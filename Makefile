@@ -47,12 +47,15 @@ MWLD_VERSION := 1.1
 # Programs
 ifeq ($(WINDOWS),1)
   WINE :=
+  AS      := $(DEVKITPPC)/bin/powerpc-eabi-as.exe
+  OBJCOPY := $(DEVKITPPC)/bin/powerpc-eabi-objcopy.exe
+  CPP     := $(DEVKITPPC)/bin/powerpc-eabi-cpp.exe -P
 else
   WINE := wine
+  AS      := $(DEVKITPPC)/bin/powerpc-eabi-as
+  OBJCOPY := $(DEVKITPPC)/bin/powerpc-eabi-objcopy
+  CPP     := $(DEVKITPPC)/bin/powerpc-eabi-cpp -P
 endif
-AS      := $(DEVKITPPC)/bin/powerpc-eabi-as.exe
-OBJCOPY := $(DEVKITPPC)/bin/powerpc-eabi-objcopy.exe
-CPP     := $(DEVKITPPC)/bin/powerpc-eabi-cpp.exe -P
 CC      := $(WINE) tools/mwcc_compiler/$(MWCC_VERSION)/mwcceppc.exe
 LD      := $(WINE) tools/mwcc_compiler/$(MWLD_VERSION)/mwldeppc.exe
 ELF2DOL := tools/elf2dol
@@ -90,6 +93,8 @@ ALL_DIRS := build $(BUILD_DIR) $(addprefix $(BUILD_DIR)/,$(SRC_DIRS) $(ASM_DIRS)
 # Make sure build directory exists before compiling anything
 DUMMY != mkdir -p $(ALL_DIRS)
 
+.PHONY: tools
+
 $(LDSCRIPT): ldscript.lcf
 	$(CPP) -MMD -MP -MT $@ -MF $@.d -I include/ -I . -DBUILD_DIR=$(BUILD_DIR) -o $@ $<
 
@@ -99,6 +104,10 @@ $(DOL): $(ELF) | tools
 
 clean:
 	rm -f -d -r build
+	$(MAKE) -C tools clean
+
+tools:
+	$(MAKE) -C tools
 
 $(ELF): $(O_FILES) $(LDSCRIPT)
 	$(LD) $(LDFLAGS) -lcf $(LDSCRIPT) $(O_FILES) -o $@
