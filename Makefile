@@ -23,6 +23,7 @@ ASM_DIRS := asm
 # Inputs
 S_FILES := $(wildcard asm/*.s)
 C_FILES := $(wildcard src/*.c)
+CPP_FILES := $(wildcard src/*.cpp)
 LDSCRIPT := $(BUILD_DIR)/ldscript.lcf
 
 # Outputs
@@ -65,7 +66,7 @@ PYTHON  := python3
 POSTPROC := tools/postprocess.py
 
 # Options
-INCLUDES := -i include/ -i include/dolphin/ -i src/sysdolphin/ -i include/dolphin/mtx/
+INCLUDES := -i include/
 
 ASFLAGS := -mgekko -I include/ 
 LDFLAGS := -map $(MAP) -fp hard -nodefaults
@@ -113,7 +114,11 @@ $(BUILD_DIR)/%.o: %.s
 
 $(BUILD_DIR)/%.o: %.c
 	$(CC) $(CFLAGS) -c -o $@ $<
-	$(PYTHON) $(POSTPROC) $(PROCFLAGS) $@
+	#$(PYTHON) $(POSTPROC) $(PROCFLAGS) $@
+
+$(BUILD_DIR)/%.o: %.cpp
+	$(CC) $(CFLAGS) -c -o $@ $<
+	#$(PYTHON) $(POSTPROC) $(PROCFLAGS) $@
 
 ### Debug Print ###
 
