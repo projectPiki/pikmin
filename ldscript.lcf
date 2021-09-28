@@ -1,5 +1,3 @@
-_SDA_BASE_ = 0x803E4D20;
-_SDA2_BASE_ = 0x803F0200;
 MEMORY {
 text : origin = 0x80003100
 }
@@ -10,7 +8,7 @@ GROUP: {
     ._exidx ALIGN(0x20) : {}
     .text ALIGN(0x20) : {}
     .ctors ALIGN(0x20) : {}
-    .dtors ALIGN(0x20) : {}
+    ._dtors ALIGN(0x20) : {}
     .rodata ALIGN(0x20) : {}
     .data ALIGN(0x20) : {}
     .bss ALIGN(0x20) : {}
@@ -27,3 +25,4 @@ GROUP: {
     __ArenaLo = (_db_stack_addr + 0x1f) & ~0x1f;
     __ArenaHi = 0x81700000;
 }
+FORCEFILES{extab.o}
