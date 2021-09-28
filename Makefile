@@ -17,8 +17,7 @@ VERSION := usa.1
 
 BUILD_DIR := build/$(NAME).$(VERSION)
 
-SRC_DIRS := src			\
-	    src/sysCommon	\
+SRC_DIRS := src src/sysCommon
 ASM_DIRS := asm
 
 # Inputs
