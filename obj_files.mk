@@ -6,13 +6,13 @@ INIT_O_FILES :=								\
 EXTAB_O_FILES :=							\
 	$(BUILD_DIR)/asm/extab.o					\
 
-EXTABINDEX_O_FILES :=                               \
-	$(BUILD_DIR)/asm/exidx.o                        \
+EXTABINDEX_O_FILES :=							\
+	$(BUILD_DIR)/asm/exidx.o					\
 
-TEXT_O_FILES :=                                     \
-	$(BUILD_DIR)/asm/text_0.o						\
-	$(BUILD_DIR)/src/Vector3f.o						\
-	$(BUILD_DIR)/asm/text_1.o						\
+TEXT_O_FILES :=								\
+	$(BUILD_DIR)/asm/text_0.o					\
+	$(BUILD_DIR)/src/sysCommon/shpRoutes.o				\
+	$(BUILD_DIR)/asm/text_1.o					\
 
 CTORS_O_FILES :=							\
 	$(BUILD_DIR)/asm/ctors.o					\

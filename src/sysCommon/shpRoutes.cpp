@@ -1,53 +1,58 @@
-
+#include "Vector3f.h"
 
 /*
  * --INFO--
  * Address:	........
  * Size:	00009C
  */
+/*
 void _Error(char *, ...)
 {
 	// UNUSED FUNCTION
 }
-
+*/
 /*
  * --INFO--
  * Address:	........
  * Size:	0000F4
  */
+/*
 void _Print(char *, ...)
 {
 	// UNUSED FUNCTION
 }
-
+*/
 /*
  * --INFO--
  * Address:	........
  * Size:	0000A8
  */
+/*
 void RoutePoint::RoutePoint()
 {
 	// UNUSED FUNCTION
 }
-
+*/
 /*
  * --INFO--
  * Address:	........
  * Size:	0001D4
  */
+/*
 void RoutePoint::refresh(Graphics &)
 {
 	// UNUSED FUNCTION
 }
-
+*/
 /*
  * --INFO--
  * Address:	80036474
  * Size:	000184
  */
+/*
 void RoutePoint::loadini(CmdStream *)
 {
-/*
+
 .loc_0x0:
   mflr      r0
   stw       r0, 0x4(r1)
@@ -160,17 +165,18 @@ void RoutePoint::loadini(CmdStream *)
   addi      r1, r1, 0x18
   mtlr      r0
   blr
-*/
-}
 
+}
+*/
 /*
  * --INFO--
  * Address:	800365F8
  * Size:	000184
  */
+/*
 void RouteGroup::RouteGroup()
 {
-/*
+
 .loc_0x0:
   mflr      r0
   lis       r4, 0x8022
@@ -269,17 +275,18 @@ void RouteGroup::RouteGroup()
   addi      r1, r1, 0x28
   mtlr      r0
   blr
-*/
-}
 
+}
+*/
 /*
  * --INFO--
  * Address:	8003677C
  * Size:	0009A0
  */
+/*
 void RouteGroup::refresh(Graphics &, EditNode *)
 {
-/*
+
 .loc_0x0:
   mflr      r0
   li        r5, 0
@@ -923,16 +930,16 @@ void RouteGroup::refresh(Graphics &, EditNode *)
   blr       
 
 .loc_0x9A0:
-*/
-}
 
+}
+*/
 /*
  * --INFO--
  * Address:	8003711C
  * Size:	00001C
  */
-void Vector3f::Vector3f(const float &, const float &, const float &)
-{
+Vector3f::Vector3f(float const&_x, float const&_y, float const&_z) :
+	x(_x), y(_y), z(_z ) {
 /*
 .loc_0x0:
   lfs       f0, 0x0(r4)
@@ -950,9 +957,10 @@ void Vector3f::Vector3f(const float &, const float &, const float &)
  * Address:	80037138
  * Size:	000060
  */
+/*
 void RouteGroup::render2d(Graphics &, int &)
 {
-/*
+
 .loc_0x0:
   mflr      r0
   addi      r8, r3, 0
@@ -978,17 +986,18 @@ void RouteGroup::render2d(Graphics &, int &)
   addi      r1, r1, 0x8
   mtlr      r0
   blr
-*/
-}
 
+}
+*/
 /*
  * --INFO--
  * Address:	80037198
  * Size:	0003CC
  */
+/*
 void RouteGroup::loadini(CmdStream *)
 {
-/*
+
 .loc_0x0:
   mflr      r0
   lis       r6, 0x8022
@@ -1263,41 +1272,46 @@ void RouteGroup::loadini(CmdStream *)
   addi      r1, r1, 0x78
   mtlr      r0
   blr
-*/
-}
 
+}
+*/
 /*
  * --INFO--
  * Address:	........
  * Size:	0001C0
  */
+/*
 void RouteGroup::saveini(char *, RandomAccessStream &)
 {
 	// UNUSED FUNCTION
 }
-
+*/
 /*
  * --INFO--
  * Address:	80037564
  * Size:	000004
  */
+/*
 void EditNode::msgCommand(DataMsg &)
 {
-/*
+
 .loc_0x0:
   blr
-*/
+
 }
+*/
 
 /*
  * --INFO--
  * Address:	80037568
  * Size:	000004
  */
+/*
 void EditNode::render2d(Graphics &, int &)
 {
-/*
+
 .loc_0x0:
   blr
-*/
+
 }
+*/
