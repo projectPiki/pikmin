@@ -93,8 +93,6 @@ ALL_DIRS := build $(BUILD_DIR) $(addprefix $(BUILD_DIR)/,$(SRC_DIRS) $(ASM_DIRS)
 # Make sure build directory exists before compiling anything
 DUMMY != mkdir -p $(ALL_DIRS)
 
-.PHONY: tools
-
 $(LDSCRIPT): ldscript.lcf
 	$(CPP) -MMD -MP -MT $@ -MF $@.d -I include/ -I . -DBUILD_DIR=$(BUILD_DIR) -o $@ $<
 
@@ -104,10 +102,6 @@ $(DOL): $(ELF) | tools
 
 clean:
 	rm -f -d -r build
-	$(MAKE) -C tools clean
-
-tools:
-	$(MAKE) -C tools
 
 $(ELF): $(O_FILES) $(LDSCRIPT)
 	$(LD) $(LDFLAGS) -lcf $(LDSCRIPT) $(O_FILES) -o $@
