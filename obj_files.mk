@@ -11,12 +11,17 @@ EXTABINDEX_O_FILES :=							\
 
 TEXT_O_FILES :=									\
     $(BUILD_DIR)/asm/text_0.o					\
+    $(BUILD_DIR)/asm/string.o					\
+    $(BUILD_DIR)/asm/text_80025914.o			\
     $(BUILD_DIR)/src/sysCommon/shpRoutes.o		\
     $(BUILD_DIR)/asm/text_1.o					\
     $(BUILD_DIR)/src/sysCommon/matMath.o		\
     $(BUILD_DIR)/asm/text_2.o					\
     $(BUILD_DIR)/src/sysCommon/timers.o	    	\
     $(BUILD_DIR)/asm/text_800409B0.o			\
+    $(BUILD_DIR)/asm/atx.o						\
+    $(BUILD_DIR)/asm/id32.o						\
+    $(BUILD_DIR)/asm/text_80044194.o			\
     $(BUILD_DIR)/src/gx/GXStubs.o				\
     $(BUILD_DIR)/asm/text_802140E8.o			\
     $(BUILD_DIR)/asm/text_8021C4CC.o			\
