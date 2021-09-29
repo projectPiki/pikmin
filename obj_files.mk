@@ -17,9 +17,13 @@ TEXT_O_FILES :=									\
     $(BUILD_DIR)/src/sysCommon/shpRoutes.o		\
     $(BUILD_DIR)/asm/text_1.o					\
     $(BUILD_DIR)/src/sysCommon/matMath.o		\
-    $(BUILD_DIR)/asm/text_2.o					\
+    $(BUILD_DIR)/asm/matMath_Partial.o			\
+    $(BUILD_DIR)/asm/stdSystem.o				\
+    $(BUILD_DIR)/asm/node.o						\
     $(BUILD_DIR)/src/sysCommon/timers.o	    	\
-    $(BUILD_DIR)/asm/text_800409B0.o			\
+    $(BUILD_DIR)/asm/controller.o				\
+    $(BUILD_DIR)/asm/cmdStream.o				\
+    $(BUILD_DIR)/asm/camera.o					\
     $(BUILD_DIR)/asm/atx.o						\
     $(BUILD_DIR)/asm/id32.o						\
     $(BUILD_DIR)/asm/text_80044194.o			\
@@ -37,7 +41,7 @@ TEXT_O_FILES :=									\
     $(BUILD_DIR)/asm/text_802140E8.o			\
     $(BUILD_DIR)/asm/text_8021C4CC.o			\
     $(BUILD_DIR)/src/amcnotstub/amcnotstub.o	\
-    $(BUILD_DIR)/asm/text_3.o					\
+    $(BUILD_DIR)/asm/DebuggerDriver.o			\
     $(BUILD_DIR)/src/odenotstub/odenotstub.o	\
 
 CTORS_O_FILES :=								\
