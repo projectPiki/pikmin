@@ -50,7 +50,10 @@ TEXT_O_FILES :=											\
     $(BUILD_DIR)/asm/pad/Padclamp.o						\
     $(BUILD_DIR)/asm/pad/Pad.o							\
     $(BUILD_DIR)/asm/ai/ai.o							\
-    $(BUILD_DIR)/asm/text_8020690C.o					\
+    $(BUILD_DIR)/asm/ar/ar.o							\
+    $(BUILD_DIR)/asm/ar/arq.o							\
+    $(BUILD_DIR)/asm/dsp/dsp.o							\
+    $(BUILD_DIR)/asm/text_CardGX.o						\
     $(BUILD_DIR)/src/gx/GXStubs.o						\
     $(BUILD_DIR)/asm/text_802140E8.o					\
     $(BUILD_DIR)/asm/text_8021C4CC.o					\
