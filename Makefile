@@ -17,7 +17,8 @@ VERSION := usa.1
 
 BUILD_DIR := build/$(NAME).$(VERSION)
 
-SRC_DIRS := src src/sysCommon src/amcnotstub src/gx
+SRC_DIRS := src src/sysCommon src/amcnotstub src/gx src/odenotstub \
+			src/TRK_MINNOW_DOLPHIN
 ASM_DIRS := asm
 
 # Inputs

@@ -756,8 +756,3 @@ DBOpen:
 .global DBClose
 DBClose:
 /* 80221F54 0021EEB4  4E 80 00 20 */	blr 
-
-.global Hu_IsStub
-Hu_IsStub:
-/* 80221F58 0021EEB8  38 60 00 00 */	li r3, 0
-/* 80221F5C 0021EEBC  4E 80 00 20 */	blr 

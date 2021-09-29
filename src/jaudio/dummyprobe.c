@@ -7,6 +7,7 @@
  */
 void Probe_Start(void)
 {
+	return;
 /*
 .loc_0x0:
   blr
@@ -20,6 +21,7 @@ void Probe_Start(void)
  */
 void Probe_Finish(void)
 {
+	return;
 /*
 .loc_0x0:
   blr
@@ -31,7 +33,9 @@ void Probe_Finish(void)
  * Address:	........
  * Size:	000050
  */
+ /*
 void Console_printf(void)
 {
 	// UNUSED FUNCTION
 }
+*/

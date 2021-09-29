@@ -5,41 +5,45 @@
  * Address:	........
  * Size:	000034
  */
+/*
 void DBGEXIInit(void)
 {
 	// UNUSED FUNCTION
 }
-
+*/
 /*
  * --INFO--
  * Address:	........
  * Size:	000028
  */
+/*
 void DBGEXISelect(void)
 {
 	// UNUSED FUNCTION
 }
-
+*/
 /*
  * --INFO--
  * Address:	........
  * Size:	00001C
  */
+/*
 void DBGEXIDeselect(void)
 {
 	// UNUSED FUNCTION
 }
-
+*/
 /*
  * --INFO--
  * Address:	........
  * Size:	00001C
  */
+/*
 void DBGEXISync(void)
 {
 	// UNUSED FUNCTION
 }
-
+*/
 /*
  * --INFO--
  * Address:	802214D8
@@ -247,31 +251,33 @@ void DBGEXIImm(void)
  * Address:	........
  * Size:	000018
  */
+/*
 void DBGEXIClearInterrupts(void)
 {
 	// UNUSED FUNCTION
 }
-
+*/
 /*
  * --INFO--
  * Address:	........
  * Size:	0000AC
  */
-void DBGCheckID(void)
+/*void DBGCheckID(void)
 {
 	// UNUSED FUNCTION
 }
-
+*/
 /*
  * --INFO--
  * Address:	........
  * Size:	00008C
  */
+/*
 void DBGWriteMailbox(void)
 {
 	// UNUSED FUNCTION
 }
-
+*/
 /*
  * --INFO--
  * Address:	80221770
@@ -679,11 +685,12 @@ void DBInitInterrupts(void)
  * Address:	........
  * Size:	000150
  */
+/*
 void CheckMailBox(void)
 {
 	// UNUSED FUNCTION
 }
-
+*/
 /*
  * --INFO--
  * Address:	80221BC8
@@ -987,6 +994,7 @@ void DBWrite(void)
  */
 void DBOpen(void)
 {
+	return;
 /*
 .loc_0x0:
   blr
@@ -1000,6 +1008,7 @@ void DBOpen(void)
  */
 void DBClose(void)
 {
+	return;
 /*
 .loc_0x0:
   blr

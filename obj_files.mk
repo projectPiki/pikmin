@@ -17,8 +17,10 @@ TEXT_O_FILES :=									\
     $(BUILD_DIR)/asm/text_2.o					\
     $(BUILD_DIR)/src/gx/GXStubs.o				\
     $(BUILD_DIR)/asm/text_802140E8.o			\
+    $(BUILD_DIR)/asm/text_8021C4CC.o			\
     $(BUILD_DIR)/src/amcnotstub/amcnotstub.o	\
     $(BUILD_DIR)/asm/text_3.o					\
+    $(BUILD_DIR)/src/odenotstub/odenotstub.o	\
 
 CTORS_O_FILES :=								\
     $(BUILD_DIR)/asm/ctors.o					\
@@ -44,5 +46,3 @@ SBSS_O_FILES :=									\
 SDATA2_O_FILES :=								\
     $(BUILD_DIR)/asm/sdata2.o					\
 	
-SBSS2_O_FILES :=							\
-#   $(BUILD_DIR)/asm/sbss2.o				\

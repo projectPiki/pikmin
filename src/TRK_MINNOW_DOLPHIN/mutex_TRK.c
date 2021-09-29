@@ -5,8 +5,9 @@
  * Address:	8021E698
  * Size:	000008
  */
-void TRKInitializeMutex(void)
+int TRKInitializeMutex(void)
 {
+	return 0;
 /*
 .loc_0x0:
   li        r3, 0
@@ -19,8 +20,9 @@ void TRKInitializeMutex(void)
  * Address:	8021E6A0
  * Size:	000008
  */
-void TRKAcquireMutex(void)
+int TRKAcquireMutex(void)
 {
+	return 0;
 /*
 .loc_0x0:
   li        r3, 0
@@ -33,8 +35,9 @@ void TRKAcquireMutex(void)
  * Address:	8021E6A8
  * Size:	000008
  */
-void TRKReleaseMutex(void)
+int TRKReleaseMutex(void)
 {
+	return 0;
 /*
 .loc_0x0:
   li        r3, 0
