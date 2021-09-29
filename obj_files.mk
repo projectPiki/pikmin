@@ -15,6 +15,8 @@ TEXT_O_FILES :=									\
     $(BUILD_DIR)/asm/text_1.o					\
     $(BUILD_DIR)/src/sysCommon/matMath.o		\
     $(BUILD_DIR)/asm/text_2.o					\
+    $(BUILD_DIR)/src/sysCommon/timers.o	    	\
+    $(BUILD_DIR)/asm/text_800409B0.o			\
     $(BUILD_DIR)/src/gx/GXStubs.o				\
     $(BUILD_DIR)/asm/text_802140E8.o			\
     $(BUILD_DIR)/asm/text_8021C4CC.o			\

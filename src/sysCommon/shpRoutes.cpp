@@ -938,9 +938,9 @@ void RouteGroup::refresh(Graphics &, EditNode *)
  * Address:	8003711C
  * Size:	00001C
  */
-Vector3f::Vector3f(float const&_x, float const&_y, float const&_z) :
-	x(_x), y(_y), z(_z ) {
-/*
+Vector3f::Vector3f(float const &_x, float const &_y, float const &_z) : x(_x), y(_y), z(_z)
+{
+  /*
 .loc_0x0:
   lfs       f0, 0x0(r4)
   stfs      f0, 0x0(r3)
