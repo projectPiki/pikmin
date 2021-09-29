@@ -18,8 +18,11 @@ VERSION := usa.1
 BUILD_DIR := build/$(NAME).$(VERSION)
 
 SRC_DIRS := src src/sysCommon src/amcnotstub src/gx src/odenotstub \
-			src/TRK_MINNOW_DOLPHIN
-ASM_DIRS := asm
+			src/TRK_MINNOW_DOLPHIN src/plugPikiNishimura src/plugPikiColin \
+			src/amcExi2 src/jaudio src/mtx src/os src/plugPikiKando \
+			src/plugPikiNakata src/plugPikiOgawa src/plugPikiYamashita
+ASM_DIRS := asm asm/OdemuExi2 asm/sysCommon asm/plugPikiNishimura \
+			asm/mtx
 
 # Inputs
 S_FILES := $(wildcard asm/*.s)
