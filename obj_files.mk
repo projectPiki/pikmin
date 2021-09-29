@@ -37,6 +37,20 @@ TEXT_O_FILES :=											\
     $(BUILD_DIR)/asm/plugPikiNishimura/SpiderAi.o		\
     $(BUILD_DIR)/asm/plugPikiNishimura/SpiderLeg.o		\
     $(BUILD_DIR)/asm/text_Nishimura.o					\
+    $(BUILD_DIR)/asm/mtx/mtx.o							\
+    $(BUILD_DIR)/asm/mtx/mtx44.o						\
+    $(BUILD_DIR)/asm/mtx/vec.o							\
+    $(BUILD_DIR)/asm/dvd/dvdlow.o						\
+    $(BUILD_DIR)/asm/dvd/dvdfs.o						\
+    $(BUILD_DIR)/asm/dvd/dvd.o							\
+    $(BUILD_DIR)/asm/dvd/dvdqueue.o						\
+    $(BUILD_DIR)/asm/dvd/dvderror.o						\
+    $(BUILD_DIR)/asm/dvd/fstload.o						\
+    $(BUILD_DIR)/asm/vi/vi.o							\
+    $(BUILD_DIR)/asm/pad/Padclamp.o						\
+    $(BUILD_DIR)/asm/pad/Pad.o							\
+    $(BUILD_DIR)/asm/ai/ai.o							\
+    $(BUILD_DIR)/asm/text_8020690C.o					\
     $(BUILD_DIR)/src/gx/GXStubs.o						\
     $(BUILD_DIR)/asm/text_802140E8.o					\
     $(BUILD_DIR)/asm/text_8021C4CC.o					\

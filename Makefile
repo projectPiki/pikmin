@@ -20,9 +20,10 @@ BUILD_DIR := build/$(NAME).$(VERSION)
 SRC_DIRS := src src/sysCommon src/amcnotstub src/gx src/odenotstub \
 			src/TRK_MINNOW_DOLPHIN src/plugPikiNishimura src/plugPikiColin \
 			src/amcExi2 src/jaudio src/mtx src/os src/plugPikiKando \
-			src/plugPikiNakata src/plugPikiOgawa src/plugPikiYamashita
+			src/plugPikiNakata src/plugPikiOgawa src/plugPikiYamashita \
+			src/dvd src/vi src/pad src/ai
 ASM_DIRS := asm asm/OdemuExi2 asm/sysCommon asm/plugPikiNishimura \
-			asm/mtx
+			asm/mtx asm/dvd asm/vi asm/pad asm/ai
 
 # Inputs
 S_FILES := $(wildcard asm/*.s)
