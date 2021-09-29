@@ -173,10 +173,22 @@ lbl_803DCE70:
 	.incbin "baserom.dol", 0x2E6790, 0x38
 .global __RTTI__7BaseApp
 __RTTI__7BaseApp:
-	.incbin "baserom.dol", 0x2E67C8, 0x30
+  .4byte 0x803dce78
+  .4byte 0x80227314
+  .4byte 0x53747265
+  .4byte 0x616d0000
+  .4byte 0x803dceb0
+  .4byte 0
+  .4byte 0x53747265
+  .4byte 0x616d0000
+  .4byte 0x803dcec0
+  .4byte 0
+  .4byte 0x80227430
+  .4byte 0x80227444
 .global __RTTI__19BufferedInputStream
 __RTTI__19BufferedInputStream:
-	.incbin "baserom.dol", 0x2E67F8, 0x8
+  .4byte 0x8022741c
+  .4byte 0x80227450
 .global lbl_803DCEE0
 lbl_803DCEE0:
 	.incbin "baserom.dol", 0x2E6800, 0x4
@@ -266,28 +278,48 @@ lbl_803DCF6C:
 	.incbin "baserom.dol", 0x2E688C, 0x4
 .global __RTTI__9GfxObject
 __RTTI__9GfxObject:
-	.incbin "baserom.dol", 0x2E6890, 0x10
+  .4byte 0x802280b4
+  .4byte 0
+  .4byte 0x54657874
+  .4byte 0x75726500
 .global __RTTI__7Texture
 __RTTI__7Texture:
-	.incbin "baserom.dol", 0x2E68A0, 0x8
+  .4byte 0x803dcf78
+  .4byte 0x802280c0
 .global __RTTI__12CacheTexture
 __RTTI__12CacheTexture:
-	.incbin "baserom.dol", 0x2E68A8, 0x28
+  .4byte 0x802280a4
+  .4byte 0x802280cc
+  .4byte 0x54657841
+  .4byte 0x74747200
+  .4byte 0x414e6f64
+  .4byte 0x65000000
+  .4byte 0x803dcf98
+  .4byte 0
+  .4byte 0x802280f4
+  .4byte 0x80228100
 .global __RTTI__7TexAttr
 __RTTI__7TexAttr:
-	.incbin "baserom.dol", 0x2E68D0, 0x10
+  .4byte 0x803dcf90
+  .4byte 0x8022810c
+  .4byte 0x54657849
+  .4byte 0x6d670000
 .global __RTTI__6TexImg
 __RTTI__6TexImg:
-	.incbin "baserom.dol", 0x2E68E0, 0x8
+  .4byte 0x803dcfb8
+  .4byte 0x80228130
 .global __RTTI__8Graphics
 __RTTI__8Graphics:
-	.incbin "baserom.dol", 0x2E68E8, 0x8
+  .4byte 0x80227550
+  .4byte 0
 .global __RTTI__15MaterialHandler
 __RTTI__15MaterialHandler:
-	.incbin "baserom.dol", 0x2E68F0, 0x8
+  .4byte 0x80228248
+  .4byte 0
 .global __RTTI__8Material
 __RTTI__8Material:
-	.incbin "baserom.dol", 0x2E68F8, 0x8
+  .4byte 0x80228268
+  .4byte 0x80228274
 .global lbl_803DCFE0
 lbl_803DCFE0:
 	.incbin "baserom.dol", 0x2E6900, 0x4
@@ -320,7 +352,9 @@ lbl_803DD004:
 	.incbin "baserom.dol", 0x2E6924, 0x28
 .global __RTTI__5Light
 __RTTI__5Light:
-	.incbin "baserom.dol", 0x2E694C, 0xC
+  .4byte 0x803dd00c
+  .4byte 0x802282e0
+  .4byte 0
 .global lbl_803DD038
 lbl_803DD038:
 	.incbin "baserom.dol", 0x2E6958, 0x4
@@ -416,52 +450,83 @@ lbl_803DD10C:
 	.incbin "baserom.dol", 0x2E6A2C, 0x10
 .global __RTTI__10MatobjInfo
 __RTTI__10MatobjInfo:
-	.incbin "baserom.dol", 0x2E6A3C, 0x20
+  .4byte 0x80228670
+  .4byte 0x80228688
+  .4byte 0x414e6f64
+  .4byte 0x65000000
+  .4byte 0x803dd124
+  .4byte 0
+  .4byte lbl_80228350
+  .4byte 0x802286c0
 .global __RTTI__9BaseShape
 __RTTI__9BaseShape:
-	.incbin "baserom.dol", 0x2E6A5C, 0x8
+  .4byte 0x802286b4
+  .4byte 0x802286cc
 .global __RTTI__22IDelegate2$$0P5Joint$$4Ul$$1
 __RTTI__22IDelegate2$$0P5Joint$$4Ul$$1:
-	.incbin "baserom.dol", 0x2E6A64, 0x8
+  .4byte 0x80228734
+  .4byte 0
 .global __RTTI__32Delegate2$$09BaseShape$$4P5Joint$$4Ul$$1
 __RTTI__32Delegate2$$09BaseShape$$4P5Joint$$4Ul$$1:
-	.incbin "baserom.dol", 0x2E6A6C, 0x8
+  .4byte 0x80228704
+  .4byte 0x80228758
 .global __RTTI__10LightFlare
 __RTTI__10LightFlare:
-	.incbin "baserom.dol", 0x2E6A74, 0x8
+  .4byte 0x8022877c
+  .4byte 0x80228788
 .global __RTTI__10LightGroup
 __RTTI__10LightGroup:
-	.incbin "baserom.dol", 0x2E6A7C, 0x8
+  .4byte 0x802287ac
+  .4byte 0x802287b8
 .global __RTTI__11ObjCollInfo
 __RTTI__11ObjCollInfo:
-	.incbin "baserom.dol", 0x2E6A84, 0x10
+  .4byte 0x802287dc
+  .4byte 0x802287e8
+  .4byte 0x416e696d
+  .4byte 0x44636b00
 .global __RTTI__8AnimData
 __RTTI__8AnimData:
-	.incbin "baserom.dol", 0x2E6A94, 0x8
+  .4byte 0x8022880c
+  .4byte 0x80228818
 .global __RTTI__7AnimDck
 __RTTI__7AnimDck:
-	.incbin "baserom.dol", 0x2E6A9C, 0x10
+  .4byte 0x803dd16c
+  .4byte 0x8022882c
+  .4byte 0x416e696d
+  .4byte 0x44636100
 .global __RTTI__7AnimDca
 __RTTI__7AnimDca:
-	.incbin "baserom.dol", 0x2E6AAC, 0x8
+  .4byte 0x803dd184
+  .4byte 0x80228868
 .global __RTTI__11AnimContext
 __RTTI__11AnimContext:
-	.incbin "baserom.dol", 0x2E6AB4, 0x8
+  .4byte 0x802288c4
+  .4byte 0
 .global __RTTI__Q25Joint7MatPoly
 __RTTI__Q25Joint7MatPoly:
-	.incbin "baserom.dol", 0x2E6ABC, 0x10
+  .4byte 0x802288dc
+  .4byte 0x802288ec
+  .4byte 0x4a6f696e
+  .4byte 0x74000000
 .global __RTTI__5Joint
 __RTTI__5Joint:
-	.incbin "baserom.dol", 0x2E6ACC, 0x10
+  .4byte 0x803dd1a4
+  .4byte 0x80228910
+  .4byte 0x4d657368
+  .4byte 0
 .global __RTTI__4Mesh
 __RTTI__4Mesh:
-	.incbin "baserom.dol", 0x2E6ADC, 0x8
+  .4byte 0x803dd1b4
+  .4byte 0x80228934
 .global __RTTI__8FaceNode
 __RTTI__8FaceNode:
-	.incbin "baserom.dol", 0x2E6AE4, 0x8
+  .4byte 0x80228958
+  .4byte 0x80228964
 .global __RTTI__8DispList
 __RTTI__8DispList:
-	.incbin "baserom.dol", 0x2E6AEC, 0xC
+  .4byte 0x802289a4
+  .4byte 0x802289b0
+  .4byte 0
 .global lbl_803DD1D8
 lbl_803DD1D8:
 	.incbin "baserom.dol", 0x2E6AF8, 0x8
@@ -581,16 +646,21 @@ lbl_803DD2B4:
 	.incbin "baserom.dol", 0x2E6BD4, 0x20
 .global __RTTI__8EditNode
 __RTTI__8EditNode:
-	.incbin "baserom.dol", 0x2E6BF4, 0x8
+  .4byte 0x80228b08
+  .4byte 0x80228b14
 .global __RTTI__10RouteGroup
 __RTTI__10RouteGroup:
-	.incbin "baserom.dol", 0x2E6BFC, 0x8
+  .4byte 0x80228ae4
+  .4byte 0x80228b28
 .global __RTTI__9RouteLink
 __RTTI__9RouteLink:
-	.incbin "baserom.dol", 0x2E6C04, 0x8
+  .4byte 0x80228b74
+  .4byte 0x80228b80
 .global __RTTI__10RoutePoint
 __RTTI__10RoutePoint:
-	.incbin "baserom.dol", 0x2E6C0C, 0xC
+  .4byte 0x80228ba4
+  .4byte 0x80228bb0
+  .4byte 0
 .global lbl_803DD2F8
 lbl_803DD2F8:
 	.incbin "baserom.dol", 0x2E6C18, 0x4
@@ -626,31 +696,57 @@ lbl_803DD328:
 	.incbin "baserom.dol", 0x2E6C48, 0x10
 .global __RTTI__10BinobjInfo
 __RTTI__10BinobjInfo:
-	.incbin "baserom.dol", 0x2E6C58, 0x20
+  .4byte 0x80228c34
+  .4byte 0x80228c4c
+  .4byte 0x414e6f64
+  .4byte 0x65000000
+  .4byte 0x803dd340
+  .4byte 0
+  .4byte 0x80228c0c
+  .4byte 0x80228c74
 .global __RTTI__11LFlareGroup
 __RTTI__11LFlareGroup:
-	.incbin "baserom.dol", 0x2E6C78, 0x8
+  .4byte 0x80228c68
+  .4byte 0x80228c80
 .global __RTTI__9StdSystem
 __RTTI__9StdSystem:
-	.incbin "baserom.dol", 0x2E6C80, 0x8
+  .4byte 0x80228c00
+  .4byte 0
 .global __RTTI__10TexobjInfo
 __RTTI__10TexobjInfo:
-	.incbin "baserom.dol", 0x2E6C88, 0x8
+  .4byte 0x80228cd8
+  .4byte 0x80228ce4
 .global __RTTI__10ShpobjInfo
 __RTTI__10ShpobjInfo:
-	.incbin "baserom.dol", 0x2E6C90, 0x8
+  .4byte 0x80228d00
+  .4byte 0x80228d0c
 .global __RTTI__10AnmobjInfo
 __RTTI__10AnmobjInfo:
-	.incbin "baserom.dol", 0x2E6C98, 0x10
+  .4byte 0x80228d54
+  .4byte 0x80228d60
+  .4byte 0x4e6f6465
+  .4byte 0
 .global lbl_803DD388
 lbl_803DD388:
 	.incbin "baserom.dol", 0x2E6CA8, 0x30
 .global __RTTI__7SRTNode
 __RTTI__7SRTNode:
-	.incbin "baserom.dol", 0x2E6CD8, 0x30
+  .4byte 0x803dd390
+  .4byte 0x80228db8
+  .4byte 0x414e6f64
+  .4byte 0x65000000
+  .4byte 0x803dd3c0
+  .4byte 0
+  .4byte 0x80228e6c
+  .4byte 0x80228e78
+  .4byte 0x4e6f6465
+  .4byte 0
+  .4byte 0x803dd3d8
+  .4byte 0x80228e84
 .global __RTTI__10Controller
 __RTTI__10Controller:
-	.incbin "baserom.dol", 0x2E6D08, 0x8
+  .4byte 0x80228e60
+  .4byte 0x80228e98
 .global lbl_803DD3F0
 lbl_803DD3F0:
 	.incbin "baserom.dol", 0x2E6D10, 0x4
@@ -749,7 +845,12 @@ lbl_803DD46C:
 	.incbin "baserom.dol", 0x2E6D8C, 0x1C
 .global __RTTI__13AtxFileStream
 __RTTI__13AtxFileStream:
-	.incbin "baserom.dol", 0x2E6DA8, 0x18
+  .4byte 0x80228f00
+  .4byte 0x80228f30
+  .4byte 0x80228fac
+  .4byte 0x80228fb8
+  .4byte 0x54657874
+  .4byte 0x75726500
 .global lbl_803DD4A0
 lbl_803DD4A0:
 	.incbin "baserom.dol", 0x2E6DC0, 0x4
@@ -761,10 +862,18 @@ lbl_803DD4AC:
 	.incbin "baserom.dol", 0x2E6DCC, 0x4
 .global __RTTI__9GfxObject_1
 __RTTI__9GfxObject_1:
-	.incbin "baserom.dol", 0x2E6DD0, 0x8
+  .4byte 0x80229050
+  .4byte 0
 .global __RTTI__7Texture_1
 __RTTI__7Texture_1:
-	.incbin "baserom.dol", 0x2E6DD8, 0x20
+  .4byte 0x803dd498
+  .4byte 0x8022905c
+  .4byte 0x414e6f64
+  .4byte 0x65000000
+  .4byte 0x803dd4c0
+  .4byte 0
+  .4byte 0x53797374
+  .4byte 0x656d0000
 .global glnWidth
 glnWidth:
 	.incbin "baserom.dol", 0x2E6DF8, 0x4
@@ -806,37 +915,54 @@ lbl_803DD524:
 	.incbin "baserom.dol", 0x2E6E44, 0x4
 .global __RTTI__22IDelegate1$$0R8Graphics$$1
 __RTTI__22IDelegate1$$0R8Graphics$$1:
-	.incbin "baserom.dol", 0x2E6E48, 0x8
+  .4byte 0x802a5390
+  .4byte 0
 .global __RTTI__29Delegate1$$06System$$4R8Graphics$$1
 __RTTI__29Delegate1$$06System$$4R8Graphics$$1:
-	.incbin "baserom.dol", 0x2E6E50, 0x18
+  .4byte 0x802a5370
+  .4byte 0x802a53a8
+  .4byte 0x53747265
+  .4byte 0x616d0000
+  .4byte 0x803dd538
+  .4byte 0
 .global __RTTI__9LogStream
 __RTTI__9LogStream:
-	.incbin "baserom.dol", 0x2E6E68, 0x8
+  .4byte 0x802a53cc
+  .4byte 0x802a53d8
 .global lbl_803DD550
 lbl_803DD550:
 	.incbin "baserom.dol", 0x2E6E70, 0x1C
 .global __RTTI__11AddressNode
 __RTTI__11AddressNode:
-	.incbin "baserom.dol", 0x2E6E8C, 0x8
+  .4byte 0x802a543c
+  .4byte 0x802a5460
 .global __RTTI__8DirEntry
 __RTTI__8DirEntry:
-	.incbin "baserom.dol", 0x2E6E94, 0x10
+  .4byte 0x802a5484
+  .4byte 0x802a5490
+  .4byte 0x802a54dc
+  .4byte 0x802a54f0
 .global __RTTI__9DVDStream
 __RTTI__9DVDStream:
-	.incbin "baserom.dol", 0x2E6EA4, 0x8
+  .4byte 0x802a54d0
+  .4byte 0x802a54fc
 .global __RTTI__9StdSystem_1
 __RTTI__9StdSystem_1:
-	.incbin "baserom.dol", 0x2E6EAC, 0x8
+  .4byte 0x802a55d8
+  .4byte 0
 .global __RTTI__6System
 __RTTI__6System:
-	.incbin "baserom.dol", 0x2E6EB4, 0x8
+  .4byte 0x803dd4d0
+  .4byte 0x802a55e4
 .global __RTTI__10AramStream
 __RTTI__10AramStream:
-	.incbin "baserom.dol", 0x2E6EBC, 0xC
+  .4byte 0x802a5624
+  .4byte 0x802a5630
+  .4byte 0
 .global __RTTI__13ControllerMgr
 __RTTI__13ControllerMgr:
-	.incbin "baserom.dol", 0x2E6EC8, 0x8
+  .4byte 0x802a56bc
+  .4byte 0
 .global sScreenMode
 sScreenMode:
 	.incbin "baserom.dol", 0x2E6ED0, 0x8
@@ -884,16 +1010,21 @@ lbl_803DD5F0:
 	.incbin "baserom.dol", 0x2E6F10, 0x24
 .global __RTTI__9BaseShape_1
 __RTTI__9BaseShape_1:
-	.incbin "baserom.dol", 0x2E6F34, 0x8
+  .4byte 0x802a5d3c
+  .4byte 0x802a5d48
 .global __RTTI__5Shape
 __RTTI__5Shape:
-	.incbin "baserom.dol", 0x2E6F3C, 0x8
+  .4byte 0x803dd5f4
+  .4byte 0x802a5d5c
 .global __RTTI__8Graphics_1
 __RTTI__8Graphics_1:
-	.incbin "baserom.dol", 0x2E6F44, 0x8
+  .4byte 0x802a5d9c
+  .4byte 0
 .global __RTTI__11DGXGraphics
 __RTTI__11DGXGraphics:
-	.incbin "baserom.dol", 0x2E6F4C, 0xC
+  .4byte 0x802a56f8
+  .4byte 0x802a5da8
+  .4byte 0
 .global lbl_803DD638
 lbl_803DD638:
 	.incbin "baserom.dol", 0x2E6F58, 0x4
@@ -995,7 +1126,9 @@ lbl_803DD6B8:
 	.incbin "baserom.dol", 0x2E6FD8, 0x2C
 .global __RTTI__9RigidBody
 __RTTI__9RigidBody:
-	.incbin "baserom.dol", 0x2E7004, 0xC
+  .4byte 0x802a5efc
+  .4byte 0x802a5f34
+  .4byte 0
 .global lbl_803DD6F0
 lbl_803DD6F0:
 	.incbin "baserom.dol", 0x2E7010, 0x8
@@ -1025,19 +1158,32 @@ lbl_803DD71C:
 	.incbin "baserom.dol", 0x2E703C, 0x24
 .global __RTTI__7AnimMgr
 __RTTI__7AnimMgr:
-	.incbin "baserom.dol", 0x2E7060, 0x10
+  .4byte lbl_803DD6F0
+  .4byte 0x802a6020
+  .4byte 0x802a6054
+  .4byte 0
 .global __RTTI__13Parm$$06String$$1
 __RTTI__13Parm$$06String$$1:
-	.incbin "baserom.dol", 0x2E7070, 0x8
+  .4byte 0x802a6044
+  .4byte 0x802a6060
 .global __RTTI__7Parm$$0f$$1
 __RTTI__7Parm$$0f$$1:
-	.incbin "baserom.dol", 0x2E7078, 0x8
+  .4byte 0x802a6080
+  .4byte 0x802a608c
 .global __RTTI__7Parm$$0i$$1
 __RTTI__7Parm$$0i$$1:
-	.incbin "baserom.dol", 0x2E7080, 0x8
+  .4byte 0x802a60ac
+  .4byte 0x802a60b8
 .global __RTTI__8AnimInfo
 __RTTI__8AnimInfo:
-	.incbin "baserom.dol", 0x2E7088, 0x20
+  .4byte 0x802a60d8
+  .4byte 0x802a60e4
+  .4byte 0x205b6f66
+  .4byte 0x665d0000
+  .4byte 0x20205b6f
+  .4byte 0x6e5d0000
+  .4byte 0x5b66756c
+  .4byte 0x6c5d0000
 .global lbl_803DD788
 lbl_803DD788:
 	.incbin "baserom.dol", 0x2E70A8, 0x8
@@ -1109,28 +1255,43 @@ lbl_803DD80C:
 	.incbin "baserom.dol", 0x2E712C, 0x30
 .global __RTTI__11GameGenNode
 __RTTI__11GameGenNode:
-	.incbin "baserom.dol", 0x2E715C, 0x18
+  .4byte 0x802a635c
+  .4byte 0x802a6394
+  .4byte 0x53656374
+  .4byte 0x696f6e00
+  .4byte 0x803dd844
+  .4byte 0x802a6410
 .global __RTTI__11GameGenFlow
 __RTTI__11GameGenFlow:
-	.incbin "baserom.dol", 0x2E7174, 0x10
+  .4byte 0x802a6320
+  .4byte 0x802a6460
+  .4byte 0x802a64d8
+  .4byte 0
 .global __RTTI__8GameFlow
 __RTTI__8GameFlow:
-	.incbin "baserom.dol", 0x2E7184, 0x8
+  .4byte lbl_802A6138
+  .4byte 0x802a655c
 .global __RTTI__18IDelegate1$$0R4Menu$$1
 __RTTI__18IDelegate1$$0R4Menu$$1:
-	.incbin "baserom.dol", 0x2E718C, 0x8
+  .4byte 0x802a65c4
+  .4byte 0
 .global __RTTI__27Delegate1$$08GameFlow$$4R4Menu$$1
 __RTTI__27Delegate1$$08GameFlow$$4R4Menu$$1:
-	.incbin "baserom.dol", 0x2E7194, 0x8
+  .4byte 0x802a65a8
+  .4byte 0x802a65d8
 .global __RTTI__9LoadIdler
 __RTTI__9LoadIdler:
-	.incbin "baserom.dol", 0x2E719C, 0x8
+  .4byte 0x802a660c
+  .4byte 0x802a6618
 .global __RTTI__13GameLoadIdler
 __RTTI__13GameLoadIdler:
-	.incbin "baserom.dol", 0x2E71A4, 0x8
+  .4byte 0x802a65fc
+  .4byte 0x802a662c
 .global __RTTI__10MemoryCard
 __RTTI__10MemoryCard:
-	.incbin "baserom.dol", 0x2E71AC, 0xC
+  .4byte 0x802a669c
+  .4byte 0x802a66a8
+  .4byte 0
 .global lbl_803DD898
 lbl_803DD898:
 	.incbin "baserom.dol", 0x2E71B8, 0x8
@@ -1166,19 +1327,30 @@ lbl_803DD8D8:
 	.incbin "baserom.dol", 0x2E71F8, 0x40
 .global __RTTI__16OnePlayerSection
 __RTTI__16OnePlayerSection:
-	.incbin "baserom.dol", 0x2E7238, 0x8
+  .4byte 0x802a67e8
+  .4byte 0x802a6844
 .global __RTTI__11GenFileInfo
 __RTTI__11GenFileInfo:
-	.incbin "baserom.dol", 0x2E7240, 0x8
+  .4byte 0x802a689c
+  .4byte 0x802a68a8
 .global __RTTI__9StageInfo
 __RTTI__9StageInfo:
-	.incbin "baserom.dol", 0x2E7248, 0x20
+  .4byte 0x802a68e8
+  .4byte 0x802a68f4
+  .4byte 0x414e6f64
+  .4byte 0x65000000
+  .4byte 0x803dd930
+  .4byte 0
+  .4byte 0x802a6940
+  .4byte 0x802a694c
 .global __RTTI__9PlayState
 __RTTI__9PlayState:
-	.incbin "baserom.dol", 0x2E7268, 0x8
+  .4byte 0x802a6934
+  .4byte 0x802a6958
 .global __RTTI__9GamePrefs
 __RTTI__9GamePrefs:
-	.incbin "baserom.dol", 0x2E7270, 0x8
+  .4byte 0x802a6928
+  .4byte 0x802a6980
 .global lbl_803DD958
 lbl_803DD958:
 	.incbin "baserom.dol", 0x2E7278, 0x4
@@ -1190,22 +1362,34 @@ lbl_803DD964:
 	.incbin "baserom.dol", 0x2E7284, 0x40
 .global __RTTI__16GameSetupSection
 __RTTI__16GameSetupSection:
-	.incbin "baserom.dol", 0x2E72C4, 0x20
+  .4byte 0x802a744c
+  .4byte 0x802a74a8
+  .4byte 0x53747265
+  .4byte 0x616d0000
+  .4byte 0x803dd9ac
+  .4byte 0
+  .4byte 0x802a7528
+  .4byte 0x802a753c
 .global __RTTI__9RamStream
 __RTTI__9RamStream:
-	.incbin "baserom.dol", 0x2E72E4, 0xC
+  .4byte 0x802a751c
+  .4byte 0x802a7548
+  .4byte 0
 .global lbl_803DD9D0
 lbl_803DD9D0:
 	.incbin "baserom.dol", 0x2E72F0, 0x30
 .global __RTTI__22CardSelectSetupSection
 __RTTI__22CardSelectSetupSection:
-	.incbin "baserom.dol", 0x2E7320, 0x8
+  .4byte 0x802a76e8
+  .4byte 0x802a7714
 .global lbl_803DDA08
 lbl_803DDA08:
 	.incbin "baserom.dol", 0x2E7328, 0x14
 .global __RTTI__17CardSelectSection
 __RTTI__17CardSelectSection:
-	.incbin "baserom.dol", 0x2E733C, 0xC
+  .4byte 0x802a7760
+  .4byte 0x802a7790
+  .4byte 0
 .global lbl_803DDA28
 lbl_803DDA28:
 	.incbin "baserom.dol", 0x2E7348, 0x4
@@ -1220,19 +1404,28 @@ lbl_803DDA3C:
 	.incbin "baserom.dol", 0x2E735C, 0x2C
 .global __RTTI__21MapSelectSetupSection
 __RTTI__21MapSelectSetupSection:
-	.incbin "baserom.dol", 0x2E7388, 0x18
+  .4byte 0x802a7914
+  .4byte 0x802a7940
+  .4byte 0x53656374
+  .4byte 0x696f6e00
+  .4byte 0x803dda70
+  .4byte 0x802a79a0
 .global __RTTI__16MapSelectSection
 __RTTI__16MapSelectSection:
-	.incbin "baserom.dol", 0x2E73A0, 0x8
+  .4byte 0x802a798c
+  .4byte 0x802a79bc
 .global __RTTI__18IDelegate1$$0R4Menu$$1_1
 __RTTI__18IDelegate1$$0R4Menu$$1_1:
-	.incbin "baserom.dol", 0x2E73A8, 0x8
+  .4byte 0x802a7a60
+  .4byte 0
 .global __RTTI__23Delegate1$$04Menu$$4R4Menu$$1
 __RTTI__23Delegate1$$04Menu$$4R4Menu$$1:
-	.incbin "baserom.dol", 0x2E73B0, 0x8
+  .4byte 0x802a7a48
+  .4byte 0x802a7a74
 .global __RTTI__41Delegate1$$021MapSelectSetupSection$$4R4Menu$$1
 __RTTI__41Delegate1$$021MapSelectSetupSection$$4R4Menu$$1:
-	.incbin "baserom.dol", 0x2E73B8, 0x8
+  .4byte 0x802a7a8c
+  .4byte 0x802a7ab8
 .global lbl_803DDAA0
 lbl_803DDAA0:
 	.incbin "baserom.dol", 0x2E73C0, 0x4
@@ -1364,37 +1557,57 @@ lbl_803DDB64:
 	.incbin "baserom.dol", 0x2E7484, 0x28
 .global __RTTI__9GaugeInfo
 __RTTI__9GaugeInfo:
-	.incbin "baserom.dol", 0x2E74AC, 0x18
+  .4byte 0x802a7bf8
+  .4byte 0x802a7c1c
+  .4byte 0x4e6f6465
+  .4byte 0
+  .4byte 0x803ddb94
+  .4byte 0x802a7c58
 .global __RTTI__15BaseGameSection
 __RTTI__15BaseGameSection:
-	.incbin "baserom.dol", 0x2E74C4, 0x8
+  .4byte 0x802a7c6c
+  .4byte 0x802a7c7c
 .global __RTTI__23NewPikiGameSetupSection
 __RTTI__23NewPikiGameSetupSection:
-	.incbin "baserom.dol", 0x2E74CC, 0x18
+  .4byte 0x802a7c40
+  .4byte 0x802a7c98
+  .4byte 0x53656374
+  .4byte 0x696f6e00
+  .4byte 0x803ddbb4
+  .4byte 0x802a7d04
 .global __RTTI__18NewPikiGameSection
 __RTTI__18NewPikiGameSection:
-	.incbin "baserom.dol", 0x2E74E4, 0x8
+  .4byte 0x802a7cf0
+  .4byte 0x802a7d20
 .global __RTTI__18GameMovieInterface
 __RTTI__18GameMovieInterface:
-	.incbin "baserom.dol", 0x2E74EC, 0x8
+  .4byte 0x802a7dac
+  .4byte 0x802a7dc0
 .global __RTTI__9ModeState
 __RTTI__9ModeState:
-	.incbin "baserom.dol", 0x2E74F4, 0x8
+  .4byte 0x802a7e00
+  .4byte 0
 .global __RTTI__16DayOverModeState
 __RTTI__16DayOverModeState:
-	.incbin "baserom.dol", 0x2E74FC, 0x8
+  .4byte 0x802a7dec
+  .4byte 0x802a7e0c
 .global __RTTI__16MessageModeState
 __RTTI__16MessageModeState:
-	.incbin "baserom.dol", 0x2E7504, 0x8
+  .4byte 0x802a7e2c
+  .4byte 0x802a7e40
 .global __RTTI__16RunningModeState
 __RTTI__16RunningModeState:
-	.incbin "baserom.dol", 0x2E750C, 0x8
+  .4byte 0x802a7e60
+  .4byte 0x802a7e74
 .global __RTTI__21QuittingGameModeState
 __RTTI__21QuittingGameModeState:
-	.incbin "baserom.dol", 0x2E7514, 0x8
+  .4byte 0x802a7e94
+  .4byte 0x802a7eac
 .global __RTTI__18IntroGameModeState
 __RTTI__18IntroGameModeState:
-	.incbin "baserom.dol", 0x2E751C, 0xC
+  .4byte 0x802a7ee0
+  .4byte 0x802a7ef4
+  .4byte 0
 .global lbl_803DDC08
 lbl_803DDC08:
 	.incbin "baserom.dol", 0x2E7528, 0x4
@@ -1448,22 +1661,37 @@ lbl_803DDC4C:
 	.incbin "baserom.dol", 0x2E756C, 0x20
 .global __RTTI__9ModeState_1
 __RTTI__9ModeState_1:
-	.incbin "baserom.dol", 0x2E758C, 0x8
+  .4byte 0x802a7fdc
+  .4byte 0
 .global __RTTI__14IntroModeState
 __RTTI__14IntroModeState:
-	.incbin "baserom.dol", 0x2E7594, 0x8
+  .4byte 0x802a7fcc
+  .4byte 0x802a7fe8
 .global __RTTI__17QuittingModeState
 __RTTI__17QuittingModeState:
-	.incbin "baserom.dol", 0x2E759C, 0x18
+  .4byte 0x802a8008
+  .4byte 0x802a801c
+  .4byte 0x4e6f6465
+  .4byte 0
+  .4byte 0x803ddc84
+  .4byte 0x802a8068
 .global __RTTI__15BaseGameSection_1
 __RTTI__15BaseGameSection_1:
-	.incbin "baserom.dol", 0x2E75B4, 0x8
+  .4byte 0x802a807c
+  .4byte 0x802a808c
 .global __RTTI__21IntroGameSetupSection
 __RTTI__21IntroGameSetupSection:
-	.incbin "baserom.dol", 0x2E75BC, 0x18
+  .4byte 0x802a8050
+  .4byte 0x802a80a8
+  .4byte 0x53656374
+  .4byte 0x696f6e00
+  .4byte 0x803ddca4
+  .4byte 0x802a8114
 .global __RTTI__16IntroGameSection
 __RTTI__16IntroGameSection:
-	.incbin "baserom.dol", 0x2E75D4, 0xC
+  .4byte 0x802a8100
+  .4byte 0x802a8130
+  .4byte 0
 .global lbl_803DDCC0
 lbl_803DDCC0:
 	.incbin "baserom.dol", 0x2E75E0, 0x8
@@ -1472,7 +1700,9 @@ lbl_803DDCC8:
 	.incbin "baserom.dol", 0x2E75E8, 0x3C
 .global __RTTI__15GameExitSection
 __RTTI__15GameExitSection:
-	.incbin "baserom.dol", 0x2E7624, 0xC
+  .4byte 0x802a81dc
+  .4byte 0x802a8234
+  .4byte 0
 .global lbl_803DDD10
 lbl_803DDD10:
 	.incbin "baserom.dol", 0x2E7630, 0x4
@@ -1550,16 +1780,28 @@ lbl_803DDD74:
 	.incbin "baserom.dol", 0x2E7694, 0x2C
 .global __RTTI__9RigidBody_1
 __RTTI__9RigidBody_1:
-	.incbin "baserom.dol", 0x2E76C0, 0x8
+  .4byte 0x802a83a0
+  .4byte 0x802a83ac
 .global __RTTI__10DynObjBody
 __RTTI__10DynObjBody:
-	.incbin "baserom.dol", 0x2E76C8, 0x8
+  .4byte 0x802a83c8
+  .4byte 0x802a83d4
 .global __RTTI__12DynObjBridge
 __RTTI__12DynObjBridge:
-	.incbin "baserom.dol", 0x2E76D0, 0x28
+  .4byte 0x802a837c
+  .4byte 0x802a83f8
+  .4byte 0x802a84b0
+  .4byte 0
+  .4byte 0x47656e42
+  .4byte 0x61736500
+  .4byte 0x803dddc0
+  .4byte 0x802a84bc
+  .4byte 0x802a84c8
+  .4byte 0x802a84d4
 .global __RTTI__18GenObjectMapObject
 __RTTI__18GenObjectMapObject:
-	.incbin "baserom.dol", 0x2E76F8, 0x8
+  .4byte 0x802a849c
+  .4byte 0x802a84e8
 .global lbl_803DDDE0
 lbl_803DDDE0:
 	.incbin "baserom.dol", 0x2E7700, 0x8
@@ -1571,7 +1813,11 @@ lbl_803DDDF0:
 	.incbin "baserom.dol", 0x2E7710, 0x34
 .global __RTTI__4Menu
 __RTTI__4Menu:
-	.incbin "baserom.dol", 0x2E7744, 0x14
+  .4byte 0x803dddf4
+  .4byte 0x802a85f0
+  .4byte 0
+  .4byte 0x802a8690
+  .4byte 0
 .global lbl_803DDE38
 lbl_803DDE38:
 	.incbin "baserom.dol", 0x2E7758, 0x4
@@ -1589,16 +1835,35 @@ lbl_803DDE50:
 	.incbin "baserom.dol", 0x2E7770, 0x1C
 .global __RTTI__16AtxCommandStream
 __RTTI__16AtxCommandStream:
-	.incbin "baserom.dol", 0x2E778C, 0x40
+  .4byte 0x802a874c
+  .4byte 0x802a8778
+  .4byte 0x47616d65
+  .4byte 0x41707000
+  .4byte 0x414e6f64
+  .4byte 0x65000000
+  .4byte 0x803dde7c
+  .4byte 0
+  .4byte 0x802a87e4
+  .4byte 0x802a87f0
+  .4byte 0x4e6f6465
+  .4byte 0
+  .4byte 0x803dde94
+  .4byte 0x802a87fc
+  .4byte 0x42617365
+  .4byte 0x41707000
 .global __RTTI__7BaseApp_1
 __RTTI__7BaseApp_1:
-	.incbin "baserom.dol", 0x2E77CC, 0x8
+  .4byte 0x803ddea4
+  .4byte 0x802a8810
 .global __RTTI__7GameApp
 __RTTI__7GameApp:
-	.incbin "baserom.dol", 0x2E77D4, 0x8
+  .4byte 0x803dde74
+  .4byte 0x802a882c
 .global __RTTI__11PlugPikiApp
 __RTTI__11PlugPikiApp:
-	.incbin "baserom.dol", 0x2E77DC, 0xC
+  .4byte 0x802a889c
+  .4byte 0x802a88a8
+  .4byte 0
 .global lbl_803DDEC8
 lbl_803DDEC8:
 	.incbin "baserom.dol", 0x2E77E8, 0x4
@@ -1694,31 +1959,48 @@ lbl_803DDF44:
 	.incbin "baserom.dol", 0x2E7864, 0x20
 .global __RTTI__18IDelegate1$$0R4Menu$$1_2
 __RTTI__18IDelegate1$$0R4Menu$$1_2:
-	.incbin "baserom.dol", 0x2E7884, 0x8
+  .4byte 0x802a8a24
+  .4byte 0
 .global __RTTI__37Delegate1$$017TitleSetupSection$$4R4Menu$$1
 __RTTI__37Delegate1$$017TitleSetupSection$$4R4Menu$$1:
-	.incbin "baserom.dol", 0x2E788C, 0x20
+  .4byte 0x802a8a50
+  .4byte 0x802a8a78
+  .4byte 0x802a8a9c
+  .4byte 0
+  .4byte 0x4e6f6465
+  .4byte 0
+  .4byte 0x803ddf7c
+  .4byte 0x802a8ad8
 .global __RTTI__17TitleSetupSection
 __RTTI__17TitleSetupSection:
-	.incbin "baserom.dol", 0x2E78AC, 0x8
+  .4byte 0x802a8ac4
+  .4byte 0x802a8aec
 .global lbl_803DDF94
 lbl_803DDF94:
 	.incbin "baserom.dol", 0x2E78B4, 0x14
 .global __RTTI__13TitlesSection
 __RTTI__13TitlesSection:
-	.incbin "baserom.dol", 0x2E78C8, 0x8
+  .4byte 0x802a8b38
+  .4byte 0x802a8b64
 .global __RTTI__20TitlesMovieInterface
 __RTTI__20TitlesMovieInterface:
-	.incbin "baserom.dol", 0x2E78D0, 0x8
+  .4byte 0x802a8bbc
+  .4byte 0x802a8bd4
 .global lbl_803DDFB8
 lbl_803DDFB8:
 	.incbin "baserom.dol", 0x2E78D8, 0x30
 .global __RTTI__19NinLogoSetupSection
 __RTTI__19NinLogoSetupSection:
-	.incbin "baserom.dol", 0x2E7908, 0x18
+  .4byte 0x802a8c6c
+  .4byte 0x802a8c94
+  .4byte 0x53656374
+  .4byte 0x696f6e00
+  .4byte 0x803ddff0
+  .4byte 0x802a8cf0
 .global __RTTI__14NinLogoSection
 __RTTI__14NinLogoSection:
-	.incbin "baserom.dol", 0x2E7920, 0x8
+  .4byte 0x802a8ce0
+  .4byte 0x802a8d0c
 .global lbl_803DE008
 lbl_803DE008:
 	.incbin "baserom.dol", 0x2E7928, 0x4
@@ -2009,46 +2291,69 @@ lbl_803DE198:
 	.incbin "baserom.dol", 0x2E7AB8, 0x1C
 .global __RTTI__12ShadowCaster
 __RTTI__12ShadowCaster:
-	.incbin "baserom.dol", 0x2E7AD4, 0x18
+  .4byte 0x802a8e48
+  .4byte 0x802a8e70
+  .4byte 0x4e6f6465
+  .4byte 0
+  .4byte 0x803de1bc
+  .4byte 0x802a8ea4
 .global __RTTI__12DynSimulator
 __RTTI__12DynSimulator:
-	.incbin "baserom.dol", 0x2E7AEC, 0x8
+  .4byte 0x802a8e94
+  .4byte 0x802a8eb8
 .global __RTTI__15MaterialHandler_1
 __RTTI__15MaterialHandler_1:
-	.incbin "baserom.dol", 0x2E7AF4, 0x8
+  .4byte 0x802a8f18
+  .4byte 0
 .global __RTTI__17MapProjMatHandler
 __RTTI__17MapProjMatHandler:
-	.incbin "baserom.dol", 0x2E7AFC, 0x8
+  .4byte 0x802a8f04
+  .4byte 0x802a8f28
 .global __RTTI__17MapShadMatHandler
 __RTTI__17MapShadMatHandler:
-	.incbin "baserom.dol", 0x2E7B04, 0x8
+  .4byte 0x802a8f44
+  .4byte 0x802a8f58
 .global __RTTI__9RigidBody_2
 __RTTI__9RigidBody_2:
-	.incbin "baserom.dol", 0x2E7B0C, 0x8
+  .4byte 0x802a8f84
+  .4byte 0x802a8f90
 .global __RTTI__10DynObjBody_1
 __RTTI__10DynObjBody_1:
-	.incbin "baserom.dol", 0x2E7B14, 0x8
+  .4byte 0x802a8fac
+  .4byte 0x802a8fb8
 .global __RTTI__14DynObjPushable
 __RTTI__14DynObjPushable:
-	.incbin "baserom.dol", 0x2E7B1C, 0x8
+  .4byte 0x802a8f74
+  .4byte 0x802a8fdc
 .global __RTTI__12DynObjSeeSaw
 __RTTI__12DynObjSeeSaw:
-	.incbin "baserom.dol", 0x2E7B24, 0x10
+  .4byte 0x802a90f8
+  .4byte 0x802a9108
+  .4byte 0x802a91bc
+  .4byte 0x802a91cc
 .global __RTTI__12DynCollShape
 __RTTI__12DynCollShape:
-	.incbin "baserom.dol", 0x2E7B34, 0x8
+  .4byte 0x802a91e8
+  .4byte 0x802a91f8
 .global __RTTI__14DynCollObjBody
 __RTTI__14DynCollObjBody:
-	.incbin "baserom.dol", 0x2E7B3C, 0x8
+  .4byte 0x802a91ac
+  .4byte 0x802a921c
 .global __RTTI__12DynMapObject
 __RTTI__12DynMapObject:
-	.incbin "baserom.dol", 0x2E7B44, 0x8
+  .4byte 0x802a9290
+  .4byte 0x802a92a0
 .global __RTTI__13MapObjectPart
 __RTTI__13MapObjectPart:
-	.incbin "baserom.dol", 0x2E7B4C, 0x10
+  .4byte 0x802a9330
+  .4byte 0x802a9340
+  .4byte 0x802a9404
+  .4byte 0
 .global __RTTI__14MapObjAnimator
 __RTTI__14MapObjAnimator:
-	.incbin "baserom.dol", 0x2E7B5C, 0xC
+  .4byte 0x802a93f4
+  .4byte 0x802a9410
+  .4byte 0
 .global lbl_803DE248
 lbl_803DE248:
 	.incbin "baserom.dol", 0x2E7B68, 0x4
@@ -2321,40 +2626,66 @@ lbl_803DE438:
 	.incbin "baserom.dol", 0x2E7D58, 0x8
 .global __RTTI__18IDelegate1$$0R4Menu$$1_3
 __RTTI__18IDelegate1$$0R4Menu$$1_3:
-	.incbin "baserom.dol", 0x2E7D60, 0x8
+  .4byte 0x802a98e8
+  .4byte 0
 .global __RTTI__26Delegate1$$07FogMenu$$4R4Menu$$1
 __RTTI__26Delegate1$$07FogMenu$$4R4Menu$$1:
-	.incbin "baserom.dol", 0x2E7D68, 0x40
+  .4byte 0x802a98cc
+  .4byte 0x802a98fc
+  .4byte 0x466f674d
+  .4byte 0x656e7500
+  .4byte 0x414e6f64
+  .4byte 0x65000000
+  .4byte 0x803de458
+  .4byte 0
+  .4byte 0x802a9914
+  .4byte 0x802a9920
+  .4byte 0x4e6f6465
+  .4byte 0
+  .4byte 0x803de470
+  .4byte 0x802a992c
+  .4byte 0x4d656e75
+  .4byte 0
 .global __RTTI__4Menu_1
 __RTTI__4Menu_1:
-	.incbin "baserom.dol", 0x2E7DA8, 0x8
+  .4byte 0x803de480
+  .4byte 0x802a9940
 .global __RTTI__7FogMenu
 __RTTI__7FogMenu:
-	.incbin "baserom.dol", 0x2E7DB0, 0x8
+  .4byte 0x803de450
+  .4byte 0x802a995c
 .global __RTTI__9LightMenu
 __RTTI__9LightMenu:
-	.incbin "baserom.dol", 0x2E7DB8, 0x8
+  .4byte 0x802a99d4
+  .4byte 0x802a99e0
 .global __RTTI__10DaySetMenu
 __RTTI__10DaySetMenu:
-	.incbin "baserom.dol", 0x2E7DC0, 0x8
+  .4byte 0x802a9a58
+  .4byte 0x802a9a64
 .global __RTTI__25Delegate1$$06DayMgr$$4R4Menu$$1
 __RTTI__25Delegate1$$06DayMgr$$4R4Menu$$1:
-	.incbin "baserom.dol", 0x2E7DC8, 0x8
+  .4byte 0x802a9adc
+  .4byte 0x802a9af8
 .global __RTTI__32Delegate1$$012PositionMenu$$4R4Menu$$1
 __RTTI__32Delegate1$$012PositionMenu$$4R4Menu$$1:
-	.incbin "baserom.dol", 0x2E7DD0, 0x8
+  .4byte 0x802a9b10
+  .4byte 0x802a9b30
 .global __RTTI__12PositionMenu
 __RTTI__12PositionMenu:
-	.incbin "baserom.dol", 0x2E7DD8, 0x8
+  .4byte 0x802a9b48
+  .4byte 0x802a9b58
 .global __RTTI__30Delegate1$$010ColourMenu$$4R4Menu$$1
 __RTTI__30Delegate1$$010ColourMenu$$4R4Menu$$1:
-	.incbin "baserom.dol", 0x2E7DE0, 0x8
+  .4byte 0x802a9bd0
+  .4byte 0x802a9bf0
 .global __RTTI__10ColourMenu
 __RTTI__10ColourMenu:
-	.incbin "baserom.dol", 0x2E7DE8, 0x8
+  .4byte 0x802a9c38
+  .4byte 0x802a9c44
 .global __RTTI__28Delegate1$$09LightMenu$$4R4Menu$$1
 __RTTI__28Delegate1$$09LightMenu$$4R4Menu$$1:
-	.incbin "baserom.dol", 0x2E7DF0, 0x8
+  .4byte 0x802a9cbc
+  .4byte 0x802a9cdc
 .global lbl_803DE4D8
 lbl_803DE4D8:
 	.incbin "baserom.dol", 0x2E7DF8, 0x4
@@ -2777,16 +3108,21 @@ lbl_803DE730:
 	.incbin "baserom.dol", 0x2E8050, 0x1C
 .global __RTTI__13ActorInstance
 __RTTI__13ActorInstance:
-	.incbin "baserom.dol", 0x2E806C, 0x8
+  .4byte 0x802a9e60
+  .4byte 0x802a9e88
 .global __RTTI__8SceneCut
 __RTTI__8SceneCut:
-	.incbin "baserom.dol", 0x2E8074, 0x8
+  .4byte 0x802a9eac
+  .4byte 0x802a9eb8
 .global __RTTI__15CineShapeObject
 __RTTI__15CineShapeObject:
-	.incbin "baserom.dol", 0x2E807C, 0x8
+  .4byte 0x802a9edc
+  .4byte 0x802a9eec
 .global __RTTI__9SceneData
 __RTTI__9SceneData:
-	.incbin "baserom.dol", 0x2E8084, 0xC
+  .4byte 0x802a9f10
+  .4byte 0x802a9f1c
+  .4byte 0
 .global lbl_803DE770
 lbl_803DE770:
 	.incbin "baserom.dol", 0x2E8090, 0x4
@@ -2819,7 +3155,9 @@ lbl_803DE794:
 	.incbin "baserom.dol", 0x2E80B4, 0x30
 .global __RTTI__9LightPool
 __RTTI__9LightPool:
-	.incbin "baserom.dol", 0x2E80E4, 0xC
+  .4byte 0x802a9f70
+  .4byte 0x802a9fa8
+  .4byte 0
 .global icon_pals
 icon_pals:
 	.incbin "baserom.dol", 0x2E80F0, 0x4
@@ -2858,16 +3196,24 @@ lbl_803DE838:
 	.incbin "baserom.dol", 0x2E8158, 0x1C
 .global __RTTI__9MovieInfo
 __RTTI__9MovieInfo:
-	.incbin "baserom.dol", 0x2E8174, 0xC
+  .4byte 0x802ac874
+  .4byte 0x802ac898
+  .4byte 0
 .global lbl_803DE860
 lbl_803DE860:
 	.incbin "baserom.dol", 0x2E8180, 0x30
 .global __RTTI__21MovSampleSetupSection
 __RTTI__21MovSampleSetupSection:
-	.incbin "baserom.dol", 0x2E81B0, 0x18
+  .4byte 0x802aca08
+  .4byte 0x802aca34
+  .4byte 0x53656374
+  .4byte 0x696f6e00
+  .4byte 0x803de898
+  .4byte 0x802aca94
 .global __RTTI__16MovSampleSection
 __RTTI__16MovSampleSection:
-	.incbin "baserom.dol", 0x2E81C8, 0x8
+  .4byte 0x802aca80
+  .4byte 0x802acab0
 .global lbl_803DE8B0
 lbl_803DE8B0:
 	.incbin "baserom.dol", 0x2E81D0, 0x4
@@ -2894,16 +3240,20 @@ lbl_803DE8CC:
 	.incbin "baserom.dol", 0x2E81EC, 0x4
 .global __RTTI__Q215AttentionCamera5Fader
 __RTTI__Q215AttentionCamera5Fader:
-	.incbin "baserom.dol", 0x2E81F0, 0x8
+  .4byte 0x802acb30
+  .4byte 0
 .global __RTTI__10ClothFader
 __RTTI__10ClothFader:
-	.incbin "baserom.dol", 0x2E81F8, 0x8
+  .4byte 0x802acb24
+  .4byte 0x802acb48
 .global __RTTI__11SimpleFader
 __RTTI__11SimpleFader:
-	.incbin "baserom.dol", 0x2E8200, 0x8
+  .4byte 0x802acb74
+  .4byte 0x802acb80
 .global __RTTI__12DefaultFader
 __RTTI__12DefaultFader:
-	.incbin "baserom.dol", 0x2E8208, 0x8
+  .4byte 0x802acbac
+  .4byte 0x802acbbc
 .global lbl_803DE8F0
 lbl_803DE8F0:
 	.incbin "baserom.dol", 0x2E8210, 0x8
@@ -2921,7 +3271,9 @@ lbl_803DE908:
 	.incbin "baserom.dol", 0x2E8228, 0x1C
 .global __RTTI__Q29RadarInfo9PartsInfo
 __RTTI__Q29RadarInfo9PartsInfo:
-	.incbin "baserom.dol", 0x2E8244, 0xC
+  .4byte 0x802acc30
+  .4byte 0x802acc54
+  .4byte 0
 .global lbl_803DE930
 lbl_803DE930:
 	.incbin "baserom.dol", 0x2E8250, 0x4
@@ -2942,49 +3294,64 @@ lbl_803DE944:
 	.incbin "baserom.dol", 0x2E8264, 0xC
 .global __RTTI__13InteractFlute
 __RTTI__13InteractFlute:
-	.incbin "baserom.dol", 0x2E8270, 0x8
+  .4byte 0x802accbc
+  .4byte 0x802accd8
 .global __RTTI__13InteractPress
 __RTTI__13InteractPress:
-	.incbin "baserom.dol", 0x2E8278, 0x8
+  .4byte 0x802acd10
+  .4byte 0x802acd20
 .global __RTTI__12InteractKill
 __RTTI__12InteractKill:
-	.incbin "baserom.dol", 0x2E8280, 0x8
+  .4byte 0x802acd58
+  .4byte 0x802acd68
 .global __RTTI__15InteractSwallow
 __RTTI__15InteractSwallow:
-	.incbin "baserom.dol", 0x2E8288, 0x8
+  .4byte 0x802acda0
+  .4byte 0x802acdb0
 .global __RTTI__14InteractAttack
 __RTTI__14InteractAttack:
-	.incbin "baserom.dol", 0x2E8290, 0x8
+  .4byte 0x802acde8
+  .4byte 0x802acdf8
 .global __RTTI__19InteractSlimeAttack
 __RTTI__19InteractSlimeAttack:
-	.incbin "baserom.dol", 0x2E8298, 0x8
+  .4byte 0x802ace30
+  .4byte 0x802ace44
 .global __RTTI__13InteractFlick
 __RTTI__13InteractFlick:
-	.incbin "baserom.dol", 0x2E82A0, 0x8
+  .4byte 0x802ace7c
+  .4byte 0x802ace8c
 .global __RTTI__12InteractWind
 __RTTI__12InteractWind:
-	.incbin "baserom.dol", 0x2E82A8, 0x8
+  .4byte 0x802acec4
+  .4byte 0x802aced4
 .global __RTTI__12InteractFire
 __RTTI__12InteractFire:
-	.incbin "baserom.dol", 0x2E82B0, 0x8
+  .4byte 0x802acf0c
+  .4byte 0x802acf1c
 .global __RTTI__14InteractBubble
 __RTTI__14InteractBubble:
-	.incbin "baserom.dol", 0x2E82B8, 0x8
+  .4byte 0x802acf54
+  .4byte 0x802acf64
 .global __RTTI__13InteractSpore
 __RTTI__13InteractSpore:
-	.incbin "baserom.dol", 0x2E82C0, 0x8
+  .4byte 0x802acfc8
+  .4byte 0x802acfd8
 .global __RTTI__19InteractChangeHappa
 __RTTI__19InteractChangeHappa:
-	.incbin "baserom.dol", 0x2E82C8, 0x8
+  .4byte 0x802ad010
+  .4byte 0x802ad024
 .global __RTTI__19InteractChangeColor
 __RTTI__19InteractChangeColor:
-	.incbin "baserom.dol", 0x2E82D0, 0x8
+  .4byte 0x802ad05c
+  .4byte 0x802ad070
 .global __RTTI__17InteractThrowAway
 __RTTI__17InteractThrowAway:
-	.incbin "baserom.dol", 0x2E82D8, 0x8
+  .4byte 0x802ad0a8
+  .4byte 0x802ad0bc
 .global __RTTI__12InteractBury
 __RTTI__12InteractBury:
-	.incbin "baserom.dol", 0x2E82E0, 0x8
+  .4byte 0x802ad0f4
+  .4byte 0x802ad104
 .global lbl_803DE9C8
 lbl_803DE9C8:
 	.incbin "baserom.dol", 0x2E82E8, 0x4
@@ -3002,16 +3369,23 @@ lbl_803DE9D8:
 	.incbin "baserom.dol", 0x2E82F8, 0xC
 .global __RTTI__15InteractRelease
 __RTTI__15InteractRelease:
-	.incbin "baserom.dol", 0x2E8304, 0x8
+  .4byte 0x802ad164
+  .4byte 0x802ad180
 .global __RTTI__12InteractGrab
 __RTTI__12InteractGrab:
-	.incbin "baserom.dol", 0x2E830C, 0x14
+  .4byte 0x802ad1b8
+  .4byte 0x802ad1c8
+  .4byte 0
+  .4byte 0x802ad22c
+  .4byte 0
 .global __RTTI__12InteractWarn
 __RTTI__12InteractWarn:
-	.incbin "baserom.dol", 0x2E8320, 0x8
+  .4byte 0x802ad21c
+  .4byte 0x802ad238
 .global __RTTI__12InteractTalk
 __RTTI__12InteractTalk:
-	.incbin "baserom.dol", 0x2E8328, 0x8
+  .4byte 0x802ad270
+  .4byte 0x802ad280
 .global lbl_803DEA10
 lbl_803DEA10:
 	.incbin "baserom.dol", 0x2E8330, 0x4
@@ -3026,37 +3400,48 @@ lbl_803DEA1C:
 	.incbin "baserom.dol", 0x2E833C, 0xC
 .global __RTTI__15InteractPullout
 __RTTI__15InteractPullout:
-	.incbin "baserom.dol", 0x2E8348, 0x8
+  .4byte 0x802ad2dc
+  .4byte 0x802ad2f8
 .global __RTTI__22Receiver$$010AICreature$$1
 __RTTI__22Receiver$$010AICreature$$1:
-	.incbin "baserom.dol", 0x2E8350, 0x8
+  .4byte 0x802ad35c
+  .4byte 0
 .global __RTTI__8SAIEvent
 __RTTI__8SAIEvent:
-	.incbin "baserom.dol", 0x2E8358, 0x8
+  .4byte 0x802ad374
+  .4byte 0x802ad380
 .global __RTTI__12SAIUserEvent
 __RTTI__12SAIUserEvent:
-	.incbin "baserom.dol", 0x2E8360, 0x8
+  .4byte 0x802ad34c
+  .4byte 0x802ad38c
 .global __RTTI__14SAIGroundEvent
 __RTTI__14SAIGroundEvent:
-	.incbin "baserom.dol", 0x2E8368, 0x8
+  .4byte 0x802ad3d8
+  .4byte 0x802ad3e8
 .global __RTTI__15SAICollideEvent
 __RTTI__15SAICollideEvent:
-	.incbin "baserom.dol", 0x2E8370, 0x8
+  .4byte 0x802ad434
+  .4byte 0x802ad444
 .global __RTTI__14SAIBounceEvent
 __RTTI__14SAIBounceEvent:
-	.incbin "baserom.dol", 0x2E8378, 0x8
+  .4byte 0x802ad490
+  .4byte 0x802ad4a0
 .global __RTTI__21SAIMotionLoopEndEvent
 __RTTI__21SAIMotionLoopEndEvent:
-	.incbin "baserom.dol", 0x2E8380, 0x8
+  .4byte 0x802ad4ec
+  .4byte 0x802ad504
 .global __RTTI__23SAIMotionLoopStartEvent
 __RTTI__23SAIMotionLoopStartEvent:
-	.incbin "baserom.dol", 0x2E8388, 0x8
+  .4byte 0x802ad550
+  .4byte 0x802ad568
 .global __RTTI__21SAIMotionAction0Event
 __RTTI__21SAIMotionAction0Event:
-	.incbin "baserom.dol", 0x2E8390, 0x8
+  .4byte 0x802ad5b4
+  .4byte 0x802ad5cc
 .global __RTTI__18SAIMotionDoneEvent
 __RTTI__18SAIMotionDoneEvent:
-	.incbin "baserom.dol", 0x2E8398, 0x8
+  .4byte 0x802ad618
+  .4byte 0x802ad62c
 .global lbl_803DEA80
 lbl_803DEA80:
 	.incbin "baserom.dol", 0x2E83A0, 0x4
@@ -3077,25 +3462,48 @@ lbl_803DEA94:
 	.incbin "baserom.dol", 0x2E83B4, 0x4
 .global __RTTI__22Receiver$$010AICreature$$1_1
 __RTTI__22Receiver$$010AICreature$$1_1:
-	.incbin "baserom.dol", 0x2E83B8, 0x8
+  .4byte 0x802ad7b0
+  .4byte 0
 .global __RTTI__20AState$$010AICreature$$1
 __RTTI__20AState$$010AICreature$$1:
-	.incbin "baserom.dol", 0x2E83C0, 0x8
+  .4byte 0x802ad7c8
+  .4byte 0x802ad7dc
 .global __RTTI__8SAIState
 __RTTI__8SAIState:
-	.incbin "baserom.dol", 0x2E83C8, 0x20
+  .4byte 0x802ad7a4
+  .4byte 0x802ad7e8
+  .4byte 0x414e6f64
+  .4byte 0x65000000
+  .4byte 0x803deab0
+  .4byte 0
+  .4byte lbl_802AD740
+  .4byte 0x802ad8e4
 .global __RTTI__12SAICondition
 __RTTI__12SAICondition:
-	.incbin "baserom.dol", 0x2E83E8, 0x8
+  .4byte 0x802ad8d4
+  .4byte 0x802ad8f0
 .global __RTTI__8SAIArrow
 __RTTI__8SAIArrow:
-	.incbin "baserom.dol", 0x2E83F0, 0x8
+  .4byte lbl_802AD734
+  .4byte 0x802ad918
 .global __RTTI__26StateMachine$$010AICreature$$1
 __RTTI__26StateMachine$$010AICreature$$1:
-	.incbin "baserom.dol", 0x2E83F8, 0x8
+  .4byte 0x802ad964
+  .4byte 0
 .global __RTTI__8SimpleAI
 __RTTI__8SimpleAI:
-	.incbin "baserom.dol", 0x2E8400, 0x30
+  .4byte 0x802ad958
+  .4byte 0x802ad980
+  .4byte 0x802ad9c8
+  .4byte 0
+  .4byte 0x802ad9dc
+  .4byte 0
+  .4byte 0x802ad9e8
+  .4byte 0
+  .4byte 0x802ad9f8
+  .4byte 0x802ada04
+  .4byte 0x802ad9bc
+  .4byte 0x802ada18
 .global lbl_803DEB10
 lbl_803DEB10:
 	.incbin "baserom.dol", 0x2E8430, 0x8
@@ -3200,22 +3608,31 @@ lbl_803DEB98:
 	.incbin "baserom.dol", 0x2E84B8, 0x4
 .global __RTTI__12FormArranger
 __RTTI__12FormArranger:
-	.incbin "baserom.dol", 0x2E84BC, 0x8
+  .4byte 0x802adbd0
+  .4byte 0
 .global __RTTI__12WingArranger
 __RTTI__12WingArranger:
-	.incbin "baserom.dol", 0x2E84C4, 0x8
+  .4byte 0x802adbc0
+  .4byte 0x802adbe0
 .global __RTTI__12LineArranger
 __RTTI__12LineArranger:
-	.incbin "baserom.dol", 0x2E84CC, 0x8
+  .4byte 0x802adbfc
+  .4byte 0x802adc0c
 .global __RTTI__15PyramidArranger
 __RTTI__15PyramidArranger:
-	.incbin "baserom.dol", 0x2E84D4, 0x8
+  .4byte 0x802adc28
+  .4byte 0x802adc38
 .global __RTTI__14CircleArranger
 __RTTI__14CircleArranger:
-	.incbin "baserom.dol", 0x2E84DC, 0x10
+  .4byte 0x802adc54
+  .4byte 0x802adc64
+  .4byte 0x802adc80
+  .4byte 0
 .global __RTTI__12FormationMgr
 __RTTI__12FormationMgr:
-	.incbin "baserom.dol", 0x2E84EC, 0xC
+  .4byte 0x802adca4
+  .4byte 0x802adcb4
+  .4byte 0
 .global totalUfoParts__11PlayerState
 totalUfoParts__11PlayerState:
 	.incbin "baserom.dol", 0x2E84F8, 0x4
@@ -3275,7 +3692,8 @@ lbl_803DEC4C:
 	.incbin "baserom.dol", 0x2E856C, 0xC
 .global __RTTI__Q211PlayerState8UfoParts
 __RTTI__Q211PlayerState8UfoParts:
-	.incbin "baserom.dol", 0x2E8578, 0x8
+  .4byte 0x802addd0
+  .4byte 0x802addfc
 .global lbl_803DEC60
 lbl_803DEC60:
 	.incbin "baserom.dol", 0x2E8580, 0x8
@@ -3314,7 +3732,13 @@ lbl_803DEC98:
 	.incbin "baserom.dol", 0x2E85B8, 0x34
 .global __RTTI__9DemoParms
 __RTTI__9DemoParms:
-	.incbin "baserom.dol", 0x2E85EC, 0x1C
+  .4byte 0x802ae0fc
+  .4byte 0x802ae134
+  .4byte 0
+  .4byte 0x4f464600
+  .4byte 0x4f4e0000
+  .4byte 0x5345454e
+  .4byte 0
 .global lbl_803DECE8
 lbl_803DECE8:
 	.incbin "baserom.dol", 0x2E8608, 0x8
@@ -3392,7 +3816,9 @@ lbl_803DED4C:
 	.incbin "baserom.dol", 0x2E866C, 0x38
 .global __RTTI__10AIConstant
 __RTTI__10AIConstant:
-	.incbin "baserom.dol", 0x2E86A4, 0xC
+  .4byte 0x802ae740
+  .4byte 0x802ae778
+  .4byte 0
 .global lbl_803DED90
 lbl_803DED90:
 	.incbin "baserom.dol", 0x2E86B0, 0x8
@@ -3419,10 +3845,12 @@ lbl_803DEDC8:
 	.incbin "baserom.dol", 0x2E86E8, 0x30
 .global __RTTI__Q29KeyConfig3Key
 __RTTI__Q29KeyConfig3Key:
-	.incbin "baserom.dol", 0x2E8718, 0x8
+  .4byte 0x802ae824
+  .4byte 0x802ae860
 .global __RTTI__9KeyConfig
 __RTTI__9KeyConfig:
-	.incbin "baserom.dol", 0x2E8720, 0x8
+  .4byte 0x802ae8ac
+  .4byte 0x802ae8b8
 .global useLOD__6AIPerf
 useLOD__6AIPerf:
 	.incbin "baserom.dol", 0x2E8728, 0x1
@@ -3464,10 +3892,13 @@ lbl_803DEE38:
 	.incbin "baserom.dol", 0x2E8758, 0x4
 .global __RTTI__18IDelegate1$$0R4Menu$$1_4
 __RTTI__18IDelegate1$$0R4Menu$$1_4:
-	.incbin "baserom.dol", 0x2E875C, 0x8
+  .4byte 0x802aedcc
+  .4byte 0
 .global __RTTI__25Delegate1$$06AIPerf$$4R4Menu$$1
 __RTTI__25Delegate1$$06AIPerf$$4R4Menu$$1:
-	.incbin "baserom.dol", 0x2E8764, 0xC
+  .4byte 0x802aedb0
+  .4byte 0x802aede0
+  .4byte 0
 .global lbl_803DEE50
 lbl_803DEE50:
 	.incbin "baserom.dol", 0x2E8770, 0x4
@@ -3482,16 +3913,23 @@ lbl_803DEE5C:
 	.incbin "baserom.dol", 0x2E877C, 0x24
 .global __RTTI__14GenObjectDebug
 __RTTI__14GenObjectDebug:
-	.incbin "baserom.dol", 0x2E87A0, 0x10
+  .4byte 0x802aee70
+  .4byte 0x802aeeb8
+  .4byte 0x802aef18
+  .4byte 0
 .global lbl_803DEE90
 lbl_803DEE90:
 	.incbin "baserom.dol", 0x2E87B0, 0x28
 .global __RTTI__11MemInfoNode
 __RTTI__11MemInfoNode:
-	.incbin "baserom.dol", 0x2E87D8, 0x8
+  .4byte 0x802aef78
+  .4byte 0x802aef84
 .global __RTTI__7MemInfo
 __RTTI__7MemInfo:
-	.incbin "baserom.dol", 0x2E87E0, 0x10
+  .4byte 0x803dee98
+  .4byte 0x802aef98
+  .4byte 0x54554245
+  .4byte 0
 .global lbl_803DEED0
 lbl_803DEED0:
 	.incbin "baserom.dol", 0x2E87F0, 0x4
@@ -3764,10 +4202,12 @@ lbl_803DF054:
 	.incbin "baserom.dol", 0x2E8974, 0x34
 .global __RTTI__12DynCollShape_1
 __RTTI__12DynCollShape_1:
-	.incbin "baserom.dol", 0x2E89A8, 0x8
+  .4byte 0x802af280
+  .4byte 0x802af290
 .global __RTTI__16CreatureCollPart
 __RTTI__16CreatureCollPart:
-	.incbin "baserom.dol", 0x2E89B0, 0x8
+  .4byte 0x802af214
+  .4byte 0x802af2b4
 .global lbl_803DF098
 lbl_803DF098:
 	.incbin "baserom.dol", 0x2E89B8, 0x4
@@ -3896,7 +4336,9 @@ lbl_803DF150:
 	.incbin "baserom.dol", 0x2E8A70, 0xC
 .global __RTTI__8Stickers
 __RTTI__8Stickers:
-	.incbin "baserom.dol", 0x2E8A7C, 0xC
+  .4byte 0x802af378
+  .4byte 0x802af390
+  .4byte 0
 .global lbl_803DF168
 lbl_803DF168:
 	.incbin "baserom.dol", 0x2E8A88, 0x4
@@ -3962,10 +4404,13 @@ lbl_803DF1B8:
 	.incbin "baserom.dol", 0x2E8AD8, 0x24
 .global __RTTI__12DualCreature
 __RTTI__12DualCreature:
-	.incbin "baserom.dol", 0x2E8AFC, 0x8
+  .4byte 0x802af48c
+  .4byte 0x802af49c
 .global __RTTI__11PelCreature
 __RTTI__11PelCreature:
-	.incbin "baserom.dol", 0x2E8B04, 0xC
+  .4byte 0x802af41c
+  .4byte 0x802af4c0
+  .4byte 0
 .global lbl_803DF1F0
 lbl_803DF1F0:
 	.incbin "baserom.dol", 0x2E8B10, 0x4
@@ -4103,10 +4548,19 @@ lbl_803DF2A0:
 	.incbin "baserom.dol", 0x2E8BC0, 0x4C
 .global __RTTI__11DynParticle
 __RTTI__11DynParticle:
-	.incbin "baserom.dol", 0x2E8C0C, 0x24
+  .4byte 0x802af944
+  .4byte 0x802af95c
+  .4byte 0
+  .4byte 0x414e6f64
+  .4byte 0x65000000
+  .4byte 0x803df2f8
+  .4byte 0
+  .4byte lbl_802AF9D4
+  .4byte 0x802afa00
 .global __RTTI__13EventListener
 __RTTI__13EventListener:
-	.incbin "baserom.dol", 0x2E8C30, 0x8
+  .4byte 0x802af9f0
+  .4byte 0x802afa0c
 .global aiGridShift__8FastGrid
 aiGridShift__8FastGrid:
 	.incbin "baserom.dol", 0x2E8C38, 0x4
@@ -4373,28 +4827,62 @@ lbl_803DF580:
 	.incbin "baserom.dol", 0x2E8EA0, 0x48
 .global __RTTI__9PelletMgr
 __RTTI__9PelletMgr:
-	.incbin "baserom.dol", 0x2E8EE8, 0x10
+  .4byte 0x802b00b0
+  .4byte 0x802b0154
+  .4byte 0x802b021c
+  .4byte 0
 .global __RTTI__10PelletProp
 __RTTI__10PelletProp:
-	.incbin "baserom.dol", 0x2E8EF8, 0x8
+  .4byte 0x802b0210
+  .4byte 0x802b022c
 .global __RTTI__Q29PelletMgr7UseNode
 __RTTI__Q29PelletMgr7UseNode:
-	.incbin "baserom.dol", 0x2E8F00, 0x38
+  .4byte 0x802b0250
+  .4byte 0x802b0264
+  .4byte 0x50656c6c
+  .4byte 0x65740000
+  .4byte 0x802b02c0
+  .4byte 0
+  .4byte 0x802b02d4
+  .4byte 0
+  .4byte 0x802b02e0
+  .4byte 0
+  .4byte 0x802b02f0
+  .4byte 0x802b02fc
+  .4byte 0x802b0310
+  .4byte 0x802b031c
 .global __RTTI__12DualCreature_1
 __RTTI__12DualCreature_1:
-	.incbin "baserom.dol", 0x2E8F38, 0x8
+  .4byte 0x802b0338
+  .4byte 0x802b0348
 .global __RTTI__6Pellet
 __RTTI__6Pellet:
-	.incbin "baserom.dol", 0x2E8F40, 0x8
+  .4byte 0x803df5e8
+  .4byte 0x802b036c
 .global __RTTI__21StateMachine$$06Pellet$$1
 __RTTI__21StateMachine$$06Pellet$$1:
-	.incbin "baserom.dol", 0x2E8F48, 0x28
+  .4byte 0x802b04d0
+  .4byte 0
+  .4byte 0x4b456666
+  .4byte 0x65637400
+  .4byte 0x802b0500
+  .4byte 0
+  .4byte 0x802b0524
+  .4byte 0
+  .4byte 0x802b0564
+  .4byte 0
 .global __RTTI__7KEffect
 __RTTI__7KEffect:
-	.incbin "baserom.dol", 0x2E8F70, 0x10
+  .4byte 0x803df630
+  .4byte 0x802b0590
+  .4byte 0x802b0628
+  .4byte 0
 .global __RTTI__12PelletConfig
 __RTTI__12PelletConfig:
-	.incbin "baserom.dol", 0x2E8F80, 0x10
+  .4byte 0x802b0618
+  .4byte 0x802b0634
+  .4byte 0x802b0678
+  .4byte 0
 .global lbl_803DF670
 lbl_803DF670:
 	.incbin "baserom.dol", 0x2E8F90, 0x4
@@ -4412,13 +4900,35 @@ lbl_803DF688:
 	.incbin "baserom.dol", 0x2E8FA8, 0x3C
 .global __RTTI__18PaniPelletAnimator
 __RTTI__18PaniPelletAnimator:
-	.incbin "baserom.dol", 0x2E8FE4, 0x28
+  .4byte 0x802b07c0
+  .4byte 0x802b07fc
+  .4byte 0x414e6f64
+  .4byte 0x65000000
+  .4byte 0x803df6cc
+  .4byte 0
+  .4byte lbl_802B0764
+  .4byte 0x802b083c
+  .4byte 0x802b0848
+  .4byte 0
 .global __RTTI__14PelletAnimInfo
 __RTTI__14PelletAnimInfo:
-	.incbin "baserom.dol", 0x2E900C, 0x34
+  .4byte 0x802b082c
+  .4byte 0x802b0854
+  .4byte 0x802b089c
+  .4byte 0
+  .4byte 0
+  .4byte 0x802b0930
+  .4byte 0
+  .4byte 0x47656e42
+  .4byte 0x61736500
+  .4byte 0x803df708
+  .4byte 0x802b093c
+  .4byte 0x802b0948
+  .4byte 0x802b0954
 .global __RTTI__15GenObjectPellet
 __RTTI__15GenObjectPellet:
-	.incbin "baserom.dol", 0x2E9040, 0x8
+  .4byte 0x802b0920
+  .4byte 0x802b0968
 .global lbl_803DF728
 lbl_803DF728:
 	.incbin "baserom.dol", 0x2E9048, 0x8
@@ -4445,37 +4955,52 @@ lbl_803DF758:
 	.incbin "baserom.dol", 0x2E9078, 0x4
 .global __RTTI__17Receiver$$06Pellet$$1
 __RTTI__17Receiver$$06Pellet$$1:
-	.incbin "baserom.dol", 0x2E907C, 0x8
+  .4byte 0x802b09f8
+  .4byte 0
 .global __RTTI__15AState$$06Pellet$$1
 __RTTI__15AState$$06Pellet$$1:
-	.incbin "baserom.dol", 0x2E9084, 0x8
+  .4byte 0x802b0a0c
+  .4byte 0x802b0a1c
 .global __RTTI__11PelletState
 __RTTI__11PelletState:
-	.incbin "baserom.dol", 0x2E908C, 0x8
+  .4byte 0x802b0a28
+  .4byte 0x802b0a34
 .global __RTTI__15PelletGoalState
 __RTTI__15PelletGoalState:
-	.incbin "baserom.dol", 0x2E9094, 0x8
+  .4byte 0x802b09e8
+  .4byte 0x802b0a48
 .global __RTTI__17PelletAppearState
 __RTTI__17PelletAppearState:
-	.incbin "baserom.dol", 0x2E909C, 0x8
+  .4byte 0x802b0ab4
+  .4byte 0x802b0ac8
 .global __RTTI__20PelletSwallowedState
 __RTTI__20PelletSwallowedState:
-	.incbin "baserom.dol", 0x2E90A4, 0x8
+  .4byte 0x802b0b34
+  .4byte 0x802b0b4c
 .global __RTTI__17PelletNormalState
 __RTTI__17PelletNormalState:
-	.incbin "baserom.dol", 0x2E90AC, 0x8
+  .4byte 0x802b0bb8
+  .4byte 0x802b0bcc
 .global __RTTI__15PelletDeadState
 __RTTI__15PelletDeadState:
-	.incbin "baserom.dol", 0x2E90B4, 0x8
+  .4byte 0x802b0c38
+  .4byte 0x802b0c48
 .global __RTTI__18PelletUfoLoadState
 __RTTI__18PelletUfoLoadState:
-	.incbin "baserom.dol", 0x2E90BC, 0x8
+  .4byte 0x802b0cb4
+  .4byte 0x802b0cc8
 .global __RTTI__21StateMachine$$06Pellet$$1_1
 __RTTI__21StateMachine$$06Pellet$$1_1:
-	.incbin "baserom.dol", 0x2E90C4, 0x8
+  .4byte 0x802b0e20
+  .4byte 0
 .global __RTTI__18PelletStateMachine
 __RTTI__18PelletStateMachine:
-	.incbin "baserom.dol", 0x2E90CC, 0x18
+  .4byte 0x802b0e0c
+  .4byte 0x802b0e38
+  .4byte 0
+  .4byte 0x2e2e2e00
+  .4byte 0x6d65636b
+  .4byte 0
 .global lbl_803DF7C4
 lbl_803DF7C4:
 	.incbin "baserom.dol", 0x2E90E4, 0x8
@@ -4583,37 +5108,89 @@ lbl_803DF850:
 	.incbin "baserom.dol", 0x2E9170, 0xC
 .global __RTTI__13InteractBreak
 __RTTI__13InteractBreak:
-	.incbin "baserom.dol", 0x2E917C, 0x8
+  .4byte 0x802b1068
+  .4byte 0x802b1084
 .global __RTTI__13InteractBuild
 __RTTI__13InteractBuild:
-	.incbin "baserom.dol", 0x2E9184, 0x40
+  .4byte 0x802b10bc
+  .4byte 0x802b10cc
+  .4byte 0x42726964
+  .4byte 0x67650000
+  .4byte 0x802b1104
+  .4byte 0
+  .4byte 0x802b1118
+  .4byte 0
+  .4byte 0x802b1124
+  .4byte 0
+  .4byte 0x802b1134
+  .4byte 0x802b1140
+  .4byte 0x802b1154
+  .4byte 0x802b1160
+  .4byte 0x802b1184
+  .4byte 0x802b1194
 .global __RTTI__10WorkObject
 __RTTI__10WorkObject:
-	.incbin "baserom.dol", 0x2E91C4, 0x8
+  .4byte 0x802b11c0
+  .4byte 0x802b11cc
 .global __RTTI__6Bridge
 __RTTI__6Bridge:
-	.incbin "baserom.dol", 0x2E91CC, 0x8
+  .4byte 0x803df86c
+  .4byte 0x802b1200
 .global __RTTI__12InteractPush
 __RTTI__12InteractPush:
-	.incbin "baserom.dol", 0x2E91D4, 0x8
+  .4byte 0x802b13a8
+  .4byte 0x802b13b8
 .global __RTTI__10HinderRock
 __RTTI__10HinderRock:
-	.incbin "baserom.dol", 0x2E91DC, 0x38
+  .4byte 0x802b13f0
+  .4byte 0x802b13fc
+  .4byte 0x414e6f64
+  .4byte 0x65000000
+  .4byte 0x803df8c4
+  .4byte 0
+  .4byte lbl_802B1024
+  .4byte 0x802b15b4
+  .4byte 0x4e6f6465
+  .4byte 0
+  .4byte 0x803df8dc
+  .4byte 0x802b15c0
+  .4byte 0x802b15a4
+  .4byte 0x802b15d4
 .global __RTTI__12DynCollShape_2
 __RTTI__12DynCollShape_2:
-	.incbin "baserom.dol", 0x2E9214, 0x8
+  .4byte 0x802b1640
+  .4byte 0x802b1650
 .global __RTTI__13DynBuildShape
 __RTTI__13DynBuildShape:
-	.incbin "baserom.dol", 0x2E921C, 0x28
+  .4byte 0x802b1630
+  .4byte 0x802b1674
+  .4byte 0x802b16fc
+  .4byte 0
+  .4byte 0x47656e42
+  .4byte 0x61736500
+  .4byte 0x803df90c
+  .4byte 0x802b1708
+  .4byte 0x802b1714
+  .4byte 0x802b1720
 .global __RTTI__19GenObjectWorkObject
 __RTTI__19GenObjectWorkObject:
-	.incbin "baserom.dol", 0x2E9244, 0x20
+  .4byte 0x802b16e8
+  .4byte 0x802b1734
+  .4byte 0x802b1794
+  .4byte 0
+  .4byte 0x802b17fc
+  .4byte 0
+  .4byte 0x802b1808
+  .4byte 0x802b1814
 .global __RTTI__13WorkObjectMgr
 __RTTI__13WorkObjectMgr:
-	.incbin "baserom.dol", 0x2E9264, 0x8
+  .4byte 0x802b17ec
+  .4byte 0x802b1838
 .global __RTTI__14WorkObjectNode
 __RTTI__14WorkObjectNode:
-	.incbin "baserom.dol", 0x2E926C, 0xC
+  .4byte 0x802b18dc
+  .4byte 0x802b18ec
+  .4byte 0
 .global avoidWayPointIndex__10PathFinder
 avoidWayPointIndex__10PathFinder:
 	.incbin "baserom.dol", 0x2E9278, 0x4
@@ -4628,7 +5205,8 @@ lbl_803DF968:
 	.incbin "baserom.dol", 0x2E9288, 0x30
 .global __RTTI__8RouteMgr
 __RTTI__8RouteMgr:
-	.incbin "baserom.dol", 0x2E92B8, 0x8
+  .4byte 0x802b1b00
+  .4byte 0x802b1b20
 .global lbl_803DF9A0
 lbl_803DF9A0:
 	.incbin "baserom.dol", 0x2E92C0, 0x8
@@ -4649,13 +5227,23 @@ lbl_803DF9C8:
 	.incbin "baserom.dol", 0x2E92E8, 0x2C
 .global __RTTI__5GmWin
 __RTTI__5GmWin:
-	.incbin "baserom.dol", 0x2E9314, 0x8
+  .4byte 0x803df9ec
+  .4byte 0x802b1c1c
 .global __RTTI__5SeWin
 __RTTI__5SeWin:
-	.incbin "baserom.dol", 0x2E931C, 0x20
+  .4byte 0x803df9cc
+  .4byte 0x802b1c30
+  .4byte 0x53654d67
+  .4byte 0x72000000
+  .4byte 0x4e6f6465
+  .4byte 0
+  .4byte 0x803dfa0c
+  .4byte 0x802b1c94
 .global __RTTI__5SeMgr
 __RTTI__5SeMgr:
-	.incbin "baserom.dol", 0x2E933C, 0xC
+  .4byte 0x803dfa04
+  .4byte 0x802b1ca8
+  .4byte 0
 .global lbl_803DFA28
 lbl_803DFA28:
 	.incbin "baserom.dol", 0x2E9348, 0x8
@@ -4673,7 +5261,21 @@ lbl_803DFA3C:
 	.incbin "baserom.dol", 0x2E935C, 0x38
 .global __RTTI__10SeConstant
 __RTTI__10SeConstant:
-	.incbin "baserom.dol", 0x2E9394, 0x3C
+  .4byte 0x802b1d70
+  .4byte 0x802b1da8
+  .4byte 0
+  .4byte 0x53455f42
+  .4byte 0x4f4d4200
+  .4byte 0x64756d6d
+  .4byte 0x79203100
+  .4byte 0x64756d6d
+  .4byte 0x79203200
+  .4byte 0x64756d6d
+  .4byte 0x79203300
+  .4byte 0x64756d6d
+  .4byte 0x79203400
+  .4byte 0x64756d6d
+  .4byte 0x79203500
 .global lbl_803DFAB0
 lbl_803DFAB0:
 	.incbin "baserom.dol", 0x2E93D0, 0x4
@@ -4844,7 +5446,10 @@ lbl_803DFBE4:
 	.incbin "baserom.dol", 0x2E9504, 0x3C
 .global __RTTI__6CPlate
 __RTTI__6CPlate:
-	.incbin "baserom.dol", 0x2E9540, 0x10
+  .4byte 0x803dfbe8
+  .4byte 0x802b4e80
+  .4byte 0x802b4f04
+  .4byte 0
 .global lbl_803DFC30
 lbl_803DFC30:
 	.incbin "baserom.dol", 0x2E9550, 0x4
@@ -4889,7 +5494,8 @@ lbl_803DFC64:
 	.incbin "baserom.dol", 0x2E9584, 0x1C
 .global __RTTI__8ActStone
 __RTTI__8ActStone:
-	.incbin "baserom.dol", 0x2E95A0, 0x8
+  .4byte 0x802b4f74
+  .4byte 0x802b4f9c
 .global lbl_803DFC88
 lbl_803DFC88:
 	.incbin "baserom.dol", 0x2E95A8, 0x8
@@ -4919,22 +5525,36 @@ lbl_803DFCAC:
 	.incbin "baserom.dol", 0x2E95CC, 0x1C
 .global __RTTI__9ActAdjust
 __RTTI__9ActAdjust:
-	.incbin "baserom.dol", 0x2E95E8, 0x10
+  .4byte 0x802b508c
+  .4byte 0x802b50b4
+  .4byte 0x802b5144
+  .4byte 0
 .global __RTTI__Q29ActAdjust11Initialiser
 __RTTI__Q29ActAdjust11Initialiser:
-	.incbin "baserom.dol", 0x2E95F8, 0x10
+  .4byte 0x802b512c
+  .4byte 0x802b5158
+  .4byte 0x41637450
+  .4byte 0x75740000
 .global __RTTI__6ActPut
 __RTTI__6ActPut:
-	.incbin "baserom.dol", 0x2E9608, 0x8
+  .4byte 0x803dfce0
+  .4byte 0x802b5170
 .global __RTTI__Q26ActPut11Initialiser
 __RTTI__Q26ActPut11Initialiser:
-	.incbin "baserom.dol", 0x2E9610, 0x18
+  .4byte 0x802b51e8
+  .4byte 0x802b51fc
+  .4byte 0x41637450
+  .4byte 0x69636b00
+  .4byte 0x802b524c
+  .4byte 0
 .global __RTTI__7ActPick
 __RTTI__7ActPick:
-	.incbin "baserom.dol", 0x2E9628, 0x8
+  .4byte 0x803dfcf8
+  .4byte 0x802b5260
 .global __RTTI__Q27ActPick11Initialiser
 __RTTI__Q27ActPick11Initialiser:
-	.incbin "baserom.dol", 0x2E9630, 0x8
+  .4byte 0x802b52f0
+  .4byte 0x802b5308
 .global lbl_803DFD18
 lbl_803DFD18:
 	.incbin "baserom.dol", 0x2E9638, 0x8
@@ -5027,10 +5647,15 @@ lbl_803DFD90:
 	.incbin "baserom.dol", 0x2E96B0, 0x24
 .global __RTTI__13ActJumpAttack
 __RTTI__13ActJumpAttack:
-	.incbin "baserom.dol", 0x2E96D4, 0x10
+  .4byte 0x802b53c8
+  .4byte 0x802b5408
+  .4byte 0x802b54a4
+  .4byte 0x802b54b0
 .global __RTTI__9ActAttack
 __RTTI__9ActAttack:
-	.incbin "baserom.dol", 0x2E96E4, 0xC
+  .4byte 0x802b5498
+  .4byte 0x802b54c4
+  .4byte 0
 .global lbl_803DFDD0
 lbl_803DFDD0:
 	.incbin "baserom.dol", 0x2E96F0, 0x4
@@ -5054,25 +5679,38 @@ lbl_803DFDEC:
 	.incbin "baserom.dol", 0x2E970C, 0x24
 .global __RTTI__11ActBoreRest
 __RTTI__11ActBoreRest:
-	.incbin "baserom.dol", 0x2E9730, 0x8
+  .4byte 0x802b55b0
+  .4byte 0x802b55ec
 .global __RTTI__14ActBoreOneshot
 __RTTI__14ActBoreOneshot:
-	.incbin "baserom.dol", 0x2E9738, 0x8
+  .4byte 0x802b567c
+  .4byte 0x802b568c
 .global __RTTI__13ActBoreListen
 __RTTI__13ActBoreListen:
-	.incbin "baserom.dol", 0x2E9740, 0x8
+  .4byte 0x802b571c
+  .4byte 0x802b572c
 .global __RTTI__11ActBoreTalk
 __RTTI__11ActBoreTalk:
-	.incbin "baserom.dol", 0x2E9748, 0x8
+  .4byte 0x802b57dc
+  .4byte 0x802b57e8
 .global __RTTI__13ActBoreSelect
 __RTTI__13ActBoreSelect:
-	.incbin "baserom.dol", 0x2E9750, 0x8
+  .4byte 0x802b5884
+  .4byte 0x802b5894
 .global __RTTI__13ActFreeSelect
 __RTTI__13ActFreeSelect:
-	.incbin "baserom.dol", 0x2E9758, 0x20
+  .4byte 0x802b590c
+  .4byte 0x802b591c
+  .4byte 0x802b5a20
+  .4byte 0
+  .4byte 0x41637469
+  .4byte 0x6f6e0000
+  .4byte 0x803dfe48
+  .4byte 0x802b5a30
 .global __RTTI__9ActBoMake
 __RTTI__9ActBoMake:
-	.incbin "baserom.dol", 0x2E9778, 0x8
+  .4byte 0x802b5a14
+  .4byte 0x802b5a3c
 .global lbl_803DFE60
 lbl_803DFE60:
 	.incbin "baserom.dol", 0x2E9780, 0x4
@@ -5099,7 +5737,8 @@ lbl_803DFE7C:
 	.incbin "baserom.dol", 0x2E979C, 0x24
 .global __RTTI__6ActBou
 __RTTI__6ActBou:
-	.incbin "baserom.dol", 0x2E97C0, 0x8
+  .4byte 0x803dfe80
+  .4byte 0x802b5b38
 .global lbl_803DFEA8
 lbl_803DFEA8:
 	.incbin "baserom.dol", 0x2E97C8, 0x1C
@@ -5114,7 +5753,8 @@ lbl_803DFECC:
 	.incbin "baserom.dol", 0x2E97EC, 0x24
 .global __RTTI__9ActBridge
 __RTTI__9ActBridge:
-	.incbin "baserom.dol", 0x2E9810, 0x8
+  .4byte 0x802b5c40
+  .4byte 0x802b5c7c
 .global lbl_803DFEF8
 lbl_803DFEF8:
 	.incbin "baserom.dol", 0x2E9818, 0x4
@@ -5135,7 +5775,8 @@ lbl_803DFF0C:
 	.incbin "baserom.dol", 0x2E982C, 0x24
 .global __RTTI__12ActBreakWall
 __RTTI__12ActBreakWall:
-	.incbin "baserom.dol", 0x2E9850, 0x8
+  .4byte 0x802b5da8
+  .4byte 0x802b5de8
 .global lbl_803DFF38
 lbl_803DFF38:
 	.incbin "baserom.dol", 0x2E9858, 0x4
@@ -5414,7 +6055,9 @@ lbl_803E00E8:
 	.incbin "baserom.dol", 0x2E9A08, 0x24
 .global __RTTI__12ActTransport
 __RTTI__12ActTransport:
-	.incbin "baserom.dol", 0x2E9A2C, 0xC
+  .4byte 0x802b5f28
+  .4byte 0x802b5f68
+  .4byte 0
 .global lbl_803E0118
 lbl_803E0118:
 	.incbin "baserom.dol", 0x2E9A38, 0x8
@@ -5468,7 +6111,8 @@ lbl_803E015C:
 	.incbin "baserom.dol", 0x2E9A7C, 0x24
 .global __RTTI__9ActKinoko
 __RTTI__9ActKinoko:
-	.incbin "baserom.dol", 0x2E9AA0, 0x8
+  .4byte 0x802b6084
+  .4byte 0x802b60c0
 .global lbl_803E0188
 lbl_803E0188:
 	.incbin "baserom.dol", 0x2E9AA8, 0x4
@@ -5483,10 +6127,14 @@ lbl_803E0194:
 	.incbin "baserom.dol", 0x2E9AB4, 0x1C
 .global __RTTI__8ActChase
 __RTTI__8ActChase:
-	.incbin "baserom.dol", 0x2E9AD0, 0x10
+  .4byte 0x802b61a4
+  .4byte 0x802b61cc
+  .4byte 0x802b625c
+  .4byte 0
 .global __RTTI__Q28ActChase11Initialiser
 __RTTI__Q28ActChase11Initialiser:
-	.incbin "baserom.dol", 0x2E9AE0, 0x8
+  .4byte 0x802b6244
+  .4byte 0x802b6270
 .global newVer
 newVer:
 	.incbin "baserom.dol", 0x2E9AE8, 0x4
@@ -5567,10 +6215,19 @@ lbl_803E0230:
 	.incbin "baserom.dol", 0x2E9B50, 0x4
 .global __RTTI__17SlotChangeListner
 __RTTI__17SlotChangeListner:
-	.incbin "baserom.dol", 0x2E9B54, 0x20
+  .4byte 0x802b62d0
+  .4byte 0
+  .4byte 0x802b62e4
+  .4byte 0
+  .4byte 0x41637469
+  .4byte 0x6f6e0000
+  .4byte 0x803e0244
+  .4byte 0x802b62f4
 .global __RTTI__8ActCrowd
 __RTTI__8ActCrowd:
-	.incbin "baserom.dol", 0x2E9B74, 0xC
+  .4byte 0x802b62c4
+  .4byte 0x802b6300
+  .4byte 0
 .global lbl_803E0260
 lbl_803E0260:
 	.incbin "baserom.dol", 0x2E9B80, 0x4
@@ -5594,7 +6251,9 @@ lbl_803E0278:
 	.incbin "baserom.dol", 0x2E9B98, 0x24
 .global __RTTI__8ActDecoy
 __RTTI__8ActDecoy:
-	.incbin "baserom.dol", 0x2E9BBC, 0xC
+  .4byte 0x802b63d4
+  .4byte 0x802b6410
+  .4byte 0
 .global lbl_803E02A8
 lbl_803E02A8:
 	.incbin "baserom.dol", 0x2E9BC8, 0x8
@@ -5621,7 +6280,9 @@ lbl_803E02C8:
 	.incbin "baserom.dol", 0x2E9BE8, 0x1C
 .global __RTTI__8ActEnter
 __RTTI__8ActEnter:
-	.incbin "baserom.dol", 0x2E9C04, 0xC
+  .4byte 0x802b651c
+  .4byte 0x802b6544
+  .4byte 0
 .global lbl_803E02F0
 lbl_803E02F0:
 	.incbin "baserom.dol", 0x2E9C10, 0x4
@@ -5648,10 +6309,14 @@ lbl_803E0310:
 	.incbin "baserom.dol", 0x2E9C30, 0x20
 .global __RTTI__9ActEscape
 __RTTI__9ActEscape:
-	.incbin "baserom.dol", 0x2E9C50, 0x10
+  .4byte 0x802b6618
+  .4byte 0x802b6640
+  .4byte 0x802b66d0
+  .4byte 0
 .global __RTTI__Q29ActEscape11Initialiser
 __RTTI__Q29ActEscape11Initialiser:
-	.incbin "baserom.dol", 0x2E9C60, 0x8
+  .4byte 0x802b66b8
+  .4byte 0x802b66e4
 .global lbl_803E0348
 lbl_803E0348:
 	.incbin "baserom.dol", 0x2E9C68, 0x8
@@ -5708,7 +6373,9 @@ lbl_803E0390:
 	.incbin "baserom.dol", 0x2E9CB0, 0x24
 .global __RTTI__7ActExit
 __RTTI__7ActExit:
-	.incbin "baserom.dol", 0x2E9CD4, 0xC
+  .4byte 0x803e0394
+  .4byte 0x802b6750
+  .4byte 0
 .global lbl_803E03C0
 lbl_803E03C0:
 	.incbin "baserom.dol", 0x2E9CE0, 0x4
@@ -5729,7 +6396,8 @@ lbl_803E03D4:
 	.incbin "baserom.dol", 0x2E9CF4, 0x2C
 .global __RTTI__7ActMine
 __RTTI__7ActMine:
-	.incbin "baserom.dol", 0x2E9D20, 0x8
+  .4byte 0x803e03d8
+  .4byte 0x802b6834
 .global lbl_803E0408
 lbl_803E0408:
 	.incbin "baserom.dol", 0x2E9D28, 0x4
@@ -5765,7 +6433,9 @@ lbl_803E0430:
 	.incbin "baserom.dol", 0x2E9D50, 0x24
 .global __RTTI__12ActFormation
 __RTTI__12ActFormation:
-	.incbin "baserom.dol", 0x2E9D74, 0xC
+  .4byte 0x802b6954
+  .4byte 0x802b6994
+  .4byte 0
 .global lbl_803E0460
 lbl_803E0460:
 	.incbin "baserom.dol", 0x2E9D80, 0x8
@@ -5792,7 +6462,9 @@ lbl_803E0480:
 	.incbin "baserom.dol", 0x2E9DA0, 0x2C
 .global __RTTI__7ActFree
 __RTTI__7ActFree:
-	.incbin "baserom.dol", 0x2E9DCC, 0xC
+  .4byte 0x803e0484
+  .4byte 0x802b6aac
+  .4byte 0
 .global lbl_803E04B8
 lbl_803E04B8:
 	.incbin "baserom.dol", 0x2E9DD8, 0x4
@@ -5807,10 +6479,14 @@ lbl_803E04C4:
 	.incbin "baserom.dol", 0x2E9DE4, 0x24
 .global __RTTI__7ActGoto
 __RTTI__7ActGoto:
-	.incbin "baserom.dol", 0x2E9E08, 0x10
+  .4byte 0x803e04c8
+  .4byte 0x802b6ba0
+  .4byte 0x802b6c30
+  .4byte 0
 .global __RTTI__Q27ActGoto11Initialiser
 __RTTI__Q27ActGoto11Initialiser:
-	.incbin "baserom.dol", 0x2E9E18, 0x8
+  .4byte 0x802b6c18
+  .4byte 0x802b6c44
 .global lbl_803E0500
 lbl_803E0500:
 	.incbin "baserom.dol", 0x2E9E20, 0x4
@@ -5846,7 +6522,9 @@ lbl_803E0528:
 	.incbin "baserom.dol", 0x2E9E48, 0x1C
 .global __RTTI__8ActGuard
 __RTTI__8ActGuard:
-	.incbin "baserom.dol", 0x2E9E64, 0xC
+  .4byte 0x802b6c94
+  .4byte 0x802b6cbc
+  .4byte 0
 .global lbl_803E0550
 lbl_803E0550:
 	.incbin "baserom.dol", 0x2E9E70, 0x4
@@ -5867,19 +6545,36 @@ lbl_803E0564:
 	.incbin "baserom.dol", 0x2E9E84, 0x24
 .global __RTTI__9ActFlower
 __RTTI__9ActFlower:
-	.incbin "baserom.dol", 0x2E9EA8, 0x10
+  .4byte 0x802b6dbc
+  .4byte 0x802b6df8
+  .4byte 0x802b6ea0
+  .4byte 0x802b6eac
 .global __RTTI__11ActPickItem
 __RTTI__11ActPickItem:
-	.incbin "baserom.dol", 0x2E9EB8, 0x28
+  .4byte 0x802b6e94
+  .4byte 0x802b6ec0
+  .4byte 0x802b6fa0
+  .4byte 0
+  .4byte 0x41637469
+  .4byte 0x6f6e0000
+  .4byte 0x803e05a8
+  .4byte 0x802b6fb0
+  .4byte 0x802b6fbc
+  .4byte 0x802b6fc8
 .global __RTTI__10ActDeliver
 __RTTI__10ActDeliver:
-	.incbin "baserom.dol", 0x2E9EE0, 0x10
+  .4byte 0x802b6f94
+  .4byte 0x802b6fdc
+  .4byte 0x802b7074
+  .4byte 0
 .global __RTTI__Q210ActDeliver11Initialiser
 __RTTI__Q210ActDeliver11Initialiser:
-	.incbin "baserom.dol", 0x2E9EF0, 0x8
+  .4byte 0x802b705c
+  .4byte 0x802b7088
 .global __RTTI__15ActPickCreature
 __RTTI__15ActPickCreature:
-	.incbin "baserom.dol", 0x2E9EF8, 0x8
+  .4byte 0x802b70ac
+  .4byte 0x802b70bc
 .global lbl_803E05E0
 lbl_803E05E0:
 	.incbin "baserom.dol", 0x2E9F00, 0x4
@@ -5918,16 +6613,21 @@ lbl_803E060C:
 	.incbin "baserom.dol", 0x2E9F2C, 0x1C
 .global __RTTI__18ActPulloutCreature
 __RTTI__18ActPulloutCreature:
-	.incbin "baserom.dol", 0x2E9F48, 0x10
+  .4byte 0x802b71bc
+  .4byte 0x802b71ec
+  .4byte 0x802b72a0
+  .4byte 0x802b72ac
 .global __RTTI__10ActPullout
 __RTTI__10ActPullout:
-	.incbin "baserom.dol", 0x2E9F58, 0x8
+  .4byte 0x802b7294
+  .4byte 0x802b72c0
 .global lbl_803E0640
 lbl_803E0640:
 	.incbin "baserom.dol", 0x2E9F60, 0x30
 .global __RTTI__7ActPush
 __RTTI__7ActPush:
-	.incbin "baserom.dol", 0x2E9F90, 0x8
+  .4byte 0x803e0648
+  .4byte 0x802b7418
 .global lbl_803E0678
 lbl_803E0678:
 	.incbin "baserom.dol", 0x2E9F98, 0x8
@@ -5999,10 +6699,14 @@ lbl_803E06D4:
 	.incbin "baserom.dol", 0x2E9FF4, 0x1C
 .global __RTTI__10ActPutItem
 __RTTI__10ActPutItem:
-	.incbin "baserom.dol", 0x2EA010, 0x10
+  .4byte 0x802b74f8
+  .4byte 0x802b7520
+  .4byte 0x802b75a4
+  .4byte 0
 .global __RTTI__10ActPutBomb
 __RTTI__10ActPutBomb:
-	.incbin "baserom.dol", 0x2EA020, 0x8
+  .4byte 0x802b7598
+  .4byte 0x802b75b8
 .global lbl_803E0708
 lbl_803E0708:
 	.incbin "baserom.dol", 0x2EA028, 0x4
@@ -6068,13 +6772,21 @@ lbl_803E0768:
 	.incbin "baserom.dol", 0x2EA088, 0x1C
 .global __RTTI__13ActRandomBoid
 __RTTI__13ActRandomBoid:
-	.incbin "baserom.dol", 0x2EA0A4, 0x10
+  .4byte 0x802b76f4
+  .4byte 0x802b7720
+  .4byte 0x802b77b4
+  .4byte 0
 .global __RTTI__Q213ActRandomBoid11Initialiser
 __RTTI__Q213ActRandomBoid11Initialiser:
-	.incbin "baserom.dol", 0x2EA0B4, 0x10
+  .4byte 0x802b7798
+  .4byte 0x802b77c8
+  .4byte 0x802b77e0
+  .4byte 0
 .global __RTTI__Q213ActRandomBoid12AnimListener
 __RTTI__Q213ActRandomBoid12AnimListener:
-	.incbin "baserom.dol", 0x2EA0C4, 0xC
+  .4byte 0x802b7800
+  .4byte 0x802b781c
+  .4byte 0
 .global lbl_803E07B0
 lbl_803E07B0:
 	.incbin "baserom.dol", 0x2EA0D0, 0x8
@@ -6113,7 +6825,9 @@ lbl_803E07E0:
 	.incbin "baserom.dol", 0x2EA100, 0x24
 .global __RTTI__9ActRescue
 __RTTI__9ActRescue:
-	.incbin "baserom.dol", 0x2EA124, 0xC
+  .4byte 0x802b787c
+  .4byte 0x802b78b8
+  .4byte 0
 .global lbl_803E0810
 lbl_803E0810:
 	.incbin "baserom.dol", 0x2EA130, 0x8
@@ -6131,7 +6845,8 @@ lbl_803E0824:
 	.incbin "baserom.dol", 0x2EA144, 0x24
 .global __RTTI__7ActRope
 __RTTI__7ActRope:
-	.incbin "baserom.dol", 0x2EA168, 0x8
+  .4byte 0x803e0828
+  .4byte 0x802b79a8
 .global lbl_803E0850
 lbl_803E0850:
 	.incbin "baserom.dol", 0x2EA170, 0x4
@@ -6155,10 +6870,15 @@ lbl_803E0868:
 	.incbin "baserom.dol", 0x2EA188, 0x24
 .global __RTTI__16ActShootCreature
 __RTTI__16ActShootCreature:
-	.incbin "baserom.dol", 0x2EA1AC, 0x10
+  .4byte 0x802b7a5c
+  .4byte 0x802b7aa0
+  .4byte 0x802b7b48
+  .4byte 0x802b7b54
 .global __RTTI__8ActShoot
 __RTTI__8ActShoot:
-	.incbin "baserom.dol", 0x2EA1BC, 0xC
+  .4byte 0x802b7b3c
+  .4byte 0x802b7b68
+  .4byte 0
 .global lbl_803E08A8
 lbl_803E08A8:
 	.incbin "baserom.dol", 0x2EA1C8, 0x4
@@ -6176,13 +6896,21 @@ lbl_803E08B8:
 	.incbin "baserom.dol", 0x2EA1D8, 0x1C
 .global __RTTI__8ActWatch
 __RTTI__8ActWatch:
-	.incbin "baserom.dol", 0x2EA1F4, 0x10
+  .4byte 0x802b7c50
+  .4byte 0x802b7c78
+  .4byte 0x802b7d08
+  .4byte 0
 .global __RTTI__Q28ActWatch11Initialiser
 __RTTI__Q28ActWatch11Initialiser:
-	.incbin "baserom.dol", 0x2EA204, 0x10
+  .4byte 0x802b7cf0
+  .4byte 0x802b7d1c
+  .4byte 0x802b7d34
+  .4byte 0
 .global __RTTI__Q28ActWatch12AnimListener
 __RTTI__Q28ActWatch12AnimListener:
-	.incbin "baserom.dol", 0x2EA214, 0xC
+  .4byte 0x802b7d54
+  .4byte 0x802b7d6c
+  .4byte 0
 .global lbl_803E0900
 lbl_803E0900:
 	.incbin "baserom.dol", 0x2EA220, 0x4
@@ -6230,19 +6958,42 @@ lbl_803E0938:
 	.incbin "baserom.dol", 0x2EA258, 0x24
 .global __RTTI__7ActWeed
 __RTTI__7ActWeed:
-	.incbin "baserom.dol", 0x2EA27C, 0x44
+  .4byte 0x803e093c
+  .4byte 0x802b7dd8
+  .4byte 0
+  .4byte 0x2d000000
+  .4byte 0x57415443
+  .4byte 0x48000000
+  .4byte 0x45534341
+  .4byte 0x50450000
+  .4byte 0x43484153
+  .4byte 0x45000000
+  .4byte 0x474f544f
+  .4byte 0
+  .4byte 0x5049434b
+  .4byte 0
+  .4byte 0x50555400
+  .4byte 0x4b49434b
+  .4byte 0
 .global lbl_803E09A0
 lbl_803E09A0:
 	.incbin "baserom.dol", 0x2EA2C0, 0x20
 .global __RTTI__9TopAction
 __RTTI__9TopAction:
-	.incbin "baserom.dol", 0x2EA2E0, 0x10
+  .4byte 0x802b7f98
+  .4byte 0x802b7fc0
+  .4byte 0x802b8038
+  .4byte 0
 .global __RTTI__Q29TopAction14MotionListener
 __RTTI__Q29TopAction14MotionListener:
-	.incbin "baserom.dol", 0x2EA2F0, 0x8
+  .4byte 0x802b8058
+  .4byte 0x802b8074
 .global __RTTI__8OrAction
 __RTTI__8OrAction:
-	.incbin "baserom.dol", 0x2EA2F8, 0x10
+  .4byte 0x802b808c
+  .4byte 0x802b8098
+  .4byte 0x802b8110
+  .4byte 0x802b811c
 .global lbl_803E09E8
 lbl_803E09E8:
 	.incbin "baserom.dol", 0x2EA308, 0x4
@@ -6275,25 +7026,35 @@ lbl_803E0A10:
 	.incbin "baserom.dol", 0x2EA330, 0x24
 .global __RTTI__7BaseInf
 __RTTI__7BaseInf:
-	.incbin "baserom.dol", 0x2EA354, 0x8
+  .4byte 0x803e0a2c
+  .4byte 0x802b8278
 .global __RTTI__11CreatureInf
 __RTTI__11CreatureInf:
-	.incbin "baserom.dol", 0x2EA35C, 0x10
+  .4byte 0x802b8260
+  .4byte 0x802b828c
+  .4byte 0x496e664d
+  .4byte 0x67720000
 .global __RTTI__6InfMgr
 __RTTI__6InfMgr:
-	.incbin "baserom.dol", 0x2EA36C, 0x8
+  .4byte 0x803e0a44
+  .4byte 0
 .global __RTTI__10MonoInfMgr
 __RTTI__10MonoInfMgr:
-	.incbin "baserom.dol", 0x2EA374, 0x8
+  .4byte 0x802b82d8
+  .4byte 0x802b82e4
 .global __RTTI__14CreatureInfMgr
 __RTTI__14CreatureInfMgr:
-	.incbin "baserom.dol", 0x2EA37C, 0x8
+  .4byte 0x802b82c8
+  .4byte 0x802b82f0
 .global __RTTI__11BPikiInfMgr
 __RTTI__11BPikiInfMgr:
-	.incbin "baserom.dol", 0x2EA384, 0x8
+  .4byte 0x802b8324
+  .4byte 0x802b8330
 .global __RTTI__8BPikiInf
 __RTTI__8BPikiInf:
-	.incbin "baserom.dol", 0x2EA38C, 0xC
+  .4byte 0x802b83a0
+  .4byte 0x802b83ac
+  .4byte 0
 .global lbl_803E0A78
 lbl_803E0A78:
 	.incbin "baserom.dol", 0x2EA398, 0x4
@@ -6344,10 +7105,28 @@ lbl_803E0AB4:
 	.incbin "baserom.dol", 0x2EA3D4, 0x7C
 .global __RTTI__19StateMachine$$04Piki$$1
 __RTTI__19StateMachine$$04Piki$$1:
-	.incbin "baserom.dol", 0x2EA450, 0x48
+  .4byte 0x802b8760
+  .4byte 0
+  .4byte 0x802b878c
+  .4byte 0
+  .4byte 0x802b87b0
+  .4byte 0
+  .4byte 0x802b87f0
+  .4byte 0
+  .4byte 0x802b8898
+  .4byte 0
+  .4byte 0x50696b69
+  .4byte 0
+  .4byte 0x802b88b8
+  .4byte 0
+  .4byte 0x802b88c4
+  .4byte 0
+  .4byte 0x802b88d4
+  .4byte 0x802b88e0
 .global __RTTI__4Piki
 __RTTI__4Piki:
-	.incbin "baserom.dol", 0x2EA498, 0x8
+  .4byte 0x803e0b58
+  .4byte 0x802b88f4
 .global lbl_803E0B80
 lbl_803E0B80:
 	.incbin "baserom.dol", 0x2EA4A0, 0x4
@@ -6602,10 +7381,16 @@ lbl_803E0CD0:
 	.incbin "baserom.dol", 0x2EA5F0, 0x50
 .global __RTTI__7PikiMgr
 __RTTI__7PikiMgr:
-	.incbin "baserom.dol", 0x2EA640, 0x18
+  .4byte 0x803e0cd8
+  .4byte 0x802b8b60
+  .4byte 0x802b8c28
+  .4byte 0
+  .4byte 0x802b8c8c
+  .4byte 0
 .global __RTTI__8PikiProp
 __RTTI__8PikiProp:
-	.incbin "baserom.dol", 0x2EA658, 0x8
+  .4byte 0x802b8c80
+  .4byte 0x802b8c9c
 .global lbl_803E0D40
 lbl_803E0D40:
 	.incbin "baserom.dol", 0x2EA660, 0x8
@@ -7127,115 +7912,153 @@ lbl_803E1058:
 	.incbin "baserom.dol", 0x2EA978, 0xC
 .global __RTTI__13AState$$04Piki$$1
 __RTTI__13AState$$04Piki$$1:
-	.incbin "baserom.dol", 0x2EA984, 0x8
+  .4byte 0x802b8d90
+  .4byte 0x802b8da0
 .global __RTTI__9PikiState
 __RTTI__9PikiState:
-	.incbin "baserom.dol", 0x2EA98C, 0x8
+  .4byte 0x802b8dac
+  .4byte 0x802b8db8
 .global __RTTI__16PikiEmotionState
 __RTTI__16PikiEmotionState:
-	.incbin "baserom.dol", 0x2EA994, 0x8
+  .4byte 0x802b8d6c
+  .4byte 0x802b8dcc
 .global __RTTI__13PikiDeadState
 __RTTI__13PikiDeadState:
-	.incbin "baserom.dol", 0x2EA99C, 0x8
+  .4byte 0x802b8e54
+  .4byte 0x802b8e64
 .global __RTTI__14PikiDyingState
 __RTTI__14PikiDyingState:
-	.incbin "baserom.dol", 0x2EA9A4, 0x8
+  .4byte 0x802b8eec
+  .4byte 0x802b8efc
 .global __RTTI__16PikiPressedState
 __RTTI__16PikiPressedState:
-	.incbin "baserom.dol", 0x2EA9AC, 0x8
+  .4byte 0x802b8f84
+  .4byte 0x802b8f98
 .global __RTTI__17PikiAutoNukiState
 __RTTI__17PikiAutoNukiState:
-	.incbin "baserom.dol", 0x2EA9B4, 0x8
+  .4byte 0x802b9020
+  .4byte 0x802b9034
 .global __RTTI__15PikiNukareState
 __RTTI__15PikiNukareState:
-	.incbin "baserom.dol", 0x2EA9BC, 0x8
+  .4byte 0x802b90bc
+  .4byte 0x802b90cc
 .global __RTTI__19PikiNukareWaitState
 __RTTI__19PikiNukareWaitState:
-	.incbin "baserom.dol", 0x2EA9C4, 0x8
+  .4byte 0x802b9154
+  .4byte 0x802b9168
 .global __RTTI__13PikiBuryState
 __RTTI__13PikiBuryState:
-	.incbin "baserom.dol", 0x2EA9CC, 0x8
+  .4byte 0x802b91f0
+  .4byte 0x802b9200
 .global __RTTI__17PikiPushPikiState
 __RTTI__17PikiPushPikiState:
-	.incbin "baserom.dol", 0x2EA9D4, 0x8
+  .4byte 0x802b9288
+  .4byte 0x802b929c
 .global __RTTI__13PikiPushState
 __RTTI__13PikiPushState:
-	.incbin "baserom.dol", 0x2EA9DC, 0x8
+  .4byte 0x802b9324
+  .4byte 0x802b9334
 .global __RTTI__13PikiWaveState
 __RTTI__13PikiWaveState:
-	.incbin "baserom.dol", 0x2EA9E4, 0x8
+  .4byte 0x802b93bc
+  .4byte 0x802b93cc
 .global __RTTI__15PikiGrowupState
 __RTTI__15PikiGrowupState:
-	.incbin "baserom.dol", 0x2EA9EC, 0x8
+  .4byte 0x802b9454
+  .4byte 0x802b9464
 .global __RTTI__21PikiKinokoChangeState
 __RTTI__21PikiKinokoChangeState:
-	.incbin "baserom.dol", 0x2EA9F4, 0x8
+  .4byte 0x802b94ec
+  .4byte 0x802b9504
 .global __RTTI__13PikiGrowState
 __RTTI__13PikiGrowState:
-	.incbin "baserom.dol", 0x2EA9FC, 0x8
+  .4byte 0x802b958c
+  .4byte 0x802b959c
 .global __RTTI__15PikiFlyingState
 __RTTI__15PikiFlyingState:
-	.incbin "baserom.dol", 0x2EAA04, 0x8
+  .4byte 0x802b9624
+  .4byte 0x802b9634
 .global __RTTI__13PikiEmitState
 __RTTI__13PikiEmitState:
-	.incbin "baserom.dol", 0x2EAA0C, 0x8
+  .4byte 0x802b96bc
+  .4byte 0x802b96cc
 .global __RTTI__20PikiWaterHangedState
 __RTTI__20PikiWaterHangedState:
-	.incbin "baserom.dol", 0x2EAA14, 0x8
+  .4byte 0x802b9754
+  .4byte 0x802b976c
 .global __RTTI__15PikiHangedState
 __RTTI__15PikiHangedState:
-	.incbin "baserom.dol", 0x2EAA1C, 0x8
+  .4byte 0x802b97f4
+  .4byte 0x802b9804
 .global __RTTI__15PikiGoHangState
 __RTTI__15PikiGoHangState:
-	.incbin "baserom.dol", 0x2EAA24, 0x8
+  .4byte 0x802b988c
+  .4byte 0x802b989c
 .global __RTTI__14PikiCliffState
 __RTTI__14PikiCliffState:
-	.incbin "baserom.dol", 0x2EAA2C, 0x8
+  .4byte 0x802b9924
+  .4byte 0x802b9934
 .global __RTTI__13PikiFallState
 __RTTI__13PikiFallState:
-	.incbin "baserom.dol", 0x2EAA34, 0x8
+  .4byte 0x802b99bc
+  .4byte 0x802b99cc
 .global __RTTI__17PikiFallMeckState
 __RTTI__17PikiFallMeckState:
-	.incbin "baserom.dol", 0x2EAA3C, 0x8
+  .4byte 0x802b9a54
+  .4byte 0x802b9a68
 .global __RTTI__14PikiFlownState
 __RTTI__14PikiFlownState:
-	.incbin "baserom.dol", 0x2EAA44, 0x8
+  .4byte 0x802b9af0
+  .4byte 0x802b9b00
 .global __RTTI__14PikiFlickState
 __RTTI__14PikiFlickState:
-	.incbin "baserom.dol", 0x2EAA4C, 0x8
+  .4byte 0x802b9b88
+  .4byte 0x802b9b98
 .global __RTTI__15PikiBulletState
 __RTTI__15PikiBulletState:
-	.incbin "baserom.dol", 0x2EAA54, 0x8
+  .4byte 0x802b9c20
+  .4byte 0x802b9c30
 .global __RTTI__18PikiSwallowedState
 __RTTI__18PikiSwallowedState:
-	.incbin "baserom.dol", 0x2EAA5C, 0x8
+  .4byte 0x802b9cb8
+  .4byte 0x802b9ccc
 .global __RTTI__14PikiFiredState
 __RTTI__14PikiFiredState:
-	.incbin "baserom.dol", 0x2EAA64, 0x8
+  .4byte 0x802b9d54
+  .4byte 0x802b9d64
 .global __RTTI__15PikiBubbleState
 __RTTI__15PikiBubbleState:
-	.incbin "baserom.dol", 0x2EAA6C, 0x8
+  .4byte 0x802b9dec
+  .4byte 0x802b9dfc
 .global __RTTI__15PikiKinokoState
 __RTTI__15PikiKinokoState:
-	.incbin "baserom.dol", 0x2EAA74, 0x8
+  .4byte 0x802b9e84
+  .4byte 0x802b9e94
 .global __RTTI__14PikiDrownState
 __RTTI__14PikiDrownState:
-	.incbin "baserom.dol", 0x2EAA7C, 0x8
+  .4byte 0x802b9f54
+  .4byte 0x802b9f64
 .global __RTTI__15PikiAbsorbState
 __RTTI__15PikiAbsorbState:
-	.incbin "baserom.dol", 0x2EAA84, 0x8
+  .4byte 0x802b9fec
+  .4byte 0x802b9ffc
 .global __RTTI__15PikiNormalState
 __RTTI__15PikiNormalState:
-	.incbin "baserom.dol", 0x2EAA8C, 0x8
+  .4byte 0x802ba084
+  .4byte 0x802ba094
 .global __RTTI__15PikiLookAtState
 __RTTI__15PikiLookAtState:
-	.incbin "baserom.dol", 0x2EAA94, 0x8
+  .4byte 0x802ba11c
+  .4byte 0x802ba12c
 .global __RTTI__19StateMachine$$04Piki$$1_1
 __RTTI__19StateMachine$$04Piki$$1_1:
-	.incbin "baserom.dol", 0x2EAA9C, 0x8
+  .4byte 0x802ba2bc
+  .4byte 0
 .global __RTTI__16PikiStateMachine
 __RTTI__16PikiStateMachine:
-	.incbin "baserom.dol", 0x2EAAA4, 0xC
+  .4byte 0x802ba2a8
+  .4byte 0x802ba2d0
+  .4byte 0
 .global firstTime__15PikiShapeObject
 firstTime__15PikiShapeObject:
 	.incbin "baserom.dol", 0x2EAAB0, 0x4
@@ -7367,19 +8190,26 @@ lbl_803E1254:
 	.incbin "baserom.dol", 0x2EAB74, 0x2C
 .global __RTTI__4Piki_1
 __RTTI__4Piki_1:
-	.incbin "baserom.dol", 0x2EABA0, 0x8
+  .4byte 0x803e1278
+  .4byte 0x802ba418
 .global __RTTI__8ViewPiki
 __RTTI__8ViewPiki:
-	.incbin "baserom.dol", 0x2EABA8, 0x10
+  .4byte 0x802ba3bc
+  .4byte 0x802ba43c
+  .4byte 0x802ba5b0
+  .4byte 0
 .global __RTTI__13CndStickMouth
 __RTTI__13CndStickMouth:
-	.incbin "baserom.dol", 0x2EABB8, 0x8
+  .4byte 0x802ba5a0
+  .4byte 0x802ba5bc
 .global __RTTI__10CndIsAtari
 __RTTI__10CndIsAtari:
-	.incbin "baserom.dol", 0x2EABC0, 0x8
+  .4byte 0x802ba5d4
+  .4byte 0x802ba5e0
 .global __RTTI__12CndIsVisible
 __RTTI__12CndIsVisible:
-	.incbin "baserom.dol", 0x2EABC8, 0x8
+  .4byte 0x802ba5f8
+  .4byte 0x802ba608
 .global lbl_803E12B0
 lbl_803E12B0:
 	.incbin "baserom.dol", 0x2EABD0, 0x4
@@ -7487,52 +8317,89 @@ lbl_803E1354:
 	.incbin "baserom.dol", 0x2EAC74, 0x24
 .global __RTTI__7GenArea
 __RTTI__7GenArea:
-	.incbin "baserom.dol", 0x2EAC98, 0x8
+  .4byte 0x803e1370
+  .4byte 0x802ba750
 .global __RTTI__13GenAreaCircle
 __RTTI__13GenAreaCircle:
-	.incbin "baserom.dol", 0x2EACA0, 0x8
+  .4byte 0x802ba728
+  .4byte 0x802ba764
 .global __RTTI__12GenAreaPoint
 __RTTI__12GenAreaPoint:
-	.incbin "baserom.dol", 0x2EACA8, 0x10
+  .4byte 0x802ba7b8
+  .4byte 0x802ba7c8
+  .4byte 0x47656e54
+  .4byte 0x79706500
 .global __RTTI__7GenType
 __RTTI__7GenType:
-	.incbin "baserom.dol", 0x2EACB8, 0x8
+  .4byte 0x803e1390
+  .4byte 0x802ba82c
 .global __RTTI__15GenTypeInitRand
 __RTTI__15GenTypeInitRand:
-	.incbin "baserom.dol", 0x2EACC0, 0x8
+  .4byte 0x802ba81c
+  .4byte 0x802ba840
 .global __RTTI__13GenTypeAtOnce
 __RTTI__13GenTypeAtOnce:
-	.incbin "baserom.dol", 0x2EACC8, 0x8
+  .4byte 0x802ba894
+  .4byte 0x802ba8a4
 .global __RTTI__10GenTypeOne
 __RTTI__10GenTypeOne:
-	.incbin "baserom.dol", 0x2EACD0, 0x10
+  .4byte 0x802ba8f8
+  .4byte 0x802ba904
+  .4byte 0x802ba968
+  .4byte 0x802ba974
 .global __RTTI__13GenObjectPiki
 __RTTI__13GenObjectPiki:
-	.incbin "baserom.dol", 0x2EACE0, 0x30
+  .4byte 0x802ba958
+  .4byte 0x802ba988
+  .4byte 0x414e6f64
+  .4byte 0x65000000
+  .4byte 0x803e13c8
+  .4byte 0
+  .4byte 0x802ba9dc
+  .4byte 0x802ba9e8
+  .4byte 0x4e6f6465
+  .4byte 0
+  .4byte 0x803e13e0
+  .4byte 0x802ba9f4
 .global __RTTI__12GeneratorMgr
 __RTTI__12GeneratorMgr:
-	.incbin "baserom.dol", 0x2EAD10, 0x8
+  .4byte 0x802ba718
+  .4byte 0x802baa08
 .global __RTTI__9Generator
 __RTTI__9Generator:
-	.incbin "baserom.dol", 0x2EAD18, 0x10
+  .4byte 0x802baa54
+  .4byte 0x802baa60
+  .4byte 0x802bab0c
+  .4byte 0
 .global lbl_803E1408
 lbl_803E1408:
 	.incbin "baserom.dol", 0x2EAD28, 0x34
 .global __RTTI__Q214GeneratorCache5Cache
 __RTTI__Q214GeneratorCache5Cache:
-	.incbin "baserom.dol", 0x2EAD5C, 0xC
+  .4byte 0x802bad34
+  .4byte 0x802bad58
+  .4byte 0
 .global lbl_803E1448
 lbl_803E1448:
 	.incbin "baserom.dol", 0x2EAD68, 0x40
 .global __RTTI__15CreatureNodeMgr
 __RTTI__15CreatureNodeMgr:
-	.incbin "baserom.dol", 0x2EADA8, 0x8
+  .4byte 0x802badb4
+  .4byte 0x802bae2c
 .global __RTTI__13PolyObjectMgr
 __RTTI__13PolyObjectMgr:
-	.incbin "baserom.dol", 0x2EADB0, 0x18
+  .4byte 0x802baed0
+  .4byte 0x802baee0
+  .4byte 0x802baf8c
+  .4byte 0x802baf9c
+  .4byte 0x802bb128
+  .4byte 0
 .global __RTTI__12SearchBuffer
 __RTTI__12SearchBuffer:
-	.incbin "baserom.dol", 0x2EADC8, 0x10
+  .4byte 0x802bb118
+  .4byte 0x802bb134
+  .4byte 0x802bb18c
+  .4byte 0
 .global lbl_803E14B8
 lbl_803E14B8:
 	.incbin "baserom.dol", 0x2EADD8, 0x4
@@ -7592,16 +8459,23 @@ lbl_803E1500:
 	.incbin "baserom.dol", 0x2EAE20, 0x3C
 .global __RTTI__4Weed
 __RTTI__4Weed:
-	.incbin "baserom.dol", 0x2EAE5C, 0x8
+  .4byte 0x803e1504
+  .4byte 0x802bb30c
 .global __RTTI__8WeedsGen
 __RTTI__8WeedsGen:
-	.incbin "baserom.dol", 0x2EAE64, 0x8
+  .4byte 0x802bb49c
+  .4byte 0x802bb4a8
 .global __RTTI__8GrassGen
 __RTTI__8GrassGen:
-	.incbin "baserom.dol", 0x2EAE6C, 0x10
+  .4byte 0x802bb638
+  .4byte 0x802bb644
+  .4byte 0x526f636b
+  .4byte 0x47656e00
 .global __RTTI__7RockGen
 __RTTI__7RockGen:
-	.incbin "baserom.dol", 0x2EAE7C, 0xC
+  .4byte 0x803e1554
+  .4byte 0x802bb7d4
+  .4byte 0
 .global lbl_803E1568
 lbl_803E1568:
 	.incbin "baserom.dol", 0x2EAE88, 0x4
@@ -7646,10 +8520,12 @@ lbl_803E159C:
 	.incbin "baserom.dol", 0x2EAEBC, 0x34
 .global __RTTI__10BoBaseItem
 __RTTI__10BoBaseItem:
-	.incbin "baserom.dol", 0x2EAEF0, 0x8
+  .4byte 0x802bb978
+  .4byte 0x802bba40
 .global __RTTI__8KusaItem
 __RTTI__8KusaItem:
-	.incbin "baserom.dol", 0x2EAEF8, 0x8
+  .4byte 0x802bbbd0
+  .4byte 0x802bbbdc
 .global lbl_803E15E0
 lbl_803E15E0:
 	.incbin "baserom.dol", 0x2EAF00, 0x4
@@ -7721,7 +8597,9 @@ lbl_803E1638:
 	.incbin "baserom.dol", 0x2EAF58, 0x34
 .global __RTTI__13FishGenerator
 __RTTI__13FishGenerator:
-	.incbin "baserom.dol", 0x2EAF8C, 0xC
+  .4byte 0x802bbd80
+  .4byte 0x802bbe4c
+  .4byte 0
 .global numKeys
 numKeys:
 	.incbin "baserom.dol", 0x2EAF98, 0x4
@@ -7913,10 +8791,37 @@ lbl_803E1770:
 	.incbin "baserom.dol", 0x2EB090, 0x44
 .global __RTTI__7UfoItem
 __RTTI__7UfoItem:
-	.incbin "baserom.dol", 0x2EB0D4, 0x6C
+  .4byte 0x803e17ac
+  .4byte 0x802bc2f4
+  .4byte 0
+  .4byte 0x77616974
+  .4byte 0
+  .4byte 0x74616b65
+  .4byte 0x6f666600
+  .4byte 0x68656e6b
+  .4byte 0x61310000
+  .4byte 0x68656e6b
+  .4byte 0x61316200
+  .4byte 0x68656e6b
+  .4byte 0x61316400
+  .4byte 0x68656e6b
+  .4byte 0x61320000
+  .4byte 0x68656e6b
+  .4byte 0x61326400
+  .4byte 0x68656e6b
+  .4byte 0x61330000
+  .4byte 0x68656e6b
+  .4byte 0x61346100
+  .4byte 0x68656e6b
+  .4byte 0x61346200
+  .4byte 0x802bc580
+  .4byte 0
+  .4byte 0x802bc58c
+  .4byte 0x802bc59c
 .global __RTTI__15PaniUfoAnimator
 __RTTI__15PaniUfoAnimator:
-	.incbin "baserom.dol", 0x2EB140, 0x8
+  .4byte 0x802bc570
+  .4byte 0x802bc5a8
 .global lbl_803E1828
 lbl_803E1828:
 	.incbin "baserom.dol", 0x2EB148, 0x4
@@ -7928,7 +8833,9 @@ lbl_803E1830:
 	.incbin "baserom.dol", 0x2EB150, 0x34
 .global __RTTI__8BombItem
 __RTTI__8BombItem:
-	.incbin "baserom.dol", 0x2EB184, 0xC
+  .4byte 0x802bc5f4
+  .4byte 0x802bc6bc
+  .4byte 0
 .global lbl_803E1870
 lbl_803E1870:
 	.incbin "baserom.dol", 0x2EB190, 0x4
@@ -8006,7 +8913,9 @@ lbl_803E18D0:
 	.incbin "baserom.dol", 0x2EB1F0, 0x44
 .global __RTTI__8GoalItem
 __RTTI__8GoalItem:
-	.incbin "baserom.dol", 0x2EB234, 0xC
+  .4byte 0x802bcb3c
+  .4byte 0x802bcb48
+  .4byte 0
 .global lbl_803E1920
 lbl_803E1920:
 	.incbin "baserom.dol", 0x2EB240, 0x4
@@ -8048,7 +8957,15 @@ lbl_803E1950:
 	.incbin "baserom.dol", 0x2EB270, 0x34
 .global __RTTI__12PikiHeadItem
 __RTTI__12PikiHeadItem:
-	.incbin "baserom.dol", 0x2EB2A4, 0x24
+  .4byte 0x802bcd34
+  .4byte 0x802bce00
+  .4byte 0x802bcf90
+  .4byte 0
+  .4byte 0x802bcfb4
+  .4byte 0
+  .4byte 0x802bcff4
+  .4byte 0
+  .4byte 0
 .global lbl_803E19A8
 lbl_803E19A8:
 	.incbin "baserom.dol", 0x2EB2C8, 0x4
@@ -8069,13 +8986,26 @@ lbl_803E19BC:
 	.incbin "baserom.dol", 0x2EB2DC, 0x34
 .global __RTTI__8DoorItem
 __RTTI__8DoorItem:
-	.incbin "baserom.dol", 0x2EB310, 0x10
+  .4byte 0x802bd0ac
+  .4byte 0x802bd174
+  .4byte 0x4b657949
+  .4byte 0x74656d00
 .global __RTTI__7KeyItem
 __RTTI__7KeyItem:
-	.incbin "baserom.dol", 0x2EB320, 0x28
+  .4byte 0x803e19f8
+  .4byte 0x802bd304
+  .4byte 0x802bd460
+  .4byte 0
+  .4byte 0x802bd46c
+  .4byte 0
+  .4byte 0x802bd47c
+  .4byte 0x802bd488
+  .4byte 0x802bd49c
+  .4byte 0x802bd4ac
 .global __RTTI__8RopeItem
 __RTTI__8RopeItem:
-	.incbin "baserom.dol", 0x2EB348, 0x8
+  .4byte 0x802bd454
+  .4byte 0x802bd4c8
 .global lbl_803E1A30
 lbl_803E1A30:
 	.incbin "baserom.dol", 0x2EB350, 0x4
@@ -8084,7 +9014,8 @@ lbl_803E1A34:
 	.incbin "baserom.dol", 0x2EB354, 0x1C
 .global __RTTI__8SeedItem
 __RTTI__8SeedItem:
-	.incbin "baserom.dol", 0x2EB370, 0x8
+  .4byte 0x802bd61c
+  .4byte 0x802bd664
 .global lbl_803E1A58
 lbl_803E1A58:
 	.incbin "baserom.dol", 0x2EB378, 0x4
@@ -8102,7 +9033,11 @@ lbl_803E1A68:
 	.incbin "baserom.dol", 0x2EB388, 0x24
 .global __RTTI__13GenObjectItem
 __RTTI__13GenObjectItem:
-	.incbin "baserom.dol", 0x2EB3AC, 0x14
+  .4byte 0x802bd82c
+  .4byte 0x802bd874
+  .4byte 0x802bd8d4
+  .4byte 0
+  .4byte 0
 .global lbl_803E1AA0
 lbl_803E1AA0:
 	.incbin "baserom.dol", 0x2EB3C0, 0x4
@@ -8132,187 +9067,263 @@ lbl_803E1AC0:
 	.incbin "baserom.dol", 0x2EB3E0, 0x4
 .global __RTTI__9SAIAction
 __RTTI__9SAIAction:
-	.incbin "baserom.dol", 0x2EB3E4, 0x8
+  .4byte 0x802bd944
+  .4byte 0
 .global __RTTI__Q211FallWaterAI13DisappearInit
 __RTTI__Q211FallWaterAI13DisappearInit:
-	.incbin "baserom.dol", 0x2EB3EC, 0x8
+  .4byte 0x802bd928
+  .4byte 0x802bd950
 .global __RTTI__Q211FallWaterAI8EmitInit
 __RTTI__Q211FallWaterAI8EmitInit:
-	.incbin "baserom.dol", 0x2EB3F4, 0x8
+  .4byte 0x802bd968
+  .4byte 0x802bd980
 .global __RTTI__Q211FallWaterAI11CollideInit
 __RTTI__Q211FallWaterAI11CollideInit:
-	.incbin "baserom.dol", 0x2EB3FC, 0x8
+  .4byte 0x802bd998
+  .4byte 0x802bd9b4
 .global __RTTI__26StateMachine$$010AICreature$$1_1
 __RTTI__26StateMachine$$010AICreature$$1_1:
-	.incbin "baserom.dol", 0x2EB404, 0x8
+  .4byte 0x802bd9d8
+  .4byte 0
 .global __RTTI__8SimpleAI_1
 __RTTI__8SimpleAI_1:
-	.incbin "baserom.dol", 0x2EB40C, 0x8
+  .4byte 0x802bd9f4
+  .4byte 0x802bda00
 .global __RTTI__11FallWaterAI
 __RTTI__11FallWaterAI:
-	.incbin "baserom.dol", 0x2EB414, 0x8
+  .4byte 0x802bd9cc
+  .4byte 0x802bda0c
 .global __RTTI__Q27WaterAI3Die
 __RTTI__Q27WaterAI3Die:
-	.incbin "baserom.dol", 0x2EB41C, 0x20
+  .4byte 0x802bda38
+  .4byte 0x802bda48
+  .4byte 0x414e6f64
+  .4byte 0x65000000
+  .4byte 0x803e1b04
+  .4byte 0
+  .4byte lbl_802BD90C
+  .4byte 0x802bda78
 .global __RTTI__12SAICondition_1
 __RTTI__12SAICondition_1:
-	.incbin "baserom.dol", 0x2EB43C, 0x8
+  .4byte 0x802bda84
+  .4byte 0x802bda94
 .global __RTTI__Q27WaterAI11CollideChar
 __RTTI__Q27WaterAI11CollideChar:
-	.incbin "baserom.dol", 0x2EB444, 0x10
+  .4byte 0x802bda60
+  .4byte 0x802bdaa8
+  .4byte 0x57617465
+  .4byte 0x72414900
 .global __RTTI__7WaterAI
 __RTTI__7WaterAI:
-	.incbin "baserom.dol", 0x2EB454, 0x8
+  .4byte 0x803e1b2c
+  .4byte 0x802bdad8
 .global __RTTI__Q25GemAI3Die
 __RTTI__Q25GemAI3Die:
-	.incbin "baserom.dol", 0x2EB45C, 0x8
+  .4byte 0x802bdb04
+  .4byte 0x802bdb10
 .global __RTTI__Q25GemAI8RiseExec
 __RTTI__Q25GemAI8RiseExec:
-	.incbin "baserom.dol", 0x2EB464, 0x8
+  .4byte 0x802bdb28
+  .4byte 0x802bdb38
 .global __RTTI__Q25GemAI8RiseInit
 __RTTI__Q25GemAI8RiseInit:
-	.incbin "baserom.dol", 0x2EB46C, 0x10
+  .4byte 0x802bdb50
+  .4byte 0x802bdb60
+  .4byte 0x47656d41
+  .4byte 0x49000000
 .global __RTTI__5GemAI
 __RTTI__5GemAI:
-	.incbin "baserom.dol", 0x2EB47C, 0x8
+  .4byte 0x803e1b54
+  .4byte 0x802bdb78
 .global __RTTI__Q26GoalAI6Effect
 __RTTI__Q26GoalAI6Effect:
-	.incbin "baserom.dol", 0x2EB484, 0x8
+  .4byte 0x802bdba4
+  .4byte 0x802bdbb4
 .global __RTTI__Q26GoalAI8EmitWait
 __RTTI__Q26GoalAI8EmitWait:
-	.incbin "baserom.dol", 0x2EB48C, 0x8
+  .4byte 0x802bdbcc
+  .4byte 0x802bdbe0
 .global __RTTI__Q26GoalAI8EmitPiki
 __RTTI__Q26GoalAI8EmitPiki:
-	.incbin "baserom.dol", 0x2EB494, 0x8
+  .4byte 0x802bdbf8
+  .4byte 0x802bdc0c
 .global __RTTI__Q26GoalAI8BootDone
 __RTTI__Q26GoalAI8BootDone:
-	.incbin "baserom.dol", 0x2EB49C, 0x8
+  .4byte 0x802bdc24
+  .4byte 0x802bdc38
 .global __RTTI__Q26GoalAI8BootEmit
 __RTTI__Q26GoalAI8BootEmit:
-	.incbin "baserom.dol", 0x2EB4A4, 0x8
+  .4byte 0x802bdc50
+  .4byte 0x802bdc64
 .global __RTTI__Q26GoalAI8BootInit
 __RTTI__Q26GoalAI8BootInit:
-	.incbin "baserom.dol", 0x2EB4AC, 0x8
+  .4byte 0x802bdc7c
+  .4byte 0x802bdc90
 .global __RTTI__Q26GoalAI8WaitInit
 __RTTI__Q26GoalAI8WaitInit:
-	.incbin "baserom.dol", 0x2EB4B4, 0x8
+  .4byte 0x802bdca8
+  .4byte 0x802bdcbc
 .global __RTTI__Q26GoalAI11NotFinished
 __RTTI__Q26GoalAI11NotFinished:
-	.incbin "baserom.dol", 0x2EB4BC, 0x10
+  .4byte 0x802bdcd4
+  .4byte 0x802bdce8
+  .4byte 0x476f616c
+  .4byte 0x41490000
 .global __RTTI__6GoalAI
 __RTTI__6GoalAI:
-	.incbin "baserom.dol", 0x2EB4CC, 0x8
+  .4byte 0x803e1ba4
+  .4byte 0x802bdd48
 .global __RTTI__Q26BombAI7DieExec
 __RTTI__Q26BombAI7DieExec:
-	.incbin "baserom.dol", 0x2EB4D4, 0x8
+  .4byte 0x802bdd74
+  .4byte 0x802bdd84
 .global __RTTI__Q26BombAI7DieInit
 __RTTI__Q26BombAI7DieInit:
-	.incbin "baserom.dol", 0x2EB4DC, 0x8
+  .4byte 0x802bdd9c
+  .4byte 0x802bddac
 .global __RTTI__Q26BombAI8MizuExec
 __RTTI__Q26BombAI8MizuExec:
-	.incbin "baserom.dol", 0x2EB4E4, 0x8
+  .4byte 0x802bddc4
+  .4byte 0x802bddd8
 .global __RTTI__Q26BombAI8MizuInit
 __RTTI__Q26BombAI8MizuInit:
-	.incbin "baserom.dol", 0x2EB4EC, 0x8
+  .4byte 0x802bddf0
+  .4byte 0x802bde04
 .global __RTTI__Q26BombAI8BombExec
 __RTTI__Q26BombAI8BombExec:
-	.incbin "baserom.dol", 0x2EB4F4, 0x8
+  .4byte 0x802bde1c
+  .4byte 0x802bde30
 .global __RTTI__11CndCollPart
 __RTTI__11CndCollPart:
-	.incbin "baserom.dol", 0x2EB4FC, 0x8
+  .4byte 0x802bde8c
+  .4byte 0
 .global __RTTI__11CndBombable
 __RTTI__11CndBombable:
-	.incbin "baserom.dol", 0x2EB504, 0x8
+  .4byte 0x802bde80
+  .4byte 0x802bde98
 .global __RTTI__Q26BombAI8BombInit
 __RTTI__Q26BombAI8BombInit:
-	.incbin "baserom.dol", 0x2EB50C, 0x8
+  .4byte 0x802bdebc
+  .4byte 0x802bded0
 .global __RTTI__Q26BombAI7SetExec
 __RTTI__Q26BombAI7SetExec:
-	.incbin "baserom.dol", 0x2EB514, 0x8
+  .4byte 0x802bdee8
+  .4byte 0x802bdef8
 .global __RTTI__Q26BombAI7SetInit
 __RTTI__Q26BombAI7SetInit:
-	.incbin "baserom.dol", 0x2EB51C, 0x10
+  .4byte 0x802bdf10
+  .4byte 0x802bdf20
+  .4byte 0x426f6d62
+  .4byte 0x41490000
 .global __RTTI__6BombAI
 __RTTI__6BombAI:
-	.incbin "baserom.dol", 0x2EB52C, 0x8
+  .4byte 0x803e1c04
+  .4byte 0x802bdf38
 .global __RTTI__Q210PikiHeadAI4Dead
 __RTTI__Q210PikiHeadAI4Dead:
-	.incbin "baserom.dol", 0x2EB534, 0x8
+  .4byte 0x802bdf64
+  .4byte 0x802bdf78
 .global __RTTI__Q210PikiHeadAI10KaretaExec
 __RTTI__Q210PikiHeadAI10KaretaExec:
-	.incbin "baserom.dol", 0x2EB53C, 0x8
+  .4byte 0x802bdf90
+  .4byte 0x802bdfa8
 .global __RTTI__Q210PikiHeadAI10KaretaInit
 __RTTI__Q210PikiHeadAI10KaretaInit:
-	.incbin "baserom.dol", 0x2EB544, 0x8
+  .4byte 0x802bdfc0
+  .4byte 0x802bdfd8
 .global __RTTI__Q210PikiHeadAI10GrowEffect
 __RTTI__Q210PikiHeadAI10GrowEffect:
-	.incbin "baserom.dol", 0x2EB54C, 0x8
+  .4byte 0x802bdff0
+  .4byte 0x802be008
 .global __RTTI__Q210PikiHeadAI12GrowupedExec
 __RTTI__Q210PikiHeadAI12GrowupedExec:
-	.incbin "baserom.dol", 0x2EB554, 0x8
+  .4byte 0x802be020
+  .4byte 0x802be03c
 .global __RTTI__Q210PikiHeadAI8WaitExec
 __RTTI__Q210PikiHeadAI8WaitExec:
-	.incbin "baserom.dol", 0x2EB55C, 0x8
+  .4byte 0x802be054
+  .4byte 0x802be06c
 .global __RTTI__Q210PikiHeadAI8WaitInit
 __RTTI__Q210PikiHeadAI8WaitInit:
-	.incbin "baserom.dol", 0x2EB564, 0x8
+  .4byte 0x802be084
+  .4byte 0x802be09c
 .global __RTTI__Q210PikiHeadAI8TaneExec
 __RTTI__Q210PikiHeadAI8TaneExec:
-	.incbin "baserom.dol", 0x2EB56C, 0x8
+  .4byte 0x802be0b4
+  .4byte 0x802be0cc
 .global __RTTI__Q210PikiHeadAI8TaneInit
 __RTTI__Q210PikiHeadAI8TaneInit:
-	.incbin "baserom.dol", 0x2EB574, 0x8
+  .4byte 0x802be0e4
+  .4byte 0x802be0fc
 .global __RTTI__Q210PikiHeadAI8BuryExec
 __RTTI__Q210PikiHeadAI8BuryExec:
-	.incbin "baserom.dol", 0x2EB57C, 0x8
+  .4byte 0x802be114
+  .4byte 0x802be12c
 .global __RTTI__Q210PikiHeadAI8BuryInit
 __RTTI__Q210PikiHeadAI8BuryInit:
-	.incbin "baserom.dol", 0x2EB584, 0x8
+  .4byte 0x802be144
+  .4byte 0x802be15c
 .global __RTTI__Q210PikiHeadAI9BuryExec2
 __RTTI__Q210PikiHeadAI9BuryExec2:
-	.incbin "baserom.dol", 0x2EB58C, 0x8
+  .4byte 0x802be174
+  .4byte 0x802be18c
 .global __RTTI__Q210PikiHeadAI9BuryInit2
 __RTTI__Q210PikiHeadAI9BuryInit2:
-	.incbin "baserom.dol", 0x2EB594, 0x8
+  .4byte 0x802be1a4
+  .4byte 0x802be1bc
 .global __RTTI__Q210PikiHeadAI13FlyingCleanup
 __RTTI__Q210PikiHeadAI13FlyingCleanup:
-	.incbin "baserom.dol", 0x2EB59C, 0x8
+  .4byte 0x802be1d4
+  .4byte 0x802be1f0
 .global __RTTI__Q210PikiHeadAI10FlyingExec
 __RTTI__Q210PikiHeadAI10FlyingExec:
-	.incbin "baserom.dol", 0x2EB5A4, 0x8
+  .4byte 0x802be208
+  .4byte 0x802be220
 .global __RTTI__Q210PikiHeadAI12FlyingEffect
 __RTTI__Q210PikiHeadAI12FlyingEffect:
-	.incbin "baserom.dol", 0x2EB5AC, 0x8
+  .4byte 0x802be238
+  .4byte 0x802be254
 .global __RTTI__Q210PikiHeadAI11BounceSound
 __RTTI__Q210PikiHeadAI11BounceSound:
-	.incbin "baserom.dol", 0x2EB5B4, 0x8
+  .4byte 0x802be26c
+  .4byte 0x802be284
 .global __RTTI__10PikiHeadAI
 __RTTI__10PikiHeadAI:
-	.incbin "baserom.dol", 0x2EB5BC, 0x8
+  .4byte 0x802be29c
+  .4byte 0x802be2a8
 .global __RTTI__Q28SluiceAI10DamageInit
 __RTTI__Q28SluiceAI10DamageInit:
-	.incbin "baserom.dol", 0x2EB5C4, 0x8
+  .4byte 0x802be2d4
+  .4byte 0x802be2ec
 .global __RTTI__Q28SluiceAI10ChangeInit
 __RTTI__Q28SluiceAI10ChangeInit:
-	.incbin "baserom.dol", 0x2EB5CC, 0x8
+  .4byte 0x802be304
+  .4byte 0x802be31c
 .global __RTTI__Q28SluiceAI8WaitInit
 __RTTI__Q28SluiceAI8WaitInit:
-	.incbin "baserom.dol", 0x2EB5D4, 0x8
+  .4byte 0x802be334
+  .4byte 0x802be348
 .global __RTTI__Q28SluiceAI8AddCount
 __RTTI__Q28SluiceAI8AddCount:
-	.incbin "baserom.dol", 0x2EB5DC, 0x8
+  .4byte 0x802be360
+  .4byte 0x802be374
 .global __RTTI__Q28SluiceAI10MotionDone
 __RTTI__Q28SluiceAI10MotionDone:
-	.incbin "baserom.dol", 0x2EB5E4, 0x8
+  .4byte 0x802be38c
+  .4byte 0x802be3a4
 .global __RTTI__Q28SluiceAI4Init
 __RTTI__Q28SluiceAI4Init:
-	.incbin "baserom.dol", 0x2EB5EC, 0x8
+  .4byte 0x802be3bc
+  .4byte 0x802be3cc
 .global __RTTI__22Receiver$$010AICreature$$1_2
 __RTTI__22Receiver$$010AICreature$$1_2:
-	.incbin "baserom.dol", 0x2EB5F4, 0x8
+  .4byte 0x802be3fc
+  .4byte 0
 .global __RTTI__8SluiceAI
 __RTTI__8SluiceAI:
-	.incbin "baserom.dol", 0x2EB5FC, 0xC
+  .4byte 0x802be490
+  .4byte 0x802be49c
+  .4byte 0
 .global lbl_803E1CE8
 lbl_803E1CE8:
 	.incbin "baserom.dol", 0x2EB608, 0x8
@@ -8363,91 +9374,196 @@ lbl_803E1D44:
 	.incbin "baserom.dol", 0x2EB664, 0x44
 .global __RTTI__11PikiHeadMgr
 __RTTI__11PikiHeadMgr:
-	.incbin "baserom.dol", 0x2EB6A8, 0x10
+  .4byte 0x802be7d0
+  .4byte 0x802be874
+  .4byte 0x802be940
+  .4byte 0
 .global __RTTI__16PikiHeadItemProp
 __RTTI__16PikiHeadItemProp:
-	.incbin "baserom.dol", 0x2EB6B8, 0x10
+  .4byte 0x802be92c
+  .4byte 0x802be950
+  .4byte 0x4974656d
+  .4byte 0x4d677200
 .global __RTTI__13PolyObjectMgr_1
 __RTTI__13PolyObjectMgr_1:
-	.incbin "baserom.dol", 0x2EB6C8, 0x8
+  .4byte 0x802be968
+  .4byte 0x802be978
 .global __RTTI__7ItemMgr
 __RTTI__7ItemMgr:
-	.incbin "baserom.dol", 0x2EB6D0, 0x10
+  .4byte 0x803e1da0
+  .4byte 0x802be9a4
+  .4byte 0x802bea6c
+  .4byte 0
 .global __RTTI__15InteractBikkuri
 __RTTI__15InteractBikkuri:
-	.incbin "baserom.dol", 0x2EB6E0, 0x38
+  .4byte 0x802bea5c
+  .4byte 0x802bea78
+  .4byte 0x802beac0
+  .4byte 0
+  .4byte 0x802bead4
+  .4byte 0
+  .4byte 0x802beae0
+  .4byte 0
+  .4byte 0x802beaf0
+  .4byte 0x802beafc
+  .4byte 0x802beb10
+  .4byte 0x802beb1c
+  .4byte 0x802beab0
+  .4byte 0x802beb40
 .global __RTTI__8DoorProp
 __RTTI__8DoorProp:
-	.incbin "baserom.dol", 0x2EB718, 0x10
+  .4byte 0x802becc8
+  .4byte 0x802becd4
+  .4byte 0x4b657950
+  .4byte 0x726f7000
 .global __RTTI__7KeyProp
 __RTTI__7KeyProp:
-	.incbin "baserom.dol", 0x2EB728, 0x8
+  .4byte 0x803e1e00
+  .4byte 0x802becec
 .global __RTTI__8SeedProp
 __RTTI__8SeedProp:
-	.incbin "baserom.dol", 0x2EB730, 0x8
+  .4byte 0x802bed04
+  .4byte 0x802bed10
 .global __RTTI__8RopeProp
 __RTTI__8RopeProp:
-	.incbin "baserom.dol", 0x2EB738, 0x8
+  .4byte 0x802bed28
+  .4byte 0x802bed34
 .global __RTTI__12MizuItemProp
 __RTTI__12MizuItemProp:
-	.incbin "baserom.dol", 0x2EB740, 0x8
+  .4byte 0x802bed4c
+  .4byte 0x802bed5c
 .global __RTTI__12BombItemProp
 __RTTI__12BombItemProp:
-	.incbin "baserom.dol", 0x2EB748, 0x8
+  .4byte 0x802bed74
+  .4byte 0x802bed84
 .global __RTTI__Q27ItemMgr7UseNode
 __RTTI__Q27ItemMgr7UseNode:
-	.incbin "baserom.dol", 0x2EB750, 0x8
+  .4byte 0x802bed9c
+  .4byte 0x802bedb0
 .global __RTTI__12KusaItemProp
 __RTTI__12KusaItemProp:
-	.incbin "baserom.dol", 0x2EB758, 0x8
+  .4byte 0x802bedd4
+  .4byte 0x802bede4
 .global __RTTI__16BuildingItemProp
 __RTTI__16BuildingItemProp:
-	.incbin "baserom.dol", 0x2EB760, 0x10
+  .4byte 0x802bedfc
+  .4byte 0x802bee10
+  .4byte 0x802bee34
+  .4byte 0
 .global __RTTI__11UfoItemProp
 __RTTI__11UfoItemProp:
-	.incbin "baserom.dol", 0x2EB770, 0x8
+  .4byte 0x802bee60
+  .4byte 0x802bee6c
 .global __RTTI__12GoalItemProp
 __RTTI__12GoalItemProp:
-	.incbin "baserom.dol", 0x2EB778, 0x8
+  .4byte 0x802bee84
+  .4byte 0x802bee94
 .global __RTTI__15CreatureNodeMgr_1
 __RTTI__15CreatureNodeMgr_1:
-	.incbin "baserom.dol", 0x2EB780, 0x8
+  .4byte 0x802beec8
+  .4byte 0x802beed8
 .global __RTTI__13MeltingPotMgr
 __RTTI__13MeltingPotMgr:
-	.incbin "baserom.dol", 0x2EB788, 0x8
+  .4byte 0x802beeb8
+  .4byte 0x802bef04
 .global __RTTI__12CreatureNode
 __RTTI__12CreatureNode:
-	.incbin "baserom.dol", 0x2EB790, 0x8
+  .4byte 0x802befb0
+  .4byte 0x802befc0
 .global __RTTI__12BuildingItem
 __RTTI__12BuildingItem:
-	.incbin "baserom.dol", 0x2EB798, 0x38
+  .4byte 0x802bf018
+  .4byte 0x802bf028
+  .4byte 0x802bf1f0
+  .4byte 0
+  .4byte 0x802bf204
+  .4byte 0
+  .4byte 0x802bf210
+  .4byte 0
+  .4byte 0x802bf220
+  .4byte 0x802bf22c
+  .4byte 0x802bf240
+  .4byte 0x802bf24c
+  .4byte 0x802bf270
+  .4byte 0x802bf280
 .global __RTTI__10ItemObject
 __RTTI__10ItemObject:
-	.incbin "baserom.dol", 0x2EB7D0, 0x8
+  .4byte 0x802bf2ac
+  .4byte 0x802bf2b8
 .global __RTTI__18NaviDemoSunsetGoal
 __RTTI__18NaviDemoSunsetGoal:
-	.incbin "baserom.dol", 0x2EB7D8, 0x8
+  .4byte 0x802bf1dc
+  .4byte 0x802bf2ec
 .global __RTTI__19NaviDemoSunsetStart
 __RTTI__19NaviDemoSunsetStart:
-	.incbin "baserom.dol", 0x2EB7E0, 0x10
+  .4byte 0x802bf484
+  .4byte 0x802bf498
+  .4byte 0x46756c63
+  .4byte 0x72756d00
 .global __RTTI__7Fulcrum
 __RTTI__7Fulcrum:
-	.incbin "baserom.dol", 0x2EB7F0, 0x8
+  .4byte 0x803e1ec8
+  .4byte 0x802bf630
 .global __RTTI__11BombGenItem
 __RTTI__11BombGenItem:
-	.incbin "baserom.dol", 0x2EB7F8, 0x8
+  .4byte 0x802bf7c8
+  .4byte 0x802bf7d4
 .global __RTTI__8ItemBall
 __RTTI__8ItemBall:
-	.incbin "baserom.dol", 0x2EB800, 0x38
+  .4byte 0x802bfac8
+  .4byte 0x802bfad4
+  .4byte 0x802bfc90
+  .4byte 0
+  .4byte 0x802bfca4
+  .4byte 0
+  .4byte 0x802bfcb0
+  .4byte 0
+  .4byte 0x802bfcc0
+  .4byte 0x802bfccc
+  .4byte 0x802bfce0
+  .4byte 0x802bfcec
+  .4byte 0x802bfd10
+  .4byte 0x802bfd20
 .global __RTTI__8MizuItem
 __RTTI__8MizuItem:
-	.incbin "baserom.dol", 0x2EB838, 0x54
+  .4byte 0x802bfc84
+  .4byte 0x802bfd4c
+  .4byte 0x31000000
+  .4byte 0x32000000
+  .4byte 0x33000000
+  .4byte 0x34000000
+  .4byte 0x35000000
+  .4byte 0x36000000
+  .4byte 0x37000000
+  .4byte 0x38000000
+  .4byte 0x39000000
+  .4byte 0x31300000
+  .4byte 0x31310000
+  .4byte 0x31320000
+  .4byte 0x31330000
+  .4byte 0x31340000
+  .4byte 0x31350000
+  .4byte 0x802bff5c
+  .4byte 0
+  .4byte 0x802bff68
+  .4byte 0x802bff78
 .global __RTTI__16PaniItemAnimator
 __RTTI__16PaniItemAnimator:
-	.incbin "baserom.dol", 0x2EB88C, 0x2C
+  .4byte 0x802bff48
+  .4byte 0x802bff84
+  .4byte 0
+  .4byte 0x802c000c
+  .4byte 0
+  .4byte 0x47656e42
+  .4byte 0x61736500
+  .4byte 0x803e1f80
+  .4byte 0x802c0018
+  .4byte 0x802c0024
+  .4byte 0x802c0030
 .global __RTTI__13GenObjectNavi
 __RTTI__13GenObjectNavi:
-	.incbin "baserom.dol", 0x2EB8B8, 0x8
+  .4byte 0x802bfffc
+  .4byte 0x802c0044
 .global DelayPikiBirth
 DelayPikiBirth:
 	.incbin "baserom.dol", 0x2EB8C0, 0x4
@@ -8885,25 +10001,62 @@ lbl_803E21E4:
 	.incbin "baserom.dol", 0x2EBB04, 0xC
 .global __RTTI__12InteractSuck
 __RTTI__12InteractSuck:
-	.incbin "baserom.dol", 0x2EBB10, 0x8
+  .4byte 0x802c0104
+  .4byte 0x802c0120
 .global __RTTI__14InteractGeyzer
 __RTTI__14InteractGeyzer:
-	.incbin "baserom.dol", 0x2EBB18, 0x8
+  .4byte 0x802c0158
+  .4byte 0x802c0168
 .global __RTTI__19StateMachine$$04Navi$$1
 __RTTI__19StateMachine$$04Navi$$1:
-	.incbin "baserom.dol", 0x2EBB20, 0x48
+  .4byte 0x802c01cc
+  .4byte 0
+  .4byte 0x802c01f8
+  .4byte 0
+  .4byte 0x802c021c
+  .4byte 0
+  .4byte 0x802c025c
+  .4byte 0
+  .4byte 0x414e6f64
+  .4byte 0x65000000
+  .4byte 0x803e2220
+  .4byte 0
+  .4byte 0x802c0310
+  .4byte 0x802c031c
+  .4byte 0x4e6f6465
+  .4byte 0
+  .4byte 0x803e2238
+  .4byte 0x802c0328
 .global __RTTI__10NaviDrawer
 __RTTI__10NaviDrawer:
-	.incbin "baserom.dol", 0x2EBB68, 0x8
+  .4byte 0x802c0304
+  .4byte 0x802c033c
 .global __RTTI__10PelletView
 __RTTI__10PelletView:
-	.incbin "baserom.dol", 0x2EBB70, 0x20
+  .4byte 0x802c03a4
+  .4byte 0
+  .4byte 0x802c03e4
+  .4byte 0
+  .4byte 0x802c0410
+  .4byte 0
+  .4byte 0x802c0448
+  .4byte 0
 .global __RTTI__8NaviProp
 __RTTI__8NaviProp:
-	.incbin "baserom.dol", 0x2EBB90, 0x28
+  .4byte 0x802c043c
+  .4byte 0x802c0458
+  .4byte 0x4e617669
+  .4byte 0
+  .4byte 0x802c04a8
+  .4byte 0
+  .4byte 0x802c04b4
+  .4byte 0
+  .4byte 0x802c04c4
+  .4byte 0x802c04d0
 .global __RTTI__4Navi
 __RTTI__4Navi:
-	.incbin "baserom.dol", 0x2EBBB8, 0x8
+  .4byte 0x803e2278
+  .4byte 0x802c04e4
 .global lbl_803E22A0
 lbl_803E22A0:
 	.incbin "baserom.dol", 0x2EBBC0, 0x4
@@ -9413,124 +10566,167 @@ lbl_803E2540:
 	.incbin "baserom.dol", 0x2EBE60, 0xC
 .global __RTTI__13AState$$04Navi$$1
 __RTTI__13AState$$04Navi$$1:
-	.incbin "baserom.dol", 0x2EBE6C, 0x10
+  .4byte 0x802c06c0
+  .4byte 0x802c06d0
+  .4byte 0x802c06dc
+  .4byte 0x802c06e8
 .global __RTTI__18NaviUfoAccessState
 __RTTI__18NaviUfoAccessState:
-	.incbin "baserom.dol", 0x2EBE7C, 0x8
+  .4byte 0x802c069c
+  .4byte 0x802c06fc
 .global __RTTI__20NaviPartsAccessState
 __RTTI__20NaviPartsAccessState:
-	.incbin "baserom.dol", 0x2EBE84, 0x8
+  .4byte 0x802c076c
+  .4byte 0x802c0784
 .global __RTTI__17NaviStartingState
 __RTTI__17NaviStartingState:
-	.incbin "baserom.dol", 0x2EBE8C, 0x8
+  .4byte 0x802c07f4
+  .4byte 0x802c0808
 .global __RTTI__17NaviPikiZeroState
 __RTTI__17NaviPikiZeroState:
-	.incbin "baserom.dol", 0x2EBE94, 0x8
+  .4byte 0x802c0878
+  .4byte 0x802c088c
 .global __RTTI__13NaviDeadState
 __RTTI__13NaviDeadState:
-	.incbin "baserom.dol", 0x2EBE9C, 0x8
+  .4byte 0x802c08fc
+  .4byte 0x802c090c
 .global __RTTI__15NaviIroIroState
 __RTTI__15NaviIroIroState:
-	.incbin "baserom.dol", 0x2EBEA4, 0x8
+  .4byte 0x802c097c
+  .4byte 0x802c098c
 .global __RTTI__14NaviClearState
 __RTTI__14NaviClearState:
-	.incbin "baserom.dol", 0x2EBEAC, 0x8
+  .4byte 0x802c09fc
+  .4byte 0x802c0a0c
 .global __RTTI__13NaviLockState
 __RTTI__13NaviLockState:
-	.incbin "baserom.dol", 0x2EBEB4, 0x8
+  .4byte 0x802c0a7c
+  .4byte 0x802c0a8c
 .global __RTTI__15NaviAttackState
 __RTTI__15NaviAttackState:
-	.incbin "baserom.dol", 0x2EBEBC, 0x8
+  .4byte 0x802c0afc
+  .4byte 0x802c0b0c
 .global __RTTI__14NaviWaterState
 __RTTI__14NaviWaterState:
-	.incbin "baserom.dol", 0x2EBEC4, 0x8
+  .4byte 0x802c0b7c
+  .4byte 0x802c0b8c
 .global __RTTI__12NaviSowState
 __RTTI__12NaviSowState:
-	.incbin "baserom.dol", 0x2EBECC, 0x8
+  .4byte 0x802c0bfc
+  .4byte 0x802c0c0c
 .global __RTTI__16NaviPressedState
 __RTTI__16NaviPressedState:
-	.incbin "baserom.dol", 0x2EBED4, 0x8
+  .4byte 0x802c0c7c
+  .4byte 0x802c0c90
 .global __RTTI__19NaviNukuAdjustState
 __RTTI__19NaviNukuAdjustState:
-	.incbin "baserom.dol", 0x2EBEDC, 0x8
+  .4byte 0x802c0d00
+  .4byte 0x802c0d14
 .global __RTTI__13NaviNukuState
 __RTTI__13NaviNukuState:
-	.incbin "baserom.dol", 0x2EBEE4, 0x8
+  .4byte 0x802c0d84
+  .4byte 0x802c0d94
 .global __RTTI__17NaviPushPikiState
 __RTTI__17NaviPushPikiState:
-	.incbin "baserom.dol", 0x2EBEEC, 0x8
+  .4byte 0x802c0e04
+  .4byte 0x802c0e18
 .global __RTTI__13NaviPushState
 __RTTI__13NaviPushState:
-	.incbin "baserom.dol", 0x2EBEF4, 0x8
+  .4byte 0x802c0e88
+  .4byte 0x802c0e98
 .global __RTTI__14NaviThrowState
 __RTTI__14NaviThrowState:
-	.incbin "baserom.dol", 0x2EBEFC, 0x8
+  .4byte 0x802c0f08
+  .4byte 0x802c0f18
 .global __RTTI__18NaviThrowWaitState
 __RTTI__18NaviThrowWaitState:
-	.incbin "baserom.dol", 0x2EBF04, 0x8
+  .4byte 0x802c0f88
+  .4byte 0x802c0f9c
 .global __RTTI__16NaviReleaseState
 __RTTI__16NaviReleaseState:
-	.incbin "baserom.dol", 0x2EBF0C, 0x8
+  .4byte 0x802c100c
+  .4byte 0x802c1020
 .global __RTTI__15NaviGatherState
 __RTTI__15NaviGatherState:
-	.incbin "baserom.dol", 0x2EBF14, 0x8
+  .4byte 0x802c1090
+  .4byte 0x802c10a0
 .global __RTTI__15NaviGeyzerState
 __RTTI__15NaviGeyzerState:
-	.incbin "baserom.dol", 0x2EBF1C, 0x8
+  .4byte 0x802c1110
+  .4byte 0x802c1120
 .global __RTTI__14NaviFlickState
 __RTTI__14NaviFlickState:
-	.incbin "baserom.dol", 0x2EBF24, 0x8
+  .4byte 0x802c1190
+  .4byte 0x802c11a0
 .global __RTTI__13NaviIdleState
 __RTTI__13NaviIdleState:
-	.incbin "baserom.dol", 0x2EBF2C, 0x8
+  .4byte 0x802c1210
+  .4byte 0x802c1220
 .global __RTTI__16NaviFunbariState
 __RTTI__16NaviFunbariState:
-	.incbin "baserom.dol", 0x2EBF34, 0x8
+  .4byte 0x802c1290
+  .4byte 0x802c12a4
 .global __RTTI__17NaviRopeExitState
 __RTTI__17NaviRopeExitState:
-	.incbin "baserom.dol", 0x2EBF3C, 0x8
+  .4byte 0x802c1314
+  .4byte 0x802c1328
 .global __RTTI__13NaviRopeState
 __RTTI__13NaviRopeState:
-	.incbin "baserom.dol", 0x2EBF44, 0x8
+  .4byte 0x802c1398
+  .4byte 0x802c13a8
 .global __RTTI__13NaviPickState
 __RTTI__13NaviPickState:
-	.incbin "baserom.dol", 0x2EBF4C, 0x8
+  .4byte 0x802c1418
+  .4byte 0x802c1428
 .global __RTTI__Q25GmWin13CloseListener
 __RTTI__Q25GmWin13CloseListener:
-	.incbin "baserom.dol", 0x2EBF54, 0x8
+  .4byte 0x802c14ac
+  .4byte 0
 .global __RTTI__Q212ContainerWin8Listener
 __RTTI__Q212ContainerWin8Listener:
-	.incbin "baserom.dol", 0x2EBF5C, 0x8
+  .4byte 0x802c14c4
+  .4byte 0
 .global __RTTI__18NaviContainerState
 __RTTI__18NaviContainerState:
-	.incbin "baserom.dol", 0x2EBF64, 0x8
+  .4byte 0x802c1498
+  .4byte 0x802c14dc
 .global __RTTI__12NaviUfoState
 __RTTI__12NaviUfoState:
-	.incbin "baserom.dol", 0x2EBF6C, 0x8
+  .4byte 0x802c1594
+  .4byte 0x802c15a4
 .global __RTTI__13NaviWalkState
 __RTTI__13NaviWalkState:
-	.incbin "baserom.dol", 0x2EBF74, 0x8
+  .4byte 0x802c1614
+  .4byte 0x802c1624
 .global __RTTI__13NaviBuryState
 __RTTI__13NaviBuryState:
-	.incbin "baserom.dol", 0x2EBF7C, 0x8
+  .4byte 0x802c1694
+  .4byte 0x802c16a4
 .global __RTTI__14NaviStuckState
 __RTTI__14NaviStuckState:
-	.incbin "baserom.dol", 0x2EBF84, 0x8
+  .4byte 0x802c174c
+  .4byte 0x802c175c
 .global __RTTI__16NaviDemoInfState
 __RTTI__16NaviDemoInfState:
-	.incbin "baserom.dol", 0x2EBF8C, 0x8
+  .4byte 0x802c17cc
+  .4byte 0x802c17e0
 .global __RTTI__17NaviDemoWaitState
 __RTTI__17NaviDemoWaitState:
-	.incbin "baserom.dol", 0x2EBF94, 0x8
+  .4byte 0x802c1850
+  .4byte 0x802c1864
 .global __RTTI__15NaviPelletState
 __RTTI__15NaviPelletState:
-	.incbin "baserom.dol", 0x2EBF9C, 0x8
+  .4byte 0x802c18d4
+  .4byte 0x802c18e4
 .global __RTTI__19StateMachine$$04Navi$$1_1
 __RTTI__19StateMachine$$04Navi$$1_1:
-	.incbin "baserom.dol", 0x2EBFA4, 0x8
+  .4byte 0x802c1a44
+  .4byte 0
 .global __RTTI__16NaviStateMachine
 __RTTI__16NaviStateMachine:
-	.incbin "baserom.dol", 0x2EBFAC, 0xC
+  .4byte 0x802c1a30
+  .4byte 0x802c1a58
+  .4byte 0
 .global lbl_803E2698
 lbl_803E2698:
 	.incbin "baserom.dol", 0x2EBFB8, 0x4
@@ -9578,40 +10774,55 @@ lbl_803E26D0:
 	.incbin "baserom.dol", 0x2EBFF0, 0xC
 .global __RTTI__13AState$$04Navi$$1_1
 __RTTI__13AState$$04Navi$$1_1:
-	.incbin "baserom.dol", 0x2EBFFC, 0x10
+  .4byte 0x802c1b34
+  .4byte 0x802c1b44
+  .4byte 0x802c1b50
+  .4byte 0x802c1b5c
 .global __RTTI__19NaviDemoSunsetState
 __RTTI__19NaviDemoSunsetState:
-	.incbin "baserom.dol", 0x2EC00C, 0x8
+  .4byte 0x802c1b10
+  .4byte 0x802c1b70
 .global __RTTI__35StateMachine$$019NaviDemoSunsetState$$1
 __RTTI__35StateMachine$$019NaviDemoSunsetState$$1:
-	.incbin "baserom.dol", 0x2EC014, 0x8
+  .4byte 0x802c1be0
+  .4byte 0
 .global __RTTI__31Receiver$$019NaviDemoSunsetState$$1
 __RTTI__31Receiver$$019NaviDemoSunsetState$$1:
-	.incbin "baserom.dol", 0x2EC01C, 0x8
+  .4byte 0x802c1d18
+  .4byte 0
 .global __RTTI__29AState$$019NaviDemoSunsetState$$1
 __RTTI__29AState$$019NaviDemoSunsetState$$1:
-	.incbin "baserom.dol", 0x2EC024, 0x8
+  .4byte 0x802c1d38
+  .4byte 0x802c1d54
 .global __RTTI__Q219NaviDemoSunsetState9DemoState
 __RTTI__Q219NaviDemoSunsetState9DemoState:
-	.incbin "baserom.dol", 0x2EC02C, 0x8
+  .4byte 0x802c1d60
+  .4byte 0x802c1d80
 .global __RTTI__Q219NaviDemoSunsetState8SitState
 __RTTI__Q219NaviDemoSunsetState8SitState:
-	.incbin "baserom.dol", 0x2EC034, 0x8
+  .4byte 0x802c1cf8
+  .4byte 0x802c1d94
 .global __RTTI__Q219NaviDemoSunsetState9WaitState
 __RTTI__Q219NaviDemoSunsetState9WaitState:
-	.incbin "baserom.dol", 0x2EC03C, 0x8
+  .4byte 0x802c1e00
+  .4byte 0x802c1e20
 .global __RTTI__Q219NaviDemoSunsetState12WhistleState
 __RTTI__Q219NaviDemoSunsetState12WhistleState:
-	.incbin "baserom.dol", 0x2EC044, 0x8
+  .4byte 0x802c1e8c
+  .4byte 0x802c1eb0
 .global __RTTI__Q219NaviDemoSunsetState9LookState
 __RTTI__Q219NaviDemoSunsetState9LookState:
-	.incbin "baserom.dol", 0x2EC04C, 0x8
+  .4byte 0x802c1f1c
+  .4byte 0x802c1f3c
 .global __RTTI__Q219NaviDemoSunsetState7GoState
 __RTTI__Q219NaviDemoSunsetState7GoState:
-	.incbin "baserom.dol", 0x2EC054, 0x8
+  .4byte 0x802c1fa8
+  .4byte 0x802c1fc8
 .global __RTTI__Q219NaviDemoSunsetState16DemoStateMachine
 __RTTI__Q219NaviDemoSunsetState16DemoStateMachine:
-	.incbin "baserom.dol", 0x2EC05C, 0xC
+  .4byte 0x802c210c
+  .4byte 0x802c2134
+  .4byte 0
 .global lbl_803E2748
 lbl_803E2748:
 	.incbin "baserom.dol", 0x2EC068, 0x4
@@ -9716,7 +10927,8 @@ lbl_803E2818:
 	.incbin "baserom.dol", 0x2EC138, 0x38
 .global __RTTI__15GameCoreSection
 __RTTI__15GameCoreSection:
-	.incbin "baserom.dol", 0x2EC170, 0x8
+  .4byte 0x802c241c
+  .4byte 0x802c2458
 .global lbl_803E2858
 lbl_803E2858:
 	.incbin "baserom.dol", 0x2EC178, 0x8
@@ -9794,64 +11006,96 @@ lbl_803E28BC:
 	.incbin "baserom.dol", 0x2EC1DC, 0x24
 .global __RTTI__7KEffect_1
 __RTTI__7KEffect_1:
-	.incbin "baserom.dol", 0x2EC200, 0x8
+  .4byte 0x803e28d8
+  .4byte 0x802c25b0
 .global __RTTI__10BurnEffect
 __RTTI__10BurnEffect:
-	.incbin "baserom.dol", 0x2EC208, 0x8
+  .4byte 0x802c2514
+  .4byte 0x802c25cc
 .global __RTTI__12RippleEffect
 __RTTI__12RippleEffect:
-	.incbin "baserom.dol", 0x2EC210, 0x8
+  .4byte 0x802c262c
+  .4byte 0x802c263c
 .global __RTTI__15FreeLightEffect
 __RTTI__15FreeLightEffect:
-	.incbin "baserom.dol", 0x2EC218, 0x8
+  .4byte 0x802c269c
+  .4byte 0x802c26ac
 .global __RTTI__16UfoSuikomiEffect
 __RTTI__16UfoSuikomiEffect:
-	.incbin "baserom.dol", 0x2EC220, 0x8
+  .4byte 0x802c270c
+  .4byte 0x802c2720
 .global __RTTI__15WhistleTemplate
 __RTTI__15WhistleTemplate:
-	.incbin "baserom.dol", 0x2EC228, 0x8
+  .4byte 0x802c2790
+  .4byte 0x802c27a0
 .global __RTTI__13UfoSuckEffect
 __RTTI__13UfoSuckEffect:
-	.incbin "baserom.dol", 0x2EC230, 0x8
+  .4byte 0x802c2780
+  .4byte 0x802c27c4
 .global __RTTI__15BombEffectLight
 __RTTI__15BombEffectLight:
-	.incbin "baserom.dol", 0x2EC238, 0x8
+  .4byte 0x802c2868
+  .4byte 0x802c2878
 .global __RTTI__10BombEffect
 __RTTI__10BombEffect:
-	.incbin "baserom.dol", 0x2EC240, 0x8
+  .4byte 0x802c28d8
+  .4byte 0x802c28e4
 .global __RTTI__12SimpleEffect
 __RTTI__12SimpleEffect:
-	.incbin "baserom.dol", 0x2EC248, 0x10
+  .4byte 0x802c2944
+  .4byte 0x802c2954
+  .4byte 0x4e617669
+  .4byte 0x46756500
 .global __RTTI__7NaviFue
 __RTTI__7NaviFue:
-	.incbin "baserom.dol", 0x2EC258, 0x8
+  .4byte 0x803e2930
+  .4byte 0x802c29b4
 .global __RTTI__15SmokeTreeEffect
 __RTTI__15SmokeTreeEffect:
-	.incbin "baserom.dol", 0x2EC260, 0x8
+  .4byte 0x802c2a14
+  .4byte 0x802c2a24
 .global __RTTI__15SmokeRockEffect
 __RTTI__15SmokeRockEffect:
-	.incbin "baserom.dol", 0x2EC268, 0x8
+  .4byte 0x802c2a84
+  .4byte 0x802c2a94
 .global __RTTI__16SmokeGrassEffect
 __RTTI__16SmokeGrassEffect:
-	.incbin "baserom.dol", 0x2EC270, 0x8
+  .4byte 0x802c2af4
+  .4byte 0x802c2b08
 .global __RTTI__15SmokeSoilEffect
 __RTTI__15SmokeSoilEffect:
-	.incbin "baserom.dol", 0x2EC278, 0x8
+  .4byte 0x802c2b68
+  .4byte 0x802c2b78
 .global __RTTI__11NaviWhistle
 __RTTI__11NaviWhistle:
-	.incbin "baserom.dol", 0x2EC280, 0x8
+  .4byte 0x802c2bd8
+  .4byte 0x802c2be4
 .global __RTTI__10GoalEffect
 __RTTI__10GoalEffect:
-	.incbin "baserom.dol", 0x2EC288, 0x8
+  .4byte 0x802c2c44
+  .4byte 0x802c2c50
 .global __RTTI__11SlimeEffect
 __RTTI__11SlimeEffect:
-	.incbin "baserom.dol", 0x2EC290, 0x30
+  .4byte 0x802c2cb0
+  .4byte 0x802c2cbc
+  .4byte 0x414e6f64
+  .4byte 0x65000000
+  .4byte 0x803e2978
+  .4byte 0
+  .4byte 0x802c2dac
+  .4byte 0x802c2db8
+  .4byte 0x4e6f6465
+  .4byte 0
+  .4byte 0x803e2990
+  .4byte 0x802c2dc4
 .global __RTTI__10Controller_1
 __RTTI__10Controller_1:
-	.incbin "baserom.dol", 0x2EC2C0, 0x8
+  .4byte 0x802c2dd8
+  .4byte 0x802c2de4
 .global __RTTI__10Kontroller
 __RTTI__10Kontroller:
-	.incbin "baserom.dol", 0x2EC2C8, 0x8
+  .4byte 0x802c2d90
+  .4byte 0x802c2e00
 .global lbl_803E29B0
 lbl_803E29B0:
 	.incbin "baserom.dol", 0x2EC2D0, 0x4
@@ -9881,7 +11125,8 @@ lbl_803E29D0:
 	.incbin "baserom.dol", 0x2EC2F0, 0x50
 .global __RTTI__7NaviMgr
 __RTTI__7NaviMgr:
-	.incbin "baserom.dol", 0x2EC340, 0x8
+  .4byte 0x803e29d8
+  .4byte 0x802c2fa4
 .global lbl_803E2A28
 lbl_803E2A28:
 	.incbin "baserom.dol", 0x2EC348, 0x4
@@ -9974,7 +11219,11 @@ lbl_803E2AC8:
 	.incbin "baserom.dol", 0x2EC3E8, 0x24
 .global __RTTI__17GenObjectMapParts
 __RTTI__17GenObjectMapParts:
-	.incbin "baserom.dol", 0x2EC40C, 0x14
+  .4byte 0x802c30d0
+  .4byte 0x802c311c
+  .4byte 0x802c317c
+  .4byte 0
+  .4byte 0
 .global lbl_803E2B00
 lbl_803E2B00:
 	.incbin "baserom.dol", 0x2EC420, 0x4
@@ -10016,22 +11265,181 @@ lbl_803E2B30:
 	.incbin "baserom.dol", 0x2EC450, 0x34
 .global __RTTI__12DynCollShape_3
 __RTTI__12DynCollShape_3:
-	.incbin "baserom.dol", 0x2EC484, 0x8
+  .4byte 0x802c32c8
+  .4byte 0x802c32d8
 .global __RTTI__8MapParts
 __RTTI__8MapParts:
-	.incbin "baserom.dol", 0x2EC48C, 0x8
+  .4byte 0x802c32fc
+  .4byte 0x802c3308
 .global __RTTI__9MapSlider
 __RTTI__9MapSlider:
-	.incbin "baserom.dol", 0x2EC494, 0x8
+  .4byte 0x802c3264
+  .4byte 0x802c3334
 .global __RTTI__9MapEntity
 __RTTI__9MapEntity:
-	.incbin "baserom.dol", 0x2EC49C, 0x24C
+  .4byte 0x802c33b4
+  .4byte 0x802c33c0
+  .4byte 0
+  .4byte 0x52554e00
+  .4byte 0x4e494745
+  .4byte 0x52550000
+  .4byte 0x57414c4b
+  .4byte 0
+  .4byte 0x57414954
+  .4byte 0
+  .4byte 0x5049434b
+  .4byte 0
+  .4byte 0x4e554b55
+  .4byte 0
+  .4byte 0x44454144
+  .4byte 0
+  .4byte 0x44454144
+  .4byte 0x32000000
+  .4byte 0x44454144
+  .4byte 0x33000000
+  .4byte 0x44414d41
+  .4byte 0x47450000
+  .4byte 0x41534942
+  .4byte 0x554d4900
+  .4byte 0x4f434152
+  .4byte 0x52590000
+  .4byte 0x4c535542
+  .4byte 0x45525500
+  .4byte 0x52535542
+  .4byte 0x45525500
+  .4byte 0x4a4f4231
+  .4byte 0
+  .4byte 0x47524f57
+  .4byte 0x55503100
+  .4byte 0x47524f57
+  .4byte 0x55503200
+  .4byte 0x4a4f4232
+  .4byte 0
+  .4byte 0x4b4f524f
+  .4byte 0x42550000
+  .4byte 0x4a554d50
+  .4byte 0
+  .4byte 0x41545441
+  .4byte 0x434b0000
+  .4byte 0x50554e43
+  .4byte 0x48000000
+  .4byte 0x4b454e4b
+  .4byte 0x41000000
+  .4byte 0x5448524f
+  .4byte 0x57000000
+  .4byte 0x48414e47
+  .4byte 0
+  .4byte 0x46414c4c
+  .4byte 0
+  .4byte 0x4a4b4f4b
+  .4byte 0x45000000
+  .4byte 0x4a484954
+  .4byte 0
+  .4byte 0x47455455
+  .4byte 0x50000000
+  .4byte 0x4e45574a
+  .4byte 0x4d500000
+  .4byte 0x524f4c4c
+  .4byte 0x4a4d5000
+  .4byte 0x57415645
+  .4byte 0x4a4d5000
+  .4byte 0x50555348
+  .4byte 0
+  .4byte 0x554d4152
+  .4byte 0x55000000
+  .4byte 0x414b5542
+  .4byte 0x49000000
+  .4byte 0x52494e42
+  .4byte 0x4f570000
+  .4byte 0x49524149
+  .4byte 0x52410000
+  .4byte 0x4b414946
+  .4byte 0x554b5500
+  .4byte 0x4b495a55
+  .4byte 0x4b550000
+  .4byte 0x4b555454
+  .4byte 0x554b5500
+  .4byte 0x46554500
+  .4byte 0x53555741
+  .4byte 0x52550000
+  .4byte 0x414f4755
+  .4byte 0
+  .4byte 0x4e455255
+  .4byte 0
+  .4byte 0x50524553
+  .4byte 0x53310000
+  .4byte 0x50524553
+  .4byte 0x53320000
+  .4byte 0x53505245
+  .4byte 0x53530000
+  .4byte 0x4f424f52
+  .4byte 0x45525500
+  .4byte 0x53495a55
+  .4byte 0x4d550000
+  .4byte 0x4f54494b
+  .4byte 0x414b4500
+  .4byte 0x4f544952
+  .4byte 0x55000000
+  .4byte 0x484e4f42
+  .4byte 0x4f525500
+  .4byte 0x4e4f424f
+  .4byte 0x52550000
+  .4byte 0x53414741
+  .4byte 0x53553200
+  .4byte 0x50756e63
+  .4byte 0x68210000
+  .4byte 0x4d4f4552
+  .4byte 0x55000000
+  .4byte 0x45534100
+  .4byte 0x47415454
+  .4byte 0x55000000
+  .4byte 0x47414b4b
+  .4byte 0x41524900
+  .4byte 0x4f4b4f52
+  .4byte 0x55000000
+  .4byte 0x524f544a
+  .4byte 0x554d5000
+  .4byte 0x67776169
+  .4byte 0x74310000
+  .4byte 0x67776169
+  .4byte 0x74320000
+  .4byte 0x67667572
+  .4byte 0x69310000
+  .4byte 0x67667572
+  .4byte 0x69320000
+  .4byte 0x676e756b
+  .4byte 0x65000000
+  .4byte 0x6a756d70
+  .4byte 0x20623100
+  .4byte 0x6d697a75
+  .4byte 0x61676500
+  .4byte 0x73616761
+  .4byte 0x73750000
+  .4byte 0x6f737500
+  .4byte 0x6e6f7275
+  .4byte 0
+  .4byte 0x6f646561
+  .4byte 0x64000000
+  .4byte 0x802c3768
+  .4byte 0
+  .4byte 0x802c3774
+  .4byte 0x802c3784
 .global __RTTI__16PaniPikiAnimator
 __RTTI__16PaniPikiAnimator:
-	.incbin "baserom.dol", 0x2EC6E8, 0x28
+  .4byte 0x802c3754
+  .4byte 0x802c3790
+  .4byte 0x802c3818
+  .4byte 0
+  .4byte 0x47656e42
+  .4byte 0x61736500
+  .4byte 0x803e2dd8
+  .4byte 0x802c3824
+  .4byte 0x802c3830
+  .4byte 0x802c383c
 .global __RTTI__14GenObjectActor
 __RTTI__14GenObjectActor:
-	.incbin "baserom.dol", 0x2EC710, 0x8
+  .4byte 0x802c3808
+  .4byte 0x802c3850
 .global lbl_803E2DF8
 lbl_803E2DF8:
 	.incbin "baserom.dol", 0x2EC718, 0x8
@@ -10061,64 +11469,134 @@ lbl_803E2E58:
 	.incbin "baserom.dol", 0x2EC778, 0x28
 .global __RTTI__14GenObjectPlant
 __RTTI__14GenObjectPlant:
-	.incbin "baserom.dol", 0x2EC7A0, 0x40
+  .4byte 0x802c3994
+  .4byte 0x802c39dc
+  .4byte 0x414e6f64
+  .4byte 0x65000000
+  .4byte 0x803e2e88
+  .4byte 0
+  .4byte lbl_802C38C4
+  .4byte 0x802c3a3c
+  .4byte 0x4e6f6465
+  .4byte 0
+  .4byte 0x803e2ea0
+  .4byte 0x802c3a48
+  .4byte 0x802c3a5c
+  .4byte 0
+  .4byte 0x802c3a68
+  .4byte 0x802c3a74
 .global __RTTI__15CreatureNodeMgr_2
 __RTTI__15CreatureNodeMgr_2:
-	.incbin "baserom.dol", 0x2EC7E0, 0x8
+  .4byte 0x802c3a98
+  .4byte 0x802c3aa8
 .global __RTTI__8PlantMgr
 __RTTI__8PlantMgr:
-	.incbin "baserom.dol", 0x2EC7E8, 0x10
+  .4byte 0x802c3a30
+  .4byte 0x802c3ad4
+  .4byte 0x802c3b90
+  .4byte 0
 .global __RTTI__Q28PlantMgr7UseNode
 __RTTI__Q28PlantMgr7UseNode:
-	.incbin "baserom.dol", 0x2EC7F8, 0x8
+  .4byte 0x802c3bd8
+  .4byte 0x802c3bec
 .global __RTTI__9SAIAction_1
 __RTTI__9SAIAction_1:
-	.incbin "baserom.dol", 0x2EC800, 0x8
+  .4byte 0x802c3c70
+  .4byte 0
 .global __RTTI__Q27PlantAI9TouchInit
 __RTTI__Q27PlantAI9TouchInit:
-	.incbin "baserom.dol", 0x2EC808, 0x8
+  .4byte 0x802c3c5c
+  .4byte 0x802c3c7c
 .global __RTTI__Q27PlantAI8WaitInit
 __RTTI__Q27PlantAI8WaitInit:
-	.incbin "baserom.dol", 0x2EC810, 0x8
+  .4byte 0x802c3c94
+  .4byte 0x802c3ca8
 .global __RTTI__12SAICondition_2
 __RTTI__12SAICondition_2:
-	.incbin "baserom.dol", 0x2EC818, 0x8
+  .4byte 0x802c3cd8
+  .4byte 0x802c3ce8
 .global __RTTI__Q27PlantAI12OpponentMove
 __RTTI__Q27PlantAI12OpponentMove:
-	.incbin "baserom.dol", 0x2EC820, 0x10
+  .4byte 0x802c3cc0
+  .4byte 0x802c3cfc
+  .4byte 0x506c616e
+  .4byte 0x74414900
 .global __RTTI__26StateMachine$$010AICreature$$1_2
 __RTTI__26StateMachine$$010AICreature$$1_2:
-	.incbin "baserom.dol", 0x2EC830, 0x8
+  .4byte 0x802c3d68
+  .4byte 0
 .global __RTTI__8SimpleAI_2
 __RTTI__8SimpleAI_2:
-	.incbin "baserom.dol", 0x2EC838, 0x8
+  .4byte 0x802c3d84
+  .4byte 0x802c3d90
 .global __RTTI__7PlantAI
 __RTTI__7PlantAI:
-	.incbin "baserom.dol", 0x2EC840, 0x38
+  .4byte 0x803e2f08
+  .4byte 0x802c3d9c
+  .4byte 0x506c616e
+  .4byte 0x74000000
+  .4byte 0x802c3dc8
+  .4byte 0
+  .4byte 0x802c3ddc
+  .4byte 0
+  .4byte 0x802c3de8
+  .4byte 0
+  .4byte 0x802c3df8
+  .4byte 0x802c3e04
+  .4byte 0x802c3e18
+  .4byte 0x802c3e24
 .global __RTTI__5Plant
 __RTTI__5Plant:
-	.incbin "baserom.dol", 0x2EC878, 0x34
+  .4byte 0x803e2f28
+  .4byte 0x802c3e48
+  .4byte 0x31000000
+  .4byte 0x32000000
+  .4byte 0x33000000
+  .4byte 0x34000000
+  .4byte 0x35000000
+  .4byte 0x36000000
+  .4byte 0x37000000
+  .4byte 0x802c402c
+  .4byte 0
+  .4byte 0x802c4038
+  .4byte 0x802c4048
 .global __RTTI__17PaniPlantAnimator
 __RTTI__17PaniPlantAnimator:
-	.incbin "baserom.dol", 0x2EC8AC, 0x2C
+  .4byte 0x802c4018
+  .4byte 0x802c4054
+  .4byte 0
+  .4byte 0x802c40c8
+  .4byte 0
+  .4byte 0x47656e42
+  .4byte 0x61736500
+  .4byte 0x803e2fa0
+  .4byte 0x802c40d4
+  .4byte 0x802c40e0
+  .4byte 0x802c40ec
 .global __RTTI__13GenObjectTeki
 __RTTI__13GenObjectTeki:
-	.incbin "baserom.dol", 0x2EC8D8, 0x8
+  .4byte 0x802c40b8
+  .4byte 0x802c4100
 .global __RTTI__9NFunction
 __RTTI__9NFunction:
-	.incbin "baserom.dol", 0x2EC8E0, 0x8
+  .4byte 0x802c4190
+  .4byte 0
 .global __RTTI__18NVibrationFunction
 __RTTI__18NVibrationFunction:
-	.incbin "baserom.dol", 0x2EC8E8, 0x8
+  .4byte 0x802c417c
+  .4byte 0x802c419c
 .global __RTTI__19NPolynomialFunction
 __RTTI__19NPolynomialFunction:
-	.incbin "baserom.dol", 0x2EC8F0, 0x8
+  .4byte 0x802c41cc
+  .4byte 0x802c41e0
 .global __RTTI__15NLinearFunction
 __RTTI__15NLinearFunction:
-	.incbin "baserom.dol", 0x2EC8F8, 0x8
+  .4byte 0x802c41ec
+  .4byte 0x802c41fc
 .global __RTTI__20NClampLinearFunction
 __RTTI__20NClampLinearFunction:
-	.incbin "baserom.dol", 0x2EC900, 0x8
+  .4byte 0x802c41b4
+  .4byte 0x802c4210
 .global lbl_803E2FE8
 lbl_803E2FE8:
 	.incbin "baserom.dol", 0x2EC908, 0x4
@@ -10130,31 +11608,45 @@ lbl_803E2FF0:
 	.incbin "baserom.dol", 0x2EC910, 0xC
 .global __RTTI__6NAlpha
 __RTTI__6NAlpha:
-	.incbin "baserom.dol", 0x2EC91C, 0x8
+  .4byte 0x803e2ff4
+  .4byte 0
 .global __RTTI__14NSpecialMatrix
 __RTTI__14NSpecialMatrix:
-	.incbin "baserom.dol", 0x2EC924, 0x8
+  .4byte 0x802c42a4
+  .4byte 0
 .global __RTTI__8LUMatrix
 __RTTI__8LUMatrix:
-	.incbin "baserom.dol", 0x2EC92C, 0x8
+  .4byte 0x802c4298
+  .4byte 0x802c42b4
 .global __RTTI__12NUpperMatrix
 __RTTI__12NUpperMatrix:
-	.incbin "baserom.dol", 0x2EC934, 0x8
+  .4byte 0x802c42cc
+  .4byte 0x802c42dc
 .global __RTTI__12NLowerMatrix
 __RTTI__12NLowerMatrix:
-	.incbin "baserom.dol", 0x2EC93C, 0x8
+  .4byte 0x802c42f4
+  .4byte 0x802c4304
 .global __RTTI__10NPosture3D
 __RTTI__10NPosture3D:
-	.incbin "baserom.dol", 0x2EC944, 0x8
+  .4byte 0x802c4328
+  .4byte 0
 .global __RTTI__10NPosture2D
 __RTTI__10NPosture2D:
-	.incbin "baserom.dol", 0x2EC94C, 0x14
+  .4byte 0x802c4340
+  .4byte 0
+  .4byte 0
+  .4byte 0x4e4c696e
+  .4byte 0x65000000
 .global __RTTI__5NLine
 __RTTI__5NLine:
-	.incbin "baserom.dol", 0x2EC960, 0x10
+  .4byte 0x803e3038
+  .4byte 0
+  .4byte 0x4e506c61
+  .4byte 0x6e650000
 .global __RTTI__6NPlane
 __RTTI__6NPlane:
-	.incbin "baserom.dol", 0x2EC970, 0x8
+  .4byte 0x803e3048
+  .4byte 0
 .global lbl_803E3058
 lbl_803E3058:
 	.incbin "baserom.dol", 0x2EC978, 0x4
@@ -10187,16 +11679,58 @@ pi__6NMathF:
 	.incbin "baserom.dol", 0x2EC99C, 0xC
 .global __RTTI__5NHeap
 __RTTI__5NHeap:
-	.incbin "baserom.dol", 0x2EC9A8, 0x8
+  .4byte 0x803e3080
+  .4byte 0
 .global __RTTI__14NArray$$05NHeap$$1
 __RTTI__14NArray$$05NHeap$$1:
-	.incbin "baserom.dol", 0x2EC9B0, 0x18
+  .4byte 0x802c4bc4
+  .4byte 0
+  .4byte 0x4e4e6f64
+  .4byte 0x65000000
+  .4byte 0x803e3098
+  .4byte 0
 .global __RTTI__14NArray$$05NNode$$1
 __RTTI__14NArray$$05NNode$$1:
-	.incbin "baserom.dol", 0x2EC9C8, 0x90
+  .4byte 0x802c4c34
+  .4byte 0
+  .4byte 0x802c4d1c
+  .4byte 0
+  .4byte 0x802c4d0c
+  .4byte 0x802c4d28
+  .4byte 0x44454144
+  .4byte 0
+  .4byte 0x44414d41
+  .4byte 0x47450000
+  .4byte 0x57414954
+  .4byte 0x5f310000
+  .4byte 0x57414954
+  .4byte 0x5f320000
+  .4byte 0x4d4f5645
+  .4byte 0x5f310000
+  .4byte 0x4d4f5645
+  .4byte 0x5f320000
+  .4byte 0x41545441
+  .4byte 0x434b0000
+  .4byte 0x464c4943
+  .4byte 0x4b000000
+  .4byte 0x54595045
+  .4byte 0x5f310000
+  .4byte 0x54595045
+  .4byte 0x5f320000
+  .4byte 0x54595045
+  .4byte 0x5f330000
+  .4byte 0x54595045
+  .4byte 0x5f340000
+  .4byte 0x54595045
+  .4byte 0x5f350000
+  .4byte 0x802c4dec
+  .4byte 0
+  .4byte 0x802c4df8
+  .4byte 0x802c4e08
 .global __RTTI__16PaniTekiAnimator
 __RTTI__16PaniTekiAnimator:
-	.incbin "baserom.dol", 0x2ECA58, 0x8
+  .4byte 0x802c4dd8
+  .4byte 0x802c4e14
 .global lbl_803E3140
 lbl_803E3140:
 	.incbin "baserom.dol", 0x2ECA60, 0x4
@@ -10277,238 +11811,394 @@ lbl_803E31B0:
 	.incbin "baserom.dol", 0x2ECAD0, 0x40
 .global __RTTI__15PaniTestSection
 __RTTI__15PaniTestSection:
-	.incbin "baserom.dol", 0x2ECB10, 0x10
+  .4byte 0x802c4f24
+  .4byte 0x802c4f7c
+  .4byte 0x802c4fd4
+  .4byte 0
 .global __RTTI__12PaniTestNode
 __RTTI__12PaniTestNode:
-	.incbin "baserom.dol", 0x2ECB20, 0x8
+  .4byte 0x802c4e6c
+  .4byte 0x802c4fe8
 .global __RTTI__19ParaMultiParameters
 __RTTI__19ParaMultiParameters:
-	.incbin "baserom.dol", 0x2ECB28, 0x8
+  .4byte 0x802c509c
+  .4byte 0
 .global __RTTI__17ParaParameters$$0f$$1
 __RTTI__17ParaParameters$$0f$$1:
-	.incbin "baserom.dol", 0x2ECB30, 0x8
+  .4byte 0x802c50d4
+  .4byte 0
 .global __RTTI__15ParaParametersF
 __RTTI__15ParaParametersF:
-	.incbin "baserom.dol", 0x2ECB38, 0x8
+  .4byte 0x802c50c4
+  .4byte 0x802c50ec
 .global __RTTI__17ParaParameters$$0i$$1
 __RTTI__17ParaParameters$$0i$$1:
-	.incbin "baserom.dol", 0x2ECB40, 0x8
+  .4byte 0x802c5130
+  .4byte 0
 .global __RTTI__15ParaParametersI
 __RTTI__15ParaParametersI:
-	.incbin "baserom.dol", 0x2ECB48, 0x8
+  .4byte 0x802c5120
+  .4byte 0x802c5144
 .global lbl_803E3230
 lbl_803E3230:
 	.incbin "baserom.dol", 0x2ECB50, 0x10
 .global __RTTI__7NCamera
 __RTTI__7NCamera:
-	.incbin "baserom.dol", 0x2ECB60, 0x8
+  .4byte 0x803e3238
+  .4byte 0
 .global __RTTI__10PcamCamera
 __RTTI__10PcamCamera:
-	.incbin "baserom.dol", 0x2ECB68, 0x8
+  .4byte 0x802c51d0
+  .4byte 0x802c51dc
 .global __RTTI__17NArray$$08Creature$$1
 __RTTI__17NArray$$08Creature$$1:
-	.incbin "baserom.dol", 0x2ECB70, 0x30
+  .4byte 0x802c51f4
+  .4byte 0
+  .4byte 0x414e6f64
+  .4byte 0x65000000
+  .4byte 0x803e3258
+  .4byte 0
+  .4byte 0x802c5288
+  .4byte 0x802c5294
+  .4byte 0x4e6f6465
+  .4byte 0
+  .4byte 0x803e3270
+  .4byte 0x802c52a0
 .global __RTTI__17PcamCameraManager
 __RTTI__17PcamCameraManager:
-	.incbin "baserom.dol", 0x2ECBA0, 0x20
+  .4byte lbl_802C5274
+  .4byte 0x802c52b4
+  .4byte 0x4e4e6f64
+  .4byte 0x65000000
+  .4byte 0x803e3288
+  .4byte 0
+  .4byte 0x802c5364
+  .4byte 0x802c5370
 .global __RTTI__22PcamSideVibrationEvent
 __RTTI__22PcamSideVibrationEvent:
-	.incbin "baserom.dol", 0x2ECBC0, 0x8
+  .4byte 0x802c534c
+  .4byte 0x802c537c
 .global __RTTI__19PcamRandomMoveEvent
 __RTTI__19PcamRandomMoveEvent:
-	.incbin "baserom.dol", 0x2ECBC8, 0x10
+  .4byte 0x802c53e4
+  .4byte 0x802c53f8
+  .4byte 0x802c5458
+  .4byte 0x802c546c
 .global __RTTI__15PcamDamageEvent
 __RTTI__15PcamDamageEvent:
-	.incbin "baserom.dol", 0x2ECBD8, 0x8
+  .4byte 0x802c5448
+  .4byte 0x802c5480
 .global __RTTI__18PcamVibrationEvent
 __RTTI__18PcamVibrationEvent:
-	.incbin "baserom.dol", 0x2ECBE0, 0x8
+  .4byte 0x802c54d8
+  .4byte 0x802c54ec
 .global __RTTI__15PeveSerialEvent
 __RTTI__15PeveSerialEvent:
-	.incbin "baserom.dol", 0x2ECBE8, 0x8
+  .4byte 0x802c555c
+  .4byte 0x802c556c
 .global __RTTI__22PcamLongVibrationEvent
 __RTTI__22PcamLongVibrationEvent:
-	.incbin "baserom.dol", 0x2ECBF0, 0x8
+  .4byte 0x802c5544
+  .4byte 0x802c5580
 .global lbl_803E32D8
 lbl_803E32D8:
 	.incbin "baserom.dol", 0x2ECBF8, 0x30
 .global __RTTI__20PcamCameraParameters
 __RTTI__20PcamCameraParameters:
-	.incbin "baserom.dol", 0x2ECC28, 0x8
+  .4byte 0x802c5ad0
+  .4byte 0x802c5b14
 .global __RTTI__11NVector3fIO
 __RTTI__11NVector3fIO:
-	.incbin "baserom.dol", 0x2ECC30, 0x8
+  .4byte 0x802c5ba0
+  .4byte 0
 .global __RTTI__16NVector3fIOClass
 __RTTI__16NVector3fIOClass:
-	.incbin "baserom.dol", 0x2ECC38, 0x8
+  .4byte 0x802c5bac
+  .4byte 0x802c5bc0
 .global __RTTI__19PeveClampVector3fIO
 __RTTI__19PeveClampVector3fIO:
-	.incbin "baserom.dol", 0x2ECC40, 0x8
+  .4byte 0x802c5b8c
+  .4byte 0x802c5bcc
 .global __RTTI__22PeveCreaturePositionIO
 __RTTI__22PeveCreaturePositionIO:
-	.incbin "baserom.dol", 0x2ECC48, 0x8
+  .4byte 0x802c5c00
+  .4byte 0x802c5c18
 .global __RTTI__12NPosture3DIO
 __RTTI__12NPosture3DIO:
-	.incbin "baserom.dol", 0x2ECC50, 0x8
+  .4byte 0x802c5c48
+  .4byte 0
 .global __RTTI__19PeveCameraPostureIO
 __RTTI__19PeveCameraPostureIO:
-	.incbin "baserom.dol", 0x2ECC58, 0x8
+  .4byte 0x802c5c34
+  .4byte 0x802c5c58
 .global __RTTI__22PeveCameraWatchpointIO
 __RTTI__22PeveCameraWatchpointIO:
-	.incbin "baserom.dol", 0x2ECC60, 0x8
+  .4byte 0x802c5c84
+  .4byte 0x802c5c9c
 .global __RTTI__21PeveCameraViewpointIO
 __RTTI__21PeveCameraViewpointIO:
-	.incbin "baserom.dol", 0x2ECC68, 0x20
+  .4byte 0x802c5cb8
+  .4byte 0x802c5cd0
+  .4byte 0x4e4e6f64
+  .4byte 0x65000000
+  .4byte 0x803e3350
+  .4byte 0
+  .4byte 0x802c5d0c
+  .4byte 0x802c5d18
 .global __RTTI__15PeveSerialEvent_1
 __RTTI__15PeveSerialEvent_1:
-	.incbin "baserom.dol", 0x2ECC88, 0x10
+  .4byte 0x802c5cfc
+  .4byte 0x802c5d24
+  .4byte 0x802c5d74
+  .4byte 0x802c5d88
 .global __RTTI__13PeveCondition
 __RTTI__13PeveCondition:
-	.incbin "baserom.dol", 0x2ECC98, 0x8
+  .4byte 0x802c5e14
+  .4byte 0
 .global __RTTI__13PeveCondition_1
 __RTTI__13PeveCondition_1:
-	.incbin "baserom.dol", 0x2ECCA0, 0x8
+  .4byte 0x802c5e78
+  .4byte 0
 .global __RTTI__20PeveBooleanCondition
 __RTTI__20PeveBooleanCondition:
-	.incbin "baserom.dol", 0x2ECCA8, 0x8
+  .4byte 0x802c5e88
+  .4byte 0x802c5ea0
 .global __RTTI__24PeveComparisonYCondition
 __RTTI__24PeveComparisonYCondition:
-	.incbin "baserom.dol", 0x2ECCB0, 0x8
+  .4byte 0x802c5e5c
+  .4byte 0x802c5eac
 .global __RTTI__21PeveDistanceCondition
 __RTTI__21PeveDistanceCondition:
-	.incbin "baserom.dol", 0x2ECCB8, 0x8
+  .4byte 0x802c5ed4
+  .4byte 0x802c5eec
 .global __RTTI__17PeveTimeCondition
 __RTTI__17PeveTimeCondition:
-	.incbin "baserom.dol", 0x2ECCC0, 0x8
+  .4byte 0x802c5f14
+  .4byte 0x802c5f28
 .global __RTTI__23PeveDependenceCondition
 __RTTI__23PeveDependenceCondition:
-	.incbin "baserom.dol", 0x2ECCC8, 0x28
+  .4byte 0x802c5f48
+  .4byte 0x802c5f60
+  .4byte 0x4e4e6f64
+  .4byte 0x65000000
+  .4byte 0x803e33b0
+  .4byte 0
+  .4byte 0x802c5fd8
+  .4byte 0x802c5fe4
+  .4byte 0x802c5fc4
+  .4byte 0x802c5ff0
 .global __RTTI__13PeveMoveEvent
 __RTTI__13PeveMoveEvent:
-	.incbin "baserom.dol", 0x2ECCF0, 0x8
+  .4byte 0x802c6058
+  .4byte 0x802c6068
 .global __RTTI__22PeveInterpolationEvent
 __RTTI__22PeveInterpolationEvent:
-	.incbin "baserom.dol", 0x2ECCF8, 0x10
+  .4byte 0x802c60b8
+  .4byte 0x802c60d0
+  .4byte 0x802c6154
+  .4byte 0x802c6168
 .global __RTTI__22PeveHomingPostureEvent
 __RTTI__22PeveHomingPostureEvent:
-	.incbin "baserom.dol", 0x2ECD08, 0x8
+  .4byte 0x802c613c
+  .4byte 0x802c617c
 .global __RTTI__23PeveHomingPositionEvent
 __RTTI__23PeveHomingPositionEvent:
-	.incbin "baserom.dol", 0x2ECD10, 0x8
+  .4byte 0x802c61d4
+  .4byte 0x802c61ec
 .global __RTTI__22PeveFunctionCurveEvent
 __RTTI__22PeveFunctionCurveEvent:
-	.incbin "baserom.dol", 0x2ECD18, 0x8
+  .4byte 0x802c623c
+  .4byte 0x802c6254
 .global __RTTI__24PeveCircleMoveWatchEvent
 __RTTI__24PeveCircleMoveWatchEvent:
-	.incbin "baserom.dol", 0x2ECD20, 0x8
+  .4byte 0x802c62a4
+  .4byte 0x802c62c0
 .global __RTTI__19PeveCircleMoveEvent
 __RTTI__19PeveCircleMoveEvent:
-	.incbin "baserom.dol", 0x2ECD28, 0x8
+  .4byte 0x802c6318
+  .4byte 0x802c632c
 .global __RTTI__26PeveHorizontalSinWaveEvent
 __RTTI__26PeveHorizontalSinWaveEvent:
-	.incbin "baserom.dol", 0x2ECD30, 0x8
+  .4byte 0x802c637c
+  .4byte 0x802c6398
 .global __RTTI__11NVector3fIO_1
 __RTTI__11NVector3fIO_1:
-	.incbin "baserom.dol", 0x2ECD38, 0x8
+  .4byte 0x802c63fc
+  .4byte 0
 .global __RTTI__21PeveAccelerationEvent
 __RTTI__21PeveAccelerationEvent:
-	.incbin "baserom.dol", 0x2ECD40, 0x8
+  .4byte 0x802c6448
+  .4byte 0x802c6460
 .global __RTTI__17PeveParabolaEvent
 __RTTI__17PeveParabolaEvent:
-	.incbin "baserom.dol", 0x2ECD48, 0x8
+  .4byte 0x802c6434
+  .4byte 0x802c6474
 .global __RTTI__13PeveWaitEvent
 __RTTI__13PeveWaitEvent:
-	.incbin "baserom.dol", 0x2ECD50, 0x18
+  .4byte 0x802c6508
+  .4byte 0x802c6518
+  .4byte 0x802c6574
+  .4byte 0
+  .4byte 0x802c6568
+  .4byte 0x802c6584
 .global __RTTI__8TaiState
 __RTTI__8TaiState:
-	.incbin "baserom.dol", 0x2ECD68, 0x10
+  .4byte 0x802c65b8
+  .4byte 0
+  .4byte 0x802c65ec
+  .4byte 0
 .global __RTTI__15TaiSerialAction
 __RTTI__15TaiSerialAction:
-	.incbin "baserom.dol", 0x2ECD78, 0x18
+  .4byte 0x802c65dc
+  .4byte 0x802c65f8
+  .4byte 0x802c6684
+  .4byte 0
+  .4byte 0x802c6690
+  .4byte 0x802c66a0
 .global __RTTI__22TaiFlickingUpperAction
 __RTTI__22TaiFlickingUpperAction:
-	.incbin "baserom.dol", 0x2ECD90, 0x8
+  .4byte 0x802c666c
+  .4byte 0x802c66ac
 .global __RTTI__17TaiFlickingAction
 __RTTI__17TaiFlickingAction:
-	.incbin "baserom.dol", 0x2ECD98, 0x8
+  .4byte 0x802c66dc
+  .4byte 0x802c66f0
 .global __RTTI__20TaiTargetStickAction
 __RTTI__20TaiTargetStickAction:
-	.incbin "baserom.dol", 0x2ECDA0, 0x8
+  .4byte 0x802c6720
+  .4byte 0x802c6738
 .global __RTTI__14TaiFlickAction
 __RTTI__14TaiFlickAction:
-	.incbin "baserom.dol", 0x2ECDA8, 0x8
+  .4byte 0x802c6760
+  .4byte 0x802c6770
 .global __RTTI__16TaiBangingAction
 __RTTI__16TaiBangingAction:
-	.incbin "baserom.dol", 0x2ECDB0, 0x18
+  .4byte 0x802c6798
+  .4byte 0x802c67ac
+  .4byte 0x802c6820
+  .4byte 0
+  .4byte 0x802c682c
+  .4byte 0x802c683c
 .global __RTTI__16TekiAndCondition
 __RTTI__16TekiAndCondition:
-	.incbin "baserom.dol", 0x2ECDC8, 0x8
+  .4byte 0x802c680c
+  .4byte 0x802c6848
 .global __RTTI__16TekiNotCondition
 __RTTI__16TekiNotCondition:
-	.incbin "baserom.dol", 0x2ECDD0, 0x8
+  .4byte 0x802c6868
+  .4byte 0x802c687c
 .global __RTTI__28TaiAnimationSwallowingAction
 __RTTI__28TaiAnimationSwallowingAction:
-	.incbin "baserom.dol", 0x2ECDD8, 0x8
+  .4byte 0x802c689c
+  .4byte 0x802c68bc
 .global __RTTI__23TaiAttackablePikiAction
 __RTTI__23TaiAttackablePikiAction:
-	.incbin "baserom.dol", 0x2ECDE0, 0x8
+  .4byte 0x802c68e4
+  .4byte 0x802c68fc
 .global __RTTI__23TaiAttackableNaviAction
 __RTTI__23TaiAttackableNaviAction:
-	.incbin "baserom.dol", 0x2ECDE8, 0x8
+  .4byte 0x802c6924
+  .4byte 0x802c693c
 .global __RTTI__27TaiAttackableNaviPikiAction
 __RTTI__27TaiAttackableNaviPikiAction:
-	.incbin "baserom.dol", 0x2ECDF0, 0x10
+  .4byte 0x802c697c
+  .4byte 0x802c6998
+  .4byte 0x802c6a00
+  .4byte 0
 .global __RTTI__26TaiNaviWatchResultOnAction
 __RTTI__26TaiNaviWatchResultOnAction:
-	.incbin "baserom.dol", 0x2ECE00, 0x8
+  .4byte 0x802c69e4
+  .4byte 0x802c6a0c
 .global __RTTI__30TaiTypeNaviWatchResultOnAction
 __RTTI__30TaiTypeNaviWatchResultOnAction:
-	.incbin "baserom.dol", 0x2ECE08, 0x8
+  .4byte 0x802c6a34
+  .4byte 0x802c6a54
 .global __RTTI__18TaiStopSoundAction
 __RTTI__18TaiStopSoundAction:
-	.incbin "baserom.dol", 0x2ECE10, 0x8
+  .4byte 0x802c6a7c
+  .4byte 0x802c6a90
 .global __RTTI__18TaiPlaySoundAction
 __RTTI__18TaiPlaySoundAction:
-	.incbin "baserom.dol", 0x2ECE18, 0x8
+  .4byte 0x802c6ab8
+  .4byte 0x802c6acc
 .global __RTTI__18TaiSetOptionAction
 __RTTI__18TaiSetOptionAction:
-	.incbin "baserom.dol", 0x2ECE20, 0x8
+  .4byte 0x802c6af4
+  .4byte 0x802c6b08
 .global __RTTI__20TaiActionStateAction
 __RTTI__20TaiActionStateAction:
-	.incbin "baserom.dol", 0x2ECE28, 0x20
+  .4byte 0x802c6b30
+  .4byte 0x802c6b48
+  .4byte 0x802c6be4
+  .4byte 0
+  .4byte 0x802c6bf0
+  .4byte 0x802c6c04
+  .4byte 0x802c6c10
+  .4byte 0x802c6c28
 .global __RTTI__24TaiChappyLegEffectAction
 __RTTI__24TaiChappyLegEffectAction:
-	.incbin "baserom.dol", 0x2ECE48, 0x8
+  .4byte 0x802c6bc8
+  .4byte 0x802c6c3c
 .global __RTTI__16TaiSmashedAction
 __RTTI__16TaiSmashedAction:
-	.incbin "baserom.dol", 0x2ECE50, 0x8
+  .4byte 0x802c6c90
+  .4byte 0x802c6ca4
 .global __RTTI__22TaiChappySmashedAction
 __RTTI__22TaiChappySmashedAction:
-	.incbin "baserom.dol", 0x2ECE58, 0x18
+  .4byte 0x802c6c78
+  .4byte 0x802c6cb0
+  .4byte 0x802c6cf4
+  .4byte 0
+  .4byte 0x802c6d00
+  .4byte 0x802c6d10
 .global __RTTI__15TekiOrCondition
 __RTTI__15TekiOrCondition:
-	.incbin "baserom.dol", 0x2ECE70, 0x8
+  .4byte 0x802c6d3c
+  .4byte 0x802c6d4c
 .global __RTTI__18TaiChappyCryAction
 __RTTI__18TaiChappyCryAction:
-	.incbin "baserom.dol", 0x2ECE78, 0x8
+  .4byte 0x802c6d84
+  .4byte 0x802c6d98
 .global __RTTI__13TaiOnceAction
 __RTTI__13TaiOnceAction:
-	.incbin "baserom.dol", 0x2ECE80, 0x8
+  .4byte 0x802c6dc0
+  .4byte 0x802c6dd0
 .global __RTTI__12TaiAndAction
 __RTTI__12TaiAndAction:
-	.incbin "baserom.dol", 0x2ECE88, 0x18
+  .4byte 0x802c6df8
+  .4byte 0x802c6e08
+  .4byte 0x802c6e60
+  .4byte 0
+  .4byte 0x802c6e70
+  .4byte 0x802c6e7c
 .global __RTTI__17TaiChappyStrategy
 __RTTI__17TaiChappyStrategy:
-	.incbin "baserom.dol", 0x2ECEA0, 0x38
+  .4byte 0x802c6e4c
+  .4byte 0x802c6e88
+  .4byte 0x414e6f64
+  .4byte 0x65000000
+  .4byte 0x803e3588
+  .4byte 0
+  .4byte 0x802c6edc
+  .4byte 0x802c6ee8
+  .4byte 0x4e6f6465
+  .4byte 0
+  .4byte 0x803e35a0
+  .4byte 0x802c6ef4
+  .4byte 0x802c6f08
+  .4byte 0x802c6f18
 .global __RTTI__20TaiCatfishParameters
 __RTTI__20TaiCatfishParameters:
-	.incbin "baserom.dol", 0x2ECED8, 0x8
+  .4byte 0x802c6ec4
+  .4byte 0x802c6f34
 .global __RTTI__24TaiBlackChappyParameters
 __RTTI__24TaiBlackChappyParameters:
-	.incbin "baserom.dol", 0x2ECEE0, 0x8
+  .4byte 0x802c6f88
+  .4byte 0x802c6fa4
 .global __RTTI__19TaiChappyParameters
 __RTTI__19TaiChappyParameters:
-	.incbin "baserom.dol", 0x2ECEE8, 0x8
+  .4byte 0x802c6ff8
+  .4byte 0x802c700c
 .global lbl_803E35D0
 lbl_803E35D0:
 	.incbin "baserom.dol", 0x2ECEF0, 0x4
@@ -10550,124 +12240,201 @@ lbl_803E3600:
 	.incbin "baserom.dol", 0x2ECF20, 0x14
 .global __RTTI__17TaiHollecStrategy
 __RTTI__17TaiHollecStrategy:
-	.incbin "baserom.dol", 0x2ECF34, 0x38
+  .4byte 0x802c715c
+  .4byte 0x802c7198
+  .4byte 0x414e6f64
+  .4byte 0x65000000
+  .4byte 0x803e361c
+  .4byte 0
+  .4byte 0x802c71e8
+  .4byte 0x802c71f4
+  .4byte 0x4e6f6465
+  .4byte 0
+  .4byte 0x803e3634
+  .4byte 0x802c7200
+  .4byte 0x802c7214
+  .4byte 0x802c7224
 .global __RTTI__19TaiHollecParameters
 __RTTI__19TaiHollecParameters:
-	.incbin "baserom.dol", 0x2ECF6C, 0x20
+  .4byte 0x802c71d4
+  .4byte 0x802c7240
+  .4byte 0x802c72b0
+  .4byte 0
+  .4byte 0x802c72bc
+  .4byte 0x802c72d0
+  .4byte 0x802c72dc
+  .4byte 0x802c72f4
 .global __RTTI__24TaiCollecLegEffectAction
 __RTTI__24TaiCollecLegEffectAction:
-	.incbin "baserom.dol", 0x2ECF8C, 0x8
+  .4byte 0x802c7294
+  .4byte 0x802c7308
 .global __RTTI__21TaiCollecGetOutAction
 __RTTI__21TaiCollecGetOutAction:
-	.incbin "baserom.dol", 0x2ECF94, 0x8
+  .4byte 0x802c7344
+  .4byte 0x802c735c
 .global __RTTI__22TaiCollecFallingAction
 __RTTI__22TaiCollecFallingAction:
-	.incbin "baserom.dol", 0x2ECF9C, 0x8
+  .4byte 0x802c7384
+  .4byte 0x802c739c
 .global __RTTI__26TaiCollecDeadFallingAction
 __RTTI__26TaiCollecDeadFallingAction:
-	.incbin "baserom.dol", 0x2ECFA4, 0x8
+  .4byte 0x802c73c4
+  .4byte 0x802c73e0
 .global __RTTI__40TaiCollecPelletFinishContainerizedAction
 __RTTI__40TaiCollecPelletFinishContainerizedAction:
-	.incbin "baserom.dol", 0x2ECFAC, 0x8
+  .4byte 0x802c7408
+  .4byte 0x802c7434
 .global __RTTI__39TaiCollecPelletStartContainerizedAction
 __RTTI__39TaiCollecPelletStartContainerizedAction:
-	.incbin "baserom.dol", 0x2ECFB4, 0x8
+  .4byte 0x802c745c
+  .4byte 0x802c7484
 .global __RTTI__25TaiCollecRoundCarryAction
 __RTTI__25TaiCollecRoundCarryAction:
-	.incbin "baserom.dol", 0x2ECFBC, 0x8
+  .4byte 0x802c74ac
+  .4byte 0x802c74c8
 .global __RTTI__30TaiCollecRouteImpassableAction
 __RTTI__30TaiCollecRouteImpassableAction:
-	.incbin "baserom.dol", 0x2ECFC4, 0x18
+  .4byte 0x802c74f0
+  .4byte 0x802c7510
+  .4byte 0x802c7558
+  .4byte 0x802c7568
+  .4byte 0x802c7574
+  .4byte 0x802c7590
 .global __RTTI__29TaiCollecCarryingToNestAction
 __RTTI__29TaiCollecCarryingToNestAction:
-	.incbin "baserom.dol", 0x2ECFDC, 0x8
+  .4byte 0x802c7538
+  .4byte 0x802c75a4
 .global __RTTI__28TaiCollecPuttingPelletAction
 __RTTI__28TaiCollecPuttingPelletAction:
-	.incbin "baserom.dol", 0x2ECFE4, 0x8
+  .4byte 0x802c7618
+  .4byte 0x802c7638
 .global __RTTI__18TaiCollecPutAction
 __RTTI__18TaiCollecPutAction:
-	.incbin "baserom.dol", 0x2ECFEC, 0x8
+  .4byte 0x802c7660
+  .4byte 0x802c7674
 .global __RTTI__29TaiCollecDefeatCarryingAction
 __RTTI__29TaiCollecDefeatCarryingAction:
-	.incbin "baserom.dol", 0x2ECFF4, 0x8
+  .4byte 0x802c769c
+  .4byte 0x802c76bc
 .global __RTTI__26TaiCollecWinCarryingAction
 __RTTI__26TaiCollecWinCarryingAction:
-	.incbin "baserom.dol", 0x2ECFFC, 0x8
+  .4byte 0x802c76e4
+  .4byte 0x802c7700
 .global __RTTI__27TaiCollecBeingDraggedAction
 __RTTI__27TaiCollecBeingDraggedAction:
-	.incbin "baserom.dol", 0x2ED004, 0x8
+  .4byte 0x802c7728
+  .4byte 0x802c7744
 .global __RTTI__23TaiCollecCarryingAction
 __RTTI__23TaiCollecCarryingAction:
-	.incbin "baserom.dol", 0x2ED00C, 0x8
+  .4byte 0x802c776c
+  .4byte 0x802c7784
 .global __RTTI__23TaiCollecCatchingAction
 __RTTI__23TaiCollecCatchingAction:
-	.incbin "baserom.dol", 0x2ED014, 0x8
+  .4byte 0x802c77ac
+  .4byte 0x802c77c4
 .global __RTTI__25TaiCollecHoldPelletAction
 __RTTI__25TaiCollecHoldPelletAction:
-	.incbin "baserom.dol", 0x2ED01C, 0x8
+  .4byte 0x802c77ec
+  .4byte 0x802c7808
 .global __RTTI__32TaiCollecPelletDisappearedAction
 __RTTI__32TaiCollecPelletDisappearedAction:
-	.incbin "baserom.dol", 0x2ED024, 0x8
+  .4byte 0x802c7830
+  .4byte 0x802c7854
 .global __RTTI__25TaiCollecPelletLostAction
 __RTTI__25TaiCollecPelletLostAction:
-	.incbin "baserom.dol", 0x2ED02C, 0x10
+  .4byte 0x802c787c
+  .4byte 0x802c7898
+  .4byte 0x802c78ec
+  .4byte 0x802c78fc
 .global __RTTI__43TaiCollecVisibleHeightPelletLostTimerAction
 __RTTI__43TaiCollecVisibleHeightPelletLostTimerAction:
-	.incbin "baserom.dol", 0x2ED03C, 0x8
+  .4byte 0x802c78c0
+  .4byte 0x802c7908
 .global __RTTI__38TaiCollecVisibleHeightPelletLostAction
 __RTTI__38TaiCollecVisibleHeightPelletLostAction:
-	.incbin "baserom.dol", 0x2ED044, 0x18
+  .4byte 0x802c7938
+  .4byte 0x802c7960
+  .4byte 0x802c799c
+  .4byte 0
+  .4byte 0x802c79a8
+  .4byte 0x802c79b8
 .global __RTTI__27TaiCollecTargetPelletAction
 __RTTI__27TaiCollecTargetPelletAction:
-	.incbin "baserom.dol", 0x2ED05C, 0x8
+  .4byte 0x802c7a30
+  .4byte 0x802c7a4c
 .global __RTTI__28TaiCollecLetGoOfPelletAction
 __RTTI__28TaiCollecLetGoOfPelletAction:
-	.incbin "baserom.dol", 0x2ED064, 0x8
+  .4byte 0x802c7a74
+  .4byte 0x802c7a94
 .global __RTTI__25TaiCollecImpassableAction
 __RTTI__25TaiCollecImpassableAction:
-	.incbin "baserom.dol", 0x2ED06C, 0x8
+  .4byte 0x802c7abc
+  .4byte 0x802c7ad8
 .global __RTTI__31TekiCollecTargetPelletCondition
 __RTTI__31TekiCollecTargetPelletCondition:
-	.incbin "baserom.dol", 0x2ED074, 0x8
+  .4byte 0x802c7b00
+  .4byte 0x802c7b20
 .global __RTTI__17TaiCollecStrategy
 __RTTI__17TaiCollecStrategy:
-	.incbin "baserom.dol", 0x2ED07C, 0x8
+  .4byte 0x802c7b40
+  .4byte 0x802c7b54
 .global __RTTI__19TaiDependenceAction
 __RTTI__19TaiDependenceAction:
-	.incbin "baserom.dol", 0x2ED084, 0x8
+  .4byte 0x802c7b90
+  .4byte 0x802c7ba4
 .global __RTTI__19TaiCollecParameters
 __RTTI__19TaiCollecParameters:
-	.incbin "baserom.dol", 0x2ED08C, 0x14
+  .4byte 0x802c7be8
+  .4byte 0x802c7bfc
+  .4byte 0
+  .4byte 0x802c7c98
+  .4byte 0
 .global __RTTI__26TaiCreatureCollisionAction
 __RTTI__26TaiCreatureCollisionAction:
-	.incbin "baserom.dol", 0x2ED0A0, 0x8
+  .4byte 0x802c7ca4
+  .4byte 0x802c7cc0
 .global __RTTI__26TaiTekiTypeCollisionAction
 __RTTI__26TaiTekiTypeCollisionAction:
-	.incbin "baserom.dol", 0x2ED0A8, 0x8
+  .4byte 0x802c7c7c
+  .4byte 0x802c7ccc
 .global __RTTI__22TaiNaviCollisionAction
 __RTTI__22TaiNaviCollisionAction:
-	.incbin "baserom.dol", 0x2ED0B0, 0x8
+  .4byte 0x802c7cfc
+  .4byte 0x802c7d14
 .global __RTTI__22TaiPikiCollisionAction
 __RTTI__22TaiPikiCollisionAction:
-	.incbin "baserom.dol", 0x2ED0B8, 0x8
+  .4byte 0x802c7d44
+  .4byte 0x802c7d5c
 .global __RTTI__22TaiWallCollisionAction
 __RTTI__22TaiWallCollisionAction:
-	.incbin "baserom.dol", 0x2ED0C0, 0x8
+  .4byte 0x802c7da8
+  .4byte 0x802c7dc0
 .global __RTTI__24TaiGroundCollisionAction
 __RTTI__24TaiGroundCollisionAction:
-	.incbin "baserom.dol", 0x2ED0C8, 0x8
+  .4byte 0x802c7de8
+  .4byte 0x802c7e04
 .global __RTTI__15TaiBounceAction
 __RTTI__15TaiBounceAction:
-	.incbin "baserom.dol", 0x2ED0D0, 0x20
+  .4byte 0x802c7e2c
+  .4byte 0x802c7e3c
+  .4byte 0x802c7eac
+  .4byte 0
+  .4byte 0x802c7eb8
+  .4byte 0x802c7ecc
+  .4byte 0x802c7e94
+  .4byte 0x802c7ed8
 .global __RTTI__33TaiStopGenParticleGeneratorAction
 __RTTI__33TaiStopGenParticleGeneratorAction:
-	.incbin "baserom.dol", 0x2ED0F0, 0x8
+  .4byte 0x802c7f28
+  .4byte 0x802c7f4c
 .global __RTTI__34TaiStartGenParticleGeneratorAction
 __RTTI__34TaiStartGenParticleGeneratorAction:
-	.incbin "baserom.dol", 0x2ED0F8, 0x8
+  .4byte 0x802c7f74
+  .4byte 0x802c7f98
 .global __RTTI__15TaiEffectAction
 __RTTI__15TaiEffectAction:
-	.incbin "baserom.dol", 0x2ED100, 0x8
+  .4byte 0x802c7fc0
+  .4byte 0x802c7fd0
 .global lbl_803E37E8
 lbl_803E37E8:
 	.incbin "baserom.dol", 0x2ED108, 0x4
@@ -10709,55 +12476,95 @@ lbl_803E3818:
 	.incbin "baserom.dol", 0x2ED138, 0xC
 .global __RTTI__23TaiIwagenShootingAction
 __RTTI__23TaiIwagenShootingAction:
-	.incbin "baserom.dol", 0x2ED144, 0x18
+  .4byte 0x802c8024
+  .4byte 0x802c8048
+  .4byte 0x802c8084
+  .4byte 0
+  .4byte 0x802c8094
+  .4byte 0x802c80a0
 .global __RTTI__17TaiIwagenStrategy
 __RTTI__17TaiIwagenStrategy:
-	.incbin "baserom.dol", 0x2ED15C, 0x38
+  .4byte 0x802c8070
+  .4byte 0x802c80ac
+  .4byte 0x414e6f64
+  .4byte 0x65000000
+  .4byte 0x803e3844
+  .4byte 0
+  .4byte 0x802c80fc
+  .4byte 0x802c8108
+  .4byte 0x4e6f6465
+  .4byte 0
+  .4byte 0x803e385c
+  .4byte 0x802c8114
+  .4byte 0x802c8128
+  .4byte 0x802c8138
 .global __RTTI__19TaiIwagenParameters
 __RTTI__19TaiIwagenParameters:
-	.incbin "baserom.dol", 0x2ED194, 0x8
+  .4byte 0x802c80e8
+  .4byte 0x802c8154
 .global __RTTI__22TaiIwagonRollingAction
 __RTTI__22TaiIwagonRollingAction:
-	.incbin "baserom.dol", 0x2ED19C, 0x8
+  .4byte 0x802c81a8
+  .4byte 0x802c81c0
 .global __RTTI__25TaiIwagonDustEffectAction
 __RTTI__25TaiIwagonDustEffectAction:
-	.incbin "baserom.dol", 0x2ED1A4, 0x8
+  .4byte 0x802c81e8
+  .4byte 0x802c8204
 .global __RTTI__17TaiIwagonStrategy
 __RTTI__17TaiIwagonStrategy:
-	.incbin "baserom.dol", 0x2ED1AC, 0x8
+  .4byte 0x802c822c
+  .4byte 0x802c8240
 .global __RTTI__19TaiIwagonParameters
 __RTTI__19TaiIwagonParameters:
-	.incbin "baserom.dol", 0x2ED1B4, 0x14
+  .4byte 0x802c8298
+  .4byte 0x802c82ac
+  .4byte 0
+  .4byte 0x802c8348
+  .4byte 0
 .global __RTTI__26TaiHasStickersOnBodyAction
 __RTTI__26TaiHasStickersOnBodyAction:
-	.incbin "baserom.dol", 0x2ED1C8, 0x8
+  .4byte 0x802c832c
+  .4byte 0x802c8354
 .global __RTTI__27TaiHasStickersInMouthAction
 __RTTI__27TaiHasStickersInMouthAction:
-	.incbin "baserom.dol", 0x2ED1D0, 0x18
+  .4byte 0x802c837c
+  .4byte 0x802c8398
+  .4byte 0x802c83d4
+  .4byte 0
+  .4byte 0x802c83e0
+  .4byte 0x802c83f0
 .global __RTTI__26TaiTargetVisibleNaviAction
 __RTTI__26TaiTargetVisibleNaviAction:
-	.incbin "baserom.dol", 0x2ED1E8, 0x8
+  .4byte 0x802c841c
+  .4byte 0x802c8438
 .global __RTTI__30TaiTargetVisibleNaviPikiAction
 __RTTI__30TaiTargetVisibleNaviPikiAction:
-	.incbin "baserom.dol", 0x2ED1F0, 0x8
+  .4byte 0x802c8478
+  .4byte 0x802c8498
 .global __RTTI__24TaiInsideTerritoryAction
 __RTTI__24TaiInsideTerritoryAction:
-	.incbin "baserom.dol", 0x2ED1F8, 0x8
+  .4byte 0x802c84c0
+  .4byte 0x802c84dc
 .global __RTTI__25TaiOutsideTerritoryAction
 __RTTI__25TaiOutsideTerritoryAction:
-	.incbin "baserom.dol", 0x2ED200, 0x8
+  .4byte 0x802c8504
+  .4byte 0x802c8520
 .global __RTTI__19TaiTargetLostAction
 __RTTI__19TaiTargetLostAction:
-	.incbin "baserom.dol", 0x2ED208, 0x8
+  .4byte 0x802c8548
+  .4byte 0x802c855c
 .global __RTTI__23TaiSeparateTargetAction
 __RTTI__23TaiSeparateTargetAction:
-	.incbin "baserom.dol", 0x2ED210, 0x8
+  .4byte 0x802c8584
+  .4byte 0x802c859c
 .global __RTTI__22TaiContactTargetAction
 __RTTI__22TaiContactTargetAction:
-	.incbin "baserom.dol", 0x2ED218, 0x8
+  .4byte 0x802c85c4
+  .4byte 0x802c85dc
 .global __RTTI__22TaiVisibleTargetAction
 __RTTI__22TaiVisibleTargetAction:
-	.incbin "baserom.dol", 0x2ED220, 0x8
+  .4byte 0x802c8604
+  .4byte 0x802c861c
 .global lbl_803E3908
 lbl_803E3908:
 	.incbin "baserom.dol", 0x2ED228, 0x4
@@ -10781,34 +12588,67 @@ lbl_803E3920:
 	.incbin "baserom.dol", 0x2ED240, 0x1C
 .global __RTTI__24TaiKinokoLegEffectAction
 __RTTI__24TaiKinokoLegEffectAction:
-	.incbin "baserom.dol", 0x2ED25C, 0x8
+  .4byte 0x802c875c
+  .4byte 0x802c87d0
 .global __RTTI__35TaiKinokoTerritoryRunningAwayAction
 __RTTI__35TaiKinokoTerritoryRunningAwayAction:
-	.incbin "baserom.dol", 0x2ED264, 0x18
+  .4byte 0x802c880c
+  .4byte 0x802c8830
+  .4byte 0x802c886c
+  .4byte 0
+  .4byte 0x802c8878
+  .4byte 0x802c8888
 .global __RTTI__32TaiKinokoDischargingSporesAction
 __RTTI__32TaiKinokoDischargingSporesAction:
-	.incbin "baserom.dol", 0x2ED27C, 0x8
+  .4byte 0x802c8904
+  .4byte 0x802c8928
 .global __RTTI__29TaiKinokoChargingSporesAction
 __RTTI__29TaiKinokoChargingSporesAction:
-	.incbin "baserom.dol", 0x2ED284, 0x8
+  .4byte 0x802c8950
+  .4byte 0x802c8970
 .global __RTTI__26TaiKinokoTurningOverAction
 __RTTI__26TaiKinokoTurningOverAction:
-	.incbin "baserom.dol", 0x2ED28C, 0x18
+  .4byte 0x802c8998
+  .4byte 0x802c89b4
+  .4byte 0x802c89f0
+  .4byte 0
+  .4byte 0x802c8a00
+  .4byte 0x802c8a0c
 .global __RTTI__17TaiKinokoStrategy
 __RTTI__17TaiKinokoStrategy:
-	.incbin "baserom.dol", 0x2ED2A4, 0x8
+  .4byte 0x802c89dc
+  .4byte 0x802c8a18
 .global __RTTI__12TaiNotAction
 __RTTI__12TaiNotAction:
-	.incbin "baserom.dol", 0x2ED2AC, 0x38
+  .4byte 0x802c8a54
+  .4byte 0x802c8a64
+  .4byte 0x414e6f64
+  .4byte 0x65000000
+  .4byte 0x803e3994
+  .4byte 0
+  .4byte 0x802c8af4
+  .4byte 0x802c8b00
+  .4byte 0x4e6f6465
+  .4byte 0
+  .4byte 0x803e39ac
+  .4byte 0x802c8b0c
+  .4byte 0x802c8b20
+  .4byte 0x802c8b30
 .global __RTTI__19TaiKinokoParameters
 __RTTI__19TaiKinokoParameters:
-	.incbin "baserom.dol", 0x2ED2E4, 0x14
+  .4byte 0x802c8ae0
+  .4byte 0x802c8b4c
+  .4byte 0
+  .4byte 0x802c8be4
+  .4byte 0
 .global __RTTI__23TaiKeySendMessageAction
 __RTTI__23TaiKeySendMessageAction:
-	.incbin "baserom.dol", 0x2ED2F8, 0x8
+  .4byte 0x802c8bcc
+  .4byte 0x802c8bf0
 .global __RTTI__20TaiSendMessageAction
 __RTTI__20TaiSendMessageAction:
-	.incbin "baserom.dol", 0x2ED300, 0x8
+  .4byte 0x802c8c18
+  .4byte 0x802c8c30
 .global lbl_803E39E8
 lbl_803E39E8:
 	.incbin "baserom.dol", 0x2ED308, 0x4
@@ -10859,46 +12699,78 @@ lbl_803E3A24:
 	.incbin "baserom.dol", 0x2ED344, 0xC
 .global __RTTI__26TaiMizinkoFlyingAwayAction
 __RTTI__26TaiMizinkoFlyingAwayAction:
-	.incbin "baserom.dol", 0x2ED350, 0x8
+  .4byte 0x802c8da8
+  .4byte 0x802c8dd0
 .global __RTTI__23TaiMizinkoWaitingAction
 __RTTI__23TaiMizinkoWaitingAction:
-	.incbin "baserom.dol", 0x2ED358, 0x8
+  .4byte 0x802c8df8
+  .4byte 0x802c8e10
 .global __RTTI__25TaiMizinkoDropWaterAction
 __RTTI__25TaiMizinkoDropWaterAction:
-	.incbin "baserom.dol", 0x2ED360, 0x8
+  .4byte 0x802c8e38
+  .4byte 0x802c8e54
 .global __RTTI__22TaiMizinkoComingAction
 __RTTI__22TaiMizinkoComingAction:
-	.incbin "baserom.dol", 0x2ED368, 0x8
+  .4byte 0x802c8e7c
+  .4byte 0x802c8e94
 .global __RTTI__21TaiMizinkoGoingAction
 __RTTI__21TaiMizinkoGoingAction:
-	.incbin "baserom.dol", 0x2ED370, 0x8
+  .4byte 0x802c8ebc
+  .4byte 0x802c8ed4
 .global __RTTI__22TaiMizinkoFadingAction
 __RTTI__22TaiMizinkoFadingAction:
-	.incbin "baserom.dol", 0x2ED378, 0x10
+  .4byte 0x802c8efc
+  .4byte 0x802c8f14
+  .4byte 0x802c8f58
+  .4byte 0x802c8f68
 .global __RTTI__27TaiMizinkoMovingTimerAction
 __RTTI__27TaiMizinkoMovingTimerAction:
-	.incbin "baserom.dol", 0x2ED388, 0x8
+  .4byte 0x802c8f3c
+  .4byte 0x802c8f74
 .global __RTTI__24TaiMizinkoCryTimerAction
 __RTTI__24TaiMizinkoCryTimerAction:
-	.incbin "baserom.dol", 0x2ED390, 0x18
+  .4byte 0x802c8fa4
+  .4byte 0x802c8fc0
+  .4byte 0x802c9004
+  .4byte 0
+  .4byte 0x802c9014
+  .4byte 0x802c9020
 .global __RTTI__18TaiMizinkoStrategy
 __RTTI__18TaiMizinkoStrategy:
-	.incbin "baserom.dol", 0x2ED3A8, 0x38
+  .4byte 0x802c8ff0
+  .4byte 0x802c902c
+  .4byte 0x414e6f64
+  .4byte 0x65000000
+  .4byte 0x803e3a90
+  .4byte 0
+  .4byte 0x802c9080
+  .4byte 0x802c908c
+  .4byte 0x4e6f6465
+  .4byte 0
+  .4byte 0x803e3aa8
+  .4byte 0x802c9098
+  .4byte 0x802c90ac
+  .4byte 0x802c90bc
 .global __RTTI__20TaiMizinkoParameters
 __RTTI__20TaiMizinkoParameters:
-	.incbin "baserom.dol", 0x2ED3E0, 0x8
+  .4byte 0x802c9068
+  .4byte 0x802c90d8
 .global __RTTI__28TaiMizigenNaviApprouchAction
 __RTTI__28TaiMizigenNaviApprouchAction:
-	.incbin "baserom.dol", 0x2ED3E8, 0x8
+  .4byte 0x802c912c
+  .4byte 0x802c914c
 .global __RTTI__26TaiMizigenGeneratingAction
 __RTTI__26TaiMizigenGeneratingAction:
-	.incbin "baserom.dol", 0x2ED3F0, 0x8
+  .4byte 0x802c9174
+  .4byte 0x802c9190
 .global __RTTI__18TaiMizigenStrategy
 __RTTI__18TaiMizigenStrategy:
-	.incbin "baserom.dol", 0x2ED3F8, 0x8
+  .4byte 0x802c91b8
+  .4byte 0x802c91cc
 .global __RTTI__20TaiMizigenParameters
 __RTTI__20TaiMizigenParameters:
-	.incbin "baserom.dol", 0x2ED400, 0x8
+  .4byte 0x802c9224
+  .4byte 0x802c923c
 .global lbl_803E3AE8
 lbl_803E3AE8:
 	.incbin "baserom.dol", 0x2ED408, 0x4
@@ -10919,31 +12791,44 @@ lbl_803E3AFC:
 	.incbin "baserom.dol", 0x2ED41C, 0xC
 .global __RTTI__34TaiRandomSetAnimationCounterAction
 __RTTI__34TaiRandomSetAnimationCounterAction:
-	.incbin "baserom.dol", 0x2ED428, 0x8
+  .4byte 0x802c92bc
+  .4byte 0x802c92ec
 .global __RTTI__23TaiSetFrameMotionAction
 __RTTI__23TaiSetFrameMotionAction:
-	.incbin "baserom.dol", 0x2ED430, 0x8
+  .4byte 0x802c9314
+  .4byte 0x802c932c
 .global __RTTI__27TaiFinishStoppingMoveAction
 __RTTI__27TaiFinishStoppingMoveAction:
-	.incbin "baserom.dol", 0x2ED438, 0x8
+  .4byte 0x802c9354
+  .4byte 0x802c9370
 .global __RTTI__21TaiStoppingMoveAction
 __RTTI__21TaiStoppingMoveAction:
-	.incbin "baserom.dol", 0x2ED440, 0x8
+  .4byte 0x802c9398
+  .4byte 0x802c93b0
 .global __RTTI__27TaiOutsideKeyStopMoveAction
 __RTTI__27TaiOutsideKeyStopMoveAction:
-	.incbin "baserom.dol", 0x2ED448, 0x10
+  .4byte 0x802c93d8
+  .4byte 0x802c93f4
+  .4byte 0x802c9434
+  .4byte 0x802c9444
 .global __RTTI__21TaiSwitchMotionAction
 __RTTI__21TaiSwitchMotionAction:
-	.incbin "baserom.dol", 0x2ED458, 0x8
+  .4byte 0x802c941c
+  .4byte 0x802c9450
 .global __RTTI__18TaiCountLoopAction
 __RTTI__18TaiCountLoopAction:
-	.incbin "baserom.dol", 0x2ED460, 0x8
+  .4byte 0x802c9480
+  .4byte 0x802c9494
 .global __RTTI__21TaiAnimationKeyAction
 __RTTI__21TaiAnimationKeyAction:
-	.incbin "baserom.dol", 0x2ED468, 0x8
+  .4byte 0x802c94bc
+  .4byte 0x802c94d4
 .global __RTTI__21TaiFinishMotionAction
 __RTTI__21TaiFinishMotionAction:
-	.incbin "baserom.dol", 0x2ED470, 0x10
+  .4byte 0x802c94fc
+  .4byte 0x802c9514
+  .4byte 0x802c9544
+  .4byte 0x802c9560
 .global lbl_803E3B60
 lbl_803E3B60:
 	.incbin "baserom.dol", 0x2ED480, 0x4
@@ -10967,97 +12852,135 @@ lbl_803E3B78:
 	.incbin "baserom.dol", 0x2ED498, 0xC
 .global __RTTI__33TaiHeadOnCollisionAvoidanceAction
 __RTTI__33TaiHeadOnCollisionAvoidanceAction:
-	.incbin "baserom.dol", 0x2ED4A4, 0x8
+  .4byte 0x802c95d4
+  .4byte 0x802c9604
 .global __RTTI__19TaiTargetNestAction
 __RTTI__19TaiTargetNestAction:
-	.incbin "baserom.dol", 0x2ED4AC, 0x8
+  .4byte 0x802c962c
+  .4byte 0x802c9640
 .global __RTTI__32TaiWatchOffTerritoryCenterAction
 __RTTI__32TaiWatchOffTerritoryCenterAction:
-	.incbin "baserom.dol", 0x2ED4B4, 0x18
+  .4byte 0x802c9668
+  .4byte 0x802c968c
+  .4byte 0x802c96cc
+  .4byte 0x802c96dc
+  .4byte 0x802c96e8
+  .4byte 0x802c9704
 .global __RTTI__20TaiRunningAwayAction
 __RTTI__20TaiRunningAwayAction:
-	.incbin "baserom.dol", 0x2ED4CC, 0x8
+  .4byte 0x802c96b4
+  .4byte 0x802c9718
 .global __RTTI__37TaiRunningAwayToTargetDirectionAction
 __RTTI__37TaiRunningAwayToTargetDirectionAction:
-	.incbin "baserom.dol", 0x2ED4D4, 0x8
+  .4byte 0x802c9754
+  .4byte 0x802c977c
 .global __RTTI__17TaiRotatingAction
 __RTTI__17TaiRotatingAction:
-	.incbin "baserom.dol", 0x2ED4DC, 0x8
+  .4byte 0x802c97b8
+  .4byte 0x802c97cc
 .global __RTTI__32TaiTurningToTargetPositionAction
 __RTTI__32TaiTurningToTargetPositionAction:
-	.incbin "baserom.dol", 0x2ED4E4, 0x8
+  .4byte 0x802c97f4
+  .4byte 0x802c9818
 .global __RTTI__24TaiOutOfTraceAngleAction
 __RTTI__24TaiOutOfTraceAngleAction:
-	.incbin "baserom.dol", 0x2ED4EC, 0x8
+  .4byte 0x802c9854
+  .4byte 0x802c9870
 .global __RTTI__21TaiTraceTurningAction
 __RTTI__21TaiTraceTurningAction:
-	.incbin "baserom.dol", 0x2ED4F4, 0x8
+  .4byte 0x802c9898
+  .4byte 0x802c98b0
 .global __RTTI__20TaiTurningAwayAction
 __RTTI__20TaiTurningAwayAction:
-	.incbin "baserom.dol", 0x2ED4FC, 0x10
+  .4byte 0x802c98ec
+  .4byte 0x802c9904
+  .4byte 0x802c9950
+  .4byte 0
 .global __RTTI__16TaiTurningAction
 __RTTI__16TaiTurningAction:
-	.incbin "baserom.dol", 0x2ED50C, 0x8
+  .4byte 0x802c9980
+  .4byte 0x802c9994
 .global __RTTI__19TaiDirectTurnAction
 __RTTI__19TaiDirectTurnAction:
-	.incbin "baserom.dol", 0x2ED514, 0x8
+  .4byte 0x802c99d0
+  .4byte 0x802c99e4
 .global __RTTI__18TaiGoingHomeAction
 __RTTI__18TaiGoingHomeAction:
-	.incbin "baserom.dol", 0x2ED51C, 0x8
+  .4byte 0x802c9a0c
+  .4byte 0x802c9a20
 .global __RTTI__16TaiTracingAction
 __RTTI__16TaiTracingAction:
-	.incbin "baserom.dol", 0x2ED524, 0x8
+  .4byte 0x802c9a5c
+  .4byte 0x802c9a70
 .global __RTTI__29TaiRandomWanderingRouteAction
 __RTTI__29TaiRandomWanderingRouteAction:
-	.incbin "baserom.dol", 0x2ED52C, 0x8
+  .4byte 0x802c9aac
+  .4byte 0x802c9acc
 .global __RTTI__19TaiImpassableAction
 __RTTI__19TaiImpassableAction:
-	.incbin "baserom.dol", 0x2ED534, 0x8
+  .4byte 0x802c9b08
+  .4byte 0x802c9b1c
 .global __RTTI__26TaiClampMinVelocityYAction
 __RTTI__26TaiClampMinVelocityYAction:
-	.incbin "baserom.dol", 0x2ED53C, 0x8
+  .4byte 0x802c9b44
+  .4byte 0x802c9b60
 .global __RTTI__23TaiClampMinHeightAction
 __RTTI__23TaiClampMinHeightAction:
-	.incbin "baserom.dol", 0x2ED544, 0x8
+  .4byte 0x802c9b88
+  .4byte 0x802c9ba0
 .global __RTTI__23TaiClampMaxHeightAction
 __RTTI__23TaiClampMaxHeightAction:
-	.incbin "baserom.dol", 0x2ED54C, 0x8
+  .4byte 0x802c9bc8
+  .4byte 0x802c9be0
 .global __RTTI__26TaiHorizontalSinWaveAction
 __RTTI__26TaiHorizontalSinWaveAction:
-	.incbin "baserom.dol", 0x2ED554, 0x8
+  .4byte 0x802c9c08
+  .4byte 0x802c9c24
 .global __RTTI__19TaiCircleMoveAction
 __RTTI__19TaiCircleMoveAction:
-	.incbin "baserom.dol", 0x2ED55C, 0x8
+  .4byte 0x802c9c4c
+  .4byte 0x802c9c60
 .global __RTTI__17TaiParabolaAction
 __RTTI__17TaiParabolaAction:
-	.incbin "baserom.dol", 0x2ED564, 0x8
+  .4byte 0x802c9c88
+  .4byte 0x802c9c9c
 .global __RTTI__21TaiAccelerationAction
 __RTTI__21TaiAccelerationAction:
-	.incbin "baserom.dol", 0x2ED56C, 0x8
+  .4byte 0x802c9cc4
+  .4byte 0x802c9cdc
 .global __RTTI__24TaiMakingNextDriveAction
 __RTTI__24TaiMakingNextDriveAction:
-	.incbin "baserom.dol", 0x2ED574, 0x8
+  .4byte 0x802c9d04
+  .4byte 0x802c9d20
 .global __RTTI__27TaiMakingNextVelocityAction
 __RTTI__27TaiMakingNextVelocityAction:
-	.incbin "baserom.dol", 0x2ED57C, 0x8
+  .4byte 0x802c9d48
+  .4byte 0x802c9d64
 .global __RTTI__34TaiMakeAccelerationDirectionAction
 __RTTI__34TaiMakeAccelerationDirectionAction:
-	.incbin "baserom.dol", 0x2ED584, 0x8
+  .4byte 0x802c9d8c
+  .4byte 0x802c9db0
 .global __RTTI__30TaiMakeVelocityDirectionAction
 __RTTI__30TaiMakeVelocityDirectionAction:
-	.incbin "baserom.dol", 0x2ED58C, 0x8
+  .4byte 0x802c9dd8
+  .4byte 0x802c9df8
 .global __RTTI__21TaiFinishFlyingAction
 __RTTI__21TaiFinishFlyingAction:
-	.incbin "baserom.dol", 0x2ED594, 0x8
+  .4byte 0x802c9e20
+  .4byte 0x802c9e38
 .global __RTTI__20TaiStartFlyingAction
 __RTTI__20TaiStartFlyingAction:
-	.incbin "baserom.dol", 0x2ED59C, 0x8
+  .4byte 0x802c9e60
+  .4byte 0x802c9e78
 .global __RTTI__17TaiStopMoveAction
 __RTTI__17TaiStopMoveAction:
-	.incbin "baserom.dol", 0x2ED5A4, 0x8
+  .4byte 0x802c9ea0
+  .4byte 0x802c9eb4
 .global __RTTI__25TaiMoveNestPositionAction
 __RTTI__25TaiMoveNestPositionAction:
-	.incbin "baserom.dol", 0x2ED5AC, 0xC
+  .4byte 0x802c9edc
+  .4byte 0x802c9ef8
+  .4byte 0
 .global lbl_803E3C98
 lbl_803E3C98:
 	.incbin "baserom.dol", 0x2ED5B8, 0x4
@@ -11090,82 +13013,132 @@ lbl_803E3CBC:
 	.incbin "baserom.dol", 0x2ED5DC, 0xC
 .global __RTTI__33TaiNapkidStartDroppingWaterAction
 __RTTI__33TaiNapkidStartDroppingWaterAction:
-	.incbin "baserom.dol", 0x2ED5E8, 0x8
+  .4byte 0x802ca088
+  .4byte 0x802ca0b8
 .global __RTTI__33TaiNapkidFallingWaterEffectAction
 __RTTI__33TaiNapkidFallingWaterEffectAction:
-	.incbin "baserom.dol", 0x2ED5F0, 0x8
+  .4byte 0x802ca0e0
+  .4byte 0x802ca104
 .global __RTTI__27TaiNapkidShockFallingAction
 __RTTI__27TaiNapkidShockFallingAction:
-	.incbin "baserom.dol", 0x2ED5F8, 0x8
+  .4byte 0x802ca12c
+  .4byte 0x802ca148
 .global __RTTI__22TaiNapkidFallingAction
 __RTTI__22TaiNapkidFallingAction:
-	.incbin "baserom.dol", 0x2ED600, 0x8
+  .4byte 0x802ca170
+  .4byte 0x802ca188
 .global __RTTI__20TaiNapkidFlickAction
 __RTTI__20TaiNapkidFlickAction:
-	.incbin "baserom.dol", 0x2ED608, 0x8
+  .4byte 0x802ca1b0
+  .4byte 0x802ca1c8
 .global __RTTI__27TaiNapkidThrowingPikiAction
 __RTTI__27TaiNapkidThrowingPikiAction:
-	.incbin "baserom.dol", 0x2ED610, 0x8
+  .4byte 0x802ca1f0
+  .4byte 0x802ca20c
 .global __RTTI__30TaiNapkidRisingAscendingAction
 __RTTI__30TaiNapkidRisingAscendingAction:
-	.incbin "baserom.dol", 0x2ED618, 0x8
+  .4byte 0x802ca234
+  .4byte 0x802ca254
 .global __RTTI__33TaiNapkidTakingOffAscendingAction
 __RTTI__33TaiNapkidTakingOffAscendingAction:
-	.incbin "baserom.dol", 0x2ED620, 0x8
+  .4byte 0x802ca27c
+  .4byte 0x802ca2a0
 .global __RTTI__29TaiNapkidCatchAscendingAction
 __RTTI__29TaiNapkidCatchAscendingAction:
-	.incbin "baserom.dol", 0x2ED628, 0x8
+  .4byte 0x802ca2c8
+  .4byte 0x802ca2e8
 .global __RTTI__26TaiNapkidCatchFlyingAction
 __RTTI__26TaiNapkidCatchFlyingAction:
-	.incbin "baserom.dol", 0x2ED630, 0x8
+  .4byte 0x802ca310
+  .4byte 0x802ca32c
 .global __RTTI__27TaiNapkidCatchTracingAction
 __RTTI__27TaiNapkidCatchTracingAction:
-	.incbin "baserom.dol", 0x2ED638, 0x8
+  .4byte 0x802ca354
+  .4byte 0x802ca370
 .global __RTTI__30TaiNapkidCatchDescendingAction
 __RTTI__30TaiNapkidCatchDescendingAction:
-	.incbin "baserom.dol", 0x2ED640, 0x18
+  .4byte 0x802ca398
+  .4byte 0x802ca3b8
+  .4byte 0x802ca42c
+  .4byte 0
+  .4byte 0x802ca438
+  .4byte 0x802ca448
 .global __RTTI__23TaiNapkidCatchingAction
 __RTTI__23TaiNapkidCatchingAction:
-	.incbin "baserom.dol", 0x2ED658, 0x8
+  .4byte 0x802ca4a8
+  .4byte 0x802ca4c0
 .global __RTTI__27TaiNapkidApproachPikiAction
 __RTTI__27TaiNapkidApproachPikiAction:
-	.incbin "baserom.dol", 0x2ED660, 0x8
+  .4byte 0x802ca4e8
+  .4byte 0x802ca504
 .global __RTTI__24TaiNapkidAscendingAction
 __RTTI__24TaiNapkidAscendingAction:
-	.incbin "baserom.dol", 0x2ED668, 0x8
+  .4byte 0x802ca52c
+  .4byte 0x802ca548
 .global __RTTI__21TaiNapkidFlyingAction
 __RTTI__21TaiNapkidFlyingAction:
-	.incbin "baserom.dol", 0x2ED670, 0x8
+  .4byte 0x802ca570
+  .4byte 0x802ca588
 .global __RTTI__23TaiNapkidCirclingAction
 __RTTI__23TaiNapkidCirclingAction:
-	.incbin "baserom.dol", 0x2ED678, 0x8
+  .4byte 0x802ca5b0
+  .4byte 0x802ca5c8
 .global __RTTI__29TaiNapkidStraightFlyingAction
 __RTTI__29TaiNapkidStraightFlyingAction:
-	.incbin "baserom.dol", 0x2ED680, 0x8
+  .4byte 0x802ca5f0
+  .4byte 0x802ca610
 .global __RTTI__25TaiNapkidShortRangeAction
 __RTTI__25TaiNapkidShortRangeAction:
-	.incbin "baserom.dol", 0x2ED688, 0x8
+  .4byte 0x802ca638
+  .4byte 0x802ca654
 .global __RTTI__23TaiNapkidPikiLostAction
 __RTTI__23TaiNapkidPikiLostAction:
-	.incbin "baserom.dol", 0x2ED690, 0x8
+  .4byte 0x802ca67c
+  .4byte 0x802ca694
 .global __RTTI__25TaiNapkidTargetPikiAction
 __RTTI__25TaiNapkidTargetPikiAction:
-	.incbin "baserom.dol", 0x2ED698, 0x18
+  .4byte 0x802ca6bc
+  .4byte 0x802ca6d8
+  .4byte 0x802ca720
+  .4byte 0x802ca730
+  .4byte 0x802ca73c
+  .4byte 0x802ca758
 .global __RTTI__29TaiNapkidWanderingRouteAction
 __RTTI__29TaiNapkidWanderingRouteAction:
-	.incbin "baserom.dol", 0x2ED6B0, 0x8
+  .4byte 0x802ca700
+  .4byte 0x802ca76c
 .global __RTTI__29TekiNapkidShortRangeCondition
 __RTTI__29TekiNapkidShortRangeCondition:
-	.incbin "baserom.dol", 0x2ED6B8, 0x8
+  .4byte 0x802ca7a8
+  .4byte 0x802ca7c8
 .global __RTTI__29TekiNapkidTargetPikiCondition
 __RTTI__29TekiNapkidTargetPikiCondition:
-	.incbin "baserom.dol", 0x2ED6C0, 0x18
+  .4byte 0x802ca800
+  .4byte 0x802ca820
+  .4byte 0x802ca854
+  .4byte 0
+  .4byte 0x802ca864
+  .4byte 0x802ca870
 .global __RTTI__17TaiNapkidStrategy
 __RTTI__17TaiNapkidStrategy:
-	.incbin "baserom.dol", 0x2ED6D8, 0x38
+  .4byte 0x802ca840
+  .4byte 0x802ca87c
+  .4byte 0x414e6f64
+  .4byte 0x65000000
+  .4byte 0x803e3dc0
+  .4byte 0
+  .4byte 0x802ca958
+  .4byte 0x802ca964
+  .4byte 0x4e6f6465
+  .4byte 0
+  .4byte 0x803e3dd8
+  .4byte 0x802ca970
+  .4byte 0x802ca984
+  .4byte 0x802ca994
 .global __RTTI__19TaiNapkidParameters
 __RTTI__19TaiNapkidParameters:
-	.incbin "baserom.dol", 0x2ED710, 0x8
+  .4byte 0x802ca944
+  .4byte 0x802ca9b0
 .global lbl_803E3DF8
 lbl_803E3DF8:
 	.incbin "baserom.dol", 0x2ED718, 0x4
@@ -11213,46 +13186,81 @@ lbl_803E3E30:
 	.incbin "baserom.dol", 0x2ED750, 0x1C
 .global __RTTI__25TaiOtimotiLegEffectAction
 __RTTI__25TaiOtimotiLegEffectAction:
-	.incbin "baserom.dol", 0x2ED76C, 0x8
+  .4byte 0x802cab5c
+  .4byte 0x802cabd0
 .global __RTTI__31TaiOtimotiAttackingEffectAction
 __RTTI__31TaiOtimotiAttackingEffectAction:
-	.incbin "baserom.dol", 0x2ED774, 0x8
+  .4byte 0x802cac0c
+  .4byte 0x802cac2c
 .global __RTTI__25TaiOtimotiAttackingAction
 __RTTI__25TaiOtimotiAttackingAction:
-	.incbin "baserom.dol", 0x2ED77C, 0x8
+  .4byte 0x802cac54
+  .4byte 0x802cac70
 .global __RTTI__24TaiOtimotiBouncingAction
 __RTTI__24TaiOtimotiBouncingAction:
-	.incbin "baserom.dol", 0x2ED784, 0x18
+  .4byte 0x802cac98
+  .4byte 0x802cacb4
+  .4byte 0x802cacf0
+  .4byte 0
+  .4byte 0x802cacfc
+  .4byte 0x802cad0c
 .global __RTTI__24TaiOtimotiPressingAction
 __RTTI__24TaiOtimotiPressingAction:
-	.incbin "baserom.dol", 0x2ED79C, 0x8
+  .4byte 0x802cad70
+  .4byte 0x802cad8c
 .global __RTTI__24TaiOtimotiDroppingAction
 __RTTI__24TaiOtimotiDroppingAction:
-	.incbin "baserom.dol", 0x2ED7A4, 0x8
+  .4byte 0x802cadb4
+  .4byte 0x802cadd0
 .global __RTTI__26TaiOtimotiAirWaitingAction
 __RTTI__26TaiOtimotiAirWaitingAction:
-	.incbin "baserom.dol", 0x2ED7AC, 0x8
+  .4byte 0x802cadf8
+  .4byte 0x802cae14
 .global __RTTI__23TaiOtimotiJumpingAction
 __RTTI__23TaiOtimotiJumpingAction:
-	.incbin "baserom.dol", 0x2ED7B4, 0x8
+  .4byte 0x802cae3c
+  .4byte 0x802cae54
 .global __RTTI__26TaiOtimotiFailToJumpAction
 __RTTI__26TaiOtimotiFailToJumpAction:
-	.incbin "baserom.dol", 0x2ED7BC, 0x8
+  .4byte 0x802cae7c
+  .4byte 0x802cae98
 .global __RTTI__21TaiOtimotiFlickAction
 __RTTI__21TaiOtimotiFlickAction:
-	.incbin "baserom.dol", 0x2ED7C4, 0x8
+  .4byte 0x802caf0c
+  .4byte 0x802caf24
 .global __RTTI__34TaiOtimotiStartDroppingWaterAction
 __RTTI__34TaiOtimotiStartDroppingWaterAction:
-	.incbin "baserom.dol", 0x2ED7CC, 0x18
+  .4byte 0x802caf4c
+  .4byte 0x802caf70
+  .4byte 0x802cafac
+  .4byte 0
+  .4byte 0x802cafbc
+  .4byte 0x802cafc8
 .global __RTTI__18TaiOtimotiStrategy
 __RTTI__18TaiOtimotiStrategy:
-	.incbin "baserom.dol", 0x2ED7E4, 0x38
+  .4byte 0x802caf98
+  .4byte 0x802cafd4
+  .4byte 0x414e6f64
+  .4byte 0x65000000
+  .4byte 0x803e3ecc
+  .4byte 0
+  .4byte 0x802cb07c
+  .4byte 0x802cb088
+  .4byte 0x4e6f6465
+  .4byte 0
+  .4byte 0x803e3ee4
+  .4byte 0x802cb094
+  .4byte 0x802cb0a8
+  .4byte 0x802cb0b8
 .global __RTTI__22TaiBlackFrogParameters
 __RTTI__22TaiBlackFrogParameters:
-	.incbin "baserom.dol", 0x2ED81C, 0x8
+  .4byte 0x802cb064
+  .4byte 0x802cb0d4
 .global __RTTI__20TaiOtimotiParameters
 __RTTI__20TaiOtimotiParameters:
-	.incbin "baserom.dol", 0x2ED824, 0xC
+  .4byte 0x802cb128
+  .4byte 0x802cb140
+  .4byte 0
 .global lbl_803E3F10
 lbl_803E3F10:
 	.incbin "baserom.dol", 0x2ED830, 0x4
@@ -11267,112 +13275,178 @@ lbl_803E3F1C:
 	.incbin "baserom.dol", 0x2ED83C, 0xC
 .global __RTTI__26TaiPalmChangingColorAction
 __RTTI__26TaiPalmChangingColorAction:
-	.incbin "baserom.dol", 0x2ED848, 0x8
+  .4byte 0x802cb1f0
+  .4byte 0x802cb218
 .global __RTTI__26TaiPalmSettingPelletAction
 __RTTI__26TaiPalmSettingPelletAction:
-	.incbin "baserom.dol", 0x2ED850, 0x8
+  .4byte 0x802cb240
+  .4byte 0x802cb25c
 .global __RTTI__22TaiPalmSunflowerAction
 __RTTI__22TaiPalmSunflowerAction:
-	.incbin "baserom.dol", 0x2ED858, 0x8
+  .4byte 0x802cb284
+  .4byte 0x802cb29c
 .global __RTTI__25TaiPalmFlowerDamageAction
 __RTTI__25TaiPalmFlowerDamageAction:
-	.incbin "baserom.dol", 0x2ED860, 0x8
+  .4byte 0x802cb2c4
+  .4byte 0x802cb2e0
 .global __RTTI__17TaiPalmGrowAction
 __RTTI__17TaiPalmGrowAction:
-	.incbin "baserom.dol", 0x2ED868, 0x8
+  .4byte 0x802cb308
+  .4byte 0x802cb31c
 .global __RTTI__20TaiPalmGrowingAction
 __RTTI__20TaiPalmGrowingAction:
-	.incbin "baserom.dol", 0x2ED870, 0x10
+  .4byte 0x802cb344
+  .4byte 0x802cb35c
+  .4byte 0x802cb39c
+  .4byte 0x802cb3ac
 .global __RTTI__17TaiDamagingAction
 __RTTI__17TaiDamagingAction:
-	.incbin "baserom.dol", 0x2ED880, 0x8
+  .4byte 0x802cb3b8
+  .4byte 0x802cb3cc
 .global __RTTI__21TaiPalmDamagingAction
 __RTTI__21TaiPalmDamagingAction:
-	.incbin "baserom.dol", 0x2ED888, 0x8
+  .4byte 0x802cb384
+  .4byte 0x802cb3e0
 .global __RTTI__14TaiDyingAction
 __RTTI__14TaiDyingAction:
-	.incbin "baserom.dol", 0x2ED890, 0x8
+  .4byte 0x802cb42c
+  .4byte 0x802cb43c
 .global __RTTI__18TaiPalmDyingAction
 __RTTI__18TaiPalmDyingAction:
-	.incbin "baserom.dol", 0x2ED898, 0x8
+  .4byte 0x802cb418
+  .4byte 0x802cb450
 .global __RTTI__19TaiPalmMotionAction
 __RTTI__19TaiPalmMotionAction:
-	.incbin "baserom.dol", 0x2ED8A0, 0x28
+  .4byte 0x802cb488
+  .4byte 0x802cb49c
+  .4byte 0x802cb4e0
+  .4byte 0
+  .4byte 0x802cb4ec
+  .4byte 0x802cb4fc
+  .4byte 0x802cb584
+  .4byte 0
+  .4byte 0x802cb594
+  .4byte 0x802cb5a0
 .global __RTTI__15TaiPalmStrategy
 __RTTI__15TaiPalmStrategy:
-	.incbin "baserom.dol", 0x2ED8C8, 0x38
+  .4byte 0x802cb574
+  .4byte 0x802cb5ac
+  .4byte 0x414e6f64
+  .4byte 0x65000000
+  .4byte 0x803e3fb0
+  .4byte 0
+  .4byte 0x802cb618
+  .4byte 0x802cb624
+  .4byte 0x4e6f6465
+  .4byte 0
+  .4byte 0x803e3fc8
+  .4byte 0x802cb630
+  .4byte 0x802cb644
+  .4byte 0x802cb654
 .global __RTTI__17TaiPalmParameters
 __RTTI__17TaiPalmParameters:
-	.incbin "baserom.dol", 0x2ED900, 0x10
+  .4byte 0x802cb604
+  .4byte 0x802cb670
+  .4byte 0x802cb708
+  .4byte 0
 .global __RTTI__19TaiDangerLifeAction
 __RTTI__19TaiDangerLifeAction:
-	.incbin "baserom.dol", 0x2ED910, 0x8
+  .4byte 0x802cb6f4
+  .4byte 0x802cb714
 .global __RTTI__13TaiWarnAction
 __RTTI__13TaiWarnAction:
-	.incbin "baserom.dol", 0x2ED918, 0x8
+  .4byte 0x802cb73c
+  .4byte 0x802cb74c
 .global __RTTI__16TaiPressedAction
 __RTTI__16TaiPressedAction:
-	.incbin "baserom.dol", 0x2ED920, 0x8
+  .4byte 0x802cb774
+  .4byte 0x802cb788
 .global __RTTI__21TaiBeingPressedAction
 __RTTI__21TaiBeingPressedAction:
-	.incbin "baserom.dol", 0x2ED928, 0x8
+  .4byte 0x802cb7b0
+  .4byte 0x802cb7c8
 .global __RTTI__16TaiSmashedAction_1
 __RTTI__16TaiSmashedAction_1:
-	.incbin "baserom.dol", 0x2ED930, 0x8
+  .4byte 0x802cb7f0
+  .4byte 0x802cb804
 .global __RTTI__16TaiStickedAction
 __RTTI__16TaiStickedAction:
-	.incbin "baserom.dol", 0x2ED938, 0x18
+  .4byte 0x802cb82c
+  .4byte 0x802cb840
+  .4byte 0x802cb87c
+  .4byte 0
+  .4byte 0x802cb888
+  .4byte 0x802cb898
 .global __RTTI__31TaiTargetNearestCollisionAction
 __RTTI__31TaiTargetNearestCollisionAction:
-	.incbin "baserom.dol", 0x2ED950, 0x8
+  .4byte 0x802cb8dc
+  .4byte 0x802cb8fc
 .global __RTTI__31TaiTargetNearestAssailantAction
 __RTTI__31TaiTargetNearestAssailantAction:
-	.incbin "baserom.dol", 0x2ED958, 0x10
+  .4byte 0x802cb924
+  .4byte 0x802cb944
+  .4byte 0x802cb980
+  .4byte 0x802cb990
 .global __RTTI__17TaiDamagingAction_1
 __RTTI__17TaiDamagingAction_1:
-	.incbin "baserom.dol", 0x2ED968, 0x8
+  .4byte 0x802cb96c
+  .4byte 0x802cb99c
 .global __RTTI__40TaiCounterattackSimultaneousDamageAction
 __RTTI__40TaiCounterattackSimultaneousDamageAction:
-	.incbin "baserom.dol", 0x2ED970, 0x8
+  .4byte 0x802cb9cc
+  .4byte 0x802cb9f8
 .global __RTTI__27TaiSimultaneousDamageAction
 __RTTI__27TaiSimultaneousDamageAction:
-	.incbin "baserom.dol", 0x2ED978, 0x8
+  .4byte 0x802cba20
+  .4byte 0x802cba3c
 .global __RTTI__15TaiDamageAction
 __RTTI__15TaiDamageAction:
-	.incbin "baserom.dol", 0x2ED980, 0x8
+  .4byte 0x802cba64
+  .4byte 0x802cba74
 .global __RTTI__20TaiDamageScaleAction
 __RTTI__20TaiDamageScaleAction:
-	.incbin "baserom.dol", 0x2ED988, 0x8
+  .4byte 0x802cba9c
+  .4byte 0x802cbab4
 .global __RTTI__20TaiDamageCountAction
 __RTTI__20TaiDamageCountAction:
-	.incbin "baserom.dol", 0x2ED990, 0x8
+  .4byte 0x802cbadc
+  .4byte 0x802cbaf4
 .global __RTTI__25TaiDamageCountResetAction
 __RTTI__25TaiDamageCountResetAction:
-	.incbin "baserom.dol", 0x2ED998, 0x8
+  .4byte 0x802cbb1c
+  .4byte 0x802cbb38
 .global __RTTI__14TaiDyingAction_1
 __RTTI__14TaiDyingAction_1:
-	.incbin "baserom.dol", 0x2ED9A0, 0x8
+  .4byte 0x802cbb60
+  .4byte 0x802cbb70
 .global __RTTI__25TaiCreateDeadEffectAction
 __RTTI__25TaiCreateDeadEffectAction:
-	.incbin "baserom.dol", 0x2ED9A8, 0x8
+  .4byte 0x802cbba0
+  .4byte 0x802cbbbc
 .global __RTTI__19TaiSpawnItemsAction
 __RTTI__19TaiSpawnItemsAction:
-	.incbin "baserom.dol", 0x2ED9B0, 0x8
+  .4byte 0x802cbbe4
+  .4byte 0x802cbbf8
 .global __RTTI__19TaiStartDyingAction
 __RTTI__19TaiStartDyingAction:
-	.incbin "baserom.dol", 0x2ED9B8, 0x8
+  .4byte 0x802cbc20
+  .4byte 0x802cbc34
 .global __RTTI__12TaiDyeAction
 __RTTI__12TaiDyeAction:
-	.incbin "baserom.dol", 0x2ED9C0, 0x8
+  .4byte 0x802cbc5c
+  .4byte 0x802cbc6c
 .global __RTTI__19TaiLifeDamageAction
 __RTTI__19TaiLifeDamageAction:
-	.incbin "baserom.dol", 0x2ED9C8, 0x8
+  .4byte 0x802cbc94
+  .4byte 0x802cbca8
 .global __RTTI__17TaiLifeZeroAction
 __RTTI__17TaiLifeZeroAction:
-	.incbin "baserom.dol", 0x2ED9D0, 0x8
+  .4byte 0x802cbcd0
+  .4byte 0x802cbce4
 .global __RTTI__13TaiDeadAction
 __RTTI__13TaiDeadAction:
-	.incbin "baserom.dol", 0x2ED9D8, 0x8
+  .4byte 0x802cbd0c
+  .4byte 0x802cbd1c
 .global lbl_803E40C0
 lbl_803E40C0:
 	.incbin "baserom.dol", 0x2ED9E0, 0x4
@@ -11387,37 +13461,72 @@ lbl_803E40CC:
 	.incbin "baserom.dol", 0x2ED9EC, 0x1C
 .global __RTTI__35TaiSwallowMissAttackingEffectAction
 __RTTI__35TaiSwallowMissAttackingEffectAction:
-	.incbin "baserom.dol", 0x2EDA08, 0x8
+  .4byte 0x802cbdf8
+  .4byte 0x802cbe74
 .global __RTTI__25TaiSwallowLegEffectAction
 __RTTI__25TaiSwallowLegEffectAction:
-	.incbin "baserom.dol", 0x2EDA10, 0x8
+  .4byte 0x802cbeb0
+  .4byte 0x802cbecc
 .global __RTTI__22TaiSwallowNoticeAction
 __RTTI__22TaiSwallowNoticeAction:
-	.incbin "baserom.dol", 0x2EDA18, 0x8
+  .4byte 0x802cbf08
+  .4byte 0x802cbf20
 .global __RTTI__21TaiSwallowSnoreAction
 __RTTI__21TaiSwallowSnoreAction:
-	.incbin "baserom.dol", 0x2EDA20, 0x8
+  .4byte 0x802cbf48
+  .4byte 0x802cbf60
 .global __RTTI__31TaiSwallowSwallowingFlickAction
 __RTTI__31TaiSwallowSwallowingFlickAction:
-	.incbin "baserom.dol", 0x2EDA28, 0x20
+  .4byte 0x802cbf88
+  .4byte 0x802cbfa8
+  .4byte 0x802cbfe4
+  .4byte 0
+  .4byte 0x802cbff0
+  .4byte 0x802cc000
+  .4byte 0x802cc080
+  .4byte 0x802cc090
 .global __RTTI__24TaiSwallowFlickingAction
 __RTTI__24TaiSwallowFlickingAction:
-	.incbin "baserom.dol", 0x2EDA48, 0x10
+  .4byte 0x802cc064
+  .4byte 0x802cc09c
+  .4byte 0x802cc130
+  .4byte 0x802cc14c
 .global __RTTI__23TaiSwallowTurningAction
 __RTTI__23TaiSwallowTurningAction:
-	.incbin "baserom.dol", 0x2EDA58, 0x8
+  .4byte 0x802cc118
+  .4byte 0x802cc160
 .global __RTTI__30TaiSwallowReceiveMessageAction
 __RTTI__30TaiSwallowReceiveMessageAction:
-	.incbin "baserom.dol", 0x2EDA60, 0x18
+  .4byte 0x802cc19c
+  .4byte 0x802cc1bc
+  .4byte 0x802cc1f8
+  .4byte 0
+  .4byte 0x802cc208
+  .4byte 0x802cc214
 .global __RTTI__18TaiSwallowStrategy
 __RTTI__18TaiSwallowStrategy:
-	.incbin "baserom.dol", 0x2EDA78, 0x38
+  .4byte 0x802cc1e4
+  .4byte 0x802cc220
+  .4byte 0x414e6f64
+  .4byte 0x65000000
+  .4byte 0x803e4160
+  .4byte 0
+  .4byte 0x802cc2cc
+  .4byte 0x802cc2d8
+  .4byte 0x4e6f6465
+  .4byte 0
+  .4byte 0x803e4178
+  .4byte 0x802cc2e4
+  .4byte 0x802cc2f8
+  .4byte 0x802cc308
 .global __RTTI__25TaiBlackSwallowParameters
 __RTTI__25TaiBlackSwallowParameters:
-	.incbin "baserom.dol", 0x2EDAB0, 0x8
+  .4byte 0x802cc2b0
+  .4byte 0x802cc324
 .global __RTTI__20TaiSwallowParameters
 __RTTI__20TaiSwallowParameters:
-	.incbin "baserom.dol", 0x2EDAB8, 0x8
+  .4byte 0x802cc378
+  .4byte 0x802cc390
 .global lbl_803E41A0
 lbl_803E41A0:
 	.incbin "baserom.dol", 0x2EDAC0, 0x4
@@ -11429,55 +13538,133 @@ lbl_803E41A8:
 	.incbin "baserom.dol", 0x2EDAC8, 0xC
 .global __RTTI__26TaiPearlTresureSoundAction
 __RTTI__26TaiPearlTresureSoundAction:
-	.incbin "baserom.dol", 0x2EDAD4, 0x18
+  .4byte 0x802cc428
+  .4byte 0x802cc450
+  .4byte 0x802cc48c
+  .4byte 0
+  .4byte 0x802cc49c
+  .4byte 0x802cc4a8
 .global __RTTI__16TaiPearlStrategy
 __RTTI__16TaiPearlStrategy:
-	.incbin "baserom.dol", 0x2EDAEC, 0x38
+  .4byte 0x802cc478
+  .4byte 0x802cc4b4
+  .4byte 0x414e6f64
+  .4byte 0x65000000
+  .4byte 0x803e41d4
+  .4byte 0
+  .4byte 0x802cc508
+  .4byte 0x802cc514
+  .4byte 0x4e6f6465
+  .4byte 0
+  .4byte 0x803e41ec
+  .4byte 0x802cc520
+  .4byte 0x802cc534
+  .4byte 0x802cc544
 .global __RTTI__21TaiRocpearlParameters
 __RTTI__21TaiRocpearlParameters:
-	.incbin "baserom.dol", 0x2EDB24, 0x8
+  .4byte 0x802cc4f0
+  .4byte 0x802cc560
 .global __RTTI__18TaiPearlParameters
 __RTTI__18TaiPearlParameters:
-	.incbin "baserom.dol", 0x2EDB2C, 0x18
+  .4byte 0x802cc5b4
+  .4byte 0x802cc5c8
+  .4byte 0x802cc668
+  .4byte 0
+  .4byte 0x802cc674
+  .4byte 0x802cc684
 .global __RTTI__17TaiShellEatAction
 __RTTI__17TaiShellEatAction:
-	.incbin "baserom.dol", 0x2EDB44, 0x8
+  .4byte 0x802cc6e4
+  .4byte 0x802cc6f8
 .global __RTTI__28TaiShellNaviPikiInsideAction
 __RTTI__28TaiShellNaviPikiInsideAction:
-	.incbin "baserom.dol", 0x2EDB4C, 0x8
+  .4byte 0x802cc738
+  .4byte 0x802cc758
 .global __RTTI__30TaiShellSaveItemPositionAction
 __RTTI__30TaiShellSaveItemPositionAction:
-	.incbin "baserom.dol", 0x2EDB54, 0x8
+  .4byte 0x802cc780
+  .4byte 0x802cc7a0
 .global __RTTI__25TaiShellSetPositionAction
 __RTTI__25TaiShellSetPositionAction:
-	.incbin "baserom.dol", 0x2EDB5C, 0x8
+  .4byte 0x802cc7c8
+  .4byte 0x802cc7e4
 .global __RTTI__16TaiShellStrategy
 __RTTI__16TaiShellStrategy:
-	.incbin "baserom.dol", 0x2EDB64, 0x8
+  .4byte 0x802cc80c
+  .4byte 0x802cc820
 .global __RTTI__18TaiShellParameters
 __RTTI__18TaiShellParameters:
-	.incbin "baserom.dol", 0x2EDB6C, 0x1C
+  .4byte 0x802cc8b0
+  .4byte 0x802cc8c4
+  .4byte 0
+  .4byte 0x802cc954
+  .4byte 0
+  .4byte 0x802cc960
+  .4byte 0x802cc970
 .global __RTTI__22TaiStartingTimerAction
 __RTTI__22TaiStartingTimerAction:
-	.incbin "baserom.dol", 0x2EDB88, 0x8
+  .4byte 0x802cc93c
+  .4byte 0x802cc97c
 .global __RTTI__21TaiTimerElapsedAction
 __RTTI__21TaiTimerElapsedAction:
-	.incbin "baserom.dol", 0x2EDB90, 0x8
+  .4byte 0x802cc9ac
+  .4byte 0x802cc9c4
 .global __RTTI__19TaiResetTimerAction
 __RTTI__19TaiResetTimerAction:
-	.incbin "baserom.dol", 0x2EDB98, 0x18
+  .4byte 0x802cc9ec
+  .4byte 0x802cca00
+  .4byte 0x802cca84
+  .4byte 0
+  .4byte 0x802cca90
+  .4byte 0x802ccaa0
 .global __RTTI__20TaiWaitTurningAction
 __RTTI__20TaiWaitTurningAction:
-	.incbin "baserom.dol", 0x2EDBB0, 0x10
+  .4byte 0x802cca6c
+  .4byte 0x802ccaac
+  .4byte 0x54656b69
+  .4byte 0
 .global __RTTI__10PelletView_1
 __RTTI__10PelletView_1:
-	.incbin "baserom.dol", 0x2EDBC0, 0x58
+  .4byte 0x802ccaec
+  .4byte 0
+  .4byte 0x802ccaf8
+  .4byte 0
+  .4byte 0x802ccb0c
+  .4byte 0
+  .4byte 0x802ccb18
+  .4byte 0
+  .4byte 0x802ccb28
+  .4byte 0x802ccb34
+  .4byte 0x4254656b
+  .4byte 0x69000000
+  .4byte 0x803e42c8
+  .4byte 0x802ccb48
+  .4byte 0x4e54656b
+  .4byte 0x69000000
+  .4byte 0x803e42d8
+  .4byte 0x802ccb74
+  .4byte 0x5954656b
+  .4byte 0x69000000
+  .4byte 0x803e42e8
+  .4byte 0x802ccba8
 .global __RTTI__4Teki
 __RTTI__4Teki:
-	.incbin "baserom.dol", 0x2EDC18, 0x30
+  .4byte 0x803e4298
+  .4byte 0x802ccbe4
+  .4byte 0x414e6f64
+  .4byte 0x65000000
+  .4byte 0x803e4300
+  .4byte 0
+  .4byte 0x802cce84
+  .4byte 0x802cce90
+  .4byte 0x4e6f6465
+  .4byte 0
+  .4byte 0x803e4318
+  .4byte 0x802cce9c
 .global __RTTI__20TekiAnimationManager
 __RTTI__20TekiAnimationManager:
-	.incbin "baserom.dol", 0x2EDC48, 0x8
+  .4byte lbl_802CCE6C
+  .4byte 0x802cceb0
 .global lbl_803E4330
 lbl_803E4330:
 	.incbin "baserom.dol", 0x2EDC50, 0x4
@@ -11660,82 +13847,126 @@ lbl_803E441C:
 	.incbin "baserom.dol", 0x2EDD3C, 0x1C
 .global __RTTI__11NVector3fIO_2
 __RTTI__11NVector3fIO_2:
-	.incbin "baserom.dol", 0x2EDD58, 0x8
+  .4byte 0x802cd070
+  .4byte 0
 .global __RTTI__10PelletView_2
 __RTTI__10PelletView_2:
-	.incbin "baserom.dol", 0x2EDD60, 0x48
+  .4byte 0x802cd0a8
+  .4byte 0
+  .4byte 0x802cd0e8
+  .4byte 0
+  .4byte 0x4254656b
+  .4byte 0x69000000
+  .4byte 0x802cd108
+  .4byte 0
+  .4byte 0x802cd114
+  .4byte 0
+  .4byte 0x802cd124
+  .4byte 0x802cd130
+  .4byte 0x803e4450
+  .4byte 0x802cd144
+  .4byte 0x802cd3a8
+  .4byte 0
+  .4byte 0x802cd3b4
+  .4byte 0x802cd3c4
 .global __RTTI__18TekiAngleCondition
 __RTTI__18TekiAngleCondition:
-	.incbin "baserom.dol", 0x2EDDA8, 0x8
+  .4byte 0x802cd394
+  .4byte 0x802cd3d0
 .global __RTTI__18TekiLowerCondition
 __RTTI__18TekiLowerCondition:
-	.incbin "baserom.dol", 0x2EDDB0, 0x8
+  .4byte 0x802cd470
+  .4byte 0x802cd484
 .global __RTTI__26TekiVisibleHeightCondition
 __RTTI__26TekiVisibleHeightCondition:
-	.incbin "baserom.dol", 0x2EDDB8, 0x8
+  .4byte 0x802cd4a4
+  .4byte 0x802cd4c0
 .global __RTTI__20TekiVisibleCondition
 __RTTI__20TekiVisibleCondition:
-	.incbin "baserom.dol", 0x2EDDC0, 0x8
+  .4byte 0x802cd4e0
+  .4byte 0x802cd4f8
 .global __RTTI__23TekiAttackableCondition
 __RTTI__23TekiAttackableCondition:
-	.incbin "baserom.dol", 0x2EDDC8, 0x8
+  .4byte 0x802cd518
+  .4byte 0x802cd530
 .global __RTTI__23TekiLowerRangeCondition
 __RTTI__23TekiLowerRangeCondition:
-	.incbin "baserom.dol", 0x2EDDD0, 0x8
+  .4byte 0x802cd550
+  .4byte 0x802cd568
 .global __RTTI__20TekiStickerCondition
 __RTTI__20TekiStickerCondition:
-	.incbin "baserom.dol", 0x2EDDD8, 0x8
+  .4byte 0x802cd588
+  .4byte 0x802cd5a0
 .global __RTTI__27TekiSphereDistanceCondition
 __RTTI__27TekiSphereDistanceCondition:
-	.incbin "baserom.dol", 0x2EDDE0, 0x8
+  .4byte 0x802cd5c0
+  .4byte 0x802cd5dc
 .global __RTTI__21TekiDistanceCondition
 __RTTI__21TekiDistanceCondition:
-	.incbin "baserom.dol", 0x2EDDE8, 0x8
+  .4byte 0x802cd5fc
+  .4byte 0x802cd614
 .global __RTTI__28TekiCreaturePointerCondition
 __RTTI__28TekiCreaturePointerCondition:
-	.incbin "baserom.dol", 0x2EDDF0, 0x8
+  .4byte 0x802cd634
+  .4byte 0x802cd654
 .global __RTTI__24TekiRecognitionCondition
 __RTTI__24TekiRecognitionCondition:
-	.incbin "baserom.dol", 0x2EDDF8, 0x8
+  .4byte 0x802cd674
+  .4byte 0x802cd690
 .global __RTTI__21TekiStickingCondition
 __RTTI__21TekiStickingCondition:
-	.incbin "baserom.dol", 0x2EDE00, 0x8
+  .4byte 0x802cd6b0
+  .4byte 0x802cd6c8
 .global __RTTI__35TekiPositionSphereDistanceCondition
 __RTTI__35TekiPositionSphereDistanceCondition:
-	.incbin "baserom.dol", 0x2EDE08, 0x8
+  .4byte 0x802cd6e8
+  .4byte 0x802cd70c
 .global __RTTI__35TekiPositionCircleDistanceCondition
 __RTTI__35TekiPositionCircleDistanceCondition:
-	.incbin "baserom.dol", 0x2EDE10, 0x8
+  .4byte 0x802cd72c
+  .4byte 0x802cd750
 .global __RTTI__29TekiPositionDistanceCondition
 __RTTI__29TekiPositionDistanceCondition:
-	.incbin "baserom.dol", 0x2EDE18, 0x8
+  .4byte 0x802cd770
+  .4byte 0x802cd790
 .global __RTTI__19TekiPelletCondition
 __RTTI__19TekiPelletCondition:
-	.incbin "baserom.dol", 0x2EDE20, 0x8
+  .4byte 0x802cd7b0
+  .4byte 0x802cd7c4
 .global __RTTI__21TekiNaviPikiCondition
 __RTTI__21TekiNaviPikiCondition:
-	.incbin "baserom.dol", 0x2EDE28, 0x8
+  .4byte 0x802cd7e4
+  .4byte 0x802cd7fc
 .global __RTTI__17TekiNaviCondition
 __RTTI__17TekiNaviCondition:
-	.incbin "baserom.dol", 0x2EDE30, 0x8
+  .4byte 0x802cd81c
+  .4byte 0x802cd830
 .global __RTTI__17TekiFreeCondition
 __RTTI__17TekiFreeCondition:
-	.incbin "baserom.dol", 0x2EDE38, 0x8
+  .4byte 0x802cd850
+  .4byte 0x802cd864
 .global __RTTI__17TekiTypeCondition
 __RTTI__17TekiTypeCondition:
-	.incbin "baserom.dol", 0x2EDE40, 0x8
+  .4byte 0x802cd884
+  .4byte 0x802cd898
 .global __RTTI__18TekiStateCondition
 __RTTI__18TekiStateCondition:
-	.incbin "baserom.dol", 0x2EDE48, 0x8
+  .4byte 0x802cd8b8
+  .4byte 0x802cd8cc
 .global __RTTI__22TekiPikiStateCondition
 __RTTI__22TekiPikiStateCondition:
-	.incbin "baserom.dol", 0x2EDE50, 0x10
+  .4byte 0x802cd8ec
+  .4byte 0x802cd904
+  .4byte 0x802cd960
+  .4byte 0
 .global __RTTI__17InteractHitEffect
 __RTTI__17InteractHitEffect:
-	.incbin "baserom.dol", 0x2EDE60, 0x8
+  .4byte 0x802cd94c
+  .4byte 0x802cd96c
 .global __RTTI__12InteractBomb
 __RTTI__12InteractBomb:
-	.incbin "baserom.dol", 0x2EDE68, 0x8
+  .4byte 0x802cd9d0
+  .4byte 0x802cd9e0
 .global lbl_803E4550
 lbl_803E4550:
 	.incbin "baserom.dol", 0x2EDE70, 0x104
@@ -11747,10 +13978,28 @@ lbl_803E4658:
 	.incbin "baserom.dol", 0x2EDF78, 0x50
 .global __RTTI__7TekiMgr
 __RTTI__7TekiMgr:
-	.incbin "baserom.dol", 0x2EDFC8, 0x10
+  .4byte 0x803e4660
+  .4byte 0x802cdc64
+  .4byte 0x4e54656b
+  .4byte 0x69000000
 .global __RTTI__10PelletView_3
 __RTTI__10PelletView_3:
-	.incbin "baserom.dol", 0x2EDFD8, 0x40
+  .4byte 0x802cdd3c
+  .4byte 0
+  .4byte 0x802cdd48
+  .4byte 0
+  .4byte 0x802cdd5c
+  .4byte 0
+  .4byte 0x802cdd68
+  .4byte 0
+  .4byte 0x802cdd78
+  .4byte 0x802cdd84
+  .4byte 0x4254656b
+  .4byte 0x69000000
+  .4byte 0x803e46e0
+  .4byte 0x802cdd98
+  .4byte 0x803e46b0
+  .4byte 0x802cddc4
 .global lbl_803E46F8
 lbl_803E46F8:
 	.incbin "baserom.dol", 0x2EE018, 0x8
@@ -11786,10 +14035,24 @@ lbl_803E4764:
 	.incbin "baserom.dol", 0x2EE084, 0x4
 .global __RTTI__15TekiPersonality
 __RTTI__15TekiPersonality:
-	.incbin "baserom.dol", 0x2EE088, 0x30
+  .4byte 0x802ce68c
+  .4byte 0
+  .4byte 0x802ce6d4
+  .4byte 0
+  .4byte 0x802ce750
+  .4byte 0
+  .4byte 0x47656e42
+  .4byte 0x61736500
+  .4byte 0x803e4780
+  .4byte 0x802ce75c
+  .4byte 0x802ce768
+  .4byte 0x802ce774
 .global __RTTI__13GenObjectBoss
 __RTTI__13GenObjectBoss:
-	.incbin "baserom.dol", 0x2EE0B8, 0x10
+  .4byte 0x802ce740
+  .4byte 0x802ce788
+  .4byte 0x426f7373
+  .4byte 0
 .global lbl_803E47A8
 lbl_803E47A8:
 	.incbin "baserom.dol", 0x2EE0C8, 0x4
@@ -11909,22 +14172,32 @@ lbl_803E4840:
 	.incbin "baserom.dol", 0x2EE160, 0x68
 .global __RTTI__20BossAnimationManager
 __RTTI__20BossAnimationManager:
-	.incbin "baserom.dol", 0x2EE1C8, 0x10
+  .4byte lbl_802CEA9C
+  .4byte 0x802ceae0
+  .4byte 0x802ceb64
+  .4byte 0
 .global __RTTI__15CndBossCollKill
 __RTTI__15CndBossCollKill:
-	.incbin "baserom.dol", 0x2EE1D8, 0x8
+  .4byte 0x802ceb54
+  .4byte 0x802ceb70
 .global __RTTI__17CndStickMouthKill
 __RTTI__17CndStickMouthKill:
-	.incbin "baserom.dol", 0x2EE1E0, 0x8
+  .4byte 0x802ceb88
+  .4byte 0x802ceb9c
 .global __RTTI__16CndStickBossKill
 __RTTI__16CndStickBossKill:
-	.incbin "baserom.dol", 0x2EE1E8, 0x8
+  .4byte 0x802cebb4
+  .4byte 0x802cebc8
 .global __RTTI__12CndBossFlick
 __RTTI__12CndBossFlick:
-	.incbin "baserom.dol", 0x2EE1F0, 0x8
+  .4byte 0x802cebe0
+  .4byte 0x802cebf0
 .global __RTTI__10CndIsAlive
 __RTTI__10CndIsAlive:
-	.incbin "baserom.dol", 0x2EE1F8, 0x10
+  .4byte 0x802cec08
+  .4byte 0x802cec14
+  .4byte 0x426f7373
+  .4byte 0x4d677200
 .global lbl_803E48E8
 lbl_803E48E8:
 	.incbin "baserom.dol", 0x2EE208, 0x8
@@ -11957,10 +14230,23 @@ lbl_803E492C:
 	.incbin "baserom.dol", 0x2EE24C, 0x20
 .global __RTTI__8BossNode
 __RTTI__8BossNode:
-	.incbin "baserom.dol", 0x2EE26C, 0x28
+  .4byte 0x802ceff4
+  .4byte 0x802cf00c
+  .4byte 0x802cf04c
+  .4byte 0
+  .4byte 0x4e6f6465
+  .4byte 0
+  .4byte 0x803e495c
+  .4byte 0x802cf070
+  .4byte 0x802cf084
+  .4byte 0x802cf090
 .global __RTTI__7BossMgr
 __RTTI__7BossMgr:
-	.incbin "baserom.dol", 0x2EE294, 0x14
+  .4byte 0x803e48e0
+  .4byte 0x802cf0b4
+  .4byte 0
+  .4byte 0x53706964
+  .4byte 0x65720000
 .global lbl_803E4988
 lbl_803E4988:
 	.incbin "baserom.dol", 0x2EE2A8, 0x4
@@ -12125,16 +14411,38 @@ lbl_803E4A5C:
 	.incbin "baserom.dol", 0x2EE37C, 0x2C
 .global __RTTI__12SpiderDrawer
 __RTTI__12SpiderDrawer:
-	.incbin "baserom.dol", 0x2EE3A8, 0x30
+  .4byte 0x802cf188
+  .4byte 0x802cf1b8
+  .4byte 0x802cf204
+  .4byte 0
+  .4byte 0x802cf210
+  .4byte 0
+  .4byte 0x802cf220
+  .4byte 0x802cf22c
+  .4byte 0x426f7373
+  .4byte 0
+  .4byte 0x803e4aa8
+  .4byte 0x802cf240
 .global __RTTI__6Spider
 __RTTI__6Spider:
-	.incbin "baserom.dol", 0x2EE3D8, 0x20
+  .4byte 0x803e4980
+  .4byte 0x802cf25c
+  .4byte 0x802cf3b0
+  .4byte 0
+  .4byte 0x802cf414
+  .4byte 0
+  .4byte 0x802cf424
+  .4byte 0x802cf430
 .global __RTTI__10SpiderProp
 __RTTI__10SpiderProp:
-	.incbin "baserom.dol", 0x2EE3F8, 0x10
+  .4byte 0x802cf408
+  .4byte 0x802cf43c
+  .4byte 0x802cf4ec
+  .4byte 0
 .global __RTTI__8SpiderAi
 __RTTI__8SpiderAi:
-	.incbin "baserom.dol", 0x2EE408, 0x8
+  .4byte 0x802cf4bc
+  .4byte 0x802cf500
 .global lbl_803E4AF0
 lbl_803E4AF0:
 	.incbin "baserom.dol", 0x2EE410, 0x4
@@ -12203,13 +14511,18 @@ lbl_803E4B44:
 	.incbin "baserom.dol", 0x2EE464, 0xC
 .global __RTTI__30SpiderGenHalfDeadCallBackJoint
 __RTTI__30SpiderGenHalfDeadCallBackJoint:
-	.incbin "baserom.dol", 0x2EE470, 0x8
+  .4byte 0x802cf5d0
+  .4byte 0x802cf61c
 .global __RTTI__23SpiderGenPerishCallBack
 __RTTI__23SpiderGenPerishCallBack:
-	.incbin "baserom.dol", 0x2EE478, 0x8
+  .4byte 0x802cf634
+  .4byte 0x802cf64c
 .global __RTTI__23SpiderGenRippleCallBack
 __RTTI__23SpiderGenRippleCallBack:
-	.incbin "baserom.dol", 0x2EE480, 0x10
+  .4byte 0x802cf664
+  .4byte 0x802cf67c
+  .4byte 0x536e616b
+  .4byte 0x65000000
 .global lbl_803E4B70
 lbl_803E4B70:
 	.incbin "baserom.dol", 0x2EE490, 0x4
@@ -12356,16 +14669,34 @@ lbl_803E4C2C:
 	.incbin "baserom.dol", 0x2EE54C, 0x2C
 .global __RTTI__5Snake
 __RTTI__5Snake:
-	.incbin "baserom.dol", 0x2EE578, 0x8
+  .4byte 0x803e4b68
+  .4byte 0x802cf710
 .global __RTTI__15CollPartUpdater
 __RTTI__15CollPartUpdater:
-	.incbin "baserom.dol", 0x2EE580, 0x8
+  .4byte 0x802cf874
+  .4byte 0
 .global __RTTI__Q25Snake18BoundSphereUpdater
 __RTTI__Q25Snake18BoundSphereUpdater:
-	.incbin "baserom.dol", 0x2EE588, 0x38
+  .4byte 0x802cf858
+  .4byte 0x802cf884
+  .4byte 0x802cf8bc
+  .4byte 0
+  .4byte 0x414e6f64
+  .4byte 0x65000000
+  .4byte 0x803e4c78
+  .4byte 0
+  .4byte lbl_802CF6AC
+  .4byte 0x802cf920
+  .4byte 0x802cf92c
+  .4byte 0
+  .4byte 0x802cf93c
+  .4byte 0x802cf948
 .global __RTTI__9SnakeProp
 __RTTI__9SnakeProp:
-	.incbin "baserom.dol", 0x2EE5C0, 0x10
+  .4byte 0x802cf914
+  .4byte 0x802cf954
+  .4byte 0x536e616b
+  .4byte 0x65416900
 .global lbl_803E4CB0
 lbl_803E4CB0:
 	.incbin "baserom.dol", 0x2EE5D0, 0x4
@@ -12383,7 +14714,9 @@ lbl_803E4CC0:
 	.incbin "baserom.dol", 0x2EE5E0, 0xC
 .global __RTTI__7SnakeAi
 __RTTI__7SnakeAi:
-	.incbin "baserom.dol", 0x2EE5EC, 0xC
+  .4byte 0x803e4ca8
+  .4byte 0x802cfa54
+  .4byte 0
 .global lbl_803E4CD8
 lbl_803E4CD8:
 	.incbin "baserom.dol", 0x2EE5F8, 0x4
@@ -12434,10 +14767,12 @@ lbl_803E4D14:
 	.incbin "baserom.dol", 0x2EE634, 0xC
 .global __RTTI__26SnakeGenBodyRotateCallBack
 __RTTI__26SnakeGenBodyRotateCallBack:
-	.incbin "baserom.dol", 0x2EE640, 0x8
+  .4byte 0x802cfa94
+  .4byte 0x802cfadc
 .global __RTTI__28SnakeGenBodyOnGroundCallBack
 __RTTI__28SnakeGenBodyOnGroundCallBack:
-	.incbin "baserom.dol", 0x2EE648, 0x8
+  .4byte 0x802cfaf4
+  .4byte 0x802cfb14
 .global lbl_803E4D30
 lbl_803E4D30:
 	.incbin "baserom.dol", 0x2EE650, 0x4
@@ -12542,22 +14877,40 @@ lbl_803E4DBC:
 	.incbin "baserom.dol", 0x2EE6DC, 0x2C
 .global __RTTI__5Slime
 __RTTI__5Slime:
-	.incbin "baserom.dol", 0x2EE708, 0x8
+  .4byte 0x803e4d48
+  .4byte 0x802cfbe0
 .global __RTTI__15CollPartUpdater_1
 __RTTI__15CollPartUpdater_1:
-	.incbin "baserom.dol", 0x2EE710, 0x8
+  .4byte 0x802cfd44
+  .4byte 0
 .global __RTTI__Q25Slime20CollideSphereUpdater
 __RTTI__Q25Slime20CollideSphereUpdater:
-	.incbin "baserom.dol", 0x2EE718, 0x8
+  .4byte 0x802cfd28
+  .4byte 0x802cfd54
 .global __RTTI__Q25Slime17TubeSphereUpdater
 __RTTI__Q25Slime17TubeSphereUpdater:
-	.incbin "baserom.dol", 0x2EE720, 0x8
+  .4byte 0x802cfd70
+  .4byte 0x802cfd8c
 .global __RTTI__Q25Slime18BoundSphereUpdater
 __RTTI__Q25Slime18BoundSphereUpdater:
-	.incbin "baserom.dol", 0x2EE728, 0x38
+  .4byte 0x802cfda8
+  .4byte 0x802cfdc4
+  .4byte 0x802cfdfc
+  .4byte 0
+  .4byte 0x414e6f64
+  .4byte 0x65000000
+  .4byte 0x803e4e18
+  .4byte 0
+  .4byte lbl_802CFB44
+  .4byte 0x802cfe60
+  .4byte 0x802cfe6c
+  .4byte 0
+  .4byte 0x802cfe7c
+  .4byte 0x802cfe88
 .global __RTTI__9SlimeProp
 __RTTI__9SlimeProp:
-	.incbin "baserom.dol", 0x2EE760, 0x8
+  .4byte 0x802cfe54
+  .4byte 0x802cfe94
 .global lbl_803E4E48
 lbl_803E4E48:
 	.incbin "baserom.dol", 0x2EE768, 0x4
@@ -12641,7 +14994,10 @@ lbl_803E4EB4:
 	.incbin "baserom.dol", 0x2EE7D4, 0x1C
 .global __RTTI__13SlimeCreature
 __RTTI__13SlimeCreature:
-	.incbin "baserom.dol", 0x2EE7F0, 0x10
+  .4byte 0x802cff2c
+  .4byte 0x802cff78
+  .4byte 0x4b696e67
+  .4byte 0
 .global lbl_803E4EE0
 lbl_803E4EE0:
 	.incbin "baserom.dol", 0x2EE800, 0x4
@@ -12773,13 +15129,35 @@ lbl_803E4F88:
 	.incbin "baserom.dol", 0x2EE8A8, 0x2C
 .global __RTTI__10KingDrawer
 __RTTI__10KingDrawer:
-	.incbin "baserom.dol", 0x2EE8D4, 0x30
+  .4byte 0x802d00c0
+  .4byte 0x802d00ec
+  .4byte 0x802d0138
+  .4byte 0
+  .4byte 0x802d0144
+  .4byte 0
+  .4byte 0x802d0154
+  .4byte 0x802d0160
+  .4byte 0x426f7373
+  .4byte 0
+  .4byte 0x803e4fd4
+  .4byte 0x802d0174
 .global __RTTI__4King
 __RTTI__4King:
-	.incbin "baserom.dol", 0x2EE904, 0x20
+  .4byte 0x803e4ed8
+  .4byte 0x802d0190
+  .4byte 0x802d02e4
+  .4byte 0
+  .4byte 0x802d0348
+  .4byte 0
+  .4byte 0x802d0358
+  .4byte 0x802d0364
 .global __RTTI__8KingProp
 __RTTI__8KingProp:
-	.incbin "baserom.dol", 0x2EE924, 0x14
+  .4byte 0x802d033c
+  .4byte 0x802d0370
+  .4byte 0
+  .4byte 0x4b696e67
+  .4byte 0x41690000
 .global lbl_803E5018
 lbl_803E5018:
 	.incbin "baserom.dol", 0x2EE938, 0x4
@@ -12791,7 +15169,9 @@ lbl_803E5020:
 	.incbin "baserom.dol", 0x2EE940, 0xC
 .global __RTTI__6KingAi
 __RTTI__6KingAi:
-	.incbin "baserom.dol", 0x2EE94C, 0xC
+  .4byte 0x803e5010
+  .4byte 0x802d0508
+  .4byte 0
 .global lbl_803E5038
 lbl_803E5038:
 	.incbin "baserom.dol", 0x2EE958, 0x4
@@ -12971,22 +15351,33 @@ lbl_803E5120:
 	.incbin "baserom.dol", 0x2EEA40, 0xC
 .global __RTTI__21KingGenSalivaCallBack
 __RTTI__21KingGenSalivaCallBack:
-	.incbin "baserom.dol", 0x2EEA4C, 0x8
+  .4byte 0x802d054c
+  .4byte 0x802d0590
 .global __RTTI__21KingGenRippleCallBack
 __RTTI__21KingGenRippleCallBack:
-	.incbin "baserom.dol", 0x2EEA54, 0x10
+  .4byte 0x802d05a8
+  .4byte 0x802d05c0
+  .4byte 0x802d05fc
+  .4byte 0
 .global __RTTI__32KingGenSpitPartsParticleCallBack
 __RTTI__32KingGenSpitPartsParticleCallBack:
-	.incbin "baserom.dol", 0x2EEA64, 0x8
+  .4byte 0x802d05d8
+  .4byte 0x802d063c
 .global __RTTI__25KingGenDamageStarCallBack
 __RTTI__25KingGenDamageStarCallBack:
-	.incbin "baserom.dol", 0x2EEA6C, 0x8
+  .4byte 0x802d0654
+  .4byte 0x802d0670
 .global __RTTI__29KingGenSalivaParticleCallBack
 __RTTI__29KingGenSalivaParticleCallBack:
-	.incbin "baserom.dol", 0x2EEA74, 0x8
+  .4byte 0x802d0688
+  .4byte 0x802d06a8
 .global __RTTI__27KingGenSpreadSalivaCallBack
 __RTTI__27KingGenSpreadSalivaCallBack:
-	.incbin "baserom.dol", 0x2EEA7C, 0x14
+  .4byte 0x802d06cc
+  .4byte 0x802d06e8
+  .4byte 0
+  .4byte 0x4b6f6761
+  .4byte 0x6e650000
 .global lbl_803E5170
 lbl_803E5170:
 	.incbin "baserom.dol", 0x2EEA90, 0x4
@@ -13034,10 +15425,25 @@ lbl_803E51A8:
 	.incbin "baserom.dol", 0x2EEAC8, 0x2C
 .global __RTTI__6Kogane
 __RTTI__6Kogane:
-	.incbin "baserom.dol", 0x2EEAF4, 0x38
+  .4byte 0x803e5168
+  .4byte 0x802d0780
+  .4byte 0x802d08d4
+  .4byte 0
+  .4byte 0x414e6f64
+  .4byte 0x65000000
+  .4byte 0x803e51e4
+  .4byte 0
+  .4byte lbl_802D071C
+  .4byte 0x802d090c
+  .4byte 0x802d0918
+  .4byte 0
+  .4byte 0x802d0928
+  .4byte 0x802d0934
 .global __RTTI__10KoganeProp
 __RTTI__10KoganeProp:
-	.incbin "baserom.dol", 0x2EEB2C, 0xC
+  .4byte 0x802d0900
+  .4byte 0x802d0940
+  .4byte 0
 .global koganeSE
 koganeSE:
 	.incbin "baserom.dol", 0x2EEB38, 0x8
@@ -13142,10 +15548,16 @@ lbl_803E52A0:
 	.incbin "baserom.dol", 0x2EEBC0, 0xC
 .global __RTTI__8KoganeAi
 __RTTI__8KoganeAi:
-	.incbin "baserom.dol", 0x2EEBCC, 0x10
+  .4byte 0x802d09b0
+  .4byte 0x802d09ec
+  .4byte 0x802d0a1c
+  .4byte 0
 .global __RTTI__23KoganeGenRippleCallBack
 __RTTI__23KoganeGenRippleCallBack:
-	.incbin "baserom.dol", 0x2EEBDC, 0x10
+  .4byte 0x802d0a04
+  .4byte 0x802d0a48
+  .4byte 0
+  .4byte 0x506f6d00
 .global lbl_803E52CC
 lbl_803E52CC:
 	.incbin "baserom.dol", 0x2EEBEC, 0x4
@@ -13184,25 +15596,73 @@ lbl_803E52F8:
 	.incbin "baserom.dol", 0x2EEC18, 0x2C
 .global __RTTI__3Pom
 __RTTI__3Pom:
-	.incbin "baserom.dol", 0x2EEC44, 0x40
+  .4byte 0x803e52c8
+  .4byte 0x802d0adc
+  .4byte 0x802d0c30
+  .4byte 0
+  .4byte 0x506f6d50
+  .4byte 0x726f7000
+  .4byte 0x414e6f64
+  .4byte 0x65000000
+  .4byte 0x803e533c
+  .4byte 0
+  .4byte lbl_802D0A78
+  .4byte 0x802d0c88
+  .4byte 0x802d0c94
+  .4byte 0
+  .4byte 0x802d0ca4
+  .4byte 0x802d0cb0
 .global __RTTI__7PomProp
 __RTTI__7PomProp:
-	.incbin "baserom.dol", 0x2EEC84, 0x14
+  .4byte 0x803e5334
+  .4byte 0x802d0cbc
+  .4byte 0
+  .4byte 0x506f6d41
+  .4byte 0x69000000
 .global lbl_803E5378
 lbl_803E5378:
 	.incbin "baserom.dol", 0x2EEC98, 0xC
 .global __RTTI__5PomAi
 __RTTI__5PomAi:
-	.incbin "baserom.dol", 0x2EECA4, 0x10
+  .4byte 0x803e5370
+  .4byte 0x802d0d88
+  .4byte 0x802d0db8
+  .4byte 0
 .global __RTTI__22PomGenOpenStarCallBack
 __RTTI__22PomGenOpenStarCallBack:
-	.incbin "baserom.dol", 0x2EECB4, 0x34
+  .4byte 0x802d0da0
+  .4byte 0x802d0de4
+  .4byte 0
+  .4byte 0x802d0e40
+  .4byte 0
+  .4byte 0x802d0e4c
+  .4byte 0
+  .4byte 0x802d0e5c
+  .4byte 0x802d0e68
+  .4byte 0x426f7373
+  .4byte 0
+  .4byte 0x803e53b8
+  .4byte 0x802d0e7c
 .global __RTTI__8KingBack
 __RTTI__8KingBack:
-	.incbin "baserom.dol", 0x2EECE8, 0x30
+  .4byte 0x802d0e28
+  .4byte 0x802d0e98
+  .4byte 0x414e6f64
+  .4byte 0x65000000
+  .4byte 0x803e53d0
+  .4byte 0
+  .4byte lbl_802D0E34
+  .4byte 0x802d0ff0
+  .4byte 0x802d0ffc
+  .4byte 0
+  .4byte 0x802d100c
+  .4byte 0x802d1018
 .global __RTTI__12KingBackProp
 __RTTI__12KingBackProp:
-	.incbin "baserom.dol", 0x2EED18, 0x10
+  .4byte 0x802d0fe0
+  .4byte 0x802d1024
+  .4byte 0x4e75636c
+  .4byte 0x65757300
 .global lbl_803E5408
 lbl_803E5408:
 	.incbin "baserom.dol", 0x2EED28, 0x4
@@ -13214,13 +15674,29 @@ lbl_803E5410:
 	.incbin "baserom.dol", 0x2EED30, 0x2C
 .global __RTTI__7Nucleus
 __RTTI__7Nucleus:
-	.incbin "baserom.dol", 0x2EED5C, 0x30
+  .4byte 0x803e5400
+  .4byte 0x802d10f0
+  .4byte 0x414e6f64
+  .4byte 0x65000000
+  .4byte 0x803e5444
+  .4byte 0
+  .4byte lbl_802D108C
+  .4byte 0x802d1244
+  .4byte 0x802d1250
+  .4byte 0
+  .4byte 0x802d1260
+  .4byte 0x802d126c
 .global __RTTI__11NucleusProp
 __RTTI__11NucleusProp:
-	.incbin "baserom.dol", 0x2EED8C, 0x14
+  .4byte 0x802d1238
+  .4byte 0x802d1278
+  .4byte 0
+  .4byte 0x802d12f4
+  .4byte 0
 .global __RTTI__9NucleusAi
 __RTTI__9NucleusAi:
-	.incbin "baserom.dol", 0x2EEDA0, 0x8
+  .4byte 0x802d12e8
+  .4byte 0x802d1308
 .global lbl_803E5488
 lbl_803E5488:
 	.incbin "baserom.dol", 0x2EEDA8, 0x4
@@ -13232,22 +15708,63 @@ lbl_803E5490:
 	.incbin "baserom.dol", 0x2EEDB0, 0x2C
 .global __RTTI__11CoreNucleus
 __RTTI__11CoreNucleus:
-	.incbin "baserom.dol", 0x2EEDDC, 0x30
+  .4byte 0x802d1340
+  .4byte 0x802d13b0
+  .4byte 0x414e6f64
+  .4byte 0x65000000
+  .4byte 0x803e54c4
+  .4byte 0
+  .4byte lbl_802D134C
+  .4byte 0x802d1508
+  .4byte 0x802d1514
+  .4byte 0
+  .4byte 0x802d1524
+  .4byte 0x802d1530
 .global __RTTI__15CoreNucleusProp
 __RTTI__15CoreNucleusProp:
-	.incbin "baserom.dol", 0x2EEE0C, 0xC
+  .4byte 0x802d14f8
+  .4byte 0x802d153c
+  .4byte 0
 .global lbl_803E54F8
 lbl_803E54F8:
 	.incbin "baserom.dol", 0x2EEE18, 0xC
 .global __RTTI__13CoreNucleusAi
 __RTTI__13CoreNucleusAi:
-	.incbin "baserom.dol", 0x2EEE24, 0x3C
+  .4byte 0x802d15ac
+  .4byte 0x802d15d0
+  .4byte 0
+  .4byte 0x4d697a75
+  .4byte 0
+  .4byte 0x802d1610
+  .4byte 0
+  .4byte 0x802d161c
+  .4byte 0
+  .4byte 0x802d162c
+  .4byte 0x802d1638
+  .4byte 0x426f7373
+  .4byte 0
+  .4byte 0x803e5530
+  .4byte 0x802d164c
 .global __RTTI__4Mizu
 __RTTI__4Mizu:
-	.incbin "baserom.dol", 0x2EEE60, 0x30
+  .4byte 0x803e5510
+  .4byte 0x802d1668
+  .4byte 0x414e6f64
+  .4byte 0x65000000
+  .4byte 0x803e5548
+  .4byte 0
+  .4byte lbl_802D1604
+  .4byte 0x802d17bc
+  .4byte 0x802d17c8
+  .4byte 0
+  .4byte 0x802d17d8
+  .4byte 0x802d17e4
 .global __RTTI__8MizuProp
 __RTTI__8MizuProp:
-	.incbin "baserom.dol", 0x2EEE90, 0x10
+  .4byte 0x802d17b0
+  .4byte 0x802d17f0
+  .4byte 0x4d697a75
+  .4byte 0x41690000
 .global lbl_803E5580
 lbl_803E5580:
 	.incbin "baserom.dol", 0x2EEEA0, 0x4
@@ -13262,10 +15779,14 @@ lbl_803E558C:
 	.incbin "baserom.dol", 0x2EEEAC, 0xC
 .global __RTTI__6MizuAi
 __RTTI__6MizuAi:
-	.incbin "baserom.dol", 0x2EEEB8, 0x10
+  .4byte 0x803e5578
+  .4byte 0x802d18a8
+  .4byte 0x802d18dc
+  .4byte 0
 .global __RTTI__25MizuGenSpringPuffCallBack
 __RTTI__25MizuGenSpringPuffCallBack:
-	.incbin "baserom.dol", 0x2EEEC8, 0x8
+  .4byte 0x802d18c0
+  .4byte 0x802d1908
 .global rumblePoint_00
 rumblePoint_00:
 	.incbin "baserom.dol", 0x2EEED0, 0x4
@@ -13355,10 +15876,13 @@ lbl_803E5624:
 	.incbin "baserom.dol", 0x2EEF44, 0x40
 .global __RTTI__Q23zen13OgTestSection
 __RTTI__Q23zen13OgTestSection:
-	.incbin "baserom.dol", 0x2EEF84, 0x8
+  .4byte 0x802d25e8
+  .4byte 0x802d2644
 .global __RTTI__Q23zen12OgTestScreen
 __RTTI__Q23zen12OgTestScreen:
-	.incbin "baserom.dol", 0x2EEF8C, 0xC
+  .4byte 0x802d26d0
+  .4byte 0x802d26e4
+  .4byte 0
 .global lbl_803E5678
 lbl_803E5678:
 	.incbin "baserom.dol", 0x2EEF98, 0x8
@@ -13445,10 +15969,19 @@ lbl_803E56F0:
 	.incbin "baserom.dol", 0x2EF010, 0xC
 .global __RTTI__Q23zen12FigureTex$$0i$$1
 __RTTI__Q23zen12FigureTex$$0i$$1:
-	.incbin "baserom.dol", 0x2EF01C, 0x20
+  .4byte 0x802d2f44
+  .4byte 0x802d2f58
+  .4byte 0x802d2f64
+  .4byte 0
+  .4byte 0x802d2f78
+  .4byte 0
+  .4byte 0x802d2f94
+  .4byte 0x802d2fa4
 .global __RTTI__Q23zen20NumberPicCallBack$$0i$$1
 __RTTI__Q23zen20NumberPicCallBack$$0i$$1:
-	.incbin "baserom.dol", 0x2EF03C, 0xC
+  .4byte 0x802d2f18
+  .4byte 0x802d2fb8
+  .4byte 0
 .global lbl_803E5728
 lbl_803E5728:
 	.incbin "baserom.dol", 0x2EF048, 0xC
@@ -13919,7 +16452,8 @@ lbl_803E5B5C:
 	.incbin "baserom.dol", 0x2EF47C, 0x1C
 .global __RTTI__Q23zen17TextColorCallBack
 __RTTI__Q23zen17TextColorCallBack:
-	.incbin "baserom.dol", 0x2EF498, 0x8
+  .4byte 0x802d626c
+  .4byte 0x802d62d8
 .global lbl_803E5B80
 lbl_803E5B80:
 	.incbin "baserom.dol", 0x2EF4A0, 0x4
@@ -13961,82 +16495,117 @@ lbl_803E5BB4:
 	.incbin "baserom.dol", 0x2EF4D4, 0x20
 .global __RTTI__Q23zen7zenList
 __RTTI__Q23zen7zenList:
-	.incbin "baserom.dol", 0x2EF4F4, 0x8
+  .4byte 0x802d6574
+  .4byte 0
 .global __RTTI__Q23zen17particleGenerator
 __RTTI__Q23zen17particleGenerator:
-	.incbin "baserom.dol", 0x2EF4FC, 0x8
+  .4byte 0x802d655c
+  .4byte 0x802d6584
 .global __RTTI__12GameModeBase
 __RTTI__12GameModeBase:
-	.incbin "baserom.dol", 0x2EF504, 0x8
+  .4byte 0x802d65b0
+  .4byte 0
 .global __RTTI__12CMresultMode
 __RTTI__12CMresultMode:
-	.incbin "baserom.dol", 0x2EF50C, 0x8
+  .4byte 0x802d65a0
+  .4byte 0x802d65c0
 .global __RTTI__11HurryUpMode
 __RTTI__11HurryUpMode:
-	.incbin "baserom.dol", 0x2EF514, 0x8
+  .4byte 0x802d65dc
+  .4byte 0x802d65e8
 .global __RTTI__12GameInfoMode
 __RTTI__12GameInfoMode:
-	.incbin "baserom.dol", 0x2EF51C, 0x8
+  .4byte 0x802d6604
+  .4byte 0x802d6614
 .global __RTTI__15ProgressiveMode
 __RTTI__15ProgressiveMode:
-	.incbin "baserom.dol", 0x2EF524, 0x8
+  .4byte 0x802d6630
+  .4byte 0x802d6640
 .global __RTTI__13CountDownMode
 __RTTI__13CountDownMode:
-	.incbin "baserom.dol", 0x2EF52C, 0x8
+  .4byte 0x802d665c
+  .4byte 0x802d666c
 .global __RTTI__12GameOverMode
 __RTTI__12GameOverMode:
-	.incbin "baserom.dol", 0x2EF534, 0x8
+  .4byte 0x802d6688
+  .4byte 0x802d6698
 .global __RTTI__13ContainerMode
 __RTTI__13ContainerMode:
-	.incbin "baserom.dol", 0x2EF53C, 0x8
+  .4byte 0x802d66b4
+  .4byte 0x802d66c4
 .global __RTTI__11WMPauseMode
 __RTTI__11WMPauseMode:
-	.incbin "baserom.dol", 0x2EF544, 0x8
+  .4byte 0x802d66e0
+  .4byte 0x802d66ec
 .global __RTTI__12WorldMapMode
 __RTTI__12WorldMapMode:
-	.incbin "baserom.dol", 0x2EF54C, 0x8
+  .4byte 0x802d6708
+  .4byte 0x802d6718
 .global __RTTI__18CMcourseSelectMode
 __RTTI__18CMcourseSelectMode:
-	.incbin "baserom.dol", 0x2EF554, 0x8
+  .4byte 0x802d6734
+  .4byte 0x802d6748
 .global __RTTI__11HiScoreMode
 __RTTI__11HiScoreMode:
-	.incbin "baserom.dol", 0x2EF55C, 0x8
+  .4byte 0x802d6764
+  .4byte 0x802d6770
 .global __RTTI__12UfoPartsMode
 __RTTI__12UfoPartsMode:
-	.incbin "baserom.dol", 0x2EF564, 0x8
+  .4byte 0x802d678c
+  .4byte 0x802d679c
 .global __RTTI__11SaveMesMode
 __RTTI__11SaveMesMode:
-	.incbin "baserom.dol", 0x2EF56C, 0x8
+  .4byte 0x802d67b8
+  .4byte 0x802d67c4
 .global __RTTI__15SaveFailureMode
 __RTTI__15SaveFailureMode:
-	.incbin "baserom.dol", 0x2EF574, 0x8
+  .4byte 0x802d67e0
+  .4byte 0x802d67f0
 .global __RTTI__15FinalResultMode
 __RTTI__15FinalResultMode:
-	.incbin "baserom.dol", 0x2EF57C, 0x8
+  .4byte 0x802d680c
+  .4byte 0x802d681c
 .global __RTTI__18IDelegate1$$0R4Menu$$1_5
 __RTTI__18IDelegate1$$0R4Menu$$1_5:
-	.incbin "baserom.dol", 0x2EF584, 0x8
+  .4byte 0x802d6874
+  .4byte 0
 .global __RTTI__41Delegate1$$021GameCourseClearScreen$$4R4Menu$$1
 __RTTI__41Delegate1$$021GameCourseClearScreen$$4R4Menu$$1:
-	.incbin "baserom.dol", 0x2EF58C, 0x20
+  .4byte 0x802d6848
+  .4byte 0x802d6888
+  .4byte 0x802d68f8
+  .4byte 0
+  .4byte 0x4e6f6465
+  .4byte 0
+  .4byte 0x803e5c7c
+  .4byte 0x802d6950
 .global __RTTI__21GameCourseClearScreen
 __RTTI__21GameCourseClearScreen:
-	.incbin "baserom.dol", 0x2EF5AC, 0x18
+  .4byte 0x802d6380
+  .4byte 0x802d6964
+  .4byte 0x53656374
+  .4byte 0x696f6e00
+  .4byte 0x803e5c94
+  .4byte 0x802d69b0
 .global __RTTI__22GameCourseClearSection
 __RTTI__22GameCourseClearSection:
-	.incbin "baserom.dol", 0x2EF5C4, 0xC
+  .4byte 0x802d6334
+  .4byte 0x802d69cc
+  .4byte 0
 .global lbl_803E5CB0
 lbl_803E5CB0:
 	.incbin "baserom.dol", 0x2EF5D0, 0x40
 .global __RTTI__21GameStageClearSection
 __RTTI__21GameStageClearSection:
-	.incbin "baserom.dol", 0x2EF610, 0x8
+  .4byte 0x802d6a6c
+  .4byte 0x802d6b00
 .global lbl_803E5CF8
 lbl_803E5CF8:
 	.incbin "baserom.dol", 0x2EF618, 0x40
 .global __RTTI__18GameCreditsSection
 __RTTI__18GameCreditsSection:
-	.incbin "baserom.dol", 0x2EF658, 0x8
+  .4byte 0x802d6ba0
+  .4byte 0x802d6c30
 .global lbl_803E5D40
 lbl_803E5D40:
 	.incbin "baserom.dol", 0x2EF660, 0x4
@@ -14099,22 +16668,37 @@ lbl_803E5D8C:
 	.incbin "baserom.dol", 0x2EF6AC, 0x20
 .global __RTTI__10EffShpInst
 __RTTI__10EffShpInst:
-	.incbin "baserom.dol", 0x2EF6CC, 0x8
+  .4byte 0x802da478
+  .4byte 0x802da49c
 .global __RTTI__9EffectMgr
 __RTTI__9EffectMgr:
-	.incbin "baserom.dol", 0x2EF6D4, 0x8
+  .4byte 0x802da4e0
+  .4byte 0x802da4ec
 .global __RTTI__26EffectGeometryRegistration
 __RTTI__26EffectGeometryRegistration:
-	.incbin "baserom.dol", 0x2EF6DC, 0x8
+  .4byte 0x802da510
+  .4byte 0
 .global __RTTI__11EffectShape
 __RTTI__11EffectShape:
-	.incbin "baserom.dol", 0x2EF6E4, 0x8
+  .4byte 0x802da538
+  .4byte 0x802da544
 .global __RTTI__26EffectParticleRegistration
 __RTTI__26EffectParticleRegistration:
-	.incbin "baserom.dol", 0x2EF6EC, 0x18
+  .4byte 0x802da568
+  .4byte 0
+  .4byte 0x4e6f6465
+  .4byte 0
+  .4byte 0x803e5dd4
+  .4byte 0x802da5a0
 .global __RTTI__12SmokeEmitter
 __RTTI__12SmokeEmitter:
-	.incbin "baserom.dol", 0x2EF704, 0x1C
+  .4byte 0x802da590
+  .4byte 0x802da5b4
+  .4byte 0
+  .4byte 0
+  .4byte 0
+  .4byte 0
+  .4byte 0
 .global lpsCoord
 lpsCoord:
 	.incbin "baserom.dol", 0x2EF720, 0x8
@@ -14138,10 +16722,12 @@ lbl_803E5E1C:
 	.incbin "baserom.dol", 0x2EF73C, 0x4
 .global __RTTI__Q23zen7zenList_1
 __RTTI__Q23zen7zenList_1:
-	.incbin "baserom.dol", 0x2EF740, 0x8
+  .4byte 0x802da74c
+  .4byte 0
 .global __RTTI__Q23zen7PCRData
 __RTTI__Q23zen7PCRData:
-	.incbin "baserom.dol", 0x2EF748, 0x8
+  .4byte 0x802da73c
+  .4byte 0x802da75c
 .global DEFAULT_FRAME_RATE__Q23zen15particleManager
 DEFAULT_FRAME_RATE__Q23zen15particleManager:
 	.incbin "baserom.dol", 0x2EF750, 0x8
@@ -14183,16 +16769,20 @@ lbl_803E5E64:
 	.incbin "baserom.dol", 0x2EF784, 0x4
 .global __RTTI__Q23zen7zenList_2
 __RTTI__Q23zen7zenList_2:
-	.incbin "baserom.dol", 0x2EF788, 0x8
+  .4byte 0x802dd7e0
+  .4byte 0
 .global __RTTI__Q23zen15particleMdlBase
 __RTTI__Q23zen15particleMdlBase:
-	.incbin "baserom.dol", 0x2EF790, 0x8
+  .4byte 0x802dd7f0
+  .4byte 0x802dd808
 .global __RTTI__Q23zen11particleMdl
 __RTTI__Q23zen11particleMdl:
-	.incbin "baserom.dol", 0x2EF798, 0x8
+  .4byte 0x802dd7cc
+  .4byte 0x802dd814
 .global __RTTI__Q23zen16particleChildMdl
 __RTTI__Q23zen16particleChildMdl:
-	.incbin "baserom.dol", 0x2EF7A0, 0x8
+  .4byte 0x802dd858
+  .4byte 0x802dd870
 .global lbl_803E5E88
 lbl_803E5E88:
 	.incbin "baserom.dol", 0x2EF7A8, 0x4
@@ -14237,7 +16827,28 @@ lbl_803E5EBC:
 	.incbin "baserom.dol", 0x2EF7DC, 0xC
 .global __RTTI__10PelletView_4
 __RTTI__10PelletView_4:
-	.incbin "baserom.dol", 0x2EF7E8, 0x58
+  .4byte 0x802dd8ec
+  .4byte 0
+  .4byte 0x802dd8f8
+  .4byte 0
+  .4byte 0x802dd90c
+  .4byte 0
+  .4byte 0x802dd918
+  .4byte 0
+  .4byte 0x802dd928
+  .4byte 0x802dd934
+  .4byte 0x4254656b
+  .4byte 0x69000000
+  .4byte 0x803e5ef0
+  .4byte 0x802dd948
+  .4byte 0x4e54656b
+  .4byte 0x69000000
+  .4byte 0x803e5f00
+  .4byte 0x802dd974
+  .4byte 0x803e5ec0
+  .4byte 0x802dd9a8
+  .4byte 0x802ddc1c
+  .4byte 0
 .global lbl_803E5F20
 lbl_803E5F20:
 	.incbin "baserom.dol", 0x2EF840, 0x4
@@ -14282,70 +16893,118 @@ lbl_803E5F54:
 	.incbin "baserom.dol", 0x2EF874, 0xC
 .global __RTTI__16TAItankAnimation
 __RTTI__16TAItankAnimation:
-	.incbin "baserom.dol", 0x2EF880, 0x18
+  .4byte 0x802dde0c
+  .4byte 0x802dde30
+  .4byte 0x802dde58
+  .4byte 0
+  .4byte 0x802dde68
+  .4byte 0x802dde74
 .global __RTTI__15TAItankStrategy
 __RTTI__15TAItankStrategy:
-	.incbin "baserom.dol", 0x2EF898, 0x10
+  .4byte 0x802dde48
+  .4byte 0x802dde80
+  .4byte 0x802ddecc
+  .4byte 0
 .global __RTTI__14TAIAnoReaction
 __RTTI__14TAIAnoReaction:
-	.incbin "baserom.dol", 0x2EF8A8, 0x8
+  .4byte 0x802ddebc
+  .4byte 0x802dded8
 .global __RTTI__12TAIAinitTank
 __RTTI__12TAIAinitTank:
-	.incbin "baserom.dol", 0x2EF8B0, 0x8
+  .4byte 0x802ddf00
+  .4byte 0x802ddf10
 .global __RTTI__20TAIAoutsideTerritory
 __RTTI__20TAIAoutsideTerritory:
-	.incbin "baserom.dol", 0x2EF8B8, 0x18
+  .4byte 0x802ddf38
+  .4byte 0x802ddf50
+  .4byte 0x802ddf8c
+  .4byte 0x802ddf98
+  .4byte 0x802ddfa4
+  .4byte 0x802ddfb4
 .global __RTTI__16TAIAflickingTank
 __RTTI__16TAIAflickingTank:
-	.incbin "baserom.dol", 0x2EF8D0, 0x10
+  .4byte 0x802ddf78
+  .4byte 0x802ddfc8
+  .4byte 0x802de01c
+  .4byte 0x802de030
 .global __RTTI__14TAIAfireBreath
 __RTTI__14TAIAfireBreath:
-	.incbin "baserom.dol", 0x2EF8E0, 0x8
+  .4byte 0x802de03c
+  .4byte 0x802de04c
 .global __RTTI__18TAIAfireBreathTank
 __RTTI__18TAIAfireBreathTank:
-	.incbin "baserom.dol", 0x2EF8E8, 0x8
+  .4byte 0x802de008
+  .4byte 0x802de060
 .global __RTTI__Q23zen17CallBack1$$0R4Teki$$1
 __RTTI__Q23zen17CallBack1$$0R4Teki$$1:
-	.incbin "baserom.dol", 0x2EF8F0, 0x8
+  .4byte 0x802de0ac
+  .4byte 0
 .global __RTTI__10FireEffect
 __RTTI__10FireEffect:
-	.incbin "baserom.dol", 0x2EF8F8, 0x8
+  .4byte 0x802de0a0
+  .4byte 0x802de0c4
 .global __RTTI__12TAIAstepBack
 __RTTI__12TAIAstepBack:
-	.incbin "baserom.dol", 0x2EF900, 0x8
+  .4byte 0x802de0fc
+  .4byte 0x802de10c
 .global __RTTI__16TAIAstepBackTank
 __RTTI__16TAIAstepBackTank:
-	.incbin "baserom.dol", 0x2EF908, 0x8
+  .4byte 0x802de0e8
+  .4byte 0x802de120
 .global __RTTI__22TAIAjudgeOptionalRange
 __RTTI__22TAIAjudgeOptionalRange:
-	.incbin "baserom.dol", 0x2EF910, 0x8
+  .4byte 0x802de17c
+  .4byte 0x802de194
 .global __RTTI__24TAIAoutsideOptionalRange
 __RTTI__24TAIAoutsideOptionalRange:
-	.incbin "baserom.dol", 0x2EF918, 0x8
+  .4byte 0x802de1a0
+  .4byte 0x802de1bc
 .global __RTTI__28TAIAoutsideOptionalRangeTank
 __RTTI__28TAIAoutsideOptionalRangeTank:
-	.incbin "baserom.dol", 0x2EF920, 0x8
+  .4byte 0x802de15c
+  .4byte 0x802de1d0
 .global __RTTI__20TAIAattackableTarget
 __RTTI__20TAIAattackableTarget:
-	.incbin "baserom.dol", 0x2EF928, 0x8
+  .4byte 0x802de230
+  .4byte 0x802de248
 .global __RTTI__25TAIAattackableAngleTarget
 __RTTI__25TAIAattackableAngleTarget:
-	.incbin "baserom.dol", 0x2EF930, 0x8
+  .4byte 0x802de214
+  .4byte 0x802de254
 .global __RTTI__16TAIAturnToTarget
 __RTTI__16TAIAturnToTarget:
-	.incbin "baserom.dol", 0x2EF938, 0x8
+  .4byte 0x802de298
+  .4byte 0x802de2ac
 .global __RTTI__10TAIApatrol
 __RTTI__10TAIApatrol:
-	.incbin "baserom.dol", 0x2EF940, 0x8
+  .4byte 0x802de2c0
+  .4byte 0x802de2cc
 .global __RTTI__14TAIApatrolTank
 __RTTI__14TAIApatrolTank:
-	.incbin "baserom.dol", 0x2EF948, 0x38
+  .4byte 0x802de288
+  .4byte 0x802de2e8
+  .4byte 0x414e6f64
+  .4byte 0x65000000
+  .4byte 0x803e6030
+  .4byte 0
+  .4byte 0x802de360
+  .4byte 0x802de36c
+  .4byte 0x4e6f6465
+  .4byte 0
+  .4byte 0x803e6048
+  .4byte 0x802de378
+  .4byte 0x802de38c
+  .4byte 0x802de39c
 .global __RTTI__17TAItankParameters
 __RTTI__17TAItankParameters:
-	.incbin "baserom.dol", 0x2EF980, 0x10
+  .4byte 0x802de34c
+  .4byte 0x802de3b8
+  .4byte 0x802de430
+  .4byte 0
 .global __RTTI__32TAIeffectAttackEventCallBackTank
 __RTTI__32TAIeffectAttackEventCallBackTank:
-	.incbin "baserom.dol", 0x2EF990, 0x8
+  .4byte 0x802de40c
+  .4byte 0x802de450
 .global lbl_803E6078
 lbl_803E6078:
 	.incbin "baserom.dol", 0x2EF998, 0x4
@@ -14378,118 +17037,198 @@ lbl_803E609C:
 	.incbin "baserom.dol", 0x2EF9BC, 0xC
 .global __RTTI__15TAImarAnimation
 __RTTI__15TAImarAnimation:
-	.incbin "baserom.dol", 0x2EF9C8, 0x18
+  .4byte 0x802de71c
+  .4byte 0x802de73c
+  .4byte 0x802de764
+  .4byte 0
+  .4byte 0x802de774
+  .4byte 0x802de780
 .global __RTTI__14TAImarStrategy
 __RTTI__14TAImarStrategy:
-	.incbin "baserom.dol", 0x2EF9E0, 0x10
+  .4byte 0x802de754
+  .4byte 0x802de78c
+  .4byte 0x802de7d4
+  .4byte 0
 .global __RTTI__11TAIAinitMar
 __RTTI__11TAIAinitMar:
-	.incbin "baserom.dol", 0x2EF9F0, 0x8
+  .4byte 0x802de7c8
+  .4byte 0x802de7e0
 .global __RTTI__13TAIAwatchNavi
 __RTTI__13TAIAwatchNavi:
-	.incbin "baserom.dol", 0x2EF9F8, 0x8
+  .4byte 0x802de808
+  .4byte 0x802de818
 .global __RTTI__14FlyingDistance
 __RTTI__14FlyingDistance:
-	.incbin "baserom.dol", 0x2EFA00, 0x10
+  .4byte 0x802de864
+  .4byte 0
+  .4byte 0x802de874
+  .4byte 0x802de888
 .global __RTTI__16TAIAflyingToGoal
 __RTTI__16TAIAflyingToGoal:
-	.incbin "baserom.dol", 0x2EFA10, 0x8
+  .4byte 0x802de894
+  .4byte 0x802de8a8
 .global __RTTI__29TAIAflyingDistanceInTerritory
 __RTTI__29TAIAflyingDistanceInTerritory:
-	.incbin "baserom.dol", 0x2EFA18, 0x8
+  .4byte 0x802de8bc
+  .4byte 0x802de8dc
 .global __RTTI__32TAIAflyingDistanceInTerritoryMar
 __RTTI__32TAIAflyingDistanceInTerritoryMar:
-	.incbin "baserom.dol", 0x2EFA20, 0x8
+  .4byte 0x802de840
+  .4byte 0x802de900
 .global __RTTI__14TAIAfireBreath_1
 __RTTI__14TAIAfireBreath_1:
-	.incbin "baserom.dol", 0x2EFA28, 0x8
+  .4byte 0x802de9b4
+  .4byte 0x802de9c4
 .global __RTTI__17TAIAfireBreathMar
 __RTTI__17TAIAfireBreathMar:
-	.incbin "baserom.dol", 0x2EFA30, 0x8
+  .4byte 0x802de9a0
+  .4byte 0x802de9d8
 .global __RTTI__Q23zen17CallBack1$$0R4Teki$$1_1
 __RTTI__Q23zen17CallBack1$$0R4Teki$$1_1:
-	.incbin "baserom.dol", 0x2EFA38, 0x8
+  .4byte 0x802dea28
+  .4byte 0
 .global __RTTI__12BreathEffect
 __RTTI__12BreathEffect:
-	.incbin "baserom.dol", 0x2EFA40, 0x8
+  .4byte 0x802dea18
+  .4byte 0x802dea40
 .global __RTTI__18TAIAflyingDistance
 __RTTI__18TAIAflyingDistance:
-	.incbin "baserom.dol", 0x2EFA48, 0x8
+  .4byte 0x802dea7c
+  .4byte 0x802dea90
 .global __RTTI__21TAIAflyingDistanceMar
 __RTTI__21TAIAflyingDistanceMar:
-	.incbin "baserom.dol", 0x2EFA50, 0x10
+  .4byte 0x802dea64
+  .4byte 0x802deaa4
+  .4byte 0x802deb10
+  .4byte 0x802deb24
 .global __RTTI__19TAIAtimerTakeOffMar
 __RTTI__19TAIAtimerTakeOffMar:
-	.incbin "baserom.dol", 0x2EFA60, 0x8
+  .4byte 0x802deafc
+  .4byte 0x802deb30
 .global __RTTI__11TAIAtakeOff
 __RTTI__11TAIAtakeOff:
-	.incbin "baserom.dol", 0x2EFA68, 0x8
+  .4byte 0x802deb94
+  .4byte 0x802deba0
 .global __RTTI__14TAIAtakeOffMar
 __RTTI__14TAIAtakeOffMar:
-	.incbin "baserom.dol", 0x2EFA70, 0x8
+  .4byte 0x802deb84
+  .4byte 0x802debb4
 .global __RTTI__16TAIAstickingPiki
 __RTTI__16TAIAstickingPiki:
-	.incbin "baserom.dol", 0x2EFA78, 0x8
+  .4byte 0x802dec3c
+  .4byte 0x802dec50
 .global __RTTI__19TAIAstickingPikiMar
 __RTTI__19TAIAstickingPikiMar:
-	.incbin "baserom.dol", 0x2EFA80, 0x10
+  .4byte 0x802dec28
+  .4byte 0x802dec5c
+  .4byte 0x802deca4
+  .4byte 0x802decb4
 .global __RTTI__17TAIAflickCheckMar
 __RTTI__17TAIAflickCheckMar:
-	.incbin "baserom.dol", 0x2EFA90, 0x8
+  .4byte 0x802dec90
+  .4byte 0x802decc0
 .global __RTTI__11TAIAlanding
 __RTTI__11TAIAlanding:
-	.incbin "baserom.dol", 0x2EFA98, 0x8
+  .4byte 0x802ded04
+  .4byte 0x802ded10
 .global __RTTI__14TAIAlandingMar
 __RTTI__14TAIAlandingMar:
-	.incbin "baserom.dol", 0x2EFAA0, 0x8
+  .4byte 0x802decf4
+  .4byte 0x802ded24
 .global __RTTI__22TAIAstickingPikiMarFly
 __RTTI__22TAIAstickingPikiMarFly:
-	.incbin "baserom.dol", 0x2EFAA8, 0x18
+  .4byte 0x802ded60
+  .4byte 0x802ded78
+  .4byte 0x802dedbc
+  .4byte 0x802dedc8
+  .4byte 0x802dedd4
+  .4byte 0x802dede4
 .global __RTTI__15TAIAflickingMar
 __RTTI__15TAIAflickingMar:
-	.incbin "baserom.dol", 0x2EFAC0, 0x8
+  .4byte 0x802dedac
+  .4byte 0x802dedf8
 .global __RTTI__22TAIAflickCheckTimerMar
 __RTTI__22TAIAflickCheckTimerMar:
-	.incbin "baserom.dol", 0x2EFAC8, 0x10
+  .4byte 0x802dee70
+  .4byte 0x802dee88
+  .4byte 0x802deec0
+  .4byte 0
 .global __RTTI__14TAIAflyingBase
 __RTTI__14TAIAflyingBase:
-	.incbin "baserom.dol", 0x2EFAD8, 0x8
+  .4byte 0x802def04
+  .4byte 0x802def14
 .global __RTTI__17TAIAflyingBaseMar
 __RTTI__17TAIAflyingBaseMar:
-	.incbin "baserom.dol", 0x2EFAE0, 0x10
+  .4byte 0x802deef0
+  .4byte 0x802def20
+  .4byte 0x802def64
+  .4byte 0x802def70
 .global __RTTI__12TAIAdyingMar
 __RTTI__12TAIAdyingMar:
-	.incbin "baserom.dol", 0x2EFAF0, 0x38
+  .4byte 0x802def54
+  .4byte 0x802def84
+  .4byte 0x414e6f64
+  .4byte 0x65000000
+  .4byte 0x803e61d8
+  .4byte 0
+  .4byte 0x802defec
+  .4byte 0x802deff8
+  .4byte 0x4e6f6465
+  .4byte 0
+  .4byte 0x803e61f0
+  .4byte 0x802df004
+  .4byte 0x802df018
+  .4byte 0x802df028
 .global __RTTI__16TAImarParameters
 __RTTI__16TAImarParameters:
-	.incbin "baserom.dol", 0x2EFB28, 0x10
+  .4byte 0x802defd8
+  .4byte 0x802df044
+  .4byte 0x802df0b8
+  .4byte 0
 .global __RTTI__31TAIeffectAttackEventCallBackMar
 __RTTI__31TAIeffectAttackEventCallBackMar:
-	.incbin "baserom.dol", 0x2EFB38, 0x10
+  .4byte 0x802df098
+  .4byte 0x802df0d8
+  .4byte 0x802df168
+  .4byte 0
 .global __RTTI__11TAIAinWater
 __RTTI__11TAIAinWater:
-	.incbin "baserom.dol", 0x2EFB48, 0x8
+  .4byte 0x802df174
+  .4byte 0x802df180
 .global __RTTI__17TAIAinWaterDamage
 __RTTI__17TAIAinWaterDamage:
-	.incbin "baserom.dol", 0x2EFB50, 0x8
+  .4byte 0x802df154
+  .4byte 0x802df18c
 .global __RTTI__10TAIAdamage
 __RTTI__10TAIAdamage:
-	.incbin "baserom.dol", 0x2EFB58, 0x18
+  .4byte 0x802df1d8
+  .4byte 0x802df1e4
+  .4byte 0x802df228
+  .4byte 0x802df234
+  .4byte 0x802df240
+  .4byte 0x802df24c
 .global __RTTI__16TAIAdyingKabekui
 __RTTI__16TAIAdyingKabekui:
-	.incbin "baserom.dol", 0x2EFB70, 0x8
+  .4byte 0x802df260
+  .4byte 0x802df274
 .global __RTTI__21TAIAdyingCrushKabekui
 __RTTI__21TAIAdyingCrushKabekui:
-	.incbin "baserom.dol", 0x2EFB78, 0x10
+  .4byte 0x802df210
+  .4byte 0x802df290
+  .4byte 0x54414941
+  .4byte 0x64696500
 .global __RTTI__7TAIAdie
 __RTTI__7TAIAdie:
-	.incbin "baserom.dol", 0x2EFB88, 0x8
+  .4byte 0x803e6260
+  .4byte 0x802df308
 .global __RTTI__13TAIAdeadCheck
 __RTTI__13TAIAdeadCheck:
-	.incbin "baserom.dol", 0x2EFB90, 0x8
+  .4byte 0x802df330
+  .4byte 0x802df340
 .global __RTTI__22TAIAhitCheckFlyingPiki
 __RTTI__22TAIAhitCheckFlyingPiki:
-	.incbin "baserom.dol", 0x2EFB98, 0x8
+  .4byte 0x802df368
+  .4byte 0x802df380
 .global lbl_803E6280
 lbl_803E6280:
 	.incbin "baserom.dol", 0x2EFBA0, 0x4
@@ -14603,148 +17342,209 @@ lbl_803E6310:
 	.incbin "baserom.dol", 0x2EFC30, 0x14
 .global __RTTI__11TAIAtakeOff_1
 __RTTI__11TAIAtakeOff_1:
-	.incbin "baserom.dol", 0x2EFC44, 0x8
+  .4byte 0x802df3c4
+  .4byte 0x802df3fc
 .global __RTTI__11TAIAlanding_1
 __RTTI__11TAIAlanding_1:
-	.incbin "baserom.dol", 0x2EFC4C, 0x8
+  .4byte 0x802df430
+  .4byte 0x802df43c
 .global __RTTI__11TAIAdescent
 __RTTI__11TAIAdescent:
-	.incbin "baserom.dol", 0x2EFC54, 0x8
+  .4byte 0x802df470
+  .4byte 0x802df47c
 .global __RTTI__14FlyingDistance_1
 __RTTI__14FlyingDistance_1:
-	.incbin "baserom.dol", 0x2EFC5C, 0x8
+  .4byte 0x802df4c8
+  .4byte 0
 .global __RTTI__18TAIAflyingDistance_1
 __RTTI__18TAIAflyingDistance_1:
-	.incbin "baserom.dol", 0x2EFC64, 0x8
+  .4byte 0x802df4b4
+  .4byte 0x802df4d8
 .global __RTTI__16TAIAflyingToGoal_1
 __RTTI__16TAIAflyingToGoal_1:
-	.incbin "baserom.dol", 0x2EFC6C, 0x8
+  .4byte 0x802df538
+  .4byte 0x802df54c
 .global __RTTI__29TAIAflyingDistanceInTerritory_1
 __RTTI__29TAIAflyingDistanceInTerritory_1:
-	.incbin "baserom.dol", 0x2EFC74, 0x8
+  .4byte 0x802df518
+  .4byte 0x802df560
 .global __RTTI__21TAIAflyingInTerritory
 __RTTI__21TAIAflyingInTerritory:
-	.incbin "baserom.dol", 0x2EFC7C, 0x8
+  .4byte 0x802df5d8
+  .4byte 0x802df5f0
 .global __RTTI__14TAIAflyingBase_1
 __RTTI__14TAIAflyingBase_1:
-	.incbin "baserom.dol", 0x2EFC84, 0x8
+  .4byte 0x802df618
+  .4byte 0x802df628
 .global __RTTI__28TAIAgoingHomePriorityFaceDir
 __RTTI__28TAIAgoingHomePriorityFaceDir:
-	.incbin "baserom.dol", 0x2EFC8C, 0x8
+  .4byte 0x802df654
+  .4byte 0x802df674
 .global __RTTI__13TAIAgoingHome
 __RTTI__13TAIAgoingHome:
-	.incbin "baserom.dol", 0x2EFC94, 0x8
+  .4byte 0x802df6a4
+  .4byte 0x802df6b4
 .global __RTTI__16TAIAturnOccasion
 __RTTI__16TAIAturnOccasion:
-	.incbin "baserom.dol", 0x2EFC9C, 0x8
+  .4byte 0x802df6f4
+  .4byte 0x802df708
 .global __RTTI__12TAIAturnHome
 __RTTI__12TAIAturnHome:
-	.incbin "baserom.dol", 0x2EFCA4, 0x8
+  .4byte 0x802df6e4
+  .4byte 0x802df71c
 .global __RTTI__12TAIAstepBack_1
 __RTTI__12TAIAstepBack_1:
-	.incbin "baserom.dol", 0x2EFCAC, 0x8
+  .4byte 0x802df754
+  .4byte 0x802df764
 .global __RTTI__16TAIAturnToTarget_1
 __RTTI__16TAIAturnToTarget_1:
-	.incbin "baserom.dol", 0x2EFCB4, 0x8
+  .4byte 0x802df7a4
+  .4byte 0x802df7b8
 .global __RTTI__10TAIApatrol_1
 __RTTI__10TAIApatrol_1:
-	.incbin "baserom.dol", 0x2EFCBC, 0x8
+  .4byte 0x802df798
+  .4byte 0x802df7cc
 .global __RTTI__8TAIAwait
 __RTTI__8TAIAwait:
-	.incbin "baserom.dol", 0x2EFCC4, 0x8
+  .4byte 0x802df80c
+  .4byte 0x802df818
 .global __RTTI__21TAIAturnFocusCreature
 __RTTI__21TAIAturnFocusCreature:
-	.incbin "baserom.dol", 0x2EFCCC, 0x8
+  .4byte 0x802df84c
+  .4byte 0x802df864
 .global __RTTI__14TAIArandomWalk
 __RTTI__14TAIArandomWalk:
-	.incbin "baserom.dol", 0x2EFCD4, 0x8
+  .4byte 0x802df8bc
+  .4byte 0x802df8cc
 .global __RTTI__8TAIAstop
 __RTTI__8TAIAstop:
-	.incbin "baserom.dol", 0x2EFCDC, 0x8
+  .4byte 0x802df8fc
+  .4byte 0x802df908
 .global __RTTI__14TAIAlookAround
 __RTTI__14TAIAlookAround:
-	.incbin "baserom.dol", 0x2EFCE4, 0x8
+  .4byte 0x802df950
+  .4byte 0x802df960
 .global __RTTI__33TAIAapproachTargetPriorityFaceDir
 __RTTI__33TAIAapproachTargetPriorityFaceDir:
-	.incbin "baserom.dol", 0x2EFCEC, 0x8
+  .4byte 0x802df990
+  .4byte 0x802df9b4
 .global __RTTI__27TAIAgoTargetPriorityFaceDir
 __RTTI__27TAIAgoTargetPriorityFaceDir:
-	.incbin "baserom.dol", 0x2EFCF4, 0x8
+  .4byte 0x802df9e8
+  .4byte 0x802dfa04
 .global __RTTI__12TAIAgoTarget
 __RTTI__12TAIAgoTarget:
-	.incbin "baserom.dol", 0x2EFCFC, 0x8
+  .4byte 0x802dfa3c
+  .4byte 0x802dfa4c
 .global __RTTI__24TAIAsetTargetPointCircle
 __RTTI__24TAIAsetTargetPointCircle:
-	.incbin "baserom.dol", 0x2EFD04, 0x8
+  .4byte 0x802dfa80
+  .4byte 0x802dfa9c
 .global __RTTI__30TAIAsetTargetPointCircleRandom
 __RTTI__30TAIAsetTargetPointCircleRandom:
-	.incbin "baserom.dol", 0x2EFD0C, 0x8
+  .4byte 0x802dfac4
+  .4byte 0x802dfae4
 .global __RTTI__14TAIAgoGoalPath
 __RTTI__14TAIAgoGoalPath:
-	.incbin "baserom.dol", 0x2EFD14, 0x8
+  .4byte 0x802dfb0c
+  .4byte 0x802dfb1c
 .global __RTTI__28TAIAsetTargetPointWorkObject
 __RTTI__28TAIAsetTargetPointWorkObject:
-	.incbin "baserom.dol", 0x2EFD1C, 0x10
+  .4byte 0x802dfb5c
+  .4byte 0x802dfb7c
+  .4byte 0x802dfbb8
+  .4byte 0x802dfbc4
 .global __RTTI__18TAIAsetMotionSpeed
 __RTTI__18TAIAsetMotionSpeed:
-	.incbin "baserom.dol", 0x2EFD2C, 0x8
+  .4byte 0x802dfbd0
+  .4byte 0x802dfbe4
 .global __RTTI__17TAIAappearKabekui
 __RTTI__17TAIAappearKabekui:
-	.incbin "baserom.dol", 0x2EFD34, 0x1C
+  .4byte 0x802dfba4
+  .4byte 0x802dfbf8
+  .4byte 0
+  .4byte 0x802dfc5c
+  .4byte 0
+  .4byte 0x802dfc68
+  .4byte 0x802dfc7c
 .global __RTTI__14TAIAmotionLoop
 __RTTI__14TAIAmotionLoop:
-	.incbin "baserom.dol", 0x2EFD50, 0x18
+  .4byte 0x802dfc4c
+  .4byte 0x802dfc88
+  .4byte 0x802dfc40
+  .4byte 0x802dfcd8
+  .4byte 0x802dfd50
+  .4byte 0
 .global __RTTI__18TAIAcheckTurnAngle
 __RTTI__18TAIAcheckTurnAngle:
-	.incbin "baserom.dol", 0x2EFD68, 0x8
+  .4byte 0x802dfd3c
+  .4byte 0x802dfd5c
 .global __RTTI__18TAIAdistanceTarget
 __RTTI__18TAIAdistanceTarget:
-	.incbin "baserom.dol", 0x2EFD70, 0x10
+  .4byte 0x802dfd84
+  .4byte 0x802dfd98
+  .4byte 0x802dfdd0
+  .4byte 0
 .global __RTTI__16TAIAstickingPiki_1
 __RTTI__16TAIAstickingPiki_1:
-	.incbin "baserom.dol", 0x2EFD80, 0x8
+  .4byte 0x802dfe00
+  .4byte 0x802dfe14
 .global __RTTI__19TAIAunvisibleTarget
 __RTTI__19TAIAunvisibleTarget:
-	.incbin "baserom.dol", 0x2EFD88, 0x8
+  .4byte 0x802dfe40
+  .4byte 0x802dfe54
 .global __RTTI__20TAIAattackableTarget_1
 __RTTI__20TAIAattackableTarget_1:
-	.incbin "baserom.dol", 0x2EFD90, 0x8
+  .4byte 0x802dfe7c
+  .4byte 0x802dfe94
 .global __RTTI__15TAIAvisiblePiki
 __RTTI__15TAIAvisiblePiki:
-	.incbin "baserom.dol", 0x2EFD98, 0x8
+  .4byte 0x802dfec0
+  .4byte 0x802dfed0
 .global __RTTI__15TAIAvisibleNavi
 __RTTI__15TAIAvisibleNavi:
-	.incbin "baserom.dol", 0x2EFDA0, 0x8
+  .4byte 0x802dfef8
+  .4byte 0x802dff08
 .global __RTTI__29TAIAoutsideTerritoryRangeNavi
 __RTTI__29TAIAoutsideTerritoryRangeNavi:
-	.incbin "baserom.dol", 0x2EFDA8, 0x8
+  .4byte 0x802dff30
+  .4byte 0x802dff50
 .global __RTTI__28TAIAinsideTerritoryRangeNavi
 __RTTI__28TAIAinsideTerritoryRangeNavi:
-	.incbin "baserom.dol", 0x2EFDB0, 0x8
+  .4byte 0x802dff78
+  .4byte 0x802dff98
 .global __RTTI__24TAIAcheckInsideRangePiki
 __RTTI__24TAIAcheckInsideRangePiki:
-	.incbin "baserom.dol", 0x2EFDB8, 0x8
+  .4byte 0x802dffc0
+  .4byte 0x802dffdc
 .global __RTTI__22TAIAjudgeOptionalRange_1
 __RTTI__22TAIAjudgeOptionalRange_1:
-	.incbin "baserom.dol", 0x2EFDC0, 0x8
+  .4byte 0x802e0028
+  .4byte 0x802e0040
 .global __RTTI__24TAIAoutsideOptionalRange_1
 __RTTI__24TAIAoutsideOptionalRange_1:
-	.incbin "baserom.dol", 0x2EFDC8, 0x8
+  .4byte 0x802e000c
+  .4byte 0x802e004c
 .global __RTTI__23TAIAinsideOptionalRange
 __RTTI__23TAIAinsideOptionalRange:
-	.incbin "baserom.dol", 0x2EFDD0, 0x8
+  .4byte 0x802e0088
+  .4byte 0x802e00a0
 .global __RTTI__13TAIAjudgeLife
 __RTTI__13TAIAjudgeLife:
-	.incbin "baserom.dol", 0x2EFDD8, 0x8
+  .4byte 0x802e0114
+  .4byte 0x802e0124
 .global __RTTI__12TAIAmoreLife
 __RTTI__12TAIAmoreLife:
-	.incbin "baserom.dol", 0x2EFDE0, 0x8
+  .4byte 0x802e0104
+  .4byte 0x802e0130
 .global __RTTI__12TAIAlessLife
 __RTTI__12TAIAlessLife:
-	.incbin "baserom.dol", 0x2EFDE8, 0x8
+  .4byte 0x802e0164
+  .4byte 0x802e0174
 .global __RTTI__20TAIAsearchWorkObject
 __RTTI__20TAIAsearchWorkObject:
-	.incbin "baserom.dol", 0x2EFDF0, 0x8
+  .4byte 0x802e01a8
+  .4byte 0x802e01c0
 .global lbl_803E64D8
 lbl_803E64D8:
 	.incbin "baserom.dol", 0x2EFDF8, 0x4
@@ -14783,40 +17583,60 @@ lbl_803E6504:
 	.incbin "baserom.dol", 0x2EFE24, 0x14
 .global __RTTI__11TAIAeatPiki
 __RTTI__11TAIAeatPiki:
-	.incbin "baserom.dol", 0x2EFE38, 0x8
+  .4byte 0x802e0204
+  .4byte 0x802e023c
 .global __RTTI__18TAIAbiteForKabekui
 __RTTI__18TAIAbiteForKabekui:
-	.incbin "baserom.dol", 0x2EFE40, 0x8
+  .4byte 0x802e0270
+  .4byte 0x802e0284
 .global __RTTI__25TAIAflickingReserveMotion
 __RTTI__25TAIAflickingReserveMotion:
-	.incbin "baserom.dol", 0x2EFE48, 0x28
+  .4byte 0x802e02bc
+  .4byte 0x802e02d8
+  .4byte 0x802e0320
+  .4byte 0x802e032c
+  .4byte 0x802e0310
+  .4byte 0x802e0338
+  .4byte 0x802e0380
+  .4byte 0
+  .4byte 0x802e03b0
+  .4byte 0x802e03c0
 .global __RTTI__14TAIAfireBreath_2
 __RTTI__14TAIAfireBreath_2:
-	.incbin "baserom.dol", 0x2EFE70, 0x8
+  .4byte 0x802e03ec
+  .4byte 0x802e03fc
 .global __RTTI__14TAIAtargetPiki
 __RTTI__14TAIAtargetPiki:
-	.incbin "baserom.dol", 0x2EFE78, 0x8
+  .4byte 0x802e0434
+  .4byte 0x802e0444
 .global __RTTI__14TAIAtargetNavi
 __RTTI__14TAIAtargetNavi:
-	.incbin "baserom.dol", 0x2EFE80, 0x8
+  .4byte 0x802e046c
+  .4byte 0x802e047c
 .global __RTTI__14TAIAmotionLoop_1
 __RTTI__14TAIAmotionLoop_1:
-	.incbin "baserom.dol", 0x2EFE88, 0x8
+  .4byte 0x802e04c0
+  .4byte 0x802e04d0
 .global __RTTI__27TAIAflickingAfterMotionLoop
 __RTTI__27TAIAflickingAfterMotionLoop:
-	.incbin "baserom.dol", 0x2EFE90, 0x8
+  .4byte 0x802e04a4
+  .4byte 0x802e04e4
 .global __RTTI__20TAIAattackWorkObject
 __RTTI__20TAIAattackWorkObject:
-	.incbin "baserom.dol", 0x2EFE98, 0x8
+  .4byte 0x802e055c
+  .4byte 0x802e0574
 .global __RTTI__14P2DGrafContext
 __RTTI__14P2DGrafContext:
-	.incbin "baserom.dol", 0x2EFEA0, 0x8
+  .4byte 0x802e05c4
+  .4byte 0
 .global __RTTI__14P2DGrafContext_1
 __RTTI__14P2DGrafContext_1:
-	.incbin "baserom.dol", 0x2EFEA8, 0x8
+  .4byte 0x802e0608
+  .4byte 0
 .global __RTTI__13P2DOrthoGraph
 __RTTI__13P2DOrthoGraph:
-	.incbin "baserom.dol", 0x2EFEB0, 0x8
+  .4byte 0x802e05f8
+  .4byte 0x802e0618
 .global lbl_803E6598
 lbl_803E6598:
 	.incbin "baserom.dol", 0x2EFEB8, 0x4
@@ -14873,10 +17693,14 @@ lbl_803E65DC:
 	.incbin "baserom.dol", 0x2EFEFC, 0x4
 .global __RTTI__14P2DGrafContext_2
 __RTTI__14P2DGrafContext_2:
-	.incbin "baserom.dol", 0x2EFF00, 0x8
+  .4byte 0x802e067c
+  .4byte 0
 .global __RTTI__13P2DPerspGraph
 __RTTI__13P2DPerspGraph:
-	.incbin "baserom.dol", 0x2EFF08, 0x10
+  .4byte 0x802e066c
+  .4byte 0x802e068c
+  .4byte 0x50324450
+  .4byte 0x616e6500
 .global lbl_803E65F8
 lbl_803E65F8:
 	.incbin "baserom.dol", 0x2EFF18, 0x4
@@ -14906,16 +17730,32 @@ lbl_803E6618:
 	.incbin "baserom.dol", 0x2EFF38, 0x20
 .global __RTTI__10P2DPicture
 __RTTI__10P2DPicture:
-	.incbin "baserom.dol", 0x2EFF58, 0x18
+  .4byte 0x802e0710
+  .4byte 0x802e071c
+  .4byte 0x50324450
+  .4byte 0x616e6500
+  .4byte 0x803e6640
+  .4byte 0
 .global __RTTI__9P2DScreen
 __RTTI__9P2DScreen:
-	.incbin "baserom.dol", 0x2EFF70, 0x18
+  .4byte 0x802e0778
+  .4byte 0x802e07d4
+  .4byte 0x50324450
+  .4byte 0x616e6500
+  .4byte 0x803e6658
+  .4byte 0
 .global __RTTI__9P2DWindow
 __RTTI__9P2DWindow:
-	.incbin "baserom.dol", 0x2EFF88, 0x18
+  .4byte 0x802e0830
+  .4byte 0x802e083c
+  .4byte 0x50324450
+  .4byte 0x616e6500
+  .4byte 0x803e6670
+  .4byte 0
 .global __RTTI__10P2DTextBox
 __RTTI__10P2DTextBox:
-	.incbin "baserom.dol", 0x2EFFA0, 0x8
+  .4byte 0x802e0898
+  .4byte 0x802e08a4
 .global lbl_803E6688
 lbl_803E6688:
 	.incbin "baserom.dol", 0x2EFFA8, 0x4
@@ -14924,7 +17764,8 @@ lbl_803E668C:
 	.incbin "baserom.dol", 0x2EFFAC, 0xC
 .global __RTTI__10FntobjInfo
 __RTTI__10FntobjInfo:
-	.incbin "baserom.dol", 0x2EFFB8, 0x8
+  .4byte 0x802e0968
+  .4byte 0x802e0980
 .global frameMax__Q29$$2unnamed$$216PikiIconCallBack
 frameMax__Q29$$2unnamed$$216PikiIconCallBack:
 	.incbin "baserom.dol", 0x2EFFC0, 0x4
@@ -14933,52 +17774,68 @@ lbl_803E66A4:
 	.incbin "baserom.dol", 0x2EFFC4, 0x24
 .global __RTTI__Q29$$2unnamed$$212DateCallBack
 __RTTI__Q29$$2unnamed$$212DateCallBack:
-	.incbin "baserom.dol", 0x2EFFE8, 0x8
+  .4byte 0x802e0c48
+  .4byte 0x802e0cc4
 .global __RTTI__Q29$$2unnamed$$217LifePinchCallBack
 __RTTI__Q29$$2unnamed$$217LifePinchCallBack:
-	.incbin "baserom.dol", 0x2EFFF0, 0x8
+  .4byte 0x802e0cf8
+  .4byte 0x802e0d18
 .global __RTTI__Q29$$2unnamed$$216LifeIconCallBack
 __RTTI__Q29$$2unnamed$$216LifeIconCallBack:
-	.incbin "baserom.dol", 0x2EFFF8, 0x8
+  .4byte 0x802e0d44
+  .4byte 0x802e0d60
 .global __RTTI__Q29$$2unnamed$$215NaviTexCallBack
 __RTTI__Q29$$2unnamed$$215NaviTexCallBack:
-	.incbin "baserom.dol", 0x2F0000, 0x8
+  .4byte 0x802e0d8c
+  .4byte 0x802e0da8
 .global __RTTI__Q29$$2unnamed$$216NaviIconCallBack
 __RTTI__Q29$$2unnamed$$216NaviIconCallBack:
-	.incbin "baserom.dol", 0x2F0008, 0x8
+  .4byte 0x802e0dd4
+  .4byte 0x802e0df0
 .global __RTTI__Q29$$2unnamed$$27SunMove
 __RTTI__Q29$$2unnamed$$27SunMove:
-	.incbin "baserom.dol", 0x2F0010, 0x8
+  .4byte 0x802e0e38
+  .4byte 0
 .global __RTTI__Q29$$2unnamed$$216MoonIconCallBack
 __RTTI__Q29$$2unnamed$$216MoonIconCallBack:
-	.incbin "baserom.dol", 0x2F0018, 0x8
+  .4byte 0x802e0e1c
+  .4byte 0x802e0e4c
 .global __RTTI__Q29$$2unnamed$$27SunAnim
 __RTTI__Q29$$2unnamed$$27SunAnim:
-	.incbin "baserom.dol", 0x2F0020, 0x8
+  .4byte 0x802e0e9c
+  .4byte 0
 .global __RTTI__Q29$$2unnamed$$216SunIcon2CallBack
 __RTTI__Q29$$2unnamed$$216SunIcon2CallBack:
-	.incbin "baserom.dol", 0x2F0028, 0x8
+  .4byte 0x802e0e80
+  .4byte 0x802e0eb0
 .global __RTTI__Q29$$2unnamed$$216SunIcon1CallBack
 __RTTI__Q29$$2unnamed$$216SunIcon1CallBack:
-	.incbin "baserom.dol", 0x2F0030, 0x8
+  .4byte 0x802e0eec
+  .4byte 0x802e0f08
 .global __RTTI__Q29$$2unnamed$$218SunCapsuleCallBack
 __RTTI__Q29$$2unnamed$$218SunCapsuleCallBack:
-	.incbin "baserom.dol", 0x2F0038, 0x8
+  .4byte 0x802e0f3c
+  .4byte 0x802e0f5c
 .global __RTTI__Q29$$2unnamed$$215SunBaseCallBack
 __RTTI__Q29$$2unnamed$$215SunBaseCallBack:
-	.incbin "baserom.dol", 0x2F0040, 0x8
+  .4byte 0x802e0f88
+  .4byte 0x802e0fa4
 .global __RTTI__Q23zen12FigureTex$$0s$$1
 __RTTI__Q23zen12FigureTex$$0s$$1:
-	.incbin "baserom.dol", 0x2F0048, 0x8
+  .4byte 0x802e1004
+  .4byte 0x802e101c
 .global __RTTI__Q23zen20NumberPicCallBack$$0s$$1
 __RTTI__Q23zen20NumberPicCallBack$$0s$$1:
-	.incbin "baserom.dol", 0x2F0050, 0x8
+  .4byte 0x802e0fe4
+  .4byte 0x802e1028
 .global __RTTI__Q29$$2unnamed$$223MapPikminWindowCallBack
 __RTTI__Q29$$2unnamed$$223MapPikminWindowCallBack:
-	.incbin "baserom.dol", 0x2F0058, 0x8
+  .4byte 0x802e1064
+  .4byte 0x802e1088
 .global __RTTI__Q29$$2unnamed$$216PikiIconCallBack
 __RTTI__Q29$$2unnamed$$216PikiIconCallBack:
-	.incbin "baserom.dol", 0x2F0060, 0x8
+  .4byte 0x802e10b4
+  .4byte 0x802e10d0
 .global TRI_NUM__Q23zen14DrawLifeCircle
 TRI_NUM__Q23zen14DrawLifeCircle:
 	.incbin "baserom.dol", 0x2F0068, 0x8
@@ -15029,19 +17886,31 @@ lbl_803E679C:
 	.incbin "baserom.dol", 0x2F00BC, 0x20
 .global __RTTI__Q23zen13StickCallBack
 __RTTI__Q23zen13StickCallBack:
-	.incbin "baserom.dol", 0x2F00DC, 0x8
+  .4byte 0x802e1264
+  .4byte 0x802e12cc
 .global __RTTI__Q23zen18ArrowBasicCallBack
 __RTTI__Q23zen18ArrowBasicCallBack:
-	.incbin "baserom.dol", 0x2F00E4, 0x8
+  .4byte 0x802e1310
+  .4byte 0
 .global __RTTI__Q23zen15ArrowLRCallBack
 __RTTI__Q23zen15ArrowLRCallBack:
-	.incbin "baserom.dol", 0x2F00EC, 0x8
+  .4byte 0x802e12f8
+  .4byte 0x802e1328
 .global __RTTI__Q23zen19ArrowCenterCallBack
 __RTTI__Q23zen19ArrowCenterCallBack:
-	.incbin "baserom.dol", 0x2F00F4, 0x10
+  .4byte 0x802e135c
+  .4byte 0x802e1378
+  .4byte 0x802e13c8
+  .4byte 0
 .global __RTTI__Q23zen12FigureTex$$0i$$1_1
 __RTTI__Q23zen12FigureTex$$0i$$1_1:
-	.incbin "baserom.dol", 0x2F0104, 0x1C
+  .4byte 0x802e13d8
+  .4byte 0x802e13ec
+  .4byte 0x414e6f64
+  .4byte 0x65000000
+  .4byte 0x803e67ec
+  .4byte 0
+  .4byte 0
 .global lbl_803E6800
 lbl_803E6800:
 	.incbin "baserom.dol", 0x2F0120, 0x4
@@ -15059,10 +17928,13 @@ lbl_803E6810:
 	.incbin "baserom.dol", 0x2F0130, 0x1C
 .global __RTTI__Q23zen11BalloonPane
 __RTTI__Q23zen11BalloonPane:
-	.incbin "baserom.dol", 0x2F014C, 0x8
+  .4byte 0x802e14c0
+  .4byte 0x802e1528
 .global __RTTI__Q23zen10DrawScreen
 __RTTI__Q23zen10DrawScreen:
-	.incbin "baserom.dol", 0x2F0154, 0xC
+  .4byte 0x802e1570
+  .4byte 0
+  .4byte 0
 .global lbl_803E6840
 lbl_803E6840:
 	.incbin "baserom.dol", 0x2F0160, 0x4
@@ -15074,13 +17946,24 @@ lbl_803E6848:
 	.incbin "baserom.dol", 0x2F0168, 0x8
 .global __RTTI__Q23zen10DrawScreen_1
 __RTTI__Q23zen10DrawScreen_1:
-	.incbin "baserom.dol", 0x2F0170, 0x8
+  .4byte 0x802e15f0
+  .4byte 0
 .global __RTTI__Q23zen11DrawAccount
 __RTTI__Q23zen11DrawAccount:
-	.incbin "baserom.dol", 0x2F0178, 0x10
+  .4byte 0x802e15dc
+  .4byte 0x802e1600
+  .4byte 0x802e163c
+  .4byte 0
 .global __RTTI__Q23zen12FigureTex$$0s$$1_1
 __RTTI__Q23zen12FigureTex$$0s$$1_1:
-	.incbin "baserom.dol", 0x2F0188, 0x20
+  .4byte 0x802e164c
+  .4byte 0x802e1664
+  .4byte 0x802e1670
+  .4byte 0
+  .4byte 0x802e1684
+  .4byte 0
+  .4byte 0x802e16a0
+  .4byte 0x802e16b0
 .global lbl_803E6888
 lbl_803E6888:
 	.incbin "baserom.dol", 0x2F01A8, 0x4
@@ -15107,10 +17990,12 @@ lbl_803E68B8:
 	.incbin "baserom.dol", 0x2F01D8, 0x8
 .global __RTTI__Q23zen10DrawScreen_2
 __RTTI__Q23zen10DrawScreen_2:
-	.incbin "baserom.dol", 0x2F01E0, 0x8
+  .4byte 0x802e174c
+  .4byte 0
 .global __RTTI__Q23zen8DrawMenu
 __RTTI__Q23zen8DrawMenu:
-	.incbin "baserom.dol", 0x2F01E8, 0x8
+  .4byte 0x802e173c
+  .4byte 0x802e175c
 .global lbl_803E68D0
 lbl_803E68D0:
 	.incbin "baserom.dol", 0x2F01F0, 0x4
@@ -15161,13 +18046,16 @@ lbl_803E690C:
 	.incbin "baserom.dol", 0x2F022C, 0xC
 .global __RTTI__16ConeTypeCallBack
 __RTTI__16ConeTypeCallBack:
-	.incbin "baserom.dol", 0x2F0238, 0x8
+  .4byte 0x802e179c
+  .4byte 0x802e17dc
 .global __RTTI__20CylinderTypeCallBack
 __RTTI__20CylinderTypeCallBack:
-	.incbin "baserom.dol", 0x2F0240, 0x8
+  .4byte 0x802e17f4
+  .4byte 0x802e180c
 .global __RTTI__17EventTypeCallBack
 __RTTI__17EventTypeCallBack:
-	.incbin "baserom.dol", 0x2F0248, 0x8
+  .4byte 0x802e1824
+  .4byte 0x802e1838
 .global lbl_803E6930
 lbl_803E6930:
 	.incbin "baserom.dol", 0x2F0250, 0x4
@@ -15197,64 +18085,111 @@ lbl_803E6950:
 	.incbin "baserom.dol", 0x2F0270, 0xC
 .global __RTTI__18TAIbeatleAnimation
 __RTTI__18TAIbeatleAnimation:
-	.incbin "baserom.dol", 0x2F027C, 0x18
+  .4byte 0x802e18c4
+  .4byte 0x802e18e8
+  .4byte 0x802e1914
+  .4byte 0
+  .4byte 0x802e1924
+  .4byte 0x802e1930
 .global __RTTI__17TAIbeatleStrategy
 __RTTI__17TAIbeatleStrategy:
-	.incbin "baserom.dol", 0x2F0294, 0x10
+  .4byte 0x802e1900
+  .4byte 0x802e193c
+  .4byte 0x802e1998
+  .4byte 0
 .global __RTTI__24TAIAcheckInsideRangePiki_1
 __RTTI__24TAIAcheckInsideRangePiki_1:
-	.incbin "baserom.dol", 0x2F02A4, 0x8
+  .4byte 0x802e19a4
+  .4byte 0x802e19c0
 .global __RTTI__30TAIAcheckInsideRangePikiBeatle
 __RTTI__30TAIAcheckInsideRangePikiBeatle:
-	.incbin "baserom.dol", 0x2F02AC, 0x8
+  .4byte 0x802e1978
+  .4byte 0x802e19cc
 .global __RTTI__16TAIAdisableStick
 __RTTI__16TAIAdisableStick:
-	.incbin "baserom.dol", 0x2F02B4, 0x18
+  .4byte 0x802e1a04
+  .4byte 0x802e1a18
+  .4byte 0x802e1a8c
+  .4byte 0x802e1a98
+  .4byte 0x802e1aa4
+  .4byte 0x802e1ab4
 .global __RTTI__18TAIAflickingBeatle
 __RTTI__18TAIAflickingBeatle:
-	.incbin "baserom.dol", 0x2F02CC, 0x8
+  .4byte 0x802e1a78
+  .4byte 0x802e1ac8
 .global __RTTI__17TAIAinvincibleOff
 __RTTI__17TAIAinvincibleOff:
-	.incbin "baserom.dol", 0x2F02D4, 0x10
+  .4byte 0x802e1b40
+  .4byte 0x802e1b54
+  .4byte 0x802e1ba0
+  .4byte 0x802e1bb4
 .global __RTTI__14TAIAmotionLoop_2
 __RTTI__14TAIAmotionLoop_2:
-	.incbin "baserom.dol", 0x2F02E4, 0x8
+  .4byte 0x802e1bc0
+  .4byte 0x802e1bd0
 .global __RTTI__27TAIAflickingAfterMotionLoop_1
 __RTTI__27TAIAflickingAfterMotionLoop_1:
-	.incbin "baserom.dol", 0x2F02EC, 0x8
+  .4byte 0x802e1be4
+  .4byte 0x802e1c00
 .global __RTTI__33TAIAflickingAfterMotionLoopBeatle
 __RTTI__33TAIAflickingAfterMotionLoopBeatle:
-	.incbin "baserom.dol", 0x2F02F4, 0x8
+  .4byte 0x802e1b7c
+  .4byte 0x802e1c1c
 .global __RTTI__14TAIArockAttack
 __RTTI__14TAIArockAttack:
-	.incbin "baserom.dol", 0x2F02FC, 0x8
+  .4byte 0x802e1ca4
+  .4byte 0x802e1cb4
 .global __RTTI__22TAIAjudgeOptionalRange_2
 __RTTI__22TAIAjudgeOptionalRange_2:
-	.incbin "baserom.dol", 0x2F0304, 0x8
+  .4byte 0x802e1d04
+  .4byte 0x802e1d1c
 .global __RTTI__23TAIAinsideOptionalRange_1
 __RTTI__23TAIAinsideOptionalRange_1:
-	.incbin "baserom.dol", 0x2F030C, 0x8
+  .4byte 0x802e1d28
+  .4byte 0x802e1d40
 .global __RTTI__29TAIAinsideOptionalRangeBeatle
 __RTTI__29TAIAinsideOptionalRangeBeatle:
-	.incbin "baserom.dol", 0x2F0314, 0x8
+  .4byte 0x802e1ce4
+  .4byte 0x802e1d54
 .global __RTTI__21TAIAvisiblePikiBeatle
 __RTTI__21TAIAvisiblePikiBeatle:
-	.incbin "baserom.dol", 0x2F031C, 0x8
+  .4byte 0x802e1d98
+  .4byte 0x802e1db0
 .global __RTTI__10TAIAdamage_1
 __RTTI__10TAIAdamage_1:
-	.incbin "baserom.dol", 0x2F0324, 0x8
+  .4byte 0x802e1e2c
+  .4byte 0x802e1e38
 .global __RTTI__16TAIAdamageBeatle
 __RTTI__16TAIAdamageBeatle:
-	.incbin "baserom.dol", 0x2F032C, 0x10
+  .4byte 0x802e1e18
+  .4byte 0x802e1e44
+  .4byte 0x802e1e88
+  .4byte 0x802e1e94
 .global __RTTI__15TAIAdyingBeatle
 __RTTI__15TAIAdyingBeatle:
-	.incbin "baserom.dol", 0x2F033C, 0x8
+  .4byte 0x802e1e78
+  .4byte 0x802e1ea8
 .global __RTTI__14TAIAinitBeatle
 __RTTI__14TAIAinitBeatle:
-	.incbin "baserom.dol", 0x2F0344, 0x38
+  .4byte 0x802e1ee0
+  .4byte 0x802e1ef0
+  .4byte 0x414e6f64
+  .4byte 0x65000000
+  .4byte 0x803e6a2c
+  .4byte 0
+  .4byte 0x802e1f48
+  .4byte 0x802e1f54
+  .4byte 0x4e6f6465
+  .4byte 0
+  .4byte 0x803e6a44
+  .4byte 0x802e1f60
+  .4byte 0x802e1f74
+  .4byte 0x802e1f84
 .global __RTTI__19TAIbeatleParameters
 __RTTI__19TAIbeatleParameters:
-	.incbin "baserom.dol", 0x2F037C, 0xC
+  .4byte 0x802e1f34
+  .4byte 0x802e1fa0
+  .4byte 0
 .global lbl_803E6A68
 lbl_803E6A68:
 	.incbin "baserom.dol", 0x2F0388, 0x4
@@ -15275,7 +18210,9 @@ lbl_803E6A7C:
 	.incbin "baserom.dol", 0x2F039C, 0x20
 .global __RTTI__Q23zen9MenuPanel
 __RTTI__Q23zen9MenuPanel:
-	.incbin "baserom.dol", 0x2F03BC, 0xC
+  .4byte 0x802e201c
+  .4byte 0x802e2080
+  .4byte 0
 .global lbl_803E6AA8
 lbl_803E6AA8:
 	.incbin "baserom.dol", 0x2F03C8, 0x4
@@ -15296,37 +18233,72 @@ lbl_803E6ABC:
 	.incbin "baserom.dol", 0x2F03DC, 0xC
 .global __RTTI__20TAIkabekuiAAnimation
 __RTTI__20TAIkabekuiAAnimation:
-	.incbin "baserom.dol", 0x2F03E8, 0x10
+  .4byte 0x802e22a8
+  .4byte 0x802e22d0
+  .4byte 0x802e22f8
+  .4byte 0
 .global __RTTI__13TAIAshadowOff
 __RTTI__13TAIAshadowOff:
-	.incbin "baserom.dol", 0x2F03F8, 0x8
+  .4byte 0x802e22e8
+  .4byte 0x802e2304
 .global __RTTI__12TAIAshadowOn
 __RTTI__12TAIAshadowOn:
-	.incbin "baserom.dol", 0x2F0400, 0x10
+  .4byte 0x802e232c
+  .4byte 0x802e233c
+  .4byte 0x802e2378
+  .4byte 0x802e238c
 .global __RTTI__17TAIAsleepKabekuiA
 __RTTI__17TAIAsleepKabekuiA:
-	.incbin "baserom.dol", 0x2F0410, 0x8
+  .4byte 0x802e2364
+  .4byte 0x802e2398
 .global __RTTI__16TAIAdiveKabekuiA
 __RTTI__16TAIAdiveKabekuiA:
-	.incbin "baserom.dol", 0x2F0418, 0x10
+  .4byte 0x802e23cc
+  .4byte 0x802e23e0
+  .4byte 0x802e2454
+  .4byte 0x802e2468
 .global __RTTI__20TAIAattackWorkObject_1
 __RTTI__20TAIAattackWorkObject_1:
-	.incbin "baserom.dol", 0x2F0428, 0x8
+  .4byte 0x802e2474
+  .4byte 0x802e248c
 .global __RTTI__28TAIAattackWorkObjectKabekuiA
 __RTTI__28TAIAattackWorkObjectKabekuiA:
-	.incbin "baserom.dol", 0x2F0430, 0x8
+  .4byte 0x802e2434
+  .4byte 0x802e24a0
 .global __RTTI__16TAIAinvincibleOn
 __RTTI__16TAIAinvincibleOn:
-	.incbin "baserom.dol", 0x2F0438, 0x10
+  .4byte 0x802e2520
+  .4byte 0x802e2534
+  .4byte 0x802e2570
+  .4byte 0x802e257c
 .global __RTTI__18TAIAsetMotionSpeed_1
 __RTTI__18TAIAsetMotionSpeed_1:
-	.incbin "baserom.dol", 0x2F0448, 0x18
+  .4byte 0x802e255c
+  .4byte 0x802e2588
+  .4byte 0x802e25e8
+  .4byte 0
+  .4byte 0x802e25f8
+  .4byte 0x802e2604
 .global __RTTI__19TAIkabekuiAStrategy
 __RTTI__19TAIkabekuiAStrategy:
-	.incbin "baserom.dol", 0x2F0460, 0x38
+  .4byte 0x802e25d4
+  .4byte 0x802e2610
+  .4byte 0x414e6f64
+  .4byte 0x65000000
+  .4byte 0x803e6b48
+  .4byte 0
+  .4byte 0x802e2664
+  .4byte 0x802e2670
+  .4byte 0x4e6f6465
+  .4byte 0
+  .4byte 0x803e6b60
+  .4byte 0x802e267c
+  .4byte 0x802e2690
+  .4byte 0x802e26a0
 .global __RTTI__21TAIkabekuiAParameters
 __RTTI__21TAIkabekuiAParameters:
-	.incbin "baserom.dol", 0x2F0498, 0x8
+  .4byte 0x802e264c
+  .4byte 0x802e26bc
 .global lbl_803E6B80
 lbl_803E6B80:
 	.incbin "baserom.dol", 0x2F04A0, 0x4
@@ -15347,31 +18319,64 @@ lbl_803E6B94:
 	.incbin "baserom.dol", 0x2F04B4, 0xC
 .global __RTTI__20TAIkabekuiBAnimation
 __RTTI__20TAIkabekuiBAnimation:
-	.incbin "baserom.dol", 0x2F04C0, 0x18
+  .4byte 0x802e2918
+  .4byte 0x802e2940
+  .4byte 0x802e2968
+  .4byte 0
+  .4byte 0x802e29e8
+  .4byte 0x802e29fc
 .global __RTTI__17TAIAsleepKabekuiB
 __RTTI__17TAIAsleepKabekuiB:
-	.incbin "baserom.dol", 0x2F04D8, 0x8
+  .4byte 0x802e29d4
+  .4byte 0x802e2a08
 .global __RTTI__16TAIAdiveKabekuiB
 __RTTI__16TAIAdiveKabekuiB:
-	.incbin "baserom.dol", 0x2F04E0, 0x10
+  .4byte 0x802e2a3c
+  .4byte 0x802e2a50
+  .4byte 0x802e2ac4
+  .4byte 0x802e2ad8
 .global __RTTI__20TAIAattackWorkObject_2
 __RTTI__20TAIAattackWorkObject_2:
-	.incbin "baserom.dol", 0x2F04F0, 0x8
+  .4byte 0x802e2ae4
+  .4byte 0x802e2afc
 .global __RTTI__28TAIAattackWorkObjectKabekuiB
 __RTTI__28TAIAattackWorkObjectKabekuiB:
-	.incbin "baserom.dol", 0x2F04F8, 0x8
+  .4byte 0x802e2aa4
+  .4byte 0x802e2b10
 .global __RTTI__18TAIAbiteForKabekui_1
 __RTTI__18TAIAbiteForKabekui_1:
-	.incbin "baserom.dol", 0x2F0500, 0x8
+  .4byte 0x802e2be0
+  .4byte 0x802e2bf4
 .global __RTTI__19TAIAbiteForKabekuiB
 __RTTI__19TAIAbiteForKabekuiB:
-	.incbin "baserom.dol", 0x2F0508, 0x20
+  .4byte 0x802e2bcc
+  .4byte 0x802e2c08
+  .4byte 0x802e2c5c
+  .4byte 0x802e2c68
+  .4byte 0x802e2cd4
+  .4byte 0
+  .4byte 0x802e2ce4
+  .4byte 0x802e2cf0
 .global __RTTI__19TAIkabekuiBStrategy
 __RTTI__19TAIkabekuiBStrategy:
-	.incbin "baserom.dol", 0x2F0528, 0x38
+  .4byte 0x802e2cc0
+  .4byte 0x802e2cfc
+  .4byte 0x414e6f64
+  .4byte 0x65000000
+  .4byte 0x803e6c10
+  .4byte 0
+  .4byte 0x802e2d50
+  .4byte 0x802e2d5c
+  .4byte 0x4e6f6465
+  .4byte 0
+  .4byte 0x803e6c28
+  .4byte 0x802e2d68
+  .4byte 0x802e2d7c
+  .4byte 0x802e2d8c
 .global __RTTI__21TAIkabekuiBParameters
 __RTTI__21TAIkabekuiBParameters:
-	.incbin "baserom.dol", 0x2F0560, 0x8
+  .4byte 0x802e2d38
+  .4byte 0x802e2da8
 .global lbl_803E6C48
 lbl_803E6C48:
 	.incbin "baserom.dol", 0x2F0568, 0x4
@@ -15401,91 +18406,171 @@ lbl_803E6C68:
 	.incbin "baserom.dol", 0x2F0588, 0xC
 .global __RTTI__20TAIkabekuiCAnimation
 __RTTI__20TAIkabekuiCAnimation:
-	.incbin "baserom.dol", 0x2F0594, 0x18
+  .4byte 0x802e308c
+  .4byte 0x802e30b4
+  .4byte 0x802e30dc
+  .4byte 0
+  .4byte 0x802e315c
+  .4byte 0x802e3170
 .global __RTTI__17TAIAsleepKabekuiC
 __RTTI__17TAIAsleepKabekuiC:
-	.incbin "baserom.dol", 0x2F05AC, 0x8
+  .4byte 0x802e3148
+  .4byte 0x802e317c
 .global __RTTI__16TAIAdiveKabekuiC
 __RTTI__16TAIAdiveKabekuiC:
-	.incbin "baserom.dol", 0x2F05B4, 0x10
+  .4byte 0x802e31b0
+  .4byte 0x802e31c4
+  .4byte 0x802e3238
+  .4byte 0x802e324c
 .global __RTTI__20TAIAattackWorkObject_3
 __RTTI__20TAIAattackWorkObject_3:
-	.incbin "baserom.dol", 0x2F05C4, 0x8
+  .4byte 0x802e3258
+  .4byte 0x802e3270
 .global __RTTI__28TAIAattackWorkObjectKabekuiC
 __RTTI__28TAIAattackWorkObjectKabekuiC:
-	.incbin "baserom.dol", 0x2F05CC, 0x8
+  .4byte 0x802e3218
+  .4byte 0x802e3284
 .global __RTTI__19TAIAlandingKabekuiC
 __RTTI__19TAIAlandingKabekuiC:
-	.incbin "baserom.dol", 0x2F05D4, 0x8
+  .4byte 0x802e3340
+  .4byte 0x802e3354
 .global __RTTI__13TAIAjudgeLife_1
 __RTTI__13TAIAjudgeLife_1:
-	.incbin "baserom.dol", 0x2F05DC, 0x8
+  .4byte 0x802e339c
+  .4byte 0x802e33ac
 .global __RTTI__12TAIAmoreLife_1
 __RTTI__12TAIAmoreLife_1:
-	.incbin "baserom.dol", 0x2F05E4, 0x8
+  .4byte 0x802e33b8
+  .4byte 0x802e33c8
 .global __RTTI__20TAIAmoreLifeKabekuiC
 __RTTI__20TAIAmoreLifeKabekuiC:
-	.incbin "baserom.dol", 0x2F05EC, 0x8
+  .4byte 0x802e3384
+  .4byte 0x802e33dc
 .global __RTTI__22TAIAhitCheckFlyingPiki_1
 __RTTI__22TAIAhitCheckFlyingPiki_1:
-	.incbin "baserom.dol", 0x2F05F4, 0x8
+  .4byte 0x802e3434
+  .4byte 0x802e344c
 .global __RTTI__24TAIAcheckPikiFlyKabekuiC
 __RTTI__24TAIAcheckPikiFlyKabekuiC:
-	.incbin "baserom.dol", 0x2F05FC, 0x8
+  .4byte 0x802e3418
+  .4byte 0x802e3458
 .global __RTTI__24TAIAflyingMotionKabekuiC
 __RTTI__24TAIAflyingMotionKabekuiC:
-	.incbin "baserom.dol", 0x2F0604, 0x8
+  .4byte 0x802e3488
+  .4byte 0x802e34a4
 .global __RTTI__14TAIAflyingBase_2
 __RTTI__14TAIAflyingBase_2:
-	.incbin "baserom.dol", 0x2F060C, 0x8
+  .4byte 0x802e34ec
+  .4byte 0x802e34fc
 .global __RTTI__22TAIAflyingBaseKabekuiC
 __RTTI__22TAIAflyingBaseKabekuiC:
-	.incbin "baserom.dol", 0x2F0614, 0x10
+  .4byte 0x802e34d4
+  .4byte 0x802e3508
+  .4byte 0x802e3554
+  .4byte 0
 .global __RTTI__Q29$$2unnamed$$212rippleEffect
 __RTTI__Q29$$2unnamed$$212rippleEffect:
-	.incbin "baserom.dol", 0x2F0624, 0x8
+  .4byte 0x802e353c
+  .4byte 0x802e3580
 .global __RTTI__19TAIAtakeOffKabekuiC
 __RTTI__19TAIAtakeOffKabekuiC:
-	.incbin "baserom.dol", 0x2F062C, 0x8
+  .4byte 0x802e35a4
+  .4byte 0x802e35b8
 .global __RTTI__12TAIAlessLife_1
 __RTTI__12TAIAlessLife_1:
-	.incbin "baserom.dol", 0x2F0634, 0x8
+  .4byte 0x802e3600
+  .4byte 0x802e3610
 .global __RTTI__20TAIAlessLifeKabekuiC
 __RTTI__20TAIAlessLifeKabekuiC:
-	.incbin "baserom.dol", 0x2F063C, 0x8
+  .4byte 0x802e35e8
+  .4byte 0x802e3624
 .global __RTTI__18TAIAbiteForKabekui_2
 __RTTI__18TAIAbiteForKabekui_2:
-	.incbin "baserom.dol", 0x2F0644, 0x8
+  .4byte 0x802e3694
+  .4byte 0x802e36a8
 .global __RTTI__19TAIAbiteForKabekuiC
 __RTTI__19TAIAbiteForKabekuiC:
-	.incbin "baserom.dol", 0x2F064C, 0x20
+  .4byte 0x802e3680
+  .4byte 0x802e36bc
+  .4byte 0x802e3710
+  .4byte 0x802e371c
+  .4byte 0x802e3788
+  .4byte 0
+  .4byte 0x802e3798
+  .4byte 0x802e37a4
 .global __RTTI__19TAIkabekuiCStrategy
 __RTTI__19TAIkabekuiCStrategy:
-	.incbin "baserom.dol", 0x2F066C, 0x38
+  .4byte 0x802e3774
+  .4byte 0x802e37b0
+  .4byte 0x414e6f64
+  .4byte 0x65000000
+  .4byte 0x803e6d54
+  .4byte 0
+  .4byte 0x802e3804
+  .4byte 0x802e3810
+  .4byte 0x4e6f6465
+  .4byte 0
+  .4byte 0x803e6d6c
+  .4byte 0x802e381c
+  .4byte 0x802e3830
+  .4byte 0x802e3840
 .global __RTTI__21TAIkabekuiCParameters
 __RTTI__21TAIkabekuiCParameters:
-	.incbin "baserom.dol", 0x2F06A4, 0x14
+  .4byte 0x802e37ec
+  .4byte 0x802e385c
+  .4byte 0
+  .4byte 0x802e3a78
+  .4byte 0
 .global __RTTI__18TAItamagoAnimation
 __RTTI__18TAItamagoAnimation:
-	.incbin "baserom.dol", 0x2F06B8, 0x10
+  .4byte 0x802e3a64
+  .4byte 0x802e3a88
+  .4byte 0x802e3ab8
+  .4byte 0
 .global __RTTI__20TAIAcountStartTamago
 __RTTI__20TAIAcountStartTamago:
-	.incbin "baserom.dol", 0x2F06C8, 0x10
+  .4byte 0x802e3aa0
+  .4byte 0x802e3ac4
+  .4byte 0x802e3af8
+  .4byte 0x802e3b04
 .global __RTTI__9TAIAhatch
 __RTTI__9TAIAhatch:
-	.incbin "baserom.dol", 0x2F06D8, 0x10
+  .4byte 0x802e3aec
+  .4byte 0x802e3b10
+  .4byte 0x802e3b58
+  .4byte 0x802e3b6c
 .global __RTTI__23TAIAtimerReactionTamago
 __RTTI__23TAIAtimerReactionTamago:
-	.incbin "baserom.dol", 0x2F06E8, 0x8
+  .4byte 0x802e3b40
+  .4byte 0x802e3b78
 .global __RTTI__15TAIAdyingTamago
 __RTTI__15TAIAdyingTamago:
-	.incbin "baserom.dol", 0x2F06F0, 0x18
+  .4byte 0x802e3bcc
+  .4byte 0x802e3bdc
+  .4byte 0x802e3c3c
+  .4byte 0
+  .4byte 0x802e3c4c
+  .4byte 0x802e3c58
 .global __RTTI__17TAItamagoStrategy
 __RTTI__17TAItamagoStrategy:
-	.incbin "baserom.dol", 0x2F0708, 0x38
+  .4byte 0x802e3c28
+  .4byte 0x802e3c64
+  .4byte 0x414e6f64
+  .4byte 0x65000000
+  .4byte 0x803e6df0
+  .4byte 0
+  .4byte 0x802e3cb4
+  .4byte 0x802e3cc0
+  .4byte 0x4e6f6465
+  .4byte 0
+  .4byte 0x803e6e08
+  .4byte 0x802e3ccc
+  .4byte 0x802e3ce0
+  .4byte 0x802e3cf0
 .global __RTTI__19TAItamagoParameters
 __RTTI__19TAItamagoParameters:
-	.incbin "baserom.dol", 0x2F0740, 0x8
+  .4byte 0x802e3ca0
+  .4byte 0x802e3d0c
 .global lbl_803E6E28
 lbl_803E6E28:
 	.incbin "baserom.dol", 0x2F0748, 0x4
@@ -15524,178 +18609,313 @@ lbl_803E6E54:
 	.incbin "baserom.dol", 0x2F0774, 0xC
 .global __RTTI__18TAIdororoAnimation
 __RTTI__18TAIdororoAnimation:
-	.incbin "baserom.dol", 0x2F0780, 0x18
+  .4byte 0x802e3f68
+  .4byte 0x802e3f8c
+  .4byte 0x802e3fb8
+  .4byte 0
+  .4byte 0x802e3fc8
+  .4byte 0x802e3fd4
 .global __RTTI__17TAIdororoStrategy
 __RTTI__17TAIdororoStrategy:
-	.incbin "baserom.dol", 0x2F0798, 0x10
+  .4byte 0x802e3fa4
+  .4byte 0x802e3fe0
+  .4byte 0x802e4030
+  .4byte 0
 .global __RTTI__17TAIAgravityDororo
 __RTTI__17TAIAgravityDororo:
-	.incbin "baserom.dol", 0x2F07A8, 0x8
+  .4byte 0x802e401c
+  .4byte 0x802e403c
 .global __RTTI__19TAIAcheckBarkDororo
 __RTTI__19TAIAcheckBarkDororo:
-	.incbin "baserom.dol", 0x2F07B0, 0x10
+  .4byte 0x802e4064
+  .4byte 0x802e4078
+  .4byte 0x802e40b0
+  .4byte 0x802e40c4
 .global __RTTI__14TAIAmotionLoop_3
 __RTTI__14TAIAmotionLoop_3:
-	.incbin "baserom.dol", 0x2F07C0, 0x8
+  .4byte 0x802e40d0
+  .4byte 0x802e40e0
 .global __RTTI__14TAIAbarkDororo
 __RTTI__14TAIAbarkDororo:
-	.incbin "baserom.dol", 0x2F07C8, 0x8
+  .4byte 0x802e40a0
+  .4byte 0x802e40f4
 .global __RTTI__24TAIAtransformationDororo
 __RTTI__24TAIAtransformationDororo:
-	.incbin "baserom.dol", 0x2F07D0, 0x8
+  .4byte 0x802e4168
+  .4byte 0x802e4184
 .global __RTTI__15TAIAbirthDororo
 __RTTI__15TAIAbirthDororo:
-	.incbin "baserom.dol", 0x2F07D8, 0x8
+  .4byte 0x802e41b4
+  .4byte 0x802e41c4
 .global __RTTI__27TAIAgoTargetPriorityFaceDir_1
 __RTTI__27TAIAgoTargetPriorityFaceDir_1:
-	.incbin "baserom.dol", 0x2F07E0, 0x8
+  .4byte 0x802e4208
+  .4byte 0x802e4224
 .global __RTTI__16TAIAgoTargetPiki
 __RTTI__16TAIAgoTargetPiki:
-	.incbin "baserom.dol", 0x2F07E8, 0x8
+  .4byte 0x802e41f4
+  .4byte 0x802e4238
 .global __RTTI__8TAIAwait_1
 __RTTI__8TAIAwait_1:
-	.incbin "baserom.dol", 0x2F07F0, 0x8
+  .4byte 0x802e42c0
+  .4byte 0x802e42cc
 .global __RTTI__14TAIAwaitDororo
 __RTTI__14TAIAwaitDororo:
-	.incbin "baserom.dol", 0x2F07F8, 0x18
+  .4byte 0x802e42b0
+  .4byte 0x802e42e0
+  .4byte 0x802e4330
+  .4byte 0x802e433c
+  .4byte 0x802e4348
+  .4byte 0x802e4358
 .global __RTTI__18TAIAflickingDororo
 __RTTI__18TAIAflickingDororo:
-	.incbin "baserom.dol", 0x2F0810, 0x8
+  .4byte 0x802e431c
+  .4byte 0x802e436c
 .global __RTTI__14TAIAgoGoalPath_1
 __RTTI__14TAIAgoGoalPath_1:
-	.incbin "baserom.dol", 0x2F0818, 0x8
+  .4byte 0x802e43c4
+  .4byte 0x802e43d4
 .global __RTTI__20TAIAgoGoalPathDororo
 __RTTI__20TAIAgoGoalPathDororo:
-	.incbin "baserom.dol", 0x2F0820, 0x10
+  .4byte 0x802e43ac
+  .4byte 0x802e43f0
+  .4byte 0x802e4448
+  .4byte 0
 .global __RTTI__17TAIAkillTouchPiki
 __RTTI__17TAIAkillTouchPiki:
-	.incbin "baserom.dol", 0x2F0830, 0x10
+  .4byte 0x802e4478
+  .4byte 0x802e448c
+  .4byte 0x802e44c4
+  .4byte 0x802e44d0
 .global __RTTI__15TAIAdyingDororo
 __RTTI__15TAIAdyingDororo:
-	.incbin "baserom.dol", 0x2F0840, 0x8
+  .4byte 0x802e44b4
+  .4byte 0x802e44e4
 .global __RTTI__14TAIAinitDororo
 __RTTI__14TAIAinitDororo:
-	.incbin "baserom.dol", 0x2F0848, 0x38
+  .4byte 0x802e451c
+  .4byte 0x802e452c
+  .4byte 0x414e6f64
+  .4byte 0x65000000
+  .4byte 0x803e6f30
+  .4byte 0
+  .4byte 0x802e4584
+  .4byte 0x802e4590
+  .4byte 0x4e6f6465
+  .4byte 0
+  .4byte 0x803e6f48
+  .4byte 0x802e459c
+  .4byte 0x802e45b0
+  .4byte 0x802e45c0
 .global __RTTI__19TAIdororoParameters
 __RTTI__19TAIdororoParameters:
-	.incbin "baserom.dol", 0x2F0880, 0x8
+  .4byte 0x802e4570
+  .4byte 0x802e45dc
 .global lbl_803E6F68
 lbl_803E6F68:
 	.incbin "baserom.dol", 0x2F0888, 0xC
 .global __RTTI__17TAIhibaAAnimation
 __RTTI__17TAIhibaAAnimation:
-	.incbin "baserom.dol", 0x2F0894, 0x18
+  .4byte 0x802e47c8
+  .4byte 0x802e47ec
+  .4byte 0x802e4818
+  .4byte 0
+  .4byte 0x802e4828
+  .4byte 0x802e4834
 .global __RTTI__16TAIhibaAStrategy
 __RTTI__16TAIhibaAStrategy:
-	.incbin "baserom.dol", 0x2F08AC, 0x18
+  .4byte 0x802e4804
+  .4byte 0x802e4840
+  .4byte 0x802e4890
+  .4byte 0
+  .4byte 0x802e489c
+  .4byte 0x802e48b0
 .global __RTTI__19TAIAfireAttackHibaA
 __RTTI__19TAIAfireAttackHibaA:
-	.incbin "baserom.dol", 0x2F08C4, 0x10
+  .4byte 0x802e487c
+  .4byte 0x802e48bc
+  .4byte 0x802e4904
+  .4byte 0x802e4918
 .global __RTTI__22TAIAtimerReactionHibaA
 __RTTI__22TAIAtimerReactionHibaA:
-	.incbin "baserom.dol", 0x2F08D4, 0x8
+  .4byte 0x802e48ec
+  .4byte 0x802e4924
 .global __RTTI__13TAIAinitHibaA
 __RTTI__13TAIAinitHibaA:
-	.incbin "baserom.dol", 0x2F08DC, 0x38
+  .4byte 0x802e4978
+  .4byte 0x802e4988
+  .4byte 0x414e6f64
+  .4byte 0x65000000
+  .4byte 0x803e6fc4
+  .4byte 0
+  .4byte 0x802e49e0
+  .4byte 0x802e49ec
+  .4byte 0x4e6f6465
+  .4byte 0
+  .4byte 0x803e6fdc
+  .4byte 0x802e49f8
+  .4byte 0x802e4a0c
+  .4byte 0x802e4a1c
 .global __RTTI__18TAIhibaAParameters
 __RTTI__18TAIhibaAParameters:
-	.incbin "baserom.dol", 0x2F0914, 0x10
+  .4byte 0x802e49cc
+  .4byte 0x802e4a38
+  .4byte 0x802e4ab0
+  .4byte 0
 .global __RTTI__33TAIeffectAttackEventCallBackHibaA
 __RTTI__33TAIeffectAttackEventCallBackHibaA:
-	.incbin "baserom.dol", 0x2F0924, 0xC
+  .4byte 0x802e4a8c
+  .4byte 0x802e4ad0
+  .4byte 0
 .global RUMBLE_NONE__18TAIAeffCloudOfDust
 RUMBLE_NONE__18TAIAeffCloudOfDust:
 	.incbin "baserom.dol", 0x2F0930, 0x20
 .global __RTTI__18TAImiurinAnimation
 __RTTI__18TAImiurinAnimation:
-	.incbin "baserom.dol", 0x2F0950, 0x18
+  .4byte 0x802e4dec
+  .4byte 0x802e4e10
+  .4byte 0x802e4e3c
+  .4byte 0
+  .4byte 0x802e4e4c
+  .4byte 0x802e4e58
 .global __RTTI__17TAImiurinStrategy
 __RTTI__17TAImiurinStrategy:
-	.incbin "baserom.dol", 0x2F0968, 0x18
+  .4byte 0x802e4e28
+  .4byte 0x802e4e64
+  .4byte 0x802e4eb4
+  .4byte 0
+  .4byte 0x802e4ec0
+  .4byte 0x802e4ed4
 .global __RTTI__16TAIAgroggyMiurin
 __RTTI__16TAIAgroggyMiurin:
-	.incbin "baserom.dol", 0x2F0980, 0x8
+  .4byte 0x802e4ea0
+  .4byte 0x802e4ee0
 .global __RTTI__24TAIAresetAnimSpeedMiurin
 __RTTI__24TAIAresetAnimSpeedMiurin:
-	.incbin "baserom.dol", 0x2F0988, 0x10
+  .4byte 0x802e4f10
+  .4byte 0x802e4f2c
+  .4byte 0x802e4f64
+  .4byte 0x802e4f70
 .global __RTTI__15TAIAangryMiurin
 __RTTI__15TAIAangryMiurin:
-	.incbin "baserom.dol", 0x2F0998, 0x8
+  .4byte 0x802e4f54
+  .4byte 0x802e4f7c
 .global __RTTI__28TAIAinsideTerritoryRangeNavi_1
 __RTTI__28TAIAinsideTerritoryRangeNavi_1:
-	.incbin "baserom.dol", 0x2F09A0, 0x8
+  .4byte 0x802e4ffc
+  .4byte 0x802e501c
 .global __RTTI__19TAIAcheckNaviMiurin
 __RTTI__19TAIAcheckNaviMiurin:
-	.incbin "baserom.dol", 0x2F09A8, 0x8
+  .4byte 0x802e4fe8
+  .4byte 0x802e5028
 .global __RTTI__21TAIAcheckFlowerPikmin
 __RTTI__21TAIAcheckFlowerPikmin:
-	.incbin "baserom.dol", 0x2F09B0, 0x8
+  .4byte 0x802e5058
+  .4byte 0x802e5070
 .global __RTTI__17TAIAsatisfyMiurin
 __RTTI__17TAIAsatisfyMiurin:
-	.incbin "baserom.dol", 0x2F09B8, 0x8
+  .4byte 0x802e5098
+  .4byte 0x802e50ac
 .global __RTTI__19TAIAwatchNaviMiurin
 __RTTI__19TAIAwatchNaviMiurin:
-	.incbin "baserom.dol", 0x2F09C0, 0x8
+  .4byte 0x802e50dc
+  .4byte 0x802e50f0
 .global __RTTI__20TAIAoutsideTerritory_1
 __RTTI__20TAIAoutsideTerritory_1:
-	.incbin "baserom.dol", 0x2F09C8, 0x8
+  .4byte 0x802e5174
+  .4byte 0x802e518c
 .global __RTTI__26TAIAoutsideTerritoryMiurin
 __RTTI__26TAIAoutsideTerritoryMiurin:
-	.incbin "baserom.dol", 0x2F09D0, 0x8
+  .4byte 0x802e5158
+  .4byte 0x802e5198
 .global __RTTI__25TAIAflickingReserveMotion_1
 __RTTI__25TAIAflickingReserveMotion_1:
-	.incbin "baserom.dol", 0x2F09D8, 0x8
+  .4byte 0x802e51f8
+  .4byte 0x802e5214
 .global __RTTI__18TAIAflickingMiurin
 __RTTI__18TAIAflickingMiurin:
-	.incbin "baserom.dol", 0x2F09E0, 0x10
+  .4byte 0x802e51e4
+  .4byte 0x802e5228
+  .4byte 0x802e5280
+  .4byte 0x802e5290
 .global __RTTI__20TAIAflickCheckMiurin
 __RTTI__20TAIAflickCheckMiurin:
-	.incbin "baserom.dol", 0x2F09F0, 0x8
+  .4byte 0x802e5268
+  .4byte 0x802e529c
 .global __RTTI__16TAIAstickingPiki_2
 __RTTI__16TAIAstickingPiki_2:
-	.incbin "baserom.dol", 0x2F09F8, 0x8
+  .4byte 0x802e52e8
+  .4byte 0x802e52fc
 .global __RTTI__22TAIAstickingPikiMiurin
 __RTTI__22TAIAstickingPikiMiurin:
-	.incbin "baserom.dol", 0x2F0A00, 0x8
+  .4byte 0x802e52d0
+  .4byte 0x802e5308
 .global __RTTI__22TAIAcheckSatisfyMiurin
 __RTTI__22TAIAcheckSatisfyMiurin:
-	.incbin "baserom.dol", 0x2F0A08, 0x8
+  .4byte 0x802e5374
+  .4byte 0x802e538c
 .global __RTTI__16TAIAattackMiurin
 __RTTI__16TAIAattackMiurin:
-	.incbin "baserom.dol", 0x2F0A10, 0x8
+  .4byte 0x802e53b4
+  .4byte 0x802e53c8
 .global __RTTI__17TAIAattackPosture
 __RTTI__17TAIAattackPosture:
-	.incbin "baserom.dol", 0x2F0A18, 0x8
+  .4byte 0x802e53f8
+  .4byte 0x802e540c
 .global __RTTI__20TAIAattackableTarget_2
 __RTTI__20TAIAattackableTarget_2:
-	.incbin "baserom.dol", 0x2F0A20, 0x8
+  .4byte 0x802e5458
+  .4byte 0x802e5470
 .global __RTTI__26TAIAattackableTargetMiurin
 __RTTI__26TAIAattackableTargetMiurin:
-	.incbin "baserom.dol", 0x2F0A28, 0x8
+  .4byte 0x802e543c
+  .4byte 0x802e547c
 .global __RTTI__33TAIAapproachTargetPriorityFaceDir_1
 __RTTI__33TAIAapproachTargetPriorityFaceDir_1:
-	.incbin "baserom.dol", 0x2F0A30, 0x8
+  .4byte 0x802e54d8
+  .4byte 0x802e54fc
 .global __RTTI__39TAIAapproachTargetPriorityFaceDirMiurin
 __RTTI__39TAIAapproachTargetPriorityFaceDirMiurin:
-	.incbin "baserom.dol", 0x2F0A38, 0x8
+  .4byte 0x802e54b0
+  .4byte 0x802e5510
 .global __RTTI__16TAIAturnToTarget_2
 __RTTI__16TAIAturnToTarget_2:
-	.incbin "baserom.dol", 0x2F0A40, 0x8
+  .4byte 0x802e5568
+  .4byte 0x802e557c
 .global __RTTI__21TAIAturnFocusCreature_1
 __RTTI__21TAIAturnFocusCreature_1:
-	.incbin "baserom.dol", 0x2F0A48, 0x8
+  .4byte 0x802e5590
+  .4byte 0x802e55a8
 .global __RTTI__27TAIAturnFocusCreatureMiurin
 __RTTI__27TAIAturnFocusCreatureMiurin:
-	.incbin "baserom.dol", 0x2F0A50, 0x10
+  .4byte 0x802e554c
+  .4byte 0x802e55c4
+  .4byte 0x802e5618
+  .4byte 0x802e5624
 .global __RTTI__15TAIAdyingMiurin
 __RTTI__15TAIAdyingMiurin:
-	.incbin "baserom.dol", 0x2F0A60, 0x8
+  .4byte 0x802e5608
+  .4byte 0x802e5638
 .global __RTTI__14TAIAinitMiurin
 __RTTI__14TAIAinitMiurin:
-	.incbin "baserom.dol", 0x2F0A68, 0x38
+  .4byte 0x802e5670
+  .4byte 0x802e5680
+  .4byte 0x414e6f64
+  .4byte 0x65000000
+  .4byte 0x803e7150
+  .4byte 0
+  .4byte 0x802e56d8
+  .4byte 0x802e56e4
+  .4byte 0x4e6f6465
+  .4byte 0
+  .4byte 0x803e7168
+  .4byte 0x802e56f0
+  .4byte 0x802e5704
+  .4byte 0x802e5714
 .global __RTTI__19TAImiurinParameters
 __RTTI__19TAImiurinParameters:
-	.incbin "baserom.dol", 0x2F0AA0, 0x8
+  .4byte 0x802e56c4
+  .4byte 0x802e5730
 .global lbl_803E7188
 lbl_803E7188:
 	.incbin "baserom.dol", 0x2F0AA8, 0x8
@@ -16031,10 +19251,18 @@ lbl_803E7368:
 	.incbin "baserom.dol", 0x2F0C88, 0x10
 .global __RTTI__Q23zen12FigureTex$$0i$$1_2
 __RTTI__Q23zen12FigureTex$$0i$$1_2:
-	.incbin "baserom.dol", 0x2F0C98, 0x20
+  .4byte 0x802e5910
+  .4byte 0x802e5924
+  .4byte 0x802e5930
+  .4byte 0
+  .4byte 0x802e5944
+  .4byte 0
+  .4byte 0x802e5960
+  .4byte 0x802e5970
 .global __RTTI__Q29$$2unnamed$$224DrawWorldMapDateCallBack
 __RTTI__Q29$$2unnamed$$224DrawWorldMapDateCallBack:
-	.incbin "baserom.dol", 0x2F0CB8, 0x8
+  .4byte 0x802e59c0
+  .4byte 0x802e59e4
 .global lbl_803E73A0
 lbl_803E73A0:
 	.incbin "baserom.dol", 0x2F0CC0, 0x8
@@ -16076,43 +19304,98 @@ lbl_803E73EC:
 	.incbin "baserom.dol", 0x2F0D0C, 0xC
 .global __RTTI__17TAIusubaAnimation
 __RTTI__17TAIusubaAnimation:
-	.incbin "baserom.dol", 0x2F0D18, 0x18
+  .4byte 0x802e6568
+  .4byte 0x802e658c
+  .4byte 0x802e65b4
+  .4byte 0
+  .4byte 0x802e65c0
+  .4byte 0x802e65cc
 .global __RTTI__12TAIAflyUsuba
 __RTTI__12TAIAflyUsuba:
-	.incbin "baserom.dol", 0x2F0D30, 0x18
+  .4byte 0x802e65a4
+  .4byte 0x802e65d8
+  .4byte 0x802e6638
+  .4byte 0
+  .4byte 0x802e6648
+  .4byte 0x802e6654
 .global __RTTI__16TAIusubaStrategy
 __RTTI__16TAIusubaStrategy:
-	.incbin "baserom.dol", 0x2F0D48, 0x38
+  .4byte 0x802e6624
+  .4byte 0x802e6660
+  .4byte 0x414e6f64
+  .4byte 0x65000000
+  .4byte 0x803e7430
+  .4byte 0
+  .4byte 0x802e66b0
+  .4byte 0x802e66bc
+  .4byte 0x4e6f6465
+  .4byte 0
+  .4byte 0x803e7448
+  .4byte 0x802e66c8
+  .4byte 0x802e66dc
+  .4byte 0x802e66ec
 .global __RTTI__18TAIusubaParameters
 __RTTI__18TAIusubaParameters:
-	.incbin "baserom.dol", 0x2F0D80, 0x10
+  .4byte 0x802e669c
+  .4byte 0x802e6708
+  .4byte 0x802e691c
+  .4byte 0
 .global __RTTI__17TAIotamaAnimation
 __RTTI__17TAIotamaAnimation:
-	.incbin "baserom.dol", 0x2F0D90, 0x18
+  .4byte 0x802e6908
+  .4byte 0x802e692c
+  .4byte 0x802e6958
+  .4byte 0
+  .4byte 0x802e6964
+  .4byte 0x802e6978
 .global __RTTI__16TAIArunAwayOtama
 __RTTI__16TAIArunAwayOtama:
-	.incbin "baserom.dol", 0x2F0DA8, 0x8
+  .4byte 0x802e6944
+  .4byte 0x802e6984
 .global __RTTI__25TAIAflickingReserveMotion_2
 __RTTI__25TAIAflickingReserveMotion_2:
-	.incbin "baserom.dol", 0x2F0DB0, 0x8
+  .4byte 0x802e6a04
+  .4byte 0x802e6a20
 .global __RTTI__15TAIAappealOtama
 __RTTI__15TAIAappealOtama:
-	.incbin "baserom.dol", 0x2F0DB8, 0x8
+  .4byte 0x802e69f4
+  .4byte 0x802e6a34
 .global __RTTI__30TAIAsetTargetPointCircleRandom_1
 __RTTI__30TAIAsetTargetPointCircleRandom_1:
-	.incbin "baserom.dol", 0x2F0DC0, 0x8
+  .4byte 0x802e6a88
+  .4byte 0x802e6aa8
 .global __RTTI__18TAIAsetTargetOtama
 __RTTI__18TAIAsetTargetOtama:
-	.incbin "baserom.dol", 0x2F0DC8, 0x8
+  .4byte 0x802e6a74
+  .4byte 0x802e6ab4
 .global __RTTI__13TAIAwaitOtama
 __RTTI__13TAIAwaitOtama:
-	.incbin "baserom.dol", 0x2F0DD0, 0x18
+  .4byte 0x802e6ae4
+  .4byte 0x802e6af4
+  .4byte 0x802e6b54
+  .4byte 0
+  .4byte 0x802e6b64
+  .4byte 0x802e6b70
 .global __RTTI__16TAIotamaStrategy
 __RTTI__16TAIotamaStrategy:
-	.incbin "baserom.dol", 0x2F0DE8, 0x38
+  .4byte 0x802e6b40
+  .4byte 0x802e6b7c
+  .4byte 0x414e6f64
+  .4byte 0x65000000
+  .4byte 0x803e74d0
+  .4byte 0
+  .4byte 0x802e6bcc
+  .4byte 0x802e6bd8
+  .4byte 0x4e6f6465
+  .4byte 0
+  .4byte 0x803e74e8
+  .4byte 0x802e6be4
+  .4byte 0x802e6bf8
+  .4byte 0x802e6c08
 .global __RTTI__18TAIotamaParameters
 __RTTI__18TAIotamaParameters:
-	.incbin "baserom.dol", 0x2F0E20, 0x8
+  .4byte 0x802e6bb8
+  .4byte 0x802e6c24
 .global lbl_803E7508
 lbl_803E7508:
 	.incbin "baserom.dol", 0x2F0E28, 0x4
@@ -16226,13 +19509,16 @@ lbl_803E759C:
 	.incbin "baserom.dol", 0x2F0EBC, 0x4
 .global __RTTI__Q23zen10DrawScreen_3
 __RTTI__Q23zen10DrawScreen_3:
-	.incbin "baserom.dol", 0x2F0EC0, 0x8
+  .4byte 0x802e6d24
+  .4byte 0
 .global __RTTI__Q23zen12DrawMenuBase
 __RTTI__Q23zen12DrawMenuBase:
-	.incbin "baserom.dol", 0x2F0EC8, 0x8
+  .4byte 0x802e6d34
+  .4byte 0x802e6d48
 .global __RTTI__Q23zen12DrawCMCSmenu
 __RTTI__Q23zen12DrawCMCSmenu:
-	.incbin "baserom.dol", 0x2F0ED0, 0x8
+  .4byte 0x802e6d10
+  .4byte 0x802e6d54
 .global lbl_803E75B8
 lbl_803E75B8:
 	.incbin "baserom.dol", 0x2F0ED8, 0x8
@@ -16280,13 +19566,25 @@ lbl_803E760C:
 	.incbin "baserom.dol", 0x2F0F2C, 0x8
 .global __RTTI__Q23zen17DrawCMresultAlpha
 __RTTI__Q23zen17DrawCMresultAlpha:
-	.incbin "baserom.dol", 0x2F0F34, 0x8
+  .4byte 0x802e6f54
+  .4byte 0
 .global __RTTI__Q23zen17DrawCMresultGraph
 __RTTI__Q23zen17DrawCMresultGraph:
-	.incbin "baserom.dol", 0x2F0F3C, 0x10
+  .4byte 0x802e6f3c
+  .4byte 0x802e6f6c
+  .4byte 0x802e6fac
+  .4byte 0
 .global __RTTI__Q23zen12FigureTex$$0i$$1_3
 __RTTI__Q23zen12FigureTex$$0i$$1_3:
-	.incbin "baserom.dol", 0x2F0F4C, 0x24
+  .4byte 0x802e6fbc
+  .4byte 0x802e6fd0
+  .4byte 0x802e6fdc
+  .4byte 0
+  .4byte 0x802e6ff0
+  .4byte 0
+  .4byte 0x802e700c
+  .4byte 0x802e701c
+  .4byte 0
 .global lbl_803E7650
 lbl_803E7650:
 	.incbin "baserom.dol", 0x2F0F70, 0x8
@@ -16304,10 +19602,13 @@ SELECT_CANCEL__Q23zen12DrawMenuBase:
 	.incbin "baserom.dol", 0x2F0F90, 0x4
 .global __RTTI__Q23zen10DrawScreen_4
 __RTTI__Q23zen10DrawScreen_4:
-	.incbin "baserom.dol", 0x2F0F94, 0x8
+  .4byte 0x802e70e4
+  .4byte 0
 .global __RTTI__Q23zen12DrawMenuBase_1
 __RTTI__Q23zen12DrawMenuBase_1:
-	.incbin "baserom.dol", 0x2F0F9C, 0xC
+  .4byte 0x802e70d0
+  .4byte 0x802e70f4
+  .4byte 0
 .global lbl_803E7688
 lbl_803E7688:
 	.incbin "baserom.dol", 0x2F0FA8, 0x8

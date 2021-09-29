@@ -194,7 +194,7 @@ for i in asm_files:
         line_array[1] = line_array[2]
         line_array[2] = line
         # Do something with the line here. Does the line belong to a baserom.dol call for a __vt__?
-        if "__vt__" in line_array[1] and "baserom.dol" in line:
+        if "__RTTI__" in line_array[1] and "baserom.dol" in line:
             file1.write(dumpVirtualTable(line))
         else:
             file1.write(line)
