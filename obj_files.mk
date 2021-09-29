@@ -10,6 +10,7 @@ EXTABINDEX_O_FILES :=							\
     $(BUILD_DIR)/asm/exidx.o					\
 
 TEXT_O_FILES :=									\
+    $(BUILD_DIR)/asm/sysBootup.o				\
     $(BUILD_DIR)/asm/text_0.o					\
     $(BUILD_DIR)/asm/string.o					\
     $(BUILD_DIR)/asm/text_80025914.o			\
@@ -22,6 +23,16 @@ TEXT_O_FILES :=									\
     $(BUILD_DIR)/asm/atx.o						\
     $(BUILD_DIR)/asm/id32.o						\
     $(BUILD_DIR)/asm/text_80044194.o			\
+    $(BUILD_DIR)/asm/genBoss.o					\
+    $(BUILD_DIR)/asm/Boss.o						\
+    $(BUILD_DIR)/asm/BossAnimMgr.o				\
+    $(BUILD_DIR)/asm/BossCnd.o					\
+    $(BUILD_DIR)/asm/BossMgr.o					\
+    $(BUILD_DIR)/asm/BossShapeObj.o				\
+    $(BUILD_DIR)/asm/Spider.o					\
+    $(BUILD_DIR)/asm/SpiderAi.o					\
+    $(BUILD_DIR)/asm/SpiderLeg.o				\
+    $(BUILD_DIR)/asm/text_Nishimura.o			\
     $(BUILD_DIR)/src/gx/GXStubs.o				\
     $(BUILD_DIR)/asm/text_802140E8.o			\
     $(BUILD_DIR)/asm/text_8021C4CC.o			\
