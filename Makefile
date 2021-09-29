@@ -17,14 +17,13 @@ VERSION := usa.1
 
 BUILD_DIR := build/$(NAME).$(VERSION)
 
-SRC_DIRS := src src/sysCommon
+SRC_DIRS := src src/sysCommon src/amcnotstub src/gx
 ASM_DIRS := asm
 
 # Inputs
 S_FILES := $(wildcard asm/*.s)
 C_FILES := $(wildcard src/*.c)
-CPP_FILES := 	$(wildcard src/*.cpp)	\
-		$(wildcard src/sysCommon/*.cpp)
+CPP_FILES := 	$(wildcard src/*.cpp)
 LDSCRIPT := $(BUILD_DIR)/ldscript.lcf
 
 # Outputs

@@ -1,4 +1,4 @@
-
+#include "types.h"
 
 /*
  * --INFO--
@@ -334,9 +334,9 @@ void SlimeCreature::setCentre(Vector3f &)
  * Address:	8016B49C
  * Size:	000008
  */
-void SlimeCreature::isFixed()
+BOOL SlimeCreature::isFixed()
 {
-	return 1;
+	return TRUE;
 /*
 .loc_0x0:
   li        r3, 0x1
