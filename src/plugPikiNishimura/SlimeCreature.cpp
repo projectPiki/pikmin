@@ -308,6 +308,7 @@ void SlimeCreature::update()
  */
 void SlimeCreature::refresh(Graphics &)
 {
+	return;
 /*
 .loc_0x0:
   blr
@@ -321,6 +322,7 @@ void SlimeCreature::refresh(Graphics &)
  */
 void SlimeCreature::setCentre(Vector3f &)
 {
+	return;
 /*
 .loc_0x0:
   blr
@@ -334,6 +336,7 @@ void SlimeCreature::setCentre(Vector3f &)
  */
 void SlimeCreature::isFixed()
 {
+	return 1;
 /*
 .loc_0x0:
   li        r3, 0x1

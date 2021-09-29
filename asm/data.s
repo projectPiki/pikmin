@@ -31059,16 +31059,27 @@ __vt__8BossProp:
   .4byte 0
   .4byte 0
   .4byte 0
-  .4byte 0x426f7373
-  .4byte 0x416e696d
-  .4byte 0x4d67722e
-  .4byte 0x63707000
-  .4byte 0x426f7373
-  .4byte 0x416e696d
-  .4byte 0x4d677200
+  .asciz "BossAnimMgr.cpp"
+  .asciz "BossAnimMgr"
 .global lbl_802CEA9C
 lbl_802CEA9C:
-	.incbin "baserom.dol", 0x2CBA9C, 0x60
+	#.incbin "baserom.dol", 0x2CBA9C, 0x60
+	.asciz "BossAnimationManager"
+	.skip 0x3
+	.asciz "CoreNode"
+	.skip 0x3
+	.4byte 0x803e4888
+	.skip 0x8
+	.4byte 0x803e4888
+	.4byte 0
+	.4byte 0x803e4890
+	.skip 0x8
+	.4byte 0x803e4888
+	.4byte 0
+	.4byte 0x803e4890
+	.skip 0x4
+	.4byte 0x803e48a0
+	.skip 0x8
 .global __vt__20BossAnimationManager
 __vt__20BossAnimationManager:
   .4byte __RTTI__20BossAnimationManager

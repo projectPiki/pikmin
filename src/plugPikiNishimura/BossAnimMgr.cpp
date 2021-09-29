@@ -5,21 +5,23 @@
  * Address:	........
  * Size:	00009C
  */
+/*
 void _Error(char *, ...)
 {
 	// UNUSED FUNCTION
 }
-
+*/
 /*
  * --INFO--
  * Address:	........
  * Size:	0000F4
  */
+/*
 void _Print(char *, ...)
 {
 	// UNUSED FUNCTION
 }
-
+*/
 /*
  * --INFO--
  * Address:	8014FA68
