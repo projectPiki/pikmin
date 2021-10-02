@@ -85,5 +85,7 @@ SBSS_O_FILES :=											\
 SDATA2_O_FILES :=										\
     $(BUILD_DIR)/asm/sdata2.o							\
     $(BUILD_DIR)/asm/sdata2_1.o							\
+    $(BUILD_DIR)/asm/sdata2_1c.o						\
+    $(BUILD_DIR)/asm/sdata2_1b.o						\
     $(BUILD_DIR)/asm/sdata2_1a.o						\
     $(BUILD_DIR)/asm/sdata2_2.o							\
