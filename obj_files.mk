@@ -12,7 +12,7 @@ EXTABINDEX_O_FILES :=									\
 TEXT_O_FILES :=											\
     $(BUILD_DIR)/asm/sysBootup.o						\
     $(BUILD_DIR)/asm/text_0.o							\
-    $(BUILD_DIR)/asm/sysCommon/string.o					\
+    $(BUILD_DIR)/src/sysCommon/string.o					\
     $(BUILD_DIR)/asm/text_80025914.o					\
     $(BUILD_DIR)/src/sysCommon/shpRoutes.o				\
     $(BUILD_DIR)/asm/text_1.o							\
