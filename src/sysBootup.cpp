@@ -24,48 +24,25 @@ void _Print(char *, ...)
  * --INFO--
  * Address:	80005560
  * Size:	000088
+ *
+ *
+ * -schedule off needs to be there so the "lwz r3" in the prologue is positioned correctly, but
+ * if scheduling is off, the "crclr" later on is in the wrong position in the body. -schedule
+ * on fixes that, but breaks the prologue. Why does this prove an earlier compiler is used?
+ *
+ * In the file called "CW Embedded PPC 2.3.1.txt" which can be found in early Codewarriors for
+ * Dolphin, there is a changelog for earlier versions. Particularly, in "Changes from 2.2",
+ * you can find this line:
+ * 
+ * "* Function Epilogues and Prologues are now scheduled."
+ *
+ * This means -schedule off applied to prologues/epilogues which exactly fits our problem.
+ * This means that Pikmin 1 (USA) uses this elusive earlier compiler.
  */
-void main(void)
-{
-/*
-.loc_0x0:
-  mflr      r0
-  stw       r0, 0x4(r1)
-  stwu      r1, -0x18(r1)
-  stw       r31, 0x14(r1)
-  lwz       r3, 0x2DEC(r13)
-  bl        0x407A8
-  li        r3, 0x18
-  bl        0x41A88
-  addi      r31, r3, 0
-  mr.       r3, r31
-  beq-      .loc_0x30
-  bl        0x3B3AC
+void myNewTest() {
+    gsys.Initialise();
 
-.loc_0x30:
-  stw       r31, 0x2DD8(r13)
-  li        r3, 0x54
-  bl        0x41A6C
-  mr.       r31, r3
-  beq-      .loc_0x4C
-  mr        r3, r31
-  bl        0x5A034
-
-.loc_0x4C:
-  lwz       r3, 0x2DEC(r13)
-  mr        r4, r31
-  bl        0x3F600
-  lis       r3, 0x8022
-  crclr     6, 0x6
-  lis       r4, 0x8022
-  addi      r5, r4, 0x2DD0
-  addi      r3, r3, 0x2DC0
-  li        r4, 0x1D
-  bl        0x1F2340
-  lwz       r0, 0x1C(r1)
-  lwz       r31, 0x14(r1)
-  addi      r1, r1, 0x18
-  mtlr      r0
-  blr
-*/
+    nodeMgr = new NodeMgr;
+    gsys.run(new PlugPikiApp);
+    OSPanic("sysBootup.cpp", 0x1d, "End of demo");
 }
