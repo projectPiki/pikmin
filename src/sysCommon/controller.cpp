@@ -1,4 +1,4 @@
-
+#include "types.h"
 
 /*
  * --INFO--
@@ -7,7 +7,7 @@
  */
 void _Error(char *, ...)
 {
-	// UNUSED FUNCTION
+  // UNUSED FUNCTION
 }
 
 /*
@@ -17,28 +17,45 @@ void _Error(char *, ...)
  */
 void _Print(char *, ...)
 {
-	// UNUSED FUNCTION
+  // UNUSED FUNCTION
 }
+
+struct Controller
+{
+  u8 unknown00[0x20];
+  u32 _20;
+  u32 _24;
+  u32 _28;
+  u32 _2C;
+  u32 _30;
+  u32 _34;
+  u32 _38;
+  u32 _3C;
+  u32 _40;
+  bool _44;
+
+  void reset(unsigned long);
+  void updateCont(unsigned long);
+  void update();
+  void getMainStickX();
+  void getMainStickY();
+  void getSubStickX();
+  void getSubStickY();
+};
 
 /*
  * --INFO--
  * Address:	800409B0
  * Size:	000024
  */
-void Controller::reset(unsigned long)
+void Controller::reset(unsigned long arg1)
 {
-/*
-.loc_0x0:
-  li        r0, -0x1
-  stw       r0, 0x3C(r3)
-  li        r0, 0
-  stb       r0, 0x44(r3)
-  stw       r4, 0x38(r3)
-  stw       r0, 0x40(r3)
-  stw       r0, 0x20(r3)
-  stw       r0, 0x24(r3)
-  blr
-*/
+  _3C = -1;
+  _44 = false;
+  _38 = arg1;
+  _40 = 0;
+  _20 = 0;
+  _24 = 0;
 }
 
 /*
@@ -46,54 +63,44 @@ void Controller::reset(unsigned long)
  * Address:	800409D4
  * Size:	00009C
  */
-void Controller::updateCont(unsigned long)
+void Controller::updateCont(unsigned long arg1)
 {
-/*
-.loc_0x0:
-  lwz       r5, 0x20(r3)
-  li        r0, 0
-  stw       r5, 0x24(r3)
-  stw       r0, 0x20(r3)
-  lbz       r0, 0x44(r3)
-  cmplwi    r0, 0
-  bne-      .loc_0x20
-  stw       r4, 0x20(r3)
+  _24 = _20;
+  _20 = 0;
 
-.loc_0x20:
-  lwz       r4, 0x20(r3)
-  lwz       r0, 0x24(r3)
-  andc      r0, r4, r0
-  stw       r0, 0x28(r3)
-  lwz       r4, 0x24(r3)
-  lwz       r0, 0x20(r3)
-  andc      r0, r4, r0
-  stw       r0, 0x2C(r3)
-  lwz       r4, 0x40(r3)
-  cmplwi    r4, 0
-  beq-      .loc_0x78
-  subic.    r0, r4, 0x1
-  stw       r0, 0x40(r3)
-  beqlr-    
-  lwz       r4, 0x34(r3)
-  lwz       r0, 0x28(r3)
-  and.      r0, r4, r0
-  stw       r0, 0x30(r3)
-  beqlr-    
-  li        r0, 0
-  stw       r0, 0x40(r3)
-  blr       
+  if (!_44)
+  {
+    _20 = arg1;
+  }
 
-.loc_0x78:
-  li        r0, 0
-  stw       r0, 0x30(r3)
-  lwz       r0, 0x28(r3)
-  cmplwi    r0, 0
-  stw       r0, 0x34(r3)
-  beqlr-    
-  li        r0, 0xA
-  stw       r0, 0x40(r3)
-  blr
-*/
+  _28 = _20 & ~_24;
+  _20 = _24 & ~_20;
+
+  if (_40)
+  {
+    _30 = 0;
+
+    if (!(_34 = _28))
+    {
+      return;
+    }
+
+    _40 = 10;
+  }
+  else
+  {
+    if (!(--_40))
+    {
+      return;
+    }
+
+    if (!(_30 = _34 & _28))
+    {
+      return;
+    }
+
+    _40 = 0;
+  }
 }
 
 /*
@@ -101,22 +108,22 @@ void Controller::updateCont(unsigned long)
  * Address:	80040A70
  * Size:	00002C
  */
+struct ControllerManager
+{
+  void updateController(Controller *);
+};
+
+struct System
+{
+  u8 data[0x27C];
+  ControllerManager *m_contManager;
+};
+
+extern System *gsys;
+
 void Controller::update()
 {
-/*
-.loc_0x0:
-  mflr      r0
-  addi      r4, r3, 0
-  stw       r0, 0x4(r1)
-  stwu      r1, -0x8(r1)
-  lwz       r5, 0x2DEC(r13)
-  addi      r3, r5, 0x27C
-  bl        0x6838
-  lwz       r0, 0xC(r1)
-  addi      r1, r1, 0x8
-  mtlr      r0
-  blr
-*/
+  gsys->m_contManager->updateController(this);
 }
 
 /*
@@ -126,7 +133,7 @@ void Controller::update()
  */
 void Controller::getMainStickX()
 {
-/*
+  /*
 .loc_0x0:
   stwu      r1, -0x18(r1)
   lis       r0, 0x4330
@@ -152,7 +159,7 @@ void Controller::getMainStickX()
  */
 void Controller::getMainStickY()
 {
-/*
+  /*
 .loc_0x0:
   stwu      r1, -0x18(r1)
   lis       r0, 0x4330
@@ -178,7 +185,7 @@ void Controller::getMainStickY()
  */
 void Controller::getSubStickX()
 {
-/*
+  /*
 .loc_0x0:
   stwu      r1, -0x18(r1)
   lis       r0, 0x4330
@@ -204,7 +211,7 @@ void Controller::getSubStickX()
  */
 void Controller::getSubStickY()
 {
-/*
+  /*
 .loc_0x0:
   stwu      r1, -0x18(r1)
   lis       r0, 0x4330
