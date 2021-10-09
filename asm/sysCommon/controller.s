@@ -75,7 +75,7 @@ getMainStickX__10ControllerFv:
 /* 80040A9C 0003D9FC  94 21 FF E8 */	stwu r1, -0x18(r1)
 /* 80040AA0 0003DA00  3C 00 43 30 */	lis r0, 0x4330
 /* 80040AA4 0003DA04  88 63 00 45 */	lbz r3, 0x45(r3)
-/* 80040AA8 0003DA08  C8 42 84 00 */	lfd f2, $$2416@sda21(r2)
+/* 80040AA8 0003DA08  C8 42 84 00 */	lfd f2, "@416"@sda21(r2)
 /* 80040AAC 0003DA0C  7C 63 07 74 */	extsb r3, r3
 /* 80040AB0 0003DA10  C0 02 83 F8 */	lfs f0, lbl_803E85F8@sda21(r2)
 /* 80040AB4 0003DA14  6C 63 80 00 */	xoris r3, r3, 0x8000
@@ -92,7 +92,7 @@ getMainStickY__10ControllerFv:
 /* 80040AD4 0003DA34  94 21 FF E8 */	stwu r1, -0x18(r1)
 /* 80040AD8 0003DA38  3C 00 43 30 */	lis r0, 0x4330
 /* 80040ADC 0003DA3C  88 63 00 46 */	lbz r3, 0x46(r3)
-/* 80040AE0 0003DA40  C8 42 84 00 */	lfd f2, $$2416@sda21(r2)
+/* 80040AE0 0003DA40  C8 42 84 00 */	lfd f2, "@416"@sda21(r2)
 /* 80040AE4 0003DA44  7C 63 07 74 */	extsb r3, r3
 /* 80040AE8 0003DA48  C0 02 83 F8 */	lfs f0, lbl_803E85F8@sda21(r2)
 /* 80040AEC 0003DA4C  6C 63 80 00 */	xoris r3, r3, 0x8000
@@ -109,7 +109,7 @@ getSubStickX__10ControllerFv:
 /* 80040B0C 0003DA6C  94 21 FF E8 */	stwu r1, -0x18(r1)
 /* 80040B10 0003DA70  3C 00 43 30 */	lis r0, 0x4330
 /* 80040B14 0003DA74  88 63 00 47 */	lbz r3, 0x47(r3)
-/* 80040B18 0003DA78  C8 42 84 00 */	lfd f2, $$2416@sda21(r2)
+/* 80040B18 0003DA78  C8 42 84 00 */	lfd f2, "@416"@sda21(r2)
 /* 80040B1C 0003DA7C  7C 63 07 74 */	extsb r3, r3
 /* 80040B20 0003DA80  C0 02 83 F8 */	lfs f0, lbl_803E85F8@sda21(r2)
 /* 80040B24 0003DA84  6C 63 80 00 */	xoris r3, r3, 0x8000
@@ -126,7 +126,7 @@ getSubStickY__10ControllerFv:
 /* 80040B44 0003DAA4  94 21 FF E8 */	stwu r1, -0x18(r1)
 /* 80040B48 0003DAA8  3C 00 43 30 */	lis r0, 0x4330
 /* 80040B4C 0003DAAC  88 63 00 48 */	lbz r3, 0x48(r3)
-/* 80040B50 0003DAB0  C8 42 84 00 */	lfd f2, $$2416@sda21(r2)
+/* 80040B50 0003DAB0  C8 42 84 00 */	lfd f2, "@416"@sda21(r2)
 /* 80040B54 0003DAB4  7C 63 07 74 */	extsb r3, r3
 /* 80040B58 0003DAB8  C0 02 83 F8 */	lfs f0, lbl_803E85F8@sda21(r2)
 /* 80040B5C 0003DABC  6C 63 80 00 */	xoris r3, r3, 0x8000

@@ -842,12 +842,12 @@ __upper_map:
 	.4byte 0xF4F5F6F7
 	.4byte 0xF8F9FAFB
 	.4byte 0xFCFDFEFF
-.global $$2stringBase0
-$$2stringBase0:
+.global "@stringBase0"
+"@stringBase0":
 	.4byte 0x2E000043
 	.4byte 0x00000000
-.global $$2stringBase0_1
-$$2stringBase0_1:
+.global "@stringBase0_1"
+"@stringBase0_1":
 	.4byte 0x002D496E
 	.4byte 0x6600496E
 	.4byte 0x66004E61

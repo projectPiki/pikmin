@@ -49,7 +49,7 @@ satisfy__12CndBossFlickFP8Creature:
 /* 8014FB98 0014CAF8  3B E3 01 18 */	addi r31, r3, 0x118
 /* 8014FB9C 0014CAFC  48 0C 84 D5 */	bl rand
 /* 8014FBA0 0014CB00  6C 60 80 00 */	xoris r0, r3, 0x8000
-/* 8014FBA4 0014CB04  C8 82 A8 70 */	lfd f4, $$2894@sda21(r2)
+/* 8014FBA4 0014CB04  C8 82 A8 70 */	lfd f4, "@894"@sda21(r2)
 /* 8014FBA8 0014CB08  90 01 00 2C */	stw r0, 0x2c(r1)
 /* 8014FBAC 0014CB0C  3C 00 43 30 */	lis r0, 0x4330
 /* 8014FBB0 0014CB10  C0 62 A8 64 */	lfs f3, lbl_803EAA64@sda21(r2)

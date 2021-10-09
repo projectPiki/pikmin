@@ -1176,8 +1176,8 @@ repeatTime__Q23zen9KeyRepeat:
 .global eventCallBack__19TAIAfireAttackHibaA
 eventCallBack__19TAIAfireAttackHibaA:
 	.skip 0x8
-.global WMeffMgr__9$$2unnamed$$2
-WMeffMgr__9$$2unnamed$$2:
+.global "WMeffMgr__9@unnamed@"
+"WMeffMgr__9@unnamed@":
 	.skip 0x8
 .global BootInfo
 BootInfo:

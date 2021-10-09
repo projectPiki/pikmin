@@ -24,8 +24,8 @@ __ct__8BossPropFv:
 /* 8014D918 0014A878  90 01 00 94 */	stw r0, 0x94(r1)
 /* 8014D91C 0014A87C  38 7F 00 04 */	addi r3, r31, 4
 /* 8014D920 0014A880  4B F1 11 61 */	bl __ct__8BaseParmFP10Parameters5ayuID
-/* 8014D924 0014A884  3C 60 80 2A */	lis r3, __vt__7Parm$$0f$$1@ha
-/* 8014D928 0014A888  3B C3 60 98 */	addi r30, r3, __vt__7Parm$$0f$$1@l
+/* 8014D924 0014A884  3C 60 80 2A */	lis r3, "__vt__7Parm<f>"@ha
+/* 8014D928 0014A888  3B C3 60 98 */	addi r30, r3, "__vt__7Parm<f>"@l
 /* 8014D92C 0014A88C  93 DF 00 0C */	stw r30, 0xc(r31)
 /* 8014D930 0014A890  38 61 01 08 */	addi r3, r1, 0x108
 /* 8014D934 0014A894  38 8D FA 8C */	addi r4, r13, lbl_803E47AC@sda21
@@ -265,8 +265,8 @@ __ct__8BossPropFv:
 /* 8014DCDC 0014AC3C  80 01 01 A8 */	lwz r0, 0x1a8(r1)
 /* 8014DCE0 0014AC40  90 01 00 B8 */	stw r0, 0xb8(r1)
 /* 8014DCE4 0014AC44  4B F1 0D 9D */	bl __ct__8BaseParmFP10Parameters5ayuID
-/* 8014DCE8 0014AC48  3C 60 80 2A */	lis r3, __vt__7Parm$$0i$$1@ha
-/* 8014DCEC 0014AC4C  3B A3 60 C4 */	addi r29, r3, __vt__7Parm$$0i$$1@l
+/* 8014DCE8 0014AC48  3C 60 80 2A */	lis r3, "__vt__7Parm<i>"@ha
+/* 8014DCEC 0014AC4C  3B A3 60 C4 */	addi r29, r3, "__vt__7Parm<i>"@l
 /* 8014DCF0 0014AC50  93 BF 01 64 */	stw r29, 0x164(r31)
 /* 8014DCF4 0014AC54  3B C0 00 01 */	li r30, 1
 /* 8014DCF8 0014AC58  38 A1 00 B4 */	addi r5, r1, 0xb4
@@ -571,7 +571,7 @@ createPellet__4BossFR8Vector3ffb:
 /* 8014E170 0014B0D0  90 61 00 4C */	stw r3, 0x4c(r1)
 /* 8014E174 0014B0D4  3F A0 43 30 */	lis r29, 0x4330
 /* 8014E178 0014B0D8  6C 00 80 00 */	xoris r0, r0, 0x8000
-/* 8014E17C 0014B0DC  CB 82 A8 48 */	lfd f28, $$21859@sda21(r2)
+/* 8014E17C 0014B0DC  CB 82 A8 48 */	lfd f28, "@1859"@sda21(r2)
 /* 8014E180 0014B0E0  93 A1 00 48 */	stw r29, 0x48(r1)
 /* 8014E184 0014B0E4  C3 A2 A8 3C */	lfs f29, lbl_803EAA3C@sda21(r2)
 /* 8014E188 0014B0E8  3B 80 00 00 */	li r28, 0
@@ -910,7 +910,7 @@ lbl_8014E630:
 /* 8014E638 0014B598  80 7E 02 24 */	lwz r3, 0x224(r30)
 /* 8014E63C 0014B59C  90 01 00 5C */	stw r0, 0x5c(r1)
 /* 8014E640 0014B5A0  3F E0 43 30 */	lis r31, 0x4330
-/* 8014E644 0014B5A4  C8 62 A8 48 */	lfd f3, $$21859@sda21(r2)
+/* 8014E644 0014B5A4  C8 62 A8 48 */	lfd f3, "@1859"@sda21(r2)
 /* 8014E648 0014B5A8  93 E1 00 58 */	stw r31, 0x58(r1)
 /* 8014E64C 0014B5AC  C0 42 A8 3C */	lfs f2, lbl_803EAA3C@sda21(r2)
 /* 8014E650 0014B5B0  C8 01 00 58 */	lfd f0, 0x58(r1)
@@ -926,7 +926,7 @@ lbl_8014E630:
 /* 8014E678 0014B5D8  C0 02 A8 58 */	lfs f0, lbl_803EAA58@sda21(r2)
 /* 8014E67C 0014B5DC  90 01 00 54 */	stw r0, 0x54(r1)
 /* 8014E680 0014B5E0  FC 20 E8 90 */	fmr f1, f29
-/* 8014E684 0014B5E4  C8 A2 A8 48 */	lfd f5, $$21859@sda21(r2)
+/* 8014E684 0014B5E4  C8 A2 A8 48 */	lfd f5, "@1859"@sda21(r2)
 /* 8014E688 0014B5E8  EC 00 07 F2 */	fmuls f0, f0, f31
 /* 8014E68C 0014B5EC  93 E1 00 50 */	stw r31, 0x50(r1)
 /* 8014E690 0014B5F0  C0 62 A8 3C */	lfs f3, lbl_803EAA3C@sda21(r2)
@@ -2230,7 +2230,7 @@ actBoss__17InteractHitEffectFP4Boss:
 /* 8014F884 0014C7E4  38 80 00 45 */	li r4, 0x45
 /* 8014F888 0014C7E8  38 C0 00 00 */	li r6, 0
 /* 8014F88C 0014C7EC  38 E0 00 00 */	li r7, 0
-/* 8014F890 0014C7F0  48 04 D2 A9 */	bl create__9EffectMgrFQ29EffectMgr12effTypeTableR8Vector3fPQ23zen37CallBack1$$0PQ23zen17particleGenerator$$1PQ23zen58CallBack2$$0PQ23zen17particleGenerator$$4PQ23zen11particleMdl$$1
+/* 8014F890 0014C7F0  48 04 D2 A9 */	bl "create__9EffectMgrFQ29EffectMgr12effTypeTableR8Vector3fPQ23zen37CallBack1<PQ23zen17particleGenerator>PQ23zen58CallBack2<PQ23zen17particleGenerator,PQ23zen11particleMdl>"
 /* 8014F894 0014C7F4  38 60 00 01 */	li r3, 1
 /* 8014F898 0014C7F8  48 00 00 98 */	b lbl_8014F930
 /* 8014F89C 0014C7FC  80 6D 31 80 */	lwz r3, effectMgr@sda21(r13)
@@ -2238,7 +2238,7 @@ actBoss__17InteractHitEffectFP4Boss:
 /* 8014F8A4 0014C804  38 80 00 45 */	li r4, 0x45
 /* 8014F8A8 0014C808  38 C0 00 00 */	li r6, 0
 /* 8014F8AC 0014C80C  38 E0 00 00 */	li r7, 0
-/* 8014F8B0 0014C810  48 04 D2 89 */	bl create__9EffectMgrFQ29EffectMgr12effTypeTableR8Vector3fPQ23zen37CallBack1$$0PQ23zen17particleGenerator$$1PQ23zen58CallBack2$$0PQ23zen17particleGenerator$$4PQ23zen11particleMdl$$1
+/* 8014F8B0 0014C810  48 04 D2 89 */	bl "create__9EffectMgrFQ29EffectMgr12effTypeTableR8Vector3fPQ23zen37CallBack1<PQ23zen17particleGenerator>PQ23zen58CallBack2<PQ23zen17particleGenerator,PQ23zen11particleMdl>"
 /* 8014F8B4 0014C814  38 60 00 01 */	li r3, 1
 /* 8014F8B8 0014C818  48 00 00 78 */	b lbl_8014F930
 /* 8014F8BC 0014C81C  80 6D 31 80 */	lwz r3, effectMgr@sda21(r13)
@@ -2246,7 +2246,7 @@ actBoss__17InteractHitEffectFP4Boss:
 /* 8014F8C4 0014C824  38 80 00 45 */	li r4, 0x45
 /* 8014F8C8 0014C828  38 C0 00 00 */	li r6, 0
 /* 8014F8CC 0014C82C  38 E0 00 00 */	li r7, 0
-/* 8014F8D0 0014C830  48 04 D2 69 */	bl create__9EffectMgrFQ29EffectMgr12effTypeTableR8Vector3fPQ23zen37CallBack1$$0PQ23zen17particleGenerator$$1PQ23zen58CallBack2$$0PQ23zen17particleGenerator$$4PQ23zen11particleMdl$$1
+/* 8014F8D0 0014C830  48 04 D2 69 */	bl "create__9EffectMgrFQ29EffectMgr12effTypeTableR8Vector3fPQ23zen37CallBack1<PQ23zen17particleGenerator>PQ23zen58CallBack2<PQ23zen17particleGenerator,PQ23zen11particleMdl>"
 /* 8014F8D4 0014C834  80 7E 00 20 */	lwz r3, 0x20(r30)
 /* 8014F8D8 0014C838  28 03 00 00 */	cmplwi r3, 0
 /* 8014F8DC 0014C83C  41 82 00 28 */	beq lbl_8014F904
@@ -2267,7 +2267,7 @@ lbl_8014F904:
 /* 8014F914 0014C874  38 80 00 45 */	li r4, 0x45
 /* 8014F918 0014C878  38 C0 00 00 */	li r6, 0
 /* 8014F91C 0014C87C  38 E0 00 00 */	li r7, 0
-/* 8014F920 0014C880  48 04 D2 19 */	bl create__9EffectMgrFQ29EffectMgr12effTypeTableR8Vector3fPQ23zen37CallBack1$$0PQ23zen17particleGenerator$$1PQ23zen58CallBack2$$0PQ23zen17particleGenerator$$4PQ23zen11particleMdl$$1
+/* 8014F920 0014C880  48 04 D2 19 */	bl "create__9EffectMgrFQ29EffectMgr12effTypeTableR8Vector3fPQ23zen37CallBack1<PQ23zen17particleGenerator>PQ23zen58CallBack2<PQ23zen17particleGenerator,PQ23zen11particleMdl>"
 /* 8014F924 0014C884  38 60 00 01 */	li r3, 1
 /* 8014F928 0014C888  48 00 00 08 */	b lbl_8014F930
 lbl_8014F92C:

@@ -27,7 +27,7 @@ lbl_80155A40:
 /* 80155A5C 001529BC  38 C0 00 00 */	li r6, 0
 /* 80155A60 001529C0  38 A5 00 94 */	addi r5, r5, 0x94
 /* 80155A64 001529C4  38 E0 00 00 */	li r7, 0
-/* 80155A68 001529C8  48 04 70 D1 */	bl create__9EffectMgrFQ29EffectMgr12effTypeTableR8Vector3fPQ23zen37CallBack1$$0PQ23zen17particleGenerator$$1PQ23zen58CallBack2$$0PQ23zen17particleGenerator$$4PQ23zen11particleMdl$$1
+/* 80155A68 001529C8  48 04 70 D1 */	bl "create__9EffectMgrFQ29EffectMgr12effTypeTableR8Vector3fPQ23zen37CallBack1<PQ23zen17particleGenerator>PQ23zen58CallBack2<PQ23zen17particleGenerator,PQ23zen11particleMdl>"
 /* 80155A6C 001529CC  7C 7F 1B 79 */	or. r31, r3, r3
 /* 80155A70 001529D0  41 82 00 F0 */	beq lbl_80155B60
 /* 80155A74 001529D4  C0 5C 00 04 */	lfs f2, 4(r28)
@@ -185,7 +185,7 @@ lbl_80155CAC:
 /* 80155CB4 00152C14  38 80 00 BA */	li r4, 0xba
 /* 80155CB8 00152C18  38 C0 00 00 */	li r6, 0
 /* 80155CBC 00152C1C  38 E0 00 00 */	li r7, 0
-/* 80155CC0 00152C20  48 04 6E 79 */	bl create__9EffectMgrFQ29EffectMgr12effTypeTableR8Vector3fPQ23zen37CallBack1$$0PQ23zen17particleGenerator$$1PQ23zen58CallBack2$$0PQ23zen17particleGenerator$$4PQ23zen11particleMdl$$1
+/* 80155CC0 00152C20  48 04 6E 79 */	bl "create__9EffectMgrFQ29EffectMgr12effTypeTableR8Vector3fPQ23zen37CallBack1<PQ23zen17particleGenerator>PQ23zen58CallBack2<PQ23zen17particleGenerator,PQ23zen11particleMdl>"
 /* 80155CC4 00152C24  28 03 00 00 */	cmplwi r3, 0
 /* 80155CC8 00152C28  41 82 00 1C */	beq lbl_80155CE4
 /* 80155CCC 00152C2C  80 81 00 50 */	lwz r4, 0x50(r1)
@@ -200,7 +200,7 @@ lbl_80155CE4:
 /* 80155CEC 00152C4C  38 80 00 B9 */	li r4, 0xb9
 /* 80155CF0 00152C50  38 C0 00 00 */	li r6, 0
 /* 80155CF4 00152C54  38 E0 00 00 */	li r7, 0
-/* 80155CF8 00152C58  48 04 6E 41 */	bl create__9EffectMgrFQ29EffectMgr12effTypeTableR8Vector3fPQ23zen37CallBack1$$0PQ23zen17particleGenerator$$1PQ23zen58CallBack2$$0PQ23zen17particleGenerator$$4PQ23zen11particleMdl$$1
+/* 80155CF8 00152C58  48 04 6E 41 */	bl "create__9EffectMgrFQ29EffectMgr12effTypeTableR8Vector3fPQ23zen37CallBack1<PQ23zen17particleGenerator>PQ23zen58CallBack2<PQ23zen17particleGenerator,PQ23zen11particleMdl>"
 /* 80155CFC 00152C5C  28 03 00 00 */	cmplwi r3, 0
 /* 80155D00 00152C60  41 82 00 1C */	beq lbl_80155D1C
 /* 80155D04 00152C64  80 81 00 50 */	lwz r4, 0x50(r1)
@@ -215,7 +215,7 @@ lbl_80155D1C:
 /* 80155D24 00152C84  38 80 00 BD */	li r4, 0xbd
 /* 80155D28 00152C88  38 C0 00 00 */	li r6, 0
 /* 80155D2C 00152C8C  38 E0 00 00 */	li r7, 0
-/* 80155D30 00152C90  48 04 6E 09 */	bl create__9EffectMgrFQ29EffectMgr12effTypeTableR8Vector3fPQ23zen37CallBack1$$0PQ23zen17particleGenerator$$1PQ23zen58CallBack2$$0PQ23zen17particleGenerator$$4PQ23zen11particleMdl$$1
+/* 80155D30 00152C90  48 04 6E 09 */	bl "create__9EffectMgrFQ29EffectMgr12effTypeTableR8Vector3fPQ23zen37CallBack1<PQ23zen17particleGenerator>PQ23zen58CallBack2<PQ23zen17particleGenerator,PQ23zen11particleMdl>"
 /* 80155D34 00152C94  3B DE 00 01 */	addi r30, r30, 1
 /* 80155D38 00152C98  2C 1E 00 03 */	cmpwi r30, 3
 /* 80155D3C 00152C9C  3B FD 00 00 */	addi r31, r29, 0
@@ -266,7 +266,7 @@ lbl_80155DA4:
 /* 80155DDC 00152D3C  80 6D 31 80 */	lwz r3, effectMgr@sda21(r13)
 /* 80155DE0 00152D40  80 DF 06 80 */	lwz r6, 0x680(r31)
 /* 80155DE4 00152D44  38 A5 00 94 */	addi r5, r5, 0x94
-/* 80155DE8 00152D48  48 04 6D 51 */	bl create__9EffectMgrFQ29EffectMgr12effTypeTableR8Vector3fPQ23zen37CallBack1$$0PQ23zen17particleGenerator$$1PQ23zen58CallBack2$$0PQ23zen17particleGenerator$$4PQ23zen11particleMdl$$1
+/* 80155DE8 00152D48  48 04 6D 51 */	bl "create__9EffectMgrFQ29EffectMgr12effTypeTableR8Vector3fPQ23zen37CallBack1<PQ23zen17particleGenerator>PQ23zen58CallBack2<PQ23zen17particleGenerator,PQ23zen11particleMdl>"
 lbl_80155DEC:
 /* 80155DEC 00152D4C  3B BD 00 01 */	addi r29, r29, 1
 /* 80155DF0 00152D50  2C 1D 00 03 */	cmpwi r29, 3
@@ -300,7 +300,7 @@ lbl_80155E18:
 /* 80155E58 00152DB8  80 6D 31 80 */	lwz r3, effectMgr@sda21(r13)
 /* 80155E5C 00152DBC  38 A5 00 94 */	addi r5, r5, 0x94
 /* 80155E60 00152DC0  38 C6 00 0C */	addi r6, r6, 0xc
-/* 80155E64 00152DC4  48 04 6C D5 */	bl create__9EffectMgrFQ29EffectMgr12effTypeTableR8Vector3fPQ23zen37CallBack1$$0PQ23zen17particleGenerator$$1PQ23zen58CallBack2$$0PQ23zen17particleGenerator$$4PQ23zen11particleMdl$$1
+/* 80155E64 00152DC4  48 04 6C D5 */	bl "create__9EffectMgrFQ29EffectMgr12effTypeTableR8Vector3fPQ23zen37CallBack1<PQ23zen17particleGenerator>PQ23zen58CallBack2<PQ23zen17particleGenerator,PQ23zen11particleMdl>"
 lbl_80155E68:
 /* 80155E68 00152DC8  3B BD 00 01 */	addi r29, r29, 1
 /* 80155E6C 00152DCC  2C 1D 00 03 */	cmpwi r29, 3
@@ -334,7 +334,7 @@ lbl_80155E94:
 /* 80155ED4 00152E34  80 6D 31 80 */	lwz r3, effectMgr@sda21(r13)
 /* 80155ED8 00152E38  38 A5 00 94 */	addi r5, r5, 0x94
 /* 80155EDC 00152E3C  38 C6 00 18 */	addi r6, r6, 0x18
-/* 80155EE0 00152E40  48 04 6C 59 */	bl create__9EffectMgrFQ29EffectMgr12effTypeTableR8Vector3fPQ23zen37CallBack1$$0PQ23zen17particleGenerator$$1PQ23zen58CallBack2$$0PQ23zen17particleGenerator$$4PQ23zen11particleMdl$$1
+/* 80155EE0 00152E40  48 04 6C 59 */	bl "create__9EffectMgrFQ29EffectMgr12effTypeTableR8Vector3fPQ23zen37CallBack1<PQ23zen17particleGenerator>PQ23zen58CallBack2<PQ23zen17particleGenerator,PQ23zen11particleMdl>"
 lbl_80155EE4:
 /* 80155EE4 00152E44  3B BD 00 01 */	addi r29, r29, 1
 /* 80155EE8 00152E48  2C 1D 00 03 */	cmpwi r29, 3
@@ -368,7 +368,7 @@ lbl_80155F10:
 /* 80155F50 00152EB0  80 6D 31 80 */	lwz r3, effectMgr@sda21(r13)
 /* 80155F54 00152EB4  38 A5 00 94 */	addi r5, r5, 0x94
 /* 80155F58 00152EB8  38 C6 00 24 */	addi r6, r6, 0x24
-/* 80155F5C 00152EBC  48 04 6B DD */	bl create__9EffectMgrFQ29EffectMgr12effTypeTableR8Vector3fPQ23zen37CallBack1$$0PQ23zen17particleGenerator$$1PQ23zen58CallBack2$$0PQ23zen17particleGenerator$$4PQ23zen11particleMdl$$1
+/* 80155F5C 00152EBC  48 04 6B DD */	bl "create__9EffectMgrFQ29EffectMgr12effTypeTableR8Vector3fPQ23zen37CallBack1<PQ23zen17particleGenerator>PQ23zen58CallBack2<PQ23zen17particleGenerator,PQ23zen11particleMdl>"
 lbl_80155F60:
 /* 80155F60 00152EC0  3B BD 00 01 */	addi r29, r29, 1
 /* 80155F64 00152EC4  2C 1D 00 03 */	cmpwi r29, 3
@@ -415,7 +415,7 @@ createDeadBombEffect__9SpiderLegFv:
 /* 80155FF8 00152F58  38 80 00 BD */	li r4, 0xbd
 /* 80155FFC 00152F5C  38 C0 00 00 */	li r6, 0
 /* 80156000 00152F60  38 E0 00 00 */	li r7, 0
-/* 80156004 00152F64  48 04 6B 35 */	bl create__9EffectMgrFQ29EffectMgr12effTypeTableR8Vector3fPQ23zen37CallBack1$$0PQ23zen17particleGenerator$$1PQ23zen58CallBack2$$0PQ23zen17particleGenerator$$4PQ23zen11particleMdl$$1
+/* 80156004 00152F64  48 04 6B 35 */	bl "create__9EffectMgrFQ29EffectMgr12effTypeTableR8Vector3fPQ23zen37CallBack1<PQ23zen17particleGenerator>PQ23zen58CallBack2<PQ23zen17particleGenerator,PQ23zen11particleMdl>"
 /* 80156008 00152F68  80 DE 00 00 */	lwz r6, 0(r30)
 /* 8015600C 00152F6C  38 80 00 05 */	li r4, 5
 /* 80156010 00152F70  80 6D 31 78 */	lwz r3, rumbleMgr@sda21(r13)
@@ -520,7 +520,7 @@ lbl_80156170:
 /* 80156178 001530D8  42 00 FF F8 */	bdnz lbl_80156170
 lbl_8015617C:
 /* 8015617C 001530DC  3B E1 00 20 */	addi r31, r1, 0x20
-/* 80156180 001530E0  CB 82 A9 98 */	lfd f28, $$22056@sda21(r2)
+/* 80156180 001530E0  CB 82 A9 98 */	lfd f28, "@2056"@sda21(r2)
 /* 80156184 001530E4  C3 A2 A9 8C */	lfs f29, lbl_803EAB8C@sda21(r2)
 /* 80156188 001530E8  7F FC FB 78 */	mr r28, r31
 /* 8015618C 001530EC  C3 C2 A9 88 */	lfs f30, lbl_803EAB88@sda21(r2)
@@ -568,7 +568,7 @@ lbl_80156218:
 /* 8015622C 0015318C  38 80 00 BE */	li r4, 0xbe
 /* 80156230 00153190  38 C0 00 00 */	li r6, 0
 /* 80156234 00153194  38 E0 00 00 */	li r7, 0
-/* 80156238 00153198  48 04 69 01 */	bl create__9EffectMgrFQ29EffectMgr12effTypeTableR8Vector3fPQ23zen37CallBack1$$0PQ23zen17particleGenerator$$1PQ23zen58CallBack2$$0PQ23zen17particleGenerator$$4PQ23zen11particleMdl$$1
+/* 80156238 00153198  48 04 69 01 */	bl "create__9EffectMgrFQ29EffectMgr12effTypeTableR8Vector3fPQ23zen37CallBack1<PQ23zen17particleGenerator>PQ23zen58CallBack2<PQ23zen17particleGenerator,PQ23zen11particleMdl>"
 lbl_8015623C:
 /* 8015623C 0015319C  7F 83 E3 78 */	mr r3, r28
 /* 80156240 001531A0  4B F3 1B 85 */	bl getChild__8CollPartFv
@@ -596,7 +596,7 @@ lbl_8015627C:
 /* 80156290 001531F0  38 80 00 BE */	li r4, 0xbe
 /* 80156294 001531F4  38 C0 00 00 */	li r6, 0
 /* 80156298 001531F8  38 E0 00 00 */	li r7, 0
-/* 8015629C 001531FC  48 04 68 9D */	bl create__9EffectMgrFQ29EffectMgr12effTypeTableR8Vector3fPQ23zen37CallBack1$$0PQ23zen17particleGenerator$$1PQ23zen58CallBack2$$0PQ23zen17particleGenerator$$4PQ23zen11particleMdl$$1
+/* 8015629C 001531FC  48 04 68 9D */	bl "create__9EffectMgrFQ29EffectMgr12effTypeTableR8Vector3fPQ23zen37CallBack1<PQ23zen17particleGenerator>PQ23zen58CallBack2<PQ23zen17particleGenerator,PQ23zen11particleMdl>"
 lbl_801562A0:
 /* 801562A0 00153200  7F A3 EB 78 */	mr r3, r29
 /* 801562A4 00153204  4B F3 1B 21 */	bl getChild__8CollPartFv
@@ -624,7 +624,7 @@ lbl_801562E0:
 /* 801562F4 00153254  38 80 00 BE */	li r4, 0xbe
 /* 801562F8 00153258  38 C0 00 00 */	li r6, 0
 /* 801562FC 0015325C  38 E0 00 00 */	li r7, 0
-/* 80156300 00153260  48 04 68 39 */	bl create__9EffectMgrFQ29EffectMgr12effTypeTableR8Vector3fPQ23zen37CallBack1$$0PQ23zen17particleGenerator$$1PQ23zen58CallBack2$$0PQ23zen17particleGenerator$$4PQ23zen11particleMdl$$1
+/* 80156300 00153260  48 04 68 39 */	bl "create__9EffectMgrFQ29EffectMgr12effTypeTableR8Vector3fPQ23zen37CallBack1<PQ23zen17particleGenerator>PQ23zen58CallBack2<PQ23zen17particleGenerator,PQ23zen11particleMdl>"
 lbl_80156304:
 /* 80156304 00153264  7F A3 EB 78 */	mr r3, r29
 /* 80156308 00153268  4B F3 1A BD */	bl getChild__8CollPartFv
@@ -651,7 +651,7 @@ lbl_80156340:
 /* 80156354 001532B4  38 80 00 BE */	li r4, 0xbe
 /* 80156358 001532B8  38 C0 00 00 */	li r6, 0
 /* 8015635C 001532BC  38 E0 00 00 */	li r7, 0
-/* 80156360 001532C0  48 04 67 D9 */	bl create__9EffectMgrFQ29EffectMgr12effTypeTableR8Vector3fPQ23zen37CallBack1$$0PQ23zen17particleGenerator$$1PQ23zen58CallBack2$$0PQ23zen17particleGenerator$$4PQ23zen11particleMdl$$1
+/* 80156360 001532C0  48 04 67 D9 */	bl "create__9EffectMgrFQ29EffectMgr12effTypeTableR8Vector3fPQ23zen37CallBack1<PQ23zen17particleGenerator>PQ23zen58CallBack2<PQ23zen17particleGenerator,PQ23zen11particleMdl>"
 lbl_80156364:
 /* 80156364 001532C4  7F A3 EB 78 */	mr r3, r29
 /* 80156368 001532C8  4B F3 1A 5D */	bl getChild__8CollPartFv
@@ -720,7 +720,7 @@ lbl_80156408:
 /* 80156448 001533A8  80 6D 31 80 */	lwz r3, effectMgr@sda21(r13)
 /* 8015644C 001533AC  38 A5 00 94 */	addi r5, r5, 0x94
 /* 80156450 001533B0  7C C0 DA 14 */	add r6, r0, r27
-/* 80156454 001533B4  48 04 66 E5 */	bl create__9EffectMgrFQ29EffectMgr12effTypeTableR8Vector3fPQ23zen37CallBack1$$0PQ23zen17particleGenerator$$1PQ23zen58CallBack2$$0PQ23zen17particleGenerator$$4PQ23zen11particleMdl$$1
+/* 80156454 001533B4  48 04 66 E5 */	bl "create__9EffectMgrFQ29EffectMgr12effTypeTableR8Vector3fPQ23zen37CallBack1<PQ23zen17particleGenerator>PQ23zen58CallBack2<PQ23zen17particleGenerator,PQ23zen11particleMdl>"
 /* 80156458 001533B8  80 BF 00 00 */	lwz r5, 0(r31)
 /* 8015645C 001533BC  38 80 00 BF */	li r4, 0xbf
 /* 80156460 001533C0  80 1F 06 84 */	lwz r0, 0x684(r31)
@@ -728,7 +728,7 @@ lbl_80156408:
 /* 80156468 001533C8  80 6D 31 80 */	lwz r3, effectMgr@sda21(r13)
 /* 8015646C 001533CC  38 A5 00 94 */	addi r5, r5, 0x94
 /* 80156470 001533D0  7C C0 DA 14 */	add r6, r0, r27
-/* 80156474 001533D4  48 04 66 C5 */	bl create__9EffectMgrFQ29EffectMgr12effTypeTableR8Vector3fPQ23zen37CallBack1$$0PQ23zen17particleGenerator$$1PQ23zen58CallBack2$$0PQ23zen17particleGenerator$$4PQ23zen11particleMdl$$1
+/* 80156474 001533D4  48 04 66 C5 */	bl "create__9EffectMgrFQ29EffectMgr12effTypeTableR8Vector3fPQ23zen37CallBack1<PQ23zen17particleGenerator>PQ23zen58CallBack2<PQ23zen17particleGenerator,PQ23zen11particleMdl>"
 /* 80156478 001533D8  3B BD 00 01 */	addi r29, r29, 1
 /* 8015647C 001533DC  2C 1D 00 03 */	cmpwi r29, 3
 /* 80156480 001533E0  3B 9E 00 00 */	addi r28, r30, 0
@@ -764,7 +764,7 @@ lbl_801564A8:
 /* 801564F0 00153450  80 6D 31 80 */	lwz r3, effectMgr@sda21(r13)
 /* 801564F4 00153454  38 A5 00 94 */	addi r5, r5, 0x94
 /* 801564F8 00153458  7C C0 DA 14 */	add r6, r0, r27
-/* 801564FC 0015345C  48 04 66 3D */	bl create__9EffectMgrFQ29EffectMgr12effTypeTableR8Vector3fPQ23zen37CallBack1$$0PQ23zen17particleGenerator$$1PQ23zen58CallBack2$$0PQ23zen17particleGenerator$$4PQ23zen11particleMdl$$1
+/* 801564FC 0015345C  48 04 66 3D */	bl "create__9EffectMgrFQ29EffectMgr12effTypeTableR8Vector3fPQ23zen37CallBack1<PQ23zen17particleGenerator>PQ23zen58CallBack2<PQ23zen17particleGenerator,PQ23zen11particleMdl>"
 /* 80156500 00153460  80 BF 00 00 */	lwz r5, 0(r31)
 /* 80156504 00153464  38 80 00 BF */	li r4, 0xbf
 /* 80156508 00153468  80 1F 06 84 */	lwz r0, 0x684(r31)
@@ -772,7 +772,7 @@ lbl_801564A8:
 /* 80156510 00153470  80 6D 31 80 */	lwz r3, effectMgr@sda21(r13)
 /* 80156514 00153474  38 A5 00 94 */	addi r5, r5, 0x94
 /* 80156518 00153478  7C C0 DA 14 */	add r6, r0, r27
-/* 8015651C 0015347C  48 04 66 1D */	bl create__9EffectMgrFQ29EffectMgr12effTypeTableR8Vector3fPQ23zen37CallBack1$$0PQ23zen17particleGenerator$$1PQ23zen58CallBack2$$0PQ23zen17particleGenerator$$4PQ23zen11particleMdl$$1
+/* 8015651C 0015347C  48 04 66 1D */	bl "create__9EffectMgrFQ29EffectMgr12effTypeTableR8Vector3fPQ23zen37CallBack1<PQ23zen17particleGenerator>PQ23zen58CallBack2<PQ23zen17particleGenerator,PQ23zen11particleMdl>"
 /* 80156520 00153480  3B BD 00 01 */	addi r29, r29, 1
 /* 80156524 00153484  2C 1D 00 03 */	cmpwi r29, 3
 /* 80156528 00153488  3B DC 00 00 */	addi r30, r28, 0
@@ -807,7 +807,7 @@ lbl_8015654C:
 /* 80156594 001534F4  80 6D 31 80 */	lwz r3, effectMgr@sda21(r13)
 /* 80156598 001534F8  38 A5 00 94 */	addi r5, r5, 0x94
 /* 8015659C 001534FC  7C C0 DA 14 */	add r6, r0, r27
-/* 801565A0 00153500  48 04 65 99 */	bl create__9EffectMgrFQ29EffectMgr12effTypeTableR8Vector3fPQ23zen37CallBack1$$0PQ23zen17particleGenerator$$1PQ23zen58CallBack2$$0PQ23zen17particleGenerator$$4PQ23zen11particleMdl$$1
+/* 801565A0 00153500  48 04 65 99 */	bl "create__9EffectMgrFQ29EffectMgr12effTypeTableR8Vector3fPQ23zen37CallBack1<PQ23zen17particleGenerator>PQ23zen58CallBack2<PQ23zen17particleGenerator,PQ23zen11particleMdl>"
 /* 801565A4 00153504  80 BF 00 00 */	lwz r5, 0(r31)
 /* 801565A8 00153508  38 80 00 BF */	li r4, 0xbf
 /* 801565AC 0015350C  80 1F 06 84 */	lwz r0, 0x684(r31)
@@ -815,7 +815,7 @@ lbl_8015654C:
 /* 801565B4 00153514  80 6D 31 80 */	lwz r3, effectMgr@sda21(r13)
 /* 801565B8 00153518  38 A5 00 94 */	addi r5, r5, 0x94
 /* 801565BC 0015351C  7C C0 DA 14 */	add r6, r0, r27
-/* 801565C0 00153520  48 04 65 79 */	bl create__9EffectMgrFQ29EffectMgr12effTypeTableR8Vector3fPQ23zen37CallBack1$$0PQ23zen17particleGenerator$$1PQ23zen58CallBack2$$0PQ23zen17particleGenerator$$4PQ23zen11particleMdl$$1
+/* 801565C0 00153520  48 04 65 79 */	bl "create__9EffectMgrFQ29EffectMgr12effTypeTableR8Vector3fPQ23zen37CallBack1<PQ23zen17particleGenerator>PQ23zen58CallBack2<PQ23zen17particleGenerator,PQ23zen11particleMdl>"
 /* 801565C4 00153524  3B BD 00 01 */	addi r29, r29, 1
 /* 801565C8 00153528  2C 1D 00 03 */	cmpwi r29, 3
 /* 801565CC 0015352C  3B DC 00 00 */	addi r30, r28, 0
@@ -850,7 +850,7 @@ lbl_801565F0:
 /* 80156638 00153598  80 6D 31 80 */	lwz r3, effectMgr@sda21(r13)
 /* 8015663C 0015359C  38 A5 00 94 */	addi r5, r5, 0x94
 /* 80156640 001535A0  7C C0 DA 14 */	add r6, r0, r27
-/* 80156644 001535A4  48 04 64 F5 */	bl create__9EffectMgrFQ29EffectMgr12effTypeTableR8Vector3fPQ23zen37CallBack1$$0PQ23zen17particleGenerator$$1PQ23zen58CallBack2$$0PQ23zen17particleGenerator$$4PQ23zen11particleMdl$$1
+/* 80156644 001535A4  48 04 64 F5 */	bl "create__9EffectMgrFQ29EffectMgr12effTypeTableR8Vector3fPQ23zen37CallBack1<PQ23zen17particleGenerator>PQ23zen58CallBack2<PQ23zen17particleGenerator,PQ23zen11particleMdl>"
 /* 80156648 001535A8  80 BF 00 00 */	lwz r5, 0(r31)
 /* 8015664C 001535AC  38 80 00 BF */	li r4, 0xbf
 /* 80156650 001535B0  80 1F 06 84 */	lwz r0, 0x684(r31)
@@ -858,7 +858,7 @@ lbl_801565F0:
 /* 80156658 001535B8  80 6D 31 80 */	lwz r3, effectMgr@sda21(r13)
 /* 8015665C 001535BC  38 A5 00 94 */	addi r5, r5, 0x94
 /* 80156660 001535C0  7C C0 DA 14 */	add r6, r0, r27
-/* 80156664 001535C4  48 04 64 D5 */	bl create__9EffectMgrFQ29EffectMgr12effTypeTableR8Vector3fPQ23zen37CallBack1$$0PQ23zen17particleGenerator$$1PQ23zen58CallBack2$$0PQ23zen17particleGenerator$$4PQ23zen11particleMdl$$1
+/* 80156664 001535C4  48 04 64 D5 */	bl "create__9EffectMgrFQ29EffectMgr12effTypeTableR8Vector3fPQ23zen37CallBack1<PQ23zen17particleGenerator>PQ23zen58CallBack2<PQ23zen17particleGenerator,PQ23zen11particleMdl>"
 /* 80156668 001535C8  3B BD 00 01 */	addi r29, r29, 1
 /* 8015666C 001535CC  2C 1D 00 03 */	cmpwi r29, 3
 /* 80156670 001535D0  3B DC 00 00 */	addi r30, r28, 0
@@ -897,13 +897,13 @@ createRippleEffect__9SpiderLegFi:
 /* 801566E4 00153644  EC 01 00 28 */	fsubs f0, f1, f0
 /* 801566E8 00153648  D0 01 00 30 */	stfs f0, 0x30(r1)
 /* 801566EC 0015364C  80 6D 31 80 */	lwz r3, effectMgr@sda21(r13)
-/* 801566F0 00153650  48 04 64 49 */	bl create__9EffectMgrFQ29EffectMgr12effTypeTableR8Vector3fPQ23zen37CallBack1$$0PQ23zen17particleGenerator$$1PQ23zen58CallBack2$$0PQ23zen17particleGenerator$$4PQ23zen11particleMdl$$1
+/* 801566F0 00153650  48 04 64 49 */	bl "create__9EffectMgrFQ29EffectMgr12effTypeTableR8Vector3fPQ23zen37CallBack1<PQ23zen17particleGenerator>PQ23zen58CallBack2<PQ23zen17particleGenerator,PQ23zen11particleMdl>"
 /* 801566F4 00153654  80 6D 31 80 */	lwz r3, effectMgr@sda21(r13)
 /* 801566F8 00153658  38 A1 00 2C */	addi r5, r1, 0x2c
 /* 801566FC 0015365C  38 80 00 55 */	li r4, 0x55
 /* 80156700 00153660  38 C0 00 00 */	li r6, 0
 /* 80156704 00153664  38 E0 00 00 */	li r7, 0
-/* 80156708 00153668  48 04 64 31 */	bl create__9EffectMgrFQ29EffectMgr12effTypeTableR8Vector3fPQ23zen37CallBack1$$0PQ23zen17particleGenerator$$1PQ23zen58CallBack2$$0PQ23zen17particleGenerator$$4PQ23zen11particleMdl$$1
+/* 80156708 00153668  48 04 64 31 */	bl "create__9EffectMgrFQ29EffectMgr12effTypeTableR8Vector3fPQ23zen37CallBack1<PQ23zen17particleGenerator>PQ23zen58CallBack2<PQ23zen17particleGenerator,PQ23zen11particleMdl>"
 /* 8015670C 0015366C  38 1F 00 0D */	addi r0, r31, 0xd
 /* 80156710 00153670  80 7E 06 88 */	lwz r3, 0x688(r30)
 /* 80156714 00153674  57 FF 18 38 */	slwi r31, r31, 3
@@ -916,7 +916,7 @@ createRippleEffect__9SpiderLegFi:
 /* 80156730 00153690  38 E0 00 00 */	li r7, 0
 /* 80156734 00153694  80 6D 31 80 */	lwz r3, effectMgr@sda21(r13)
 /* 80156738 00153698  7C C0 FA 14 */	add r6, r0, r31
-/* 8015673C 0015369C  48 04 63 FD */	bl create__9EffectMgrFQ29EffectMgr12effTypeTableR8Vector3fPQ23zen37CallBack1$$0PQ23zen17particleGenerator$$1PQ23zen58CallBack2$$0PQ23zen17particleGenerator$$4PQ23zen11particleMdl$$1
+/* 8015673C 0015369C  48 04 63 FD */	bl "create__9EffectMgrFQ29EffectMgr12effTypeTableR8Vector3fPQ23zen37CallBack1<PQ23zen17particleGenerator>PQ23zen58CallBack2<PQ23zen17particleGenerator,PQ23zen11particleMdl>"
 /* 80156740 001536A0  28 03 00 00 */	cmplwi r3, 0
 /* 80156744 001536A4  41 82 00 14 */	beq lbl_80156758
 /* 80156748 001536A8  C0 22 A9 A4 */	lfs f1, lbl_803EABA4@sda21(r2)
@@ -930,7 +930,7 @@ lbl_80156758:
 /* 80156764 001536C4  38 80 00 0C */	li r4, 0xc
 /* 80156768 001536C8  7C C0 FA 14 */	add r6, r0, r31
 /* 8015676C 001536CC  38 E0 00 00 */	li r7, 0
-/* 80156770 001536D0  48 04 63 C9 */	bl create__9EffectMgrFQ29EffectMgr12effTypeTableR8Vector3fPQ23zen37CallBack1$$0PQ23zen17particleGenerator$$1PQ23zen58CallBack2$$0PQ23zen17particleGenerator$$4PQ23zen11particleMdl$$1
+/* 80156770 001536D0  48 04 63 C9 */	bl "create__9EffectMgrFQ29EffectMgr12effTypeTableR8Vector3fPQ23zen37CallBack1<PQ23zen17particleGenerator>PQ23zen58CallBack2<PQ23zen17particleGenerator,PQ23zen11particleMdl>"
 /* 80156774 001536D4  28 03 00 00 */	cmplwi r3, 0
 /* 80156778 001536D8  41 82 00 14 */	beq lbl_8015678C
 /* 8015677C 001536DC  C0 22 A9 A4 */	lfs f1, lbl_803EABA4@sda21(r2)
@@ -944,7 +944,7 @@ lbl_8015678C:
 /* 80156798 001536F8  38 80 00 0D */	li r4, 0xd
 /* 8015679C 001536FC  7C C0 FA 14 */	add r6, r0, r31
 /* 801567A0 00153700  38 E0 00 00 */	li r7, 0
-/* 801567A4 00153704  48 04 63 95 */	bl create__9EffectMgrFQ29EffectMgr12effTypeTableR8Vector3fPQ23zen37CallBack1$$0PQ23zen17particleGenerator$$1PQ23zen58CallBack2$$0PQ23zen17particleGenerator$$4PQ23zen11particleMdl$$1
+/* 801567A4 00153704  48 04 63 95 */	bl "create__9EffectMgrFQ29EffectMgr12effTypeTableR8Vector3fPQ23zen37CallBack1<PQ23zen17particleGenerator>PQ23zen58CallBack2<PQ23zen17particleGenerator,PQ23zen11particleMdl>"
 /* 801567A8 00153708  28 03 00 00 */	cmplwi r3, 0
 /* 801567AC 0015370C  41 82 00 14 */	beq lbl_801567C0
 /* 801567B0 00153710  C0 22 A9 A4 */	lfs f1, lbl_803EABA4@sda21(r2)
@@ -979,7 +979,7 @@ lbl_80156804:
 /* 80156810 00153770  38 A0 00 00 */	li r5, 0
 /* 80156814 00153774  7C 80 FA 14 */	add r4, r0, r31
 /* 80156818 00153778  38 63 00 14 */	addi r3, r3, 0x14
-/* 8015681C 0015377C  48 04 AE 41 */	bl killGenerator__Q23zen15particleManagerFPQ23zen37CallBack1$$0PQ23zen17particleGenerator$$1PQ23zen58CallBack2$$0PQ23zen17particleGenerator$$4PQ23zen11particleMdl$$1b
+/* 8015681C 0015377C  48 04 AE 41 */	bl "killGenerator__Q23zen15particleManagerFPQ23zen37CallBack1<PQ23zen17particleGenerator>PQ23zen58CallBack2<PQ23zen17particleGenerator,PQ23zen11particleMdl>b"
 /* 80156820 00153780  3B DE 00 01 */	addi r30, r30, 1
 /* 80156824 00153784  2C 1E 00 04 */	cmpwi r30, 4
 /* 80156828 00153788  3B FF 00 0C */	addi r31, r31, 0xc
@@ -993,7 +993,7 @@ lbl_80156838:
 /* 80156844 001537A4  38 A0 00 00 */	li r5, 0
 /* 80156848 001537A8  7C 80 FA 14 */	add r4, r0, r31
 /* 8015684C 001537AC  38 63 00 14 */	addi r3, r3, 0x14
-/* 80156850 001537B0  48 04 AE 0D */	bl killGenerator__Q23zen15particleManagerFPQ23zen37CallBack1$$0PQ23zen17particleGenerator$$1PQ23zen58CallBack2$$0PQ23zen17particleGenerator$$4PQ23zen11particleMdl$$1b
+/* 80156850 001537B0  48 04 AE 0D */	bl "killGenerator__Q23zen15particleManagerFPQ23zen37CallBack1<PQ23zen17particleGenerator>PQ23zen58CallBack2<PQ23zen17particleGenerator,PQ23zen11particleMdl>b"
 /* 80156854 001537B4  3B DE 00 01 */	addi r30, r30, 1
 /* 80156858 001537B8  2C 1E 00 0C */	cmpwi r30, 0xc
 /* 8015685C 001537BC  3B FF 00 10 */	addi r31, r31, 0x10
@@ -1007,7 +1007,7 @@ lbl_8015686C:
 /* 80156878 001537D8  38 A0 00 00 */	li r5, 0
 /* 8015687C 001537DC  7C 80 FA 14 */	add r4, r0, r31
 /* 80156880 001537E0  38 63 00 14 */	addi r3, r3, 0x14
-/* 80156884 001537E4  48 04 AD D9 */	bl killGenerator__Q23zen15particleManagerFPQ23zen37CallBack1$$0PQ23zen17particleGenerator$$1PQ23zen58CallBack2$$0PQ23zen17particleGenerator$$4PQ23zen11particleMdl$$1b
+/* 80156884 001537E4  48 04 AD D9 */	bl "killGenerator__Q23zen15particleManagerFPQ23zen37CallBack1<PQ23zen17particleGenerator>PQ23zen58CallBack2<PQ23zen17particleGenerator,PQ23zen11particleMdl>b"
 /* 80156888 001537E8  3B DE 00 01 */	addi r30, r30, 1
 /* 8015688C 001537EC  2C 1E 00 04 */	cmpwi r30, 4
 /* 80156890 001537F0  3B FF 00 08 */	addi r31, r31, 8
@@ -1288,8 +1288,8 @@ __ct__9SpiderLegFP6Spider:
 
 .global __ct__23SpiderGenRippleCallBackFv
 __ct__23SpiderGenRippleCallBackFv:
-/* 80156C44 00153BA4  3C 80 80 2B */	lis r4, __vt__Q23zen37CallBack1$$0PQ23zen17particleGenerator$$1@ha
-/* 80156C48 00153BA8  38 04 06 00 */	addi r0, r4, __vt__Q23zen37CallBack1$$0PQ23zen17particleGenerator$$1@l
+/* 80156C44 00153BA4  3C 80 80 2B */	lis r4, "__vt__Q23zen37CallBack1<PQ23zen17particleGenerator>"@ha
+/* 80156C48 00153BA8  38 04 06 00 */	addi r0, r4, "__vt__Q23zen37CallBack1<PQ23zen17particleGenerator>"@l
 /* 80156C4C 00153BAC  3C 80 80 2D */	lis r4, __vt__23SpiderGenRippleCallBack@ha
 /* 80156C50 00153BB0  90 03 00 00 */	stw r0, 0(r3)
 /* 80156C54 00153BB4  38 04 F6 88 */	addi r0, r4, __vt__23SpiderGenRippleCallBack@l
@@ -1298,8 +1298,8 @@ __ct__23SpiderGenRippleCallBackFv:
 
 .global __ct__23SpiderGenPerishCallBackFv
 __ct__23SpiderGenPerishCallBackFv:
-/* 80156C60 00153BC0  3C 80 80 2B */	lis r4, __vt__Q23zen37CallBack1$$0PQ23zen17particleGenerator$$1@ha
-/* 80156C64 00153BC4  38 04 06 00 */	addi r0, r4, __vt__Q23zen37CallBack1$$0PQ23zen17particleGenerator$$1@l
+/* 80156C60 00153BC0  3C 80 80 2B */	lis r4, "__vt__Q23zen37CallBack1<PQ23zen17particleGenerator>"@ha
+/* 80156C64 00153BC4  38 04 06 00 */	addi r0, r4, "__vt__Q23zen37CallBack1<PQ23zen17particleGenerator>"@l
 /* 80156C68 00153BC8  3C 80 80 2D */	lis r4, __vt__23SpiderGenPerishCallBack@ha
 /* 80156C6C 00153BCC  90 03 00 00 */	stw r0, 0(r3)
 /* 80156C70 00153BD0  38 04 F6 58 */	addi r0, r4, __vt__23SpiderGenPerishCallBack@l
@@ -1308,8 +1308,8 @@ __ct__23SpiderGenPerishCallBackFv:
 
 .global __ct__30SpiderGenHalfDeadCallBackJointFv
 __ct__30SpiderGenHalfDeadCallBackJointFv:
-/* 80156C7C 00153BDC  3C 80 80 2B */	lis r4, __vt__Q23zen37CallBack1$$0PQ23zen17particleGenerator$$1@ha
-/* 80156C80 00153BE0  38 04 06 00 */	addi r0, r4, __vt__Q23zen37CallBack1$$0PQ23zen17particleGenerator$$1@l
+/* 80156C7C 00153BDC  3C 80 80 2B */	lis r4, "__vt__Q23zen37CallBack1<PQ23zen17particleGenerator>"@ha
+/* 80156C80 00153BE0  38 04 06 00 */	addi r0, r4, "__vt__Q23zen37CallBack1<PQ23zen17particleGenerator>"@l
 /* 80156C84 00153BE4  3C 80 80 2D */	lis r4, __vt__30SpiderGenHalfDeadCallBackJoint@ha
 /* 80156C88 00153BE8  90 03 00 00 */	stw r0, 0(r3)
 /* 80156C8C 00153BEC  38 04 F6 28 */	addi r0, r4, __vt__30SpiderGenHalfDeadCallBackJoint@l
@@ -1478,7 +1478,7 @@ setLegParameter__9SpiderLegFv:
 /* 80156EF0 00153E50  80 7E 02 24 */	lwz r3, 0x224(r30)
 /* 80156EF4 00153E54  90 01 00 84 */	stw r0, 0x84(r1)
 /* 80156EF8 00153E58  3C 00 43 30 */	lis r0, 0x4330
-/* 80156EFC 00153E5C  C8 42 A9 98 */	lfd f2, $$22056@sda21(r2)
+/* 80156EFC 00153E5C  C8 42 A9 98 */	lfd f2, "@2056"@sda21(r2)
 /* 80156F00 00153E60  90 01 00 80 */	stw r0, 0x80(r1)
 /* 80156F04 00153E64  C0 03 02 A0 */	lfs f0, 0x2a0(r3)
 /* 80156F08 00153E68  C8 21 00 80 */	lfd f1, 0x80(r1)
@@ -1497,7 +1497,7 @@ lbl_80156F38:
 /* 80156F38 00153E98  D0 1F 00 E0 */	stfs f0, 0xe0(r31)
 lbl_80156F3C:
 /* 80156F3C 00153E9C  38 00 00 04 */	li r0, 4
-/* 80156F40 00153EA0  C8 E2 A9 98 */	lfd f7, $$22056@sda21(r2)
+/* 80156F40 00153EA0  C8 E2 A9 98 */	lfd f7, "@2056"@sda21(r2)
 /* 80156F44 00153EA4  7C 09 03 A6 */	mtctr r0
 /* 80156F48 00153EA8  C0 82 A9 70 */	lfs f4, lbl_803EAB70@sda21(r2)
 /* 80156F4C 00153EAC  80 8D 2D EC */	lwz r4, gsys@sda21(r13)
@@ -1833,7 +1833,7 @@ lbl_801573D0:
 /* 801573E4 00154344  EC 60 07 32 */	fmuls f3, f0, f28
 /* 801573E8 00154348  80 7F 00 00 */	lwz r3, 0(r31)
 /* 801573EC 0015434C  90 01 01 10 */	stw r0, 0x110(r1)
-/* 801573F0 00154350  C8 42 A9 98 */	lfd f2, $$22056@sda21(r2)
+/* 801573F0 00154350  C8 42 A9 98 */	lfd f2, "@2056"@sda21(r2)
 /* 801573F4 00154354  C8 21 01 10 */	lfd f1, 0x110(r1)
 /* 801573F8 00154358  C0 02 A9 8C */	lfs f0, lbl_803EAB8C@sda21(r2)
 /* 801573FC 0015435C  EC 81 10 28 */	fsubs f4, f1, f2
@@ -1862,7 +1862,7 @@ lbl_8015743C:
 /* 80157450 001543B0  EC 60 07 32 */	fmuls f3, f0, f28
 /* 80157454 001543B4  80 7F 00 00 */	lwz r3, 0(r31)
 /* 80157458 001543B8  90 01 01 10 */	stw r0, 0x110(r1)
-/* 8015745C 001543BC  C8 42 A9 98 */	lfd f2, $$22056@sda21(r2)
+/* 8015745C 001543BC  C8 42 A9 98 */	lfd f2, "@2056"@sda21(r2)
 /* 80157460 001543C0  C8 21 01 10 */	lfd f1, 0x110(r1)
 /* 80157464 001543C4  C0 02 A9 8C */	lfs f0, lbl_803EAB8C@sda21(r2)
 /* 80157468 001543C8  EC 81 10 28 */	fsubs f4, f1, f2
@@ -1892,7 +1892,7 @@ lbl_801574A8:
 /* 801574C0 00154420  90 01 01 10 */	stw r0, 0x110(r1)
 /* 801574C4 00154424  80 64 02 24 */	lwz r3, 0x224(r4)
 /* 801574C8 00154428  EC 00 07 32 */	fmuls f0, f0, f28
-/* 801574CC 0015442C  C8 62 A9 98 */	lfd f3, $$22056@sda21(r2)
+/* 801574CC 0015442C  C8 62 A9 98 */	lfd f3, "@2056"@sda21(r2)
 /* 801574D0 00154430  C8 21 01 10 */	lfd f1, 0x110(r1)
 /* 801574D4 00154434  C0 42 A9 8C */	lfs f2, lbl_803EAB8C@sda21(r2)
 /* 801574D8 00154438  EC 61 18 28 */	fsubs f3, f1, f3
@@ -2076,7 +2076,7 @@ setWalkNewPosition__9SpiderLegFv:
 /* 80157760 001546C0  3F E0 43 30 */	lis r31, 0x4330
 /* 80157764 001546C4  C2 C2 A9 74 */	lfs f22, lbl_803EAB74@sda21(r2)
 /* 80157768 001546C8  C3 02 A9 A8 */	lfs f24, lbl_803EABA8@sda21(r2)
-/* 8015776C 001546CC  CB 22 A9 98 */	lfd f25, $$22056@sda21(r2)
+/* 8015776C 001546CC  CB 22 A9 98 */	lfd f25, "@2056"@sda21(r2)
 /* 80157770 001546D0  C3 42 A9 8C */	lfs f26, lbl_803EAB8C@sda21(r2)
 /* 80157774 001546D4  C3 62 A9 88 */	lfs f27, lbl_803EAB88@sda21(r2)
 /* 80157778 001546D8  C3 82 A9 C4 */	lfs f28, lbl_803EABC4@sda21(r2)
@@ -2256,7 +2256,7 @@ checkMotionRatio__9SpiderLegFv:
 /* 801579FC 0015495C  38 00 00 04 */	li r0, 4
 /* 80157A00 00154960  C0 A2 A9 D4 */	lfs f5, lbl_803EABD4@sda21(r2)
 /* 80157A04 00154964  7C 09 03 A6 */	mtctr r0
-/* 80157A08 00154968  C8 82 A9 98 */	lfd f4, $$22056@sda21(r2)
+/* 80157A08 00154968  C8 82 A9 98 */	lfd f4, "@2056"@sda21(r2)
 /* 80157A0C 0015496C  38 E3 00 00 */	addi r7, r3, 0
 /* 80157A10 00154970  38 80 00 00 */	li r4, 0
 /* 80157A14 00154974  3C C0 43 30 */	lis r6, 0x4330
@@ -2382,7 +2382,7 @@ lbl_80157B8C:
 /* 80157BC8 00154B28  D0 0D 31 70 */	stfs f0, vibSpin$2820@sda21(r13)
 lbl_80157BCC:
 /* 80157BCC 00154B2C  3B E0 00 00 */	li r31, 0
-/* 80157BD0 00154B30  CB C2 A9 98 */	lfd f30, $$22056@sda21(r2)
+/* 80157BD0 00154B30  CB C2 A9 98 */	lfd f30, "@2056"@sda21(r2)
 /* 80157BD4 00154B34  1C 7F 00 24 */	mulli r3, r31, 0x24
 /* 80157BD8 00154B38  C3 E2 A9 DC */	lfs f31, lbl_803EABDC@sda21(r2)
 /* 80157BDC 00154B3C  57 E0 10 3A */	slwi r0, r31, 2
@@ -2821,8 +2821,8 @@ setRealCentre__9SpiderLegFR8Vector3f:
 /* 8015822C 0015518C  FC 04 00 40 */	fcmpo cr0, f4, f0
 /* 80158230 00155190  40 81 00 5C */	ble lbl_8015828C
 /* 80158234 00155194  FC 20 20 34 */	frsqrte f1, f4
-/* 80158238 00155198  C8 62 A9 78 */	lfd f3, $$21835_1@sda21(r2)
-/* 8015823C 0015519C  C8 42 A9 80 */	lfd f2, $$21836@sda21(r2)
+/* 80158238 00155198  C8 62 A9 78 */	lfd f3, "@1835_1"@sda21(r2)
+/* 8015823C 0015519C  C8 42 A9 80 */	lfd f2, "@1836"@sda21(r2)
 /* 80158240 001551A0  FC 01 00 72 */	fmul f0, f1, f1
 /* 80158244 001551A4  FC 23 00 72 */	fmul f1, f3, f1
 /* 80158248 001551A8  FC 04 00 32 */	fmul f0, f4, f0
@@ -3426,7 +3426,7 @@ lbl_80158AC4:
 /* 80158AE8 00155A48  3C A0 80 2B */	lis r5, __vt__11Interaction@ha
 /* 80158AEC 00155A4C  C3 E2 A9 F4 */	lfs f31, lbl_803EABF4@sda21(r2)
 /* 80158AF0 00155A50  3C 80 80 2B */	lis r4, __vt__13InteractFlick@ha
-/* 80158AF4 00155A54  CB 62 A9 98 */	lfd f27, $$22056@sda21(r2)
+/* 80158AF4 00155A54  CB 62 A9 98 */	lfd f27, "@2056"@sda21(r2)
 /* 80158AF8 00155A58  3C C0 80 2D */	lis r6, legId__4Kumo@ha
 /* 80158AFC 00155A5C  C3 82 A9 8C */	lfs f28, lbl_803EAB8C@sda21(r2)
 /* 80158B00 00155A60  C3 A2 A9 88 */	lfs f29, lbl_803EAB88@sda21(r2)
@@ -3611,7 +3611,7 @@ lbl_80158D88:
 /* 80158D90 00155CF0  38 80 00 E0 */	li r4, 0xe0
 /* 80158D94 00155CF4  38 C0 00 00 */	li r6, 0
 /* 80158D98 00155CF8  38 E0 00 00 */	li r7, 0
-/* 80158D9C 00155CFC  48 04 3D 9D */	bl create__9EffectMgrFQ29EffectMgr12effTypeTableR8Vector3fPQ23zen37CallBack1$$0PQ23zen17particleGenerator$$1PQ23zen58CallBack2$$0PQ23zen17particleGenerator$$4PQ23zen11particleMdl$$1
+/* 80158D9C 00155CFC  48 04 3D 9D */	bl "create__9EffectMgrFQ29EffectMgr12effTypeTableR8Vector3fPQ23zen37CallBack1<PQ23zen17particleGenerator>PQ23zen58CallBack2<PQ23zen17particleGenerator,PQ23zen11particleMdl>"
 lbl_80158DA0:
 /* 80158DA0 00155D00  80 7D 00 00 */	lwz r3, 0(r29)
 /* 80158DA4 00155D04  88 03 03 BA */	lbz r0, 0x3ba(r3)
@@ -3700,7 +3700,7 @@ setKneeDirection__9SpiderLegFv:
 /* 80158ED0 00155E30  7F FB FB 78 */	mr r27, r31
 /* 80158ED4 00155E34  80 04 00 04 */	lwz r0, 4(r4)
 /* 80158ED8 00155E38  7F FA FB 78 */	mr r26, r31
-/* 80158EDC 00155E3C  CB 02 A9 98 */	lfd f24, $$22056@sda21(r2)
+/* 80158EDC 00155E3C  CB 02 A9 98 */	lfd f24, "@2056"@sda21(r2)
 /* 80158EE0 00155E40  3B 81 00 44 */	addi r28, r1, 0x44
 /* 80158EE4 00155E44  90 61 00 44 */	stw r3, 0x44(r1)
 /* 80158EE8 00155E48  C3 22 A9 88 */	lfs f25, lbl_803EAB88@sda21(r2)
@@ -4791,7 +4791,7 @@ lbl_80159ECC:
 /* 80159EF0 00156E50  38 80 00 B5 */	li r4, 0xb5
 /* 80159EF4 00156E54  38 C0 00 00 */	li r6, 0
 /* 80159EF8 00156E58  38 E0 00 00 */	li r7, 0
-/* 80159EFC 00156E5C  48 04 2C 3D */	bl create__9EffectMgrFQ29EffectMgr12effTypeTableR8Vector3fPQ23zen37CallBack1$$0PQ23zen17particleGenerator$$1PQ23zen58CallBack2$$0PQ23zen17particleGenerator$$4PQ23zen11particleMdl$$1
+/* 80159EFC 00156E5C  48 04 2C 3D */	bl "create__9EffectMgrFQ29EffectMgr12effTypeTableR8Vector3fPQ23zen37CallBack1<PQ23zen17particleGenerator>PQ23zen58CallBack2<PQ23zen17particleGenerator,PQ23zen11particleMdl>"
 /* 80159F00 00156E60  28 03 00 00 */	cmplwi r3, 0
 /* 80159F04 00156E64  41 82 00 0C */	beq lbl_80159F10
 /* 80159F08 00156E68  38 13 01 2C */	addi r0, r19, 0x12c
@@ -4802,7 +4802,7 @@ lbl_80159F10:
 /* 80159F18 00156E78  38 80 00 B6 */	li r4, 0xb6
 /* 80159F1C 00156E7C  38 C0 00 00 */	li r6, 0
 /* 80159F20 00156E80  38 E0 00 00 */	li r7, 0
-/* 80159F24 00156E84  48 04 2C 15 */	bl create__9EffectMgrFQ29EffectMgr12effTypeTableR8Vector3fPQ23zen37CallBack1$$0PQ23zen17particleGenerator$$1PQ23zen58CallBack2$$0PQ23zen17particleGenerator$$4PQ23zen11particleMdl$$1
+/* 80159F24 00156E84  48 04 2C 15 */	bl "create__9EffectMgrFQ29EffectMgr12effTypeTableR8Vector3fPQ23zen37CallBack1<PQ23zen17particleGenerator>PQ23zen58CallBack2<PQ23zen17particleGenerator,PQ23zen11particleMdl>"
 /* 80159F28 00156E88  28 03 00 00 */	cmplwi r3, 0
 /* 80159F2C 00156E8C  41 82 00 0C */	beq lbl_80159F38
 /* 80159F30 00156E90  38 13 01 2C */	addi r0, r19, 0x12c

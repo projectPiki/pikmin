@@ -551,12 +551,12 @@ __RTTI__10MatobjInfo:
 __RTTI__9BaseShape:
   .4byte 0x802286b4
   .4byte 0x802286cc
-.global __RTTI__22IDelegate2$$0P5Joint$$4Ul$$1
-__RTTI__22IDelegate2$$0P5Joint$$4Ul$$1:
+.global "__RTTI__22IDelegate2<P5Joint,Ul>"
+"__RTTI__22IDelegate2<P5Joint,Ul>":
   .4byte 0x80228734
   .4byte 0
-.global __RTTI__32Delegate2$$09BaseShape$$4P5Joint$$4Ul$$1
-__RTTI__32Delegate2$$09BaseShape$$4P5Joint$$4Ul$$1:
+.global "__RTTI__32Delegate2<9BaseShape,P5Joint,Ul>"
+"__RTTI__32Delegate2<9BaseShape,P5Joint,Ul>":
   .4byte 0x80228704
   .4byte 0x80228758
 .global __RTTI__10LightFlare
@@ -1056,12 +1056,12 @@ lbl_803DD51C:
 .global lbl_803DD524
 lbl_803DD524:
 	.4byte 0x73797300
-.global __RTTI__22IDelegate1$$0R8Graphics$$1
-__RTTI__22IDelegate1$$0R8Graphics$$1:
+.global "__RTTI__22IDelegate1<R8Graphics>"
+"__RTTI__22IDelegate1<R8Graphics>":
   .4byte 0x802a5390
   .4byte 0
-.global __RTTI__29Delegate1$$06System$$4R8Graphics$$1
-__RTTI__29Delegate1$$06System$$4R8Graphics$$1:
+.global "__RTTI__29Delegate1<6System,R8Graphics>"
+"__RTTI__29Delegate1<6System,R8Graphics>":
   .4byte 0x802a5370
   .4byte 0x802a53a8
   .4byte 0x53747265
@@ -1342,16 +1342,16 @@ __RTTI__7AnimMgr:
   .4byte 0x802a6020
   .4byte 0x802a6054
   .4byte 0
-.global __RTTI__13Parm$$06String$$1
-__RTTI__13Parm$$06String$$1:
+.global "__RTTI__13Parm<6String>"
+"__RTTI__13Parm<6String>":
   .4byte 0x802a6044
   .4byte 0x802a6060
-.global __RTTI__7Parm$$0f$$1
-__RTTI__7Parm$$0f$$1:
+.global "__RTTI__7Parm<f>"
+"__RTTI__7Parm<f>":
   .4byte 0x802a6080
   .4byte 0x802a608c
-.global __RTTI__7Parm$$0i$$1
-__RTTI__7Parm$$0i$$1:
+.global "__RTTI__7Parm<i>"
+"__RTTI__7Parm<i>":
   .4byte 0x802a60ac
   .4byte 0x802a60b8
 .global __RTTI__8AnimInfo
@@ -1473,12 +1473,12 @@ __RTTI__11GameGenFlow:
 __RTTI__8GameFlow:
   .4byte lbl_802A6138
   .4byte 0x802a655c
-.global __RTTI__18IDelegate1$$0R4Menu$$1
-__RTTI__18IDelegate1$$0R4Menu$$1:
+.global "__RTTI__18IDelegate1<R4Menu>"
+"__RTTI__18IDelegate1<R4Menu>":
   .4byte 0x802a65c4
   .4byte 0
-.global __RTTI__27Delegate1$$08GameFlow$$4R4Menu$$1
-__RTTI__27Delegate1$$08GameFlow$$4R4Menu$$1:
+.global "__RTTI__27Delegate1<8GameFlow,R4Menu>"
+"__RTTI__27Delegate1<8GameFlow,R4Menu>":
   .4byte 0x802a65a8
   .4byte 0x802a65d8
 .global __RTTI__9LoadIdler
@@ -1680,16 +1680,16 @@ __RTTI__21MapSelectSetupSection:
 __RTTI__16MapSelectSection:
   .4byte 0x802a798c
   .4byte 0x802a79bc
-.global __RTTI__18IDelegate1$$0R4Menu$$1_1
-__RTTI__18IDelegate1$$0R4Menu$$1_1:
+.global "__RTTI__18IDelegate1<R4Menu>_1"
+"__RTTI__18IDelegate1<R4Menu>_1":
   .4byte 0x802a7a60
   .4byte 0
-.global __RTTI__23Delegate1$$04Menu$$4R4Menu$$1
-__RTTI__23Delegate1$$04Menu$$4R4Menu$$1:
+.global "__RTTI__23Delegate1<4Menu,R4Menu>"
+"__RTTI__23Delegate1<4Menu,R4Menu>":
   .4byte 0x802a7a48
   .4byte 0x802a7a74
-.global __RTTI__41Delegate1$$021MapSelectSetupSection$$4R4Menu$$1
-__RTTI__41Delegate1$$021MapSelectSetupSection$$4R4Menu$$1:
+.global "__RTTI__41Delegate1<21MapSelectSetupSection,R4Menu>"
+"__RTTI__41Delegate1<21MapSelectSetupSection,R4Menu>":
   .4byte 0x802a7a8c
   .4byte 0x802a7ab8
 .global lbl_803DDAA0
@@ -2303,12 +2303,12 @@ lbl_803DDF44:
 	.4byte 0x00000000
 	.4byte 0x802A89D8
 	.4byte 0x802A89E4
-.global __RTTI__18IDelegate1$$0R4Menu$$1_2
-__RTTI__18IDelegate1$$0R4Menu$$1_2:
+.global "__RTTI__18IDelegate1<R4Menu>_2"
+"__RTTI__18IDelegate1<R4Menu>_2":
   .4byte 0x802a8a24
   .4byte 0
-.global __RTTI__37Delegate1$$017TitleSetupSection$$4R4Menu$$1
-__RTTI__37Delegate1$$017TitleSetupSection$$4R4Menu$$1:
+.global "__RTTI__37Delegate1<17TitleSetupSection,R4Menu>"
+"__RTTI__37Delegate1<17TitleSetupSection,R4Menu>":
   .4byte 0x802a8a50
   .4byte 0x802a8a78
   .4byte 0x802a8a9c
@@ -3032,12 +3032,12 @@ lbl_803DE430:
 lbl_803DE438:
 	.4byte 0x64697374
 	.4byte 0x00000000
-.global __RTTI__18IDelegate1$$0R4Menu$$1_3
-__RTTI__18IDelegate1$$0R4Menu$$1_3:
+.global "__RTTI__18IDelegate1<R4Menu>_3"
+"__RTTI__18IDelegate1<R4Menu>_3":
   .4byte 0x802a98e8
   .4byte 0
-.global __RTTI__26Delegate1$$07FogMenu$$4R4Menu$$1
-__RTTI__26Delegate1$$07FogMenu$$4R4Menu$$1:
+.global "__RTTI__26Delegate1<7FogMenu,R4Menu>"
+"__RTTI__26Delegate1<7FogMenu,R4Menu>":
   .4byte 0x802a98cc
   .4byte 0x802a98fc
   .4byte 0x466f674d
@@ -3070,28 +3070,28 @@ __RTTI__9LightMenu:
 __RTTI__10DaySetMenu:
   .4byte 0x802a9a58
   .4byte 0x802a9a64
-.global __RTTI__25Delegate1$$06DayMgr$$4R4Menu$$1
-__RTTI__25Delegate1$$06DayMgr$$4R4Menu$$1:
+.global "__RTTI__25Delegate1<6DayMgr,R4Menu>"
+"__RTTI__25Delegate1<6DayMgr,R4Menu>":
   .4byte 0x802a9adc
   .4byte 0x802a9af8
-.global __RTTI__32Delegate1$$012PositionMenu$$4R4Menu$$1
-__RTTI__32Delegate1$$012PositionMenu$$4R4Menu$$1:
+.global "__RTTI__32Delegate1<12PositionMenu,R4Menu>"
+"__RTTI__32Delegate1<12PositionMenu,R4Menu>":
   .4byte 0x802a9b10
   .4byte 0x802a9b30
 .global __RTTI__12PositionMenu
 __RTTI__12PositionMenu:
   .4byte 0x802a9b48
   .4byte 0x802a9b58
-.global __RTTI__30Delegate1$$010ColourMenu$$4R4Menu$$1
-__RTTI__30Delegate1$$010ColourMenu$$4R4Menu$$1:
+.global "__RTTI__30Delegate1<10ColourMenu,R4Menu>"
+"__RTTI__30Delegate1<10ColourMenu,R4Menu>":
   .4byte 0x802a9bd0
   .4byte 0x802a9bf0
 .global __RTTI__10ColourMenu
 __RTTI__10ColourMenu:
   .4byte 0x802a9c38
   .4byte 0x802a9c44
-.global __RTTI__28Delegate1$$09LightMenu$$4R4Menu$$1
-__RTTI__28Delegate1$$09LightMenu$$4R4Menu$$1:
+.global "__RTTI__28Delegate1<9LightMenu,R4Menu>"
+"__RTTI__28Delegate1<9LightMenu,R4Menu>":
   .4byte 0x802a9cbc
   .4byte 0x802a9cdc
 .global lbl_803DE4D8
@@ -3884,8 +3884,8 @@ lbl_803DEA1C:
 __RTTI__15InteractPullout:
   .4byte 0x802ad2dc
   .4byte 0x802ad2f8
-.global __RTTI__22Receiver$$010AICreature$$1
-__RTTI__22Receiver$$010AICreature$$1:
+.global "__RTTI__22Receiver<10AICreature>"
+"__RTTI__22Receiver<10AICreature>":
   .4byte 0x802ad35c
   .4byte 0
 .global __RTTI__8SAIEvent
@@ -3942,12 +3942,12 @@ lbl_803DEA90:
 .global lbl_803DEA94
 lbl_803DEA94:
 	.4byte 0x00000000
-.global __RTTI__22Receiver$$010AICreature$$1_1
-__RTTI__22Receiver$$010AICreature$$1_1:
+.global "__RTTI__22Receiver<10AICreature>_1"
+"__RTTI__22Receiver<10AICreature>_1":
   .4byte 0x802ad7b0
   .4byte 0
-.global __RTTI__20AState$$010AICreature$$1
-__RTTI__20AState$$010AICreature$$1:
+.global "__RTTI__20AState<10AICreature>"
+"__RTTI__20AState<10AICreature>":
   .4byte 0x802ad7c8
   .4byte 0x802ad7dc
 .global __RTTI__8SAIState
@@ -3968,8 +3968,8 @@ __RTTI__12SAICondition:
 __RTTI__8SAIArrow:
   .4byte lbl_802AD734
   .4byte 0x802ad918
-.global __RTTI__26StateMachine$$010AICreature$$1
-__RTTI__26StateMachine$$010AICreature$$1:
+.global "__RTTI__26StateMachine<10AICreature>"
+"__RTTI__26StateMachine<10AICreature>":
   .4byte 0x802ad964
   .4byte 0
 .global __RTTI__8SimpleAI
@@ -4439,12 +4439,12 @@ optLevel__6AIPerf:
 .global lbl_803DEE38
 lbl_803DEE38:
 	.4byte 0x25730000
-.global __RTTI__18IDelegate1$$0R4Menu$$1_4
-__RTTI__18IDelegate1$$0R4Menu$$1_4:
+.global "__RTTI__18IDelegate1<R4Menu>_4"
+"__RTTI__18IDelegate1<R4Menu>_4":
   .4byte 0x802aedcc
   .4byte 0
-.global __RTTI__25Delegate1$$06AIPerf$$4R4Menu$$1
-__RTTI__25Delegate1$$06AIPerf$$4R4Menu$$1:
+.global "__RTTI__25Delegate1<6AIPerf,R4Menu>"
+"__RTTI__25Delegate1<6AIPerf,R4Menu>":
   .4byte 0x802aedb0
   .4byte 0x802aede0
   .4byte 0
@@ -5562,8 +5562,8 @@ __RTTI__12DualCreature_1:
 __RTTI__6Pellet:
   .4byte 0x803df5e8
   .4byte 0x802b036c
-.global __RTTI__21StateMachine$$06Pellet$$1
-__RTTI__21StateMachine$$06Pellet$$1:
+.global "__RTTI__21StateMachine<6Pellet>"
+"__RTTI__21StateMachine<6Pellet>":
   .4byte 0x802b04d0
   .4byte 0
   .4byte 0x4b456666
@@ -5677,12 +5677,12 @@ lbl_803DF754:
 .global lbl_803DF758
 lbl_803DF758:
 	.4byte 0x41200000
-.global __RTTI__17Receiver$$06Pellet$$1
-__RTTI__17Receiver$$06Pellet$$1:
+.global "__RTTI__17Receiver<6Pellet>"
+"__RTTI__17Receiver<6Pellet>":
   .4byte 0x802b09f8
   .4byte 0
-.global __RTTI__15AState$$06Pellet$$1
-__RTTI__15AState$$06Pellet$$1:
+.global "__RTTI__15AState<6Pellet>"
+"__RTTI__15AState<6Pellet>":
   .4byte 0x802b0a0c
   .4byte 0x802b0a1c
 .global __RTTI__11PelletState
@@ -5713,8 +5713,8 @@ __RTTI__15PelletDeadState:
 __RTTI__18PelletUfoLoadState:
   .4byte 0x802b0cb4
   .4byte 0x802b0cc8
-.global __RTTI__21StateMachine$$06Pellet$$1_1
-__RTTI__21StateMachine$$06Pellet$$1_1:
+.global "__RTTI__21StateMachine<6Pellet>_1"
+"__RTTI__21StateMachine<6Pellet>_1":
   .4byte 0x802b0e20
   .4byte 0
 .global __RTTI__18PelletStateMachine
@@ -8212,8 +8212,8 @@ lbl_803E0AB4:
 	.4byte 0x72656400
 	.4byte 0x79656C6C
 	.4byte 0x6F770000
-.global __RTTI__19StateMachine$$04Piki$$1
-__RTTI__19StateMachine$$04Piki$$1:
+.global "__RTTI__19StateMachine<4Piki>"
+"__RTTI__19StateMachine<4Piki>":
   .4byte 0x802b8760
   .4byte 0
   .4byte 0x802b878c
@@ -9067,8 +9067,8 @@ lbl_803E1058:
 	.4byte 0x00000000
 	.4byte 0x802B8D80
 	.4byte 0x00000000
-.global __RTTI__13AState$$04Piki$$1
-__RTTI__13AState$$04Piki$$1:
+.global "__RTTI__13AState<4Piki>"
+"__RTTI__13AState<4Piki>":
   .4byte 0x802b8d90
   .4byte 0x802b8da0
 .global __RTTI__9PikiState
@@ -9207,8 +9207,8 @@ __RTTI__15PikiNormalState:
 __RTTI__15PikiLookAtState:
   .4byte 0x802ba11c
   .4byte 0x802ba12c
-.global __RTTI__19StateMachine$$04Piki$$1_1
-__RTTI__19StateMachine$$04Piki$$1_1:
+.global "__RTTI__19StateMachine<4Piki>_1"
+"__RTTI__19StateMachine<4Piki>_1":
   .4byte 0x802ba2bc
   .4byte 0
 .global __RTTI__16PikiStateMachine
@@ -10417,8 +10417,8 @@ __RTTI__Q211FallWaterAI8EmitInit:
 __RTTI__Q211FallWaterAI11CollideInit:
   .4byte 0x802bd998
   .4byte 0x802bd9b4
-.global __RTTI__26StateMachine$$010AICreature$$1_1
-__RTTI__26StateMachine$$010AICreature$$1_1:
+.global "__RTTI__26StateMachine<10AICreature>_1"
+"__RTTI__26StateMachine<10AICreature>_1":
   .4byte 0x802bd9d8
   .4byte 0
 .global __RTTI__8SimpleAI_1
@@ -10651,8 +10651,8 @@ __RTTI__Q28SluiceAI10MotionDone:
 __RTTI__Q28SluiceAI4Init:
   .4byte 0x802be3bc
   .4byte 0x802be3cc
-.global __RTTI__22Receiver$$010AICreature$$1_2
-__RTTI__22Receiver$$010AICreature$$1_2:
+.global "__RTTI__22Receiver<10AICreature>_2"
+"__RTTI__22Receiver<10AICreature>_2":
   .4byte 0x802be3fc
   .4byte 0
 .global __RTTI__8SluiceAI
@@ -11370,8 +11370,8 @@ __RTTI__12InteractSuck:
 __RTTI__14InteractGeyzer:
   .4byte 0x802c0158
   .4byte 0x802c0168
-.global __RTTI__19StateMachine$$04Navi$$1
-__RTTI__19StateMachine$$04Navi$$1:
+.global "__RTTI__19StateMachine<4Navi>"
+"__RTTI__19StateMachine<4Navi>":
   .4byte 0x802c01cc
   .4byte 0
   .4byte 0x802c01f8
@@ -11929,8 +11929,8 @@ lbl_803E2540:
 	.4byte 0x00000000
 	.4byte 0x802C06B0
 	.4byte 0x00000000
-.global __RTTI__13AState$$04Navi$$1
-__RTTI__13AState$$04Navi$$1:
+.global "__RTTI__13AState<4Navi>"
+"__RTTI__13AState<4Navi>":
   .4byte 0x802c06c0
   .4byte 0x802c06d0
   .4byte 0x802c06dc
@@ -12083,8 +12083,8 @@ __RTTI__17NaviDemoWaitState:
 __RTTI__15NaviPelletState:
   .4byte 0x802c18d4
   .4byte 0x802c18e4
-.global __RTTI__19StateMachine$$04Navi$$1_1
-__RTTI__19StateMachine$$04Navi$$1_1:
+.global "__RTTI__19StateMachine<4Navi>_1"
+"__RTTI__19StateMachine<4Navi>_1":
   .4byte 0x802c1a44
   .4byte 0
 .global __RTTI__16NaviStateMachine
@@ -12139,8 +12139,8 @@ lbl_803E26D0:
 	.4byte 0x43C80000
 	.4byte 0x802C1B24
 	.4byte 0x00000000
-.global __RTTI__13AState$$04Navi$$1_1
-__RTTI__13AState$$04Navi$$1_1:
+.global "__RTTI__13AState<4Navi>_1"
+"__RTTI__13AState<4Navi>_1":
   .4byte 0x802c1b34
   .4byte 0x802c1b44
   .4byte 0x802c1b50
@@ -12149,16 +12149,16 @@ __RTTI__13AState$$04Navi$$1_1:
 __RTTI__19NaviDemoSunsetState:
   .4byte 0x802c1b10
   .4byte 0x802c1b70
-.global __RTTI__35StateMachine$$019NaviDemoSunsetState$$1
-__RTTI__35StateMachine$$019NaviDemoSunsetState$$1:
+.global "__RTTI__35StateMachine<19NaviDemoSunsetState>"
+"__RTTI__35StateMachine<19NaviDemoSunsetState>":
   .4byte 0x802c1be0
   .4byte 0
-.global __RTTI__31Receiver$$019NaviDemoSunsetState$$1
-__RTTI__31Receiver$$019NaviDemoSunsetState$$1:
+.global "__RTTI__31Receiver<19NaviDemoSunsetState>"
+"__RTTI__31Receiver<19NaviDemoSunsetState>":
   .4byte 0x802c1d18
   .4byte 0
-.global __RTTI__29AState$$019NaviDemoSunsetState$$1
-__RTTI__29AState$$019NaviDemoSunsetState$$1:
+.global "__RTTI__29AState<19NaviDemoSunsetState>"
+"__RTTI__29AState<19NaviDemoSunsetState>":
   .4byte 0x802c1d38
   .4byte 0x802c1d54
 .global __RTTI__Q219NaviDemoSunsetState9DemoState
@@ -13004,8 +13004,8 @@ __RTTI__Q27PlantAI12OpponentMove:
   .4byte 0x802c3cfc
   .4byte 0x506c616e
   .4byte 0x74414900
-.global __RTTI__26StateMachine$$010AICreature$$1_2
-__RTTI__26StateMachine$$010AICreature$$1_2:
+.global "__RTTI__26StateMachine<10AICreature>_2"
+"__RTTI__26StateMachine<10AICreature>_2":
   .4byte 0x802c3d68
   .4byte 0
 .global __RTTI__8SimpleAI_2
@@ -13168,16 +13168,16 @@ pi__6NMathF:
 __RTTI__5NHeap:
   .4byte 0x803e3080
   .4byte 0
-.global __RTTI__14NArray$$05NHeap$$1
-__RTTI__14NArray$$05NHeap$$1:
+.global "__RTTI__14NArray<5NHeap>"
+"__RTTI__14NArray<5NHeap>":
   .4byte 0x802c4bc4
   .4byte 0
   .4byte 0x4e4e6f64
   .4byte 0x65000000
   .4byte 0x803e3098
   .4byte 0
-.global __RTTI__14NArray$$05NNode$$1
-__RTTI__14NArray$$05NNode$$1:
+.global "__RTTI__14NArray<5NNode>"
+"__RTTI__14NArray<5NNode>":
   .4byte 0x802c4c34
   .4byte 0
   .4byte 0x802c4d1c
@@ -13328,16 +13328,16 @@ __RTTI__12PaniTestNode:
 __RTTI__19ParaMultiParameters:
   .4byte 0x802c509c
   .4byte 0
-.global __RTTI__17ParaParameters$$0f$$1
-__RTTI__17ParaParameters$$0f$$1:
+.global "__RTTI__17ParaParameters<f>"
+"__RTTI__17ParaParameters<f>":
   .4byte 0x802c50d4
   .4byte 0
 .global __RTTI__15ParaParametersF
 __RTTI__15ParaParametersF:
   .4byte 0x802c50c4
   .4byte 0x802c50ec
-.global __RTTI__17ParaParameters$$0i$$1
-__RTTI__17ParaParameters$$0i$$1:
+.global "__RTTI__17ParaParameters<i>"
+"__RTTI__17ParaParameters<i>":
   .4byte 0x802c5130
   .4byte 0
 .global __RTTI__15ParaParametersI
@@ -13358,8 +13358,8 @@ __RTTI__7NCamera:
 __RTTI__10PcamCamera:
   .4byte 0x802c51d0
   .4byte 0x802c51dc
-.global __RTTI__17NArray$$08Creature$$1
-__RTTI__17NArray$$08Creature$$1:
+.global "__RTTI__17NArray<8Creature>"
+"__RTTI__17NArray<8Creature>":
   .4byte 0x802c51f4
   .4byte 0
   .4byte 0x414e6f64
@@ -17797,8 +17797,8 @@ lbl_803E56F0:
 	.4byte 0x25730000
 	.4byte 0x802D2F34
 	.4byte 0x00000000
-.global __RTTI__Q23zen12FigureTex$$0i$$1
-__RTTI__Q23zen12FigureTex$$0i$$1:
+.global "__RTTI__Q23zen12FigureTex<i>"
+"__RTTI__Q23zen12FigureTex<i>":
   .4byte 0x802d2f44
   .4byte 0x802d2f58
   .4byte 0x802d2f64
@@ -17807,8 +17807,8 @@ __RTTI__Q23zen12FigureTex$$0i$$1:
   .4byte 0
   .4byte 0x802d2f94
   .4byte 0x802d2fa4
-.global __RTTI__Q23zen20NumberPicCallBack$$0i$$1
-__RTTI__Q23zen20NumberPicCallBack$$0i$$1:
+.global "__RTTI__Q23zen20NumberPicCallBack<i>"
+"__RTTI__Q23zen20NumberPicCallBack<i>":
   .4byte 0x802d2f18
   .4byte 0x802d2fb8
   .4byte 0
@@ -18523,12 +18523,12 @@ __RTTI__15SaveFailureMode:
 __RTTI__15FinalResultMode:
   .4byte 0x802d680c
   .4byte 0x802d681c
-.global __RTTI__18IDelegate1$$0R4Menu$$1_5
-__RTTI__18IDelegate1$$0R4Menu$$1_5:
+.global "__RTTI__18IDelegate1<R4Menu>_5"
+"__RTTI__18IDelegate1<R4Menu>_5":
   .4byte 0x802d6874
   .4byte 0
-.global __RTTI__41Delegate1$$021GameCourseClearScreen$$4R4Menu$$1
-__RTTI__41Delegate1$$021GameCourseClearScreen$$4R4Menu$$1:
+.global "__RTTI__41Delegate1<21GameCourseClearScreen,R4Menu>"
+"__RTTI__41Delegate1<21GameCourseClearScreen,R4Menu>":
   .4byte 0x802d6848
   .4byte 0x802d6888
   .4byte 0x802d68f8
@@ -18936,8 +18936,8 @@ __RTTI__14TAIAfireBreath:
 __RTTI__18TAIAfireBreathTank:
   .4byte 0x802de008
   .4byte 0x802de060
-.global __RTTI__Q23zen17CallBack1$$0R4Teki$$1
-__RTTI__Q23zen17CallBack1$$0R4Teki$$1:
+.global "__RTTI__Q23zen17CallBack1<R4Teki>"
+"__RTTI__Q23zen17CallBack1<R4Teki>":
   .4byte 0x802de0ac
   .4byte 0
 .global __RTTI__10FireEffect
@@ -19086,8 +19086,8 @@ __RTTI__14TAIAfireBreath_1:
 __RTTI__17TAIAfireBreathMar:
   .4byte 0x802de9a0
   .4byte 0x802de9d8
-.global __RTTI__Q23zen17CallBack1$$0R4Teki$$1_1
-__RTTI__Q23zen17CallBack1$$0R4Teki$$1_1:
+.global "__RTTI__Q23zen17CallBack1<R4Teki>_1"
+"__RTTI__Q23zen17CallBack1<R4Teki>_1":
   .4byte 0x802dea28
   .4byte 0
 .global __RTTI__12BreathEffect
@@ -19786,8 +19786,8 @@ lbl_803E668C:
 __RTTI__10FntobjInfo:
   .4byte 0x802e0968
   .4byte 0x802e0980
-.global frameMax__Q29$$2unnamed$$216PikiIconCallBack
-frameMax__Q29$$2unnamed$$216PikiIconCallBack:
+.global "frameMax__Q29@unnamed@16PikiIconCallBack"
+"frameMax__Q29@unnamed@16PikiIconCallBack":
 	.4byte 0x3F000000
 .global lbl_803E66A4
 lbl_803E66A4:
@@ -19800,68 +19800,68 @@ lbl_803E66A4:
 	.4byte 0x00000000
 	.4byte 0x802E0CA0
 	.4byte 0x802E0CB0
-.global __RTTI__Q29$$2unnamed$$212DateCallBack
-__RTTI__Q29$$2unnamed$$212DateCallBack:
+.global "__RTTI__Q29@unnamed@12DateCallBack"
+"__RTTI__Q29@unnamed@12DateCallBack":
   .4byte 0x802e0c48
   .4byte 0x802e0cc4
-.global __RTTI__Q29$$2unnamed$$217LifePinchCallBack
-__RTTI__Q29$$2unnamed$$217LifePinchCallBack:
+.global "__RTTI__Q29@unnamed@17LifePinchCallBack"
+"__RTTI__Q29@unnamed@17LifePinchCallBack":
   .4byte 0x802e0cf8
   .4byte 0x802e0d18
-.global __RTTI__Q29$$2unnamed$$216LifeIconCallBack
-__RTTI__Q29$$2unnamed$$216LifeIconCallBack:
+.global "__RTTI__Q29@unnamed@16LifeIconCallBack"
+"__RTTI__Q29@unnamed@16LifeIconCallBack":
   .4byte 0x802e0d44
   .4byte 0x802e0d60
-.global __RTTI__Q29$$2unnamed$$215NaviTexCallBack
-__RTTI__Q29$$2unnamed$$215NaviTexCallBack:
+.global "__RTTI__Q29@unnamed@15NaviTexCallBack"
+"__RTTI__Q29@unnamed@15NaviTexCallBack":
   .4byte 0x802e0d8c
   .4byte 0x802e0da8
-.global __RTTI__Q29$$2unnamed$$216NaviIconCallBack
-__RTTI__Q29$$2unnamed$$216NaviIconCallBack:
+.global "__RTTI__Q29@unnamed@16NaviIconCallBack"
+"__RTTI__Q29@unnamed@16NaviIconCallBack":
   .4byte 0x802e0dd4
   .4byte 0x802e0df0
-.global __RTTI__Q29$$2unnamed$$27SunMove
-__RTTI__Q29$$2unnamed$$27SunMove:
+.global "__RTTI__Q29@unnamed@7SunMove"
+"__RTTI__Q29@unnamed@7SunMove":
   .4byte 0x802e0e38
   .4byte 0
-.global __RTTI__Q29$$2unnamed$$216MoonIconCallBack
-__RTTI__Q29$$2unnamed$$216MoonIconCallBack:
+.global "__RTTI__Q29@unnamed@16MoonIconCallBack"
+"__RTTI__Q29@unnamed@16MoonIconCallBack":
   .4byte 0x802e0e1c
   .4byte 0x802e0e4c
-.global __RTTI__Q29$$2unnamed$$27SunAnim
-__RTTI__Q29$$2unnamed$$27SunAnim:
+.global "__RTTI__Q29@unnamed@7SunAnim"
+"__RTTI__Q29@unnamed@7SunAnim":
   .4byte 0x802e0e9c
   .4byte 0
-.global __RTTI__Q29$$2unnamed$$216SunIcon2CallBack
-__RTTI__Q29$$2unnamed$$216SunIcon2CallBack:
+.global "__RTTI__Q29@unnamed@16SunIcon2CallBack"
+"__RTTI__Q29@unnamed@16SunIcon2CallBack":
   .4byte 0x802e0e80
   .4byte 0x802e0eb0
-.global __RTTI__Q29$$2unnamed$$216SunIcon1CallBack
-__RTTI__Q29$$2unnamed$$216SunIcon1CallBack:
+.global "__RTTI__Q29@unnamed@16SunIcon1CallBack"
+"__RTTI__Q29@unnamed@16SunIcon1CallBack":
   .4byte 0x802e0eec
   .4byte 0x802e0f08
-.global __RTTI__Q29$$2unnamed$$218SunCapsuleCallBack
-__RTTI__Q29$$2unnamed$$218SunCapsuleCallBack:
+.global "__RTTI__Q29@unnamed@18SunCapsuleCallBack"
+"__RTTI__Q29@unnamed@18SunCapsuleCallBack":
   .4byte 0x802e0f3c
   .4byte 0x802e0f5c
-.global __RTTI__Q29$$2unnamed$$215SunBaseCallBack
-__RTTI__Q29$$2unnamed$$215SunBaseCallBack:
+.global "__RTTI__Q29@unnamed@15SunBaseCallBack"
+"__RTTI__Q29@unnamed@15SunBaseCallBack":
   .4byte 0x802e0f88
   .4byte 0x802e0fa4
-.global __RTTI__Q23zen12FigureTex$$0s$$1
-__RTTI__Q23zen12FigureTex$$0s$$1:
+.global "__RTTI__Q23zen12FigureTex<s>"
+"__RTTI__Q23zen12FigureTex<s>":
   .4byte 0x802e1004
   .4byte 0x802e101c
-.global __RTTI__Q23zen20NumberPicCallBack$$0s$$1
-__RTTI__Q23zen20NumberPicCallBack$$0s$$1:
+.global "__RTTI__Q23zen20NumberPicCallBack<s>"
+"__RTTI__Q23zen20NumberPicCallBack<s>":
   .4byte 0x802e0fe4
   .4byte 0x802e1028
-.global __RTTI__Q29$$2unnamed$$223MapPikminWindowCallBack
-__RTTI__Q29$$2unnamed$$223MapPikminWindowCallBack:
+.global "__RTTI__Q29@unnamed@23MapPikminWindowCallBack"
+"__RTTI__Q29@unnamed@23MapPikminWindowCallBack":
   .4byte 0x802e1064
   .4byte 0x802e1088
-.global __RTTI__Q29$$2unnamed$$216PikiIconCallBack
-__RTTI__Q29$$2unnamed$$216PikiIconCallBack:
+.global "__RTTI__Q29@unnamed@16PikiIconCallBack"
+"__RTTI__Q29@unnamed@16PikiIconCallBack":
   .4byte 0x802e10b4
   .4byte 0x802e10d0
 .global TRI_NUM__Q23zen14DrawLifeCircle
@@ -19943,8 +19943,8 @@ __RTTI__Q23zen19ArrowCenterCallBack:
   .4byte 0x802e1378
   .4byte 0x802e13c8
   .4byte 0
-.global __RTTI__Q23zen12FigureTex$$0i$$1_1
-__RTTI__Q23zen12FigureTex$$0i$$1_1:
+.global "__RTTI__Q23zen12FigureTex<i>_1"
+"__RTTI__Q23zen12FigureTex<i>_1":
   .4byte 0x802e13d8
   .4byte 0x802e13ec
   .4byte 0x414e6f64
@@ -20002,8 +20002,8 @@ __RTTI__Q23zen11DrawAccount:
   .4byte 0x802e1600
   .4byte 0x802e163c
   .4byte 0
-.global __RTTI__Q23zen12FigureTex$$0s$$1_1
-__RTTI__Q23zen12FigureTex$$0s$$1_1:
+.global "__RTTI__Q23zen12FigureTex<s>_1"
+"__RTTI__Q23zen12FigureTex<s>_1":
   .4byte 0x802e164c
   .4byte 0x802e1664
   .4byte 0x802e1670
@@ -20539,8 +20539,8 @@ __RTTI__22TAIAflyingBaseKabekuiC:
   .4byte 0x802e3508
   .4byte 0x802e3554
   .4byte 0
-.global __RTTI__Q29$$2unnamed$$212rippleEffect
-__RTTI__Q29$$2unnamed$$212rippleEffect:
+.global "__RTTI__Q29@unnamed@12rippleEffect"
+"__RTTI__Q29@unnamed@12rippleEffect":
   .4byte 0x802e353c
   .4byte 0x802e3580
 .global __RTTI__19TAIAtakeOffKabekuiC
@@ -21002,12 +21002,12 @@ __RTTI__19TAImiurinParameters:
 lbl_803E7188:
 	.4byte 0x2A253032
 	.4byte 0x642A0000
-.global mapNoScr2Game__9$$2unnamed$$2
-mapNoScr2Game__9$$2unnamed$$2:
+.global "mapNoScr2Game__9@unnamed@"
+"mapNoScr2Game__9@unnamed@":
 	.4byte 0x03010002
 	.4byte 0x04000000
-.global mapNoGame2Scr__9$$2unnamed$$2
-mapNoGame2Scr__9$$2unnamed$$2:
+.global "mapNoGame2Scr__9@unnamed@"
+"mapNoGame2Scr__9@unnamed@":
 	.4byte 0x02010300
 	.4byte 0x04000000
 .global lbl_803E71A0
@@ -21304,11 +21304,11 @@ lbl_803E7320:
 .global lbl_803E7324
 lbl_803E7324:
 	.4byte 0x00000000
-.global EVENT_NONE__Q29$$2unnamed$$219WorldMapCoursePoint
-EVENT_NONE__Q29$$2unnamed$$219WorldMapCoursePoint:
+.global "EVENT_NONE__Q29@unnamed@19WorldMapCoursePoint"
+"EVENT_NONE__Q29@unnamed@19WorldMapCoursePoint":
 	.4byte 0x00000000
-.global EVENT_APPEAR_FINISH__Q29$$2unnamed$$219WorldMapCoursePoint
-EVENT_APPEAR_FINISH__Q29$$2unnamed$$219WorldMapCoursePoint:
+.global "EVENT_APPEAR_FINISH__Q29@unnamed@19WorldMapCoursePoint"
+"EVENT_APPEAR_FINISH__Q29@unnamed@19WorldMapCoursePoint":
 	.4byte 0x00000001
 .global lbl_803E7330
 lbl_803E7330:
@@ -21344,8 +21344,8 @@ lbl_803E7368:
 	.4byte 0x64720000
 	.4byte 0x802E5900
 	.4byte 0x00000000
-.global __RTTI__Q23zen12FigureTex$$0i$$1_2
-__RTTI__Q23zen12FigureTex$$0i$$1_2:
+.global "__RTTI__Q23zen12FigureTex<i>_2"
+"__RTTI__Q23zen12FigureTex<i>_2":
   .4byte 0x802e5910
   .4byte 0x802e5924
   .4byte 0x802e5930
@@ -21354,8 +21354,8 @@ __RTTI__Q23zen12FigureTex$$0i$$1_2:
   .4byte 0
   .4byte 0x802e5960
   .4byte 0x802e5970
-.global __RTTI__Q29$$2unnamed$$224DrawWorldMapDateCallBack
-__RTTI__Q29$$2unnamed$$224DrawWorldMapDateCallBack:
+.global "__RTTI__Q29@unnamed@24DrawWorldMapDateCallBack"
+"__RTTI__Q29@unnamed@24DrawWorldMapDateCallBack":
   .4byte 0x802e59c0
   .4byte 0x802e59e4
 .global lbl_803E73A0
@@ -21687,8 +21687,8 @@ __RTTI__Q23zen17DrawCMresultGraph:
   .4byte 0x802e6f6c
   .4byte 0x802e6fac
   .4byte 0
-.global __RTTI__Q23zen12FigureTex$$0i$$1_3
-__RTTI__Q23zen12FigureTex$$0i$$1_3:
+.global "__RTTI__Q23zen12FigureTex<i>_3"
+"__RTTI__Q23zen12FigureTex<i>_3":
   .4byte 0x802e6fbc
   .4byte 0x802e6fd0
   .4byte 0x802e6fdc
@@ -21912,12 +21912,12 @@ GX2HWFiltConv:
 fragmentID:
 	.4byte 0xFFFFFFFE
 	.4byte 0x00000000
-.global $$2159
-$$2159:
+.global "@159"
+"@159":
 	.4byte 0x40240000
 	.4byte 0x00000000
-.global $$2wstringBase0
-$$2wstringBase0:
+.global "@wstringBase0"
+"@wstringBase0":
 	.4byte 0x00000000
 	.4byte 0x00000000
 .global next

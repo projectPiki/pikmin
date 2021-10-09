@@ -38,8 +38,8 @@ __ct__10SpiderPropFv:
 /* 80152818 0014F778  80 01 01 B8 */	lwz r0, 0x1b8(r1)
 /* 8015281C 0014F77C  90 01 01 B0 */	stw r0, 0x1b0(r1)
 /* 80152820 0014F780  4B F0 C2 61 */	bl __ct__8BaseParmFP10Parameters5ayuID
-/* 80152824 0014F784  3C 60 80 2A */	lis r3, __vt__7Parm$$0f$$1@ha
-/* 80152828 0014F788  3B C3 60 98 */	addi r30, r3, __vt__7Parm$$0f$$1@l
+/* 80152824 0014F784  3C 60 80 2A */	lis r3, "__vt__7Parm<f>"@ha
+/* 80152828 0014F788  3B C3 60 98 */	addi r30, r3, "__vt__7Parm<f>"@l
 /* 8015282C 0014F78C  93 DF 02 0C */	stw r30, 0x20c(r31)
 /* 80152830 0014F790  38 A1 01 AC */	addi r5, r1, 0x1ac
 /* 80152834 0014F794  38 7F 02 14 */	addi r3, r31, 0x214
@@ -557,8 +557,8 @@ __ct__10SpiderPropFv:
 /* 80153034 0014FF94  80 01 03 30 */	lwz r0, 0x330(r1)
 /* 80153038 0014FF98  90 01 00 F4 */	stw r0, 0xf4(r1)
 /* 8015303C 0014FF9C  4B F0 BA 45 */	bl __ct__8BaseParmFP10Parameters5ayuID
-/* 80153040 0014FFA0  3C 60 80 2A */	lis r3, __vt__7Parm$$0i$$1@ha
-/* 80153044 0014FFA4  3B A3 60 C4 */	addi r29, r3, __vt__7Parm$$0i$$1@l
+/* 80153040 0014FFA0  3C 60 80 2A */	lis r3, "__vt__7Parm<i>"@ha
+/* 80153044 0014FFA4  3B A3 60 C4 */	addi r29, r3, "__vt__7Parm<i>"@l
 /* 80153048 0014FFA8  93 BF 04 FC */	stw r29, 0x4fc(r31)
 /* 8015304C 0014FFAC  3B C0 00 01 */	li r30, 1
 /* 80153050 0014FFB0  38 A1 00 F0 */	addi r5, r1, 0xf0

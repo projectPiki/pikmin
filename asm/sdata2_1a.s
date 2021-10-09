@@ -49,12 +49,12 @@ lbl_803E9848:
 .global lbl_803E984C
 lbl_803E984C:
 	.4byte 0x42C80000
-.global $$2440
-$$2440:
+.global "@440"
+"@440":
 	.4byte 0x3FE00000
 	.4byte 0x00000000
-.global $$2441
-$$2441:
+.global "@441"
+"@441":
 	.4byte 0x40080000
 	.4byte 0x00000000
 .global lbl_803E9860
@@ -63,8 +63,8 @@ lbl_803E9860:
 .global lbl_803E9864
 lbl_803E9864:
 	.4byte 0x46FFFE00
-.global $$21442
-$$21442:
+.global "@1442"
+"@1442":
 	.4byte 0x43300000
 	.4byte 0x80000000
 .global lbl_803E9870
@@ -203,8 +203,8 @@ lbl_803E991C:
 lbl_803E9920:
 	.4byte 0x3E99999A
 	.4byte 0x00000000
-.global $$22634
-$$22634:
+.global "@2634"
+"@2634":
 	.4byte 0x43300000
 	.4byte 0x80000000
 .global lbl_803E9930
@@ -235,12 +235,12 @@ lbl_803E994C:
 lbl_803E9950:
 	.4byte 0x41700000
 	.4byte 0x00000000
-.global $$22973
-$$22973:
+.global "@2973"
+"@2973":
 	.4byte 0x3FE00000
 	.4byte 0x00000000
-.global $$22974
-$$22974:
+.global "@2974"
+"@2974":
 	.4byte 0x40080000
 	.4byte 0x00000000
 .global lbl_803E9968
@@ -355,16 +355,16 @@ lbl_803E99F8:
 .global lbl_803E99FC
 lbl_803E99FC:
 	.4byte 0x3F000000
-.global $$21650
-$$21650:
+.global "@1650"
+"@1650":
 	.4byte 0x43300000
 	.4byte 0x80000000
-.global $$21703
-$$21703:
+.global "@1703"
+"@1703":
 	.4byte 0x3FE00000
 	.4byte 0x00000000
-.global $$21704
-$$21704:
+.global "@1704"
+"@1704":
 	.4byte 0x40080000
 	.4byte 0x00000000
 .global lbl_803E9A18
@@ -439,8 +439,8 @@ lbl_803E9A70:
 .global lbl_803E9A74
 lbl_803E9A74:
 	.4byte 0x42480000
-.global $$22059
-$$22059:
+.global "@2059"
+"@2059":
 	.4byte 0x43300000
 	.4byte 0x80000000
 .global lbl_803E9A80
@@ -471,8 +471,8 @@ lbl_803E9A9C:
 lbl_803E9AA0:
 	.4byte 0x3A800000
 	.4byte 0x00000000
-.global $$21512_1
-$$21512_1:
+.global "@1512_1"
+"@1512_1":
 	.4byte 0x43300000
 	.4byte 0x00000000
 .global lbl_803E9AB0
@@ -481,12 +481,12 @@ lbl_803E9AB0:
 .global lbl_803E9AB4
 lbl_803E9AB4:
 	.4byte 0x46480000
-.global $$21095
-$$21095:
+.global "@1095"
+"@1095":
 	.4byte 0x3FE00000
 	.4byte 0x00000000
-.global $$21096
-$$21096:
+.global "@1096"
+"@1096":
 	.4byte 0x40080000
 	.4byte 0x00000000
 .global lbl_803E9AC8
@@ -513,8 +513,8 @@ lbl_803E9AE4:
 lbl_803E9AE8:
 	.4byte 0x40400000
 	.4byte 0x00000000
-.global $$2975
-$$2975:
+.global "@975"
+"@975":
 	.4byte 0x43300000
 	.4byte 0x80000000
 .global lbl_803E9AF8
@@ -537,12 +537,12 @@ lbl_803E9B08:
 lbl_803E9B10:
 	.4byte 0x00000000
 	.4byte 0x00000000
-.global $$2982
-$$2982:
+.global "@982"
+"@982":
 	.4byte 0x3FE00000
 	.4byte 0x00000000
-.global $$2983
-$$2983:
+.global "@983"
+"@983":
 	.4byte 0x40080000
 	.4byte 0x00000000
 .global lbl_803E9B28
@@ -567,8 +567,8 @@ lbl_803E9B3C:
 lbl_803E9B40:
 	.4byte 0x40400000
 	.4byte 0x00000000
-.global $$21113
-$$21113:
+.global "@1113"
+"@1113":
 	.4byte 0x43300000
 	.4byte 0x80000000
 .global lbl_803E9B50
@@ -581,8 +581,8 @@ lbl_803E9B54:
 lbl_803E9B58:
 	.4byte 0x40490FDB
 	.4byte 0x00000000
-.global $$21175
-$$21175:
+.global "@1175"
+"@1175":
 	.4byte 0x43300000
 	.4byte 0x00000000
 .global lbl_803E9B68
@@ -629,8 +629,8 @@ lbl_803E9BA0:
 .global lbl_803E9BA4
 lbl_803E9BA4:
 	.4byte 0x40490FDB
-.global $$2933
-$$2933:
+.global "@933"
+"@933":
 	.4byte 0x43300000
 	.4byte 0x80000000
 .global lbl_803E9BB0
@@ -673,8 +673,8 @@ lbl_803E9BDC:
 lbl_803E9BE0:
 	.4byte 0x41980000
 	.4byte 0x00000000
-.global $$21896
-$$21896:
+.global "@1896"
+"@1896":
 	.4byte 0x43300000
 	.4byte 0x80000000
 .global lbl_803E9BF0
@@ -711,8 +711,8 @@ lbl_803E9C14:
 lbl_803E9C18:
 	.4byte 0x3F800000
 	.4byte 0x00000000
-.global $$21109
-$$21109:
+.global "@1109"
+"@1109":
 	.4byte 0x43300000
 	.4byte 0x80000000
 .global lbl_803E9C28
@@ -749,8 +749,8 @@ lbl_803E9C4C:
 lbl_803E9C50:
 	.4byte 0x41A00000
 	.4byte 0x00000000
-.global $$21668
-$$21668:
+.global "@1668"
+"@1668":
 	.4byte 0x43300000
 	.4byte 0x80000000
 .global lbl_803E9C60
@@ -763,12 +763,12 @@ lbl_803E9C64:
 lbl_803E9C68:
 	.4byte 0x3F4CCCCD
 	.4byte 0x00000000
-.global $$21956_2
-$$21956_2:
+.global "@1956_2"
+"@1956_2":
 	.4byte 0x3FE00000
 	.4byte 0x00000000
-.global $$21957_1
-$$21957_1:
+.global "@1957_1"
+"@1957_1":
 	.4byte 0x40080000
 	.4byte 0x00000000
 .global lbl_803E9C80
@@ -803,8 +803,8 @@ lbl_803E9CA4:
 lbl_803E9CA8:
 	.4byte 0x3F000000
 	.4byte 0x00000000
-.global $$21475
-$$21475:
+.global "@1475"
+"@1475":
 	.4byte 0x43300000
 	.4byte 0x80000000
 .global lbl_803E9CB8
@@ -813,12 +813,12 @@ lbl_803E9CB8:
 .global lbl_803E9CBC
 lbl_803E9CBC:
 	.4byte 0x42480000
-.global $$21615
-$$21615:
+.global "@1615"
+"@1615":
 	.4byte 0x3FE00000
 	.4byte 0x00000000
-.global $$21616
-$$21616:
+.global "@1616"
+"@1616":
 	.4byte 0x40080000
 	.4byte 0x00000000
 .global lbl_803E9CD0
@@ -835,12 +835,12 @@ lbl_803E9CDC:
 lbl_803E9CE0:
 	.4byte 0x00000000
 	.4byte 0x00000000
-.global $$2914
-$$2914:
+.global "@914"
+"@914":
 	.4byte 0x3FE00000
 	.4byte 0x00000000
-.global $$2915
-$$2915:
+.global "@915"
+"@915":
 	.4byte 0x40080000
 	.4byte 0x00000000
 .global lbl_803E9CF8
@@ -901,12 +901,12 @@ lbl_803E9D40:
 .global lbl_803E9D44
 lbl_803E9D44:
 	.4byte 0x43480000
-.global $$21550
-$$21550:
+.global "@1550"
+"@1550":
 	.4byte 0x3FE00000
 	.4byte 0x00000000
-.global $$21551
-$$21551:
+.global "@1551"
+"@1551":
 	.4byte 0x40080000
 	.4byte 0x00000000
 .global lbl_803E9D58
@@ -959,8 +959,8 @@ lbl_803E9D94:
 lbl_803E9D98:
 	.4byte 0x46480000
 	.4byte 0x00000000
-.global $$21317
-$$21317:
+.global "@1317"
+"@1317":
 	.4byte 0x43300000
 	.4byte 0x80000000
 .global lbl_803E9DA8
@@ -975,8 +975,8 @@ lbl_803E9DB0:
 .global lbl_803E9DB4
 lbl_803E9DB4:
 	.4byte 0x40000000
-.global $$22046
-$$22046:
+.global "@2046"
+"@2046":
 	.4byte 0x43300000
 	.4byte 0x80000000
 .global lbl_803E9DC0
@@ -995,12 +995,12 @@ lbl_803E9DCC:
 lbl_803E9DD0:
 	.4byte 0x47FA0000
 	.4byte 0x00000000
-.global $$22765
-$$22765:
+.global "@2765"
+"@2765":
 	.4byte 0x3FE00000
 	.4byte 0x00000000
-.global $$22766
-$$22766:
+.global "@2766"
+"@2766":
 	.4byte 0x40080000
 	.4byte 0x00000000
 .global lbl_803E9DE8
@@ -1061,8 +1061,8 @@ lbl_803E9E2C:
 lbl_803E9E30:
 	.4byte 0x3F4CCCCD
 	.4byte 0x00000000
-.global $$22700
-$$22700:
+.global "@2700"
+"@2700":
 	.4byte 0x43300000
 	.4byte 0x80000000
 .global lbl_803E9E40
@@ -1091,12 +1091,12 @@ lbl_803E9E5C:
 lbl_803E9E60:
 	.4byte 0x00000000
 	.4byte 0x00000000
-.global $$22211
-$$22211:
+.global "@2211"
+"@2211":
 	.4byte 0x3FE00000
 	.4byte 0x00000000
-.global $$22212
-$$22212:
+.global "@2212"
+"@2212":
 	.4byte 0x40080000
 	.4byte 0x00000000
 .global lbl_803E9E78
@@ -1217,8 +1217,8 @@ lbl_803E9F0C:
 lbl_803E9F10:
 	.4byte 0x3F7FFFFE
 	.4byte 0x00000000
-.global $$22878
-$$22878:
+.global "@2878"
+"@2878":
 	.4byte 0x43300000
 	.4byte 0x80000000
 .global lbl_803E9F20
@@ -1339,16 +1339,16 @@ lbl_803E9FB4:
 lbl_803E9FB8:
 	.4byte 0xC47A0000
 	.4byte 0x00000000
-.global $$22868
-$$22868:
+.global "@2868"
+"@2868":
 	.4byte 0x43300000
 	.4byte 0x80000000
-.global $$22963
-$$22963:
+.global "@2963"
+"@2963":
 	.4byte 0x3FE00000
 	.4byte 0x00000000
-.global $$22964
-$$22964:
+.global "@2964"
+"@2964":
 	.4byte 0x40080000
 	.4byte 0x00000000
 .global lbl_803E9FD8
@@ -1475,12 +1475,12 @@ lbl_803EA078:
 .global lbl_803EA07C
 lbl_803EA07C:
 	.4byte 0x00000000
-.global $$22140
-$$22140:
+.global "@2140"
+"@2140":
 	.4byte 0x3FE00000
 	.4byte 0x00000000
-.global $$22141
-$$22141:
+.global "@2141"
+"@2141":
 	.4byte 0x40080000
 	.4byte 0x00000000
 .global lbl_803EA090
@@ -1511,8 +1511,8 @@ lbl_803EA0AC:
 lbl_803EA0B0:
 	.4byte 0x3F19999A
 	.4byte 0x00000000
-.global $$22152
-$$22152:
+.global "@2152"
+"@2152":
 	.4byte 0x43300000
 	.4byte 0x80000000
 .global lbl_803EA0C0
@@ -1541,8 +1541,8 @@ lbl_803EA0DC:
 lbl_803EA0E0:
 	.4byte 0x40400000
 	.4byte 0x00000000
-.global $$24106
-$$24106:
+.global "@4106"
+"@4106":
 	.4byte 0x43300000
 	.4byte 0x80000000
 .global lbl_803EA0F0
@@ -1589,12 +1589,12 @@ lbl_803EA124:
 lbl_803EA128:
 	.4byte 0x40800000
 	.4byte 0x00000000
-.global $$2981
-$$2981:
+.global "@981"
+"@981":
 	.4byte 0x3FE00000
 	.4byte 0x00000000
-.global $$2982_1
-$$2982_1:
+.global "@982_1"
+"@982_1":
 	.4byte 0x40080000
 	.4byte 0x00000000
 .global lbl_803EA140
@@ -1603,8 +1603,8 @@ lbl_803EA140:
 .global lbl_803EA144
 lbl_803EA144:
 	.4byte 0x41A00000
-.global $$21061
-$$21061:
+.global "@1061"
+"@1061":
 	.4byte 0x43300000
 	.4byte 0x80000000
 .global lbl_803EA150
@@ -1635,8 +1635,8 @@ lbl_803EA16C:
 lbl_803EA170:
 	.4byte 0x3F800000
 	.4byte 0x00000000
-.global $$22099
-$$22099:
+.global "@2099"
+"@2099":
 	.4byte 0x43300000
 	.4byte 0x80000000
 .global lbl_803EA180
@@ -1653,8 +1653,8 @@ lbl_803EA18C:
 lbl_803EA190:
 	.4byte 0x00000000
 	.4byte 0x00000000
-.global $$2681_1
-$$2681_1:
+.global "@681_1"
+"@681_1":
 	.4byte 0x43300000
 	.4byte 0x80000000
 .global lbl_803EA1A0
@@ -1695,12 +1695,12 @@ lbl_803EA1CC:
 lbl_803EA1D0:
 	.4byte 0x40000000
 	.4byte 0x00000000
-.global $$21272
-$$21272:
+.global "@1272"
+"@1272":
 	.4byte 0x3FE00000
 	.4byte 0x00000000
-.global $$21273
-$$21273:
+.global "@1273"
+"@1273":
 	.4byte 0x40080000
 	.4byte 0x00000000
 .global lbl_803EA1E8
@@ -1741,12 +1741,12 @@ lbl_803EA214:
 lbl_803EA218:
 	.4byte 0x3F000000
 	.4byte 0x00000000
-.global $$2883
-$$2883:
+.global "@883"
+"@883":
 	.4byte 0x3FE00000
 	.4byte 0x00000000
-.global $$2884
-$$2884:
+.global "@884"
+"@884":
 	.4byte 0x40080000
 	.4byte 0x00000000
 .global lbl_803EA230
@@ -1775,8 +1775,8 @@ lbl_803EA24C:
 lbl_803EA250:
 	.4byte 0x47000000
 	.4byte 0x00000000
-.global $$2536
-$$2536:
+.global "@536"
+"@536":
 	.4byte 0x43300000
 	.4byte 0x00000000
 .global lbl_803EA260
@@ -1785,16 +1785,16 @@ lbl_803EA260:
 .global lbl_803EA264
 lbl_803EA264:
 	.4byte 0x46FFFE00
-.global $$2696
-$$2696:
+.global "@696"
+"@696":
 	.4byte 0x43300000
 	.4byte 0x80000000
 .global lbl_803EA270
 lbl_803EA270:
 	.4byte 0x00000000
 	.4byte 0x00000000
-.global $$2732
-$$2732:
+.global "@732"
+"@732":
 	.4byte 0x43300000
 	.4byte 0x80000000
 .global lbl_803EA280
@@ -1831,8 +1831,8 @@ lbl_803EA2A8:
 .global lbl_803EA2AC
 lbl_803EA2AC:
 	.4byte 0x443B8000
-.global $$22313
-$$22313:
+.global "@2313"
+"@2313":
 	.4byte 0x43300000
 	.4byte 0x80000000
 .global lbl_803EA2B8
@@ -1861,8 +1861,8 @@ lbl_803EA2D4:
 lbl_803EA2D8:
 	.4byte 0x432A0000
 	.4byte 0x00000000
-.global $$21977
-$$21977:
+.global "@1977"
+"@1977":
 	.4byte 0x43300000
 	.4byte 0x00000000
 .global lbl_803EA2E8
@@ -1877,8 +1877,8 @@ lbl_803EA2F0:
 .global lbl_803EA2F4
 lbl_803EA2F4:
 	.4byte 0x4F000000
-.global $$22532
-$$22532:
+.global "@2532"
+"@2532":
 	.4byte 0x43300000
 	.4byte 0x80000000
 .global lbl_803EA300
@@ -1929,8 +1929,8 @@ lbl_803EA338:
 .global lbl_803EA33C
 lbl_803EA33C:
 	.4byte 0x40000000
-.global $$2831
-$$2831:
+.global "@831"
+"@831":
 	.4byte 0x43300000
 	.4byte 0x80000000
 .global lbl_803EA348
@@ -2057,12 +2057,12 @@ lbl_803EA3E8:
 .global lbl_803EA3EC
 lbl_803EA3EC:
 	.4byte 0x00000000
-.global $$2850
-$$2850:
+.global "@850"
+"@850":
 	.4byte 0x3FE00000
 	.4byte 0x00000000
-.global $$2851
-$$2851:
+.global "@851"
+"@851":
 	.4byte 0x40080000
 	.4byte 0x00000000
 .global lbl_803EA400
@@ -2079,8 +2079,8 @@ lbl_803EA40C:
 lbl_803EA410:
 	.4byte 0x00000000
 	.4byte 0x00000000
-.global $$22065
-$$22065:
+.global "@2065"
+"@2065":
 	.4byte 0x43300000
 	.4byte 0x80000000
 .global lbl_803EA420
@@ -2395,16 +2395,16 @@ lbl_803EA5C0:
 .global lbl_803EA5C4
 lbl_803EA5C4:
 	.4byte 0x3ECCCCCD
-.global $$22898
-$$22898:
+.global "@2898"
+"@2898":
 	.4byte 0x40000000
 	.4byte 0x00000000
-.global $$22899
-$$22899:
+.global "@2899"
+"@2899":
 	.4byte 0x3FE00000
 	.4byte 0x00000000
-.global $$22900
-$$22900:
+.global "@2900"
+"@2900":
 	.4byte 0x40080000
 	.4byte 0x00000000
 .global lbl_803EA5E0
@@ -2469,8 +2469,8 @@ lbl_803EA62C:
 lbl_803EA630:
 	.4byte 0x40000000
 	.4byte 0x00000000
-.global $$22673
-$$22673:
+.global "@2673"
+"@2673":
 	.4byte 0x43300000
 	.4byte 0x80000000
 .global lbl_803EA640
@@ -2479,8 +2479,8 @@ lbl_803EA640:
 .global lbl_803EA644
 lbl_803EA644:
 	.4byte 0x46FFFE00
-.global $$21255_1
-$$21255_1:
+.global "@1255_1"
+"@1255_1":
 	.4byte 0x43300000
 	.4byte 0x80000000
 .global lbl_803EA650
@@ -2623,8 +2623,8 @@ lbl_803EA704:
 lbl_803EA708:
 	.4byte 0xC3960000
 	.4byte 0x00000000
-.global $$23741
-$$23741:
+.global "@3741"
+"@3741":
 	.4byte 0x43300000
 	.4byte 0x80000000
 .global lbl_803EA718
@@ -2741,20 +2741,20 @@ lbl_803EA7A8:
 .global lbl_803EA7AC
 lbl_803EA7AC:
 	.4byte 0xBF000000
-.global $$23088
-$$23088:
+.global "@3088"
+"@3088":
 	.4byte 0x43300000
 	.4byte 0x80000000
 .global lbl_803EA7B8
 lbl_803EA7B8:
 	.4byte 0x46FFFE00
 	.4byte 0x00000000
-.global $$23280
-$$23280:
+.global "@3280"
+"@3280":
 	.4byte 0x3FE00000
 	.4byte 0x00000000
-.global $$23281
-$$23281:
+.global "@3281"
+"@3281":
 	.4byte 0x40080000
 	.4byte 0x00000000
 .global lbl_803EA7D0
@@ -2803,8 +2803,8 @@ lbl_803EA804:
 lbl_803EA808:
 	.4byte 0x40000000
 	.4byte 0x00000000
-.global $$22270
-$$22270:
+.global "@2270"
+"@2270":
 	.4byte 0x43300000
 	.4byte 0x80000000
 .global lbl_803EA818
@@ -2817,8 +2817,8 @@ lbl_803EA81C:
 lbl_803EA820:
 	.4byte 0x00000000
 	.4byte 0x00000000
-.global $$21708
-$$21708:
+.global "@1708"
+"@1708":
 	.4byte 0x43300000
 	.4byte 0x80000000
 .global lbl_803EA830
@@ -2917,8 +2917,8 @@ lbl_803EA8A8:
 .global lbl_803EA8AC
 lbl_803EA8AC:
 	.4byte 0xBF000000
-.global $$22938
-$$22938:
+.global "@2938"
+"@2938":
 	.4byte 0x43300000
 	.4byte 0x80000000
 .global lbl_803EA8B8
@@ -2993,8 +2993,8 @@ lbl_803EA914:
 lbl_803EA918:
 	.4byte 0x3F000000
 	.4byte 0x00000000
-.global $$21697_2
-$$21697_2:
+.global "@1697_2"
+"@1697_2":
 	.4byte 0x43300000
 	.4byte 0x80000000
 .global lbl_803EA928
@@ -3007,8 +3007,8 @@ lbl_803EA92C:
 lbl_803EA930:
 	.4byte 0x40000000
 	.4byte 0x00000000
-.global $$21688
-$$21688:
+.global "@1688"
+"@1688":
 	.4byte 0x43300000
 	.4byte 0x80000000
 .global lbl_803EA940
@@ -3027,12 +3027,12 @@ lbl_803EA950:
 .global lbl_803EA954
 lbl_803EA954:
 	.4byte 0x41F00000
-.global $$21854
-$$21854:
+.global "@1854"
+"@1854":
 	.4byte 0x3FE00000
 	.4byte 0x00000000
-.global $$21855
-$$21855:
+.global "@1855"
+"@1855":
 	.4byte 0x40080000
 	.4byte 0x00000000
 .global lbl_803EA968
@@ -3059,8 +3059,8 @@ lbl_803EA980:
 .global lbl_803EA984
 lbl_803EA984:
 	.4byte 0x46FFFE00
-.global $$22729
-$$22729:
+.global "@2729"
+"@2729":
 	.4byte 0x43300000
 	.4byte 0x80000000
 .global lbl_803EA990
@@ -3199,8 +3199,8 @@ lbl_803EAA40:
 .global lbl_803EAA44
 lbl_803EAA44:
 	.4byte 0x403FFFF3
-.global $$21859
-$$21859:
+.global "@1859"
+"@1859":
 	.4byte 0x43300000
 	.4byte 0x80000000
 .global lbl_803EAA50
@@ -3225,8 +3225,8 @@ lbl_803EAA64:
 lbl_803EAA68:
 	.4byte 0x3F7FFFEF
 	.4byte 0x00000000
-.global $$2894
-$$2894:
+.global "@894"
+"@894":
 	.4byte 0x43300000
 	.4byte 0x80000000
 .global lbl_803EAA78
@@ -3379,8 +3379,8 @@ lbl_803EAB38:
 .global lbl_803EAB3C
 lbl_803EAB3C:
 	.4byte 0x3F7FFFEF
-.global $$22018
-$$22018:
+.global "@2018"
+"@2018":
 	.4byte 0x43300000
 	.4byte 0x80000000
 .global lbl_803EAB48
@@ -3419,12 +3419,12 @@ lbl_803EAB70:
 .global lbl_803EAB74
 lbl_803EAB74:
 	.4byte 0x00000000
-.global $$21835_1
-$$21835_1:
+.global "@1835_1"
+"@1835_1":
 	.4byte 0x3FE00000
 	.4byte 0x00000000
-.global $$21836
-$$21836:
+.global "@1836"
+"@1836":
 	.4byte 0x40080000
 	.4byte 0x00000000
 .global lbl_803EAB88
@@ -3437,8 +3437,8 @@ lbl_803EAB8C:
 lbl_803EAB90:
 	.4byte 0x413FFFF3
 	.4byte 0x00000000
-.global $$22056
-$$22056:
+.global "@2056"
+"@2056":
 	.4byte 0x43300000
 	.4byte 0x80000000
 .global lbl_803EABA0
@@ -3609,8 +3609,8 @@ lbl_803EAC78:
 .global lbl_803EAC7C
 lbl_803EAC7C:
 	.4byte 0x40C90FCE
-.global $$21901
-$$21901:
+.global "@1901"
+"@1901":
 	.4byte 0x43300000
 	.4byte 0x80000000
 .global lbl_803EAC88
@@ -3665,8 +3665,8 @@ lbl_803EACC8:
 .global lbl_803EACCC
 lbl_803EACCC:
 	.4byte 0x403FFFF3
-.global $$21740
-$$21740:
+.global "@1740"
+"@1740":
 	.4byte 0x43300000
 	.4byte 0x80000000
 .global lbl_803EACD8
@@ -3743,12 +3743,12 @@ lbl_803EAD34:
 lbl_803EAD38:
 	.4byte 0x46480000
 	.4byte 0x00000000
-.global $$21739
-$$21739:
+.global "@1739"
+"@1739":
 	.4byte 0x3FE00000
 	.4byte 0x00000000
-.global $$21740_1
-$$21740_1:
+.global "@1740_1"
+"@1740_1":
 	.4byte 0x40080000
 	.4byte 0x00000000
 .global lbl_803EAD50
@@ -3765,8 +3765,8 @@ lbl_803EAD5C:
 lbl_803EAD60:
 	.4byte 0x3F800000
 	.4byte 0x00000000
-.global $$21837
-$$21837:
+.global "@1837"
+"@1837":
 	.4byte 0x43300000
 	.4byte 0x80000000
 .global lbl_803EAD70
@@ -3853,12 +3853,12 @@ lbl_803EADD8:
 .global lbl_803EADDC
 lbl_803EADDC:
 	.4byte 0x46480000
-.global $$21114
-$$21114:
+.global "@1114"
+"@1114":
 	.4byte 0x3FE00000
 	.4byte 0x00000000
-.global $$21115
-$$21115:
+.global "@1115"
+"@1115":
 	.4byte 0x40080000
 	.4byte 0x00000000
 .global lbl_803EADF0
@@ -3985,8 +3985,8 @@ lbl_803EAE90:
 .global lbl_803EAE94
 lbl_803EAE94:
 	.4byte 0x3F7FFFEF
-.global $$22221
-$$22221:
+.global "@2221"
+"@2221":
 	.4byte 0x43300000
 	.4byte 0x80000000
 .global lbl_803EAEA0
