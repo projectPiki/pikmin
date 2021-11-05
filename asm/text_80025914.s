@@ -1,5 +1,5 @@
 .include "macros.inc"
-
+.section .text, "ax"  # 0x80005560 - 0x80221F60
 .global animate__20PVWPolygonColourInfoFPfR6Colour
 animate__20PVWPolygonColourInfoFPfR6Colour:
 /* 80025914 00022874  7C 08 02 A6 */	mflr r0

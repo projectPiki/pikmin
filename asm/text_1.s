@@ -1,5 +1,7 @@
 .include "macros.inc"
 
+.section .text, "ax"  # 0x80005560 - 0x80221F60
+
 .global render2d__10RouteGroupFR8GraphicsRi
 render2d__10RouteGroupFR8GraphicsRi:
 /* 80037138 00034098  7C 08 02 A6 */	mflr r0

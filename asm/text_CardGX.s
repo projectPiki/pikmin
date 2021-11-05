@@ -1,5 +1,5 @@
 .include "macros.inc"
-
+.section .text, "ax"  # 0x80005560 - 0x80221F60
 .global __CARDDefaultApiCallback
 __CARDDefaultApiCallback:
 /* 80207E60 00204DC0  4E 80 00 20 */	blr 
