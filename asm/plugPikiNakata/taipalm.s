@@ -1,0 +1,451 @@
+.include "macros.inc"
+
+.section .data, "wa"  # 0x80222DC0 - 0x802E9640
+.global lbl_802CB198
+lbl_802CB198:
+	.4byte 0x74616970
+	.4byte 0x616C6D2E
+	.4byte 0x63707000
+	.4byte 0x4348414E
+	.4byte 0x47494E47
+	.4byte 0x5F434F4C
+	.4byte 0x4F525F50
+	.4byte 0x4552494F
+	.4byte 0x44000000
+	.4byte 0x4348414E
+	.4byte 0x47494E47
+	.4byte 0x5F434F4C
+	.4byte 0x4F525F50
+	.4byte 0x4552494F
+	.4byte 0x445F5241
+	.4byte 0x4E444F4D
+	.4byte 0x5F524154
+	.4byte 0x45000000
+	.4byte 0x47524F57
+	.4byte 0x494E475F
+	.4byte 0x50455249
+	.4byte 0x4F440000
+	.4byte 0x54616950
+	.4byte 0x616C6D43
+	.4byte 0x68616E67
+	.4byte 0x696E6743
+	.4byte 0x6F6C6F72
+	.4byte 0x41637469
+	.4byte 0x6F6E0000
+	.4byte 0x54616941
+	.4byte 0x6374696F
+	.4byte 0x6E000000
+	.4byte 0x803E3F20
+	.4byte 0x00000000
+	.4byte 0x00000000
+.global __vt__26TaiPalmChangingColorAction
+__vt__26TaiPalmChangingColorAction:
+  .4byte __RTTI__26TaiPalmChangingColorAction
+  .4byte 0
+  .4byte start__26TaiPalmChangingColorActionFR4Teki
+  .4byte finish__9TaiActionFR4Teki
+  .4byte act__26TaiPalmChangingColorActionFR4Teki
+  .4byte actByEvent__9TaiActionFR9TekiEvent
+  .4byte hasNextState__9TaiActionFv
+  .4byte 0x54616950
+  .4byte 0x616c6d53
+  .4byte 0x65747469
+  .4byte 0x6e675065
+  .4byte 0x6c6c6574
+  .4byte 0x41637469
+  .4byte 0x6f6e0000
+  .4byte 0x803e3f20
+  .4byte 0
+  .4byte 0
+.global __vt__26TaiPalmSettingPelletAction
+__vt__26TaiPalmSettingPelletAction:
+  .4byte __RTTI__26TaiPalmSettingPelletAction
+  .4byte 0
+  .4byte start__26TaiPalmSettingPelletActionFR4Teki
+  .4byte finish__9TaiActionFR4Teki
+  .4byte act__9TaiActionFR4Teki
+  .4byte actByEvent__9TaiActionFR9TekiEvent
+  .4byte hasNextState__9TaiActionFv
+  .4byte 0x54616950
+  .4byte 0x616c6d53
+  .4byte 0x756e666c
+  .4byte 0x6f776572
+  .4byte 0x41637469
+  .4byte 0x6f6e0000
+  .4byte 0x803e3f20
+  .4byte 0
+  .4byte 0
+.global __vt__22TaiPalmSunflowerAction
+__vt__22TaiPalmSunflowerAction:
+  .4byte __RTTI__22TaiPalmSunflowerAction
+  .4byte 0
+  .4byte start__9TaiActionFR4Teki
+  .4byte finish__9TaiActionFR4Teki
+  .4byte act__22TaiPalmSunflowerActionFR4Teki
+  .4byte actByEvent__9TaiActionFR9TekiEvent
+  .4byte hasNextState__9TaiActionFv
+  .4byte 0x54616950
+  .4byte 0x616c6d46
+  .4byte 0x6c6f7765
+  .4byte 0x7244616d
+  .4byte 0x61676541
+  .4byte 0x6374696f
+  .4byte 0x6e000000
+  .4byte 0x803e3f20
+  .4byte 0
+  .4byte 0
+.global __vt__25TaiPalmFlowerDamageAction
+__vt__25TaiPalmFlowerDamageAction:
+  .4byte __RTTI__25TaiPalmFlowerDamageAction
+  .4byte 0
+  .4byte start__9TaiActionFR4Teki
+  .4byte finish__9TaiActionFR4Teki
+  .4byte act__25TaiPalmFlowerDamageActionFR4Teki
+  .4byte actByEvent__9TaiActionFR9TekiEvent
+  .4byte hasNextState__9TaiActionFv
+  .4byte 0x54616950
+  .4byte 0x616c6d47
+  .4byte 0x726f7741
+  .4byte 0x6374696f
+  .4byte 0x6e000000
+  .4byte 0x803e3f20
+  .4byte 0
+  .4byte 0
+.global __vt__17TaiPalmGrowAction
+__vt__17TaiPalmGrowAction:
+  .4byte __RTTI__17TaiPalmGrowAction
+  .4byte 0
+  .4byte start__9TaiActionFR4Teki
+  .4byte finish__9TaiActionFR4Teki
+  .4byte act__17TaiPalmGrowActionFR4Teki
+  .4byte actByEvent__9TaiActionFR9TekiEvent
+  .4byte hasNextState__9TaiActionFv
+  .4byte 0x54616950
+  .4byte 0x616c6d47
+  .4byte 0x726f7769
+  .4byte 0x6e674163
+  .4byte 0x74696f6e
+  .4byte 0
+  .4byte 0x803e3f20
+  .4byte 0
+  .4byte 0
+.global __vt__20TaiPalmGrowingAction
+__vt__20TaiPalmGrowingAction:
+  .4byte __RTTI__20TaiPalmGrowingAction
+  .4byte 0
+  .4byte start__20TaiPalmGrowingActionFR4Teki
+  .4byte finish__9TaiActionFR4Teki
+  .4byte act__9TaiActionFR4Teki
+  .4byte actByEvent__9TaiActionFR9TekiEvent
+  .4byte hasNextState__9TaiActionFv
+  .4byte 0x54616950
+  .4byte 0x616c6d44
+  .4byte 0x616d6167
+  .4byte 0x696e6741
+  .4byte 0x6374696f
+  .4byte 0x6e000000
+  .4byte 0x5461694d
+  .4byte 0x6f74696f
+  .4byte 0x6e416374
+  .4byte 0x696f6e00
+  .4byte 0x803e3f20
+  .4byte 0
+  .4byte 0
+  .4byte 0x54616944
+  .4byte 0x616d6167
+  .4byte 0x696e6741
+  .4byte 0x6374696f
+  .4byte 0x6e000000
+  .4byte 0x803e3f20
+  .4byte 0
+  .4byte 0x803e3f58
+  .4byte 0
+  .4byte 0
+  .4byte 0x803e3f20
+  .4byte 0
+  .4byte 0x803e3f58
+  .4byte 0
+  .4byte __RTTI__17TaiDamagingAction
+  .4byte 0
+  .4byte 0
+.global __vt__21TaiPalmDamagingAction
+__vt__21TaiPalmDamagingAction:
+  .4byte __RTTI__21TaiPalmDamagingAction
+  .4byte 0
+  .4byte start__21TaiPalmDamagingActionFR4Teki
+  .4byte finish__9TaiActionFR4Teki
+  .4byte act__17TaiDamagingActionFR4Teki
+  .4byte actByEvent__9TaiActionFR9TekiEvent
+  .4byte hasNextState__9TaiActionFv
+  .4byte 0x54616950
+  .4byte 0x616c6d44
+  .4byte 0x79696e67
+  .4byte 0x41637469
+  .4byte 0x6f6e0000
+  .4byte 0x54616944
+  .4byte 0x79696e67
+  .4byte 0x41637469
+  .4byte 0x6f6e0000
+  .4byte 0x803e3f20
+  .4byte 0
+  .4byte 0x803e3f58
+  .4byte 0
+  .4byte 0
+  .4byte 0x803e3f20
+  .4byte 0
+  .4byte 0x803e3f58
+  .4byte 0
+  .4byte __RTTI__14TaiDyingAction
+  .4byte 0
+  .4byte 0
+.global __vt__18TaiPalmDyingAction
+__vt__18TaiPalmDyingAction:
+  .4byte __RTTI__18TaiPalmDyingAction
+  .4byte 0
+  .4byte start__18TaiPalmDyingActionFR4Teki
+  .4byte finish__9TaiActionFR4Teki
+  .4byte act__18TaiPalmDyingActionFR4Teki
+  .4byte actByEvent__9TaiActionFR9TekiEvent
+  .4byte hasNextState__9TaiActionFv
+  .4byte 0x54616950
+  .4byte 0x616c6d4d
+  .4byte 0x6f74696f
+  .4byte 0x6e416374
+  .4byte 0x696f6e00
+  .4byte 0x803e3f20
+  .4byte 0
+  .4byte 0x803e3f58
+  .4byte 0
+  .4byte 0
+.global __vt__19TaiPalmMotionAction
+__vt__19TaiPalmMotionAction:
+  .4byte __RTTI__19TaiPalmMotionAction
+  .4byte 0
+  .4byte start__19TaiPalmMotionActionFR4Teki
+  .4byte finish__9TaiActionFR4Teki
+  .4byte act__15TaiMotionActionFR4Teki
+  .4byte actByEvent__9TaiActionFR9TekiEvent
+  .4byte hasNextState__9TaiActionFv
+  .4byte 0x54656b69
+  .4byte 0x4e6f7443
+  .4byte 0x6f6e6469
+  .4byte 0x74696f6e
+  .4byte 0
+  .4byte 0x436f6e64
+  .4byte 0x6974696f
+  .4byte 0x6e000000
+  .4byte 0x54656b69
+  .4byte 0x436f6e64
+  .4byte 0x6974696f
+  .4byte 0x6e000000
+  .4byte 0x803e3f88
+  .4byte 0
+  .4byte 0
+  .4byte 0x803e3f88
+  .4byte 0
+  .4byte 0x803e3f90
+  .4byte 0
+  .4byte 0
+  .4byte 0
+  .4byte 0
+  .4byte 0
+  .4byte 0x54656b69
+  .4byte 0x416e6443
+  .4byte 0x6f6e6469
+  .4byte 0x74696f6e
+  .4byte 0
+  .4byte 0x803e3f88
+  .4byte 0
+  .4byte 0x803e3f90
+  .4byte 0
+  .4byte 0
+  .4byte 0
+  .4byte 0
+  .4byte 0
+  .4byte 0
+  .4byte 0
+  .4byte 0
+  .4byte 0
+  .4byte 0
+  .4byte 0
+  .4byte 0x54616950
+  .4byte 0x616c6d53
+  .4byte 0x74726174
+  .4byte 0x65677900
+  .4byte 0x54656b69
+  .4byte 0x53747261
+  .4byte 0x74656779
+  .4byte 0
+  .4byte 0x54616953
+  .4byte 0x74726174
+  .4byte 0x65677900
+  .4byte 0x803e3f98
+  .4byte 0
+  .4byte 0
+  .4byte 0x803e3f98
+  .4byte 0
+  .4byte 0x803e3fa0
+  .4byte 0
+  .4byte 0
+.global __vt__15TaiPalmStrategy
+__vt__15TaiPalmStrategy:
+  .4byte __RTTI__15TaiPalmStrategy
+  .4byte 0
+  .4byte start__15TaiPalmStrategyFR4Teki
+  .4byte act__11TaiStrategyFR4Teki
+  .4byte eventPerformed__11TaiStrategyFR9TekiEvent
+  .4byte createEffect__15TaiPalmStrategyFR4Tekii
+  .4byte draw__15TaiPalmStrategyFR4TekiR8Graphics
+  .4byte drawDebugInfo__12TekiStrategyFR4TekiR8Graphics
+  .4byte interact__12TekiStrategyFR4TekiR18TekiInteractionKey
+  .4byte spawnCorpseParts__12TekiStrategyFR4Teki
+  .4byte 0
+  .4byte 0
+  .4byte 0
+  .4byte 0
+  .4byte 0
+  .4byte 0
+  .4byte 0
+  .4byte 0x54616950
+  .4byte 0x616c6d50
+  .4byte 0x6172616d
+  .4byte 0x65746572
+  .4byte 0x73000000
+  .4byte 0x436f7265
+  .4byte 0x4e6f6465
+  .4byte 0
+  .4byte 0x803e3fb8
+  .4byte 0
+  .4byte 0
+  .4byte 0x803e3fb8
+  .4byte 0
+  .4byte 0x803e3fc0
+  .4byte 0
+  .4byte 0
+  .4byte 0x54656b69
+  .4byte 0x50617261
+  .4byte 0x6d657465
+  .4byte 0x72730000
+  .4byte 0x803e3fb8
+  .4byte 0
+  .4byte 0x803e3fc0
+  .4byte 0
+  .4byte 0x803e3fd0
+  .4byte 0
+  .4byte 0
+  .4byte 0x803e3fb8
+  .4byte 0
+  .4byte 0x803e3fc0
+  .4byte 0
+  .4byte 0x803e3fd0
+  .4byte 0
+  .4byte 0x803e3fd8
+  .4byte 0
+  .4byte 0
+.global __vt__17TaiPalmParameters
+__vt__17TaiPalmParameters:
+  .4byte __RTTI__17TaiPalmParameters
+  .4byte 0
+  .4byte getAgeNodeType__5ANodeFv
+  .4byte read__14TekiParametersFR18RandomAccessStream
+  .4byte update__4NodeFv
+  .4byte draw__4NodeFR8Graphics
+  .4byte render__4NodeFR8Graphics
+  .4byte concat__4NodeFv
+  .4byte concat__4NodeFR3VQS
+  .4byte concat__4NodeFR3SRT
+  .4byte concat__4NodeFR8Matrix4f
+  .4byte getModelMatrix__4NodeFv
+  .4byte 0
+
+.section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
+  .4byte 0x802cb088
+  .4byte 0x4e6f6465
+  .4byte 0
+  .4byte 0x803e3ee4
+  .4byte 0x802cb094
+  .4byte 0x802cb0a8
+  .4byte 0x802cb0b8
+.global __RTTI__22TaiBlackFrogParameters
+__RTTI__22TaiBlackFrogParameters:
+  .4byte 0x802cb064
+  .4byte 0x802cb0d4
+.global __RTTI__20TaiOtimotiParameters
+__RTTI__20TaiOtimotiParameters:
+  .4byte 0x802cb128
+  .4byte 0x802cb140
+  .4byte 0
+.global lbl_803E3F10
+lbl_803E3F10:
+	.4byte 0x00000000
+.global lbl_803E3F14
+lbl_803E3F14:
+	.4byte 0x00000000
+.global lbl_803E3F18
+lbl_803E3F18:
+	.4byte 0x00000000
+.global lbl_803E3F1C
+lbl_803E3F1C:
+	.4byte 0x3F800000
+	.4byte 0x802CB20C
+	.4byte 0x00000000
+.global __RTTI__26TaiPalmChangingColorAction
+__RTTI__26TaiPalmChangingColorAction:
+  .4byte 0x802cb1f0
+  .4byte 0x802cb218
+.global __RTTI__26TaiPalmSettingPelletAction
+__RTTI__26TaiPalmSettingPelletAction:
+  .4byte 0x802cb240
+  .4byte 0x802cb25c
+.global __RTTI__22TaiPalmSunflowerAction
+__RTTI__22TaiPalmSunflowerAction:
+  .4byte 0x802cb284
+  .4byte 0x802cb29c
+.global __RTTI__25TaiPalmFlowerDamageAction
+__RTTI__25TaiPalmFlowerDamageAction:
+  .4byte 0x802cb2c4
+  .4byte 0x802cb2e0
+.global __RTTI__17TaiPalmGrowAction
+__RTTI__17TaiPalmGrowAction:
+  .4byte 0x802cb308
+  .4byte 0x802cb31c
+.global __RTTI__20TaiPalmGrowingAction
+__RTTI__20TaiPalmGrowingAction:
+  .4byte 0x802cb344
+  .4byte 0x802cb35c
+  .4byte 0x802cb39c
+  .4byte 0x802cb3ac
+.global __RTTI__17TaiDamagingAction
+__RTTI__17TaiDamagingAction:
+  .4byte 0x802cb3b8
+  .4byte 0x802cb3cc
+.global __RTTI__21TaiPalmDamagingAction
+__RTTI__21TaiPalmDamagingAction:
+  .4byte 0x802cb384
+  .4byte 0x802cb3e0
+.global __RTTI__14TaiDyingAction
+__RTTI__14TaiDyingAction:
+  .4byte 0x802cb42c
+  .4byte 0x802cb43c
+.global __RTTI__18TaiPalmDyingAction
+__RTTI__18TaiPalmDyingAction:
+  .4byte 0x802cb418
+  .4byte 0x802cb450
+.global __RTTI__19TaiPalmMotionAction
+__RTTI__19TaiPalmMotionAction:
+  .4byte 0x802cb488
+  .4byte 0x802cb49c
+  .4byte 0x802cb4e0
+  .4byte 0
+  .4byte 0x802cb4ec
+  .4byte 0x802cb4fc
+  .4byte 0x802cb584
+  .4byte 0
+  .4byte 0x802cb594
+  .4byte 0x802cb5a0
+.global __RTTI__15TaiPalmStrategy
+__RTTI__15TaiPalmStrategy:
+  .4byte 0x802cb574
+  .4byte 0x802cb5ac
+  .4byte 0x414e6f64
+  .4byte 0x65000000

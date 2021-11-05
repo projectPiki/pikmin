@@ -1,0 +1,731 @@
+.include "macros.inc"
+
+.section .data, "wa"  # 0x80222DC0 - 0x802E9640
+  .4byte 0x75746566
+  .4byte 0x66656374
+  .4byte 0x2e637070
+  .4byte 0
+  .4byte 0x75744566
+  .4byte 0x66656374
+  .4byte 0
+  .4byte 0x4275726e
+  .4byte 0x45666665
+  .4byte 0x63740000
+  .4byte 0x7a656e3a
+  .4byte 0x3a43616c
+  .4byte 0x6c426163
+  .4byte 0x6b313c7a
+  .4byte 0x656e3a3a
+  .4byte 0x70617274
+  .4byte 0x69636c65
+  .4byte 0x4d646c20
+  .4byte 0x2a3e0000
+  .4byte 0x7a656e3a
+  .4byte 0x3a43616c
+  .4byte 0x6c426163
+  .4byte 0x6b323c7a
+  .4byte 0x656e3a3a
+  .4byte 0x70617274
+  .4byte 0x69636c65
+  .4byte 0x47656e65
+  .4byte 0x7261746f
+  .4byte 0x72202a2c
+  .4byte 0x207a656e
+  .4byte 0x3a3a7061
+  .4byte 0x72746963
+  .4byte 0x6c654d64
+  .4byte 0x6c202a3e
+  .4byte 0
+  .4byte 0x7a656e3a
+  .4byte 0x3a43616c
+  .4byte 0x6c426163
+  .4byte 0x6b313c7a
+  .4byte 0x656e3a3a
+  .4byte 0x70617274
+  .4byte 0x69636c65
+  .4byte 0x47656e65
+  .4byte 0x7261746f
+  .4byte 0x72202a3e
+  .4byte 0
+  .4byte 0x803e28c0
+  .4byte 0x8
+  .4byte 0x803e28c8
+  .4byte 0x4
+  .4byte 0x803e28d0
+  .4byte 0
+  .4byte 0
+  .4byte 0x803e28c0
+  .4byte 0x8
+  .4byte 0x803e28c8
+  .4byte 0x4
+  .4byte 0x803e28d0
+  .4byte 0
+  .4byte __RTTI__7KEffect_1
+  .4byte 0
+  .4byte 0
+.global __vt__10BurnEffect
+__vt__10BurnEffect:
+  .4byte __RTTI__10BurnEffect
+  .4byte 0
+  .4byte invoke__10BurnEffectFPQ23zen17particleGenerator
+  .4byte __RTTI__10BurnEffect
+  .4byte 0xfffffffc
+  .4byte 0x80099520
+  .4byte __RTTI__10BurnEffect
+  .4byte 0xfffffff8
+  .4byte 0x80099528
+  .4byte invoke__7KEffectFPQ23zen17particleGeneratorPQ23zen11particleMdl
+  .4byte invoke__7KEffectFPQ23zen11particleMdl
+  .4byte emit__10BurnEffectFR10EffectParm
+  .4byte kill__10BurnEffectFv
+  .4byte stop__10BurnEffectFv
+  .4byte restart__10BurnEffectFv
+  .4byte 0x52697070
+  .4byte 0x6c654566
+  .4byte 0x66656374
+  .4byte 0
+  .4byte 0x803e28c0
+  .4byte 0x8
+  .4byte 0x803e28c8
+  .4byte 0x4
+  .4byte 0x803e28d0
+  .4byte 0
+  .4byte __RTTI__7KEffect_1
+  .4byte 0
+  .4byte 0
+.global __vt__12RippleEffect
+__vt__12RippleEffect:
+  .4byte __RTTI__12RippleEffect
+  .4byte 0
+  .4byte invoke__7KEffectFPQ23zen17particleGenerator
+  .4byte __RTTI__12RippleEffect
+  .4byte 0xfffffffc
+  .4byte 0x80099520
+  .4byte __RTTI__12RippleEffect
+  .4byte 0xfffffff8
+  .4byte 0x80099528
+  .4byte invoke__7KEffectFPQ23zen17particleGeneratorPQ23zen11particleMdl
+  .4byte invoke__7KEffectFPQ23zen11particleMdl
+  .4byte emit__12RippleEffectFR10EffectParm
+  .4byte kill__12RippleEffectFv
+  .4byte stop__12RippleEffectFv
+  .4byte restart__12RippleEffectFv
+  .4byte 0x46726565
+  .4byte 0x4c696768
+  .4byte 0x74456666
+  .4byte 0x65637400
+  .4byte 0x803e28c0
+  .4byte 0x8
+  .4byte 0x803e28c8
+  .4byte 0x4
+  .4byte 0x803e28d0
+  .4byte 0
+  .4byte __RTTI__7KEffect_1
+  .4byte 0
+  .4byte 0
+.global __vt__15FreeLightEffect
+__vt__15FreeLightEffect:
+  .4byte __RTTI__15FreeLightEffect
+  .4byte 0
+  .4byte invoke__7KEffectFPQ23zen17particleGenerator
+  .4byte __RTTI__15FreeLightEffect
+  .4byte 0xfffffffc
+  .4byte 0x80099520
+  .4byte __RTTI__15FreeLightEffect
+  .4byte 0xfffffff8
+  .4byte 0x80099528
+  .4byte invoke__7KEffectFPQ23zen17particleGeneratorPQ23zen11particleMdl
+  .4byte invoke__7KEffectFPQ23zen11particleMdl
+  .4byte emit__15FreeLightEffectFR10EffectParm
+  .4byte kill__15FreeLightEffectFv
+  .4byte stop__15FreeLightEffectFv
+  .4byte restart__15FreeLightEffectFv
+  .4byte 0x55666f53
+  .4byte 0x75696b6f
+  .4byte 0x6d694566
+  .4byte 0x66656374
+  .4byte 0
+  .4byte 0x803e28c0
+  .4byte 0x8
+  .4byte 0x803e28c8
+  .4byte 0x4
+  .4byte 0x803e28d0
+  .4byte 0
+  .4byte __RTTI__7KEffect_1
+  .4byte 0
+  .4byte 0
+.global __vt__16UfoSuikomiEffect
+__vt__16UfoSuikomiEffect:
+  .4byte __RTTI__16UfoSuikomiEffect
+  .4byte 0
+  .4byte invoke__7KEffectFPQ23zen17particleGenerator
+  .4byte __RTTI__16UfoSuikomiEffect
+  .4byte 0xfffffffc
+  .4byte 0x80099520
+  .4byte __RTTI__16UfoSuikomiEffect
+  .4byte 0xfffffff8
+  .4byte 0x80099528
+  .4byte invoke__7KEffectFPQ23zen17particleGeneratorPQ23zen11particleMdl
+  .4byte invoke__7KEffectFPQ23zen11particleMdl
+  .4byte emit__16UfoSuikomiEffectFR10EffectParm
+  .4byte kill__16UfoSuikomiEffectFv
+  .4byte stop__7KEffectFv
+  .4byte restart__7KEffectFv
+  .4byte 0x55666f53
+  .4byte 0x75636b45
+  .4byte 0x66666563
+  .4byte 0x74000000
+  .4byte 0x57686973
+  .4byte 0x746c6554
+  .4byte 0x656d706c
+  .4byte 0x61746500
+  .4byte 0x803e28c0
+  .4byte 0x8
+  .4byte 0x803e28c8
+  .4byte 0x4
+  .4byte 0x803e28d0
+  .4byte 0
+  .4byte __RTTI__7KEffect_1
+  .4byte 0
+  .4byte 0
+  .4byte 0x803e28c0
+  .4byte 0x8
+  .4byte 0x803e28c8
+  .4byte 0x4
+  .4byte 0x803e28d0
+  .4byte 0
+  .4byte __RTTI__7KEffect_1
+  .4byte 0
+  .4byte __RTTI__15WhistleTemplate
+  .4byte 0
+  .4byte 0
+.global __vt__13UfoSuckEffect
+__vt__13UfoSuckEffect:
+  .4byte __RTTI__13UfoSuckEffect
+  .4byte 0
+  .4byte invoke__7KEffectFPQ23zen17particleGenerator
+  .4byte __RTTI__13UfoSuckEffect
+  .4byte 0xfffffffc
+  .4byte 0x80115b84
+  .4byte __RTTI__13UfoSuckEffect
+  .4byte 0xfffffff8
+  .4byte 0x80099528
+  .4byte invoke__15WhistleTemplateFPQ23zen17particleGeneratorPQ23zen11particleMdl
+  .4byte invoke__7KEffectFPQ23zen11particleMdl
+  .4byte emit__15WhistleTemplateFR10EffectParm
+  .4byte kill__15WhistleTemplateFv
+  .4byte stop__7KEffectFv
+  .4byte restart__7KEffectFv
+.global __vt__15WhistleTemplate
+__vt__15WhistleTemplate:
+  .4byte __RTTI__15WhistleTemplate
+  .4byte 0
+  .4byte invoke__7KEffectFPQ23zen17particleGenerator
+  .4byte __RTTI__15WhistleTemplate
+  .4byte 0xfffffffc
+  .4byte 0x80115b84
+  .4byte __RTTI__15WhistleTemplate
+  .4byte 0xfffffff8
+  .4byte 0x80099528
+  .4byte invoke__15WhistleTemplateFPQ23zen17particleGeneratorPQ23zen11particleMdl
+  .4byte invoke__7KEffectFPQ23zen11particleMdl
+  .4byte emit__15WhistleTemplateFR10EffectParm
+  .4byte kill__15WhistleTemplateFv
+  .4byte stop__7KEffectFv
+  .4byte restart__7KEffectFv
+  .4byte 0x426f6d62
+  .4byte 0x45666665
+  .4byte 0x63744c69
+  .4byte 0x67687400
+  .4byte 0x803e28c0
+  .4byte 0x8
+  .4byte 0x803e28c8
+  .4byte 0x4
+  .4byte 0x803e28d0
+  .4byte 0
+  .4byte __RTTI__7KEffect_1
+  .4byte 0
+  .4byte 0
+.global __vt__15BombEffectLight
+__vt__15BombEffectLight:
+  .4byte __RTTI__15BombEffectLight
+  .4byte 0
+  .4byte invoke__7KEffectFPQ23zen17particleGenerator
+  .4byte __RTTI__15BombEffectLight
+  .4byte 0xfffffffc
+  .4byte 0x80099520
+  .4byte __RTTI__15BombEffectLight
+  .4byte 0xfffffff8
+  .4byte 0x80099528
+  .4byte invoke__7KEffectFPQ23zen17particleGeneratorPQ23zen11particleMdl
+  .4byte invoke__7KEffectFPQ23zen11particleMdl
+  .4byte emit__15BombEffectLightFR10EffectParm
+  .4byte kill__15BombEffectLightFv
+  .4byte stop__7KEffectFv
+  .4byte restart__7KEffectFv
+  .4byte 0x426f6d62
+  .4byte 0x45666665
+  .4byte 0x63740000
+  .4byte 0x803e28c0
+  .4byte 0x8
+  .4byte 0x803e28c8
+  .4byte 0x4
+  .4byte 0x803e28d0
+  .4byte 0
+  .4byte __RTTI__7KEffect_1
+  .4byte 0
+  .4byte 0
+.global __vt__10BombEffect
+__vt__10BombEffect:
+  .4byte __RTTI__10BombEffect
+  .4byte 0
+  .4byte invoke__7KEffectFPQ23zen17particleGenerator
+  .4byte __RTTI__10BombEffect
+  .4byte 0xfffffffc
+  .4byte 0x80099520
+  .4byte __RTTI__10BombEffect
+  .4byte 0xfffffff8
+  .4byte 0x80099528
+  .4byte invoke__7KEffectFPQ23zen17particleGeneratorPQ23zen11particleMdl
+  .4byte invoke__7KEffectFPQ23zen11particleMdl
+  .4byte emit__10BombEffectFR10EffectParm
+  .4byte kill__10BombEffectFv
+  .4byte stop__7KEffectFv
+  .4byte restart__7KEffectFv
+  .4byte 0x53696d70
+  .4byte 0x6c654566
+  .4byte 0x66656374
+  .4byte 0
+  .4byte 0x803e28c0
+  .4byte 0x8
+  .4byte 0x803e28c8
+  .4byte 0x4
+  .4byte 0x803e28d0
+  .4byte 0
+  .4byte __RTTI__7KEffect_1
+  .4byte 0
+  .4byte 0
+.global __vt__12SimpleEffect
+__vt__12SimpleEffect:
+  .4byte __RTTI__12SimpleEffect
+  .4byte 0
+  .4byte invoke__7KEffectFPQ23zen17particleGenerator
+  .4byte __RTTI__12SimpleEffect
+  .4byte 0xfffffffc
+  .4byte 0x80099520
+  .4byte __RTTI__12SimpleEffect
+  .4byte 0xfffffff8
+  .4byte 0x80099528
+  .4byte invoke__7KEffectFPQ23zen17particleGeneratorPQ23zen11particleMdl
+  .4byte invoke__7KEffectFPQ23zen11particleMdl
+  .4byte emit__12SimpleEffectFR10EffectParm
+  .4byte kill__12SimpleEffectFv
+  .4byte stop__7KEffectFv
+  .4byte restart__7KEffectFv
+  .4byte 0x803e28c0
+  .4byte 0x8
+  .4byte 0x803e28c8
+  .4byte 0x4
+  .4byte 0x803e28d0
+  .4byte 0
+  .4byte __RTTI__7KEffect_1
+  .4byte 0
+  .4byte 0
+.global __vt__7NaviFue
+__vt__7NaviFue:
+  .4byte __RTTI__7NaviFue
+  .4byte 0
+  .4byte invoke__7NaviFueFPQ23zen17particleGenerator
+  .4byte __RTTI__7NaviFue
+  .4byte 0xfffffffc
+  .4byte 0x80099520
+  .4byte __RTTI__7NaviFue
+  .4byte 0xfffffff8
+  .4byte 0x80099528
+  .4byte invoke__7KEffectFPQ23zen17particleGeneratorPQ23zen11particleMdl
+  .4byte invoke__7KEffectFPQ23zen11particleMdl
+  .4byte emit__7NaviFueFR10EffectParm
+  .4byte kill__7NaviFueFv
+  .4byte stop__7KEffectFv
+  .4byte restart__7KEffectFv
+  .4byte 0x536d6f6b
+  .4byte 0x65547265
+  .4byte 0x65456666
+  .4byte 0x65637400
+  .4byte 0x803e28c0
+  .4byte 0x8
+  .4byte 0x803e28c8
+  .4byte 0x4
+  .4byte 0x803e28d0
+  .4byte 0
+  .4byte __RTTI__7KEffect_1
+  .4byte 0
+  .4byte 0
+.global __vt__15SmokeTreeEffect
+__vt__15SmokeTreeEffect:
+  .4byte __RTTI__15SmokeTreeEffect
+  .4byte 0
+  .4byte invoke__7KEffectFPQ23zen17particleGenerator
+  .4byte __RTTI__15SmokeTreeEffect
+  .4byte 0xfffffffc
+  .4byte 0x80099520
+  .4byte __RTTI__15SmokeTreeEffect
+  .4byte 0xfffffff8
+  .4byte 0x80099528
+  .4byte invoke__7KEffectFPQ23zen17particleGeneratorPQ23zen11particleMdl
+  .4byte invoke__7KEffectFPQ23zen11particleMdl
+  .4byte emit__15SmokeTreeEffectFR10EffectParm
+  .4byte kill__7KEffectFv
+  .4byte stop__7KEffectFv
+  .4byte restart__7KEffectFv
+  .4byte 0x536d6f6b
+  .4byte 0x65526f63
+  .4byte 0x6b456666
+  .4byte 0x65637400
+  .4byte 0x803e28c0
+  .4byte 0x8
+  .4byte 0x803e28c8
+  .4byte 0x4
+  .4byte 0x803e28d0
+  .4byte 0
+  .4byte __RTTI__7KEffect_1
+  .4byte 0
+  .4byte 0
+.global __vt__15SmokeRockEffect
+__vt__15SmokeRockEffect:
+  .4byte __RTTI__15SmokeRockEffect
+  .4byte 0
+  .4byte invoke__7KEffectFPQ23zen17particleGenerator
+  .4byte __RTTI__15SmokeRockEffect
+  .4byte 0xfffffffc
+  .4byte 0x80099520
+  .4byte __RTTI__15SmokeRockEffect
+  .4byte 0xfffffff8
+  .4byte 0x80099528
+  .4byte invoke__7KEffectFPQ23zen17particleGeneratorPQ23zen11particleMdl
+  .4byte invoke__7KEffectFPQ23zen11particleMdl
+  .4byte emit__15SmokeRockEffectFR10EffectParm
+  .4byte kill__7KEffectFv
+  .4byte stop__7KEffectFv
+  .4byte restart__7KEffectFv
+  .4byte 0x536d6f6b
+  .4byte 0x65477261
+  .4byte 0x73734566
+  .4byte 0x66656374
+  .4byte 0
+  .4byte 0x803e28c0
+  .4byte 0x8
+  .4byte 0x803e28c8
+  .4byte 0x4
+  .4byte 0x803e28d0
+  .4byte 0
+  .4byte __RTTI__7KEffect_1
+  .4byte 0
+  .4byte 0
+.global __vt__16SmokeGrassEffect
+__vt__16SmokeGrassEffect:
+  .4byte __RTTI__16SmokeGrassEffect
+  .4byte 0
+  .4byte invoke__7KEffectFPQ23zen17particleGenerator
+  .4byte __RTTI__16SmokeGrassEffect
+  .4byte 0xfffffffc
+  .4byte 0x80099520
+  .4byte __RTTI__16SmokeGrassEffect
+  .4byte 0xfffffff8
+  .4byte 0x80099528
+  .4byte invoke__7KEffectFPQ23zen17particleGeneratorPQ23zen11particleMdl
+  .4byte invoke__7KEffectFPQ23zen11particleMdl
+  .4byte emit__16SmokeGrassEffectFR10EffectParm
+  .4byte kill__7KEffectFv
+  .4byte stop__7KEffectFv
+  .4byte restart__7KEffectFv
+  .4byte 0x536d6f6b
+  .4byte 0x65536f69
+  .4byte 0x6c456666
+  .4byte 0x65637400
+  .4byte 0x803e28c0
+  .4byte 0x8
+  .4byte 0x803e28c8
+  .4byte 0x4
+  .4byte 0x803e28d0
+  .4byte 0
+  .4byte __RTTI__7KEffect_1
+  .4byte 0
+  .4byte 0
+.global __vt__15SmokeSoilEffect
+__vt__15SmokeSoilEffect:
+  .4byte __RTTI__15SmokeSoilEffect
+  .4byte 0
+  .4byte invoke__7KEffectFPQ23zen17particleGenerator
+  .4byte __RTTI__15SmokeSoilEffect
+  .4byte 0xfffffffc
+  .4byte 0x80099520
+  .4byte __RTTI__15SmokeSoilEffect
+  .4byte 0xfffffff8
+  .4byte 0x80099528
+  .4byte invoke__7KEffectFPQ23zen17particleGeneratorPQ23zen11particleMdl
+  .4byte invoke__7KEffectFPQ23zen11particleMdl
+  .4byte emit__15SmokeSoilEffectFR10EffectParm
+  .4byte kill__7KEffectFv
+  .4byte stop__7KEffectFv
+  .4byte restart__7KEffectFv
+  .4byte 0x4e617669
+  .4byte 0x57686973
+  .4byte 0x746c6500
+  .4byte 0x803e28c0
+  .4byte 0x8
+  .4byte 0x803e28c8
+  .4byte 0x4
+  .4byte 0x803e28d0
+  .4byte 0
+  .4byte __RTTI__7KEffect_1
+  .4byte 0
+  .4byte 0
+.global __vt__11NaviWhistle
+__vt__11NaviWhistle:
+  .4byte __RTTI__11NaviWhistle
+  .4byte 0
+  .4byte invoke__7KEffectFPQ23zen17particleGenerator
+  .4byte __RTTI__11NaviWhistle
+  .4byte 0xfffffffc
+  .4byte 0x80115b7c
+  .4byte __RTTI__11NaviWhistle
+  .4byte 0xfffffff8
+  .4byte 0x80099528
+  .4byte invoke__11NaviWhistleFPQ23zen17particleGeneratorPQ23zen11particleMdl
+  .4byte invoke__7KEffectFPQ23zen11particleMdl
+  .4byte emit__11NaviWhistleFR10EffectParm
+  .4byte kill__11NaviWhistleFv
+  .4byte stop__7KEffectFv
+  .4byte restart__7KEffectFv
+  .4byte 0x476f616c
+  .4byte 0x45666665
+  .4byte 0x63740000
+  .4byte 0x803e28c0
+  .4byte 0x8
+  .4byte 0x803e28c8
+  .4byte 0x4
+  .4byte 0x803e28d0
+  .4byte 0
+  .4byte __RTTI__7KEffect_1
+  .4byte 0
+  .4byte 0
+.global __vt__10GoalEffect
+__vt__10GoalEffect:
+  .4byte __RTTI__10GoalEffect
+  .4byte 0
+  .4byte invoke__10GoalEffectFPQ23zen17particleGenerator
+  .4byte __RTTI__10GoalEffect
+  .4byte 0xfffffffc
+  .4byte 0x80099520
+  .4byte __RTTI__10GoalEffect
+  .4byte 0xfffffff8
+  .4byte 0x80099528
+  .4byte invoke__7KEffectFPQ23zen17particleGeneratorPQ23zen11particleMdl
+  .4byte invoke__7KEffectFPQ23zen11particleMdl
+  .4byte emit__10GoalEffectFR10EffectParm
+  .4byte kill__7KEffectFv
+  .4byte stop__7KEffectFv
+  .4byte restart__7KEffectFv
+  .4byte 0x536c696d
+  .4byte 0x65456666
+  .4byte 0x65637400
+  .4byte 0x803e28c0
+  .4byte 0x8
+  .4byte 0x803e28c8
+  .4byte 0x4
+  .4byte 0x803e28d0
+  .4byte 0
+  .4byte __RTTI__7KEffect_1
+  .4byte 0
+  .4byte 0
+.global __vt__11SlimeEffect
+__vt__11SlimeEffect:
+  .4byte __RTTI__11SlimeEffect
+  .4byte 0
+  .4byte invoke__7KEffectFPQ23zen17particleGenerator
+  .4byte __RTTI__11SlimeEffect
+  .4byte 0xfffffffc
+  .4byte 0x80115b74
+  .4byte __RTTI__11SlimeEffect
+  .4byte 0xfffffff8
+  .4byte 0x80099528
+  .4byte invoke__11SlimeEffectFPQ23zen17particleGeneratorPQ23zen11particleMdl
+  .4byte invoke__7KEffectFPQ23zen11particleMdl
+  .4byte emit__11SlimeEffectFR10EffectParm
+  .4byte kill__11SlimeEffectFv
+  .4byte stop__11SlimeEffectFv
+  .4byte restart__11SlimeEffectFv
+  .4byte 0
+  .4byte 0
+  .4byte 0
+  .4byte 0
+  .4byte 0xfffffffc
+  .4byte 0
+  .4byte 0
+  .4byte 0xfffffff8
+  .4byte 0
+  .4byte 0
+  .4byte 0
+  .4byte 0
+  .4byte 0
+  .4byte 0
+  .4byte 0
+  .4byte 0
+  .4byte 0
+  .4byte 0
+  .4byte 0
+  .4byte 0
+  .4byte 0
+  .4byte 0
+  .4byte 0
+  .4byte 0
+  .4byte 0
+
+.section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
+	.4byte 0x803E2828
+	.4byte 0x00000000
+	.4byte 0x802C242C
+	.4byte 0x802C2438
+	.4byte 0x4E6F6465
+	.4byte 0x00000000
+	.4byte 0x803E2840
+	.4byte 0x802C2444
+.global __RTTI__15GameCoreSection
+__RTTI__15GameCoreSection:
+  .4byte 0x802c241c
+  .4byte 0x802c2458
+.global lbl_803E2858
+lbl_803E2858:
+	.4byte 0x00000000
+	.4byte 0x00000000
+.global lbl_803E2860
+lbl_803E2860:
+	.4byte 0x3F666666
+.global lbl_803E2864
+lbl_803E2864:
+	.4byte 0x00000000
+.global lbl_803E2868
+lbl_803E2868:
+	.4byte 0x00000000
+.global lbl_803E286C
+lbl_803E286C:
+	.4byte 0x00000000
+.global lbl_803E2870
+lbl_803E2870:
+	.4byte 0x00000000
+.global lbl_803E2874
+lbl_803E2874:
+	.4byte 0x3F800000
+.global lbl_803E2878
+lbl_803E2878:
+	.4byte 0x00000000
+.global lbl_803E287C
+lbl_803E287C:
+	.4byte 0x00000000
+.global lbl_803E2880
+lbl_803E2880:
+	.4byte 0x3F800000
+.global lbl_803E2884
+lbl_803E2884:
+	.4byte 0x00000000
+.global lbl_803E2888
+lbl_803E2888:
+	.4byte 0xBF800000
+.global lbl_803E288C
+lbl_803E288C:
+	.4byte 0xBF800000
+.global lbl_803E2890
+lbl_803E2890:
+	.4byte 0x00000000
+.global lbl_803E2894
+lbl_803E2894:
+	.4byte 0x00000000
+.global lbl_803E2898
+lbl_803E2898:
+	.4byte 0x00000000
+.global lbl_803E289C
+lbl_803E289C:
+	.4byte 0x00000000
+.global lbl_803E28A0
+lbl_803E28A0:
+	.4byte 0x3F800000
+.global lbl_803E28A4
+lbl_803E28A4:
+	.4byte 0x00000000
+.global lbl_803E28A8
+lbl_803E28A8:
+	.4byte 0x00000000
+.global lbl_803E28AC
+lbl_803E28AC:
+	.4byte 0x3F800000
+.global lbl_803E28B0
+lbl_803E28B0:
+	.4byte 0x00000000
+.global lbl_803E28B4
+lbl_803E28B4:
+	.4byte 0x3F800000
+.global lbl_803E28B8
+lbl_803E28B8:
+	.4byte 0x00000000
+.global lbl_803E28BC
+lbl_803E28BC:
+	.4byte 0x00000000
+	.4byte 0x802C2520
+	.4byte 0x00000000
+	.4byte 0x802C2544
+	.4byte 0x00000000
+	.4byte 0x802C2584
+	.4byte 0x00000000
+	.4byte 0x4B456666
+	.4byte 0x65637400
+.global __RTTI__7KEffect_1
+__RTTI__7KEffect_1:
+  .4byte 0x803e28d8
+  .4byte 0x802c25b0
+.global __RTTI__10BurnEffect
+__RTTI__10BurnEffect:
+  .4byte 0x802c2514
+  .4byte 0x802c25cc
+.global __RTTI__12RippleEffect
+__RTTI__12RippleEffect:
+  .4byte 0x802c262c
+  .4byte 0x802c263c
+.global __RTTI__15FreeLightEffect
+__RTTI__15FreeLightEffect:
+  .4byte 0x802c269c
+  .4byte 0x802c26ac
+.global __RTTI__16UfoSuikomiEffect
+__RTTI__16UfoSuikomiEffect:
+  .4byte 0x802c270c
+  .4byte 0x802c2720
+.global __RTTI__15WhistleTemplate
+__RTTI__15WhistleTemplate:
+  .4byte 0x802c2790
+  .4byte 0x802c27a0
+.global __RTTI__13UfoSuckEffect
+__RTTI__13UfoSuckEffect:
+  .4byte 0x802c2780
+  .4byte 0x802c27c4
+.global __RTTI__15BombEffectLight
+__RTTI__15BombEffectLight:
+  .4byte 0x802c2868
+  .4byte 0x802c2878
+.global __RTTI__10BombEffect
+__RTTI__10BombEffect:
+  .4byte 0x802c28d8
+  .4byte 0x802c28e4
+.global __RTTI__12SimpleEffect
+__RTTI__12SimpleEffect:
+  .4byte 0x802c2944
+  .4byte 0x802c2954
+  .4byte 0x4e617669
+  .4byte 0x46756500
+.global __RTTI__7NaviFue
+__RTTI__7NaviFue:
+  .4byte 0x803e2930
+  .4byte 0x802c29b4
+.global __RTTI__15SmokeTreeEffect
+__RTTI__15SmokeTreeEffect:
+  .4byte 0x802c2a14
+  .4byte 0x802c2a24

@@ -1,0 +1,273 @@
+.include "macros.inc"
+
+.section .data, "wa"  # 0x80222DC0 - 0x802E9640
+  .4byte 0x6d617050
+  .4byte 0x61727473
+  .4byte 0x2e637070
+  .4byte 0
+  .4byte 0x6d617050
+  .4byte 0x61727473
+  .4byte 0
+  .4byte 0x6d617070
+  .4byte 0x61727473
+  .4byte 0x2f636f6e
+  .4byte 0x652e6d6f
+  .4byte 0x64000000
+  .4byte 0x6d617070
+  .4byte 0x61727473
+  .4byte 0x2f63796c
+  .4byte 0x696e6465
+  .4byte 0x722e6d6f
+  .4byte 0x64000000
+  .4byte 0x6d617070
+  .4byte 0x61727473
+  .4byte 0x2f637562
+  .4byte 0x652e6d6f
+  .4byte 0x64000000
+  .4byte 0x6d617070
+  .4byte 0x61727473
+  .4byte 0x2f626f61
+  .4byte 0x72642e6d
+  .4byte 0x6f640000
+.global shapeFiles__8MapParts
+shapeFiles__8MapParts:
+	.4byte 0x802C31F4
+	.4byte 0x802C3208
+	.4byte 0x802C3220
+	.4byte 0x802C3234
+.global lbl_802C3258
+lbl_802C3258:
+	.4byte 0x25642074
+	.4byte 0x6F20676F
+	.4byte 0x210A0000
+	.4byte 0x4D617053
+	.4byte 0x6C696465
+	.4byte 0x72000000
+	.4byte 0x436F7265
+	.4byte 0x4E6F6465
+	.4byte 0x00000000
+	.4byte 0x803E2B3C
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x803E2B3C
+	.4byte 0x00000000
+	.4byte 0x803E2B44
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x44796E43
+	.4byte 0x6F6C6C4F
+	.4byte 0x626A6563
+	.4byte 0x74000000
+	.4byte 0x803E2B3C
+	.4byte 0x00000000
+	.4byte 0x803E2B44
+	.4byte 0x00000000
+	.4byte 0x803E2B54
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x44796E43
+	.4byte 0x6F6C6C53
+	.4byte 0x68617065
+	.4byte 0x00000000
+	.4byte 0x803E2B3C
+	.4byte 0x00000000
+	.4byte 0x803E2B44
+	.4byte 0x00000000
+	.4byte 0x803E2B54
+	.4byte 0x00000000
+	.4byte 0x803E2B5C
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x4D617050
+	.4byte 0x61727473
+	.4byte 0x00000000
+	.4byte 0x803E2B3C
+	.4byte 0x00000000
+	.4byte 0x803E2B44
+	.4byte 0x00000000
+	.4byte 0x803E2B54
+	.4byte 0x00000000
+	.4byte 0x803E2B5C
+	.4byte 0x00000000
+	.4byte 0x803E2B64
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x803E2B3C
+	.4byte 0x00000000
+	.4byte 0x803E2B44
+	.4byte 0x00000000
+	.4byte 0x803E2B54
+	.4byte 0x00000000
+	.4byte 0x803E2B5C
+	.4byte 0x00000000
+	.4byte 0x803E2B64
+	.4byte 0x00000000
+	.4byte 0x803E2B6C
+	.4byte 0x00000000
+	.4byte 0x00000000
+.global __vt__9MapSlider
+__vt__9MapSlider:
+  .4byte __RTTI__9MapSlider
+  .4byte 0
+  .4byte getAgeNodeType__5ANodeFv
+  .4byte read__8MapPartsFR18RandomAccessStream
+  .4byte update__9MapSliderFv
+  .4byte draw__4NodeFR8Graphics
+  .4byte render__4NodeFR8Graphics
+  .4byte concat__4NodeFv
+  .4byte concat__4NodeFR3VQS
+  .4byte concat__4NodeFR3SRT
+  .4byte concat__4NodeFR8Matrix4f
+  .4byte getModelMatrix__4NodeFv
+  .4byte adjust__12DynCollShapeFP8Creature
+  .4byte applyVelocity__8MapPartsFR5PlaneR8Vector3fR8Vector3f
+  .4byte touchCallback__13DynCollObjectFR5PlaneR8Vector3fR8Vector3f
+  .4byte getShape__12DynCollShapeFv
+  .4byte jointVisible__12DynCollShapeFii
+  .4byte refresh__9MapSliderFR8Graphics
+  .4byte init__9MapSliderFv
+  .4byte 0x4d617045
+  .4byte 0x6e746974
+  .4byte 0x79000000
+  .4byte 0x803e2b3c
+  .4byte 0
+  .4byte 0x803e2b44
+  .4byte 0
+  .4byte 0x803e2b54
+  .4byte 0
+  .4byte 0x803e2b5c
+  .4byte 0
+  .4byte __RTTI__12DynCollShape_3
+  .4byte 0
+  .4byte __RTTI__8MapParts
+  .4byte 0
+  .4byte 0
+.global __vt__9MapEntity
+__vt__9MapEntity:
+  .4byte __RTTI__9MapEntity
+  .4byte 0
+  .4byte getAgeNodeType__5ANodeFv
+  .4byte read__8MapPartsFR18RandomAccessStream
+  .4byte update__9MapEntityFv
+  .4byte draw__4NodeFR8Graphics
+  .4byte render__4NodeFR8Graphics
+  .4byte concat__4NodeFv
+  .4byte concat__4NodeFR3VQS
+  .4byte concat__4NodeFR3SRT
+  .4byte concat__4NodeFR8Matrix4f
+  .4byte getModelMatrix__4NodeFv
+  .4byte adjust__12DynCollShapeFP8Creature
+  .4byte applyVelocity__8MapPartsFR5PlaneR8Vector3fR8Vector3f
+  .4byte touchCallback__13DynCollObjectFR5PlaneR8Vector3fR8Vector3f
+  .4byte getShape__12DynCollShapeFv
+  .4byte jointVisible__12DynCollShapeFii
+  .4byte refresh__12DynCollShapeFR8Graphics
+  .4byte init__8MapPartsFv
+  .4byte 0
+  .4byte 0
+  .4byte 0
+  .4byte 0
+  .4byte 0
+  .4byte 0
+  .4byte 0
+  .4byte 0
+  .4byte 0
+  .4byte 0
+  .4byte 0
+  .4byte 0
+  .4byte 0
+  .4byte 0
+  .4byte 0
+  .4byte 0
+  .4byte 0
+  .4byte 0
+  .4byte 0
+  .4byte 0
+  .4byte 0
+  .4byte 0
+  .4byte 0
+.global __vt__8MapParts
+__vt__8MapParts:
+  .4byte __RTTI__8MapParts
+  .4byte 0
+  .4byte getAgeNodeType__5ANodeFv
+  .4byte read__8MapPartsFR18RandomAccessStream
+  .4byte update__8MapPartsFv
+  .4byte draw__4NodeFR8Graphics
+  .4byte render__4NodeFR8Graphics
+  .4byte concat__4NodeFv
+  .4byte concat__4NodeFR3VQS
+  .4byte concat__4NodeFR3SRT
+  .4byte concat__4NodeFR8Matrix4f
+  .4byte getModelMatrix__4NodeFv
+  .4byte adjust__12DynCollShapeFP8Creature
+  .4byte applyVelocity__8MapPartsFR5PlaneR8Vector3fR8Vector3f
+  .4byte touchCallback__13DynCollObjectFR5PlaneR8Vector3fR8Vector3f
+  .4byte getShape__12DynCollShapeFv
+  .4byte jointVisible__12DynCollShapeFii
+  .4byte refresh__12DynCollShapeFR8Graphics
+  .4byte init__8MapPartsFv
+
+.section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
+	.4byte 0x00000000
+	.4byte 0x47656E42
+	.4byte 0x61736500
+	.4byte 0x803E2AD4
+	.4byte 0x802C30F0
+	.4byte 0x802C30FC
+	.4byte 0x802C3108
+.global __RTTI__17GenObjectMapParts
+__RTTI__17GenObjectMapParts:
+  .4byte 0x802c30d0
+  .4byte 0x802c311c
+  .4byte 0x802c317c
+  .4byte 0
+  .4byte 0
+.global lbl_803E2B00
+lbl_803E2B00:
+	.4byte 0x00000000
+.global lbl_803E2B04
+lbl_803E2B04:
+	.4byte 0x00000000
+.global lbl_803E2B08
+lbl_803E2B08:
+	.4byte 0x00000000
+.global lbl_803E2B0C
+lbl_803E2B0C:
+	.4byte 0x3DCCCCCD
+.global lbl_803E2B10
+lbl_803E2B10:
+	.4byte 0x00000000
+.global lbl_803E2B14
+lbl_803E2B14:
+	.4byte 0x00000000
+.global lbl_803E2B18
+lbl_803E2B18:
+	.4byte 0x00000000
+.global lbl_803E2B1C
+lbl_803E2B1C:
+	.4byte 0x00000000
+.global lbl_803E2B20
+lbl_803E2B20:
+	.4byte 0x00000000
+.global lbl_803E2B24
+lbl_803E2B24:
+	.4byte 0x00000000
+.global lbl_803E2B28
+lbl_803E2B28:
+	.4byte 0x00000000
+.global lbl_803E2B2C
+lbl_803E2B2C:
+	.4byte 0x41A00000
+.global lbl_803E2B30
+lbl_803E2B30:
+	.4byte 0x00000000
+	.4byte 0x414E6F64
+	.4byte 0x65000000
+	.4byte 0x803E2B34
+	.4byte 0x00000000
+	.4byte 0x802C3270
+	.4byte 0x802C327C
+	.4byte 0x4E6F6465
+	.4byte 0x00000000
+	.4byte 0x803E2B4C

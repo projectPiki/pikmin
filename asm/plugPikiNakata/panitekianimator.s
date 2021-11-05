@@ -1,0 +1,107 @@
+.include "macros.inc"
+
+.section .data, "wa"  # 0x80222DC0 - 0x802E9640
+  .4byte 0x70616e69
+  .4byte 0x74656b69
+  .4byte 0x616e696d
+  .4byte 0x61746f72
+  .4byte 0x2e637070
+  .4byte 0
+  .4byte 0x70616e69
+  .4byte 0x74656b69
+  .4byte 0x616e696d
+  .4byte 0x61746f72
+  .4byte 0
+  .4byte 0x57414954
+  .4byte 0x41435449
+  .4byte 0x4f4e5f31
+  .4byte 0
+  .4byte 0x57414954
+  .4byte 0x41435449
+  .4byte 0x4f4e5f32
+  .4byte 0
+.global motionLabels__16PaniTekiAnimator
+motionLabels__16PaniTekiAnimator:
+	.4byte 0x803E30C0
+	.4byte 0x803E30C8
+	.4byte 0x803E30D0
+	.4byte 0x803E30D8
+	.4byte 0x802C4D7C
+	.4byte 0x802C4D8C
+	.4byte 0x803E30E0
+	.4byte 0x803E30E8
+	.4byte 0x803E30F0
+	.4byte 0x803E30F8
+	.4byte 0x803E3100
+	.4byte 0x803E3108
+	.4byte 0x803E3110
+	.4byte 0x803E3118
+	.4byte 0x803E3120
+	.4byte 0x50616E69
+	.4byte 0x54656B69
+	.4byte 0x416E696D
+	.4byte 0x61746F72
+	.4byte 0x00000000
+	.4byte 0x416E696D
+	.4byte 0x61746F72
+	.4byte 0x00000000
+	.4byte 0x50616E69
+	.4byte 0x416E696D
+	.4byte 0x61746F72
+	.4byte 0x00000000
+	.4byte 0x803E3128
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x803E3128
+	.4byte 0x00000000
+	.4byte 0x803E3130
+	.4byte 0x00000000
+	.4byte 0x00000000
+.global __vt__16PaniTekiAnimator
+__vt__16PaniTekiAnimator:
+  .4byte __RTTI__16PaniTekiAnimator
+  .4byte 0
+  .4byte changeContext__12PaniAnimatorFP11AnimContext
+  .4byte animate__12PaniAnimatorFf
+  .4byte finishOneShot__8AnimatorFv
+  .4byte finishLoop__8AnimatorFv
+  .4byte updateContext__12PaniAnimatorFv
+  .4byte 0
+
+.section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
+.global "__RTTI__14NArray<5NHeap>"
+"__RTTI__14NArray<5NHeap>":
+  .4byte 0x802c4bc4
+  .4byte 0
+  .4byte 0x4e4e6f64
+  .4byte 0x65000000
+  .4byte 0x803e3098
+  .4byte 0
+.global "__RTTI__14NArray<5NNode>"
+"__RTTI__14NArray<5NNode>":
+  .4byte 0x802c4c34
+  .4byte 0
+  .4byte 0x802c4d1c
+  .4byte 0
+  .4byte 0x802c4d0c
+  .4byte 0x802c4d28
+  .4byte 0x44454144
+  .4byte 0
+  .4byte 0x44414d41
+  .4byte 0x47450000
+  .4byte 0x57414954
+  .4byte 0x5f310000
+  .4byte 0x57414954
+  .4byte 0x5f320000
+  .4byte 0x4d4f5645
+  .4byte 0x5f310000
+  .4byte 0x4d4f5645
+  .4byte 0x5f320000
+  .4byte 0x41545441
+  .4byte 0x434b0000
+  .4byte 0x464c4943
+  .4byte 0x4b000000
+  .4byte 0x54595045
+  .4byte 0x5f310000
+  .4byte 0x54595045
+  .4byte 0x5f320000

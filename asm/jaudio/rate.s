@@ -1,0 +1,15 @@
+.include "macros.inc"
+
+.section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
+.global JAC_DAC_RATE
+JAC_DAC_RATE:
+	.4byte 0x46FA3900
+.global JAC_SUBFRAMES
+JAC_SUBFRAMES:
+	.4byte 0x00000007
+.global JAC_FRAMESAMPLES
+JAC_FRAMESAMPLES:
+	.4byte 0x00000230
+.global DAC_SIZE
+DAC_SIZE:
+	.4byte 0x00000460

@@ -1,0 +1,181 @@
+.include "macros.inc"
+
+.section .data, "wa"  # 0x80222DC0 - 0x802E9640
+  .4byte 0x74616963
+  .4byte 0x6f6c6c69
+  .4byte 0x73696f6e
+  .4byte 0x61637469
+  .4byte 0x6f6e732e
+  .4byte 0x63707000
+  .4byte 0x74616963
+  .4byte 0x6f6c6c69
+  .4byte 0x73696f6e
+  .4byte 0x61637469
+  .4byte 0x6f6e7300
+  .4byte 0x54616954
+  .4byte 0x656b6954
+  .4byte 0x79706543
+  .4byte 0x6f6c6c69
+  .4byte 0x73696f6e
+  .4byte 0x41637469
+  .4byte 0x6f6e0000
+  .4byte 0x54616941
+  .4byte 0x6374696f
+  .4byte 0x6e000000
+  .4byte 0x54616943
+  .4byte 0x72656174
+  .4byte 0x75726543
+  .4byte 0x6f6c6c69
+  .4byte 0x73696f6e
+  .4byte 0x41637469
+  .4byte 0x6f6e0000
+  .4byte 0x803e3778
+  .4byte 0
+  .4byte 0
+  .4byte 0x803e3778
+  .4byte 0
+  .4byte __RTTI__26TaiCreatureCollisionAction
+  .4byte 0
+  .4byte 0
+.global __vt__26TaiTekiTypeCollisionAction
+__vt__26TaiTekiTypeCollisionAction:
+  .4byte __RTTI__26TaiTekiTypeCollisionAction
+  .4byte 0
+  .4byte start__9TaiActionFR4Teki
+  .4byte finish__9TaiActionFR4Teki
+  .4byte act__9TaiActionFR4Teki
+  .4byte actByEvent__26TaiTekiTypeCollisionActionFR9TekiEvent
+  .4byte hasNextState__9TaiActionFv
+  .4byte 0x5461694e
+  .4byte 0x61766943
+  .4byte 0x6f6c6c69
+  .4byte 0x73696f6e
+  .4byte 0x41637469
+  .4byte 0x6f6e0000
+  .4byte 0x803e3778
+  .4byte 0
+  .4byte __RTTI__26TaiCreatureCollisionAction
+  .4byte 0
+  .4byte 0
+.global __vt__22TaiNaviCollisionAction
+__vt__22TaiNaviCollisionAction:
+  .4byte __RTTI__22TaiNaviCollisionAction
+  .4byte 0
+  .4byte start__9TaiActionFR4Teki
+  .4byte finish__9TaiActionFR4Teki
+  .4byte act__9TaiActionFR4Teki
+  .4byte actByEvent__22TaiNaviCollisionActionFR9TekiEvent
+  .4byte hasNextState__9TaiActionFv
+  .4byte 0x54616950
+  .4byte 0x696b6943
+  .4byte 0x6f6c6c69
+  .4byte 0x73696f6e
+  .4byte 0x41637469
+  .4byte 0x6f6e0000
+  .4byte 0x803e3778
+  .4byte 0
+  .4byte __RTTI__26TaiCreatureCollisionAction
+  .4byte 0
+  .4byte 0
+.global __vt__22TaiPikiCollisionAction
+__vt__22TaiPikiCollisionAction:
+  .4byte __RTTI__22TaiPikiCollisionAction
+  .4byte 0
+  .4byte start__9TaiActionFR4Teki
+  .4byte finish__9TaiActionFR4Teki
+  .4byte act__9TaiActionFR4Teki
+  .4byte actByEvent__22TaiPikiCollisionActionFR9TekiEvent
+  .4byte hasNextState__9TaiActionFv
+.global __vt__26TaiCreatureCollisionAction
+__vt__26TaiCreatureCollisionAction:
+  .4byte __RTTI__26TaiCreatureCollisionAction
+  .4byte 0
+  .4byte start__9TaiActionFR4Teki
+  .4byte finish__9TaiActionFR4Teki
+  .4byte act__9TaiActionFR4Teki
+  .4byte actByEvent__26TaiCreatureCollisionActionFR9TekiEvent
+  .4byte hasNextState__9TaiActionFv
+  .4byte 0x54616957
+  .4byte 0x616c6c43
+  .4byte 0x6f6c6c69
+  .4byte 0x73696f6e
+  .4byte 0x41637469
+  .4byte 0x6f6e0000
+  .4byte 0x803e3778
+  .4byte 0
+  .4byte 0
+.global __vt__22TaiWallCollisionAction
+__vt__22TaiWallCollisionAction:
+  .4byte __RTTI__22TaiWallCollisionAction
+  .4byte 0
+  .4byte start__9TaiActionFR4Teki
+  .4byte finish__9TaiActionFR4Teki
+  .4byte act__9TaiActionFR4Teki
+  .4byte actByEvent__22TaiWallCollisionActionFR9TekiEvent
+  .4byte hasNextState__9TaiActionFv
+  .4byte 0x54616947
+  .4byte 0x726f756e
+  .4byte 0x64436f6c
+  .4byte 0x6c697369
+  .4byte 0x6f6e4163
+  .4byte 0x74696f6e
+  .4byte 0
+  .4byte 0x803e3778
+  .4byte 0
+  .4byte 0
+.global __vt__24TaiGroundCollisionAction
+__vt__24TaiGroundCollisionAction:
+  .4byte __RTTI__24TaiGroundCollisionAction
+  .4byte 0
+  .4byte start__9TaiActionFR4Teki
+  .4byte finish__9TaiActionFR4Teki
+  .4byte act__9TaiActionFR4Teki
+  .4byte actByEvent__24TaiGroundCollisionActionFR9TekiEvent
+  .4byte hasNextState__9TaiActionFv
+  .4byte 0x54616942
+  .4byte 0x6f756e63
+  .4byte 0x65416374
+  .4byte 0x696f6e00
+  .4byte 0x803e3778
+  .4byte 0
+  .4byte 0
+.global __vt__15TaiBounceAction
+__vt__15TaiBounceAction:
+  .4byte __RTTI__15TaiBounceAction
+  .4byte 0
+  .4byte start__9TaiActionFR4Teki
+  .4byte finish__9TaiActionFR4Teki
+  .4byte act__9TaiActionFR4Teki
+  .4byte actByEvent__15TaiBounceActionFR9TekiEvent
+  .4byte hasNextState__9TaiActionFv
+  .4byte 0
+
+.section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
+  .4byte 0x802c7a94
+.global __RTTI__25TaiCollecImpassableAction
+__RTTI__25TaiCollecImpassableAction:
+  .4byte 0x802c7abc
+  .4byte 0x802c7ad8
+.global __RTTI__31TekiCollecTargetPelletCondition
+__RTTI__31TekiCollecTargetPelletCondition:
+  .4byte 0x802c7b00
+  .4byte 0x802c7b20
+.global __RTTI__17TaiCollecStrategy
+__RTTI__17TaiCollecStrategy:
+  .4byte 0x802c7b40
+  .4byte 0x802c7b54
+.global __RTTI__19TaiDependenceAction
+__RTTI__19TaiDependenceAction:
+  .4byte 0x802c7b90
+  .4byte 0x802c7ba4
+.global __RTTI__19TaiCollecParameters
+__RTTI__19TaiCollecParameters:
+  .4byte 0x802c7be8
+  .4byte 0x802c7bfc
+  .4byte 0
+  .4byte 0x802c7c98
+  .4byte 0
+.global __RTTI__26TaiCreatureCollisionAction
+__RTTI__26TaiCreatureCollisionAction:
+  .4byte 0x802c7ca4
+  .4byte 0x802c7cc0

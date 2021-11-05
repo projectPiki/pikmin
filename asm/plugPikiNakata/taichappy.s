@@ -1,0 +1,419 @@
+.include "macros.inc"
+
+.section .data, "wa"  # 0x80222DC0 - 0x802E9640
+.global lbl_802C6B70
+lbl_802C6B70:
+	.4byte 0x74616963
+	.4byte 0x68617070
+	.4byte 0x792E6370
+	.4byte 0x70000000
+	.4byte 0x74616963
+	.4byte 0x68617070
+	.4byte 0x79000000
+	.4byte 0x534D4153
+	.4byte 0x485F5459
+	.4byte 0x50450000
+	.4byte 0x50524553
+	.4byte 0x5345445F
+	.4byte 0x50455249
+	.4byte 0x4F440000
+	.4byte 0x43525949
+	.4byte 0x4E475F50
+	.4byte 0x4552494F
+	.4byte 0x44000000
+	.4byte 0x534D4153
+	.4byte 0x485F4441
+	.4byte 0x4D414745
+	.4byte 0x00000000
+	.4byte 0x54616943
+	.4byte 0x68617070
+	.4byte 0x794C6567
+	.4byte 0x45666665
+	.4byte 0x63744163
+	.4byte 0x74696F6E
+	.4byte 0x00000000
+	.4byte 0x54616941
+	.4byte 0x6374696F
+	.4byte 0x6E000000
+	.4byte 0x54414941
+	.4byte 0x65666643
+	.4byte 0x6C6F7564
+	.4byte 0x4F664475
+	.4byte 0x73740000
+	.4byte 0x803E3510
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x5461694A
+	.4byte 0x6F696E74
+	.4byte 0x45666665
+	.4byte 0x63744163
+	.4byte 0x74696F6E
+	.4byte 0x00000000
+	.4byte 0x803E3510
+	.4byte 0x00000000
+	.4byte 0x803E3518
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x803E3510
+	.4byte 0x00000000
+	.4byte 0x803E3518
+	.4byte 0x00000000
+	.4byte 0x803E3520
+	.4byte 0x00000000
+	.4byte 0x00000000
+.global __vt__24TaiChappyLegEffectAction
+__vt__24TaiChappyLegEffectAction:
+  .4byte __RTTI__24TaiChappyLegEffectAction
+  .4byte 0
+  .4byte start__18TAIAeffCloudOfDustFR4Teki
+  .4byte finish__9TaiActionFR4Teki
+  .4byte act__18TAIAeffCloudOfDustFR4Teki
+  .4byte actByEvent__9TaiActionFR9TekiEvent
+  .4byte hasNextState__9TaiActionFv
+  .4byte setType__24TaiChappyLegEffectActionFR8Vector3fii
+  .4byte 0x54616943
+  .4byte 0x68617070
+  .4byte 0x79536d61
+  .4byte 0x73686564
+  .4byte 0x41637469
+  .4byte 0x6f6e0000
+  .4byte 0x54616953
+  .4byte 0x6d617368
+  .4byte 0x65644163
+  .4byte 0x74696f6e
+  .4byte 0
+  .4byte 0x803e3510
+  .4byte 0
+  .4byte 0
+  .4byte 0x803e3510
+  .4byte 0
+  .4byte __RTTI__16TaiSmashedAction
+  .4byte 0
+  .4byte 0
+.global __vt__22TaiChappySmashedAction
+__vt__22TaiChappySmashedAction:
+  .4byte __RTTI__22TaiChappySmashedAction
+  .4byte 0
+  .4byte start__9TaiActionFR4Teki
+  .4byte finish__9TaiActionFR4Teki
+  .4byte act__9TaiActionFR4Teki
+  .4byte actByEvent__22TaiChappySmashedActionFR9TekiEvent
+  .4byte hasNextState__9TaiActionFv
+  .4byte 0x54656b69
+  .4byte 0x416e6443
+  .4byte 0x6f6e6469
+  .4byte 0x74696f6e
+  .4byte 0
+  .4byte 0x436f6e64
+  .4byte 0x6974696f
+  .4byte 0x6e000000
+  .4byte 0x54656b69
+  .4byte 0x436f6e64
+  .4byte 0x6974696f
+  .4byte 0x6e000000
+  .4byte 0x803e3540
+  .4byte 0
+  .4byte 0
+  .4byte 0x803e3540
+  .4byte 0
+  .4byte 0x803e3548
+  .4byte 0
+  .4byte 0
+  .4byte 0
+  .4byte 0
+  .4byte 0
+  .4byte 0x54656b69
+  .4byte 0x4f72436f
+  .4byte 0x6e646974
+  .4byte 0x696f6e00
+  .4byte 0x803e3540
+  .4byte 0
+  .4byte 0x803e3548
+  .4byte 0
+  .4byte 0
+.global __vt__15TekiOrCondition
+__vt__15TekiOrCondition:
+  .4byte __RTTI__15TekiOrCondition
+  .4byte 0
+  .4byte satisfy__15TekiOrConditionFP8Creature
+  .4byte 0
+  .4byte 0
+  .4byte 0
+  .4byte 0
+  .4byte 0
+  .4byte 0
+  .4byte 0x54616943
+  .4byte 0x68617070
+  .4byte 0x79437279
+  .4byte 0x41637469
+  .4byte 0x6f6e0000
+  .4byte 0x803e3510
+  .4byte 0
+  .4byte 0
+.global __vt__18TaiChappyCryAction
+__vt__18TaiChappyCryAction:
+  .4byte __RTTI__18TaiChappyCryAction
+  .4byte 0
+  .4byte start__9TaiActionFR4Teki
+  .4byte finish__9TaiActionFR4Teki
+  .4byte act__18TaiChappyCryActionFR4Teki
+  .4byte actByEvent__9TaiActionFR9TekiEvent
+  .4byte hasNextState__9TaiActionFv
+  .4byte 0x5461694f
+  .4byte 0x6e636541
+  .4byte 0x6374696f
+  .4byte 0x6e000000
+  .4byte 0x803e3510
+  .4byte 0
+  .4byte 0
+.global __vt__13TaiOnceAction
+__vt__13TaiOnceAction:
+  .4byte __RTTI__13TaiOnceAction
+  .4byte 0
+  .4byte start__9TaiActionFR4Teki
+  .4byte finish__9TaiActionFR4Teki
+  .4byte act__13TaiOnceActionFR4Teki
+  .4byte actByEvent__9TaiActionFR9TekiEvent
+  .4byte hasNextState__9TaiActionFv
+  .4byte 0x54616941
+  .4byte 0x6e644163
+  .4byte 0x74696f6e
+  .4byte 0
+  .4byte 0x803e3510
+  .4byte 0
+  .4byte 0
+.global __vt__12TaiAndAction
+__vt__12TaiAndAction:
+  .4byte __RTTI__12TaiAndAction
+  .4byte 0
+  .4byte start__12TaiAndActionFR4Teki
+  .4byte finish__12TaiAndActionFR4Teki
+  .4byte act__12TaiAndActionFR4Teki
+  .4byte actByEvent__9TaiActionFR9TekiEvent
+  .4byte hasNextState__9TaiActionFv
+  .4byte 0
+  .4byte 0
+  .4byte 0
+  .4byte 0
+  .4byte 0
+  .4byte 0
+  .4byte 0
+  .4byte 0x54616943
+  .4byte 0x68617070
+  .4byte 0x79537472
+  .4byte 0x61746567
+  .4byte 0x79000000
+  .4byte 0x54656b69
+  .4byte 0x53747261
+  .4byte 0x74656779
+  .4byte 0
+  .4byte 0x54616953
+  .4byte 0x74726174
+  .4byte 0x65677900
+  .4byte 0x803e3570
+  .4byte 0
+  .4byte 0
+  .4byte 0x803e3570
+  .4byte 0
+  .4byte 0x803e3578
+  .4byte 0
+  .4byte 0
+.global __vt__17TaiChappyStrategy
+__vt__17TaiChappyStrategy:
+  .4byte __RTTI__17TaiChappyStrategy
+  .4byte 0
+  .4byte start__11TaiStrategyFR4Teki
+  .4byte act__11TaiStrategyFR4Teki
+  .4byte eventPerformed__11TaiStrategyFR9TekiEvent
+  .4byte createEffect__12TekiStrategyFR4Tekii
+  .4byte draw__12TekiStrategyFR4TekiR8Graphics
+  .4byte drawDebugInfo__12TekiStrategyFR4TekiR8Graphics
+  .4byte interact__12TekiStrategyFR4TekiR18TekiInteractionKey
+  .4byte spawnCorpseParts__12TekiStrategyFR4Teki
+  .4byte 0x54616943
+  .4byte 0x61746669
+  .4byte 0x73685061
+  .4byte 0x72616d65
+  .4byte 0x74657273
+  .4byte 0
+  .4byte 0x436f7265
+  .4byte 0x4e6f6465
+  .4byte 0
+  .4byte 0x803e3590
+  .4byte 0
+  .4byte 0
+  .4byte 0x803e3590
+  .4byte 0
+  .4byte 0x803e3598
+  .4byte 0
+  .4byte 0
+  .4byte 0x54656b69
+  .4byte 0x50617261
+  .4byte 0x6d657465
+  .4byte 0x72730000
+  .4byte 0x803e3590
+  .4byte 0
+  .4byte 0x803e3598
+  .4byte 0
+  .4byte 0x803e35a8
+  .4byte 0
+  .4byte 0
+  .4byte 0x803e3590
+  .4byte 0
+  .4byte 0x803e3598
+  .4byte 0
+  .4byte 0x803e35a8
+  .4byte 0
+  .4byte 0x803e35b0
+  .4byte 0
+  .4byte 0
+.global __vt__20TaiCatfishParameters
+__vt__20TaiCatfishParameters:
+  .4byte __RTTI__20TaiCatfishParameters
+  .4byte 0
+  .4byte getAgeNodeType__5ANodeFv
+  .4byte read__14TekiParametersFR18RandomAccessStream
+  .4byte update__4NodeFv
+  .4byte draw__4NodeFR8Graphics
+  .4byte render__4NodeFR8Graphics
+  .4byte concat__4NodeFv
+  .4byte concat__4NodeFR3VQS
+  .4byte concat__4NodeFR3SRT
+  .4byte concat__4NodeFR8Matrix4f
+  .4byte getModelMatrix__4NodeFv
+  .4byte 0x54616942
+  .4byte 0x6c61636b
+  .4byte 0x43686170
+  .4byte 0x70795061
+  .4byte 0x72616d65
+  .4byte 0x74657273
+  .4byte 0
+  .4byte 0x803e3590
+  .4byte 0
+  .4byte 0x803e3598
+  .4byte 0
+  .4byte 0x803e35a8
+  .4byte 0
+  .4byte 0x803e35b0
+  .4byte 0
+  .4byte 0
+.global __vt__24TaiBlackChappyParameters
+__vt__24TaiBlackChappyParameters:
+  .4byte __RTTI__24TaiBlackChappyParameters
+  .4byte 0
+  .4byte getAgeNodeType__5ANodeFv
+  .4byte read__14TekiParametersFR18RandomAccessStream
+  .4byte update__4NodeFv
+  .4byte draw__4NodeFR8Graphics
+  .4byte render__4NodeFR8Graphics
+  .4byte concat__4NodeFv
+  .4byte concat__4NodeFR3VQS
+  .4byte concat__4NodeFR3SRT
+  .4byte concat__4NodeFR8Matrix4f
+  .4byte getModelMatrix__4NodeFv
+  .4byte 0x54616943
+  .4byte 0x68617070
+  .4byte 0x79506172
+  .4byte 0x616d6574
+  .4byte 0x65727300
+  .4byte 0x803e3590
+  .4byte 0
+  .4byte 0x803e3598
+  .4byte 0
+  .4byte 0x803e35a8
+  .4byte 0
+  .4byte 0x803e35b0
+  .4byte 0
+  .4byte 0
+.global __vt__19TaiChappyParameters
+__vt__19TaiChappyParameters:
+  .4byte __RTTI__19TaiChappyParameters
+  .4byte 0
+  .4byte getAgeNodeType__5ANodeFv
+  .4byte read__14TekiParametersFR18RandomAccessStream
+  .4byte update__4NodeFv
+  .4byte draw__4NodeFR8Graphics
+  .4byte render__4NodeFR8Graphics
+  .4byte concat__4NodeFv
+  .4byte concat__4NodeFR3VQS
+  .4byte concat__4NodeFR3SRT
+  .4byte concat__4NodeFR8Matrix4f
+  .4byte getModelMatrix__4NodeFv
+
+.section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
+.global __RTTI__26TaiNaviWatchResultOnAction
+__RTTI__26TaiNaviWatchResultOnAction:
+  .4byte 0x802c69e4
+  .4byte 0x802c6a0c
+.global __RTTI__30TaiTypeNaviWatchResultOnAction
+__RTTI__30TaiTypeNaviWatchResultOnAction:
+  .4byte 0x802c6a34
+  .4byte 0x802c6a54
+.global __RTTI__18TaiStopSoundAction
+__RTTI__18TaiStopSoundAction:
+  .4byte 0x802c6a7c
+  .4byte 0x802c6a90
+.global __RTTI__18TaiPlaySoundAction
+__RTTI__18TaiPlaySoundAction:
+  .4byte 0x802c6ab8
+  .4byte 0x802c6acc
+.global __RTTI__18TaiSetOptionAction
+__RTTI__18TaiSetOptionAction:
+  .4byte 0x802c6af4
+  .4byte 0x802c6b08
+.global __RTTI__20TaiActionStateAction
+__RTTI__20TaiActionStateAction:
+  .4byte 0x802c6b30
+  .4byte 0x802c6b48
+  .4byte 0x802c6be4
+  .4byte 0
+  .4byte 0x802c6bf0
+  .4byte 0x802c6c04
+  .4byte 0x802c6c10
+  .4byte 0x802c6c28
+.global __RTTI__24TaiChappyLegEffectAction
+__RTTI__24TaiChappyLegEffectAction:
+  .4byte 0x802c6bc8
+  .4byte 0x802c6c3c
+.global __RTTI__16TaiSmashedAction
+__RTTI__16TaiSmashedAction:
+  .4byte 0x802c6c90
+  .4byte 0x802c6ca4
+.global __RTTI__22TaiChappySmashedAction
+__RTTI__22TaiChappySmashedAction:
+  .4byte 0x802c6c78
+  .4byte 0x802c6cb0
+  .4byte 0x802c6cf4
+  .4byte 0
+  .4byte 0x802c6d00
+  .4byte 0x802c6d10
+.global __RTTI__15TekiOrCondition
+__RTTI__15TekiOrCondition:
+  .4byte 0x802c6d3c
+  .4byte 0x802c6d4c
+.global __RTTI__18TaiChappyCryAction
+__RTTI__18TaiChappyCryAction:
+  .4byte 0x802c6d84
+  .4byte 0x802c6d98
+.global __RTTI__13TaiOnceAction
+__RTTI__13TaiOnceAction:
+  .4byte 0x802c6dc0
+  .4byte 0x802c6dd0
+.global __RTTI__12TaiAndAction
+__RTTI__12TaiAndAction:
+  .4byte 0x802c6df8
+  .4byte 0x802c6e08
+  .4byte 0x802c6e60
+  .4byte 0
+  .4byte 0x802c6e70
+  .4byte 0x802c6e7c
+.global __RTTI__17TaiChappyStrategy
+__RTTI__17TaiChappyStrategy:
+  .4byte 0x802c6e4c
+  .4byte 0x802c6e88
+  .4byte 0x414e6f64
+  .4byte 0x65000000
+  .4byte 0x803e3588
+  .4byte 0
+  .4byte 0x802c6edc
+  .4byte 0x802c6ee8

@@ -1,0 +1,557 @@
+.include "macros.inc"
+
+.section .data, "wa"  # 0x80222DC0 - 0x802E9640
+  .4byte 0x74616972
+  .4byte 0x65616374
+  .4byte 0x696f6e61
+  .4byte 0x6374696f
+  .4byte 0x6e732e63
+  .4byte 0x70700000
+  .4byte 0x74616972
+  .4byte 0x65616374
+  .4byte 0x696f6e61
+  .4byte 0x6374696f
+  .4byte 0x6e730000
+  .4byte 0x54616944
+  .4byte 0x616e6765
+  .4byte 0x724c6966
+  .4byte 0x65416374
+  .4byte 0x696f6e00
+  .4byte 0x54616941
+  .4byte 0x6374696f
+  .4byte 0x6e000000
+  .4byte 0x803e3fe8
+  .4byte 0
+  .4byte 0
+.global __vt__19TaiDangerLifeAction
+__vt__19TaiDangerLifeAction:
+  .4byte __RTTI__19TaiDangerLifeAction
+  .4byte 0
+  .4byte start__9TaiActionFR4Teki
+  .4byte finish__9TaiActionFR4Teki
+  .4byte act__19TaiDangerLifeActionFR4Teki
+  .4byte actByEvent__9TaiActionFR9TekiEvent
+  .4byte hasNextState__9TaiActionFv
+  .4byte 0x54616957
+  .4byte 0x61726e41
+  .4byte 0x6374696f
+  .4byte 0x6e000000
+  .4byte 0x803e3fe8
+  .4byte 0
+  .4byte 0
+.global __vt__13TaiWarnAction
+__vt__13TaiWarnAction:
+  .4byte __RTTI__13TaiWarnAction
+  .4byte 0
+  .4byte start__13TaiWarnActionFR4Teki
+  .4byte finish__9TaiActionFR4Teki
+  .4byte act__9TaiActionFR4Teki
+  .4byte actByEvent__9TaiActionFR9TekiEvent
+  .4byte hasNextState__9TaiActionFv
+  .4byte 0x54616950
+  .4byte 0x72657373
+  .4byte 0x65644163
+  .4byte 0x74696f6e
+  .4byte 0
+  .4byte 0x803e3fe8
+  .4byte 0
+  .4byte 0
+.global __vt__16TaiPressedAction
+__vt__16TaiPressedAction:
+  .4byte __RTTI__16TaiPressedAction
+  .4byte 0
+  .4byte start__9TaiActionFR4Teki
+  .4byte finish__9TaiActionFR4Teki
+  .4byte act__9TaiActionFR4Teki
+  .4byte actByEvent__16TaiPressedActionFR9TekiEvent
+  .4byte hasNextState__9TaiActionFv
+  .4byte 0x54616942
+  .4byte 0x65696e67
+  .4byte 0x50726573
+  .4byte 0x73656441
+  .4byte 0x6374696f
+  .4byte 0x6e000000
+  .4byte 0x803e3fe8
+  .4byte 0
+  .4byte 0
+.global __vt__21TaiBeingPressedAction
+__vt__21TaiBeingPressedAction:
+  .4byte __RTTI__21TaiBeingPressedAction
+  .4byte 0
+  .4byte start__21TaiBeingPressedActionFR4Teki
+  .4byte finish__9TaiActionFR4Teki
+  .4byte act__9TaiActionFR4Teki
+  .4byte actByEvent__9TaiActionFR9TekiEvent
+  .4byte hasNextState__9TaiActionFv
+  .4byte 0x54616953
+  .4byte 0x6d617368
+  .4byte 0x65644163
+  .4byte 0x74696f6e
+  .4byte 0
+  .4byte 0x803e3fe8
+  .4byte 0
+  .4byte 0
+.global __vt__16TaiSmashedAction
+__vt__16TaiSmashedAction:
+  .4byte __RTTI__16TaiSmashedAction_1
+  .4byte 0
+  .4byte start__9TaiActionFR4Teki
+  .4byte finish__9TaiActionFR4Teki
+  .4byte act__9TaiActionFR4Teki
+  .4byte actByEvent__16TaiSmashedActionFR9TekiEvent
+  .4byte hasNextState__9TaiActionFv
+  .4byte 0x54616953
+  .4byte 0x7469636b
+  .4byte 0x65644163
+  .4byte 0x74696f6e
+  .4byte 0
+  .4byte 0x803e3fe8
+  .4byte 0
+  .4byte 0
+.global __vt__16TaiStickedAction
+__vt__16TaiStickedAction:
+  .4byte __RTTI__16TaiStickedAction
+  .4byte 0
+  .4byte start__9TaiActionFR4Teki
+  .4byte finish__9TaiActionFR4Teki
+  .4byte act__16TaiStickedActionFR4Teki
+  .4byte actByEvent__9TaiActionFR9TekiEvent
+  .4byte hasNextState__9TaiActionFv
+  .4byte 0x54656b69
+  .4byte 0x416e6443
+  .4byte 0x6f6e6469
+  .4byte 0x74696f6e
+  .4byte 0
+  .4byte 0x436f6e64
+  .4byte 0x6974696f
+  .4byte 0x6e000000
+  .4byte 0x54656b69
+  .4byte 0x436f6e64
+  .4byte 0x6974696f
+  .4byte 0x6e000000
+  .4byte 0x803e4020
+  .4byte 0
+  .4byte 0
+  .4byte 0x803e4020
+  .4byte 0
+  .4byte 0x803e4028
+  .4byte 0
+  .4byte 0
+  .4byte 0
+  .4byte 0
+  .4byte 0
+  .4byte 0
+  .4byte 0
+  .4byte 0
+  .4byte 0
+  .4byte 0
+  .4byte 0
+  .4byte 0x54616954
+  .4byte 0x61726765
+  .4byte 0x744e6561
+  .4byte 0x72657374
+  .4byte 0x436f6c6c
+  .4byte 0x6973696f
+  .4byte 0x6e416374
+  .4byte 0x696f6e00
+  .4byte 0x803e3fe8
+  .4byte 0
+  .4byte 0
+.global __vt__31TaiTargetNearestCollisionAction
+__vt__31TaiTargetNearestCollisionAction:
+  .4byte __RTTI__31TaiTargetNearestCollisionAction
+  .4byte 0
+  .4byte start__9TaiActionFR4Teki
+  .4byte finish__9TaiActionFR4Teki
+  .4byte act__9TaiActionFR4Teki
+  .4byte actByEvent__31TaiTargetNearestCollisionActionFR9TekiEvent
+  .4byte hasNextState__9TaiActionFv
+  .4byte 0x54616954
+  .4byte 0x61726765
+  .4byte 0x744e6561
+  .4byte 0x72657374
+  .4byte 0x41737361
+  .4byte 0x696c616e
+  .4byte 0x74416374
+  .4byte 0x696f6e00
+  .4byte 0x803e3fe8
+  .4byte 0
+  .4byte 0
+.global __vt__31TaiTargetNearestAssailantAction
+__vt__31TaiTargetNearestAssailantAction:
+  .4byte __RTTI__31TaiTargetNearestAssailantAction
+  .4byte 0
+  .4byte start__9TaiActionFR4Teki
+  .4byte finish__9TaiActionFR4Teki
+  .4byte act__31TaiTargetNearestAssailantActionFR4Teki
+  .4byte actByEvent__9TaiActionFR9TekiEvent
+  .4byte hasNextState__9TaiActionFv
+  .4byte 0x54616944
+  .4byte 0x616d6167
+  .4byte 0x696e6741
+  .4byte 0x6374696f
+  .4byte 0x6e000000
+  .4byte 0x5461694d
+  .4byte 0x6f74696f
+  .4byte 0x6e416374
+  .4byte 0x696f6e00
+  .4byte 0x803e3fe8
+  .4byte 0
+  .4byte 0
+  .4byte 0x803e3fe8
+  .4byte 0
+  .4byte 0x803e4040
+  .4byte 0
+  .4byte 0
+.global __vt__17TaiDamagingAction
+__vt__17TaiDamagingAction:
+  .4byte __RTTI__17TaiDamagingAction_1
+  .4byte 0
+  .4byte start__17TaiDamagingActionFR4Teki
+  .4byte finish__9TaiActionFR4Teki
+  .4byte act__17TaiDamagingActionFR4Teki
+  .4byte actByEvent__9TaiActionFR9TekiEvent
+  .4byte hasNextState__9TaiActionFv
+  .4byte 0x54616943
+  .4byte 0x6f756e74
+  .4byte 0x65726174
+  .4byte 0x7461636b
+  .4byte 0x53696d75
+  .4byte 0x6c74616e
+  .4byte 0x656f7573
+  .4byte 0x44616d61
+  .4byte 0x67654163
+  .4byte 0x74696f6e
+  .4byte 0
+  .4byte 0x803e3fe8
+  .4byte 0
+  .4byte 0
+.global __vt__40TaiCounterattackSimultaneousDamageAction
+__vt__40TaiCounterattackSimultaneousDamageAction:
+  .4byte __RTTI__40TaiCounterattackSimultaneousDamageAction
+  .4byte 0
+  .4byte start__9TaiActionFR4Teki
+  .4byte finish__9TaiActionFR4Teki
+  .4byte act__40TaiCounterattackSimultaneousDamageActionFR4Teki
+  .4byte actByEvent__9TaiActionFR9TekiEvent
+  .4byte hasNextState__9TaiActionFv
+  .4byte 0x54616953
+  .4byte 0x696d756c
+  .4byte 0x74616e65
+  .4byte 0x6f757344
+  .4byte 0x616d6167
+  .4byte 0x65416374
+  .4byte 0x696f6e00
+  .4byte 0x803e3fe8
+  .4byte 0
+  .4byte 0
+.global __vt__27TaiSimultaneousDamageAction
+__vt__27TaiSimultaneousDamageAction:
+  .4byte __RTTI__27TaiSimultaneousDamageAction
+  .4byte 0
+  .4byte start__9TaiActionFR4Teki
+  .4byte finish__9TaiActionFR4Teki
+  .4byte act__27TaiSimultaneousDamageActionFR4Teki
+  .4byte actByEvent__9TaiActionFR9TekiEvent
+  .4byte hasNextState__9TaiActionFv
+  .4byte 0x54616944
+  .4byte 0x616d6167
+  .4byte 0x65416374
+  .4byte 0x696f6e00
+  .4byte 0x803e3fe8
+  .4byte 0
+  .4byte 0
+.global __vt__15TaiDamageAction
+__vt__15TaiDamageAction:
+  .4byte __RTTI__15TaiDamageAction
+  .4byte 0
+  .4byte start__9TaiActionFR4Teki
+  .4byte finish__9TaiActionFR4Teki
+  .4byte act__15TaiDamageActionFR4Teki
+  .4byte actByEvent__9TaiActionFR9TekiEvent
+  .4byte hasNextState__9TaiActionFv
+  .4byte 0x54616944
+  .4byte 0x616d6167
+  .4byte 0x65536361
+  .4byte 0x6c654163
+  .4byte 0x74696f6e
+  .4byte 0
+  .4byte 0x803e3fe8
+  .4byte 0
+  .4byte 0
+.global __vt__20TaiDamageScaleAction
+__vt__20TaiDamageScaleAction:
+  .4byte __RTTI__20TaiDamageScaleAction
+  .4byte 0
+  .4byte start__9TaiActionFR4Teki
+  .4byte finish__9TaiActionFR4Teki
+  .4byte act__20TaiDamageScaleActionFR4Teki
+  .4byte actByEvent__9TaiActionFR9TekiEvent
+  .4byte hasNextState__9TaiActionFv
+  .4byte 0x54616944
+  .4byte 0x616d6167
+  .4byte 0x65436f75
+  .4byte 0x6e744163
+  .4byte 0x74696f6e
+  .4byte 0
+  .4byte 0x803e3fe8
+  .4byte 0
+  .4byte 0
+.global __vt__20TaiDamageCountAction
+__vt__20TaiDamageCountAction:
+  .4byte __RTTI__20TaiDamageCountAction
+  .4byte 0
+  .4byte start__9TaiActionFR4Teki
+  .4byte finish__9TaiActionFR4Teki
+  .4byte act__20TaiDamageCountActionFR4Teki
+  .4byte actByEvent__9TaiActionFR9TekiEvent
+  .4byte hasNextState__9TaiActionFv
+  .4byte 0x54616944
+  .4byte 0x616d6167
+  .4byte 0x65436f75
+  .4byte 0x6e745265
+  .4byte 0x73657441
+  .4byte 0x6374696f
+  .4byte 0x6e000000
+  .4byte 0x803e3fe8
+  .4byte 0
+  .4byte 0
+.global __vt__25TaiDamageCountResetAction
+__vt__25TaiDamageCountResetAction:
+  .4byte __RTTI__25TaiDamageCountResetAction
+  .4byte 0
+  .4byte start__25TaiDamageCountResetActionFR4Teki
+  .4byte finish__9TaiActionFR4Teki
+  .4byte act__9TaiActionFR4Teki
+  .4byte actByEvent__9TaiActionFR9TekiEvent
+  .4byte hasNextState__9TaiActionFv
+  .4byte 0x54616944
+  .4byte 0x79696e67
+  .4byte 0x41637469
+  .4byte 0x6f6e0000
+  .4byte 0x803e3fe8
+  .4byte 0
+  .4byte 0x803e4040
+  .4byte 0
+  .4byte 0
+.global __vt__14TaiDyingAction
+__vt__14TaiDyingAction:
+  .4byte __RTTI__14TaiDyingAction_1
+  .4byte 0
+  .4byte start__14TaiDyingActionFR4Teki
+  .4byte finish__9TaiActionFR4Teki
+  .4byte act__14TaiDyingActionFR4Teki
+  .4byte actByEvent__9TaiActionFR9TekiEvent
+  .4byte hasNextState__9TaiActionFv
+  .4byte 0x54616943
+  .4byte 0x72656174
+  .4byte 0x65446561
+  .4byte 0x64456666
+  .4byte 0x65637441
+  .4byte 0x6374696f
+  .4byte 0x6e000000
+  .4byte 0x803e3fe8
+  .4byte 0
+  .4byte 0
+.global __vt__25TaiCreateDeadEffectAction
+__vt__25TaiCreateDeadEffectAction:
+  .4byte __RTTI__25TaiCreateDeadEffectAction
+  .4byte 0
+  .4byte start__25TaiCreateDeadEffectActionFR4Teki
+  .4byte finish__9TaiActionFR4Teki
+  .4byte act__9TaiActionFR4Teki
+  .4byte actByEvent__9TaiActionFR9TekiEvent
+  .4byte hasNextState__9TaiActionFv
+  .4byte 0x54616953
+  .4byte 0x7061776e
+  .4byte 0x4974656d
+  .4byte 0x73416374
+  .4byte 0x696f6e00
+  .4byte 0x803e3fe8
+  .4byte 0
+  .4byte 0
+.global __vt__19TaiSpawnItemsAction
+__vt__19TaiSpawnItemsAction:
+  .4byte __RTTI__19TaiSpawnItemsAction
+  .4byte 0
+  .4byte start__19TaiSpawnItemsActionFR4Teki
+  .4byte finish__9TaiActionFR4Teki
+  .4byte act__9TaiActionFR4Teki
+  .4byte actByEvent__9TaiActionFR9TekiEvent
+  .4byte hasNextState__9TaiActionFv
+  .4byte 0x54616953
+  .4byte 0x74617274
+  .4byte 0x4479696e
+  .4byte 0x67416374
+  .4byte 0x696f6e00
+  .4byte 0x803e3fe8
+  .4byte 0
+  .4byte 0
+.global __vt__19TaiStartDyingAction
+__vt__19TaiStartDyingAction:
+  .4byte __RTTI__19TaiStartDyingAction
+  .4byte 0
+  .4byte start__19TaiStartDyingActionFR4Teki
+  .4byte finish__9TaiActionFR4Teki
+  .4byte act__9TaiActionFR4Teki
+  .4byte actByEvent__9TaiActionFR9TekiEvent
+  .4byte hasNextState__9TaiActionFv
+  .4byte 0x54616944
+  .4byte 0x79654163
+  .4byte 0x74696f6e
+  .4byte 0
+  .4byte 0x803e3fe8
+  .4byte 0
+  .4byte 0
+.global __vt__12TaiDyeAction
+__vt__12TaiDyeAction:
+  .4byte __RTTI__12TaiDyeAction
+  .4byte 0
+  .4byte start__12TaiDyeActionFR4Teki
+  .4byte finish__9TaiActionFR4Teki
+  .4byte act__9TaiActionFR4Teki
+  .4byte actByEvent__9TaiActionFR9TekiEvent
+  .4byte hasNextState__9TaiActionFv
+  .4byte 0x5461694c
+  .4byte 0x69666544
+  .4byte 0x616d6167
+  .4byte 0x65416374
+  .4byte 0x696f6e00
+  .4byte 0x803e3fe8
+  .4byte 0
+  .4byte 0
+.global __vt__19TaiLifeDamageAction
+__vt__19TaiLifeDamageAction:
+  .4byte __RTTI__19TaiLifeDamageAction
+  .4byte 0
+  .4byte start__19TaiLifeDamageActionFR4Teki
+  .4byte finish__9TaiActionFR4Teki
+  .4byte act__9TaiActionFR4Teki
+  .4byte actByEvent__9TaiActionFR9TekiEvent
+  .4byte hasNextState__9TaiActionFv
+  .4byte 0x5461694c
+  .4byte 0x6966655a
+  .4byte 0x65726f41
+  .4byte 0x6374696f
+  .4byte 0x6e000000
+  .4byte 0x803e3fe8
+  .4byte 0
+  .4byte 0
+.global __vt__17TaiLifeZeroAction
+__vt__17TaiLifeZeroAction:
+  .4byte __RTTI__17TaiLifeZeroAction
+  .4byte 0
+  .4byte start__17TaiLifeZeroActionFR4Teki
+  .4byte finish__9TaiActionFR4Teki
+  .4byte act__9TaiActionFR4Teki
+  .4byte actByEvent__9TaiActionFR9TekiEvent
+  .4byte hasNextState__9TaiActionFv
+  .4byte 0x54616944
+  .4byte 0x65616441
+  .4byte 0x6374696f
+  .4byte 0x6e000000
+  .4byte 0x803e3fe8
+  .4byte 0
+  .4byte 0
+.global __vt__13TaiDeadAction
+__vt__13TaiDeadAction:
+  .4byte __RTTI__13TaiDeadAction
+  .4byte 0
+  .4byte start__9TaiActionFR4Teki
+  .4byte finish__9TaiActionFR4Teki
+  .4byte act__13TaiDeadActionFR4Teki
+  .4byte actByEvent__9TaiActionFR9TekiEvent
+  .4byte hasNextState__9TaiActionFv
+  .4byte 0
+
+.section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
+  .4byte 0x803e3fb0
+  .4byte 0
+  .4byte 0x802cb618
+  .4byte 0x802cb624
+  .4byte 0x4e6f6465
+  .4byte 0
+  .4byte 0x803e3fc8
+  .4byte 0x802cb630
+  .4byte 0x802cb644
+  .4byte 0x802cb654
+.global __RTTI__17TaiPalmParameters
+__RTTI__17TaiPalmParameters:
+  .4byte 0x802cb604
+  .4byte 0x802cb670
+  .4byte 0x802cb708
+  .4byte 0
+.global __RTTI__19TaiDangerLifeAction
+__RTTI__19TaiDangerLifeAction:
+  .4byte 0x802cb6f4
+  .4byte 0x802cb714
+.global __RTTI__13TaiWarnAction
+__RTTI__13TaiWarnAction:
+  .4byte 0x802cb73c
+  .4byte 0x802cb74c
+.global __RTTI__16TaiPressedAction
+__RTTI__16TaiPressedAction:
+  .4byte 0x802cb774
+  .4byte 0x802cb788
+.global __RTTI__21TaiBeingPressedAction
+__RTTI__21TaiBeingPressedAction:
+  .4byte 0x802cb7b0
+  .4byte 0x802cb7c8
+.global __RTTI__16TaiSmashedAction_1
+__RTTI__16TaiSmashedAction_1:
+  .4byte 0x802cb7f0
+  .4byte 0x802cb804
+.global __RTTI__16TaiStickedAction
+__RTTI__16TaiStickedAction:
+  .4byte 0x802cb82c
+  .4byte 0x802cb840
+  .4byte 0x802cb87c
+  .4byte 0
+  .4byte 0x802cb888
+  .4byte 0x802cb898
+.global __RTTI__31TaiTargetNearestCollisionAction
+__RTTI__31TaiTargetNearestCollisionAction:
+  .4byte 0x802cb8dc
+  .4byte 0x802cb8fc
+.global __RTTI__31TaiTargetNearestAssailantAction
+__RTTI__31TaiTargetNearestAssailantAction:
+  .4byte 0x802cb924
+  .4byte 0x802cb944
+  .4byte 0x802cb980
+  .4byte 0x802cb990
+.global __RTTI__17TaiDamagingAction_1
+__RTTI__17TaiDamagingAction_1:
+  .4byte 0x802cb96c
+  .4byte 0x802cb99c
+.global __RTTI__40TaiCounterattackSimultaneousDamageAction
+__RTTI__40TaiCounterattackSimultaneousDamageAction:
+  .4byte 0x802cb9cc
+  .4byte 0x802cb9f8
+.global __RTTI__27TaiSimultaneousDamageAction
+__RTTI__27TaiSimultaneousDamageAction:
+  .4byte 0x802cba20
+  .4byte 0x802cba3c
+.global __RTTI__15TaiDamageAction
+__RTTI__15TaiDamageAction:
+  .4byte 0x802cba64
+  .4byte 0x802cba74
+.global __RTTI__20TaiDamageScaleAction
+__RTTI__20TaiDamageScaleAction:
+  .4byte 0x802cba9c
+  .4byte 0x802cbab4
+.global __RTTI__20TaiDamageCountAction
+__RTTI__20TaiDamageCountAction:
+  .4byte 0x802cbadc
+  .4byte 0x802cbaf4
+.global __RTTI__25TaiDamageCountResetAction
+__RTTI__25TaiDamageCountResetAction:
+  .4byte 0x802cbb1c
+  .4byte 0x802cbb38
+.global __RTTI__14TaiDyingAction_1
+__RTTI__14TaiDyingAction_1:
+  .4byte 0x802cbb60
+  .4byte 0x802cbb70
+.global __RTTI__25TaiCreateDeadEffectAction
+__RTTI__25TaiCreateDeadEffectAction:
+  .4byte 0x802cbba0
+  .4byte 0x802cbbbc

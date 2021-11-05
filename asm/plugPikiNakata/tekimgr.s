@@ -1,0 +1,313 @@
+.include "macros.inc"
+
+.section .data, "wa"  # 0x80222DC0 - 0x802E9640
+.global lbl_802CDA18
+lbl_802CDA18:
+	.4byte 0x74656B69
+	.4byte 0x6D67722E
+	.4byte 0x63707000
+	.4byte 0x6B616265
+	.4byte 0x6B756941
+	.4byte 0x00000000
+	.4byte 0x6B616265
+	.4byte 0x6B756942
+	.4byte 0x00000000
+	.4byte 0x6B616265
+	.4byte 0x6B756943
+	.4byte 0x00000000
+.global typeNames__7TekiMgr
+typeNames__7TekiMgr:
+	.4byte 0x803E4558
+	.4byte 0x803E4560
+	.4byte 0x803E4568
+	.4byte 0x803E4570
+	.4byte 0x803E4578
+	.4byte 0x803E4580
+	.4byte 0x803E4588
+	.4byte 0x803E4590
+	.4byte 0x803E4598
+	.4byte 0x803E45A0
+	.4byte 0x803E45A8
+	.4byte 0x803E45B0
+	.4byte 0x803E45B8
+	.4byte 0x803E45C0
+	.4byte 0x803E45C8
+	.4byte 0x803E45D0
+	.4byte 0x803E45D8
+	.4byte 0x803E45DC
+	.4byte 0x802CDA24
+	.4byte 0x802CDA30
+	.4byte 0x802CDA3C
+	.4byte 0x803E45E4
+	.4byte 0x803E45EC
+	.4byte 0x803E45F4
+	.4byte 0x803E45FC
+	.4byte 0x803E4604
+	.4byte 0x803E460C
+	.4byte 0x803E4614
+	.4byte 0x803E461C
+	.4byte 0x803E4624
+	.4byte 0x803E462C
+	.4byte 0x803E4634
+	.4byte 0x803E463C
+	.4byte 0x803E4644
+	.4byte 0x803E464C
+.global typeIds__7TekiMgr
+typeIds__7TekiMgr:
+	.4byte 0x746B6672
+	.4byte 0x746B6967
+	.4byte 0x746B6977
+	.4byte 0x746B6368
+	.4byte 0x746B7377
+	.4byte 0x746B6D69
+	.4byte 0x746B7175
+	.4byte 0x746B7061
+	.4byte 0x746B636F
+	.4byte 0x746B6B69
+	.4byte 0x746B7368
+	.4byte 0x746B6E61
+	.4byte 0x746B686F
+	.4byte 0x746B7065
+	.4byte 0x746B726F
+	.4byte 0x746B7461
+	.4byte 0x746B6D61
+	.4byte 0x746B6265
+	.4byte 0x746B6B61
+	.4byte 0x746B6B62
+	.4byte 0x746B6B63
+	.4byte 0x746B746D
+	.4byte 0x746B646F
+	.4byte 0x746B6869
+	.4byte 0x746B6D75
+	.4byte 0x746B6F74
+	.4byte 0x746B7573
+	.4byte 0x746B7933
+	.4byte 0x746B7934
+	.4byte 0x746B7935
+	.4byte 0x746B6E6D
+	.4byte 0x746B6362
+	.4byte 0x746B7362
+	.4byte 0x746B6677
+	.4byte 0x746B6E31
+.global lbl_802CDB60
+lbl_802CDB60:
+	.4byte 0x74656B69
+	.4byte 0x70617261
+	.4byte 0x2F25732E
+	.4byte 0x62696E00
+	.4byte 0x74656B69
+	.4byte 0x20646174
+	.4byte 0x61000000
+	.4byte 0x2573206D
+	.4byte 0x6F64656C
+	.4byte 0x20646174
+	.4byte 0x61000000
+	.4byte 0x74656B69
+	.4byte 0x732F2573
+	.4byte 0x2F25732E
+	.4byte 0x6D6F6400
+	.4byte 0x25732061
+	.4byte 0x6E696D61
+	.4byte 0x74696F6E
+	.4byte 0x20646174
+	.4byte 0x61000000
+	.4byte 0x74656B69
+	.4byte 0x6B657973
+	.4byte 0x2F25732E
+	.4byte 0x6B657900
+	.4byte 0x436F7265
+	.4byte 0x4E6F6465
+	.4byte 0x00000000
+	.4byte 0x803E4670
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x803E4670
+	.4byte 0x00000000
+	.4byte 0x803E4678
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x54726176
+	.4byte 0x65727361
+	.4byte 0x626C6500
+	.4byte 0x4F626A65
+	.4byte 0x63744D67
+	.4byte 0x72000000
+	.4byte 0x803E4670
+	.4byte 0x00000008
+	.4byte 0x803E4678
+	.4byte 0x00000008
+	.4byte 0x803E4688
+	.4byte 0x00000008
+	.4byte 0x803E4690
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x4D6F6E6F
+	.4byte 0x4F626A65
+	.4byte 0x63744D67
+	.4byte 0x72000000
+	.4byte 0x803E4670
+	.4byte 0x00000008
+	.4byte 0x803E4678
+	.4byte 0x00000008
+	.4byte 0x803E4688
+	.4byte 0x00000008
+	.4byte 0x803E4690
+	.4byte 0x00000000
+	.4byte 0x803E4698
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x803E4670
+	.4byte 0x00000008
+	.4byte 0x803E4678
+	.4byte 0x00000008
+	.4byte 0x803E4688
+	.4byte 0x00000008
+	.4byte 0x803E4690
+	.4byte 0x00000000
+	.4byte 0x803E4698
+	.4byte 0x00000000
+	.4byte 0x803E46A0
+	.4byte 0x00000000
+	.4byte 0x00000000
+.global __vt__7TekiMgr
+__vt__7TekiMgr:
+  .4byte __RTTI__7TekiMgr
+  .4byte 0
+  .4byte getCreature__13MonoObjectMgrFi
+  .4byte getFirst__13MonoObjectMgrFv
+  .4byte getNext__13MonoObjectMgrFi
+  .4byte isDone__13MonoObjectMgrFi
+  .4byte __RTTI__7TekiMgr
+  .4byte 0xfffffff8
+  .4byte getAgeNodeType__5ANodeFv
+  .4byte read__8CoreNodeFR18RandomAccessStream
+  .4byte 0x8014b11c
+  .4byte draw__4NodeFR8Graphics
+  .4byte render__4NodeFR8Graphics
+  .4byte concat__4NodeFv
+  .4byte concat__4NodeFR3VQS
+  .4byte concat__4NodeFR3SRT
+  .4byte concat__4NodeFR8Matrix4f
+  .4byte getModelMatrix__4NodeFv
+  .4byte __dt__7TekiMgrFv
+  .4byte update__7TekiMgrFv
+  .4byte postUpdate__13MonoObjectMgrFif
+  .4byte stickUpdate__9ObjectMgrFv
+  .4byte refresh__7TekiMgrFR8Graphics
+  .4byte drawShadow__13MonoObjectMgrFR8GraphicsP7Texture
+  .4byte getSize__13MonoObjectMgrFv
+  .4byte getMax__13MonoObjectMgrFv
+  .4byte findClosest__9ObjectMgrFR8Vector3ffP9Condition
+  .4byte findClosest__9ObjectMgrFR8Vector3fP9Condition
+  .4byte search__13MonoObjectMgrFP9ObjectMgr
+  .4byte killAll__9ObjectMgrFv
+  .4byte birth__13MonoObjectMgrFv
+  .4byte kill__13MonoObjectMgrFP8Creature
+  .4byte createObject__7TekiMgrFv
+  .4byte 0
+
+.section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
+.global __RTTI__17TekiTypeCondition
+__RTTI__17TekiTypeCondition:
+  .4byte 0x802cd884
+  .4byte 0x802cd898
+.global __RTTI__18TekiStateCondition
+__RTTI__18TekiStateCondition:
+  .4byte 0x802cd8b8
+  .4byte 0x802cd8cc
+.global __RTTI__22TekiPikiStateCondition
+__RTTI__22TekiPikiStateCondition:
+  .4byte 0x802cd8ec
+  .4byte 0x802cd904
+  .4byte 0x802cd960
+  .4byte 0
+.global __RTTI__17InteractHitEffect
+__RTTI__17InteractHitEffect:
+  .4byte 0x802cd94c
+  .4byte 0x802cd96c
+.global __RTTI__12InteractBomb
+__RTTI__12InteractBomb:
+  .4byte 0x802cd9d0
+  .4byte 0x802cd9e0
+.global lbl_803E4550
+lbl_803E4550:
+	.4byte 0x74656B69
+	.4byte 0x4D677200
+	.4byte 0x66726F67
+	.4byte 0x00000000
+	.4byte 0x69776167
+	.4byte 0x656E0000
+	.4byte 0x69776167
+	.4byte 0x6F6E0000
+	.4byte 0x63686170
+	.4byte 0x70790000
+	.4byte 0x7377616C
+	.4byte 0x6C6F7700
+	.4byte 0x6D697A69
+	.4byte 0x67656E00
+	.4byte 0x71757269
+	.4byte 0x6F6E6500
+	.4byte 0x70616C6D
+	.4byte 0x00000000
+	.4byte 0x636F6C6C
+	.4byte 0x65630000
+	.4byte 0x6B696E6F
+	.4byte 0x6B6F0000
+	.4byte 0x7368656C
+	.4byte 0x6C000000
+	.4byte 0x6E61706B
+	.4byte 0x69640000
+	.4byte 0x686F6C6C
+	.4byte 0x65630000
+	.4byte 0x70656172
+	.4byte 0x6C000000
+	.4byte 0x726F6370
+	.4byte 0x65000000
+	.4byte 0x74616E6B
+	.4byte 0x00000000
+	.4byte 0x6D617200
+	.4byte 0x62656174
+	.4byte 0x6C650000
+	.4byte 0x74616D61
+	.4byte 0x676F0000
+	.4byte 0x646F726F
+	.4byte 0x726F0000
+	.4byte 0x68696261
+	.4byte 0x41000000
+	.4byte 0x6D697572
+	.4byte 0x696E0000
+	.4byte 0x6F74616D
+	.4byte 0x61000000
+	.4byte 0x75737562
+	.4byte 0x61000000
+	.4byte 0x79616D61
+	.4byte 0x73683300
+	.4byte 0x79616D61
+	.4byte 0x73683400
+	.4byte 0x79616D61
+	.4byte 0x73683500
+	.4byte 0x6E616D61
+	.4byte 0x7A750000
+	.4byte 0x63686170
+	.4byte 0x70620000
+	.4byte 0x7377616C
+	.4byte 0x6C6F6200
+	.4byte 0x66726F77
+	.4byte 0x00000000
+	.4byte 0x6E616B61
+	.4byte 0x74613100
+.global lbl_803E4654
+lbl_803E4654:
+	.4byte 0x00000000
+.global lbl_803E4658
+lbl_803E4658:
+	.4byte 0x74656B69
+	.4byte 0x73000000
+	.4byte 0x54656B69
+	.4byte 0x4D677200
+	.4byte 0x414E6F64
+	.4byte 0x65000000
+	.4byte 0x803E4668
+	.4byte 0x00000000
+	.4byte 0x802CDBC0
+	.4byte 0x802CDBCC

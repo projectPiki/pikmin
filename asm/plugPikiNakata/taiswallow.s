@@ -1,0 +1,547 @@
+.include "macros.inc"
+
+.section .data, "wa"  # 0x80222DC0 - 0x802E9640
+.global lbl_802CBD48
+lbl_802CBD48:
+	.4byte 0x74616973
+	.4byte 0x77616C6C
+	.4byte 0x6F772E63
+	.4byte 0x70700000
+	.4byte 0x74616973
+	.4byte 0x77616C6C
+	.4byte 0x6F770000
+	.4byte 0x4E4F5449
+	.4byte 0x43455F44
+	.4byte 0x49535441
+	.4byte 0x4E434500
+	.4byte 0x4C4F5745
+	.4byte 0x525F4441
+	.4byte 0x4D414745
+	.4byte 0x5F524154
+	.4byte 0x45000000
+	.4byte 0x4C4F5745
+	.4byte 0x525F4441
+	.4byte 0x4D414745
+	.4byte 0x5F434F55
+	.4byte 0x4E545F52
+	.4byte 0x41544500
+	.4byte 0x5455524E
+	.4byte 0x5F56454C
+	.4byte 0x4F434954
+	.4byte 0x595F4655
+	.4byte 0x4E435449
+	.4byte 0x4F4E5F4D
+	.4byte 0x41585F43
+	.4byte 0x4F554E54
+	.4byte 0x00000000
+	.4byte 0x5455524E
+	.4byte 0x5F56454C
+	.4byte 0x4F434954
+	.4byte 0x595F4655
+	.4byte 0x4E435449
+	.4byte 0x4F4E5F4D
+	.4byte 0x41585F52
+	.4byte 0x41544500
+	.4byte 0x464C4943
+	.4byte 0x4B5F4C4F
+	.4byte 0x5745525F
+	.4byte 0x414E474C
+	.4byte 0x45000000
+	.4byte 0x54616953
+	.4byte 0x77616C6C
+	.4byte 0x6F774D69
+	.4byte 0x73734174
+	.4byte 0x7461636B
+	.4byte 0x696E6745
+	.4byte 0x66666563
+	.4byte 0x74416374
+	.4byte 0x696F6E00
+	.4byte 0x54616941
+	.4byte 0x6374696F
+	.4byte 0x6E000000
+	.4byte 0x54414941
+	.4byte 0x65666643
+	.4byte 0x6C6F7564
+	.4byte 0x4F664475
+	.4byte 0x73740000
+	.4byte 0x803E40D0
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x5461694A
+	.4byte 0x6F696E74
+	.4byte 0x45666665
+	.4byte 0x63744163
+	.4byte 0x74696F6E
+	.4byte 0x00000000
+	.4byte 0x803E40D0
+	.4byte 0x00000000
+	.4byte 0x803E40D8
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x803E40D0
+	.4byte 0x00000000
+	.4byte 0x803E40D8
+	.4byte 0x00000000
+	.4byte 0x803E40E0
+	.4byte 0x00000000
+	.4byte 0x00000000
+.global __vt__35TaiSwallowMissAttackingEffectAction
+__vt__35TaiSwallowMissAttackingEffectAction:
+  .4byte __RTTI__35TaiSwallowMissAttackingEffectAction
+  .4byte 0
+  .4byte start__18TAIAeffCloudOfDustFR4Teki
+  .4byte finish__9TaiActionFR4Teki
+  .4byte act__18TAIAeffCloudOfDustFR4Teki
+  .4byte actByEvent__9TaiActionFR9TekiEvent
+  .4byte hasNextState__9TaiActionFv
+  .4byte setType__35TaiSwallowMissAttackingEffectActionFR8Vector3fii
+  .4byte 0x54616953
+  .4byte 0x77616c6c
+  .4byte 0x6f774c65
+  .4byte 0x67456666
+  .4byte 0x65637441
+  .4byte 0x6374696f
+  .4byte 0x6e000000
+  .4byte 0x803e40d0
+  .4byte 0
+  .4byte 0x803e40d8
+  .4byte 0
+  .4byte 0x803e40e0
+  .4byte 0
+  .4byte 0
+.global __vt__25TaiSwallowLegEffectAction
+__vt__25TaiSwallowLegEffectAction:
+  .4byte __RTTI__25TaiSwallowLegEffectAction
+  .4byte 0
+  .4byte start__18TAIAeffCloudOfDustFR4Teki
+  .4byte finish__9TaiActionFR4Teki
+  .4byte act__18TAIAeffCloudOfDustFR4Teki
+  .4byte actByEvent__9TaiActionFR9TekiEvent
+  .4byte hasNextState__9TaiActionFv
+  .4byte setType__25TaiSwallowLegEffectActionFR8Vector3fii
+  .4byte 0x54616953
+  .4byte 0x77616c6c
+  .4byte 0x6f774e6f
+  .4byte 0x74696365
+  .4byte 0x41637469
+  .4byte 0x6f6e0000
+  .4byte 0x803e40d0
+  .4byte 0
+  .4byte 0
+.global __vt__22TaiSwallowNoticeAction
+__vt__22TaiSwallowNoticeAction:
+  .4byte __RTTI__22TaiSwallowNoticeAction
+  .4byte 0
+  .4byte start__9TaiActionFR4Teki
+  .4byte finish__9TaiActionFR4Teki
+  .4byte act__22TaiSwallowNoticeActionFR4Teki
+  .4byte actByEvent__9TaiActionFR9TekiEvent
+  .4byte hasNextState__9TaiActionFv
+  .4byte 0x54616953
+  .4byte 0x77616c6c
+  .4byte 0x6f77536e
+  .4byte 0x6f726541
+  .4byte 0x6374696f
+  .4byte 0x6e000000
+  .4byte 0x803e40d0
+  .4byte 0
+  .4byte 0
+.global __vt__21TaiSwallowSnoreAction
+__vt__21TaiSwallowSnoreAction:
+  .4byte __RTTI__21TaiSwallowSnoreAction
+  .4byte 0
+  .4byte start__21TaiSwallowSnoreActionFR4Teki
+  .4byte finish__21TaiSwallowSnoreActionFR4Teki
+  .4byte act__9TaiActionFR4Teki
+  .4byte actByEvent__9TaiActionFR9TekiEvent
+  .4byte hasNextState__9TaiActionFv
+  .4byte 0x54616953
+  .4byte 0x77616c6c
+  .4byte 0x6f775377
+  .4byte 0x616c6c6f
+  .4byte 0x77696e67
+  .4byte 0x466c6963
+  .4byte 0x6b416374
+  .4byte 0x696f6e00
+  .4byte 0x803e40d0
+  .4byte 0
+  .4byte 0
+.global __vt__31TaiSwallowSwallowingFlickAction
+__vt__31TaiSwallowSwallowingFlickAction:
+  .4byte __RTTI__31TaiSwallowSwallowingFlickAction
+  .4byte 0
+  .4byte start__9TaiActionFR4Teki
+  .4byte finish__9TaiActionFR4Teki
+  .4byte act__31TaiSwallowSwallowingFlickActionFR4Teki
+  .4byte actByEvent__9TaiActionFR9TekiEvent
+  .4byte hasNextState__9TaiActionFv
+  .4byte 0x54656b69
+  .4byte 0x4e6f7443
+  .4byte 0x6f6e6469
+  .4byte 0x74696f6e
+  .4byte 0
+  .4byte 0x436f6e64
+  .4byte 0x6974696f
+  .4byte 0x6e000000
+  .4byte 0x54656b69
+  .4byte 0x436f6e64
+  .4byte 0x6974696f
+  .4byte 0x6e000000
+  .4byte 0x803e4110
+  .4byte 0
+  .4byte 0
+  .4byte 0x803e4110
+  .4byte 0
+  .4byte 0x803e4118
+  .4byte 0
+  .4byte 0
+  .4byte 0
+  .4byte 0
+  .4byte 0
+  .4byte 0x496e7465
+  .4byte 0x72616374
+  .4byte 0x696f6e00
+  .4byte 0
+  .4byte 0
+  .4byte 0
+  .4byte 0
+  .4byte 0
+  .4byte 0
+  .4byte 0
+  .4byte 0
+  .4byte 0
+  .4byte 0
+  .4byte 0
+  .4byte 0x54616953
+  .4byte 0x77616c6c
+  .4byte 0x6f77466c
+  .4byte 0x69636b69
+  .4byte 0x6e674163
+  .4byte 0x74696f6e
+  .4byte 0
+  .4byte 0x5461694d
+  .4byte 0x6f74696f
+  .4byte 0x6e416374
+  .4byte 0x696f6e00
+  .4byte 0x803e40d0
+  .4byte 0
+  .4byte 0
+  .4byte 0x803e40d0
+  .4byte 0
+  .4byte 0x803e4120
+  .4byte 0
+  .4byte 0
+.global __vt__24TaiSwallowFlickingAction
+__vt__24TaiSwallowFlickingAction:
+  .4byte __RTTI__24TaiSwallowFlickingAction
+  .4byte 0
+  .4byte start__24TaiSwallowFlickingActionFR4Teki
+  .4byte finish__24TaiSwallowFlickingActionFR4Teki
+  .4byte act__24TaiSwallowFlickingActionFR4Teki
+  .4byte actByEvent__9TaiActionFR9TekiEvent
+  .4byte hasNextState__9TaiActionFv
+  .4byte 0x54656b69
+  .4byte 0x416e6443
+  .4byte 0x6f6e6469
+  .4byte 0x74696f6e
+  .4byte 0
+  .4byte 0x803e4110
+  .4byte 0
+  .4byte 0x803e4118
+  .4byte 0
+  .4byte 0
+  .4byte 0
+  .4byte 0
+  .4byte 0
+  .4byte 0
+  .4byte 0
+  .4byte 0
+  .4byte 0
+  .4byte 0
+  .4byte 0
+  .4byte 0x54616953
+  .4byte 0x77616c6c
+  .4byte 0x6f775475
+  .4byte 0x726e696e
+  .4byte 0x67416374
+  .4byte 0x696f6e00
+  .4byte 0x54616943
+  .4byte 0x6f6e7469
+  .4byte 0x6e756f75
+  .4byte 0x734d6f74
+  .4byte 0x696f6e41
+  .4byte 0x6374696f
+  .4byte 0x6e000000
+  .4byte 0x803e40d0
+  .4byte 0
+  .4byte 0x803e4120
+  .4byte 0
+  .4byte 0
+  .4byte 0x803e40d0
+  .4byte 0
+  .4byte 0x803e4120
+  .4byte 0
+  .4byte 0x803e4130
+  .4byte 0
+  .4byte 0
+.global __vt__23TaiSwallowTurningAction
+__vt__23TaiSwallowTurningAction:
+  .4byte __RTTI__23TaiSwallowTurningAction
+  .4byte 0
+  .4byte start__25TaiContinuousMotionActionFR4Teki
+  .4byte finish__9TaiActionFR4Teki
+  .4byte act__23TaiSwallowTurningActionFR4Teki
+  .4byte actByEvent__9TaiActionFR9TekiEvent
+  .4byte hasNextState__9TaiActionFv
+  .4byte motionStarted__25TaiContinuousMotionActionFR4Teki
+  .4byte 0x54616953
+  .4byte 0x77616c6c
+  .4byte 0x6f775265
+  .4byte 0x63656976
+  .4byte 0x654d6573
+  .4byte 0x73616765
+  .4byte 0x41637469
+  .4byte 0x6f6e0000
+  .4byte 0x803e40d0
+  .4byte 0
+  .4byte 0
+.global __vt__30TaiSwallowReceiveMessageAction
+__vt__30TaiSwallowReceiveMessageAction:
+  .4byte __RTTI__30TaiSwallowReceiveMessageAction
+  .4byte 0
+  .4byte start__9TaiActionFR4Teki
+  .4byte finish__9TaiActionFR4Teki
+  .4byte act__9TaiActionFR4Teki
+  .4byte actByEvent__30TaiSwallowReceiveMessageActionFR9TekiEvent
+  .4byte hasNextState__9TaiActionFv
+  .4byte 0x54616953
+  .4byte 0x77616c6c
+  .4byte 0x6f775374
+  .4byte 0x72617465
+  .4byte 0x67790000
+  .4byte 0x54656b69
+  .4byte 0x53747261
+  .4byte 0x74656779
+  .4byte 0
+  .4byte 0x54616953
+  .4byte 0x74726174
+  .4byte 0x65677900
+  .4byte 0x803e4148
+  .4byte 0
+  .4byte 0
+  .4byte 0x803e4148
+  .4byte 0
+  .4byte 0x803e4150
+  .4byte 0
+  .4byte 0
+.global __vt__18TaiSwallowStrategy
+__vt__18TaiSwallowStrategy:
+  .4byte __RTTI__18TaiSwallowStrategy
+  .4byte 0
+  .4byte start__18TaiSwallowStrategyFR4Teki
+  .4byte act__11TaiStrategyFR4Teki
+  .4byte eventPerformed__11TaiStrategyFR9TekiEvent
+  .4byte createEffect__12TekiStrategyFR4Tekii
+  .4byte draw__18TaiSwallowStrategyFR4TekiR8Graphics
+  .4byte drawDebugInfo__18TaiSwallowStrategyFR4TekiR8Graphics
+  .4byte interact__18TaiSwallowStrategyFR4TekiR18TekiInteractionKey
+  .4byte spawnCorpseParts__12TekiStrategyFR4Teki
+  .4byte 0x5461694f
+  .4byte 0x6e636541
+  .4byte 0x6374696f
+  .4byte 0x6e000000
+  .4byte 0x803e40d0
+  .4byte 0
+  .4byte 0
+  .4byte 0
+  .4byte 0
+  .4byte 0
+  .4byte 0
+  .4byte 0
+  .4byte 0
+  .4byte 0
+  .4byte 0
+  .4byte 0
+  .4byte 0
+  .4byte 0
+  .4byte 0
+  .4byte 0
+  .4byte 0
+  .4byte 0x54616942
+  .4byte 0x6c61636b
+  .4byte 0x5377616c
+  .4byte 0x6c6f7750
+  .4byte 0x6172616d
+  .4byte 0x65746572
+  .4byte 0x73000000
+  .4byte 0x436f7265
+  .4byte 0x4e6f6465
+  .4byte 0
+  .4byte 0x803e4168
+  .4byte 0
+  .4byte 0
+  .4byte 0x803e4168
+  .4byte 0
+  .4byte 0x803e4170
+  .4byte 0
+  .4byte 0
+  .4byte 0x54656b69
+  .4byte 0x50617261
+  .4byte 0x6d657465
+  .4byte 0x72730000
+  .4byte 0x803e4168
+  .4byte 0
+  .4byte 0x803e4170
+  .4byte 0
+  .4byte 0x803e4180
+  .4byte 0
+  .4byte 0
+  .4byte 0x803e4168
+  .4byte 0
+  .4byte 0x803e4170
+  .4byte 0
+  .4byte 0x803e4180
+  .4byte 0
+  .4byte 0x803e4188
+  .4byte 0
+  .4byte 0
+.global __vt__25TaiBlackSwallowParameters
+__vt__25TaiBlackSwallowParameters:
+  .4byte __RTTI__25TaiBlackSwallowParameters
+  .4byte 0
+  .4byte getAgeNodeType__5ANodeFv
+  .4byte read__14TekiParametersFR18RandomAccessStream
+  .4byte update__4NodeFv
+  .4byte draw__4NodeFR8Graphics
+  .4byte render__4NodeFR8Graphics
+  .4byte concat__4NodeFv
+  .4byte concat__4NodeFR3VQS
+  .4byte concat__4NodeFR3SRT
+  .4byte concat__4NodeFR8Matrix4f
+  .4byte getModelMatrix__4NodeFv
+  .4byte 0x54616953
+  .4byte 0x77616c6c
+  .4byte 0x6f775061
+  .4byte 0x72616d65
+  .4byte 0x74657273
+  .4byte 0
+  .4byte 0x803e4168
+  .4byte 0
+  .4byte 0x803e4170
+  .4byte 0
+  .4byte 0x803e4180
+  .4byte 0
+  .4byte 0x803e4188
+  .4byte 0
+  .4byte 0
+.global __vt__20TaiSwallowParameters
+__vt__20TaiSwallowParameters:
+  .4byte __RTTI__20TaiSwallowParameters
+  .4byte 0
+  .4byte getAgeNodeType__5ANodeFv
+  .4byte read__14TekiParametersFR18RandomAccessStream
+  .4byte update__4NodeFv
+  .4byte draw__4NodeFR8Graphics
+  .4byte render__4NodeFR8Graphics
+  .4byte concat__4NodeFv
+  .4byte concat__4NodeFR3VQS
+  .4byte concat__4NodeFR3SRT
+  .4byte concat__4NodeFR8Matrix4f
+  .4byte getModelMatrix__4NodeFv
+  .4byte 0
+
+.section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
+.global __RTTI__19TaiSpawnItemsAction
+__RTTI__19TaiSpawnItemsAction:
+  .4byte 0x802cbbe4
+  .4byte 0x802cbbf8
+.global __RTTI__19TaiStartDyingAction
+__RTTI__19TaiStartDyingAction:
+  .4byte 0x802cbc20
+  .4byte 0x802cbc34
+.global __RTTI__12TaiDyeAction
+__RTTI__12TaiDyeAction:
+  .4byte 0x802cbc5c
+  .4byte 0x802cbc6c
+.global __RTTI__19TaiLifeDamageAction
+__RTTI__19TaiLifeDamageAction:
+  .4byte 0x802cbc94
+  .4byte 0x802cbca8
+.global __RTTI__17TaiLifeZeroAction
+__RTTI__17TaiLifeZeroAction:
+  .4byte 0x802cbcd0
+  .4byte 0x802cbce4
+.global __RTTI__13TaiDeadAction
+__RTTI__13TaiDeadAction:
+  .4byte 0x802cbd0c
+  .4byte 0x802cbd1c
+.global lbl_803E40C0
+lbl_803E40C0:
+	.4byte 0x00000000
+.global lbl_803E40C4
+lbl_803E40C4:
+	.4byte 0x00000000
+.global lbl_803E40C8
+lbl_803E40C8:
+	.4byte 0x00000000
+.global lbl_803E40CC
+lbl_803E40CC:
+	.4byte 0x00000000
+	.4byte 0x802CBE1C
+	.4byte 0x00000000
+	.4byte 0x802CBE28
+	.4byte 0x802CBE3C
+	.4byte 0x802CBE48
+	.4byte 0x802CBE60
+.global __RTTI__35TaiSwallowMissAttackingEffectAction
+__RTTI__35TaiSwallowMissAttackingEffectAction:
+  .4byte 0x802cbdf8
+  .4byte 0x802cbe74
+.global __RTTI__25TaiSwallowLegEffectAction
+__RTTI__25TaiSwallowLegEffectAction:
+  .4byte 0x802cbeb0
+  .4byte 0x802cbecc
+.global __RTTI__22TaiSwallowNoticeAction
+__RTTI__22TaiSwallowNoticeAction:
+  .4byte 0x802cbf08
+  .4byte 0x802cbf20
+.global __RTTI__21TaiSwallowSnoreAction
+__RTTI__21TaiSwallowSnoreAction:
+  .4byte 0x802cbf48
+  .4byte 0x802cbf60
+.global __RTTI__31TaiSwallowSwallowingFlickAction
+__RTTI__31TaiSwallowSwallowingFlickAction:
+  .4byte 0x802cbf88
+  .4byte 0x802cbfa8
+  .4byte 0x802cbfe4
+  .4byte 0
+  .4byte 0x802cbff0
+  .4byte 0x802cc000
+  .4byte 0x802cc080
+  .4byte 0x802cc090
+.global __RTTI__24TaiSwallowFlickingAction
+__RTTI__24TaiSwallowFlickingAction:
+  .4byte 0x802cc064
+  .4byte 0x802cc09c
+  .4byte 0x802cc130
+  .4byte 0x802cc14c
+.global __RTTI__23TaiSwallowTurningAction
+__RTTI__23TaiSwallowTurningAction:
+  .4byte 0x802cc118
+  .4byte 0x802cc160
+.global __RTTI__30TaiSwallowReceiveMessageAction
+__RTTI__30TaiSwallowReceiveMessageAction:
+  .4byte 0x802cc19c
+  .4byte 0x802cc1bc
+  .4byte 0x802cc1f8
+  .4byte 0
+  .4byte 0x802cc208
+  .4byte 0x802cc214
+.global __RTTI__18TaiSwallowStrategy
+__RTTI__18TaiSwallowStrategy:
+  .4byte 0x802cc1e4
+  .4byte 0x802cc220
+  .4byte 0x414e6f64
+  .4byte 0x65000000
+  .4byte 0x803e4160
+  .4byte 0

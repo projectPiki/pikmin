@@ -1,0 +1,459 @@
+.include "macros.inc"
+
+.section .data, "wa"  # 0x80222DC0 - 0x802E9640
+  .4byte 0x70657665
+  .4byte 0x6d6f7469
+  .4byte 0x6f6e6576
+  .4byte 0x656e7473
+  .4byte 0x2e637070
+  .4byte 0
+  .4byte 0x70657665
+  .4byte 0x6d6f7469
+  .4byte 0x6f6e6576
+  .4byte 0x656e7473
+  .4byte 0
+  .4byte 0x50657665
+  .4byte 0x56696272
+  .4byte 0x6174696f
+  .4byte 0x6e457665
+  .4byte 0x6e740000
+  .4byte 0x50657665
+  .4byte 0x4576656e
+  .4byte 0x74000000
+  .4byte 0x803e33b8
+  .4byte 0
+  .4byte 0
+  .4byte 0x803e33b8
+  .4byte 0
+  .4byte 0x803e33c0
+  .4byte 0
+  .4byte 0
+.global __vt__18PeveVibrationEvent
+__vt__18PeveVibrationEvent:
+  .4byte 0x803e33c8
+  .4byte 0
+  .4byte setChild__5NNodeFiP5NNode
+  .4byte addChild__5NNodeFP5NNode
+  .4byte addChild__5NNodeFiP5NNode
+  .4byte removeChild__5NNodeFP5NNode
+  .4byte removeChild__5NNodeFi
+  .4byte removeAllChildren__5NNodeFv
+  .4byte reset__9PeveEventFv
+  .4byte update__18PeveVibrationEventFv
+  .4byte isFinished__9PeveEventFv
+  .4byte finish__9PeveEventFv
+  .4byte setEventOption__9PeveEventFi
+  .4byte clearEventOption__9PeveEventFi
+  .4byte setEventOptions__9PeveEventFi
+  .4byte 0x4e46756e
+  .4byte 0x6374696f
+  .4byte 0x6e000000
+  .4byte 0
+  .4byte 0
+  .4byte 0
+  .4byte 0x50657665
+  .4byte 0x4d6f7665
+  .4byte 0x4576656e
+  .4byte 0x74000000
+  .4byte 0x803e33b8
+  .4byte 0
+  .4byte 0x803e33c0
+  .4byte 0
+  .4byte 0
+.global __vt__13PeveMoveEvent
+__vt__13PeveMoveEvent:
+  .4byte __RTTI__13PeveMoveEvent
+  .4byte 0
+  .4byte setChild__5NNodeFiP5NNode
+  .4byte addChild__5NNodeFP5NNode
+  .4byte addChild__5NNodeFiP5NNode
+  .4byte removeChild__5NNodeFP5NNode
+  .4byte removeChild__5NNodeFi
+  .4byte removeAllChildren__5NNodeFv
+  .4byte reset__13PeveMoveEventFv
+  .4byte update__9PeveEventFv
+  .4byte isFinished__9PeveEventFv
+  .4byte finish__9PeveEventFv
+  .4byte setEventOption__9PeveEventFi
+  .4byte clearEventOption__9PeveEventFi
+  .4byte setEventOptions__9PeveEventFi
+  .4byte 0x50657665
+  .4byte 0x496e7465
+  .4byte 0x72706f6c
+  .4byte 0x6174696f
+  .4byte 0x6e457665
+  .4byte 0x6e740000
+  .4byte 0x803e33b8
+  .4byte 0
+  .4byte 0x803e33c0
+  .4byte 0
+  .4byte 0
+.global __vt__22PeveInterpolationEvent
+__vt__22PeveInterpolationEvent:
+  .4byte __RTTI__22PeveInterpolationEvent
+  .4byte 0
+  .4byte setChild__5NNodeFiP5NNode
+  .4byte addChild__5NNodeFP5NNode
+  .4byte addChild__5NNodeFiP5NNode
+  .4byte removeChild__5NNodeFP5NNode
+  .4byte removeChild__5NNodeFi
+  .4byte removeAllChildren__5NNodeFv
+  .4byte reset__22PeveInterpolationEventFv
+  .4byte update__22PeveInterpolationEventFv
+  .4byte isFinished__22PeveInterpolationEventFv
+  .4byte finish__9PeveEventFv
+  .4byte setEventOption__9PeveEventFi
+  .4byte clearEventOption__9PeveEventFi
+  .4byte setEventOptions__9PeveEventFi
+  .4byte setStartTime__22PeveInterpolationEventFf
+  .4byte getStartTime__22PeveInterpolationEventFv
+  .4byte setPeriod__22PeveInterpolationEventFf
+  .4byte getPeriod__22PeveInterpolationEventFv
+  .4byte setTime__22PeveInterpolationEventFf
+  .4byte getTime__22PeveInterpolationEventFv
+  .4byte getEndTime__22PeveInterpolationEventFv
+  .4byte 0x50657665
+  .4byte 0x486f6d69
+  .4byte 0x6e67506f
+  .4byte 0x73747572
+  .4byte 0x65457665
+  .4byte 0x6e740000
+  .4byte 0x50657665
+  .4byte 0x50617261
+  .4byte 0x6c6c656c
+  .4byte 0x4576656e
+  .4byte 0x74000000
+  .4byte 0x803e33b8
+  .4byte 0
+  .4byte 0x803e33c0
+  .4byte 0
+  .4byte 0
+  .4byte 0x803e33b8
+  .4byte 0
+  .4byte 0x803e33c0
+  .4byte 0
+  .4byte 0x803e33e0
+  .4byte 0
+  .4byte 0
+.global __vt__22PeveHomingPostureEvent
+__vt__22PeveHomingPostureEvent:
+  .4byte __RTTI__22PeveHomingPostureEvent
+  .4byte 0
+  .4byte setChild__5NNodeFiP5NNode
+  .4byte addChild__5NNodeFP5NNode
+  .4byte addChild__5NNodeFiP5NNode
+  .4byte removeChild__5NNodeFP5NNode
+  .4byte removeChild__5NNodeFi
+  .4byte removeAllChildren__5NNodeFv
+  .4byte reset__17PeveParallelEventFv
+  .4byte update__17PeveParallelEventFv
+  .4byte isFinished__17PeveParallelEventFv
+  .4byte finish__9PeveEventFv
+  .4byte setEventOption__9PeveEventFi
+  .4byte clearEventOption__9PeveEventFi
+  .4byte setEventOptions__9PeveEventFi
+  .4byte 0x50657665
+  .4byte 0x486f6d69
+  .4byte 0x6e67506f
+  .4byte 0x73697469
+  .4byte 0x6f6e4576
+  .4byte 0x656e7400
+  .4byte 0x803e33b8
+  .4byte 0
+  .4byte 0x803e33c0
+  .4byte 0
+  .4byte 0
+.global __vt__23PeveHomingPositionEvent
+__vt__23PeveHomingPositionEvent:
+  .4byte __RTTI__23PeveHomingPositionEvent
+  .4byte 0
+  .4byte setChild__5NNodeFiP5NNode
+  .4byte addChild__5NNodeFP5NNode
+  .4byte addChild__5NNodeFiP5NNode
+  .4byte removeChild__5NNodeFP5NNode
+  .4byte removeChild__5NNodeFi
+  .4byte removeAllChildren__5NNodeFv
+  .4byte reset__9PeveEventFv
+  .4byte update__23PeveHomingPositionEventFv
+  .4byte isFinished__9PeveEventFv
+  .4byte finish__9PeveEventFv
+  .4byte setEventOption__9PeveEventFi
+  .4byte clearEventOption__9PeveEventFi
+  .4byte setEventOptions__9PeveEventFi
+  .4byte 0x50657665
+  .4byte 0x46756e63
+  .4byte 0x74696f6e
+  .4byte 0x43757276
+  .4byte 0x65457665
+  .4byte 0x6e740000
+  .4byte 0x803e33b8
+  .4byte 0
+  .4byte 0x803e33c0
+  .4byte 0
+  .4byte 0
+.global __vt__22PeveFunctionCurveEvent
+__vt__22PeveFunctionCurveEvent:
+  .4byte __RTTI__22PeveFunctionCurveEvent
+  .4byte 0
+  .4byte setChild__5NNodeFiP5NNode
+  .4byte addChild__5NNodeFP5NNode
+  .4byte addChild__5NNodeFiP5NNode
+  .4byte removeChild__5NNodeFP5NNode
+  .4byte removeChild__5NNodeFi
+  .4byte removeAllChildren__5NNodeFv
+  .4byte reset__22PeveFunctionCurveEventFv
+  .4byte update__22PeveFunctionCurveEventFv
+  .4byte isFinished__9PeveEventFv
+  .4byte finish__9PeveEventFv
+  .4byte setEventOption__9PeveEventFi
+  .4byte clearEventOption__9PeveEventFi
+  .4byte setEventOptions__9PeveEventFi
+  .4byte 0x50657665
+  .4byte 0x43697263
+  .4byte 0x6c654d6f
+  .4byte 0x76655761
+  .4byte 0x74636845
+  .4byte 0x76656e74
+  .4byte 0
+  .4byte 0x803e33b8
+  .4byte 0
+  .4byte 0x803e33c0
+  .4byte 0
+  .4byte 0x803e33e0
+  .4byte 0
+  .4byte 0
+.global __vt__24PeveCircleMoveWatchEvent
+__vt__24PeveCircleMoveWatchEvent:
+  .4byte __RTTI__24PeveCircleMoveWatchEvent
+  .4byte 0
+  .4byte setChild__5NNodeFiP5NNode
+  .4byte addChild__5NNodeFP5NNode
+  .4byte addChild__5NNodeFiP5NNode
+  .4byte removeChild__5NNodeFP5NNode
+  .4byte removeChild__5NNodeFi
+  .4byte removeAllChildren__5NNodeFv
+  .4byte reset__17PeveParallelEventFv
+  .4byte update__17PeveParallelEventFv
+  .4byte isFinished__17PeveParallelEventFv
+  .4byte finish__9PeveEventFv
+  .4byte setEventOption__9PeveEventFi
+  .4byte clearEventOption__9PeveEventFi
+  .4byte setEventOptions__9PeveEventFi
+  .4byte 0x50657665
+  .4byte 0x43697263
+  .4byte 0x6c654d6f
+  .4byte 0x76654576
+  .4byte 0x656e7400
+  .4byte 0x803e33b8
+  .4byte 0
+  .4byte 0x803e33c0
+  .4byte 0
+  .4byte 0
+.global __vt__19PeveCircleMoveEvent
+__vt__19PeveCircleMoveEvent:
+  .4byte __RTTI__19PeveCircleMoveEvent
+  .4byte 0
+  .4byte setChild__5NNodeFiP5NNode
+  .4byte addChild__5NNodeFP5NNode
+  .4byte addChild__5NNodeFiP5NNode
+  .4byte removeChild__5NNodeFP5NNode
+  .4byte removeChild__5NNodeFi
+  .4byte removeAllChildren__5NNodeFv
+  .4byte reset__19PeveCircleMoveEventFv
+  .4byte update__19PeveCircleMoveEventFv
+  .4byte isFinished__9PeveEventFv
+  .4byte finish__9PeveEventFv
+  .4byte setEventOption__9PeveEventFi
+  .4byte clearEventOption__9PeveEventFi
+  .4byte setEventOptions__9PeveEventFi
+  .4byte 0x50657665
+  .4byte 0x486f7269
+  .4byte 0x7a6f6e74
+  .4byte 0x616c5369
+  .4byte 0x6e576176
+  .4byte 0x65457665
+  .4byte 0x6e740000
+  .4byte 0x803e33b8
+  .4byte 0
+  .4byte 0x803e33c0
+  .4byte 0
+  .4byte 0
+.global __vt__26PeveHorizontalSinWaveEvent
+__vt__26PeveHorizontalSinWaveEvent:
+  .4byte __RTTI__26PeveHorizontalSinWaveEvent
+  .4byte 0
+  .4byte setChild__5NNodeFiP5NNode
+  .4byte addChild__5NNodeFP5NNode
+  .4byte addChild__5NNodeFiP5NNode
+  .4byte removeChild__5NNodeFP5NNode
+  .4byte removeChild__5NNodeFi
+  .4byte removeAllChildren__5NNodeFv
+  .4byte reset__26PeveHorizontalSinWaveEventFv
+  .4byte update__26PeveHorizontalSinWaveEventFv
+  .4byte isFinished__9PeveEventFv
+  .4byte finish__9PeveEventFv
+  .4byte setEventOption__9PeveEventFi
+  .4byte clearEventOption__9PeveEventFi
+  .4byte setEventOptions__9PeveEventFi
+  .4byte 0x4e566563
+  .4byte 0x746f7233
+  .4byte 0x66494f43
+  .4byte 0x6c617373
+  .4byte 0
+  .4byte 0x4e566563
+  .4byte 0x746f7233
+  .4byte 0x66494f00
+  .4byte __RTTI__11NVector3fIO_1
+  .4byte 0
+  .4byte 0
+  .4byte 0
+  .4byte 0
+  .4byte 0
+  .4byte 0
+  .4byte 0
+  .4byte 0
+  .4byte 0
+  .4byte 0
+  .4byte 0x50657665
+  .4byte 0x50617261
+  .4byte 0x626f6c61
+  .4byte 0x4576656e
+  .4byte 0x74000000
+  .4byte 0x50657665
+  .4byte 0x41636365
+  .4byte 0x6c657261
+  .4byte 0x74696f6e
+  .4byte 0x4576656e
+  .4byte 0x74000000
+  .4byte 0x803e33b8
+  .4byte 0
+  .4byte 0x803e33c0
+  .4byte 0
+  .4byte 0
+  .4byte 0x803e33b8
+  .4byte 0
+  .4byte 0x803e33c0
+  .4byte 0
+  .4byte __RTTI__21PeveAccelerationEvent
+  .4byte 0
+  .4byte 0
+.global __vt__17PeveParabolaEvent
+__vt__17PeveParabolaEvent:
+  .4byte __RTTI__17PeveParabolaEvent
+  .4byte 0
+  .4byte setChild__5NNodeFiP5NNode
+  .4byte addChild__5NNodeFP5NNode
+  .4byte addChild__5NNodeFiP5NNode
+  .4byte removeChild__5NNodeFP5NNode
+  .4byte removeChild__5NNodeFi
+  .4byte removeAllChildren__5NNodeFv
+  .4byte reset__9PeveEventFv
+  .4byte update__21PeveAccelerationEventFv
+  .4byte isFinished__9PeveEventFv
+  .4byte finish__9PeveEventFv
+  .4byte setEventOption__9PeveEventFi
+  .4byte clearEventOption__9PeveEventFi
+  .4byte setEventOptions__9PeveEventFi
+.global __vt__21PeveAccelerationEvent
+__vt__21PeveAccelerationEvent:
+  .4byte __RTTI__21PeveAccelerationEvent
+  .4byte 0
+  .4byte setChild__5NNodeFiP5NNode
+  .4byte addChild__5NNodeFP5NNode
+  .4byte addChild__5NNodeFiP5NNode
+  .4byte removeChild__5NNodeFP5NNode
+  .4byte removeChild__5NNodeFi
+  .4byte removeAllChildren__5NNodeFv
+  .4byte reset__9PeveEventFv
+  .4byte update__21PeveAccelerationEventFv
+  .4byte isFinished__9PeveEventFv
+  .4byte finish__9PeveEventFv
+  .4byte setEventOption__9PeveEventFi
+  .4byte clearEventOption__9PeveEventFi
+  .4byte setEventOptions__9PeveEventFi
+  .4byte 0x50657665
+  .4byte 0x57616974
+  .4byte 0x4576656e
+  .4byte 0x74000000
+  .4byte 0x803e33b8
+  .4byte 0
+  .4byte 0x803e33c0
+  .4byte 0
+  .4byte 0
+.global __vt__13PeveWaitEvent
+__vt__13PeveWaitEvent:
+  .4byte __RTTI__13PeveWaitEvent
+  .4byte 0
+  .4byte setChild__5NNodeFiP5NNode
+  .4byte addChild__5NNodeFP5NNode
+  .4byte addChild__5NNodeFiP5NNode
+  .4byte removeChild__5NNodeFP5NNode
+  .4byte removeChild__5NNodeFi
+  .4byte removeAllChildren__5NNodeFv
+  .4byte reset__9PeveEventFv
+  .4byte update__9PeveEventFv
+  .4byte isFinished__9PeveEventFv
+  .4byte finish__9PeveEventFv
+  .4byte setEventOption__9PeveEventFi
+  .4byte clearEventOption__9PeveEventFi
+  .4byte setEventOptions__9PeveEventFi
+
+.section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
+.global __RTTI__13PeveCondition_1
+__RTTI__13PeveCondition_1:
+  .4byte 0x802c5e78
+  .4byte 0
+.global __RTTI__20PeveBooleanCondition
+__RTTI__20PeveBooleanCondition:
+  .4byte 0x802c5e88
+  .4byte 0x802c5ea0
+.global __RTTI__24PeveComparisonYCondition
+__RTTI__24PeveComparisonYCondition:
+  .4byte 0x802c5e5c
+  .4byte 0x802c5eac
+.global __RTTI__21PeveDistanceCondition
+__RTTI__21PeveDistanceCondition:
+  .4byte 0x802c5ed4
+  .4byte 0x802c5eec
+.global __RTTI__17PeveTimeCondition
+__RTTI__17PeveTimeCondition:
+  .4byte 0x802c5f14
+  .4byte 0x802c5f28
+.global __RTTI__23PeveDependenceCondition
+__RTTI__23PeveDependenceCondition:
+  .4byte 0x802c5f48
+  .4byte 0x802c5f60
+  .4byte 0x4e4e6f64
+  .4byte 0x65000000
+  .4byte 0x803e33b0
+  .4byte 0
+  .4byte 0x802c5fd8
+  .4byte 0x802c5fe4
+  .4byte 0x802c5fc4
+  .4byte 0x802c5ff0
+.global __RTTI__13PeveMoveEvent
+__RTTI__13PeveMoveEvent:
+  .4byte 0x802c6058
+  .4byte 0x802c6068
+.global __RTTI__22PeveInterpolationEvent
+__RTTI__22PeveInterpolationEvent:
+  .4byte 0x802c60b8
+  .4byte 0x802c60d0
+  .4byte 0x802c6154
+  .4byte 0x802c6168
+.global __RTTI__22PeveHomingPostureEvent
+__RTTI__22PeveHomingPostureEvent:
+  .4byte 0x802c613c
+  .4byte 0x802c617c
+.global __RTTI__23PeveHomingPositionEvent
+__RTTI__23PeveHomingPositionEvent:
+  .4byte 0x802c61d4
+  .4byte 0x802c61ec
+.global __RTTI__22PeveFunctionCurveEvent
+__RTTI__22PeveFunctionCurveEvent:
+  .4byte 0x802c623c
+  .4byte 0x802c6254
+.global __RTTI__24PeveCircleMoveWatchEvent
+__RTTI__24PeveCircleMoveWatchEvent:
+  .4byte 0x802c62a4
+  .4byte 0x802c62c0
