@@ -21934,7 +21934,3 @@ K2:
 exi:
 	.4byte 0x803D6280
 	.4byte 0x00000000
-.global pucEXI2InputPending
-pucEXI2InputPending:
-	.4byte 0x803E81C0
-	.4byte 0x00000000

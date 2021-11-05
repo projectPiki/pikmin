@@ -1647,12 +1647,3 @@ errno:
 .global initialized$16
 initialized$16:
 	.skip 0x8
-.global ucEXI2InputPending
-ucEXI2InputPending:
-	.skip 0x4
-.global fExi2Selected
-fExi2Selected:
-	.skip 0x4
-.global TRK_Callback
-TRK_Callback:
-	.skip 0x8
