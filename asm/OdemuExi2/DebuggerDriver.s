@@ -1,5 +1,5 @@
 .include "macros.inc"
-
+.section .text, "ax"  # 0x80005560 - 0x80221F60
 .global DBGEXIImm
 DBGEXIImm:
 /* 802214D8 0021E438  94 21 FF B8 */	stwu r1, -0x48(r1)

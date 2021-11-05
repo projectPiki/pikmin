@@ -21,10 +21,12 @@ SRC_DIRS := src src/sysCommon src/amcnotstub src/gx src/odenotstub \
 			src/TRK_MINNOW_DOLPHIN src/plugPikiNishimura src/plugPikiColin \
 			src/amcExi2 src/jaudio src/mtx src/os src/plugPikiKando \
 			src/plugPikiNakata src/plugPikiOgawa src/plugPikiYamashita \
-			src/dvd src/vi src/pad src/ai src/ar src/dsp
-ASM_DIRS := asm asm/OdemuExi2 asm/sysCommon asm/plugPikiNishimura \
-			asm/mtx asm/dvd asm/vi asm/pad asm/ai asm/ar asm/dsp
-
+			src/dvd src/vi src/pad src/ai src/ar src/dsp src/OdemuExi2
+ASM_DIRS := asm asm/sysCommon asm/amcnotstub asm/gx asm/odenotstub \
+            asm/TRK_MINNOW_DOLPHIN asm/plugPikiNishimura asm/plugPikiColin \
+            asm/amcExi2 asm/jaudio asm/mtx asm/os asm/plugPikiKando \
+            asm/plugPikiNakata asm/plugPikiOgawa asm/plugPikiYamashita \
+            asm/dvd asm/vi asm/pad asm/ai asm/ar asm/dsp asm/OdemuExi2
 # Inputs
 S_FILES := $(wildcard asm/*.s)
 C_FILES := $(wildcard src/*.c)
@@ -38,9 +40,7 @@ MAP     := $(BUILD_DIR)/pikmin1.map
 
 include obj_files.mk
 
-O_FILES := $(INIT_O_FILES) $(EXTAB_O_FILES) $(EXTABINDEX_O_FILES) $(TEXT_O_FILES)  \
-           $(CTORS_O_FILES) $(DTORS_O_FILES) $(RODATA_O_FILES) $(DATA_O_FILES)     \
-           $(BSS_O_FILES) $(SDATA_O_FILES) $(SBSS_O_FILES) $(SDATA2_O_FILES)       \
+O_FILES := $(GROUP_0_FILES) $(TEXT_O_FILES) \
 
 #-------------------------------------------------------------------------------
 # Tools
