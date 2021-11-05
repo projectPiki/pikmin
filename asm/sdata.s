@@ -21938,7 +21938,3 @@ exi:
 pucEXI2InputPending:
 	.4byte 0x803E81C0
 	.4byte 0x00000000
-.global SendCount
-SendCount:
-	.4byte 0x80000000
-	.4byte 0x00000000

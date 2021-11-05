@@ -1,4 +1,5 @@
 .include "macros.inc"
+
 .section .text, "ax"  # 0x80005560 - 0x80221F60
 .global DBGEXIImm
 DBGEXIImm:
@@ -756,3 +757,33 @@ DBOpen:
 .global DBClose
 DBClose:
 /* 80221F54 0021EEB4  4E 80 00 20 */	blr 
+
+.section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
+.balign 0x8
+
+.global SendCount
+SendCount:
+	.4byte 0x80000000
+	.skip 4
+
+.section .sbss, "wa"
+.balign 0x8
+
+.global MTRCallback
+MTRCallback:
+	.skip 0x4
+.global DBGCallback
+DBGCallback:
+	.skip 0x4
+.global SendMailData
+SendMailData:
+	.skip 0x4
+.global RecvDataLeng
+RecvDataLeng:
+	.skip 0x4
+.global pEXIInputFlag
+pEXIInputFlag:
+	.skip 0x4
+.global EXIInputFlag
+EXIInputFlag:
+	.skip 0x1

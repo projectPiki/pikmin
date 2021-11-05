@@ -1656,21 +1656,3 @@ fExi2Selected:
 .global TRK_Callback
 TRK_Callback:
 	.skip 0x8
-.global MTRCallback
-MTRCallback:
-	.skip 0x4
-.global DBGCallback
-DBGCallback:
-	.skip 0x4
-.global SendMailData
-SendMailData:
-	.skip 0x4
-.global RecvDataLeng
-RecvDataLeng:
-	.skip 0x4
-.global pEXIInputFlag
-pEXIInputFlag:
-	.skip 0x4
-.global EXIInputFlag
-EXIInputFlag:
-	.skip 0x1
