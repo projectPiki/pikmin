@@ -21930,7 +21930,3 @@ K1:
 .global K2
 K2:
 	.4byte 0xFEFEFEFF
-.global exi
-exi:
-	.4byte 0x803D6280
-	.4byte 0x00000000
