@@ -40,7 +40,7 @@ MAP     := $(BUILD_DIR)/pikmin1.map
 
 include obj_files.mk
 
-O_FILES := $(GROUP_0_FILES) $(TEXT_O_FILES) \
+O_FILES := $(GROUP_0_FILES) $(TEXT_O_FILES) $(INIT_O_FILES)\
 
 #-------------------------------------------------------------------------------
 # Tools

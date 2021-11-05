@@ -1036,31 +1036,3 @@ lbl_80222D50:
 	.4byte 0x2076302E
 	.4byte 0x38000000
 	.4byte 0x00000000
-.global gTRKMemMap
-gTRKMemMap:
-	.4byte 0x00000000
-	.4byte 0xFFFFFFFF
-	.4byte 0x00000001
-	.4byte 0x00000001
-.global lbl_80222D80
-lbl_80222D80:
-	.4byte 0x60000000
-	.4byte 0x60000000
-	.4byte 0x60000000
-	.4byte 0x60000000
-	.4byte 0x60000000
-.global lbl_80222D94
-lbl_80222D94:
-	.4byte 0x60000000
-	.4byte 0x60000000
-	.4byte 0x60000000
-	.4byte 0x60000000
-	.4byte 0x60000000
-.global lbl_80222DA8
-lbl_80222DA8:
-	.4byte 0x60000000
-	.4byte 0x60000000
-	.4byte 0x60000000
-	.4byte 0x60000000
-	.4byte 0x60000000
-	.4byte 0x00000000
