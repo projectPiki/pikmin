@@ -1026,13 +1026,3 @@ __sincos_poly:
 	.4byte 0xBDA55DE7
 	.4byte 0x3F800000
 	.4byte 0x3F490FDB
-.global lbl_80222D50
-lbl_80222D50:
-	.4byte 0x4D657472
-	.4byte 0x6F54524B
-	.4byte 0x20666F72
-	.4byte 0x20446F6C
-	.4byte 0x7068696E
-	.4byte 0x2076302E
-	.4byte 0x38000000
-	.4byte 0x00000000

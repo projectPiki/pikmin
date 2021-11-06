@@ -21,12 +21,14 @@ SRC_DIRS := src src/sysCommon src/amcnotstub src/gx src/odenotstub \
 			src/TRK_MINNOW_DOLPHIN src/plugPikiNishimura src/plugPikiColin \
 			src/amcExi2 src/jaudio src/mtx src/os src/plugPikiKando \
 			src/plugPikiNakata src/plugPikiOgawa src/plugPikiYamashita \
-			src/dvd src/vi src/pad src/ai src/ar src/dsp src/OdemuExi2
+			src/dvd src/vi src/pad src/ai src/ar src/dsp src/OdemuExi2 \
+			src/MSL_C.PPCEABI.bare.H
 ASM_DIRS := asm asm/sysCommon asm/amcnotstub asm/gx asm/odenotstub \
             asm/TRK_MINNOW_DOLPHIN asm/plugPikiNishimura asm/plugPikiColin \
             asm/amcExi2 asm/jaudio asm/mtx asm/os asm/plugPikiKando \
             asm/plugPikiNakata asm/plugPikiOgawa asm/plugPikiYamashita \
-            asm/dvd asm/vi asm/pad asm/ai asm/ar asm/dsp asm/OdemuExi2
+            asm/dvd asm/vi asm/pad asm/ai asm/ar asm/dsp asm/OdemuExi2 \
+			asm/MSL_C.PPCEABI.bare.H
 # Inputs
 S_FILES := $(wildcard asm/*.s)
 C_FILES := $(wildcard src/*.c)
@@ -114,7 +116,8 @@ tools:
 	$(MAKE) -C tools
 
 $(ELF): $(O_FILES) $(LDSCRIPT)
-	$(LD) $(LDFLAGS) -lcf $(LDSCRIPT) $(O_FILES) -o $@
+	@echo $(O_FILES) > build/o_files
+	$(LD) $(LDFLAGS) -o $@ -lcf $(LDSCRIPT) @build/o_files
 # The Metrowerks linker doesn't generate physical addresses in the ELF program headers. This fixes it somehow.
 	$(OBJCOPY) $@ $@
 
