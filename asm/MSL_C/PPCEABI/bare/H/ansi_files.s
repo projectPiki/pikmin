@@ -1,0 +1,59 @@
+.include "macros.inc"
+.section .data, "wa"  # 0x80222DC0 - 0x802E9640
+.balign 0x8
+.global __files
+__files:
+	.4byte 0x00000000
+	.4byte 0x08800000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x802E9004
+	.4byte 0x00000001
+	.4byte 0x802E9004
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x8021A5B0
+	.4byte 0x8021A518
+	.4byte 0x8021A510
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x10800000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x802E904C
+	.4byte 0x00000001
+	.4byte 0x802E904C
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x8021A5B0
+	.4byte 0x8021A518
+	.4byte 0x8021A510
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x10800000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x802E9094
+	.4byte 0x00000001
+	.4byte 0x802E9094
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x8021A5B0
+	.4byte 0x8021A518
+	.4byte 0x8021A510
+	.4byte 0x00000000
