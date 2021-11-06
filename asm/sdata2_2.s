@@ -4019,27 +4019,3 @@ lbl_803EC5DC:
 lbl_803EC5E0:
 	.4byte 0x4B7FFFFF
 	.4byte 0x00000000
-.global "@268"
-"@268":
-	.4byte 0x00000000
-	.4byte 0x00000000
-.global "@269"
-"@269":
-	.4byte 0x4197D784
-	.4byte 0x00000000
-.global "@270"
-"@270":
-	.4byte 0x3FF00000
-	.4byte 0x00000000
-.global "@272"
-"@272":
-	.4byte 0x43300000
-	.4byte 0x80000000
-.global "@362"
-"@362":
-	.4byte 0x3FB99999
-	.4byte 0x9999999A
-.global "@363"
-"@363":
-	.4byte 0x40240000
-	.4byte 0x00000000

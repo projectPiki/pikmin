@@ -21912,7 +21912,3 @@ GX2HWFiltConv:
 fragmentID:
 	.4byte 0xFFFFFFFE
 	.4byte 0x00000000
-.global "@159"
-"@159":
-	.4byte 0x40240000
-	.4byte 0x00000000

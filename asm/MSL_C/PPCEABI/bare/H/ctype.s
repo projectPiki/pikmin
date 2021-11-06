@@ -1,6 +1,35 @@
 .include "macros.inc"
+.section .text, "ax"  # 0x80005560 - 0x80221F60
+.global toupper
+toupper:
+/* 80215DB4 00212D14  2C 03 FF FF */	cmpwi r3, -1
+/* 80215DB8 00212D18  40 82 00 0C */	bne lbl_80215DC4
+/* 80215DBC 00212D1C  38 60 FF FF */	li r3, -1
+/* 80215DC0 00212D20  4E 80 00 20 */	blr 
+lbl_80215DC4:
+/* 80215DC4 00212D24  3C 80 80 22 */	lis r4, __upper_map@ha
+/* 80215DC8 00212D28  54 63 06 3E */	clrlwi r3, r3, 0x18
+/* 80215DCC 00212D2C  38 04 2A 08 */	addi r0, r4, __upper_map@l
+/* 80215DD0 00212D30  7C 60 1A 14 */	add r3, r0, r3
+/* 80215DD4 00212D34  88 63 00 00 */	lbz r3, 0(r3)
+/* 80215DD8 00212D38  4E 80 00 20 */	blr 
+
+.global tolower
+tolower:
+/* 80215DDC 00212D3C  2C 03 FF FF */	cmpwi r3, -1
+/* 80215DE0 00212D40  40 82 00 0C */	bne lbl_80215DEC
+/* 80215DE4 00212D44  38 60 FF FF */	li r3, -1
+/* 80215DE8 00212D48  4E 80 00 20 */	blr 
+lbl_80215DEC:
+/* 80215DEC 00212D4C  3C 80 80 22 */	lis r4, __lower_map@ha
+/* 80215DF0 00212D50  54 63 06 3E */	clrlwi r3, r3, 0x18
+/* 80215DF4 00212D54  38 04 29 08 */	addi r0, r4, __lower_map@l
+/* 80215DF8 00212D58  7C 60 1A 14 */	add r3, r0, r3
+/* 80215DFC 00212D5C  88 63 00 00 */	lbz r3, 0(r3)
+/* 80215E00 00212D60  4E 80 00 20 */	blr 
 
 .section .rodata, "a"  # 0x80221FE0 - 0x80222DC0
+.balign 0x8
 .global __ctype_map
 __ctype_map:
 	.4byte 0x01010101
