@@ -846,21 +846,3 @@ __upper_map:
 "@stringBase0":
 	.4byte 0x2E000043
 	.4byte 0x00000000
-.global "@stringBase0_1"
-"@stringBase0_1":
-	.4byte 0x002D496E
-	.4byte 0x6600496E
-	.4byte 0x66004E61
-	.4byte 0x4E000000
-.global lbl_80222B20
-lbl_80222B20:
-	.4byte 0x00000000
-	.4byte 0x7FFFFFFF
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000

@@ -21916,17 +21916,3 @@ fragmentID:
 "@159":
 	.4byte 0x40240000
 	.4byte 0x00000000
-.global "@wstringBase0"
-"@wstringBase0":
-	.4byte 0x00000000
-	.4byte 0x00000000
-.global next
-next:
-	.4byte 0x00000001
-	.4byte 0x00000000
-.global K1
-K1:
-	.4byte 0x80808080
-.global K2
-K2:
-	.4byte 0xFEFEFEFF
