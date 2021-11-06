@@ -1,5 +1,5 @@
 
-
+#ifdef NOMATCH
 /*
  * --INFO--
  * Address:	........
@@ -211,17 +211,11 @@ void TRKInitializeSerialHandler(void)
   blr
 */
 }
-
+#endif
 /*
  * --INFO--
  * Address:	8021CED4
  * Size:	000008
  */
-void TRKTerminateSerialHandler(void)
-{
-/*
-.loc_0x0:
-  li        r3, 0
-  blr
-*/
-}
+int TRKTerminateSerialHandler(void)
+{ return 0; }

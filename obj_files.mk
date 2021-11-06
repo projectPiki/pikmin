@@ -65,7 +65,12 @@ TEXT_O_FILES :=\
 	$(BUILD_DIR)/asm/text_CardGX.o\
 	$(BUILD_DIR)/src/gx/GXStubs.o\
 	$(BUILD_DIR)/asm/text_802140E8.o\
-	$(BUILD_DIR)/asm/text_8021C4CC.o\
+	$(BUILD_DIR)/asm/TRK_MINNOW_DOLPHIN/msg.o\
+	$(BUILD_DIR)/asm/TRK_MINNOW_DOLPHIN/msgbuf.o\
+	$(BUILD_DIR)/asm/TRK_MINNOW_DOLPHIN/serpoll.o\
+	$(BUILD_DIR)/src/TRK_MINNOW_DOLPHIN/serpoll.o\
+	$(BUILD_DIR)/src/TRK_MINNOW_DOLPHIN/usr_put.o\
+	$(BUILD_DIR)/asm/TRK_MINNOW_DOLPHIN/dispatch.o\
 	$(BUILD_DIR)/asm/TRK_MINNOW_DOLPHIN/msghndlr.o\
 	$(BUILD_DIR)/asm/TRK_MINNOW_DOLPHIN/support.o\
 	$(BUILD_DIR)/src/TRK_MINNOW_DOLPHIN/mutex_TRK.o\
