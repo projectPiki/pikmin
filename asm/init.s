@@ -72,12 +72,12 @@ lbl_800031D4:
 
 .global __init_registers
 __init_registers:
-/* 800031F0 000001F0  3C 20 80 3F */	lis r1, 0x803FC840@h
-/* 800031F4 000001F4  60 21 C8 40 */	ori r1, r1, 0x803FC840@l
-/* 800031F8 000001F8  3C 40 80 3F */	lis r2, 0x803F0200@h
-/* 800031FC 000001FC  60 42 02 00 */	ori r2, r2, 0x803F0200@l
-/* 80003200 00000200  3D A0 80 3E */	lis r13, __RTTI__26SnakeGenBodyRotateCallBack@h
-/* 80003204 00000204  61 AD 4D 20 */	ori r13, r13, __RTTI__26SnakeGenBodyRotateCallBack@l
+/* 800031F0 000001F0  3C 20 80 3F */	lis r1, _stack_addr@h
+/* 800031F4 000001F4  60 21 C8 40 */	ori r1, r1, _stack_addr@l
+/* 800031F8 000001F8  3C 40 80 3F */	lis r2, _SDA2_BASE_@h
+/* 800031FC 000001FC  60 42 02 00 */	ori r2, r2, _SDA2_BASE_@l
+/* 80003200 00000200  3D A0 80 3E */	lis r13, _SDA_BASE_@h
+/* 80003204 00000204  61 AD 4D 20 */	ori r13, r13, _SDA_BASE_@l
 /* 80003208 00000208  4E 80 00 20 */	blr 
 
 .global __init_data

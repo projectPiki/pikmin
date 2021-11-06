@@ -4303,17 +4303,3 @@ lbl_803EC808:
 .global lbl_803EC80C
 lbl_803EC80C:
 	.4byte 0x40490FDB
-.global lbl_803EC810
-lbl_803EC810:
-	.4byte 0x3F22F983
-.global lbl_803EC814
-lbl_803EC814:
-	.4byte 0x3F000000
-.global lbl_803EC818
-lbl_803EC818:
-	.4byte 0x39B504F3
-	.4byte 0x00000000
-.global "@110_1"
-"@110_1":
-	.4byte 0x43300000
-	.4byte 0x80000000

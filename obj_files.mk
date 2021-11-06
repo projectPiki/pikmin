@@ -65,7 +65,9 @@ TEXT_O_FILES :=\
 	$(BUILD_DIR)/asm/text_CardGX.o\
 	$(BUILD_DIR)/src/gx/GXStubs.o\
 	$(BUILD_DIR)/asm/text_802140E8.o\
+	$(BUILD_DIR)/asm/MSL_C.PPCEABI.bare.H/trigf.o\
 	$(BUILD_DIR)/asm/MSL_C.PPCEABI.bare.H/math_inlines.o\
+	$(BUILD_DIR)/asm/MSL_C.PPCEABI.bare.H/common_float_tables.o\
 	$(BUILD_DIR)/asm/TRK_MINNOW_DOLPHIN/mainloop.o\
 	$(BUILD_DIR)/asm/TRK_MINNOW_DOLPHIN/nubevent.o\
 	$(BUILD_DIR)/asm/TRK_MINNOW_DOLPHIN/nubinit.o\

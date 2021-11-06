@@ -1,6 +1,7 @@
 .include "macros.inc"
 
 .section .rodata, "a"  # 0x80221FE0 - 0x80222DC0
+.balign 0x8
 .global __sincos_on_quadrant
 __sincos_on_quadrant:
 	.4byte 0x00000000
