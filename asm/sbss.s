@@ -1644,6 +1644,3 @@ __console_exit:
 .global errno
 errno:
 	.skip 0x8
-.global initialized$16
-initialized$16:
-	.skip 0x8

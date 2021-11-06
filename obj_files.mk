@@ -65,6 +65,7 @@ TEXT_O_FILES :=\
 	$(BUILD_DIR)/asm/text_CardGX.o\
 	$(BUILD_DIR)/src/gx/GXStubs.o\
 	$(BUILD_DIR)/asm/text_802140E8.o\
+	$(BUILD_DIR)/asm/MSL_C.PPCEABI.bare.H/uart_console_io.o\
 	$(BUILD_DIR)/asm/MSL_C.PPCEABI.bare.H/wchar_io.o\
 	$(BUILD_DIR)/asm/MSL_C.PPCEABI.bare.H/float.o\
 	$(BUILD_DIR)/asm/MSL_C.PPCEABI.bare.H/e_asin.o\
