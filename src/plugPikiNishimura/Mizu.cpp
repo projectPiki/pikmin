@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -25,7 +27,7 @@ void _Print(char *, ...)
  * Address:	8017B3D4
  * Size:	000090
  */
-void MizuProp::MizuProp()
+MizuProp::MizuProp()
 {
 /*
 .loc_0x0:
@@ -73,7 +75,7 @@ void MizuProp::MizuProp()
  * Address:	8017B464
  * Size:	000084
  */
-void Mizu::Mizu(CreatureProp *)
+Mizu::Mizu(CreatureProp *)
 {
 /*
 .loc_0x0:

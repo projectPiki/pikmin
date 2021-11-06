@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -25,7 +27,7 @@ void _Print(char *, ...)
  * Address:	800A3428
  * Size:	000180
  */
-void SeMgr::SeMgr()
+SeMgr::SeMgr()
 {
 /*
 .loc_0x0:
@@ -192,10 +194,6 @@ void SeMgr::addInfo(int, char *)
  */
 void SeMgr::update()
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*

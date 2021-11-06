@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -187,10 +189,6 @@ void operator new[] (unsigned long, int)
  */
 void operator delete (void *)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -200,8 +198,4 @@ void operator delete (void *)
  */
 void operator delete[] (void *)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }

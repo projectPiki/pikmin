@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -748,10 +750,6 @@ void StateMachine<NaviDemoSunsetState>::transit(NaviDemoSunsetState *, int)
  */
 void AState<NaviDemoSunsetState>::init(NaviDemoSunsetState *)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -761,10 +759,6 @@ void AState<NaviDemoSunsetState>::init(NaviDemoSunsetState *)
  */
 void AState<NaviDemoSunsetState>::cleanup(NaviDemoSunsetState *)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -871,10 +865,6 @@ void NaviDemoSunsetState::GoState::procAnimMsg(NaviDemoSunsetState *, MsgAnim *)
  */
 void NaviDemoSunsetState::GoState::cleanup(NaviDemoSunsetState *)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -931,10 +921,6 @@ void NaviDemoSunsetState::LookState::init(NaviDemoSunsetState *)
  */
 void NaviDemoSunsetState::LookState::exec(NaviDemoSunsetState *)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -944,10 +930,6 @@ void NaviDemoSunsetState::LookState::exec(NaviDemoSunsetState *)
  */
 void NaviDemoSunsetState::LookState::cleanup(NaviDemoSunsetState *)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -1059,10 +1041,6 @@ void NaviDemoSunsetState::WhistleState::init(NaviDemoSunsetState *)
  */
 void NaviDemoSunsetState::WhistleState::exec(NaviDemoSunsetState *)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -1376,10 +1354,6 @@ void NaviDemoSunsetState::WhistleState::enterAllPikis(NaviDemoSunsetState *)
  */
 void NaviDemoSunsetState::WhistleState::cleanup(NaviDemoSunsetState *)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -1433,10 +1407,6 @@ void NaviDemoSunsetState::WaitState::init(NaviDemoSunsetState *)
  */
 void NaviDemoSunsetState::WaitState::exec(NaviDemoSunsetState *)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -1446,10 +1416,6 @@ void NaviDemoSunsetState::WaitState::exec(NaviDemoSunsetState *)
  */
 void NaviDemoSunsetState::WaitState::cleanup(NaviDemoSunsetState *)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -1503,10 +1469,6 @@ void NaviDemoSunsetState::SitState::init(NaviDemoSunsetState *)
  */
 void NaviDemoSunsetState::SitState::exec(NaviDemoSunsetState *)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -1516,10 +1478,6 @@ void NaviDemoSunsetState::SitState::exec(NaviDemoSunsetState *)
  */
 void NaviDemoSunsetState::SitState::cleanup(NaviDemoSunsetState *)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -1527,7 +1485,7 @@ void NaviDemoSunsetState::SitState::cleanup(NaviDemoSunsetState *)
  * Address:	8010C180
  * Size:	0000D4
  */
-void NaviDemoSunsetState::NaviDemoSunsetState()
+NaviDemoSunsetState::NaviDemoSunsetState()
 {
 /*
 .loc_0x0:
@@ -2253,10 +2211,6 @@ void StateMachine<NaviDemoSunsetState>::exec(NaviDemoSunsetState *)
  */
 void AState<NaviDemoSunsetState>::exec(NaviDemoSunsetState *)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -2582,10 +2536,6 @@ void Receiver<NaviDemoSunsetState>::procMsg(NaviDemoSunsetState *, Msg *)
  */
 void Receiver<NaviDemoSunsetState>::procGroundMsg(NaviDemoSunsetState *, MsgGround *)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -2595,10 +2545,6 @@ void Receiver<NaviDemoSunsetState>::procGroundMsg(NaviDemoSunsetState *, MsgGrou
  */
 void Receiver<NaviDemoSunsetState>::procUserMsg(NaviDemoSunsetState *, MsgUser *)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -2608,10 +2554,6 @@ void Receiver<NaviDemoSunsetState>::procUserMsg(NaviDemoSunsetState *, MsgUser *
  */
 void Receiver<NaviDemoSunsetState>::procOffWallMsg(NaviDemoSunsetState *, MsgOffWall *)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -2621,10 +2563,6 @@ void Receiver<NaviDemoSunsetState>::procOffWallMsg(NaviDemoSunsetState *, MsgOff
  */
 void Receiver<NaviDemoSunsetState>::procWallMsg(NaviDemoSunsetState *, MsgWall *)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -2634,10 +2572,6 @@ void Receiver<NaviDemoSunsetState>::procWallMsg(NaviDemoSunsetState *, MsgWall *
  */
 void Receiver<NaviDemoSunsetState>::procDamageMsg(NaviDemoSunsetState *, MsgDamage *)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -2647,10 +2581,6 @@ void Receiver<NaviDemoSunsetState>::procDamageMsg(NaviDemoSunsetState *, MsgDama
  */
 void Receiver<NaviDemoSunsetState>::procAnimMsg(NaviDemoSunsetState *, MsgAnim *)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -2660,10 +2590,6 @@ void Receiver<NaviDemoSunsetState>::procAnimMsg(NaviDemoSunsetState *, MsgAnim *
  */
 void Receiver<NaviDemoSunsetState>::procCollideMsg(NaviDemoSunsetState *, MsgCollide *)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -2673,10 +2599,6 @@ void Receiver<NaviDemoSunsetState>::procCollideMsg(NaviDemoSunsetState *, MsgCol
  */
 void Receiver<NaviDemoSunsetState>::procTargetMsg(NaviDemoSunsetState *, MsgTarget *)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -2686,10 +2608,6 @@ void Receiver<NaviDemoSunsetState>::procTargetMsg(NaviDemoSunsetState *, MsgTarg
  */
 void Receiver<NaviDemoSunsetState>::procHangMsg(NaviDemoSunsetState *, MsgHang *)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -2699,10 +2617,6 @@ void Receiver<NaviDemoSunsetState>::procHangMsg(NaviDemoSunsetState *, MsgHang *
  */
 void Receiver<NaviDemoSunsetState>::procStickMsg(NaviDemoSunsetState *, MsgStick *)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -2712,10 +2626,6 @@ void Receiver<NaviDemoSunsetState>::procStickMsg(NaviDemoSunsetState *, MsgStick
  */
 void Receiver<NaviDemoSunsetState>::procBounceMsg(NaviDemoSunsetState *, MsgBounce *)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -2725,10 +2635,6 @@ void Receiver<NaviDemoSunsetState>::procBounceMsg(NaviDemoSunsetState *, MsgBoun
  */
 void AState<NaviDemoSunsetState>::resume(NaviDemoSunsetState *)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -2738,10 +2644,6 @@ void AState<NaviDemoSunsetState>::resume(NaviDemoSunsetState *)
  */
 void AState<NaviDemoSunsetState>::restart(NaviDemoSunsetState *)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -2751,8 +2653,4 @@ void AState<NaviDemoSunsetState>::restart(NaviDemoSunsetState *)
  */
 void StateMachine<NaviDemoSunsetState>::init(NaviDemoSunsetState *)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }

@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -25,7 +27,7 @@ void _Print(char *, ...)
  * Address:	801BF574
  * Size:	000108
  */
-void zen::DrawScreen::DrawScreen(char *, P2DGrafContext *, bool, bool)
+zen::DrawScreen::DrawScreen(char *, P2DGrafContext *, bool, bool)
 {
 /*
 .loc_0x0:
@@ -162,7 +164,7 @@ void zen::DrawScreen::draw()
  * Address:	801BF6F0
  * Size:	0000B4
  */
-void zen::NumberTex::NumberTex()
+zen::NumberTex::NumberTex()
 {
 /*
 .loc_0x0:
@@ -319,13 +321,9 @@ void zen::P2DPaneLibrary::makeResident(P2DPane *)
  * Address:	801BF8BC
  * Size:	000008
  */
-void PSUTree<P2DPane>::getEndChild() const
+u32  PSUTree<P2DPane>::getEndChild() const
 {
-/*
-.loc_0x0:
-  li        r3, 0
-  blr
-*/
+	return 0x0;
 }
 
 /*
@@ -787,7 +785,7 @@ void zen::P2DPaneLibrary::printUseTexName(char *, IDelegate1<char *> *)
  * Address:	801BFCC4
  * Size:	000168
  */
-void zen::BalloonPane::BalloonPane(P2DPane *, float)
+zen::BalloonPane::BalloonPane(P2DPane *, float)
 {
 /*
 .loc_0x0:

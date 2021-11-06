@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -25,7 +27,7 @@ void _Print(char *, ...)
  * Address:	80143BF0
  * Size:	000084
  */
-void Teki::Teki()
+Teki::Teki()
 {
 /*
 .loc_0x0:
@@ -127,13 +129,10 @@ void YTeki::init(int)
  * Address:	80143D00
  * Size:	000008
  */
-void BTeki::setTekiOptions(int)
+void BTeki::setTekiOptions(int a1)
 {
-/*
-.loc_0x0:
-  stw       r4, 0x410(r3)
-  blr
-*/
+// Generated from stw r4, 0x410(r3)
+_410 = a1;
 }
 
 /*
@@ -143,12 +142,8 @@ void BTeki::setTekiOptions(int)
  */
 void BTeki::clearTekiOptions()
 {
-/*
-.loc_0x0:
-  li        r0, 0
-  stw       r0, 0x410(r3)
-  blr
-*/
+// Generated from stw r0, 0x410(r3)
+_410 = 0;
 }
 
 /*
@@ -188,13 +183,10 @@ void BTeki::clearAnimationKeyOption(int)
  * Address:	80143D34
  * Size:	000008
  */
-void BTeki::setAnimationKeyOptions(int)
+void BTeki::setAnimationKeyOptions(int a1)
 {
-/*
-.loc_0x0:
-  stw       r4, 0x414(r3)
-  blr
-*/
+// Generated from stw r4, 0x414(r3)
+_414 = a1;
 }
 
 /*
@@ -204,12 +196,8 @@ void BTeki::setAnimationKeyOptions(int)
  */
 void BTeki::clearAnimationKeyOptions()
 {
-/*
-.loc_0x0:
-  li        r0, 0
-  stw       r0, 0x414(r3)
-  blr
-*/
+// Generated from stw r0, 0x414(r3)
+_414 = 0;
 }
 
 /*

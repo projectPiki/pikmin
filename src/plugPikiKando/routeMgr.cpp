@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -25,7 +27,7 @@ void _Print(char *, ...)
  * Address:	........
  * Size:	00009C
  */
-void PathFinder::PathFinder(RouteMgr::Group &)
+PathFinder::PathFinder(RouteMgr::Group &)
 {
 	// UNUSED FUNCTION
 }
@@ -35,7 +37,7 @@ void PathFinder::PathFinder(RouteMgr::Group &)
  * Address:	8009F5E4
  * Size:	000014
  */
-void PathFinder::Buffer::Buffer()
+PathFinder::Buffer::Buffer()
 {
 /*
 .loc_0x0:
@@ -2771,7 +2773,7 @@ void RouteMgr::getWayPoint(unsigned long, int)
  * Address:	800A16D4
  * Size:	00009C
  */
-void RouteMgr::RouteMgr()
+RouteMgr::RouteMgr()
 {
 /*
 .loc_0x0:
@@ -3028,7 +3030,7 @@ void RouteMgr::construct(MapMgr *)
  * Address:	800A19F8
  * Size:	000014
  */
-void WayPoint::WayPoint()
+WayPoint::WayPoint()
 {
 /*
 .loc_0x0:
@@ -3229,7 +3231,7 @@ void RouteMgr::getColinIndex(RouteGroup *, RoutePoint *)
  * Address:	........
  * Size:	000080
  */
-void RouteTracer::RouteTracer()
+RouteTracer::RouteTracer()
 {
 	// UNUSED FUNCTION
 }
@@ -3239,7 +3241,7 @@ void RouteTracer::RouteTracer()
  * Address:	........
  * Size:	000014
  */
-void RouteTracer::Context::PointInfo::PointInfo()
+RouteTracer::Context::PointInfo::PointInfo()
 {
 	// UNUSED FUNCTION
 }

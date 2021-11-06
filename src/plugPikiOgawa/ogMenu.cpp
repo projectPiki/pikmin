@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -35,7 +37,7 @@ void zen::ogDrawScrMenu::setScreen(char *)
  * Address:	80191294
  * Size:	0000C0
  */
-void zen::ogDrawScrMenu::ogDrawScrMenu()
+zen::ogDrawScrMenu::ogDrawScrMenu()
 {
 /*
 .loc_0x0:
@@ -413,7 +415,7 @@ void zen::ogDrawScrMenu::draw(Graphics &)
  * Address:	801916E4
  * Size:	000278
  */
-void zen::ogDrawScrController::ogDrawScrController()
+zen::ogDrawScrController::ogDrawScrController()
 {
 /*
 .loc_0x0:
@@ -908,7 +910,7 @@ void zen::ogDrawScrController::update()
  * Address:	80191D78
  * Size:	000554
  */
-void zen::ogDrawScrInfo::ogDrawScrInfo()
+zen::ogDrawScrInfo::ogDrawScrInfo()
 {
 /*
 .loc_0x0:
@@ -1491,7 +1493,7 @@ void zen::ogDrawScrInfo::update(Controller *)
  * Address:	........
  * Size:	000170
  */
-void zen::ogDrawScrInfo2::ogDrawScrInfo2()
+zen::ogDrawScrInfo2::ogDrawScrInfo2()
 {
 	// UNUSED FUNCTION
 }
@@ -1531,7 +1533,7 @@ void zen::ogDrawScrInfo2::drawHougaku(Graphics &)
  * Address:	801925CC
  * Size:	0003FC
  */
-void zen::ogScrMenuMgr::ogScrMenuMgr()
+zen::ogScrMenuMgr::ogScrMenuMgr()
 {
 /*
 .loc_0x0:

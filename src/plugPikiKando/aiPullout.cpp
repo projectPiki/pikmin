@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -25,7 +27,7 @@ void _Print(char *, ...)
  * Address:	800BD670
  * Size:	000100
  */
-void ActPullout::ActPullout(Piki *)
+ActPullout::ActPullout(Piki *)
 {
 /*
 .loc_0x0:
@@ -503,7 +505,7 @@ void ActPulloutCreature::animationKeyUpdated(PaniAnimKeyEvent &)
  * Address:	800BDBD8
  * Size:	00005C
  */
-void ActPulloutCreature::ActPulloutCreature(Piki *)
+ActPulloutCreature::ActPulloutCreature(Piki *)
 {
 /*
 .loc_0x0:
@@ -765,7 +767,7 @@ void ActPulloutCreature::exec()
  * Address:	800BDF08
  * Size:	00006C
  */
-void ActPulloutCreature::~ActPulloutCreature()
+ActPulloutCreature::~ActPulloutCreature()
 {
 /*
 .loc_0x0:
@@ -806,7 +808,7 @@ void ActPulloutCreature::~ActPulloutCreature()
  * Address:	800BDF74
  * Size:	000074
  */
-void ActPullout::~ActPullout()
+ActPullout::~ActPullout()
 {
 /*
 .loc_0x0:

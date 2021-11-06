@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -25,7 +27,7 @@ void _Print(char *, ...)
  * Address:	........
  * Size:	000054
  */
-void P2DPerspGraph::P2DPerspGraph()
+P2DPerspGraph::P2DPerspGraph()
 {
 	// UNUSED FUNCTION
 }
@@ -35,7 +37,7 @@ void P2DPerspGraph::P2DPerspGraph()
  * Address:	........
  * Size:	000084
  */
-void P2DPerspGraph::P2DPerspGraph(const PUTRect &, float, float, float)
+P2DPerspGraph::P2DPerspGraph(const PUTRect &, float, float, float)
 {
 	// UNUSED FUNCTION
 }
@@ -45,7 +47,7 @@ void P2DPerspGraph::P2DPerspGraph(const PUTRect &, float, float, float)
  * Address:	801B0190
  * Size:	000084
  */
-void P2DPerspGraph::P2DPerspGraph(int, int, int, int, float, float, float)
+P2DPerspGraph::P2DPerspGraph(int, int, int, int, float, float, float)
 {
 /*
 .loc_0x0:

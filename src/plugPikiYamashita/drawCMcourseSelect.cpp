@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -381,7 +383,7 @@ void zen::DrawCMCSmenu::setModeFunc(int)
  * Address:	801EC8D8
  * Size:	0003A4
  */
-void zen::DrawCMcourseSelect::DrawCMcourseSelect()
+zen::DrawCMcourseSelect::DrawCMcourseSelect()
 {
 /*
 .loc_0x0:
@@ -640,7 +642,7 @@ void zen::DrawCMcourseSelect::DrawCMcourseSelect()
  * Address:	801ECC7C
  * Size:	000088
  */
-void zen::DrawCMCSmenu::MenuExpansion::MenuExpansion()
+zen::DrawCMCSmenu::MenuExpansion::MenuExpansion()
 {
 /*
 .loc_0x0:
@@ -686,7 +688,7 @@ void zen::DrawCMCSmenu::MenuExpansion::MenuExpansion()
  * Address:	........
  * Size:	000074
  */
-void zen::DrawMenuBase::~DrawMenuBase()
+zen::DrawMenuBase::~DrawMenuBase()
 {
 	// UNUSED FUNCTION
 }
@@ -1313,11 +1315,7 @@ void zen::DrawCMCSmenu::update(Controller *)
  * Address:	801ED478
  * Size:	000008
  */
-void zen::DrawMenuBase::modeDefault(Controller *)
+u32  zen::DrawMenuBase::modeDefault(Controller *)
 {
-/*
-.loc_0x0:
-  li        r3, 0
-  blr
-*/
+	return 0x0;
 }

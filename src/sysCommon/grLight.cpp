@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -25,7 +27,7 @@ void _Print(char *, ...)
  * Address:	80029A48
  * Size:	000200
  */
-void Light::Light()
+Light::Light()
 {
 /*
 .loc_0x0:
@@ -165,7 +167,7 @@ void Light::Light()
  * Address:	80029C48
  * Size:	000014
  */
-void CullingPlane::CullingPlane()
+CullingPlane::CullingPlane()
 {
 /*
 .loc_0x0:

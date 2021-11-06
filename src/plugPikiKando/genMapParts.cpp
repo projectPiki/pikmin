@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -913,8 +915,4 @@ void GenObjectMapParts::birth(BirthInfo &)
  */
 void MapParts::init()
 {
-/*
-.loc_0x0:
-  blr
-*/
 }

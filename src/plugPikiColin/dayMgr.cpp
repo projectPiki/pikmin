@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -1287,7 +1289,7 @@ void LightMenu::menuDecrease(Menu &)
  * Address:	8006A714
  * Size:	00072C
  */
-void ColourMenu::ColourMenu(Colour *, Controller *, Font *, bool)
+ColourMenu::ColourMenu(Colour *, Controller *, Font *, bool)
 {
 /*
 .loc_0x0:
@@ -1784,7 +1786,7 @@ void ColourMenu::ColourMenu(Colour *, Controller *, Font *, bool)
  * Address:	8006AE40
  * Size:	0005BC
  */
-void PositionMenu::PositionMenu(Vector3f *, Controller *, Font *, bool, bool)
+PositionMenu::PositionMenu(Vector3f *, Controller *, Font *, bool, bool)
 {
 /*
 .loc_0x0:
@@ -2267,7 +2269,7 @@ void DayMgr::menuBDecrease(Menu &)
  * Address:	8006B4B4
  * Size:	001B80
  */
-void DayMgr::DayMgr(MapMgr *, Controller *)
+DayMgr::DayMgr(MapMgr *, Controller *)
 {
 /*
 .loc_0x0:
@@ -4171,7 +4173,7 @@ void DayMgr::DayMgr(MapMgr *, Controller *)
  * Address:	8006D034
  * Size:	00052C
  */
-void LightMenu::LightMenu(Light *, int *, Controller *, Font *, bool)
+LightMenu::LightMenu(Light *, int *, Controller *, Font *, bool)
 {
 /*
 .loc_0x0:
@@ -4538,7 +4540,7 @@ void LightMenu::LightMenu(Light *, int *, Controller *, Font *, bool)
  * Address:	8006D560
  * Size:	000B30
  */
-void FogMenu::FogMenu(Colour *, float *, float *, Controller *, Font *, bool)
+FogMenu::FogMenu(Colour *, float *, float *, Controller *, Font *, bool)
 {
 /*
 .loc_0x0:
@@ -5308,7 +5310,7 @@ void FogMenu::FogMenu(Colour *, float *, float *, Controller *, Font *, bool)
  * Address:	8006E090
  * Size:	000314
  */
-void TimeSetting::TimeSetting()
+TimeSetting::TimeSetting()
 {
 /*
 .loc_0x0:

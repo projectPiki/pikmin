@@ -5,13 +5,10 @@
  * Address:	8021C4CC
  * Size:	000008
  */
-void TRKSetBufferUsed(void)
+void TRKSetBufferUsed(void a1)
 {
-/*
-.loc_0x0:
-  stw       r4, 0x4(r3)
-  blr
-*/
+// Generated from stw r4, 0x4(r3)
+_04 = a1;
 }
 
 /*

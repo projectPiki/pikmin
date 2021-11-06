@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -25,7 +27,7 @@ void _Print(char *, ...)
  * Address:	801BA600
  * Size:	002CAC
  */
-void zen::DrawContainer::DrawContainer()
+zen::DrawContainer::DrawContainer()
 {
 /*
 .loc_0x0:
@@ -3036,7 +3038,7 @@ void zen::DrawContainer::DrawContainer()
  * Address:	801BD2AC
  * Size:	000014
  */
-void zen::TexAnim::AnimData::AnimData()
+zen::TexAnim::AnimData::AnimData()
 {
 /*
 .loc_0x0:

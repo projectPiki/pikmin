@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -25,7 +27,7 @@ void _Print(char *, ...)
  * Address:	8012E6C8
  * Size:	000108
  */
-void TaiIwagonParameters::TaiIwagonParameters()
+TaiIwagonParameters::TaiIwagonParameters()
 {
 /*
 .loc_0x0:
@@ -103,7 +105,7 @@ void TaiIwagonParameters::TaiIwagonParameters()
  * Address:	8012E7D0
  * Size:	000084
  */
-void TaiIwagonSoundTable::TaiIwagonSoundTable()
+TaiIwagonSoundTable::TaiIwagonSoundTable()
 {
 /*
 .loc_0x0:
@@ -154,7 +156,7 @@ void TaiIwagonSoundTable::TaiIwagonSoundTable()
  * Address:	8012E854
  * Size:	0004C0
  */
-void TaiIwagonStrategy::TaiIwagonStrategy(TekiParameters *)
+TaiIwagonStrategy::TaiIwagonStrategy(TekiParameters *)
 {
 /*
 .loc_0x0:
@@ -674,7 +676,7 @@ void TaiIwagonRollingAction::act(Teki &)
  * Address:	8012EED4
  * Size:	000118
  */
-void TaiIwagenParameters::TaiIwagenParameters()
+TaiIwagenParameters::TaiIwagenParameters()
 {
 /*
 .loc_0x0:
@@ -756,7 +758,7 @@ void TaiIwagenParameters::TaiIwagenParameters()
  * Address:	8012EFEC
  * Size:	000210
  */
-void TaiIwagenStrategy::TaiIwagenStrategy(TekiParameters *)
+TaiIwagenStrategy::TaiIwagenStrategy(TekiParameters *)
 {
 /*
 .loc_0x0:

@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -437,10 +439,6 @@ void TaiOutsideKeyStopMoveAction::act(Teki &)
  */
 void TaiStoppingMoveAction::start(Teki &)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -491,10 +489,6 @@ void TaiStoppingMoveAction::act(Teki &)
  */
 void TaiStoppingMoveAction::finish(Teki &)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*

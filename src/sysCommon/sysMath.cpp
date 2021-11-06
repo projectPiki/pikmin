@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -2557,7 +2559,7 @@ void KRect::inside(Vector3f &)
  * Address:	8003949C
  * Size:	00002C
  */
-void KTri::KTri()
+KTri::KTri()
 {
 /*
 .loc_0x0:
@@ -2641,7 +2643,7 @@ void KTri::set(Vector3f &, Vector3f &, Vector3f &)
  * Address:	........
  * Size:	000020
  */
-void KSegment::KSegment()
+KSegment::KSegment()
 {
 	// UNUSED FUNCTION
 }

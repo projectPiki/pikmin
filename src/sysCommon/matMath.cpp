@@ -1,3 +1,5 @@
+#include "types.h"
+
 #include "Matrix4f.h"
 extern const float lbl_803E85E0;
 extern const float lbl_803E85E4;
@@ -29,7 +31,7 @@ void _Print(char *, ...)
  * Size:	000088
  */
 /*
-void Matrix4f::Matrix4f(float (*) [4])
+Matrix4f::Matrix4f(float (*) [4])
 {
 	// UNUSED FUNCTION
 }
@@ -1446,8 +1448,4 @@ void Matrix4f::makeReflection(Plane &)
 //void __sinit_matMath_cpp(void)
 //{
 //	return;
-/*
-.loc_0x0:
-  blr
-*/
 //}

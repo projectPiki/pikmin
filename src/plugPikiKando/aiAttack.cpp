@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -25,7 +27,7 @@ void _Print(char *, ...)
  * Address:	800A82E8
  * Size:	0000C8
  */
-void ActAttack::ActAttack(Piki *)
+ActAttack::ActAttack(Piki *)
 {
 /*
 .loc_0x0:
@@ -89,7 +91,7 @@ void ActAttack::ActAttack(Piki *)
  * Address:	800A83B0
  * Size:	000064
  */
-void AndAction::~AndAction()
+AndAction::~AndAction()
 {
 /*
 .loc_0x0:
@@ -335,12 +337,8 @@ void ActAttack::animationKeyUpdated(PaniAnimKeyEvent &)
  */
 void ActAttack::resume()
 {
-/*
-.loc_0x0:
-  li        r0, 0
-  stb       r0, 0x1C(r3)
-  blr
-*/
+// Generated from stb r0, 0x1C(r3)
+_1C = 0;
 }
 
 /*
@@ -383,13 +381,9 @@ void ActAttack::restart()
  * Address:	800A86C0
  * Size:	000008
  */
-void ActAttack::resumable()
+u32  ActAttack::resumable()
 {
-/*
-.loc_0x0:
-  li        r3, 0x1
-  blr
-*/
+	return 0x1;
 }
 
 /*
@@ -397,13 +391,9 @@ void ActAttack::resumable()
  * Address:	800A86C8
  * Size:	000008
  */
-void ActAttack::findTarget()
+u32  ActAttack::findTarget()
 {
-/*
-.loc_0x0:
-  li        r3, 0
-  blr
-*/
+	return 0x0;
 }
 
 /*
@@ -717,7 +707,7 @@ void ActAttack::cleanup()
  * Address:	800A8A70
  * Size:	000060
  */
-void ActJumpAttack::ActJumpAttack(Piki *)
+ActJumpAttack::ActJumpAttack(Piki *)
 {
 /*
 .loc_0x0:
@@ -2700,7 +2690,7 @@ void ActJumpAttack::doClimb()
  * Address:	800AA424
  * Size:	00006C
  */
-void ActJumpAttack::~ActJumpAttack()
+ActJumpAttack::~ActJumpAttack()
 {
 /*
 .loc_0x0:
@@ -2741,7 +2731,7 @@ void ActJumpAttack::~ActJumpAttack()
  * Address:	800AA490
  * Size:	00007C
  */
-void ActAttack::~ActAttack()
+ActAttack::~ActAttack()
 {
 /*
 .loc_0x0:

@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -129,7 +131,7 @@ void P2DFont::loadFont(char *, int &, int &)
  * Address:	801B5DB4
  * Size:	0000BC
  */
-void P2DFont::P2DFont(char *)
+P2DFont::P2DFont(char *)
 {
 /*
 .loc_0x0:

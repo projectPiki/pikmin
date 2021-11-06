@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -25,7 +27,7 @@ void _Print(char *, ...)
  * Address:	80175A30
  * Size:	000330
  */
-void KoganeProp::KoganeProp()
+KoganeProp::KoganeProp()
 {
 /*
 .loc_0x0:
@@ -241,7 +243,7 @@ void KoganeProp::KoganeProp()
  * Address:	80175D60
  * Size:	000084
  */
-void Kogane::Kogane(CreatureProp *)
+Kogane::Kogane(CreatureProp *)
 {
 /*
 .loc_0x0:

@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -25,7 +27,7 @@ void _Print(char *, ...)
  * Address:	8007D26C
  * Size:	0000A4
  */
-void AICreature::AICreature(CreatureProp *)
+AICreature::AICreature(CreatureProp *)
 {
 /*
 .loc_0x0:
@@ -222,10 +224,6 @@ void AICreature::animationKeyUpdated(PaniAnimKeyEvent &)
  */
 void AICreature::playEffect(int)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -235,10 +233,6 @@ void AICreature::playEffect(int)
  */
 void AICreature::playSound(int)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -303,7 +297,7 @@ void AICreature::checkEventFlag(int)
  * Address:	8007D4E4
  * Size:	000024
  */
-void SimpleAI::SimpleAI()
+SimpleAI::SimpleAI()
 {
 /*
 .loc_0x0:
@@ -635,10 +629,6 @@ void StateMachine<AICreature>::transit(AICreature *, int)
  */
 void AState<AICreature>::init(AICreature *)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -646,13 +636,10 @@ void AState<AICreature>::init(AICreature *)
  * Address:	8007D860
  * Size:	000008
  */
-void AICreature::setCurrState(AState<AICreature> *)
+void AICreature::setCurrState(AState<AICreature> * a1)
 {
-/*
-.loc_0x0:
-  stw       r4, 0x2E4(r3)
-  blr
-*/
+// Generated from stw r4, 0x2E4(r3)
+_2E4 = a1;
 }
 
 /*
@@ -662,10 +649,6 @@ void AICreature::setCurrState(AState<AICreature> *)
  */
 void AState<AICreature>::cleanup(AICreature *)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -814,13 +797,9 @@ void SimpleAI::checkEvent(AICreature *)
  * Address:	8007D9E0
  * Size:	000008
  */
-void SAICondition::satisfy(AICreature *)
+u32  SAICondition::satisfy(AICreature *)
 {
-/*
-.loc_0x0:
-  li        r3, 0x1
-  blr
-*/
+	return 0x1;
 }
 
 /*
@@ -828,7 +807,7 @@ void SAICondition::satisfy(AICreature *)
  * Address:	8007D9E8
  * Size:	00010C
  */
-void SAIState::SAIState(int)
+SAIState::SAIState(int)
 {
 /*
 .loc_0x0:
@@ -970,10 +949,6 @@ void SAIState::init(AICreature *)
  */
 void AICreature::startMotion(int)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -1118,10 +1093,6 @@ void SAIState::cleanup(AICreature *)
  */
 void AICreature::startMotion(int, float)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -1131,10 +1102,6 @@ void AICreature::startMotion(int, float)
  */
 void AICreature::finishMotion(float)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -1144,10 +1111,6 @@ void AICreature::finishMotion(float)
  */
 void AICreature::finishMotion()
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -1199,10 +1162,6 @@ void AICreature::getMotionSpeed()
  */
 void AICreature::setMotionSpeed(float)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -1212,10 +1171,6 @@ void AICreature::setMotionSpeed(float)
  */
 void AICreature::stopMotion()
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -1223,13 +1178,9 @@ void AICreature::stopMotion()
  * Address:	8007DD14
  * Size:	000008
  */
-void Creature::insideSafeArea(Vector3f &)
+u32  Creature::insideSafeArea(Vector3f &)
 {
-/*
-.loc_0x0:
-  li        r3, 0x1
-  blr
-*/
+	return 0x1;
 }
 
 /*
@@ -1237,13 +1188,9 @@ void Creature::insideSafeArea(Vector3f &)
  * Address:	8007DD1C
  * Size:	000008
  */
-void Creature::platAttachable()
+u32  Creature::platAttachable()
 {
-/*
-.loc_0x0:
-  li        r3, 0
-  blr
-*/
+	return 0x0;
 }
 
 /*
@@ -1251,13 +1198,9 @@ void Creature::platAttachable()
  * Address:	8007DD24
  * Size:	000008
  */
-void Creature::doDoAI()
+u32  Creature::doDoAI()
 {
-/*
-.loc_0x0:
-  li        r3, 0x1
-  blr
-*/
+	return 0x1;
 }
 
 /*
@@ -1267,10 +1210,6 @@ void Creature::doDoAI()
  */
 void Creature::setRouteTracer(RouteTracer *)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -1280,10 +1219,6 @@ void Creature::setRouteTracer(RouteTracer *)
  */
 void Creature::initParam(int)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -1293,10 +1228,6 @@ void Creature::initParam(int)
  */
 void Creature::startAI(int)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -1362,10 +1293,6 @@ void Creature::getCylinderHeight()
  */
 void Creature::doStore(CreatureInf *)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -1375,10 +1302,6 @@ void Creature::doStore(CreatureInf *)
  */
 void Creature::doRestore(CreatureInf *)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -1388,10 +1311,6 @@ void Creature::doRestore(CreatureInf *)
  */
 void Creature::doSave(RandomAccessStream &)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -1401,10 +1320,6 @@ void Creature::doSave(RandomAccessStream &)
  */
 void Creature::doLoad(RandomAccessStream &)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -1450,13 +1365,9 @@ void Creature::setCentre(Vector3f &)
  * Address:	8007DDA0
  * Size:	000008
  */
-void Creature::isOrganic()
+u32  Creature::isOrganic()
 {
-/*
-.loc_0x0:
-  li        r3, 0x1
-  blr
-*/
+	return 0x1;
 }
 
 /*
@@ -1464,13 +1375,9 @@ void Creature::isOrganic()
  * Address:	8007DDA8
  * Size:	000008
  */
-void Creature::isBuried()
+u32  Creature::isBuried()
 {
-/*
-.loc_0x0:
-  li        r3, 0
-  blr
-*/
+	return 0x0;
 }
 
 /*
@@ -1478,13 +1385,9 @@ void Creature::isBuried()
  * Address:	8007DDB0
  * Size:	000008
  */
-void Creature::isAtari()
+u32  Creature::isAtari()
 {
-/*
-.loc_0x0:
-  li        r3, 0x1
-  blr
-*/
+	return 0x1;
 }
 
 /*
@@ -1510,13 +1413,9 @@ void Creature::isAlive()
  * Address:	8007DDD0
  * Size:	000008
  */
-void Creature::isFixed()
+u32  Creature::isFixed()
 {
-/*
-.loc_0x0:
-  li        r3, 0
-  blr
-*/
+	return 0x0;
 }
 
 /*
@@ -1524,13 +1423,9 @@ void Creature::isFixed()
  * Address:	8007DDD8
  * Size:	000008
  */
-void Creature::needFlick(Creature *)
+u32  Creature::needFlick(Creature *)
 {
-/*
-.loc_0x0:
-  li        r3, 0x1
-  blr
-*/
+	return 0x1;
 }
 
 /*
@@ -1538,13 +1433,9 @@ void Creature::needFlick(Creature *)
  * Address:	8007DDE0
  * Size:	000008
  */
-void Creature::ignoreAtari(Creature *)
+u32  Creature::ignoreAtari(Creature *)
 {
-/*
-.loc_0x0:
-  li        r3, 0
-  blr
-*/
+	return 0x0;
 }
 
 /*
@@ -1572,10 +1463,6 @@ void Creature::isFree()
  */
 void Creature::sendMsg(Msg *)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -1585,10 +1472,6 @@ void Creature::sendMsg(Msg *)
  */
 void Creature::jumpCallback()
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -1598,10 +1481,6 @@ void Creature::jumpCallback()
  */
 void Creature::offwallCallback(DynCollObject *)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -1611,10 +1490,6 @@ void Creature::offwallCallback(DynCollObject *)
  */
 void Creature::stickCallback(Creature *)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -1624,10 +1499,6 @@ void Creature::stickCallback(Creature *)
  */
 void Creature::offstickCallback(Creature *)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -1637,10 +1508,6 @@ void Creature::offstickCallback(Creature *)
  */
 void Creature::stickToCallback(Creature *)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -1650,10 +1517,6 @@ void Creature::stickToCallback(Creature *)
  */
 void Creature::dump()
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -1663,10 +1526,6 @@ void Creature::dump()
  */
 void Creature::startWaterEffect()
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -1676,10 +1535,6 @@ void Creature::startWaterEffect()
  */
 void Creature::finishWaterEffect()
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -1687,13 +1542,9 @@ void Creature::finishWaterEffect()
  * Address:	8007DE24
  * Size:	000008
  */
-void Creature::isRopable()
+u32  Creature::isRopable()
 {
-/*
-.loc_0x0:
-  li        r3, 0
-  blr
-*/
+	return 0x0;
 }
 
 /*
@@ -1701,13 +1552,9 @@ void Creature::isRopable()
  * Address:	8007DE2C
  * Size:	000008
  */
-void Creature::mayIstick()
+u32  Creature::mayIstick()
 {
-/*
-.loc_0x0:
-  li        r3, 0
-  blr
-*/
+	return 0x0;
 }
 
 /*
@@ -1715,13 +1562,9 @@ void Creature::mayIstick()
  * Address:	8007DE34
  * Size:	000008
  */
-void Creature::getFormationPri()
+u32  Creature::getFormationPri()
 {
-/*
-.loc_0x0:
-  li        r3, 0x80
-  blr
-*/
+	return 0x80;
 }
 
 /*
@@ -1731,10 +1574,6 @@ void Creature::getFormationPri()
  */
 void Creature::refresh2d(Graphics &)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -1744,10 +1583,6 @@ void Creature::refresh2d(Graphics &)
  */
 void Creature::doAI()
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -1757,10 +1592,6 @@ void Creature::doAI()
  */
 void Creature::doAnimation()
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -1770,10 +1601,6 @@ void Creature::doAnimation()
  */
 void Creature::exitCourse()
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -1783,10 +1610,6 @@ void Creature::exitCourse()
  */
 void RefCountable::addCntCallback()
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -1796,10 +1619,6 @@ void RefCountable::addCntCallback()
  */
 void RefCountable::subCntCallback()
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -1809,10 +1628,6 @@ void RefCountable::subCntCallback()
  */
 void AState<AICreature>::exec(AICreature *)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -1822,10 +1637,6 @@ void AState<AICreature>::exec(AICreature *)
  */
 void AState<AICreature>::resume(AICreature *)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -1835,10 +1646,6 @@ void AState<AICreature>::resume(AICreature *)
  */
 void AState<AICreature>::restart(AICreature *)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -1872,10 +1679,6 @@ void AState<AICreature>::transit(AICreature *, int)
  */
 void StateMachine<AICreature>::init(AICreature *)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*

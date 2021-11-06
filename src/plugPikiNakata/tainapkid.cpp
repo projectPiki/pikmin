@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -25,7 +27,7 @@ void _Print(char *, ...)
  * Address:	80135C20
  * Size:	000084
  */
-void TaiNapkidSoundTable::TaiNapkidSoundTable()
+TaiNapkidSoundTable::TaiNapkidSoundTable()
 {
 /*
 .loc_0x0:
@@ -76,7 +78,7 @@ void TaiNapkidSoundTable::TaiNapkidSoundTable()
  * Address:	80135CA4
  * Size:	000564
  */
-void TaiNapkidParameters::TaiNapkidParameters()
+TaiNapkidParameters::TaiNapkidParameters()
 {
 /*
 .loc_0x0:
@@ -433,7 +435,7 @@ void TaiNapkidParameters::TaiNapkidParameters()
  * Address:	80136208
  * Size:	0022C4
  */
-void TaiNapkidStrategy::TaiNapkidStrategy(TekiParameters *)
+TaiNapkidStrategy::TaiNapkidStrategy(TekiParameters *)
 {
 /*
 .loc_0x0:
@@ -5385,13 +5387,9 @@ void TaiNapkidFallingAction::start(Teki &)
  * Address:	8013A3C8
  * Size:	000008
  */
-void TaiNapkidFallingAction::act(Teki &)
+u32  TaiNapkidFallingAction::act(Teki &)
 {
-/*
-.loc_0x0:
-  li        r3, 0
-  blr
-*/
+	return 0x0;
 }
 
 /*

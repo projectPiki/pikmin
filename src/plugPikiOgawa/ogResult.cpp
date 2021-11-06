@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -979,7 +981,7 @@ void zen::ogScrResultMgr::setEnumResultTable(zen::EnumResult *)
  * Address:	801841E8
  * Size:	00017C
  */
-void zen::ogScrResultMgr::ogScrResultMgr()
+zen::ogScrResultMgr::ogScrResultMgr()
 {
 /*
 .loc_0x0:
@@ -1090,7 +1092,7 @@ void zen::ogScrResultMgr::ogScrResultMgr()
  * Address:	80184364
  * Size:	000170
  */
-void zen::ogScrResultMgr::ogScrResultMgr(zen::EnumResult *)
+zen::ogScrResultMgr::ogScrResultMgr(zen::EnumResult *)
 {
 /*
 .loc_0x0:

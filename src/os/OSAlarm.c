@@ -60,12 +60,8 @@ void OSInitAlarm(void)
  */
 void OSCreateAlarm(void)
 {
-/*
-.loc_0x0:
-  li        r0, 0
-  stw       r0, 0x0(r3)
-  blr
-*/
+// Generated from stw r0, 0x0(r3)
+_00 = 0;
 }
 
 /*

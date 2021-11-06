@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -41,13 +43,9 @@ void FormationMgr::getCreature(int)
  * Address:	8007DF6C
  * Size:	000008
  */
-void FormationMgr::getFirst()
+u32  FormationMgr::getFirst()
 {
-/*
-.loc_0x0:
-  li        r3, 0
-  blr
-*/
+	return 0x0;
 }
 
 /*
@@ -226,7 +224,7 @@ void FormArranger::getLength(FormationMgr *)
  * Address:	........
  * Size:	000148
  */
-void FormationMgr::FormationMgr()
+FormationMgr::FormationMgr()
 {
 	// UNUSED FUNCTION
 }
@@ -236,7 +234,7 @@ void FormationMgr::FormationMgr()
  * Address:	........
  * Size:	000044
  */
-void FormPoint::FormPoint()
+FormPoint::FormPoint()
 {
 	// UNUSED FUNCTION
 }
@@ -1669,7 +1667,7 @@ void WingArranger::arrange(FormationMgr *)
  * Address:	........
  * Size:	00005C
  */
-void Rope::Rope()
+Rope::Rope()
 {
 	// UNUSED FUNCTION
 }
@@ -1713,7 +1711,7 @@ void Rope::refresh(Graphics &)
  * Address:	........
  * Size:	000020
  */
-void Spine::Spine()
+Spine::Spine()
 {
 	// UNUSED FUNCTION
 }

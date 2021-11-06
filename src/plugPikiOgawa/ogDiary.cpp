@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -25,7 +27,7 @@ void _Print(char *, ...)
  * Address:	8018F1F4
  * Size:	000150
  */
-void zen::ogScrDiaryMgr::ogScrDiaryMgr()
+zen::ogScrDiaryMgr::ogScrDiaryMgr()
 {
 /*
 .loc_0x0:
@@ -737,7 +739,7 @@ void zen::ogScrDiaryMgr::updateDiary(Controller *)
  * Address:	8018FA74
  * Size:	000158
  */
-void zen::ogDrawDiary::ogDrawDiary()
+zen::ogDrawDiary::ogDrawDiary()
 {
 /*
 .loc_0x0:
@@ -1255,7 +1257,7 @@ void zen::ogDrawDiary::draw(Graphics &)
  * Address:	8019011C
  * Size:	000430
  */
-void zen::ogDrawSelectDiary::ogDrawSelectDiary()
+zen::ogDrawSelectDiary::ogDrawSelectDiary()
 {
 /*
 .loc_0x0:

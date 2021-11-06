@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -25,7 +27,7 @@ void _Print(char *, ...)
  * Address:	801C59D4
  * Size:	000084
  */
-void TAIbeatleSoundTable::TAIbeatleSoundTable()
+TAIbeatleSoundTable::TAIbeatleSoundTable()
 {
 /*
 .loc_0x0:
@@ -76,7 +78,7 @@ void TAIbeatleSoundTable::TAIbeatleSoundTable()
  * Address:	801C5A58
  * Size:	000418
  */
-void TAIbeatleParameters::TAIbeatleParameters()
+TAIbeatleParameters::TAIbeatleParameters()
 {
 /*
 .loc_0x0:
@@ -350,7 +352,7 @@ void TAIbeatleParameters::TAIbeatleParameters()
  * Address:	801C5E70
  * Size:	000EF4
  */
-void TAIbeatleStrategy::TAIbeatleStrategy()
+TAIbeatleStrategy::TAIbeatleStrategy()
 {
 /*
 .loc_0x0:
@@ -4425,11 +4427,7 @@ void TAIAinitBeatle::start(Teki &)
  * Address:	801C94C4
  * Size:	000008
  */
-void TAIAinitBeatle::act(Teki &)
+u32  TAIAinitBeatle::act(Teki &)
 {
-/*
-.loc_0x0:
-  li        r3, 0x1
-  blr
-*/
+	return 0x1;
 }

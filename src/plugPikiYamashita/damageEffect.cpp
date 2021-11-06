@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -5,7 +7,7 @@
  * Address:	801F14F4
  * Size:	00000C
  */
-void zen::DamageEffect::DamageEffect()
+zen::DamageEffect::DamageEffect()
 {
 /*
 .loc_0x0:

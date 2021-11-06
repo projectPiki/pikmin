@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -25,7 +27,7 @@ void _Print(char *, ...)
  * Address:	80152684
  * Size:	000110
  */
-void BossShapeObject::BossShapeObject(Shape *, char *)
+BossShapeObject::BossShapeObject(Shape *, char *)
 {
 /*
 .loc_0x0:

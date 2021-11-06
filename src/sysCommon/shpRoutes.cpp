@@ -1,3 +1,5 @@
+#include "types.h"
+
 #include "Vector3f.h"
 
 /*
@@ -28,7 +30,7 @@ void _Print(char *, ...)
  * Size:	0000A8
  */
 /*
-void RoutePoint::RoutePoint()
+RoutePoint::RoutePoint()
 {
 	// UNUSED FUNCTION
 }
@@ -174,7 +176,7 @@ void RoutePoint::loadini(CmdStream *)
  * Size:	000184
  */
 /*
-void RouteGroup::RouteGroup()
+RouteGroup::RouteGroup()
 {
 
 .loc_0x0:
@@ -1294,10 +1296,6 @@ void RouteGroup::saveini(char *, RandomAccessStream &)
 /*
 void EditNode::msgCommand(DataMsg &)
 {
-
-.loc_0x0:
-  blr
-
 }
 */
 
@@ -1309,9 +1307,5 @@ void EditNode::msgCommand(DataMsg &)
 /*
 void EditNode::render2d(Graphics &, int &)
 {
-
-.loc_0x0:
-  blr
-
 }
 */

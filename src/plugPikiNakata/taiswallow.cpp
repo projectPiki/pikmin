@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -25,7 +27,7 @@ void _Print(char *, ...)
  * Address:	8013F304
  * Size:	000084
  */
-void TaiSwallowSoundTable::TaiSwallowSoundTable()
+TaiSwallowSoundTable::TaiSwallowSoundTable()
 {
 /*
 .loc_0x0:
@@ -76,7 +78,7 @@ void TaiSwallowSoundTable::TaiSwallowSoundTable()
  * Address:	8013F388
  * Size:	000448
  */
-void TaiSwallowParameters::TaiSwallowParameters()
+TaiSwallowParameters::TaiSwallowParameters()
 {
 /*
 .loc_0x0:
@@ -362,7 +364,7 @@ void TaiSwallowParameters::TaiSwallowParameters()
  * Address:	8013F7D0
  * Size:	00043C
  */
-void TaiBlackSwallowParameters::TaiBlackSwallowParameters()
+TaiBlackSwallowParameters::TaiBlackSwallowParameters()
 {
 /*
 .loc_0x0:
@@ -645,7 +647,7 @@ void TaiBlackSwallowParameters::TaiBlackSwallowParameters()
  * Address:	8013FC0C
  * Size:	0016EC
  */
-void TaiSwallowStrategy::TaiSwallowStrategy(TekiParameters *)
+TaiSwallowStrategy::TaiSwallowStrategy(TekiParameters *)
 {
 /*
 .loc_0x0:
@@ -3165,7 +3167,7 @@ void TaiSwallowNoticeAction::act(Teki &)
  * Address:	80141DC4
  * Size:	000058
  */
-void TaiSwallowLegEffectAction::TaiSwallowLegEffectAction(float)
+TaiSwallowLegEffectAction::TaiSwallowLegEffectAction(float)
 {
 /*
 .loc_0x0:
@@ -3266,7 +3268,7 @@ void TaiSwallowLegEffectAction::setType(Vector3f &, int, int)
  * Address:	80141EE0
  * Size:	000054
  */
-void TaiSwallowMissAttackingEffectAction::TaiSwallowMissAttackingEffectAction(float)
+TaiSwallowMissAttackingEffectAction::TaiSwallowMissAttackingEffectAction(float)
 {
 /*
 .loc_0x0:

@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -25,7 +27,7 @@ void _Print(char *, ...)
  * Address:	8011D95C
  * Size:	000084
  */
-void NCamera::NCamera(Camera *)
+NCamera::NCamera(Camera *)
 {
 /*
 .loc_0x0:

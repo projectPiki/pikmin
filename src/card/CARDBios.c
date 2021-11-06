@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -7,10 +9,6 @@
  */
 void __CARDDefaultApiCallback(void)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*

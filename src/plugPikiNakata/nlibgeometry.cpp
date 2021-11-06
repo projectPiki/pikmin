@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -25,7 +27,7 @@ void _Print(char *, ...)
  * Address:	........
  * Size:	000058
  */
-void NAxisAngle4f::NAxisAngle4f()
+NAxisAngle4f::NAxisAngle4f()
 {
 	// UNUSED FUNCTION
 }
@@ -35,7 +37,7 @@ void NAxisAngle4f::NAxisAngle4f()
  * Address:	8011BC80
  * Size:	000058
  */
-void NAxisAngle4f::NAxisAngle4f(NVector3f &, float)
+NAxisAngle4f::NAxisAngle4f(NVector3f &, float)
 {
 /*
 .loc_0x0:
@@ -91,7 +93,7 @@ void NAxisAngle4f::construct(NVector3f &, float)
  * Address:	8011BCF8
  * Size:	000080
  */
-void NMatrix4f::NMatrix4f()
+NMatrix4f::NMatrix4f()
 {
 /*
 .loc_0x0:
@@ -135,7 +137,7 @@ void NMatrix4f::NMatrix4f()
  * Address:	........
  * Size:	000030
  */
-void NMatrix4f::NMatrix4f(Matrix4f &)
+NMatrix4f::NMatrix4f(Matrix4f &)
 {
 	// UNUSED FUNCTION
 }
@@ -165,7 +167,7 @@ void NMatrix4f::construct(Matrix4f &)
  * Address:	8011BD98
  * Size:	000070
  */
-void NMatrix4f::NMatrix4f(float, float, float, float, float, float, float, float, float, float, float, float, float, float, float, float)
+NMatrix4f::NMatrix4f(float, float, float, float, float, float, float, float, float, float, float, float, float, float, float, float)
 {
 /*
 .loc_0x0:
@@ -215,7 +217,7 @@ void NMatrix4f::construct(float, float, float, float, float, float, float, float
  * Address:	........
  * Size:	000030
  */
-void NMatrix4f::NMatrix4f(float (*) [4])
+NMatrix4f::NMatrix4f(float (*) [4])
 {
 	// UNUSED FUNCTION
 }
@@ -524,7 +526,7 @@ void NMatrix4f::println()
  * Address:	........
  * Size:	000090
  */
-void NOrientation::NOrientation()
+NOrientation::NOrientation()
 {
 	// UNUSED FUNCTION
 }
@@ -534,7 +536,7 @@ void NOrientation::NOrientation()
  * Address:	8011BF4C
  * Size:	000050
  */
-void NOrientation::NOrientation(Vector3f &)
+NOrientation::NOrientation(Vector3f &)
 {
 /*
 .loc_0x0:
@@ -610,7 +612,7 @@ void NOrientation::construct(Vector3f &)
  * Address:	........
  * Size:	000060
  */
-void NOrientation::NOrientation(Vector3f &, Vector3f &)
+NOrientation::NOrientation(Vector3f &, Vector3f &)
 {
 	// UNUSED FUNCTION
 }
@@ -988,7 +990,7 @@ void NOrientation::println()
  * Address:	8011C3A4
  * Size:	00003C
  */
-void NPolar3f::NPolar3f()
+NPolar3f::NPolar3f()
 {
 /*
 .loc_0x0:
@@ -1015,7 +1017,7 @@ void NPolar3f::NPolar3f()
  * Address:	........
  * Size:	000030
  */
-void NPolar3f::NPolar3f(float, float, float)
+NPolar3f::NPolar3f(float, float, float)
 {
 	// UNUSED FUNCTION
 }
@@ -1035,7 +1037,7 @@ void NPolar3f::construct(float, float, float)
  * Address:	........
  * Size:	000030
  */
-void NPolar3f::NPolar3f(NPolar3f &)
+NPolar3f::NPolar3f(NPolar3f &)
 {
 	// UNUSED FUNCTION
 }
@@ -1055,7 +1057,7 @@ void NPolar3f::construct(NPolar3f &)
  * Address:	8011C3E0
  * Size:	000030
  */
-void NPolar3f::NPolar3f(Vector3f &)
+NPolar3f::NPolar3f(Vector3f &)
 {
 /*
 .loc_0x0:
@@ -1294,7 +1296,7 @@ void NPolar3f::println()
  * Address:	........
  * Size:	00005C
  */
-void NPosture2D::NPosture2D()
+NPosture2D::NPosture2D()
 {
 	// UNUSED FUNCTION
 }
@@ -1304,7 +1306,7 @@ void NPosture2D::NPosture2D()
  * Address:	........
  * Size:	000068
  */
-void NPosture2D::NPosture2D(Vector3f &, float)
+NPosture2D::NPosture2D(Vector3f &, float)
 {
 	// UNUSED FUNCTION
 }
@@ -1413,7 +1415,7 @@ void NPosture2D::println()
  * Address:	8011C620
  * Size:	0000A0
  */
-void NPosture3D::NPosture3D()
+NPosture3D::NPosture3D()
 {
 /*
 .loc_0x0:
@@ -1465,7 +1467,7 @@ void NPosture3D::NPosture3D()
  * Address:	........
  * Size:	000060
  */
-void NPosture3D::NPosture3D(NPosture3D &)
+NPosture3D::NPosture3D(NPosture3D &)
 {
 	// UNUSED FUNCTION
 }
@@ -1485,7 +1487,7 @@ void NPosture3D::construct(NPosture3D &)
  * Address:	8011C6C0
  * Size:	000070
  */
-void NPosture3D::NPosture3D(Vector3f &, Vector3f &)
+NPosture3D::NPosture3D(Vector3f &, Vector3f &)
 {
 /*
 .loc_0x0:
@@ -1878,7 +1880,7 @@ void NPosture3D::println()
  * Address:	........
  * Size:	00003C
  */
-void NSpecialMatrix::NSpecialMatrix(int)
+NSpecialMatrix::NSpecialMatrix(int)
 {
 	// UNUSED FUNCTION
 }
@@ -1898,7 +1900,7 @@ void NSpecialMatrix::construct(int)
  * Address:	........
  * Size:	00004C
  */
-void NLowerMatrix::NLowerMatrix(float *, int)
+NLowerMatrix::NLowerMatrix(float *, int)
 {
 	// UNUSED FUNCTION
 }
@@ -1938,7 +1940,7 @@ void NLowerMatrix::println()
  * Address:	........
  * Size:	00004C
  */
-void NUpperMatrix::NUpperMatrix(float *, float *, int)
+NUpperMatrix::NUpperMatrix(float *, float *, int)
 {
 	// UNUSED FUNCTION
 }
@@ -1978,7 +1980,7 @@ void NUpperMatrix::println()
  * Address:	........
  * Size:	00006C
  */
-void LUMatrix::LUMatrix(float *, float *, float *, int)
+LUMatrix::LUMatrix(float *, float *, float *, int)
 {
 	// UNUSED FUNCTION
 }
@@ -2035,13 +2037,10 @@ void LUMatrix::setDimension(int)
  * Address:	8011C9F8
  * Size:	000008
  */
-void NSpecialMatrix::setDimension(int)
+void NSpecialMatrix::setDimension(int a1)
 {
-/*
-.loc_0x0:
-  stw       r4, 0x4(r3)
-  blr
-*/
+// Generated from stw r4, 0x4(r3)
+_04 = a1;
 }
 
 /*
@@ -2079,7 +2078,7 @@ void LUMatrix::println()
  * Address:	8011CA00
  * Size:	000080
  */
-void NTransform3D::NTransform3D()
+NTransform3D::NTransform3D()
 {
 /*
 .loc_0x0:
@@ -2171,7 +2170,7 @@ void NMath<float>::copyArray44(float (*) [4], float (*) [4])
  * Address:	........
  * Size:	000098
  */
-void NTransform3D::NTransform3D(NMatrix4f &)
+NTransform3D::NTransform3D(NMatrix4f &)
 {
 	// UNUSED FUNCTION
 }
@@ -2503,7 +2502,7 @@ void NTransform3D::inputRotation(NAxisAngle4f &)
  * Address:	8011CDC0
  * Size:	000010
  */
-void NVector::NVector()
+NVector::NVector()
 {
 /*
 .loc_0x0:
@@ -2519,7 +2518,7 @@ void NVector::NVector()
  * Address:	........
  * Size:	000030
  */
-void NVector::NVector(float *, int)
+NVector::NVector(float *, int)
 {
 	// UNUSED FUNCTION
 }
@@ -2654,7 +2653,7 @@ void NVector3f::printlnVector3f(Vector3f &)
  * Address:	8011CE54
  * Size:	00002C
  */
-void NVector3f::NVector3f()
+NVector3f::NVector3f()
 {
 /*
 .loc_0x0:
@@ -2677,7 +2676,7 @@ void NVector3f::NVector3f()
  * Address:	8011CE80
  * Size:	000040
  */
-void NVector3f::NVector3f(Vector3f &)
+NVector3f::NVector3f(Vector3f &)
 {
 /*
 .loc_0x0:
@@ -2726,7 +2725,7 @@ void NVector3f::construct(Vector3f &)
  * Address:	8011CEDC
  * Size:	000040
  */
-void NVector3f::NVector3f(float, float, float)
+NVector3f::NVector3f(float, float, float)
 {
 /*
 .loc_0x0:
@@ -2772,7 +2771,7 @@ void NVector3f::construct(float, float, float)
  * Address:	8011CF2C
  * Size:	000040
  */
-void NVector3f::NVector3f(Vector3f &, Vector3f &)
+NVector3f::NVector3f(Vector3f &, Vector3f &)
 {
 /*
 .loc_0x0:
@@ -2978,10 +2977,6 @@ void NVector3f::print()
  */
 void NVector3f::println()
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -3194,7 +3189,7 @@ void NAlpha::fadeOutInValue(float)
  * Address:	........
  * Size:	000030
  */
-void NAlpha::NAlpha()
+NAlpha::NAlpha()
 {
 	// UNUSED FUNCTION
 }

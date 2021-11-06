@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -153,7 +155,7 @@ void GameSetupSection::preCacheShapes()
  * Address:	80054CC4
  * Size:	000284
  */
-void GameSetupSection::GameSetupSection()
+GameSetupSection::GameSetupSection()
 {
 /*
 .loc_0x0:
@@ -357,10 +359,6 @@ void GameSetupSection::update()
  */
 void GameSetupSection::init()
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -384,13 +382,10 @@ void RamStream::getPending()
  * Address:	80054F78
  * Size:	000008
  */
-void RamStream::setPosition(int)
+void RamStream::setPosition(int a1)
 {
-/*
-.loc_0x0:
-  stw       r4, 0xC(r3)
-  blr
-*/
+// Generated from stw r4, 0xC(r3)
+_0C = a1;
 }
 
 /*
@@ -426,13 +421,10 @@ void RamStream::getLength()
  * Address:	80054F90
  * Size:	000008
  */
-void RamStream::setLength(int)
+void RamStream::setLength(int a1)
 {
-/*
-.loc_0x0:
-  stw       r4, 0x10(r3)
-  blr
-*/
+// Generated from stw r4, 0x10(r3)
+_10 = a1;
 }
 
 /*

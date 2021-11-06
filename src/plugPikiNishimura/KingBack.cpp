@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -25,7 +27,7 @@ void _Print(char *, ...)
  * Address:	80179E08
  * Size:	000090
  */
-void KingBackProp::KingBackProp()
+KingBackProp::KingBackProp()
 {
 /*
 .loc_0x0:
@@ -73,7 +75,7 @@ void KingBackProp::KingBackProp()
  * Address:	80179E98
  * Size:	00006C
  */
-void KingBack::KingBack(CreatureProp *)
+KingBack::KingBack(CreatureProp *)
 {
 /*
 .loc_0x0:
@@ -188,10 +190,6 @@ void KingBack::doKill()
  */
 void KingBack::exitCourse()
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*

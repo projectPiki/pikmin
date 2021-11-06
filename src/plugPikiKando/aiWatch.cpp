@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -27,10 +29,6 @@ void _Print(char *, ...)
  */
 void ActWatch::AnimListener::animationKeyUpdated(PaniAnimKeyEvent &)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -38,7 +36,7 @@ void ActWatch::AnimListener::animationKeyUpdated(PaniAnimKeyEvent &)
  * Address:	800C2C58
  * Size:	0000C4
  */
-void ActWatch::ActWatch(Piki *)
+ActWatch::ActWatch(Piki *)
 {
 /*
 .loc_0x0:
@@ -105,10 +103,6 @@ void ActWatch::ActWatch(Piki *)
  */
 void ActWatch::Initialiser::initialise(Action *)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -381,7 +375,7 @@ void ActWatch::exec()
  * Address:	800C3044
  * Size:	000064
  */
-void ActWatch::~ActWatch()
+ActWatch::~ActWatch()
 {
 /*
 .loc_0x0:

@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -25,7 +27,7 @@ void _Print(char *, ...)
  * Address:	8007B564
  * Size:	0000C8
  */
-void RadarInfo::RadarInfo()
+RadarInfo::RadarInfo()
 {
 /*
 .loc_0x0:

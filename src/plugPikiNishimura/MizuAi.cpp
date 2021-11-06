@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -25,7 +27,7 @@ void _Print(char *, ...)
  * Address:	8017B858
  * Size:	000080
  */
-void MizuAi::MizuAi(Mizu *)
+MizuAi::MizuAi(Mizu *)
 {
 /*
 .loc_0x0:
@@ -189,10 +191,6 @@ void MizuAi::initGeyzer(Mizu *)
  */
 void MizuAi::animationKeyUpdated(PaniAnimKeyEvent &)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*

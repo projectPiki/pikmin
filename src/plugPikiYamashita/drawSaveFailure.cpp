@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -25,7 +27,7 @@ void _Print(char *, ...)
  * Address:	801F3560
  * Size:	0000F4
  */
-void zen::DrawSaveFailure::DrawSaveFailure()
+zen::DrawSaveFailure::DrawSaveFailure()
 {
 /*
 .loc_0x0:

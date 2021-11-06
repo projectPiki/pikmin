@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -25,7 +27,7 @@ void _Print(char *, ...)
  * Address:	801CA2A8
  * Size:	000084
  */
-void TAIkabekuiASoundTable::TAIkabekuiASoundTable()
+TAIkabekuiASoundTable::TAIkabekuiASoundTable()
 {
 /*
 .loc_0x0:
@@ -76,7 +78,7 @@ void TAIkabekuiASoundTable::TAIkabekuiASoundTable()
  * Address:	801CA32C
  * Size:	00036C
  */
-void TAIkabekuiAParameters::TAIkabekuiAParameters()
+TAIkabekuiAParameters::TAIkabekuiAParameters()
 {
 /*
 .loc_0x0:
@@ -307,7 +309,7 @@ void TAIkabekuiAParameters::TAIkabekuiAParameters()
  * Address:	801CA698
  * Size:	000A84
  */
-void TAIkabekuiAStrategy::TAIkabekuiAStrategy()
+TAIkabekuiAStrategy::TAIkabekuiAStrategy()
 {
 /*
 .loc_0x0:

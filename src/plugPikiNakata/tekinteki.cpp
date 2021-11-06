@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -25,7 +27,7 @@ void _Print(char *, ...)
  * Address:	........
  * Size:	00000C
  */
-void TekiMessage::TekiMessage(int, NTeki *)
+TekiMessage::TekiMessage(int, NTeki *)
 {
 	// UNUSED FUNCTION
 }
@@ -35,7 +37,7 @@ void TekiMessage::TekiMessage(int, NTeki *)
  * Address:	8014B9F8
  * Size:	000114
  */
-void NTeki::NTeki()
+NTeki::NTeki()
 {
 /*
 .loc_0x0:

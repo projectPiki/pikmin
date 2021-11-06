@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -25,7 +27,7 @@ void _Print(char *, ...)
  * Address:	800474B8
  * Size:	0002F8
  */
-void DGXGraphics::DGXGraphics(bool)
+DGXGraphics::DGXGraphics(bool)
 {
 /*
 .loc_0x0:
@@ -1186,13 +1188,10 @@ void DGXGraphics::retraceProc(unsigned long)
  * Address:	8004828C
  * Size:	000008
  */
-void DGXGraphics::setCamera(Camera *)
+void DGXGraphics::setCamera(Camera * a1)
 {
-/*
-.loc_0x0:
-  stw       r4, 0x2E4(r3)
-  blr
-*/
+// Generated from stw r4, 0x2E4(r3)
+_2E4 = a1;
 }
 
 /*
@@ -2043,10 +2042,6 @@ void DGXGraphics::setViewportOffset(RectArea &)
  */
 void DGXGraphics::initReflectTex(bool)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -6536,7 +6531,7 @@ void DGXGraphics::directErase(RectArea &, bool)
  * Address:	8004C754
  * Size:	00003C
  */
-void Shape::Shape()
+Shape::Shape()
 {
 /*
 .loc_0x0:
@@ -6676,10 +6671,6 @@ void Shape::optimize()
  */
 void DGXGraphics::setPointSize(float)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -6689,10 +6680,6 @@ void DGXGraphics::setPointSize(float)
  */
 void DGXGraphics::setClippingPlane(bool, Plane *)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -6702,10 +6689,6 @@ void DGXGraphics::setClippingPlane(bool, Plane *)
  */
 void DGXGraphics::drawOutline(Camera &, Shape *)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -6715,10 +6698,6 @@ void DGXGraphics::drawOutline(Camera &, Shape *)
  */
 void DGXGraphics::drawOneStrip(Vector3f *, Vector3f *, Vector2f *, int)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*

@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -25,7 +27,7 @@ void _Print(char *, ...)
  * Address:	8019B804
  * Size:	000080
  */
-void GameStageClearSection::GameStageClearSection()
+GameStageClearSection::GameStageClearSection()
 {
 /*
 .loc_0x0:
@@ -71,8 +73,4 @@ void GameStageClearSection::GameStageClearSection()
  */
 void GameStageClearSection::init()
 {
-/*
-.loc_0x0:
-  blr
-*/
 }

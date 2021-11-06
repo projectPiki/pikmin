@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -25,7 +27,7 @@ void _Print(char *, ...)
  * Address:	800EECE8
  * Size:	00033C
  */
-void SluiceAI::SluiceAI()
+SluiceAI::SluiceAI()
 {
 /*
 .loc_0x0:
@@ -487,7 +489,7 @@ void SluiceAI::DamageInit::act(AICreature *)
  * Address:	800EF260
  * Size:	00050C
  */
-void PikiHeadAI::PikiHeadAI()
+PikiHeadAI::PikiHeadAI()
 {
 /*
 .loc_0x0:
@@ -1614,7 +1616,7 @@ void PikiHeadAI::Dead::act(AICreature *)
  * Address:	800EFFA4
  * Size:	000390
  */
-void BombAI::BombAI()
+BombAI::BombAI()
 {
 /*
 .loc_0x0:
@@ -3169,7 +3171,7 @@ void BombAI::DieExec::act(AICreature *)
  * Address:	800F13C0
  * Size:	0003E0
  */
-void GoalAI::GoalAI()
+GoalAI::GoalAI()
 {
 /*
 .loc_0x0:
@@ -3897,10 +3899,6 @@ void GoalAI::BootEmit::act(AICreature *)
  */
 void GoalAI::BootDone::act(AICreature *)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -4137,10 +4135,6 @@ void GoalAI::EmitPiki::act(AICreature *)
  */
 void GoalAI::EmitWait::act(AICreature *)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -4190,7 +4184,7 @@ void GoalAI::Effect::act(AICreature *)
  * Address:	........
  * Size:	0001AC
  */
-void GemAI::GemAI()
+GemAI::GemAI()
 {
 	// UNUSED FUNCTION
 }
@@ -4430,7 +4424,7 @@ void GemAI::Die::act(AICreature *)
  * Address:	800F2394
  * Size:	000254
  */
-void WaterAI::WaterAI()
+WaterAI::WaterAI()
 {
 /*
 .loc_0x0:
@@ -4651,7 +4645,7 @@ void WaterAI::Die::act(AICreature *)
  * Address:	800F2650
  * Size:	0001D8
  */
-void FallWaterAI::FallWaterAI()
+FallWaterAI::FallWaterAI()
 {
 /*
 .loc_0x0:

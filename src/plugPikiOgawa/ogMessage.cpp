@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -936,7 +938,7 @@ void zen::ogScrMessageMgr::MakeAndSetPageInfo(char ***)
  * Address:	8018C5A4
  * Size:	0002A4
  */
-void zen::ogScrMessageMgr::ogScrMessageMgr(char *)
+zen::ogScrMessageMgr::ogScrMessageMgr(char *)
 {
 /*
 .loc_0x0:

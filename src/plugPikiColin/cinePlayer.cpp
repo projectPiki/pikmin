@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -174,7 +176,7 @@ void CinematicPlayer::init(char *)
  * Address:	8006FBD8
  * Size:	0001B0
  */
-void CinematicPlayer::CinematicPlayer(char *)
+CinematicPlayer::CinematicPlayer(char *)
 {
 /*
 .loc_0x0:
@@ -296,7 +298,7 @@ void CinematicPlayer::CinematicPlayer(char *)
  * Address:	8006FD88
  * Size:	000130
  */
-void ActorInstance::ActorInstance()
+ActorInstance::ActorInstance()
 {
 /*
 .loc_0x0:
@@ -4153,7 +4155,7 @@ void ActorInstance::refresh(Matrix4f &, Graphics &, float *)
  * Address:	80073144
  * Size:	00001C
  */
-void Vector3f::Vector3f(const Vector3f &)
+Vector3f::Vector3f(const Vector3f &)
 {
 /*
 .loc_0x0:
@@ -4174,8 +4176,4 @@ void Vector3f::Vector3f(const Vector3f &)
  */
 void Creature::demoDraw(Graphics &, Matrix4f *)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }

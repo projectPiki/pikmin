@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -25,7 +27,7 @@ void _Print(char *, ...)
  * Address:	80044194
  * Size:	000070
  */
-void Texture::Texture()
+Texture::Texture()
 {
 /*
 .loc_0x0:
@@ -592,8 +594,4 @@ void Texture::decodeData(TexImg *)
  */
 void Texture::makeResident()
 {
-/*
-.loc_0x0:
-  blr
-*/
 }

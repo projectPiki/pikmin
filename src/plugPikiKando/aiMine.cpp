@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -25,7 +27,7 @@ void _Print(char *, ...)
  * Address:	800B92C0
  * Size:	000080
  */
-void ActMine::ActMine(Piki *)
+ActMine::ActMine(Piki *)
 {
 /*
 .loc_0x0:
@@ -471,10 +473,6 @@ void ActMine::exec()
  */
 void ActMine::cleanup()
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -550,7 +548,7 @@ void ActMine::animationKeyUpdated(PaniAnimKeyEvent &)
  * Address:	800B9844
  * Size:	000080
  */
-void ActMine::~ActMine()
+ActMine::~ActMine()
 {
 /*
 .loc_0x0:

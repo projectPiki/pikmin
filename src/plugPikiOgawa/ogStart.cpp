@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -25,7 +27,7 @@ void _Print(char *, ...)
  * Address:	80198988
  * Size:	0000F8
  */
-void zen::ogScrStartMgr::ogScrStartMgr()
+zen::ogScrStartMgr::ogScrStartMgr()
 {
 /*
 .loc_0x0:

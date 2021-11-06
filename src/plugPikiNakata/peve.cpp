@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -25,7 +27,7 @@ void _Print(char *, ...)
  * Address:	80125540
  * Size:	000010
  */
-void PeveCondition::PeveCondition()
+PeveCondition::PeveCondition()
 {
 /*
 .loc_0x0:
@@ -41,7 +43,7 @@ void PeveCondition::PeveCondition()
  * Address:	80125550
  * Size:	000048
  */
-void PeveEvent::PeveEvent(int)
+PeveEvent::PeveEvent(int)
 {
 /*
 .loc_0x0:
@@ -71,7 +73,7 @@ void PeveEvent::PeveEvent(int)
  * Address:	........
  * Size:	000054
  */
-void PeveParallelEvent::PeveParallelEvent(int)
+PeveParallelEvent::PeveParallelEvent(int)
 {
 	// UNUSED FUNCTION
 }
@@ -234,7 +236,7 @@ void PeveParallelEvent::isFinished()
  * Address:	8012571C
  * Size:	000054
  */
-void PeveSerialEvent::PeveSerialEvent(int)
+PeveSerialEvent::PeveSerialEvent(int)
 {
 /*
 .loc_0x0:
@@ -429,7 +431,7 @@ void PeveSerialEvent::isFinished()
  * Address:	........
  * Size:	000050
  */
-void PeveCameraViewpointIO::PeveCameraViewpointIO()
+PeveCameraViewpointIO::PeveCameraViewpointIO()
 {
 	// UNUSED FUNCTION
 }
@@ -449,7 +451,7 @@ void PeveCameraViewpointIO::construct(PcamCamera *)
  * Address:	........
  * Size:	000050
  */
-void PeveCameraWatchpointIO::PeveCameraWatchpointIO()
+PeveCameraWatchpointIO::PeveCameraWatchpointIO()
 {
 	// UNUSED FUNCTION
 }
@@ -469,7 +471,7 @@ void PeveCameraWatchpointIO::construct(PcamCamera *)
  * Address:	80125918
  * Size:	000050
  */
-void PeveCameraPostureIO::PeveCameraPostureIO()
+PeveCameraPostureIO::PeveCameraPostureIO()
 {
 /*
 .loc_0x0:
@@ -503,13 +505,10 @@ void PeveCameraPostureIO::PeveCameraPostureIO()
  * Address:	80125968
  * Size:	000008
  */
-void PeveCameraPostureIO::construct(PcamCamera *)
+void PeveCameraPostureIO::construct(PcamCamera * a1)
 {
-/*
-.loc_0x0:
-  stw       r4, 0x4(r3)
-  blr
-*/
+// Generated from stw r4, 0x4(r3)
+_04 = a1;
 }
 
 /*
@@ -517,7 +516,7 @@ void PeveCameraPostureIO::construct(PcamCamera *)
  * Address:	........
  * Size:	000050
  */
-void PeveCreaturePositionIO::PeveCreaturePositionIO()
+PeveCreaturePositionIO::PeveCreaturePositionIO()
 {
 	// UNUSED FUNCTION
 }
@@ -537,7 +536,7 @@ void PeveCreaturePositionIO::construct(Creature *)
  * Address:	80125970
  * Size:	000060
  */
-void PeveClampVector3fIO::PeveClampVector3fIO()
+PeveClampVector3fIO::PeveClampVector3fIO()
 {
 /*
 .loc_0x0:

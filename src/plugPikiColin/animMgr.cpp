@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -120,7 +122,7 @@ void AnimInfo::checkAnimData()
  * Address:	80050100
  * Size:	00027C
  */
-void AnimInfo::AnimInfo(AnimMgr *, AnimData *)
+AnimInfo::AnimInfo(AnimMgr *, AnimData *)
 {
 /*
 .loc_0x0:
@@ -745,7 +747,7 @@ void AnimInfo::doread(RandomAccessStream &, int)
  * Address:	800507F4
  * Size:	000020
  */
-void AnimKey::AnimKey()
+AnimKey::AnimKey()
 {
 /*
 .loc_0x0:
@@ -827,7 +829,7 @@ void AnimInfo::addKeyFrame()
  * Address:	800508A4
  * Size:	000234
  */
-void AnimMgr::AnimMgr(Shape *, char *, int, char *)
+AnimMgr::AnimMgr(Shape *, char *, int, char *)
 {
 /*
 .loc_0x0:
@@ -1593,10 +1595,6 @@ void Animator::startAnim(int, int, int, int)
  */
 void Animator::finishLoop()
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -1854,13 +1852,10 @@ void Animator::animate(float)
  * Address:	80051458
  * Size:	000008
  */
-void Animator::changeContext(AnimContext *)
+void Animator::changeContext(AnimContext * a1)
 {
-/*
-.loc_0x0:
-  stw       r4, 0x4(r3)
-  blr
-*/
+// Generated from stw r4, 0x4(r3)
+_04 = a1;
 }
 
 /*
@@ -1868,13 +1863,9 @@ void Animator::changeContext(AnimContext *)
  * Address:	80051460
  * Size:	000008
  */
-void Parm<String>::size()
+u32  Parm<String>::size()
 {
-/*
-.loc_0x0:
-  li        r3, 0x8
-  blr
-*/
+	return 0x8;
 }
 
 /*
@@ -1882,13 +1873,9 @@ void Parm<String>::size()
  * Address:	80051468
  * Size:	000008
  */
-void Parm<float>::size()
+u32  Parm<float>::size()
 {
-/*
-.loc_0x0:
-  li        r3, 0x4
-  blr
-*/
+	return 0x4;
 }
 
 /*
@@ -1896,11 +1883,7 @@ void Parm<float>::size()
  * Address:	80051470
  * Size:	000008
  */
-void Parm<int>::size()
+u32  Parm<int>::size()
 {
-/*
-.loc_0x0:
-  li        r3, 0x4
-  blr
-*/
+	return 0x4;
 }

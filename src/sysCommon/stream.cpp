@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -459,10 +461,6 @@ void Stream::vPrintf(char *, std::@class$1stream_cpp *)
  */
 void Stream::read(void *, int)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -472,10 +470,6 @@ void Stream::read(void *, int)
  */
 void Stream::write(void *, int)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -483,13 +477,9 @@ void Stream::write(void *, int)
  * Address:	800254E0
  * Size:	000008
  */
-void Stream::getPending()
+u32  Stream::getPending()
 {
-/*
-.loc_0x0:
-  li        r3, 0
-  blr
-*/
+	return 0x0;
 }
 
 /*
@@ -497,13 +487,9 @@ void Stream::getPending()
  * Address:	800254E8
  * Size:	000008
  */
-void Stream::getAvailable()
+u32  Stream::getAvailable()
 {
-/*
-.loc_0x0:
-  li        r3, 0
-  blr
-*/
+	return 0x0;
 }
 
 /*
@@ -513,10 +499,6 @@ void Stream::getAvailable()
  */
 void Stream::close()
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -536,10 +518,6 @@ void RandomAccessStream::writeTo(int, void *, int)
  */
 void RandomAccessStream::setPosition(int)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -577,11 +555,7 @@ void RandomAccessStream::readIntFrom(int)
  * Address:	800254F8
  * Size:	000008
  */
-void Stream::getClosing()
+u32  Stream::getClosing()
 {
-/*
-.loc_0x0:
-  li        r3, 0
-  blr
-*/
+	return 0x0;
 }

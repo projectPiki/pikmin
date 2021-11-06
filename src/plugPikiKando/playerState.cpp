@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -25,7 +27,7 @@ void _Print(char *, ...)
  * Address:	........
  * Size:	000014
  */
-void TimeGraph::TimeGraph()
+TimeGraph::TimeGraph()
 {
 	// UNUSED FUNCTION
 }
@@ -395,7 +397,7 @@ void PlayerState::initGame()
  * Address:	8007F778
  * Size:	000330
  */
-void PlayerState::PlayerState()
+PlayerState::PlayerState()
 {
 /*
 .loc_0x0:
@@ -662,7 +664,7 @@ void TimeGraph::PikiNum::set(int, int)
  * Address:	8007FAD4
  * Size:	000070
  */
-void PlayerState::UfoParts::UfoParts()
+PlayerState::UfoParts::UfoParts()
 {
 /*
 .loc_0x0:
@@ -2168,13 +2170,9 @@ void PlayerState::getCurrDay()
  * Address:	80080BC4
  * Size:	000008
  */
-void PlayerState::getTotalDays()
+u32  PlayerState::getTotalDays()
 {
-/*
-.loc_0x0:
-  li        r3, 0x1E
-  blr
-*/
+	return 0x1E;
 }
 
 /*

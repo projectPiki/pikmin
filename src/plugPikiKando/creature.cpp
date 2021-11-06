@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -815,7 +817,7 @@ void Creature::getStandType()
  * Address:	8008A7F8
  * Size:	00005C
  */
-void SearchData::SearchData()
+SearchData::SearchData()
 {
 /*
 .loc_0x0:
@@ -1471,7 +1473,7 @@ void Creature::kill(bool)
  * Address:	8008AED8
  * Size:	0002C0
  */
-void Creature::Creature(CreatureProp *)
+Creature::Creature(CreatureProp *)
 {
 /*
 .loc_0x0:
@@ -3058,13 +3060,9 @@ void Creature::getCatchPos(Creature *)
  * Address:	8008C3C4
  * Size:	000008
  */
-void Creature::needShadow()
+u32  Creature::needShadow()
 {
-/*
-.loc_0x0:
-  li        r3, 0x1
-  blr
-*/
+	return 0x1;
 }
 
 /*
@@ -4338,13 +4336,9 @@ void Creature::moveVelocity()
  * Address:	8008D53C
  * Size:	000008
  */
-void Creature::getAvoid(Vector3f &, Vector3f &)
+u32  Creature::getAvoid(Vector3f &, Vector3f &)
 {
-/*
-.loc_0x0:
-  li        r3, 0
-  blr
-*/
+	return 0x0;
 }
 
 /*

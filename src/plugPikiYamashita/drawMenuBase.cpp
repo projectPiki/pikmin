@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -25,7 +27,7 @@ void _Print(char *, ...)
  * Address:	801F014C
  * Size:	000438
  */
-void zen::DrawMenuBase::DrawMenuBase(char *, bool, bool)
+zen::DrawMenuBase::DrawMenuBase(char *, bool, bool)
 {
 /*
 .loc_0x0:
@@ -528,13 +530,9 @@ void zen::DrawMenuBase::start()
  * Address:	801F07E8
  * Size:	000008
  */
-void zen::DrawMenuBase::modeSleep(Controller *)
+u32  zen::DrawMenuBase::modeSleep(Controller *)
 {
-/*
-.loc_0x0:
-  li        r3, 0
-  blr
-*/
+	return 0x0;
 }
 
 /*

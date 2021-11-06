@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -324,10 +326,6 @@ void ObjectMgr::update()
  */
 void ObjectMgr::store()
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -1236,7 +1234,7 @@ void ObjectMgr::drawShadow(Graphics &, Texture *)
  * Address:	800E104C
  * Size:	0000A4
  */
-void MonoObjectMgr::MonoObjectMgr()
+MonoObjectMgr::MonoObjectMgr()
 {
 /*
 .loc_0x0:
@@ -2426,7 +2424,7 @@ void MonoObjectMgr::searchSelf()
  * Address:	800E1D44
  * Size:	000260
  */
-void PolyObjectMgr::PolyObjectMgr(int)
+PolyObjectMgr::PolyObjectMgr(int)
 {
 /*
 .loc_0x0:
@@ -2917,10 +2915,6 @@ void PolyObjectMgr::drawShadow(Graphics &, Texture *)
  */
 void PolyObjectMgr::beginRegister()
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -3994,13 +3988,9 @@ void CreatureNodeMgr::getCreature(int)
  * Address:	800E2E44
  * Size:	000008
  */
-void CreatureNodeMgr::getFirst()
+u32  CreatureNodeMgr::getFirst()
 {
-/*
-.loc_0x0:
-  li        r3, 0
-  blr
-*/
+	return 0x0;
 }
 
 /*
@@ -4076,7 +4066,7 @@ void CreatureNodeMgr::getSize()
  * Address:	800E2EBC
  * Size:	00006C
  */
-void CreatureNodeMgr::~CreatureNodeMgr()
+CreatureNodeMgr::~CreatureNodeMgr()
 {
 /*
 .loc_0x0:
@@ -4133,7 +4123,7 @@ void CreatureNodeMgr::getMax()
  * Address:	800E2F30
  * Size:	00006C
  */
-void PolyObjectMgr::~PolyObjectMgr()
+PolyObjectMgr::~PolyObjectMgr()
 {
 /*
 .loc_0x0:

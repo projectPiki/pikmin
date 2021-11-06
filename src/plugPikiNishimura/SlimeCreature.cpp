@@ -25,7 +25,7 @@ void _Print(char *, ...)
  * Address:	8016B278
  * Size:	000078
  */
-void SlimeCreature::SlimeCreature(CreatureProp *)
+SlimeCreature::SlimeCreature(CreatureProp *)
 {
 /*
 .loc_0x0:
@@ -251,10 +251,6 @@ void SlimeCreature::ignoreAtari(Creature *)
  */
 void SlimeCreature::doAI()
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -264,10 +260,6 @@ void SlimeCreature::doAI()
  */
 void SlimeCreature::doAnimation()
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -309,10 +301,6 @@ void SlimeCreature::update()
 void SlimeCreature::refresh(Graphics &)
 {
 	return;
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -323,10 +311,6 @@ void SlimeCreature::refresh(Graphics &)
 void SlimeCreature::setCentre(Vector3f &)
 {
 	return;
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -337,9 +321,5 @@ void SlimeCreature::setCentre(Vector3f &)
 BOOL SlimeCreature::isFixed()
 {
 	return TRUE;
-/*
-.loc_0x0:
-  li        r3, 0x1
-  blr
-*/
+	return 0x1;
 }

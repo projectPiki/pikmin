@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -25,7 +27,7 @@ void _Print(char *, ...)
  * Address:	800B4570
  * Size:	0000A4
  */
-void ActKinoko::ActKinoko(Piki *)
+ActKinoko::ActKinoko(Piki *)
 {
 /*
 .loc_0x0:
@@ -351,12 +353,8 @@ void ActKinoko::exeJump()
  */
 void ActKinoko::initAttack()
 {
-/*
-.loc_0x0:
-  li        r0, 0x1
-  stw       r0, 0x1C(r3)
-  blr
-*/
+// Generated from stw r0, 0x1C(r3)
+_1C = 1;
 }
 
 /*
@@ -1339,10 +1337,6 @@ void ActKinoko::animationKeyUpdated(PaniAnimKeyEvent &)
  */
 void ActKinoko::cleanup()
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -1350,7 +1344,7 @@ void ActKinoko::cleanup()
  * Address:	800B55F4
  * Size:	000080
  */
-void ActKinoko::~ActKinoko()
+ActKinoko::~ActKinoko()
 {
 /*
 .loc_0x0:

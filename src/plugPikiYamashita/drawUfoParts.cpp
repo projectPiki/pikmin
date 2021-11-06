@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -5,7 +7,7 @@
  * Address:	801F1D60
  * Size:	0000EC
  */
-void zen::DrawUfoParts::DrawUfoParts()
+zen::DrawUfoParts::DrawUfoParts()
 {
 /*
 .loc_0x0:

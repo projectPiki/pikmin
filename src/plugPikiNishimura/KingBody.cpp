@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -664,7 +666,7 @@ void KingBody::killCallBackEffect(bool)
  * Address:	801735E8
  * Size:	00023C
  */
-void KingBody::KingBody(King *)
+KingBody::KingBody(King *)
 {
 /*
 .loc_0x0:
@@ -827,7 +829,7 @@ void KingBody::KingBody(King *)
  * Address:	80173824
  * Size:	00001C
  */
-void KingGenRippleCallBack::KingGenRippleCallBack()
+KingGenRippleCallBack::KingGenRippleCallBack()
 {
 /*
 .loc_0x0:
@@ -846,7 +848,7 @@ void KingGenRippleCallBack::KingGenRippleCallBack()
  * Address:	80173840
  * Size:	00001C
  */
-void KingGenSalivaCallBack::KingGenSalivaCallBack()
+KingGenSalivaCallBack::KingGenSalivaCallBack()
 {
 /*
 .loc_0x0:

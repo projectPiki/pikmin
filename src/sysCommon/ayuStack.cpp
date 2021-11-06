@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -301,7 +303,7 @@ void AyuHeap::init(char *, int, void *, int)
  * Address:	8002497C
  * Size:	000068
  */
-void AyuCache::AyuCache(unsigned long)
+AyuCache::AyuCache(unsigned long)
 {
 /*
 .loc_0x0:

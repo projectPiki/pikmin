@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -25,7 +27,7 @@ void _Print(char *, ...)
  * Address:	8019399C
  * Size:	000360
  */
-void zen::ogScrMakeDefaultMgr::ogScrMakeDefaultMgr()
+zen::ogScrMakeDefaultMgr::ogScrMakeDefaultMgr()
 {
 /*
 .loc_0x0:

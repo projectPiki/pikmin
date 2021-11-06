@@ -1,3 +1,5 @@
+#include "types.h"
+
 #include "timers.h"
 
 /*
@@ -63,10 +65,6 @@ void Timers::newFrame()
 void Timers::_start(char *, bool)
 {
   return;
-  /*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -77,10 +75,6 @@ void Timers::_start(char *, bool)
 void Timers::_stop(char *)
 {
   return;
-  /*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -101,8 +95,4 @@ void Timers::showTimes()
 void Timers::draw(Graphics &, Font *)
 {
   return;
-  /*
-.loc_0x0:
-  blr
-*/
 }

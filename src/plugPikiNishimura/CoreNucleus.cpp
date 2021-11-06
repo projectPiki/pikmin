@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -25,7 +27,7 @@ void _Print(char *, ...)
  * Address:	8017A954
  * Size:	000090
  */
-void CoreNucleusProp::CoreNucleusProp()
+CoreNucleusProp::CoreNucleusProp()
 {
 /*
 .loc_0x0:
@@ -73,7 +75,7 @@ void CoreNucleusProp::CoreNucleusProp()
  * Address:	8017A9E4
  * Size:	000084
  */
-void CoreNucleus::CoreNucleus(CreatureProp *)
+CoreNucleus::CoreNucleus(CreatureProp *)
 {
 /*
 .loc_0x0:
@@ -200,10 +202,6 @@ void CoreNucleus::doKill()
  */
 void CoreNucleus::exitCourse()
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*

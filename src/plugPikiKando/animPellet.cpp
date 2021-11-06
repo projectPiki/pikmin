@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -25,7 +27,7 @@ void _Print(char *, ...)
  * Address:	80099548
  * Size:	000180
  */
-void PelletAnimInfo::PelletAnimInfo()
+PelletAnimInfo::PelletAnimInfo()
 {
 /*
 .loc_0x0:
@@ -252,7 +254,7 @@ void PelletAnimInfo::read(RandomAccessStream &)
  * Address:	8009982C
  * Size:	000140
  */
-void PelletShapeObject::PelletShapeObject(char *, Shape *, char *, char *, int)
+PelletShapeObject::PelletShapeObject(char *, Shape *, char *, char *, int)
 {
 /*
 .loc_0x0:
@@ -354,7 +356,7 @@ void PelletShapeObject::PelletShapeObject(char *, Shape *, char *, char *, int)
  * Address:	8009996C
  * Size:	000038
  */
-void PelletAnimator::PelletAnimator()
+PelletAnimator::PelletAnimator()
 {
 /*
 .loc_0x0:
@@ -715,7 +717,7 @@ void PaniPelletAnimator::createMotionTable()
  * Address:	80099CD8
  * Size:	00003C
  */
-void PaniPelletAnimator::PaniPelletAnimator()
+PaniPelletAnimator::PaniPelletAnimator()
 {
 /*
 .loc_0x0:

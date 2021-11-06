@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -25,7 +27,7 @@ void _Print(char *, ...)
  * Address:	80197F28
  * Size:	0000C4
  */
-void zen::ogGraphMgr::ogGraphMgr(P2DScreen *)
+zen::ogGraphMgr::ogGraphMgr(P2DScreen *)
 {
 /*
 .loc_0x0:

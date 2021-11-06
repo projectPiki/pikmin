@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -78,7 +80,7 @@ void PelletMgr::getUfoIDFromIndex(int)
  * Address:	80094B70
  * Size:	000390
  */
-void PelletConfig::PelletConfig()
+PelletConfig::PelletConfig()
 {
 /*
 .loc_0x0:
@@ -491,7 +493,7 @@ void PelletView::becomePellet(unsigned long, Vector3f &, float)
  * Address:	8009513C
  * Size:	000270
  */
-void Pellet::Pellet()
+Pellet::Pellet()
 {
 /*
 .loc_0x0:
@@ -1469,10 +1471,6 @@ void StateMachine<Pellet>::transit(Pellet *, int)
  */
 void AState<Pellet>::init(Pellet *)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -1482,10 +1480,6 @@ void AState<Pellet>::init(Pellet *)
  */
 void AState<Pellet>::cleanup(Pellet *)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -2777,10 +2771,6 @@ void Pellet::startCarryMotion(float)
  */
 void PelletView::viewStartTrembleMotion(float)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -2800,10 +2790,6 @@ void Pellet::stopMotion()
  */
 void PelletView::viewSetMotionSpeed(float)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -2854,10 +2840,6 @@ void Pellet::finishMotion()
  */
 void PelletView::viewFinishMotion()
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -3553,10 +3535,6 @@ void Pellet::doAnimation()
  */
 void PelletView::viewDoAnimation()
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -4410,10 +4388,6 @@ void StateMachine<Pellet>::exec(Pellet *)
  */
 void AState<Pellet>::exec(Pellet *)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -5377,7 +5351,7 @@ void PelletMgr::createObject()
  * Address:	800987EC
  * Size:	000254
  */
-void PelletMgr::PelletMgr(MapMgr *)
+PelletMgr::PelletMgr(MapMgr *)
 {
 /*
 .loc_0x0:
@@ -5576,7 +5550,7 @@ void Parm<float>::Parm(Parameters *, float, float, float, ayuID, char *)
  * Address:	80098A98
  * Size:	00006C
  */
-void MonoObjectMgr::~MonoObjectMgr()
+MonoObjectMgr::~MonoObjectMgr()
 {
 /*
 .loc_0x0:
@@ -6394,10 +6368,6 @@ void PelletMgr::refresh(Graphics &)
  */
 void PelletMgr::refresh2d(Graphics &)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -6405,7 +6375,7 @@ void PelletMgr::refresh2d(Graphics &)
  * Address:	800992DC
  * Size:	000084
  */
-void PelletMgr::~PelletMgr()
+PelletMgr::~PelletMgr()
 {
 /*
 .loc_0x0:
@@ -6482,13 +6452,9 @@ void MonoObjectMgr::getMax()
  * Address:	80099370
  * Size:	000008
  */
-void KEffect::invoke(zen::particleGenerator *)
+u32  KEffect::invoke(zen::particleGenerator *)
 {
-/*
-.loc_0x0:
-  li        r3, 0
-  blr
-*/
+	return 0x0;
 }
 
 /*
@@ -6498,10 +6464,6 @@ void KEffect::invoke(zen::particleGenerator *)
  */
 void KEffect::kill()
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -6511,10 +6473,6 @@ void KEffect::kill()
  */
 void KEffect::stop()
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -6524,10 +6482,6 @@ void KEffect::stop()
  */
 void KEffect::restart()
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -6535,13 +6489,9 @@ void KEffect::restart()
  * Address:	80099384
  * Size:	000008
  */
-void KEffect::invoke(zen::particleGenerator *, zen::particleMdl *)
+u32  KEffect::invoke(zen::particleGenerator *, zen::particleMdl *)
 {
-/*
-.loc_0x0:
-  li        r3, 0
-  blr
-*/
+	return 0x0;
 }
 
 /*
@@ -6549,13 +6499,9 @@ void KEffect::invoke(zen::particleGenerator *, zen::particleMdl *)
  * Address:	8009938C
  * Size:	000008
  */
-void KEffect::invoke(zen::particleMdl *)
+u32  KEffect::invoke(zen::particleMdl *)
 {
-/*
-.loc_0x0:
-  li        r3, 0
-  blr
-*/
+	return 0x0;
 }
 
 /*
@@ -6565,10 +6511,6 @@ void KEffect::invoke(zen::particleMdl *)
  */
 void StateMachine<Pellet>::init(Pellet *)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -6691,10 +6633,6 @@ void Receiver<Pellet>::procMsg(Pellet *, Msg *)
  */
 void Receiver<Pellet>::procGroundMsg(Pellet *, MsgGround *)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -6704,10 +6642,6 @@ void Receiver<Pellet>::procGroundMsg(Pellet *, MsgGround *)
  */
 void Receiver<Pellet>::procUserMsg(Pellet *, MsgUser *)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -6717,10 +6651,6 @@ void Receiver<Pellet>::procUserMsg(Pellet *, MsgUser *)
  */
 void Receiver<Pellet>::procOffWallMsg(Pellet *, MsgOffWall *)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -6730,10 +6660,6 @@ void Receiver<Pellet>::procOffWallMsg(Pellet *, MsgOffWall *)
  */
 void Receiver<Pellet>::procWallMsg(Pellet *, MsgWall *)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -6743,10 +6669,6 @@ void Receiver<Pellet>::procWallMsg(Pellet *, MsgWall *)
  */
 void Receiver<Pellet>::procDamageMsg(Pellet *, MsgDamage *)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -6756,10 +6678,6 @@ void Receiver<Pellet>::procDamageMsg(Pellet *, MsgDamage *)
  */
 void Receiver<Pellet>::procAnimMsg(Pellet *, MsgAnim *)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -6769,10 +6687,6 @@ void Receiver<Pellet>::procAnimMsg(Pellet *, MsgAnim *)
  */
 void Receiver<Pellet>::procCollideMsg(Pellet *, MsgCollide *)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -6782,10 +6696,6 @@ void Receiver<Pellet>::procCollideMsg(Pellet *, MsgCollide *)
  */
 void Receiver<Pellet>::procTargetMsg(Pellet *, MsgTarget *)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -6795,10 +6705,6 @@ void Receiver<Pellet>::procTargetMsg(Pellet *, MsgTarget *)
  */
 void Receiver<Pellet>::procHangMsg(Pellet *, MsgHang *)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -6808,10 +6714,6 @@ void Receiver<Pellet>::procHangMsg(Pellet *, MsgHang *)
  */
 void Receiver<Pellet>::procStickMsg(Pellet *, MsgStick *)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -6821,10 +6723,6 @@ void Receiver<Pellet>::procStickMsg(Pellet *, MsgStick *)
  */
 void Receiver<Pellet>::procBounceMsg(Pellet *, MsgBounce *)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*

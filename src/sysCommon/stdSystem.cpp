@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -49,7 +51,7 @@ void AnmobjInfo::detach()
  * Address:	8003EE64
  * Size:	000144
  */
-void StdSystem::StdSystem()
+StdSystem::StdSystem()
 {
 /*
 .loc_0x0:
@@ -142,7 +144,7 @@ void StdSystem::StdSystem()
  * Address:	8003EFA8
  * Size:	00000C
  */
-void AyuHeap::AyuHeap()
+AyuHeap::AyuHeap()
 {
 /*
 .loc_0x0:
@@ -195,12 +197,8 @@ void StdSystem::onceInit()
  * Address:	8003F01C
  * Size:	000004
  */
-void Matrix4f::Matrix4f()
+Matrix4f::Matrix4f()
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -431,13 +429,9 @@ void StdSystem::loadTexture(char *, bool)
  * Address:	8003F1FC
  * Size:	000008
  */
-void StdSystem::openFile(char *, bool, bool)
+u32  StdSystem::openFile(char *, bool, bool)
 {
-/*
-.loc_0x0:
-  li        r3, 0
-  blr
-*/
+	return 0x0;
 }
 
 /*
@@ -1251,7 +1245,7 @@ void StdSystem::initLFlares(int)
  * Address:	8003FA4C
  * Size:	00001C
  */
-void LFInfo::LFInfo()
+LFInfo::LFInfo()
 {
 /*
 .loc_0x0:
@@ -1272,12 +1266,8 @@ void LFInfo::LFInfo()
  */
 void StdSystem::resetLFlares()
 {
-/*
-.loc_0x0:
-  li        r0, 0
-  stw       r0, 0x22C(r3)
-  blr
-*/
+// Generated from stw r0, 0x22C(r3)
+_22C = 0;
 }
 
 /*
@@ -1961,10 +1951,6 @@ void StdSystem::loadBundle(char *, bool)
  */
 void StdSystem::copyWaitUntilDone()
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -1972,13 +1958,9 @@ void StdSystem::copyWaitUntilDone()
  * Address:	80040338
  * Size:	000008
  */
-void StdSystem::copyRamToCache(unsigned long, unsigned long, unsigned long)
+u32  StdSystem::copyRamToCache(unsigned long, unsigned long, unsigned long)
 {
-/*
-.loc_0x0:
-  li        r3, 0
-  blr
-*/
+	return 0x0;
 }
 
 /*
@@ -2194,10 +2176,6 @@ void TextureCacher::cacheTexture(CacheTexture *)
  */
 void StdSystem::copyCacheToRam(unsigned long, unsigned long, unsigned long)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -2207,10 +2185,6 @@ void StdSystem::copyCacheToRam(unsigned long, unsigned long, unsigned long)
  */
 void StdSystem::copyCacheToTexture(CacheTexture *)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -2220,10 +2194,6 @@ void StdSystem::copyCacheToTexture(CacheTexture *)
  */
 void StdSystem::Activate(bool)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -2233,10 +2203,6 @@ void StdSystem::Activate(bool)
  */
 void StdSystem::parseArchiveDirectory(char *, char *)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -2246,10 +2212,6 @@ void StdSystem::parseArchiveDirectory(char *, char *)
  */
 void StdSystem::startLoading(LoadIdler *, bool, unsigned long)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -2259,10 +2221,6 @@ void StdSystem::startLoading(LoadIdler *, bool, unsigned long)
  */
 void StdSystem::endLoading()
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -2296,10 +2254,6 @@ void TexobjInfo::attach()
  */
 void GfxObject::attach()
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -2333,8 +2287,4 @@ void TexobjInfo::detach()
  */
 void GfxObject::detach()
 {
-/*
-.loc_0x0:
-  blr
-*/
 }

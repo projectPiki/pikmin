@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -495,7 +497,7 @@ void GrassGen::resolve()
  * Address:	800E4BD4
  * Size:	0000A0
  */
-void RockGen::RockGen(Shape *, CreatureProp *)
+RockGen::RockGen(Shape *, CreatureProp *)
 {
 /*
 .loc_0x0:
@@ -726,7 +728,7 @@ void RockGen::create(int, float, int)
  * Address:	800E4EF8
  * Size:	000014
  */
-void Pebble::Pebble()
+Pebble::Pebble()
 {
 /*
 .loc_0x0:
@@ -1124,7 +1126,7 @@ void RockGen::getRandomPebble()
  * Address:	800E52E8
  * Size:	0000A0
  */
-void GrassGen::GrassGen(Shape *, CreatureProp *)
+GrassGen::GrassGen(Shape *, CreatureProp *)
 {
 /*
 .loc_0x0:
@@ -1339,7 +1341,7 @@ void GrassGen::create(int, float, int)
  * Address:	800E55CC
  * Size:	000014
  */
-void Grass::Grass()
+Grass::Grass()
 {
 /*
 .loc_0x0:
@@ -1646,7 +1648,7 @@ void GrassGen::getRandomGrass()
  * Address:	........
  * Size:	000078
  */
-void WeedsGen::WeedsGen(Shape *, CreatureProp *)
+WeedsGen::WeedsGen(Shape *, CreatureProp *)
 {
 	// UNUSED FUNCTION
 }
@@ -1658,10 +1660,6 @@ void WeedsGen::WeedsGen(Shape *, CreatureProp *)
  */
 void WeedsGen::update()
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -1671,10 +1669,6 @@ void WeedsGen::update()
  */
 void WeedsGen::refresh(Graphics &)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -1815,7 +1809,7 @@ void WeedsGen::startAI(int)
  * Address:	........
  * Size:	000064
  */
-void Weed::Weed()
+Weed::Weed()
 {
 	// UNUSED FUNCTION
 }
@@ -2067,13 +2061,9 @@ void Weed::isVisible()
  * Address:	800E5D6C
  * Size:	000008
  */
-void Weed::isAlive()
+u32  Weed::isAlive()
 {
-/*
-.loc_0x0:
-  li        r3, 0x1
-  blr
-*/
+	return 0x1;
 }
 
 /*
@@ -2098,13 +2088,9 @@ void Weed::isAtari()
  * Address:	800E5D88
  * Size:	000008
  */
-void Weed::needFlick(Creature *)
+u32  Weed::needFlick(Creature *)
 {
-/*
-.loc_0x0:
-  li        r3, 0
-  blr
-*/
+	return 0x0;
 }
 
 /*
@@ -2129,13 +2115,9 @@ void GrassGen::isAlive()
  * Address:	800E5DA4
  * Size:	000008
  */
-void GrassGen::isVisible()
+u32  GrassGen::isVisible()
 {
-/*
-.loc_0x0:
-  li        r3, 0x1
-  blr
-*/
+	return 0x1;
 }
 
 /*
@@ -2143,13 +2125,9 @@ void GrassGen::isVisible()
  * Address:	800E5DAC
  * Size:	000008
  */
-void GrassGen::needFlick(Creature *)
+u32  GrassGen::needFlick(Creature *)
 {
-/*
-.loc_0x0:
-  li        r3, 0
-  blr
-*/
+	return 0x0;
 }
 
 /*
@@ -2174,13 +2152,9 @@ void RockGen::isAlive()
  * Address:	800E5DC8
  * Size:	000008
  */
-void RockGen::isVisible()
+u32  RockGen::isVisible()
 {
-/*
-.loc_0x0:
-  li        r3, 0x1
-  blr
-*/
+	return 0x1;
 }
 
 /*
@@ -2188,11 +2162,7 @@ void RockGen::isVisible()
  * Address:	800E5DD0
  * Size:	000008
  */
-void RockGen::needFlick(Creature *)
+u32  RockGen::needFlick(Creature *)
 {
-/*
-.loc_0x0:
-  li        r3, 0
-  blr
-*/
+	return 0x0;
 }

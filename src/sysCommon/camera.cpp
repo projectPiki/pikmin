@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -2033,7 +2035,7 @@ void Camera::projectCamPoint(Vector3f &)
  * Address:	800431C4
  * Size:	000150
  */
-void Camera::Camera()
+Camera::Camera()
 {
 /*
 .loc_0x0:

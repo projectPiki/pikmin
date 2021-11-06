@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -78,7 +80,7 @@ void MapParts::applyVelocity(Plane &, Vector3f &, Vector3f &)
  * Address:	8011851C
  * Size:	000078
  */
-void MapEntity::MapEntity(Shape *)
+MapEntity::MapEntity(Shape *)
 {
 /*
 .loc_0x0:
@@ -196,7 +198,7 @@ void MapEntity::update()
  * Address:	80118694
  * Size:	0000D0
  */
-void MapSlider::MapSlider(Shape *, int, int, float, float, float, int)
+MapSlider::MapSlider(Shape *, int, int, float, float, float, int)
 {
 /*
 .loc_0x0:
@@ -694,10 +696,6 @@ void MapSlider::refresh(Graphics &)
  */
 void MapParts::read(RandomAccessStream &)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -707,8 +705,4 @@ void MapParts::read(RandomAccessStream &)
  */
 void MapParts::update()
 {
-/*
-.loc_0x0:
-  blr
-*/
 }

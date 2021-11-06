@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -25,7 +27,7 @@ void _Print(char *, ...)
  * Address:	........
  * Size:	000060
  */
-void GenObjectNavi::GenObjectNavi()
+GenObjectNavi::GenObjectNavi()
 {
 	// UNUSED FUNCTION
 }
@@ -126,10 +128,6 @@ void GenObjectNavi::initialise()
  */
 void GenObjectNavi::doRead(RandomAccessStream &)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*

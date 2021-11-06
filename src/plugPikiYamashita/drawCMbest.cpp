@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -202,13 +204,9 @@ void zen::DrawCMBpicObj::modeAppear()
  * Address:	801EE50C
  * Size:	000008
  */
-void zen::DrawCMBpicObj::modeSleep()
+u32  zen::DrawCMBpicObj::modeSleep()
 {
-/*
-.loc_0x0:
-  li        r3, 0
-  blr
-*/
+	return 0x0;
 }
 
 /*
@@ -375,7 +373,7 @@ void zen::DrawCMbest::init(P2DScreen *)
  * Address:	801EE738
  * Size:	000040
  */
-void zen::DrawCMBpicObj::DrawCMBpicObj()
+zen::DrawCMBpicObj::DrawCMBpicObj()
 {
 /*
 .loc_0x0:
@@ -513,13 +511,9 @@ void zen::DrawCMbest::wait()
  * Address:	801EE860
  * Size:	000008
  */
-void zen::DrawCMbest::modeSleep()
+u32  zen::DrawCMbest::modeSleep()
 {
-/*
-.loc_0x0:
-  li        r3, 0
-  blr
-*/
+	return 0x0;
 }
 
 /*
@@ -527,13 +521,9 @@ void zen::DrawCMbest::modeSleep()
  * Address:	801EE868
  * Size:	000008
  */
-void zen::DrawCMbest::modeWait()
+u32  zen::DrawCMbest::modeWait()
 {
-/*
-.loc_0x0:
-  li        r3, 0
-  blr
-*/
+	return 0x0;
 }
 
 /*

@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -25,7 +27,7 @@ void _Print(char *, ...)
  * Address:	........
  * Size:	0000A4
  */
-void DemoParms::DemoParms()
+DemoParms::DemoParms()
 {
 	// UNUSED FUNCTION
 }
@@ -35,7 +37,7 @@ void DemoParms::DemoParms()
  * Address:	........
  * Size:	000120
  */
-void DemoParms::Parms::Parms()
+DemoParms::Parms::Parms()
 {
 	// UNUSED FUNCTION
 }
@@ -45,7 +47,7 @@ void DemoParms::Parms::Parms()
  * Address:	80081C10
  * Size:	0005F4
  */
-void DemoFlags::DemoFlags()
+DemoFlags::DemoFlags()
 {
 /*
 .loc_0x0:

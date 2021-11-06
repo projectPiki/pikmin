@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -25,7 +27,7 @@ void _Print(char *, ...)
  * Address:	........
  * Size:	00011C
  */
-void GenObjectDebug::GenObjectDebug()
+GenObjectDebug::GenObjectDebug()
 {
 	// UNUSED FUNCTION
 }
@@ -173,10 +175,6 @@ void GenObjectDebug::initialise()
  */
 void GenObjectDebug::doRead(RandomAccessStream &)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -208,8 +206,4 @@ void GenObjectDebug::birth(BirthInfo &)
  */
 void GenObject::render(Graphics &, Generator *)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }

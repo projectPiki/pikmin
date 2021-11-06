@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -338,7 +340,7 @@ void handleTutorialWindow(unsigned long &, Controller *)
  * Address:	80056E84
  * Size:	000118
  */
-void BaseGameSection::BaseGameSection()
+BaseGameSection::BaseGameSection()
 {
 /*
 .loc_0x0:
@@ -595,10 +597,6 @@ void BaseGameSection::draw(Graphics &)
  */
 void ModeState::postUpdate()
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -1164,10 +1162,6 @@ void RunningModeState::update(unsigned long &)
  */
 void GameInterface::message(int, int)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -3411,7 +3405,7 @@ void GameMovieInterface::parse(GameMovieInterface::ComplexMessage &)
  * Address:	800596C0
  * Size:	000724
  */
-void NewPikiGameSection::NewPikiGameSection()
+NewPikiGameSection::NewPikiGameSection()
 {
 /*
 .loc_0x0:
@@ -4151,7 +4145,7 @@ void NewPikiGameSetupSection::createMapObjects(MapMgr *)
  * Address:	8005A0F8
  * Size:	000020
  */
-void GameMovieInterface::ComplexMessage::ComplexMessage()
+GameMovieInterface::ComplexMessage::ComplexMessage()
 {
 /*
 .loc_0x0:
@@ -4173,10 +4167,6 @@ void GameMovieInterface::ComplexMessage::ComplexMessage()
  */
 void GameInterface::movie(int, int, Creature *, Vector3f *, Vector3f *, unsigned long, bool)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -4186,10 +4176,6 @@ void GameInterface::movie(int, int, Creature *, Vector3f *, Vector3f *, unsigned
  */
 void GameInterface::parseMessages()
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -4199,10 +4185,6 @@ void GameInterface::parseMessages()
  */
 void GameInterface::parse(int, int)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -4957,10 +4939,6 @@ void NewPikiGameSetupSection::draw(Graphics &)
  */
 void ModeState::postRender(Graphics &)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -4970,10 +4948,6 @@ void ModeState::postRender(Graphics &)
  */
 void NewPikiGameSection::init()
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -5269,8 +5243,4 @@ void QuittingGameModeState::postUpdate()
  */
 void BaseGameSection::openMenu()
 {
-/*
-.loc_0x0:
-  blr
-*/
 }

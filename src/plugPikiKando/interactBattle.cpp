@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -318,10 +320,6 @@ void InteractChangeColor::actPiki(Piki *)
  */
 void Piki::changeShape(int)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -376,10 +374,6 @@ void InteractChangeHappa::actPiki(Piki *)
  */
 void Piki::setFlower(int)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -595,13 +589,9 @@ void InteractFire::actPiki(Piki *)
  * Address:	8007BDE0
  * Size:	000008
  */
-void InteractWind::actCommon(Creature *)
+u32  InteractWind::actCommon(Creature *)
 {
-/*
-.loc_0x0:
-  li        r3, 0x1
-  blr
-*/
+	return 0x1;
 }
 
 /*
@@ -821,13 +811,9 @@ void InteractFlick::actPiki(Piki *)
  * Address:	8007C038
  * Size:	000008
  */
-void InteractSlimeAttack::actCommon(Creature *)
+u32  InteractSlimeAttack::actCommon(Creature *)
 {
-/*
-.loc_0x0:
-  li        r3, 0x1
-  blr
-*/
+	return 0x1;
 }
 
 /*
@@ -1001,13 +987,9 @@ void InteractAttack::actCommon(Creature *)
  * Address:	8007C210
  * Size:	000008
  */
-void Creature::isVisible()
+u32  Creature::isVisible()
 {
-/*
-.loc_0x0:
-  li        r3, 0x1
-  blr
-*/
+	return 0x1;
 }
 
 /*
@@ -1141,13 +1123,9 @@ void InteractAttack::actPiki(Piki *)
  * Address:	8007C3A0
  * Size:	000008
  */
-void InteractSwallow::actCommon(Creature *)
+u32  InteractSwallow::actCommon(Creature *)
 {
-/*
-.loc_0x0:
-  li        r3, 0x1
-  blr
-*/
+	return 0x1;
 }
 
 /*
@@ -1391,13 +1369,9 @@ void InteractSwallow::actPiki(Piki *)
  * Address:	8007C698
  * Size:	000008
  */
-void Condition::satisfy(Creature *)
+u32  Condition::satisfy(Creature *)
 {
-/*
-.loc_0x0:
-  li        r3, 0x1
-  blr
-*/
+	return 0x1;
 }
 
 /*
@@ -1558,13 +1532,9 @@ void InteractPress::actPiki(Piki *)
  * Address:	8007C84C
  * Size:	000008
  */
-void InteractFlute::actTeki(Teki *)
+u32  InteractFlute::actTeki(Teki *)
 {
-/*
-.loc_0x0:
-  li        r3, 0x1
-  blr
-*/
+	return 0x1;
 }
 
 /*
@@ -1572,13 +1542,9 @@ void InteractFlute::actTeki(Teki *)
  * Address:	8007C854
  * Size:	000008
  */
-void Interaction::actCommon(Creature *)
+u32  Interaction::actCommon(Creature *)
 {
-/*
-.loc_0x0:
-  li        r3, 0x1
-  blr
-*/
+	return 0x1;
 }
 
 /*
@@ -1586,13 +1552,9 @@ void Interaction::actCommon(Creature *)
  * Address:	8007C85C
  * Size:	000008
  */
-void Interaction::actPiki(Piki *)
+u32  Interaction::actPiki(Piki *)
 {
-/*
-.loc_0x0:
-  li        r3, 0x1
-  blr
-*/
+	return 0x1;
 }
 
 /*
@@ -1600,13 +1562,9 @@ void Interaction::actPiki(Piki *)
  * Address:	8007C864
  * Size:	000008
  */
-void Interaction::actNavi(Navi *)
+u32  Interaction::actNavi(Navi *)
 {
-/*
-.loc_0x0:
-  li        r3, 0x1
-  blr
-*/
+	return 0x1;
 }
 
 /*
@@ -1614,13 +1572,9 @@ void Interaction::actNavi(Navi *)
  * Address:	8007C86C
  * Size:	000008
  */
-void Interaction::actBoss(Boss *)
+u32  Interaction::actBoss(Boss *)
 {
-/*
-.loc_0x0:
-  li        r3, 0x1
-  blr
-*/
+	return 0x1;
 }
 
 /*
@@ -1628,13 +1582,9 @@ void Interaction::actBoss(Boss *)
  * Address:	8007C874
  * Size:	000008
  */
-void Interaction::actPellet(Pellet *)
+u32  Interaction::actPellet(Pellet *)
 {
-/*
-.loc_0x0:
-  li        r3, 0x1
-  blr
-*/
+	return 0x1;
 }
 
 /*
@@ -1642,13 +1592,9 @@ void Interaction::actPellet(Pellet *)
  * Address:	8007C87C
  * Size:	000008
  */
-void Interaction::actHinderRock(HinderRock *)
+u32  Interaction::actHinderRock(HinderRock *)
 {
-/*
-.loc_0x0:
-  li        r3, 0x1
-  blr
-*/
+	return 0x1;
 }
 
 /*
@@ -1656,13 +1602,9 @@ void Interaction::actHinderRock(HinderRock *)
  * Address:	8007C884
  * Size:	000008
  */
-void Interaction::actBridge(Bridge *)
+u32  Interaction::actBridge(Bridge *)
 {
-/*
-.loc_0x0:
-  li        r3, 0x1
-  blr
-*/
+	return 0x1;
 }
 
 /*
@@ -1670,13 +1612,9 @@ void Interaction::actBridge(Bridge *)
  * Address:	8007C88C
  * Size:	000008
  */
-void Interaction::actItem(ItemCreature *)
+u32  Interaction::actItem(ItemCreature *)
 {
-/*
-.loc_0x0:
-  li        r3, 0x1
-  blr
-*/
+	return 0x1;
 }
 
 /*
@@ -1684,11 +1622,7 @@ void Interaction::actItem(ItemCreature *)
  * Address:	8007C894
  * Size:	000008
  */
-void Interaction::actTeki(Teki *)
+u32  Interaction::actTeki(Teki *)
 {
-/*
-.loc_0x0:
-  li        r3, 0x1
-  blr
-*/
+	return 0x1;
 }

@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -25,7 +27,7 @@ void _Print(char *, ...)
  * Address:	8012AAC0
  * Size:	000084
  */
-void TaiCollecSoundTable::TaiCollecSoundTable()
+TaiCollecSoundTable::TaiCollecSoundTable()
 {
 /*
 .loc_0x0:
@@ -76,7 +78,7 @@ void TaiCollecSoundTable::TaiCollecSoundTable()
  * Address:	8012AB44
  * Size:	000484
  */
-void TaiCollecParameters::TaiCollecParameters()
+TaiCollecParameters::TaiCollecParameters()
 {
 /*
 .loc_0x0:
@@ -377,7 +379,7 @@ void TaiCollecParameters::TaiCollecParameters()
  * Address:	8012AFC8
  * Size:	00179C
  */
-void TaiCollecStrategy::TaiCollecStrategy(TekiParameters *)
+TaiCollecStrategy::TaiCollecStrategy(TekiParameters *)
 {
 /*
 .loc_0x0:
@@ -4292,7 +4294,7 @@ void TaiCollecGetOutAction::act(Teki &)
  * Address:	8012DFD4
  * Size:	000058
  */
-void TaiCollecLegEffectAction::TaiCollecLegEffectAction(float)
+TaiCollecLegEffectAction::TaiCollecLegEffectAction(float)
 {
 /*
 .loc_0x0:
@@ -4380,7 +4382,7 @@ void TaiCollecLegEffectAction::setType(Vector3f &, int, int)
  * Address:	8012E0BC
  * Size:	000088
  */
-void TaiHollecParameters::TaiHollecParameters()
+TaiHollecParameters::TaiHollecParameters()
 {
 /*
 .loc_0x0:
@@ -4426,7 +4428,7 @@ void TaiHollecParameters::TaiHollecParameters()
  * Address:	8012E144
  * Size:	0000C4
  */
-void TaiHollecStrategy::TaiHollecStrategy(TekiParameters *)
+TaiHollecStrategy::TaiHollecStrategy(TekiParameters *)
 {
 /*
 .loc_0x0:

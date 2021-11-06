@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -25,7 +27,7 @@ void _Print(char *, ...)
  * Address:	........
  * Size:	000084
  */
-void TAIusubaSoundTable::TAIusubaSoundTable()
+TAIusubaSoundTable::TAIusubaSoundTable()
 {
 	// UNUSED FUNCTION
 }
@@ -35,7 +37,7 @@ void TAIusubaSoundTable::TAIusubaSoundTable()
  * Address:	801E9FA0
  * Size:	000294
  */
-void TAIusubaParameters::TAIusubaParameters()
+TAIusubaParameters::TAIusubaParameters()
 {
 /*
 .loc_0x0:
@@ -212,7 +214,7 @@ void TAIusubaParameters::TAIusubaParameters()
  * Address:	........
  * Size:	0001D8
  */
-void TAIusubaStrategy::TAIusubaStrategy()
+TAIusubaStrategy::TAIusubaStrategy()
 {
 	// UNUSED FUNCTION
 }

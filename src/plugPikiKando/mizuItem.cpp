@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -25,7 +27,7 @@ void _Print(char *, ...)
  * Address:	800F7CB0
  * Size:	000068
  */
-void MizuItem::MizuItem(int, CreatureProp *, ItemShapeObject *, SimpleAI *)
+MizuItem::MizuItem(int, CreatureProp *, ItemShapeObject *, SimpleAI *)
 {
 /*
 .loc_0x0:
@@ -105,13 +107,9 @@ void MizuItem::update()
  * Address:	800F7D88
  * Size:	000008
  */
-void MizuItem::needFlick(Creature *)
+u32  MizuItem::needFlick(Creature *)
 {
-/*
-.loc_0x0:
-  li        r3, 0
-  blr
-*/
+	return 0x0;
 }
 
 /*

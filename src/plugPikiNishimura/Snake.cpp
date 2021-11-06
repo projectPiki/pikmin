@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -25,7 +27,7 @@ void _Print(char *, ...)
  * Address:	8015A2C4
  * Size:	0008F0
  */
-void SnakeProp::SnakeProp()
+SnakeProp::SnakeProp()
 {
 /*
 .loc_0x0:
@@ -609,7 +611,7 @@ void SnakeProp::SnakeProp()
  * Address:	8015ABB4
  * Size:	000104
  */
-void Snake::Snake(CreatureProp *)
+Snake::Snake(CreatureProp *)
 {
 /*
 .loc_0x0:
@@ -694,13 +696,10 @@ void Snake::Snake(CreatureProp *)
  * Address:	8015ACB8
  * Size:	000008
  */
-void Snake::setBossType(bool)
+void Snake::setBossType(bool a1)
 {
-/*
-.loc_0x0:
-  stb       r4, 0x3BC(r3)
-  blr
-*/
+// Generated from stb r4, 0x3BC(r3)
+_3BC = a1;
 }
 
 /*

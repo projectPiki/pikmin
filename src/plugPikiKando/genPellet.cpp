@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -25,7 +27,7 @@ void _Print(char *, ...)
  * Address:	........
  * Size:	000070
  */
-void GenObjectPellet::GenObjectPellet()
+GenObjectPellet::GenObjectPellet()
 {
 	// UNUSED FUNCTION
 }

@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -261,10 +263,6 @@ void StateMachine<Navi>::transit(Navi *, int)
  */
 void AState<Navi>::init(Navi *)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -274,10 +272,6 @@ void AState<Navi>::init(Navi *)
  */
 void AState<Navi>::cleanup(Navi *)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -372,12 +366,8 @@ void Navi::getPlatePikis()
  */
 void Navi::startDayEnd()
 {
-/*
-.loc_0x0:
-  li        r0, 0x1
-  stw       r0, 0x6C0(r3)
-  blr
-*/
+// Generated from stw r0, 0x6C0(r3)
+_6C0 = 1;
 }
 
 /*
@@ -865,7 +855,7 @@ void Navi::enterAllPikis()
  * Address:	800F8BA8
  * Size:	000C20
  */
-void NaviProp::NaviProp()
+NaviProp::NaviProp()
 {
 /*
 .loc_0x0:
@@ -1731,10 +1721,6 @@ void Navi::startDamage()
  */
 void AState<Navi>::resume(Navi *)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -1742,13 +1728,9 @@ void AState<Navi>::resume(Navi *)
  * Address:	800F982C
  * Size:	000008
  */
-void NaviState::invincible(Navi *)
+u32  NaviState::invincible(Navi *)
 {
-/*
-.loc_0x0:
-  li        r3, 0
-  blr
-*/
+	return 0x0;
 }
 
 /*
@@ -2011,10 +1993,6 @@ void Navi::finishDamage()
  */
 void AState<Navi>::restart(Navi *)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -2022,7 +2000,7 @@ void AState<Navi>::restart(Navi *)
  * Address:	800F9B8C
  * Size:	000668
  */
-void Navi::Navi(CreatureProp *, int)
+Navi::Navi(CreatureProp *, int)
 {
 /*
 .loc_0x0:
@@ -5461,10 +5439,6 @@ void StateMachine<Navi>::exec(Navi *)
  */
 void AState<Navi>::exec(Navi *)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -6291,10 +6265,6 @@ void Navi::wallCallback(Plane &, DynCollObject *)
  */
 void Navi::jumpCallback()
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -6814,10 +6784,6 @@ void Navi::collisionCallback(CollEvent &)
  */
 void Navi::doKill()
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -9049,10 +9015,6 @@ void Navi::renderCircle(Graphics &)
  */
 void Navi::refresh2d(Graphics &)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -9202,10 +9164,6 @@ void Receiver<Navi>::procMsg(Navi *, Msg *)
  */
 void Receiver<Navi>::procGroundMsg(Navi *, MsgGround *)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -9215,10 +9173,6 @@ void Receiver<Navi>::procGroundMsg(Navi *, MsgGround *)
  */
 void Receiver<Navi>::procUserMsg(Navi *, MsgUser *)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -9228,10 +9182,6 @@ void Receiver<Navi>::procUserMsg(Navi *, MsgUser *)
  */
 void Receiver<Navi>::procOffWallMsg(Navi *, MsgOffWall *)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -9241,10 +9191,6 @@ void Receiver<Navi>::procOffWallMsg(Navi *, MsgOffWall *)
  */
 void Receiver<Navi>::procWallMsg(Navi *, MsgWall *)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -9254,10 +9200,6 @@ void Receiver<Navi>::procWallMsg(Navi *, MsgWall *)
  */
 void Receiver<Navi>::procDamageMsg(Navi *, MsgDamage *)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -9267,10 +9209,6 @@ void Receiver<Navi>::procDamageMsg(Navi *, MsgDamage *)
  */
 void Receiver<Navi>::procAnimMsg(Navi *, MsgAnim *)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -9280,10 +9218,6 @@ void Receiver<Navi>::procAnimMsg(Navi *, MsgAnim *)
  */
 void Receiver<Navi>::procCollideMsg(Navi *, MsgCollide *)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -9293,10 +9227,6 @@ void Receiver<Navi>::procCollideMsg(Navi *, MsgCollide *)
  */
 void Receiver<Navi>::procTargetMsg(Navi *, MsgTarget *)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -9306,10 +9236,6 @@ void Receiver<Navi>::procTargetMsg(Navi *, MsgTarget *)
  */
 void Receiver<Navi>::procHangMsg(Navi *, MsgHang *)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -9319,10 +9245,6 @@ void Receiver<Navi>::procHangMsg(Navi *, MsgHang *)
  */
 void Receiver<Navi>::procStickMsg(Navi *, MsgStick *)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -9332,10 +9254,6 @@ void Receiver<Navi>::procStickMsg(Navi *, MsgStick *)
  */
 void Receiver<Navi>::procBounceMsg(Navi *, MsgBounce *)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -11281,10 +11199,6 @@ void NaviDrawer::draw(Graphics &)
  */
 void PelletView::viewInit()
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -11294,10 +11208,6 @@ void PelletView::viewInit()
  */
 void PelletView::viewStartExplodeMotion(float)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -11334,13 +11244,9 @@ void NaviProp::read(RandomAccessStream &)
  * Address:	801010FC
  * Size:	000008
  */
-void Navi::mayIstick()
+u32  Navi::mayIstick()
 {
-/*
-.loc_0x0:
-  li        r3, 0
-  blr
-*/
+	return 0x0;
 }
 
 /*
@@ -11364,10 +11270,6 @@ void Navi::getShadowSize()
  */
 void StateMachine<Navi>::init(Navi *)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*

@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -717,7 +719,7 @@ void MapObjAnimator::finishOneShot()
  * Address:	........
  * Size:	000364
  */
-void DynMapObject::DynMapObject(MapMgr *, MapAnimShapeObject *)
+DynMapObject::DynMapObject(MapMgr *, MapAnimShapeObject *)
 {
 	// UNUSED FUNCTION
 }
@@ -727,7 +729,7 @@ void DynMapObject::DynMapObject(MapMgr *, MapAnimShapeObject *)
  * Address:	80061FE8
  * Size:	0001BC
  */
-void DynCollShape::DynCollShape(Shape *)
+DynCollShape::DynCollShape(Shape *)
 {
 /*
 .loc_0x0:
@@ -4022,7 +4024,7 @@ void DynObjPushable::render(Graphics &)
  * Address:	80064DEC
  * Size:	0006B0
  */
-void MapMgr::MapMgr(Controller *)
+MapMgr::MapMgr(Controller *)
 {
 /*
 .loc_0x0:
@@ -4484,7 +4486,7 @@ void MapMgr::MapMgr(Controller *)
  * Address:	8006549C
  * Size:	000018
  */
-void MapRoom::MapRoom()
+MapRoom::MapRoom()
 {
 /*
 .loc_0x0:
@@ -4813,7 +4815,7 @@ void MapMgr::initShape()
  * Address:	800658A8
  * Size:	000020
  */
-void Collision::Collision()
+Collision::Collision()
 {
 /*
 .loc_0x0:
@@ -4835,10 +4837,6 @@ void Collision::Collision()
  */
 void MapMgr::createLights()
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -5098,13 +5096,9 @@ void MapMgr::update()
  * Address:	80065B9C
  * Size:	000008
  */
-void Creature::alwaysUpdatePlatform()
+u32  Creature::alwaysUpdatePlatform()
 {
-/*
-.loc_0x0:
-  li        r3, 0
-  blr
-*/
+	return 0x0;
 }
 
 /*
@@ -8980,10 +8974,6 @@ void MapMgr::recTraceMove(CollGroup *, MoveTrace &, float)
  */
 void DynCollObject::touchCallback(Plane &, Vector3f &, Vector3f &)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -8993,10 +8983,6 @@ void DynCollObject::touchCallback(Plane &, Vector3f &, Vector3f &)
  */
 void Creature::wallCallback(Plane &, DynCollObject *)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -9543,7 +9529,7 @@ void MapMgr::requestCollPart(ObjCollInfo *, Creature *)
  * Address:	80069530
  * Size:	000134
  */
-void ShadowCaster::ShadowCaster()
+ShadowCaster::ShadowCaster()
 {
 /*
 .loc_0x0:
@@ -9737,10 +9723,6 @@ void MapShadMatHandler::setMaterial(Material *)
  */
 void DynObjPushable::touchCallback(Plane &, Vector3f &, Vector3f &)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -9750,10 +9732,6 @@ void DynObjPushable::touchCallback(Plane &, Vector3f &, Vector3f &)
  */
 void DynCollObjBody::update()
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -9763,10 +9741,6 @@ void DynCollObjBody::update()
  */
 void DynCollObjBody::adjust(Creature *)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -9790,10 +9764,6 @@ void DynCollShape::getShape()
  */
 void DynCollObject::applyVelocity(Plane &, Vector3f &, Vector3f &)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -9803,10 +9773,6 @@ void DynCollObject::applyVelocity(Plane &, Vector3f &, Vector3f &)
  */
 void MapObjectPart::update()
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -9816,10 +9782,6 @@ void MapObjectPart::update()
  */
 void MapObjectPart::refresh(Graphics &)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -9857,10 +9819,6 @@ void MapObjectPart::touchCallback(Plane &, Vector3f &, Vector3f &)
  */
 void DynCollObject::adjust(Creature *)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -9868,13 +9826,9 @@ void DynCollObject::adjust(Creature *)
  * Address:	8006979C
  * Size:	000008
  */
-void DynCollObject::getShape()
+u32  DynCollObject::getShape()
 {
-/*
-.loc_0x0:
-  li        r3, 0
-  blr
-*/
+	return 0x0;
 }
 
 /*

@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -25,7 +27,7 @@ void _Print(char *, ...)
  * Address:	........
  * Size:	000074
  */
-void ItemBall::ItemBall(Shape *, CreatureProp *)
+ItemBall::ItemBall(Shape *, CreatureProp *)
 {
 	// UNUSED FUNCTION
 }
@@ -62,13 +64,9 @@ void ItemBall::startAI(int)
  * Address:	800F7994
  * Size:	000008
  */
-void ItemBall::isAlive()
+u32  ItemBall::isAlive()
 {
-/*
-.loc_0x0:
-  li        r3, 0x1
-  blr
-*/
+	return 0x1;
 }
 
 /*
@@ -76,13 +74,9 @@ void ItemBall::isAlive()
  * Address:	800F799C
  * Size:	000008
  */
-void ItemBall::isVisible()
+u32  ItemBall::isVisible()
 {
-/*
-.loc_0x0:
-  li        r3, 0x1
-  blr
-*/
+	return 0x1;
 }
 
 /*
@@ -90,7 +84,7 @@ void ItemBall::isVisible()
  * Address:	........
  * Size:	00005C
  */
-void ItemObject::ItemObject(int, Shape *)
+ItemObject::ItemObject(int, Shape *)
 {
 	// UNUSED FUNCTION
 }
@@ -102,10 +96,6 @@ void ItemObject::ItemObject(int, Shape *)
  */
 void ItemObject::update()
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -113,7 +103,7 @@ void ItemObject::update()
  * Address:	800F79A8
  * Size:	00007C
  */
-void BombGenItem::BombGenItem(Shape *)
+BombGenItem::BombGenItem(Shape *)
 {
 /*
 .loc_0x0:
@@ -235,7 +225,7 @@ void BombGenItem::pick()
  * Address:	800F7AC0
  * Size:	00006C
  */
-void Fulcrum::Fulcrum()
+Fulcrum::Fulcrum()
 {
 /*
 .loc_0x0:
@@ -274,7 +264,7 @@ void Fulcrum::Fulcrum()
  * Address:	800F7B2C
  * Size:	00006C
  */
-void NaviDemoSunsetStart::NaviDemoSunsetStart()
+NaviDemoSunsetStart::NaviDemoSunsetStart()
 {
 /*
 .loc_0x0:
@@ -313,7 +303,7 @@ void NaviDemoSunsetStart::NaviDemoSunsetStart()
  * Address:	800F7B98
  * Size:	00006C
  */
-void NaviDemoSunsetGoal::NaviDemoSunsetGoal()
+NaviDemoSunsetGoal::NaviDemoSunsetGoal()
 {
 /*
 .loc_0x0:
@@ -352,13 +342,9 @@ void NaviDemoSunsetGoal::NaviDemoSunsetGoal()
  * Address:	800F7C04
  * Size:	000008
  */
-void ItemObject::needShadow()
+u32  ItemObject::needShadow()
 {
-/*
-.loc_0x0:
-  li        r3, 0
-  blr
-*/
+	return 0x0;
 }
 
 /*
@@ -368,10 +354,6 @@ void ItemObject::needShadow()
  */
 void ItemObject::postUpdate(int, float)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -379,13 +361,9 @@ void ItemObject::postUpdate(int, float)
  * Address:	800F7C10
  * Size:	000008
  */
-void ItemObject::isAtari()
+u32  ItemObject::isAtari()
 {
-/*
-.loc_0x0:
-  li        r3, 0
-  blr
-*/
+	return 0x0;
 }
 
 /*
@@ -421,13 +399,9 @@ void BombGenItem::isAtari()
  * Address:	800F7C48
  * Size:	000008
  */
-void BombGenItem::needFlick(Creature *)
+u32  BombGenItem::needFlick(Creature *)
 {
-/*
-.loc_0x0:
-  li        r3, 0
-  blr
-*/
+	return 0x0;
 }
 
 /*

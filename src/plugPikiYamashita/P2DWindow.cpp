@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -197,7 +199,7 @@ void P2DWindow::loadResource()
  * Address:	801B39D8
  * Size:	000258
  */
-void P2DWindow::P2DWindow(P2DPane *, RandomAccessStream *, unsigned short)
+P2DWindow::P2DWindow(P2DPane *, RandomAccessStream *, unsigned short)
 {
 /*
 .loc_0x0:
@@ -1021,7 +1023,7 @@ void P2DWindow::P2DWindowTexture::setTevMode()
  * Address:	801B4448
  * Size:	000064
  */
-void P2DWindow::~P2DWindow()
+P2DWindow::~P2DWindow()
 {
 /*
 .loc_0x0:

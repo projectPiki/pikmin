@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -25,7 +27,7 @@ void _Print(char *, ...)
  * Address:	80115B8C
  * Size:	0000CC
  */
-void Kontroller::Kontroller(int)
+Kontroller::Kontroller(int)
 {
 /*
 .loc_0x0:

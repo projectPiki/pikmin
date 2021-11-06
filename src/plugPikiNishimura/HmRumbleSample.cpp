@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -25,7 +27,7 @@ void _Print(char *, ...)
  * Address:	8017D680
  * Size:	000014
  */
-void RumbleSample::RumbleSample(int)
+RumbleSample::RumbleSample(int)
 {
 /*
 .loc_0x0:

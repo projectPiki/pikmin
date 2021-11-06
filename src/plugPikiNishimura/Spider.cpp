@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -25,7 +27,7 @@ void _Print(char *, ...)
  * Address:	80152794
  * Size:	0009C8
  */
-void SpiderProp::SpiderProp()
+SpiderProp::SpiderProp()
 {
 /*
 .loc_0x0:
@@ -663,7 +665,7 @@ void SpiderProp::SpiderProp()
  * Address:	8015315C
  * Size:	000140
  */
-void Spider::Spider(CreatureProp *)
+Spider::Spider(CreatureProp *)
 {
 /*
 .loc_0x0:

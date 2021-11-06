@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -39,13 +41,9 @@ void InitializeUART(void)
  * Address:	801FD80C
  * Size:	000008
  */
-void ReadUARTN(void)
+u32  ReadUARTN(void)
 {
-/*
-.loc_0x0:
-  li        r3, 0x4
-  blr
-*/
+	return 0x4;
 }
 
 /*

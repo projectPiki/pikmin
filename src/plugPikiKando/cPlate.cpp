@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -42,7 +44,7 @@ void CPlate::getCreature(int)
  * Address:	800A5724
  * Size:	00022C
  */
-void CPlate::CPlate(MapMgr *)
+CPlate::CPlate(MapMgr *)
 {
 /*
 .loc_0x0:
@@ -193,7 +195,7 @@ void CPlate::CPlate(MapMgr *)
  * Address:	800A5950
  * Size:	000030
  */
-void CPlate::Slot::Slot()
+CPlate::Slot::Slot()
 {
 /*
 .loc_0x0:
@@ -217,13 +219,9 @@ void CPlate::Slot::Slot()
  * Address:	800A5980
  * Size:	000008
  */
-void CPlate::canNaviRunFast()
+u32  CPlate::canNaviRunFast()
 {
-/*
-.loc_0x0:
-  li        r3, 0x1
-  blr
-*/
+	return 0x1;
 }
 
 /*
@@ -233,10 +231,6 @@ void CPlate::canNaviRunFast()
  */
 void CPlate::init(Vector3f &)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -1845,13 +1839,9 @@ void CPlate::render(Graphics &)
  * Address:	800A6D30
  * Size:	000008
  */
-void CPlate::getFirst()
+u32  CPlate::getFirst()
 {
-/*
-.loc_0x0:
-  li        r3, 0
-  blr
-*/
+	return 0x0;
 }
 
 /*

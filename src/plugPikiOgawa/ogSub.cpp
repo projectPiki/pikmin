@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -325,7 +327,7 @@ void zen::getStringCVS(char *, char *, short)
  * Address:	8017EB80
  * Size:	000328
  */
-void zen::PikaAlphaMgr::PikaAlphaMgr(P2DScreen *)
+zen::PikaAlphaMgr::PikaAlphaMgr(P2DScreen *)
 {
 /*
 .loc_0x0:
@@ -800,7 +802,7 @@ void zen::PikaAlphaMgr::update()
  * Address:	8017F134
  * Size:	0000F0
  */
-void zen::setTenmetuAlpha::setTenmetuAlpha(P2DPicture *, float, float, unsigned char, unsigned char)
+zen::setTenmetuAlpha::setTenmetuAlpha(P2DPicture *, float, float, unsigned char, unsigned char)
 {
 /*
 .loc_0x0:
@@ -872,7 +874,7 @@ void zen::setTenmetuAlpha::setTenmetuAlpha(P2DPicture *, float, float, unsigned 
  * Address:	8017F224
  * Size:	0000F0
  */
-void zen::setTenmetuAlpha::setTenmetuAlpha(P2DPicture *, float)
+zen::setTenmetuAlpha::setTenmetuAlpha(P2DPicture *, float)
 {
 /*
 .loc_0x0:
@@ -1535,7 +1537,7 @@ void zen::setTenmetuAlpha::update()
  * Address:	8017FAA0
  * Size:	000080
  */
-void zen::ogFadeMgr::ogFadeMgr(P2DPane *, unsigned char)
+zen::ogFadeMgr::ogFadeMgr(P2DPane *, unsigned char)
 {
 /*
 .loc_0x0:
@@ -1822,7 +1824,7 @@ void P2DPane::move(int, int)
  * Address:	8017FD64
  * Size:	000178
  */
-void zen::ogTexAnimSubMgr::ogTexAnimSubMgr(P2DScreen *, P2DPicture *, P2DTextBox *)
+zen::ogTexAnimSubMgr::ogTexAnimSubMgr(P2DScreen *, P2DPicture *, P2DTextBox *)
 {
 /*
 .loc_0x0:
@@ -1944,7 +1946,7 @@ void zen::ogTexAnimSubMgr::update()
  * Address:	8017FEDC
  * Size:	0000F4
  */
-void zen::ogTexAnimMgr::ogTexAnimMgr(P2DScreen *)
+zen::ogTexAnimMgr::ogTexAnimMgr(P2DScreen *)
 {
 /*
 .loc_0x0:
@@ -2347,7 +2349,7 @@ void zen::cnvSpecialNumber(char *)
  * Address:	80180390
  * Size:	000090
  */
-void zen::TypingTextMgr::TypingTextMgr(P2DTextBox *)
+zen::TypingTextMgr::TypingTextMgr(P2DTextBox *)
 {
 /*
 .loc_0x0:
@@ -2438,7 +2440,7 @@ void zen::TypingTextMgr::start()
  * Address:	80180494
  * Size:	000160
  */
-void zen::ogMsgCtrlTagMgr::ogMsgCtrlTagMgr()
+zen::ogMsgCtrlTagMgr::ogMsgCtrlTagMgr()
 {
 /*
 .loc_0x0:
@@ -3198,13 +3200,9 @@ void zen::cnvSpecialNumberHyphen(char *)
  * Address:	80180E54
  * Size:	000008
  */
-void P2DPaneCallBack::draw(P2DPane *)
+u32  P2DPaneCallBack::draw(P2DPane *)
 {
-/*
-.loc_0x0:
-  li        r3, 0x1
-  blr
-*/
+	return 0x1;
 }
 
 /*

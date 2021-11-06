@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -25,7 +27,7 @@ void _Print(char *, ...)
  * Address:	801ACC54
  * Size:	000024
  */
-void TAIAmotion::TAIAmotion(int, int)
+TAIAmotion::TAIAmotion(int, int)
 {
 /*
 .loc_0x0:
@@ -100,7 +102,7 @@ void TAIAmotion::act(Teki &)
  * Address:	801ACCE0
  * Size:	000024
  */
-void TAIAreserveMotion::TAIAreserveMotion(int, int)
+TAIAreserveMotion::TAIAreserveMotion(int, int)
 {
 /*
 .loc_0x0:

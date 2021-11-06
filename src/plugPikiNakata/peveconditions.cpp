@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -25,7 +27,7 @@ void _Print(char *, ...)
  * Address:	........
  * Size:	000048
  */
-void PeveBooleanCondition::PeveBooleanCondition()
+PeveBooleanCondition::PeveBooleanCondition()
 {
 	// UNUSED FUNCTION
 }
@@ -45,7 +47,7 @@ void PeveBooleanCondition::construct(bool)
  * Address:	........
  * Size:	000048
  */
-void PeveDependenceCondition::PeveDependenceCondition()
+PeveDependenceCondition::PeveDependenceCondition()
 {
 	// UNUSED FUNCTION
 }
@@ -65,7 +67,7 @@ void PeveDependenceCondition::construct(PeveCondition *)
  * Address:	80125C68
  * Size:	000048
  */
-void PeveTimeCondition::PeveTimeCondition()
+PeveTimeCondition::PeveTimeCondition()
 {
 /*
 .loc_0x0:
@@ -113,7 +115,7 @@ void PeveTimeCondition::construct(float)
  * Address:	........
  * Size:	000064
  */
-void PeveDistanceCondition::PeveDistanceCondition()
+PeveDistanceCondition::PeveDistanceCondition()
 {
 	// UNUSED FUNCTION
 }
@@ -214,7 +216,7 @@ void PeveDistanceCondition::update()
  * Address:	........
  * Size:	000060
  */
-void PeveComparisonYCondition::PeveComparisonYCondition()
+PeveComparisonYCondition::PeveComparisonYCondition()
 {
 	// UNUSED FUNCTION
 }
@@ -290,12 +292,8 @@ void PeveComparisonYCondition::update()
  */
 void PeveComparisonYCondition::reset()
 {
-/*
-.loc_0x0:
-  li        r0, 0
-  stb       r0, 0x4(r3)
-  blr
-*/
+// Generated from stb r0, 0x4(r3)
+_04 = 0;
 }
 
 /*
@@ -319,12 +317,8 @@ void PeveBooleanCondition::isMet()
  */
 void PeveDistanceCondition::reset()
 {
-/*
-.loc_0x0:
-  li        r0, 0
-  stb       r0, 0x4(r3)
-  blr
-*/
+// Generated from stb r0, 0x4(r3)
+_04 = 0;
 }
 
 /*
@@ -410,10 +404,6 @@ void PeveDependenceCondition::isMet()
  */
 void PeveDependenceCondition::reset()
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -423,8 +413,4 @@ void PeveDependenceCondition::reset()
  */
 void PeveDependenceCondition::update()
 {
-/*
-.loc_0x0:
-  blr
-*/
 }

@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -101,7 +103,7 @@ void GenObjectTeki::initialise()
  * Address:	8011B394
  * Size:	00008C
  */
-void GenObjectTeki::GenObjectTeki()
+GenObjectTeki::GenObjectTeki()
 {
 /*
 .loc_0x0:

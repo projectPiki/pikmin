@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -154,10 +156,6 @@ void WorkObjectMgr::finalSetup()
  */
 void WorkObject::finalSetup()
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -165,7 +163,7 @@ void WorkObject::finalSetup()
  * Address:	........
  * Size:	00008C
  */
-void WorkObject::WorkObject()
+WorkObject::WorkObject()
 {
 	// UNUSED FUNCTION
 }
@@ -236,7 +234,7 @@ void WorkObjectMgr::getShapeName(int)
  * Address:	8009B260
  * Size:	000110
  */
-void WorkObjectMgr::WorkObjectMgr()
+WorkObjectMgr::WorkObjectMgr()
 {
 /*
 .loc_0x0:
@@ -316,7 +314,7 @@ void WorkObjectMgr::WorkObjectMgr()
  * Address:	8009B370
  * Size:	000054
  */
-void ObjectMgr::~ObjectMgr()
+ObjectMgr::~ObjectMgr()
 {
 /*
 .loc_0x0:
@@ -573,13 +571,9 @@ void WorkObjectMgr::getCreature(int)
  * Address:	8009B60C
  * Size:	000008
  */
-void WorkObjectMgr::getFirst()
+u32  WorkObjectMgr::getFirst()
 {
-/*
-.loc_0x0:
-  li        r3, 0
-  blr
-*/
+	return 0x0;
 }
 
 /*
@@ -655,7 +649,7 @@ void WorkObjectMgr::getSize()
  * Address:	........
  * Size:	00015C
  */
-void GenObjectWorkObject::GenObjectWorkObject()
+GenObjectWorkObject::GenObjectWorkObject()
 {
 	// UNUSED FUNCTION
 }
@@ -1365,7 +1359,7 @@ void GenObjectWorkObject::birth(BirthInfo &)
  * Address:	8009BF1C
  * Size:	000178
  */
-void HinderRock::HinderRock(Shape *)
+HinderRock::HinderRock(Shape *)
 {
 /*
 .loc_0x0:
@@ -3267,7 +3261,7 @@ void Bridge::workable(Vector3f &)
  * Address:	8009D71C
  * Size:	0002C4
  */
-void Bridge::Bridge(Shape *, bool)
+Bridge::Bridge(Shape *, bool)
 {
 /*
 .loc_0x0:
@@ -5738,13 +5732,9 @@ void operator* (const Vector3f &, const float &)
  * Address:	8009F500
  * Size:	000008
  */
-void Bridge::isBridge()
+u32  Bridge::isBridge()
 {
-/*
-.loc_0x0:
-  li        r3, 0x1
-  blr
-*/
+	return 0x1;
 }
 
 /*
@@ -5771,12 +5761,8 @@ void Bridge::alwaysUpdatePlatform()
  */
 void Bridge::finalSetup()
 {
-/*
-.loc_0x0:
-  li        r0, 0x3
-  stb       r0, 0x424(r3)
-  blr
-*/
+// Generated from stb r0, 0x424(r3)
+_424 = 3;
 }
 
 /*
@@ -5784,13 +5770,9 @@ void Bridge::finalSetup()
  * Address:	8009F528
  * Size:	000008
  */
-void WorkObject::isVisible()
+u32  WorkObject::isVisible()
 {
-/*
-.loc_0x0:
-  li        r3, 0x1
-  blr
-*/
+	return 0x1;
 }
 
 /*
@@ -5798,13 +5780,9 @@ void WorkObject::isVisible()
  * Address:	8009F530
  * Size:	000008
  */
-void WorkObject::isAlive()
+u32  WorkObject::isAlive()
 {
-/*
-.loc_0x0:
-  li        r3, 0x1
-  blr
-*/
+	return 0x1;
 }
 
 /*
@@ -5812,13 +5790,9 @@ void WorkObject::isAlive()
  * Address:	8009F538
  * Size:	000008
  */
-void WorkObject::isHinderRock()
+u32  WorkObject::isHinderRock()
 {
-/*
-.loc_0x0:
-  li        r3, 0
-  blr
-*/
+	return 0x0;
 }
 
 /*
@@ -5840,13 +5814,9 @@ void ItemCreature::getHeight()
  * Address:	8009F548
  * Size:	000008
  */
-void HinderRock::isHinderRock()
+u32  HinderRock::isHinderRock()
 {
-/*
-.loc_0x0:
-  li        r3, 0x1
-  blr
-*/
+	return 0x1;
 }
 
 /*
@@ -5856,10 +5826,6 @@ void HinderRock::isHinderRock()
  */
 void DynBuildShape::update()
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -5869,10 +5835,6 @@ void DynBuildShape::update()
  */
 void DynBuildShape::refresh(Graphics &)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -5880,7 +5842,7 @@ void DynBuildShape::refresh(Graphics &)
  * Address:	8009F558
  * Size:	00006C
  */
-void WorkObjectMgr::~WorkObjectMgr()
+WorkObjectMgr::~WorkObjectMgr()
 {
 /*
 .loc_0x0:
@@ -5937,13 +5899,9 @@ void WorkObjectMgr::getMax()
  * Address:	8009F5CC
  * Size:	000008
  */
-void WorkObject::isFinished()
+u32  WorkObject::isFinished()
 {
-/*
-.loc_0x0:
-  li        r3, 0
-  blr
-*/
+	return 0x0;
 }
 
 /*
@@ -5951,13 +5909,9 @@ void WorkObject::isFinished()
  * Address:	8009F5D4
  * Size:	000008
  */
-void WorkObject::workable(Vector3f &)
+u32  WorkObject::workable(Vector3f &)
 {
-/*
-.loc_0x0:
-  li        r3, 0x1
-  blr
-*/
+	return 0x1;
 }
 
 /*

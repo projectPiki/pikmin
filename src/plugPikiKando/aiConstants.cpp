@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -62,7 +64,7 @@ void AIConstant::createInstance()
  * Address:	80083EAC
  * Size:	000470
  */
-void AIConstant::AIConstant()
+AIConstant::AIConstant()
 {
 /*
 .loc_0x0:

@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -25,7 +27,7 @@ void _Print(char *, ...)
  * Address:	8005AE1C
  * Size:	000298
  */
-void IntroGameSection::IntroGameSection()
+IntroGameSection::IntroGameSection()
 {
 /*
 .loc_0x0:
@@ -261,10 +263,6 @@ void IntroModeState::update(unsigned long &)
  */
 void IntroModeState::postRender(Graphics &)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -685,8 +683,4 @@ void IntroGameSetupSection::draw(Graphics &)
  */
 void IntroGameSection::init()
 {
-/*
-.loc_0x0:
-  blr
-*/
 }

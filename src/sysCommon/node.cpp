@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -313,7 +315,7 @@ void Node::render(Graphics &)
  * Address:	........
  * Size:	000128
  */
-void SRTNode::SRTNode(char *)
+SRTNode::SRTNode(char *)
 {
 	// UNUSED FUNCTION
 }
@@ -437,7 +439,7 @@ void NodeMgr::findNode(char *, CoreNode *)
  * Address:	80040938
  * Size:	00003C
  */
-void NodeMgr::NodeMgr()
+NodeMgr::NodeMgr()
 {
 /*
 .loc_0x0:
@@ -464,7 +466,7 @@ void NodeMgr::NodeMgr()
  * Address:	........
  * Size:	000040
  */
-void NodeMgr::~NodeMgr()
+NodeMgr::~NodeMgr()
 {
 	// UNUSED FUNCTION
 }
@@ -476,10 +478,6 @@ void NodeMgr::~NodeMgr()
  */
 void SRTNode::concat()
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -489,10 +487,6 @@ void SRTNode::concat()
  */
 void SRTNode::concat(Matrix4f &)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*

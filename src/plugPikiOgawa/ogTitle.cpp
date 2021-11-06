@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -45,7 +47,7 @@ void zen::ogScrTitleMgr::setGamePrefs()
  * Address:	80181090
  * Size:	0004A8
  */
-void zen::ogScrTitleMgr::ogScrTitleMgr()
+zen::ogScrTitleMgr::ogScrTitleMgr()
 {
 /*
 .loc_0x0:

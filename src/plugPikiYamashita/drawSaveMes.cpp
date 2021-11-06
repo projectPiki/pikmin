@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -25,7 +27,7 @@ void _Print(char *, ...)
  * Address:	801F265C
  * Size:	000348
  */
-void zen::DrawSaveMes::DrawSaveMes()
+zen::DrawSaveMes::DrawSaveMes()
 {
 /*
 .loc_0x0:

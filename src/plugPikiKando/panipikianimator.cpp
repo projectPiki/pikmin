@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -1037,7 +1039,7 @@ void PaniPikiAnimator::createMotionTable()
  * Address:	801199D4
  * Size:	00003C
  */
-void PaniPikiAnimator::PaniPikiAnimator()
+PaniPikiAnimator::PaniPikiAnimator()
 {
 /*
 .loc_0x0:

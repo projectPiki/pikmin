@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -62,7 +64,7 @@ void KeyConfig::createInstance()
  * Address:	8008470C
  * Size:	0001DC
  */
-void KeyConfig::KeyConfig()
+KeyConfig::KeyConfig()
 {
 /*
 .loc_0x0:

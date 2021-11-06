@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -25,7 +27,7 @@ void _Print(char *, ...)
  * Address:	801F3A38
  * Size:	000AC0
  */
-void zen::DrawTotalScore::DrawTotalScore(zen::TotalScoreRecord *)
+zen::DrawTotalScore::DrawTotalScore(zen::TotalScoreRecord *)
 {
 /*
 .loc_0x0:
@@ -1056,10 +1058,6 @@ void zen::DrawTotalScore::setEffect(P2DPane *, int)
  */
 void zen::DrawTotalScore::playRankInFanfare()
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -1663,7 +1661,7 @@ void zen::DrawTotalScore::setRankInColor()
  * Address:	801F50C8
  * Size:	000070
  */
-void zen::DrawFinalResult::DrawFinalResult(zen::TotalScoreRecord *)
+zen::DrawFinalResult::DrawFinalResult(zen::TotalScoreRecord *)
 {
 /*
 .loc_0x0:

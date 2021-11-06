@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -25,7 +27,7 @@ void _Print(char *, ...)
  * Address:	80182318
  * Size:	000324
  */
-void zen::ogScrPauseMgr::ogScrPauseMgr()
+zen::ogScrPauseMgr::ogScrPauseMgr()
 {
 /*
 .loc_0x0:
@@ -661,7 +663,7 @@ void zen::ogScrPauseMgr::draw(Graphics &)
  * Address:	80182B38
  * Size:	00005C
  */
-void P2DPerspGraph::~P2DPerspGraph()
+P2DPerspGraph::~P2DPerspGraph()
 {
 /*
 .loc_0x0:

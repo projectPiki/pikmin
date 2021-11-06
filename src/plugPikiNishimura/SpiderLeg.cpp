@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -1433,7 +1435,7 @@ void SpiderLeg::setLegScaleParam(int)
  * Address:	80156AF0
  * Size:	000154
  */
-void SpiderLeg::SpiderLeg(Spider *)
+SpiderLeg::SpiderLeg(Spider *)
 {
 /*
 .loc_0x0:
@@ -1530,7 +1532,7 @@ void SpiderLeg::SpiderLeg(Spider *)
  * Address:	80156C44
  * Size:	00001C
  */
-void SpiderGenRippleCallBack::SpiderGenRippleCallBack()
+SpiderGenRippleCallBack::SpiderGenRippleCallBack()
 {
 /*
 .loc_0x0:
@@ -1549,7 +1551,7 @@ void SpiderGenRippleCallBack::SpiderGenRippleCallBack()
  * Address:	80156C60
  * Size:	00001C
  */
-void SpiderGenPerishCallBack::SpiderGenPerishCallBack()
+SpiderGenPerishCallBack::SpiderGenPerishCallBack()
 {
 /*
 .loc_0x0:
@@ -1568,7 +1570,7 @@ void SpiderGenPerishCallBack::SpiderGenPerishCallBack()
  * Address:	80156C7C
  * Size:	00001C
  */
-void SpiderGenHalfDeadCallBackJoint::SpiderGenHalfDeadCallBackJoint()
+SpiderGenHalfDeadCallBackJoint::SpiderGenHalfDeadCallBackJoint()
 {
 /*
 .loc_0x0:

@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -25,7 +27,7 @@ void _Print(char *, ...)
  * Address:	801CD720
  * Size:	000084
  */
-void TAIkabekuiCSoundTable::TAIkabekuiCSoundTable()
+TAIkabekuiCSoundTable::TAIkabekuiCSoundTable()
 {
 /*
 .loc_0x0:
@@ -76,7 +78,7 @@ void TAIkabekuiCSoundTable::TAIkabekuiCSoundTable()
  * Address:	801CD7A4
  * Size:	000478
  */
-void TAIkabekuiCParameters::TAIkabekuiCParameters()
+TAIkabekuiCParameters::TAIkabekuiCParameters()
 {
 /*
 .loc_0x0:
@@ -374,7 +376,7 @@ void TAIkabekuiCParameters::TAIkabekuiCParameters()
  * Address:	801CDC1C
  * Size:	00129C
  */
-void TAIkabekuiCStrategy::TAIkabekuiCStrategy()
+TAIkabekuiCStrategy::TAIkabekuiCStrategy()
 {
 /*
 .loc_0x0:
@@ -2606,13 +2608,9 @@ void TAIAmoreLifeKabekuiC::getLifePercentThreshold(Teki &)
  * Address:	801CFA24
  * Size:	000008
  */
-void TAIAcheckPikiFlyKabekuiC::act(Teki &)
+u32  TAIAcheckPikiFlyKabekuiC::act(Teki &)
 {
-/*
-.loc_0x0:
-  li        r3, 0
-  blr
-*/
+	return 0x0;
 }
 
 /*

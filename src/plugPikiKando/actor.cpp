@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -25,7 +27,7 @@ void _Print(char *, ...)
  * Address:	........
  * Size:	000074
  */
-void Actor::Actor()
+Actor::Actor()
 {
 	// UNUSED FUNCTION
 }

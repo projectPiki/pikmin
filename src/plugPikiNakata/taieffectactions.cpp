@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -97,7 +99,7 @@ void TaiStopGenParticleGeneratorAction::start(Teki &)
  * Address:	8012E638
  * Size:	00008C
  */
-void TaiJointEffectAction::TaiJointEffectAction(float, int, int, int, int, int)
+TaiJointEffectAction::TaiJointEffectAction(float, int, int, int, int, int)
 {
 /*
 .loc_0x0:
@@ -146,8 +148,4 @@ void TaiJointEffectAction::TaiJointEffectAction(float, int, int, int, int, int)
  */
 void TaiJointEffectAction::setType(Vector3f &, int, int)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }

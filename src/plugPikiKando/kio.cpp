@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -62,7 +64,7 @@ void hioCallback()
  * Address:	80084374
  * Size:	00005C
  */
-void KIO::KIO()
+KIO::KIO()
 {
 /*
 .loc_0x0:

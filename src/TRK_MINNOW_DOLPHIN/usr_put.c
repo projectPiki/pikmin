@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -57,10 +59,6 @@ void usr_puts_ram(void)
  */
 void usr_put_initialize(void)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*

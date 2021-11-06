@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -35,7 +37,7 @@ void PaniPikiAnimMgr::getMotionTable()
  * Address:	8011F8A0
  * Size:	00003C
  */
-void PaniPikiAnimMgr::PaniPikiAnimMgr()
+PaniPikiAnimMgr::PaniPikiAnimMgr()
 {
 /*
 .loc_0x0:

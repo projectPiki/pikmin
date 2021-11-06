@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -25,7 +27,7 @@ void _Print(char *, ...)
  * Address:	8016A630
  * Size:	00013C
  */
-void SlimeBody::SlimeBody(Slime *)
+SlimeBody::SlimeBody(Slime *)
 {
 /*
 .loc_0x0:

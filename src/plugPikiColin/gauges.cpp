@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -567,7 +569,7 @@ void LifeGaugeMgr::init(int)
  * Address:	8005BE40
  * Size:	000054
  */
-void GaugeInfo::GaugeInfo()
+GaugeInfo::GaugeInfo()
 {
 /*
 .loc_0x0:
@@ -732,7 +734,7 @@ void LifeGaugeMgr::removeLG(GaugeInfo *)
  * Address:	8005BF9C
  * Size:	0000D8
  */
-void LifeGauge::LifeGauge()
+LifeGauge::LifeGauge()
 {
 /*
 .loc_0x0:
@@ -1964,8 +1966,4 @@ void LifeGauge::countOff()
  */
 void __sinit_gauges_cpp(void)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }

@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -25,7 +27,7 @@ void _Print(char *, ...)
  * Address:	800E97AC
  * Size:	000158
  */
-void UfoShapeObject::UfoShapeObject(Shape *)
+UfoShapeObject::UfoShapeObject(Shape *)
 {
 /*
 .loc_0x0:
@@ -125,7 +127,7 @@ void UfoShapeObject::UfoShapeObject(Shape *)
  * Address:	800E9904
  * Size:	000028
  */
-void AnimContext::AnimContext()
+AnimContext::AnimContext()
 {
 /*
 .loc_0x0:
@@ -367,7 +369,7 @@ void PaniUfoAnimator::createMotionTable()
  * Address:	800E9BDC
  * Size:	00003C
  */
-void PaniUfoAnimator::PaniUfoAnimator()
+PaniUfoAnimator::PaniUfoAnimator()
 {
 /*
 .loc_0x0:
@@ -394,7 +396,7 @@ void PaniUfoAnimator::PaniUfoAnimator()
  * Address:	800E9C18
  * Size:	00005C
  */
-void UfoAnimator::UfoAnimator()
+UfoAnimator::UfoAnimator()
 {
 /*
 .loc_0x0:

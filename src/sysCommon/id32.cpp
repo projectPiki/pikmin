@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -25,7 +27,7 @@ void _Print(char *, ...)
  * Address:	80043E5C
  * Size:	000038
  */
-void ID32::ID32()
+ID32::ID32()
 {
 /*
 .loc_0x0:
@@ -51,7 +53,7 @@ void ID32::ID32()
  * Address:	80043E94
  * Size:	000030
  */
-void ID32::ID32(unsigned long)
+ID32::ID32(unsigned long)
 {
 /*
 .loc_0x0:
@@ -360,10 +362,6 @@ void ID32::read(RandomAccessStream &)
  */
 void ID32::print()
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*

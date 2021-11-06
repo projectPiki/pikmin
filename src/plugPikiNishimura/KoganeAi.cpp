@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -176,7 +178,7 @@ void KoganeAi::killCallBackEffect(bool)
  * Address:	801762E8
  * Size:	000074
  */
-void KoganeAi::KoganeAi(Kogane *)
+KoganeAi::KoganeAi(Kogane *)
 {
 /*
 .loc_0x0:

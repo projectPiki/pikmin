@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -25,7 +27,7 @@ void _Print(char *, ...)
  * Address:	801D4800
  * Size:	000084
  */
-void TAIhibaASoundTable::TAIhibaASoundTable()
+TAIhibaASoundTable::TAIhibaASoundTable()
 {
 /*
 .loc_0x0:
@@ -76,7 +78,7 @@ void TAIhibaASoundTable::TAIhibaASoundTable()
  * Address:	801D4884
  * Size:	0002F8
  */
-void TAIhibaAParameters::TAIhibaAParameters()
+TAIhibaAParameters::TAIhibaAParameters()
 {
 /*
 .loc_0x0:
@@ -278,7 +280,7 @@ void TAIhibaAParameters::TAIhibaAParameters()
  * Address:	801D4B7C
  * Size:	0001E8
  */
-void TAIhibaAStrategy::TAIhibaAStrategy()
+TAIhibaAStrategy::TAIhibaAStrategy()
 {
 /*
 .loc_0x0:
@@ -1353,13 +1355,9 @@ void TAIAinitHibaA::start(Teki &)
  * Address:	801D59C0
  * Size:	000008
  */
-void TAIAinitHibaA::act(Teki &)
+u32  TAIAinitHibaA::act(Teki &)
 {
-/*
-.loc_0x0:
-  li        r3, 0x1
-  blr
-*/
+	return 0x1;
 }
 
 /*

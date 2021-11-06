@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -25,7 +27,7 @@ void _Print(char *, ...)
  * Address:	801241A8
  * Size:	0000CC
  */
-void PcamLongVibrationEvent::PcamLongVibrationEvent(PcamCamera *)
+PcamLongVibrationEvent::PcamLongVibrationEvent(PcamCamera *)
 {
 /*
 .loc_0x0:
@@ -158,7 +160,7 @@ void PcamLongVibrationEvent::makePcamLongVibrationEvent(float, float, float, flo
  * Address:	8012434C
  * Size:	000078
  */
-void PcamVibrationEvent::PcamVibrationEvent(PcamCamera *)
+PcamVibrationEvent::PcamVibrationEvent(PcamCamera *)
 {
 /*
 .loc_0x0:
@@ -245,7 +247,7 @@ void PcamVibrationEvent::makePcamVibrationEvent()
  * Address:	80124448
  * Size:	000078
  */
-void PcamDamageEvent::PcamDamageEvent(PcamCamera *)
+PcamDamageEvent::PcamDamageEvent(PcamCamera *)
 {
 /*
 .loc_0x0:
@@ -327,7 +329,7 @@ void PcamDamageEvent::makePcamDamageEvent()
  * Address:	........
  * Size:	000064
  */
-void PcamRandomMoveEvent::PcamRandomMoveEvent(PcamCamera *)
+PcamRandomMoveEvent::PcamRandomMoveEvent(PcamCamera *)
 {
 	// UNUSED FUNCTION
 }
@@ -525,7 +527,7 @@ void PcamRandomMoveEvent::update()
  * Address:	801247C0
  * Size:	0000C4
  */
-void PcamSideVibrationEvent::PcamSideVibrationEvent(PcamCamera *)
+PcamSideVibrationEvent::PcamSideVibrationEvent(PcamCamera *)
 {
 /*
 .loc_0x0:
@@ -726,11 +728,8 @@ void PeveEvent::clearEventOption(int)
  * Address:	801249BC
  * Size:	000008
  */
-void PeveEvent::setEventOptions(int)
+void PeveEvent::setEventOptions(int a1)
 {
-/*
-.loc_0x0:
-  stw       r4, 0xC(r3)
-  blr
-*/
+// Generated from stw r4, 0xC(r3)
+_0C = a1;
 }

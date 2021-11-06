@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -25,12 +27,8 @@ void _Print(char *, ...)
  * Address:	800E2FB4
  * Size:	000004
  */
-void SearchSystem::SearchSystem()
+SearchSystem::SearchSystem()
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -980,7 +978,7 @@ void SearchSystem::updateLoopOptimised()
  * Address:	800E3C10
  * Size:	000070
  */
-void SearchBuffer::SearchBuffer()
+SearchBuffer::SearchBuffer()
 {
 /*
 .loc_0x0:
@@ -1631,13 +1629,9 @@ void SearchBuffer::getCreature(int)
  * Address:	800E430C
  * Size:	000008
  */
-void SearchBuffer::getFirst()
+u32  SearchBuffer::getFirst()
 {
-/*
-.loc_0x0:
-  li        r3, 0
-  blr
-*/
+	return 0x0;
 }
 
 /*

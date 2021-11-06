@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -374,7 +376,7 @@ void ItemMgr::getUfo()
  * Address:	........
  * Size:	000110
  */
-void ItemShapeObject::ItemShapeObject(Shape *, char *, char *)
+ItemShapeObject::ItemShapeObject(Shape *, char *, char *)
 {
 	// UNUSED FUNCTION
 }
@@ -384,7 +386,7 @@ void ItemShapeObject::ItemShapeObject(Shape *, char *, char *)
  * Address:	800F2D4C
  * Size:	0003C0
  */
-void MeltingPotMgr::MeltingPotMgr(ItemMgr *)
+MeltingPotMgr::MeltingPotMgr(ItemMgr *)
 {
 /*
 .loc_0x0:
@@ -1335,7 +1337,7 @@ void ItemMgr::addUseList(int)
  * Address:	800F3990
  * Size:	0009D8
  */
-void ItemMgr::ItemMgr()
+ItemMgr::ItemMgr()
 {
 /*
 .loc_0x0:
@@ -2157,13 +2159,9 @@ void ItemMgr::showInfo()
  * Address:	800F4368
  * Size:	000008
  */
-void ItemMgr::getPelletShapeObject(int, int)
+u32  ItemMgr::getPelletShapeObject(int, int)
 {
-/*
-.loc_0x0:
-  li        r3, 0
-  blr
-*/
+	return 0x0;
 }
 
 /*
@@ -3708,7 +3706,7 @@ void ItemMgr::initialise()
  * Address:	800F58AC
  * Size:	0000C8
  */
-void ItemCreature::ItemCreature(int, CreatureProp *, Shape *)
+ItemCreature::ItemCreature(int, CreatureProp *, Shape *)
 {
 /*
 .loc_0x0:
@@ -4976,7 +4974,7 @@ void InteractAttack::actItem(ItemCreature *)
  * Address:	800F65E4
  * Size:	000144
  */
-void BuildingItem::BuildingItem(int, CreatureProp *, ItemShapeObject *, SimpleAI *)
+BuildingItem::BuildingItem(int, CreatureProp *, ItemShapeObject *, SimpleAI *)
 {
 /*
 .loc_0x0:
@@ -5496,10 +5494,6 @@ void BuildingItem::refresh(Graphics &)
  */
 void BuildingItem::refresh2d(Graphics &)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -6145,7 +6139,7 @@ void ItemMgr::kill(Creature *)
  * Address:	800F7390
  * Size:	0001D8
  */
-void PikiHeadMgr::PikiHeadMgr(ItemMgr *)
+PikiHeadMgr::PikiHeadMgr(ItemMgr *)
 {
 /*
 .loc_0x0:
@@ -6494,7 +6488,7 @@ void ItemMgr::getContainerExitCount()
  * Address:	800F77B4
  * Size:	000084
  */
-void PikiHeadMgr::~PikiHeadMgr()
+PikiHeadMgr::~PikiHeadMgr()
 {
 /*
 .loc_0x0:
@@ -6543,7 +6537,7 @@ void PikiHeadMgr::~PikiHeadMgr()
  * Address:	800F7838
  * Size:	000084
  */
-void ItemMgr::~ItemMgr()
+ItemMgr::~ItemMgr()
 {
 /*
 .loc_0x0:
@@ -6592,7 +6586,7 @@ void ItemMgr::~ItemMgr()
  * Address:	800F78BC
  * Size:	000084
  */
-void MeltingPotMgr::~MeltingPotMgr()
+MeltingPotMgr::~MeltingPotMgr()
 {
 /*
 .loc_0x0:
@@ -6655,13 +6649,9 @@ void BuildingItem::getiMass()
  * Address:	800F7948
  * Size:	000008
  */
-void BuildingItem::needShadow()
+u32  BuildingItem::needShadow()
 {
-/*
-.loc_0x0:
-  li        r3, 0
-  blr
-*/
+	return 0x0;
 }
 
 /*

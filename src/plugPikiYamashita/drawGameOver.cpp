@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -25,7 +27,7 @@ void _Print(char *, ...)
  * Address:	801E8900
  * Size:	000334
  */
-void zen::DrawGameOver::DrawGameOver()
+zen::DrawGameOver::DrawGameOver()
 {
 /*
 .loc_0x0:
@@ -377,7 +379,7 @@ void zen::DrawGameOverLetter::init(P2DPane *)
  * Address:	801E8D90
  * Size:	00003C
  */
-void zen::DrawGameOverLetter::DrawGameOverLetter()
+zen::DrawGameOverLetter::DrawGameOverLetter()
 {
 /*
 .loc_0x0:

@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -25,7 +27,7 @@ void _Print(char *, ...)
  * Address:	8005EA80
  * Size:	00006C
  */
-void BaseParm::BaseParm(Parameters *, ayuID)
+BaseParm::BaseParm(Parameters *, ayuID)
 {
 /*
 .loc_0x0:
@@ -136,10 +138,6 @@ void Parameters::write(RandomAccessStream &)
  */
 void BaseParm::write(RandomAccessStream &)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -236,10 +234,6 @@ void Parameters::read(RandomAccessStream &)
  */
 void BaseParm::read(RandomAccessStream &)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*

@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -348,10 +350,6 @@ void SAIUserEvent::procUserMsg(AICreature *, MsgUser *)
  */
 void Receiver<AICreature>::procBounceMsg(AICreature *, MsgBounce *)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -361,10 +359,6 @@ void Receiver<AICreature>::procBounceMsg(AICreature *, MsgBounce *)
  */
 void Receiver<AICreature>::procStickMsg(AICreature *, MsgStick *)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -374,10 +368,6 @@ void Receiver<AICreature>::procStickMsg(AICreature *, MsgStick *)
  */
 void Receiver<AICreature>::procHangMsg(AICreature *, MsgHang *)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -387,10 +377,6 @@ void Receiver<AICreature>::procHangMsg(AICreature *, MsgHang *)
  */
 void Receiver<AICreature>::procTargetMsg(AICreature *, MsgTarget *)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -400,10 +386,6 @@ void Receiver<AICreature>::procTargetMsg(AICreature *, MsgTarget *)
  */
 void Receiver<AICreature>::procCollideMsg(AICreature *, MsgCollide *)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -413,10 +395,6 @@ void Receiver<AICreature>::procCollideMsg(AICreature *, MsgCollide *)
  */
 void Receiver<AICreature>::procAnimMsg(AICreature *, MsgAnim *)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -426,10 +404,6 @@ void Receiver<AICreature>::procAnimMsg(AICreature *, MsgAnim *)
  */
 void Receiver<AICreature>::procDamageMsg(AICreature *, MsgDamage *)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -439,10 +413,6 @@ void Receiver<AICreature>::procDamageMsg(AICreature *, MsgDamage *)
  */
 void Receiver<AICreature>::procWallMsg(AICreature *, MsgWall *)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -452,10 +422,6 @@ void Receiver<AICreature>::procWallMsg(AICreature *, MsgWall *)
  */
 void Receiver<AICreature>::procOffWallMsg(AICreature *, MsgOffWall *)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -465,10 +431,6 @@ void Receiver<AICreature>::procOffWallMsg(AICreature *, MsgOffWall *)
  */
 void Receiver<AICreature>::procUserMsg(AICreature *, MsgUser *)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -478,10 +440,6 @@ void Receiver<AICreature>::procUserMsg(AICreature *, MsgUser *)
  */
 void Receiver<AICreature>::procGroundMsg(AICreature *, MsgGround *)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*

@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -25,7 +27,7 @@ void _Print(char *, ...)
  * Address:	801CFE0C
  * Size:	000084
  */
-void TAItamagoSoundTable::TAItamagoSoundTable()
+TAItamagoSoundTable::TAItamagoSoundTable()
 {
 /*
 .loc_0x0:
@@ -76,7 +78,7 @@ void TAItamagoSoundTable::TAItamagoSoundTable()
  * Address:	801CFE90
  * Size:	0002F4
  */
-void TAItamagoParameters::TAItamagoParameters()
+TAItamagoParameters::TAItamagoParameters()
 {
 /*
 .loc_0x0:
@@ -277,7 +279,7 @@ void TAItamagoParameters::TAItamagoParameters()
  * Address:	801D0184
  * Size:	0002DC
  */
-void TAItamagoStrategy::TAItamagoStrategy()
+TAItamagoStrategy::TAItamagoStrategy()
 {
 /*
 .loc_0x0:

@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -25,7 +27,7 @@ void _Print(char *, ...)
  * Address:	8013A500
  * Size:	000084
  */
-void TaiOtimotiSoundTable::TaiOtimotiSoundTable()
+TaiOtimotiSoundTable::TaiOtimotiSoundTable()
 {
 /*
 .loc_0x0:
@@ -76,7 +78,7 @@ void TaiOtimotiSoundTable::TaiOtimotiSoundTable()
  * Address:	8013A584
  * Size:	000540
  */
-void TaiOtimotiParameters::TaiOtimotiParameters()
+TaiOtimotiParameters::TaiOtimotiParameters()
 {
 /*
 .loc_0x0:
@@ -424,7 +426,7 @@ void TaiOtimotiParameters::TaiOtimotiParameters()
  * Address:	8013AAC4
  * Size:	000084
  */
-void TaiBlackFrogSoundTable::TaiBlackFrogSoundTable()
+TaiBlackFrogSoundTable::TaiBlackFrogSoundTable()
 {
 /*
 .loc_0x0:
@@ -475,7 +477,7 @@ void TaiBlackFrogSoundTable::TaiBlackFrogSoundTable()
  * Address:	8013AB48
  * Size:	00053C
  */
-void TaiBlackFrogParameters::TaiBlackFrogParameters()
+TaiBlackFrogParameters::TaiBlackFrogParameters()
 {
 /*
 .loc_0x0:
@@ -822,7 +824,7 @@ void TaiBlackFrogParameters::TaiBlackFrogParameters()
  * Address:	8013B084
  * Size:	00161C
  */
-void TaiOtimotiStrategy::TaiOtimotiStrategy(TekiParameters *)
+TaiOtimotiStrategy::TaiOtimotiStrategy(TekiParameters *)
 {
 /*
 .loc_0x0:
@@ -3762,13 +3764,9 @@ void TaiOtimotiPressingAction::actByEvent(TekiEvent &)
  * Address:	8013D824
  * Size:	000008
  */
-void TaiOtimotiBouncingAction::act(Teki &)
+u32  TaiOtimotiBouncingAction::act(Teki &)
 {
-/*
-.loc_0x0:
-  li        r3, 0x1
-  blr
-*/
+	return 0x1;
 }
 
 /*
@@ -3776,13 +3774,9 @@ void TaiOtimotiBouncingAction::act(Teki &)
  * Address:	8013D82C
  * Size:	000008
  */
-void TaiOtimotiBouncingAction::actByEvent(TekiEvent &)
+u32  TaiOtimotiBouncingAction::actByEvent(TekiEvent &)
 {
-/*
-.loc_0x0:
-  li        r3, 0
-  blr
-*/
+	return 0x0;
 }
 
 /*
@@ -3792,10 +3786,6 @@ void TaiOtimotiBouncingAction::actByEvent(TekiEvent &)
  */
 void TaiOtimotiAttackingAction::start(Teki &)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -3867,13 +3857,9 @@ void TaiOtimotiAttackingAction::act(Teki &)
  * Address:	8013D8E8
  * Size:	000008
  */
-void TaiOtimotiAttackingAction::actByEvent(TekiEvent &)
+u32  TaiOtimotiAttackingAction::actByEvent(TekiEvent &)
 {
-/*
-.loc_0x0:
-  li        r3, 0
-  blr
-*/
+	return 0x0;
 }
 
 /*
@@ -3957,7 +3943,7 @@ void TaiOtimotiAttackingEffectAction::start(Teki &)
  * Address:	8013D9E0
  * Size:	000058
  */
-void TaiOtimotiLegEffectAction::TaiOtimotiLegEffectAction(float)
+TaiOtimotiLegEffectAction::TaiOtimotiLegEffectAction(float)
 {
 /*
 .loc_0x0:

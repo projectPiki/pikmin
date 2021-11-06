@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -35,7 +37,7 @@ void CmdStream::init(Stream *)
  * Address:	........
  * Size:	000004
  */
-void CmdStream::CmdStream()
+CmdStream::CmdStream()
 {
 	// UNUSED FUNCTION
 }
@@ -45,7 +47,7 @@ void CmdStream::CmdStream()
  * Address:	80040B7C
  * Size:	0000B0
  */
-void CmdStream::CmdStream(Stream *)
+CmdStream::CmdStream(Stream *)
 {
 /*
 .loc_0x0:

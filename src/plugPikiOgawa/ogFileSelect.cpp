@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -2328,7 +2330,7 @@ void zen::ogScrFileSelectMgr::init()
  * Address:	801896BC
  * Size:	0008F8
  */
-void zen::ogScrFileSelectMgr::ogScrFileSelectMgr()
+zen::ogScrFileSelectMgr::ogScrFileSelectMgr()
 {
 /*
 .loc_0x0:
@@ -2956,7 +2958,7 @@ void zen::ogScrFileSelectMgr::ogScrFileSelectMgr()
  * Address:	80189FB4
  * Size:	00000C
  */
-void CardQuickInfo::CardQuickInfo()
+CardQuickInfo::CardQuickInfo()
 {
 /*
 .loc_0x0:
@@ -4975,7 +4977,7 @@ void zen::ogScrFileSelectMgr::update(Controller *, CardQuickInfo &)
  * Address:	8018B9D0
  * Size:	000024
  */
-void Colour::Colour(const Colour &)
+Colour::Colour(const Colour &)
 {
 /*
 .loc_0x0:

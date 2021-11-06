@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -355,7 +357,7 @@ void PelletStateMachine::init(Pellet *)
  * Address:	8009A42C
  * Size:	00004C
  */
-void PelletUfoLoadState::PelletUfoLoadState()
+PelletUfoLoadState::PelletUfoLoadState()
 {
 /*
 .loc_0x0:
@@ -388,12 +390,8 @@ void PelletUfoLoadState::PelletUfoLoadState()
  */
 void PelletUfoLoadState::init(Pellet *)
 {
-/*
-.loc_0x0:
-  li        r0, 0x8
-  stb       r0, 0x10(r3)
-  blr
-*/
+// Generated from stb r0, 0x10(r3)
+_10 = 8;
 }
 
 /*
@@ -488,7 +486,7 @@ void PelletUfoLoadState::cleanup(Pellet *)
  * Address:	8009A540
  * Size:	00004C
  */
-void PelletDeadState::PelletDeadState()
+PelletDeadState::PelletDeadState()
 {
 /*
 .loc_0x0:
@@ -521,10 +519,6 @@ void PelletDeadState::PelletDeadState()
  */
 void PelletDeadState::init(Pellet *)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -534,10 +528,6 @@ void PelletDeadState::init(Pellet *)
  */
 void PelletDeadState::exec(Pellet *)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -547,10 +537,6 @@ void PelletDeadState::exec(Pellet *)
  */
 void PelletDeadState::cleanup(Pellet *)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -558,7 +544,7 @@ void PelletDeadState::cleanup(Pellet *)
  * Address:	8009A598
  * Size:	000048
  */
-void PelletNormalState::PelletNormalState()
+PelletNormalState::PelletNormalState()
 {
 /*
 .loc_0x0:
@@ -590,10 +576,6 @@ void PelletNormalState::PelletNormalState()
  */
 void PelletNormalState::init(Pellet *)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -603,10 +585,6 @@ void PelletNormalState::init(Pellet *)
  */
 void PelletNormalState::exec(Pellet *)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -616,10 +594,6 @@ void PelletNormalState::exec(Pellet *)
  */
 void PelletNormalState::cleanup(Pellet *)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -627,7 +601,7 @@ void PelletNormalState::cleanup(Pellet *)
  * Address:	8009A5EC
  * Size:	000050
  */
-void PelletSwallowedState::PelletSwallowedState()
+PelletSwallowedState::PelletSwallowedState()
 {
 /*
 .loc_0x0:
@@ -661,10 +635,6 @@ void PelletSwallowedState::PelletSwallowedState()
  */
 void PelletSwallowedState::init(Pellet *)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -722,7 +692,7 @@ void PelletSwallowedState::cleanup(Pellet *)
  * Address:	8009A6A0
  * Size:	00004C
  */
-void PelletAppearState::PelletAppearState()
+PelletAppearState::PelletAppearState()
 {
 /*
 .loc_0x0:
@@ -872,10 +842,6 @@ void PelletAppearState::exec(Pellet *)
  */
 void PelletAppearState::cleanup(Pellet *)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -883,7 +849,7 @@ void PelletAppearState::cleanup(Pellet *)
  * Address:	8009A81C
  * Size:	00005C
  */
-void PelletGoalState::PelletGoalState()
+PelletGoalState::PelletGoalState()
 {
 /*
 .loc_0x0:
@@ -1524,10 +1490,6 @@ void PelletGoalState::exec(Pellet *)
  */
 void Suckable::finishSuck(Pellet *)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -1563,10 +1525,6 @@ void PelletGoalState::cleanup(Pellet *)
  */
 void AState<Pellet>::resume(Pellet *)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -1576,8 +1534,4 @@ void AState<Pellet>::resume(Pellet *)
  */
 void AState<Pellet>::restart(Pellet *)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }

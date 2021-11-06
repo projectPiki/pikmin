@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -25,7 +27,7 @@ void _Print(char *, ...)
  * Address:	800B5AAC
  * Size:	0000FC
  */
-void ActCrowd::ActCrowd(Piki *)
+ActCrowd::ActCrowd(Piki *)
 {
 /*
 .loc_0x0:
@@ -104,13 +106,10 @@ void ActCrowd::ActCrowd(Piki *)
  * Address:	800B5BA8
  * Size:	000008
  */
-void ActCrowd::inform(int)
+void ActCrowd::inform(int a1)
 {
-/*
-.loc_0x0:
-  stw       r4, 0x58(r3)
-  blr
-*/
+// Generated from stw r4, 0x58(r3)
+_58 = a1;
 }
 
 /*
@@ -2173,10 +2172,6 @@ void ActCrowd::startZawatuki()
  */
 void ActCrowd::finishZawatuki()
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -2204,7 +2199,7 @@ void ActCrowd::startTalk()
  * Address:	800B7710
  * Size:	000080
  */
-void ActCrowd::~ActCrowd()
+ActCrowd::~ActCrowd()
 {
 /*
 .loc_0x0:
@@ -2250,13 +2245,9 @@ void ActCrowd::~ActCrowd()
  * Address:	800B7790
  * Size:	000008
  */
-void ActCrowd::resumable()
+u32  ActCrowd::resumable()
 {
-/*
-.loc_0x0:
-  li        r3, 0x1
-  blr
-*/
+	return 0x1;
 }
 
 /*

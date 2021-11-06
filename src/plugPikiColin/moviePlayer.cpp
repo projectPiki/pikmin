@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -55,7 +57,7 @@ void MovieInfo::refresh(Graphics &)
  * Address:	80076E34
  * Size:	0000BC
  */
-void MoviePlayer::MoviePlayer()
+MoviePlayer::MoviePlayer()
 {
 /*
 .loc_0x0:

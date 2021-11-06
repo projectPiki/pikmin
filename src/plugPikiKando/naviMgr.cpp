@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -25,7 +27,7 @@ void _Print(char *, ...)
  * Address:	801171C4
  * Size:	000180
  */
-void NaviMgr::NaviMgr()
+NaviMgr::NaviMgr()
 {
 /*
 .loc_0x0:
@@ -580,7 +582,7 @@ void NaviMgr::read(RandomAccessStream &)
  * Address:	801177C8
  * Size:	000084
  */
-void NaviMgr::~NaviMgr()
+NaviMgr::~NaviMgr()
 {
 /*
 .loc_0x0:

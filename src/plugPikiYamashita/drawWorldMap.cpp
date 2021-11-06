@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -25,7 +27,7 @@ void _Print(char *, ...)
  * Address:	........
  * Size:	000040
  */
-void zen::DrawWorldMap::~DrawWorldMap()
+zen::DrawWorldMap::~DrawWorldMap()
 {
 	// UNUSED FUNCTION
 }
@@ -35,7 +37,7 @@ void zen::DrawWorldMap::~DrawWorldMap()
  * Address:	801DB14C
  * Size:	00246C
  */
-void zen::DrawWorldMap::DrawWorldMap()
+zen::DrawWorldMap::DrawWorldMap()
 {
 /*
 .loc_0x0:
@@ -2692,7 +2694,7 @@ void P2DPane::hide()
  * Address:	801DD740
  * Size:	00002C
  */
-void @unnamed@::WorldMapTitleObj::WorldMapTitleObj()
+@unnamed@::WorldMapTitleObj::WorldMapTitleObj()
 {
 /*
 .loc_0x0:
@@ -3407,7 +3409,7 @@ void zen::WorldMapCursorMgr::initParams()
  * Address:	801DE0B4
  * Size:	0000EC
  */
-void zen::WorldMapCursorOnyon::WorldMapCursorOnyon()
+zen::WorldMapCursorOnyon::WorldMapCursorOnyon()
 {
 /*
 .loc_0x0:
@@ -3758,7 +3760,7 @@ void zen::WorldMapWipe::init(P2DScreen *, unsigned long)
  * Address:	801DE520
  * Size:	000034
  */
-void zen::WorldMapWipe::WorldMapWipe()
+zen::WorldMapWipe::WorldMapWipe()
 {
 /*
 .loc_0x0:
@@ -3899,7 +3901,7 @@ void @unnamed@::WorldMapCoursePoint::setPane(P2DScreen *, unsigned long, unsigne
  * Address:	801DE6DC
  * Size:	000038
  */
-void @unnamed@::WorldMapCoursePoint::WorldMapCoursePoint()
+@unnamed@::WorldMapCoursePoint::WorldMapCoursePoint()
 {
 /*
 .loc_0x0:

@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -79,7 +81,7 @@ void ActPutBomb::procCollideMsg(Piki *, MsgCollide *)
  * Address:	800BEA94
  * Size:	000088
  */
-void ActPutBomb::ActPutBomb(Piki *)
+ActPutBomb::ActPutBomb(Piki *)
 {
 /*
 .loc_0x0:
@@ -632,12 +634,8 @@ void ActPutBomb::init(Creature *)
  */
 void ActPutBomb::initSet()
 {
-/*
-.loc_0x0:
-  li        r0, 0x2
-  sth       r0, 0x18(r3)
-  blr
-*/
+// Generated from sth r0, 0x18(r3)
+_18 = 2;
 }
 
 /*
@@ -1236,12 +1234,8 @@ void ActPutBomb::exeAim()
  */
 void ActPutBomb::initWait()
 {
-/*
-.loc_0x0:
-  li        r0, 0x4
-  sth       r0, 0x18(r3)
-  blr
-*/
+// Generated from sth r0, 0x18(r3)
+_18 = 4;
 }
 
 /*
@@ -1784,10 +1778,6 @@ void ActPutBomb::animationKeyUpdated(PaniAnimKeyEvent &)
  */
 void ActPutBomb::cleanup()
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -1795,7 +1785,7 @@ void ActPutBomb::cleanup()
  * Address:	800BFF4C
  * Size:	00005C
  */
-void ActPutItem::ActPutItem(Piki *)
+ActPutItem::ActPutItem(Piki *)
 {
 /*
 .loc_0x0:
@@ -2580,7 +2570,7 @@ void ActPutItem::cleanup()
  * Address:	800C0918
  * Size:	000064
  */
-void ActPutItem::~ActPutItem()
+ActPutItem::~ActPutItem()
 {
 /*
 .loc_0x0:
@@ -2619,7 +2609,7 @@ void ActPutItem::~ActPutItem()
  * Address:	800C097C
  * Size:	000080
  */
-void ActPutBomb::~ActPutBomb()
+ActPutBomb::~ActPutBomb()
 {
 /*
 .loc_0x0:

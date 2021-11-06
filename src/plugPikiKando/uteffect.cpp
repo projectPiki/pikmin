@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -25,7 +27,7 @@ void _Print(char *, ...)
  * Address:	80113164
  * Size:	000068
  */
-void SlimeEffect::SlimeEffect()
+SlimeEffect::SlimeEffect()
 {
 /*
 .loc_0x0:
@@ -239,7 +241,7 @@ void SlimeEffect::kill()
  * Address:	8011337C
  * Size:	000F54
  */
-void UtEffectMgr::UtEffectMgr()
+UtEffectMgr::UtEffectMgr()
 {
 /*
 .loc_0x0:
@@ -1370,7 +1372,7 @@ void UtEffectMgr::kill(int)
  * Address:	80114368
  * Size:	000034
  */
-void PermanentEffect::PermanentEffect()
+PermanentEffect::PermanentEffect()
 {
 /*
 .loc_0x0:
@@ -2107,13 +2109,9 @@ void BurnEffect::kill()
  * Address:	80114AA4
  * Size:	000008
  */
-void BurnEffect::invoke(zen::particleGenerator *)
+u32  BurnEffect::invoke(zen::particleGenerator *)
 {
-/*
-.loc_0x0:
-  li        r3, 0x1
-  blr
-*/
+	return 0x1;
 }
 
 /*
@@ -2745,10 +2743,6 @@ void BombEffectLight::emit(EffectParm &)
  */
 void BombEffectLight::kill()
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -2832,10 +2826,6 @@ void BombEffect::emit(EffectParm &)
  */
 void BombEffect::kill()
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -2900,13 +2890,9 @@ void SimpleEffect::kill()
  * Address:	801153C0
  * Size:	000008
  */
-void NaviFue::invoke(zen::particleGenerator *)
+u32  NaviFue::invoke(zen::particleGenerator *)
 {
-/*
-.loc_0x0:
-  li        r3, 0x1
-  blr
-*/
+	return 0x1;
 }
 
 /*

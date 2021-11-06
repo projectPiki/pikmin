@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -25,7 +27,7 @@ void _Print(char *, ...)
  * Address:	801A5774
  * Size:	000084
  */
-void TAImarSoundTable::TAImarSoundTable()
+TAImarSoundTable::TAImarSoundTable()
 {
 /*
 .loc_0x0:
@@ -76,7 +78,7 @@ void TAImarSoundTable::TAImarSoundTable()
  * Address:	801A57F8
  * Size:	000440
  */
-void TAImarParameters::TAImarParameters()
+TAImarParameters::TAImarParameters()
 {
 /*
 .loc_0x0:
@@ -360,7 +362,7 @@ void TAImarParameters::TAImarParameters()
  * Address:	801A5C38
  * Size:	000DE8
  */
-void TAImarStrategy::TAImarStrategy()
+TAImarStrategy::TAImarStrategy()
 {
 /*
 .loc_0x0:
@@ -1810,13 +1812,9 @@ void TAIAinitMar::start(Teki &)
  * Address:	801A6FE8
  * Size:	000008
  */
-void TAIAinitMar::act(Teki &)
+u32  TAIAinitMar::act(Teki &)
 {
-/*
-.loc_0x0:
-  li        r3, 0x1
-  blr
-*/
+	return 0x1;
 }
 
 /*
@@ -1868,13 +1866,9 @@ void TAIAwatchNavi::start(Teki &)
  * Address:	801A7060
  * Size:	000008
  */
-void TAIAwatchNavi::act(Teki &)
+u32  TAIAwatchNavi::act(Teki &)
 {
-/*
-.loc_0x0:
-  li        r3, 0x1
-  blr
-*/
+	return 0x1;
 }
 
 /*
@@ -2567,10 +2561,6 @@ void TAIAstickingPikiMar::getPikiNum(Teki &)
  */
 void TAIAstickingPiki::start(Teki &)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*

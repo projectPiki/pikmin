@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -25,7 +27,7 @@ void _Print(char *, ...)
  * Address:	8017AD44
  * Size:	000020
  */
-void CoreNucleusAi::CoreNucleusAi(CoreNucleus *)
+CoreNucleusAi::CoreNucleusAi(CoreNucleus *)
 {
 /*
 .loc_0x0:
@@ -147,10 +149,6 @@ void CoreNucleusAi::animationKeyUpdated(PaniAnimKeyEvent &)
  */
 void CoreNucleusAi::keyAction0()
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -160,10 +158,6 @@ void CoreNucleusAi::keyAction0()
  */
 void CoreNucleusAi::keyAction1()
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -226,10 +220,6 @@ void CoreNucleusAi::keyFinished()
  */
 void CoreNucleusAi::playSound(int)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -239,12 +229,8 @@ void CoreNucleusAi::playSound(int)
  */
 void CoreNucleusAi::setHitMotionStart()
 {
-/*
-.loc_0x0:
-  li        r0, 0x1
-  stb       r0, 0x4(r3)
-  blr
-*/
+// Generated from stb r0, 0x4(r3)
+_04 = 1;
 }
 
 /*

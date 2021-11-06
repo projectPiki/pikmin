@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -198,7 +200,7 @@ void @unnamed@::killDororoEffect(Teki &)
  * Address:	801D11A0
  * Size:	000084
  */
-void TAIdororoSoundTable::TAIdororoSoundTable()
+TAIdororoSoundTable::TAIdororoSoundTable()
 {
 /*
 .loc_0x0:
@@ -249,7 +251,7 @@ void TAIdororoSoundTable::TAIdororoSoundTable()
  * Address:	801D1224
  * Size:	0003C0
  */
-void TAIdororoParameters::TAIdororoParameters()
+TAIdororoParameters::TAIdororoParameters()
 {
 /*
 .loc_0x0:
@@ -501,7 +503,7 @@ void TAIdororoParameters::TAIdororoParameters()
  * Address:	801D15E4
  * Size:	000AD0
  */
-void TAIdororoStrategy::TAIdororoStrategy()
+TAIdororoStrategy::TAIdororoStrategy()
 {
 /*
 .loc_0x0:
@@ -3204,13 +3206,9 @@ void TAIAgoTargetPiki::act(Teki &)
  * Address:	801D3960
  * Size:	000008
  */
-void TAIAgoTargetPiki::checkArrival(Teki &)
+u32  TAIAgoTargetPiki::checkArrival(Teki &)
 {
-/*
-.loc_0x0:
-  li        r3, 0
-  blr
-*/
+	return 0x0;
 }
 
 /*
@@ -4382,11 +4380,7 @@ void TAIAinitDororo::start(Teki &)
  * Address:	801D47F8
  * Size:	000008
  */
-void TAIAinitDororo::act(Teki &)
+u32  TAIAinitDororo::act(Teki &)
 {
-/*
-.loc_0x0:
-  li        r3, 0x1
-  blr
-*/
+	return 0x1;
 }

@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -108,7 +110,7 @@ void P2DPicture::loadResource()
  * Address:	801B1990
  * Size:	0000B4
  */
-void P2DPicture::~P2DPicture()
+P2DPicture::~P2DPicture()
 {
 /*
 .loc_0x0:
@@ -173,7 +175,7 @@ void P2DPicture::~P2DPicture()
  * Address:	........
  * Size:	000058
  */
-void P2DPicture::P2DPicture()
+P2DPicture::P2DPicture()
 {
 	// UNUSED FUNCTION
 }
@@ -183,7 +185,7 @@ void P2DPicture::P2DPicture()
  * Address:	801B1A44
  * Size:	000134
  */
-void P2DPicture::P2DPicture(P2DPane *, RandomAccessStream *, unsigned short)
+P2DPicture::P2DPicture(P2DPane *, RandomAccessStream *, unsigned short)
 {
 /*
 .loc_0x0:
@@ -276,7 +278,7 @@ void P2DPicture::P2DPicture(P2DPane *, RandomAccessStream *, unsigned short)
  * Address:	........
  * Size:	000040
  */
-void P2DStream::~P2DStream()
+P2DStream::~P2DStream()
 {
 	// UNUSED FUNCTION
 }
@@ -286,7 +288,7 @@ void P2DStream::~P2DStream()
  * Address:	801B1B78
  * Size:	0000AC
  */
-void P2DPicture::P2DPicture(Texture *)
+P2DPicture::P2DPicture(Texture *)
 {
 /*
 .loc_0x0:

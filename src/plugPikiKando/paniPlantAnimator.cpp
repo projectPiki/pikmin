@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -135,7 +137,7 @@ void PaniPlantAnimator::createMotionTable()
  * Address:	8011B290
  * Size:	00003C
  */
-void PaniPlantAnimator::PaniPlantAnimator()
+PaniPlantAnimator::PaniPlantAnimator()
 {
 /*
 .loc_0x0:

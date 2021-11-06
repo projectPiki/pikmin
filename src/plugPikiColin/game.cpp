@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -37,10 +39,6 @@ void StageInfo::write(RandomAccessStream &)
  */
 void StageInfo::read(RandomAccessStream &)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*

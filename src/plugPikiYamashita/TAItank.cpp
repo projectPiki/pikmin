@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -25,7 +27,7 @@ void _Print(char *, ...)
  * Address:	801A35D0
  * Size:	000084
  */
-void TAItankSoundTable::TAItankSoundTable()
+TAItankSoundTable::TAItankSoundTable()
 {
 /*
 .loc_0x0:
@@ -76,7 +78,7 @@ void TAItankSoundTable::TAItankSoundTable()
  * Address:	801A3654
  * Size:	000364
  */
-void TAItankParameters::TAItankParameters()
+TAItankParameters::TAItankParameters()
 {
 /*
 .loc_0x0:
@@ -305,7 +307,7 @@ void TAItankParameters::TAItankParameters()
  * Address:	801A39B8
  * Size:	000C14
  */
-void TAItankStrategy::TAItankStrategy()
+TAItankStrategy::TAItankStrategy()
 {
 /*
 .loc_0x0:
@@ -1824,13 +1826,9 @@ void TAItankAnimation::makeDefaultAnimations()
  * Address:	801A4EAC
  * Size:	000008
  */
-void TAIAnoReaction::act(Teki &)
+u32  TAIAnoReaction::act(Teki &)
 {
-/*
-.loc_0x0:
-  li        r3, 0x1
-  blr
-*/
+	return 0x1;
 }
 
 /*
@@ -1853,13 +1851,9 @@ void TAIAinitTank::start(Teki &)
  * Address:	801A4EC0
  * Size:	000008
  */
-void TAIAinitTank::act(Teki &)
+u32  TAIAinitTank::act(Teki &)
 {
-/*
-.loc_0x0:
-  li        r3, 0x1
-  blr
-*/
+	return 0x1;
 }
 
 /*

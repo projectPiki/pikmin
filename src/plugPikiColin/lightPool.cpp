@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -25,7 +27,7 @@ void _Print(char *, ...)
  * Address:	80073164
  * Size:	00016C
  */
-void LightPool::LightPool()
+LightPool::LightPool()
 {
 /*
 .loc_0x0:

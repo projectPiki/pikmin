@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -626,7 +628,7 @@ void PlugPikiApp::idle()
  * Address:	8005F5DC
  * Size:	000148
  */
-void PlugPikiApp::PlugPikiApp()
+PlugPikiApp::PlugPikiApp()
 {
 /*
 .loc_0x0:
@@ -726,7 +728,7 @@ void PlugPikiApp::PlugPikiApp()
  * Address:	8005F724
  * Size:	000064
  */
-void GameApp::~GameApp()
+GameApp::~GameApp()
 {
 /*
 .loc_0x0:
@@ -765,13 +767,9 @@ void GameApp::~GameApp()
  * Address:	8005F788
  * Size:	000008
  */
-void GameApp::idle()
+u32  GameApp::idle()
 {
-/*
-.loc_0x0:
-  li        r3, 0x1
-  blr
-*/
+	return 0x1;
 }
 
 /*
@@ -779,7 +777,7 @@ void GameApp::idle()
  * Address:	8005F790
  * Size:	000074
  */
-void PlugPikiApp::~PlugPikiApp()
+PlugPikiApp::~PlugPikiApp()
 {
 /*
 .loc_0x0:

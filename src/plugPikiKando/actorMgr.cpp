@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -25,7 +27,7 @@ void _Print(char *, ...)
  * Address:	........
  * Size:	0000E4
  */
-void ActorMgr::ActorMgr(MapMgr *)
+ActorMgr::ActorMgr(MapMgr *)
 {
 	// UNUSED FUNCTION
 }
@@ -90,7 +92,7 @@ void ActorMgr::newActor(int)
  * Address:	........
  * Size:	000084
  */
-void ActorMgr::~ActorMgr()
+ActorMgr::~ActorMgr()
 {
 	// UNUSED FUNCTION
 }

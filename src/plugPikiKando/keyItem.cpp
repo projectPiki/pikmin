@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -25,7 +27,7 @@ void _Print(char *, ...)
  * Address:	800ED204
  * Size:	0000A8
  */
-void KeyItem::KeyItem(CreatureProp *, Shape *)
+KeyItem::KeyItem(CreatureProp *, Shape *)
 {
 /*
 .loc_0x0:
@@ -128,12 +130,8 @@ void KeyItem::init(Vector3f &)
  */
 void KeyItem::startAI(int)
 {
-/*
-.loc_0x0:
-  li        r0, 0
-  stw       r0, 0x2B8(r3)
-  blr
-*/
+// Generated from stw r0, 0x2B8(r3)
+_2B8 = 0;
 }
 
 /*
@@ -273,10 +271,6 @@ void KeyItem::update()
  */
 void KeyItem::collisionCallback(CollEvent &)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -397,7 +391,7 @@ void KeyItem::refresh(Graphics &)
  * Address:	800ED5D4
  * Size:	000060
  */
-void DoorItem::DoorItem(int, CreatureProp *, Shape *)
+DoorItem::DoorItem(int, CreatureProp *, Shape *)
 {
 /*
 .loc_0x0:
@@ -521,12 +515,8 @@ void DoorItem::init(Vector3f &)
  */
 void DoorItem::startAI(int)
 {
-/*
-.loc_0x0:
-  li        r0, 0
-  stw       r0, 0x3CC(r3)
-  blr
-*/
+// Generated from stw r0, 0x3CC(r3)
+_3CC = 0;
 }
 
 /*
@@ -787,13 +777,9 @@ void DoorItem::refresh(Graphics &)
  * Address:	800ED9C4
  * Size:	000008
  */
-void DoorItem::isAlive()
+u32  DoorItem::isAlive()
 {
-/*
-.loc_0x0:
-  li        r3, 0x1
-  blr
-*/
+	return 0x1;
 }
 
 /*

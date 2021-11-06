@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -445,11 +447,7 @@ void CARDClose(void)
  * Address:	8020BEE0
  * Size:	000008
  */
-void __CARDIsOpened(void)
+u32  __CARDIsOpened(void)
 {
-/*
-.loc_0x0:
-  li        r3, 0
-  blr
-*/
+	return 0x0;
 }

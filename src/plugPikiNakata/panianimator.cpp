@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -25,7 +27,7 @@ void _Print(char *, ...)
  * Address:	8011EF58
  * Size:	000034
  */
-void PaniMotionInfo::PaniMotionInfo(int)
+PaniMotionInfo::PaniMotionInfo(int)
 {
 /*
 .loc_0x0:
@@ -50,7 +52,7 @@ void PaniMotionInfo::PaniMotionInfo(int)
  * Address:	8011EF8C
  * Size:	000030
  */
-void PaniMotionInfo::PaniMotionInfo(int, PaniAnimKeyListener *)
+PaniMotionInfo::PaniMotionInfo(int, PaniAnimKeyListener *)
 {
 /*
 .loc_0x0:
@@ -91,7 +93,7 @@ void PaniMotionInfo::init(int, PaniAnimKeyListener *)
  * Address:	8011EFC8
  * Size:	000034
  */
-void PaniMotion::PaniMotion(int)
+PaniMotion::PaniMotion(int)
 {
 /*
 .loc_0x0:
@@ -118,7 +120,7 @@ void PaniMotion::PaniMotion(int)
  * Address:	........
  * Size:	000030
  */
-void PaniMotion::PaniMotion(int, int)
+PaniMotion::PaniMotion(int, int)
 {
 	// UNUSED FUNCTION
 }
@@ -143,7 +145,7 @@ void PaniMotion::init(int, int)
  * Address:	8011F008
  * Size:	00006C
  */
-void PaniMotionTable::PaniMotionTable(int)
+PaniMotionTable::PaniMotionTable(int)
 {
 /*
 .loc_0x0:
@@ -186,7 +188,7 @@ void PaniMotionTable::PaniMotionTable(int)
  * Address:	8011F074
  * Size:	00006C
  */
-void PaniSoundTable::PaniSoundTable(int)
+PaniSoundTable::PaniSoundTable(int)
 {
 /*
 .loc_0x0:
@@ -229,7 +231,7 @@ void PaniSoundTable::PaniSoundTable(int)
  * Address:	8011F0E0
  * Size:	000044
  */
-void PaniAnimator::PaniAnimator()
+PaniAnimator::PaniAnimator()
 {
 /*
 .loc_0x0:
@@ -299,13 +301,10 @@ void PaniAnimator::init(AnimContext *, AnimMgr *, PaniMotionTable *)
  * Address:	8011F190
  * Size:	000008
  */
-void PaniAnimator::changeContext(AnimContext *)
+void PaniAnimator::changeContext(AnimContext * a1)
 {
-/*
-.loc_0x0:
-  stw       r4, 0x4(r3)
-  blr
-*/
+// Generated from stw r4, 0x4(r3)
+_04 = a1;
 }
 
 /*

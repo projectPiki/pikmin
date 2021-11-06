@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -25,7 +27,7 @@ void _Print(char *, ...)
  * Address:	80091EC0
  * Size:	000094
  */
-void DualCreature::DualCreature()
+DualCreature::DualCreature()
 {
 /*
 .loc_0x0:
@@ -548,7 +550,7 @@ void DualCreature::refresh(Graphics &)
  * Address:	........
  * Size:	000140
  */
-void PelCreature::PelCreature(int, ItemShapeObject *, CreatureProp *, MapMgr *)
+PelCreature::PelCreature(int, ItemShapeObject *, CreatureProp *, MapMgr *)
 {
 	// UNUSED FUNCTION
 }
@@ -606,13 +608,9 @@ void PelCreature::getiMass()
  * Address:	8009248C
  * Size:	000008
  */
-void PelCreature::isAlive()
+u32  PelCreature::isAlive()
 {
-/*
-.loc_0x0:
-  li        r3, 0x1
-  blr
-*/
+	return 0x1;
 }
 
 /*

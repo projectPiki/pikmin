@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -7,10 +9,6 @@
  */
 void __stdio_atexit(void)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*

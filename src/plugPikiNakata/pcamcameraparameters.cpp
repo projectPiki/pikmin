@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -25,7 +27,7 @@ void _Print(char *, ...)
  * Address:	801249C4
  * Size:	000A78
  */
-void PcamCameraParameters::PcamCameraParameters()
+PcamCameraParameters::PcamCameraParameters()
 {
 /*
 .loc_0x0:
@@ -709,7 +711,7 @@ void PcamCameraParameters::PcamCameraParameters()
  * Address:	8012543C
  * Size:	000018
  */
-void ParaParameterInfoF::ParaParameterInfoF()
+ParaParameterInfoF::ParaParameterInfoF()
 {
 /*
 .loc_0x0:
@@ -727,7 +729,7 @@ void ParaParameterInfoF::ParaParameterInfoF()
  * Address:	80125454
  * Size:	000014
  */
-void ParaParameterInfoI::ParaParameterInfoI()
+ParaParameterInfoI::ParaParameterInfoI()
 {
 /*
 .loc_0x0:

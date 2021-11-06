@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -25,7 +27,7 @@ void _Print(char *, ...)
  * Address:	8019B888
  * Size:	000094
  */
-void GameCreditsSection::GameCreditsSection()
+GameCreditsSection::GameCreditsSection()
 {
 /*
 .loc_0x0:
@@ -76,8 +78,4 @@ void GameCreditsSection::GameCreditsSection()
  */
 void GameCreditsSection::init()
 {
-/*
-.loc_0x0:
-  blr
-*/
 }

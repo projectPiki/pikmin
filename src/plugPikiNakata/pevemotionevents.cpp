@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -25,7 +27,7 @@ void _Print(char *, ...)
  * Address:	........
  * Size:	000054
  */
-void PeveWaitEvent::PeveWaitEvent()
+PeveWaitEvent::PeveWaitEvent()
 {
 	// UNUSED FUNCTION
 }
@@ -45,7 +47,7 @@ void PeveWaitEvent::makeWaitEvent(float)
  * Address:	80125F04
  * Size:	000040
  */
-void PeveAccelerationEvent::PeveAccelerationEvent()
+PeveAccelerationEvent::PeveAccelerationEvent()
 {
 /*
 .loc_0x0:
@@ -199,7 +201,7 @@ void PeveAccelerationEvent::update()
  * Address:	801260D4
  * Size:	000074
  */
-void PeveParabolaEvent::PeveParabolaEvent()
+PeveParabolaEvent::PeveParabolaEvent()
 {
 /*
 .loc_0x0:
@@ -438,7 +440,7 @@ void PeveHorizontalSinWaveEvent::update()
  * Address:	80126390
  * Size:	00005C
  */
-void PeveCircleMoveEvent::PeveCircleMoveEvent()
+PeveCircleMoveEvent::PeveCircleMoveEvent()
 {
 /*
 .loc_0x0:
@@ -722,7 +724,7 @@ void PeveCircleMoveEvent::calcAngle()
  * Address:	........
  * Size:	0000F0
  */
-void PeveCircleMoveWatchEvent::PeveCircleMoveWatchEvent()
+PeveCircleMoveWatchEvent::PeveCircleMoveWatchEvent()
 {
 	// UNUSED FUNCTION
 }
@@ -742,7 +744,7 @@ void PeveCircleMoveWatchEvent::makeCircleMoveWatchEvent(float, NVector3fIO *, NV
  * Address:	........
  * Size:	000040
  */
-void PeveFunctionCurveEvent::PeveFunctionCurveEvent()
+PeveFunctionCurveEvent::PeveFunctionCurveEvent()
 {
 	// UNUSED FUNCTION
 }
@@ -843,7 +845,7 @@ void PeveFunctionCurveEvent::update()
  * Address:	........
  * Size:	000040
  */
-void PeveHomingPositionEvent::PeveHomingPositionEvent()
+PeveHomingPositionEvent::PeveHomingPositionEvent()
 {
 	// UNUSED FUNCTION
 }
@@ -950,7 +952,7 @@ void PeveHomingPositionEvent::update()
  * Address:	........
  * Size:	0000D0
  */
-void PeveHomingPostureEvent::PeveHomingPostureEvent()
+PeveHomingPostureEvent::PeveHomingPostureEvent()
 {
 	// UNUSED FUNCTION
 }
@@ -970,7 +972,7 @@ void PeveHomingPostureEvent::makeHomingPostureEvent(PeveCondition *, NVector3fIO
  * Address:	........
  * Size:	00009C
  */
-void PeveInterpolationEvent::PeveInterpolationEvent(int, NPool<SplineSegment> *)
+PeveInterpolationEvent::PeveInterpolationEvent(int, NPool<SplineSegment> *)
 {
 	// UNUSED FUNCTION
 }
@@ -1192,7 +1194,7 @@ void PeveInterpolationEvent::update()
  * Address:	........
  * Size:	00005C
  */
-void PeveMoveEvent::PeveMoveEvent()
+PeveMoveEvent::PeveMoveEvent()
 {
 	// UNUSED FUNCTION
 }
@@ -1249,7 +1251,7 @@ void PeveMoveEvent::reset()
  * Address:	80126B7C
  * Size:	00009C
  */
-void PeveVibrationEvent::PeveVibrationEvent()
+PeveVibrationEvent::PeveVibrationEvent()
 {
 /*
 .loc_0x0:

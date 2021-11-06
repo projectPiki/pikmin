@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -25,7 +27,7 @@ void _Print(char *, ...)
  * Address:	800B77AC
  * Size:	000054
  */
-void ActDecoy::ActDecoy(Piki *)
+ActDecoy::ActDecoy(Piki *)
 {
 /*
 .loc_0x0:
@@ -227,10 +229,6 @@ void ActDecoy::init(Creature *)
  */
 void ActDecoy::cleanup()
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -240,10 +238,6 @@ void ActDecoy::cleanup()
  */
 void ActDecoy::animationKeyUpdated(PaniAnimKeyEvent &)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -616,7 +610,7 @@ void ActDecoy::exec()
  * Address:	800B7EF0
  * Size:	00006C
  */
-void ActDecoy::~ActDecoy()
+ActDecoy::~ActDecoy()
 {
 /*
 .loc_0x0:

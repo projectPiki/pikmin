@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -25,7 +27,7 @@ void _Print(char *, ...)
  * Address:	800C1E24
  * Size:	000060
  */
-void ActRope::ActRope(Piki *)
+ActRope::ActRope(Piki *)
 {
 /*
 .loc_0x0:
@@ -268,7 +270,7 @@ void ActRope::cleanup()
  * Address:	800C2108
  * Size:	000064
  */
-void ActRope::~ActRope()
+ActRope::~ActRope()
 {
 /*
 .loc_0x0:

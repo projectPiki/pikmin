@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -291,7 +293,7 @@ void BTeki::doRestore(CreatureInf *)
  * Address:	8014416C
  * Size:	0000B0
  */
-void TekiShapeObject::TekiShapeObject(Shape *)
+TekiShapeObject::TekiShapeObject(Shape *)
 {
 /*
 .loc_0x0:
@@ -658,7 +660,7 @@ void BTeki::arrivedAt(float, float)
  * Address:	80144598
  * Size:	000398
  */
-void BTeki::BTeki()
+BTeki::BTeki()
 {
 /*
 .loc_0x0:
@@ -1852,12 +1854,8 @@ void BTeki::doAI()
  */
 void BTeki::die()
 {
-/*
-.loc_0x0:
-  li        r0, 0x1
-  stw       r0, 0x31C(r3)
-  blr
-*/
+// Generated from stw r0, 0x31C(r3)
+_31C = 1;
 }
 
 /*
@@ -3706,10 +3704,6 @@ void BTeki::getDirection()
  */
 void BTeki::shootBall(Creature &)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*

@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -25,7 +27,7 @@ void _Print(char *, ...)
  * Address:	800B5688
  * Size:	00006C
  */
-void ActChase::ActChase(Piki *)
+ActChase::ActChase(Piki *)
 {
 /*
 .loc_0x0:
@@ -68,10 +70,6 @@ void ActChase::ActChase(Piki *)
  */
 void ActChase::Initialiser::initialise(Action *)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -347,7 +345,7 @@ void ActChase::exec()
  * Address:	800B5A48
  * Size:	000064
  */
-void ActChase::~ActChase()
+ActChase::~ActChase()
 {
 /*
 .loc_0x0:

@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -25,7 +27,7 @@ void _Print(char *, ...)
  * Address:	........
  * Size:	0000E8
  */
-void SplineInterpolator::SplineInterpolator(int, NPool<SplineSegment> *)
+SplineInterpolator::SplineInterpolator(int, NPool<SplineSegment> *)
 {
 	// UNUSED FUNCTION
 }
@@ -37,12 +39,8 @@ void SplineInterpolator::SplineInterpolator(int, NPool<SplineSegment> *)
  */
 void SplineInterpolator::reset()
 {
-/*
-.loc_0x0:
-  li        r0, 0
-  stb       r0, 0x10(r3)
-  blr
-*/
+// Generated from stb r0, 0x10(r3)
+_10 = 0;
 }
 
 /*
@@ -459,7 +457,7 @@ void NArray<SplineKeyFrame>::remove(int, int)
  * Address:	........
  * Size:	000048
  */
-void SplineKeyFrame::SplineKeyFrame()
+SplineKeyFrame::SplineKeyFrame()
 {
 	// UNUSED FUNCTION
 }
@@ -519,7 +517,7 @@ void SplineKeyFrame::readData(Stream &, int)
  * Address:	........
  * Size:	0000C4
  */
-void SplineSegment::SplineSegment()
+SplineSegment::SplineSegment()
 {
 	// UNUSED FUNCTION
 }
@@ -539,7 +537,7 @@ void SplineSegment::calcDistance(NVector3f &, float *)
  * Address:	........
  * Size:	0000B0
  */
-void SplineCurve::SplineCurve(int)
+SplineCurve::SplineCurve(int)
 {
 	// UNUSED FUNCTION
 }

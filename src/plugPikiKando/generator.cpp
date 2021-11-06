@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -65,7 +67,7 @@ void sprintID(char *, unsigned long)
  * Address:	800DACB4
  * Size:	000030
  */
-void GenBase::GenBase(unsigned long, char *, char *)
+GenBase::GenBase(unsigned long, char *, char *)
 {
 /*
 .loc_0x0:
@@ -186,10 +188,6 @@ void GenBase::read(RandomAccessStream &)
  */
 void GenBase::doRead(RandomAccessStream &)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -1408,7 +1406,7 @@ void GenAreaCircle::ramLoadParameters(RandomAccessStream &)
  * Address:	800DBAE0
  * Size:	000170
  */
-void Generator::Generator()
+Generator::Generator()
 {
 /*
 .loc_0x0:
@@ -1512,7 +1510,7 @@ void Generator::Generator()
  * Address:	800DBC50
  * Size:	000154
  */
-void Generator::Generator(int)
+Generator::Generator(int)
 {
 /*
 .loc_0x0:
@@ -1609,7 +1607,7 @@ void Generator::Generator(int)
  * Address:	........
  * Size:	000054
  */
-void Generator::~Generator()
+Generator::~Generator()
 {
 	// UNUSED FUNCTION
 }
@@ -1973,10 +1971,6 @@ void Generator::init()
  */
 void GenType::init(Generator *)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -1986,10 +1980,6 @@ void GenType::init(Generator *)
  */
 void GenArea::init(Generator *)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -2051,10 +2041,6 @@ void Generator::informDeath(Creature *)
  */
 void Generator::update()
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -2189,10 +2175,6 @@ void Generator::render(Graphics &)
  */
 void GenType::render(Graphics &, Generator *)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -2202,10 +2184,6 @@ void GenType::render(Graphics &, Generator *)
  */
 void GenArea::render(Graphics &, Generator *)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -3389,7 +3367,7 @@ void Generator::write(RandomAccessStream &)
  * Address:	800DD3B4
  * Size:	000514
  */
-void GeneratorMgr::GeneratorMgr()
+GeneratorMgr::GeneratorMgr()
 {
 /*
 .loc_0x0:
@@ -5128,10 +5106,6 @@ void GenAreaPoint::getPos(Generator *)
  */
 void GenAreaPoint::render(Graphics &, Generator *)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -5344,7 +5318,7 @@ void GenAreaCircle::render(Graphics &, Generator *)
  * Address:	800DEB98
  * Size:	000058
  */
-void GeneratorList::GeneratorList()
+GeneratorList::GeneratorList()
 {
 /*
 .loc_0x0:
@@ -5542,10 +5516,6 @@ void GenAreaCircle::getRadius()
  */
 void GenArea::update(Generator *)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -5569,10 +5539,6 @@ void GenArea::getRadius()
  */
 void GenType::update(Generator *)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -5580,11 +5546,7 @@ void GenType::update(Generator *)
  * Address:	800DED60
  * Size:	000008
  */
-void GenTypeOne::getMaxCount()
+u32  GenTypeOne::getMaxCount()
 {
-/*
-.loc_0x0:
-  li        r3, 0x1
-  blr
-*/
+	return 0x1;
 }

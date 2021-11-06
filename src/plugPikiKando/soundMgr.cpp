@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -25,7 +27,7 @@ void _Print(char *, ...)
  * Address:	800A3C5C
  * Size:	000070
  */
-void SeContext::SeContext()
+SeContext::SeContext()
 {
 /*
 .loc_0x0:
@@ -65,7 +67,7 @@ void SeContext::SeContext()
  * Address:	800A3CCC
  * Size:	000068
  */
-void SeContext::SeContext(Creature *, int)
+SeContext::SeContext(Creature *, int)
 {
 /*
 .loc_0x0:
@@ -394,7 +396,7 @@ void SeContext::dump()
  * Address:	800A3FD8
  * Size:	000120
  */
-void SeSystem::SeSystem()
+SeSystem::SeSystem()
 {
 /*
 .loc_0x0:
@@ -480,7 +482,7 @@ void SeSystem::SeSystem()
  * Address:	800A40F8
  * Size:	000014
  */
-void SeSystem::Event::Event()
+SeSystem::Event::Event()
 {
 /*
 .loc_0x0:
@@ -1872,13 +1874,9 @@ void SeSystem::update(Graphics &, Vector3f &)
  * Address:	800A51C0
  * Size:	000008
  */
-void Boss::isBossBgm()
+u32  Boss::isBossBgm()
 {
-/*
-.loc_0x0:
-  li        r3, 0
-  blr
-*/
+	return 0x0;
 }
 
 /*

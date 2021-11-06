@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -25,7 +27,7 @@ void _Print(char *, ...)
  * Address:	801E7AB0
  * Size:	0001F8
  */
-void zen::DrawCountDown::DrawCountDown()
+zen::DrawCountDown::DrawCountDown()
 {
 /*
 .loc_0x0:

@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -25,7 +27,7 @@ void _Print(char *, ...)
  * Address:	8005503C
  * Size:	00023C
  */
-void CardSelectSection::CardSelectSection()
+CardSelectSection::CardSelectSection()
 {
 /*
 .loc_0x0:
@@ -540,8 +542,4 @@ void CardSelectSetupSection::draw(Graphics &)
  */
 void CardSelectSection::init()
 {
-/*
-.loc_0x0:
-  blr
-*/
 }

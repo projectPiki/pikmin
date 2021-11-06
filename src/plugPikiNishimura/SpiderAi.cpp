@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -25,7 +27,7 @@ void _Print(char *, ...)
  * Address:	80153840
  * Size:	000020
  */
-void SpiderAi::SpiderAi(Spider *)
+SpiderAi::SpiderAi(Spider *)
 {
 /*
 .loc_0x0:

@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -25,7 +27,7 @@ void _Print(char *, ...)
  * Address:	8017A544
  * Size:	000020
  */
-void NucleusAi::NucleusAi(Nucleus *)
+NucleusAi::NucleusAi(Nucleus *)
 {
 /*
 .loc_0x0:
@@ -147,10 +149,6 @@ void NucleusAi::animationKeyUpdated(PaniAnimKeyEvent &)
  */
 void NucleusAi::keyAction0()
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -160,10 +158,6 @@ void NucleusAi::keyAction0()
  */
 void NucleusAi::keyAction1()
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -226,10 +220,6 @@ void NucleusAi::keyFinished()
  */
 void NucleusAi::playSound(int)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*

@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -94,7 +96,7 @@ void zen::ogScrMapMgr::start(short)
  * Address:	80182EB4
  * Size:	0001CC
  */
-void zen::ogScrMapMgr::ogScrMapMgr()
+zen::ogScrMapMgr::ogScrMapMgr()
 {
 /*
 .loc_0x0:

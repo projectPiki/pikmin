@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -25,7 +27,7 @@ void _Print(char *, ...)
  * Address:	80024DFC
  * Size:	0000D8
  */
-void BaseApp::BaseApp()
+BaseApp::BaseApp()
 {
 /*
 .loc_0x0:
@@ -93,13 +95,10 @@ void BaseApp::BaseApp()
  * Address:	80024ED4
  * Size:	000008
  */
-void CoreNode::setName(char *)
+void CoreNode::setName(char * a1)
 {
-/*
-.loc_0x0:
-  stw       r4, 0x4(r3)
-  blr
-*/
+// Generated from stw r4, 0x4(r3)
+_04 = a1;
 }
 
 /*
@@ -167,7 +166,7 @@ void BaseApp::softReset()
  * Address:	80024F24
  * Size:	0000A4
  */
-void BaseApp::~BaseApp()
+BaseApp::~BaseApp()
 {
 /*
 .loc_0x0:
@@ -226,10 +225,6 @@ void BaseApp::~BaseApp()
  */
 void Stream::flush()
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -239,10 +234,6 @@ void Stream::flush()
  */
 void BaseApp::InitApp(char *)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -250,13 +241,9 @@ void BaseApp::InitApp(char *)
  * Address:	80024FD0
  * Size:	000008
  */
-void BaseApp::idle()
+u32  BaseApp::idle()
 {
-/*
-.loc_0x0:
-  li        r3, 0
-  blr
-*/
+	return 0x0;
 }
 
 /*
@@ -264,13 +251,9 @@ void BaseApp::idle()
  * Address:	80024FD8
  * Size:	000008
  */
-void BaseApp::keyDown(int, int, int)
+u32  BaseApp::keyDown(int, int, int)
 {
-/*
-.loc_0x0:
-  li        r3, 0
-  blr
-*/
+	return 0x0;
 }
 
 /*
@@ -304,10 +287,6 @@ void BaseApp::useHeap(int)
  */
 void BaseApp::procCmd(char *)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -386,10 +365,6 @@ void Node::concat(VQS &)
  */
 void Node::concat()
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -397,13 +372,9 @@ void Node::concat()
  * Address:	8002509C
  * Size:	000008
  */
-void Node::getModelMatrix()
+u32  Node::getModelMatrix()
 {
-/*
-.loc_0x0:
-  li        r3, 0
-  blr
-*/
+	return 0x0;
 }
 
 /*
@@ -413,10 +384,6 @@ void Node::getModelMatrix()
  */
 void CoreNode::read(RandomAccessStream &)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -424,11 +391,7 @@ void CoreNode::read(RandomAccessStream &)
  * Address:	800250A8
  * Size:	000008
  */
-void ANode::getAgeNodeType()
+u32  ANode::getAgeNodeType()
 {
-/*
-.loc_0x0:
-  li        r3, 0
-  blr
-*/
+	return 0x0;
 }

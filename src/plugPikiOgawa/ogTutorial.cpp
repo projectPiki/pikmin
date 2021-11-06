@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -25,7 +27,7 @@ void _Print(char *, ...)
  * Address:	80182B94
  * Size:	000080
  */
-void zen::ogScrTutorialMgr::ogScrTutorialMgr()
+zen::ogScrTutorialMgr::ogScrTutorialMgr()
 {
 /*
 .loc_0x0:

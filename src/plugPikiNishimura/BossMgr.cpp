@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -166,13 +168,9 @@ void BossMgr::getCreature(int)
  * Address:	8014FEF4
  * Size:	000008
  */
-void BossMgr::getFirst()
+u32  BossMgr::getFirst()
 {
-/*
-.loc_0x0:
-  li        r3, 0
-  blr
-*/
+	return 0x0;
 }
 
 /*
@@ -333,7 +331,7 @@ void BossMgr::getMax()
  * Address:	80150050
  * Size:	0002F4
  */
-void BossMgr::BossMgr()
+BossMgr::BossMgr()
 {
 /*
 .loc_0x0:
@@ -546,7 +544,7 @@ void BossMgr::BossMgr()
  * Address:	80150344
  * Size:	000044
  */
-void BossNode::BossNode()
+BossNode::BossNode()
 {
 /*
 .loc_0x0:
@@ -3388,12 +3386,8 @@ void BossMgr::refresh2d(Graphics &)
  */
 void BossMgr::finalSetup()
 {
-/*
-.loc_0x0:
-  li        r0, 0x1
-  stb       r0, 0x2C(r3)
-  blr
-*/
+// Generated from stb r0, 0x2C(r3)
+_2C = 1;
 }
 
 /*
@@ -3417,7 +3411,7 @@ void BossMgr::getBossShapeObject(int)
  * Address:	80152610
  * Size:	00006C
  */
-void BossMgr::~BossMgr()
+BossMgr::~BossMgr()
 {
 /*
 .loc_0x0:

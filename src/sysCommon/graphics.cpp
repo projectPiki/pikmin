@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -2158,7 +2160,7 @@ void PVWTextureInfo::read(RandomAccessStream &)
  * Address:	800275A0
  * Size:	000018
  */
-void PVWTextureData::PVWTextureData()
+PVWTextureData::PVWTextureData()
 {
 /*
 .loc_0x0:
@@ -2305,10 +2307,6 @@ void Material::attach()
  */
 void Graphics::useDList(unsigned long)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -2316,13 +2314,9 @@ void Graphics::useDList(unsigned long)
  * Address:	80027730
  * Size:	000008
  */
-void Graphics::compileMaterial(Material *)
+u32  Graphics::compileMaterial(Material *)
 {
-/*
-.loc_0x0:
-  li        r3, 0
-  blr
-*/
+	return 0x0;
 }
 
 /*
@@ -2968,7 +2962,7 @@ void Font::setTexture(Texture *, int, int)
  * Address:	80027F88
  * Size:	00002C
  */
-void FontChar::FontChar()
+FontChar::FontChar()
 {
 /*
 .loc_0x0:
@@ -3237,7 +3231,7 @@ void GfxInfo::createCollData(Vector3f *, float)
  * Address:	80028214
  * Size:	000058
  */
-void CollTriInfo::CollTriInfo()
+CollTriInfo::CollTriInfo()
 {
 /*
 .loc_0x0:
@@ -3271,7 +3265,7 @@ void CollTriInfo::CollTriInfo()
  * Address:	8002826C
  * Size:	000014
  */
-void Plane::Plane()
+Plane::Plane()
 {
 /*
 .loc_0x0:
@@ -3337,7 +3331,7 @@ void MaterialHandler::setTexMatrix(bool)
  * Address:	800282E4
  * Size:	0001C8
  */
-void Graphics::Graphics()
+Graphics::Graphics()
 {
 /*
 .loc_0x0:
@@ -3467,7 +3461,7 @@ void Graphics::Graphics()
  * Address:	800284AC
  * Size:	00000C
  */
-void CachedShape::CachedShape()
+CachedShape::CachedShape()
 {
 /*
 .loc_0x0:
@@ -3518,12 +3512,8 @@ void Graphics::initRender(int, int)
  */
 void Graphics::resetMatrixBuffer()
 {
-/*
-.loc_0x0:
-  li        r0, 0
-  stw       r0, 0x38C(r3)
-  blr
-*/
+// Generated from stw r0, 0x38C(r3)
+_38C = 0;
 }
 
 /*
@@ -5148,10 +5138,6 @@ void Graphics::calcLighting(float)
  */
 void Graphics::setAmbient()
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -5228,10 +5214,6 @@ void CacheTexture::makeResident()
  */
 void Graphics::videoReset()
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -5241,10 +5223,6 @@ void Graphics::videoReset()
  */
 void Graphics::setVerticalFilter(unsigned char *)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -5254,10 +5232,6 @@ void Graphics::setVerticalFilter(unsigned char *)
  */
 void Graphics::getVerticalFilter(unsigned char *)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -5265,13 +5239,9 @@ void Graphics::getVerticalFilter(unsigned char *)
  * Address:	8002997C
  * Size:	000008
  */
-void Graphics::getDListPtr()
+u32  Graphics::getDListPtr()
 {
-/*
-.loc_0x0:
-  li        r3, 0
-  blr
-*/
+	return 0x0;
 }
 
 /*
@@ -5279,13 +5249,9 @@ void Graphics::getDListPtr()
  * Address:	80029984
  * Size:	000008
  */
-void Graphics::getDListRemainSize()
+u32  Graphics::getDListRemainSize()
 {
-/*
-.loc_0x0:
-  li        r3, 0
-  blr
-*/
+	return 0x0;
 }
 
 /*
@@ -5293,13 +5259,10 @@ void Graphics::getDListRemainSize()
  * Address:	8002998C
  * Size:	000008
  */
-void Graphics::setLightcam(LightCamera *)
+void Graphics::setLightcam(LightCamera * a1)
 {
-/*
-.loc_0x0:
-  stw       r4, 0x338(r3)
-  blr
-*/
+// Generated from stw r4, 0x338(r3)
+_338 = a1;
 }
 
 /*
@@ -5309,10 +5272,6 @@ void Graphics::setLightcam(LightCamera *)
  */
 void Graphics::setBlendMode(unsigned char, unsigned char, unsigned char)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -5395,8 +5354,4 @@ void Graphics::useMaterial(Material *)
  */
 void Graphics::testRectangle(RectArea &)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }

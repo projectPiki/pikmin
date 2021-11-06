@@ -163,16 +163,6 @@ void __StringRead(void)
 
 /*
  * --INFO--
- * Address:	........
- * Size:	000088
- */
-void (int, long, ..., ... &, double)
-{
-	// UNUSED FUNCTION
-}
-
-/*
- * --INFO--
  * Address:	802181E0
  * Size:	0009A4
  */

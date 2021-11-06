@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -25,7 +27,7 @@ void _Print(char *, ...)
  * Address:	800BD364
  * Size:	0000CC
  */
-void ActPickCreature::ActPickCreature(Piki *)
+ActPickCreature::ActPickCreature(Piki *)
 {
 /*
 .loc_0x0:
@@ -122,7 +124,7 @@ void ActPickCreature::InitGoto::initialise(Action *, Action *)
  * Address:	........
  * Size:	00019C
  */
-void ActDeliver::ActDeliver(Piki *)
+ActDeliver::ActDeliver(Piki *)
 {
 	// UNUSED FUNCTION
 }
@@ -224,7 +226,7 @@ void ActDeliver::init(Creature *)
  * Address:	800BD538
  * Size:	000074
  */
-void ActDeliver::~ActDeliver()
+ActDeliver::~ActDeliver()
 {
 /*
 .loc_0x0:
@@ -271,12 +273,8 @@ void ActDeliver::~ActDeliver()
  */
 void ActDeliver::defaultInitialiser()
 {
-/*
-.loc_0x0:
-  li        r0, 0
-  stw       r0, 0x18(r3)
-  blr
-*/
+// Generated from stw r0, 0x18(r3)
+_18 = 0;
 }
 
 /*
@@ -316,10 +314,6 @@ void ActDeliver::cleanup()
  */
 void Action::Initialiser::initialise(Action *)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -327,7 +321,7 @@ void Action::Initialiser::initialise(Action *)
  * Address:	800BD5FC
  * Size:	000074
  */
-void ActPickCreature::~ActPickCreature()
+ActPickCreature::~ActPickCreature()
 {
 /*
 .loc_0x0:

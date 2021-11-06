@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -243,7 +245,7 @@ void PikiShapeObject::initOnce()
  * Address:	800D8AD4
  * Size:	00009C
  */
-void PikiShapeObject::PikiShapeObject(Shape *)
+PikiShapeObject::PikiShapeObject(Shape *)
 {
 /*
 .loc_0x0:
@@ -408,7 +410,7 @@ void ViewPiki::changeShape(int)
  * Address:	800D8CB8
  * Size:	000060
  */
-void ViewPiki::ViewPiki(CreatureProp *)
+ViewPiki::ViewPiki(CreatureProp *)
 {
 /*
 .loc_0x0:
@@ -717,10 +719,6 @@ void ViewPiki::setFlower(int)
  */
 void ViewPiki::setLeaves(int)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*

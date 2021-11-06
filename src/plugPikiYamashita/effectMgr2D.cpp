@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -25,7 +27,7 @@ void _Print(char *, ...)
  * Address:	........
  * Size:	000068
  */
-void zen::EffectMgr2D::~EffectMgr2D()
+zen::EffectMgr2D::~EffectMgr2D()
 {
 	// UNUSED FUNCTION
 }
@@ -35,7 +37,7 @@ void zen::EffectMgr2D::~EffectMgr2D()
  * Address:	801E98C0
  * Size:	00027C
  */
-void zen::EffectMgr2D::EffectMgr2D(int, int, int)
+zen::EffectMgr2D::EffectMgr2D(int, int, int)
 {
 /*
 .loc_0x0:

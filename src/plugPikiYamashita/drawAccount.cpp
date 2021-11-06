@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -25,7 +27,7 @@ void _Print(char *, ...)
  * Address:	801C1140
  * Size:	001474
  */
-void zen::DrawAccount::DrawAccount()
+zen::DrawAccount::DrawAccount()
 {
 /*
 .loc_0x0:
@@ -1436,7 +1438,7 @@ void zen::DrawAccount::DrawAccount()
  * Address:	........
  * Size:	000064
  */
-void zen::DrawScreen::~DrawScreen()
+zen::DrawScreen::~DrawScreen()
 {
 	// UNUSED FUNCTION
 }

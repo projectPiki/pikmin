@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -162,10 +164,6 @@ void GameStat::ColCounter::dump(char *)
  */
 void GameStat::dump()
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*

@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -25,7 +27,7 @@ void _Print(char *, ...)
  * Address:	800AC79C
  * Size:	00006C
  */
-void ActBou::ActBou(Piki *)
+ActBou::ActBou(Piki *)
 {
 /*
 .loc_0x0:
@@ -565,7 +567,7 @@ void ActBou::cleanup()
  * Address:	800ACE3C
  * Size:	000064
  */
-void ActBou::~ActBou()
+ActBou::~ActBou()
 {
 /*
 .loc_0x0:

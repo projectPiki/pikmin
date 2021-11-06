@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -25,7 +27,7 @@ void _Print(char *, ...)
  * Address:	801F0A80
  * Size:	0003D8
  */
-void zen::DrawHiScore::DrawHiScore()
+zen::DrawHiScore::DrawHiScore()
 {
 /*
 .loc_0x0:

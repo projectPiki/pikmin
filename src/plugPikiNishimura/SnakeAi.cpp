@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -25,7 +27,7 @@ void _Print(char *, ...)
  * Address:	8015B1F0
  * Size:	0000D0
  */
-void SnakeAi::SnakeAi(Snake *)
+SnakeAi::SnakeAi(Snake *)
 {
 /*
 .loc_0x0:

@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -35,7 +37,7 @@ void zen::KeyRepeat::update(Controller *)
  * Address:	801C0310
  * Size:	000094
  */
-void zen::ZenController::ZenController(Controller *)
+zen::ZenController::ZenController(Controller *)
 {
 /*
 .loc_0x0:

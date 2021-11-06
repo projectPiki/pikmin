@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -25,7 +27,7 @@ void _Print(char *, ...)
  * Address:	800ED9DC
  * Size:	0000B0
  */
-void RopeItem::RopeItem(CreatureProp *, Shape *)
+RopeItem::RopeItem(CreatureProp *, Shape *)
 {
 /*
 .loc_0x0:
@@ -81,13 +83,9 @@ void RopeItem::RopeItem(CreatureProp *, Shape *)
  * Address:	800EDA8C
  * Size:	000008
  */
-void RopeItem::isAtari()
+u32  RopeItem::isAtari()
 {
-/*
-.loc_0x0:
-  li        r3, 0
-  blr
-*/
+	return 0x0;
 }
 
 /*
@@ -354,10 +352,6 @@ void RopeItem::autoInit()
  */
 void RopeItem::startAI(int)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -404,13 +398,9 @@ void RopeItem::getiMass()
  * Address:	800EDDB8
  * Size:	000008
  */
-void RopeItem::needShadow()
+u32  RopeItem::needShadow()
 {
-/*
-.loc_0x0:
-  li        r3, 0
-  blr
-*/
+	return 0x0;
 }
 
 /*
@@ -418,13 +408,9 @@ void RopeItem::needShadow()
  * Address:	800EDDC0
  * Size:	000008
  */
-void RopeItem::isAlive()
+u32  RopeItem::isAlive()
 {
-/*
-.loc_0x0:
-  li        r3, 0x1
-  blr
-*/
+	return 0x1;
 }
 
 /*
@@ -432,11 +418,7 @@ void RopeItem::isAlive()
  * Address:	800EDDC8
  * Size:	000008
  */
-void RopeItem::isVisible()
+u32  RopeItem::isVisible()
 {
-/*
-.loc_0x0:
-  li        r3, 0x1
-  blr
-*/
+	return 0x1;
 }

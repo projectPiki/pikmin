@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -517,7 +519,7 @@ void ActTransport::calcNumStickers()
  * Address:	800AF1F0
  * Size:	0000F4
  */
-void ActTransport::ActTransport(Piki *)
+ActTransport::ActTransport(Piki *)
 {
 /*
 .loc_0x0:
@@ -6894,7 +6896,7 @@ void ActTransport::moveToWayPoint()
  * Address:	800B44DC
  * Size:	000080
  */
-void ActTransport::~ActTransport()
+ActTransport::~ActTransport()
 {
 /*
 .loc_0x0:

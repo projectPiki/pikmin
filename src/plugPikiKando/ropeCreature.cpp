@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -25,7 +27,7 @@ void _Print(char *, ...)
  * Address:	800946A4
  * Size:	000058
  */
-void RopeCreature::RopeCreature(CreatureProp *)
+RopeCreature::RopeCreature(CreatureProp *)
 {
 /*
 .loc_0x0:
@@ -309,10 +311,6 @@ void RopeCreature::getRopePos(float)
  */
 void RopeCreature::refresh(Graphics &)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -320,11 +318,7 @@ void RopeCreature::refresh(Graphics &)
  * Address:	80094A30
  * Size:	000008
  */
-void RopeCreature::needShadow()
+u32  RopeCreature::needShadow()
 {
-/*
-.loc_0x0:
-  li        r3, 0
-  blr
-*/
+	return 0x0;
 }

@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -25,7 +27,7 @@ void _Print(char *, ...)
  * Address:	801EEB68
  * Size:	000A54
  */
-void zen::DrawCMresult::DrawCMresult()
+zen::DrawCMresult::DrawCMresult()
 {
 /*
 .loc_0x0:
@@ -1203,13 +1205,9 @@ void zen::DrawCMresult::setMode(zen::DrawCMresult::modeFlag)
  * Address:	801EFB08
  * Size:	000008
  */
-void zen::DrawCMresult::modeSleep(Controller *)
+u32  zen::DrawCMresult::modeSleep(Controller *)
 {
-/*
-.loc_0x0:
-  li        r3, 0
-  blr
-*/
+	return 0x0;
 }
 
 /*

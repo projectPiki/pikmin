@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -25,7 +27,7 @@ void _Print(char *, ...)
  * Address:	801EAA70
  * Size:	000084
  */
-void TAIotamaSoundTable::TAIotamaSoundTable()
+TAIotamaSoundTable::TAIotamaSoundTable()
 {
 /*
 .loc_0x0:
@@ -76,7 +78,7 @@ void TAIotamaSoundTable::TAIotamaSoundTable()
  * Address:	801EAAF4
  * Size:	00033C
  */
-void TAIotamaParameters::TAIotamaParameters()
+TAIotamaParameters::TAIotamaParameters()
 {
 /*
 .loc_0x0:
@@ -295,7 +297,7 @@ void TAIotamaParameters::TAIotamaParameters()
  * Address:	801EAE30
  * Size:	000530
  */
-void TAIotamaStrategy::TAIotamaStrategy()
+TAIotamaStrategy::TAIotamaStrategy()
 {
 /*
 .loc_0x0:

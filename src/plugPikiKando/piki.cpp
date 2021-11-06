@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -334,10 +336,6 @@ void Piki::startDemo()
  */
 void PikiState::stopEffect()
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -401,10 +399,6 @@ void Piki::finishDemo()
  */
 void PikiState::restartEffect()
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -529,10 +523,6 @@ void Piki::addCntCallback()
  */
 void Piki::subCntCallback()
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -2581,13 +2571,9 @@ void Piki::actOnSituaton()
  * Address:	800C84C0
  * Size:	000008
  */
-void PikiState::freeAI()
+u32  PikiState::freeAI()
 {
-/*
-.loc_0x0:
-  li        r3, 0
-  blr
-*/
+	return 0x0;
 }
 
 /*
@@ -4876,10 +4862,6 @@ void Piki::startDamage()
  */
 void AState<Piki>::resume(Piki *)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -4964,10 +4946,6 @@ void Piki::finishDamage()
  */
 void AState<Piki>::restart(Piki *)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -5175,13 +5153,9 @@ void Piki::ignoreAtari(Creature *)
  * Address:	800CA308
  * Size:	000008
  */
-void Piki::needFlick(Creature *)
+u32  Piki::needFlick(Creature *)
 {
-/*
-.loc_0x0:
-  li        r3, 0x1
-  blr
-*/
+	return 0x1;
 }
 
 /*
@@ -5459,10 +5433,6 @@ void Piki::wallCallback(Plane &, DynCollObject *)
  */
 void Piki::jumpCallback()
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -7012,13 +6982,9 @@ void Piki::collisionCallback(CollEvent &)
  * Address:	800CB95C
  * Size:	000008
  */
-void PikiState::collideAI()
+u32  PikiState::collideAI()
 {
-/*
-.loc_0x0:
-  li        r3, 0
-  blr
-*/
+	return 0x0;
 }
 
 /*
@@ -7026,7 +6992,7 @@ void PikiState::collideAI()
  * Address:	800CB964
  * Size:	000400
  */
-void Piki::Piki(CreatureProp *)
+Piki::Piki(CreatureProp *)
 {
 /*
 .loc_0x0:
@@ -7809,10 +7775,6 @@ void Piki::init(Navi *)
  */
 void Piki::initBirth()
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -8124,13 +8086,9 @@ void Piki::updateLookCreature()
  * Address:	800CC6CC
  * Size:	000008
  */
-void PikiState::useLookUpdate()
+u32  PikiState::useLookUpdate()
 {
-/*
-.loc_0x0:
-  li        r3, 0x1
-  blr
-*/
+	return 0x1;
 }
 
 /*
@@ -8918,10 +8876,6 @@ void StateMachine<Piki>::exec(Piki *)
  */
 void AState<Piki>::exec(Piki *)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -9382,10 +9336,6 @@ void Piki::getShadowPos()
  */
 void Piki::setLeaves(int)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -9395,10 +9345,6 @@ void Piki::setLeaves(int)
  */
 void StateMachine<Piki>::init(Piki *)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -9470,10 +9416,6 @@ void StateMachine<Piki>::transit(Piki *, int)
  */
 void AState<Piki>::init(Piki *)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -9483,10 +9425,6 @@ void AState<Piki>::init(Piki *)
  */
 void AState<Piki>::cleanup(Piki *)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*

@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -55,7 +57,7 @@ void GemItem::bounceCallback()
  * Address:	........
  * Size:	000108
  */
-void GemItem::GemItem(CreatureProp *, int, Shape **, Shape **, Shape **, SimpleAI *, float, int, int)
+GemItem::GemItem(CreatureProp *, int, Shape **, Shape **, Shape **, SimpleAI *, float, int, int)
 {
 	// UNUSED FUNCTION
 }
@@ -445,10 +447,6 @@ void GemItem::setRouteTracer(RouteTracer *)
  */
 void ItemCreature::finalSetup()
 {
-/*
-.loc_0x0:
-  li        r0, 0x1
-  stb       r0, 0x3C4(r3)
-  blr
-*/
+// Generated from stb r0, 0x3C4(r3)
+_3C4 = 1;
 }

@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -25,7 +27,7 @@ void _Print(char *, ...)
  * Address:	80126E04
  * Size:	00005C
  */
-void TaiSerialAction::TaiSerialAction(int, int)
+TaiSerialAction::TaiSerialAction(int, int)
 {
 /*
 .loc_0x0:
@@ -91,10 +93,6 @@ void TaiSerialAction::start(Teki &)
  */
 void TaiAction::start(Teki &)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -152,10 +150,6 @@ void TaiSerialAction::finish(Teki &)
  */
 void TaiAction::finish(Teki &)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -223,13 +217,9 @@ void TaiSerialAction::act(Teki &)
  * Address:	80126FD4
  * Size:	000008
  */
-void TaiAction::act(Teki &)
+u32  TaiAction::act(Teki &)
 {
-/*
-.loc_0x0:
-  li        r3, 0
-  blr
-*/
+	return 0x0;
 }
 
 /*
@@ -300,13 +290,9 @@ void TaiSerialAction::actByEvent(TekiEvent &)
  * Address:	80127090
  * Size:	000008
  */
-void TaiAction::actByEvent(TekiEvent &)
+u32  TaiAction::actByEvent(TekiEvent &)
 {
-/*
-.loc_0x0:
-  li        r3, 0
-  blr
-*/
+	return 0x0;
 }
 
 /*
@@ -314,7 +300,7 @@ void TaiAction::actByEvent(TekiEvent &)
  * Address:	80127098
  * Size:	00004C
  */
-void TaiState::TaiState(int)
+TaiState::TaiState(int)
 {
 /*
 .loc_0x0:
@@ -629,7 +615,7 @@ void TaiState::eventPerformed(TekiEvent &)
  * Address:	801273E4
  * Size:	000064
  */
-void TaiStrategy::TaiStrategy(int, int)
+TaiStrategy::TaiStrategy(int, int)
 {
 /*
 .loc_0x0:

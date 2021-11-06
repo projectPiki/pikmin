@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -25,7 +27,7 @@ void _Print(char *, ...)
  * Address:	80093FA8
  * Size:	000090
  */
-void EventTalker::EventTalker()
+EventTalker::EventTalker()
 {
 /*
 .loc_0x0:
@@ -114,10 +116,6 @@ void EventTalker::informEvent(Event &)
  */
 void EventListener::gotEvent(Event &)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*

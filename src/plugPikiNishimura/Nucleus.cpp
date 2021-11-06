@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -25,7 +27,7 @@ void _Print(char *, ...)
  * Address:	8017A1AC
  * Size:	000090
  */
-void NucleusProp::NucleusProp()
+NucleusProp::NucleusProp()
 {
 /*
 .loc_0x0:
@@ -73,7 +75,7 @@ void NucleusProp::NucleusProp()
  * Address:	8017A23C
  * Size:	000084
  */
-void Nucleus::Nucleus(CreatureProp *)
+Nucleus::Nucleus(CreatureProp *)
 {
 /*
 .loc_0x0:
@@ -199,10 +201,6 @@ void Nucleus::doKill()
  */
 void Nucleus::exitCourse()
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*

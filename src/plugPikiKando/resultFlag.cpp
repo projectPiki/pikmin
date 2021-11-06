@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -25,7 +27,7 @@ void _Print(char *, ...)
  * Address:	8008358C
  * Size:	0001BC
  */
-void ResultFlags::ResultFlags()
+ResultFlags::ResultFlags()
 {
 /*
 .loc_0x0:

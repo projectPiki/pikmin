@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -25,7 +27,7 @@ void _Print(char *, ...)
  * Address:	800B8D68
  * Size:	000060
  */
-void ActExit::ActExit(Piki *)
+ActExit::ActExit(Piki *)
 {
 /*
 .loc_0x0:
@@ -424,7 +426,7 @@ void ActExit::cleanup()
  * Address:	800B925C
  * Size:	000064
  */
-void ActExit::~ActExit()
+ActExit::~ActExit()
 {
 /*
 .loc_0x0:

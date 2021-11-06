@@ -7,9 +7,5 @@
 BOOL AMC_IsStub(void)
 {
 	return FALSE;
-/*
-.loc_0x0:
-  li        r3, 0
-  blr
-*/
+	return 0x0;
 }

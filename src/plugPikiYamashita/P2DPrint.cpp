@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -25,7 +27,7 @@ void _Print(char *, ...)
  * Address:	801B49A4
  * Size:	000048
  */
-void P2DPrint::P2DPrint(P2DFont *, int, int, Colour, Colour)
+P2DPrint::P2DPrint(P2DFont *, int, int, Colour, Colour)
 {
 /*
 .loc_0x0:

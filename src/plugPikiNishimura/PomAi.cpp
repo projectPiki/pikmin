@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -25,7 +27,7 @@ void _Print(char *, ...)
  * Address:	80178558
  * Size:	000074
  */
-void PomAi::PomAi(Pom *)
+PomAi::PomAi(Pom *)
 {
 /*
 .loc_0x0:

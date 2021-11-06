@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -278,10 +280,6 @@ void RigidBody::initializeBody()
  */
 void RigidBody::initRender(int)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -2080,10 +2078,6 @@ void RigidBody::updateViewInfo(int, int)
  */
 void RigidBody::makeBodyQuat(Quat &)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -2324,13 +2318,9 @@ void RigidBody::calculateVertices(int)
  * Address:	8004FBBC
  * Size:	000008
  */
-void RigidBody::checkForCollisions(int, CollState &)
+u32  RigidBody::checkForCollisions(int, CollState &)
 {
-/*
-.loc_0x0:
-  li        r3, 0
-  blr
-*/
+	return 0x0;
 }
 
 /*
@@ -2788,10 +2778,6 @@ void RigidBody::initDimensions(float, float, float)
  */
 void RigidBody::shadrender(Graphics &, LightCamera *)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -2815,8 +2801,4 @@ void RigidBody::getViewScale()
  */
 void RigidBody::updateCont()
 {
-/*
-.loc_0x0:
-  blr
-*/
 }

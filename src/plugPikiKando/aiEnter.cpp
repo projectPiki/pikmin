@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -25,7 +27,7 @@ void _Print(char *, ...)
  * Address:	800B7F64
  * Size:	000060
  */
-void ActEnter::ActEnter(Piki *)
+ActEnter::ActEnter(Piki *)
 {
 /*
 .loc_0x0:
@@ -721,7 +723,7 @@ void ActEnter::cleanup()
  * Address:	800B87C4
  * Size:	000064
  */
-void ActEnter::~ActEnter()
+ActEnter::~ActEnter()
 {
 /*
 .loc_0x0:

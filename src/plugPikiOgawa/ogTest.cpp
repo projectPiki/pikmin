@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -25,7 +27,7 @@ void _Print(char *, ...)
  * Address:	8017D744
  * Size:	0002EC
  */
-void zen::OgTestScreen::OgTestScreen()
+zen::OgTestScreen::OgTestScreen()
 {
 /*
 .loc_0x0:
@@ -1191,7 +1193,7 @@ void zen::OgTestScreen::draw(Graphics &)
  * Address:	8017E73C
  * Size:	000094
  */
-void zen::OgTestSection::OgTestSection()
+zen::OgTestSection::OgTestSection()
 {
 /*
 .loc_0x0:

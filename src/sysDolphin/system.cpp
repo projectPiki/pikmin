@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -1467,7 +1469,7 @@ void System::hardReset()
  * Address:	80045934
  * Size:	0000F8
  */
-void System::System()
+System::System()
 {
 /*
 .loc_0x0:
@@ -2095,10 +2097,6 @@ void System::Initialise()
  */
 void System::sndPlaySe(unsigned long)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -2106,7 +2104,7 @@ void System::sndPlaySe(unsigned long)
  * Address:	800461B8
  * Size:	00004C
  */
-void System::~System()
+System::~System()
 {
 /*
 .loc_0x0:
@@ -2405,10 +2403,6 @@ void loadFunc(void *)
  */
 void LoadIdler::draw(Graphics &)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -2418,10 +2412,6 @@ void LoadIdler::draw(Graphics &)
  */
 void LoadIdler::init()
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*

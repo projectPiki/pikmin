@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -45,12 +47,8 @@ void DemoEventMgr::getSenderName(int)
  * Address:	8008313C
  * Size:	000004
  */
-void DemoEventMgr::DemoEventMgr()
+DemoEventMgr::DemoEventMgr()
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*

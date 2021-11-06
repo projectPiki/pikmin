@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -25,7 +27,7 @@ void _Print(char *, ...)
  * Address:	8018D04C
  * Size:	0009D0
  */
-void zen::ogScrMemChkMgr::ogScrMemChkMgr()
+zen::ogScrMemChkMgr::ogScrMemChkMgr()
 {
 /*
 .loc_0x0:

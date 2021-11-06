@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -57,7 +59,7 @@ void makeObjectMapObject()
  * Address:	8005D128
  * Size:	000068
  */
-void GenObjectMapObject::GenObjectMapObject()
+GenObjectMapObject::GenObjectMapObject()
 {
 /*
 .loc_0x0:
@@ -173,10 +175,6 @@ void GenObjectMapObject::doRead(RandomAccessStream &)
  */
 void GenObjectMapObject::render(Graphics &, Generator *)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -184,13 +182,9 @@ void GenObjectMapObject::render(Graphics &, Generator *)
  * Address:	8005D264
  * Size:	000008
  */
-void GenObjectMapObject::birth(BirthInfo &)
+u32  GenObjectMapObject::birth(BirthInfo &)
 {
-/*
-.loc_0x0:
-  li        r3, 0
-  blr
-*/
+	return 0x0;
 }
 
 /*
@@ -198,7 +192,7 @@ void GenObjectMapObject::birth(BirthInfo &)
  * Address:	8005D26C
  * Size:	0002A8
  */
-void RigidBody::RigidBody()
+RigidBody::RigidBody()
 {
 /*
 .loc_0x0:
@@ -390,7 +384,7 @@ void RigidBody::RigidBody()
  * Address:	8005D514
  * Size:	000014
  */
-void Quat::Quat()
+Quat::Quat()
 {
 /*
 .loc_0x0:
@@ -407,7 +401,7 @@ void Quat::Quat()
  * Address:	8005D528
  * Size:	000150
  */
-void RigidBody::configuration::configuration()
+RigidBody::configuration::configuration()
 {
 /*
 .loc_0x0:
@@ -521,7 +515,7 @@ void RigidBody::configuration::configuration()
  * Address:	8005D678
  * Size:	000014
  */
-void WorldSpring::WorldSpring()
+WorldSpring::WorldSpring()
 {
 /*
 .loc_0x0:
@@ -538,7 +532,7 @@ void WorldSpring::WorldSpring()
  * Address:	........
  * Size:	0002C0
  */
-void DynObjBody::DynObjBody()
+DynObjBody::DynObjBody()
 {
 	// UNUSED FUNCTION
 }
@@ -569,10 +563,6 @@ void Vector3f::set(const float &, const float &, const float &)
  */
 void DynObjBridge::applyGroundForces(int, CollGroup *)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -607,10 +597,6 @@ void DynObjBody::initDimensions(float, float, float)
  */
 void GenObject::updateUseList(Generator *, int)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -620,10 +606,6 @@ void GenObject::updateUseList(Generator *, int)
  */
 void GenObject::init(Generator *)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -633,10 +615,6 @@ void GenObject::init(Generator *)
  */
 void GenObject::update(Generator *)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -646,10 +624,6 @@ void GenObject::update(Generator *)
  */
 void GenBase::doWrite(RandomAccessStream &)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -659,10 +633,6 @@ void GenBase::doWrite(RandomAccessStream &)
  */
 void GenBase::update()
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -672,8 +642,4 @@ void GenBase::update()
  */
 void GenBase::render(Graphics &)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }

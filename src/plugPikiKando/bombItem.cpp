@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -123,13 +125,9 @@ void BombItem::isVisible()
  * Address:	800EA290
  * Size:	000008
  */
-void BombItem::needShadow()
+u32  BombItem::needShadow()
 {
-/*
-.loc_0x0:
-  li        r3, 0
-  blr
-*/
+	return 0x0;
 }
 
 /*
@@ -177,7 +175,7 @@ void BombItem::isAlive()
  * Address:	800EA2F0
  * Size:	0000AC
  */
-void BombItem::BombItem(CreatureProp *, ItemShapeObject *, SimpleAI *)
+BombItem::BombItem(CreatureProp *, ItemShapeObject *, SimpleAI *)
 {
 /*
 .loc_0x0:
@@ -402,10 +400,6 @@ void BombItem::update()
  */
 void BombItem::renderTimer(Graphics &)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -523,10 +517,6 @@ void BombItem::refresh(Graphics &)
  */
 void BombItem::renderBlast(Graphics &)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*

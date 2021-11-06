@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -121,7 +123,7 @@ void zen::particleMdlManager::init(unsigned long, unsigned long)
  * Address:	801A1904
  * Size:	00005C
  */
-void zen::particleChildMdl::~particleChildMdl()
+zen::particleChildMdl::~particleChildMdl()
 {
 /*
 .loc_0x0:
@@ -160,7 +162,7 @@ void zen::particleChildMdl::~particleChildMdl()
  * Address:	801A1960
  * Size:	0000A8
  */
-void zen::particleChildMdl::particleChildMdl()
+zen::particleChildMdl::particleChildMdl()
 {
 /*
 .loc_0x0:
@@ -214,7 +216,7 @@ void zen::particleChildMdl::particleChildMdl()
  * Address:	........
  * Size:	00004C
  */
-void zen::particleMdlBase::~particleMdlBase()
+zen::particleMdlBase::~particleMdlBase()
 {
 	// UNUSED FUNCTION
 }
@@ -224,7 +226,7 @@ void zen::particleMdlBase::~particleMdlBase()
  * Address:	801A1A08
  * Size:	00005C
  */
-void zen::particleMdl::~particleMdl()
+zen::particleMdl::~particleMdl()
 {
 /*
 .loc_0x0:
@@ -263,7 +265,7 @@ void zen::particleMdl::~particleMdl()
  * Address:	801A1A64
  * Size:	000180
  */
-void zen::particleMdl::particleMdl()
+zen::particleMdl::particleMdl()
 {
 /*
 .loc_0x0:

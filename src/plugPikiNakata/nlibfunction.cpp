@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -25,7 +27,7 @@ void _Print(char *, ...)
  * Address:	........
  * Size:	000074
  */
-void NPolynomialFunction::NPolynomialFunction(float *, int)
+NPolynomialFunction::NPolynomialFunction(float *, int)
 {
 	// UNUSED FUNCTION
 }
@@ -57,7 +59,7 @@ void NPolynomialFunction::construct(float *, int)
  * Address:	........
  * Size:	000074
  */
-void NPolynomialFunction::NPolynomialFunction(float *, NPolynomialFunction &)
+NPolynomialFunction::NPolynomialFunction(float *, NPolynomialFunction &)
 {
 	// UNUSED FUNCTION
 }
@@ -228,7 +230,7 @@ void NPolynomialFunction::println()
  * Address:	........
  * Size:	000070
  */
-void NLinearFunction::NLinearFunction(float *)
+NLinearFunction::NLinearFunction(float *)
 {
 	// UNUSED FUNCTION
 }
@@ -258,7 +260,7 @@ void NLinearFunction::makeLinearFunction(float, float, float, float)
  * Address:	8011B878
  * Size:	00007C
  */
-void NClampLinearFunction::NClampLinearFunction(float *)
+NClampLinearFunction::NClampLinearFunction(float *)
 {
 /*
 .loc_0x0:
@@ -530,7 +532,7 @@ void NClampLinearFunction::println()
  * Address:	8011BB38
  * Size:	00003C
  */
-void NVibrationFunction::NVibrationFunction()
+NVibrationFunction::NVibrationFunction()
 {
 /*
 .loc_0x0:
@@ -606,7 +608,7 @@ void NVibrationFunction::getValue(float)
  * Address:	........
  * Size:	000004
  */
-void NFunction3D::NFunction3D()
+NFunction3D::NFunction3D()
 {
 	// UNUSED FUNCTION
 }

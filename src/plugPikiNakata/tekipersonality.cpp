@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -25,7 +27,7 @@ void _Print(char *, ...)
  * Address:	8014CA60
  * Size:	0001F8
  */
-void TekiPersonality::TekiPersonality()
+TekiPersonality::TekiPersonality()
 {
 /*
 .loc_0x0:

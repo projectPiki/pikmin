@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -1635,7 +1637,7 @@ void Creature::endRope()
  * Address:	80090C84
  * Size:	000058
  */
-void Stickers::Stickers(Creature *)
+Stickers::Stickers(Creature *)
 {
 /*
 .loc_0x0:
@@ -1776,13 +1778,9 @@ void Stickers::getCreature(int)
  * Address:	80090DD8
  * Size:	000008
  */
-void Stickers::getFirst()
+u32  Stickers::getFirst()
 {
-/*
-.loc_0x0:
-  li        r3, 0
-  blr
-*/
+	return 0x0;
 }
 
 /*

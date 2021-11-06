@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -301,13 +303,9 @@ void TAIAsetTargetPointWorkObject::start(Teki &)
  * Address:	801A8FA4
  * Size:	000008
  */
-void TAIAsetTargetPointWorkObject::act(Teki &)
+u32  TAIAsetTargetPointWorkObject::act(Teki &)
 {
-/*
-.loc_0x0:
-  li        r3, 0x1
-  blr
-*/
+	return 0x1;
 }
 
 /*
@@ -723,13 +721,9 @@ void TAIAsetTargetPointCircleRandom::start(Teki &)
  * Address:	801A94AC
  * Size:	000008
  */
-void TAIAsetTargetPointCircleRandom::act(Teki &)
+u32  TAIAsetTargetPointCircleRandom::act(Teki &)
 {
-/*
-.loc_0x0:
-  li        r3, 0x1
-  blr
-*/
+	return 0x1;
 }
 
 /*
@@ -2367,7 +2361,7 @@ void TAIApatrol::changeStatus(int, Teki &)
  * Address:	801AA6CC
  * Size:	00007C
  */
-void TAIApatrol::TAIApatrol(int, int, int, int, Vector3f *, int, bool)
+TAIApatrol::TAIApatrol(int, int, int, int, Vector3f *, int, bool)
 {
 /*
 .loc_0x0:
@@ -4187,13 +4181,9 @@ void TAIAflyingToGoal::act(Teki &)
  * Address:	801ABD6C
  * Size:	000008
  */
-void TAIAflyingToGoal::goal(Teki &)
+u32  TAIAflyingToGoal::goal(Teki &)
 {
-/*
-.loc_0x0:
-  li        r3, 0x1
-  blr
-*/
+	return 0x1;
 }
 
 /*
@@ -5285,10 +5275,6 @@ void TAIAlanding::act(Teki &)
  */
 void TAIAlanding::landingEffect(Teki &)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*

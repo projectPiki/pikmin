@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -820,13 +822,10 @@ void GoalItem::invoke(zen::particleGenerator *, zen::particleMdl *)
  * Address:	800EB138
  * Size:	000008
  */
-void GoalItem::setFlightLight(bool)
+void GoalItem::setFlightLight(bool a1)
 {
-/*
-.loc_0x0:
-  stb       r4, 0x3EC(r3)
-  blr
-*/
+// Generated from stb r4, 0x3EC(r3)
+_3EC = a1;
 }
 
 /*
@@ -1204,13 +1203,9 @@ void GoalItem::exitPiki()
  * Address:	800EB5B8
  * Size:	000008
  */
-void GoalItem::needShadow()
+u32  GoalItem::needShadow()
 {
-/*
-.loc_0x0:
-  li        r3, 0
-  blr
-*/
+	return 0x0;
 }
 
 /*
@@ -1218,7 +1213,7 @@ void GoalItem::needShadow()
  * Address:	800EB5C0
  * Size:	000110
  */
-void GoalItem::GoalItem(CreatureProp *, ItemShapeObject *, ItemShapeObject *, ItemShapeObject *, SimpleAI *)
+GoalItem::GoalItem(CreatureProp *, ItemShapeObject *, ItemShapeObject *, ItemShapeObject *, SimpleAI *)
 {
 /*
 .loc_0x0:
@@ -2450,13 +2445,9 @@ void GoalItem::getRouteIndex()
  * Address:	800EC4B0
  * Size:	000008
  */
-void GoalItem::isVisible()
+u32  GoalItem::isVisible()
 {
-/*
-.loc_0x0:
-  li        r3, 0x1
-  blr
-*/
+	return 0x1;
 }
 
 /*
@@ -2464,13 +2455,9 @@ void GoalItem::isVisible()
  * Address:	800EC4B8
  * Size:	000008
  */
-void GoalItem::isAlive()
+u32  GoalItem::isAlive()
 {
-/*
-.loc_0x0:
-  li        r3, 0x1
-  blr
-*/
+	return 0x1;
 }
 
 /*

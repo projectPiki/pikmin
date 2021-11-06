@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -1136,7 +1138,7 @@ void UfoItem::setJetEffect(int, bool)
  * Address:	800E7DC4
  * Size:	00001C
  */
-void UfoItem::LightAnimator::LightAnimator()
+UfoItem::LightAnimator::LightAnimator()
 {
 /*
 .loc_0x0:
@@ -1928,13 +1930,9 @@ void UfoItem::animationKeyUpdated(PaniAnimKeyEvent &)
  * Address:	800E86FC
  * Size:	000008
  */
-void UfoItem::needShadow()
+u32  UfoItem::needShadow()
 {
-/*
-.loc_0x0:
-  li        r3, 0
-  blr
-*/
+	return 0x0;
 }
 
 /*
@@ -1942,7 +1940,7 @@ void UfoItem::needShadow()
  * Address:	800E8704
  * Size:	0001F4
  */
-void UfoItem::UfoItem(CreatureProp *, UfoShapeObject *)
+UfoItem::UfoItem(CreatureProp *, UfoShapeObject *)
 {
 /*
 .loc_0x0:
@@ -2079,7 +2077,7 @@ void UfoItem::UfoItem(CreatureProp *, UfoShapeObject *)
  * Address:	800E88F8
  * Size:	000014
  */
-void UfoItem::Spot::Spot()
+UfoItem::Spot::Spot()
 {
 /*
 .loc_0x0:
@@ -2096,13 +2094,9 @@ void UfoItem::Spot::Spot()
  * Address:	800E890C
  * Size:	000008
  */
-void UfoItem::ignoreAtari(Creature *)
+u32  UfoItem::ignoreAtari(Creature *)
 {
-/*
-.loc_0x0:
-  li        r3, 0
-  blr
-*/
+	return 0x0;
 }
 
 /*
@@ -3256,13 +3250,9 @@ void UfoItem::getRouteIndex()
  * Address:	800E9794
  * Size:	000008
  */
-void UfoItem::isVisible()
+u32  UfoItem::isVisible()
 {
-/*
-.loc_0x0:
-  li        r3, 0x1
-  blr
-*/
+	return 0x1;
 }
 
 /*
@@ -3270,13 +3260,9 @@ void UfoItem::isVisible()
  * Address:	800E979C
  * Size:	000008
  */
-void UfoItem::isAlive()
+u32  UfoItem::isAlive()
 {
-/*
-.loc_0x0:
-  li        r3, 0x1
-  blr
-*/
+	return 0x1;
 }
 
 /*

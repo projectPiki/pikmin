@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -25,7 +27,7 @@ void _Print(char *, ...)
  * Address:	........
  * Size:	00000C
  */
-void TekiInteractionKey::TekiInteractionKey(int, Interaction *)
+TekiInteractionKey::TekiInteractionKey(int, Interaction *)
 {
 	// UNUSED FUNCTION
 }
@@ -141,13 +143,9 @@ void InteractHitEffect::actTeki(Teki *)
  * Address:	8014A524
  * Size:	000008
  */
-void InteractSwallow::actTeki(Teki *)
+u32  InteractSwallow::actTeki(Teki *)
 {
-/*
-.loc_0x0:
-  li        r3, 0x1
-  blr
-*/
+	return 0x1;
 }
 
 /*
@@ -189,11 +187,7 @@ void InteractPress::actTeki(Teki *)
  * Address:	8014A584
  * Size:	000008
  */
-void InteractFlick::actTeki(Teki *)
+u32  InteractFlick::actTeki(Teki *)
 {
-/*
-.loc_0x0:
-  li        r3, 0x1
-  blr
-*/
+	return 0x1;
 }

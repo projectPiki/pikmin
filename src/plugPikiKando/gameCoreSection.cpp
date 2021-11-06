@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -3865,7 +3867,7 @@ void GameCoreSection::finalSetup()
  * Address:	8010FE4C
  * Size:	0009A4
  */
-void GameCoreSection::GameCoreSection(Controller *, MapMgr *, Camera &)
+GameCoreSection::GameCoreSection(Controller *, MapMgr *, Camera &)
 {
 /*
 .loc_0x0:
@@ -4786,12 +4788,8 @@ void GameCoreSection::update()
  */
 void GameCoreSection::startContainerDemo()
 {
-/*
-.loc_0x0:
-  li        r0, 0x2
-  stw       r0, 0x34(r3)
-  blr
-*/
+// Generated from stw r0, 0x34(r3)
+_34 = 2;
 }
 
 /*

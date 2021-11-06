@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -27,10 +29,6 @@ void _Print(char *, ...)
  */
 void CreatureCollPart::touchCallback(Plane &, Vector3f &, Vector3f &)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -219,10 +217,6 @@ void CreaturePlatMgr::update(Graphics &)
  */
 void CreatureCollPart::update()
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -232,8 +226,4 @@ void CreatureCollPart::update()
  */
 void CreatureCollPart::refresh(Graphics &)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }

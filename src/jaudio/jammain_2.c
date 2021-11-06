@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -4691,13 +4693,9 @@ void Cmd_Finish()
  * Address:	800125E0
  * Size:	000008
  */
-void Cmd_Nop()
+u32  Cmd_Nop()
 {
-/*
-.loc_0x0:
-  li        r3, 0
-  blr
-*/
+	return 0x0;
 }
 
 /*

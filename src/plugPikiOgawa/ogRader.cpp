@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -45,7 +47,7 @@ void zen::setOffsetSub(P2DPicture *)
  * Address:	801850A0
  * Size:	000970
  */
-void zen::ogRaderMgr::ogRaderMgr()
+zen::ogRaderMgr::ogRaderMgr()
 {
 /*
 .loc_0x0:

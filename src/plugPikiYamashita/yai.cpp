@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -25,7 +27,7 @@ void _Print(char *, ...)
  * Address:	801E9654
  * Size:	000064
  */
-void YaiStrategy::YaiStrategy(int, int)
+YaiStrategy::YaiStrategy(int, int)
 {
 /*
 .loc_0x0:

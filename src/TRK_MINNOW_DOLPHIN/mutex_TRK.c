@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -8,11 +10,7 @@
 int TRKInitializeMutex(void)
 {
 	return 0;
-/*
-.loc_0x0:
-  li        r3, 0
-  blr
-*/
+	return 0x0;
 }
 
 /*
@@ -23,11 +21,7 @@ int TRKInitializeMutex(void)
 int TRKAcquireMutex(void)
 {
 	return 0;
-/*
-.loc_0x0:
-  li        r3, 0
-  blr
-*/
+	return 0x0;
 }
 
 /*
@@ -38,9 +32,5 @@ int TRKAcquireMutex(void)
 int TRKReleaseMutex(void)
 {
 	return 0;
-/*
-.loc_0x0:
-  li        r3, 0
-  blr
-*/
+	return 0x0;
 }

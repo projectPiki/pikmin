@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -25,7 +27,7 @@ void _Print(char *, ...)
  * Address:	800A5444
  * Size:	000014
  */
-void UpdateContext::UpdateContext()
+UpdateContext::UpdateContext()
 {
 /*
 .loc_0x0:
@@ -136,7 +138,7 @@ void UpdateContext::exit()
  * Address:	800A5520
  * Size:	00001C
  */
-void UpdateMgr::UpdateMgr()
+UpdateMgr::UpdateMgr()
 {
 /*
 .loc_0x0:

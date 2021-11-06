@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -25,7 +27,7 @@ void _Print(char *, ...)
  * Address:	........
  * Size:	00009C
  */
-void ParaParametersI::ParaParametersI(int, ParaParameterInfoI *)
+ParaParametersI::ParaParametersI(int, ParaParameterInfoI *)
 {
 	// UNUSED FUNCTION
 }
@@ -171,7 +173,7 @@ void ParaParametersI::print()
  * Address:	........
  * Size:	00009C
  */
-void ParaParametersF::ParaParametersF(int, ParaParameterInfoF *)
+ParaParametersF::ParaParametersF(int, ParaParameterInfoF *)
 {
 	// UNUSED FUNCTION
 }
@@ -317,7 +319,7 @@ void ParaParametersF::print()
  * Address:	80121854
  * Size:	0000A8
  */
-void ParaMultiParameters::ParaMultiParameters(int, ParaParameterInfoI *, int, ParaParameterInfoF *)
+ParaMultiParameters::ParaMultiParameters(int, ParaParameterInfoI *, int, ParaParameterInfoF *)
 {
 /*
 .loc_0x0:
@@ -644,10 +646,6 @@ void ParaMultiParameters::print()
  */
 void ParaParameters<float>::read(Stream &)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -657,10 +655,6 @@ void ParaParameters<float>::read(Stream &)
  */
 void ParaParameters<float>::write(Stream &)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -670,10 +664,6 @@ void ParaParameters<float>::write(Stream &)
  */
 void ParaParameters<float>::print()
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -683,10 +673,6 @@ void ParaParameters<float>::print()
  */
 void ParaParameters<int>::read(Stream &)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -696,10 +682,6 @@ void ParaParameters<int>::read(Stream &)
  */
 void ParaParameters<int>::write(Stream &)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -709,8 +691,4 @@ void ParaParameters<int>::write(Stream &)
  */
 void ParaParameters<int>::print()
 {
-/*
-.loc_0x0:
-  blr
-*/
 }

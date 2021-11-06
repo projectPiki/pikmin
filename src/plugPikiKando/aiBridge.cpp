@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -25,7 +27,7 @@ void _Print(char *, ...)
  * Address:	800ACEA0
  * Size:	0000AC
  */
-void ActBridge::ActBridge(Piki *)
+ActBridge::ActBridge(Piki *)
 {
 /*
 .loc_0x0:
@@ -1603,7 +1605,7 @@ void ActBridge::newExeWork()
  * Address:	800AE0A8
  * Size:	000080
  */
-void ActBridge::~ActBridge()
+ActBridge::~ActBridge()
 {
 /*
 .loc_0x0:

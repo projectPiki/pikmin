@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -61,7 +63,7 @@ void GameCourseClearScreen::menuQuitGame(Menu &)
  * Address:	80199474
  * Size:	000D38
  */
-void GameCourseClearSection::GameCourseClearSection()
+GameCourseClearSection::GameCourseClearSection()
 {
 /*
 .loc_0x0:
@@ -1003,7 +1005,7 @@ void GameCourseClearSection::GameCourseClearSection()
  * Address:	........
  * Size:	000058
  */
-void zen::DrawHurryUp::~DrawHurryUp()
+zen::DrawHurryUp::~DrawHurryUp()
 {
 	// UNUSED FUNCTION
 }
@@ -1013,7 +1015,7 @@ void zen::DrawHurryUp::~DrawHurryUp()
  * Address:	........
  * Size:	000058
  */
-void zen::DrawContainer::~DrawContainer()
+zen::DrawContainer::~DrawContainer()
 {
 	// UNUSED FUNCTION
 }
@@ -1023,7 +1025,7 @@ void zen::DrawContainer::~DrawContainer()
  * Address:	8019A1AC
  * Size:	0000AC
  */
-void CMresultMode::CMresultMode()
+CMresultMode::CMresultMode()
 {
 /*
 .loc_0x0:
@@ -1078,7 +1080,7 @@ void CMresultMode::CMresultMode()
  * Address:	8019A258
  * Size:	000078
  */
-void GameModeMgr::GameModeMgr(int)
+GameModeMgr::GameModeMgr(int)
 {
 /*
 .loc_0x0:
@@ -1124,7 +1126,7 @@ void GameModeMgr::GameModeMgr(int)
  * Address:	8019A2D0
  * Size:	000188
  */
-void zen::particleGenerator::particleGenerator()
+zen::particleGenerator::particleGenerator()
 {
 /*
 .loc_0x0:
@@ -1234,7 +1236,7 @@ void zen::particleGenerator::particleGenerator()
  * Address:	........
  * Size:	000040
  */
-void zen::bBoardColourAnimData::~bBoardColourAnimData()
+zen::bBoardColourAnimData::~bBoardColourAnimData()
 {
 	// UNUSED FUNCTION
 }
@@ -1244,7 +1246,7 @@ void zen::bBoardColourAnimData::~bBoardColourAnimData()
  * Address:	........
  * Size:	000048
  */
-void zen::particleManager::~particleManager()
+zen::particleManager::~particleManager()
 {
 	// UNUSED FUNCTION
 }
@@ -1254,7 +1256,7 @@ void zen::particleManager::~particleManager()
  * Address:	........
  * Size:	000040
  */
-void zen::simplePtclManager::~simplePtclManager()
+zen::simplePtclManager::~simplePtclManager()
 {
 	// UNUSED FUNCTION
 }
@@ -1264,7 +1266,7 @@ void zen::simplePtclManager::~simplePtclManager()
  * Address:	........
  * Size:	000040
  */
-void zen::particleMdlManager::~particleMdlManager()
+zen::particleMdlManager::~particleMdlManager()
 {
 	// UNUSED FUNCTION
 }
@@ -1274,7 +1276,7 @@ void zen::particleMdlManager::~particleMdlManager()
  * Address:	8019A458
  * Size:	000030
  */
-void zen::zenListManager::zenListManager()
+zen::zenListManager::zenListManager()
 {
 /*
 .loc_0x0:
@@ -1298,7 +1300,7 @@ void zen::zenListManager::zenListManager()
  * Address:	........
  * Size:	000040
  */
-void zen::particleLoader::~particleLoader()
+zen::particleLoader::~particleLoader()
 {
 	// UNUSED FUNCTION
 }
@@ -1308,7 +1310,7 @@ void zen::particleLoader::~particleLoader()
  * Address:	........
  * Size:	000040
  */
-void zen::zenListManager::~zenListManager()
+zen::zenListManager::~zenListManager()
 {
 	// UNUSED FUNCTION
 }
@@ -2572,10 +2574,6 @@ void GameModeBase::update(Controller *)
  */
 void GameModeBase::draw(Graphics &)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -3144,10 +3142,6 @@ void GameCourseClearScreen::read(RandomAccessStream &)
  */
 void GameCourseClearSection::init()
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*

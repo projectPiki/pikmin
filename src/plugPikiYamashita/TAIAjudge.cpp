@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -27,10 +29,6 @@ void _Print(char *, ...)
  */
 void TAIAsearchWorkObject::start(Teki &)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*

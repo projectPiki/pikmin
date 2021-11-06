@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -218,7 +220,7 @@ void MtxGroup::read(RandomAccessStream &)
  * Address:	8002A1D4
  * Size:	000094
  */
-void DispList::DispList()
+DispList::DispList()
 {
 /*
 .loc_0x0:
@@ -355,7 +357,7 @@ void Mesh::read(RandomAccessStream &)
  * Address:	8002A378
  * Size:	000014
  */
-void MtxGroup::MtxGroup()
+MtxGroup::MtxGroup()
 {
 /*
 .loc_0x0:
@@ -844,7 +846,7 @@ void extract(float, AnimParam &, DataChunk &)
  * Address:	8002A91C
  * Size:	00007C
  */
-void CamDataInfo::CamDataInfo()
+CamDataInfo::CamDataInfo()
 {
 /*
 .loc_0x0:
@@ -2511,7 +2513,7 @@ void SceneData::getAnimInfo(CmdStream *)
  * Address:	8002BF10
  * Size:	00003C
  */
-void LightDataInfo::LightDataInfo()
+LightDataInfo::LightDataInfo()
 {
 /*
 .loc_0x0:
@@ -2965,7 +2967,7 @@ void AnimData::initData()
  * Address:	8002C448
  * Size:	000010
  */
-void AnimCacheInfo::AnimCacheInfo()
+AnimCacheInfo::AnimCacheInfo()
 {
 /*
 .loc_0x0:
@@ -3463,7 +3465,7 @@ void AnimDca::read(RandomAccessStream &)
  * Address:	8002CA88
  * Size:	000034
  */
-void AnimDataInfo::AnimDataInfo()
+AnimDataInfo::AnimDataInfo()
 {
 /*
 .loc_0x0:
@@ -4392,7 +4394,7 @@ void AnimDca::getAnimInfo(CmdStream *)
  * Address:	8002D69C
  * Size:	00010C
  */
-void AnimDck::AnimDck(BaseShape *, int)
+AnimDck::AnimDck(BaseShape *, int)
 {
 /*
 .loc_0x0:
@@ -6651,7 +6653,7 @@ void ShapeDynMaterials::updateContext()
  * Address:	8002F378
  * Size:	00030C
  */
-void BaseShape::BaseShape()
+BaseShape::BaseShape()
 {
 /*
 .loc_0x0:
@@ -7331,12 +7333,8 @@ void BaseShape::makeInstance(ShapeDynMaterials &, int)
  * Address:	8002FC38
  * Size:	000004
  */
-void Colour::Colour()
+Colour::Colour()
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -7344,7 +7342,7 @@ void Colour::Colour()
  * Address:	8002FC3C
  * Size:	00000C
  */
-void PVWTevColReg::PVWTevColReg()
+PVWTevColReg::PVWTevColReg()
 {
 /*
 .loc_0x0:
@@ -7359,7 +7357,7 @@ void PVWTevColReg::PVWTevColReg()
  * Address:	8002FC48
  * Size:	0000AC
  */
-void Material::Material()
+Material::Material()
 {
 /*
 .loc_0x0:
@@ -8443,7 +8441,7 @@ void BaseShape::resolveTextureNames()
  * Address:	80030A18
  * Size:	00005C
  */
-void TexAttr::TexAttr()
+TexAttr::TexAttr()
 {
 /*
 .loc_0x0:
@@ -11349,7 +11347,7 @@ void BaseShape::read(RandomAccessStream &)
  * Address:	800330D0
  * Size:	000018
  */
-void CollGroup::CollGroup()
+CollGroup::CollGroup()
 {
 /*
 .loc_0x0:
@@ -11367,7 +11365,7 @@ void CollGroup::CollGroup()
  * Address:	800330E8
  * Size:	0000E4
  */
-void Joint::Joint()
+Joint::Joint()
 {
 /*
 .loc_0x0:
@@ -11436,7 +11434,7 @@ void Joint::Joint()
  * Address:	800331CC
  * Size:	000054
  */
-void Mesh::Mesh()
+Mesh::Mesh()
 {
 /*
 .loc_0x0:
@@ -11469,7 +11467,7 @@ void Mesh::Mesh()
  * Address:	80033220
  * Size:	000014
  */
-void Envelope::Envelope()
+Envelope::Envelope()
 {
 /*
 .loc_0x0:
@@ -11907,7 +11905,7 @@ void PVWAnimInfo3<PVWKeyInfoS10>::read(RandomAccessStream &)
  * Address:	80033808
  * Size:	000060
  */
-void PVWTevInfo::PVWTevInfo()
+PVWTevInfo::PVWTevInfo()
 {
 /*
 .loc_0x0:
@@ -11943,7 +11941,7 @@ void PVWTevInfo::PVWTevInfo()
  * Address:	80033868
  * Size:	00004C
  */
-void TexImg::TexImg()
+TexImg::TexImg()
 {
 /*
 .loc_0x0:
@@ -11974,12 +11972,8 @@ void TexImg::TexImg()
  * Address:	800338B4
  * Size:	000004
  */
-void Vector2f::Vector2f()
+Vector2f::Vector2f()
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -13853,7 +13847,7 @@ void BaseShape::loadAnimation(char *, bool)
  * Address:	80034FB8
  * Size:	000030
  */
-void CoreNode::CoreNode(char *)
+CoreNode::CoreNode(char *)
 {
 /*
 .loc_0x0:
@@ -14009,7 +14003,7 @@ void BaseShape::overrideAnim(int, AnimContext *)
  * Address:	800350F8
  * Size:	000074
  */
-void AnimFrameCacher::AnimFrameCacher(int)
+AnimFrameCacher::AnimFrameCacher(int)
 {
 /*
 .loc_0x0:
@@ -14842,10 +14836,6 @@ void MatobjInfo::attach()
  */
 void MatobjInfo::detach()
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -14855,10 +14845,6 @@ void MatobjInfo::detach()
  */
 void GfxobjInfo::attach()
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -14868,10 +14854,6 @@ void GfxobjInfo::attach()
  */
 void GfxobjInfo::detach()
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -14881,10 +14863,6 @@ void GfxobjInfo::detach()
  */
 void BaseShape::optimize()
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -14894,10 +14872,6 @@ void BaseShape::optimize()
  */
 void BaseShape::update()
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -14907,10 +14881,6 @@ void BaseShape::update()
  */
 void BaseShape::render(Graphics &)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -14920,10 +14890,6 @@ void BaseShape::render(Graphics &)
  */
 void BaseShape::render2d(Graphics &)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -14933,10 +14899,6 @@ void BaseShape::render2d(Graphics &)
  */
 void AnimData::writeType(RandomAccessStream &)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -15014,7 +14976,7 @@ void __sinit_shapeBase_cpp(void)
  * Address:	80035B24
  * Size:	000014
  */
-void Vector3f::Vector3f()
+Vector3f::Vector3f()
 {
 /*
 .loc_0x0:

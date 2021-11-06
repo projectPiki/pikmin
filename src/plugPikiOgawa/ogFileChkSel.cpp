@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -35,7 +37,7 @@ void zen::ogScrFileChkSelMgr::init()
  * Address:	80193594
  * Size:	000110
  */
-void zen::ogScrFileChkSelMgr::ogScrFileChkSelMgr()
+zen::ogScrFileChkSelMgr::ogScrFileChkSelMgr()
 {
 /*
 .loc_0x0:

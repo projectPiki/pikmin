@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -27,7 +29,7 @@ void _Print(char *, ...)
  * Address:	8014FA68
  * Size:	000094
  */
-void BossAnimationManager::BossAnimationManager(BossMgr *)
+BossAnimationManager::BossAnimationManager(BossMgr *)
 {
 /*
 .loc_0x0:

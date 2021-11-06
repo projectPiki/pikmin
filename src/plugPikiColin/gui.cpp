@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -25,7 +27,7 @@ void _Print(char *, ...)
  * Address:	8005D6F8
  * Size:	0001C8
  */
-void Menu::Menu(Controller *, Font *, bool)
+Menu::Menu(Controller *, Font *, bool)
 {
 /*
 .loc_0x0:
@@ -195,7 +197,7 @@ void Menu::MenuItem::remove()
  * Address:	........
  * Size:	00001C
  */
-void Menu::KeyEvent::KeyEvent(int, int, IDelegate1<Menu &> *)
+Menu::KeyEvent::KeyEvent(int, int, IDelegate1<Menu &> *)
 {
 	// UNUSED FUNCTION
 }
@@ -205,7 +207,7 @@ void Menu::KeyEvent::KeyEvent(int, int, IDelegate1<Menu &> *)
  * Address:	8005D8C0
  * Size:	000094
  */
-void Menu::MenuItem::MenuItem(int, int, char *, IDelegate1<Menu &> *)
+Menu::MenuItem::MenuItem(int, int, char *, IDelegate1<Menu &> *)
 {
 /*
 .loc_0x0:
@@ -346,10 +348,6 @@ void Menu::addKeyEvent(int, int, IDelegate1<Menu &> *)
  */
 void Menu::enterOption()
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*

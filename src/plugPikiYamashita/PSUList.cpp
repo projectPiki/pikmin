@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -5,7 +7,7 @@
  * Address:	801B33C8
  * Size:	000018
  */
-void PSUPtrLink::PSUPtrLink(void *)
+PSUPtrLink::PSUPtrLink(void *)
 {
 /*
 .loc_0x0:
@@ -23,7 +25,7 @@ void PSUPtrLink::PSUPtrLink(void *)
  * Address:	801B33E0
  * Size:	000060
  */
-void PSUPtrLink::~PSUPtrLink()
+PSUPtrLink::~PSUPtrLink()
 {
 /*
 .loc_0x0:
@@ -63,7 +65,7 @@ void PSUPtrLink::~PSUPtrLink()
  * Address:	........
  * Size:	00003C
  */
-void PSUPtrList::PSUPtrList(bool)
+PSUPtrList::PSUPtrList(bool)
 {
 	// UNUSED FUNCTION
 }
@@ -73,7 +75,7 @@ void PSUPtrList::PSUPtrList(bool)
  * Address:	801B3440
  * Size:	000068
  */
-void PSUPtrList::~PSUPtrList()
+PSUPtrList::~PSUPtrList()
 {
 /*
 .loc_0x0:

@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -25,7 +27,7 @@ void _Print(char *, ...)
  * Address:	8016C2B0
  * Size:	000048
  */
-void KingAi::KingAi(King *)
+KingAi::KingAi(King *)
 {
 /*
 .loc_0x0:

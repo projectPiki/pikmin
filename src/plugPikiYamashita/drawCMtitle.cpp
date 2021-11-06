@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -211,13 +213,9 @@ void zen::DrawCMtitleObj::appear(float)
  * Address:	801ED6A0
  * Size:	000008
  */
-void zen::DrawCMtitleObj::modeSleep()
+u32  zen::DrawCMtitleObj::modeSleep()
 {
-/*
-.loc_0x0:
-  li        r3, 0
-  blr
-*/
+	return 0x0;
 }
 
 /*

@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -25,7 +27,7 @@ void _Print(char *, ...)
  * Address:	8014D8CC
  * Size:	0005AC
  */
-void BossProp::BossProp()
+BossProp::BossProp()
 {
 /*
 .loc_0x0:
@@ -400,7 +402,7 @@ void BossProp::BossProp()
  * Address:	8014DE78
  * Size:	0000EC
  */
-void Boss::Boss(CreatureProp *)
+Boss::Boss(CreatureProp *)
 {
 /*
 .loc_0x0:
@@ -2378,10 +2380,6 @@ void Boss::refreshViewCulling(Graphics &)
  */
 void Boss::drawShape(Graphics &)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -2547,13 +2545,9 @@ void InteractAttack::actBoss(Boss *)
  * Address:	8014F76C
  * Size:	000008
  */
-void Boss::attackDefaultPortion()
+u32  Boss::attackDefaultPortion()
 {
-/*
-.loc_0x0:
-  li        r3, 0
-  blr
-*/
+	return 0x0;
 }
 
 /*
@@ -2643,10 +2637,6 @@ void InteractBomb::actBoss(Boss *)
  */
 void Boss::bombDamageCounter(CollPart *)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -2837,13 +2827,9 @@ void Boss::isOrganic()
  * Address:	8014F9D4
  * Size:	000008
  */
-void Boss::isFixed()
+u32  Boss::isFixed()
 {
-/*
-.loc_0x0:
-  li        r3, 0x1
-  blr
-*/
+	return 0x1;
 }
 
 /*
@@ -2851,13 +2837,9 @@ void Boss::isFixed()
  * Address:	8014F9DC
  * Size:	000008
  */
-void Boss::ignoreAtari(Creature *)
+u32  Boss::ignoreAtari(Creature *)
 {
-/*
-.loc_0x0:
-  li        r3, 0
-  blr
-*/
+	return 0x0;
 }
 
 /*
@@ -2914,10 +2896,6 @@ void Boss::getShadowSize()
  */
 void Boss::update()
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -2927,10 +2905,6 @@ void Boss::update()
  */
 void Boss::refresh(Graphics &)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -2940,10 +2914,6 @@ void Boss::refresh(Graphics &)
  */
 void Boss::doKill()
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -2953,10 +2923,6 @@ void Boss::doKill()
  */
 void Boss::exitCourse()
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -2966,10 +2932,6 @@ void Boss::exitCourse()
  */
 void Boss::collisionCallback(CollEvent &)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*

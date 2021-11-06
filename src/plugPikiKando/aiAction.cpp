@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -248,7 +250,7 @@ void Action::Child::initialise(Creature *)
  * Address:	800C3DD0
  * Size:	000038
  */
-void Action::Action(Piki *, bool)
+Action::Action(Piki *, bool)
 {
 /*
 .loc_0x0:
@@ -274,7 +276,7 @@ void Action::Action(Piki *, bool)
  * Address:	800C3E08
  * Size:	000078
  */
-void Action::~Action()
+Action::~Action()
 {
 /*
 .loc_0x0:
@@ -320,7 +322,7 @@ void Action::~Action()
  * Address:	800C3E80
  * Size:	000080
  */
-void Action::Child::~Child()
+Action::Child::~Child()
 {
 /*
 .loc_0x0:
@@ -372,12 +374,8 @@ void Action::Child::~Child()
  */
 void Action::init(Creature *)
 {
-/*
-.loc_0x0:
-  li        r0, 0
-  sth       r0, 0x8(r3)
-  blr
-*/
+// Generated from sth r0, 0x8(r3)
+_08 = 0;
 }
 
 /*
@@ -385,13 +383,9 @@ void Action::init(Creature *)
  * Address:	800C3F0C
  * Size:	000008
  */
-void Action::exec()
+u32  Action::exec()
 {
-/*
-.loc_0x0:
-  li        r3, 0x2
-  blr
-*/
+	return 0x2;
 }
 
 /*
@@ -867,7 +861,7 @@ void Action::setChildren(int, ...)
  * Address:	800C4494
  * Size:	000010
  */
-void Action::Child::Child()
+Action::Child::Child()
 {
 /*
 .loc_0x0:
@@ -1004,7 +998,7 @@ void TopAction::MotionListener::animationKeyUpdated(PaniAnimKeyEvent &)
  * Address:	800C45F0
  * Size:	00064C
  */
-void TopAction::TopAction(Piki *)
+TopAction::TopAction(Piki *)
 {
 /*
 .loc_0x0:
@@ -1483,7 +1477,7 @@ void TopAction::TopAction(Piki *)
  * Address:	800C4C3C
  * Size:	000088
  */
-void TopAction::~TopAction()
+TopAction::~TopAction()
 {
 /*
 .loc_0x0:
@@ -2209,7 +2203,7 @@ void TopAction::knowledgeCheck()
  * Address:	800C54AC
  * Size:	000090
  */
-void TopAction::ObjBore::ObjBore()
+TopAction::ObjBore::ObjBore()
 {
 /*
 .loc_0x0:
@@ -2291,7 +2285,7 @@ void TopAction::ObjBore::update()
  * Address:	800C553C
  * Size:	00008C
  */
-void TopAction::Boredom::Boredom()
+TopAction::Boredom::Boredom()
 {
 /*
 .loc_0x0:
@@ -2447,7 +2441,7 @@ void TopAction::draw(Graphics &)
  * Address:	800C564C
  * Size:	000088
  */
-void OrAction::~OrAction()
+OrAction::~OrAction()
 {
 /*
 .loc_0x0:

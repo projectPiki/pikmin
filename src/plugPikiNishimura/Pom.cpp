@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -25,7 +27,7 @@ void _Print(char *, ...)
  * Address:	80177DE0
  * Size:	0002B4
  */
-void PomProp::PomProp()
+PomProp::PomProp()
 {
 /*
 .loc_0x0:
@@ -210,7 +212,7 @@ void PomProp::PomProp()
  * Address:	80178094
  * Size:	000098
  */
-void Pom::Pom(CreatureProp *)
+Pom::Pom(CreatureProp *)
 {
 /*
 .loc_0x0:

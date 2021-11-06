@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -25,7 +27,7 @@ void _Print(char *, ...)
  * Address:	800C12E8
  * Size:	000098
  */
-void ActRescue::ActRescue(Piki *)
+ActRescue::ActRescue(Piki *)
 {
 /*
 .loc_0x0:
@@ -934,10 +936,6 @@ void ActRescue::exeThrow()
  */
 void ActRescue::cleanup()
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -945,7 +943,7 @@ void ActRescue::cleanup()
  * Address:	800C1D90
  * Size:	000080
  */
-void ActRescue::~ActRescue()
+ActRescue::~ActRescue()
 {
 /*
 .loc_0x0:

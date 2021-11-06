@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -25,7 +27,7 @@ void _Print(char *, ...)
  * Address:	80164B80
  * Size:	000008
  */
-void SlimeAi::SlimeAi(Slime *)
+SlimeAi::SlimeAi(Slime *)
 {
 /*
 .loc_0x0:

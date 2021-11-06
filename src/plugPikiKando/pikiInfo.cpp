@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -25,7 +27,7 @@ void _Print(char *, ...)
  * Address:	80119CE4
  * Size:	000024
  */
-void PikiInfo::PikiInfo()
+PikiInfo::PikiInfo()
 {
 /*
 .loc_0x0:

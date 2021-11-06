@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -1436,7 +1438,7 @@ void CollPart::getNext()
  * Address:	80087E48
  * Size:	00003C
  */
-void CollPart::CollPart()
+CollPart::CollPart()
 {
 /*
 .loc_0x0:
@@ -2580,7 +2582,7 @@ void CollPart::samePlatShape(Shape *)
  * Address:	80088C30
  * Size:	0000A0
  */
-void CollInfo::CollInfo(int)
+CollInfo::CollInfo(int)
 {
 /*
 .loc_0x0:
@@ -2874,13 +2876,9 @@ void CollInfo::checkCollisionSpecial(Vector3f &, float, CndCollPart *)
  * Address:	80088EF8
  * Size:	000008
  */
-void CndCollPart::satisfy(CollPart *)
+u32  CndCollPart::satisfy(CollPart *)
 {
-/*
-.loc_0x0:
-  li        r3, 0
-  blr
-*/
+	return 0x0;
 }
 
 /*
@@ -4428,8 +4426,4 @@ void CollInfo::makeTree()
  */
 void __sinit_collInfo_cpp(void)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }

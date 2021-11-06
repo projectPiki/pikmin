@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -25,7 +27,7 @@ void _Print(char *, ...)
  * Address:	80094098
  * Size:	000024
  */
-void FastGrid::FastGrid()
+FastGrid::FastGrid()
 {
 /*
 .loc_0x0:

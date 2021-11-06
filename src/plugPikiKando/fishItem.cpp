@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -25,7 +27,7 @@ void _Print(char *, ...)
  * Address:	800E6668
  * Size:	0000B0
  */
-void FishGenerator::FishGenerator()
+FishGenerator::FishGenerator()
 {
 /*
 .loc_0x0:
@@ -81,7 +83,7 @@ void FishGenerator::FishGenerator()
  * Address:	800E6718
  * Size:	000020
  */
-void Fish::Fish()
+Fish::Fish()
 {
 /*
 .loc_0x0:

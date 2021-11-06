@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -15,13 +17,9 @@ void __init_uart_console(void)
  * Address:	8021A510
  * Size:	000008
  */
-void __close_console(void)
+u32  __close_console(void)
 {
-/*
-.loc_0x0:
-  li        r3, 0
-  blr
-*/
+	return 0x0;
 }
 
 /*

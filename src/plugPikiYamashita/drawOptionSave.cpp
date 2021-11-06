@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -25,7 +27,7 @@ void _Print(char *, ...)
  * Address:	801F5500
  * Size:	00004C
  */
-void zen::DrawOptionSave::DrawOptionSave()
+zen::DrawOptionSave::DrawOptionSave()
 {
 /*
 .loc_0x0:

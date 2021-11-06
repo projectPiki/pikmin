@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -502,13 +504,9 @@ void TAIAdamage::act(Teki &)
  * Address:	801A897C
  * Size:	000008
  */
-void TAIAdamage::judgeDamage(Teki &)
+u32  TAIAdamage::judgeDamage(Teki &)
 {
-/*
-.loc_0x0:
-  li        r3, 0x1
-  blr
-*/
+	return 0x1;
 }
 
 /*

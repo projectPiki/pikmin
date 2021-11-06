@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -223,7 +225,7 @@ void PaniItemAnimator::createMotionTable()
  * Address:	800F80F4
  * Size:	00003C
  */
-void PaniItemAnimator::PaniItemAnimator()
+PaniItemAnimator::PaniItemAnimator()
 {
 /*
 .loc_0x0:

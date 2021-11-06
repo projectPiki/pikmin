@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -60,7 +62,7 @@ void P2DScreen::update()
  * Address:	801B2B9C
  * Size:	000064
  */
-void P2DScreen::~P2DScreen()
+P2DScreen::~P2DScreen()
 {
 /*
 .loc_0x0:
@@ -334,13 +336,9 @@ void P2DScreen::makeHiearachyPanes(P2DPane *, RandomAccessStream *, bool, bool)
  * Address:	801B2ECC
  * Size:	000008
  */
-void P2DScreen::makeUserPane(unsigned short, P2DPane *, RandomAccessStream *)
+u32  P2DScreen::makeUserPane(unsigned short, P2DPane *, RandomAccessStream *)
 {
-/*
-.loc_0x0:
-  li        r3, 0
-  blr
-*/
+	return 0x0;
 }
 
 /*

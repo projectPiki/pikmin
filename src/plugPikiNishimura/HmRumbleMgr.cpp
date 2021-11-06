@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -25,7 +27,7 @@ void _Print(char *, ...)
  * Address:	........
  * Size:	00000C
  */
-void ChannelDataMgr::ChannelDataMgr()
+ChannelDataMgr::ChannelDataMgr()
 {
 	// UNUSED FUNCTION
 }
@@ -55,7 +57,7 @@ void ChannelDataMgr::getChannelDataTbl(int)
  * Address:	8017C868
  * Size:	000028
  */
-void ChannelMgr::ChannelMgr()
+ChannelMgr::ChannelMgr()
 {
 /*
 .loc_0x0:
@@ -220,7 +222,7 @@ void ChannelMgr::update()
  * Address:	........
  * Size:	000058
  */
-void ControlerMgr::ControlerMgr()
+ControlerMgr::ControlerMgr()
 {
 	// UNUSED FUNCTION
 }
@@ -339,7 +341,7 @@ void ControlerMgr::update()
  * Address:	8017CA88
  * Size:	000120
  */
-void RumbleMgr::RumbleMgr(bool, bool, bool, bool)
+RumbleMgr::RumbleMgr(bool, bool, bool, bool)
 {
 /*
 .loc_0x0:

@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -25,7 +27,7 @@ void _Print(char *, ...)
  * Address:	80198D2C
  * Size:	0000EC
  */
-void zen::TextColorCallBack::TextColorCallBack(P2DPane *)
+zen::TextColorCallBack::TextColorCallBack(P2DPane *)
 {
 /*
 .loc_0x0:

@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -336,10 +338,6 @@ void TAIAattackWorkObject::attackWorkObject(Teki &)
  */
 void TAIAattackWorkObject::attackEffect(Teki &)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*

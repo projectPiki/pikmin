@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -25,7 +27,7 @@ void _Print(char *, ...)
  * Address:	801B6338
  * Size:	001FCC
  */
-void zen::DrawGameInfo::DrawGameInfo(zen::DrawGameInfo::playModeFlag)
+zen::DrawGameInfo::DrawGameInfo(zen::DrawGameInfo::playModeFlag)
 {
 /*
 .loc_0x0:
@@ -3468,13 +3470,9 @@ void @unnamed@::LifePinchCallBack::invoke(P2DPane *)
  * Address:	801B917C
  * Size:	000008
  */
-void @unnamed@::LifeIconCallBack::invoke(P2DPane *)
+u32  @unnamed@::LifeIconCallBack::invoke(P2DPane *)
 {
-/*
-.loc_0x0:
-  li        r3, 0x1
-  blr
-*/
+	return 0x1;
 }
 
 /*

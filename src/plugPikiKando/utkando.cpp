@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -89,7 +91,7 @@ void selectRandomly(Choice *, int)
  * Address:	801161C0
  * Size:	000010
  */
-void BitFlags::BitFlags()
+BitFlags::BitFlags()
 {
 /*
 .loc_0x0:
@@ -356,7 +358,7 @@ void BitFlags::isFlag(unsigned short)
  * Address:	801163EC
  * Size:	00000C
  */
-void LoopChecker::LoopChecker(char *, float)
+LoopChecker::LoopChecker(char *, float)
 {
 /*
 .loc_0x0:

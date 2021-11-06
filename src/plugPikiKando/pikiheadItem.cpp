@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -172,13 +174,9 @@ void PikiHeadItem::canPullout()
  * Address:	800EC624
  * Size:	000008
  */
-void PikiHeadItem::isVisible()
+u32  PikiHeadItem::isVisible()
 {
-/*
-.loc_0x0:
-  li        r3, 0x1
-  blr
-*/
+	return 0x1;
 }
 
 /*
@@ -234,13 +232,9 @@ void PikiHeadItem::needShadow()
  * Address:	800EC694
  * Size:	000008
  */
-void PikiHeadItem::isAlive()
+u32  PikiHeadItem::isAlive()
 {
-/*
-.loc_0x0:
-  li        r3, 0x1
-  blr
-*/
+	return 0x1;
 }
 
 /*
@@ -248,7 +242,7 @@ void PikiHeadItem::isAlive()
  * Address:	800EC69C
  * Size:	00018C
  */
-void PikiHeadItem::PikiHeadItem(CreatureProp *, ItemShapeObject *, SimpleAI *)
+PikiHeadItem::PikiHeadItem(CreatureProp *, ItemShapeObject *, SimpleAI *)
 {
 /*
 .loc_0x0:
@@ -585,13 +579,10 @@ void PikiHeadItem::getiMass()
  * Address:	800ECAA0
  * Size:	000008
  */
-void PikiHeadItem::setColor(int)
+void PikiHeadItem::setColor(int a1)
 {
-/*
-.loc_0x0:
-  stw       r4, 0x3CC(r3)
-  blr
-*/
+// Generated from stw r4, 0x3CC(r3)
+_3CC = a1;
 }
 
 /*
@@ -1136,11 +1127,7 @@ void PikiHeadItem::interactSwallow(InteractSwallow &)
  * Address:	800ED1FC
  * Size:	000008
  */
-void PikiHeadItem::isAtari()
+u32  PikiHeadItem::isAtari()
 {
-/*
-.loc_0x0:
-  li        r3, 0
-  blr
-*/
+	return 0x0;
 }

@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -1242,11 +1244,7 @@ void TekiNotCondition::satisfy(Creature *)
  * Address:	801283A0
  * Size:	000008
  */
-void TekiCondition::satisfy(Creature *)
+u32  TekiCondition::satisfy(Creature *)
 {
-/*
-.loc_0x0:
-  li        r3, 0x1
-  blr
-*/
+	return 0x1;
 }

@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -752,10 +754,6 @@ void TaiRandomWanderingRouteAction::start(Teki &)
  */
 void TaiRandomWanderingRouteAction::finish(Teki &)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -966,10 +964,6 @@ void TaiTracingAction::act(Teki &)
  */
 void TaiGoingHomeAction::finish(Teki &)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*

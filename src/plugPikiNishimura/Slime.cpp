@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -25,7 +27,7 @@ void _Print(char *, ...)
  * Address:	80163714
  * Size:	000578
  */
-void SlimeProp::SlimeProp()
+SlimeProp::SlimeProp()
 {
 /*
 .loc_0x0:
@@ -387,7 +389,7 @@ void SlimeProp::SlimeProp()
  * Address:	80163C8C
  * Size:	0001D4
  */
-void Slime::Slime(CreatureProp *, BossShapeObject *)
+Slime::Slime(CreatureProp *, BossShapeObject *)
 {
 /*
 .loc_0x0:
@@ -530,7 +532,7 @@ void Slime::Slime(CreatureProp *, BossShapeObject *)
  * Address:	80163E60
  * Size:	000054
  */
-void Slime::TubeSphereUpdater::TubeSphereUpdater()
+Slime::TubeSphereUpdater::TubeSphereUpdater()
 {
 /*
 .loc_0x0:
@@ -563,7 +565,7 @@ void Slime::TubeSphereUpdater::TubeSphereUpdater()
  * Address:	80163EB4
  * Size:	000054
  */
-void Slime::CollideSphereUpdater::CollideSphereUpdater()
+Slime::CollideSphereUpdater::CollideSphereUpdater()
 {
 /*
 .loc_0x0:
@@ -827,10 +829,6 @@ void Slime::doKill()
  */
 void Slime::exitCourse()
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*

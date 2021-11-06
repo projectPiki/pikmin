@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -25,7 +27,7 @@ void _Print(char *, ...)
  * Address:	800EDDD0
  * Size:	0000DC
  */
-void SeedItem::SeedItem(CreatureProp *, Shape **)
+SeedItem::SeedItem(CreatureProp *, Shape **)
 {
 /*
 .loc_0x0:
@@ -172,13 +174,9 @@ void SeedItem::isVisible()
  * Address:	800EDF0C
  * Size:	000008
  */
-void SeedItem::isAtari()
+u32  SeedItem::isAtari()
 {
-/*
-.loc_0x0:
-  li        r3, 0
-  blr
-*/
+	return 0x0;
 }
 
 /*

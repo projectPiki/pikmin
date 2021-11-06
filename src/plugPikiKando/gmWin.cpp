@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -25,7 +27,7 @@ void _Print(char *, ...)
  * Address:	........
  * Size:	0000F8
  */
-void GmWin::GmWin()
+GmWin::GmWin()
 {
 	// UNUSED FUNCTION
 }
@@ -57,12 +59,8 @@ void GmWin::moveHome(Vector2i &)
  */
 void GmWin::open()
 {
-/*
-.loc_0x0:
-  li        r0, 0x1000
-  stw       r0, 0x28(r3)
-  blr
-*/
+// Generated from stw r0, 0x28(r3)
+_28 = 4096;
 }
 
 /*
@@ -648,7 +646,7 @@ void GmWin::textureright(Graphics &, Texture *, int, int, int, RectArea)
  * Address:	........
  * Size:	00004C
  */
-void GmWinMgr::GmWinMgr()
+GmWinMgr::GmWinMgr()
 {
 	// UNUSED FUNCTION
 }

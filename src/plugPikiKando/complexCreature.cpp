@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -25,7 +27,7 @@ void _Print(char *, ...)
  * Address:	........
  * Size:	0000B4
  */
-void ComplexCreature::ComplexCreature(int, CreatureProp *)
+ComplexCreature::ComplexCreature(int, CreatureProp *)
 {
 	// UNUSED FUNCTION
 }
@@ -37,12 +39,8 @@ void ComplexCreature::ComplexCreature(int, CreatureProp *)
  */
 void SmartPtr<Creature>::SmartPtr()
 {
-/*
-.loc_0x0:
-  li        r0, 0
-  stw       r0, 0x0(r3)
-  blr
-*/
+// Generated from stw r0, 0x0(r3)
+_00 = 0;
 }
 
 /*
@@ -112,10 +110,6 @@ void ComplexCreature::postUpdate(int, float)
  */
 void Creature::collisionCallback(CollEvent &)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -125,8 +119,4 @@ void Creature::collisionCallback(CollEvent &)
  */
 void Creature::bounceCallback()
 {
-/*
-.loc_0x0:
-  blr
-*/
 }

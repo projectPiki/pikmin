@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -273,10 +275,6 @@ void __DSPCheckMXICBoot2(STRUCT_DSP_TASK2 *)
  */
 void DSPInit(void)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*

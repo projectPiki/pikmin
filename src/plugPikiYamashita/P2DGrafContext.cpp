@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -25,7 +27,7 @@ void _Print(char *, ...)
  * Address:	........
  * Size:	00009C
  */
-void P2DGrafContext::P2DGrafContext(const PUTRect &)
+P2DGrafContext::P2DGrafContext(const PUTRect &)
 {
 	// UNUSED FUNCTION
 }
@@ -35,7 +37,7 @@ void P2DGrafContext::P2DGrafContext(const PUTRect &)
  * Address:	801AF7AC
  * Size:	0000B4
  */
-void P2DGrafContext::P2DGrafContext(int, int, int, int)
+P2DGrafContext::P2DGrafContext(int, int, int, int)
 {
 /*
 .loc_0x0:
@@ -510,7 +512,7 @@ void P2DGrafContext::polylineTo(int *, int)
  * Address:	801AFC50
  * Size:	00004C
  */
-void P2DGrafContext::~P2DGrafContext()
+P2DGrafContext::~P2DGrafContext()
 {
 /*
 .loc_0x0:
@@ -577,8 +579,4 @@ void P2DGrafContext::place(int, int, int, int)
  */
 void P2DGrafContext::setLookat()
 {
-/*
-.loc_0x0:
-  blr
-*/
 }

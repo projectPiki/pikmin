@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -25,7 +27,7 @@ void _Print(char *, ...)
  * Address:	800AC30C
  * Size:	000054
  */
-void ActBoMake::ActBoMake(Piki *)
+ActBoMake::ActBoMake(Piki *)
 {
 /*
 .loc_0x0:
@@ -345,13 +347,9 @@ void ActBoMake::initWork()
  * Address:	800AC684
  * Size:	000008
  */
-void ActBoMake::exeWork()
+u32  ActBoMake::exeWork()
 {
-/*
-.loc_0x0:
-  li        r3, 0
-  blr
-*/
+	return 0x0;
 }
 
 /*
@@ -426,7 +424,7 @@ void ActBoMake::animationKeyUpdated(PaniAnimKeyEvent &)
  * Address:	800AC728
  * Size:	00006C
  */
-void ActBoMake::~ActBoMake()
+ActBoMake::~ActBoMake()
 {
 /*
 .loc_0x0:

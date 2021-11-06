@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -50,7 +52,7 @@ void TekiMgr::getTypeIndex(char *)
  * Address:	8014A598
  * Size:	000300
  */
-void TekiMgr::TekiMgr()
+TekiMgr::TekiMgr()
 {
 /*
 .loc_0x0:
@@ -1058,7 +1060,7 @@ void TekiMgr::getResultFlag(int)
  * Address:	8014B098
  * Size:	000084
  */
-void TekiMgr::~TekiMgr()
+TekiMgr::~TekiMgr()
 {
 /*
 .loc_0x0:

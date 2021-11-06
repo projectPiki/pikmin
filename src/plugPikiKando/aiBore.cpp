@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -25,7 +27,7 @@ void _Print(char *, ...)
  * Address:	800AA51C
  * Size:	000108
  */
-void ActFreeSelect::ActFreeSelect(Piki *)
+ActFreeSelect::ActFreeSelect(Piki *)
 {
 /*
 .loc_0x0:
@@ -329,10 +331,6 @@ void ActFreeSelect::exec()
  */
 void ActFreeSelect::cleanup()
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -614,7 +612,7 @@ void ActFreeSelect::determine()
  * Address:	800AABF8
  * Size:	000104
  */
-void ActBoreSelect::ActBoreSelect(Piki *)
+ActBoreSelect::ActBoreSelect(Piki *)
 {
 /*
 .loc_0x0:
@@ -776,12 +774,8 @@ void ActBoreSelect::init(Creature *)
  */
 void ActBoreSelect::stop()
 {
-/*
-.loc_0x0:
-  li        r0, 0x1
-  stb       r0, 0x1A(r3)
-  blr
-*/
+// Generated from stb r0, 0x1A(r3)
+_1A = 1;
 }
 
 /*
@@ -918,10 +912,6 @@ void ActBoreSelect::exec()
  */
 void ActBoreSelect::cleanup()
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -1270,7 +1260,7 @@ void ActBoreSelect::determine()
  * Address:	800AB390
  * Size:	000080
  */
-void ActBoreTalk::ActBoreTalk(Piki *)
+ActBoreTalk::ActBoreTalk(Piki *)
 {
 /*
 .loc_0x0:
@@ -1655,10 +1645,6 @@ void ActBoreTalk::exec()
  */
 void ActBoreTalk::cleanup()
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -1687,7 +1673,7 @@ void ActBoreTalk::animationKeyUpdated(PaniAnimKeyEvent &)
  * Address:	........
  * Size:	000040
  */
-void ActBoreListen::ActBoreListen(Piki *)
+ActBoreListen::ActBoreListen(Piki *)
 {
 	// UNUSED FUNCTION
 }
@@ -1699,10 +1685,6 @@ void ActBoreListen::ActBoreListen(Piki *)
  */
 void ActBoreListen::init(Creature *)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -1710,13 +1692,9 @@ void ActBoreListen::init(Creature *)
  * Address:	800AB860
  * Size:	000008
  */
-void ActBoreListen::exec()
+u32  ActBoreListen::exec()
 {
-/*
-.loc_0x0:
-  li        r3, 0
-  blr
-*/
+	return 0x0;
 }
 
 /*
@@ -1726,10 +1704,6 @@ void ActBoreListen::exec()
  */
 void ActBoreListen::cleanup()
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -1739,10 +1713,6 @@ void ActBoreListen::cleanup()
  */
 void ActBoreListen::procAnimMsg(Piki *, MsgAnim *)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -1750,7 +1720,7 @@ void ActBoreListen::procAnimMsg(Piki *, MsgAnim *)
  * Address:	800AB870
  * Size:	000080
  */
-void ActBoreOneshot::ActBoreOneshot(Piki *)
+ActBoreOneshot::ActBoreOneshot(Piki *)
 {
 /*
 .loc_0x0:
@@ -1917,10 +1887,6 @@ void ActBoreOneshot::exec()
  */
 void ActBoreOneshot::cleanup()
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -1946,7 +1912,7 @@ void ActBoreOneshot::animationKeyUpdated(PaniAnimKeyEvent &)
  * Address:	800ABA40
  * Size:	000080
  */
-void ActBoreRest::ActBoreRest(Piki *)
+ActBoreRest::ActBoreRest(Piki *)
 {
 /*
 .loc_0x0:
@@ -2377,10 +2343,6 @@ void ActBoreRest::exec()
  */
 void ActBoreRest::cleanup()
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -2477,7 +2439,7 @@ void ActBoreRest::animationKeyUpdated(PaniAnimKeyEvent &)
  * Address:	800AC024
  * Size:	000080
  */
-void ActBoreRest::~ActBoreRest()
+ActBoreRest::~ActBoreRest()
 {
 /*
 .loc_0x0:
@@ -2523,7 +2485,7 @@ void ActBoreRest::~ActBoreRest()
  * Address:	800AC0A4
  * Size:	000080
  */
-void ActBoreOneshot::~ActBoreOneshot()
+ActBoreOneshot::~ActBoreOneshot()
 {
 /*
 .loc_0x0:
@@ -2569,7 +2531,7 @@ void ActBoreOneshot::~ActBoreOneshot()
  * Address:	800AC124
  * Size:	000064
  */
-void ActBoreListen::~ActBoreListen()
+ActBoreListen::~ActBoreListen()
 {
 /*
 .loc_0x0:
@@ -2608,7 +2570,7 @@ void ActBoreListen::~ActBoreListen()
  * Address:	800AC188
  * Size:	000080
  */
-void ActBoreTalk::~ActBoreTalk()
+ActBoreTalk::~ActBoreTalk()
 {
 /*
 .loc_0x0:
@@ -2654,7 +2616,7 @@ void ActBoreTalk::~ActBoreTalk()
  * Address:	800AC208
  * Size:	000064
  */
-void ActBoreSelect::~ActBoreSelect()
+ActBoreSelect::~ActBoreSelect()
 {
 /*
 .loc_0x0:
@@ -2693,7 +2655,7 @@ void ActBoreSelect::~ActBoreSelect()
  * Address:	800AC26C
  * Size:	000064
  */
-void ActFreeSelect::~ActFreeSelect()
+ActFreeSelect::~ActFreeSelect()
 {
 /*
 .loc_0x0:

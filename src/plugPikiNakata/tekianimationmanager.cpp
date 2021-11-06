@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -25,7 +27,7 @@ void _Print(char *, ...)
  * Address:	80143E48
  * Size:	000094
  */
-void TekiAnimationManager::TekiAnimationManager(TekiMgr *)
+TekiAnimationManager::TekiAnimationManager(TekiMgr *)
 {
 /*
 .loc_0x0:

@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -25,7 +27,7 @@ void _Print(char *, ...)
  * Address:	8016B4A4
  * Size:	0007BC
  */
-void KingProp::KingProp()
+KingProp::KingProp()
 {
 /*
 .loc_0x0:
@@ -532,7 +534,7 @@ void KingProp::KingProp()
  * Address:	8016BC60
  * Size:	000148
  */
-void King::King(CreatureProp *)
+King::King(CreatureProp *)
 {
 /*
 .loc_0x0:

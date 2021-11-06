@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -25,7 +27,7 @@ void _Print(char *, ...)
  * Address:	800DED68
  * Size:	000130
  */
-void GeneratorCache::GeneratorCache()
+GeneratorCache::GeneratorCache()
 {
 /*
 .loc_0x0:

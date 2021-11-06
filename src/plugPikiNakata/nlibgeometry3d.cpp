@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -25,7 +27,7 @@ void _Print(char *, ...)
  * Address:	........
  * Size:	00008C
  */
-void NLine::NLine()
+NLine::NLine()
 {
 	// UNUSED FUNCTION
 }
@@ -35,7 +37,7 @@ void NLine::NLine()
  * Address:	8011D3FC
  * Size:	000070
  */
-void NLine::NLine(NVector3f &, NVector3f &)
+NLine::NLine(NVector3f &, NVector3f &)
 {
 /*
 .loc_0x0:
@@ -102,7 +104,7 @@ void NLine::construct(NVector3f &, NVector3f &)
  * Address:	........
  * Size:	000060
  */
-void NLine::NLine(NLine &)
+NLine::NLine(NLine &)
 {
 	// UNUSED FUNCTION
 }
@@ -361,7 +363,7 @@ void NLine::println()
  * Address:	........
  * Size:	000064
  */
-void NPlane::NPlane()
+NPlane::NPlane()
 {
 	// UNUSED FUNCTION
 }
@@ -371,7 +373,7 @@ void NPlane::NPlane()
  * Address:	........
  * Size:	000068
  */
-void NPlane::NPlane(NVector3f &, float)
+NPlane::NPlane(NVector3f &, float)
 {
 	// UNUSED FUNCTION
 }
@@ -391,7 +393,7 @@ void NPlane::construct(NVector3f &, float)
  * Address:	8011D6E4
  * Size:	000068
  */
-void NPlane::NPlane(NVector3f &, NVector3f &)
+NPlane::NPlane(NVector3f &, NVector3f &)
 {
 /*
 .loc_0x0:
@@ -463,7 +465,7 @@ void NPlane::construct(NVector3f &, NVector3f &)
  * Address:	........
  * Size:	000078
  */
-void NPlane::NPlane(NVector3f &, NVector3f &, NVector3f &)
+NPlane::NPlane(NVector3f &, NVector3f &, NVector3f &)
 {
 	// UNUSED FUNCTION
 }
@@ -483,7 +485,7 @@ void NPlane::construct(NVector3f &, NVector3f &, NVector3f &)
  * Address:	........
  * Size:	000058
  */
-void NPlane::NPlane(Plane &)
+NPlane::NPlane(Plane &)
 {
 	// UNUSED FUNCTION
 }
@@ -503,7 +505,7 @@ void NPlane::construct(Plane &)
  * Address:	........
  * Size:	000058
  */
-void NPlane::NPlane(NPlane &)
+NPlane::NPlane(NPlane &)
 {
 	// UNUSED FUNCTION
 }
@@ -801,7 +803,7 @@ void NPlane::println()
  * Address:	........
  * Size:	0000F0
  */
-void NSegment::NSegment()
+NSegment::NSegment()
 {
 	// UNUSED FUNCTION
 }
@@ -811,7 +813,7 @@ void NSegment::NSegment()
  * Address:	........
  * Size:	0000D4
  */
-void NSegment::NSegment(NVector3f &, NVector3f &)
+NSegment::NSegment(NVector3f &, NVector3f &)
 {
 	// UNUSED FUNCTION
 }
@@ -831,7 +833,7 @@ void NSegment::construct(NVector3f &, NVector3f &)
  * Address:	........
  * Size:	0000C4
  */
-void NSegment::NSegment(NSegment &)
+NSegment::NSegment(NSegment &)
 {
 	// UNUSED FUNCTION
 }

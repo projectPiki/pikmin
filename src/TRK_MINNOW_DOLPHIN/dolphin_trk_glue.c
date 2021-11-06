@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -157,10 +159,6 @@ void InitMetroTRKCommTable(void)
  */
 void TRKUARTInterruptHandler(void)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*

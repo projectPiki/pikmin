@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -25,7 +27,7 @@ void _Print(char *, ...)
  * Address:	8011FEF8
  * Size:	000554
  */
-void PaniTestNode::PaniTestNode()
+PaniTestNode::PaniTestNode()
 {
 /*
 .loc_0x0:

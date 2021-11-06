@@ -318,44 +318,6 @@ void __StringWrite(void)
 
 /*
  * --INFO--
- * Address:	80216898
- * Size:	000058
- */
-void (int, long, ..., int, ...)
-{
-/*
-.loc_0x0:
-  mflr      r0
-  stw       r0, 0x4(r1)
-  stwu      r1, -0x20(r1)
-  stw       r31, 0x1C(r1)
-  addi      r31, r5, 0
-  stw       r30, 0x18(r1)
-  addi      r30, r3, 0
-  addi      r3, r4, 0
-  addi      r6, r30, 0
-  li        r4, 0x1
-  bl        -0xABC
-  cmplw     r31, r3
-  bne-      .loc_0x3C
-  mr        r3, r30
-  b         .loc_0x40
-
-.loc_0x3C:
-  li        r3, 0
-
-.loc_0x40:
-  lwz       r0, 0x24(r1)
-  lwz       r31, 0x1C(r1)
-  lwz       r30, 0x18(r1)
-  mtlr      r0
-  addi      r1, r1, 0x20
-  blr
-*/
-}
-
-/*
- * --INFO--
  * Address:	802168F0
  * Size:	000630
  */

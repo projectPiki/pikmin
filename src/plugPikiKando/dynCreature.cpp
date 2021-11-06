@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -35,7 +37,7 @@ void printMatrix(char *, Matrix4f &)
  * Address:	80092808
  * Size:	0000D8
  */
-void DynParticle::DynParticle()
+DynParticle::DynParticle()
 {
 /*
 .loc_0x0:
@@ -119,10 +121,6 @@ void DynParticle::getSize()
  */
 void DynParticle::refresh(Graphics &)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -132,10 +130,6 @@ void DynParticle::refresh(Graphics &)
  */
 void DynParticle::doKill()
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -143,7 +137,7 @@ void DynParticle::doKill()
  * Address:	800928F8
  * Size:	0001F4
  */
-void DynParticleHeap::DynParticleHeap(int)
+DynParticleHeap::DynParticleHeap(int)
 {
 /*
 .loc_0x0:
@@ -306,7 +300,7 @@ void DynParticleHeap::releaseOne(DynParticle *)
  * Address:	80092AEC
  * Size:	0000F4
  */
-void DynCreature::DynCreature()
+DynCreature::DynCreature()
 {
 /*
 .loc_0x0:

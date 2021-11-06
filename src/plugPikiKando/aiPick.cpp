@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -25,7 +27,7 @@ void _Print(char *, ...)
  * Address:	800BCAFC
  * Size:	0000E0
  */
-void ActPickItem::ActPickItem(Piki *)
+ActPickItem::ActPickItem(Piki *)
 {
 /*
 .loc_0x0:
@@ -397,7 +399,7 @@ void ActPickItem::cleanup()
  * Address:	........
  * Size:	000080
  */
-void ActFlower::ActFlower(Piki *)
+ActFlower::ActFlower(Piki *)
 {
 	// UNUSED FUNCTION
 }
@@ -683,7 +685,7 @@ void ActFlower::exec()
  * Address:	800BD25C
  * Size:	000080
  */
-void ActFlower::~ActFlower()
+ActFlower::~ActFlower()
 {
 /*
 .loc_0x0:
@@ -729,7 +731,7 @@ void ActFlower::~ActFlower()
  * Address:	800BD2DC
  * Size:	000074
  */
-void ActPickItem::~ActPickItem()
+ActPickItem::~ActPickItem()
 {
 /*
 .loc_0x0:

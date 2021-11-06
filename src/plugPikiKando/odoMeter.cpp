@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -25,7 +27,7 @@ void _Print(char *, ...)
  * Address:	800CD804
  * Size:	000010
  */
-void OdoMeter::OdoMeter()
+OdoMeter::OdoMeter()
 {
 /*
 .loc_0x0:

@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -25,13 +27,9 @@ void _Print(char *, ...)
  * Address:	8007CB38
  * Size:	000008
  */
-void InteractPullout::actCommon(Creature *)
+u32  InteractPullout::actCommon(Creature *)
 {
-/*
-.loc_0x0:
-  li        r3, 0x1
-  blr
-*/
+	return 0x1;
 }
 
 /*

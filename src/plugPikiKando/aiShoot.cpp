@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -25,7 +27,7 @@ void _Print(char *, ...)
  * Address:	800C216C
  * Size:	000120
  */
-void ActShoot::ActShoot(Piki *)
+ActShoot::ActShoot(Piki *)
 {
 /*
 .loc_0x0:
@@ -591,7 +593,7 @@ void ActShootCreature::animationKeyUpdated(PaniAnimKeyEvent &)
  * Address:	800C27AC
  * Size:	00005C
  */
-void ActShootCreature::ActShootCreature(Piki *)
+ActShootCreature::ActShootCreature(Piki *)
 {
 /*
 .loc_0x0:
@@ -893,7 +895,7 @@ void ActShootCreature::exec()
  * Address:	800C2B6C
  * Size:	00006C
  */
-void ActShootCreature::~ActShootCreature()
+ActShootCreature::~ActShootCreature()
 {
 /*
 .loc_0x0:
@@ -934,7 +936,7 @@ void ActShootCreature::~ActShootCreature()
  * Address:	800C2BD8
  * Size:	000074
  */
-void ActShoot::~ActShoot()
+ActShoot::~ActShoot()
 {
 /*
 .loc_0x0:

@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -25,7 +27,7 @@ void _Print(char *, ...)
  * Address:	800BAF68
  * Size:	00004C
  */
-void ActGoto::ActGoto(Piki *)
+ActGoto::ActGoto(Piki *)
 {
 /*
 .loc_0x0:
@@ -456,7 +458,7 @@ void ActGoto::exec()
  * Address:	800BB4BC
  * Size:	000064
  */
-void ActGoto::~ActGoto()
+ActGoto::~ActGoto()
 {
 /*
 .loc_0x0:

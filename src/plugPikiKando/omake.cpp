@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -25,7 +27,7 @@ void _Print(char *, ...)
  * Address:	80078DB0
  * Size:	0001E8
  */
-void AttentionCamera::AttentionCamera()
+AttentionCamera::AttentionCamera()
 {
 /*
 .loc_0x0:
@@ -504,7 +506,7 @@ void ClothFader::reset()
  * Address:	80079434
  * Size:	00002C
  */
-void ClothFader::Particle::Particle()
+ClothFader::Particle::Particle()
 {
 /*
 .loc_0x0:
@@ -539,10 +541,6 @@ void AttentionCamera::start(unsigned long, Creature *, float, float)
  */
 void AttentionCamera::Fader::initFadeOut()
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -664,13 +662,9 @@ void AttentionCamera::update()
  * Address:	800795A4
  * Size:	000008
  */
-void AttentionCamera::Fader::updateFadeIn()
+u32  AttentionCamera::Fader::updateFadeIn()
 {
-/*
-.loc_0x0:
-  li        r3, 0x1
-  blr
-*/
+	return 0x1;
 }
 
 /*
@@ -680,10 +674,6 @@ void AttentionCamera::Fader::updateFadeIn()
  */
 void AttentionCamera::Fader::initFadeIn()
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -691,13 +681,9 @@ void AttentionCamera::Fader::initFadeIn()
  * Address:	800795B0
  * Size:	000008
  */
-void AttentionCamera::Fader::updateFadeOut()
+u32  AttentionCamera::Fader::updateFadeOut()
 {
-/*
-.loc_0x0:
-  li        r3, 0x1
-  blr
-*/
+	return 0x1;
 }
 
 /*
@@ -746,10 +732,6 @@ void AttentionCamera::refresh(Graphics &)
  */
 void AttentionCamera::Fader::drawFadeIn(Graphics &)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -759,10 +741,6 @@ void AttentionCamera::Fader::drawFadeIn(Graphics &)
  */
 void AttentionCamera::Fader::drawFadeOut(Graphics &)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*

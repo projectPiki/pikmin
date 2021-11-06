@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -1980,7 +1982,7 @@ void GameFlow::softReset()
  * Address:	80052CA4
  * Size:	00006C
  */
-void Node::Node(char *)
+Node::Node(char *)
 {
 /*
 .loc_0x0:
@@ -2173,10 +2175,6 @@ void GameGenFlow::update()
  */
 void GameLoadIdler::init()
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -2384,7 +2382,7 @@ void GamePrefs::Initialise()
  * Address:	80053114
  * Size:	00001C
  */
-void GameRecChalCourse::GameRecChalCourse()
+GameRecChalCourse::GameRecChalCourse()
 {
 /*
 .loc_0x0:
@@ -2403,7 +2401,7 @@ void GameRecChalCourse::GameRecChalCourse()
  * Address:	80053130
  * Size:	00000C
  */
-void GameRecDeadPikmin::GameRecDeadPikmin()
+GameRecDeadPikmin::GameRecDeadPikmin()
 {
 /*
 .loc_0x0:
@@ -2418,7 +2416,7 @@ void GameRecDeadPikmin::GameRecDeadPikmin()
  * Address:	8005313C
  * Size:	00000C
  */
-void GameRecBornPikmin::GameRecBornPikmin()
+GameRecBornPikmin::GameRecBornPikmin()
 {
 /*
 .loc_0x0:
@@ -2433,7 +2431,7 @@ void GameRecBornPikmin::GameRecBornPikmin()
  * Address:	80053148
  * Size:	000014
  */
-void GameRecMinDay::GameRecMinDay()
+GameRecMinDay::GameRecMinDay()
 {
 /*
 .loc_0x0:

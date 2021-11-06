@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -260,7 +262,7 @@ void ActFormation::animationKeyUpdated(PaniAnimKeyEvent &)
  * Address:	800B9C04
  * Size:	00005C
  */
-void ActFormation::ActFormation(Piki *)
+ActFormation::ActFormation(Piki *)
 {
 /*
 .loc_0x0:
@@ -992,7 +994,7 @@ void ActFormation::exec()
  * Address:	800BA58C
  * Size:	00006C
  */
-void ActFormation::~ActFormation()
+ActFormation::~ActFormation()
 {
 /*
 .loc_0x0:

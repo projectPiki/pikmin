@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -104,7 +106,7 @@ void PikiMgr::getFormationPikis()
  * Address:	800CDD8C
  * Size:	000258
  */
-void PikiMgr::PikiMgr(Navi *)
+PikiMgr::PikiMgr(Navi *)
 {
 /*
 .loc_0x0:
@@ -270,7 +272,7 @@ void PikiMgr::PikiMgr(Navi *)
  * Address:	800CDFE4
  * Size:	000D90
  */
-void PikiProp::Parms::Parms()
+PikiProp::Parms::Parms()
 {
 /*
 .loc_0x0:
@@ -1454,7 +1456,7 @@ void PikiMgr::dumpAll()
  * Address:	800CF054
  * Size:	000084
  */
-void PikiMgr::~PikiMgr()
+PikiMgr::~PikiMgr()
 {
 /*
 .loc_0x0:

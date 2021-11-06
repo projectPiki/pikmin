@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -25,7 +27,7 @@ void _Print(char *, ...)
  * Address:	800C30A8
  * Size:	000054
  */
-void ActWeed::ActWeed(Piki *)
+ActWeed::ActWeed(Piki *)
 {
 /*
 .loc_0x0:
@@ -355,12 +357,8 @@ void ActWeed::exeApproach()
  */
 void ActWeed::initAdjust()
 {
-/*
-.loc_0x0:
-  li        r0, 0x1
-  sth       r0, 0x18(r3)
-  blr
-*/
+// Generated from sth r0, 0x18(r3)
+_18 = 1;
 }
 
 /*
@@ -851,7 +849,7 @@ void ActWeed::animationKeyUpdated(PaniAnimKeyEvent &)
  * Address:	800C3A70
  * Size:	00006C
  */
-void ActWeed::~ActWeed()
+ActWeed::~ActWeed()
 {
 /*
 .loc_0x0:

@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -662,10 +664,6 @@ void EXI2_WriteN(void)
  */
 void EXI2_Reserve(void)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -675,10 +673,6 @@ void EXI2_Reserve(void)
  */
 void EXI2_Unreserve(void)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*

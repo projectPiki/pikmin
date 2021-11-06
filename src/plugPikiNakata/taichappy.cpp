@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -25,7 +27,7 @@ void _Print(char *, ...)
  * Address:	80128520
  * Size:	000084
  */
-void TaiChappySoundTable::TaiChappySoundTable()
+TaiChappySoundTable::TaiChappySoundTable()
 {
 /*
 .loc_0x0:
@@ -76,7 +78,7 @@ void TaiChappySoundTable::TaiChappySoundTable()
  * Address:	801285A4
  * Size:	0003A4
  */
-void TaiChappyParameters::TaiChappyParameters()
+TaiChappyParameters::TaiChappyParameters()
 {
 /*
 .loc_0x0:
@@ -321,7 +323,7 @@ void TaiChappyParameters::TaiChappyParameters()
  * Address:	80128948
  * Size:	0003A0
  */
-void TaiBlackChappyParameters::TaiBlackChappyParameters()
+TaiBlackChappyParameters::TaiBlackChappyParameters()
 {
 /*
 .loc_0x0:
@@ -565,7 +567,7 @@ void TaiBlackChappyParameters::TaiBlackChappyParameters()
  * Address:	80128CE8
  * Size:	000084
  */
-void TaiCatfishSoundTable::TaiCatfishSoundTable()
+TaiCatfishSoundTable::TaiCatfishSoundTable()
 {
 /*
 .loc_0x0:
@@ -616,7 +618,7 @@ void TaiCatfishSoundTable::TaiCatfishSoundTable()
  * Address:	80128D6C
  * Size:	00039C
  */
-void TaiCatfishParameters::TaiCatfishParameters()
+TaiCatfishParameters::TaiCatfishParameters()
 {
 /*
 .loc_0x0:
@@ -859,7 +861,7 @@ void TaiCatfishParameters::TaiCatfishParameters()
  * Address:	80129108
  * Size:	00156C
  */
-void TaiChappyStrategy::TaiChappyStrategy(TekiParameters *)
+TaiChappyStrategy::TaiChappyStrategy(TekiParameters *)
 {
 /*
 .loc_0x0:
@@ -2502,7 +2504,7 @@ void TaiChappySmashedAction::actByEvent(TekiEvent &)
  * Address:	8012A804
  * Size:	000058
  */
-void TaiChappyLegEffectAction::TaiChappyLegEffectAction(float)
+TaiChappyLegEffectAction::TaiChappyLegEffectAction(float)
 {
 /*
 .loc_0x0:
@@ -2637,13 +2639,9 @@ void TekiOrCondition::satisfy(Creature *)
  * Address:	8012A970
  * Size:	000008
  */
-void TaiOnceAction::act(Teki &)
+u32  TaiOnceAction::act(Teki &)
 {
-/*
-.loc_0x0:
-  li        r3, 0x1
-  blr
-*/
+	return 0x1;
 }
 
 /*

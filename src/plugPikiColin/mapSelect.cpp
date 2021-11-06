@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -584,7 +586,7 @@ void MapSelectSetupSection::menuSelectOption(Menu &)
  * Address:	80055E50
  * Size:	00046C
  */
-void MapSelectSection::MapSelectSection()
+MapSelectSection::MapSelectSection()
 {
 /*
 .loc_0x0:
@@ -1507,10 +1509,6 @@ void MapSelectSetupSection::draw(Graphics &)
  */
 void MapSelectSection::init()
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*

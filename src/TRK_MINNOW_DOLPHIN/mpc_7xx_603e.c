@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -261,11 +263,7 @@ void TRKRestoreExtended1Block(void)
  * Address:	80220410
  * Size:	000008
  */
-void TRKTargetCPUMinorType(void)
+u32  TRKTargetCPUMinorType(void)
 {
-/*
-.loc_0x0:
-  li        r3, 0x54
-  blr
-*/
+	return 0x54;
 }

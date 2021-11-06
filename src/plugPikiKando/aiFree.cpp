@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -25,7 +27,7 @@ void _Print(char *, ...)
  * Address:	800BA600
  * Size:	0000CC
  */
-void ActFree::ActFree(Piki *)
+ActFree::ActFree(Piki *)
 {
 /*
 .loc_0x0:
@@ -565,10 +567,6 @@ void ActFree::cleanup()
  */
 void ActFree::animationKeyUpdated(PaniAnimKeyEvent &)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -732,7 +730,7 @@ void ActFree::procCollideMsg(Piki *, MsgCollide *)
  * Address:	800BAECC
  * Size:	000080
  */
-void ActFree::~ActFree()
+ActFree::~ActFree()
 {
 /*
 .loc_0x0:
@@ -778,13 +776,9 @@ void ActFree::~ActFree()
  * Address:	800BAF4C
  * Size:	000008
  */
-void ActFree::resumable()
+u32  ActFree::resumable()
 {
-/*
-.loc_0x0:
-  li        r3, 0x1
-  blr
-*/
+	return 0x1;
 }
 
 /*

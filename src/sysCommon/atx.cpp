@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -577,11 +579,8 @@ void AtxFileStream::getLength()
  * Address:	80043E54
  * Size:	000008
  */
-void AtxFileStream::setLength(int)
+void AtxFileStream::setLength(int a1)
 {
-/*
-.loc_0x0:
-  stw       r4, 0xC(r3)
-  blr
-*/
+// Generated from stw r4, 0xC(r3)
+_0C = a1;
 }

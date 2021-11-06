@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -107,10 +109,6 @@ void __ARQServiceQueueLo(void)
  */
 void __ARQCallbackHack(void)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*

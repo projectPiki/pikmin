@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -25,7 +27,7 @@ void _Print(char *, ...)
  * Address:	8005B690
  * Size:	00009C
  */
-void GameExitSection::GameExitSection()
+GameExitSection::GameExitSection()
 {
 /*
 .loc_0x0:
@@ -114,8 +116,4 @@ void GameExitSection::update()
  */
 void GameExitSection::init()
 {
-/*
-.loc_0x0:
-  blr
-*/
 }

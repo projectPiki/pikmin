@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -25,7 +27,7 @@ void _Print(char *, ...)
  * Address:	80141FD0
  * Size:	000084
  */
-void TaiShellSoundTable::TaiShellSoundTable()
+TaiShellSoundTable::TaiShellSoundTable()
 {
 /*
 .loc_0x0:
@@ -76,7 +78,7 @@ void TaiShellSoundTable::TaiShellSoundTable()
  * Address:	80142054
  * Size:	00018C
  */
-void TaiShellParameters::TaiShellParameters()
+TaiShellParameters::TaiShellParameters()
 {
 /*
 .loc_0x0:
@@ -187,7 +189,7 @@ void TaiShellParameters::TaiShellParameters()
  * Address:	801421E0
  * Size:	0004F4
  */
-void TaiShellStrategy::TaiShellStrategy(TekiParameters *)
+TaiShellStrategy::TaiShellStrategy(TekiParameters *)
 {
 /*
 .loc_0x0:
@@ -1265,7 +1267,7 @@ void TaiShellEatAction::act(Teki &)
  * Address:	80142FC8
  * Size:	000084
  */
-void TaiPearlSoundTable::TaiPearlSoundTable()
+TaiPearlSoundTable::TaiPearlSoundTable()
 {
 /*
 .loc_0x0:
@@ -1316,7 +1318,7 @@ void TaiPearlSoundTable::TaiPearlSoundTable()
  * Address:	8014304C
  * Size:	000148
  */
-void TaiPearlParameters::TaiPearlParameters()
+TaiPearlParameters::TaiPearlParameters()
 {
 /*
 .loc_0x0:
@@ -1410,7 +1412,7 @@ void TaiPearlParameters::TaiPearlParameters()
  * Address:	80143194
  * Size:	00014C
  */
-void TaiRocpearlParameters::TaiRocpearlParameters()
+TaiRocpearlParameters::TaiRocpearlParameters()
 {
 /*
 .loc_0x0:
@@ -1505,7 +1507,7 @@ void TaiRocpearlParameters::TaiRocpearlParameters()
  * Address:	801432E0
  * Size:	00036C
  */
-void TaiPearlStrategy::TaiPearlStrategy(TekiParameters *)
+TaiPearlStrategy::TaiPearlStrategy(TekiParameters *)
 {
 /*
 .loc_0x0:

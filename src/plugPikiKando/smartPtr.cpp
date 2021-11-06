@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -25,7 +27,7 @@ void _Print(char *, ...)
  * Address:	800E4338
  * Size:	000018
  */
-void RefCountable::RefCountable()
+RefCountable::RefCountable()
 {
 /*
 .loc_0x0:
@@ -45,12 +47,8 @@ void RefCountable::RefCountable()
  */
 void RefCountable::clearCnt()
 {
-/*
-.loc_0x0:
-  li        r0, 0
-  stw       r0, 0x4(r3)
-  blr
-*/
+// Generated from stw r0, 0x4(r3)
+_04 = 0;
 }
 
 /*

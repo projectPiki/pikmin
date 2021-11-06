@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -2366,7 +2368,7 @@ void MemoryCard::makeDefaultFile()
  * Address:	800754A4
  * Size:	000010
  */
-void Stream::Stream()
+Stream::Stream()
 {
 /*
 .loc_0x0:

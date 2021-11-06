@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -25,7 +27,7 @@ void _Print(char *, ...)
  * Address:	800A6D94
  * Size:	000054
  */
-void ActStone::ActStone(Piki *)
+ActStone::ActStone(Piki *)
 {
 /*
 .loc_0x0:
@@ -359,12 +361,8 @@ void ActStone::exeApproach()
  */
 void ActStone::initAdjust()
 {
-/*
-.loc_0x0:
-  li        r0, 0x1
-  sth       r0, 0x18(r3)
-  blr
-*/
+// Generated from sth r0, 0x18(r3)
+_18 = 1;
 }
 
 /*
@@ -902,7 +900,7 @@ void ActStone::animationKeyUpdated(PaniAnimKeyEvent &)
  * Address:	800A77F8
  * Size:	00006C
  */
-void ActStone::~ActStone()
+ActStone::~ActStone()
 {
 /*
 .loc_0x0:
@@ -945,10 +943,6 @@ void ActStone::~ActStone()
  */
 void Action::defaultInitialiser()
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -958,10 +952,6 @@ void Action::defaultInitialiser()
  */
 void Action::dump()
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -971,10 +961,6 @@ void Action::dump()
  */
 void Action::draw(Graphics &)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -984,10 +970,6 @@ void Action::draw(Graphics &)
  */
 void Action::resume()
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -997,10 +979,6 @@ void Action::resume()
  */
 void Action::restart()
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -1008,13 +986,9 @@ void Action::restart()
  * Address:	800A7878
  * Size:	000008
  */
-void Action::resumable()
+u32  Action::resumable()
 {
-/*
-.loc_0x0:
-  li        r3, 0
-  blr
-*/
+	return 0x0;
 }
 
 /*
@@ -1047,10 +1021,6 @@ void Action::getInfo(char *)
  */
 void Receiver<Piki>::procBounceMsg(Piki *, MsgBounce *)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -1060,10 +1030,6 @@ void Receiver<Piki>::procBounceMsg(Piki *, MsgBounce *)
  */
 void Receiver<Piki>::procStickMsg(Piki *, MsgStick *)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -1073,10 +1039,6 @@ void Receiver<Piki>::procStickMsg(Piki *, MsgStick *)
  */
 void Receiver<Piki>::procHangMsg(Piki *, MsgHang *)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -1086,10 +1048,6 @@ void Receiver<Piki>::procHangMsg(Piki *, MsgHang *)
  */
 void Receiver<Piki>::procTargetMsg(Piki *, MsgTarget *)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -1099,10 +1057,6 @@ void Receiver<Piki>::procTargetMsg(Piki *, MsgTarget *)
  */
 void Receiver<Piki>::procCollideMsg(Piki *, MsgCollide *)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -1112,10 +1066,6 @@ void Receiver<Piki>::procCollideMsg(Piki *, MsgCollide *)
  */
 void Receiver<Piki>::procAnimMsg(Piki *, MsgAnim *)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -1125,10 +1075,6 @@ void Receiver<Piki>::procAnimMsg(Piki *, MsgAnim *)
  */
 void Receiver<Piki>::procDamageMsg(Piki *, MsgDamage *)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -1138,10 +1084,6 @@ void Receiver<Piki>::procDamageMsg(Piki *, MsgDamage *)
  */
 void Receiver<Piki>::procWallMsg(Piki *, MsgWall *)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -1151,10 +1093,6 @@ void Receiver<Piki>::procWallMsg(Piki *, MsgWall *)
  */
 void Receiver<Piki>::procOffWallMsg(Piki *, MsgOffWall *)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -1164,10 +1102,6 @@ void Receiver<Piki>::procOffWallMsg(Piki *, MsgOffWall *)
  */
 void Receiver<Piki>::procUserMsg(Piki *, MsgUser *)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -1177,10 +1111,6 @@ void Receiver<Piki>::procUserMsg(Piki *, MsgUser *)
  */
 void Receiver<Piki>::procGroundMsg(Piki *, MsgGround *)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*

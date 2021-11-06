@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -25,7 +27,7 @@ void _Print(char *, ...)
  * Address:	800BDFF0
  * Size:	0000A0
  */
-void ActPush::ActPush(Piki *)
+ActPush::ActPush(Piki *)
 {
 /*
 .loc_0x0:
@@ -829,7 +831,7 @@ void ActPush::cleanup()
  * Address:	800BE960
  * Size:	000080
  */
-void ActPush::~ActPush()
+ActPush::~ActPush()
 {
 /*
 .loc_0x0:

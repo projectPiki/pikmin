@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -25,7 +27,7 @@ void _Print(char *, ...)
  * Address:	........
  * Size:	0001C0
  */
-void SmokeEmitter::SmokeEmitter(int, Texture *)
+SmokeEmitter::SmokeEmitter(int, Texture *)
 {
 	// UNUSED FUNCTION
 }
@@ -35,7 +37,7 @@ void SmokeEmitter::SmokeEmitter(int, Texture *)
  * Address:	........
  * Size:	00002C
  */
-void SmokeEmitter::Smoke::Smoke()
+SmokeEmitter::Smoke::Smoke()
 {
 	// UNUSED FUNCTION
 }
@@ -294,7 +296,7 @@ void SmokeEmitter::draw(Graphics &)
  * Address:	........
  * Size:	0000A0
  */
-void EffectParticleRegistration::EffectParticleRegistration(char *, char *, char *)
+EffectParticleRegistration::EffectParticleRegistration(char *, char *, char *)
 {
 	// UNUSED FUNCTION
 }
@@ -447,7 +449,7 @@ void EffShpInst::draw(Graphics &)
  * Address:	........
  * Size:	000124
  */
-void EffectGeometryRegistration::EffectGeometryRegistration(char *, char *, float, unsigned char)
+EffectGeometryRegistration::EffectGeometryRegistration(char *, char *, float, unsigned char)
 {
 	// UNUSED FUNCTION
 }
@@ -534,7 +536,7 @@ void EffectGeometryRegistration::create(Vector3f &, Vector3f &, Vector3f &)
  * Address:	........
  * Size:	000064
  */
-void EffectSimpleParticleRegistration::EffectSimpleParticleRegistration(char *, Colour, Colour)
+EffectSimpleParticleRegistration::EffectSimpleParticleRegistration(char *, Colour, Colour)
 {
 	// UNUSED FUNCTION
 }
@@ -544,7 +546,7 @@ void EffectSimpleParticleRegistration::EffectSimpleParticleRegistration(char *, 
  * Address:	8019C1AC
  * Size:	00064C
  */
-void EffectMgr::EffectMgr()
+EffectMgr::EffectMgr()
 {
 /*
 .loc_0x0:

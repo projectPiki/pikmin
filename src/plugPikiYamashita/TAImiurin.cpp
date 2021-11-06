@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -25,7 +27,7 @@ void _Print(char *, ...)
  * Address:	801D624C
  * Size:	000084
  */
-void TAImiurinSoundTable::TAImiurinSoundTable()
+TAImiurinSoundTable::TAImiurinSoundTable()
 {
 /*
 .loc_0x0:
@@ -76,7 +78,7 @@ void TAImiurinSoundTable::TAImiurinSoundTable()
  * Address:	801D62D0
  * Size:	000404
  */
-void TAImiurinParameters::TAImiurinParameters()
+TAImiurinParameters::TAImiurinParameters()
 {
 /*
 .loc_0x0:
@@ -345,7 +347,7 @@ void TAImiurinParameters::TAImiurinParameters()
  * Address:	801D66D4
  * Size:	0019CC
  */
-void TAImiurinStrategy::TAImiurinStrategy()
+TAImiurinStrategy::TAImiurinStrategy()
 {
 /*
 .loc_0x0:
@@ -4792,11 +4794,7 @@ void TAIAinitMiurin::start(Teki &)
  * Address:	801DA080
  * Size:	000008
  */
-void TAIAinitMiurin::act(Teki &)
+u32  TAIAinitMiurin::act(Teki &)
 {
-/*
-.loc_0x0:
-  li        r3, 0x1
-  blr
-*/
+	return 0x1;
 }

@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -25,7 +27,7 @@ void _Print(char *, ...)
  * Address:	801A2754
  * Size:	0000F8
  */
-void YTeki::YTeki()
+YTeki::YTeki()
 {
 /*
 .loc_0x0:
@@ -864,13 +866,9 @@ void YTeki::startNewMotion(int)
  * Address:	801A30C8
  * Size:	000008
  */
-void TAIeffectAttackEventCallBack::hitCreature(zen::particleGenerator *, TAIeffectAttackParam *, Creature *, Vector3f)
+u32  TAIeffectAttackEventCallBack::hitCreature(zen::particleGenerator *, TAIeffectAttackParam *, Creature *, Vector3f)
 {
-/*
-.loc_0x0:
-  li        r3, 0
-  blr
-*/
+	return 0x0;
 }
 
 /*
@@ -878,13 +876,9 @@ void TAIeffectAttackEventCallBack::hitCreature(zen::particleGenerator *, TAIeffe
  * Address:	801A30D0
  * Size:	000008
  */
-void TAIeffectAttackEventCallBack::hitCreature(TAIeffectAttackParam *, Creature *, Vector3f)
+u32  TAIeffectAttackEventCallBack::hitCreature(TAIeffectAttackParam *, Creature *, Vector3f)
 {
-/*
-.loc_0x0:
-  li        r3, 0
-  blr
-*/
+	return 0x0;
 }
 
 /*
@@ -892,13 +886,9 @@ void TAIeffectAttackEventCallBack::hitCreature(TAIeffectAttackParam *, Creature 
  * Address:	801A30D8
  * Size:	000008
  */
-void TAIeffectAttackEventCallBack::hitCreature(TAIeffectAttackParam *, Creature *)
+u32  TAIeffectAttackEventCallBack::hitCreature(TAIeffectAttackParam *, Creature *)
 {
-/*
-.loc_0x0:
-  li        r3, 0
-  blr
-*/
+	return 0x0;
 }
 
 /*
@@ -906,13 +896,9 @@ void TAIeffectAttackEventCallBack::hitCreature(TAIeffectAttackParam *, Creature 
  * Address:	801A30E0
  * Size:	000008
  */
-void TAIeffectAttackEventCallBack::hitMap(TAIeffectAttackParam *)
+u32  TAIeffectAttackEventCallBack::hitMap(TAIeffectAttackParam *)
 {
-/*
-.loc_0x0:
-  li        r3, 0
-  blr
-*/
+	return 0x0;
 }
 
 /*
@@ -922,10 +908,6 @@ void TAIeffectAttackEventCallBack::hitMap(TAIeffectAttackParam *)
  */
 void TAIeffectAttackEventCallBack::playEventSound(zen::particleGenerator *, TAIeffectAttackParam *)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -935,10 +917,6 @@ void TAIeffectAttackEventCallBack::playEventSound(zen::particleGenerator *, TAIe
  */
 void TAIeffectAttackEventCallBack::ptclHitMap(zen::particleGenerator *, TAIeffectAttackParam *)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -946,11 +924,7 @@ void TAIeffectAttackEventCallBack::ptclHitMap(zen::particleGenerator *, TAIeffec
  * Address:	801A30F0
  * Size:	000008
  */
-void TAIeffectAttackEventCallBack::hitCheckCulling(zen::particleGenerator *, TAIeffectAttackParam *, Creature *)
+u32  TAIeffectAttackEventCallBack::hitCheckCulling(zen::particleGenerator *, TAIeffectAttackParam *, Creature *)
 {
-/*
-.loc_0x0:
-  li        r3, 0x1
-  blr
-*/
+	return 0x1;
 }

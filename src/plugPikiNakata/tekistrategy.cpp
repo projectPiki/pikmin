@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -25,7 +27,7 @@ void _Print(char *, ...)
  * Address:	8014D1A4
  * Size:	000010
  */
-void TekiStrategy::TekiStrategy()
+TekiStrategy::TekiStrategy()
 {
 /*
 .loc_0x0:
@@ -43,10 +45,6 @@ void TekiStrategy::TekiStrategy()
  */
 void TekiStrategy::start(Teki &)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -56,10 +54,6 @@ void TekiStrategy::start(Teki &)
  */
 void TekiStrategy::act(Teki &)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -69,10 +63,6 @@ void TekiStrategy::act(Teki &)
  */
 void TekiStrategy::eventPerformed(TekiEvent &)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -82,10 +72,6 @@ void TekiStrategy::eventPerformed(TekiEvent &)
  */
 void TekiStrategy::createEffect(Teki &, int)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -170,10 +156,6 @@ void TekiStrategy::interact(Teki &, TekiInteractionKey &)
  */
 void TekiStrategy::spawnCorpseParts(Teki &)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -181,7 +163,7 @@ void TekiStrategy::spawnCorpseParts(Teki &)
  * Address:	8014D264
  * Size:	00006C
  */
-void TekiStrategyTable::TekiStrategyTable(int)
+TekiStrategyTable::TekiStrategyTable(int)
 {
 /*
 .loc_0x0:

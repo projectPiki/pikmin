@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -126,7 +128,7 @@ void zen::particleManager::init(unsigned long, unsigned long, unsigned long, flo
  * Address:	801A123C
  * Size:	00004C
  */
-void zen::particleGenerator::~particleGenerator()
+zen::particleGenerator::~particleGenerator()
 {
 /*
 .loc_0x0:

@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -133,13 +135,9 @@ void zen::DrawCMscoreObj::modeMove()
  * Address:	801ED9FC
  * Size:	000008
  */
-void zen::DrawCMscoreObj::modeWait()
+u32  zen::DrawCMscoreObj::modeWait()
 {
-/*
-.loc_0x0:
-  li        r3, 0
-  blr
-*/
+	return 0x0;
 }
 
 /*
@@ -545,7 +543,7 @@ void zen::NumberPicCallBack<int>::setTexture(P2DPane *)
  * Address:	801EDF84
  * Size:	000074
  */
-void zen::DrawCMscoreObj::DrawCMscoreObj()
+zen::DrawCMscoreObj::DrawCMscoreObj()
 {
 /*
 .loc_0x0:
@@ -800,13 +798,9 @@ void zen::DrawCMscoreMgr::appear(float)
  * Address:	801EE228
  * Size:	000008
  */
-void zen::DrawCMscoreMgr::modeSleep()
+u32  zen::DrawCMscoreMgr::modeSleep()
 {
-/*
-.loc_0x0:
-  li        r3, 0
-  blr
-*/
+	return 0x0;
 }
 
 /*

@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -25,7 +27,7 @@ void _Print(char *, ...)
  * Address:	800A3B04
  * Size:	000134
  */
-void SeConstant::SeConstant()
+SeConstant::SeConstant()
 {
 /*
 .loc_0x0:

@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -25,7 +27,7 @@ void _Print(char *, ...)
  * Address:	........
  * Size:	000030
  */
-void PikiInfMgr::PikiInfMgr()
+PikiInfMgr::PikiInfMgr()
 {
 	// UNUSED FUNCTION
 }
@@ -253,7 +255,7 @@ void PikiInfMgr::getTotal()
  * Address:	........
  * Size:	0000A4
  */
-void BaseInf::BaseInf()
+BaseInf::BaseInf()
 {
 	// UNUSED FUNCTION
 }
@@ -300,10 +302,6 @@ void BaseInf::store(Creature *)
  */
 void BaseInf::doStore(Creature *)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -348,10 +346,6 @@ void BaseInf::restore(Creature *)
  */
 void BaseInf::doRestore(Creature *)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -484,7 +478,7 @@ void BaseInf::loadCard(RandomAccessStream &)
  * Address:	........
  * Size:	0000EC
  */
-void BPikiInf::BPikiInf()
+BPikiInf::BPikiInf()
 {
 	// UNUSED FUNCTION
 }
@@ -671,7 +665,7 @@ void BPikiInf::doRestore(Creature *)
  * Address:	800C5CEC
  * Size:	000170
  */
-void MonoInfMgr::MonoInfMgr()
+MonoInfMgr::MonoInfMgr()
 {
 /*
 .loc_0x0:
@@ -1184,7 +1178,7 @@ void CreatureInfMgr::getRestoreFun(int)
  * Address:	........
  * Size:	0000F4
  */
-void CreatureInf::CreatureInf()
+CreatureInf::CreatureInf()
 {
 	// UNUSED FUNCTION
 }
@@ -1530,10 +1524,6 @@ void StageInf::loadCard(RandomAccessStream &)
  */
 void InfMgr::init(int)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*

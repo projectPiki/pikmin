@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -25,7 +27,7 @@ void _Print(char *, ...)
  * Address:	80194204
  * Size:	000A0C
  */
-void zen::ogScrTotalScoreMgr::ogScrTotalScoreMgr(zen::TotalScoreType *)
+zen::ogScrTotalScoreMgr::ogScrTotalScoreMgr(zen::TotalScoreType *)
 {
 /*
 .loc_0x0:

@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -25,7 +27,7 @@ void _Print(char *, ...)
  * Address:	80119D3C
  * Size:	0000C8
  */
-void Plant::Plant()
+Plant::Plant()
 {
 /*
 .loc_0x0:
@@ -544,10 +546,6 @@ void Plant::refresh(Graphics &)
  */
 void Plant::doKill()
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -555,7 +553,7 @@ void Plant::doKill()
  * Address:	........
  * Size:	000170
  */
-void PlantAI::PlantAI()
+PlantAI::PlantAI()
 {
 	// UNUSED FUNCTION
 }
@@ -720,7 +718,7 @@ void PlantAI::TouchInit::act(AICreature *)
  * Address:	8011A548
  * Size:	000478
  */
-void PlantMgr::PlantMgr(MapMgr *)
+PlantMgr::PlantMgr(MapMgr *)
 {
 /*
 .loc_0x0:
@@ -1249,7 +1247,7 @@ void PlantMgr::birth()
  * Address:	8011ABB4
  * Size:	000118
  */
-void PlantShapeObject::PlantShapeObject(Shape *, char *, char *)
+PlantShapeObject::PlantShapeObject(Shape *, char *, char *)
 {
 /*
 .loc_0x0:
@@ -1339,7 +1337,7 @@ void PlantShapeObject::PlantShapeObject(Shape *, char *, char *)
  * Address:	........
  * Size:	000068
  */
-void GenObjectPlant::GenObjectPlant()
+GenObjectPlant::GenObjectPlant()
 {
 	// UNUSED FUNCTION
 }
@@ -1688,7 +1686,7 @@ void GenObjectPlant::render(Graphics &, Generator *)
  * Address:	8011B098
  * Size:	000084
  */
-void PlantMgr::~PlantMgr()
+PlantMgr::~PlantMgr()
 {
 /*
 .loc_0x0:

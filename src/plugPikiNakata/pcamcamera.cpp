@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -25,12 +27,8 @@ void _Print(char *, ...)
  * Address:	80121BB8
  * Size:	000004
  */
-void PcamMotionInfo::PcamMotionInfo()
+PcamMotionInfo::PcamMotionInfo()
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -58,7 +56,7 @@ void PcamMotionInfo::println()
  * Address:	80121BBC
  * Size:	000024
  */
-void PcamControlInfo::PcamControlInfo()
+PcamControlInfo::PcamControlInfo()
 {
 /*
 .loc_0x0:
@@ -102,7 +100,7 @@ void PcamControlInfo::init(bool, bool, bool, bool, bool, bool, bool, float, floa
  * Address:	80121C0C
  * Size:	000134
  */
-void PcamCamera::PcamCamera(Camera *)
+PcamCamera::PcamCamera(Camera *)
 {
 /*
 .loc_0x0:

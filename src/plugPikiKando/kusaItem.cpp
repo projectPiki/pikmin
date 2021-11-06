@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -25,7 +27,7 @@ void _Print(char *, ...)
  * Address:	800E5DD8
  * Size:	0000A4
  */
-void KusaItem::KusaItem(CreatureProp *, Shape *)
+KusaItem::KusaItem(CreatureProp *, Shape *)
 {
 /*
 .loc_0x0:
@@ -394,7 +396,7 @@ void KusaItem::refresh(Graphics &)
  * Address:	800E61D4
  * Size:	0000D8
  */
-void BoBaseItem::BoBaseItem(CreatureProp *, Shape *)
+BoBaseItem::BoBaseItem(CreatureProp *, Shape *)
 {
 /*
 .loc_0x0:
@@ -811,13 +813,9 @@ void BoBaseItem::isAlive()
  * Address:	800E6650
  * Size:	000008
  */
-void BoBaseItem::isVisible()
+u32  BoBaseItem::isVisible()
 {
-/*
-.loc_0x0:
-  li        r3, 0x1
-  blr
-*/
+	return 0x1;
 }
 
 /*
@@ -825,13 +823,9 @@ void BoBaseItem::isVisible()
  * Address:	800E6658
  * Size:	000008
  */
-void KusaItem::isVisible()
+u32  KusaItem::isVisible()
 {
-/*
-.loc_0x0:
-  li        r3, 0x1
-  blr
-*/
+	return 0x1;
 }
 
 /*
@@ -839,11 +833,7 @@ void KusaItem::isVisible()
  * Address:	800E6660
  * Size:	000008
  */
-void KusaItem::isAlive()
+u32  KusaItem::isAlive()
 {
-/*
-.loc_0x0:
-  li        r3, 0x1
-  blr
-*/
+	return 0x1;
 }

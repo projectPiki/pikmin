@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -25,7 +27,7 @@ void _Print(char *, ...)
  * Address:	80086690
  * Size:	000080
  */
-void MemStat::MemStat()
+MemStat::MemStat()
 {
 /*
 .loc_0x0:

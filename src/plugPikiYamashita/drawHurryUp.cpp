@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -25,7 +27,7 @@ void _Print(char *, ...)
  * Address:	801C049C
  * Size:	000308
  */
-void zen::DrawHurryUp::DrawHurryUp()
+zen::DrawHurryUp::DrawHurryUp()
 {
 /*
 .loc_0x0:

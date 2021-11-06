@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -640,12 +642,8 @@ void zen::DrawMenuTitle::setPane(P2DScreen *, P2DPane *, unsigned long)
  */
 void zen::DrawMenuTitle::start()
 {
-/*
-.loc_0x0:
-  li        r0, 0x1
-  stw       r0, 0x0(r3)
-  blr
-*/
+// Generated from stw r0, 0x0(r3)
+_00 = 1;
 }
 
 /*
@@ -655,12 +653,8 @@ void zen::DrawMenuTitle::start()
  */
 void zen::DrawMenuTitle::wait()
 {
-/*
-.loc_0x0:
-  li        r0, 0
-  stw       r0, 0x0(r3)
-  blr
-*/
+// Generated from stw r0, 0x0(r3)
+_00 = 0;
 }
 
 /*
@@ -680,12 +674,8 @@ void zen::DrawMenuTitle::operation()
  */
 void zen::DrawMenuTitle::end()
 {
-/*
-.loc_0x0:
-  li        r0, 0x3
-  stw       r0, 0x0(r3)
-  blr
-*/
+// Generated from stw r0, 0x0(r3)
+_00 = 3;
 }
 
 /*
@@ -813,7 +803,7 @@ void zen::DrawMenuTitle::update(float)
  * Address:	801C30FC
  * Size:	000AFC
  */
-void zen::DrawMenu::DrawMenu(char *, bool, bool)
+zen::DrawMenu::DrawMenu(char *, bool, bool)
 {
 /*
 .loc_0x0:
@@ -1572,7 +1562,7 @@ void zen::DrawMenu::DrawMenu(char *, bool, bool)
  * Address:	801C3BF8
  * Size:	000054
  */
-void zen::DrawMenuItem::~DrawMenuItem()
+zen::DrawMenuItem::~DrawMenuItem()
 {
 /*
 .loc_0x0:
@@ -1607,7 +1597,7 @@ void zen::DrawMenuItem::~DrawMenuItem()
  * Address:	801C3C4C
  * Size:	00006C
  */
-void zen::DrawMenuItem::DrawMenuItem()
+zen::DrawMenuItem::DrawMenuItem()
 {
 /*
 .loc_0x0:

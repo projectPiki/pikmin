@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -79,7 +81,7 @@ void BufferedInputStream::init(Stream *, unsigned char *, int)
  * Address:	80025598
  * Size:	0000C0
  */
-void BufferedInputStream::BufferedInputStream(Stream *, unsigned char *, int)
+BufferedInputStream::BufferedInputStream(Stream *, unsigned char *, int)
 {
 /*
 .loc_0x0:
@@ -372,13 +374,9 @@ void RandomAccessStream::getLength()
  * Address:	8002588C
  * Size:	000008
  */
-void RandomAccessStream::getPosition()
+u32  RandomAccessStream::getPosition()
 {
-/*
-.loc_0x0:
-  li        r3, 0
-  blr
-*/
+	return 0x0;
 }
 
 /*

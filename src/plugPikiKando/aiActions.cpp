@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -25,7 +27,7 @@ void _Print(char *, ...)
  * Address:	800A79F8
  * Size:	000080
  */
-void ActPick::ActPick(Piki *)
+ActPick::ActPick(Piki *)
 {
 /*
 .loc_0x0:
@@ -73,10 +75,6 @@ void ActPick::ActPick(Piki *)
  */
 void ActPick::Initialiser::initialise(Action *)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -312,7 +310,7 @@ void ActPick::exec()
  * Address:	........
  * Size:	000040
  */
-void ActPut::ActPut(Piki *)
+ActPut::ActPut(Piki *)
 {
 	// UNUSED FUNCTION
 }
@@ -324,10 +322,6 @@ void ActPut::ActPut(Piki *)
  */
 void ActPut::Initialiser::initialise(Action *)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -352,10 +346,6 @@ void ActPut::init(Creature *)
  */
 void ActPut::cleanup()
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -437,7 +427,7 @@ void ActPut::exec()
  * Address:	800A7DE8
  * Size:	00006C
  */
-void ActAdjust::ActAdjust(Piki *)
+ActAdjust::ActAdjust(Piki *)
 {
 /*
 .loc_0x0:
@@ -745,7 +735,7 @@ void ActAdjust::exec()
  * Address:	800A8198
  * Size:	000064
  */
-void ActAdjust::~ActAdjust()
+ActAdjust::~ActAdjust()
 {
 /*
 .loc_0x0:
@@ -801,7 +791,7 @@ void ActAdjust::defaultInitialiser()
  * Address:	800A8210
  * Size:	000064
  */
-void ActPut::~ActPut()
+ActPut::~ActPut()
 {
 /*
 .loc_0x0:
@@ -840,7 +830,7 @@ void ActPut::~ActPut()
  * Address:	800A8274
  * Size:	00006C
  */
-void ActPick::~ActPick()
+ActPick::~ActPick()
 {
 /*
 .loc_0x0:

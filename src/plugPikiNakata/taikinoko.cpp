@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -25,7 +27,7 @@ void _Print(char *, ...)
  * Address:	8012FB98
  * Size:	000084
  */
-void TaiKinokoSoundTable::TaiKinokoSoundTable()
+TaiKinokoSoundTable::TaiKinokoSoundTable()
 {
 /*
 .loc_0x0:
@@ -76,7 +78,7 @@ void TaiKinokoSoundTable::TaiKinokoSoundTable()
  * Address:	8012FC1C
  * Size:	000518
  */
-void TaiKinokoParameters::TaiKinokoParameters()
+TaiKinokoParameters::TaiKinokoParameters()
 {
 /*
 .loc_0x0:
@@ -414,7 +416,7 @@ void TaiKinokoParameters::TaiKinokoParameters()
  * Address:	80130134
  * Size:	001298
  */
-void TaiKinokoStrategy::TaiKinokoStrategy(TekiParameters *)
+TaiKinokoStrategy::TaiKinokoStrategy(TekiParameters *)
 {
 /*
 .loc_0x0:
@@ -2089,10 +2091,6 @@ void TaiKinokoChargingSporesAction::act(Teki &)
  */
 void TaiKinokoDischargingSporesAction::start(Teki &)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -2482,7 +2480,7 @@ void TaiKinokoTerritoryRunningAwayAction::act(Teki &)
  * Address:	80131D54
  * Size:	000058
  */
-void TaiKinokoLegEffectAction::TaiKinokoLegEffectAction(float)
+TaiKinokoLegEffectAction::TaiKinokoLegEffectAction(float)
 {
 /*
 .loc_0x0:

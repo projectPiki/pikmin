@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -5,7 +7,7 @@
  * Address:	........
  * Size:	000088
  */
-void P2DOrthoGraph::P2DOrthoGraph()
+P2DOrthoGraph::P2DOrthoGraph()
 {
 	// UNUSED FUNCTION
 }
@@ -15,7 +17,7 @@ void P2DOrthoGraph::P2DOrthoGraph()
  * Address:	........
  * Size:	0000C8
  */
-void P2DOrthoGraph::P2DOrthoGraph(const PUTRect &)
+P2DOrthoGraph::P2DOrthoGraph(const PUTRect &)
 {
 	// UNUSED FUNCTION
 }
@@ -25,7 +27,7 @@ void P2DOrthoGraph::P2DOrthoGraph(const PUTRect &)
  * Address:	801AFCF0
  * Size:	0000C4
  */
-void P2DOrthoGraph::P2DOrthoGraph(int, int, int, int)
+P2DOrthoGraph::P2DOrthoGraph(int, int, int, int)
 {
 /*
 .loc_0x0:
@@ -366,7 +368,7 @@ void P2DOrthoGraph::scissorBounds(PUTRect *, PUTRect *)
  * Address:	801B0134
  * Size:	00005C
  */
-void P2DOrthoGraph::~P2DOrthoGraph()
+P2DOrthoGraph::~P2DOrthoGraph()
 {
 /*
 .loc_0x0:

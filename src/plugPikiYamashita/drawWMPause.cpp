@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -25,7 +27,7 @@ void _Print(char *, ...)
  * Address:	801E9CF8
  * Size:	0000A8
  */
-void zen::DrawWMPause::DrawWMPause()
+zen::DrawWMPause::DrawWMPause()
 {
 /*
 .loc_0x0:

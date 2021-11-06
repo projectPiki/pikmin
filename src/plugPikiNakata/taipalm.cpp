@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -25,7 +27,7 @@ void _Print(char *, ...)
  * Address:	8013DAB4
  * Size:	000084
  */
-void TaiPalmSoundTable::TaiPalmSoundTable()
+TaiPalmSoundTable::TaiPalmSoundTable()
 {
 /*
 .loc_0x0:
@@ -76,7 +78,7 @@ void TaiPalmSoundTable::TaiPalmSoundTable()
  * Address:	8013DB38
  * Size:	0001F4
  */
-void TaiPalmParameters::TaiPalmParameters()
+TaiPalmParameters::TaiPalmParameters()
 {
 /*
 .loc_0x0:
@@ -213,7 +215,7 @@ void TaiPalmParameters::TaiPalmParameters()
  * Address:	8013DD2C
  * Size:	0004F0
  */
-void TaiPalmStrategy::TaiPalmStrategy(TekiParameters *)
+TaiPalmStrategy::TaiPalmStrategy(TekiParameters *)
 {
 /*
 .loc_0x0:
@@ -1331,10 +1333,6 @@ void TaiPalmSettingPelletAction::start(Teki &)
  */
 void TaiPalmChangingColorAction::start(Teki &)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*

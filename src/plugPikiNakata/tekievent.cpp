@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -25,7 +27,7 @@ void _Print(char *, ...)
  * Address:	8014A398
  * Size:	000034
  */
-void TekiEvent::TekiEvent(int, Teki *)
+TekiEvent::TekiEvent(int, Teki *)
 {
 /*
 .loc_0x0:
@@ -50,7 +52,7 @@ void TekiEvent::TekiEvent(int, Teki *)
  * Address:	8014A3CC
  * Size:	000030
  */
-void TekiEvent::TekiEvent(int, Teki *, Creature *)
+TekiEvent::TekiEvent(int, Teki *, Creature *)
 {
 /*
 .loc_0x0:

@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -2331,13 +2333,9 @@ void AIPerf::breakSluice(Menu &)
  * Address:	80086470
  * Size:	000008
  */
-void WorkObject::isBridge()
+u32  WorkObject::isBridge()
 {
-/*
-.loc_0x0:
-  li        r3, 0
-  blr
-*/
+	return 0x0;
 }
 
 /*

@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -25,7 +27,7 @@ void _Print(char *, ...)
  * Address:	80195740
  * Size:	00073C
  */
-void zen::ogSaveMgr::ogSaveMgr()
+zen::ogSaveMgr::ogSaveMgr()
 {
 /*
 .loc_0x0:

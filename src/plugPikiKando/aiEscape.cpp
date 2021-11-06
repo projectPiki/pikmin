@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -25,7 +27,7 @@ void _Print(char *, ...)
  * Address:	800B8828
  * Size:	00007C
  */
-void ActEscape::ActEscape(Piki *)
+ActEscape::ActEscape(Piki *)
 {
 /*
 .loc_0x0:
@@ -72,10 +74,6 @@ void ActEscape::ActEscape(Piki *)
  */
 void ActEscape::Initialiser::initialise(Action *)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -442,7 +440,7 @@ void ActEscape::getInfo(char *)
  * Address:	800B8D04
  * Size:	000064
  */
-void ActEscape::~ActEscape()
+ActEscape::~ActEscape()
 {
 /*
 .loc_0x0:

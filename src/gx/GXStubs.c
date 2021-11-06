@@ -1,3 +1,5 @@
+#include "types.h"
+
 /*
  * --INFO--
  * Address:	802140E4
@@ -6,8 +8,4 @@
 void __GXSetRange(void)
 {
 	return;
-/*
-.loc_0x0:
-  blr
-*/
 }

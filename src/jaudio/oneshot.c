@@ -1270,13 +1270,10 @@ void Gate_1Shot(jc_ *, unsigned char, unsigned char, long)
  * Address:	80015F80
  * Size:	000008
  */
-void UpdatePause_1Shot(jc_ *, unsigned char)
+void UpdatePause_1Shot(jc_ *, unsigned char a1)
 {
-/*
-.loc_0x0:
-  stb       r4, 0x2(r3)
-  blr
-*/
+// Generated from stb r4, 0x2(r3)
+_02 = a1;
 }
 
 /*

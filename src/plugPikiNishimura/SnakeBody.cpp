@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -221,7 +223,7 @@ void SnakeBody::killCallBackEffect(bool)
  * Address:	8015FF30
  * Size:	000158
  */
-void SnakeBody::SnakeBody(Snake *)
+SnakeBody::SnakeBody(Snake *)
 {
 /*
 .loc_0x0:

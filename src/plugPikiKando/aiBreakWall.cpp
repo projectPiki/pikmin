@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -25,7 +27,7 @@ void _Print(char *, ...)
  * Address:	800AE13C
  * Size:	000070
  */
-void ActBreakWall::ActBreakWall(Piki *)
+ActBreakWall::ActBreakWall(Piki *)
 {
 /*
 .loc_0x0:
@@ -930,10 +932,6 @@ void BuildingItem::isCompleted()
  */
 void ActBreakWall::cleanup()
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -941,7 +939,7 @@ void ActBreakWall::cleanup()
  * Address:	800AEC0C
  * Size:	00006C
  */
-void ActBreakWall::~ActBreakWall()
+ActBreakWall::~ActBreakWall()
 {
 /*
 .loc_0x0:

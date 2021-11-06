@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -25,7 +27,7 @@ void _Print(char *, ...)
  * Address:	80196864
  * Size:	0003E4
  */
-void zen::ogNitakuMgr::ogNitakuMgr(P2DScreen *, P2DTextBox *, P2DTextBox *, P2DTextBox *, bool, bool)
+zen::ogNitakuMgr::ogNitakuMgr(P2DScreen *, P2DTextBox *, P2DTextBox *, P2DTextBox *, bool, bool)
 {
 /*
 .loc_0x0:

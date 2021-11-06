@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -25,7 +27,7 @@ void _Print(char *, ...)
  * Address:	801F19D8
  * Size:	000048
  */
-void zen::AlphaWipe::AlphaWipe()
+zen::AlphaWipe::AlphaWipe()
 {
 /*
 .loc_0x0:

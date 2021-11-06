@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -85,7 +87,7 @@ void P2DTextBox::loadResource()
  * Address:	801B4534
  * Size:	00020C
  */
-void P2DTextBox::P2DTextBox(P2DPane *, RandomAccessStream *, unsigned short)
+P2DTextBox::P2DTextBox(P2DPane *, RandomAccessStream *, unsigned short)
 {
 /*
 .loc_0x0:
@@ -400,7 +402,7 @@ void P2DTextBox::drawSelf(int, int, Matrix4f *)
  * Address:	801B4940
  * Size:	000064
  */
-void P2DTextBox::~P2DTextBox()
+P2DTextBox::~P2DTextBox()
 {
 /*
 .loc_0x0:

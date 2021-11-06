@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -243,7 +245,7 @@ void ActRandomBoid::AnimListener::animationKeyUpdated(PaniAnimKeyEvent &)
  * Address:	800C0D08
  * Size:	00008C
  */
-void ActRandomBoid::ActRandomBoid(Piki *)
+ActRandomBoid::ActRandomBoid(Piki *)
 {
 /*
 .loc_0x0:
@@ -294,10 +296,6 @@ void ActRandomBoid::ActRandomBoid(Piki *)
  */
 void ActRandomBoid::Initialiser::initialise(Action *)
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -377,10 +375,6 @@ void ActRandomBoid::init(Creature *)
  */
 void ActRandomBoid::cleanup()
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -692,7 +686,7 @@ void ActRandomBoid::getInfo(char *)
  * Address:	800C1284
  * Size:	000064
  */
-void ActRandomBoid::~ActRandomBoid()
+ActRandomBoid::~ActRandomBoid()
 {
 /*
 .loc_0x0:

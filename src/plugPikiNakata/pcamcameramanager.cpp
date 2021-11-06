@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -25,7 +27,7 @@ void _Print(char *, ...)
  * Address:	80123C54
  * Size:	0001F8
  */
-void PcamCameraManager::PcamCameraManager(Camera *, Controller *)
+PcamCameraManager::PcamCameraManager(Camera *, Controller *)
 {
 /*
 .loc_0x0:
@@ -334,10 +336,6 @@ void PeveEvent::update()
  */
 void PeveCondition::update()
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -347,10 +345,6 @@ void PeveCondition::update()
  */
 void PeveEvent::finish()
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -528,10 +522,6 @@ void PeveEvent::reset()
  */
 void PeveCondition::reset()
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*

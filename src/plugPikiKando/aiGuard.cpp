@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -25,7 +27,7 @@ void _Print(char *, ...)
  * Address:	800BB534
  * Size:	000084
  */
-void ActGuard::ActGuard(Piki *)
+ActGuard::ActGuard(Piki *)
 {
 /*
 .loc_0x0:
@@ -1772,7 +1774,7 @@ void ActGuard::setRight()
  * Address:	800BCA98
  * Size:	000064
  */
-void ActGuard::~ActGuard()
+ActGuard::~ActGuard()
 {
 /*
 .loc_0x0:

@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -483,10 +485,6 @@ void Jac_PlayInit()
  */
 void Jac_Archiver_Init()
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*

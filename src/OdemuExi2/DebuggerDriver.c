@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -995,10 +997,6 @@ void DBWrite(void)
 void DBOpen(void)
 {
 	return;
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -1009,8 +1007,4 @@ void DBOpen(void)
 void DBClose(void)
 {
 	return;
-/*
-.loc_0x0:
-  blr
-*/
 }

@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -25,7 +27,7 @@ void _Print(char *, ...)
  * Address:	80131F64
  * Size:	0000B0
  */
-void TaiMizigenParameters::TaiMizigenParameters()
+TaiMizigenParameters::TaiMizigenParameters()
 {
 /*
 .loc_0x0:
@@ -81,7 +83,7 @@ void TaiMizigenParameters::TaiMizigenParameters()
  * Address:	80132014
  * Size:	00017C
  */
-void TaiMizigenStrategy::TaiMizigenStrategy(TekiParameters *)
+TaiMizigenStrategy::TaiMizigenStrategy(TekiParameters *)
 {
 /*
 .loc_0x0:
@@ -350,13 +352,9 @@ void TaiMizigenGeneratingAction::start(Teki &)
  * Address:	80132380
  * Size:	000008
  */
-void TaiMizigenGeneratingAction::act(Teki &)
+u32  TaiMizigenGeneratingAction::act(Teki &)
 {
-/*
-.loc_0x0:
-  li        r3, 0x1
-  blr
-*/
+	return 0x1;
 }
 
 /*
@@ -428,7 +426,7 @@ void TaiMizigenNaviApprouchAction::act(Teki &)
  * Address:	80132440
  * Size:	000380
  */
-void TaiMizinkoParameters::TaiMizinkoParameters()
+TaiMizinkoParameters::TaiMizinkoParameters()
 {
 /*
 .loc_0x0:
@@ -664,7 +662,7 @@ void TaiMizinkoParameters::TaiMizinkoParameters()
  * Address:	801327C0
  * Size:	000084
  */
-void TaiMizinkoSoundTable::TaiMizinkoSoundTable()
+TaiMizinkoSoundTable::TaiMizinkoSoundTable()
 {
 /*
 .loc_0x0:
@@ -715,7 +713,7 @@ void TaiMizinkoSoundTable::TaiMizinkoSoundTable()
  * Address:	80132844
  * Size:	0008B4
  */
-void TaiMizinkoStrategy::TaiMizinkoStrategy(TekiParameters *)
+TaiMizinkoStrategy::TaiMizinkoStrategy(TekiParameters *)
 {
 /*
 .loc_0x0:

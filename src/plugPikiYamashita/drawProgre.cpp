@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -25,7 +27,7 @@ void _Print(char *, ...)
  * Address:	801DA250
  * Size:	0001B4
  */
-void zen::DrawProgre::DrawProgre()
+zen::DrawProgre::DrawProgre()
 {
 /*
 .loc_0x0:

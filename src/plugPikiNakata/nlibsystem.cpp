@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -25,7 +27,7 @@ void _Print(char *, ...)
  * Address:	8011E0F8
  * Size:	0000CC
  */
-void NNode::NNode(int)
+NNode::NNode(int)
 {
 /*
 .loc_0x0:
@@ -767,7 +769,7 @@ void NArray<NNode>::remove(int, int)
  * Address:	........
  * Size:	000010
  */
-void NListNode::NListNode()
+NListNode::NListNode()
 {
 	// UNUSED FUNCTION
 }
@@ -827,7 +829,7 @@ void NListNode::toString()
  * Address:	........
  * Size:	00000C
  */
-void NList::NList()
+NList::NList()
 {
 	// UNUSED FUNCTION
 }
@@ -857,7 +859,7 @@ void NList::toString()
  * Address:	........
  * Size:	0000CC
  */
-void NHeap::NHeap(int)
+NHeap::NHeap(int)
 {
 	// UNUSED FUNCTION
 }

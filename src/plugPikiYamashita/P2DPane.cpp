@@ -1,3 +1,5 @@
+#include "types.h"
+
 
 
 /*
@@ -25,13 +27,10 @@ void _Print(char *, ...)
  * Address:	801B069C
  * Size:	000008
  */
-void P2DPane::setCallBack(P2DPaneCallBack *)
+void P2DPane::setCallBack(P2DPaneCallBack * a1)
 {
-/*
-.loc_0x0:
-  stw       r4, 0x4(r3)
-  blr
-*/
+// Generated from stw r4, 0x4(r3)
+_04 = a1;
 }
 
 /*
@@ -88,7 +87,7 @@ void P2DPane::drawSelf(int, int, Matrix4f *)
  * Address:	801B0700
  * Size:	000030
  */
-void P2DPaneCallBackBase::P2DPaneCallBackBase(P2DPane *, P2DPaneType)
+P2DPaneCallBackBase::P2DPaneCallBackBase(P2DPane *, P2DPaneType)
 {
 /*
 .loc_0x0:
@@ -266,7 +265,7 @@ void PSUPtrList::getFirstLink() const
  * Address:	801B0880
  * Size:	00014C
  */
-void P2DPane::P2DPane()
+P2DPane::P2DPane()
 {
 /*
 .loc_0x0:
@@ -391,7 +390,7 @@ void PSUList<P2DPane>::~PSUList()
  * Address:	801B09CC
  * Size:	000168
  */
-void P2DPane::P2DPane(P2DPane *, unsigned short, bool, unsigned long, const PUTRect &)
+P2DPane::P2DPane(P2DPane *, unsigned short, bool, unsigned long, const PUTRect &)
 {
 /*
 .loc_0x0:
@@ -497,7 +496,7 @@ void P2DPane::P2DPane(P2DPane *, unsigned short, bool, unsigned long, const PUTR
  * Address:	........
  * Size:	000158
  */
-void P2DPane::P2DPane(unsigned long, const PUTRect &)
+P2DPane::P2DPane(unsigned long, const PUTRect &)
 {
 	// UNUSED FUNCTION
 }
@@ -507,7 +506,7 @@ void P2DPane::P2DPane(unsigned long, const PUTRect &)
  * Address:	........
  * Size:	000140
  */
-void P2DPane::P2DPane(unsigned short, unsigned long, const PUTRect &)
+P2DPane::P2DPane(unsigned short, unsigned long, const PUTRect &)
 {
 	// UNUSED FUNCTION
 }
@@ -517,7 +516,7 @@ void P2DPane::P2DPane(unsigned short, unsigned long, const PUTRect &)
  * Address:	801B0B34
  * Size:	000290
  */
-void P2DPane::P2DPane(P2DPane *, RandomAccessStream *, unsigned short)
+P2DPane::P2DPane(P2DPane *, RandomAccessStream *, unsigned short)
 {
 /*
 .loc_0x0:
@@ -705,7 +704,7 @@ void P2DPane::P2DPane(P2DPane *, RandomAccessStream *, unsigned short)
  * Address:	801B0DC4
  * Size:	0000E0
  */
-void P2DPane::~P2DPane()
+P2DPane::~P2DPane()
 {
 /*
 .loc_0x0:
@@ -1488,10 +1487,6 @@ void P2DPane::loadChildResource()
  */
 void P2DPane::loadResource()
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
@@ -1501,10 +1496,6 @@ void P2DPane::loadResource()
  */
 void P2DPane::makeResident()
 {
-/*
-.loc_0x0:
-  blr
-*/
 }
 
 /*
