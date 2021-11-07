@@ -505,12 +505,7 @@ lbl_802E9610:
 	.4byte 0x20455849
 	.4byte 0x3220706F
 	.4byte 0x7274210A
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
+	.byte 0
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 0x8

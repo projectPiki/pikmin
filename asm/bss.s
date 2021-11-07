@@ -602,5 +602,4 @@ pic_ctrl:
 	.skip 0x1B0
 .global dvd_ctrl
 dvd_ctrl:
-#	.skip 0xAB40
-	.skip 0x40
+	.skip 0x30

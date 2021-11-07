@@ -1643,7 +1643,6 @@ lbl_80222DA8:
 	.4byte 0x60000000
 	.4byte 0x60000000
 	.4byte 0x60000000
-	.4byte 0x00000000
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 0x8

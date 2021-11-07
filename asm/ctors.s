@@ -20,9 +20,3 @@ __init_cpp_exceptions_reference:
 	.4byte 0x801D59C8
 	.4byte __sinit_trigf_c
 	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000

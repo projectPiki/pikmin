@@ -763,8 +763,7 @@ DBClose:
 
 .global SendCount
 SendCount:
-	.4byte 0x80000000
-	.skip 4
+	.byte 0x80
 
 .section .sbss, "wa"
 .balign 0x8

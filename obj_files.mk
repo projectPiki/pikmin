@@ -130,6 +130,3 @@ TEXT_O_FILES :=\
 	$(BUILD_DIR)/src/amcnotstub/amcnotstub.o\
 	$(BUILD_DIR)/asm/OdemuExi2/DebuggerDriver.o\
 	$(BUILD_DIR)/src/odenotstub/odenotstub.o\
-
-INIT_O_FILES :=\
-	$(BUILD_DIR)/asm/init_tables.o\
