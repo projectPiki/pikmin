@@ -21908,7 +21908,3 @@ GXTexTlutIds:
 GX2HWFiltConv:
 	.4byte 0x00040105
 	.4byte 0x02060000
-.global fragmentID
-fragmentID:
-	.4byte 0xFFFFFFFE
-	.4byte 0x00000000

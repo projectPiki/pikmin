@@ -22,13 +22,13 @@ SRC_DIRS := src src/sysCommon src/amcnotstub src/gx src/odenotstub \
 			src/amcExi2 src/jaudio src/mtx src/os src/plugPikiKando \
 			src/plugPikiNakata src/plugPikiOgawa src/plugPikiYamashita \
 			src/dvd src/vi src/pad src/ai src/ar src/dsp src/OdemuExi2 \
-			src/MSL_C/PPCEABI/bare/H
+			src/MSL_C/PPCEABI/bare/H src/Runtime/PPCEABI/H
 ASM_DIRS := asm asm/sysCommon asm/amcnotstub asm/gx asm/odenotstub \
             asm/TRK_MINNOW_DOLPHIN asm/plugPikiNishimura asm/plugPikiColin \
             asm/amcExi2 asm/jaudio asm/mtx asm/os asm/plugPikiKando \
             asm/plugPikiNakata asm/plugPikiOgawa asm/plugPikiYamashita \
             asm/dvd asm/vi asm/pad asm/ai asm/ar asm/dsp asm/OdemuExi2 \
-			asm/MSL_C/PPCEABI/bare/H
+			asm/MSL_C/PPCEABI/bare/H asm/Runtime/PPCEABI/H
 # Inputs
 S_FILES := $(wildcard asm/*.s)
 C_FILES := $(wildcard src/*.c)

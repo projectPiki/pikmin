@@ -2,8 +2,6 @@
 
 GROUP_0_FILES :=\
 	$(BUILD_DIR)/asm/init.o\
-	$(BUILD_DIR)/asm/extab.o\
-	$(BUILD_DIR)/asm/exidx.o\
 	$(BUILD_DIR)/asm/ctors.o\
 	$(BUILD_DIR)/asm/dtors.o\
 	$(BUILD_DIR)/asm/rodata.o\
@@ -64,7 +62,17 @@ TEXT_O_FILES :=\
 	$(BUILD_DIR)/asm/dsp/dsp.o\
 	$(BUILD_DIR)/asm/text_CardGX.o\
 	$(BUILD_DIR)/src/gx/GXStubs.o\
-	$(BUILD_DIR)/asm/text_802140E8.o\
+	$(BUILD_DIR)/asm/gx/GXDisplayList.o\
+	$(BUILD_DIR)/asm/gx/GXTransform.o\
+	$(BUILD_DIR)/asm/Runtime/PPCEABI/H/__mem.o\
+	$(BUILD_DIR)/asm/Runtime/PPCEABI/H/__va_arg.o\
+	$(BUILD_DIR)/asm/Runtime/PPCEABI/H/global_destructor_chain.o\
+	$(BUILD_DIR)/asm/Runtime/PPCEABI/H/CPlusLibPPC.o\
+	$(BUILD_DIR)/asm/Runtime/PPCEABI/H/NMWException.o\
+	$(BUILD_DIR)/asm/Runtime/PPCEABI/H/ptmf.o\
+	$(BUILD_DIR)/asm/Runtime/PPCEABI/H/ExceptionPPC.o\
+	$(BUILD_DIR)/asm/Runtime/PPCEABI/H/runtime.o\
+	$(BUILD_DIR)/asm/Runtime/PPCEABI/H/__init_cpp_exceptions.o\
 	$(BUILD_DIR)/asm/MSL_C/PPCEABI/bare/H/abort_exit.o\
 	$(BUILD_DIR)/asm/MSL_C/PPCEABI/bare/H/errno.o\
 	$(BUILD_DIR)/asm/MSL_C/PPCEABI/bare/H/ansi_fp.o\

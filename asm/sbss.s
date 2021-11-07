@@ -1620,9 +1620,3 @@ DrawDone:
 .global FinishQueue
 FinishQueue:
 	.skip 0xC
-.global OldCPUFifo
-OldCPUFifo:
-	.skip 0x8
-.global __global_destructor_chain
-__global_destructor_chain:
-	.skip 0x8

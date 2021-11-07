@@ -27,6 +27,7 @@ GROUP: {
 }
 
 FORCEFILES {
-	extab.o
 	uart_console_io.o
+	ExceptionPPC.o
+	__init_cpp_exceptions.o
 }

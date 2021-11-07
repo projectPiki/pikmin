@@ -592,17 +592,3 @@ lbl_80222748:
 	.4byte 0x00000002
 	.4byte 0x00000002
 	.4byte 0x00000001
-.global __ptmf_null
-__ptmf_null:
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-.global __constants
-__constants:
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x41F00000
-	.4byte 0x00000000
-	.4byte 0x41E00000
-	.4byte 0x00000000

@@ -4009,13 +4009,3 @@ lbl_803EC5C8:
 "@132":
 	.4byte 0x43300000
 	.4byte 0x80000000
-.global lbl_803EC5D8
-lbl_803EC5D8:
-	.4byte 0x3F000000
-.global lbl_803EC5DC
-lbl_803EC5DC:
-	.4byte 0x43AA0000
-.global lbl_803EC5E0
-lbl_803EC5E0:
-	.4byte 0x4B7FFFFF
-	.4byte 0x00000000
