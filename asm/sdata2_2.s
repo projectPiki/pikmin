@@ -3899,13 +3899,3 @@ lbl_803EC508:
 "@113":
 	.4byte 0x40080000
 	.4byte 0x00000000
-.global lbl_803EC520
-lbl_803EC520:
-	.4byte 0x43440000
-.global lbl_803EC524
-lbl_803EC524:
-	.4byte 0x4D411E7A
-.global "@114"
-"@114":
-	.4byte 0x43300000
-	.4byte 0x00000000

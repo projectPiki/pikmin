@@ -1,5 +1,5 @@
 .include "macros.inc"
-
+.section .text, "ax"  # 0x80005560 - 0x80221F60
 .global DSPCheckMailToDSP
 DSPCheckMailToDSP:
 /* 80207E14 00204D74  3C 60 CC 00 */	lis r3, 0xCC005000@ha

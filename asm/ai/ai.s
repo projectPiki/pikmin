@@ -1,5 +1,5 @@
 .include "macros.inc"
-
+.section .text, "ax"  # 0x80005560 - 0x80221F60
 .global AIRegisterDMACallback
 AIRegisterDMACallback:
 /* 80206004 00202F64  7C 08 02 A6 */	mflr r0
@@ -664,3 +664,51 @@ lbl_802068D4:
 /* 80206900 00203860  38 21 00 30 */	addi r1, r1, 0x30
 /* 80206904 00203864  7C 08 03 A6 */	mtlr r0
 /* 80206908 00203868  4E 80 00 20 */	blr 
+
+.section .sbss, "wa"
+.balign 0x8
+.global __AIS_Callback
+__AIS_Callback:
+	.skip 0x4
+.global __AID_Callback
+__AID_Callback:
+	.skip 0x4
+.global __CallbackStack
+__CallbackStack:
+	.skip 0x4
+.global __OldStack
+__OldStack:
+	.skip 0x4
+.global __AI_init_flag
+__AI_init_flag:
+	.skip 0x8
+.global bound_32KHz
+bound_32KHz:
+	.skip 0x4
+.global lbl_803E80C4
+lbl_803E80C4:
+	.skip 0x4
+.global bound_48KHz
+bound_48KHz:
+	.skip 0x4
+.global lbl_803E80CC
+lbl_803E80CC:
+	.skip 0x4
+.global min_wait
+min_wait:
+	.skip 0x4
+.global lbl_803E80D4
+lbl_803E80D4:
+	.skip 0x4
+.global max_wait
+max_wait:
+	.skip 0x4
+.global lbl_803E80DC
+lbl_803E80DC:
+	.skip 0x4
+.global buffer_1
+buffer_1:
+	.skip 0x4
+.global lbl_803E80E4
+lbl_803E80E4:
+	.skip 0x4

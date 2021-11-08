@@ -1,5 +1,5 @@
 .include "macros.inc"
-
+.section .text, "ax"  # 0x80005560 - 0x80221F60
 .global __ARQServiceQueueLo
 __ARQServiceQueueLo:
 /* 80207A80 002049E0  7C 08 02 A6 */	mflr r0
@@ -270,3 +270,36 @@ lbl_80207DF0:
 /* 80207E08 00204D68  83 A1 00 2C */	lwz r29, 0x2c(r1)
 /* 80207E0C 00204D6C  38 21 00 38 */	addi r1, r1, 0x38
 /* 80207E10 00204D70  4E 80 00 20 */	blr 
+
+.section .sbss, "wa"
+.balign 0x8
+.global __ARQRequestQueueHi
+__ARQRequestQueueHi:
+	.skip 0x4
+.global __ARQRequestTailHi
+__ARQRequestTailHi:
+	.skip 0x4
+.global __ARQRequestQueueLo
+__ARQRequestQueueLo:
+	.skip 0x4
+.global __ARQRequestTailLo
+__ARQRequestTailLo:
+	.skip 0x4
+.global __ARQRequestPendingHi
+__ARQRequestPendingHi:
+	.skip 0x4
+.global __ARQRequestPendingLo
+__ARQRequestPendingLo:
+	.skip 0x4
+.global __ARQCallbackHi
+__ARQCallbackHi:
+	.skip 0x4
+.global __ARQCallbackLo
+__ARQCallbackLo:
+	.skip 0x4
+.global __ARQChunkSize
+__ARQChunkSize:
+	.skip 0x4
+.global __ARQ_init_flag
+__ARQ_init_flag:
+	.skip 0x4

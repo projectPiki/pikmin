@@ -1,5 +1,5 @@
 .include "macros.inc"
-
+.section .text, "ax"  # 0x80005560 - 0x80221F60
 .global ARRegisterDMACallback
 ARRegisterDMACallback:
 /* 8020690C 0020386C  7C 08 02 A6 */	mflr r0
@@ -1171,3 +1171,37 @@ lbl_80207A60:
 /* 80207A74 002049D4  38 21 01 40 */	addi r1, r1, 0x140
 /* 80207A78 002049D8  7C 08 03 A6 */	mtlr r0
 /* 80207A7C 002049DC  4E 80 00 20 */	blr 
+
+.section .sbss, "wa"
+.balign 0x8
+.global __AR_Callback
+__AR_Callback:
+	.skip 0x4
+.global __AR_Size
+__AR_Size:
+	.skip 0x4
+.global __AR_StackPointer
+__AR_StackPointer:
+	.skip 0x4
+.global __AR_FreeBlocks
+__AR_FreeBlocks:
+	.skip 0x4
+.global __AR_BlockLength
+__AR_BlockLength:
+	.skip 0x4
+.global __AR_init_flag
+__AR_init_flag:
+	.skip 0x4
+
+.section .sdata2, "a"  # 0x803E8200 - 0x803EC840
+.balign 0x8
+.global lbl_803EC520
+lbl_803EC520:
+	.4byte 0x43440000
+.global lbl_803EC524
+lbl_803EC524:
+	.4byte 0x4D411E7A
+.global "@114"
+"@114":
+	.4byte 0x43300000
+	.4byte 0x00000000
