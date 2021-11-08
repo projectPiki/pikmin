@@ -1563,6 +1563,3 @@ __ARQChunkSize:
 .global __ARQ_init_flag
 __ARQ_init_flag:
 	.skip 0x4
-.global __CARDDiskID
-__CARDDiskID:
-	.skip 0x8

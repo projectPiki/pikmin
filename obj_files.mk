@@ -60,7 +60,20 @@ TEXT_O_FILES :=\
 	$(BUILD_DIR)/asm/ar/ar.o\
 	$(BUILD_DIR)/asm/ar/arq.o\
 	$(BUILD_DIR)/asm/dsp/dsp.o\
-	$(BUILD_DIR)/asm/text_CardGX.o\
+	$(BUILD_DIR)/asm/card/CARDBios.o\
+	$(BUILD_DIR)/asm/card/CARDRdwr.o\
+	$(BUILD_DIR)/asm/card/CARDBlock.o\
+	$(BUILD_DIR)/asm/card/CARDDir.o\
+	$(BUILD_DIR)/asm/card/CARDCheck.o\
+	$(BUILD_DIR)/asm/card/CARDMount.o\
+	$(BUILD_DIR)/asm/card/CARDFormat.o\
+	$(BUILD_DIR)/asm/card/CARDOpen.o\
+	$(BUILD_DIR)/asm/card/CARDCreate.o\
+	$(BUILD_DIR)/asm/card/CARDRead.o\
+	$(BUILD_DIR)/asm/card/CARDWrite.o\
+	$(BUILD_DIR)/asm/card/CARDDelete.o\
+	$(BUILD_DIR)/asm/card/CARDStat.o\
+	$(BUILD_DIR)/asm/card/CARDRename.o\
 	$(BUILD_DIR)/asm/hio/hio.o\
 	$(BUILD_DIR)/asm/gx/GXInit.o\
 	$(BUILD_DIR)/asm/gx/GXFifo.o\
