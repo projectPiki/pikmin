@@ -7783,75 +7783,75 @@ lbl_802A9D84:
 	.4byte 0x00000000
 .global __vt__13ActorInstance
 __vt__13ActorInstance:
-  .4byte __RTTI__13ActorInstance
-  .4byte 0
-  .4byte getAgeNodeType__5ANodeFv
-  .4byte read__8CoreNodeFR18RandomAccessStream
-  .4byte 0x5363656e
-  .4byte 0x65437574
-  .4byte 0
-  .4byte 0x803de73c
-  .4byte 0
-  .4byte 0x803de744
-  .4byte 0
-  .4byte 0
+	.4byte __RTTI__13ActorInstance
+	.4byte 0
+	.4byte getAgeNodeType__5ANodeFv
+	.4byte read__8CoreNodeFR18RandomAccessStream
+	.4byte 0x5363656e
+	.4byte 0x65437574
+	.4byte 0
+	.4byte 0x803de73c
+	.4byte 0
+	.4byte 0x803de744
+	.4byte 0
+	.4byte 0
 .global __vt__8SceneCut
 __vt__8SceneCut:
-  .4byte __RTTI__8SceneCut
-  .4byte 0
-  .4byte getAgeNodeType__5ANodeFv
-  .4byte read__8CoreNodeFR18RandomAccessStream
-  .4byte 0x43696e65
-  .4byte 0x53686170
-  .4byte 0x654f626a
-  .4byte 0x65637400
-  .4byte 0x803de73c
-  .4byte 0
-  .4byte 0x803de744
-  .4byte 0
-  .4byte 0
+	.4byte __RTTI__8SceneCut
+	.4byte 0
+	.4byte getAgeNodeType__5ANodeFv
+	.4byte read__8CoreNodeFR18RandomAccessStream
+	.4byte 0x43696e65
+	.4byte 0x53686170
+	.4byte 0x654f626a
+	.4byte 0x65637400
+	.4byte 0x803de73c
+	.4byte 0
+	.4byte 0x803de744
+	.4byte 0
+	.4byte 0
 .global __vt__15CineShapeObject
 __vt__15CineShapeObject:
-  .4byte __RTTI__15CineShapeObject
-  .4byte 0
-  .4byte getAgeNodeType__5ANodeFv
-  .4byte read__8CoreNodeFR18RandomAccessStream
-  .4byte 0x5363656e
-  .4byte 0x65446174
-  .4byte 0x61000000
-  .4byte 0x803de73c
-  .4byte 0
-  .4byte 0x803de744
-  .4byte 0
-  .4byte 0
+	.4byte __RTTI__15CineShapeObject
+	.4byte 0
+	.4byte getAgeNodeType__5ANodeFv
+	.4byte read__8CoreNodeFR18RandomAccessStream
+	.4byte 0x5363656e
+	.4byte 0x65446174
+	.4byte 0x61000000
+	.4byte 0x803de73c
+	.4byte 0
+	.4byte 0x803de744
+	.4byte 0
+	.4byte 0
 .global __vt__9SceneData
 __vt__9SceneData:
-  .4byte __RTTI__9SceneData
-  .4byte 0
-  .4byte getAgeNodeType__5ANodeFv
-  .4byte read__8CoreNodeFR18RandomAccessStream
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
+	.4byte __RTTI__9SceneData
+	.4byte 0
+	.4byte getAgeNodeType__5ANodeFv
+	.4byte read__8CoreNodeFR18RandomAccessStream
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .global "__RTTI__30Delegate1<10ColourMenu,R4Menu>"
 "__RTTI__30Delegate1<10ColourMenu,R4Menu>":
-  .4byte 0x802a9bd0
-  .4byte 0x802a9bf0
+	.4byte 0x802a9bd0
+	.4byte 0x802a9bf0
 .global __RTTI__10ColourMenu
 __RTTI__10ColourMenu:
-  .4byte 0x802a9c38
-  .4byte 0x802a9c44
+	.4byte 0x802a9c38
+	.4byte 0x802a9c44
 .global "__RTTI__28Delegate1<9LightMenu,R4Menu>"
 "__RTTI__28Delegate1<9LightMenu,R4Menu>":
-  .4byte 0x802a9cbc
-  .4byte 0x802a9cdc
+	.4byte 0x802a9cbc
+	.4byte 0x802a9cdc
 .global lbl_803DE4D8
 lbl_803DE4D8:
 	.4byte 0x00000000
@@ -8291,11 +8291,11 @@ lbl_803DE730:
 	.4byte 0x802A9E7C
 .global __RTTI__13ActorInstance
 __RTTI__13ActorInstance:
-  .4byte 0x802a9e60
-  .4byte 0x802a9e88
+	.4byte 0x802a9e60
+	.4byte 0x802a9e88
 .global __RTTI__8SceneCut
 __RTTI__8SceneCut:
-  .4byte 0x802a9eac
+	.4byte 0x802a9eac
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .global lbl_803EA05C

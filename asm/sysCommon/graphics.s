@@ -9858,138 +9858,138 @@ btipalFmts:
 	.4byte 0x00000000
 .global __vt__12CacheTexture
 __vt__12CacheTexture:
-  .4byte __RTTI__12CacheTexture
-  .4byte 0
-  .4byte attach__7TextureFv
-  .4byte detach__7TextureFv
-  .4byte makeResident__12CacheTextureFv
-  .4byte 0x436f7265
-  .4byte 0x4e6f6465
-  .4byte 0
-  .4byte 0x803dcfa0
-  .4byte 0
-  .4byte 0
-  .4byte 0x803dcfa0
-  .4byte 0
-  .4byte 0x803dcfa8
-  .4byte 0
-  .4byte 0
+	.4byte __RTTI__12CacheTexture
+	.4byte 0
+	.4byte attach__7TextureFv
+	.4byte detach__7TextureFv
+	.4byte makeResident__12CacheTextureFv
+	.4byte 0x436f7265
+	.4byte 0x4e6f6465
+	.4byte 0
+	.4byte 0x803dcfa0
+	.4byte 0
+	.4byte 0
+	.4byte 0x803dcfa0
+	.4byte 0
+	.4byte 0x803dcfa8
+	.4byte 0
+	.4byte 0
 .global __vt__7TexAttr
 __vt__7TexAttr:
-  .4byte __RTTI__7TexAttr
-  .4byte 0
-  .4byte getAgeNodeType__5ANodeFv
-  .4byte read__7TexAttrFR18RandomAccessStream
-  .4byte 0x803dcfa0
-  .4byte 0
-  .4byte 0x803dcfa8
-  .4byte 0
-  .4byte 0
+	.4byte __RTTI__7TexAttr
+	.4byte 0
+	.4byte getAgeNodeType__5ANodeFv
+	.4byte read__7TexAttrFR18RandomAccessStream
+	.4byte 0x803dcfa0
+	.4byte 0
+	.4byte 0x803dcfa8
+	.4byte 0
+	.4byte 0
 .global __vt__6TexImg
 __vt__6TexImg:
-  .4byte __RTTI__6TexImg
-  .4byte 0
-  .4byte getAgeNodeType__5ANodeFv
-  .4byte read__6TexImgFR18RandomAccessStream
+	.4byte __RTTI__6TexImg
+	.4byte 0
+	.4byte getAgeNodeType__5ANodeFv
+	.4byte read__6TexImgFR18RandomAccessStream
 .global __vt__8Graphics
 __vt__8Graphics:
-  .4byte __RTTI__8Graphics
-  .4byte 0
-  .4byte videoReset__8GraphicsFv
-  .4byte setVerticalFilter__8GraphicsFPUc
-  .4byte getVerticalFilter__8GraphicsFPUc
-  .4byte getDListPtr__8GraphicsFv
-  .4byte getDListRemainSize__8GraphicsFv
-  .4byte compileMaterial__8GraphicsFP8Material
-  .4byte useDList__8GraphicsFUl
-  .4byte initRender__8GraphicsFii
-  .4byte 0
-  .4byte setAmbient__8GraphicsFv
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte setLightcam__8GraphicsFP11LightCamera
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte setBlendMode__8GraphicsFUcUcUc
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte setMatHandler__8GraphicsFP15MaterialHandler
-  .4byte 0
-  .4byte useMaterial__8GraphicsFP8Material
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte testRectangle__8GraphicsFR8RectArea
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte perspPrintf__8GraphicsFP4FontR8Vector3fiiPce
-  .4byte 0x4d617465
-  .4byte 0x7269616c
-  .4byte 0x48616e64
-  .4byte 0x6c657200
+	.4byte __RTTI__8Graphics
+	.4byte 0
+	.4byte videoReset__8GraphicsFv
+	.4byte setVerticalFilter__8GraphicsFPUc
+	.4byte getVerticalFilter__8GraphicsFPUc
+	.4byte getDListPtr__8GraphicsFv
+	.4byte getDListRemainSize__8GraphicsFv
+	.4byte compileMaterial__8GraphicsFP8Material
+	.4byte useDList__8GraphicsFUl
+	.4byte initRender__8GraphicsFii
+	.4byte 0
+	.4byte setAmbient__8GraphicsFv
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte setLightcam__8GraphicsFP11LightCamera
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte setBlendMode__8GraphicsFUcUcUc
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte setMatHandler__8GraphicsFP15MaterialHandler
+	.4byte 0
+	.4byte useMaterial__8GraphicsFP8Material
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte testRectangle__8GraphicsFR8RectArea
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte perspPrintf__8GraphicsFP4FontR8Vector3fiiPce
+	.4byte 0x4d617465
+	.4byte 0x7269616c
+	.4byte 0x48616e64
+	.4byte 0x6c657200
 .global __vt__15MaterialHandler
 __vt__15MaterialHandler:
-  .4byte __RTTI__15MaterialHandler
-  .4byte 0
-  .4byte setMaterial__15MaterialHandlerFP8Material
-  .4byte setTexMatrix__15MaterialHandlerFb
-  .4byte 0x4d617465
-  .4byte 0x7269616c
-  .4byte 0
-  .4byte 0x803dcfa0
-  .4byte 0
-  .4byte 0x803dcfa8
-  .4byte 0
-  .4byte 0
+	.4byte __RTTI__15MaterialHandler
+	.4byte 0
+	.4byte setMaterial__15MaterialHandlerFP8Material
+	.4byte setTexMatrix__15MaterialHandlerFb
+	.4byte 0x4d617465
+	.4byte 0x7269616c
+	.4byte 0
+	.4byte 0x803dcfa0
+	.4byte 0
+	.4byte 0x803dcfa8
+	.4byte 0
+	.4byte 0
 .global __vt__8Material
 __vt__8Material:
-  .4byte __RTTI__8Material
-  .4byte 0
-  .4byte getAgeNodeType__5ANodeFv
-  .4byte read__8MaterialFR18RandomAccessStream
-  .4byte attach__8MaterialFv
-  .4byte 0
+	.4byte __RTTI__8Material
+	.4byte 0
+	.4byte getAgeNodeType__5ANodeFv
+	.4byte read__8MaterialFR18RandomAccessStream
+	.4byte attach__8MaterialFv
+	.4byte 0
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
-  .4byte 0x803dcec0
-  .4byte 0
-  .4byte 0x80227430
-  .4byte 0x80227444
+	.4byte 0x803dcec0
+	.4byte 0
+	.4byte 0x80227430
+	.4byte 0x80227444
 .global __RTTI__19BufferedInputStream
 __RTTI__19BufferedInputStream:
-  .4byte 0x8022741c
-  .4byte 0x80227450
+	.4byte 0x8022741c
+	.4byte 0x80227450
 .global lbl_803DCEE0
 lbl_803DCEE0:
 	.4byte 0x3F800000
@@ -10086,36 +10086,36 @@ lbl_803DCF6C:
 	.4byte 0x00000000
 .global __RTTI__9GfxObject
 __RTTI__9GfxObject:
-  .4byte 0x802280b4
-  .4byte 0
-  .4byte 0x54657874
-  .4byte 0x75726500
+	.4byte 0x802280b4
+	.4byte 0
+	.4byte 0x54657874
+	.4byte 0x75726500
 .global __RTTI__7Texture
 __RTTI__7Texture:
-  .4byte 0x803dcf78
-  .4byte 0x802280c0
+	.4byte 0x803dcf78
+	.4byte 0x802280c0
 .global __RTTI__12CacheTexture
 __RTTI__12CacheTexture:
-  .4byte 0x802280a4
-  .4byte 0x802280cc
-  .4byte 0x54657841
-  .4byte 0x74747200
-  .4byte 0x414e6f64
-  .4byte 0x65000000
-  .4byte 0x803dcf98
-  .4byte 0
-  .4byte 0x802280f4
-  .4byte 0x80228100
+	.4byte 0x802280a4
+	.4byte 0x802280cc
+	.4byte 0x54657841
+	.4byte 0x74747200
+	.4byte 0x414e6f64
+	.4byte 0x65000000
+	.4byte 0x803dcf98
+	.4byte 0
+	.4byte 0x802280f4
+	.4byte 0x80228100
 .global __RTTI__7TexAttr
 __RTTI__7TexAttr:
-  .4byte 0x803dcf90
-  .4byte 0x8022810c
-  .4byte 0x54657849
-  .4byte 0x6d670000
+	.4byte 0x803dcf90
+	.4byte 0x8022810c
+	.4byte 0x54657849
+	.4byte 0x6d670000
 .global __RTTI__6TexImg
 __RTTI__6TexImg:
-  .4byte 0x803dcfb8
-  .4byte 0x80228130
+	.4byte 0x803dcfb8
+	.4byte 0x80228130
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .global "@4499"

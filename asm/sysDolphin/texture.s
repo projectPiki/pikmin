@@ -871,9 +871,9 @@ __ct__22GameCourseClearSectionFv:
 /* 8019953C 0019649C  38 8D 0E 8C */	addi r4, r13, lbl_803E5BAC@sda21
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
-  .4byte 0x74657874
-  .4byte 0x7572652e
-  .4byte 0x63707000
+	.4byte 0x74657874
+	.4byte 0x7572652e
+	.4byte 0x63707000
 .global gxTexFmts
 gxTexFmts:
 	.4byte 0x00000004
@@ -893,42 +893,42 @@ gxTexFmts:
 	.4byte 0x00000000
 .global __vt__7Texture
 __vt__7Texture:
-  .4byte __RTTI__7Texture_1
-  .4byte 0
-  .4byte attach__7TextureFv
-  .4byte detach__7TextureFv
-  .4byte makeResident__7TextureFv
-  .4byte 0x436f7265
-  .4byte 0x4e6f6465
-  .4byte 0
-  .4byte 0x803dd4c8
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
+	.4byte __RTTI__7Texture_1
+	.4byte 0
+	.4byte attach__7TextureFv
+	.4byte detach__7TextureFv
+	.4byte makeResident__7TextureFv
+	.4byte 0x436f7265
+	.4byte 0x4e6f6465
+	.4byte 0
+	.4byte 0x803dd4c8
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
 .global __vt__9GfxObject
 __vt__9GfxObject:
-  .4byte __RTTI__9GfxObject_1
-  .4byte 0
-  .4byte attach__9GfxObjectFv
-  .4byte detach__9GfxObjectFv
+	.4byte __RTTI__9GfxObject_1
+	.4byte 0
+	.4byte attach__9GfxObjectFv
+	.4byte detach__9GfxObjectFv
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 	.4byte 0x80228F10
 	.4byte 0x80228F24
 .global __RTTI__13AtxFileStream
 __RTTI__13AtxFileStream:
-  .4byte 0x80228f00
-  .4byte 0x80228f30
-  .4byte 0x80228fac
-  .4byte 0x80228fb8
-  .4byte 0x54657874
-  .4byte 0x75726500
+	.4byte 0x80228f00
+	.4byte 0x80228f30
+	.4byte 0x80228fac
+	.4byte 0x80228fb8
+	.4byte 0x54657874
+	.4byte 0x75726500
 .global lbl_803DD4A0
 lbl_803DD4A0:
 	.4byte 0x74786500
@@ -941,8 +941,8 @@ lbl_803DD4AC:
 	.4byte 0x62746900
 .global __RTTI__9GfxObject_1
 __RTTI__9GfxObject_1:
-  .4byte 0x80229050
-  .4byte 0
+	.4byte 0x80229050
+	.4byte 0
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .global lbl_803E8778

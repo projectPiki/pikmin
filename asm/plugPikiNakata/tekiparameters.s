@@ -350,39 +350,39 @@ lbl_802CE008:
 	.4byte 0x00000000
 .global __vt__14TekiParameters
 __vt__14TekiParameters:
-  .4byte 0x803e4740
-  .4byte 0
-  .4byte getAgeNodeType__5ANodeFv
-  .4byte read__14TekiParametersFR18RandomAccessStream
-  .4byte update__4NodeFv
-  .4byte draw__4NodeFR8Graphics
-  .4byte render__4NodeFR8Graphics
-  .4byte concat__4NodeFv
-  .4byte concat__4NodeFR3VQS
-  .4byte concat__4NodeFR3SRT
-  .4byte concat__4NodeFR8Matrix4f
-  .4byte getModelMatrix__4NodeFv
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
+	.4byte 0x803e4740
+	.4byte 0
+	.4byte getAgeNodeType__5ANodeFv
+	.4byte read__14TekiParametersFR18RandomAccessStream
+	.4byte update__4NodeFv
+	.4byte draw__4NodeFR8Graphics
+	.4byte render__4NodeFR8Graphics
+	.4byte concat__4NodeFv
+	.4byte concat__4NodeFR3VQS
+	.4byte concat__4NodeFR3SRT
+	.4byte concat__4NodeFR8Matrix4f
+	.4byte getModelMatrix__4NodeFv
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
-  .4byte 0x802cdd5c
-  .4byte 0
-  .4byte 0x802cdd68
-  .4byte 0
-  .4byte 0x802cdd78
-  .4byte 0x802cdd84
-  .4byte 0x4254656b
-  .4byte 0x69000000
-  .4byte 0x803e46e0
-  .4byte 0x802cdd98
-  .4byte 0x803e46b0
-  .4byte 0x802cddc4
+	.4byte 0x802cdd5c
+	.4byte 0
+	.4byte 0x802cdd68
+	.4byte 0
+	.4byte 0x802cdd78
+	.4byte 0x802cdd84
+	.4byte 0x4254656b
+	.4byte 0x69000000
+	.4byte 0x803e46e0
+	.4byte 0x802cdd98
+	.4byte 0x803e46b0
+	.4byte 0x802cddc4
 .global lbl_803E46F8
 lbl_803E46F8:
 	.4byte 0x3C4E6F64

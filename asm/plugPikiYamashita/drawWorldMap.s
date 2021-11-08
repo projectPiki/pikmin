@@ -1,18 +1,18 @@
 .include "macros.inc"
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
-  .4byte 0x802e56d8
-  .4byte 0x802e56e4
-  .4byte 0x4e6f6465
-  .4byte 0
-  .4byte 0x803e7168
-  .4byte 0x802e56f0
-  .4byte 0x802e5704
-  .4byte 0x802e5714
+	.4byte 0x802e56d8
+	.4byte 0x802e56e4
+	.4byte 0x4e6f6465
+	.4byte 0
+	.4byte 0x803e7168
+	.4byte 0x802e56f0
+	.4byte 0x802e5704
+	.4byte 0x802e5714
 .global __RTTI__19TAImiurinParameters
 __RTTI__19TAImiurinParameters:
-  .4byte 0x802e56c4
-  .4byte 0x802e5730
+	.4byte 0x802e56c4
+	.4byte 0x802e5730
 .global lbl_803E7188
 lbl_803E7188:
 	.4byte 0x2A253032

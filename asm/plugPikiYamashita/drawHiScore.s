@@ -18,10 +18,10 @@ SELECT_CANCEL__Q23zen12DrawMenuBase:
 	.4byte 0xFFFFFFFF
 .global __RTTI__Q23zen10DrawScreen_4
 __RTTI__Q23zen10DrawScreen_4:
-  .4byte 0x802e70e4
-  .4byte 0
+	.4byte 0x802e70e4
+	.4byte 0
 .global __RTTI__Q23zen12DrawMenuBase_1
 __RTTI__Q23zen12DrawMenuBase_1:
-  .4byte 0x802e70d0
-  .4byte 0x802e70f4
-  .4byte 0
+	.4byte 0x802e70d0
+	.4byte 0x802e70f4
+	.4byte 0

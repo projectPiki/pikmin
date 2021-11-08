@@ -744,92 +744,92 @@ lbl_80102704:
 /* 80102714 000FF674  7C 08 03 A6 */	mtlr r0
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
-  .4byte 0x61695765
-  .4byte 0x65642e63
-  .4byte 0x70700000
-  .4byte 0x52656365
-  .4byte 0x69766572
-  .4byte 0x3c50696b
-  .4byte 0x693e0000
-  .4byte 0x803e0944
-  .4byte 0
-  .4byte 0
-  .4byte 0x803e0944
-  .4byte 0
-  .4byte 0x803e0954
-  .4byte 0
-  .4byte 0
+	.4byte 0x61695765
+	.4byte 0x65642e63
+	.4byte 0x70700000
+	.4byte 0x52656365
+	.4byte 0x69766572
+	.4byte 0x3c50696b
+	.4byte 0x693e0000
+	.4byte 0x803e0944
+	.4byte 0
+	.4byte 0
+	.4byte 0x803e0944
+	.4byte 0
+	.4byte 0x803e0954
+	.4byte 0
+	.4byte 0
 .global __vt__7ActWeed
 __vt__7ActWeed:
-  .4byte __RTTI__7ActWeed
-  .4byte 0
-  .4byte "procMsg__15Receiver<4Piki>FP4PikiP3Msg"
-  .4byte "procBounceMsg__15Receiver<4Piki>FP4PikiP9MsgBounce"
-  .4byte "procStickMsg__15Receiver<4Piki>FP4PikiP8MsgStick"
-  .4byte "procHangMsg__15Receiver<4Piki>FP4PikiP7MsgHang"
-  .4byte "procTargetMsg__15Receiver<4Piki>FP4PikiP9MsgTarget"
-  .4byte "procCollideMsg__15Receiver<4Piki>FP4PikiP10MsgCollide"
-  .4byte "procAnimMsg__15Receiver<4Piki>FP4PikiP7MsgAnim"
-  .4byte "procDamageMsg__15Receiver<4Piki>FP4PikiP9MsgDamage"
-  .4byte "procWallMsg__15Receiver<4Piki>FP4PikiP7MsgWall"
-  .4byte "procOffWallMsg__15Receiver<4Piki>FP4PikiP10MsgOffWall"
-  .4byte "procUserMsg__15Receiver<4Piki>FP4PikiP7MsgUser"
-  .4byte "procGroundMsg__15Receiver<4Piki>FP4PikiP9MsgGround"
-  .4byte defaultInitialiser__6ActionFv
-  .4byte dump__6ActionFv
-  .4byte draw__6ActionFR8Graphics
-  .4byte __dt__7ActWeedFv
-  .4byte init__7ActWeedFP8Creature
-  .4byte exec__7ActWeedFv
-  .4byte cleanup__7ActWeedFv
-  .4byte resume__6ActionFv
-  .4byte restart__6ActionFv
-  .4byte resumable__6ActionFv
-  .4byte getInfo__6ActionFPc
-  .4byte __RTTI__7ActWeed
-  .4byte 0xffffffec
-  .4byte 0x800c3adc
-  .4byte animationKeyUpdated__7ActWeedFR16PaniAnimKeyEvent
-  .4byte 0x50616e69
-  .4byte 0x416e696d
-  .4byte 0x4b65794c
-  .4byte 0x69737465
-  .4byte 0x6e657200
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0x800a7908
-  .4byte 0x800a7930
-  .4byte 0x800a7944
-  .4byte 0x800a7958
-  .4byte 0x800a796c
-  .4byte 0x800a7980
-  .4byte 0x800a7994
-  .4byte 0x800a79a8
-  .4byte 0x800a791c
-  .4byte 0x800a79d0
-  .4byte 0x800a79bc
-  .4byte 0
+	.4byte __RTTI__7ActWeed
+	.4byte 0
+	.4byte "procMsg__15Receiver<4Piki>FP4PikiP3Msg"
+	.4byte "procBounceMsg__15Receiver<4Piki>FP4PikiP9MsgBounce"
+	.4byte "procStickMsg__15Receiver<4Piki>FP4PikiP8MsgStick"
+	.4byte "procHangMsg__15Receiver<4Piki>FP4PikiP7MsgHang"
+	.4byte "procTargetMsg__15Receiver<4Piki>FP4PikiP9MsgTarget"
+	.4byte "procCollideMsg__15Receiver<4Piki>FP4PikiP10MsgCollide"
+	.4byte "procAnimMsg__15Receiver<4Piki>FP4PikiP7MsgAnim"
+	.4byte "procDamageMsg__15Receiver<4Piki>FP4PikiP9MsgDamage"
+	.4byte "procWallMsg__15Receiver<4Piki>FP4PikiP7MsgWall"
+	.4byte "procOffWallMsg__15Receiver<4Piki>FP4PikiP10MsgOffWall"
+	.4byte "procUserMsg__15Receiver<4Piki>FP4PikiP7MsgUser"
+	.4byte "procGroundMsg__15Receiver<4Piki>FP4PikiP9MsgGround"
+	.4byte defaultInitialiser__6ActionFv
+	.4byte dump__6ActionFv
+	.4byte draw__6ActionFR8Graphics
+	.4byte __dt__7ActWeedFv
+	.4byte init__7ActWeedFP8Creature
+	.4byte exec__7ActWeedFv
+	.4byte cleanup__7ActWeedFv
+	.4byte resume__6ActionFv
+	.4byte restart__6ActionFv
+	.4byte resumable__6ActionFv
+	.4byte getInfo__6ActionFPc
+	.4byte __RTTI__7ActWeed
+	.4byte 0xffffffec
+	.4byte 0x800c3adc
+	.4byte animationKeyUpdated__7ActWeedFR16PaniAnimKeyEvent
+	.4byte 0x50616e69
+	.4byte 0x416e696d
+	.4byte 0x4b65794c
+	.4byte 0x69737465
+	.4byte 0x6e657200
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0x800a7908
+	.4byte 0x800a7930
+	.4byte 0x800a7944
+	.4byte 0x800a7958
+	.4byte 0x800a796c
+	.4byte 0x800a7980
+	.4byte 0x800a7994
+	.4byte 0x800a79a8
+	.4byte 0x800a791c
+	.4byte 0x800a79d0
+	.4byte 0x800a79bc
+	.4byte 0
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 	.4byte 0x802B7C6C
 .global __RTTI__8ActWatch
 __RTTI__8ActWatch:
-  .4byte 0x802b7c50
-  .4byte 0x802b7c78
-  .4byte 0x802b7d08
-  .4byte 0
+	.4byte 0x802b7c50
+	.4byte 0x802b7c78
+	.4byte 0x802b7d08
+	.4byte 0
 .global __RTTI__Q28ActWatch11Initialiser
 __RTTI__Q28ActWatch11Initialiser:
-  .4byte 0x802b7cf0
-  .4byte 0x802b7d1c
-  .4byte 0x802b7d34
-  .4byte 0
+	.4byte 0x802b7cf0
+	.4byte 0x802b7d1c
+	.4byte 0x802b7d34
+	.4byte 0
 .global __RTTI__Q28ActWatch12AnimListener
 __RTTI__Q28ActWatch12AnimListener:
-  .4byte 0x802b7d54
-  .4byte 0x802b7d6c
-  .4byte 0
+	.4byte 0x802b7d54
+	.4byte 0x802b7d6c
+	.4byte 0
 .global lbl_803E0900
 lbl_803E0900:
 	.4byte 0x00000000

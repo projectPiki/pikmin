@@ -5694,22 +5694,22 @@ partsInfo:
 	.4byte 0x00000000
 .global __vt__Q211PlayerState8UfoParts
 __vt__Q211PlayerState8UfoParts:
-  .4byte __RTTI__Q211PlayerState8UfoParts
-  .4byte 0
-  .4byte animationKeyUpdated__Q211PlayerState8UfoPartsFR16PaniAnimKeyEvent
-  .4byte 0
-  .4byte 0
-  .4byte 0
+	.4byte __RTTI__Q211PlayerState8UfoParts
+	.4byte 0
+	.4byte animationKeyUpdated__Q211PlayerState8UfoPartsFR16PaniAnimKeyEvent
+	.4byte 0
+	.4byte 0
+	.4byte 0
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
-  .4byte 0x802adc64
-  .4byte 0x802adc80
-  .4byte 0
+	.4byte 0x802adc64
+	.4byte 0x802adc80
+	.4byte 0
 .global __RTTI__12FormationMgr
 __RTTI__12FormationMgr:
-  .4byte 0x802adca4
-  .4byte 0x802adcb4
-  .4byte 0
+	.4byte 0x802adca4
+	.4byte 0x802adcb4
+	.4byte 0
 .global totalUfoParts__11PlayerState
 totalUfoParts__11PlayerState:
 	.4byte 0x0000001E

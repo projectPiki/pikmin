@@ -12264,98 +12264,98 @@ sFontData:
 	.4byte 0x00000000
 .global __vt__5Shape
 __vt__5Shape:
-  .4byte __RTTI__5Shape
-  .4byte 0
-  .4byte getAgeNodeType__5ANodeFv
-  .4byte read__9BaseShapeFR18RandomAccessStream
-  .4byte optimize__5ShapeFv
-  .4byte update__9BaseShapeFv
-  .4byte render__9BaseShapeFR8Graphics
-  .4byte render2d__9BaseShapeFR8Graphics
-  .4byte makeRouteGroup__9BaseShapeFv
-  .4byte 0x47726170
-  .4byte 0x68696373
-  .4byte 0
-  .4byte __RTTI__8Graphics_1
-  .4byte 0
-  .4byte 0
+	.4byte __RTTI__5Shape
+	.4byte 0
+	.4byte getAgeNodeType__5ANodeFv
+	.4byte read__9BaseShapeFR18RandomAccessStream
+	.4byte optimize__5ShapeFv
+	.4byte update__9BaseShapeFv
+	.4byte render__9BaseShapeFR8Graphics
+	.4byte render2d__9BaseShapeFR8Graphics
+	.4byte makeRouteGroup__9BaseShapeFv
+	.4byte 0x47726170
+	.4byte 0x68696373
+	.4byte 0
+	.4byte __RTTI__8Graphics_1
+	.4byte 0
+	.4byte 0
 .global __vt__11DGXGraphics
 __vt__11DGXGraphics:
-  .4byte __RTTI__11DGXGraphics
-  .4byte 0
-  .4byte videoReset__11DGXGraphicsFv
-  .4byte setVerticalFilter__11DGXGraphicsFPUc
-  .4byte getVerticalFilter__11DGXGraphicsFPUc
-  .4byte getDListPtr__11DGXGraphicsFv
-  .4byte getDListRemainSize__11DGXGraphicsFv
-  .4byte compileMaterial__11DGXGraphicsFP8Material
-  .4byte useDList__11DGXGraphicsFUl
-  .4byte initRender__11DGXGraphicsFii
-  .4byte resetCopyFilter__11DGXGraphicsFv
-  .4byte setAmbient__11DGXGraphicsFv
-  .4byte setLighting__11DGXGraphicsFbP15PVWLightingInfo
-  .4byte setLight__11DGXGraphicsFP5Lighti
-  .4byte clearBuffer__11DGXGraphicsFib
-  .4byte setPerspective__11DGXGraphicsFPA4_ffffff
-  .4byte setOrthogonal__11DGXGraphicsFPA4_fR8RectArea
-  .4byte setLightcam__8GraphicsFP11LightCamera
-  .4byte setViewport__11DGXGraphicsFR8RectArea
-  .4byte setViewportOffset__11DGXGraphicsFR8RectArea
-  .4byte setScissor__11DGXGraphicsFR8RectArea
-  .4byte setBlendMode__11DGXGraphicsFUcUcUc
-  .4byte setCullFront__11DGXGraphicsFi
-  .4byte setDepth__11DGXGraphicsFb
-  .4byte setCBlending__11DGXGraphicsFi
-  .4byte setPointSize__11DGXGraphicsFf
-  .4byte setLineWidth__11DGXGraphicsFf
-  .4byte setCamera__11DGXGraphicsFP6Camera
-  .4byte calcViewMatrix__11DGXGraphicsFR8Matrix4fR8Matrix4f
-  .4byte useMatrix__11DGXGraphicsFR8Matrix4fi
-  .4byte setClippingPlane__11DGXGraphicsFbP5Plane
-  .4byte initMesh__11DGXGraphicsFP5Shape
-  .4byte drawSingleMatpoly__11DGXGraphicsFP5ShapePQ25Joint7MatPoly
-  .4byte drawMeshes__11DGXGraphicsFR6CameraP5Shape
-  .4byte initParticle__11DGXGraphicsFb
-  .4byte drawParticle__11DGXGraphicsFR6CameraR8Vector3ff
-  .4byte drawRotParticle__11DGXGraphicsFR6CameraR8Vector3fUsf
-  .4byte drawCamParticle__11DGXGraphicsFR6CameraR8Vector3fR8Vector2fR8Vector2fR8Vector2f
-  .4byte drawLine__11DGXGraphicsFR8Vector3fR8Vector3f
-  .4byte drawPoints__11DGXGraphicsFP8Vector3fi
-  .4byte drawOneTri__11DGXGraphicsFP8Vector3fP8Vector3fP8Vector2fi
-  .4byte drawOneStrip__11DGXGraphicsFP8Vector3fP8Vector3fP8Vector2fi
-  .4byte setColour__11DGXGraphicsFR6Colourb
-  .4byte setAuxColour__11DGXGraphicsFR6Colour
-  .4byte setPrimEnv__11DGXGraphicsFP6ColourP6Colour
-  .4byte setClearColour__11DGXGraphicsFR6Colour
-  .4byte setFog__11DGXGraphicsFb
-  .4byte setFog__11DGXGraphicsFbR6Colourfff
-  .4byte setMatHandler__8GraphicsFP15MaterialHandler
-  .4byte setMaterial__11DGXGraphicsFP8Materialb
-  .4byte useMaterial__8GraphicsFP8Material
-  .4byte useTexture__11DGXGraphicsFP7Texturei
-  .4byte drawRectangle__11DGXGraphicsFR8RectAreaR8RectAreaP8Vector3f
-  .4byte fillRectangle__11DGXGraphicsFR8RectArea
-  .4byte blatRectangle__11DGXGraphicsFR8RectArea
-  .4byte lineRectangle__11DGXGraphicsFR8RectArea
-  .4byte testRectangle__11DGXGraphicsFR8RectArea
-  .4byte initProjTex__11DGXGraphicsFbP11LightCamera
-  .4byte initReflectTex__11DGXGraphicsFb
-  .4byte texturePrintf__11DGXGraphicsFP4FontiiPce
-  .4byte perspPrintf__8GraphicsFP4FontR8Vector3fiiPce
-  .4byte useMatrixQuick__11DGXGraphicsFR8Matrix4fi
-  .4byte drawOutline__11DGXGraphicsFR6CameraP5Shape
+	.4byte __RTTI__11DGXGraphics
+	.4byte 0
+	.4byte videoReset__11DGXGraphicsFv
+	.4byte setVerticalFilter__11DGXGraphicsFPUc
+	.4byte getVerticalFilter__11DGXGraphicsFPUc
+	.4byte getDListPtr__11DGXGraphicsFv
+	.4byte getDListRemainSize__11DGXGraphicsFv
+	.4byte compileMaterial__11DGXGraphicsFP8Material
+	.4byte useDList__11DGXGraphicsFUl
+	.4byte initRender__11DGXGraphicsFii
+	.4byte resetCopyFilter__11DGXGraphicsFv
+	.4byte setAmbient__11DGXGraphicsFv
+	.4byte setLighting__11DGXGraphicsFbP15PVWLightingInfo
+	.4byte setLight__11DGXGraphicsFP5Lighti
+	.4byte clearBuffer__11DGXGraphicsFib
+	.4byte setPerspective__11DGXGraphicsFPA4_ffffff
+	.4byte setOrthogonal__11DGXGraphicsFPA4_fR8RectArea
+	.4byte setLightcam__8GraphicsFP11LightCamera
+	.4byte setViewport__11DGXGraphicsFR8RectArea
+	.4byte setViewportOffset__11DGXGraphicsFR8RectArea
+	.4byte setScissor__11DGXGraphicsFR8RectArea
+	.4byte setBlendMode__11DGXGraphicsFUcUcUc
+	.4byte setCullFront__11DGXGraphicsFi
+	.4byte setDepth__11DGXGraphicsFb
+	.4byte setCBlending__11DGXGraphicsFi
+	.4byte setPointSize__11DGXGraphicsFf
+	.4byte setLineWidth__11DGXGraphicsFf
+	.4byte setCamera__11DGXGraphicsFP6Camera
+	.4byte calcViewMatrix__11DGXGraphicsFR8Matrix4fR8Matrix4f
+	.4byte useMatrix__11DGXGraphicsFR8Matrix4fi
+	.4byte setClippingPlane__11DGXGraphicsFbP5Plane
+	.4byte initMesh__11DGXGraphicsFP5Shape
+	.4byte drawSingleMatpoly__11DGXGraphicsFP5ShapePQ25Joint7MatPoly
+	.4byte drawMeshes__11DGXGraphicsFR6CameraP5Shape
+	.4byte initParticle__11DGXGraphicsFb
+	.4byte drawParticle__11DGXGraphicsFR6CameraR8Vector3ff
+	.4byte drawRotParticle__11DGXGraphicsFR6CameraR8Vector3fUsf
+	.4byte drawCamParticle__11DGXGraphicsFR6CameraR8Vector3fR8Vector2fR8Vector2fR8Vector2f
+	.4byte drawLine__11DGXGraphicsFR8Vector3fR8Vector3f
+	.4byte drawPoints__11DGXGraphicsFP8Vector3fi
+	.4byte drawOneTri__11DGXGraphicsFP8Vector3fP8Vector3fP8Vector2fi
+	.4byte drawOneStrip__11DGXGraphicsFP8Vector3fP8Vector3fP8Vector2fi
+	.4byte setColour__11DGXGraphicsFR6Colourb
+	.4byte setAuxColour__11DGXGraphicsFR6Colour
+	.4byte setPrimEnv__11DGXGraphicsFP6ColourP6Colour
+	.4byte setClearColour__11DGXGraphicsFR6Colour
+	.4byte setFog__11DGXGraphicsFb
+	.4byte setFog__11DGXGraphicsFbR6Colourfff
+	.4byte setMatHandler__8GraphicsFP15MaterialHandler
+	.4byte setMaterial__11DGXGraphicsFP8Materialb
+	.4byte useMaterial__8GraphicsFP8Material
+	.4byte useTexture__11DGXGraphicsFP7Texturei
+	.4byte drawRectangle__11DGXGraphicsFR8RectAreaR8RectAreaP8Vector3f
+	.4byte fillRectangle__11DGXGraphicsFR8RectArea
+	.4byte blatRectangle__11DGXGraphicsFR8RectArea
+	.4byte lineRectangle__11DGXGraphicsFR8RectArea
+	.4byte testRectangle__11DGXGraphicsFR8RectArea
+	.4byte initProjTex__11DGXGraphicsFbP11LightCamera
+	.4byte initReflectTex__11DGXGraphicsFb
+	.4byte texturePrintf__11DGXGraphicsFP4FontiiPce
+	.4byte perspPrintf__8GraphicsFP4FontR8Vector3fiiPce
+	.4byte useMatrixQuick__11DGXGraphicsFR8Matrix4fi
+	.4byte drawOutline__11DGXGraphicsFR6CameraP5Shape
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
-  .4byte 0x802a55e4
+	.4byte 0x802a55e4
 .global __RTTI__10AramStream
 __RTTI__10AramStream:
-  .4byte 0x802a5624
-  .4byte 0x802a5630
-  .4byte 0
+	.4byte 0x802a5624
+	.4byte 0x802a5630
+	.4byte 0
 .global __RTTI__13ControllerMgr
 __RTTI__13ControllerMgr:
-  .4byte 0x802a56bc
-  .4byte 0
+	.4byte 0x802a56bc
+	.4byte 0
 .global sScreenMode
 sScreenMode:
 	.4byte 0x802A5740
@@ -12413,11 +12413,11 @@ lbl_803DD5F0:
 	.4byte 0x802A5D30
 .global __RTTI__9BaseShape_1
 __RTTI__9BaseShape_1:
-  .4byte 0x802a5d3c
-  .4byte 0x802a5d48
+	.4byte 0x802a5d3c
+	.4byte 0x802a5d48
 .global __RTTI__5Shape
 __RTTI__5Shape:
-  .4byte 0x803dd5f4
+	.4byte 0x803dd5f4
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .global lbl_803E87B0

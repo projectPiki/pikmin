@@ -393,13 +393,13 @@ isAlive__8ItemBallFv:
 /* 800F7998 000F48F8  4E 80 00 20 */	blr 
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
-  .4byte 0x61694573
-  .4byte 0x63617065
-  .4byte 0x2e637070
-  .4byte 0
-  .4byte 0x61694573
-  .4byte 0x63617065
-  .4byte 0
+	.4byte 0x61694573
+	.4byte 0x63617065
+	.4byte 0x2e637070
+	.4byte 0
+	.4byte 0x61694573
+	.4byte 0x63617065
+	.4byte 0
 .global lbl_802B6604
 lbl_802B6604:
 	.4byte 0x65736328
@@ -424,61 +424,61 @@ lbl_802B6604:
 	.4byte 0x00000000
 .global __vt__9ActEscape
 __vt__9ActEscape:
-  .4byte __RTTI__9ActEscape
-  .4byte 0
-  .4byte "procMsg__15Receiver<4Piki>FP4PikiP3Msg"
-  .4byte "procBounceMsg__15Receiver<4Piki>FP4PikiP9MsgBounce"
-  .4byte "procStickMsg__15Receiver<4Piki>FP4PikiP8MsgStick"
-  .4byte "procHangMsg__15Receiver<4Piki>FP4PikiP7MsgHang"
-  .4byte "procTargetMsg__15Receiver<4Piki>FP4PikiP9MsgTarget"
-  .4byte "procCollideMsg__15Receiver<4Piki>FP4PikiP10MsgCollide"
-  .4byte "procAnimMsg__15Receiver<4Piki>FP4PikiP7MsgAnim"
-  .4byte "procDamageMsg__15Receiver<4Piki>FP4PikiP9MsgDamage"
-  .4byte "procWallMsg__15Receiver<4Piki>FP4PikiP7MsgWall"
-  .4byte "procOffWallMsg__15Receiver<4Piki>FP4PikiP10MsgOffWall"
-  .4byte "procUserMsg__15Receiver<4Piki>FP4PikiP7MsgUser"
-  .4byte "procGroundMsg__15Receiver<4Piki>FP4PikiP9MsgGround"
-  .4byte defaultInitialiser__6ActionFv
-  .4byte dump__6ActionFv
-  .4byte draw__6ActionFR8Graphics
-  .4byte __dt__9ActEscapeFv
-  .4byte init__9ActEscapeFP8Creature
-  .4byte exec__9ActEscapeFv
-  .4byte cleanup__9ActEscapeFv
-  .4byte resume__6ActionFv
-  .4byte restart__6ActionFv
-  .4byte resumable__6ActionFv
-  .4byte getInfo__9ActEscapeFPc
-  .4byte 0x41637445
-  .4byte 0x73636170
-  .4byte 0x653a3a49
-  .4byte 0x6e697469
-  .4byte 0x616c6973
-  .4byte 0x65720000
-  .4byte 0x41637469
-  .4byte 0x6f6e3a3a
-  .4byte 0x496e6974
-  .4byte 0x69616c69
-  .4byte 0x73657200
-  .4byte 0x803e0338
-  .4byte 0
-  .4byte 0
+	.4byte __RTTI__9ActEscape
+	.4byte 0
+	.4byte "procMsg__15Receiver<4Piki>FP4PikiP3Msg"
+	.4byte "procBounceMsg__15Receiver<4Piki>FP4PikiP9MsgBounce"
+	.4byte "procStickMsg__15Receiver<4Piki>FP4PikiP8MsgStick"
+	.4byte "procHangMsg__15Receiver<4Piki>FP4PikiP7MsgHang"
+	.4byte "procTargetMsg__15Receiver<4Piki>FP4PikiP9MsgTarget"
+	.4byte "procCollideMsg__15Receiver<4Piki>FP4PikiP10MsgCollide"
+	.4byte "procAnimMsg__15Receiver<4Piki>FP4PikiP7MsgAnim"
+	.4byte "procDamageMsg__15Receiver<4Piki>FP4PikiP9MsgDamage"
+	.4byte "procWallMsg__15Receiver<4Piki>FP4PikiP7MsgWall"
+	.4byte "procOffWallMsg__15Receiver<4Piki>FP4PikiP10MsgOffWall"
+	.4byte "procUserMsg__15Receiver<4Piki>FP4PikiP7MsgUser"
+	.4byte "procGroundMsg__15Receiver<4Piki>FP4PikiP9MsgGround"
+	.4byte defaultInitialiser__6ActionFv
+	.4byte dump__6ActionFv
+	.4byte draw__6ActionFR8Graphics
+	.4byte __dt__9ActEscapeFv
+	.4byte init__9ActEscapeFP8Creature
+	.4byte exec__9ActEscapeFv
+	.4byte cleanup__9ActEscapeFv
+	.4byte resume__6ActionFv
+	.4byte restart__6ActionFv
+	.4byte resumable__6ActionFv
+	.4byte getInfo__9ActEscapeFPc
+	.4byte 0x41637445
+	.4byte 0x73636170
+	.4byte 0x653a3a49
+	.4byte 0x6e697469
+	.4byte 0x616c6973
+	.4byte 0x65720000
+	.4byte 0x41637469
+	.4byte 0x6f6e3a3a
+	.4byte 0x496e6974
+	.4byte 0x69616c69
+	.4byte 0x73657200
+	.4byte 0x803e0338
+	.4byte 0
+	.4byte 0
 .global __vt__Q29ActEscape11Initialiser
 __vt__Q29ActEscape11Initialiser:
-  .4byte __RTTI__Q29ActEscape11Initialiser
-  .4byte 0
-  .4byte initialise__Q29ActEscape11InitialiserFP6Action
-  .4byte 0x800a7908
-  .4byte 0x800a7930
-  .4byte 0x800a7944
-  .4byte 0x800a7958
-  .4byte 0x800a796c
-  .4byte 0x800a7980
-  .4byte 0x800a7994
-  .4byte 0x800a79a8
-  .4byte 0x800a791c
-  .4byte 0x800a79d0
-  .4byte 0x800a79bc
+	.4byte __RTTI__Q29ActEscape11Initialiser
+	.4byte 0
+	.4byte initialise__Q29ActEscape11InitialiserFP6Action
+	.4byte 0x800a7908
+	.4byte 0x800a7930
+	.4byte 0x800a7944
+	.4byte 0x800a7958
+	.4byte 0x800a796c
+	.4byte 0x800a7980
+	.4byte 0x800a7994
+	.4byte 0x800a79a8
+	.4byte 0x800a791c
+	.4byte 0x800a79d0
+	.4byte 0x800a79bc
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .global lbl_803E02C0
@@ -498,9 +498,9 @@ lbl_803E02C8:
 	.4byte 0x802B6538
 .global __RTTI__8ActEnter
 __RTTI__8ActEnter:
-  .4byte 0x802b651c
-  .4byte 0x802b6544
-  .4byte 0
+	.4byte 0x802b651c
+	.4byte 0x802b6544
+	.4byte 0
 .global lbl_803E02F0
 lbl_803E02F0:
 	.4byte 0x00000000

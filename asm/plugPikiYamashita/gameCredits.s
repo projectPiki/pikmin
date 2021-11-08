@@ -13,8 +13,8 @@
 	.4byte 0x802D6AE4
 .global __RTTI__21GameStageClearSection
 __RTTI__21GameStageClearSection:
-  .4byte 0x802d6a6c
-  .4byte 0x802d6b00
+	.4byte 0x802d6a6c
+	.4byte 0x802d6b00
 .global lbl_803E5CF8
 lbl_803E5CF8:
 	.4byte 0x3C4E6F64

@@ -347,50 +347,50 @@ lbl_802C55D8:
 	.4byte 0x00000000
 .global __vt__20PcamCameraParameters
 __vt__20PcamCameraParameters:
-  .4byte __RTTI__20PcamCameraParameters
-  .4byte 0
-  .4byte getAgeNodeType__5ANodeFv
-  .4byte read__20PcamCameraParametersFR18RandomAccessStream
-  .4byte update__4NodeFv
-  .4byte draw__4NodeFR8Graphics
-  .4byte render__4NodeFR8Graphics
-  .4byte concat__4NodeFv
-  .4byte concat__4NodeFR3VQS
-  .4byte concat__4NodeFR3SRT
-  .4byte concat__4NodeFR8Matrix4f
-  .4byte getModelMatrix__4NodeFv
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
+	.4byte __RTTI__20PcamCameraParameters
+	.4byte 0
+	.4byte getAgeNodeType__5ANodeFv
+	.4byte read__20PcamCameraParametersFR18RandomAccessStream
+	.4byte update__4NodeFv
+	.4byte draw__4NodeFR8Graphics
+	.4byte render__4NodeFR8Graphics
+	.4byte concat__4NodeFv
+	.4byte concat__4NodeFR3VQS
+	.4byte concat__4NodeFR3SRT
+	.4byte concat__4NodeFR8Matrix4f
+	.4byte getModelMatrix__4NodeFv
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .global __RTTI__19PcamRandomMoveEvent
 __RTTI__19PcamRandomMoveEvent:
-  .4byte 0x802c53e4
-  .4byte 0x802c53f8
-  .4byte 0x802c5458
-  .4byte 0x802c546c
+	.4byte 0x802c53e4
+	.4byte 0x802c53f8
+	.4byte 0x802c5458
+	.4byte 0x802c546c
 .global __RTTI__15PcamDamageEvent
 __RTTI__15PcamDamageEvent:
-  .4byte 0x802c5448
-  .4byte 0x802c5480
+	.4byte 0x802c5448
+	.4byte 0x802c5480
 .global __RTTI__18PcamVibrationEvent
 __RTTI__18PcamVibrationEvent:
-  .4byte 0x802c54d8
-  .4byte 0x802c54ec
+	.4byte 0x802c54d8
+	.4byte 0x802c54ec
 .global __RTTI__15PeveSerialEvent
 __RTTI__15PeveSerialEvent:
-  .4byte 0x802c555c
-  .4byte 0x802c556c
+	.4byte 0x802c555c
+	.4byte 0x802c556c
 .global __RTTI__22PcamLongVibrationEvent
 __RTTI__22PcamLongVibrationEvent:
-  .4byte 0x802c5544
-  .4byte 0x802c5580
+	.4byte 0x802c5544
+	.4byte 0x802c5580
 .global lbl_803E32D8
 lbl_803E32D8:
 	.4byte 0x3C4E6F64

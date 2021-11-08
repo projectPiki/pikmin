@@ -29,24 +29,24 @@ startMotion__10PcamCameraFii:
 /* 80122FC0 0011FF20  90 83 00 88 */	stw r4, 0x88(r3)
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
-  .4byte 0x736d6172
-  .4byte 0x74507472
-  .4byte 0x2e637070
-  .4byte 0
-  .4byte 0x736d6172
-  .4byte 0x74507472
-  .4byte 0
-  .4byte 0x52656643
-  .4byte 0x6f756e74
-  .4byte 0x61626c65
-  .4byte 0
+	.4byte 0x736d6172
+	.4byte 0x74507472
+	.4byte 0x2e637070
+	.4byte 0
+	.4byte 0x736d6172
+	.4byte 0x74507472
+	.4byte 0
+	.4byte 0x52656643
+	.4byte 0x6f756e74
+	.4byte 0x61626c65
+	.4byte 0
 .global __vt__12RefCountable
 __vt__12RefCountable:
-  .4byte 0x803e14b0
-  .4byte 0
-  .4byte addCntCallback__12RefCountableFv
-  .4byte subCntCallback__12RefCountableFv
-  .4byte 0
+	.4byte 0x803e14b0
+	.4byte 0
+	.4byte addCntCallback__12RefCountableFv
+	.4byte subCntCallback__12RefCountableFv
+	.4byte 0
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 	.4byte 0x802BADFC

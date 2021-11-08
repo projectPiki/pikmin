@@ -21,8 +21,8 @@ lbl_80222708:
 	.4byte 0x00000000
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
-  .4byte 0x536e616b
-  .4byte 0x65416900
+	.4byte 0x536e616b
+	.4byte 0x65416900
 .global lbl_803E4CB0
 lbl_803E4CB0:
 	.4byte 0x00000000
@@ -42,9 +42,9 @@ lbl_803E4CC0:
 	.4byte 0x00000000
 .global __RTTI__7SnakeAi
 __RTTI__7SnakeAi:
-  .4byte 0x803e4ca8
-  .4byte 0x802cfa54
-  .4byte 0
+	.4byte 0x803e4ca8
+	.4byte 0x802cfa54
+	.4byte 0
 .global lbl_803E4CD8
 lbl_803E4CD8:
 	.4byte 0x00000000

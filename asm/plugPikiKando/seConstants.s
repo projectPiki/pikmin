@@ -199,13 +199,13 @@ TCIntrruptHandler:
 /* 801F89BC 001F591C  93 C1 00 28 */	stw r30, 0x28(r1)
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
-  .4byte 0x7365436f
-  .4byte 0x6e737461
-  .4byte 0x6e74732e
-  .4byte 0x63707000
-  .4byte 0x7365436f
-  .4byte 0x6e737461
-  .4byte 0x6e740000
+	.4byte 0x7365436f
+	.4byte 0x6e737461
+	.4byte 0x6e74732e
+	.4byte 0x63707000
+	.4byte 0x7365436f
+	.4byte 0x6e737461
+	.4byte 0x6e740000
 .global lbl_802B1D2C
 lbl_802B1D2C:
 	.4byte 0x736F756E
@@ -248,43 +248,43 @@ lbl_802B1D2C:
 	.4byte 0x00000000
 .global __vt__10SeConstant
 __vt__10SeConstant:
-  .4byte __RTTI__10SeConstant
-  .4byte 0
-  .4byte getAgeNodeType__5ANodeFv
-  .4byte read__10SeConstantFR18RandomAccessStream
-  .4byte update__4NodeFv
-  .4byte draw__4NodeFR8Graphics
-  .4byte render__4NodeFR8Graphics
-  .4byte concat__4NodeFv
-  .4byte concat__4NodeFR3VQS
-  .4byte concat__4NodeFR3SRT
-  .4byte concat__4NodeFR8Matrix4f
-  .4byte getModelMatrix__4NodeFv
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
+	.4byte __RTTI__10SeConstant
+	.4byte 0
+	.4byte getAgeNodeType__5ANodeFv
+	.4byte read__10SeConstantFR18RandomAccessStream
+	.4byte update__4NodeFv
+	.4byte draw__4NodeFR8Graphics
+	.4byte render__4NodeFR8Graphics
+	.4byte concat__4NodeFv
+	.4byte concat__4NodeFR3VQS
+	.4byte concat__4NodeFR3SRT
+	.4byte concat__4NodeFR8Matrix4f
+	.4byte getModelMatrix__4NodeFv
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
-  .4byte 0x802b1c1c
+	.4byte 0x802b1c1c
 .global __RTTI__5SeWin
 __RTTI__5SeWin:
-  .4byte 0x803df9cc
-  .4byte 0x802b1c30
-  .4byte 0x53654d67
-  .4byte 0x72000000
-  .4byte 0x4e6f6465
-  .4byte 0
-  .4byte 0x803dfa0c
-  .4byte 0x802b1c94
+	.4byte 0x803df9cc
+	.4byte 0x802b1c30
+	.4byte 0x53654d67
+	.4byte 0x72000000
+	.4byte 0x4e6f6465
+	.4byte 0
+	.4byte 0x803dfa0c
+	.4byte 0x802b1c94
 .global __RTTI__5SeMgr
 __RTTI__5SeMgr:
-  .4byte 0x803dfa04
-  .4byte 0x802b1ca8
-  .4byte 0
+	.4byte 0x803dfa04
+	.4byte 0x802b1ca8
+	.4byte 0
 .global lbl_803DFA28
 lbl_803DFA28:
 	.4byte 0x3C4E6F64

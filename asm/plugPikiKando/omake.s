@@ -5492,88 +5492,88 @@ lbl_801D0280:
 /* 801D02C4 001CD224  90 1A 00 04 */	stw r0, 4(r26)
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
-  .4byte 0x6f6d616b
-  .4byte 0x652e6370
-  .4byte 0x70000000
-  .4byte 0x61747465
-  .4byte 0x6e74696f
-  .4byte 0x6e43616d
-  .4byte 0x65726100
-  .4byte 0x436c6f74
-  .4byte 0x68466164
-  .4byte 0x65720000
-  .4byte 0x41747465
-  .4byte 0x6e74696f
-  .4byte 0x6e43616d
-  .4byte 0x6572613a
-  .4byte 0x3a466164
-  .4byte 0x65720000
-  .4byte __RTTI__Q215AttentionCamera5Fader
-  .4byte 0
-  .4byte 0
+	.4byte 0x6f6d616b
+	.4byte 0x652e6370
+	.4byte 0x70000000
+	.4byte 0x61747465
+	.4byte 0x6e74696f
+	.4byte 0x6e43616d
+	.4byte 0x65726100
+	.4byte 0x436c6f74
+	.4byte 0x68466164
+	.4byte 0x65720000
+	.4byte 0x41747465
+	.4byte 0x6e74696f
+	.4byte 0x6e43616d
+	.4byte 0x6572613a
+	.4byte 0x3a466164
+	.4byte 0x65720000
+	.4byte __RTTI__Q215AttentionCamera5Fader
+	.4byte 0
+	.4byte 0
 .global __vt__10ClothFader
 __vt__10ClothFader:
-  .4byte __RTTI__10ClothFader
-  .4byte 0
-  .4byte initFadeIn__10ClothFaderFv
-  .4byte updateFadeIn__10ClothFaderFv
-  .4byte drawFadeIn__10ClothFaderFR8Graphics
-  .4byte initFadeOut__10ClothFaderFv
-  .4byte updateFadeOut__10ClothFaderFv
-  .4byte drawFadeOut__10ClothFaderFR8Graphics
-  .4byte 0x53696d70
-  .4byte 0x6c654661
-  .4byte 0x64657200
-  .4byte __RTTI__Q215AttentionCamera5Fader
-  .4byte 0
-  .4byte 0
+	.4byte __RTTI__10ClothFader
+	.4byte 0
+	.4byte initFadeIn__10ClothFaderFv
+	.4byte updateFadeIn__10ClothFaderFv
+	.4byte drawFadeIn__10ClothFaderFR8Graphics
+	.4byte initFadeOut__10ClothFaderFv
+	.4byte updateFadeOut__10ClothFaderFv
+	.4byte drawFadeOut__10ClothFaderFR8Graphics
+	.4byte 0x53696d70
+	.4byte 0x6c654661
+	.4byte 0x64657200
+	.4byte __RTTI__Q215AttentionCamera5Fader
+	.4byte 0
+	.4byte 0
 .global __vt__11SimpleFader
 __vt__11SimpleFader:
-  .4byte __RTTI__11SimpleFader
-  .4byte 0
-  .4byte initFadeIn__11SimpleFaderFv
-  .4byte updateFadeIn__11SimpleFaderFv
-  .4byte drawFadeIn__11SimpleFaderFR8Graphics
-  .4byte initFadeOut__11SimpleFaderFv
-  .4byte updateFadeOut__11SimpleFaderFv
-  .4byte drawFadeOut__11SimpleFaderFR8Graphics
-  .4byte 0x44656661
-  .4byte 0x756c7446
-  .4byte 0x61646572
-  .4byte 0
-  .4byte __RTTI__Q215AttentionCamera5Fader
-  .4byte 0
-  .4byte 0
+	.4byte __RTTI__11SimpleFader
+	.4byte 0
+	.4byte initFadeIn__11SimpleFaderFv
+	.4byte updateFadeIn__11SimpleFaderFv
+	.4byte drawFadeIn__11SimpleFaderFR8Graphics
+	.4byte initFadeOut__11SimpleFaderFv
+	.4byte updateFadeOut__11SimpleFaderFv
+	.4byte drawFadeOut__11SimpleFaderFR8Graphics
+	.4byte 0x44656661
+	.4byte 0x756c7446
+	.4byte 0x61646572
+	.4byte 0
+	.4byte __RTTI__Q215AttentionCamera5Fader
+	.4byte 0
+	.4byte 0
 .global __vt__12DefaultFader
 __vt__12DefaultFader:
-  .4byte __RTTI__12DefaultFader
-  .4byte 0
-  .4byte initFadeIn__12DefaultFaderFv
-  .4byte updateFadeIn__12DefaultFaderFv
-  .4byte drawFadeIn__12DefaultFaderFR8Graphics
-  .4byte initFadeOut__12DefaultFaderFv
-  .4byte updateFadeOut__12DefaultFaderFv
-  .4byte drawFadeOut__12DefaultFaderFR8Graphics
+	.4byte __RTTI__12DefaultFader
+	.4byte 0
+	.4byte initFadeIn__12DefaultFaderFv
+	.4byte updateFadeIn__12DefaultFaderFv
+	.4byte drawFadeIn__12DefaultFaderFR8Graphics
+	.4byte initFadeOut__12DefaultFaderFv
+	.4byte updateFadeOut__12DefaultFaderFv
+	.4byte drawFadeOut__12DefaultFaderFR8Graphics
 .global __vt__Q215AttentionCamera5Fader
 __vt__Q215AttentionCamera5Fader:
-  .4byte __RTTI__Q215AttentionCamera5Fader
-  .4byte 0
-  .4byte initFadeIn__Q215AttentionCamera5FaderFv
-  .4byte updateFadeIn__Q215AttentionCamera5FaderFv
-  .4byte drawFadeIn__Q215AttentionCamera5FaderFR8Graphics
-  .4byte initFadeOut__Q215AttentionCamera5FaderFv
-  .4byte updateFadeOut__Q215AttentionCamera5FaderFv
-  .4byte drawFadeOut__Q215AttentionCamera5FaderFR8Graphics
+	.4byte __RTTI__Q215AttentionCamera5Fader
+	.4byte 0
+	.4byte initFadeIn__Q215AttentionCamera5FaderFv
+	.4byte updateFadeIn__Q215AttentionCamera5FaderFv
+	.4byte drawFadeIn__Q215AttentionCamera5FaderFR8Graphics
+	.4byte initFadeOut__Q215AttentionCamera5FaderFv
+	.4byte updateFadeOut__Q215AttentionCamera5FaderFv
+	.4byte drawFadeOut__Q215AttentionCamera5FaderFR8Graphics
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
-  .4byte 0x53656374
-  .4byte 0x696f6e00
-  .4byte 0x803de898
-  .4byte 0x802aca94
+	.4byte 0x53656374
+	.4byte 0x696f6e00
+	.4byte 0x803de898
+	.4byte 0x802aca94
 .global __RTTI__16MovSampleSection
 __RTTI__16MovSampleSection:
-  .4byte 0x802aca80
-  .4byte 0x802acab0
+	.4byte 0x802aca80
+	.4byte 0x802acab0
 .global lbl_803DE8B0
 lbl_803DE8B0:
 	.4byte 0x00000000
@@ -5600,8 +5600,8 @@ lbl_803DE8CC:
 	.4byte 0x00000000
 .global __RTTI__Q215AttentionCamera5Fader
 __RTTI__Q215AttentionCamera5Fader:
-  .4byte 0x802acb30
-  .4byte 0
+	.4byte 0x802acb30
+	.4byte 0
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .global lbl_803EA0FC

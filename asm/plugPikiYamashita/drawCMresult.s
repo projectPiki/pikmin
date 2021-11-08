@@ -52,8 +52,8 @@ lbl_803E760C:
 	.4byte 0x77000000
 .global __RTTI__Q23zen17DrawCMresultAlpha
 __RTTI__Q23zen17DrawCMresultAlpha:
-  .4byte 0x802e6f54
-  .4byte 0
+	.4byte 0x802e6f54
+	.4byte 0
 .global __RTTI__Q23zen17DrawCMresultGraph
 __RTTI__Q23zen17DrawCMresultGraph:
-  .4byte 0x802e6f3c
+	.4byte 0x802e6f3c

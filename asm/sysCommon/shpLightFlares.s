@@ -833,16 +833,16 @@ lbl_802289E4:
 	.4byte 0x72650000
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
-  .4byte 0x80228934
+	.4byte 0x80228934
 .global __RTTI__8FaceNode
 __RTTI__8FaceNode:
-  .4byte 0x80228958
-  .4byte 0x80228964
+	.4byte 0x80228958
+	.4byte 0x80228964
 .global __RTTI__8DispList
 __RTTI__8DispList:
-  .4byte 0x802289a4
-  .4byte 0x802289b0
-  .4byte 0
+	.4byte 0x802289a4
+	.4byte 0x802289b0
+	.4byte 0
 .global lbl_803DD1D8
 lbl_803DD1D8:
 	.4byte 0x73697A65

@@ -744,9 +744,9 @@ lbl_8017ECE4:
 /* 8017ECF8 0017BC58  7F 3A 01 2E */	stwx r25, r26, r0
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
-  .4byte 0x67724c69
-  .4byte 0x6768742e
-  .4byte 0x63707000
+	.4byte 0x67724c69
+	.4byte 0x6768742e
+	.4byte 0x63707000
 .global lbl_802282AC
 lbl_802282AC:
 	.4byte 0x80029E90
@@ -769,31 +769,31 @@ lbl_802282AC:
 	.4byte 0x00000000
 .global __vt__5Light
 __vt__5Light:
-  .4byte __RTTI__5Light
-  .4byte 0
-  .4byte getAgeNodeType__5ANodeFv
-  .4byte read__8CoreNodeFR18RandomAccessStream
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
+	.4byte __RTTI__5Light
+	.4byte 0
+	.4byte getAgeNodeType__5ANodeFv
+	.4byte read__8CoreNodeFR18RandomAccessStream
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .global __RTTI__8Graphics
 __RTTI__8Graphics:
-  .4byte 0x80227550
-  .4byte 0
+	.4byte 0x80227550
+	.4byte 0
 .global __RTTI__15MaterialHandler
 __RTTI__15MaterialHandler:
-  .4byte 0x80228248
-  .4byte 0
+	.4byte 0x80228248
+	.4byte 0
 .global __RTTI__8Material
 __RTTI__8Material:
-  .4byte 0x80228268
-  .4byte 0x80228274
+	.4byte 0x80228268
+	.4byte 0x80228274
 .global lbl_803DCFE0
 lbl_803DCFE0:
 	.4byte 0x00000000

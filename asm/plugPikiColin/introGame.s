@@ -1205,13 +1205,13 @@ setPort__13P2DPerspGraphFv:
 /* 801B03F0 001AD350  D0 1F 00 5C */	stfs f0, 0x5c(r31)
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
-  .4byte 0x696e7472
-  .4byte 0x6f47616d
-  .4byte 0x652e6370
-  .4byte 0x70000000
-  .4byte 0x696e7472
-  .4byte 0x6f47616d
-  .4byte 0x65000000
+	.4byte 0x696e7472
+	.4byte 0x6f47616d
+	.4byte 0x652e6370
+	.4byte 0x70000000
+	.4byte 0x696e7472
+	.4byte 0x6f47616d
+	.4byte 0x65000000
 .global lbl_802A7F84
 lbl_802A7F84:
 	.4byte 0x3C496E74
@@ -1244,139 +1244,139 @@ lbl_802A7F84:
 	.4byte 0x00000000
 .global __vt__14IntroModeState
 __vt__14IntroModeState:
-  .4byte __RTTI__14IntroModeState
-  .4byte 0
-  .4byte update__14IntroModeStateFRUl
-  .4byte postRender__14IntroModeStateFR8Graphics
-  .4byte postUpdate__9ModeStateFv
-  .4byte 0x51756974
-  .4byte 0x74696e67
-  .4byte 0x4d6f6465
-  .4byte 0x53746174
-  .4byte 0x65000000
-  .4byte __RTTI__9ModeState_1
-  .4byte 0
-  .4byte 0
+	.4byte __RTTI__14IntroModeState
+	.4byte 0
+	.4byte update__14IntroModeStateFRUl
+	.4byte postRender__14IntroModeStateFR8Graphics
+	.4byte postUpdate__9ModeStateFv
+	.4byte 0x51756974
+	.4byte 0x74696e67
+	.4byte 0x4d6f6465
+	.4byte 0x53746174
+	.4byte 0x65000000
+	.4byte __RTTI__9ModeState_1
+	.4byte 0
+	.4byte 0
 .global __vt__17QuittingModeState
 __vt__17QuittingModeState:
-  .4byte __RTTI__17QuittingModeState
-  .4byte 0
-  .4byte update__17QuittingModeStateFRUl
-  .4byte postRender__9ModeStateFR8Graphics
-  .4byte postUpdate__17QuittingModeStateFv
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0x496e7472
-  .4byte 0x6f47616d
-  .4byte 0x65536574
-  .4byte 0x75705365
-  .4byte 0x6374696f
-  .4byte 0x6e000000
-  .4byte 0x803ddc5c
-  .4byte 0
-  .4byte 0x803ddc64
-  .4byte 0
-  .4byte 0
-  .4byte 0x42617365
-  .4byte 0x47616d65
-  .4byte 0x53656374
-  .4byte 0x696f6e00
-  .4byte 0x803ddc5c
-  .4byte 0
-  .4byte 0x803ddc64
-  .4byte 0
-  .4byte 0x803ddc8c
-  .4byte 0
-  .4byte 0
-  .4byte 0x803ddc5c
-  .4byte 0
-  .4byte 0x803ddc64
-  .4byte 0
-  .4byte 0x803ddc8c
-  .4byte 0
-  .4byte __RTTI__15BaseGameSection_1
-  .4byte 0
-  .4byte 0
+	.4byte __RTTI__17QuittingModeState
+	.4byte 0
+	.4byte update__17QuittingModeStateFRUl
+	.4byte postRender__9ModeStateFR8Graphics
+	.4byte postUpdate__17QuittingModeStateFv
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0x496e7472
+	.4byte 0x6f47616d
+	.4byte 0x65536574
+	.4byte 0x75705365
+	.4byte 0x6374696f
+	.4byte 0x6e000000
+	.4byte 0x803ddc5c
+	.4byte 0
+	.4byte 0x803ddc64
+	.4byte 0
+	.4byte 0
+	.4byte 0x42617365
+	.4byte 0x47616d65
+	.4byte 0x53656374
+	.4byte 0x696f6e00
+	.4byte 0x803ddc5c
+	.4byte 0
+	.4byte 0x803ddc64
+	.4byte 0
+	.4byte 0x803ddc8c
+	.4byte 0
+	.4byte 0
+	.4byte 0x803ddc5c
+	.4byte 0
+	.4byte 0x803ddc64
+	.4byte 0
+	.4byte 0x803ddc8c
+	.4byte 0
+	.4byte __RTTI__15BaseGameSection_1
+	.4byte 0
+	.4byte 0
 .global __vt__21IntroGameSetupSection
 __vt__21IntroGameSetupSection:
-  .4byte __RTTI__21IntroGameSetupSection
-  .4byte 0
-  .4byte getAgeNodeType__5ANodeFv
-  .4byte read__8CoreNodeFR18RandomAccessStream
-  .4byte update__21IntroGameSetupSectionFv
-  .4byte draw__21IntroGameSetupSectionFR8Graphics
-  .4byte render__4NodeFR8Graphics
-  .4byte concat__4NodeFv
-  .4byte concat__4NodeFR3VQS
-  .4byte concat__4NodeFR3SRT
-  .4byte concat__4NodeFR8Matrix4f
-  .4byte getModelMatrix__4NodeFv
-  .4byte openMenu__15BaseGameSectionFv
-  .4byte 0x496e7472
-  .4byte 0x6f47616d
-  .4byte 0x65536563
-  .4byte 0x74696f6e
-  .4byte 0
-  .4byte 0x803ddc5c
-  .4byte 0
-  .4byte 0x803ddc64
-  .4byte 0
-  .4byte 0x803ddc8c
-  .4byte 0
-  .4byte 0
-  .4byte 0x803ddc5c
-  .4byte 0
-  .4byte 0x803ddc64
-  .4byte 0
-  .4byte 0x803ddc8c
-  .4byte 0
-  .4byte 0x803ddcac
-  .4byte 0
-  .4byte 0
+	.4byte __RTTI__21IntroGameSetupSection
+	.4byte 0
+	.4byte getAgeNodeType__5ANodeFv
+	.4byte read__8CoreNodeFR18RandomAccessStream
+	.4byte update__21IntroGameSetupSectionFv
+	.4byte draw__21IntroGameSetupSectionFR8Graphics
+	.4byte render__4NodeFR8Graphics
+	.4byte concat__4NodeFv
+	.4byte concat__4NodeFR3VQS
+	.4byte concat__4NodeFR3SRT
+	.4byte concat__4NodeFR8Matrix4f
+	.4byte getModelMatrix__4NodeFv
+	.4byte openMenu__15BaseGameSectionFv
+	.4byte 0x496e7472
+	.4byte 0x6f47616d
+	.4byte 0x65536563
+	.4byte 0x74696f6e
+	.4byte 0
+	.4byte 0x803ddc5c
+	.4byte 0
+	.4byte 0x803ddc64
+	.4byte 0
+	.4byte 0x803ddc8c
+	.4byte 0
+	.4byte 0
+	.4byte 0x803ddc5c
+	.4byte 0
+	.4byte 0x803ddc64
+	.4byte 0
+	.4byte 0x803ddc8c
+	.4byte 0
+	.4byte 0x803ddcac
+	.4byte 0
+	.4byte 0
 .global __vt__16IntroGameSection
 __vt__16IntroGameSection:
-  .4byte __RTTI__16IntroGameSection
-  .4byte 0
-  .4byte getAgeNodeType__5ANodeFv
-  .4byte read__8CoreNodeFR18RandomAccessStream
-  .4byte update__4NodeFv
-  .4byte draw__4NodeFR8Graphics
-  .4byte render__4NodeFR8Graphics
-  .4byte concat__4NodeFv
-  .4byte concat__4NodeFR3VQS
-  .4byte concat__4NodeFR3SRT
-  .4byte concat__4NodeFR8Matrix4f
-  .4byte getModelMatrix__4NodeFv
-  .4byte init__16IntroGameSectionFv
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
+	.4byte __RTTI__16IntroGameSection
+	.4byte 0
+	.4byte getAgeNodeType__5ANodeFv
+	.4byte read__8CoreNodeFR18RandomAccessStream
+	.4byte update__4NodeFv
+	.4byte draw__4NodeFR8Graphics
+	.4byte render__4NodeFR8Graphics
+	.4byte concat__4NodeFv
+	.4byte concat__4NodeFR3VQS
+	.4byte concat__4NodeFR3SRT
+	.4byte concat__4NodeFR8Matrix4f
+	.4byte getModelMatrix__4NodeFv
+	.4byte init__16IntroGameSectionFv
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
-  .4byte 0x802a7e74
+	.4byte 0x802a7e74
 .global __RTTI__21QuittingGameModeState
 __RTTI__21QuittingGameModeState:
-  .4byte 0x802a7e94
-  .4byte 0x802a7eac
+	.4byte 0x802a7e94
+	.4byte 0x802a7eac
 .global __RTTI__18IntroGameModeState
 __RTTI__18IntroGameModeState:
-  .4byte 0x802a7ee0
-  .4byte 0x802a7ef4
-  .4byte 0
+	.4byte 0x802a7ee0
+	.4byte 0x802a7ef4
+	.4byte 0
 .global lbl_803DDC08
 lbl_803DDC08:
 	.4byte 0x3DCCCCCD
@@ -1438,29 +1438,29 @@ lbl_803DDC4C:
 	.4byte 0x802A7FA4
 .global __RTTI__9ModeState_1
 __RTTI__9ModeState_1:
-  .4byte 0x802a7fdc
-  .4byte 0
+	.4byte 0x802a7fdc
+	.4byte 0
 .global __RTTI__14IntroModeState
 __RTTI__14IntroModeState:
-  .4byte 0x802a7fcc
-  .4byte 0x802a7fe8
+	.4byte 0x802a7fcc
+	.4byte 0x802a7fe8
 .global __RTTI__17QuittingModeState
 __RTTI__17QuittingModeState:
-  .4byte 0x802a8008
-  .4byte 0x802a801c
-  .4byte 0x4e6f6465
-  .4byte 0
-  .4byte 0x803ddc84
-  .4byte 0x802a8068
+	.4byte 0x802a8008
+	.4byte 0x802a801c
+	.4byte 0x4e6f6465
+	.4byte 0
+	.4byte 0x803ddc84
+	.4byte 0x802a8068
 .global __RTTI__15BaseGameSection_1
 __RTTI__15BaseGameSection_1:
-  .4byte 0x802a807c
-  .4byte 0x802a808c
+	.4byte 0x802a807c
+	.4byte 0x802a808c
 .global __RTTI__21IntroGameSetupSection
 __RTTI__21IntroGameSetupSection:
-  .4byte 0x802a8050
-  .4byte 0x802a80a8
-  .4byte 0x53656374
+	.4byte 0x802a8050
+	.4byte 0x802a80a8
+	.4byte 0x53656374
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .global "@1494"

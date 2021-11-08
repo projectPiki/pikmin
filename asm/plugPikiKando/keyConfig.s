@@ -485,53 +485,53 @@ lbl_802AE7E0:
 	.4byte 0x00000000
 .global __vt__Q29KeyConfig3Key
 __vt__Q29KeyConfig3Key:
-  .4byte __RTTI__Q29KeyConfig3Key
-  .4byte 0
-  .4byte getAgeNodeType__5ANodeFv
-  .4byte read__Q29KeyConfig3KeyFR18RandomAccessStream
-  .4byte update__4NodeFv
-  .4byte draw__4NodeFR8Graphics
-  .4byte render__4NodeFR8Graphics
-  .4byte concat__4NodeFv
-  .4byte concat__4NodeFR3VQS
-  .4byte concat__4NodeFR3SRT
-  .4byte concat__4NodeFR8Matrix4f
-  .4byte getModelMatrix__4NodeFv
-  .4byte 0x4b657943
-  .4byte 0x6f6e6669
-  .4byte 0x67000000
-  .4byte 0x803dedd8
-  .4byte 0
-  .4byte 0x803dede0
-  .4byte 0
-  .4byte 0x803dedf0
-  .4byte 0
-  .4byte 0
+	.4byte __RTTI__Q29KeyConfig3Key
+	.4byte 0
+	.4byte getAgeNodeType__5ANodeFv
+	.4byte read__Q29KeyConfig3KeyFR18RandomAccessStream
+	.4byte update__4NodeFv
+	.4byte draw__4NodeFR8Graphics
+	.4byte render__4NodeFR8Graphics
+	.4byte concat__4NodeFv
+	.4byte concat__4NodeFR3VQS
+	.4byte concat__4NodeFR3SRT
+	.4byte concat__4NodeFR8Matrix4f
+	.4byte getModelMatrix__4NodeFv
+	.4byte 0x4b657943
+	.4byte 0x6f6e6669
+	.4byte 0x67000000
+	.4byte 0x803dedd8
+	.4byte 0
+	.4byte 0x803dede0
+	.4byte 0
+	.4byte 0x803dedf0
+	.4byte 0
+	.4byte 0
 .global __vt__9KeyConfig
 __vt__9KeyConfig:
-  .4byte __RTTI__9KeyConfig
-  .4byte 0
-  .4byte getAgeNodeType__5ANodeFv
-  .4byte read__9KeyConfigFR18RandomAccessStream
-  .4byte update__4NodeFv
-  .4byte draw__4NodeFR8Graphics
-  .4byte render__4NodeFR8Graphics
-  .4byte concat__4NodeFv
-  .4byte concat__4NodeFR3VQS
-  .4byte concat__4NodeFR3SRT
-  .4byte concat__4NodeFR8Matrix4f
-  .4byte getModelMatrix__4NodeFv
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
+	.4byte __RTTI__9KeyConfig
+	.4byte 0
+	.4byte getAgeNodeType__5ANodeFv
+	.4byte read__9KeyConfigFR18RandomAccessStream
+	.4byte update__4NodeFv
+	.4byte draw__4NodeFR8Graphics
+	.4byte render__4NodeFR8Graphics
+	.4byte concat__4NodeFv
+	.4byte concat__4NodeFR3VQS
+	.4byte concat__4NodeFR3SRT
+	.4byte concat__4NodeFR8Matrix4f
+	.4byte getModelMatrix__4NodeFv
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
-  .4byte 0x802ae778
-  .4byte 0
+	.4byte 0x802ae778
+	.4byte 0
 .global lbl_803DED90
 lbl_803DED90:
 	.4byte 0x6B696F2E

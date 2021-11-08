@@ -9244,9 +9244,9 @@ sectionNames$2018:
 	.4byte 0x802A9F94
 .global __RTTI__9LightPool
 __RTTI__9LightPool:
-  .4byte 0x802a9f70
-  .4byte 0x802a9fa8
-  .4byte 0
+	.4byte 0x802a9f70
+	.4byte 0x802a9fa8
+	.4byte 0
 .global icon_pals
 icon_pals:
 	.4byte 0x802AA060

@@ -329,13 +329,13 @@ lbl_801D04EC:
 /* 801D0528 001CD488  38 00 00 00 */	li r0, 0
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
-  .4byte 0x72616461
-  .4byte 0x72496e66
-  .4byte 0x6f2e6370
-  .4byte 0x70000000
-  .4byte 0x72616461
-  .4byte 0x72496e66
-  .4byte 0x6f000000
+	.4byte 0x72616461
+	.4byte 0x72496e66
+	.4byte 0x6f2e6370
+	.4byte 0x70000000
+	.4byte 0x72616461
+	.4byte 0x72496e66
+	.4byte 0x6f000000
 .global lbl_802ACC24
 lbl_802ACC24:
 	.4byte 0x436F7265
@@ -357,32 +357,32 @@ lbl_802ACC24:
 	.4byte 0x00000000
 .global __vt__Q29RadarInfo9PartsInfo
 __vt__Q29RadarInfo9PartsInfo:
-  .4byte __RTTI__Q29RadarInfo9PartsInfo
-  .4byte 0
-  .4byte getAgeNodeType__5ANodeFv
-  .4byte read__8CoreNodeFR18RandomAccessStream
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
+	.4byte __RTTI__Q29RadarInfo9PartsInfo
+	.4byte 0
+	.4byte getAgeNodeType__5ANodeFv
+	.4byte read__8CoreNodeFR18RandomAccessStream
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .global __RTTI__10ClothFader
 __RTTI__10ClothFader:
-  .4byte 0x802acb24
-  .4byte 0x802acb48
+	.4byte 0x802acb24
+	.4byte 0x802acb48
 .global __RTTI__11SimpleFader
 __RTTI__11SimpleFader:
-  .4byte 0x802acb74
-  .4byte 0x802acb80
+	.4byte 0x802acb74
+	.4byte 0x802acb80
 .global __RTTI__12DefaultFader
 __RTTI__12DefaultFader:
-  .4byte 0x802acbac
-  .4byte 0x802acbbc
+	.4byte 0x802acbac
+	.4byte 0x802acbbc
 .global lbl_803DE8F0
 lbl_803DE8F0:
 	.4byte 0x616C6976

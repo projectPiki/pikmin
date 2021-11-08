@@ -95,50 +95,50 @@ lbl_802C2E70:
 	.4byte 0x00000000
 .global __vt__7NaviMgr
 __vt__7NaviMgr:
-  .4byte __RTTI__7NaviMgr
-  .4byte 0
-  .4byte getCreature__13MonoObjectMgrFi
-  .4byte getFirst__13MonoObjectMgrFv
-  .4byte getNext__13MonoObjectMgrFi
-  .4byte isDone__13MonoObjectMgrFi
-  .4byte __RTTI__7NaviMgr
-  .4byte 0xfffffff8
-  .4byte getAgeNodeType__5ANodeFv
-  .4byte 0x8011784c
-  .4byte 0x80117854
-  .4byte draw__4NodeFR8Graphics
-  .4byte render__4NodeFR8Graphics
-  .4byte concat__4NodeFv
-  .4byte concat__4NodeFR3VQS
-  .4byte concat__4NodeFR3SRT
-  .4byte concat__4NodeFR8Matrix4f
-  .4byte getModelMatrix__4NodeFv
-  .4byte __dt__7NaviMgrFv
-  .4byte update__7NaviMgrFv
-  .4byte postUpdate__13MonoObjectMgrFif
-  .4byte stickUpdate__9ObjectMgrFv
-  .4byte refresh__13MonoObjectMgrFR8Graphics
-  .4byte drawShadow__13MonoObjectMgrFR8GraphicsP7Texture
-  .4byte getSize__13MonoObjectMgrFv
-  .4byte getMax__13MonoObjectMgrFv
-  .4byte findClosest__9ObjectMgrFR8Vector3ffP9Condition
-  .4byte findClosest__9ObjectMgrFR8Vector3fP9Condition
-  .4byte search__13MonoObjectMgrFP9ObjectMgr
-  .4byte killAll__9ObjectMgrFv
-  .4byte birth__13MonoObjectMgrFv
-  .4byte kill__13MonoObjectMgrFP8Creature
-  .4byte createObject__7NaviMgrFv
-  .4byte read__7NaviMgrFR18RandomAccessStream
+	.4byte __RTTI__7NaviMgr
+	.4byte 0
+	.4byte getCreature__13MonoObjectMgrFi
+	.4byte getFirst__13MonoObjectMgrFv
+	.4byte getNext__13MonoObjectMgrFi
+	.4byte isDone__13MonoObjectMgrFi
+	.4byte __RTTI__7NaviMgr
+	.4byte 0xfffffff8
+	.4byte getAgeNodeType__5ANodeFv
+	.4byte 0x8011784c
+	.4byte 0x80117854
+	.4byte draw__4NodeFR8Graphics
+	.4byte render__4NodeFR8Graphics
+	.4byte concat__4NodeFv
+	.4byte concat__4NodeFR3VQS
+	.4byte concat__4NodeFR3SRT
+	.4byte concat__4NodeFR8Matrix4f
+	.4byte getModelMatrix__4NodeFv
+	.4byte __dt__7NaviMgrFv
+	.4byte update__7NaviMgrFv
+	.4byte postUpdate__13MonoObjectMgrFif
+	.4byte stickUpdate__9ObjectMgrFv
+	.4byte refresh__13MonoObjectMgrFR8Graphics
+	.4byte drawShadow__13MonoObjectMgrFR8GraphicsP7Texture
+	.4byte getSize__13MonoObjectMgrFv
+	.4byte getMax__13MonoObjectMgrFv
+	.4byte findClosest__9ObjectMgrFR8Vector3ffP9Condition
+	.4byte findClosest__9ObjectMgrFR8Vector3fP9Condition
+	.4byte search__13MonoObjectMgrFP9ObjectMgr
+	.4byte killAll__9ObjectMgrFv
+	.4byte birth__13MonoObjectMgrFv
+	.4byte kill__13MonoObjectMgrFP8Creature
+	.4byte createObject__7NaviMgrFv
+	.4byte read__7NaviMgrFR18RandomAccessStream
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .global __RTTI__10Controller_1
 __RTTI__10Controller_1:
-  .4byte 0x802c2dd8
-  .4byte 0x802c2de4
+	.4byte 0x802c2dd8
+	.4byte 0x802c2de4
 .global __RTTI__10Kontroller
 __RTTI__10Kontroller:
-  .4byte 0x802c2d90
-  .4byte 0x802c2e00
+	.4byte 0x802c2d90
+	.4byte 0x802c2e00
 .global lbl_803E29B0
 lbl_803E29B0:
 	.4byte 0x00000000

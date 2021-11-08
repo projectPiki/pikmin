@@ -3063,17 +3063,17 @@ transTable:
 	.4byte 0x00000000
 .global __vt__9MovieInfo
 __vt__9MovieInfo:
-  .4byte __RTTI__9MovieInfo
-  .4byte 0
-  .4byte getAgeNodeType__5ANodeFv
-  .4byte read__8CoreNodeFR18RandomAccessStream
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
+	.4byte __RTTI__9MovieInfo
+	.4byte 0
+	.4byte getAgeNodeType__5ANodeFv
+	.4byte read__8CoreNodeFR18RandomAccessStream
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 	.4byte 0x53747265

@@ -134,15 +134,15 @@ start__Q23zen12DrawGameOverFQ33zen12DrawGameOver8modeFlagf:
 /* 801E8DF8 001E5D58  80 03 00 10 */	lwz r0, 0x10(r3)
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
-  .4byte 0x6576656e
-  .4byte 0x744c6973
-  .4byte 0x74656e65
-  .4byte 0x722e6370
-  .4byte 0x70000000
-  .4byte 0x6576656e
-  .4byte 0x744c6973
-  .4byte 0x74656e65
-  .4byte 0x72000000
+	.4byte 0x6576656e
+	.4byte 0x744c6973
+	.4byte 0x74656e65
+	.4byte 0x722e6370
+	.4byte 0x70000000
+	.4byte 0x6576656e
+	.4byte 0x744c6973
+	.4byte 0x74656e65
+	.4byte 0x72000000
 .global lbl_802AF9D4
 lbl_802AF9D4:
 	.4byte 0x436F7265
@@ -168,18 +168,18 @@ lbl_802AF9E0:
 	.4byte 0x00000000
 .global __vt__13EventListener
 __vt__13EventListener:
-  .4byte __RTTI__13EventListener
-  .4byte 0
-  .4byte getAgeNodeType__5ANodeFv
-  .4byte read__8CoreNodeFR18RandomAccessStream
-  .4byte gotEvent__13EventListenerFR5Event
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
+	.4byte __RTTI__13EventListener
+	.4byte 0
+	.4byte getAgeNodeType__5ANodeFv
+	.4byte read__8CoreNodeFR18RandomAccessStream
+	.4byte gotEvent__13EventListenerFR5Event
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 	.4byte 0x00000000

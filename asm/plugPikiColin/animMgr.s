@@ -2851,9 +2851,9 @@ lbl_801A61BC:
 /* 801A61D8 001A3138  90 13 00 04 */	stw r0, 4(r19)
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
-  .4byte 0x616e696d
-  .4byte 0x4d67722e
-  .4byte 0x63707000
+	.4byte 0x616e696d
+	.4byte 0x4d67722e
+	.4byte 0x63707000
 .global lbl_802A5FCC
 lbl_802A5FCC:
 	.4byte 0x436F7265
@@ -2874,91 +2874,91 @@ lbl_802A5FE4:
 	.4byte 0x00000000
 .global __vt__8Animator
 __vt__8Animator:
-  .4byte 0x803dd720
-  .4byte 0
-  .4byte changeContext__8AnimatorFP11AnimContext
-  .4byte animate__8AnimatorFf
-  .4byte finishOneShot__8AnimatorFv
-  .4byte finishLoop__8AnimatorFv
-  .4byte 0x803dd730
-  .4byte 0
-  .4byte 0
-  .4byte 0x803dd730
-  .4byte 0
-  .4byte 0x803dd738
-  .4byte 0
-  .4byte 0
+	.4byte 0x803dd720
+	.4byte 0
+	.4byte changeContext__8AnimatorFP11AnimContext
+	.4byte animate__8AnimatorFf
+	.4byte finishOneShot__8AnimatorFv
+	.4byte finishLoop__8AnimatorFv
+	.4byte 0x803dd730
+	.4byte 0
+	.4byte 0
+	.4byte 0x803dd730
+	.4byte 0
+	.4byte 0x803dd738
+	.4byte 0
+	.4byte 0
 .global __vt__7AnimMgr
 __vt__7AnimMgr:
-  .4byte __RTTI__7AnimMgr
-  .4byte 0
-  .4byte getAgeNodeType__5ANodeFv
-  .4byte read__7AnimMgrFR18RandomAccessStream
-  .4byte 0x5061726d
-  .4byte 0x3c537472
-  .4byte 0x696e673e
-  .4byte 0
-  .4byte 0x42617365
-  .4byte 0x5061726d
-  .4byte 0
-  .4byte 0x803dd748
-  .4byte 0
-  .4byte 0
+	.4byte __RTTI__7AnimMgr
+	.4byte 0
+	.4byte getAgeNodeType__5ANodeFv
+	.4byte read__7AnimMgrFR18RandomAccessStream
+	.4byte 0x5061726d
+	.4byte 0x3c537472
+	.4byte 0x696e673e
+	.4byte 0
+	.4byte 0x42617365
+	.4byte 0x5061726d
+	.4byte 0
+	.4byte 0x803dd748
+	.4byte 0
+	.4byte 0
 .global "__vt__13Parm<6String>"
 "__vt__13Parm<6String>":
-  .4byte "__RTTI__13Parm<6String>"
-  .4byte 0
-  .4byte "size__13Parm<6String>Fv"
-  .4byte "write__13Parm<6String>FR18RandomAccessStream"
-  .4byte "read__13Parm<6String>FR18RandomAccessStream"
-  .4byte 0x5061726d
-  .4byte 0x3c666c6f
-  .4byte 0x61743e00
-  .4byte 0x803dd748
-  .4byte 0
-  .4byte 0
+	.4byte "__RTTI__13Parm<6String>"
+	.4byte 0
+	.4byte "size__13Parm<6String>Fv"
+	.4byte "write__13Parm<6String>FR18RandomAccessStream"
+	.4byte "read__13Parm<6String>FR18RandomAccessStream"
+	.4byte 0x5061726d
+	.4byte 0x3c666c6f
+	.4byte 0x61743e00
+	.4byte 0x803dd748
+	.4byte 0
+	.4byte 0
 .global "__vt__7Parm<f>"
 "__vt__7Parm<f>":
-  .4byte "__RTTI__7Parm<f>"
-  .4byte 0
-  .4byte "size__7Parm<f>Fv"
-  .4byte "write__7Parm<f>FR18RandomAccessStream"
-  .4byte "read__7Parm<f>FR18RandomAccessStream"
-  .4byte 0x5061726d
-  .4byte 0x3c696e74
-  .4byte 0x3e000000
-  .4byte 0x803dd748
-  .4byte 0
-  .4byte 0
+	.4byte "__RTTI__7Parm<f>"
+	.4byte 0
+	.4byte "size__7Parm<f>Fv"
+	.4byte "write__7Parm<f>FR18RandomAccessStream"
+	.4byte "read__7Parm<f>FR18RandomAccessStream"
+	.4byte 0x5061726d
+	.4byte 0x3c696e74
+	.4byte 0x3e000000
+	.4byte 0x803dd748
+	.4byte 0
+	.4byte 0
 .global "__vt__7Parm<i>"
 "__vt__7Parm<i>":
-  .4byte "__RTTI__7Parm<i>"
-  .4byte 0
-  .4byte "size__7Parm<i>Fv"
-  .4byte "write__7Parm<i>FR18RandomAccessStream"
-  .4byte "read__7Parm<i>FR18RandomAccessStream"
-  .4byte 0x416e696d
-  .4byte 0x496e666f
-  .4byte 0
-  .4byte 0x803dd730
-  .4byte 0
-  .4byte 0x803dd738
-  .4byte 0
-  .4byte 0
+	.4byte "__RTTI__7Parm<i>"
+	.4byte 0
+	.4byte "size__7Parm<i>Fv"
+	.4byte "write__7Parm<i>FR18RandomAccessStream"
+	.4byte "read__7Parm<i>FR18RandomAccessStream"
+	.4byte 0x416e696d
+	.4byte 0x496e666f
+	.4byte 0
+	.4byte 0x803dd730
+	.4byte 0
+	.4byte 0x803dd738
+	.4byte 0
+	.4byte 0
 .global __vt__8AnimInfo
 __vt__8AnimInfo:
-  .4byte __RTTI__8AnimInfo
-  .4byte 0
-  .4byte getAgeNodeType__5ANodeFv
-  .4byte read__8CoreNodeFR18RandomAccessStream
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
+	.4byte __RTTI__8AnimInfo
+	.4byte 0
+	.4byte getAgeNodeType__5ANodeFv
+	.4byte read__8CoreNodeFR18RandomAccessStream
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 	.4byte 0x00000000
@@ -2966,9 +2966,9 @@ __vt__8AnimInfo:
 	.4byte 0x802A5F20
 .global __RTTI__9RigidBody
 __RTTI__9RigidBody:
-  .4byte 0x802a5efc
-  .4byte 0x802a5f34
-  .4byte 0
+	.4byte 0x802a5efc
+	.4byte 0x802a5f34
+	.4byte 0
 .global lbl_803DD6F0
 lbl_803DD6F0:
 	.4byte 0x416E696D
@@ -3009,14 +3009,14 @@ lbl_803DD71C:
 	.4byte 0x802A6014
 .global __RTTI__7AnimMgr
 __RTTI__7AnimMgr:
-  .4byte lbl_803DD6F0
-  .4byte 0x802a6020
-  .4byte 0x802a6054
-  .4byte 0
+	.4byte lbl_803DD6F0
+	.4byte 0x802a6020
+	.4byte 0x802a6054
+	.4byte 0
 .global "__RTTI__13Parm<6String>"
 "__RTTI__13Parm<6String>":
-  .4byte 0x802a6044
-  .4byte 0x802a6060
+	.4byte 0x802a6044
+	.4byte 0x802a6060
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .global "@1408"

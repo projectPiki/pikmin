@@ -429,13 +429,13 @@ lbl_801EECEC:
 /* 801EED8C 001EBCEC  3B A0 00 00 */	li r29, 0
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
-  .4byte 0x67656e50
-  .4byte 0x656c6c65
-  .4byte 0x742e6370
-  .4byte 0x70000000
-  .4byte 0x67656e50
-  .4byte 0x656c6c65
-  .4byte 0x74000000
+	.4byte 0x67656e50
+	.4byte 0x656c6c65
+	.4byte 0x742e6370
+	.4byte 0x70000000
+	.4byte 0x67656e50
+	.4byte 0x656c6c65
+	.4byte 0x74000000
 .global lbl_802B0904
 lbl_802B0904:
 	.4byte 0x6F626A65
@@ -474,32 +474,32 @@ lbl_802B0910:
 	.4byte 0x00000000
 .global __vt__15GenObjectPellet
 __vt__15GenObjectPellet:
-  .4byte __RTTI__15GenObjectPellet
-  .4byte 0
-  .4byte doWrite__15GenObjectPelletFR18RandomAccessStream
-  .4byte ramSaveParameters__7GenBaseFR18RandomAccessStream
-  .4byte ramLoadParameters__7GenBaseFR18RandomAccessStream
-  .4byte doRead__15GenObjectPelletFR18RandomAccessStream
-  .4byte update__7GenBaseFv
-  .4byte render__7GenBaseFR8Graphics
-  .4byte getLatestVersion__9GenObjectFv
-  .4byte updateUseList__15GenObjectPelletFP9Generatori
-  .4byte init__9GenObjectFP9Generator
-  .4byte update__9GenObjectFP9Generator
-  .4byte render__9GenObjectFR8GraphicsP9Generator
-  .4byte birth__15GenObjectPelletFR9BirthInfo
-  .4byte 0
+	.4byte __RTTI__15GenObjectPellet
+	.4byte 0
+	.4byte doWrite__15GenObjectPelletFR18RandomAccessStream
+	.4byte ramSaveParameters__7GenBaseFR18RandomAccessStream
+	.4byte ramLoadParameters__7GenBaseFR18RandomAccessStream
+	.4byte doRead__15GenObjectPelletFR18RandomAccessStream
+	.4byte update__7GenBaseFv
+	.4byte render__7GenBaseFR8Graphics
+	.4byte getLatestVersion__9GenObjectFv
+	.4byte updateUseList__15GenObjectPelletFP9Generatori
+	.4byte init__9GenObjectFP9Generator
+	.4byte update__9GenObjectFP9Generator
+	.4byte render__9GenObjectFR8GraphicsP9Generator
+	.4byte birth__15GenObjectPelletFR9BirthInfo
+	.4byte 0
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
-  .4byte 0x65000000
-  .4byte 0x803df6cc
-  .4byte 0
-  .4byte lbl_802B0764
-  .4byte 0x802b083c
-  .4byte 0x802b0848
-  .4byte 0
+	.4byte 0x65000000
+	.4byte 0x803df6cc
+	.4byte 0
+	.4byte lbl_802B0764
+	.4byte 0x802b083c
+	.4byte 0x802b0848
+	.4byte 0
 .global __RTTI__14PelletAnimInfo
 __RTTI__14PelletAnimInfo:
-  .4byte 0x802b082c
-  .4byte 0x802b0854
-  .4byte 0x802b089c
+	.4byte 0x802b082c
+	.4byte 0x802b0854
+	.4byte 0x802b089c

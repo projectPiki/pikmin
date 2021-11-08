@@ -2131,54 +2131,54 @@ movieNames$localstatic0$__ct__21MovSampleSetupSectionFv:
 	.4byte 0x00000000
 .global __vt__21MovSampleSetupSection
 __vt__21MovSampleSetupSection:
-  .4byte __RTTI__21MovSampleSetupSection
-  .4byte 0
-  .4byte getAgeNodeType__5ANodeFv
-  .4byte read__8CoreNodeFR18RandomAccessStream
-  .4byte update__21MovSampleSetupSectionFv
-  .4byte draw__21MovSampleSetupSectionFR8Graphics
-  .4byte render__4NodeFR8Graphics
-  .4byte concat__4NodeFv
-  .4byte concat__4NodeFR3VQS
-  .4byte concat__4NodeFR3SRT
-  .4byte concat__4NodeFR8Matrix4f
-  .4byte getModelMatrix__4NodeFv
-  .4byte 0x4d6f7653
-  .4byte 0x616d706c
-  .4byte 0x65536563
-  .4byte 0x74696f6e
-  .4byte 0
-  .4byte 0x803de870
-  .4byte 0
-  .4byte 0x803de878
-  .4byte 0
-  .4byte 0x803de888
-  .4byte 0
-  .4byte 0
-  .4byte 0x803de870
-  .4byte 0
-  .4byte 0x803de878
-  .4byte 0
-  .4byte 0x803de888
-  .4byte 0
-  .4byte 0x803de8a0
-  .4byte 0
-  .4byte 0
+	.4byte __RTTI__21MovSampleSetupSection
+	.4byte 0
+	.4byte getAgeNodeType__5ANodeFv
+	.4byte read__8CoreNodeFR18RandomAccessStream
+	.4byte update__21MovSampleSetupSectionFv
+	.4byte draw__21MovSampleSetupSectionFR8Graphics
+	.4byte render__4NodeFR8Graphics
+	.4byte concat__4NodeFv
+	.4byte concat__4NodeFR3VQS
+	.4byte concat__4NodeFR3SRT
+	.4byte concat__4NodeFR8Matrix4f
+	.4byte getModelMatrix__4NodeFv
+	.4byte 0x4d6f7653
+	.4byte 0x616d706c
+	.4byte 0x65536563
+	.4byte 0x74696f6e
+	.4byte 0
+	.4byte 0x803de870
+	.4byte 0
+	.4byte 0x803de878
+	.4byte 0
+	.4byte 0x803de888
+	.4byte 0
+	.4byte 0
+	.4byte 0x803de870
+	.4byte 0
+	.4byte 0x803de878
+	.4byte 0
+	.4byte 0x803de888
+	.4byte 0
+	.4byte 0x803de8a0
+	.4byte 0
+	.4byte 0
 .global __vt__16MovSampleSection
 __vt__16MovSampleSection:
-  .4byte __RTTI__16MovSampleSection
-  .4byte 0
-  .4byte getAgeNodeType__5ANodeFv
-  .4byte read__8CoreNodeFR18RandomAccessStream
-  .4byte update__4NodeFv
-  .4byte draw__4NodeFR8Graphics
-  .4byte render__4NodeFR8Graphics
-  .4byte concat__4NodeFv
-  .4byte concat__4NodeFR3VQS
-  .4byte concat__4NodeFR3SRT
-  .4byte concat__4NodeFR8Matrix4f
-  .4byte getModelMatrix__4NodeFv
-  .4byte init__16MovSampleSectionFv
+	.4byte __RTTI__16MovSampleSection
+	.4byte 0
+	.4byte getAgeNodeType__5ANodeFv
+	.4byte read__8CoreNodeFR18RandomAccessStream
+	.4byte update__4NodeFv
+	.4byte draw__4NodeFR8Graphics
+	.4byte render__4NodeFR8Graphics
+	.4byte concat__4NodeFv
+	.4byte concat__4NodeFR3VQS
+	.4byte concat__4NodeFR3SRT
+	.4byte concat__4NodeFR8Matrix4f
+	.4byte getModelMatrix__4NodeFv
+	.4byte init__16MovSampleSectionFv
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 	.4byte 0x00000000
@@ -2186,9 +2186,9 @@ __vt__16MovSampleSection:
 	.4byte 0x802AC88C
 .global __RTTI__9MovieInfo
 __RTTI__9MovieInfo:
-  .4byte 0x802ac874
-  .4byte 0x802ac898
-  .4byte 0
+	.4byte 0x802ac874
+	.4byte 0x802ac898
+	.4byte 0
 .global lbl_803DE860
 lbl_803DE860:
 	.4byte 0x3C4E6F64
@@ -2205,8 +2205,8 @@ lbl_803DE860:
 	.4byte 0x802ACA20
 .global __RTTI__21MovSampleSetupSection
 __RTTI__21MovSampleSetupSection:
-  .4byte 0x802aca08
-  .4byte 0x802aca34
+	.4byte 0x802aca08
+	.4byte 0x802aca34
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .global lbl_803EA0D4

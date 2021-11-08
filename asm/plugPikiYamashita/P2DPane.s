@@ -27,11 +27,11 @@ lbl_803E65DC:
 	.4byte 0xBF800000
 .global __RTTI__14P2DGrafContext_2
 __RTTI__14P2DGrafContext_2:
-  .4byte 0x802e067c
-  .4byte 0
+	.4byte 0x802e067c
+	.4byte 0
 .global __RTTI__13P2DPerspGraph
 __RTTI__13P2DPerspGraph:
-  .4byte 0x802e066c
-  .4byte 0x802e068c
-  .4byte 0x50324450
-  .4byte 0x616e6500
+	.4byte 0x802e066c
+	.4byte 0x802e068c
+	.4byte 0x50324450
+	.4byte 0x616e6500

@@ -9,20 +9,20 @@ lbl_80222748:
 	.4byte 0x00000001
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
-  .4byte 0x65000000
-  .4byte 0x803e51e4
-  .4byte 0
-  .4byte lbl_802D071C
-  .4byte 0x802d090c
-  .4byte 0x802d0918
-  .4byte 0
-  .4byte 0x802d0928
-  .4byte 0x802d0934
+	.4byte 0x65000000
+	.4byte 0x803e51e4
+	.4byte 0
+	.4byte lbl_802D071C
+	.4byte 0x802d090c
+	.4byte 0x802d0918
+	.4byte 0
+	.4byte 0x802d0928
+	.4byte 0x802d0934
 .global __RTTI__10KoganeProp
 __RTTI__10KoganeProp:
-  .4byte 0x802d0900
-  .4byte 0x802d0940
-  .4byte 0
+	.4byte 0x802d0900
+	.4byte 0x802d0940
+	.4byte 0
 .global koganeSE
 koganeSE:
 	.4byte 0x00000076

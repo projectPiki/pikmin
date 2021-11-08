@@ -1028,68 +1028,68 @@ lbl_801C8624:
 /* 801C8628 001C5588  41 82 FD 4C */	beq lbl_801C8374
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
-  .4byte 0x6c696768
-  .4byte 0x74506f6f
-  .4byte 0x6c2e6370
-  .4byte 0x70000000
-  .4byte 0x4c696768
-  .4byte 0x74506f6f
-  .4byte 0x6c000000
-  .4byte 0x436f7265
-  .4byte 0x4e6f6465
-  .4byte 0
-  .4byte 0x803de7a4
-  .4byte 0
-  .4byte 0
-  .4byte 0x803de7a4
-  .4byte 0
-  .4byte 0x803de7ac
-  .4byte 0
-  .4byte 0
-  .4byte 0x803de7a4
-  .4byte 0
-  .4byte 0x803de7ac
-  .4byte 0
-  .4byte 0x803de7bc
-  .4byte 0
-  .4byte 0
+	.4byte 0x6c696768
+	.4byte 0x74506f6f
+	.4byte 0x6c2e6370
+	.4byte 0x70000000
+	.4byte 0x4c696768
+	.4byte 0x74506f6f
+	.4byte 0x6c000000
+	.4byte 0x436f7265
+	.4byte 0x4e6f6465
+	.4byte 0
+	.4byte 0x803de7a4
+	.4byte 0
+	.4byte 0
+	.4byte 0x803de7a4
+	.4byte 0
+	.4byte 0x803de7ac
+	.4byte 0
+	.4byte 0
+	.4byte 0x803de7a4
+	.4byte 0
+	.4byte 0x803de7ac
+	.4byte 0
+	.4byte 0x803de7bc
+	.4byte 0
+	.4byte 0
 .global __vt__9LightPool
 __vt__9LightPool:
-  .4byte __RTTI__9LightPool
-  .4byte 0
-  .4byte getAgeNodeType__5ANodeFv
-  .4byte read__8CoreNodeFR18RandomAccessStream
-  .4byte update__4NodeFv
-  .4byte draw__9LightPoolFR8Graphics
-  .4byte render__4NodeFR8Graphics
-  .4byte concat__4NodeFv
-  .4byte concat__4NodeFR3VQS
-  .4byte concat__4NodeFR3SRT
-  .4byte concat__4NodeFR8Matrix4f
-  .4byte getModelMatrix__4NodeFv
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
+	.4byte __RTTI__9LightPool
+	.4byte 0
+	.4byte getAgeNodeType__5ANodeFv
+	.4byte read__8CoreNodeFR18RandomAccessStream
+	.4byte update__4NodeFv
+	.4byte draw__9LightPoolFR8Graphics
+	.4byte render__4NodeFR8Graphics
+	.4byte concat__4NodeFv
+	.4byte concat__4NodeFR3VQS
+	.4byte concat__4NodeFR3SRT
+	.4byte concat__4NodeFR8Matrix4f
+	.4byte getModelMatrix__4NodeFv
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
-  .4byte 0x802a9eb8
+	.4byte 0x802a9eb8
 .global __RTTI__15CineShapeObject
 __RTTI__15CineShapeObject:
-  .4byte 0x802a9edc
-  .4byte 0x802a9eec
+	.4byte 0x802a9edc
+	.4byte 0x802a9eec
 .global __RTTI__9SceneData
 __RTTI__9SceneData:
-  .4byte 0x802a9f10
-  .4byte 0x802a9f1c
-  .4byte 0
+	.4byte 0x802a9f10
+	.4byte 0x802a9f1c
+	.4byte 0
 .global lbl_803DE770
 lbl_803DE770:
 	.4byte 0x00000000

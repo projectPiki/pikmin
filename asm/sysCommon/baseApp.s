@@ -648,36 +648,36 @@ lbl_802272DC:
 	.4byte 0x00000000
 .global __vt__7BaseApp
 __vt__7BaseApp:
-  .4byte __RTTI__7BaseApp
-  .4byte 0
-  .4byte getAgeNodeType__5ANodeFv
-  .4byte read__8CoreNodeFR18RandomAccessStream
-  .4byte update__4NodeFv
-  .4byte draw__4NodeFR8Graphics
-  .4byte render__4NodeFR8Graphics
-  .4byte concat__4NodeFv
-  .4byte concat__4NodeFR3VQS
-  .4byte concat__4NodeFR3SRT
-  .4byte concat__4NodeFR8Matrix4f
-  .4byte getModelMatrix__4NodeFv
-  .4byte __dt__7BaseAppFv
-  .4byte InitApp__7BaseAppFPc
-  .4byte idle__7BaseAppFv
-  .4byte keyDown__7BaseAppFiii
-  .4byte softReset__7BaseAppFv
-  .4byte useHeap__7BaseAppFi
-  .4byte procCmd__7BaseAppFPc
+	.4byte __RTTI__7BaseApp
+	.4byte 0
+	.4byte getAgeNodeType__5ANodeFv
+	.4byte read__8CoreNodeFR18RandomAccessStream
+	.4byte update__4NodeFv
+	.4byte draw__4NodeFR8Graphics
+	.4byte render__4NodeFR8Graphics
+	.4byte concat__4NodeFv
+	.4byte concat__4NodeFR3VQS
+	.4byte concat__4NodeFR3SRT
+	.4byte concat__4NodeFR8Matrix4f
+	.4byte getModelMatrix__4NodeFv
+	.4byte __dt__7BaseAppFv
+	.4byte InitApp__7BaseAppFPc
+	.4byte idle__7BaseAppFv
+	.4byte keyDown__7BaseAppFiii
+	.4byte softReset__7BaseAppFv
+	.4byte useHeap__7BaseAppFi
+	.4byte procCmd__7BaseAppFPc
 .global __vt__8CoreNode
 __vt__8CoreNode:
-  .4byte 0x803dce90
-  .4byte 0
-  .4byte getAgeNodeType__5ANodeFv
-  .4byte read__8CoreNodeFR18RandomAccessStream
+	.4byte 0x803dce90
+	.4byte 0
+	.4byte getAgeNodeType__5ANodeFv
+	.4byte read__8CoreNodeFR18RandomAccessStream
 .global __vt__5ANode
 __vt__5ANode:
-  .4byte 0x803dce88
-  .4byte 0
-  .4byte getAgeNodeType__5ANodeFv
+	.4byte 0x803dce88
+	.4byte 0
+	.4byte getAgeNodeType__5ANodeFv
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .global buf

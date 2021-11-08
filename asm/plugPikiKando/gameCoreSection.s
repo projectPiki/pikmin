@@ -1847,63 +1847,63 @@ triNames$4141:
 	.4byte 0x00000000
 .global __vt__15GameCoreSection
 __vt__15GameCoreSection:
-  .4byte __RTTI__15GameCoreSection
-  .4byte 0
-  .4byte getAgeNodeType__5ANodeFv
-  .4byte read__8CoreNodeFR18RandomAccessStream
-  .4byte update__15GameCoreSectionFv
-  .4byte draw__15GameCoreSectionFR8Graphics
-  .4byte render__4NodeFR8Graphics
-  .4byte concat__4NodeFv
-  .4byte concat__4NodeFR3VQS
-  .4byte concat__4NodeFR3SRT
-  .4byte concat__4NodeFR8Matrix4f
-  .4byte getModelMatrix__4NodeFv
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0x496e7465
-  .4byte 0x72616374
-  .4byte 0x696f6e00
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
+	.4byte __RTTI__15GameCoreSection
+	.4byte 0
+	.4byte getAgeNodeType__5ANodeFv
+	.4byte read__8CoreNodeFR18RandomAccessStream
+	.4byte update__15GameCoreSectionFv
+	.4byte draw__15GameCoreSectionFR8Graphics
+	.4byte render__4NodeFR8Graphics
+	.4byte concat__4NodeFv
+	.4byte concat__4NodeFR3VQS
+	.4byte concat__4NodeFR3SRT
+	.4byte concat__4NodeFR8Matrix4f
+	.4byte getModelMatrix__4NodeFv
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0x496e7465
+	.4byte 0x72616374
+	.4byte 0x696f6e00
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
-  .4byte 0x802c1d94
+	.4byte 0x802c1d94
 .global __RTTI__Q219NaviDemoSunsetState9WaitState
 __RTTI__Q219NaviDemoSunsetState9WaitState:
-  .4byte 0x802c1e00
-  .4byte 0x802c1e20
+	.4byte 0x802c1e00
+	.4byte 0x802c1e20
 .global __RTTI__Q219NaviDemoSunsetState12WhistleState
 __RTTI__Q219NaviDemoSunsetState12WhistleState:
-  .4byte 0x802c1e8c
-  .4byte 0x802c1eb0
+	.4byte 0x802c1e8c
+	.4byte 0x802c1eb0
 .global __RTTI__Q219NaviDemoSunsetState9LookState
 __RTTI__Q219NaviDemoSunsetState9LookState:
-  .4byte 0x802c1f1c
-  .4byte 0x802c1f3c
+	.4byte 0x802c1f1c
+	.4byte 0x802c1f3c
 .global __RTTI__Q219NaviDemoSunsetState7GoState
 __RTTI__Q219NaviDemoSunsetState7GoState:
-  .4byte 0x802c1fa8
-  .4byte 0x802c1fc8
+	.4byte 0x802c1fa8
+	.4byte 0x802c1fc8
 .global __RTTI__Q219NaviDemoSunsetState16DemoStateMachine
 __RTTI__Q219NaviDemoSunsetState16DemoStateMachine:
-  .4byte 0x802c210c
-  .4byte 0x802c2134
-  .4byte 0
+	.4byte 0x802c210c
+	.4byte 0x802c2134
+	.4byte 0
 .global lbl_803E2748
 lbl_803E2748:
 	.4byte 0x3F800000

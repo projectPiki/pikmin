@@ -1556,15 +1556,15 @@ lbl_8011ED2C:
 /* 8011EE58 0011BDB8  7C 08 03 A6 */	mtlr r0
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
-  .4byte 0x67656e65
-  .4byte 0x7261746f
-  .4byte 0x72436163
-  .4byte 0x68652e63
-  .4byte 0x70700000
-  .4byte 0x47656e65
-  .4byte 0x7261746f
-  .4byte 0x72436163
-  .4byte 0x68650000
+	.4byte 0x67656e65
+	.4byte 0x7261746f
+	.4byte 0x72436163
+	.4byte 0x68652e63
+	.4byte 0x70700000
+	.4byte 0x47656e65
+	.4byte 0x7261746f
+	.4byte 0x72436163
+	.4byte 0x68650000
 .global lbl_802BAC1C
 lbl_802BAC1C:
 	.4byte 0x436F7265
@@ -1653,35 +1653,35 @@ lbl_802BAC1C:
 	.4byte 0x00000000
 .global __vt__Q214GeneratorCache5Cache
 __vt__Q214GeneratorCache5Cache:
-  .4byte __RTTI__Q214GeneratorCache5Cache
-  .4byte 0
-  .4byte getAgeNodeType__5ANodeFv
-  .4byte read__8CoreNodeFR18RandomAccessStream
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
+	.4byte __RTTI__Q214GeneratorCache5Cache
+	.4byte 0
+	.4byte getAgeNodeType__5ANodeFv
+	.4byte read__8CoreNodeFR18RandomAccessStream
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
-  .4byte 0x802ba9dc
-  .4byte 0x802ba9e8
-  .4byte 0x4e6f6465
-  .4byte 0
-  .4byte 0x803e13e0
-  .4byte 0x802ba9f4
+	.4byte 0x802ba9dc
+	.4byte 0x802ba9e8
+	.4byte 0x4e6f6465
+	.4byte 0
+	.4byte 0x803e13e0
+	.4byte 0x802ba9f4
 .global __RTTI__12GeneratorMgr
 __RTTI__12GeneratorMgr:
-  .4byte 0x802ba718
-  .4byte 0x802baa08
+	.4byte 0x802ba718
+	.4byte 0x802baa08
 .global __RTTI__9Generator
 __RTTI__9Generator:
-  .4byte 0x802baa54
-  .4byte 0x802baa60
-  .4byte 0x802bab0c
-  .4byte 0
+	.4byte 0x802baa54
+	.4byte 0x802baa60
+	.4byte 0x802bab0c
+	.4byte 0
 .global lbl_803E1408
 lbl_803E1408:
 	.4byte 0x00000000

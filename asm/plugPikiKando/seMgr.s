@@ -1099,57 +1099,57 @@ lbl_802B1BF8:
 	.4byte 0x00000000
 .global __vt__5SeWin
 __vt__5SeWin:
-  .4byte __RTTI__5SeWin
-  .4byte 0
-  .4byte getAgeNodeType__5ANodeFv
-  .4byte read__8CoreNodeFR18RandomAccessStream
-  .4byte open__5SeWinFv
-  .4byte close__5SeWinFv
-  .4byte update__5SeWinFv
-  .4byte doRender__5SeWinFR8Graphics
-  .4byte render__5GmWinFR8Graphics
-  .4byte printStart__5GmWinFR8Graphics
-  .4byte print__5GmWinFR8GraphicsiiPc
-  .4byte printcentre__5GmWinFR8GraphicsiPc
-  .4byte printleft__5GmWinFR8GraphicsiPc
-  .4byte printright__5GmWinFR8GraphicsiPc
-  .4byte texture__5GmWinFR8GraphicsP7Textureiiii8RectArea
-  .4byte texturecentre__5GmWinFR8GraphicsP7Textureiii8RectArea
-  .4byte textureleft__5GmWinFR8GraphicsP7Textureiii8RectArea
-  .4byte textureright__5GmWinFR8GraphicsP7Textureiii8RectArea
-  .4byte 0x803df9dc
-  .4byte 0
-  .4byte 0x803df9e4
-  .4byte 0
-  .4byte 0
-  .4byte 0x803df9dc
-  .4byte 0
-  .4byte 0x803df9e4
-  .4byte 0
-  .4byte 0x803dfa14
-  .4byte 0
-  .4byte 0
+	.4byte __RTTI__5SeWin
+	.4byte 0
+	.4byte getAgeNodeType__5ANodeFv
+	.4byte read__8CoreNodeFR18RandomAccessStream
+	.4byte open__5SeWinFv
+	.4byte close__5SeWinFv
+	.4byte update__5SeWinFv
+	.4byte doRender__5SeWinFR8Graphics
+	.4byte render__5GmWinFR8Graphics
+	.4byte printStart__5GmWinFR8Graphics
+	.4byte print__5GmWinFR8GraphicsiiPc
+	.4byte printcentre__5GmWinFR8GraphicsiPc
+	.4byte printleft__5GmWinFR8GraphicsiPc
+	.4byte printright__5GmWinFR8GraphicsiPc
+	.4byte texture__5GmWinFR8GraphicsP7Textureiiii8RectArea
+	.4byte texturecentre__5GmWinFR8GraphicsP7Textureiii8RectArea
+	.4byte textureleft__5GmWinFR8GraphicsP7Textureiii8RectArea
+	.4byte textureright__5GmWinFR8GraphicsP7Textureiii8RectArea
+	.4byte 0x803df9dc
+	.4byte 0
+	.4byte 0x803df9e4
+	.4byte 0
+	.4byte 0
+	.4byte 0x803df9dc
+	.4byte 0
+	.4byte 0x803df9e4
+	.4byte 0
+	.4byte 0x803dfa14
+	.4byte 0
+	.4byte 0
 .global __vt__5SeMgr
 __vt__5SeMgr:
-  .4byte __RTTI__5SeMgr
-  .4byte 0
-  .4byte getAgeNodeType__5ANodeFv
-  .4byte read__8CoreNodeFR18RandomAccessStream
-  .4byte update__5SeMgrFv
-  .4byte draw__4NodeFR8Graphics
-  .4byte render__4NodeFR8Graphics
-  .4byte concat__4NodeFv
-  .4byte concat__4NodeFR3VQS
-  .4byte concat__4NodeFR3SRT
-  .4byte concat__4NodeFR8Matrix4f
-  .4byte getModelMatrix__4NodeFv
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
+	.4byte __RTTI__5SeMgr
+	.4byte 0
+	.4byte getAgeNodeType__5ANodeFv
+	.4byte read__8CoreNodeFR18RandomAccessStream
+	.4byte update__5SeMgrFv
+	.4byte draw__4NodeFR8Graphics
+	.4byte render__4NodeFR8Graphics
+	.4byte concat__4NodeFv
+	.4byte concat__4NodeFR3VQS
+	.4byte concat__4NodeFR3SRT
+	.4byte concat__4NodeFR8Matrix4f
+	.4byte getModelMatrix__4NodeFv
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 	.4byte 0x414E6F64
@@ -1164,8 +1164,8 @@ __vt__5SeMgr:
 	.4byte 0x802B1B0C
 .global __RTTI__8RouteMgr
 __RTTI__8RouteMgr:
-  .4byte 0x802b1b00
-  .4byte 0x802b1b20
+	.4byte 0x802b1b00
+	.4byte 0x802b1b20
 .global lbl_803DF9A0
 lbl_803DF9A0:
 	.4byte 0x3C4E6F64
@@ -1201,7 +1201,7 @@ lbl_803DF9C8:
 	.4byte 0x6E000000
 .global __RTTI__5GmWin
 __RTTI__5GmWin:
-  .4byte 0x803df9ec
+	.4byte 0x803df9ec
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .global lbl_803EA57C

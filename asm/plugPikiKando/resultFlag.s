@@ -1575,4 +1575,4 @@ flagTable__11ResultFlags:
 	.4byte 0x802AE120
 .global __RTTI__9DemoParms
 __RTTI__9DemoParms:
-  .4byte 0x802ae0fc
+	.4byte 0x802ae0fc

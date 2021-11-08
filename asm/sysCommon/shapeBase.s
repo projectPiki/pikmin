@@ -25910,247 +25910,247 @@ lbl_80228664:
 	.4byte 0x00000000
 .global __vt__10MatobjInfo
 __vt__10MatobjInfo:
-  .4byte __RTTI__10MatobjInfo
-  .4byte 0
-  .4byte attach__10MatobjInfoFv
-  .4byte detach__10MatobjInfoFv
+	.4byte __RTTI__10MatobjInfo
+	.4byte 0
+	.4byte attach__10MatobjInfoFv
+	.4byte detach__10MatobjInfoFv
 .global __vt__10GfxobjInfo
 __vt__10GfxobjInfo:
-  .4byte 0x803dd114
-  .4byte 0
-  .4byte attach__10GfxobjInfoFv
-  .4byte detach__10GfxobjInfoFv
-  .4byte 0x42617365
-  .4byte 0x53686170
-  .4byte 0x65000000
-  .4byte 0x803dd12c
-  .4byte 0
-  .4byte 0
-  .4byte 0x803dd12c
-  .4byte 0
-  .4byte 0x803dd134
-  .4byte 0
-  .4byte 0
+	.4byte 0x803dd114
+	.4byte 0
+	.4byte attach__10GfxobjInfoFv
+	.4byte detach__10GfxobjInfoFv
+	.4byte 0x42617365
+	.4byte 0x53686170
+	.4byte 0x65000000
+	.4byte 0x803dd12c
+	.4byte 0
+	.4byte 0
+	.4byte 0x803dd12c
+	.4byte 0
+	.4byte 0x803dd134
+	.4byte 0
+	.4byte 0
 .global __vt__9BaseShape
 __vt__9BaseShape:
-  .4byte __RTTI__9BaseShape
-  .4byte 0
-  .4byte getAgeNodeType__5ANodeFv
-  .4byte read__9BaseShapeFR18RandomAccessStream
-  .4byte optimize__9BaseShapeFv
-  .4byte update__9BaseShapeFv
-  .4byte render__9BaseShapeFR8Graphics
-  .4byte render2d__9BaseShapeFR8Graphics
-  .4byte makeRouteGroup__9BaseShapeFv
-  .4byte 0x44656c65
-  .4byte 0x67617465
-  .4byte 0x323c4261
-  .4byte 0x73655368
-  .4byte 0x6170652c
-  .4byte 0x204a6f69
-  .4byte 0x6e74202a
-  .4byte 0x2c20756e
-  .4byte 0x7369676e
-  .4byte 0x6564206c
-  .4byte 0x6f6e673e
-  .4byte 0
-  .4byte 0x4944656c
-  .4byte 0x65676174
-  .4byte 0x65323c4a
-  .4byte 0x6f696e74
-  .4byte 0x202a2c20
-  .4byte 0x756e7369
-  .4byte 0x676e6564
-  .4byte 0x206c6f6e
-  .4byte 0x673e0000
-  .4byte "__RTTI__22IDelegate2<P5Joint,Ul>"
-  .4byte 0
-  .4byte 0
+	.4byte __RTTI__9BaseShape
+	.4byte 0
+	.4byte getAgeNodeType__5ANodeFv
+	.4byte read__9BaseShapeFR18RandomAccessStream
+	.4byte optimize__9BaseShapeFv
+	.4byte update__9BaseShapeFv
+	.4byte render__9BaseShapeFR8Graphics
+	.4byte render2d__9BaseShapeFR8Graphics
+	.4byte makeRouteGroup__9BaseShapeFv
+	.4byte 0x44656c65
+	.4byte 0x67617465
+	.4byte 0x323c4261
+	.4byte 0x73655368
+	.4byte 0x6170652c
+	.4byte 0x204a6f69
+	.4byte 0x6e74202a
+	.4byte 0x2c20756e
+	.4byte 0x7369676e
+	.4byte 0x6564206c
+	.4byte 0x6f6e673e
+	.4byte 0
+	.4byte 0x4944656c
+	.4byte 0x65676174
+	.4byte 0x65323c4a
+	.4byte 0x6f696e74
+	.4byte 0x202a2c20
+	.4byte 0x756e7369
+	.4byte 0x676e6564
+	.4byte 0x206c6f6e
+	.4byte 0x673e0000
+	.4byte "__RTTI__22IDelegate2<P5Joint,Ul>"
+	.4byte 0
+	.4byte 0
 .global "__vt__32Delegate2<9BaseShape,P5Joint,Ul>"
 "__vt__32Delegate2<9BaseShape,P5Joint,Ul>":
-  .4byte "__RTTI__32Delegate2<9BaseShape,P5Joint,Ul>"
-  .4byte 0
-  .4byte "invoke__32Delegate2<9BaseShape,P5Joint,Ul>FP5JointUl"
+	.4byte "__RTTI__32Delegate2<9BaseShape,P5Joint,Ul>"
+	.4byte 0
+	.4byte "invoke__32Delegate2<9BaseShape,P5Joint,Ul>FP5JointUl"
 .global "__vt__22IDelegate2<P5Joint,Ul>"
 "__vt__22IDelegate2<P5Joint,Ul>":
-  .4byte "__RTTI__22IDelegate2<P5Joint,Ul>"
-  .4byte 0
-  .4byte 0
-  .4byte 0x4c696768
-  .4byte 0x74466c61
-  .4byte 0x72650000
-  .4byte 0x803dd12c
-  .4byte 0
-  .4byte 0x803dd134
-  .4byte 0
-  .4byte 0
+	.4byte "__RTTI__22IDelegate2<P5Joint,Ul>"
+	.4byte 0
+	.4byte 0
+	.4byte 0x4c696768
+	.4byte 0x74466c61
+	.4byte 0x72650000
+	.4byte 0x803dd12c
+	.4byte 0
+	.4byte 0x803dd134
+	.4byte 0
+	.4byte 0
 .global __vt__10LightFlare
 __vt__10LightFlare:
-  .4byte __RTTI__10LightFlare
-  .4byte 0
-  .4byte getAgeNodeType__5ANodeFv
-  .4byte read__8CoreNodeFR18RandomAccessStream
-  .4byte 0x4c696768
-  .4byte 0x7447726f
-  .4byte 0x75700000
-  .4byte 0x803dd12c
-  .4byte 0
-  .4byte 0x803dd134
-  .4byte 0
-  .4byte 0
+	.4byte __RTTI__10LightFlare
+	.4byte 0
+	.4byte getAgeNodeType__5ANodeFv
+	.4byte read__8CoreNodeFR18RandomAccessStream
+	.4byte 0x4c696768
+	.4byte 0x7447726f
+	.4byte 0x75700000
+	.4byte 0x803dd12c
+	.4byte 0
+	.4byte 0x803dd134
+	.4byte 0
+	.4byte 0
 .global __vt__10LightGroup
 __vt__10LightGroup:
-  .4byte __RTTI__10LightGroup
-  .4byte 0
-  .4byte getAgeNodeType__5ANodeFv
-  .4byte read__8CoreNodeFR18RandomAccessStream
-  .4byte 0x4f626a43
-  .4byte 0x6f6c6c49
-  .4byte 0x6e666f00
-  .4byte 0x803dd12c
-  .4byte 0
-  .4byte 0x803dd134
-  .4byte 0
-  .4byte 0
+	.4byte __RTTI__10LightGroup
+	.4byte 0
+	.4byte getAgeNodeType__5ANodeFv
+	.4byte read__8CoreNodeFR18RandomAccessStream
+	.4byte 0x4f626a43
+	.4byte 0x6f6c6c49
+	.4byte 0x6e666f00
+	.4byte 0x803dd12c
+	.4byte 0
+	.4byte 0x803dd134
+	.4byte 0
+	.4byte 0
 .global __vt__11ObjCollInfo
 __vt__11ObjCollInfo:
-  .4byte __RTTI__11ObjCollInfo
-  .4byte 0
-  .4byte getAgeNodeType__5ANodeFv
-  .4byte read__8CoreNodeFR18RandomAccessStream
-  .4byte 0x416e696d
-  .4byte 0x44617461
-  .4byte 0
-  .4byte 0x803dd12c
-  .4byte 0
-  .4byte 0x803dd134
-  .4byte 0
-  .4byte 0
-  .4byte 0x803dd12c
-  .4byte 0
-  .4byte 0x803dd134
-  .4byte 0
-  .4byte __RTTI__8AnimData
-  .4byte 0
-  .4byte 0
+	.4byte __RTTI__11ObjCollInfo
+	.4byte 0
+	.4byte getAgeNodeType__5ANodeFv
+	.4byte read__8CoreNodeFR18RandomAccessStream
+	.4byte 0x416e696d
+	.4byte 0x44617461
+	.4byte 0
+	.4byte 0x803dd12c
+	.4byte 0
+	.4byte 0x803dd134
+	.4byte 0
+	.4byte 0
+	.4byte 0x803dd12c
+	.4byte 0
+	.4byte 0x803dd134
+	.4byte 0
+	.4byte __RTTI__8AnimData
+	.4byte 0
+	.4byte 0
 .global __vt__7AnimDck
 __vt__7AnimDck:
-  .4byte __RTTI__7AnimDck
-  .4byte 0
-  .4byte getAgeNodeType__5ANodeFv
-  .4byte read__7AnimDckFR18RandomAccessStream
-  .4byte extractSRT__7AnimDckFR3SRTiP12AnimDataInfof
-  .4byte makeAnimSRT__7AnimDckFiP8Matrix4fP8Matrix4fP12AnimDataInfof
-  .4byte detach__8AnimDataFv
-  .4byte writeType__8AnimDataFR18RandomAccessStream
-  .4byte 0x803dd12c
-  .4byte 0
-  .4byte 0x803dd134
-  .4byte 0
-  .4byte __RTTI__8AnimData
-  .4byte 0
-  .4byte 0
+	.4byte __RTTI__7AnimDck
+	.4byte 0
+	.4byte getAgeNodeType__5ANodeFv
+	.4byte read__7AnimDckFR18RandomAccessStream
+	.4byte extractSRT__7AnimDckFR3SRTiP12AnimDataInfof
+	.4byte makeAnimSRT__7AnimDckFiP8Matrix4fP8Matrix4fP12AnimDataInfof
+	.4byte detach__8AnimDataFv
+	.4byte writeType__8AnimDataFR18RandomAccessStream
+	.4byte 0x803dd12c
+	.4byte 0
+	.4byte 0x803dd134
+	.4byte 0
+	.4byte __RTTI__8AnimData
+	.4byte 0
+	.4byte 0
 .global __vt__7AnimDca
 __vt__7AnimDca:
-  .4byte __RTTI__7AnimDca
-  .4byte 0
-  .4byte getAgeNodeType__5ANodeFv
-  .4byte read__7AnimDcaFR18RandomAccessStream
-  .4byte extractSRT__8AnimDataFR3SRTiP12AnimDataInfof
-  .4byte makeAnimSRT__8AnimDataFiP8Matrix4fP8Matrix4fP12AnimDataInfof
-  .4byte detach__8AnimDataFv
-  .4byte writeType__8AnimDataFR18RandomAccessStream
+	.4byte __RTTI__7AnimDca
+	.4byte 0
+	.4byte getAgeNodeType__5ANodeFv
+	.4byte read__7AnimDcaFR18RandomAccessStream
+	.4byte extractSRT__8AnimDataFR3SRTiP12AnimDataInfof
+	.4byte makeAnimSRT__8AnimDataFiP8Matrix4fP8Matrix4fP12AnimDataInfof
+	.4byte detach__8AnimDataFv
+	.4byte writeType__8AnimDataFR18RandomAccessStream
 .global __vt__8AnimData
 __vt__8AnimData:
-  .4byte __RTTI__8AnimData
-  .4byte 0
-  .4byte getAgeNodeType__5ANodeFv
-  .4byte read__8CoreNodeFR18RandomAccessStream
-  .4byte extractSRT__8AnimDataFR3SRTiP12AnimDataInfof
-  .4byte makeAnimSRT__8AnimDataFiP8Matrix4fP8Matrix4fP12AnimDataInfof
-  .4byte detach__8AnimDataFv
-  .4byte writeType__8AnimDataFR18RandomAccessStream
-  .4byte 0x416e696d
-  .4byte 0x436f6e74
-  .4byte 0x65787400
+	.4byte __RTTI__8AnimData
+	.4byte 0
+	.4byte getAgeNodeType__5ANodeFv
+	.4byte read__8CoreNodeFR18RandomAccessStream
+	.4byte extractSRT__8AnimDataFR3SRTiP12AnimDataInfof
+	.4byte makeAnimSRT__8AnimDataFiP8Matrix4fP8Matrix4fP12AnimDataInfof
+	.4byte detach__8AnimDataFv
+	.4byte writeType__8AnimDataFR18RandomAccessStream
+	.4byte 0x416e696d
+	.4byte 0x436f6e74
+	.4byte 0x65787400
 .global __vt__11AnimContext
 __vt__11AnimContext:
-  .4byte __RTTI__11AnimContext
-  .4byte 0
-  .4byte animate__11AnimContextFf
-  .4byte 0x4a6f696e
-  .4byte 0x743a3a4d
-  .4byte 0x6174506f
-  .4byte 0x6c790000
-  .4byte 0x803dd12c
-  .4byte 0
-  .4byte 0x803dd134
-  .4byte 0
-  .4byte 0
+	.4byte __RTTI__11AnimContext
+	.4byte 0
+	.4byte animate__11AnimContextFf
+	.4byte 0x4a6f696e
+	.4byte 0x743a3a4d
+	.4byte 0x6174506f
+	.4byte 0x6c790000
+	.4byte 0x803dd12c
+	.4byte 0
+	.4byte 0x803dd134
+	.4byte 0
+	.4byte 0
 .global __vt__Q25Joint7MatPoly
 __vt__Q25Joint7MatPoly:
-  .4byte __RTTI__Q25Joint7MatPoly
-  .4byte 0
-  .4byte getAgeNodeType__5ANodeFv
-  .4byte read__8CoreNodeFR18RandomAccessStream
-  .4byte 0x803dd12c
-  .4byte 0
-  .4byte 0x803dd134
-  .4byte 0
-  .4byte 0
+	.4byte __RTTI__Q25Joint7MatPoly
+	.4byte 0
+	.4byte getAgeNodeType__5ANodeFv
+	.4byte read__8CoreNodeFR18RandomAccessStream
+	.4byte 0x803dd12c
+	.4byte 0
+	.4byte 0x803dd134
+	.4byte 0
+	.4byte 0
 .global __vt__5Joint
 __vt__5Joint:
-  .4byte __RTTI__5Joint
-  .4byte 0
-  .4byte getAgeNodeType__5ANodeFv
-  .4byte read__5JointFR18RandomAccessStream
-  .4byte 0x803dd12c
-  .4byte 0
-  .4byte 0x803dd134
-  .4byte 0
-  .4byte 0
+	.4byte __RTTI__5Joint
+	.4byte 0
+	.4byte getAgeNodeType__5ANodeFv
+	.4byte read__5JointFR18RandomAccessStream
+	.4byte 0x803dd12c
+	.4byte 0
+	.4byte 0x803dd134
+	.4byte 0
+	.4byte 0
 .global __vt__4Mesh
 __vt__4Mesh:
-  .4byte __RTTI__4Mesh
-  .4byte 0
-  .4byte getAgeNodeType__5ANodeFv
-  .4byte read__4MeshFR18RandomAccessStream
-  .4byte 0x46616365
-  .4byte 0x4e6f6465
-  .4byte 0
-  .4byte 0x803dd12c
-  .4byte 0
-  .4byte 0x803dd134
-  .4byte 0
-  .4byte 0
+	.4byte __RTTI__4Mesh
+	.4byte 0
+	.4byte getAgeNodeType__5ANodeFv
+	.4byte read__4MeshFR18RandomAccessStream
+	.4byte 0x46616365
+	.4byte 0x4e6f6465
+	.4byte 0
+	.4byte 0x803dd12c
+	.4byte 0
+	.4byte 0x803dd134
+	.4byte 0
+	.4byte 0
 .global __vt__8FaceNode
 __vt__8FaceNode:
-  .4byte __RTTI__8FaceNode
-  .4byte 0
-  .4byte getAgeNodeType__5ANodeFv
-  .4byte read__8CoreNodeFR18RandomAccessStream
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0x44697370
-  .4byte 0x4c697374
-  .4byte 0
-  .4byte 0x803dd12c
-  .4byte 0
-  .4byte 0x803dd134
-  .4byte 0
-  .4byte 0
+	.4byte __RTTI__8FaceNode
+	.4byte 0
+	.4byte getAgeNodeType__5ANodeFv
+	.4byte read__8CoreNodeFR18RandomAccessStream
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0x44697370
+	.4byte 0x4c697374
+	.4byte 0
+	.4byte 0x803dd12c
+	.4byte 0
+	.4byte 0x803dd134
+	.4byte 0
+	.4byte 0
 .global __vt__8DispList
 __vt__8DispList:
-  .4byte __RTTI__8DispList
-  .4byte 0
-  .4byte getAgeNodeType__5ANodeFv
-  .4byte read__8DispListFR18RandomAccessStream
-  .4byte 0
+	.4byte __RTTI__8DispList
+	.4byte 0
+	.4byte getAgeNodeType__5ANodeFv
+	.4byte read__8DispListFR18RandomAccessStream
+	.4byte 0
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 	.4byte 0x00000000
@@ -26158,9 +26158,9 @@ __vt__8DispList:
 	.4byte 0x802282D4
 .global __RTTI__5Light
 __RTTI__5Light:
-  .4byte 0x803dd00c
-  .4byte 0x802282e0
-  .4byte 0
+	.4byte 0x803dd00c
+	.4byte 0x802282e0
+	.4byte 0
 .global lbl_803DD038
 lbl_803DD038:
 	.4byte 0x47000000
@@ -26282,73 +26282,73 @@ lbl_803DD10C:
 	.4byte 0x00000000
 .global __RTTI__10MatobjInfo
 __RTTI__10MatobjInfo:
-  .4byte 0x80228670
-  .4byte 0x80228688
-  .4byte 0x414e6f64
-  .4byte 0x65000000
-  .4byte 0x803dd124
-  .4byte 0
-  .4byte lbl_80228350
-  .4byte 0x802286c0
+	.4byte 0x80228670
+	.4byte 0x80228688
+	.4byte 0x414e6f64
+	.4byte 0x65000000
+	.4byte 0x803dd124
+	.4byte 0
+	.4byte lbl_80228350
+	.4byte 0x802286c0
 .global __RTTI__9BaseShape
 __RTTI__9BaseShape:
-  .4byte 0x802286b4
-  .4byte 0x802286cc
+	.4byte 0x802286b4
+	.4byte 0x802286cc
 .global "__RTTI__22IDelegate2<P5Joint,Ul>"
 "__RTTI__22IDelegate2<P5Joint,Ul>":
-  .4byte 0x80228734
-  .4byte 0
+	.4byte 0x80228734
+	.4byte 0
 .global "__RTTI__32Delegate2<9BaseShape,P5Joint,Ul>"
 "__RTTI__32Delegate2<9BaseShape,P5Joint,Ul>":
-  .4byte 0x80228704
-  .4byte 0x80228758
+	.4byte 0x80228704
+	.4byte 0x80228758
 .global __RTTI__10LightFlare
 __RTTI__10LightFlare:
-  .4byte 0x8022877c
-  .4byte 0x80228788
+	.4byte 0x8022877c
+	.4byte 0x80228788
 .global __RTTI__10LightGroup
 __RTTI__10LightGroup:
-  .4byte 0x802287ac
-  .4byte 0x802287b8
+	.4byte 0x802287ac
+	.4byte 0x802287b8
 .global __RTTI__11ObjCollInfo
 __RTTI__11ObjCollInfo:
-  .4byte 0x802287dc
-  .4byte 0x802287e8
-  .4byte 0x416e696d
-  .4byte 0x44636b00
+	.4byte 0x802287dc
+	.4byte 0x802287e8
+	.4byte 0x416e696d
+	.4byte 0x44636b00
 .global __RTTI__8AnimData
 __RTTI__8AnimData:
-  .4byte 0x8022880c
-  .4byte 0x80228818
+	.4byte 0x8022880c
+	.4byte 0x80228818
 .global __RTTI__7AnimDck
 __RTTI__7AnimDck:
-  .4byte 0x803dd16c
-  .4byte 0x8022882c
-  .4byte 0x416e696d
-  .4byte 0x44636100
+	.4byte 0x803dd16c
+	.4byte 0x8022882c
+	.4byte 0x416e696d
+	.4byte 0x44636100
 .global __RTTI__7AnimDca
 __RTTI__7AnimDca:
-  .4byte 0x803dd184
-  .4byte 0x80228868
+	.4byte 0x803dd184
+	.4byte 0x80228868
 .global __RTTI__11AnimContext
 __RTTI__11AnimContext:
-  .4byte 0x802288c4
-  .4byte 0
+	.4byte 0x802288c4
+	.4byte 0
 .global __RTTI__Q25Joint7MatPoly
 __RTTI__Q25Joint7MatPoly:
-  .4byte 0x802288dc
-  .4byte 0x802288ec
-  .4byte 0x4a6f696e
-  .4byte 0x74000000
+	.4byte 0x802288dc
+	.4byte 0x802288ec
+	.4byte 0x4a6f696e
+	.4byte 0x74000000
 .global __RTTI__5Joint
 __RTTI__5Joint:
-  .4byte 0x803dd1a4
-  .4byte 0x80228910
-  .4byte 0x4d657368
-  .4byte 0
+	.4byte 0x803dd1a4
+	.4byte 0x80228910
+	.4byte 0x4d657368
+	.4byte 0
 .global __RTTI__4Mesh
 __RTTI__4Mesh:
-  .4byte 0x803dd1b4
+	.4byte 0x803dd1b4
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .global lbl_803E85F8

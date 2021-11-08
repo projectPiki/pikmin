@@ -7,8 +7,8 @@
 	.4byte 0x802D6C14
 .global __RTTI__18GameCreditsSection
 __RTTI__18GameCreditsSection:
-  .4byte 0x802d6ba0
-  .4byte 0x802d6c30
+	.4byte 0x802d6ba0
+	.4byte 0x802d6c30
 .global lbl_803E5D40
 lbl_803E5D40:
 	.4byte 0x3F800000
@@ -78,20 +78,20 @@ lbl_803E5D8C:
 	.4byte 0x802DA490
 .global __RTTI__10EffShpInst
 __RTTI__10EffShpInst:
-  .4byte 0x802da478
-  .4byte 0x802da49c
+	.4byte 0x802da478
+	.4byte 0x802da49c
 .global __RTTI__9EffectMgr
 __RTTI__9EffectMgr:
-  .4byte 0x802da4e0
-  .4byte 0x802da4ec
+	.4byte 0x802da4e0
+	.4byte 0x802da4ec
 .global __RTTI__26EffectGeometryRegistration
 __RTTI__26EffectGeometryRegistration:
-  .4byte 0x802da510
-  .4byte 0
+	.4byte 0x802da510
+	.4byte 0
 .global __RTTI__11EffectShape
 __RTTI__11EffectShape:
-  .4byte 0x802da538
-  .4byte 0x802da544
+	.4byte 0x802da538
+	.4byte 0x802da544
 .global __RTTI__26EffectParticleRegistration
 __RTTI__26EffectParticleRegistration:
-  .4byte 0x802da568
+	.4byte 0x802da568

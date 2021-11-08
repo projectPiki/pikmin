@@ -2776,102 +2776,102 @@ lbl_801D3FD0:
 /* 801D4014 001D0F74  EC 01 00 28 */	fsubs f0, f1, f0
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
-  .4byte 0x666f726d
-  .4byte 0x6174696f
-  .4byte 0x6e4d6772
-  .4byte 0x2e637070
-  .4byte 0
-  .4byte 0x666f726d
-  .4byte 0x6174696f
-  .4byte 0x6e000000
-  .4byte 0x57696e67
-  .4byte 0x41727261
-  .4byte 0x6e676572
-  .4byte 0
-  .4byte 0x466f726d
-  .4byte 0x41727261
-  .4byte 0x6e676572
-  .4byte 0
-  .4byte __RTTI__12FormArranger
-  .4byte 0
-  .4byte 0
+	.4byte 0x666f726d
+	.4byte 0x6174696f
+	.4byte 0x6e4d6772
+	.4byte 0x2e637070
+	.4byte 0
+	.4byte 0x666f726d
+	.4byte 0x6174696f
+	.4byte 0x6e000000
+	.4byte 0x57696e67
+	.4byte 0x41727261
+	.4byte 0x6e676572
+	.4byte 0
+	.4byte 0x466f726d
+	.4byte 0x41727261
+	.4byte 0x6e676572
+	.4byte 0
+	.4byte __RTTI__12FormArranger
+	.4byte 0
+	.4byte 0
 .global __vt__12WingArranger
 __vt__12WingArranger:
-  .4byte __RTTI__12WingArranger
-  .4byte 0
-  .4byte arrange__12WingArrangerFP12FormationMgr
-  .4byte getLength__12FormArrangerFP12FormationMgr
-  .4byte 0x4c696e65
-  .4byte 0x41727261
-  .4byte 0x6e676572
-  .4byte 0
-  .4byte __RTTI__12FormArranger
-  .4byte 0
-  .4byte 0
+	.4byte __RTTI__12WingArranger
+	.4byte 0
+	.4byte arrange__12WingArrangerFP12FormationMgr
+	.4byte getLength__12FormArrangerFP12FormationMgr
+	.4byte 0x4c696e65
+	.4byte 0x41727261
+	.4byte 0x6e676572
+	.4byte 0
+	.4byte __RTTI__12FormArranger
+	.4byte 0
+	.4byte 0
 .global __vt__12LineArranger
 __vt__12LineArranger:
-  .4byte __RTTI__12LineArranger
-  .4byte 0
-  .4byte arrange__12LineArrangerFP12FormationMgr
-  .4byte getLength__12FormArrangerFP12FormationMgr
-  .4byte 0x50797261
-  .4byte 0x6d696441
-  .4byte 0x7272616e
-  .4byte 0x67657200
-  .4byte __RTTI__12FormArranger
-  .4byte 0
-  .4byte 0
+	.4byte __RTTI__12LineArranger
+	.4byte 0
+	.4byte arrange__12LineArrangerFP12FormationMgr
+	.4byte getLength__12FormArrangerFP12FormationMgr
+	.4byte 0x50797261
+	.4byte 0x6d696441
+	.4byte 0x7272616e
+	.4byte 0x67657200
+	.4byte __RTTI__12FormArranger
+	.4byte 0
+	.4byte 0
 .global __vt__15PyramidArranger
 __vt__15PyramidArranger:
-  .4byte __RTTI__15PyramidArranger
-  .4byte 0
-  .4byte arrange__15PyramidArrangerFP12FormationMgr
-  .4byte getLength__15PyramidArrangerFP12FormationMgr
-  .4byte 0x43697263
-  .4byte 0x6c654172
-  .4byte 0x72616e67
-  .4byte 0x65720000
-  .4byte __RTTI__12FormArranger
-  .4byte 0
-  .4byte 0
+	.4byte __RTTI__15PyramidArranger
+	.4byte 0
+	.4byte arrange__15PyramidArrangerFP12FormationMgr
+	.4byte getLength__15PyramidArrangerFP12FormationMgr
+	.4byte 0x43697263
+	.4byte 0x6c654172
+	.4byte 0x72616e67
+	.4byte 0x65720000
+	.4byte __RTTI__12FormArranger
+	.4byte 0
+	.4byte 0
 .global __vt__14CircleArranger
 __vt__14CircleArranger:
-  .4byte __RTTI__14CircleArranger
-  .4byte 0
-  .4byte arrange__14CircleArrangerFP12FormationMgr
-  .4byte getLength__12FormArrangerFP12FormationMgr
-  .4byte 0x54726176
-  .4byte 0x65727361
-  .4byte 0x626c6500
+	.4byte __RTTI__14CircleArranger
+	.4byte 0
+	.4byte arrange__14CircleArrangerFP12FormationMgr
+	.4byte getLength__12FormArrangerFP12FormationMgr
+	.4byte 0x54726176
+	.4byte 0x65727361
+	.4byte 0x626c6500
 .global __vt__11Traversable
 __vt__11Traversable:
-  .4byte 0x803debc4
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0x466f726d
-  .4byte 0x6174696f
-  .4byte 0x6e4d6772
-  .4byte 0
-  .4byte 0x803debc4
-  .4byte 0
-  .4byte 0
+	.4byte 0x803debc4
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0x466f726d
+	.4byte 0x6174696f
+	.4byte 0x6e4d6772
+	.4byte 0
+	.4byte 0x803debc4
+	.4byte 0
+	.4byte 0
 .global __vt__12FormationMgr
 __vt__12FormationMgr:
-  .4byte __RTTI__12FormationMgr
-  .4byte 0
-  .4byte getCreature__12FormationMgrFi
-  .4byte getFirst__12FormationMgrFv
-  .4byte getNext__12FormationMgrFi
-  .4byte isDone__12FormationMgrFi
+	.4byte __RTTI__12FormationMgr
+	.4byte 0
+	.4byte getCreature__12FormationMgrFi
+	.4byte getFirst__12FormationMgrFv
+	.4byte getNext__12FormationMgrFi
+	.4byte isDone__12FormationMgrFi
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
-  .4byte 0x802ad9f8
-  .4byte 0x802ada04
-  .4byte 0x802ad9bc
-  .4byte 0x802ada18
+	.4byte 0x802ad9f8
+	.4byte 0x802ada04
+	.4byte 0x802ad9bc
+	.4byte 0x802ada18
 .global lbl_803DEB10
 lbl_803DEB10:
 	.4byte 0x6E6F6E61
@@ -2977,23 +2977,23 @@ lbl_803DEB98:
 	.4byte 0x00000000
 .global __RTTI__12FormArranger
 __RTTI__12FormArranger:
-  .4byte 0x802adbd0
-  .4byte 0
+	.4byte 0x802adbd0
+	.4byte 0
 .global __RTTI__12WingArranger
 __RTTI__12WingArranger:
-  .4byte 0x802adbc0
-  .4byte 0x802adbe0
+	.4byte 0x802adbc0
+	.4byte 0x802adbe0
 .global __RTTI__12LineArranger
 __RTTI__12LineArranger:
-  .4byte 0x802adbfc
-  .4byte 0x802adc0c
+	.4byte 0x802adbfc
+	.4byte 0x802adc0c
 .global __RTTI__15PyramidArranger
 __RTTI__15PyramidArranger:
-  .4byte 0x802adc28
-  .4byte 0x802adc38
+	.4byte 0x802adc28
+	.4byte 0x802adc38
 .global __RTTI__14CircleArranger
 __RTTI__14CircleArranger:
-  .4byte 0x802adc54
+	.4byte 0x802adc54
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 	.4byte 0x00000000

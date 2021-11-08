@@ -1,18 +1,18 @@
 .include "macros.inc"
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
-  .4byte 0x802d2f58
-  .4byte 0x802d2f64
-  .4byte 0
-  .4byte 0x802d2f78
-  .4byte 0
-  .4byte 0x802d2f94
-  .4byte 0x802d2fa4
+	.4byte 0x802d2f58
+	.4byte 0x802d2f64
+	.4byte 0
+	.4byte 0x802d2f78
+	.4byte 0
+	.4byte 0x802d2f94
+	.4byte 0x802d2fa4
 .global "__RTTI__Q23zen20NumberPicCallBack<i>"
 "__RTTI__Q23zen20NumberPicCallBack<i>":
-  .4byte 0x802d2f18
-  .4byte 0x802d2fb8
-  .4byte 0
+	.4byte 0x802d2f18
+	.4byte 0x802d2fb8
+	.4byte 0
 .global lbl_803E5728
 lbl_803E5728:
 	.4byte 0x6F6E2530

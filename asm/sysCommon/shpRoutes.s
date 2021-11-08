@@ -2420,55 +2420,55 @@ lbl_80228A2C:
 	.4byte 0x00000000
 .global __vt__10RouteGroup
 __vt__10RouteGroup:
-  .4byte __RTTI__10RouteGroup
-  .4byte 0
-  .4byte getAgeNodeType__5ANodeFv
-  .4byte read__8CoreNodeFR18RandomAccessStream
-  .4byte msgCommand__8EditNodeFR7DataMsg
-  .4byte render2d__10RouteGroupFR8GraphicsRi
+	.4byte __RTTI__10RouteGroup
+	.4byte 0
+	.4byte getAgeNodeType__5ANodeFv
+	.4byte read__8CoreNodeFR18RandomAccessStream
+	.4byte msgCommand__8EditNodeFR7DataMsg
+	.4byte render2d__10RouteGroupFR8GraphicsRi
 .global __vt__8EditNode
 __vt__8EditNode:
-  .4byte __RTTI__8EditNode
-  .4byte 0
-  .4byte getAgeNodeType__5ANodeFv
-  .4byte read__8CoreNodeFR18RandomAccessStream
-  .4byte msgCommand__8EditNodeFR7DataMsg
-  .4byte render2d__8EditNodeFR8GraphicsRi
-  .4byte 0x526f7574
-  .4byte 0x654c696e
-  .4byte 0x6b000000
-  .4byte 0x803dd2c4
-  .4byte 0
-  .4byte 0x803dd2cc
-  .4byte 0
-  .4byte 0
+	.4byte __RTTI__8EditNode
+	.4byte 0
+	.4byte getAgeNodeType__5ANodeFv
+	.4byte read__8CoreNodeFR18RandomAccessStream
+	.4byte msgCommand__8EditNodeFR7DataMsg
+	.4byte render2d__8EditNodeFR8GraphicsRi
+	.4byte 0x526f7574
+	.4byte 0x654c696e
+	.4byte 0x6b000000
+	.4byte 0x803dd2c4
+	.4byte 0
+	.4byte 0x803dd2cc
+	.4byte 0
+	.4byte 0
 .global __vt__9RouteLink
 __vt__9RouteLink:
-  .4byte __RTTI__9RouteLink
-  .4byte 0
-  .4byte getAgeNodeType__5ANodeFv
-  .4byte read__8CoreNodeFR18RandomAccessStream
-  .4byte 0x526f7574
-  .4byte 0x65506f69
-  .4byte 0x6e740000
-  .4byte 0x803dd2c4
-  .4byte 0
-  .4byte 0x803dd2cc
-  .4byte 0
-  .4byte 0
+	.4byte __RTTI__9RouteLink
+	.4byte 0
+	.4byte getAgeNodeType__5ANodeFv
+	.4byte read__8CoreNodeFR18RandomAccessStream
+	.4byte 0x526f7574
+	.4byte 0x65506f69
+	.4byte 0x6e740000
+	.4byte 0x803dd2c4
+	.4byte 0
+	.4byte 0x803dd2cc
+	.4byte 0
+	.4byte 0
 .global __vt__10RoutePoint
 __vt__10RoutePoint:
-  .4byte __RTTI__10RoutePoint
-  .4byte 0
-  .4byte getAgeNodeType__5ANodeFv
-  .4byte read__8CoreNodeFR18RandomAccessStream
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
+	.4byte __RTTI__10RoutePoint
+	.4byte 0
+	.4byte getAgeNodeType__5ANodeFv
+	.4byte read__8CoreNodeFR18RandomAccessStream
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .global lbl_803DD240
@@ -2554,11 +2554,11 @@ lbl_803DD2B4:
 	.4byte 0x80228AFC
 .global __RTTI__8EditNode
 __RTTI__8EditNode:
-  .4byte 0x80228b08
-  .4byte 0x80228b14
+	.4byte 0x80228b08
+	.4byte 0x80228b14
 .global __RTTI__10RouteGroup
 __RTTI__10RouteGroup:
-  .4byte 0x80228ae4
+	.4byte 0x80228ae4
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .global lbl_803E8690

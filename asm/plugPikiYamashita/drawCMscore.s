@@ -15,13 +15,13 @@ lbl_803E759C:
 	.4byte 0x00000000
 .global __RTTI__Q23zen10DrawScreen_3
 __RTTI__Q23zen10DrawScreen_3:
-  .4byte 0x802e6d24
-  .4byte 0
+	.4byte 0x802e6d24
+	.4byte 0
 .global __RTTI__Q23zen12DrawMenuBase
 __RTTI__Q23zen12DrawMenuBase:
-  .4byte 0x802e6d34
-  .4byte 0x802e6d48
+	.4byte 0x802e6d34
+	.4byte 0x802e6d48
 .global __RTTI__Q23zen12DrawCMCSmenu
 __RTTI__Q23zen12DrawCMCSmenu:
-  .4byte 0x802e6d10
-  .4byte 0x802e6d54
+	.4byte 0x802e6d10
+	.4byte 0x802e6d54

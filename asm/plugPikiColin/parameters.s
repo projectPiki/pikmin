@@ -481,20 +481,20 @@ __ct__9P2DWindowFP7P2DPaneP18RandomAccessStreamUs:
 /* 801B3B50 001B0AB0  98 DE 01 1A */	stb r6, 0x11a(r30)
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
-  .4byte 0x70617261
-  .4byte 0x6d657465
-  .4byte 0x72732e63
-  .4byte 0x70700000
-  .4byte 0x42617365
-  .4byte 0x5061726d
-  .4byte 0
+	.4byte 0x70617261
+	.4byte 0x6d657465
+	.4byte 0x72732e63
+	.4byte 0x70700000
+	.4byte 0x42617365
+	.4byte 0x5061726d
+	.4byte 0
 .global __vt__8BaseParm
 __vt__8BaseParm:
-  .4byte 0x803dde30
-  .4byte 0
-  .4byte 0
-  .4byte write__8BaseParmFR18RandomAccessStream
-  .4byte read__8BaseParmFR18RandomAccessStream
+	.4byte 0x803dde30
+	.4byte 0
+	.4byte 0
+	.4byte write__8BaseParmFR18RandomAccessStream
+	.4byte read__8BaseParmFR18RandomAccessStream
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 	.4byte 0x00000000

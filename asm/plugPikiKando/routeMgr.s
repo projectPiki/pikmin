@@ -9021,74 +9021,74 @@ lbl_801F8160:
 /* 801F8188 001F50E8  98 67 00 01 */	stb r3, 1(r7)
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
-  .4byte 0x726f7574
-  .4byte 0x654d6772
-  .4byte 0x2e637070
-  .4byte 0
-  .4byte 0x726f7574
-  .4byte 0x654d6772
-  .4byte 0
-  .4byte 0x436f7265
-  .4byte 0x4e6f6465
-  .4byte 0
-  .4byte 0x803df978
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0x526f7574
-  .4byte 0x654d6772
-  .4byte 0
-  .4byte 0x803df978
-  .4byte 0
-  .4byte 0x803df980
-  .4byte 0
-  .4byte 0
-  .4byte 0x803df978
-  .4byte 0
-  .4byte 0x803df980
-  .4byte 0
-  .4byte 0x803df990
-  .4byte 0
-  .4byte 0
+	.4byte 0x726f7574
+	.4byte 0x654d6772
+	.4byte 0x2e637070
+	.4byte 0
+	.4byte 0x726f7574
+	.4byte 0x654d6772
+	.4byte 0
+	.4byte 0x436f7265
+	.4byte 0x4e6f6465
+	.4byte 0
+	.4byte 0x803df978
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0x526f7574
+	.4byte 0x654d6772
+	.4byte 0
+	.4byte 0x803df978
+	.4byte 0
+	.4byte 0x803df980
+	.4byte 0
+	.4byte 0
+	.4byte 0x803df978
+	.4byte 0
+	.4byte 0x803df980
+	.4byte 0
+	.4byte 0x803df990
+	.4byte 0
+	.4byte 0
 .global __vt__8RouteMgr
 __vt__8RouteMgr:
-  .4byte __RTTI__8RouteMgr
-  .4byte 0
-  .4byte getAgeNodeType__5ANodeFv
-  .4byte read__8CoreNodeFR18RandomAccessStream
-  .4byte update__8RouteMgrFv
-  .4byte draw__4NodeFR8Graphics
-  .4byte render__4NodeFR8Graphics
-  .4byte concat__4NodeFv
-  .4byte concat__4NodeFR3VQS
-  .4byte concat__4NodeFR3SRT
-  .4byte concat__4NodeFR8Matrix4f
-  .4byte getModelMatrix__4NodeFv
-  .4byte 0
+	.4byte __RTTI__8RouteMgr
+	.4byte 0
+	.4byte getAgeNodeType__5ANodeFv
+	.4byte read__8CoreNodeFR18RandomAccessStream
+	.4byte update__8RouteMgrFv
+	.4byte draw__4NodeFR8Graphics
+	.4byte render__4NodeFR8Graphics
+	.4byte concat__4NodeFv
+	.4byte concat__4NodeFR3VQS
+	.4byte concat__4NodeFR3SRT
+	.4byte concat__4NodeFR8Matrix4f
+	.4byte getModelMatrix__4NodeFv
+	.4byte 0
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
-  .4byte 0x802b1734
-  .4byte 0x802b1794
-  .4byte 0
-  .4byte 0x802b17fc
-  .4byte 0
-  .4byte 0x802b1808
-  .4byte 0x802b1814
+	.4byte 0x802b1734
+	.4byte 0x802b1794
+	.4byte 0
+	.4byte 0x802b17fc
+	.4byte 0
+	.4byte 0x802b1808
+	.4byte 0x802b1814
 .global __RTTI__13WorkObjectMgr
 __RTTI__13WorkObjectMgr:
-  .4byte 0x802b17ec
-  .4byte 0x802b1838
+	.4byte 0x802b17ec
+	.4byte 0x802b1838
 .global __RTTI__14WorkObjectNode
 __RTTI__14WorkObjectNode:
-  .4byte 0x802b18dc
-  .4byte 0x802b18ec
-  .4byte 0
+	.4byte 0x802b18dc
+	.4byte 0x802b18ec
+	.4byte 0
 .global avoidWayPointIndex__10PathFinder
 avoidWayPointIndex__10PathFinder:
 	.4byte 0xFFFFFFFF

@@ -381,50 +381,50 @@ lbl_801D1B38:
 /* 801D1B5C 001CEABC  38 60 00 03 */	li r3, 3
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
-  .4byte 0x696e7465
-  .4byte 0x72616374
-  .4byte 0x50756c6c
-  .4byte 0x6f75742e
-  .4byte 0x63707000
-  .4byte 0x696e7465
-  .4byte 0x72616374
-  .4byte 0x50756c6c
-  .4byte 0x6f757400
-  .4byte 0x496e7465
-  .4byte 0x72616374
-  .4byte 0x50756c6c
-  .4byte 0x6f757400
-  .4byte 0x496e7465
-  .4byte 0x72616374
-  .4byte 0x696f6e00
-  .4byte 0x803dea20
-  .4byte 0
-  .4byte 0
+	.4byte 0x696e7465
+	.4byte 0x72616374
+	.4byte 0x50756c6c
+	.4byte 0x6f75742e
+	.4byte 0x63707000
+	.4byte 0x696e7465
+	.4byte 0x72616374
+	.4byte 0x50756c6c
+	.4byte 0x6f757400
+	.4byte 0x496e7465
+	.4byte 0x72616374
+	.4byte 0x50756c6c
+	.4byte 0x6f757400
+	.4byte 0x496e7465
+	.4byte 0x72616374
+	.4byte 0x696f6e00
+	.4byte 0x803dea20
+	.4byte 0
+	.4byte 0
 .global __vt__15InteractPullout
 __vt__15InteractPullout:
-  .4byte __RTTI__15InteractPullout
-  .4byte 0
-  .4byte actCommon__15InteractPulloutFP8Creature
-  .4byte actPiki__15InteractPulloutFP4Piki
-  .4byte actTeki__11InteractionFP4Teki
-  .4byte actNavi__11InteractionFP4Navi
-  .4byte actBoss__11InteractionFP4Boss
-  .4byte actPellet__11InteractionFP6Pellet
-  .4byte actHinderRock__11InteractionFP10HinderRock
-  .4byte actBridge__11InteractionFP6Bridge
-  .4byte actItem__15InteractPulloutFP12ItemCreature
+	.4byte __RTTI__15InteractPullout
+	.4byte 0
+	.4byte actCommon__15InteractPulloutFP8Creature
+	.4byte actPiki__15InteractPulloutFP4Piki
+	.4byte actTeki__11InteractionFP4Teki
+	.4byte actNavi__11InteractionFP4Navi
+	.4byte actBoss__11InteractionFP4Boss
+	.4byte actPellet__11InteractionFP6Pellet
+	.4byte actHinderRock__11InteractionFP10HinderRock
+	.4byte actBridge__11InteractionFP6Bridge
+	.4byte actItem__15InteractPulloutFP12ItemCreature
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
-  .4byte 0x802ad22c
-  .4byte 0
+	.4byte 0x802ad22c
+	.4byte 0
 .global __RTTI__12InteractWarn
 __RTTI__12InteractWarn:
-  .4byte 0x802ad21c
-  .4byte 0x802ad238
+	.4byte 0x802ad21c
+	.4byte 0x802ad238
 .global __RTTI__12InteractTalk
 __RTTI__12InteractTalk:
-  .4byte 0x802ad270
-  .4byte 0x802ad280
+	.4byte 0x802ad270
+	.4byte 0x802ad280
 .global lbl_803DEA10
 lbl_803DEA10:
 	.4byte 0x00000000

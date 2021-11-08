@@ -2913,109 +2913,109 @@ lbl_802A7860:
 	.4byte 0x00000000
 .global __vt__21MapSelectSetupSection
 __vt__21MapSelectSetupSection:
-  .4byte __RTTI__21MapSelectSetupSection
-  .4byte 0
-  .4byte getAgeNodeType__5ANodeFv
-  .4byte read__8CoreNodeFR18RandomAccessStream
-  .4byte update__21MapSelectSetupSectionFv
-  .4byte draw__21MapSelectSetupSectionFR8Graphics
-  .4byte render__4NodeFR8Graphics
-  .4byte concat__4NodeFv
-  .4byte concat__4NodeFR3VQS
-  .4byte concat__4NodeFR3SRT
-  .4byte concat__4NodeFR8Matrix4f
-  .4byte getModelMatrix__4NodeFv
-  .4byte 0x4d617053
-  .4byte 0x656c6563
-  .4byte 0x74536563
-  .4byte 0x74696f6e
-  .4byte 0
-  .4byte 0x803dda48
-  .4byte 0
-  .4byte 0x803dda50
-  .4byte 0
-  .4byte 0x803dda60
-  .4byte 0
-  .4byte 0
-  .4byte 0x803dda48
-  .4byte 0
-  .4byte 0x803dda50
-  .4byte 0
-  .4byte 0x803dda60
-  .4byte 0
-  .4byte 0x803dda78
-  .4byte 0
-  .4byte 0
+	.4byte __RTTI__21MapSelectSetupSection
+	.4byte 0
+	.4byte getAgeNodeType__5ANodeFv
+	.4byte read__8CoreNodeFR18RandomAccessStream
+	.4byte update__21MapSelectSetupSectionFv
+	.4byte draw__21MapSelectSetupSectionFR8Graphics
+	.4byte render__4NodeFR8Graphics
+	.4byte concat__4NodeFv
+	.4byte concat__4NodeFR3VQS
+	.4byte concat__4NodeFR3SRT
+	.4byte concat__4NodeFR8Matrix4f
+	.4byte getModelMatrix__4NodeFv
+	.4byte 0x4d617053
+	.4byte 0x656c6563
+	.4byte 0x74536563
+	.4byte 0x74696f6e
+	.4byte 0
+	.4byte 0x803dda48
+	.4byte 0
+	.4byte 0x803dda50
+	.4byte 0
+	.4byte 0x803dda60
+	.4byte 0
+	.4byte 0
+	.4byte 0x803dda48
+	.4byte 0
+	.4byte 0x803dda50
+	.4byte 0
+	.4byte 0x803dda60
+	.4byte 0
+	.4byte 0x803dda78
+	.4byte 0
+	.4byte 0
 .global __vt__16MapSelectSection
 __vt__16MapSelectSection:
-  .4byte __RTTI__16MapSelectSection
-  .4byte 0
-  .4byte getAgeNodeType__5ANodeFv
-  .4byte read__8CoreNodeFR18RandomAccessStream
-  .4byte update__4NodeFv
-  .4byte draw__4NodeFR8Graphics
-  .4byte render__4NodeFR8Graphics
-  .4byte concat__4NodeFv
-  .4byte concat__4NodeFR3VQS
-  .4byte concat__4NodeFR3SRT
-  .4byte concat__4NodeFR8Matrix4f
-  .4byte getModelMatrix__4NodeFv
-  .4byte init__16MapSelectSectionFv
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0x44656c65
-  .4byte 0x67617465
-  .4byte 0x313c4d65
-  .4byte 0x6e752c20
-  .4byte 0x4d656e75
-  .4byte 0x20263e00
-  .4byte 0x4944656c
-  .4byte 0x65676174
-  .4byte 0x65313c4d
-  .4byte 0x656e7520
-  .4byte 0x263e0000
-  .4byte "__RTTI__18IDelegate1<R4Menu>_1"
-  .4byte 0
-  .4byte 0
+	.4byte __RTTI__16MapSelectSection
+	.4byte 0
+	.4byte getAgeNodeType__5ANodeFv
+	.4byte read__8CoreNodeFR18RandomAccessStream
+	.4byte update__4NodeFv
+	.4byte draw__4NodeFR8Graphics
+	.4byte render__4NodeFR8Graphics
+	.4byte concat__4NodeFv
+	.4byte concat__4NodeFR3VQS
+	.4byte concat__4NodeFR3SRT
+	.4byte concat__4NodeFR8Matrix4f
+	.4byte getModelMatrix__4NodeFv
+	.4byte init__16MapSelectSectionFv
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0x44656c65
+	.4byte 0x67617465
+	.4byte 0x313c4d65
+	.4byte 0x6e752c20
+	.4byte 0x4d656e75
+	.4byte 0x20263e00
+	.4byte 0x4944656c
+	.4byte 0x65676174
+	.4byte 0x65313c4d
+	.4byte 0x656e7520
+	.4byte 0x263e0000
+	.4byte "__RTTI__18IDelegate1<R4Menu>_1"
+	.4byte 0
+	.4byte 0
 .global "__vt__23Delegate1<4Menu,R4Menu>"
 "__vt__23Delegate1<4Menu,R4Menu>":
-  .4byte "__RTTI__23Delegate1<4Menu,R4Menu>"
-  .4byte 0
-  .4byte "invoke__23Delegate1<4Menu,R4Menu>FR4Menu"
-  .4byte 0x44656c65
-  .4byte 0x67617465
-  .4byte 0x313c4d61
-  .4byte 0x7053656c
-  .4byte 0x65637453
-  .4byte 0x65747570
-  .4byte 0x53656374
-  .4byte 0x696f6e2c
-  .4byte 0x204d656e
-  .4byte 0x7520263e
-  .4byte 0
-  .4byte "__RTTI__18IDelegate1<R4Menu>_1"
-  .4byte 0
-  .4byte 0
+	.4byte "__RTTI__23Delegate1<4Menu,R4Menu>"
+	.4byte 0
+	.4byte "invoke__23Delegate1<4Menu,R4Menu>FR4Menu"
+	.4byte 0x44656c65
+	.4byte 0x67617465
+	.4byte 0x313c4d61
+	.4byte 0x7053656c
+	.4byte 0x65637453
+	.4byte 0x65747570
+	.4byte 0x53656374
+	.4byte 0x696f6e2c
+	.4byte 0x204d656e
+	.4byte 0x7520263e
+	.4byte 0
+	.4byte "__RTTI__18IDelegate1<R4Menu>_1"
+	.4byte 0
+	.4byte 0
 .global "__vt__41Delegate1<21MapSelectSetupSection,R4Menu>"
 "__vt__41Delegate1<21MapSelectSetupSection,R4Menu>":
-  .4byte "__RTTI__41Delegate1<21MapSelectSetupSection,R4Menu>"
-  .4byte 0
-  .4byte "invoke__41Delegate1<21MapSelectSetupSection,R4Menu>FR4Menu"
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
+	.4byte "__RTTI__41Delegate1<21MapSelectSetupSection,R4Menu>"
+	.4byte 0
+	.4byte "invoke__41Delegate1<21MapSelectSetupSection,R4Menu>FR4Menu"
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 	.4byte 0x696F6E00
@@ -3023,9 +3023,9 @@ __vt__16MapSelectSection:
 	.4byte 0x802A7774
 .global __RTTI__17CardSelectSection
 __RTTI__17CardSelectSection:
-  .4byte 0x802a7760
-  .4byte 0x802a7790
-  .4byte 0
+	.4byte 0x802a7760
+	.4byte 0x802a7790
+	.4byte 0
 .global lbl_803DDA28
 lbl_803DDA28:
 	.4byte 0x25730000
@@ -3052,16 +3052,16 @@ lbl_803DDA3C:
 	.4byte 0x802A792C
 .global __RTTI__21MapSelectSetupSection
 __RTTI__21MapSelectSetupSection:
-  .4byte 0x802a7914
-  .4byte 0x802a7940
-  .4byte 0x53656374
-  .4byte 0x696f6e00
-  .4byte 0x803dda70
-  .4byte 0x802a79a0
+	.4byte 0x802a7914
+	.4byte 0x802a7940
+	.4byte 0x53656374
+	.4byte 0x696f6e00
+	.4byte 0x803dda70
+	.4byte 0x802a79a0
 .global __RTTI__16MapSelectSection
 __RTTI__16MapSelectSection:
-  .4byte 0x802a798c
-  .4byte 0x802a79bc
+	.4byte 0x802a798c
+	.4byte 0x802a79bc
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .global lbl_803E8880

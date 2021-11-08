@@ -2071,61 +2071,61 @@ checkArrival__27TAIAgoTargetPriorityFaceDirFR4Teki:
 /* 801A9894 001A67F4  C0 01 00 5C */	lfs f0, 0x5c(r1)
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
-  .4byte 0x67616d65
-  .4byte 0x50726566
-  .4byte 0x732e6370
-  .4byte 0x70000000
-  .4byte 0x47616d65
-  .4byte 0x50726566
-  .4byte 0x73000000
-  .4byte 0x506c6179
-  .4byte 0x53746174
-  .4byte 0x65000000
-  .4byte 0x436f7265
-  .4byte 0x4e6f6465
-  .4byte 0
-  .4byte 0x803dd938
-  .4byte 0
-  .4byte 0
-  .4byte 0x803dd938
-  .4byte 0
-  .4byte 0x803dd940
-  .4byte 0
-  .4byte 0
+	.4byte 0x67616d65
+	.4byte 0x50726566
+	.4byte 0x732e6370
+	.4byte 0x70000000
+	.4byte 0x47616d65
+	.4byte 0x50726566
+	.4byte 0x73000000
+	.4byte 0x506c6179
+	.4byte 0x53746174
+	.4byte 0x65000000
+	.4byte 0x436f7265
+	.4byte 0x4e6f6465
+	.4byte 0
+	.4byte 0x803dd938
+	.4byte 0
+	.4byte 0
+	.4byte 0x803dd938
+	.4byte 0
+	.4byte 0x803dd940
+	.4byte 0
+	.4byte 0
 .global __vt__9PlayState
 __vt__9PlayState:
-  .4byte __RTTI__9PlayState
-  .4byte 0
-  .4byte getAgeNodeType__5ANodeFv
-  .4byte read__9PlayStateFR18RandomAccessStream
-  .4byte write__9PlayStateFR18RandomAccessStream
-  .4byte 0x803dd938
-  .4byte 0
-  .4byte 0x803dd940
-  .4byte 0
-  .4byte 0
+	.4byte __RTTI__9PlayState
+	.4byte 0
+	.4byte getAgeNodeType__5ANodeFv
+	.4byte read__9PlayStateFR18RandomAccessStream
+	.4byte write__9PlayStateFR18RandomAccessStream
+	.4byte 0x803dd938
+	.4byte 0
+	.4byte 0x803dd940
+	.4byte 0
+	.4byte 0
 .global __vt__9GamePrefs
 __vt__9GamePrefs:
-  .4byte __RTTI__9GamePrefs
-  .4byte 0
-  .4byte getAgeNodeType__5ANodeFv
-  .4byte read__9GamePrefsFR18RandomAccessStream
-  .4byte write__9GamePrefsFR18RandomAccessStream
+	.4byte __RTTI__9GamePrefs
+	.4byte 0
+	.4byte getAgeNodeType__5ANodeFv
+	.4byte read__9GamePrefsFR18RandomAccessStream
+	.4byte write__9GamePrefsFR18RandomAccessStream
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .global __RTTI__16OnePlayerSection
 __RTTI__16OnePlayerSection:
-  .4byte 0x802a67e8
-  .4byte 0x802a6844
+	.4byte 0x802a67e8
+	.4byte 0x802a6844
 .global __RTTI__11GenFileInfo
 __RTTI__11GenFileInfo:
-  .4byte 0x802a689c
-  .4byte 0x802a68a8
+	.4byte 0x802a689c
+	.4byte 0x802a68a8
 .global __RTTI__9StageInfo
 __RTTI__9StageInfo:
-  .4byte 0x802a68e8
-  .4byte 0x802a68f4
-  .4byte 0x414e6f64
-  .4byte 0x65000000
-  .4byte 0x803dd930
-  .4byte 0
+	.4byte 0x802a68e8
+	.4byte 0x802a68f4
+	.4byte 0x414e6f64
+	.4byte 0x65000000
+	.4byte 0x803dd930
+	.4byte 0

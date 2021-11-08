@@ -3845,117 +3845,117 @@ lbl_802A8920:
 	.4byte 0x00000000
 .global "__vt__37Delegate1<17TitleSetupSection,R4Menu>"
 "__vt__37Delegate1<17TitleSetupSection,R4Menu>":
-  .4byte "__RTTI__37Delegate1<17TitleSetupSection,R4Menu>"
-  .4byte 0
-  .4byte "invoke__37Delegate1<17TitleSetupSection,R4Menu>FR4Menu"
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0x47616d65
-  .4byte 0x496e7465
-  .4byte 0x72666163
-  .4byte 0x65000000
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0x5469746c
-  .4byte 0x65536574
-  .4byte 0x75705365
-  .4byte 0x6374696f
-  .4byte 0x6e000000
-  .4byte 0x803ddf54
-  .4byte 0
-  .4byte 0x803ddf5c
-  .4byte 0
-  .4byte 0
-  .4byte 0x803ddf54
-  .4byte 0
-  .4byte 0x803ddf5c
-  .4byte 0
-  .4byte 0x803ddf84
-  .4byte 0
-  .4byte 0
+	.4byte "__RTTI__37Delegate1<17TitleSetupSection,R4Menu>"
+	.4byte 0
+	.4byte "invoke__37Delegate1<17TitleSetupSection,R4Menu>FR4Menu"
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0x47616d65
+	.4byte 0x496e7465
+	.4byte 0x72666163
+	.4byte 0x65000000
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0x5469746c
+	.4byte 0x65536574
+	.4byte 0x75705365
+	.4byte 0x6374696f
+	.4byte 0x6e000000
+	.4byte 0x803ddf54
+	.4byte 0
+	.4byte 0x803ddf5c
+	.4byte 0
+	.4byte 0
+	.4byte 0x803ddf54
+	.4byte 0
+	.4byte 0x803ddf5c
+	.4byte 0
+	.4byte 0x803ddf84
+	.4byte 0
+	.4byte 0
 .global __vt__17TitleSetupSection
 __vt__17TitleSetupSection:
-  .4byte __RTTI__17TitleSetupSection
-  .4byte 0
-  .4byte getAgeNodeType__5ANodeFv
-  .4byte read__8CoreNodeFR18RandomAccessStream
-  .4byte update__17TitleSetupSectionFv
-  .4byte draw__17TitleSetupSectionFR8Graphics
-  .4byte render__4NodeFR8Graphics
-  .4byte concat__4NodeFv
-  .4byte concat__4NodeFR3VQS
-  .4byte concat__4NodeFR3SRT
-  .4byte concat__4NodeFR8Matrix4f
-  .4byte getModelMatrix__4NodeFv
-  .4byte 0x5469746c
-  .4byte 0x65735365
-  .4byte 0x6374696f
-  .4byte 0x6e000000
-  .4byte 0x803ddf54
-  .4byte 0
-  .4byte 0x803ddf5c
-  .4byte 0
-  .4byte 0x803ddf84
-  .4byte 0
-  .4byte 0
-  .4byte 0x803ddf54
-  .4byte 0
-  .4byte 0x803ddf5c
-  .4byte 0
-  .4byte 0x803ddf84
-  .4byte 0
-  .4byte 0x803ddfa0
-  .4byte 0
-  .4byte 0
+	.4byte __RTTI__17TitleSetupSection
+	.4byte 0
+	.4byte getAgeNodeType__5ANodeFv
+	.4byte read__8CoreNodeFR18RandomAccessStream
+	.4byte update__17TitleSetupSectionFv
+	.4byte draw__17TitleSetupSectionFR8Graphics
+	.4byte render__4NodeFR8Graphics
+	.4byte concat__4NodeFv
+	.4byte concat__4NodeFR3VQS
+	.4byte concat__4NodeFR3SRT
+	.4byte concat__4NodeFR8Matrix4f
+	.4byte getModelMatrix__4NodeFv
+	.4byte 0x5469746c
+	.4byte 0x65735365
+	.4byte 0x6374696f
+	.4byte 0x6e000000
+	.4byte 0x803ddf54
+	.4byte 0
+	.4byte 0x803ddf5c
+	.4byte 0
+	.4byte 0x803ddf84
+	.4byte 0
+	.4byte 0
+	.4byte 0x803ddf54
+	.4byte 0
+	.4byte 0x803ddf5c
+	.4byte 0
+	.4byte 0x803ddf84
+	.4byte 0
+	.4byte 0x803ddfa0
+	.4byte 0
+	.4byte 0
 .global __vt__13TitlesSection
 __vt__13TitlesSection:
-  .4byte __RTTI__13TitlesSection
-  .4byte 0
-  .4byte getAgeNodeType__5ANodeFv
-  .4byte read__8CoreNodeFR18RandomAccessStream
-  .4byte update__4NodeFv
-  .4byte draw__4NodeFR8Graphics
-  .4byte render__4NodeFR8Graphics
-  .4byte concat__4NodeFv
-  .4byte concat__4NodeFR3VQS
-  .4byte concat__4NodeFR3SRT
-  .4byte concat__4NodeFR8Matrix4f
-  .4byte getModelMatrix__4NodeFv
-  .4byte init__13TitlesSectionFv
-  .4byte 0x5469746c
-  .4byte 0x65734d6f
-  .4byte 0x76696549
-  .4byte 0x6e746572
-  .4byte 0x66616365
-  .4byte 0
-  .4byte 0x803ddf74
-  .4byte 0
-  .4byte 0
+	.4byte __RTTI__13TitlesSection
+	.4byte 0
+	.4byte getAgeNodeType__5ANodeFv
+	.4byte read__8CoreNodeFR18RandomAccessStream
+	.4byte update__4NodeFv
+	.4byte draw__4NodeFR8Graphics
+	.4byte render__4NodeFR8Graphics
+	.4byte concat__4NodeFv
+	.4byte concat__4NodeFR3VQS
+	.4byte concat__4NodeFR3SRT
+	.4byte concat__4NodeFR8Matrix4f
+	.4byte getModelMatrix__4NodeFv
+	.4byte init__13TitlesSectionFv
+	.4byte 0x5469746c
+	.4byte 0x65734d6f
+	.4byte 0x76696549
+	.4byte 0x6e746572
+	.4byte 0x66616365
+	.4byte 0
+	.4byte 0x803ddf74
+	.4byte 0
+	.4byte 0
 .global __vt__20TitlesMovieInterface
 __vt__20TitlesMovieInterface:
-  .4byte __RTTI__20TitlesMovieInterface
-  .4byte 0
-  .4byte message__20TitlesMovieInterfaceFii
-  .4byte movie__13GameInterfaceFiiP8CreatureP8Vector3fP8Vector3fUlb
-  .4byte parseMessages__13GameInterfaceFv
-  .4byte parse__13GameInterfaceFii
+	.4byte __RTTI__20TitlesMovieInterface
+	.4byte 0
+	.4byte message__20TitlesMovieInterfaceFii
+	.4byte movie__13GameInterfaceFiiP8CreatureP8Vector3fP8Vector3fUlb
+	.4byte parseMessages__13GameInterfaceFv
+	.4byte parse__13GameInterfaceFii
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
-  .4byte 0x802a8810
+	.4byte 0x802a8810
 .global __RTTI__7GameApp
 __RTTI__7GameApp:
-  .4byte 0x803dde74
-  .4byte 0x802a882c
+	.4byte 0x803dde74
+	.4byte 0x802a882c
 .global __RTTI__11PlugPikiApp
 __RTTI__11PlugPikiApp:
-  .4byte 0x802a889c
-  .4byte 0x802a88a8
-  .4byte 0
+	.4byte 0x802a889c
+	.4byte 0x802a88a8
+	.4byte 0
 .global lbl_803DDEC8
 lbl_803DDEC8:
 	.4byte 0x00000000
@@ -4059,22 +4059,22 @@ lbl_803DDF44:
 	.4byte 0x802A89E4
 .global "__RTTI__18IDelegate1<R4Menu>_2"
 "__RTTI__18IDelegate1<R4Menu>_2":
-  .4byte 0x802a8a24
-  .4byte 0
+	.4byte 0x802a8a24
+	.4byte 0
 .global "__RTTI__37Delegate1<17TitleSetupSection,R4Menu>"
 "__RTTI__37Delegate1<17TitleSetupSection,R4Menu>":
-  .4byte 0x802a8a50
-  .4byte 0x802a8a78
-  .4byte 0x802a8a9c
-  .4byte 0
-  .4byte 0x4e6f6465
-  .4byte 0
-  .4byte 0x803ddf7c
-  .4byte 0x802a8ad8
+	.4byte 0x802a8a50
+	.4byte 0x802a8a78
+	.4byte 0x802a8a9c
+	.4byte 0
+	.4byte 0x4e6f6465
+	.4byte 0
+	.4byte 0x803ddf7c
+	.4byte 0x802a8ad8
 .global __RTTI__17TitleSetupSection
 __RTTI__17TitleSetupSection:
-  .4byte 0x802a8ac4
-  .4byte 0x802a8aec
+	.4byte 0x802a8ac4
+	.4byte 0x802a8aec
 .global lbl_803DDF94
 lbl_803DDF94:
 	.4byte 0x00000000

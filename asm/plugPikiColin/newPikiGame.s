@@ -9826,268 +9826,268 @@ lbl_802A7BB4:
 	.4byte 0x65000000
 .global __vt__13GameInterface
 __vt__13GameInterface:
-  .4byte 0x803ddb6c
-  .4byte 0
-  .4byte message__13GameInterfaceFii
-  .4byte movie__13GameInterfaceFiiP8CreatureP8Vector3fP8Vector3fUlb
-  .4byte parseMessages__13GameInterfaceFv
-  .4byte parse__13GameInterfaceFii
-  .4byte 0x47617567
-  .4byte 0x65496e66
-  .4byte 0x6f000000
-  .4byte 0x436f7265
-  .4byte 0x4e6f6465
-  .4byte 0
-  .4byte 0x803ddb7c
-  .4byte 0
-  .4byte 0
-  .4byte 0x803ddb7c
-  .4byte 0
-  .4byte 0x803ddb84
-  .4byte 0
-  .4byte 0
+	.4byte 0x803ddb6c
+	.4byte 0
+	.4byte message__13GameInterfaceFii
+	.4byte movie__13GameInterfaceFiiP8CreatureP8Vector3fP8Vector3fUlb
+	.4byte parseMessages__13GameInterfaceFv
+	.4byte parse__13GameInterfaceFii
+	.4byte 0x47617567
+	.4byte 0x65496e66
+	.4byte 0x6f000000
+	.4byte 0x436f7265
+	.4byte 0x4e6f6465
+	.4byte 0
+	.4byte 0x803ddb7c
+	.4byte 0
+	.4byte 0
+	.4byte 0x803ddb7c
+	.4byte 0
+	.4byte 0x803ddb84
+	.4byte 0
+	.4byte 0
 .global __vt__9GaugeInfo
 __vt__9GaugeInfo:
-  .4byte __RTTI__9GaugeInfo
-  .4byte 0
-  .4byte getAgeNodeType__5ANodeFv
-  .4byte read__8CoreNodeFR18RandomAccessStream
-  .4byte 0x4e657750
-  .4byte 0x696b6947
-  .4byte 0x616d6553
-  .4byte 0x65747570
-  .4byte 0x53656374
-  .4byte 0x696f6e00
-  .4byte 0x803ddb7c
-  .4byte 0
-  .4byte 0x803ddb84
-  .4byte 0
-  .4byte 0
-  .4byte 0x42617365
-  .4byte 0x47616d65
-  .4byte 0x53656374
-  .4byte 0x696f6e00
-  .4byte 0x803ddb7c
-  .4byte 0
-  .4byte 0x803ddb84
-  .4byte 0
-  .4byte 0x803ddb9c
-  .4byte 0
-  .4byte 0
-  .4byte 0x803ddb7c
-  .4byte 0
-  .4byte 0x803ddb84
-  .4byte 0
-  .4byte 0x803ddb9c
-  .4byte 0
-  .4byte __RTTI__15BaseGameSection
-  .4byte 0
-  .4byte 0
+	.4byte __RTTI__9GaugeInfo
+	.4byte 0
+	.4byte getAgeNodeType__5ANodeFv
+	.4byte read__8CoreNodeFR18RandomAccessStream
+	.4byte 0x4e657750
+	.4byte 0x696b6947
+	.4byte 0x616d6553
+	.4byte 0x65747570
+	.4byte 0x53656374
+	.4byte 0x696f6e00
+	.4byte 0x803ddb7c
+	.4byte 0
+	.4byte 0x803ddb84
+	.4byte 0
+	.4byte 0
+	.4byte 0x42617365
+	.4byte 0x47616d65
+	.4byte 0x53656374
+	.4byte 0x696f6e00
+	.4byte 0x803ddb7c
+	.4byte 0
+	.4byte 0x803ddb84
+	.4byte 0
+	.4byte 0x803ddb9c
+	.4byte 0
+	.4byte 0
+	.4byte 0x803ddb7c
+	.4byte 0
+	.4byte 0x803ddb84
+	.4byte 0
+	.4byte 0x803ddb9c
+	.4byte 0
+	.4byte __RTTI__15BaseGameSection
+	.4byte 0
+	.4byte 0
 .global __vt__23NewPikiGameSetupSection
 __vt__23NewPikiGameSetupSection:
-  .4byte __RTTI__23NewPikiGameSetupSection
-  .4byte 0
-  .4byte getAgeNodeType__5ANodeFv
-  .4byte read__8CoreNodeFR18RandomAccessStream
-  .4byte update__23NewPikiGameSetupSectionFv
-  .4byte draw__23NewPikiGameSetupSectionFR8Graphics
-  .4byte render__4NodeFR8Graphics
-  .4byte concat__4NodeFv
-  .4byte concat__4NodeFR3VQS
-  .4byte concat__4NodeFR3SRT
-  .4byte concat__4NodeFR8Matrix4f
-  .4byte getModelMatrix__4NodeFv
-  .4byte openMenu__23NewPikiGameSetupSectionFv
-  .4byte 0x4e657750
-  .4byte 0x696b6947
-  .4byte 0x616d6553
-  .4byte 0x65637469
-  .4byte 0x6f6e0000
-  .4byte 0x803ddb7c
-  .4byte 0
-  .4byte 0x803ddb84
-  .4byte 0
-  .4byte 0x803ddb9c
-  .4byte 0
-  .4byte 0
-  .4byte 0x803ddb7c
-  .4byte 0
-  .4byte 0x803ddb84
-  .4byte 0
-  .4byte 0x803ddb9c
-  .4byte 0
-  .4byte 0x803ddbbc
-  .4byte 0
-  .4byte 0
+	.4byte __RTTI__23NewPikiGameSetupSection
+	.4byte 0
+	.4byte getAgeNodeType__5ANodeFv
+	.4byte read__8CoreNodeFR18RandomAccessStream
+	.4byte update__23NewPikiGameSetupSectionFv
+	.4byte draw__23NewPikiGameSetupSectionFR8Graphics
+	.4byte render__4NodeFR8Graphics
+	.4byte concat__4NodeFv
+	.4byte concat__4NodeFR3VQS
+	.4byte concat__4NodeFR3SRT
+	.4byte concat__4NodeFR8Matrix4f
+	.4byte getModelMatrix__4NodeFv
+	.4byte openMenu__23NewPikiGameSetupSectionFv
+	.4byte 0x4e657750
+	.4byte 0x696b6947
+	.4byte 0x616d6553
+	.4byte 0x65637469
+	.4byte 0x6f6e0000
+	.4byte 0x803ddb7c
+	.4byte 0
+	.4byte 0x803ddb84
+	.4byte 0
+	.4byte 0x803ddb9c
+	.4byte 0
+	.4byte 0
+	.4byte 0x803ddb7c
+	.4byte 0
+	.4byte 0x803ddb84
+	.4byte 0
+	.4byte 0x803ddb9c
+	.4byte 0
+	.4byte 0x803ddbbc
+	.4byte 0
+	.4byte 0
 .global __vt__18NewPikiGameSection
 __vt__18NewPikiGameSection:
-  .4byte __RTTI__18NewPikiGameSection
-  .4byte 0
-  .4byte getAgeNodeType__5ANodeFv
-  .4byte read__8CoreNodeFR18RandomAccessStream
-  .4byte update__4NodeFv
-  .4byte draw__4NodeFR8Graphics
-  .4byte render__4NodeFR8Graphics
-  .4byte concat__4NodeFv
-  .4byte concat__4NodeFR3VQS
-  .4byte concat__4NodeFR3SRT
-  .4byte concat__4NodeFR8Matrix4f
-  .4byte getModelMatrix__4NodeFv
-  .4byte init__18NewPikiGameSectionFv
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0x47616d65
-  .4byte 0x4d6f7669
-  .4byte 0x65496e74
-  .4byte 0x65726661
-  .4byte 0x63650000
-  .4byte 0x803ddb6c
-  .4byte 0
-  .4byte 0
+	.4byte __RTTI__18NewPikiGameSection
+	.4byte 0
+	.4byte getAgeNodeType__5ANodeFv
+	.4byte read__8CoreNodeFR18RandomAccessStream
+	.4byte update__4NodeFv
+	.4byte draw__4NodeFR8Graphics
+	.4byte render__4NodeFR8Graphics
+	.4byte concat__4NodeFv
+	.4byte concat__4NodeFR3VQS
+	.4byte concat__4NodeFR3SRT
+	.4byte concat__4NodeFR8Matrix4f
+	.4byte getModelMatrix__4NodeFv
+	.4byte init__18NewPikiGameSectionFv
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0x47616d65
+	.4byte 0x4d6f7669
+	.4byte 0x65496e74
+	.4byte 0x65726661
+	.4byte 0x63650000
+	.4byte 0x803ddb6c
+	.4byte 0
+	.4byte 0
 .global __vt__18GameMovieInterface
 __vt__18GameMovieInterface:
-  .4byte __RTTI__18GameMovieInterface
-  .4byte 0
-  .4byte message__18GameMovieInterfaceFii
-  .4byte movie__18GameMovieInterfaceFiiP8CreatureP8Vector3fP8Vector3fUlb
-  .4byte parseMessages__18GameMovieInterfaceFv
-  .4byte parse__13GameInterfaceFii
-  .4byte parse__18GameMovieInterfaceFRQ218GameMovieInterface13SimpleMessage
-  .4byte parse__18GameMovieInterfaceFRQ218GameMovieInterface14ComplexMessage
-  .4byte 0x4461794f
-  .4byte 0x7665724d
-  .4byte 0x6f646553
-  .4byte 0x74617465
-  .4byte 0
-  .4byte 0x4d6f6465
-  .4byte 0x53746174
-  .4byte 0x65000000
-  .4byte __RTTI__9ModeState
-  .4byte 0
-  .4byte 0
+	.4byte __RTTI__18GameMovieInterface
+	.4byte 0
+	.4byte message__18GameMovieInterfaceFii
+	.4byte movie__18GameMovieInterfaceFiiP8CreatureP8Vector3fP8Vector3fUlb
+	.4byte parseMessages__18GameMovieInterfaceFv
+	.4byte parse__13GameInterfaceFii
+	.4byte parse__18GameMovieInterfaceFRQ218GameMovieInterface13SimpleMessage
+	.4byte parse__18GameMovieInterfaceFRQ218GameMovieInterface14ComplexMessage
+	.4byte 0x4461794f
+	.4byte 0x7665724d
+	.4byte 0x6f646553
+	.4byte 0x74617465
+	.4byte 0
+	.4byte 0x4d6f6465
+	.4byte 0x53746174
+	.4byte 0x65000000
+	.4byte __RTTI__9ModeState
+	.4byte 0
+	.4byte 0
 .global __vt__16DayOverModeState
 __vt__16DayOverModeState:
-  .4byte __RTTI__16DayOverModeState
-  .4byte 0
-  .4byte update__16DayOverModeStateFRUl
-  .4byte postRender__16DayOverModeStateFR8Graphics
-  .4byte postUpdate__9ModeStateFv
-  .4byte 0x4d657373
-  .4byte 0x6167654d
-  .4byte 0x6f646553
-  .4byte 0x74617465
-  .4byte 0
-  .4byte __RTTI__9ModeState
-  .4byte 0
-  .4byte 0
+	.4byte __RTTI__16DayOverModeState
+	.4byte 0
+	.4byte update__16DayOverModeStateFRUl
+	.4byte postRender__16DayOverModeStateFR8Graphics
+	.4byte postUpdate__9ModeStateFv
+	.4byte 0x4d657373
+	.4byte 0x6167654d
+	.4byte 0x6f646553
+	.4byte 0x74617465
+	.4byte 0
+	.4byte __RTTI__9ModeState
+	.4byte 0
+	.4byte 0
 .global __vt__16MessageModeState
 __vt__16MessageModeState:
-  .4byte __RTTI__16MessageModeState
-  .4byte 0
-  .4byte update__16MessageModeStateFRUl
-  .4byte postRender__16MessageModeStateFR8Graphics
-  .4byte postUpdate__9ModeStateFv
-  .4byte 0x52756e6e
-  .4byte 0x696e674d
-  .4byte 0x6f646553
-  .4byte 0x74617465
-  .4byte 0
-  .4byte __RTTI__9ModeState
-  .4byte 0
-  .4byte 0
+	.4byte __RTTI__16MessageModeState
+	.4byte 0
+	.4byte update__16MessageModeStateFRUl
+	.4byte postRender__16MessageModeStateFR8Graphics
+	.4byte postUpdate__9ModeStateFv
+	.4byte 0x52756e6e
+	.4byte 0x696e674d
+	.4byte 0x6f646553
+	.4byte 0x74617465
+	.4byte 0
+	.4byte __RTTI__9ModeState
+	.4byte 0
+	.4byte 0
 .global __vt__16RunningModeState
 __vt__16RunningModeState:
-  .4byte __RTTI__16RunningModeState
-  .4byte 0
-  .4byte update__16RunningModeStateFRUl
-  .4byte postRender__16RunningModeStateFR8Graphics
-  .4byte postUpdate__9ModeStateFv
-  .4byte 0x51756974
-  .4byte 0x74696e67
-  .4byte 0x47616d65
-  .4byte 0x4d6f6465
-  .4byte 0x53746174
-  .4byte 0x65000000
-  .4byte __RTTI__9ModeState
-  .4byte 0
-  .4byte 0
+	.4byte __RTTI__16RunningModeState
+	.4byte 0
+	.4byte update__16RunningModeStateFRUl
+	.4byte postRender__16RunningModeStateFR8Graphics
+	.4byte postUpdate__9ModeStateFv
+	.4byte 0x51756974
+	.4byte 0x74696e67
+	.4byte 0x47616d65
+	.4byte 0x4d6f6465
+	.4byte 0x53746174
+	.4byte 0x65000000
+	.4byte __RTTI__9ModeState
+	.4byte 0
+	.4byte 0
 .global __vt__21QuittingGameModeState
 __vt__21QuittingGameModeState:
-  .4byte __RTTI__21QuittingGameModeState
-  .4byte 0
-  .4byte update__21QuittingGameModeStateFRUl
-  .4byte postRender__9ModeStateFR8Graphics
-  .4byte postUpdate__21QuittingGameModeStateFv
+	.4byte __RTTI__21QuittingGameModeState
+	.4byte 0
+	.4byte update__21QuittingGameModeStateFRUl
+	.4byte postRender__9ModeStateFR8Graphics
+	.4byte postUpdate__21QuittingGameModeStateFv
 .global __vt__9ModeState
 __vt__9ModeState:
-  .4byte __RTTI__9ModeState
-  .4byte 0
-  .4byte update__9ModeStateFRUl
-  .4byte postRender__9ModeStateFR8Graphics
-  .4byte postUpdate__9ModeStateFv
-  .4byte 0x496e7472
-  .4byte 0x6f47616d
-  .4byte 0x654d6f64
-  .4byte 0x65537461
-  .4byte 0x74650000
-  .4byte __RTTI__9ModeState
-  .4byte 0
-  .4byte 0
+	.4byte __RTTI__9ModeState
+	.4byte 0
+	.4byte update__9ModeStateFRUl
+	.4byte postRender__9ModeStateFR8Graphics
+	.4byte postUpdate__9ModeStateFv
+	.4byte 0x496e7472
+	.4byte 0x6f47616d
+	.4byte 0x654d6f64
+	.4byte 0x65537461
+	.4byte 0x74650000
+	.4byte __RTTI__9ModeState
+	.4byte 0
+	.4byte 0
 .global __vt__18IntroGameModeState
 __vt__18IntroGameModeState:
-  .4byte __RTTI__18IntroGameModeState
-  .4byte 0
-  .4byte update__18IntroGameModeStateFRUl
-  .4byte postRender__18IntroGameModeStateFR8Graphics
-  .4byte postUpdate__9ModeStateFv
+	.4byte __RTTI__18IntroGameModeState
+	.4byte 0
+	.4byte update__18IntroGameModeStateFRUl
+	.4byte postRender__18IntroGameModeStateFR8Graphics
+	.4byte postUpdate__9ModeStateFv
 .global __vt__15BaseGameSection
 __vt__15BaseGameSection:
-  .4byte __RTTI__15BaseGameSection
-  .4byte 0
-  .4byte getAgeNodeType__5ANodeFv
-  .4byte read__8CoreNodeFR18RandomAccessStream
-  .4byte update__4NodeFv
-  .4byte draw__15BaseGameSectionFR8Graphics
-  .4byte render__4NodeFR8Graphics
-  .4byte concat__4NodeFv
-  .4byte concat__4NodeFR3VQS
-  .4byte concat__4NodeFR3SRT
-  .4byte concat__4NodeFR8Matrix4f
-  .4byte getModelMatrix__4NodeFv
-  .4byte openMenu__15BaseGameSectionFv
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
+	.4byte __RTTI__15BaseGameSection
+	.4byte 0
+	.4byte getAgeNodeType__5ANodeFv
+	.4byte read__8CoreNodeFR18RandomAccessStream
+	.4byte update__4NodeFv
+	.4byte draw__15BaseGameSectionFR8Graphics
+	.4byte render__4NodeFR8Graphics
+	.4byte concat__4NodeFv
+	.4byte concat__4NodeFR3VQS
+	.4byte concat__4NodeFR3SRT
+	.4byte concat__4NodeFR8Matrix4f
+	.4byte getModelMatrix__4NodeFv
+	.4byte openMenu__15BaseGameSectionFv
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .global "__RTTI__18IDelegate1<R4Menu>_1"
 "__RTTI__18IDelegate1<R4Menu>_1":
-  .4byte 0x802a7a60
-  .4byte 0
+	.4byte 0x802a7a60
+	.4byte 0
 .global "__RTTI__23Delegate1<4Menu,R4Menu>"
 "__RTTI__23Delegate1<4Menu,R4Menu>":
-  .4byte 0x802a7a48
-  .4byte 0x802a7a74
+	.4byte 0x802a7a48
+	.4byte 0x802a7a74
 .global "__RTTI__41Delegate1<21MapSelectSetupSection,R4Menu>"
 "__RTTI__41Delegate1<21MapSelectSetupSection,R4Menu>":
-  .4byte 0x802a7a8c
-  .4byte 0x802a7ab8
+	.4byte 0x802a7a8c
+	.4byte 0x802a7ab8
 .global lbl_803DDAA0
 lbl_803DDAA0:
 	.4byte 0x00000000
@@ -10235,47 +10235,47 @@ lbl_803DDB64:
 	.4byte 0x802A7C10
 .global __RTTI__9GaugeInfo
 __RTTI__9GaugeInfo:
-  .4byte 0x802a7bf8
-  .4byte 0x802a7c1c
-  .4byte 0x4e6f6465
-  .4byte 0
-  .4byte 0x803ddb94
-  .4byte 0x802a7c58
+	.4byte 0x802a7bf8
+	.4byte 0x802a7c1c
+	.4byte 0x4e6f6465
+	.4byte 0
+	.4byte 0x803ddb94
+	.4byte 0x802a7c58
 .global __RTTI__15BaseGameSection
 __RTTI__15BaseGameSection:
-  .4byte 0x802a7c6c
-  .4byte 0x802a7c7c
+	.4byte 0x802a7c6c
+	.4byte 0x802a7c7c
 .global __RTTI__23NewPikiGameSetupSection
 __RTTI__23NewPikiGameSetupSection:
-  .4byte 0x802a7c40
-  .4byte 0x802a7c98
-  .4byte 0x53656374
-  .4byte 0x696f6e00
-  .4byte 0x803ddbb4
-  .4byte 0x802a7d04
+	.4byte 0x802a7c40
+	.4byte 0x802a7c98
+	.4byte 0x53656374
+	.4byte 0x696f6e00
+	.4byte 0x803ddbb4
+	.4byte 0x802a7d04
 .global __RTTI__18NewPikiGameSection
 __RTTI__18NewPikiGameSection:
-  .4byte 0x802a7cf0
-  .4byte 0x802a7d20
+	.4byte 0x802a7cf0
+	.4byte 0x802a7d20
 .global __RTTI__18GameMovieInterface
 __RTTI__18GameMovieInterface:
-  .4byte 0x802a7dac
-  .4byte 0x802a7dc0
+	.4byte 0x802a7dac
+	.4byte 0x802a7dc0
 .global __RTTI__9ModeState
 __RTTI__9ModeState:
-  .4byte 0x802a7e00
-  .4byte 0
+	.4byte 0x802a7e00
+	.4byte 0
 .global __RTTI__16DayOverModeState
 __RTTI__16DayOverModeState:
-  .4byte 0x802a7dec
-  .4byte 0x802a7e0c
+	.4byte 0x802a7dec
+	.4byte 0x802a7e0c
 .global __RTTI__16MessageModeState
 __RTTI__16MessageModeState:
-  .4byte 0x802a7e2c
-  .4byte 0x802a7e40
+	.4byte 0x802a7e2c
+	.4byte 0x802a7e40
 .global __RTTI__16RunningModeState
 __RTTI__16RunningModeState:
-  .4byte 0x802a7e60
+	.4byte 0x802a7e60
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .global lbl_803E8890

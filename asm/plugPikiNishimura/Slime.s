@@ -23,12 +23,12 @@ lbl_803E4D14:
 	.4byte 0x00000000
 .global __RTTI__26SnakeGenBodyRotateCallBack
 __RTTI__26SnakeGenBodyRotateCallBack:
-  .4byte 0x802cfa94
-  .4byte 0x802cfadc
+	.4byte 0x802cfa94
+	.4byte 0x802cfadc
 .global __RTTI__28SnakeGenBodyOnGroundCallBack
 __RTTI__28SnakeGenBodyOnGroundCallBack:
-  .4byte 0x802cfaf4
-  .4byte 0x802cfb14
+	.4byte 0x802cfaf4
+	.4byte 0x802cfb14
 .global lbl_803E4D30
 lbl_803E4D30:
 	.4byte 0x3F800000
@@ -145,23 +145,23 @@ lbl_803E4DBC:
 	.4byte 0x802CFBC4
 .global __RTTI__5Slime
 __RTTI__5Slime:
-  .4byte 0x803e4d48
-  .4byte 0x802cfbe0
+	.4byte 0x803e4d48
+	.4byte 0x802cfbe0
 .global __RTTI__15CollPartUpdater_1
 __RTTI__15CollPartUpdater_1:
-  .4byte 0x802cfd44
-  .4byte 0
+	.4byte 0x802cfd44
+	.4byte 0
 .global __RTTI__Q25Slime20CollideSphereUpdater
 __RTTI__Q25Slime20CollideSphereUpdater:
-  .4byte 0x802cfd28
-  .4byte 0x802cfd54
+	.4byte 0x802cfd28
+	.4byte 0x802cfd54
 .global __RTTI__Q25Slime17TubeSphereUpdater
 __RTTI__Q25Slime17TubeSphereUpdater:
-  .4byte 0x802cfd70
-  .4byte 0x802cfd8c
+	.4byte 0x802cfd70
+	.4byte 0x802cfd8c
 .global __RTTI__Q25Slime18BoundSphereUpdater
 __RTTI__Q25Slime18BoundSphereUpdater:
-  .4byte 0x802cfda8
-  .4byte 0x802cfdc4
-  .4byte 0x802cfdfc
-  .4byte 0
+	.4byte 0x802cfda8
+	.4byte 0x802cfdc4
+	.4byte 0x802cfdfc
+	.4byte 0

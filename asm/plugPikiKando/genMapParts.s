@@ -1,13 +1,13 @@
 .include "macros.inc"
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
-  .4byte 0x67656e4d
-  .4byte 0x61705061
-  .4byte 0x7274732e
-  .4byte 0x63707000
-  .4byte 0x67656e4d
-  .4byte 0x61705061
-  .4byte 0x72747300
+	.4byte 0x67656e4d
+	.4byte 0x61705061
+	.4byte 0x7274732e
+	.4byte 0x63707000
+	.4byte 0x67656e4d
+	.4byte 0x61705061
+	.4byte 0x72747300
 .global shapeNames
 shapeNames:
 	.4byte 0x803E2A44
@@ -67,46 +67,46 @@ lbl_802C30BC:
 	.4byte 0x00000000
 .global __vt__17GenObjectMapParts
 __vt__17GenObjectMapParts:
-  .4byte __RTTI__17GenObjectMapParts
-  .4byte 0
-  .4byte doWrite__7GenBaseFR18RandomAccessStream
-  .4byte ramSaveParameters__7GenBaseFR18RandomAccessStream
-  .4byte ramLoadParameters__7GenBaseFR18RandomAccessStream
-  .4byte doRead__17GenObjectMapPartsFR18RandomAccessStream
-  .4byte update__7GenBaseFv
-  .4byte render__7GenBaseFR8Graphics
-  .4byte getLatestVersion__9GenObjectFv
-  .4byte updateUseList__9GenObjectFP9Generatori
-  .4byte init__9GenObjectFP9Generator
-  .4byte update__9GenObjectFP9Generator
-  .4byte render__17GenObjectMapPartsFR8GraphicsP9Generator
-  .4byte birth__17GenObjectMapPartsFR9BirthInfo
-  .4byte 0x5061726d
-  .4byte 0x3c666c6f
-  .4byte 0x61743e00
-  .4byte 0x42617365
-  .4byte 0x5061726d
-  .4byte 0
-  .4byte 0x803e2af4
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0x5061726d
-  .4byte 0x3c696e74
-  .4byte 0x3e000000
-  .4byte 0x803e2af4
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
+	.4byte __RTTI__17GenObjectMapParts
+	.4byte 0
+	.4byte doWrite__7GenBaseFR18RandomAccessStream
+	.4byte ramSaveParameters__7GenBaseFR18RandomAccessStream
+	.4byte ramLoadParameters__7GenBaseFR18RandomAccessStream
+	.4byte doRead__17GenObjectMapPartsFR18RandomAccessStream
+	.4byte update__7GenBaseFv
+	.4byte render__7GenBaseFR8Graphics
+	.4byte getLatestVersion__9GenObjectFv
+	.4byte updateUseList__9GenObjectFP9Generatori
+	.4byte init__9GenObjectFP9Generator
+	.4byte update__9GenObjectFP9Generator
+	.4byte render__17GenObjectMapPartsFR8GraphicsP9Generator
+	.4byte birth__17GenObjectMapPartsFR9BirthInfo
+	.4byte 0x5061726d
+	.4byte 0x3c666c6f
+	.4byte 0x61743e00
+	.4byte 0x42617365
+	.4byte 0x5061726d
+	.4byte 0
+	.4byte 0x803e2af4
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0x5061726d
+	.4byte 0x3c696e74
+	.4byte 0x3e000000
+	.4byte 0x803e2af4
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 	.4byte 0x4E6F6465
@@ -121,8 +121,8 @@ __vt__17GenObjectMapParts:
 	.4byte 0x802C2F78
 .global __RTTI__7NaviMgr
 __RTTI__7NaviMgr:
-  .4byte 0x803e29d8
-  .4byte 0x802c2fa4
+	.4byte 0x803e29d8
+	.4byte 0x802c2fa4
 .global lbl_803E2A28
 lbl_803E2A28:
 	.4byte 0x00000000

@@ -798,66 +798,66 @@ lbl_802A8BF8:
 	.4byte 0x00000000
 .global __vt__19NinLogoSetupSection
 __vt__19NinLogoSetupSection:
-  .4byte __RTTI__19NinLogoSetupSection
-  .4byte 0
-  .4byte getAgeNodeType__5ANodeFv
-  .4byte read__8CoreNodeFR18RandomAccessStream
-  .4byte update__19NinLogoSetupSectionFv
-  .4byte draw__19NinLogoSetupSectionFR8Graphics
-  .4byte render__4NodeFR8Graphics
-  .4byte concat__4NodeFv
-  .4byte concat__4NodeFR3VQS
-  .4byte concat__4NodeFR3SRT
-  .4byte concat__4NodeFR8Matrix4f
-  .4byte getModelMatrix__4NodeFv
-  .4byte 0x4e696e4c
-  .4byte 0x6f676f53
-  .4byte 0x65637469
-  .4byte 0x6f6e0000
-  .4byte 0x803ddfc8
-  .4byte 0
-  .4byte 0x803ddfd0
-  .4byte 0
-  .4byte 0x803ddfe0
-  .4byte 0
-  .4byte 0
-  .4byte 0x803ddfc8
-  .4byte 0
-  .4byte 0x803ddfd0
-  .4byte 0
-  .4byte 0x803ddfe0
-  .4byte 0
-  .4byte 0x803ddff8
-  .4byte 0
-  .4byte 0
+	.4byte __RTTI__19NinLogoSetupSection
+	.4byte 0
+	.4byte getAgeNodeType__5ANodeFv
+	.4byte read__8CoreNodeFR18RandomAccessStream
+	.4byte update__19NinLogoSetupSectionFv
+	.4byte draw__19NinLogoSetupSectionFR8Graphics
+	.4byte render__4NodeFR8Graphics
+	.4byte concat__4NodeFv
+	.4byte concat__4NodeFR3VQS
+	.4byte concat__4NodeFR3SRT
+	.4byte concat__4NodeFR8Matrix4f
+	.4byte getModelMatrix__4NodeFv
+	.4byte 0x4e696e4c
+	.4byte 0x6f676f53
+	.4byte 0x65637469
+	.4byte 0x6f6e0000
+	.4byte 0x803ddfc8
+	.4byte 0
+	.4byte 0x803ddfd0
+	.4byte 0
+	.4byte 0x803ddfe0
+	.4byte 0
+	.4byte 0
+	.4byte 0x803ddfc8
+	.4byte 0
+	.4byte 0x803ddfd0
+	.4byte 0
+	.4byte 0x803ddfe0
+	.4byte 0
+	.4byte 0x803ddff8
+	.4byte 0
+	.4byte 0
 .global __vt__14NinLogoSection
 __vt__14NinLogoSection:
-  .4byte __RTTI__14NinLogoSection
-  .4byte 0
-  .4byte getAgeNodeType__5ANodeFv
-  .4byte read__8CoreNodeFR18RandomAccessStream
-  .4byte update__4NodeFv
-  .4byte draw__4NodeFR8Graphics
-  .4byte render__4NodeFR8Graphics
-  .4byte concat__4NodeFv
-  .4byte concat__4NodeFR3VQS
-  .4byte concat__4NodeFR3SRT
-  .4byte concat__4NodeFR8Matrix4f
-  .4byte getModelMatrix__4NodeFv
-  .4byte init__14NinLogoSectionFv
-  .4byte 0
+	.4byte __RTTI__14NinLogoSection
+	.4byte 0
+	.4byte getAgeNodeType__5ANodeFv
+	.4byte read__8CoreNodeFR18RandomAccessStream
+	.4byte update__4NodeFv
+	.4byte draw__4NodeFR8Graphics
+	.4byte render__4NodeFR8Graphics
+	.4byte concat__4NodeFv
+	.4byte concat__4NodeFR3VQS
+	.4byte concat__4NodeFR3SRT
+	.4byte concat__4NodeFR8Matrix4f
+	.4byte getModelMatrix__4NodeFv
+	.4byte init__14NinLogoSectionFv
+	.4byte 0
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 	.4byte 0x803DDF98
 	.4byte 0x802A8B48
 .global __RTTI__13TitlesSection
 __RTTI__13TitlesSection:
-  .4byte 0x802a8b38
-  .4byte 0x802a8b64
+	.4byte 0x802a8b38
+	.4byte 0x802a8b64
 .global __RTTI__20TitlesMovieInterface
 __RTTI__20TitlesMovieInterface:
-  .4byte 0x802a8bbc
-  .4byte 0x802a8bd4
+	.4byte 0x802a8bbc
+	.4byte 0x802a8bd4
 .global lbl_803DDFB8
 lbl_803DDFB8:
 	.4byte 0x3C4E6F64
@@ -874,8 +874,8 @@ lbl_803DDFB8:
 	.4byte 0x802A8C80
 .global __RTTI__19NinLogoSetupSection
 __RTTI__19NinLogoSetupSection:
-  .4byte 0x802a8c6c
-  .4byte 0x802a8c94
+	.4byte 0x802a8c6c
+	.4byte 0x802a8c94
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .global lbl_803E8A50

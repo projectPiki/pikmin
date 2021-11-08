@@ -21,10 +21,10 @@ lbl_803E4EB4:
 	.4byte 0x802CFF64
 .global __RTTI__13SlimeCreature
 __RTTI__13SlimeCreature:
-  .4byte 0x802cff2c
-  .4byte 0x802cff78
-  .4byte 0x4b696e67
-  .4byte 0
+	.4byte 0x802cff2c
+	.4byte 0x802cff78
+	.4byte 0x4b696e67
+	.4byte 0
 .global lbl_803E4EE0
 lbl_803E4EE0:
 	.4byte 0x6F303000
@@ -166,14 +166,14 @@ lbl_803E4F88:
 	.4byte 0x802D00D8
 .global __RTTI__10KingDrawer
 __RTTI__10KingDrawer:
-  .4byte 0x802d00c0
-  .4byte 0x802d00ec
-  .4byte 0x802d0138
-  .4byte 0
-  .4byte 0x802d0144
-  .4byte 0
-  .4byte 0x802d0154
-  .4byte 0x802d0160
-  .4byte 0x426f7373
-  .4byte 0
-  .4byte 0x803e4fd4
+	.4byte 0x802d00c0
+	.4byte 0x802d00ec
+	.4byte 0x802d0138
+	.4byte 0
+	.4byte 0x802d0144
+	.4byte 0
+	.4byte 0x802d0154
+	.4byte 0x802d0160
+	.4byte 0x426f7373
+	.4byte 0
+	.4byte 0x803e4fd4

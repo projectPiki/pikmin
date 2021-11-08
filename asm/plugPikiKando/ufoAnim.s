@@ -673,9 +673,9 @@ __ct__20TaiCatfishParametersFv:
 /* 80128DC0 00125D20  80 E7 00 08 */	lwz r7, 8(r7)
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
-  .4byte 0x75666f41
-  .4byte 0x6e696d2e
-  .4byte 0x63707000
+	.4byte 0x75666f41
+	.4byte 0x6e696d2e
+	.4byte 0x63707000
 .global lbl_802BC4B4
 lbl_802BC4B4:
 	.4byte 0x6F626A65
@@ -750,13 +750,13 @@ motionLabels__15PaniUfoAnimator:
 	.4byte 0x00000000
 .global __vt__15PaniUfoAnimator
 __vt__15PaniUfoAnimator:
-  .4byte __RTTI__15PaniUfoAnimator
-  .4byte 0
-  .4byte changeContext__12PaniAnimatorFP11AnimContext
-  .4byte animate__12PaniAnimatorFf
-  .4byte finishOneShot__8AnimatorFv
-  .4byte finishLoop__8AnimatorFv
-  .4byte updateContext__12PaniAnimatorFv
+	.4byte __RTTI__15PaniUfoAnimator
+	.4byte 0
+	.4byte changeContext__12PaniAnimatorFP11AnimContext
+	.4byte animate__12PaniAnimatorFf
+	.4byte finishOneShot__8AnimatorFv
+	.4byte finishLoop__8AnimatorFv
+	.4byte updateContext__12PaniAnimatorFv
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 	.4byte 0x802BC0CC
@@ -770,20 +770,20 @@ __vt__15PaniUfoAnimator:
 	.4byte 0x74656D00
 .global __RTTI__7UfoItem
 __RTTI__7UfoItem:
-  .4byte 0x803e17ac
-  .4byte 0x802bc2f4
-  .4byte 0
-  .4byte 0x77616974
-  .4byte 0
-  .4byte 0x74616b65
-  .4byte 0x6f666600
-  .4byte 0x68656e6b
-  .4byte 0x61310000
-  .4byte 0x68656e6b
-  .4byte 0x61316200
-  .4byte 0x68656e6b
-  .4byte 0x61316400
-  .4byte 0x68656e6b
-  .4byte 0x61320000
-  .4byte 0x68656e6b
-  .4byte 0x61326400
+	.4byte 0x803e17ac
+	.4byte 0x802bc2f4
+	.4byte 0
+	.4byte 0x77616974
+	.4byte 0
+	.4byte 0x74616b65
+	.4byte 0x6f666600
+	.4byte 0x68656e6b
+	.4byte 0x61310000
+	.4byte 0x68656e6b
+	.4byte 0x61316200
+	.4byte 0x68656e6b
+	.4byte 0x61316400
+	.4byte 0x68656e6b
+	.4byte 0x61320000
+	.4byte 0x68656e6b
+	.4byte 0x61326400

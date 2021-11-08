@@ -4264,9 +4264,9 @@ lbl_80222674:
 	.4byte 0x0000010C
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
-  .4byte 0x6974656d
-  .4byte 0x41492e63
-  .4byte 0x70700000
+	.4byte 0x6974656d
+	.4byte 0x41492e63
+	.4byte 0x70700000
 .global lbl_802BD90C
 lbl_802BD90C:
 	.4byte 0x436F7265
@@ -4293,861 +4293,861 @@ lbl_802BD918:
 	.4byte 0x00000000
 .global __vt__Q211FallWaterAI13DisappearInit
 __vt__Q211FallWaterAI13DisappearInit:
-  .4byte __RTTI__Q211FallWaterAI13DisappearInit
-  .4byte 0
-  .4byte act__Q211FallWaterAI13DisappearInitFP10AICreature
-  .4byte 0x46616c6c
-  .4byte 0x57617465
-  .4byte 0x7241493a
-  .4byte 0x3a456d69
-  .4byte 0x74496e69
-  .4byte 0x74000000
-  .4byte __RTTI__9SAIAction
-  .4byte 0
-  .4byte 0
+	.4byte __RTTI__Q211FallWaterAI13DisappearInit
+	.4byte 0
+	.4byte act__Q211FallWaterAI13DisappearInitFP10AICreature
+	.4byte 0x46616c6c
+	.4byte 0x57617465
+	.4byte 0x7241493a
+	.4byte 0x3a456d69
+	.4byte 0x74496e69
+	.4byte 0x74000000
+	.4byte __RTTI__9SAIAction
+	.4byte 0
+	.4byte 0
 .global __vt__Q211FallWaterAI8EmitInit
 __vt__Q211FallWaterAI8EmitInit:
-  .4byte __RTTI__Q211FallWaterAI8EmitInit
-  .4byte 0
-  .4byte act__Q211FallWaterAI8EmitInitFP10AICreature
-  .4byte 0x46616c6c
-  .4byte 0x57617465
-  .4byte 0x7241493a
-  .4byte 0x3a436f6c
-  .4byte 0x6c696465
-  .4byte 0x496e6974
-  .4byte 0
-  .4byte __RTTI__9SAIAction
-  .4byte 0
-  .4byte 0
+	.4byte __RTTI__Q211FallWaterAI8EmitInit
+	.4byte 0
+	.4byte act__Q211FallWaterAI8EmitInitFP10AICreature
+	.4byte 0x46616c6c
+	.4byte 0x57617465
+	.4byte 0x7241493a
+	.4byte 0x3a436f6c
+	.4byte 0x6c696465
+	.4byte 0x496e6974
+	.4byte 0
+	.4byte __RTTI__9SAIAction
+	.4byte 0
+	.4byte 0
 .global __vt__Q211FallWaterAI11CollideInit
 __vt__Q211FallWaterAI11CollideInit:
-  .4byte __RTTI__Q211FallWaterAI11CollideInit
-  .4byte 0
-  .4byte act__Q211FallWaterAI11CollideInitFP10AICreature
-  .4byte 0x46616c6c
-  .4byte 0x57617465
-  .4byte 0x72414900
-  .4byte 0x53746174
-  .4byte 0x654d6163
-  .4byte 0x68696e65
-  .4byte 0x3c414943
-  .4byte 0x72656174
-  .4byte 0x7572653e
-  .4byte 0
-  .4byte 0x53696d70
-  .4byte 0x6c654149
-  .4byte 0
-  .4byte "__RTTI__26StateMachine<10AICreature>_1"
-  .4byte 0
-  .4byte 0
-  .4byte "__RTTI__26StateMachine<10AICreature>_1"
-  .4byte 0
-  .4byte __RTTI__8SimpleAI_1
-  .4byte 0
-  .4byte 0
+	.4byte __RTTI__Q211FallWaterAI11CollideInit
+	.4byte 0
+	.4byte act__Q211FallWaterAI11CollideInitFP10AICreature
+	.4byte 0x46616c6c
+	.4byte 0x57617465
+	.4byte 0x72414900
+	.4byte 0x53746174
+	.4byte 0x654d6163
+	.4byte 0x68696e65
+	.4byte 0x3c414943
+	.4byte 0x72656174
+	.4byte 0x7572653e
+	.4byte 0
+	.4byte 0x53696d70
+	.4byte 0x6c654149
+	.4byte 0
+	.4byte "__RTTI__26StateMachine<10AICreature>_1"
+	.4byte 0
+	.4byte 0
+	.4byte "__RTTI__26StateMachine<10AICreature>_1"
+	.4byte 0
+	.4byte __RTTI__8SimpleAI_1
+	.4byte 0
+	.4byte 0
 .global __vt__11FallWaterAI
 __vt__11FallWaterAI:
-  .4byte __RTTI__11FallWaterAI
-  .4byte 0
-  .4byte "init__26StateMachine<10AICreature>FP10AICreature"
-  .4byte exec__8SimpleAIFP10AICreature
-  .4byte procMsg__8SimpleAIFP10AICreatureP3Msg
-  .4byte "transit__26StateMachine<10AICreature>FP10AICreaturei"
-  .4byte 0x57617465
-  .4byte 0x7241493a
-  .4byte 0x3a446965
-  .4byte 0
-  .4byte __RTTI__9SAIAction
-  .4byte 0
-  .4byte 0
+	.4byte __RTTI__11FallWaterAI
+	.4byte 0
+	.4byte "init__26StateMachine<10AICreature>FP10AICreature"
+	.4byte exec__8SimpleAIFP10AICreature
+	.4byte procMsg__8SimpleAIFP10AICreatureP3Msg
+	.4byte "transit__26StateMachine<10AICreature>FP10AICreaturei"
+	.4byte 0x57617465
+	.4byte 0x7241493a
+	.4byte 0x3a446965
+	.4byte 0
+	.4byte __RTTI__9SAIAction
+	.4byte 0
+	.4byte 0
 .global __vt__Q27WaterAI3Die
 __vt__Q27WaterAI3Die:
-  .4byte __RTTI__Q27WaterAI3Die
-  .4byte 0
-  .4byte act__Q27WaterAI3DieFP10AICreature
-  .4byte 0x57617465
-  .4byte 0x7241493a
-  .4byte 0x3a436f6c
-  .4byte 0x6c696465
-  .4byte 0x43686172
-  .4byte 0
-  .4byte 0x803e1b0c
-  .4byte 0
-  .4byte 0
-  .4byte 0x53414943
-  .4byte 0x6f6e6469
-  .4byte 0x74696f6e
-  .4byte 0
-  .4byte 0x803e1b0c
-  .4byte 0
-  .4byte 0x803e1b14
-  .4byte 0
-  .4byte 0
-  .4byte 0x803e1b0c
-  .4byte 0
-  .4byte 0x803e1b14
-  .4byte 0
-  .4byte __RTTI__12SAICondition_1
-  .4byte 0
-  .4byte 0
+	.4byte __RTTI__Q27WaterAI3Die
+	.4byte 0
+	.4byte act__Q27WaterAI3DieFP10AICreature
+	.4byte 0x57617465
+	.4byte 0x7241493a
+	.4byte 0x3a436f6c
+	.4byte 0x6c696465
+	.4byte 0x43686172
+	.4byte 0
+	.4byte 0x803e1b0c
+	.4byte 0
+	.4byte 0
+	.4byte 0x53414943
+	.4byte 0x6f6e6469
+	.4byte 0x74696f6e
+	.4byte 0
+	.4byte 0x803e1b0c
+	.4byte 0
+	.4byte 0x803e1b14
+	.4byte 0
+	.4byte 0
+	.4byte 0x803e1b0c
+	.4byte 0
+	.4byte 0x803e1b14
+	.4byte 0
+	.4byte __RTTI__12SAICondition_1
+	.4byte 0
+	.4byte 0
 .global __vt__Q27WaterAI11CollideChar
 __vt__Q27WaterAI11CollideChar:
-  .4byte __RTTI__Q27WaterAI11CollideChar
-  .4byte 0
-  .4byte getAgeNodeType__5ANodeFv
-  .4byte read__8CoreNodeFR18RandomAccessStream
-  .4byte satisfy__Q27WaterAI11CollideCharFP10AICreature
-  .4byte "__RTTI__26StateMachine<10AICreature>_1"
-  .4byte 0
-  .4byte __RTTI__8SimpleAI_1
-  .4byte 0
-  .4byte 0
+	.4byte __RTTI__Q27WaterAI11CollideChar
+	.4byte 0
+	.4byte getAgeNodeType__5ANodeFv
+	.4byte read__8CoreNodeFR18RandomAccessStream
+	.4byte satisfy__Q27WaterAI11CollideCharFP10AICreature
+	.4byte "__RTTI__26StateMachine<10AICreature>_1"
+	.4byte 0
+	.4byte __RTTI__8SimpleAI_1
+	.4byte 0
+	.4byte 0
 .global __vt__7WaterAI
 __vt__7WaterAI:
-  .4byte __RTTI__7WaterAI
-  .4byte 0
-  .4byte "init__26StateMachine<10AICreature>FP10AICreature"
-  .4byte exec__8SimpleAIFP10AICreature
-  .4byte procMsg__8SimpleAIFP10AICreatureP3Msg
-  .4byte "transit__26StateMachine<10AICreature>FP10AICreaturei"
-  .4byte 0x47656d41
-  .4byte 0x493a3a44
-  .4byte 0x69650000
-  .4byte __RTTI__9SAIAction
-  .4byte 0
-  .4byte 0
+	.4byte __RTTI__7WaterAI
+	.4byte 0
+	.4byte "init__26StateMachine<10AICreature>FP10AICreature"
+	.4byte exec__8SimpleAIFP10AICreature
+	.4byte procMsg__8SimpleAIFP10AICreatureP3Msg
+	.4byte "transit__26StateMachine<10AICreature>FP10AICreaturei"
+	.4byte 0x47656d41
+	.4byte 0x493a3a44
+	.4byte 0x69650000
+	.4byte __RTTI__9SAIAction
+	.4byte 0
+	.4byte 0
 .global __vt__Q25GemAI3Die
 __vt__Q25GemAI3Die:
-  .4byte __RTTI__Q25GemAI3Die
-  .4byte 0
-  .4byte act__Q25GemAI3DieFP10AICreature
-  .4byte 0x47656d41
-  .4byte 0x493a3a52
-  .4byte 0x69736545
-  .4byte 0x78656300
-  .4byte __RTTI__9SAIAction
-  .4byte 0
-  .4byte 0
+	.4byte __RTTI__Q25GemAI3Die
+	.4byte 0
+	.4byte act__Q25GemAI3DieFP10AICreature
+	.4byte 0x47656d41
+	.4byte 0x493a3a52
+	.4byte 0x69736545
+	.4byte 0x78656300
+	.4byte __RTTI__9SAIAction
+	.4byte 0
+	.4byte 0
 .global __vt__Q25GemAI8RiseExec
 __vt__Q25GemAI8RiseExec:
-  .4byte __RTTI__Q25GemAI8RiseExec
-  .4byte 0
-  .4byte act__Q25GemAI8RiseExecFP10AICreature
-  .4byte 0x47656d41
-  .4byte 0x493a3a52
-  .4byte 0x69736549
-  .4byte 0x6e697400
-  .4byte __RTTI__9SAIAction
-  .4byte 0
-  .4byte 0
+	.4byte __RTTI__Q25GemAI8RiseExec
+	.4byte 0
+	.4byte act__Q25GemAI8RiseExecFP10AICreature
+	.4byte 0x47656d41
+	.4byte 0x493a3a52
+	.4byte 0x69736549
+	.4byte 0x6e697400
+	.4byte __RTTI__9SAIAction
+	.4byte 0
+	.4byte 0
 .global __vt__Q25GemAI8RiseInit
 __vt__Q25GemAI8RiseInit:
-  .4byte __RTTI__Q25GemAI8RiseInit
-  .4byte 0
-  .4byte act__Q25GemAI8RiseInitFP10AICreature
-  .4byte "__RTTI__26StateMachine<10AICreature>_1"
-  .4byte 0
-  .4byte __RTTI__8SimpleAI_1
-  .4byte 0
-  .4byte 0
+	.4byte __RTTI__Q25GemAI8RiseInit
+	.4byte 0
+	.4byte act__Q25GemAI8RiseInitFP10AICreature
+	.4byte "__RTTI__26StateMachine<10AICreature>_1"
+	.4byte 0
+	.4byte __RTTI__8SimpleAI_1
+	.4byte 0
+	.4byte 0
 .global __vt__5GemAI
 __vt__5GemAI:
-  .4byte __RTTI__5GemAI
-  .4byte 0
-  .4byte "init__26StateMachine<10AICreature>FP10AICreature"
-  .4byte exec__8SimpleAIFP10AICreature
-  .4byte procMsg__8SimpleAIFP10AICreatureP3Msg
-  .4byte "transit__26StateMachine<10AICreature>FP10AICreaturei"
-  .4byte 0x476f616c
-  .4byte 0x41493a3a
-  .4byte 0x45666665
-  .4byte 0x63740000
-  .4byte __RTTI__9SAIAction
-  .4byte 0
-  .4byte 0
+	.4byte __RTTI__5GemAI
+	.4byte 0
+	.4byte "init__26StateMachine<10AICreature>FP10AICreature"
+	.4byte exec__8SimpleAIFP10AICreature
+	.4byte procMsg__8SimpleAIFP10AICreatureP3Msg
+	.4byte "transit__26StateMachine<10AICreature>FP10AICreaturei"
+	.4byte 0x476f616c
+	.4byte 0x41493a3a
+	.4byte 0x45666665
+	.4byte 0x63740000
+	.4byte __RTTI__9SAIAction
+	.4byte 0
+	.4byte 0
 .global __vt__Q26GoalAI6Effect
 __vt__Q26GoalAI6Effect:
-  .4byte __RTTI__Q26GoalAI6Effect
-  .4byte 0
-  .4byte act__Q26GoalAI6EffectFP10AICreature
-  .4byte 0x476f616c
-  .4byte 0x41493a3a
-  .4byte 0x456d6974
-  .4byte 0x57616974
-  .4byte 0
-  .4byte __RTTI__9SAIAction
-  .4byte 0
-  .4byte 0
+	.4byte __RTTI__Q26GoalAI6Effect
+	.4byte 0
+	.4byte act__Q26GoalAI6EffectFP10AICreature
+	.4byte 0x476f616c
+	.4byte 0x41493a3a
+	.4byte 0x456d6974
+	.4byte 0x57616974
+	.4byte 0
+	.4byte __RTTI__9SAIAction
+	.4byte 0
+	.4byte 0
 .global __vt__Q26GoalAI8EmitWait
 __vt__Q26GoalAI8EmitWait:
-  .4byte __RTTI__Q26GoalAI8EmitWait
-  .4byte 0
-  .4byte act__Q26GoalAI8EmitWaitFP10AICreature
-  .4byte 0x476f616c
-  .4byte 0x41493a3a
-  .4byte 0x456d6974
-  .4byte 0x50696b69
-  .4byte 0
-  .4byte __RTTI__9SAIAction
-  .4byte 0
-  .4byte 0
+	.4byte __RTTI__Q26GoalAI8EmitWait
+	.4byte 0
+	.4byte act__Q26GoalAI8EmitWaitFP10AICreature
+	.4byte 0x476f616c
+	.4byte 0x41493a3a
+	.4byte 0x456d6974
+	.4byte 0x50696b69
+	.4byte 0
+	.4byte __RTTI__9SAIAction
+	.4byte 0
+	.4byte 0
 .global __vt__Q26GoalAI8EmitPiki
 __vt__Q26GoalAI8EmitPiki:
-  .4byte __RTTI__Q26GoalAI8EmitPiki
-  .4byte 0
-  .4byte act__Q26GoalAI8EmitPikiFP10AICreature
-  .4byte 0x476f616c
-  .4byte 0x41493a3a
-  .4byte 0x426f6f74
-  .4byte 0x446f6e65
-  .4byte 0
-  .4byte __RTTI__9SAIAction
-  .4byte 0
-  .4byte 0
+	.4byte __RTTI__Q26GoalAI8EmitPiki
+	.4byte 0
+	.4byte act__Q26GoalAI8EmitPikiFP10AICreature
+	.4byte 0x476f616c
+	.4byte 0x41493a3a
+	.4byte 0x426f6f74
+	.4byte 0x446f6e65
+	.4byte 0
+	.4byte __RTTI__9SAIAction
+	.4byte 0
+	.4byte 0
 .global __vt__Q26GoalAI8BootDone
 __vt__Q26GoalAI8BootDone:
-  .4byte __RTTI__Q26GoalAI8BootDone
-  .4byte 0
-  .4byte act__Q26GoalAI8BootDoneFP10AICreature
-  .4byte 0x476f616c
-  .4byte 0x41493a3a
-  .4byte 0x426f6f74
-  .4byte 0x456d6974
-  .4byte 0
-  .4byte __RTTI__9SAIAction
-  .4byte 0
-  .4byte 0
+	.4byte __RTTI__Q26GoalAI8BootDone
+	.4byte 0
+	.4byte act__Q26GoalAI8BootDoneFP10AICreature
+	.4byte 0x476f616c
+	.4byte 0x41493a3a
+	.4byte 0x426f6f74
+	.4byte 0x456d6974
+	.4byte 0
+	.4byte __RTTI__9SAIAction
+	.4byte 0
+	.4byte 0
 .global __vt__Q26GoalAI8BootEmit
 __vt__Q26GoalAI8BootEmit:
-  .4byte __RTTI__Q26GoalAI8BootEmit
-  .4byte 0
-  .4byte act__Q26GoalAI8BootEmitFP10AICreature
-  .4byte 0x476f616c
-  .4byte 0x41493a3a
-  .4byte 0x426f6f74
-  .4byte 0x496e6974
-  .4byte 0
-  .4byte __RTTI__9SAIAction
-  .4byte 0
-  .4byte 0
+	.4byte __RTTI__Q26GoalAI8BootEmit
+	.4byte 0
+	.4byte act__Q26GoalAI8BootEmitFP10AICreature
+	.4byte 0x476f616c
+	.4byte 0x41493a3a
+	.4byte 0x426f6f74
+	.4byte 0x496e6974
+	.4byte 0
+	.4byte __RTTI__9SAIAction
+	.4byte 0
+	.4byte 0
 .global __vt__Q26GoalAI8BootInit
 __vt__Q26GoalAI8BootInit:
-  .4byte __RTTI__Q26GoalAI8BootInit
-  .4byte 0
-  .4byte act__Q26GoalAI8BootInitFP10AICreature
-  .4byte 0x476f616c
-  .4byte 0x41493a3a
-  .4byte 0x57616974
-  .4byte 0x496e6974
-  .4byte 0
-  .4byte __RTTI__9SAIAction
-  .4byte 0
-  .4byte 0
+	.4byte __RTTI__Q26GoalAI8BootInit
+	.4byte 0
+	.4byte act__Q26GoalAI8BootInitFP10AICreature
+	.4byte 0x476f616c
+	.4byte 0x41493a3a
+	.4byte 0x57616974
+	.4byte 0x496e6974
+	.4byte 0
+	.4byte __RTTI__9SAIAction
+	.4byte 0
+	.4byte 0
 .global __vt__Q26GoalAI8WaitInit
 __vt__Q26GoalAI8WaitInit:
-  .4byte __RTTI__Q26GoalAI8WaitInit
-  .4byte 0
-  .4byte act__Q26GoalAI8WaitInitFP10AICreature
-  .4byte 0x476f616c
-  .4byte 0x41493a3a
-  .4byte 0x4e6f7446
-  .4byte 0x696e6973
-  .4byte 0x68656400
-  .4byte 0x803e1b0c
-  .4byte 0
-  .4byte 0x803e1b14
-  .4byte 0
-  .4byte __RTTI__12SAICondition_1
-  .4byte 0
-  .4byte 0
+	.4byte __RTTI__Q26GoalAI8WaitInit
+	.4byte 0
+	.4byte act__Q26GoalAI8WaitInitFP10AICreature
+	.4byte 0x476f616c
+	.4byte 0x41493a3a
+	.4byte 0x4e6f7446
+	.4byte 0x696e6973
+	.4byte 0x68656400
+	.4byte 0x803e1b0c
+	.4byte 0
+	.4byte 0x803e1b14
+	.4byte 0
+	.4byte __RTTI__12SAICondition_1
+	.4byte 0
+	.4byte 0
 .global __vt__Q26GoalAI11NotFinished
 __vt__Q26GoalAI11NotFinished:
-  .4byte __RTTI__Q26GoalAI11NotFinished
-  .4byte 0
-  .4byte getAgeNodeType__5ANodeFv
-  .4byte read__8CoreNodeFR18RandomAccessStream
-  .4byte satisfy__Q26GoalAI11NotFinishedFP10AICreature
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte "__RTTI__26StateMachine<10AICreature>_1"
-  .4byte 0
-  .4byte __RTTI__8SimpleAI_1
-  .4byte 0
-  .4byte 0
+	.4byte __RTTI__Q26GoalAI11NotFinished
+	.4byte 0
+	.4byte getAgeNodeType__5ANodeFv
+	.4byte read__8CoreNodeFR18RandomAccessStream
+	.4byte satisfy__Q26GoalAI11NotFinishedFP10AICreature
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte "__RTTI__26StateMachine<10AICreature>_1"
+	.4byte 0
+	.4byte __RTTI__8SimpleAI_1
+	.4byte 0
+	.4byte 0
 .global __vt__6GoalAI
 __vt__6GoalAI:
-  .4byte __RTTI__6GoalAI
-  .4byte 0
-  .4byte "init__26StateMachine<10AICreature>FP10AICreature"
-  .4byte exec__8SimpleAIFP10AICreature
-  .4byte procMsg__8SimpleAIFP10AICreatureP3Msg
-  .4byte "transit__26StateMachine<10AICreature>FP10AICreaturei"
-  .4byte 0x426f6d62
-  .4byte 0x41493a3a
-  .4byte 0x44696545
-  .4byte 0x78656300
-  .4byte __RTTI__9SAIAction
-  .4byte 0
-  .4byte 0
+	.4byte __RTTI__6GoalAI
+	.4byte 0
+	.4byte "init__26StateMachine<10AICreature>FP10AICreature"
+	.4byte exec__8SimpleAIFP10AICreature
+	.4byte procMsg__8SimpleAIFP10AICreatureP3Msg
+	.4byte "transit__26StateMachine<10AICreature>FP10AICreaturei"
+	.4byte 0x426f6d62
+	.4byte 0x41493a3a
+	.4byte 0x44696545
+	.4byte 0x78656300
+	.4byte __RTTI__9SAIAction
+	.4byte 0
+	.4byte 0
 .global __vt__Q26BombAI7DieExec
 __vt__Q26BombAI7DieExec:
-  .4byte __RTTI__Q26BombAI7DieExec
-  .4byte 0
-  .4byte act__Q26BombAI7DieExecFP10AICreature
-  .4byte 0x426f6d62
-  .4byte 0x41493a3a
-  .4byte 0x44696549
-  .4byte 0x6e697400
-  .4byte __RTTI__9SAIAction
-  .4byte 0
-  .4byte 0
+	.4byte __RTTI__Q26BombAI7DieExec
+	.4byte 0
+	.4byte act__Q26BombAI7DieExecFP10AICreature
+	.4byte 0x426f6d62
+	.4byte 0x41493a3a
+	.4byte 0x44696549
+	.4byte 0x6e697400
+	.4byte __RTTI__9SAIAction
+	.4byte 0
+	.4byte 0
 .global __vt__Q26BombAI7DieInit
 __vt__Q26BombAI7DieInit:
-  .4byte __RTTI__Q26BombAI7DieInit
-  .4byte 0
-  .4byte act__Q26BombAI7DieInitFP10AICreature
-  .4byte 0x426f6d62
-  .4byte 0x41493a3a
-  .4byte 0x4d697a75
-  .4byte 0x45786563
-  .4byte 0
-  .4byte __RTTI__9SAIAction
-  .4byte 0
-  .4byte 0
+	.4byte __RTTI__Q26BombAI7DieInit
+	.4byte 0
+	.4byte act__Q26BombAI7DieInitFP10AICreature
+	.4byte 0x426f6d62
+	.4byte 0x41493a3a
+	.4byte 0x4d697a75
+	.4byte 0x45786563
+	.4byte 0
+	.4byte __RTTI__9SAIAction
+	.4byte 0
+	.4byte 0
 .global __vt__Q26BombAI8MizuExec
 __vt__Q26BombAI8MizuExec:
-  .4byte __RTTI__Q26BombAI8MizuExec
-  .4byte 0
-  .4byte act__Q26BombAI8MizuExecFP10AICreature
-  .4byte 0x426f6d62
-  .4byte 0x41493a3a
-  .4byte 0x4d697a75
-  .4byte 0x496e6974
-  .4byte 0
-  .4byte __RTTI__9SAIAction
-  .4byte 0
-  .4byte 0
+	.4byte __RTTI__Q26BombAI8MizuExec
+	.4byte 0
+	.4byte act__Q26BombAI8MizuExecFP10AICreature
+	.4byte 0x426f6d62
+	.4byte 0x41493a3a
+	.4byte 0x4d697a75
+	.4byte 0x496e6974
+	.4byte 0
+	.4byte __RTTI__9SAIAction
+	.4byte 0
+	.4byte 0
 .global __vt__Q26BombAI8MizuInit
 __vt__Q26BombAI8MizuInit:
-  .4byte __RTTI__Q26BombAI8MizuInit
-  .4byte 0
-  .4byte act__Q26BombAI8MizuInitFP10AICreature
-  .4byte 0x426f6d62
-  .4byte 0x41493a3a
-  .4byte 0x426f6d62
-  .4byte 0x45786563
-  .4byte 0
-  .4byte __RTTI__9SAIAction
-  .4byte 0
-  .4byte 0
+	.4byte __RTTI__Q26BombAI8MizuInit
+	.4byte 0
+	.4byte act__Q26BombAI8MizuInitFP10AICreature
+	.4byte 0x426f6d62
+	.4byte 0x41493a3a
+	.4byte 0x426f6d62
+	.4byte 0x45786563
+	.4byte 0
+	.4byte __RTTI__9SAIAction
+	.4byte 0
+	.4byte 0
 .global __vt__Q26BombAI8BombExec
 __vt__Q26BombAI8BombExec:
-  .4byte __RTTI__Q26BombAI8BombExec
-  .4byte 0
-  .4byte act__Q26BombAI8BombExecFP10AICreature
-  .4byte 0x496e7465
-  .4byte 0x72616374
-  .4byte 0x696f6e00
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0x436e6442
-  .4byte 0x6f6d6261
-  .4byte 0x626c6500
-  .4byte 0x436e6443
-  .4byte 0x6f6c6c50
-  .4byte 0x61727400
-  .4byte __RTTI__11CndCollPart
-  .4byte 0
-  .4byte 0
+	.4byte __RTTI__Q26BombAI8BombExec
+	.4byte 0
+	.4byte act__Q26BombAI8BombExecFP10AICreature
+	.4byte 0x496e7465
+	.4byte 0x72616374
+	.4byte 0x696f6e00
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0x436e6442
+	.4byte 0x6f6d6261
+	.4byte 0x626c6500
+	.4byte 0x436e6443
+	.4byte 0x6f6c6c50
+	.4byte 0x61727400
+	.4byte __RTTI__11CndCollPart
+	.4byte 0
+	.4byte 0
 .global __vt__11CndBombable
 __vt__11CndBombable:
-  .4byte __RTTI__11CndBombable
-  .4byte 0
-  .4byte satisfy__11CndBombableFP8CollPart
+	.4byte __RTTI__11CndBombable
+	.4byte 0
+	.4byte satisfy__11CndBombableFP8CollPart
 .global __vt__11CndCollPart
 __vt__11CndCollPart:
-  .4byte __RTTI__11CndCollPart
-  .4byte 0
-  .4byte satisfy__11CndCollPartFP8CollPart
-  .4byte 0x426f6d62
-  .4byte 0x41493a3a
-  .4byte 0x426f6d62
-  .4byte 0x496e6974
-  .4byte 0
-  .4byte __RTTI__9SAIAction
-  .4byte 0
-  .4byte 0
+	.4byte __RTTI__11CndCollPart
+	.4byte 0
+	.4byte satisfy__11CndCollPartFP8CollPart
+	.4byte 0x426f6d62
+	.4byte 0x41493a3a
+	.4byte 0x426f6d62
+	.4byte 0x496e6974
+	.4byte 0
+	.4byte __RTTI__9SAIAction
+	.4byte 0
+	.4byte 0
 .global __vt__Q26BombAI8BombInit
 __vt__Q26BombAI8BombInit:
-  .4byte __RTTI__Q26BombAI8BombInit
-  .4byte 0
-  .4byte act__Q26BombAI8BombInitFP10AICreature
-  .4byte 0x426f6d62
-  .4byte 0x41493a3a
-  .4byte 0x53657445
-  .4byte 0x78656300
-  .4byte __RTTI__9SAIAction
-  .4byte 0
-  .4byte 0
+	.4byte __RTTI__Q26BombAI8BombInit
+	.4byte 0
+	.4byte act__Q26BombAI8BombInitFP10AICreature
+	.4byte 0x426f6d62
+	.4byte 0x41493a3a
+	.4byte 0x53657445
+	.4byte 0x78656300
+	.4byte __RTTI__9SAIAction
+	.4byte 0
+	.4byte 0
 .global __vt__Q26BombAI7SetExec
 __vt__Q26BombAI7SetExec:
-  .4byte __RTTI__Q26BombAI7SetExec
-  .4byte 0
-  .4byte act__Q26BombAI7SetExecFP10AICreature
-  .4byte 0x426f6d62
-  .4byte 0x41493a3a
-  .4byte 0x53657449
-  .4byte 0x6e697400
-  .4byte __RTTI__9SAIAction
-  .4byte 0
-  .4byte 0
+	.4byte __RTTI__Q26BombAI7SetExec
+	.4byte 0
+	.4byte act__Q26BombAI7SetExecFP10AICreature
+	.4byte 0x426f6d62
+	.4byte 0x41493a3a
+	.4byte 0x53657449
+	.4byte 0x6e697400
+	.4byte __RTTI__9SAIAction
+	.4byte 0
+	.4byte 0
 .global __vt__Q26BombAI7SetInit
 __vt__Q26BombAI7SetInit:
-  .4byte __RTTI__Q26BombAI7SetInit
-  .4byte 0
-  .4byte act__Q26BombAI7SetInitFP10AICreature
-  .4byte "__RTTI__26StateMachine<10AICreature>_1"
-  .4byte 0
-  .4byte __RTTI__8SimpleAI_1
-  .4byte 0
-  .4byte 0
+	.4byte __RTTI__Q26BombAI7SetInit
+	.4byte 0
+	.4byte act__Q26BombAI7SetInitFP10AICreature
+	.4byte "__RTTI__26StateMachine<10AICreature>_1"
+	.4byte 0
+	.4byte __RTTI__8SimpleAI_1
+	.4byte 0
+	.4byte 0
 .global __vt__6BombAI
 __vt__6BombAI:
-  .4byte __RTTI__6BombAI
-  .4byte 0
-  .4byte "init__26StateMachine<10AICreature>FP10AICreature"
-  .4byte exec__8SimpleAIFP10AICreature
-  .4byte procMsg__8SimpleAIFP10AICreatureP3Msg
-  .4byte "transit__26StateMachine<10AICreature>FP10AICreaturei"
-  .4byte 0x50696b69
-  .4byte 0x48656164
-  .4byte 0x41493a3a
-  .4byte 0x44656164
-  .4byte 0
-  .4byte __RTTI__9SAIAction
-  .4byte 0
-  .4byte 0
+	.4byte __RTTI__6BombAI
+	.4byte 0
+	.4byte "init__26StateMachine<10AICreature>FP10AICreature"
+	.4byte exec__8SimpleAIFP10AICreature
+	.4byte procMsg__8SimpleAIFP10AICreatureP3Msg
+	.4byte "transit__26StateMachine<10AICreature>FP10AICreaturei"
+	.4byte 0x50696b69
+	.4byte 0x48656164
+	.4byte 0x41493a3a
+	.4byte 0x44656164
+	.4byte 0
+	.4byte __RTTI__9SAIAction
+	.4byte 0
+	.4byte 0
 .global __vt__Q210PikiHeadAI4Dead
 __vt__Q210PikiHeadAI4Dead:
-  .4byte __RTTI__Q210PikiHeadAI4Dead
-  .4byte 0
-  .4byte act__Q210PikiHeadAI4DeadFP10AICreature
-  .4byte 0x50696b69
-  .4byte 0x48656164
-  .4byte 0x41493a3a
-  .4byte 0x4b617265
-  .4byte 0x74614578
-  .4byte 0x65630000
-  .4byte __RTTI__9SAIAction
-  .4byte 0
-  .4byte 0
+	.4byte __RTTI__Q210PikiHeadAI4Dead
+	.4byte 0
+	.4byte act__Q210PikiHeadAI4DeadFP10AICreature
+	.4byte 0x50696b69
+	.4byte 0x48656164
+	.4byte 0x41493a3a
+	.4byte 0x4b617265
+	.4byte 0x74614578
+	.4byte 0x65630000
+	.4byte __RTTI__9SAIAction
+	.4byte 0
+	.4byte 0
 .global __vt__Q210PikiHeadAI10KaretaExec
 __vt__Q210PikiHeadAI10KaretaExec:
-  .4byte __RTTI__Q210PikiHeadAI10KaretaExec
-  .4byte 0
-  .4byte act__Q210PikiHeadAI10KaretaExecFP10AICreature
-  .4byte 0x50696b69
-  .4byte 0x48656164
-  .4byte 0x41493a3a
-  .4byte 0x4b617265
-  .4byte 0x7461496e
-  .4byte 0x69740000
-  .4byte __RTTI__9SAIAction
-  .4byte 0
-  .4byte 0
+	.4byte __RTTI__Q210PikiHeadAI10KaretaExec
+	.4byte 0
+	.4byte act__Q210PikiHeadAI10KaretaExecFP10AICreature
+	.4byte 0x50696b69
+	.4byte 0x48656164
+	.4byte 0x41493a3a
+	.4byte 0x4b617265
+	.4byte 0x7461496e
+	.4byte 0x69740000
+	.4byte __RTTI__9SAIAction
+	.4byte 0
+	.4byte 0
 .global __vt__Q210PikiHeadAI10KaretaInit
 __vt__Q210PikiHeadAI10KaretaInit:
-  .4byte __RTTI__Q210PikiHeadAI10KaretaInit
-  .4byte 0
-  .4byte act__Q210PikiHeadAI10KaretaInitFP10AICreature
-  .4byte 0x50696b69
-  .4byte 0x48656164
-  .4byte 0x41493a3a
-  .4byte 0x47726f77
-  .4byte 0x45666665
-  .4byte 0x63740000
-  .4byte __RTTI__9SAIAction
-  .4byte 0
-  .4byte 0
+	.4byte __RTTI__Q210PikiHeadAI10KaretaInit
+	.4byte 0
+	.4byte act__Q210PikiHeadAI10KaretaInitFP10AICreature
+	.4byte 0x50696b69
+	.4byte 0x48656164
+	.4byte 0x41493a3a
+	.4byte 0x47726f77
+	.4byte 0x45666665
+	.4byte 0x63740000
+	.4byte __RTTI__9SAIAction
+	.4byte 0
+	.4byte 0
 .global __vt__Q210PikiHeadAI10GrowEffect
 __vt__Q210PikiHeadAI10GrowEffect:
-  .4byte __RTTI__Q210PikiHeadAI10GrowEffect
-  .4byte 0
-  .4byte act__Q210PikiHeadAI10GrowEffectFP10AICreature
-  .4byte 0x50696b69
-  .4byte 0x48656164
-  .4byte 0x41493a3a
-  .4byte 0x47726f77
-  .4byte 0x75706564
-  .4byte 0x45786563
-  .4byte 0
-  .4byte __RTTI__9SAIAction
-  .4byte 0
-  .4byte 0
+	.4byte __RTTI__Q210PikiHeadAI10GrowEffect
+	.4byte 0
+	.4byte act__Q210PikiHeadAI10GrowEffectFP10AICreature
+	.4byte 0x50696b69
+	.4byte 0x48656164
+	.4byte 0x41493a3a
+	.4byte 0x47726f77
+	.4byte 0x75706564
+	.4byte 0x45786563
+	.4byte 0
+	.4byte __RTTI__9SAIAction
+	.4byte 0
+	.4byte 0
 .global __vt__Q210PikiHeadAI12GrowupedExec
 __vt__Q210PikiHeadAI12GrowupedExec:
-  .4byte __RTTI__Q210PikiHeadAI12GrowupedExec
-  .4byte 0
-  .4byte act__Q210PikiHeadAI12GrowupedExecFP10AICreature
-  .4byte 0x50696b69
-  .4byte 0x48656164
-  .4byte 0x41493a3a
-  .4byte 0x57616974
-  .4byte 0x45786563
-  .4byte 0
-  .4byte __RTTI__9SAIAction
-  .4byte 0
-  .4byte 0
+	.4byte __RTTI__Q210PikiHeadAI12GrowupedExec
+	.4byte 0
+	.4byte act__Q210PikiHeadAI12GrowupedExecFP10AICreature
+	.4byte 0x50696b69
+	.4byte 0x48656164
+	.4byte 0x41493a3a
+	.4byte 0x57616974
+	.4byte 0x45786563
+	.4byte 0
+	.4byte __RTTI__9SAIAction
+	.4byte 0
+	.4byte 0
 .global __vt__Q210PikiHeadAI8WaitExec
 __vt__Q210PikiHeadAI8WaitExec:
-  .4byte __RTTI__Q210PikiHeadAI8WaitExec
-  .4byte 0
-  .4byte act__Q210PikiHeadAI8WaitExecFP10AICreature
-  .4byte 0x50696b69
-  .4byte 0x48656164
-  .4byte 0x41493a3a
-  .4byte 0x57616974
-  .4byte 0x496e6974
-  .4byte 0
-  .4byte __RTTI__9SAIAction
-  .4byte 0
-  .4byte 0
+	.4byte __RTTI__Q210PikiHeadAI8WaitExec
+	.4byte 0
+	.4byte act__Q210PikiHeadAI8WaitExecFP10AICreature
+	.4byte 0x50696b69
+	.4byte 0x48656164
+	.4byte 0x41493a3a
+	.4byte 0x57616974
+	.4byte 0x496e6974
+	.4byte 0
+	.4byte __RTTI__9SAIAction
+	.4byte 0
+	.4byte 0
 .global __vt__Q210PikiHeadAI8WaitInit
 __vt__Q210PikiHeadAI8WaitInit:
-  .4byte __RTTI__Q210PikiHeadAI8WaitInit
-  .4byte 0
-  .4byte act__Q210PikiHeadAI8WaitInitFP10AICreature
-  .4byte 0x50696b69
-  .4byte 0x48656164
-  .4byte 0x41493a3a
-  .4byte 0x54616e65
-  .4byte 0x45786563
-  .4byte 0
-  .4byte __RTTI__9SAIAction
-  .4byte 0
-  .4byte 0
+	.4byte __RTTI__Q210PikiHeadAI8WaitInit
+	.4byte 0
+	.4byte act__Q210PikiHeadAI8WaitInitFP10AICreature
+	.4byte 0x50696b69
+	.4byte 0x48656164
+	.4byte 0x41493a3a
+	.4byte 0x54616e65
+	.4byte 0x45786563
+	.4byte 0
+	.4byte __RTTI__9SAIAction
+	.4byte 0
+	.4byte 0
 .global __vt__Q210PikiHeadAI8TaneExec
 __vt__Q210PikiHeadAI8TaneExec:
-  .4byte __RTTI__Q210PikiHeadAI8TaneExec
-  .4byte 0
-  .4byte act__Q210PikiHeadAI8TaneExecFP10AICreature
-  .4byte 0x50696b69
-  .4byte 0x48656164
-  .4byte 0x41493a3a
-  .4byte 0x54616e65
-  .4byte 0x496e6974
-  .4byte 0
-  .4byte __RTTI__9SAIAction
-  .4byte 0
-  .4byte 0
+	.4byte __RTTI__Q210PikiHeadAI8TaneExec
+	.4byte 0
+	.4byte act__Q210PikiHeadAI8TaneExecFP10AICreature
+	.4byte 0x50696b69
+	.4byte 0x48656164
+	.4byte 0x41493a3a
+	.4byte 0x54616e65
+	.4byte 0x496e6974
+	.4byte 0
+	.4byte __RTTI__9SAIAction
+	.4byte 0
+	.4byte 0
 .global __vt__Q210PikiHeadAI8TaneInit
 __vt__Q210PikiHeadAI8TaneInit:
-  .4byte __RTTI__Q210PikiHeadAI8TaneInit
-  .4byte 0
-  .4byte act__Q210PikiHeadAI8TaneInitFP10AICreature
-  .4byte 0x50696b69
-  .4byte 0x48656164
-  .4byte 0x41493a3a
-  .4byte 0x42757279
-  .4byte 0x45786563
-  .4byte 0
-  .4byte __RTTI__9SAIAction
-  .4byte 0
-  .4byte 0
+	.4byte __RTTI__Q210PikiHeadAI8TaneInit
+	.4byte 0
+	.4byte act__Q210PikiHeadAI8TaneInitFP10AICreature
+	.4byte 0x50696b69
+	.4byte 0x48656164
+	.4byte 0x41493a3a
+	.4byte 0x42757279
+	.4byte 0x45786563
+	.4byte 0
+	.4byte __RTTI__9SAIAction
+	.4byte 0
+	.4byte 0
 .global __vt__Q210PikiHeadAI8BuryExec
 __vt__Q210PikiHeadAI8BuryExec:
-  .4byte __RTTI__Q210PikiHeadAI8BuryExec
-  .4byte 0
-  .4byte act__Q210PikiHeadAI8BuryExecFP10AICreature
-  .4byte 0x50696b69
-  .4byte 0x48656164
-  .4byte 0x41493a3a
-  .4byte 0x42757279
-  .4byte 0x496e6974
-  .4byte 0
-  .4byte __RTTI__9SAIAction
-  .4byte 0
-  .4byte 0
+	.4byte __RTTI__Q210PikiHeadAI8BuryExec
+	.4byte 0
+	.4byte act__Q210PikiHeadAI8BuryExecFP10AICreature
+	.4byte 0x50696b69
+	.4byte 0x48656164
+	.4byte 0x41493a3a
+	.4byte 0x42757279
+	.4byte 0x496e6974
+	.4byte 0
+	.4byte __RTTI__9SAIAction
+	.4byte 0
+	.4byte 0
 .global __vt__Q210PikiHeadAI8BuryInit
 __vt__Q210PikiHeadAI8BuryInit:
-  .4byte __RTTI__Q210PikiHeadAI8BuryInit
-  .4byte 0
-  .4byte act__Q210PikiHeadAI8BuryInitFP10AICreature
-  .4byte 0x50696b69
-  .4byte 0x48656164
-  .4byte 0x41493a3a
-  .4byte 0x42757279
-  .4byte 0x45786563
-  .4byte 0x32000000
-  .4byte __RTTI__9SAIAction
-  .4byte 0
-  .4byte 0
+	.4byte __RTTI__Q210PikiHeadAI8BuryInit
+	.4byte 0
+	.4byte act__Q210PikiHeadAI8BuryInitFP10AICreature
+	.4byte 0x50696b69
+	.4byte 0x48656164
+	.4byte 0x41493a3a
+	.4byte 0x42757279
+	.4byte 0x45786563
+	.4byte 0x32000000
+	.4byte __RTTI__9SAIAction
+	.4byte 0
+	.4byte 0
 .global __vt__Q210PikiHeadAI9BuryExec2
 __vt__Q210PikiHeadAI9BuryExec2:
-  .4byte __RTTI__Q210PikiHeadAI9BuryExec2
-  .4byte 0
-  .4byte act__Q210PikiHeadAI9BuryExec2FP10AICreature
-  .4byte 0x50696b69
-  .4byte 0x48656164
-  .4byte 0x41493a3a
-  .4byte 0x42757279
-  .4byte 0x496e6974
-  .4byte 0x32000000
-  .4byte __RTTI__9SAIAction
-  .4byte 0
-  .4byte 0
+	.4byte __RTTI__Q210PikiHeadAI9BuryExec2
+	.4byte 0
+	.4byte act__Q210PikiHeadAI9BuryExec2FP10AICreature
+	.4byte 0x50696b69
+	.4byte 0x48656164
+	.4byte 0x41493a3a
+	.4byte 0x42757279
+	.4byte 0x496e6974
+	.4byte 0x32000000
+	.4byte __RTTI__9SAIAction
+	.4byte 0
+	.4byte 0
 .global __vt__Q210PikiHeadAI9BuryInit2
 __vt__Q210PikiHeadAI9BuryInit2:
-  .4byte __RTTI__Q210PikiHeadAI9BuryInit2
-  .4byte 0
-  .4byte act__Q210PikiHeadAI9BuryInit2FP10AICreature
-  .4byte 0x50696b69
-  .4byte 0x48656164
-  .4byte 0x41493a3a
-  .4byte 0x466c7969
-  .4byte 0x6e67436c
-  .4byte 0x65616e75
-  .4byte 0x70000000
-  .4byte __RTTI__9SAIAction
-  .4byte 0
-  .4byte 0
+	.4byte __RTTI__Q210PikiHeadAI9BuryInit2
+	.4byte 0
+	.4byte act__Q210PikiHeadAI9BuryInit2FP10AICreature
+	.4byte 0x50696b69
+	.4byte 0x48656164
+	.4byte 0x41493a3a
+	.4byte 0x466c7969
+	.4byte 0x6e67436c
+	.4byte 0x65616e75
+	.4byte 0x70000000
+	.4byte __RTTI__9SAIAction
+	.4byte 0
+	.4byte 0
 .global __vt__Q210PikiHeadAI13FlyingCleanup
 __vt__Q210PikiHeadAI13FlyingCleanup:
-  .4byte __RTTI__Q210PikiHeadAI13FlyingCleanup
-  .4byte 0
-  .4byte act__Q210PikiHeadAI13FlyingCleanupFP10AICreature
-  .4byte 0x50696b69
-  .4byte 0x48656164
-  .4byte 0x41493a3a
-  .4byte 0x466c7969
-  .4byte 0x6e674578
-  .4byte 0x65630000
-  .4byte __RTTI__9SAIAction
-  .4byte 0
-  .4byte 0
+	.4byte __RTTI__Q210PikiHeadAI13FlyingCleanup
+	.4byte 0
+	.4byte act__Q210PikiHeadAI13FlyingCleanupFP10AICreature
+	.4byte 0x50696b69
+	.4byte 0x48656164
+	.4byte 0x41493a3a
+	.4byte 0x466c7969
+	.4byte 0x6e674578
+	.4byte 0x65630000
+	.4byte __RTTI__9SAIAction
+	.4byte 0
+	.4byte 0
 .global __vt__Q210PikiHeadAI10FlyingExec
 __vt__Q210PikiHeadAI10FlyingExec:
-  .4byte __RTTI__Q210PikiHeadAI10FlyingExec
-  .4byte 0
-  .4byte act__Q210PikiHeadAI10FlyingExecFP10AICreature
-  .4byte 0x50696b69
-  .4byte 0x48656164
-  .4byte 0x41493a3a
-  .4byte 0x466c7969
-  .4byte 0x6e674566
-  .4byte 0x66656374
-  .4byte 0
-  .4byte __RTTI__9SAIAction
-  .4byte 0
-  .4byte 0
+	.4byte __RTTI__Q210PikiHeadAI10FlyingExec
+	.4byte 0
+	.4byte act__Q210PikiHeadAI10FlyingExecFP10AICreature
+	.4byte 0x50696b69
+	.4byte 0x48656164
+	.4byte 0x41493a3a
+	.4byte 0x466c7969
+	.4byte 0x6e674566
+	.4byte 0x66656374
+	.4byte 0
+	.4byte __RTTI__9SAIAction
+	.4byte 0
+	.4byte 0
 .global __vt__Q210PikiHeadAI12FlyingEffect
 __vt__Q210PikiHeadAI12FlyingEffect:
-  .4byte __RTTI__Q210PikiHeadAI12FlyingEffect
-  .4byte 0
-  .4byte act__Q210PikiHeadAI12FlyingEffectFP10AICreature
-  .4byte 0x50696b69
-  .4byte 0x48656164
-  .4byte 0x41493a3a
-  .4byte 0x426f756e
-  .4byte 0x6365536f
-  .4byte 0x756e6400
-  .4byte __RTTI__9SAIAction
-  .4byte 0
-  .4byte 0
+	.4byte __RTTI__Q210PikiHeadAI12FlyingEffect
+	.4byte 0
+	.4byte act__Q210PikiHeadAI12FlyingEffectFP10AICreature
+	.4byte 0x50696b69
+	.4byte 0x48656164
+	.4byte 0x41493a3a
+	.4byte 0x426f756e
+	.4byte 0x6365536f
+	.4byte 0x756e6400
+	.4byte __RTTI__9SAIAction
+	.4byte 0
+	.4byte 0
 .global __vt__Q210PikiHeadAI11BounceSound
 __vt__Q210PikiHeadAI11BounceSound:
-  .4byte __RTTI__Q210PikiHeadAI11BounceSound
-  .4byte 0
-  .4byte act__Q210PikiHeadAI11BounceSoundFP10AICreature
-  .4byte 0x50696b69
-  .4byte 0x48656164
-  .4byte 0x41490000
-  .4byte "__RTTI__26StateMachine<10AICreature>_1"
-  .4byte 0
-  .4byte __RTTI__8SimpleAI_1
-  .4byte 0
-  .4byte 0
+	.4byte __RTTI__Q210PikiHeadAI11BounceSound
+	.4byte 0
+	.4byte act__Q210PikiHeadAI11BounceSoundFP10AICreature
+	.4byte 0x50696b69
+	.4byte 0x48656164
+	.4byte 0x41490000
+	.4byte "__RTTI__26StateMachine<10AICreature>_1"
+	.4byte 0
+	.4byte __RTTI__8SimpleAI_1
+	.4byte 0
+	.4byte 0
 .global __vt__10PikiHeadAI
 __vt__10PikiHeadAI:
-  .4byte __RTTI__10PikiHeadAI
-  .4byte 0
-  .4byte "init__26StateMachine<10AICreature>FP10AICreature"
-  .4byte exec__8SimpleAIFP10AICreature
-  .4byte procMsg__8SimpleAIFP10AICreatureP3Msg
-  .4byte "transit__26StateMachine<10AICreature>FP10AICreaturei"
-  .4byte 0x536c7569
-  .4byte 0x63654149
-  .4byte 0x3a3a4461
-  .4byte 0x6d616765
-  .4byte 0x496e6974
-  .4byte 0
-  .4byte __RTTI__9SAIAction
-  .4byte 0
-  .4byte 0
+	.4byte __RTTI__10PikiHeadAI
+	.4byte 0
+	.4byte "init__26StateMachine<10AICreature>FP10AICreature"
+	.4byte exec__8SimpleAIFP10AICreature
+	.4byte procMsg__8SimpleAIFP10AICreatureP3Msg
+	.4byte "transit__26StateMachine<10AICreature>FP10AICreaturei"
+	.4byte 0x536c7569
+	.4byte 0x63654149
+	.4byte 0x3a3a4461
+	.4byte 0x6d616765
+	.4byte 0x496e6974
+	.4byte 0
+	.4byte __RTTI__9SAIAction
+	.4byte 0
+	.4byte 0
 .global __vt__Q28SluiceAI10DamageInit
 __vt__Q28SluiceAI10DamageInit:
-  .4byte __RTTI__Q28SluiceAI10DamageInit
-  .4byte 0
-  .4byte act__Q28SluiceAI10DamageInitFP10AICreature
-  .4byte 0x536c7569
-  .4byte 0x63654149
-  .4byte 0x3a3a4368
-  .4byte 0x616e6765
-  .4byte 0x496e6974
-  .4byte 0
-  .4byte __RTTI__9SAIAction
-  .4byte 0
-  .4byte 0
+	.4byte __RTTI__Q28SluiceAI10DamageInit
+	.4byte 0
+	.4byte act__Q28SluiceAI10DamageInitFP10AICreature
+	.4byte 0x536c7569
+	.4byte 0x63654149
+	.4byte 0x3a3a4368
+	.4byte 0x616e6765
+	.4byte 0x496e6974
+	.4byte 0
+	.4byte __RTTI__9SAIAction
+	.4byte 0
+	.4byte 0
 .global __vt__Q28SluiceAI10ChangeInit
 __vt__Q28SluiceAI10ChangeInit:
-  .4byte __RTTI__Q28SluiceAI10ChangeInit
-  .4byte 0
-  .4byte act__Q28SluiceAI10ChangeInitFP10AICreature
-  .4byte 0x536c7569
-  .4byte 0x63654149
-  .4byte 0x3a3a5761
-  .4byte 0x6974496e
-  .4byte 0x69740000
-  .4byte __RTTI__9SAIAction
-  .4byte 0
-  .4byte 0
+	.4byte __RTTI__Q28SluiceAI10ChangeInit
+	.4byte 0
+	.4byte act__Q28SluiceAI10ChangeInitFP10AICreature
+	.4byte 0x536c7569
+	.4byte 0x63654149
+	.4byte 0x3a3a5761
+	.4byte 0x6974496e
+	.4byte 0x69740000
+	.4byte __RTTI__9SAIAction
+	.4byte 0
+	.4byte 0
 .global __vt__Q28SluiceAI8WaitInit
 __vt__Q28SluiceAI8WaitInit:
-  .4byte __RTTI__Q28SluiceAI8WaitInit
-  .4byte 0
-  .4byte act__Q28SluiceAI8WaitInitFP10AICreature
-  .4byte 0x536c7569
-  .4byte 0x63654149
-  .4byte 0x3a3a4164
-  .4byte 0x64436f75
-  .4byte 0x6e740000
-  .4byte __RTTI__9SAIAction
-  .4byte 0
-  .4byte 0
+	.4byte __RTTI__Q28SluiceAI8WaitInit
+	.4byte 0
+	.4byte act__Q28SluiceAI8WaitInitFP10AICreature
+	.4byte 0x536c7569
+	.4byte 0x63654149
+	.4byte 0x3a3a4164
+	.4byte 0x64436f75
+	.4byte 0x6e740000
+	.4byte __RTTI__9SAIAction
+	.4byte 0
+	.4byte 0
 .global __vt__Q28SluiceAI8AddCount
 __vt__Q28SluiceAI8AddCount:
-  .4byte __RTTI__Q28SluiceAI8AddCount
-  .4byte 0
-  .4byte act__Q28SluiceAI8AddCountFP10AICreature
-  .4byte 0x536c7569
-  .4byte 0x63654149
-  .4byte 0x3a3a4d6f
-  .4byte 0x74696f6e
-  .4byte 0x446f6e65
-  .4byte 0
-  .4byte __RTTI__9SAIAction
-  .4byte 0
-  .4byte 0
+	.4byte __RTTI__Q28SluiceAI8AddCount
+	.4byte 0
+	.4byte act__Q28SluiceAI8AddCountFP10AICreature
+	.4byte 0x536c7569
+	.4byte 0x63654149
+	.4byte 0x3a3a4d6f
+	.4byte 0x74696f6e
+	.4byte 0x446f6e65
+	.4byte 0
+	.4byte __RTTI__9SAIAction
+	.4byte 0
+	.4byte 0
 .global __vt__Q28SluiceAI10MotionDone
 __vt__Q28SluiceAI10MotionDone:
-  .4byte __RTTI__Q28SluiceAI10MotionDone
-  .4byte 0
-  .4byte act__Q28SluiceAI10MotionDoneFP10AICreature
-  .4byte 0x536c7569
-  .4byte 0x63654149
-  .4byte 0x3a3a496e
-  .4byte 0x69740000
-  .4byte __RTTI__9SAIAction
-  .4byte 0
-  .4byte 0
+	.4byte __RTTI__Q28SluiceAI10MotionDone
+	.4byte 0
+	.4byte act__Q28SluiceAI10MotionDoneFP10AICreature
+	.4byte 0x536c7569
+	.4byte 0x63654149
+	.4byte 0x3a3a496e
+	.4byte 0x69740000
+	.4byte __RTTI__9SAIAction
+	.4byte 0
+	.4byte 0
 .global __vt__Q28SluiceAI4Init
 __vt__Q28SluiceAI4Init:
-  .4byte __RTTI__Q28SluiceAI4Init
-  .4byte 0
-  .4byte act__Q28SluiceAI4InitFP10AICreature
+	.4byte __RTTI__Q28SluiceAI4Init
+	.4byte 0
+	.4byte act__Q28SluiceAI4InitFP10AICreature
 .global __vt__9SAIAction
 __vt__9SAIAction:
-  .4byte __RTTI__9SAIAction
-  .4byte 0
-  .4byte 0
-  .4byte 0x53414945
-  .4byte 0x76656e74
-  .4byte 0
-  .4byte 0x52656365
-  .4byte 0x69766572
-  .4byte 0x3c414943
-  .4byte 0x72656174
-  .4byte 0x7572653e
-  .4byte 0
-  .4byte "__RTTI__22Receiver<10AICreature>_2"
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0x536c7569
-  .4byte 0x63654149
-  .4byte 0
-  .4byte "__RTTI__26StateMachine<10AICreature>_1"
-  .4byte 0
-  .4byte __RTTI__8SimpleAI_1
-  .4byte 0
-  .4byte 0
+	.4byte __RTTI__9SAIAction
+	.4byte 0
+	.4byte 0
+	.4byte 0x53414945
+	.4byte 0x76656e74
+	.4byte 0
+	.4byte 0x52656365
+	.4byte 0x69766572
+	.4byte 0x3c414943
+	.4byte 0x72656174
+	.4byte 0x7572653e
+	.4byte 0
+	.4byte "__RTTI__22Receiver<10AICreature>_2"
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0x536c7569
+	.4byte 0x63654149
+	.4byte 0
+	.4byte "__RTTI__26StateMachine<10AICreature>_1"
+	.4byte 0
+	.4byte __RTTI__8SimpleAI_1
+	.4byte 0
+	.4byte 0
 .global __vt__8SluiceAI
 __vt__8SluiceAI:
-  .4byte __RTTI__8SluiceAI
-  .4byte 0
-  .4byte "init__26StateMachine<10AICreature>FP10AICreature"
-  .4byte exec__8SimpleAIFP10AICreature
-  .4byte procMsg__8SimpleAIFP10AICreatureP3Msg
-  .4byte "transit__26StateMachine<10AICreature>FP10AICreaturei"
-  .4byte 0x8007d184
-  .4byte 0x8007d1ac
-  .4byte 0x8007d1c0
-  .4byte 0x8007d1d4
-  .4byte 0x8007d1e8
-  .4byte 0x8007d1fc
-  .4byte 0x8007d210
-  .4byte 0x8007d224
-  .4byte 0x8007d198
-  .4byte 0x8007d24c
-  .4byte 0x8007d238
-  .4byte 0
+	.4byte __RTTI__8SluiceAI
+	.4byte 0
+	.4byte "init__26StateMachine<10AICreature>FP10AICreature"
+	.4byte exec__8SimpleAIFP10AICreature
+	.4byte procMsg__8SimpleAIFP10AICreatureP3Msg
+	.4byte "transit__26StateMachine<10AICreature>FP10AICreaturei"
+	.4byte 0x8007d184
+	.4byte 0x8007d1ac
+	.4byte 0x8007d1c0
+	.4byte 0x8007d1d4
+	.4byte 0x8007d1e8
+	.4byte 0x8007d1fc
+	.4byte 0x8007d210
+	.4byte 0x8007d224
+	.4byte 0x8007d198
+	.4byte 0x8007d24c
+	.4byte 0x8007d238
+	.4byte 0
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 	.4byte 0x00000000
@@ -5159,11 +5159,11 @@ __vt__8SluiceAI:
 	.4byte 0x802BD860
 .global __RTTI__13GenObjectItem
 __RTTI__13GenObjectItem:
-  .4byte 0x802bd82c
-  .4byte 0x802bd874
-  .4byte 0x802bd8d4
-  .4byte 0
-  .4byte 0
+	.4byte 0x802bd82c
+	.4byte 0x802bd874
+	.4byte 0x802bd8d4
+	.4byte 0
+	.4byte 0
 .global lbl_803E1AA0
 lbl_803E1AA0:
 	.4byte 0x00000000
@@ -5193,238 +5193,238 @@ lbl_803E1AC0:
 	.4byte 0x42700000
 .global __RTTI__9SAIAction
 __RTTI__9SAIAction:
-  .4byte 0x802bd944
-  .4byte 0
+	.4byte 0x802bd944
+	.4byte 0
 .global __RTTI__Q211FallWaterAI13DisappearInit
 __RTTI__Q211FallWaterAI13DisappearInit:
-  .4byte 0x802bd928
-  .4byte 0x802bd950
+	.4byte 0x802bd928
+	.4byte 0x802bd950
 .global __RTTI__Q211FallWaterAI8EmitInit
 __RTTI__Q211FallWaterAI8EmitInit:
-  .4byte 0x802bd968
-  .4byte 0x802bd980
+	.4byte 0x802bd968
+	.4byte 0x802bd980
 .global __RTTI__Q211FallWaterAI11CollideInit
 __RTTI__Q211FallWaterAI11CollideInit:
-  .4byte 0x802bd998
-  .4byte 0x802bd9b4
+	.4byte 0x802bd998
+	.4byte 0x802bd9b4
 .global "__RTTI__26StateMachine<10AICreature>_1"
 "__RTTI__26StateMachine<10AICreature>_1":
-  .4byte 0x802bd9d8
-  .4byte 0
+	.4byte 0x802bd9d8
+	.4byte 0
 .global __RTTI__8SimpleAI_1
 __RTTI__8SimpleAI_1:
-  .4byte 0x802bd9f4
-  .4byte 0x802bda00
+	.4byte 0x802bd9f4
+	.4byte 0x802bda00
 .global __RTTI__11FallWaterAI
 __RTTI__11FallWaterAI:
-  .4byte 0x802bd9cc
-  .4byte 0x802bda0c
+	.4byte 0x802bd9cc
+	.4byte 0x802bda0c
 .global __RTTI__Q27WaterAI3Die
 __RTTI__Q27WaterAI3Die:
-  .4byte 0x802bda38
-  .4byte 0x802bda48
-  .4byte 0x414e6f64
-  .4byte 0x65000000
-  .4byte 0x803e1b04
-  .4byte 0
-  .4byte lbl_802BD90C
-  .4byte 0x802bda78
+	.4byte 0x802bda38
+	.4byte 0x802bda48
+	.4byte 0x414e6f64
+	.4byte 0x65000000
+	.4byte 0x803e1b04
+	.4byte 0
+	.4byte lbl_802BD90C
+	.4byte 0x802bda78
 .global __RTTI__12SAICondition_1
 __RTTI__12SAICondition_1:
-  .4byte 0x802bda84
-  .4byte 0x802bda94
+	.4byte 0x802bda84
+	.4byte 0x802bda94
 .global __RTTI__Q27WaterAI11CollideChar
 __RTTI__Q27WaterAI11CollideChar:
-  .4byte 0x802bda60
-  .4byte 0x802bdaa8
-  .4byte 0x57617465
-  .4byte 0x72414900
+	.4byte 0x802bda60
+	.4byte 0x802bdaa8
+	.4byte 0x57617465
+	.4byte 0x72414900
 .global __RTTI__7WaterAI
 __RTTI__7WaterAI:
-  .4byte 0x803e1b2c
-  .4byte 0x802bdad8
+	.4byte 0x803e1b2c
+	.4byte 0x802bdad8
 .global __RTTI__Q25GemAI3Die
 __RTTI__Q25GemAI3Die:
-  .4byte 0x802bdb04
-  .4byte 0x802bdb10
+	.4byte 0x802bdb04
+	.4byte 0x802bdb10
 .global __RTTI__Q25GemAI8RiseExec
 __RTTI__Q25GemAI8RiseExec:
-  .4byte 0x802bdb28
-  .4byte 0x802bdb38
+	.4byte 0x802bdb28
+	.4byte 0x802bdb38
 .global __RTTI__Q25GemAI8RiseInit
 __RTTI__Q25GemAI8RiseInit:
-  .4byte 0x802bdb50
-  .4byte 0x802bdb60
-  .4byte 0x47656d41
-  .4byte 0x49000000
+	.4byte 0x802bdb50
+	.4byte 0x802bdb60
+	.4byte 0x47656d41
+	.4byte 0x49000000
 .global __RTTI__5GemAI
 __RTTI__5GemAI:
-  .4byte 0x803e1b54
-  .4byte 0x802bdb78
+	.4byte 0x803e1b54
+	.4byte 0x802bdb78
 .global __RTTI__Q26GoalAI6Effect
 __RTTI__Q26GoalAI6Effect:
-  .4byte 0x802bdba4
-  .4byte 0x802bdbb4
+	.4byte 0x802bdba4
+	.4byte 0x802bdbb4
 .global __RTTI__Q26GoalAI8EmitWait
 __RTTI__Q26GoalAI8EmitWait:
-  .4byte 0x802bdbcc
-  .4byte 0x802bdbe0
+	.4byte 0x802bdbcc
+	.4byte 0x802bdbe0
 .global __RTTI__Q26GoalAI8EmitPiki
 __RTTI__Q26GoalAI8EmitPiki:
-  .4byte 0x802bdbf8
-  .4byte 0x802bdc0c
+	.4byte 0x802bdbf8
+	.4byte 0x802bdc0c
 .global __RTTI__Q26GoalAI8BootDone
 __RTTI__Q26GoalAI8BootDone:
-  .4byte 0x802bdc24
-  .4byte 0x802bdc38
+	.4byte 0x802bdc24
+	.4byte 0x802bdc38
 .global __RTTI__Q26GoalAI8BootEmit
 __RTTI__Q26GoalAI8BootEmit:
-  .4byte 0x802bdc50
-  .4byte 0x802bdc64
+	.4byte 0x802bdc50
+	.4byte 0x802bdc64
 .global __RTTI__Q26GoalAI8BootInit
 __RTTI__Q26GoalAI8BootInit:
-  .4byte 0x802bdc7c
-  .4byte 0x802bdc90
+	.4byte 0x802bdc7c
+	.4byte 0x802bdc90
 .global __RTTI__Q26GoalAI8WaitInit
 __RTTI__Q26GoalAI8WaitInit:
-  .4byte 0x802bdca8
-  .4byte 0x802bdcbc
+	.4byte 0x802bdca8
+	.4byte 0x802bdcbc
 .global __RTTI__Q26GoalAI11NotFinished
 __RTTI__Q26GoalAI11NotFinished:
-  .4byte 0x802bdcd4
-  .4byte 0x802bdce8
-  .4byte 0x476f616c
-  .4byte 0x41490000
+	.4byte 0x802bdcd4
+	.4byte 0x802bdce8
+	.4byte 0x476f616c
+	.4byte 0x41490000
 .global __RTTI__6GoalAI
 __RTTI__6GoalAI:
-  .4byte 0x803e1ba4
-  .4byte 0x802bdd48
+	.4byte 0x803e1ba4
+	.4byte 0x802bdd48
 .global __RTTI__Q26BombAI7DieExec
 __RTTI__Q26BombAI7DieExec:
-  .4byte 0x802bdd74
-  .4byte 0x802bdd84
+	.4byte 0x802bdd74
+	.4byte 0x802bdd84
 .global __RTTI__Q26BombAI7DieInit
 __RTTI__Q26BombAI7DieInit:
-  .4byte 0x802bdd9c
-  .4byte 0x802bddac
+	.4byte 0x802bdd9c
+	.4byte 0x802bddac
 .global __RTTI__Q26BombAI8MizuExec
 __RTTI__Q26BombAI8MizuExec:
-  .4byte 0x802bddc4
-  .4byte 0x802bddd8
+	.4byte 0x802bddc4
+	.4byte 0x802bddd8
 .global __RTTI__Q26BombAI8MizuInit
 __RTTI__Q26BombAI8MizuInit:
-  .4byte 0x802bddf0
-  .4byte 0x802bde04
+	.4byte 0x802bddf0
+	.4byte 0x802bde04
 .global __RTTI__Q26BombAI8BombExec
 __RTTI__Q26BombAI8BombExec:
-  .4byte 0x802bde1c
-  .4byte 0x802bde30
+	.4byte 0x802bde1c
+	.4byte 0x802bde30
 .global __RTTI__11CndCollPart
 __RTTI__11CndCollPart:
-  .4byte 0x802bde8c
-  .4byte 0
+	.4byte 0x802bde8c
+	.4byte 0
 .global __RTTI__11CndBombable
 __RTTI__11CndBombable:
-  .4byte 0x802bde80
-  .4byte 0x802bde98
+	.4byte 0x802bde80
+	.4byte 0x802bde98
 .global __RTTI__Q26BombAI8BombInit
 __RTTI__Q26BombAI8BombInit:
-  .4byte 0x802bdebc
-  .4byte 0x802bded0
+	.4byte 0x802bdebc
+	.4byte 0x802bded0
 .global __RTTI__Q26BombAI7SetExec
 __RTTI__Q26BombAI7SetExec:
-  .4byte 0x802bdee8
-  .4byte 0x802bdef8
+	.4byte 0x802bdee8
+	.4byte 0x802bdef8
 .global __RTTI__Q26BombAI7SetInit
 __RTTI__Q26BombAI7SetInit:
-  .4byte 0x802bdf10
-  .4byte 0x802bdf20
-  .4byte 0x426f6d62
-  .4byte 0x41490000
+	.4byte 0x802bdf10
+	.4byte 0x802bdf20
+	.4byte 0x426f6d62
+	.4byte 0x41490000
 .global __RTTI__6BombAI
 __RTTI__6BombAI:
-  .4byte 0x803e1c04
-  .4byte 0x802bdf38
+	.4byte 0x803e1c04
+	.4byte 0x802bdf38
 .global __RTTI__Q210PikiHeadAI4Dead
 __RTTI__Q210PikiHeadAI4Dead:
-  .4byte 0x802bdf64
-  .4byte 0x802bdf78
+	.4byte 0x802bdf64
+	.4byte 0x802bdf78
 .global __RTTI__Q210PikiHeadAI10KaretaExec
 __RTTI__Q210PikiHeadAI10KaretaExec:
-  .4byte 0x802bdf90
-  .4byte 0x802bdfa8
+	.4byte 0x802bdf90
+	.4byte 0x802bdfa8
 .global __RTTI__Q210PikiHeadAI10KaretaInit
 __RTTI__Q210PikiHeadAI10KaretaInit:
-  .4byte 0x802bdfc0
-  .4byte 0x802bdfd8
+	.4byte 0x802bdfc0
+	.4byte 0x802bdfd8
 .global __RTTI__Q210PikiHeadAI10GrowEffect
 __RTTI__Q210PikiHeadAI10GrowEffect:
-  .4byte 0x802bdff0
-  .4byte 0x802be008
+	.4byte 0x802bdff0
+	.4byte 0x802be008
 .global __RTTI__Q210PikiHeadAI12GrowupedExec
 __RTTI__Q210PikiHeadAI12GrowupedExec:
-  .4byte 0x802be020
-  .4byte 0x802be03c
+	.4byte 0x802be020
+	.4byte 0x802be03c
 .global __RTTI__Q210PikiHeadAI8WaitExec
 __RTTI__Q210PikiHeadAI8WaitExec:
-  .4byte 0x802be054
-  .4byte 0x802be06c
+	.4byte 0x802be054
+	.4byte 0x802be06c
 .global __RTTI__Q210PikiHeadAI8WaitInit
 __RTTI__Q210PikiHeadAI8WaitInit:
-  .4byte 0x802be084
-  .4byte 0x802be09c
+	.4byte 0x802be084
+	.4byte 0x802be09c
 .global __RTTI__Q210PikiHeadAI8TaneExec
 __RTTI__Q210PikiHeadAI8TaneExec:
-  .4byte 0x802be0b4
-  .4byte 0x802be0cc
+	.4byte 0x802be0b4
+	.4byte 0x802be0cc
 .global __RTTI__Q210PikiHeadAI8TaneInit
 __RTTI__Q210PikiHeadAI8TaneInit:
-  .4byte 0x802be0e4
-  .4byte 0x802be0fc
+	.4byte 0x802be0e4
+	.4byte 0x802be0fc
 .global __RTTI__Q210PikiHeadAI8BuryExec
 __RTTI__Q210PikiHeadAI8BuryExec:
-  .4byte 0x802be114
-  .4byte 0x802be12c
+	.4byte 0x802be114
+	.4byte 0x802be12c
 .global __RTTI__Q210PikiHeadAI8BuryInit
 __RTTI__Q210PikiHeadAI8BuryInit:
-  .4byte 0x802be144
-  .4byte 0x802be15c
+	.4byte 0x802be144
+	.4byte 0x802be15c
 .global __RTTI__Q210PikiHeadAI9BuryExec2
 __RTTI__Q210PikiHeadAI9BuryExec2:
-  .4byte 0x802be174
-  .4byte 0x802be18c
+	.4byte 0x802be174
+	.4byte 0x802be18c
 .global __RTTI__Q210PikiHeadAI9BuryInit2
 __RTTI__Q210PikiHeadAI9BuryInit2:
-  .4byte 0x802be1a4
-  .4byte 0x802be1bc
+	.4byte 0x802be1a4
+	.4byte 0x802be1bc
 .global __RTTI__Q210PikiHeadAI13FlyingCleanup
 __RTTI__Q210PikiHeadAI13FlyingCleanup:
-  .4byte 0x802be1d4
-  .4byte 0x802be1f0
+	.4byte 0x802be1d4
+	.4byte 0x802be1f0
 .global __RTTI__Q210PikiHeadAI10FlyingExec
 __RTTI__Q210PikiHeadAI10FlyingExec:
-  .4byte 0x802be208
-  .4byte 0x802be220
+	.4byte 0x802be208
+	.4byte 0x802be220
 .global __RTTI__Q210PikiHeadAI12FlyingEffect
 __RTTI__Q210PikiHeadAI12FlyingEffect:
-  .4byte 0x802be238
-  .4byte 0x802be254
+	.4byte 0x802be238
+	.4byte 0x802be254
 .global __RTTI__Q210PikiHeadAI11BounceSound
 __RTTI__Q210PikiHeadAI11BounceSound:
-  .4byte 0x802be26c
-  .4byte 0x802be284
+	.4byte 0x802be26c
+	.4byte 0x802be284
 .global __RTTI__10PikiHeadAI
 __RTTI__10PikiHeadAI:
-  .4byte 0x802be29c
-  .4byte 0x802be2a8
+	.4byte 0x802be29c
+	.4byte 0x802be2a8
 .global __RTTI__Q28SluiceAI10DamageInit
 __RTTI__Q28SluiceAI10DamageInit:
-  .4byte 0x802be2d4
-  .4byte 0x802be2ec
+	.4byte 0x802be2d4
+	.4byte 0x802be2ec
 .global __RTTI__Q28SluiceAI10ChangeInit
 __RTTI__Q28SluiceAI10ChangeInit:
-  .4byte 0x802be304
-  .4byte 0x802be31c
+	.4byte 0x802be304
+	.4byte 0x802be31c
 .global __RTTI__Q28SluiceAI8WaitInit
 __RTTI__Q28SluiceAI8WaitInit:
-  .4byte 0x802be334
+	.4byte 0x802be334

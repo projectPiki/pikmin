@@ -1,19 +1,19 @@
 .include "macros.inc"
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
-  .4byte 0x74656b69
-  .4byte 0x616e696d
-  .4byte 0x6174696f
-  .4byte 0x6e6d616e
-  .4byte 0x61676572
-  .4byte 0x2e637070
-  .4byte 0
-  .4byte 0x74656b69
-  .4byte 0x616e696d
-  .4byte 0x6174696f
-  .4byte 0x6e6d616e
-  .4byte 0x61676572
-  .4byte 0
+	.4byte 0x74656b69
+	.4byte 0x616e696d
+	.4byte 0x6174696f
+	.4byte 0x6e6d616e
+	.4byte 0x61676572
+	.4byte 0x2e637070
+	.4byte 0
+	.4byte 0x74656b69
+	.4byte 0x616e696d
+	.4byte 0x6174696f
+	.4byte 0x6e6d616e
+	.4byte 0x61676572
+	.4byte 0
 .global lbl_802CCE6C
 lbl_802CCE6C:
 	.4byte 0x54656B69
@@ -42,38 +42,38 @@ lbl_802CCE6C:
 	.4byte 0x00000000
 .global __vt__20TekiAnimationManager
 __vt__20TekiAnimationManager:
-  .4byte __RTTI__20TekiAnimationManager
-  .4byte 0
-  .4byte getAgeNodeType__5ANodeFv
-  .4byte read__20TekiAnimationManagerFR18RandomAccessStream
-  .4byte update__4NodeFv
-  .4byte draw__4NodeFR8Graphics
-  .4byte render__4NodeFR8Graphics
-  .4byte concat__4NodeFv
-  .4byte concat__4NodeFR3VQS
-  .4byte concat__4NodeFR3SRT
-  .4byte concat__4NodeFR8Matrix4f
-  .4byte getModelMatrix__4NodeFv
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
+	.4byte __RTTI__20TekiAnimationManager
+	.4byte 0
+	.4byte getAgeNodeType__5ANodeFv
+	.4byte read__20TekiAnimationManagerFR18RandomAccessStream
+	.4byte update__4NodeFv
+	.4byte draw__4NodeFR8Graphics
+	.4byte render__4NodeFR8Graphics
+	.4byte concat__4NodeFv
+	.4byte concat__4NodeFR3VQS
+	.4byte concat__4NodeFR3SRT
+	.4byte concat__4NodeFR8Matrix4f
+	.4byte getModelMatrix__4NodeFv
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
-  .4byte 0x803e42c8
-  .4byte 0x802ccb48
-  .4byte 0x4e54656b
-  .4byte 0x69000000
-  .4byte 0x803e42d8
-  .4byte 0x802ccb74
-  .4byte 0x5954656b
-  .4byte 0x69000000
-  .4byte 0x803e42e8
-  .4byte 0x802ccba8
+	.4byte 0x803e42c8
+	.4byte 0x802ccb48
+	.4byte 0x4e54656b
+	.4byte 0x69000000
+	.4byte 0x803e42d8
+	.4byte 0x802ccb74
+	.4byte 0x5954656b
+	.4byte 0x69000000
+	.4byte 0x803e42e8
+	.4byte 0x802ccba8
 .global __RTTI__4Teki
 __RTTI__4Teki:
-  .4byte 0x803e4298
-  .4byte 0x802ccbe4
+	.4byte 0x803e4298
+	.4byte 0x802ccbe4

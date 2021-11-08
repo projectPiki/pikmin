@@ -3669,9 +3669,9 @@ lbl_802A82E0:
 	.4byte 0x802A8218
 .global __RTTI__15GameExitSection
 __RTTI__15GameExitSection:
-  .4byte 0x802a81dc
-  .4byte 0x802a8234
-  .4byte 0
+	.4byte 0x802a81dc
+	.4byte 0x802a8234
+	.4byte 0
 .global lbl_803DDD10
 lbl_803DDD10:
 	.4byte 0x00000000

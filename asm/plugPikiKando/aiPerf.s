@@ -4197,37 +4197,37 @@ lbl_802AED40:
 	.4byte 0x00000000
 .global "__vt__25Delegate1<6AIPerf,R4Menu>"
 "__vt__25Delegate1<6AIPerf,R4Menu>":
-  .4byte "__RTTI__25Delegate1<6AIPerf,R4Menu>"
-  .4byte 0
-  .4byte "invoke__25Delegate1<6AIPerf,R4Menu>FR4Menu"
-  .4byte 0x44656c65
-  .4byte 0x67617465
-  .4byte 0x313c4d65
-  .4byte 0x6e752c20
-  .4byte 0x4d656e75
-  .4byte 0x20263e00
-  .4byte "__RTTI__18IDelegate1<R4Menu>_4"
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
+	.4byte "__RTTI__25Delegate1<6AIPerf,R4Menu>"
+	.4byte 0
+	.4byte "invoke__25Delegate1<6AIPerf,R4Menu>FR4Menu"
+	.4byte 0x44656c65
+	.4byte 0x67617465
+	.4byte 0x313c4d65
+	.4byte 0x6e752c20
+	.4byte 0x4d656e75
+	.4byte 0x20263e00
+	.4byte "__RTTI__18IDelegate1<R4Menu>_4"
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 	.4byte 0x803DEDE8
 	.4byte 0x802AE84C
 .global __RTTI__Q29KeyConfig3Key
 __RTTI__Q29KeyConfig3Key:
-  .4byte 0x802ae824
-  .4byte 0x802ae860
+	.4byte 0x802ae824
+	.4byte 0x802ae860
 .global __RTTI__9KeyConfig
 __RTTI__9KeyConfig:
-  .4byte 0x802ae8ac
-  .4byte 0x802ae8b8
+	.4byte 0x802ae8ac
+	.4byte 0x802ae8b8
 .global useLOD__6AIPerf
 useLOD__6AIPerf:
 	.byte 0x1

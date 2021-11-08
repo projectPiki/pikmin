@@ -132886,221 +132886,221 @@ errorList:
 	.4byte 0x00000000
 .global "__vt__29Delegate1<6System,R8Graphics>"
 "__vt__29Delegate1<6System,R8Graphics>":
-  .4byte "__RTTI__29Delegate1<6System,R8Graphics>"
-  .4byte 0
-  .4byte "invoke__29Delegate1<6System,R8Graphics>FR8Graphics"
+	.4byte "__RTTI__29Delegate1<6System,R8Graphics>"
+	.4byte 0
+	.4byte "invoke__29Delegate1<6System,R8Graphics>FR8Graphics"
 .global "__vt__22IDelegate1<R8Graphics>"
 "__vt__22IDelegate1<R8Graphics>":
-  .4byte "__RTTI__22IDelegate1<R8Graphics>"
-  .4byte 0
-  .4byte 0
-  .4byte 0x4c6f6753
-  .4byte 0x74726561
-  .4byte 0x6d000000
-  .4byte 0x803dd540
-  .4byte 0
-  .4byte 0
+	.4byte "__RTTI__22IDelegate1<R8Graphics>"
+	.4byte 0
+	.4byte 0
+	.4byte 0x4c6f6753
+	.4byte 0x74726561
+	.4byte 0x6d000000
+	.4byte 0x803dd540
+	.4byte 0
+	.4byte 0
 .global __vt__9LogStream
 __vt__9LogStream:
-  .4byte __RTTI__9LogStream
-  .4byte 0
-  .4byte readInt__6StreamFv
-  .4byte readByte__6StreamFv
-  .4byte readShort__6StreamFv
-  .4byte readFloat__6StreamFv
-  .4byte readString__6StreamFPci
-  .4byte readString__6StreamFR6String
-  .4byte readString__6StreamFv
-  .4byte writeInt__6StreamFi
-  .4byte writeByte__6StreamFUc
-  .4byte writeShort__6StreamFs
-  .4byte writeFloat__6StreamFf
-  .4byte writeString__6StreamFPc
-  .4byte writeString__6StreamFR6String
-  .4byte read__6StreamFPvi
-  .4byte write__9LogStreamFPvi
-  .4byte getPending__6StreamFv
-  .4byte getAvailable__6StreamFv
-  .4byte close__6StreamFv
-  .4byte getClosing__6StreamFv
-  .4byte flush__9LogStreamFv
-  .4byte 0x41646472
-  .4byte 0x6573734e
-  .4byte 0x6f646500
-  .4byte 0x436f7265
-  .4byte 0x4e6f6465
-  .4byte 0
-  .4byte 0x803dd55c
-  .4byte 0
-  .4byte 0
-  .4byte 0x803dd55c
-  .4byte 0
-  .4byte 0x803dd564
-  .4byte 0
-  .4byte 0
+	.4byte __RTTI__9LogStream
+	.4byte 0
+	.4byte readInt__6StreamFv
+	.4byte readByte__6StreamFv
+	.4byte readShort__6StreamFv
+	.4byte readFloat__6StreamFv
+	.4byte readString__6StreamFPci
+	.4byte readString__6StreamFR6String
+	.4byte readString__6StreamFv
+	.4byte writeInt__6StreamFi
+	.4byte writeByte__6StreamFUc
+	.4byte writeShort__6StreamFs
+	.4byte writeFloat__6StreamFf
+	.4byte writeString__6StreamFPc
+	.4byte writeString__6StreamFR6String
+	.4byte read__6StreamFPvi
+	.4byte write__9LogStreamFPvi
+	.4byte getPending__6StreamFv
+	.4byte getAvailable__6StreamFv
+	.4byte close__6StreamFv
+	.4byte getClosing__6StreamFv
+	.4byte flush__9LogStreamFv
+	.4byte 0x41646472
+	.4byte 0x6573734e
+	.4byte 0x6f646500
+	.4byte 0x436f7265
+	.4byte 0x4e6f6465
+	.4byte 0
+	.4byte 0x803dd55c
+	.4byte 0
+	.4byte 0
+	.4byte 0x803dd55c
+	.4byte 0
+	.4byte 0x803dd564
+	.4byte 0
+	.4byte 0
 .global __vt__11AddressNode
 __vt__11AddressNode:
-  .4byte __RTTI__11AddressNode
-  .4byte 0
-  .4byte getAgeNodeType__5ANodeFv
-  .4byte read__8CoreNodeFR18RandomAccessStream
-  .4byte 0x44697245
-  .4byte 0x6e747279
-  .4byte 0
-  .4byte 0x803dd55c
-  .4byte 0
-  .4byte 0x803dd564
-  .4byte 0
-  .4byte 0
+	.4byte __RTTI__11AddressNode
+	.4byte 0
+	.4byte getAgeNodeType__5ANodeFv
+	.4byte read__8CoreNodeFR18RandomAccessStream
+	.4byte 0x44697245
+	.4byte 0x6e747279
+	.4byte 0
+	.4byte 0x803dd55c
+	.4byte 0
+	.4byte 0x803dd564
+	.4byte 0
+	.4byte 0
 .global __vt__8DirEntry
 __vt__8DirEntry:
-  .4byte __RTTI__8DirEntry
-  .4byte 0
-  .4byte getAgeNodeType__5ANodeFv
-  .4byte read__8CoreNodeFR18RandomAccessStream
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0x44564453
-  .4byte 0x74726561
-  .4byte 0x6d000000
-  .4byte 0x52616e64
-  .4byte 0x6f6d4163
-  .4byte 0x63657373
-  .4byte 0x53747265
-  .4byte 0x616d0000
-  .4byte 0x803dd540
-  .4byte 0
-  .4byte 0
-  .4byte 0x803dd540
-  .4byte 0
-  .4byte 0x803dd57c
-  .4byte 0
-  .4byte 0
+	.4byte __RTTI__8DirEntry
+	.4byte 0
+	.4byte getAgeNodeType__5ANodeFv
+	.4byte read__8CoreNodeFR18RandomAccessStream
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0x44564453
+	.4byte 0x74726561
+	.4byte 0x6d000000
+	.4byte 0x52616e64
+	.4byte 0x6f6d4163
+	.4byte 0x63657373
+	.4byte 0x53747265
+	.4byte 0x616d0000
+	.4byte 0x803dd540
+	.4byte 0
+	.4byte 0
+	.4byte 0x803dd540
+	.4byte 0
+	.4byte 0x803dd57c
+	.4byte 0
+	.4byte 0
 .global __vt__9DVDStream
 __vt__9DVDStream:
-  .4byte __RTTI__9DVDStream
-  .4byte 0
-  .4byte readInt__6StreamFv
-  .4byte readByte__6StreamFv
-  .4byte readShort__6StreamFv
-  .4byte readFloat__6StreamFv
-  .4byte readString__6StreamFPci
-  .4byte readString__6StreamFR6String
-  .4byte readString__6StreamFv
-  .4byte writeInt__6StreamFi
-  .4byte writeByte__6StreamFUc
-  .4byte writeShort__6StreamFs
-  .4byte writeFloat__6StreamFf
-  .4byte writeString__6StreamFPc
-  .4byte writeString__6StreamFR6String
-  .4byte read__9DVDStreamFPvi
-  .4byte write__6StreamFPvi
-  .4byte getPending__9DVDStreamFv
-  .4byte getAvailable__6StreamFv
-  .4byte close__9DVDStreamFv
-  .4byte getClosing__6StreamFv
-  .4byte flush__6StreamFv
-  .4byte getPosition__18RandomAccessStreamFv
-  .4byte setPosition__18RandomAccessStreamFi
-  .4byte getLength__18RandomAccessStreamFv
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0x53746453
-  .4byte 0x79737465
-  .4byte 0x6d000000
-  .4byte __RTTI__9StdSystem_1
-  .4byte 0
-  .4byte 0
+	.4byte __RTTI__9DVDStream
+	.4byte 0
+	.4byte readInt__6StreamFv
+	.4byte readByte__6StreamFv
+	.4byte readShort__6StreamFv
+	.4byte readFloat__6StreamFv
+	.4byte readString__6StreamFPci
+	.4byte readString__6StreamFR6String
+	.4byte readString__6StreamFv
+	.4byte writeInt__6StreamFi
+	.4byte writeByte__6StreamFUc
+	.4byte writeShort__6StreamFs
+	.4byte writeFloat__6StreamFf
+	.4byte writeString__6StreamFPc
+	.4byte writeString__6StreamFR6String
+	.4byte read__9DVDStreamFPvi
+	.4byte write__6StreamFPvi
+	.4byte getPending__9DVDStreamFv
+	.4byte getAvailable__6StreamFv
+	.4byte close__9DVDStreamFv
+	.4byte getClosing__6StreamFv
+	.4byte flush__6StreamFv
+	.4byte getPosition__18RandomAccessStreamFv
+	.4byte setPosition__18RandomAccessStreamFi
+	.4byte getLength__18RandomAccessStreamFv
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0x53746453
+	.4byte 0x79737465
+	.4byte 0x6d000000
+	.4byte __RTTI__9StdSystem_1
+	.4byte 0
+	.4byte 0
 .global __vt__6System
 __vt__6System:
-  .4byte __RTTI__6System
-  .4byte 0
-  .4byte initSoftReset__6SystemFv
-  .4byte openFile__6SystemFPcbb
-  .4byte copyRamToCache__6SystemFUlUlUl
-  .4byte copyCacheToRam__6SystemFUlUlUl
-  .4byte copyWaitUntilDone__6SystemFv
-  .4byte copyCacheToTexture__6SystemFP12CacheTexture
-  .4byte Activate__9StdSystemFb
-  .4byte parseArchiveDirectory__6SystemFPcPc
-  .4byte sndPlaySe__6SystemFUl
-  .4byte startLoading__6SystemFP9LoadIdlerbUl
-  .4byte endLoading__6SystemFv
-  .4byte 0x4172616d
-  .4byte 0x53747265
-  .4byte 0x616d0000
-  .4byte 0x803dd540
-  .4byte 0
-  .4byte 0x803dd57c
-  .4byte 0
-  .4byte 0
+	.4byte __RTTI__6System
+	.4byte 0
+	.4byte initSoftReset__6SystemFv
+	.4byte openFile__6SystemFPcbb
+	.4byte copyRamToCache__6SystemFUlUlUl
+	.4byte copyCacheToRam__6SystemFUlUlUl
+	.4byte copyWaitUntilDone__6SystemFv
+	.4byte copyCacheToTexture__6SystemFP12CacheTexture
+	.4byte Activate__9StdSystemFb
+	.4byte parseArchiveDirectory__6SystemFPcPc
+	.4byte sndPlaySe__6SystemFUl
+	.4byte startLoading__6SystemFP9LoadIdlerbUl
+	.4byte endLoading__6SystemFv
+	.4byte 0x4172616d
+	.4byte 0x53747265
+	.4byte 0x616d0000
+	.4byte 0x803dd540
+	.4byte 0
+	.4byte 0x803dd57c
+	.4byte 0
+	.4byte 0
 .global __vt__10AramStream
 __vt__10AramStream:
-  .4byte __RTTI__10AramStream
-  .4byte 0
-  .4byte readInt__6StreamFv
-  .4byte readByte__6StreamFv
-  .4byte readShort__6StreamFv
-  .4byte readFloat__6StreamFv
-  .4byte readString__6StreamFPci
-  .4byte readString__6StreamFR6String
-  .4byte readString__6StreamFv
-  .4byte writeInt__6StreamFi
-  .4byte writeByte__6StreamFUc
-  .4byte writeShort__6StreamFs
-  .4byte writeFloat__6StreamFf
-  .4byte writeString__6StreamFPc
-  .4byte writeString__6StreamFR6String
-  .4byte read__10AramStreamFPvi
-  .4byte write__6StreamFPvi
-  .4byte getPending__10AramStreamFv
-  .4byte getAvailable__6StreamFv
-  .4byte close__6StreamFv
-  .4byte getClosing__6StreamFv
-  .4byte flush__6StreamFv
-  .4byte getPosition__18RandomAccessStreamFv
-  .4byte setPosition__18RandomAccessStreamFi
-  .4byte getLength__18RandomAccessStreamFv
+	.4byte __RTTI__10AramStream
+	.4byte 0
+	.4byte readInt__6StreamFv
+	.4byte readByte__6StreamFv
+	.4byte readShort__6StreamFv
+	.4byte readFloat__6StreamFv
+	.4byte readString__6StreamFPci
+	.4byte readString__6StreamFR6String
+	.4byte readString__6StreamFv
+	.4byte writeInt__6StreamFi
+	.4byte writeByte__6StreamFUc
+	.4byte writeShort__6StreamFs
+	.4byte writeFloat__6StreamFf
+	.4byte writeString__6StreamFPc
+	.4byte writeString__6StreamFR6String
+	.4byte read__10AramStreamFPvi
+	.4byte write__6StreamFPvi
+	.4byte getPending__10AramStreamFv
+	.4byte getAvailable__6StreamFv
+	.4byte close__6StreamFv
+	.4byte getClosing__6StreamFv
+	.4byte flush__6StreamFv
+	.4byte getPosition__18RandomAccessStreamFv
+	.4byte setPosition__18RandomAccessStreamFi
+	.4byte getLength__18RandomAccessStreamFv
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .global __RTTI__7Texture_1
 __RTTI__7Texture_1:
-  .4byte 0x803dd498
-  .4byte 0x8022905c
-  .4byte 0x414e6f64
-  .4byte 0x65000000
-  .4byte 0x803dd4c0
-  .4byte 0
-  .4byte 0x53797374
-  .4byte 0x656d0000
+	.4byte 0x803dd498
+	.4byte 0x8022905c
+	.4byte 0x414e6f64
+	.4byte 0x65000000
+	.4byte 0x803dd4c0
+	.4byte 0
+	.4byte 0x53797374
+	.4byte 0x656d0000
 .global glnWidth
 glnWidth:
 	.4byte 0x00000280
@@ -133149,20 +133149,20 @@ lbl_803DD524:
 	.4byte 0x73797300
 .global "__RTTI__22IDelegate1<R8Graphics>"
 "__RTTI__22IDelegate1<R8Graphics>":
-  .4byte 0x802a5390
-  .4byte 0
+	.4byte 0x802a5390
+	.4byte 0
 .global "__RTTI__29Delegate1<6System,R8Graphics>"
 "__RTTI__29Delegate1<6System,R8Graphics>":
-  .4byte 0x802a5370
-  .4byte 0x802a53a8
-  .4byte 0x53747265
-  .4byte 0x616d0000
-  .4byte 0x803dd538
-  .4byte 0
+	.4byte 0x802a5370
+	.4byte 0x802a53a8
+	.4byte 0x53747265
+	.4byte 0x616d0000
+	.4byte 0x803dd538
+	.4byte 0
 .global __RTTI__9LogStream
 __RTTI__9LogStream:
-  .4byte 0x802a53cc
-  .4byte 0x802a53d8
+	.4byte 0x802a53cc
+	.4byte 0x802a53d8
 .global lbl_803DD550
 lbl_803DD550:
 	.4byte 0x25730A00
@@ -133174,21 +133174,21 @@ lbl_803DD550:
 	.4byte 0x802A5454
 .global __RTTI__11AddressNode
 __RTTI__11AddressNode:
-  .4byte 0x802a543c
-  .4byte 0x802a5460
+	.4byte 0x802a543c
+	.4byte 0x802a5460
 .global __RTTI__8DirEntry
 __RTTI__8DirEntry:
-  .4byte 0x802a5484
-  .4byte 0x802a5490
-  .4byte 0x802a54dc
-  .4byte 0x802a54f0
+	.4byte 0x802a5484
+	.4byte 0x802a5490
+	.4byte 0x802a54dc
+	.4byte 0x802a54f0
 .global __RTTI__9DVDStream
 __RTTI__9DVDStream:
-  .4byte 0x802a54d0
-  .4byte 0x802a54fc
+	.4byte 0x802a54d0
+	.4byte 0x802a54fc
 .global __RTTI__9StdSystem_1
 __RTTI__9StdSystem_1:
-  .4byte 0x802a55d8
+	.4byte 0x802a55d8
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .global lbl_803E8790

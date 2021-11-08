@@ -1854,63 +1854,63 @@ lbl_801FC754:
 /* 801FC758 001F96B8  41 82 00 14 */	beq lbl_801FC76C
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
-  .4byte 0x61695374
-  .4byte 0x6f6e652e
-  .4byte 0x63707000
-  .4byte 0x41637453
-  .4byte 0x746f6e65
-  .4byte 0
-  .4byte 0x52656365
-  .4byte 0x69766572
-  .4byte 0x3c50696b
-  .4byte 0x693e0000
-  .4byte 0x803dfc68
-  .4byte 0
-  .4byte 0
-  .4byte 0x803dfc68
-  .4byte 0
-  .4byte 0x803dfc78
-  .4byte 0
-  .4byte 0
+	.4byte 0x61695374
+	.4byte 0x6f6e652e
+	.4byte 0x63707000
+	.4byte 0x41637453
+	.4byte 0x746f6e65
+	.4byte 0
+	.4byte 0x52656365
+	.4byte 0x69766572
+	.4byte 0x3c50696b
+	.4byte 0x693e0000
+	.4byte 0x803dfc68
+	.4byte 0
+	.4byte 0
+	.4byte 0x803dfc68
+	.4byte 0
+	.4byte 0x803dfc78
+	.4byte 0
+	.4byte 0
 .global __vt__8ActStone
 __vt__8ActStone:
-  .4byte __RTTI__8ActStone
-  .4byte 0
-  .4byte "procMsg__15Receiver<4Piki>FP4PikiP3Msg"
-  .4byte "procBounceMsg__15Receiver<4Piki>FP4PikiP9MsgBounce"
-  .4byte "procStickMsg__15Receiver<4Piki>FP4PikiP8MsgStick"
-  .4byte "procHangMsg__15Receiver<4Piki>FP4PikiP7MsgHang"
-  .4byte "procTargetMsg__15Receiver<4Piki>FP4PikiP9MsgTarget"
-  .4byte "procCollideMsg__15Receiver<4Piki>FP4PikiP10MsgCollide"
-  .4byte "procAnimMsg__15Receiver<4Piki>FP4PikiP7MsgAnim"
-  .4byte "procDamageMsg__15Receiver<4Piki>FP4PikiP9MsgDamage"
-  .4byte "procWallMsg__15Receiver<4Piki>FP4PikiP7MsgWall"
-  .4byte "procOffWallMsg__15Receiver<4Piki>FP4PikiP10MsgOffWall"
-  .4byte "procUserMsg__15Receiver<4Piki>FP4PikiP7MsgUser"
-  .4byte "procGroundMsg__15Receiver<4Piki>FP4PikiP9MsgGround"
-  .4byte defaultInitialiser__6ActionFv
-  .4byte dump__6ActionFv
-  .4byte draw__6ActionFR8Graphics
-  .4byte __dt__8ActStoneFv
-  .4byte init__8ActStoneFP8Creature
-  .4byte exec__8ActStoneFv
-  .4byte cleanup__8ActStoneFv
-  .4byte resume__6ActionFv
-  .4byte restart__6ActionFv
-  .4byte resumable__6ActionFv
-  .4byte getInfo__6ActionFPc
-  .4byte __RTTI__8ActStone
-  .4byte 0xffffffec
-  .4byte 0x800a79f0
-  .4byte animationKeyUpdated__8ActStoneFR16PaniAnimKeyEvent
-  .4byte 0x50616e69
-  .4byte 0x416e696d
-  .4byte 0x4b65794c
-  .4byte 0x69737465
-  .4byte 0x6e657200
-  .4byte 0
-  .4byte 0
-  .4byte 0
+	.4byte __RTTI__8ActStone
+	.4byte 0
+	.4byte "procMsg__15Receiver<4Piki>FP4PikiP3Msg"
+	.4byte "procBounceMsg__15Receiver<4Piki>FP4PikiP9MsgBounce"
+	.4byte "procStickMsg__15Receiver<4Piki>FP4PikiP8MsgStick"
+	.4byte "procHangMsg__15Receiver<4Piki>FP4PikiP7MsgHang"
+	.4byte "procTargetMsg__15Receiver<4Piki>FP4PikiP9MsgTarget"
+	.4byte "procCollideMsg__15Receiver<4Piki>FP4PikiP10MsgCollide"
+	.4byte "procAnimMsg__15Receiver<4Piki>FP4PikiP7MsgAnim"
+	.4byte "procDamageMsg__15Receiver<4Piki>FP4PikiP9MsgDamage"
+	.4byte "procWallMsg__15Receiver<4Piki>FP4PikiP7MsgWall"
+	.4byte "procOffWallMsg__15Receiver<4Piki>FP4PikiP10MsgOffWall"
+	.4byte "procUserMsg__15Receiver<4Piki>FP4PikiP7MsgUser"
+	.4byte "procGroundMsg__15Receiver<4Piki>FP4PikiP9MsgGround"
+	.4byte defaultInitialiser__6ActionFv
+	.4byte dump__6ActionFv
+	.4byte draw__6ActionFR8Graphics
+	.4byte __dt__8ActStoneFv
+	.4byte init__8ActStoneFP8Creature
+	.4byte exec__8ActStoneFv
+	.4byte cleanup__8ActStoneFv
+	.4byte resume__6ActionFv
+	.4byte restart__6ActionFv
+	.4byte resumable__6ActionFv
+	.4byte getInfo__6ActionFPc
+	.4byte __RTTI__8ActStone
+	.4byte 0xffffffec
+	.4byte 0x800a79f0
+	.4byte animationKeyUpdated__8ActStoneFR16PaniAnimKeyEvent
+	.4byte 0x50616e69
+	.4byte 0x416e696d
+	.4byte 0x4b65794c
+	.4byte 0x69737465
+	.4byte 0x6e657200
+	.4byte 0
+	.4byte 0
+	.4byte 0
 .global lbl_802B5044
 lbl_802B5044:
 	.4byte 0x800A7908
@@ -1936,10 +1936,10 @@ lbl_802B5044:
 	.4byte 0x00000000
 .global __RTTI__6CPlate
 __RTTI__6CPlate:
-  .4byte 0x803dfbe8
-  .4byte 0x802b4e80
-  .4byte 0x802b4f04
-  .4byte 0
+	.4byte 0x803dfbe8
+	.4byte 0x802b4e80
+	.4byte 0x802b4f04
+	.4byte 0
 .global lbl_803DFC30
 lbl_803DFC30:
 	.4byte 0x00000000

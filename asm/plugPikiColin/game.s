@@ -1687,66 +1687,66 @@ lbl_802A67B8:
 	.4byte 0x00000000
 .global __vt__16OnePlayerSection
 __vt__16OnePlayerSection:
-  .4byte __RTTI__16OnePlayerSection
-  .4byte 0
-  .4byte getAgeNodeType__5ANodeFv
-  .4byte read__8CoreNodeFR18RandomAccessStream
-  .4byte update__4NodeFv
-  .4byte draw__4NodeFR8Graphics
-  .4byte render__4NodeFR8Graphics
-  .4byte concat__4NodeFv
-  .4byte concat__4NodeFR3VQS
-  .4byte concat__4NodeFR3SRT
-  .4byte concat__4NodeFR8Matrix4f
-  .4byte getModelMatrix__4NodeFv
-  .4byte init__16OnePlayerSectionFv
-  .4byte 0x47656e46
-  .4byte 0x696c6549
-  .4byte 0x6e666f00
-  .4byte 0x803dd8e8
-  .4byte 0
-  .4byte 0x803dd8f0
-  .4byte 0
-  .4byte 0
+	.4byte __RTTI__16OnePlayerSection
+	.4byte 0
+	.4byte getAgeNodeType__5ANodeFv
+	.4byte read__8CoreNodeFR18RandomAccessStream
+	.4byte update__4NodeFv
+	.4byte draw__4NodeFR8Graphics
+	.4byte render__4NodeFR8Graphics
+	.4byte concat__4NodeFv
+	.4byte concat__4NodeFR3VQS
+	.4byte concat__4NodeFR3SRT
+	.4byte concat__4NodeFR8Matrix4f
+	.4byte getModelMatrix__4NodeFv
+	.4byte init__16OnePlayerSectionFv
+	.4byte 0x47656e46
+	.4byte 0x696c6549
+	.4byte 0x6e666f00
+	.4byte 0x803dd8e8
+	.4byte 0
+	.4byte 0x803dd8f0
+	.4byte 0
+	.4byte 0
 .global __vt__11GenFileInfo
 __vt__11GenFileInfo:
-  .4byte __RTTI__11GenFileInfo
-  .4byte 0
-  .4byte getAgeNodeType__5ANodeFv
-  .4byte read__8CoreNodeFR18RandomAccessStream
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0x53746167
-  .4byte 0x65496e66
-  .4byte 0x6f000000
-  .4byte 0x803dd8e8
-  .4byte 0
-  .4byte 0x803dd8f0
-  .4byte 0
-  .4byte 0
+	.4byte __RTTI__11GenFileInfo
+	.4byte 0
+	.4byte getAgeNodeType__5ANodeFv
+	.4byte read__8CoreNodeFR18RandomAccessStream
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0x53746167
+	.4byte 0x65496e66
+	.4byte 0x6f000000
+	.4byte 0x803dd8e8
+	.4byte 0
+	.4byte 0x803dd8f0
+	.4byte 0
+	.4byte 0
 .global __vt__9StageInfo
 __vt__9StageInfo:
-  .4byte __RTTI__9StageInfo
-  .4byte 0
-  .4byte getAgeNodeType__5ANodeFv
-  .4byte read__9StageInfoFR18RandomAccessStream
+	.4byte __RTTI__9StageInfo
+	.4byte 0
+	.4byte getAgeNodeType__5ANodeFv
+	.4byte read__9StageInfoFR18RandomAccessStream
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
-  .4byte 0x802a6618
+	.4byte 0x802a6618
 .global __RTTI__13GameLoadIdler
 __RTTI__13GameLoadIdler:
-  .4byte 0x802a65fc
-  .4byte 0x802a662c
+	.4byte 0x802a65fc
+	.4byte 0x802a662c
 .global __RTTI__10MemoryCard
 __RTTI__10MemoryCard:
-  .4byte 0x802a669c
-  .4byte 0x802a66a8
-  .4byte 0
+	.4byte 0x802a669c
+	.4byte 0x802a66a8
+	.4byte 0
 .global lbl_803DD898
 lbl_803DD898:
 	.4byte 0x67656E66

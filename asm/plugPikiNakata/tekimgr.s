@@ -171,64 +171,64 @@ lbl_802CDB60:
 	.4byte 0x00000000
 .global __vt__7TekiMgr
 __vt__7TekiMgr:
-  .4byte __RTTI__7TekiMgr
-  .4byte 0
-  .4byte getCreature__13MonoObjectMgrFi
-  .4byte getFirst__13MonoObjectMgrFv
-  .4byte getNext__13MonoObjectMgrFi
-  .4byte isDone__13MonoObjectMgrFi
-  .4byte __RTTI__7TekiMgr
-  .4byte 0xfffffff8
-  .4byte getAgeNodeType__5ANodeFv
-  .4byte read__8CoreNodeFR18RandomAccessStream
-  .4byte 0x8014b11c
-  .4byte draw__4NodeFR8Graphics
-  .4byte render__4NodeFR8Graphics
-  .4byte concat__4NodeFv
-  .4byte concat__4NodeFR3VQS
-  .4byte concat__4NodeFR3SRT
-  .4byte concat__4NodeFR8Matrix4f
-  .4byte getModelMatrix__4NodeFv
-  .4byte __dt__7TekiMgrFv
-  .4byte update__7TekiMgrFv
-  .4byte postUpdate__13MonoObjectMgrFif
-  .4byte stickUpdate__9ObjectMgrFv
-  .4byte refresh__7TekiMgrFR8Graphics
-  .4byte drawShadow__13MonoObjectMgrFR8GraphicsP7Texture
-  .4byte getSize__13MonoObjectMgrFv
-  .4byte getMax__13MonoObjectMgrFv
-  .4byte findClosest__9ObjectMgrFR8Vector3ffP9Condition
-  .4byte findClosest__9ObjectMgrFR8Vector3fP9Condition
-  .4byte search__13MonoObjectMgrFP9ObjectMgr
-  .4byte killAll__9ObjectMgrFv
-  .4byte birth__13MonoObjectMgrFv
-  .4byte kill__13MonoObjectMgrFP8Creature
-  .4byte createObject__7TekiMgrFv
-  .4byte 0
+	.4byte __RTTI__7TekiMgr
+	.4byte 0
+	.4byte getCreature__13MonoObjectMgrFi
+	.4byte getFirst__13MonoObjectMgrFv
+	.4byte getNext__13MonoObjectMgrFi
+	.4byte isDone__13MonoObjectMgrFi
+	.4byte __RTTI__7TekiMgr
+	.4byte 0xfffffff8
+	.4byte getAgeNodeType__5ANodeFv
+	.4byte read__8CoreNodeFR18RandomAccessStream
+	.4byte 0x8014b11c
+	.4byte draw__4NodeFR8Graphics
+	.4byte render__4NodeFR8Graphics
+	.4byte concat__4NodeFv
+	.4byte concat__4NodeFR3VQS
+	.4byte concat__4NodeFR3SRT
+	.4byte concat__4NodeFR8Matrix4f
+	.4byte getModelMatrix__4NodeFv
+	.4byte __dt__7TekiMgrFv
+	.4byte update__7TekiMgrFv
+	.4byte postUpdate__13MonoObjectMgrFif
+	.4byte stickUpdate__9ObjectMgrFv
+	.4byte refresh__7TekiMgrFR8Graphics
+	.4byte drawShadow__13MonoObjectMgrFR8GraphicsP7Texture
+	.4byte getSize__13MonoObjectMgrFv
+	.4byte getMax__13MonoObjectMgrFv
+	.4byte findClosest__9ObjectMgrFR8Vector3ffP9Condition
+	.4byte findClosest__9ObjectMgrFR8Vector3fP9Condition
+	.4byte search__13MonoObjectMgrFP9ObjectMgr
+	.4byte killAll__9ObjectMgrFv
+	.4byte birth__13MonoObjectMgrFv
+	.4byte kill__13MonoObjectMgrFP8Creature
+	.4byte createObject__7TekiMgrFv
+	.4byte 0
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .global __RTTI__17TekiTypeCondition
 __RTTI__17TekiTypeCondition:
-  .4byte 0x802cd884
-  .4byte 0x802cd898
+	.4byte 0x802cd884
+	.4byte 0x802cd898
 .global __RTTI__18TekiStateCondition
 __RTTI__18TekiStateCondition:
-  .4byte 0x802cd8b8
-  .4byte 0x802cd8cc
+	.4byte 0x802cd8b8
+	.4byte 0x802cd8cc
 .global __RTTI__22TekiPikiStateCondition
 __RTTI__22TekiPikiStateCondition:
-  .4byte 0x802cd8ec
-  .4byte 0x802cd904
-  .4byte 0x802cd960
-  .4byte 0
+	.4byte 0x802cd8ec
+	.4byte 0x802cd904
+	.4byte 0x802cd960
+	.4byte 0
 .global __RTTI__17InteractHitEffect
 __RTTI__17InteractHitEffect:
-  .4byte 0x802cd94c
-  .4byte 0x802cd96c
+	.4byte 0x802cd94c
+	.4byte 0x802cd96c
 .global __RTTI__12InteractBomb
 __RTTI__12InteractBomb:
-  .4byte 0x802cd9d0
-  .4byte 0x802cd9e0
+	.4byte 0x802cd9d0
+	.4byte 0x802cd9e0
 .global lbl_803E4550
 lbl_803E4550:
 	.4byte 0x74656B69

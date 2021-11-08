@@ -6644,21 +6644,21 @@ lbl_802B4DB0:
 	.4byte 0x802B1D94
 .global __RTTI__10SeConstant
 __RTTI__10SeConstant:
-  .4byte 0x802b1d70
-  .4byte 0x802b1da8
-  .4byte 0
-  .4byte 0x53455f42
-  .4byte 0x4f4d4200
-  .4byte 0x64756d6d
-  .4byte 0x79203100
-  .4byte 0x64756d6d
-  .4byte 0x79203200
-  .4byte 0x64756d6d
-  .4byte 0x79203300
-  .4byte 0x64756d6d
-  .4byte 0x79203400
-  .4byte 0x64756d6d
-  .4byte 0x79203500
+	.4byte 0x802b1d70
+	.4byte 0x802b1da8
+	.4byte 0
+	.4byte 0x53455f42
+	.4byte 0x4f4d4200
+	.4byte 0x64756d6d
+	.4byte 0x79203100
+	.4byte 0x64756d6d
+	.4byte 0x79203200
+	.4byte 0x64756d6d
+	.4byte 0x79203300
+	.4byte 0x64756d6d
+	.4byte 0x79203400
+	.4byte 0x64756d6d
+	.4byte 0x79203500
 .global lbl_803DFAB0
 lbl_803DFAB0:
 	.4byte 0x00000000

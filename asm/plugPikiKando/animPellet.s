@@ -1228,80 +1228,80 @@ motionLabels__18PaniPelletAnimator:
 	.4byte 0x00000000
 .global __vt__18PaniPelletAnimator
 __vt__18PaniPelletAnimator:
-  .4byte __RTTI__18PaniPelletAnimator
-  .4byte 0
-  .4byte changeContext__12PaniAnimatorFP11AnimContext
-  .4byte animate__12PaniAnimatorFf
-  .4byte finishOneShot__8AnimatorFv
-  .4byte finishLoop__8AnimatorFv
-  .4byte updateContext__12PaniAnimatorFv
-  .4byte 0x50656c6c
-  .4byte 0x6574416e
-  .4byte 0x696d496e
-  .4byte 0x666f0000
-  .4byte 0x803df6d4
-  .4byte 0
-  .4byte 0
-  .4byte 0x50617261
-  .4byte 0x6d657465
-  .4byte 0x72730000
-  .4byte 0x803df6d4
-  .4byte 0x4
-  .4byte 0x803df6dc
-  .4byte 0x4
-  .4byte 0x803df6e4
-  .4byte 0
-  .4byte 0
+	.4byte __RTTI__18PaniPelletAnimator
+	.4byte 0
+	.4byte changeContext__12PaniAnimatorFP11AnimContext
+	.4byte animate__12PaniAnimatorFf
+	.4byte finishOneShot__8AnimatorFv
+	.4byte finishLoop__8AnimatorFv
+	.4byte updateContext__12PaniAnimatorFv
+	.4byte 0x50656c6c
+	.4byte 0x6574416e
+	.4byte 0x696d496e
+	.4byte 0x666f0000
+	.4byte 0x803df6d4
+	.4byte 0
+	.4byte 0
+	.4byte 0x50617261
+	.4byte 0x6d657465
+	.4byte 0x72730000
+	.4byte 0x803df6d4
+	.4byte 0x4
+	.4byte 0x803df6dc
+	.4byte 0x4
+	.4byte 0x803df6e4
+	.4byte 0
+	.4byte 0
 .global __vt__14PelletAnimInfo
 __vt__14PelletAnimInfo:
-  .4byte __RTTI__14PelletAnimInfo
-  .4byte 0
-  .4byte __RTTI__14PelletAnimInfo
-  .4byte 0xfffffffc
-  .4byte getAgeNodeType__5ANodeFv
-  .4byte 0x80099d14
-  .4byte read__14PelletAnimInfoFR18RandomAccessStream
-  .4byte 0x5061726d
-  .4byte 0x3c537472
-  .4byte 0x696e673e
-  .4byte 0
-  .4byte 0x42617365
-  .4byte 0x5061726d
-  .4byte 0
-  .4byte 0x803df6f4
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
+	.4byte __RTTI__14PelletAnimInfo
+	.4byte 0
+	.4byte __RTTI__14PelletAnimInfo
+	.4byte 0xfffffffc
+	.4byte getAgeNodeType__5ANodeFv
+	.4byte 0x80099d14
+	.4byte read__14PelletAnimInfoFR18RandomAccessStream
+	.4byte 0x5061726d
+	.4byte 0x3c537472
+	.4byte 0x696e673e
+	.4byte 0
+	.4byte 0x42617365
+	.4byte 0x5061726d
+	.4byte 0
+	.4byte 0x803df6f4
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
-  .4byte 0x802b0524
-  .4byte 0
-  .4byte 0x802b0564
-  .4byte 0
+	.4byte 0x802b0524
+	.4byte 0
+	.4byte 0x802b0564
+	.4byte 0
 .global __RTTI__7KEffect
 __RTTI__7KEffect:
-  .4byte 0x803df630
-  .4byte 0x802b0590
-  .4byte 0x802b0628
-  .4byte 0
+	.4byte 0x803df630
+	.4byte 0x802b0590
+	.4byte 0x802b0628
+	.4byte 0
 .global __RTTI__12PelletConfig
 __RTTI__12PelletConfig:
-  .4byte 0x802b0618
-  .4byte 0x802b0634
-  .4byte 0x802b0678
-  .4byte 0
+	.4byte 0x802b0618
+	.4byte 0x802b0634
+	.4byte 0x802b0678
+	.4byte 0
 .global lbl_803DF670
 lbl_803DF670:
 	.4byte 0x78303000
@@ -1335,9 +1335,9 @@ lbl_803DF688:
 	.4byte 0x802B07F0
 .global __RTTI__18PaniPelletAnimator
 __RTTI__18PaniPelletAnimator:
-  .4byte 0x802b07c0
-  .4byte 0x802b07fc
-  .4byte 0x414e6f64
+	.4byte 0x802b07c0
+	.4byte 0x802b07fc
+	.4byte 0x414e6f64
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 	.4byte 0x00000000

@@ -768,33 +768,33 @@ lbl_802AE6D0:
 	.4byte 0x00000000
 .global __vt__10AIConstant
 __vt__10AIConstant:
-  .4byte __RTTI__10AIConstant
-  .4byte 0
-  .4byte getAgeNodeType__5ANodeFv
-  .4byte read__10AIConstantFR18RandomAccessStream
-  .4byte update__4NodeFv
-  .4byte draw__4NodeFR8Graphics
-  .4byte render__4NodeFR8Graphics
-  .4byte concat__4NodeFv
-  .4byte concat__4NodeFR3VQS
-  .4byte concat__4NodeFR3SRT
-  .4byte concat__4NodeFR8Matrix4f
-  .4byte getModelMatrix__4NodeFv
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
+	.4byte __RTTI__10AIConstant
+	.4byte 0
+	.4byte getAgeNodeType__5ANodeFv
+	.4byte read__10AIConstantFR18RandomAccessStream
+	.4byte update__4NodeFv
+	.4byte draw__4NodeFR8Graphics
+	.4byte render__4NodeFR8Graphics
+	.4byte concat__4NodeFv
+	.4byte concat__4NodeFR3VQS
+	.4byte concat__4NodeFR3SRT
+	.4byte concat__4NodeFR8Matrix4f
+	.4byte getModelMatrix__4NodeFv
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
-  .4byte 0x802ae134
-  .4byte 0
-  .4byte 0x4f464600
-  .4byte 0x4f4e0000
-  .4byte 0x5345454e
-  .4byte 0
+	.4byte 0x802ae134
+	.4byte 0
+	.4byte 0x4f464600
+	.4byte 0x4f4e0000
+	.4byte 0x5345454e
+	.4byte 0
 .global lbl_803DECE8
 lbl_803DECE8:
 	.4byte 0x3C4E6F64

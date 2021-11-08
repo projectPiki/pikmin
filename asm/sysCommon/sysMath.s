@@ -14394,16 +14394,16 @@ start__Q23zen12ogScrMenuMgrFv:
 /* 80192B1C 0018FA7C  FC 20 00 90 */	fmr f1, f0
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
-  .4byte 0x80228b28
+	.4byte 0x80228b28
 .global __RTTI__9RouteLink
 __RTTI__9RouteLink:
-  .4byte 0x80228b74
-  .4byte 0x80228b80
+	.4byte 0x80228b74
+	.4byte 0x80228b80
 .global __RTTI__10RoutePoint
 __RTTI__10RoutePoint:
-  .4byte 0x80228ba4
-  .4byte 0x80228bb0
-  .4byte 0
+	.4byte 0x80228ba4
+	.4byte 0x80228bb0
+	.4byte 0
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .global "@896_1"

@@ -181,17 +181,17 @@ lbl_80136D14:
 /* 80136D60 00133CC0  55 00 10 3A */	slwi r0, r8, 2
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
-  .4byte 0x70616e69
-  .4byte 0x4974656d
-  .4byte 0x416e696d
-  .4byte 0x61746f72
-  .4byte 0x2e637070
-  .4byte 0
-  .4byte 0x70616e69
-  .4byte 0x4974656d
-  .4byte 0x416e696d
-  .4byte 0x61746f72
-  .4byte 0
+	.4byte 0x70616e69
+	.4byte 0x4974656d
+	.4byte 0x416e696d
+	.4byte 0x61746f72
+	.4byte 0x2e637070
+	.4byte 0
+	.4byte 0x70616e69
+	.4byte 0x4974656d
+	.4byte 0x416e696d
+	.4byte 0x61746f72
+	.4byte 0
 .global motionLabels__16PaniItemAnimator
 motionLabels__16PaniItemAnimator:
 	.4byte 0x803E1F20
@@ -231,37 +231,37 @@ motionLabels__16PaniItemAnimator:
 	.4byte 0x00000000
 .global __vt__16PaniItemAnimator
 __vt__16PaniItemAnimator:
-  .4byte __RTTI__16PaniItemAnimator
-  .4byte 0
-  .4byte changeContext__12PaniAnimatorFP11AnimContext
-  .4byte animate__12PaniAnimatorFf
-  .4byte finishOneShot__8AnimatorFv
-  .4byte finishLoop__8AnimatorFv
-  .4byte updateContext__12PaniAnimatorFv
-  .4byte 0
+	.4byte __RTTI__16PaniItemAnimator
+	.4byte 0
+	.4byte changeContext__12PaniAnimatorFP11AnimContext
+	.4byte animate__12PaniAnimatorFf
+	.4byte finishOneShot__8AnimatorFv
+	.4byte finishLoop__8AnimatorFv
+	.4byte updateContext__12PaniAnimatorFv
+	.4byte 0
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
-  .4byte 0x802bfca4
-  .4byte 0
-  .4byte 0x802bfcb0
-  .4byte 0
-  .4byte 0x802bfcc0
-  .4byte 0x802bfccc
-  .4byte 0x802bfce0
-  .4byte 0x802bfcec
-  .4byte 0x802bfd10
-  .4byte 0x802bfd20
+	.4byte 0x802bfca4
+	.4byte 0
+	.4byte 0x802bfcb0
+	.4byte 0
+	.4byte 0x802bfcc0
+	.4byte 0x802bfccc
+	.4byte 0x802bfce0
+	.4byte 0x802bfcec
+	.4byte 0x802bfd10
+	.4byte 0x802bfd20
 .global __RTTI__8MizuItem
 __RTTI__8MizuItem:
-  .4byte 0x802bfc84
-  .4byte 0x802bfd4c
-  .4byte 0x31000000
-  .4byte 0x32000000
-  .4byte 0x33000000
-  .4byte 0x34000000
-  .4byte 0x35000000
-  .4byte 0x36000000
-  .4byte 0x37000000
-  .4byte 0x38000000
-  .4byte 0x39000000
-  .4byte 0x31300000
+	.4byte 0x802bfc84
+	.4byte 0x802bfd4c
+	.4byte 0x31000000
+	.4byte 0x32000000
+	.4byte 0x33000000
+	.4byte 0x34000000
+	.4byte 0x35000000
+	.4byte 0x36000000
+	.4byte 0x37000000
+	.4byte 0x38000000
+	.4byte 0x39000000
+	.4byte 0x31300000

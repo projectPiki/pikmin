@@ -1,10 +1,10 @@
 .include "macros.inc"
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
-  .4byte 0x802d0370
-  .4byte 0
-  .4byte 0x4b696e67
-  .4byte 0x41690000
+	.4byte 0x802d0370
+	.4byte 0
+	.4byte 0x4b696e67
+	.4byte 0x41690000
 .global lbl_803E5018
 lbl_803E5018:
 	.4byte 0x00000000
@@ -18,9 +18,9 @@ lbl_803E5020:
 	.4byte 0x00000000
 .global __RTTI__6KingAi
 __RTTI__6KingAi:
-  .4byte 0x803e5010
-  .4byte 0x802d0508
-  .4byte 0
+	.4byte 0x803e5010
+	.4byte 0x802d0508
+	.4byte 0
 .global lbl_803E5038
 lbl_803E5038:
 	.4byte 0x00000000
@@ -202,8 +202,8 @@ lbl_803E5120:
 	.4byte 0x00000000
 .global __RTTI__21KingGenSalivaCallBack
 __RTTI__21KingGenSalivaCallBack:
-  .4byte 0x802d054c
-  .4byte 0x802d0590
+	.4byte 0x802d054c
+	.4byte 0x802d0590
 .global __RTTI__21KingGenRippleCallBack
 __RTTI__21KingGenRippleCallBack:
-  .4byte 0x802d05a8
+	.4byte 0x802d05a8

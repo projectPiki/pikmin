@@ -14,16 +14,16 @@ lbl_803E52A0:
 	.4byte 0x00000000
 .global __RTTI__8KoganeAi
 __RTTI__8KoganeAi:
-  .4byte 0x802d09b0
-  .4byte 0x802d09ec
-  .4byte 0x802d0a1c
-  .4byte 0
+	.4byte 0x802d09b0
+	.4byte 0x802d09ec
+	.4byte 0x802d0a1c
+	.4byte 0
 .global __RTTI__23KoganeGenRippleCallBack
 __RTTI__23KoganeGenRippleCallBack:
-  .4byte 0x802d0a04
-  .4byte 0x802d0a48
-  .4byte 0
-  .4byte 0x506f6d00
+	.4byte 0x802d0a04
+	.4byte 0x802d0a48
+	.4byte 0
+	.4byte 0x506f6d00
 .global lbl_803E52CC
 lbl_803E52CC:
 	.4byte 0x73303000
@@ -72,10 +72,10 @@ lbl_803E52F8:
 	.4byte 0x802D0AC0
 .global __RTTI__3Pom
 __RTTI__3Pom:
-  .4byte 0x803e52c8
-  .4byte 0x802d0adc
-  .4byte 0x802d0c30
-  .4byte 0
-  .4byte 0x506f6d50
-  .4byte 0x726f7000
-  .4byte 0x414e6f64
+	.4byte 0x803e52c8
+	.4byte 0x802d0adc
+	.4byte 0x802d0c30
+	.4byte 0
+	.4byte 0x506f6d50
+	.4byte 0x726f7000
+	.4byte 0x414e6f64

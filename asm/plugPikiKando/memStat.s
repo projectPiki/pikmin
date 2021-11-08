@@ -889,9 +889,9 @@ lbl_801DBA18:
 /* 801DBA24 001D8984  38 84 5F 32 */	addi r4, r4, 0x6D695F32@l
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
-  .4byte 0x6d656d53
-  .4byte 0x7461742e
-  .4byte 0x63707000
+	.4byte 0x6d656d53
+	.4byte 0x7461742e
+	.4byte 0x63707000
 .global lbl_802AEF54
 lbl_802AEF54:
 	.4byte 0x696E666F
@@ -920,23 +920,23 @@ lbl_802AEF54:
 	.4byte 0x00000000
 .global __vt__7MemInfo
 __vt__7MemInfo:
-  .4byte __RTTI__7MemInfo
-  .4byte 0
-  .4byte getAgeNodeType__5ANodeFv
-  .4byte read__8CoreNodeFR18RandomAccessStream
+	.4byte __RTTI__7MemInfo
+	.4byte 0
+	.4byte getAgeNodeType__5ANodeFv
+	.4byte read__8CoreNodeFR18RandomAccessStream
 .global __vt__11MemInfoNode
 __vt__11MemInfoNode:
-  .4byte __RTTI__11MemInfoNode
-  .4byte 0
-  .4byte getAgeNodeType__5ANodeFv
-  .4byte read__8CoreNodeFR18RandomAccessStream
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
+	.4byte __RTTI__11MemInfoNode
+	.4byte 0
+	.4byte getAgeNodeType__5ANodeFv
+	.4byte read__8CoreNodeFR18RandomAccessStream
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 	.4byte 0x802AEE80
@@ -949,10 +949,10 @@ __vt__11MemInfoNode:
 	.4byte 0x802AEEA4
 .global __RTTI__14GenObjectDebug
 __RTTI__14GenObjectDebug:
-  .4byte 0x802aee70
-  .4byte 0x802aeeb8
-  .4byte 0x802aef18
-  .4byte 0
+	.4byte 0x802aee70
+	.4byte 0x802aeeb8
+	.4byte 0x802aef18
+	.4byte 0
 .global lbl_803DEE90
 lbl_803DEE90:
 	.4byte 0x6D656D69

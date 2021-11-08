@@ -895,82 +895,82 @@ __ct__8NaviPropFv:
 /* 800F9230 000F6190  4B F6 58 51 */	bl __ct__8BaseParmFP10Parameters5ayuID
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
-  .4byte 0x6169466f
-  .4byte 0x726d6174
-  .4byte 0x696f6e2e
-  .4byte 0x63707000
-  .4byte 0x6169466f
-  .4byte 0x726d6174
-  .4byte 0x696f6e00
-  .4byte 0x41637446
-  .4byte 0x6f726d61
-  .4byte 0x74696f6e
-  .4byte 0
-  .4byte 0x50616e69
-  .4byte 0x416e696d
-  .4byte 0x4b65794c
-  .4byte 0x69737465
-  .4byte 0x6e657200
-  .4byte 0x52656365
-  .4byte 0x69766572
-  .4byte 0x3c50696b
-  .4byte 0x693e0000
-  .4byte 0x803e043c
-  .4byte 0
-  .4byte 0
-  .4byte 0x803e0434
-  .4byte 0x14
-  .4byte 0x803e043c
-  .4byte 0
-  .4byte 0x803e044c
-  .4byte 0
-  .4byte 0
+	.4byte 0x6169466f
+	.4byte 0x726d6174
+	.4byte 0x696f6e2e
+	.4byte 0x63707000
+	.4byte 0x6169466f
+	.4byte 0x726d6174
+	.4byte 0x696f6e00
+	.4byte 0x41637446
+	.4byte 0x6f726d61
+	.4byte 0x74696f6e
+	.4byte 0
+	.4byte 0x50616e69
+	.4byte 0x416e696d
+	.4byte 0x4b65794c
+	.4byte 0x69737465
+	.4byte 0x6e657200
+	.4byte 0x52656365
+	.4byte 0x69766572
+	.4byte 0x3c50696b
+	.4byte 0x693e0000
+	.4byte 0x803e043c
+	.4byte 0
+	.4byte 0
+	.4byte 0x803e0434
+	.4byte 0x14
+	.4byte 0x803e043c
+	.4byte 0
+	.4byte 0x803e044c
+	.4byte 0
+	.4byte 0
 .global __vt__12ActFormation
 __vt__12ActFormation:
-  .4byte __RTTI__12ActFormation
-  .4byte 0
-  .4byte "procMsg__15Receiver<4Piki>FP4PikiP3Msg"
-  .4byte "procBounceMsg__15Receiver<4Piki>FP4PikiP9MsgBounce"
-  .4byte "procStickMsg__15Receiver<4Piki>FP4PikiP8MsgStick"
-  .4byte "procHangMsg__15Receiver<4Piki>FP4PikiP7MsgHang"
-  .4byte "procTargetMsg__15Receiver<4Piki>FP4PikiP9MsgTarget"
-  .4byte "procCollideMsg__15Receiver<4Piki>FP4PikiP10MsgCollide"
-  .4byte "procAnimMsg__15Receiver<4Piki>FP4PikiP7MsgAnim"
-  .4byte "procDamageMsg__15Receiver<4Piki>FP4PikiP9MsgDamage"
-  .4byte "procWallMsg__15Receiver<4Piki>FP4PikiP7MsgWall"
-  .4byte "procOffWallMsg__15Receiver<4Piki>FP4PikiP10MsgOffWall"
-  .4byte "procUserMsg__15Receiver<4Piki>FP4PikiP7MsgUser"
-  .4byte "procGroundMsg__15Receiver<4Piki>FP4PikiP9MsgGround"
-  .4byte defaultInitialiser__6ActionFv
-  .4byte dump__6ActionFv
-  .4byte draw__6ActionFR8Graphics
-  .4byte __dt__12ActFormationFv
-  .4byte init__12ActFormationFP8Creature
-  .4byte exec__12ActFormationFv
-  .4byte cleanup__12ActFormationFv
-  .4byte resume__6ActionFv
-  .4byte restart__6ActionFv
-  .4byte resumable__6ActionFv
-  .4byte getInfo__6ActionFPc
-  .4byte __RTTI__12ActFormation
-  .4byte 0xffffffec
-  .4byte 0x800ba5f8
-  .4byte animationKeyUpdated__12ActFormationFR16PaniAnimKeyEvent
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0x800a7908
-  .4byte 0x800a7930
-  .4byte 0x800a7944
-  .4byte 0x800a7958
-  .4byte 0x800a796c
-  .4byte 0x800a7980
-  .4byte 0x800a7994
-  .4byte 0x800a79a8
-  .4byte 0x800a791c
-  .4byte 0x800a79d0
-  .4byte 0x800a79bc
-  .4byte 0
+	.4byte __RTTI__12ActFormation
+	.4byte 0
+	.4byte "procMsg__15Receiver<4Piki>FP4PikiP3Msg"
+	.4byte "procBounceMsg__15Receiver<4Piki>FP4PikiP9MsgBounce"
+	.4byte "procStickMsg__15Receiver<4Piki>FP4PikiP8MsgStick"
+	.4byte "procHangMsg__15Receiver<4Piki>FP4PikiP7MsgHang"
+	.4byte "procTargetMsg__15Receiver<4Piki>FP4PikiP9MsgTarget"
+	.4byte "procCollideMsg__15Receiver<4Piki>FP4PikiP10MsgCollide"
+	.4byte "procAnimMsg__15Receiver<4Piki>FP4PikiP7MsgAnim"
+	.4byte "procDamageMsg__15Receiver<4Piki>FP4PikiP9MsgDamage"
+	.4byte "procWallMsg__15Receiver<4Piki>FP4PikiP7MsgWall"
+	.4byte "procOffWallMsg__15Receiver<4Piki>FP4PikiP10MsgOffWall"
+	.4byte "procUserMsg__15Receiver<4Piki>FP4PikiP7MsgUser"
+	.4byte "procGroundMsg__15Receiver<4Piki>FP4PikiP9MsgGround"
+	.4byte defaultInitialiser__6ActionFv
+	.4byte dump__6ActionFv
+	.4byte draw__6ActionFR8Graphics
+	.4byte __dt__12ActFormationFv
+	.4byte init__12ActFormationFP8Creature
+	.4byte exec__12ActFormationFv
+	.4byte cleanup__12ActFormationFv
+	.4byte resume__6ActionFv
+	.4byte restart__6ActionFv
+	.4byte resumable__6ActionFv
+	.4byte getInfo__6ActionFPc
+	.4byte __RTTI__12ActFormation
+	.4byte 0xffffffec
+	.4byte 0x800ba5f8
+	.4byte animationKeyUpdated__12ActFormationFR16PaniAnimKeyEvent
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0x800a7908
+	.4byte 0x800a7930
+	.4byte 0x800a7944
+	.4byte 0x800a7958
+	.4byte 0x800a796c
+	.4byte 0x800a7980
+	.4byte 0x800a7994
+	.4byte 0x800a79a8
+	.4byte 0x800a791c
+	.4byte 0x800a79d0
+	.4byte 0x800a79bc
+	.4byte 0
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 	.4byte 0x4163744D
@@ -985,8 +985,8 @@ __vt__12ActFormation:
 	.4byte 0x802B6828
 .global __RTTI__7ActMine
 __RTTI__7ActMine:
-  .4byte 0x803e03d8
-  .4byte 0x802b6834
+	.4byte 0x803e03d8
+	.4byte 0x802b6834
 .global lbl_803E0408
 lbl_803E0408:
 	.4byte 0x00000000

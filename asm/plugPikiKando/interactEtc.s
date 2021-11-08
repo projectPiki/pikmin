@@ -182,65 +182,65 @@ lbl_801D1898:
 /* 801D1898 001CE7F8  38 60 00 08 */	li r3, 8
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
-  .4byte 0x696e7465
-  .4byte 0x72616374
-  .4byte 0x4574632e
-  .4byte 0x63707000
-  .4byte 0x696e7465
-  .4byte 0x72616374
-  .4byte 0x45746300
-  .4byte 0x496e7465
-  .4byte 0x72616374
-  .4byte 0x5761726e
-  .4byte 0
-  .4byte 0x496e7465
-  .4byte 0x72616374
-  .4byte 0x696f6e00
-  .4byte 0x803de9f8
-  .4byte 0
-  .4byte 0
+	.4byte 0x696e7465
+	.4byte 0x72616374
+	.4byte 0x4574632e
+	.4byte 0x63707000
+	.4byte 0x696e7465
+	.4byte 0x72616374
+	.4byte 0x45746300
+	.4byte 0x496e7465
+	.4byte 0x72616374
+	.4byte 0x5761726e
+	.4byte 0
+	.4byte 0x496e7465
+	.4byte 0x72616374
+	.4byte 0x696f6e00
+	.4byte 0x803de9f8
+	.4byte 0
+	.4byte 0
 .global __vt__12InteractWarn
 __vt__12InteractWarn:
-  .4byte __RTTI__12InteractWarn
-  .4byte 0
-  .4byte actCommon__11InteractionFP8Creature
-  .4byte actPiki__12InteractWarnFP4Piki
-  .4byte actTeki__11InteractionFP4Teki
-  .4byte actNavi__11InteractionFP4Navi
-  .4byte actBoss__11InteractionFP4Boss
-  .4byte actPellet__11InteractionFP6Pellet
-  .4byte actHinderRock__11InteractionFP10HinderRock
-  .4byte actBridge__11InteractionFP6Bridge
-  .4byte actItem__11InteractionFP12ItemCreature
-  .4byte 0x496e7465
-  .4byte 0x72616374
-  .4byte 0x54616c6b
-  .4byte 0
-  .4byte 0x803de9f8
-  .4byte 0
-  .4byte 0
+	.4byte __RTTI__12InteractWarn
+	.4byte 0
+	.4byte actCommon__11InteractionFP8Creature
+	.4byte actPiki__12InteractWarnFP4Piki
+	.4byte actTeki__11InteractionFP4Teki
+	.4byte actNavi__11InteractionFP4Navi
+	.4byte actBoss__11InteractionFP4Boss
+	.4byte actPellet__11InteractionFP6Pellet
+	.4byte actHinderRock__11InteractionFP10HinderRock
+	.4byte actBridge__11InteractionFP6Bridge
+	.4byte actItem__11InteractionFP12ItemCreature
+	.4byte 0x496e7465
+	.4byte 0x72616374
+	.4byte 0x54616c6b
+	.4byte 0
+	.4byte 0x803de9f8
+	.4byte 0
+	.4byte 0
 .global __vt__12InteractTalk
 __vt__12InteractTalk:
-  .4byte __RTTI__12InteractTalk
-  .4byte 0
-  .4byte actCommon__11InteractionFP8Creature
-  .4byte actPiki__12InteractTalkFP4Piki
-  .4byte actTeki__11InteractionFP4Teki
-  .4byte actNavi__11InteractionFP4Navi
-  .4byte actBoss__11InteractionFP4Boss
-  .4byte actPellet__11InteractionFP6Pellet
-  .4byte actHinderRock__11InteractionFP10HinderRock
-  .4byte actBridge__11InteractionFP6Bridge
-  .4byte actItem__11InteractionFP12ItemCreature
+	.4byte __RTTI__12InteractTalk
+	.4byte 0
+	.4byte actCommon__11InteractionFP8Creature
+	.4byte actPiki__12InteractTalkFP4Piki
+	.4byte actTeki__11InteractionFP4Teki
+	.4byte actNavi__11InteractionFP4Navi
+	.4byte actBoss__11InteractionFP4Boss
+	.4byte actPellet__11InteractionFP6Pellet
+	.4byte actHinderRock__11InteractionFP10HinderRock
+	.4byte actBridge__11InteractionFP6Bridge
+	.4byte actItem__11InteractionFP12ItemCreature
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 	.4byte 0x00000000
 .global __RTTI__15InteractRelease
 __RTTI__15InteractRelease:
-  .4byte 0x802ad164
-  .4byte 0x802ad180
+	.4byte 0x802ad164
+	.4byte 0x802ad180
 .global __RTTI__12InteractGrab
 __RTTI__12InteractGrab:
-  .4byte 0x802ad1b8
-  .4byte 0x802ad1c8
-  .4byte 0
+	.4byte 0x802ad1b8
+	.4byte 0x802ad1c8
+	.4byte 0

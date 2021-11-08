@@ -17,14 +17,14 @@ lbl_803E558C:
 	.4byte 0x00000000
 .global __RTTI__6MizuAi
 __RTTI__6MizuAi:
-  .4byte 0x803e5578
-  .4byte 0x802d18a8
-  .4byte 0x802d18dc
-  .4byte 0
+	.4byte 0x803e5578
+	.4byte 0x802d18a8
+	.4byte 0x802d18dc
+	.4byte 0
 .global __RTTI__25MizuGenSpringPuffCallBack
 __RTTI__25MizuGenSpringPuffCallBack:
-  .4byte 0x802d18c0
-  .4byte 0x802d1908
+	.4byte 0x802d18c0
+	.4byte 0x802d1908
 .global rumblePoint_00
 rumblePoint_00:
 	.4byte 0x0000000B

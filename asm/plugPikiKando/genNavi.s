@@ -117,9 +117,9 @@ lbl_80136E98:
 /* 80136F18 00133E78  7F C4 01 2E */	stwx r30, r4, r0
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
-  .4byte 0x67656e4e
-  .4byte 0x6176692e
-  .4byte 0x63707000
+	.4byte 0x67656e4e
+	.4byte 0x6176692e
+	.4byte 0x63707000
 .global lbl_802BFFC4
 lbl_802BFFC4:
 	.4byte 0x6F626A65
@@ -167,31 +167,31 @@ lbl_802BFFE4:
 	.4byte 0x00000000
 .global __vt__13GenObjectNavi
 __vt__13GenObjectNavi:
-  .4byte __RTTI__13GenObjectNavi
-  .4byte 0
-  .4byte doWrite__7GenBaseFR18RandomAccessStream
-  .4byte ramSaveParameters__7GenBaseFR18RandomAccessStream
-  .4byte ramLoadParameters__7GenBaseFR18RandomAccessStream
-  .4byte doRead__13GenObjectNaviFR18RandomAccessStream
-  .4byte update__7GenBaseFv
-  .4byte render__7GenBaseFR8Graphics
-  .4byte getLatestVersion__9GenObjectFv
-  .4byte updateUseList__9GenObjectFP9Generatori
-  .4byte init__9GenObjectFP9Generator
-  .4byte update__9GenObjectFP9Generator
-  .4byte render__9GenObjectFR8GraphicsP9Generator
-  .4byte birth__13GenObjectNaviFR9BirthInfo
+	.4byte __RTTI__13GenObjectNavi
+	.4byte 0
+	.4byte doWrite__7GenBaseFR18RandomAccessStream
+	.4byte ramSaveParameters__7GenBaseFR18RandomAccessStream
+	.4byte ramLoadParameters__7GenBaseFR18RandomAccessStream
+	.4byte doRead__13GenObjectNaviFR18RandomAccessStream
+	.4byte update__7GenBaseFv
+	.4byte render__7GenBaseFR8Graphics
+	.4byte getLatestVersion__9GenObjectFv
+	.4byte updateUseList__9GenObjectFP9Generatori
+	.4byte init__9GenObjectFP9Generator
+	.4byte update__9GenObjectFP9Generator
+	.4byte render__9GenObjectFR8GraphicsP9Generator
+	.4byte birth__13GenObjectNaviFR9BirthInfo
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
-  .4byte 0x31310000
-  .4byte 0x31320000
-  .4byte 0x31330000
-  .4byte 0x31340000
-  .4byte 0x31350000
-  .4byte 0x802bff5c
-  .4byte 0
-  .4byte 0x802bff68
-  .4byte 0x802bff78
+	.4byte 0x31310000
+	.4byte 0x31320000
+	.4byte 0x31330000
+	.4byte 0x31340000
+	.4byte 0x31350000
+	.4byte 0x802bff5c
+	.4byte 0
+	.4byte 0x802bff68
+	.4byte 0x802bff78
 .global __RTTI__16PaniItemAnimator
 __RTTI__16PaniItemAnimator:
-  .4byte 0x802bff48
+	.4byte 0x802bff48

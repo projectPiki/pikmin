@@ -220,22 +220,22 @@ lbl_803DCE70:
 	.4byte 0x80227300
 .global __RTTI__7BaseApp
 __RTTI__7BaseApp:
-  .4byte 0x803dce78
-  .4byte 0x80227314
-  .4byte 0x53747265
-  .4byte 0x616d0000
-  .4byte 0x803dceb0
-  .4byte 0
-  .4byte 0x53747265
-  .4byte 0x616d0000
-  .4byte 0x803dcec0
-  .4byte 0
-  .4byte 0x80227430
-  .4byte 0x80227444
+	.4byte 0x803dce78
+	.4byte 0x80227314
+	.4byte 0x53747265
+	.4byte 0x616d0000
+	.4byte 0x803dceb0
+	.4byte 0
+	.4byte 0x53747265
+	.4byte 0x616d0000
+	.4byte 0x803dcec0
+	.4byte 0
+	.4byte 0x80227430
+	.4byte 0x80227444
 .global __RTTI__19BufferedInputStream
 __RTTI__19BufferedInputStream:
-  .4byte 0x8022741c
-  .4byte 0x80227450
+	.4byte 0x8022741c
+	.4byte 0x80227450
 .global lbl_803DCEE0
 lbl_803DCEE0:
 	.4byte 0x3F800000
@@ -332,48 +332,48 @@ lbl_803DCF6C:
 	.4byte 0x00000000
 .global __RTTI__9GfxObject
 __RTTI__9GfxObject:
-  .4byte 0x802280b4
-  .4byte 0
-  .4byte 0x54657874
-  .4byte 0x75726500
+	.4byte 0x802280b4
+	.4byte 0
+	.4byte 0x54657874
+	.4byte 0x75726500
 .global __RTTI__7Texture
 __RTTI__7Texture:
-  .4byte 0x803dcf78
-  .4byte 0x802280c0
+	.4byte 0x803dcf78
+	.4byte 0x802280c0
 .global __RTTI__12CacheTexture
 __RTTI__12CacheTexture:
-  .4byte 0x802280a4
-  .4byte 0x802280cc
-  .4byte 0x54657841
-  .4byte 0x74747200
-  .4byte 0x414e6f64
-  .4byte 0x65000000
-  .4byte 0x803dcf98
-  .4byte 0
-  .4byte 0x802280f4
-  .4byte 0x80228100
+	.4byte 0x802280a4
+	.4byte 0x802280cc
+	.4byte 0x54657841
+	.4byte 0x74747200
+	.4byte 0x414e6f64
+	.4byte 0x65000000
+	.4byte 0x803dcf98
+	.4byte 0
+	.4byte 0x802280f4
+	.4byte 0x80228100
 .global __RTTI__7TexAttr
 __RTTI__7TexAttr:
-  .4byte 0x803dcf90
-  .4byte 0x8022810c
-  .4byte 0x54657849
-  .4byte 0x6d670000
+	.4byte 0x803dcf90
+	.4byte 0x8022810c
+	.4byte 0x54657849
+	.4byte 0x6d670000
 .global __RTTI__6TexImg
 __RTTI__6TexImg:
-  .4byte 0x803dcfb8
-  .4byte 0x80228130
+	.4byte 0x803dcfb8
+	.4byte 0x80228130
 .global __RTTI__8Graphics
 __RTTI__8Graphics:
-  .4byte 0x80227550
-  .4byte 0
+	.4byte 0x80227550
+	.4byte 0
 .global __RTTI__15MaterialHandler
 __RTTI__15MaterialHandler:
-  .4byte 0x80228248
-  .4byte 0
+	.4byte 0x80228248
+	.4byte 0
 .global __RTTI__8Material
 __RTTI__8Material:
-  .4byte 0x80228268
-  .4byte 0x80228274
+	.4byte 0x80228268
+	.4byte 0x80228274
 .global lbl_803DCFE0
 lbl_803DCFE0:
 	.4byte 0x00000000
@@ -415,9 +415,9 @@ lbl_803DD004:
 	.4byte 0x802282D4
 .global __RTTI__5Light
 __RTTI__5Light:
-  .4byte 0x803dd00c
-  .4byte 0x802282e0
-  .4byte 0
+	.4byte 0x803dd00c
+	.4byte 0x802282e0
+	.4byte 0
 .global lbl_803DD038
 lbl_803DD038:
 	.4byte 0x47000000
@@ -539,83 +539,83 @@ lbl_803DD10C:
 	.4byte 0x00000000
 .global __RTTI__10MatobjInfo
 __RTTI__10MatobjInfo:
-  .4byte 0x80228670
-  .4byte 0x80228688
-  .4byte 0x414e6f64
-  .4byte 0x65000000
-  .4byte 0x803dd124
-  .4byte 0
-  .4byte lbl_80228350
-  .4byte 0x802286c0
+	.4byte 0x80228670
+	.4byte 0x80228688
+	.4byte 0x414e6f64
+	.4byte 0x65000000
+	.4byte 0x803dd124
+	.4byte 0
+	.4byte lbl_80228350
+	.4byte 0x802286c0
 .global __RTTI__9BaseShape
 __RTTI__9BaseShape:
-  .4byte 0x802286b4
-  .4byte 0x802286cc
+	.4byte 0x802286b4
+	.4byte 0x802286cc
 .global "__RTTI__22IDelegate2<P5Joint,Ul>"
 "__RTTI__22IDelegate2<P5Joint,Ul>":
-  .4byte 0x80228734
-  .4byte 0
+	.4byte 0x80228734
+	.4byte 0
 .global "__RTTI__32Delegate2<9BaseShape,P5Joint,Ul>"
 "__RTTI__32Delegate2<9BaseShape,P5Joint,Ul>":
-  .4byte 0x80228704
-  .4byte 0x80228758
+	.4byte 0x80228704
+	.4byte 0x80228758
 .global __RTTI__10LightFlare
 __RTTI__10LightFlare:
-  .4byte 0x8022877c
-  .4byte 0x80228788
+	.4byte 0x8022877c
+	.4byte 0x80228788
 .global __RTTI__10LightGroup
 __RTTI__10LightGroup:
-  .4byte 0x802287ac
-  .4byte 0x802287b8
+	.4byte 0x802287ac
+	.4byte 0x802287b8
 .global __RTTI__11ObjCollInfo
 __RTTI__11ObjCollInfo:
-  .4byte 0x802287dc
-  .4byte 0x802287e8
-  .4byte 0x416e696d
-  .4byte 0x44636b00
+	.4byte 0x802287dc
+	.4byte 0x802287e8
+	.4byte 0x416e696d
+	.4byte 0x44636b00
 .global __RTTI__8AnimData
 __RTTI__8AnimData:
-  .4byte 0x8022880c
-  .4byte 0x80228818
+	.4byte 0x8022880c
+	.4byte 0x80228818
 .global __RTTI__7AnimDck
 __RTTI__7AnimDck:
-  .4byte 0x803dd16c
-  .4byte 0x8022882c
-  .4byte 0x416e696d
-  .4byte 0x44636100
+	.4byte 0x803dd16c
+	.4byte 0x8022882c
+	.4byte 0x416e696d
+	.4byte 0x44636100
 .global __RTTI__7AnimDca
 __RTTI__7AnimDca:
-  .4byte 0x803dd184
-  .4byte 0x80228868
+	.4byte 0x803dd184
+	.4byte 0x80228868
 .global __RTTI__11AnimContext
 __RTTI__11AnimContext:
-  .4byte 0x802288c4
-  .4byte 0
+	.4byte 0x802288c4
+	.4byte 0
 .global __RTTI__Q25Joint7MatPoly
 __RTTI__Q25Joint7MatPoly:
-  .4byte 0x802288dc
-  .4byte 0x802288ec
-  .4byte 0x4a6f696e
-  .4byte 0x74000000
+	.4byte 0x802288dc
+	.4byte 0x802288ec
+	.4byte 0x4a6f696e
+	.4byte 0x74000000
 .global __RTTI__5Joint
 __RTTI__5Joint:
-  .4byte 0x803dd1a4
-  .4byte 0x80228910
-  .4byte 0x4d657368
-  .4byte 0
+	.4byte 0x803dd1a4
+	.4byte 0x80228910
+	.4byte 0x4d657368
+	.4byte 0
 .global __RTTI__4Mesh
 __RTTI__4Mesh:
-  .4byte 0x803dd1b4
-  .4byte 0x80228934
+	.4byte 0x803dd1b4
+	.4byte 0x80228934
 .global __RTTI__8FaceNode
 __RTTI__8FaceNode:
-  .4byte 0x80228958
-  .4byte 0x80228964
+	.4byte 0x80228958
+	.4byte 0x80228964
 .global __RTTI__8DispList
 __RTTI__8DispList:
-  .4byte 0x802289a4
-  .4byte 0x802289b0
-  .4byte 0
+	.4byte 0x802289a4
+	.4byte 0x802289b0
+	.4byte 0
 .global lbl_803DD1D8
 lbl_803DD1D8:
 	.4byte 0x73697A65
@@ -759,21 +759,21 @@ lbl_803DD2B4:
 	.4byte 0x80228AFC
 .global __RTTI__8EditNode
 __RTTI__8EditNode:
-  .4byte 0x80228b08
-  .4byte 0x80228b14
+	.4byte 0x80228b08
+	.4byte 0x80228b14
 .global __RTTI__10RouteGroup
 __RTTI__10RouteGroup:
-  .4byte 0x80228ae4
-  .4byte 0x80228b28
+	.4byte 0x80228ae4
+	.4byte 0x80228b28
 .global __RTTI__9RouteLink
 __RTTI__9RouteLink:
-  .4byte 0x80228b74
-  .4byte 0x80228b80
+	.4byte 0x80228b74
+	.4byte 0x80228b80
 .global __RTTI__10RoutePoint
 __RTTI__10RoutePoint:
-  .4byte 0x80228ba4
-  .4byte 0x80228bb0
-  .4byte 0
+	.4byte 0x80228ba4
+	.4byte 0x80228bb0
+	.4byte 0
 .global lbl_803DD2F8
 lbl_803DD2F8:
 	.4byte 0x00000000
@@ -814,36 +814,36 @@ lbl_803DD328:
 	.4byte 0x00000000
 .global __RTTI__10BinobjInfo
 __RTTI__10BinobjInfo:
-  .4byte 0x80228c34
-  .4byte 0x80228c4c
-  .4byte 0x414e6f64
-  .4byte 0x65000000
-  .4byte 0x803dd340
-  .4byte 0
-  .4byte 0x80228c0c
-  .4byte 0x80228c74
+	.4byte 0x80228c34
+	.4byte 0x80228c4c
+	.4byte 0x414e6f64
+	.4byte 0x65000000
+	.4byte 0x803dd340
+	.4byte 0
+	.4byte 0x80228c0c
+	.4byte 0x80228c74
 .global __RTTI__11LFlareGroup
 __RTTI__11LFlareGroup:
-  .4byte 0x80228c68
-  .4byte 0x80228c80
+	.4byte 0x80228c68
+	.4byte 0x80228c80
 .global __RTTI__9StdSystem
 __RTTI__9StdSystem:
-  .4byte 0x80228c00
-  .4byte 0
+	.4byte 0x80228c00
+	.4byte 0
 .global __RTTI__10TexobjInfo
 __RTTI__10TexobjInfo:
-  .4byte 0x80228cd8
-  .4byte 0x80228ce4
+	.4byte 0x80228cd8
+	.4byte 0x80228ce4
 .global __RTTI__10ShpobjInfo
 __RTTI__10ShpobjInfo:
-  .4byte 0x80228d00
-  .4byte 0x80228d0c
+	.4byte 0x80228d00
+	.4byte 0x80228d0c
 .global __RTTI__10AnmobjInfo
 __RTTI__10AnmobjInfo:
-  .4byte 0x80228d54
-  .4byte 0x80228d60
-  .4byte 0x4e6f6465
-  .4byte 0
+	.4byte 0x80228d54
+	.4byte 0x80228d60
+	.4byte 0x4e6f6465
+	.4byte 0
 .global lbl_803DD388
 lbl_803DD388:
 	.4byte 0x25732573
@@ -860,22 +860,22 @@ lbl_803DD388:
 	.4byte 0x80228DA4
 .global __RTTI__7SRTNode
 __RTTI__7SRTNode:
-  .4byte 0x803dd390
-  .4byte 0x80228db8
-  .4byte 0x414e6f64
-  .4byte 0x65000000
-  .4byte 0x803dd3c0
-  .4byte 0
-  .4byte 0x80228e6c
-  .4byte 0x80228e78
-  .4byte 0x4e6f6465
-  .4byte 0
-  .4byte 0x803dd3d8
-  .4byte 0x80228e84
+	.4byte 0x803dd390
+	.4byte 0x80228db8
+	.4byte 0x414e6f64
+	.4byte 0x65000000
+	.4byte 0x803dd3c0
+	.4byte 0
+	.4byte 0x80228e6c
+	.4byte 0x80228e78
+	.4byte 0x4e6f6465
+	.4byte 0
+	.4byte 0x803dd3d8
+	.4byte 0x80228e84
 .global __RTTI__10Controller
 __RTTI__10Controller:
-  .4byte 0x80228e60
-  .4byte 0x80228e98
+	.4byte 0x80228e60
+	.4byte 0x80228e98
 .global lbl_803DD3F0
 lbl_803DD3F0:
 	.4byte 0x00000000
@@ -980,12 +980,12 @@ lbl_803DD46C:
 	.4byte 0x80228F24
 .global __RTTI__13AtxFileStream
 __RTTI__13AtxFileStream:
-  .4byte 0x80228f00
-  .4byte 0x80228f30
-  .4byte 0x80228fac
-  .4byte 0x80228fb8
-  .4byte 0x54657874
-  .4byte 0x75726500
+	.4byte 0x80228f00
+	.4byte 0x80228f30
+	.4byte 0x80228fac
+	.4byte 0x80228fb8
+	.4byte 0x54657874
+	.4byte 0x75726500
 .global lbl_803DD4A0
 lbl_803DD4A0:
 	.4byte 0x74786500
@@ -998,18 +998,18 @@ lbl_803DD4AC:
 	.4byte 0x62746900
 .global __RTTI__9GfxObject_1
 __RTTI__9GfxObject_1:
-  .4byte 0x80229050
-  .4byte 0
+	.4byte 0x80229050
+	.4byte 0
 .global __RTTI__7Texture_1
 __RTTI__7Texture_1:
-  .4byte 0x803dd498
-  .4byte 0x8022905c
-  .4byte 0x414e6f64
-  .4byte 0x65000000
-  .4byte 0x803dd4c0
-  .4byte 0
-  .4byte 0x53797374
-  .4byte 0x656d0000
+	.4byte 0x803dd498
+	.4byte 0x8022905c
+	.4byte 0x414e6f64
+	.4byte 0x65000000
+	.4byte 0x803dd4c0
+	.4byte 0
+	.4byte 0x53797374
+	.4byte 0x656d0000
 .global glnWidth
 glnWidth:
 	.4byte 0x00000280
@@ -1058,20 +1058,20 @@ lbl_803DD524:
 	.4byte 0x73797300
 .global "__RTTI__22IDelegate1<R8Graphics>"
 "__RTTI__22IDelegate1<R8Graphics>":
-  .4byte 0x802a5390
-  .4byte 0
+	.4byte 0x802a5390
+	.4byte 0
 .global "__RTTI__29Delegate1<6System,R8Graphics>"
 "__RTTI__29Delegate1<6System,R8Graphics>":
-  .4byte 0x802a5370
-  .4byte 0x802a53a8
-  .4byte 0x53747265
-  .4byte 0x616d0000
-  .4byte 0x803dd538
-  .4byte 0
+	.4byte 0x802a5370
+	.4byte 0x802a53a8
+	.4byte 0x53747265
+	.4byte 0x616d0000
+	.4byte 0x803dd538
+	.4byte 0
 .global __RTTI__9LogStream
 __RTTI__9LogStream:
-  .4byte 0x802a53cc
-  .4byte 0x802a53d8
+	.4byte 0x802a53cc
+	.4byte 0x802a53d8
 .global lbl_803DD550
 lbl_803DD550:
 	.4byte 0x25730A00
@@ -1083,35 +1083,35 @@ lbl_803DD550:
 	.4byte 0x802A5454
 .global __RTTI__11AddressNode
 __RTTI__11AddressNode:
-  .4byte 0x802a543c
-  .4byte 0x802a5460
+	.4byte 0x802a543c
+	.4byte 0x802a5460
 .global __RTTI__8DirEntry
 __RTTI__8DirEntry:
-  .4byte 0x802a5484
-  .4byte 0x802a5490
-  .4byte 0x802a54dc
-  .4byte 0x802a54f0
+	.4byte 0x802a5484
+	.4byte 0x802a5490
+	.4byte 0x802a54dc
+	.4byte 0x802a54f0
 .global __RTTI__9DVDStream
 __RTTI__9DVDStream:
-  .4byte 0x802a54d0
-  .4byte 0x802a54fc
+	.4byte 0x802a54d0
+	.4byte 0x802a54fc
 .global __RTTI__9StdSystem_1
 __RTTI__9StdSystem_1:
-  .4byte 0x802a55d8
-  .4byte 0
+	.4byte 0x802a55d8
+	.4byte 0
 .global __RTTI__6System
 __RTTI__6System:
-  .4byte 0x803dd4d0
-  .4byte 0x802a55e4
+	.4byte 0x803dd4d0
+	.4byte 0x802a55e4
 .global __RTTI__10AramStream
 __RTTI__10AramStream:
-  .4byte 0x802a5624
-  .4byte 0x802a5630
-  .4byte 0
+	.4byte 0x802a5624
+	.4byte 0x802a5630
+	.4byte 0
 .global __RTTI__13ControllerMgr
 __RTTI__13ControllerMgr:
-  .4byte 0x802a56bc
-  .4byte 0
+	.4byte 0x802a56bc
+	.4byte 0
 .global sScreenMode
 sScreenMode:
 	.4byte 0x802A5740
@@ -1169,21 +1169,21 @@ lbl_803DD5F0:
 	.4byte 0x802A5D30
 .global __RTTI__9BaseShape_1
 __RTTI__9BaseShape_1:
-  .4byte 0x802a5d3c
-  .4byte 0x802a5d48
+	.4byte 0x802a5d3c
+	.4byte 0x802a5d48
 .global __RTTI__5Shape
 __RTTI__5Shape:
-  .4byte 0x803dd5f4
-  .4byte 0x802a5d5c
+	.4byte 0x803dd5f4
+	.4byte 0x802a5d5c
 .global __RTTI__8Graphics_1
 __RTTI__8Graphics_1:
-  .4byte 0x802a5d9c
-  .4byte 0
+	.4byte 0x802a5d9c
+	.4byte 0
 .global __RTTI__11DGXGraphics
 __RTTI__11DGXGraphics:
-  .4byte 0x802a56f8
-  .4byte 0x802a5da8
-  .4byte 0
+	.4byte 0x802a56f8
+	.4byte 0x802a5da8
+	.4byte 0
 .global lbl_803DD638
 lbl_803DD638:
 	.4byte 0x47000000
@@ -1295,9 +1295,9 @@ lbl_803DD6B8:
 	.4byte 0x802A5F20
 .global __RTTI__9RigidBody
 __RTTI__9RigidBody:
-  .4byte 0x802a5efc
-  .4byte 0x802a5f34
-  .4byte 0
+	.4byte 0x802a5efc
+	.4byte 0x802a5f34
+	.4byte 0
 .global lbl_803DD6F0
 lbl_803DD6F0:
 	.4byte 0x416E696D
@@ -1338,32 +1338,32 @@ lbl_803DD71C:
 	.4byte 0x802A6014
 .global __RTTI__7AnimMgr
 __RTTI__7AnimMgr:
-  .4byte lbl_803DD6F0
-  .4byte 0x802a6020
-  .4byte 0x802a6054
-  .4byte 0
+	.4byte lbl_803DD6F0
+	.4byte 0x802a6020
+	.4byte 0x802a6054
+	.4byte 0
 .global "__RTTI__13Parm<6String>"
 "__RTTI__13Parm<6String>":
-  .4byte 0x802a6044
-  .4byte 0x802a6060
+	.4byte 0x802a6044
+	.4byte 0x802a6060
 .global "__RTTI__7Parm<f>"
 "__RTTI__7Parm<f>":
-  .4byte 0x802a6080
-  .4byte 0x802a608c
+	.4byte 0x802a6080
+	.4byte 0x802a608c
 .global "__RTTI__7Parm<i>"
 "__RTTI__7Parm<i>":
-  .4byte 0x802a60ac
-  .4byte 0x802a60b8
+	.4byte 0x802a60ac
+	.4byte 0x802a60b8
 .global __RTTI__8AnimInfo
 __RTTI__8AnimInfo:
-  .4byte 0x802a60d8
-  .4byte 0x802a60e4
-  .4byte 0x205b6f66
-  .4byte 0x665d0000
-  .4byte 0x20205b6f
-  .4byte 0x6e5d0000
-  .4byte 0x5b66756c
-  .4byte 0x6c5d0000
+	.4byte 0x802a60d8
+	.4byte 0x802a60e4
+	.4byte 0x205b6f66
+	.4byte 0x665d0000
+	.4byte 0x20205b6f
+	.4byte 0x6e5d0000
+	.4byte 0x5b66756c
+	.4byte 0x6c5d0000
 .global lbl_803DD788
 lbl_803DD788:
 	.4byte 0x205B6F6E
@@ -1457,43 +1457,43 @@ lbl_803DD80C:
 	.4byte 0x802A6380
 .global __RTTI__11GameGenNode
 __RTTI__11GameGenNode:
-  .4byte 0x802a635c
-  .4byte 0x802a6394
-  .4byte 0x53656374
-  .4byte 0x696f6e00
-  .4byte 0x803dd844
-  .4byte 0x802a6410
+	.4byte 0x802a635c
+	.4byte 0x802a6394
+	.4byte 0x53656374
+	.4byte 0x696f6e00
+	.4byte 0x803dd844
+	.4byte 0x802a6410
 .global __RTTI__11GameGenFlow
 __RTTI__11GameGenFlow:
-  .4byte 0x802a6320
-  .4byte 0x802a6460
-  .4byte 0x802a64d8
-  .4byte 0
+	.4byte 0x802a6320
+	.4byte 0x802a6460
+	.4byte 0x802a64d8
+	.4byte 0
 .global __RTTI__8GameFlow
 __RTTI__8GameFlow:
-  .4byte lbl_802A6138
-  .4byte 0x802a655c
+	.4byte lbl_802A6138
+	.4byte 0x802a655c
 .global "__RTTI__18IDelegate1<R4Menu>"
 "__RTTI__18IDelegate1<R4Menu>":
-  .4byte 0x802a65c4
-  .4byte 0
+	.4byte 0x802a65c4
+	.4byte 0
 .global "__RTTI__27Delegate1<8GameFlow,R4Menu>"
 "__RTTI__27Delegate1<8GameFlow,R4Menu>":
-  .4byte 0x802a65a8
-  .4byte 0x802a65d8
+	.4byte 0x802a65a8
+	.4byte 0x802a65d8
 .global __RTTI__9LoadIdler
 __RTTI__9LoadIdler:
-  .4byte 0x802a660c
-  .4byte 0x802a6618
+	.4byte 0x802a660c
+	.4byte 0x802a6618
 .global __RTTI__13GameLoadIdler
 __RTTI__13GameLoadIdler:
-  .4byte 0x802a65fc
-  .4byte 0x802a662c
+	.4byte 0x802a65fc
+	.4byte 0x802a662c
 .global __RTTI__10MemoryCard
 __RTTI__10MemoryCard:
-  .4byte 0x802a669c
-  .4byte 0x802a66a8
-  .4byte 0
+	.4byte 0x802a669c
+	.4byte 0x802a66a8
+	.4byte 0
 .global lbl_803DD898
 lbl_803DD898:
 	.4byte 0x67656E66
@@ -1550,30 +1550,30 @@ lbl_803DD8D8:
 	.4byte 0x802A6828
 .global __RTTI__16OnePlayerSection
 __RTTI__16OnePlayerSection:
-  .4byte 0x802a67e8
-  .4byte 0x802a6844
+	.4byte 0x802a67e8
+	.4byte 0x802a6844
 .global __RTTI__11GenFileInfo
 __RTTI__11GenFileInfo:
-  .4byte 0x802a689c
-  .4byte 0x802a68a8
+	.4byte 0x802a689c
+	.4byte 0x802a68a8
 .global __RTTI__9StageInfo
 __RTTI__9StageInfo:
-  .4byte 0x802a68e8
-  .4byte 0x802a68f4
-  .4byte 0x414e6f64
-  .4byte 0x65000000
-  .4byte 0x803dd930
-  .4byte 0
-  .4byte 0x802a6940
-  .4byte 0x802a694c
+	.4byte 0x802a68e8
+	.4byte 0x802a68f4
+	.4byte 0x414e6f64
+	.4byte 0x65000000
+	.4byte 0x803dd930
+	.4byte 0
+	.4byte 0x802a6940
+	.4byte 0x802a694c
 .global __RTTI__9PlayState
 __RTTI__9PlayState:
-  .4byte 0x802a6934
-  .4byte 0x802a6958
+	.4byte 0x802a6934
+	.4byte 0x802a6958
 .global __RTTI__9GamePrefs
 __RTTI__9GamePrefs:
-  .4byte 0x802a6928
-  .4byte 0x802a6980
+	.4byte 0x802a6928
+	.4byte 0x802a6980
 .global lbl_803DD958
 lbl_803DD958:
 	.4byte 0x00000000
@@ -1601,19 +1601,19 @@ lbl_803DD964:
 	.4byte 0x802A748C
 .global __RTTI__16GameSetupSection
 __RTTI__16GameSetupSection:
-  .4byte 0x802a744c
-  .4byte 0x802a74a8
-  .4byte 0x53747265
-  .4byte 0x616d0000
-  .4byte 0x803dd9ac
-  .4byte 0
-  .4byte 0x802a7528
-  .4byte 0x802a753c
+	.4byte 0x802a744c
+	.4byte 0x802a74a8
+	.4byte 0x53747265
+	.4byte 0x616d0000
+	.4byte 0x803dd9ac
+	.4byte 0
+	.4byte 0x802a7528
+	.4byte 0x802a753c
 .global __RTTI__9RamStream
 __RTTI__9RamStream:
-  .4byte 0x802a751c
-  .4byte 0x802a7548
-  .4byte 0
+	.4byte 0x802a751c
+	.4byte 0x802a7548
+	.4byte 0
 .global lbl_803DD9D0
 lbl_803DD9D0:
 	.4byte 0x3C4E6F64
@@ -1630,8 +1630,8 @@ lbl_803DD9D0:
 	.4byte 0x802A7700
 .global __RTTI__22CardSelectSetupSection
 __RTTI__22CardSelectSetupSection:
-  .4byte 0x802a76e8
-  .4byte 0x802a7714
+	.4byte 0x802a76e8
+	.4byte 0x802a7714
 .global lbl_803DDA08
 lbl_803DDA08:
 	.4byte 0x25730000
@@ -1641,9 +1641,9 @@ lbl_803DDA08:
 	.4byte 0x802A7774
 .global __RTTI__17CardSelectSection
 __RTTI__17CardSelectSection:
-  .4byte 0x802a7760
-  .4byte 0x802a7790
-  .4byte 0
+	.4byte 0x802a7760
+	.4byte 0x802a7790
+	.4byte 0
 .global lbl_803DDA28
 lbl_803DDA28:
 	.4byte 0x25730000
@@ -1670,28 +1670,28 @@ lbl_803DDA3C:
 	.4byte 0x802A792C
 .global __RTTI__21MapSelectSetupSection
 __RTTI__21MapSelectSetupSection:
-  .4byte 0x802a7914
-  .4byte 0x802a7940
-  .4byte 0x53656374
-  .4byte 0x696f6e00
-  .4byte 0x803dda70
-  .4byte 0x802a79a0
+	.4byte 0x802a7914
+	.4byte 0x802a7940
+	.4byte 0x53656374
+	.4byte 0x696f6e00
+	.4byte 0x803dda70
+	.4byte 0x802a79a0
 .global __RTTI__16MapSelectSection
 __RTTI__16MapSelectSection:
-  .4byte 0x802a798c
-  .4byte 0x802a79bc
+	.4byte 0x802a798c
+	.4byte 0x802a79bc
 .global "__RTTI__18IDelegate1<R4Menu>_1"
 "__RTTI__18IDelegate1<R4Menu>_1":
-  .4byte 0x802a7a60
-  .4byte 0
+	.4byte 0x802a7a60
+	.4byte 0
 .global "__RTTI__23Delegate1<4Menu,R4Menu>"
 "__RTTI__23Delegate1<4Menu,R4Menu>":
-  .4byte 0x802a7a48
-  .4byte 0x802a7a74
+	.4byte 0x802a7a48
+	.4byte 0x802a7a74
 .global "__RTTI__41Delegate1<21MapSelectSetupSection,R4Menu>"
 "__RTTI__41Delegate1<21MapSelectSetupSection,R4Menu>":
-  .4byte 0x802a7a8c
-  .4byte 0x802a7ab8
+	.4byte 0x802a7a8c
+	.4byte 0x802a7ab8
 .global lbl_803DDAA0
 lbl_803DDAA0:
 	.4byte 0x00000000
@@ -1839,57 +1839,57 @@ lbl_803DDB64:
 	.4byte 0x802A7C10
 .global __RTTI__9GaugeInfo
 __RTTI__9GaugeInfo:
-  .4byte 0x802a7bf8
-  .4byte 0x802a7c1c
-  .4byte 0x4e6f6465
-  .4byte 0
-  .4byte 0x803ddb94
-  .4byte 0x802a7c58
+	.4byte 0x802a7bf8
+	.4byte 0x802a7c1c
+	.4byte 0x4e6f6465
+	.4byte 0
+	.4byte 0x803ddb94
+	.4byte 0x802a7c58
 .global __RTTI__15BaseGameSection
 __RTTI__15BaseGameSection:
-  .4byte 0x802a7c6c
-  .4byte 0x802a7c7c
+	.4byte 0x802a7c6c
+	.4byte 0x802a7c7c
 .global __RTTI__23NewPikiGameSetupSection
 __RTTI__23NewPikiGameSetupSection:
-  .4byte 0x802a7c40
-  .4byte 0x802a7c98
-  .4byte 0x53656374
-  .4byte 0x696f6e00
-  .4byte 0x803ddbb4
-  .4byte 0x802a7d04
+	.4byte 0x802a7c40
+	.4byte 0x802a7c98
+	.4byte 0x53656374
+	.4byte 0x696f6e00
+	.4byte 0x803ddbb4
+	.4byte 0x802a7d04
 .global __RTTI__18NewPikiGameSection
 __RTTI__18NewPikiGameSection:
-  .4byte 0x802a7cf0
-  .4byte 0x802a7d20
+	.4byte 0x802a7cf0
+	.4byte 0x802a7d20
 .global __RTTI__18GameMovieInterface
 __RTTI__18GameMovieInterface:
-  .4byte 0x802a7dac
-  .4byte 0x802a7dc0
+	.4byte 0x802a7dac
+	.4byte 0x802a7dc0
 .global __RTTI__9ModeState
 __RTTI__9ModeState:
-  .4byte 0x802a7e00
-  .4byte 0
+	.4byte 0x802a7e00
+	.4byte 0
 .global __RTTI__16DayOverModeState
 __RTTI__16DayOverModeState:
-  .4byte 0x802a7dec
-  .4byte 0x802a7e0c
+	.4byte 0x802a7dec
+	.4byte 0x802a7e0c
 .global __RTTI__16MessageModeState
 __RTTI__16MessageModeState:
-  .4byte 0x802a7e2c
-  .4byte 0x802a7e40
+	.4byte 0x802a7e2c
+	.4byte 0x802a7e40
 .global __RTTI__16RunningModeState
 __RTTI__16RunningModeState:
-  .4byte 0x802a7e60
-  .4byte 0x802a7e74
+	.4byte 0x802a7e60
+	.4byte 0x802a7e74
 .global __RTTI__21QuittingGameModeState
 __RTTI__21QuittingGameModeState:
-  .4byte 0x802a7e94
-  .4byte 0x802a7eac
+	.4byte 0x802a7e94
+	.4byte 0x802a7eac
 .global __RTTI__18IntroGameModeState
 __RTTI__18IntroGameModeState:
-  .4byte 0x802a7ee0
-  .4byte 0x802a7ef4
-  .4byte 0
+	.4byte 0x802a7ee0
+	.4byte 0x802a7ef4
+	.4byte 0
 .global lbl_803DDC08
 lbl_803DDC08:
 	.4byte 0x3DCCCCCD
@@ -1951,37 +1951,37 @@ lbl_803DDC4C:
 	.4byte 0x802A7FA4
 .global __RTTI__9ModeState_1
 __RTTI__9ModeState_1:
-  .4byte 0x802a7fdc
-  .4byte 0
+	.4byte 0x802a7fdc
+	.4byte 0
 .global __RTTI__14IntroModeState
 __RTTI__14IntroModeState:
-  .4byte 0x802a7fcc
-  .4byte 0x802a7fe8
+	.4byte 0x802a7fcc
+	.4byte 0x802a7fe8
 .global __RTTI__17QuittingModeState
 __RTTI__17QuittingModeState:
-  .4byte 0x802a8008
-  .4byte 0x802a801c
-  .4byte 0x4e6f6465
-  .4byte 0
-  .4byte 0x803ddc84
-  .4byte 0x802a8068
+	.4byte 0x802a8008
+	.4byte 0x802a801c
+	.4byte 0x4e6f6465
+	.4byte 0
+	.4byte 0x803ddc84
+	.4byte 0x802a8068
 .global __RTTI__15BaseGameSection_1
 __RTTI__15BaseGameSection_1:
-  .4byte 0x802a807c
-  .4byte 0x802a808c
+	.4byte 0x802a807c
+	.4byte 0x802a808c
 .global __RTTI__21IntroGameSetupSection
 __RTTI__21IntroGameSetupSection:
-  .4byte 0x802a8050
-  .4byte 0x802a80a8
-  .4byte 0x53656374
-  .4byte 0x696f6e00
-  .4byte 0x803ddca4
-  .4byte 0x802a8114
+	.4byte 0x802a8050
+	.4byte 0x802a80a8
+	.4byte 0x53656374
+	.4byte 0x696f6e00
+	.4byte 0x803ddca4
+	.4byte 0x802a8114
 .global __RTTI__16IntroGameSection
 __RTTI__16IntroGameSection:
-  .4byte 0x802a8100
-  .4byte 0x802a8130
-  .4byte 0
+	.4byte 0x802a8100
+	.4byte 0x802a8130
+	.4byte 0
 .global lbl_803DDCC0
 lbl_803DDCC0:
 	.4byte 0x3C4E6F64
@@ -2005,9 +2005,9 @@ lbl_803DDCC8:
 	.4byte 0x802A8218
 .global __RTTI__15GameExitSection
 __RTTI__15GameExitSection:
-  .4byte 0x802a81dc
-  .4byte 0x802a8234
-  .4byte 0
+	.4byte 0x802a81dc
+	.4byte 0x802a8234
+	.4byte 0
 .global lbl_803DDD10
 lbl_803DDD10:
 	.4byte 0x00000000
@@ -2096,28 +2096,28 @@ lbl_803DDD74:
 	.4byte 0x802A838C
 .global __RTTI__9RigidBody_1
 __RTTI__9RigidBody_1:
-  .4byte 0x802a83a0
-  .4byte 0x802a83ac
+	.4byte 0x802a83a0
+	.4byte 0x802a83ac
 .global __RTTI__10DynObjBody
 __RTTI__10DynObjBody:
-  .4byte 0x802a83c8
-  .4byte 0x802a83d4
+	.4byte 0x802a83c8
+	.4byte 0x802a83d4
 .global __RTTI__12DynObjBridge
 __RTTI__12DynObjBridge:
-  .4byte 0x802a837c
-  .4byte 0x802a83f8
-  .4byte 0x802a84b0
-  .4byte 0
-  .4byte 0x47656e42
-  .4byte 0x61736500
-  .4byte 0x803dddc0
-  .4byte 0x802a84bc
-  .4byte 0x802a84c8
-  .4byte 0x802a84d4
+	.4byte 0x802a837c
+	.4byte 0x802a83f8
+	.4byte 0x802a84b0
+	.4byte 0
+	.4byte 0x47656e42
+	.4byte 0x61736500
+	.4byte 0x803dddc0
+	.4byte 0x802a84bc
+	.4byte 0x802a84c8
+	.4byte 0x802a84d4
 .global __RTTI__18GenObjectMapObject
 __RTTI__18GenObjectMapObject:
-  .4byte 0x802a849c
-  .4byte 0x802a84e8
+	.4byte 0x802a849c
+	.4byte 0x802a84e8
 .global lbl_803DDDE0
 lbl_803DDDE0:
 	.4byte 0x3C4E6F64
@@ -2143,11 +2143,11 @@ lbl_803DDDF0:
 	.4byte 0x802A85DC
 .global __RTTI__4Menu
 __RTTI__4Menu:
-  .4byte 0x803dddf4
-  .4byte 0x802a85f0
-  .4byte 0
-  .4byte 0x802a8690
-  .4byte 0
+	.4byte 0x803dddf4
+	.4byte 0x802a85f0
+	.4byte 0
+	.4byte 0x802a8690
+	.4byte 0
 .global lbl_803DDE38
 lbl_803DDE38:
 	.4byte 0x6F766C00
@@ -2173,35 +2173,35 @@ lbl_803DDE50:
 	.4byte 0x802A876C
 .global __RTTI__16AtxCommandStream
 __RTTI__16AtxCommandStream:
-  .4byte 0x802a874c
-  .4byte 0x802a8778
-  .4byte 0x47616d65
-  .4byte 0x41707000
-  .4byte 0x414e6f64
-  .4byte 0x65000000
-  .4byte 0x803dde7c
-  .4byte 0
-  .4byte 0x802a87e4
-  .4byte 0x802a87f0
-  .4byte 0x4e6f6465
-  .4byte 0
-  .4byte 0x803dde94
-  .4byte 0x802a87fc
-  .4byte 0x42617365
-  .4byte 0x41707000
+	.4byte 0x802a874c
+	.4byte 0x802a8778
+	.4byte 0x47616d65
+	.4byte 0x41707000
+	.4byte 0x414e6f64
+	.4byte 0x65000000
+	.4byte 0x803dde7c
+	.4byte 0
+	.4byte 0x802a87e4
+	.4byte 0x802a87f0
+	.4byte 0x4e6f6465
+	.4byte 0
+	.4byte 0x803dde94
+	.4byte 0x802a87fc
+	.4byte 0x42617365
+	.4byte 0x41707000
 .global __RTTI__7BaseApp_1
 __RTTI__7BaseApp_1:
-  .4byte 0x803ddea4
-  .4byte 0x802a8810
+	.4byte 0x803ddea4
+	.4byte 0x802a8810
 .global __RTTI__7GameApp
 __RTTI__7GameApp:
-  .4byte 0x803dde74
-  .4byte 0x802a882c
+	.4byte 0x803dde74
+	.4byte 0x802a882c
 .global __RTTI__11PlugPikiApp
 __RTTI__11PlugPikiApp:
-  .4byte 0x802a889c
-  .4byte 0x802a88a8
-  .4byte 0
+	.4byte 0x802a889c
+	.4byte 0x802a88a8
+	.4byte 0
 .global lbl_803DDEC8
 lbl_803DDEC8:
 	.4byte 0x00000000
@@ -2305,22 +2305,22 @@ lbl_803DDF44:
 	.4byte 0x802A89E4
 .global "__RTTI__18IDelegate1<R4Menu>_2"
 "__RTTI__18IDelegate1<R4Menu>_2":
-  .4byte 0x802a8a24
-  .4byte 0
+	.4byte 0x802a8a24
+	.4byte 0
 .global "__RTTI__37Delegate1<17TitleSetupSection,R4Menu>"
 "__RTTI__37Delegate1<17TitleSetupSection,R4Menu>":
-  .4byte 0x802a8a50
-  .4byte 0x802a8a78
-  .4byte 0x802a8a9c
-  .4byte 0
-  .4byte 0x4e6f6465
-  .4byte 0
-  .4byte 0x803ddf7c
-  .4byte 0x802a8ad8
+	.4byte 0x802a8a50
+	.4byte 0x802a8a78
+	.4byte 0x802a8a9c
+	.4byte 0
+	.4byte 0x4e6f6465
+	.4byte 0
+	.4byte 0x803ddf7c
+	.4byte 0x802a8ad8
 .global __RTTI__17TitleSetupSection
 __RTTI__17TitleSetupSection:
-  .4byte 0x802a8ac4
-  .4byte 0x802a8aec
+	.4byte 0x802a8ac4
+	.4byte 0x802a8aec
 .global lbl_803DDF94
 lbl_803DDF94:
 	.4byte 0x00000000
@@ -2330,12 +2330,12 @@ lbl_803DDF94:
 	.4byte 0x802A8B48
 .global __RTTI__13TitlesSection
 __RTTI__13TitlesSection:
-  .4byte 0x802a8b38
-  .4byte 0x802a8b64
+	.4byte 0x802a8b38
+	.4byte 0x802a8b64
 .global __RTTI__20TitlesMovieInterface
 __RTTI__20TitlesMovieInterface:
-  .4byte 0x802a8bbc
-  .4byte 0x802a8bd4
+	.4byte 0x802a8bbc
+	.4byte 0x802a8bd4
 .global lbl_803DDFB8
 lbl_803DDFB8:
 	.4byte 0x3C4E6F64
@@ -2352,16 +2352,16 @@ lbl_803DDFB8:
 	.4byte 0x802A8C80
 .global __RTTI__19NinLogoSetupSection
 __RTTI__19NinLogoSetupSection:
-  .4byte 0x802a8c6c
-  .4byte 0x802a8c94
-  .4byte 0x53656374
-  .4byte 0x696f6e00
-  .4byte 0x803ddff0
-  .4byte 0x802a8cf0
+	.4byte 0x802a8c6c
+	.4byte 0x802a8c94
+	.4byte 0x53656374
+	.4byte 0x696f6e00
+	.4byte 0x803ddff0
+	.4byte 0x802a8cf0
 .global __RTTI__14NinLogoSection
 __RTTI__14NinLogoSection:
-  .4byte 0x802a8ce0
-  .4byte 0x802a8d0c
+	.4byte 0x802a8ce0
+	.4byte 0x802a8d0c
 .global lbl_803DE008
 lbl_803DE008:
 	.4byte 0x47000000
@@ -2663,69 +2663,69 @@ lbl_803DE198:
 	.4byte 0x802A8E64
 .global __RTTI__12ShadowCaster
 __RTTI__12ShadowCaster:
-  .4byte 0x802a8e48
-  .4byte 0x802a8e70
-  .4byte 0x4e6f6465
-  .4byte 0
-  .4byte 0x803de1bc
-  .4byte 0x802a8ea4
+	.4byte 0x802a8e48
+	.4byte 0x802a8e70
+	.4byte 0x4e6f6465
+	.4byte 0
+	.4byte 0x803de1bc
+	.4byte 0x802a8ea4
 .global __RTTI__12DynSimulator
 __RTTI__12DynSimulator:
-  .4byte 0x802a8e94
-  .4byte 0x802a8eb8
+	.4byte 0x802a8e94
+	.4byte 0x802a8eb8
 .global __RTTI__15MaterialHandler_1
 __RTTI__15MaterialHandler_1:
-  .4byte 0x802a8f18
-  .4byte 0
+	.4byte 0x802a8f18
+	.4byte 0
 .global __RTTI__17MapProjMatHandler
 __RTTI__17MapProjMatHandler:
-  .4byte 0x802a8f04
-  .4byte 0x802a8f28
+	.4byte 0x802a8f04
+	.4byte 0x802a8f28
 .global __RTTI__17MapShadMatHandler
 __RTTI__17MapShadMatHandler:
-  .4byte 0x802a8f44
-  .4byte 0x802a8f58
+	.4byte 0x802a8f44
+	.4byte 0x802a8f58
 .global __RTTI__9RigidBody_2
 __RTTI__9RigidBody_2:
-  .4byte 0x802a8f84
-  .4byte 0x802a8f90
+	.4byte 0x802a8f84
+	.4byte 0x802a8f90
 .global __RTTI__10DynObjBody_1
 __RTTI__10DynObjBody_1:
-  .4byte 0x802a8fac
-  .4byte 0x802a8fb8
+	.4byte 0x802a8fac
+	.4byte 0x802a8fb8
 .global __RTTI__14DynObjPushable
 __RTTI__14DynObjPushable:
-  .4byte 0x802a8f74
-  .4byte 0x802a8fdc
+	.4byte 0x802a8f74
+	.4byte 0x802a8fdc
 .global __RTTI__12DynObjSeeSaw
 __RTTI__12DynObjSeeSaw:
-  .4byte 0x802a90f8
-  .4byte 0x802a9108
-  .4byte 0x802a91bc
-  .4byte 0x802a91cc
+	.4byte 0x802a90f8
+	.4byte 0x802a9108
+	.4byte 0x802a91bc
+	.4byte 0x802a91cc
 .global __RTTI__12DynCollShape
 __RTTI__12DynCollShape:
-  .4byte 0x802a91e8
-  .4byte 0x802a91f8
+	.4byte 0x802a91e8
+	.4byte 0x802a91f8
 .global __RTTI__14DynCollObjBody
 __RTTI__14DynCollObjBody:
-  .4byte 0x802a91ac
-  .4byte 0x802a921c
+	.4byte 0x802a91ac
+	.4byte 0x802a921c
 .global __RTTI__12DynMapObject
 __RTTI__12DynMapObject:
-  .4byte 0x802a9290
-  .4byte 0x802a92a0
+	.4byte 0x802a9290
+	.4byte 0x802a92a0
 .global __RTTI__13MapObjectPart
 __RTTI__13MapObjectPart:
-  .4byte 0x802a9330
-  .4byte 0x802a9340
-  .4byte 0x802a9404
-  .4byte 0
+	.4byte 0x802a9330
+	.4byte 0x802a9340
+	.4byte 0x802a9404
+	.4byte 0
 .global __RTTI__14MapObjAnimator
 __RTTI__14MapObjAnimator:
-  .4byte 0x802a93f4
-  .4byte 0x802a9410
-  .4byte 0
+	.4byte 0x802a93f4
+	.4byte 0x802a9410
+	.4byte 0
 .global lbl_803DE248
 lbl_803DE248:
 	.4byte 0x00000000
@@ -3034,66 +3034,66 @@ lbl_803DE438:
 	.4byte 0x00000000
 .global "__RTTI__18IDelegate1<R4Menu>_3"
 "__RTTI__18IDelegate1<R4Menu>_3":
-  .4byte 0x802a98e8
-  .4byte 0
+	.4byte 0x802a98e8
+	.4byte 0
 .global "__RTTI__26Delegate1<7FogMenu,R4Menu>"
 "__RTTI__26Delegate1<7FogMenu,R4Menu>":
-  .4byte 0x802a98cc
-  .4byte 0x802a98fc
-  .4byte 0x466f674d
-  .4byte 0x656e7500
-  .4byte 0x414e6f64
-  .4byte 0x65000000
-  .4byte 0x803de458
-  .4byte 0
-  .4byte 0x802a9914
-  .4byte 0x802a9920
-  .4byte 0x4e6f6465
-  .4byte 0
-  .4byte 0x803de470
-  .4byte 0x802a992c
-  .4byte 0x4d656e75
-  .4byte 0
+	.4byte 0x802a98cc
+	.4byte 0x802a98fc
+	.4byte 0x466f674d
+	.4byte 0x656e7500
+	.4byte 0x414e6f64
+	.4byte 0x65000000
+	.4byte 0x803de458
+	.4byte 0
+	.4byte 0x802a9914
+	.4byte 0x802a9920
+	.4byte 0x4e6f6465
+	.4byte 0
+	.4byte 0x803de470
+	.4byte 0x802a992c
+	.4byte 0x4d656e75
+	.4byte 0
 .global __RTTI__4Menu_1
 __RTTI__4Menu_1:
-  .4byte 0x803de480
-  .4byte 0x802a9940
+	.4byte 0x803de480
+	.4byte 0x802a9940
 .global __RTTI__7FogMenu
 __RTTI__7FogMenu:
-  .4byte 0x803de450
-  .4byte 0x802a995c
+	.4byte 0x803de450
+	.4byte 0x802a995c
 .global __RTTI__9LightMenu
 __RTTI__9LightMenu:
-  .4byte 0x802a99d4
-  .4byte 0x802a99e0
+	.4byte 0x802a99d4
+	.4byte 0x802a99e0
 .global __RTTI__10DaySetMenu
 __RTTI__10DaySetMenu:
-  .4byte 0x802a9a58
-  .4byte 0x802a9a64
+	.4byte 0x802a9a58
+	.4byte 0x802a9a64
 .global "__RTTI__25Delegate1<6DayMgr,R4Menu>"
 "__RTTI__25Delegate1<6DayMgr,R4Menu>":
-  .4byte 0x802a9adc
-  .4byte 0x802a9af8
+	.4byte 0x802a9adc
+	.4byte 0x802a9af8
 .global "__RTTI__32Delegate1<12PositionMenu,R4Menu>"
 "__RTTI__32Delegate1<12PositionMenu,R4Menu>":
-  .4byte 0x802a9b10
-  .4byte 0x802a9b30
+	.4byte 0x802a9b10
+	.4byte 0x802a9b30
 .global __RTTI__12PositionMenu
 __RTTI__12PositionMenu:
-  .4byte 0x802a9b48
-  .4byte 0x802a9b58
+	.4byte 0x802a9b48
+	.4byte 0x802a9b58
 .global "__RTTI__30Delegate1<10ColourMenu,R4Menu>"
 "__RTTI__30Delegate1<10ColourMenu,R4Menu>":
-  .4byte 0x802a9bd0
-  .4byte 0x802a9bf0
+	.4byte 0x802a9bd0
+	.4byte 0x802a9bf0
 .global __RTTI__10ColourMenu
 __RTTI__10ColourMenu:
-  .4byte 0x802a9c38
-  .4byte 0x802a9c44
+	.4byte 0x802a9c38
+	.4byte 0x802a9c44
 .global "__RTTI__28Delegate1<9LightMenu,R4Menu>"
 "__RTTI__28Delegate1<9LightMenu,R4Menu>":
-  .4byte 0x802a9cbc
-  .4byte 0x802a9cdc
+	.4byte 0x802a9cbc
+	.4byte 0x802a9cdc
 .global lbl_803DE4D8
 lbl_803DE4D8:
 	.4byte 0x00000000
@@ -3533,21 +3533,21 @@ lbl_803DE730:
 	.4byte 0x802A9E7C
 .global __RTTI__13ActorInstance
 __RTTI__13ActorInstance:
-  .4byte 0x802a9e60
-  .4byte 0x802a9e88
+	.4byte 0x802a9e60
+	.4byte 0x802a9e88
 .global __RTTI__8SceneCut
 __RTTI__8SceneCut:
-  .4byte 0x802a9eac
-  .4byte 0x802a9eb8
+	.4byte 0x802a9eac
+	.4byte 0x802a9eb8
 .global __RTTI__15CineShapeObject
 __RTTI__15CineShapeObject:
-  .4byte 0x802a9edc
-  .4byte 0x802a9eec
+	.4byte 0x802a9edc
+	.4byte 0x802a9eec
 .global __RTTI__9SceneData
 __RTTI__9SceneData:
-  .4byte 0x802a9f10
-  .4byte 0x802a9f1c
-  .4byte 0
+	.4byte 0x802a9f10
+	.4byte 0x802a9f1c
+	.4byte 0
 .global lbl_803DE770
 lbl_803DE770:
 	.4byte 0x00000000
@@ -3591,9 +3591,9 @@ lbl_803DE794:
 	.4byte 0x802A9F94
 .global __RTTI__9LightPool
 __RTTI__9LightPool:
-  .4byte 0x802a9f70
-  .4byte 0x802a9fa8
-  .4byte 0
+	.4byte 0x802a9f70
+	.4byte 0x802a9fa8
+	.4byte 0
 .global icon_pals
 icon_pals:
 	.4byte 0x802AA060
@@ -3653,9 +3653,9 @@ lbl_803DE838:
 	.4byte 0x802AC88C
 .global __RTTI__9MovieInfo
 __RTTI__9MovieInfo:
-  .4byte 0x802ac874
-  .4byte 0x802ac898
-  .4byte 0
+	.4byte 0x802ac874
+	.4byte 0x802ac898
+	.4byte 0
 .global lbl_803DE860
 lbl_803DE860:
 	.4byte 0x3C4E6F64
@@ -3672,16 +3672,16 @@ lbl_803DE860:
 	.4byte 0x802ACA20
 .global __RTTI__21MovSampleSetupSection
 __RTTI__21MovSampleSetupSection:
-  .4byte 0x802aca08
-  .4byte 0x802aca34
-  .4byte 0x53656374
-  .4byte 0x696f6e00
-  .4byte 0x803de898
-  .4byte 0x802aca94
+	.4byte 0x802aca08
+	.4byte 0x802aca34
+	.4byte 0x53656374
+	.4byte 0x696f6e00
+	.4byte 0x803de898
+	.4byte 0x802aca94
 .global __RTTI__16MovSampleSection
 __RTTI__16MovSampleSection:
-  .4byte 0x802aca80
-  .4byte 0x802acab0
+	.4byte 0x802aca80
+	.4byte 0x802acab0
 .global lbl_803DE8B0
 lbl_803DE8B0:
 	.4byte 0x00000000
@@ -3708,20 +3708,20 @@ lbl_803DE8CC:
 	.4byte 0x00000000
 .global __RTTI__Q215AttentionCamera5Fader
 __RTTI__Q215AttentionCamera5Fader:
-  .4byte 0x802acb30
-  .4byte 0
+	.4byte 0x802acb30
+	.4byte 0
 .global __RTTI__10ClothFader
 __RTTI__10ClothFader:
-  .4byte 0x802acb24
-  .4byte 0x802acb48
+	.4byte 0x802acb24
+	.4byte 0x802acb48
 .global __RTTI__11SimpleFader
 __RTTI__11SimpleFader:
-  .4byte 0x802acb74
-  .4byte 0x802acb80
+	.4byte 0x802acb74
+	.4byte 0x802acb80
 .global __RTTI__12DefaultFader
 __RTTI__12DefaultFader:
-  .4byte 0x802acbac
-  .4byte 0x802acbbc
+	.4byte 0x802acbac
+	.4byte 0x802acbbc
 .global lbl_803DE8F0
 lbl_803DE8F0:
 	.4byte 0x616C6976
@@ -3747,9 +3747,9 @@ lbl_803DE908:
 	.4byte 0x802ACC48
 .global __RTTI__Q29RadarInfo9PartsInfo
 __RTTI__Q29RadarInfo9PartsInfo:
-  .4byte 0x802acc30
-  .4byte 0x802acc54
-  .4byte 0
+	.4byte 0x802acc30
+	.4byte 0x802acc54
+	.4byte 0
 .global lbl_803DE930
 lbl_803DE930:
 	.4byte 0x00000000
@@ -3772,64 +3772,64 @@ lbl_803DE944:
 	.4byte 0x00000000
 .global __RTTI__13InteractFlute
 __RTTI__13InteractFlute:
-  .4byte 0x802accbc
-  .4byte 0x802accd8
+	.4byte 0x802accbc
+	.4byte 0x802accd8
 .global __RTTI__13InteractPress
 __RTTI__13InteractPress:
-  .4byte 0x802acd10
-  .4byte 0x802acd20
+	.4byte 0x802acd10
+	.4byte 0x802acd20
 .global __RTTI__12InteractKill
 __RTTI__12InteractKill:
-  .4byte 0x802acd58
-  .4byte 0x802acd68
+	.4byte 0x802acd58
+	.4byte 0x802acd68
 .global __RTTI__15InteractSwallow
 __RTTI__15InteractSwallow:
-  .4byte 0x802acda0
-  .4byte 0x802acdb0
+	.4byte 0x802acda0
+	.4byte 0x802acdb0
 .global __RTTI__14InteractAttack
 __RTTI__14InteractAttack:
-  .4byte 0x802acde8
-  .4byte 0x802acdf8
+	.4byte 0x802acde8
+	.4byte 0x802acdf8
 .global __RTTI__19InteractSlimeAttack
 __RTTI__19InteractSlimeAttack:
-  .4byte 0x802ace30
-  .4byte 0x802ace44
+	.4byte 0x802ace30
+	.4byte 0x802ace44
 .global __RTTI__13InteractFlick
 __RTTI__13InteractFlick:
-  .4byte 0x802ace7c
-  .4byte 0x802ace8c
+	.4byte 0x802ace7c
+	.4byte 0x802ace8c
 .global __RTTI__12InteractWind
 __RTTI__12InteractWind:
-  .4byte 0x802acec4
-  .4byte 0x802aced4
+	.4byte 0x802acec4
+	.4byte 0x802aced4
 .global __RTTI__12InteractFire
 __RTTI__12InteractFire:
-  .4byte 0x802acf0c
-  .4byte 0x802acf1c
+	.4byte 0x802acf0c
+	.4byte 0x802acf1c
 .global __RTTI__14InteractBubble
 __RTTI__14InteractBubble:
-  .4byte 0x802acf54
-  .4byte 0x802acf64
+	.4byte 0x802acf54
+	.4byte 0x802acf64
 .global __RTTI__13InteractSpore
 __RTTI__13InteractSpore:
-  .4byte 0x802acfc8
-  .4byte 0x802acfd8
+	.4byte 0x802acfc8
+	.4byte 0x802acfd8
 .global __RTTI__19InteractChangeHappa
 __RTTI__19InteractChangeHappa:
-  .4byte 0x802ad010
-  .4byte 0x802ad024
+	.4byte 0x802ad010
+	.4byte 0x802ad024
 .global __RTTI__19InteractChangeColor
 __RTTI__19InteractChangeColor:
-  .4byte 0x802ad05c
-  .4byte 0x802ad070
+	.4byte 0x802ad05c
+	.4byte 0x802ad070
 .global __RTTI__17InteractThrowAway
 __RTTI__17InteractThrowAway:
-  .4byte 0x802ad0a8
-  .4byte 0x802ad0bc
+	.4byte 0x802ad0a8
+	.4byte 0x802ad0bc
 .global __RTTI__12InteractBury
 __RTTI__12InteractBury:
-  .4byte 0x802ad0f4
-  .4byte 0x802ad104
+	.4byte 0x802ad0f4
+	.4byte 0x802ad104
 .global lbl_803DE9C8
 lbl_803DE9C8:
 	.4byte 0x00000000
@@ -3849,23 +3849,23 @@ lbl_803DE9D8:
 	.4byte 0x00000000
 .global __RTTI__15InteractRelease
 __RTTI__15InteractRelease:
-  .4byte 0x802ad164
-  .4byte 0x802ad180
+	.4byte 0x802ad164
+	.4byte 0x802ad180
 .global __RTTI__12InteractGrab
 __RTTI__12InteractGrab:
-  .4byte 0x802ad1b8
-  .4byte 0x802ad1c8
-  .4byte 0
-  .4byte 0x802ad22c
-  .4byte 0
+	.4byte 0x802ad1b8
+	.4byte 0x802ad1c8
+	.4byte 0
+	.4byte 0x802ad22c
+	.4byte 0
 .global __RTTI__12InteractWarn
 __RTTI__12InteractWarn:
-  .4byte 0x802ad21c
-  .4byte 0x802ad238
+	.4byte 0x802ad21c
+	.4byte 0x802ad238
 .global __RTTI__12InteractTalk
 __RTTI__12InteractTalk:
-  .4byte 0x802ad270
-  .4byte 0x802ad280
+	.4byte 0x802ad270
+	.4byte 0x802ad280
 .global lbl_803DEA10
 lbl_803DEA10:
 	.4byte 0x00000000
@@ -3882,48 +3882,48 @@ lbl_803DEA1C:
 	.4byte 0x00000000
 .global __RTTI__15InteractPullout
 __RTTI__15InteractPullout:
-  .4byte 0x802ad2dc
-  .4byte 0x802ad2f8
+	.4byte 0x802ad2dc
+	.4byte 0x802ad2f8
 .global "__RTTI__22Receiver<10AICreature>"
 "__RTTI__22Receiver<10AICreature>":
-  .4byte 0x802ad35c
-  .4byte 0
+	.4byte 0x802ad35c
+	.4byte 0
 .global __RTTI__8SAIEvent
 __RTTI__8SAIEvent:
-  .4byte 0x802ad374
-  .4byte 0x802ad380
+	.4byte 0x802ad374
+	.4byte 0x802ad380
 .global __RTTI__12SAIUserEvent
 __RTTI__12SAIUserEvent:
-  .4byte 0x802ad34c
-  .4byte 0x802ad38c
+	.4byte 0x802ad34c
+	.4byte 0x802ad38c
 .global __RTTI__14SAIGroundEvent
 __RTTI__14SAIGroundEvent:
-  .4byte 0x802ad3d8
-  .4byte 0x802ad3e8
+	.4byte 0x802ad3d8
+	.4byte 0x802ad3e8
 .global __RTTI__15SAICollideEvent
 __RTTI__15SAICollideEvent:
-  .4byte 0x802ad434
-  .4byte 0x802ad444
+	.4byte 0x802ad434
+	.4byte 0x802ad444
 .global __RTTI__14SAIBounceEvent
 __RTTI__14SAIBounceEvent:
-  .4byte 0x802ad490
-  .4byte 0x802ad4a0
+	.4byte 0x802ad490
+	.4byte 0x802ad4a0
 .global __RTTI__21SAIMotionLoopEndEvent
 __RTTI__21SAIMotionLoopEndEvent:
-  .4byte 0x802ad4ec
-  .4byte 0x802ad504
+	.4byte 0x802ad4ec
+	.4byte 0x802ad504
 .global __RTTI__23SAIMotionLoopStartEvent
 __RTTI__23SAIMotionLoopStartEvent:
-  .4byte 0x802ad550
-  .4byte 0x802ad568
+	.4byte 0x802ad550
+	.4byte 0x802ad568
 .global __RTTI__21SAIMotionAction0Event
 __RTTI__21SAIMotionAction0Event:
-  .4byte 0x802ad5b4
-  .4byte 0x802ad5cc
+	.4byte 0x802ad5b4
+	.4byte 0x802ad5cc
 .global __RTTI__18SAIMotionDoneEvent
 __RTTI__18SAIMotionDoneEvent:
-  .4byte 0x802ad618
-  .4byte 0x802ad62c
+	.4byte 0x802ad618
+	.4byte 0x802ad62c
 .global lbl_803DEA80
 lbl_803DEA80:
 	.4byte 0x00000000
@@ -3944,48 +3944,48 @@ lbl_803DEA94:
 	.4byte 0x00000000
 .global "__RTTI__22Receiver<10AICreature>_1"
 "__RTTI__22Receiver<10AICreature>_1":
-  .4byte 0x802ad7b0
-  .4byte 0
+	.4byte 0x802ad7b0
+	.4byte 0
 .global "__RTTI__20AState<10AICreature>"
 "__RTTI__20AState<10AICreature>":
-  .4byte 0x802ad7c8
-  .4byte 0x802ad7dc
+	.4byte 0x802ad7c8
+	.4byte 0x802ad7dc
 .global __RTTI__8SAIState
 __RTTI__8SAIState:
-  .4byte 0x802ad7a4
-  .4byte 0x802ad7e8
-  .4byte 0x414e6f64
-  .4byte 0x65000000
-  .4byte 0x803deab0
-  .4byte 0
-  .4byte lbl_802AD740
-  .4byte 0x802ad8e4
+	.4byte 0x802ad7a4
+	.4byte 0x802ad7e8
+	.4byte 0x414e6f64
+	.4byte 0x65000000
+	.4byte 0x803deab0
+	.4byte 0
+	.4byte lbl_802AD740
+	.4byte 0x802ad8e4
 .global __RTTI__12SAICondition
 __RTTI__12SAICondition:
-  .4byte 0x802ad8d4
-  .4byte 0x802ad8f0
+	.4byte 0x802ad8d4
+	.4byte 0x802ad8f0
 .global __RTTI__8SAIArrow
 __RTTI__8SAIArrow:
-  .4byte lbl_802AD734
-  .4byte 0x802ad918
+	.4byte lbl_802AD734
+	.4byte 0x802ad918
 .global "__RTTI__26StateMachine<10AICreature>"
 "__RTTI__26StateMachine<10AICreature>":
-  .4byte 0x802ad964
-  .4byte 0
+	.4byte 0x802ad964
+	.4byte 0
 .global __RTTI__8SimpleAI
 __RTTI__8SimpleAI:
-  .4byte 0x802ad958
-  .4byte 0x802ad980
-  .4byte 0x802ad9c8
-  .4byte 0
-  .4byte 0x802ad9dc
-  .4byte 0
-  .4byte 0x802ad9e8
-  .4byte 0
-  .4byte 0x802ad9f8
-  .4byte 0x802ada04
-  .4byte 0x802ad9bc
-  .4byte 0x802ada18
+	.4byte 0x802ad958
+	.4byte 0x802ad980
+	.4byte 0x802ad9c8
+	.4byte 0
+	.4byte 0x802ad9dc
+	.4byte 0
+	.4byte 0x802ad9e8
+	.4byte 0
+	.4byte 0x802ad9f8
+	.4byte 0x802ada04
+	.4byte 0x802ad9bc
+	.4byte 0x802ada18
 .global lbl_803DEB10
 lbl_803DEB10:
 	.4byte 0x6E6F6E61
@@ -4091,31 +4091,31 @@ lbl_803DEB98:
 	.4byte 0x00000000
 .global __RTTI__12FormArranger
 __RTTI__12FormArranger:
-  .4byte 0x802adbd0
-  .4byte 0
+	.4byte 0x802adbd0
+	.4byte 0
 .global __RTTI__12WingArranger
 __RTTI__12WingArranger:
-  .4byte 0x802adbc0
-  .4byte 0x802adbe0
+	.4byte 0x802adbc0
+	.4byte 0x802adbe0
 .global __RTTI__12LineArranger
 __RTTI__12LineArranger:
-  .4byte 0x802adbfc
-  .4byte 0x802adc0c
+	.4byte 0x802adbfc
+	.4byte 0x802adc0c
 .global __RTTI__15PyramidArranger
 __RTTI__15PyramidArranger:
-  .4byte 0x802adc28
-  .4byte 0x802adc38
+	.4byte 0x802adc28
+	.4byte 0x802adc38
 .global __RTTI__14CircleArranger
 __RTTI__14CircleArranger:
-  .4byte 0x802adc54
-  .4byte 0x802adc64
-  .4byte 0x802adc80
-  .4byte 0
+	.4byte 0x802adc54
+	.4byte 0x802adc64
+	.4byte 0x802adc80
+	.4byte 0
 .global __RTTI__12FormationMgr
 __RTTI__12FormationMgr:
-  .4byte 0x802adca4
-  .4byte 0x802adcb4
-  .4byte 0
+	.4byte 0x802adca4
+	.4byte 0x802adcb4
+	.4byte 0
 .global totalUfoParts__11PlayerState
 totalUfoParts__11PlayerState:
 	.4byte 0x0000001E
@@ -4188,8 +4188,8 @@ lbl_803DEC4C:
 	.4byte 0x00000000
 .global __RTTI__Q211PlayerState8UfoParts
 __RTTI__Q211PlayerState8UfoParts:
-  .4byte 0x802addd0
-  .4byte 0x802addfc
+	.4byte 0x802addd0
+	.4byte 0x802addfc
 .global lbl_803DEC60
 lbl_803DEC60:
 	.4byte 0x3C4E6F64
@@ -4243,13 +4243,13 @@ lbl_803DEC98:
 	.4byte 0x802AE120
 .global __RTTI__9DemoParms
 __RTTI__9DemoParms:
-  .4byte 0x802ae0fc
-  .4byte 0x802ae134
-  .4byte 0
-  .4byte 0x4f464600
-  .4byte 0x4f4e0000
-  .4byte 0x5345454e
-  .4byte 0
+	.4byte 0x802ae0fc
+	.4byte 0x802ae134
+	.4byte 0
+	.4byte 0x4f464600
+	.4byte 0x4f4e0000
+	.4byte 0x5345454e
+	.4byte 0
 .global lbl_803DECE8
 lbl_803DECE8:
 	.4byte 0x3C4E6F64
@@ -4341,9 +4341,9 @@ lbl_803DED4C:
 	.4byte 0x802AE764
 .global __RTTI__10AIConstant
 __RTTI__10AIConstant:
-  .4byte 0x802ae740
-  .4byte 0x802ae778
-  .4byte 0
+	.4byte 0x802ae740
+	.4byte 0x802ae778
+	.4byte 0
 .global lbl_803DED90
 lbl_803DED90:
 	.4byte 0x6B696F2E
@@ -4388,12 +4388,12 @@ lbl_803DEDC8:
 	.4byte 0x802AE84C
 .global __RTTI__Q29KeyConfig3Key
 __RTTI__Q29KeyConfig3Key:
-  .4byte 0x802ae824
-  .4byte 0x802ae860
+	.4byte 0x802ae824
+	.4byte 0x802ae860
 .global __RTTI__9KeyConfig
 __RTTI__9KeyConfig:
-  .4byte 0x802ae8ac
-  .4byte 0x802ae8b8
+	.4byte 0x802ae8ac
+	.4byte 0x802ae8b8
 .global useLOD__6AIPerf
 useLOD__6AIPerf:
 	.byte 0x1
@@ -4441,13 +4441,13 @@ lbl_803DEE38:
 	.4byte 0x25730000
 .global "__RTTI__18IDelegate1<R4Menu>_4"
 "__RTTI__18IDelegate1<R4Menu>_4":
-  .4byte 0x802aedcc
-  .4byte 0
+	.4byte 0x802aedcc
+	.4byte 0
 .global "__RTTI__25Delegate1<6AIPerf,R4Menu>"
 "__RTTI__25Delegate1<6AIPerf,R4Menu>":
-  .4byte 0x802aedb0
-  .4byte 0x802aede0
-  .4byte 0
+	.4byte 0x802aedb0
+	.4byte 0x802aede0
+	.4byte 0
 .global lbl_803DEE50
 lbl_803DEE50:
 	.4byte 0x70303000
@@ -4470,10 +4470,10 @@ lbl_803DEE5C:
 	.4byte 0x802AEEA4
 .global __RTTI__14GenObjectDebug
 __RTTI__14GenObjectDebug:
-  .4byte 0x802aee70
-  .4byte 0x802aeeb8
-  .4byte 0x802aef18
-  .4byte 0
+	.4byte 0x802aee70
+	.4byte 0x802aeeb8
+	.4byte 0x802aef18
+	.4byte 0
 .global lbl_803DEE90
 lbl_803DEE90:
 	.4byte 0x6D656D69
@@ -4488,14 +4488,14 @@ lbl_803DEE90:
 	.4byte 0x802AEF6C
 .global __RTTI__11MemInfoNode
 __RTTI__11MemInfoNode:
-  .4byte 0x802aef78
-  .4byte 0x802aef84
+	.4byte 0x802aef78
+	.4byte 0x802aef84
 .global __RTTI__7MemInfo
 __RTTI__7MemInfo:
-  .4byte 0x803dee98
-  .4byte 0x802aef98
-  .4byte 0x54554245
-  .4byte 0
+	.4byte 0x803dee98
+	.4byte 0x802aef98
+	.4byte 0x54554245
+	.4byte 0
 .global lbl_803DEED0
 lbl_803DEED0:
 	.4byte 0xBF800000
@@ -4788,12 +4788,12 @@ lbl_803DF054:
 	.4byte 0x802AF264
 .global __RTTI__12DynCollShape_1
 __RTTI__12DynCollShape_1:
-  .4byte 0x802af280
-  .4byte 0x802af290
+	.4byte 0x802af280
+	.4byte 0x802af290
 .global __RTTI__16CreatureCollPart
 __RTTI__16CreatureCollPart:
-  .4byte 0x802af214
-  .4byte 0x802af2b4
+	.4byte 0x802af214
+	.4byte 0x802af2b4
 .global lbl_803DF098
 lbl_803DF098:
 	.4byte 0x47000000
@@ -4929,9 +4929,9 @@ lbl_803DF150:
 	.4byte 0x00000000
 .global __RTTI__8Stickers
 __RTTI__8Stickers:
-  .4byte 0x802af378
-  .4byte 0x802af390
-  .4byte 0
+	.4byte 0x802af378
+	.4byte 0x802af390
+	.4byte 0
 .global lbl_803DF168
 lbl_803DF168:
 	.4byte 0x00000000
@@ -5005,13 +5005,13 @@ lbl_803DF1B8:
 	.4byte 0x802AF470
 .global __RTTI__12DualCreature
 __RTTI__12DualCreature:
-  .4byte 0x802af48c
-  .4byte 0x802af49c
+	.4byte 0x802af48c
+	.4byte 0x802af49c
 .global __RTTI__11PelCreature
 __RTTI__11PelCreature:
-  .4byte 0x802af41c
-  .4byte 0x802af4c0
-  .4byte 0
+	.4byte 0x802af41c
+	.4byte 0x802af4c0
+	.4byte 0
 .global lbl_803DF1F0
 lbl_803DF1F0:
 	.4byte 0x00000000
@@ -5167,19 +5167,19 @@ lbl_803DF2A0:
 	.4byte 0x802AF950
 .global __RTTI__11DynParticle
 __RTTI__11DynParticle:
-  .4byte 0x802af944
-  .4byte 0x802af95c
-  .4byte 0
-  .4byte 0x414e6f64
-  .4byte 0x65000000
-  .4byte 0x803df2f8
-  .4byte 0
-  .4byte lbl_802AF9D4
-  .4byte 0x802afa00
+	.4byte 0x802af944
+	.4byte 0x802af95c
+	.4byte 0
+	.4byte 0x414e6f64
+	.4byte 0x65000000
+	.4byte 0x803df2f8
+	.4byte 0
+	.4byte lbl_802AF9D4
+	.4byte 0x802afa00
 .global __RTTI__13EventListener
 __RTTI__13EventListener:
-  .4byte 0x802af9f0
-  .4byte 0x802afa0c
+	.4byte 0x802af9f0
+	.4byte 0x802afa0c
 .global aiGridShift__8FastGrid
 aiGridShift__8FastGrid:
 	.4byte 0x000C0000
@@ -5530,62 +5530,62 @@ lbl_803DF580:
 	.4byte 0x802B0128
 .global __RTTI__9PelletMgr
 __RTTI__9PelletMgr:
-  .4byte 0x802b00b0
-  .4byte 0x802b0154
-  .4byte 0x802b021c
-  .4byte 0
+	.4byte 0x802b00b0
+	.4byte 0x802b0154
+	.4byte 0x802b021c
+	.4byte 0
 .global __RTTI__10PelletProp
 __RTTI__10PelletProp:
-  .4byte 0x802b0210
-  .4byte 0x802b022c
+	.4byte 0x802b0210
+	.4byte 0x802b022c
 .global __RTTI__Q29PelletMgr7UseNode
 __RTTI__Q29PelletMgr7UseNode:
-  .4byte 0x802b0250
-  .4byte 0x802b0264
-  .4byte 0x50656c6c
-  .4byte 0x65740000
-  .4byte 0x802b02c0
-  .4byte 0
-  .4byte 0x802b02d4
-  .4byte 0
-  .4byte 0x802b02e0
-  .4byte 0
-  .4byte 0x802b02f0
-  .4byte 0x802b02fc
-  .4byte 0x802b0310
-  .4byte 0x802b031c
+	.4byte 0x802b0250
+	.4byte 0x802b0264
+	.4byte 0x50656c6c
+	.4byte 0x65740000
+	.4byte 0x802b02c0
+	.4byte 0
+	.4byte 0x802b02d4
+	.4byte 0
+	.4byte 0x802b02e0
+	.4byte 0
+	.4byte 0x802b02f0
+	.4byte 0x802b02fc
+	.4byte 0x802b0310
+	.4byte 0x802b031c
 .global __RTTI__12DualCreature_1
 __RTTI__12DualCreature_1:
-  .4byte 0x802b0338
-  .4byte 0x802b0348
+	.4byte 0x802b0338
+	.4byte 0x802b0348
 .global __RTTI__6Pellet
 __RTTI__6Pellet:
-  .4byte 0x803df5e8
-  .4byte 0x802b036c
+	.4byte 0x803df5e8
+	.4byte 0x802b036c
 .global "__RTTI__21StateMachine<6Pellet>"
 "__RTTI__21StateMachine<6Pellet>":
-  .4byte 0x802b04d0
-  .4byte 0
-  .4byte 0x4b456666
-  .4byte 0x65637400
-  .4byte 0x802b0500
-  .4byte 0
-  .4byte 0x802b0524
-  .4byte 0
-  .4byte 0x802b0564
-  .4byte 0
+	.4byte 0x802b04d0
+	.4byte 0
+	.4byte 0x4b456666
+	.4byte 0x65637400
+	.4byte 0x802b0500
+	.4byte 0
+	.4byte 0x802b0524
+	.4byte 0
+	.4byte 0x802b0564
+	.4byte 0
 .global __RTTI__7KEffect
 __RTTI__7KEffect:
-  .4byte 0x803df630
-  .4byte 0x802b0590
-  .4byte 0x802b0628
-  .4byte 0
+	.4byte 0x803df630
+	.4byte 0x802b0590
+	.4byte 0x802b0628
+	.4byte 0
 .global __RTTI__12PelletConfig
 __RTTI__12PelletConfig:
-  .4byte 0x802b0618
-  .4byte 0x802b0634
-  .4byte 0x802b0678
-  .4byte 0
+	.4byte 0x802b0618
+	.4byte 0x802b0634
+	.4byte 0x802b0678
+	.4byte 0
 .global lbl_803DF670
 lbl_803DF670:
 	.4byte 0x78303000
@@ -5619,35 +5619,35 @@ lbl_803DF688:
 	.4byte 0x802B07F0
 .global __RTTI__18PaniPelletAnimator
 __RTTI__18PaniPelletAnimator:
-  .4byte 0x802b07c0
-  .4byte 0x802b07fc
-  .4byte 0x414e6f64
-  .4byte 0x65000000
-  .4byte 0x803df6cc
-  .4byte 0
-  .4byte lbl_802B0764
-  .4byte 0x802b083c
-  .4byte 0x802b0848
-  .4byte 0
+	.4byte 0x802b07c0
+	.4byte 0x802b07fc
+	.4byte 0x414e6f64
+	.4byte 0x65000000
+	.4byte 0x803df6cc
+	.4byte 0
+	.4byte lbl_802B0764
+	.4byte 0x802b083c
+	.4byte 0x802b0848
+	.4byte 0
 .global __RTTI__14PelletAnimInfo
 __RTTI__14PelletAnimInfo:
-  .4byte 0x802b082c
-  .4byte 0x802b0854
-  .4byte 0x802b089c
-  .4byte 0
-  .4byte 0
-  .4byte 0x802b0930
-  .4byte 0
-  .4byte 0x47656e42
-  .4byte 0x61736500
-  .4byte 0x803df708
-  .4byte 0x802b093c
-  .4byte 0x802b0948
-  .4byte 0x802b0954
+	.4byte 0x802b082c
+	.4byte 0x802b0854
+	.4byte 0x802b089c
+	.4byte 0
+	.4byte 0
+	.4byte 0x802b0930
+	.4byte 0
+	.4byte 0x47656e42
+	.4byte 0x61736500
+	.4byte 0x803df708
+	.4byte 0x802b093c
+	.4byte 0x802b0948
+	.4byte 0x802b0954
 .global __RTTI__15GenObjectPellet
 __RTTI__15GenObjectPellet:
-  .4byte 0x802b0920
-  .4byte 0x802b0968
+	.4byte 0x802b0920
+	.4byte 0x802b0968
 .global lbl_803DF728
 lbl_803DF728:
 	.4byte 0x55464F4C
@@ -5679,52 +5679,52 @@ lbl_803DF758:
 	.4byte 0x41200000
 .global "__RTTI__17Receiver<6Pellet>"
 "__RTTI__17Receiver<6Pellet>":
-  .4byte 0x802b09f8
-  .4byte 0
+	.4byte 0x802b09f8
+	.4byte 0
 .global "__RTTI__15AState<6Pellet>"
 "__RTTI__15AState<6Pellet>":
-  .4byte 0x802b0a0c
-  .4byte 0x802b0a1c
+	.4byte 0x802b0a0c
+	.4byte 0x802b0a1c
 .global __RTTI__11PelletState
 __RTTI__11PelletState:
-  .4byte 0x802b0a28
-  .4byte 0x802b0a34
+	.4byte 0x802b0a28
+	.4byte 0x802b0a34
 .global __RTTI__15PelletGoalState
 __RTTI__15PelletGoalState:
-  .4byte 0x802b09e8
-  .4byte 0x802b0a48
+	.4byte 0x802b09e8
+	.4byte 0x802b0a48
 .global __RTTI__17PelletAppearState
 __RTTI__17PelletAppearState:
-  .4byte 0x802b0ab4
-  .4byte 0x802b0ac8
+	.4byte 0x802b0ab4
+	.4byte 0x802b0ac8
 .global __RTTI__20PelletSwallowedState
 __RTTI__20PelletSwallowedState:
-  .4byte 0x802b0b34
-  .4byte 0x802b0b4c
+	.4byte 0x802b0b34
+	.4byte 0x802b0b4c
 .global __RTTI__17PelletNormalState
 __RTTI__17PelletNormalState:
-  .4byte 0x802b0bb8
-  .4byte 0x802b0bcc
+	.4byte 0x802b0bb8
+	.4byte 0x802b0bcc
 .global __RTTI__15PelletDeadState
 __RTTI__15PelletDeadState:
-  .4byte 0x802b0c38
-  .4byte 0x802b0c48
+	.4byte 0x802b0c38
+	.4byte 0x802b0c48
 .global __RTTI__18PelletUfoLoadState
 __RTTI__18PelletUfoLoadState:
-  .4byte 0x802b0cb4
-  .4byte 0x802b0cc8
+	.4byte 0x802b0cb4
+	.4byte 0x802b0cc8
 .global "__RTTI__21StateMachine<6Pellet>_1"
 "__RTTI__21StateMachine<6Pellet>_1":
-  .4byte 0x802b0e20
-  .4byte 0
+	.4byte 0x802b0e20
+	.4byte 0
 .global __RTTI__18PelletStateMachine
 __RTTI__18PelletStateMachine:
-  .4byte 0x802b0e0c
-  .4byte 0x802b0e38
-  .4byte 0
-  .4byte 0x2e2e2e00
-  .4byte 0x6d65636b
-  .4byte 0
+	.4byte 0x802b0e0c
+	.4byte 0x802b0e38
+	.4byte 0
+	.4byte 0x2e2e2e00
+	.4byte 0x6d65636b
+	.4byte 0
 .global lbl_803DF7C4
 lbl_803DF7C4:
 	.4byte 0x3C4E6F64
@@ -5835,89 +5835,89 @@ lbl_803DF850:
 	.4byte 0x00000000
 .global __RTTI__13InteractBreak
 __RTTI__13InteractBreak:
-  .4byte 0x802b1068
-  .4byte 0x802b1084
+	.4byte 0x802b1068
+	.4byte 0x802b1084
 .global __RTTI__13InteractBuild
 __RTTI__13InteractBuild:
-  .4byte 0x802b10bc
-  .4byte 0x802b10cc
-  .4byte 0x42726964
-  .4byte 0x67650000
-  .4byte 0x802b1104
-  .4byte 0
-  .4byte 0x802b1118
-  .4byte 0
-  .4byte 0x802b1124
-  .4byte 0
-  .4byte 0x802b1134
-  .4byte 0x802b1140
-  .4byte 0x802b1154
-  .4byte 0x802b1160
-  .4byte 0x802b1184
-  .4byte 0x802b1194
+	.4byte 0x802b10bc
+	.4byte 0x802b10cc
+	.4byte 0x42726964
+	.4byte 0x67650000
+	.4byte 0x802b1104
+	.4byte 0
+	.4byte 0x802b1118
+	.4byte 0
+	.4byte 0x802b1124
+	.4byte 0
+	.4byte 0x802b1134
+	.4byte 0x802b1140
+	.4byte 0x802b1154
+	.4byte 0x802b1160
+	.4byte 0x802b1184
+	.4byte 0x802b1194
 .global __RTTI__10WorkObject
 __RTTI__10WorkObject:
-  .4byte 0x802b11c0
-  .4byte 0x802b11cc
+	.4byte 0x802b11c0
+	.4byte 0x802b11cc
 .global __RTTI__6Bridge
 __RTTI__6Bridge:
-  .4byte 0x803df86c
-  .4byte 0x802b1200
+	.4byte 0x803df86c
+	.4byte 0x802b1200
 .global __RTTI__12InteractPush
 __RTTI__12InteractPush:
-  .4byte 0x802b13a8
-  .4byte 0x802b13b8
+	.4byte 0x802b13a8
+	.4byte 0x802b13b8
 .global __RTTI__10HinderRock
 __RTTI__10HinderRock:
-  .4byte 0x802b13f0
-  .4byte 0x802b13fc
-  .4byte 0x414e6f64
-  .4byte 0x65000000
-  .4byte 0x803df8c4
-  .4byte 0
-  .4byte lbl_802B1024
-  .4byte 0x802b15b4
-  .4byte 0x4e6f6465
-  .4byte 0
-  .4byte 0x803df8dc
-  .4byte 0x802b15c0
-  .4byte 0x802b15a4
-  .4byte 0x802b15d4
+	.4byte 0x802b13f0
+	.4byte 0x802b13fc
+	.4byte 0x414e6f64
+	.4byte 0x65000000
+	.4byte 0x803df8c4
+	.4byte 0
+	.4byte lbl_802B1024
+	.4byte 0x802b15b4
+	.4byte 0x4e6f6465
+	.4byte 0
+	.4byte 0x803df8dc
+	.4byte 0x802b15c0
+	.4byte 0x802b15a4
+	.4byte 0x802b15d4
 .global __RTTI__12DynCollShape_2
 __RTTI__12DynCollShape_2:
-  .4byte 0x802b1640
-  .4byte 0x802b1650
+	.4byte 0x802b1640
+	.4byte 0x802b1650
 .global __RTTI__13DynBuildShape
 __RTTI__13DynBuildShape:
-  .4byte 0x802b1630
-  .4byte 0x802b1674
-  .4byte 0x802b16fc
-  .4byte 0
-  .4byte 0x47656e42
-  .4byte 0x61736500
-  .4byte 0x803df90c
-  .4byte 0x802b1708
-  .4byte 0x802b1714
-  .4byte 0x802b1720
+	.4byte 0x802b1630
+	.4byte 0x802b1674
+	.4byte 0x802b16fc
+	.4byte 0
+	.4byte 0x47656e42
+	.4byte 0x61736500
+	.4byte 0x803df90c
+	.4byte 0x802b1708
+	.4byte 0x802b1714
+	.4byte 0x802b1720
 .global __RTTI__19GenObjectWorkObject
 __RTTI__19GenObjectWorkObject:
-  .4byte 0x802b16e8
-  .4byte 0x802b1734
-  .4byte 0x802b1794
-  .4byte 0
-  .4byte 0x802b17fc
-  .4byte 0
-  .4byte 0x802b1808
-  .4byte 0x802b1814
+	.4byte 0x802b16e8
+	.4byte 0x802b1734
+	.4byte 0x802b1794
+	.4byte 0
+	.4byte 0x802b17fc
+	.4byte 0
+	.4byte 0x802b1808
+	.4byte 0x802b1814
 .global __RTTI__13WorkObjectMgr
 __RTTI__13WorkObjectMgr:
-  .4byte 0x802b17ec
-  .4byte 0x802b1838
+	.4byte 0x802b17ec
+	.4byte 0x802b1838
 .global __RTTI__14WorkObjectNode
 __RTTI__14WorkObjectNode:
-  .4byte 0x802b18dc
-  .4byte 0x802b18ec
-  .4byte 0
+	.4byte 0x802b18dc
+	.4byte 0x802b18ec
+	.4byte 0
 .global avoidWayPointIndex__10PathFinder
 avoidWayPointIndex__10PathFinder:
 	.4byte 0xFFFFFFFF
@@ -5944,8 +5944,8 @@ lbl_803DF968:
 	.4byte 0x802B1B0C
 .global __RTTI__8RouteMgr
 __RTTI__8RouteMgr:
-  .4byte 0x802b1b00
-  .4byte 0x802b1b20
+	.4byte 0x802b1b00
+	.4byte 0x802b1b20
 .global lbl_803DF9A0
 lbl_803DF9A0:
 	.4byte 0x3C4E6F64
@@ -5981,23 +5981,23 @@ lbl_803DF9C8:
 	.4byte 0x6E000000
 .global __RTTI__5GmWin
 __RTTI__5GmWin:
-  .4byte 0x803df9ec
-  .4byte 0x802b1c1c
+	.4byte 0x803df9ec
+	.4byte 0x802b1c1c
 .global __RTTI__5SeWin
 __RTTI__5SeWin:
-  .4byte 0x803df9cc
-  .4byte 0x802b1c30
-  .4byte 0x53654d67
-  .4byte 0x72000000
-  .4byte 0x4e6f6465
-  .4byte 0
-  .4byte 0x803dfa0c
-  .4byte 0x802b1c94
+	.4byte 0x803df9cc
+	.4byte 0x802b1c30
+	.4byte 0x53654d67
+	.4byte 0x72000000
+	.4byte 0x4e6f6465
+	.4byte 0
+	.4byte 0x803dfa0c
+	.4byte 0x802b1c94
 .global __RTTI__5SeMgr
 __RTTI__5SeMgr:
-  .4byte 0x803dfa04
-  .4byte 0x802b1ca8
-  .4byte 0
+	.4byte 0x803dfa04
+	.4byte 0x802b1ca8
+	.4byte 0
 .global lbl_803DFA28
 lbl_803DFA28:
 	.4byte 0x3C4E6F64
@@ -6029,21 +6029,21 @@ lbl_803DFA3C:
 	.4byte 0x802B1D94
 .global __RTTI__10SeConstant
 __RTTI__10SeConstant:
-  .4byte 0x802b1d70
-  .4byte 0x802b1da8
-  .4byte 0
-  .4byte 0x53455f42
-  .4byte 0x4f4d4200
-  .4byte 0x64756d6d
-  .4byte 0x79203100
-  .4byte 0x64756d6d
-  .4byte 0x79203200
-  .4byte 0x64756d6d
-  .4byte 0x79203300
-  .4byte 0x64756d6d
-  .4byte 0x79203400
-  .4byte 0x64756d6d
-  .4byte 0x79203500
+	.4byte 0x802b1d70
+	.4byte 0x802b1da8
+	.4byte 0
+	.4byte 0x53455f42
+	.4byte 0x4f4d4200
+	.4byte 0x64756d6d
+	.4byte 0x79203100
+	.4byte 0x64756d6d
+	.4byte 0x79203200
+	.4byte 0x64756d6d
+	.4byte 0x79203300
+	.4byte 0x64756d6d
+	.4byte 0x79203400
+	.4byte 0x64756d6d
+	.4byte 0x79203500
 .global lbl_803DFAB0
 lbl_803DFAB0:
 	.4byte 0x00000000
@@ -6250,10 +6250,10 @@ lbl_803DFBE4:
 	.4byte 0x00000000
 .global __RTTI__6CPlate
 __RTTI__6CPlate:
-  .4byte 0x803dfbe8
-  .4byte 0x802b4e80
-  .4byte 0x802b4f04
-  .4byte 0
+	.4byte 0x803dfbe8
+	.4byte 0x802b4e80
+	.4byte 0x802b4f04
+	.4byte 0
 .global lbl_803DFC30
 lbl_803DFC30:
 	.4byte 0x00000000
@@ -6304,8 +6304,8 @@ lbl_803DFC64:
 	.4byte 0x802B4F90
 .global __RTTI__8ActStone
 __RTTI__8ActStone:
-  .4byte 0x802b4f74
-  .4byte 0x802b4f9c
+	.4byte 0x802b4f74
+	.4byte 0x802b4f9c
 .global lbl_803DFC88
 lbl_803DFC88:
 	.4byte 0x2D000000
@@ -6342,36 +6342,36 @@ lbl_803DFCAC:
 	.4byte 0x802B50A8
 .global __RTTI__9ActAdjust
 __RTTI__9ActAdjust:
-  .4byte 0x802b508c
-  .4byte 0x802b50b4
-  .4byte 0x802b5144
-  .4byte 0
+	.4byte 0x802b508c
+	.4byte 0x802b50b4
+	.4byte 0x802b5144
+	.4byte 0
 .global __RTTI__Q29ActAdjust11Initialiser
 __RTTI__Q29ActAdjust11Initialiser:
-  .4byte 0x802b512c
-  .4byte 0x802b5158
-  .4byte 0x41637450
-  .4byte 0x75740000
+	.4byte 0x802b512c
+	.4byte 0x802b5158
+	.4byte 0x41637450
+	.4byte 0x75740000
 .global __RTTI__6ActPut
 __RTTI__6ActPut:
-  .4byte 0x803dfce0
-  .4byte 0x802b5170
+	.4byte 0x803dfce0
+	.4byte 0x802b5170
 .global __RTTI__Q26ActPut11Initialiser
 __RTTI__Q26ActPut11Initialiser:
-  .4byte 0x802b51e8
-  .4byte 0x802b51fc
-  .4byte 0x41637450
-  .4byte 0x69636b00
-  .4byte 0x802b524c
-  .4byte 0
+	.4byte 0x802b51e8
+	.4byte 0x802b51fc
+	.4byte 0x41637450
+	.4byte 0x69636b00
+	.4byte 0x802b524c
+	.4byte 0
 .global __RTTI__7ActPick
 __RTTI__7ActPick:
-  .4byte 0x803dfcf8
-  .4byte 0x802b5260
+	.4byte 0x803dfcf8
+	.4byte 0x802b5260
 .global __RTTI__Q27ActPick11Initialiser
 __RTTI__Q27ActPick11Initialiser:
-  .4byte 0x802b52f0
-  .4byte 0x802b5308
+	.4byte 0x802b52f0
+	.4byte 0x802b5308
 .global lbl_803DFD18
 lbl_803DFD18:
 	.4byte 0x61747461
@@ -6473,15 +6473,15 @@ lbl_803DFD90:
 	.4byte 0x802B53FC
 .global __RTTI__13ActJumpAttack
 __RTTI__13ActJumpAttack:
-  .4byte 0x802b53c8
-  .4byte 0x802b5408
-  .4byte 0x802b54a4
-  .4byte 0x802b54b0
+	.4byte 0x802b53c8
+	.4byte 0x802b5408
+	.4byte 0x802b54a4
+	.4byte 0x802b54b0
 .global __RTTI__9ActAttack
 __RTTI__9ActAttack:
-  .4byte 0x802b5498
-  .4byte 0x802b54c4
-  .4byte 0
+	.4byte 0x802b5498
+	.4byte 0x802b54c4
+	.4byte 0
 .global lbl_803DFDD0
 lbl_803DFDD0:
 	.4byte 0x00000000
@@ -6514,38 +6514,38 @@ lbl_803DFDEC:
 	.4byte 0x802B55E0
 .global __RTTI__11ActBoreRest
 __RTTI__11ActBoreRest:
-  .4byte 0x802b55b0
-  .4byte 0x802b55ec
+	.4byte 0x802b55b0
+	.4byte 0x802b55ec
 .global __RTTI__14ActBoreOneshot
 __RTTI__14ActBoreOneshot:
-  .4byte 0x802b567c
-  .4byte 0x802b568c
+	.4byte 0x802b567c
+	.4byte 0x802b568c
 .global __RTTI__13ActBoreListen
 __RTTI__13ActBoreListen:
-  .4byte 0x802b571c
-  .4byte 0x802b572c
+	.4byte 0x802b571c
+	.4byte 0x802b572c
 .global __RTTI__11ActBoreTalk
 __RTTI__11ActBoreTalk:
-  .4byte 0x802b57dc
-  .4byte 0x802b57e8
+	.4byte 0x802b57dc
+	.4byte 0x802b57e8
 .global __RTTI__13ActBoreSelect
 __RTTI__13ActBoreSelect:
-  .4byte 0x802b5884
-  .4byte 0x802b5894
+	.4byte 0x802b5884
+	.4byte 0x802b5894
 .global __RTTI__13ActFreeSelect
 __RTTI__13ActFreeSelect:
-  .4byte 0x802b590c
-  .4byte 0x802b591c
-  .4byte 0x802b5a20
-  .4byte 0
-  .4byte 0x41637469
-  .4byte 0x6f6e0000
-  .4byte 0x803dfe48
-  .4byte 0x802b5a30
+	.4byte 0x802b590c
+	.4byte 0x802b591c
+	.4byte 0x802b5a20
+	.4byte 0
+	.4byte 0x41637469
+	.4byte 0x6f6e0000
+	.4byte 0x803dfe48
+	.4byte 0x802b5a30
 .global __RTTI__9ActBoMake
 __RTTI__9ActBoMake:
-  .4byte 0x802b5a14
-  .4byte 0x802b5a3c
+	.4byte 0x802b5a14
+	.4byte 0x802b5a3c
 .global lbl_803DFE60
 lbl_803DFE60:
 	.4byte 0x426F7500
@@ -6580,8 +6580,8 @@ lbl_803DFE7C:
 	.4byte 0x802B5B2C
 .global __RTTI__6ActBou
 __RTTI__6ActBou:
-  .4byte 0x803dfe80
-  .4byte 0x802b5b38
+	.4byte 0x803dfe80
+	.4byte 0x802b5b38
 .global lbl_803DFEA8
 lbl_803DFEA8:
 	.4byte 0x42726964
@@ -6610,8 +6610,8 @@ lbl_803DFECC:
 	.4byte 0x802B5C70
 .global __RTTI__9ActBridge
 __RTTI__9ActBridge:
-  .4byte 0x802b5c40
-  .4byte 0x802b5c7c
+	.4byte 0x802b5c40
+	.4byte 0x802b5c7c
 .global lbl_803DFEF8
 lbl_803DFEF8:
 	.4byte 0x00000000
@@ -6640,8 +6640,8 @@ lbl_803DFF0C:
 	.4byte 0x802B5DDC
 .global __RTTI__12ActBreakWall
 __RTTI__12ActBreakWall:
-  .4byte 0x802b5da8
-  .4byte 0x802b5de8
+	.4byte 0x802b5da8
+	.4byte 0x802b5de8
 .global lbl_803DFF38
 lbl_803DFF38:
 	.4byte 0x00000000
@@ -6945,9 +6945,9 @@ lbl_803E00E8:
 	.4byte 0x802B5F5C
 .global __RTTI__12ActTransport
 __RTTI__12ActTransport:
-  .4byte 0x802b5f28
-  .4byte 0x802b5f68
-  .4byte 0
+	.4byte 0x802b5f28
+	.4byte 0x802b5f68
+	.4byte 0
 .global lbl_803E0118
 lbl_803E0118:
 	.4byte 0x6B696E6F
@@ -7010,8 +7010,8 @@ lbl_803E015C:
 	.4byte 0x802B60B4
 .global __RTTI__9ActKinoko
 __RTTI__9ActKinoko:
-  .4byte 0x802b6084
-  .4byte 0x802b60c0
+	.4byte 0x802b6084
+	.4byte 0x802b60c0
 .global lbl_803E0188
 lbl_803E0188:
 	.4byte 0x00000000
@@ -7032,14 +7032,14 @@ lbl_803E0194:
 	.4byte 0x802B61C0
 .global __RTTI__8ActChase
 __RTTI__8ActChase:
-  .4byte 0x802b61a4
-  .4byte 0x802b61cc
-  .4byte 0x802b625c
-  .4byte 0
+	.4byte 0x802b61a4
+	.4byte 0x802b61cc
+	.4byte 0x802b625c
+	.4byte 0
 .global __RTTI__Q28ActChase11Initialiser
 __RTTI__Q28ActChase11Initialiser:
-  .4byte 0x802b6244
-  .4byte 0x802b6270
+	.4byte 0x802b6244
+	.4byte 0x802b6270
 .global newVer
 newVer:
 	.4byte 0x01000000
@@ -7121,19 +7121,19 @@ lbl_803E0230:
 	.4byte 0x00000000
 .global __RTTI__17SlotChangeListner
 __RTTI__17SlotChangeListner:
-  .4byte 0x802b62d0
-  .4byte 0
-  .4byte 0x802b62e4
-  .4byte 0
-  .4byte 0x41637469
-  .4byte 0x6f6e0000
-  .4byte 0x803e0244
-  .4byte 0x802b62f4
+	.4byte 0x802b62d0
+	.4byte 0
+	.4byte 0x802b62e4
+	.4byte 0
+	.4byte 0x41637469
+	.4byte 0x6f6e0000
+	.4byte 0x803e0244
+	.4byte 0x802b62f4
 .global __RTTI__8ActCrowd
 __RTTI__8ActCrowd:
-  .4byte 0x802b62c4
-  .4byte 0x802b6300
-  .4byte 0
+	.4byte 0x802b62c4
+	.4byte 0x802b6300
+	.4byte 0
 .global lbl_803E0260
 lbl_803E0260:
 	.4byte 0x00000000
@@ -7165,9 +7165,9 @@ lbl_803E0278:
 	.4byte 0x802B6404
 .global __RTTI__8ActDecoy
 __RTTI__8ActDecoy:
-  .4byte 0x802b63d4
-  .4byte 0x802b6410
-  .4byte 0
+	.4byte 0x802b63d4
+	.4byte 0x802b6410
+	.4byte 0
 .global lbl_803E02A8
 lbl_803E02A8:
 	.4byte 0x456E7465
@@ -7201,9 +7201,9 @@ lbl_803E02C8:
 	.4byte 0x802B6538
 .global __RTTI__8ActEnter
 __RTTI__8ActEnter:
-  .4byte 0x802b651c
-  .4byte 0x802b6544
-  .4byte 0
+	.4byte 0x802b651c
+	.4byte 0x802b6544
+	.4byte 0
 .global lbl_803E02F0
 lbl_803E02F0:
 	.4byte 0x00000000
@@ -7238,14 +7238,14 @@ lbl_803E0310:
 	.4byte 0x802B6634
 .global __RTTI__9ActEscape
 __RTTI__9ActEscape:
-  .4byte 0x802b6618
-  .4byte 0x802b6640
-  .4byte 0x802b66d0
-  .4byte 0
+	.4byte 0x802b6618
+	.4byte 0x802b6640
+	.4byte 0x802b66d0
+	.4byte 0
 .global __RTTI__Q29ActEscape11Initialiser
 __RTTI__Q29ActEscape11Initialiser:
-  .4byte 0x802b66b8
-  .4byte 0x802b66e4
+	.4byte 0x802b66b8
+	.4byte 0x802b66e4
 .global lbl_803E0348
 lbl_803E0348:
 	.4byte 0x45786974
@@ -7311,9 +7311,9 @@ lbl_803E0390:
 	.4byte 0x802B6744
 .global __RTTI__7ActExit
 __RTTI__7ActExit:
-  .4byte 0x803e0394
-  .4byte 0x802b6750
-  .4byte 0
+	.4byte 0x803e0394
+	.4byte 0x802b6750
+	.4byte 0
 .global lbl_803E03C0
 lbl_803E03C0:
 	.4byte 0x00000000
@@ -7344,8 +7344,8 @@ lbl_803E03D4:
 	.4byte 0x802B6828
 .global __RTTI__7ActMine
 __RTTI__7ActMine:
-  .4byte 0x803e03d8
-  .4byte 0x802b6834
+	.4byte 0x803e03d8
+	.4byte 0x802b6834
 .global lbl_803E0408
 lbl_803E0408:
 	.4byte 0x00000000
@@ -7389,9 +7389,9 @@ lbl_803E0430:
 	.4byte 0x802B6988
 .global __RTTI__12ActFormation
 __RTTI__12ActFormation:
-  .4byte 0x802b6954
-  .4byte 0x802b6994
-  .4byte 0
+	.4byte 0x802b6954
+	.4byte 0x802b6994
+	.4byte 0
 .global lbl_803E0460
 lbl_803E0460:
 	.4byte 0x66726565
@@ -7429,9 +7429,9 @@ lbl_803E0480:
 	.4byte 0x802B6AA0
 .global __RTTI__7ActFree
 __RTTI__7ActFree:
-  .4byte 0x803e0484
-  .4byte 0x802b6aac
-  .4byte 0
+	.4byte 0x803e0484
+	.4byte 0x802b6aac
+	.4byte 0
 .global lbl_803E04B8
 lbl_803E04B8:
 	.4byte 0x00000000
@@ -7454,14 +7454,14 @@ lbl_803E04C4:
 	.4byte 0x802B6B94
 .global __RTTI__7ActGoto
 __RTTI__7ActGoto:
-  .4byte 0x803e04c8
-  .4byte 0x802b6ba0
-  .4byte 0x802b6c30
-  .4byte 0
+	.4byte 0x803e04c8
+	.4byte 0x802b6ba0
+	.4byte 0x802b6c30
+	.4byte 0
 .global __RTTI__Q27ActGoto11Initialiser
 __RTTI__Q27ActGoto11Initialiser:
-  .4byte 0x802b6c18
-  .4byte 0x802b6c44
+	.4byte 0x802b6c18
+	.4byte 0x802b6c44
 .global lbl_803E0500
 lbl_803E0500:
 	.4byte 0x00000000
@@ -7503,9 +7503,9 @@ lbl_803E0528:
 	.4byte 0x802B6CB0
 .global __RTTI__8ActGuard
 __RTTI__8ActGuard:
-  .4byte 0x802b6c94
-  .4byte 0x802b6cbc
-  .4byte 0
+	.4byte 0x802b6c94
+	.4byte 0x802b6cbc
+	.4byte 0
 .global lbl_803E0550
 lbl_803E0550:
 	.4byte 0x00000000
@@ -7534,36 +7534,36 @@ lbl_803E0564:
 	.4byte 0x802B6DEC
 .global __RTTI__9ActFlower
 __RTTI__9ActFlower:
-  .4byte 0x802b6dbc
-  .4byte 0x802b6df8
-  .4byte 0x802b6ea0
-  .4byte 0x802b6eac
+	.4byte 0x802b6dbc
+	.4byte 0x802b6df8
+	.4byte 0x802b6ea0
+	.4byte 0x802b6eac
 .global __RTTI__11ActPickItem
 __RTTI__11ActPickItem:
-  .4byte 0x802b6e94
-  .4byte 0x802b6ec0
-  .4byte 0x802b6fa0
-  .4byte 0
-  .4byte 0x41637469
-  .4byte 0x6f6e0000
-  .4byte 0x803e05a8
-  .4byte 0x802b6fb0
-  .4byte 0x802b6fbc
-  .4byte 0x802b6fc8
+	.4byte 0x802b6e94
+	.4byte 0x802b6ec0
+	.4byte 0x802b6fa0
+	.4byte 0
+	.4byte 0x41637469
+	.4byte 0x6f6e0000
+	.4byte 0x803e05a8
+	.4byte 0x802b6fb0
+	.4byte 0x802b6fbc
+	.4byte 0x802b6fc8
 .global __RTTI__10ActDeliver
 __RTTI__10ActDeliver:
-  .4byte 0x802b6f94
-  .4byte 0x802b6fdc
-  .4byte 0x802b7074
-  .4byte 0
+	.4byte 0x802b6f94
+	.4byte 0x802b6fdc
+	.4byte 0x802b7074
+	.4byte 0
 .global __RTTI__Q210ActDeliver11Initialiser
 __RTTI__Q210ActDeliver11Initialiser:
-  .4byte 0x802b705c
-  .4byte 0x802b7088
+	.4byte 0x802b705c
+	.4byte 0x802b7088
 .global __RTTI__15ActPickCreature
 __RTTI__15ActPickCreature:
-  .4byte 0x802b70ac
-  .4byte 0x802b70bc
+	.4byte 0x802b70ac
+	.4byte 0x802b70bc
 .global lbl_803E05E0
 lbl_803E05E0:
 	.4byte 0x00000000
@@ -7608,14 +7608,14 @@ lbl_803E060C:
 	.4byte 0x802B71E0
 .global __RTTI__18ActPulloutCreature
 __RTTI__18ActPulloutCreature:
-  .4byte 0x802b71bc
-  .4byte 0x802b71ec
-  .4byte 0x802b72a0
-  .4byte 0x802b72ac
+	.4byte 0x802b71bc
+	.4byte 0x802b71ec
+	.4byte 0x802b72a0
+	.4byte 0x802b72ac
 .global __RTTI__10ActPullout
 __RTTI__10ActPullout:
-  .4byte 0x802b7294
-  .4byte 0x802b72c0
+	.4byte 0x802b7294
+	.4byte 0x802b72c0
 .global lbl_803E0640
 lbl_803E0640:
 	.4byte 0x50757368
@@ -7632,8 +7632,8 @@ lbl_803E0640:
 	.4byte 0x802B740C
 .global __RTTI__7ActPush
 __RTTI__7ActPush:
-  .4byte 0x803e0648
-  .4byte 0x802b7418
+	.4byte 0x803e0648
+	.4byte 0x802b7418
 .global lbl_803E0678
 lbl_803E0678:
 	.4byte 0x70757462
@@ -7712,14 +7712,14 @@ lbl_803E06D4:
 	.4byte 0x802B7514
 .global __RTTI__10ActPutItem
 __RTTI__10ActPutItem:
-  .4byte 0x802b74f8
-  .4byte 0x802b7520
-  .4byte 0x802b75a4
-  .4byte 0
+	.4byte 0x802b74f8
+	.4byte 0x802b7520
+	.4byte 0x802b75a4
+	.4byte 0
 .global __RTTI__10ActPutBomb
 __RTTI__10ActPutBomb:
-  .4byte 0x802b7598
-  .4byte 0x802b75b8
+	.4byte 0x802b7598
+	.4byte 0x802b75b8
 .global lbl_803E0708
 lbl_803E0708:
 	.4byte 0x00000000
@@ -7795,21 +7795,21 @@ lbl_803E0768:
 	.4byte 0x802B7714
 .global __RTTI__13ActRandomBoid
 __RTTI__13ActRandomBoid:
-  .4byte 0x802b76f4
-  .4byte 0x802b7720
-  .4byte 0x802b77b4
-  .4byte 0
+	.4byte 0x802b76f4
+	.4byte 0x802b7720
+	.4byte 0x802b77b4
+	.4byte 0
 .global __RTTI__Q213ActRandomBoid11Initialiser
 __RTTI__Q213ActRandomBoid11Initialiser:
-  .4byte 0x802b7798
-  .4byte 0x802b77c8
-  .4byte 0x802b77e0
-  .4byte 0
+	.4byte 0x802b7798
+	.4byte 0x802b77c8
+	.4byte 0x802b77e0
+	.4byte 0
 .global __RTTI__Q213ActRandomBoid12AnimListener
 __RTTI__Q213ActRandomBoid12AnimListener:
-  .4byte 0x802b7800
-  .4byte 0x802b781c
-  .4byte 0
+	.4byte 0x802b7800
+	.4byte 0x802b781c
+	.4byte 0
 .global lbl_803E07B0
 lbl_803E07B0:
 	.4byte 0x52657363
@@ -7857,9 +7857,9 @@ lbl_803E07E0:
 	.4byte 0x802B78AC
 .global __RTTI__9ActRescue
 __RTTI__9ActRescue:
-  .4byte 0x802b787c
-  .4byte 0x802b78b8
-  .4byte 0
+	.4byte 0x802b787c
+	.4byte 0x802b78b8
+	.4byte 0
 .global lbl_803E0810
 lbl_803E0810:
 	.4byte 0x726F7065
@@ -7886,8 +7886,8 @@ lbl_803E0824:
 	.4byte 0x802B799C
 .global __RTTI__7ActRope
 __RTTI__7ActRope:
-  .4byte 0x803e0828
-  .4byte 0x802b79a8
+	.4byte 0x803e0828
+	.4byte 0x802b79a8
 .global lbl_803E0850
 lbl_803E0850:
 	.4byte 0x00000000
@@ -7919,15 +7919,15 @@ lbl_803E0868:
 	.4byte 0x802B7A94
 .global __RTTI__16ActShootCreature
 __RTTI__16ActShootCreature:
-  .4byte 0x802b7a5c
-  .4byte 0x802b7aa0
-  .4byte 0x802b7b48
-  .4byte 0x802b7b54
+	.4byte 0x802b7a5c
+	.4byte 0x802b7aa0
+	.4byte 0x802b7b48
+	.4byte 0x802b7b54
 .global __RTTI__8ActShoot
 __RTTI__8ActShoot:
-  .4byte 0x802b7b3c
-  .4byte 0x802b7b68
-  .4byte 0
+	.4byte 0x802b7b3c
+	.4byte 0x802b7b68
+	.4byte 0
 .global lbl_803E08A8
 lbl_803E08A8:
 	.4byte 0x00000000
@@ -7951,21 +7951,21 @@ lbl_803E08B8:
 	.4byte 0x802B7C6C
 .global __RTTI__8ActWatch
 __RTTI__8ActWatch:
-  .4byte 0x802b7c50
-  .4byte 0x802b7c78
-  .4byte 0x802b7d08
-  .4byte 0
+	.4byte 0x802b7c50
+	.4byte 0x802b7c78
+	.4byte 0x802b7d08
+	.4byte 0
 .global __RTTI__Q28ActWatch11Initialiser
 __RTTI__Q28ActWatch11Initialiser:
-  .4byte 0x802b7cf0
-  .4byte 0x802b7d1c
-  .4byte 0x802b7d34
-  .4byte 0
+	.4byte 0x802b7cf0
+	.4byte 0x802b7d1c
+	.4byte 0x802b7d34
+	.4byte 0
 .global __RTTI__Q28ActWatch12AnimListener
 __RTTI__Q28ActWatch12AnimListener:
-  .4byte 0x802b7d54
-  .4byte 0x802b7d6c
-  .4byte 0
+	.4byte 0x802b7d54
+	.4byte 0x802b7d6c
+	.4byte 0
 .global lbl_803E0900
 lbl_803E0900:
 	.4byte 0x00000000
@@ -8021,23 +8021,23 @@ lbl_803E0938:
 	.4byte 0x802B7DCC
 .global __RTTI__7ActWeed
 __RTTI__7ActWeed:
-  .4byte 0x803e093c
-  .4byte 0x802b7dd8
-  .4byte 0
-  .4byte 0x2d000000
-  .4byte 0x57415443
-  .4byte 0x48000000
-  .4byte 0x45534341
-  .4byte 0x50450000
-  .4byte 0x43484153
-  .4byte 0x45000000
-  .4byte 0x474f544f
-  .4byte 0
-  .4byte 0x5049434b
-  .4byte 0
-  .4byte 0x50555400
-  .4byte 0x4b49434b
-  .4byte 0
+	.4byte 0x803e093c
+	.4byte 0x802b7dd8
+	.4byte 0
+	.4byte 0x2d000000
+	.4byte 0x57415443
+	.4byte 0x48000000
+	.4byte 0x45534341
+	.4byte 0x50450000
+	.4byte 0x43484153
+	.4byte 0x45000000
+	.4byte 0x474f544f
+	.4byte 0
+	.4byte 0x5049434b
+	.4byte 0
+	.4byte 0x50555400
+	.4byte 0x4b49434b
+	.4byte 0
 .global lbl_803E09A0
 lbl_803E09A0:
 	.4byte 0x6E6F206E
@@ -8050,20 +8050,20 @@ lbl_803E09A0:
 	.4byte 0x802B7FB4
 .global __RTTI__9TopAction
 __RTTI__9TopAction:
-  .4byte 0x802b7f98
-  .4byte 0x802b7fc0
-  .4byte 0x802b8038
-  .4byte 0
+	.4byte 0x802b7f98
+	.4byte 0x802b7fc0
+	.4byte 0x802b8038
+	.4byte 0
 .global __RTTI__Q29TopAction14MotionListener
 __RTTI__Q29TopAction14MotionListener:
-  .4byte 0x802b8058
-  .4byte 0x802b8074
+	.4byte 0x802b8058
+	.4byte 0x802b8074
 .global __RTTI__8OrAction
 __RTTI__8OrAction:
-  .4byte 0x802b808c
-  .4byte 0x802b8098
-  .4byte 0x802b8110
-  .4byte 0x802b811c
+	.4byte 0x802b808c
+	.4byte 0x802b8098
+	.4byte 0x802b8110
+	.4byte 0x802b811c
 .global lbl_803E09E8
 lbl_803E09E8:
 	.4byte 0x00000000
@@ -8105,35 +8105,35 @@ lbl_803E0A10:
 	.4byte 0x496E6600
 .global __RTTI__7BaseInf
 __RTTI__7BaseInf:
-  .4byte 0x803e0a2c
-  .4byte 0x802b8278
+	.4byte 0x803e0a2c
+	.4byte 0x802b8278
 .global __RTTI__11CreatureInf
 __RTTI__11CreatureInf:
-  .4byte 0x802b8260
-  .4byte 0x802b828c
-  .4byte 0x496e664d
-  .4byte 0x67720000
+	.4byte 0x802b8260
+	.4byte 0x802b828c
+	.4byte 0x496e664d
+	.4byte 0x67720000
 .global __RTTI__6InfMgr
 __RTTI__6InfMgr:
-  .4byte 0x803e0a44
-  .4byte 0
+	.4byte 0x803e0a44
+	.4byte 0
 .global __RTTI__10MonoInfMgr
 __RTTI__10MonoInfMgr:
-  .4byte 0x802b82d8
-  .4byte 0x802b82e4
+	.4byte 0x802b82d8
+	.4byte 0x802b82e4
 .global __RTTI__14CreatureInfMgr
 __RTTI__14CreatureInfMgr:
-  .4byte 0x802b82c8
-  .4byte 0x802b82f0
+	.4byte 0x802b82c8
+	.4byte 0x802b82f0
 .global __RTTI__11BPikiInfMgr
 __RTTI__11BPikiInfMgr:
-  .4byte 0x802b8324
-  .4byte 0x802b8330
+	.4byte 0x802b8324
+	.4byte 0x802b8330
 .global __RTTI__8BPikiInf
 __RTTI__8BPikiInf:
-  .4byte 0x802b83a0
-  .4byte 0x802b83ac
-  .4byte 0
+	.4byte 0x802b83a0
+	.4byte 0x802b83ac
+	.4byte 0
 .global lbl_803E0A78
 lbl_803E0A78:
 	.4byte 0x00000000
@@ -8214,28 +8214,28 @@ lbl_803E0AB4:
 	.4byte 0x6F770000
 .global "__RTTI__19StateMachine<4Piki>"
 "__RTTI__19StateMachine<4Piki>":
-  .4byte 0x802b8760
-  .4byte 0
-  .4byte 0x802b878c
-  .4byte 0
-  .4byte 0x802b87b0
-  .4byte 0
-  .4byte 0x802b87f0
-  .4byte 0
-  .4byte 0x802b8898
-  .4byte 0
-  .4byte 0x50696b69
-  .4byte 0
-  .4byte 0x802b88b8
-  .4byte 0
-  .4byte 0x802b88c4
-  .4byte 0
-  .4byte 0x802b88d4
-  .4byte 0x802b88e0
+	.4byte 0x802b8760
+	.4byte 0
+	.4byte 0x802b878c
+	.4byte 0
+	.4byte 0x802b87b0
+	.4byte 0
+	.4byte 0x802b87f0
+	.4byte 0
+	.4byte 0x802b8898
+	.4byte 0
+	.4byte 0x50696b69
+	.4byte 0
+	.4byte 0x802b88b8
+	.4byte 0
+	.4byte 0x802b88c4
+	.4byte 0
+	.4byte 0x802b88d4
+	.4byte 0x802b88e0
 .global __RTTI__4Piki
 __RTTI__4Piki:
-  .4byte 0x803e0b58
-  .4byte 0x802b88f4
+	.4byte 0x803e0b58
+	.4byte 0x802b88f4
 .global lbl_803E0B80
 lbl_803E0B80:
 	.4byte 0x73303000
@@ -8510,16 +8510,16 @@ lbl_803E0CD0:
 	.4byte 0x802B8B34
 .global __RTTI__7PikiMgr
 __RTTI__7PikiMgr:
-  .4byte 0x803e0cd8
-  .4byte 0x802b8b60
-  .4byte 0x802b8c28
-  .4byte 0
-  .4byte 0x802b8c8c
-  .4byte 0
+	.4byte 0x803e0cd8
+	.4byte 0x802b8b60
+	.4byte 0x802b8c28
+	.4byte 0
+	.4byte 0x802b8c8c
+	.4byte 0
 .global __RTTI__8PikiProp
 __RTTI__8PikiProp:
-  .4byte 0x802b8c80
-  .4byte 0x802b8c9c
+	.4byte 0x802b8c80
+	.4byte 0x802b8c9c
 .global lbl_803E0D40
 lbl_803E0D40:
 	.4byte 0x4C4F4F4B
@@ -9069,153 +9069,153 @@ lbl_803E1058:
 	.4byte 0x00000000
 .global "__RTTI__13AState<4Piki>"
 "__RTTI__13AState<4Piki>":
-  .4byte 0x802b8d90
-  .4byte 0x802b8da0
+	.4byte 0x802b8d90
+	.4byte 0x802b8da0
 .global __RTTI__9PikiState
 __RTTI__9PikiState:
-  .4byte 0x802b8dac
-  .4byte 0x802b8db8
+	.4byte 0x802b8dac
+	.4byte 0x802b8db8
 .global __RTTI__16PikiEmotionState
 __RTTI__16PikiEmotionState:
-  .4byte 0x802b8d6c
-  .4byte 0x802b8dcc
+	.4byte 0x802b8d6c
+	.4byte 0x802b8dcc
 .global __RTTI__13PikiDeadState
 __RTTI__13PikiDeadState:
-  .4byte 0x802b8e54
-  .4byte 0x802b8e64
+	.4byte 0x802b8e54
+	.4byte 0x802b8e64
 .global __RTTI__14PikiDyingState
 __RTTI__14PikiDyingState:
-  .4byte 0x802b8eec
-  .4byte 0x802b8efc
+	.4byte 0x802b8eec
+	.4byte 0x802b8efc
 .global __RTTI__16PikiPressedState
 __RTTI__16PikiPressedState:
-  .4byte 0x802b8f84
-  .4byte 0x802b8f98
+	.4byte 0x802b8f84
+	.4byte 0x802b8f98
 .global __RTTI__17PikiAutoNukiState
 __RTTI__17PikiAutoNukiState:
-  .4byte 0x802b9020
-  .4byte 0x802b9034
+	.4byte 0x802b9020
+	.4byte 0x802b9034
 .global __RTTI__15PikiNukareState
 __RTTI__15PikiNukareState:
-  .4byte 0x802b90bc
-  .4byte 0x802b90cc
+	.4byte 0x802b90bc
+	.4byte 0x802b90cc
 .global __RTTI__19PikiNukareWaitState
 __RTTI__19PikiNukareWaitState:
-  .4byte 0x802b9154
-  .4byte 0x802b9168
+	.4byte 0x802b9154
+	.4byte 0x802b9168
 .global __RTTI__13PikiBuryState
 __RTTI__13PikiBuryState:
-  .4byte 0x802b91f0
-  .4byte 0x802b9200
+	.4byte 0x802b91f0
+	.4byte 0x802b9200
 .global __RTTI__17PikiPushPikiState
 __RTTI__17PikiPushPikiState:
-  .4byte 0x802b9288
-  .4byte 0x802b929c
+	.4byte 0x802b9288
+	.4byte 0x802b929c
 .global __RTTI__13PikiPushState
 __RTTI__13PikiPushState:
-  .4byte 0x802b9324
-  .4byte 0x802b9334
+	.4byte 0x802b9324
+	.4byte 0x802b9334
 .global __RTTI__13PikiWaveState
 __RTTI__13PikiWaveState:
-  .4byte 0x802b93bc
-  .4byte 0x802b93cc
+	.4byte 0x802b93bc
+	.4byte 0x802b93cc
 .global __RTTI__15PikiGrowupState
 __RTTI__15PikiGrowupState:
-  .4byte 0x802b9454
-  .4byte 0x802b9464
+	.4byte 0x802b9454
+	.4byte 0x802b9464
 .global __RTTI__21PikiKinokoChangeState
 __RTTI__21PikiKinokoChangeState:
-  .4byte 0x802b94ec
-  .4byte 0x802b9504
+	.4byte 0x802b94ec
+	.4byte 0x802b9504
 .global __RTTI__13PikiGrowState
 __RTTI__13PikiGrowState:
-  .4byte 0x802b958c
-  .4byte 0x802b959c
+	.4byte 0x802b958c
+	.4byte 0x802b959c
 .global __RTTI__15PikiFlyingState
 __RTTI__15PikiFlyingState:
-  .4byte 0x802b9624
-  .4byte 0x802b9634
+	.4byte 0x802b9624
+	.4byte 0x802b9634
 .global __RTTI__13PikiEmitState
 __RTTI__13PikiEmitState:
-  .4byte 0x802b96bc
-  .4byte 0x802b96cc
+	.4byte 0x802b96bc
+	.4byte 0x802b96cc
 .global __RTTI__20PikiWaterHangedState
 __RTTI__20PikiWaterHangedState:
-  .4byte 0x802b9754
-  .4byte 0x802b976c
+	.4byte 0x802b9754
+	.4byte 0x802b976c
 .global __RTTI__15PikiHangedState
 __RTTI__15PikiHangedState:
-  .4byte 0x802b97f4
-  .4byte 0x802b9804
+	.4byte 0x802b97f4
+	.4byte 0x802b9804
 .global __RTTI__15PikiGoHangState
 __RTTI__15PikiGoHangState:
-  .4byte 0x802b988c
-  .4byte 0x802b989c
+	.4byte 0x802b988c
+	.4byte 0x802b989c
 .global __RTTI__14PikiCliffState
 __RTTI__14PikiCliffState:
-  .4byte 0x802b9924
-  .4byte 0x802b9934
+	.4byte 0x802b9924
+	.4byte 0x802b9934
 .global __RTTI__13PikiFallState
 __RTTI__13PikiFallState:
-  .4byte 0x802b99bc
-  .4byte 0x802b99cc
+	.4byte 0x802b99bc
+	.4byte 0x802b99cc
 .global __RTTI__17PikiFallMeckState
 __RTTI__17PikiFallMeckState:
-  .4byte 0x802b9a54
-  .4byte 0x802b9a68
+	.4byte 0x802b9a54
+	.4byte 0x802b9a68
 .global __RTTI__14PikiFlownState
 __RTTI__14PikiFlownState:
-  .4byte 0x802b9af0
-  .4byte 0x802b9b00
+	.4byte 0x802b9af0
+	.4byte 0x802b9b00
 .global __RTTI__14PikiFlickState
 __RTTI__14PikiFlickState:
-  .4byte 0x802b9b88
-  .4byte 0x802b9b98
+	.4byte 0x802b9b88
+	.4byte 0x802b9b98
 .global __RTTI__15PikiBulletState
 __RTTI__15PikiBulletState:
-  .4byte 0x802b9c20
-  .4byte 0x802b9c30
+	.4byte 0x802b9c20
+	.4byte 0x802b9c30
 .global __RTTI__18PikiSwallowedState
 __RTTI__18PikiSwallowedState:
-  .4byte 0x802b9cb8
-  .4byte 0x802b9ccc
+	.4byte 0x802b9cb8
+	.4byte 0x802b9ccc
 .global __RTTI__14PikiFiredState
 __RTTI__14PikiFiredState:
-  .4byte 0x802b9d54
-  .4byte 0x802b9d64
+	.4byte 0x802b9d54
+	.4byte 0x802b9d64
 .global __RTTI__15PikiBubbleState
 __RTTI__15PikiBubbleState:
-  .4byte 0x802b9dec
-  .4byte 0x802b9dfc
+	.4byte 0x802b9dec
+	.4byte 0x802b9dfc
 .global __RTTI__15PikiKinokoState
 __RTTI__15PikiKinokoState:
-  .4byte 0x802b9e84
-  .4byte 0x802b9e94
+	.4byte 0x802b9e84
+	.4byte 0x802b9e94
 .global __RTTI__14PikiDrownState
 __RTTI__14PikiDrownState:
-  .4byte 0x802b9f54
-  .4byte 0x802b9f64
+	.4byte 0x802b9f54
+	.4byte 0x802b9f64
 .global __RTTI__15PikiAbsorbState
 __RTTI__15PikiAbsorbState:
-  .4byte 0x802b9fec
-  .4byte 0x802b9ffc
+	.4byte 0x802b9fec
+	.4byte 0x802b9ffc
 .global __RTTI__15PikiNormalState
 __RTTI__15PikiNormalState:
-  .4byte 0x802ba084
-  .4byte 0x802ba094
+	.4byte 0x802ba084
+	.4byte 0x802ba094
 .global __RTTI__15PikiLookAtState
 __RTTI__15PikiLookAtState:
-  .4byte 0x802ba11c
-  .4byte 0x802ba12c
+	.4byte 0x802ba11c
+	.4byte 0x802ba12c
 .global "__RTTI__19StateMachine<4Piki>_1"
 "__RTTI__19StateMachine<4Piki>_1":
-  .4byte 0x802ba2bc
-  .4byte 0
+	.4byte 0x802ba2bc
+	.4byte 0
 .global __RTTI__16PikiStateMachine
 __RTTI__16PikiStateMachine:
-  .4byte 0x802ba2a8
-  .4byte 0x802ba2d0
-  .4byte 0
+	.4byte 0x802ba2a8
+	.4byte 0x802ba2d0
+	.4byte 0
 .global firstTime__15PikiShapeObject
 firstTime__15PikiShapeObject:
 	.4byte 0x01000000
@@ -9364,26 +9364,26 @@ lbl_803E1254:
 	.4byte 0x00000000
 .global __RTTI__4Piki_1
 __RTTI__4Piki_1:
-  .4byte 0x803e1278
-  .4byte 0x802ba418
+	.4byte 0x803e1278
+	.4byte 0x802ba418
 .global __RTTI__8ViewPiki
 __RTTI__8ViewPiki:
-  .4byte 0x802ba3bc
-  .4byte 0x802ba43c
-  .4byte 0x802ba5b0
-  .4byte 0
+	.4byte 0x802ba3bc
+	.4byte 0x802ba43c
+	.4byte 0x802ba5b0
+	.4byte 0
 .global __RTTI__13CndStickMouth
 __RTTI__13CndStickMouth:
-  .4byte 0x802ba5a0
-  .4byte 0x802ba5bc
+	.4byte 0x802ba5a0
+	.4byte 0x802ba5bc
 .global __RTTI__10CndIsAtari
 __RTTI__10CndIsAtari:
-  .4byte 0x802ba5d4
-  .4byte 0x802ba5e0
+	.4byte 0x802ba5d4
+	.4byte 0x802ba5e0
 .global __RTTI__12CndIsVisible
 __RTTI__12CndIsVisible:
-  .4byte 0x802ba5f8
-  .4byte 0x802ba608
+	.4byte 0x802ba5f8
+	.4byte 0x802ba608
 .global lbl_803E12B0
 lbl_803E12B0:
 	.4byte 0x70303000
@@ -9506,60 +9506,60 @@ lbl_803E1354:
 	.4byte 0x72656100
 .global __RTTI__7GenArea
 __RTTI__7GenArea:
-  .4byte 0x803e1370
-  .4byte 0x802ba750
+	.4byte 0x803e1370
+	.4byte 0x802ba750
 .global __RTTI__13GenAreaCircle
 __RTTI__13GenAreaCircle:
-  .4byte 0x802ba728
-  .4byte 0x802ba764
+	.4byte 0x802ba728
+	.4byte 0x802ba764
 .global __RTTI__12GenAreaPoint
 __RTTI__12GenAreaPoint:
-  .4byte 0x802ba7b8
-  .4byte 0x802ba7c8
-  .4byte 0x47656e54
-  .4byte 0x79706500
+	.4byte 0x802ba7b8
+	.4byte 0x802ba7c8
+	.4byte 0x47656e54
+	.4byte 0x79706500
 .global __RTTI__7GenType
 __RTTI__7GenType:
-  .4byte 0x803e1390
-  .4byte 0x802ba82c
+	.4byte 0x803e1390
+	.4byte 0x802ba82c
 .global __RTTI__15GenTypeInitRand
 __RTTI__15GenTypeInitRand:
-  .4byte 0x802ba81c
-  .4byte 0x802ba840
+	.4byte 0x802ba81c
+	.4byte 0x802ba840
 .global __RTTI__13GenTypeAtOnce
 __RTTI__13GenTypeAtOnce:
-  .4byte 0x802ba894
-  .4byte 0x802ba8a4
+	.4byte 0x802ba894
+	.4byte 0x802ba8a4
 .global __RTTI__10GenTypeOne
 __RTTI__10GenTypeOne:
-  .4byte 0x802ba8f8
-  .4byte 0x802ba904
-  .4byte 0x802ba968
-  .4byte 0x802ba974
+	.4byte 0x802ba8f8
+	.4byte 0x802ba904
+	.4byte 0x802ba968
+	.4byte 0x802ba974
 .global __RTTI__13GenObjectPiki
 __RTTI__13GenObjectPiki:
-  .4byte 0x802ba958
-  .4byte 0x802ba988
-  .4byte 0x414e6f64
-  .4byte 0x65000000
-  .4byte 0x803e13c8
-  .4byte 0
-  .4byte 0x802ba9dc
-  .4byte 0x802ba9e8
-  .4byte 0x4e6f6465
-  .4byte 0
-  .4byte 0x803e13e0
-  .4byte 0x802ba9f4
+	.4byte 0x802ba958
+	.4byte 0x802ba988
+	.4byte 0x414e6f64
+	.4byte 0x65000000
+	.4byte 0x803e13c8
+	.4byte 0
+	.4byte 0x802ba9dc
+	.4byte 0x802ba9e8
+	.4byte 0x4e6f6465
+	.4byte 0
+	.4byte 0x803e13e0
+	.4byte 0x802ba9f4
 .global __RTTI__12GeneratorMgr
 __RTTI__12GeneratorMgr:
-  .4byte 0x802ba718
-  .4byte 0x802baa08
+	.4byte 0x802ba718
+	.4byte 0x802baa08
 .global __RTTI__9Generator
 __RTTI__9Generator:
-  .4byte 0x802baa54
-  .4byte 0x802baa60
-  .4byte 0x802bab0c
-  .4byte 0
+	.4byte 0x802baa54
+	.4byte 0x802baa60
+	.4byte 0x802bab0c
+	.4byte 0
 .global lbl_803E1408
 lbl_803E1408:
 	.4byte 0x00000000
@@ -9577,9 +9577,9 @@ lbl_803E1408:
 	.4byte 0x802BAD4C
 .global __RTTI__Q214GeneratorCache5Cache
 __RTTI__Q214GeneratorCache5Cache:
-  .4byte 0x802bad34
-  .4byte 0x802bad58
-  .4byte 0
+	.4byte 0x802bad34
+	.4byte 0x802bad58
+	.4byte 0
 .global lbl_803E1448
 lbl_803E1448:
 	.4byte 0x3C4E6F64
@@ -9600,22 +9600,22 @@ lbl_803E1448:
 	.4byte 0x802BAE08
 .global __RTTI__15CreatureNodeMgr
 __RTTI__15CreatureNodeMgr:
-  .4byte 0x802badb4
-  .4byte 0x802bae2c
+	.4byte 0x802badb4
+	.4byte 0x802bae2c
 .global __RTTI__13PolyObjectMgr
 __RTTI__13PolyObjectMgr:
-  .4byte 0x802baed0
-  .4byte 0x802baee0
-  .4byte 0x802baf8c
-  .4byte 0x802baf9c
-  .4byte 0x802bb128
-  .4byte 0
+	.4byte 0x802baed0
+	.4byte 0x802baee0
+	.4byte 0x802baf8c
+	.4byte 0x802baf9c
+	.4byte 0x802bb128
+	.4byte 0
 .global __RTTI__12SearchBuffer
 __RTTI__12SearchBuffer:
-  .4byte 0x802bb118
-  .4byte 0x802bb134
-  .4byte 0x802bb18c
-  .4byte 0
+	.4byte 0x802bb118
+	.4byte 0x802bb134
+	.4byte 0x802bb18c
+	.4byte 0
 .global lbl_803E14B8
 lbl_803E14B8:
 	.4byte 0x41700000
@@ -9689,23 +9689,23 @@ lbl_803E1500:
 	.4byte 0x802BB2E0
 .global __RTTI__4Weed
 __RTTI__4Weed:
-  .4byte 0x803e1504
-  .4byte 0x802bb30c
+	.4byte 0x803e1504
+	.4byte 0x802bb30c
 .global __RTTI__8WeedsGen
 __RTTI__8WeedsGen:
-  .4byte 0x802bb49c
-  .4byte 0x802bb4a8
+	.4byte 0x802bb49c
+	.4byte 0x802bb4a8
 .global __RTTI__8GrassGen
 __RTTI__8GrassGen:
-  .4byte 0x802bb638
-  .4byte 0x802bb644
-  .4byte 0x526f636b
-  .4byte 0x47656e00
+	.4byte 0x802bb638
+	.4byte 0x802bb644
+	.4byte 0x526f636b
+	.4byte 0x47656e00
 .global __RTTI__7RockGen
 __RTTI__7RockGen:
-  .4byte 0x803e1554
-  .4byte 0x802bb7d4
-  .4byte 0
+	.4byte 0x803e1554
+	.4byte 0x802bb7d4
+	.4byte 0
 .global lbl_803E1568
 lbl_803E1568:
 	.4byte 0x3F800000
@@ -9762,12 +9762,12 @@ lbl_803E159C:
 	.4byte 0x802BBA14
 .global __RTTI__10BoBaseItem
 __RTTI__10BoBaseItem:
-  .4byte 0x802bb978
-  .4byte 0x802bba40
+	.4byte 0x802bb978
+	.4byte 0x802bba40
 .global __RTTI__8KusaItem
 __RTTI__8KusaItem:
-  .4byte 0x802bbbd0
-  .4byte 0x802bbbdc
+	.4byte 0x802bbbd0
+	.4byte 0x802bbbdc
 .global lbl_803E15E0
 lbl_803E15E0:
 	.4byte 0x40800000
@@ -9851,9 +9851,9 @@ lbl_803E1638:
 	.4byte 0x802BBE20
 .global __RTTI__13FishGenerator
 __RTTI__13FishGenerator:
-  .4byte 0x802bbd80
-  .4byte 0x802bbe4c
-  .4byte 0
+	.4byte 0x802bbd80
+	.4byte 0x802bbe4c
+	.4byte 0
 .global numKeys
 numKeys:
 	.4byte 0x00000003
@@ -10061,37 +10061,37 @@ lbl_803E1770:
 	.4byte 0x74656D00
 .global __RTTI__7UfoItem
 __RTTI__7UfoItem:
-  .4byte 0x803e17ac
-  .4byte 0x802bc2f4
-  .4byte 0
-  .4byte 0x77616974
-  .4byte 0
-  .4byte 0x74616b65
-  .4byte 0x6f666600
-  .4byte 0x68656e6b
-  .4byte 0x61310000
-  .4byte 0x68656e6b
-  .4byte 0x61316200
-  .4byte 0x68656e6b
-  .4byte 0x61316400
-  .4byte 0x68656e6b
-  .4byte 0x61320000
-  .4byte 0x68656e6b
-  .4byte 0x61326400
-  .4byte 0x68656e6b
-  .4byte 0x61330000
-  .4byte 0x68656e6b
-  .4byte 0x61346100
-  .4byte 0x68656e6b
-  .4byte 0x61346200
-  .4byte 0x802bc580
-  .4byte 0
-  .4byte 0x802bc58c
-  .4byte 0x802bc59c
+	.4byte 0x803e17ac
+	.4byte 0x802bc2f4
+	.4byte 0
+	.4byte 0x77616974
+	.4byte 0
+	.4byte 0x74616b65
+	.4byte 0x6f666600
+	.4byte 0x68656e6b
+	.4byte 0x61310000
+	.4byte 0x68656e6b
+	.4byte 0x61316200
+	.4byte 0x68656e6b
+	.4byte 0x61316400
+	.4byte 0x68656e6b
+	.4byte 0x61320000
+	.4byte 0x68656e6b
+	.4byte 0x61326400
+	.4byte 0x68656e6b
+	.4byte 0x61330000
+	.4byte 0x68656e6b
+	.4byte 0x61346100
+	.4byte 0x68656e6b
+	.4byte 0x61346200
+	.4byte 0x802bc580
+	.4byte 0
+	.4byte 0x802bc58c
+	.4byte 0x802bc59c
 .global __RTTI__15PaniUfoAnimator
 __RTTI__15PaniUfoAnimator:
-  .4byte 0x802bc570
-  .4byte 0x802bc5a8
+	.4byte 0x802bc570
+	.4byte 0x802bc5a8
 .global lbl_803E1828
 lbl_803E1828:
 	.4byte 0x00000000
@@ -10115,9 +10115,9 @@ lbl_803E1830:
 	.4byte 0x802BC690
 .global __RTTI__8BombItem
 __RTTI__8BombItem:
-  .4byte 0x802bc5f4
-  .4byte 0x802bc6bc
-  .4byte 0
+	.4byte 0x802bc5f4
+	.4byte 0x802bc6bc
+	.4byte 0
 .global lbl_803E1870
 lbl_803E1870:
 	.4byte 0x3F800000
@@ -10211,9 +10211,9 @@ lbl_803E18D0:
 	.4byte 0x802BC994
 .global __RTTI__8GoalItem
 __RTTI__8GoalItem:
-  .4byte 0x802bcb3c
-  .4byte 0x802bcb48
-  .4byte 0
+	.4byte 0x802bcb3c
+	.4byte 0x802bcb48
+	.4byte 0
 .global lbl_803E1920
 lbl_803E1920:
 	.4byte 0xBF800000
@@ -10267,15 +10267,15 @@ lbl_803E1950:
 	.4byte 0x802BCDD4
 .global __RTTI__12PikiHeadItem
 __RTTI__12PikiHeadItem:
-  .4byte 0x802bcd34
-  .4byte 0x802bce00
-  .4byte 0x802bcf90
-  .4byte 0
-  .4byte 0x802bcfb4
-  .4byte 0
-  .4byte 0x802bcff4
-  .4byte 0
-  .4byte 0
+	.4byte 0x802bcd34
+	.4byte 0x802bce00
+	.4byte 0x802bcf90
+	.4byte 0
+	.4byte 0x802bcfb4
+	.4byte 0
+	.4byte 0x802bcff4
+	.4byte 0
+	.4byte 0
 .global lbl_803E19A8
 lbl_803E19A8:
 	.4byte 0x40000000
@@ -10308,26 +10308,26 @@ lbl_803E19BC:
 	.4byte 0x802BD148
 .global __RTTI__8DoorItem
 __RTTI__8DoorItem:
-  .4byte 0x802bd0ac
-  .4byte 0x802bd174
-  .4byte 0x4b657949
-  .4byte 0x74656d00
+	.4byte 0x802bd0ac
+	.4byte 0x802bd174
+	.4byte 0x4b657949
+	.4byte 0x74656d00
 .global __RTTI__7KeyItem
 __RTTI__7KeyItem:
-  .4byte 0x803e19f8
-  .4byte 0x802bd304
-  .4byte 0x802bd460
-  .4byte 0
-  .4byte 0x802bd46c
-  .4byte 0
-  .4byte 0x802bd47c
-  .4byte 0x802bd488
-  .4byte 0x802bd49c
-  .4byte 0x802bd4ac
+	.4byte 0x803e19f8
+	.4byte 0x802bd304
+	.4byte 0x802bd460
+	.4byte 0
+	.4byte 0x802bd46c
+	.4byte 0
+	.4byte 0x802bd47c
+	.4byte 0x802bd488
+	.4byte 0x802bd49c
+	.4byte 0x802bd4ac
 .global __RTTI__8RopeItem
 __RTTI__8RopeItem:
-  .4byte 0x802bd454
-  .4byte 0x802bd4c8
+	.4byte 0x802bd454
+	.4byte 0x802bd4c8
 .global lbl_803E1A30
 lbl_803E1A30:
 	.4byte 0x00000000
@@ -10342,8 +10342,8 @@ lbl_803E1A34:
 	.4byte 0x802BD650
 .global __RTTI__8SeedItem
 __RTTI__8SeedItem:
-  .4byte 0x802bd61c
-  .4byte 0x802bd664
+	.4byte 0x802bd61c
+	.4byte 0x802bd664
 .global lbl_803E1A58
 lbl_803E1A58:
 	.4byte 0x70303000
@@ -10369,11 +10369,11 @@ lbl_803E1A68:
 	.4byte 0x802BD860
 .global __RTTI__13GenObjectItem
 __RTTI__13GenObjectItem:
-  .4byte 0x802bd82c
-  .4byte 0x802bd874
-  .4byte 0x802bd8d4
-  .4byte 0
-  .4byte 0
+	.4byte 0x802bd82c
+	.4byte 0x802bd874
+	.4byte 0x802bd8d4
+	.4byte 0
+	.4byte 0
 .global lbl_803E1AA0
 lbl_803E1AA0:
 	.4byte 0x00000000
@@ -10403,263 +10403,263 @@ lbl_803E1AC0:
 	.4byte 0x42700000
 .global __RTTI__9SAIAction
 __RTTI__9SAIAction:
-  .4byte 0x802bd944
-  .4byte 0
+	.4byte 0x802bd944
+	.4byte 0
 .global __RTTI__Q211FallWaterAI13DisappearInit
 __RTTI__Q211FallWaterAI13DisappearInit:
-  .4byte 0x802bd928
-  .4byte 0x802bd950
+	.4byte 0x802bd928
+	.4byte 0x802bd950
 .global __RTTI__Q211FallWaterAI8EmitInit
 __RTTI__Q211FallWaterAI8EmitInit:
-  .4byte 0x802bd968
-  .4byte 0x802bd980
+	.4byte 0x802bd968
+	.4byte 0x802bd980
 .global __RTTI__Q211FallWaterAI11CollideInit
 __RTTI__Q211FallWaterAI11CollideInit:
-  .4byte 0x802bd998
-  .4byte 0x802bd9b4
+	.4byte 0x802bd998
+	.4byte 0x802bd9b4
 .global "__RTTI__26StateMachine<10AICreature>_1"
 "__RTTI__26StateMachine<10AICreature>_1":
-  .4byte 0x802bd9d8
-  .4byte 0
+	.4byte 0x802bd9d8
+	.4byte 0
 .global __RTTI__8SimpleAI_1
 __RTTI__8SimpleAI_1:
-  .4byte 0x802bd9f4
-  .4byte 0x802bda00
+	.4byte 0x802bd9f4
+	.4byte 0x802bda00
 .global __RTTI__11FallWaterAI
 __RTTI__11FallWaterAI:
-  .4byte 0x802bd9cc
-  .4byte 0x802bda0c
+	.4byte 0x802bd9cc
+	.4byte 0x802bda0c
 .global __RTTI__Q27WaterAI3Die
 __RTTI__Q27WaterAI3Die:
-  .4byte 0x802bda38
-  .4byte 0x802bda48
-  .4byte 0x414e6f64
-  .4byte 0x65000000
-  .4byte 0x803e1b04
-  .4byte 0
-  .4byte lbl_802BD90C
-  .4byte 0x802bda78
+	.4byte 0x802bda38
+	.4byte 0x802bda48
+	.4byte 0x414e6f64
+	.4byte 0x65000000
+	.4byte 0x803e1b04
+	.4byte 0
+	.4byte lbl_802BD90C
+	.4byte 0x802bda78
 .global __RTTI__12SAICondition_1
 __RTTI__12SAICondition_1:
-  .4byte 0x802bda84
-  .4byte 0x802bda94
+	.4byte 0x802bda84
+	.4byte 0x802bda94
 .global __RTTI__Q27WaterAI11CollideChar
 __RTTI__Q27WaterAI11CollideChar:
-  .4byte 0x802bda60
-  .4byte 0x802bdaa8
-  .4byte 0x57617465
-  .4byte 0x72414900
+	.4byte 0x802bda60
+	.4byte 0x802bdaa8
+	.4byte 0x57617465
+	.4byte 0x72414900
 .global __RTTI__7WaterAI
 __RTTI__7WaterAI:
-  .4byte 0x803e1b2c
-  .4byte 0x802bdad8
+	.4byte 0x803e1b2c
+	.4byte 0x802bdad8
 .global __RTTI__Q25GemAI3Die
 __RTTI__Q25GemAI3Die:
-  .4byte 0x802bdb04
-  .4byte 0x802bdb10
+	.4byte 0x802bdb04
+	.4byte 0x802bdb10
 .global __RTTI__Q25GemAI8RiseExec
 __RTTI__Q25GemAI8RiseExec:
-  .4byte 0x802bdb28
-  .4byte 0x802bdb38
+	.4byte 0x802bdb28
+	.4byte 0x802bdb38
 .global __RTTI__Q25GemAI8RiseInit
 __RTTI__Q25GemAI8RiseInit:
-  .4byte 0x802bdb50
-  .4byte 0x802bdb60
-  .4byte 0x47656d41
-  .4byte 0x49000000
+	.4byte 0x802bdb50
+	.4byte 0x802bdb60
+	.4byte 0x47656d41
+	.4byte 0x49000000
 .global __RTTI__5GemAI
 __RTTI__5GemAI:
-  .4byte 0x803e1b54
-  .4byte 0x802bdb78
+	.4byte 0x803e1b54
+	.4byte 0x802bdb78
 .global __RTTI__Q26GoalAI6Effect
 __RTTI__Q26GoalAI6Effect:
-  .4byte 0x802bdba4
-  .4byte 0x802bdbb4
+	.4byte 0x802bdba4
+	.4byte 0x802bdbb4
 .global __RTTI__Q26GoalAI8EmitWait
 __RTTI__Q26GoalAI8EmitWait:
-  .4byte 0x802bdbcc
-  .4byte 0x802bdbe0
+	.4byte 0x802bdbcc
+	.4byte 0x802bdbe0
 .global __RTTI__Q26GoalAI8EmitPiki
 __RTTI__Q26GoalAI8EmitPiki:
-  .4byte 0x802bdbf8
-  .4byte 0x802bdc0c
+	.4byte 0x802bdbf8
+	.4byte 0x802bdc0c
 .global __RTTI__Q26GoalAI8BootDone
 __RTTI__Q26GoalAI8BootDone:
-  .4byte 0x802bdc24
-  .4byte 0x802bdc38
+	.4byte 0x802bdc24
+	.4byte 0x802bdc38
 .global __RTTI__Q26GoalAI8BootEmit
 __RTTI__Q26GoalAI8BootEmit:
-  .4byte 0x802bdc50
-  .4byte 0x802bdc64
+	.4byte 0x802bdc50
+	.4byte 0x802bdc64
 .global __RTTI__Q26GoalAI8BootInit
 __RTTI__Q26GoalAI8BootInit:
-  .4byte 0x802bdc7c
-  .4byte 0x802bdc90
+	.4byte 0x802bdc7c
+	.4byte 0x802bdc90
 .global __RTTI__Q26GoalAI8WaitInit
 __RTTI__Q26GoalAI8WaitInit:
-  .4byte 0x802bdca8
-  .4byte 0x802bdcbc
+	.4byte 0x802bdca8
+	.4byte 0x802bdcbc
 .global __RTTI__Q26GoalAI11NotFinished
 __RTTI__Q26GoalAI11NotFinished:
-  .4byte 0x802bdcd4
-  .4byte 0x802bdce8
-  .4byte 0x476f616c
-  .4byte 0x41490000
+	.4byte 0x802bdcd4
+	.4byte 0x802bdce8
+	.4byte 0x476f616c
+	.4byte 0x41490000
 .global __RTTI__6GoalAI
 __RTTI__6GoalAI:
-  .4byte 0x803e1ba4
-  .4byte 0x802bdd48
+	.4byte 0x803e1ba4
+	.4byte 0x802bdd48
 .global __RTTI__Q26BombAI7DieExec
 __RTTI__Q26BombAI7DieExec:
-  .4byte 0x802bdd74
-  .4byte 0x802bdd84
+	.4byte 0x802bdd74
+	.4byte 0x802bdd84
 .global __RTTI__Q26BombAI7DieInit
 __RTTI__Q26BombAI7DieInit:
-  .4byte 0x802bdd9c
-  .4byte 0x802bddac
+	.4byte 0x802bdd9c
+	.4byte 0x802bddac
 .global __RTTI__Q26BombAI8MizuExec
 __RTTI__Q26BombAI8MizuExec:
-  .4byte 0x802bddc4
-  .4byte 0x802bddd8
+	.4byte 0x802bddc4
+	.4byte 0x802bddd8
 .global __RTTI__Q26BombAI8MizuInit
 __RTTI__Q26BombAI8MizuInit:
-  .4byte 0x802bddf0
-  .4byte 0x802bde04
+	.4byte 0x802bddf0
+	.4byte 0x802bde04
 .global __RTTI__Q26BombAI8BombExec
 __RTTI__Q26BombAI8BombExec:
-  .4byte 0x802bde1c
-  .4byte 0x802bde30
+	.4byte 0x802bde1c
+	.4byte 0x802bde30
 .global __RTTI__11CndCollPart
 __RTTI__11CndCollPart:
-  .4byte 0x802bde8c
-  .4byte 0
+	.4byte 0x802bde8c
+	.4byte 0
 .global __RTTI__11CndBombable
 __RTTI__11CndBombable:
-  .4byte 0x802bde80
-  .4byte 0x802bde98
+	.4byte 0x802bde80
+	.4byte 0x802bde98
 .global __RTTI__Q26BombAI8BombInit
 __RTTI__Q26BombAI8BombInit:
-  .4byte 0x802bdebc
-  .4byte 0x802bded0
+	.4byte 0x802bdebc
+	.4byte 0x802bded0
 .global __RTTI__Q26BombAI7SetExec
 __RTTI__Q26BombAI7SetExec:
-  .4byte 0x802bdee8
-  .4byte 0x802bdef8
+	.4byte 0x802bdee8
+	.4byte 0x802bdef8
 .global __RTTI__Q26BombAI7SetInit
 __RTTI__Q26BombAI7SetInit:
-  .4byte 0x802bdf10
-  .4byte 0x802bdf20
-  .4byte 0x426f6d62
-  .4byte 0x41490000
+	.4byte 0x802bdf10
+	.4byte 0x802bdf20
+	.4byte 0x426f6d62
+	.4byte 0x41490000
 .global __RTTI__6BombAI
 __RTTI__6BombAI:
-  .4byte 0x803e1c04
-  .4byte 0x802bdf38
+	.4byte 0x803e1c04
+	.4byte 0x802bdf38
 .global __RTTI__Q210PikiHeadAI4Dead
 __RTTI__Q210PikiHeadAI4Dead:
-  .4byte 0x802bdf64
-  .4byte 0x802bdf78
+	.4byte 0x802bdf64
+	.4byte 0x802bdf78
 .global __RTTI__Q210PikiHeadAI10KaretaExec
 __RTTI__Q210PikiHeadAI10KaretaExec:
-  .4byte 0x802bdf90
-  .4byte 0x802bdfa8
+	.4byte 0x802bdf90
+	.4byte 0x802bdfa8
 .global __RTTI__Q210PikiHeadAI10KaretaInit
 __RTTI__Q210PikiHeadAI10KaretaInit:
-  .4byte 0x802bdfc0
-  .4byte 0x802bdfd8
+	.4byte 0x802bdfc0
+	.4byte 0x802bdfd8
 .global __RTTI__Q210PikiHeadAI10GrowEffect
 __RTTI__Q210PikiHeadAI10GrowEffect:
-  .4byte 0x802bdff0
-  .4byte 0x802be008
+	.4byte 0x802bdff0
+	.4byte 0x802be008
 .global __RTTI__Q210PikiHeadAI12GrowupedExec
 __RTTI__Q210PikiHeadAI12GrowupedExec:
-  .4byte 0x802be020
-  .4byte 0x802be03c
+	.4byte 0x802be020
+	.4byte 0x802be03c
 .global __RTTI__Q210PikiHeadAI8WaitExec
 __RTTI__Q210PikiHeadAI8WaitExec:
-  .4byte 0x802be054
-  .4byte 0x802be06c
+	.4byte 0x802be054
+	.4byte 0x802be06c
 .global __RTTI__Q210PikiHeadAI8WaitInit
 __RTTI__Q210PikiHeadAI8WaitInit:
-  .4byte 0x802be084
-  .4byte 0x802be09c
+	.4byte 0x802be084
+	.4byte 0x802be09c
 .global __RTTI__Q210PikiHeadAI8TaneExec
 __RTTI__Q210PikiHeadAI8TaneExec:
-  .4byte 0x802be0b4
-  .4byte 0x802be0cc
+	.4byte 0x802be0b4
+	.4byte 0x802be0cc
 .global __RTTI__Q210PikiHeadAI8TaneInit
 __RTTI__Q210PikiHeadAI8TaneInit:
-  .4byte 0x802be0e4
-  .4byte 0x802be0fc
+	.4byte 0x802be0e4
+	.4byte 0x802be0fc
 .global __RTTI__Q210PikiHeadAI8BuryExec
 __RTTI__Q210PikiHeadAI8BuryExec:
-  .4byte 0x802be114
-  .4byte 0x802be12c
+	.4byte 0x802be114
+	.4byte 0x802be12c
 .global __RTTI__Q210PikiHeadAI8BuryInit
 __RTTI__Q210PikiHeadAI8BuryInit:
-  .4byte 0x802be144
-  .4byte 0x802be15c
+	.4byte 0x802be144
+	.4byte 0x802be15c
 .global __RTTI__Q210PikiHeadAI9BuryExec2
 __RTTI__Q210PikiHeadAI9BuryExec2:
-  .4byte 0x802be174
-  .4byte 0x802be18c
+	.4byte 0x802be174
+	.4byte 0x802be18c
 .global __RTTI__Q210PikiHeadAI9BuryInit2
 __RTTI__Q210PikiHeadAI9BuryInit2:
-  .4byte 0x802be1a4
-  .4byte 0x802be1bc
+	.4byte 0x802be1a4
+	.4byte 0x802be1bc
 .global __RTTI__Q210PikiHeadAI13FlyingCleanup
 __RTTI__Q210PikiHeadAI13FlyingCleanup:
-  .4byte 0x802be1d4
-  .4byte 0x802be1f0
+	.4byte 0x802be1d4
+	.4byte 0x802be1f0
 .global __RTTI__Q210PikiHeadAI10FlyingExec
 __RTTI__Q210PikiHeadAI10FlyingExec:
-  .4byte 0x802be208
-  .4byte 0x802be220
+	.4byte 0x802be208
+	.4byte 0x802be220
 .global __RTTI__Q210PikiHeadAI12FlyingEffect
 __RTTI__Q210PikiHeadAI12FlyingEffect:
-  .4byte 0x802be238
-  .4byte 0x802be254
+	.4byte 0x802be238
+	.4byte 0x802be254
 .global __RTTI__Q210PikiHeadAI11BounceSound
 __RTTI__Q210PikiHeadAI11BounceSound:
-  .4byte 0x802be26c
-  .4byte 0x802be284
+	.4byte 0x802be26c
+	.4byte 0x802be284
 .global __RTTI__10PikiHeadAI
 __RTTI__10PikiHeadAI:
-  .4byte 0x802be29c
-  .4byte 0x802be2a8
+	.4byte 0x802be29c
+	.4byte 0x802be2a8
 .global __RTTI__Q28SluiceAI10DamageInit
 __RTTI__Q28SluiceAI10DamageInit:
-  .4byte 0x802be2d4
-  .4byte 0x802be2ec
+	.4byte 0x802be2d4
+	.4byte 0x802be2ec
 .global __RTTI__Q28SluiceAI10ChangeInit
 __RTTI__Q28SluiceAI10ChangeInit:
-  .4byte 0x802be304
-  .4byte 0x802be31c
+	.4byte 0x802be304
+	.4byte 0x802be31c
 .global __RTTI__Q28SluiceAI8WaitInit
 __RTTI__Q28SluiceAI8WaitInit:
-  .4byte 0x802be334
-  .4byte 0x802be348
+	.4byte 0x802be334
+	.4byte 0x802be348
 .global __RTTI__Q28SluiceAI8AddCount
 __RTTI__Q28SluiceAI8AddCount:
-  .4byte 0x802be360
-  .4byte 0x802be374
+	.4byte 0x802be360
+	.4byte 0x802be374
 .global __RTTI__Q28SluiceAI10MotionDone
 __RTTI__Q28SluiceAI10MotionDone:
-  .4byte 0x802be38c
-  .4byte 0x802be3a4
+	.4byte 0x802be38c
+	.4byte 0x802be3a4
 .global __RTTI__Q28SluiceAI4Init
 __RTTI__Q28SluiceAI4Init:
-  .4byte 0x802be3bc
-  .4byte 0x802be3cc
+	.4byte 0x802be3bc
+	.4byte 0x802be3cc
 .global "__RTTI__22Receiver<10AICreature>_2"
 "__RTTI__22Receiver<10AICreature>_2":
-  .4byte 0x802be3fc
-  .4byte 0
+	.4byte 0x802be3fc
+	.4byte 0
 .global __RTTI__8SluiceAI
 __RTTI__8SluiceAI:
-  .4byte 0x802be490
-  .4byte 0x802be49c
-  .4byte 0
+	.4byte 0x802be490
+	.4byte 0x802be49c
+	.4byte 0
 .global lbl_803E1CE8
 lbl_803E1CE8:
 	.4byte 0x6974656D
@@ -10734,196 +10734,196 @@ lbl_803E1D44:
 	.4byte 0x802BE848
 .global __RTTI__11PikiHeadMgr
 __RTTI__11PikiHeadMgr:
-  .4byte 0x802be7d0
-  .4byte 0x802be874
-  .4byte 0x802be940
-  .4byte 0
+	.4byte 0x802be7d0
+	.4byte 0x802be874
+	.4byte 0x802be940
+	.4byte 0
 .global __RTTI__16PikiHeadItemProp
 __RTTI__16PikiHeadItemProp:
-  .4byte 0x802be92c
-  .4byte 0x802be950
-  .4byte 0x4974656d
-  .4byte 0x4d677200
+	.4byte 0x802be92c
+	.4byte 0x802be950
+	.4byte 0x4974656d
+	.4byte 0x4d677200
 .global __RTTI__13PolyObjectMgr_1
 __RTTI__13PolyObjectMgr_1:
-  .4byte 0x802be968
-  .4byte 0x802be978
+	.4byte 0x802be968
+	.4byte 0x802be978
 .global __RTTI__7ItemMgr
 __RTTI__7ItemMgr:
-  .4byte 0x803e1da0
-  .4byte 0x802be9a4
-  .4byte 0x802bea6c
-  .4byte 0
+	.4byte 0x803e1da0
+	.4byte 0x802be9a4
+	.4byte 0x802bea6c
+	.4byte 0
 .global __RTTI__15InteractBikkuri
 __RTTI__15InteractBikkuri:
-  .4byte 0x802bea5c
-  .4byte 0x802bea78
-  .4byte 0x802beac0
-  .4byte 0
-  .4byte 0x802bead4
-  .4byte 0
-  .4byte 0x802beae0
-  .4byte 0
-  .4byte 0x802beaf0
-  .4byte 0x802beafc
-  .4byte 0x802beb10
-  .4byte 0x802beb1c
-  .4byte 0x802beab0
-  .4byte 0x802beb40
+	.4byte 0x802bea5c
+	.4byte 0x802bea78
+	.4byte 0x802beac0
+	.4byte 0
+	.4byte 0x802bead4
+	.4byte 0
+	.4byte 0x802beae0
+	.4byte 0
+	.4byte 0x802beaf0
+	.4byte 0x802beafc
+	.4byte 0x802beb10
+	.4byte 0x802beb1c
+	.4byte 0x802beab0
+	.4byte 0x802beb40
 .global __RTTI__8DoorProp
 __RTTI__8DoorProp:
-  .4byte 0x802becc8
-  .4byte 0x802becd4
-  .4byte 0x4b657950
-  .4byte 0x726f7000
+	.4byte 0x802becc8
+	.4byte 0x802becd4
+	.4byte 0x4b657950
+	.4byte 0x726f7000
 .global __RTTI__7KeyProp
 __RTTI__7KeyProp:
-  .4byte 0x803e1e00
-  .4byte 0x802becec
+	.4byte 0x803e1e00
+	.4byte 0x802becec
 .global __RTTI__8SeedProp
 __RTTI__8SeedProp:
-  .4byte 0x802bed04
-  .4byte 0x802bed10
+	.4byte 0x802bed04
+	.4byte 0x802bed10
 .global __RTTI__8RopeProp
 __RTTI__8RopeProp:
-  .4byte 0x802bed28
-  .4byte 0x802bed34
+	.4byte 0x802bed28
+	.4byte 0x802bed34
 .global __RTTI__12MizuItemProp
 __RTTI__12MizuItemProp:
-  .4byte 0x802bed4c
-  .4byte 0x802bed5c
+	.4byte 0x802bed4c
+	.4byte 0x802bed5c
 .global __RTTI__12BombItemProp
 __RTTI__12BombItemProp:
-  .4byte 0x802bed74
-  .4byte 0x802bed84
+	.4byte 0x802bed74
+	.4byte 0x802bed84
 .global __RTTI__Q27ItemMgr7UseNode
 __RTTI__Q27ItemMgr7UseNode:
-  .4byte 0x802bed9c
-  .4byte 0x802bedb0
+	.4byte 0x802bed9c
+	.4byte 0x802bedb0
 .global __RTTI__12KusaItemProp
 __RTTI__12KusaItemProp:
-  .4byte 0x802bedd4
-  .4byte 0x802bede4
+	.4byte 0x802bedd4
+	.4byte 0x802bede4
 .global __RTTI__16BuildingItemProp
 __RTTI__16BuildingItemProp:
-  .4byte 0x802bedfc
-  .4byte 0x802bee10
-  .4byte 0x802bee34
-  .4byte 0
+	.4byte 0x802bedfc
+	.4byte 0x802bee10
+	.4byte 0x802bee34
+	.4byte 0
 .global __RTTI__11UfoItemProp
 __RTTI__11UfoItemProp:
-  .4byte 0x802bee60
-  .4byte 0x802bee6c
+	.4byte 0x802bee60
+	.4byte 0x802bee6c
 .global __RTTI__12GoalItemProp
 __RTTI__12GoalItemProp:
-  .4byte 0x802bee84
-  .4byte 0x802bee94
+	.4byte 0x802bee84
+	.4byte 0x802bee94
 .global __RTTI__15CreatureNodeMgr_1
 __RTTI__15CreatureNodeMgr_1:
-  .4byte 0x802beec8
-  .4byte 0x802beed8
+	.4byte 0x802beec8
+	.4byte 0x802beed8
 .global __RTTI__13MeltingPotMgr
 __RTTI__13MeltingPotMgr:
-  .4byte 0x802beeb8
-  .4byte 0x802bef04
+	.4byte 0x802beeb8
+	.4byte 0x802bef04
 .global __RTTI__12CreatureNode
 __RTTI__12CreatureNode:
-  .4byte 0x802befb0
-  .4byte 0x802befc0
+	.4byte 0x802befb0
+	.4byte 0x802befc0
 .global __RTTI__12BuildingItem
 __RTTI__12BuildingItem:
-  .4byte 0x802bf018
-  .4byte 0x802bf028
-  .4byte 0x802bf1f0
-  .4byte 0
-  .4byte 0x802bf204
-  .4byte 0
-  .4byte 0x802bf210
-  .4byte 0
-  .4byte 0x802bf220
-  .4byte 0x802bf22c
-  .4byte 0x802bf240
-  .4byte 0x802bf24c
-  .4byte 0x802bf270
-  .4byte 0x802bf280
+	.4byte 0x802bf018
+	.4byte 0x802bf028
+	.4byte 0x802bf1f0
+	.4byte 0
+	.4byte 0x802bf204
+	.4byte 0
+	.4byte 0x802bf210
+	.4byte 0
+	.4byte 0x802bf220
+	.4byte 0x802bf22c
+	.4byte 0x802bf240
+	.4byte 0x802bf24c
+	.4byte 0x802bf270
+	.4byte 0x802bf280
 .global __RTTI__10ItemObject
 __RTTI__10ItemObject:
-  .4byte 0x802bf2ac
-  .4byte 0x802bf2b8
+	.4byte 0x802bf2ac
+	.4byte 0x802bf2b8
 .global __RTTI__18NaviDemoSunsetGoal
 __RTTI__18NaviDemoSunsetGoal:
-  .4byte 0x802bf1dc
-  .4byte 0x802bf2ec
+	.4byte 0x802bf1dc
+	.4byte 0x802bf2ec
 .global __RTTI__19NaviDemoSunsetStart
 __RTTI__19NaviDemoSunsetStart:
-  .4byte 0x802bf484
-  .4byte 0x802bf498
-  .4byte 0x46756c63
-  .4byte 0x72756d00
+	.4byte 0x802bf484
+	.4byte 0x802bf498
+	.4byte 0x46756c63
+	.4byte 0x72756d00
 .global __RTTI__7Fulcrum
 __RTTI__7Fulcrum:
-  .4byte 0x803e1ec8
-  .4byte 0x802bf630
+	.4byte 0x803e1ec8
+	.4byte 0x802bf630
 .global __RTTI__11BombGenItem
 __RTTI__11BombGenItem:
-  .4byte 0x802bf7c8
-  .4byte 0x802bf7d4
+	.4byte 0x802bf7c8
+	.4byte 0x802bf7d4
 .global __RTTI__8ItemBall
 __RTTI__8ItemBall:
-  .4byte 0x802bfac8
-  .4byte 0x802bfad4
-  .4byte 0x802bfc90
-  .4byte 0
-  .4byte 0x802bfca4
-  .4byte 0
-  .4byte 0x802bfcb0
-  .4byte 0
-  .4byte 0x802bfcc0
-  .4byte 0x802bfccc
-  .4byte 0x802bfce0
-  .4byte 0x802bfcec
-  .4byte 0x802bfd10
-  .4byte 0x802bfd20
+	.4byte 0x802bfac8
+	.4byte 0x802bfad4
+	.4byte 0x802bfc90
+	.4byte 0
+	.4byte 0x802bfca4
+	.4byte 0
+	.4byte 0x802bfcb0
+	.4byte 0
+	.4byte 0x802bfcc0
+	.4byte 0x802bfccc
+	.4byte 0x802bfce0
+	.4byte 0x802bfcec
+	.4byte 0x802bfd10
+	.4byte 0x802bfd20
 .global __RTTI__8MizuItem
 __RTTI__8MizuItem:
-  .4byte 0x802bfc84
-  .4byte 0x802bfd4c
-  .4byte 0x31000000
-  .4byte 0x32000000
-  .4byte 0x33000000
-  .4byte 0x34000000
-  .4byte 0x35000000
-  .4byte 0x36000000
-  .4byte 0x37000000
-  .4byte 0x38000000
-  .4byte 0x39000000
-  .4byte 0x31300000
-  .4byte 0x31310000
-  .4byte 0x31320000
-  .4byte 0x31330000
-  .4byte 0x31340000
-  .4byte 0x31350000
-  .4byte 0x802bff5c
-  .4byte 0
-  .4byte 0x802bff68
-  .4byte 0x802bff78
+	.4byte 0x802bfc84
+	.4byte 0x802bfd4c
+	.4byte 0x31000000
+	.4byte 0x32000000
+	.4byte 0x33000000
+	.4byte 0x34000000
+	.4byte 0x35000000
+	.4byte 0x36000000
+	.4byte 0x37000000
+	.4byte 0x38000000
+	.4byte 0x39000000
+	.4byte 0x31300000
+	.4byte 0x31310000
+	.4byte 0x31320000
+	.4byte 0x31330000
+	.4byte 0x31340000
+	.4byte 0x31350000
+	.4byte 0x802bff5c
+	.4byte 0
+	.4byte 0x802bff68
+	.4byte 0x802bff78
 .global __RTTI__16PaniItemAnimator
 __RTTI__16PaniItemAnimator:
-  .4byte 0x802bff48
-  .4byte 0x802bff84
-  .4byte 0
-  .4byte 0x802c000c
-  .4byte 0
-  .4byte 0x47656e42
-  .4byte 0x61736500
-  .4byte 0x803e1f80
-  .4byte 0x802c0018
-  .4byte 0x802c0024
-  .4byte 0x802c0030
+	.4byte 0x802bff48
+	.4byte 0x802bff84
+	.4byte 0
+	.4byte 0x802c000c
+	.4byte 0
+	.4byte 0x47656e42
+	.4byte 0x61736500
+	.4byte 0x803e1f80
+	.4byte 0x802c0018
+	.4byte 0x802c0024
+	.4byte 0x802c0030
 .global __RTTI__13GenObjectNavi
 __RTTI__13GenObjectNavi:
-  .4byte 0x802bfffc
-  .4byte 0x802c0044
+	.4byte 0x802bfffc
+	.4byte 0x802c0044
 .global DelayPikiBirth
 DelayPikiBirth:
 	.4byte 0x01000000
@@ -11364,62 +11364,62 @@ lbl_803E21E4:
 	.4byte 0x00000000
 .global __RTTI__12InteractSuck
 __RTTI__12InteractSuck:
-  .4byte 0x802c0104
-  .4byte 0x802c0120
+	.4byte 0x802c0104
+	.4byte 0x802c0120
 .global __RTTI__14InteractGeyzer
 __RTTI__14InteractGeyzer:
-  .4byte 0x802c0158
-  .4byte 0x802c0168
+	.4byte 0x802c0158
+	.4byte 0x802c0168
 .global "__RTTI__19StateMachine<4Navi>"
 "__RTTI__19StateMachine<4Navi>":
-  .4byte 0x802c01cc
-  .4byte 0
-  .4byte 0x802c01f8
-  .4byte 0
-  .4byte 0x802c021c
-  .4byte 0
-  .4byte 0x802c025c
-  .4byte 0
-  .4byte 0x414e6f64
-  .4byte 0x65000000
-  .4byte 0x803e2220
-  .4byte 0
-  .4byte 0x802c0310
-  .4byte 0x802c031c
-  .4byte 0x4e6f6465
-  .4byte 0
-  .4byte 0x803e2238
-  .4byte 0x802c0328
+	.4byte 0x802c01cc
+	.4byte 0
+	.4byte 0x802c01f8
+	.4byte 0
+	.4byte 0x802c021c
+	.4byte 0
+	.4byte 0x802c025c
+	.4byte 0
+	.4byte 0x414e6f64
+	.4byte 0x65000000
+	.4byte 0x803e2220
+	.4byte 0
+	.4byte 0x802c0310
+	.4byte 0x802c031c
+	.4byte 0x4e6f6465
+	.4byte 0
+	.4byte 0x803e2238
+	.4byte 0x802c0328
 .global __RTTI__10NaviDrawer
 __RTTI__10NaviDrawer:
-  .4byte 0x802c0304
-  .4byte 0x802c033c
+	.4byte 0x802c0304
+	.4byte 0x802c033c
 .global __RTTI__10PelletView
 __RTTI__10PelletView:
-  .4byte 0x802c03a4
-  .4byte 0
-  .4byte 0x802c03e4
-  .4byte 0
-  .4byte 0x802c0410
-  .4byte 0
-  .4byte 0x802c0448
-  .4byte 0
+	.4byte 0x802c03a4
+	.4byte 0
+	.4byte 0x802c03e4
+	.4byte 0
+	.4byte 0x802c0410
+	.4byte 0
+	.4byte 0x802c0448
+	.4byte 0
 .global __RTTI__8NaviProp
 __RTTI__8NaviProp:
-  .4byte 0x802c043c
-  .4byte 0x802c0458
-  .4byte 0x4e617669
-  .4byte 0
-  .4byte 0x802c04a8
-  .4byte 0
-  .4byte 0x802c04b4
-  .4byte 0
-  .4byte 0x802c04c4
-  .4byte 0x802c04d0
+	.4byte 0x802c043c
+	.4byte 0x802c0458
+	.4byte 0x4e617669
+	.4byte 0
+	.4byte 0x802c04a8
+	.4byte 0
+	.4byte 0x802c04b4
+	.4byte 0
+	.4byte 0x802c04c4
+	.4byte 0x802c04d0
 .global __RTTI__4Navi
 __RTTI__4Navi:
-  .4byte 0x803e2278
-  .4byte 0x802c04e4
+	.4byte 0x803e2278
+	.4byte 0x802c04e4
 .global lbl_803E22A0
 lbl_803E22A0:
 	.4byte 0x00000000
@@ -11931,167 +11931,167 @@ lbl_803E2540:
 	.4byte 0x00000000
 .global "__RTTI__13AState<4Navi>"
 "__RTTI__13AState<4Navi>":
-  .4byte 0x802c06c0
-  .4byte 0x802c06d0
-  .4byte 0x802c06dc
-  .4byte 0x802c06e8
+	.4byte 0x802c06c0
+	.4byte 0x802c06d0
+	.4byte 0x802c06dc
+	.4byte 0x802c06e8
 .global __RTTI__18NaviUfoAccessState
 __RTTI__18NaviUfoAccessState:
-  .4byte 0x802c069c
-  .4byte 0x802c06fc
+	.4byte 0x802c069c
+	.4byte 0x802c06fc
 .global __RTTI__20NaviPartsAccessState
 __RTTI__20NaviPartsAccessState:
-  .4byte 0x802c076c
-  .4byte 0x802c0784
+	.4byte 0x802c076c
+	.4byte 0x802c0784
 .global __RTTI__17NaviStartingState
 __RTTI__17NaviStartingState:
-  .4byte 0x802c07f4
-  .4byte 0x802c0808
+	.4byte 0x802c07f4
+	.4byte 0x802c0808
 .global __RTTI__17NaviPikiZeroState
 __RTTI__17NaviPikiZeroState:
-  .4byte 0x802c0878
-  .4byte 0x802c088c
+	.4byte 0x802c0878
+	.4byte 0x802c088c
 .global __RTTI__13NaviDeadState
 __RTTI__13NaviDeadState:
-  .4byte 0x802c08fc
-  .4byte 0x802c090c
+	.4byte 0x802c08fc
+	.4byte 0x802c090c
 .global __RTTI__15NaviIroIroState
 __RTTI__15NaviIroIroState:
-  .4byte 0x802c097c
-  .4byte 0x802c098c
+	.4byte 0x802c097c
+	.4byte 0x802c098c
 .global __RTTI__14NaviClearState
 __RTTI__14NaviClearState:
-  .4byte 0x802c09fc
-  .4byte 0x802c0a0c
+	.4byte 0x802c09fc
+	.4byte 0x802c0a0c
 .global __RTTI__13NaviLockState
 __RTTI__13NaviLockState:
-  .4byte 0x802c0a7c
-  .4byte 0x802c0a8c
+	.4byte 0x802c0a7c
+	.4byte 0x802c0a8c
 .global __RTTI__15NaviAttackState
 __RTTI__15NaviAttackState:
-  .4byte 0x802c0afc
-  .4byte 0x802c0b0c
+	.4byte 0x802c0afc
+	.4byte 0x802c0b0c
 .global __RTTI__14NaviWaterState
 __RTTI__14NaviWaterState:
-  .4byte 0x802c0b7c
-  .4byte 0x802c0b8c
+	.4byte 0x802c0b7c
+	.4byte 0x802c0b8c
 .global __RTTI__12NaviSowState
 __RTTI__12NaviSowState:
-  .4byte 0x802c0bfc
-  .4byte 0x802c0c0c
+	.4byte 0x802c0bfc
+	.4byte 0x802c0c0c
 .global __RTTI__16NaviPressedState
 __RTTI__16NaviPressedState:
-  .4byte 0x802c0c7c
-  .4byte 0x802c0c90
+	.4byte 0x802c0c7c
+	.4byte 0x802c0c90
 .global __RTTI__19NaviNukuAdjustState
 __RTTI__19NaviNukuAdjustState:
-  .4byte 0x802c0d00
-  .4byte 0x802c0d14
+	.4byte 0x802c0d00
+	.4byte 0x802c0d14
 .global __RTTI__13NaviNukuState
 __RTTI__13NaviNukuState:
-  .4byte 0x802c0d84
-  .4byte 0x802c0d94
+	.4byte 0x802c0d84
+	.4byte 0x802c0d94
 .global __RTTI__17NaviPushPikiState
 __RTTI__17NaviPushPikiState:
-  .4byte 0x802c0e04
-  .4byte 0x802c0e18
+	.4byte 0x802c0e04
+	.4byte 0x802c0e18
 .global __RTTI__13NaviPushState
 __RTTI__13NaviPushState:
-  .4byte 0x802c0e88
-  .4byte 0x802c0e98
+	.4byte 0x802c0e88
+	.4byte 0x802c0e98
 .global __RTTI__14NaviThrowState
 __RTTI__14NaviThrowState:
-  .4byte 0x802c0f08
-  .4byte 0x802c0f18
+	.4byte 0x802c0f08
+	.4byte 0x802c0f18
 .global __RTTI__18NaviThrowWaitState
 __RTTI__18NaviThrowWaitState:
-  .4byte 0x802c0f88
-  .4byte 0x802c0f9c
+	.4byte 0x802c0f88
+	.4byte 0x802c0f9c
 .global __RTTI__16NaviReleaseState
 __RTTI__16NaviReleaseState:
-  .4byte 0x802c100c
-  .4byte 0x802c1020
+	.4byte 0x802c100c
+	.4byte 0x802c1020
 .global __RTTI__15NaviGatherState
 __RTTI__15NaviGatherState:
-  .4byte 0x802c1090
-  .4byte 0x802c10a0
+	.4byte 0x802c1090
+	.4byte 0x802c10a0
 .global __RTTI__15NaviGeyzerState
 __RTTI__15NaviGeyzerState:
-  .4byte 0x802c1110
-  .4byte 0x802c1120
+	.4byte 0x802c1110
+	.4byte 0x802c1120
 .global __RTTI__14NaviFlickState
 __RTTI__14NaviFlickState:
-  .4byte 0x802c1190
-  .4byte 0x802c11a0
+	.4byte 0x802c1190
+	.4byte 0x802c11a0
 .global __RTTI__13NaviIdleState
 __RTTI__13NaviIdleState:
-  .4byte 0x802c1210
-  .4byte 0x802c1220
+	.4byte 0x802c1210
+	.4byte 0x802c1220
 .global __RTTI__16NaviFunbariState
 __RTTI__16NaviFunbariState:
-  .4byte 0x802c1290
-  .4byte 0x802c12a4
+	.4byte 0x802c1290
+	.4byte 0x802c12a4
 .global __RTTI__17NaviRopeExitState
 __RTTI__17NaviRopeExitState:
-  .4byte 0x802c1314
-  .4byte 0x802c1328
+	.4byte 0x802c1314
+	.4byte 0x802c1328
 .global __RTTI__13NaviRopeState
 __RTTI__13NaviRopeState:
-  .4byte 0x802c1398
-  .4byte 0x802c13a8
+	.4byte 0x802c1398
+	.4byte 0x802c13a8
 .global __RTTI__13NaviPickState
 __RTTI__13NaviPickState:
-  .4byte 0x802c1418
-  .4byte 0x802c1428
+	.4byte 0x802c1418
+	.4byte 0x802c1428
 .global __RTTI__Q25GmWin13CloseListener
 __RTTI__Q25GmWin13CloseListener:
-  .4byte 0x802c14ac
-  .4byte 0
+	.4byte 0x802c14ac
+	.4byte 0
 .global __RTTI__Q212ContainerWin8Listener
 __RTTI__Q212ContainerWin8Listener:
-  .4byte 0x802c14c4
-  .4byte 0
+	.4byte 0x802c14c4
+	.4byte 0
 .global __RTTI__18NaviContainerState
 __RTTI__18NaviContainerState:
-  .4byte 0x802c1498
-  .4byte 0x802c14dc
+	.4byte 0x802c1498
+	.4byte 0x802c14dc
 .global __RTTI__12NaviUfoState
 __RTTI__12NaviUfoState:
-  .4byte 0x802c1594
-  .4byte 0x802c15a4
+	.4byte 0x802c1594
+	.4byte 0x802c15a4
 .global __RTTI__13NaviWalkState
 __RTTI__13NaviWalkState:
-  .4byte 0x802c1614
-  .4byte 0x802c1624
+	.4byte 0x802c1614
+	.4byte 0x802c1624
 .global __RTTI__13NaviBuryState
 __RTTI__13NaviBuryState:
-  .4byte 0x802c1694
-  .4byte 0x802c16a4
+	.4byte 0x802c1694
+	.4byte 0x802c16a4
 .global __RTTI__14NaviStuckState
 __RTTI__14NaviStuckState:
-  .4byte 0x802c174c
-  .4byte 0x802c175c
+	.4byte 0x802c174c
+	.4byte 0x802c175c
 .global __RTTI__16NaviDemoInfState
 __RTTI__16NaviDemoInfState:
-  .4byte 0x802c17cc
-  .4byte 0x802c17e0
+	.4byte 0x802c17cc
+	.4byte 0x802c17e0
 .global __RTTI__17NaviDemoWaitState
 __RTTI__17NaviDemoWaitState:
-  .4byte 0x802c1850
-  .4byte 0x802c1864
+	.4byte 0x802c1850
+	.4byte 0x802c1864
 .global __RTTI__15NaviPelletState
 __RTTI__15NaviPelletState:
-  .4byte 0x802c18d4
-  .4byte 0x802c18e4
+	.4byte 0x802c18d4
+	.4byte 0x802c18e4
 .global "__RTTI__19StateMachine<4Navi>_1"
 "__RTTI__19StateMachine<4Navi>_1":
-  .4byte 0x802c1a44
-  .4byte 0
+	.4byte 0x802c1a44
+	.4byte 0
 .global __RTTI__16NaviStateMachine
 __RTTI__16NaviStateMachine:
-  .4byte 0x802c1a30
-  .4byte 0x802c1a58
-  .4byte 0
+	.4byte 0x802c1a30
+	.4byte 0x802c1a58
+	.4byte 0
 .global lbl_803E2698
 lbl_803E2698:
 	.4byte 0x00000000
@@ -12141,55 +12141,55 @@ lbl_803E26D0:
 	.4byte 0x00000000
 .global "__RTTI__13AState<4Navi>_1"
 "__RTTI__13AState<4Navi>_1":
-  .4byte 0x802c1b34
-  .4byte 0x802c1b44
-  .4byte 0x802c1b50
-  .4byte 0x802c1b5c
+	.4byte 0x802c1b34
+	.4byte 0x802c1b44
+	.4byte 0x802c1b50
+	.4byte 0x802c1b5c
 .global __RTTI__19NaviDemoSunsetState
 __RTTI__19NaviDemoSunsetState:
-  .4byte 0x802c1b10
-  .4byte 0x802c1b70
+	.4byte 0x802c1b10
+	.4byte 0x802c1b70
 .global "__RTTI__35StateMachine<19NaviDemoSunsetState>"
 "__RTTI__35StateMachine<19NaviDemoSunsetState>":
-  .4byte 0x802c1be0
-  .4byte 0
+	.4byte 0x802c1be0
+	.4byte 0
 .global "__RTTI__31Receiver<19NaviDemoSunsetState>"
 "__RTTI__31Receiver<19NaviDemoSunsetState>":
-  .4byte 0x802c1d18
-  .4byte 0
+	.4byte 0x802c1d18
+	.4byte 0
 .global "__RTTI__29AState<19NaviDemoSunsetState>"
 "__RTTI__29AState<19NaviDemoSunsetState>":
-  .4byte 0x802c1d38
-  .4byte 0x802c1d54
+	.4byte 0x802c1d38
+	.4byte 0x802c1d54
 .global __RTTI__Q219NaviDemoSunsetState9DemoState
 __RTTI__Q219NaviDemoSunsetState9DemoState:
-  .4byte 0x802c1d60
-  .4byte 0x802c1d80
+	.4byte 0x802c1d60
+	.4byte 0x802c1d80
 .global __RTTI__Q219NaviDemoSunsetState8SitState
 __RTTI__Q219NaviDemoSunsetState8SitState:
-  .4byte 0x802c1cf8
-  .4byte 0x802c1d94
+	.4byte 0x802c1cf8
+	.4byte 0x802c1d94
 .global __RTTI__Q219NaviDemoSunsetState9WaitState
 __RTTI__Q219NaviDemoSunsetState9WaitState:
-  .4byte 0x802c1e00
-  .4byte 0x802c1e20
+	.4byte 0x802c1e00
+	.4byte 0x802c1e20
 .global __RTTI__Q219NaviDemoSunsetState12WhistleState
 __RTTI__Q219NaviDemoSunsetState12WhistleState:
-  .4byte 0x802c1e8c
-  .4byte 0x802c1eb0
+	.4byte 0x802c1e8c
+	.4byte 0x802c1eb0
 .global __RTTI__Q219NaviDemoSunsetState9LookState
 __RTTI__Q219NaviDemoSunsetState9LookState:
-  .4byte 0x802c1f1c
-  .4byte 0x802c1f3c
+	.4byte 0x802c1f1c
+	.4byte 0x802c1f3c
 .global __RTTI__Q219NaviDemoSunsetState7GoState
 __RTTI__Q219NaviDemoSunsetState7GoState:
-  .4byte 0x802c1fa8
-  .4byte 0x802c1fc8
+	.4byte 0x802c1fa8
+	.4byte 0x802c1fc8
 .global __RTTI__Q219NaviDemoSunsetState16DemoStateMachine
 __RTTI__Q219NaviDemoSunsetState16DemoStateMachine:
-  .4byte 0x802c210c
-  .4byte 0x802c2134
-  .4byte 0
+	.4byte 0x802c210c
+	.4byte 0x802c2134
+	.4byte 0
 .global lbl_803E2748
 lbl_803E2748:
 	.4byte 0x3F800000
@@ -12326,8 +12326,8 @@ lbl_803E2818:
 	.4byte 0x802C2444
 .global __RTTI__15GameCoreSection
 __RTTI__15GameCoreSection:
-  .4byte 0x802c241c
-  .4byte 0x802c2458
+	.4byte 0x802c241c
+	.4byte 0x802c2458
 .global lbl_803E2858
 lbl_803E2858:
 	.4byte 0x00000000
@@ -12414,96 +12414,96 @@ lbl_803E28BC:
 	.4byte 0x65637400
 .global __RTTI__7KEffect_1
 __RTTI__7KEffect_1:
-  .4byte 0x803e28d8
-  .4byte 0x802c25b0
+	.4byte 0x803e28d8
+	.4byte 0x802c25b0
 .global __RTTI__10BurnEffect
 __RTTI__10BurnEffect:
-  .4byte 0x802c2514
-  .4byte 0x802c25cc
+	.4byte 0x802c2514
+	.4byte 0x802c25cc
 .global __RTTI__12RippleEffect
 __RTTI__12RippleEffect:
-  .4byte 0x802c262c
-  .4byte 0x802c263c
+	.4byte 0x802c262c
+	.4byte 0x802c263c
 .global __RTTI__15FreeLightEffect
 __RTTI__15FreeLightEffect:
-  .4byte 0x802c269c
-  .4byte 0x802c26ac
+	.4byte 0x802c269c
+	.4byte 0x802c26ac
 .global __RTTI__16UfoSuikomiEffect
 __RTTI__16UfoSuikomiEffect:
-  .4byte 0x802c270c
-  .4byte 0x802c2720
+	.4byte 0x802c270c
+	.4byte 0x802c2720
 .global __RTTI__15WhistleTemplate
 __RTTI__15WhistleTemplate:
-  .4byte 0x802c2790
-  .4byte 0x802c27a0
+	.4byte 0x802c2790
+	.4byte 0x802c27a0
 .global __RTTI__13UfoSuckEffect
 __RTTI__13UfoSuckEffect:
-  .4byte 0x802c2780
-  .4byte 0x802c27c4
+	.4byte 0x802c2780
+	.4byte 0x802c27c4
 .global __RTTI__15BombEffectLight
 __RTTI__15BombEffectLight:
-  .4byte 0x802c2868
-  .4byte 0x802c2878
+	.4byte 0x802c2868
+	.4byte 0x802c2878
 .global __RTTI__10BombEffect
 __RTTI__10BombEffect:
-  .4byte 0x802c28d8
-  .4byte 0x802c28e4
+	.4byte 0x802c28d8
+	.4byte 0x802c28e4
 .global __RTTI__12SimpleEffect
 __RTTI__12SimpleEffect:
-  .4byte 0x802c2944
-  .4byte 0x802c2954
-  .4byte 0x4e617669
-  .4byte 0x46756500
+	.4byte 0x802c2944
+	.4byte 0x802c2954
+	.4byte 0x4e617669
+	.4byte 0x46756500
 .global __RTTI__7NaviFue
 __RTTI__7NaviFue:
-  .4byte 0x803e2930
-  .4byte 0x802c29b4
+	.4byte 0x803e2930
+	.4byte 0x802c29b4
 .global __RTTI__15SmokeTreeEffect
 __RTTI__15SmokeTreeEffect:
-  .4byte 0x802c2a14
-  .4byte 0x802c2a24
+	.4byte 0x802c2a14
+	.4byte 0x802c2a24
 .global __RTTI__15SmokeRockEffect
 __RTTI__15SmokeRockEffect:
-  .4byte 0x802c2a84
-  .4byte 0x802c2a94
+	.4byte 0x802c2a84
+	.4byte 0x802c2a94
 .global __RTTI__16SmokeGrassEffect
 __RTTI__16SmokeGrassEffect:
-  .4byte 0x802c2af4
-  .4byte 0x802c2b08
+	.4byte 0x802c2af4
+	.4byte 0x802c2b08
 .global __RTTI__15SmokeSoilEffect
 __RTTI__15SmokeSoilEffect:
-  .4byte 0x802c2b68
-  .4byte 0x802c2b78
+	.4byte 0x802c2b68
+	.4byte 0x802c2b78
 .global __RTTI__11NaviWhistle
 __RTTI__11NaviWhistle:
-  .4byte 0x802c2bd8
-  .4byte 0x802c2be4
+	.4byte 0x802c2bd8
+	.4byte 0x802c2be4
 .global __RTTI__10GoalEffect
 __RTTI__10GoalEffect:
-  .4byte 0x802c2c44
-  .4byte 0x802c2c50
+	.4byte 0x802c2c44
+	.4byte 0x802c2c50
 .global __RTTI__11SlimeEffect
 __RTTI__11SlimeEffect:
-  .4byte 0x802c2cb0
-  .4byte 0x802c2cbc
-  .4byte 0x414e6f64
-  .4byte 0x65000000
-  .4byte 0x803e2978
-  .4byte 0
-  .4byte 0x802c2dac
-  .4byte 0x802c2db8
-  .4byte 0x4e6f6465
-  .4byte 0
-  .4byte 0x803e2990
-  .4byte 0x802c2dc4
+	.4byte 0x802c2cb0
+	.4byte 0x802c2cbc
+	.4byte 0x414e6f64
+	.4byte 0x65000000
+	.4byte 0x803e2978
+	.4byte 0
+	.4byte 0x802c2dac
+	.4byte 0x802c2db8
+	.4byte 0x4e6f6465
+	.4byte 0
+	.4byte 0x803e2990
+	.4byte 0x802c2dc4
 .global __RTTI__10Controller_1
 __RTTI__10Controller_1:
-  .4byte 0x802c2dd8
-  .4byte 0x802c2de4
+	.4byte 0x802c2dd8
+	.4byte 0x802c2de4
 .global __RTTI__10Kontroller
 __RTTI__10Kontroller:
-  .4byte 0x802c2d90
-  .4byte 0x802c2e00
+	.4byte 0x802c2d90
+	.4byte 0x802c2e00
 .global lbl_803E29B0
 lbl_803E29B0:
 	.4byte 0x00000000
@@ -12552,8 +12552,8 @@ lbl_803E29D0:
 	.4byte 0x802C2F78
 .global __RTTI__7NaviMgr
 __RTTI__7NaviMgr:
-  .4byte 0x803e29d8
-  .4byte 0x802c2fa4
+	.4byte 0x803e29d8
+	.4byte 0x802c2fa4
 .global lbl_803E2A28
 lbl_803E2A28:
 	.4byte 0x00000000
@@ -12665,11 +12665,11 @@ lbl_803E2AC8:
 	.4byte 0x802C3108
 .global __RTTI__17GenObjectMapParts
 __RTTI__17GenObjectMapParts:
-  .4byte 0x802c30d0
-  .4byte 0x802c311c
-  .4byte 0x802c317c
-  .4byte 0
-  .4byte 0
+	.4byte 0x802c30d0
+	.4byte 0x802c311c
+	.4byte 0x802c317c
+	.4byte 0
+	.4byte 0
 .global lbl_803E2B00
 lbl_803E2B00:
 	.4byte 0x00000000
@@ -12723,181 +12723,181 @@ lbl_803E2B30:
 	.4byte 0x802C32AC
 .global __RTTI__12DynCollShape_3
 __RTTI__12DynCollShape_3:
-  .4byte 0x802c32c8
-  .4byte 0x802c32d8
+	.4byte 0x802c32c8
+	.4byte 0x802c32d8
 .global __RTTI__8MapParts
 __RTTI__8MapParts:
-  .4byte 0x802c32fc
-  .4byte 0x802c3308
+	.4byte 0x802c32fc
+	.4byte 0x802c3308
 .global __RTTI__9MapSlider
 __RTTI__9MapSlider:
-  .4byte 0x802c3264
-  .4byte 0x802c3334
+	.4byte 0x802c3264
+	.4byte 0x802c3334
 .global __RTTI__9MapEntity
 __RTTI__9MapEntity:
-  .4byte 0x802c33b4
-  .4byte 0x802c33c0
-  .4byte 0
-  .4byte 0x52554e00
-  .4byte 0x4e494745
-  .4byte 0x52550000
-  .4byte 0x57414c4b
-  .4byte 0
-  .4byte 0x57414954
-  .4byte 0
-  .4byte 0x5049434b
-  .4byte 0
-  .4byte 0x4e554b55
-  .4byte 0
-  .4byte 0x44454144
-  .4byte 0
-  .4byte 0x44454144
-  .4byte 0x32000000
-  .4byte 0x44454144
-  .4byte 0x33000000
-  .4byte 0x44414d41
-  .4byte 0x47450000
-  .4byte 0x41534942
-  .4byte 0x554d4900
-  .4byte 0x4f434152
-  .4byte 0x52590000
-  .4byte 0x4c535542
-  .4byte 0x45525500
-  .4byte 0x52535542
-  .4byte 0x45525500
-  .4byte 0x4a4f4231
-  .4byte 0
-  .4byte 0x47524f57
-  .4byte 0x55503100
-  .4byte 0x47524f57
-  .4byte 0x55503200
-  .4byte 0x4a4f4232
-  .4byte 0
-  .4byte 0x4b4f524f
-  .4byte 0x42550000
-  .4byte 0x4a554d50
-  .4byte 0
-  .4byte 0x41545441
-  .4byte 0x434b0000
-  .4byte 0x50554e43
-  .4byte 0x48000000
-  .4byte 0x4b454e4b
-  .4byte 0x41000000
-  .4byte 0x5448524f
-  .4byte 0x57000000
-  .4byte 0x48414e47
-  .4byte 0
-  .4byte 0x46414c4c
-  .4byte 0
-  .4byte 0x4a4b4f4b
-  .4byte 0x45000000
-  .4byte 0x4a484954
-  .4byte 0
-  .4byte 0x47455455
-  .4byte 0x50000000
-  .4byte 0x4e45574a
-  .4byte 0x4d500000
-  .4byte 0x524f4c4c
-  .4byte 0x4a4d5000
-  .4byte 0x57415645
-  .4byte 0x4a4d5000
-  .4byte 0x50555348
-  .4byte 0
-  .4byte 0x554d4152
-  .4byte 0x55000000
-  .4byte 0x414b5542
-  .4byte 0x49000000
-  .4byte 0x52494e42
-  .4byte 0x4f570000
-  .4byte 0x49524149
-  .4byte 0x52410000
-  .4byte 0x4b414946
-  .4byte 0x554b5500
-  .4byte 0x4b495a55
-  .4byte 0x4b550000
-  .4byte 0x4b555454
-  .4byte 0x554b5500
-  .4byte 0x46554500
-  .4byte 0x53555741
-  .4byte 0x52550000
-  .4byte 0x414f4755
-  .4byte 0
-  .4byte 0x4e455255
-  .4byte 0
-  .4byte 0x50524553
-  .4byte 0x53310000
-  .4byte 0x50524553
-  .4byte 0x53320000
-  .4byte 0x53505245
-  .4byte 0x53530000
-  .4byte 0x4f424f52
-  .4byte 0x45525500
-  .4byte 0x53495a55
-  .4byte 0x4d550000
-  .4byte 0x4f54494b
-  .4byte 0x414b4500
-  .4byte 0x4f544952
-  .4byte 0x55000000
-  .4byte 0x484e4f42
-  .4byte 0x4f525500
-  .4byte 0x4e4f424f
-  .4byte 0x52550000
-  .4byte 0x53414741
-  .4byte 0x53553200
-  .4byte 0x50756e63
-  .4byte 0x68210000
-  .4byte 0x4d4f4552
-  .4byte 0x55000000
-  .4byte 0x45534100
-  .4byte 0x47415454
-  .4byte 0x55000000
-  .4byte 0x47414b4b
-  .4byte 0x41524900
-  .4byte 0x4f4b4f52
-  .4byte 0x55000000
-  .4byte 0x524f544a
-  .4byte 0x554d5000
-  .4byte 0x67776169
-  .4byte 0x74310000
-  .4byte 0x67776169
-  .4byte 0x74320000
-  .4byte 0x67667572
-  .4byte 0x69310000
-  .4byte 0x67667572
-  .4byte 0x69320000
-  .4byte 0x676e756b
-  .4byte 0x65000000
-  .4byte 0x6a756d70
-  .4byte 0x20623100
-  .4byte 0x6d697a75
-  .4byte 0x61676500
-  .4byte 0x73616761
-  .4byte 0x73750000
-  .4byte 0x6f737500
-  .4byte 0x6e6f7275
-  .4byte 0
-  .4byte 0x6f646561
-  .4byte 0x64000000
-  .4byte 0x802c3768
-  .4byte 0
-  .4byte 0x802c3774
-  .4byte 0x802c3784
+	.4byte 0x802c33b4
+	.4byte 0x802c33c0
+	.4byte 0
+	.4byte 0x52554e00
+	.4byte 0x4e494745
+	.4byte 0x52550000
+	.4byte 0x57414c4b
+	.4byte 0
+	.4byte 0x57414954
+	.4byte 0
+	.4byte 0x5049434b
+	.4byte 0
+	.4byte 0x4e554b55
+	.4byte 0
+	.4byte 0x44454144
+	.4byte 0
+	.4byte 0x44454144
+	.4byte 0x32000000
+	.4byte 0x44454144
+	.4byte 0x33000000
+	.4byte 0x44414d41
+	.4byte 0x47450000
+	.4byte 0x41534942
+	.4byte 0x554d4900
+	.4byte 0x4f434152
+	.4byte 0x52590000
+	.4byte 0x4c535542
+	.4byte 0x45525500
+	.4byte 0x52535542
+	.4byte 0x45525500
+	.4byte 0x4a4f4231
+	.4byte 0
+	.4byte 0x47524f57
+	.4byte 0x55503100
+	.4byte 0x47524f57
+	.4byte 0x55503200
+	.4byte 0x4a4f4232
+	.4byte 0
+	.4byte 0x4b4f524f
+	.4byte 0x42550000
+	.4byte 0x4a554d50
+	.4byte 0
+	.4byte 0x41545441
+	.4byte 0x434b0000
+	.4byte 0x50554e43
+	.4byte 0x48000000
+	.4byte 0x4b454e4b
+	.4byte 0x41000000
+	.4byte 0x5448524f
+	.4byte 0x57000000
+	.4byte 0x48414e47
+	.4byte 0
+	.4byte 0x46414c4c
+	.4byte 0
+	.4byte 0x4a4b4f4b
+	.4byte 0x45000000
+	.4byte 0x4a484954
+	.4byte 0
+	.4byte 0x47455455
+	.4byte 0x50000000
+	.4byte 0x4e45574a
+	.4byte 0x4d500000
+	.4byte 0x524f4c4c
+	.4byte 0x4a4d5000
+	.4byte 0x57415645
+	.4byte 0x4a4d5000
+	.4byte 0x50555348
+	.4byte 0
+	.4byte 0x554d4152
+	.4byte 0x55000000
+	.4byte 0x414b5542
+	.4byte 0x49000000
+	.4byte 0x52494e42
+	.4byte 0x4f570000
+	.4byte 0x49524149
+	.4byte 0x52410000
+	.4byte 0x4b414946
+	.4byte 0x554b5500
+	.4byte 0x4b495a55
+	.4byte 0x4b550000
+	.4byte 0x4b555454
+	.4byte 0x554b5500
+	.4byte 0x46554500
+	.4byte 0x53555741
+	.4byte 0x52550000
+	.4byte 0x414f4755
+	.4byte 0
+	.4byte 0x4e455255
+	.4byte 0
+	.4byte 0x50524553
+	.4byte 0x53310000
+	.4byte 0x50524553
+	.4byte 0x53320000
+	.4byte 0x53505245
+	.4byte 0x53530000
+	.4byte 0x4f424f52
+	.4byte 0x45525500
+	.4byte 0x53495a55
+	.4byte 0x4d550000
+	.4byte 0x4f54494b
+	.4byte 0x414b4500
+	.4byte 0x4f544952
+	.4byte 0x55000000
+	.4byte 0x484e4f42
+	.4byte 0x4f525500
+	.4byte 0x4e4f424f
+	.4byte 0x52550000
+	.4byte 0x53414741
+	.4byte 0x53553200
+	.4byte 0x50756e63
+	.4byte 0x68210000
+	.4byte 0x4d4f4552
+	.4byte 0x55000000
+	.4byte 0x45534100
+	.4byte 0x47415454
+	.4byte 0x55000000
+	.4byte 0x47414b4b
+	.4byte 0x41524900
+	.4byte 0x4f4b4f52
+	.4byte 0x55000000
+	.4byte 0x524f544a
+	.4byte 0x554d5000
+	.4byte 0x67776169
+	.4byte 0x74310000
+	.4byte 0x67776169
+	.4byte 0x74320000
+	.4byte 0x67667572
+	.4byte 0x69310000
+	.4byte 0x67667572
+	.4byte 0x69320000
+	.4byte 0x676e756b
+	.4byte 0x65000000
+	.4byte 0x6a756d70
+	.4byte 0x20623100
+	.4byte 0x6d697a75
+	.4byte 0x61676500
+	.4byte 0x73616761
+	.4byte 0x73750000
+	.4byte 0x6f737500
+	.4byte 0x6e6f7275
+	.4byte 0
+	.4byte 0x6f646561
+	.4byte 0x64000000
+	.4byte 0x802c3768
+	.4byte 0
+	.4byte 0x802c3774
+	.4byte 0x802c3784
 .global __RTTI__16PaniPikiAnimator
 __RTTI__16PaniPikiAnimator:
-  .4byte 0x802c3754
-  .4byte 0x802c3790
-  .4byte 0x802c3818
-  .4byte 0
-  .4byte 0x47656e42
-  .4byte 0x61736500
-  .4byte 0x803e2dd8
-  .4byte 0x802c3824
-  .4byte 0x802c3830
-  .4byte 0x802c383c
+	.4byte 0x802c3754
+	.4byte 0x802c3790
+	.4byte 0x802c3818
+	.4byte 0
+	.4byte 0x47656e42
+	.4byte 0x61736500
+	.4byte 0x803e2dd8
+	.4byte 0x802c3824
+	.4byte 0x802c3830
+	.4byte 0x802c383c
 .global __RTTI__14GenObjectActor
 __RTTI__14GenObjectActor:
-  .4byte 0x802c3808
-  .4byte 0x802c3850
+	.4byte 0x802c3808
+	.4byte 0x802c3850
 .global lbl_803E2DF8
 lbl_803E2DF8:
 	.4byte 0x3C4E6F64
@@ -12952,134 +12952,134 @@ lbl_803E2E58:
 	.4byte 0x802C39C8
 .global __RTTI__14GenObjectPlant
 __RTTI__14GenObjectPlant:
-  .4byte 0x802c3994
-  .4byte 0x802c39dc
-  .4byte 0x414e6f64
-  .4byte 0x65000000
-  .4byte 0x803e2e88
-  .4byte 0
-  .4byte lbl_802C38C4
-  .4byte 0x802c3a3c
-  .4byte 0x4e6f6465
-  .4byte 0
-  .4byte 0x803e2ea0
-  .4byte 0x802c3a48
-  .4byte 0x802c3a5c
-  .4byte 0
-  .4byte 0x802c3a68
-  .4byte 0x802c3a74
+	.4byte 0x802c3994
+	.4byte 0x802c39dc
+	.4byte 0x414e6f64
+	.4byte 0x65000000
+	.4byte 0x803e2e88
+	.4byte 0
+	.4byte lbl_802C38C4
+	.4byte 0x802c3a3c
+	.4byte 0x4e6f6465
+	.4byte 0
+	.4byte 0x803e2ea0
+	.4byte 0x802c3a48
+	.4byte 0x802c3a5c
+	.4byte 0
+	.4byte 0x802c3a68
+	.4byte 0x802c3a74
 .global __RTTI__15CreatureNodeMgr_2
 __RTTI__15CreatureNodeMgr_2:
-  .4byte 0x802c3a98
-  .4byte 0x802c3aa8
+	.4byte 0x802c3a98
+	.4byte 0x802c3aa8
 .global __RTTI__8PlantMgr
 __RTTI__8PlantMgr:
-  .4byte 0x802c3a30
-  .4byte 0x802c3ad4
-  .4byte 0x802c3b90
-  .4byte 0
+	.4byte 0x802c3a30
+	.4byte 0x802c3ad4
+	.4byte 0x802c3b90
+	.4byte 0
 .global __RTTI__Q28PlantMgr7UseNode
 __RTTI__Q28PlantMgr7UseNode:
-  .4byte 0x802c3bd8
-  .4byte 0x802c3bec
+	.4byte 0x802c3bd8
+	.4byte 0x802c3bec
 .global __RTTI__9SAIAction_1
 __RTTI__9SAIAction_1:
-  .4byte 0x802c3c70
-  .4byte 0
+	.4byte 0x802c3c70
+	.4byte 0
 .global __RTTI__Q27PlantAI9TouchInit
 __RTTI__Q27PlantAI9TouchInit:
-  .4byte 0x802c3c5c
-  .4byte 0x802c3c7c
+	.4byte 0x802c3c5c
+	.4byte 0x802c3c7c
 .global __RTTI__Q27PlantAI8WaitInit
 __RTTI__Q27PlantAI8WaitInit:
-  .4byte 0x802c3c94
-  .4byte 0x802c3ca8
+	.4byte 0x802c3c94
+	.4byte 0x802c3ca8
 .global __RTTI__12SAICondition_2
 __RTTI__12SAICondition_2:
-  .4byte 0x802c3cd8
-  .4byte 0x802c3ce8
+	.4byte 0x802c3cd8
+	.4byte 0x802c3ce8
 .global __RTTI__Q27PlantAI12OpponentMove
 __RTTI__Q27PlantAI12OpponentMove:
-  .4byte 0x802c3cc0
-  .4byte 0x802c3cfc
-  .4byte 0x506c616e
-  .4byte 0x74414900
+	.4byte 0x802c3cc0
+	.4byte 0x802c3cfc
+	.4byte 0x506c616e
+	.4byte 0x74414900
 .global "__RTTI__26StateMachine<10AICreature>_2"
 "__RTTI__26StateMachine<10AICreature>_2":
-  .4byte 0x802c3d68
-  .4byte 0
+	.4byte 0x802c3d68
+	.4byte 0
 .global __RTTI__8SimpleAI_2
 __RTTI__8SimpleAI_2:
-  .4byte 0x802c3d84
-  .4byte 0x802c3d90
+	.4byte 0x802c3d84
+	.4byte 0x802c3d90
 .global __RTTI__7PlantAI
 __RTTI__7PlantAI:
-  .4byte 0x803e2f08
-  .4byte 0x802c3d9c
-  .4byte 0x506c616e
-  .4byte 0x74000000
-  .4byte 0x802c3dc8
-  .4byte 0
-  .4byte 0x802c3ddc
-  .4byte 0
-  .4byte 0x802c3de8
-  .4byte 0
-  .4byte 0x802c3df8
-  .4byte 0x802c3e04
-  .4byte 0x802c3e18
-  .4byte 0x802c3e24
+	.4byte 0x803e2f08
+	.4byte 0x802c3d9c
+	.4byte 0x506c616e
+	.4byte 0x74000000
+	.4byte 0x802c3dc8
+	.4byte 0
+	.4byte 0x802c3ddc
+	.4byte 0
+	.4byte 0x802c3de8
+	.4byte 0
+	.4byte 0x802c3df8
+	.4byte 0x802c3e04
+	.4byte 0x802c3e18
+	.4byte 0x802c3e24
 .global __RTTI__5Plant
 __RTTI__5Plant:
-  .4byte 0x803e2f28
-  .4byte 0x802c3e48
-  .4byte 0x31000000
-  .4byte 0x32000000
-  .4byte 0x33000000
-  .4byte 0x34000000
-  .4byte 0x35000000
-  .4byte 0x36000000
-  .4byte 0x37000000
-  .4byte 0x802c402c
-  .4byte 0
-  .4byte 0x802c4038
-  .4byte 0x802c4048
+	.4byte 0x803e2f28
+	.4byte 0x802c3e48
+	.4byte 0x31000000
+	.4byte 0x32000000
+	.4byte 0x33000000
+	.4byte 0x34000000
+	.4byte 0x35000000
+	.4byte 0x36000000
+	.4byte 0x37000000
+	.4byte 0x802c402c
+	.4byte 0
+	.4byte 0x802c4038
+	.4byte 0x802c4048
 .global __RTTI__17PaniPlantAnimator
 __RTTI__17PaniPlantAnimator:
-  .4byte 0x802c4018
-  .4byte 0x802c4054
-  .4byte 0
-  .4byte 0x802c40c8
-  .4byte 0
-  .4byte 0x47656e42
-  .4byte 0x61736500
-  .4byte 0x803e2fa0
-  .4byte 0x802c40d4
-  .4byte 0x802c40e0
-  .4byte 0x802c40ec
+	.4byte 0x802c4018
+	.4byte 0x802c4054
+	.4byte 0
+	.4byte 0x802c40c8
+	.4byte 0
+	.4byte 0x47656e42
+	.4byte 0x61736500
+	.4byte 0x803e2fa0
+	.4byte 0x802c40d4
+	.4byte 0x802c40e0
+	.4byte 0x802c40ec
 .global __RTTI__13GenObjectTeki
 __RTTI__13GenObjectTeki:
-  .4byte 0x802c40b8
-  .4byte 0x802c4100
+	.4byte 0x802c40b8
+	.4byte 0x802c4100
 .global __RTTI__9NFunction
 __RTTI__9NFunction:
-  .4byte 0x802c4190
-  .4byte 0
+	.4byte 0x802c4190
+	.4byte 0
 .global __RTTI__18NVibrationFunction
 __RTTI__18NVibrationFunction:
-  .4byte 0x802c417c
-  .4byte 0x802c419c
+	.4byte 0x802c417c
+	.4byte 0x802c419c
 .global __RTTI__19NPolynomialFunction
 __RTTI__19NPolynomialFunction:
-  .4byte 0x802c41cc
-  .4byte 0x802c41e0
+	.4byte 0x802c41cc
+	.4byte 0x802c41e0
 .global __RTTI__15NLinearFunction
 __RTTI__15NLinearFunction:
-  .4byte 0x802c41ec
-  .4byte 0x802c41fc
+	.4byte 0x802c41ec
+	.4byte 0x802c41fc
 .global __RTTI__20NClampLinearFunction
 __RTTI__20NClampLinearFunction:
-  .4byte 0x802c41b4
-  .4byte 0x802c4210
+	.4byte 0x802c41b4
+	.4byte 0x802c4210
 .global lbl_803E2FE8
 lbl_803E2FE8:
 	.4byte 0x00000000
@@ -13093,45 +13093,45 @@ lbl_803E2FF0:
 	.4byte 0x68610000
 .global __RTTI__6NAlpha
 __RTTI__6NAlpha:
-  .4byte 0x803e2ff4
-  .4byte 0
+	.4byte 0x803e2ff4
+	.4byte 0
 .global __RTTI__14NSpecialMatrix
 __RTTI__14NSpecialMatrix:
-  .4byte 0x802c42a4
-  .4byte 0
+	.4byte 0x802c42a4
+	.4byte 0
 .global __RTTI__8LUMatrix
 __RTTI__8LUMatrix:
-  .4byte 0x802c4298
-  .4byte 0x802c42b4
+	.4byte 0x802c4298
+	.4byte 0x802c42b4
 .global __RTTI__12NUpperMatrix
 __RTTI__12NUpperMatrix:
-  .4byte 0x802c42cc
-  .4byte 0x802c42dc
+	.4byte 0x802c42cc
+	.4byte 0x802c42dc
 .global __RTTI__12NLowerMatrix
 __RTTI__12NLowerMatrix:
-  .4byte 0x802c42f4
-  .4byte 0x802c4304
+	.4byte 0x802c42f4
+	.4byte 0x802c4304
 .global __RTTI__10NPosture3D
 __RTTI__10NPosture3D:
-  .4byte 0x802c4328
-  .4byte 0
+	.4byte 0x802c4328
+	.4byte 0
 .global __RTTI__10NPosture2D
 __RTTI__10NPosture2D:
-  .4byte 0x802c4340
-  .4byte 0
-  .4byte 0
-  .4byte 0x4e4c696e
-  .4byte 0x65000000
+	.4byte 0x802c4340
+	.4byte 0
+	.4byte 0
+	.4byte 0x4e4c696e
+	.4byte 0x65000000
 .global __RTTI__5NLine
 __RTTI__5NLine:
-  .4byte 0x803e3038
-  .4byte 0
-  .4byte 0x4e506c61
-  .4byte 0x6e650000
+	.4byte 0x803e3038
+	.4byte 0
+	.4byte 0x4e506c61
+	.4byte 0x6e650000
 .global __RTTI__6NPlane
 __RTTI__6NPlane:
-  .4byte 0x803e3048
-  .4byte 0
+	.4byte 0x803e3048
+	.4byte 0
 .global lbl_803E3058
 lbl_803E3058:
 	.4byte 0x00000000
@@ -13166,58 +13166,58 @@ pi__6NMathF:
 	.4byte 0x70000000
 .global __RTTI__5NHeap
 __RTTI__5NHeap:
-  .4byte 0x803e3080
-  .4byte 0
+	.4byte 0x803e3080
+	.4byte 0
 .global "__RTTI__14NArray<5NHeap>"
 "__RTTI__14NArray<5NHeap>":
-  .4byte 0x802c4bc4
-  .4byte 0
-  .4byte 0x4e4e6f64
-  .4byte 0x65000000
-  .4byte 0x803e3098
-  .4byte 0
+	.4byte 0x802c4bc4
+	.4byte 0
+	.4byte 0x4e4e6f64
+	.4byte 0x65000000
+	.4byte 0x803e3098
+	.4byte 0
 .global "__RTTI__14NArray<5NNode>"
 "__RTTI__14NArray<5NNode>":
-  .4byte 0x802c4c34
-  .4byte 0
-  .4byte 0x802c4d1c
-  .4byte 0
-  .4byte 0x802c4d0c
-  .4byte 0x802c4d28
-  .4byte 0x44454144
-  .4byte 0
-  .4byte 0x44414d41
-  .4byte 0x47450000
-  .4byte 0x57414954
-  .4byte 0x5f310000
-  .4byte 0x57414954
-  .4byte 0x5f320000
-  .4byte 0x4d4f5645
-  .4byte 0x5f310000
-  .4byte 0x4d4f5645
-  .4byte 0x5f320000
-  .4byte 0x41545441
-  .4byte 0x434b0000
-  .4byte 0x464c4943
-  .4byte 0x4b000000
-  .4byte 0x54595045
-  .4byte 0x5f310000
-  .4byte 0x54595045
-  .4byte 0x5f320000
-  .4byte 0x54595045
-  .4byte 0x5f330000
-  .4byte 0x54595045
-  .4byte 0x5f340000
-  .4byte 0x54595045
-  .4byte 0x5f350000
-  .4byte 0x802c4dec
-  .4byte 0
-  .4byte 0x802c4df8
-  .4byte 0x802c4e08
+	.4byte 0x802c4c34
+	.4byte 0
+	.4byte 0x802c4d1c
+	.4byte 0
+	.4byte 0x802c4d0c
+	.4byte 0x802c4d28
+	.4byte 0x44454144
+	.4byte 0
+	.4byte 0x44414d41
+	.4byte 0x47450000
+	.4byte 0x57414954
+	.4byte 0x5f310000
+	.4byte 0x57414954
+	.4byte 0x5f320000
+	.4byte 0x4d4f5645
+	.4byte 0x5f310000
+	.4byte 0x4d4f5645
+	.4byte 0x5f320000
+	.4byte 0x41545441
+	.4byte 0x434b0000
+	.4byte 0x464c4943
+	.4byte 0x4b000000
+	.4byte 0x54595045
+	.4byte 0x5f310000
+	.4byte 0x54595045
+	.4byte 0x5f320000
+	.4byte 0x54595045
+	.4byte 0x5f330000
+	.4byte 0x54595045
+	.4byte 0x5f340000
+	.4byte 0x54595045
+	.4byte 0x5f350000
+	.4byte 0x802c4dec
+	.4byte 0
+	.4byte 0x802c4df8
+	.4byte 0x802c4e08
 .global __RTTI__16PaniTekiAnimator
 __RTTI__16PaniTekiAnimator:
-  .4byte 0x802c4dd8
-  .4byte 0x802c4e14
+	.4byte 0x802c4dd8
+	.4byte 0x802c4e14
 .global lbl_803E3140
 lbl_803E3140:
 	.4byte 0x00000000
@@ -13316,34 +13316,34 @@ lbl_803E31B0:
 	.4byte 0x802C4F60
 .global __RTTI__15PaniTestSection
 __RTTI__15PaniTestSection:
-  .4byte 0x802c4f24
-  .4byte 0x802c4f7c
-  .4byte 0x802c4fd4
-  .4byte 0
+	.4byte 0x802c4f24
+	.4byte 0x802c4f7c
+	.4byte 0x802c4fd4
+	.4byte 0
 .global __RTTI__12PaniTestNode
 __RTTI__12PaniTestNode:
-  .4byte 0x802c4e6c
-  .4byte 0x802c4fe8
+	.4byte 0x802c4e6c
+	.4byte 0x802c4fe8
 .global __RTTI__19ParaMultiParameters
 __RTTI__19ParaMultiParameters:
-  .4byte 0x802c509c
-  .4byte 0
+	.4byte 0x802c509c
+	.4byte 0
 .global "__RTTI__17ParaParameters<f>"
 "__RTTI__17ParaParameters<f>":
-  .4byte 0x802c50d4
-  .4byte 0
+	.4byte 0x802c50d4
+	.4byte 0
 .global __RTTI__15ParaParametersF
 __RTTI__15ParaParametersF:
-  .4byte 0x802c50c4
-  .4byte 0x802c50ec
+	.4byte 0x802c50c4
+	.4byte 0x802c50ec
 .global "__RTTI__17ParaParameters<i>"
 "__RTTI__17ParaParameters<i>":
-  .4byte 0x802c5130
-  .4byte 0
+	.4byte 0x802c5130
+	.4byte 0
 .global __RTTI__15ParaParametersI
 __RTTI__15ParaParametersI:
-  .4byte 0x802c5120
-  .4byte 0x802c5144
+	.4byte 0x802c5120
+	.4byte 0x802c5144
 .global lbl_803E3230
 lbl_803E3230:
 	.4byte 0x63616D65
@@ -13352,62 +13352,62 @@ lbl_803E3230:
 	.4byte 0x65726100
 .global __RTTI__7NCamera
 __RTTI__7NCamera:
-  .4byte 0x803e3238
-  .4byte 0
+	.4byte 0x803e3238
+	.4byte 0
 .global __RTTI__10PcamCamera
 __RTTI__10PcamCamera:
-  .4byte 0x802c51d0
-  .4byte 0x802c51dc
+	.4byte 0x802c51d0
+	.4byte 0x802c51dc
 .global "__RTTI__17NArray<8Creature>"
 "__RTTI__17NArray<8Creature>":
-  .4byte 0x802c51f4
-  .4byte 0
-  .4byte 0x414e6f64
-  .4byte 0x65000000
-  .4byte 0x803e3258
-  .4byte 0
-  .4byte 0x802c5288
-  .4byte 0x802c5294
-  .4byte 0x4e6f6465
-  .4byte 0
-  .4byte 0x803e3270
-  .4byte 0x802c52a0
+	.4byte 0x802c51f4
+	.4byte 0
+	.4byte 0x414e6f64
+	.4byte 0x65000000
+	.4byte 0x803e3258
+	.4byte 0
+	.4byte 0x802c5288
+	.4byte 0x802c5294
+	.4byte 0x4e6f6465
+	.4byte 0
+	.4byte 0x803e3270
+	.4byte 0x802c52a0
 .global __RTTI__17PcamCameraManager
 __RTTI__17PcamCameraManager:
-  .4byte lbl_802C5274
-  .4byte 0x802c52b4
-  .4byte 0x4e4e6f64
-  .4byte 0x65000000
-  .4byte 0x803e3288
-  .4byte 0
-  .4byte 0x802c5364
-  .4byte 0x802c5370
+	.4byte lbl_802C5274
+	.4byte 0x802c52b4
+	.4byte 0x4e4e6f64
+	.4byte 0x65000000
+	.4byte 0x803e3288
+	.4byte 0
+	.4byte 0x802c5364
+	.4byte 0x802c5370
 .global __RTTI__22PcamSideVibrationEvent
 __RTTI__22PcamSideVibrationEvent:
-  .4byte 0x802c534c
-  .4byte 0x802c537c
+	.4byte 0x802c534c
+	.4byte 0x802c537c
 .global __RTTI__19PcamRandomMoveEvent
 __RTTI__19PcamRandomMoveEvent:
-  .4byte 0x802c53e4
-  .4byte 0x802c53f8
-  .4byte 0x802c5458
-  .4byte 0x802c546c
+	.4byte 0x802c53e4
+	.4byte 0x802c53f8
+	.4byte 0x802c5458
+	.4byte 0x802c546c
 .global __RTTI__15PcamDamageEvent
 __RTTI__15PcamDamageEvent:
-  .4byte 0x802c5448
-  .4byte 0x802c5480
+	.4byte 0x802c5448
+	.4byte 0x802c5480
 .global __RTTI__18PcamVibrationEvent
 __RTTI__18PcamVibrationEvent:
-  .4byte 0x802c54d8
-  .4byte 0x802c54ec
+	.4byte 0x802c54d8
+	.4byte 0x802c54ec
 .global __RTTI__15PeveSerialEvent
 __RTTI__15PeveSerialEvent:
-  .4byte 0x802c555c
-  .4byte 0x802c556c
+	.4byte 0x802c555c
+	.4byte 0x802c556c
 .global __RTTI__22PcamLongVibrationEvent
 __RTTI__22PcamLongVibrationEvent:
-  .4byte 0x802c5544
-  .4byte 0x802c5580
+	.4byte 0x802c5544
+	.4byte 0x802c5580
 .global lbl_803E32D8
 lbl_803E32D8:
 	.4byte 0x3C4E6F64
@@ -13424,300 +13424,300 @@ lbl_803E32D8:
 	.4byte 0x802C5B00
 .global __RTTI__20PcamCameraParameters
 __RTTI__20PcamCameraParameters:
-  .4byte 0x802c5ad0
-  .4byte 0x802c5b14
+	.4byte 0x802c5ad0
+	.4byte 0x802c5b14
 .global __RTTI__11NVector3fIO
 __RTTI__11NVector3fIO:
-  .4byte 0x802c5ba0
-  .4byte 0
+	.4byte 0x802c5ba0
+	.4byte 0
 .global __RTTI__16NVector3fIOClass
 __RTTI__16NVector3fIOClass:
-  .4byte 0x802c5bac
-  .4byte 0x802c5bc0
+	.4byte 0x802c5bac
+	.4byte 0x802c5bc0
 .global __RTTI__19PeveClampVector3fIO
 __RTTI__19PeveClampVector3fIO:
-  .4byte 0x802c5b8c
-  .4byte 0x802c5bcc
+	.4byte 0x802c5b8c
+	.4byte 0x802c5bcc
 .global __RTTI__22PeveCreaturePositionIO
 __RTTI__22PeveCreaturePositionIO:
-  .4byte 0x802c5c00
-  .4byte 0x802c5c18
+	.4byte 0x802c5c00
+	.4byte 0x802c5c18
 .global __RTTI__12NPosture3DIO
 __RTTI__12NPosture3DIO:
-  .4byte 0x802c5c48
-  .4byte 0
+	.4byte 0x802c5c48
+	.4byte 0
 .global __RTTI__19PeveCameraPostureIO
 __RTTI__19PeveCameraPostureIO:
-  .4byte 0x802c5c34
-  .4byte 0x802c5c58
+	.4byte 0x802c5c34
+	.4byte 0x802c5c58
 .global __RTTI__22PeveCameraWatchpointIO
 __RTTI__22PeveCameraWatchpointIO:
-  .4byte 0x802c5c84
-  .4byte 0x802c5c9c
+	.4byte 0x802c5c84
+	.4byte 0x802c5c9c
 .global __RTTI__21PeveCameraViewpointIO
 __RTTI__21PeveCameraViewpointIO:
-  .4byte 0x802c5cb8
-  .4byte 0x802c5cd0
-  .4byte 0x4e4e6f64
-  .4byte 0x65000000
-  .4byte 0x803e3350
-  .4byte 0
-  .4byte 0x802c5d0c
-  .4byte 0x802c5d18
+	.4byte 0x802c5cb8
+	.4byte 0x802c5cd0
+	.4byte 0x4e4e6f64
+	.4byte 0x65000000
+	.4byte 0x803e3350
+	.4byte 0
+	.4byte 0x802c5d0c
+	.4byte 0x802c5d18
 .global __RTTI__15PeveSerialEvent_1
 __RTTI__15PeveSerialEvent_1:
-  .4byte 0x802c5cfc
-  .4byte 0x802c5d24
-  .4byte 0x802c5d74
-  .4byte 0x802c5d88
+	.4byte 0x802c5cfc
+	.4byte 0x802c5d24
+	.4byte 0x802c5d74
+	.4byte 0x802c5d88
 .global __RTTI__13PeveCondition
 __RTTI__13PeveCondition:
-  .4byte 0x802c5e14
-  .4byte 0
+	.4byte 0x802c5e14
+	.4byte 0
 .global __RTTI__13PeveCondition_1
 __RTTI__13PeveCondition_1:
-  .4byte 0x802c5e78
-  .4byte 0
+	.4byte 0x802c5e78
+	.4byte 0
 .global __RTTI__20PeveBooleanCondition
 __RTTI__20PeveBooleanCondition:
-  .4byte 0x802c5e88
-  .4byte 0x802c5ea0
+	.4byte 0x802c5e88
+	.4byte 0x802c5ea0
 .global __RTTI__24PeveComparisonYCondition
 __RTTI__24PeveComparisonYCondition:
-  .4byte 0x802c5e5c
-  .4byte 0x802c5eac
+	.4byte 0x802c5e5c
+	.4byte 0x802c5eac
 .global __RTTI__21PeveDistanceCondition
 __RTTI__21PeveDistanceCondition:
-  .4byte 0x802c5ed4
-  .4byte 0x802c5eec
+	.4byte 0x802c5ed4
+	.4byte 0x802c5eec
 .global __RTTI__17PeveTimeCondition
 __RTTI__17PeveTimeCondition:
-  .4byte 0x802c5f14
-  .4byte 0x802c5f28
+	.4byte 0x802c5f14
+	.4byte 0x802c5f28
 .global __RTTI__23PeveDependenceCondition
 __RTTI__23PeveDependenceCondition:
-  .4byte 0x802c5f48
-  .4byte 0x802c5f60
-  .4byte 0x4e4e6f64
-  .4byte 0x65000000
-  .4byte 0x803e33b0
-  .4byte 0
-  .4byte 0x802c5fd8
-  .4byte 0x802c5fe4
-  .4byte 0x802c5fc4
-  .4byte 0x802c5ff0
+	.4byte 0x802c5f48
+	.4byte 0x802c5f60
+	.4byte 0x4e4e6f64
+	.4byte 0x65000000
+	.4byte 0x803e33b0
+	.4byte 0
+	.4byte 0x802c5fd8
+	.4byte 0x802c5fe4
+	.4byte 0x802c5fc4
+	.4byte 0x802c5ff0
 .global __RTTI__13PeveMoveEvent
 __RTTI__13PeveMoveEvent:
-  .4byte 0x802c6058
-  .4byte 0x802c6068
+	.4byte 0x802c6058
+	.4byte 0x802c6068
 .global __RTTI__22PeveInterpolationEvent
 __RTTI__22PeveInterpolationEvent:
-  .4byte 0x802c60b8
-  .4byte 0x802c60d0
-  .4byte 0x802c6154
-  .4byte 0x802c6168
+	.4byte 0x802c60b8
+	.4byte 0x802c60d0
+	.4byte 0x802c6154
+	.4byte 0x802c6168
 .global __RTTI__22PeveHomingPostureEvent
 __RTTI__22PeveHomingPostureEvent:
-  .4byte 0x802c613c
-  .4byte 0x802c617c
+	.4byte 0x802c613c
+	.4byte 0x802c617c
 .global __RTTI__23PeveHomingPositionEvent
 __RTTI__23PeveHomingPositionEvent:
-  .4byte 0x802c61d4
-  .4byte 0x802c61ec
+	.4byte 0x802c61d4
+	.4byte 0x802c61ec
 .global __RTTI__22PeveFunctionCurveEvent
 __RTTI__22PeveFunctionCurveEvent:
-  .4byte 0x802c623c
-  .4byte 0x802c6254
+	.4byte 0x802c623c
+	.4byte 0x802c6254
 .global __RTTI__24PeveCircleMoveWatchEvent
 __RTTI__24PeveCircleMoveWatchEvent:
-  .4byte 0x802c62a4
-  .4byte 0x802c62c0
+	.4byte 0x802c62a4
+	.4byte 0x802c62c0
 .global __RTTI__19PeveCircleMoveEvent
 __RTTI__19PeveCircleMoveEvent:
-  .4byte 0x802c6318
-  .4byte 0x802c632c
+	.4byte 0x802c6318
+	.4byte 0x802c632c
 .global __RTTI__26PeveHorizontalSinWaveEvent
 __RTTI__26PeveHorizontalSinWaveEvent:
-  .4byte 0x802c637c
-  .4byte 0x802c6398
+	.4byte 0x802c637c
+	.4byte 0x802c6398
 .global __RTTI__11NVector3fIO_1
 __RTTI__11NVector3fIO_1:
-  .4byte 0x802c63fc
-  .4byte 0
+	.4byte 0x802c63fc
+	.4byte 0
 .global __RTTI__21PeveAccelerationEvent
 __RTTI__21PeveAccelerationEvent:
-  .4byte 0x802c6448
-  .4byte 0x802c6460
+	.4byte 0x802c6448
+	.4byte 0x802c6460
 .global __RTTI__17PeveParabolaEvent
 __RTTI__17PeveParabolaEvent:
-  .4byte 0x802c6434
-  .4byte 0x802c6474
+	.4byte 0x802c6434
+	.4byte 0x802c6474
 .global __RTTI__13PeveWaitEvent
 __RTTI__13PeveWaitEvent:
-  .4byte 0x802c6508
-  .4byte 0x802c6518
-  .4byte 0x802c6574
-  .4byte 0
-  .4byte 0x802c6568
-  .4byte 0x802c6584
+	.4byte 0x802c6508
+	.4byte 0x802c6518
+	.4byte 0x802c6574
+	.4byte 0
+	.4byte 0x802c6568
+	.4byte 0x802c6584
 .global __RTTI__8TaiState
 __RTTI__8TaiState:
-  .4byte 0x802c65b8
-  .4byte 0
-  .4byte 0x802c65ec
-  .4byte 0
+	.4byte 0x802c65b8
+	.4byte 0
+	.4byte 0x802c65ec
+	.4byte 0
 .global __RTTI__15TaiSerialAction
 __RTTI__15TaiSerialAction:
-  .4byte 0x802c65dc
-  .4byte 0x802c65f8
-  .4byte 0x802c6684
-  .4byte 0
-  .4byte 0x802c6690
-  .4byte 0x802c66a0
+	.4byte 0x802c65dc
+	.4byte 0x802c65f8
+	.4byte 0x802c6684
+	.4byte 0
+	.4byte 0x802c6690
+	.4byte 0x802c66a0
 .global __RTTI__22TaiFlickingUpperAction
 __RTTI__22TaiFlickingUpperAction:
-  .4byte 0x802c666c
-  .4byte 0x802c66ac
+	.4byte 0x802c666c
+	.4byte 0x802c66ac
 .global __RTTI__17TaiFlickingAction
 __RTTI__17TaiFlickingAction:
-  .4byte 0x802c66dc
-  .4byte 0x802c66f0
+	.4byte 0x802c66dc
+	.4byte 0x802c66f0
 .global __RTTI__20TaiTargetStickAction
 __RTTI__20TaiTargetStickAction:
-  .4byte 0x802c6720
-  .4byte 0x802c6738
+	.4byte 0x802c6720
+	.4byte 0x802c6738
 .global __RTTI__14TaiFlickAction
 __RTTI__14TaiFlickAction:
-  .4byte 0x802c6760
-  .4byte 0x802c6770
+	.4byte 0x802c6760
+	.4byte 0x802c6770
 .global __RTTI__16TaiBangingAction
 __RTTI__16TaiBangingAction:
-  .4byte 0x802c6798
-  .4byte 0x802c67ac
-  .4byte 0x802c6820
-  .4byte 0
-  .4byte 0x802c682c
-  .4byte 0x802c683c
+	.4byte 0x802c6798
+	.4byte 0x802c67ac
+	.4byte 0x802c6820
+	.4byte 0
+	.4byte 0x802c682c
+	.4byte 0x802c683c
 .global __RTTI__16TekiAndCondition
 __RTTI__16TekiAndCondition:
-  .4byte 0x802c680c
-  .4byte 0x802c6848
+	.4byte 0x802c680c
+	.4byte 0x802c6848
 .global __RTTI__16TekiNotCondition
 __RTTI__16TekiNotCondition:
-  .4byte 0x802c6868
-  .4byte 0x802c687c
+	.4byte 0x802c6868
+	.4byte 0x802c687c
 .global __RTTI__28TaiAnimationSwallowingAction
 __RTTI__28TaiAnimationSwallowingAction:
-  .4byte 0x802c689c
-  .4byte 0x802c68bc
+	.4byte 0x802c689c
+	.4byte 0x802c68bc
 .global __RTTI__23TaiAttackablePikiAction
 __RTTI__23TaiAttackablePikiAction:
-  .4byte 0x802c68e4
-  .4byte 0x802c68fc
+	.4byte 0x802c68e4
+	.4byte 0x802c68fc
 .global __RTTI__23TaiAttackableNaviAction
 __RTTI__23TaiAttackableNaviAction:
-  .4byte 0x802c6924
-  .4byte 0x802c693c
+	.4byte 0x802c6924
+	.4byte 0x802c693c
 .global __RTTI__27TaiAttackableNaviPikiAction
 __RTTI__27TaiAttackableNaviPikiAction:
-  .4byte 0x802c697c
-  .4byte 0x802c6998
-  .4byte 0x802c6a00
-  .4byte 0
+	.4byte 0x802c697c
+	.4byte 0x802c6998
+	.4byte 0x802c6a00
+	.4byte 0
 .global __RTTI__26TaiNaviWatchResultOnAction
 __RTTI__26TaiNaviWatchResultOnAction:
-  .4byte 0x802c69e4
-  .4byte 0x802c6a0c
+	.4byte 0x802c69e4
+	.4byte 0x802c6a0c
 .global __RTTI__30TaiTypeNaviWatchResultOnAction
 __RTTI__30TaiTypeNaviWatchResultOnAction:
-  .4byte 0x802c6a34
-  .4byte 0x802c6a54
+	.4byte 0x802c6a34
+	.4byte 0x802c6a54
 .global __RTTI__18TaiStopSoundAction
 __RTTI__18TaiStopSoundAction:
-  .4byte 0x802c6a7c
-  .4byte 0x802c6a90
+	.4byte 0x802c6a7c
+	.4byte 0x802c6a90
 .global __RTTI__18TaiPlaySoundAction
 __RTTI__18TaiPlaySoundAction:
-  .4byte 0x802c6ab8
-  .4byte 0x802c6acc
+	.4byte 0x802c6ab8
+	.4byte 0x802c6acc
 .global __RTTI__18TaiSetOptionAction
 __RTTI__18TaiSetOptionAction:
-  .4byte 0x802c6af4
-  .4byte 0x802c6b08
+	.4byte 0x802c6af4
+	.4byte 0x802c6b08
 .global __RTTI__20TaiActionStateAction
 __RTTI__20TaiActionStateAction:
-  .4byte 0x802c6b30
-  .4byte 0x802c6b48
-  .4byte 0x802c6be4
-  .4byte 0
-  .4byte 0x802c6bf0
-  .4byte 0x802c6c04
-  .4byte 0x802c6c10
-  .4byte 0x802c6c28
+	.4byte 0x802c6b30
+	.4byte 0x802c6b48
+	.4byte 0x802c6be4
+	.4byte 0
+	.4byte 0x802c6bf0
+	.4byte 0x802c6c04
+	.4byte 0x802c6c10
+	.4byte 0x802c6c28
 .global __RTTI__24TaiChappyLegEffectAction
 __RTTI__24TaiChappyLegEffectAction:
-  .4byte 0x802c6bc8
-  .4byte 0x802c6c3c
+	.4byte 0x802c6bc8
+	.4byte 0x802c6c3c
 .global __RTTI__16TaiSmashedAction
 __RTTI__16TaiSmashedAction:
-  .4byte 0x802c6c90
-  .4byte 0x802c6ca4
+	.4byte 0x802c6c90
+	.4byte 0x802c6ca4
 .global __RTTI__22TaiChappySmashedAction
 __RTTI__22TaiChappySmashedAction:
-  .4byte 0x802c6c78
-  .4byte 0x802c6cb0
-  .4byte 0x802c6cf4
-  .4byte 0
-  .4byte 0x802c6d00
-  .4byte 0x802c6d10
+	.4byte 0x802c6c78
+	.4byte 0x802c6cb0
+	.4byte 0x802c6cf4
+	.4byte 0
+	.4byte 0x802c6d00
+	.4byte 0x802c6d10
 .global __RTTI__15TekiOrCondition
 __RTTI__15TekiOrCondition:
-  .4byte 0x802c6d3c
-  .4byte 0x802c6d4c
+	.4byte 0x802c6d3c
+	.4byte 0x802c6d4c
 .global __RTTI__18TaiChappyCryAction
 __RTTI__18TaiChappyCryAction:
-  .4byte 0x802c6d84
-  .4byte 0x802c6d98
+	.4byte 0x802c6d84
+	.4byte 0x802c6d98
 .global __RTTI__13TaiOnceAction
 __RTTI__13TaiOnceAction:
-  .4byte 0x802c6dc0
-  .4byte 0x802c6dd0
+	.4byte 0x802c6dc0
+	.4byte 0x802c6dd0
 .global __RTTI__12TaiAndAction
 __RTTI__12TaiAndAction:
-  .4byte 0x802c6df8
-  .4byte 0x802c6e08
-  .4byte 0x802c6e60
-  .4byte 0
-  .4byte 0x802c6e70
-  .4byte 0x802c6e7c
+	.4byte 0x802c6df8
+	.4byte 0x802c6e08
+	.4byte 0x802c6e60
+	.4byte 0
+	.4byte 0x802c6e70
+	.4byte 0x802c6e7c
 .global __RTTI__17TaiChappyStrategy
 __RTTI__17TaiChappyStrategy:
-  .4byte 0x802c6e4c
-  .4byte 0x802c6e88
-  .4byte 0x414e6f64
-  .4byte 0x65000000
-  .4byte 0x803e3588
-  .4byte 0
-  .4byte 0x802c6edc
-  .4byte 0x802c6ee8
-  .4byte 0x4e6f6465
-  .4byte 0
-  .4byte 0x803e35a0
-  .4byte 0x802c6ef4
-  .4byte 0x802c6f08
-  .4byte 0x802c6f18
+	.4byte 0x802c6e4c
+	.4byte 0x802c6e88
+	.4byte 0x414e6f64
+	.4byte 0x65000000
+	.4byte 0x803e3588
+	.4byte 0
+	.4byte 0x802c6edc
+	.4byte 0x802c6ee8
+	.4byte 0x4e6f6465
+	.4byte 0
+	.4byte 0x803e35a0
+	.4byte 0x802c6ef4
+	.4byte 0x802c6f08
+	.4byte 0x802c6f18
 .global __RTTI__20TaiCatfishParameters
 __RTTI__20TaiCatfishParameters:
-  .4byte 0x802c6ec4
-  .4byte 0x802c6f34
+	.4byte 0x802c6ec4
+	.4byte 0x802c6f34
 .global __RTTI__24TaiBlackChappyParameters
 __RTTI__24TaiBlackChappyParameters:
-  .4byte 0x802c6f88
-  .4byte 0x802c6fa4
+	.4byte 0x802c6f88
+	.4byte 0x802c6fa4
 .global __RTTI__19TaiChappyParameters
 __RTTI__19TaiChappyParameters:
-  .4byte 0x802c6ff8
-  .4byte 0x802c700c
+	.4byte 0x802c6ff8
+	.4byte 0x802c700c
 .global lbl_803E35D0
 lbl_803E35D0:
 	.4byte 0x00000000
@@ -13763,201 +13763,201 @@ lbl_803E3600:
 	.4byte 0x802C718C
 .global __RTTI__17TaiHollecStrategy
 __RTTI__17TaiHollecStrategy:
-  .4byte 0x802c715c
-  .4byte 0x802c7198
-  .4byte 0x414e6f64
-  .4byte 0x65000000
-  .4byte 0x803e361c
-  .4byte 0
-  .4byte 0x802c71e8
-  .4byte 0x802c71f4
-  .4byte 0x4e6f6465
-  .4byte 0
-  .4byte 0x803e3634
-  .4byte 0x802c7200
-  .4byte 0x802c7214
-  .4byte 0x802c7224
+	.4byte 0x802c715c
+	.4byte 0x802c7198
+	.4byte 0x414e6f64
+	.4byte 0x65000000
+	.4byte 0x803e361c
+	.4byte 0
+	.4byte 0x802c71e8
+	.4byte 0x802c71f4
+	.4byte 0x4e6f6465
+	.4byte 0
+	.4byte 0x803e3634
+	.4byte 0x802c7200
+	.4byte 0x802c7214
+	.4byte 0x802c7224
 .global __RTTI__19TaiHollecParameters
 __RTTI__19TaiHollecParameters:
-  .4byte 0x802c71d4
-  .4byte 0x802c7240
-  .4byte 0x802c72b0
-  .4byte 0
-  .4byte 0x802c72bc
-  .4byte 0x802c72d0
-  .4byte 0x802c72dc
-  .4byte 0x802c72f4
+	.4byte 0x802c71d4
+	.4byte 0x802c7240
+	.4byte 0x802c72b0
+	.4byte 0
+	.4byte 0x802c72bc
+	.4byte 0x802c72d0
+	.4byte 0x802c72dc
+	.4byte 0x802c72f4
 .global __RTTI__24TaiCollecLegEffectAction
 __RTTI__24TaiCollecLegEffectAction:
-  .4byte 0x802c7294
-  .4byte 0x802c7308
+	.4byte 0x802c7294
+	.4byte 0x802c7308
 .global __RTTI__21TaiCollecGetOutAction
 __RTTI__21TaiCollecGetOutAction:
-  .4byte 0x802c7344
-  .4byte 0x802c735c
+	.4byte 0x802c7344
+	.4byte 0x802c735c
 .global __RTTI__22TaiCollecFallingAction
 __RTTI__22TaiCollecFallingAction:
-  .4byte 0x802c7384
-  .4byte 0x802c739c
+	.4byte 0x802c7384
+	.4byte 0x802c739c
 .global __RTTI__26TaiCollecDeadFallingAction
 __RTTI__26TaiCollecDeadFallingAction:
-  .4byte 0x802c73c4
-  .4byte 0x802c73e0
+	.4byte 0x802c73c4
+	.4byte 0x802c73e0
 .global __RTTI__40TaiCollecPelletFinishContainerizedAction
 __RTTI__40TaiCollecPelletFinishContainerizedAction:
-  .4byte 0x802c7408
-  .4byte 0x802c7434
+	.4byte 0x802c7408
+	.4byte 0x802c7434
 .global __RTTI__39TaiCollecPelletStartContainerizedAction
 __RTTI__39TaiCollecPelletStartContainerizedAction:
-  .4byte 0x802c745c
-  .4byte 0x802c7484
+	.4byte 0x802c745c
+	.4byte 0x802c7484
 .global __RTTI__25TaiCollecRoundCarryAction
 __RTTI__25TaiCollecRoundCarryAction:
-  .4byte 0x802c74ac
-  .4byte 0x802c74c8
+	.4byte 0x802c74ac
+	.4byte 0x802c74c8
 .global __RTTI__30TaiCollecRouteImpassableAction
 __RTTI__30TaiCollecRouteImpassableAction:
-  .4byte 0x802c74f0
-  .4byte 0x802c7510
-  .4byte 0x802c7558
-  .4byte 0x802c7568
-  .4byte 0x802c7574
-  .4byte 0x802c7590
+	.4byte 0x802c74f0
+	.4byte 0x802c7510
+	.4byte 0x802c7558
+	.4byte 0x802c7568
+	.4byte 0x802c7574
+	.4byte 0x802c7590
 .global __RTTI__29TaiCollecCarryingToNestAction
 __RTTI__29TaiCollecCarryingToNestAction:
-  .4byte 0x802c7538
-  .4byte 0x802c75a4
+	.4byte 0x802c7538
+	.4byte 0x802c75a4
 .global __RTTI__28TaiCollecPuttingPelletAction
 __RTTI__28TaiCollecPuttingPelletAction:
-  .4byte 0x802c7618
-  .4byte 0x802c7638
+	.4byte 0x802c7618
+	.4byte 0x802c7638
 .global __RTTI__18TaiCollecPutAction
 __RTTI__18TaiCollecPutAction:
-  .4byte 0x802c7660
-  .4byte 0x802c7674
+	.4byte 0x802c7660
+	.4byte 0x802c7674
 .global __RTTI__29TaiCollecDefeatCarryingAction
 __RTTI__29TaiCollecDefeatCarryingAction:
-  .4byte 0x802c769c
-  .4byte 0x802c76bc
+	.4byte 0x802c769c
+	.4byte 0x802c76bc
 .global __RTTI__26TaiCollecWinCarryingAction
 __RTTI__26TaiCollecWinCarryingAction:
-  .4byte 0x802c76e4
-  .4byte 0x802c7700
+	.4byte 0x802c76e4
+	.4byte 0x802c7700
 .global __RTTI__27TaiCollecBeingDraggedAction
 __RTTI__27TaiCollecBeingDraggedAction:
-  .4byte 0x802c7728
-  .4byte 0x802c7744
+	.4byte 0x802c7728
+	.4byte 0x802c7744
 .global __RTTI__23TaiCollecCarryingAction
 __RTTI__23TaiCollecCarryingAction:
-  .4byte 0x802c776c
-  .4byte 0x802c7784
+	.4byte 0x802c776c
+	.4byte 0x802c7784
 .global __RTTI__23TaiCollecCatchingAction
 __RTTI__23TaiCollecCatchingAction:
-  .4byte 0x802c77ac
-  .4byte 0x802c77c4
+	.4byte 0x802c77ac
+	.4byte 0x802c77c4
 .global __RTTI__25TaiCollecHoldPelletAction
 __RTTI__25TaiCollecHoldPelletAction:
-  .4byte 0x802c77ec
-  .4byte 0x802c7808
+	.4byte 0x802c77ec
+	.4byte 0x802c7808
 .global __RTTI__32TaiCollecPelletDisappearedAction
 __RTTI__32TaiCollecPelletDisappearedAction:
-  .4byte 0x802c7830
-  .4byte 0x802c7854
+	.4byte 0x802c7830
+	.4byte 0x802c7854
 .global __RTTI__25TaiCollecPelletLostAction
 __RTTI__25TaiCollecPelletLostAction:
-  .4byte 0x802c787c
-  .4byte 0x802c7898
-  .4byte 0x802c78ec
-  .4byte 0x802c78fc
+	.4byte 0x802c787c
+	.4byte 0x802c7898
+	.4byte 0x802c78ec
+	.4byte 0x802c78fc
 .global __RTTI__43TaiCollecVisibleHeightPelletLostTimerAction
 __RTTI__43TaiCollecVisibleHeightPelletLostTimerAction:
-  .4byte 0x802c78c0
-  .4byte 0x802c7908
+	.4byte 0x802c78c0
+	.4byte 0x802c7908
 .global __RTTI__38TaiCollecVisibleHeightPelletLostAction
 __RTTI__38TaiCollecVisibleHeightPelletLostAction:
-  .4byte 0x802c7938
-  .4byte 0x802c7960
-  .4byte 0x802c799c
-  .4byte 0
-  .4byte 0x802c79a8
-  .4byte 0x802c79b8
+	.4byte 0x802c7938
+	.4byte 0x802c7960
+	.4byte 0x802c799c
+	.4byte 0
+	.4byte 0x802c79a8
+	.4byte 0x802c79b8
 .global __RTTI__27TaiCollecTargetPelletAction
 __RTTI__27TaiCollecTargetPelletAction:
-  .4byte 0x802c7a30
-  .4byte 0x802c7a4c
+	.4byte 0x802c7a30
+	.4byte 0x802c7a4c
 .global __RTTI__28TaiCollecLetGoOfPelletAction
 __RTTI__28TaiCollecLetGoOfPelletAction:
-  .4byte 0x802c7a74
-  .4byte 0x802c7a94
+	.4byte 0x802c7a74
+	.4byte 0x802c7a94
 .global __RTTI__25TaiCollecImpassableAction
 __RTTI__25TaiCollecImpassableAction:
-  .4byte 0x802c7abc
-  .4byte 0x802c7ad8
+	.4byte 0x802c7abc
+	.4byte 0x802c7ad8
 .global __RTTI__31TekiCollecTargetPelletCondition
 __RTTI__31TekiCollecTargetPelletCondition:
-  .4byte 0x802c7b00
-  .4byte 0x802c7b20
+	.4byte 0x802c7b00
+	.4byte 0x802c7b20
 .global __RTTI__17TaiCollecStrategy
 __RTTI__17TaiCollecStrategy:
-  .4byte 0x802c7b40
-  .4byte 0x802c7b54
+	.4byte 0x802c7b40
+	.4byte 0x802c7b54
 .global __RTTI__19TaiDependenceAction
 __RTTI__19TaiDependenceAction:
-  .4byte 0x802c7b90
-  .4byte 0x802c7ba4
+	.4byte 0x802c7b90
+	.4byte 0x802c7ba4
 .global __RTTI__19TaiCollecParameters
 __RTTI__19TaiCollecParameters:
-  .4byte 0x802c7be8
-  .4byte 0x802c7bfc
-  .4byte 0
-  .4byte 0x802c7c98
-  .4byte 0
+	.4byte 0x802c7be8
+	.4byte 0x802c7bfc
+	.4byte 0
+	.4byte 0x802c7c98
+	.4byte 0
 .global __RTTI__26TaiCreatureCollisionAction
 __RTTI__26TaiCreatureCollisionAction:
-  .4byte 0x802c7ca4
-  .4byte 0x802c7cc0
+	.4byte 0x802c7ca4
+	.4byte 0x802c7cc0
 .global __RTTI__26TaiTekiTypeCollisionAction
 __RTTI__26TaiTekiTypeCollisionAction:
-  .4byte 0x802c7c7c
-  .4byte 0x802c7ccc
+	.4byte 0x802c7c7c
+	.4byte 0x802c7ccc
 .global __RTTI__22TaiNaviCollisionAction
 __RTTI__22TaiNaviCollisionAction:
-  .4byte 0x802c7cfc
-  .4byte 0x802c7d14
+	.4byte 0x802c7cfc
+	.4byte 0x802c7d14
 .global __RTTI__22TaiPikiCollisionAction
 __RTTI__22TaiPikiCollisionAction:
-  .4byte 0x802c7d44
-  .4byte 0x802c7d5c
+	.4byte 0x802c7d44
+	.4byte 0x802c7d5c
 .global __RTTI__22TaiWallCollisionAction
 __RTTI__22TaiWallCollisionAction:
-  .4byte 0x802c7da8
-  .4byte 0x802c7dc0
+	.4byte 0x802c7da8
+	.4byte 0x802c7dc0
 .global __RTTI__24TaiGroundCollisionAction
 __RTTI__24TaiGroundCollisionAction:
-  .4byte 0x802c7de8
-  .4byte 0x802c7e04
+	.4byte 0x802c7de8
+	.4byte 0x802c7e04
 .global __RTTI__15TaiBounceAction
 __RTTI__15TaiBounceAction:
-  .4byte 0x802c7e2c
-  .4byte 0x802c7e3c
-  .4byte 0x802c7eac
-  .4byte 0
-  .4byte 0x802c7eb8
-  .4byte 0x802c7ecc
-  .4byte 0x802c7e94
-  .4byte 0x802c7ed8
+	.4byte 0x802c7e2c
+	.4byte 0x802c7e3c
+	.4byte 0x802c7eac
+	.4byte 0
+	.4byte 0x802c7eb8
+	.4byte 0x802c7ecc
+	.4byte 0x802c7e94
+	.4byte 0x802c7ed8
 .global __RTTI__33TaiStopGenParticleGeneratorAction
 __RTTI__33TaiStopGenParticleGeneratorAction:
-  .4byte 0x802c7f28
-  .4byte 0x802c7f4c
+	.4byte 0x802c7f28
+	.4byte 0x802c7f4c
 .global __RTTI__34TaiStartGenParticleGeneratorAction
 __RTTI__34TaiStartGenParticleGeneratorAction:
-  .4byte 0x802c7f74
-  .4byte 0x802c7f98
+	.4byte 0x802c7f74
+	.4byte 0x802c7f98
 .global __RTTI__15TaiEffectAction
 __RTTI__15TaiEffectAction:
-  .4byte 0x802c7fc0
-  .4byte 0x802c7fd0
+	.4byte 0x802c7fc0
+	.4byte 0x802c7fd0
 .global lbl_803E37E8
 lbl_803E37E8:
 	.4byte 0x00000000
@@ -14001,95 +14001,95 @@ lbl_803E3818:
 	.4byte 0x00000000
 .global __RTTI__23TaiIwagenShootingAction
 __RTTI__23TaiIwagenShootingAction:
-  .4byte 0x802c8024
-  .4byte 0x802c8048
-  .4byte 0x802c8084
-  .4byte 0
-  .4byte 0x802c8094
-  .4byte 0x802c80a0
+	.4byte 0x802c8024
+	.4byte 0x802c8048
+	.4byte 0x802c8084
+	.4byte 0
+	.4byte 0x802c8094
+	.4byte 0x802c80a0
 .global __RTTI__17TaiIwagenStrategy
 __RTTI__17TaiIwagenStrategy:
-  .4byte 0x802c8070
-  .4byte 0x802c80ac
-  .4byte 0x414e6f64
-  .4byte 0x65000000
-  .4byte 0x803e3844
-  .4byte 0
-  .4byte 0x802c80fc
-  .4byte 0x802c8108
-  .4byte 0x4e6f6465
-  .4byte 0
-  .4byte 0x803e385c
-  .4byte 0x802c8114
-  .4byte 0x802c8128
-  .4byte 0x802c8138
+	.4byte 0x802c8070
+	.4byte 0x802c80ac
+	.4byte 0x414e6f64
+	.4byte 0x65000000
+	.4byte 0x803e3844
+	.4byte 0
+	.4byte 0x802c80fc
+	.4byte 0x802c8108
+	.4byte 0x4e6f6465
+	.4byte 0
+	.4byte 0x803e385c
+	.4byte 0x802c8114
+	.4byte 0x802c8128
+	.4byte 0x802c8138
 .global __RTTI__19TaiIwagenParameters
 __RTTI__19TaiIwagenParameters:
-  .4byte 0x802c80e8
-  .4byte 0x802c8154
+	.4byte 0x802c80e8
+	.4byte 0x802c8154
 .global __RTTI__22TaiIwagonRollingAction
 __RTTI__22TaiIwagonRollingAction:
-  .4byte 0x802c81a8
-  .4byte 0x802c81c0
+	.4byte 0x802c81a8
+	.4byte 0x802c81c0
 .global __RTTI__25TaiIwagonDustEffectAction
 __RTTI__25TaiIwagonDustEffectAction:
-  .4byte 0x802c81e8
-  .4byte 0x802c8204
+	.4byte 0x802c81e8
+	.4byte 0x802c8204
 .global __RTTI__17TaiIwagonStrategy
 __RTTI__17TaiIwagonStrategy:
-  .4byte 0x802c822c
-  .4byte 0x802c8240
+	.4byte 0x802c822c
+	.4byte 0x802c8240
 .global __RTTI__19TaiIwagonParameters
 __RTTI__19TaiIwagonParameters:
-  .4byte 0x802c8298
-  .4byte 0x802c82ac
-  .4byte 0
-  .4byte 0x802c8348
-  .4byte 0
+	.4byte 0x802c8298
+	.4byte 0x802c82ac
+	.4byte 0
+	.4byte 0x802c8348
+	.4byte 0
 .global __RTTI__26TaiHasStickersOnBodyAction
 __RTTI__26TaiHasStickersOnBodyAction:
-  .4byte 0x802c832c
-  .4byte 0x802c8354
+	.4byte 0x802c832c
+	.4byte 0x802c8354
 .global __RTTI__27TaiHasStickersInMouthAction
 __RTTI__27TaiHasStickersInMouthAction:
-  .4byte 0x802c837c
-  .4byte 0x802c8398
-  .4byte 0x802c83d4
-  .4byte 0
-  .4byte 0x802c83e0
-  .4byte 0x802c83f0
+	.4byte 0x802c837c
+	.4byte 0x802c8398
+	.4byte 0x802c83d4
+	.4byte 0
+	.4byte 0x802c83e0
+	.4byte 0x802c83f0
 .global __RTTI__26TaiTargetVisibleNaviAction
 __RTTI__26TaiTargetVisibleNaviAction:
-  .4byte 0x802c841c
-  .4byte 0x802c8438
+	.4byte 0x802c841c
+	.4byte 0x802c8438
 .global __RTTI__30TaiTargetVisibleNaviPikiAction
 __RTTI__30TaiTargetVisibleNaviPikiAction:
-  .4byte 0x802c8478
-  .4byte 0x802c8498
+	.4byte 0x802c8478
+	.4byte 0x802c8498
 .global __RTTI__24TaiInsideTerritoryAction
 __RTTI__24TaiInsideTerritoryAction:
-  .4byte 0x802c84c0
-  .4byte 0x802c84dc
+	.4byte 0x802c84c0
+	.4byte 0x802c84dc
 .global __RTTI__25TaiOutsideTerritoryAction
 __RTTI__25TaiOutsideTerritoryAction:
-  .4byte 0x802c8504
-  .4byte 0x802c8520
+	.4byte 0x802c8504
+	.4byte 0x802c8520
 .global __RTTI__19TaiTargetLostAction
 __RTTI__19TaiTargetLostAction:
-  .4byte 0x802c8548
-  .4byte 0x802c855c
+	.4byte 0x802c8548
+	.4byte 0x802c855c
 .global __RTTI__23TaiSeparateTargetAction
 __RTTI__23TaiSeparateTargetAction:
-  .4byte 0x802c8584
-  .4byte 0x802c859c
+	.4byte 0x802c8584
+	.4byte 0x802c859c
 .global __RTTI__22TaiContactTargetAction
 __RTTI__22TaiContactTargetAction:
-  .4byte 0x802c85c4
-  .4byte 0x802c85dc
+	.4byte 0x802c85c4
+	.4byte 0x802c85dc
 .global __RTTI__22TaiVisibleTargetAction
 __RTTI__22TaiVisibleTargetAction:
-  .4byte 0x802c8604
-  .4byte 0x802c861c
+	.4byte 0x802c8604
+	.4byte 0x802c861c
 .global lbl_803E3908
 lbl_803E3908:
 	.4byte 0x00000000
@@ -14119,67 +14119,67 @@ lbl_803E3920:
 	.4byte 0x802C87BC
 .global __RTTI__24TaiKinokoLegEffectAction
 __RTTI__24TaiKinokoLegEffectAction:
-  .4byte 0x802c875c
-  .4byte 0x802c87d0
+	.4byte 0x802c875c
+	.4byte 0x802c87d0
 .global __RTTI__35TaiKinokoTerritoryRunningAwayAction
 __RTTI__35TaiKinokoTerritoryRunningAwayAction:
-  .4byte 0x802c880c
-  .4byte 0x802c8830
-  .4byte 0x802c886c
-  .4byte 0
-  .4byte 0x802c8878
-  .4byte 0x802c8888
+	.4byte 0x802c880c
+	.4byte 0x802c8830
+	.4byte 0x802c886c
+	.4byte 0
+	.4byte 0x802c8878
+	.4byte 0x802c8888
 .global __RTTI__32TaiKinokoDischargingSporesAction
 __RTTI__32TaiKinokoDischargingSporesAction:
-  .4byte 0x802c8904
-  .4byte 0x802c8928
+	.4byte 0x802c8904
+	.4byte 0x802c8928
 .global __RTTI__29TaiKinokoChargingSporesAction
 __RTTI__29TaiKinokoChargingSporesAction:
-  .4byte 0x802c8950
-  .4byte 0x802c8970
+	.4byte 0x802c8950
+	.4byte 0x802c8970
 .global __RTTI__26TaiKinokoTurningOverAction
 __RTTI__26TaiKinokoTurningOverAction:
-  .4byte 0x802c8998
-  .4byte 0x802c89b4
-  .4byte 0x802c89f0
-  .4byte 0
-  .4byte 0x802c8a00
-  .4byte 0x802c8a0c
+	.4byte 0x802c8998
+	.4byte 0x802c89b4
+	.4byte 0x802c89f0
+	.4byte 0
+	.4byte 0x802c8a00
+	.4byte 0x802c8a0c
 .global __RTTI__17TaiKinokoStrategy
 __RTTI__17TaiKinokoStrategy:
-  .4byte 0x802c89dc
-  .4byte 0x802c8a18
+	.4byte 0x802c89dc
+	.4byte 0x802c8a18
 .global __RTTI__12TaiNotAction
 __RTTI__12TaiNotAction:
-  .4byte 0x802c8a54
-  .4byte 0x802c8a64
-  .4byte 0x414e6f64
-  .4byte 0x65000000
-  .4byte 0x803e3994
-  .4byte 0
-  .4byte 0x802c8af4
-  .4byte 0x802c8b00
-  .4byte 0x4e6f6465
-  .4byte 0
-  .4byte 0x803e39ac
-  .4byte 0x802c8b0c
-  .4byte 0x802c8b20
-  .4byte 0x802c8b30
+	.4byte 0x802c8a54
+	.4byte 0x802c8a64
+	.4byte 0x414e6f64
+	.4byte 0x65000000
+	.4byte 0x803e3994
+	.4byte 0
+	.4byte 0x802c8af4
+	.4byte 0x802c8b00
+	.4byte 0x4e6f6465
+	.4byte 0
+	.4byte 0x803e39ac
+	.4byte 0x802c8b0c
+	.4byte 0x802c8b20
+	.4byte 0x802c8b30
 .global __RTTI__19TaiKinokoParameters
 __RTTI__19TaiKinokoParameters:
-  .4byte 0x802c8ae0
-  .4byte 0x802c8b4c
-  .4byte 0
-  .4byte 0x802c8be4
-  .4byte 0
+	.4byte 0x802c8ae0
+	.4byte 0x802c8b4c
+	.4byte 0
+	.4byte 0x802c8be4
+	.4byte 0
 .global __RTTI__23TaiKeySendMessageAction
 __RTTI__23TaiKeySendMessageAction:
-  .4byte 0x802c8bcc
-  .4byte 0x802c8bf0
+	.4byte 0x802c8bcc
+	.4byte 0x802c8bf0
 .global __RTTI__20TaiSendMessageAction
 __RTTI__20TaiSendMessageAction:
-  .4byte 0x802c8c18
-  .4byte 0x802c8c30
+	.4byte 0x802c8c18
+	.4byte 0x802c8c30
 .global lbl_803E39E8
 lbl_803E39E8:
 	.4byte 0x00000000
@@ -14232,78 +14232,78 @@ lbl_803E3A24:
 	.4byte 0x00000000
 .global __RTTI__26TaiMizinkoFlyingAwayAction
 __RTTI__26TaiMizinkoFlyingAwayAction:
-  .4byte 0x802c8da8
-  .4byte 0x802c8dd0
+	.4byte 0x802c8da8
+	.4byte 0x802c8dd0
 .global __RTTI__23TaiMizinkoWaitingAction
 __RTTI__23TaiMizinkoWaitingAction:
-  .4byte 0x802c8df8
-  .4byte 0x802c8e10
+	.4byte 0x802c8df8
+	.4byte 0x802c8e10
 .global __RTTI__25TaiMizinkoDropWaterAction
 __RTTI__25TaiMizinkoDropWaterAction:
-  .4byte 0x802c8e38
-  .4byte 0x802c8e54
+	.4byte 0x802c8e38
+	.4byte 0x802c8e54
 .global __RTTI__22TaiMizinkoComingAction
 __RTTI__22TaiMizinkoComingAction:
-  .4byte 0x802c8e7c
-  .4byte 0x802c8e94
+	.4byte 0x802c8e7c
+	.4byte 0x802c8e94
 .global __RTTI__21TaiMizinkoGoingAction
 __RTTI__21TaiMizinkoGoingAction:
-  .4byte 0x802c8ebc
-  .4byte 0x802c8ed4
+	.4byte 0x802c8ebc
+	.4byte 0x802c8ed4
 .global __RTTI__22TaiMizinkoFadingAction
 __RTTI__22TaiMizinkoFadingAction:
-  .4byte 0x802c8efc
-  .4byte 0x802c8f14
-  .4byte 0x802c8f58
-  .4byte 0x802c8f68
+	.4byte 0x802c8efc
+	.4byte 0x802c8f14
+	.4byte 0x802c8f58
+	.4byte 0x802c8f68
 .global __RTTI__27TaiMizinkoMovingTimerAction
 __RTTI__27TaiMizinkoMovingTimerAction:
-  .4byte 0x802c8f3c
-  .4byte 0x802c8f74
+	.4byte 0x802c8f3c
+	.4byte 0x802c8f74
 .global __RTTI__24TaiMizinkoCryTimerAction
 __RTTI__24TaiMizinkoCryTimerAction:
-  .4byte 0x802c8fa4
-  .4byte 0x802c8fc0
-  .4byte 0x802c9004
-  .4byte 0
-  .4byte 0x802c9014
-  .4byte 0x802c9020
+	.4byte 0x802c8fa4
+	.4byte 0x802c8fc0
+	.4byte 0x802c9004
+	.4byte 0
+	.4byte 0x802c9014
+	.4byte 0x802c9020
 .global __RTTI__18TaiMizinkoStrategy
 __RTTI__18TaiMizinkoStrategy:
-  .4byte 0x802c8ff0
-  .4byte 0x802c902c
-  .4byte 0x414e6f64
-  .4byte 0x65000000
-  .4byte 0x803e3a90
-  .4byte 0
-  .4byte 0x802c9080
-  .4byte 0x802c908c
-  .4byte 0x4e6f6465
-  .4byte 0
-  .4byte 0x803e3aa8
-  .4byte 0x802c9098
-  .4byte 0x802c90ac
-  .4byte 0x802c90bc
+	.4byte 0x802c8ff0
+	.4byte 0x802c902c
+	.4byte 0x414e6f64
+	.4byte 0x65000000
+	.4byte 0x803e3a90
+	.4byte 0
+	.4byte 0x802c9080
+	.4byte 0x802c908c
+	.4byte 0x4e6f6465
+	.4byte 0
+	.4byte 0x803e3aa8
+	.4byte 0x802c9098
+	.4byte 0x802c90ac
+	.4byte 0x802c90bc
 .global __RTTI__20TaiMizinkoParameters
 __RTTI__20TaiMizinkoParameters:
-  .4byte 0x802c9068
-  .4byte 0x802c90d8
+	.4byte 0x802c9068
+	.4byte 0x802c90d8
 .global __RTTI__28TaiMizigenNaviApprouchAction
 __RTTI__28TaiMizigenNaviApprouchAction:
-  .4byte 0x802c912c
-  .4byte 0x802c914c
+	.4byte 0x802c912c
+	.4byte 0x802c914c
 .global __RTTI__26TaiMizigenGeneratingAction
 __RTTI__26TaiMizigenGeneratingAction:
-  .4byte 0x802c9174
-  .4byte 0x802c9190
+	.4byte 0x802c9174
+	.4byte 0x802c9190
 .global __RTTI__18TaiMizigenStrategy
 __RTTI__18TaiMizigenStrategy:
-  .4byte 0x802c91b8
-  .4byte 0x802c91cc
+	.4byte 0x802c91b8
+	.4byte 0x802c91cc
 .global __RTTI__20TaiMizigenParameters
 __RTTI__20TaiMizigenParameters:
-  .4byte 0x802c9224
-  .4byte 0x802c923c
+	.4byte 0x802c9224
+	.4byte 0x802c923c
 .global lbl_803E3AE8
 lbl_803E3AE8:
 	.4byte 0x00000000
@@ -14326,44 +14326,44 @@ lbl_803E3AFC:
 	.4byte 0x00000000
 .global __RTTI__34TaiRandomSetAnimationCounterAction
 __RTTI__34TaiRandomSetAnimationCounterAction:
-  .4byte 0x802c92bc
-  .4byte 0x802c92ec
+	.4byte 0x802c92bc
+	.4byte 0x802c92ec
 .global __RTTI__23TaiSetFrameMotionAction
 __RTTI__23TaiSetFrameMotionAction:
-  .4byte 0x802c9314
-  .4byte 0x802c932c
+	.4byte 0x802c9314
+	.4byte 0x802c932c
 .global __RTTI__27TaiFinishStoppingMoveAction
 __RTTI__27TaiFinishStoppingMoveAction:
-  .4byte 0x802c9354
-  .4byte 0x802c9370
+	.4byte 0x802c9354
+	.4byte 0x802c9370
 .global __RTTI__21TaiStoppingMoveAction
 __RTTI__21TaiStoppingMoveAction:
-  .4byte 0x802c9398
-  .4byte 0x802c93b0
+	.4byte 0x802c9398
+	.4byte 0x802c93b0
 .global __RTTI__27TaiOutsideKeyStopMoveAction
 __RTTI__27TaiOutsideKeyStopMoveAction:
-  .4byte 0x802c93d8
-  .4byte 0x802c93f4
-  .4byte 0x802c9434
-  .4byte 0x802c9444
+	.4byte 0x802c93d8
+	.4byte 0x802c93f4
+	.4byte 0x802c9434
+	.4byte 0x802c9444
 .global __RTTI__21TaiSwitchMotionAction
 __RTTI__21TaiSwitchMotionAction:
-  .4byte 0x802c941c
-  .4byte 0x802c9450
+	.4byte 0x802c941c
+	.4byte 0x802c9450
 .global __RTTI__18TaiCountLoopAction
 __RTTI__18TaiCountLoopAction:
-  .4byte 0x802c9480
-  .4byte 0x802c9494
+	.4byte 0x802c9480
+	.4byte 0x802c9494
 .global __RTTI__21TaiAnimationKeyAction
 __RTTI__21TaiAnimationKeyAction:
-  .4byte 0x802c94bc
-  .4byte 0x802c94d4
+	.4byte 0x802c94bc
+	.4byte 0x802c94d4
 .global __RTTI__21TaiFinishMotionAction
 __RTTI__21TaiFinishMotionAction:
-  .4byte 0x802c94fc
-  .4byte 0x802c9514
-  .4byte 0x802c9544
-  .4byte 0x802c9560
+	.4byte 0x802c94fc
+	.4byte 0x802c9514
+	.4byte 0x802c9544
+	.4byte 0x802c9560
 .global lbl_803E3B60
 lbl_803E3B60:
 	.4byte 0x00000000
@@ -14389,135 +14389,135 @@ lbl_803E3B78:
 	.4byte 0x00000000
 .global __RTTI__33TaiHeadOnCollisionAvoidanceAction
 __RTTI__33TaiHeadOnCollisionAvoidanceAction:
-  .4byte 0x802c95d4
-  .4byte 0x802c9604
+	.4byte 0x802c95d4
+	.4byte 0x802c9604
 .global __RTTI__19TaiTargetNestAction
 __RTTI__19TaiTargetNestAction:
-  .4byte 0x802c962c
-  .4byte 0x802c9640
+	.4byte 0x802c962c
+	.4byte 0x802c9640
 .global __RTTI__32TaiWatchOffTerritoryCenterAction
 __RTTI__32TaiWatchOffTerritoryCenterAction:
-  .4byte 0x802c9668
-  .4byte 0x802c968c
-  .4byte 0x802c96cc
-  .4byte 0x802c96dc
-  .4byte 0x802c96e8
-  .4byte 0x802c9704
+	.4byte 0x802c9668
+	.4byte 0x802c968c
+	.4byte 0x802c96cc
+	.4byte 0x802c96dc
+	.4byte 0x802c96e8
+	.4byte 0x802c9704
 .global __RTTI__20TaiRunningAwayAction
 __RTTI__20TaiRunningAwayAction:
-  .4byte 0x802c96b4
-  .4byte 0x802c9718
+	.4byte 0x802c96b4
+	.4byte 0x802c9718
 .global __RTTI__37TaiRunningAwayToTargetDirectionAction
 __RTTI__37TaiRunningAwayToTargetDirectionAction:
-  .4byte 0x802c9754
-  .4byte 0x802c977c
+	.4byte 0x802c9754
+	.4byte 0x802c977c
 .global __RTTI__17TaiRotatingAction
 __RTTI__17TaiRotatingAction:
-  .4byte 0x802c97b8
-  .4byte 0x802c97cc
+	.4byte 0x802c97b8
+	.4byte 0x802c97cc
 .global __RTTI__32TaiTurningToTargetPositionAction
 __RTTI__32TaiTurningToTargetPositionAction:
-  .4byte 0x802c97f4
-  .4byte 0x802c9818
+	.4byte 0x802c97f4
+	.4byte 0x802c9818
 .global __RTTI__24TaiOutOfTraceAngleAction
 __RTTI__24TaiOutOfTraceAngleAction:
-  .4byte 0x802c9854
-  .4byte 0x802c9870
+	.4byte 0x802c9854
+	.4byte 0x802c9870
 .global __RTTI__21TaiTraceTurningAction
 __RTTI__21TaiTraceTurningAction:
-  .4byte 0x802c9898
-  .4byte 0x802c98b0
+	.4byte 0x802c9898
+	.4byte 0x802c98b0
 .global __RTTI__20TaiTurningAwayAction
 __RTTI__20TaiTurningAwayAction:
-  .4byte 0x802c98ec
-  .4byte 0x802c9904
-  .4byte 0x802c9950
-  .4byte 0
+	.4byte 0x802c98ec
+	.4byte 0x802c9904
+	.4byte 0x802c9950
+	.4byte 0
 .global __RTTI__16TaiTurningAction
 __RTTI__16TaiTurningAction:
-  .4byte 0x802c9980
-  .4byte 0x802c9994
+	.4byte 0x802c9980
+	.4byte 0x802c9994
 .global __RTTI__19TaiDirectTurnAction
 __RTTI__19TaiDirectTurnAction:
-  .4byte 0x802c99d0
-  .4byte 0x802c99e4
+	.4byte 0x802c99d0
+	.4byte 0x802c99e4
 .global __RTTI__18TaiGoingHomeAction
 __RTTI__18TaiGoingHomeAction:
-  .4byte 0x802c9a0c
-  .4byte 0x802c9a20
+	.4byte 0x802c9a0c
+	.4byte 0x802c9a20
 .global __RTTI__16TaiTracingAction
 __RTTI__16TaiTracingAction:
-  .4byte 0x802c9a5c
-  .4byte 0x802c9a70
+	.4byte 0x802c9a5c
+	.4byte 0x802c9a70
 .global __RTTI__29TaiRandomWanderingRouteAction
 __RTTI__29TaiRandomWanderingRouteAction:
-  .4byte 0x802c9aac
-  .4byte 0x802c9acc
+	.4byte 0x802c9aac
+	.4byte 0x802c9acc
 .global __RTTI__19TaiImpassableAction
 __RTTI__19TaiImpassableAction:
-  .4byte 0x802c9b08
-  .4byte 0x802c9b1c
+	.4byte 0x802c9b08
+	.4byte 0x802c9b1c
 .global __RTTI__26TaiClampMinVelocityYAction
 __RTTI__26TaiClampMinVelocityYAction:
-  .4byte 0x802c9b44
-  .4byte 0x802c9b60
+	.4byte 0x802c9b44
+	.4byte 0x802c9b60
 .global __RTTI__23TaiClampMinHeightAction
 __RTTI__23TaiClampMinHeightAction:
-  .4byte 0x802c9b88
-  .4byte 0x802c9ba0
+	.4byte 0x802c9b88
+	.4byte 0x802c9ba0
 .global __RTTI__23TaiClampMaxHeightAction
 __RTTI__23TaiClampMaxHeightAction:
-  .4byte 0x802c9bc8
-  .4byte 0x802c9be0
+	.4byte 0x802c9bc8
+	.4byte 0x802c9be0
 .global __RTTI__26TaiHorizontalSinWaveAction
 __RTTI__26TaiHorizontalSinWaveAction:
-  .4byte 0x802c9c08
-  .4byte 0x802c9c24
+	.4byte 0x802c9c08
+	.4byte 0x802c9c24
 .global __RTTI__19TaiCircleMoveAction
 __RTTI__19TaiCircleMoveAction:
-  .4byte 0x802c9c4c
-  .4byte 0x802c9c60
+	.4byte 0x802c9c4c
+	.4byte 0x802c9c60
 .global __RTTI__17TaiParabolaAction
 __RTTI__17TaiParabolaAction:
-  .4byte 0x802c9c88
-  .4byte 0x802c9c9c
+	.4byte 0x802c9c88
+	.4byte 0x802c9c9c
 .global __RTTI__21TaiAccelerationAction
 __RTTI__21TaiAccelerationAction:
-  .4byte 0x802c9cc4
-  .4byte 0x802c9cdc
+	.4byte 0x802c9cc4
+	.4byte 0x802c9cdc
 .global __RTTI__24TaiMakingNextDriveAction
 __RTTI__24TaiMakingNextDriveAction:
-  .4byte 0x802c9d04
-  .4byte 0x802c9d20
+	.4byte 0x802c9d04
+	.4byte 0x802c9d20
 .global __RTTI__27TaiMakingNextVelocityAction
 __RTTI__27TaiMakingNextVelocityAction:
-  .4byte 0x802c9d48
-  .4byte 0x802c9d64
+	.4byte 0x802c9d48
+	.4byte 0x802c9d64
 .global __RTTI__34TaiMakeAccelerationDirectionAction
 __RTTI__34TaiMakeAccelerationDirectionAction:
-  .4byte 0x802c9d8c
-  .4byte 0x802c9db0
+	.4byte 0x802c9d8c
+	.4byte 0x802c9db0
 .global __RTTI__30TaiMakeVelocityDirectionAction
 __RTTI__30TaiMakeVelocityDirectionAction:
-  .4byte 0x802c9dd8
-  .4byte 0x802c9df8
+	.4byte 0x802c9dd8
+	.4byte 0x802c9df8
 .global __RTTI__21TaiFinishFlyingAction
 __RTTI__21TaiFinishFlyingAction:
-  .4byte 0x802c9e20
-  .4byte 0x802c9e38
+	.4byte 0x802c9e20
+	.4byte 0x802c9e38
 .global __RTTI__20TaiStartFlyingAction
 __RTTI__20TaiStartFlyingAction:
-  .4byte 0x802c9e60
-  .4byte 0x802c9e78
+	.4byte 0x802c9e60
+	.4byte 0x802c9e78
 .global __RTTI__17TaiStopMoveAction
 __RTTI__17TaiStopMoveAction:
-  .4byte 0x802c9ea0
-  .4byte 0x802c9eb4
+	.4byte 0x802c9ea0
+	.4byte 0x802c9eb4
 .global __RTTI__25TaiMoveNestPositionAction
 __RTTI__25TaiMoveNestPositionAction:
-  .4byte 0x802c9edc
-  .4byte 0x802c9ef8
-  .4byte 0
+	.4byte 0x802c9edc
+	.4byte 0x802c9ef8
+	.4byte 0
 .global lbl_803E3C98
 lbl_803E3C98:
 	.4byte 0x00000000
@@ -14552,132 +14552,132 @@ lbl_803E3CBC:
 	.4byte 0x00000000
 .global __RTTI__33TaiNapkidStartDroppingWaterAction
 __RTTI__33TaiNapkidStartDroppingWaterAction:
-  .4byte 0x802ca088
-  .4byte 0x802ca0b8
+	.4byte 0x802ca088
+	.4byte 0x802ca0b8
 .global __RTTI__33TaiNapkidFallingWaterEffectAction
 __RTTI__33TaiNapkidFallingWaterEffectAction:
-  .4byte 0x802ca0e0
-  .4byte 0x802ca104
+	.4byte 0x802ca0e0
+	.4byte 0x802ca104
 .global __RTTI__27TaiNapkidShockFallingAction
 __RTTI__27TaiNapkidShockFallingAction:
-  .4byte 0x802ca12c
-  .4byte 0x802ca148
+	.4byte 0x802ca12c
+	.4byte 0x802ca148
 .global __RTTI__22TaiNapkidFallingAction
 __RTTI__22TaiNapkidFallingAction:
-  .4byte 0x802ca170
-  .4byte 0x802ca188
+	.4byte 0x802ca170
+	.4byte 0x802ca188
 .global __RTTI__20TaiNapkidFlickAction
 __RTTI__20TaiNapkidFlickAction:
-  .4byte 0x802ca1b0
-  .4byte 0x802ca1c8
+	.4byte 0x802ca1b0
+	.4byte 0x802ca1c8
 .global __RTTI__27TaiNapkidThrowingPikiAction
 __RTTI__27TaiNapkidThrowingPikiAction:
-  .4byte 0x802ca1f0
-  .4byte 0x802ca20c
+	.4byte 0x802ca1f0
+	.4byte 0x802ca20c
 .global __RTTI__30TaiNapkidRisingAscendingAction
 __RTTI__30TaiNapkidRisingAscendingAction:
-  .4byte 0x802ca234
-  .4byte 0x802ca254
+	.4byte 0x802ca234
+	.4byte 0x802ca254
 .global __RTTI__33TaiNapkidTakingOffAscendingAction
 __RTTI__33TaiNapkidTakingOffAscendingAction:
-  .4byte 0x802ca27c
-  .4byte 0x802ca2a0
+	.4byte 0x802ca27c
+	.4byte 0x802ca2a0
 .global __RTTI__29TaiNapkidCatchAscendingAction
 __RTTI__29TaiNapkidCatchAscendingAction:
-  .4byte 0x802ca2c8
-  .4byte 0x802ca2e8
+	.4byte 0x802ca2c8
+	.4byte 0x802ca2e8
 .global __RTTI__26TaiNapkidCatchFlyingAction
 __RTTI__26TaiNapkidCatchFlyingAction:
-  .4byte 0x802ca310
-  .4byte 0x802ca32c
+	.4byte 0x802ca310
+	.4byte 0x802ca32c
 .global __RTTI__27TaiNapkidCatchTracingAction
 __RTTI__27TaiNapkidCatchTracingAction:
-  .4byte 0x802ca354
-  .4byte 0x802ca370
+	.4byte 0x802ca354
+	.4byte 0x802ca370
 .global __RTTI__30TaiNapkidCatchDescendingAction
 __RTTI__30TaiNapkidCatchDescendingAction:
-  .4byte 0x802ca398
-  .4byte 0x802ca3b8
-  .4byte 0x802ca42c
-  .4byte 0
-  .4byte 0x802ca438
-  .4byte 0x802ca448
+	.4byte 0x802ca398
+	.4byte 0x802ca3b8
+	.4byte 0x802ca42c
+	.4byte 0
+	.4byte 0x802ca438
+	.4byte 0x802ca448
 .global __RTTI__23TaiNapkidCatchingAction
 __RTTI__23TaiNapkidCatchingAction:
-  .4byte 0x802ca4a8
-  .4byte 0x802ca4c0
+	.4byte 0x802ca4a8
+	.4byte 0x802ca4c0
 .global __RTTI__27TaiNapkidApproachPikiAction
 __RTTI__27TaiNapkidApproachPikiAction:
-  .4byte 0x802ca4e8
-  .4byte 0x802ca504
+	.4byte 0x802ca4e8
+	.4byte 0x802ca504
 .global __RTTI__24TaiNapkidAscendingAction
 __RTTI__24TaiNapkidAscendingAction:
-  .4byte 0x802ca52c
-  .4byte 0x802ca548
+	.4byte 0x802ca52c
+	.4byte 0x802ca548
 .global __RTTI__21TaiNapkidFlyingAction
 __RTTI__21TaiNapkidFlyingAction:
-  .4byte 0x802ca570
-  .4byte 0x802ca588
+	.4byte 0x802ca570
+	.4byte 0x802ca588
 .global __RTTI__23TaiNapkidCirclingAction
 __RTTI__23TaiNapkidCirclingAction:
-  .4byte 0x802ca5b0
-  .4byte 0x802ca5c8
+	.4byte 0x802ca5b0
+	.4byte 0x802ca5c8
 .global __RTTI__29TaiNapkidStraightFlyingAction
 __RTTI__29TaiNapkidStraightFlyingAction:
-  .4byte 0x802ca5f0
-  .4byte 0x802ca610
+	.4byte 0x802ca5f0
+	.4byte 0x802ca610
 .global __RTTI__25TaiNapkidShortRangeAction
 __RTTI__25TaiNapkidShortRangeAction:
-  .4byte 0x802ca638
-  .4byte 0x802ca654
+	.4byte 0x802ca638
+	.4byte 0x802ca654
 .global __RTTI__23TaiNapkidPikiLostAction
 __RTTI__23TaiNapkidPikiLostAction:
-  .4byte 0x802ca67c
-  .4byte 0x802ca694
+	.4byte 0x802ca67c
+	.4byte 0x802ca694
 .global __RTTI__25TaiNapkidTargetPikiAction
 __RTTI__25TaiNapkidTargetPikiAction:
-  .4byte 0x802ca6bc
-  .4byte 0x802ca6d8
-  .4byte 0x802ca720
-  .4byte 0x802ca730
-  .4byte 0x802ca73c
-  .4byte 0x802ca758
+	.4byte 0x802ca6bc
+	.4byte 0x802ca6d8
+	.4byte 0x802ca720
+	.4byte 0x802ca730
+	.4byte 0x802ca73c
+	.4byte 0x802ca758
 .global __RTTI__29TaiNapkidWanderingRouteAction
 __RTTI__29TaiNapkidWanderingRouteAction:
-  .4byte 0x802ca700
-  .4byte 0x802ca76c
+	.4byte 0x802ca700
+	.4byte 0x802ca76c
 .global __RTTI__29TekiNapkidShortRangeCondition
 __RTTI__29TekiNapkidShortRangeCondition:
-  .4byte 0x802ca7a8
-  .4byte 0x802ca7c8
+	.4byte 0x802ca7a8
+	.4byte 0x802ca7c8
 .global __RTTI__29TekiNapkidTargetPikiCondition
 __RTTI__29TekiNapkidTargetPikiCondition:
-  .4byte 0x802ca800
-  .4byte 0x802ca820
-  .4byte 0x802ca854
-  .4byte 0
-  .4byte 0x802ca864
-  .4byte 0x802ca870
+	.4byte 0x802ca800
+	.4byte 0x802ca820
+	.4byte 0x802ca854
+	.4byte 0
+	.4byte 0x802ca864
+	.4byte 0x802ca870
 .global __RTTI__17TaiNapkidStrategy
 __RTTI__17TaiNapkidStrategy:
-  .4byte 0x802ca840
-  .4byte 0x802ca87c
-  .4byte 0x414e6f64
-  .4byte 0x65000000
-  .4byte 0x803e3dc0
-  .4byte 0
-  .4byte 0x802ca958
-  .4byte 0x802ca964
-  .4byte 0x4e6f6465
-  .4byte 0
-  .4byte 0x803e3dd8
-  .4byte 0x802ca970
-  .4byte 0x802ca984
-  .4byte 0x802ca994
+	.4byte 0x802ca840
+	.4byte 0x802ca87c
+	.4byte 0x414e6f64
+	.4byte 0x65000000
+	.4byte 0x803e3dc0
+	.4byte 0
+	.4byte 0x802ca958
+	.4byte 0x802ca964
+	.4byte 0x4e6f6465
+	.4byte 0
+	.4byte 0x803e3dd8
+	.4byte 0x802ca970
+	.4byte 0x802ca984
+	.4byte 0x802ca994
 .global __RTTI__19TaiNapkidParameters
 __RTTI__19TaiNapkidParameters:
-  .4byte 0x802ca944
-  .4byte 0x802ca9b0
+	.4byte 0x802ca944
+	.4byte 0x802ca9b0
 .global lbl_803E3DF8
 lbl_803E3DF8:
 	.4byte 0x00000000
@@ -14731,81 +14731,81 @@ lbl_803E3E30:
 	.4byte 0x802CABBC
 .global __RTTI__25TaiOtimotiLegEffectAction
 __RTTI__25TaiOtimotiLegEffectAction:
-  .4byte 0x802cab5c
-  .4byte 0x802cabd0
+	.4byte 0x802cab5c
+	.4byte 0x802cabd0
 .global __RTTI__31TaiOtimotiAttackingEffectAction
 __RTTI__31TaiOtimotiAttackingEffectAction:
-  .4byte 0x802cac0c
-  .4byte 0x802cac2c
+	.4byte 0x802cac0c
+	.4byte 0x802cac2c
 .global __RTTI__25TaiOtimotiAttackingAction
 __RTTI__25TaiOtimotiAttackingAction:
-  .4byte 0x802cac54
-  .4byte 0x802cac70
+	.4byte 0x802cac54
+	.4byte 0x802cac70
 .global __RTTI__24TaiOtimotiBouncingAction
 __RTTI__24TaiOtimotiBouncingAction:
-  .4byte 0x802cac98
-  .4byte 0x802cacb4
-  .4byte 0x802cacf0
-  .4byte 0
-  .4byte 0x802cacfc
-  .4byte 0x802cad0c
+	.4byte 0x802cac98
+	.4byte 0x802cacb4
+	.4byte 0x802cacf0
+	.4byte 0
+	.4byte 0x802cacfc
+	.4byte 0x802cad0c
 .global __RTTI__24TaiOtimotiPressingAction
 __RTTI__24TaiOtimotiPressingAction:
-  .4byte 0x802cad70
-  .4byte 0x802cad8c
+	.4byte 0x802cad70
+	.4byte 0x802cad8c
 .global __RTTI__24TaiOtimotiDroppingAction
 __RTTI__24TaiOtimotiDroppingAction:
-  .4byte 0x802cadb4
-  .4byte 0x802cadd0
+	.4byte 0x802cadb4
+	.4byte 0x802cadd0
 .global __RTTI__26TaiOtimotiAirWaitingAction
 __RTTI__26TaiOtimotiAirWaitingAction:
-  .4byte 0x802cadf8
-  .4byte 0x802cae14
+	.4byte 0x802cadf8
+	.4byte 0x802cae14
 .global __RTTI__23TaiOtimotiJumpingAction
 __RTTI__23TaiOtimotiJumpingAction:
-  .4byte 0x802cae3c
-  .4byte 0x802cae54
+	.4byte 0x802cae3c
+	.4byte 0x802cae54
 .global __RTTI__26TaiOtimotiFailToJumpAction
 __RTTI__26TaiOtimotiFailToJumpAction:
-  .4byte 0x802cae7c
-  .4byte 0x802cae98
+	.4byte 0x802cae7c
+	.4byte 0x802cae98
 .global __RTTI__21TaiOtimotiFlickAction
 __RTTI__21TaiOtimotiFlickAction:
-  .4byte 0x802caf0c
-  .4byte 0x802caf24
+	.4byte 0x802caf0c
+	.4byte 0x802caf24
 .global __RTTI__34TaiOtimotiStartDroppingWaterAction
 __RTTI__34TaiOtimotiStartDroppingWaterAction:
-  .4byte 0x802caf4c
-  .4byte 0x802caf70
-  .4byte 0x802cafac
-  .4byte 0
-  .4byte 0x802cafbc
-  .4byte 0x802cafc8
+	.4byte 0x802caf4c
+	.4byte 0x802caf70
+	.4byte 0x802cafac
+	.4byte 0
+	.4byte 0x802cafbc
+	.4byte 0x802cafc8
 .global __RTTI__18TaiOtimotiStrategy
 __RTTI__18TaiOtimotiStrategy:
-  .4byte 0x802caf98
-  .4byte 0x802cafd4
-  .4byte 0x414e6f64
-  .4byte 0x65000000
-  .4byte 0x803e3ecc
-  .4byte 0
-  .4byte 0x802cb07c
-  .4byte 0x802cb088
-  .4byte 0x4e6f6465
-  .4byte 0
-  .4byte 0x803e3ee4
-  .4byte 0x802cb094
-  .4byte 0x802cb0a8
-  .4byte 0x802cb0b8
+	.4byte 0x802caf98
+	.4byte 0x802cafd4
+	.4byte 0x414e6f64
+	.4byte 0x65000000
+	.4byte 0x803e3ecc
+	.4byte 0
+	.4byte 0x802cb07c
+	.4byte 0x802cb088
+	.4byte 0x4e6f6465
+	.4byte 0
+	.4byte 0x803e3ee4
+	.4byte 0x802cb094
+	.4byte 0x802cb0a8
+	.4byte 0x802cb0b8
 .global __RTTI__22TaiBlackFrogParameters
 __RTTI__22TaiBlackFrogParameters:
-  .4byte 0x802cb064
-  .4byte 0x802cb0d4
+	.4byte 0x802cb064
+	.4byte 0x802cb0d4
 .global __RTTI__20TaiOtimotiParameters
 __RTTI__20TaiOtimotiParameters:
-  .4byte 0x802cb128
-  .4byte 0x802cb140
-  .4byte 0
+	.4byte 0x802cb128
+	.4byte 0x802cb140
+	.4byte 0
 .global lbl_803E3F10
 lbl_803E3F10:
 	.4byte 0x00000000
@@ -14822,178 +14822,178 @@ lbl_803E3F1C:
 	.4byte 0x00000000
 .global __RTTI__26TaiPalmChangingColorAction
 __RTTI__26TaiPalmChangingColorAction:
-  .4byte 0x802cb1f0
-  .4byte 0x802cb218
+	.4byte 0x802cb1f0
+	.4byte 0x802cb218
 .global __RTTI__26TaiPalmSettingPelletAction
 __RTTI__26TaiPalmSettingPelletAction:
-  .4byte 0x802cb240
-  .4byte 0x802cb25c
+	.4byte 0x802cb240
+	.4byte 0x802cb25c
 .global __RTTI__22TaiPalmSunflowerAction
 __RTTI__22TaiPalmSunflowerAction:
-  .4byte 0x802cb284
-  .4byte 0x802cb29c
+	.4byte 0x802cb284
+	.4byte 0x802cb29c
 .global __RTTI__25TaiPalmFlowerDamageAction
 __RTTI__25TaiPalmFlowerDamageAction:
-  .4byte 0x802cb2c4
-  .4byte 0x802cb2e0
+	.4byte 0x802cb2c4
+	.4byte 0x802cb2e0
 .global __RTTI__17TaiPalmGrowAction
 __RTTI__17TaiPalmGrowAction:
-  .4byte 0x802cb308
-  .4byte 0x802cb31c
+	.4byte 0x802cb308
+	.4byte 0x802cb31c
 .global __RTTI__20TaiPalmGrowingAction
 __RTTI__20TaiPalmGrowingAction:
-  .4byte 0x802cb344
-  .4byte 0x802cb35c
-  .4byte 0x802cb39c
-  .4byte 0x802cb3ac
+	.4byte 0x802cb344
+	.4byte 0x802cb35c
+	.4byte 0x802cb39c
+	.4byte 0x802cb3ac
 .global __RTTI__17TaiDamagingAction
 __RTTI__17TaiDamagingAction:
-  .4byte 0x802cb3b8
-  .4byte 0x802cb3cc
+	.4byte 0x802cb3b8
+	.4byte 0x802cb3cc
 .global __RTTI__21TaiPalmDamagingAction
 __RTTI__21TaiPalmDamagingAction:
-  .4byte 0x802cb384
-  .4byte 0x802cb3e0
+	.4byte 0x802cb384
+	.4byte 0x802cb3e0
 .global __RTTI__14TaiDyingAction
 __RTTI__14TaiDyingAction:
-  .4byte 0x802cb42c
-  .4byte 0x802cb43c
+	.4byte 0x802cb42c
+	.4byte 0x802cb43c
 .global __RTTI__18TaiPalmDyingAction
 __RTTI__18TaiPalmDyingAction:
-  .4byte 0x802cb418
-  .4byte 0x802cb450
+	.4byte 0x802cb418
+	.4byte 0x802cb450
 .global __RTTI__19TaiPalmMotionAction
 __RTTI__19TaiPalmMotionAction:
-  .4byte 0x802cb488
-  .4byte 0x802cb49c
-  .4byte 0x802cb4e0
-  .4byte 0
-  .4byte 0x802cb4ec
-  .4byte 0x802cb4fc
-  .4byte 0x802cb584
-  .4byte 0
-  .4byte 0x802cb594
-  .4byte 0x802cb5a0
+	.4byte 0x802cb488
+	.4byte 0x802cb49c
+	.4byte 0x802cb4e0
+	.4byte 0
+	.4byte 0x802cb4ec
+	.4byte 0x802cb4fc
+	.4byte 0x802cb584
+	.4byte 0
+	.4byte 0x802cb594
+	.4byte 0x802cb5a0
 .global __RTTI__15TaiPalmStrategy
 __RTTI__15TaiPalmStrategy:
-  .4byte 0x802cb574
-  .4byte 0x802cb5ac
-  .4byte 0x414e6f64
-  .4byte 0x65000000
-  .4byte 0x803e3fb0
-  .4byte 0
-  .4byte 0x802cb618
-  .4byte 0x802cb624
-  .4byte 0x4e6f6465
-  .4byte 0
-  .4byte 0x803e3fc8
-  .4byte 0x802cb630
-  .4byte 0x802cb644
-  .4byte 0x802cb654
+	.4byte 0x802cb574
+	.4byte 0x802cb5ac
+	.4byte 0x414e6f64
+	.4byte 0x65000000
+	.4byte 0x803e3fb0
+	.4byte 0
+	.4byte 0x802cb618
+	.4byte 0x802cb624
+	.4byte 0x4e6f6465
+	.4byte 0
+	.4byte 0x803e3fc8
+	.4byte 0x802cb630
+	.4byte 0x802cb644
+	.4byte 0x802cb654
 .global __RTTI__17TaiPalmParameters
 __RTTI__17TaiPalmParameters:
-  .4byte 0x802cb604
-  .4byte 0x802cb670
-  .4byte 0x802cb708
-  .4byte 0
+	.4byte 0x802cb604
+	.4byte 0x802cb670
+	.4byte 0x802cb708
+	.4byte 0
 .global __RTTI__19TaiDangerLifeAction
 __RTTI__19TaiDangerLifeAction:
-  .4byte 0x802cb6f4
-  .4byte 0x802cb714
+	.4byte 0x802cb6f4
+	.4byte 0x802cb714
 .global __RTTI__13TaiWarnAction
 __RTTI__13TaiWarnAction:
-  .4byte 0x802cb73c
-  .4byte 0x802cb74c
+	.4byte 0x802cb73c
+	.4byte 0x802cb74c
 .global __RTTI__16TaiPressedAction
 __RTTI__16TaiPressedAction:
-  .4byte 0x802cb774
-  .4byte 0x802cb788
+	.4byte 0x802cb774
+	.4byte 0x802cb788
 .global __RTTI__21TaiBeingPressedAction
 __RTTI__21TaiBeingPressedAction:
-  .4byte 0x802cb7b0
-  .4byte 0x802cb7c8
+	.4byte 0x802cb7b0
+	.4byte 0x802cb7c8
 .global __RTTI__16TaiSmashedAction_1
 __RTTI__16TaiSmashedAction_1:
-  .4byte 0x802cb7f0
-  .4byte 0x802cb804
+	.4byte 0x802cb7f0
+	.4byte 0x802cb804
 .global __RTTI__16TaiStickedAction
 __RTTI__16TaiStickedAction:
-  .4byte 0x802cb82c
-  .4byte 0x802cb840
-  .4byte 0x802cb87c
-  .4byte 0
-  .4byte 0x802cb888
-  .4byte 0x802cb898
+	.4byte 0x802cb82c
+	.4byte 0x802cb840
+	.4byte 0x802cb87c
+	.4byte 0
+	.4byte 0x802cb888
+	.4byte 0x802cb898
 .global __RTTI__31TaiTargetNearestCollisionAction
 __RTTI__31TaiTargetNearestCollisionAction:
-  .4byte 0x802cb8dc
-  .4byte 0x802cb8fc
+	.4byte 0x802cb8dc
+	.4byte 0x802cb8fc
 .global __RTTI__31TaiTargetNearestAssailantAction
 __RTTI__31TaiTargetNearestAssailantAction:
-  .4byte 0x802cb924
-  .4byte 0x802cb944
-  .4byte 0x802cb980
-  .4byte 0x802cb990
+	.4byte 0x802cb924
+	.4byte 0x802cb944
+	.4byte 0x802cb980
+	.4byte 0x802cb990
 .global __RTTI__17TaiDamagingAction_1
 __RTTI__17TaiDamagingAction_1:
-  .4byte 0x802cb96c
-  .4byte 0x802cb99c
+	.4byte 0x802cb96c
+	.4byte 0x802cb99c
 .global __RTTI__40TaiCounterattackSimultaneousDamageAction
 __RTTI__40TaiCounterattackSimultaneousDamageAction:
-  .4byte 0x802cb9cc
-  .4byte 0x802cb9f8
+	.4byte 0x802cb9cc
+	.4byte 0x802cb9f8
 .global __RTTI__27TaiSimultaneousDamageAction
 __RTTI__27TaiSimultaneousDamageAction:
-  .4byte 0x802cba20
-  .4byte 0x802cba3c
+	.4byte 0x802cba20
+	.4byte 0x802cba3c
 .global __RTTI__15TaiDamageAction
 __RTTI__15TaiDamageAction:
-  .4byte 0x802cba64
-  .4byte 0x802cba74
+	.4byte 0x802cba64
+	.4byte 0x802cba74
 .global __RTTI__20TaiDamageScaleAction
 __RTTI__20TaiDamageScaleAction:
-  .4byte 0x802cba9c
-  .4byte 0x802cbab4
+	.4byte 0x802cba9c
+	.4byte 0x802cbab4
 .global __RTTI__20TaiDamageCountAction
 __RTTI__20TaiDamageCountAction:
-  .4byte 0x802cbadc
-  .4byte 0x802cbaf4
+	.4byte 0x802cbadc
+	.4byte 0x802cbaf4
 .global __RTTI__25TaiDamageCountResetAction
 __RTTI__25TaiDamageCountResetAction:
-  .4byte 0x802cbb1c
-  .4byte 0x802cbb38
+	.4byte 0x802cbb1c
+	.4byte 0x802cbb38
 .global __RTTI__14TaiDyingAction_1
 __RTTI__14TaiDyingAction_1:
-  .4byte 0x802cbb60
-  .4byte 0x802cbb70
+	.4byte 0x802cbb60
+	.4byte 0x802cbb70
 .global __RTTI__25TaiCreateDeadEffectAction
 __RTTI__25TaiCreateDeadEffectAction:
-  .4byte 0x802cbba0
-  .4byte 0x802cbbbc
+	.4byte 0x802cbba0
+	.4byte 0x802cbbbc
 .global __RTTI__19TaiSpawnItemsAction
 __RTTI__19TaiSpawnItemsAction:
-  .4byte 0x802cbbe4
-  .4byte 0x802cbbf8
+	.4byte 0x802cbbe4
+	.4byte 0x802cbbf8
 .global __RTTI__19TaiStartDyingAction
 __RTTI__19TaiStartDyingAction:
-  .4byte 0x802cbc20
-  .4byte 0x802cbc34
+	.4byte 0x802cbc20
+	.4byte 0x802cbc34
 .global __RTTI__12TaiDyeAction
 __RTTI__12TaiDyeAction:
-  .4byte 0x802cbc5c
-  .4byte 0x802cbc6c
+	.4byte 0x802cbc5c
+	.4byte 0x802cbc6c
 .global __RTTI__19TaiLifeDamageAction
 __RTTI__19TaiLifeDamageAction:
-  .4byte 0x802cbc94
-  .4byte 0x802cbca8
+	.4byte 0x802cbc94
+	.4byte 0x802cbca8
 .global __RTTI__17TaiLifeZeroAction
 __RTTI__17TaiLifeZeroAction:
-  .4byte 0x802cbcd0
-  .4byte 0x802cbce4
+	.4byte 0x802cbcd0
+	.4byte 0x802cbce4
 .global __RTTI__13TaiDeadAction
 __RTTI__13TaiDeadAction:
-  .4byte 0x802cbd0c
-  .4byte 0x802cbd1c
+	.4byte 0x802cbd0c
+	.4byte 0x802cbd1c
 .global lbl_803E40C0
 lbl_803E40C0:
 	.4byte 0x00000000
@@ -15014,72 +15014,72 @@ lbl_803E40CC:
 	.4byte 0x802CBE60
 .global __RTTI__35TaiSwallowMissAttackingEffectAction
 __RTTI__35TaiSwallowMissAttackingEffectAction:
-  .4byte 0x802cbdf8
-  .4byte 0x802cbe74
+	.4byte 0x802cbdf8
+	.4byte 0x802cbe74
 .global __RTTI__25TaiSwallowLegEffectAction
 __RTTI__25TaiSwallowLegEffectAction:
-  .4byte 0x802cbeb0
-  .4byte 0x802cbecc
+	.4byte 0x802cbeb0
+	.4byte 0x802cbecc
 .global __RTTI__22TaiSwallowNoticeAction
 __RTTI__22TaiSwallowNoticeAction:
-  .4byte 0x802cbf08
-  .4byte 0x802cbf20
+	.4byte 0x802cbf08
+	.4byte 0x802cbf20
 .global __RTTI__21TaiSwallowSnoreAction
 __RTTI__21TaiSwallowSnoreAction:
-  .4byte 0x802cbf48
-  .4byte 0x802cbf60
+	.4byte 0x802cbf48
+	.4byte 0x802cbf60
 .global __RTTI__31TaiSwallowSwallowingFlickAction
 __RTTI__31TaiSwallowSwallowingFlickAction:
-  .4byte 0x802cbf88
-  .4byte 0x802cbfa8
-  .4byte 0x802cbfe4
-  .4byte 0
-  .4byte 0x802cbff0
-  .4byte 0x802cc000
-  .4byte 0x802cc080
-  .4byte 0x802cc090
+	.4byte 0x802cbf88
+	.4byte 0x802cbfa8
+	.4byte 0x802cbfe4
+	.4byte 0
+	.4byte 0x802cbff0
+	.4byte 0x802cc000
+	.4byte 0x802cc080
+	.4byte 0x802cc090
 .global __RTTI__24TaiSwallowFlickingAction
 __RTTI__24TaiSwallowFlickingAction:
-  .4byte 0x802cc064
-  .4byte 0x802cc09c
-  .4byte 0x802cc130
-  .4byte 0x802cc14c
+	.4byte 0x802cc064
+	.4byte 0x802cc09c
+	.4byte 0x802cc130
+	.4byte 0x802cc14c
 .global __RTTI__23TaiSwallowTurningAction
 __RTTI__23TaiSwallowTurningAction:
-  .4byte 0x802cc118
-  .4byte 0x802cc160
+	.4byte 0x802cc118
+	.4byte 0x802cc160
 .global __RTTI__30TaiSwallowReceiveMessageAction
 __RTTI__30TaiSwallowReceiveMessageAction:
-  .4byte 0x802cc19c
-  .4byte 0x802cc1bc
-  .4byte 0x802cc1f8
-  .4byte 0
-  .4byte 0x802cc208
-  .4byte 0x802cc214
+	.4byte 0x802cc19c
+	.4byte 0x802cc1bc
+	.4byte 0x802cc1f8
+	.4byte 0
+	.4byte 0x802cc208
+	.4byte 0x802cc214
 .global __RTTI__18TaiSwallowStrategy
 __RTTI__18TaiSwallowStrategy:
-  .4byte 0x802cc1e4
-  .4byte 0x802cc220
-  .4byte 0x414e6f64
-  .4byte 0x65000000
-  .4byte 0x803e4160
-  .4byte 0
-  .4byte 0x802cc2cc
-  .4byte 0x802cc2d8
-  .4byte 0x4e6f6465
-  .4byte 0
-  .4byte 0x803e4178
-  .4byte 0x802cc2e4
-  .4byte 0x802cc2f8
-  .4byte 0x802cc308
+	.4byte 0x802cc1e4
+	.4byte 0x802cc220
+	.4byte 0x414e6f64
+	.4byte 0x65000000
+	.4byte 0x803e4160
+	.4byte 0
+	.4byte 0x802cc2cc
+	.4byte 0x802cc2d8
+	.4byte 0x4e6f6465
+	.4byte 0
+	.4byte 0x803e4178
+	.4byte 0x802cc2e4
+	.4byte 0x802cc2f8
+	.4byte 0x802cc308
 .global __RTTI__25TaiBlackSwallowParameters
 __RTTI__25TaiBlackSwallowParameters:
-  .4byte 0x802cc2b0
-  .4byte 0x802cc324
+	.4byte 0x802cc2b0
+	.4byte 0x802cc324
 .global __RTTI__20TaiSwallowParameters
 __RTTI__20TaiSwallowParameters:
-  .4byte 0x802cc378
-  .4byte 0x802cc390
+	.4byte 0x802cc378
+	.4byte 0x802cc390
 .global lbl_803E41A0
 lbl_803E41A0:
 	.4byte 0x00000000
@@ -15093,133 +15093,133 @@ lbl_803E41A8:
 	.4byte 0x00000000
 .global __RTTI__26TaiPearlTresureSoundAction
 __RTTI__26TaiPearlTresureSoundAction:
-  .4byte 0x802cc428
-  .4byte 0x802cc450
-  .4byte 0x802cc48c
-  .4byte 0
-  .4byte 0x802cc49c
-  .4byte 0x802cc4a8
+	.4byte 0x802cc428
+	.4byte 0x802cc450
+	.4byte 0x802cc48c
+	.4byte 0
+	.4byte 0x802cc49c
+	.4byte 0x802cc4a8
 .global __RTTI__16TaiPearlStrategy
 __RTTI__16TaiPearlStrategy:
-  .4byte 0x802cc478
-  .4byte 0x802cc4b4
-  .4byte 0x414e6f64
-  .4byte 0x65000000
-  .4byte 0x803e41d4
-  .4byte 0
-  .4byte 0x802cc508
-  .4byte 0x802cc514
-  .4byte 0x4e6f6465
-  .4byte 0
-  .4byte 0x803e41ec
-  .4byte 0x802cc520
-  .4byte 0x802cc534
-  .4byte 0x802cc544
+	.4byte 0x802cc478
+	.4byte 0x802cc4b4
+	.4byte 0x414e6f64
+	.4byte 0x65000000
+	.4byte 0x803e41d4
+	.4byte 0
+	.4byte 0x802cc508
+	.4byte 0x802cc514
+	.4byte 0x4e6f6465
+	.4byte 0
+	.4byte 0x803e41ec
+	.4byte 0x802cc520
+	.4byte 0x802cc534
+	.4byte 0x802cc544
 .global __RTTI__21TaiRocpearlParameters
 __RTTI__21TaiRocpearlParameters:
-  .4byte 0x802cc4f0
-  .4byte 0x802cc560
+	.4byte 0x802cc4f0
+	.4byte 0x802cc560
 .global __RTTI__18TaiPearlParameters
 __RTTI__18TaiPearlParameters:
-  .4byte 0x802cc5b4
-  .4byte 0x802cc5c8
-  .4byte 0x802cc668
-  .4byte 0
-  .4byte 0x802cc674
-  .4byte 0x802cc684
+	.4byte 0x802cc5b4
+	.4byte 0x802cc5c8
+	.4byte 0x802cc668
+	.4byte 0
+	.4byte 0x802cc674
+	.4byte 0x802cc684
 .global __RTTI__17TaiShellEatAction
 __RTTI__17TaiShellEatAction:
-  .4byte 0x802cc6e4
-  .4byte 0x802cc6f8
+	.4byte 0x802cc6e4
+	.4byte 0x802cc6f8
 .global __RTTI__28TaiShellNaviPikiInsideAction
 __RTTI__28TaiShellNaviPikiInsideAction:
-  .4byte 0x802cc738
-  .4byte 0x802cc758
+	.4byte 0x802cc738
+	.4byte 0x802cc758
 .global __RTTI__30TaiShellSaveItemPositionAction
 __RTTI__30TaiShellSaveItemPositionAction:
-  .4byte 0x802cc780
-  .4byte 0x802cc7a0
+	.4byte 0x802cc780
+	.4byte 0x802cc7a0
 .global __RTTI__25TaiShellSetPositionAction
 __RTTI__25TaiShellSetPositionAction:
-  .4byte 0x802cc7c8
-  .4byte 0x802cc7e4
+	.4byte 0x802cc7c8
+	.4byte 0x802cc7e4
 .global __RTTI__16TaiShellStrategy
 __RTTI__16TaiShellStrategy:
-  .4byte 0x802cc80c
-  .4byte 0x802cc820
+	.4byte 0x802cc80c
+	.4byte 0x802cc820
 .global __RTTI__18TaiShellParameters
 __RTTI__18TaiShellParameters:
-  .4byte 0x802cc8b0
-  .4byte 0x802cc8c4
-  .4byte 0
-  .4byte 0x802cc954
-  .4byte 0
-  .4byte 0x802cc960
-  .4byte 0x802cc970
+	.4byte 0x802cc8b0
+	.4byte 0x802cc8c4
+	.4byte 0
+	.4byte 0x802cc954
+	.4byte 0
+	.4byte 0x802cc960
+	.4byte 0x802cc970
 .global __RTTI__22TaiStartingTimerAction
 __RTTI__22TaiStartingTimerAction:
-  .4byte 0x802cc93c
-  .4byte 0x802cc97c
+	.4byte 0x802cc93c
+	.4byte 0x802cc97c
 .global __RTTI__21TaiTimerElapsedAction
 __RTTI__21TaiTimerElapsedAction:
-  .4byte 0x802cc9ac
-  .4byte 0x802cc9c4
+	.4byte 0x802cc9ac
+	.4byte 0x802cc9c4
 .global __RTTI__19TaiResetTimerAction
 __RTTI__19TaiResetTimerAction:
-  .4byte 0x802cc9ec
-  .4byte 0x802cca00
-  .4byte 0x802cca84
-  .4byte 0
-  .4byte 0x802cca90
-  .4byte 0x802ccaa0
+	.4byte 0x802cc9ec
+	.4byte 0x802cca00
+	.4byte 0x802cca84
+	.4byte 0
+	.4byte 0x802cca90
+	.4byte 0x802ccaa0
 .global __RTTI__20TaiWaitTurningAction
 __RTTI__20TaiWaitTurningAction:
-  .4byte 0x802cca6c
-  .4byte 0x802ccaac
-  .4byte 0x54656b69
-  .4byte 0
+	.4byte 0x802cca6c
+	.4byte 0x802ccaac
+	.4byte 0x54656b69
+	.4byte 0
 .global __RTTI__10PelletView_1
 __RTTI__10PelletView_1:
-  .4byte 0x802ccaec
-  .4byte 0
-  .4byte 0x802ccaf8
-  .4byte 0
-  .4byte 0x802ccb0c
-  .4byte 0
-  .4byte 0x802ccb18
-  .4byte 0
-  .4byte 0x802ccb28
-  .4byte 0x802ccb34
-  .4byte 0x4254656b
-  .4byte 0x69000000
-  .4byte 0x803e42c8
-  .4byte 0x802ccb48
-  .4byte 0x4e54656b
-  .4byte 0x69000000
-  .4byte 0x803e42d8
-  .4byte 0x802ccb74
-  .4byte 0x5954656b
-  .4byte 0x69000000
-  .4byte 0x803e42e8
-  .4byte 0x802ccba8
+	.4byte 0x802ccaec
+	.4byte 0
+	.4byte 0x802ccaf8
+	.4byte 0
+	.4byte 0x802ccb0c
+	.4byte 0
+	.4byte 0x802ccb18
+	.4byte 0
+	.4byte 0x802ccb28
+	.4byte 0x802ccb34
+	.4byte 0x4254656b
+	.4byte 0x69000000
+	.4byte 0x803e42c8
+	.4byte 0x802ccb48
+	.4byte 0x4e54656b
+	.4byte 0x69000000
+	.4byte 0x803e42d8
+	.4byte 0x802ccb74
+	.4byte 0x5954656b
+	.4byte 0x69000000
+	.4byte 0x803e42e8
+	.4byte 0x802ccba8
 .global __RTTI__4Teki
 __RTTI__4Teki:
-  .4byte 0x803e4298
-  .4byte 0x802ccbe4
-  .4byte 0x414e6f64
-  .4byte 0x65000000
-  .4byte 0x803e4300
-  .4byte 0
-  .4byte 0x802cce84
-  .4byte 0x802cce90
-  .4byte 0x4e6f6465
-  .4byte 0
-  .4byte 0x803e4318
-  .4byte 0x802cce9c
+	.4byte 0x803e4298
+	.4byte 0x802ccbe4
+	.4byte 0x414e6f64
+	.4byte 0x65000000
+	.4byte 0x803e4300
+	.4byte 0
+	.4byte 0x802cce84
+	.4byte 0x802cce90
+	.4byte 0x4e6f6465
+	.4byte 0
+	.4byte 0x803e4318
+	.4byte 0x802cce9c
 .global __RTTI__20TekiAnimationManager
 __RTTI__20TekiAnimationManager:
-  .4byte lbl_802CCE6C
-  .4byte 0x802cceb0
+	.4byte lbl_802CCE6C
+	.4byte 0x802cceb0
 .global lbl_803E4330
 lbl_803E4330:
 	.4byte 0x00000000
@@ -15408,126 +15408,126 @@ lbl_803E441C:
 	.4byte 0x00000000
 .global __RTTI__11NVector3fIO_2
 __RTTI__11NVector3fIO_2:
-  .4byte 0x802cd070
-  .4byte 0
+	.4byte 0x802cd070
+	.4byte 0
 .global __RTTI__10PelletView_2
 __RTTI__10PelletView_2:
-  .4byte 0x802cd0a8
-  .4byte 0
-  .4byte 0x802cd0e8
-  .4byte 0
-  .4byte 0x4254656b
-  .4byte 0x69000000
-  .4byte 0x802cd108
-  .4byte 0
-  .4byte 0x802cd114
-  .4byte 0
-  .4byte 0x802cd124
-  .4byte 0x802cd130
-  .4byte 0x803e4450
-  .4byte 0x802cd144
-  .4byte 0x802cd3a8
-  .4byte 0
-  .4byte 0x802cd3b4
-  .4byte 0x802cd3c4
+	.4byte 0x802cd0a8
+	.4byte 0
+	.4byte 0x802cd0e8
+	.4byte 0
+	.4byte 0x4254656b
+	.4byte 0x69000000
+	.4byte 0x802cd108
+	.4byte 0
+	.4byte 0x802cd114
+	.4byte 0
+	.4byte 0x802cd124
+	.4byte 0x802cd130
+	.4byte 0x803e4450
+	.4byte 0x802cd144
+	.4byte 0x802cd3a8
+	.4byte 0
+	.4byte 0x802cd3b4
+	.4byte 0x802cd3c4
 .global __RTTI__18TekiAngleCondition
 __RTTI__18TekiAngleCondition:
-  .4byte 0x802cd394
-  .4byte 0x802cd3d0
+	.4byte 0x802cd394
+	.4byte 0x802cd3d0
 .global __RTTI__18TekiLowerCondition
 __RTTI__18TekiLowerCondition:
-  .4byte 0x802cd470
-  .4byte 0x802cd484
+	.4byte 0x802cd470
+	.4byte 0x802cd484
 .global __RTTI__26TekiVisibleHeightCondition
 __RTTI__26TekiVisibleHeightCondition:
-  .4byte 0x802cd4a4
-  .4byte 0x802cd4c0
+	.4byte 0x802cd4a4
+	.4byte 0x802cd4c0
 .global __RTTI__20TekiVisibleCondition
 __RTTI__20TekiVisibleCondition:
-  .4byte 0x802cd4e0
-  .4byte 0x802cd4f8
+	.4byte 0x802cd4e0
+	.4byte 0x802cd4f8
 .global __RTTI__23TekiAttackableCondition
 __RTTI__23TekiAttackableCondition:
-  .4byte 0x802cd518
-  .4byte 0x802cd530
+	.4byte 0x802cd518
+	.4byte 0x802cd530
 .global __RTTI__23TekiLowerRangeCondition
 __RTTI__23TekiLowerRangeCondition:
-  .4byte 0x802cd550
-  .4byte 0x802cd568
+	.4byte 0x802cd550
+	.4byte 0x802cd568
 .global __RTTI__20TekiStickerCondition
 __RTTI__20TekiStickerCondition:
-  .4byte 0x802cd588
-  .4byte 0x802cd5a0
+	.4byte 0x802cd588
+	.4byte 0x802cd5a0
 .global __RTTI__27TekiSphereDistanceCondition
 __RTTI__27TekiSphereDistanceCondition:
-  .4byte 0x802cd5c0
-  .4byte 0x802cd5dc
+	.4byte 0x802cd5c0
+	.4byte 0x802cd5dc
 .global __RTTI__21TekiDistanceCondition
 __RTTI__21TekiDistanceCondition:
-  .4byte 0x802cd5fc
-  .4byte 0x802cd614
+	.4byte 0x802cd5fc
+	.4byte 0x802cd614
 .global __RTTI__28TekiCreaturePointerCondition
 __RTTI__28TekiCreaturePointerCondition:
-  .4byte 0x802cd634
-  .4byte 0x802cd654
+	.4byte 0x802cd634
+	.4byte 0x802cd654
 .global __RTTI__24TekiRecognitionCondition
 __RTTI__24TekiRecognitionCondition:
-  .4byte 0x802cd674
-  .4byte 0x802cd690
+	.4byte 0x802cd674
+	.4byte 0x802cd690
 .global __RTTI__21TekiStickingCondition
 __RTTI__21TekiStickingCondition:
-  .4byte 0x802cd6b0
-  .4byte 0x802cd6c8
+	.4byte 0x802cd6b0
+	.4byte 0x802cd6c8
 .global __RTTI__35TekiPositionSphereDistanceCondition
 __RTTI__35TekiPositionSphereDistanceCondition:
-  .4byte 0x802cd6e8
-  .4byte 0x802cd70c
+	.4byte 0x802cd6e8
+	.4byte 0x802cd70c
 .global __RTTI__35TekiPositionCircleDistanceCondition
 __RTTI__35TekiPositionCircleDistanceCondition:
-  .4byte 0x802cd72c
-  .4byte 0x802cd750
+	.4byte 0x802cd72c
+	.4byte 0x802cd750
 .global __RTTI__29TekiPositionDistanceCondition
 __RTTI__29TekiPositionDistanceCondition:
-  .4byte 0x802cd770
-  .4byte 0x802cd790
+	.4byte 0x802cd770
+	.4byte 0x802cd790
 .global __RTTI__19TekiPelletCondition
 __RTTI__19TekiPelletCondition:
-  .4byte 0x802cd7b0
-  .4byte 0x802cd7c4
+	.4byte 0x802cd7b0
+	.4byte 0x802cd7c4
 .global __RTTI__21TekiNaviPikiCondition
 __RTTI__21TekiNaviPikiCondition:
-  .4byte 0x802cd7e4
-  .4byte 0x802cd7fc
+	.4byte 0x802cd7e4
+	.4byte 0x802cd7fc
 .global __RTTI__17TekiNaviCondition
 __RTTI__17TekiNaviCondition:
-  .4byte 0x802cd81c
-  .4byte 0x802cd830
+	.4byte 0x802cd81c
+	.4byte 0x802cd830
 .global __RTTI__17TekiFreeCondition
 __RTTI__17TekiFreeCondition:
-  .4byte 0x802cd850
-  .4byte 0x802cd864
+	.4byte 0x802cd850
+	.4byte 0x802cd864
 .global __RTTI__17TekiTypeCondition
 __RTTI__17TekiTypeCondition:
-  .4byte 0x802cd884
-  .4byte 0x802cd898
+	.4byte 0x802cd884
+	.4byte 0x802cd898
 .global __RTTI__18TekiStateCondition
 __RTTI__18TekiStateCondition:
-  .4byte 0x802cd8b8
-  .4byte 0x802cd8cc
+	.4byte 0x802cd8b8
+	.4byte 0x802cd8cc
 .global __RTTI__22TekiPikiStateCondition
 __RTTI__22TekiPikiStateCondition:
-  .4byte 0x802cd8ec
-  .4byte 0x802cd904
-  .4byte 0x802cd960
-  .4byte 0
+	.4byte 0x802cd8ec
+	.4byte 0x802cd904
+	.4byte 0x802cd960
+	.4byte 0
 .global __RTTI__17InteractHitEffect
 __RTTI__17InteractHitEffect:
-  .4byte 0x802cd94c
-  .4byte 0x802cd96c
+	.4byte 0x802cd94c
+	.4byte 0x802cd96c
 .global __RTTI__12InteractBomb
 __RTTI__12InteractBomb:
-  .4byte 0x802cd9d0
-  .4byte 0x802cd9e0
+	.4byte 0x802cd9d0
+	.4byte 0x802cd9e0
 .global lbl_803E4550
 lbl_803E4550:
 	.4byte 0x74656B69
@@ -15622,28 +15622,28 @@ lbl_803E4658:
 	.4byte 0x802CDC38
 .global __RTTI__7TekiMgr
 __RTTI__7TekiMgr:
-  .4byte 0x803e4660
-  .4byte 0x802cdc64
-  .4byte 0x4e54656b
-  .4byte 0x69000000
+	.4byte 0x803e4660
+	.4byte 0x802cdc64
+	.4byte 0x4e54656b
+	.4byte 0x69000000
 .global __RTTI__10PelletView_3
 __RTTI__10PelletView_3:
-  .4byte 0x802cdd3c
-  .4byte 0
-  .4byte 0x802cdd48
-  .4byte 0
-  .4byte 0x802cdd5c
-  .4byte 0
-  .4byte 0x802cdd68
-  .4byte 0
-  .4byte 0x802cdd78
-  .4byte 0x802cdd84
-  .4byte 0x4254656b
-  .4byte 0x69000000
-  .4byte 0x803e46e0
-  .4byte 0x802cdd98
-  .4byte 0x803e46b0
-  .4byte 0x802cddc4
+	.4byte 0x802cdd3c
+	.4byte 0
+	.4byte 0x802cdd48
+	.4byte 0
+	.4byte 0x802cdd5c
+	.4byte 0
+	.4byte 0x802cdd68
+	.4byte 0
+	.4byte 0x802cdd78
+	.4byte 0x802cdd84
+	.4byte 0x4254656b
+	.4byte 0x69000000
+	.4byte 0x803e46e0
+	.4byte 0x802cdd98
+	.4byte 0x803e46b0
+	.4byte 0x802cddc4
 .global lbl_803E46F8
 lbl_803E46F8:
 	.4byte 0x3C4E6F64
@@ -15696,24 +15696,24 @@ lbl_803E4764:
 	.4byte 0x00000000
 .global __RTTI__15TekiPersonality
 __RTTI__15TekiPersonality:
-  .4byte 0x802ce68c
-  .4byte 0
-  .4byte 0x802ce6d4
-  .4byte 0
-  .4byte 0x802ce750
-  .4byte 0
-  .4byte 0x47656e42
-  .4byte 0x61736500
-  .4byte 0x803e4780
-  .4byte 0x802ce75c
-  .4byte 0x802ce768
-  .4byte 0x802ce774
+	.4byte 0x802ce68c
+	.4byte 0
+	.4byte 0x802ce6d4
+	.4byte 0
+	.4byte 0x802ce750
+	.4byte 0
+	.4byte 0x47656e42
+	.4byte 0x61736500
+	.4byte 0x803e4780
+	.4byte 0x802ce75c
+	.4byte 0x802ce768
+	.4byte 0x802ce774
 .global __RTTI__13GenObjectBoss
 __RTTI__13GenObjectBoss:
-  .4byte 0x802ce740
-  .4byte 0x802ce788
-  .4byte 0x426f7373
-  .4byte 0
+	.4byte 0x802ce740
+	.4byte 0x802ce788
+	.4byte 0x426f7373
+	.4byte 0
 .global lbl_803E47A8
 lbl_803E47A8:
 	.4byte 0x73303000
@@ -15858,32 +15858,32 @@ lbl_803E4840:
 	.4byte 0x802CEACC
 .global __RTTI__20BossAnimationManager
 __RTTI__20BossAnimationManager:
-  .4byte lbl_802CEA9C
-  .4byte 0x802ceae0
-  .4byte 0x802ceb64
-  .4byte 0
+	.4byte lbl_802CEA9C
+	.4byte 0x802ceae0
+	.4byte 0x802ceb64
+	.4byte 0
 .global __RTTI__15CndBossCollKill
 __RTTI__15CndBossCollKill:
-  .4byte 0x802ceb54
-  .4byte 0x802ceb70
+	.4byte 0x802ceb54
+	.4byte 0x802ceb70
 .global __RTTI__17CndStickMouthKill
 __RTTI__17CndStickMouthKill:
-  .4byte 0x802ceb88
-  .4byte 0x802ceb9c
+	.4byte 0x802ceb88
+	.4byte 0x802ceb9c
 .global __RTTI__16CndStickBossKill
 __RTTI__16CndStickBossKill:
-  .4byte 0x802cebb4
-  .4byte 0x802cebc8
+	.4byte 0x802cebb4
+	.4byte 0x802cebc8
 .global __RTTI__12CndBossFlick
 __RTTI__12CndBossFlick:
-  .4byte 0x802cebe0
-  .4byte 0x802cebf0
+	.4byte 0x802cebe0
+	.4byte 0x802cebf0
 .global __RTTI__10CndIsAlive
 __RTTI__10CndIsAlive:
-  .4byte 0x802cec08
-  .4byte 0x802cec14
-  .4byte 0x426f7373
-  .4byte 0x4d677200
+	.4byte 0x802cec08
+	.4byte 0x802cec14
+	.4byte 0x426f7373
+	.4byte 0x4d677200
 .global lbl_803E48E8
 lbl_803E48E8:
 	.4byte 0x3C4E6F64
@@ -15931,23 +15931,23 @@ lbl_803E492C:
 	.4byte 0x802CF000
 .global __RTTI__8BossNode
 __RTTI__8BossNode:
-  .4byte 0x802ceff4
-  .4byte 0x802cf00c
-  .4byte 0x802cf04c
-  .4byte 0
-  .4byte 0x4e6f6465
-  .4byte 0
-  .4byte 0x803e495c
-  .4byte 0x802cf070
-  .4byte 0x802cf084
-  .4byte 0x802cf090
+	.4byte 0x802ceff4
+	.4byte 0x802cf00c
+	.4byte 0x802cf04c
+	.4byte 0
+	.4byte 0x4e6f6465
+	.4byte 0
+	.4byte 0x803e495c
+	.4byte 0x802cf070
+	.4byte 0x802cf084
+	.4byte 0x802cf090
 .global __RTTI__7BossMgr
 __RTTI__7BossMgr:
-  .4byte 0x803e48e0
-  .4byte 0x802cf0b4
-  .4byte 0
-  .4byte 0x53706964
-  .4byte 0x65720000
+	.4byte 0x803e48e0
+	.4byte 0x802cf0b4
+	.4byte 0
+	.4byte 0x53706964
+	.4byte 0x65720000
 .global lbl_803E4988
 lbl_803E4988:
 	.4byte 0x70313000
@@ -16122,38 +16122,38 @@ lbl_803E4A5C:
 	.4byte 0x802CF1A4
 .global __RTTI__12SpiderDrawer
 __RTTI__12SpiderDrawer:
-  .4byte 0x802cf188
-  .4byte 0x802cf1b8
-  .4byte 0x802cf204
-  .4byte 0
-  .4byte 0x802cf210
-  .4byte 0
-  .4byte 0x802cf220
-  .4byte 0x802cf22c
-  .4byte 0x426f7373
-  .4byte 0
-  .4byte 0x803e4aa8
-  .4byte 0x802cf240
+	.4byte 0x802cf188
+	.4byte 0x802cf1b8
+	.4byte 0x802cf204
+	.4byte 0
+	.4byte 0x802cf210
+	.4byte 0
+	.4byte 0x802cf220
+	.4byte 0x802cf22c
+	.4byte 0x426f7373
+	.4byte 0
+	.4byte 0x803e4aa8
+	.4byte 0x802cf240
 .global __RTTI__6Spider
 __RTTI__6Spider:
-  .4byte 0x803e4980
-  .4byte 0x802cf25c
-  .4byte 0x802cf3b0
-  .4byte 0
-  .4byte 0x802cf414
-  .4byte 0
-  .4byte 0x802cf424
-  .4byte 0x802cf430
+	.4byte 0x803e4980
+	.4byte 0x802cf25c
+	.4byte 0x802cf3b0
+	.4byte 0
+	.4byte 0x802cf414
+	.4byte 0
+	.4byte 0x802cf424
+	.4byte 0x802cf430
 .global __RTTI__10SpiderProp
 __RTTI__10SpiderProp:
-  .4byte 0x802cf408
-  .4byte 0x802cf43c
-  .4byte 0x802cf4ec
-  .4byte 0
+	.4byte 0x802cf408
+	.4byte 0x802cf43c
+	.4byte 0x802cf4ec
+	.4byte 0
 .global __RTTI__8SpiderAi
 __RTTI__8SpiderAi:
-  .4byte 0x802cf4bc
-  .4byte 0x802cf500
+	.4byte 0x802cf4bc
+	.4byte 0x802cf500
 .global lbl_803E4AF0
 lbl_803E4AF0:
 	.4byte 0x00000000
@@ -16224,18 +16224,18 @@ lbl_803E4B44:
 	.4byte 0x00000000
 .global __RTTI__30SpiderGenHalfDeadCallBackJoint
 __RTTI__30SpiderGenHalfDeadCallBackJoint:
-  .4byte 0x802cf5d0
-  .4byte 0x802cf61c
+	.4byte 0x802cf5d0
+	.4byte 0x802cf61c
 .global __RTTI__23SpiderGenPerishCallBack
 __RTTI__23SpiderGenPerishCallBack:
-  .4byte 0x802cf634
-  .4byte 0x802cf64c
+	.4byte 0x802cf634
+	.4byte 0x802cf64c
 .global __RTTI__23SpiderGenRippleCallBack
 __RTTI__23SpiderGenRippleCallBack:
-  .4byte 0x802cf664
-  .4byte 0x802cf67c
-  .4byte 0x536e616b
-  .4byte 0x65000000
+	.4byte 0x802cf664
+	.4byte 0x802cf67c
+	.4byte 0x536e616b
+	.4byte 0x65000000
 .global lbl_803E4B70
 lbl_803E4B70:
 	.4byte 0x70303000
@@ -16392,34 +16392,34 @@ lbl_803E4C2C:
 	.4byte 0x802CF6F4
 .global __RTTI__5Snake
 __RTTI__5Snake:
-  .4byte 0x803e4b68
-  .4byte 0x802cf710
+	.4byte 0x803e4b68
+	.4byte 0x802cf710
 .global __RTTI__15CollPartUpdater
 __RTTI__15CollPartUpdater:
-  .4byte 0x802cf874
-  .4byte 0
+	.4byte 0x802cf874
+	.4byte 0
 .global __RTTI__Q25Snake18BoundSphereUpdater
 __RTTI__Q25Snake18BoundSphereUpdater:
-  .4byte 0x802cf858
-  .4byte 0x802cf884
-  .4byte 0x802cf8bc
-  .4byte 0
-  .4byte 0x414e6f64
-  .4byte 0x65000000
-  .4byte 0x803e4c78
-  .4byte 0
-  .4byte lbl_802CF6AC
-  .4byte 0x802cf920
-  .4byte 0x802cf92c
-  .4byte 0
-  .4byte 0x802cf93c
-  .4byte 0x802cf948
+	.4byte 0x802cf858
+	.4byte 0x802cf884
+	.4byte 0x802cf8bc
+	.4byte 0
+	.4byte 0x414e6f64
+	.4byte 0x65000000
+	.4byte 0x803e4c78
+	.4byte 0
+	.4byte lbl_802CF6AC
+	.4byte 0x802cf920
+	.4byte 0x802cf92c
+	.4byte 0
+	.4byte 0x802cf93c
+	.4byte 0x802cf948
 .global __RTTI__9SnakeProp
 __RTTI__9SnakeProp:
-  .4byte 0x802cf914
-  .4byte 0x802cf954
-  .4byte 0x536e616b
-  .4byte 0x65416900
+	.4byte 0x802cf914
+	.4byte 0x802cf954
+	.4byte 0x536e616b
+	.4byte 0x65416900
 .global lbl_803E4CB0
 lbl_803E4CB0:
 	.4byte 0x00000000
@@ -16439,9 +16439,9 @@ lbl_803E4CC0:
 	.4byte 0x00000000
 .global __RTTI__7SnakeAi
 __RTTI__7SnakeAi:
-  .4byte 0x803e4ca8
-  .4byte 0x802cfa54
-  .4byte 0
+	.4byte 0x803e4ca8
+	.4byte 0x802cfa54
+	.4byte 0
 .global lbl_803E4CD8
 lbl_803E4CD8:
 	.4byte 0x00000000
@@ -16494,12 +16494,12 @@ lbl_803E4D14:
 	.4byte 0x00000000
 .global __RTTI__26SnakeGenBodyRotateCallBack
 __RTTI__26SnakeGenBodyRotateCallBack:
-  .4byte 0x802cfa94
-  .4byte 0x802cfadc
+	.4byte 0x802cfa94
+	.4byte 0x802cfadc
 .global __RTTI__28SnakeGenBodyOnGroundCallBack
 __RTTI__28SnakeGenBodyOnGroundCallBack:
-  .4byte 0x802cfaf4
-  .4byte 0x802cfb14
+	.4byte 0x802cfaf4
+	.4byte 0x802cfb14
 .global lbl_803E4D30
 lbl_803E4D30:
 	.4byte 0x3F800000
@@ -16616,40 +16616,40 @@ lbl_803E4DBC:
 	.4byte 0x802CFBC4
 .global __RTTI__5Slime
 __RTTI__5Slime:
-  .4byte 0x803e4d48
-  .4byte 0x802cfbe0
+	.4byte 0x803e4d48
+	.4byte 0x802cfbe0
 .global __RTTI__15CollPartUpdater_1
 __RTTI__15CollPartUpdater_1:
-  .4byte 0x802cfd44
-  .4byte 0
+	.4byte 0x802cfd44
+	.4byte 0
 .global __RTTI__Q25Slime20CollideSphereUpdater
 __RTTI__Q25Slime20CollideSphereUpdater:
-  .4byte 0x802cfd28
-  .4byte 0x802cfd54
+	.4byte 0x802cfd28
+	.4byte 0x802cfd54
 .global __RTTI__Q25Slime17TubeSphereUpdater
 __RTTI__Q25Slime17TubeSphereUpdater:
-  .4byte 0x802cfd70
-  .4byte 0x802cfd8c
+	.4byte 0x802cfd70
+	.4byte 0x802cfd8c
 .global __RTTI__Q25Slime18BoundSphereUpdater
 __RTTI__Q25Slime18BoundSphereUpdater:
-  .4byte 0x802cfda8
-  .4byte 0x802cfdc4
-  .4byte 0x802cfdfc
-  .4byte 0
-  .4byte 0x414e6f64
-  .4byte 0x65000000
-  .4byte 0x803e4e18
-  .4byte 0
-  .4byte lbl_802CFB44
-  .4byte 0x802cfe60
-  .4byte 0x802cfe6c
-  .4byte 0
-  .4byte 0x802cfe7c
-  .4byte 0x802cfe88
+	.4byte 0x802cfda8
+	.4byte 0x802cfdc4
+	.4byte 0x802cfdfc
+	.4byte 0
+	.4byte 0x414e6f64
+	.4byte 0x65000000
+	.4byte 0x803e4e18
+	.4byte 0
+	.4byte lbl_802CFB44
+	.4byte 0x802cfe60
+	.4byte 0x802cfe6c
+	.4byte 0
+	.4byte 0x802cfe7c
+	.4byte 0x802cfe88
 .global __RTTI__9SlimeProp
 __RTTI__9SlimeProp:
-  .4byte 0x802cfe54
-  .4byte 0x802cfe94
+	.4byte 0x802cfe54
+	.4byte 0x802cfe94
 .global lbl_803E4E48
 lbl_803E4E48:
 	.4byte 0x3F2AACDA
@@ -16740,10 +16740,10 @@ lbl_803E4EB4:
 	.4byte 0x802CFF64
 .global __RTTI__13SlimeCreature
 __RTTI__13SlimeCreature:
-  .4byte 0x802cff2c
-  .4byte 0x802cff78
-  .4byte 0x4b696e67
-  .4byte 0
+	.4byte 0x802cff2c
+	.4byte 0x802cff78
+	.4byte 0x4b696e67
+	.4byte 0
 .global lbl_803E4EE0
 lbl_803E4EE0:
 	.4byte 0x6F303000
@@ -16885,35 +16885,35 @@ lbl_803E4F88:
 	.4byte 0x802D00D8
 .global __RTTI__10KingDrawer
 __RTTI__10KingDrawer:
-  .4byte 0x802d00c0
-  .4byte 0x802d00ec
-  .4byte 0x802d0138
-  .4byte 0
-  .4byte 0x802d0144
-  .4byte 0
-  .4byte 0x802d0154
-  .4byte 0x802d0160
-  .4byte 0x426f7373
-  .4byte 0
-  .4byte 0x803e4fd4
-  .4byte 0x802d0174
+	.4byte 0x802d00c0
+	.4byte 0x802d00ec
+	.4byte 0x802d0138
+	.4byte 0
+	.4byte 0x802d0144
+	.4byte 0
+	.4byte 0x802d0154
+	.4byte 0x802d0160
+	.4byte 0x426f7373
+	.4byte 0
+	.4byte 0x803e4fd4
+	.4byte 0x802d0174
 .global __RTTI__4King
 __RTTI__4King:
-  .4byte 0x803e4ed8
-  .4byte 0x802d0190
-  .4byte 0x802d02e4
-  .4byte 0
-  .4byte 0x802d0348
-  .4byte 0
-  .4byte 0x802d0358
-  .4byte 0x802d0364
+	.4byte 0x803e4ed8
+	.4byte 0x802d0190
+	.4byte 0x802d02e4
+	.4byte 0
+	.4byte 0x802d0348
+	.4byte 0
+	.4byte 0x802d0358
+	.4byte 0x802d0364
 .global __RTTI__8KingProp
 __RTTI__8KingProp:
-  .4byte 0x802d033c
-  .4byte 0x802d0370
-  .4byte 0
-  .4byte 0x4b696e67
-  .4byte 0x41690000
+	.4byte 0x802d033c
+	.4byte 0x802d0370
+	.4byte 0
+	.4byte 0x4b696e67
+	.4byte 0x41690000
 .global lbl_803E5018
 lbl_803E5018:
 	.4byte 0x00000000
@@ -16927,9 +16927,9 @@ lbl_803E5020:
 	.4byte 0x00000000
 .global __RTTI__6KingAi
 __RTTI__6KingAi:
-  .4byte 0x803e5010
-  .4byte 0x802d0508
-  .4byte 0
+	.4byte 0x803e5010
+	.4byte 0x802d0508
+	.4byte 0
 .global lbl_803E5038
 lbl_803E5038:
 	.4byte 0x00000000
@@ -17111,33 +17111,33 @@ lbl_803E5120:
 	.4byte 0x00000000
 .global __RTTI__21KingGenSalivaCallBack
 __RTTI__21KingGenSalivaCallBack:
-  .4byte 0x802d054c
-  .4byte 0x802d0590
+	.4byte 0x802d054c
+	.4byte 0x802d0590
 .global __RTTI__21KingGenRippleCallBack
 __RTTI__21KingGenRippleCallBack:
-  .4byte 0x802d05a8
-  .4byte 0x802d05c0
-  .4byte 0x802d05fc
-  .4byte 0
+	.4byte 0x802d05a8
+	.4byte 0x802d05c0
+	.4byte 0x802d05fc
+	.4byte 0
 .global __RTTI__32KingGenSpitPartsParticleCallBack
 __RTTI__32KingGenSpitPartsParticleCallBack:
-  .4byte 0x802d05d8
-  .4byte 0x802d063c
+	.4byte 0x802d05d8
+	.4byte 0x802d063c
 .global __RTTI__25KingGenDamageStarCallBack
 __RTTI__25KingGenDamageStarCallBack:
-  .4byte 0x802d0654
-  .4byte 0x802d0670
+	.4byte 0x802d0654
+	.4byte 0x802d0670
 .global __RTTI__29KingGenSalivaParticleCallBack
 __RTTI__29KingGenSalivaParticleCallBack:
-  .4byte 0x802d0688
-  .4byte 0x802d06a8
+	.4byte 0x802d0688
+	.4byte 0x802d06a8
 .global __RTTI__27KingGenSpreadSalivaCallBack
 __RTTI__27KingGenSpreadSalivaCallBack:
-  .4byte 0x802d06cc
-  .4byte 0x802d06e8
-  .4byte 0
-  .4byte 0x4b6f6761
-  .4byte 0x6e650000
+	.4byte 0x802d06cc
+	.4byte 0x802d06e8
+	.4byte 0
+	.4byte 0x4b6f6761
+	.4byte 0x6e650000
 .global lbl_803E5170
 lbl_803E5170:
 	.4byte 0x6F303000
@@ -17195,25 +17195,25 @@ lbl_803E51A8:
 	.4byte 0x802D0764
 .global __RTTI__6Kogane
 __RTTI__6Kogane:
-  .4byte 0x803e5168
-  .4byte 0x802d0780
-  .4byte 0x802d08d4
-  .4byte 0
-  .4byte 0x414e6f64
-  .4byte 0x65000000
-  .4byte 0x803e51e4
-  .4byte 0
-  .4byte lbl_802D071C
-  .4byte 0x802d090c
-  .4byte 0x802d0918
-  .4byte 0
-  .4byte 0x802d0928
-  .4byte 0x802d0934
+	.4byte 0x803e5168
+	.4byte 0x802d0780
+	.4byte 0x802d08d4
+	.4byte 0
+	.4byte 0x414e6f64
+	.4byte 0x65000000
+	.4byte 0x803e51e4
+	.4byte 0
+	.4byte lbl_802D071C
+	.4byte 0x802d090c
+	.4byte 0x802d0918
+	.4byte 0
+	.4byte 0x802d0928
+	.4byte 0x802d0934
 .global __RTTI__10KoganeProp
 __RTTI__10KoganeProp:
-  .4byte 0x802d0900
-  .4byte 0x802d0940
-  .4byte 0
+	.4byte 0x802d0900
+	.4byte 0x802d0940
+	.4byte 0
 .global koganeSE
 koganeSE:
 	.4byte 0x00000076
@@ -17321,16 +17321,16 @@ lbl_803E52A0:
 	.4byte 0x00000000
 .global __RTTI__8KoganeAi
 __RTTI__8KoganeAi:
-  .4byte 0x802d09b0
-  .4byte 0x802d09ec
-  .4byte 0x802d0a1c
-  .4byte 0
+	.4byte 0x802d09b0
+	.4byte 0x802d09ec
+	.4byte 0x802d0a1c
+	.4byte 0
 .global __RTTI__23KoganeGenRippleCallBack
 __RTTI__23KoganeGenRippleCallBack:
-  .4byte 0x802d0a04
-  .4byte 0x802d0a48
-  .4byte 0
-  .4byte 0x506f6d00
+	.4byte 0x802d0a04
+	.4byte 0x802d0a48
+	.4byte 0
+	.4byte 0x506f6d00
 .global lbl_803E52CC
 lbl_803E52CC:
 	.4byte 0x73303000
@@ -17379,29 +17379,29 @@ lbl_803E52F8:
 	.4byte 0x802D0AC0
 .global __RTTI__3Pom
 __RTTI__3Pom:
-  .4byte 0x803e52c8
-  .4byte 0x802d0adc
-  .4byte 0x802d0c30
-  .4byte 0
-  .4byte 0x506f6d50
-  .4byte 0x726f7000
-  .4byte 0x414e6f64
-  .4byte 0x65000000
-  .4byte 0x803e533c
-  .4byte 0
-  .4byte lbl_802D0A78
-  .4byte 0x802d0c88
-  .4byte 0x802d0c94
-  .4byte 0
-  .4byte 0x802d0ca4
-  .4byte 0x802d0cb0
+	.4byte 0x803e52c8
+	.4byte 0x802d0adc
+	.4byte 0x802d0c30
+	.4byte 0
+	.4byte 0x506f6d50
+	.4byte 0x726f7000
+	.4byte 0x414e6f64
+	.4byte 0x65000000
+	.4byte 0x803e533c
+	.4byte 0
+	.4byte lbl_802D0A78
+	.4byte 0x802d0c88
+	.4byte 0x802d0c94
+	.4byte 0
+	.4byte 0x802d0ca4
+	.4byte 0x802d0cb0
 .global __RTTI__7PomProp
 __RTTI__7PomProp:
-  .4byte 0x803e5334
-  .4byte 0x802d0cbc
-  .4byte 0
-  .4byte 0x506f6d41
-  .4byte 0x69000000
+	.4byte 0x803e5334
+	.4byte 0x802d0cbc
+	.4byte 0
+	.4byte 0x506f6d41
+	.4byte 0x69000000
 .global lbl_803E5378
 lbl_803E5378:
 	.4byte 0x44480000
@@ -17409,45 +17409,45 @@ lbl_803E5378:
 	.4byte 0x00000000
 .global __RTTI__5PomAi
 __RTTI__5PomAi:
-  .4byte 0x803e5370
-  .4byte 0x802d0d88
-  .4byte 0x802d0db8
-  .4byte 0
+	.4byte 0x803e5370
+	.4byte 0x802d0d88
+	.4byte 0x802d0db8
+	.4byte 0
 .global __RTTI__22PomGenOpenStarCallBack
 __RTTI__22PomGenOpenStarCallBack:
-  .4byte 0x802d0da0
-  .4byte 0x802d0de4
-  .4byte 0
-  .4byte 0x802d0e40
-  .4byte 0
-  .4byte 0x802d0e4c
-  .4byte 0
-  .4byte 0x802d0e5c
-  .4byte 0x802d0e68
-  .4byte 0x426f7373
-  .4byte 0
-  .4byte 0x803e53b8
-  .4byte 0x802d0e7c
+	.4byte 0x802d0da0
+	.4byte 0x802d0de4
+	.4byte 0
+	.4byte 0x802d0e40
+	.4byte 0
+	.4byte 0x802d0e4c
+	.4byte 0
+	.4byte 0x802d0e5c
+	.4byte 0x802d0e68
+	.4byte 0x426f7373
+	.4byte 0
+	.4byte 0x803e53b8
+	.4byte 0x802d0e7c
 .global __RTTI__8KingBack
 __RTTI__8KingBack:
-  .4byte 0x802d0e28
-  .4byte 0x802d0e98
-  .4byte 0x414e6f64
-  .4byte 0x65000000
-  .4byte 0x803e53d0
-  .4byte 0
-  .4byte lbl_802D0E34
-  .4byte 0x802d0ff0
-  .4byte 0x802d0ffc
-  .4byte 0
-  .4byte 0x802d100c
-  .4byte 0x802d1018
+	.4byte 0x802d0e28
+	.4byte 0x802d0e98
+	.4byte 0x414e6f64
+	.4byte 0x65000000
+	.4byte 0x803e53d0
+	.4byte 0
+	.4byte lbl_802D0E34
+	.4byte 0x802d0ff0
+	.4byte 0x802d0ffc
+	.4byte 0
+	.4byte 0x802d100c
+	.4byte 0x802d1018
 .global __RTTI__12KingBackProp
 __RTTI__12KingBackProp:
-  .4byte 0x802d0fe0
-  .4byte 0x802d1024
-  .4byte 0x4e75636c
-  .4byte 0x65757300
+	.4byte 0x802d0fe0
+	.4byte 0x802d1024
+	.4byte 0x4e75636c
+	.4byte 0x65757300
 .global lbl_803E5408
 lbl_803E5408:
 	.4byte 0x00000000
@@ -17469,29 +17469,29 @@ lbl_803E5410:
 	.4byte 0x802D10D4
 .global __RTTI__7Nucleus
 __RTTI__7Nucleus:
-  .4byte 0x803e5400
-  .4byte 0x802d10f0
-  .4byte 0x414e6f64
-  .4byte 0x65000000
-  .4byte 0x803e5444
-  .4byte 0
-  .4byte lbl_802D108C
-  .4byte 0x802d1244
-  .4byte 0x802d1250
-  .4byte 0
-  .4byte 0x802d1260
-  .4byte 0x802d126c
+	.4byte 0x803e5400
+	.4byte 0x802d10f0
+	.4byte 0x414e6f64
+	.4byte 0x65000000
+	.4byte 0x803e5444
+	.4byte 0
+	.4byte lbl_802D108C
+	.4byte 0x802d1244
+	.4byte 0x802d1250
+	.4byte 0
+	.4byte 0x802d1260
+	.4byte 0x802d126c
 .global __RTTI__11NucleusProp
 __RTTI__11NucleusProp:
-  .4byte 0x802d1238
-  .4byte 0x802d1278
-  .4byte 0
-  .4byte 0x802d12f4
-  .4byte 0
+	.4byte 0x802d1238
+	.4byte 0x802d1278
+	.4byte 0
+	.4byte 0x802d12f4
+	.4byte 0
 .global __RTTI__9NucleusAi
 __RTTI__9NucleusAi:
-  .4byte 0x802d12e8
-  .4byte 0x802d1308
+	.4byte 0x802d12e8
+	.4byte 0x802d1308
 .global lbl_803E5488
 lbl_803E5488:
 	.4byte 0x00000000
@@ -17513,23 +17513,23 @@ lbl_803E5490:
 	.4byte 0x802D1394
 .global __RTTI__11CoreNucleus
 __RTTI__11CoreNucleus:
-  .4byte 0x802d1340
-  .4byte 0x802d13b0
-  .4byte 0x414e6f64
-  .4byte 0x65000000
-  .4byte 0x803e54c4
-  .4byte 0
-  .4byte lbl_802D134C
-  .4byte 0x802d1508
-  .4byte 0x802d1514
-  .4byte 0
-  .4byte 0x802d1524
-  .4byte 0x802d1530
+	.4byte 0x802d1340
+	.4byte 0x802d13b0
+	.4byte 0x414e6f64
+	.4byte 0x65000000
+	.4byte 0x803e54c4
+	.4byte 0
+	.4byte lbl_802D134C
+	.4byte 0x802d1508
+	.4byte 0x802d1514
+	.4byte 0
+	.4byte 0x802d1524
+	.4byte 0x802d1530
 .global __RTTI__15CoreNucleusProp
 __RTTI__15CoreNucleusProp:
-  .4byte 0x802d14f8
-  .4byte 0x802d153c
-  .4byte 0
+	.4byte 0x802d14f8
+	.4byte 0x802d153c
+	.4byte 0
 .global lbl_803E54F8
 lbl_803E54F8:
 	.4byte 0x00000000
@@ -17537,41 +17537,41 @@ lbl_803E54F8:
 	.4byte 0x00000000
 .global __RTTI__13CoreNucleusAi
 __RTTI__13CoreNucleusAi:
-  .4byte 0x802d15ac
-  .4byte 0x802d15d0
-  .4byte 0
-  .4byte 0x4d697a75
-  .4byte 0
-  .4byte 0x802d1610
-  .4byte 0
-  .4byte 0x802d161c
-  .4byte 0
-  .4byte 0x802d162c
-  .4byte 0x802d1638
-  .4byte 0x426f7373
-  .4byte 0
-  .4byte 0x803e5530
-  .4byte 0x802d164c
+	.4byte 0x802d15ac
+	.4byte 0x802d15d0
+	.4byte 0
+	.4byte 0x4d697a75
+	.4byte 0
+	.4byte 0x802d1610
+	.4byte 0
+	.4byte 0x802d161c
+	.4byte 0
+	.4byte 0x802d162c
+	.4byte 0x802d1638
+	.4byte 0x426f7373
+	.4byte 0
+	.4byte 0x803e5530
+	.4byte 0x802d164c
 .global __RTTI__4Mizu
 __RTTI__4Mizu:
-  .4byte 0x803e5510
-  .4byte 0x802d1668
-  .4byte 0x414e6f64
-  .4byte 0x65000000
-  .4byte 0x803e5548
-  .4byte 0
-  .4byte lbl_802D1604
-  .4byte 0x802d17bc
-  .4byte 0x802d17c8
-  .4byte 0
-  .4byte 0x802d17d8
-  .4byte 0x802d17e4
+	.4byte 0x803e5510
+	.4byte 0x802d1668
+	.4byte 0x414e6f64
+	.4byte 0x65000000
+	.4byte 0x803e5548
+	.4byte 0
+	.4byte lbl_802D1604
+	.4byte 0x802d17bc
+	.4byte 0x802d17c8
+	.4byte 0
+	.4byte 0x802d17d8
+	.4byte 0x802d17e4
 .global __RTTI__8MizuProp
 __RTTI__8MizuProp:
-  .4byte 0x802d17b0
-  .4byte 0x802d17f0
-  .4byte 0x4d697a75
-  .4byte 0x41690000
+	.4byte 0x802d17b0
+	.4byte 0x802d17f0
+	.4byte 0x4d697a75
+	.4byte 0x41690000
 .global lbl_803E5580
 lbl_803E5580:
 	.4byte 0x00000000
@@ -17588,14 +17588,14 @@ lbl_803E558C:
 	.4byte 0x00000000
 .global __RTTI__6MizuAi
 __RTTI__6MizuAi:
-  .4byte 0x803e5578
-  .4byte 0x802d18a8
-  .4byte 0x802d18dc
-  .4byte 0
+	.4byte 0x803e5578
+	.4byte 0x802d18a8
+	.4byte 0x802d18dc
+	.4byte 0
 .global __RTTI__25MizuGenSpringPuffCallBack
 __RTTI__25MizuGenSpringPuffCallBack:
-  .4byte 0x802d18c0
-  .4byte 0x802d1908
+	.4byte 0x802d18c0
+	.4byte 0x802d1908
 .global rumblePoint_00
 rumblePoint_00:
 	.4byte 0x0000000B
@@ -17701,13 +17701,13 @@ lbl_803E5624:
 	.4byte 0x802D2628
 .global __RTTI__Q23zen13OgTestSection
 __RTTI__Q23zen13OgTestSection:
-  .4byte 0x802d25e8
-  .4byte 0x802d2644
+	.4byte 0x802d25e8
+	.4byte 0x802d2644
 .global __RTTI__Q23zen12OgTestScreen
 __RTTI__Q23zen12OgTestScreen:
-  .4byte 0x802d26d0
-  .4byte 0x802d26e4
-  .4byte 0
+	.4byte 0x802d26d0
+	.4byte 0x802d26e4
+	.4byte 0
 .global lbl_803E5678
 lbl_803E5678:
 	.4byte 0x706B2530
@@ -17799,19 +17799,19 @@ lbl_803E56F0:
 	.4byte 0x00000000
 .global "__RTTI__Q23zen12FigureTex<i>"
 "__RTTI__Q23zen12FigureTex<i>":
-  .4byte 0x802d2f44
-  .4byte 0x802d2f58
-  .4byte 0x802d2f64
-  .4byte 0
-  .4byte 0x802d2f78
-  .4byte 0
-  .4byte 0x802d2f94
-  .4byte 0x802d2fa4
+	.4byte 0x802d2f44
+	.4byte 0x802d2f58
+	.4byte 0x802d2f64
+	.4byte 0
+	.4byte 0x802d2f78
+	.4byte 0
+	.4byte 0x802d2f94
+	.4byte 0x802d2fa4
 .global "__RTTI__Q23zen20NumberPicCallBack<i>"
 "__RTTI__Q23zen20NumberPicCallBack<i>":
-  .4byte 0x802d2f18
-  .4byte 0x802d2fb8
-  .4byte 0
+	.4byte 0x802d2f18
+	.4byte 0x802d2fb8
+	.4byte 0
 .global lbl_803E5728
 lbl_803E5728:
 	.4byte 0x6F6E2530
@@ -18402,8 +18402,8 @@ lbl_803E5B5C:
 	.4byte 0x802D62C4
 .global __RTTI__Q23zen17TextColorCallBack
 __RTTI__Q23zen17TextColorCallBack:
-  .4byte 0x802d626c
-  .4byte 0x802d62d8
+	.4byte 0x802d626c
+	.4byte 0x802d62d8
 .global lbl_803E5B80
 lbl_803E5B80:
 	.4byte 0x43480000
@@ -18453,103 +18453,103 @@ lbl_803E5BB4:
 	.4byte 0x802D6534
 .global __RTTI__Q23zen7zenList
 __RTTI__Q23zen7zenList:
-  .4byte 0x802d6574
-  .4byte 0
+	.4byte 0x802d6574
+	.4byte 0
 .global __RTTI__Q23zen17particleGenerator
 __RTTI__Q23zen17particleGenerator:
-  .4byte 0x802d655c
-  .4byte 0x802d6584
+	.4byte 0x802d655c
+	.4byte 0x802d6584
 .global __RTTI__12GameModeBase
 __RTTI__12GameModeBase:
-  .4byte 0x802d65b0
-  .4byte 0
+	.4byte 0x802d65b0
+	.4byte 0
 .global __RTTI__12CMresultMode
 __RTTI__12CMresultMode:
-  .4byte 0x802d65a0
-  .4byte 0x802d65c0
+	.4byte 0x802d65a0
+	.4byte 0x802d65c0
 .global __RTTI__11HurryUpMode
 __RTTI__11HurryUpMode:
-  .4byte 0x802d65dc
-  .4byte 0x802d65e8
+	.4byte 0x802d65dc
+	.4byte 0x802d65e8
 .global __RTTI__12GameInfoMode
 __RTTI__12GameInfoMode:
-  .4byte 0x802d6604
-  .4byte 0x802d6614
+	.4byte 0x802d6604
+	.4byte 0x802d6614
 .global __RTTI__15ProgressiveMode
 __RTTI__15ProgressiveMode:
-  .4byte 0x802d6630
-  .4byte 0x802d6640
+	.4byte 0x802d6630
+	.4byte 0x802d6640
 .global __RTTI__13CountDownMode
 __RTTI__13CountDownMode:
-  .4byte 0x802d665c
-  .4byte 0x802d666c
+	.4byte 0x802d665c
+	.4byte 0x802d666c
 .global __RTTI__12GameOverMode
 __RTTI__12GameOverMode:
-  .4byte 0x802d6688
-  .4byte 0x802d6698
+	.4byte 0x802d6688
+	.4byte 0x802d6698
 .global __RTTI__13ContainerMode
 __RTTI__13ContainerMode:
-  .4byte 0x802d66b4
-  .4byte 0x802d66c4
+	.4byte 0x802d66b4
+	.4byte 0x802d66c4
 .global __RTTI__11WMPauseMode
 __RTTI__11WMPauseMode:
-  .4byte 0x802d66e0
-  .4byte 0x802d66ec
+	.4byte 0x802d66e0
+	.4byte 0x802d66ec
 .global __RTTI__12WorldMapMode
 __RTTI__12WorldMapMode:
-  .4byte 0x802d6708
-  .4byte 0x802d6718
+	.4byte 0x802d6708
+	.4byte 0x802d6718
 .global __RTTI__18CMcourseSelectMode
 __RTTI__18CMcourseSelectMode:
-  .4byte 0x802d6734
-  .4byte 0x802d6748
+	.4byte 0x802d6734
+	.4byte 0x802d6748
 .global __RTTI__11HiScoreMode
 __RTTI__11HiScoreMode:
-  .4byte 0x802d6764
-  .4byte 0x802d6770
+	.4byte 0x802d6764
+	.4byte 0x802d6770
 .global __RTTI__12UfoPartsMode
 __RTTI__12UfoPartsMode:
-  .4byte 0x802d678c
-  .4byte 0x802d679c
+	.4byte 0x802d678c
+	.4byte 0x802d679c
 .global __RTTI__11SaveMesMode
 __RTTI__11SaveMesMode:
-  .4byte 0x802d67b8
-  .4byte 0x802d67c4
+	.4byte 0x802d67b8
+	.4byte 0x802d67c4
 .global __RTTI__15SaveFailureMode
 __RTTI__15SaveFailureMode:
-  .4byte 0x802d67e0
-  .4byte 0x802d67f0
+	.4byte 0x802d67e0
+	.4byte 0x802d67f0
 .global __RTTI__15FinalResultMode
 __RTTI__15FinalResultMode:
-  .4byte 0x802d680c
-  .4byte 0x802d681c
+	.4byte 0x802d680c
+	.4byte 0x802d681c
 .global "__RTTI__18IDelegate1<R4Menu>_5"
 "__RTTI__18IDelegate1<R4Menu>_5":
-  .4byte 0x802d6874
-  .4byte 0
+	.4byte 0x802d6874
+	.4byte 0
 .global "__RTTI__41Delegate1<21GameCourseClearScreen,R4Menu>"
 "__RTTI__41Delegate1<21GameCourseClearScreen,R4Menu>":
-  .4byte 0x802d6848
-  .4byte 0x802d6888
-  .4byte 0x802d68f8
-  .4byte 0
-  .4byte 0x4e6f6465
-  .4byte 0
-  .4byte 0x803e5c7c
-  .4byte 0x802d6950
+	.4byte 0x802d6848
+	.4byte 0x802d6888
+	.4byte 0x802d68f8
+	.4byte 0
+	.4byte 0x4e6f6465
+	.4byte 0
+	.4byte 0x803e5c7c
+	.4byte 0x802d6950
 .global __RTTI__21GameCourseClearScreen
 __RTTI__21GameCourseClearScreen:
-  .4byte 0x802d6380
-  .4byte 0x802d6964
-  .4byte 0x53656374
-  .4byte 0x696f6e00
-  .4byte 0x803e5c94
-  .4byte 0x802d69b0
+	.4byte 0x802d6380
+	.4byte 0x802d6964
+	.4byte 0x53656374
+	.4byte 0x696f6e00
+	.4byte 0x803e5c94
+	.4byte 0x802d69b0
 .global __RTTI__22GameCourseClearSection
 __RTTI__22GameCourseClearSection:
-  .4byte 0x802d6334
-  .4byte 0x802d69cc
-  .4byte 0
+	.4byte 0x802d6334
+	.4byte 0x802d69cc
+	.4byte 0
 .global lbl_803E5CB0
 lbl_803E5CB0:
 	.4byte 0x3C4E6F64
@@ -18570,8 +18570,8 @@ lbl_803E5CB0:
 	.4byte 0x802D6AE4
 .global __RTTI__21GameStageClearSection
 __RTTI__21GameStageClearSection:
-  .4byte 0x802d6a6c
-  .4byte 0x802d6b00
+	.4byte 0x802d6a6c
+	.4byte 0x802d6b00
 .global lbl_803E5CF8
 lbl_803E5CF8:
 	.4byte 0x3C4E6F64
@@ -18592,8 +18592,8 @@ lbl_803E5CF8:
 	.4byte 0x802D6C14
 .global __RTTI__18GameCreditsSection
 __RTTI__18GameCreditsSection:
-  .4byte 0x802d6ba0
-  .4byte 0x802d6c30
+	.4byte 0x802d6ba0
+	.4byte 0x802d6c30
 .global lbl_803E5D40
 lbl_803E5D40:
 	.4byte 0x3F800000
@@ -18663,37 +18663,37 @@ lbl_803E5D8C:
 	.4byte 0x802DA490
 .global __RTTI__10EffShpInst
 __RTTI__10EffShpInst:
-  .4byte 0x802da478
-  .4byte 0x802da49c
+	.4byte 0x802da478
+	.4byte 0x802da49c
 .global __RTTI__9EffectMgr
 __RTTI__9EffectMgr:
-  .4byte 0x802da4e0
-  .4byte 0x802da4ec
+	.4byte 0x802da4e0
+	.4byte 0x802da4ec
 .global __RTTI__26EffectGeometryRegistration
 __RTTI__26EffectGeometryRegistration:
-  .4byte 0x802da510
-  .4byte 0
+	.4byte 0x802da510
+	.4byte 0
 .global __RTTI__11EffectShape
 __RTTI__11EffectShape:
-  .4byte 0x802da538
-  .4byte 0x802da544
+	.4byte 0x802da538
+	.4byte 0x802da544
 .global __RTTI__26EffectParticleRegistration
 __RTTI__26EffectParticleRegistration:
-  .4byte 0x802da568
-  .4byte 0
-  .4byte 0x4e6f6465
-  .4byte 0
-  .4byte 0x803e5dd4
-  .4byte 0x802da5a0
+	.4byte 0x802da568
+	.4byte 0
+	.4byte 0x4e6f6465
+	.4byte 0
+	.4byte 0x803e5dd4
+	.4byte 0x802da5a0
 .global __RTTI__12SmokeEmitter
 __RTTI__12SmokeEmitter:
-  .4byte 0x802da590
-  .4byte 0x802da5b4
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
+	.4byte 0x802da590
+	.4byte 0x802da5b4
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
 .global lpsCoord
 lpsCoord:
 	.4byte 0x00000100
@@ -18718,12 +18718,12 @@ lbl_803E5E1C:
 	.4byte 0x00000000
 .global __RTTI__Q23zen7zenList_1
 __RTTI__Q23zen7zenList_1:
-  .4byte 0x802da74c
-  .4byte 0
+	.4byte 0x802da74c
+	.4byte 0
 .global __RTTI__Q23zen7PCRData
 __RTTI__Q23zen7PCRData:
-  .4byte 0x802da73c
-  .4byte 0x802da75c
+	.4byte 0x802da73c
+	.4byte 0x802da75c
 .global DEFAULT_FRAME_RATE__Q23zen15particleManager
 DEFAULT_FRAME_RATE__Q23zen15particleManager:
 	.4byte 0x41F00000
@@ -18766,20 +18766,20 @@ lbl_803E5E64:
 	.4byte 0x00000000
 .global __RTTI__Q23zen7zenList_2
 __RTTI__Q23zen7zenList_2:
-  .4byte 0x802dd7e0
-  .4byte 0
+	.4byte 0x802dd7e0
+	.4byte 0
 .global __RTTI__Q23zen15particleMdlBase
 __RTTI__Q23zen15particleMdlBase:
-  .4byte 0x802dd7f0
-  .4byte 0x802dd808
+	.4byte 0x802dd7f0
+	.4byte 0x802dd808
 .global __RTTI__Q23zen11particleMdl
 __RTTI__Q23zen11particleMdl:
-  .4byte 0x802dd7cc
-  .4byte 0x802dd814
+	.4byte 0x802dd7cc
+	.4byte 0x802dd814
 .global __RTTI__Q23zen16particleChildMdl
 __RTTI__Q23zen16particleChildMdl:
-  .4byte 0x802dd858
-  .4byte 0x802dd870
+	.4byte 0x802dd858
+	.4byte 0x802dd870
 .global lbl_803E5E88
 lbl_803E5E88:
 	.4byte 0x00000000
@@ -18826,28 +18826,28 @@ lbl_803E5EBC:
 	.4byte 0x69000000
 .global __RTTI__10PelletView_4
 __RTTI__10PelletView_4:
-  .4byte 0x802dd8ec
-  .4byte 0
-  .4byte 0x802dd8f8
-  .4byte 0
-  .4byte 0x802dd90c
-  .4byte 0
-  .4byte 0x802dd918
-  .4byte 0
-  .4byte 0x802dd928
-  .4byte 0x802dd934
-  .4byte 0x4254656b
-  .4byte 0x69000000
-  .4byte 0x803e5ef0
-  .4byte 0x802dd948
-  .4byte 0x4e54656b
-  .4byte 0x69000000
-  .4byte 0x803e5f00
-  .4byte 0x802dd974
-  .4byte 0x803e5ec0
-  .4byte 0x802dd9a8
-  .4byte 0x802ddc1c
-  .4byte 0
+	.4byte 0x802dd8ec
+	.4byte 0
+	.4byte 0x802dd8f8
+	.4byte 0
+	.4byte 0x802dd90c
+	.4byte 0
+	.4byte 0x802dd918
+	.4byte 0
+	.4byte 0x802dd928
+	.4byte 0x802dd934
+	.4byte 0x4254656b
+	.4byte 0x69000000
+	.4byte 0x803e5ef0
+	.4byte 0x802dd948
+	.4byte 0x4e54656b
+	.4byte 0x69000000
+	.4byte 0x803e5f00
+	.4byte 0x802dd974
+	.4byte 0x803e5ec0
+	.4byte 0x802dd9a8
+	.4byte 0x802ddc1c
+	.4byte 0
 .global lbl_803E5F20
 lbl_803E5F20:
 	.4byte 0x00000000
@@ -18894,118 +18894,118 @@ lbl_803E5F54:
 	.4byte 0x00000000
 .global __RTTI__16TAItankAnimation
 __RTTI__16TAItankAnimation:
-  .4byte 0x802dde0c
-  .4byte 0x802dde30
-  .4byte 0x802dde58
-  .4byte 0
-  .4byte 0x802dde68
-  .4byte 0x802dde74
+	.4byte 0x802dde0c
+	.4byte 0x802dde30
+	.4byte 0x802dde58
+	.4byte 0
+	.4byte 0x802dde68
+	.4byte 0x802dde74
 .global __RTTI__15TAItankStrategy
 __RTTI__15TAItankStrategy:
-  .4byte 0x802dde48
-  .4byte 0x802dde80
-  .4byte 0x802ddecc
-  .4byte 0
+	.4byte 0x802dde48
+	.4byte 0x802dde80
+	.4byte 0x802ddecc
+	.4byte 0
 .global __RTTI__14TAIAnoReaction
 __RTTI__14TAIAnoReaction:
-  .4byte 0x802ddebc
-  .4byte 0x802dded8
+	.4byte 0x802ddebc
+	.4byte 0x802dded8
 .global __RTTI__12TAIAinitTank
 __RTTI__12TAIAinitTank:
-  .4byte 0x802ddf00
-  .4byte 0x802ddf10
+	.4byte 0x802ddf00
+	.4byte 0x802ddf10
 .global __RTTI__20TAIAoutsideTerritory
 __RTTI__20TAIAoutsideTerritory:
-  .4byte 0x802ddf38
-  .4byte 0x802ddf50
-  .4byte 0x802ddf8c
-  .4byte 0x802ddf98
-  .4byte 0x802ddfa4
-  .4byte 0x802ddfb4
+	.4byte 0x802ddf38
+	.4byte 0x802ddf50
+	.4byte 0x802ddf8c
+	.4byte 0x802ddf98
+	.4byte 0x802ddfa4
+	.4byte 0x802ddfb4
 .global __RTTI__16TAIAflickingTank
 __RTTI__16TAIAflickingTank:
-  .4byte 0x802ddf78
-  .4byte 0x802ddfc8
-  .4byte 0x802de01c
-  .4byte 0x802de030
+	.4byte 0x802ddf78
+	.4byte 0x802ddfc8
+	.4byte 0x802de01c
+	.4byte 0x802de030
 .global __RTTI__14TAIAfireBreath
 __RTTI__14TAIAfireBreath:
-  .4byte 0x802de03c
-  .4byte 0x802de04c
+	.4byte 0x802de03c
+	.4byte 0x802de04c
 .global __RTTI__18TAIAfireBreathTank
 __RTTI__18TAIAfireBreathTank:
-  .4byte 0x802de008
-  .4byte 0x802de060
+	.4byte 0x802de008
+	.4byte 0x802de060
 .global "__RTTI__Q23zen17CallBack1<R4Teki>"
 "__RTTI__Q23zen17CallBack1<R4Teki>":
-  .4byte 0x802de0ac
-  .4byte 0
+	.4byte 0x802de0ac
+	.4byte 0
 .global __RTTI__10FireEffect
 __RTTI__10FireEffect:
-  .4byte 0x802de0a0
-  .4byte 0x802de0c4
+	.4byte 0x802de0a0
+	.4byte 0x802de0c4
 .global __RTTI__12TAIAstepBack
 __RTTI__12TAIAstepBack:
-  .4byte 0x802de0fc
-  .4byte 0x802de10c
+	.4byte 0x802de0fc
+	.4byte 0x802de10c
 .global __RTTI__16TAIAstepBackTank
 __RTTI__16TAIAstepBackTank:
-  .4byte 0x802de0e8
-  .4byte 0x802de120
+	.4byte 0x802de0e8
+	.4byte 0x802de120
 .global __RTTI__22TAIAjudgeOptionalRange
 __RTTI__22TAIAjudgeOptionalRange:
-  .4byte 0x802de17c
-  .4byte 0x802de194
+	.4byte 0x802de17c
+	.4byte 0x802de194
 .global __RTTI__24TAIAoutsideOptionalRange
 __RTTI__24TAIAoutsideOptionalRange:
-  .4byte 0x802de1a0
-  .4byte 0x802de1bc
+	.4byte 0x802de1a0
+	.4byte 0x802de1bc
 .global __RTTI__28TAIAoutsideOptionalRangeTank
 __RTTI__28TAIAoutsideOptionalRangeTank:
-  .4byte 0x802de15c
-  .4byte 0x802de1d0
+	.4byte 0x802de15c
+	.4byte 0x802de1d0
 .global __RTTI__20TAIAattackableTarget
 __RTTI__20TAIAattackableTarget:
-  .4byte 0x802de230
-  .4byte 0x802de248
+	.4byte 0x802de230
+	.4byte 0x802de248
 .global __RTTI__25TAIAattackableAngleTarget
 __RTTI__25TAIAattackableAngleTarget:
-  .4byte 0x802de214
-  .4byte 0x802de254
+	.4byte 0x802de214
+	.4byte 0x802de254
 .global __RTTI__16TAIAturnToTarget
 __RTTI__16TAIAturnToTarget:
-  .4byte 0x802de298
-  .4byte 0x802de2ac
+	.4byte 0x802de298
+	.4byte 0x802de2ac
 .global __RTTI__10TAIApatrol
 __RTTI__10TAIApatrol:
-  .4byte 0x802de2c0
-  .4byte 0x802de2cc
+	.4byte 0x802de2c0
+	.4byte 0x802de2cc
 .global __RTTI__14TAIApatrolTank
 __RTTI__14TAIApatrolTank:
-  .4byte 0x802de288
-  .4byte 0x802de2e8
-  .4byte 0x414e6f64
-  .4byte 0x65000000
-  .4byte 0x803e6030
-  .4byte 0
-  .4byte 0x802de360
-  .4byte 0x802de36c
-  .4byte 0x4e6f6465
-  .4byte 0
-  .4byte 0x803e6048
-  .4byte 0x802de378
-  .4byte 0x802de38c
-  .4byte 0x802de39c
+	.4byte 0x802de288
+	.4byte 0x802de2e8
+	.4byte 0x414e6f64
+	.4byte 0x65000000
+	.4byte 0x803e6030
+	.4byte 0
+	.4byte 0x802de360
+	.4byte 0x802de36c
+	.4byte 0x4e6f6465
+	.4byte 0
+	.4byte 0x803e6048
+	.4byte 0x802de378
+	.4byte 0x802de38c
+	.4byte 0x802de39c
 .global __RTTI__17TAItankParameters
 __RTTI__17TAItankParameters:
-  .4byte 0x802de34c
-  .4byte 0x802de3b8
-  .4byte 0x802de430
-  .4byte 0
+	.4byte 0x802de34c
+	.4byte 0x802de3b8
+	.4byte 0x802de430
+	.4byte 0
 .global __RTTI__32TAIeffectAttackEventCallBackTank
 __RTTI__32TAIeffectAttackEventCallBackTank:
-  .4byte 0x802de40c
-  .4byte 0x802de450
+	.4byte 0x802de40c
+	.4byte 0x802de450
 .global lbl_803E6078
 lbl_803E6078:
 	.4byte 0x00000000
@@ -19040,198 +19040,198 @@ lbl_803E609C:
 	.4byte 0x00000000
 .global __RTTI__15TAImarAnimation
 __RTTI__15TAImarAnimation:
-  .4byte 0x802de71c
-  .4byte 0x802de73c
-  .4byte 0x802de764
-  .4byte 0
-  .4byte 0x802de774
-  .4byte 0x802de780
+	.4byte 0x802de71c
+	.4byte 0x802de73c
+	.4byte 0x802de764
+	.4byte 0
+	.4byte 0x802de774
+	.4byte 0x802de780
 .global __RTTI__14TAImarStrategy
 __RTTI__14TAImarStrategy:
-  .4byte 0x802de754
-  .4byte 0x802de78c
-  .4byte 0x802de7d4
-  .4byte 0
+	.4byte 0x802de754
+	.4byte 0x802de78c
+	.4byte 0x802de7d4
+	.4byte 0
 .global __RTTI__11TAIAinitMar
 __RTTI__11TAIAinitMar:
-  .4byte 0x802de7c8
-  .4byte 0x802de7e0
+	.4byte 0x802de7c8
+	.4byte 0x802de7e0
 .global __RTTI__13TAIAwatchNavi
 __RTTI__13TAIAwatchNavi:
-  .4byte 0x802de808
-  .4byte 0x802de818
+	.4byte 0x802de808
+	.4byte 0x802de818
 .global __RTTI__14FlyingDistance
 __RTTI__14FlyingDistance:
-  .4byte 0x802de864
-  .4byte 0
-  .4byte 0x802de874
-  .4byte 0x802de888
+	.4byte 0x802de864
+	.4byte 0
+	.4byte 0x802de874
+	.4byte 0x802de888
 .global __RTTI__16TAIAflyingToGoal
 __RTTI__16TAIAflyingToGoal:
-  .4byte 0x802de894
-  .4byte 0x802de8a8
+	.4byte 0x802de894
+	.4byte 0x802de8a8
 .global __RTTI__29TAIAflyingDistanceInTerritory
 __RTTI__29TAIAflyingDistanceInTerritory:
-  .4byte 0x802de8bc
-  .4byte 0x802de8dc
+	.4byte 0x802de8bc
+	.4byte 0x802de8dc
 .global __RTTI__32TAIAflyingDistanceInTerritoryMar
 __RTTI__32TAIAflyingDistanceInTerritoryMar:
-  .4byte 0x802de840
-  .4byte 0x802de900
+	.4byte 0x802de840
+	.4byte 0x802de900
 .global __RTTI__14TAIAfireBreath_1
 __RTTI__14TAIAfireBreath_1:
-  .4byte 0x802de9b4
-  .4byte 0x802de9c4
+	.4byte 0x802de9b4
+	.4byte 0x802de9c4
 .global __RTTI__17TAIAfireBreathMar
 __RTTI__17TAIAfireBreathMar:
-  .4byte 0x802de9a0
-  .4byte 0x802de9d8
+	.4byte 0x802de9a0
+	.4byte 0x802de9d8
 .global "__RTTI__Q23zen17CallBack1<R4Teki>_1"
 "__RTTI__Q23zen17CallBack1<R4Teki>_1":
-  .4byte 0x802dea28
-  .4byte 0
+	.4byte 0x802dea28
+	.4byte 0
 .global __RTTI__12BreathEffect
 __RTTI__12BreathEffect:
-  .4byte 0x802dea18
-  .4byte 0x802dea40
+	.4byte 0x802dea18
+	.4byte 0x802dea40
 .global __RTTI__18TAIAflyingDistance
 __RTTI__18TAIAflyingDistance:
-  .4byte 0x802dea7c
-  .4byte 0x802dea90
+	.4byte 0x802dea7c
+	.4byte 0x802dea90
 .global __RTTI__21TAIAflyingDistanceMar
 __RTTI__21TAIAflyingDistanceMar:
-  .4byte 0x802dea64
-  .4byte 0x802deaa4
-  .4byte 0x802deb10
-  .4byte 0x802deb24
+	.4byte 0x802dea64
+	.4byte 0x802deaa4
+	.4byte 0x802deb10
+	.4byte 0x802deb24
 .global __RTTI__19TAIAtimerTakeOffMar
 __RTTI__19TAIAtimerTakeOffMar:
-  .4byte 0x802deafc
-  .4byte 0x802deb30
+	.4byte 0x802deafc
+	.4byte 0x802deb30
 .global __RTTI__11TAIAtakeOff
 __RTTI__11TAIAtakeOff:
-  .4byte 0x802deb94
-  .4byte 0x802deba0
+	.4byte 0x802deb94
+	.4byte 0x802deba0
 .global __RTTI__14TAIAtakeOffMar
 __RTTI__14TAIAtakeOffMar:
-  .4byte 0x802deb84
-  .4byte 0x802debb4
+	.4byte 0x802deb84
+	.4byte 0x802debb4
 .global __RTTI__16TAIAstickingPiki
 __RTTI__16TAIAstickingPiki:
-  .4byte 0x802dec3c
-  .4byte 0x802dec50
+	.4byte 0x802dec3c
+	.4byte 0x802dec50
 .global __RTTI__19TAIAstickingPikiMar
 __RTTI__19TAIAstickingPikiMar:
-  .4byte 0x802dec28
-  .4byte 0x802dec5c
-  .4byte 0x802deca4
-  .4byte 0x802decb4
+	.4byte 0x802dec28
+	.4byte 0x802dec5c
+	.4byte 0x802deca4
+	.4byte 0x802decb4
 .global __RTTI__17TAIAflickCheckMar
 __RTTI__17TAIAflickCheckMar:
-  .4byte 0x802dec90
-  .4byte 0x802decc0
+	.4byte 0x802dec90
+	.4byte 0x802decc0
 .global __RTTI__11TAIAlanding
 __RTTI__11TAIAlanding:
-  .4byte 0x802ded04
-  .4byte 0x802ded10
+	.4byte 0x802ded04
+	.4byte 0x802ded10
 .global __RTTI__14TAIAlandingMar
 __RTTI__14TAIAlandingMar:
-  .4byte 0x802decf4
-  .4byte 0x802ded24
+	.4byte 0x802decf4
+	.4byte 0x802ded24
 .global __RTTI__22TAIAstickingPikiMarFly
 __RTTI__22TAIAstickingPikiMarFly:
-  .4byte 0x802ded60
-  .4byte 0x802ded78
-  .4byte 0x802dedbc
-  .4byte 0x802dedc8
-  .4byte 0x802dedd4
-  .4byte 0x802dede4
+	.4byte 0x802ded60
+	.4byte 0x802ded78
+	.4byte 0x802dedbc
+	.4byte 0x802dedc8
+	.4byte 0x802dedd4
+	.4byte 0x802dede4
 .global __RTTI__15TAIAflickingMar
 __RTTI__15TAIAflickingMar:
-  .4byte 0x802dedac
-  .4byte 0x802dedf8
+	.4byte 0x802dedac
+	.4byte 0x802dedf8
 .global __RTTI__22TAIAflickCheckTimerMar
 __RTTI__22TAIAflickCheckTimerMar:
-  .4byte 0x802dee70
-  .4byte 0x802dee88
-  .4byte 0x802deec0
-  .4byte 0
+	.4byte 0x802dee70
+	.4byte 0x802dee88
+	.4byte 0x802deec0
+	.4byte 0
 .global __RTTI__14TAIAflyingBase
 __RTTI__14TAIAflyingBase:
-  .4byte 0x802def04
-  .4byte 0x802def14
+	.4byte 0x802def04
+	.4byte 0x802def14
 .global __RTTI__17TAIAflyingBaseMar
 __RTTI__17TAIAflyingBaseMar:
-  .4byte 0x802deef0
-  .4byte 0x802def20
-  .4byte 0x802def64
-  .4byte 0x802def70
+	.4byte 0x802deef0
+	.4byte 0x802def20
+	.4byte 0x802def64
+	.4byte 0x802def70
 .global __RTTI__12TAIAdyingMar
 __RTTI__12TAIAdyingMar:
-  .4byte 0x802def54
-  .4byte 0x802def84
-  .4byte 0x414e6f64
-  .4byte 0x65000000
-  .4byte 0x803e61d8
-  .4byte 0
-  .4byte 0x802defec
-  .4byte 0x802deff8
-  .4byte 0x4e6f6465
-  .4byte 0
-  .4byte 0x803e61f0
-  .4byte 0x802df004
-  .4byte 0x802df018
-  .4byte 0x802df028
+	.4byte 0x802def54
+	.4byte 0x802def84
+	.4byte 0x414e6f64
+	.4byte 0x65000000
+	.4byte 0x803e61d8
+	.4byte 0
+	.4byte 0x802defec
+	.4byte 0x802deff8
+	.4byte 0x4e6f6465
+	.4byte 0
+	.4byte 0x803e61f0
+	.4byte 0x802df004
+	.4byte 0x802df018
+	.4byte 0x802df028
 .global __RTTI__16TAImarParameters
 __RTTI__16TAImarParameters:
-  .4byte 0x802defd8
-  .4byte 0x802df044
-  .4byte 0x802df0b8
-  .4byte 0
+	.4byte 0x802defd8
+	.4byte 0x802df044
+	.4byte 0x802df0b8
+	.4byte 0
 .global __RTTI__31TAIeffectAttackEventCallBackMar
 __RTTI__31TAIeffectAttackEventCallBackMar:
-  .4byte 0x802df098
-  .4byte 0x802df0d8
-  .4byte 0x802df168
-  .4byte 0
+	.4byte 0x802df098
+	.4byte 0x802df0d8
+	.4byte 0x802df168
+	.4byte 0
 .global __RTTI__11TAIAinWater
 __RTTI__11TAIAinWater:
-  .4byte 0x802df174
-  .4byte 0x802df180
+	.4byte 0x802df174
+	.4byte 0x802df180
 .global __RTTI__17TAIAinWaterDamage
 __RTTI__17TAIAinWaterDamage:
-  .4byte 0x802df154
-  .4byte 0x802df18c
+	.4byte 0x802df154
+	.4byte 0x802df18c
 .global __RTTI__10TAIAdamage
 __RTTI__10TAIAdamage:
-  .4byte 0x802df1d8
-  .4byte 0x802df1e4
-  .4byte 0x802df228
-  .4byte 0x802df234
-  .4byte 0x802df240
-  .4byte 0x802df24c
+	.4byte 0x802df1d8
+	.4byte 0x802df1e4
+	.4byte 0x802df228
+	.4byte 0x802df234
+	.4byte 0x802df240
+	.4byte 0x802df24c
 .global __RTTI__16TAIAdyingKabekui
 __RTTI__16TAIAdyingKabekui:
-  .4byte 0x802df260
-  .4byte 0x802df274
+	.4byte 0x802df260
+	.4byte 0x802df274
 .global __RTTI__21TAIAdyingCrushKabekui
 __RTTI__21TAIAdyingCrushKabekui:
-  .4byte 0x802df210
-  .4byte 0x802df290
-  .4byte 0x54414941
-  .4byte 0x64696500
+	.4byte 0x802df210
+	.4byte 0x802df290
+	.4byte 0x54414941
+	.4byte 0x64696500
 .global __RTTI__7TAIAdie
 __RTTI__7TAIAdie:
-  .4byte 0x803e6260
-  .4byte 0x802df308
+	.4byte 0x803e6260
+	.4byte 0x802df308
 .global __RTTI__13TAIAdeadCheck
 __RTTI__13TAIAdeadCheck:
-  .4byte 0x802df330
-  .4byte 0x802df340
+	.4byte 0x802df330
+	.4byte 0x802df340
 .global __RTTI__22TAIAhitCheckFlyingPiki
 __RTTI__22TAIAhitCheckFlyingPiki:
-  .4byte 0x802df368
-  .4byte 0x802df380
+	.4byte 0x802df368
+	.4byte 0x802df380
 .global lbl_803E6280
 lbl_803E6280:
 	.4byte 0x00000000
@@ -19349,209 +19349,209 @@ lbl_803E6310:
 	.4byte 0x802DF3F0
 .global __RTTI__11TAIAtakeOff_1
 __RTTI__11TAIAtakeOff_1:
-  .4byte 0x802df3c4
-  .4byte 0x802df3fc
+	.4byte 0x802df3c4
+	.4byte 0x802df3fc
 .global __RTTI__11TAIAlanding_1
 __RTTI__11TAIAlanding_1:
-  .4byte 0x802df430
-  .4byte 0x802df43c
+	.4byte 0x802df430
+	.4byte 0x802df43c
 .global __RTTI__11TAIAdescent
 __RTTI__11TAIAdescent:
-  .4byte 0x802df470
-  .4byte 0x802df47c
+	.4byte 0x802df470
+	.4byte 0x802df47c
 .global __RTTI__14FlyingDistance_1
 __RTTI__14FlyingDistance_1:
-  .4byte 0x802df4c8
-  .4byte 0
+	.4byte 0x802df4c8
+	.4byte 0
 .global __RTTI__18TAIAflyingDistance_1
 __RTTI__18TAIAflyingDistance_1:
-  .4byte 0x802df4b4
-  .4byte 0x802df4d8
+	.4byte 0x802df4b4
+	.4byte 0x802df4d8
 .global __RTTI__16TAIAflyingToGoal_1
 __RTTI__16TAIAflyingToGoal_1:
-  .4byte 0x802df538
-  .4byte 0x802df54c
+	.4byte 0x802df538
+	.4byte 0x802df54c
 .global __RTTI__29TAIAflyingDistanceInTerritory_1
 __RTTI__29TAIAflyingDistanceInTerritory_1:
-  .4byte 0x802df518
-  .4byte 0x802df560
+	.4byte 0x802df518
+	.4byte 0x802df560
 .global __RTTI__21TAIAflyingInTerritory
 __RTTI__21TAIAflyingInTerritory:
-  .4byte 0x802df5d8
-  .4byte 0x802df5f0
+	.4byte 0x802df5d8
+	.4byte 0x802df5f0
 .global __RTTI__14TAIAflyingBase_1
 __RTTI__14TAIAflyingBase_1:
-  .4byte 0x802df618
-  .4byte 0x802df628
+	.4byte 0x802df618
+	.4byte 0x802df628
 .global __RTTI__28TAIAgoingHomePriorityFaceDir
 __RTTI__28TAIAgoingHomePriorityFaceDir:
-  .4byte 0x802df654
-  .4byte 0x802df674
+	.4byte 0x802df654
+	.4byte 0x802df674
 .global __RTTI__13TAIAgoingHome
 __RTTI__13TAIAgoingHome:
-  .4byte 0x802df6a4
-  .4byte 0x802df6b4
+	.4byte 0x802df6a4
+	.4byte 0x802df6b4
 .global __RTTI__16TAIAturnOccasion
 __RTTI__16TAIAturnOccasion:
-  .4byte 0x802df6f4
-  .4byte 0x802df708
+	.4byte 0x802df6f4
+	.4byte 0x802df708
 .global __RTTI__12TAIAturnHome
 __RTTI__12TAIAturnHome:
-  .4byte 0x802df6e4
-  .4byte 0x802df71c
+	.4byte 0x802df6e4
+	.4byte 0x802df71c
 .global __RTTI__12TAIAstepBack_1
 __RTTI__12TAIAstepBack_1:
-  .4byte 0x802df754
-  .4byte 0x802df764
+	.4byte 0x802df754
+	.4byte 0x802df764
 .global __RTTI__16TAIAturnToTarget_1
 __RTTI__16TAIAturnToTarget_1:
-  .4byte 0x802df7a4
-  .4byte 0x802df7b8
+	.4byte 0x802df7a4
+	.4byte 0x802df7b8
 .global __RTTI__10TAIApatrol_1
 __RTTI__10TAIApatrol_1:
-  .4byte 0x802df798
-  .4byte 0x802df7cc
+	.4byte 0x802df798
+	.4byte 0x802df7cc
 .global __RTTI__8TAIAwait
 __RTTI__8TAIAwait:
-  .4byte 0x802df80c
-  .4byte 0x802df818
+	.4byte 0x802df80c
+	.4byte 0x802df818
 .global __RTTI__21TAIAturnFocusCreature
 __RTTI__21TAIAturnFocusCreature:
-  .4byte 0x802df84c
-  .4byte 0x802df864
+	.4byte 0x802df84c
+	.4byte 0x802df864
 .global __RTTI__14TAIArandomWalk
 __RTTI__14TAIArandomWalk:
-  .4byte 0x802df8bc
-  .4byte 0x802df8cc
+	.4byte 0x802df8bc
+	.4byte 0x802df8cc
 .global __RTTI__8TAIAstop
 __RTTI__8TAIAstop:
-  .4byte 0x802df8fc
-  .4byte 0x802df908
+	.4byte 0x802df8fc
+	.4byte 0x802df908
 .global __RTTI__14TAIAlookAround
 __RTTI__14TAIAlookAround:
-  .4byte 0x802df950
-  .4byte 0x802df960
+	.4byte 0x802df950
+	.4byte 0x802df960
 .global __RTTI__33TAIAapproachTargetPriorityFaceDir
 __RTTI__33TAIAapproachTargetPriorityFaceDir:
-  .4byte 0x802df990
-  .4byte 0x802df9b4
+	.4byte 0x802df990
+	.4byte 0x802df9b4
 .global __RTTI__27TAIAgoTargetPriorityFaceDir
 __RTTI__27TAIAgoTargetPriorityFaceDir:
-  .4byte 0x802df9e8
-  .4byte 0x802dfa04
+	.4byte 0x802df9e8
+	.4byte 0x802dfa04
 .global __RTTI__12TAIAgoTarget
 __RTTI__12TAIAgoTarget:
-  .4byte 0x802dfa3c
-  .4byte 0x802dfa4c
+	.4byte 0x802dfa3c
+	.4byte 0x802dfa4c
 .global __RTTI__24TAIAsetTargetPointCircle
 __RTTI__24TAIAsetTargetPointCircle:
-  .4byte 0x802dfa80
-  .4byte 0x802dfa9c
+	.4byte 0x802dfa80
+	.4byte 0x802dfa9c
 .global __RTTI__30TAIAsetTargetPointCircleRandom
 __RTTI__30TAIAsetTargetPointCircleRandom:
-  .4byte 0x802dfac4
-  .4byte 0x802dfae4
+	.4byte 0x802dfac4
+	.4byte 0x802dfae4
 .global __RTTI__14TAIAgoGoalPath
 __RTTI__14TAIAgoGoalPath:
-  .4byte 0x802dfb0c
-  .4byte 0x802dfb1c
+	.4byte 0x802dfb0c
+	.4byte 0x802dfb1c
 .global __RTTI__28TAIAsetTargetPointWorkObject
 __RTTI__28TAIAsetTargetPointWorkObject:
-  .4byte 0x802dfb5c
-  .4byte 0x802dfb7c
-  .4byte 0x802dfbb8
-  .4byte 0x802dfbc4
+	.4byte 0x802dfb5c
+	.4byte 0x802dfb7c
+	.4byte 0x802dfbb8
+	.4byte 0x802dfbc4
 .global __RTTI__18TAIAsetMotionSpeed
 __RTTI__18TAIAsetMotionSpeed:
-  .4byte 0x802dfbd0
-  .4byte 0x802dfbe4
+	.4byte 0x802dfbd0
+	.4byte 0x802dfbe4
 .global __RTTI__17TAIAappearKabekui
 __RTTI__17TAIAappearKabekui:
-  .4byte 0x802dfba4
-  .4byte 0x802dfbf8
-  .4byte 0
-  .4byte 0x802dfc5c
-  .4byte 0
-  .4byte 0x802dfc68
-  .4byte 0x802dfc7c
+	.4byte 0x802dfba4
+	.4byte 0x802dfbf8
+	.4byte 0
+	.4byte 0x802dfc5c
+	.4byte 0
+	.4byte 0x802dfc68
+	.4byte 0x802dfc7c
 .global __RTTI__14TAIAmotionLoop
 __RTTI__14TAIAmotionLoop:
-  .4byte 0x802dfc4c
-  .4byte 0x802dfc88
-  .4byte 0x802dfc40
-  .4byte 0x802dfcd8
-  .4byte 0x802dfd50
-  .4byte 0
+	.4byte 0x802dfc4c
+	.4byte 0x802dfc88
+	.4byte 0x802dfc40
+	.4byte 0x802dfcd8
+	.4byte 0x802dfd50
+	.4byte 0
 .global __RTTI__18TAIAcheckTurnAngle
 __RTTI__18TAIAcheckTurnAngle:
-  .4byte 0x802dfd3c
-  .4byte 0x802dfd5c
+	.4byte 0x802dfd3c
+	.4byte 0x802dfd5c
 .global __RTTI__18TAIAdistanceTarget
 __RTTI__18TAIAdistanceTarget:
-  .4byte 0x802dfd84
-  .4byte 0x802dfd98
-  .4byte 0x802dfdd0
-  .4byte 0
+	.4byte 0x802dfd84
+	.4byte 0x802dfd98
+	.4byte 0x802dfdd0
+	.4byte 0
 .global __RTTI__16TAIAstickingPiki_1
 __RTTI__16TAIAstickingPiki_1:
-  .4byte 0x802dfe00
-  .4byte 0x802dfe14
+	.4byte 0x802dfe00
+	.4byte 0x802dfe14
 .global __RTTI__19TAIAunvisibleTarget
 __RTTI__19TAIAunvisibleTarget:
-  .4byte 0x802dfe40
-  .4byte 0x802dfe54
+	.4byte 0x802dfe40
+	.4byte 0x802dfe54
 .global __RTTI__20TAIAattackableTarget_1
 __RTTI__20TAIAattackableTarget_1:
-  .4byte 0x802dfe7c
-  .4byte 0x802dfe94
+	.4byte 0x802dfe7c
+	.4byte 0x802dfe94
 .global __RTTI__15TAIAvisiblePiki
 __RTTI__15TAIAvisiblePiki:
-  .4byte 0x802dfec0
-  .4byte 0x802dfed0
+	.4byte 0x802dfec0
+	.4byte 0x802dfed0
 .global __RTTI__15TAIAvisibleNavi
 __RTTI__15TAIAvisibleNavi:
-  .4byte 0x802dfef8
-  .4byte 0x802dff08
+	.4byte 0x802dfef8
+	.4byte 0x802dff08
 .global __RTTI__29TAIAoutsideTerritoryRangeNavi
 __RTTI__29TAIAoutsideTerritoryRangeNavi:
-  .4byte 0x802dff30
-  .4byte 0x802dff50
+	.4byte 0x802dff30
+	.4byte 0x802dff50
 .global __RTTI__28TAIAinsideTerritoryRangeNavi
 __RTTI__28TAIAinsideTerritoryRangeNavi:
-  .4byte 0x802dff78
-  .4byte 0x802dff98
+	.4byte 0x802dff78
+	.4byte 0x802dff98
 .global __RTTI__24TAIAcheckInsideRangePiki
 __RTTI__24TAIAcheckInsideRangePiki:
-  .4byte 0x802dffc0
-  .4byte 0x802dffdc
+	.4byte 0x802dffc0
+	.4byte 0x802dffdc
 .global __RTTI__22TAIAjudgeOptionalRange_1
 __RTTI__22TAIAjudgeOptionalRange_1:
-  .4byte 0x802e0028
-  .4byte 0x802e0040
+	.4byte 0x802e0028
+	.4byte 0x802e0040
 .global __RTTI__24TAIAoutsideOptionalRange_1
 __RTTI__24TAIAoutsideOptionalRange_1:
-  .4byte 0x802e000c
-  .4byte 0x802e004c
+	.4byte 0x802e000c
+	.4byte 0x802e004c
 .global __RTTI__23TAIAinsideOptionalRange
 __RTTI__23TAIAinsideOptionalRange:
-  .4byte 0x802e0088
-  .4byte 0x802e00a0
+	.4byte 0x802e0088
+	.4byte 0x802e00a0
 .global __RTTI__13TAIAjudgeLife
 __RTTI__13TAIAjudgeLife:
-  .4byte 0x802e0114
-  .4byte 0x802e0124
+	.4byte 0x802e0114
+	.4byte 0x802e0124
 .global __RTTI__12TAIAmoreLife
 __RTTI__12TAIAmoreLife:
-  .4byte 0x802e0104
-  .4byte 0x802e0130
+	.4byte 0x802e0104
+	.4byte 0x802e0130
 .global __RTTI__12TAIAlessLife
 __RTTI__12TAIAlessLife:
-  .4byte 0x802e0164
-  .4byte 0x802e0174
+	.4byte 0x802e0164
+	.4byte 0x802e0174
 .global __RTTI__20TAIAsearchWorkObject
 __RTTI__20TAIAsearchWorkObject:
-  .4byte 0x802e01a8
-  .4byte 0x802e01c0
+	.4byte 0x802e01a8
+	.4byte 0x802e01c0
 .global lbl_803E64D8
 lbl_803E64D8:
 	.4byte 0x00000000
@@ -19594,60 +19594,60 @@ lbl_803E6504:
 	.4byte 0x802E0230
 .global __RTTI__11TAIAeatPiki
 __RTTI__11TAIAeatPiki:
-  .4byte 0x802e0204
-  .4byte 0x802e023c
+	.4byte 0x802e0204
+	.4byte 0x802e023c
 .global __RTTI__18TAIAbiteForKabekui
 __RTTI__18TAIAbiteForKabekui:
-  .4byte 0x802e0270
-  .4byte 0x802e0284
+	.4byte 0x802e0270
+	.4byte 0x802e0284
 .global __RTTI__25TAIAflickingReserveMotion
 __RTTI__25TAIAflickingReserveMotion:
-  .4byte 0x802e02bc
-  .4byte 0x802e02d8
-  .4byte 0x802e0320
-  .4byte 0x802e032c
-  .4byte 0x802e0310
-  .4byte 0x802e0338
-  .4byte 0x802e0380
-  .4byte 0
-  .4byte 0x802e03b0
-  .4byte 0x802e03c0
+	.4byte 0x802e02bc
+	.4byte 0x802e02d8
+	.4byte 0x802e0320
+	.4byte 0x802e032c
+	.4byte 0x802e0310
+	.4byte 0x802e0338
+	.4byte 0x802e0380
+	.4byte 0
+	.4byte 0x802e03b0
+	.4byte 0x802e03c0
 .global __RTTI__14TAIAfireBreath_2
 __RTTI__14TAIAfireBreath_2:
-  .4byte 0x802e03ec
-  .4byte 0x802e03fc
+	.4byte 0x802e03ec
+	.4byte 0x802e03fc
 .global __RTTI__14TAIAtargetPiki
 __RTTI__14TAIAtargetPiki:
-  .4byte 0x802e0434
-  .4byte 0x802e0444
+	.4byte 0x802e0434
+	.4byte 0x802e0444
 .global __RTTI__14TAIAtargetNavi
 __RTTI__14TAIAtargetNavi:
-  .4byte 0x802e046c
-  .4byte 0x802e047c
+	.4byte 0x802e046c
+	.4byte 0x802e047c
 .global __RTTI__14TAIAmotionLoop_1
 __RTTI__14TAIAmotionLoop_1:
-  .4byte 0x802e04c0
-  .4byte 0x802e04d0
+	.4byte 0x802e04c0
+	.4byte 0x802e04d0
 .global __RTTI__27TAIAflickingAfterMotionLoop
 __RTTI__27TAIAflickingAfterMotionLoop:
-  .4byte 0x802e04a4
-  .4byte 0x802e04e4
+	.4byte 0x802e04a4
+	.4byte 0x802e04e4
 .global __RTTI__20TAIAattackWorkObject
 __RTTI__20TAIAattackWorkObject:
-  .4byte 0x802e055c
-  .4byte 0x802e0574
+	.4byte 0x802e055c
+	.4byte 0x802e0574
 .global __RTTI__14P2DGrafContext
 __RTTI__14P2DGrafContext:
-  .4byte 0x802e05c4
-  .4byte 0
+	.4byte 0x802e05c4
+	.4byte 0
 .global __RTTI__14P2DGrafContext_1
 __RTTI__14P2DGrafContext_1:
-  .4byte 0x802e0608
-  .4byte 0
+	.4byte 0x802e0608
+	.4byte 0
 .global __RTTI__13P2DOrthoGraph
 __RTTI__13P2DOrthoGraph:
-  .4byte 0x802e05f8
-  .4byte 0x802e0618
+	.4byte 0x802e05f8
+	.4byte 0x802e0618
 .global lbl_803E6598
 lbl_803E6598:
 	.4byte 0x00000000
@@ -19704,14 +19704,14 @@ lbl_803E65DC:
 	.4byte 0xBF800000
 .global __RTTI__14P2DGrafContext_2
 __RTTI__14P2DGrafContext_2:
-  .4byte 0x802e067c
-  .4byte 0
+	.4byte 0x802e067c
+	.4byte 0
 .global __RTTI__13P2DPerspGraph
 __RTTI__13P2DPerspGraph:
-  .4byte 0x802e066c
-  .4byte 0x802e068c
-  .4byte 0x50324450
-  .4byte 0x616e6500
+	.4byte 0x802e066c
+	.4byte 0x802e068c
+	.4byte 0x50324450
+	.4byte 0x616e6500
 .global lbl_803E65F8
 lbl_803E65F8:
 	.4byte 0x3F800000
@@ -19748,32 +19748,32 @@ lbl_803E6618:
 	.4byte 0x00000000
 .global __RTTI__10P2DPicture
 __RTTI__10P2DPicture:
-  .4byte 0x802e0710
-  .4byte 0x802e071c
-  .4byte 0x50324450
-  .4byte 0x616e6500
-  .4byte 0x803e6640
-  .4byte 0
+	.4byte 0x802e0710
+	.4byte 0x802e071c
+	.4byte 0x50324450
+	.4byte 0x616e6500
+	.4byte 0x803e6640
+	.4byte 0
 .global __RTTI__9P2DScreen
 __RTTI__9P2DScreen:
-  .4byte 0x802e0778
-  .4byte 0x802e07d4
-  .4byte 0x50324450
-  .4byte 0x616e6500
-  .4byte 0x803e6658
-  .4byte 0
+	.4byte 0x802e0778
+	.4byte 0x802e07d4
+	.4byte 0x50324450
+	.4byte 0x616e6500
+	.4byte 0x803e6658
+	.4byte 0
 .global __RTTI__9P2DWindow
 __RTTI__9P2DWindow:
-  .4byte 0x802e0830
-  .4byte 0x802e083c
-  .4byte 0x50324450
-  .4byte 0x616e6500
-  .4byte 0x803e6670
-  .4byte 0
+	.4byte 0x802e0830
+	.4byte 0x802e083c
+	.4byte 0x50324450
+	.4byte 0x616e6500
+	.4byte 0x803e6670
+	.4byte 0
 .global __RTTI__10P2DTextBox
 __RTTI__10P2DTextBox:
-  .4byte 0x802e0898
-  .4byte 0x802e08a4
+	.4byte 0x802e0898
+	.4byte 0x802e08a4
 .global lbl_803E6688
 lbl_803E6688:
 	.4byte 0x00000000
@@ -19784,8 +19784,8 @@ lbl_803E668C:
 	.4byte 0x00000000
 .global __RTTI__10FntobjInfo
 __RTTI__10FntobjInfo:
-  .4byte 0x802e0968
-  .4byte 0x802e0980
+	.4byte 0x802e0968
+	.4byte 0x802e0980
 .global "frameMax__Q29@unnamed@16PikiIconCallBack"
 "frameMax__Q29@unnamed@16PikiIconCallBack":
 	.4byte 0x3F000000
@@ -19802,68 +19802,68 @@ lbl_803E66A4:
 	.4byte 0x802E0CB0
 .global "__RTTI__Q29@unnamed@12DateCallBack"
 "__RTTI__Q29@unnamed@12DateCallBack":
-  .4byte 0x802e0c48
-  .4byte 0x802e0cc4
+	.4byte 0x802e0c48
+	.4byte 0x802e0cc4
 .global "__RTTI__Q29@unnamed@17LifePinchCallBack"
 "__RTTI__Q29@unnamed@17LifePinchCallBack":
-  .4byte 0x802e0cf8
-  .4byte 0x802e0d18
+	.4byte 0x802e0cf8
+	.4byte 0x802e0d18
 .global "__RTTI__Q29@unnamed@16LifeIconCallBack"
 "__RTTI__Q29@unnamed@16LifeIconCallBack":
-  .4byte 0x802e0d44
-  .4byte 0x802e0d60
+	.4byte 0x802e0d44
+	.4byte 0x802e0d60
 .global "__RTTI__Q29@unnamed@15NaviTexCallBack"
 "__RTTI__Q29@unnamed@15NaviTexCallBack":
-  .4byte 0x802e0d8c
-  .4byte 0x802e0da8
+	.4byte 0x802e0d8c
+	.4byte 0x802e0da8
 .global "__RTTI__Q29@unnamed@16NaviIconCallBack"
 "__RTTI__Q29@unnamed@16NaviIconCallBack":
-  .4byte 0x802e0dd4
-  .4byte 0x802e0df0
+	.4byte 0x802e0dd4
+	.4byte 0x802e0df0
 .global "__RTTI__Q29@unnamed@7SunMove"
 "__RTTI__Q29@unnamed@7SunMove":
-  .4byte 0x802e0e38
-  .4byte 0
+	.4byte 0x802e0e38
+	.4byte 0
 .global "__RTTI__Q29@unnamed@16MoonIconCallBack"
 "__RTTI__Q29@unnamed@16MoonIconCallBack":
-  .4byte 0x802e0e1c
-  .4byte 0x802e0e4c
+	.4byte 0x802e0e1c
+	.4byte 0x802e0e4c
 .global "__RTTI__Q29@unnamed@7SunAnim"
 "__RTTI__Q29@unnamed@7SunAnim":
-  .4byte 0x802e0e9c
-  .4byte 0
+	.4byte 0x802e0e9c
+	.4byte 0
 .global "__RTTI__Q29@unnamed@16SunIcon2CallBack"
 "__RTTI__Q29@unnamed@16SunIcon2CallBack":
-  .4byte 0x802e0e80
-  .4byte 0x802e0eb0
+	.4byte 0x802e0e80
+	.4byte 0x802e0eb0
 .global "__RTTI__Q29@unnamed@16SunIcon1CallBack"
 "__RTTI__Q29@unnamed@16SunIcon1CallBack":
-  .4byte 0x802e0eec
-  .4byte 0x802e0f08
+	.4byte 0x802e0eec
+	.4byte 0x802e0f08
 .global "__RTTI__Q29@unnamed@18SunCapsuleCallBack"
 "__RTTI__Q29@unnamed@18SunCapsuleCallBack":
-  .4byte 0x802e0f3c
-  .4byte 0x802e0f5c
+	.4byte 0x802e0f3c
+	.4byte 0x802e0f5c
 .global "__RTTI__Q29@unnamed@15SunBaseCallBack"
 "__RTTI__Q29@unnamed@15SunBaseCallBack":
-  .4byte 0x802e0f88
-  .4byte 0x802e0fa4
+	.4byte 0x802e0f88
+	.4byte 0x802e0fa4
 .global "__RTTI__Q23zen12FigureTex<s>"
 "__RTTI__Q23zen12FigureTex<s>":
-  .4byte 0x802e1004
-  .4byte 0x802e101c
+	.4byte 0x802e1004
+	.4byte 0x802e101c
 .global "__RTTI__Q23zen20NumberPicCallBack<s>"
 "__RTTI__Q23zen20NumberPicCallBack<s>":
-  .4byte 0x802e0fe4
-  .4byte 0x802e1028
+	.4byte 0x802e0fe4
+	.4byte 0x802e1028
 .global "__RTTI__Q29@unnamed@23MapPikminWindowCallBack"
 "__RTTI__Q29@unnamed@23MapPikminWindowCallBack":
-  .4byte 0x802e1064
-  .4byte 0x802e1088
+	.4byte 0x802e1064
+	.4byte 0x802e1088
 .global "__RTTI__Q29@unnamed@16PikiIconCallBack"
 "__RTTI__Q29@unnamed@16PikiIconCallBack":
-  .4byte 0x802e10b4
-  .4byte 0x802e10d0
+	.4byte 0x802e10b4
+	.4byte 0x802e10d0
 .global TRI_NUM__Q23zen14DrawLifeCircle
 TRI_NUM__Q23zen14DrawLifeCircle:
 	.4byte 0x43000000
@@ -19927,31 +19927,31 @@ lbl_803E679C:
 	.4byte 0x802E12B8
 .global __RTTI__Q23zen13StickCallBack
 __RTTI__Q23zen13StickCallBack:
-  .4byte 0x802e1264
-  .4byte 0x802e12cc
+	.4byte 0x802e1264
+	.4byte 0x802e12cc
 .global __RTTI__Q23zen18ArrowBasicCallBack
 __RTTI__Q23zen18ArrowBasicCallBack:
-  .4byte 0x802e1310
-  .4byte 0
+	.4byte 0x802e1310
+	.4byte 0
 .global __RTTI__Q23zen15ArrowLRCallBack
 __RTTI__Q23zen15ArrowLRCallBack:
-  .4byte 0x802e12f8
-  .4byte 0x802e1328
+	.4byte 0x802e12f8
+	.4byte 0x802e1328
 .global __RTTI__Q23zen19ArrowCenterCallBack
 __RTTI__Q23zen19ArrowCenterCallBack:
-  .4byte 0x802e135c
-  .4byte 0x802e1378
-  .4byte 0x802e13c8
-  .4byte 0
+	.4byte 0x802e135c
+	.4byte 0x802e1378
+	.4byte 0x802e13c8
+	.4byte 0
 .global "__RTTI__Q23zen12FigureTex<i>_1"
 "__RTTI__Q23zen12FigureTex<i>_1":
-  .4byte 0x802e13d8
-  .4byte 0x802e13ec
-  .4byte 0x414e6f64
-  .4byte 0x65000000
-  .4byte 0x803e67ec
-  .4byte 0
-  .4byte 0
+	.4byte 0x802e13d8
+	.4byte 0x802e13ec
+	.4byte 0x414e6f64
+	.4byte 0x65000000
+	.4byte 0x803e67ec
+	.4byte 0
+	.4byte 0
 .global lbl_803E6800
 lbl_803E6800:
 	.4byte 0x00000000
@@ -19975,13 +19975,13 @@ lbl_803E6810:
 	.4byte 0x802E1514
 .global __RTTI__Q23zen11BalloonPane
 __RTTI__Q23zen11BalloonPane:
-  .4byte 0x802e14c0
-  .4byte 0x802e1528
+	.4byte 0x802e14c0
+	.4byte 0x802e1528
 .global __RTTI__Q23zen10DrawScreen
 __RTTI__Q23zen10DrawScreen:
-  .4byte 0x802e1570
-  .4byte 0
-  .4byte 0
+	.4byte 0x802e1570
+	.4byte 0
+	.4byte 0
 .global lbl_803E6840
 lbl_803E6840:
 	.4byte 0x00000000
@@ -19994,24 +19994,24 @@ lbl_803E6848:
 	.4byte 0x00000000
 .global __RTTI__Q23zen10DrawScreen_1
 __RTTI__Q23zen10DrawScreen_1:
-  .4byte 0x802e15f0
-  .4byte 0
+	.4byte 0x802e15f0
+	.4byte 0
 .global __RTTI__Q23zen11DrawAccount
 __RTTI__Q23zen11DrawAccount:
-  .4byte 0x802e15dc
-  .4byte 0x802e1600
-  .4byte 0x802e163c
-  .4byte 0
+	.4byte 0x802e15dc
+	.4byte 0x802e1600
+	.4byte 0x802e163c
+	.4byte 0
 .global "__RTTI__Q23zen12FigureTex<s>_1"
 "__RTTI__Q23zen12FigureTex<s>_1":
-  .4byte 0x802e164c
-  .4byte 0x802e1664
-  .4byte 0x802e1670
-  .4byte 0
-  .4byte 0x802e1684
-  .4byte 0
-  .4byte 0x802e16a0
-  .4byte 0x802e16b0
+	.4byte 0x802e164c
+	.4byte 0x802e1664
+	.4byte 0x802e1670
+	.4byte 0
+	.4byte 0x802e1684
+	.4byte 0
+	.4byte 0x802e16a0
+	.4byte 0x802e16b0
 .global lbl_803E6888
 lbl_803E6888:
 	.4byte 0x3F800000
@@ -20044,12 +20044,12 @@ lbl_803E68B8:
 	.4byte 0x64720000
 .global __RTTI__Q23zen10DrawScreen_2
 __RTTI__Q23zen10DrawScreen_2:
-  .4byte 0x802e174c
-  .4byte 0
+	.4byte 0x802e174c
+	.4byte 0
 .global __RTTI__Q23zen8DrawMenu
 __RTTI__Q23zen8DrawMenu:
-  .4byte 0x802e173c
-  .4byte 0x802e175c
+	.4byte 0x802e173c
+	.4byte 0x802e175c
 .global lbl_803E68D0
 lbl_803E68D0:
 	.4byte 0x00000000
@@ -20102,16 +20102,16 @@ lbl_803E690C:
 	.4byte 0x00000000
 .global __RTTI__16ConeTypeCallBack
 __RTTI__16ConeTypeCallBack:
-  .4byte 0x802e179c
-  .4byte 0x802e17dc
+	.4byte 0x802e179c
+	.4byte 0x802e17dc
 .global __RTTI__20CylinderTypeCallBack
 __RTTI__20CylinderTypeCallBack:
-  .4byte 0x802e17f4
-  .4byte 0x802e180c
+	.4byte 0x802e17f4
+	.4byte 0x802e180c
 .global __RTTI__17EventTypeCallBack
 __RTTI__17EventTypeCallBack:
-  .4byte 0x802e1824
-  .4byte 0x802e1838
+	.4byte 0x802e1824
+	.4byte 0x802e1838
 .global lbl_803E6930
 lbl_803E6930:
 	.4byte 0x00000000
@@ -20143,111 +20143,111 @@ lbl_803E6950:
 	.4byte 0x00000000
 .global __RTTI__18TAIbeatleAnimation
 __RTTI__18TAIbeatleAnimation:
-  .4byte 0x802e18c4
-  .4byte 0x802e18e8
-  .4byte 0x802e1914
-  .4byte 0
-  .4byte 0x802e1924
-  .4byte 0x802e1930
+	.4byte 0x802e18c4
+	.4byte 0x802e18e8
+	.4byte 0x802e1914
+	.4byte 0
+	.4byte 0x802e1924
+	.4byte 0x802e1930
 .global __RTTI__17TAIbeatleStrategy
 __RTTI__17TAIbeatleStrategy:
-  .4byte 0x802e1900
-  .4byte 0x802e193c
-  .4byte 0x802e1998
-  .4byte 0
+	.4byte 0x802e1900
+	.4byte 0x802e193c
+	.4byte 0x802e1998
+	.4byte 0
 .global __RTTI__24TAIAcheckInsideRangePiki_1
 __RTTI__24TAIAcheckInsideRangePiki_1:
-  .4byte 0x802e19a4
-  .4byte 0x802e19c0
+	.4byte 0x802e19a4
+	.4byte 0x802e19c0
 .global __RTTI__30TAIAcheckInsideRangePikiBeatle
 __RTTI__30TAIAcheckInsideRangePikiBeatle:
-  .4byte 0x802e1978
-  .4byte 0x802e19cc
+	.4byte 0x802e1978
+	.4byte 0x802e19cc
 .global __RTTI__16TAIAdisableStick
 __RTTI__16TAIAdisableStick:
-  .4byte 0x802e1a04
-  .4byte 0x802e1a18
-  .4byte 0x802e1a8c
-  .4byte 0x802e1a98
-  .4byte 0x802e1aa4
-  .4byte 0x802e1ab4
+	.4byte 0x802e1a04
+	.4byte 0x802e1a18
+	.4byte 0x802e1a8c
+	.4byte 0x802e1a98
+	.4byte 0x802e1aa4
+	.4byte 0x802e1ab4
 .global __RTTI__18TAIAflickingBeatle
 __RTTI__18TAIAflickingBeatle:
-  .4byte 0x802e1a78
-  .4byte 0x802e1ac8
+	.4byte 0x802e1a78
+	.4byte 0x802e1ac8
 .global __RTTI__17TAIAinvincibleOff
 __RTTI__17TAIAinvincibleOff:
-  .4byte 0x802e1b40
-  .4byte 0x802e1b54
-  .4byte 0x802e1ba0
-  .4byte 0x802e1bb4
+	.4byte 0x802e1b40
+	.4byte 0x802e1b54
+	.4byte 0x802e1ba0
+	.4byte 0x802e1bb4
 .global __RTTI__14TAIAmotionLoop_2
 __RTTI__14TAIAmotionLoop_2:
-  .4byte 0x802e1bc0
-  .4byte 0x802e1bd0
+	.4byte 0x802e1bc0
+	.4byte 0x802e1bd0
 .global __RTTI__27TAIAflickingAfterMotionLoop_1
 __RTTI__27TAIAflickingAfterMotionLoop_1:
-  .4byte 0x802e1be4
-  .4byte 0x802e1c00
+	.4byte 0x802e1be4
+	.4byte 0x802e1c00
 .global __RTTI__33TAIAflickingAfterMotionLoopBeatle
 __RTTI__33TAIAflickingAfterMotionLoopBeatle:
-  .4byte 0x802e1b7c
-  .4byte 0x802e1c1c
+	.4byte 0x802e1b7c
+	.4byte 0x802e1c1c
 .global __RTTI__14TAIArockAttack
 __RTTI__14TAIArockAttack:
-  .4byte 0x802e1ca4
-  .4byte 0x802e1cb4
+	.4byte 0x802e1ca4
+	.4byte 0x802e1cb4
 .global __RTTI__22TAIAjudgeOptionalRange_2
 __RTTI__22TAIAjudgeOptionalRange_2:
-  .4byte 0x802e1d04
-  .4byte 0x802e1d1c
+	.4byte 0x802e1d04
+	.4byte 0x802e1d1c
 .global __RTTI__23TAIAinsideOptionalRange_1
 __RTTI__23TAIAinsideOptionalRange_1:
-  .4byte 0x802e1d28
-  .4byte 0x802e1d40
+	.4byte 0x802e1d28
+	.4byte 0x802e1d40
 .global __RTTI__29TAIAinsideOptionalRangeBeatle
 __RTTI__29TAIAinsideOptionalRangeBeatle:
-  .4byte 0x802e1ce4
-  .4byte 0x802e1d54
+	.4byte 0x802e1ce4
+	.4byte 0x802e1d54
 .global __RTTI__21TAIAvisiblePikiBeatle
 __RTTI__21TAIAvisiblePikiBeatle:
-  .4byte 0x802e1d98
-  .4byte 0x802e1db0
+	.4byte 0x802e1d98
+	.4byte 0x802e1db0
 .global __RTTI__10TAIAdamage_1
 __RTTI__10TAIAdamage_1:
-  .4byte 0x802e1e2c
-  .4byte 0x802e1e38
+	.4byte 0x802e1e2c
+	.4byte 0x802e1e38
 .global __RTTI__16TAIAdamageBeatle
 __RTTI__16TAIAdamageBeatle:
-  .4byte 0x802e1e18
-  .4byte 0x802e1e44
-  .4byte 0x802e1e88
-  .4byte 0x802e1e94
+	.4byte 0x802e1e18
+	.4byte 0x802e1e44
+	.4byte 0x802e1e88
+	.4byte 0x802e1e94
 .global __RTTI__15TAIAdyingBeatle
 __RTTI__15TAIAdyingBeatle:
-  .4byte 0x802e1e78
-  .4byte 0x802e1ea8
+	.4byte 0x802e1e78
+	.4byte 0x802e1ea8
 .global __RTTI__14TAIAinitBeatle
 __RTTI__14TAIAinitBeatle:
-  .4byte 0x802e1ee0
-  .4byte 0x802e1ef0
-  .4byte 0x414e6f64
-  .4byte 0x65000000
-  .4byte 0x803e6a2c
-  .4byte 0
-  .4byte 0x802e1f48
-  .4byte 0x802e1f54
-  .4byte 0x4e6f6465
-  .4byte 0
-  .4byte 0x803e6a44
-  .4byte 0x802e1f60
-  .4byte 0x802e1f74
-  .4byte 0x802e1f84
+	.4byte 0x802e1ee0
+	.4byte 0x802e1ef0
+	.4byte 0x414e6f64
+	.4byte 0x65000000
+	.4byte 0x803e6a2c
+	.4byte 0
+	.4byte 0x802e1f48
+	.4byte 0x802e1f54
+	.4byte 0x4e6f6465
+	.4byte 0
+	.4byte 0x803e6a44
+	.4byte 0x802e1f60
+	.4byte 0x802e1f74
+	.4byte 0x802e1f84
 .global __RTTI__19TAIbeatleParameters
 __RTTI__19TAIbeatleParameters:
-  .4byte 0x802e1f34
-  .4byte 0x802e1fa0
-  .4byte 0
+	.4byte 0x802e1f34
+	.4byte 0x802e1fa0
+	.4byte 0
 .global lbl_803E6A68
 lbl_803E6A68:
 	.4byte 0x00000000
@@ -20275,9 +20275,9 @@ lbl_803E6A7C:
 	.4byte 0x802E206C
 .global __RTTI__Q23zen9MenuPanel
 __RTTI__Q23zen9MenuPanel:
-  .4byte 0x802e201c
-  .4byte 0x802e2080
-  .4byte 0
+	.4byte 0x802e201c
+	.4byte 0x802e2080
+	.4byte 0
 .global lbl_803E6AA8
 lbl_803E6AA8:
 	.4byte 0x3F800000
@@ -20300,72 +20300,72 @@ lbl_803E6ABC:
 	.4byte 0x00000000
 .global __RTTI__20TAIkabekuiAAnimation
 __RTTI__20TAIkabekuiAAnimation:
-  .4byte 0x802e22a8
-  .4byte 0x802e22d0
-  .4byte 0x802e22f8
-  .4byte 0
+	.4byte 0x802e22a8
+	.4byte 0x802e22d0
+	.4byte 0x802e22f8
+	.4byte 0
 .global __RTTI__13TAIAshadowOff
 __RTTI__13TAIAshadowOff:
-  .4byte 0x802e22e8
-  .4byte 0x802e2304
+	.4byte 0x802e22e8
+	.4byte 0x802e2304
 .global __RTTI__12TAIAshadowOn
 __RTTI__12TAIAshadowOn:
-  .4byte 0x802e232c
-  .4byte 0x802e233c
-  .4byte 0x802e2378
-  .4byte 0x802e238c
+	.4byte 0x802e232c
+	.4byte 0x802e233c
+	.4byte 0x802e2378
+	.4byte 0x802e238c
 .global __RTTI__17TAIAsleepKabekuiA
 __RTTI__17TAIAsleepKabekuiA:
-  .4byte 0x802e2364
-  .4byte 0x802e2398
+	.4byte 0x802e2364
+	.4byte 0x802e2398
 .global __RTTI__16TAIAdiveKabekuiA
 __RTTI__16TAIAdiveKabekuiA:
-  .4byte 0x802e23cc
-  .4byte 0x802e23e0
-  .4byte 0x802e2454
-  .4byte 0x802e2468
+	.4byte 0x802e23cc
+	.4byte 0x802e23e0
+	.4byte 0x802e2454
+	.4byte 0x802e2468
 .global __RTTI__20TAIAattackWorkObject_1
 __RTTI__20TAIAattackWorkObject_1:
-  .4byte 0x802e2474
-  .4byte 0x802e248c
+	.4byte 0x802e2474
+	.4byte 0x802e248c
 .global __RTTI__28TAIAattackWorkObjectKabekuiA
 __RTTI__28TAIAattackWorkObjectKabekuiA:
-  .4byte 0x802e2434
-  .4byte 0x802e24a0
+	.4byte 0x802e2434
+	.4byte 0x802e24a0
 .global __RTTI__16TAIAinvincibleOn
 __RTTI__16TAIAinvincibleOn:
-  .4byte 0x802e2520
-  .4byte 0x802e2534
-  .4byte 0x802e2570
-  .4byte 0x802e257c
+	.4byte 0x802e2520
+	.4byte 0x802e2534
+	.4byte 0x802e2570
+	.4byte 0x802e257c
 .global __RTTI__18TAIAsetMotionSpeed_1
 __RTTI__18TAIAsetMotionSpeed_1:
-  .4byte 0x802e255c
-  .4byte 0x802e2588
-  .4byte 0x802e25e8
-  .4byte 0
-  .4byte 0x802e25f8
-  .4byte 0x802e2604
+	.4byte 0x802e255c
+	.4byte 0x802e2588
+	.4byte 0x802e25e8
+	.4byte 0
+	.4byte 0x802e25f8
+	.4byte 0x802e2604
 .global __RTTI__19TAIkabekuiAStrategy
 __RTTI__19TAIkabekuiAStrategy:
-  .4byte 0x802e25d4
-  .4byte 0x802e2610
-  .4byte 0x414e6f64
-  .4byte 0x65000000
-  .4byte 0x803e6b48
-  .4byte 0
-  .4byte 0x802e2664
-  .4byte 0x802e2670
-  .4byte 0x4e6f6465
-  .4byte 0
-  .4byte 0x803e6b60
-  .4byte 0x802e267c
-  .4byte 0x802e2690
-  .4byte 0x802e26a0
+	.4byte 0x802e25d4
+	.4byte 0x802e2610
+	.4byte 0x414e6f64
+	.4byte 0x65000000
+	.4byte 0x803e6b48
+	.4byte 0
+	.4byte 0x802e2664
+	.4byte 0x802e2670
+	.4byte 0x4e6f6465
+	.4byte 0
+	.4byte 0x803e6b60
+	.4byte 0x802e267c
+	.4byte 0x802e2690
+	.4byte 0x802e26a0
 .global __RTTI__21TAIkabekuiAParameters
 __RTTI__21TAIkabekuiAParameters:
-  .4byte 0x802e264c
-  .4byte 0x802e26bc
+	.4byte 0x802e264c
+	.4byte 0x802e26bc
 .global lbl_803E6B80
 lbl_803E6B80:
 	.4byte 0x3F800000
@@ -20388,64 +20388,64 @@ lbl_803E6B94:
 	.4byte 0x00000000
 .global __RTTI__20TAIkabekuiBAnimation
 __RTTI__20TAIkabekuiBAnimation:
-  .4byte 0x802e2918
-  .4byte 0x802e2940
-  .4byte 0x802e2968
-  .4byte 0
-  .4byte 0x802e29e8
-  .4byte 0x802e29fc
+	.4byte 0x802e2918
+	.4byte 0x802e2940
+	.4byte 0x802e2968
+	.4byte 0
+	.4byte 0x802e29e8
+	.4byte 0x802e29fc
 .global __RTTI__17TAIAsleepKabekuiB
 __RTTI__17TAIAsleepKabekuiB:
-  .4byte 0x802e29d4
-  .4byte 0x802e2a08
+	.4byte 0x802e29d4
+	.4byte 0x802e2a08
 .global __RTTI__16TAIAdiveKabekuiB
 __RTTI__16TAIAdiveKabekuiB:
-  .4byte 0x802e2a3c
-  .4byte 0x802e2a50
-  .4byte 0x802e2ac4
-  .4byte 0x802e2ad8
+	.4byte 0x802e2a3c
+	.4byte 0x802e2a50
+	.4byte 0x802e2ac4
+	.4byte 0x802e2ad8
 .global __RTTI__20TAIAattackWorkObject_2
 __RTTI__20TAIAattackWorkObject_2:
-  .4byte 0x802e2ae4
-  .4byte 0x802e2afc
+	.4byte 0x802e2ae4
+	.4byte 0x802e2afc
 .global __RTTI__28TAIAattackWorkObjectKabekuiB
 __RTTI__28TAIAattackWorkObjectKabekuiB:
-  .4byte 0x802e2aa4
-  .4byte 0x802e2b10
+	.4byte 0x802e2aa4
+	.4byte 0x802e2b10
 .global __RTTI__18TAIAbiteForKabekui_1
 __RTTI__18TAIAbiteForKabekui_1:
-  .4byte 0x802e2be0
-  .4byte 0x802e2bf4
+	.4byte 0x802e2be0
+	.4byte 0x802e2bf4
 .global __RTTI__19TAIAbiteForKabekuiB
 __RTTI__19TAIAbiteForKabekuiB:
-  .4byte 0x802e2bcc
-  .4byte 0x802e2c08
-  .4byte 0x802e2c5c
-  .4byte 0x802e2c68
-  .4byte 0x802e2cd4
-  .4byte 0
-  .4byte 0x802e2ce4
-  .4byte 0x802e2cf0
+	.4byte 0x802e2bcc
+	.4byte 0x802e2c08
+	.4byte 0x802e2c5c
+	.4byte 0x802e2c68
+	.4byte 0x802e2cd4
+	.4byte 0
+	.4byte 0x802e2ce4
+	.4byte 0x802e2cf0
 .global __RTTI__19TAIkabekuiBStrategy
 __RTTI__19TAIkabekuiBStrategy:
-  .4byte 0x802e2cc0
-  .4byte 0x802e2cfc
-  .4byte 0x414e6f64
-  .4byte 0x65000000
-  .4byte 0x803e6c10
-  .4byte 0
-  .4byte 0x802e2d50
-  .4byte 0x802e2d5c
-  .4byte 0x4e6f6465
-  .4byte 0
-  .4byte 0x803e6c28
-  .4byte 0x802e2d68
-  .4byte 0x802e2d7c
-  .4byte 0x802e2d8c
+	.4byte 0x802e2cc0
+	.4byte 0x802e2cfc
+	.4byte 0x414e6f64
+	.4byte 0x65000000
+	.4byte 0x803e6c10
+	.4byte 0
+	.4byte 0x802e2d50
+	.4byte 0x802e2d5c
+	.4byte 0x4e6f6465
+	.4byte 0
+	.4byte 0x803e6c28
+	.4byte 0x802e2d68
+	.4byte 0x802e2d7c
+	.4byte 0x802e2d8c
 .global __RTTI__21TAIkabekuiBParameters
 __RTTI__21TAIkabekuiBParameters:
-  .4byte 0x802e2d38
-  .4byte 0x802e2da8
+	.4byte 0x802e2d38
+	.4byte 0x802e2da8
 .global lbl_803E6C48
 lbl_803E6C48:
 	.4byte 0x3F800000
@@ -20477,171 +20477,171 @@ lbl_803E6C68:
 	.4byte 0x00000000
 .global __RTTI__20TAIkabekuiCAnimation
 __RTTI__20TAIkabekuiCAnimation:
-  .4byte 0x802e308c
-  .4byte 0x802e30b4
-  .4byte 0x802e30dc
-  .4byte 0
-  .4byte 0x802e315c
-  .4byte 0x802e3170
+	.4byte 0x802e308c
+	.4byte 0x802e30b4
+	.4byte 0x802e30dc
+	.4byte 0
+	.4byte 0x802e315c
+	.4byte 0x802e3170
 .global __RTTI__17TAIAsleepKabekuiC
 __RTTI__17TAIAsleepKabekuiC:
-  .4byte 0x802e3148
-  .4byte 0x802e317c
+	.4byte 0x802e3148
+	.4byte 0x802e317c
 .global __RTTI__16TAIAdiveKabekuiC
 __RTTI__16TAIAdiveKabekuiC:
-  .4byte 0x802e31b0
-  .4byte 0x802e31c4
-  .4byte 0x802e3238
-  .4byte 0x802e324c
+	.4byte 0x802e31b0
+	.4byte 0x802e31c4
+	.4byte 0x802e3238
+	.4byte 0x802e324c
 .global __RTTI__20TAIAattackWorkObject_3
 __RTTI__20TAIAattackWorkObject_3:
-  .4byte 0x802e3258
-  .4byte 0x802e3270
+	.4byte 0x802e3258
+	.4byte 0x802e3270
 .global __RTTI__28TAIAattackWorkObjectKabekuiC
 __RTTI__28TAIAattackWorkObjectKabekuiC:
-  .4byte 0x802e3218
-  .4byte 0x802e3284
+	.4byte 0x802e3218
+	.4byte 0x802e3284
 .global __RTTI__19TAIAlandingKabekuiC
 __RTTI__19TAIAlandingKabekuiC:
-  .4byte 0x802e3340
-  .4byte 0x802e3354
+	.4byte 0x802e3340
+	.4byte 0x802e3354
 .global __RTTI__13TAIAjudgeLife_1
 __RTTI__13TAIAjudgeLife_1:
-  .4byte 0x802e339c
-  .4byte 0x802e33ac
+	.4byte 0x802e339c
+	.4byte 0x802e33ac
 .global __RTTI__12TAIAmoreLife_1
 __RTTI__12TAIAmoreLife_1:
-  .4byte 0x802e33b8
-  .4byte 0x802e33c8
+	.4byte 0x802e33b8
+	.4byte 0x802e33c8
 .global __RTTI__20TAIAmoreLifeKabekuiC
 __RTTI__20TAIAmoreLifeKabekuiC:
-  .4byte 0x802e3384
-  .4byte 0x802e33dc
+	.4byte 0x802e3384
+	.4byte 0x802e33dc
 .global __RTTI__22TAIAhitCheckFlyingPiki_1
 __RTTI__22TAIAhitCheckFlyingPiki_1:
-  .4byte 0x802e3434
-  .4byte 0x802e344c
+	.4byte 0x802e3434
+	.4byte 0x802e344c
 .global __RTTI__24TAIAcheckPikiFlyKabekuiC
 __RTTI__24TAIAcheckPikiFlyKabekuiC:
-  .4byte 0x802e3418
-  .4byte 0x802e3458
+	.4byte 0x802e3418
+	.4byte 0x802e3458
 .global __RTTI__24TAIAflyingMotionKabekuiC
 __RTTI__24TAIAflyingMotionKabekuiC:
-  .4byte 0x802e3488
-  .4byte 0x802e34a4
+	.4byte 0x802e3488
+	.4byte 0x802e34a4
 .global __RTTI__14TAIAflyingBase_2
 __RTTI__14TAIAflyingBase_2:
-  .4byte 0x802e34ec
-  .4byte 0x802e34fc
+	.4byte 0x802e34ec
+	.4byte 0x802e34fc
 .global __RTTI__22TAIAflyingBaseKabekuiC
 __RTTI__22TAIAflyingBaseKabekuiC:
-  .4byte 0x802e34d4
-  .4byte 0x802e3508
-  .4byte 0x802e3554
-  .4byte 0
+	.4byte 0x802e34d4
+	.4byte 0x802e3508
+	.4byte 0x802e3554
+	.4byte 0
 .global "__RTTI__Q29@unnamed@12rippleEffect"
 "__RTTI__Q29@unnamed@12rippleEffect":
-  .4byte 0x802e353c
-  .4byte 0x802e3580
+	.4byte 0x802e353c
+	.4byte 0x802e3580
 .global __RTTI__19TAIAtakeOffKabekuiC
 __RTTI__19TAIAtakeOffKabekuiC:
-  .4byte 0x802e35a4
-  .4byte 0x802e35b8
+	.4byte 0x802e35a4
+	.4byte 0x802e35b8
 .global __RTTI__12TAIAlessLife_1
 __RTTI__12TAIAlessLife_1:
-  .4byte 0x802e3600
-  .4byte 0x802e3610
+	.4byte 0x802e3600
+	.4byte 0x802e3610
 .global __RTTI__20TAIAlessLifeKabekuiC
 __RTTI__20TAIAlessLifeKabekuiC:
-  .4byte 0x802e35e8
-  .4byte 0x802e3624
+	.4byte 0x802e35e8
+	.4byte 0x802e3624
 .global __RTTI__18TAIAbiteForKabekui_2
 __RTTI__18TAIAbiteForKabekui_2:
-  .4byte 0x802e3694
-  .4byte 0x802e36a8
+	.4byte 0x802e3694
+	.4byte 0x802e36a8
 .global __RTTI__19TAIAbiteForKabekuiC
 __RTTI__19TAIAbiteForKabekuiC:
-  .4byte 0x802e3680
-  .4byte 0x802e36bc
-  .4byte 0x802e3710
-  .4byte 0x802e371c
-  .4byte 0x802e3788
-  .4byte 0
-  .4byte 0x802e3798
-  .4byte 0x802e37a4
+	.4byte 0x802e3680
+	.4byte 0x802e36bc
+	.4byte 0x802e3710
+	.4byte 0x802e371c
+	.4byte 0x802e3788
+	.4byte 0
+	.4byte 0x802e3798
+	.4byte 0x802e37a4
 .global __RTTI__19TAIkabekuiCStrategy
 __RTTI__19TAIkabekuiCStrategy:
-  .4byte 0x802e3774
-  .4byte 0x802e37b0
-  .4byte 0x414e6f64
-  .4byte 0x65000000
-  .4byte 0x803e6d54
-  .4byte 0
-  .4byte 0x802e3804
-  .4byte 0x802e3810
-  .4byte 0x4e6f6465
-  .4byte 0
-  .4byte 0x803e6d6c
-  .4byte 0x802e381c
-  .4byte 0x802e3830
-  .4byte 0x802e3840
+	.4byte 0x802e3774
+	.4byte 0x802e37b0
+	.4byte 0x414e6f64
+	.4byte 0x65000000
+	.4byte 0x803e6d54
+	.4byte 0
+	.4byte 0x802e3804
+	.4byte 0x802e3810
+	.4byte 0x4e6f6465
+	.4byte 0
+	.4byte 0x803e6d6c
+	.4byte 0x802e381c
+	.4byte 0x802e3830
+	.4byte 0x802e3840
 .global __RTTI__21TAIkabekuiCParameters
 __RTTI__21TAIkabekuiCParameters:
-  .4byte 0x802e37ec
-  .4byte 0x802e385c
-  .4byte 0
-  .4byte 0x802e3a78
-  .4byte 0
+	.4byte 0x802e37ec
+	.4byte 0x802e385c
+	.4byte 0
+	.4byte 0x802e3a78
+	.4byte 0
 .global __RTTI__18TAItamagoAnimation
 __RTTI__18TAItamagoAnimation:
-  .4byte 0x802e3a64
-  .4byte 0x802e3a88
-  .4byte 0x802e3ab8
-  .4byte 0
+	.4byte 0x802e3a64
+	.4byte 0x802e3a88
+	.4byte 0x802e3ab8
+	.4byte 0
 .global __RTTI__20TAIAcountStartTamago
 __RTTI__20TAIAcountStartTamago:
-  .4byte 0x802e3aa0
-  .4byte 0x802e3ac4
-  .4byte 0x802e3af8
-  .4byte 0x802e3b04
+	.4byte 0x802e3aa0
+	.4byte 0x802e3ac4
+	.4byte 0x802e3af8
+	.4byte 0x802e3b04
 .global __RTTI__9TAIAhatch
 __RTTI__9TAIAhatch:
-  .4byte 0x802e3aec
-  .4byte 0x802e3b10
-  .4byte 0x802e3b58
-  .4byte 0x802e3b6c
+	.4byte 0x802e3aec
+	.4byte 0x802e3b10
+	.4byte 0x802e3b58
+	.4byte 0x802e3b6c
 .global __RTTI__23TAIAtimerReactionTamago
 __RTTI__23TAIAtimerReactionTamago:
-  .4byte 0x802e3b40
-  .4byte 0x802e3b78
+	.4byte 0x802e3b40
+	.4byte 0x802e3b78
 .global __RTTI__15TAIAdyingTamago
 __RTTI__15TAIAdyingTamago:
-  .4byte 0x802e3bcc
-  .4byte 0x802e3bdc
-  .4byte 0x802e3c3c
-  .4byte 0
-  .4byte 0x802e3c4c
-  .4byte 0x802e3c58
+	.4byte 0x802e3bcc
+	.4byte 0x802e3bdc
+	.4byte 0x802e3c3c
+	.4byte 0
+	.4byte 0x802e3c4c
+	.4byte 0x802e3c58
 .global __RTTI__17TAItamagoStrategy
 __RTTI__17TAItamagoStrategy:
-  .4byte 0x802e3c28
-  .4byte 0x802e3c64
-  .4byte 0x414e6f64
-  .4byte 0x65000000
-  .4byte 0x803e6df0
-  .4byte 0
-  .4byte 0x802e3cb4
-  .4byte 0x802e3cc0
-  .4byte 0x4e6f6465
-  .4byte 0
-  .4byte 0x803e6e08
-  .4byte 0x802e3ccc
-  .4byte 0x802e3ce0
-  .4byte 0x802e3cf0
+	.4byte 0x802e3c28
+	.4byte 0x802e3c64
+	.4byte 0x414e6f64
+	.4byte 0x65000000
+	.4byte 0x803e6df0
+	.4byte 0
+	.4byte 0x802e3cb4
+	.4byte 0x802e3cc0
+	.4byte 0x4e6f6465
+	.4byte 0
+	.4byte 0x803e6e08
+	.4byte 0x802e3ccc
+	.4byte 0x802e3ce0
+	.4byte 0x802e3cf0
 .global __RTTI__19TAItamagoParameters
 __RTTI__19TAItamagoParameters:
-  .4byte 0x802e3ca0
-  .4byte 0x802e3d0c
+	.4byte 0x802e3ca0
+	.4byte 0x802e3d0c
 .global lbl_803E6E28
 lbl_803E6E28:
 	.4byte 0x00000000
@@ -20682,108 +20682,108 @@ lbl_803E6E54:
 	.4byte 0x00000000
 .global __RTTI__18TAIdororoAnimation
 __RTTI__18TAIdororoAnimation:
-  .4byte 0x802e3f68
-  .4byte 0x802e3f8c
-  .4byte 0x802e3fb8
-  .4byte 0
-  .4byte 0x802e3fc8
-  .4byte 0x802e3fd4
+	.4byte 0x802e3f68
+	.4byte 0x802e3f8c
+	.4byte 0x802e3fb8
+	.4byte 0
+	.4byte 0x802e3fc8
+	.4byte 0x802e3fd4
 .global __RTTI__17TAIdororoStrategy
 __RTTI__17TAIdororoStrategy:
-  .4byte 0x802e3fa4
-  .4byte 0x802e3fe0
-  .4byte 0x802e4030
-  .4byte 0
+	.4byte 0x802e3fa4
+	.4byte 0x802e3fe0
+	.4byte 0x802e4030
+	.4byte 0
 .global __RTTI__17TAIAgravityDororo
 __RTTI__17TAIAgravityDororo:
-  .4byte 0x802e401c
-  .4byte 0x802e403c
+	.4byte 0x802e401c
+	.4byte 0x802e403c
 .global __RTTI__19TAIAcheckBarkDororo
 __RTTI__19TAIAcheckBarkDororo:
-  .4byte 0x802e4064
-  .4byte 0x802e4078
-  .4byte 0x802e40b0
-  .4byte 0x802e40c4
+	.4byte 0x802e4064
+	.4byte 0x802e4078
+	.4byte 0x802e40b0
+	.4byte 0x802e40c4
 .global __RTTI__14TAIAmotionLoop_3
 __RTTI__14TAIAmotionLoop_3:
-  .4byte 0x802e40d0
-  .4byte 0x802e40e0
+	.4byte 0x802e40d0
+	.4byte 0x802e40e0
 .global __RTTI__14TAIAbarkDororo
 __RTTI__14TAIAbarkDororo:
-  .4byte 0x802e40a0
-  .4byte 0x802e40f4
+	.4byte 0x802e40a0
+	.4byte 0x802e40f4
 .global __RTTI__24TAIAtransformationDororo
 __RTTI__24TAIAtransformationDororo:
-  .4byte 0x802e4168
-  .4byte 0x802e4184
+	.4byte 0x802e4168
+	.4byte 0x802e4184
 .global __RTTI__15TAIAbirthDororo
 __RTTI__15TAIAbirthDororo:
-  .4byte 0x802e41b4
-  .4byte 0x802e41c4
+	.4byte 0x802e41b4
+	.4byte 0x802e41c4
 .global __RTTI__27TAIAgoTargetPriorityFaceDir_1
 __RTTI__27TAIAgoTargetPriorityFaceDir_1:
-  .4byte 0x802e4208
-  .4byte 0x802e4224
+	.4byte 0x802e4208
+	.4byte 0x802e4224
 .global __RTTI__16TAIAgoTargetPiki
 __RTTI__16TAIAgoTargetPiki:
-  .4byte 0x802e41f4
-  .4byte 0x802e4238
+	.4byte 0x802e41f4
+	.4byte 0x802e4238
 .global __RTTI__8TAIAwait_1
 __RTTI__8TAIAwait_1:
-  .4byte 0x802e42c0
-  .4byte 0x802e42cc
+	.4byte 0x802e42c0
+	.4byte 0x802e42cc
 .global __RTTI__14TAIAwaitDororo
 __RTTI__14TAIAwaitDororo:
-  .4byte 0x802e42b0
-  .4byte 0x802e42e0
-  .4byte 0x802e4330
-  .4byte 0x802e433c
-  .4byte 0x802e4348
-  .4byte 0x802e4358
+	.4byte 0x802e42b0
+	.4byte 0x802e42e0
+	.4byte 0x802e4330
+	.4byte 0x802e433c
+	.4byte 0x802e4348
+	.4byte 0x802e4358
 .global __RTTI__18TAIAflickingDororo
 __RTTI__18TAIAflickingDororo:
-  .4byte 0x802e431c
-  .4byte 0x802e436c
+	.4byte 0x802e431c
+	.4byte 0x802e436c
 .global __RTTI__14TAIAgoGoalPath_1
 __RTTI__14TAIAgoGoalPath_1:
-  .4byte 0x802e43c4
-  .4byte 0x802e43d4
+	.4byte 0x802e43c4
+	.4byte 0x802e43d4
 .global __RTTI__20TAIAgoGoalPathDororo
 __RTTI__20TAIAgoGoalPathDororo:
-  .4byte 0x802e43ac
-  .4byte 0x802e43f0
-  .4byte 0x802e4448
-  .4byte 0
+	.4byte 0x802e43ac
+	.4byte 0x802e43f0
+	.4byte 0x802e4448
+	.4byte 0
 .global __RTTI__17TAIAkillTouchPiki
 __RTTI__17TAIAkillTouchPiki:
-  .4byte 0x802e4478
-  .4byte 0x802e448c
-  .4byte 0x802e44c4
-  .4byte 0x802e44d0
+	.4byte 0x802e4478
+	.4byte 0x802e448c
+	.4byte 0x802e44c4
+	.4byte 0x802e44d0
 .global __RTTI__15TAIAdyingDororo
 __RTTI__15TAIAdyingDororo:
-  .4byte 0x802e44b4
-  .4byte 0x802e44e4
+	.4byte 0x802e44b4
+	.4byte 0x802e44e4
 .global __RTTI__14TAIAinitDororo
 __RTTI__14TAIAinitDororo:
-  .4byte 0x802e451c
-  .4byte 0x802e452c
-  .4byte 0x414e6f64
-  .4byte 0x65000000
-  .4byte 0x803e6f30
-  .4byte 0
-  .4byte 0x802e4584
-  .4byte 0x802e4590
-  .4byte 0x4e6f6465
-  .4byte 0
-  .4byte 0x803e6f48
-  .4byte 0x802e459c
-  .4byte 0x802e45b0
-  .4byte 0x802e45c0
+	.4byte 0x802e451c
+	.4byte 0x802e452c
+	.4byte 0x414e6f64
+	.4byte 0x65000000
+	.4byte 0x803e6f30
+	.4byte 0
+	.4byte 0x802e4584
+	.4byte 0x802e4590
+	.4byte 0x4e6f6465
+	.4byte 0
+	.4byte 0x803e6f48
+	.4byte 0x802e459c
+	.4byte 0x802e45b0
+	.4byte 0x802e45c0
 .global __RTTI__19TAIdororoParameters
 __RTTI__19TAIdororoParameters:
-  .4byte 0x802e4570
-  .4byte 0x802e45dc
+	.4byte 0x802e4570
+	.4byte 0x802e45dc
 .global lbl_803E6F68
 lbl_803E6F68:
 	.4byte 0x43A50000
@@ -20791,57 +20791,57 @@ lbl_803E6F68:
 	.4byte 0x00000000
 .global __RTTI__17TAIhibaAAnimation
 __RTTI__17TAIhibaAAnimation:
-  .4byte 0x802e47c8
-  .4byte 0x802e47ec
-  .4byte 0x802e4818
-  .4byte 0
-  .4byte 0x802e4828
-  .4byte 0x802e4834
+	.4byte 0x802e47c8
+	.4byte 0x802e47ec
+	.4byte 0x802e4818
+	.4byte 0
+	.4byte 0x802e4828
+	.4byte 0x802e4834
 .global __RTTI__16TAIhibaAStrategy
 __RTTI__16TAIhibaAStrategy:
-  .4byte 0x802e4804
-  .4byte 0x802e4840
-  .4byte 0x802e4890
-  .4byte 0
-  .4byte 0x802e489c
-  .4byte 0x802e48b0
+	.4byte 0x802e4804
+	.4byte 0x802e4840
+	.4byte 0x802e4890
+	.4byte 0
+	.4byte 0x802e489c
+	.4byte 0x802e48b0
 .global __RTTI__19TAIAfireAttackHibaA
 __RTTI__19TAIAfireAttackHibaA:
-  .4byte 0x802e487c
-  .4byte 0x802e48bc
-  .4byte 0x802e4904
-  .4byte 0x802e4918
+	.4byte 0x802e487c
+	.4byte 0x802e48bc
+	.4byte 0x802e4904
+	.4byte 0x802e4918
 .global __RTTI__22TAIAtimerReactionHibaA
 __RTTI__22TAIAtimerReactionHibaA:
-  .4byte 0x802e48ec
-  .4byte 0x802e4924
+	.4byte 0x802e48ec
+	.4byte 0x802e4924
 .global __RTTI__13TAIAinitHibaA
 __RTTI__13TAIAinitHibaA:
-  .4byte 0x802e4978
-  .4byte 0x802e4988
-  .4byte 0x414e6f64
-  .4byte 0x65000000
-  .4byte 0x803e6fc4
-  .4byte 0
-  .4byte 0x802e49e0
-  .4byte 0x802e49ec
-  .4byte 0x4e6f6465
-  .4byte 0
-  .4byte 0x803e6fdc
-  .4byte 0x802e49f8
-  .4byte 0x802e4a0c
-  .4byte 0x802e4a1c
+	.4byte 0x802e4978
+	.4byte 0x802e4988
+	.4byte 0x414e6f64
+	.4byte 0x65000000
+	.4byte 0x803e6fc4
+	.4byte 0
+	.4byte 0x802e49e0
+	.4byte 0x802e49ec
+	.4byte 0x4e6f6465
+	.4byte 0
+	.4byte 0x803e6fdc
+	.4byte 0x802e49f8
+	.4byte 0x802e4a0c
+	.4byte 0x802e4a1c
 .global __RTTI__18TAIhibaAParameters
 __RTTI__18TAIhibaAParameters:
-  .4byte 0x802e49cc
-  .4byte 0x802e4a38
-  .4byte 0x802e4ab0
-  .4byte 0
+	.4byte 0x802e49cc
+	.4byte 0x802e4a38
+	.4byte 0x802e4ab0
+	.4byte 0
 .global __RTTI__33TAIeffectAttackEventCallBackHibaA
 __RTTI__33TAIeffectAttackEventCallBackHibaA:
-  .4byte 0x802e4a8c
-  .4byte 0x802e4ad0
-  .4byte 0
+	.4byte 0x802e4a8c
+	.4byte 0x802e4ad0
+	.4byte 0
 .global RUMBLE_NONE__18TAIAeffCloudOfDust
 RUMBLE_NONE__18TAIAeffCloudOfDust:
 	.4byte 0xFFFFFFFF
@@ -20854,150 +20854,150 @@ RUMBLE_NONE__18TAIAeffCloudOfDust:
 	.4byte 0x00000000
 .global __RTTI__18TAImiurinAnimation
 __RTTI__18TAImiurinAnimation:
-  .4byte 0x802e4dec
-  .4byte 0x802e4e10
-  .4byte 0x802e4e3c
-  .4byte 0
-  .4byte 0x802e4e4c
-  .4byte 0x802e4e58
+	.4byte 0x802e4dec
+	.4byte 0x802e4e10
+	.4byte 0x802e4e3c
+	.4byte 0
+	.4byte 0x802e4e4c
+	.4byte 0x802e4e58
 .global __RTTI__17TAImiurinStrategy
 __RTTI__17TAImiurinStrategy:
-  .4byte 0x802e4e28
-  .4byte 0x802e4e64
-  .4byte 0x802e4eb4
-  .4byte 0
-  .4byte 0x802e4ec0
-  .4byte 0x802e4ed4
+	.4byte 0x802e4e28
+	.4byte 0x802e4e64
+	.4byte 0x802e4eb4
+	.4byte 0
+	.4byte 0x802e4ec0
+	.4byte 0x802e4ed4
 .global __RTTI__16TAIAgroggyMiurin
 __RTTI__16TAIAgroggyMiurin:
-  .4byte 0x802e4ea0
-  .4byte 0x802e4ee0
+	.4byte 0x802e4ea0
+	.4byte 0x802e4ee0
 .global __RTTI__24TAIAresetAnimSpeedMiurin
 __RTTI__24TAIAresetAnimSpeedMiurin:
-  .4byte 0x802e4f10
-  .4byte 0x802e4f2c
-  .4byte 0x802e4f64
-  .4byte 0x802e4f70
+	.4byte 0x802e4f10
+	.4byte 0x802e4f2c
+	.4byte 0x802e4f64
+	.4byte 0x802e4f70
 .global __RTTI__15TAIAangryMiurin
 __RTTI__15TAIAangryMiurin:
-  .4byte 0x802e4f54
-  .4byte 0x802e4f7c
+	.4byte 0x802e4f54
+	.4byte 0x802e4f7c
 .global __RTTI__28TAIAinsideTerritoryRangeNavi_1
 __RTTI__28TAIAinsideTerritoryRangeNavi_1:
-  .4byte 0x802e4ffc
-  .4byte 0x802e501c
+	.4byte 0x802e4ffc
+	.4byte 0x802e501c
 .global __RTTI__19TAIAcheckNaviMiurin
 __RTTI__19TAIAcheckNaviMiurin:
-  .4byte 0x802e4fe8
-  .4byte 0x802e5028
+	.4byte 0x802e4fe8
+	.4byte 0x802e5028
 .global __RTTI__21TAIAcheckFlowerPikmin
 __RTTI__21TAIAcheckFlowerPikmin:
-  .4byte 0x802e5058
-  .4byte 0x802e5070
+	.4byte 0x802e5058
+	.4byte 0x802e5070
 .global __RTTI__17TAIAsatisfyMiurin
 __RTTI__17TAIAsatisfyMiurin:
-  .4byte 0x802e5098
-  .4byte 0x802e50ac
+	.4byte 0x802e5098
+	.4byte 0x802e50ac
 .global __RTTI__19TAIAwatchNaviMiurin
 __RTTI__19TAIAwatchNaviMiurin:
-  .4byte 0x802e50dc
-  .4byte 0x802e50f0
+	.4byte 0x802e50dc
+	.4byte 0x802e50f0
 .global __RTTI__20TAIAoutsideTerritory_1
 __RTTI__20TAIAoutsideTerritory_1:
-  .4byte 0x802e5174
-  .4byte 0x802e518c
+	.4byte 0x802e5174
+	.4byte 0x802e518c
 .global __RTTI__26TAIAoutsideTerritoryMiurin
 __RTTI__26TAIAoutsideTerritoryMiurin:
-  .4byte 0x802e5158
-  .4byte 0x802e5198
+	.4byte 0x802e5158
+	.4byte 0x802e5198
 .global __RTTI__25TAIAflickingReserveMotion_1
 __RTTI__25TAIAflickingReserveMotion_1:
-  .4byte 0x802e51f8
-  .4byte 0x802e5214
+	.4byte 0x802e51f8
+	.4byte 0x802e5214
 .global __RTTI__18TAIAflickingMiurin
 __RTTI__18TAIAflickingMiurin:
-  .4byte 0x802e51e4
-  .4byte 0x802e5228
-  .4byte 0x802e5280
-  .4byte 0x802e5290
+	.4byte 0x802e51e4
+	.4byte 0x802e5228
+	.4byte 0x802e5280
+	.4byte 0x802e5290
 .global __RTTI__20TAIAflickCheckMiurin
 __RTTI__20TAIAflickCheckMiurin:
-  .4byte 0x802e5268
-  .4byte 0x802e529c
+	.4byte 0x802e5268
+	.4byte 0x802e529c
 .global __RTTI__16TAIAstickingPiki_2
 __RTTI__16TAIAstickingPiki_2:
-  .4byte 0x802e52e8
-  .4byte 0x802e52fc
+	.4byte 0x802e52e8
+	.4byte 0x802e52fc
 .global __RTTI__22TAIAstickingPikiMiurin
 __RTTI__22TAIAstickingPikiMiurin:
-  .4byte 0x802e52d0
-  .4byte 0x802e5308
+	.4byte 0x802e52d0
+	.4byte 0x802e5308
 .global __RTTI__22TAIAcheckSatisfyMiurin
 __RTTI__22TAIAcheckSatisfyMiurin:
-  .4byte 0x802e5374
-  .4byte 0x802e538c
+	.4byte 0x802e5374
+	.4byte 0x802e538c
 .global __RTTI__16TAIAattackMiurin
 __RTTI__16TAIAattackMiurin:
-  .4byte 0x802e53b4
-  .4byte 0x802e53c8
+	.4byte 0x802e53b4
+	.4byte 0x802e53c8
 .global __RTTI__17TAIAattackPosture
 __RTTI__17TAIAattackPosture:
-  .4byte 0x802e53f8
-  .4byte 0x802e540c
+	.4byte 0x802e53f8
+	.4byte 0x802e540c
 .global __RTTI__20TAIAattackableTarget_2
 __RTTI__20TAIAattackableTarget_2:
-  .4byte 0x802e5458
-  .4byte 0x802e5470
+	.4byte 0x802e5458
+	.4byte 0x802e5470
 .global __RTTI__26TAIAattackableTargetMiurin
 __RTTI__26TAIAattackableTargetMiurin:
-  .4byte 0x802e543c
-  .4byte 0x802e547c
+	.4byte 0x802e543c
+	.4byte 0x802e547c
 .global __RTTI__33TAIAapproachTargetPriorityFaceDir_1
 __RTTI__33TAIAapproachTargetPriorityFaceDir_1:
-  .4byte 0x802e54d8
-  .4byte 0x802e54fc
+	.4byte 0x802e54d8
+	.4byte 0x802e54fc
 .global __RTTI__39TAIAapproachTargetPriorityFaceDirMiurin
 __RTTI__39TAIAapproachTargetPriorityFaceDirMiurin:
-  .4byte 0x802e54b0
-  .4byte 0x802e5510
+	.4byte 0x802e54b0
+	.4byte 0x802e5510
 .global __RTTI__16TAIAturnToTarget_2
 __RTTI__16TAIAturnToTarget_2:
-  .4byte 0x802e5568
-  .4byte 0x802e557c
+	.4byte 0x802e5568
+	.4byte 0x802e557c
 .global __RTTI__21TAIAturnFocusCreature_1
 __RTTI__21TAIAturnFocusCreature_1:
-  .4byte 0x802e5590
-  .4byte 0x802e55a8
+	.4byte 0x802e5590
+	.4byte 0x802e55a8
 .global __RTTI__27TAIAturnFocusCreatureMiurin
 __RTTI__27TAIAturnFocusCreatureMiurin:
-  .4byte 0x802e554c
-  .4byte 0x802e55c4
-  .4byte 0x802e5618
-  .4byte 0x802e5624
+	.4byte 0x802e554c
+	.4byte 0x802e55c4
+	.4byte 0x802e5618
+	.4byte 0x802e5624
 .global __RTTI__15TAIAdyingMiurin
 __RTTI__15TAIAdyingMiurin:
-  .4byte 0x802e5608
-  .4byte 0x802e5638
+	.4byte 0x802e5608
+	.4byte 0x802e5638
 .global __RTTI__14TAIAinitMiurin
 __RTTI__14TAIAinitMiurin:
-  .4byte 0x802e5670
-  .4byte 0x802e5680
-  .4byte 0x414e6f64
-  .4byte 0x65000000
-  .4byte 0x803e7150
-  .4byte 0
-  .4byte 0x802e56d8
-  .4byte 0x802e56e4
-  .4byte 0x4e6f6465
-  .4byte 0
-  .4byte 0x803e7168
-  .4byte 0x802e56f0
-  .4byte 0x802e5704
-  .4byte 0x802e5714
+	.4byte 0x802e5670
+	.4byte 0x802e5680
+	.4byte 0x414e6f64
+	.4byte 0x65000000
+	.4byte 0x803e7150
+	.4byte 0
+	.4byte 0x802e56d8
+	.4byte 0x802e56e4
+	.4byte 0x4e6f6465
+	.4byte 0
+	.4byte 0x803e7168
+	.4byte 0x802e56f0
+	.4byte 0x802e5704
+	.4byte 0x802e5714
 .global __RTTI__19TAImiurinParameters
 __RTTI__19TAImiurinParameters:
-  .4byte 0x802e56c4
-  .4byte 0x802e5730
+	.4byte 0x802e56c4
+	.4byte 0x802e5730
 .global lbl_803E7188
 lbl_803E7188:
 	.4byte 0x2A253032
@@ -21346,18 +21346,18 @@ lbl_803E7368:
 	.4byte 0x00000000
 .global "__RTTI__Q23zen12FigureTex<i>_2"
 "__RTTI__Q23zen12FigureTex<i>_2":
-  .4byte 0x802e5910
-  .4byte 0x802e5924
-  .4byte 0x802e5930
-  .4byte 0
-  .4byte 0x802e5944
-  .4byte 0
-  .4byte 0x802e5960
-  .4byte 0x802e5970
+	.4byte 0x802e5910
+	.4byte 0x802e5924
+	.4byte 0x802e5930
+	.4byte 0
+	.4byte 0x802e5944
+	.4byte 0
+	.4byte 0x802e5960
+	.4byte 0x802e5970
 .global "__RTTI__Q29@unnamed@24DrawWorldMapDateCallBack"
 "__RTTI__Q29@unnamed@24DrawWorldMapDateCallBack":
-  .4byte 0x802e59c0
-  .4byte 0x802e59e4
+	.4byte 0x802e59c0
+	.4byte 0x802e59e4
 .global lbl_803E73A0
 lbl_803E73A0:
 	.4byte 0x63642530
@@ -21408,98 +21408,98 @@ lbl_803E73EC:
 	.4byte 0x00000000
 .global __RTTI__17TAIusubaAnimation
 __RTTI__17TAIusubaAnimation:
-  .4byte 0x802e6568
-  .4byte 0x802e658c
-  .4byte 0x802e65b4
-  .4byte 0
-  .4byte 0x802e65c0
-  .4byte 0x802e65cc
+	.4byte 0x802e6568
+	.4byte 0x802e658c
+	.4byte 0x802e65b4
+	.4byte 0
+	.4byte 0x802e65c0
+	.4byte 0x802e65cc
 .global __RTTI__12TAIAflyUsuba
 __RTTI__12TAIAflyUsuba:
-  .4byte 0x802e65a4
-  .4byte 0x802e65d8
-  .4byte 0x802e6638
-  .4byte 0
-  .4byte 0x802e6648
-  .4byte 0x802e6654
+	.4byte 0x802e65a4
+	.4byte 0x802e65d8
+	.4byte 0x802e6638
+	.4byte 0
+	.4byte 0x802e6648
+	.4byte 0x802e6654
 .global __RTTI__16TAIusubaStrategy
 __RTTI__16TAIusubaStrategy:
-  .4byte 0x802e6624
-  .4byte 0x802e6660
-  .4byte 0x414e6f64
-  .4byte 0x65000000
-  .4byte 0x803e7430
-  .4byte 0
-  .4byte 0x802e66b0
-  .4byte 0x802e66bc
-  .4byte 0x4e6f6465
-  .4byte 0
-  .4byte 0x803e7448
-  .4byte 0x802e66c8
-  .4byte 0x802e66dc
-  .4byte 0x802e66ec
+	.4byte 0x802e6624
+	.4byte 0x802e6660
+	.4byte 0x414e6f64
+	.4byte 0x65000000
+	.4byte 0x803e7430
+	.4byte 0
+	.4byte 0x802e66b0
+	.4byte 0x802e66bc
+	.4byte 0x4e6f6465
+	.4byte 0
+	.4byte 0x803e7448
+	.4byte 0x802e66c8
+	.4byte 0x802e66dc
+	.4byte 0x802e66ec
 .global __RTTI__18TAIusubaParameters
 __RTTI__18TAIusubaParameters:
-  .4byte 0x802e669c
-  .4byte 0x802e6708
-  .4byte 0x802e691c
-  .4byte 0
+	.4byte 0x802e669c
+	.4byte 0x802e6708
+	.4byte 0x802e691c
+	.4byte 0
 .global __RTTI__17TAIotamaAnimation
 __RTTI__17TAIotamaAnimation:
-  .4byte 0x802e6908
-  .4byte 0x802e692c
-  .4byte 0x802e6958
-  .4byte 0
-  .4byte 0x802e6964
-  .4byte 0x802e6978
+	.4byte 0x802e6908
+	.4byte 0x802e692c
+	.4byte 0x802e6958
+	.4byte 0
+	.4byte 0x802e6964
+	.4byte 0x802e6978
 .global __RTTI__16TAIArunAwayOtama
 __RTTI__16TAIArunAwayOtama:
-  .4byte 0x802e6944
-  .4byte 0x802e6984
+	.4byte 0x802e6944
+	.4byte 0x802e6984
 .global __RTTI__25TAIAflickingReserveMotion_2
 __RTTI__25TAIAflickingReserveMotion_2:
-  .4byte 0x802e6a04
-  .4byte 0x802e6a20
+	.4byte 0x802e6a04
+	.4byte 0x802e6a20
 .global __RTTI__15TAIAappealOtama
 __RTTI__15TAIAappealOtama:
-  .4byte 0x802e69f4
-  .4byte 0x802e6a34
+	.4byte 0x802e69f4
+	.4byte 0x802e6a34
 .global __RTTI__30TAIAsetTargetPointCircleRandom_1
 __RTTI__30TAIAsetTargetPointCircleRandom_1:
-  .4byte 0x802e6a88
-  .4byte 0x802e6aa8
+	.4byte 0x802e6a88
+	.4byte 0x802e6aa8
 .global __RTTI__18TAIAsetTargetOtama
 __RTTI__18TAIAsetTargetOtama:
-  .4byte 0x802e6a74
-  .4byte 0x802e6ab4
+	.4byte 0x802e6a74
+	.4byte 0x802e6ab4
 .global __RTTI__13TAIAwaitOtama
 __RTTI__13TAIAwaitOtama:
-  .4byte 0x802e6ae4
-  .4byte 0x802e6af4
-  .4byte 0x802e6b54
-  .4byte 0
-  .4byte 0x802e6b64
-  .4byte 0x802e6b70
+	.4byte 0x802e6ae4
+	.4byte 0x802e6af4
+	.4byte 0x802e6b54
+	.4byte 0
+	.4byte 0x802e6b64
+	.4byte 0x802e6b70
 .global __RTTI__16TAIotamaStrategy
 __RTTI__16TAIotamaStrategy:
-  .4byte 0x802e6b40
-  .4byte 0x802e6b7c
-  .4byte 0x414e6f64
-  .4byte 0x65000000
-  .4byte 0x803e74d0
-  .4byte 0
-  .4byte 0x802e6bcc
-  .4byte 0x802e6bd8
-  .4byte 0x4e6f6465
-  .4byte 0
-  .4byte 0x803e74e8
-  .4byte 0x802e6be4
-  .4byte 0x802e6bf8
-  .4byte 0x802e6c08
+	.4byte 0x802e6b40
+	.4byte 0x802e6b7c
+	.4byte 0x414e6f64
+	.4byte 0x65000000
+	.4byte 0x803e74d0
+	.4byte 0
+	.4byte 0x802e6bcc
+	.4byte 0x802e6bd8
+	.4byte 0x4e6f6465
+	.4byte 0
+	.4byte 0x803e74e8
+	.4byte 0x802e6be4
+	.4byte 0x802e6bf8
+	.4byte 0x802e6c08
 .global __RTTI__18TAIotamaParameters
 __RTTI__18TAIotamaParameters:
-  .4byte 0x802e6bb8
-  .4byte 0x802e6c24
+	.4byte 0x802e6bb8
+	.4byte 0x802e6c24
 .global lbl_803E7508
 lbl_803E7508:
 	.4byte 0x00000000
@@ -21614,16 +21614,16 @@ lbl_803E759C:
 	.4byte 0x00000000
 .global __RTTI__Q23zen10DrawScreen_3
 __RTTI__Q23zen10DrawScreen_3:
-  .4byte 0x802e6d24
-  .4byte 0
+	.4byte 0x802e6d24
+	.4byte 0
 .global __RTTI__Q23zen12DrawMenuBase
 __RTTI__Q23zen12DrawMenuBase:
-  .4byte 0x802e6d34
-  .4byte 0x802e6d48
+	.4byte 0x802e6d34
+	.4byte 0x802e6d48
 .global __RTTI__Q23zen12DrawCMCSmenu
 __RTTI__Q23zen12DrawCMCSmenu:
-  .4byte 0x802e6d10
-  .4byte 0x802e6d54
+	.4byte 0x802e6d10
+	.4byte 0x802e6d54
 .global lbl_803E75B8
 lbl_803E75B8:
 	.4byte 0x00000000
@@ -21679,25 +21679,25 @@ lbl_803E760C:
 	.4byte 0x77000000
 .global __RTTI__Q23zen17DrawCMresultAlpha
 __RTTI__Q23zen17DrawCMresultAlpha:
-  .4byte 0x802e6f54
-  .4byte 0
+	.4byte 0x802e6f54
+	.4byte 0
 .global __RTTI__Q23zen17DrawCMresultGraph
 __RTTI__Q23zen17DrawCMresultGraph:
-  .4byte 0x802e6f3c
-  .4byte 0x802e6f6c
-  .4byte 0x802e6fac
-  .4byte 0
+	.4byte 0x802e6f3c
+	.4byte 0x802e6f6c
+	.4byte 0x802e6fac
+	.4byte 0
 .global "__RTTI__Q23zen12FigureTex<i>_3"
 "__RTTI__Q23zen12FigureTex<i>_3":
-  .4byte 0x802e6fbc
-  .4byte 0x802e6fd0
-  .4byte 0x802e6fdc
-  .4byte 0
-  .4byte 0x802e6ff0
-  .4byte 0
-  .4byte 0x802e700c
-  .4byte 0x802e701c
-  .4byte 0
+	.4byte 0x802e6fbc
+	.4byte 0x802e6fd0
+	.4byte 0x802e6fdc
+	.4byte 0
+	.4byte 0x802e6ff0
+	.4byte 0
+	.4byte 0x802e700c
+	.4byte 0x802e701c
+	.4byte 0
 .global lbl_803E7650
 lbl_803E7650:
 	.4byte 0x68652530
@@ -21719,13 +21719,13 @@ SELECT_CANCEL__Q23zen12DrawMenuBase:
 	.4byte 0xFFFFFFFF
 .global __RTTI__Q23zen10DrawScreen_4
 __RTTI__Q23zen10DrawScreen_4:
-  .4byte 0x802e70e4
-  .4byte 0
+	.4byte 0x802e70e4
+	.4byte 0
 .global __RTTI__Q23zen12DrawMenuBase_1
 __RTTI__Q23zen12DrawMenuBase_1:
-  .4byte 0x802e70d0
-  .4byte 0x802e70f4
-  .4byte 0
+	.4byte 0x802e70d0
+	.4byte 0x802e70f4
+	.4byte 0
 .global lbl_803E7688
 lbl_803E7688:
 	.4byte 0x705F2530

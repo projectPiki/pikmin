@@ -670,18 +670,18 @@ lbl_800FFF18:
 /* 800FFF18 000FCE78  80 7F 03 20 */	lwz r3, 0x320(r31)
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
-  .4byte 0x61695261
-  .4byte 0x6e646f6d
-  .4byte 0x426f6964
-  .4byte 0x2e637070
-  .4byte 0
-  .4byte 0x61695261
-  .4byte 0x6e646f6d
-  .4byte 0x426f6964
-  .4byte 0
-  .4byte 0x83898393
-  .4byte 0x835f8380
-  .4byte 0
+	.4byte 0x61695261
+	.4byte 0x6e646f6d
+	.4byte 0x426f6964
+	.4byte 0x2e637070
+	.4byte 0
+	.4byte 0x61695261
+	.4byte 0x6e646f6d
+	.4byte 0x426f6964
+	.4byte 0
+	.4byte 0x83898393
+	.4byte 0x835f8380
+	.4byte 0
 .global stateName
 stateName:
 	.4byte 0x802B76DC
@@ -705,85 +705,85 @@ stateName:
 	.4byte 0x00000000
 .global __vt__13ActRandomBoid
 __vt__13ActRandomBoid:
-  .4byte __RTTI__13ActRandomBoid
-  .4byte 0
-  .4byte "procMsg__15Receiver<4Piki>FP4PikiP3Msg"
-  .4byte "procBounceMsg__15Receiver<4Piki>FP4PikiP9MsgBounce"
-  .4byte "procStickMsg__15Receiver<4Piki>FP4PikiP8MsgStick"
-  .4byte "procHangMsg__15Receiver<4Piki>FP4PikiP7MsgHang"
-  .4byte "procTargetMsg__15Receiver<4Piki>FP4PikiP9MsgTarget"
-  .4byte "procCollideMsg__15Receiver<4Piki>FP4PikiP10MsgCollide"
-  .4byte "procAnimMsg__15Receiver<4Piki>FP4PikiP7MsgAnim"
-  .4byte "procDamageMsg__15Receiver<4Piki>FP4PikiP9MsgDamage"
-  .4byte "procWallMsg__15Receiver<4Piki>FP4PikiP7MsgWall"
-  .4byte "procOffWallMsg__15Receiver<4Piki>FP4PikiP10MsgOffWall"
-  .4byte "procUserMsg__15Receiver<4Piki>FP4PikiP7MsgUser"
-  .4byte "procGroundMsg__15Receiver<4Piki>FP4PikiP9MsgGround"
-  .4byte defaultInitialiser__6ActionFv
-  .4byte dump__6ActionFv
-  .4byte draw__6ActionFR8Graphics
-  .4byte __dt__13ActRandomBoidFv
-  .4byte init__13ActRandomBoidFP8Creature
-  .4byte exec__13ActRandomBoidFv
-  .4byte cleanup__13ActRandomBoidFv
-  .4byte resume__6ActionFv
-  .4byte restart__6ActionFv
-  .4byte resumable__6ActionFv
-  .4byte getInfo__13ActRandomBoidFPc
-  .4byte 0x41637452
-  .4byte 0x616e646f
-  .4byte 0x6d426f69
-  .4byte 0x643a3a49
-  .4byte 0x6e697469
-  .4byte 0x616c6973
-  .4byte 0x65720000
-  .4byte 0x41637469
-  .4byte 0x6f6e3a3a
-  .4byte 0x496e6974
-  .4byte 0x69616c69
-  .4byte 0x73657200
-  .4byte 0x803e078c
-  .4byte 0
-  .4byte 0
+	.4byte __RTTI__13ActRandomBoid
+	.4byte 0
+	.4byte "procMsg__15Receiver<4Piki>FP4PikiP3Msg"
+	.4byte "procBounceMsg__15Receiver<4Piki>FP4PikiP9MsgBounce"
+	.4byte "procStickMsg__15Receiver<4Piki>FP4PikiP8MsgStick"
+	.4byte "procHangMsg__15Receiver<4Piki>FP4PikiP7MsgHang"
+	.4byte "procTargetMsg__15Receiver<4Piki>FP4PikiP9MsgTarget"
+	.4byte "procCollideMsg__15Receiver<4Piki>FP4PikiP10MsgCollide"
+	.4byte "procAnimMsg__15Receiver<4Piki>FP4PikiP7MsgAnim"
+	.4byte "procDamageMsg__15Receiver<4Piki>FP4PikiP9MsgDamage"
+	.4byte "procWallMsg__15Receiver<4Piki>FP4PikiP7MsgWall"
+	.4byte "procOffWallMsg__15Receiver<4Piki>FP4PikiP10MsgOffWall"
+	.4byte "procUserMsg__15Receiver<4Piki>FP4PikiP7MsgUser"
+	.4byte "procGroundMsg__15Receiver<4Piki>FP4PikiP9MsgGround"
+	.4byte defaultInitialiser__6ActionFv
+	.4byte dump__6ActionFv
+	.4byte draw__6ActionFR8Graphics
+	.4byte __dt__13ActRandomBoidFv
+	.4byte init__13ActRandomBoidFP8Creature
+	.4byte exec__13ActRandomBoidFv
+	.4byte cleanup__13ActRandomBoidFv
+	.4byte resume__6ActionFv
+	.4byte restart__6ActionFv
+	.4byte resumable__6ActionFv
+	.4byte getInfo__13ActRandomBoidFPc
+	.4byte 0x41637452
+	.4byte 0x616e646f
+	.4byte 0x6d426f69
+	.4byte 0x643a3a49
+	.4byte 0x6e697469
+	.4byte 0x616c6973
+	.4byte 0x65720000
+	.4byte 0x41637469
+	.4byte 0x6f6e3a3a
+	.4byte 0x496e6974
+	.4byte 0x69616c69
+	.4byte 0x73657200
+	.4byte 0x803e078c
+	.4byte 0
+	.4byte 0
 .global __vt__Q213ActRandomBoid11Initialiser
 __vt__Q213ActRandomBoid11Initialiser:
-  .4byte __RTTI__Q213ActRandomBoid11Initialiser
-  .4byte 0
-  .4byte initialise__Q213ActRandomBoid11InitialiserFP6Action
-  .4byte 0x50616e69
-  .4byte 0x416e696d
-  .4byte 0x4b65794c
-  .4byte 0x69737465
-  .4byte 0x6e657200
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0x41637452
-  .4byte 0x616e646f
-  .4byte 0x6d426f69
-  .4byte 0x643a3a41
-  .4byte 0x6e696d4c
-  .4byte 0x69737465
-  .4byte 0x6e657200
-  .4byte 0x803e079c
-  .4byte 0
-  .4byte 0
+	.4byte __RTTI__Q213ActRandomBoid11Initialiser
+	.4byte 0
+	.4byte initialise__Q213ActRandomBoid11InitialiserFP6Action
+	.4byte 0x50616e69
+	.4byte 0x416e696d
+	.4byte 0x4b65794c
+	.4byte 0x69737465
+	.4byte 0x6e657200
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0x41637452
+	.4byte 0x616e646f
+	.4byte 0x6d426f69
+	.4byte 0x643a3a41
+	.4byte 0x6e696d4c
+	.4byte 0x69737465
+	.4byte 0x6e657200
+	.4byte 0x803e079c
+	.4byte 0
+	.4byte 0
 .global __vt__Q213ActRandomBoid12AnimListener
 __vt__Q213ActRandomBoid12AnimListener:
-  .4byte __RTTI__Q213ActRandomBoid12AnimListener
-  .4byte 0
-  .4byte animationKeyUpdated__Q213ActRandomBoid12AnimListenerFR16PaniAnimKeyEvent
-  .4byte 0x800a7908
-  .4byte 0x800a7930
-  .4byte 0x800a7944
-  .4byte 0x800a7958
-  .4byte 0x800a796c
-  .4byte 0x800a7980
-  .4byte 0x800a7994
-  .4byte 0x800a79a8
-  .4byte 0x800a791c
-  .4byte 0x800a79d0
-  .4byte 0x800a79bc
+	.4byte __RTTI__Q213ActRandomBoid12AnimListener
+	.4byte 0
+	.4byte animationKeyUpdated__Q213ActRandomBoid12AnimListenerFR16PaniAnimKeyEvent
+	.4byte 0x800a7908
+	.4byte 0x800a7930
+	.4byte 0x800a7944
+	.4byte 0x800a7958
+	.4byte 0x800a796c
+	.4byte 0x800a7980
+	.4byte 0x800a7994
+	.4byte 0x800a79a8
+	.4byte 0x800a791c
+	.4byte 0x800a79d0
+	.4byte 0x800a79bc
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 	.4byte 0x802B7504
@@ -794,14 +794,14 @@ __vt__Q213ActRandomBoid12AnimListener:
 	.4byte 0x802B7514
 .global __RTTI__10ActPutItem
 __RTTI__10ActPutItem:
-  .4byte 0x802b74f8
-  .4byte 0x802b7520
-  .4byte 0x802b75a4
-  .4byte 0
+	.4byte 0x802b74f8
+	.4byte 0x802b7520
+	.4byte 0x802b75a4
+	.4byte 0
 .global __RTTI__10ActPutBomb
 __RTTI__10ActPutBomb:
-  .4byte 0x802b7598
-  .4byte 0x802b75b8
+	.4byte 0x802b7598
+	.4byte 0x802b75b8
 .global lbl_803E0708
 lbl_803E0708:
 	.4byte 0x00000000

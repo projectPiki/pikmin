@@ -953,79 +953,79 @@ lbl_802A833C:
 	.4byte 0x00000000
 .global __vt__12DynObjBridge
 __vt__12DynObjBridge:
-  .4byte __RTTI__12DynObjBridge
-  .4byte 0
-  .4byte getAgeNodeType__5ANodeFv
-  .4byte read__8CoreNodeFR18RandomAccessStream
-  .4byte update__4NodeFv
-  .4byte draw__4NodeFR8Graphics
-  .4byte render__10DynObjBodyFR8Graphics
-  .4byte concat__4NodeFv
-  .4byte concat__4NodeFR3VQS
-  .4byte concat__4NodeFR3SRT
-  .4byte concat__4NodeFR8Matrix4f
-  .4byte getModelMatrix__4NodeFv
-  .4byte initDimensions__10DynObjBodyFfff
-  .4byte computeForces__10DynObjBodyFif
-  .4byte integrate__10DynObjBodyFiif
-  .4byte resolveCollisions__9RigidBodyFiR9Collision
-  .4byte calculateVertices__9RigidBodyFi
-  .4byte initCollisions__9RigidBodyFi
-  .4byte checkForCollisions__9RigidBodyFiR9CollState
-  .4byte updateVecQuats__9RigidBodyFif
-  .4byte updateViewInfo__9RigidBodyFii
-  .4byte applyBodyFriction__9RigidBodyFiR8Vector3fR8Vector3fR8Vector3f
-  .4byte makeBodyQuat__9RigidBodyFR4Quat
-  .4byte initRender__10DynObjBodyFi
-  .4byte shadrender__9RigidBodyFR8GraphicsP11LightCamera
-  .4byte getViewScale__9RigidBodyFv
-  .4byte updateCont__9RigidBodyFv
-  .4byte applyGroundForces__12DynObjBridgeFiP9CollGroup
-  .4byte touchCallback__10DynObjBodyFR5PlaneR8Vector3fR8Vector3f
-  .4byte applyVelocity__10DynObjBodyFR5PlaneR8Vector3fR8Vector3f
-  .4byte 0x47656e4f
-  .4byte 0x626a6563
-  .4byte 0x744d6170
-  .4byte 0x4f626a65
-  .4byte 0x63740000
-  .4byte 0x50617261
-  .4byte 0x6d657465
-  .4byte 0x72730000
-  .4byte 0x803dddb8
-  .4byte 0
-  .4byte 0
-  .4byte 0x47656e4f
-  .4byte 0x626a6563
-  .4byte 0x74000000
-  .4byte 0x803dddb8
-  .4byte 0
-  .4byte 0x803dddc8
-  .4byte 0
-  .4byte 0
-  .4byte 0x803dddb8
-  .4byte 0
-  .4byte 0x803dddc8
-  .4byte 0
-  .4byte 0x803dddd0
-  .4byte 0
-  .4byte 0
+	.4byte __RTTI__12DynObjBridge
+	.4byte 0
+	.4byte getAgeNodeType__5ANodeFv
+	.4byte read__8CoreNodeFR18RandomAccessStream
+	.4byte update__4NodeFv
+	.4byte draw__4NodeFR8Graphics
+	.4byte render__10DynObjBodyFR8Graphics
+	.4byte concat__4NodeFv
+	.4byte concat__4NodeFR3VQS
+	.4byte concat__4NodeFR3SRT
+	.4byte concat__4NodeFR8Matrix4f
+	.4byte getModelMatrix__4NodeFv
+	.4byte initDimensions__10DynObjBodyFfff
+	.4byte computeForces__10DynObjBodyFif
+	.4byte integrate__10DynObjBodyFiif
+	.4byte resolveCollisions__9RigidBodyFiR9Collision
+	.4byte calculateVertices__9RigidBodyFi
+	.4byte initCollisions__9RigidBodyFi
+	.4byte checkForCollisions__9RigidBodyFiR9CollState
+	.4byte updateVecQuats__9RigidBodyFif
+	.4byte updateViewInfo__9RigidBodyFii
+	.4byte applyBodyFriction__9RigidBodyFiR8Vector3fR8Vector3fR8Vector3f
+	.4byte makeBodyQuat__9RigidBodyFR4Quat
+	.4byte initRender__10DynObjBodyFi
+	.4byte shadrender__9RigidBodyFR8GraphicsP11LightCamera
+	.4byte getViewScale__9RigidBodyFv
+	.4byte updateCont__9RigidBodyFv
+	.4byte applyGroundForces__12DynObjBridgeFiP9CollGroup
+	.4byte touchCallback__10DynObjBodyFR5PlaneR8Vector3fR8Vector3f
+	.4byte applyVelocity__10DynObjBodyFR5PlaneR8Vector3fR8Vector3f
+	.4byte 0x47656e4f
+	.4byte 0x626a6563
+	.4byte 0x744d6170
+	.4byte 0x4f626a65
+	.4byte 0x63740000
+	.4byte 0x50617261
+	.4byte 0x6d657465
+	.4byte 0x72730000
+	.4byte 0x803dddb8
+	.4byte 0
+	.4byte 0
+	.4byte 0x47656e4f
+	.4byte 0x626a6563
+	.4byte 0x74000000
+	.4byte 0x803dddb8
+	.4byte 0
+	.4byte 0x803dddc8
+	.4byte 0
+	.4byte 0
+	.4byte 0x803dddb8
+	.4byte 0
+	.4byte 0x803dddc8
+	.4byte 0
+	.4byte 0x803dddd0
+	.4byte 0
+	.4byte 0
 .global __vt__18GenObjectMapObject
 __vt__18GenObjectMapObject:
-  .4byte __RTTI__18GenObjectMapObject
-  .4byte 0
-  .4byte doWrite__7GenBaseFR18RandomAccessStream
-  .4byte ramSaveParameters__7GenBaseFR18RandomAccessStream
-  .4byte ramLoadParameters__7GenBaseFR18RandomAccessStream
-  .4byte doRead__18GenObjectMapObjectFR18RandomAccessStream
-  .4byte update__7GenBaseFv
-  .4byte render__7GenBaseFR8Graphics
-  .4byte getLatestVersion__9GenObjectFv
-  .4byte updateUseList__9GenObjectFP9Generatori
-  .4byte init__9GenObjectFP9Generator
-  .4byte update__9GenObjectFP9Generator
-  .4byte render__18GenObjectMapObjectFR8GraphicsP9Generator
-  .4byte birth__18GenObjectMapObjectFR9BirthInfo
-  .4byte 0
+	.4byte __RTTI__18GenObjectMapObject
+	.4byte 0
+	.4byte doWrite__7GenBaseFR18RandomAccessStream
+	.4byte ramSaveParameters__7GenBaseFR18RandomAccessStream
+	.4byte ramLoadParameters__7GenBaseFR18RandomAccessStream
+	.4byte doRead__18GenObjectMapObjectFR18RandomAccessStream
+	.4byte update__7GenBaseFv
+	.4byte render__7GenBaseFR8Graphics
+	.4byte getLatestVersion__9GenObjectFv
+	.4byte updateUseList__9GenObjectFP9Generatori
+	.4byte init__9GenObjectFP9Generator
+	.4byte update__9GenObjectFP9Generator
+	.4byte render__18GenObjectMapObjectFR8GraphicsP9Generator
+	.4byte birth__18GenObjectMapObjectFR9BirthInfo
+	.4byte 0
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .global lbl_803DDD48
@@ -1074,20 +1074,20 @@ lbl_803DDD74:
 	.4byte 0x802A838C
 .global __RTTI__9RigidBody_1
 __RTTI__9RigidBody_1:
-  .4byte 0x802a83a0
-  .4byte 0x802a83ac
+	.4byte 0x802a83a0
+	.4byte 0x802a83ac
 .global __RTTI__10DynObjBody
 __RTTI__10DynObjBody:
-  .4byte 0x802a83c8
-  .4byte 0x802a83d4
+	.4byte 0x802a83c8
+	.4byte 0x802a83d4
 .global __RTTI__12DynObjBridge
 __RTTI__12DynObjBridge:
-  .4byte 0x802a837c
-  .4byte 0x802a83f8
-  .4byte 0x802a84b0
-  .4byte 0
-  .4byte 0x47656e42
-  .4byte 0x61736500
+	.4byte 0x802a837c
+	.4byte 0x802a83f8
+	.4byte 0x802a84b0
+	.4byte 0
+	.4byte 0x47656e42
+	.4byte 0x61736500
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .global lbl_803E8998

@@ -269,13 +269,13 @@ lbl_801DB388:
 /* 801DB3F0 001D8350  3B BB 00 44 */	addi r29, r27, 0x44
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
-  .4byte 0x636f7572
-  .4byte 0x73654465
-  .4byte 0x6275672e
-  .4byte 0x63707000
-  .4byte 0x636f7572
-  .4byte 0x73654465
-  .4byte 0x62756700
+	.4byte 0x636f7572
+	.4byte 0x73654465
+	.4byte 0x6275672e
+	.4byte 0x63707000
+	.4byte 0x636f7572
+	.4byte 0x73654465
+	.4byte 0x62756700
 .global lbl_802AEE54
 lbl_802AEE54:
 	.4byte 0x6F626A65
@@ -314,35 +314,35 @@ lbl_802AEE60:
 	.4byte 0x00000000
 .global __vt__14GenObjectDebug
 __vt__14GenObjectDebug:
-  .4byte __RTTI__14GenObjectDebug
-  .4byte 0
-  .4byte doWrite__7GenBaseFR18RandomAccessStream
-  .4byte ramSaveParameters__7GenBaseFR18RandomAccessStream
-  .4byte ramLoadParameters__7GenBaseFR18RandomAccessStream
-  .4byte doRead__14GenObjectDebugFR18RandomAccessStream
-  .4byte update__7GenBaseFv
-  .4byte render__7GenBaseFR8Graphics
-  .4byte getLatestVersion__9GenObjectFv
-  .4byte updateUseList__9GenObjectFP9Generatori
-  .4byte init__9GenObjectFP9Generator
-  .4byte update__9GenObjectFP9Generator
-  .4byte render__9GenObjectFR8GraphicsP9Generator
-  .4byte birth__14GenObjectDebugFR9BirthInfo
-  .4byte 0x5061726d
-  .4byte 0x3c696e74
-  .4byte 0x3e000000
-  .4byte 0x42617365
-  .4byte 0x5061726d
-  .4byte 0
-  .4byte 0x803dee88
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
+	.4byte __RTTI__14GenObjectDebug
+	.4byte 0
+	.4byte doWrite__7GenBaseFR18RandomAccessStream
+	.4byte ramSaveParameters__7GenBaseFR18RandomAccessStream
+	.4byte ramLoadParameters__7GenBaseFR18RandomAccessStream
+	.4byte doRead__14GenObjectDebugFR18RandomAccessStream
+	.4byte update__7GenBaseFv
+	.4byte render__7GenBaseFR8Graphics
+	.4byte getLatestVersion__9GenObjectFv
+	.4byte updateUseList__9GenObjectFP9Generatori
+	.4byte init__9GenObjectFP9Generator
+	.4byte update__9GenObjectFP9Generator
+	.4byte render__9GenObjectFR8GraphicsP9Generator
+	.4byte birth__14GenObjectDebugFR9BirthInfo
+	.4byte 0x5061726d
+	.4byte 0x3c696e74
+	.4byte 0x3e000000
+	.4byte 0x42617365
+	.4byte 0x5061726d
+	.4byte 0
+	.4byte 0x803dee88
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 	.4byte 0x73746F70
@@ -356,13 +356,13 @@ lbl_803DEE38:
 	.4byte 0x25730000
 .global "__RTTI__18IDelegate1<R4Menu>_4"
 "__RTTI__18IDelegate1<R4Menu>_4":
-  .4byte 0x802aedcc
-  .4byte 0
+	.4byte 0x802aedcc
+	.4byte 0
 .global "__RTTI__25Delegate1<6AIPerf,R4Menu>"
 "__RTTI__25Delegate1<6AIPerf,R4Menu>":
-  .4byte 0x802aedb0
-  .4byte 0x802aede0
-  .4byte 0
+	.4byte 0x802aedb0
+	.4byte 0x802aede0
+	.4byte 0
 .global lbl_803DEE50
 lbl_803DEE50:
 	.4byte 0x70303000

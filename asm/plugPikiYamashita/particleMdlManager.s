@@ -21,12 +21,12 @@ lbl_803E5E1C:
 	.4byte 0x00000000
 .global __RTTI__Q23zen7zenList_1
 __RTTI__Q23zen7zenList_1:
-  .4byte 0x802da74c
-  .4byte 0
+	.4byte 0x802da74c
+	.4byte 0
 .global __RTTI__Q23zen7PCRData
 __RTTI__Q23zen7PCRData:
-  .4byte 0x802da73c
-  .4byte 0x802da75c
+	.4byte 0x802da73c
+	.4byte 0x802da75c
 .global DEFAULT_FRAME_RATE__Q23zen15particleManager
 DEFAULT_FRAME_RATE__Q23zen15particleManager:
 	.4byte 0x41F00000

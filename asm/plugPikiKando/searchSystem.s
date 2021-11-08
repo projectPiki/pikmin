@@ -1343,38 +1343,38 @@ lbl_80122F60:
 /* 80122F68 0011FEC8  FC 00 08 40 */	fcmpo cr0, f0, f1
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
-  .4byte 0x73656172
-  .4byte 0x63685379
-  .4byte 0x7374656d
-  .4byte 0x2e637070
-  .4byte 0
-  .4byte 0x73656172
-  .4byte 0x63685379
-  .4byte 0x73000000
-  .4byte 0x53656172
-  .4byte 0x63684275
-  .4byte 0x66666572
-  .4byte 0
-  .4byte 0x54726176
-  .4byte 0x65727361
-  .4byte 0x626c6500
-  .4byte 0x803e14a0
-  .4byte 0
-  .4byte 0
+	.4byte 0x73656172
+	.4byte 0x63685379
+	.4byte 0x7374656d
+	.4byte 0x2e637070
+	.4byte 0
+	.4byte 0x73656172
+	.4byte 0x63685379
+	.4byte 0x73000000
+	.4byte 0x53656172
+	.4byte 0x63684275
+	.4byte 0x66666572
+	.4byte 0
+	.4byte 0x54726176
+	.4byte 0x65727361
+	.4byte 0x626c6500
+	.4byte 0x803e14a0
+	.4byte 0
+	.4byte 0
 .global __vt__12SearchBuffer
 __vt__12SearchBuffer:
-  .4byte __RTTI__12SearchBuffer
-  .4byte 0
-  .4byte getCreature__12SearchBufferFi
-  .4byte getFirst__12SearchBufferFv
-  .4byte getNext__12SearchBufferFi
-  .4byte isDone__12SearchBufferFi
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
+	.4byte __RTTI__12SearchBuffer
+	.4byte 0
+	.4byte getCreature__12SearchBufferFi
+	.4byte getFirst__12SearchBufferFv
+	.4byte getNext__12SearchBufferFi
+	.4byte isDone__12SearchBufferFi
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 	.4byte 0x803E1468

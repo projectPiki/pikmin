@@ -62,11 +62,11 @@ lbl_802CE5B8:
 	.4byte 0x69747900
 .global __vt__15TekiPersonality
 __vt__15TekiPersonality:
-  .4byte __RTTI__15TekiPersonality
-  .4byte 0
-  .4byte read__15TekiPersonalityFR18RandomAccessStreami
-  .4byte write__15TekiPersonalityFR18RandomAccessStream
-  .4byte 0
+	.4byte __RTTI__15TekiPersonality
+	.4byte 0
+	.4byte read__15TekiPersonalityFR18RandomAccessStreami
+	.4byte write__15TekiPersonalityFR18RandomAccessStream
+	.4byte 0
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 	.4byte 0x414E6F64

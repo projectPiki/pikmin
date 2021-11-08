@@ -2330,336 +2330,336 @@ __ct__17TAIdororoStrategyFv:
 /* 801D15FC 001CE55C  3B E3 00 00 */	addi r31, r3, 0
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
-  .4byte 0x696e7465
-  .4byte 0x72616374
-  .4byte 0x42617474
-  .4byte 0x6c652e63
-  .4byte 0x70700000
-  .4byte 0x696e7465
-  .4byte 0x72616374
-  .4byte 0x42617474
-  .4byte 0x6c650000
-  .4byte 0x496e7465
-  .4byte 0x72616374
-  .4byte 0x466c7574
-  .4byte 0x65000000
-  .4byte 0x496e7465
-  .4byte 0x72616374
-  .4byte 0x696f6e00
-  .4byte 0x803de948
-  .4byte 0
-  .4byte 0
+	.4byte 0x696e7465
+	.4byte 0x72616374
+	.4byte 0x42617474
+	.4byte 0x6c652e63
+	.4byte 0x70700000
+	.4byte 0x696e7465
+	.4byte 0x72616374
+	.4byte 0x42617474
+	.4byte 0x6c650000
+	.4byte 0x496e7465
+	.4byte 0x72616374
+	.4byte 0x466c7574
+	.4byte 0x65000000
+	.4byte 0x496e7465
+	.4byte 0x72616374
+	.4byte 0x696f6e00
+	.4byte 0x803de948
+	.4byte 0
+	.4byte 0
 .global __vt__13InteractFlute
 __vt__13InteractFlute:
-  .4byte __RTTI__13InteractFlute
-  .4byte 0
-  .4byte actCommon__11InteractionFP8Creature
-  .4byte actPiki__11InteractionFP4Piki
-  .4byte actTeki__13InteractFluteFP4Teki
-  .4byte actNavi__11InteractionFP4Navi
-  .4byte actBoss__11InteractionFP4Boss
-  .4byte actPellet__11InteractionFP6Pellet
-  .4byte actHinderRock__11InteractionFP10HinderRock
-  .4byte actBridge__11InteractionFP6Bridge
-  .4byte actItem__11InteractionFP12ItemCreature
-  .4byte 0x496e7465
-  .4byte 0x72616374
-  .4byte 0x50726573
-  .4byte 0x73000000
-  .4byte 0x803de948
-  .4byte 0
-  .4byte 0
+	.4byte __RTTI__13InteractFlute
+	.4byte 0
+	.4byte actCommon__11InteractionFP8Creature
+	.4byte actPiki__11InteractionFP4Piki
+	.4byte actTeki__13InteractFluteFP4Teki
+	.4byte actNavi__11InteractionFP4Navi
+	.4byte actBoss__11InteractionFP4Boss
+	.4byte actPellet__11InteractionFP6Pellet
+	.4byte actHinderRock__11InteractionFP10HinderRock
+	.4byte actBridge__11InteractionFP6Bridge
+	.4byte actItem__11InteractionFP12ItemCreature
+	.4byte 0x496e7465
+	.4byte 0x72616374
+	.4byte 0x50726573
+	.4byte 0x73000000
+	.4byte 0x803de948
+	.4byte 0
+	.4byte 0
 .global __vt__13InteractPress
 __vt__13InteractPress:
-  .4byte __RTTI__13InteractPress
-  .4byte 0
-  .4byte actCommon__11InteractionFP8Creature
-  .4byte actPiki__13InteractPressFP4Piki
-  .4byte actTeki__13InteractPressFP4Teki
-  .4byte actNavi__13InteractPressFP4Navi
-  .4byte actBoss__11InteractionFP4Boss
-  .4byte actPellet__11InteractionFP6Pellet
-  .4byte actHinderRock__11InteractionFP10HinderRock
-  .4byte actBridge__11InteractionFP6Bridge
-  .4byte actItem__11InteractionFP12ItemCreature
-  .4byte 0x496e7465
-  .4byte 0x72616374
-  .4byte 0x4b696c6c
-  .4byte 0
-  .4byte 0x803de948
-  .4byte 0
-  .4byte 0
+	.4byte __RTTI__13InteractPress
+	.4byte 0
+	.4byte actCommon__11InteractionFP8Creature
+	.4byte actPiki__13InteractPressFP4Piki
+	.4byte actTeki__13InteractPressFP4Teki
+	.4byte actNavi__13InteractPressFP4Navi
+	.4byte actBoss__11InteractionFP4Boss
+	.4byte actPellet__11InteractionFP6Pellet
+	.4byte actHinderRock__11InteractionFP10HinderRock
+	.4byte actBridge__11InteractionFP6Bridge
+	.4byte actItem__11InteractionFP12ItemCreature
+	.4byte 0x496e7465
+	.4byte 0x72616374
+	.4byte 0x4b696c6c
+	.4byte 0
+	.4byte 0x803de948
+	.4byte 0
+	.4byte 0
 .global __vt__12InteractKill
 __vt__12InteractKill:
-  .4byte __RTTI__12InteractKill
-  .4byte 0
-  .4byte actCommon__11InteractionFP8Creature
-  .4byte actPiki__12InteractKillFP4Piki
-  .4byte actTeki__11InteractionFP4Teki
-  .4byte actNavi__12InteractKillFP4Navi
-  .4byte actBoss__11InteractionFP4Boss
-  .4byte actPellet__12InteractKillFP6Pellet
-  .4byte actHinderRock__11InteractionFP10HinderRock
-  .4byte actBridge__11InteractionFP6Bridge
-  .4byte actItem__11InteractionFP12ItemCreature
-  .4byte 0x496e7465
-  .4byte 0x72616374
-  .4byte 0x5377616c
-  .4byte 0x6c6f7700
-  .4byte 0x803de948
-  .4byte 0
-  .4byte 0
+	.4byte __RTTI__12InteractKill
+	.4byte 0
+	.4byte actCommon__11InteractionFP8Creature
+	.4byte actPiki__12InteractKillFP4Piki
+	.4byte actTeki__11InteractionFP4Teki
+	.4byte actNavi__12InteractKillFP4Navi
+	.4byte actBoss__11InteractionFP4Boss
+	.4byte actPellet__12InteractKillFP6Pellet
+	.4byte actHinderRock__11InteractionFP10HinderRock
+	.4byte actBridge__11InteractionFP6Bridge
+	.4byte actItem__11InteractionFP12ItemCreature
+	.4byte 0x496e7465
+	.4byte 0x72616374
+	.4byte 0x5377616c
+	.4byte 0x6c6f7700
+	.4byte 0x803de948
+	.4byte 0
+	.4byte 0
 .global __vt__15InteractSwallow
 __vt__15InteractSwallow:
-  .4byte __RTTI__15InteractSwallow
-  .4byte 0
-  .4byte actCommon__15InteractSwallowFP8Creature
-  .4byte actPiki__15InteractSwallowFP4Piki
-  .4byte actTeki__15InteractSwallowFP4Teki
-  .4byte actNavi__15InteractSwallowFP4Navi
-  .4byte actBoss__11InteractionFP4Boss
-  .4byte actPellet__15InteractSwallowFP6Pellet
-  .4byte actHinderRock__11InteractionFP10HinderRock
-  .4byte actBridge__11InteractionFP6Bridge
-  .4byte actItem__15InteractSwallowFP12ItemCreature
-  .4byte 0x496e7465
-  .4byte 0x72616374
-  .4byte 0x41747461
-  .4byte 0x636b0000
-  .4byte 0x803de948
-  .4byte 0
-  .4byte 0
+	.4byte __RTTI__15InteractSwallow
+	.4byte 0
+	.4byte actCommon__15InteractSwallowFP8Creature
+	.4byte actPiki__15InteractSwallowFP4Piki
+	.4byte actTeki__15InteractSwallowFP4Teki
+	.4byte actNavi__15InteractSwallowFP4Navi
+	.4byte actBoss__11InteractionFP4Boss
+	.4byte actPellet__15InteractSwallowFP6Pellet
+	.4byte actHinderRock__11InteractionFP10HinderRock
+	.4byte actBridge__11InteractionFP6Bridge
+	.4byte actItem__15InteractSwallowFP12ItemCreature
+	.4byte 0x496e7465
+	.4byte 0x72616374
+	.4byte 0x41747461
+	.4byte 0x636b0000
+	.4byte 0x803de948
+	.4byte 0
+	.4byte 0
 .global __vt__14InteractAttack
 __vt__14InteractAttack:
-  .4byte __RTTI__14InteractAttack
-  .4byte 0
-  .4byte actCommon__14InteractAttackFP8Creature
-  .4byte actPiki__14InteractAttackFP4Piki
-  .4byte actTeki__14InteractAttackFP4Teki
-  .4byte actNavi__14InteractAttackFP4Navi
-  .4byte actBoss__14InteractAttackFP4Boss
-  .4byte actPellet__11InteractionFP6Pellet
-  .4byte actHinderRock__11InteractionFP10HinderRock
-  .4byte actBridge__11InteractionFP6Bridge
-  .4byte actItem__14InteractAttackFP12ItemCreature
-  .4byte 0x496e7465
-  .4byte 0x72616374
-  .4byte 0x536c696d
-  .4byte 0x65417474
-  .4byte 0x61636b00
-  .4byte 0x803de948
-  .4byte 0
-  .4byte 0
+	.4byte __RTTI__14InteractAttack
+	.4byte 0
+	.4byte actCommon__14InteractAttackFP8Creature
+	.4byte actPiki__14InteractAttackFP4Piki
+	.4byte actTeki__14InteractAttackFP4Teki
+	.4byte actNavi__14InteractAttackFP4Navi
+	.4byte actBoss__14InteractAttackFP4Boss
+	.4byte actPellet__11InteractionFP6Pellet
+	.4byte actHinderRock__11InteractionFP10HinderRock
+	.4byte actBridge__11InteractionFP6Bridge
+	.4byte actItem__14InteractAttackFP12ItemCreature
+	.4byte 0x496e7465
+	.4byte 0x72616374
+	.4byte 0x536c696d
+	.4byte 0x65417474
+	.4byte 0x61636b00
+	.4byte 0x803de948
+	.4byte 0
+	.4byte 0
 .global __vt__19InteractSlimeAttack
 __vt__19InteractSlimeAttack:
-  .4byte __RTTI__19InteractSlimeAttack
-  .4byte 0
-  .4byte actCommon__19InteractSlimeAttackFP8Creature
-  .4byte actPiki__11InteractionFP4Piki
-  .4byte actTeki__11InteractionFP4Teki
-  .4byte actNavi__11InteractionFP4Navi
-  .4byte actBoss__11InteractionFP4Boss
-  .4byte actPellet__11InteractionFP6Pellet
-  .4byte actHinderRock__11InteractionFP10HinderRock
-  .4byte actBridge__11InteractionFP6Bridge
-  .4byte actItem__11InteractionFP12ItemCreature
-  .4byte 0x496e7465
-  .4byte 0x72616374
-  .4byte 0x466c6963
-  .4byte 0x6b000000
-  .4byte 0x803de948
-  .4byte 0
-  .4byte 0
+	.4byte __RTTI__19InteractSlimeAttack
+	.4byte 0
+	.4byte actCommon__19InteractSlimeAttackFP8Creature
+	.4byte actPiki__11InteractionFP4Piki
+	.4byte actTeki__11InteractionFP4Teki
+	.4byte actNavi__11InteractionFP4Navi
+	.4byte actBoss__11InteractionFP4Boss
+	.4byte actPellet__11InteractionFP6Pellet
+	.4byte actHinderRock__11InteractionFP10HinderRock
+	.4byte actBridge__11InteractionFP6Bridge
+	.4byte actItem__11InteractionFP12ItemCreature
+	.4byte 0x496e7465
+	.4byte 0x72616374
+	.4byte 0x466c6963
+	.4byte 0x6b000000
+	.4byte 0x803de948
+	.4byte 0
+	.4byte 0
 .global __vt__13InteractFlick
 __vt__13InteractFlick:
-  .4byte __RTTI__13InteractFlick
-  .4byte 0
-  .4byte actCommon__13InteractFlickFP8Creature
-  .4byte actPiki__13InteractFlickFP4Piki
-  .4byte actTeki__13InteractFlickFP4Teki
-  .4byte actNavi__13InteractFlickFP4Navi
-  .4byte actBoss__13InteractFlickFP4Boss
-  .4byte actPellet__11InteractionFP6Pellet
-  .4byte actHinderRock__11InteractionFP10HinderRock
-  .4byte actBridge__11InteractionFP6Bridge
-  .4byte actItem__13InteractFlickFP12ItemCreature
-  .4byte 0x496e7465
-  .4byte 0x72616374
-  .4byte 0x57696e64
-  .4byte 0
-  .4byte 0x803de948
-  .4byte 0
-  .4byte 0
+	.4byte __RTTI__13InteractFlick
+	.4byte 0
+	.4byte actCommon__13InteractFlickFP8Creature
+	.4byte actPiki__13InteractFlickFP4Piki
+	.4byte actTeki__13InteractFlickFP4Teki
+	.4byte actNavi__13InteractFlickFP4Navi
+	.4byte actBoss__13InteractFlickFP4Boss
+	.4byte actPellet__11InteractionFP6Pellet
+	.4byte actHinderRock__11InteractionFP10HinderRock
+	.4byte actBridge__11InteractionFP6Bridge
+	.4byte actItem__13InteractFlickFP12ItemCreature
+	.4byte 0x496e7465
+	.4byte 0x72616374
+	.4byte 0x57696e64
+	.4byte 0
+	.4byte 0x803de948
+	.4byte 0
+	.4byte 0
 .global __vt__12InteractWind
 __vt__12InteractWind:
-  .4byte __RTTI__12InteractWind
-  .4byte 0
-  .4byte actCommon__12InteractWindFP8Creature
-  .4byte actPiki__12InteractWindFP4Piki
-  .4byte actTeki__11InteractionFP4Teki
-  .4byte actNavi__12InteractWindFP4Navi
-  .4byte actBoss__11InteractionFP4Boss
-  .4byte actPellet__11InteractionFP6Pellet
-  .4byte actHinderRock__11InteractionFP10HinderRock
-  .4byte actBridge__11InteractionFP6Bridge
-  .4byte actItem__11InteractionFP12ItemCreature
-  .4byte 0x496e7465
-  .4byte 0x72616374
-  .4byte 0x46697265
-  .4byte 0
-  .4byte 0x803de948
-  .4byte 0
-  .4byte 0
+	.4byte __RTTI__12InteractWind
+	.4byte 0
+	.4byte actCommon__12InteractWindFP8Creature
+	.4byte actPiki__12InteractWindFP4Piki
+	.4byte actTeki__11InteractionFP4Teki
+	.4byte actNavi__12InteractWindFP4Navi
+	.4byte actBoss__11InteractionFP4Boss
+	.4byte actPellet__11InteractionFP6Pellet
+	.4byte actHinderRock__11InteractionFP10HinderRock
+	.4byte actBridge__11InteractionFP6Bridge
+	.4byte actItem__11InteractionFP12ItemCreature
+	.4byte 0x496e7465
+	.4byte 0x72616374
+	.4byte 0x46697265
+	.4byte 0
+	.4byte 0x803de948
+	.4byte 0
+	.4byte 0
 .global __vt__12InteractFire
 __vt__12InteractFire:
-  .4byte __RTTI__12InteractFire
-  .4byte 0
-  .4byte actCommon__11InteractionFP8Creature
-  .4byte actPiki__12InteractFireFP4Piki
-  .4byte actTeki__11InteractionFP4Teki
-  .4byte actNavi__12InteractFireFP4Navi
-  .4byte actBoss__11InteractionFP4Boss
-  .4byte actPellet__11InteractionFP6Pellet
-  .4byte actHinderRock__11InteractionFP10HinderRock
-  .4byte actBridge__11InteractionFP6Bridge
-  .4byte actItem__11InteractionFP12ItemCreature
-  .4byte 0x496e7465
-  .4byte 0x72616374
-  .4byte 0x42756262
-  .4byte 0x6c650000
-  .4byte 0x803de948
-  .4byte 0
-  .4byte 0
+	.4byte __RTTI__12InteractFire
+	.4byte 0
+	.4byte actCommon__11InteractionFP8Creature
+	.4byte actPiki__12InteractFireFP4Piki
+	.4byte actTeki__11InteractionFP4Teki
+	.4byte actNavi__12InteractFireFP4Navi
+	.4byte actBoss__11InteractionFP4Boss
+	.4byte actPellet__11InteractionFP6Pellet
+	.4byte actHinderRock__11InteractionFP10HinderRock
+	.4byte actBridge__11InteractionFP6Bridge
+	.4byte actItem__11InteractionFP12ItemCreature
+	.4byte 0x496e7465
+	.4byte 0x72616374
+	.4byte 0x42756262
+	.4byte 0x6c650000
+	.4byte 0x803de948
+	.4byte 0
+	.4byte 0
 .global __vt__14InteractBubble
 __vt__14InteractBubble:
-  .4byte __RTTI__14InteractBubble
-  .4byte 0
-  .4byte actCommon__11InteractionFP8Creature
-  .4byte actPiki__14InteractBubbleFP4Piki
-  .4byte actTeki__11InteractionFP4Teki
-  .4byte actNavi__14InteractBubbleFP4Navi
-  .4byte actBoss__11InteractionFP4Boss
-  .4byte actPellet__11InteractionFP6Pellet
-  .4byte actHinderRock__11InteractionFP10HinderRock
-  .4byte actBridge__11InteractionFP6Bridge
-  .4byte actItem__11InteractionFP12ItemCreature
+	.4byte __RTTI__14InteractBubble
+	.4byte 0
+	.4byte actCommon__11InteractionFP8Creature
+	.4byte actPiki__14InteractBubbleFP4Piki
+	.4byte actTeki__11InteractionFP4Teki
+	.4byte actNavi__14InteractBubbleFP4Navi
+	.4byte actBoss__11InteractionFP4Boss
+	.4byte actPellet__11InteractionFP6Pellet
+	.4byte actHinderRock__11InteractionFP10HinderRock
+	.4byte actBridge__11InteractionFP6Bridge
+	.4byte actItem__11InteractionFP12ItemCreature
 .global __vt__11Interaction
 __vt__11Interaction:
-  .4byte 0x803de948
-  .4byte 0
-  .4byte actCommon__11InteractionFP8Creature
-  .4byte actPiki__11InteractionFP4Piki
-  .4byte actTeki__11InteractionFP4Teki
-  .4byte actNavi__11InteractionFP4Navi
-  .4byte actBoss__11InteractionFP4Boss
-  .4byte actPellet__11InteractionFP6Pellet
-  .4byte actHinderRock__11InteractionFP10HinderRock
-  .4byte actBridge__11InteractionFP6Bridge
-  .4byte actItem__11InteractionFP12ItemCreature
-  .4byte 0x496e7465
-  .4byte 0x72616374
-  .4byte 0x53706f72
-  .4byte 0x65000000
-  .4byte 0x803de948
-  .4byte 0
-  .4byte 0
+	.4byte 0x803de948
+	.4byte 0
+	.4byte actCommon__11InteractionFP8Creature
+	.4byte actPiki__11InteractionFP4Piki
+	.4byte actTeki__11InteractionFP4Teki
+	.4byte actNavi__11InteractionFP4Navi
+	.4byte actBoss__11InteractionFP4Boss
+	.4byte actPellet__11InteractionFP6Pellet
+	.4byte actHinderRock__11InteractionFP10HinderRock
+	.4byte actBridge__11InteractionFP6Bridge
+	.4byte actItem__11InteractionFP12ItemCreature
+	.4byte 0x496e7465
+	.4byte 0x72616374
+	.4byte 0x53706f72
+	.4byte 0x65000000
+	.4byte 0x803de948
+	.4byte 0
+	.4byte 0
 .global __vt__13InteractSpore
 __vt__13InteractSpore:
-  .4byte __RTTI__13InteractSpore
-  .4byte 0
-  .4byte actCommon__11InteractionFP8Creature
-  .4byte actPiki__13InteractSporeFP4Piki
-  .4byte actTeki__11InteractionFP4Teki
-  .4byte actNavi__11InteractionFP4Navi
-  .4byte actBoss__11InteractionFP4Boss
-  .4byte actPellet__11InteractionFP6Pellet
-  .4byte actHinderRock__11InteractionFP10HinderRock
-  .4byte actBridge__11InteractionFP6Bridge
-  .4byte actItem__11InteractionFP12ItemCreature
-  .4byte 0x496e7465
-  .4byte 0x72616374
-  .4byte 0x4368616e
-  .4byte 0x67654861
-  .4byte 0x70706100
-  .4byte 0x803de948
-  .4byte 0
-  .4byte 0
+	.4byte __RTTI__13InteractSpore
+	.4byte 0
+	.4byte actCommon__11InteractionFP8Creature
+	.4byte actPiki__13InteractSporeFP4Piki
+	.4byte actTeki__11InteractionFP4Teki
+	.4byte actNavi__11InteractionFP4Navi
+	.4byte actBoss__11InteractionFP4Boss
+	.4byte actPellet__11InteractionFP6Pellet
+	.4byte actHinderRock__11InteractionFP10HinderRock
+	.4byte actBridge__11InteractionFP6Bridge
+	.4byte actItem__11InteractionFP12ItemCreature
+	.4byte 0x496e7465
+	.4byte 0x72616374
+	.4byte 0x4368616e
+	.4byte 0x67654861
+	.4byte 0x70706100
+	.4byte 0x803de948
+	.4byte 0
+	.4byte 0
 .global __vt__19InteractChangeHappa
 __vt__19InteractChangeHappa:
-  .4byte __RTTI__19InteractChangeHappa
-  .4byte 0
-  .4byte actCommon__11InteractionFP8Creature
-  .4byte actPiki__19InteractChangeHappaFP4Piki
-  .4byte actTeki__11InteractionFP4Teki
-  .4byte actNavi__11InteractionFP4Navi
-  .4byte actBoss__11InteractionFP4Boss
-  .4byte actPellet__11InteractionFP6Pellet
-  .4byte actHinderRock__11InteractionFP10HinderRock
-  .4byte actBridge__11InteractionFP6Bridge
-  .4byte actItem__11InteractionFP12ItemCreature
-  .4byte 0x496e7465
-  .4byte 0x72616374
-  .4byte 0x4368616e
-  .4byte 0x6765436f
-  .4byte 0x6c6f7200
-  .4byte 0x803de948
-  .4byte 0
-  .4byte 0
+	.4byte __RTTI__19InteractChangeHappa
+	.4byte 0
+	.4byte actCommon__11InteractionFP8Creature
+	.4byte actPiki__19InteractChangeHappaFP4Piki
+	.4byte actTeki__11InteractionFP4Teki
+	.4byte actNavi__11InteractionFP4Navi
+	.4byte actBoss__11InteractionFP4Boss
+	.4byte actPellet__11InteractionFP6Pellet
+	.4byte actHinderRock__11InteractionFP10HinderRock
+	.4byte actBridge__11InteractionFP6Bridge
+	.4byte actItem__11InteractionFP12ItemCreature
+	.4byte 0x496e7465
+	.4byte 0x72616374
+	.4byte 0x4368616e
+	.4byte 0x6765436f
+	.4byte 0x6c6f7200
+	.4byte 0x803de948
+	.4byte 0
+	.4byte 0
 .global __vt__19InteractChangeColor
 __vt__19InteractChangeColor:
-  .4byte __RTTI__19InteractChangeColor
-  .4byte 0
-  .4byte actCommon__11InteractionFP8Creature
-  .4byte actPiki__19InteractChangeColorFP4Piki
-  .4byte actTeki__11InteractionFP4Teki
-  .4byte actNavi__11InteractionFP4Navi
-  .4byte actBoss__11InteractionFP4Boss
-  .4byte actPellet__11InteractionFP6Pellet
-  .4byte actHinderRock__11InteractionFP10HinderRock
-  .4byte actBridge__11InteractionFP6Bridge
-  .4byte actItem__11InteractionFP12ItemCreature
-  .4byte 0x496e7465
-  .4byte 0x72616374
-  .4byte 0x5468726f
-  .4byte 0x77417761
-  .4byte 0x79000000
-  .4byte 0x803de948
-  .4byte 0
-  .4byte 0
+	.4byte __RTTI__19InteractChangeColor
+	.4byte 0
+	.4byte actCommon__11InteractionFP8Creature
+	.4byte actPiki__19InteractChangeColorFP4Piki
+	.4byte actTeki__11InteractionFP4Teki
+	.4byte actNavi__11InteractionFP4Navi
+	.4byte actBoss__11InteractionFP4Boss
+	.4byte actPellet__11InteractionFP6Pellet
+	.4byte actHinderRock__11InteractionFP10HinderRock
+	.4byte actBridge__11InteractionFP6Bridge
+	.4byte actItem__11InteractionFP12ItemCreature
+	.4byte 0x496e7465
+	.4byte 0x72616374
+	.4byte 0x5468726f
+	.4byte 0x77417761
+	.4byte 0x79000000
+	.4byte 0x803de948
+	.4byte 0
+	.4byte 0
 .global __vt__17InteractThrowAway
 __vt__17InteractThrowAway:
-  .4byte __RTTI__17InteractThrowAway
-  .4byte 0
-  .4byte actCommon__11InteractionFP8Creature
-  .4byte actPiki__17InteractThrowAwayFP4Piki
-  .4byte actTeki__11InteractionFP4Teki
-  .4byte actNavi__11InteractionFP4Navi
-  .4byte actBoss__11InteractionFP4Boss
-  .4byte actPellet__11InteractionFP6Pellet
-  .4byte actHinderRock__11InteractionFP10HinderRock
-  .4byte actBridge__11InteractionFP6Bridge
-  .4byte actItem__11InteractionFP12ItemCreature
-  .4byte 0x496e7465
-  .4byte 0x72616374
-  .4byte 0x42757279
-  .4byte 0
-  .4byte 0x803de948
-  .4byte 0
-  .4byte 0
+	.4byte __RTTI__17InteractThrowAway
+	.4byte 0
+	.4byte actCommon__11InteractionFP8Creature
+	.4byte actPiki__17InteractThrowAwayFP4Piki
+	.4byte actTeki__11InteractionFP4Teki
+	.4byte actNavi__11InteractionFP4Navi
+	.4byte actBoss__11InteractionFP4Boss
+	.4byte actPellet__11InteractionFP6Pellet
+	.4byte actHinderRock__11InteractionFP10HinderRock
+	.4byte actBridge__11InteractionFP6Bridge
+	.4byte actItem__11InteractionFP12ItemCreature
+	.4byte 0x496e7465
+	.4byte 0x72616374
+	.4byte 0x42757279
+	.4byte 0
+	.4byte 0x803de948
+	.4byte 0
+	.4byte 0
 .global __vt__12InteractBury
 __vt__12InteractBury:
-  .4byte __RTTI__12InteractBury
-  .4byte 0
-  .4byte actCommon__11InteractionFP8Creature
-  .4byte actPiki__12InteractBuryFP4Piki
-  .4byte actTeki__11InteractionFP4Teki
-  .4byte actNavi__12InteractBuryFP4Navi
-  .4byte actBoss__11InteractionFP4Boss
-  .4byte actPellet__11InteractionFP6Pellet
-  .4byte actHinderRock__11InteractionFP10HinderRock
-  .4byte actBridge__11InteractionFP6Bridge
-  .4byte actItem__11InteractionFP12ItemCreature
-  .4byte 0
+	.4byte __RTTI__12InteractBury
+	.4byte 0
+	.4byte actCommon__11InteractionFP8Creature
+	.4byte actPiki__12InteractBuryFP4Piki
+	.4byte actTeki__11InteractionFP4Teki
+	.4byte actNavi__12InteractBuryFP4Navi
+	.4byte actBoss__11InteractionFP4Boss
+	.4byte actPellet__11InteractionFP6Pellet
+	.4byte actHinderRock__11InteractionFP10HinderRock
+	.4byte actBridge__11InteractionFP6Bridge
+	.4byte actItem__11InteractionFP12ItemCreature
+	.4byte 0
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 	.4byte 0x00000000
@@ -2667,9 +2667,9 @@ __vt__12InteractBury:
 	.4byte 0x802ACC48
 .global __RTTI__Q29RadarInfo9PartsInfo
 __RTTI__Q29RadarInfo9PartsInfo:
-  .4byte 0x802acc30
-  .4byte 0x802acc54
-  .4byte 0
+	.4byte 0x802acc30
+	.4byte 0x802acc54
+	.4byte 0
 .global lbl_803DE930
 lbl_803DE930:
 	.4byte 0x00000000
@@ -2692,52 +2692,52 @@ lbl_803DE944:
 	.4byte 0x00000000
 .global __RTTI__13InteractFlute
 __RTTI__13InteractFlute:
-  .4byte 0x802accbc
-  .4byte 0x802accd8
+	.4byte 0x802accbc
+	.4byte 0x802accd8
 .global __RTTI__13InteractPress
 __RTTI__13InteractPress:
-  .4byte 0x802acd10
-  .4byte 0x802acd20
+	.4byte 0x802acd10
+	.4byte 0x802acd20
 .global __RTTI__12InteractKill
 __RTTI__12InteractKill:
-  .4byte 0x802acd58
-  .4byte 0x802acd68
+	.4byte 0x802acd58
+	.4byte 0x802acd68
 .global __RTTI__15InteractSwallow
 __RTTI__15InteractSwallow:
-  .4byte 0x802acda0
-  .4byte 0x802acdb0
+	.4byte 0x802acda0
+	.4byte 0x802acdb0
 .global __RTTI__14InteractAttack
 __RTTI__14InteractAttack:
-  .4byte 0x802acde8
-  .4byte 0x802acdf8
+	.4byte 0x802acde8
+	.4byte 0x802acdf8
 .global __RTTI__19InteractSlimeAttack
 __RTTI__19InteractSlimeAttack:
-  .4byte 0x802ace30
-  .4byte 0x802ace44
+	.4byte 0x802ace30
+	.4byte 0x802ace44
 .global __RTTI__13InteractFlick
 __RTTI__13InteractFlick:
-  .4byte 0x802ace7c
-  .4byte 0x802ace8c
+	.4byte 0x802ace7c
+	.4byte 0x802ace8c
 .global __RTTI__12InteractWind
 __RTTI__12InteractWind:
-  .4byte 0x802acec4
-  .4byte 0x802aced4
+	.4byte 0x802acec4
+	.4byte 0x802aced4
 .global __RTTI__12InteractFire
 __RTTI__12InteractFire:
-  .4byte 0x802acf0c
-  .4byte 0x802acf1c
+	.4byte 0x802acf0c
+	.4byte 0x802acf1c
 .global __RTTI__14InteractBubble
 __RTTI__14InteractBubble:
-  .4byte 0x802acf54
-  .4byte 0x802acf64
+	.4byte 0x802acf54
+	.4byte 0x802acf64
 .global __RTTI__13InteractSpore
 __RTTI__13InteractSpore:
-  .4byte 0x802acfc8
-  .4byte 0x802acfd8
+	.4byte 0x802acfc8
+	.4byte 0x802acfd8
 .global __RTTI__19InteractChangeHappa
 __RTTI__19InteractChangeHappa:
-  .4byte 0x802ad010
-  .4byte 0x802ad024
+	.4byte 0x802ad010
+	.4byte 0x802ad024
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .global lbl_803EA154

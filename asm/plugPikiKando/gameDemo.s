@@ -1873,26 +1873,26 @@ lbl_802ADE20:
 	.4byte 0x00000000
 .global __vt__9DemoParms
 __vt__9DemoParms:
-  .4byte __RTTI__9DemoParms
-  .4byte 0
-  .4byte getAgeNodeType__5ANodeFv
-  .4byte read__9DemoParmsFR18RandomAccessStream
-  .4byte update__4NodeFv
-  .4byte draw__4NodeFR8Graphics
-  .4byte render__4NodeFR8Graphics
-  .4byte concat__4NodeFv
-  .4byte concat__4NodeFR3VQS
-  .4byte concat__4NodeFR3SRT
-  .4byte concat__4NodeFR8Matrix4f
-  .4byte getModelMatrix__4NodeFv
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
+	.4byte __RTTI__9DemoParms
+	.4byte 0
+	.4byte getAgeNodeType__5ANodeFv
+	.4byte read__9DemoParmsFR18RandomAccessStream
+	.4byte update__4NodeFv
+	.4byte draw__4NodeFR8Graphics
+	.4byte render__4NodeFR8Graphics
+	.4byte concat__4NodeFv
+	.4byte concat__4NodeFR3VQS
+	.4byte concat__4NodeFR3SRT
+	.4byte concat__4NodeFR8Matrix4f
+	.4byte getModelMatrix__4NodeFv
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .global lbl_803DEC48
@@ -1905,8 +1905,8 @@ lbl_803DEC4C:
 	.4byte 0x00000000
 .global __RTTI__Q211PlayerState8UfoParts
 __RTTI__Q211PlayerState8UfoParts:
-  .4byte 0x802addd0
-  .4byte 0x802addfc
+	.4byte 0x802addd0
+	.4byte 0x802addfc
 .global lbl_803DEC60
 lbl_803DEC60:
 	.4byte 0x3C4E6F64

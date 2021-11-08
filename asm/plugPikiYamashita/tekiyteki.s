@@ -15,20 +15,20 @@ lbl_803E5E64:
 	.4byte 0x00000000
 .global __RTTI__Q23zen7zenList_2
 __RTTI__Q23zen7zenList_2:
-  .4byte 0x802dd7e0
-  .4byte 0
+	.4byte 0x802dd7e0
+	.4byte 0
 .global __RTTI__Q23zen15particleMdlBase
 __RTTI__Q23zen15particleMdlBase:
-  .4byte 0x802dd7f0
-  .4byte 0x802dd808
+	.4byte 0x802dd7f0
+	.4byte 0x802dd808
 .global __RTTI__Q23zen11particleMdl
 __RTTI__Q23zen11particleMdl:
-  .4byte 0x802dd7cc
-  .4byte 0x802dd814
+	.4byte 0x802dd7cc
+	.4byte 0x802dd814
 .global __RTTI__Q23zen16particleChildMdl
 __RTTI__Q23zen16particleChildMdl:
-  .4byte 0x802dd858
-  .4byte 0x802dd870
+	.4byte 0x802dd858
+	.4byte 0x802dd870
 .global lbl_803E5E88
 lbl_803E5E88:
 	.4byte 0x00000000
@@ -75,13 +75,13 @@ lbl_803E5EBC:
 	.4byte 0x69000000
 .global __RTTI__10PelletView_4
 __RTTI__10PelletView_4:
-  .4byte 0x802dd8ec
-  .4byte 0
-  .4byte 0x802dd8f8
-  .4byte 0
-  .4byte 0x802dd90c
-  .4byte 0
-  .4byte 0x802dd918
-  .4byte 0
-  .4byte 0x802dd928
-  .4byte 0x802dd934
+	.4byte 0x802dd8ec
+	.4byte 0
+	.4byte 0x802dd8f8
+	.4byte 0
+	.4byte 0x802dd90c
+	.4byte 0
+	.4byte 0x802dd918
+	.4byte 0
+	.4byte 0x802dd928
+	.4byte 0x802dd934

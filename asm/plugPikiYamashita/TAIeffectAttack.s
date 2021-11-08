@@ -19,12 +19,12 @@ lbl_803E68B8:
 	.4byte 0x64720000
 .global __RTTI__Q23zen10DrawScreen_2
 __RTTI__Q23zen10DrawScreen_2:
-  .4byte 0x802e174c
-  .4byte 0
+	.4byte 0x802e174c
+	.4byte 0
 .global __RTTI__Q23zen8DrawMenu
 __RTTI__Q23zen8DrawMenu:
-  .4byte 0x802e173c
-  .4byte 0x802e175c
+	.4byte 0x802e173c
+	.4byte 0x802e175c
 .global lbl_803E68D0
 lbl_803E68D0:
 	.4byte 0x00000000

@@ -5161,18 +5161,18 @@ lbl_801E6BF8:
 /* 801E6C20 001E3B80  EC 00 08 2A */	fadds f0, f0, f1
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
-  .4byte 0x63726561
-  .4byte 0x74757265
-  .4byte 0x53746963
-  .4byte 0x6b2e6370
-  .4byte 0x70000000
-  .4byte 0x43726561
-  .4byte 0x74757265
-  .4byte 0x53746963
-  .4byte 0x6b000000
-  .4byte 0x54454b49
-  .4byte 0x504c4154
-  .4byte 0
+	.4byte 0x63726561
+	.4byte 0x74757265
+	.4byte 0x53746963
+	.4byte 0x6b2e6370
+	.4byte 0x70000000
+	.4byte 0x43726561
+	.4byte 0x74757265
+	.4byte 0x53746963
+	.4byte 0x6b000000
+	.4byte 0x54454b49
+	.4byte 0x504c4154
+	.4byte 0
 .global _standType
 _standType:
 	.4byte 0x803DF0EC
@@ -5196,33 +5196,33 @@ lbl_802AF368:
 	.4byte 0x00000000
 .global __vt__8Stickers
 __vt__8Stickers:
-  .4byte __RTTI__8Stickers
-  .4byte 0
-  .4byte getCreature__8StickersFi
-  .4byte getFirst__8StickersFv
-  .4byte getNext__8StickersFi
-  .4byte isDone__8StickersFi
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0x496e7465
-  .4byte 0x72616374
-  .4byte 0x696f6e00
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
+	.4byte __RTTI__8Stickers
+	.4byte 0
+	.4byte getCreature__8StickersFi
+	.4byte getFirst__8StickersFv
+	.4byte getNext__8StickersFi
+	.4byte isDone__8StickersFi
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0x496e7465
+	.4byte 0x72616374
+	.4byte 0x696f6e00
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .global lbl_803DF0B8

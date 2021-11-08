@@ -1,28 +1,28 @@
 .include "macros.inc"
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
-  .4byte 0x802d05c0
-  .4byte 0x802d05fc
-  .4byte 0
+	.4byte 0x802d05c0
+	.4byte 0x802d05fc
+	.4byte 0
 .global __RTTI__32KingGenSpitPartsParticleCallBack
 __RTTI__32KingGenSpitPartsParticleCallBack:
-  .4byte 0x802d05d8
-  .4byte 0x802d063c
+	.4byte 0x802d05d8
+	.4byte 0x802d063c
 .global __RTTI__25KingGenDamageStarCallBack
 __RTTI__25KingGenDamageStarCallBack:
-  .4byte 0x802d0654
-  .4byte 0x802d0670
+	.4byte 0x802d0654
+	.4byte 0x802d0670
 .global __RTTI__29KingGenSalivaParticleCallBack
 __RTTI__29KingGenSalivaParticleCallBack:
-  .4byte 0x802d0688
-  .4byte 0x802d06a8
+	.4byte 0x802d0688
+	.4byte 0x802d06a8
 .global __RTTI__27KingGenSpreadSalivaCallBack
 __RTTI__27KingGenSpreadSalivaCallBack:
-  .4byte 0x802d06cc
-  .4byte 0x802d06e8
-  .4byte 0
-  .4byte 0x4b6f6761
-  .4byte 0x6e650000
+	.4byte 0x802d06cc
+	.4byte 0x802d06e8
+	.4byte 0
+	.4byte 0x4b6f6761
+	.4byte 0x6e650000
 .global lbl_803E5170
 lbl_803E5170:
 	.4byte 0x6F303000
@@ -80,8 +80,8 @@ lbl_803E51A8:
 	.4byte 0x802D0764
 .global __RTTI__6Kogane
 __RTTI__6Kogane:
-  .4byte 0x803e5168
-  .4byte 0x802d0780
-  .4byte 0x802d08d4
-  .4byte 0
-  .4byte 0x414e6f64
+	.4byte 0x803e5168
+	.4byte 0x802d0780
+	.4byte 0x802d08d4
+	.4byte 0
+	.4byte 0x414e6f64

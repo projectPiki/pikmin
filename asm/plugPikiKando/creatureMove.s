@@ -3159,12 +3159,12 @@ lbl_801E4724:
 	.4byte 0x802AF264
 .global __RTTI__12DynCollShape_1
 __RTTI__12DynCollShape_1:
-  .4byte 0x802af280
-  .4byte 0x802af290
+	.4byte 0x802af280
+	.4byte 0x802af290
 .global __RTTI__16CreatureCollPart
 __RTTI__16CreatureCollPart:
-  .4byte 0x802af214
-  .4byte 0x802af2b4
+	.4byte 0x802af214
+	.4byte 0x802af2b4
 .global lbl_803DF098
 lbl_803DF098:
 	.4byte 0x47000000

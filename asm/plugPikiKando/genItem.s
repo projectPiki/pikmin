@@ -716,9 +716,9 @@ lbl_8012D90C:
 /* 8012D918 0012A878  40 80 00 68 */	bge lbl_8012D980
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
-  .4byte 0x67656e49
-  .4byte 0x74656d2e
-  .4byte 0x63707000
+	.4byte 0x67656e49
+	.4byte 0x74656d2e
+	.4byte 0x63707000
 .global lbl_802BD7A4
 lbl_802BD7A4:
 	.4byte 0x6F626A65
@@ -788,40 +788,40 @@ lbl_802BD7D0:
 	.4byte 0x00000000
 .global __vt__13GenObjectItem
 __vt__13GenObjectItem:
-  .4byte __RTTI__13GenObjectItem
-  .4byte 0
-  .4byte doWrite__13GenObjectItemFR18RandomAccessStream
-  .4byte ramSaveParameters__13GenObjectItemFR18RandomAccessStream
-  .4byte ramLoadParameters__13GenObjectItemFR18RandomAccessStream
-  .4byte doRead__13GenObjectItemFR18RandomAccessStream
-  .4byte update__7GenBaseFv
-  .4byte render__7GenBaseFR8Graphics
-  .4byte getLatestVersion__9GenObjectFv
-  .4byte updateUseList__13GenObjectItemFP9Generatori
-  .4byte init__9GenObjectFP9Generator
-  .4byte update__9GenObjectFP9Generator
-  .4byte render__9GenObjectFR8GraphicsP9Generator
-  .4byte birth__13GenObjectItemFR9BirthInfo
-  .4byte 0x5061726d
-  .4byte 0x3c696e74
-  .4byte 0x3e000000
-  .4byte 0x42617365
-  .4byte 0x5061726d
-  .4byte 0
-  .4byte 0x803e1a94
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
+	.4byte __RTTI__13GenObjectItem
+	.4byte 0
+	.4byte doWrite__13GenObjectItemFR18RandomAccessStream
+	.4byte ramSaveParameters__13GenObjectItemFR18RandomAccessStream
+	.4byte ramLoadParameters__13GenObjectItemFR18RandomAccessStream
+	.4byte doRead__13GenObjectItemFR18RandomAccessStream
+	.4byte update__7GenBaseFv
+	.4byte render__7GenBaseFR8Graphics
+	.4byte getLatestVersion__9GenObjectFv
+	.4byte updateUseList__13GenObjectItemFP9Generatori
+	.4byte init__9GenObjectFP9Generator
+	.4byte update__9GenObjectFP9Generator
+	.4byte render__9GenObjectFR8GraphicsP9Generator
+	.4byte birth__13GenObjectItemFR9BirthInfo
+	.4byte 0x5061726d
+	.4byte 0x3c696e74
+	.4byte 0x3e000000
+	.4byte 0x42617365
+	.4byte 0x5061726d
+	.4byte 0
+	.4byte 0x803e1a94
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .global __RTTI__8RopeItem
 __RTTI__8RopeItem:
-  .4byte 0x802bd454
-  .4byte 0x802bd4c8
+	.4byte 0x802bd454
+	.4byte 0x802bd4c8
 .global lbl_803E1A30
 lbl_803E1A30:
 	.4byte 0x00000000
@@ -836,8 +836,8 @@ lbl_803E1A34:
 	.4byte 0x802BD650
 .global __RTTI__8SeedItem
 __RTTI__8SeedItem:
-  .4byte 0x802bd61c
-  .4byte 0x802bd664
+	.4byte 0x802bd61c
+	.4byte 0x802bd664
 .global lbl_803E1A58
 lbl_803E1A58:
 	.4byte 0x70303000

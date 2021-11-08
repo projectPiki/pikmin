@@ -1033,78 +1033,78 @@ lbl_802A7660:
 	.4byte 0x00000000
 .global __vt__22CardSelectSetupSection
 __vt__22CardSelectSetupSection:
-  .4byte __RTTI__22CardSelectSetupSection
-  .4byte 0
-  .4byte getAgeNodeType__5ANodeFv
-  .4byte read__8CoreNodeFR18RandomAccessStream
-  .4byte update__22CardSelectSetupSectionFv
-  .4byte draw__22CardSelectSetupSectionFR8Graphics
-  .4byte render__4NodeFR8Graphics
-  .4byte concat__4NodeFv
-  .4byte concat__4NodeFR3VQS
-  .4byte concat__4NodeFR3SRT
-  .4byte concat__4NodeFR8Matrix4f
-  .4byte getModelMatrix__4NodeFv
-  .4byte 0x43617264
-  .4byte 0x53656c65
-  .4byte 0x63745365
-  .4byte 0x6374696f
-  .4byte 0x6e000000
-  .4byte 0x803dd9e0
-  .4byte 0
-  .4byte 0x803dd9e8
-  .4byte 0
-  .4byte 0x803dd9f8
-  .4byte 0
-  .4byte 0
-  .4byte 0x803dd9e0
-  .4byte 0
-  .4byte 0x803dd9e8
-  .4byte 0
-  .4byte 0x803dd9f8
-  .4byte 0
-  .4byte 0x803dda14
-  .4byte 0
-  .4byte 0
+	.4byte __RTTI__22CardSelectSetupSection
+	.4byte 0
+	.4byte getAgeNodeType__5ANodeFv
+	.4byte read__8CoreNodeFR18RandomAccessStream
+	.4byte update__22CardSelectSetupSectionFv
+	.4byte draw__22CardSelectSetupSectionFR8Graphics
+	.4byte render__4NodeFR8Graphics
+	.4byte concat__4NodeFv
+	.4byte concat__4NodeFR3VQS
+	.4byte concat__4NodeFR3SRT
+	.4byte concat__4NodeFR8Matrix4f
+	.4byte getModelMatrix__4NodeFv
+	.4byte 0x43617264
+	.4byte 0x53656c65
+	.4byte 0x63745365
+	.4byte 0x6374696f
+	.4byte 0x6e000000
+	.4byte 0x803dd9e0
+	.4byte 0
+	.4byte 0x803dd9e8
+	.4byte 0
+	.4byte 0x803dd9f8
+	.4byte 0
+	.4byte 0
+	.4byte 0x803dd9e0
+	.4byte 0
+	.4byte 0x803dd9e8
+	.4byte 0
+	.4byte 0x803dd9f8
+	.4byte 0
+	.4byte 0x803dda14
+	.4byte 0
+	.4byte 0
 .global __vt__17CardSelectSection
 __vt__17CardSelectSection:
-  .4byte __RTTI__17CardSelectSection
-  .4byte 0
-  .4byte getAgeNodeType__5ANodeFv
-  .4byte read__8CoreNodeFR18RandomAccessStream
-  .4byte update__4NodeFv
-  .4byte draw__4NodeFR8Graphics
-  .4byte render__4NodeFR8Graphics
-  .4byte concat__4NodeFv
-  .4byte concat__4NodeFR3VQS
-  .4byte concat__4NodeFR3SRT
-  .4byte concat__4NodeFR8Matrix4f
-  .4byte getModelMatrix__4NodeFv
-  .4byte init__17CardSelectSectionFv
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
+	.4byte __RTTI__17CardSelectSection
+	.4byte 0
+	.4byte getAgeNodeType__5ANodeFv
+	.4byte read__8CoreNodeFR18RandomAccessStream
+	.4byte update__4NodeFv
+	.4byte draw__4NodeFR8Graphics
+	.4byte render__4NodeFR8Graphics
+	.4byte concat__4NodeFv
+	.4byte concat__4NodeFR3VQS
+	.4byte concat__4NodeFR3SRT
+	.4byte concat__4NodeFR8Matrix4f
+	.4byte getModelMatrix__4NodeFv
+	.4byte init__17CardSelectSectionFv
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
-  .4byte 0
-  .4byte 0x802a7528
-  .4byte 0x802a753c
+	.4byte 0
+	.4byte 0x802a7528
+	.4byte 0x802a753c
 .global __RTTI__9RamStream
 __RTTI__9RamStream:
-  .4byte 0x802a751c
-  .4byte 0x802a7548
-  .4byte 0
+	.4byte 0x802a751c
+	.4byte 0x802a7548
+	.4byte 0
 .global lbl_803DD9D0
 lbl_803DD9D0:
 	.4byte 0x3C4E6F64
@@ -1121,8 +1121,8 @@ lbl_803DD9D0:
 	.4byte 0x802A7700
 .global __RTTI__22CardSelectSetupSection
 __RTTI__22CardSelectSetupSection:
-  .4byte 0x802a76e8
-  .4byte 0x802a7714
+	.4byte 0x802a76e8
+	.4byte 0x802a7714
 .global lbl_803DDA08
 lbl_803DDA08:
 	.4byte 0x25730000

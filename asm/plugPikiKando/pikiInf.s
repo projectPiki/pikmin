@@ -1014,9 +1014,9 @@ lbl_8010516C:
 /* 80105188 001020E8  41 82 00 0C */	beq lbl_80105194
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
-  .4byte 0x70696b69
-  .4byte 0x496e662e
-  .4byte 0x63707000
+	.4byte 0x70696b69
+	.4byte 0x496e662e
+	.4byte 0x63707000
 .global lbl_802B823C
 lbl_802B823C:
 	.4byte 0x436F7265
@@ -1052,134 +1052,134 @@ lbl_802B8254:
 	.4byte 0x00000000
 .global __vt__11CreatureInf
 __vt__11CreatureInf:
-  .4byte __RTTI__11CreatureInf
-  .4byte 0
-  .4byte getAgeNodeType__5ANodeFv
-  .4byte read__8CoreNodeFR18RandomAccessStream
-  .4byte doStore__11CreatureInfFP8Creature
-  .4byte doRestore__11CreatureInfFP8Creature
-  .4byte saveCard__7BaseInfFR18RandomAccessStream
-  .4byte loadCard__7BaseInfFR18RandomAccessStream
-  .4byte 0x43726561
-  .4byte 0x74757265
-  .4byte 0x496e664d
-  .4byte 0x67720000
-  .4byte 0x4d6f6e6f
-  .4byte 0x496e664d
-  .4byte 0x67720000
-  .4byte __RTTI__6InfMgr
-  .4byte 0
-  .4byte 0
-  .4byte __RTTI__6InfMgr
-  .4byte 0
-  .4byte __RTTI__10MonoInfMgr
-  .4byte 0
-  .4byte 0
+	.4byte __RTTI__11CreatureInf
+	.4byte 0
+	.4byte getAgeNodeType__5ANodeFv
+	.4byte read__8CoreNodeFR18RandomAccessStream
+	.4byte doStore__11CreatureInfFP8Creature
+	.4byte doRestore__11CreatureInfFP8Creature
+	.4byte saveCard__7BaseInfFR18RandomAccessStream
+	.4byte loadCard__7BaseInfFR18RandomAccessStream
+	.4byte 0x43726561
+	.4byte 0x74757265
+	.4byte 0x496e664d
+	.4byte 0x67720000
+	.4byte 0x4d6f6e6f
+	.4byte 0x496e664d
+	.4byte 0x67720000
+	.4byte __RTTI__6InfMgr
+	.4byte 0
+	.4byte 0
+	.4byte __RTTI__6InfMgr
+	.4byte 0
+	.4byte __RTTI__10MonoInfMgr
+	.4byte 0
+	.4byte 0
 .global __vt__14CreatureInfMgr
 __vt__14CreatureInfMgr:
-  .4byte __RTTI__14CreatureInfMgr
-  .4byte 0
-  .4byte init__10MonoInfMgrFi
-  .4byte getFreeInf__10MonoInfMgrFv
-  .4byte delInf__10MonoInfMgrFP7BaseInf
-  .4byte getFreeNum__10MonoInfMgrFv
-  .4byte getActiveNum__10MonoInfMgrFv
-  .4byte newInf__14CreatureInfMgrFv
-  .4byte 0x4250696b
-  .4byte 0x69496e66
-  .4byte 0x4d677200
-  .4byte __RTTI__6InfMgr
-  .4byte 0
-  .4byte __RTTI__10MonoInfMgr
-  .4byte 0
-  .4byte 0
+	.4byte __RTTI__14CreatureInfMgr
+	.4byte 0
+	.4byte init__10MonoInfMgrFi
+	.4byte getFreeInf__10MonoInfMgrFv
+	.4byte delInf__10MonoInfMgrFP7BaseInf
+	.4byte getFreeNum__10MonoInfMgrFv
+	.4byte getActiveNum__10MonoInfMgrFv
+	.4byte newInf__14CreatureInfMgrFv
+	.4byte 0x4250696b
+	.4byte 0x69496e66
+	.4byte 0x4d677200
+	.4byte __RTTI__6InfMgr
+	.4byte 0
+	.4byte __RTTI__10MonoInfMgr
+	.4byte 0
+	.4byte 0
 .global __vt__11BPikiInfMgr
 __vt__11BPikiInfMgr:
-  .4byte __RTTI__11BPikiInfMgr
-  .4byte 0
-  .4byte init__10MonoInfMgrFi
-  .4byte getFreeInf__10MonoInfMgrFv
-  .4byte delInf__10MonoInfMgrFP7BaseInf
-  .4byte getFreeNum__10MonoInfMgrFv
-  .4byte getActiveNum__10MonoInfMgrFv
-  .4byte newInf__11BPikiInfMgrFv
+	.4byte __RTTI__11BPikiInfMgr
+	.4byte 0
+	.4byte init__10MonoInfMgrFi
+	.4byte getFreeInf__10MonoInfMgrFv
+	.4byte delInf__10MonoInfMgrFP7BaseInf
+	.4byte getFreeNum__10MonoInfMgrFv
+	.4byte getActiveNum__10MonoInfMgrFv
+	.4byte newInf__11BPikiInfMgrFv
 .global __vt__10MonoInfMgr
 __vt__10MonoInfMgr:
-  .4byte __RTTI__10MonoInfMgr
-  .4byte 0
-  .4byte init__10MonoInfMgrFi
-  .4byte getFreeInf__10MonoInfMgrFv
-  .4byte delInf__10MonoInfMgrFP7BaseInf
-  .4byte getFreeNum__10MonoInfMgrFv
-  .4byte getActiveNum__10MonoInfMgrFv
-  .4byte 0
+	.4byte __RTTI__10MonoInfMgr
+	.4byte 0
+	.4byte init__10MonoInfMgrFi
+	.4byte getFreeInf__10MonoInfMgrFv
+	.4byte delInf__10MonoInfMgrFP7BaseInf
+	.4byte getFreeNum__10MonoInfMgrFv
+	.4byte getActiveNum__10MonoInfMgrFv
+	.4byte 0
 .global __vt__6InfMgr
 __vt__6InfMgr:
-  .4byte __RTTI__6InfMgr
-  .4byte 0
-  .4byte init__6InfMgrFi
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0x4250696b
-  .4byte 0x69496e66
-  .4byte 0
-  .4byte 0x803e0a1c
-  .4byte 0
-  .4byte 0x803e0a24
-  .4byte 0
-  .4byte __RTTI__7BaseInf
-  .4byte 0
-  .4byte 0
+	.4byte __RTTI__6InfMgr
+	.4byte 0
+	.4byte init__6InfMgrFi
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0x4250696b
+	.4byte 0x69496e66
+	.4byte 0
+	.4byte 0x803e0a1c
+	.4byte 0
+	.4byte 0x803e0a24
+	.4byte 0
+	.4byte __RTTI__7BaseInf
+	.4byte 0
+	.4byte 0
 .global __vt__8BPikiInf
 __vt__8BPikiInf:
-  .4byte __RTTI__8BPikiInf
-  .4byte 0
-  .4byte getAgeNodeType__5ANodeFv
-  .4byte read__8CoreNodeFR18RandomAccessStream
-  .4byte doStore__8BPikiInfFP8Creature
-  .4byte doRestore__8BPikiInfFP8Creature
-  .4byte saveCard__8BPikiInfFR18RandomAccessStream
-  .4byte loadCard__8BPikiInfFR18RandomAccessStream
+	.4byte __RTTI__8BPikiInf
+	.4byte 0
+	.4byte getAgeNodeType__5ANodeFv
+	.4byte read__8CoreNodeFR18RandomAccessStream
+	.4byte doStore__8BPikiInfFP8Creature
+	.4byte doRestore__8BPikiInfFP8Creature
+	.4byte saveCard__8BPikiInfFR18RandomAccessStream
+	.4byte loadCard__8BPikiInfFR18RandomAccessStream
 .global __vt__7BaseInf
 __vt__7BaseInf:
-  .4byte __RTTI__7BaseInf
-  .4byte 0
-  .4byte getAgeNodeType__5ANodeFv
-  .4byte read__8CoreNodeFR18RandomAccessStream
-  .4byte doStore__7BaseInfFP8Creature
-  .4byte doRestore__7BaseInfFP8Creature
-  .4byte saveCard__7BaseInfFR18RandomAccessStream
-  .4byte loadCard__7BaseInfFR18RandomAccessStream
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0
+	.4byte __RTTI__7BaseInf
+	.4byte 0
+	.4byte getAgeNodeType__5ANodeFv
+	.4byte read__8CoreNodeFR18RandomAccessStream
+	.4byte doStore__7BaseInfFP8Creature
+	.4byte doRestore__7BaseInfFP8Creature
+	.4byte saveCard__7BaseInfFR18RandomAccessStream
+	.4byte loadCard__7BaseInfFR18RandomAccessStream
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 	.4byte 0x803E09B0
 	.4byte 0x802B7FB4
 .global __RTTI__9TopAction
 __RTTI__9TopAction:
-  .4byte 0x802b7f98
-  .4byte 0x802b7fc0
-  .4byte 0x802b8038
-  .4byte 0
+	.4byte 0x802b7f98
+	.4byte 0x802b7fc0
+	.4byte 0x802b8038
+	.4byte 0
 .global __RTTI__Q29TopAction14MotionListener
 __RTTI__Q29TopAction14MotionListener:
-  .4byte 0x802b8058
-  .4byte 0x802b8074
+	.4byte 0x802b8058
+	.4byte 0x802b8074
 .global __RTTI__8OrAction
 __RTTI__8OrAction:
-  .4byte 0x802b808c
-  .4byte 0x802b8098
-  .4byte 0x802b8110
-  .4byte 0x802b811c
+	.4byte 0x802b808c
+	.4byte 0x802b8098
+	.4byte 0x802b8110
+	.4byte 0x802b811c
 .global lbl_803E09E8
 lbl_803E09E8:
 	.4byte 0x00000000
@@ -1221,13 +1221,13 @@ lbl_803E0A10:
 	.4byte 0x496E6600
 .global __RTTI__7BaseInf
 __RTTI__7BaseInf:
-  .4byte 0x803e0a2c
-  .4byte 0x802b8278
+	.4byte 0x803e0a2c
+	.4byte 0x802b8278
 .global __RTTI__11CreatureInf
 __RTTI__11CreatureInf:
-  .4byte 0x802b8260
-  .4byte 0x802b828c
-  .4byte 0x496e664d
+	.4byte 0x802b8260
+	.4byte 0x802b828c
+	.4byte 0x496e664d
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .global lbl_803EADB4

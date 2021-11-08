@@ -432,15 +432,15 @@ __ct__9EffectMgrFv:
 /* 8019C218 00199178  39 06 00 60 */	addi r8, r6, 0x60
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
-  .4byte 0x636f6e74
-  .4byte 0x726f6c6c
-  .4byte 0x65724d67
-  .4byte 0x722e6370
-  .4byte 0x70000000
-  .4byte 0x436f6e74
-  .4byte 0x726f6c6c
-  .4byte 0x65724d67
-  .4byte 0x72000000
+	.4byte 0x636f6e74
+	.4byte 0x726f6c6c
+	.4byte 0x65724d67
+	.4byte 0x722e6370
+	.4byte 0x70000000
+	.4byte 0x436f6e74
+	.4byte 0x726f6c6c
+	.4byte 0x65724d67
+	.4byte 0x72000000
 .global padChannels
 padChannels:
 	.4byte 0x80000000
@@ -449,12 +449,12 @@ padChannels:
 	.4byte 0x10000000
 .global __vt__13ControllerMgr
 __vt__13ControllerMgr:
-  .4byte __RTTI__13ControllerMgr
-  .4byte 0
-  .4byte keyDown__13ControllerMgrFi
+	.4byte __RTTI__13ControllerMgr
+	.4byte 0
+	.4byte keyDown__13ControllerMgrFi
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
-  .4byte 0
+	.4byte 0
 .global __RTTI__6System
 __RTTI__6System:
-  .4byte 0x803dd4d0
+	.4byte 0x803dd4d0

@@ -521,4 +521,4 @@ lbl_801D9404:
 	.4byte 0x802AE764
 .global __RTTI__10AIConstant
 __RTTI__10AIConstant:
-  .4byte 0x802ae740
+	.4byte 0x802ae740

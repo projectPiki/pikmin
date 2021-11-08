@@ -3,24 +3,24 @@
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .global "__RTTI__Q29@unnamed@15SunBaseCallBack"
 "__RTTI__Q29@unnamed@15SunBaseCallBack":
-  .4byte 0x802e0f88
-  .4byte 0x802e0fa4
+	.4byte 0x802e0f88
+	.4byte 0x802e0fa4
 .global "__RTTI__Q23zen12FigureTex<s>"
 "__RTTI__Q23zen12FigureTex<s>":
-  .4byte 0x802e1004
-  .4byte 0x802e101c
+	.4byte 0x802e1004
+	.4byte 0x802e101c
 .global "__RTTI__Q23zen20NumberPicCallBack<s>"
 "__RTTI__Q23zen20NumberPicCallBack<s>":
-  .4byte 0x802e0fe4
-  .4byte 0x802e1028
+	.4byte 0x802e0fe4
+	.4byte 0x802e1028
 .global "__RTTI__Q29@unnamed@23MapPikminWindowCallBack"
 "__RTTI__Q29@unnamed@23MapPikminWindowCallBack":
-  .4byte 0x802e1064
-  .4byte 0x802e1088
+	.4byte 0x802e1064
+	.4byte 0x802e1088
 .global "__RTTI__Q29@unnamed@16PikiIconCallBack"
 "__RTTI__Q29@unnamed@16PikiIconCallBack":
-  .4byte 0x802e10b4
-  .4byte 0x802e10d0
+	.4byte 0x802e10b4
+	.4byte 0x802e10d0
 .global TRI_NUM__Q23zen14DrawLifeCircle
 TRI_NUM__Q23zen14DrawLifeCircle:
 	.4byte 0x43000000
@@ -84,12 +84,12 @@ lbl_803E679C:
 	.4byte 0x802E12B8
 .global __RTTI__Q23zen13StickCallBack
 __RTTI__Q23zen13StickCallBack:
-  .4byte 0x802e1264
-  .4byte 0x802e12cc
+	.4byte 0x802e1264
+	.4byte 0x802e12cc
 .global __RTTI__Q23zen18ArrowBasicCallBack
 __RTTI__Q23zen18ArrowBasicCallBack:
-  .4byte 0x802e1310
-  .4byte 0
+	.4byte 0x802e1310
+	.4byte 0
 .global __RTTI__Q23zen15ArrowLRCallBack
 __RTTI__Q23zen15ArrowLRCallBack:
-  .4byte 0x802e12f8
+	.4byte 0x802e12f8

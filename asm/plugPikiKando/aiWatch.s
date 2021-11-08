@@ -315,9 +315,9 @@ lbl_80101CAC:
 /* 80101CD8 000FEC38  54 00 10 3A */	slwi r0, r0, 2
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
-  .4byte 0x61695761
-  .4byte 0x7463682e
-  .4byte 0x63707000
+	.4byte 0x61695761
+	.4byte 0x7463682e
+	.4byte 0x63707000
 .global lbl_802B7C44
 lbl_802B7C44:
 	.4byte 0x77617463
@@ -340,83 +340,83 @@ lbl_802B7C44:
 	.4byte 0x00000000
 .global __vt__8ActWatch
 __vt__8ActWatch:
-  .4byte __RTTI__8ActWatch
-  .4byte 0
-  .4byte "procMsg__15Receiver<4Piki>FP4PikiP3Msg"
-  .4byte "procBounceMsg__15Receiver<4Piki>FP4PikiP9MsgBounce"
-  .4byte "procStickMsg__15Receiver<4Piki>FP4PikiP8MsgStick"
-  .4byte "procHangMsg__15Receiver<4Piki>FP4PikiP7MsgHang"
-  .4byte "procTargetMsg__15Receiver<4Piki>FP4PikiP9MsgTarget"
-  .4byte "procCollideMsg__15Receiver<4Piki>FP4PikiP10MsgCollide"
-  .4byte "procAnimMsg__15Receiver<4Piki>FP4PikiP7MsgAnim"
-  .4byte "procDamageMsg__15Receiver<4Piki>FP4PikiP9MsgDamage"
-  .4byte "procWallMsg__15Receiver<4Piki>FP4PikiP7MsgWall"
-  .4byte "procOffWallMsg__15Receiver<4Piki>FP4PikiP10MsgOffWall"
-  .4byte "procUserMsg__15Receiver<4Piki>FP4PikiP7MsgUser"
-  .4byte "procGroundMsg__15Receiver<4Piki>FP4PikiP9MsgGround"
-  .4byte defaultInitialiser__6ActionFv
-  .4byte dump__6ActionFv
-  .4byte draw__6ActionFR8Graphics
-  .4byte __dt__8ActWatchFv
-  .4byte init__8ActWatchFP8Creature
-  .4byte exec__8ActWatchFv
-  .4byte cleanup__8ActWatchFv
-  .4byte resume__6ActionFv
-  .4byte restart__6ActionFv
-  .4byte resumable__6ActionFv
-  .4byte getInfo__8ActWatchFPc
-  .4byte 0x41637457
-  .4byte 0x61746368
-  .4byte 0x3a3a496e
-  .4byte 0x69746961
-  .4byte 0x6c697365
-  .4byte 0x72000000
-  .4byte 0x41637469
-  .4byte 0x6f6e3a3a
-  .4byte 0x496e6974
-  .4byte 0x69616c69
-  .4byte 0x73657200
-  .4byte 0x803e08dc
-  .4byte 0
-  .4byte 0
+	.4byte __RTTI__8ActWatch
+	.4byte 0
+	.4byte "procMsg__15Receiver<4Piki>FP4PikiP3Msg"
+	.4byte "procBounceMsg__15Receiver<4Piki>FP4PikiP9MsgBounce"
+	.4byte "procStickMsg__15Receiver<4Piki>FP4PikiP8MsgStick"
+	.4byte "procHangMsg__15Receiver<4Piki>FP4PikiP7MsgHang"
+	.4byte "procTargetMsg__15Receiver<4Piki>FP4PikiP9MsgTarget"
+	.4byte "procCollideMsg__15Receiver<4Piki>FP4PikiP10MsgCollide"
+	.4byte "procAnimMsg__15Receiver<4Piki>FP4PikiP7MsgAnim"
+	.4byte "procDamageMsg__15Receiver<4Piki>FP4PikiP9MsgDamage"
+	.4byte "procWallMsg__15Receiver<4Piki>FP4PikiP7MsgWall"
+	.4byte "procOffWallMsg__15Receiver<4Piki>FP4PikiP10MsgOffWall"
+	.4byte "procUserMsg__15Receiver<4Piki>FP4PikiP7MsgUser"
+	.4byte "procGroundMsg__15Receiver<4Piki>FP4PikiP9MsgGround"
+	.4byte defaultInitialiser__6ActionFv
+	.4byte dump__6ActionFv
+	.4byte draw__6ActionFR8Graphics
+	.4byte __dt__8ActWatchFv
+	.4byte init__8ActWatchFP8Creature
+	.4byte exec__8ActWatchFv
+	.4byte cleanup__8ActWatchFv
+	.4byte resume__6ActionFv
+	.4byte restart__6ActionFv
+	.4byte resumable__6ActionFv
+	.4byte getInfo__8ActWatchFPc
+	.4byte 0x41637457
+	.4byte 0x61746368
+	.4byte 0x3a3a496e
+	.4byte 0x69746961
+	.4byte 0x6c697365
+	.4byte 0x72000000
+	.4byte 0x41637469
+	.4byte 0x6f6e3a3a
+	.4byte 0x496e6974
+	.4byte 0x69616c69
+	.4byte 0x73657200
+	.4byte 0x803e08dc
+	.4byte 0
+	.4byte 0
 .global __vt__Q28ActWatch11Initialiser
 __vt__Q28ActWatch11Initialiser:
-  .4byte __RTTI__Q28ActWatch11Initialiser
-  .4byte 0
-  .4byte initialise__Q28ActWatch11InitialiserFP6Action
-  .4byte 0x50616e69
-  .4byte 0x416e696d
-  .4byte 0x4b65794c
-  .4byte 0x69737465
-  .4byte 0x6e657200
-  .4byte 0
-  .4byte 0
-  .4byte 0
-  .4byte 0x41637457
-  .4byte 0x61746368
-  .4byte 0x3a3a416e
-  .4byte 0x696d4c69
-  .4byte 0x7374656e
-  .4byte 0x65720000
-  .4byte 0x803e08ec
-  .4byte 0
-  .4byte 0
+	.4byte __RTTI__Q28ActWatch11Initialiser
+	.4byte 0
+	.4byte initialise__Q28ActWatch11InitialiserFP6Action
+	.4byte 0x50616e69
+	.4byte 0x416e696d
+	.4byte 0x4b65794c
+	.4byte 0x69737465
+	.4byte 0x6e657200
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0x41637457
+	.4byte 0x61746368
+	.4byte 0x3a3a416e
+	.4byte 0x696d4c69
+	.4byte 0x7374656e
+	.4byte 0x65720000
+	.4byte 0x803e08ec
+	.4byte 0
+	.4byte 0
 .global __vt__Q28ActWatch12AnimListener
 __vt__Q28ActWatch12AnimListener:
-  .4byte __RTTI__Q28ActWatch12AnimListener
-  .4byte 0
-  .4byte animationKeyUpdated__Q28ActWatch12AnimListenerFR16PaniAnimKeyEvent
-  .4byte 0x800a7908
-  .4byte 0x800a7930
-  .4byte 0x800a7944
-  .4byte 0x800a7958
-  .4byte 0x800a796c
-  .4byte 0x800a7980
-  .4byte 0x800a7994
-  .4byte 0x800a79a8
-  .4byte 0x800a791c
-  .4byte 0x800a79d0
-  .4byte 0x800a79bc
+	.4byte __RTTI__Q28ActWatch12AnimListener
+	.4byte 0
+	.4byte animationKeyUpdated__Q28ActWatch12AnimListenerFR16PaniAnimKeyEvent
+	.4byte 0x800a7908
+	.4byte 0x800a7930
+	.4byte 0x800a7944
+	.4byte 0x800a7958
+	.4byte 0x800a796c
+	.4byte 0x800a7980
+	.4byte 0x800a7994
+	.4byte 0x800a79a8
+	.4byte 0x800a791c
+	.4byte 0x800a79d0
+	.4byte 0x800a79bc
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 	.4byte 0x00000000
@@ -426,15 +426,15 @@ __vt__Q28ActWatch12AnimListener:
 	.4byte 0x802B7A94
 .global __RTTI__16ActShootCreature
 __RTTI__16ActShootCreature:
-  .4byte 0x802b7a5c
-  .4byte 0x802b7aa0
-  .4byte 0x802b7b48
-  .4byte 0x802b7b54
+	.4byte 0x802b7a5c
+	.4byte 0x802b7aa0
+	.4byte 0x802b7b48
+	.4byte 0x802b7b54
 .global __RTTI__8ActShoot
 __RTTI__8ActShoot:
-  .4byte 0x802b7b3c
-  .4byte 0x802b7b68
-  .4byte 0
+	.4byte 0x802b7b3c
+	.4byte 0x802b7b68
+	.4byte 0
 .global lbl_803E08A8
 lbl_803E08A8:
 	.4byte 0x00000000

@@ -47,23 +47,23 @@ lbl_803E73EC:
 	.4byte 0x00000000
 .global __RTTI__17TAIusubaAnimation
 __RTTI__17TAIusubaAnimation:
-  .4byte 0x802e6568
-  .4byte 0x802e658c
-  .4byte 0x802e65b4
-  .4byte 0
-  .4byte 0x802e65c0
-  .4byte 0x802e65cc
+	.4byte 0x802e6568
+	.4byte 0x802e658c
+	.4byte 0x802e65b4
+	.4byte 0
+	.4byte 0x802e65c0
+	.4byte 0x802e65cc
 .global __RTTI__12TAIAflyUsuba
 __RTTI__12TAIAflyUsuba:
-  .4byte 0x802e65a4
-  .4byte 0x802e65d8
-  .4byte 0x802e6638
-  .4byte 0
-  .4byte 0x802e6648
-  .4byte 0x802e6654
+	.4byte 0x802e65a4
+	.4byte 0x802e65d8
+	.4byte 0x802e6638
+	.4byte 0
+	.4byte 0x802e6648
+	.4byte 0x802e6654
 .global __RTTI__16TAIusubaStrategy
 __RTTI__16TAIusubaStrategy:
-  .4byte 0x802e6624
-  .4byte 0x802e6660
-  .4byte 0x414e6f64
-  .4byte 0x65000000
+	.4byte 0x802e6624
+	.4byte 0x802e6660
+	.4byte 0x414e6f64
+	.4byte 0x65000000

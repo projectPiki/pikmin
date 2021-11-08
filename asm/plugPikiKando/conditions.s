@@ -42,44 +42,44 @@ lbl_801198D8:
 /* 801198E4 00116844  4B F2 D7 21 */	bl alloc__6SystemFUl
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
-  .4byte 0x436e6453
-  .4byte 0x7469636b
-  .4byte 0x4d6f7574
-  .4byte 0x68000000
-  .4byte 0x436f6e64
-  .4byte 0x6974696f
-  .4byte 0x6e000000
-  .4byte 0x803e1290
-  .4byte 0
-  .4byte 0
+	.4byte 0x436e6453
+	.4byte 0x7469636b
+	.4byte 0x4d6f7574
+	.4byte 0x68000000
+	.4byte 0x436f6e64
+	.4byte 0x6974696f
+	.4byte 0x6e000000
+	.4byte 0x803e1290
+	.4byte 0
+	.4byte 0
 .global __vt__13CndStickMouth
 __vt__13CndStickMouth:
-  .4byte __RTTI__13CndStickMouth
-  .4byte 0
-  .4byte satisfy__13CndStickMouthFP8Creature
-  .4byte 0x436e6449
-  .4byte 0x73417461
-  .4byte 0x72690000
-  .4byte 0x803e1290
-  .4byte 0
-  .4byte 0
+	.4byte __RTTI__13CndStickMouth
+	.4byte 0
+	.4byte satisfy__13CndStickMouthFP8Creature
+	.4byte 0x436e6449
+	.4byte 0x73417461
+	.4byte 0x72690000
+	.4byte 0x803e1290
+	.4byte 0
+	.4byte 0
 .global __vt__10CndIsAtari
 __vt__10CndIsAtari:
-  .4byte __RTTI__10CndIsAtari
-  .4byte 0
-  .4byte satisfy__10CndIsAtariFP8Creature
-  .4byte 0x436e6449
-  .4byte 0x73566973
-  .4byte 0x69626c65
-  .4byte 0
-  .4byte 0x803e1290
-  .4byte 0
-  .4byte 0
+	.4byte __RTTI__10CndIsAtari
+	.4byte 0
+	.4byte satisfy__10CndIsAtariFP8Creature
+	.4byte 0x436e6449
+	.4byte 0x73566973
+	.4byte 0x69626c65
+	.4byte 0
+	.4byte 0x803e1290
+	.4byte 0
+	.4byte 0
 .global __vt__12CndIsVisible
 __vt__12CndIsVisible:
-  .4byte __RTTI__12CndIsVisible
-  .4byte 0
-  .4byte satisfy__12CndIsVisibleFP8Creature
+	.4byte __RTTI__12CndIsVisible
+	.4byte 0
+	.4byte satisfy__12CndIsVisibleFP8Creature
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 	.4byte 0x802BA3DC

@@ -10,13 +10,13 @@
 	.4byte 0x802D2628
 .global __RTTI__Q23zen13OgTestSection
 __RTTI__Q23zen13OgTestSection:
-  .4byte 0x802d25e8
-  .4byte 0x802d2644
+	.4byte 0x802d25e8
+	.4byte 0x802d2644
 .global __RTTI__Q23zen12OgTestScreen
 __RTTI__Q23zen12OgTestScreen:
-  .4byte 0x802d26d0
-  .4byte 0x802d26e4
-  .4byte 0
+	.4byte 0x802d26d0
+	.4byte 0x802d26e4
+	.4byte 0
 .global lbl_803E5678
 lbl_803E5678:
 	.4byte 0x706B2530

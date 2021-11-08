@@ -17,18 +17,18 @@ lbl_803E4B44:
 	.4byte 0x00000000
 .global __RTTI__30SpiderGenHalfDeadCallBackJoint
 __RTTI__30SpiderGenHalfDeadCallBackJoint:
-  .4byte 0x802cf5d0
-  .4byte 0x802cf61c
+	.4byte 0x802cf5d0
+	.4byte 0x802cf61c
 .global __RTTI__23SpiderGenPerishCallBack
 __RTTI__23SpiderGenPerishCallBack:
-  .4byte 0x802cf634
-  .4byte 0x802cf64c
+	.4byte 0x802cf634
+	.4byte 0x802cf64c
 .global __RTTI__23SpiderGenRippleCallBack
 __RTTI__23SpiderGenRippleCallBack:
-  .4byte 0x802cf664
-  .4byte 0x802cf67c
-  .4byte 0x536e616b
-  .4byte 0x65000000
+	.4byte 0x802cf664
+	.4byte 0x802cf67c
+	.4byte 0x536e616b
+	.4byte 0x65000000
 .global lbl_803E4B70
 lbl_803E4B70:
 	.4byte 0x70303000
@@ -185,15 +185,15 @@ lbl_803E4C2C:
 	.4byte 0x802CF6F4
 .global __RTTI__5Snake
 __RTTI__5Snake:
-  .4byte 0x803e4b68
-  .4byte 0x802cf710
+	.4byte 0x803e4b68
+	.4byte 0x802cf710
 .global __RTTI__15CollPartUpdater
 __RTTI__15CollPartUpdater:
-  .4byte 0x802cf874
-  .4byte 0
+	.4byte 0x802cf874
+	.4byte 0
 .global __RTTI__Q25Snake18BoundSphereUpdater
 __RTTI__Q25Snake18BoundSphereUpdater:
-  .4byte 0x802cf858
-  .4byte 0x802cf884
-  .4byte 0x802cf8bc
-  .4byte 0
+	.4byte 0x802cf858
+	.4byte 0x802cf884
+	.4byte 0x802cf8bc
+	.4byte 0

@@ -5036,46 +5036,46 @@ lbl_80222318:
 	.4byte 0x00000000
 .global __vt__9RigidBody
 __vt__9RigidBody:
-  .4byte __RTTI__9RigidBody
-  .4byte 0
-  .4byte getAgeNodeType__5ANodeFv
-  .4byte read__8CoreNodeFR18RandomAccessStream
-  .4byte update__4NodeFv
-  .4byte draw__4NodeFR8Graphics
-  .4byte render__9RigidBodyFR8Graphics
-  .4byte concat__4NodeFv
-  .4byte concat__4NodeFR3VQS
-  .4byte concat__4NodeFR3SRT
-  .4byte concat__4NodeFR8Matrix4f
-  .4byte getModelMatrix__4NodeFv
-  .4byte initDimensions__9RigidBodyFfff
-  .4byte computeForces__9RigidBodyFif
-  .4byte integrate__9RigidBodyFiif
-  .4byte resolveCollisions__9RigidBodyFiR9Collision
-  .4byte calculateVertices__9RigidBodyFi
-  .4byte initCollisions__9RigidBodyFi
-  .4byte checkForCollisions__9RigidBodyFiR9CollState
-  .4byte updateVecQuats__9RigidBodyFif
-  .4byte updateViewInfo__9RigidBodyFii
-  .4byte applyBodyFriction__9RigidBodyFiR8Vector3fR8Vector3fR8Vector3f
-  .4byte makeBodyQuat__9RigidBodyFR4Quat
-  .4byte initRender__9RigidBodyFi
-  .4byte shadrender__9RigidBodyFR8GraphicsP11LightCamera
-  .4byte getViewScale__9RigidBodyFv
-  .4byte updateCont__9RigidBodyFv
-  .4byte applyGroundForces__9RigidBodyFiP9CollGroup
+	.4byte __RTTI__9RigidBody
+	.4byte 0
+	.4byte getAgeNodeType__5ANodeFv
+	.4byte read__8CoreNodeFR18RandomAccessStream
+	.4byte update__4NodeFv
+	.4byte draw__4NodeFR8Graphics
+	.4byte render__9RigidBodyFR8Graphics
+	.4byte concat__4NodeFv
+	.4byte concat__4NodeFR3VQS
+	.4byte concat__4NodeFR3SRT
+	.4byte concat__4NodeFR8Matrix4f
+	.4byte getModelMatrix__4NodeFv
+	.4byte initDimensions__9RigidBodyFfff
+	.4byte computeForces__9RigidBodyFif
+	.4byte integrate__9RigidBodyFiif
+	.4byte resolveCollisions__9RigidBodyFiR9Collision
+	.4byte calculateVertices__9RigidBodyFi
+	.4byte initCollisions__9RigidBodyFi
+	.4byte checkForCollisions__9RigidBodyFiR9CollState
+	.4byte updateVecQuats__9RigidBodyFif
+	.4byte updateViewInfo__9RigidBodyFii
+	.4byte applyBodyFriction__9RigidBodyFiR8Vector3fR8Vector3fR8Vector3f
+	.4byte makeBodyQuat__9RigidBodyFR4Quat
+	.4byte initRender__9RigidBodyFi
+	.4byte shadrender__9RigidBodyFR8GraphicsP11LightCamera
+	.4byte getViewScale__9RigidBodyFv
+	.4byte updateCont__9RigidBodyFv
+	.4byte applyGroundForces__9RigidBodyFiP9CollGroup
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
-  .4byte 0x802a5d5c
+	.4byte 0x802a5d5c
 .global __RTTI__8Graphics_1
 __RTTI__8Graphics_1:
-  .4byte 0x802a5d9c
-  .4byte 0
+	.4byte 0x802a5d9c
+	.4byte 0
 .global __RTTI__11DGXGraphics
 __RTTI__11DGXGraphics:
-  .4byte 0x802a56f8
-  .4byte 0x802a5da8
-  .4byte 0
+	.4byte 0x802a56f8
+	.4byte 0x802a5da8
+	.4byte 0
 .global lbl_803DD638
 lbl_803DD638:
 	.4byte 0x47000000

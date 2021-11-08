@@ -853,6 +853,6 @@ lbl_801E93EC:
 	.4byte 0x802AF950
 .global __RTTI__11DynParticle
 __RTTI__11DynParticle:
-  .4byte 0x802af944
-  .4byte 0x802af95c
-  .4byte 0
+	.4byte 0x802af944
+	.4byte 0x802af95c
+	.4byte 0

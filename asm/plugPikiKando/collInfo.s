@@ -7112,31 +7112,31 @@ lbl_801DED6C:
 /* 801DED8C 001DBCEC  48 00 00 08 */	b lbl_801DED94
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
-  .4byte 0x636f6c6c
-  .4byte 0x496e666f
-  .4byte 0x2e637070
-  .4byte 0
-  .4byte 0x636f6c6c
-  .4byte 0x496e666f
-  .4byte 0
-  .4byte 0x434f4c4c
-  .4byte 0x4953494f
-  .4byte 0x4e000000
-  .4byte 0x424f554e
-  .4byte 0x44535048
-  .4byte 0x45524500
-  .4byte 0x52454645
-  .4byte 0x52454e43
-  .4byte 0x45000000
-  .4byte 0x504c4154
-  .4byte 0x464f524d
-  .4byte 0
-  .4byte 0x43594c49
-  .4byte 0x4e444552
-  .4byte 0
-  .4byte 0x54554245
-  .4byte 0x5f434849
-  .4byte 0x4c440000
+	.4byte 0x636f6c6c
+	.4byte 0x496e666f
+	.4byte 0x2e637070
+	.4byte 0
+	.4byte 0x636f6c6c
+	.4byte 0x496e666f
+	.4byte 0
+	.4byte 0x434f4c4c
+	.4byte 0x4953494f
+	.4byte 0x4e000000
+	.4byte 0x424f554e
+	.4byte 0x44535048
+	.4byte 0x45524500
+	.4byte 0x52454645
+	.4byte 0x52454e43
+	.4byte 0x45000000
+	.4byte 0x504c4154
+	.4byte 0x464f524d
+	.4byte 0
+	.4byte 0x43594c49
+	.4byte 0x4e444552
+	.4byte 0
+	.4byte 0x54554245
+	.4byte 0x5f434849
+	.4byte 0x4c440000
 .global _typeStr
 _typeStr:
 	.4byte 0x802AF00C
