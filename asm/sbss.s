@@ -1251,9 +1251,3 @@ Reschedule:
 .global serEnabled
 serEnabled:
 	.skip 0x8
-.global __DBInterface
-__DBInterface:
-	.skip 0x4
-.global DBVerbose
-DBVerbose:
-	.skip 0x4

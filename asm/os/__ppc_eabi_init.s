@@ -1,5 +1,4 @@
 .include "macros.inc"
-
 .section .init, "ax"  # 0x80003100 - 0x800054C0
 .global __init_hardware
 __init_hardware:
@@ -28,3 +27,54 @@ lbl_80003300:
 /* 80003314 00000314  40 80 FF EC */	bge lbl_80003300
 /* 80003318 00000318  4C 00 01 2C */	isync 
 /* 8000331C 0000031C  4E 80 00 20 */	blr 
+
+.section .text, "ax"  # 0x80005560 - 0x80221F60
+.global __init_user
+__init_user:
+/* 801FDA14 001FA974  7C 08 02 A6 */	mflr r0
+/* 801FDA18 001FA978  90 01 00 04 */	stw r0, 4(r1)
+/* 801FDA1C 001FA97C  94 21 FF F8 */	stwu r1, -8(r1)
+/* 801FDA20 001FA980  48 00 00 15 */	bl __init_cpp
+/* 801FDA24 001FA984  80 01 00 0C */	lwz r0, 0xc(r1)
+/* 801FDA28 001FA988  38 21 00 08 */	addi r1, r1, 8
+/* 801FDA2C 001FA98C  7C 08 03 A6 */	mtlr r0
+/* 801FDA30 001FA990  4E 80 00 20 */	blr 
+
+.global __init_cpp
+__init_cpp:
+/* 801FDA34 001FA994  7C 08 02 A6 */	mflr r0
+/* 801FDA38 001FA998  90 01 00 04 */	stw r0, 4(r1)
+/* 801FDA3C 001FA99C  94 21 FF F0 */	stwu r1, -0x10(r1)
+/* 801FDA40 001FA9A0  93 E1 00 0C */	stw r31, 0xc(r1)
+/* 801FDA44 001FA9A4  3C 60 80 22 */	lis r3, __init_cpp_exceptions_reference@ha
+/* 801FDA48 001FA9A8  38 03 1F 60 */	addi r0, r3, __init_cpp_exceptions_reference@l
+/* 801FDA4C 001FA9AC  7C 1F 03 78 */	mr r31, r0
+/* 801FDA50 001FA9B0  48 00 00 04 */	b lbl_801FDA54
+lbl_801FDA54:
+/* 801FDA54 001FA9B4  48 00 00 04 */	b lbl_801FDA58
+lbl_801FDA58:
+/* 801FDA58 001FA9B8  48 00 00 10 */	b lbl_801FDA68
+lbl_801FDA5C:
+/* 801FDA5C 001FA9BC  7D 88 03 A6 */	mtlr r12
+/* 801FDA60 001FA9C0  4E 80 00 21 */	blrl 
+/* 801FDA64 001FA9C4  3B FF 00 04 */	addi r31, r31, 4
+lbl_801FDA68:
+/* 801FDA68 001FA9C8  81 9F 00 00 */	lwz r12, 0(r31)
+/* 801FDA6C 001FA9CC  28 0C 00 00 */	cmplwi r12, 0
+/* 801FDA70 001FA9D0  40 82 FF EC */	bne lbl_801FDA5C
+/* 801FDA74 001FA9D4  80 01 00 14 */	lwz r0, 0x14(r1)
+/* 801FDA78 001FA9D8  83 E1 00 0C */	lwz r31, 0xc(r1)
+/* 801FDA7C 001FA9DC  38 21 00 10 */	addi r1, r1, 0x10
+/* 801FDA80 001FA9E0  7C 08 03 A6 */	mtlr r0
+/* 801FDA84 001FA9E4  4E 80 00 20 */	blr 
+
+.global _ExitProcess
+_ExitProcess:
+/* 801FDA88 001FA9E8  7C 08 02 A6 */	mflr r0
+/* 801FDA8C 001FA9EC  90 01 00 04 */	stw r0, 4(r1)
+/* 801FDA90 001FA9F0  94 21 FF F8 */	stwu r1, -8(r1)
+/* 801FDA94 001FA9F4  4B FF 7E E9 */	bl PPCHalt
+/* 801FDA98 001FA9F8  80 01 00 0C */	lwz r0, 0xc(r1)
+/* 801FDA9C 001FA9FC  38 21 00 08 */	addi r1, r1, 8
+/* 801FDAA0 001FAA00  7C 08 03 A6 */	mtlr r0
+/* 801FDAA4 001FAA04  4E 80 00 20 */	blr 

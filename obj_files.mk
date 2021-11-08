@@ -1,7 +1,6 @@
 # Linker order for every file, passed to the Metrowerks linker.
 
 GROUP_0_FILES :=\
-	$(BUILD_DIR)/asm/init.o\
 	$(BUILD_DIR)/asm/ctors.o\
 	$(BUILD_DIR)/asm/dtors.o\
 	$(BUILD_DIR)/asm/rodata.o\
@@ -44,6 +43,9 @@ TEXT_O_FILES :=\
 	$(BUILD_DIR)/asm/plugPikiNishimura/SpiderAi.o\
 	$(BUILD_DIR)/asm/plugPikiNishimura/SpiderLeg.o\
 	$(BUILD_DIR)/asm/text_Nishimura.o\
+	$(BUILD_DIR)/src/os/__start.o\
+	$(BUILD_DIR)/asm/os/__ppc_eabi_init.o\
+	$(BUILD_DIR)/asm/db/db.o\
 	$(BUILD_DIR)/asm/mtx/mtx.o\
 	$(BUILD_DIR)/asm/mtx/mtx44.o\
 	$(BUILD_DIR)/asm/mtx/vec.o\
