@@ -21798,7 +21798,3 @@ lbl_803E7708:
 fontEncode$55:
 	.4byte 0xFFFF0000
 	.4byte 0x00000000
-.global lbl_803E7718
-lbl_803E7718:
-	.4byte 0x00000000
-	.4byte 0x00000000

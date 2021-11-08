@@ -43,6 +43,10 @@ TEXT_O_FILES :=\
 	$(BUILD_DIR)/asm/plugPikiNishimura/SpiderAi.o\
 	$(BUILD_DIR)/asm/plugPikiNishimura/SpiderLeg.o\
 	$(BUILD_DIR)/asm/text_Nishimura.o\
+	$(BUILD_DIR)/asm/os/OSSync.o\
+	$(BUILD_DIR)/asm/os/OSThread.o\
+	$(BUILD_DIR)/asm/os/OSTime.o\
+	$(BUILD_DIR)/asm/os/OSUartExi.o\
 	$(BUILD_DIR)/src/os/__start.o\
 	$(BUILD_DIR)/asm/os/__ppc_eabi_init.o\
 	$(BUILD_DIR)/asm/db/db.o\

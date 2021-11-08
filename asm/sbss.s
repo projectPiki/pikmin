@@ -1239,15 +1239,3 @@ HoldDown:
 .global lbl_803E7F4C
 lbl_803E7F4C:
 	.skip 0x4
-.global RunQueueBits
-RunQueueBits:
-	.skip 0x4
-.global RunQueueHint
-RunQueueHint:
-	.skip 0x4
-.global Reschedule
-Reschedule:
-	.skip 0x8
-.global serEnabled
-serEnabled:
-	.skip 0x8
