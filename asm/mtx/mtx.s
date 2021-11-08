@@ -1,5 +1,5 @@
 .include "macros.inc"
-
+.section .text, "ax"  # 0x80005560 - 0x80221F60
 .global PSMTXIdentity
 PSMTXIdentity:
 /* 801FDB94 001FAAF4  C0 02 C2 DC */	lfs f0, lbl_803EC4DC@sda21(r2)
@@ -248,3 +248,29 @@ MTXLightPerspective:
 /* 801FDF14 001FAE74  83 E1 00 2C */	lwz r31, 0x2c(r1)
 /* 801FDF18 001FAE78  38 21 00 58 */	addi r1, r1, 0x58
 /* 801FDF1C 001FAE7C  4E 80 00 20 */	blr 
+
+.section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
+.balign 0x8
+.global Unit01
+Unit01:
+	.4byte 0x00000000
+	.4byte 0x3F800000
+
+.section .sdata2, "a"  # 0x803E8200 - 0x803EC840
+.balign 0x8
+.global lbl_803EC4D8
+lbl_803EC4D8:
+	.4byte 0x3F800000
+.global lbl_803EC4DC
+lbl_803EC4DC:
+	.4byte 0x00000000
+.global lbl_803EC4E0
+lbl_803EC4E0:
+	.4byte 0xBF800000
+.global lbl_803EC4E4
+lbl_803EC4E4:
+	.4byte 0x3F000000
+.global lbl_803EC4E8
+lbl_803EC4E8:
+	.4byte 0x3C8EFA35
+	.4byte 0x00000000

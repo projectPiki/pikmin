@@ -1,5 +1,5 @@
 .include "macros.inc"
-
+.section .text, "ax"  # 0x80005560 - 0x80221F60
 .global __DVDClearWaitingQueue
 __DVDClearWaitingQueue:
 /* 80201F04 001FEE64  3C 60 80 3D */	lis r3, WaitingQueue@ha

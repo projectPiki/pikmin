@@ -1,5 +1,5 @@
 .include "macros.inc"
-
+.section .text, "ax"  # 0x80005560 - 0x80221F60
 .global DoReset
 DoReset:
 /* 80203E04 00200D64  7C 08 02 A6 */	mflr r0
@@ -2370,3 +2370,104 @@ lbl_80205FE8:
 /* 80205FF8 00202F58  83 A1 00 1C */	lwz r29, 0x1c(r1)
 /* 80205FFC 00202F5C  38 21 00 28 */	addi r1, r1, 0x28
 /* 80206000 00202F60  4E 80 00 20 */	blr 
+
+.section .data, "wa"  # 0x80222DC0 - 0x802E9640
+.balign 0x8
+.global ResetFunctionInfo
+ResetFunctionInfo:
+	.4byte 0x80205EE8
+	.4byte 0x0000007F
+	.4byte 0x00000000
+	.4byte 0x00000000
+.global XYNTSC
+XYNTSC:
+	.4byte 0xF7020E13
+	.4byte 0x1D092507
+	.4byte 0x34054104
+	.4byte 0x57035703
+	.4byte 0x57038302
+	.4byte 0x83028302
+.global XYPAL
+XYPAL:
+	.4byte 0x94030D18
+	.4byte 0x1A0C2708
+	.4byte 0x34063E05
+	.4byte 0x4E046803
+	.4byte 0x68036803
+	.4byte 0x68039C02
+lbl_802E8B88:
+	.4byte 0x50414453
+	.4byte 0x65745361
+	.4byte 0x6D706C69
+	.4byte 0x6E675261
+	.4byte 0x74653A20
+	.4byte 0x756E6B6E
+	.4byte 0x6F776E20
+	.4byte 0x54562066
+	.4byte 0x6F726D61
+	.4byte 0x74000000
+
+.section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
+.balign 0x8
+.global ResettingChan
+ResettingChan:
+	.4byte 0x00000020
+.global XPatchBits
+XPatchBits:
+	.4byte 0xF0000000
+.global AnalogMode
+AnalogMode:
+	.4byte 0x00000300
+.global Spec
+Spec:
+	.4byte 0x00000005
+.global MakeStatus
+MakeStatus:
+	.4byte 0x80205AF0
+.global cmdReadOrigin
+cmdReadOrigin:
+	.4byte 0x41000000
+.global cmdCalibrate
+cmdCalibrate:
+	.4byte 0x42000000
+.global lbl_803E7774
+lbl_803E7774:
+	.4byte 0x5061642E
+	.4byte 0x63000000
+	.4byte 0x00000000
+
+.section .sbss, "wa"
+.balign 0x8
+.global Initialized
+Initialized:
+	.skip 0x4
+.global EnabledBits
+EnabledBits:
+	.skip 0x4
+.global ResettingBits
+ResettingBits:
+	.skip 0x4
+.global ProbingBits
+ProbingBits:
+	.skip 0x4
+.global RecalibrateBits
+RecalibrateBits:
+	.skip 0x4
+.global WaitingBits
+WaitingBits:
+	.skip 0x4
+.global CheckingBits
+CheckingBits:
+	.skip 0x4
+.global cmdTypeAndStatus
+cmdTypeAndStatus:
+	.skip 0x4
+.global recalibrated$595
+recalibrated$595:
+	.skip 0x4
+.global __PADSpec
+__PADSpec:
+	.skip 0x4
+.global __PADFixBits
+__PADFixBits:
+	.skip 0x4

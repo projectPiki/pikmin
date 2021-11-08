@@ -1,5 +1,5 @@
 .include "macros.inc"
-
+.section .text, "ax"  # 0x80005560 - 0x80221F60
 .global MTXPerspective
 MTXPerspective:
 /* 801FDF20 001FAE80  7C 08 02 A6 */	mflr r0
@@ -95,3 +95,24 @@ MTXOrtho:
 /* 801FE07C 001FAFDC  D0 63 00 38 */	stfs f3, 0x38(r3)
 /* 801FE080 001FAFE0  D1 23 00 3C */	stfs f9, 0x3c(r3)
 /* 801FE084 001FAFE4  4E 80 00 20 */	blr 
+
+.section .sdata2, "a"  # 0x803E8200 - 0x803EC840
+.balign 0x8
+.global lbl_803EC4F0
+lbl_803EC4F0:
+	.4byte 0x3F800000
+.global lbl_803EC4F4
+lbl_803EC4F4:
+	.4byte 0x40000000
+.global lbl_803EC4F8
+lbl_803EC4F8:
+	.4byte 0x00000000
+.global lbl_803EC4FC
+lbl_803EC4FC:
+	.4byte 0xBF800000
+.global lbl_803EC500
+lbl_803EC500:
+	.4byte 0x3F000000
+.global lbl_803EC504
+lbl_803EC504:
+	.4byte 0x3C8EFA35

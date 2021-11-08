@@ -1,5 +1,5 @@
 .include "macros.inc"
-
+.section .text, "ax"  # 0x80005560 - 0x80221F60
 .global __VIRetraceHandler
 __VIRetraceHandler:
 /* 8020247C 001FF3DC  7C 08 02 A6 */	mflr r0
@@ -1646,3 +1646,150 @@ VIGetDTVStatus:
 /* 80203BC0 00200B20  38 21 00 10 */	addi r1, r1, 0x10
 /* 80203BC4 00200B24  7C 08 03 A6 */	mtlr r0
 /* 80203BC8 00200B28  4E 80 00 20 */	blr 
+
+.section .data, "wa"  # 0x80222DC0 - 0x802E9640
+.balign 0x8
+.global timing
+timing:
+	.4byte 0x060000F0
+	.4byte 0x00180019
+	.4byte 0x00030002
+	.4byte 0x0C0D0C0D
+	.4byte 0x02080207
+	.4byte 0x02080207
+	.4byte 0x020D01AD
+	.4byte 0x404769A2
+	.4byte 0x01757A00
+	.4byte 0x019C0600
+	.4byte 0x00F00018
+	.4byte 0x00180004
+	.4byte 0x00040C0C
+	.4byte 0x0C0C0208
+	.4byte 0x02080208
+	.4byte 0x0208020E
+	.4byte 0x01AD4047
+	.4byte 0x69A20175
+	.4byte 0x7A00019C
+	.4byte 0x0500011F
+	.4byte 0x00230024
+	.4byte 0x00010000
+	.4byte 0x0D0C0B0A
+	.4byte 0x026B026A
+	.4byte 0x0269026C
+	.4byte 0x027101B0
+	.4byte 0x404B6AAC
+	.4byte 0x017C8500
+	.4byte 0x01A40500
+	.4byte 0x011F0023
+	.4byte 0x00230002
+	.4byte 0x00020D0B
+	.4byte 0x0D0B026B
+	.4byte 0x026D026B
+	.4byte 0x026D0272
+	.4byte 0x01B0404B
+	.4byte 0x6AAC017C
+	.4byte 0x850001A4
+	.4byte 0x060000F0
+	.4byte 0x00180019
+	.4byte 0x00030002
+	.4byte 0x100F0E0D
+	.4byte 0x02060205
+	.4byte 0x02040207
+	.4byte 0x020D01AD
+	.4byte 0x404E70A2
+	.4byte 0x01757A00
+	.4byte 0x019C0600
+	.4byte 0x00F00018
+	.4byte 0x00180004
+	.4byte 0x0004100E
+	.4byte 0x100E0206
+	.4byte 0x02080206
+	.4byte 0x0208020E
+	.4byte 0x01AD404E
+	.4byte 0x70A20175
+	.4byte 0x7A00019C
+	.4byte 0x0C0001E0
+	.4byte 0x00300030
+	.4byte 0x00060006
+	.4byte 0x18181818
+	.4byte 0x040E040E
+	.4byte 0x040E040E
+	.4byte 0x041A01AD
+	.4byte 0x404769A2
+	.4byte 0x01757A00
+	.4byte 0x019C0000
+.global taps
+taps:
+	.4byte 0x01F001DC
+	.4byte 0x01AE0174
+	.4byte 0x012900DB
+	.4byte 0x008E0046
+	.4byte 0x000C00E2
+	.4byte 0x00CB00C0
+	.4byte 0x00C400CF
+	.4byte 0x00DE00EC
+	.4byte 0x00FC0008
+	.4byte 0x000F0013
+	.4byte 0x0013000F
+	.4byte 0x000C0008
+	.4byte 0x00010000
+.global lbl_802E8B20
+lbl_802E8B20:
+	.4byte 0x802026F8
+	.4byte 0x80202700
+	.4byte 0x80202728
+	.4byte 0x80202730
+	.4byte 0x80202708
+	.4byte 0x80202710
+	.4byte 0x80202730
+	.4byte 0x80202730
+	.4byte 0x80202718
+	.4byte 0x80202720
+
+.section .sbss, "wa"
+.balign 0x8
+.global retraceCount
+retraceCount:
+	.skip 0x4
+.global flushFlag
+flushFlag:
+	.skip 0x4
+.global retraceQueue
+retraceQueue:
+	.skip 0x8
+.global PreCB
+PreCB:
+	.skip 0x4
+.global PostCB
+PostCB:
+	.skip 0x4
+.global encoderType
+encoderType:
+	.skip 0x4
+.global displayOffsetH
+displayOffsetH:
+	.skip 0x2
+.global displayOffsetV
+displayOffsetV:
+	.skip 0x2
+.global changeMode
+changeMode:
+	.skip 0x8
+.global changed
+changed:
+	.skip 0x4
+.global lbl_803E805C
+lbl_803E805C:
+	.skip 0x4
+.global shdwChangeMode
+shdwChangeMode:
+	.skip 0x8
+.global shdwChanged
+shdwChanged:
+	.skip 0x4
+.global lbl_803E806C
+lbl_803E806C:
+	.skip 0x4
+.global FBSet
+FBSet:
+	.skip 0x8

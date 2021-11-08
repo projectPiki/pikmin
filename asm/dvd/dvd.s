@@ -1,5 +1,5 @@
 .include "macros.inc"
-
+.section .text, "ax"  # 0x80005560 - 0x80221F60
 .global DVDInit
 DVDInit:
 /* 801FF964 001FC8C4  7C 08 02 A6 */	mflr r0
@@ -2744,3 +2744,148 @@ lbl_80201EE0:
 /* 80201EF8 001FEE58  83 A1 00 14 */	lwz r29, 0x14(r1)
 /* 80201EFC 001FEE5C  38 21 00 20 */	addi r1, r1, 0x20
 /* 80201F00 001FEE60  4E 80 00 20 */	blr 
+
+.section .data, "wa"  # 0x80222DC0 - 0x802E9640
+.balign 0x8
+.global lbl_802E8818
+lbl_802E8818:
+	.4byte 0x61707020
+	.4byte 0x626F6F74
+	.4byte 0x65642076
+	.4byte 0x6961204A
+	.4byte 0x5441470A
+	.4byte 0x00000000
+	.4byte 0x6C6F6164
+	.4byte 0x20667374
+	.4byte 0x0A000000
+	.4byte 0x61707020
+	.4byte 0x626F6F74
+	.4byte 0x65642066
+	.4byte 0x726F6D20
+	.4byte 0x626F6F74
+	.4byte 0x726F6D0A
+	.4byte 0x00000000
+	.4byte 0x626F6F74
+	.4byte 0x726F6D0A
+	.4byte 0x00000000
+.global lbl_802E8864
+lbl_802E8864:
+	.4byte 0x80200B40
+	.4byte 0x80200A00
+	.4byte 0x80200A18
+	.4byte 0x80200A30
+	.4byte 0x80200A60
+	.4byte 0x80200B24
+	.4byte 0x80200A78
+	.4byte 0x80200A48
+.global lbl_802E8884
+lbl_802E8884:
+	.4byte 0x80200E20
+	.4byte 0x80200BDC
+	.4byte 0x80200C38
+	.4byte 0x80200C5C
+	.4byte 0x80200BDC
+	.4byte 0x80200BB0
+	.4byte 0x80200C7C
+	.4byte 0x80200CE0
+	.4byte 0x80200D0C
+	.4byte 0x80200D40
+	.4byte 0x80200D64
+	.4byte 0x80200D88
+	.4byte 0x80200DAC
+	.4byte 0x80200DD0
+	.4byte 0x80200DF8
+	.4byte 0x80200C6C
+.global lbl_802E88C4
+lbl_802E88C4:
+	.4byte 0x80201A0C
+	.4byte 0x80201A0C
+	.4byte 0x80201A2C
+	.4byte 0x80201A70
+	.4byte 0x80201ABC
+	.4byte 0x80201B38
+	.4byte 0x80201B38
+	.4byte 0x80201B38
+	.4byte 0x80201B38
+	.4byte 0x80201C04
+	.4byte 0x80201C04
+	.4byte 0x80201A0C
+	.4byte 0x80201B38
+.global lbl_802E88F8
+lbl_802E88F8:
+	.4byte 0x80201D9C
+	.4byte 0x80201DA4
+	.4byte 0x80201D94
+	.4byte 0x80201D94
+	.4byte 0x80201D9C
+	.4byte 0x80201D9C
+	.4byte 0x80201D9C
+	.4byte 0x80201D9C
+	.4byte 0x80201D9C
+	.4byte 0x80201DA4
+	.4byte 0x80201D94
+	.4byte 0x80201D94
+	.4byte 0x80201D9C
+
+.section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
+.balign 0x8
+.global autoInvalidation
+autoInvalidation:
+	.4byte 0x00000001
+
+.section .sbss, "wa"
+.balign 0x8
+.global executing
+executing:
+	.skip 0x4
+.global currID
+currID:
+	.skip 0x4
+.global bootInfo
+bootInfo:
+	.skip 0x4
+.global PauseFlag
+PauseFlag:
+	.skip 0x4
+.global PausingFlag
+PausingFlag:
+	.skip 0x4
+.global AutoFinishing
+AutoFinishing:
+	.skip 0x4
+.global FatalErrorFlag
+FatalErrorFlag:
+	.skip 0x4
+.global CurrCommand
+CurrCommand:
+	.skip 0x4
+.global Canceling
+Canceling:
+	.skip 0x4
+.global CancelCallback
+CancelCallback:
+	.skip 0x4
+.global ResumeFromHere
+ResumeFromHere:
+	.skip 0x4
+.global CancelLastError
+CancelLastError:
+	.skip 0x4
+.global LastError
+LastError:
+	.skip 0x4
+.global NumInternalRetry
+NumInternalRetry:
+	.skip 0x4
+.global ResetRequired
+ResetRequired:
+	.skip 0x4
+.global FirstTimeInBootrom
+FirstTimeInBootrom:
+	.skip 0x4
+.global DVDInitialized
+DVDInitialized:
+	.skip 0x4
+.global LastState_1
+LastState_1:
+	.skip 0x4

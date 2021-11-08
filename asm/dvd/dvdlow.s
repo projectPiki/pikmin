@@ -1,5 +1,5 @@
 .include "macros.inc"
-
+.section .text, "ax"  # 0x80005560 - 0x80221F60
 .global __DVDInitWA
 __DVDInitWA:
 /* 801FE12C 001FB08C  7C 08 02 A6 */	mflr r0
@@ -1019,3 +1019,64 @@ __DVDLowSetWAType:
 /* 801FEF74 001FBED4  7C 08 03 A6 */	mtlr r0
 /* 801FEF78 001FBED8  38 21 00 18 */	addi r1, r1, 0x18
 /* 801FEF7C 001FBEDC  4E 80 00 20 */	blr 
+
+.section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
+.balign 0x8
+.global FirstRead
+FirstRead:
+	.4byte 0x00000001
+	.4byte 0x00000000
+
+.section .sbss, "wa"
+.balign 0x8
+.global StopAtNextInt
+StopAtNextInt:
+	.skip 0x4
+.global LastLength
+LastLength:
+	.skip 0x4
+.global Callback_1
+Callback_1:
+	.skip 0x4
+.global ResetCoverCallback
+ResetCoverCallback:
+	.skip 0x4
+.global LastResetEnd
+LastResetEnd:
+	.skip 0x4
+.global lbl_803E7F84
+lbl_803E7F84:
+	.skip 0x4
+.global ResetOccurred
+ResetOccurred:
+	.skip 0x4
+.global WaitingCoverClose
+WaitingCoverClose:
+	.skip 0x4
+.global Breaking
+Breaking:
+	.skip 0x4
+.global WorkAroundType
+WorkAroundType:
+	.skip 0x4
+.global WorkAroundSeekLocation
+WorkAroundSeekLocation:
+	.skip 0x8
+.global LastReadFinished
+LastReadFinished:
+	.skip 0x4
+.global lbl_803E7FA4
+lbl_803E7FA4:
+	.skip 0x4
+.global LastReadIssued
+LastReadIssued:
+	.skip 0x4
+.global lbl_803E7FAC
+lbl_803E7FAC:
+	.skip 0x4
+.global LastCommandWasRead
+LastCommandWasRead:
+	.skip 0x4
+.global NextCommandNumber
+NextCommandNumber:
+	.skip 0x4

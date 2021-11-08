@@ -1,5 +1,5 @@
 .include "macros.inc"
-
+.section .text, "ax"  # 0x80005560 - 0x80221F60
 .global __DVDStoreErrorCode
 __DVDStoreErrorCode:
 /* 802020FC 001FF05C  7C 08 02 A6 */	mflr r0
@@ -102,3 +102,24 @@ lbl_80202230:
 /* 80202248 001FF1A8  38 21 00 20 */	addi r1, r1, 0x20
 /* 8020224C 001FF1AC  7C 08 03 A6 */	mtlr r0
 /* 80202250 001FF1B0  4E 80 00 20 */	blr 
+
+.section .data, "wa"  # 0x80222DC0 - 0x802E9640
+.balign 0x8
+.global ErrorTable
+ErrorTable:
+	.4byte 0x00000000
+	.4byte 0x00023A00
+	.4byte 0x00062800
+	.4byte 0x00030200
+	.4byte 0x00031100
+	.4byte 0x00052000
+	.4byte 0x00052001
+	.4byte 0x00052100
+	.4byte 0x00052400
+	.4byte 0x00052401
+	.4byte 0x00052402
+	.4byte 0x000B5A01
+	.4byte 0x00056300
+	.4byte 0x00020401
+	.4byte 0x00020400
+	.4byte 0x00040800

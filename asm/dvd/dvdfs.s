@@ -1,5 +1,5 @@
 .include "macros.inc"
-
+.section .text, "ax"  # 0x80005560 - 0x80221F60
 .global __DVDFSInit
 __DVDFSInit:
 /* 801FEF80 001FBEE0  3C 60 80 00 */	lis r3, 0x80000038@ha
@@ -759,3 +759,282 @@ lbl_801FF954:
 /* 801FF958 001FC8B8  38 21 00 08 */	addi r1, r1, 8
 /* 801FF95C 001FC8BC  7C 08 03 A6 */	mtlr r0
 /* 801FF960 001FC8C0  4E 80 00 20 */	blr 
+
+.section .data, "wa"  # 0x80222DC0 - 0x802E9640
+.balign 0x8
+.global lbl_802E8460
+lbl_802E8460:
+	.4byte 0x44564443
+	.4byte 0x6F6E7665
+	.4byte 0x7274456E
+	.4byte 0x7472796E
+	.4byte 0x756D546F
+	.4byte 0x50617468
+	.4byte 0x28706F73
+	.4byte 0x7369626C
+	.4byte 0x79204456
+	.4byte 0x444F7065
+	.4byte 0x6E206F72
+	.4byte 0x20445644
+	.4byte 0x4368616E
+	.4byte 0x67654469
+	.4byte 0x72206F72
+	.4byte 0x20445644
+	.4byte 0x4F70656E
+	.4byte 0x44697229
+	.4byte 0x3A207370
+	.4byte 0x65636966
+	.4byte 0x69656420
+	.4byte 0x64697265
+	.4byte 0x63746F72
+	.4byte 0x79206F72
+	.4byte 0x2066696C
+	.4byte 0x65202825
+	.4byte 0x73292064
+	.4byte 0x6F65736E
+	.4byte 0x2774206D
+	.4byte 0x61746368
+	.4byte 0x20737461
+	.4byte 0x6E646172
+	.4byte 0x6420382E
+	.4byte 0x3320666F
+	.4byte 0x726D6174
+	.4byte 0x2E205468
+	.4byte 0x69732069
+	.4byte 0x73206120
+	.4byte 0x74656D70
+	.4byte 0x6F726172
+	.4byte 0x79207265
+	.4byte 0x73747269
+	.4byte 0x6374696F
+	.4byte 0x6E20616E
+	.4byte 0x64207769
+	.4byte 0x6C6C2062
+	.4byte 0x65207265
+	.4byte 0x6D6F7665
+	.4byte 0x6420736F
+	.4byte 0x6F6E0A00
+.global lbl_802E8528
+lbl_802E8528:
+	.4byte 0x5761726E
+	.4byte 0x696E673A
+	.4byte 0x20445644
+	.4byte 0x4F70656E
+	.4byte 0x28293A20
+	.4byte 0x66696C65
+	.4byte 0x20272573
+	.4byte 0x27207761
+	.4byte 0x73206E6F
+	.4byte 0x7420666F
+	.4byte 0x756E6420
+	.4byte 0x756E6465
+	.4byte 0x72202573
+	.4byte 0x2E0A0000
+.global lbl_802E8560
+lbl_802E8560:
+	.4byte 0x44564452
+	.4byte 0x65616441
+	.4byte 0x73796E63
+	.4byte 0x28293A20
+	.4byte 0x73706563
+	.4byte 0x69666965
+	.4byte 0x64206172
+	.4byte 0x65612069
+	.4byte 0x73206F75
+	.4byte 0x74206F66
+	.4byte 0x20746865
+	.4byte 0x2066696C
+	.4byte 0x65202000
+.global lbl_802E8594
+lbl_802E8594:
+	.4byte 0x44564452
+	.4byte 0x65616428
+	.4byte 0x293A2073
+	.4byte 0x70656369
+	.4byte 0x66696564
+	.4byte 0x20617265
+	.4byte 0x61206973
+	.4byte 0x206F7574
+	.4byte 0x206F6620
+	.4byte 0x74686520
+	.4byte 0x66696C65
+	.4byte 0x20200000
+	.4byte 0x44564453
+	.4byte 0x65656B28
+	.4byte 0x293A206F
+	.4byte 0x66667365
+	.4byte 0x74206973
+	.4byte 0x206F7574
+	.4byte 0x206F6620
+	.4byte 0x74686520
+	.4byte 0x66696C65
+	.4byte 0x20200000
+	.4byte 0x44564450
+	.4byte 0x72657061
+	.4byte 0x72655374
+	.4byte 0x7265616D
+	.4byte 0x4173796E
+	.4byte 0x6328293A
+	.4byte 0x20537065
+	.4byte 0x63696669
+	.4byte 0x65642073
+	.4byte 0x74617274
+	.4byte 0x20616464
+	.4byte 0x72657373
+	.4byte 0x20286669
+	.4byte 0x6C657374
+	.4byte 0x61727428
+	.4byte 0x30782578
+	.4byte 0x29202B20
+	.4byte 0x6F666673
+	.4byte 0x65742830
+	.4byte 0x78257829
+	.4byte 0x29206973
+	.4byte 0x206E6F74
+	.4byte 0x2033324B
+	.4byte 0x4220616C
+	.4byte 0x69676E65
+	.4byte 0x64000000
+	.4byte 0x44564450
+	.4byte 0x72657061
+	.4byte 0x72655374
+	.4byte 0x7265616D
+	.4byte 0x4173796E
+	.4byte 0x6328293A
+	.4byte 0x20537065
+	.4byte 0x63696669
+	.4byte 0x6564206C
+	.4byte 0x656E6774
+	.4byte 0x68202830
+	.4byte 0x78257829
+	.4byte 0x20697320
+	.4byte 0x6E6F7420
+	.4byte 0x61206D75
+	.4byte 0x6C746970
+	.4byte 0x6C65206F
+	.4byte 0x66203332
+	.4byte 0x37363828
+	.4byte 0x33322A31
+	.4byte 0x30323429
+	.4byte 0x00000000
+	.4byte 0x44564450
+	.4byte 0x72657061
+	.4byte 0x72655374
+	.4byte 0x7265616D
+	.4byte 0x4173796E
+	.4byte 0x6328293A
+	.4byte 0x20546865
+	.4byte 0x20617265
+	.4byte 0x61207370
+	.4byte 0x65636966
+	.4byte 0x69656420
+	.4byte 0x286F6666
+	.4byte 0x73657428
+	.4byte 0x30782578
+	.4byte 0x292C206C
+	.4byte 0x656E6774
+	.4byte 0x68283078
+	.4byte 0x25782929
+	.4byte 0x20697320
+	.4byte 0x6F757420
+	.4byte 0x6F662074
+	.4byte 0x68652066
+	.4byte 0x696C6500
+	.4byte 0x44564450
+	.4byte 0x72657061
+	.4byte 0x72655374
+	.4byte 0x7265616D
+	.4byte 0x28293A20
+	.4byte 0x53706563
+	.4byte 0x69666965
+	.4byte 0x64207374
+	.4byte 0x61727420
+	.4byte 0x61646472
+	.4byte 0x65737320
+	.4byte 0x2866696C
+	.4byte 0x65737461
+	.4byte 0x72742830
+	.4byte 0x78257829
+	.4byte 0x202B206F
+	.4byte 0x66667365
+	.4byte 0x74283078
+	.4byte 0x25782929
+	.4byte 0x20697320
+	.4byte 0x6E6F7420
+	.4byte 0x33324B42
+	.4byte 0x20616C69
+	.4byte 0x676E6564
+	.4byte 0x00000000
+	.4byte 0x44564450
+	.4byte 0x72657061
+	.4byte 0x72655374
+	.4byte 0x7265616D
+	.4byte 0x28293A20
+	.4byte 0x53706563
+	.4byte 0x69666965
+	.4byte 0x64206C65
+	.4byte 0x6E677468
+	.4byte 0x20283078
+	.4byte 0x25782920
+	.4byte 0x6973206E
+	.4byte 0x6F742061
+	.4byte 0x206D756C
+	.4byte 0x7469706C
+	.4byte 0x65206F66
+	.4byte 0x20333237
+	.4byte 0x36382833
+	.4byte 0x322A3130
+	.4byte 0x32342900
+	.4byte 0x44564450
+	.4byte 0x72657061
+	.4byte 0x72655374
+	.4byte 0x7265616D
+	.4byte 0x28293A20
+	.4byte 0x54686520
+	.4byte 0x61726561
+	.4byte 0x20737065
+	.4byte 0x63696669
+	.4byte 0x65642028
+	.4byte 0x6F666673
+	.4byte 0x65742830
+	.4byte 0x78257829
+	.4byte 0x2C206C65
+	.4byte 0x6E677468
+	.4byte 0x28307825
+	.4byte 0x78292920
+	.4byte 0x6973206F
+	.4byte 0x7574206F
+	.4byte 0x66207468
+	.4byte 0x65206669
+	.4byte 0x6C650000
+	
+.section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
+.balign 0x8
+.global lbl_803E7730
+lbl_803E7730:
+	.4byte 0x64766466
+	.4byte 0x732E6300
+
+.section .sbss, "wa"
+.balign 0x8
+.global BootInfo_1
+BootInfo_1:
+	.skip 0x4
+.global FstStart
+FstStart:
+	.skip 0x4
+.global FstStringStart
+FstStringStart:
+	.skip 0x4
+.global MaxEntryNum
+MaxEntryNum:
+	.skip 0x4
+.global currentDirectory
+currentDirectory:
+	.skip 0x4
+.global __DVDLongFileNameFlag
+__DVDLongFileNameFlag:
+	.skip 0x4
+.global __DVDThreadQueue
+__DVDThreadQueue:
+	.skip 0x8

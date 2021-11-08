@@ -1,5 +1,5 @@
 .include "macros.inc"
-
+.section .text, "ax"  # 0x80005560 - 0x80221F60
 .global PSVECSquareMag
 PSVECSquareMag:
 /* 801FE088 001FAFE8  E0 43 00 00 */	psq_l f2, 0(r3), 0, qr0
@@ -47,3 +47,18 @@ lbl_801FE11C:
 /* 801FE120 001FB080  38 21 00 10 */	addi r1, r1, 0x10
 /* 801FE124 001FB084  7C 08 03 A6 */	mtlr r0
 /* 801FE128 001FB088  4E 80 00 20 */	blr 
+
+.section .sdata2, "a"  # 0x803E8200 - 0x803EC840
+.balign 0x8
+.global lbl_803EC508
+lbl_803EC508:
+	.4byte 0x00000000
+	.4byte 0x00000000
+.global "@112"
+"@112":
+	.4byte 0x3FE00000
+	.4byte 0x00000000
+.global "@113"
+"@113":
+	.4byte 0x40080000
+	.4byte 0x00000000
