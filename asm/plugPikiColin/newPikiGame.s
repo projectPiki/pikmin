@@ -9767,24 +9767,24 @@ lbl_802A7AFC:
 	.4byte 0x00000000
 .global lbl_802A7B0C
 lbl_802A7B0C:
-	.4byte 0x80059284
-	.4byte 0x80059660
-	.4byte 0x80059364
-	.4byte 0x80059380
-	.4byte 0x800593DC
-	.4byte 0x80059438
-	.4byte 0x80059568
-	.4byte 0x8005957C
-	.4byte 0x8005959C
-	.4byte 0x800595AC
-	.4byte 0x800595C8
-	.4byte 0x800595F0
-	.4byte 0x800595FC
-	.4byte 0x80059614
-	.4byte 0x80059640
-	.4byte 0x80059660
-	.4byte 0x80059650
-	.4byte 0x8005965C
+	.4byte lbl_80059284
+	.4byte lbl_80059660
+	.4byte lbl_80059364
+	.4byte lbl_80059380
+	.4byte lbl_800593DC
+	.4byte lbl_80059438
+	.4byte lbl_80059568
+	.4byte lbl_8005957C
+	.4byte lbl_8005959C
+	.4byte lbl_800595AC
+	.4byte lbl_800595C8
+	.4byte lbl_800595F0
+	.4byte lbl_800595FC
+	.4byte lbl_80059614
+	.4byte lbl_80059640
+	.4byte lbl_80059660
+	.4byte lbl_80059650
+	.4byte lbl_8005965C
 	.4byte 0x3C4E6577
 	.4byte 0x50696B69
 	.4byte 0x47616D65

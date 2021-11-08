@@ -1453,7 +1453,7 @@ lbl_80209204:
 .balign 0x8
 .global ResetFunctionInfo_1
 ResetFunctionInfo_1:
-	.4byte 0x802091C4
+	.4byte OnReset_1
 	.4byte 0x0000007F
 	.4byte 0x00000000
 	.4byte 0x00000000

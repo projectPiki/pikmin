@@ -75,6 +75,8 @@ lbl_800BDFCC:
 /* 800BDFDC 000BAF3C  38 21 00 18 */	addi r1, r1, 0x18
 /* 800BDFE0 000BAF40  7C 08 03 A6 */	mtlr r0
 /* 800BDFE4 000BAF44  4E 80 00 20 */	blr 
+.global lbl_800BDFE8
+lbl_800BDFE8:
 /* 800BDFE8 000BAF48  38 63 FF EC */	addi r3, r3, -20
 
 .section .text, "ax"  # 0x80005560 - 0x80221F60

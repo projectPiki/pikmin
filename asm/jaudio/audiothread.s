@@ -344,6 +344,8 @@ StreamMain__Fv:
 /* 80006818 00003778  7C 03 00 2E */	lwzx r0, r3, r0
 /* 8000681C 0000377C  7C 09 03 A6 */	mtctr r0
 /* 80006820 00003780  4E 80 04 20 */	bctr 
+.global lbl_80006824
+lbl_80006824:
 /* 80006824 00003784  80 1F 00 84 */	lwz r0, 0x84(r31)
 /* 80006828 00003788  3B A0 FF FF */	li r29, -1
 /* 8000682C 0000378C  3B 9F 00 88 */	addi r28, r31, 0x88
@@ -2755,6 +2757,8 @@ read__9SnakePropFR18RandomAccessStream:
 /* 8015B1DC 0015813C  38 21 00 18 */	addi r1, r1, 0x18
 /* 8015B1E0 00158140  7C 08 03 A6 */	mtlr r0
 /* 8015B1E4 00158144  4E 80 00 20 */	blr 
+.global lbl_8015B1E8
+lbl_8015B1E8:
 /* 8015B1E8 00158148  38 63 FE 14 */	addi r3, r3, -492
 /* 8015B1EC 0015814C  4B FF FF AC */	b read__9SnakePropFR18RandomAccessStream
 

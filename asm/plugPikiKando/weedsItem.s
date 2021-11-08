@@ -1824,7 +1824,7 @@ __vt__4Weed:
 	.4byte exitCourse__8CreatureFv
 	.4byte __RTTI__4Weed
 	.4byte 0xfffffd48
-	.4byte 0x8007df54
+	.4byte lbl_8007DF54
 	.4byte getCurrState__10AICreatureFv
 	.4byte "setCurrState__10AICreatureFP20AState<10AICreature>"
 	.4byte playSound__10AICreatureFi
@@ -1929,7 +1929,7 @@ __vt__8WeedsGen:
 	.4byte exitCourse__8CreatureFv
 	.4byte __RTTI__8WeedsGen
 	.4byte 0xfffffd48
-	.4byte 0x8007df54
+	.4byte lbl_8007DF54
 	.4byte getCurrState__10AICreatureFv
 	.4byte "setCurrState__10AICreatureFP20AState<10AICreature>"
 	.4byte playSound__10AICreatureFi
@@ -2034,7 +2034,7 @@ __vt__8GrassGen:
 	.4byte exitCourse__8CreatureFv
 	.4byte __RTTI__8GrassGen
 	.4byte 0xfffffd48
-	.4byte 0x8007df54
+	.4byte lbl_8007DF54
 	.4byte getCurrState__10AICreatureFv
 	.4byte "setCurrState__10AICreatureFP20AState<10AICreature>"
 	.4byte playSound__10AICreatureFi
@@ -2136,7 +2136,7 @@ __vt__7RockGen:
 	.4byte exitCourse__8CreatureFv
 	.4byte __RTTI__7RockGen
 	.4byte 0xfffffd48
-	.4byte 0x8007df54
+	.4byte lbl_8007DF54
 	.4byte getCurrState__10AICreatureFv
 	.4byte "setCurrState__10AICreatureFP20AState<10AICreature>"
 	.4byte playSound__10AICreatureFi

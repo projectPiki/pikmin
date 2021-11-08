@@ -10624,8 +10624,8 @@ __vt__9PelletMgr:
 	.4byte __RTTI__9PelletMgr
 	.4byte 0xfffffff8
 	.4byte getAgeNodeType__5ANodeFv
-	.4byte 0x80099538
-	.4byte 0x80099540
+	.4byte lbl_80099538
+	.4byte lbl_80099540
 	.4byte draw__4NodeFR8Graphics
 	.4byte render__4NodeFR8Graphics
 	.4byte concat__4NodeFv
@@ -10829,7 +10829,7 @@ __vt__6Pellet:
 	.4byte doCreateColls__6PelletFR8Graphics
 	.4byte __RTTI__6Pellet
 	.4byte 0xfffffbc0
-	.4byte 0x80099530
+	.4byte lbl_80099530
 	.4byte animationKeyUpdated__6PelletFR16PaniAnimKeyEvent
 	.4byte 0x53746174
 	.4byte 0x654d6163
@@ -10895,10 +10895,10 @@ __vt__7KEffect:
 	.4byte invoke__7KEffectFPQ23zen17particleGenerator
 	.4byte __RTTI__7KEffect
 	.4byte 0xfffffffc
-	.4byte 0x80099520
+	.4byte lbl_80099520
 	.4byte __RTTI__7KEffect
 	.4byte 0xfffffff8
-	.4byte 0x80099528
+	.4byte lbl_80099528
 	.4byte invoke__7KEffectFPQ23zen17particleGeneratorPQ23zen11particleMdl
 	.4byte invoke__7KEffectFPQ23zen11particleMdl
 	.4byte 0
@@ -10944,7 +10944,7 @@ __vt__12PelletConfig:
 	.4byte __RTTI__12PelletConfig
 	.4byte 0xfffffffc
 	.4byte getAgeNodeType__5ANodeFv
-	.4byte 0x80099518
+	.4byte lbl_80099518
 	.4byte read__12PelletConfigFR18RandomAccessStream
 	.4byte 0x5061726d
 	.4byte 0x3c666c6f
@@ -10992,17 +10992,17 @@ __vt__12PelletConfig:
 	.4byte 0
 .global lbl_802B071C
 lbl_802B071C:
-	.4byte 0x80099404
-	.4byte 0x8009942C
-	.4byte 0x80099440
-	.4byte 0x80099454
-	.4byte 0x80099468
-	.4byte 0x8009947C
-	.4byte 0x80099490
-	.4byte 0x800994A4
-	.4byte 0x80099418
-	.4byte 0x800994CC
-	.4byte 0x800994B8
+	.4byte lbl_80099404
+	.4byte lbl_8009942C
+	.4byte lbl_80099440
+	.4byte lbl_80099454
+	.4byte lbl_80099468
+	.4byte lbl_8009947C
+	.4byte lbl_80099490
+	.4byte lbl_800994A4
+	.4byte lbl_80099418
+	.4byte lbl_800994CC
+	.4byte lbl_800994B8
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 	.4byte 0x643E0000

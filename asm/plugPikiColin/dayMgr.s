@@ -13743,34 +13743,34 @@ lbl_802A9480:
 	.4byte 0x70700000
 	.4byte 0x00000000
 	.4byte 0xFFFFFFFF
-	.4byte 0x8005EA1C
+	.4byte menuCloseMenu__4MenuFR4Menu
 	.4byte 0x00000000
 	.4byte 0xFFFFFFFF
-	.4byte 0x800698AC
+	.4byte menuEnterX__12PositionMenuFR4Menu
 	.4byte 0x00000000
 	.4byte 0xFFFFFFFF
-	.4byte 0x800699A4
+	.4byte menuDecrease__12PositionMenuFR4Menu
 	.4byte 0x00000000
 	.4byte 0xFFFFFFFF
-	.4byte 0x80069900
+	.4byte menuIncrease__12PositionMenuFR4Menu
 	.4byte 0x00000000
 	.4byte 0xFFFFFFFF
-	.4byte 0x80069854
+	.4byte menuEnterY__12PositionMenuFR4Menu
 	.4byte 0x00000000
 	.4byte 0xFFFFFFFF
-	.4byte 0x800699A4
+	.4byte menuDecrease__12PositionMenuFR4Menu
 	.4byte 0x00000000
 	.4byte 0xFFFFFFFF
-	.4byte 0x80069900
+	.4byte menuIncrease__12PositionMenuFR4Menu
 	.4byte 0x00000000
 	.4byte 0xFFFFFFFF
-	.4byte 0x800697FC
+	.4byte menuEnterZ__12PositionMenuFR4Menu
 	.4byte 0x00000000
 	.4byte 0xFFFFFFFF
-	.4byte 0x800699A4
+	.4byte menuDecrease__12PositionMenuFR4Menu
 	.4byte 0x00000000
 	.4byte 0xFFFFFFFF
-	.4byte 0x80069900
+	.4byte menuIncrease__12PositionMenuFR4Menu
 .global lbl_802A9504
 lbl_802A9504:
 	.4byte 0x2573203D
@@ -13778,64 +13778,64 @@ lbl_802A9504:
 	.4byte 0x66000000
 	.4byte 0x00000000
 	.4byte 0xFFFFFFFF
-	.4byte 0x8005EA1C
+	.4byte menuCloseMenu__4MenuFR4Menu
 	.4byte 0x00000000
 	.4byte 0xFFFFFFFF
-	.4byte 0x80069B38
+	.4byte menuEnterR__10ColourMenuFR4Menu
 	.4byte 0x00000000
 	.4byte 0xFFFFFFFF
-	.4byte 0x80069BD8
+	.4byte menuDecrease__10ColourMenuFR4Menu
 	.4byte 0x00000000
 	.4byte 0xFFFFFFFF
-	.4byte 0x80069B84
+	.4byte menuIncrease__10ColourMenuFR4Menu
 	.4byte 0x00000000
 	.4byte 0xFFFFFFFF
-	.4byte 0x80069AE8
+	.4byte menuEnterG__10ColourMenuFR4Menu
 	.4byte 0x00000000
 	.4byte 0xFFFFFFFF
-	.4byte 0x80069BD8
+	.4byte menuDecrease__10ColourMenuFR4Menu
 	.4byte 0x00000000
 	.4byte 0xFFFFFFFF
-	.4byte 0x80069B84
+	.4byte menuIncrease__10ColourMenuFR4Menu
 	.4byte 0x00000000
 	.4byte 0xFFFFFFFF
-	.4byte 0x80069A98
+	.4byte menuEnterB__10ColourMenuFR4Menu
 	.4byte 0x00000000
 	.4byte 0xFFFFFFFF
-	.4byte 0x80069BD8
+	.4byte menuDecrease__10ColourMenuFR4Menu
 	.4byte 0x00000000
 	.4byte 0xFFFFFFFF
-	.4byte 0x80069B84
+	.4byte menuIncrease__10ColourMenuFR4Menu
 	.4byte 0x00000000
 	.4byte 0xFFFFFFFF
-	.4byte 0x80069A48
+	.4byte menuEnterA__10ColourMenuFR4Menu
 	.4byte 0x00000000
 	.4byte 0xFFFFFFFF
-	.4byte 0x80069BD8
+	.4byte menuDecrease__10ColourMenuFR4Menu
 	.4byte 0x00000000
 	.4byte 0xFFFFFFFF
-	.4byte 0x80069B84
+	.4byte menuIncrease__10ColourMenuFR4Menu
 	.4byte 0x00000000
 	.4byte 0xFFFFFFFF
-	.4byte 0x8005EA1C
+	.4byte menuCloseMenu__4MenuFR4Menu
 	.4byte 0x00000000
 	.4byte 0xFFFFFFFF
-	.4byte 0x80069C80
+	.4byte menuEnterNear__7FogMenuFR4Menu
 	.4byte 0x00000000
 	.4byte 0xFFFFFFFF
-	.4byte 0x80069D2C
+	.4byte menuDecrease__7FogMenuFR4Menu
 	.4byte 0x00000000
 	.4byte 0xFFFFFFFF
-	.4byte 0x80069CD4
+	.4byte menuIncrease__7FogMenuFR4Menu
 	.4byte 0x00000000
 	.4byte 0xFFFFFFFF
-	.4byte 0x80069C2C
+	.4byte menuEnterFar__7FogMenuFR4Menu
 	.4byte 0x00000000
 	.4byte 0xFFFFFFFF
-	.4byte 0x80069D2C
+	.4byte menuDecrease__7FogMenuFR4Menu
 	.4byte 0x00000000
 	.4byte 0xFFFFFFFF
-	.4byte 0x80069CD4
+	.4byte menuIncrease__7FogMenuFR4Menu
 	.4byte 0x50415241
 	.4byte 0x4C4C454C
 	.4byte 0x00000000
@@ -13857,19 +13857,19 @@ lightConv:
 	.4byte 0x76690000
 	.4byte 0x00000000
 	.4byte 0xFFFFFFFF
-	.4byte 0x8006A1B8
+	.4byte menuChangeType__9LightMenuFR4Menu
 	.4byte 0x00000000
 	.4byte 0xFFFFFFFF
-	.4byte 0x80069D84
+	.4byte menuChangeMove__9LightMenuFR4Menu
 	.4byte 0x00000000
 	.4byte 0xFFFFFFFF
-	.4byte 0x8006A610
+	.4byte menuEnterNear__9LightMenuFR4Menu
 	.4byte 0x00000000
 	.4byte 0xFFFFFFFF
-	.4byte 0x8006A6BC
+	.4byte menuDecrease__9LightMenuFR4Menu
 	.4byte 0x00000000
 	.4byte 0xFFFFFFFF
-	.4byte 0x8006A664
+	.4byte menuIncrease__9LightMenuFR4Menu
 	.4byte 0x466F7620
 	.4byte 0x3D20252E
 	.4byte 0x32660000
@@ -13881,7 +13881,7 @@ lightConv:
 	.4byte 0x6E000000
 	.4byte 0x00000000
 	.4byte 0xFFFFFFFF
-	.4byte 0x8005EA1C
+	.4byte menuCloseMenu__4MenuFR4Menu
 	.4byte 0x58203D20
 	.4byte 0x252E3266
 	.4byte 0x00000000
@@ -13893,31 +13893,31 @@ lightConv:
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0xFFFFFFFF
-	.4byte 0x8005EA1C
+	.4byte menuCloseMenu__4MenuFR4Menu
 	.4byte 0x00000000
 	.4byte 0xFFFFFFFF
-	.4byte 0x8005EA1C
+	.4byte menuCloseMenu__4MenuFR4Menu
 	.4byte 0x00000000
 	.4byte 0xFFFFFFFF
-	.4byte 0x8006E3FC
+	.4byte menuDecreaseLights__6DayMgrFR4Menu
 	.4byte 0x00000000
 	.4byte 0xFFFFFFFF
-	.4byte 0x8006E3A4
+	.4byte menuIncreaseLights__6DayMgrFR4Menu
 	.4byte 0x00000000
 	.4byte 0xFFFFFFFF
-	.4byte 0x8006E4D8
+	.4byte menuDecreaseTime__6DayMgrFR4Menu
 	.4byte 0x00000000
 	.4byte 0xFFFFFFFF
-	.4byte 0x8006E454
+	.4byte menuIncreaseTime__6DayMgrFR4Menu
 	.4byte 0x00000000
 	.4byte 0xFFFFFFFF
-	.4byte 0x8006EFE8
+	.4byte menuDumpSettings__6DayMgrFR4Menu
 	.4byte 0x00000000
 	.4byte 0xFFFFFFFF
-	.4byte 0x8006B458
+	.4byte menuBDecrease__6DayMgrFR4Menu
 	.4byte 0x00000000
 	.4byte 0xFFFFFFFF
-	.4byte 0x8006B3FC
+	.4byte menuBIncrease__6DayMgrFR4Menu
 .global lbl_802A9738
 lbl_802A9738:
 	.4byte 0x4C696768

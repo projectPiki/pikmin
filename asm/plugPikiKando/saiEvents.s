@@ -857,17 +857,17 @@ __vt__8SAIEvent:
 	.4byte "procGroundMsg__22Receiver<10AICreature>FP10AICreatureP9MsgGround"
 .global lbl_802AD6E8
 lbl_802AD6E8:
-	.4byte 0x8007D184
-	.4byte 0x8007D1AC
-	.4byte 0x8007D1C0
-	.4byte 0x8007D1D4
-	.4byte 0x8007D1E8
-	.4byte 0x8007D1FC
-	.4byte 0x8007D210
-	.4byte 0x8007D224
-	.4byte 0x8007D198
-	.4byte 0x8007D24C
-	.4byte 0x8007D238
+	.4byte lbl_8007D184
+	.4byte lbl_8007D1AC
+	.4byte lbl_8007D1C0
+	.4byte lbl_8007D1D4
+	.4byte lbl_8007D1E8
+	.4byte lbl_8007D1FC
+	.4byte lbl_8007D210
+	.4byte lbl_8007D224
+	.4byte lbl_8007D198
+	.4byte lbl_8007D24C
+	.4byte lbl_8007D238
 	.4byte 0x00000000
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820

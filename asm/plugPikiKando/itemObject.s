@@ -389,7 +389,7 @@ __vt__18NaviDemoSunsetGoal:
 	.4byte exitCourse__8CreatureFv
 	.4byte __RTTI__18NaviDemoSunsetGoal
 	.4byte 0xfffffd48
-	.4byte 0x8007df54
+	.4byte lbl_8007DF54
 	.4byte getCurrState__10AICreatureFv
 	.4byte "setCurrState__10AICreatureFP20AState<10AICreature>"
 	.4byte playSound__10AICreatureFi
@@ -498,7 +498,7 @@ __vt__19NaviDemoSunsetStart:
 	.4byte exitCourse__8CreatureFv
 	.4byte __RTTI__19NaviDemoSunsetStart
 	.4byte 0xfffffd48
-	.4byte 0x8007df54
+	.4byte lbl_8007DF54
 	.4byte getCurrState__10AICreatureFv
 	.4byte "setCurrState__10AICreatureFP20AState<10AICreature>"
 	.4byte playSound__10AICreatureFi
@@ -602,7 +602,7 @@ __vt__7Fulcrum:
 	.4byte exitCourse__8CreatureFv
 	.4byte __RTTI__7Fulcrum
 	.4byte 0xfffffd48
-	.4byte 0x8007df54
+	.4byte lbl_8007DF54
 	.4byte getCurrState__10AICreatureFv
 	.4byte "setCurrState__10AICreatureFP20AState<10AICreature>"
 	.4byte playSound__10AICreatureFi
@@ -709,7 +709,7 @@ __vt__11BombGenItem:
 	.4byte exitCourse__8CreatureFv
 	.4byte __RTTI__11BombGenItem
 	.4byte 0xfffffd48
-	.4byte 0x8007df54
+	.4byte lbl_8007DF54
 	.4byte getCurrState__10AICreatureFv
 	.4byte "setCurrState__10AICreatureFP20AState<10AICreature>"
 	.4byte playSound__10AICreatureFi
@@ -798,7 +798,7 @@ __vt__10ItemObject:
 	.4byte exitCourse__8CreatureFv
 	.4byte __RTTI__10ItemObject
 	.4byte 0xfffffd48
-	.4byte 0x8007df54
+	.4byte lbl_8007DF54
 	.4byte getCurrState__10AICreatureFv
 	.4byte "setCurrState__10AICreatureFP20AState<10AICreature>"
 	.4byte playSound__10AICreatureFi
@@ -903,7 +903,7 @@ __vt__8ItemBall:
 	.4byte exitCourse__8CreatureFv
 	.4byte __RTTI__8ItemBall
 	.4byte 0xfffffd48
-	.4byte 0x8007df54
+	.4byte lbl_8007DF54
 	.4byte getCurrState__10AICreatureFv
 	.4byte "setCurrState__10AICreatureFP20AState<10AICreature>"
 	.4byte playSound__10AICreatureFi

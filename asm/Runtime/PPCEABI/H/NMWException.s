@@ -247,7 +247,7 @@ extab:
 	.4byte 0x00000010
 	.4byte 0x00000000
 	.4byte 0x8200001C
-	.4byte 0x80214B70
+	.4byte __dt__26__partial_array_destructorFv
 	.4byte 0x18080000
 	.4byte 0x00000000
 	.4byte 0x28080000
@@ -255,26 +255,26 @@ extab:
 	.4byte 0x00000010
 	.4byte 0x00000000
 	.4byte 0x8200001C
-	.4byte 0x80214B70
+	.4byte __dt__26__partial_array_destructorFv
 
 .section ._exidx, "wa"  # 0x80005500 - 0x80005560
-	.4byte 0x802149F4
+	.4byte __destroy_new_array
 	.4byte 0x0000007C
 	.4byte 0x800054C0
-	.4byte 0x80214A70
+	.4byte __construct_array
 	.4byte 0x00000100
 	.4byte 0x800054C8
-	.4byte 0x80214B70
+	.4byte __dt__26__partial_array_destructorFv
 	.4byte 0x000000B8
 	.4byte 0x800054E0
-	.4byte 0x80214C28
+	.4byte __construct_new_array
 	.4byte 0x00000108
 	.4byte 0x800054E8
 .global lbl_80005530
 lbl_80005530:
 	.4byte 0x80005500
 	.4byte lbl_80005530
-	.4byte 0x802149F4
+	.4byte __destroy_new_array
 	.4byte 0x0000033C
 	.4byte 0x00000000
 	.4byte 0x00000000

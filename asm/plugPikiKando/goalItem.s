@@ -2310,7 +2310,7 @@ __vt__8GoalItem:
 	.4byte exitCourse__8CreatureFv
 	.4byte __RTTI__8GoalItem
 	.4byte 0xfffffd48
-	.4byte 0x8007df54
+	.4byte lbl_8007DF54
 	.4byte getCurrState__10AICreatureFv
 	.4byte "setCurrState__10AICreatureFP20AState<10AICreature>"
 	.4byte playSound__10AICreatureFi
@@ -2334,7 +2334,7 @@ __vt__8GoalItem:
 	.4byte getRouteIndex__8GoalItemFv
 	.4byte __RTTI__8GoalItem
 	.4byte 0xfffffc38
-	.4byte 0x800ec4c0
+	.4byte lbl_800EC4C0
 	.4byte invoke__8GoalItemFPQ23zen17particleGeneratorPQ23zen11particleMdl
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820

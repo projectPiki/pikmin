@@ -699,6 +699,8 @@ lbl_80017FF4:
 /* 80017FF4 00014F54  38 03 00 0C */	addi r0, r3, 0xc
 /* 80017FF8 00014F58  38 63 00 0C */	addi r3, r3, 0xc
 /* 80017FFC 00014F5C  7C 9F 01 2E */	stwx r4, r31, r0
+.global lbl_80018000
+lbl_80018000:
 /* 80018000 00014F60  42 00 FF F4 */	bdnz lbl_80017FF4
 /* 80018004 00014F64  3C 80 00 01 */	lis r4, 0x0000FFFF@ha
 /* 80018008 00014F68  38 7F 00 D4 */	addi r3, r31, 0xd4
@@ -1679,21 +1681,36 @@ animationKeyUpdated__6KingAiFR16PaniAnimKeyEvent:
 /* 8016C428 00169388  7C 05 00 2E */	lwzx r0, r5, r0
 /* 8016C42C 0016938C  7C 09 03 A6 */	mtctr r0
 /* 8016C430 00169390  4E 80 04 20 */	bctr 
+.global lbl_8016C434
+lbl_8016C434:
 /* 8016C434 00169394  48 00 00 4D */	bl keyAction0__6KingAiFv
 /* 8016C438 00169398  48 00 00 38 */	b lbl_8016C470
+.global lbl_8016C43C
+lbl_8016C43C:
 /* 8016C43C 0016939C  48 00 02 15 */	bl keyAction1__6KingAiFv
 /* 8016C440 001693A0  48 00 00 30 */	b lbl_8016C470
+.global lbl_8016C444
+lbl_8016C444:
 /* 8016C444 001693A4  48 00 02 F1 */	bl keyAction2__6KingAiFv
 /* 8016C448 001693A8  48 00 00 28 */	b lbl_8016C470
+.global lbl_8016C44C
+lbl_8016C44C:
 /* 8016C44C 001693AC  48 00 03 39 */	bl keyLoopEnd__6KingAiFv
 /* 8016C450 001693B0  48 00 00 20 */	b lbl_8016C470
+.global lbl_8016C454
+lbl_8016C454:
 /* 8016C454 001693B4  48 00 03 45 */	bl keyFinished__6KingAiFv
 /* 8016C458 001693B8  48 00 00 18 */	b lbl_8016C470
+.global lbl_8016C45C
+lbl_8016C45C:
 /* 8016C45C 001693BC  80 84 00 04 */	lwz r4, 4(r4)
 /* 8016C460 001693C0  48 00 03 C9 */	bl playSound__6KingAiFi
 /* 8016C464 001693C4  48 00 00 0C */	b lbl_8016C470
+.global lbl_8016C468
+lbl_8016C468:
 /* 8016C468 001693C8  80 84 00 04 */	lwz r4, 4(r4)
 /* 8016C46C 001693CC  48 00 04 01 */	bl createEffect__6KingAiFi
+.global lbl_8016C470
 lbl_8016C470:
 /* 8016C470 001693D0  80 01 00 0C */	lwz r0, 0xc(r1)
 /* 8016C474 001693D4  38 21 00 08 */	addi r1, r1, 8
@@ -1717,15 +1734,21 @@ keyAction0__6KingAiFv:
 /* 8016C4B0 00169410  7C 03 00 2E */	lwzx r0, r3, r0
 /* 8016C4B4 00169414  7C 09 03 A6 */	mtctr r0
 /* 8016C4B8 00169418  4E 80 04 20 */	bctr 
+.global lbl_8016C4BC
+lbl_8016C4BC:
 /* 8016C4BC 0016941C  80 65 03 C0 */	lwz r3, 0x3c0(r5)
 /* 8016C4C0 00169420  48 00 6D FD */	bl createUfoParts__8KingBodyFv
 /* 8016C4C4 00169424  48 00 01 78 */	b lbl_8016C63C
+.global lbl_8016C4C8
+lbl_8016C4C8:
 /* 8016C4C8 00169428  7F E3 FB 78 */	mr r3, r31
 /* 8016C4CC 0016942C  48 00 10 E5 */	bl killStickToMouthPiki__6KingAiFv
 /* 8016C4D0 00169430  80 7F 00 04 */	lwz r3, 4(r31)
 /* 8016C4D4 00169434  80 63 03 C0 */	lwz r3, 0x3c0(r3)
 /* 8016C4D8 00169438  48 00 69 89 */	bl setEatBombEffect__8KingBodyFv
 /* 8016C4DC 0016943C  48 00 01 60 */	b lbl_8016C63C
+.global lbl_8016C4E0
+lbl_8016C4E0:
 /* 8016C4E0 00169440  3C 80 6E 6F */	lis r4, 0x6E6F7365@ha
 /* 8016C4E4 00169444  80 65 02 20 */	lwz r3, 0x220(r5)
 /* 8016C4E8 00169448  38 84 73 65 */	addi r4, r4, 0x6E6F7365@l
@@ -1761,11 +1784,15 @@ lbl_8016C558:
 /* 8016C55C 001694BC  80 63 03 C0 */	lwz r3, 0x3c0(r3)
 /* 8016C560 001694C0  48 00 68 25 */	bl setSeedFlashEffect__8KingBodyFv
 /* 8016C564 001694C4  48 00 00 D8 */	b lbl_8016C63C
+.global lbl_8016C568
+lbl_8016C568:
 /* 8016C568 001694C8  38 00 00 01 */	li r0, 1
 /* 8016C56C 001694CC  98 1F 00 09 */	stb r0, 9(r31)
 /* 8016C570 001694D0  7F E3 FB 78 */	mr r3, r31
 /* 8016C574 001694D4  48 00 10 69 */	bl tongueAttackNavi__6KingAiFv
 /* 8016C578 001694D8  48 00 00 C4 */	b lbl_8016C63C
+.global lbl_8016C57C
+lbl_8016C57C:
 /* 8016C57C 001694DC  80 6D 31 80 */	lwz r3, effectMgr@sda21(r13)
 /* 8016C580 001694E0  38 A5 00 94 */	addi r5, r5, 0x94
 /* 8016C584 001694E4  38 80 00 6A */	li r4, 0x6a
@@ -1773,9 +1800,13 @@ lbl_8016C558:
 /* 8016C58C 001694EC  38 E0 00 00 */	li r7, 0
 /* 8016C590 001694F0  48 03 05 A9 */	bl "create__9EffectMgrFQ29EffectMgr12effTypeTableR8Vector3fPQ23zen37CallBack1<PQ23zen17particleGenerator>PQ23zen58CallBack2<PQ23zen17particleGenerator,PQ23zen11particleMdl>"
 /* 8016C594 001694F4  48 00 00 A8 */	b lbl_8016C63C
+.global lbl_8016C598
+lbl_8016C598:
 /* 8016C598 001694F8  38 00 00 01 */	li r0, 1
 /* 8016C59C 001694FC  98 05 02 BD */	stb r0, 0x2bd(r5)
 /* 8016C5A0 00169500  48 00 00 9C */	b lbl_8016C63C
+.global lbl_8016C5A4
+lbl_8016C5A4:
 /* 8016C5A4 00169504  7F E3 FB 78 */	mr r3, r31
 /* 8016C5A8 00169508  48 00 04 81 */	bl fallBackSide__6KingAiFv
 /* 8016C5AC 0016950C  80 7F 00 04 */	lwz r3, 4(r31)
@@ -1799,6 +1830,8 @@ lbl_8016C558:
 /* 8016C5F4 00169554  38 A5 00 94 */	addi r5, r5, 0x94
 /* 8016C5F8 00169558  4B FB 79 E1 */	bl startVibrationEvent__17PcamCameraManagerFiR8Vector3f
 /* 8016C5FC 0016955C  48 00 00 40 */	b lbl_8016C63C
+.global lbl_8016C600
+lbl_8016C600:
 /* 8016C600 00169560  7C A3 2B 78 */	mr r3, r5
 /* 8016C604 00169564  81 85 00 00 */	lwz r12, 0(r5)
 /* 8016C608 00169568  81 8C 00 90 */	lwz r12, 0x90(r12)
@@ -1814,6 +1847,7 @@ lbl_8016C558:
 /* 8016C630 00169590  80 7F 00 04 */	lwz r3, 4(r31)
 /* 8016C634 00169594  38 00 00 01 */	li r0, 1
 /* 8016C638 00169598  98 03 02 BE */	stb r0, 0x2be(r3)
+.global lbl_8016C63C
 lbl_8016C63C:
 /* 8016C63C 0016959C  80 01 00 34 */	lwz r0, 0x34(r1)
 /* 8016C640 001695A0  83 E1 00 2C */	lwz r31, 0x2c(r1)

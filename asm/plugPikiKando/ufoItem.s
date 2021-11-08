@@ -3152,7 +3152,7 @@ __vt__8Suckable:
 	.4byte exitCourse__8CreatureFv
 	.4byte 0x803e17a4
 	.4byte 0xfffffd48
-	.4byte 0x8007df54
+	.4byte lbl_8007DF54
 	.4byte getCurrState__10AICreatureFv
 	.4byte "setCurrState__10AICreatureFP20AState<10AICreature>"
 	.4byte playSound__10AICreatureFi
@@ -3262,7 +3262,7 @@ __vt__7UfoItem:
 	.4byte exitCourse__8CreatureFv
 	.4byte __RTTI__7UfoItem
 	.4byte 0xfffffd48
-	.4byte 0x800e97a4
+	.4byte lbl_800E97A4
 	.4byte getCurrState__10AICreatureFv
 	.4byte "setCurrState__10AICreatureFP20AState<10AICreature>"
 	.4byte playSound__10AICreatureFi

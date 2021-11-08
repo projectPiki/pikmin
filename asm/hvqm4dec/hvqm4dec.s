@@ -18959,7 +18959,7 @@ mcbtypetrans$1481:
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .global func$793
 func$793:
-	.4byte 0x800209E8
-	.4byte 0x80020A84
-	.4byte 0x80020C30
-	.4byte 0x80020DCC
+	.4byte _MotionComp_00
+	.4byte _MotionComp_01
+	.4byte _MotionComp_10
+	.4byte _MotionComp_11

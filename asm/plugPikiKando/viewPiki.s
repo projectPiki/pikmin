@@ -2651,7 +2651,7 @@ __vt__8ViewPiki:
 	.4byte exitCourse__8CreatureFv
 	.4byte __RTTI__8ViewPiki
 	.4byte 0xfffffd48
-	.4byte 0x800cd7fc
+	.4byte lbl_800CD7FC
 	.4byte isKinoko__8ViewPikiFv
 	.4byte animationKeyUpdated__4PikiFR16PaniAnimKeyEvent
 	.4byte initBirth__8ViewPikiFv

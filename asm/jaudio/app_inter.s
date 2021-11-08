@@ -288,6 +288,8 @@ read__8KingPropFR18RandomAccessStream:
 /* 8016C29C 001691FC  38 21 00 18 */	addi r1, r1, 0x18
 /* 8016C2A0 00169200  7C 08 03 A6 */	mtlr r0
 /* 8016C2A4 00169204  4E 80 00 20 */	blr 
+.global lbl_8016C2A8
+lbl_8016C2A8:
 /* 8016C2A8 00169208  38 63 FE 14 */	addi r3, r3, -492
 /* 8016C2AC 0016920C  4B FF FF AC */	b read__8KingPropFR18RandomAccessStream
 

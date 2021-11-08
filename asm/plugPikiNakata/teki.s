@@ -157,16 +157,16 @@ __vt__4Teki:
 	.4byte __RTTI__4Teki
 	.4byte 0xfffffd48
 	.4byte viewInit__10PelletViewFv
-	.4byte 0x80143e40
-	.4byte 0x80143e38
-	.4byte 0x80143e30
+	.4byte lbl_80143E40
+	.4byte lbl_80143E38
+	.4byte lbl_80143E30
 	.4byte viewStartExplodeMotion__10PelletViewFf
-	.4byte 0x80143e28
-	.4byte 0x80143e20
-	.4byte 0x80143e18
-	.4byte 0x80143e10
-	.4byte 0x80143e08
-	.4byte 0x80143e00
+	.4byte lbl_80143E28
+	.4byte lbl_80143E20
+	.4byte lbl_80143E18
+	.4byte lbl_80143E10
+	.4byte lbl_80143E08
+	.4byte lbl_80143E00
 	.4byte viewStartTrembleMotion__5BTekiFf
 	.4byte viewSetMotionSpeed__5BTekiFf
 	.4byte viewDoAnimation__5BTekiFv
@@ -212,7 +212,7 @@ __vt__4Teki:
 	.4byte becomeCorpse__5BTekiFv
 	.4byte __RTTI__4Teki
 	.4byte 0xfffffac8
-	.4byte 0x80143dec
+	.4byte lbl_80143DEC
 	.4byte 0
 	.4byte 0
 	.4byte 0

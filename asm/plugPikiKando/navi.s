@@ -9817,17 +9817,17 @@ lbl_802C00B4:
 	.4byte 0x654D0000
 .global lbl_802C00D8
 lbl_802C00D8:
-	.4byte 0x800FF854
-	.4byte 0x800FF87C
-	.4byte 0x800FF890
-	.4byte 0x800FF8A4
-	.4byte 0x800FF8B8
-	.4byte 0x800FF8CC
-	.4byte 0x800FF8E0
-	.4byte 0x800FF8F4
-	.4byte 0x800FF868
-	.4byte 0x800FF91C
-	.4byte 0x800FF908
+	.4byte lbl_800FF854
+	.4byte lbl_800FF87C
+	.4byte lbl_800FF890
+	.4byte lbl_800FF8A4
+	.4byte lbl_800FF8B8
+	.4byte lbl_800FF8CC
+	.4byte lbl_800FF8E0
+	.4byte lbl_800FF8F4
+	.4byte lbl_800FF868
+	.4byte lbl_800FF91C
+	.4byte lbl_800FF908
 	.4byte 0x496E7465
 	.4byte 0x72616374
 	.4byte 0x5375636B
@@ -10172,19 +10172,19 @@ __vt__4Navi:
 	.4byte exitCourse__8CreatureFv
 	.4byte __RTTI__4Navi
 	.4byte 0xfffffd48
-	.4byte 0x80101110
+	.4byte lbl_80101110
 	.4byte __RTTI__4Navi
 	.4byte 0xfffffd44
 	.4byte viewInit__10PelletViewFv
-	.4byte 0x80101138
-	.4byte 0x80101130
-	.4byte 0x80101128
+	.4byte lbl_80101138
+	.4byte lbl_80101130
+	.4byte lbl_80101128
 	.4byte viewStartExplodeMotion__10PelletViewFf
 	.4byte viewSetMotionSpeed__10PelletViewFf
 	.4byte viewFinishMotion__10PelletViewFv
 	.4byte viewDoAnimation__10PelletViewFv
-	.4byte 0x80101120
-	.4byte 0x80101118
+	.4byte lbl_80101120
+	.4byte lbl_80101118
 	.4byte viewGetScale__10PelletViewFv
 	.4byte viewKill__4NaviFv
 	.4byte viewDraw__4NaviFR8GraphicsR8Matrix4f

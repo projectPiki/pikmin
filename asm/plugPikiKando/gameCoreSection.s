@@ -1663,25 +1663,25 @@ lbl_802C2188:
 	.4byte 0x696F6E00
 .global lbl_802C21AC
 lbl_802C21AC:
-	.4byte 0x8010D9C4
-	.4byte 0x8010D9C8
-	.4byte 0x8010D9C4
-	.4byte 0x8010D9C8
-	.4byte 0x8010D9C8
-	.4byte 0x8010D9C8
-	.4byte 0x8010D9C8
-	.4byte 0x8010D9C4
-	.4byte 0x8010D9C8
-	.4byte 0x8010D9C8
-	.4byte 0x8010D9C8
-	.4byte 0x8010D9C8
-	.4byte 0x8010D9C8
-	.4byte 0x8010D9C8
-	.4byte 0x8010D9C8
-	.4byte 0x8010D9C8
-	.4byte 0x8010D9C8
-	.4byte 0x8010D9C4
-	.4byte 0x8010D9C4
+	.4byte lbl_8010D9C4
+	.4byte lbl_8010D9C8
+	.4byte lbl_8010D9C4
+	.4byte lbl_8010D9C8
+	.4byte lbl_8010D9C8
+	.4byte lbl_8010D9C8
+	.4byte lbl_8010D9C8
+	.4byte lbl_8010D9C4
+	.4byte lbl_8010D9C8
+	.4byte lbl_8010D9C8
+	.4byte lbl_8010D9C8
+	.4byte lbl_8010D9C8
+	.4byte lbl_8010D9C8
+	.4byte lbl_8010D9C8
+	.4byte lbl_8010D9C8
+	.4byte lbl_8010D9C8
+	.4byte lbl_8010D9C8
+	.4byte lbl_8010D9C4
+	.4byte lbl_8010D9C4
 	.4byte 0x67656E43
 	.4byte 0x61636865
 	.4byte 0x00000000

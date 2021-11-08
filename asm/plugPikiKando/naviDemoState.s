@@ -2186,17 +2186,17 @@ lbl_802C1AD8:
 	.4byte 0x20212100
 .global lbl_802C1AE4
 lbl_802C1AE4:
-	.4byte 0x8010CD4C
-	.4byte 0x8010CD74
-	.4byte 0x8010CD88
-	.4byte 0x8010CD9C
-	.4byte 0x8010CDB0
-	.4byte 0x8010CDC4
-	.4byte 0x8010CDD8
-	.4byte 0x8010CDEC
-	.4byte 0x8010CD60
-	.4byte 0x8010CE14
-	.4byte 0x8010CE00
+	.4byte lbl_8010CD4C
+	.4byte lbl_8010CD74
+	.4byte lbl_8010CD88
+	.4byte lbl_8010CD9C
+	.4byte lbl_8010CDB0
+	.4byte lbl_8010CDC4
+	.4byte lbl_8010CDD8
+	.4byte lbl_8010CDEC
+	.4byte lbl_8010CD60
+	.4byte lbl_8010CE14
+	.4byte lbl_8010CE00
 	.4byte 0x4E617669
 	.4byte 0x44656D6F
 	.4byte 0x53756E73
@@ -2621,17 +2621,17 @@ __vt__Q219NaviDemoSunsetState16DemoStateMachine:
 	.4byte "exec__35StateMachine<19NaviDemoSunsetState>FP19NaviDemoSunsetState"
 	.4byte "procMsg__35StateMachine<19NaviDemoSunsetState>FP19NaviDemoSunsetStateP3Msg"
 	.4byte "transit__35StateMachine<19NaviDemoSunsetState>FP19NaviDemoSunsetStatei"
-	.4byte 0x800ff854
-	.4byte 0x800ff87c
-	.4byte 0x800ff890
-	.4byte 0x800ff8a4
-	.4byte 0x800ff8b8
-	.4byte 0x800ff8cc
-	.4byte 0x800ff8e0
-	.4byte 0x800ff8f4
-	.4byte 0x800ff868
-	.4byte 0x800ff91c
-	.4byte 0x800ff908
+	.4byte lbl_800FF854
+	.4byte lbl_800FF87C
+	.4byte lbl_800FF890
+	.4byte lbl_800FF8A4
+	.4byte lbl_800FF8B8
+	.4byte lbl_800FF8CC
+	.4byte lbl_800FF8E0
+	.4byte lbl_800FF8F4
+	.4byte lbl_800FF868
+	.4byte lbl_800FF91C
+	.4byte lbl_800FF908
 	.4byte 0
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820

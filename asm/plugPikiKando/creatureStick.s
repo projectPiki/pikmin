@@ -731,8 +731,12 @@ lbl_800CF0C0:
 /* 800CF0CC 000CC02C  38 21 00 18 */	addi r1, r1, 0x18
 /* 800CF0D0 000CC030  7C 08 03 A6 */	mtlr r0
 /* 800CF0D4 000CC034  4E 80 00 20 */	blr 
+.global lbl_800CF0D8
+lbl_800CF0D8:
 /* 800CF0D8 000CC038  38 63 FF F8 */	addi r3, r3, -8
 /* 800CF0DC 000CC03C  4B FF FD 6C */	b read__7PikiMgrFR18RandomAccessStream
+.global lbl_800CF0E0
+lbl_800CF0E0:
 /* 800CF0E0 000CC040  38 63 FF F8 */	addi r3, r3, -8
 /* 800CF0E4 000CC044  4B FF FD 24 */	b update__7PikiMgrFv
 

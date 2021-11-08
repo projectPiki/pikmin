@@ -1901,7 +1901,7 @@ __vt__8ActStone:
 	.4byte getInfo__6ActionFPc
 	.4byte __RTTI__8ActStone
 	.4byte 0xffffffec
-	.4byte 0x800a79f0
+	.4byte lbl_800A79F0
 	.4byte animationKeyUpdated__8ActStoneFR16PaniAnimKeyEvent
 	.4byte 0x50616e69
 	.4byte 0x416e696d
@@ -1913,17 +1913,17 @@ __vt__8ActStone:
 	.4byte 0
 .global lbl_802B5044
 lbl_802B5044:
-	.4byte 0x800A7908
-	.4byte 0x800A7930
-	.4byte 0x800A7944
-	.4byte 0x800A7958
-	.4byte 0x800A796C
-	.4byte 0x800A7980
-	.4byte 0x800A7994
-	.4byte 0x800A79A8
-	.4byte 0x800A791C
-	.4byte 0x800A79D0
-	.4byte 0x800A79BC
+	.4byte lbl_800A7908
+	.4byte lbl_800A7930
+	.4byte lbl_800A7944
+	.4byte lbl_800A7958
+	.4byte lbl_800A796C
+	.4byte lbl_800A7980
+	.4byte lbl_800A7994
+	.4byte lbl_800A79A8
+	.4byte lbl_800A791C
+	.4byte lbl_800A79D0
+	.4byte lbl_800A79BC
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 	.4byte 0x802B4E48

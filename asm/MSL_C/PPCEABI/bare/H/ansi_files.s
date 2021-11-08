@@ -17,9 +17,9 @@ __files:
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x00000000
-	.4byte 0x8021A5B0
-	.4byte 0x8021A518
-	.4byte 0x8021A510
+	.4byte __read_console
+	.4byte __write_console
+	.4byte __close_console
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x10800000
@@ -35,9 +35,9 @@ __files:
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x00000000
-	.4byte 0x8021A5B0
-	.4byte 0x8021A518
-	.4byte 0x8021A510
+	.4byte __read_console
+	.4byte __write_console
+	.4byte __close_console
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x10800000
@@ -53,7 +53,7 @@ __files:
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x00000000
-	.4byte 0x8021A5B0
-	.4byte 0x8021A518
-	.4byte 0x8021A510
+	.4byte __read_console
+	.4byte __write_console
+	.4byte __close_console
 	.4byte 0x00000000

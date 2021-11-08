@@ -2132,14 +2132,14 @@ J_STREAM:
 	.4byte 0x00000000
 .global lbl_80222E8C
 lbl_80222E8C:
-	.4byte 0x80006B68
-	.4byte 0x80006824
-	.4byte 0x8000690C
-	.4byte 0x80006930
-	.4byte 0x80006A74
-	.4byte 0x80006A74
-	.4byte 0x80006B1C
-	.4byte 0x80006B3C
+	.4byte lbl_80006B68
+	.4byte lbl_80006824
+	.4byte lbl_8000690C
+	.4byte lbl_80006930
+	.4byte lbl_80006A74
+	.4byte lbl_80006A74
+	.4byte lbl_80006B1C
+	.4byte lbl_80006B3C
 	.4byte 0x00000000
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840

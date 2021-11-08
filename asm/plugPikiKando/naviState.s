@@ -12283,10 +12283,10 @@ __vt__18NaviContainerState:
 	.4byte onCloseWindow__18NaviContainerStateFv
 	.4byte __RTTI__18NaviContainerState
 	.4byte 0xffffffe0
-	.4byte 0x8010b0b8
+	.4byte lbl_8010B0B8
 	.4byte __RTTI__18NaviContainerState
 	.4byte 0xffffffd8
-	.4byte 0x8010b0cc
+	.4byte lbl_8010B0CC
 .global __vt__Q25GmWin13CloseListener
 __vt__Q25GmWin13CloseListener:
 	.4byte __RTTI__Q25GmWin13CloseListener
@@ -12633,17 +12633,17 @@ __vt__16NaviStateMachine:
 	.4byte "exec__19StateMachine<4Navi>FP4Navi"
 	.4byte "procMsg__19StateMachine<4Navi>FP4NaviP3Msg"
 	.4byte "transit__19StateMachine<4Navi>FP4Navii"
-	.4byte 0x800ff854
-	.4byte 0x800ff87c
-	.4byte 0x800ff890
-	.4byte 0x800ff8a4
-	.4byte 0x800ff8b8
-	.4byte 0x800ff8cc
-	.4byte 0x800ff8e0
-	.4byte 0x800ff8f4
-	.4byte 0x800ff868
-	.4byte 0x800ff91c
-	.4byte 0x800ff908
+	.4byte lbl_800FF854
+	.4byte lbl_800FF87C
+	.4byte lbl_800FF890
+	.4byte lbl_800FF8A4
+	.4byte lbl_800FF8B8
+	.4byte lbl_800FF8CC
+	.4byte lbl_800FF8E0
+	.4byte lbl_800FF8F4
+	.4byte lbl_800FF868
+	.4byte lbl_800FF91C
+	.4byte lbl_800FF908
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .global __RTTI__8NaviProp

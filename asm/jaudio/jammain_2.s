@@ -21789,57 +21789,57 @@ lbl_80168580:
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .global lbl_80225068
 lbl_80225068:
-	.4byte 0x8000F92C
-	.4byte 0x8000F974
-	.4byte 0x8000F974
-	.4byte 0x8000F974
-	.4byte 0x8000F944
-	.4byte 0x8000F974
-	.4byte 0x8000F974
-	.4byte 0x8000F974
-	.4byte 0x8000F954
-	.4byte 0x8000F974
-	.4byte 0x8000F974
-	.4byte 0x8000F974
-	.4byte 0x8000F968
+	.4byte lbl_8000F92C
+	.4byte lbl_8000F974
+	.4byte lbl_8000F974
+	.4byte lbl_8000F974
+	.4byte lbl_8000F944
+	.4byte lbl_8000F974
+	.4byte lbl_8000F974
+	.4byte lbl_8000F974
+	.4byte lbl_8000F954
+	.4byte lbl_8000F974
+	.4byte lbl_8000F974
+	.4byte lbl_8000F974
+	.4byte lbl_8000F968
 .global lbl_8022509C
 lbl_8022509C:
-	.4byte 0x8000FCCC
-	.4byte 0x8000FD20
-	.4byte 0x8000FD20
-	.4byte 0x8000FD20
-	.4byte 0x8000FCE8
-	.4byte 0x8000FD20
-	.4byte 0x8000FD20
-	.4byte 0x8000FD20
-	.4byte 0x8000FCF8
-	.4byte 0x8000FD20
-	.4byte 0x8000FD20
-	.4byte 0x8000FD20
-	.4byte 0x8000FD0C
-	.4byte 0x8000FD20
-	.4byte 0x8000FD20
-	.4byte 0x8000FD20
-	.4byte 0x8000FD1C
+	.4byte lbl_8000FCCC
+	.4byte lbl_8000FD20
+	.4byte lbl_8000FD20
+	.4byte lbl_8000FD20
+	.4byte lbl_8000FCE8
+	.4byte lbl_8000FD20
+	.4byte lbl_8000FD20
+	.4byte lbl_8000FD20
+	.4byte lbl_8000FCF8
+	.4byte lbl_8000FD20
+	.4byte lbl_8000FD20
+	.4byte lbl_8000FD20
+	.4byte lbl_8000FD0C
+	.4byte lbl_8000FD20
+	.4byte lbl_8000FD20
+	.4byte lbl_8000FD20
+	.4byte lbl_8000FD1C
 .global lbl_802250E0
 lbl_802250E0:
-	.4byte 0x800100DC
-	.4byte 0x800100DC
-	.4byte 0x800100E4
-	.4byte 0x800101AC
-	.4byte 0x800101AC
-	.4byte 0x800101AC
-	.4byte 0x800101AC
-	.4byte 0x800101AC
-	.4byte 0x800101AC
-	.4byte 0x800101AC
-	.4byte 0x800101AC
-	.4byte 0x800101AC
-	.4byte 0x8001010C
-	.4byte 0x80010154
-	.4byte 0x800101AC
-	.4byte 0x800101AC
-	.4byte 0x80010188
+	.4byte lbl_800100DC
+	.4byte lbl_800100DC
+	.4byte lbl_800100E4
+	.4byte lbl_800101AC
+	.4byte lbl_800101AC
+	.4byte lbl_800101AC
+	.4byte lbl_800101AC
+	.4byte lbl_800101AC
+	.4byte lbl_800101AC
+	.4byte lbl_800101AC
+	.4byte lbl_800101AC
+	.4byte lbl_800101AC
+	.4byte lbl_8001010C
+	.4byte lbl_80010154
+	.4byte lbl_800101AC
+	.4byte lbl_800101AC
+	.4byte lbl_80010188
 .global Arglist
 Arglist:
 	.4byte 0x00000000
@@ -21909,69 +21909,69 @@ Arglist:
 .global CMDP_LIST
 CMDP_LIST:
 	.4byte 0x00000000
-	.4byte 0x80011800
-	.4byte 0x80011840
-	.4byte 0x800118A0
-	.4byte 0x800118E0
-	.4byte 0x800119E0
-	.4byte 0x80011A20
-	.4byte 0x80011A80
-	.4byte 0x80011AA0
-	.4byte 0x80011AC0
-	.4byte 0x80011B20
-	.4byte 0x80011BA0
-	.4byte 0x80011C00
-	.4byte 0x80011C40
-	.4byte 0x80011CA0
-	.4byte 0x80011D00
-	.4byte 0x80011D40
-	.4byte 0x80011D80
-	.4byte 0x80011DC0
+	.4byte Cmd_OpenTrack__Fv
+	.4byte Cmd_OpenTrackBros__Fv
+	.4byte Cmd_Call__Fv
+	.4byte Cmd_CallF__Fv
+	.4byte Cmd_Ret__Fv
+	.4byte Cmd_RetF__Fv
+	.4byte Cmd_Jmp__Fv
+	.4byte Cmd_JmpF__Fv
+	.4byte Cmd_LoopS__Fv
+	.4byte Cmd_LoopE__Fv
+	.4byte Cmd_ReadPort__Fv
+	.4byte Cmd_WritePort__Fv
+	.4byte Cmd_CheckPortImport__Fv
+	.4byte Cmd_CheckPortExport__Fv
+	.4byte Cmd_WaitReg__Fv
+	.4byte Cmd_ConnectName__Fv
+	.4byte Cmd_ParentWritePort__Fv
+	.4byte Cmd_ChildWritePort__Fv
 	.4byte 0x00000000
-	.4byte 0x80011E20
-	.4byte 0x80011E60
-	.4byte 0x80011E80
-	.4byte 0x80011EC0
-	.4byte 0x80011F00
-	.4byte 0x80011F80
-	.4byte 0x80011FE0
-	.4byte 0x80012060
-	.4byte 0x800120A0
-	.4byte 0x800120E0
-	.4byte 0x80012120
-	.4byte 0x80012140
-	.4byte 0x800121A0
-	.4byte 0x800121E0
-	.4byte 0x80012200
-	.4byte 0x80012220
-	.4byte 0x80012260
-	.4byte 0x800122A0
-	.4byte 0x800122E0
-	.4byte 0x80012320
-	.4byte 0x80012380
-	.4byte 0x800123C0
-	.4byte 0x80012400
-	.4byte 0x80012600
-	.4byte 0x800126C0
-	.4byte 0x80012760
-	.4byte 0x800127C0
-	.4byte 0x80012820
-	.4byte 0x80012900
-	.4byte 0x80012940
-	.4byte 0x800129E0
-	.4byte 0x00000000
-	.4byte 0x00000000
+	.4byte Cmd_SetLastNote__Fv
+	.4byte Cmd_TimeRelate__Fv
+	.4byte Cmd_SimpleOsc__Fv
+	.4byte Cmd_SimpleEnv__Fv
+	.4byte Cmd_SimpleADSR__Fv
+	.4byte Cmd_Transpose__Fv
+	.4byte Cmd_CloseTrack__Fv
+	.4byte Cmd_OutSwitch__Fv
+	.4byte Cmd_UpdateSync__Fv
+	.4byte Cmd_BusConnect__Fv
+	.4byte Cmd_PauseStatus__Fv
+	.4byte Cmd_SetInterrupt__Fv
+	.4byte Cmd_DisInterrupt__Fv
+	.4byte Cmd_ClrI__Fv
+	.4byte Cmd_SetI__Fv
+	.4byte Cmd_RetI__Fv
+	.4byte Cmd_IntTimer__Fv
+	.4byte Cmd_ConnectOpen__Fv
+	.4byte Cmd_ConnectClose__Fv
+	.4byte Cmd_SyncCPU__Fv
+	.4byte Cmd_FlushAll__Fv
+	.4byte Cmd_FlushRelease__Fv
+	.4byte Cmd_Wait3__Fv
+	.4byte Cmd_PanPowSet__Fv
+	.4byte Cmd_IIRSet__Fv
+	.4byte Cmd_FIRSet__Fv
+	.4byte Cmd_EXTSet__Fv
+	.4byte Cmd_PanSwSet__Fv
+	.4byte Cmd_OscRoute__Fv
+	.4byte Cmd_IIRCutOff__Fv
+	.4byte Cmd_OscFull__Fv
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x00000000
-	.4byte 0x80012A20
-	.4byte 0x80012AA0
-	.4byte 0x800125E0
-	.4byte 0x800124A0
-	.4byte 0x80012440
-	.4byte 0x80012500
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte Cmd_CheckWave__Fv
+	.4byte Cmd_Printf__Fv
+	.4byte Cmd_Nop__Fv
+	.4byte Cmd_Tempo__Fv
+	.4byte Cmd_TimeBase__Fv
+	.4byte Cmd_Finish__Fv
 	.4byte 0x00000000
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820

@@ -269,7 +269,7 @@ __vt__8MizuItem:
 	.4byte exitCourse__8CreatureFv
 	.4byte __RTTI__8MizuItem
 	.4byte 0xfffffd48
-	.4byte 0x8007df54
+	.4byte lbl_8007DF54
 	.4byte getCurrState__10AICreatureFv
 	.4byte "setCurrState__10AICreatureFP20AState<10AICreature>"
 	.4byte playSound__10AICreatureFi

@@ -6286,14 +6286,14 @@ lbl_802B5ECC:
 	.4byte 0x636B0000
 .global lbl_802B5EDC
 lbl_802B5EDC:
-	.4byte 0x800B0D0C
-	.4byte 0x800B0C9C
-	.4byte 0x800B0D44
-	.4byte 0x800B1344
-	.4byte 0x800B1350
-	.4byte 0x800B0D50
-	.4byte 0x800B135C
-	.4byte 0x800B0D38
+	.4byte lbl_800B0D0C
+	.4byte lbl_800B0C9C
+	.4byte lbl_800B0D44
+	.4byte lbl_800B1344
+	.4byte lbl_800B1350
+	.4byte lbl_800B0D50
+	.4byte lbl_800B135C
+	.4byte lbl_800B0D38
 	.4byte 0x25732025
 	.4byte 0x6420252E
 	.4byte 0x31660000
@@ -6358,21 +6358,21 @@ __vt__12ActTransport:
 	.4byte animationKeyUpdated__12ActTransportFR16PaniAnimKeyEvent
 	.4byte __RTTI__12ActTransport
 	.4byte 0xffffff48
-	.4byte 0x800b455c
+	.4byte lbl_800B455C
 	.4byte 0
 	.4byte 0
 	.4byte 0
-	.4byte 0x800a7908
-	.4byte 0x800a7930
-	.4byte 0x800a7944
-	.4byte 0x800a7958
-	.4byte 0x800a796c
-	.4byte 0x800a7980
-	.4byte 0x800a7994
-	.4byte 0x800a79a8
-	.4byte 0x800a791c
-	.4byte 0x800a79d0
-	.4byte 0x800a79bc
+	.4byte lbl_800A7908
+	.4byte lbl_800A7930
+	.4byte lbl_800A7944
+	.4byte lbl_800A7958
+	.4byte lbl_800A796C
+	.4byte lbl_800A7980
+	.4byte lbl_800A7994
+	.4byte lbl_800A79A8
+	.4byte lbl_800A791C
+	.4byte lbl_800A79D0
+	.4byte lbl_800A79BC
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .global lbl_803DFF08

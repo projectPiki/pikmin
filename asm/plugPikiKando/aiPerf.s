@@ -3859,64 +3859,64 @@ gridStrings:
 	.4byte 0x802AE944
 	.4byte 0x00000000
 	.4byte 0xFFFFFFFF
-	.4byte 0x8005EA1C
+	.4byte menuCloseMenu__4MenuFR4Menu
 	.4byte 0x00000000
 	.4byte 0xFFFFFFFF
-	.4byte 0x80085734
+	.4byte toggleBridge__6AIPerfFR4Menu
 	.4byte 0x00000000
 	.4byte 0xFFFFFFFF
-	.4byte 0x800857AC
+	.4byte toggleShowRoute__6AIPerfFR4Menu
 	.4byte 0x00000000
 	.4byte 0xFFFFFFFF
-	.4byte 0x80085BB8
+	.4byte decOptLevel__6AIPerfFR4Menu
 	.4byte 0x00000000
 	.4byte 0xFFFFFFFF
-	.4byte 0x80085B6C
+	.4byte incOptLevel__6AIPerfFR4Menu
 	.4byte 0x00000000
 	.4byte 0xFFFFFFFF
-	.4byte 0x80085AF4
+	.4byte toggleCollSort__6AIPerfFR4Menu
 	.4byte 0x00000000
 	.4byte 0xFFFFFFFF
-	.4byte 0x80085824
+	.4byte toggleKando__6AIPerfFR4Menu
 	.4byte 0x00000000
 	.4byte 0xFFFFFFFF
-	.4byte 0x80085A7C
+	.4byte toggleSoundDebug__6AIPerfFR4Menu
 	.4byte 0x00000000
 	.4byte 0xFFFFFFFF
-	.4byte 0x800856BC
+	.4byte toggleGeneratorMode__6AIPerfFR4Menu
 	.4byte 0x00000000
 	.4byte 0xFFFFFFFF
-	.4byte 0x80085634
+	.4byte toggleMoveType__6AIPerfFR4Menu
 	.4byte 0x00000000
 	.4byte 0xFFFFFFFF
-	.4byte 0x8008589C
+	.4byte toggleLOD__6AIPerfFR4Menu
 	.4byte 0x00000000
 	.4byte 0xFFFFFFFF
-	.4byte 0x80085914
+	.4byte toggleColls__6AIPerfFR4Menu
 	.4byte 0x00000000
 	.4byte 0xFFFFFFFF
-	.4byte 0x8008598C
+	.4byte toggleASync__6AIPerfFR4Menu
 	.4byte 0x00000000
 	.4byte 0xFFFFFFFF
-	.4byte 0x80085A04
+	.4byte toggleInsQuick__6AIPerfFR4Menu
 	.4byte 0x00000000
 	.4byte 0xFFFFFFFF
-	.4byte 0x80085D64
+	.4byte decUfoLevel__6AIPerfFR4Menu
 	.4byte 0x00000000
 	.4byte 0xFFFFFFFF
-	.4byte 0x80085C04
+	.4byte incUfoLevel__6AIPerfFR4Menu
 	.4byte 0x00000000
 	.4byte 0xFFFFFFFF
-	.4byte 0x80085FC4
+	.4byte flowerPiki__6AIPerfFR4Menu
 	.4byte 0x00000000
 	.4byte 0xFFFFFFFF
-	.4byte 0x800860D8
+	.4byte breakSluice__6AIPerfFR4Menu
 	.4byte 0x00000000
 	.4byte 0xFFFFFFFF
-	.4byte 0x80085D9C
+	.4byte collectPikis__6AIPerfFR4Menu
 	.4byte 0x00000000
 	.4byte 0xFFFFFFFF
-	.4byte 0x80085F0C
+	.4byte fullfillPiki__6AIPerfFR4Menu
 .global lbl_802AEA4C
 lbl_802AEA4C:
 	.4byte 0x42726964

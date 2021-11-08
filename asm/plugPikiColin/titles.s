@@ -3759,10 +3759,10 @@ lbl_802A8920:
 	.4byte 0x70700000
 	.4byte 0x00000000
 	.4byte 0xFFFFFFFF
-	.4byte 0x8005F804
+	.4byte menuSelectOption__17TitleSetupSectionFR4Menu
 	.4byte 0x00000000
 	.4byte 0xFFFFFFFF
-	.4byte 0x8005EA1C
+	.4byte menuCloseMenu__4MenuFR4Menu
 	.4byte 0x3C546974
 	.4byte 0x6C657353
 	.4byte 0x65637469

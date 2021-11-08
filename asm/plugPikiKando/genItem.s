@@ -738,29 +738,29 @@ lbl_802BD7C0:
 	.4byte 0x90B60000
 .global lbl_802BD7D0
 lbl_802BD7D0:
-	.4byte 0x800EE9AC
-	.4byte 0x800EEA84
-	.4byte 0x800EEA84
-	.4byte 0x800EEA84
-	.4byte 0x800EE984
-	.4byte 0x800EEA84
-	.4byte 0x800EE998
-	.4byte 0x800EEA84
-	.4byte 0x800EEA84
-	.4byte 0x800EEA84
-	.4byte 0x800EE9C0
-	.4byte 0x800EE9C0
-	.4byte 0x800EE9C0
-	.4byte 0x800EE9C0
-	.4byte 0x800EEA84
-	.4byte 0x800EEA84
-	.4byte 0x800EEA84
-	.4byte 0x800EEA84
-	.4byte 0x800EEA84
-	.4byte 0x800EEA7C
-	.4byte 0x800EEA84
-	.4byte 0x800EE9CC
-	.4byte 0x800EEA24
+	.4byte lbl_800EE9AC
+	.4byte lbl_800EEA84
+	.4byte lbl_800EEA84
+	.4byte lbl_800EEA84
+	.4byte lbl_800EE984
+	.4byte lbl_800EEA84
+	.4byte lbl_800EE998
+	.4byte lbl_800EEA84
+	.4byte lbl_800EEA84
+	.4byte lbl_800EEA84
+	.4byte lbl_800EE9C0
+	.4byte lbl_800EE9C0
+	.4byte lbl_800EE9C0
+	.4byte lbl_800EE9C0
+	.4byte lbl_800EEA84
+	.4byte lbl_800EEA84
+	.4byte lbl_800EEA84
+	.4byte lbl_800EEA84
+	.4byte lbl_800EEA84
+	.4byte lbl_800EEA7C
+	.4byte lbl_800EEA84
+	.4byte lbl_800EE9CC
+	.4byte lbl_800EEA24
 	.4byte 0x47656E4F
 	.4byte 0x626A6563
 	.4byte 0x74497465

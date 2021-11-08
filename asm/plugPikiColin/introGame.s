@@ -208,6 +208,8 @@ __ct__18PaniPelletAnimatorFv:
 /* 80099D08 00096C68  38 21 00 18 */	addi r1, r1, 0x18
 /* 80099D0C 00096C6C  7C 08 03 A6 */	mtlr r0
 /* 80099D10 00096C70  4E 80 00 20 */	blr 
+.global lbl_80099D14
+lbl_80099D14:
 /* 80099D14 00096C74  38 63 FF FC */	addi r3, r3, -4
 /* 80099D18 00096C78  4B FF FA 84 */	b read__14PelletAnimInfoFR18RandomAccessStream
 

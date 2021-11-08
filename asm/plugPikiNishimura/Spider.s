@@ -1113,5 +1113,7 @@ read__10SpiderPropFR18RandomAccessStream:
 /* 8015382C 0015078C  38 21 00 18 */	addi r1, r1, 0x18
 /* 80153830 00150790  7C 08 03 A6 */	mtlr r0
 /* 80153834 00150794  4E 80 00 20 */	blr 
+.global lbl_80153838
+lbl_80153838:
 /* 80153838 00150798  38 63 FE 14 */	addi r3, r3, -492
 /* 8015383C 0015079C  4B FF FF AC */	b read__10SpiderPropFR18RandomAccessStream

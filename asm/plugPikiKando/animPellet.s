@@ -1259,7 +1259,7 @@ __vt__14PelletAnimInfo:
 	.4byte __RTTI__14PelletAnimInfo
 	.4byte 0xfffffffc
 	.4byte getAgeNodeType__5ANodeFv
-	.4byte 0x80099d14
+	.4byte lbl_80099D14
 	.4byte read__14PelletAnimInfoFR18RandomAccessStream
 	.4byte 0x5061726d
 	.4byte 0x3c537472

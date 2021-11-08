@@ -609,21 +609,21 @@ lbl_801D82DC:
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .global lbl_802AE1A0
 lbl_802AE1A0:
-	.4byte 0x800833F8
-	.4byte 0x80083444
-	.4byte 0x80083410
-	.4byte 0x80083468
-	.4byte 0x8008341C
-	.4byte 0x8008348C
-	.4byte 0x80083518
+	.4byte lbl_800833F8
+	.4byte lbl_80083444
+	.4byte lbl_80083410
+	.4byte lbl_80083468
+	.4byte lbl_8008341C
+	.4byte lbl_8008348C
+	.4byte lbl_80083518
 .global lbl_802AE1BC
 lbl_802AE1BC:
-	.4byte 0x80083318
-	.4byte 0x80083380
-	.4byte 0x80083394
-	.4byte 0x800833A8
-	.4byte 0x80083328
-	.4byte 0x80083338
-	.4byte 0x80083348
-	.4byte 0x800833B4
+	.4byte lbl_80083318
+	.4byte lbl_80083380
+	.4byte lbl_80083394
+	.4byte lbl_800833A8
+	.4byte lbl_80083328
+	.4byte lbl_80083338
+	.4byte lbl_80083348
+	.4byte lbl_800833B4
 	.4byte 0x00000000

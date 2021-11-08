@@ -222,6 +222,8 @@ changeMode__4PikiFiP4Navi:
 /* 800CD208 000CA168  7C 03 00 2E */	lwzx r0, r3, r0
 /* 800CD20C 000CA16C  7C 09 03 A6 */	mtctr r0
 /* 800CD210 000CA170  4E 80 04 20 */	bctr 
+.global lbl_800CD214
+lbl_800CD214:
 /* 800CD214 000CA174  80 7E 04 F8 */	lwz r3, 0x4f8(r30)
 /* 800CD218 000CA178  38 00 00 0F */	li r0, 0xf
 /* 800CD21C 000CA17C  B0 03 00 08 */	sth r0, 8(r3)
@@ -233,6 +235,8 @@ changeMode__4PikiFiP4Navi:
 /* 800CD234 000CA194  7C 63 02 14 */	add r3, r3, r0
 /* 800CD238 000CA198  4B FF 6A ED */	bl initialise__Q26Action5ChildFP8Creature
 /* 800CD23C 000CA19C  48 00 01 C0 */	b lbl_800CD3FC
+.global lbl_800CD240
+lbl_800CD240:
 /* 800CD240 000CA1A0  80 7E 04 F8 */	lwz r3, 0x4f8(r30)
 /* 800CD244 000CA1A4  38 00 00 0D */	li r0, 0xd
 /* 800CD248 000CA1A8  38 80 00 00 */	li r4, 0
@@ -244,6 +248,8 @@ changeMode__4PikiFiP4Navi:
 /* 800CD260 000CA1C0  7C 63 02 14 */	add r3, r3, r0
 /* 800CD264 000CA1C4  4B FF 6A C1 */	bl initialise__Q26Action5ChildFP8Creature
 /* 800CD268 000CA1C8  48 00 01 94 */	b lbl_800CD3FC
+.global lbl_800CD26C
+lbl_800CD26C:
 /* 800CD26C 000CA1CC  80 7E 04 F8 */	lwz r3, 0x4f8(r30)
 /* 800CD270 000CA1D0  38 00 00 0E */	li r0, 0xe
 /* 800CD274 000CA1D4  B0 03 00 08 */	sth r0, 8(r3)
@@ -255,6 +261,8 @@ changeMode__4PikiFiP4Navi:
 /* 800CD28C 000CA1EC  7C 63 02 14 */	add r3, r3, r0
 /* 800CD290 000CA1F0  4B FF 6A 95 */	bl initialise__Q26Action5ChildFP8Creature
 /* 800CD294 000CA1F4  48 00 01 68 */	b lbl_800CD3FC
+.global lbl_800CD298
+lbl_800CD298:
 /* 800CD298 000CA1F8  80 7E 04 F8 */	lwz r3, 0x4f8(r30)
 /* 800CD29C 000CA1FC  38 00 00 19 */	li r0, 0x19
 /* 800CD2A0 000CA200  38 80 00 00 */	li r4, 0
@@ -266,6 +274,8 @@ changeMode__4PikiFiP4Navi:
 /* 800CD2B8 000CA218  7C 63 02 14 */	add r3, r3, r0
 /* 800CD2BC 000CA21C  4B FF 6A 69 */	bl initialise__Q26Action5ChildFP8Creature
 /* 800CD2C0 000CA220  48 00 01 3C */	b lbl_800CD3FC
+.global lbl_800CD2C4
+lbl_800CD2C4:
 /* 800CD2C4 000CA224  80 7E 04 F8 */	lwz r3, 0x4f8(r30)
 /* 800CD2C8 000CA228  38 00 00 0B */	li r0, 0xb
 /* 800CD2CC 000CA22C  38 80 00 00 */	li r4, 0
@@ -276,6 +286,8 @@ changeMode__4PikiFiP4Navi:
 /* 800CD2E0 000CA240  7C 63 02 14 */	add r3, r3, r0
 /* 800CD2E4 000CA244  4B FF 6A 41 */	bl initialise__Q26Action5ChildFP8Creature
 /* 800CD2E8 000CA248  48 00 01 14 */	b lbl_800CD3FC
+.global lbl_800CD2EC
+lbl_800CD2EC:
 /* 800CD2EC 000CA24C  80 7E 04 F8 */	lwz r3, 0x4f8(r30)
 /* 800CD2F0 000CA250  38 00 00 0C */	li r0, 0xc
 /* 800CD2F4 000CA254  38 80 00 00 */	li r4, 0
@@ -287,10 +299,14 @@ changeMode__4PikiFiP4Navi:
 /* 800CD30C 000CA26C  7C 63 02 14 */	add r3, r3, r0
 /* 800CD310 000CA270  4B FF 6A 15 */	bl initialise__Q26Action5ChildFP8Creature
 /* 800CD314 000CA274  48 00 00 E8 */	b lbl_800CD3FC
+.global lbl_800CD318
+lbl_800CD318:
 /* 800CD318 000CA278  80 7E 04 F8 */	lwz r3, 0x4f8(r30)
 /* 800CD31C 000CA27C  38 00 00 09 */	li r0, 9
 /* 800CD320 000CA280  B0 03 00 08 */	sth r0, 8(r3)
 /* 800CD324 000CA284  48 00 00 D8 */	b lbl_800CD3FC
+.global lbl_800CD328
+lbl_800CD328:
 /* 800CD328 000CA288  80 7E 04 F8 */	lwz r3, 0x4f8(r30)
 /* 800CD32C 000CA28C  38 00 00 10 */	li r0, 0x10
 /* 800CD330 000CA290  38 80 00 00 */	li r4, 0
@@ -302,6 +318,8 @@ changeMode__4PikiFiP4Navi:
 /* 800CD348 000CA2A8  7C 63 02 14 */	add r3, r3, r0
 /* 800CD34C 000CA2AC  4B FF 69 D9 */	bl initialise__Q26Action5ChildFP8Creature
 /* 800CD350 000CA2B0  48 00 00 AC */	b lbl_800CD3FC
+.global lbl_800CD354
+lbl_800CD354:
 /* 800CD354 000CA2B4  80 7E 04 F8 */	lwz r3, 0x4f8(r30)
 /* 800CD358 000CA2B8  38 00 00 11 */	li r0, 0x11
 /* 800CD35C 000CA2BC  B0 03 00 08 */	sth r0, 8(r3)
@@ -314,6 +332,8 @@ changeMode__4PikiFiP4Navi:
 /* 800CD378 000CA2D8  7C 65 02 14 */	add r3, r5, r0
 /* 800CD37C 000CA2DC  4B FF 69 A9 */	bl initialise__Q26Action5ChildFP8Creature
 /* 800CD380 000CA2E0  48 00 00 7C */	b lbl_800CD3FC
+.global lbl_800CD384
+lbl_800CD384:
 /* 800CD384 000CA2E4  80 7E 04 F8 */	lwz r3, 0x4f8(r30)
 /* 800CD388 000CA2E8  38 00 00 12 */	li r0, 0x12
 /* 800CD38C 000CA2EC  B0 03 00 08 */	sth r0, 8(r3)
@@ -326,6 +346,8 @@ changeMode__4PikiFiP4Navi:
 /* 800CD3A8 000CA308  7C 65 02 14 */	add r3, r5, r0
 /* 800CD3AC 000CA30C  4B FF 69 79 */	bl initialise__Q26Action5ChildFP8Creature
 /* 800CD3B0 000CA310  48 00 00 4C */	b lbl_800CD3FC
+.global lbl_800CD3B4
+lbl_800CD3B4:
 /* 800CD3B4 000CA314  80 6D 2F 6C */	lwz r3, playerState@sda21(r13)
 /* 800CD3B8 000CA318  88 03 01 B5 */	lbz r0, 0x1b5(r3)
 /* 800CD3BC 000CA31C  28 00 00 00 */	cmplwi r0, 0
@@ -341,9 +363,12 @@ changeMode__4PikiFiP4Navi:
 /* 800CD3E4 000CA344  7C 63 02 14 */	add r3, r3, r0
 /* 800CD3E8 000CA348  4B FF 69 3D */	bl initialise__Q26Action5ChildFP8Creature
 /* 800CD3EC 000CA34C  48 00 00 10 */	b lbl_800CD3FC
+.global lbl_800CD3F0
+lbl_800CD3F0:
 /* 800CD3F0 000CA350  80 7E 04 F8 */	lwz r3, 0x4f8(r30)
 /* 800CD3F4 000CA354  38 00 00 0A */	li r0, 0xa
 /* 800CD3F8 000CA358  B0 03 00 08 */	sth r0, 8(r3)
+.global lbl_800CD3FC
 lbl_800CD3FC:
 /* 800CD3FC 000CA35C  B3 FE 04 FC */	sth r31, 0x4fc(r30)
 lbl_800CD400:
@@ -638,6 +663,8 @@ __sinit_piki_cpp:
 /* 800CD7F0 000CA750  98 C8 00 2A */	stb r6, 0x2a(r8)
 /* 800CD7F4 000CA754  98 E8 00 2B */	stb r7, 0x2b(r8)
 /* 800CD7F8 000CA758  4E 80 00 20 */	blr 
+.global lbl_800CD7FC
+lbl_800CD7FC:
 /* 800CD7FC 000CA75C  38 63 FD 48 */	addi r3, r3, -696
 /* 800CD800 000CA760  4B FF C9 10 */	b animationKeyUpdated__4PikiFR16PaniAnimKeyEvent
 

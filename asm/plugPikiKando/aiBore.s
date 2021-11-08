@@ -2221,7 +2221,7 @@ __vt__11ActBoreRest:
 	.4byte animationKeyUpdated__11ActBoreRestFR16PaniAnimKeyEvent
 	.4byte __RTTI__11ActBoreRest
 	.4byte 0xffffffd8
-	.4byte 0x800ac2f8
+	.4byte lbl_800AC2F8
 	.4byte 0x41637442
 	.4byte 0x6f72654f
 	.4byte 0x6e657368
@@ -2263,7 +2263,7 @@ __vt__14ActBoreOneshot:
 	.4byte animationKeyUpdated__14ActBoreOneshotFR16PaniAnimKeyEvent
 	.4byte __RTTI__14ActBoreOneshot
 	.4byte 0xffffffe4
-	.4byte 0x800ac2e4
+	.4byte lbl_800AC2E4
 	.4byte 0x41637442
 	.4byte 0x6f72654c
 	.4byte 0x69737465
@@ -2354,7 +2354,7 @@ __vt__11ActBoreTalk:
 	.4byte animationKeyUpdated__11ActBoreTalkFR16PaniAnimKeyEvent
 	.4byte __RTTI__11ActBoreTalk
 	.4byte 0xffffffd8
-	.4byte 0x800ac2d0
+	.4byte lbl_800AC2D0
 	.4byte 0
 	.4byte 0
 	.4byte 0
@@ -2430,17 +2430,17 @@ __vt__13ActFreeSelect:
 	.4byte restart__6ActionFv
 	.4byte resumable__6ActionFv
 	.4byte getInfo__6ActionFPc
-	.4byte 0x800a7908
-	.4byte 0x800a7930
-	.4byte 0x800a7944
-	.4byte 0x800a7958
-	.4byte 0x800a796c
-	.4byte 0x800a7980
-	.4byte 0x800a7994
-	.4byte 0x800a79a8
-	.4byte 0x800a791c
-	.4byte 0x800a79d0
-	.4byte 0x800a79bc
+	.4byte lbl_800A7908
+	.4byte lbl_800A7930
+	.4byte lbl_800A7944
+	.4byte lbl_800A7958
+	.4byte lbl_800A796C
+	.4byte lbl_800A7980
+	.4byte lbl_800A7994
+	.4byte lbl_800A79A8
+	.4byte lbl_800A791C
+	.4byte lbl_800A79D0
+	.4byte lbl_800A79BC
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 	.4byte 0x00000000

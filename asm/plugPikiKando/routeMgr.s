@@ -5450,6 +5450,8 @@ update__Q23zen15DrawFinalResultFP10Controller:
 /* 801F516C 001F20CC  7C 03 00 2E */	lwzx r0, r3, r0
 /* 801F5170 001F20D0  7C 09 03 A6 */	mtctr r0
 /* 801F5174 001F20D4  4E 80 04 20 */	bctr 
+.global lbl_801F5178
+lbl_801F5178:
 /* 801F5178 001F20D8  83 FF 00 04 */	lwz r31, 4(r31)
 /* 801F517C 001F20DC  38 80 00 01 */	li r4, 1
 /* 801F5180 001F20E0  80 7F 00 10 */	lwz r3, 0x10(r31)
@@ -5458,6 +5460,8 @@ update__Q23zen15DrawFinalResultFP10Controller:
 /* 801F518C 001F20EC  38 80 00 00 */	li r4, 0
 /* 801F5190 001F20F0  4B FF F5 3D */	bl setMode__Q23zen14DrawTotalScoreFQ33zen14DrawTotalScore8modeFlag
 /* 801F5194 001F20F4  48 00 01 2C */	b lbl_801F52C0
+.global lbl_801F5198
+lbl_801F5198:
 /* 801F5198 001F20F8  80 7F 00 04 */	lwz r3, 4(r31)
 /* 801F519C 001F20FC  4B FF F3 5D */	bl update__Q23zen14DrawTotalScoreFP10Controller
 /* 801F51A0 001F2100  54 60 06 3F */	clrlwi. r0, r3, 0x18
@@ -5466,6 +5470,8 @@ update__Q23zen15DrawFinalResultFP10Controller:
 /* 801F51AC 001F210C  38 80 00 02 */	li r4, 2
 /* 801F51B0 001F2110  48 00 02 89 */	bl setMode__Q23zen15DrawFinalResultFQ33zen15DrawFinalResult8modeFlag
 /* 801F51B4 001F2114  48 00 01 0C */	b lbl_801F52C0
+.global lbl_801F51B8
+lbl_801F51B8:
 /* 801F51B8 001F2118  3C 60 01 00 */	lis r3, 0x01001000@ha
 /* 801F51BC 001F211C  80 A4 00 28 */	lwz r5, 0x28(r4)
 /* 801F51C0 001F2120  38 03 10 00 */	addi r0, r3, 0x01001000@l
@@ -5481,6 +5487,8 @@ lbl_801F51E4:
 /* 801F51E4 001F2144  80 7F 00 04 */	lwz r3, 4(r31)
 /* 801F51E8 001F2148  4B FF F3 11 */	bl update__Q23zen14DrawTotalScoreFP10Controller
 /* 801F51EC 001F214C  48 00 00 D4 */	b lbl_801F52C0
+.global lbl_801F51F0
+lbl_801F51F0:
 /* 801F51F0 001F2150  38 7F 00 08 */	addi r3, r31, 8
 /* 801F51F4 001F2154  4B FF CC 59 */	bl update__Q23zen12DrawUfoPartsFP10Controller
 /* 801F51F8 001F2158  54 60 06 3F */	clrlwi. r0, r3, 0x18
@@ -5502,6 +5510,8 @@ lbl_801F522C:
 /* 801F5230 001F2190  38 80 00 04 */	li r4, 4
 /* 801F5234 001F2194  48 00 02 05 */	bl setMode__Q23zen15DrawFinalResultFQ33zen15DrawFinalResult8modeFlag
 /* 801F5238 001F2198  48 00 00 88 */	b lbl_801F52C0
+.global lbl_801F523C
+lbl_801F523C:
 /* 801F523C 001F219C  38 7F 00 58 */	addi r3, r31, 0x58
 /* 801F5240 001F21A0  48 00 03 0D */	bl update__Q23zen14DrawOptionSaveFP10Controller
 /* 801F5244 001F21A4  54 60 06 3F */	clrlwi. r0, r3, 0x18
@@ -5539,7 +5549,10 @@ lbl_801F52A8:
 /* 801F52B0 001F2210  48 00 01 89 */	bl setMode__Q23zen15DrawFinalResultFQ33zen15DrawFinalResult8modeFlag
 /* 801F52B4 001F2214  48 00 00 0C */	b lbl_801F52C0
 /* 801F52B8 001F2218  48 00 00 08 */	b lbl_801F52C0
+.global lbl_801F52BC
+lbl_801F52BC:
 /* 801F52BC 001F221C  3B C0 00 01 */	li r30, 1
+.global lbl_801F52C0
 lbl_801F52C0:
 /* 801F52C0 001F2220  7F C3 F3 78 */	mr r3, r30
 /* 801F52C4 001F2224  80 01 00 1C */	lwz r0, 0x1c(r1)
@@ -5568,6 +5581,8 @@ draw__Q23zen15DrawFinalResultFR8Graphics:
 /* 801F5314 001F2274  7C 03 00 2E */	lwzx r0, r3, r0
 /* 801F5318 001F2278  7C 09 03 A6 */	mtctr r0
 /* 801F531C 001F227C  4E 80 04 20 */	bctr 
+.global lbl_801F5320
+lbl_801F5320:
 /* 801F5320 001F2280  38 7D 00 58 */	addi r3, r29, 0x58
 /* 801F5324 001F2284  48 00 04 B1 */	bl init__Q23zen14DrawOptionSaveFv
 /* 801F5328 001F2288  83 FD 00 04 */	lwz r31, 4(r29)
@@ -5580,6 +5595,8 @@ draw__Q23zen15DrawFinalResultFR8Graphics:
 /* 801F5344 001F22A4  7F C4 F3 78 */	mr r4, r30
 /* 801F5348 001F22A8  4B FF 48 65 */	bl draw__Q23zen11EffectMgr2DFR8Graphics
 /* 801F534C 001F22AC  48 00 00 AC */	b lbl_801F53F8
+.global lbl_801F5350
+lbl_801F5350:
 /* 801F5350 001F22B0  83 FD 00 04 */	lwz r31, 4(r29)
 /* 801F5354 001F22B4  80 7F 00 0C */	lwz r3, 0xc(r31)
 /* 801F5358 001F22B8  81 83 00 00 */	lwz r12, 0(r3)
@@ -5590,6 +5607,8 @@ draw__Q23zen15DrawFinalResultFR8Graphics:
 /* 801F536C 001F22CC  7F C4 F3 78 */	mr r4, r30
 /* 801F5370 001F22D0  4B FF 48 3D */	bl draw__Q23zen11EffectMgr2DFR8Graphics
 /* 801F5374 001F22D4  48 00 00 84 */	b lbl_801F53F8
+.global lbl_801F5378
+lbl_801F5378:
 /* 801F5378 001F22D8  80 1D 00 08 */	lwz r0, 8(r29)
 /* 801F537C 001F22DC  2C 00 00 03 */	cmpwi r0, 3
 /* 801F5380 001F22E0  40 82 00 10 */	bne lbl_801F5390
@@ -5611,6 +5630,8 @@ lbl_801F53B4:
 /* 801F53B8 001F2318  38 9E 00 00 */	addi r4, r30, 0
 /* 801F53BC 001F231C  4B FF CB C1 */	bl draw__Q23zen12DrawUfoPartsFR8Graphics
 /* 801F53C0 001F2320  48 00 00 38 */	b lbl_801F53F8
+.global lbl_801F53C4
+lbl_801F53C4:
 /* 801F53C4 001F2324  38 7D 00 08 */	addi r3, r29, 8
 /* 801F53C8 001F2328  38 9E 00 00 */	addi r4, r30, 0
 /* 801F53CC 001F232C  4B FF CB B1 */	bl draw__Q23zen12DrawUfoPartsFR8Graphics
@@ -5618,12 +5639,15 @@ lbl_801F53B4:
 /* 801F53D4 001F2334  38 9E 00 00 */	addi r4, r30, 0
 /* 801F53D8 001F2338  48 00 02 FD */	bl draw__Q23zen14DrawOptionSaveFR8Graphics
 /* 801F53DC 001F233C  48 00 00 1C */	b lbl_801F53F8
+.global lbl_801F53E0
+lbl_801F53E0:
 /* 801F53E0 001F2340  38 7D 00 08 */	addi r3, r29, 8
 /* 801F53E4 001F2344  38 9E 00 00 */	addi r4, r30, 0
 /* 801F53E8 001F2348  4B FF CB 95 */	bl draw__Q23zen12DrawUfoPartsFR8Graphics
 /* 801F53EC 001F234C  38 7D 00 58 */	addi r3, r29, 0x58
 /* 801F53F0 001F2350  38 9E 00 00 */	addi r4, r30, 0
 /* 801F53F4 001F2354  48 00 02 E1 */	bl draw__Q23zen14DrawOptionSaveFR8Graphics
+.global lbl_801F53F8
 lbl_801F53F8:
 /* 801F53F8 001F2358  80 01 00 2C */	lwz r0, 0x2c(r1)
 /* 801F53FC 001F235C  83 E1 00 24 */	lwz r31, 0x24(r1)
@@ -5663,6 +5687,8 @@ setMode__Q23zen15DrawFinalResultFQ33zen15DrawFinalResult8modeFlag:
 /* 801F546C 001F23CC  7C 03 00 2E */	lwzx r0, r3, r0
 /* 801F5470 001F23D0  7C 09 03 A6 */	mtctr r0
 /* 801F5474 001F23D4  4E 80 04 20 */	bctr 
+.global lbl_801F5478
+lbl_801F5478:
 /* 801F5478 001F23D8  83 FE 00 04 */	lwz r31, 4(r30)
 /* 801F547C 001F23DC  38 80 00 01 */	li r4, 1
 /* 801F5480 001F23E0  80 7F 00 10 */	lwz r3, 0x10(r31)
@@ -5673,6 +5699,8 @@ setMode__Q23zen15DrawFinalResultFQ33zen15DrawFinalResult8modeFlag:
 /* 801F5494 001F23F4  38 7E 00 08 */	addi r3, r30, 8
 /* 801F5498 001F23F8  4B FF CC 99 */	bl sleep__Q23zen12DrawUfoPartsFv
 /* 801F549C 001F23FC  48 00 00 4C */	b lbl_801F54E8
+.global lbl_801F54A0
+lbl_801F54A0:
 /* 801F54A0 001F2400  83 FE 00 04 */	lwz r31, 4(r30)
 /* 801F54A4 001F2404  38 80 00 01 */	li r4, 1
 /* 801F54A8 001F2408  80 7F 00 10 */	lwz r3, 0x10(r31)
@@ -5681,16 +5709,23 @@ setMode__Q23zen15DrawFinalResultFQ33zen15DrawFinalResult8modeFlag:
 /* 801F54B4 001F2414  38 80 00 01 */	li r4, 1
 /* 801F54B8 001F2418  4B FF F2 15 */	bl setMode__Q23zen14DrawTotalScoreFQ33zen14DrawTotalScore8modeFlag
 /* 801F54BC 001F241C  48 00 00 2C */	b lbl_801F54E8
+.global lbl_801F54C0
+lbl_801F54C0:
 /* 801F54C0 001F2420  38 7E 00 08 */	addi r3, r30, 8
 /* 801F54C4 001F2424  4B FF CC A1 */	bl start__Q23zen12DrawUfoPartsFv
 /* 801F54C8 001F2428  48 00 00 20 */	b lbl_801F54E8
+.global lbl_801F54CC
+lbl_801F54CC:
 /* 801F54CC 001F242C  38 7E 00 58 */	addi r3, r30, 0x58
 /* 801F54D0 001F2430  48 00 03 2D */	bl start__Q23zen14DrawOptionSaveFv
 /* 801F54D4 001F2434  48 00 00 14 */	b lbl_801F54E8
+.global lbl_801F54D8
+lbl_801F54D8:
 /* 801F54D8 001F2438  38 7E 00 08 */	addi r3, r30, 8
 /* 801F54DC 001F243C  4B FF CC F1 */	bl operation__Q23zen12DrawUfoPartsFv
 /* 801F54E0 001F2440  38 00 00 03 */	li r0, 3
 /* 801F54E4 001F2444  90 1E 00 00 */	stw r0, 0(r30)
+.global lbl_801F54E8
 lbl_801F54E8:
 /* 801F54E8 001F2448  80 01 00 1C */	lwz r0, 0x1c(r1)
 /* 801F54EC 001F244C  83 E1 00 14 */	lwz r31, 0x14(r1)
@@ -5741,6 +5776,8 @@ update__Q23zen14DrawOptionSaveFP10Controller:
 /* 801F5588 001F24E8  7C 03 00 2E */	lwzx r0, r3, r0
 /* 801F558C 001F24EC  7C 09 03 A6 */	mtctr r0
 /* 801F5590 001F24F0  4E 80 04 20 */	bctr 
+.global lbl_801F5594
+lbl_801F5594:
 /* 801F5594 001F24F4  38 7D 00 04 */	addi r3, r29, 4
 /* 801F5598 001F24F8  38 9F 00 00 */	addi r4, r31, 0
 /* 801F559C 001F24FC  4B FF D4 E9 */	bl update__Q23zen11DrawSaveMesFP10Controller
@@ -5765,10 +5802,14 @@ lbl_801F55D8:
 /* 801F55E0 001F2540  38 A0 00 00 */	li r5, 0
 /* 801F55E4 001F2544  48 00 02 41 */	bl setMode__Q23zen14DrawOptionSaveFUlP10Controller
 /* 801F55E8 001F2548  48 00 00 CC */	b lbl_801F56B4
+.global lbl_801F55EC
+lbl_801F55EC:
 /* 801F55EC 001F254C  38 7D 00 00 */	addi r3, r29, 0
 /* 801F55F0 001F2550  38 9F 00 00 */	addi r4, r31, 0
 /* 801F55F4 001F2554  48 00 01 4D */	bl modeCardCheck__Q23zen14DrawOptionSaveFP10Controller
 /* 801F55F8 001F2558  48 00 00 BC */	b lbl_801F56B4
+.global lbl_801F55FC
+lbl_801F55FC:
 /* 801F55FC 001F255C  3C 60 80 3A */	lis r3, gameflow@ha
 /* 801F5600 001F2560  38 63 D7 B8 */	addi r3, r3, gameflow@l
 /* 801F5604 001F2564  3B E3 00 24 */	addi r31, r3, 0x24
@@ -5789,6 +5830,8 @@ lbl_801F5634:
 /* 801F563C 001F259C  38 A0 00 00 */	li r5, 0
 /* 801F5640 001F25A0  48 00 01 E5 */	bl setMode__Q23zen14DrawOptionSaveFUlP10Controller
 /* 801F5644 001F25A4  48 00 00 70 */	b lbl_801F56B4
+.global lbl_801F5648
+lbl_801F5648:
 /* 801F5648 001F25A8  38 7D 00 04 */	addi r3, r29, 4
 /* 801F564C 001F25AC  38 9F 00 00 */	addi r4, r31, 0
 /* 801F5650 001F25B0  4B FF D4 35 */	bl update__Q23zen11DrawSaveMesFP10Controller
@@ -5802,6 +5845,8 @@ lbl_801F5634:
 /* 801F5670 001F25D0  38 A0 00 00 */	li r5, 0
 /* 801F5674 001F25D4  48 00 01 B1 */	bl setMode__Q23zen14DrawOptionSaveFUlP10Controller
 /* 801F5678 001F25D8  48 00 00 3C */	b lbl_801F56B4
+.global lbl_801F567C
+lbl_801F567C:
 /* 801F567C 001F25DC  38 7D 00 04 */	addi r3, r29, 4
 /* 801F5680 001F25E0  38 9F 00 00 */	addi r4, r31, 0
 /* 801F5684 001F25E4  4B FF D4 01 */	bl update__Q23zen11DrawSaveMesFP10Controller
@@ -5815,7 +5860,10 @@ lbl_801F5634:
 /* 801F56A4 001F2604  38 A0 00 00 */	li r5, 0
 /* 801F56A8 001F2608  48 00 01 7D */	bl setMode__Q23zen14DrawOptionSaveFUlP10Controller
 /* 801F56AC 001F260C  48 00 00 08 */	b lbl_801F56B4
+.global lbl_801F56B0
+lbl_801F56B0:
 /* 801F56B0 001F2610  3B C0 00 01 */	li r30, 1
+.global lbl_801F56B4
 lbl_801F56B4:
 /* 801F56B4 001F2614  7F C3 F3 78 */	mr r3, r30
 /* 801F56B8 001F2618  80 01 00 2C */	lwz r0, 0x2c(r1)
@@ -5947,12 +5995,18 @@ setMode__Q23zen14DrawOptionSaveFUlP10Controller:
 /* 801F585C 001F27BC  7C 03 00 2E */	lwzx r0, r3, r0
 /* 801F5860 001F27C0  7C 09 03 A6 */	mtctr r0
 /* 801F5864 001F27C4  4E 80 04 20 */	bctr 
+.global lbl_801F5868
+lbl_801F5868:
 /* 801F5868 001F27C8  38 7E 00 04 */	addi r3, r30, 4
 /* 801F586C 001F27CC  4B FF D1 39 */	bl sleep__Q23zen11DrawSaveMesFv
 /* 801F5870 001F27D0  48 00 00 BC */	b lbl_801F592C
+.global lbl_801F5874
+lbl_801F5874:
 /* 801F5874 001F27D4  38 7E 00 04 */	addi r3, r30, 4
 /* 801F5878 001F27D8  4B FF D1 51 */	bl mesAppear__Q23zen11DrawSaveMesFv
 /* 801F587C 001F27DC  48 00 00 B0 */	b lbl_801F592C
+.global lbl_801F5880
+lbl_801F5880:
 /* 801F5880 001F27E0  38 7E 00 50 */	addi r3, r30, 0x50
 /* 801F5884 001F27E4  4B F9 84 A5 */	bl start__Q23zen14ogScrMemChkMgrFv
 /* 801F5888 001F27E8  28 1F 00 00 */	cmplwi r31, 0
@@ -5988,18 +6042,25 @@ lbl_801F58E8:
 /* 801F58F0 001F2850  38 A0 00 00 */	li r5, 0
 /* 801F58F4 001F2854  4B FF FF 31 */	bl setMode__Q23zen14DrawOptionSaveFUlP10Controller
 /* 801F58F8 001F2858  48 00 00 34 */	b lbl_801F592C
+.global lbl_801F58FC
+lbl_801F58FC:
 /* 801F58FC 001F285C  38 60 01 28 */	li r3, 0x128
 /* 801F5900 001F2860  4B EA FA 75 */	bl playSysSe__8SeSystemFi
 /* 801F5904 001F2864  48 00 00 28 */	b lbl_801F592C
+.global lbl_801F5908
+lbl_801F5908:
 /* 801F5908 001F2868  38 60 01 2A */	li r3, 0x12a
 /* 801F590C 001F286C  4B EA FA 69 */	bl playSysSe__8SeSystemFi
 /* 801F5910 001F2870  38 7E 00 04 */	addi r3, r30, 4
 /* 801F5914 001F2874  4B FF D1 4D */	bl saveError__Q23zen11DrawSaveMesFv
 /* 801F5918 001F2878  48 00 00 14 */	b lbl_801F592C
+.global lbl_801F591C
+lbl_801F591C:
 /* 801F591C 001F287C  38 60 01 29 */	li r3, 0x129
 /* 801F5920 001F2880  4B EA FA 55 */	bl playSysSe__8SeSystemFi
 /* 801F5924 001F2884  38 7E 00 04 */	addi r3, r30, 4
 /* 801F5928 001F2888  4B FF D0 F1 */	bl saveFinish__Q23zen11DrawSaveMesFv
+.global lbl_801F592C
 lbl_801F592C:
 /* 801F592C 001F288C  80 01 00 24 */	lwz r0, 0x24(r1)
 /* 801F5930 001F2890  83 E1 00 1C */	lwz r31, 0x1c(r1)
@@ -8911,6 +8972,8 @@ EXIDma:
 /* 801F7FF4 001F4F54  80 1A 00 0C */	lwz r0, 0xc(r26)
 /* 801F7FF8 001F4F58  3B E3 00 00 */	addi r31, r3, 0
 /* 801F7FFC 001F4F5C  54 00 07 BF */	clrlwi. r0, r0, 0x1e
+.global lbl_801F8000
+lbl_801F8000:
 /* 801F8000 001F4F60  40 82 00 10 */	bne lbl_801F8010
 /* 801F8004 001F4F64  80 1A 00 0C */	lwz r0, 0xc(r26)
 /* 801F8008 001F4F68  54 00 07 7B */	rlwinm. r0, r0, 0, 0x1d, 0x1d

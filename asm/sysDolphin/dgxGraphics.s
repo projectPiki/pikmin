@@ -12121,13 +12121,13 @@ lbl_802A5B2C:
 	.4byte 0x61720A00
 .global lbl_802A5B54
 lbl_802A5B54:
-	.4byte 0x8004A534
-	.4byte 0x8004A568
-	.4byte 0x8004A59C
-	.4byte 0x8004A5D0
-	.4byte 0x8004A604
-	.4byte 0x8004A638
-	.4byte 0x8004A684
+	.4byte lbl_8004A534
+	.4byte lbl_8004A568
+	.4byte lbl_8004A59C
+	.4byte lbl_8004A5D0
+	.4byte lbl_8004A604
+	.4byte lbl_8004A638
+	.4byte lbl_8004A684
 	.4byte 0x556E6B6E
 	.4byte 0x6F776E20
 	.4byte 0x61646472
@@ -12231,7 +12231,7 @@ sFontData:
 	.4byte 0x10840400
 	.4byte 0x20040470
 	.4byte 0x40840400
-	.4byte 0x80020800
+	.4byte lbl_80020800
 	.4byte 0xF8011000
 	.4byte 0x70800000
 	.4byte 0x88822200

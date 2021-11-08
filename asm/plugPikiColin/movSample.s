@@ -848,6 +848,8 @@ lbl_800B7774:
 resumable__8ActCrowdFv:
 /* 800B7790 000B46F0  38 60 00 01 */	li r3, 1
 /* 800B7794 000B46F4  4E 80 00 20 */	blr 
+.global lbl_800B7798
+lbl_800B7798:
 /* 800B7798 000B46F8  39 60 00 04 */	li r11, 4
 /* 800B779C 000B46FC  7D 63 58 2E */	lwzx r11, r3, r11
 /* 800B77A0 000B4700  7C 63 5A 14 */	add r3, r3, r11

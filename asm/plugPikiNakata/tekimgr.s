@@ -181,7 +181,7 @@ __vt__7TekiMgr:
 	.4byte 0xfffffff8
 	.4byte getAgeNodeType__5ANodeFv
 	.4byte read__8CoreNodeFR18RandomAccessStream
-	.4byte 0x8014b11c
+	.4byte lbl_8014B11C
 	.4byte draw__4NodeFR8Graphics
 	.4byte render__4NodeFR8Graphics
 	.4byte concat__4NodeFv

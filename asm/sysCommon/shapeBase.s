@@ -25888,7 +25888,7 @@ lbl_80228588:
 lbl_8022864C:
 	.4byte 0x00000000
 	.4byte 0xFFFFFFFF
-	.4byte 0x8002F684
+	.4byte countMaterials__9BaseShapeFP5JointUl
 .global lbl_80228658
 lbl_80228658:
 	.4byte 0x6D617465

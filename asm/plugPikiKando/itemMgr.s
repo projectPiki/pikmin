@@ -5594,28 +5594,28 @@ lbl_802BE52C:
 	.4byte 0x6D6F6400
 .global lbl_802BE544
 lbl_802BE544:
-	.4byte 0x800F3648
-	.4byte 0x800F381C
-	.4byte 0x800F381C
-	.4byte 0x800F381C
-	.4byte 0x800F381C
-	.4byte 0x800F381C
-	.4byte 0x800F3700
-	.4byte 0x800F3734
-	.4byte 0x800F3768
-	.4byte 0x800F379C
-	.4byte 0x800F381C
-	.4byte 0x800F381C
-	.4byte 0x800F381C
-	.4byte 0x800F36B0
-	.4byte 0x800F3684
-	.4byte 0x800F381C
-	.4byte 0x800F381C
-	.4byte 0x800F37D0
-	.4byte 0x800F37F8
-	.4byte 0x800F36D8
-	.4byte 0x800F381C
-	.4byte 0x800F3628
+	.4byte lbl_800F3648
+	.4byte lbl_800F381C
+	.4byte lbl_800F381C
+	.4byte lbl_800F381C
+	.4byte lbl_800F381C
+	.4byte lbl_800F381C
+	.4byte lbl_800F3700
+	.4byte lbl_800F3734
+	.4byte lbl_800F3768
+	.4byte lbl_800F379C
+	.4byte lbl_800F381C
+	.4byte lbl_800F381C
+	.4byte lbl_800F381C
+	.4byte lbl_800F36B0
+	.4byte lbl_800F3684
+	.4byte lbl_800F381C
+	.4byte lbl_800F381C
+	.4byte lbl_800F37D0
+	.4byte lbl_800F37F8
+	.4byte lbl_800F36D8
+	.4byte lbl_800F381C
+	.4byte lbl_800F3628
 .global lbl_802BE59C
 lbl_802BE59C:
 	.4byte 0x436F7265
@@ -5740,29 +5740,29 @@ lbl_802BE5A8:
 	.4byte 0x00000000
 .global lbl_802BE774
 lbl_802BE774:
-	.4byte 0x800F7024
-	.4byte 0x800F703C
-	.4byte 0x800F7048
-	.4byte 0x800F7048
-	.4byte 0x800F7048
-	.4byte 0x800F7048
-	.4byte 0x800F7048
-	.4byte 0x800F703C
-	.4byte 0x800F703C
-	.4byte 0x800F703C
-	.4byte 0x800F703C
-	.4byte 0x800F7048
-	.4byte 0x800F7048
-	.4byte 0x800F7048
-	.4byte 0x800F703C
-	.4byte 0x800F703C
-	.4byte 0x800F7048
-	.4byte 0x800F7048
-	.4byte 0x800F703C
-	.4byte 0x800F703C
-	.4byte 0x800F703C
-	.4byte 0x800F7048
-	.4byte 0x800F703C
+	.4byte lbl_800F7024
+	.4byte lbl_800F703C
+	.4byte lbl_800F7048
+	.4byte lbl_800F7048
+	.4byte lbl_800F7048
+	.4byte lbl_800F7048
+	.4byte lbl_800F7048
+	.4byte lbl_800F703C
+	.4byte lbl_800F703C
+	.4byte lbl_800F703C
+	.4byte lbl_800F703C
+	.4byte lbl_800F7048
+	.4byte lbl_800F7048
+	.4byte lbl_800F7048
+	.4byte lbl_800F703C
+	.4byte lbl_800F703C
+	.4byte lbl_800F7048
+	.4byte lbl_800F7048
+	.4byte lbl_800F703C
+	.4byte lbl_800F703C
+	.4byte lbl_800F703C
+	.4byte lbl_800F7048
+	.4byte lbl_800F703C
 	.4byte 0x50696B69
 	.4byte 0x48656164
 	.4byte 0x4D677200
@@ -5829,7 +5829,7 @@ __vt__11PikiHeadMgr:
 	.4byte 0xfffffff8
 	.4byte getAgeNodeType__5ANodeFv
 	.4byte read__8CoreNodeFR18RandomAccessStream
-	.4byte 0x80099540
+	.4byte lbl_80099540
 	.4byte draw__4NodeFR8Graphics
 	.4byte render__4NodeFR8Graphics
 	.4byte concat__4NodeFv
@@ -5909,7 +5909,7 @@ __vt__7ItemMgr:
 	.4byte 0xfffffff8
 	.4byte getAgeNodeType__5ANodeFv
 	.4byte read__8CoreNodeFR18RandomAccessStream
-	.4byte 0x800f7950
+	.4byte lbl_800F7950
 	.4byte draw__4NodeFR8Graphics
 	.4byte render__4NodeFR8Graphics
 	.4byte concat__4NodeFv
@@ -6075,7 +6075,7 @@ __vt__12ItemCreature:
 	.4byte exitCourse__8CreatureFv
 	.4byte 0x803e1df0
 	.4byte 0xfffffd48
-	.4byte 0x8007df54
+	.4byte lbl_8007DF54
 	.4byte getCurrState__10AICreatureFv
 	.4byte "setCurrState__10AICreatureFP20AState<10AICreature>"
 	.4byte playSound__10AICreatureFi
@@ -6281,7 +6281,7 @@ __vt__13MeltingPotMgr:
 	.4byte 0xfffffff8
 	.4byte getAgeNodeType__5ANodeFv
 	.4byte read__8CoreNodeFR18RandomAccessStream
-	.4byte 0x8009f5dc
+	.4byte lbl_8009F5DC
 	.4byte draw__4NodeFR8Graphics
 	.4byte render__4NodeFR8Graphics
 	.4byte concat__4NodeFv
@@ -6419,7 +6419,7 @@ __vt__12BuildingItem:
 	.4byte exitCourse__8CreatureFv
 	.4byte __RTTI__12BuildingItem
 	.4byte 0xfffffd48
-	.4byte 0x8007df54
+	.4byte lbl_8007DF54
 	.4byte getCurrState__10AICreatureFv
 	.4byte "setCurrState__10AICreatureFP20AState<10AICreature>"
 	.4byte playSound__10AICreatureFi

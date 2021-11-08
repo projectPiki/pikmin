@@ -2837,20 +2837,20 @@ lbl_802A7820:
 	.4byte 0x74000000
 	.4byte 0x00000000
 	.4byte 0xFFFFFFFF
-	.4byte 0x80055A74
+	.4byte openAllMaps__21MapSelectSetupSectionFR4Menu
 	.4byte 0x00000000
 	.4byte 0xFFFFFFFF
-	.4byte 0x8005570C
+	.4byte openAllChMaps__21MapSelectSetupSectionFR4Menu
 .global lbl_802A7854
 lbl_802A7854:
 	.4byte 0x00000000
 	.4byte 0xFFFFFFFF
-	.4byte 0x80055D44
+	.4byte menuSelectOption__21MapSelectSetupSectionFR4Menu
 .global lbl_802A7860
 lbl_802A7860:
 	.4byte 0x00000000
 	.4byte 0xFFFFFFFF
-	.4byte 0x8005EA1C
+	.4byte menuCloseMenu__4MenuFR4Menu
 	.4byte 0x3C4D6170
 	.4byte 0x53656C65
 	.4byte 0x63745365

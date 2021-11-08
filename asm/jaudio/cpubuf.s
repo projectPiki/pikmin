@@ -109,6 +109,8 @@ CpuFrameEnd__Fv:
 /* 800070E4 00004044  38 60 00 01 */	li r3, 1
 /* 800070E8 00004048  90 01 00 04 */	stw r0, 4(r1)
 /* 800070EC 0000404C  94 21 FF F8 */	stwu r1, -8(r1)
+.global lbl_800070F0
+lbl_800070F0:
 /* 800070F0 00004050  4B FF FD F1 */	bl CpubufProcess__F13DSPBUF_EVENTS
 /* 800070F4 00004054  80 01 00 0C */	lwz r0, 0xc(r1)
 /* 800070F8 00004058  38 21 00 08 */	addi r1, r1, 8

@@ -225,16 +225,16 @@ __vt__5BTeki:
 	.4byte 0x803e4470
 	.4byte 0xfffffd48
 	.4byte viewInit__10PelletViewFv
-	.4byte 0x80143e40
-	.4byte 0x80143e38
-	.4byte 0x80143e30
+	.4byte lbl_80143E40
+	.4byte lbl_80143E38
+	.4byte lbl_80143E30
 	.4byte viewStartExplodeMotion__10PelletViewFf
-	.4byte 0x80143e28
-	.4byte 0x80143e20
-	.4byte 0x80143e18
-	.4byte 0x80143e10
-	.4byte 0x80143e08
-	.4byte 0x80143e00
+	.4byte lbl_80143E28
+	.4byte lbl_80143E20
+	.4byte lbl_80143E18
+	.4byte lbl_80143E10
+	.4byte lbl_80143E08
+	.4byte lbl_80143E00
 	.4byte viewStartTrembleMotion__5BTekiFf
 	.4byte viewSetMotionSpeed__5BTekiFf
 	.4byte viewDoAnimation__5BTekiFv
@@ -280,7 +280,7 @@ __vt__5BTeki:
 	.4byte becomeCorpse__5BTekiFv
 	.4byte 0x803e4470
 	.4byte 0xfffffbac
-	.4byte 0x80149bac
+	.4byte lbl_80149BAC
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 	.4byte 0x414e6f64

@@ -511,7 +511,7 @@ __vt__7ActMine:
 	.4byte animationKeyUpdated__7ActMineFR16PaniAnimKeyEvent
 	.4byte __RTTI__7ActMine
 	.4byte 0xffffffd8
-	.4byte 0x800b98c4
+	.4byte lbl_800B98C4
 	.4byte 0x496e7465
 	.4byte 0x72616374
 	.4byte 0x696f6e00
@@ -529,17 +529,17 @@ __vt__7ActMine:
 	.4byte 0
 	.4byte 0
 	.4byte 0
-	.4byte 0x800a7908
-	.4byte 0x800a7930
-	.4byte 0x800a7944
-	.4byte 0x800a7958
-	.4byte 0x800a796c
-	.4byte 0x800a7980
-	.4byte 0x800a7994
-	.4byte 0x800a79a8
-	.4byte 0x800a791c
-	.4byte 0x800a79d0
-	.4byte 0x800a79bc
+	.4byte lbl_800A7908
+	.4byte lbl_800A7930
+	.4byte lbl_800A7944
+	.4byte lbl_800A7958
+	.4byte lbl_800A796C
+	.4byte lbl_800A7980
+	.4byte lbl_800A7994
+	.4byte lbl_800A79A8
+	.4byte lbl_800A791C
+	.4byte lbl_800A79D0
+	.4byte lbl_800A79BC
 	.4byte 0
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820

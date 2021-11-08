@@ -749,13 +749,13 @@ lbl_8017ECE4:
 	.4byte 0x63707000
 .global lbl_802282AC
 lbl_802282AC:
-	.4byte 0x80029E90
-	.4byte 0x80029DB0
-	.4byte 0x80029DC4
-	.4byte 0x80029DE0
-	.4byte 0x80029DFC
-	.4byte 0x80029E28
-	.4byte 0x80029E58
+	.4byte lbl_80029E90
+	.4byte lbl_80029DB0
+	.4byte lbl_80029DC4
+	.4byte lbl_80029DE0
+	.4byte lbl_80029DFC
+	.4byte lbl_80029E28
+	.4byte lbl_80029E58
 	.4byte 0x436F7265
 	.4byte 0x4E6F6465
 	.4byte 0x00000000

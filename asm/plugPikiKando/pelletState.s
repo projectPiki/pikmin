@@ -2656,17 +2656,17 @@ __vt__18PelletStateMachine:
 	.4byte "exec__21StateMachine<6Pellet>FP6Pellet"
 	.4byte "procMsg__21StateMachine<6Pellet>FP6PelletP3Msg"
 	.4byte "transit__21StateMachine<6Pellet>FP6Pelleti"
-	.4byte 0x80099404
-	.4byte 0x8009942c
-	.4byte 0x80099440
-	.4byte 0x80099454
-	.4byte 0x80099468
-	.4byte 0x8009947c
-	.4byte 0x80099490
-	.4byte 0x800994a4
-	.4byte 0x80099418
-	.4byte 0x800994cc
-	.4byte 0x800994b8
+	.4byte lbl_80099404
+	.4byte lbl_8009942C
+	.4byte lbl_80099440
+	.4byte lbl_80099454
+	.4byte lbl_80099468
+	.4byte lbl_8009947C
+	.4byte lbl_80099490
+	.4byte lbl_800994A4
+	.4byte lbl_80099418
+	.4byte lbl_800994CC
+	.4byte lbl_800994B8
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 	.4byte 0

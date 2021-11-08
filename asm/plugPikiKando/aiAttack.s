@@ -3246,13 +3246,13 @@ lbl_801FDB6C:
 	.4byte 0
 .global lbl_802B5374
 lbl_802B5374:
-	.4byte 0x800A938C
-	.4byte 0x800A9DF4
-	.4byte 0x800A90E0
-	.4byte 0x800A9DF4
-	.4byte 0x800A9774
-	.4byte 0x800A9B6C
-	.4byte 0x800A90D4
+	.4byte lbl_800A938C
+	.4byte lbl_800A9DF4
+	.4byte lbl_800A90E0
+	.4byte lbl_800A9DF4
+	.4byte lbl_800A9774
+	.4byte lbl_800A9B6C
+	.4byte lbl_800A90D4
 	.4byte 0x496E7465
 	.4byte 0x72616374
 	.4byte 0x696F6E00
@@ -3319,7 +3319,7 @@ __vt__13ActJumpAttack:
 	.4byte getInfo__6ActionFPc
 	.4byte __RTTI__13ActJumpAttack
 	.4byte 0xffffffec
-	.4byte 0x800aa514
+	.4byte lbl_800AA514
 	.4byte animationKeyUpdated__13ActJumpAttackFR16PaniAnimKeyEvent
 	.4byte 0x41637441
 	.4byte 0x74746163
@@ -3370,22 +3370,22 @@ __vt__9ActAttack:
 	.4byte getInfo__6ActionFPc
 	.4byte __RTTI__9ActAttack
 	.4byte 0xffffffe8
-	.4byte 0x800aa50c
+	.4byte lbl_800AA50C
 	.4byte animationKeyUpdated__9ActAttackFR16PaniAnimKeyEvent
 	.4byte 0
 	.4byte 0
 	.4byte 0
-	.4byte 0x800a7908
-	.4byte 0x800a7930
-	.4byte 0x800a7944
-	.4byte 0x800a7958
-	.4byte 0x800a796c
-	.4byte 0x800a7980
-	.4byte 0x800a7994
-	.4byte 0x800a79a8
-	.4byte 0x800a791c
-	.4byte 0x800a79d0
-	.4byte 0x800a79bc
+	.4byte lbl_800A7908
+	.4byte lbl_800A7930
+	.4byte lbl_800A7944
+	.4byte lbl_800A7958
+	.4byte lbl_800A796C
+	.4byte lbl_800A7980
+	.4byte lbl_800A7994
+	.4byte lbl_800A79A8
+	.4byte lbl_800A791C
+	.4byte lbl_800A79D0
+	.4byte lbl_800A79BC
 	.4byte 0
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820

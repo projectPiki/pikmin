@@ -4098,25 +4098,25 @@ lbl_802A61BC:
 	.4byte 0x20257300
 	.4byte 0x00000000
 	.4byte 0xFFFFFFFF
-	.4byte 0x800519BC
+	.4byte menuToggleTimers__8GameFlowFR4Menu
 	.4byte 0x00000000
 	.4byte 0xFFFFFFFF
-	.4byte 0x80051A4C
+	.4byte menuTogglePrint__8GameFlowFR4Menu
 	.4byte 0x00000000
 	.4byte 0xFFFFFFFF
-	.4byte 0x80051AAC
+	.4byte menuToggleDInfo__8GameFlowFR4Menu
 	.4byte 0x00000000
 	.4byte 0xFFFFFFFF
-	.4byte 0x80051B0C
+	.4byte menuToggleDExtra__8GameFlowFR4Menu
 	.4byte 0x00000000
 	.4byte 0xFFFFFFFF
-	.4byte 0x80051B6C
+	.4byte menuToggleBlur__8GameFlowFR4Menu
 	.4byte 0x00000000
 	.4byte 0xFFFFFFFF
-	.4byte 0x80051BCC
+	.4byte menuToggleInfo__8GameFlowFR4Menu
 	.4byte 0x00000000
 	.4byte 0xFFFFFFFF
-	.4byte 0x80051C2C
+	.4byte menuToggleColls__8GameFlowFR4Menu
 .global lbl_802A6220
 lbl_802A6220:
 	.4byte 0x74797065
@@ -4131,13 +4131,13 @@ lbl_802A622C:
 	.4byte 0x64000000
 	.4byte 0x00000000
 	.4byte 0xFFFFFFFF
-	.4byte 0x80051C8C
+	.4byte menuChangeFilter__8GameFlowFR4Menu
 	.4byte 0x00000000
 	.4byte 0xFFFFFFFF
-	.4byte 0x80051DD8
+	.4byte menuDecreaseFilter__8GameFlowFR4Menu
 	.4byte 0x00000000
 	.4byte 0xFFFFFFFF
-	.4byte 0x80051D2C
+	.4byte menuIncreaseFilter__8GameFlowFR4Menu
 	.4byte 0x61726368
 	.4byte 0x69766573
 	.4byte 0x2F626C6F

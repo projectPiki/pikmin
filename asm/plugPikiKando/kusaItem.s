@@ -692,7 +692,7 @@ __vt__10BoBaseItem:
 	.4byte exitCourse__8CreatureFv
 	.4byte __RTTI__10BoBaseItem
 	.4byte 0xfffffd48
-	.4byte 0x8007df54
+	.4byte lbl_8007DF54
 	.4byte getCurrState__10AICreatureFv
 	.4byte "setCurrState__10AICreatureFP20AState<10AICreature>"
 	.4byte playSound__10AICreatureFi
@@ -797,7 +797,7 @@ __vt__8KusaItem:
 	.4byte exitCourse__8CreatureFv
 	.4byte __RTTI__8KusaItem
 	.4byte 0xfffffd48
-	.4byte 0x8007df54
+	.4byte lbl_8007DF54
 	.4byte getCurrState__10AICreatureFv
 	.4byte "setCurrState__10AICreatureFP20AState<10AICreature>"
 	.4byte playSound__10AICreatureFi

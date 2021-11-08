@@ -3357,7 +3357,7 @@ __vt__15CreatureNodeMgr:
 	.4byte 0xfffffff8
 	.4byte getAgeNodeType__5ANodeFv
 	.4byte read__8CoreNodeFR18RandomAccessStream
-	.4byte 0x8009f5dc
+	.4byte lbl_8009F5DC
 	.4byte draw__4NodeFR8Graphics
 	.4byte render__4NodeFR8Graphics
 	.4byte concat__4NodeFv
@@ -3404,7 +3404,7 @@ __vt__13PolyObjectMgr:
 	.4byte 0xfffffff8
 	.4byte getAgeNodeType__5ANodeFv
 	.4byte read__8CoreNodeFR18RandomAccessStream
-	.4byte 0x800e2fac
+	.4byte lbl_800E2FAC
 	.4byte draw__4NodeFR8Graphics
 	.4byte render__4NodeFR8Graphics
 	.4byte concat__4NodeFv
@@ -3453,7 +3453,7 @@ __vt__13MonoObjectMgr:
 	.4byte 0xfffffff8
 	.4byte getAgeNodeType__5ANodeFv
 	.4byte read__8CoreNodeFR18RandomAccessStream
-	.4byte 0x80099540
+	.4byte lbl_80099540
 	.4byte draw__4NodeFR8Graphics
 	.4byte render__4NodeFR8Graphics
 	.4byte concat__4NodeFv
@@ -3501,7 +3501,7 @@ __vt__9ObjectMgr:
 	.4byte 0xfffffff8
 	.4byte getAgeNodeType__5ANodeFv
 	.4byte read__8CoreNodeFR18RandomAccessStream
-	.4byte 0x8009f5dc
+	.4byte lbl_8009F5DC
 	.4byte draw__4NodeFR8Graphics
 	.4byte render__4NodeFR8Graphics
 	.4byte concat__4NodeFv

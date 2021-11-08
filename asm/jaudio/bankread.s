@@ -170,6 +170,8 @@ __Bank_Regist_Inner__FPUcUlUl:
 /* 8000C0E4 00009044  4B FF FD 5D */	bl Bank_Test__FPUc
 /* 8000C0E8 00009048  3C 80 80 31 */	lis r4, bankp@ha
 /* 8000C0EC 0000904C  57 E5 10 3A */	slwi r5, r31, 2
+.global lbl_8000C0F0
+lbl_8000C0F0:
 /* 8000C0F0 00009050  38 04 CA E0 */	addi r0, r4, bankp@l
 /* 8000C0F4 00009054  7C 80 2A 14 */	add r4, r0, r5
 /* 8000C0F8 00009058  90 64 00 00 */	stw r3, 0(r4)

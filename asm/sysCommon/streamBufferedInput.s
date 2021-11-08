@@ -740,6 +740,8 @@ read__11NucleusPropFR18RandomAccessStream:
 /* 8017A530 00177490  38 21 00 18 */	addi r1, r1, 0x18
 /* 8017A534 00177494  7C 08 03 A6 */	mtlr r0
 /* 8017A538 00177498  4E 80 00 20 */	blr 
+.global lbl_8017A53C
+lbl_8017A53C:
 /* 8017A53C 0017749C  38 63 FE 14 */	addi r3, r3, -492
 /* 8017A540 001774A0  4B FF FF AC */	b read__11NucleusPropFR18RandomAccessStream
 

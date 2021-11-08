@@ -126,6 +126,8 @@ lbl_800C2C30:
 /* 800C2C40 000BFBA0  38 21 00 18 */	addi r1, r1, 0x18
 /* 800C2C44 000BFBA4  7C 08 03 A6 */	mtlr r0
 /* 800C2C48 000BFBA8  4E 80 00 20 */	blr 
+.global lbl_800C2C4C
+lbl_800C2C4C:
 /* 800C2C4C 000BFBAC  38 63 FF EC */	addi r3, r3, -20
 /* 800C2C50 000BFBB0  4B FF FA B0 */	b animationKeyUpdated__16ActShootCreatureFR16PaniAnimKeyEvent
 

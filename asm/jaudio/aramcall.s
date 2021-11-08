@@ -1291,7 +1291,7 @@ extdir:
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .global ARCALL
 ARCALL:
-	.4byte 0x8000DAA0
+	.4byte LoadAram_Default__FPcUlUlPUlP7jaheap_
 .global first
 first:
 	.4byte 0x00000001

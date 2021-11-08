@@ -2375,7 +2375,7 @@ lbl_80205FE8:
 .balign 0x8
 .global ResetFunctionInfo
 ResetFunctionInfo:
-	.4byte 0x80205EE8
+	.4byte OnReset
 	.4byte 0x0000007F
 	.4byte 0x00000000
 	.4byte 0x00000000
@@ -2423,7 +2423,7 @@ Spec:
 	.4byte 0x00000005
 .global MakeStatus
 MakeStatus:
-	.4byte 0x80205AF0
+	.4byte SPEC2_MakeStatus
 .global cmdReadOrigin
 cmdReadOrigin:
 	.4byte 0x41000000

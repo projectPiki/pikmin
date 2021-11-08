@@ -5136,17 +5136,17 @@ __vt__8SluiceAI:
 	.4byte exec__8SimpleAIFP10AICreature
 	.4byte procMsg__8SimpleAIFP10AICreatureP3Msg
 	.4byte "transit__26StateMachine<10AICreature>FP10AICreaturei"
-	.4byte 0x8007d184
-	.4byte 0x8007d1ac
-	.4byte 0x8007d1c0
-	.4byte 0x8007d1d4
-	.4byte 0x8007d1e8
-	.4byte 0x8007d1fc
-	.4byte 0x8007d210
-	.4byte 0x8007d224
-	.4byte 0x8007d198
-	.4byte 0x8007d24c
-	.4byte 0x8007d238
+	.4byte lbl_8007D184
+	.4byte lbl_8007D1AC
+	.4byte lbl_8007D1C0
+	.4byte lbl_8007D1D4
+	.4byte lbl_8007D1E8
+	.4byte lbl_8007D1FC
+	.4byte lbl_8007D210
+	.4byte lbl_8007D224
+	.4byte lbl_8007D198
+	.4byte lbl_8007D24C
+	.4byte lbl_8007D238
 	.4byte 0
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820

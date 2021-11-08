@@ -2735,39 +2735,39 @@ isEmpty__7PUTRectCFv:
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .global lbl_802A8540
 lbl_802A8540:
-	.4byte 0x8005E3E8
-	.4byte 0x8005E268
-	.4byte 0x8005E284
-	.4byte 0x8005E3E8
-	.4byte 0x8005E2A0
-	.4byte 0x8005E3E8
-	.4byte 0x8005E3E8
-	.4byte 0x8005E3E8
-	.4byte 0x8005E2D0
-	.4byte 0x8005E3E8
-	.4byte 0x8005E3E8
-	.4byte 0x8005E3E8
-	.4byte 0x8005E3E8
-	.4byte 0x8005E3E8
-	.4byte 0x8005E3E8
-	.4byte 0x8005E3E8
-	.4byte 0x8005E304
-	.4byte 0x8005E3E8
-	.4byte 0x8005E3E8
-	.4byte 0x8005E3E8
-	.4byte 0x8005E3E8
-	.4byte 0x8005E3E8
-	.4byte 0x8005E3E8
-	.4byte 0x8005E3E8
-	.4byte 0x8005E3E8
-	.4byte 0x8005E3E8
-	.4byte 0x8005E3E8
-	.4byte 0x8005E3E8
-	.4byte 0x8005E3E8
-	.4byte 0x8005E3E8
-	.4byte 0x8005E3E8
-	.4byte 0x8005E3E8
-	.4byte 0x8005E2D0
+	.4byte lbl_8005E3E8
+	.4byte lbl_8005E268
+	.4byte lbl_8005E284
+	.4byte lbl_8005E3E8
+	.4byte lbl_8005E2A0
+	.4byte lbl_8005E3E8
+	.4byte lbl_8005E3E8
+	.4byte lbl_8005E3E8
+	.4byte lbl_8005E2D0
+	.4byte lbl_8005E3E8
+	.4byte lbl_8005E3E8
+	.4byte lbl_8005E3E8
+	.4byte lbl_8005E3E8
+	.4byte lbl_8005E3E8
+	.4byte lbl_8005E3E8
+	.4byte lbl_8005E3E8
+	.4byte lbl_8005E304
+	.4byte lbl_8005E3E8
+	.4byte lbl_8005E3E8
+	.4byte lbl_8005E3E8
+	.4byte lbl_8005E3E8
+	.4byte lbl_8005E3E8
+	.4byte lbl_8005E3E8
+	.4byte lbl_8005E3E8
+	.4byte lbl_8005E3E8
+	.4byte lbl_8005E3E8
+	.4byte lbl_8005E3E8
+	.4byte lbl_8005E3E8
+	.4byte lbl_8005E3E8
+	.4byte lbl_8005E3E8
+	.4byte lbl_8005E3E8
+	.4byte lbl_8005E3E8
+	.4byte lbl_8005E2D0
 	.4byte 0x436F7265
 	.4byte 0x4E6F6465
 	.4byte 0x00000000

@@ -3293,10 +3293,10 @@ __vt__6CPlate:
 	.4byte __RTTI__6CPlate
 	.4byte 0xfffffff8
 	.4byte getAgeNodeType__5ANodeFv
-	.4byte 0x800a6d7c
-	.4byte 0x800a6d8c
+	.4byte lbl_800A6D7C
+	.4byte lbl_800A6D8C
 	.4byte draw__4NodeFR8Graphics
-	.4byte 0x800a6d84
+	.4byte lbl_800A6D84
 	.4byte concat__4NodeFv
 	.4byte concat__4NodeFR3VQS
 	.4byte concat__4NodeFR3SRT

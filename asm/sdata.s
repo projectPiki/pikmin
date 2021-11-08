@@ -38,7 +38,7 @@ v1:
 	.4byte 0x00005555
 .global ARCALL
 ARCALL:
-	.4byte 0x8000DAA0
+	.4byte LoadAram_Default__FPcUlUlPUlP7jaheap_
 .global first
 first:
 	.4byte 0x00000001

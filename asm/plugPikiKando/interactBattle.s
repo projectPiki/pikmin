@@ -137,6 +137,8 @@ lbl_800BA5DC:
 /* 800BA5EC 000B754C  38 21 00 18 */	addi r1, r1, 0x18
 /* 800BA5F0 000B7550  7C 08 03 A6 */	mtlr r0
 /* 800BA5F4 000B7554  4E 80 00 20 */	blr 
+.global lbl_800BA5F8
+lbl_800BA5F8:
 /* 800BA5F8 000B7558  38 63 FF EC */	addi r3, r3, -20
 /* 800BA5FC 000B755C  4B FF F2 DC */	b animationKeyUpdated__12ActFormationFR16PaniAnimKeyEvent
 
@@ -791,6 +793,8 @@ lbl_800BAF30:
 resumable__7ActFreeFv:
 /* 800BAF4C 000B7EAC  38 60 00 01 */	li r3, 1
 /* 800BAF50 000B7EB0  4E 80 00 20 */	blr 
+.global lbl_800BAF54
+lbl_800BAF54:
 /* 800BAF54 000B7EB4  39 60 00 04 */	li r11, 4
 /* 800BAF58 000B7EB8  7D 63 58 2E */	lwzx r11, r3, r11
 /* 800BAF5C 000B7EBC  7C 63 5A 14 */	add r3, r3, r11

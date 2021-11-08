@@ -9774,16 +9774,16 @@ fmtNames:
 	.4byte 0x80227F78
 .global lbl_80227FA8
 lbl_80227FA8:
-	.4byte 0x800287B0
-	.4byte 0x80028790
-	.4byte 0x800287A4
-	.4byte 0x800287BC
-	.4byte 0x800287CC
-	.4byte 0x800287D4
-	.4byte 0x800287DC
-	.4byte 0x800287E8
-	.4byte 0x800287F4
-	.4byte 0x800287FC
+	.4byte lbl_800287B0
+	.4byte lbl_80028790
+	.4byte lbl_800287A4
+	.4byte lbl_800287BC
+	.4byte lbl_800287CC
+	.4byte lbl_800287D4
+	.4byte lbl_800287DC
+	.4byte lbl_800287E8
+	.4byte lbl_800287F4
+	.4byte lbl_800287FC
 	.4byte 0x47585F54
 	.4byte 0x465F4934
 	.4byte 0x00000000

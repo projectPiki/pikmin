@@ -728,7 +728,7 @@ __vt__18ActPulloutCreature:
 	.4byte getInfo__6ActionFPc
 	.4byte __RTTI__18ActPulloutCreature
 	.4byte 0xffffffec
-	.4byte 0x800bdfe8
+	.4byte lbl_800BDFE8
 	.4byte animationKeyUpdated__18ActPulloutCreatureFR16PaniAnimKeyEvent
 	.4byte 0x50616e69
 	.4byte 0x416e696d
@@ -783,17 +783,17 @@ __vt__10ActPullout:
 	.4byte restart__6ActionFv
 	.4byte resumable__6ActionFv
 	.4byte getInfo__6ActionFPc
-	.4byte 0x800a7908
-	.4byte 0x800a7930
-	.4byte 0x800a7944
-	.4byte 0x800a7958
-	.4byte 0x800a796c
-	.4byte 0x800a7980
-	.4byte 0x800a7994
-	.4byte 0x800a79a8
-	.4byte 0x800a791c
-	.4byte 0x800a79d0
-	.4byte 0x800a79bc
+	.4byte lbl_800A7908
+	.4byte lbl_800A7930
+	.4byte lbl_800A7944
+	.4byte lbl_800A7958
+	.4byte lbl_800A796C
+	.4byte lbl_800A7980
+	.4byte lbl_800A7994
+	.4byte lbl_800A79A8
+	.4byte lbl_800A791C
+	.4byte lbl_800A79D0
+	.4byte lbl_800A79BC
 	.4byte 0
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820

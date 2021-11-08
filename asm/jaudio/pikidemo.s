@@ -4757,30 +4757,30 @@ DEMO_STATUS:
 	.4byte 0x802269A4
 .global lbl_80226F14
 lbl_80226F14:
-	.4byte 0x8001AC58
-	.4byte 0x8001ABEC
-	.4byte 0x8001AC58
-	.4byte 0x8001AC58
-	.4byte 0x8001AC58
-	.4byte 0x8001ABFC
-	.4byte 0x8001AC0C
-	.4byte 0x8001AC1C
-	.4byte 0x8001AC2C
-	.4byte 0x8001AC3C
-	.4byte 0x8001AC4C
+	.4byte lbl_8001AC58
+	.4byte lbl_8001ABEC
+	.4byte lbl_8001AC58
+	.4byte lbl_8001AC58
+	.4byte lbl_8001AC58
+	.4byte lbl_8001ABFC
+	.4byte lbl_8001AC0C
+	.4byte lbl_8001AC1C
+	.4byte lbl_8001AC2C
+	.4byte lbl_8001AC3C
+	.4byte lbl_8001AC4C
 .global lbl_80226F40
 lbl_80226F40:
-	.4byte 0x8001B008
-	.4byte 0x8001AF98
-	.4byte 0x8001B014
-	.4byte 0x8001B014
-	.4byte 0x8001B014
-	.4byte 0x8001AFA8
-	.4byte 0x8001AFB8
-	.4byte 0x8001AFC8
-	.4byte 0x8001AFD8
-	.4byte 0x8001AFE8
-	.4byte 0x8001AFF8
+	.4byte lbl_8001B008
+	.4byte lbl_8001AF98
+	.4byte lbl_8001B014
+	.4byte lbl_8001B014
+	.4byte lbl_8001B014
+	.4byte lbl_8001AFA8
+	.4byte lbl_8001AFB8
+	.4byte lbl_8001AFC8
+	.4byte lbl_8001AFD8
+	.4byte lbl_8001AFE8
+	.4byte lbl_8001AFF8
 	.4byte 0x00000000
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820

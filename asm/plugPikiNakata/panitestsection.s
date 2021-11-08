@@ -136,7 +136,7 @@ __vt__12PaniTestNode:
 	.4byte getModelMatrix__4NodeFv
 	.4byte __RTTI__12PaniTestNode
 	.4byte 0xffffffe0
-	.4byte 0x8012159c
+	.4byte lbl_8012159C
 	.4byte animationKeyUpdated__12PaniTestNodeFR16PaniAnimKeyEvent
 	.4byte 0
 	.4byte 0

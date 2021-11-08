@@ -185,7 +185,7 @@ __vt__8PlantMgr:
 	.4byte 0xfffffff8
 	.4byte getAgeNodeType__5ANodeFv
 	.4byte read__8CoreNodeFR18RandomAccessStream
-	.4byte 0x8009f5dc
+	.4byte lbl_8009F5DC
 	.4byte draw__4NodeFR8Graphics
 	.4byte render__4NodeFR8Graphics
 	.4byte concat__4NodeFv
@@ -477,7 +477,7 @@ __vt__5Plant:
 	.4byte exitCourse__8CreatureFv
 	.4byte __RTTI__5Plant
 	.4byte 0xfffffd48
-	.4byte 0x8007df54
+	.4byte lbl_8007DF54
 	.4byte getCurrState__10AICreatureFv
 	.4byte "setCurrState__10AICreatureFP20AState<10AICreature>"
 	.4byte playSound__10AICreatureFi

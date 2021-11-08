@@ -7711,38 +7711,38 @@ onionColours$1858:
 	.4byte 0x41200000
 .global lbl_802A9D84
 lbl_802A9D84:
-	.4byte 0x8007158C
-	.4byte 0x800715C8
-	.4byte 0x80071604
-	.4byte 0x80071638
-	.4byte 0x800716B4
-	.4byte 0x80071724
-	.4byte 0x80071794
-	.4byte 0x80071800
-	.4byte 0x8007187C
-	.4byte 0x800718C8
-	.4byte 0x80071A64
-	.4byte 0x80071AD4
-	.4byte 0x80071B44
-	.4byte 0x80071BB4
-	.4byte 0x80071C24
-	.4byte 0x80071C94
-	.4byte 0x80071D04
-	.4byte 0x80071D74
-	.4byte 0x80071DE4
-	.4byte 0x80071E54
-	.4byte 0x80071FF8
-	.4byte 0x8007204C
-	.4byte 0x8007204C
-	.4byte 0x8007204C
-	.4byte 0x8007204C
-	.4byte 0x8007204C
-	.4byte 0x8007204C
-	.4byte 0x8007204C
-	.4byte 0x8007204C
-	.4byte 0x80072074
-	.4byte 0x80072160
-	.4byte 0x8007217C
+	.4byte lbl_8007158C
+	.4byte lbl_800715C8
+	.4byte lbl_80071604
+	.4byte lbl_80071638
+	.4byte lbl_800716B4
+	.4byte lbl_80071724
+	.4byte lbl_80071794
+	.4byte lbl_80071800
+	.4byte lbl_8007187C
+	.4byte lbl_800718C8
+	.4byte lbl_80071A64
+	.4byte lbl_80071AD4
+	.4byte lbl_80071B44
+	.4byte lbl_80071BB4
+	.4byte lbl_80071C24
+	.4byte lbl_80071C94
+	.4byte lbl_80071D04
+	.4byte lbl_80071D74
+	.4byte lbl_80071DE4
+	.4byte lbl_80071E54
+	.4byte lbl_80071FF8
+	.4byte lbl_8007204C
+	.4byte lbl_8007204C
+	.4byte lbl_8007204C
+	.4byte lbl_8007204C
+	.4byte lbl_8007204C
+	.4byte lbl_8007204C
+	.4byte lbl_8007204C
+	.4byte lbl_8007204C
+	.4byte lbl_80072074
+	.4byte lbl_80072160
+	.4byte lbl_8007217C
 	.4byte 0x70696B69
 	.4byte 0x732F626C
 	.4byte 0x754D6F64

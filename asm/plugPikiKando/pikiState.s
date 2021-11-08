@@ -10630,16 +10630,16 @@ lbl_802B8D38:
 	.4byte 0x00000000
 .global lbl_802B8D44
 lbl_802B8D44:
-	.4byte 0x800D7F64
-	.4byte 0x800D8200
-	.4byte 0x800D8584
-	.4byte 0x800D826C
-	.4byte 0x800D8344
-	.4byte 0x800D7E68
-	.4byte 0x800D82D8
-	.4byte 0x800D8078
-	.4byte 0x800D8104
-	.4byte 0x800D83BC
+	.4byte lbl_800D7F64
+	.4byte lbl_800D8200
+	.4byte lbl_800D8584
+	.4byte lbl_800D826C
+	.4byte lbl_800D8344
+	.4byte lbl_800D7E68
+	.4byte lbl_800D82D8
+	.4byte lbl_800D8078
+	.4byte lbl_800D8104
+	.4byte lbl_800D83BC
 	.4byte 0x50696B69
 	.4byte 0x456D6F74
 	.4byte 0x696F6E53
@@ -12090,17 +12090,17 @@ __vt__16PikiStateMachine:
 	.4byte "exec__19StateMachine<4Piki>FP4Piki"
 	.4byte "procMsg__19StateMachine<4Piki>FP4PikiP3Msg"
 	.4byte transit__16PikiStateMachineFP4Pikii
-	.4byte 0x800a7908
-	.4byte 0x800a7930
-	.4byte 0x800a7944
-	.4byte 0x800a7958
-	.4byte 0x800a796c
-	.4byte 0x800a7980
-	.4byte 0x800a7994
-	.4byte 0x800a79a8
-	.4byte 0x800a791c
-	.4byte 0x800a79d0
-	.4byte 0x800a79bc
+	.4byte lbl_800A7908
+	.4byte lbl_800A7930
+	.4byte lbl_800A7944
+	.4byte lbl_800A7958
+	.4byte lbl_800A796C
+	.4byte lbl_800A7980
+	.4byte lbl_800A7994
+	.4byte lbl_800A79A8
+	.4byte lbl_800A791C
+	.4byte lbl_800A79D0
+	.4byte lbl_800A79BC
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 	.4byte 0x802B8AF4

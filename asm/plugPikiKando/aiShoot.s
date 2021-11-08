@@ -845,7 +845,7 @@ __vt__16ActShootCreature:
 	.4byte getInfo__6ActionFPc
 	.4byte __RTTI__16ActShootCreature
 	.4byte 0xffffffec
-	.4byte 0x800c2c4c
+	.4byte lbl_800C2C4C
 	.4byte animationKeyUpdated__16ActShootCreatureFR16PaniAnimKeyEvent
 	.4byte 0
 	.4byte 0
@@ -903,17 +903,17 @@ __vt__8ActShoot:
 	.4byte 0
 	.4byte 0
 	.4byte 0
-	.4byte 0x800a7908
-	.4byte 0x800a7930
-	.4byte 0x800a7944
-	.4byte 0x800a7958
-	.4byte 0x800a796c
-	.4byte 0x800a7980
-	.4byte 0x800a7994
-	.4byte 0x800a79a8
-	.4byte 0x800a791c
-	.4byte 0x800a79d0
-	.4byte 0x800a79bc
+	.4byte lbl_800A7908
+	.4byte lbl_800A7930
+	.4byte lbl_800A7944
+	.4byte lbl_800A7958
+	.4byte lbl_800A796C
+	.4byte lbl_800A7980
+	.4byte lbl_800A7994
+	.4byte lbl_800A79A8
+	.4byte lbl_800A791C
+	.4byte lbl_800A79D0
+	.4byte lbl_800A79BC
 	.4byte 0
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820

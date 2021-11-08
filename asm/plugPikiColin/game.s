@@ -1641,18 +1641,18 @@ levNames:
 	.4byte 0x69000000
 .global lbl_802A67B8
 lbl_802A67B8:
-	.4byte 0x800536D8
-	.4byte 0x80053764
-	.4byte 0x8005379C
-	.4byte 0x80053860
-	.4byte 0x80053924
-	.4byte 0x800539E8
-	.4byte 0x80053780
-	.4byte 0x80053A04
-	.4byte 0x80053A84
-	.4byte 0x80053AA0
-	.4byte 0x80053ABC
-	.4byte 0x80053B0C
+	.4byte lbl_800536D8
+	.4byte lbl_80053764
+	.4byte lbl_8005379C
+	.4byte lbl_80053860
+	.4byte lbl_80053924
+	.4byte lbl_800539E8
+	.4byte lbl_80053780
+	.4byte lbl_80053A04
+	.4byte lbl_80053A84
+	.4byte lbl_80053AA0
+	.4byte lbl_80053ABC
+	.4byte lbl_80053B0C
 	.4byte 0x4F6E6550
 	.4byte 0x6C617965
 	.4byte 0x72536563

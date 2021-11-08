@@ -1983,28 +1983,28 @@ info__8Reaction:
 	.4byte 0x802B7ECC
 .global lbl_802B7EFC
 lbl_802B7EFC:
-	.4byte 0x800C3B34
-	.4byte 0x800C3B74
-	.4byte 0x800C3B94
-	.4byte 0x800C3BB4
-	.4byte 0x800C3BD4
-	.4byte 0x800C3BF4
-	.4byte 0x800C3C14
-	.4byte 0x800C3C34
-	.4byte 0x800C3B54
-	.4byte 0x800C3C74
-	.4byte 0x800C3C54
-	.4byte 0x800A7908
-	.4byte 0x800A7930
-	.4byte 0x800A7944
-	.4byte 0x800A7958
-	.4byte 0x800A796C
-	.4byte 0x800A7980
-	.4byte 0x800A7994
-	.4byte 0x800A79A8
-	.4byte 0x800A791C
-	.4byte 0x800A79D0
-	.4byte 0x800A79BC
+	.4byte lbl_800C3B34
+	.4byte lbl_800C3B74
+	.4byte lbl_800C3B94
+	.4byte lbl_800C3BB4
+	.4byte lbl_800C3BD4
+	.4byte lbl_800C3BF4
+	.4byte lbl_800C3C14
+	.4byte lbl_800C3C34
+	.4byte lbl_800C3B54
+	.4byte lbl_800C3C74
+	.4byte lbl_800C3C54
+	.4byte lbl_800A7908
+	.4byte lbl_800A7930
+	.4byte lbl_800A7944
+	.4byte lbl_800A7958
+	.4byte lbl_800A796C
+	.4byte lbl_800A7980
+	.4byte lbl_800A7994
+	.4byte lbl_800A79A8
+	.4byte lbl_800A791C
+	.4byte lbl_800A79D0
+	.4byte lbl_800A79BC
 	.4byte 0x746F7061
 	.4byte 0x6374696F
 	.4byte 0x6E000000

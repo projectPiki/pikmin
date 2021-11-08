@@ -2601,13 +2601,13 @@ lbl_801A2954:
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .global lbl_802A5EB0
 lbl_802A5EB0:
-	.4byte 0x8004DB3C
-	.4byte 0x8004D9B0
-	.4byte 0x8004D9C4
-	.4byte 0x8004D9EC
-	.4byte 0x8004DA30
-	.4byte 0x8004DA44
-	.4byte 0x8004DA58
-	.4byte 0x8004DAC0
-	.4byte 0x8004DB3C
-	.4byte 0x8004DAD8
+	.4byte lbl_8004DB3C
+	.4byte lbl_8004D9B0
+	.4byte lbl_8004D9C4
+	.4byte lbl_8004D9EC
+	.4byte lbl_8004DA30
+	.4byte lbl_8004DA44
+	.4byte lbl_8004DA58
+	.4byte lbl_8004DAC0
+	.4byte lbl_8004DB3C
+	.4byte lbl_8004DAD8

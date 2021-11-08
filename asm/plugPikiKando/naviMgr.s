@@ -104,8 +104,8 @@ __vt__7NaviMgr:
 	.4byte __RTTI__7NaviMgr
 	.4byte 0xfffffff8
 	.4byte getAgeNodeType__5ANodeFv
-	.4byte 0x8011784c
-	.4byte 0x80117854
+	.4byte lbl_8011784C
+	.4byte lbl_80117854
 	.4byte draw__4NodeFR8Graphics
 	.4byte render__4NodeFR8Graphics
 	.4byte concat__4NodeFv

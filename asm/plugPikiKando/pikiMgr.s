@@ -1582,8 +1582,8 @@ __vt__7PikiMgr:
 	.4byte __RTTI__7PikiMgr
 	.4byte 0xfffffff8
 	.4byte getAgeNodeType__5ANodeFv
-	.4byte 0x800cf0d8
-	.4byte 0x800cf0e0
+	.4byte lbl_800CF0D8
+	.4byte lbl_800CF0E0
 	.4byte draw__4NodeFR8Graphics
 	.4byte render__4NodeFR8Graphics
 	.4byte concat__4NodeFv
