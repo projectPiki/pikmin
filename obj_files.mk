@@ -61,6 +61,18 @@ TEXT_O_FILES :=\
 	$(BUILD_DIR)/asm/ar/arq.o\
 	$(BUILD_DIR)/asm/dsp/dsp.o\
 	$(BUILD_DIR)/asm/text_CardGX.o\
+	$(BUILD_DIR)/asm/hio/hio.o\
+	$(BUILD_DIR)/asm/gx/GXInit.o\
+	$(BUILD_DIR)/asm/gx/GXFifo.o\
+	$(BUILD_DIR)/asm/gx/GXAttr.o\
+	$(BUILD_DIR)/asm/gx/GXMisc.o\
+	$(BUILD_DIR)/asm/gx/GXGeometry.o\
+	$(BUILD_DIR)/asm/gx/GXFrameBuf.o\
+	$(BUILD_DIR)/asm/gx/GXLight.o\
+	$(BUILD_DIR)/asm/gx/GXTexture.o\
+	$(BUILD_DIR)/asm/gx/GXBump.o\
+	$(BUILD_DIR)/asm/gx/GXTev.o\
+	$(BUILD_DIR)/asm/gx/GXPixel.o\
 	$(BUILD_DIR)/src/gx/GXStubs.o\
 	$(BUILD_DIR)/asm/gx/GXDisplayList.o\
 	$(BUILD_DIR)/asm/gx/GXTransform.o\
