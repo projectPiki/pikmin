@@ -1212,30 +1212,3 @@ __OSArenaHi:
 .global InterruptHandlerTable
 InterruptHandlerTable:
 	.skip 0x8
-.global Prepared
-Prepared:
-	.skip 0x8
-.global ResetFunctionQueue
-ResetFunctionQueue:
-	.skip 0x8
-.global ResetCallback
-ResetCallback:
-	.skip 0x4
-.global Down
-Down:
-	.skip 0x4
-.global LastState
-LastState:
-	.skip 0x8
-.global HoldUp
-HoldUp:
-	.skip 0x4
-.global lbl_803E7F44
-lbl_803E7F44:
-	.skip 0x4
-.global HoldDown
-HoldDown:
-	.skip 0x4
-.global lbl_803E7F4C
-lbl_803E7F4C:
-	.skip 0x4

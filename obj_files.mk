@@ -43,6 +43,11 @@ TEXT_O_FILES :=\
 	$(BUILD_DIR)/asm/plugPikiNishimura/SpiderAi.o\
 	$(BUILD_DIR)/asm/plugPikiNishimura/SpiderLeg.o\
 	$(BUILD_DIR)/asm/text_Nishimura.o\
+	$(BUILD_DIR)/asm/os/OSReboot.o\
+	$(BUILD_DIR)/asm/os/OSReset.o\
+	$(BUILD_DIR)/asm/os/OSResetSW.o\
+	$(BUILD_DIR)/asm/os/OSRtc.o\
+	$(BUILD_DIR)/asm/os/OSSerial.o\
 	$(BUILD_DIR)/asm/os/OSSync.o\
 	$(BUILD_DIR)/asm/os/OSThread.o\
 	$(BUILD_DIR)/asm/os/OSTime.o\
