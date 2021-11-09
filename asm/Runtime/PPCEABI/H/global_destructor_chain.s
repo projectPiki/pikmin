@@ -36,4 +36,4 @@ __register_global_object:
 .balign 0x8
 .global __global_destructor_chain
 __global_destructor_chain:
-	.skip 0x8
+	.skip 0x4

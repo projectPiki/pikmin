@@ -11,15 +11,15 @@
 .balign 0x8
 .global __lconv
 __lconv:
-	.4byte 0x80222B08
-	.4byte 0x80222B0A
-	.4byte 0x80222B0A
-	.4byte 0x80222B0A
-	.4byte 0x80222B0A
-	.4byte 0x80222B0A
-	.4byte 0x80222B0A
-	.4byte 0x80222B0A
-	.4byte 0x80222B0A
-	.4byte 0x80222B0A
+	.4byte "@stringBase0"
+	.4byte "@stringBase0"+2
+	.4byte "@stringBase0"+2
+	.4byte "@stringBase0"+2
+	.4byte "@stringBase0"+2
+	.4byte "@stringBase0"+2
+	.4byte "@stringBase0"+2
+	.4byte "@stringBase0"+2
+	.4byte "@stringBase0"+2
+	.4byte "@stringBase0"+2
 	.4byte 0x7F7F7F7F
 	.4byte 0x7F7F7F7F

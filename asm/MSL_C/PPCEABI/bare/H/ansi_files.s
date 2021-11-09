@@ -6,12 +6,13 @@ __files:
 	.4byte 0x00000000
 	.4byte 0x08800000
 	.4byte 0x00000000
+lbl_802E9004:
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x00000000
-	.4byte 0x802E9004
+	.4byte lbl_802E9004
 	.4byte 0x00000001
-	.4byte 0x802E9004
+	.4byte lbl_802E9004
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x00000000
@@ -24,12 +25,13 @@ __files:
 	.4byte 0x00000000
 	.4byte 0x10800000
 	.4byte 0x00000000
+lbl_802E904C:
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x00000000
-	.4byte 0x802E904C
+	.4byte lbl_802E904C
 	.4byte 0x00000001
-	.4byte 0x802E904C
+	.4byte lbl_802E904C
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x00000000
@@ -42,12 +44,13 @@ __files:
 	.4byte 0x00000000
 	.4byte 0x10800000
 	.4byte 0x00000000
+lbl_802E9094:
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x00000000
-	.4byte 0x802E9094
+	.4byte lbl_802E9094
 	.4byte 0x00000001
-	.4byte 0x802E9094
+	.4byte lbl_802E9094
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x00000000

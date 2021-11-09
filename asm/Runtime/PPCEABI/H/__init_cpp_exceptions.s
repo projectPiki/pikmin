@@ -47,4 +47,3 @@ lbl_8021552C:
 .global fragmentID
 fragmentID:
 	.4byte 0xFFFFFFFE
-	.4byte 0x00000000

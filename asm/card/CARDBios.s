@@ -1462,4 +1462,4 @@ ResetFunctionInfo_1:
 .balign 0x8
 .global __CARDDiskID
 __CARDDiskID:
-	.skip 0x8
+	.skip 0x4

@@ -1651,4 +1651,3 @@ tbl2$209:
 .global tbl3$210
 tbl3$210:
 	.4byte 0x000C0102
-	.4byte 0x00000000

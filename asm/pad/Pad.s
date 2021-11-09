@@ -2434,7 +2434,6 @@ cmdCalibrate:
 lbl_803E7774:
 	.4byte 0x5061642E
 	.4byte 0x63000000
-	.4byte 0x00000000
 
 .section .sbss, "wa"
 .balign 0x8

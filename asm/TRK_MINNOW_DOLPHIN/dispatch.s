@@ -82,4 +82,3 @@ gTRKDispatchTable:
 	.4byte TRKDoUnsupported
 	.4byte TRKDoUnsupported
 	.4byte 0x00000000
-	.4byte 0x00000000

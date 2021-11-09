@@ -1799,4 +1799,4 @@ lbl_803E806C:
 	.skip 0x4
 .global FBSet
 FBSet:
-	.skip 0x8
+	.skip 0x4

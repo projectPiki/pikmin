@@ -4,14 +4,14 @@
 .balign 0x8
 .global __sincos_on_quadrant
 __sincos_on_quadrant:
-	.4byte 0x00000000
-	.4byte 0x3F800000
-	.4byte 0x3F800000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0xBF800000
-	.4byte 0xBF800000
-	.4byte 0x00000000
+	.float 0.0
+	.float 1.0
+	.float 1.0
+	.float 0.0
+	.float 0.0
+	.float -1.0
+	.float -1.0
+	.float 0.0
 .global __sincos_poly
 __sincos_poly:
 	.4byte 0x366CCFAA
@@ -22,5 +22,5 @@ __sincos_poly:
 	.4byte 0x3B2335DD
 	.4byte 0xBE9DE9E6
 	.4byte 0xBDA55DE7
-	.4byte 0x3F800000
+	.float 1.0
 	.4byte 0x3F490FDB

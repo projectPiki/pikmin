@@ -46,13 +46,10 @@ lbl_8021BF40:
 .balign 0x8
 .global "@106"
 "@106":
-	.4byte 0x00000000
-	.4byte 0x00000000
+	.double 0.0
 .global "@107"
 "@107":
-	.4byte 0x3FE00000
-	.4byte 0x00000000
+	.double 0.5
 .global "@108"
 "@108":
-	.4byte 0x40080000
-	.4byte 0x00000000
+	.double 3.0

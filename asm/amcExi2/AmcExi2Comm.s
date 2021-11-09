@@ -1,5 +1,4 @@
 .include "macros.inc"
-
 .section .text, "ax"  # 0x80005560 - 0x80221F60
 .global EXI2_CallBack
 EXI2_CallBack:
@@ -499,20 +498,13 @@ EXI2_Unreserve:
 .balign 0x8
 .global lbl_802E9610
 lbl_802E9610:
-	.4byte 0x43616E27
-	.4byte 0x74207365
-	.4byte 0x6C656374
-	.4byte 0x20455849
-	.4byte 0x3220706F
-	.4byte 0x7274210A
-	.byte 0
+	.asciz "Can't select EXI2 port!\n"
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 0x8
 .global pucEXI2InputPending
 pucEXI2InputPending:
-	.4byte 0x803E81C0
-	.4byte 0x00000000
+	.4byte ucEXI2InputPending
 
 .section .sbss, "wa"
 .balign 0x8
@@ -524,4 +516,4 @@ fExi2Selected:
 	.skip 0x4
 .global TRK_Callback
 TRK_Callback:
-	.skip 0x8
+	.skip 0x4

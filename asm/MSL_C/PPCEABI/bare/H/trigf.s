@@ -283,7 +283,7 @@ __sinit_trigf_c:
 .balign 0x8
 .global tmp_float
 tmp_float:
-	.4byte 0x3E800000
+	.float 0.25
 	.4byte 0x3CBE6080
 	.4byte 0x34372200
 	.4byte 0x2DA44152
@@ -304,7 +304,7 @@ lbl_803EC810:
 	.4byte 0x3F22F983
 .global lbl_803EC814
 lbl_803EC814:
-	.4byte 0x3F000000
+	.float 0.5
 .global lbl_803EC818
 lbl_803EC818:
 	.4byte 0x39B504F3

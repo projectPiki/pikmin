@@ -121,4 +121,4 @@ lbl_8021A674:
 .balign 0x8
 .global initialized$16
 initialized$16:
-	.skip 0x8
+	.skip 0x4

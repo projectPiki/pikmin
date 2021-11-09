@@ -557,4 +557,4 @@ GPFifo:
 	.skip 0x4
 .global CPUFifo
 CPUFifo:
-	.skip 0x8
+	.skip 0x4

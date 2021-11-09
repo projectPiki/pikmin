@@ -570,7 +570,6 @@ lbl_8020DB44:
 .global Chan
 Chan:
 	.4byte 0xFFFFFFFF
-	.4byte 0x00000000
 
 .section .sbss, "wa"
 .balign 0x8
@@ -582,4 +581,4 @@ TxCallback:
 	.skip 0x4
 .global RxCallback
 RxCallback:
-	.skip 0x8
+	.skip 0x4

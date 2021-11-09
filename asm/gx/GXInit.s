@@ -1068,8 +1068,7 @@ lbl_8020EA3C:
 .balign 0x8
 .global gx
 gx:
-	.4byte 0x803D3650
-	.4byte 0x00000000
+	.4byte gxData
 
 .section .sbss, "wa"
 .balign 0x8

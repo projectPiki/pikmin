@@ -206,4 +206,4 @@ bb2:
 	.skip 0x4
 .global idTmp
 idTmp:
-	.skip 0x8
+	.skip 0x4

@@ -764,87 +764,14 @@ lbl_801FF954:
 .balign 0x8
 .global lbl_802E8460
 lbl_802E8460:
-	.4byte 0x44564443
-	.4byte 0x6F6E7665
-	.4byte 0x7274456E
-	.4byte 0x7472796E
-	.4byte 0x756D546F
-	.4byte 0x50617468
-	.4byte 0x28706F73
-	.4byte 0x7369626C
-	.4byte 0x79204456
-	.4byte 0x444F7065
-	.4byte 0x6E206F72
-	.4byte 0x20445644
-	.4byte 0x4368616E
-	.4byte 0x67654469
-	.4byte 0x72206F72
-	.4byte 0x20445644
-	.4byte 0x4F70656E
-	.4byte 0x44697229
-	.4byte 0x3A207370
-	.4byte 0x65636966
-	.4byte 0x69656420
-	.4byte 0x64697265
-	.4byte 0x63746F72
-	.4byte 0x79206F72
-	.4byte 0x2066696C
-	.4byte 0x65202825
-	.4byte 0x73292064
-	.4byte 0x6F65736E
-	.4byte 0x2774206D
-	.4byte 0x61746368
-	.4byte 0x20737461
-	.4byte 0x6E646172
-	.4byte 0x6420382E
-	.4byte 0x3320666F
-	.4byte 0x726D6174
-	.4byte 0x2E205468
-	.4byte 0x69732069
-	.4byte 0x73206120
-	.4byte 0x74656D70
-	.4byte 0x6F726172
-	.4byte 0x79207265
-	.4byte 0x73747269
-	.4byte 0x6374696F
-	.4byte 0x6E20616E
-	.4byte 0x64207769
-	.4byte 0x6C6C2062
-	.4byte 0x65207265
-	.4byte 0x6D6F7665
-	.4byte 0x6420736F
-	.4byte 0x6F6E0A00
+	.asciz "DVDConvertEntrynumToPath(possibly DVDOpen or DVDChangeDir or DVDOpenDir): specified directory or file (%s) doesn't match standard 8.3 format. This is a temporary restriction and will be removed soon\n"
 .global lbl_802E8528
 lbl_802E8528:
-	.4byte 0x5761726E
-	.4byte 0x696E673A
-	.4byte 0x20445644
-	.4byte 0x4F70656E
-	.4byte 0x28293A20
-	.4byte 0x66696C65
-	.4byte 0x20272573
-	.4byte 0x27207761
-	.4byte 0x73206E6F
-	.4byte 0x7420666F
-	.4byte 0x756E6420
-	.4byte 0x756E6465
-	.4byte 0x72202573
-	.4byte 0x2E0A0000
+	.asciz "Warning: DVDOpen(): file '%s' was not found under %s.\n"
+	.skip 1
 .global lbl_802E8560
 lbl_802E8560:
-	.4byte 0x44564452
-	.4byte 0x65616441
-	.4byte 0x73796E63
-	.4byte 0x28293A20
-	.4byte 0x73706563
-	.4byte 0x69666965
-	.4byte 0x64206172
-	.4byte 0x65612069
-	.4byte 0x73206F75
-	.4byte 0x74206F66
-	.4byte 0x20746865
-	.4byte 0x2066696C
-	.4byte 0x65202000
+	.asciz "DVDReadAsync(): specified area is out of the file  "
 .global lbl_802E8594
 lbl_802E8594:
 	.4byte 0x44564452

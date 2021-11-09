@@ -94,4 +94,4 @@ __stdio_exit:
 	.skip 0x4
 .global __console_exit
 __console_exit:
-	.skip 0x8
+	.skip 0x4

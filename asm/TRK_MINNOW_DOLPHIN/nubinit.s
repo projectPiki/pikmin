@@ -127,4 +127,3 @@ lbl_8021C49C:
 .balign 0x8
 lbl_80222D50:
 	.asciz "MetroTRK for Dolphin v0.8"
-	.skip 2

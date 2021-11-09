@@ -152,4 +152,4 @@ lbl_802142C8:
 .balign 0x8
 .global OldCPUFifo
 OldCPUFifo:
-	.skip 0x8
+	.skip 0x4
