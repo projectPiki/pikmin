@@ -43,6 +43,12 @@ TEXT_O_FILES :=\
 	$(BUILD_DIR)/asm/plugPikiNishimura/SpiderAi.o\
 	$(BUILD_DIR)/asm/plugPikiNishimura/SpiderLeg.o\
 	$(BUILD_DIR)/asm/text_Nishimura.o\
+	$(BUILD_DIR)/asm/plugPikiYamashita/drawMenuBase.o\
+	$(BUILD_DIR)/asm/plugPikiYamashita/drawHiScore.o\
+	$(BUILD_DIR)/asm/plugPikiYamashita/damageEffect.o\
+	$(BUILD_DIR)/asm/plugPikiYamashita/alphaWipe.o\
+	$(BUILD_DIR)/asm/plugPikiYamashita/drawUfoParts.o\
+	$(BUILD_DIR)/asm/plugPikiYamashita/zenSys.o\
 	$(BUILD_DIR)/asm/plugPikiYamashita/drawSaveMes.o\
 	$(BUILD_DIR)/asm/plugPikiYamashita/drawSaveFailure.o\
 	$(BUILD_DIR)/asm/plugPikiYamashita/drawFinalResult.o\
