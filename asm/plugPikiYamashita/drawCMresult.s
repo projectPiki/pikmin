@@ -1619,7 +1619,7 @@ __vt__Q23zen17DrawCMresultAlpha:
 	.4byte 0
 	.4byte 0x803e7624
 	.4byte 0x4
-	.4byte "__RTTI__Q23zen12FigureTex<i>_3"
+	.4byte "__RTTI__Q23zen12FigureTex<i>"
 	.4byte 0x4
 	.4byte 0x803e7634
 	.4byte 0x4
@@ -1675,8 +1675,7 @@ __RTTI__Q23zen17DrawCMresultGraph:
 	.4byte 0x802e6f6c
 	.4byte 0x802e6fac
 	.4byte 0
-.global "__RTTI__Q23zen12FigureTex<i>_3"
-"__RTTI__Q23zen12FigureTex<i>_3":
+"__RTTI__Q23zen12FigureTex<i>":
 	.4byte 0x802e6fbc
 	.4byte 0x802e6fd0
 	.4byte 0x802e6fdc

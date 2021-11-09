@@ -664,12 +664,12 @@ lbl_802E70D0:
 lbl_802E70E4:
 	.asciz "zen::DrawScreen"
 lbl_802E70F4:
-	.4byte __RTTI__Q23zen10DrawScreen_4
+	.4byte __RTTI__Q23zen10DrawScreen
 	.4byte 0x00000000
 	.4byte 0x00000000
 .global __vt__Q23zen12DrawMenuBase
 __vt__Q23zen12DrawMenuBase:
-	.4byte __RTTI__Q23zen12DrawMenuBase_1
+	.4byte __RTTI__Q23zen12DrawMenuBase
 	.4byte 0
 	.4byte update__Q23zen10DrawScreenFv
 	.4byte draw__Q23zen10DrawScreenFv
@@ -702,12 +702,10 @@ lbl_803E7668:
 .global SELECT_CANCEL__Q23zen12DrawMenuBase
 SELECT_CANCEL__Q23zen12DrawMenuBase:
 	.4byte 0xFFFFFFFF
-.global __RTTI__Q23zen10DrawScreen_4
-__RTTI__Q23zen10DrawScreen_4:
+__RTTI__Q23zen10DrawScreen:
 	.4byte lbl_802E70E4
 	.4byte 0
-.global __RTTI__Q23zen12DrawMenuBase_1
-__RTTI__Q23zen12DrawMenuBase_1:
+__RTTI__Q23zen12DrawMenuBase:
 	.4byte lbl_802E70D0
 	.4byte lbl_802E70F4
 	.4byte 0
