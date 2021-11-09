@@ -21784,19 +21784,3 @@ lbl_803E76E8:
 lbl_803E76F0:
 	.4byte 0x00000000
 	.4byte 0x00000000
-.global __OSCurrHeap
-__OSCurrHeap:
-	.4byte 0xFFFFFFFF
-	.4byte 0x00000000
-.global __OSArenaLo
-__OSArenaLo:
-	.4byte 0xFFFFFFFF
-	.4byte 0x00000000
-.global lbl_803E7708
-lbl_803E7708:
-	.4byte 0x0A000000
-	.4byte 0x00000000
-.global fontEncode$55
-fontEncode$55:
-	.4byte 0xFFFF0000
-	.4byte 0x00000000

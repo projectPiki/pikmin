@@ -1179,36 +1179,3 @@ eventCallBack__19TAIAfireAttackHibaA:
 .global "WMeffMgr__9@unnamed@"
 "WMeffMgr__9@unnamed@":
 	.skip 0x8
-.global BootInfo
-BootInfo:
-	.skip 0x4
-.global BI2DebugFlag
-BI2DebugFlag:
-	.skip 0x4
-.global AreWeInitialized
-AreWeInitialized:
-	.skip 0x4
-.global OSExceptionTable
-OSExceptionTable:
-	.skip 0x4
-.global AlarmQueue
-AlarmQueue:
-	.skip 0x8
-.global HeapArray
-HeapArray:
-	.skip 0x4
-.global NumHeaps
-NumHeaps:
-	.skip 0x4
-.global ArenaStart
-ArenaStart:
-	.skip 0x4
-.global ArenaEnd
-ArenaEnd:
-	.skip 0x4
-.global __OSArenaHi
-__OSArenaHi:
-	.skip 0x8
-.global InterruptHandlerTable
-InterruptHandlerTable:
-	.skip 0x8
