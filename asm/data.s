@@ -205058,27 +205058,3 @@ lbl_802E7238:
 	.4byte lbl_801F54D8
 	.4byte lbl_801F54E8
 	.4byte 0x00000000
-.global lbl_802E7258
-lbl_802E7258:
-	.4byte lbl_801F56B4
-	.4byte lbl_801F5594
-	.4byte lbl_801F55EC
-	.4byte lbl_801F55FC
-	.4byte lbl_801F567C
-	.4byte lbl_801F5648
-	.4byte lbl_801F56B0
-	.4byte lbl_801F56B0
-	.4byte lbl_801F56B0
-	.4byte lbl_801F56B0
-.global lbl_802E7280
-lbl_802E7280:
-	.4byte lbl_801F5868
-	.4byte lbl_801F5874
-	.4byte lbl_801F5880
-	.4byte lbl_801F58FC
-	.4byte lbl_801F5908
-	.4byte lbl_801F591C
-	.4byte lbl_801F592C
-	.4byte lbl_801F592C
-	.4byte lbl_801F592C
-	.4byte lbl_801F592C
