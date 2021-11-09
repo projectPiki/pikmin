@@ -3671,25 +3671,3 @@ lbl_803EC3C0:
 .global lbl_803EC3C4
 lbl_803EC3C4:
 	.4byte 0x3E800000
-.global lbl_803EC3C8
-lbl_803EC3C8:
-	.4byte 0x00000000
-.global lbl_803EC3CC
-lbl_803EC3CC:
-	.4byte 0x3F800000
-.global lbl_803EC3D0
-lbl_803EC3D0:
-	.4byte 0x3DCCCCCD
-.global lbl_803EC3D4
-lbl_803EC3D4:
-	.4byte 0x3FC90FDB
-.global lbl_803EC3D8
-lbl_803EC3D8:
-	.4byte 0xC3F00000
-.global lbl_803EC3DC
-lbl_803EC3DC:
-	.4byte 0x3F000000
-.global "@1351"
-"@1351":
-	.4byte 0x43300000
-	.4byte 0x80000000
