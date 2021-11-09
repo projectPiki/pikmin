@@ -21764,23 +21764,3 @@ lbl_803E76C0:
 lbl_803E76C8:
 	.4byte 0x25732573
 	.4byte 0x00000000
-.global lbl_803E76D0
-lbl_803E76D0:
-	.4byte 0x77696E25
-	.4byte 0x64000000
-.global lbl_803E76D8
-lbl_803E76D8:
-	.4byte 0x70642530
-	.4byte 0x32640000
-.global lbl_803E76E0
-lbl_803E76E0:
-	.4byte 0x6C702530
-	.4byte 0x32640000
-.global lbl_803E76E8
-lbl_803E76E8:
-	.4byte 0x64702530
-	.4byte 0x32640000
-.global lbl_803E76F0
-lbl_803E76F0:
-	.4byte 0x00000000
-	.4byte 0x00000000
