@@ -34,5 +34,4 @@ lbl_801F8F74:
 .balign 0x8
 .global fontEncode$55
 fontEncode$55:
-	.4byte 0xFFFF0000
-	.4byte 0x00000000
+	.2byte 0xFFFF

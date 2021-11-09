@@ -363,7 +363,6 @@ lbl_802E71E0:
 	.4byte 0x73617665
 	.4byte 0x5F782E62
 	.4byte 0x6C6F0000
-	.4byte 0x00000000
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 0x8

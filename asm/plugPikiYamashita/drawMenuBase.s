@@ -658,16 +658,13 @@ lbl_802E7088:
 	.4byte 0x00000000
 	.4byte 0x0000001C
 	.4byte 0x00000000
-	.4byte 0x7A656E3A
-	.4byte 0x3A447261
-	.4byte 0x774D656E
-	.4byte 0x75426173
-	.4byte 0x65000000
-	.4byte 0x7A656E3A
-	.4byte 0x3A447261
-	.4byte 0x77536372
-	.4byte 0x65656E00
-	.4byte 0x803E7674
+lbl_802E70D0:
+	.asciz "zen::DrawMenuBase"
+	.skip 2
+lbl_802E70E4:
+	.asciz "zen::DrawScreen"
+lbl_802E70F4:
+	.4byte __RTTI__Q23zen10DrawScreen_4
 	.4byte 0x00000000
 	.4byte 0x00000000
 .global __vt__Q23zen12DrawMenuBase
@@ -707,12 +704,12 @@ SELECT_CANCEL__Q23zen12DrawMenuBase:
 	.4byte 0xFFFFFFFF
 .global __RTTI__Q23zen10DrawScreen_4
 __RTTI__Q23zen10DrawScreen_4:
-	.4byte 0x802e70e4
+	.4byte lbl_802E70E4
 	.4byte 0
 .global __RTTI__Q23zen12DrawMenuBase_1
 __RTTI__Q23zen12DrawMenuBase_1:
-	.4byte 0x802e70d0
-	.4byte 0x802e70f4
+	.4byte lbl_802E70D0
+	.4byte lbl_802E70F4
 	.4byte 0
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840

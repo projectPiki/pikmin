@@ -691,4 +691,4 @@ lbl_802E7B54:
 .balign 0x8
 .global InterruptHandlerTable
 InterruptHandlerTable:
-	.skip 0x8
+	.skip 0x4
