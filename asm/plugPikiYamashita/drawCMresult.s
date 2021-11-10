@@ -1507,33 +1507,14 @@ lbl_801F0130:
 .balign 0x8
 .global lbl_802E6E88
 lbl_802E6E88:
-	.4byte 0x64726177
-	.4byte 0x434D7265
-	.4byte 0x73756C74
-	.4byte 0x2E637070
-	.4byte 0x00000000
-	.4byte 0x64726177
-	.4byte 0x434D7265
-	.4byte 0x73756C74
-	.4byte 0x00000000
-	.4byte 0x73637265
-	.4byte 0x656E2F62
-	.4byte 0x6C6F2F63
-	.4byte 0x68615F72
-	.4byte 0x652E626C
-	.4byte 0x6F000000
-	.4byte 0x73637265
-	.4byte 0x656E2F62
-	.4byte 0x6C6F2F63
-	.4byte 0x68615F72
-	.4byte 0x616E6B2E
-	.4byte 0x626C6F00
-	.4byte 0x73637265
-	.4byte 0x656E2F62
-	.4byte 0x6C6F2F63
-	.4byte 0x68615F62
-	.4byte 0x6573742E
-	.4byte 0x626C6F00
+	.asciz "drawCMresult.cpp"
+	.skip 3
+	.asciz "drawCMresult"
+	.skip 3
+	.asciz "screen/blo/cha_re.blo"
+	.skip 2
+	.asciz "screen/blo/cha_rank.blo"
+	.asciz "screen/blo/cha_best.blo"
 	.4byte 0x00000000
 	.4byte 0xFFFFFFFF
 	.4byte modeSleep__Q23zen12DrawCMresultFP10Controller
@@ -1552,19 +1533,14 @@ lbl_802E6E88:
 	.4byte 0x00000000
 	.4byte 0xFFFFFFFF
 	.4byte modeOperation__Q23zen12DrawCMresultFP10Controller
-	.4byte 0x7A656E3A
-	.4byte 0x3A447261
-	.4byte 0x77434D72
-	.4byte 0x6573756C
-	.4byte 0x74477261
-	.4byte 0x70680000
-	.4byte 0x7A656E3A
-	.4byte 0x3A447261
-	.4byte 0x77434D72
-	.4byte 0x6573756C
-	.4byte 0x74416C70
-	.4byte 0x68610000
-	.4byte 0x803E7614
+lbl_802E6F3C:
+	.asciz "zen::DrawCMresultGraph"
+	.skip 1
+lbl_802E6F54:
+	.asciz "zen::DrawCMresultAlpha"
+	.skip 1
+lbl_802E6F6C:
+	.4byte __RTTI__Q23zen17DrawCMresultAlpha
 	.4byte 0x00000000
 	.4byte 0x00000000
 .global __vt__Q23zen17DrawCMresultGraph
@@ -1577,55 +1553,38 @@ __vt__Q23zen17DrawCMresultAlpha:
 	.4byte __RTTI__Q23zen17DrawCMresultAlpha
 	.4byte 0
 	.4byte update__Q23zen17DrawCMresultAlphaFv
-	.4byte 0x7a656e3a
-	.4byte 0x3a4e756d
-	.4byte 0x62657250
-	.4byte 0x69634361
-	.4byte 0x6c6c4261
-	.4byte 0x636b3c69
-	.4byte 0x6e743e00
-	.4byte 0x7a656e3a
-	.4byte 0x3a4e756d
-	.4byte 0x62657254
-	.4byte 0x65780000
-	.4byte 0x7a656e3a
-	.4byte 0x3a466967
-	.4byte 0x75726554
-	.4byte 0x65783c69
-	.4byte 0x6e743e00
-	.4byte 0x803e7624
+	.asciz "zen::NumberPicCallBack<int>"
+lbl_802E6FAC:
+	.asciz "zen::NumberTex"
+	.skip 1
+lbl_802E6FBC:
+	.asciz "zen::FigureTex<int>"
+lbl_802E6FD0:
+	.4byte __RTTI__Q23zen9NumberTex
 	.4byte 0
 	.4byte 0
-	.4byte 0x50324450
-	.4byte 0x616e6543
-	.4byte 0x616c6c42
-	.4byte 0x61636b42
-	.4byte 0x61736500
-	.4byte 0x7a656e3a
-	.4byte 0x3a43616c
-	.4byte 0x6c426163
-	.4byte 0x6b313c50
-	.4byte 0x32445061
-	.4byte 0x6e65202a
-	.4byte 0x3e000000
-	.4byte 0x50324450
-	.4byte 0x616e6543
-	.4byte 0x616c6c42
-	.4byte 0x61636b00
-	.4byte 0x803e7634
+lbl_802E6FDC:
+	.asciz "P2DPaneCallBackBase"
+lbl_802E6FF0:
+	.asciz "zen::CallBack1<P2DPane *>"
+	.skip 2
+lbl_802E700C:
+	.asciz "P2DPaneCallBack"
+lbl_802E701C:
+	.4byte __RTTI__19P2DPaneCallBackBase
 	.4byte 0x4
-	.4byte 0x803e763c
+	.4byte "__RTTI__Q23zen20CallBack1<P7P2DPane>"
 	.4byte 0
 	.4byte 0
-	.4byte 0x803e7624
+	.4byte __RTTI__Q23zen9NumberTex
 	.4byte 0x4
 	.4byte "__RTTI__Q23zen12FigureTex<i>"
 	.4byte 0x4
-	.4byte 0x803e7634
+	.4byte __RTTI__19P2DPaneCallBackBase
 	.4byte 0x4
-	.4byte 0x803e763c
+	.4byte "__RTTI__Q23zen20CallBack1<P7P2DPane>"
 	.4byte 0
-	.4byte 0x803e7644
+	.4byte __RTTI__15P2DPaneCallBack
 	.4byte 0
 	.4byte 0
 	.4byte 0
@@ -1644,8 +1603,8 @@ __vt__Q23zen17DrawCMresultAlpha:
 .balign 0x8
 .global lbl_803E75F0
 lbl_803E75F0:
-	.4byte 0x705F6D25
-	.4byte 0x64000000
+	.asciz "p_m%d"
+	.skip 2
 .global lbl_803E75F8
 lbl_803E75F8:
 	.4byte 0x00000000
@@ -1663,27 +1622,29 @@ lbl_803E7608:
 	.4byte 0x00000000
 .global lbl_803E760C
 lbl_803E760C:
-	.4byte 0x6D25645F
-	.4byte 0x77000000
-.global __RTTI__Q23zen17DrawCMresultAlpha
+	.asciz "m%d_w"
+	.skip 2
 __RTTI__Q23zen17DrawCMresultAlpha:
-	.4byte 0x802e6f54
+	.4byte lbl_802E6F54
 	.4byte 0
-.global __RTTI__Q23zen17DrawCMresultGraph
 __RTTI__Q23zen17DrawCMresultGraph:
-	.4byte 0x802e6f3c
-	.4byte 0x802e6f6c
-	.4byte 0x802e6fac
+	.4byte lbl_802E6F3C
+	.4byte lbl_802E6F6C
+__RTTI__Q23zen9NumberTex:
+	.4byte lbl_802E6FAC
 	.4byte 0
 "__RTTI__Q23zen12FigureTex<i>":
-	.4byte 0x802e6fbc
-	.4byte 0x802e6fd0
-	.4byte 0x802e6fdc
+	.4byte lbl_802E6FBC
+	.4byte lbl_802E6FD0
+__RTTI__19P2DPaneCallBackBase:
+	.4byte lbl_802E6FDC
 	.4byte 0
-	.4byte 0x802e6ff0
+"__RTTI__Q23zen20CallBack1<P7P2DPane>":
+	.4byte lbl_802E6FF0
 	.4byte 0
-	.4byte 0x802e700c
-	.4byte 0x802e701c
+__RTTI__15P2DPaneCallBack:
+	.4byte lbl_802E700C
+	.4byte lbl_802E701C
 	.4byte 0
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
