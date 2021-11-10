@@ -72,7 +72,7 @@ TEXT_O_FILES :=\
 	$(BUILD_DIR)/asm/os/OSExi.o\
 	$(BUILD_DIR)/asm/os/OSFont.o\
 	$(BUILD_DIR)/asm/os/OSInterrupt.o\
-	$(BUILD_DIR)/asm/os/OSLink.o\
+	$(BUILD_DIR)/src/os/OSLink.o\
 	$(BUILD_DIR)/asm/os/OSMessage.o\
 	$(BUILD_DIR)/asm/os/OSMutex.o\
 	$(BUILD_DIR)/asm/os/OSReboot.o\

@@ -1,4 +1,6 @@
-
+#define OS_MODULE_LIST_ADDR 0x800030C8
+#define OS_STRING_TABLE_ADDR 0x800030D0
+#define OS_BASE_CACHED 0x80003000
 
 /*
  * --INFO--
@@ -70,6 +72,14 @@ void OSUnlink(void)
 	// UNUSED FUNCTION
 }
 
+struct OSModuleQueue { /* Relocatable Module Queue @ 800030c8 */
+    int* pFirst;
+    int* pLast;
+};
+
+struct OSModuleQueue __OSModuleInfoList: (OS_BASE_CACHED | OS_MODULE_LIST_ADDR);
+const void* __OSStringTable: (OS_BASE_CACHED | OS_STRING_TABLE_ADDR);
+
 /*
  * --INFO--
  * Address:	801F979C
@@ -77,13 +87,7 @@ void OSUnlink(void)
  */
 void __OSModuleInit(void)
 {
-/*
-.loc_0x0:
-  lis       r4, 0x8000
-  li        r0, 0
-  stw       r0, 0x30CC(r4)
-  stw       r0, 0x30C8(r4)
-  stw       r0, 0x30D0(r4)
-  blr
-*/
+	__OSModuleInfoList.pLast = 0;
+	__OSModuleInfoList.pFirst = 0;
+	__OSStringTable = 0;
 }
