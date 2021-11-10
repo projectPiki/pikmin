@@ -43,6 +43,9 @@ TEXT_O_FILES :=\
 	$(BUILD_DIR)/asm/plugPikiNishimura/SpiderAi.o\
 	$(BUILD_DIR)/asm/plugPikiNishimura/SpiderLeg.o\
 	$(BUILD_DIR)/asm/text_Nishimura.o\
+	$(BUILD_DIR)/asm/plugPikiYamashita/drawCMtitle.o\
+	$(BUILD_DIR)/asm/plugPikiYamashita/drawCMscore.o\
+	$(BUILD_DIR)/asm/plugPikiYamashita/drawCMbest.o\
 	$(BUILD_DIR)/asm/plugPikiYamashita/drawCMresult.o\
 	$(BUILD_DIR)/asm/plugPikiYamashita/drawMenuBase.o\
 	$(BUILD_DIR)/asm/plugPikiYamashita/drawHiScore.o\

@@ -21626,33 +21626,3 @@ __RTTI__Q23zen12DrawMenuBase:
 __RTTI__Q23zen12DrawCMCSmenu:
 	.4byte 0x802e6d10
 	.4byte 0x802e6d54
-.global lbl_803E75B8
-lbl_803E75B8:
-	.4byte 0x00000000
-	.4byte 0x00000000
-.global lbl_803E75C0
-lbl_803E75C0:
-	.4byte 0x00000000
-.global lbl_803E75C4
-lbl_803E75C4:
-	.4byte 0x25646261
-	.4byte 0x6E000000
-.global lbl_803E75CC
-lbl_803E75CC:
-	.4byte 0x2564695F
-	.4byte 0x6C000000
-.global lbl_803E75D4
-lbl_803E75D4:
-	.4byte 0x2564695F
-	.4byte 0x63000000
-.global lbl_803E75DC
-lbl_803E75DC:
-	.4byte 0x2564695F
-	.4byte 0x72000000
-.global MEMORY_BEST_SCORE__Q23zen14DrawCMscoreMgr
-MEMORY_BEST_SCORE__Q23zen14DrawCMscoreMgr:
-	.4byte 0x00000005
-.global lbl_803E75E8
-lbl_803E75E8:
-	.4byte 0x625F2530
-	.4byte 0x32640000
