@@ -3561,26 +3561,3 @@ lbl_803EC318:
 .global lbl_803EC31C
 lbl_803EC31C:
 	.4byte 0x3DCCCCCD
-.global lbl_803EC320
-lbl_803EC320:
-	.4byte 0x3F800000
-.global lbl_803EC324
-lbl_803EC324:
-	.4byte 0x00000000
-.global lbl_803EC328
-lbl_803EC328:
-	.4byte 0x3FC90FDB
-.global lbl_803EC32C
-lbl_803EC32C:
-	.4byte 0x3F000000
-.global lbl_803EC330
-lbl_803EC330:
-	.4byte 0x44200000
-	.4byte 0x00000000
-.global "@1295_1"
-"@1295_1":
-	.4byte 0x43300000
-	.4byte 0x80000000
-.global lbl_803EC340
-lbl_803EC340:
-	.4byte 0x40200000
