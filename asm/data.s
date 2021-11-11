@@ -133674,109 +133674,45 @@ bigFont_data:
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x000000F0
-	.4byte 0x73797374
-	.4byte 0x656D2E63
-	.4byte 0x70700000
+	.asciz "system.cpp"
+	.skip 1
 .global lbl_802A514C
 lbl_802A514C:
-	.4byte 0x6275696C
-	.4byte 0x642E6D61
-	.4byte 0x70000000
+	.asciz "build.map"
+	.skip 2
 .global lbl_802A5158
 lbl_802A5158:
-	.4byte 0x6C616E67
-	.4byte 0x75616765
-	.4byte 0x00000000
+	.asciz "language"
+	.skip 3
 .global lbl_802A5164
 lbl_802A5164:
-	.4byte 0x62696746
-	.4byte 0x6F6E742E
-	.4byte 0x62746900
-	.4byte 0x52656164
-	.4byte 0x696E6720
-	.4byte 0x47616D65
-	.4byte 0x20446973
-	.4byte 0x632E2E2E
-	.4byte 0x00000000
-	.4byte 0x416E2065
-	.4byte 0x72726F72
-	.4byte 0x20686173
-	.4byte 0x206F6363
-	.4byte 0x75727265
-	.4byte 0x642E0000
-	.4byte 0x5475726E
-	.4byte 0x20746865
-	.4byte 0x20706F77
-	.4byte 0x6572204F
-	.4byte 0x46462061
-	.4byte 0x6E640000
-	.4byte 0x63686563
-	.4byte 0x6B207468
-	.4byte 0x65204E49
-	.4byte 0x4E54454E
-	.4byte 0x444F2047
-	.4byte 0x414D4543
-	.4byte 0x55424500
-	.4byte 0x496E7374
-	.4byte 0x72756374
-	.4byte 0x696F6E20
-	.4byte 0x426F6F6B
-	.4byte 0x6C657420
-	.4byte 0x666F7200
-	.4byte 0x696E7374
-	.4byte 0x72756374
-	.4byte 0x696F6E73
-	.4byte 0x2E000000
-	.4byte 0x54686520
-	.4byte 0x47616D65
-	.4byte 0x20446973
-	.4byte 0x6320636F
-	.4byte 0x756C6420
-	.4byte 0x6E6F7420
-	.4byte 0x62652072
-	.4byte 0x6561642E
-	.4byte 0x00000000
-	.4byte 0x506C6561
-	.4byte 0x73652072
-	.4byte 0x65616420
-	.4byte 0x74686500
-	.4byte 0x4E494E54
-	.4byte 0x454E444F
-	.4byte 0x2047414D
-	.4byte 0x45435542
-	.4byte 0x45000000
-	.4byte 0x496E7374
-	.4byte 0x72756374
-	.4byte 0x696F6E20
-	.4byte 0x426F6F6B
-	.4byte 0x6C657400
-	.4byte 0x666F7220
-	.4byte 0x6D6F7265
-	.4byte 0x20696E66
-	.4byte 0x6F726D61
-	.4byte 0x74696F6E
-	.4byte 0x2E000000
-	.4byte 0x506C6561
-	.4byte 0x73652069
-	.4byte 0x6E736572
-	.4byte 0x74206100
-	.4byte 0x50696B6D
-	.4byte 0x696E2047
-	.4byte 0x616D6520
-	.4byte 0x44697363
-	.4byte 0x2E000000
-	.4byte 0x506C6561
-	.4byte 0x73652063
-	.4byte 0x6C6F7365
-	.4byte 0x20746865
-	.4byte 0x00000000
-	.4byte 0x44697363
-	.4byte 0x20436F76
-	.4byte 0x65722E00
-	.4byte 0x54686973
-	.4byte 0x20697320
-	.4byte 0x6E6F7420
-	.4byte 0x61000000
+	.asciz "bigFont.bti"
+	.asciz "Reading Game Disc..."
+	.skip 3
+	.asciz "An error has occurred."
+	.skip 1
+	.asciz "Turn the power OFF and"
+	.skip 1
+	.asciz "check the NINTENDO GAMECUBE"
+	.asciz "Instruction Booklet for"
+	.asciz "instructions."
+	.skip 2
+	.asciz "The Game Disc could not be read."
+	.skip 3
+	.asciz "Please read the"
+	.asciz "NINTENDO GAMECUBE"
+	.skip 2
+	.asciz "Instruction Booklet"
+	.asciz "for more information."
+	.skip 2
+	.asciz "Please insert a"
+	.asciz "Pikmin Game Disc."
+	.skip 2
+	.asciz "Please close the"
+	.skip 3
+	.asciz "Disc Cover."
+	.asciz "This is not a"
+	.skip 2
 .global errorMessages
 errorMessages:
 	.4byte 0x802A5170
@@ -204038,9 +203974,4 @@ __vt__11YaiStrategy:
 	.4byte 0x00000000
 .global lbl_802E63D8
 lbl_802E63D8:
-	.4byte 0x73637265
-	.4byte 0x656E2F62
-	.4byte 0x6C6F2F70
-	.4byte 0x61757365
-	.4byte 0x5F772E62
-	.4byte 0x6C6F0000
+	.asciz "screen/blo/pause_w.blo"
