@@ -21372,19 +21372,3 @@ lbl_803E73A8:
 	.4byte 0x00000000
 	.4byte 0x802E5A80
 	.4byte 0x802E5A9C
-.global lbl_803E73C0
-lbl_803E73C0:
-	.4byte 0x43A00000
-.global lbl_803E73C4
-lbl_803E73C4:
-	.4byte 0x43700000
-.global lbl_803E73C8
-lbl_803E73C8:
-	.4byte 0x43A00000
-.global lbl_803E73CC
-lbl_803E73CC:
-	.4byte 0x43700000
-.global lbl_803E73D0
-lbl_803E73D0:
-	.4byte 0x00000000
-	.4byte 0x00000000
