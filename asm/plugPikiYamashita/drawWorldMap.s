@@ -13785,77 +13785,41 @@ lbl_801E7A98:
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 0x8
-.global lbl_802E57B0
 lbl_802E57B0:
-	.4byte 0x64726177
-	.4byte 0x576F726C
-	.4byte 0x644D6170
-	.4byte 0x2E637070
-	.4byte 0x00000000
-	.4byte 0x64726177
-	.4byte 0x576F726C
-	.4byte 0x644D6170
-	.4byte 0x00000000
-	.4byte 0x73637265
-	.4byte 0x656E2F62
-	.4byte 0x6C6F2F77
-	.4byte 0x5F776970
-	.4byte 0x652E626C
-	.4byte 0x6F000000
-	.4byte 0x73637265
-	.4byte 0x656E2F62
-	.4byte 0x6C6F2F77
-	.4byte 0x5F69636F
-	.4byte 0x6E2E626C
-	.4byte 0x6F000000
-	.4byte 0x73637265
-	.4byte 0x656E2F62
-	.4byte 0x6C6F2F77
-	.4byte 0x5F746974
-	.4byte 0x6C652E62
-	.4byte 0x6C6F0000
-	.4byte 0x73637265
-	.4byte 0x656E2F62
-	.4byte 0x6C6F2F77
-	.4byte 0x5F6D6F6E
-	.4byte 0x692E626C
-	.4byte 0x6F000000
-	.4byte 0x73637265
-	.4byte 0x656E2F62
-	.4byte 0x6C6F2F77
-	.4byte 0x5F646174
-	.4byte 0x61312E62
-	.4byte 0x6C6F0000
-	.4byte 0x73637265
-	.4byte 0x656E2F62
-	.4byte 0x6C6F2F77
-	.4byte 0x5F646174
-	.4byte 0x61322E62
-	.4byte 0x6C6F0000
-	.4byte 0x73637265
-	.4byte 0x656E2F62
-	.4byte 0x6C6F2F77
-	.4byte 0x5F706F69
-	.4byte 0x6E742E62
-	.4byte 0x6C6F0000
-	.4byte 0x73637265
-	.4byte 0x656E2F62
-	.4byte 0x6C6F2F77
-	.4byte 0x5F6C696E
-	.4byte 0x652E626C
-	.4byte 0x6F000000
-	.4byte 0x73637265
-	.4byte 0x656E2F62
-	.4byte 0x6C6F2F77
-	.4byte 0x5F626163
-	.4byte 0x6B2E626C
-	.4byte 0x6F000000
-	.4byte 0x73637265
-	.4byte 0x656E2F62
-	.4byte 0x6C6F2F77
-	.4byte 0x5F6F6B2E
-	.4byte 0x626C6F00
-.global lbl_802E58C0
+	.asciz "drawWorldMap.cpp"
+	.skip 3
+lbl_802E57C4:
+	.asciz "drawWorldMap"
+	.skip 3
+lbl_802E57D4:
+	.asciz "screen/blo/w_wipe.blo"
+	.skip 2
+lbl_802E57EC:
+	.asciz "screen/blo/w_icon.blo"
+	.skip 2
+lbl_802E5804:
+	.asciz "screen/blo/w_title.blo"
+	.skip 1
+lbl_802E581C:
+	.asciz "screen/blo/w_moni.blo"
+	.skip 2
+lbl_802E5834:
+	.asciz "screen/blo/w_data1.blo"
+	.skip 1
+lbl_802E584C:
+	.asciz "screen/blo/w_data2.blo"
+	.skip 1
+lbl_802E5864:
+	.asciz "screen/blo/w_point.blo"
+	.skip 1
+lbl_802E587C:
+	.asciz "screen/blo/w_line.blo"
+	.skip 2
+lbl_802E5894:
+	.asciz "screen/blo/w_back.blo"
+	.skip 2
+lbl_802E58AC:
+	.asciz "screen/blo/w_ok.blo"
 lbl_802E58C0:
 	.4byte lbl_801DEC60
 	.4byte lbl_801DEC94
@@ -13866,77 +13830,56 @@ lbl_802E58C0:
 	.4byte lbl_801DF044
 	.4byte lbl_801DEB40
 	.4byte lbl_801DF028
-	.4byte 0x7A656E3A
-	.4byte 0x3A4E756D
-	.4byte 0x62657250
-	.4byte 0x69634361
-	.4byte 0x6C6C4261
-	.4byte 0x636B3C69
-	.4byte 0x6E743E00
-	.4byte 0x7A656E3A
-	.4byte 0x3A4E756D
-	.4byte 0x62657254
-	.4byte 0x65780000
-	.4byte 0x7A656E3A
-	.4byte 0x3A466967
-	.4byte 0x75726554
-	.4byte 0x65783C69
-	.4byte 0x6E743E00
-	.4byte 0x803E7370
+lbl_802E58E4:
+	.asciz "zen::NumberPicCallBack<int>"
+lbl_802E5900:
+	.asciz "zen::NumberTex"
+	.skip 1
+lbl_802E5910:
+	.asciz "zen::FigureTex<int>"
+lbl_802E5924:
+	.4byte __RTTI__Q23zen9NumberTex
 	.4byte 0x00000000
 	.4byte 0x00000000
-	.4byte 0x50324450
-	.4byte 0x616E6543
-	.4byte 0x616C6C42
-	.4byte 0x61636B42
-	.4byte 0x61736500
-	.4byte 0x7A656E3A
-	.4byte 0x3A43616C
-	.4byte 0x6C426163
-	.4byte 0x6B313C50
-	.4byte 0x32445061
-	.4byte 0x6E65202A
-	.4byte 0x3E000000
-	.4byte 0x50324450
-	.4byte 0x616E6543
-	.4byte 0x616C6C42
-	.4byte 0x61636B00
-	.4byte 0x803E7380
+lbl_802E5930:
+	.asciz "P2DPaneCallBackBase"
+lbl_802E5944:
+	.asciz "zen::CallBack1<P2DPane *>"
+	.skip 2
+lbl_802E5960:
+	.asciz "P2DPaneCallBack"
+lbl_802E5970:
+	.4byte __RTTI__19P2DPaneCallBackBase
 	.4byte 0x00000004
-	.4byte 0x803E7388
+	.4byte "__RTTI__Q23zen20CallBack1<P7P2DPane>"
 	.4byte 0x00000000
 	.4byte 0x00000000
-	.4byte 0x803E7370
+lbl_802E5984:
+	.4byte __RTTI__Q23zen9NumberTex
 	.4byte 0x00000004
-	.4byte 0x803E7378
+	.4byte "__RTTI__Q23zen12FigureTex<i>"
 	.4byte 0x00000004
-	.4byte 0x803E7380
+	.4byte __RTTI__19P2DPaneCallBackBase
 	.4byte 0x00000004
-	.4byte 0x803E7388
+	.4byte "__RTTI__Q23zen20CallBack1<P7P2DPane>"
 	.4byte 0x00000000
-	.4byte 0x803E7390
-	.4byte 0x00000000
-	.4byte 0x00000000
+	.4byte __RTTI__15P2DPaneCallBack
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x00000000
-	.4byte 0x40756E6E
-	.4byte 0x616D6564
-	.4byte 0x403A3A44
-	.4byte 0x72617757
-	.4byte 0x6F726C64
-	.4byte 0x4D617044
-	.4byte 0x61746543
-	.4byte 0x616C6C42
-	.4byte 0x61636B00
-	.4byte 0x803E7370
+	.4byte 0x00000000
+	.4byte 0x00000000
+lbl_802E59C0:
+	.asciz "@unnamed@::DrawWorldMapDateCallBack"
+lbl_802E59E4:
+	.4byte __RTTI__Q23zen9NumberTex
 	.4byte 0x00000004
-	.4byte 0x803E7380
+	.4byte __RTTI__19P2DPaneCallBackBase
 	.4byte 0x00000004
-	.4byte 0x803E7388
+	.4byte "__RTTI__Q23zen20CallBack1<P7P2DPane>"
 	.4byte 0x00000000
-	.4byte 0x803E7390
+	.4byte __RTTI__15P2DPaneCallBack
 	.4byte 0x00000000
 	.4byte 0x00000000
 .global "__vt__Q29@unnamed@24DrawWorldMapDateCallBack"
@@ -13963,21 +13906,21 @@ lbl_802E58C0:
 	.4byte 0x02010300
 	.4byte 0x04000000
 lbl_803E71A0:
-	.4byte 0x00000000
+	.float 0.0
 lbl_803E71A4:
-	.4byte 0x44200000
+	.float 640.0
 lbl_803E71A8:
-	.4byte 0x41F00000
+	.float 30.0
 lbl_803E71AC:
-	.4byte 0x00000000
+	.float 0.0
 lbl_803E71B0:
-	.4byte 0x42200000
+	.float 40.0
 lbl_803E71B4:
-	.4byte 0x41F00000
+	.float 30.0
 lbl_803E71B8:
-	.4byte 0x00000000
+	.float 0.0
 OBJ_NUM__Q23zen16WorldMapTitleMgr:
-	.4byte 0x00000005
+	.4byte 5
 lbl_803E71C0:
 	.4byte 0x00000000
 lbl_803E71C4:
@@ -14159,51 +14102,51 @@ lbl_803E7320:
 lbl_803E7324:
 	.4byte 0x00000000
 "EVENT_NONE__Q29@unnamed@19WorldMapCoursePoint":
-	.4byte 0x00000000
+	.4byte 0
 "EVENT_APPEAR_FINISH__Q29@unnamed@19WorldMapCoursePoint":
-	.4byte 0x00000001
+	.4byte 1
 lbl_803E7330:
-	.4byte 0x6F6E7925
-	.4byte 0x64000000
+	.asciz "ony%d"
+	.skip 2
 lbl_803E7338:
-	.4byte 0x63686125
-	.4byte 0x64000000
+	.asciz "cha%d"
+	.skip 2
 lbl_803E7340:
-	.4byte 0x6D617025
-	.4byte 0x64000000
+	.asciz "map%d"
+	.skip 2
 lbl_803E7348:
-	.4byte 0x70612530
-	.4byte 0x32640000
+	.asciz "pa%02d"
+	.skip 1
 lbl_803E7350:
-	.4byte 0x706E2530
-	.4byte 0x32640000
+	.asciz "pn%02d"
+	.skip 1
 lbl_803E7358:
-	.4byte 0x68652530
-	.4byte 0x32640000
+	.asciz "he%02d"
+	.skip 1
 lbl_803E7360:
-	.4byte 0x69253032
-	.4byte 0x646C0000
+	.asciz "i%02dl"
+	.skip 1
 lbl_803E7368:
-	.4byte 0x69253032
-	.4byte 0x64720000
+	.asciz "i%02dr"
+	.skip 1
 __RTTI__Q23zen9NumberTex:
-	.4byte 0x802E5900
+	.4byte lbl_802E5900
 	.4byte 0x00000000
 "__RTTI__Q23zen12FigureTex<i>":
-	.4byte 0x802e5910
-	.4byte 0x802e5924
+	.4byte lbl_802E5910
+	.4byte lbl_802E5924
 __RTTI__19P2DPaneCallBackBase:
-	.4byte 0x802e5930
+	.4byte lbl_802E5930
 	.4byte 0
 "__RTTI__Q23zen20CallBack1<P7P2DPane>":
-	.4byte 0x802e5944
+	.4byte lbl_802E5944
 	.4byte 0
 __RTTI__15P2DPaneCallBack:
-	.4byte 0x802e5960
-	.4byte 0x802e5970
+	.4byte lbl_802E5960
+	.4byte lbl_802E5970
 "__RTTI__Q29@unnamed@24DrawWorldMapDateCallBack":
-	.4byte 0x802e59c0
-	.4byte 0x802e59e4
+	.4byte lbl_802E59C0
+	.4byte lbl_802E59E4
 
 .section .sbss, "wa"
 .balign 0x8
