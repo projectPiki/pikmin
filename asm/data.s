@@ -2020,7 +2020,7 @@ DSPRES_FILTER:
 	.4byte 0xB001A801
 	.4byte 0xA0019801
 	.4byte 0x90018801
-	.4byte lbl_80018800
+	.4byte 0x80018800
 	.4byte 0x90009800
 	.4byte 0xA000A800
 	.4byte 0xB000B800
@@ -2238,8 +2238,7 @@ FORCE_RELEASE_TABLE:
 	.4byte 0x00000000
 .global extdir
 extdir:
-	.4byte 0x2F42616E
-	.4byte 0x6B732F00
+	.asciz "/Banks/"
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x00000000
@@ -2781,7 +2780,7 @@ TRE_TABLE:
 	.4byte 0x7FFF0000
 	.4byte 0x00140000
 	.4byte 0x00000014
-	.4byte lbl_80010000
+	.4byte 0x80010000
 	.4byte 0x00140000
 	.4byte 0x00000014
 	.4byte 0x7FFF000D
@@ -2795,16 +2794,16 @@ REL_TABLE:
 VIBRATO_DEF:
 	.4byte 0x01000000
 	.4byte 0x3F4CCCCD
-	.4byte 0x80225828
-	.4byte 0x80225828
+	.4byte VIB_TABLE
+	.4byte VIB_TABLE
 	.4byte 0x00000000
 	.4byte 0x3F800000
 .global TREMOLO_DEF
 TREMOLO_DEF:
 	.4byte 0x00000000
 	.4byte 0x3F800000
-	.4byte 0x8022584C
-	.4byte 0x8022584C
+	.4byte TRE_TABLE
+	.4byte TRE_TABLE
 	.4byte 0x00000000
 	.4byte 0x3F800000
 .global ENVELOPE_DEF
@@ -2812,7 +2811,7 @@ ENVELOPE_DEF:
 	.4byte 0x00000000
 	.4byte 0x3F800000
 	.4byte 0x00000000
-	.4byte 0x80225870
+	.4byte REL_TABLE
 	.4byte 0x3F800000
 	.4byte 0x00000000
 .global ADS_TABLE
@@ -2836,7 +2835,7 @@ OSC_DEF:
 	.4byte 0x00000000
 	.4byte 0x3F800000
 	.4byte 0x00000000
-	.4byte 0x80225870
+	.4byte REL_TABLE
 	.4byte 0x3F800000
 	.4byte 0x00000000
 	.4byte 0x00000000
@@ -2853,7 +2852,7 @@ OSC_ENV:
 	.4byte 0x00000000
 	.4byte 0x3F800000
 	.4byte 0x00000000
-	.4byte 0x803DCD68
+	.4byte OSC_REL
 	.4byte 0x3F800000
 	.4byte 0x00000000
 .global polys_table
@@ -3378,48 +3377,48 @@ EVENT_DIST_SCALE:
 	.4byte 0x00000000
 .global bgm_mute_set
 bgm_mute_set:
-	.4byte 0x803DCD90
-	.4byte 0x803DCD90
-	.4byte 0x803DCD98
-	.4byte 0x803DCDA0
-	.4byte 0x803DCD90
-	.4byte 0x803DCD90
-	.4byte 0x803DCD90
-	.4byte 0x803DCDA8
-	.4byte 0x803DCDB0
-	.4byte 0x803DCD90
-	.4byte 0x803DCD90
-	.4byte 0x803DCD90
-	.4byte 0x803DCD90
-	.4byte 0x803DCD90
-	.4byte 0x803DCD90
-	.4byte 0x803DCDB8
-	.4byte 0x803DCD90
-	.4byte 0x803DCD90
-	.4byte 0x803DCD90
-	.4byte 0x803DCD90
+	.4byte bgm0_set
+	.4byte bgm0_set
+	.4byte bgm1_set
+	.4byte bgm2_set
+	.4byte bgm0_set
+	.4byte bgm0_set
+	.4byte bgm0_set
+	.4byte bgm3_set
+	.4byte bgm4_set
+	.4byte bgm0_set
+	.4byte bgm0_set
+	.4byte bgm0_set
+	.4byte bgm0_set
+	.4byte bgm0_set
+	.4byte bgm0_set
+	.4byte bgm5_set
+	.4byte bgm0_set
+	.4byte bgm0_set
+	.4byte bgm0_set
+	.4byte bgm0_set
 .global bgm_volume_set
 bgm_volume_set:
-	.4byte 0x803DCDC0
-	.4byte 0x803DCDC0
-	.4byte 0x803DCDC8
-	.4byte 0x803DCDD0
-	.4byte 0x803DCDC0
-	.4byte 0x803DCDC0
-	.4byte 0x803DCDC0
-	.4byte 0x803DCDD8
-	.4byte 0x803DCDE0
-	.4byte 0x803DCDC0
-	.4byte 0x803DCDC0
-	.4byte 0x803DCDC0
-	.4byte 0x803DCDC0
-	.4byte 0x803DCDC0
-	.4byte 0x803DCDC0
-	.4byte 0x803DCDE8
-	.4byte 0x803DCDC0
-	.4byte 0x803DCDC0
-	.4byte 0x803DCDF0
-	.4byte 0x803DCDC0
+	.4byte bgm0_volset
+	.4byte bgm0_volset
+	.4byte bgm1_volset
+	.4byte bgm2_volset
+	.4byte bgm0_volset
+	.4byte bgm0_volset
+	.4byte bgm0_volset
+	.4byte bgm3_volset
+	.4byte bgm4_volset
+	.4byte bgm0_volset
+	.4byte bgm0_volset
+	.4byte bgm0_volset
+	.4byte bgm0_volset
+	.4byte bgm0_volset
+	.4byte bgm0_volset
+	.4byte bgm5_volset
+	.4byte bgm0_volset
+	.4byte bgm0_volset
+	.4byte cresult_volset
+	.4byte bgm0_volset
 .global GAMEBGM_VOL_TABLE
 GAMEBGM_VOL_TABLE:
 	.4byte 0x00000000
@@ -4007,22 +4006,22 @@ DEMO_STATUS:
 	.4byte 0x00000000
 	.4byte 0x000201A8
 	.4byte 0x00000000
-	.4byte 0x803DCE1C
+	.4byte demo1
 	.4byte 0x000201C0
 	.4byte 0x00000000
-	.4byte 0x803DCE24
+	.4byte demo2
 	.4byte 0x00050100
 	.4byte 0x00000000
-	.4byte 0x803DCE28
+	.4byte demo3
 	.4byte 0x0102018D
 	.4byte 0x00000000
-	.4byte 0x802264D0
+	.4byte demo4
 	.4byte 0x0102018D
 	.4byte 0x00000000
-	.4byte 0x802264FC
+	.4byte demo5
 	.4byte 0x0102018D
 	.4byte 0x00000000
-	.4byte 0x802264FC
+	.4byte demo5
 	.4byte 0x02050000
 	.4byte 0x00000000
 	.4byte 0x00000000
@@ -4031,16 +4030,16 @@ DEMO_STATUS:
 	.4byte 0x00000000
 	.4byte 0x03020102
 	.4byte 0x00000000
-	.4byte 0x80226524
+	.4byte demo9
 	.4byte 0x03020102
 	.4byte 0x00000000
-	.4byte 0x80226524
+	.4byte demo9
 	.4byte 0x03020102
 	.4byte 0x00000000
-	.4byte 0x80226524
+	.4byte demo9
 	.4byte 0x03050100
 	.4byte 0x00000000
-	.4byte 0x803DCE30
+	.4byte demo12
 	.4byte 0x01050100
 	.4byte 0x00000000
 	.4byte 0x00000000
@@ -4052,19 +4051,19 @@ DEMO_STATUS:
 	.4byte 0x00000000
 	.4byte 0x01020107
 	.4byte 0x00000000
-	.4byte 0x80226530
+	.4byte demo16
 	.4byte 0x00040109
 	.4byte 0x00000000
-	.4byte 0x80226554
+	.4byte demo17
 	.4byte 0x00020101
 	.4byte 0x00000000
-	.4byte 0x802265A8
+	.4byte demo18
 	.4byte 0x00020101
 	.4byte 0x00000000
-	.4byte 0x802265B8
+	.4byte demo19
 	.4byte 0x00020106
 	.4byte 0x00000000
-	.4byte 0x802265E4
+	.4byte demo20
 	.4byte 0x00020106
 	.4byte 0x00000000
 	.4byte 0x8022660C
