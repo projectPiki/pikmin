@@ -13761,7 +13761,7 @@ bigFont_data:
 	.4byte 0xF3F0E030
 	.4byte 0xFDFFFFFF
 	.4byte 0xFEF5F0E0
-	.4byte lbl_80100000
+	.4byte 0x80100000
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x00000000
@@ -15184,7 +15184,7 @@ bigFont_data:
 	.4byte 0xF3F5F0F0
 	.4byte 0xF0700000
 	.4byte 0xF0F0E0B0
-	.4byte lbl_80100000
+	.4byte 0x80100000
 	.4byte 0x00003080
 	.4byte 0x8080D0F4
 	.4byte 0x0000B0F0
@@ -16331,7 +16331,7 @@ bigFont_data:
 	.4byte 0xFFFFFFFB
 	.4byte 0x00000000
 	.4byte 0x00000000
-	.4byte lbl_80100000
+	.4byte 0x80100000
 	.4byte 0x00000000
 	.4byte 0xF0D01000
 	.4byte 0x00000000
@@ -16619,7 +16619,7 @@ bigFont_data:
 	.4byte 0xFFFFFFFB
 	.4byte 0x00000000
 	.4byte 0x00000000
-	.4byte lbl_80100000
+	.4byte 0x80100000
 	.4byte 0x00000000
 	.4byte 0xF0D01000
 	.4byte 0x00000000
@@ -16715,7 +16715,7 @@ bigFont_data:
 	.4byte 0xFFFFFFFC
 	.4byte 0x00000000
 	.4byte 0x00000000
-	.4byte lbl_80100000
+	.4byte 0x80100000
 	.4byte 0x00000000
 	.4byte 0xF0A00000
 	.4byte 0x00000000
@@ -19633,7 +19633,7 @@ bigFont_data:
 	.4byte 0xE0F0FDFD
 	.4byte 0x00000030
 	.4byte 0xF0F3FFFB
-	.4byte lbl_80100000
+	.4byte 0x80100000
 	.4byte 0x00000000
 	.4byte 0xF0D00000
 	.4byte 0x0070C0F0
@@ -20534,7 +20534,7 @@ bigFont_data:
 	.4byte 0xFBF9F3F0
 	.4byte 0xF0D02000
 	.4byte 0xF0F0F0E0
-	.4byte lbl_80100000
+	.4byte 0x80100000
 	.4byte 0x40402000
 	.4byte 0x00000000
 	.4byte 0x0010F0F1
@@ -22131,7 +22131,7 @@ bigFont_data:
 	.4byte 0xF0F5FFFD
 	.4byte 0x00000000
 	.4byte 0x00000000
-	.4byte lbl_80100000
+	.4byte 0x80100000
 	.4byte 0x00000000
 	.4byte 0xF0D00000
 	.4byte 0x00000000
@@ -22155,7 +22155,7 @@ bigFont_data:
 	.4byte 0xF0F5FFFD
 	.4byte 0x00000000
 	.4byte 0x00000000
-	.4byte lbl_80100000
+	.4byte 0x80100000
 	.4byte 0x00104040
 	.4byte 0xF0D00070
 	.4byte 0xF0F0F030
@@ -23045,7 +23045,7 @@ bigFont_data:
 	.4byte 0xF3FCFFFF
 	.4byte 0x0000B0F1
 	.4byte 0xFCFFFFF7
-	.4byte lbl_800070F0
+	.4byte 0x800070F0
 	.4byte 0xF3F9F3F0
 	.4byte 0xF03000D0
 	.4byte 0xF0F0F0C0
@@ -24005,9 +24005,9 @@ bigFont_data:
 	.4byte 0xF0F0F8FF
 	.4byte 0x6000A0F0
 	.4byte 0xF1FAFFFF
-	.4byte lbl_8000C0F0
+	.4byte 0x8000C0F0
 	.4byte 0xFBFFFFFD
-	.4byte lbl_800090F0
+	.4byte 0x800090F0
 	.4byte 0xF5FFFDF3
 	.4byte 0xFFF3F010
 	.4byte 0x00000000
@@ -29401,7 +29401,7 @@ bigFont_data:
 	.4byte 0xFAFFF8F0
 	.4byte 0x000080F0
 	.4byte 0xFCFFF7F0
-	.4byte lbl_800040F0
+	.4byte 0x800040F0
 	.4byte 0xF2FFFFF2
 	.4byte 0x700000E0
 	.4byte 0xF1FEFFF3
@@ -29425,7 +29425,7 @@ bigFont_data:
 	.4byte 0xFAFFF8F0
 	.4byte 0x000080F0
 	.4byte 0xFCFFF7F0
-	.4byte lbl_800040F0
+	.4byte 0x800040F0
 	.4byte 0xF2FFFFF2
 	.4byte 0x700000E0
 	.4byte 0xF1FEFFF3
@@ -29449,7 +29449,7 @@ bigFont_data:
 	.4byte 0xFAFFF8F0
 	.4byte 0x000080F0
 	.4byte 0xFCFFF7F0
-	.4byte lbl_800040F0
+	.4byte 0x800040F0
 	.4byte 0xF2FFFFF2
 	.4byte 0x700000E0
 	.4byte 0xF1FEFFF3
@@ -31132,7 +31132,7 @@ bigFont_data:
 	.4byte 0x20404010
 	.4byte 0x00000000
 	.4byte 0xD0F0F0E0
-	.4byte lbl_80100000
+	.4byte 0x80100000
 	.4byte 0xF0F3F5F1
 	.4byte 0xF0700000
 	.4byte 0xF0FCFFF8
@@ -32501,7 +32501,7 @@ bigFont_data:
 	.4byte 0xF0E0E0F0
 	.4byte 0xF0F0D080
 	.4byte 0x10000060
-	.4byte lbl_80100000
+	.4byte 0x80100000
 	.4byte 0x00000000
 	.4byte 0x80701000
 	.4byte 0x001070B0
@@ -33443,7 +33443,7 @@ bigFont_data:
 	.4byte 0x00000000
 	.4byte 0xF0D01000
 	.4byte 0x00000000
-	.4byte lbl_80100000
+	.4byte 0x80100000
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x00000000
@@ -44967,7 +44967,7 @@ bigFont_data:
 	.4byte 0x00000000
 	.4byte 0xF0C01000
 	.4byte 0x00000000
-	.4byte lbl_80100000
+	.4byte 0x80100000
 	.4byte 0x00000000
 	.4byte 0x000090F0
 	.4byte 0xF8FFFDF0
@@ -47726,7 +47726,7 @@ bigFont_data:
 	.4byte 0xFBF9F3F0
 	.4byte 0xF0D02000
 	.4byte 0xF0F0F0E0
-	.4byte lbl_80100000
+	.4byte 0x80100000
 	.4byte 0x40402000
 	.4byte 0x00000000
 	.4byte 0x20E0F0F8
@@ -54948,7 +54948,7 @@ bigFont_data:
 	.4byte 0xC0F0F0F0
 	.4byte 0xF0B00000
 	.4byte 0x40D0F0D0
-	.4byte lbl_80100000
+	.4byte 0x80100000
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x00000000
@@ -64116,7 +64116,7 @@ bigFont_data:
 	.4byte 0xC0F0F0F0
 	.4byte 0xF0B00000
 	.4byte 0x30D0F0E0
-	.4byte lbl_80100000
+	.4byte 0x80100000
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x00000000
@@ -79164,7 +79164,7 @@ bigFont_data:
 	.4byte 0x00C0F0F0
 	.4byte 0xF0E03000
 	.4byte 0x0050B0B0
-	.4byte lbl_80100000
+	.4byte 0x80100000
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x00000000
@@ -79643,7 +79643,7 @@ bigFont_data:
 	.4byte 0xF3FEFFF9
 	.4byte 0x00000000
 	.4byte 0x00000000
-	.4byte lbl_80100000
+	.4byte 0x80100000
 	.4byte 0x00000000
 	.4byte 0xF2C08070
 	.4byte 0x10000000
@@ -90924,7 +90924,7 @@ bigFont_data:
 	.4byte 0xF0F0F0F0
 	.4byte 0xF0E05000
 	.4byte 0x8080A0B0
-	.4byte lbl_80100000
+	.4byte 0x80100000
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x00000000
@@ -94092,7 +94092,7 @@ bigFont_data:
 	.4byte 0x80B0F0F0
 	.4byte 0xF0E05000
 	.4byte 0x0010A0B0
-	.4byte lbl_80100000
+	.4byte 0x80100000
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x00000000
@@ -94564,7 +94564,7 @@ bigFont_data:
 	.4byte 0x20404010
 	.4byte 0x00000000
 	.4byte 0xD0F1F1E0
-	.4byte lbl_80100000
+	.4byte 0x80100000
 	.4byte 0xF0FAFFF8
 	.4byte 0xF0800000
 	.4byte 0xF3FFFFF5
@@ -104559,7 +104559,7 @@ bigFont_data:
 	.4byte 0xB0500000
 	.4byte 0xF0E08030
 	.4byte 0x00000000
-	.4byte lbl_80100000
+	.4byte 0x80100000
 	.4byte 0x00000000
 	.4byte 0x00000060
 	.4byte 0xF0F8FFFE
@@ -105538,7 +105538,7 @@ bigFont_data:
 	.4byte 0xF2F0F0F0
 	.4byte 0xD0C0F0F0
 	.4byte 0xF7F3F0F0
-	.4byte lbl_80100000
+	.4byte 0x80100000
 	.4byte 0xFFFFFBF5
 	.4byte 0xF0F08000
 	.4byte 0xF9FEFFFF
@@ -118188,7 +118188,7 @@ bigFont_data:
 	.4byte 0x40F0F0F0
 	.4byte 0xF0E03000
 	.4byte 0x0090F0E0
-	.4byte lbl_80100000
+	.4byte 0x80100000
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x00000000
@@ -118443,7 +118443,7 @@ bigFont_data:
 	.4byte 0x00000000
 	.4byte 0xF0D0F0F0
 	.4byte 0xF0F0F060
-	.4byte lbl_800060D0
+	.4byte 0x800060D0
 	.4byte 0xF0E08000
 	.4byte 0x00000000
 	.4byte 0x00000000
@@ -125944,7 +125944,7 @@ bigFont_data:
 	.4byte 0xF3F4F0F0
 	.4byte 0xD0C02000
 	.4byte 0xFFFFF2E0
-	.4byte lbl_80100000
+	.4byte 0x80100000
 	.4byte 0x00D0F2FD
 	.4byte 0xFFFFFFFF
 	.4byte 0x0050F0FC
@@ -127452,7 +127452,7 @@ bigFont_data:
 	.4byte 0xD0F0F0F0
 	.4byte 0xF0B00000
 	.4byte 0x40D0F0E0
-	.4byte lbl_80100000
+	.4byte 0x80100000
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x00000000
@@ -130462,7 +130462,7 @@ bigFont_data:
 	.4byte 0x000020F0
 	.4byte 0xF0A00000
 	.4byte 0x00000030
-	.4byte lbl_80100000
+	.4byte 0x80100000
 	.4byte 0xF0000000
 	.4byte 0x00000000
 	.4byte 0x00F1F7F3

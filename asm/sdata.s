@@ -186,11 +186,11 @@ first_1:
 	.4byte 0x00000000
 .global copy
 copy:
-	.4byte 0x8038A8F0
+	.4byte copyinfo
 	.4byte 0x00000000
 .global buf
 buf:
-	.4byte 0x8038A908
+	.4byte interleavebuf
 	.4byte 0x00000000
 .global gop_subframe
 gop_subframe:
