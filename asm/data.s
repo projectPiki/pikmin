@@ -76340,7 +76340,3 @@ lbl_802E58C0:
 	.4byte 0
 	.4byte 0
 	.4byte 0
-.global lbl_802E5A38
-lbl_802E5A38:
-	.asciz "screen/blo/count.blo"
-	.skip 3

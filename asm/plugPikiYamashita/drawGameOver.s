@@ -939,10 +939,6 @@ lbl_802E5A68:
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 0x8
-.global lbl_803E73A0 # this string is used in __ct__Q23zen13DrawCountDownFv
-lbl_803E73A0:
-	.asciz "cd%02d"
-	.skip 1
 lbl_803E73A8:
 	.asciz "go%02d"
 
