@@ -21000,7 +21000,3 @@ __RTTI__14TAIAinitMiurin:
 __RTTI__19TAImiurinParameters:
 	.4byte 0x802e56c4
 	.4byte 0x802e5730
-.global lbl_803E7188
-lbl_803E7188:
-	.4byte 0x2A253032
-	.4byte 0x642A0000

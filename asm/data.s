@@ -76084,10 +76084,8 @@ __vt__15TAIAdyingMiurin:
 	.4byte act__15TAIAdyingMiurinFR4Teki
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
-	.4byte 0x54414941
-	.4byte 0x696e6974
-	.4byte 0x4d697572
-	.4byte 0x696e0000
+	.asciz "TAIAinitMiurin"
+	.skip 1
 	.4byte 0x803e7050
 	.4byte 0
 	.4byte 0
@@ -76107,14 +76105,9 @@ __vt__14TAIAinitMiurin:
 	.4byte 0
 	.4byte 0
 	.4byte 0
-	.4byte 0x5441496d
-	.4byte 0x69757269
-	.4byte 0x6e506172
-	.4byte 0x616d6574
-	.4byte 0x65727300
-	.4byte 0x436f7265
-	.4byte 0x4e6f6465
-	.4byte 0
+	.asciz "TAImiurinParameters"
+	.asciz "CoreNode"
+	.skip 3
 	.4byte 0x803e7158
 	.4byte 0
 	.4byte 0
@@ -76123,10 +76116,9 @@ __vt__14TAIAinitMiurin:
 	.4byte 0x803e7160
 	.4byte 0
 	.4byte 0
-	.4byte 0x54656b69
-	.4byte 0x50617261
-	.4byte 0x6d657465
-	.4byte 0x72730000
+lbl_802E5704:
+	.asciz "TekiParameters"
+	.skip 1
 	.4byte 0x803e7158
 	.4byte 0
 	.4byte 0x803e7160
@@ -76158,16 +76150,3 @@ __vt__19TAImiurinParameters:
 	.4byte concat__4NodeFR8Matrix4f
 	.4byte getModelMatrix__4NodeFv
 	.4byte 0
-.global lbl_802E5788
-lbl_802E5788:
-	.4byte 0x73637265
-	.4byte 0x656E2F62
-	.4byte 0x6C6F2F70
-	.4byte 0x726F6772
-	.4byte 0x652E626C
-	.4byte 0x6F000000
-.global lbl_802E57A0
-lbl_802E57A0:
-	.4byte 0x70726F67
-	.4byte 0x7265322E
-	.4byte 0x626C6F00
