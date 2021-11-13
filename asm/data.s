@@ -76342,47 +76342,5 @@ lbl_802E58C0:
 	.4byte 0
 .global lbl_802E5A38
 lbl_802E5A38:
-	.4byte 0x73637265
-	.4byte 0x656E2F62
-	.4byte 0x6C6F2F63
-	.4byte 0x6F756E74
-	.4byte 0x2E626C6F
-	.4byte 0x00000000
-.global lbl_802E5A50
-lbl_802E5A50:
-	.4byte 0x73637265
-	.4byte 0x656E2F62
-	.4byte 0x6C6F2F67
-	.4byte 0x616D656F
-	.4byte 0x7665722E
-	.4byte 0x626C6F00
-.global lbl_802E5A68
-lbl_802E5A68:
-	.4byte 0x73637265
-	.4byte 0x656E2F62
-	.4byte 0x6C6F2F67
-	.4byte 0x616D656F
-	.4byte 0x7665322E
-	.4byte 0x626C6F00
-	.4byte 0x59616953
-	.4byte 0x74726174
-	.4byte 0x65677900
-	.4byte 0x54656B69
-	.4byte 0x53747261
-	.4byte 0x74656779
-	.4byte 0x00000000
-	.4byte 0x803E73B0
-	.4byte 0x00000000
-	.4byte 0x00000000
-.global __vt__11YaiStrategy
-__vt__11YaiStrategy:
-	.4byte 0x803e73b8
-	.4byte 0
-	.4byte start__11YaiStrategyFR4Teki
-	.4byte act__11YaiStrategyFR4Teki
-	.4byte eventPerformed__11YaiStrategyFR9TekiEvent
-	.4byte createEffect__12TekiStrategyFR4Tekii
-	.4byte draw__11YaiStrategyFR4TekiR8Graphics
-	.4byte drawDebugInfo__12TekiStrategyFR4TekiR8Graphics
-	.4byte interact__12TekiStrategyFR4TekiR18TekiInteractionKey
-	.4byte spawnCorpseParts__12TekiStrategyFR4Teki
+	.asciz "screen/blo/count.blo"
+	.skip 3

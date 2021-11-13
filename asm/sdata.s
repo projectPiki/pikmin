@@ -21360,15 +21360,3 @@ lbl_803E7368:
 "__RTTI__Q29@unnamed@24DrawWorldMapDateCallBack":
 	.4byte 0x802e59c0
 	.4byte 0x802e59e4
-.global lbl_803E73A0
-lbl_803E73A0:
-	.4byte 0x63642530
-	.4byte 0x32640000
-.global lbl_803E73A8
-lbl_803E73A8:
-	.4byte 0x676F2530
-	.4byte 0x32640000
-	.4byte 0x802E5A8C
-	.4byte 0x00000000
-	.4byte 0x802E5A80
-	.4byte 0x802E5A9C
