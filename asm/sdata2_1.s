@@ -450,11 +450,9 @@ lbl_803E85DC:
 	.4byte 0x40490FDB
 .global lbl_803E85E0
 lbl_803E85E0:
-	#.incbin "baserom.dol", 0x2F1520, 0x4
 	.float 1.0
 .global lbl_803E85E4
 lbl_803E85E4:
-	#.incbin "baserom.dol", 0x2F1524, 0x4
 	.float 0.0
 .global lbl_803E85E8
 lbl_803E85E8:

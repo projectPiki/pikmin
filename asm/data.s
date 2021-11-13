@@ -24708,21 +24708,15 @@ __vt__12ActBreakWall:
 	.4byte lbl_800A79BC
 .global lbl_802B5EB0
 lbl_802B5EB0:
-	.4byte 0x61695472
-	.4byte 0x616E7370
-	.4byte 0x6F72742E
-	.4byte 0x63707000
+	.asciz "aiTransport.cpp"
 .global lbl_802B5EC0
 lbl_802B5EC0:
-	.4byte 0x5472616E
-	.4byte 0x73706F72
-	.4byte 0x74000000
+	.asciz "Transport"
+	.skip 2
 .global lbl_802B5ECC
 lbl_802B5ECC:
-	.4byte 0x63617272
-	.4byte 0x792D656E
-	.4byte 0x64737469
-	.4byte 0x636B0000
+	.asciz "carry-endstick"
+	.skip 1
 .global lbl_802B5EDC
 lbl_802B5EDC:
 	.4byte lbl_800B0D0C
@@ -24733,21 +24727,14 @@ lbl_802B5EDC:
 	.4byte lbl_800B0D50
 	.4byte lbl_800B135C
 	.4byte lbl_800B0D38
-	.4byte 0x25732025
-	.4byte 0x6420252E
-	.4byte 0x31660000
-	.4byte 0x252E3166
-	.4byte 0x2F252E31
-	.4byte 0x66202573
-	.4byte 0x00000000
-	.4byte 0x25732025
-	.4byte 0x6420252E
-	.4byte 0x31662025
-	.4byte 0x73000000
-	.4byte 0x41637454
-	.4byte 0x72616E73
-	.4byte 0x706F7274
-	.4byte 0x00000000
+	.asciz "%s %d %.1f"
+	.skip 1
+	.asciz "%.1f/%.1f %s"
+	.skip 3
+	.asciz "%s %d %.1f %s"
+	.skip 2
+	.asciz "ActTransport"
+	.skip 3
 	.4byte 0x50616E69
 	.4byte 0x416E696D
 	.4byte 0x4B65794C
@@ -51666,7 +51653,6 @@ __vt__8BossProp:
   .asciz "BossAnimMgr"
 .global lbl_802CEA9C
 lbl_802CEA9C:
-	#.incbin "baserom.dol", 0x2CBA9C, 0x60
 	.asciz "BossAnimationManager"
 	.skip 0x3
 	.asciz "CoreNode"
@@ -58636,13 +58622,9 @@ dummy_blo_num_table__3zen:
 	.4byte 0x00000000
 .global lbl_802D50B8
 lbl_802D50B8:
-	.4byte 0x6F675261
-	.4byte 0x6465722E
-	.4byte 0x63707000
-	.4byte 0x4F675261
-	.4byte 0x64657253
-	.4byte 0x65637469
-	.4byte 0x6F6E0000
+	.asciz "ogRader.cpp"
+	.asciz "OgRaderSection"
+	.skip 1
 .global map_area_data__3zen
 map_area_data__3zen:
 	.4byte 0xC42E8000
@@ -58660,48 +58642,26 @@ map_area_data__3zen:
 	.4byte 0xC2300000
 	.4byte 0x44BC0000
 	.4byte 0x45112000
-	.4byte 0x73637265
-	.4byte 0x656E2F62
-	.4byte 0x6C6F2F70
-	.4byte 0x5F6D6170
-	.4byte 0x30302E62
-	.4byte 0x6C6F0000
-	.4byte 0x73637265
-	.4byte 0x656E2F62
-	.4byte 0x6C6F2F70
-	.4byte 0x5F6D6170
-	.4byte 0x30312E62
-	.4byte 0x6C6F0000
-	.4byte 0x73637265
-	.4byte 0x656E2F62
-	.4byte 0x6C6F2F70
-	.4byte 0x5F6D6170
-	.4byte 0x30322E62
-	.4byte 0x6C6F0000
-	.4byte 0x73637265
-	.4byte 0x656E2F62
-	.4byte 0x6C6F2F70
-	.4byte 0x5F6D6170
-	.4byte 0x30332E62
-	.4byte 0x6C6F0000
-	.4byte 0x73637265
-	.4byte 0x656E2F62
-	.4byte 0x6C6F2F70
-	.4byte 0x5F6D6170
-	.4byte 0x30342E62
-	.4byte 0x6C6F0000
+lbl_802D5110:
+	.asciz "screen/blo/p_map00.blo"
+	.skip 1
+lbl_802D5128:
+	.asciz "screen/blo/p_map01.blo"
+	.skip 1
+lbl_802D5140:
+	.asciz "screen/blo/p_map02.blo"
+	.skip 1
+lbl_802D5158:
+	.asciz "screen/blo/p_map03.blo"
+	.skip 1
+lbl_802D5170:
+	.asciz "screen/blo/p_map04.blo"
+	.skip 1
 .global lbl_802D5188
 lbl_802D5188:
-	.4byte 0x6F674669
-	.4byte 0x6C655365
-	.4byte 0x6C656374
-	.4byte 0x2E637070
-	.4byte 0x00000000
-	.4byte 0x4F674669
-	.4byte 0x6C655365
-	.4byte 0x6C656374
-	.4byte 0x53656374
-	.4byte 0x696F6E00
+	.asciz "ogFileSelect.cpp"
+	.skip 3
+	.asciz "OgFileSelectSection"
 .global lbl_802D51B0
 lbl_802D51B0:
 	.4byte lbl_801893D8
@@ -67438,38 +67398,22 @@ yura:
 	.4byte 0x1E920DB2
 .global UseSolidTex__3zen
 UseSolidTex__3zen:
-	.4byte 0x802DA788
-	.4byte 0x802DBF88
-	.4byte 0x802DC788
-	.4byte 0x802DB788
-	.4byte 0x802DAF88
-	.4byte 0x802DCF88
-	.4byte 0x70617274
-	.4byte 0x69636C65
-	.4byte 0x4D646C4D
-	.4byte 0x616E6167
-	.4byte 0x65722E63
-	.4byte 0x70700000
-	.4byte 0x70617274
-	.4byte 0x69636C65
-	.4byte 0x4D646C4D
-	.4byte 0x616E6167
-	.4byte 0x65720000
-	.4byte 0x7A656E3A
-	.4byte 0x3A706172
-	.4byte 0x7469636C
-	.4byte 0x654D646C
-	.4byte 0x00000000
-	.4byte 0x7A656E3A
-	.4byte 0x3A7A656E
-	.4byte 0x4C697374
-	.4byte 0x00000000
-	.4byte 0x7A656E3A
-	.4byte 0x3A706172
-	.4byte 0x7469636C
-	.4byte 0x654D646C
-	.4byte 0x42617365
-	.4byte 0x00000000
+	.4byte ami
+	.4byte marble
+	.4byte noise
+	.4byte cloud
+	.4byte check
+	.4byte yura
+	.asciz "particleMdlManager.cpp"
+	.skip 1
+	.asciz "particleMdlManager"
+	.skip 1
+	.asciz "zen::particleMdl"
+	.skip 3
+	.asciz "zen::zenList"
+	.skip 3
+	.asciz "zen::particleMdlBase"
+	.skip 3
 	.4byte 0x803E5E68
 	.4byte 0x00000000
 	.4byte 0x00000000
