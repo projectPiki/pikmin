@@ -1532,13 +1532,11 @@ lbl_801D5E2C:
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 0x8
 lbl_802E4630:
-	.4byte 0x54414968
-	.4byte 0x69626141
-	.4byte 0x2E637070
-	.4byte 0x00000000
-	.4byte 0x54414968
-	.4byte 0x69626141
-	.4byte 0x00000000
+	.asciz "TAIhibaA.cpp"
+	.balign 4
+lbl_802E4640:
+	.asciz "TAIhibaA"
+	.balign 4
 lbl_802E464C:
 	.4byte 0x91D282BF
 	.4byte 0x8E9E8AD4
@@ -1549,103 +1547,47 @@ lbl_802E465C:
 	.4byte 0x8E9E8AD4
 	.4byte 0x81699562
 	.4byte 0x816A0000
-	.4byte 0x74656B69
-	.4byte 0x732F6869
-	.4byte 0x6261412F
-	.4byte 0x6D6F7469
-	.4byte 0x6F6E2F64
-	.4byte 0x6561642E
-	.4byte 0x64636100
-	.4byte 0x74656B69
-	.4byte 0x732F6869
-	.4byte 0x6261412F
-	.4byte 0x6D6F7469
-	.4byte 0x6F6E2F64
-	.4byte 0x616D6167
-	.4byte 0x652E6463
-	.4byte 0x61000000
-	.4byte 0x74656B69
-	.4byte 0x732F6869
-	.4byte 0x6261412F
-	.4byte 0x6D6F7469
-	.4byte 0x6F6E2F77
-	.4byte 0x61697431
-	.4byte 0x2E646361
-	.4byte 0x00000000
-	.4byte 0x74656B69
-	.4byte 0x732F6869
-	.4byte 0x6261412F
-	.4byte 0x6D6F7469
-	.4byte 0x6F6E2F77
-	.4byte 0x61697432
-	.4byte 0x2E646361
-	.4byte 0x00000000
-	.4byte 0x74656B69
-	.4byte 0x732F6869
-	.4byte 0x6261412F
-	.4byte 0x6D6F7469
-	.4byte 0x6F6E2F77
-	.4byte 0x61697461
-	.4byte 0x6374312E
-	.4byte 0x64636B00
-	.4byte 0x74656B69
-	.4byte 0x732F6869
-	.4byte 0x6261412F
-	.4byte 0x6D6F7469
-	.4byte 0x6F6E2F77
-	.4byte 0x61697461
-	.4byte 0x6374322E
-	.4byte 0x64636100
-	.4byte 0x74656B69
-	.4byte 0x732F6869
-	.4byte 0x6261412F
-	.4byte 0x6D6F7469
-	.4byte 0x6F6E2F6D
-	.4byte 0x6F766531
-	.4byte 0x2E64636B
-	.4byte 0x00000000
-	.4byte 0x74656B69
-	.4byte 0x732F6869
-	.4byte 0x6261412F
-	.4byte 0x6D6F7469
-	.4byte 0x6F6E2F6D
-	.4byte 0x6F766532
-	.4byte 0x2E64636B
-	.4byte 0x00000000
-	.4byte 0x74656B69
-	.4byte 0x732F6869
-	.4byte 0x6261412F
-	.4byte 0x6D6F7469
-	.4byte 0x6F6E2F61
-	.4byte 0x74746163
-	.4byte 0x6B2E6463
-	.4byte 0x61000000
-	.4byte 0x74656B69
-	.4byte 0x732F6869
-	.4byte 0x6261412F
-	.4byte 0x6D6F7469
-	.4byte 0x6F6E2F74
-	.4byte 0x79706531
-	.4byte 0x2E64636B
-	.4byte 0x00000000
-	.4byte 0x74656B69
-	.4byte 0x732F6869
-	.4byte 0x6261412F
-	.4byte 0x6D6F7469
-	.4byte 0x6F6E2F74
-	.4byte 0x79706532
-	.4byte 0x2E646361
-	.4byte 0x00000000
-	.4byte 0x54414968
-	.4byte 0x69626141
-	.4byte 0x416E696D
-	.4byte 0x6174696F
-	.4byte 0x6E000000
-	.4byte 0x54414961
-	.4byte 0x6E696D61
-	.4byte 0x74696F6E
-	.4byte 0x00000000
-	.4byte 0x803E6F6C
+lbl_802E466C:
+	.asciz "tekis/hibaA/motion/dead.dca"
+	.balign 4
+lbl_802E4688:
+	.asciz "tekis/hibaA/motion/damage.dca"
+	.balign 4
+lbl_802E46A8:
+	.asciz "tekis/hibaA/motion/wait1.dca"
+	.balign 4
+lbl_802E46C8:
+	.asciz "tekis/hibaA/motion/wait2.dca"
+	.balign 4
+lbl_802E46E8:
+	.asciz "tekis/hibaA/motion/waitact1.dck"
+	.balign 4
+lbl_802E4708:
+	.asciz "tekis/hibaA/motion/waitact2.dca"
+	.balign 4
+lbl_802E4728:
+	.asciz "tekis/hibaA/motion/move1.dck"
+	.balign 4
+lbl_802E4748:
+	.asciz "tekis/hibaA/motion/move2.dck"
+	.balign 4
+lbl_802E4768:
+	.asciz "tekis/hibaA/motion/attack.dca"
+	.balign 4
+lbl_802E4788:
+	.asciz "tekis/hibaA/motion/type1.dck"
+	.balign 4
+lbl_802E47A8:
+	.asciz "tekis/hibaA/motion/type2.dca"
+	.balign 4
+lbl_802E47C8:
+	.asciz "TAIhibaAAnimation"
+	.balign 4
+lbl_802E47DC:
+	.asciz "TAIanimation"
+	.balign 4
+lbl_802E47EC:
+	.4byte __RTTI__12TAIanimation
 	.4byte 0x00000000
 	.4byte 0x00000000
 .global __vt__17TAIhibaAAnimation
@@ -1653,24 +1595,23 @@ __vt__17TAIhibaAAnimation:
 	.4byte __RTTI__17TAIhibaAAnimation
 	.4byte 0
 	.4byte makeDefaultAnimations__17TAIhibaAAnimationFv
-	.4byte 0x54414968
-	.4byte 0x69626141
-	.4byte 0x53747261
-	.4byte 0x74656779
-	.4byte 0
-	.4byte 0x54656b69
-	.4byte 0x53747261
-	.4byte 0x74656779
-	.4byte 0
-	.4byte 0x59616953
-	.4byte 0x74726174
-	.4byte 0x65677900
-	.4byte 0x803e6f7c
+lbl_802E4804:
+	.asciz "TAIhibaAStrategy"
+	.balign 4
+lbl_802E4818:
+	.asciz "TekiStrategy"
+	.balign 4
+lbl_802E4828:
+	.asciz "YaiStrategy"
+	.balign 4
+lbl_802E4834:
+	.4byte __RTTI__12TekiStrategy
 	.4byte 0
 	.4byte 0
-	.4byte 0x803e6f7c
+lbl_802E4840:
+	.4byte __RTTI__12TekiStrategy
 	.4byte 0
-	.4byte 0x803e6f84
+	.4byte __RTTI__11YaiStrategy
 	.4byte 0
 	.4byte 0
 .global __vt__16TAIhibaAStrategy
@@ -1685,25 +1626,23 @@ __vt__16TAIhibaAStrategy:
 	.4byte drawDebugInfo__12TekiStrategyFR4TekiR8Graphics
 	.4byte interact__12TekiStrategyFR4TekiR18TekiInteractionKey
 	.4byte spawnCorpseParts__12TekiStrategyFR4Teki
-	.4byte 0x54414941
-	.4byte 0x66697265
-	.4byte 0x41747461
-	.4byte 0x636b4869
-	.4byte 0x62614100
-	.4byte 0x54616941
-	.4byte 0x6374696f
-	.4byte 0x6e000000
-	.4byte 0x54414941
-	.4byte 0x72657365
-	.4byte 0x7276654d
-	.4byte 0x6f74696f
-	.4byte 0x6e000000
-	.4byte 0x803e6f94
+lbl_802E487C:
+	.asciz "TAIAfireAttackHibaA"
+	.balign 4
+lbl_802E4890:
+	.asciz "TaiAction"
+	.balign 4
+lbl_802E489C:
+	.asciz "TAIAreserveMotion"
+	.balign 4
+lbl_802E48B0:
+	.4byte __RTTI__9TaiAction
 	.4byte 0
 	.4byte 0
-	.4byte 0x803e6f94
+lbl_802E48BC:
+	.4byte __RTTI__9TaiAction
 	.4byte 0
-	.4byte 0x803e6f9c
+	.4byte __RTTI__17TAIAreserveMotion
 	.4byte 0
 	.4byte 0
 .global __vt__19TAIAfireAttackHibaA
@@ -1715,23 +1654,20 @@ __vt__19TAIAfireAttackHibaA:
 	.4byte act__19TAIAfireAttackHibaAFR4Teki
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
-	.4byte 0x54414941
-	.4byte 0x74696d65
-	.4byte 0x72526561
-	.4byte 0x6374696f
-	.4byte 0x6e486962
-	.4byte 0x61410000
-	.4byte 0x54414941
-	.4byte 0x74696d65
-	.4byte 0x72526561
-	.4byte 0x6374696f
-	.4byte 0x6e000000
-	.4byte 0x803e6f94
+lbl_802E48EC:
+	.asciz "TAIAtimerReactionHibaA"
+	.balign 4
+lbl_802E4904:
+	.asciz "TAIAtimerReaction"
+	.balign 4
+lbl_802E4918:
+	.4byte __RTTI__9TaiAction
 	.4byte 0
 	.4byte 0
-	.4byte 0x803e6f94
+lbl_802E4924:
+	.4byte __RTTI__9TaiAction
 	.4byte 0
-	.4byte 0x803e6fac
+	.4byte __RTTI__17TAIAtimerReaction
 	.4byte 0
 	.4byte 0
 .global __vt__22TAIAtimerReactionHibaA
@@ -1752,11 +1688,11 @@ __vt__22TAIAtimerReactionHibaA:
 	.4byte 0
 	.4byte 0
 	.4byte 0
-	.4byte 0x54414941
-	.4byte 0x696e6974
-	.4byte 0x48696261
-	.4byte 0x41000000
-	.4byte 0x803e6f94
+lbl_802E4978:
+	.asciz "TAIAinitHibaA"
+	.balign 4
+lbl_802E4988:
+	.4byte __RTTI__9TaiAction
 	.4byte 0
 	.4byte 0
 .global __vt__13TAIAinitHibaA
@@ -1775,40 +1711,41 @@ __vt__13TAIAinitHibaA:
 	.4byte 0
 	.4byte 0
 	.4byte 0
-	.4byte 0x54414968
-	.4byte 0x69626141
-	.4byte 0x50617261
-	.4byte 0x6d657465
-	.4byte 0x72730000
-	.4byte 0x436f7265
-	.4byte 0x4e6f6465
-	.4byte 0
-	.4byte 0x803e6fcc
-	.4byte 0
-	.4byte 0
-	.4byte 0x803e6fcc
-	.4byte 0
-	.4byte 0x803e6fd4
+lbl_802E49CC:
+	.asciz "TAIhibaAParameters"
+	.balign 4
+lbl_802E49E0:
+	.asciz "CoreNode"
+	.balign 4
+lbl_802E49EC:
+	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte 0
-	.4byte 0x54656b69
-	.4byte 0x50617261
-	.4byte 0x6d657465
-	.4byte 0x72730000
-	.4byte 0x803e6fcc
+lbl_802E49F8:
+	.4byte __RTTI__5ANode
 	.4byte 0
-	.4byte 0x803e6fd4
-	.4byte 0
-	.4byte 0x803e6fe4
+	.4byte __RTTI__8CoreNode
 	.4byte 0
 	.4byte 0
-	.4byte 0x803e6fcc
+lbl_802E4A0C:
+	.asciz "TekiParameters"
+	.balign 4
+lbl_802E4A1C:
+	.4byte __RTTI__5ANode
 	.4byte 0
-	.4byte 0x803e6fd4
+	.4byte __RTTI__8CoreNode
 	.4byte 0
-	.4byte 0x803e6fe4
+	.4byte __RTTI__4Node
 	.4byte 0
-	.4byte 0x803e6fec
+	.4byte 0
+lbl_802E4A38:
+	.4byte __RTTI__5ANode
+	.4byte 0
+	.4byte __RTTI__8CoreNode
+	.4byte 0
+	.4byte __RTTI__4Node
+	.4byte 0
+	.4byte __RTTI__14TekiParameters
 	.4byte 0
 	.4byte 0
 .global __vt__18TAIhibaAParameters
@@ -1825,24 +1762,14 @@ __vt__18TAIhibaAParameters:
 	.4byte concat__4NodeFR3SRT
 	.4byte concat__4NodeFR8Matrix4f
 	.4byte getModelMatrix__4NodeFv
-	.4byte 0x54414965
-	.4byte 0x66666563
-	.4byte 0x74417474
-	.4byte 0x61636b45
-	.4byte 0x76656e74
-	.4byte 0x43616c6c
-	.4byte 0x4261636b
-	.4byte 0x48696261
-	.4byte 0x41000000
-	.4byte 0x54414965
-	.4byte 0x66666563
-	.4byte 0x74417474
-	.4byte 0x61636b45
-	.4byte 0x76656e74
-	.4byte 0x43616c6c
-	.4byte 0x4261636b
-	.4byte 0
-	.4byte 0x803e6ffc
+lbl_802E4A8C:
+	.asciz "TAIeffectAttackEventCallBackHibaA"
+	.balign 4
+lbl_802E4AB0:
+	.asciz "TAIeffectAttackEventCallBack"
+	.balign 4
+lbl_802E4AD0:
+	.4byte __RTTI__28TAIeffectAttackEventCallBack
 	.4byte 0
 	.4byte 0
 .global __vt__33TAIeffectAttackEventCallBackHibaA
@@ -1856,9 +1783,9 @@ __vt__33TAIeffectAttackEventCallBackHibaA:
 	.4byte playEventSound__28TAIeffectAttackEventCallBackFPQ23zen17particleGeneratorP20TAIeffectAttackParam
 	.4byte ptclHitMap__33TAIeffectAttackEventCallBackHibaAFPQ23zen17particleGeneratorP20TAIeffectAttackParam
 	.4byte hitCheckCulling__33TAIeffectAttackEventCallBackHibaAFPQ23zen17particleGeneratorP20TAIeffectAttackParamP8Creature
-	.4byte 0x496e7465
-	.4byte 0x72616374
-	.4byte 0x696f6e00
+lbl_802E4B00:
+	.asciz "Interaction"
+	.balign 4
 	.4byte 0
 	.4byte 0
 	.4byte 0
@@ -1884,40 +1811,40 @@ __vt__33TAIeffectAttackEventCallBackHibaA:
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 0x8
 lbl_803E6F68:
-	.4byte 0x43A50000
+	.float 330.0
 __RTTI__12TAIanimation:
-	.4byte 0x802E47DC
+	.4byte lbl_802E47DC
 	.4byte 0x00000000
 __RTTI__17TAIhibaAAnimation:
-	.4byte 0x802e47c8
-	.4byte 0x802e47ec
+	.4byte lbl_802E47C8
+	.4byte lbl_802E47EC
 __RTTI__12TekiStrategy:
-	.4byte 0x802e4818
+	.4byte lbl_802E4818
 	.4byte 0
 __RTTI__11YaiStrategy:
-	.4byte 0x802e4828
-	.4byte 0x802e4834
+	.4byte lbl_802E4828
+	.4byte lbl_802E4834
 __RTTI__16TAIhibaAStrategy:
-	.4byte 0x802e4804
-	.4byte 0x802e4840
+	.4byte lbl_802E4804
+	.4byte lbl_802E4840
 __RTTI__9TaiAction:
-	.4byte 0x802e4890
+	.4byte lbl_802E4890
 	.4byte 0
 __RTTI__17TAIAreserveMotion:
-	.4byte 0x802e489c
-	.4byte 0x802e48b0
+	.4byte lbl_802E489C
+	.4byte lbl_802E48B0
 __RTTI__19TAIAfireAttackHibaA:
-	.4byte 0x802e487c
-	.4byte 0x802e48bc
+	.4byte lbl_802E487C
+	.4byte lbl_802E48BC
 __RTTI__17TAIAtimerReaction:
-	.4byte 0x802e4904
-	.4byte 0x802e4918
+	.4byte lbl_802E4904
+	.4byte lbl_802E4918
 __RTTI__22TAIAtimerReactionHibaA:
-	.4byte 0x802e48ec
-	.4byte 0x802e4924
+	.4byte lbl_802E48EC
+	.4byte lbl_802E4924
 __RTTI__13TAIAinitHibaA:
-	.4byte 0x802e4978
-	.4byte 0x802e4988
+	.4byte lbl_802E4978
+	.4byte lbl_802E4988
 lbl_803E6FC4:
 	.asciz "ANode"
 .balign 0x4	
@@ -1925,25 +1852,26 @@ __RTTI__5ANode:
 	.4byte lbl_803E6FC4
 	.4byte 0
 __RTTI__8CoreNode:
-	.4byte 0x802e49e0
-	.4byte 0x802e49ec
+	.4byte lbl_802E49E0
+	.4byte lbl_802E49EC
 lbl_803E6FDC:
 	.asciz "Node"
 .balign 0x4
 __RTTI__4Node:
 	.4byte lbl_803E6FDC
-	.4byte 0x802e49f8
+	.4byte lbl_802E49F8
 __RTTI__14TekiParameters:
-	.4byte 0x802e4a0c
-	.4byte 0x802e4a1c
+	.4byte lbl_802E4A0C
+	.4byte lbl_802E4A1C
 __RTTI__18TAIhibaAParameters:
-	.4byte 0x802e49cc
-	.4byte 0x802e4a38
-	.4byte 0x802e4ab0
+	.4byte lbl_802E49CC
+	.4byte lbl_802E4A38
+__RTTI__28TAIeffectAttackEventCallBack:
+	.4byte lbl_802E4AB0
 	.4byte 0
 __RTTI__33TAIeffectAttackEventCallBackHibaA:
-	.4byte 0x802e4a8c
-	.4byte 0x802e4ad0
+	.4byte lbl_802E4A8C
+	.4byte lbl_802E4AD0
 	.4byte 0
 
 .section .sbss, "wa"
