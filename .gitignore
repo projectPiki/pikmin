@@ -21,3 +21,9 @@
 *.bat
 build
 tools/mwcc_compiler/
+*.sln
+*.vcxproj
+*.user
+*.filters
+Debug
+.vs
