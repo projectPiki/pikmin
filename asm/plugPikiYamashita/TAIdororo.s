@@ -3884,7 +3884,6 @@ act__14TAIAinitDororoFR4Teki:
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 0x8
-.global lbl_802E3D60
 lbl_802E3D60:
 	.asciz "TAIdororo.cpp"
 	.balign 4
@@ -3918,115 +3917,58 @@ lbl_802E3DBC:
 	.4byte 0x82E98DC5
 	.4byte 0x91E58193
 	.4byte 0x00000000
+lbl_802E3DD8:
 	.4byte 0x83458347
 	.4byte 0x83438367
 	.4byte 0x81699562
 	.4byte 0x816A0000
+lbl_802E3DE8:
 	.4byte 0x8373834E
 	.4byte 0x837E8393
 	.4byte 0x82F08E45
 	.4byte 0x82B78DC5
 	.4byte 0x91E59094
 	.4byte 0x00000000
-	.4byte 0x74656B69
-	.4byte 0x732F646F
-	.4byte 0x726F726F
-	.4byte 0x2F6D6F74
-	.4byte 0x696F6E2F
-	.4byte 0x64656164
-	.4byte 0x2E646361
-	.4byte 0x00000000
-	.4byte 0x74656B69
-	.4byte 0x732F646F
-	.4byte 0x726F726F
-	.4byte 0x2F6D6F74
-	.4byte 0x696F6E2F
-	.4byte 0x64616D61
-	.4byte 0x67652E64
-	.4byte 0x63610000
-	.4byte 0x74656B69
-	.4byte 0x732F646F
-	.4byte 0x726F726F
-	.4byte 0x2F6D6F74
-	.4byte 0x696F6E2F
-	.4byte 0x77616974
-	.4byte 0x312E6463
-	.4byte 0x61000000
-	.4byte 0x74656B69
-	.4byte 0x732F646F
-	.4byte 0x726F726F
-	.4byte 0x2F6D6F74
-	.4byte 0x696F6E2F
-	.4byte 0x77616974
-	.4byte 0x322E6463
-	.4byte 0x61000000
-	.4byte 0x74656B69
-	.4byte 0x732F646F
-	.4byte 0x726F726F
-	.4byte 0x2F6D6F74
-	.4byte 0x696F6E2F
-	.4byte 0x77616974
-	.4byte 0x61637431
-	.4byte 0x2E64636B
-	.4byte 0x00000000
-	.4byte 0x74656B69
-	.4byte 0x732F646F
-	.4byte 0x726F726F
-	.4byte 0x2F6D6F74
-	.4byte 0x696F6E2F
-	.4byte 0x77616974
-	.4byte 0x61637432
-	.4byte 0x2E646361
-	.4byte 0x00000000
-	.4byte 0x74656B69
-	.4byte 0x732F646F
-	.4byte 0x726F726F
-	.4byte 0x2F6D6F74
-	.4byte 0x696F6E2F
-	.4byte 0x6D6F7665
-	.4byte 0x312E6463
-	.4byte 0x6B000000
-	.4byte 0x74656B69
-	.4byte 0x732F646F
-	.4byte 0x726F726F
-	.4byte 0x2F6D6F74
-	.4byte 0x696F6E2F
-	.4byte 0x6D6F7665
-	.4byte 0x322E6463
-	.4byte 0x6B000000
-	.4byte 0x74656B69
-	.4byte 0x732F646F
-	.4byte 0x726F726F
-	.4byte 0x2F6D6F74
-	.4byte 0x696F6E2F
-	.4byte 0x61747461
-	.4byte 0x636B2E64
-	.4byte 0x63610000
-	.4byte 0x74656B69
-	.4byte 0x732F646F
-	.4byte 0x726F726F
-	.4byte 0x2F6D6F74
-	.4byte 0x696F6E2F
-	.4byte 0x74797065
-	.4byte 0x312E6463
-	.4byte 0x6B000000
-	.4byte 0x74656B69
-	.4byte 0x732F646F
-	.4byte 0x726F726F
-	.4byte 0x2F6D6F74
-	.4byte 0x696F6E2F
-	.4byte 0x74797065
-	.4byte 0x322E6463
-	.4byte 0x61000000
-	.4byte 0x54414964
-	.4byte 0x6F726F72
-	.4byte 0x6F416E69
-	.4byte 0x6D617469
-	.4byte 0x6F6E0000
-	.4byte 0x54414961
-	.4byte 0x6E696D61
-	.4byte 0x74696F6E
-	.4byte 0x00000000
+lbl_802E3E00:
+	.asciz "tekis/dororo/motion/dead.dca"
+	.balign 4
+lbl_802E3E20:
+	.asciz "tekis/dororo/motion/damage.dca"
+	.balign 4
+lbl_802E3E40:
+	.asciz "tekis/dororo/motion/wait1.dca"
+	.balign 4
+lbl_802E3E60:
+	.asciz "tekis/dororo/motion/wait2.dca"
+	.balign 4
+lbl_802E3E80:
+	.asciz "tekis/dororo/motion/waitact1.dck"
+	.balign 4
+lbl_802E3EA4:
+	.asciz "tekis/dororo/motion/waitact2.dca"
+	.balign 4
+lbl_802E3EC8:
+	.asciz "tekis/dororo/motion/move1.dck"
+	.balign 4
+lbl_802E3EE8:
+	.asciz "tekis/dororo/motion/move2.dck"
+	.balign 4
+lbl_802E3F08:
+	.asciz "tekis/dororo/motion/attack.dca"
+	.balign 4
+lbl_802E3F28:
+	.asciz "tekis/dororo/motion/type1.dck"
+	.balign 4
+lbl_802E3F48:
+	.asciz "tekis/dororo/motion/type2.dca"
+	.balign 4
+lbl_802E3F68:
+	.asciz "TAIdororoAnimation"
+	.balign 4
+lbl_802E3F7C:
+	.asciz "TAIanimation"
+	.balign 4
+lbl_802E3F8C:
 	.4byte 0x803E6E58
 	.4byte 0x00000000
 	.4byte 0x00000000
@@ -4035,21 +3977,20 @@ __vt__18TAIdororoAnimation:
 	.4byte __RTTI__18TAIdororoAnimation
 	.4byte 0
 	.4byte makeDefaultAnimations__18TAIdororoAnimationFv
-	.4byte 0x54414964
-	.4byte 0x6f726f72
-	.4byte 0x6f537472
-	.4byte 0x61746567
-	.4byte 0x79000000
-	.4byte 0x54656b69
-	.4byte 0x53747261
-	.4byte 0x74656779
-	.4byte 0
-	.4byte 0x59616953
-	.4byte 0x74726174
-	.4byte 0x65677900
+lbl_802E3FA4:
+	.asciz "TAIdororoStrategy"
+	.balign 4
+lbl_802E3FB8:
+	.asciz "TekiStrategy"
+	.balign 4
+lbl_802E3FC8:
+	.asciz "YaiStrategy"
+	.balign 4
+lbl_802E3FD4:
 	.4byte 0x803e6e68
 	.4byte 0
 	.4byte 0
+lbl_802E3FE0:
 	.4byte 0x803e6e68
 	.4byte 0
 	.4byte 0x803e6e70
@@ -4067,14 +4008,13 @@ __vt__17TAIdororoStrategy:
 	.4byte drawDebugInfo__12TekiStrategyFR4TekiR8Graphics
 	.4byte interact__12TekiStrategyFR4TekiR18TekiInteractionKey
 	.4byte spawnCorpseParts__12TekiStrategyFR4Teki
-	.4byte 0x54414941
-	.4byte 0x67726176
-	.4byte 0x69747944
-	.4byte 0x6f726f72
-	.4byte 0x6f000000
-	.4byte 0x54616941
-	.4byte 0x6374696f
-	.4byte 0x6e000000
+lbl_802E401C:
+	.asciz "TAIAgravityDororo"
+	.balign 4
+lbl_802E4030:
+	.asciz "TaiAction"
+	.balign 4
+lbl_802E403C:
 	.4byte 0x803e6e80
 	.4byte 0
 	.4byte 0
