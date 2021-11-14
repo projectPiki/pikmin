@@ -75276,31 +75276,3 @@ __vt__33TAIeffectAttackEventCallBackHibaA:
 	.4byte 0
 	.4byte 0
 	.4byte 0
-	.4byte 0x54414941
-	.4byte 0x65666665
-	.4byte 0x63742e63
-	.4byte 0x70700000
-	.4byte 0x54414941
-	.4byte 0x65666665
-	.4byte 0x63740000
-	.4byte 0x54414941
-	.4byte 0x65666643
-	.4byte 0x6c6f7564
-	.4byte 0x4f664475
-	.4byte 0x73740000
-	.4byte 0x54616941
-	.4byte 0x6374696f
-	.4byte 0x6e000000
-	.4byte 0x803e7014
-	.4byte 0
-	.4byte 0
-.global __vt__18TAIAeffCloudOfDust
-__vt__18TAIAeffCloudOfDust:
-	.4byte 0x803e701c
-	.4byte 0
-	.4byte start__18TAIAeffCloudOfDustFR4Teki
-	.4byte finish__9TaiActionFR4Teki
-	.4byte act__18TAIAeffCloudOfDustFR4Teki
-	.4byte actByEvent__9TaiActionFR9TekiEvent
-	.4byte hasNextState__9TaiActionFv
-	.4byte setType__18TAIAeffCloudOfDustFR8Vector3fii

@@ -2924,7 +2924,3 @@ lbl_803EBF7C:
 .global lbl_803EBF90
 lbl_803EBF90:
 	.4byte 0x3E800000
-	.4byte 0x00000000
-.global lbl_803EBF98
-lbl_803EBF98:
-	.4byte 0x00000000

@@ -20844,11 +20844,3 @@ __RTTI__33TAIeffectAttackEventCallBackHibaA:
 	.4byte 0x802e4a8c
 	.4byte 0x802e4ad0
 	.4byte 0
-.global RUMBLE_NONE__18TAIAeffCloudOfDust
-RUMBLE_NONE__18TAIAeffCloudOfDust:
-	.4byte 0xFFFFFFFF
-	.4byte 0x802E4B90
-	.4byte 0x00000000
-	.4byte 0x802E4B7C
-	.4byte 0x802E4B9C
-	.4byte 0x00000000
