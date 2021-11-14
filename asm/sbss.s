@@ -1172,7 +1172,4 @@ pDownTex__Q23zen19ArrowCenterCallBack:
 	.skip 0x4
 .global repeatTime__Q23zen9KeyRepeat
 repeatTime__Q23zen9KeyRepeat:
-	.skip 0x8
-.global eventCallBack__19TAIAfireAttackHibaA
-eventCallBack__19TAIAfireAttackHibaA:
-	.skip 0x8
+	.skip 0x4

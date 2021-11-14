@@ -1,51 +1,32 @@
 .include "macros.inc"
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
+.balign 0x8
 .global lbl_80222DC0
 lbl_80222DC0:
-	.4byte 0x73797342
-	.4byte 0x6F6F7475
-	.4byte 0x702E6370
-	.4byte 0x70000000
+	.asciz "sysBootup.cpp"
+	.skip 2
 .global lbl_80222DD0
 lbl_80222DD0:
-	.4byte 0x456E6420
-	.4byte 0x6F662064
-	.4byte 0x656D6F00
-	.4byte 0x00000000
+	.asciz "End of demo"
+.balign 0x8
 .global J_STREAMNAME
 J_STREAMNAME:
-	.4byte 0x2F737472
-	.4byte 0x65616D30
-	.4byte 0x302E6164
-	.4byte 0x70000000
-	.4byte 0x2F737472
-	.4byte 0x65616D30
-	.4byte 0x312E6164
-	.4byte 0x70000000
-	.4byte 0x2F737472
-	.4byte 0x65616D30
-	.4byte 0x322E6164
-	.4byte 0x70000000
-	.4byte 0x2F737472
-	.4byte 0x65616D30
-	.4byte 0x332E6164
-	.4byte 0x70000000
-	.4byte 0x2F737472
-	.4byte 0x65616D30
-	.4byte 0x342E6164
-	.4byte 0x70000000
-	.4byte 0x2F737472
-	.4byte 0x65616D30
-	.4byte 0x352E6164
-	.4byte 0x70000000
-	.4byte 0x2F737472
-	.4byte 0x65616D30
-	.4byte 0x362E6164
-	.4byte 0x70000000
-	.4byte 0x2F737472
-	.4byte 0x65616D30
-	.4byte 0x372E6164
-	.4byte 0x70000000
+	.asciz "/stream00.adp"
+	.skip 2
+	.asciz "/stream01.adp"
+	.skip 2
+	.asciz "/stream02.adp"
+	.skip 2
+	.asciz "/stream03.adp"
+	.skip 2
+	.asciz "/stream04.adp"
+	.skip 2
+	.asciz "/stream05.adp"
+	.skip 2
+	.asciz "/stream06.adp"
+	.skip 2
+	.asciz "/stream07.adp"
+	.skip 2
 .global J_STREAM
 J_STREAM:
 	.4byte 0x00000000
@@ -69,7 +50,7 @@ lbl_80222E8C:
 	.4byte lbl_80006A74
 	.4byte lbl_80006B1C
 	.4byte lbl_80006B3C
-	.4byte 0x00000000
+.balign 0x8
 .global audio_root_path
 audio_root_path:
 	.4byte 0x00000000
@@ -4066,37 +4047,37 @@ DEMO_STATUS:
 	.4byte demo20
 	.4byte 0x00020106
 	.4byte 0x00000000
-	.4byte 0x8022660C
+	.4byte demo21
 	.4byte 0x00020106
 	.4byte 0x00000000
-	.4byte 0x8022660C
+	.4byte demo21
 	.4byte 0x00020106
 	.4byte 0x00000000
-	.4byte 0x8022660C
+	.4byte demo21
 	.4byte 0x00020106
 	.4byte 0x00000000
-	.4byte 0x80226634
+	.4byte demo24
 	.4byte 0x00020101
 	.4byte 0x00000000
-	.4byte 0x8022665C
+	.4byte demo25
 	.4byte 0x0004010A
 	.4byte 0x00000000
-	.4byte 0x8022667C
+	.4byte demo26
 	.4byte 0x03050100
 	.4byte 0x00000000
-	.4byte 0x803DCE38
+	.4byte demo27
 	.4byte 0x000402A2
 	.4byte 0x00000000
-	.4byte 0x802266B0
+	.4byte demo28
 	.4byte 0x000402A2
 	.4byte 0x00000000
-	.4byte 0x8022672C
+	.4byte demo29
 	.4byte 0x000402A2
 	.4byte 0x00000000
-	.4byte 0x8022672C
+	.4byte demo29
 	.4byte 0x000402A2
 	.4byte 0x00000000
-	.4byte 0x8022672C
+	.4byte demo29
 	.4byte 0x000102C0
 	.4byte 0x00000000
 	.4byte 0x802267A8
@@ -4372,7 +4353,7 @@ lbl_80226F40:
 	.4byte lbl_8001AFD8
 	.4byte lbl_8001AFE8
 	.4byte lbl_8001AFF8
-	.4byte 0x00000000
+.balign 0x8
 .global filter_table
 filter_table:
 	.4byte 0x00000000
@@ -4597,17 +4578,14 @@ func$793:
 	.4byte _MotionComp_01
 	.4byte _MotionComp_10
 	.4byte _MotionComp_11
-	.4byte 0x62617365
-	.4byte 0x4170702E
-	.4byte 0x63707000
+lbl_802272D0:
+	.asciz "baseApp.cpp"
 .global lbl_802272DC
 lbl_802272DC:
-	.4byte 0x5B57696E
-	.4byte 0x646F7773
-	.4byte 0x5D000000
-	.4byte 0x436F7265
-	.4byte 0x4E6F6465
-	.4byte 0x00000000
+	.asciz "[Windows]"
+	.skip 2
+	.asciz "CoreNode"
+	.skip 3
 	.4byte 0x803DCE88
 	.4byte 0x00000000
 	.4byte 0x00000000
@@ -50565,18 +50543,16 @@ __vt__12InteractBomb:
 	.4byte actItem__12InteractBombFP12ItemCreature
 .global lbl_802CDA18
 lbl_802CDA18:
-	.4byte 0x74656B69
-	.4byte 0x6D67722E
-	.4byte 0x63707000
-	.4byte 0x6B616265
-	.4byte 0x6B756941
-	.4byte 0x00000000
-	.4byte 0x6B616265
-	.4byte 0x6B756942
-	.4byte 0x00000000
-	.4byte 0x6B616265
-	.4byte 0x6B756943
-	.4byte 0x00000000
+	.asciz "tekimgr.cpp"
+lbl_802CDA24:
+	.asciz "kabekuiA"
+	.skip 3
+lbl_802CDA30:
+	.asciz "kabekuiB"
+	.skip 3
+lbl_802CDA3C:
+	.asciz "kabekuiC"
+	.skip 3
 .global typeNames__7TekiMgr
 typeNames__7TekiMgr:
 	.4byte 0x803E4558
@@ -50597,9 +50573,9 @@ typeNames__7TekiMgr:
 	.4byte 0x803E45D0
 	.4byte 0x803E45D8
 	.4byte 0x803E45DC
-	.4byte 0x802CDA24
-	.4byte 0x802CDA30
-	.4byte 0x802CDA3C
+	.4byte lbl_802CDA24
+	.4byte lbl_802CDA30
+	.4byte lbl_802CDA3C
 	.4byte 0x803E45E4
 	.4byte 0x803E45EC
 	.4byte 0x803E45F4
@@ -74924,355 +74900,3 @@ __vt__19TAIdororoParameters:
 	.4byte concat__4NodeFR3SRT
 	.4byte concat__4NodeFR8Matrix4f
 	.4byte getModelMatrix__4NodeFv
-.global lbl_802E4630
-lbl_802E4630:
-	.4byte 0x54414968
-	.4byte 0x69626141
-	.4byte 0x2E637070
-	.4byte 0x00000000
-	.4byte 0x54414968
-	.4byte 0x69626141
-	.4byte 0x00000000
-.global lbl_802E464C
-lbl_802E464C:
-	.4byte 0x91D282BF
-	.4byte 0x8E9E8AD4
-	.4byte 0x81699562
-	.4byte 0x816A0000
-.global lbl_802E465C
-lbl_802E465C:
-	.4byte 0x8D558C82
-	.4byte 0x8E9E8AD4
-	.4byte 0x81699562
-	.4byte 0x816A0000
-	.4byte 0x74656B69
-	.4byte 0x732F6869
-	.4byte 0x6261412F
-	.4byte 0x6D6F7469
-	.4byte 0x6F6E2F64
-	.4byte 0x6561642E
-	.4byte 0x64636100
-	.4byte 0x74656B69
-	.4byte 0x732F6869
-	.4byte 0x6261412F
-	.4byte 0x6D6F7469
-	.4byte 0x6F6E2F64
-	.4byte 0x616D6167
-	.4byte 0x652E6463
-	.4byte 0x61000000
-	.4byte 0x74656B69
-	.4byte 0x732F6869
-	.4byte 0x6261412F
-	.4byte 0x6D6F7469
-	.4byte 0x6F6E2F77
-	.4byte 0x61697431
-	.4byte 0x2E646361
-	.4byte 0x00000000
-	.4byte 0x74656B69
-	.4byte 0x732F6869
-	.4byte 0x6261412F
-	.4byte 0x6D6F7469
-	.4byte 0x6F6E2F77
-	.4byte 0x61697432
-	.4byte 0x2E646361
-	.4byte 0x00000000
-	.4byte 0x74656B69
-	.4byte 0x732F6869
-	.4byte 0x6261412F
-	.4byte 0x6D6F7469
-	.4byte 0x6F6E2F77
-	.4byte 0x61697461
-	.4byte 0x6374312E
-	.4byte 0x64636B00
-	.4byte 0x74656B69
-	.4byte 0x732F6869
-	.4byte 0x6261412F
-	.4byte 0x6D6F7469
-	.4byte 0x6F6E2F77
-	.4byte 0x61697461
-	.4byte 0x6374322E
-	.4byte 0x64636100
-	.4byte 0x74656B69
-	.4byte 0x732F6869
-	.4byte 0x6261412F
-	.4byte 0x6D6F7469
-	.4byte 0x6F6E2F6D
-	.4byte 0x6F766531
-	.4byte 0x2E64636B
-	.4byte 0x00000000
-	.4byte 0x74656B69
-	.4byte 0x732F6869
-	.4byte 0x6261412F
-	.4byte 0x6D6F7469
-	.4byte 0x6F6E2F6D
-	.4byte 0x6F766532
-	.4byte 0x2E64636B
-	.4byte 0x00000000
-	.4byte 0x74656B69
-	.4byte 0x732F6869
-	.4byte 0x6261412F
-	.4byte 0x6D6F7469
-	.4byte 0x6F6E2F61
-	.4byte 0x74746163
-	.4byte 0x6B2E6463
-	.4byte 0x61000000
-	.4byte 0x74656B69
-	.4byte 0x732F6869
-	.4byte 0x6261412F
-	.4byte 0x6D6F7469
-	.4byte 0x6F6E2F74
-	.4byte 0x79706531
-	.4byte 0x2E64636B
-	.4byte 0x00000000
-	.4byte 0x74656B69
-	.4byte 0x732F6869
-	.4byte 0x6261412F
-	.4byte 0x6D6F7469
-	.4byte 0x6F6E2F74
-	.4byte 0x79706532
-	.4byte 0x2E646361
-	.4byte 0x00000000
-	.4byte 0x54414968
-	.4byte 0x69626141
-	.4byte 0x416E696D
-	.4byte 0x6174696F
-	.4byte 0x6E000000
-	.4byte 0x54414961
-	.4byte 0x6E696D61
-	.4byte 0x74696F6E
-	.4byte 0x00000000
-	.4byte 0x803E6F6C
-	.4byte 0x00000000
-	.4byte 0x00000000
-.global __vt__17TAIhibaAAnimation
-__vt__17TAIhibaAAnimation:
-	.4byte __RTTI__17TAIhibaAAnimation
-	.4byte 0
-	.4byte makeDefaultAnimations__17TAIhibaAAnimationFv
-	.4byte 0x54414968
-	.4byte 0x69626141
-	.4byte 0x53747261
-	.4byte 0x74656779
-	.4byte 0
-	.4byte 0x54656b69
-	.4byte 0x53747261
-	.4byte 0x74656779
-	.4byte 0
-	.4byte 0x59616953
-	.4byte 0x74726174
-	.4byte 0x65677900
-	.4byte 0x803e6f7c
-	.4byte 0
-	.4byte 0
-	.4byte 0x803e6f7c
-	.4byte 0
-	.4byte 0x803e6f84
-	.4byte 0
-	.4byte 0
-.global __vt__16TAIhibaAStrategy
-__vt__16TAIhibaAStrategy:
-	.4byte __RTTI__16TAIhibaAStrategy
-	.4byte 0
-	.4byte start__11YaiStrategyFR4Teki
-	.4byte act__16TAIhibaAStrategyFR4Teki
-	.4byte eventPerformed__11YaiStrategyFR9TekiEvent
-	.4byte createEffect__12TekiStrategyFR4Tekii
-	.4byte draw__16TAIhibaAStrategyFR4TekiR8Graphics
-	.4byte drawDebugInfo__12TekiStrategyFR4TekiR8Graphics
-	.4byte interact__12TekiStrategyFR4TekiR18TekiInteractionKey
-	.4byte spawnCorpseParts__12TekiStrategyFR4Teki
-	.4byte 0x54414941
-	.4byte 0x66697265
-	.4byte 0x41747461
-	.4byte 0x636b4869
-	.4byte 0x62614100
-	.4byte 0x54616941
-	.4byte 0x6374696f
-	.4byte 0x6e000000
-	.4byte 0x54414941
-	.4byte 0x72657365
-	.4byte 0x7276654d
-	.4byte 0x6f74696f
-	.4byte 0x6e000000
-	.4byte 0x803e6f94
-	.4byte 0
-	.4byte 0
-	.4byte 0x803e6f94
-	.4byte 0
-	.4byte 0x803e6f9c
-	.4byte 0
-	.4byte 0
-.global __vt__19TAIAfireAttackHibaA
-__vt__19TAIAfireAttackHibaA:
-	.4byte __RTTI__19TAIAfireAttackHibaA
-	.4byte 0
-	.4byte start__19TAIAfireAttackHibaAFR4Teki
-	.4byte finish__9TaiActionFR4Teki
-	.4byte act__19TAIAfireAttackHibaAFR4Teki
-	.4byte actByEvent__9TaiActionFR9TekiEvent
-	.4byte hasNextState__9TaiActionFv
-	.4byte 0x54414941
-	.4byte 0x74696d65
-	.4byte 0x72526561
-	.4byte 0x6374696f
-	.4byte 0x6e486962
-	.4byte 0x61410000
-	.4byte 0x54414941
-	.4byte 0x74696d65
-	.4byte 0x72526561
-	.4byte 0x6374696f
-	.4byte 0x6e000000
-	.4byte 0x803e6f94
-	.4byte 0
-	.4byte 0
-	.4byte 0x803e6f94
-	.4byte 0
-	.4byte 0x803e6fac
-	.4byte 0
-	.4byte 0
-.global __vt__22TAIAtimerReactionHibaA
-__vt__22TAIAtimerReactionHibaA:
-	.4byte __RTTI__22TAIAtimerReactionHibaA
-	.4byte 0
-	.4byte start__17TAIAtimerReactionFR4Teki
-	.4byte finish__9TaiActionFR4Teki
-	.4byte act__17TAIAtimerReactionFR4Teki
-	.4byte actByEvent__9TaiActionFR9TekiEvent
-	.4byte hasNextState__9TaiActionFv
-	.4byte getFrameMax__22TAIAtimerReactionHibaAFR4Teki
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0x54414941
-	.4byte 0x696e6974
-	.4byte 0x48696261
-	.4byte 0x41000000
-	.4byte 0x803e6f94
-	.4byte 0
-	.4byte 0
-.global __vt__13TAIAinitHibaA
-__vt__13TAIAinitHibaA:
-	.4byte __RTTI__13TAIAinitHibaA
-	.4byte 0
-	.4byte start__13TAIAinitHibaAFR4Teki
-	.4byte finish__9TaiActionFR4Teki
-	.4byte act__13TAIAinitHibaAFR4Teki
-	.4byte actByEvent__9TaiActionFR9TekiEvent
-	.4byte hasNextState__9TaiActionFv
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0x54414968
-	.4byte 0x69626141
-	.4byte 0x50617261
-	.4byte 0x6d657465
-	.4byte 0x72730000
-	.4byte 0x436f7265
-	.4byte 0x4e6f6465
-	.4byte 0
-	.4byte 0x803e6fcc
-	.4byte 0
-	.4byte 0
-	.4byte 0x803e6fcc
-	.4byte 0
-	.4byte 0x803e6fd4
-	.4byte 0
-	.4byte 0
-	.4byte 0x54656b69
-	.4byte 0x50617261
-	.4byte 0x6d657465
-	.4byte 0x72730000
-	.4byte 0x803e6fcc
-	.4byte 0
-	.4byte 0x803e6fd4
-	.4byte 0
-	.4byte 0x803e6fe4
-	.4byte 0
-	.4byte 0
-	.4byte 0x803e6fcc
-	.4byte 0
-	.4byte 0x803e6fd4
-	.4byte 0
-	.4byte 0x803e6fe4
-	.4byte 0
-	.4byte 0x803e6fec
-	.4byte 0
-	.4byte 0
-.global __vt__18TAIhibaAParameters
-__vt__18TAIhibaAParameters:
-	.4byte __RTTI__18TAIhibaAParameters
-	.4byte 0
-	.4byte getAgeNodeType__5ANodeFv
-	.4byte read__14TekiParametersFR18RandomAccessStream
-	.4byte update__4NodeFv
-	.4byte draw__4NodeFR8Graphics
-	.4byte render__4NodeFR8Graphics
-	.4byte concat__4NodeFv
-	.4byte concat__4NodeFR3VQS
-	.4byte concat__4NodeFR3SRT
-	.4byte concat__4NodeFR8Matrix4f
-	.4byte getModelMatrix__4NodeFv
-	.4byte 0x54414965
-	.4byte 0x66666563
-	.4byte 0x74417474
-	.4byte 0x61636b45
-	.4byte 0x76656e74
-	.4byte 0x43616c6c
-	.4byte 0x4261636b
-	.4byte 0x48696261
-	.4byte 0x41000000
-	.4byte 0x54414965
-	.4byte 0x66666563
-	.4byte 0x74417474
-	.4byte 0x61636b45
-	.4byte 0x76656e74
-	.4byte 0x43616c6c
-	.4byte 0x4261636b
-	.4byte 0
-	.4byte 0x803e6ffc
-	.4byte 0
-	.4byte 0
-.global __vt__33TAIeffectAttackEventCallBackHibaA
-__vt__33TAIeffectAttackEventCallBackHibaA:
-	.4byte __RTTI__33TAIeffectAttackEventCallBackHibaA
-	.4byte 0
-	.4byte hitCreature__33TAIeffectAttackEventCallBackHibaAFP20TAIeffectAttackParamP8Creature
-	.4byte hitCreature__28TAIeffectAttackEventCallBackFP20TAIeffectAttackParamP8Creature8Vector3f
-	.4byte hitCreature__28TAIeffectAttackEventCallBackFPQ23zen17particleGeneratorP20TAIeffectAttackParamP8Creature8Vector3f
-	.4byte hitMap__33TAIeffectAttackEventCallBackHibaAFP20TAIeffectAttackParam
-	.4byte playEventSound__28TAIeffectAttackEventCallBackFPQ23zen17particleGeneratorP20TAIeffectAttackParam
-	.4byte ptclHitMap__33TAIeffectAttackEventCallBackHibaAFPQ23zen17particleGeneratorP20TAIeffectAttackParam
-	.4byte hitCheckCulling__33TAIeffectAttackEventCallBackHibaAFPQ23zen17particleGeneratorP20TAIeffectAttackParamP8Creature
-	.4byte 0x496e7465
-	.4byte 0x72616374
-	.4byte 0x696f6e00
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
