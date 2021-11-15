@@ -1,6 +1,12 @@
 #include "types.h"
 
-
+#define OS_INTERRUPTMASK_EXI_2 0x18000
+#define OS_INTERRUPTMASK_PI_DEBUG 0x40
+#define __OS_INTERRUPT_PI_DEBUG 0x19
+#define DB_NO_ERROR 0
+#define ODEMU_ADDR_PC2NNGC 0x10000
+#define ODEMU_OFFSET_NNGC2PC 0x405
+#define ODEMU_ADDR_NNGC2PC 0x1C000
 
 /*
  * --INFO--
@@ -654,32 +660,16 @@ void DBInitComm(void)
  * Address:	80221B74
  * Size:	000054
  */
-void DBInitInterrupts(void)
+void DBInitInterrupts(void)	// matches
 {
-/*
-.loc_0x0:
-  mflr      r0
-  lis       r3, 0x2
-  stw       r0, 0x4(r1)
-  subi      r3, r3, 0x8000
-  stwu      r1, -0x8(r1)
-  bl        -0x2886C
-  li        r3, 0x40
-  bl        -0x28874
-  lis       r3, 0x8022
-  addi      r0, r3, 0x1A80
-  lis       r3, 0x8022
-  stw       r0, 0x34B4(r13)
-  addi      r4, r3, 0x1ABC
-  li        r3, 0x19
-  bl        -0x28BE4
-  li        r3, 0x40
-  bl        -0x28810
-  lwz       r0, 0xC(r1)
-  addi      r1, r1, 0x8
-  mtlr      r0
-  blr
-*/
+	(void)__OSMaskInterrupts(OS_INTERRUPTMASK_EXI_2);
+	(void)__OSMaskInterrupts(OS_INTERRUPTMASK_PI_DEBUG);
+
+	DBGCallback = MWCallback;
+
+	(void)__OSSetInterruptHandler(__OS_INTERRUPT_PI_DEBUG, DBGHandler);
+
+	(void)__OSUnmaskInterrupts(OS_INTERRUPTMASK_PI_DEBUG);
 }
 
 /*
