@@ -3969,7 +3969,7 @@ lbl_802E3F7C:
 	.asciz "TAIanimation"
 	.balign 4
 lbl_802E3F8C:
-	.4byte 0x803E6E58
+	.4byte __RTTI__12TAIanimation
 	.4byte 0x00000000
 	.4byte 0x00000000
 .global __vt__18TAIdororoAnimation
@@ -3987,13 +3987,13 @@ lbl_802E3FC8:
 	.asciz "YaiStrategy"
 	.balign 4
 lbl_802E3FD4:
-	.4byte 0x803e6e68
+	.4byte __RTTI__12TekiStrategy
 	.4byte 0
 	.4byte 0
 lbl_802E3FE0:
-	.4byte 0x803e6e68
+	.4byte __RTTI__12TekiStrategy
 	.4byte 0
-	.4byte 0x803e6e70
+	.4byte __RTTI__11YaiStrategy
 	.4byte 0
 	.4byte 0
 .global __vt__17TAIdororoStrategy
@@ -4015,7 +4015,7 @@ lbl_802E4030:
 	.asciz "TaiAction"
 	.balign 4
 lbl_802E403C:
-	.4byte 0x803e6e80
+	.4byte __RTTI__9TaiAction
 	.4byte 0
 	.4byte 0
 .global __vt__17TAIAgravityDororo
@@ -4027,12 +4027,11 @@ __vt__17TAIAgravityDororo:
 	.4byte act__17TAIAgravityDororoFR4Teki
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
-	.4byte 0x54414941
-	.4byte 0x63686563
-	.4byte 0x6b426172
-	.4byte 0x6b446f72
-	.4byte 0x6f726f00
-	.4byte 0x803e6e80
+lbl_802E4064:
+	.asciz "TAIAcheckBarkDororo"
+	.balign 4
+lbl_802E4078:
+	.4byte __RTTI__9TaiAction
 	.4byte 0
 	.4byte 0
 .global __vt__19TAIAcheckBarkDororo
@@ -4044,30 +4043,29 @@ __vt__19TAIAcheckBarkDororo:
 	.4byte act__19TAIAcheckBarkDororoFR4Teki
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
-	.4byte 0x54414941
-	.4byte 0x6261726b
-	.4byte 0x446f726f
-	.4byte 0x726f0000
-	.4byte 0x54414941
-	.4byte 0x72657365
-	.4byte 0x7276654d
-	.4byte 0x6f74696f
-	.4byte 0x6e000000
-	.4byte 0x803e6e80
+lbl_802E40A0:
+	.asciz "TAIAbarkDororo"
+	.balign 4
+lbl_802E40B0:
+	.asciz "TAIAreserveMotion"
+	.balign 4
+lbl_802E40C4:
+	.4byte __RTTI__9TaiAction
 	.4byte 0
 	.4byte 0
-	.4byte 0x54414941
-	.4byte 0x6d6f7469
-	.4byte 0x6f6e4c6f
-	.4byte 0x6f700000
-	.4byte 0x803e6e80
+lbl_802E40D0:
+	.asciz "TAIAmotionLoop"
+	.balign 4
+lbl_802E40E0:
+	.4byte __RTTI__9TaiAction
 	.4byte 0
-	.4byte 0x803e6e98
+	.4byte __RTTI__17TAIAreserveMotion
 	.4byte 0
 	.4byte 0
-	.4byte 0x803e6e80
+lbl_802E40F4:
+	.4byte __RTTI__9TaiAction
 	.4byte 0
-	.4byte 0x803e6e98
+	.4byte __RTTI__17TAIAreserveMotion
 	.4byte 0
 	.4byte __RTTI__14TAIAmotionLoop
 	.4byte 0
@@ -4082,9 +4080,9 @@ __vt__14TAIAbarkDororo:
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
 	.4byte getFrameMax__14TAIAmotionLoopFR4Teki
-	.4byte 0x496e7465
-	.4byte 0x72616374
-	.4byte 0x696f6e00
+lbl_802E4130:
+	.asciz "Interaction"
+	.balign 4
 	.4byte 0
 	.4byte 0
 	.4byte 0
@@ -4096,16 +4094,13 @@ __vt__14TAIAbarkDororo:
 	.4byte 0
 	.4byte 0
 	.4byte 0
-	.4byte 0x54414941
-	.4byte 0x7472616e
-	.4byte 0x73666f72
-	.4byte 0x6d617469
-	.4byte 0x6f6e446f
-	.4byte 0x726f726f
+lbl_802E4168:
+	.asciz "TAIAtransformationDororo"
+	.balign 4
+lbl_802E4184:
+	.4byte __RTTI__9TaiAction
 	.4byte 0
-	.4byte 0x803e6e80
-	.4byte 0
-	.4byte 0x803e6e98
+	.4byte __RTTI__17TAIAreserveMotion
 	.4byte 0
 	.4byte 0
 .global __vt__24TAIAtransformationDororo
@@ -4117,13 +4112,13 @@ __vt__24TAIAtransformationDororo:
 	.4byte act__24TAIAtransformationDororoFR4Teki
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
-	.4byte 0x54414941
-	.4byte 0x62697274
-	.4byte 0x68446f72
-	.4byte 0x6f726f00
-	.4byte 0x803e6e80
+lbl_802E41B4:
+	.asciz "TAIAbirthDororo"
+	.balign 4
+lbl_802E41C4:
+	.4byte __RTTI__9TaiAction
 	.4byte 0
-	.4byte 0x803e6e98
+	.4byte __RTTI__17TAIAreserveMotion
 	.4byte 0
 	.4byte 0
 .global __vt__15TAIAbirthDororo
@@ -4135,26 +4130,22 @@ __vt__15TAIAbirthDororo:
 	.4byte act__15TAIAbirthDororoFR4Teki
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
-	.4byte 0x54414941
-	.4byte 0x676f5461
-	.4byte 0x72676574
-	.4byte 0x50696b69
+lbl_802E41F4:
+	.asciz "TAIAgoTargetPiki"
+	.balign 4
+lbl_802E4208:
+	.asciz "TAIAgoTargetPriorityFaceDir"
+	.balign 4
+lbl_802E4224:
+	.4byte __RTTI__9TaiAction
 	.4byte 0
-	.4byte 0x54414941
-	.4byte 0x676f5461
-	.4byte 0x72676574
-	.4byte 0x5072696f
-	.4byte 0x72697479
-	.4byte 0x46616365
-	.4byte 0x44697200
-	.4byte 0x803e6e80
-	.4byte 0
-	.4byte 0x803e6e98
+	.4byte __RTTI__17TAIAreserveMotion
 	.4byte 0
 	.4byte 0
-	.4byte 0x803e6e80
+lbl_802E4238:
+	.4byte __RTTI__9TaiAction
 	.4byte 0
-	.4byte 0x803e6e98
+	.4byte __RTTI__17TAIAreserveMotion
 	.4byte 0
 	.4byte __RTTI__27TAIAgoTargetPriorityFaceDir
 	.4byte 0
@@ -4170,11 +4161,11 @@ __vt__16TAIAgoTargetPiki:
 	.4byte hasNextState__9TaiActionFv
 	.4byte checkArrival__16TAIAgoTargetPikiFR4Teki
 	.4byte getWalkVelocity__27TAIAgoTargetPriorityFaceDirFR4Teki
-	.4byte 0x54414941
-	.4byte 0x6e6f5265
-	.4byte 0x61637469
-	.4byte 0x6f6e0000
-	.4byte 0x803e6e80
+lbl_802E4278:
+	.asciz "TAIAnoReaction"
+	.balign 4
+lbl_802E4288:
+	.4byte __RTTI__9TaiAction
 	.4byte 0
 	.4byte 0
 	.4byte 0
@@ -4184,21 +4175,22 @@ __vt__16TAIAgoTargetPiki:
 	.4byte 0
 	.4byte 0
 	.4byte 0
-	.4byte 0x54414941
-	.4byte 0x77616974
-	.4byte 0x446f726f
-	.4byte 0x726f0000
-	.4byte 0x54414941
-	.4byte 0x77616974
+lbl_802E42B0:
+	.asciz "TAIAwaitDororo"
+	.balign 4
+lbl_802E42C0:
+	.asciz "TAIAwait"
+	.balign 4
+lbl_802E42CC:
+	.4byte __RTTI__9TaiAction
 	.4byte 0
-	.4byte 0x803e6e80
-	.4byte 0
-	.4byte 0x803e6e98
+	.4byte __RTTI__17TAIAreserveMotion
 	.4byte 0
 	.4byte 0
-	.4byte 0x803e6e80
+lbl_802E42E0:
+	.4byte __RTTI__9TaiAction
 	.4byte 0
-	.4byte 0x803e6e98
+	.4byte __RTTI__17TAIAreserveMotion
 	.4byte 0
 	.4byte __RTTI__8TAIAwait
 	.4byte 0
@@ -4213,31 +4205,31 @@ __vt__14TAIAwaitDororo:
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
 	.4byte getWaitCounterMax__14TAIAwaitDororoFR4Teki
-	.4byte 0x54414941
-	.4byte 0x666c6963
-	.4byte 0x6b696e67
-	.4byte 0x446f726f
-	.4byte 0x726f0000
-	.4byte 0x54414941
-	.4byte 0x6d6f7469
-	.4byte 0x6f6e0000
-	.4byte 0x803e6e80
+lbl_802E431C:
+	.asciz "TAIAflickingDororo"
+	.balign 4
+lbl_802E4330:
+	.asciz "TAIAmotion"
+	.balign 4
+lbl_802E433C:
+	.4byte __RTTI__9TaiAction
 	.4byte 0
 	.4byte 0
-	.4byte 0x54414941
-	.4byte 0x666c6963
-	.4byte 0x6b696e67
+lbl_802E4348:
+	.asciz "TAIAflicking"
+	.balign 4
+lbl_802E4358:
+	.4byte __RTTI__9TaiAction
 	.4byte 0
-	.4byte 0x803e6e80
-	.4byte 0
-	.4byte 0x803e6ee0
+	.4byte __RTTI__10TAIAmotion
 	.4byte 0
 	.4byte 0
-	.4byte 0x803e6e80
+lbl_802E436C:
+	.4byte __RTTI__9TaiAction
 	.4byte 0
-	.4byte 0x803e6ee0
+	.4byte __RTTI__10TAIAmotion
 	.4byte 0
-	.4byte 0x803e6ee8
+	.4byte __RTTI__12TAIAflicking
 	.4byte 0
 	.4byte 0
 .global __vt__18TAIAflickingDororo
@@ -4251,26 +4243,24 @@ __vt__18TAIAflickingDororo:
 	.4byte hasNextState__9TaiActionFv
 	.4byte flick__12TAIAflickingFR4Teki
 	.4byte getFlickDirection__12TAIAflickingFR4Teki
-	.4byte 0x54414941
-	.4byte 0x676f476f
-	.4byte 0x616c5061
-	.4byte 0x7468446f
-	.4byte 0x726f726f
+lbl_802E43AC:
+	.asciz "TAIAgoGoalPathDororo"
+	.balign 4
+lbl_802E43C4:
+	.asciz "TAIAgoGoalPath"
+	.balign 4
+lbl_802E43D4:
+	.4byte __RTTI__9TaiAction
 	.4byte 0
-	.4byte 0x54414941
-	.4byte 0x676f476f
-	.4byte 0x616c5061
-	.4byte 0x74680000
-	.4byte 0x803e6e80
-	.4byte 0
-	.4byte 0x803e6e98
+	.4byte __RTTI__17TAIAreserveMotion
 	.4byte 0
 	.4byte __RTTI__27TAIAgoTargetPriorityFaceDir
 	.4byte 0
 	.4byte 0
-	.4byte 0x803e6e80
+lbl_802E43F0:
+	.4byte __RTTI__9TaiAction
 	.4byte 0
-	.4byte 0x803e6e98
+	.4byte __RTTI__17TAIAreserveMotion
 	.4byte 0
 	.4byte __RTTI__27TAIAgoTargetPriorityFaceDir
 	.4byte 0
@@ -4288,14 +4278,14 @@ __vt__20TAIAgoGoalPathDororo:
 	.4byte hasNextState__9TaiActionFv
 	.4byte checkArrival__14TAIAgoGoalPathFR4Teki
 	.4byte getWalkVelocity__20TAIAgoGoalPathDororoFR4Teki
-	.4byte 0x54656b69
-	.4byte 0x436f6e64
-	.4byte 0x6974696f
-	.4byte 0x6e000000
-	.4byte 0x436f6e64
-	.4byte 0x6974696f
-	.4byte 0x6e000000
-	.4byte 0x803e6f08
+lbl_802E4438:
+	.asciz "TekiCondition"
+	.balign 4
+lbl_802E4448:
+	.asciz "Condition"
+	.balign 4
+lbl_802E4454:
+	.4byte __RTTI__9Condition
 	.4byte 0
 	.4byte 0
 	.4byte 0
@@ -4304,12 +4294,11 @@ __vt__20TAIAgoGoalPathDororo:
 	.4byte 0
 	.4byte 0
 	.4byte 0
-	.4byte 0x54414941
-	.4byte 0x6b696c6c
-	.4byte 0x546f7563
-	.4byte 0x6850696b
-	.4byte 0x69000000
-	.4byte 0x803e6e80
+lbl_802E4478:
+	.asciz "TAIAkillTouchPiki"
+	.balign 4
+lbl_802E448C:
+	.4byte __RTTI__9TaiAction
 	.4byte 0
 	.4byte 0
 .global __vt__17TAIAkillTouchPiki
@@ -4321,23 +4310,24 @@ __vt__17TAIAkillTouchPiki:
 	.4byte act__17TAIAkillTouchPikiFR4Teki
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
-	.4byte 0x54414941
-	.4byte 0x6479696e
-	.4byte 0x67446f72
-	.4byte 0x6f726f00
-	.4byte 0x54414941
-	.4byte 0x6479696e
-	.4byte 0x67000000
-	.4byte 0x803e6e80
+lbl_802E44B4:
+	.asciz "TAIAdyingDororo"
+	.balign 4
+lbl_802E44C4:
+	.asciz "TAIAdying"
+	.balign 4
+lbl_802E44D0:
+	.4byte __RTTI__9TaiAction
 	.4byte 0
-	.4byte 0x803e6ee0
+	.4byte __RTTI__10TAIAmotion
 	.4byte 0
 	.4byte 0
-	.4byte 0x803e6e80
+lbl_802E44E4:
+	.4byte __RTTI__9TaiAction
 	.4byte 0
-	.4byte 0x803e6ee0
+	.4byte __RTTI__10TAIAmotion
 	.4byte 0
-	.4byte 0x803e6f18
+	.4byte __RTTI__9TAIAdying
 	.4byte 0
 	.4byte 0
 .global __vt__15TAIAdyingDororo
@@ -4349,11 +4339,11 @@ __vt__15TAIAdyingDororo:
 	.4byte act__15TAIAdyingDororoFR4Teki
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
-	.4byte 0x54414941
-	.4byte 0x696e6974
-	.4byte 0x446f726f
-	.4byte 0x726f0000
-	.4byte 0x803e6e80
+lbl_802E451C:
+	.asciz "TAIAinitDororo"
+	.balign 4
+lbl_802E452C:
+	.4byte __RTTI__9TaiAction
 	.4byte 0
 	.4byte 0
 .global __vt__14TAIAinitDororo
@@ -4372,40 +4362,41 @@ __vt__14TAIAinitDororo:
 	.4byte 0
 	.4byte 0
 	.4byte 0
-	.4byte 0x54414964
-	.4byte 0x6f726f72
-	.4byte 0x6f506172
-	.4byte 0x616d6574
-	.4byte 0x65727300
-	.4byte 0x436f7265
-	.4byte 0x4e6f6465
-	.4byte 0
-	.4byte 0x803e6f38
-	.4byte 0
-	.4byte 0
-	.4byte 0x803e6f38
-	.4byte 0
-	.4byte 0x803e6f40
+lbl_802E4570:
+	.asciz "TAIdororoParameters"
+	.balign 4
+lbl_802E4584:
+	.asciz "CoreNode"
+	.balign 4
+lbl_802E4590:
+	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte 0
-	.4byte 0x54656b69
-	.4byte 0x50617261
-	.4byte 0x6d657465
-	.4byte 0x72730000
-	.4byte 0x803e6f38
+lbl_802E459C:
+	.4byte __RTTI__5ANode
 	.4byte 0
-	.4byte 0x803e6f40
-	.4byte 0
-	.4byte 0x803e6f50
+	.4byte __RTTI__8CoreNode
 	.4byte 0
 	.4byte 0
-	.4byte 0x803e6f38
+lbl_802E45B0:
+	.asciz "TekiParameters"
+	.balign 4
+lbl_802E45C0:
+	.4byte __RTTI__5ANode
 	.4byte 0
-	.4byte 0x803e6f40
+	.4byte __RTTI__8CoreNode
 	.4byte 0
-	.4byte 0x803e6f50
+	.4byte __RTTI__4Node
 	.4byte 0
-	.4byte 0x803e6f58
+	.4byte 0
+lbl_802E45DC:
+	.4byte __RTTI__5ANode
+	.4byte 0
+	.4byte __RTTI__8CoreNode
+	.4byte 0
+	.4byte __RTTI__4Node
+	.4byte 0
+	.4byte __RTTI__14TekiParameters
 	.4byte 0
 	.4byte 0
 .global __vt__19TAIdororoParameters
@@ -4450,86 +4441,86 @@ lbl_803E6E50:
 lbl_803E6E54:
 	.4byte 0xC1800000
 __RTTI__12TAIanimation:
-	.4byte 0x802E3F7C
+	.4byte lbl_802E3F7C
 	.4byte 0x00000000
 __RTTI__18TAIdororoAnimation:
-	.4byte 0x802e3f68
-	.4byte 0x802e3f8c
+	.4byte lbl_802E3F68
+	.4byte lbl_802E3F8C
 __RTTI__12TekiStrategy:
-	.4byte 0x802e3fb8
+	.4byte lbl_802E3FB8
 	.4byte 0
 __RTTI__11YaiStrategy:
-	.4byte 0x802e3fc8
-	.4byte 0x802e3fd4
+	.4byte lbl_802E3FC8
+	.4byte lbl_802E3FD4
 __RTTI__17TAIdororoStrategy:
-	.4byte 0x802e3fa4
-	.4byte 0x802e3fe0
+	.4byte lbl_802E3FA4
+	.4byte lbl_802E3FE0
 __RTTI__9TaiAction:
-	.4byte 0x802e4030
+	.4byte lbl_802E4030
 	.4byte 0
 __RTTI__17TAIAgravityDororo:
-	.4byte 0x802e401c
-	.4byte 0x802e403c
+	.4byte lbl_802E401C
+	.4byte lbl_802E403C
 __RTTI__19TAIAcheckBarkDororo:
-	.4byte 0x802e4064
-	.4byte 0x802e4078
+	.4byte lbl_802E4064
+	.4byte lbl_802E4078
 __RTTI__17TAIAreserveMotion:
-	.4byte 0x802e40b0
-	.4byte 0x802e40c4
+	.4byte lbl_802E40B0
+	.4byte lbl_802E40C4
 __RTTI__14TAIAmotionLoop:
-	.4byte 0x802e40d0
-	.4byte 0x802e40e0
+	.4byte lbl_802E40D0
+	.4byte lbl_802E40E0
 __RTTI__14TAIAbarkDororo:
-	.4byte 0x802e40a0
-	.4byte 0x802e40f4
+	.4byte lbl_802E40A0
+	.4byte lbl_802E40F4
 __RTTI__24TAIAtransformationDororo:
-	.4byte 0x802e4168
-	.4byte 0x802e4184
+	.4byte lbl_802E4168
+	.4byte lbl_802E4184
 __RTTI__15TAIAbirthDororo:
-	.4byte 0x802e41b4
-	.4byte 0x802e41c4
+	.4byte lbl_802E41B4
+	.4byte lbl_802E41C4
 __RTTI__27TAIAgoTargetPriorityFaceDir:
-	.4byte 0x802e4208
-	.4byte 0x802e4224
+	.4byte lbl_802E4208
+	.4byte lbl_802E4224
 __RTTI__16TAIAgoTargetPiki:
-	.4byte 0x802e41f4
-	.4byte 0x802e4238
+	.4byte lbl_802E41F4
+	.4byte lbl_802E4238
 __RTTI__8TAIAwait:
-	.4byte 0x802e42c0
-	.4byte 0x802e42cc
+	.4byte lbl_802E42C0
+	.4byte lbl_802E42CC
 __RTTI__14TAIAwaitDororo:
-	.4byte 0x802e42b0
-	.4byte 0x802e42e0
+	.4byte lbl_802E42B0
+	.4byte lbl_802E42E0
 __RTTI__10TAIAmotion:
-	.4byte 0x802e4330
-	.4byte 0x802e433c
+	.4byte lbl_802E4330
+	.4byte lbl_802E433C
 __RTTI__12TAIAflicking:
-	.4byte 0x802e4348
-	.4byte 0x802e4358
+	.4byte lbl_802E4348
+	.4byte lbl_802E4358
 __RTTI__18TAIAflickingDororo:
-	.4byte 0x802e431c
-	.4byte 0x802e436c
+	.4byte lbl_802E431C
+	.4byte lbl_802E436C
 __RTTI__14TAIAgoGoalPath:
-	.4byte 0x802e43c4
-	.4byte 0x802e43d4
+	.4byte lbl_802E43C4
+	.4byte lbl_802E43D4
 __RTTI__20TAIAgoGoalPathDororo:
-	.4byte 0x802e43ac
-	.4byte 0x802e43f0
+	.4byte lbl_802E43AC
+	.4byte lbl_802E43F0
 __RTTI__9Condition:
-	.4byte 0x802e4448
+	.4byte lbl_802E4448
 	.4byte 0
 __RTTI__17TAIAkillTouchPiki:
-	.4byte 0x802e4478
-	.4byte 0x802e448c
+	.4byte lbl_802E4478
+	.4byte lbl_802E448C
 __RTTI__9TAIAdying:
-	.4byte 0x802e44c4
-	.4byte 0x802e44d0
+	.4byte lbl_802E44C4
+	.4byte lbl_802E44D0
 __RTTI__15TAIAdyingDororo:
-	.4byte 0x802e44b4
-	.4byte 0x802e44e4
+	.4byte lbl_802E44B4
+	.4byte lbl_802E44E4
 __RTTI__14TAIAinitDororo:
-	.4byte 0x802e451c
-	.4byte 0x802e452c
+	.4byte lbl_802E451C
+	.4byte lbl_802E452C
 lbl_803E6F30:
 	.asciz "ANode"
 	.balign 4
@@ -4537,20 +4528,20 @@ __RTTI__5ANode:
 	.4byte lbl_803E6F30
 	.4byte 0
 __RTTI__8CoreNode:
-	.4byte 0x802e4584
-	.4byte 0x802e4590
+	.4byte lbl_802E4584
+	.4byte lbl_802E4590
 lbl_803E6F48:
 	.asciz "Node"
 	.balign 4
 __RTTI__4Node:
 	.4byte lbl_803E6F48
-	.4byte 0x802e459c
+	.4byte lbl_802E459C
 __RTTI__14TekiParameters:
-	.4byte 0x802e45b0
-	.4byte 0x802e45c0
+	.4byte lbl_802E45B0
+	.4byte lbl_802E45C0
 __RTTI__19TAIdororoParameters:
-	.4byte 0x802e4570
-	.4byte 0x802e45dc
+	.4byte lbl_802E4570
+	.4byte lbl_802E45DC
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 0x8
