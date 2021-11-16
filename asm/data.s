@@ -24483,46 +24483,47 @@ __vt__6ActBou:
 	.4byte lbl_800A791C
 	.4byte lbl_800A79D0
 	.4byte lbl_800A79BC
-	.4byte 0
-	.4byte 0x61694272
-	.4byte 0x69646765
-	.4byte 0x2e637070
-	.4byte 0
-	.4byte 0x61694272
-	.4byte 0x69646765
-	.4byte 0
-	.4byte 0x61707072
-	.4byte 0x6f616368
-	.4byte 0
-	.4byte 0x496e7465
-	.4byte 0x72616374
-	.4byte 0x696f6e00
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
+.balign 8
+.global lbl_802B5BE0
+lbl_802B5BE0:
+	.asciz "aiBridge.cpp"
+	.balign 4
+.global lbl_802B5BF0
+lbl_802B5BF0:
+	.asciz "aiBridge"
+	.balign 4
+.global lbl_802B5BFC
+lbl_802B5BFC:
+	.asciz "approach"
+	.balign 4
+.global lbl_802B5C08
+lbl_802B5C08:
+	.asciz "Interaction"
+	.balign 4
 	.4byte 0
 	.4byte 0
 	.4byte 0
 	.4byte 0
 	.4byte 0
 	.4byte 0
-	.4byte 0x41637442
-	.4byte 0x72696467
-	.4byte 0x65000000
-	.4byte 0x50616e69
-	.4byte 0x416e696d
-	.4byte 0x4b65794c
-	.4byte 0x69737465
-	.4byte 0x6e657200
-	.4byte 0x52656365
-	.4byte 0x69766572
-	.4byte 0x3c50696b
-	.4byte 0x693e0000
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.asciz "ActBridge"
+	.balign 4
+	.asciz "PaniAnimKeyListener"
+	.balign 4
+	.asciz "Receiver<Piki>"
+	.balign 4
+.global lbl_802B5C70
+lbl_802B5C70:
 	.4byte 0x803dfed8
 	.4byte 0
 	.4byte 0
+.global lbl_802B5C7C
+lbl_802B5C7C:
 	.4byte 0x803dfed0
 	.4byte 0x50
 	.4byte 0x803dfed8
@@ -24564,6 +24565,8 @@ __vt__9ActBridge:
 	.4byte 0
 	.4byte 0
 	.4byte 0
+.global lbl_802B5D18
+lbl_802B5D18:
 	.4byte lbl_800A7908
 	.4byte lbl_800A7930
 	.4byte lbl_800A7944
@@ -24575,22 +24578,23 @@ __vt__9ActBridge:
 	.4byte lbl_800A791C
 	.4byte lbl_800A79D0
 	.4byte lbl_800A79BC
-	.4byte 0
-	.4byte 0x61694272
-	.4byte 0x65616b57
-	.4byte 0x616c6c2e
-	.4byte 0x63707000
-	.4byte 0x61694272
-	.4byte 0x65616b57
-	.4byte 0x616c6c00
+.balign 8
+.global lbl_802B5D48
+lbl_802B5D48:
+	.asciz "aiBreakWall.cpp"
+	.balign 4
+.global lbl_802B5D58
+lbl_802B5D58:
+	.asciz "aiBreakWall"
+	.balign 4
 .global lbl_802B5D64
 lbl_802B5D64:
-	.4byte 0x62726561
-	.4byte 0x6B57616C
-	.4byte 0x6C000000
-	.4byte 0x496E7465
-	.4byte 0x72616374
-	.4byte 0x696F6E00
+	.asciz "breakWall"
+	.balign 4
+.global lbl_802B5D70
+lbl_802B5D70:
+	.asciz "Interaction"
+	.balign 4
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x00000000
@@ -24602,24 +24606,27 @@ lbl_802B5D64:
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x00000000
-	.4byte 0x41637442
-	.4byte 0x7265616B
-	.4byte 0x57616C6C
-	.4byte 0x00000000
-	.4byte 0x50616E69
-	.4byte 0x416E696D
-	.4byte 0x4B65794C
-	.4byte 0x69737465
-	.4byte 0x6E657200
-	.4byte 0x52656365
-	.4byte 0x69766572
-	.4byte 0x3C50696B
-	.4byte 0x693E0000
+.global lbl_802B5DA8
+lbl_802B5DA8:
+	.asciz "ActBreakWall"
+	.balign 4
+.global lbl_802B5DB8
+lbl_802B5DB8:
+	.asciz "PaniAnimKeyListener"
+	.balign 4
+.global lbl_802B5DCC
+lbl_802B5DCC:
+	.asciz "Receiver<Piki>"
+	.balign 4
+.global lbl_802B5DDC
+lbl_802B5DDC:
 	.4byte 0x803DFF18
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x803DFF10
 	.4byte 0x00000014
+.global lbl_802B5DE8
+lbl_802B5DE8:
 	.4byte 0x803DFF18
 	.4byte 0x00000000
 	.4byte 0x803DFF28

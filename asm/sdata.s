@@ -4124,7 +4124,7 @@ __RTTI__12FormationMgr:
 	.4byte 0
 .global totalUfoParts__11PlayerState
 totalUfoParts__11PlayerState:
-	.4byte 0x0000001E
+	.4byte 30
 .global lbl_803DEBDC
 lbl_803DEBDC:
 	.4byte 0x00000000
@@ -4134,17 +4134,30 @@ lbl_803DEBE0:
 .global lbl_803DEBE4
 lbl_803DEBE4:
 	.4byte 0x00000000
-	.4byte 0x63617272
-	.4byte 0x79000000
-	.4byte 0x61737369
-	.4byte 0x676E0000
-	.4byte 0x61667465
-	.4byte 0x72000000
-	.4byte 0x70697374
-	.4byte 0x6F6E0000
-	.4byte 0x73706563
-	.4byte 0x69616C00
-	.4byte 0x36000000
+.global lbl_803DEBE8
+lbl_803DEBE8:
+	.asciz "carry"
+	.balign 4
+.global lbl_803DEBF0
+lbl_803DEBF0:
+	.asciz "assign"
+	.balign 4
+.global lbl_803DEBF8
+lbl_803DEBF8:
+	.asciz "after"
+	.balign 4
+.global lbl_803DEC00
+lbl_803DEC00:
+	.asciz "piston"
+	.balign 4
+.global lbl_803DEC08
+lbl_803DEC08:
+	.asciz "special"
+	.balign 4
+.global lbl_803DEC10
+lbl_803DEC10:
+	.asciz "6"
+	.balign 4
 .global lbl_803DEC14
 lbl_803DEC14:
 	.4byte 0x00000000
@@ -4235,16 +4248,28 @@ lbl_803DEC94:
 .global lbl_803DEC98
 lbl_803DEC98:
 	.4byte 0x00000000
+.global lbl_803DEC9C
+lbl_803DEC9C:
 	.4byte 0x802AE0D0
 	.4byte 0x00000000
-	.4byte 0x414E6F64
-	.4byte 0x65000000
+.global lbl_803DECA4
+lbl_803DECA4:
+	.asciz "ANode"
+	.balign 4
+.global lbl_803DECAC
+lbl_803DECAC:
 	.4byte 0x803DECA4
 	.4byte 0x00000000
+.global lbl_803DECB4
+lbl_803DECB4:
 	.4byte 0x802AE108
 	.4byte 0x802AE114
-	.4byte 0x4E6F6465
-	.4byte 0x00000000
+.global lbl_803DECBC
+lbl_803DECBC:
+	.asciz "Node"
+	.balign 4
+.global lbl_803DECC4
+lbl_803DECC4:
 	.4byte 0x803DECBC
 	.4byte 0x802AE120
 .global __RTTI__9DemoParms
@@ -4252,14 +4277,22 @@ __RTTI__9DemoParms:
 	.4byte 0x802ae0fc
 	.4byte 0x802ae134
 	.4byte 0
-	.4byte 0x4f464600
-	.4byte 0x4f4e0000
-	.4byte 0x5345454e
-	.4byte 0
+.global lbl_803DECD8
+lbl_803DECD8:
+	.asciz "OFF"
+	.balign 4
+.global lbl_803DECDC
+lbl_803DECDC:
+	.asciz "ON"
+	.balign 4
+.global lbl_803DECE0
+lbl_803DECE0:
+	.asciz "SEEN"
+	.balign 4
 .global lbl_803DECE8
 lbl_803DECE8:
-	.4byte 0x3C4E6F64
-	.4byte 0x653E0000
+	.asciz "<Node>"
+	.balign 4
 .global lbl_803DECF0
 lbl_803DECF0:
 	.4byte 0x70303000
@@ -4435,16 +4468,23 @@ pikiMabiki__6AIPerf:
 	.byte 0x1
 .global optLevel__6AIPerf
 optLevel__6AIPerf:
-	.4byte 0x00000002
-	.4byte 0x73746F70
-	.4byte 0x00000000
-	.4byte 0x6E6F2073
-	.4byte 0x746F7000
-	.4byte 0x736C6970
-	.4byte 0x00000000
+	.4byte 2
+.global lbl_803DEE20
+lbl_803DEE20:
+	.asciz "stop"
+	.balign 4
+.global lbl_803DEE28
+lbl_803DEE28:
+	.asciz "no stop"
+	.balign 4
+.global lbl_803DEE30
+lbl_803DEE30:
+	.asciz "slip"
+	.balign 4
 .global lbl_803DEE38
 lbl_803DEE38:
-	.4byte 0x25730000
+	.asciz "%s"
+	.balign 4
 .global "__RTTI__18IDelegate1<R4Menu>_4"
 "__RTTI__18IDelegate1<R4Menu>_4":
 	.4byte 0x802aedcc
@@ -6106,30 +6146,48 @@ lbl_803DFAF4:
 	.4byte 0x00000000
 .global lbl_803DFAF8
 lbl_803DFAF8:
-	.4byte 0x53452025
-	.4byte 0x64000000
-	.4byte 0x2D2D2D2D
-	.4byte 0x2D000000
-	.4byte 0x62617474
-	.4byte 0x6C650000
-	.4byte 0x70656C6C
-	.4byte 0x65740000
-	.4byte 0x6F6E796F
-	.4byte 0x6E000000
-	.4byte 0x6275696C
-	.4byte 0x64000000
-	.4byte 0x77617465
-	.4byte 0x72000000
-	.4byte 0x66726565
-	.4byte 0x00000000
-	.4byte 0x3F3F3F3F
-	.4byte 0x00000000
-	.4byte 0x44414D45
-	.4byte 0x00000000
+	.asciz "SE %d"
+	.balign 4
+.global lbl_803DFB00
+lbl_803DFB00:
+	.asciz "-----"
+	.balign 4
+.global lbl_803DFB08
+lbl_803DFB08:
+	.asciz "battle"
+	.balign 4
+.global lbl_803DFB10
+lbl_803DFB10:
+	.asciz "pellet"
+	.balign 4
+.global lbl_803DFB18
+lbl_803DFB18:
+	.asciz "onyon"
+	.balign 4
+.global lbl_803DFB20
+lbl_803DFB20:
+	.asciz "build"
+	.balign 4
+.global lbl_803DFB28
+lbl_803DFB28:
+	.asciz "water"
+	.balign 4
+.global lbl_803DFB30
+lbl_803DFB30:
+	.asciz "free"
+	.balign 4
+.global lbl_803DFB38
+lbl_803DFB38:
+	.asciz "????"
+	.balign 4
+.global lbl_803DFB40
+lbl_803DFB40:
+	.asciz "DAME"
+	.balign 4
 .global lbl_803DFB48
 lbl_803DFB48:
-	.4byte 0x3C706F73
-	.4byte 0x3E000000
+	.asciz "<pos>"
+	.balign 4
 .global lbl_803DFB50
 lbl_803DFB50:
 	.4byte 0x00000000
@@ -6150,8 +6208,8 @@ lbl_803DFB64:
 	.4byte 0x00000000
 .global lbl_803DFB68
 lbl_803DFB68:
-	.4byte 0x3C4E6F64
-	.4byte 0x653E0000
+	.asciz "<Node>"
+	.balign 4
 .global lbl_803DFB70
 lbl_803DFB70:
 	.4byte 0x70303000
@@ -6163,8 +6221,8 @@ lbl_803DFB78:
 	.4byte 0x70303200
 .global lbl_803DFB7C
 lbl_803DFB7C:
-	.4byte 0x7061726D
-	.4byte 0x732F0000
+	.asciz "parms/"
+	.balign 4
 .global lbl_803DFB84
 lbl_803DFB84:
 	.4byte 0x00000000
@@ -6590,13 +6648,20 @@ __RTTI__6ActBou:
 	.4byte 0x802b5b38
 .global lbl_803DFEA8
 lbl_803DFEA8:
-	.4byte 0x42726964
-	.4byte 0x67650000
-	.4byte 0x6465746F
-	.4byte 0x75720000
-	.4byte 0x676F0000
-	.4byte 0x776F726B
-	.4byte 0x00000000
+	.asciz "Bridge"
+	.balign 4
+.global lbl_803DFEB0
+lbl_803DFEB0:
+	.asciz "detour"
+	.balign 4
+.global lbl_803DFEB8
+lbl_803DFEB8:
+	.asciz "go"
+	.balign 4
+.global lbl_803DFEBC
+lbl_803DFEBC:
+	.asciz "work"
+	.balign 4
 .global lbl_803DFEC4
 lbl_803DFEC4:
 	.4byte 0x00000000
@@ -6610,14 +6675,14 @@ lbl_803DFECC:
 	.4byte 0x00000000
 	.4byte 0x802B5C60
 	.4byte 0x00000000
-	.4byte 0x41637469
-	.4byte 0x6F6E0000
+	.asciz "Action"
+	.balign 4
 	.4byte 0x803DFEE0
-	.4byte 0x802B5C70
+	.4byte lbl_802B5C70
 .global __RTTI__9ActBridge
 __RTTI__9ActBridge:
 	.4byte 0x802b5c40
-	.4byte 0x802b5c7c
+	.4byte lbl_802B5C7C
 .global lbl_803DFEF8
 lbl_803DFEF8:
 	.4byte 0x00000000
@@ -6843,32 +6908,54 @@ lbl_803E0034:
 .global lbl_803E0038
 lbl_803E0038:
 	.4byte 0x00000000
-	.4byte 0x676F0000
-	.4byte 0x77616974
-	.4byte 0x00000000
-	.4byte 0x6C696674
-	.4byte 0x00000000
-	.4byte 0x6D6F7665
-	.4byte 0x00000000
-	.4byte 0x67757275
-	.4byte 0x00000000
+.global lbl_803E003C
+lbl_803E003C:
+	.asciz "go"
+	.balign 4
+.global lbl_803E0040
+lbl_803E0040:
+	.asciz "wait"
+	.balign 4
+.global lbl_803E0048
+lbl_803E0048:
+	.asciz "lift"
+	.balign 4
+.global lbl_803E0050
+lbl_803E0050:
+	.asciz "move"
+	.balign 4
+.global lbl_803E0058
+lbl_803E0058:
+	.asciz "guru"
+	.balign 4
 .global lbl_803E0060
 lbl_803E0060:
-	.4byte 0x676F616C
-	.4byte 0x00000000
-	.4byte 0x70757400
-	.4byte 0x74756265
-	.4byte 0x00000000
-	.4byte 0x76657274
-	.4byte 0x00000000
-	.4byte 0x6F746865
-	.4byte 0x72000000
+	.asciz "goal"
+	.balign 4
+.global lbl_803E0068
+lbl_803E0068:
+	.asciz "put"
+	.balign 4
+.global lbl_803E006C
+lbl_803E006C:
+	.asciz "tube"
+	.balign 4
+.global lbl_803E0074
+lbl_803E0074:
+	.asciz "vert"
+	.balign 4
+.global lbl_803E007C
+lbl_803E007C:
+	.asciz "other"
+	.balign 4
 .global lbl_803E0084
 lbl_803E0084:
-	.4byte 0x20000000
+	.asciz " "
+	.balign 4
 .global lbl_803E0088
 lbl_803E0088:
-	.4byte 0x25640000
+	.asciz "%d"
+	.balign 4
 .global lbl_803E008C
 lbl_803E008C:
 	.4byte 0x00000000
@@ -9330,16 +9417,34 @@ lbl_803E1218:
 .global lbl_803E121C
 lbl_803E121C:
 	.4byte 0x00000000
-	.4byte 0x41000000
-	.4byte 0x42000000
-	.4byte 0x43000000
-	.4byte 0x44000000
-	.4byte 0x45000000
-	.4byte 0x46000000
+.global lbl_803E1220
+lbl_803E1220:
+	.asciz "A"
+	.balign 4
+.global lbl_803E1224
+lbl_803E1224:
+	.asciz "B"
+	.balign 4
+.global lbl_803E1228
+lbl_803E1228:
+	.asciz "C"
+	.balign 4
+.global lbl_803E122C
+lbl_803E122C:
+	.asciz "D"
+	.balign 4
+.global lbl_803E1230
+lbl_803E1230:
+	.asciz "E"
+	.balign 4
+.global lbl_803E1234
+lbl_803E1234:
+	.asciz "F"
+	.balign 4
 .global lbl_803E1238
 lbl_803E1238:
-	.4byte 0x25732564
-	.4byte 0x00000000
+	.asciz "%s%d"
+	.balign 4
 .global lbl_803E1240
 lbl_803E1240:
 	.4byte 0x00000000
