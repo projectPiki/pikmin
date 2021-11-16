@@ -1164,9 +1164,3 @@ eventCallBack__12BreathEffect:
 .global pGameInfo__3zen
 pGameInfo__3zen:
 	.skip 0x8
-.global pUpTex__Q23zen19ArrowCenterCallBack
-pUpTex__Q23zen19ArrowCenterCallBack:
-	.skip 0x4
-.global pDownTex__Q23zen19ArrowCenterCallBack
-pDownTex__Q23zen19ArrowCenterCallBack:
-	.skip 0x4
