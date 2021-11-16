@@ -5685,34 +5685,20 @@ modes:
 	.4byte 0x803DD06C
 .global lbl_80228350
 lbl_80228350:
-	.4byte 0x436F7265
-	.4byte 0x4E6F6465
-	.4byte 0x00000000
-	.4byte 0x3C534345
-	.4byte 0x4E455F4B
-	.4byte 0x45595F41
-	.4byte 0x4E4D5F49
-	.4byte 0x4E464F3E
-	.4byte 0x00000000
-	.4byte 0x3C4B4559
-	.4byte 0x5F43414D
-	.4byte 0x4552415F
-	.4byte 0x414E4D3E
-	.4byte 0x00000000
-	.4byte 0x3C4B4559
-	.4byte 0x5F43414D
-	.4byte 0x4552415F
-	.4byte 0x5441424C
-	.4byte 0x453E0000
-	.4byte 0x63616D5F
-	.4byte 0x706F735F
-	.4byte 0x78000000
-	.4byte 0x63616D5F
-	.4byte 0x706F735F
-	.4byte 0x79000000
-	.4byte 0x63616D5F
-	.4byte 0x706F735F
-	.4byte 0x7A000000
+	.asciz "CoreNode"
+	.balign 4
+	.asciz "<SCENE_KEY_ANM_INFO>"
+	.balign 4
+	.asciz "<KEY_CAMERA_ANM>"
+	.balign 4
+	.asciz "<KEY_CAMERA_TABLE>"
+	.balign 4
+	.asciz "cam_pos_x"
+	.balign 4
+	.asciz "cam_pos_y"
+	.balign 4
+	.asciz "cam_pos_z"
+	.balign 4
 	.4byte 0x63616D5F
 	.4byte 0x6C61745F
 	.4byte 0x78000000
@@ -46501,108 +46487,42 @@ __vt__25TaiMoveNestPositionAction:
 	.4byte hasNextState__9TaiActionFv
 .global lbl_802C9F20
 lbl_802C9F20:
-	.4byte 0x7461696E
-	.4byte 0x61706B69
-	.4byte 0x642E6370
-	.4byte 0x70000000
-	.4byte 0x7461696E
-	.4byte 0x61706B69
-	.4byte 0x64000000
-	.4byte 0x53545255
-	.4byte 0x47474C45
-	.4byte 0x5F4C4F4F
-	.4byte 0x505F434F
-	.4byte 0x554E5400
-	.4byte 0x43415252
-	.4byte 0x59494E47
-	.4byte 0x5F56454C
-	.4byte 0x4F434954
-	.4byte 0x59000000
-	.4byte 0x43415252
-	.4byte 0x59494E47
-	.4byte 0x5F464C49
-	.4byte 0x4748545F
-	.4byte 0x48454947
-	.4byte 0x48540000
-	.4byte 0x54414B49
-	.4byte 0x4E475F4F
-	.4byte 0x46465F46
-	.4byte 0x4C494748
-	.4byte 0x545F4845
-	.4byte 0x49474854
-	.4byte 0x00000000
-	.4byte 0x57414E44
-	.4byte 0x4552494E
-	.4byte 0x475F484F
-	.4byte 0x5645525F
-	.4byte 0x50455249
-	.4byte 0x4F440000
-	.4byte 0x57414E44
-	.4byte 0x4552494E
-	.4byte 0x475F484F
-	.4byte 0x5645525F
-	.4byte 0x50524F42
-	.4byte 0x4142494C
-	.4byte 0x49545900
-	.4byte 0x484F5645
-	.4byte 0x52494E47
-	.4byte 0x5F57414E
-	.4byte 0x4445525F
-	.4byte 0x50455249
-	.4byte 0x4F440000
-	.4byte 0x484F5645
-	.4byte 0x52494E47
-	.4byte 0x5F57414E
-	.4byte 0x4445525F
-	.4byte 0x50524F42
-	.4byte 0x4142494C
-	.4byte 0x49545900
-	.4byte 0x484F5645
-	.4byte 0x52494E47
-	.4byte 0x5F574153
-	.4byte 0x485F5045
-	.4byte 0x52494F44
-	.4byte 0x00000000
-	.4byte 0x484F5645
-	.4byte 0x52494E47
-	.4byte 0x5F574153
-	.4byte 0x485F5052
-	.4byte 0x4F424142
-	.4byte 0x494C4954
-	.4byte 0x59000000
-	.4byte 0x57415348
-	.4byte 0x494E475F
-	.4byte 0x57414E44
-	.4byte 0x45525F50
-	.4byte 0x4552494F
-	.4byte 0x44000000
-	.4byte 0x57415348
-	.4byte 0x494E475F
-	.4byte 0x57414E44
-	.4byte 0x45525F50
-	.4byte 0x524F4241
-	.4byte 0x42494C49
-	.4byte 0x54590000
-	.4byte 0x5448524F
-	.4byte 0x575F5045
-	.4byte 0x52494F44
-	.4byte 0x00000000
-	.4byte 0x5448524F
-	.4byte 0x575F5645
-	.4byte 0x4C4F4349
-	.4byte 0x54590000
-	.4byte 0x5461694E
-	.4byte 0x61706B69
-	.4byte 0x64537461
-	.4byte 0x72744472
-	.4byte 0x6F707069
-	.4byte 0x6E675761
-	.4byte 0x74657241
-	.4byte 0x6374696F
-	.4byte 0x6E000000
-	.4byte 0x54616941
-	.4byte 0x6374696F
-	.4byte 0x6E000000
+	.asciz "tainapkid.cpp"
+	.balign 4
+	.asciz "tainapkid"
+	.balign 4
+	.asciz "STRUGGLE_LOOP_COUNT"
+	.balign 4
+	.asciz "CARRYING_VELOCITY"
+	.balign 4
+	.asciz "CARRYING_FLIGHT_HEIGHT"
+	.balign 4
+	.asciz "TAKING_OFF_FLIGHT_HEIGHT"
+	.balign 4
+	.asciz "WANDERING_HOVER_PERIOD"
+	.balign 4
+	.asciz "WANDERING_HOVER_PROBABILITY"
+	.balign 4
+	.asciz "HOVERING_WANDER_PERIOD"
+	.balign 4
+	.asciz "HOVERING_WANDER_PROBABILITY"
+	.balign 4
+	.asciz "HOVERING_WASH_PERIOD"
+	.balign 4
+	.asciz "HOVERING_WASH_PROBABILITY"
+	.balign 4
+	.asciz "WASHING_WANDER_PERIOD"
+	.balign 4
+	.asciz "WASHING_WANDER_PROBABILITY"
+	.balign 4
+	.asciz "THROW_PERIOD"
+	.balign 4
+	.asciz "THROW_VELOCITY"
+	.balign 4
+	.asciz "TaiNapkidStartDroppingWaterAction"
+	.balign 4
+	.asciz "TaiAction"
+	.balign 4
 	.4byte 0x803E3CC0
 	.4byte 0x00000000
 	.4byte 0x00000000
@@ -46615,15 +46535,8 @@ __vt__33TaiNapkidStartDroppingWaterAction:
 	.4byte act__9TaiActionFR4Teki
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
-	.4byte 0x5461694e
-	.4byte 0x61706b69
-	.4byte 0x6446616c
-	.4byte 0x6c696e67
-	.4byte 0x57617465
-	.4byte 0x72456666
-	.4byte 0x65637441
-	.4byte 0x6374696f
-	.4byte 0x6e000000
+	.asciz "TaiNapkidFallingWaterEffectAction"
+	.balign 4
 	.4byte 0x803e3cc0
 	.4byte 0
 	.4byte 0
@@ -46636,13 +46549,8 @@ __vt__33TaiNapkidFallingWaterEffectAction:
 	.4byte act__9TaiActionFR4Teki
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
-	.4byte 0x5461694e
-	.4byte 0x61706b69
-	.4byte 0x6453686f
-	.4byte 0x636b4661
-	.4byte 0x6c6c696e
-	.4byte 0x67416374
-	.4byte 0x696f6e00
+	.asciz "TaiNapkidShockFallingAction"
+	.balign 4
 	.4byte 0x803e3cc0
 	.4byte 0
 	.4byte 0
@@ -46655,12 +46563,8 @@ __vt__27TaiNapkidShockFallingAction:
 	.4byte act__9TaiActionFR4Teki
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
-	.4byte 0x5461694e
-	.4byte 0x61706b69
-	.4byte 0x6446616c
-	.4byte 0x6c696e67
-	.4byte 0x41637469
-	.4byte 0x6f6e0000
+	.asciz "TaiNapkidFallingAction"
+	.balign 4
 	.4byte 0x803e3cc0
 	.4byte 0
 	.4byte 0
@@ -46673,12 +46577,8 @@ __vt__22TaiNapkidFallingAction:
 	.4byte act__22TaiNapkidFallingActionFR4Teki
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
-	.4byte 0x5461694e
-	.4byte 0x61706b69
-	.4byte 0x64466c69
-	.4byte 0x636b4163
-	.4byte 0x74696f6e
-	.4byte 0
+	.asciz "TaiNapkidFlickAction"
+	.balign 4
 	.4byte 0x803e3cc0
 	.4byte 0
 	.4byte 0
@@ -46691,13 +46591,8 @@ __vt__20TaiNapkidFlickAction:
 	.4byte act__20TaiNapkidFlickActionFR4Teki
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
-	.4byte 0x5461694e
-	.4byte 0x61706b69
-	.4byte 0x64546872
-	.4byte 0x6f77696e
-	.4byte 0x6750696b
-	.4byte 0x69416374
-	.4byte 0x696f6e00
+	.asciz "TaiNapkidThrowingPikiAction"
+	.balign 4
 	.4byte 0x803e3cc0
 	.4byte 0
 	.4byte 0
@@ -46710,14 +46605,8 @@ __vt__27TaiNapkidThrowingPikiAction:
 	.4byte act__27TaiNapkidThrowingPikiActionFR4Teki
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
-	.4byte 0x5461694e
-	.4byte 0x61706b69
-	.4byte 0x64526973
-	.4byte 0x696e6741
-	.4byte 0x7363656e
-	.4byte 0x64696e67
-	.4byte 0x41637469
-	.4byte 0x6f6e0000
+	.asciz "TaiNapkidRisingAscendingAction"
+	.balign 4
 	.4byte 0x803e3cc0
 	.4byte 0
 	.4byte 0
@@ -46730,15 +46619,8 @@ __vt__30TaiNapkidRisingAscendingAction:
 	.4byte act__9TaiActionFR4Teki
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
-	.4byte 0x5461694e
-	.4byte 0x61706b69
-	.4byte 0x6454616b
-	.4byte 0x696e674f
-	.4byte 0x66664173
-	.4byte 0x63656e64
-	.4byte 0x696e6741
-	.4byte 0x6374696f
-	.4byte 0x6e000000
+	.asciz "TaiNapkidTakingOffAscendingAction"
+	.balign 4
 	.4byte 0x803e3cc0
 	.4byte 0
 	.4byte 0
@@ -46751,14 +46633,8 @@ __vt__33TaiNapkidTakingOffAscendingAction:
 	.4byte act__9TaiActionFR4Teki
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
-	.4byte 0x5461694e
-	.4byte 0x61706b69
-	.4byte 0x64436174
-	.4byte 0x63684173
-	.4byte 0x63656e64
-	.4byte 0x696e6741
-	.4byte 0x6374696f
-	.4byte 0x6e000000
+	.asciz "TaiNapkidCatchAscendingAction"
+	.balign 4
 	.4byte 0x803e3cc0
 	.4byte 0
 	.4byte 0
@@ -46771,13 +46647,8 @@ __vt__29TaiNapkidCatchAscendingAction:
 	.4byte act__9TaiActionFR4Teki
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
-	.4byte 0x5461694e
-	.4byte 0x61706b69
-	.4byte 0x64436174
-	.4byte 0x6368466c
-	.4byte 0x79696e67
-	.4byte 0x41637469
-	.4byte 0x6f6e0000
+	.asciz "TaiNapkidCatchFlyingAction"
+	.balign 4
 	.4byte 0x803e3cc0
 	.4byte 0
 	.4byte 0
@@ -46790,13 +46661,8 @@ __vt__26TaiNapkidCatchFlyingAction:
 	.4byte act__9TaiActionFR4Teki
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
-	.4byte 0x5461694e
-	.4byte 0x61706b69
-	.4byte 0x64436174
-	.4byte 0x63685472
-	.4byte 0x6163696e
-	.4byte 0x67416374
-	.4byte 0x696f6e00
+	.asciz "TaiNapkidCatchTracingAction"
+	.balign 4
 	.4byte 0x803e3cc0
 	.4byte 0
 	.4byte 0
@@ -46809,14 +46675,8 @@ __vt__27TaiNapkidCatchTracingAction:
 	.4byte act__27TaiNapkidCatchTracingActionFR4Teki
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
-	.4byte 0x5461694e
-	.4byte 0x61706b69
-	.4byte 0x64436174
-	.4byte 0x63684465
-	.4byte 0x7363656e
-	.4byte 0x64696e67
-	.4byte 0x41637469
-	.4byte 0x6f6e0000
+	.asciz "TaiNapkidCatchDescendingAction"
+	.balign 4
 	.4byte 0x803e3cc0
 	.4byte 0
 	.4byte 0
@@ -46829,9 +46689,8 @@ __vt__30TaiNapkidCatchDescendingAction:
 	.4byte act__9TaiActionFR4Teki
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
-	.4byte 0x496e7465
-	.4byte 0x72616374
-	.4byte 0x696f6e00
+	.asciz "Interaction"
+	.balign 4
 	.4byte 0
 	.4byte 0
 	.4byte 0
@@ -46843,18 +46702,12 @@ __vt__30TaiNapkidCatchDescendingAction:
 	.4byte 0
 	.4byte 0
 	.4byte 0
-	.4byte 0x54656b69
-	.4byte 0x416e6443
-	.4byte 0x6f6e6469
-	.4byte 0x74696f6e
-	.4byte 0
-	.4byte 0x436f6e64
-	.4byte 0x6974696f
-	.4byte 0x6e000000
-	.4byte 0x54656b69
-	.4byte 0x436f6e64
-	.4byte 0x6974696f
-	.4byte 0x6e000000
+	.asciz "TekiAndCondition"
+	.balign 4
+	.asciz "Condition"
+	.balign 4
+	.asciz "TekiCondition"
+	.balign 4
 	.4byte 0x803e3d28
 	.4byte 0
 	.4byte 0
@@ -46866,11 +46719,8 @@ __vt__30TaiNapkidCatchDescendingAction:
 	.4byte 0
 	.4byte 0
 	.4byte 0
-	.4byte 0x54656b69
-	.4byte 0x4e6f7443
-	.4byte 0x6f6e6469
-	.4byte 0x74696f6e
-	.4byte 0
+	.asciz "TekiNotCondition"
+	.balign 4
 	.4byte 0x803e3d28
 	.4byte 0
 	.4byte 0x803e3d30
@@ -46879,12 +46729,8 @@ __vt__30TaiNapkidCatchDescendingAction:
 	.4byte 0
 	.4byte 0
 	.4byte 0
-	.4byte 0x5461694e
-	.4byte 0x61706b69
-	.4byte 0x64436174
-	.4byte 0x6368696e
-	.4byte 0x67416374
-	.4byte 0x696f6e00
+	.asciz "TaiNapkidCatchingAction"
+	.balign 4
 	.4byte 0x803e3cc0
 	.4byte 0
 	.4byte 0
@@ -46897,13 +46743,8 @@ __vt__23TaiNapkidCatchingAction:
 	.4byte act__23TaiNapkidCatchingActionFR4Teki
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
-	.4byte 0x5461694e
-	.4byte 0x61706b69
-	.4byte 0x64417070
-	.4byte 0x726f6163
-	.4byte 0x6850696b
-	.4byte 0x69416374
-	.4byte 0x696f6e00
+	.asciz "TaiNapkidApproachPikiAction"
+	.balign 4
 	.4byte 0x803e3cc0
 	.4byte 0
 	.4byte 0
@@ -46916,13 +46757,8 @@ __vt__27TaiNapkidApproachPikiAction:
 	.4byte act__27TaiNapkidApproachPikiActionFR4Teki
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
-	.4byte 0x5461694e
-	.4byte 0x61706b69
-	.4byte 0x64417363
-	.4byte 0x656e6469
-	.4byte 0x6e674163
-	.4byte 0x74696f6e
-	.4byte 0
+	.asciz "TaiNapkidAscendingAction"
+	.balign 4
 	.4byte 0x803e3cc0
 	.4byte 0
 	.4byte 0
@@ -46935,12 +46771,8 @@ __vt__24TaiNapkidAscendingAction:
 	.4byte act__24TaiNapkidAscendingActionFR4Teki
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
-	.4byte 0x5461694e
-	.4byte 0x61706b69
-	.4byte 0x64466c79
-	.4byte 0x696e6741
-	.4byte 0x6374696f
-	.4byte 0x6e000000
+	.asciz "TaiNapkidFlyingAction"
+	.balign 4
 	.4byte 0x803e3cc0
 	.4byte 0
 	.4byte 0
@@ -46953,12 +46785,8 @@ __vt__21TaiNapkidFlyingAction:
 	.4byte act__21TaiNapkidFlyingActionFR4Teki
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
-	.4byte 0x5461694e
-	.4byte 0x61706b69
-	.4byte 0x64436972
-	.4byte 0x636c696e
-	.4byte 0x67416374
-	.4byte 0x696f6e00
+	.asciz "TaiNapkidCirclingAction"
+	.balign 4
 	.4byte 0x803e3cc0
 	.4byte 0
 	.4byte 0
@@ -46971,14 +46799,8 @@ __vt__23TaiNapkidCirclingAction:
 	.4byte act__23TaiNapkidCirclingActionFR4Teki
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
-	.4byte 0x5461694e
-	.4byte 0x61706b69
-	.4byte 0x64537472
-	.4byte 0x61696768
-	.4byte 0x74466c79
-	.4byte 0x696e6741
-	.4byte 0x6374696f
-	.4byte 0x6e000000
+	.asciz "TaiNapkidStraightFlyingAction"
+	.balign 4
 	.4byte 0x803e3cc0
 	.4byte 0
 	.4byte 0
@@ -46991,13 +46813,8 @@ __vt__29TaiNapkidStraightFlyingAction:
 	.4byte act__29TaiNapkidStraightFlyingActionFR4Teki
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
-	.4byte 0x5461694e
-	.4byte 0x61706b69
-	.4byte 0x6453686f
-	.4byte 0x72745261
-	.4byte 0x6e676541
-	.4byte 0x6374696f
-	.4byte 0x6e000000
+	.asciz "TaiNapkidShortRangeAction"
+	.balign 4
 	.4byte 0x803e3cc0
 	.4byte 0
 	.4byte 0
@@ -47010,12 +46827,8 @@ __vt__25TaiNapkidShortRangeAction:
 	.4byte act__25TaiNapkidShortRangeActionFR4Teki
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
-	.4byte 0x5461694e
-	.4byte 0x61706b69
-	.4byte 0x6450696b
-	.4byte 0x694c6f73
-	.4byte 0x74416374
-	.4byte 0x696f6e00
+	.asciz "TaiNapkidPikiLostAction"
+	.balign 4
 	.4byte 0x803e3cc0
 	.4byte 0
 	.4byte 0
@@ -47028,13 +46841,8 @@ __vt__23TaiNapkidPikiLostAction:
 	.4byte act__23TaiNapkidPikiLostActionFR4Teki
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
-	.4byte 0x5461694e
-	.4byte 0x61706b69
-	.4byte 0x64546172
-	.4byte 0x67657450
-	.4byte 0x696b6941
-	.4byte 0x6374696f
-	.4byte 0x6e000000
+	.asciz "TaiNapkidTargetPikiAction"
+	.balign 4
 	.4byte 0x803e3cc0
 	.4byte 0
 	.4byte 0
@@ -47047,28 +46855,15 @@ __vt__25TaiNapkidTargetPikiAction:
 	.4byte act__25TaiNapkidTargetPikiActionFR4Teki
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
-	.4byte 0x5461694e
-	.4byte 0x61706b69
-	.4byte 0x6457616e
-	.4byte 0x64657269
-	.4byte 0x6e67526f
-	.4byte 0x75746541
-	.4byte 0x6374696f
-	.4byte 0x6e000000
-	.4byte 0x5461694d
-	.4byte 0x6f74696f
-	.4byte 0x6e416374
-	.4byte 0x696f6e00
+	.asciz "TaiNapkidWanderingRouteAction"
+	.balign 4
+	.asciz "TaiMotionAction"
+	.balign 4
 	.4byte 0x803e3cc0
 	.4byte 0
 	.4byte 0
-	.4byte 0x54616943
-	.4byte 0x6f6e7469
-	.4byte 0x6e756f75
-	.4byte 0x734d6f74
-	.4byte 0x696f6e41
-	.4byte 0x6374696f
-	.4byte 0x6e000000
+	.asciz "TaiContinuousMotionAction"
+	.balign 4
 	.4byte 0x803e3cc0
 	.4byte 0
 	.4byte 0x803e3d80
@@ -47091,14 +46886,8 @@ __vt__29TaiNapkidWanderingRouteAction:
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
 	.4byte motionStarted__25TaiContinuousMotionActionFR4Teki
-	.4byte 0x54656b69
-	.4byte 0x4e61706b
-	.4byte 0x69645368
-	.4byte 0x6f727452
-	.4byte 0x616e6765
-	.4byte 0x436f6e64
-	.4byte 0x6974696f
-	.4byte 0x6e000000
+	.asciz "TekiNapkidShortRangeCondition"
+	.balign 4
 	.4byte 0x803e3d28
 	.4byte 0
 	.4byte 0x803e3d30
@@ -47115,14 +46904,8 @@ __vt__29TekiNapkidShortRangeCondition:
 	.4byte 0
 	.4byte 0
 	.4byte 0
-	.4byte 0x54656b69
-	.4byte 0x4e61706b
-	.4byte 0x69645461
-	.4byte 0x72676574
-	.4byte 0x50696b69
-	.4byte 0x436f6e64
-	.4byte 0x6974696f
-	.4byte 0x6e000000
+	.asciz "TekiNapkidTargetPikiCondition"
+	.balign 4
 	.4byte 0x803e3d28
 	.4byte 0
 	.4byte 0x803e3d30
@@ -47133,18 +46916,12 @@ __vt__29TekiNapkidTargetPikiCondition:
 	.4byte __RTTI__29TekiNapkidTargetPikiCondition
 	.4byte 0
 	.4byte satisfy__29TekiNapkidTargetPikiConditionFP8Creature
-	.4byte 0x5461694e
-	.4byte 0x61706b69
-	.4byte 0x64537472
-	.4byte 0x61746567
-	.4byte 0x79000000
-	.4byte 0x54656b69
-	.4byte 0x53747261
-	.4byte 0x74656779
-	.4byte 0
-	.4byte 0x54616953
-	.4byte 0x74726174
-	.4byte 0x65677900
+	.asciz "TaiNapkidStrategy"
+	.balign 4
+	.asciz "TekiStrategy"
+	.balign 4
+	.asciz "TaiStrategy"
+	.balign 4
 	.4byte 0x803e3da8
 	.4byte 0
 	.4byte 0
@@ -47165,10 +46942,8 @@ __vt__17TaiNapkidStrategy:
 	.4byte drawDebugInfo__17TaiNapkidStrategyFR4TekiR8Graphics
 	.4byte interact__12TekiStrategyFR4TekiR18TekiInteractionKey
 	.4byte spawnCorpseParts__12TekiStrategyFR4Teki
-	.4byte 0x5461694e
-	.4byte 0x6f744163
-	.4byte 0x74696f6e
-	.4byte 0
+	.asciz "TaiNotAction"
+	.balign 4
 	.4byte 0x803e3cc0
 	.4byte 0
 	.4byte 0
@@ -47179,10 +46954,8 @@ __vt__17TaiNapkidStrategy:
 	.4byte 0
 	.4byte 0
 	.4byte 0
-	.4byte 0x5461694f
-	.4byte 0x6e636541
-	.4byte 0x6374696f
-	.4byte 0x6e000000
+	.asciz "TaiOnceAction"
+	.balign 4
 	.4byte 0x803e3cc0
 	.4byte 0
 	.4byte 0
@@ -47200,14 +46973,10 @@ __vt__17TaiNapkidStrategy:
 	.4byte 0
 	.4byte 0
 	.4byte 0
-	.4byte 0x5461694e
-	.4byte 0x61706b69
-	.4byte 0x64506172
-	.4byte 0x616d6574
-	.4byte 0x65727300
-	.4byte 0x436f7265
-	.4byte 0x4e6f6465
-	.4byte 0
+	.asciz "TaiNapkidParameters"
+	.balign 4
+	.asciz "CoreNode"
+	.balign 4
 	.4byte 0x803e3dc8
 	.4byte 0
 	.4byte 0
@@ -47216,10 +46985,8 @@ __vt__17TaiNapkidStrategy:
 	.4byte 0x803e3dd0
 	.4byte 0
 	.4byte 0
-	.4byte 0x54656b69
-	.4byte 0x50617261
-	.4byte 0x6d657465
-	.4byte 0x72730000
+	.asciz "TekiParameters"
+	.balign 4
 	.4byte 0x803e3dc8
 	.4byte 0
 	.4byte 0x803e3dd0
@@ -47253,20 +47020,12 @@ __vt__19TaiNapkidParameters:
 	.4byte 0
 .global lbl_802CAA08
 lbl_802CAA08:
-	.4byte 0x7461696F
-	.4byte 0x74696D6F
-	.4byte 0x74692E63
-	.4byte 0x70700000
-	.4byte 0x7461696F
-	.4byte 0x74696D6F
-	.4byte 0x74690000
-	.4byte 0x52454144
-	.4byte 0x595F464F
-	.4byte 0x525F4A55
-	.4byte 0x4D505F4C
-	.4byte 0x4F4F505F
-	.4byte 0x434F554E
-	.4byte 0x54000000
+	.asciz "taiotimoti.cpp"
+	.balign 4
+	.asciz "taiotimoti"
+	.balign 4
+	.asciz "READY_FOR_JUMP_LOOP_COUNT"
+	.balign 4
 	.4byte 0x44524F50
 	.4byte 0x5F56454C
 	.4byte 0x4F434954

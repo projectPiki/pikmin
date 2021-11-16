@@ -444,105 +444,111 @@ lbl_803DD054:
 	.4byte 0x00000000
 .global lbl_803DD058
 lbl_803DD058:
-	.4byte 0x00000000
-	.4byte 0x4E4F4E45
-	.4byte 0x00000000
-	.4byte 0x4F504100
-	.4byte 0x54455800
-	.4byte 0x584C5500
+	.float 0.0
+	.asciz "NONE"
+	.balign 4
+	.asciz "OPA"
+	.balign 4
+	.asciz "TEX"
+	.balign 4
+	.asciz "XLU"
+	.balign 4
 .global lbl_803DD070
 lbl_803DD070:
-	.4byte 0x66616365
-	.4byte 0x00000000
+	.asciz "face"
+	.balign 4
 .global lbl_803DD078
 lbl_803DD078:
-	.4byte 0x00000000
+	.asciz ""
+	.balign 4
 .global lbl_803DD07C
 lbl_803DD07C:
-	.4byte 0x6D617470
-	.4byte 0x6F6C7900
+	.asciz "matpoly"
+	.balign 4
 .global lbl_803DD084
 lbl_803DD084:
-	.4byte 0x73697A65
-	.4byte 0x00000000
+	.asciz "size"
+	.balign 4
 .global lbl_803DD08C
 lbl_803DD08C:
-	.4byte 0x25640000
+	.asciz "%d"
+	.balign 4
 .global lbl_803DD090
 lbl_803DD090:
-	.4byte 0x25660000
+	.asciz "%f"
+	.balign 4
 .global lbl_803DD094
 lbl_803DD094:
-	.4byte 0x696E6465
-	.4byte 0x78000000
+	.asciz "index"
+	.balign 4
 .global lbl_803DD09C
 lbl_803DD09C:
-	.4byte 0x6E616D65
-	.4byte 0x00000000
+	.asciz "name"
+	.balign 4
 .global lbl_803DD0A4
 lbl_803DD0A4:
-	.4byte 0x63616D5F
-	.4byte 0x66617200
+	.asciz "cam_far"
+	.balign 4
 .global lbl_803DD0AC
 lbl_803DD0AC:
-	.4byte 0x3C4A4F49
-	.4byte 0x4E543E00
+	.asciz "<JOINT>"
+	.balign 4
 .global lbl_803DD0B4
 lbl_803DD0B4:
-	.4byte 0x6B696E64
-	.4byte 0x00000000
+	.asciz "kind"
+	.balign 4
 .global lbl_803DD0BC
 lbl_803DD0BC:
-	.4byte 0x70617265
-	.4byte 0x6E740000
+	.asciz "parent"
+	.balign 4
 .global lbl_803DD0C4
 lbl_803DD0C4:
-	.4byte 0x6368696C
-	.4byte 0x64000000
+	.asciz "child"
+	.balign 4
 .global lbl_803DD0CC
 lbl_803DD0CC:
-	.4byte 0x726F7574
-	.4byte 0x65000000
+	.asciz "route"
+	.balign 4
 .global lbl_803DD0D4
 lbl_803DD0D4:
-	.4byte 0x6E6F6E61
-	.4byte 0x6D650000
+	.asciz "noname"
+	.balign 4
 .global lbl_803DD0DC
 lbl_803DD0DC:
-	.4byte 0x25732573
-	.4byte 0x00000000
+	.asciz "%s%s"
+	.balign 4
 .global lbl_803DD0E4
 lbl_803DD0E4:
-	.4byte 0x74657861
-	.4byte 0x74747200
+	.asciz "texattr"
+	.balign 4
 .global lbl_803DD0EC
 lbl_803DD0EC:
-	.4byte 0x6D657368
-	.4byte 0x00000000
+	.asciz "mesh"
+	.balign 4
 .global lbl_803DD0F4
 lbl_803DD0F4:
-	.4byte 0x74657849
-	.4byte 0x6D670000
+	.asciz "texImg"
+	.balign 4
 .global lbl_803DD0FC
 lbl_803DD0FC:
-	.4byte 0x2E64636B
-	.4byte 0x00000000
+	.asciz ".dck"
+	.balign 4
 .global lbl_803DD104
 lbl_803DD104:
-	.4byte 0x2E646361
-	.4byte 0x00000000
+	.asciz ".dca"
+	.balign 4
 .global lbl_803DD10C
 lbl_803DD10C:
-	.4byte 0x726F6F74
-	.4byte 0x00000000
+	.asciz "root"
+	.balign 4
 	.4byte 0x8022867C
 	.4byte 0x00000000
 .global __RTTI__10MatobjInfo
 __RTTI__10MatobjInfo:
 	.4byte 0x80228670
 	.4byte 0x80228688
-	.4byte 0x414e6f64
-	.4byte 0x65000000
+	.asciz "ANode"
+	.balign 4
 	.4byte 0x803dd124
 	.4byte 0
 	.4byte lbl_80228350
