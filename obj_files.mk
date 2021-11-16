@@ -43,6 +43,7 @@ TEXT_O_FILES :=\
 	$(BUILD_DIR)/asm/plugPikiNishimura/SpiderAi.o\
 	$(BUILD_DIR)/asm/plugPikiNishimura/SpiderLeg.o\
 	$(BUILD_DIR)/asm/text_Nishimura.o\
+	$(BUILD_DIR)/asm/plugPikiYamashita/TAIAattack.o\
 	$(BUILD_DIR)/asm/plugPikiYamashita/P2DGrafContext.o\
 	$(BUILD_DIR)/asm/plugPikiYamashita/P2DOrthoGraph.o\
 	$(BUILD_DIR)/asm/plugPikiYamashita/P2DPerspGraph.o\
