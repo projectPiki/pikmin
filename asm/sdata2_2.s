@@ -1595,10 +1595,3 @@ lbl_803EB808:
 .global lbl_803EB80C
 lbl_803EB80C:
 	.4byte 0x41700000
-.global "@1192"
-"@1192":
-	.4byte 0x43300000
-	.4byte 0x80000000
-.global lbl_803EB818
-lbl_803EB818:
-	.4byte 0x00000000

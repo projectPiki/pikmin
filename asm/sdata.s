@@ -19582,14 +19582,3 @@ __RTTI__18TAIAsetMotionSpeed:
 __RTTI__17TAIAappearKabekui:
 	.4byte 0x802dfba4
 	.4byte 0x802dfbf8
-	.4byte 0
-	.4byte 0x802dfc5c
-	.4byte 0
-	.4byte 0x802dfc68
-	.4byte 0x802dfc7c
-.global __RTTI__14TAIAmotionLoop
-__RTTI__14TAIAmotionLoop:
-	.4byte 0x802dfc4c
-	.4byte 0x802dfc88
-	.4byte 0x802dfc40
-	.4byte 0x802dfcd8
