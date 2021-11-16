@@ -1,0 +1,50 @@
+.include "macros.inc"
+.section .text, "ax"  # 0x80005560 - 0x80221F60
+.global setData__Q23zen7TexAnimFUlP7Texturef
+setData__Q23zen7TexAnimFUlP7Texturef:
+/* 801C10A0 001BE000  80 03 00 04 */	lwz r0, 4(r3)
+/* 801C10A4 001BE004  7C 04 00 40 */	cmplw r4, r0
+/* 801C10A8 001BE008  4C 80 00 20 */	bgelr 
+/* 801C10AC 001BE00C  80 63 00 08 */	lwz r3, 8(r3)
+/* 801C10B0 001BE010  54 80 18 38 */	slwi r0, r4, 3
+/* 801C10B4 001BE014  7C 63 02 14 */	add r3, r3, r0
+/* 801C10B8 001BE018  90 A3 00 00 */	stw r5, 0(r3)
+/* 801C10BC 001BE01C  D0 23 00 04 */	stfs f1, 4(r3)
+/* 801C10C0 001BE020  4E 80 00 20 */	blr 
+
+.global update__Q23zen7TexAnimFv
+update__Q23zen7TexAnimFv:
+/* 801C10C4 001BE024  80 8D 2D EC */	lwz r4, gsys@sda21(r13)
+/* 801C10C8 001BE028  38 A0 00 00 */	li r5, 0
+/* 801C10CC 001BE02C  C0 23 00 0C */	lfs f1, 0xc(r3)
+/* 801C10D0 001BE030  C0 04 02 8C */	lfs f0, 0x28c(r4)
+/* 801C10D4 001BE034  EC 01 00 2A */	fadds f0, f1, f0
+/* 801C10D8 001BE038  D0 03 00 0C */	stfs f0, 0xc(r3)
+/* 801C10DC 001BE03C  80 03 00 00 */	lwz r0, 0(r3)
+/* 801C10E0 001BE040  80 83 00 08 */	lwz r4, 8(r3)
+/* 801C10E4 001BE044  54 00 18 38 */	slwi r0, r0, 3
+/* 801C10E8 001BE048  7C 84 02 14 */	add r4, r4, r0
+/* 801C10EC 001BE04C  48 00 00 3C */	b lbl_801C1128
+lbl_801C10F0:
+/* 801C10F0 001BE050  C0 03 00 0C */	lfs f0, 0xc(r3)
+/* 801C10F4 001BE054  EC 00 08 28 */	fsubs f0, f0, f1
+/* 801C10F8 001BE058  D0 03 00 0C */	stfs f0, 0xc(r3)
+/* 801C10FC 001BE05C  80 83 00 00 */	lwz r4, 0(r3)
+/* 801C1100 001BE060  38 84 00 01 */	addi r4, r4, 1
+/* 801C1104 001BE064  90 83 00 00 */	stw r4, 0(r3)
+/* 801C1108 001BE068  80 03 00 04 */	lwz r0, 4(r3)
+/* 801C110C 001BE06C  7C 04 00 40 */	cmplw r4, r0
+/* 801C1110 001BE070  41 80 00 08 */	blt lbl_801C1118
+/* 801C1114 001BE074  90 A3 00 00 */	stw r5, 0(r3)
+lbl_801C1118:
+/* 801C1118 001BE078  80 03 00 00 */	lwz r0, 0(r3)
+/* 801C111C 001BE07C  80 83 00 08 */	lwz r4, 8(r3)
+/* 801C1120 001BE080  54 00 18 38 */	slwi r0, r0, 3
+/* 801C1124 001BE084  7C 84 02 14 */	add r4, r4, r0
+lbl_801C1128:
+/* 801C1128 001BE088  C0 03 00 0C */	lfs f0, 0xc(r3)
+/* 801C112C 001BE08C  C0 24 00 04 */	lfs f1, 4(r4)
+/* 801C1130 001BE090  FC 00 08 40 */	fcmpo cr0, f0, f1
+/* 801C1134 001BE094  41 81 FF BC */	bgt lbl_801C10F0
+/* 801C1138 001BE098  80 64 00 00 */	lwz r3, 0(r4)
+/* 801C113C 001BE09C  4E 80 00 20 */	blr 

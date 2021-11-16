@@ -43,6 +43,9 @@ TEXT_O_FILES :=\
 	$(BUILD_DIR)/asm/plugPikiNishimura/SpiderAi.o\
 	$(BUILD_DIR)/asm/plugPikiNishimura/SpiderLeg.o\
 	$(BUILD_DIR)/asm/text_Nishimura.o\
+	$(BUILD_DIR)/asm/plugPikiYamashita/texAnim.o\
+	$(BUILD_DIR)/asm/plugPikiYamashita/drawAccount.o\
+	$(BUILD_DIR)/asm/plugPikiYamashita/drawMenu.o\
 	$(BUILD_DIR)/asm/plugPikiYamashita/TAIeffectAttack.o\
 	$(BUILD_DIR)/asm/plugPikiYamashita/TAIbeatle.o\
 	$(BUILD_DIR)/asm/plugPikiYamashita/menuPanelMgr.o\
