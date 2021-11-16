@@ -43,6 +43,15 @@ TEXT_O_FILES :=\
 	$(BUILD_DIR)/asm/plugPikiNishimura/SpiderAi.o\
 	$(BUILD_DIR)/asm/plugPikiNishimura/SpiderLeg.o\
 	$(BUILD_DIR)/asm/text_Nishimura.o\
+	$(BUILD_DIR)/asm/plugPikiYamashita/P2DPicture.o\
+	$(BUILD_DIR)/asm/plugPikiYamashita/P2DScreen.o\
+	$(BUILD_DIR)/asm/plugPikiYamashita/P2DStream.o\
+	$(BUILD_DIR)/asm/plugPikiYamashita/PSUList.o\
+	$(BUILD_DIR)/asm/plugPikiYamashita/PUTRect.o\
+	$(BUILD_DIR)/asm/plugPikiYamashita/P2DWindow.o\
+	$(BUILD_DIR)/asm/plugPikiYamashita/P2DTextBox.o\
+	$(BUILD_DIR)/asm/plugPikiYamashita/P2DPrint.o\
+	$(BUILD_DIR)/asm/plugPikiYamashita/P2DFont.o\
 	$(BUILD_DIR)/asm/plugPikiYamashita/drawGameInfo.o\
 	$(BUILD_DIR)/asm/plugPikiYamashita/zenGraphics.o\
 	$(BUILD_DIR)/asm/plugPikiYamashita/drawContainer.o\
