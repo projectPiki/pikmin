@@ -1602,16 +1602,3 @@ lbl_803EB80C:
 .global lbl_803EB818
 lbl_803EB818:
 	.4byte 0x00000000
-	.4byte 0x00000000
-.global lbl_803EB820
-lbl_803EB820:
-	.4byte 0x00000000
-.global lbl_803EB824
-lbl_803EB824:
-	.4byte 0x3F000000
-.global lbl_803EB828
-lbl_803EB828:
-	.4byte 0x40490FDB
-.global lbl_803EB82C
-lbl_803EB82C:
-	.4byte 0x40C90FDB
