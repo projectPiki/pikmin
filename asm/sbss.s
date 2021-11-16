@@ -1170,6 +1170,3 @@ pUpTex__Q23zen19ArrowCenterCallBack:
 .global pDownTex__Q23zen19ArrowCenterCallBack
 pDownTex__Q23zen19ArrowCenterCallBack:
 	.skip 0x4
-.global repeatTime__Q23zen9KeyRepeat
-repeatTime__Q23zen9KeyRepeat:
-	.skip 0x4
