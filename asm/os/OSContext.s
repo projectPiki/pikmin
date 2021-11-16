@@ -606,125 +606,42 @@ __OSContextInit:
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 0x8
-.global lbl_802E7718
 lbl_802E7718:
-	.4byte 0x2D2D2D2D
-	.4byte 0x2D2D2D2D
-	.4byte 0x2D2D2D2D
-	.4byte 0x2D2D2D2D
-	.4byte 0x2D2D2D2D
-	.4byte 0x2D2D2D2D
-	.4byte 0x2D20436F
-	.4byte 0x6E746578
-	.4byte 0x74203078
-	.4byte 0x25303878
-	.4byte 0x202D2D2D
-	.4byte 0x2D2D2D2D
-	.4byte 0x2D2D2D2D
-	.4byte 0x2D2D2D2D
-	.4byte 0x2D2D2D2D
-	.4byte 0x2D2D2D2D
-	.4byte 0x2D2D0A00
-	.4byte 0x72252D32
-	.4byte 0x6420203D
-	.4byte 0x20307825
-	.4byte 0x30387820
-	.4byte 0x28253134
-	.4byte 0x64292020
-	.4byte 0x72252D32
-	.4byte 0x6420203D
-	.4byte 0x20307825
-	.4byte 0x30387820
-	.4byte 0x28253134
-	.4byte 0x64290A00
-	.4byte 0x4C522020
-	.4byte 0x203D2030
-	.4byte 0x78253038
-	.4byte 0x78202020
-	.4byte 0x20202020
-	.4byte 0x20202020
-	.4byte 0x20202020
-	.4byte 0x20202020
-	.4byte 0x43522020
-	.4byte 0x203D2030
-	.4byte 0x78253038
-	.4byte 0x780A0000
-	.4byte 0x53525230
-	.4byte 0x203D2030
-	.4byte 0x78253038
-	.4byte 0x78202020
-	.4byte 0x20202020
-	.4byte 0x20202020
-	.4byte 0x20202020
-	.4byte 0x20202020
-	.4byte 0x53525231
-	.4byte 0x203D2030
-	.4byte 0x78253038
-	.4byte 0x780A0000
-	.4byte 0x0A475152
-	.4byte 0x732D2D2D
-	.4byte 0x2D2D2D2D
-	.4byte 0x2D2D2D0A
-	.4byte 0x00000000
-	.4byte 0x67717225
-	.4byte 0x64203D20
-	.4byte 0x30782530
-	.4byte 0x38782009
-	.4byte 0x20677172
-	.4byte 0x2564203D
-	.4byte 0x20307825
-	.4byte 0x3038780A
-	.4byte 0x00000000
-	.4byte 0x0A0A4650
-	.4byte 0x52732D2D
-	.4byte 0x2D2D2D2D
-	.4byte 0x2D2D2D2D
-	.4byte 0x0A000000
-	.4byte 0x66722564
-	.4byte 0x20093D20
-	.4byte 0x25642009
-	.4byte 0x20667225
-	.4byte 0x6420093D
-	.4byte 0x2025640A
-	.4byte 0x00000000
-	.4byte 0x0A0A5053
-	.4byte 0x46732D2D
-	.4byte 0x2D2D2D2D
-	.4byte 0x2D2D2D2D
-	.4byte 0x0A000000
-	.4byte 0x70732564
-	.4byte 0x20093D20
-	.4byte 0x30782578
-	.4byte 0x20092070
-	.4byte 0x73256420
-	.4byte 0x093D2030
-	.4byte 0x7825780A
-	.4byte 0x00000000
-	.4byte 0x0A416464
-	.4byte 0x72657373
-	.4byte 0x3A202020
-	.4byte 0x20202042
-	.4byte 0x61636B20
-	.4byte 0x43686169
-	.4byte 0x6E202020
-	.4byte 0x204C5220
-	.4byte 0x53617665
-	.4byte 0x0A000000
-	.4byte 0x30782530
-	.4byte 0x38783A20
-	.4byte 0x20203078
-	.4byte 0x25303878
-	.4byte 0x20202020
-	.4byte 0x30782530
-	.4byte 0x38780A00
-.global lbl_802E78CC
+	.asciz "------------------------- Context 0x%08x -------------------------\n"
+	.balign 4
+lbl_802E775C:
+	.asciz "r%-2d  = 0x%08x (%14d)  r%-2d  = 0x%08x (%14d)\n"
+	.balign 4
+lbl_802E778C:
+	.asciz "LR   = 0x%08x                   CR   = 0x%08x\n"
+	.balign 4
+lbl_802E77BC:
+	.asciz "SRR0 = 0x%08x                   SRR1 = 0x%08x\n"
+	.balign 4
+lbl_802E77EC:
+	.asciz "\nGQRs----------\n"
+	.balign 4
+lbl_802E7800:
+	.asciz "gqr%d = 0x%08x \t gqr%d = 0x%08x\n"
+	.balign 4
+lbl_802E7824:
+	.asciz "\n\nFPRs----------\n"
+	.balign 4
+lbl_802E7838:
+	.asciz "fr%d \t= %d \t fr%d \t= %d\n"
+	.balign 4
+lbl_802E7854:
+	.asciz "\n\nPSFs----------\n"
+	.balign 4
+lbl_802E7868:
+	.asciz "ps%d \t= 0x%x \t ps%d \t= 0x%x\n"
+	.balign 4
+lbl_802E7888:
+	.asciz "\nAddress:      Back Chain    LR Save\n"
+	.balign 4
+lbl_802E78B0:
+	.asciz "0x%08x:   0x%08x    0x%08x\n"
+	.balign 4
 lbl_802E78CC:
-	.4byte 0x4650552D
-	.4byte 0x756E6176
-	.4byte 0x61696C61
-	.4byte 0x626C6520
-	.4byte 0x68616E64
-	.4byte 0x6C657220
-	.4byte 0x696E7374
-	.4byte 0x616C6C65
-	.4byte 0x640A0000
+	.asciz "FPU-unavailable handler installed\n"
+	.balign 4

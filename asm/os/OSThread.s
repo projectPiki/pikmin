@@ -1942,531 +1942,87 @@ lbl_801FD378:
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 0x8
-.global lbl_802E7BD8
 lbl_802E7BD8:
-	.4byte 0x4F534368
-	.4byte 0x65636B41
-	.4byte 0x63746976
-	.4byte 0x65546872
-	.4byte 0x65616473
-	.4byte 0x3A204661
-	.4byte 0x696C6564
-	.4byte 0x2052756E
-	.4byte 0x51756575
-	.4byte 0x655B7072
-	.4byte 0x696F5D2E
-	.4byte 0x68656164
-	.4byte 0x20213D20
-	.4byte 0x4E554C4C
-	.4byte 0x20262620
-	.4byte 0x52756E51
-	.4byte 0x75657565
-	.4byte 0x5B707269
-	.4byte 0x6F5D2E74
-	.4byte 0x61696C20
-	.4byte 0x213D204E
-	.4byte 0x554C4C20
-	.4byte 0x696E2025
-	.4byte 0x640A0000
-	.4byte 0x4F535468
-	.4byte 0x72656164
-	.4byte 0x2E630000
-	.4byte 0x4F534368
-	.4byte 0x65636B41
-	.4byte 0x63746976
-	.4byte 0x65546872
-	.4byte 0x65616473
-	.4byte 0x3A204661
-	.4byte 0x696C6564
-	.4byte 0x2052756E
-	.4byte 0x51756575
-	.4byte 0x655B7072
-	.4byte 0x696F5D2E
-	.4byte 0x68656164
-	.4byte 0x203D3D20
-	.4byte 0x4E554C4C
-	.4byte 0x20262620
-	.4byte 0x52756E51
-	.4byte 0x75657565
-	.4byte 0x5B707269
-	.4byte 0x6F5D2E74
-	.4byte 0x61696C20
-	.4byte 0x3D3D204E
-	.4byte 0x554C4C20
-	.4byte 0x696E2025
-	.4byte 0x640A0000
-	.4byte 0x4F534368
-	.4byte 0x65636B41
-	.4byte 0x63746976
-	.4byte 0x65546872
-	.4byte 0x65616473
-	.4byte 0x3A204661
-	.4byte 0x696C6564
-	.4byte 0x20436865
-	.4byte 0x636B5468
-	.4byte 0x72656164
-	.4byte 0x51756575
-	.4byte 0x65282652
-	.4byte 0x756E5175
-	.4byte 0x6575655B
-	.4byte 0x7072696F
-	.4byte 0x5D292069
-	.4byte 0x6E202564
-	.4byte 0x0A000000
-	.4byte 0x4F534368
-	.4byte 0x65636B41
-	.4byte 0x63746976
-	.4byte 0x65546872
-	.4byte 0x65616473
-	.4byte 0x3A204661
-	.4byte 0x696C6564
-	.4byte 0x205F5F4F
-	.4byte 0x53416374
-	.4byte 0x69766554
-	.4byte 0x68726561
-	.4byte 0x64517565
-	.4byte 0x75652E68
-	.4byte 0x65616420
-	.4byte 0x3D3D204E
-	.4byte 0x554C4C20
-	.4byte 0x7C7C205F
-	.4byte 0x5F4F5341
-	.4byte 0x63746976
-	.4byte 0x65546872
-	.4byte 0x65616451
-	.4byte 0x75657565
-	.4byte 0x2E686561
-	.4byte 0x642D3E6C
-	.4byte 0x696E6B41
-	.4byte 0x63746976
-	.4byte 0x652E7072
-	.4byte 0x6576203D
-	.4byte 0x3D204E55
-	.4byte 0x4C4C2069
-	.4byte 0x6E202564
-	.4byte 0x0A000000
-	.4byte 0x4F534368
-	.4byte 0x65636B41
-	.4byte 0x63746976
-	.4byte 0x65546872
-	.4byte 0x65616473
-	.4byte 0x3A204661
-	.4byte 0x696C6564
-	.4byte 0x205F5F4F
-	.4byte 0x53416374
-	.4byte 0x69766554
-	.4byte 0x68726561
-	.4byte 0x64517565
-	.4byte 0x75652E74
-	.4byte 0x61696C20
-	.4byte 0x3D3D204E
-	.4byte 0x554C4C20
-	.4byte 0x7C7C205F
-	.4byte 0x5F4F5341
-	.4byte 0x63746976
-	.4byte 0x65546872
-	.4byte 0x65616451
-	.4byte 0x75657565
-	.4byte 0x2E746169
-	.4byte 0x6C2D3E6C
-	.4byte 0x696E6B41
-	.4byte 0x63746976
-	.4byte 0x652E6E65
-	.4byte 0x7874203D
-	.4byte 0x3D204E55
-	.4byte 0x4C4C2069
-	.4byte 0x6E202564
-	.4byte 0x0A000000
-	.4byte 0x4F534368
-	.4byte 0x65636B41
-	.4byte 0x63746976
-	.4byte 0x65546872
-	.4byte 0x65616473
-	.4byte 0x3A204661
-	.4byte 0x696C6564
-	.4byte 0x20746872
-	.4byte 0x6561642D
-	.4byte 0x3E6C696E
-	.4byte 0x6B416374
-	.4byte 0x6976652E
-	.4byte 0x6E657874
-	.4byte 0x203D3D20
-	.4byte 0x4E554C4C
-	.4byte 0x207C7C20
-	.4byte 0x74687265
-	.4byte 0x6164203D
-	.4byte 0x3D207468
-	.4byte 0x72656164
-	.4byte 0x2D3E6C69
-	.4byte 0x6E6B4163
-	.4byte 0x74697665
-	.4byte 0x2E6E6578
-	.4byte 0x742D3E6C
-	.4byte 0x696E6B41
-	.4byte 0x63746976
-	.4byte 0x652E7072
-	.4byte 0x65762069
-	.4byte 0x6E202564
-	.4byte 0x0A000000
-	.4byte 0x4F534368
-	.4byte 0x65636B41
-	.4byte 0x63746976
-	.4byte 0x65546872
-	.4byte 0x65616473
-	.4byte 0x3A204661
-	.4byte 0x696C6564
-	.4byte 0x20746872
-	.4byte 0x6561642D
-	.4byte 0x3E6C696E
-	.4byte 0x6B416374
-	.4byte 0x6976652E
-	.4byte 0x70726576
-	.4byte 0x203D3D20
-	.4byte 0x4E554C4C
-	.4byte 0x207C7C20
-	.4byte 0x74687265
-	.4byte 0x6164203D
-	.4byte 0x3D207468
-	.4byte 0x72656164
-	.4byte 0x2D3E6C69
-	.4byte 0x6E6B4163
-	.4byte 0x74697665
-	.4byte 0x2E707265
-	.4byte 0x762D3E6C
-	.4byte 0x696E6B41
-	.4byte 0x63746976
-	.4byte 0x652E6E65
-	.4byte 0x78742069
-	.4byte 0x6E202564
-	.4byte 0x0A000000
-	.4byte 0x4F534368
-	.4byte 0x65636B41
-	.4byte 0x63746976
-	.4byte 0x65546872
-	.4byte 0x65616473
-	.4byte 0x3A204661
-	.4byte 0x696C6564
-	.4byte 0x202A2874
-	.4byte 0x68726561
-	.4byte 0x642D3E73
-	.4byte 0x7461636B
-	.4byte 0x456E6429
-	.4byte 0x203D3D20
-	.4byte 0x4F535F54
-	.4byte 0x48524541
-	.4byte 0x445F5354
-	.4byte 0x41434B5F
-	.4byte 0x4D414749
-	.4byte 0x4320696E
-	.4byte 0x2025640A
-	.4byte 0x00000000
-	.4byte 0x4F534368
-	.4byte 0x65636B41
-	.4byte 0x63746976
-	.4byte 0x65546872
-	.4byte 0x65616473
-	.4byte 0x3A204661
-	.4byte 0x696C6564
-	.4byte 0x204F535F
-	.4byte 0x5052494F
-	.4byte 0x52495459
-	.4byte 0x5F4D494E
-	.4byte 0x203C3D20
-	.4byte 0x74687265
-	.4byte 0x61642D3E
-	.4byte 0x7072696F
-	.4byte 0x72697479
-	.4byte 0x20262620
-	.4byte 0x74687265
-	.4byte 0x61642D3E
-	.4byte 0x7072696F
-	.4byte 0x72697479
-	.4byte 0x203C3D20
-	.4byte 0x4F535F50
-	.4byte 0x52494F52
-	.4byte 0x4954595F
-	.4byte 0x4D41582B
-	.4byte 0x3120696E
-	.4byte 0x2025640A
-	.4byte 0x00000000
-	.4byte 0x4F534368
-	.4byte 0x65636B41
-	.4byte 0x63746976
-	.4byte 0x65546872
-	.4byte 0x65616473
-	.4byte 0x3A204661
-	.4byte 0x696C6564
-	.4byte 0x2030203C
-	.4byte 0x3D207468
-	.4byte 0x72656164
-	.4byte 0x2D3E7375
-	.4byte 0x7370656E
-	.4byte 0x6420696E
-	.4byte 0x2025640A
-	.4byte 0x00000000
-	.4byte 0x4F534368
-	.4byte 0x65636B41
-	.4byte 0x63746976
-	.4byte 0x65546872
-	.4byte 0x65616473
-	.4byte 0x3A204661
-	.4byte 0x696C6564
-	.4byte 0x20436865
-	.4byte 0x636B5468
-	.4byte 0x72656164
-	.4byte 0x51756575
-	.4byte 0x65282674
-	.4byte 0x68726561
-	.4byte 0x642D3E71
-	.4byte 0x75657565
-	.4byte 0x4A6F696E
-	.4byte 0x2920696E
-	.4byte 0x2025640A
-	.4byte 0x00000000
-	.4byte 0x4F534368
-	.4byte 0x65636B41
-	.4byte 0x63746976
-	.4byte 0x65546872
-	.4byte 0x65616473
-	.4byte 0x3A204661
-	.4byte 0x696C6564
-	.4byte 0x20746872
-	.4byte 0x6561642D
-	.4byte 0x3E717565
-	.4byte 0x7565203D
-	.4byte 0x3D202652
-	.4byte 0x756E5175
-	.4byte 0x6575655B
-	.4byte 0x74687265
-	.4byte 0x61642D3E
-	.4byte 0x7072696F
-	.4byte 0x72697479
-	.4byte 0x5D20696E
-	.4byte 0x2025640A
-	.4byte 0x00000000
-	.4byte 0x4F534368
-	.4byte 0x65636B41
-	.4byte 0x63746976
-	.4byte 0x65546872
-	.4byte 0x65616473
-	.4byte 0x3A204661
-	.4byte 0x696C6564
-	.4byte 0x2049734D
-	.4byte 0x656D6265
-	.4byte 0x72282652
-	.4byte 0x756E5175
-	.4byte 0x6575655B
-	.4byte 0x74687265
-	.4byte 0x61642D3E
-	.4byte 0x7072696F
-	.4byte 0x72697479
-	.4byte 0x5D2C2074
-	.4byte 0x68726561
-	.4byte 0x64292069
-	.4byte 0x6E202564
-	.4byte 0x0A000000
-	.4byte 0x4F534368
-	.4byte 0x65636B41
-	.4byte 0x63746976
-	.4byte 0x65546872
-	.4byte 0x65616473
-	.4byte 0x3A204661
-	.4byte 0x696C6564
-	.4byte 0x20746872
-	.4byte 0x6561642D
-	.4byte 0x3E707269
-	.4byte 0x6F726974
-	.4byte 0x79203D3D
-	.4byte 0x205F5F4F
-	.4byte 0x53476574
-	.4byte 0x45666665
-	.4byte 0x63746976
-	.4byte 0x65507269
-	.4byte 0x6F726974
-	.4byte 0x79287468
-	.4byte 0x72656164
-	.4byte 0x2920696E
-	.4byte 0x2025640A
-	.4byte 0x00000000
-	.4byte 0x4F534368
-	.4byte 0x65636B41
-	.4byte 0x63746976
-	.4byte 0x65546872
-	.4byte 0x65616473
-	.4byte 0x3A204661
-	.4byte 0x696C6564
-	.4byte 0x20214973
-	.4byte 0x53757370
-	.4byte 0x656E6465
-	.4byte 0x64287468
-	.4byte 0x72656164
-	.4byte 0x2D3E7375
-	.4byte 0x7370656E
-	.4byte 0x64292069
-	.4byte 0x6E202564
-	.4byte 0x0A000000
-	.4byte 0x4F534368
-	.4byte 0x65636B41
-	.4byte 0x63746976
-	.4byte 0x65546872
-	.4byte 0x65616473
-	.4byte 0x3A204661
-	.4byte 0x696C6564
-	.4byte 0x20746872
-	.4byte 0x6561642D
-	.4byte 0x3E717565
-	.4byte 0x7565203D
-	.4byte 0x3D204E55
-	.4byte 0x4C4C2069
-	.4byte 0x6E202564
-	.4byte 0x0A000000
-	.4byte 0x4F534368
-	.4byte 0x65636B41
-	.4byte 0x63746976
-	.4byte 0x65546872
-	.4byte 0x65616473
-	.4byte 0x3A204661
-	.4byte 0x696C6564
-	.4byte 0x20746872
-	.4byte 0x6561642D
-	.4byte 0x3E717565
-	.4byte 0x75652021
-	.4byte 0x3D204E55
-	.4byte 0x4C4C2069
-	.4byte 0x6E202564
-	.4byte 0x0A000000
-	.4byte 0x4F534368
-	.4byte 0x65636B41
-	.4byte 0x63746976
-	.4byte 0x65546872
-	.4byte 0x65616473
-	.4byte 0x3A204661
-	.4byte 0x696C6564
-	.4byte 0x20436865
-	.4byte 0x636B5468
-	.4byte 0x72656164
-	.4byte 0x51756575
-	.4byte 0x65287468
-	.4byte 0x72656164
-	.4byte 0x2D3E7175
-	.4byte 0x65756529
-	.4byte 0x20696E20
-	.4byte 0x25640A00
-	.4byte 0x4F534368
-	.4byte 0x65636B41
-	.4byte 0x63746976
-	.4byte 0x65546872
-	.4byte 0x65616473
-	.4byte 0x3A204661
-	.4byte 0x696C6564
-	.4byte 0x2049734D
-	.4byte 0x656D6265
-	.4byte 0x72287468
-	.4byte 0x72656164
-	.4byte 0x2D3E7175
-	.4byte 0x6575652C
-	.4byte 0x20746872
-	.4byte 0x65616429
-	.4byte 0x20696E20
-	.4byte 0x25640A00
-	.4byte 0x4F534368
-	.4byte 0x65636B41
-	.4byte 0x63746976
-	.4byte 0x65546872
-	.4byte 0x65616473
-	.4byte 0x3A204661
-	.4byte 0x696C6564
-	.4byte 0x20746872
-	.4byte 0x6561642D
-	.4byte 0x3E707269
-	.4byte 0x6F726974
-	.4byte 0x79203D3D
-	.4byte 0x20333220
-	.4byte 0x696E2025
-	.4byte 0x640A0000
-	.4byte 0x4F534368
-	.4byte 0x65636B41
-	.4byte 0x63746976
-	.4byte 0x65546872
-	.4byte 0x65616473
-	.4byte 0x3A204661
-	.4byte 0x696C6564
-	.4byte 0x20215F5F
-	.4byte 0x4F534368
-	.4byte 0x65636B44
-	.4byte 0x6561644C
-	.4byte 0x6F636B28
-	.4byte 0x74687265
-	.4byte 0x61642920
-	.4byte 0x696E2025
-	.4byte 0x640A0000
-	.4byte 0x4F534368
-	.4byte 0x65636B41
-	.4byte 0x63746976
-	.4byte 0x65546872
-	.4byte 0x65616473
-	.4byte 0x3A204661
-	.4byte 0x696C6564
-	.4byte 0x20746872
-	.4byte 0x6561642D
-	.4byte 0x3E717565
-	.4byte 0x75654D75
-	.4byte 0x7465782E
-	.4byte 0x68656164
-	.4byte 0x203D3D20
-	.4byte 0x4E554C4C
-	.4byte 0x20262620
-	.4byte 0x74687265
-	.4byte 0x61642D3E
-	.4byte 0x71756575
-	.4byte 0x654D7574
-	.4byte 0x65782E74
-	.4byte 0x61696C20
-	.4byte 0x3D3D204E
-	.4byte 0x554C4C20
-	.4byte 0x696E2025
-	.4byte 0x640A0000
-	.4byte 0x4F534368
-	.4byte 0x65636B41
-	.4byte 0x63746976
-	.4byte 0x65546872
-	.4byte 0x65616473
-	.4byte 0x3A204661
-	.4byte 0x696C6564
-	.4byte 0x2E20756E
-	.4byte 0x6B6F776E
-	.4byte 0x20746872
-	.4byte 0x65616420
-	.4byte 0x73746174
-	.4byte 0x65202825
-	.4byte 0x6429206F
-	.4byte 0x66207468
-	.4byte 0x72656164
-	.4byte 0x2025700A
-	.4byte 0x00000000
-	.4byte 0x4F534368
-	.4byte 0x65636B41
-	.4byte 0x63746976
-	.4byte 0x65546872
-	.4byte 0x65616473
-	.4byte 0x3A204661
-	.4byte 0x696C6564
-	.4byte 0x205F5F4F
-	.4byte 0x53436865
-	.4byte 0x636B4D75
-	.4byte 0x74657865
-	.4byte 0x73287468
-	.4byte 0x72656164
-	.4byte 0x2920696E
-	.4byte 0x2025640A
-	.4byte 0x00000000
+	.asciz "OSCheckActiveThreads: Failed RunQueue[prio].head != NULL && RunQueue[prio].tail != NULL in %d\n"
+	.balign 4
+lbl_802E7C38:
+	.asciz "OSThread.c"
+	.balign 4
+lbl_802E7C44:
+	.asciz "OSCheckActiveThreads: Failed RunQueue[prio].head == NULL && RunQueue[prio].tail == NULL in %d\n"
+	.balign 4
+lbl_802E7CA4:
+	.asciz "OSCheckActiveThreads: Failed CheckThreadQueue(&RunQueue[prio]) in %d\n"
+	.balign 4
+lbl_802E7CEC:
+	.asciz "OSCheckActiveThreads: Failed __OSActiveThreadQueue.head == NULL || __OSActiveThreadQueue.head->linkActive.prev == NULL in %d\n"
+	.balign 4
+lbl_802E7D6C:
+	.asciz "OSCheckActiveThreads: Failed __OSActiveThreadQueue.tail == NULL || __OSActiveThreadQueue.tail->linkActive.next == NULL in %d\n"
+	.balign 4
+lbl_802E7DEC:
+	.asciz "OSCheckActiveThreads: Failed thread->linkActive.next == NULL || thread == thread->linkActive.next->linkActive.prev in %d\n"
+	.balign 4
+lbl_802E7E68:
+	.asciz "OSCheckActiveThreads: Failed thread->linkActive.prev == NULL || thread == thread->linkActive.prev->linkActive.next in %d\n"
+	.balign 4
+lbl_802E7EE4:
+	.asciz "OSCheckActiveThreads: Failed *(thread->stackEnd) == OS_THREAD_STACK_MAGIC in %d\n"
+	.balign 4
+lbl_802E7F38:
+	.asciz "OSCheckActiveThreads: Failed OS_PRIORITY_MIN <= thread->priority && thread->priority <= OS_PRIORITY_MAX+1 in %d\n"
+	.balign 4
+lbl_802E7FAC:
+	.asciz "OSCheckActiveThreads: Failed 0 <= thread->suspend in %d\n"
+	.balign 4
+lbl_802E7FE8:
+	.asciz "OSCheckActiveThreads: Failed CheckThreadQueue(&thread->queueJoin) in %d\n"
+	.balign 4
+lbl_802E8034:
+	.asciz "OSCheckActiveThreads: Failed thread->queue == &RunQueue[thread->priority] in %d\n"
+	.balign 4
+lbl_802E8088:
+	.asciz "OSCheckActiveThreads: Failed IsMember(&RunQueue[thread->priority], thread) in %d\n"
+	.balign 4
+lbl_802E80DC:
+	.asciz "OSCheckActiveThreads: Failed thread->priority == __OSGetEffectivePriority(thread) in %d\n"
+	.balign 4
+lbl_802E8138:
+	.asciz "OSCheckActiveThreads: Failed !IsSuspended(thread->suspend) in %d\n"
+	.balign 4
+lbl_802E817C:
+	.asciz "OSCheckActiveThreads: Failed thread->queue == NULL in %d\n"
+	.balign 4
+lbl_802E81B8:
+	.asciz "OSCheckActiveThreads: Failed thread->queue != NULL in %d\n"
+	.balign 4
+lbl_802E81F4:
+	.asciz "OSCheckActiveThreads: Failed CheckThreadQueue(thread->queue) in %d\n"
+	.balign 4
+lbl_802E8238:
+	.asciz "OSCheckActiveThreads: Failed IsMember(thread->queue, thread) in %d\n"
+	.balign 4
+lbl_802E827C:
+	.asciz "OSCheckActiveThreads: Failed thread->priority == 32 in %d\n"
+	.balign 4
+lbl_802E82B8:
+	.asciz "OSCheckActiveThreads: Failed !__OSCheckDeadLock(thread) in %d\n"
+	.balign 4
+lbl_802E82F8:
+	.asciz "OSCheckActiveThreads: Failed thread->queueMutex.head == NULL && thread->queueMutex.tail == NULL in %d\n"
+	.balign 4
+lbl_802E8360:
+	.asciz "OSCheckActiveThreads: Failed. unkown thread state (%d) of thread %p\n"
+	.balign 4
+lbl_802E83A8:
+	.asciz "OSCheckActiveThreads: Failed __OSCheckMutexes(thread) in %d\n"
+	.balign 4
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 0x8
-.global lbl_803E7718
 lbl_803E7718:
-	.4byte 0x00000000
-	.4byte 0x00000000
+	.byte 0
+	.balign 0x8
 
 .section .sbss, "wa"
 .balign 0x8

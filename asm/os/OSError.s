@@ -236,152 +236,37 @@ lbl_801F7BB4:
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 0x8
-.global lbl_802E78F0
 lbl_802E78F0:
-	.4byte 0x20696E20
-	.4byte 0x22257322
-	.4byte 0x206F6E20
-	.4byte 0x6C696E65
-	.4byte 0x2025642E
-	.4byte 0x0A000000
-	.4byte 0x0A416464
-	.4byte 0x72657373
-	.4byte 0x3A202020
-	.4byte 0x20202042
-	.4byte 0x61636B20
-	.4byte 0x43686169
-	.4byte 0x6E202020
-	.4byte 0x204C5220
-	.4byte 0x53617665
-	.4byte 0x0A000000
-	.4byte 0x30782530
-	.4byte 0x38783A20
-	.4byte 0x20203078
-	.4byte 0x25303878
-	.4byte 0x20202020
-	.4byte 0x30782530
-	.4byte 0x38780A00
-	.4byte 0x4E6F6E2D
-	.4byte 0x7265636F
-	.4byte 0x76657261
-	.4byte 0x626C6520
-	.4byte 0x45786365
-	.4byte 0x7074696F
-	.4byte 0x6E202564
-	.4byte 0x00000000
-	.4byte 0x556E6861
-	.4byte 0x6E646C65
-	.4byte 0x64204578
-	.4byte 0x63657074
-	.4byte 0x696F6E20
-	.4byte 0x25640000
-	.4byte 0x0A445349
-	.4byte 0x53523D20
-	.4byte 0x30782530
-	.4byte 0x38782020
-	.4byte 0x20202020
-	.4byte 0x20202020
-	.4byte 0x20202020
-	.4byte 0x20202020
-	.4byte 0x20444152
-	.4byte 0x20203D20
-	.4byte 0x30782530
-	.4byte 0x38780A00
-	.4byte 0x0A496E73
-	.4byte 0x74727563
-	.4byte 0x74696F6E
-	.4byte 0x20617420
-	.4byte 0x30782578
-	.4byte 0x20287265
-	.4byte 0x61642066
-	.4byte 0x726F6D20
-	.4byte 0x53525230
-	.4byte 0x29206174
-	.4byte 0x74656D70
-	.4byte 0x74656420
-	.4byte 0x746F2061
-	.4byte 0x63636573
-	.4byte 0x7320696E
-	.4byte 0x76616C69
-	.4byte 0x64206164
-	.4byte 0x64726573
-	.4byte 0x73203078
-	.4byte 0x25782028
-	.4byte 0x72656164
-	.4byte 0x2066726F
-	.4byte 0x6D204441
-	.4byte 0x52290A00
-	.4byte 0x0A417474
-	.4byte 0x656D7074
-	.4byte 0x65642074
-	.4byte 0x6F206665
-	.4byte 0x74636820
-	.4byte 0x696E7374
-	.4byte 0x72756374
-	.4byte 0x696F6E20
-	.4byte 0x66726F6D
-	.4byte 0x20696E76
-	.4byte 0x616C6964
-	.4byte 0x20616464
-	.4byte 0x72657373
-	.4byte 0x20307825
-	.4byte 0x78202872
-	.4byte 0x65616420
-	.4byte 0x66726F6D
-	.4byte 0x20535252
-	.4byte 0x30290A00
-	.4byte 0x0A496E73
-	.4byte 0x74727563
-	.4byte 0x74696F6E
-	.4byte 0x20617420
-	.4byte 0x30782578
-	.4byte 0x20287265
-	.4byte 0x61642066
-	.4byte 0x726F6D20
-	.4byte 0x53525230
-	.4byte 0x29206174
-	.4byte 0x74656D70
-	.4byte 0x74656420
-	.4byte 0x746F2061
-	.4byte 0x63636573
-	.4byte 0x7320756E
-	.4byte 0x616C6967
-	.4byte 0x6E656420
-	.4byte 0x61646472
-	.4byte 0x65737320
-	.4byte 0x30782578
-	.4byte 0x20287265
-	.4byte 0x61642066
-	.4byte 0x726F6D20
-	.4byte 0x44415229
-	.4byte 0x0A000000
-	.4byte 0x0A50726F
-	.4byte 0x6772616D
-	.4byte 0x20657863
-	.4byte 0x65707469
-	.4byte 0x6F6E203A
-	.4byte 0x20506F73
-	.4byte 0x7369626C
-	.4byte 0x6520696C
-	.4byte 0x6C656761
-	.4byte 0x6C20696E
-	.4byte 0x73747275
-	.4byte 0x6374696F
-	.4byte 0x6E2F6F70
-	.4byte 0x65726174
-	.4byte 0x696F6E20
-	.4byte 0x6174206F
-	.4byte 0x72206172
-	.4byte 0x6F756E64
-	.4byte 0x20307825
-	.4byte 0x78202872
-	.4byte 0x65616420
-	.4byte 0x66726F6D
-	.4byte 0x20535252
-	.4byte 0x30290A00
+	.asciz " in \"%s\" on line %d.\n"
+	.balign 4
+lbl_802E7908:
+	.asciz "\nAddress:      Back Chain    LR Save\n"
+	.balign 4
+lbl_802E7930:
+	.asciz "0x%08x:   0x%08x    0x%08x\n"
+	.balign 4
+lbl_802E794C:
+	.asciz "Non-recoverable Exception %d"
+	.balign 4
+lbl_802E796C:
+	.asciz "Unhandled Exception %d"
+	.balign 4
+lbl_802E7984:
+	.asciz "\nDSISR= 0x%08x                   DAR  = 0x%08x\n"
+	.balign 4
+lbl_802E79B4:
+	.asciz "\nInstruction at 0x%x (read from SRR0) attempted to access invalid address 0x%x (read from DAR)\n"
+	.balign 4
+lbl_802E7A14:
+	.asciz "\nAttempted to fetch instruction from invalid address 0x%x (read from SRR0)\n"
+	.balign 4
+lbl_802E7A60:
+	.asciz "\nInstruction at 0x%x (read from SRR0) attempted to access unaligned address 0x%x (read from DAR)\n"
+	.balign 4
+lbl_802E7AC4:
+	.asciz "\nProgram exception : Possible illegal instruction/operation at or around 0x%x (read from SRR0)\n"
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 0x8
-.global lbl_803E7708
 lbl_803E7708:
-	.2byte 0x0A00
+	.asciz "\n"

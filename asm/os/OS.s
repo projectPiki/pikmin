@@ -530,67 +530,45 @@ __OSGetDIConfig:
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 0x8
-.global lbl_802E72A8
 lbl_802E72A8:
-	.4byte 0x0A446F6C
-	.4byte 0x7068696E
-	.4byte 0x204F5320
-	.4byte 0x24526576
-	.4byte 0x6973696F
-	.4byte 0x6E3A2033
-	.4byte 0x3720242E
-	.4byte 0x0A000000
-	.4byte 0x4B65726E
-	.4byte 0x656C2062
-	.4byte 0x75696C74
-	.4byte 0x203A2025
-	.4byte 0x73202573
-	.4byte 0x0A000000
-	.4byte 0x4A756C20
-	.4byte 0x31392032
-	.4byte 0x30303100
-	.4byte 0x30353A34
-	.4byte 0x333A3432
-	.4byte 0x00000000
-	.4byte 0x436F6E73
-	.4byte 0x6F6C6520
-	.4byte 0x54797065
-	.4byte 0x203A2000
-	.4byte 0x52657461
-	.4byte 0x696C2025
-	.4byte 0x640A0000
-	.4byte 0x4D616320
-	.4byte 0x456D756C
-	.4byte 0x61746F72
-	.4byte 0x0A000000
-	.4byte 0x50432045
-	.4byte 0x6D756C61
-	.4byte 0x746F720A
-	.4byte 0x00000000
-	.4byte 0x45505043
-	.4byte 0x20417274
-	.4byte 0x6875720A
-	.4byte 0x00000000
-	.4byte 0x45505043
-	.4byte 0x204D696E
-	.4byte 0x6E6F770A
-	.4byte 0x00000000
-	.4byte 0x44657665
-	.4byte 0x6C6F706D
-	.4byte 0x656E7420
-	.4byte 0x48572564
-	.4byte 0x0A000000
-	.4byte 0x4D656D6F
-	.4byte 0x72792025
-	.4byte 0x64204D42
-	.4byte 0x0A000000
-	.4byte 0x4172656E
-	.4byte 0x61203A20
-	.4byte 0x30782578
-	.4byte 0x202D2030
-	.4byte 0x7825780A
-	.4byte 0x00000000
-.global __OSExceptionLocations
+	.asciz "\nDolphin OS $Revision: 37 $.\n"
+	.balign 4
+lbl_802E72C8:
+	.asciz "Kernel built : %s %s\n"
+	.balign 4
+lbl_802E72E0:
+	.asciz "Jul 19 2001"
+	.balign 4
+lbl_802E72EC:
+	.asciz "05:43:42"
+	.balign 4
+lbl_802E72F8:
+	.asciz "Console Type : "
+	.balign 4
+lbl_802E7308:
+	.asciz "Retail %d\n"
+	.balign 4
+lbl_802E7314:
+	.asciz "Mac Emulator\n"
+	.balign 4
+lbl_802E7324:
+	.asciz "PC Emulator\n"
+	.balign 4
+lbl_802E7334:
+	.asciz "EPPC Arthur\n"
+	.balign 4
+lbl_802E7344:
+	.asciz "EPPC Minnow\n"
+	.balign 4
+lbl_802E7354:
+	.asciz "Development HW%d\n"
+	.balign 4
+lbl_802E7368:
+	.asciz "Memory %d MB\n"
+	.balign 4
+lbl_802E7378:
+	.asciz "Arena : 0x%x - 0x%x\n"
+	.balign 4
 __OSExceptionLocations:
 	.4byte 0x00000100
 	.4byte 0x00000200
@@ -607,44 +585,18 @@ __OSExceptionLocations:
 	.4byte 0x00001300
 	.4byte 0x00001400
 	.4byte 0x00001700
-	.4byte 0x496E7374
-	.4byte 0x616C6C69
-	.4byte 0x6E67204F
-	.4byte 0x53444249
-	.4byte 0x6E746567
-	.4byte 0x7261746F
-	.4byte 0x720A0000
-	.4byte 0x3E3E3E20
-	.4byte 0x4F53494E
-	.4byte 0x49543A20
-	.4byte 0x65786365
-	.4byte 0x7074696F
-	.4byte 0x6E202564
-	.4byte 0x20636F6D
-	.4byte 0x6D616E64
-	.4byte 0x65657265
-	.4byte 0x64206279
-	.4byte 0x2054524B
-	.4byte 0x0A000000
-	.4byte 0x3E3E3E20
-	.4byte 0x4F53494E
-	.4byte 0x49543A20
-	.4byte 0x65786365
-	.4byte 0x7074696F
-	.4byte 0x6E202564
-	.4byte 0x20766563
-	.4byte 0x746F7265
-	.4byte 0x6420746F
-	.4byte 0x20646562
-	.4byte 0x75676765
-	.4byte 0x720A0000
-	.4byte 0x45786365
-	.4byte 0x7074696F
-	.4byte 0x6E732069
-	.4byte 0x6E697469
-	.4byte 0x616C697A
-	.4byte 0x65642E2E
-	.4byte 0x2E0A0000
+lbl_802E73CC:
+	.asciz "Installing OSDBIntegrator\n"
+	.balign 4
+lbl_802E73E8:
+	.asciz ">>> OSINIT: exception %d commandeered by TRK\n"
+	.balign 4
+lbl_802E7418:
+	.asciz ">>> OSINIT: exception %d vectored to debugger\n"
+	.balign 4
+lbl_802E7448:
+	.asciz "Exceptions initialized...\n"
+	.balign 4
 
 .section .sbss, "wa"
 .balign 0x8

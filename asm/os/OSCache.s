@@ -360,144 +360,45 @@ lbl_801F6FF4:
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 0x8
-.global lbl_802E74E8
 lbl_802E74E8:
-	.4byte 0x3E3E3E20
-	.4byte 0x4C322049
-	.4byte 0x4E56414C
-	.4byte 0x49444154
-	.4byte 0x45203A20
-	.4byte 0x53484F55
-	.4byte 0x4C44204E
-	.4byte 0x45564552
-	.4byte 0x20484150
-	.4byte 0x50454E0A
-	.4byte 0x00000000
-	.4byte 0x4D616368
-	.4byte 0x696E6520
-	.4byte 0x63686563
-	.4byte 0x6B207265
-	.4byte 0x63656976
-	.4byte 0x65640A00
-	.4byte 0x48494432
-	.4byte 0x203D2030
-	.4byte 0x78257820
-	.4byte 0x20205352
-	.4byte 0x5231203D
-	.4byte 0x20307825
-	.4byte 0x780A0000
-	.4byte 0x4D616368
-	.4byte 0x696E6520
-	.4byte 0x63686563
-	.4byte 0x6B207761
-	.4byte 0x73206E6F
-	.4byte 0x7420444D
-	.4byte 0x412F6C6F
-	.4byte 0x636B6564
-	.4byte 0x20636163
-	.4byte 0x68652072
-	.4byte 0x656C6174
-	.4byte 0x65640A00
-	.4byte 0x444D4145
-	.4byte 0x72726F72
-	.4byte 0x48616E64
-	.4byte 0x6C657228
-	.4byte 0x293A2041
-	.4byte 0x6E206572
-	.4byte 0x726F7220
-	.4byte 0x6F636375
-	.4byte 0x72726564
-	.4byte 0x20776869
-	.4byte 0x6C652070
-	.4byte 0x726F6365
-	.4byte 0x7373696E
-	.4byte 0x6720444D
-	.4byte 0x412E0A00
-	.4byte 0x54686520
-	.4byte 0x666F6C6C
-	.4byte 0x6F77696E
-	.4byte 0x67206572
-	.4byte 0x726F7273
-	.4byte 0x20686176
-	.4byte 0x65206265
-	.4byte 0x656E2064
-	.4byte 0x65746563
-	.4byte 0x74656420
-	.4byte 0x616E6420
-	.4byte 0x636C6561
-	.4byte 0x72656420
-	.4byte 0x3A0A0000
-	.4byte 0x092D2052
-	.4byte 0x65717565
-	.4byte 0x73746564
-	.4byte 0x2061206C
-	.4byte 0x6F636B65
-	.4byte 0x64206361
-	.4byte 0x63686520
-	.4byte 0x74616720
-	.4byte 0x74686174
-	.4byte 0x20776173
-	.4byte 0x20616C72
-	.4byte 0x65616479
-	.4byte 0x20696E20
-	.4byte 0x74686520
-	.4byte 0x63616368
-	.4byte 0x650A0000
-	.4byte 0x092D2044
-	.4byte 0x4D412061
-	.4byte 0x7474656D
-	.4byte 0x70746564
-	.4byte 0x20746F20
-	.4byte 0x61636365
-	.4byte 0x7373206E
-	.4byte 0x6F726D61
-	.4byte 0x6C206361
-	.4byte 0x6368650A
-	.4byte 0x00000000
-	.4byte 0x092D2044
-	.4byte 0x4D41206D
-	.4byte 0x69737365
-	.4byte 0x6420696E
-	.4byte 0x20646174
-	.4byte 0x61206361
-	.4byte 0x6368650A
-	.4byte 0x00000000
-	.4byte 0x092D2044
-	.4byte 0x4D412071
-	.4byte 0x75657565
-	.4byte 0x206F7665
-	.4byte 0x72666C6F
-	.4byte 0x7765640A
-	.4byte 0x00000000
-	.4byte 0x4C312069
-	.4byte 0x2D636163
-	.4byte 0x68657320
-	.4byte 0x696E6974
-	.4byte 0x69616C69
-	.4byte 0x7A65640A
-	.4byte 0x00000000
-	.4byte 0x4C312064
-	.4byte 0x2D636163
-	.4byte 0x68657320
-	.4byte 0x696E6974
-	.4byte 0x69616C69
-	.4byte 0x7A65640A
-	.4byte 0x00000000
-	.4byte 0x4C322063
-	.4byte 0x61636865
-	.4byte 0x20696E69
-	.4byte 0x7469616C
-	.4byte 0x697A6564
-	.4byte 0x0A000000
-	.4byte 0x4C6F636B
-	.4byte 0x65642063
-	.4byte 0x61636865
-	.4byte 0x206D6163
-	.4byte 0x68696E65
-	.4byte 0x20636865
-	.4byte 0x636B2068
-	.4byte 0x616E646C
-	.4byte 0x65722069
-	.4byte 0x6E737461
-	.4byte 0x6C6C6564
-	.4byte 0x0A000000
+	.asciz ">>> L2 INVALIDATE : SHOULD NEVER HAPPEN\n"
+	.balign 4
+lbl_802E7514:
+	.asciz "Machine check received\n"
+	.balign 4
+lbl_802E752C:
+	.asciz "HID2 = 0x%x   SRR1 = 0x%x\n"
+	.balign 4
+lbl_802E7548:
+	.asciz "Machine check was not DMA/locked cache related\n"
+	.balign 4
+lbl_802E7578:
+	.asciz "DMAErrorHandler(): An error occurred while processing DMA.\n"
+	.balign 4
+lbl_802E75B4:
+	.asciz "The following errors have been detected and cleared :\n"
+	.balign 4
+lbl_802E75EC:
+	.asciz "\t- Requested a locked cache tag that was already in the cache\n"
+	.balign 4
+lbl_802E762C:
+	.asciz "\t- DMA attempted to access normal cache\n"
+	.balign 4
+lbl_802E7658:
+	.asciz "\t- DMA missed in data cache\n"
+	.balign 4
+lbl_802E7678:
+	.asciz "\t- DMA queue overflowed\n"
+	.balign 4
+lbl_802E7694:
+	.asciz "L1 i-caches initialized\n"
+	.balign 4
+lbl_802E76B0:
+	.asciz "L1 d-caches initialized\n"
+	.balign 4
+lbl_802E76CC:
+	.asciz "L2 cache initialized\n"
+	.balign 4
+lbl_802E76E4:
+	.asciz "Locked cache machine check handler installed\n"
+	.balign 4
