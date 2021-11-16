@@ -20250,32 +20250,3 @@ __RTTI__19TAIbeatleParameters:
 	.4byte 0x802e1f34
 	.4byte 0x802e1fa0
 	.4byte 0
-.global lbl_803E6A68
-lbl_803E6A68:
-	.4byte 0x00000000
-.global lbl_803E6A6C
-lbl_803E6A6C:
-	.4byte 0x00000000
-.global lbl_803E6A70
-lbl_803E6A70:
-	.4byte 0x00000000
-.global lbl_803E6A74
-lbl_803E6A74:
-	.4byte 0x00000000
-.global lbl_803E6A78
-lbl_803E6A78:
-	.4byte 0x00000000
-.global lbl_803E6A7C
-lbl_803E6A7C:
-	.4byte 0x70253033
-	.4byte 0x64000000
-	.4byte 0x802E202C
-	.4byte 0x00000000
-	.4byte 0x802E2040
-	.4byte 0x00000000
-	.4byte 0x802E205C
-	.4byte 0x802E206C
-.global __RTTI__Q23zen9MenuPanel
-__RTTI__Q23zen9MenuPanel:
-	.4byte 0x802e201c
-	.4byte 0x802e2080
