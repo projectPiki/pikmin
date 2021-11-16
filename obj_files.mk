@@ -43,6 +43,9 @@ TEXT_O_FILES :=\
 	$(BUILD_DIR)/asm/plugPikiNishimura/SpiderAi.o\
 	$(BUILD_DIR)/asm/plugPikiNishimura/SpiderLeg.o\
 	$(BUILD_DIR)/asm/text_Nishimura.o\
+	$(BUILD_DIR)/asm/plugPikiYamashita/TAIkabekuiA.o\
+	$(BUILD_DIR)/asm/plugPikiYamashita/TAIkabekuiB.o\
+	$(BUILD_DIR)/asm/plugPikiYamashita/TAIkabekuiC.o\
 	$(BUILD_DIR)/asm/plugPikiYamashita/TAItamago.o\
 	$(BUILD_DIR)/asm/plugPikiYamashita/TAIdororo.o\
 	$(BUILD_DIR)/asm/plugPikiYamashita/TAIhibaA.o\
