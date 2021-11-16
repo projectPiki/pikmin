@@ -13313,8 +13313,8 @@ lbl_801BA0CC:
 /* 801BA128 001B7088  4C 80 00 20 */	bgelr 
 /* 801BA12C 001B708C  38 60 00 00 */	li r3, 0
 /* 801BA130 001B7090  4E 80 00 20 */	blr 
-.global lbl_801BA134
-lbl_801BA134:
+.global "@16@invoke__Q29@unnamed@15SunBaseCallBackFP7P2DPane"
+"@16@invoke__Q29@unnamed@15SunBaseCallBackFP7P2DPane":
 /* 801BA134 001B7094  38 63 FF F0 */	addi r3, r3, -16
 /* 801BA138 001B7098  4B FF F9 D0 */	b "invoke__Q29@unnamed@15SunBaseCallBackFP7P2DPane"
 

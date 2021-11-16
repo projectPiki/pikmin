@@ -1161,6 +1161,3 @@ effectStartCounter__12TAIAdyingMar:
 .global eventCallBack__12BreathEffect
 eventCallBack__12BreathEffect:
 	.skip 0x4
-.global pGameInfo__3zen
-pGameInfo__3zen:
-	.skip 0x8
