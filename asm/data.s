@@ -68318,7 +68318,7 @@ __vt__32TAIAflyingDistanceInTerritoryMar:
 	.4byte getVelocity__32TAIAflyingDistanceInTerritoryMarFR4Teki
 	.4byte __RTTI__32TAIAflyingDistanceInTerritoryMar
 	.4byte 0xfffffff4
-	.4byte lbl_801A8488
+	.4byte "@12@getOffset__32TAIAflyingDistanceInTerritoryMarFR4Teki"
 	.4byte getOffset__32TAIAflyingDistanceInTerritoryMarFR4Teki
 	.4byte 0x54414941
 	.4byte 0x6f757473
@@ -68423,7 +68423,7 @@ __vt__21TAIAflyingDistanceMar:
 	.4byte hasNextState__9TaiActionFv
 	.4byte __RTTI__21TAIAflyingDistanceMar
 	.4byte 0xfffffff8
-	.4byte lbl_801A8480
+	.4byte "@8@getOffset__21TAIAflyingDistanceMarFR4Teki"
 	.4byte getGoalAreaRange__21TAIAflyingDistanceMarFR4Teki
 	.4byte getOffset__21TAIAflyingDistanceMarFR4Teki
 .global __vt__14FlyingDistance
@@ -68854,179 +68854,3 @@ __vt__31TAIeffectAttackEventCallBackMar:
 	.4byte 0
 	.4byte 0
 	.4byte 0
-	.4byte 0x54414941
-	.4byte 0x72656163
-	.4byte 0x74696f6e
-	.4byte 0x2e637070
-	.4byte 0
-	.4byte 0x54414941
-	.4byte 0x72656163
-	.4byte 0x74696f6e
-	.4byte 0
-	.4byte 0x54414941
-	.4byte 0x696e5761
-	.4byte 0x74657244
-	.4byte 0x616d6167
-	.4byte 0x65000000
-	.4byte 0x54616941
-	.4byte 0x6374696f
-	.4byte 0x6e000000
-	.4byte 0x54414941
-	.4byte 0x696e5761
-	.4byte 0x74657200
-	.4byte 0x803e6220
-	.4byte 0
-	.4byte 0
-	.4byte 0x803e6220
-	.4byte 0
-	.4byte __RTTI__11TAIAinWater
-	.4byte 0
-	.4byte 0
-.global __vt__17TAIAinWaterDamage
-__vt__17TAIAinWaterDamage:
-	.4byte __RTTI__17TAIAinWaterDamage
-	.4byte 0
-	.4byte start__9TaiActionFR4Teki
-	.4byte finish__9TaiActionFR4Teki
-	.4byte act__17TAIAinWaterDamageFR4Teki
-	.4byte actByEvent__17TAIAinWaterDamageFR9TekiEvent
-	.4byte hasNextState__9TaiActionFv
-.global __vt__11TAIAinWater
-__vt__11TAIAinWater:
-	.4byte __RTTI__11TAIAinWater
-	.4byte 0
-	.4byte start__9TaiActionFR4Teki
-	.4byte finish__9TaiActionFR4Teki
-	.4byte act__11TAIAinWaterFR4Teki
-	.4byte actByEvent__11TAIAinWaterFR9TekiEvent
-	.4byte hasNextState__9TaiActionFv
-	.4byte 0x54414941
-	.4byte 0x64616d61
-	.4byte 0x67650000
-	.4byte 0x803e6220
-	.4byte 0
-	.4byte 0
-.global __vt__10TAIAdamage
-__vt__10TAIAdamage:
-	.4byte __RTTI__10TAIAdamage
-	.4byte 0
-	.4byte start__9TaiActionFR4Teki
-	.4byte finish__9TaiActionFR4Teki
-	.4byte act__10TAIAdamageFR4Teki
-	.4byte actByEvent__9TaiActionFR9TekiEvent
-	.4byte hasNextState__9TaiActionFv
-	.4byte judgeDamage__10TAIAdamageFR4Teki
-	.4byte 0x54414941
-	.4byte 0x6479696e
-	.4byte 0x67437275
-	.4byte 0x73684b61
-	.4byte 0x62656b75
-	.4byte 0x69000000
-	.4byte 0x54414941
-	.4byte 0x6d6f7469
-	.4byte 0x6f6e0000
-	.4byte 0x803e6220
-	.4byte 0
-	.4byte 0
-	.4byte 0x54414941
-	.4byte 0x6479696e
-	.4byte 0x67000000
-	.4byte 0x803e6220
-	.4byte 0
-	.4byte 0x803e6240
-	.4byte 0
-	.4byte 0
-	.4byte 0x54414941
-	.4byte 0x6479696e
-	.4byte 0x674b6162
-	.4byte 0x656b7569
-	.4byte 0
-	.4byte 0x803e6220
-	.4byte 0
-	.4byte 0x803e6240
-	.4byte 0
-	.4byte 0x803e6248
-	.4byte 0
-	.4byte 0
-	.4byte 0x803e6220
-	.4byte 0
-	.4byte 0x803e6240
-	.4byte 0
-	.4byte 0x803e6248
-	.4byte 0
-	.4byte __RTTI__16TAIAdyingKabekui
-	.4byte 0
-	.4byte 0
-.global __vt__21TAIAdyingCrushKabekui
-__vt__21TAIAdyingCrushKabekui:
-	.4byte __RTTI__21TAIAdyingCrushKabekui
-	.4byte 0
-	.4byte start__21TAIAdyingCrushKabekuiFR4Teki
-	.4byte finish__9TaiActionFR4Teki
-	.4byte act__16TAIAdyingKabekuiFR4Teki
-	.4byte actByEvent__9TaiActionFR9TekiEvent
-	.4byte hasNextState__9TaiActionFv
-.global __vt__16TAIAdyingKabekui
-__vt__16TAIAdyingKabekui:
-	.4byte __RTTI__16TAIAdyingKabekui
-	.4byte 0
-	.4byte start__16TAIAdyingKabekuiFR4Teki
-	.4byte finish__9TaiActionFR4Teki
-	.4byte act__16TAIAdyingKabekuiFR4Teki
-	.4byte actByEvent__9TaiActionFR9TekiEvent
-	.4byte hasNextState__9TaiActionFv
-.global __vt__9TAIAdying
-__vt__9TAIAdying:
-	.4byte 0x803e6248
-	.4byte 0
-	.4byte start__9TAIAdyingFR4Teki
-	.4byte finish__9TaiActionFR4Teki
-	.4byte act__9TAIAdyingFR4Teki
-	.4byte actByEvent__9TaiActionFR9TekiEvent
-	.4byte hasNextState__9TaiActionFv
-	.4byte 0x803e6220
-	.4byte 0
-	.4byte 0
-.global __vt__7TAIAdie
-__vt__7TAIAdie:
-	.4byte __RTTI__7TAIAdie
-	.4byte 0
-	.4byte start__7TAIAdieFR4Teki
-	.4byte finish__9TaiActionFR4Teki
-	.4byte act__9TaiActionFR4Teki
-	.4byte actByEvent__9TaiActionFR9TekiEvent
-	.4byte hasNextState__9TaiActionFv
-	.4byte 0x54414941
-	.4byte 0x64656164
-	.4byte 0x43686563
-	.4byte 0x6b000000
-	.4byte 0x803e6220
-	.4byte 0
-	.4byte 0
-.global __vt__13TAIAdeadCheck
-__vt__13TAIAdeadCheck:
-	.4byte __RTTI__13TAIAdeadCheck
-	.4byte 0
-	.4byte start__9TaiActionFR4Teki
-	.4byte finish__9TaiActionFR4Teki
-	.4byte act__13TAIAdeadCheckFR4Teki
-	.4byte actByEvent__9TaiActionFR9TekiEvent
-	.4byte hasNextState__9TaiActionFv
-	.4byte 0x54414941
-	.4byte 0x68697443
-	.4byte 0x6865636b
-	.4byte 0x466c7969
-	.4byte 0x6e675069
-	.4byte 0x6b690000
-	.4byte 0x803e6220
-	.4byte 0
-	.4byte 0
-.global __vt__22TAIAhitCheckFlyingPiki
-__vt__22TAIAhitCheckFlyingPiki:
-	.4byte __RTTI__22TAIAhitCheckFlyingPiki
-	.4byte 0
-	.4byte start__9TaiActionFR4Teki
-	.4byte finish__9TaiActionFR4Teki
-	.4byte act__9TaiActionFR4Teki
-	.4byte actByEvent__22TAIAhitCheckFlyingPikiFR9TekiEvent
-	.4byte hasNextState__9TaiActionFv
