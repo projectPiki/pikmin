@@ -1147,7 +1147,3 @@ rumbleMgr:
 .global effectMgr
 effectMgr:
 	.skip 0x4
-.balign 8
-.global eventCallBackFire__10FireEffect
-eventCallBackFire__10FireEffect:
-	.skip 0x4
