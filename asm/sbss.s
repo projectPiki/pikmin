@@ -1142,22 +1142,12 @@ init$2821:
 	.skip 0x4
 .global rumbleMgr
 rumbleMgr:
-	.skip 0x8
+	.skip 0x4
+.balign 8
 .global effectMgr
 effectMgr:
-	.skip 0x8
+	.skip 0x4
+.balign 8
 .global eventCallBackFire__10FireEffect
 eventCallBackFire__10FireEffect:
-	.skip 0x8
-.global effectScale0__12TAIAdyingMar
-effectScale0__12TAIAdyingMar:
-	.skip 0x4
-.global effectScale1__12TAIAdyingMar
-effectScale1__12TAIAdyingMar:
-	.skip 0x4
-.global effectStartCounter__12TAIAdyingMar
-effectStartCounter__12TAIAdyingMar:
-	.skip 0x4
-.global eventCallBack__12BreathEffect
-eventCallBack__12BreathEffect:
 	.skip 0x4
