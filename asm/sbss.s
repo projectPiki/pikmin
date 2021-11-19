@@ -1143,7 +1143,3 @@ init$2821:
 .global rumbleMgr
 rumbleMgr:
 	.skip 0x4
-.balign 8
-.global effectMgr
-effectMgr:
-	.skip 0x4

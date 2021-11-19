@@ -43,6 +43,8 @@ TEXT_O_FILES :=\
 	$(BUILD_DIR)/asm/plugPikiNishimura/SpiderAi.o\
 	$(BUILD_DIR)/asm/plugPikiNishimura/SpiderLeg.o\
 	$(BUILD_DIR)/asm/text_Nishimura.o\
+	$(BUILD_DIR)/asm/plugPikiYamashita/effectMgr.o\
+	$(BUILD_DIR)/asm/plugPikiYamashita/particleGenerator.o\
 	$(BUILD_DIR)/asm/plugPikiYamashita/particleLoader.o\
 	$(BUILD_DIR)/asm/plugPikiYamashita/solidField.o\
 	$(BUILD_DIR)/asm/plugPikiYamashita/particleManager.o\
