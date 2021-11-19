@@ -1209,13 +1209,3 @@ lbl_803EB5D8:
 .global lbl_803EB5DC
 lbl_803EB5DC:
 	.4byte 0x41C80000
-.global lbl_803EB5E0
-lbl_803EB5E0:
-	.4byte 0x42C80000
-	.4byte 0x00000000
-.global lbl_803EB5E8
-lbl_803EB5E8:
-	.4byte 0x00000000
-.global lbl_803EB5EC
-lbl_803EB5EC:
-	.4byte 0x3F800000
