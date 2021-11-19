@@ -7119,8 +7119,9 @@ lbl_803E0194:
 	.4byte 0x00000000
 	.4byte 0x802B61B0
 	.4byte 0x00000000
-	.4byte 0x41637469
-	.4byte 0x6F6E0000
+lbl_803E01A0:
+	.asciz "Action"
+	.balign 4
 	.4byte 0x803E01A0
 	.4byte 0x802B61C0
 .global __RTTI__8ActChase
@@ -7138,8 +7139,8 @@ newVer:
 	.4byte 0x01000000
 .global lbl_803E01CC
 lbl_803E01CC:
-	.4byte 0x63726F77
-	.4byte 0x64000000
+	.asciz "crowd"
+	.balign 4
 .global lbl_803E01D4
 lbl_803E01D4:
 	.4byte 0x00000000
@@ -17925,11 +17926,12 @@ lbl_803E56F0:
 	.4byte 0
 .global lbl_803E5728
 lbl_803E5728:
-	.4byte 0x6F6E2530
-	.4byte 0x32640000
+	.asciz "on%02d"
+	.balign 4
 .global lbl_803E5730
 lbl_803E5730:
-	.4byte 0x454E4400
+	.asciz "END"
+	.balign 4
 .global bloFile_Oniyon__3zen
 bloFile_Oniyon__3zen:
 	.4byte lbl_802D31A4
@@ -18665,20 +18667,20 @@ __RTTI__22GameCourseClearSection:
 	.4byte 0
 .global lbl_803E5CB0
 lbl_803E5CB0:
-	.4byte 0x3C4E6F64
-	.4byte 0x653E0000
-	.4byte 0x414E6F64
-	.4byte 0x65000000
+	.asciz "<Node>"
+	.balign 4
+	.asciz "ANode"
+	.balign 4
 	.4byte 0x803E5CB8
 	.4byte 0x00000000
 	.4byte 0x802D6A9C
 	.4byte 0x802D6AA8
-	.4byte 0x4E6F6465
-	.4byte 0x00000000
+	.asciz "Node"
+	.balign 4
 	.4byte 0x803E5CD0
 	.4byte 0x802D6AD0
-	.4byte 0x53656374
-	.4byte 0x696F6E00
+	.asciz "Section"
+	.balign 4
 	.4byte 0x803E5CE0
 	.4byte 0x802D6AE4
 .global __RTTI__21GameStageClearSection
@@ -18687,20 +18689,20 @@ __RTTI__21GameStageClearSection:
 	.4byte 0x802d6b00
 .global lbl_803E5CF8
 lbl_803E5CF8:
-	.4byte 0x3C4E6F64
-	.4byte 0x653E0000
-	.4byte 0x414E6F64
-	.4byte 0x65000000
+	.asciz "<Node>"
+	.balign 4
+	.asciz "ANode"
+	.balign 4
 	.4byte 0x803E5D00
 	.4byte 0x00000000
 	.4byte 0x802D6BCC
 	.4byte 0x802D6BD8
-	.4byte 0x4E6F6465
-	.4byte 0x00000000
+	.asciz "Node"
+	.balign 4
 	.4byte 0x803E5D18
 	.4byte 0x802D6C00
-	.4byte 0x53656374
-	.4byte 0x696F6E00
+	.asciz "Section"
+	.balign 4
 	.4byte 0x803E5D28
 	.4byte 0x802D6C14
 .global __RTTI__18GameCreditsSection
@@ -18766,10 +18768,10 @@ lbl_803E5D88:
 	.4byte 0x00000000
 .global lbl_803E5D8C
 lbl_803E5D8C:
-	.4byte 0x7074636C
-	.4byte 0x4D677200
-	.4byte 0x414E6F64
-	.4byte 0x65000000
+	.asciz "ptclMgr"
+	.balign 4
+	.asciz "ANode"
+	.balign 4
 	.4byte 0x803E5D94
 	.4byte 0x00000000
 	.4byte 0x802DA484
@@ -18794,8 +18796,8 @@ __RTTI__11EffectShape:
 __RTTI__26EffectParticleRegistration:
 	.4byte 0x802da568
 	.4byte 0
-	.4byte 0x4e6f6465
-	.4byte 0
+	.asciz "Node"
+	.balign 4
 	.4byte 0x803e5dd4
 	.4byte 0x802da5a0
 .global __RTTI__12SmokeEmitter
