@@ -59181,37 +59181,3 @@ lbl_802D6040:
 .global lbl_802D6058
 lbl_802D6058:
 	.asciz "screen/blo/f_result.blo"
-.balign 4
-.global lbl_802D6070
-lbl_802D6070:
-	.asciz "ogSave.cpp"
-.balign 4
-	.asciz "OgSaveSection"
-.balign 4
-	.asciz "screen/blo/ac_save.blo"
-.balign 4
-	.asciz "screen/blo/black.blo"
-.balign 4
-	.asciz "screen/blo/ac_save2.blo"
-.balign 4
-.global lbl_802D60D4
-lbl_802D60D4:
-	.4byte lbl_8019632C
-	.4byte lbl_80196150
-	.4byte lbl_801962A4
-	.4byte lbl_801961DC
-	.4byte lbl_8019646C
-	.4byte lbl_801964D0
-	.4byte lbl_80196580
-	.4byte lbl_801965CC
-	.4byte lbl_80196620
-	.4byte lbl_80196670
-	.4byte lbl_801966E4
-	.4byte lbl_80196738
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
