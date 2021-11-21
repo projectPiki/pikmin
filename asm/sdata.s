@@ -18497,15 +18497,3 @@ lbl_803E5B48:
 .global lbl_803E5B4C
 lbl_803E5B4C:
 	.4byte 0x00000000
-.global lbl_803E5B50
-lbl_803E5B50:
-	.4byte 0x00000000
-.global lbl_803E5B54
-lbl_803E5B54:
-	.4byte 0x00000000
-.global lbl_803E5B58
-lbl_803E5B58:
-	.4byte 0x00000000
-.global lbl_803E5B5C
-lbl_803E5B5C:
-	.4byte 0x00000000
