@@ -1097,35 +1097,3 @@ lbl_803EB518:
 "@890":
 	.4byte 0x43300000
 	.4byte 0x00000000
-.global lbl_803EB528
-lbl_803EB528:
-	.4byte 0x00000000
-.global lbl_803EB52C
-lbl_803EB52C:
-	.4byte 0x40400000
-.global lbl_803EB530
-lbl_803EB530:
-	.4byte 0x43960000
-.global lbl_803EB534
-lbl_803EB534:
-	.4byte 0x3F800000
-.global lbl_803EB538
-lbl_803EB538:
-	.4byte 0x42200000
-.global lbl_803EB53C
-lbl_803EB53C:
-	.4byte 0x3F000000
-.global lbl_803EB540
-lbl_803EB540:
-	.4byte 0x42700000
-.global lbl_803EB544
-lbl_803EB544:
-	.4byte 0x3A83126F
-.global lbl_803EB548
-lbl_803EB548:
-	.4byte 0x459C4000
-.balign 8
-.global "@1860"
-"@1860":
-	.4byte 0x43300000
-	.4byte 0x80000000

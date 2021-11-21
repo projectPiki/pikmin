@@ -43,6 +43,7 @@ TEXT_O_FILES :=\
 	$(BUILD_DIR)/asm/plugPikiNishimura/SpiderAi.o\
 	$(BUILD_DIR)/asm/plugPikiNishimura/SpiderLeg.o\
 	$(BUILD_DIR)/asm/text_Nishimura.o\
+	$(BUILD_DIR)/asm/plugPikiYamashita/gameCourseClear.o\
 	$(BUILD_DIR)/asm/plugPikiYamashita/gameStageClear.o\
 	$(BUILD_DIR)/asm/plugPikiYamashita/gameCredits.o\
 	$(BUILD_DIR)/asm/plugPikiYamashita/zenMath.o\
