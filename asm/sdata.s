@@ -18462,19 +18462,3 @@ lbl_803E5B0C:
 .global lbl_803E5B10
 lbl_803E5B10:
 	.float 1.0
-.balign 8
-.global lbl_803E5B18
-lbl_803E5B18:
-	.asciz "pd%02d"
-.balign 4
-.global lbl_803E5B20
-lbl_803E5B20:
-	.asciz "lp%02d"
-.balign 4
-.global lbl_803E5B28
-lbl_803E5B28:
-	.asciz "dp%02d"
-.balign 4
-.global lbl_803E5B30
-lbl_803E5B30:
-	.float 0.0

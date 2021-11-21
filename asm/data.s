@@ -59177,7 +59177,3 @@ lbl_802D6028:
 .global lbl_802D6040
 lbl_802D6040:
 	.asciz "screen/blo/black.blo"
-.balign 4
-.global lbl_802D6058
-lbl_802D6058:
-	.asciz "screen/blo/f_result.blo"
