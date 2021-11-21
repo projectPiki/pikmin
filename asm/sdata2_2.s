@@ -1124,22 +1124,8 @@ lbl_803EB544:
 .global lbl_803EB548
 lbl_803EB548:
 	.4byte 0x459C4000
-	.4byte 0x00000000
+.balign 8
 .global "@1860"
 "@1860":
 	.4byte 0x43300000
 	.4byte 0x80000000
-.global lbl_803EB558
-lbl_803EB558:
-	.4byte 0x3F800000
-.global lbl_803EB55C
-lbl_803EB55C:
-	.4byte 0x00000000
-.global "@653"
-"@653":
-	.4byte 0x3FE00000
-	.4byte 0x00000000
-.global "@654"
-"@654":
-	.4byte 0x40080000
-	.4byte 0x00000000
