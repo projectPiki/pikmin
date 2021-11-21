@@ -58940,36 +58940,19 @@ kanji_convert_table_1:
 	.4byte 0x92E1949A
 	.4byte 0x8F5A8FCE
 	.4byte 0x00000000
-	.4byte 0x6F674D65
-	.4byte 0x73736167
-	.4byte 0x652E6370
-	.4byte 0x70000000
-	.4byte 0x4F674D65
-	.4byte 0x73736167
-	.4byte 0x65536563
-	.4byte 0x74696F6E
-	.4byte 0x00000000
+.balign 4
+	.asciz "ogMessage.cpp"
+.balign 4
+	.asciz "OgMessageSection"
+.balign 4
 .global lbl_802D5C60
 lbl_802D5C60:
-	.4byte 0x25734658
-	.4byte 0x5B33325D
-	.4byte 0x25734659
-	.4byte 0x5B32385D
-	.4byte 0x25734343
-	.4byte 0x5B25735D
-	.4byte 0x25732573
-	.4byte 0x43435B25
-	.4byte 0x735D2573
-	.4byte 0x46585B32
-	.4byte 0x345D2573
-	.4byte 0x46595B32
-	.4byte 0x345D0000
-	.4byte 0x62696746
-	.4byte 0x6F6E742E
-	.4byte 0x62746900
-	.4byte 0x61626378
-	.4byte 0x797A6C72
-	.4byte 0x00000000
+	.asciz "%sFX[32]%sFY[28]%sCC[%s]%s%sCC[%s]%sFX[24]%sFY[24]"
+.balign 4
+	.asciz "bigFont.bti"
+.balign 4
+	.asciz "abcxyzlr"
+.balign 4
 	.4byte 0x93FA96DA
 	.4byte 0x8E9E8E84
 	.4byte 0x96A2926D
@@ -58977,22 +58960,15 @@ lbl_802D5C60:
 	.4byte 0x926E89A1
 	.4byte 0x96BC0000
 	.4byte 0x00000000
+.balign 4
 .global lbl_802D5CC8
 lbl_802D5CC8:
-	.4byte 0x73637265
-	.4byte 0x656E2F62
-	.4byte 0x6C6F2F62
-	.4byte 0x6C61636B
-	.4byte 0x2E626C6F
-	.4byte 0x00000000
+	.asciz "screen/blo/black.blo"
+.balign 4
 .global lbl_802D5CE0
 lbl_802D5CE0:
-	.4byte 0x73637265
-	.4byte 0x656E2F62
-	.4byte 0x6C6F2F64
-	.4byte 0x6174615F
-	.4byte 0x6D2E626C
-	.4byte 0x6F000000
+	.asciz "screen/blo/data_m.blo"
+.balign 4
 .global lbl_802D5CF8
 lbl_802D5CF8:
 	.4byte lbl_8018DC3C
@@ -59061,59 +59037,42 @@ lbl_802D5DC8:
 	.4byte lbl_8018F1C4
 	.4byte lbl_8018F1DC
 	.4byte 0x00000000
+.balign 4
 .global lbl_802D5DE8
 lbl_802D5DE8:
-	.4byte 0x62696746
-	.4byte 0x6F6E742E
-	.4byte 0x62746900
+	.asciz "bigFont.bti"
+.balign 4
 .global lbl_802D5DF4
 lbl_802D5DF4:
-	.4byte 0x73637265
-	.4byte 0x656E2F62
-	.4byte 0x6C6F2F74
-	.4byte 0x755F6261
-	.4byte 0x73652E62
-	.4byte 0x6C6F0000
+	.asciz "screen/blo/tu_base.blo"
+.balign 4
 .global lbl_802D5E0C
 lbl_802D5E0C:
 	.4byte 0x74783F3F
 	.4byte 0x82CC9094
 	.4byte 0x2825648C
 	.4byte 0xC2290000
+.balign 4
 .global lbl_802D5E1C
 lbl_802D5E1C:
-	.4byte 0x73637265
-	.4byte 0x656E2F62
-	.4byte 0x6C6F2F6D
-	.4byte 0x5F6D656E
-	.4byte 0x755F622E
-	.4byte 0x626C6F00
+	.asciz "screen/blo/m_menu_b.blo"
+.balign 4
 .global lbl_802D5E34
 lbl_802D5E34:
-	.4byte 0x73637265
-	.4byte 0x656E2F62
-	.4byte 0x6C6F2F6D
-	.4byte 0x5F6D656E
-	.4byte 0x755F722E
-	.4byte 0x626C6F00
+	.asciz "screen/blo/m_menu_r.blo"
+.balign 4
 .global lbl_802D5E4C
 lbl_802D5E4C:
-	.4byte 0x73637265
-	.4byte 0x656E2F62
-	.4byte 0x6C6F2F62
-	.4byte 0x6C61636B
-	.4byte 0x2E626C6F
+	.asciz "screen/blo/black.blo"
+.balign 4
 	.4byte 0x00000000
-	.4byte 0x00000000
+.balign 4
 .global lbl_802D5E68
 lbl_802D5E68:
-	.4byte 0x6F674D65
-	.4byte 0x6E752E63
-	.4byte 0x70700000
-	.4byte 0x4F674D65
-	.4byte 0x6E755365
-	.4byte 0x6374696F
-	.4byte 0x6E000000
+	.asciz "ogMenu.cpp"
+.balign 4
+	.asciz "OgMenuSection"
+.balign 4
 .global RotateAngleData__3zen
 RotateAngleData__3zen:
 	.4byte 0x00000000
@@ -59158,7 +59117,7 @@ pane_name$1940:
 	.4byte 0x00615F6D
 	.4byte 0x00625F6D
 	.4byte 0x00635F6D
-	.4byte 0x33645F6D
+	.ascii "3d_m"
 .global pane_name2$1941
 pane_name2$1941:
 	.4byte 0x0000006C
@@ -59180,7 +59139,7 @@ pane_name3$1942:
 	.4byte 0x00615F63
 	.4byte 0x00625F63
 	.4byte 0x00635F63
-	.4byte 0x33645F63
+	.ascii "3d_c"
 .global pane_name4$1943
 pane_name4$1943:
 	.4byte 0x006C5F77
@@ -59191,99 +59150,50 @@ pane_name4$1943:
 	.4byte 0x00615F77
 	.4byte 0x00625F77
 	.4byte 0x00635F77
-	.4byte 0x33645F77
-	.4byte 0x73637265
-	.4byte 0x656E2F62
-	.4byte 0x6C6F2F63
-	.4byte 0x6F6E745F
-	.4byte 0x30302E62
-	.4byte 0x6C6F0000
+	.ascii "3d_w"
+.balign 4
+lbl_802D5F94:
+	.asciz "screen/blo/cont_00.blo"
+.balign 4
 .global lbl_802D5FAC
 lbl_802D5FAC:
-	.4byte 0x73637265
-	.4byte 0x656E2F62
-	.4byte 0x6C6F2F6D
-	.4byte 0x5F6D656E
-	.4byte 0x75322E62
-	.4byte 0x6C6F0000
-	.4byte 0x73637265
-	.4byte 0x656E2F62
-	.4byte 0x6C6F2F6D
-	.4byte 0x5F6D656E
-	.4byte 0x75326D2E
-	.4byte 0x626C6F00
-	.4byte 0x73637265
-	.4byte 0x656E2F62
-	.4byte 0x6C6F2F63
-	.4byte 0x6F6E745F
-	.4byte 0x792E626C
-	.4byte 0x6F000000
-	.4byte 0x73637265
-	.4byte 0x656E2F62
-	.4byte 0x6C6F2F62
-	.4byte 0x6C61636B
-	.4byte 0x2E626C6F
+	.asciz "screen/blo/m_menu2.blo"
+.balign 4
+	.asciz "screen/blo/m_menu2m.blo"
+.balign 4
+	.asciz "screen/blo/cont_y.blo"
+.balign 4
+	.asciz "screen/blo/black.blo"
 	.4byte 0x00000000
-	.4byte 0x00000000
+.balign 4
 .global lbl_802D6010
 lbl_802D6010:
-	.4byte 0x73637265
-	.4byte 0x656E2F62
-	.4byte 0x6C6F2F64
-	.4byte 0x6174615F
-	.4byte 0x622E626C
-	.4byte 0x6F000000
+	.asciz "screen/blo/data_b.blo"
+.balign 4
 .global lbl_802D6028
 lbl_802D6028:
-	.4byte 0x73637265
-	.4byte 0x656E2F62
-	.4byte 0x6C6F2F64
-	.4byte 0x6174615F
-	.4byte 0x70662E62
-	.4byte 0x6C6F0000
+	.asciz "screen/blo/data_pf.blo"
+.balign 4
 .global lbl_802D6040
 lbl_802D6040:
-	.4byte 0x73637265
-	.4byte 0x656E2F62
-	.4byte 0x6C6F2F62
-	.4byte 0x6C61636B
-	.4byte 0x2E626C6F
-	.4byte 0x00000000
+	.asciz "screen/blo/black.blo"
+.balign 4
 .global lbl_802D6058
 lbl_802D6058:
-	.4byte 0x73637265
-	.4byte 0x656E2F62
-	.4byte 0x6C6F2F66
-	.4byte 0x5F726573
-	.4byte 0x756C742E
-	.4byte 0x626C6F00
+	.asciz "screen/blo/f_result.blo"
+.balign 4
 .global lbl_802D6070
 lbl_802D6070:
-	.4byte 0x6F675361
-	.4byte 0x76652E63
-	.4byte 0x70700000
-	.4byte 0x4F675361
-	.4byte 0x76655365
-	.4byte 0x6374696F
-	.4byte 0x6E000000
-	.4byte 0x73637265
-	.4byte 0x656E2F62
-	.4byte 0x6C6F2F61
-	.4byte 0x635F7361
-	.4byte 0x76652E62
-	.4byte 0x6C6F0000
-	.4byte 0x73637265
-	.4byte 0x656E2F62
-	.4byte 0x6C6F2F62
-	.4byte 0x6C61636B
-	.4byte 0x2E626C6F
-	.4byte 0x00000000
-	.4byte 0x73637265
-	.4byte 0x656E2F62
-	.4byte 0x6C6F2F61
-	.4byte 0x635F7361
-	.4byte 0x7665322E
-	.4byte 0x626C6F00
+	.asciz "ogSave.cpp"
+.balign 4
+	.asciz "OgSaveSection"
+.balign 4
+	.asciz "screen/blo/ac_save.blo"
+.balign 4
+	.asciz "screen/blo/black.blo"
+.balign 4
+	.asciz "screen/blo/ac_save2.blo"
+.balign 4
 .global lbl_802D60D4
 lbl_802D60D4:
 	.4byte lbl_8019632C
@@ -59305,147 +59215,3 @@ lbl_802D60D4:
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x00000000
-.global lbl_802D6120
-lbl_802D6120:
-	.4byte 0x6F674772
-	.4byte 0x6170682E
-	.4byte 0x63707000
-	.4byte 0x4F675265
-	.4byte 0x73756C74
-	.4byte 0x53656374
-	.4byte 0x696F6E00
-	.4byte 0x00000000
-.global LinePointB__3zen
-LinePointB__3zen:
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-.global LinePointR__3zen
-LinePointR__3zen:
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-.global LinePointY__3zen
-LinePointY__3zen:
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-.global ogawa_per_line__3zen
-ogawa_per_line__3zen:
-	.4byte 0x00010001
-	.4byte 0x00020003
-	.4byte 0x000A000C
-	.4byte 0x000C000D
-	.4byte 0x000D000E
-	.4byte 0x00130014
-	.4byte 0x00160000
-	.4byte 0x00000000
-.global og_piki_lines_color__3zen
-og_piki_lines_color__3zen:
-	.4byte 0x00C0FFFF
-	.4byte 0xFF0000FF
-	.4byte 0xFFFF00FF
-	.4byte 0x00000000
-.global lbl_802D6230
-lbl_802D6230:
-	.4byte 0x73637265
-	.4byte 0x656E2F62
-	.4byte 0x6C6F2F70
-	.4byte 0x72657373
-	.4byte 0x5F732E62
-	.4byte 0x6C6F0000
-	.4byte 0x6F674361
-	.4byte 0x6C6C4261
-	.4byte 0x636B2E63
-	.4byte 0x70700000
-	.4byte 0x4F674361
-	.4byte 0x6C6C4261
-	.4byte 0x636B5365
-	.4byte 0x6374696F
-	.4byte 0x6E000000
-	.4byte 0x7A656E3A
-	.4byte 0x3A546578
-	.4byte 0x74436F6C
-	.4byte 0x6F724361
-	.4byte 0x6C6C4261
-	.4byte 0x636B0000
-	.4byte 0x50324450
-	.4byte 0x616E6543
-	.4byte 0x616C6C42
-	.4byte 0x61636B42
-	.4byte 0x61736500
-	.4byte 0x7A656E3A
-	.4byte 0x3A43616C
-	.4byte 0x6C426163
-	.4byte 0x6B313C50
-	.4byte 0x32445061
-	.4byte 0x6E65202A
-	.4byte 0x3E000000
-	.4byte 0x50324450
-	.4byte 0x616E6543
-	.4byte 0x616C6C42
-	.4byte 0x61636B00
-	.4byte 0x803E5B60
-	.4byte 0x00000004
-	.4byte 0x803E5B68
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x803E5B60
-	.4byte 0x00000004
-	.4byte 0x803E5B68
-	.4byte 0x00000000
-	.4byte 0x803E5B70
-	.4byte 0x00000000
-	.4byte 0x00000000
-.global __vt__Q23zen17TextColorCallBack
-__vt__Q23zen17TextColorCallBack:
-	.4byte __RTTI__Q23zen17TextColorCallBack
-	.4byte 0
-	.4byte invoke__Q23zen17TextColorCallBackFP7P2DPane
-	.4byte draw__15P2DPaneCallBackFP7P2DPane
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0

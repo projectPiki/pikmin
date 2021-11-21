@@ -18509,13 +18509,3 @@ lbl_803E5B58:
 .global lbl_803E5B5C
 lbl_803E5B5C:
 	.4byte 0x00000000
-	.4byte 0x802D6284
-	.4byte 0x00000000
-	.4byte 0x802D6298
-	.4byte 0x00000000
-	.4byte 0x802D62B4
-	.4byte 0x802D62C4
-.global __RTTI__Q23zen17TextColorCallBack
-__RTTI__Q23zen17TextColorCallBack:
-	.4byte 0x802d626c
-	.4byte 0x802d62d8
