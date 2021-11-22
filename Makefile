@@ -57,7 +57,6 @@ MWLD_VERSION := 1.1
 ifeq ($(WINDOWS),1)
   WINE :=
   AS      := $(DEVKITPPC)/bin/powerpc-eabi-as.exe
-  OBJCOPY := $(DEVKITPPC)/bin/powerpc-eabi-objcopy.exe
   CPP     := $(DEVKITPPC)/bin/powerpc-eabi-cpp.exe -P
 else
   WINE := wine
@@ -113,7 +112,7 @@ $(DOL): $(ELF) | tools
 
 clean:
 	rm -f -d -r build
-
+	$(MAKE) -C tools clean
 tools:
 	$(MAKE) -C tools
 
