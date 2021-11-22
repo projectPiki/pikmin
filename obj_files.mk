@@ -43,6 +43,8 @@ TEXT_O_FILES :=\
 	$(BUILD_DIR)/asm/plugPikiNishimura/SpiderAi.o\
 	$(BUILD_DIR)/asm/plugPikiNishimura/SpiderLeg.o\
 	$(BUILD_DIR)/asm/text_Nishimura.o\
+	$(BUILD_DIR)/asm/plugPikiOgawa/ogFileChkSel.o\
+	$(BUILD_DIR)/asm/plugPikiOgawa/ogMakeDefault.o\
 	$(BUILD_DIR)/asm/plugPikiOgawa/ogTotalScore.o\
 	$(BUILD_DIR)/asm/plugPikiOgawa/ogSave.o\
 	$(BUILD_DIR)/asm/plugPikiOgawa/ogNitaku.o\

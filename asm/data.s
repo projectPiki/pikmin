@@ -59164,16 +59164,3 @@ lbl_802D5FAC:
 	.asciz "screen/blo/cont_y.blo"
 .balign 4
 	.asciz "screen/blo/black.blo"
-	.4byte 0x00000000
-.balign 4
-.global lbl_802D6010
-lbl_802D6010:
-	.asciz "screen/blo/data_b.blo"
-.balign 4
-.global lbl_802D6028
-lbl_802D6028:
-	.asciz "screen/blo/data_pf.blo"
-.balign 4
-.global lbl_802D6040
-lbl_802D6040:
-	.asciz "screen/blo/black.blo"
