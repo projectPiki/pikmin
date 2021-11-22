@@ -5686,19 +5686,19 @@ modes:
 .global lbl_80228350
 lbl_80228350:
 	.asciz "CoreNode"
-	.balign 4
+.balign 4
 	.asciz "<SCENE_KEY_ANM_INFO>"
-	.balign 4
+.balign 4
 	.asciz "<KEY_CAMERA_ANM>"
-	.balign 4
+.balign 4
 	.asciz "<KEY_CAMERA_TABLE>"
-	.balign 4
+.balign 4
 	.asciz "cam_pos_x"
-	.balign 4
+.balign 4
 	.asciz "cam_pos_y"
-	.balign 4
+.balign 4
 	.asciz "cam_pos_z"
-	.balign 4
+.balign 4
 	.4byte 0x63616D5F
 	.4byte 0x6C61745F
 	.4byte 0x78000000
@@ -57189,26 +57189,25 @@ bloFiles_Tutorial__3zen:
 .global lbl_802D4058
 lbl_802D4058:
 	.asciz "screen/blo/test.blo"
-	.balign 4
+.balign 4
 .global lbl_802D406C
 lbl_802D406C:
 	.asciz "screen/blo/test2.blo"
-	.balign 4
 .balign 8
 .global lbl_802D4088
 lbl_802D4088:
 	.asciz "ogResult.cpp"
-	.balign 4
+.balign 4
 	.asciz "OgResultSection"
-	.balign 4
+.balign 4
 	.asciz "screen/blo/re_a_00.blo"
-	.balign 4
+.balign 4
 	.asciz "screen/blo/re_a_01.blo"
-	.balign 4
+.balign 4
 	.asciz "screen/blo/re_b_00.blo"
-	.balign 4
+.balign 4
 	.asciz "screen/blo/re_b_01.blo"
-	.balign 4
+.balign 4
 	.4byte 0x73637265
 	.4byte 0x656E2F62
 	.4byte 0x6C6F2F72
@@ -59063,104 +59062,4 @@ lbl_802D5E34:
 .balign 4
 .global lbl_802D5E4C
 lbl_802D5E4C:
-	.asciz "screen/blo/black.blo"
-.balign 4
-	.4byte 0x00000000
-.balign 4
-.global lbl_802D5E68
-lbl_802D5E68:
-	.asciz "ogMenu.cpp"
-.balign 4
-	.asciz "OgMenuSection"
-.balign 4
-.global RotateAngleData__3zen
-RotateAngleData__3zen:
-	.4byte 0x00000000
-	.4byte 0x40000000
-	.4byte 0x40800000
-	.4byte 0x40C00000
-	.4byte 0x41000000
-	.4byte 0x41200000
-	.4byte 0x41400000
-	.4byte 0x41600000
-	.4byte 0x41800000
-	.4byte 0x41900000
-	.4byte 0x41A00000
-	.4byte 0x41B00000
-	.4byte 0x41C00000
-	.4byte 0x41D00000
-	.4byte 0x41E00000
-	.4byte 0x41F00000
-	.4byte 0x42000000
-	.4byte 0x42080000
-	.4byte 0x42100000
-	.4byte 0x42180000
-	.4byte 0x42200000
-	.4byte 0x42280000
-	.4byte 0x42300000
-	.4byte 0x42380000
-	.4byte 0x42400000
-	.4byte 0x42480000
-	.4byte 0x42500000
-	.4byte 0x42580000
-	.4byte 0x42600000
-	.4byte 0x42680000
-	.4byte 0x42700000
-	.4byte 0xBF800000
-.global pane_name$1940
-pane_name$1940:
-	.4byte 0x006C5F6D
-	.4byte 0x00725F6D
-	.4byte 0x007A5F6D
-	.4byte 0x00795F6D
-	.4byte 0x00785F6D
-	.4byte 0x00615F6D
-	.4byte 0x00625F6D
-	.4byte 0x00635F6D
-	.ascii "3d_m"
-.global pane_name2$1941
-pane_name2$1941:
-	.4byte 0x0000006C
-	.4byte 0x00000072
-	.4byte 0x0000007A
-	.4byte 0x00000079
-	.4byte 0x00000078
-	.4byte 0x00000061
-	.4byte 0x00000062
-	.4byte 0x00000063
-	.4byte 0x00003364
-.global pane_name3$1942
-pane_name3$1942:
-	.4byte 0x006C5F63
-	.4byte 0x00725F63
-	.4byte 0x007A5F63
-	.4byte 0x00795F63
-	.4byte 0x00785F63
-	.4byte 0x00615F63
-	.4byte 0x00625F63
-	.4byte 0x00635F63
-	.ascii "3d_c"
-.global pane_name4$1943
-pane_name4$1943:
-	.4byte 0x006C5F77
-	.4byte 0x00725F77
-	.4byte 0x007A5F77
-	.4byte 0x00795F77
-	.4byte 0x00785F77
-	.4byte 0x00615F77
-	.4byte 0x00625F77
-	.4byte 0x00635F77
-	.ascii "3d_w"
-.balign 4
-lbl_802D5F94:
-	.asciz "screen/blo/cont_00.blo"
-.balign 4
-.global lbl_802D5FAC
-lbl_802D5FAC:
-	.asciz "screen/blo/m_menu2.blo"
-.balign 4
-	.asciz "screen/blo/m_menu2m.blo"
-.balign 4
-	.asciz "screen/blo/cont_y.blo"
-.balign 4
 	.asciz "screen/blo/black.blo"
