@@ -18383,12 +18383,3 @@ lbl_803E5A8C:
 	.4byte 0x34303430
 	.4byte 0x66660000
 	.4byte 0x00000000
-.global lbl_803E5A98
-lbl_803E5A98:
-	.4byte 0x43A00000
-.global lbl_803E5A9C
-lbl_803E5A9C:
-	.4byte 0x43700000
-.global lbl_803E5AA0
-lbl_803E5AA0:
-	.4byte 0x00000000
