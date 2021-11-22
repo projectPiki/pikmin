@@ -212,7 +212,7 @@ TEXT_O_FILES :=\
 	$(BUILD_DIR)/asm/Runtime/PPCEABI/H/global_destructor_chain.o\
 	$(BUILD_DIR)/asm/Runtime/PPCEABI/H/CPlusLibPPC.o\
 	$(BUILD_DIR)/asm/Runtime/PPCEABI/H/NMWException.o\
-	$(BUILD_DIR)/asm/Runtime/PPCEABI/H/ptmf.o\
+	$(BUILD_DIR)/src/Runtime/PPCEABI/H/ptmf.o\
 	$(BUILD_DIR)/asm/Runtime/PPCEABI/H/ExceptionPPC.o\
 	$(BUILD_DIR)/asm/Runtime/PPCEABI/H/runtime.o\
 	$(BUILD_DIR)/asm/Runtime/PPCEABI/H/__init_cpp_exceptions.o\

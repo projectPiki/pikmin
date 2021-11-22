@@ -1,4 +1,17 @@
+// presumably, ptmf = pointer to member function
 
+typedef struct PTMF {
+	long this_delta; // self-explanatory
+	long v_offset;   // vtable offset
+	union {
+		void* f_addr;   // function address
+		long ve_offset; // virtual function entry offset (of vtable)
+	} f_data;
+} PTMF;
+
+const PTMF __ptmf_null = { 0, 0, 0 };
+
+void __ptmf_scall(...);
 
 /*
  * --INFO--
@@ -45,24 +58,23 @@ void __ptmf_call4(void)
  * Address:	80214D30
  * Size:	000028
  */
-void __ptmf_scall(void)
+ // clang-format off
+asm void __ptmf_scall(...)
 {
-/*
-.loc_0x0:
-  lwz       r0, 0x0(r12)
-  lwz       r11, 0x4(r12)
-  lwz       r12, 0x8(r12)
-  add       r3, r3, r0
-  cmpwi     r11, 0
-  blt-      .loc_0x20
-  lwzx      r12, r3, r12
-  lwzx      r12, r12, r11
-
-.loc_0x20:
-  mtctr     r12
-  bctr
-*/
+	nofralloc
+		lwz		r0, PTMF.this_delta(r12)
+		lwz		r11, PTMF.v_offset(r12)
+		lwz		r12, PTMF.f_data(r12)
+		add		r3, r3, r0
+		cmpwi	r11, 0
+		blt-	cr0, loc_0x20
+		lwzx	r12, r3, r12
+		lwzx	r12, r12, r11
+	loc_0x20:
+		mtctr	r12
+		bctr
 }
+// clang-format on
 
 /*
  * --INFO--
