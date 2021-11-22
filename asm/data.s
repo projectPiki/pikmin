@@ -59035,31 +59035,3 @@ lbl_802D5DC8:
 	.4byte lbl_8018F1AC
 	.4byte lbl_8018F1C4
 	.4byte lbl_8018F1DC
-	.4byte 0x00000000
-.balign 4
-.global lbl_802D5DE8
-lbl_802D5DE8:
-	.asciz "bigFont.bti"
-.balign 4
-.global lbl_802D5DF4
-lbl_802D5DF4:
-	.asciz "screen/blo/tu_base.blo"
-.balign 4
-.global lbl_802D5E0C
-lbl_802D5E0C:
-	.4byte 0x74783F3F
-	.4byte 0x82CC9094
-	.4byte 0x2825648C
-	.4byte 0xC2290000
-.balign 4
-.global lbl_802D5E1C
-lbl_802D5E1C:
-	.asciz "screen/blo/m_menu_b.blo"
-.balign 4
-.global lbl_802D5E34
-lbl_802D5E34:
-	.asciz "screen/blo/m_menu_r.blo"
-.balign 4
-.global lbl_802D5E4C
-lbl_802D5E4C:
-	.asciz "screen/blo/black.blo"
