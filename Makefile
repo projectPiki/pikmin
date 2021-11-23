@@ -81,10 +81,6 @@ CFLAGS  := -Cpp_exceptions off -O4,p -fp hard -proc gekko -nodefaults -RTTI on -
 # for postprocess.py
 PROCFLAGS := -fprologue-fixup=old_stack
 
-# elf2dol needs to know these in order to calculate sbss correctly.
-SDATA_PDHR := 9
-SBSS_PDHR := 10
-
 #-------------------------------------------------------------------------------
 # Recipes
 #-------------------------------------------------------------------------------
