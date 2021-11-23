@@ -4080,16 +4080,16 @@ DEMO_STATUS:
 	.4byte demo29
 	.4byte 0x000102C0
 	.4byte 0x00000000
-	.4byte 0x802267A8
+	.4byte demo32
 	.4byte 0x000102C0
 	.4byte 0x00000000
-	.4byte 0x802267A8
+	.4byte demo32
 	.4byte 0x000102C0
 	.4byte 0x00000000
-	.4byte 0x802267A8
+	.4byte demo32
 	.4byte 0x000102C0
 	.4byte 0x00000000
-	.4byte 0x802267A8
+	.4byte demo32
 	.4byte 0x00010225
 	.4byte 0x00000000
 	.4byte 0x00000000
@@ -4104,16 +4104,16 @@ DEMO_STATUS:
 	.4byte 0x00000000
 	.4byte 0x00050100
 	.4byte 0x00000000
-	.4byte 0x802267B4
+	.4byte demo40
 	.4byte 0x00050100
 	.4byte 0x00000000
-	.4byte 0x802267B4
+	.4byte demo40
 	.4byte 0x00050100
 	.4byte 0x00000000
-	.4byte 0x802267B4
+	.4byte demo40
 	.4byte 0x00050100
 	.4byte 0x00000000
-	.4byte 0x802267B4
+	.4byte demo40
 	.4byte 0x01050100
 	.4byte 0x00000000
 	.4byte 0x00000000
@@ -4125,31 +4125,31 @@ DEMO_STATUS:
 	.4byte 0x00000000
 	.4byte 0x00010284
 	.4byte 0x00000000
-	.4byte 0x802267C8
+	.4byte demo47
 	.4byte 0x00010284
 	.4byte 0x00000000
-	.4byte 0x802267C8
+	.4byte demo47
 	.4byte 0x00010284
 	.4byte 0x00000000
-	.4byte 0x802267C8
+	.4byte demo47
 	.4byte 0x00010284
 	.4byte 0x00000000
-	.4byte 0x802267C8
+	.4byte demo47
 	.4byte 0x00040181
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x00040284
 	.4byte 0x00000000
-	.4byte 0x802267F4
+	.4byte demo52
 	.4byte 0x00040284
 	.4byte 0x00000000
-	.4byte 0x802267F4
+	.4byte demo52
 	.4byte 0x00040284
 	.4byte 0x00000000
-	.4byte 0x802267F4
+	.4byte demo52
 	.4byte 0x00040284
 	.4byte 0x00000000
-	.4byte 0x802267F4
+	.4byte demo52
 	.4byte 0x00020100
 	.4byte 0x00000000
 	.4byte 0x00000000
@@ -4191,40 +4191,40 @@ DEMO_STATUS:
 	.4byte 0x00000000
 	.4byte 0x00040286
 	.4byte 0x00000000
-	.4byte 0x80226868
+	.4byte demo69
 	.4byte 0x00040286
 	.4byte 0x00000000
-	.4byte 0x80226868
+	.4byte demo69
 	.4byte 0x00040286
 	.4byte 0x00000000
-	.4byte 0x80226868
+	.4byte demo69
 	.4byte 0x00040286
 	.4byte 0x00000000
-	.4byte 0x80226868
+	.4byte demo69
 	.4byte 0x00020187
 	.4byte 0x00000000
-	.4byte 0x8022687C
+	.4byte demo73
 	.4byte 0x0002018C
 	.4byte 0x00000000
-	.4byte 0x802268B0
+	.4byte demo74
 	.4byte 0x000201AB
 	.4byte 0x00000000
-	.4byte 0x802268E8
+	.4byte demo75
 	.4byte 0x000402AA
 	.4byte 0x00000000
-	.4byte 0x80226910
+	.4byte demo76
 	.4byte 0x000101C0
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x00020106
 	.4byte 0x00000000
-	.4byte 0x8022660C
+	.4byte demo21
 	.4byte 0x00020106
 	.4byte 0x00000000
-	.4byte 0x8022660C
+	.4byte demo21
 	.4byte 0x00020101
 	.4byte 0x00000000
-	.4byte 0x802265A8
+	.4byte demo18
 	.4byte 0x00020100
 	.4byte 0x00000000
 	.4byte 0x00000000
@@ -4245,19 +4245,19 @@ DEMO_STATUS:
 	.4byte 0x00000000
 	.4byte 0x000402A2
 	.4byte 0x00000000
-	.4byte 0x8022672C
+	.4byte demo29
 	.4byte 0x000102C0
 	.4byte 0x00000000
-	.4byte 0x802267A8
+	.4byte demo32
 	.4byte 0x00050100
 	.4byte 0x00000000
-	.4byte 0x802267B4
+	.4byte demo40
 	.4byte 0x00010284
 	.4byte 0x00000000
-	.4byte 0x802267C8
+	.4byte demo47
 	.4byte 0x00040284
 	.4byte 0x00000000
-	.4byte 0x802267F4
+	.4byte demo52
 	.4byte 0x01050100
 	.4byte 0x00000000
 	.4byte 0x00000000
@@ -4266,7 +4266,7 @@ DEMO_STATUS:
 	.4byte 0x00000000
 	.4byte 0x00040286
 	.4byte 0x00000000
-	.4byte 0x80226868
+	.4byte demo69
 	.4byte 0x00020100
 	.4byte 0x00000000
 	.4byte 0x00000000
@@ -4284,13 +4284,13 @@ DEMO_STATUS:
 	.4byte 0x00000000
 	.4byte 0x00050100
 	.4byte 0x00000000
-	.4byte 0x80226924
+	.4byte demo100
 	.4byte 0x00020106
 	.4byte 0x00000000
-	.4byte 0x8022693C
+	.4byte demo101
 	.4byte 0x00040200
 	.4byte 0x00000000
-	.4byte 0x803DCE40
+	.4byte demo102
 	.4byte 0x00020100
 	.4byte 0x00000000
 	.4byte 0x00000000
@@ -4323,10 +4323,10 @@ DEMO_STATUS:
 	.4byte 0x00000000
 	.4byte 0x000202C0
 	.4byte 0x00000000
-	.4byte 0x8022695C
+	.4byte demo113
 	.4byte 0x000402A9
 	.4byte 0x00000000
-	.4byte 0x802269A4
+	.4byte demo114
 .global lbl_80226F14
 lbl_80226F14:
 	.4byte lbl_8001AC58
