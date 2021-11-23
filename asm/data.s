@@ -58219,37 +58219,38 @@ dummy_blo_num_table__3zen:
 .global lbl_802D50B8
 lbl_802D50B8:
 	.asciz "ogRader.cpp"
+.balign 4
 	.asciz "OgRaderSection"
-	.skip 1
+.balign 4
 .global map_area_data__3zen
 map_area_data__3zen:
-	.4byte 0xC42E8000
-	.4byte 0x44FD0000
-	.4byte 0x45340000
-	.4byte 0xC3A70000
-	.4byte 0x44FD0000
-	.4byte 0x45340000
-	.4byte 0xC32A0000
-	.4byte 0x440A8000
-	.4byte 0x4525E000
-	.4byte 0xC3F00000
-	.4byte 0x43200000
-	.4byte 0x4576E000
-	.4byte 0xC2300000
-	.4byte 0x44BC0000
-	.4byte 0x45112000
+	.float -698.0
+	.float 2024.0
+	.float 2880.0
+	.float -334.0
+	.float 2024.0
+	.float 2880.0
+	.float -170.0
+	.float 554.0
+	.float 2654.0
+	.float -480.0
+	.float 160.0
+	.float 3950.0
+	.float -44.0
+	.float 1504.0
+	.float 2322.0
+.balign 4
 lbl_802D5110:
 	.asciz "screen/blo/p_map00.blo"
-	.skip 1
+.balign 4
 lbl_802D5128:
 	.asciz "screen/blo/p_map01.blo"
-	.skip 1
+.balign 4
 lbl_802D5140:
 	.asciz "screen/blo/p_map02.blo"
-	.skip 1
+.balign 4
 lbl_802D5158:
 	.asciz "screen/blo/p_map03.blo"
-	.skip 1
+.balign 4
 lbl_802D5170:
 	.asciz "screen/blo/p_map04.blo"
-	.skip 1
