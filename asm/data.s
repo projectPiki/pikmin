@@ -57190,10 +57190,3 @@ bloFiles_Tutorial__3zen:
 	.4byte 0x803E59E4
 	.4byte 0x00000000
 	.4byte 0x00000000
-.global lbl_802D4058
-lbl_802D4058:
-	.asciz "screen/blo/test.blo"
-.balign 4
-.global lbl_802D406C
-lbl_802D406C:
-	.asciz "screen/blo/test2.blo"
