@@ -1483,7 +1483,7 @@ lbl_8018D038:
 /* 8018D048 00189FA8  4E 80 00 20 */	blr 
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
-.balign 8
+.balign 32
 .global sjis_convert_table_1
 sjis_convert_table_1:
 	.4byte 0x00000118
