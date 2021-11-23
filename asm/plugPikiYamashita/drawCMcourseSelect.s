@@ -163,7 +163,7 @@ lbl_801EC674:
 /* 801EC6B0 001E9610  C3 E2 C1 2C */	lfs f31, lbl_803EC32C@sda21(r2)
 /* 801EC6B4 001E9614  C3 22 C1 30 */	lfs f25, lbl_803EC330@sda21(r2)
 /* 801EC6B8 001E9618  C3 42 C1 20 */	lfs f26, lbl_803EC320@sda21(r2)
-/* 801EC6BC 001E961C  CB 62 C1 38 */	lfd f27, "@1295"@sda21(r2)
+/* 801EC6BC 001E961C  CB 62 C1 38 */	lfd f27, lbl_803EC338@sda21(r2)
 /* 801EC6C0 001E9620  48 00 01 C4 */	b lbl_801EC884
 lbl_801EC6C4:
 /* 801EC6C4 001E9624  80 1A 01 98 */	lwz r0, 0x198(r26)
@@ -483,7 +483,7 @@ lbl_801ECA2C:
 /* 801ECB60 001E9AC0  90 77 01 98 */	stw r3, 0x198(r23)
 /* 801ECB64 001E9AC4  7F 5D D3 78 */	mr r29, r26
 /* 801ECB68 001E9AC8  3F 00 43 30 */	lis r24, 0x4330
-/* 801ECB6C 001E9ACC  CB E2 C1 38 */	lfd f31, "@1295"@sda21(r2)
+/* 801ECB6C 001E9ACC  CB E2 C1 38 */	lfd f31, lbl_803EC338@sda21(r2)
 /* 801ECB70 001E9AD0  48 00 00 AC */	b lbl_801ECC1C
 lbl_801ECB74:
 /* 801ECB74 001E9AD4  38 BA 00 00 */	addi r5, r26, 0
@@ -1120,32 +1120,34 @@ modeDefault__Q23zen12DrawMenuBaseFP10Controller:
 /* 801ED47C 001EA3DC  4E 80 00 20 */	blr 
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
-.balign 0x8
-.global lbl_802E6C78
+.balign 8
 lbl_802E6C78:
 	.asciz "drawCMcourseSelect.cpp"
-	.skip 1
+.balign 4
 	.asciz "drawCMcourseSelect"
-	.skip 1
-.global lbl_802E6CA4
+.balign 4
 lbl_802E6CA4:
 	.4byte 0x00000000
 	.4byte 0xFFFFFFFF
 	.4byte modeAppear__Q23zen12DrawCMCSmenuFP10Controller
+.balign 4
 	.asciz "screen/blo/cha_sel.blo"
-	.skip 1
+.balign 4
 	.asciz "screen/blo/cha_rank.blo"
+.balign 4
 	.asciz "screen/blo/cha_best.blo"
+.balign 4
 	.asciz "screen/blo/cha_map.blo"
-	.skip 1
+.balign 4
 lbl_802E6C10:
 	.asciz "zen::DrawCMCSmenu"
-	.skip 2
+.balign 4
 lbl_802E6C24:
 	.asciz "zen::DrawScreen"
+.balign 4
 lbl_802E6C34:
 	.asciz "zen::DrawMenuBase"
-	.skip 2
+.balign 4
 lbl_802E6C48:
 	.4byte __RTTI__Q23zen10DrawScreen
 	.4byte 0x00000000
@@ -1196,9 +1198,10 @@ lbl_803E7530:
 	.4byte 0x00000000
 lbl_803E7534:
 	.4byte 0x00000000
+.balign 4
 lbl_803E7538:
 	.asciz "p_m%d"
-	.skip 2
+.balign 4
 lbl_803E7540:
 	.4byte 0x43A00000
 lbl_803E7544:
@@ -1211,7 +1214,6 @@ lbl_803E7550:
 	.4byte 0x43700000
 lbl_803E7554:
 	.4byte 0x00000000
-.global lbl_803E7558
 lbl_803E7558:
 	.4byte 0x43A00000
 lbl_803E755C:
@@ -1270,8 +1272,8 @@ lbl_803EC32C:
 	.4byte 0x3F000000
 lbl_803EC330:
 	.4byte 0x44200000
-	.4byte 0x00000000
-"@1295":
+.balign 8
+lbl_803EC338:
 	.4byte 0x43300000
 	.4byte 0x80000000
 lbl_803EC340:

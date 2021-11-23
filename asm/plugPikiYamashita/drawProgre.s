@@ -413,18 +413,18 @@ draw__Q23zen10DrawProgreFR8Graphics:
 /* 801DA810 001D7770  4E 80 00 20 */	blr 
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
-.balign 0x8
+.balign 8
 lbl_802E5788:
 	.asciz "screen/blo/progre.blo"
-	.skip 2
+.balign 4
 lbl_802E57A0:
 	.asciz "progre2.blo"
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
-.balign 0x8
+.balign 8
 lbl_803EC038:
-	.4byte 0x00000000
+	.float 0.0
 lbl_803EC03C:
-	.4byte 0x3F800000
+	.float 1.0
 lbl_803EC040:
-	.4byte 0x3F000000
+	.float 0.5

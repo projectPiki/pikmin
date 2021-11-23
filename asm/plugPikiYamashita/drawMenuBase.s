@@ -362,7 +362,7 @@ init__Q23zen12DrawMenuBaseFi:
 /* 801F069C 001ED5FC  80 1D 01 04 */	lwz r0, 0x104(r29)
 /* 801F06A0 001ED600  80 BD 01 74 */	lwz r5, 0x174(r29)
 /* 801F06A4 001ED604  1C 80 00 0C */	mulli r4, r0, 0xc
-/* 801F06A8 001ED608  C8 42 C2 00 */	lfd f2, "@827"@sda21(r2)
+/* 801F06A8 001ED608  C8 42 C2 00 */	lfd f2, lbl_803EC400@sda21(r2)
 /* 801F06AC 001ED60C  38 04 00 04 */	addi r0, r4, 4
 /* 801F06B0 001ED610  7C 85 00 2E */	lwzx r4, r5, r0
 /* 801F06B4 001ED614  A8 04 00 1A */	lha r0, 0x1a(r4)
@@ -382,7 +382,7 @@ init__Q23zen12DrawMenuBaseFi:
 /* 801F06EC 001ED64C  38 7D 01 44 */	addi r3, r29, 0x144
 /* 801F06F0 001ED650  80 BD 01 74 */	lwz r5, 0x174(r29)
 /* 801F06F4 001ED654  1C 80 00 0C */	mulli r4, r0, 0xc
-/* 801F06F8 001ED658  C8 42 C2 00 */	lfd f2, "@827"@sda21(r2)
+/* 801F06F8 001ED658  C8 42 C2 00 */	lfd f2, lbl_803EC400@sda21(r2)
 /* 801F06FC 001ED65C  38 04 00 08 */	addi r0, r4, 8
 /* 801F0700 001ED660  7C 85 00 2E */	lwzx r4, r5, r0
 /* 801F0704 001ED664  A8 04 00 1A */	lha r0, 0x1a(r4)
@@ -531,7 +531,7 @@ lbl_801F08E0:
 /* 801F08FC 001ED85C  4B EB 4A 79 */	bl playSysSe__8SeSystemFi
 /* 801F0900 001ED860  80 9E 00 04 */	lwz r4, 4(r30)
 /* 801F0904 001ED864  3F A0 43 30 */	lis r29, 0x4330
-/* 801F0908 001ED868  C8 42 C2 00 */	lfd f2, "@827"@sda21(r2)
+/* 801F0908 001ED868  C8 42 C2 00 */	lfd f2, lbl_803EC400@sda21(r2)
 /* 801F090C 001ED86C  38 7B 01 14 */	addi r3, r27, 0x114
 /* 801F0910 001ED870  A8 04 00 1A */	lha r0, 0x1a(r4)
 /* 801F0914 001ED874  A8 84 00 18 */	lha r4, 0x18(r4)
@@ -549,7 +549,7 @@ lbl_801F08E0:
 /* 801F0944 001ED8A4  4B FE A2 65 */	bl move__Q23zen17SpectrumCursorMgrFfff
 /* 801F0948 001ED8A8  80 9E 00 08 */	lwz r4, 8(r30)
 /* 801F094C 001ED8AC  38 7B 01 44 */	addi r3, r27, 0x144
-/* 801F0950 001ED8B0  C8 42 C2 00 */	lfd f2, "@827"@sda21(r2)
+/* 801F0950 001ED8B0  C8 42 C2 00 */	lfd f2, lbl_803EC400@sda21(r2)
 /* 801F0954 001ED8B4  A8 04 00 1A */	lha r0, 0x1a(r4)
 /* 801F0958 001ED8B8  A8 84 00 18 */	lha r4, 0x18(r4)
 /* 801F095C 001ED8BC  6C 00 80 00 */	xoris r0, r0, 0x8000
@@ -658,11 +658,13 @@ lbl_802E7088:
 	.4byte 0x00000000
 	.4byte 0x0000001C
 	.4byte 0x00000000
+.balign 4
 lbl_802E70D0:
 	.asciz "zen::DrawMenuBase"
-	.skip 2
+.balign 4
 lbl_802E70E4:
 	.asciz "zen::DrawScreen"
+.balign 4
 lbl_802E70F4:
 	.4byte __RTTI__Q23zen10DrawScreen
 	.4byte 0x00000000
@@ -683,22 +685,18 @@ __vt__Q23zen12DrawMenuBase:
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 0x8
-.global lbl_803E7650
 lbl_803E7650:
-	.4byte 0x68652530
-	.4byte 0x32640000
-.global lbl_803E7658
+	.asciz "he%02d"
+.balign 4
 lbl_803E7658:
-	.4byte 0x686D2530
-	.4byte 0x32640000
-.global lbl_803E7660
+	.asciz "hm%02d"
+.balign 4
 lbl_803E7660:
-	.4byte 0x69253032
-	.4byte 0x646C0000
-.global lbl_803E7668
+	.asciz "i%02dl"
+.balign 4
 lbl_803E7668:
-	.4byte 0x69253032
-	.4byte 0x64720000
+	.asciz "i%02dr"
+.balign 4
 .global SELECT_CANCEL__Q23zen12DrawMenuBase
 SELECT_CANCEL__Q23zen12DrawMenuBase:
 	.4byte 0xFFFFFFFF
@@ -711,27 +709,20 @@ __RTTI__Q23zen12DrawMenuBase:
 	.4byte 0
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
-.balign 0x8
-.global lbl_803EC3E8
+.balign 8
 lbl_803EC3E8:
 	.4byte 0x3F800000
-.global lbl_803EC3EC
 lbl_803EC3EC:
 	.4byte 0x00000000
-.global lbl_803EC3F0
 lbl_803EC3F0:
 	.4byte 0x41200000
-.global lbl_803EC3F4
 lbl_803EC3F4:
 	.4byte 0x42C80000
-.global lbl_803EC3F8
 lbl_803EC3F8:
 	.4byte 0x42480000
-	.4byte 0x00000000
-.global "@827"
-"@827":
+.balign 8
+lbl_803EC400:
 	.4byte 0x43300000
 	.4byte 0x80000000
-.global lbl_803EC408
 lbl_803EC408:
 	.4byte 0x3F000000

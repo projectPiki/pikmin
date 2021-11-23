@@ -1608,7 +1608,7 @@ act__18TAIAsetTargetOtamaFR4Teki:
 /* 801EC268 001E91C8  41 82 00 54 */	beq lbl_801EC2BC
 /* 801EC26C 001E91CC  48 02 BE 05 */	bl rand
 /* 801EC270 001E91D0  6C 60 80 00 */	xoris r0, r3, 0x8000
-/* 801EC274 001E91D4  C8 82 C1 10 */	lfd f4, "@2630"@sda21(r2)
+/* 801EC274 001E91D4  C8 82 C1 10 */	lfd f4, lbl_803EC310@sda21(r2)
 /* 801EC278 001E91D8  90 01 00 1C */	stw r0, 0x1c(r1)
 /* 801EC27C 001E91DC  3C 00 43 30 */	lis r0, 0x4330
 /* 801EC280 001E91E0  C0 42 C1 08 */	lfs f2, lbl_803EC308@sda21(r2)
@@ -1668,7 +1668,7 @@ start__13TAIAwaitOtamaFR4Teki:
 /* 801EC344 001E92A4  80 63 00 84 */	lwz r3, 0x84(r3)
 /* 801EC348 001E92A8  EC 1F F0 28 */	fsubs f0, f31, f30
 /* 801EC34C 001E92AC  90 01 00 60 */	stw r0, 0x60(r1)
-/* 801EC350 001E92B0  C8 62 C1 10 */	lfd f3, "@2630"@sda21(r2)
+/* 801EC350 001E92B0  C8 62 C1 10 */	lfd f3, lbl_803EC310@sda21(r2)
 /* 801EC354 001E92B4  38 80 00 32 */	li r4, 0x32
 /* 801EC358 001E92B8  C8 41 00 60 */	lfd f2, 0x60(r1)
 /* 801EC35C 001E92BC  C0 22 C1 08 */	lfs f1, lbl_803EC308@sda21(r2)
@@ -1754,10 +1754,10 @@ lbl_801EC45C:
 .balign 0x8
 lbl_802E6760:
 	.asciz "TAIotama.cpp"
-	.skip 3
+.balign 4
 lbl_802E6770:
 	.asciz "TAIotama"
-	.skip 3
+.balign 4
 lbl_802E677C:
 	.4byte 0x83458347
 	.4byte 0x83438367
@@ -1772,31 +1772,35 @@ lbl_802E6794:
 	.4byte 0x8E9E8AD4
 	.4byte 0x81699562
 	.4byte 0x816A0000
+.balign 4
 	.asciz "tekis/otama/motion/dead.dca"
+.balign 4
 	.asciz "tekis/otama/motion/damage.dca"
-	.skip 2
+.balign 4
 	.asciz "tekis/otama/motion/wait1.dca"
-	.skip 3
+.balign 4
 	.asciz "tekis/otama/motion/wait2.dca"
-	.skip 3
+.balign 4
 	.asciz "tekis/otama/motion/waitact1.dck"
+.balign 4
 	.asciz "tekis/otama/motion/waitact2.dca"
+.balign 4
 	.asciz "tekis/otama/motion/move1.dck"
-	.skip 3
+.balign 4
 	.asciz "tekis/otama/motion/move2.dck"
-	.skip 3
+.balign 4
 	.asciz "tekis/otama/motion/attack.dca"
-	.skip 2
+.balign 4
 	.asciz "tekis/otama/motion/type1.dck"
-	.skip 3
+.balign 4
 	.asciz "tekis/otama/motion/type2.dca"
-	.skip 3
+.balign 4
 lbl_802E6908:
 	.asciz "TAIotamaAnimation"
-	.skip 2
+.balign 4
 lbl_802E691C:
 	.asciz "TAIanimation"
-	.skip 3
+.balign 4
 lbl_802E692C:
 	.4byte __RTTI__12TAIanimation
 	.4byte 0x00000000
@@ -1806,15 +1810,16 @@ __vt__17TAIotamaAnimation:
 	.4byte __RTTI__17TAIotamaAnimation
 	.4byte 0
 	.4byte makeDefaultAnimations__17TAIotamaAnimationFv
+.balign 4
 lbl_802E6944:
 	.asciz "TAIArunAwayOtama"
-	.skip 3
+.balign 4
 lbl_802E6958:
 	.asciz "TaiAction"
-	.skip 2
+.balign 4
 lbl_802E6964:
 	.asciz "TAIAreserveMotion"
-	.skip 2
+.balign 4
 lbl_802E6978:
 	.4byte __RTTI__9TaiAction
 	.4byte 0
@@ -1834,9 +1839,10 @@ __vt__16TAIArunAwayOtama:
 	.4byte act__16TAIArunAwayOtamaFR4Teki
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
+.balign 4
 lbl_802E69B4:
 	.asciz "TAIAtimerReaction"
-	.skip 2
+.balign 4
 lbl_802E69C8:
 	.4byte __RTTI__9TaiAction
 	.4byte 0
@@ -1849,11 +1855,13 @@ lbl_802E69C8:
 	.4byte 0
 	.4byte 0
 	.4byte 0
+.balign 4
 lbl_802E69F4:
 	.asciz "TAIAappealOtama"
+.balign 4
 lbl_802E6A04:
 	.asciz "TAIAflickingReserveMotion"
-	.skip 2
+.balign 4
 lbl_802E6A20:
 	.4byte __RTTI__9TaiAction
 	.4byte 0
@@ -1879,12 +1887,13 @@ __vt__15TAIAappealOtama:
 	.4byte hasNextState__9TaiActionFv
 	.4byte flick__15TAIAappealOtamaFR4Teki
 	.4byte getFlickDirection__25TAIAflickingReserveMotionFR4Teki
+.balign 4
 lbl_802E6A74:
 	.asciz "TAIAsetTargetOtama"
-	.skip 1
+.balign 4
 lbl_802E6A88:
 	.asciz "TAIAsetTargetPointCircleRandom"
-	.skip 1
+.balign 4
 lbl_802E6AA8:
 	.4byte __RTTI__9TaiAction
 	.4byte 0
@@ -1904,9 +1913,10 @@ __vt__18TAIAsetTargetOtama:
 	.4byte act__18TAIAsetTargetOtamaFR4Teki
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
+.balign 4
 lbl_802E6AE4:
 	.asciz "TAIAwaitOtama"
-	.skip 2
+.balign 4
 lbl_802E6AF4:
 	.4byte __RTTI__9TaiAction
 	.4byte 0
@@ -1929,14 +1939,16 @@ __vt__13TAIAwaitOtama:
 	.4byte 0
 	.4byte 0
 	.4byte 0
+.balign 4
 lbl_802E6B40:
 	.asciz "TAIotamaStrategy"
-	.skip 3
+.balign 4
 lbl_802E6B54:
 	.asciz "TekiStrategy"
-	.skip 3
+.balign 4
 lbl_802E6B64:
 	.asciz "YaiStrategy"
+.balign 4
 lbl_802E6B70:
 	.4byte __RTTI__12TekiStrategy
 	.4byte 0
@@ -1959,12 +1971,13 @@ __vt__16TAIotamaStrategy:
 	.4byte drawDebugInfo__12TekiStrategyFR4TekiR8Graphics
 	.4byte interact__12TekiStrategyFR4TekiR18TekiInteractionKey
 	.4byte spawnCorpseParts__12TekiStrategyFR4Teki
+.balign 4
 lbl_802E6BB8:
 	.asciz "TAIotamaParameters"
-	.skip 1
+.balign 4
 lbl_802E6BCC:
 	.asciz "CoreNode"
-	.skip 3
+.balign 4
 lbl_802E6BD8:
 	.4byte __RTTI__5ANode
 	.4byte 0
@@ -1975,9 +1988,10 @@ lbl_802E6BE4:
 	.4byte __RTTI__8CoreNode
 	.4byte 0
 	.4byte 0
+.balign 4
 lbl_802E6BF8:
 	.asciz "TekiParameters"
-	.skip 1
+.balign 4
 lbl_802E6C08:
 	.4byte __RTTI__5ANode
 	.4byte 0
@@ -2052,18 +2066,20 @@ __RTTI__11YaiStrategy:
 __RTTI__16TAIotamaStrategy:
 	.4byte lbl_802E6B40
 	.4byte lbl_802E6B7C
+.balign 4
 lbl_803E74D0:
 	.asciz "ANode"
-	.skip 2
+.balign 4
 __RTTI__5ANode:
 	.4byte lbl_803E74D0
 	.4byte 0
 __RTTI__8CoreNode:
 	.4byte lbl_802E6BCC
 	.4byte lbl_802E6BD8
+.balign 4
 lbl_803E74E8:
 	.asciz "Node"
-	.skip 3
+.balign 4
 __RTTI__4Node:
 	.4byte lbl_803E74E8
 	.4byte lbl_802E6BE4
@@ -2126,8 +2142,8 @@ lbl_803EC304:
 	.4byte 0x40400000
 lbl_803EC308:
 	.4byte 0x46FFFE00
-	.4byte 0x00000000
-"@2630":
+.balign 8
+lbl_803EC310:
 	.4byte 0x43300000
 	.4byte 0x80000000
 lbl_803EC318:

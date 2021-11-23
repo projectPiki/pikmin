@@ -4,7 +4,7 @@
 .global metro
 metro:
 .asciz "Metrowerks Target Resident Kernel for PowerPC"
-.skip 0x2
+.balign 4
 /* 800034E8 000004E8  00 00 00 00 */	.4byte 0x00000000  /* unknown instruction */
 /* 800034EC 000004EC  00 00 00 00 */	.4byte 0x00000000  /* unknown instruction */
 /* 800034F0 000004F0  00 00 00 00 */	.4byte 0x00000000  /* unknown instruction */

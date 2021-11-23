@@ -1306,7 +1306,7 @@ createRankInEffect__Q23zen12DrawCMresultFv:
 /* 801EFE34 001ECD94  7C 64 00 50 */	subf r3, r4, r0
 /* 801EFE38 001ECD98  A8 1E 00 1C */	lha r0, 0x1c(r30)
 /* 801EFE3C 001ECD9C  7C 63 0E 70 */	srawi r3, r3, 1
-/* 801EFE40 001ECDA0  C8 62 C1 E0 */	lfd f3, "@1351"@sda21(r2)
+/* 801EFE40 001ECDA0  C8 62 C1 E0 */	lfd f3, lbl_803EC3E0@sda21(r2)
 /* 801EFE44 001ECDA4  7C 64 1A 14 */	add r3, r4, r3
 /* 801EFE48 001ECDA8  C0 0D 28 D8 */	lfs f0, lbl_803E75F8@sda21(r13)
 /* 801EFE4C 001ECDAC  20 63 01 E0 */	subfic r3, r3, 0x1e0
@@ -1342,7 +1342,7 @@ createRankInEffect__Q23zen12DrawCMresultFv:
 /* 801EFEC4 001ECE24  7C 64 00 50 */	subf r3, r4, r0
 /* 801EFEC8 001ECE28  A8 1E 00 1C */	lha r0, 0x1c(r30)
 /* 801EFECC 001ECE2C  7C 63 0E 70 */	srawi r3, r3, 1
-/* 801EFED0 001ECE30  C8 62 C1 E0 */	lfd f3, "@1351"@sda21(r2)
+/* 801EFED0 001ECE30  C8 62 C1 E0 */	lfd f3, lbl_803EC3E0@sda21(r2)
 /* 801EFED4 001ECE34  7C 64 1A 14 */	add r3, r4, r3
 /* 801EFED8 001ECE38  C0 0D 28 DC */	lfs f0, lbl_803E75FC@sda21(r13)
 /* 801EFEDC 001ECE3C  20 63 01 E0 */	subfic r3, r3, 0x1e0
@@ -1376,7 +1376,7 @@ createRankInEffect__Q23zen12DrawCMresultFv:
 /* 801EFF4C 001ECEAC  7C 64 00 50 */	subf r3, r4, r0
 /* 801EFF50 001ECEB0  A8 1E 00 1C */	lha r0, 0x1c(r30)
 /* 801EFF54 001ECEB4  7C 63 0E 70 */	srawi r3, r3, 1
-/* 801EFF58 001ECEB8  C8 62 C1 E0 */	lfd f3, "@1351"@sda21(r2)
+/* 801EFF58 001ECEB8  C8 62 C1 E0 */	lfd f3, lbl_803EC3E0@sda21(r2)
 /* 801EFF5C 001ECEBC  7C 64 1A 14 */	add r3, r4, r3
 /* 801EFF60 001ECEC0  C0 0D 28 E0 */	lfs f0, lbl_803E7600@sda21(r13)
 /* 801EFF64 001ECEC4  20 63 01 E0 */	subfic r3, r3, 0x1e0
@@ -1434,7 +1434,7 @@ createRankInEffect__Q23zen12DrawCMresultFv:
 /* 801F0034 001ECF94  7C 03 00 50 */	subf r0, r3, r0
 /* 801F0038 001ECF98  81 21 00 E8 */	lwz r9, 0xe8(r1)
 /* 801F003C 001ECF9C  7C 00 0E 70 */	srawi r0, r0, 1
-/* 801F0040 001ECFA0  C8 62 C1 E0 */	lfd f3, "@1351"@sda21(r2)
+/* 801F0040 001ECFA0  C8 62 C1 E0 */	lfd f3, lbl_803EC3E0@sda21(r2)
 /* 801F0044 001ECFA4  7C 04 02 14 */	add r0, r4, r0
 /* 801F0048 001ECFA8  C0 0D 28 E4 */	lfs f0, lbl_803E7604@sda21(r13)
 /* 801F004C 001ECFAC  90 01 00 EC */	stw r0, 0xec(r1)
@@ -1474,7 +1474,7 @@ createRankInEffect__Q23zen12DrawCMresultFv:
 /* 801F00D4 001ED034  90 61 00 FC */	stw r3, 0xfc(r1)
 /* 801F00D8 001ED038  20 00 01 E0 */	subfic r0, r0, 0x1e0
 /* 801F00DC 001ED03C  6C 00 80 00 */	xoris r0, r0, 0x8000
-/* 801F00E0 001ED040  C8 62 C1 E0 */	lfd f3, "@1351"@sda21(r2)
+/* 801F00E0 001ED040  C8 62 C1 E0 */	lfd f3, lbl_803EC3E0@sda21(r2)
 /* 801F00E4 001ED044  93 E1 00 F8 */	stw r31, 0xf8(r1)
 /* 801F00E8 001ED048  C0 0D 28 E8 */	lfs f0, lbl_803E7608@sda21(r13)
 /* 801F00EC 001ED04C  38 C0 00 00 */	li r6, 0
@@ -1504,17 +1504,18 @@ lbl_801F0130:
 /* 801F0148 001ED0A8  4E 80 00 20 */	blr 
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
-.balign 0x8
-.global lbl_802E6E88
+.balign 8
 lbl_802E6E88:
 	.asciz "drawCMresult.cpp"
-	.skip 3
+.balign 4
 	.asciz "drawCMresult"
-	.skip 3
+.balign 4
 	.asciz "screen/blo/cha_re.blo"
-	.skip 2
+.balign 4
 	.asciz "screen/blo/cha_rank.blo"
+.balign 4
 	.asciz "screen/blo/cha_best.blo"
+.balign 4
 	.4byte 0x00000000
 	.4byte 0xFFFFFFFF
 	.4byte modeSleep__Q23zen12DrawCMresultFP10Controller
@@ -1533,12 +1534,13 @@ lbl_802E6E88:
 	.4byte 0x00000000
 	.4byte 0xFFFFFFFF
 	.4byte modeOperation__Q23zen12DrawCMresultFP10Controller
+.balign 4
 lbl_802E6F3C:
 	.asciz "zen::DrawCMresultGraph"
-	.skip 1
+.balign 4
 lbl_802E6F54:
 	.asciz "zen::DrawCMresultAlpha"
-	.skip 1
+.balign 4
 lbl_802E6F6C:
 	.4byte __RTTI__Q23zen17DrawCMresultAlpha
 	.4byte 0x00000000
@@ -1553,23 +1555,28 @@ __vt__Q23zen17DrawCMresultAlpha:
 	.4byte __RTTI__Q23zen17DrawCMresultAlpha
 	.4byte 0
 	.4byte update__Q23zen17DrawCMresultAlphaFv
+.balign 4
 	.asciz "zen::NumberPicCallBack<int>"
+.balign 4
 lbl_802E6FAC:
 	.asciz "zen::NumberTex"
-	.skip 1
+.balign 4
 lbl_802E6FBC:
 	.asciz "zen::FigureTex<int>"
 lbl_802E6FD0:
 	.4byte __RTTI__Q23zen9NumberTex
 	.4byte 0
 	.4byte 0
+.balign 4
 lbl_802E6FDC:
 	.asciz "P2DPaneCallBackBase"
+.balign 4
 lbl_802E6FF0:
 	.asciz "zen::CallBack1<P2DPane *>"
-	.skip 2
+.balign 4
 lbl_802E700C:
 	.asciz "P2DPaneCallBack"
+.balign 4
 lbl_802E701C:
 	.4byte __RTTI__19P2DPaneCallBackBase
 	.4byte 0x4
@@ -1600,30 +1607,25 @@ lbl_802E701C:
 	.4byte 0
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
-.balign 0x8
-.global lbl_803E75F0
+.balign 8
+.balign 4
 lbl_803E75F0:
 	.asciz "p_m%d"
-	.skip 2
-.global lbl_803E75F8
+.balign 4
 lbl_803E75F8:
 	.4byte 0x00000000
-.global lbl_803E75FC
 lbl_803E75FC:
 	.4byte 0x00000000
-.global lbl_803E7600
 lbl_803E7600:
 	.4byte 0x00000000
-.global lbl_803E7604
 lbl_803E7604:
 	.4byte 0x00000000
-.global lbl_803E7608
 lbl_803E7608:
 	.4byte 0x00000000
-.global lbl_803E760C
+.balign 4
 lbl_803E760C:
 	.asciz "m%d_w"
-	.skip 2
+.balign 4
 __RTTI__Q23zen17DrawCMresultAlpha:
 	.4byte lbl_802E6F54
 	.4byte 0
@@ -1648,26 +1650,20 @@ __RTTI__15P2DPaneCallBack:
 	.4byte 0
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
-.balign 0x8
-.global lbl_803EC3C8
+.balign 8
 lbl_803EC3C8:
 	.4byte 0x00000000
-.global lbl_803EC3CC
 lbl_803EC3CC:
 	.4byte 0x3F800000
-.global lbl_803EC3D0
 lbl_803EC3D0:
 	.4byte 0x3DCCCCCD
-.global lbl_803EC3D4
 lbl_803EC3D4:
 	.4byte 0x3FC90FDB
-.global lbl_803EC3D8
 lbl_803EC3D8:
 	.4byte 0xC3F00000
-.global lbl_803EC3DC
 lbl_803EC3DC:
 	.4byte 0x3F000000
-.global "@1351"
-"@1351":
+.balign 8
+lbl_803EC3E0:
 	.4byte 0x43300000
 	.4byte 0x80000000
