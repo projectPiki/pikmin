@@ -423,16 +423,3 @@ lbl_803EB14C:
 .global lbl_803EB150
 lbl_803EB150:
 	.4byte 0x3E99999A
-	.4byte 0x00000000
-.global lbl_803EB158
-lbl_803EB158:
-	.4byte 0x3E4CCCCD
-.global lbl_803EB15C
-lbl_803EB15C:
-	.4byte 0x3F000000
-.global lbl_803EB160
-lbl_803EB160:
-	.4byte 0x00000000
-.global lbl_803EB164
-lbl_803EB164:
-	.4byte 0x42700000

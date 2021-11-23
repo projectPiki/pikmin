@@ -17924,6 +17924,3 @@ lbl_803E56F0:
 	.4byte 0x802d2f18
 	.4byte 0x802d2fb8
 	.4byte 0
-.global lbl_803E5728
-lbl_803E5728:
-	.asciz "on%02d"
