@@ -56047,35 +56047,3 @@ lbl_802D3010:
 	.4byte 0x735F7365
 	.4byte 0x6C65632E
 	.4byte 0x626C6F00
-	.4byte 0x00000000
-.global lbl_802D30C0
-lbl_802D30C0:
-	.4byte 0x6F675061
-	.4byte 0x7573652E
-	.4byte 0x63707000
-	.4byte 0x4F675061
-	.4byte 0x75736553
-	.4byte 0x65637469
-	.4byte 0x6F6E0000
-	.4byte 0x73637265
-	.4byte 0x656E2F62
-	.4byte 0x6C6F2F62
-	.4byte 0x6C61636B
-	.4byte 0x2E626C6F
-	.4byte 0x00000000
-	.4byte 0x73637265
-	.4byte 0x656E2F62
-	.4byte 0x6C6F2F70
-	.4byte 0x61757365
-	.4byte 0x2E626C6F
-	.4byte 0x00000000
-	.4byte 0x73637265
-	.4byte 0x656E2F62
-	.4byte 0x6C6F2F70
-	.4byte 0x61757365
-	.4byte 0x5F6F6B2E
-	.4byte 0x626C6F00
-.balign 8
-.global lbl_802D3128
-lbl_802D3128:
-	.asciz "screen/blo/tu_base.blo"

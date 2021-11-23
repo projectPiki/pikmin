@@ -43,6 +43,8 @@ TEXT_O_FILES :=\
 	$(BUILD_DIR)/asm/plugPikiNishimura/SpiderAi.o\
 	$(BUILD_DIR)/asm/plugPikiNishimura/SpiderLeg.o\
 	$(BUILD_DIR)/asm/text_Nishimura.o\
+	$(BUILD_DIR)/asm/plugPikiOgawa/ogPause.o\
+	$(BUILD_DIR)/asm/plugPikiOgawa/ogTutorial.o\
 	$(BUILD_DIR)/asm/plugPikiOgawa/ogTutorialData.o\
 	$(BUILD_DIR)/asm/plugPikiOgawa/ogMap.o\
 	$(BUILD_DIR)/asm/plugPikiOgawa/ogResult.o\
