@@ -12014,7 +12014,7 @@ p_icon_palette:
 	.4byte 0xD276EB5C
 	.4byte 0xCE75F7BF
 	.4byte 0x98D08000
-	.4byte lbl_80018000
+	.4byte 0x80018000
 	.4byte 0x8000EF7D
 	.4byte 0xD29498F5
 	.4byte 0xD6B78C69
@@ -12402,7 +12402,7 @@ o_icon_palette:
 	.4byte 0xD276EB5C
 	.4byte 0xCE75F7BF
 	.4byte 0x98D08000
-	.4byte lbl_80018000
+	.4byte 0x80018000
 	.4byte 0x8000EF7D
 	.4byte 0xD29498F5
 	.4byte 0xD6B78C69
@@ -12765,7 +12765,7 @@ p_card_v_palette:
 	.4byte 0xFFFFFFE0
 	.4byte 0xFC1FFC00
 	.4byte 0x83FF83E0
-	.4byte lbl_801F8000
+	.4byte 0x801F8000
 	.4byte 0x80C08100
 	.4byte 0x80409400
 	.4byte 0xA0449888
@@ -13178,7 +13178,7 @@ p_card_v_data:
 	.4byte 0x43585C07
 	.4byte 0xAB073D3B
 	.4byte 0x44585A07
-	.4byte lbl_80077444
+	.4byte 0x80077444
 	.4byte 0x4C4F5A07
 	.4byte 0x27231F21
 	.4byte 0x2413FEF2
