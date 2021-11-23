@@ -18280,6 +18280,3 @@ bloFile_PartsInfo_un14__3zen:
 bloFile_Test__3zen:
 	.4byte 0x802D3DD4
 	.4byte lbl_803E5730
-	.4byte 0x00000000
-	.4byte 0x454E4400
-	.4byte 0x00000000
