@@ -281,10 +281,3 @@ lbl_803EB074:
 .global lbl_803EB078
 lbl_803EB078:
 	.4byte 0x42200000
-	.4byte 0x00000000
-.global lbl_803EB080
-lbl_803EB080:
-	.4byte 0x41F00000
-.global lbl_803EB084
-lbl_803EB084:
-	.4byte 0x00000000

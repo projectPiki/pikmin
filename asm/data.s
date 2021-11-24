@@ -54184,29 +54184,3 @@ __vt__15CoreNucleusProp:
 	.4byte 0
 	.4byte 0
 	.4byte 0
-	.4byte 0x436f7265
-	.4byte 0x4e75636c
-	.4byte 0x65757341
-	.4byte 0x692e6370
-	.4byte 0x70000000
-	.4byte 0x436f7265
-	.4byte 0x4e75636c
-	.4byte 0x65757341
-	.4byte 0x69000000
-	.4byte 0x50616e69
-	.4byte 0x416e696d
-	.4byte 0x4b65794c
-	.4byte 0x69737465
-	.4byte 0x6e657200
-	.4byte 0x803e54fc
-	.4byte 0
-	.4byte 0
-.global __vt__13CoreNucleusAi
-__vt__13CoreNucleusAi:
-	.4byte __RTTI__13CoreNucleusAi
-	.4byte 0
-	.4byte animationKeyUpdated__13CoreNucleusAiFR16PaniAnimKeyEvent
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0

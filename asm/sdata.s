@@ -17641,13 +17641,3 @@ __RTTI__11CoreNucleus:
 __RTTI__15CoreNucleusProp:
 	.4byte 0x802D14F8
 	.4byte 0x802D153C
-	.4byte 0
-.global lbl_803E54F8
-lbl_803E54F8:
-	.4byte 0x00000000
-	.4byte 0x802D15BC
-	.4byte 0x00000000
-.global __RTTI__13CoreNucleusAi
-__RTTI__13CoreNucleusAi:
-	.4byte 0x802D15AC
-	.4byte 0x802D15D0

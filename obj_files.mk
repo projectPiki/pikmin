@@ -43,6 +43,7 @@ TEXT_O_FILES :=\
 	$(BUILD_DIR)/asm/plugPikiNishimura/SpiderAi.o\
 	$(BUILD_DIR)/asm/plugPikiNishimura/SpiderLeg.o\
 	$(BUILD_DIR)/asm/text_Nishimura.o\
+	$(BUILD_DIR)/asm/plugPikiNishimura/CoreNucleusAi.o\
 	$(BUILD_DIR)/asm/plugPikiNishimura/Mizu.o\
 	$(BUILD_DIR)/asm/plugPikiNishimura/MizuAi.o\
 	$(BUILD_DIR)/asm/plugPikiNishimura/nscalculation.o\
