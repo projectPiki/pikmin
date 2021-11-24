@@ -52290,7 +52290,7 @@ __vt__9SnakeProp:
 	.4byte __RTTI__9SnakeProp
 	.4byte 0xfffffe14
 	.4byte getAgeNodeType__5ANodeFv
-	.4byte lbl_8015B1E8
+	.4byte "@492@read__9SnakePropFR18RandomAccessStream"
 	.4byte 0
 	.4byte 0
 	.4byte 0
@@ -52648,7 +52648,7 @@ __vt__9SlimeProp:
 	.4byte __RTTI__9SlimeProp
 	.4byte 0xfffffe14
 	.4byte getAgeNodeType__5ANodeFv
-	.4byte lbl_80164B78
+	.4byte "@492@read__9SlimePropFR18RandomAccessStream"
 	.4byte 0
 	.4byte 0
 	.4byte 0
@@ -52971,7 +52971,7 @@ __vt__8KingProp:
 	.4byte __RTTI__8KingProp
 	.4byte 0xfffffe14
 	.4byte getAgeNodeType__5ANodeFv
-	.4byte lbl_8016C2A8
+	.4byte "@492@read__8KingPropFR18RandomAccessStream"
 	.4byte 0
 	.4byte 0
 	.4byte 0
@@ -53371,7 +53371,7 @@ __vt__10KoganeProp:
 	.4byte __RTTI__10KoganeProp
 	.4byte 0xfffffe14
 	.4byte getAgeNodeType__5ANodeFv
-	.4byte lbl_801760FC
+	.4byte "@492@read__10KoganePropFR18RandomAccessStream"
 	.4byte 0
 	.4byte 0
 	.4byte 0
@@ -53606,7 +53606,7 @@ __vt__7PomProp:
 	.4byte __RTTI__7PomProp
 	.4byte 0xfffffe14
 	.4byte getAgeNodeType__5ANodeFv
-	.4byte lbl_80178550
+	.4byte "@492@read__7PomPropFR18RandomAccessStream"
 	.4byte 0
 	.4byte 0
 	.4byte 0
@@ -53836,7 +53836,7 @@ __vt__12KingBackProp:
 	.4byte __RTTI__12KingBackProp
 	.4byte 0xfffffe14
 	.4byte getAgeNodeType__5ANodeFv
-	.4byte lbl_8017A1A4
+	.4byte "@492@read__12KingBackPropFR18RandomAccessStream"
 	.4byte 0
 	.4byte 0
 	.4byte 0
@@ -53991,7 +53991,7 @@ __vt__11NucleusProp:
 	.4byte __RTTI__11NucleusProp
 	.4byte 0xfffffe14
 	.4byte getAgeNodeType__5ANodeFv
-	.4byte lbl_8017A53C
+	.4byte "@492@read__11NucleusPropFR18RandomAccessStream"
 	.4byte 0
 	.4byte 0
 	.4byte 0
@@ -54020,166 +54020,6 @@ __vt__9NucleusAi:
 	.4byte __RTTI__9NucleusAi
 	.4byte 0
 	.4byte animationKeyUpdated__9NucleusAiFR16PaniAnimKeyEvent
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0x436f7265
-	.4byte 0x4e75636c
-	.4byte 0x6575732e
-	.4byte 0x63707000
-	.4byte 0x436f7265
-	.4byte 0x4e75636c
-	.4byte 0x65757300
-.global lbl_802D134C
-lbl_802D134C:
-	.4byte 0x436F7265
-	.4byte 0x4E6F6465
-	.4byte 0x00000000
-	.4byte 0x4576656E
-	.4byte 0x7454616C
-	.4byte 0x6B657200
-	.4byte 0x52656643
-	.4byte 0x6F756E74
-	.4byte 0x61626C65
-	.4byte 0x00000000
-	.4byte 0x43726561
-	.4byte 0x74757265
-	.4byte 0x00000000
-	.4byte 0x803E5494
-	.4byte 0x00000008
-	.4byte 0x803E549C
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x803E5494
-	.4byte 0x00000008
-	.4byte 0x803E549C
-	.4byte 0x00000000
-	.4byte 0x803E54A4
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x803E5494
-	.4byte 0x00000008
-	.4byte 0x803E549C
-	.4byte 0x00000000
-	.4byte 0x803E54A4
-	.4byte 0x00000000
-	.4byte 0x803E54B4
-	.4byte 0x00000000
-	.4byte 0x00000000
-.global __vt__11CoreNucleus
-__vt__11CoreNucleus:
-	.4byte __RTTI__11CoreNucleus
-	.4byte 0
-	.4byte addCntCallback__12RefCountableFv
-	.4byte subCntCallback__12RefCountableFv
-	.4byte insideSafeArea__8CreatureFR8Vector3f
-	.4byte platAttachable__8CreatureFv
-	.4byte alwaysUpdatePlatform__8CreatureFv
-	.4byte doDoAI__8CreatureFv
-	.4byte setRouteTracer__8CreatureFP11RouteTracer
-	.4byte init__8CreatureFv
-	.4byte init__11CoreNucleusFR8Vector3f
-	.4byte resetPosition__8CreatureFR8Vector3f
-	.4byte initParam__8CreatureFi
-	.4byte startAI__8CreatureFi
-	.4byte getiMass__11CoreNucleusFv
-	.4byte getSize__8CreatureFv
-	.4byte getHeight__8CreatureFv
-	.4byte getCylinderHeight__8CreatureFv
-	.4byte doStore__8CreatureFP11CreatureInf
-	.4byte doRestore__8CreatureFP11CreatureInf
-	.4byte doSave__8CreatureFR18RandomAccessStream
-	.4byte doLoad__8CreatureFR18RandomAccessStream
-	.4byte getCentre__4BossFv
-	.4byte getCentreSize__8CreatureFv
-	.4byte getBoundingSphereCentre__8CreatureFv
-	.4byte getBoundingSphereRadius__8CreatureFv
-	.4byte getShadowPos__8CreatureFv
-	.4byte setCentre__8CreatureFR8Vector3f
-	.4byte getShadowSize__4BossFv
-	.4byte isVisible__4BossFv
-	.4byte isOrganic__4BossFv
-	.4byte isTerrible__8CreatureFv
-	.4byte isBuried__8CreatureFv
-	.4byte isAtari__4BossFv
-	.4byte isAlive__4BossFv
-	.4byte isFixed__4BossFv
-	.4byte needShadow__4BossFv
-	.4byte needFlick__8CreatureFP8Creature
-	.4byte ignoreAtari__4BossFP8Creature
-	.4byte isFree__8CreatureFv
-	.4byte stimulate__4BossFR11Interaction
-	.4byte sendMsg__8CreatureFP3Msg
-	.4byte collisionCallback__11CoreNucleusFR9CollEvent
-	.4byte bounceCallback__8CreatureFv
-	.4byte jumpCallback__8CreatureFv
-	.4byte wallCallback__4BossFR5PlaneP13DynCollObject
-	.4byte offwallCallback__8CreatureFP13DynCollObject
-	.4byte stickCallback__8CreatureFP8Creature
-	.4byte offstickCallback__8CreatureFP8Creature
-	.4byte stickToCallback__8CreatureFP8Creature
-	.4byte dump__8CreatureFv
-	.4byte startWaterEffect__8CreatureFv
-	.4byte finishWaterEffect__8CreatureFv
-	.4byte isRopable__8CreatureFv
-	.4byte mayIstick__8CreatureFv
-	.4byte getFormationPri__8CreatureFv
-	.4byte update__11CoreNucleusFv
-	.4byte postUpdate__8CreatureFif
-	.4byte stickUpdate__8CreatureFv
-	.4byte refresh__11CoreNucleusFR8Graphics
-	.4byte refresh2d__4BossFR8Graphics
-	.4byte renderAtari__8CreatureFR8Graphics
-	.4byte drawShadow__8CreatureFR8Graphics
-	.4byte demoDraw__8CreatureFR8GraphicsP8Matrix4f
-	.4byte getCatchPos__8CreatureFP8Creature
-	.4byte doAI__11CoreNucleusFv
-	.4byte doAnimation__11CoreNucleusFv
-	.4byte doKill__11CoreNucleusFv
-	.4byte exitCourse__11CoreNucleusFv
-	.4byte isBossBgm__4BossFv
-	.4byte attackDefaultPortion__4BossFv
-	.4byte bombDamageCounter__4BossFP8CollPart
-	.4byte drawShape__11CoreNucleusFR8Graphics
-	.4byte 0x436f7265
-	.4byte 0x4e75636c
-	.4byte 0x65757350
-	.4byte 0x726f7000
-	.4byte 0x803e54cc
-	.4byte 0
-	.4byte 0
-	.4byte 0x43726561
-	.4byte 0x74757265
-	.4byte 0x50726f70
-	.4byte 0
-	.4byte 0x426f7373
-	.4byte 0x50726f70
-	.4byte 0
-	.4byte 0x803e54dc
-	.4byte 0
-	.4byte 0
-	.4byte 0x803e54cc
-	.4byte 0x1ec
-	.4byte 0x803e54d4
-	.4byte 0x1ec
-	.4byte 0x803e54dc
-	.4byte 0
-	.4byte 0x803e54e4
-	.4byte 0
-	.4byte 0
-.global __vt__15CoreNucleusProp
-__vt__15CoreNucleusProp:
-	.4byte __RTTI__15CoreNucleusProp
-	.4byte 0
-	.4byte read__15CoreNucleusPropFR18RandomAccessStream
-	.4byte __RTTI__15CoreNucleusProp
-	.4byte 0xfffffe14
-	.4byte getAgeNodeType__5ANodeFv
-	.4byte lbl_8017AD3C
-	.4byte 0
-	.4byte 0
-	.4byte 0
 	.4byte 0
 	.4byte 0
 	.4byte 0

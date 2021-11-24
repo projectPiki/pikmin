@@ -895,8 +895,8 @@ read__12KingBackPropFR18RandomAccessStream:
 /* 8017A198 001770F8  38 21 00 18 */	addi r1, r1, 0x18
 /* 8017A19C 001770FC  7C 08 03 A6 */	mtlr r0
 /* 8017A1A0 00177100  4E 80 00 20 */	blr 
-.global lbl_8017A1A4
-lbl_8017A1A4:
+.global "@492@read__12KingBackPropFR18RandomAccessStream"
+"@492@read__12KingBackPropFR18RandomAccessStream":
 /* 8017A1A4 00177104  38 63 FE 14 */	addi r3, r3, -492
 /* 8017A1A8 00177108  4B FF FF AC */	b read__12KingBackPropFR18RandomAccessStream
 

@@ -2757,8 +2757,8 @@ read__9SnakePropFR18RandomAccessStream:
 /* 8015B1DC 0015813C  38 21 00 18 */	addi r1, r1, 0x18
 /* 8015B1E0 00158140  7C 08 03 A6 */	mtlr r0
 /* 8015B1E4 00158144  4E 80 00 20 */	blr 
-.global lbl_8015B1E8
-lbl_8015B1E8:
+.global "@492@read__9SnakePropFR18RandomAccessStream"
+"@492@read__9SnakePropFR18RandomAccessStream":
 /* 8015B1E8 00158148  38 63 FE 14 */	addi r3, r3, -492
 /* 8015B1EC 0015814C  4B FF FF AC */	b read__9SnakePropFR18RandomAccessStream
 
