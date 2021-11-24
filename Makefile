@@ -9,8 +9,6 @@ endif
 # Files
 #-------------------------------------------------------------------------------
 
-TARGET_COL := gc
-
 NAME := pikmin
 VERSION := usa.1
 #VERSION := usa.0
@@ -102,7 +100,7 @@ $(LDSCRIPT): ldscript.lcf
 	$(CPP) -MMD -MP -MT $@ -MF $@.d -I include/ -I . -DBUILD_DIR=$(BUILD_DIR) -o $@ $<
 
 $(DOL): $(ELF) | tools
-	$(ELF2DOL) $< $@ $(SDATA_PDHR) $(SBSS_PDHR) $(TARGET_COL)
+	$(ELF2DOL) $< $@
 	$(SHA1SUM) -c sha1/$(NAME).$(VERSION).sha1
 	$(PYTHON) calcprogress.py $@
 
