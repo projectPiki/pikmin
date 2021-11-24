@@ -59,19 +59,16 @@ void RumbleSample::simpleStop()
  */
 void RumbleSample::simpleStart(float param_1)
 {
-	_00 = param_1;
-	_04 += _00;
-	if (_00 <= 0.0f) {
-		PADControlMotor(_08, 2);
-	}
-	else {
-		if (_04 < 1.0f) {
-			PADControlMotor(_08, 0);
-
-		}
-		else {
-			_04 -= 1.0f;
-			PADControlMotor(_08, 1);
-		}
-	}
+    _00 = param_1;
+    _04 += _00;
+    if (_00 <= 0.0f) {
+        PADControlMotor(_08, 2);
+    }
+    else if (_04 < 1.0f) {
+        PADControlMotor(_08, 0);
+    }
+    else {
+        _04 -= 1.0f;
+        PADControlMotor(_08, 1);
+    }
 }
