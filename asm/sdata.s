@@ -17625,22 +17625,22 @@ lbl_803E5490:
 	.4byte 0x802D1394
 .global __RTTI__11CoreNucleus
 __RTTI__11CoreNucleus:
-	.4byte 0x802d1340
-	.4byte 0x802d13b0
-	.4byte 0x414e6f64
+	.4byte 0x802D1340
+	.4byte 0x802D13B0
+	.4byte 0x414E6F64
 	.4byte 0x65000000
-	.4byte 0x803e54c4
+	.4byte 0x803E54C4
 	.4byte 0
 	.4byte lbl_802D134C
-	.4byte 0x802d1508
-	.4byte 0x802d1514
+	.4byte 0x802D1508
+	.4byte 0x802D1514
 	.4byte 0
-	.4byte 0x802d1524
-	.4byte 0x802d1530
+	.4byte 0x802D1524
+	.4byte 0x802D1530
 .global __RTTI__15CoreNucleusProp
 __RTTI__15CoreNucleusProp:
-	.4byte 0x802d14f8
-	.4byte 0x802d153c
+	.4byte 0x802D14F8
+	.4byte 0x802D153C
 	.4byte 0
 .global lbl_803E54F8
 lbl_803E54F8:
@@ -17649,36 +17649,5 @@ lbl_803E54F8:
 	.4byte 0x00000000
 .global __RTTI__13CoreNucleusAi
 __RTTI__13CoreNucleusAi:
-	.4byte 0x802d15ac
-	.4byte 0x802d15d0
-	.4byte 0
-	.4byte 0x4d697a75
-	.4byte 0
-	.4byte 0x802d1610
-	.4byte 0
-	.4byte 0x802d161c
-	.4byte 0
-	.4byte 0x802d162c
-	.4byte 0x802d1638
-	.4byte 0x426f7373
-	.4byte 0
-	.4byte 0x803e5530
-	.4byte 0x802d164c
-.global __RTTI__4Mizu
-__RTTI__4Mizu:
-	.4byte 0x803e5510
-	.4byte 0x802d1668
-	.4byte 0x414e6f64
-	.4byte 0x65000000
-	.4byte 0x803e5548
-	.4byte 0
-	.4byte lbl_802D1604
-	.4byte 0x802d17bc
-	.4byte 0x802d17c8
-	.4byte 0
-	.4byte 0x802d17d8
-	.4byte 0x802d17e4
-.global __RTTI__8MizuProp
-__RTTI__8MizuProp:
-	.4byte 0x802d17b0
-	.4byte 0x802d17f0
+	.4byte 0x802D15AC
+	.4byte 0x802D15D0
