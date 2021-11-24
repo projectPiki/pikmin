@@ -1,51 +1,805 @@
 .include "macros.inc"
+.section .data, "wa"  # 0x80222DC0 - 0x802E9640
+.balign 8
+patternTable:
+	.4byte 0x00000010
+	.4byte 0x00000000
+	.4byte 0x00000008
+	.4byte 0x00005557
+	.4byte 0x00000006
+	.4byte 0x00000557
+	.4byte 0x00000004
+	.4byte 0x00000017
+	.4byte 0x00000003
+	.4byte 0x00000007
+	.4byte 0x00000004
+	.4byte 0x00000057
+	.4byte 0x00000003
+	.4byte 0x00000017
+	.4byte 0x00000003
+	.4byte 0x0000000F
+	.4byte 0x00000004
+	.4byte 0x0000003F
+	.4byte 0x00000005
+	.4byte 0x000000FF
+	.4byte 0x00000006
+	.4byte 0x000003FF
+	.4byte 0x00000007
+	.4byte 0x00000FFF
+	.4byte 0x00000008
+	.4byte 0x00003FFF
+	.4byte 0x00000004
+	.4byte 0x0000007F
+	.4byte 0x00000008
+	.4byte 0x00007FFF
+	.4byte 0x00000001
+	.4byte 0x00000003
+rumbleFrame_00:
+	.4byte 0x00000000
+	.4byte 0x3D4CCCCD
+	.float 0.1
+	.4byte 0x3E19999A
+	.4byte 0x3E4CCCCD
+	.4byte 0x3E6B851F
+	.4byte 0x3E8F5C29
+	.4byte 0x3EA8F5C3
+	.4byte 0x3EC28F5C
+	.4byte 0x3EDC28F6
+	.4byte 0x3EEB851F
+rumblePower_00:
+	.4byte 0x3E4CCCCD
+	.4byte 0x3F666666
+	.float 1.0
+	.4byte 0x3F666666
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x3ECCCCCD
+	.4byte 0x00000000
+	.4byte 0x3E4CCCCD
+	.4byte 0x3CA3D70A
+	.4byte 0x00000000
+rumbleFrame_01:
+	.4byte 0x00000000
+	.4byte 0x3E23D70A
+	.4byte 0x3E428F5C
+	.4byte 0x3E75C28F
+	.4byte 0x3E851EB8
+	.4byte 0x3EBD70A4
+	.4byte 0x3ECCCCCD
+	.4byte 0x3EE66666
+	.4byte 0x3EEB851F
+	.4byte 0x3F0A3D71
+	.4byte 0x3F0F5C29
+	.4byte 0x3F1C28F6
+	.4byte 0x3F1EB852
+	.4byte 0x3F333333
+	.4byte 0x3F3AE148
+	.4byte 0x3F47AE14
+	.4byte 0x3F4A3D71
+	.4byte 0x3F5C28F6
+	.4byte 0x3F6B851F
+	.4byte 0x3F75C28F
+	.4byte 0x3F83D70A
+	.4byte 0x3F90A3D7
+	.4byte 0x3F95C28F
+	.4byte 0x3FB33333
+rumblePower_01:
+	.float 1.0
+	.4byte 0x3F733333
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x3F666666
+	.4byte 0x3F59999A
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x3F4CCCCD
+	.4byte 0x3F3AE148
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x3F23D70A
+	.4byte 0x3F07AE14
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x3EE147AE
+	.4byte 0x3EB33333
+	.4byte 0x00000000
+	.4byte 0x3E8A3D71
+	.4byte 0x3CA3D70A
+	.4byte 0x3E23D70A
+	.4byte 0x3C23D70A
+	.4byte 0x00000000
+rumbleFrame_02:
+	.4byte 0x00000000
+	.4byte 0x3DA3D70A
+	.float 0.1
+	.4byte 0x3E23D70A
+	.4byte 0x3E99999A
+rumblePower_02:
+	.4byte 0x3F4CCCCD
+	.4byte 0x3F333333
+	.4byte 0x3E99999A
+	.4byte 0x3D23D70A
+	.4byte 0x3C23D70A
+rumbleFrame_03:
+	.4byte 0x00000000
+	.4byte 0x3D23D70A
+	.4byte 0x3DB851EC
+	.4byte 0x3DE147AE
+	.4byte 0x3E051EB8
+	.4byte 0x3E19999A
+	.4byte 0x3E3851EC
+	.4byte 0x3E570A3D
+	.4byte 0x3E75C28F
+	.4byte 0x3E8A3D71
+	.4byte 0x3E99999A
+	.4byte 0x3EA8F5C3
+	.4byte 0x3EB851EC
+	.4byte 0x3ECCCCCD
+	.4byte 0x3EE147AE
+	.4byte 0x3EF5C28F
+	.4byte 0x3F051EB8
+	.4byte 0x3F0F5C29
+	.4byte 0x3F19999A
+	.4byte 0x3F266666
+	.4byte 0x3F333333
+	.4byte 0x3F400000
+	.4byte 0x3F4CCCCD
+	.4byte 0x3F59999A
+	.4byte 0x3F6E147B
+	.4byte 0x3F8147AE
+	.4byte 0x3F8CCCCD
+	.4byte 0x3F99999A
+rumblePower_03:
+	.4byte 0x3F666666
+	.4byte 0x3F5EB852
+	.4byte 0x3E99999A
+	.4byte 0x3E19999A
+	.4byte 0x3E8A3D71
+	.4byte 0x3E0F5C29
+	.4byte 0x3E800000
+	.4byte 0x3E051EB8
+	.4byte 0x3E6B851F
+	.4byte 0x3DF5C28F
+	.4byte 0x3E570A3D
+	.4byte 0x3DF5C28F
+	.4byte 0x3E428F5C
+	.4byte 0x3DF5C28F
+	.4byte 0x3E2E147B
+	.4byte 0x3DE147AE
+	.4byte 0x3E19999A
+	.4byte 0x3DE147AE
+	.4byte 0x3E051EB8
+	.float 0.1
+	.4byte 0x3DF5C28F
+	.4byte 0x3DB851EC
+	.4byte 0x3DE147AE
+	.4byte 0x3DB851EC
+	.float 0.1
+	.4byte 0x3DA3D70A
+	.4byte 0x3D4CCCCD
+	.4byte 0x00000000
+rumbleFrame_04:
+	.4byte 0x00000000
+	.float 0.1
+	.4byte 0x3E19999A
+	.4byte 0x3E4CCCCD
+	.4byte 0x3E800000
+	.4byte 0x3E99999A
+rumblePower_04:
+	.4byte 0x3F666666
+	.4byte 0x3F666666
+	.float 0.1
+	.4byte 0x3E99999A
+	.4byte 0x3E99999A
+	.4byte 0x00000000
+rumbleFrame_05:
+	.4byte 0x00000000
+	.4byte 0x3E3851EC
+	.4byte 0x3E570A3D
+	.4byte 0x3E8F5C29
+	.4byte 0x3E8F5C29
+	.4byte 0x3ECCCCCD
+	.4byte 0x3EE66666
+	.4byte 0x3F028F5C
+	.4byte 0x3F051EB8
+	.4byte 0x3F23D70A
+	.4byte 0x3F30A3D7
+	.4byte 0x3F400000
+	.4byte 0x3F547AE1
+	.4byte 0x3F63D70A
+	.4byte 0x3F7D70A4
+	.4byte 0x3F83D70A
+	.4byte 0x3F8F5C29
+	.4byte 0x3F9851EC
+	.4byte 0x3FA00000
+	.4byte 0x3FA66666
+	.4byte 0x3FB33333
+rumblePower_05:
+	.float 1.0
+	.4byte 0x3F6B851F
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x3F4A3D71
+	.4byte 0x3F2147AE
+	.4byte 0x00000000
+	.4byte 0x3CA3D70A
+	.4byte 0x3EE66666
+	.4byte 0x3E9EB852
+	.4byte 0x3CA3D70A
+	.4byte 0x3E75C28F
+	.4byte 0x3CF5C28F
+	.4byte 0x3E3851EC
+	.4byte 0x3D23D70A
+	.4byte 0x3E051EB8
+	.4byte 0x3D23D70A
+	.float 0.1
+	.4byte 0x3D23D70A
+	.4byte 0x3D75C28F
+	.4byte 0x00000000
+rumbleFrame_06:
+	.4byte 0x00000000
+	.4byte 0x3D4CCCCD
+	.float 0.1
+	.4byte 0x3E19999A
+	.4byte 0x3E4CCCCD
+	.4byte 0x3E800000
+	.4byte 0x3E99999A
+	.4byte 0x3EB33333
+	.4byte 0x3ECCCCCD
+	.4byte 0x3EE66666
+	.float 0.5
+	.4byte 0x3F0CCCCD
+	.4byte 0x3F19999A
+	.4byte 0x3F266666
+	.4byte 0x3F333333
+	.4byte 0x3F428F5C
+	.4byte 0x3F4CCCCD
+	.4byte 0x3F59999A
+	.4byte 0x3F666666
+	.float 1.0
+rumblePower_06:
+	.4byte 0x3F59999A
+	.4byte 0x3F4CCCCD
+	.4byte 0x3E19999A
+	.4byte 0x3ECCCCCD
+	.4byte 0x3DF5C28F
+	.4byte 0x3E800000
+	.4byte 0x3DE147AE
+	.4byte 0x3E4CCCCD
+	.float 0.1
+	.4byte 0x3E428F5C
+	.float 0.1
+	.4byte 0x3E2E147B
+	.float 0.1
+	.4byte 0x3E23D70A
+	.float 0.1
+	.4byte 0x3E19999A
+	.float 0.1
+	.4byte 0x3E0F5C29
+	.float 0.1
+	.4byte 0x00000000
+rumbleFrame_07:
+	.4byte 0x00000000
+	.4byte 0x3DE147AE
+	.4byte 0x3DF5C28F
+	.4byte 0x3E051EB8
+	.4byte 0x3E4CCCCD
+	.4byte 0x3E570A3D
+	.4byte 0x3E947AE1
+	.4byte 0x3E9EB852
+	.4byte 0x3EA8F5C3
+	.4byte 0x3ED1EB85
+	.4byte 0x3ED70A3D
+	.4byte 0x3F051EB8
+	.4byte 0x3F07AE14
+	.4byte 0x3F0A3D71
+	.4byte 0x3F1EB852
+	.4byte 0x3F23D70A
+	.4byte 0x3F3851EC
+	.4byte 0x3F3D70A4
+	.4byte 0x3F400000
+	.float 1.0
+rumblePower_07:
+	.4byte 0x3F733333
+	.4byte 0x3F7851EC
+	.4byte 0x3F59999A
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x3F400000
+	.4byte 0x3F3AE148
+	.4byte 0x3F0CCCCD
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x3F19999A
+	.4byte 0x3F2147AE
+	.4byte 0x3EA3D70A
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x3F028F5C
+	.4byte 0x3EF5C28F
+	.4byte 0x3E428F5C
+	.4byte 0x3CA3D70A
+	.4byte 0x00000000
+rumbleFrame_08:
+	.4byte 0x00000000
+	.4byte 0x3DB851EC
+	.4byte 0x3DB851EC
+	.float 0.1
+	.4byte 0x3E2E147B
+	.4byte 0x3E2E147B
+	.4byte 0x3E3851EC
+	.4byte 0x3E851EB8
+	.4byte 0x3E851EB8
+	.float 0.5
+rumblePower_08:
+	.4byte 0x3F59999A
+	.4byte 0x3F59999A
+	.float 0.1
+	.4byte 0x3EE66666
+	.4byte 0x3EE66666
+	.4byte 0x3D4CCCCD
+	.4byte 0x3E800000
+	.4byte 0x3E800000
+	.4byte 0x3C23D70A
+	.4byte 0x00000000
+rumbleFrame_09:
+	.4byte 0x00000000
+	.4byte 0x3C23D70A
+	.4byte 0x3D4CCCCD
+	.4byte 0x3DF5C28F
+	.4byte 0x3DF5C28F
+	.4byte 0x3E23D70A
+	.4byte 0x3E75C28F
+	.4byte 0x3E851EB8
+	.4byte 0x3EAE147B
+	.4byte 0x3EAE147B
+	.4byte 0x3EC7AE14
+rumblePower_09:
+	.4byte 0x3E428F5C
+	.4byte 0x3F266666
+	.4byte 0x3F07AE14
+	.4byte 0x3F266666
+	.4byte 0x3E800000
+	.4byte 0x3ECCCCCD
+	.4byte 0x3E800000
+	.4byte 0x3F028F5C
+	.4byte 0x3EB851EC
+	.4byte 0x3F028F5C
+	.float 0.1
+rumbleFrame_10:
+	.4byte 0x00000000
+	.float 0.1
+	.4byte 0x3E19999A
+	.4byte 0x3E4CCCCD
+	.4byte 0x3E800000
+	.4byte 0x3E99999A
+rumblePower_10:
+	.4byte 0x3F400000
+	.4byte 0x3F400000
+	.float 0.1
+	.4byte 0x3E8A3D71
+	.4byte 0x3E8A3D71
+	.4byte 0x00000000
+rumbleFrame_11:
+	.4byte 0x00000000
+	.4byte 0x3DF5C28F
+	.4byte 0x3E428F5C
+	.4byte 0x3E8F5C29
+	.4byte 0x3EAE147B
+	.4byte 0x3EDC28F6
+	.4byte 0x3EFAE148
+	.4byte 0x3F19999A
+	.4byte 0x3F28F5C3
+	.4byte 0x3F428F5C
+	.4byte 0x3F547AE1
+	.4byte 0x3F6B851F
+	.4byte 0x3F7AE148
+	.4byte 0x3F933333
+rumblePower_11:
+	.4byte 0x3F666666
+	.4byte 0x3F47AE14
+	.4byte 0x3E6147AE
+	.4byte 0x3F266666
+	.4byte 0x3E3851EC
+	.4byte 0x3F0A3D71
+	.4byte 0x3E0F5C29
+	.4byte 0x3ED70A3D
+	.float 0.1
+	.4byte 0x3EA3D70A
+	.4byte 0x3D75C28F
+	.4byte 0x3E851EB8
+	.4byte 0x3CA3D70A
+	.4byte 0x00000000
+rumbleFrame_12:
+	.4byte 0x00000000
+	.float 0.1
+	.4byte 0x3E2E147B
+	.4byte 0x3E4CCCCD
+	.4byte 0x3E6147AE
+	.4byte 0x3E99999A
+	.4byte 0x3ECCCCCD
+	.float 0.5
+	.4byte 0x3F147AE1
+	.4byte 0x3F19999A
+	.4byte 0x3F2147AE
+	.4byte 0x3F333333
+	.4byte 0x3F428F5C
+	.4byte 0x3F4CCCCD
+	.4byte 0x3F51EB85
+	.4byte 0x3F59999A
+	.4byte 0x3F8CCCCD
+	.4byte 0x3F8F5C29
+	.4byte 0x3F99999A
+	.4byte 0x3FA00000
+	.4byte 0x3FACCCCD
+	.4byte 0x3FAF5C29
+	.4byte 0x3FBC28F6
+	.4byte 0x3FBEB852
+	.4byte 0x3FD9999A
+rumblePower_12:
+	.4byte 0x3F4CCCCD
+	.4byte 0x3F400000
+	.4byte 0x3F19999A
+	.float 0.5
+	.4byte 0x3ECCCCCD
+	.4byte 0x3E800000
+	.4byte 0x3E4CCCCD
+	.4byte 0x3E800000
+	.4byte 0x3ECCCCCD
+	.float 0.5
+	.4byte 0x3F1C28F6
+	.4byte 0x3F266666
+	.4byte 0x3F1C28F6
+	.float 0.5
+	.4byte 0x3EC28F5C
+	.4byte 0x3CA3D70A
+	.4byte 0x3CA3D70A
+	.4byte 0x3F0CCCCD
+	.4byte 0x3F0CCCCD
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x3F07AE14
+	.4byte 0x3F07AE14
+	.4byte 0x3C23D70A
+	.4byte 0x00000000
+rumbleFrame_13:
+	.4byte 0x00000000
+	.float 0.1
+	.4byte 0x3E4CCCCD
+	.4byte 0x3E800000
+	.4byte 0x3E99999A
+	.4byte 0x3EB33333
+	.4byte 0x3ECCCCCD
+	.4byte 0x3EE66666
+	.float 0.5
+	.4byte 0x3F0CCCCD
+	.4byte 0x3F19999A
+	.4byte 0x3F266666
+	.4byte 0x3F333333
+	.4byte 0x3F400000
+rumblePower_13:
+	.4byte 0x3F4CCCCD
+	.4byte 0x3F333333
+	.float 0.1
+	.4byte 0x3D4CCCCD
+	.float 0.1
+	.4byte 0x3EB33333
+	.4byte 0x3ECCCCCD
+	.4byte 0x3EB33333
+	.float 0.1
+	.4byte 0x3D4CCCCD
+	.float 0.1
+	.4byte 0x3E2E147B
+	.4byte 0x3E4CCCCD
+	.4byte 0x3E2E147B
+rumbleFrame_14:
+	.4byte 0x00000000
+	.4byte 0x3DF5C28F
+	.4byte 0x3E051EB8
+	.4byte 0x3E23D70A
+	.4byte 0x3E6147AE
+	.4byte 0x3E947AE1
+	.4byte 0x3E99999A
+	.float 0.5
+rumblePower_14:
+	.4byte 0x3F6B851F
+	.4byte 0x3F63D70A
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x3F2E147B
+	.4byte 0x3F266666
+	.4byte 0x3CA3D70A
+	.4byte 0x00000000
+rumbleFrame_15:
+	.4byte 0x00000000
+	.4byte 0x3DA3D70A
+	.4byte 0x3DB851EC
+	.float 0.1
+	.4byte 0x3E428F5C
+	.4byte 0x3E4CCCCD
+rumblePower_15:
+	.4byte 0x3EE66666
+	.4byte 0x3ECCCCCD
+	.4byte 0x00000000
+	.4byte 0x3E800000
+	.4byte 0x3E4CCCCD
+	.4byte 0x00000000
+rumbleFrame_16:
+	.4byte 0x00000000
+	.float 0.1
+	.4byte 0x3E23D70A
+	.4byte 0x3E6147AE
+	.4byte 0x3E99999A
+	.4byte 0x3EC7AE14
+	.4byte 0x3ED70A3D
+	.4byte 0x3EE66666
+	.4byte 0x3F07AE14
+	.4byte 0x3F19999A
+	.4byte 0x3F1C28F6
+	.4byte 0x3F23D70A
+	.4byte 0x3F2E147B
+	.4byte 0x3F333333
+	.4byte 0x3F428F5C
+	.4byte 0x3F428F5C
+	.4byte 0x3F4CCCCD
+	.4byte 0x3F547AE1
+	.4byte 0x3F570A3D
+	.4byte 0x3F63D70A
+	.4byte 0x3F68F5C3
+	.4byte 0x3F7851EC
+	.4byte 0x3F7D70A4
+	.4byte 0x3F83D70A
+	.4byte 0x3F8B851F
+	.4byte 0x3F90A3D7
+	.4byte 0x3F99999A
+rumblePower_16:
+	.4byte 0x3F400000
+	.4byte 0x3F2B851F
+	.4byte 0x3ECCCCCD
+	.4byte 0x3E19999A
+	.float 0.1
+	.4byte 0x3E19999A
+	.4byte 0x3ECCCCCD
+	.4byte 0x3F1EB852
+	.4byte 0x3F28F5C3
+	.4byte 0x3F2147AE
+	.4byte 0x3E6B851F
+	.4byte 0x3F051EB8
+	.4byte 0x3E570A3D
+	.4byte 0x3EF0A3D7
+	.4byte 0x3ED1EB85
+	.4byte 0x3E2E147B
+	.4byte 0x3EC7AE14
+	.4byte 0x3DF5C28F
+	.4byte 0x3EC28F5C
+	.4byte 0x3DA3D70A
+	.4byte 0x3EB33333
+	.4byte 0x3D75C28F
+	.4byte 0x3E9EB852
+	.4byte 0x3CF5C28F
+	.4byte 0x3E947AE1
+	.4byte 0x3CA3D70A
+	.4byte 0x00000000
+rumbleFrame_17:
+	.4byte 0x00000000
+	.4byte 0x3D75C28F
+	.float 0.1
+	.float 0.1
+	.4byte 0x3E19999A
+	.4byte 0x3E2E147B
+	.4byte 0x3E6147AE
+	.4byte 0x3E851EB8
+	.4byte 0x3E9EB852
+	.4byte 0x3E9EB852
+	.4byte 0x3ECCCCCD
+	.4byte 0x3ECCCCCD
+	.4byte 0x3EEB851F
+	.4byte 0x3EF0A3D7
+	.4byte 0x3F07AE14
+	.4byte 0x3F0CCCCD
+	.4byte 0x3F1EB852
+	.4byte 0x3F266666
+	.4byte 0x3F30A3D7
+	.4byte 0x3F3D70A4
+	.4byte 0x3F4A3D71
+	.4byte 0x3F4F5C29
+	.4byte 0x3F6147AE
+	.4byte 0x3F63D70A
+	.4byte 0x3F70A3D7
+	.4byte 0x3F7AE148
+	.4byte 0x3F828F5C
+	.4byte 0x3F87AE14
+	.4byte 0x3F88F5C3
+	.4byte 0x3F8F5C29
+	.4byte 0x3F933333
+	.4byte 0x3F99999A
+	.4byte 0x3FA147AE
+	.4byte 0x3FA7AE14
+	.4byte 0x3FAF5C29
+	.4byte 0x3FB0A3D7
+	.4byte 0x3FBAE148
+	.4byte 0x3FCCCCCD
+rumblePower_17:
+	.4byte 0x3F4CCCCD
+	.4byte 0x3F3AE148
+	.4byte 0x3E8F5C29
+	.4byte 0x3F266666
+	.4byte 0x3F170A3D
+	.4byte 0x3E75C28F
+	.4byte 0x3F0A3D71
+	.4byte 0x3E428F5C
+	.float 0.5
+	.4byte 0x3E3851EC
+	.4byte 0x3EF5C28F
+	.4byte 0x3E19999A
+	.4byte 0x3EE66666
+	.4byte 0x3E0F5C29
+	.4byte 0x3ED1EB85
+	.4byte 0x3E051EB8
+	.4byte 0x3EC7AE14
+	.4byte 0x3E051EB8
+	.4byte 0x3EC28F5C
+	.4byte 0x3DE147AE
+	.4byte 0x3EB851EC
+	.float 0.1
+	.4byte 0x3DB851EC
+	.4byte 0x3EAE147B
+	.float 0.1
+	.4byte 0x3EAE147B
+	.4byte 0x3DB851EC
+	.4byte 0x3DA3D70A
+	.4byte 0x3EA8F5C3
+	.4byte 0x3E9EB852
+	.4byte 0x3DA3D70A
+	.4byte 0x3E99999A
+	.4byte 0x3D75C28F
+	.4byte 0x3E947AE1
+	.4byte 0x3D75C28F
+	.4byte 0x3E8F5C29
+	.4byte 0x3CF5C28F
+	.4byte 0x00000000
+rumbleFrame_18:
+	.4byte 0x00000000
+	.4byte 0x3DA3D70A
+	.float 0.1
+	.4byte 0x3E051EB8
+	.4byte 0x3E3851EC
+	.4byte 0x3E75C28F
+	.4byte 0x3E947AE1
+	.4byte 0x3EA8F5C3
+	.4byte 0x3EA8F5C3
+	.4byte 0x3EB851EC
+	.4byte 0x3ED1EB85
+	.4byte 0x3EDC28F6
+	.4byte 0x3EE66666
+	.float 0.5
+	.4byte 0x3F4CCCCD
+rumblePower_18:
+	.float 1.0
+	.4byte 0x3F7851EC
+	.4byte 0x3F4CCCCD
+	.4byte 0x3ECCCCCD
+	.4byte 0x3E6B851F
+	.4byte 0x3E4CCCCD
+	.4byte 0x3E851EB8
+	.4byte 0x3F028F5C
+	.4byte 0x3F451EB8
+	.4byte 0x3F4CCCCD
+	.4byte 0x3F451EB8
+	.4byte 0x3F19999A
+	.4byte 0x3D4CCCCD
+	.4byte 0x3C23D70A
+	.4byte 0x3C23D70A
+rumbleFrame_19:
+	.4byte 0x00000000
+	.4byte 0x3DA3D70A
+	.float 0.1
+rumblePower_19:
+	.float 1.0
+	.4byte 0x3F666666
+	.4byte 0x00000000
+.global channelDataTbl
+channelDataTbl:
+	.4byte rumblePoint_00
+	.4byte rumbleFrame_00
+	.4byte rumblePower_00
+	.4byte rumblePoint_01
+	.4byte rumbleFrame_01
+	.4byte rumblePower_01
+	.4byte rumblePoint_02
+	.4byte rumbleFrame_02
+	.4byte rumblePower_02
+	.4byte rumblePoint_03
+	.4byte rumbleFrame_03
+	.4byte rumblePower_03
+	.4byte rumblePoint_04
+	.4byte rumbleFrame_04
+	.4byte rumblePower_04
+	.4byte rumblePoint_05
+	.4byte rumbleFrame_05
+	.4byte rumblePower_05
+	.4byte rumblePoint_06
+	.4byte rumbleFrame_06
+	.4byte rumblePower_06
+	.4byte rumblePoint_07
+	.4byte rumbleFrame_07
+	.4byte rumblePower_07
+	.4byte rumblePoint_08
+	.4byte rumbleFrame_08
+	.4byte rumblePower_08
+	.4byte rumblePoint_09
+	.4byte rumbleFrame_09
+	.4byte rumblePower_09
+	.4byte rumblePoint_10
+	.4byte rumbleFrame_10
+	.4byte rumblePower_10
+	.4byte rumblePoint_11
+	.4byte rumbleFrame_11
+	.4byte rumblePower_11
+	.4byte rumblePoint_12
+	.4byte rumbleFrame_12
+	.4byte rumblePower_12
+	.4byte rumblePoint_13
+	.4byte rumbleFrame_13
+	.4byte rumblePower_13
+	.4byte rumblePoint_14
+	.4byte rumbleFrame_14
+	.4byte rumblePower_14
+	.4byte rumblePoint_15
+	.4byte rumbleFrame_15
+	.4byte rumblePower_15
+	.4byte rumblePoint_16
+	.4byte rumbleFrame_16
+	.4byte rumblePower_16
+	.4byte rumblePoint_17
+	.4byte rumbleFrame_17
+	.4byte rumblePower_17
+	.4byte rumblePoint_18
+	.4byte rumbleFrame_18
+	.4byte rumblePower_18
+	.4byte rumblePoint_19
+	.4byte rumbleFrame_19
+	.4byte rumblePower_19
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
-.global lbl_803E5580
-lbl_803E5580:
-	.4byte 0x00000000
-.global lbl_803E5584
-lbl_803E5584:
-	.4byte 0x3F800000
-.global lbl_803E5588
-lbl_803E5588:
-	.4byte 0x00000000
-.global lbl_803E558C
-lbl_803E558C:
-	.4byte 0x00000000
-	.4byte 0x802D1894
-	.4byte 0x00000000
-.global __RTTI__6MizuAi
-__RTTI__6MizuAi:
-	.4byte 0x803e5578
-	.4byte 0x802d18a8
-	.4byte 0x802d18dc
-	.4byte 0
-.global __RTTI__25MizuGenSpringPuffCallBack
-__RTTI__25MizuGenSpringPuffCallBack:
-	.4byte 0x802d18c0
-	.4byte 0x802d1908
-.global rumblePoint_00
+.balign 8
 rumblePoint_00:
 	.4byte 0x0000000B
-.global rumblePoint_01
 rumblePoint_01:
 	.4byte 0x00000018
-.global rumblePoint_02
 rumblePoint_02:
 	.4byte 0x00000005
-.global rumblePoint_03
 rumblePoint_03:
 	.4byte 0x0000001C
-.global rumblePoint_04
 rumblePoint_04:
 	.4byte 0x00000006
-.global rumblePoint_05
 rumblePoint_05:
 	.4byte 0x00000015
-.global rumblePoint_06
 rumblePoint_06:
 	.4byte 0x00000014
-.global rumblePoint_07
 rumblePoint_07:
 	.4byte 0x00000014
+rumblePoint_08:
+	.4byte 0x0000000A
+rumblePoint_09:
+	.4byte 0x0000000B
+rumblePoint_10:
+	.4byte 0x00000006
+rumblePoint_11:
+	.4byte 0x0000000E
+rumblePoint_12:
+	.4byte 0x00000019
+rumblePoint_13:
+	.4byte 0x0000000E
+rumblePoint_14:
+	.4byte 0x00000008
+rumblePoint_15:
+	.4byte 0x00000006
+rumblePoint_16:
+	.4byte 0x0000001B
+rumblePoint_17:
+	.4byte 0x00000026
+rumblePoint_18:
+	.4byte 0x0000000F
+rumblePoint_19:
+	.4byte 0x00000003
