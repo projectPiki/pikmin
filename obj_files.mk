@@ -43,6 +43,8 @@ TEXT_O_FILES :=\
 	$(BUILD_DIR)/asm/plugPikiNishimura/SpiderAi.o\
 	$(BUILD_DIR)/asm/plugPikiNishimura/SpiderLeg.o\
 	$(BUILD_DIR)/asm/text_Nishimura.o\
+	$(BUILD_DIR)/asm/plugPikiNishimura/nscalculation.o\
+	$(BUILD_DIR)/asm/plugPikiNishimura/HmRumbleMgr.o\
 	$(BUILD_DIR)/src/plugPikiNishimura/HmRumbleSample.o\
 	$(BUILD_DIR)/asm/plugPikiOgawa/ogTest.o\
 	$(BUILD_DIR)/asm/plugPikiOgawa/ogSub.o\

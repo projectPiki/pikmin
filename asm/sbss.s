@@ -1140,6 +1140,3 @@ vibSpin$2820:
 .global init$2821
 init$2821:
 	.skip 0x4
-.global rumbleMgr
-rumbleMgr:
-	.skip 0x4

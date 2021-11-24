@@ -322,39 +322,3 @@ lbl_803EB0B0:
 .global lbl_803EB0B4
 lbl_803EB0B4:
 	.4byte 0x40400000
-.global lbl_803EB0B8
-lbl_803EB0B8:
-	.4byte 0x3F800000
-.global lbl_803EB0BC
-lbl_803EB0BC:
-	.4byte 0x3F000000
-.global lbl_803EB0C0
-lbl_803EB0C0:
-	.4byte 0x40000000
-.global lbl_803EB0C4
-lbl_803EB0C4:
-	.4byte 0x00000000
-.global "@447"
-"@447":
-	.4byte 0x3FE00000
-	.4byte 0x00000000
-.global "@448"
-"@448":
-	.4byte 0x40080000
-	.4byte 0x00000000
-.global lbl_803EB0D8
-lbl_803EB0D8:
-	.4byte 0x358637BD
-	.4byte 0x00000000
-.global lbl_803EB0E0
-lbl_803EB0E0:
-	.4byte 0x00000000
-.global lbl_803EB0E4
-lbl_803EB0E4:
-	.4byte 0x3F800000
-.global lbl_803EB0E8
-lbl_803EB0E8:
-	.4byte 0x447A0000
-.global lbl_803EB0EC
-lbl_803EB0EC:
-	.4byte 0x3F000000
