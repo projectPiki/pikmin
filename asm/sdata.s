@@ -17597,10 +17597,3 @@ __RTTI__7Nucleus:
 __RTTI__11NucleusProp:
 	.4byte 0x802d1238
 	.4byte 0x802d1278
-	.4byte 0
-	.4byte 0x802d12f4
-	.4byte 0
-.global __RTTI__9NucleusAi
-__RTTI__9NucleusAi:
-	.4byte 0x802d12e8
-	.4byte 0x802d1308

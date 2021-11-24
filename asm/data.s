@@ -54000,27 +54000,3 @@ __vt__11NucleusProp:
 	.4byte 0
 	.4byte 0
 	.4byte 0
-	.4byte 0x4e75636c
-	.4byte 0x65757341
-	.4byte 0x692e6370
-	.4byte 0x70000000
-	.4byte 0x4e75636c
-	.4byte 0x65757341
-	.4byte 0x69000000
-	.4byte 0x50616e69
-	.4byte 0x416e696d
-	.4byte 0x4b65794c
-	.4byte 0x69737465
-	.4byte 0x6e657200
-	.4byte 0x803e5478
-	.4byte 0
-	.4byte 0
-.global __vt__9NucleusAi
-__vt__9NucleusAi:
-	.4byte __RTTI__9NucleusAi
-	.4byte 0
-	.4byte animationKeyUpdated__9NucleusAiFR16PaniAnimKeyEvent
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
