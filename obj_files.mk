@@ -201,7 +201,7 @@ TEXT_O_FILES :=\
 	$(BUILD_DIR)/asm/ai/ai.o\
 	$(BUILD_DIR)/asm/ar/ar.o\
 	$(BUILD_DIR)/asm/ar/arq.o\
-	$(BUILD_DIR)/asm/dsp/dsp.o\
+	$(BUILD_DIR)/src/dsp/dsp.o\
 	$(BUILD_DIR)/asm/card/CARDBios.o\
 	$(BUILD_DIR)/asm/card/CARDRdwr.o\
 	$(BUILD_DIR)/asm/card/CARDBlock.o\

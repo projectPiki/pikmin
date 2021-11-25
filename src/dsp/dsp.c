@@ -1,19 +1,14 @@
-
-
+#include "dsp.h"
 /*
  * --INFO--
  * Address:	80207E14
  * Size:	000010
  */
-void DSPCheckMailToDSP(void)
+
+
+u32 DSPCheckMailToDSP(void)
 {
-/*
-.loc_0x0:
-  lis       r3, 0xCC00
-  lhz       r0, 0x5000(r3)
-  rlwinm    r3,r0,17,31,31
-  blr
-*/
+	return (HW_REG(0xCC005000, u16) >> 15) & 1;
 }
 
 /*
@@ -21,15 +16,9 @@ void DSPCheckMailToDSP(void)
  * Address:	80207E24
  * Size:	000010
  */
-void DSPCheckMailFromDSP(void)
+u32 DSPCheckMailFromDSP(void)
 {
-/*
-.loc_0x0:
-  lis       r3, 0xCC00
-  lhz       r0, 0x5004(r3)
-  rlwinm    r3,r0,17,31,31
-  blr
-*/
+	return (HW_REG(0xCC005004, u16) >> 15) & 1;;
 }
 
 /*
@@ -47,17 +36,9 @@ void DSPReadCPUToDSPMbox(void)
  * Address:	80207E34
  * Size:	000018
  */
-void DSPReadMailFromDSP(void)
+u32 DSPReadMailFromDSP(void)
 {
-/*
-.loc_0x0:
-  lis       r3, 0xCC00
-  addi      r3, r3, 0x5000
-  lhz       r0, 0x4(r3)
-  lhz       r3, 0x6(r3)
-  rlwimi    r3,r0,16,0,15
-  blr
-*/
+	return (__DSPRegs[2] << 16) | __DSPRegs[3];
 }
 
 /*
@@ -65,16 +46,10 @@ void DSPReadMailFromDSP(void)
  * Address:	80207E4C
  * Size:	000014
  */
-void DSPSendMailToDSP(void)
+void DSPSendMailToDSP(u32 mail)
 {
-/*
-.loc_0x0:
-  lis       r4, 0xCC00
-  rlwinm    r0,r3,16,16,31
-  sth       r0, 0x5000(r4)
-  sth       r3, 0x5002(r4)
-  blr
-*/
+	__DSPRegs[0] = (u16)((mail >> 16) & 0xffff);
+	__DSPRegs[1] = (u16)(mail & 0xffff);
 }
 
 /*

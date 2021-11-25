@@ -26,7 +26,7 @@ ASM_DIRS := asm asm/sysCommon asm/amcnotstub asm/gx asm/odenotstub \
             asm/TRK_MINNOW_DOLPHIN asm/plugPikiNishimura asm/plugPikiColin \
             asm/amcExi2 asm/jaudio asm/mtx asm/os asm/plugPikiKando \
             asm/plugPikiNakata asm/plugPikiOgawa asm/plugPikiYamashita \
-            asm/dvd asm/vi asm/pad asm/ai asm/ar asm/dsp asm/OdemuExi2 \
+            asm/dvd asm/vi asm/pad asm/ai asm/ar asm/OdemuExi2 \
 			asm/MSL_C/PPCEABI/bare/H asm/Runtime/PPCEABI/H asm/hio asm/card \
 			asm/db asm/base
 # Inputs
