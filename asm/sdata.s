@@ -17529,32 +17529,3 @@ __RTTI__5PomAi:
 __RTTI__22PomGenOpenStarCallBack:
 	.4byte 0x802d0da0
 	.4byte 0x802d0de4
-	.4byte 0
-	.4byte 0x802d0e40
-	.4byte 0
-	.4byte 0x802d0e4c
-	.4byte 0
-	.4byte 0x802d0e5c
-	.4byte 0x802d0e68
-	.4byte 0x426f7373
-	.4byte 0
-	.4byte 0x803e53b8
-	.4byte 0x802d0e7c
-.global __RTTI__8KingBack
-__RTTI__8KingBack:
-	.4byte 0x802d0e28
-	.4byte 0x802d0e98
-	.4byte 0x414e6f64
-	.4byte 0x65000000
-	.4byte 0x803e53d0
-	.4byte 0
-	.4byte lbl_802D0E34
-	.4byte 0x802d0ff0
-	.4byte 0x802d0ffc
-	.4byte 0
-	.4byte 0x802d100c
-	.4byte 0x802d1018
-.global __RTTI__12KingBackProp
-__RTTI__12KingBackProp:
-	.4byte 0x802d0fe0
-	.4byte 0x802d1024

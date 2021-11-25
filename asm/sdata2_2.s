@@ -232,15 +232,3 @@ lbl_803EB030:
 .global lbl_803EB034
 lbl_803EB034:
 	.4byte 0x43480000
-.global lbl_803EB038
-lbl_803EB038:
-	.float 1.0
-.global lbl_803EB03C
-lbl_803EB03C:
-	.float 0.0
-.global lbl_803EB040
-lbl_803EB040:
-	.4byte 0x38D1B717
-.global lbl_803EB044
-lbl_803EB044:
-	.float 20.0
