@@ -220,21 +220,21 @@ lbl_803DCE70:
 	.4byte 0x80227300
 .global __RTTI__7BaseApp
 __RTTI__7BaseApp:
-	.4byte 0x803dce78
+	.4byte 0x803DCE78
 	.4byte 0x80227314
 	.4byte 0x53747265
-	.4byte 0x616d0000
-	.4byte 0x803dceb0
+	.4byte 0x616D0000
+	.4byte 0x803DCEB0
 	.4byte 0
 	.4byte 0x53747265
-	.4byte 0x616d0000
-	.4byte 0x803dcec0
+	.4byte 0x616D0000
+	.4byte 0x803DCEC0
 	.4byte 0
 	.4byte 0x80227430
 	.4byte 0x80227444
 .global __RTTI__19BufferedInputStream
 __RTTI__19BufferedInputStream:
-	.4byte 0x8022741c
+	.4byte 0x8022741C
 	.4byte 0x80227450
 .global lbl_803DCEE0
 lbl_803DCEE0:
@@ -332,35 +332,35 @@ lbl_803DCF6C:
 	.4byte 0x00000000
 .global __RTTI__9GfxObject
 __RTTI__9GfxObject:
-	.4byte 0x802280b4
+	.4byte 0x802280B4
 	.4byte 0
 	.4byte 0x54657874
 	.4byte 0x75726500
 .global __RTTI__7Texture
 __RTTI__7Texture:
-	.4byte 0x803dcf78
-	.4byte 0x802280c0
+	.4byte 0x803DCF78
+	.4byte 0x802280C0
 .global __RTTI__12CacheTexture
 __RTTI__12CacheTexture:
-	.4byte 0x802280a4
-	.4byte 0x802280cc
+	.4byte 0x802280A4
+	.4byte 0x802280CC
 	.4byte 0x54657841
 	.4byte 0x74747200
-	.4byte 0x414e6f64
+	.4byte 0x414E6F64
 	.4byte 0x65000000
-	.4byte 0x803dcf98
+	.4byte 0x803DCF98
 	.4byte 0
-	.4byte 0x802280f4
+	.4byte 0x802280F4
 	.4byte 0x80228100
 .global __RTTI__7TexAttr
 __RTTI__7TexAttr:
-	.4byte 0x803dcf90
-	.4byte 0x8022810c
+	.4byte 0x803DCF90
+	.4byte 0x8022810C
 	.4byte 0x54657849
-	.4byte 0x6d670000
+	.4byte 0x6D670000
 .global __RTTI__6TexImg
 __RTTI__6TexImg:
-	.4byte 0x803dcfb8
+	.4byte 0x803DCFB8
 	.4byte 0x80228130
 .global __RTTI__8Graphics
 __RTTI__8Graphics:
@@ -415,8 +415,8 @@ lbl_803DD004:
 	.4byte 0x802282D4
 .global __RTTI__5Light
 __RTTI__5Light:
-	.4byte 0x803dd00c
-	.4byte 0x802282e0
+	.4byte 0x803DD00C
+	.4byte 0x802282E0
 	.4byte 0
 .global lbl_803DD038
 lbl_803DD038:
@@ -445,102 +445,103 @@ lbl_803DD054:
 .global lbl_803DD058
 lbl_803DD058:
 	.float 0.0
+.balign 4
 	.asciz "NONE"
-	.balign 4
+.balign 4
 	.asciz "OPA"
-	.balign 4
+.balign 4
 	.asciz "TEX"
-	.balign 4
+.balign 4
 	.asciz "XLU"
-	.balign 4
+.balign 4
 .global lbl_803DD070
 lbl_803DD070:
 	.asciz "face"
-	.balign 4
+.balign 4
 .global lbl_803DD078
 lbl_803DD078:
 	.asciz ""
-	.balign 4
+.balign 4
 .global lbl_803DD07C
 lbl_803DD07C:
 	.asciz "matpoly"
-	.balign 4
+.balign 4
 .global lbl_803DD084
 lbl_803DD084:
 	.asciz "size"
-	.balign 4
+.balign 4
 .global lbl_803DD08C
 lbl_803DD08C:
 	.asciz "%d"
-	.balign 4
+.balign 4
 .global lbl_803DD090
 lbl_803DD090:
 	.asciz "%f"
-	.balign 4
+.balign 4
 .global lbl_803DD094
 lbl_803DD094:
 	.asciz "index"
-	.balign 4
+.balign 4
 .global lbl_803DD09C
 lbl_803DD09C:
 	.asciz "name"
-	.balign 4
+.balign 4
 .global lbl_803DD0A4
 lbl_803DD0A4:
 	.asciz "cam_far"
-	.balign 4
+.balign 4
 .global lbl_803DD0AC
 lbl_803DD0AC:
 	.asciz "<JOINT>"
-	.balign 4
+.balign 4
 .global lbl_803DD0B4
 lbl_803DD0B4:
 	.asciz "kind"
-	.balign 4
+.balign 4
 .global lbl_803DD0BC
 lbl_803DD0BC:
 	.asciz "parent"
-	.balign 4
+.balign 4
 .global lbl_803DD0C4
 lbl_803DD0C4:
 	.asciz "child"
-	.balign 4
+.balign 4
 .global lbl_803DD0CC
 lbl_803DD0CC:
 	.asciz "route"
-	.balign 4
+.balign 4
 .global lbl_803DD0D4
 lbl_803DD0D4:
 	.asciz "noname"
-	.balign 4
+.balign 4
 .global lbl_803DD0DC
 lbl_803DD0DC:
 	.asciz "%s%s"
-	.balign 4
+.balign 4
 .global lbl_803DD0E4
 lbl_803DD0E4:
 	.asciz "texattr"
-	.balign 4
+.balign 4
 .global lbl_803DD0EC
 lbl_803DD0EC:
 	.asciz "mesh"
-	.balign 4
+.balign 4
 .global lbl_803DD0F4
 lbl_803DD0F4:
 	.asciz "texImg"
-	.balign 4
+.balign 4
 .global lbl_803DD0FC
 lbl_803DD0FC:
 	.asciz ".dck"
-	.balign 4
+.balign 4
 .global lbl_803DD104
 lbl_803DD104:
 	.asciz ".dca"
-	.balign 4
+.balign 4
 .global lbl_803DD10C
 lbl_803DD10C:
 	.asciz "root"
-	.balign 4
+.balign 4
 	.4byte 0x8022867C
 	.4byte 0x00000000
 .global __RTTI__10MatobjInfo
@@ -548,15 +549,15 @@ __RTTI__10MatobjInfo:
 	.4byte 0x80228670
 	.4byte 0x80228688
 	.asciz "ANode"
-	.balign 4
-	.4byte 0x803dd124
+.balign 4
+	.4byte 0x803DD124
 	.4byte 0
 	.4byte lbl_80228350
-	.4byte 0x802286c0
+	.4byte 0x802286C0
 .global __RTTI__9BaseShape
 __RTTI__9BaseShape:
-	.4byte 0x802286b4
-	.4byte 0x802286cc
+	.4byte 0x802286B4
+	.4byte 0x802286CC
 .global "__RTTI__22IDelegate2<P5Joint,Ul>"
 "__RTTI__22IDelegate2<P5Joint,Ul>":
 	.4byte 0x80228734
@@ -567,48 +568,48 @@ __RTTI__9BaseShape:
 	.4byte 0x80228758
 .global __RTTI__10LightFlare
 __RTTI__10LightFlare:
-	.4byte 0x8022877c
+	.4byte 0x8022877C
 	.4byte 0x80228788
 .global __RTTI__10LightGroup
 __RTTI__10LightGroup:
-	.4byte 0x802287ac
-	.4byte 0x802287b8
+	.4byte 0x802287AC
+	.4byte 0x802287B8
 .global __RTTI__11ObjCollInfo
 __RTTI__11ObjCollInfo:
-	.4byte 0x802287dc
-	.4byte 0x802287e8
-	.4byte 0x416e696d
-	.4byte 0x44636b00
+	.4byte 0x802287DC
+	.4byte 0x802287E8
+	.4byte 0x416E696D
+	.4byte 0x44636B00
 .global __RTTI__8AnimData
 __RTTI__8AnimData:
-	.4byte 0x8022880c
+	.4byte 0x8022880C
 	.4byte 0x80228818
 .global __RTTI__7AnimDck
 __RTTI__7AnimDck:
-	.4byte 0x803dd16c
-	.4byte 0x8022882c
-	.4byte 0x416e696d
+	.4byte 0x803DD16C
+	.4byte 0x8022882C
+	.4byte 0x416E696D
 	.4byte 0x44636100
 .global __RTTI__7AnimDca
 __RTTI__7AnimDca:
-	.4byte 0x803dd184
+	.4byte 0x803DD184
 	.4byte 0x80228868
 .global __RTTI__11AnimContext
 __RTTI__11AnimContext:
-	.4byte 0x802288c4
+	.4byte 0x802288C4
 	.4byte 0
 .global __RTTI__Q25Joint7MatPoly
 __RTTI__Q25Joint7MatPoly:
-	.4byte 0x802288dc
-	.4byte 0x802288ec
-	.4byte 0x4a6f696e
+	.4byte 0x802288DC
+	.4byte 0x802288EC
+	.4byte 0x4A6F696E
 	.4byte 0x74000000
 .global __RTTI__5Joint
 __RTTI__5Joint:
-	.4byte 0x803dd1a4
+	.4byte 0x803DD1A4
 	.4byte 0x80228910
-	.4byte 0x4d657368
-	.4byte 0
+	.4byte 0x4D657368
+	.4byte 0x00000000
 .global __RTTI__4Mesh
 __RTTI__4Mesh:
 	.4byte 0x803dd1b4
@@ -765,20 +766,20 @@ lbl_803DD2B4:
 	.4byte 0x80228AFC
 .global __RTTI__8EditNode
 __RTTI__8EditNode:
-	.4byte 0x80228b08
-	.4byte 0x80228b14
+	.4byte 0x80228B08
+	.4byte 0x80228B14
 .global __RTTI__10RouteGroup
 __RTTI__10RouteGroup:
-	.4byte 0x80228ae4
-	.4byte 0x80228b28
+	.4byte 0x80228AE4
+	.4byte 0x80228B28
 .global __RTTI__9RouteLink
 __RTTI__9RouteLink:
-	.4byte 0x80228b74
-	.4byte 0x80228b80
+	.4byte 0x80228B74
+	.4byte 0x80228B80
 .global __RTTI__10RoutePoint
 __RTTI__10RoutePoint:
-	.4byte 0x80228ba4
-	.4byte 0x80228bb0
+	.4byte 0x80228BA4
+	.4byte 0x80228BB0
 	.4byte 0
 .global lbl_803DD2F8
 lbl_803DD2F8:
@@ -820,34 +821,34 @@ lbl_803DD328:
 	.4byte 0x00000000
 .global __RTTI__10BinobjInfo
 __RTTI__10BinobjInfo:
-	.4byte 0x80228c34
-	.4byte 0x80228c4c
+	.4byte 0x80228C34
+	.4byte 0x80228C4C
 	.4byte 0x414e6f64
 	.4byte 0x65000000
-	.4byte 0x803dd340
+	.4byte 0x803DD340
 	.4byte 0
-	.4byte 0x80228c0c
-	.4byte 0x80228c74
+	.4byte 0x80228C0C
+	.4byte 0x80228C74
 .global __RTTI__11LFlareGroup
 __RTTI__11LFlareGroup:
-	.4byte 0x80228c68
-	.4byte 0x80228c80
+	.4byte 0x80228C68
+	.4byte 0x80228C80
 .global __RTTI__9StdSystem
 __RTTI__9StdSystem:
-	.4byte 0x80228c00
+	.4byte 0x80228C00
 	.4byte 0
 .global __RTTI__10TexobjInfo
 __RTTI__10TexobjInfo:
-	.4byte 0x80228cd8
-	.4byte 0x80228ce4
+	.4byte 0x80228CD8
+	.4byte 0x80228CE4
 .global __RTTI__10ShpobjInfo
 __RTTI__10ShpobjInfo:
-	.4byte 0x80228d00
-	.4byte 0x80228d0c
+	.4byte 0x80228D00
+	.4byte 0x80228D0C
 .global __RTTI__10AnmobjInfo
 __RTTI__10AnmobjInfo:
-	.4byte 0x80228d54
-	.4byte 0x80228d60
+	.4byte 0x80228D54
+	.4byte 0x80228D60
 	.4byte 0x4e6f6465
 	.4byte 0
 .global lbl_803DD388
@@ -866,22 +867,22 @@ lbl_803DD388:
 	.4byte 0x80228DA4
 .global __RTTI__7SRTNode
 __RTTI__7SRTNode:
-	.4byte 0x803dd390
-	.4byte 0x80228db8
-	.4byte 0x414e6f64
+	.4byte 0x803DD390
+	.4byte 0x80228DB8
+	.4byte 0x414E6F64
 	.4byte 0x65000000
-	.4byte 0x803dd3c0
-	.4byte 0
-	.4byte 0x80228e6c
-	.4byte 0x80228e78
-	.4byte 0x4e6f6465
-	.4byte 0
-	.4byte 0x803dd3d8
-	.4byte 0x80228e84
+	.4byte 0x803DD3C0
+	.4byte 0x00000000
+	.4byte 0x80228E6C
+	.4byte 0x80228E78
+	.4byte 0x4E6F6465
+	.4byte 0x00000000
+	.4byte 0x803DD3D8
+	.4byte 0x80228E84
 .global __RTTI__10Controller
 __RTTI__10Controller:
-	.4byte 0x80228e60
-	.4byte 0x80228e98
+	.4byte 0x80228E60
+	.4byte 0x80228E98
 .global lbl_803DD3F0
 lbl_803DD3F0:
 	.4byte 0x00000000
