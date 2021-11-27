@@ -2146,7 +2146,7 @@ void PlayerState::updateFinalResult()
  * Address:	80080BB0
  * Size:	000014
  */
-void PlayerState::getCurrDay()
+s32 PlayerState::getCurrDay()
 {
 /*
 .loc_0x0:
@@ -2163,9 +2163,9 @@ void PlayerState::getCurrDay()
  * Address:	80080BC4
  * Size:	000008
  */
-u32  PlayerState::getTotalDays()
+s32  PlayerState::getTotalDays()
 {
-	return 0x1E;
+	return 30;
 }
 
 /*

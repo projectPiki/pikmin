@@ -17024,21 +17024,3 @@ __RTTI__4King:
 __RTTI__8KingProp:
 	.4byte 0x802D033C
 	.4byte 0x802D0370
-	.4byte 0
-	.4byte 0x4B696E67
-	.4byte 0x41690000
-.global lbl_803E5018
-lbl_803E5018:
-	.4byte 0x00000000
-.global lbl_803E501C
-lbl_803E501C:
-	.4byte 0x00000000
-.global lbl_803E5020
-lbl_803E5020:
-	.4byte 0x00000000
-	.4byte 0x802D04F4
-	.4byte 0x00000000
-.global __RTTI__6KingAi
-__RTTI__6KingAi:
-	.4byte 0x803E5010
-	.4byte 0x802D0508
