@@ -1,27 +1,5 @@
 #include "types.h"
 
-
-
-/*
- * --INFO--
- * Address:	........
- * Size:	00009C
- */
-void _Error(char *, ...)
-{
-	// UNUSED FUNCTION
-}
-
-/*
- * --INFO--
- * Address:	........
- * Size:	0000F4
- */
-void _Print(char *, ...)
-{
-	// UNUSED FUNCTION
-}
-
 /*
  * --INFO--
  * Address:	80005560
@@ -41,7 +19,29 @@ void _Print(char *, ...)
  * This means -schedule off applied to prologues/epilogues which exactly fits our problem.
  * This means that Pikmin 1 (USA) uses this elusive earlier compiler.
  */
-void myNewTest() {
+
+typedef unsigned long size_t;
+
+struct System { void Initialise(); static void* alloc(size_t); void run(void* ptr); };
+extern System gsys;
+
+struct NodeMgr {
+    char filler0[0x18];
+    NodeMgr();
+};
+extern NodeMgr* nodeMgr;
+struct PlugPikiApp {
+    char filler0[0x54];
+    PlugPikiApp();
+};
+
+extern "C" void OSPanic(const char* filename, int line, const char* msg, ...);
+
+inline void* operator new(size_t size) {
+    return System::alloc(size);
+}
+
+void main() {
     gsys.Initialise();
 
     nodeMgr = new NodeMgr;
