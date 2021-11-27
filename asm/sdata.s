@@ -17512,21 +17512,3 @@ __RTTI__3Pom:
 __RTTI__7PomProp:
 	.4byte 0x803e5334
 	.4byte 0x802d0cbc
-	.4byte 0
-	.4byte 0x506f6d41
-	.4byte 0x69000000
-.global lbl_803E5378
-lbl_803E5378:
-	.4byte 0x44480000
-	.4byte 0x802D0D74
-	.4byte 0x00000000
-.global __RTTI__5PomAi
-__RTTI__5PomAi:
-	.4byte 0x803e5370
-	.4byte 0x802d0d88
-	.4byte 0x802d0db8
-	.4byte 0
-.global __RTTI__22PomGenOpenStarCallBack
-__RTTI__22PomGenOpenStarCallBack:
-	.4byte 0x802d0da0
-	.4byte 0x802d0de4
