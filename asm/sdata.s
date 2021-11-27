@@ -1557,30 +1557,30 @@ lbl_803DD8D8:
 	.4byte 0x802A6828
 .global __RTTI__16OnePlayerSection
 __RTTI__16OnePlayerSection:
-	.4byte 0x802a67e8
-	.4byte 0x802a6844
+	.4byte 0x802A67E8
+	.4byte 0x802A6844
 .global __RTTI__11GenFileInfo
 __RTTI__11GenFileInfo:
-	.4byte 0x802a689c
-	.4byte 0x802a68a8
+	.4byte 0x802A689C
+	.4byte 0x802A68A8
 .global __RTTI__9StageInfo
 __RTTI__9StageInfo:
-	.4byte 0x802a68e8
-	.4byte 0x802a68f4
-	.4byte 0x414e6f64
+	.4byte 0x802A68E8
+	.4byte 0x802A68F4
+	.4byte 0x414E6f64
 	.4byte 0x65000000
-	.4byte 0x803dd930
+	.4byte 0x803DD930
 	.4byte 0
-	.4byte 0x802a6940
-	.4byte 0x802a694c
+	.4byte 0x802A6940
+	.4byte 0x802A694C
 .global __RTTI__9PlayState
 __RTTI__9PlayState:
-	.4byte 0x802a6934
-	.4byte 0x802a6958
+	.4byte 0x802A6934
+	.4byte 0x802A6958
 .global __RTTI__9GamePrefs
 __RTTI__9GamePrefs:
-	.4byte 0x802a6928
-	.4byte 0x802a6980
+	.4byte 0x802A6928
+	.4byte 0x802A6980
 .global lbl_803DD958
 lbl_803DD958:
 	.4byte 0x00000000
@@ -1608,18 +1608,18 @@ lbl_803DD964:
 	.4byte 0x802A748C
 .global __RTTI__16GameSetupSection
 __RTTI__16GameSetupSection:
-	.4byte 0x802a744c
-	.4byte 0x802a74a8
+	.4byte 0x802A744C
+	.4byte 0x802A74A8
 	.4byte 0x53747265
-	.4byte 0x616d0000
-	.4byte 0x803dd9ac
+	.4byte 0x616D0000
+	.4byte 0x803DD9AC
 	.4byte 0
-	.4byte 0x802a7528
-	.4byte 0x802a753c
+	.4byte 0x802A7528
+	.4byte 0x802A753C
 .global __RTTI__9RamStream
 __RTTI__9RamStream:
-	.4byte 0x802a751c
-	.4byte 0x802a7548
+	.4byte 0x802A751C
+	.4byte 0x802A7548
 	.4byte 0
 .global lbl_803DD9D0
 lbl_803DD9D0:
@@ -1648,8 +1648,8 @@ lbl_803DDA08:
 	.4byte 0x802A7774
 .global __RTTI__17CardSelectSection
 __RTTI__17CardSelectSection:
-	.4byte 0x802a7760
-	.4byte 0x802a7790
+	.4byte 0x802A7760
+	.4byte 0x802A7790
 	.4byte 0
 .global lbl_803DDA28
 lbl_803DDA28:
@@ -16853,10 +16853,10 @@ lbl_803E4EB4:
 	.4byte 0x802CFF64
 .global __RTTI__13SlimeCreature
 __RTTI__13SlimeCreature:
-	.4byte 0x802cff2c
-	.4byte 0x802cff78
-	.4byte 0x4b696e67
-	.4byte 0
+	.4byte 0x802CFF2C
+	.4byte 0x802CFF78
+	.4byte 0x4B696E67
+	.4byte 0x00000000
 .global lbl_803E4EE0
 lbl_803E4EE0:
 	.4byte 0x6F303000
@@ -17014,12 +17014,12 @@ __RTTI__10KingDrawer:
 __RTTI__4King:
 	.4byte 0x803E4ED8
 	.4byte 0x802D0190
-	.4byte 0x802D02e4
+	.4byte 0x802D02E4
 	.4byte 0
 	.4byte 0x802D0348
 	.4byte 0
 	.4byte 0x802D0358
-	.4byte 0x802d0364
+	.4byte 0x802D0364
 .global __RTTI__8KingProp
 __RTTI__8KingProp:
 	.4byte 0x802D033C
@@ -17248,81 +17248,3 @@ __RTTI__29KingGenSalivaParticleCallBack:
 __RTTI__27KingGenSpreadSalivaCallBack:
 	.4byte 0x802D06CC
 	.4byte 0x802D06E8
-	.4byte 0
-	.4byte 0x4B6F6761
-	.4byte 0x6E650000
-.global lbl_803E5170
-lbl_803E5170:
-	.4byte 0x6F303000
-.global lbl_803E5174
-lbl_803E5174:
-	.4byte 0x6F303100
-.global lbl_803E5178
-lbl_803E5178:
-	.4byte 0x6F303200
-.global lbl_803E517C
-lbl_803E517C:
-	.4byte 0x70303000
-.global lbl_803E5180
-lbl_803E5180:
-	.4byte 0x70313000
-.global lbl_803E5184
-lbl_803E5184:
-	.4byte 0x70353000
-.global lbl_803E5188
-lbl_803E5188:
-	.4byte 0x70353100
-.global lbl_803E518C
-lbl_803E518C:
-	.4byte 0x70353200
-.global lbl_803E5190
-lbl_803E5190:
-	.4byte 0x70353300
-.global lbl_803E5194
-lbl_803E5194:
-	.4byte 0x74303000
-.global lbl_803E5198
-lbl_803E5198:
-	.4byte 0x74303100
-.global lbl_803E519C
-lbl_803E519C:
-	.4byte 0x74313000
-.global lbl_803E51A0
-lbl_803E51A0:
-	.4byte 0x74313100
-.global lbl_803E51A4
-lbl_803E51A4:
-	.4byte 0x74353000
-.global lbl_803E51A8
-lbl_803E51A8:
-	.4byte 0x73303000
-	.4byte 0x802D0728
-	.4byte 0x00000000
-	.4byte 0x802D0734
-	.4byte 0x00000000
-	.4byte 0x802D0744
-	.4byte 0x802D0750
-	.4byte 0x426F7373
-	.4byte 0x00000000
-	.4byte 0x803E51C4
-	.4byte 0x802D0764
-.global __RTTI__6Kogane
-__RTTI__6Kogane:
-	.4byte 0x803E5168
-	.4byte 0x802D0780
-	.4byte 0x802D08D4
-	.4byte 0
-	.4byte 0x414E6F64
-	.4byte 0x65000000
-	.4byte 0x803E51E4
-	.4byte 0
-	.4byte lbl_802D071C
-	.4byte 0x802D090C
-	.4byte 0x802D0918
-	.4byte 0
-	.4byte 0x802D0928
-	.4byte 0x802D0934
-.global __RTTI__10KoganeProp
-__RTTI__10KoganeProp:
-	.4byte 0x802D0900
-	.4byte 0x802D0940
