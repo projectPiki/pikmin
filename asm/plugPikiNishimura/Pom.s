@@ -528,7 +528,6 @@ read__7PomPropFR18RandomAccessStream:
 /* 80178548 001754A8  7C 08 03 A6 */	mtlr r0
 /* 8017854C 001754AC  4E 80 00 20 */	blr 
 
-.global "@492@read__7PomPropFR18RandomAccessStream"
 "@492@read__7PomPropFR18RandomAccessStream":
 /* 80178550 001754B0  38 63 FE 14 */	addi r3, r3, -492
 /* 80178554 001754B4  4B FF FF AC */	b read__7PomPropFR18RandomAccessStream
