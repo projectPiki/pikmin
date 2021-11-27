@@ -4028,16 +4028,3 @@ lbl_803EAECC:
 .global lbl_803EAED0
 lbl_803EAED0:
 	.4byte 0x42180000
-	.4byte 0x00000000
-.global lbl_803EAED8
-lbl_803EAED8:
-	.4byte 0x40000000
-.global lbl_803EAEDC
-lbl_803EAEDC:
-	.4byte 0x42A00000
-.global lbl_803EAEE0
-lbl_803EAEE0:
-	.4byte 0x00000000
-.global lbl_803EAEE4
-lbl_803EAEE4:
-	.4byte 0x437A0000

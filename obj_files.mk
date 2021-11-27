@@ -13,7 +13,6 @@ GROUP_0_FILES :=\
 	$(BUILD_DIR)/asm/sdata2_1c.o\
 	$(BUILD_DIR)/asm/sdata2_1b.o\
 	$(BUILD_DIR)/asm/sdata2_1a.o\
-	$(BUILD_DIR)/asm/sdata2_2.o\
 
 TEXT_O_FILES :=\
 	$(BUILD_DIR)/asm/sysBootup.o\
@@ -43,6 +42,7 @@ TEXT_O_FILES :=\
 	$(BUILD_DIR)/asm/plugPikiNishimura/SpiderAi.o\
 	$(BUILD_DIR)/asm/plugPikiNishimura/SpiderLeg.o\
 	$(BUILD_DIR)/asm/text_Nishimura.o\
+	$(BUILD_DIR)/asm/plugPikiNishimura/KingBody.o\
 	$(BUILD_DIR)/asm/plugPikiNishimura/Kogane.o\
 	$(BUILD_DIR)/asm/plugPikiNishimura/KoganeAi.o\
 	$(BUILD_DIR)/asm/plugPikiNishimura/Pom.o\

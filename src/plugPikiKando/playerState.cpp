@@ -1,6 +1,10 @@
 #include "types.h"
 
-
+class PlayerState {
+	int getCurrDay();
+	int getCurrParts();
+	bool isEnding();
+};
 
 /*
  * --INFO--
@@ -77,39 +81,28 @@ void TimeGraph::get(unsigned short, int)
  * Address:	8007F3B8
  * Size:	000058
  */
-void PlayerState::isEnding()
-{
-/*
-.loc_0x0:
-  mflr      r0
-  stw       r0, 0x4(r1)
-  stwu      r1, -0x18(r1)
-  stw       r31, 0x14(r1)
-  mr        r31, r3
-  bl        0x17E4
-  cmpwi     r3, 0x1D
-  blt-      .loc_0x28
-  li        r3, 0x1
-  b         .loc_0x44
 
-.loc_0x28:
-  mr        r3, r31
-  bl        0x188C
-  cmpwi     r3, 0x1E
-  blt-      .loc_0x40
-  li        r3, 0x1
-  b         .loc_0x44
+bool PlayerState::isEnding() {
+	// fully matches
+	{
+		int game_stat;
+		bool is_ending;
 
-.loc_0x40:
-  li        r3, 0
-
-.loc_0x44:
-  lwz       r0, 0x1C(r1)
-  lwz       r31, 0x14(r1)
-  addi      r1, r1, 0x18
-  mtlr      r0
-  blr
-*/
+		game_stat = PlayerState::getCurrDay();
+		if (game_stat >= 29) {
+			is_ending = true;
+		}
+		else {
+			game_stat = PlayerState::getCurrParts();
+			if (game_stat >= 30) {
+				is_ending = true;
+			}
+			else {
+				is_ending = false;
+			}
+		}
+		return is_ending;
+	}
 }
 
 /*
