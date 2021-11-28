@@ -3847,35 +3847,3 @@ lbl_803EADD0:
 .global lbl_803EADD4
 lbl_803EADD4:
 	.4byte 0x40400000
-.global lbl_803EADD8
-lbl_803EADD8:
-	.4byte 0x00000000
-.global lbl_803EADDC
-lbl_803EADDC:
-	.4byte 0x46480000
-.global "@1114"
-"@1114":
-	.4byte 0x3FE00000
-	.4byte 0x00000000
-.global "@1115"
-"@1115":
-	.4byte 0x40080000
-	.4byte 0x00000000
-.global lbl_803EADF0
-lbl_803EADF0:
-	.4byte 0x3E800000
-.global lbl_803EADF4
-lbl_803EADF4:
-	.4byte 0x3F000000
-.global lbl_803EADF8
-lbl_803EADF8:
-	.4byte 0x00000000
-.global lbl_803EADFC
-lbl_803EADFC:
-	.4byte 0x41A00000
-.global lbl_803EAE00
-lbl_803EAE00:
-	.4byte 0x3C23D70A
-.global lbl_803EAE04
-lbl_803EAE04:
-	.4byte 0x3F000000

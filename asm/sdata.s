@@ -16820,38 +16820,3 @@ lbl_803E4E8C:
 .global lbl_803E4E90
 lbl_803E4E90:
 	.4byte 0x00000000
-	.4byte 0x00000000
-.global lbl_803E4E98
-lbl_803E4E98:
-	.4byte 0x00000000
-.global lbl_803E4E9C
-lbl_803E4E9C:
-	.4byte 0x00000000
-.global lbl_803E4EA0
-lbl_803E4EA0:
-	.4byte 0x00000000
-.global lbl_803E4EA4
-lbl_803E4EA4:
-	.4byte 0x00000000
-.global lbl_803E4EA8
-lbl_803E4EA8:
-	.4byte 0x00000000
-.global lbl_803E4EAC
-lbl_803E4EAC:
-	.4byte 0x00000000
-.global lbl_803E4EB0
-lbl_803E4EB0:
-	.4byte 0x00000000
-.global lbl_803E4EB4
-lbl_803E4EB4:
-	.4byte 0x00000000
-	.4byte 0x802CFF3C
-	.4byte 0x00000000
-	.4byte 0x802CFF48
-	.4byte 0x00000000
-	.4byte 0x802CFF58
-	.4byte 0x802CFF64
-.global __RTTI__13SlimeCreature
-__RTTI__13SlimeCreature:
-	.4byte 0x802CFF2C
-	.4byte 0x802CFF78
