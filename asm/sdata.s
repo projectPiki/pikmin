@@ -16261,9 +16261,3 @@ __RTTI__6Spider:
 __RTTI__10SpiderProp:
 	.4byte 0x802cf408
 	.4byte 0x802cf43c
-	.4byte 0x802cf4ec
-	.4byte 0
-.global __RTTI__8SpiderAi
-__RTTI__8SpiderAi:
-	.4byte 0x802cf4bc
-	.4byte 0x802cf500
