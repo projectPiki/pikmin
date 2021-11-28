@@ -472,29 +472,3 @@ lbl_80222680:
 	.4byte 0x3F000000
 	.4byte 0x0000002A
 	.4byte 0x3E99999A
-.global lbl_802226A0
-lbl_802226A0:
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-.global lbl_802226D0
-lbl_802226D0:
-	.4byte 0x3FE00000
-	.4byte 0x3FA00000
-	.4byte 0x3E800000
-	.4byte 0x3F400000
-.global lbl_802226E0
-lbl_802226E0:
-	.4byte 0x3FE00000
-	.4byte 0x3FA00000
-	.4byte 0x3E800000
-	.4byte 0x3F400000

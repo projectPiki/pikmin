@@ -1,5 +1,5 @@
 .include "macros.inc"
-
+.section .text, "ax"  # 0x80005560 - 0x80221F60
 .global setHalfDeadFallEffect__9SpiderLegFUl
 setHalfDeadFallEffect__9SpiderLegFUl:
 /* 80155A08 00152968  7C 08 02 A6 */	mflr r0
@@ -520,7 +520,7 @@ lbl_80156170:
 /* 80156178 001530D8  42 00 FF F8 */	bdnz lbl_80156170
 lbl_8015617C:
 /* 8015617C 001530DC  3B E1 00 20 */	addi r31, r1, 0x20
-/* 80156180 001530E0  CB 82 A9 98 */	lfd f28, "@2056"@sda21(r2)
+/* 80156180 001530E0  CB 82 A9 98 */	lfd f28, lbl_803EAB98@sda21(r2)
 /* 80156184 001530E4  C3 A2 A9 8C */	lfs f29, lbl_803EAB8C@sda21(r2)
 /* 80156188 001530E8  7F FC FB 78 */	mr r28, r31
 /* 8015618C 001530EC  C3 C2 A9 88 */	lfs f30, lbl_803EAB88@sda21(r2)
@@ -1478,7 +1478,7 @@ setLegParameter__9SpiderLegFv:
 /* 80156EF0 00153E50  80 7E 02 24 */	lwz r3, 0x224(r30)
 /* 80156EF4 00153E54  90 01 00 84 */	stw r0, 0x84(r1)
 /* 80156EF8 00153E58  3C 00 43 30 */	lis r0, 0x4330
-/* 80156EFC 00153E5C  C8 42 A9 98 */	lfd f2, "@2056"@sda21(r2)
+/* 80156EFC 00153E5C  C8 42 A9 98 */	lfd f2, lbl_803EAB98@sda21(r2)
 /* 80156F00 00153E60  90 01 00 80 */	stw r0, 0x80(r1)
 /* 80156F04 00153E64  C0 03 02 A0 */	lfs f0, 0x2a0(r3)
 /* 80156F08 00153E68  C8 21 00 80 */	lfd f1, 0x80(r1)
@@ -1497,7 +1497,7 @@ lbl_80156F38:
 /* 80156F38 00153E98  D0 1F 00 E0 */	stfs f0, 0xe0(r31)
 lbl_80156F3C:
 /* 80156F3C 00153E9C  38 00 00 04 */	li r0, 4
-/* 80156F40 00153EA0  C8 E2 A9 98 */	lfd f7, "@2056"@sda21(r2)
+/* 80156F40 00153EA0  C8 E2 A9 98 */	lfd f7, lbl_803EAB98@sda21(r2)
 /* 80156F44 00153EA4  7C 09 03 A6 */	mtctr r0
 /* 80156F48 00153EA8  C0 82 A9 70 */	lfs f4, lbl_803EAB70@sda21(r2)
 /* 80156F4C 00153EAC  80 8D 2D EC */	lwz r4, gsys@sda21(r13)
@@ -1833,7 +1833,7 @@ lbl_801573D0:
 /* 801573E4 00154344  EC 60 07 32 */	fmuls f3, f0, f28
 /* 801573E8 00154348  80 7F 00 00 */	lwz r3, 0(r31)
 /* 801573EC 0015434C  90 01 01 10 */	stw r0, 0x110(r1)
-/* 801573F0 00154350  C8 42 A9 98 */	lfd f2, "@2056"@sda21(r2)
+/* 801573F0 00154350  C8 42 A9 98 */	lfd f2, lbl_803EAB98@sda21(r2)
 /* 801573F4 00154354  C8 21 01 10 */	lfd f1, 0x110(r1)
 /* 801573F8 00154358  C0 02 A9 8C */	lfs f0, lbl_803EAB8C@sda21(r2)
 /* 801573FC 0015435C  EC 81 10 28 */	fsubs f4, f1, f2
@@ -1862,7 +1862,7 @@ lbl_8015743C:
 /* 80157450 001543B0  EC 60 07 32 */	fmuls f3, f0, f28
 /* 80157454 001543B4  80 7F 00 00 */	lwz r3, 0(r31)
 /* 80157458 001543B8  90 01 01 10 */	stw r0, 0x110(r1)
-/* 8015745C 001543BC  C8 42 A9 98 */	lfd f2, "@2056"@sda21(r2)
+/* 8015745C 001543BC  C8 42 A9 98 */	lfd f2, lbl_803EAB98@sda21(r2)
 /* 80157460 001543C0  C8 21 01 10 */	lfd f1, 0x110(r1)
 /* 80157464 001543C4  C0 02 A9 8C */	lfs f0, lbl_803EAB8C@sda21(r2)
 /* 80157468 001543C8  EC 81 10 28 */	fsubs f4, f1, f2
@@ -1892,7 +1892,7 @@ lbl_801574A8:
 /* 801574C0 00154420  90 01 01 10 */	stw r0, 0x110(r1)
 /* 801574C4 00154424  80 64 02 24 */	lwz r3, 0x224(r4)
 /* 801574C8 00154428  EC 00 07 32 */	fmuls f0, f0, f28
-/* 801574CC 0015442C  C8 62 A9 98 */	lfd f3, "@2056"@sda21(r2)
+/* 801574CC 0015442C  C8 62 A9 98 */	lfd f3, lbl_803EAB98@sda21(r2)
 /* 801574D0 00154430  C8 21 01 10 */	lfd f1, 0x110(r1)
 /* 801574D4 00154434  C0 42 A9 8C */	lfs f2, lbl_803EAB8C@sda21(r2)
 /* 801574D8 00154438  EC 61 18 28 */	fsubs f3, f1, f3
@@ -2076,7 +2076,7 @@ setWalkNewPosition__9SpiderLegFv:
 /* 80157760 001546C0  3F E0 43 30 */	lis r31, 0x4330
 /* 80157764 001546C4  C2 C2 A9 74 */	lfs f22, lbl_803EAB74@sda21(r2)
 /* 80157768 001546C8  C3 02 A9 A8 */	lfs f24, lbl_803EABA8@sda21(r2)
-/* 8015776C 001546CC  CB 22 A9 98 */	lfd f25, "@2056"@sda21(r2)
+/* 8015776C 001546CC  CB 22 A9 98 */	lfd f25, lbl_803EAB98@sda21(r2)
 /* 80157770 001546D0  C3 42 A9 8C */	lfs f26, lbl_803EAB8C@sda21(r2)
 /* 80157774 001546D4  C3 62 A9 88 */	lfs f27, lbl_803EAB88@sda21(r2)
 /* 80157778 001546D8  C3 82 A9 C4 */	lfs f28, lbl_803EABC4@sda21(r2)
@@ -2256,7 +2256,7 @@ checkMotionRatio__9SpiderLegFv:
 /* 801579FC 0015495C  38 00 00 04 */	li r0, 4
 /* 80157A00 00154960  C0 A2 A9 D4 */	lfs f5, lbl_803EABD4@sda21(r2)
 /* 80157A04 00154964  7C 09 03 A6 */	mtctr r0
-/* 80157A08 00154968  C8 82 A9 98 */	lfd f4, "@2056"@sda21(r2)
+/* 80157A08 00154968  C8 82 A9 98 */	lfd f4, lbl_803EAB98@sda21(r2)
 /* 80157A0C 0015496C  38 E3 00 00 */	addi r7, r3, 0
 /* 80157A10 00154970  38 80 00 00 */	li r4, 0
 /* 80157A14 00154974  3C C0 43 30 */	lis r6, 0x4330
@@ -2382,7 +2382,7 @@ lbl_80157B8C:
 /* 80157BC8 00154B28  D0 0D 31 70 */	stfs f0, vibSpin$2820@sda21(r13)
 lbl_80157BCC:
 /* 80157BCC 00154B2C  3B E0 00 00 */	li r31, 0
-/* 80157BD0 00154B30  CB C2 A9 98 */	lfd f30, "@2056"@sda21(r2)
+/* 80157BD0 00154B30  CB C2 A9 98 */	lfd f30, lbl_803EAB98@sda21(r2)
 /* 80157BD4 00154B34  1C 7F 00 24 */	mulli r3, r31, 0x24
 /* 80157BD8 00154B38  C3 E2 A9 DC */	lfs f31, lbl_803EABDC@sda21(r2)
 /* 80157BDC 00154B3C  57 E0 10 3A */	slwi r0, r31, 2
@@ -2821,8 +2821,8 @@ setRealCentre__9SpiderLegFR8Vector3f:
 /* 8015822C 0015518C  FC 04 00 40 */	fcmpo cr0, f4, f0
 /* 80158230 00155190  40 81 00 5C */	ble lbl_8015828C
 /* 80158234 00155194  FC 20 20 34 */	frsqrte f1, f4
-/* 80158238 00155198  C8 62 A9 78 */	lfd f3, "@1835_1"@sda21(r2)
-/* 8015823C 0015519C  C8 42 A9 80 */	lfd f2, "@1836"@sda21(r2)
+/* 80158238 00155198  C8 62 A9 78 */	lfd f3, lbl_803EAB78@sda21(r2)
+/* 8015823C 0015519C  C8 42 A9 80 */	lfd f2, lbl_803EAB80@sda21(r2)
 /* 80158240 001551A0  FC 01 00 72 */	fmul f0, f1, f1
 /* 80158244 001551A4  FC 23 00 72 */	fmul f1, f3, f1
 /* 80158248 001551A8  FC 04 00 32 */	fmul f0, f4, f0
@@ -3426,7 +3426,7 @@ lbl_80158AC4:
 /* 80158AE8 00155A48  3C A0 80 2B */	lis r5, __vt__11Interaction@ha
 /* 80158AEC 00155A4C  C3 E2 A9 F4 */	lfs f31, lbl_803EABF4@sda21(r2)
 /* 80158AF0 00155A50  3C 80 80 2B */	lis r4, __vt__13InteractFlick@ha
-/* 80158AF4 00155A54  CB 62 A9 98 */	lfd f27, "@2056"@sda21(r2)
+/* 80158AF4 00155A54  CB 62 A9 98 */	lfd f27, lbl_803EAB98@sda21(r2)
 /* 80158AF8 00155A58  3C C0 80 2D */	lis r6, legId__4Kumo@ha
 /* 80158AFC 00155A5C  C3 82 A9 8C */	lfs f28, lbl_803EAB8C@sda21(r2)
 /* 80158B00 00155A60  C3 A2 A9 88 */	lfs f29, lbl_803EAB88@sda21(r2)
@@ -3700,7 +3700,7 @@ setKneeDirection__9SpiderLegFv:
 /* 80158ED0 00155E30  7F FB FB 78 */	mr r27, r31
 /* 80158ED4 00155E34  80 04 00 04 */	lwz r0, 4(r4)
 /* 80158ED8 00155E38  7F FA FB 78 */	mr r26, r31
-/* 80158EDC 00155E3C  CB 02 A9 98 */	lfd f24, "@2056"@sda21(r2)
+/* 80158EDC 00155E3C  CB 02 A9 98 */	lfd f24, lbl_803EAB98@sda21(r2)
 /* 80158EE0 00155E40  3B 81 00 44 */	addi r28, r1, 0x44
 /* 80158EE4 00155E44  90 61 00 44 */	stw r3, 0x44(r1)
 /* 80158EE8 00155E48  C3 22 A9 88 */	lfs f25, lbl_803EAB88@sda21(r2)
@@ -5061,3 +5061,254 @@ invoke__23SpiderGenRippleCallBackFPQ23zen17particleGenerator:
 lbl_8015A2BC:
 /* 8015A2BC 0015721C  38 60 00 01 */	li r3, 1
 /* 8015A2C0 00157220  4E 80 00 20 */	blr 
+
+.section .rodata, "a"  # 0x80221FE0 - 0x80222DC0
+.balign 8
+lbl_802226A0:
+	.float 0.0
+	.float 0.0
+	.float 0.0
+	.float 0.0
+	.float 0.0
+	.float 0.0
+	.float 0.0
+	.float 0.0
+	.float 0.0
+	.float 0.0
+	.float 0.0
+	.float 0.0
+lbl_802226D0:
+	.float 1.75
+	.float 1.25
+	.float 0.25
+	.float 0.75
+lbl_802226E0:
+	.float 1.75
+	.float 1.25
+	.float 0.25
+	.float 0.75
+
+.section .data, "wa"  # 0x80222DC0 - 0x802E9640
+.balign 8
+leg_index__4Kumo:
+	.4byte 0x0000000C
+	.4byte 0x0000000B
+	.4byte 0x0000000A
+	.4byte 0x0000000F
+	.4byte 0x0000000E
+	.4byte 0x0000000D
+	.4byte 0x00000006
+	.4byte 0x00000005
+	.4byte 0x00000004
+	.4byte 0x00000009
+	.4byte 0x00000008
+	.4byte 0x00000007
+legId__4Kumo:
+	.4byte 0x00000003
+	.4byte 0x00000002
+	.4byte 0x00000000
+	.4byte 0x00000001
+	.4byte 0xFFFFFFFF
+	.4byte 0x00000002
+	.4byte 0x00000003
+	.4byte 0x00000000
+	.4byte 0x00000001
+.balign 4
+lbl_802CF57C:
+	.asciz "SpiderLeg.cpp"
+.balign 4
+lbl_802CF58C:
+	.asciz "SpiderLeg"
+.balign 4
+lbl_802CF598:
+	.asciz "Interaction"
+.balign 4
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+.balign 4
+lbl_802CF5D0:
+	.asciz "SpiderGenHalfDeadCallBackJoint"
+.balign 4
+lbl_802CF5F0:
+	.asciz "zen::CallBack1<zen::particleGenerator *>"
+.balign 4
+lbl_802CF61C:
+	.4byte "__RTTI__Q23zen37CallBack1<PQ23zen17particleGenerator>"
+	.4byte 0x00000000
+	.4byte 0x00000000
+.global __vt__30SpiderGenHalfDeadCallBackJoint
+__vt__30SpiderGenHalfDeadCallBackJoint:
+	.4byte __RTTI__30SpiderGenHalfDeadCallBackJoint
+	.4byte 0
+	.4byte invoke__30SpiderGenHalfDeadCallBackJointFPQ23zen17particleGenerator
+.balign 4
+lbl_802CF634:
+	.asciz "SpiderGenPerishCallBack"
+.balign 4
+lbl_802CF64C:
+	.4byte "__RTTI__Q23zen37CallBack1<PQ23zen17particleGenerator>"
+	.4byte 0
+	.4byte 0
+.global __vt__23SpiderGenPerishCallBack
+__vt__23SpiderGenPerishCallBack:
+	.4byte __RTTI__23SpiderGenPerishCallBack
+	.4byte 0
+	.4byte invoke__23SpiderGenPerishCallBackFPQ23zen17particleGenerator
+.balign 4
+lbl_802CF664:
+	.asciz "SpiderGenRippleCallBack"
+.balign 4
+lbl_802CF67C:
+	.4byte "__RTTI__Q23zen37CallBack1<PQ23zen17particleGenerator>"
+	.4byte 0
+	.4byte 0
+.global __vt__23SpiderGenRippleCallBack
+__vt__23SpiderGenRippleCallBack:
+	.4byte __RTTI__23SpiderGenRippleCallBack
+	.4byte 0
+	.4byte invoke__23SpiderGenRippleCallBackFPQ23zen17particleGenerator
+	.4byte 0
+	.4byte 0
+	.4byte 0
+
+.section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
+.balign 8
+lbl_803E4AF0:
+	.float 0.0
+lbl_803E4AF4:
+	.float 0.0
+lbl_803E4AF8:
+	.float 0.0
+lbl_803E4AFC:
+	.float 0.0
+lbl_803E4B00:
+	.float 0.0
+lbl_803E4B04:
+	.float 0.0
+lbl_803E4B08:
+	.float 0.0
+lbl_803E4B0C:
+	.float 1.0
+lbl_803E4B10:
+	.float 0.0
+lbl_803E4B14:
+	.float 0.0
+lbl_803E4B18:
+	.float 0.0
+lbl_803E4B1C:
+	.float 1.0
+lbl_803E4B20:
+	.float 0.0
+lbl_803E4B24:
+	.float 0.0
+lbl_803E4B28:
+	.float 0.0
+lbl_803E4B2C:
+	.float 1.0
+lbl_803E4B30:
+	.float 0.0
+lbl_803E4B34:
+	.float 0.0
+lbl_803E4B38:
+	.float 0.0
+lbl_803E4B3C:
+	.float 1.0
+lbl_803E4B40:
+	.float 1.0
+lbl_803E4B44:
+	.float 1.0
+"__RTTI__Q23zen37CallBack1<PQ23zen17particleGenerator>":
+	.4byte lbl_802CF5F0
+	.4byte 0x00000000
+__RTTI__30SpiderGenHalfDeadCallBackJoint:
+	.4byte lbl_802CF5D0
+	.4byte lbl_802CF61C
+__RTTI__23SpiderGenPerishCallBack:
+	.4byte lbl_802CF634
+	.4byte lbl_802CF64C
+__RTTI__23SpiderGenRippleCallBack:
+	.4byte lbl_802CF664
+	.4byte lbl_802CF67C
+
+.section .sbss, "wa"
+.balign 8
+vibSpin$2820:
+	.skip 0x4
+init$2821:
+	.skip 0x4
+
+.section .sdata2, "a"  # 0x803E8200 - 0x803EC840
+.balign 8
+lbl_803EAB70:
+	.4byte 0x3F000000
+lbl_803EAB74:
+	.4byte 0x00000000
+lbl_803EAB78:
+	.4byte 0x3FE00000
+	.4byte 0x00000000
+lbl_803EAB80:
+	.4byte 0x40080000
+	.4byte 0x00000000
+lbl_803EAB88:
+	.4byte 0x3F800000
+lbl_803EAB8C:
+	.4byte 0x46FFFE00
+lbl_803EAB90:
+	.4byte 0x413FFFF3
+.balign 8
+lbl_803EAB98:
+	.4byte 0x43300000
+	.4byte 0x80000000
+lbl_803EABA0:
+	.4byte 0x40A00000
+lbl_803EABA4:
+	.4byte 0x40400000
+lbl_803EABA8:
+	.4byte 0x40490FDB
+lbl_803EABAC:
+	.4byte 0x3FC90FDB
+lbl_803EABB0:
+	.4byte 0x40C90FDB
+lbl_803EABB4:
+	.4byte 0x3FC00000
+lbl_803EABB8:
+	.4byte 0x41F00000
+lbl_803EABBC:
+	.4byte 0x3D4CCCCD
+lbl_803EABC0:
+	.4byte 0x3F7851EC
+lbl_803EABC4:
+	.4byte 0x3F7FFFEF
+lbl_803EABC8:
+	.4byte 0x3F490FDB
+lbl_803EABCC:
+	.4byte 0x41200000
+lbl_803EABD0:
+	.4byte 0x40800000
+lbl_803EABD4:
+	.4byte 0x3F8CCCCD
+lbl_803EABD8:
+	.4byte 0x42480000
+lbl_803EABDC:
+	.4byte 0x3C23D70A
+lbl_803EABE0:
+	.4byte 0x3E800000
+lbl_803EABE4:
+	.4byte 0x41700000
+lbl_803EABE8:
+	.4byte 0x40C00000
+lbl_803EABEC:
+	.4byte 0xC0A00000
+lbl_803EABF0:
+	.4byte 0x40000000
+lbl_803EABF4:
+	.4byte 0xC47A0000

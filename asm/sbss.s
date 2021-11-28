@@ -1133,10 +1133,4 @@ tekiMgr:
 	.skip 0x8
 .global bossMgr
 bossMgr:
-	.skip 0x8
-.global vibSpin$2820
-vibSpin$2820:
-	.skip 0x4
-.global init$2821
-init$2821:
 	.skip 0x4
