@@ -16544,7 +16544,7 @@ lbl_803E4CB8:
 	.4byte 0x00000000
 .global lbl_803E4CBC
 lbl_803E4CBC:
-	.4byte 0x3F800000
+	.float 1.0
 .global lbl_803E4CC0
 lbl_803E4CC0:
 	.4byte 0x00000000
@@ -16554,62 +16554,3 @@ lbl_803E4CC0:
 __RTTI__7SnakeAi:
 	.4byte 0x803e4ca8
 	.4byte 0x802cfa54
-	.4byte 0
-.global lbl_803E4CD8
-lbl_803E4CD8:
-	.4byte 0x00000000
-.global lbl_803E4CDC
-lbl_803E4CDC:
-	.4byte 0x3F800000
-.global lbl_803E4CE0
-lbl_803E4CE0:
-	.4byte 0x00000000
-.global lbl_803E4CE4
-lbl_803E4CE4:
-	.4byte 0x00000000
-.global lbl_803E4CE8
-lbl_803E4CE8:
-	.4byte 0x3F800000
-.global lbl_803E4CEC
-lbl_803E4CEC:
-	.4byte 0x00000000
-.global lbl_803E4CF0
-lbl_803E4CF0:
-	.4byte 0x00000000
-.global lbl_803E4CF4
-lbl_803E4CF4:
-	.4byte 0x3F800000
-.global lbl_803E4CF8
-lbl_803E4CF8:
-	.4byte 0x00000000
-.global lbl_803E4CFC
-lbl_803E4CFC:
-	.4byte 0x40400000
-.global lbl_803E4D00
-lbl_803E4D00:
-	.4byte 0x00000000
-.global lbl_803E4D04
-lbl_803E4D04:
-	.4byte 0x42C80000
-.global lbl_803E4D08
-lbl_803E4D08:
-	.4byte 0x00000000
-.global lbl_803E4D0C
-lbl_803E4D0C:
-	.4byte 0x3F800000
-.global lbl_803E4D10
-lbl_803E4D10:
-	.4byte 0x3F800000
-.global lbl_803E4D14
-lbl_803E4D14:
-	.4byte 0x3F800000
-	.4byte 0x802CFAB0
-	.4byte 0x00000000
-.global __RTTI__26SnakeGenBodyRotateCallBack
-__RTTI__26SnakeGenBodyRotateCallBack:
-	.4byte 0x802cfa94
-	.4byte 0x802cfadc
-.global __RTTI__28SnakeGenBodyOnGroundCallBack
-__RTTI__28SnakeGenBodyOnGroundCallBack:
-	.4byte 0x802cfaf4
-	.4byte 0x802cfb14
