@@ -95,7 +95,7 @@ lbl_803E306C:
 	.4byte 0x3F800000
 .global error__6NMathF
 error__6NMathF:
-	.4byte 0x38D1B717
+	.float 0.0001
 .global degreePerRadian__6NMathF
 degreePerRadian__6NMathF:
 	.4byte 0x42652EE0

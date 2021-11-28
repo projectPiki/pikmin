@@ -26387,7 +26387,7 @@ lbl_803E862C:
 	.4byte 0x3F800000
 .global lbl_803E8630
 lbl_803E8630:
-	.4byte 0x38D1B717
+	.float 0.0001
 	.4byte 0x00000000
 .global "@1188"
 "@1188":

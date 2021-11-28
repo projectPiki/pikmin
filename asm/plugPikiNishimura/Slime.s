@@ -1852,7 +1852,7 @@ lbl_803EAD24:
 lbl_803EAD28:
 	.4byte 0x00000000
 lbl_803EAD2C:
-	.4byte 0x38D1B717
+	.float 0.0001
 lbl_803EAD30:
 	.4byte 0xC47A0000
 lbl_803EAD34:

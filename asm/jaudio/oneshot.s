@@ -6920,7 +6920,7 @@ lbl_803E8C40:
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .global lbl_803EB040
 lbl_803EB040:
-	.4byte 0x38D1B717
+	.float 0.0001
 .global lbl_803EB044
 lbl_803EB044:
 	.4byte 0x41A00000

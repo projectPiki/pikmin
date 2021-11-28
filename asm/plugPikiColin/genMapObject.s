@@ -1092,7 +1092,7 @@ __RTTI__12DynObjBridge:
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .global lbl_803E8998
 lbl_803E8998:
-	.4byte 0x38D1B717
+	.float 0.0001
 .global lbl_803E899C
 lbl_803E899C:
 	.4byte 0x3C888889

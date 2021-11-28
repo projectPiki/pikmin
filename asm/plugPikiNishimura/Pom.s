@@ -819,7 +819,7 @@ lbl_803EAFC4:
 lbl_803EAFC8:
 	.float 0.0
 lbl_803EAFCC:
-	.4byte 0x38D1B717
+	.float 0.0001
 lbl_803EAFD0:
 	.float 20.0
 lbl_803EAFD4:

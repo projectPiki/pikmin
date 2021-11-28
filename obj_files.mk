@@ -41,7 +41,7 @@ TEXT_O_FILES :=\
 	$(BUILD_DIR)/asm/plugPikiNishimura/Spider.o\
 	$(BUILD_DIR)/asm/plugPikiNishimura/SpiderAi.o\
 	$(BUILD_DIR)/asm/plugPikiNishimura/SpiderLeg.o\
-	$(BUILD_DIR)/asm/text_Nishimura.o\
+	$(BUILD_DIR)/asm/plugPikiNishimura/Snake.o\
 	$(BUILD_DIR)/asm/plugPikiNishimura/SnakeAi.o\
 	$(BUILD_DIR)/asm/plugPikiNishimura/SnakeBody.o\
 	$(BUILD_DIR)/asm/plugPikiNishimura/Slime.o\

@@ -6336,7 +6336,7 @@ lbl_803E8CD8:
 	.4byte 0x00000000
 .global lbl_803E8CDC
 lbl_803E8CDC:
-	.4byte 0x38D1B717
+	.float 0.0001
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .global lbl_803EB0F0

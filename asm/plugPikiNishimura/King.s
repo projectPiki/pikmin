@@ -1409,7 +1409,7 @@ lbl_803EAE54:
 lbl_803EAE58:
 	.4byte 0x3F800000
 lbl_803EAE5C:
-	.4byte 0x38D1B717
+	.float 0.0001
 lbl_803EAE60:
 	.4byte 0x420C0000
 lbl_803EAE64:

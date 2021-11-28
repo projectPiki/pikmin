@@ -2995,7 +2995,7 @@ lbl_803EB08C:
 	.4byte 0x00000000
 .global lbl_803EB090
 lbl_803EB090:
-	.4byte 0x38D1B717
+	.float 0.0001
 .global lbl_803EB094
 lbl_803EB094:
 	.4byte 0x41200000

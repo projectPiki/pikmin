@@ -22240,7 +22240,7 @@ lbl_803EAFC8:
 	.4byte 0x00000000
 .global lbl_803EAFCC
 lbl_803EAFCC:
-	.4byte 0x38D1B717
+	.float 0.0001
 .global lbl_803EAFD0
 lbl_803EAFD0:
 	.4byte 0x41A00000
