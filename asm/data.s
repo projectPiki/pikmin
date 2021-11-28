@@ -51728,10 +51728,3 @@ __vt__7BossMgr:
 	.4byte findClosest__9ObjectMgrFR8Vector3fP9Condition
 	.4byte search__9ObjectMgrFP9ObjectMgr
 	.4byte killAll__7BossMgrFv
-.global lbl_802CF158
-lbl_802CF158:
-	.4byte 0x626F7373
-	.4byte 0x65732F25
-	.4byte 0x732F616E
-	.4byte 0x696D732E
-	.4byte 0x62696E00

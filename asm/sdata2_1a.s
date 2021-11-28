@@ -3229,9 +3229,3 @@ lbl_803EAA68:
 "@894":
 	.4byte 0x43300000
 	.4byte 0x80000000
-.global lbl_803EAA78
-lbl_803EAA78:
-	.4byte 0x00000000
-.global lbl_803EAA7C
-lbl_803EAA7C:
-	.4byte 0x41F00000
