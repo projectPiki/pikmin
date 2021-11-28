@@ -16531,26 +16531,3 @@ __RTTI__Q25Snake18BoundSphereUpdater:
 __RTTI__9SnakeProp:
 	.4byte 0x802cf914
 	.4byte 0x802cf954
-	.4byte 0x536e616b
-	.4byte 0x65416900
-.global lbl_803E4CB0
-lbl_803E4CB0:
-	.4byte 0x00000000
-.global lbl_803E4CB4
-lbl_803E4CB4:
-	.4byte 0x00000000
-.global lbl_803E4CB8
-lbl_803E4CB8:
-	.4byte 0x00000000
-.global lbl_803E4CBC
-lbl_803E4CBC:
-	.float 1.0
-.global lbl_803E4CC0
-lbl_803E4CC0:
-	.4byte 0x00000000
-	.4byte 0x802CFA40
-	.4byte 0x00000000
-.global __RTTI__7SnakeAi
-__RTTI__7SnakeAi:
-	.4byte 0x803e4ca8
-	.4byte 0x802cfa54

@@ -498,10 +498,3 @@ lbl_802226E0:
 	.4byte 0x3FA00000
 	.4byte 0x3E800000
 	.4byte 0x3F400000
-.global lbl_802226F0
-lbl_802226F0:
-	.4byte 0x42000000
-	.4byte 0x42000000
-	.4byte 0x42000000
-	.4byte 0x41E00000
-	.4byte 0x41E00000
