@@ -1,5 +1,5 @@
 .include "macros.inc"
-
+.section .text, "ax"  # 0x80005560 - 0x80221F60
 .global __ct__10SpiderPropFv
 __ct__10SpiderPropFv:
 /* 80152794 0014F6F4  7C 08 02 A6 */	mflr r0
@@ -1113,7 +1113,530 @@ read__10SpiderPropFR18RandomAccessStream:
 /* 8015382C 0015078C  38 21 00 18 */	addi r1, r1, 0x18
 /* 80153830 00150790  7C 08 03 A6 */	mtlr r0
 /* 80153834 00150794  4E 80 00 20 */	blr 
-.global lbl_80153838
-lbl_80153838:
+
+"@492@read__10SpiderPropFR18RandomAccessStream":
 /* 80153838 00150798  38 63 FE 14 */	addi r3, r3, -492
 /* 8015383C 0015079C  4B FF FF AC */	b read__10SpiderPropFR18RandomAccessStream
+
+.section .data, "wa"  # 0x80222DC0 - 0x802E9640
+.balign 8
+lbl_802CF170:
+	.asciz "Spider.cpp"
+.balign 4
+lbl_802CF17C:
+	.asciz "CoreNode"
+.balign 4
+lbl_802CF188:
+	.asciz "SpiderDrawer"
+.balign 4
+lbl_802CF198:
+	.4byte __RTTI__5ANode
+	.4byte 0x00000000
+	.4byte 0x00000000
+lbl_802CF1A4:
+	.4byte __RTTI__5ANode
+	.4byte 0x00000000
+	.4byte __RTTI__8CoreNode
+	.4byte 0x00000000
+	.4byte 0x00000000
+lbl_802CF1B8:
+	.4byte __RTTI__5ANode
+	.4byte 0x00000000
+	.4byte __RTTI__8CoreNode
+	.4byte 0x00000000
+	.4byte __RTTI__4Node
+	.4byte 0x00000000
+	.4byte 0x00000000
+.global __vt__12SpiderDrawer
+__vt__12SpiderDrawer:
+	.4byte __RTTI__12SpiderDrawer
+	.4byte 0
+	.4byte getAgeNodeType__5ANodeFv
+	.4byte read__8CoreNodeFR18RandomAccessStream
+	.4byte update__4NodeFv
+	.4byte draw__12SpiderDrawerFR8Graphics
+	.4byte render__4NodeFR8Graphics
+	.4byte concat__4NodeFv
+	.4byte concat__4NodeFR3VQS
+	.4byte concat__4NodeFR3SRT
+	.4byte concat__4NodeFR8Matrix4f
+	.4byte getModelMatrix__4NodeFv
+.balign 4
+lbl_802CF204:
+	.asciz "EventTalker"
+.balign 4
+lbl_802CF210:
+	.asciz "RefCountable"
+.balign 4
+lbl_802CF220:
+	.asciz "Creature"
+.balign 4
+lbl_802CF22C:
+	.4byte __RTTI__11EventTalker
+	.4byte 0x8
+	.4byte __RTTI__12RefCountable
+	.4byte 0
+	.4byte 0
+lbl_802CF240:
+	.4byte __RTTI__11EventTalker
+	.4byte 0x8
+	.4byte __RTTI__12RefCountable
+	.4byte 0
+	.4byte __RTTI__8Creature
+	.4byte 0
+	.4byte 0
+lbl_802CF25C:
+	.4byte __RTTI__11EventTalker
+	.4byte 0x8
+	.4byte __RTTI__12RefCountable
+	.4byte 0
+	.4byte __RTTI__8Creature
+	.4byte 0
+	.4byte __RTTI__4Boss
+	.4byte 0
+	.4byte 0
+.global __vt__6Spider
+__vt__6Spider:
+	.4byte __RTTI__6Spider
+	.4byte 0
+	.4byte addCntCallback__12RefCountableFv
+	.4byte subCntCallback__12RefCountableFv
+	.4byte insideSafeArea__8CreatureFR8Vector3f
+	.4byte platAttachable__8CreatureFv
+	.4byte alwaysUpdatePlatform__8CreatureFv
+	.4byte doDoAI__8CreatureFv
+	.4byte setRouteTracer__8CreatureFP11RouteTracer
+	.4byte init__8CreatureFv
+	.4byte init__6SpiderFR8Vector3f
+	.4byte resetPosition__8CreatureFR8Vector3f
+	.4byte initParam__8CreatureFi
+	.4byte startAI__8CreatureFi
+	.4byte getiMass__6SpiderFv
+	.4byte getSize__8CreatureFv
+	.4byte getHeight__8CreatureFv
+	.4byte getCylinderHeight__8CreatureFv
+	.4byte doStore__8CreatureFP11CreatureInf
+	.4byte doRestore__8CreatureFP11CreatureInf
+	.4byte doSave__8CreatureFR18RandomAccessStream
+	.4byte doLoad__8CreatureFR18RandomAccessStream
+	.4byte getCentre__4BossFv
+	.4byte getCentreSize__8CreatureFv
+	.4byte getBoundingSphereCentre__8CreatureFv
+	.4byte getBoundingSphereRadius__8CreatureFv
+	.4byte getShadowPos__8CreatureFv
+	.4byte setCentre__8CreatureFR8Vector3f
+	.4byte getShadowSize__4BossFv
+	.4byte isVisible__4BossFv
+	.4byte isOrganic__4BossFv
+	.4byte isTerrible__8CreatureFv
+	.4byte isBuried__8CreatureFv
+	.4byte isAtari__4BossFv
+	.4byte isAlive__4BossFv
+	.4byte isFixed__4BossFv
+	.4byte needShadow__4BossFv
+	.4byte needFlick__8CreatureFP8Creature
+	.4byte ignoreAtari__4BossFP8Creature
+	.4byte isFree__8CreatureFv
+	.4byte stimulate__4BossFR11Interaction
+	.4byte sendMsg__8CreatureFP3Msg
+	.4byte collisionCallback__4BossFR9CollEvent
+	.4byte bounceCallback__8CreatureFv
+	.4byte jumpCallback__8CreatureFv
+	.4byte wallCallback__4BossFR5PlaneP13DynCollObject
+	.4byte offwallCallback__8CreatureFP13DynCollObject
+	.4byte stickCallback__8CreatureFP8Creature
+	.4byte offstickCallback__8CreatureFP8Creature
+	.4byte stickToCallback__8CreatureFP8Creature
+	.4byte dump__8CreatureFv
+	.4byte startWaterEffect__8CreatureFv
+	.4byte finishWaterEffect__8CreatureFv
+	.4byte isRopable__8CreatureFv
+	.4byte mayIstick__8CreatureFv
+	.4byte getFormationPri__8CreatureFv
+	.4byte update__6SpiderFv
+	.4byte postUpdate__8CreatureFif
+	.4byte stickUpdate__8CreatureFv
+	.4byte refresh__6SpiderFR8Graphics
+	.4byte refresh2d__4BossFR8Graphics
+	.4byte renderAtari__8CreatureFR8Graphics
+	.4byte drawShadow__8CreatureFR8Graphics
+	.4byte demoDraw__8CreatureFR8GraphicsP8Matrix4f
+	.4byte getCatchPos__8CreatureFP8Creature
+	.4byte doAI__6SpiderFv
+	.4byte doAnimation__6SpiderFv
+	.4byte doKill__6SpiderFv
+	.4byte exitCourse__6SpiderFv
+	.4byte isBossBgm__6SpiderFv
+	.4byte attackDefaultPortion__4BossFv
+	.4byte bombDamageCounter__4BossFP8CollPart
+	.4byte drawShape__6SpiderFR8Graphics
+.balign 4
+lbl_802CF3A4:
+	.asciz "Parm<int>"
+.balign 4
+lbl_802CF3B0:
+	.asciz "BaseParm"
+.balign 4
+lbl_802CF3BC:
+	.4byte __RTTI__8BaseParm
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+.balign 4
+lbl_802CF3DC:
+	.asciz "Parm<float>"
+.balign 4
+lbl_802CF3E8:
+	.4byte __RTTI__8BaseParm
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+.balign 4
+lbl_802CF408:
+	.asciz "SpiderProp"
+.balign 4
+lbl_802CF414:
+	.asciz "CreatureProp"
+.balign 4
+lbl_802CF424:
+	.asciz "BossProp"
+.balign 4
+lbl_802CF430:
+	.4byte __RTTI__12CreatureProp
+	.4byte 0
+	.4byte 0
+lbl_802CF43C:
+	.4byte __RTTI__5ANode
+	.4byte 0x1ec
+	.4byte __RTTI__8CoreNode
+	.4byte 0x1ec
+	.4byte __RTTI__12CreatureProp
+	.4byte 0
+	.4byte __RTTI__8BossProp
+	.4byte 0
+	.4byte 0
+.global __vt__10SpiderProp
+__vt__10SpiderProp:
+	.4byte __RTTI__10SpiderProp
+	.4byte 0
+	.4byte read__10SpiderPropFR18RandomAccessStream
+	.4byte __RTTI__10SpiderProp
+	.4byte 0xfffffe14
+	.4byte getAgeNodeType__5ANodeFv
+	.4byte "@492@read__10SpiderPropFR18RandomAccessStream"
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+
+.section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
+.balign 8
+lbl_803E4980:
+	.asciz "Spider"
+.balign 4
+lbl_803E4988:
+	.asciz "p10"
+.balign 4
+lbl_803E498C:
+	.asciz "p11"
+.balign 4
+lbl_803E4990:
+	.asciz "p12"
+.balign 4
+lbl_803E4994:
+	.asciz "p13"
+.balign 4
+lbl_803E4998:
+	.asciz "p14"
+.balign 4
+lbl_803E499C:
+	.asciz "p15"
+.balign 4
+lbl_803E49A0:
+	.asciz "p20"
+.balign 4
+lbl_803E49A4:
+	.asciz "p21"
+.balign 4
+lbl_803E49A8:
+	.asciz "p22"
+.balign 4
+lbl_803E49AC:
+	.asciz "p23"
+.balign 4
+lbl_803E49B0:
+	.asciz "p24"
+.balign 4
+lbl_803E49B4:
+	.asciz "p30"
+.balign 4
+lbl_803E49B8:
+	.asciz "p31"
+.balign 4
+lbl_803E49BC:
+	.asciz "p32"
+.balign 4
+lbl_803E49C0:
+	.asciz "p33"
+.balign 4
+lbl_803E49C4:
+	.asciz "p34"
+.balign 4
+lbl_803E49C8:
+	.asciz "p35"
+.balign 4
+lbl_803E49CC:
+	.asciz "p40"
+.balign 4
+lbl_803E49D0:
+	.asciz "p50"
+.balign 4
+lbl_803E49D4:
+	.asciz "p51"
+.balign 4
+lbl_803E49D8:
+	.asciz "p52"
+.balign 4
+lbl_803E49DC:
+	.asciz "p53"
+.balign 4
+lbl_803E49E0:
+	.asciz "p54"
+.balign 4
+lbl_803E49E4:
+	.asciz "p55"
+.balign 4
+lbl_803E49E8:
+	.asciz "p56"
+.balign 4
+lbl_803E49EC:
+	.asciz "p57"
+.balign 4
+lbl_803E49F0:
+	.asciz "p60"
+.balign 4
+lbl_803E49F4:
+	.asciz "p61"
+.balign 4
+lbl_803E49F8:
+	.asciz "p62"
+.balign 4
+lbl_803E49FC:
+	.asciz "p63"
+.balign 4
+lbl_803E4A00:
+	.asciz "p70"
+.balign 4
+lbl_803E4A04:
+	.asciz "p71"
+.balign 4
+lbl_803E4A08:
+	.asciz "p72"
+.balign 4
+lbl_803E4A0C:
+	.asciz "p73"
+.balign 4
+lbl_803E4A10:
+	.asciz "p74"
+.balign 4
+lbl_803E4A14:
+	.asciz "p75"
+.balign 4
+lbl_803E4A18:
+	.asciz "c00"
+.balign 4
+lbl_803E4A1C:
+	.asciz "c01"
+.balign 4
+lbl_803E4A20:
+	.asciz "t00"
+.balign 4
+lbl_803E4A24:
+	.asciz "s00"
+.balign 4
+lbl_803E4A28:
+	.asciz "s01"
+.balign 4
+lbl_803E4A2C:
+	.asciz "s02"
+.balign 4
+lbl_803E4A30:
+	.asciz "s10"
+.balign 4
+lbl_803E4A34:
+	.asciz "s11"
+.balign 4
+lbl_803E4A38:
+	.asciz "s30"
+.balign 4
+lbl_803E4A3C:
+	.asciz "s31"
+.balign 4
+lbl_803E4A40:
+	.asciz "s32"
+.balign 4
+lbl_803E4A44:
+	.asciz "i00"
+.balign 4
+lbl_803E4A48:
+	.asciz "i01"
+.balign 4
+lbl_803E4A4C:
+	.asciz "i02"
+.balign 4
+lbl_803E4A50:
+	.asciz "i03"
+.balign 4
+lbl_803E4A54:
+	.asciz "i10"
+.balign 4
+lbl_803E4A58:
+	.asciz "i20"
+.balign 4
+lbl_803E4A5C:
+	.asciz ""
+.balign 4
+lbl_803E4A60:
+	.asciz "ANode"
+.balign 4
+__RTTI__5ANode:
+	.4byte lbl_803E4A60
+	.4byte 0x00000000
+__RTTI__8CoreNode:
+	.4byte lbl_802CF17C
+	.4byte lbl_802CF198
+.balign 4
+lbl_803E4A78:
+	.asciz "Node"
+.balign 4
+__RTTI__4Node:
+	.4byte lbl_803E4A78
+	.4byte lbl_802CF1A4
+__RTTI__12SpiderDrawer:
+	.4byte lbl_802CF188
+	.4byte lbl_802CF1B8
+__RTTI__11EventTalker:
+	.4byte lbl_802CF204
+	.4byte 0
+__RTTI__12RefCountable:
+	.4byte lbl_802CF210
+	.4byte 0
+__RTTI__8Creature:
+	.4byte lbl_802CF220
+	.4byte lbl_802CF22C
+.balign 4
+lbl_803E4AA8:
+	.asciz "Boss"
+.balign 4
+__RTTI__4Boss:
+	.4byte lbl_803E4AA8
+	.4byte lbl_802CF240
+__RTTI__6Spider:
+	.4byte lbl_803E4980
+	.4byte lbl_802CF25C
+__RTTI__8BaseParm:
+	.4byte lbl_802CF3B0
+	.4byte 0
+__RTTI__12CreatureProp:
+	.4byte lbl_802CF414
+	.4byte 0
+__RTTI__8BossProp:
+	.4byte lbl_802CF424
+	.4byte lbl_802CF430
+__RTTI__10SpiderProp:
+	.4byte lbl_802CF408
+	.4byte lbl_802CF43C
+
+.section .sdata2, "a"  # 0x803E8200 - 0x803EC840
+.balign 8
+lbl_803EAA80:
+	.4byte 0x3FC00000
+lbl_803EAA84:
+	.4byte 0x3DE76C8B
+lbl_803EAA88:
+	.4byte 0x3EBD70A4
+lbl_803EAA8C:
+	.4byte 0x40E00000
+lbl_803EAA90:
+	.4byte 0x3DCCCCCD
+lbl_803EAA94:
+	.4byte 0x41200000
+lbl_803EAA98:
+	.4byte 0x42F00000
+lbl_803EAA9C:
+	.4byte 0x41700000
+lbl_803EAAA0:
+	.4byte 0x42340000
+lbl_803EAAA4:
+	.4byte 0x42480000
+lbl_803EAAA8:
+	.4byte 0x42960000
+lbl_803EAAAC:
+	.4byte 0x42C80000
+lbl_803EAAB0:
+	.4byte 0x42FA0000
+lbl_803EAAB4:
+	.4byte 0x3F333333
+lbl_803EAAB8:
+	.4byte 0x3F99999A
+lbl_803EAABC:
+	.4byte 0x3FE66666
+lbl_803EAAC0:
+	.4byte 0x41C80000
+lbl_803EAAC4:
+	.4byte 0x41A00000
+lbl_803EAAC8:
+	.4byte 0x43480000
+lbl_803EAACC:
+	.4byte 0x3E99999A
+lbl_803EAAD0:
+	.4byte 0x00000000
+lbl_803EAAD4:
+	.4byte 0x3E19999A
+lbl_803EAAD8:
+	.4byte 0x40000000
+lbl_803EAADC:
+	.4byte 0x3F733333
+lbl_803EAAE0:
+	.4byte 0x41F00000
+lbl_803EAAE4:
+	.4byte 0x3C23D70A
+lbl_803EAAE8:
+	.4byte 0x3F800000
+lbl_803EAAEC:
+	.4byte 0x3F000000
+lbl_803EAAF0:
+	.4byte 0x3F666666
+lbl_803EAAF4:
+	.4byte 0x3FCCCCCD
+lbl_803EAAF8:
+	.4byte 0x43340000
+lbl_803EAAFC:
+	.4byte 0x3D4CCCCD
+lbl_803EAB00:
+	.4byte 0x40BCCCCD
+lbl_803EAB04:
+	.4byte 0x40C00000
+lbl_803EAB08:
+	.4byte 0x43160000
+lbl_803EAB0C:
+	.4byte 0x3F400000
+lbl_803EAB10:
+	.4byte 0x42800000
+lbl_803EAB14:
+	.4byte 0x420C0000
+lbl_803EAB18:
+	.4byte 0x43FA0000
+lbl_803EAB1C:
+	.4byte 0x44960000
