@@ -52656,15 +52656,3 @@ __vt__9SlimeProp:
 	.4byte 0
 	.4byte 0
 	.4byte 0
-.global lbl_802CFEF0
-lbl_802CFEF0:
-	.4byte lbl_80167C3C
-	.4byte lbl_80168038
-	.4byte lbl_801685D8
-	.4byte lbl_80168C1C
-	.4byte lbl_8016928C
-	.4byte lbl_80169868
-	.4byte lbl_80169CEC
-	.4byte lbl_8016A1CC
-	.4byte lbl_8016A32C
-	.4byte lbl_8016A37C
