@@ -3215,17 +3215,3 @@ lbl_803EAA58:
 .global lbl_803EAA5C
 lbl_803EAA5C:
 	.4byte 0x46480000
-.global lbl_803EAA60
-lbl_803EAA60:
-	.4byte 0x3F800000
-.global lbl_803EAA64
-lbl_803EAA64:
-	.4byte 0x46FFFE00
-.global lbl_803EAA68
-lbl_803EAA68:
-	.4byte 0x3F7FFFEF
-	.4byte 0x00000000
-.global "@894"
-"@894":
-	.4byte 0x43300000
-	.4byte 0x80000000

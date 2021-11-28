@@ -1,5 +1,5 @@
 .include "macros.inc"
-
+.section .text, "ax"  # 0x80005560 - 0x80221F60
 .global satisfy__10CndIsAliveFP8Creature
 satisfy__10CndIsAliveFP8Creature:
 /* 8014FAFC 0014CA5C  7C 08 02 A6 */	mflr r0
@@ -49,7 +49,7 @@ satisfy__12CndBossFlickFP8Creature:
 /* 8014FB98 0014CAF8  3B E3 01 18 */	addi r31, r3, 0x118
 /* 8014FB9C 0014CAFC  48 0C 84 D5 */	bl rand
 /* 8014FBA0 0014CB00  6C 60 80 00 */	xoris r0, r3, 0x8000
-/* 8014FBA4 0014CB04  C8 82 A8 70 */	lfd f4, "@894"@sda21(r2)
+/* 8014FBA4 0014CB04  C8 82 A8 70 */	lfd f4, lbl_803EAA70@sda21(r2)
 /* 8014FBA8 0014CB08  90 01 00 2C */	stw r0, 0x2c(r1)
 /* 8014FBAC 0014CB0C  3C 00 43 30 */	lis r0, 0x4330
 /* 8014FBB0 0014CB10  C0 62 A8 64 */	lfs f3, lbl_803EAA64@sda21(r2)
@@ -187,3 +187,110 @@ lbl_8014FD70:
 /* 8014FD7C 0014CCDC  38 21 00 30 */	addi r1, r1, 0x30
 /* 8014FD80 0014CCE0  7C 08 03 A6 */	mtlr r0
 /* 8014FD84 0014CCE4  4E 80 00 20 */	blr 
+
+.section .data, "wa"  # 0x80222DC0 - 0x802E9640
+.balign 8
+lbl_802CEB48:
+	.asciz "BossCnd.cpp"
+.balign 4
+lbl_802CEB54:
+	.asciz "CndBossCollKill"
+.balign 4
+lbl_802CEB64:
+	.asciz "Condition"
+.balign 4
+lbl_802CEB70:
+	.4byte __RTTI__9Condition
+	.4byte 0
+	.4byte 0
+.global __vt__15CndBossCollKill
+__vt__15CndBossCollKill:
+	.4byte __RTTI__15CndBossCollKill
+	.4byte 0
+	.4byte satisfy__15CndBossCollKillFP8Creature
+.balign 4
+lbl_802CEB88:
+	.asciz "CndStickMouthKill"
+.balign 4
+lbl_802CEB9C:
+	.4byte __RTTI__9Condition
+	.4byte 0
+	.4byte 0
+.global __vt__17CndStickMouthKill
+__vt__17CndStickMouthKill:
+	.4byte __RTTI__17CndStickMouthKill
+	.4byte 0
+	.4byte satisfy__17CndStickMouthKillFP8Creature
+.balign 4
+lbl_802CEBB4:
+	.asciz "CndStickBossKill"
+.balign 4
+lbl_802CEBC8:
+	.4byte __RTTI__9Condition
+	.4byte 0
+	.4byte 0
+.global __vt__16CndStickBossKill
+__vt__16CndStickBossKill:
+	.4byte __RTTI__16CndStickBossKill
+	.4byte 0
+	.4byte satisfy__16CndStickBossKillFP8Creature
+.balign 4
+lbl_802CEBE0:
+	.asciz "CndBossFlick"
+.balign 4
+lbl_802CEBF0:
+	.4byte __RTTI__9Condition
+	.4byte 0
+	.4byte 0
+.global __vt__12CndBossFlick
+__vt__12CndBossFlick:
+	.4byte __RTTI__12CndBossFlick
+	.4byte 0
+	.4byte satisfy__12CndBossFlickFP8Creature
+.balign 4
+lbl_802CEC08:
+	.asciz "CndIsAlive"
+.balign 4
+lbl_802CEC14:
+	.4byte __RTTI__9Condition
+	.4byte 0
+	.4byte 0
+.global __vt__10CndIsAlive
+__vt__10CndIsAlive:
+	.4byte __RTTI__10CndIsAlive
+	.4byte 0
+	.4byte satisfy__10CndIsAliveFP8Creature
+
+.section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
+.balign 8
+__RTTI__9Condition:
+	.4byte lbl_802CEB64
+	.4byte 0
+__RTTI__15CndBossCollKill:
+	.4byte lbl_802CEB54
+	.4byte lbl_802CEB70
+__RTTI__17CndStickMouthKill:
+	.4byte lbl_802CEB88
+	.4byte lbl_802CEB9C
+__RTTI__16CndStickBossKill:
+	.4byte lbl_802CEBB4
+	.4byte lbl_802CEBC8
+__RTTI__12CndBossFlick:
+	.4byte lbl_802CEBE0
+	.4byte lbl_802CEBF0
+__RTTI__10CndIsAlive:
+	.4byte lbl_802CEC08
+	.4byte lbl_802CEC14
+
+.section .sdata2, "a"  # 0x803E8200 - 0x803EC840
+.balign 8
+lbl_803EAA60:
+	.float 1.0
+lbl_803EAA64:
+	.4byte 0x46FFFE00
+lbl_803EAA68:
+	.4byte 0x3F7FFFEF
+.balign 8
+lbl_803EAA70:
+	.4byte 0x43300000
+	.4byte 0x80000000

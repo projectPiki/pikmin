@@ -15973,25 +15973,3 @@ lbl_803E4840:
 __RTTI__20BossAnimationManager:
 	.4byte lbl_802CEA9C
 	.4byte 0x802ceae0
-	.4byte 0x802ceb64
-	.4byte 0
-.global __RTTI__15CndBossCollKill
-__RTTI__15CndBossCollKill:
-	.4byte 0x802ceb54
-	.4byte 0x802ceb70
-.global __RTTI__17CndStickMouthKill
-__RTTI__17CndStickMouthKill:
-	.4byte 0x802ceb88
-	.4byte 0x802ceb9c
-.global __RTTI__16CndStickBossKill
-__RTTI__16CndStickBossKill:
-	.4byte 0x802cebb4
-	.4byte 0x802cebc8
-.global __RTTI__12CndBossFlick
-__RTTI__12CndBossFlick:
-	.4byte 0x802cebe0
-	.4byte 0x802cebf0
-.global __RTTI__10CndIsAlive
-__RTTI__10CndIsAlive:
-	.4byte 0x802cec08
-	.4byte 0x802cec14
