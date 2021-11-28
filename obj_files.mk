@@ -42,6 +42,7 @@ TEXT_O_FILES :=\
 	$(BUILD_DIR)/asm/plugPikiNishimura/SpiderAi.o\
 	$(BUILD_DIR)/asm/plugPikiNishimura/SpiderLeg.o\
 	$(BUILD_DIR)/asm/text_Nishimura.o\
+	$(BUILD_DIR)/asm/plugPikiNishimura/Slime.o\
 	$(BUILD_DIR)/asm/plugPikiNishimura/SlimeAi.o\
 	$(BUILD_DIR)/asm/plugPikiNishimura/SlimeBody.o\
 	$(BUILD_DIR)/asm/plugPikiNishimura/SlimeCreature.o\
