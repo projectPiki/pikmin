@@ -5244,7 +5244,7 @@ __RTTI__23SpiderGenRippleCallBack:
 vibSpin$2820:
 	.skip 0x4
 init$2821:
-	.skip 0x4
+	.skip 0x1
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8

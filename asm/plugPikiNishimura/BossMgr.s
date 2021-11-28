@@ -1,5 +1,5 @@
 .include "macros.inc"
-
+.section .text, "ax"  # 0x80005560 - 0x80221F60
 .global getCreature__7BossMgrFi
 getCreature__7BossMgrFi:
 /* 8014FD88 0014CCE8  38 00 00 02 */	li r0, 2
@@ -1264,7 +1264,6 @@ lbl_80150F64:
 /* 80150F78 0014DED8  7C 03 00 2E */	lwzx r0, r3, r0
 /* 80150F7C 0014DEDC  7C 09 03 A6 */	mtctr r0
 /* 80150F80 0014DEE0  4E 80 04 20 */	bctr 
-.global lbl_80150F84
 lbl_80150F84:
 /* 80150F84 0014DEE4  3C 60 80 2D */	lis r3, __vt__8BossNode@ha
 /* 80150F88 0014DEE8  3B 63 F0 20 */	addi r27, r3, __vt__8BossNode@l
@@ -1299,7 +1298,6 @@ lbl_80150FEC:
 /* 80150FEC 0014DF4C  7C 1A F0 00 */	cmpw r26, r30
 /* 80150FF0 0014DF50  41 80 FF A4 */	blt lbl_80150F94
 /* 80150FF4 0014DF54  48 00 03 D0 */	b lbl_801513C4
-.global lbl_80150FF8
 lbl_80150FF8:
 /* 80150FF8 0014DF58  3C 60 80 2D */	lis r3, __vt__8BossNode@ha
 /* 80150FFC 0014DF5C  3B 63 F0 20 */	addi r27, r3, __vt__8BossNode@l
@@ -1335,7 +1333,6 @@ lbl_80151064:
 /* 80151064 0014DFC4  7C 1A F0 00 */	cmpw r26, r30
 /* 80151068 0014DFC8  41 80 FF A0 */	blt lbl_80151008
 /* 8015106C 0014DFCC  48 00 03 58 */	b lbl_801513C4
-.global lbl_80151070
 lbl_80151070:
 /* 80151070 0014DFD0  3C 60 80 2D */	lis r3, __vt__8BossNode@ha
 /* 80151074 0014DFD4  3B 63 F0 20 */	addi r27, r3, __vt__8BossNode@l
@@ -1371,13 +1368,11 @@ lbl_801510DC:
 /* 801510DC 0014E03C  7C 1A F0 00 */	cmpw r26, r30
 /* 801510E0 0014E040  41 80 FF A0 */	blt lbl_80151080
 /* 801510E4 0014E044  48 00 02 E0 */	b lbl_801513C4
-.global lbl_801510E8
 lbl_801510E8:
 /* 801510E8 0014E048  38 7F 00 00 */	addi r3, r31, 0
 /* 801510EC 0014E04C  38 9E 00 00 */	addi r4, r30, 0
 /* 801510F0 0014E050  4B FF FC 7D */	bl initSlime__7BossMgrFi
 /* 801510F4 0014E054  48 00 02 D0 */	b lbl_801513C4
-.global lbl_801510F8
 lbl_801510F8:
 /* 801510F8 0014E058  3C 60 80 2D */	lis r3, __vt__8BossNode@ha
 /* 801510FC 0014E05C  3B 63 F0 20 */	addi r27, r3, __vt__8BossNode@l
@@ -1413,7 +1408,6 @@ lbl_80151164:
 /* 80151164 0014E0C4  7C 1A F0 00 */	cmpw r26, r30
 /* 80151168 0014E0C8  41 80 FF A0 */	blt lbl_80151108
 /* 8015116C 0014E0CC  48 00 02 58 */	b lbl_801513C4
-.global lbl_80151170
 lbl_80151170:
 /* 80151170 0014E0D0  3C 60 80 2D */	lis r3, __vt__8BossNode@ha
 /* 80151174 0014E0D4  3B 63 F0 20 */	addi r27, r3, __vt__8BossNode@l
@@ -1449,7 +1443,6 @@ lbl_801511DC:
 /* 801511DC 0014E13C  7C 1A F0 00 */	cmpw r26, r30
 /* 801511E0 0014E140  41 80 FF A0 */	blt lbl_80151180
 /* 801511E4 0014E144  48 00 01 E0 */	b lbl_801513C4
-.global lbl_801511E8
 lbl_801511E8:
 /* 801511E8 0014E148  3C 60 80 2D */	lis r3, __vt__8BossNode@ha
 /* 801511EC 0014E14C  3B 63 F0 20 */	addi r27, r3, __vt__8BossNode@l
@@ -1485,7 +1478,6 @@ lbl_80151254:
 /* 80151254 0014E1B4  7C 1A F0 00 */	cmpw r26, r30
 /* 80151258 0014E1B8  41 80 FF A0 */	blt lbl_801511F8
 /* 8015125C 0014E1BC  48 00 01 68 */	b lbl_801513C4
-.global lbl_80151260
 lbl_80151260:
 /* 80151260 0014E1C0  3C 60 80 2D */	lis r3, __vt__8BossNode@ha
 /* 80151264 0014E1C4  3B 63 F0 20 */	addi r27, r3, __vt__8BossNode@l
@@ -1521,7 +1513,6 @@ lbl_801512CC:
 /* 801512CC 0014E22C  7C 1A F0 00 */	cmpw r26, r30
 /* 801512D0 0014E230  41 80 FF A0 */	blt lbl_80151270
 /* 801512D4 0014E234  48 00 00 F0 */	b lbl_801513C4
-.global lbl_801512D8
 lbl_801512D8:
 /* 801512D8 0014E238  3C 60 80 2D */	lis r3, __vt__8BossNode@ha
 /* 801512DC 0014E23C  3B 63 F0 20 */	addi r27, r3, __vt__8BossNode@l
@@ -1557,7 +1548,6 @@ lbl_80151344:
 /* 80151344 0014E2A4  7C 1A F0 00 */	cmpw r26, r30
 /* 80151348 0014E2A8  41 80 FF A0 */	blt lbl_801512E8
 /* 8015134C 0014E2AC  48 00 00 78 */	b lbl_801513C4
-.global lbl_80151350
 lbl_80151350:
 /* 80151350 0014E2B0  3C 60 80 2D */	lis r3, __vt__8BossNode@ha
 /* 80151354 0014E2B4  3B 63 F0 20 */	addi r27, r3, __vt__8BossNode@l
@@ -1592,7 +1582,6 @@ lbl_801513A8:
 lbl_801513BC:
 /* 801513BC 0014E31C  7C 1A F0 00 */	cmpw r26, r30
 /* 801513C0 0014E320  41 80 FF A0 */	blt lbl_80151360
-.global lbl_801513C4
 lbl_801513C4:
 /* 801513C4 0014E324  80 7F 00 34 */	lwz r3, 0x34(r31)
 /* 801513C8 0014E328  57 80 10 3A */	slwi r0, r28, 2
@@ -1625,7 +1614,6 @@ create__7BossMgrFiR9BirthInfoP13GenObjectBoss:
 /* 80151424 0014E384  7C 03 00 2E */	lwzx r0, r3, r0
 /* 80151428 0014E388  7C 09 03 A6 */	mtctr r0
 /* 8015142C 0014E38C  4E 80 04 20 */	bctr 
-.global lbl_80151430
 lbl_80151430:
 /* 80151430 0014E390  80 7D 00 3C */	lwz r3, 0x3c(r29)
 /* 80151434 0014E394  83 83 00 10 */	lwz r28, 0x10(r3)
@@ -1706,7 +1694,6 @@ lbl_8015152C:
 /* 8015154C 0014E4AC  80 9C 03 1C */	lwz r4, 0x31c(r28)
 /* 80151550 0014E4B0  4B F4 75 B5 */	bl addUseList__9PelletMgrFUl
 /* 80151554 0014E4B4  48 00 0C 20 */	b lbl_80152174
-.global lbl_80151558
 lbl_80151558:
 /* 80151558 0014E4B8  80 7D 00 3C */	lwz r3, 0x3c(r29)
 /* 8015155C 0014E4BC  83 83 00 28 */	lwz r28, 0x28(r3)
@@ -1788,7 +1775,6 @@ lbl_80151658:
 /* 80151678 0014E5D8  80 9C 03 1C */	lwz r4, 0x31c(r28)
 /* 8015167C 0014E5DC  4B F4 74 89 */	bl addUseList__9PelletMgrFUl
 /* 80151680 0014E5E0  48 00 0A F4 */	b lbl_80152174
-.global lbl_80151684
 lbl_80151684:
 /* 80151684 0014E5E4  80 7D 00 3C */	lwz r3, 0x3c(r29)
 /* 80151688 0014E5E8  83 83 00 E8 */	lwz r28, 0xe8(r3)
@@ -1874,7 +1860,6 @@ lbl_801517AC:
 /* 801517B0 0014E710  38 80 00 00 */	li r4, 0
 /* 801517B4 0014E714  48 00 95 05 */	bl setBossType__5SnakeFb
 /* 801517B8 0014E718  48 00 09 BC */	b lbl_80152174
-.global lbl_801517BC
 lbl_801517BC:
 /* 801517BC 0014E71C  80 7D 00 3C */	lwz r3, 0x3c(r29)
 /* 801517C0 0014E720  83 83 00 40 */	lwz r28, 0x40(r3)
@@ -2057,7 +2042,6 @@ lbl_80151A2C:
 /* 80151A54 0014E9B4  93 FC 03 FC */	stw r31, 0x3fc(r28)
 /* 80151A58 0014E9B8  93 9F 03 BC */	stw r28, 0x3bc(r31)
 /* 80151A5C 0014E9BC  48 00 07 18 */	b lbl_80152174
-.global lbl_80151A60
 lbl_80151A60:
 /* 80151A60 0014E9C0  80 7D 00 3C */	lwz r3, 0x3c(r29)
 /* 80151A64 0014E9C4  83 83 00 58 */	lwz r28, 0x58(r3)
@@ -2139,7 +2123,6 @@ lbl_80151B60:
 /* 80151B80 0014EAE0  80 9C 03 1C */	lwz r4, 0x31c(r28)
 /* 80151B84 0014EAE4  4B F4 6F 81 */	bl addUseList__9PelletMgrFUl
 /* 80151B88 0014EAE8  48 00 05 EC */	b lbl_80152174
-.global lbl_80151B8C
 lbl_80151B8C:
 /* 80151B8C 0014EAEC  80 7D 00 3C */	lwz r3, 0x3c(r29)
 /* 80151B90 0014EAF0  83 83 00 70 */	lwz r28, 0x70(r3)
@@ -2221,7 +2204,6 @@ lbl_80151C8C:
 /* 80151CAC 0014EC0C  80 9C 03 1C */	lwz r4, 0x31c(r28)
 /* 80151CB0 0014EC10  4B F4 6E 55 */	bl addUseList__9PelletMgrFUl
 /* 80151CB4 0014EC14  48 00 04 C0 */	b lbl_80152174
-.global lbl_80151CB8
 lbl_80151CB8:
 /* 80151CB8 0014EC18  80 8D 2F 6C */	lwz r4, playerState@sda21(r13)
 /* 80151CBC 0014EC1C  38 60 00 01 */	li r3, 1
@@ -2314,7 +2296,6 @@ lbl_80151DFC:
 /* 80151E00 0014ED60  80 9F 00 20 */	lwz r4, 0x20(r31)
 /* 80151E04 0014ED64  48 02 63 81 */	bl setColor__3PomFi
 /* 80151E08 0014ED68  48 00 03 6C */	b lbl_80152174
-.global lbl_80151E0C
 lbl_80151E0C:
 /* 80151E0C 0014ED6C  80 7D 00 3C */	lwz r3, 0x3c(r29)
 /* 80151E10 0014ED70  83 83 00 A0 */	lwz r28, 0xa0(r3)
@@ -2396,7 +2377,6 @@ lbl_80151F0C:
 /* 80151F2C 0014EE8C  80 9C 03 1C */	lwz r4, 0x31c(r28)
 /* 80151F30 0014EE90  4B F4 6B D5 */	bl addUseList__9PelletMgrFUl
 /* 80151F34 0014EE94  48 00 02 40 */	b lbl_80152174
-.global lbl_80151F38
 lbl_80151F38:
 /* 80151F38 0014EE98  80 7D 00 3C */	lwz r3, 0x3c(r29)
 /* 80151F3C 0014EE9C  83 83 01 00 */	lwz r28, 0x100(r3)
@@ -2475,7 +2455,6 @@ lbl_8015202C:
 /* 8015204C 0014EFAC  80 9C 03 1C */	lwz r4, 0x31c(r28)
 /* 80152050 0014EFB0  4B F4 6A B5 */	bl addUseList__9PelletMgrFUl
 /* 80152054 0014EFB4  48 00 01 20 */	b lbl_80152174
-.global lbl_80152058
 lbl_80152058:
 /* 80152058 0014EFB8  80 7D 00 3C */	lwz r3, 0x3c(r29)
 /* 8015205C 0014EFBC  83 83 01 18 */	lwz r28, 0x118(r3)
@@ -2935,7 +2914,367 @@ lbl_80152664:
 /* 80152670 0014F5D0  38 21 00 18 */	addi r1, r1, 0x18
 /* 80152674 0014F5D4  7C 08 03 A6 */	mtlr r0
 /* 80152678 0014F5D8  4E 80 00 20 */	blr 
-.global lbl_8015267C
-lbl_8015267C:
+
+"@8@update__7BossMgrFv":
 /* 8015267C 0014F5DC  38 63 FF F8 */	addi r3, r3, -8
 /* 80152680 0014F5E0  4B FF FC 88 */	b update__7BossMgrFv
+
+.section .data, "wa"  # 0x80222DC0 - 0x802E9640
+.balign 8
+lbl_802CEC30:
+	.asciz "BossMgr.cpp"
+.balign 4
+lbl_802CEC3C:
+	.asciz "CoreNode"
+.balign 4
+lbl_802CEC48:
+	.asciz "spider shape"
+.balign 4
+lbl_802CEC58:
+	.asciz "bosses/kumo/kumo.mod"
+.balign 4
+lbl_802CEC70:
+	.asciz "spider anim"
+.balign 4
+lbl_802CEC7C:
+	.asciz "spider rest"
+.balign 4
+lbl_802CEC88:
+	.asciz "bosses/kumo/"
+.balign 4
+lbl_802CEC98:
+	.asciz "parms.bin"
+.balign 4
+lbl_802CECA4:
+	.asciz "snake shape"
+.balign 4
+lbl_802CECB0:
+	.asciz "bosses/snake/snake.mod"
+.balign 4
+lbl_802CECC8:
+	.asciz "snake anim"
+.balign 4
+lbl_802CECD4:
+	.asciz "snake rest"
+.balign 4
+lbl_802CECE0:
+	.asciz "bosses/snake/"
+.balign 4
+lbl_802CECF0:
+	.asciz "slime shape"
+.balign 4
+lbl_802CECFC:
+	.asciz "bosses/slime/slime.mod"
+.balign 4
+lbl_802CED14:
+	.asciz "slime anim"
+.balign 4
+lbl_802CED20:
+	.asciz "slime rest"
+.balign 4
+lbl_802CED2C:
+	.asciz "bosses/slime/"
+.balign 4
+lbl_802CED3C:
+	.asciz "nucleus shape"
+.balign 4
+lbl_802CED4C:
+	.asciz "bosses/nucleus/nucleus.mod"
+.balign 4
+lbl_802CED68:
+	.asciz "nucleus anim"
+.balign 4
+lbl_802CED78:
+	.asciz "nucleus rest"
+.balign 4
+lbl_802CED88:
+	.asciz "bosses/nucleus/"
+.balign 4
+lbl_802CED98:
+	.asciz "core nucleus shape"
+.balign 4
+lbl_802CEDAC:
+	.asciz "bosses/core/core.mod"
+.balign 4
+lbl_802CEDC4:
+	.asciz "core nucleus anim"
+.balign 4
+lbl_802CEDD8:
+	.asciz "core nucleus rest"
+.balign 4
+lbl_802CEDEC:
+	.asciz "bosses/core/"
+.balign 4
+lbl_802CEDFC:
+	.asciz "king shape"
+.balign 4
+lbl_802CEE08:
+	.asciz "bosses/king/king.mod"
+.balign 4
+lbl_802CEE20:
+	.asciz "king anim"
+.balign 4
+lbl_802CEE2C:
+	.asciz "king rest"
+.balign 4
+lbl_802CEE38:
+	.asciz "bosses/king/"
+.balign 4
+lbl_802CEE48:
+	.asciz "kogane shape"
+.balign 4
+lbl_802CEE58:
+	.asciz "bosses/kogane/kogane.mod"
+.balign 4
+lbl_802CEE74:
+	.asciz "kogane anim"
+.balign 4
+lbl_802CEE80:
+	.asciz "kogane rest"
+.balign 4
+lbl_802CEE8C:
+	.asciz "bosses/kogane/"
+.balign 4
+lbl_802CEE9C:
+	.asciz "pom shape"
+.balign 4
+lbl_802CEEA8:
+	.asciz "bosses/pom/pom.mod"
+.balign 4
+lbl_802CEEBC:
+	.asciz "pom anim"
+.balign 4
+lbl_802CEEC8:
+	.asciz "pom rest"
+.balign 4
+lbl_802CEED4:
+	.asciz "bosses/pom/"
+.balign 4
+lbl_802CEEE0:
+	.asciz "king back shape"
+.balign 4
+lbl_802CEEF0:
+	.asciz "bosses/kingback/kingback.mod"
+.balign 4
+lbl_802CEF10:
+	.asciz "king back anim"
+.balign 4
+lbl_802CEF20:
+	.asciz "kingback"
+.balign 4
+lbl_802CEF2C:
+	.asciz "king back rest"
+.balign 4
+lbl_802CEF3C:
+	.asciz "bosses/kingback/"
+.balign 4
+lbl_802CEF50:
+	.asciz "mizu shape"
+.balign 4
+lbl_802CEF5C:
+	.asciz "bosses/mizu/mizu.mod"
+.balign 4
+lbl_802CEF74:
+	.asciz "mizu anim"
+.balign 4
+lbl_802CEF80:
+	.asciz "mizu rest"
+.balign 4
+lbl_802CEF8C:
+	.asciz "bosses/mizu/"
+.balign 4
+lbl_802CEF9C:
+	.4byte lbl_80150F84
+	.4byte lbl_80150FF8
+	.4byte lbl_801510E8
+	.4byte lbl_801510F8
+	.4byte lbl_80151170
+	.4byte lbl_801511E8
+	.4byte lbl_80151260
+	.4byte lbl_801513C4
+	.4byte lbl_801513C4
+	.4byte lbl_80151070
+	.4byte lbl_801512D8
+	.4byte lbl_80151350
+lbl_802CEFCC:
+	.4byte lbl_80151430
+	.4byte lbl_80151558
+	.4byte lbl_801517BC
+	.4byte lbl_80151A60
+	.4byte lbl_80151B8C
+	.4byte lbl_80151CB8
+	.4byte lbl_80151E0C
+	.4byte lbl_80151684
+	.4byte lbl_80151F38
+	.4byte lbl_80152058
+.balign 4
+lbl_802CEFF4:
+	.asciz "BossNode"
+.balign 4
+lbl_802CF000:
+	.4byte __RTTI__5ANode
+	.4byte 0x00000000
+	.4byte 0x00000000
+lbl_802CF00C:
+	.4byte __RTTI__5ANode
+	.4byte 0x00000000
+	.4byte __RTTI__8CoreNode
+	.4byte 0x00000000
+	.4byte 0x00000000
+.global __vt__8BossNode
+__vt__8BossNode:
+	.4byte __RTTI__8BossNode
+	.4byte 0
+	.4byte getAgeNodeType__5ANodeFv
+	.4byte read__8CoreNodeFR18RandomAccessStream
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+.balign 4
+lbl_802CF04C:
+	.asciz "Traversable"
+.balign 4
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+lbl_802CF070:
+	.4byte __RTTI__5ANode
+	.4byte 0
+	.4byte __RTTI__8CoreNode
+	.4byte 0
+	.4byte 0
+.balign 4
+lbl_802CF084:
+	.asciz "ObjectMgr"
+.balign 4
+lbl_802CF090:
+	.4byte __RTTI__5ANode
+	.4byte 0x8
+	.4byte __RTTI__8CoreNode
+	.4byte 0x8
+	.4byte __RTTI__4Node
+	.4byte 0x8
+	.4byte __RTTI__11Traversable
+	.4byte 0
+	.4byte 0
+lbl_802CF0B4:
+	.4byte __RTTI__5ANode
+	.4byte 0x8
+	.4byte __RTTI__8CoreNode
+	.4byte 0x8
+	.4byte __RTTI__4Node
+	.4byte 0x8
+	.4byte __RTTI__11Traversable
+	.4byte 0
+	.4byte __RTTI__9ObjectMgr
+	.4byte 0
+	.4byte 0
+.global __vt__7BossMgr
+__vt__7BossMgr:
+	.4byte __RTTI__7BossMgr
+	.4byte 0
+	.4byte getCreature__7BossMgrFi
+	.4byte getFirst__7BossMgrFv
+	.4byte getNext__7BossMgrFi
+	.4byte isDone__7BossMgrFi
+	.4byte __RTTI__7BossMgr
+	.4byte 0xFFFFFFF8
+	.4byte getAgeNodeType__5ANodeFv
+	.4byte read__8CoreNodeFR18RandomAccessStream
+	.4byte "@8@update__7BossMgrFv"
+	.4byte draw__4NodeFR8Graphics
+	.4byte render__4NodeFR8Graphics
+	.4byte concat__4NodeFv
+	.4byte concat__4NodeFR3VQS
+	.4byte concat__4NodeFR3SRT
+	.4byte concat__4NodeFR8Matrix4f
+	.4byte getModelMatrix__4NodeFv
+	.4byte __dt__7BossMgrFv
+	.4byte update__7BossMgrFv
+	.4byte postUpdate__9ObjectMgrFif
+	.4byte stickUpdate__9ObjectMgrFv
+	.4byte refresh__7BossMgrFR8Graphics
+	.4byte drawShadow__9ObjectMgrFR8GraphicsP7Texture
+	.4byte getSize__7BossMgrFv
+	.4byte getMax__7BossMgrFv
+	.4byte findClosest__9ObjectMgrFR8Vector3ffP9Condition
+	.4byte findClosest__9ObjectMgrFR8Vector3fP9Condition
+	.4byte search__9ObjectMgrFP9ObjectMgr
+	.4byte killAll__7BossMgrFv
+
+.section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
+.balign 8
+lbl_803E48E0:
+	.asciz "BossMgr"
+.balign 4
+lbl_803E48E8:
+	.asciz "<Node>"
+.balign 4
+lbl_803E48F0:
+	.asciz "kumo"
+.balign 4
+lbl_803E48F8:
+	.asciz "snake"
+.balign 4
+lbl_803E4900:
+	.asciz "slime"
+.balign 4
+lbl_803E4908:
+	.asciz "nucleus"
+.balign 4
+lbl_803E4910:
+	.asciz "core"
+.balign 4
+lbl_803E4918:
+	.asciz "king"
+.balign 4
+lbl_803E4920:
+	.asciz "kogane"
+.balign 4
+lbl_803E4928:
+	.asciz "pom"
+.balign 4
+lbl_803E492C:
+	.asciz "mizu"
+.balign 4
+lbl_803E4934:
+	.asciz "ANode"
+.balign 4
+__RTTI__5ANode:
+	.4byte lbl_803E4934
+	.4byte 0
+__RTTI__8CoreNode:
+	.4byte lbl_802CEC3C
+	.4byte lbl_802CF000
+__RTTI__8BossNode:
+	.4byte lbl_802CEFF4
+	.4byte lbl_802CF00C
+__RTTI__11Traversable:
+	.4byte lbl_802CF04C
+	.4byte 0
+.balign 4
+lbl_803E495C:
+	.asciz "Node"
+.balign 4
+__RTTI__4Node:
+	.4byte lbl_803E495C
+	.4byte lbl_802CF070
+__RTTI__9ObjectMgr:
+	.4byte lbl_802CF084
+	.4byte lbl_802CF090
+__RTTI__7BossMgr:
+	.4byte lbl_803E48E0
+	.4byte lbl_802CF0B4
+
+.section .sbss, "wa"
+.balign 8
+.global bossMgr
+bossMgr:
+	.skip 0x4
