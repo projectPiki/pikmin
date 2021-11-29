@@ -15958,18 +15958,3 @@ lbl_803E4840:
 	.4byte 0x00000000
 	.4byte 0x802CEA10
 	.4byte 0x802CEA2C
-	.4byte 0x00000000
-	.4byte 0x414E6F64
-	.4byte 0x65000000
-	.4byte 0x803E4880
-	.4byte 0x00000000
-	.4byte 0x802CEAB4
-	.4byte 0x802CEAC0
-	.4byte 0x4E6F6465
-	.4byte 0x00000000
-	.4byte 0x803E4898
-	.4byte 0x802CEACC
-.global __RTTI__20BossAnimationManager
-__RTTI__20BossAnimationManager:
-	.4byte lbl_802CEA9C
-	.4byte 0x802ceae0

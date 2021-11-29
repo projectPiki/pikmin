@@ -1,5 +1,5 @@
 .include "macros.inc"
-
+.section .text, "ax"  # 0x80005560 - 0x80221F60
 .global __ct__20BossAnimationManagerFP7BossMgr
 __ct__20BossAnimationManagerFP7BossMgr:
 /* 8014FA68 0014C9C8  7C 08 02 A6 */	mflr r0
@@ -39,3 +39,76 @@ __ct__20BossAnimationManagerFP7BossMgr:
 /* 8014FAF0 0014CA50  38 21 00 18 */	addi r1, r1, 0x18
 /* 8014FAF4 0014CA54  7C 08 03 A6 */	mtlr r0
 /* 8014FAF8 0014CA58  4E 80 00 20 */	blr 
+
+.section .data, "wa"  # 0x80222DC0 - 0x802E9640
+.balign 8
+lbl_802CEA80:
+	.asciz "BossAnimMgr.cpp"
+.balign 4
+lbl_802CEA8C:
+	.asciz "BossAnimMgr"
+.balign 4
+lbl_802CEA9C:
+	.asciz "BossAnimationManager"
+.balign 4
+lbl_802CEAB4:
+	.asciz "CoreNode"
+.balign 4
+lbl_802CEAC0:
+	.4byte __RTTI__5ANode
+	.skip 0x8
+lbl_802CEACC:
+	.4byte __RTTI__5ANode
+	.4byte 0
+	.4byte __RTTI__8CoreNode
+	.skip 0x8
+lbl_802CEAE0:
+	.4byte __RTTI__5ANode
+	.4byte 0
+	.4byte __RTTI__8CoreNode
+	.skip 0x4
+	.4byte __RTTI__4Node
+	.skip 0x8
+.global __vt__20BossAnimationManager
+__vt__20BossAnimationManager:
+	.4byte __RTTI__20BossAnimationManager
+	.4byte 0
+	.4byte getAgeNodeType__5ANodeFv
+	.4byte read__8CoreNodeFR18RandomAccessStream
+	.4byte update__4NodeFv
+	.4byte draw__4NodeFR8Graphics
+	.4byte render__4NodeFR8Graphics
+	.4byte concat__4NodeFv
+	.4byte concat__4NodeFR3VQS
+	.4byte concat__4NodeFR3SRT
+	.4byte concat__4NodeFR8Matrix4f
+	.4byte getModelMatrix__4NodeFv
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+
+.section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
+.balign 8
+lbl_803E4880:
+	.asciz "ANode"
+.balign 4
+__RTTI__5ANode:
+	.4byte lbl_803E4880
+	.4byte 0
+__RTTI__8CoreNode:
+	.4byte lbl_802CEAB4
+	.4byte lbl_802CEAC0
+.balign 4
+lbl_803E4898:
+	.asciz "Node"
+.balign 4
+__RTTI__4Node:
+	.4byte lbl_803E4898
+	.4byte lbl_802CEACC
+__RTTI__20BossAnimationManager:
+	.4byte lbl_802CEA9C
+	.4byte lbl_802CEAE0
