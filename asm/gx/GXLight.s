@@ -43,8 +43,8 @@ GXInitSpecularDir:
 /* 802119F0 0020E950  FC 08 20 40 */	fcmpo cr0, f8, f4
 /* 802119F4 0020E954  40 81 00 5C */	ble lbl_80211A50
 /* 802119F8 0020E958  FC A0 40 34 */	frsqrte f5, f8
-/* 802119FC 0020E95C  C8 E2 C3 68 */	lfd f7, "@165"@sda21(r2)
-/* 80211A00 0020E960  C8 C2 C3 70 */	lfd f6, "@166"@sda21(r2)
+/* 802119FC 0020E95C  C8 E2 C3 68 */	lfd f7, lbl_803EC568@sda21(r2)
+/* 80211A00 0020E960  C8 C2 C3 70 */	lfd f6, lbl_803EC570@sda21(r2)
 /* 80211A04 0020E964  FC 85 01 72 */	fmul f4, f5, f5
 /* 80211A08 0020E968  FC A7 01 72 */	fmul f5, f7, f5
 /* 80211A0C 0020E96C  FC 88 01 32 */	fmul f4, f8, f4
@@ -550,21 +550,13 @@ lbl_802120EC:
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 0x8
-.global lbl_803EC560
 lbl_803EC560:
-	.4byte 0x00000000
-.global lbl_803EC564
+	.float 0.0
 lbl_803EC564:
-	.4byte 0x3F800000
-.global "@165"
-"@165":
-	.4byte 0x3FE00000
-	.4byte 0x00000000
-.global "@166"
-"@166":
-	.4byte 0x40080000
-	.4byte 0x00000000
-.global lbl_803EC578
+	.float 1.0
+lbl_803EC568:
+	.double 0.5
+lbl_803EC570:
+	.double 3.0
 lbl_803EC578:
-	.4byte 0x49800000
-	.4byte 0x00000000
+	.float 1048576.0

@@ -1416,7 +1416,6 @@ lbl_8021E1FC:
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 0x8
-.global lbl_802E9548
 lbl_802E9548:
 	.4byte lbl_8021D79C
 	.4byte lbl_8021D7BC
@@ -1425,7 +1424,6 @@ lbl_802E9548:
 	.4byte lbl_8021D7A4
 	.4byte lbl_8021D7AC
 	.4byte lbl_8021D7B4
-.global lbl_802E9564
 lbl_802E9564:
 	.4byte lbl_8021D998
 	.4byte lbl_8021D9B8

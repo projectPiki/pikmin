@@ -79,7 +79,7 @@ stateReadingFST:
 /* 801FFA74 001FC9D4  94 21 FF F8 */	stwu r1, -8(r1)
 /* 801FFA78 001FC9D8  38 A3 31 00 */	addi r5, r3, tmpBuffer@l
 /* 801FFA7C 001FC9DC  3C 60 80 20 */	lis r3, cbForStateReadingFST@ha
-/* 801FFA80 001FC9E0  90 0D 32 FC */	stw r0, LastState_1@sda21(r13)
+/* 801FFA80 001FC9E0  90 0D 32 FC */	stw r0, LastState@sda21(r13)
 /* 801FFA84 001FC9E4  38 C3 FA B4 */	addi r6, r3, cbForStateReadingFST@l
 /* 801FFA88 001FC9E8  80 ED 32 C0 */	lwz r7, bootInfo@sda21(r13)
 /* 801FFA8C 001FC9EC  80 85 00 08 */	lwz r4, 8(r5)
@@ -428,7 +428,7 @@ lbl_801FFF00:
 /* 801FFF28 001FCE88  4B FF EA 55 */	bl DVDLowSeek
 /* 801FFF2C 001FCE8C  48 00 00 9C */	b lbl_801FFFC8
 lbl_801FFF30:
-/* 801FFF30 001FCE90  81 8D 32 FC */	lwz r12, LastState_1@sda21(r13)
+/* 801FFF30 001FCE90  81 8D 32 FC */	lwz r12, LastState@sda21(r13)
 /* 801FFF34 001FCE94  80 6D 32 B8 */	lwz r3, executing@sda21(r13)
 /* 801FFF38 001FCE98  7D 88 03 A6 */	mtlr r12
 /* 801FFF3C 001FCE9C  4E 80 00 21 */	blrl 
@@ -705,7 +705,7 @@ lbl_802002BC:
 /* 802002E4 001FD244  3C 80 80 20 */	lis r4, stateCheckID2@ha
 /* 802002E8 001FD248  80 6D 32 B8 */	lwz r3, executing@sda21(r13)
 /* 802002EC 001FD24C  38 04 03 80 */	addi r0, r4, stateCheckID2@l
-/* 802002F0 001FD250  90 0D 32 FC */	stw r0, LastState_1@sda21(r13)
+/* 802002F0 001FD250  90 0D 32 FC */	stw r0, LastState@sda21(r13)
 /* 802002F4 001FD254  48 00 00 8D */	bl stateCheckID2
 /* 802002F8 001FD258  48 00 00 40 */	b lbl_80200338
 lbl_802002FC:
@@ -723,7 +723,7 @@ lbl_80200324:
 /* 80200324 001FD284  3C 80 80 20 */	lis r4, stateCheckID3@ha
 /* 80200328 001FD288  80 6D 32 B8 */	lwz r3, executing@sda21(r13)
 /* 8020032C 001FD28C  38 04 03 4C */	addi r0, r4, stateCheckID3@l
-/* 80200330 001FD290  90 0D 32 FC */	stw r0, LastState_1@sda21(r13)
+/* 80200330 001FD290  90 0D 32 FC */	stw r0, LastState@sda21(r13)
 /* 80200334 001FD294  48 00 00 19 */	bl stateCheckID3
 lbl_80200338:
 /* 80200338 001FD298  80 01 00 14 */	lwz r0, 0x14(r1)
@@ -867,7 +867,7 @@ lbl_80200508:
 /* 80200514 001FD474  80 ED 32 C0 */	lwz r7, bootInfo@sda21(r13)
 /* 80200518 001FD478  38 03 FA 60 */	addi r0, r3, stateReadingFST@l
 /* 8020051C 001FD47C  38 80 00 00 */	li r4, 0
-/* 80200520 001FD480  90 0D 32 FC */	stw r0, LastState_1@sda21(r13)
+/* 80200520 001FD480  90 0D 32 FC */	stw r0, LastState@sda21(r13)
 /* 80200524 001FD484  3C 60 80 3D */	lis r3, tmpBuffer@ha
 /* 80200528 001FD488  38 A3 31 00 */	addi r5, r3, tmpBuffer@l
 /* 8020052C 001FD48C  90 8D 32 EC */	stw r4, NumInternalRetry@sda21(r13)
@@ -975,7 +975,7 @@ AlarmHandler_2:
 /* 8020068C 001FD5EC  3C 80 80 20 */	lis r4, stateCoverClosed_CMD@ha
 /* 80200690 001FD5F0  80 6D 32 B8 */	lwz r3, executing@sda21(r13)
 /* 80200694 001FD5F4  38 04 07 7C */	addi r0, r4, stateCoverClosed_CMD@l
-/* 80200698 001FD5F8  90 0D 32 FC */	stw r0, LastState_1@sda21(r13)
+/* 80200698 001FD5F8  90 0D 32 FC */	stw r0, LastState@sda21(r13)
 /* 8020069C 001FD5FC  48 00 00 E1 */	bl stateCoverClosed_CMD
 /* 802006A0 001FD600  80 01 00 0C */	lwz r0, 0xc(r1)
 /* 802006A4 001FD604  38 21 00 08 */	addi r1, r1, 8
@@ -1343,7 +1343,7 @@ stateBusy:
 /* 80200B7C 001FDADC  38 04 0B 70 */	addi r0, r4, stateBusy@l
 /* 80200B80 001FDAE0  7C 67 1B 78 */	mr r7, r3
 /* 80200B84 001FDAE4  94 21 FF F8 */	stwu r1, -8(r1)
-/* 80200B88 001FDAE8  90 0D 32 FC */	stw r0, LastState_1@sda21(r13)
+/* 80200B88 001FDAE8  90 0D 32 FC */	stw r0, LastState@sda21(r13)
 /* 80200B8C 001FDAEC  80 03 00 08 */	lwz r0, 8(r3)
 /* 80200B90 001FDAF0  28 00 00 0F */	cmplwi r0, 0xf
 /* 80200B94 001FDAF4  41 81 02 8C */	bgt lbl_80200E20
@@ -1365,7 +1365,6 @@ lbl_80200BB0:
 /* 80200BD0 001FDB30  80 67 00 18 */	lwz r3, 0x18(r7)
 /* 80200BD4 001FDB34  4B FF DE 69 */	bl DVDLowReadDiskID
 /* 80200BD8 001FDB38  48 00 02 48 */	b lbl_80200E20
-lbl_80200BDC:
 lbl_80200BDC:
 /* 80200BDC 001FDB3C  3C 60 CC 00 */	lis r3, 0xCC006000@ha
 /* 80200BE0 001FDB40  38 63 60 00 */	addi r3, r3, 0xCC006000@l
@@ -2395,8 +2394,6 @@ DVDCancelAsync:
 /* 80201A04 001FE964  7C 09 03 A6 */	mtctr r0
 /* 80201A08 001FE968  4E 80 04 20 */	bctr 
 lbl_80201A0C:
-lbl_80201A0C:
-lbl_80201A0C:
 /* 80201A0C 001FE96C  28 1E 00 00 */	cmplwi r30, 0
 /* 80201A10 001FE970  41 82 01 F4 */	beq lbl_80201C04
 /* 80201A14 001FE974  39 9E 00 00 */	addi r12, r30, 0
@@ -2482,10 +2479,6 @@ lbl_80201B28:
 /* 80201B2C 001FEA8C  93 CD 32 DC */	stw r30, CancelCallback@sda21(r13)
 /* 80201B30 001FEA90  90 0D 32 D8 */	stw r0, Canceling@sda21(r13)
 /* 80201B34 001FEA94  48 00 00 D0 */	b lbl_80201C04
-lbl_80201B38:
-lbl_80201B38:
-lbl_80201B38:
-lbl_80201B38:
 lbl_80201B38:
 /* 80201B38 001FEA98  4B FF D3 ED */	bl DVDLowClearCallback
 /* 80201B3C 001FEA9C  3C 80 80 20 */	lis r4, cbForStateMotorStopped@ha
@@ -2671,21 +2664,11 @@ lbl_80201D70:
 /* 80201D8C 001FECEC  7C 09 03 A6 */	mtctr r0
 /* 80201D90 001FECF0  4E 80 04 20 */	bctr 
 lbl_80201D94:
-lbl_80201D94:
-lbl_80201D94:
-lbl_80201D94:
 /* 80201D94 001FECF4  3B E0 00 01 */	li r31, 1
 /* 80201D98 001FECF8  48 00 00 34 */	b lbl_80201DCC
 lbl_80201D9C:
-lbl_80201D9C:
-lbl_80201D9C:
-lbl_80201D9C:
-lbl_80201D9C:
-lbl_80201D9C:
-lbl_80201D9C:
 /* 80201D9C 001FECFC  3B E0 00 00 */	li r31, 0
 /* 80201DA0 001FED00  48 00 00 2C */	b lbl_80201DCC
-lbl_80201DA4:
 lbl_80201DA4:
 /* 80201DA4 001FED04  3C 80 CC 00 */	lis r4, 0xCC006000@ha
 /* 80201DA8 001FED08  38 84 60 00 */	addi r4, r4, 0xCC006000@l
@@ -2793,28 +2776,18 @@ lbl_80201EE0:
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 0x8
-.global lbl_802E8818
 lbl_802E8818:
-	.4byte 0x61707020
-	.4byte 0x626F6F74
-	.4byte 0x65642076
-	.4byte 0x6961204A
-	.4byte 0x5441470A
-	.4byte 0x00000000
-	.4byte 0x6C6F6164
-	.4byte 0x20667374
-	.4byte 0x0A000000
-	.4byte 0x61707020
-	.4byte 0x626F6F74
-	.4byte 0x65642066
-	.4byte 0x726F6D20
-	.4byte 0x626F6F74
-	.4byte 0x726F6D0A
-	.4byte 0x00000000
-	.4byte 0x626F6F74
-	.4byte 0x726F6D0A
-	.4byte 0x00000000
-.global lbl_802E8864
+	.asciz "app booted via JTAG\n"
+.balign 4
+lbl_802E8830:
+	.asciz "load fst\n"
+.balign 4
+lbl_802E883C:
+	.asciz "app booted from bootrom\n"
+.balign 4
+lbl_802E8858:
+	.asciz "bootrom\n"
+.balign 4
 lbl_802E8864:
 	.4byte lbl_80200B40
 	.4byte lbl_80200A00
@@ -2824,7 +2797,6 @@ lbl_802E8864:
 	.4byte lbl_80200B24
 	.4byte lbl_80200A78
 	.4byte lbl_80200A48
-.global lbl_802E8884
 lbl_802E8884:
 	.4byte lbl_80200E20
 	.4byte lbl_80200BDC
@@ -2842,7 +2814,6 @@ lbl_802E8884:
 	.4byte lbl_80200DD0
 	.4byte lbl_80200DF8
 	.4byte lbl_80200C6C
-.global lbl_802E88C4
 lbl_802E88C4:
 	.4byte lbl_80201A0C
 	.4byte lbl_80201A0C
@@ -2857,7 +2828,6 @@ lbl_802E88C4:
 	.4byte lbl_80201C04
 	.4byte lbl_80201A0C
 	.4byte lbl_80201B38
-.global lbl_802E88F8
 lbl_802E88F8:
 	.4byte lbl_80201D9C
 	.4byte lbl_80201DA4
@@ -2875,63 +2845,44 @@ lbl_802E88F8:
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 0x8
-.global autoInvalidation
 autoInvalidation:
 	.4byte 0x00000001
 
 .section .sbss, "wa"
 .balign 0x8
-.global executing
 executing:
 	.skip 0x4
-.global currID
 currID:
 	.skip 0x4
-.global bootInfo
 bootInfo:
 	.skip 0x4
-.global PauseFlag
 PauseFlag:
 	.skip 0x4
-.global PausingFlag
 PausingFlag:
 	.skip 0x4
-.global AutoFinishing
 AutoFinishing:
 	.skip 0x4
-.global FatalErrorFlag
 FatalErrorFlag:
 	.skip 0x4
-.global CurrCommand
 CurrCommand:
 	.skip 0x4
-.global Canceling
 Canceling:
 	.skip 0x4
-.global CancelCallback
 CancelCallback:
 	.skip 0x4
-.global ResumeFromHere
 ResumeFromHere:
 	.skip 0x4
-.global CancelLastError
 CancelLastError:
 	.skip 0x4
-.global LastError
 LastError:
 	.skip 0x4
-.global NumInternalRetry
 NumInternalRetry:
 	.skip 0x4
-.global ResetRequired
 ResetRequired:
 	.skip 0x4
-.global FirstTimeInBootrom
 FirstTimeInBootrom:
 	.skip 0x4
-.global DVDInitialized
 DVDInitialized:
 	.skip 0x4
-.global LastState_1
-LastState_1:
+LastState:
 	.skip 0x4

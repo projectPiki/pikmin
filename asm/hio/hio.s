@@ -567,18 +567,14 @@ lbl_8020DB44:
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 0x8
-.global Chan
 Chan:
 	.4byte 0xFFFFFFFF
 
 .section .sbss, "wa"
 .balign 0x8
-.global ExiCallback
 ExiCallback:
 	.skip 0x4
-.global TxCallback
 TxCallback:
 	.skip 0x4
-.global RxCallback
 RxCallback:
 	.skip 0x4

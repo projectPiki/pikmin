@@ -153,57 +153,38 @@ lbl_8020243C:
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 0x8
-.global lbl_802E8970
 lbl_802E8970:
-	.4byte 0x20204761
-	.4byte 0x6D65204E
-	.4byte 0x616D6520
-	.4byte 0x2E2E2E20
-	.4byte 0x25632563
-	.4byte 0x25632563
-	.4byte 0x0A000000
-	.4byte 0x2020436F
-	.4byte 0x6D70616E
-	.4byte 0x79202E2E
-	.4byte 0x2E2E2E20
-	.4byte 0x25632563
-	.4byte 0x0A000000
-	.4byte 0x20204469
-	.4byte 0x736B2023
-	.4byte 0x202E2E2E
-	.4byte 0x2E2E2E20
-	.4byte 0x25640A00
-	.4byte 0x20204761
-	.4byte 0x6D652076
-	.4byte 0x6572202E
-	.4byte 0x2E2E2E20
-	.4byte 0x25640A00
-	.4byte 0x20205374
-	.4byte 0x7265616D
-	.4byte 0x696E6720
-	.4byte 0x2E2E2E20
-	.4byte 0x25730A00
+	.asciz "  Game Name ... %c%c%c%c\n"
+.balign 4
+lbl_802E898C:
+	.asciz "  Company ..... %c%c\n"
+.balign 4
+lbl_802E89A4:
+	.asciz "  Disk # ...... %d\n"
+.balign 4
+lbl_802E89B8:
+	.asciz "  Game ver .... %d\n"
+.balign 4
+lbl_802E89CC:
+	.asciz "  Streaming ... %s\n"
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 0x8
-.global lbl_803E7740
 lbl_803E7740:
-	.4byte 0x0A000000
-.global lbl_803E7744
+	.asciz "\n"
+.balign 4
 lbl_803E7744:
-	.4byte 0x4F464600
-.global lbl_803E7748
+	.asciz "OFF"
+.balign 4
 lbl_803E7748:
-	.4byte 0x4F4E0000
+	.asciz "ON"
+.balign 4
 
 .section .sbss, "wa"
 .balign 0x8
-.global status
 status:
 	.skip 0x4
-.global bb2
 bb2:
 	.skip 0x4
-.global idTmp
 idTmp:
 	.skip 0x4
