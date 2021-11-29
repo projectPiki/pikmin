@@ -15811,5 +15811,3 @@ lbl_803E4764:
 __RTTI__15TekiPersonality:
 	.4byte 0x802ce68c
 	.4byte 0
-	.4byte 0x802ce6d4
-	.4byte 0

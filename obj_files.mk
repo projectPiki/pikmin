@@ -32,6 +32,7 @@ TEXT_O_FILES :=\
 	$(BUILD_DIR)/asm/sysCommon/atx.o\
 	$(BUILD_DIR)/asm/sysCommon/id32.o\
 	$(BUILD_DIR)/asm/text_80044194.o\
+	$(BUILD_DIR)/asm/plugPikiNakata/tekistrategy.o\
 	$(BUILD_DIR)/asm/plugPikiNishimura/genBoss.o\
 	$(BUILD_DIR)/asm/plugPikiNishimura/Boss.o\
 	$(BUILD_DIR)/asm/plugPikiNishimura/BossAnimMgr.o\
