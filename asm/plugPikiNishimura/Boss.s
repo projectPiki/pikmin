@@ -1,5 +1,5 @@
 .include "macros.inc"
-
+.section .text, "ax"  # 0x80005560 - 0x80221F60
 .global __ct__8BossPropFv
 __ct__8BossPropFv:
 /* 8014D8CC 0014A82C  7C 08 02 A6 */	mflr r0
@@ -571,7 +571,7 @@ createPellet__4BossFR8Vector3ffb:
 /* 8014E170 0014B0D0  90 61 00 4C */	stw r3, 0x4c(r1)
 /* 8014E174 0014B0D4  3F A0 43 30 */	lis r29, 0x4330
 /* 8014E178 0014B0D8  6C 00 80 00 */	xoris r0, r0, 0x8000
-/* 8014E17C 0014B0DC  CB 82 A8 48 */	lfd f28, "@1859"@sda21(r2)
+/* 8014E17C 0014B0DC  CB 82 A8 48 */	lfd f28, lbl_803EAA48@sda21(r2)
 /* 8014E180 0014B0E0  93 A1 00 48 */	stw r29, 0x48(r1)
 /* 8014E184 0014B0E4  C3 A2 A8 3C */	lfs f29, lbl_803EAA3C@sda21(r2)
 /* 8014E188 0014B0E8  3B 80 00 00 */	li r28, 0
@@ -910,7 +910,7 @@ lbl_8014E630:
 /* 8014E638 0014B598  80 7E 02 24 */	lwz r3, 0x224(r30)
 /* 8014E63C 0014B59C  90 01 00 5C */	stw r0, 0x5c(r1)
 /* 8014E640 0014B5A0  3F E0 43 30 */	lis r31, 0x4330
-/* 8014E644 0014B5A4  C8 62 A8 48 */	lfd f3, "@1859"@sda21(r2)
+/* 8014E644 0014B5A4  C8 62 A8 48 */	lfd f3, lbl_803EAA48@sda21(r2)
 /* 8014E648 0014B5A8  93 E1 00 58 */	stw r31, 0x58(r1)
 /* 8014E64C 0014B5AC  C0 42 A8 3C */	lfs f2, lbl_803EAA3C@sda21(r2)
 /* 8014E650 0014B5B0  C8 01 00 58 */	lfd f0, 0x58(r1)
@@ -926,7 +926,7 @@ lbl_8014E630:
 /* 8014E678 0014B5D8  C0 02 A8 58 */	lfs f0, lbl_803EAA58@sda21(r2)
 /* 8014E67C 0014B5DC  90 01 00 54 */	stw r0, 0x54(r1)
 /* 8014E680 0014B5E0  FC 20 E8 90 */	fmr f1, f29
-/* 8014E684 0014B5E4  C8 A2 A8 48 */	lfd f5, "@1859"@sda21(r2)
+/* 8014E684 0014B5E4  C8 A2 A8 48 */	lfd f5, lbl_803EAA48@sda21(r2)
 /* 8014E688 0014B5E8  EC 00 07 F2 */	fmuls f0, f0, f31
 /* 8014E68C 0014B5EC  93 E1 00 50 */	stw r31, 0x50(r1)
 /* 8014E690 0014B5F0  C0 62 A8 3C */	lfs f3, lbl_803EAA3C@sda21(r2)
@@ -2225,7 +2225,6 @@ actBoss__17InteractHitEffectFP4Boss:
 /* 8014F870 0014C7D0  7C 03 00 2E */	lwzx r0, r3, r0
 /* 8014F874 0014C7D4  7C 09 03 A6 */	mtctr r0
 /* 8014F878 0014C7D8  4E 80 04 20 */	bctr 
-.global lbl_8014F87C
 lbl_8014F87C:
 /* 8014F87C 0014C7DC  80 6D 31 80 */	lwz r3, effectMgr@sda21(r13)
 /* 8014F880 0014C7E0  38 BE 00 08 */	addi r5, r30, 8
@@ -2235,7 +2234,6 @@ lbl_8014F87C:
 /* 8014F890 0014C7F0  48 04 D2 A9 */	bl "create__9EffectMgrFQ29EffectMgr12effTypeTableR8Vector3fPQ23zen37CallBack1<PQ23zen17particleGenerator>PQ23zen58CallBack2<PQ23zen17particleGenerator,PQ23zen11particleMdl>"
 /* 8014F894 0014C7F4  38 60 00 01 */	li r3, 1
 /* 8014F898 0014C7F8  48 00 00 98 */	b lbl_8014F930
-.global lbl_8014F89C
 lbl_8014F89C:
 /* 8014F89C 0014C7FC  80 6D 31 80 */	lwz r3, effectMgr@sda21(r13)
 /* 8014F8A0 0014C800  38 BE 00 08 */	addi r5, r30, 8
@@ -2245,7 +2243,6 @@ lbl_8014F89C:
 /* 8014F8B0 0014C810  48 04 D2 89 */	bl "create__9EffectMgrFQ29EffectMgr12effTypeTableR8Vector3fPQ23zen37CallBack1<PQ23zen17particleGenerator>PQ23zen58CallBack2<PQ23zen17particleGenerator,PQ23zen11particleMdl>"
 /* 8014F8B4 0014C814  38 60 00 01 */	li r3, 1
 /* 8014F8B8 0014C818  48 00 00 78 */	b lbl_8014F930
-.global lbl_8014F8BC
 lbl_8014F8BC:
 /* 8014F8BC 0014C81C  80 6D 31 80 */	lwz r3, effectMgr@sda21(r13)
 /* 8014F8C0 0014C820  38 BE 00 08 */	addi r5, r30, 8
@@ -2268,7 +2265,6 @@ lbl_8014F8BC:
 lbl_8014F904:
 /* 8014F904 0014C864  38 60 00 01 */	li r3, 1
 /* 8014F908 0014C868  48 00 00 28 */	b lbl_8014F930
-.global lbl_8014F90C
 lbl_8014F90C:
 /* 8014F90C 0014C86C  80 6D 31 80 */	lwz r3, effectMgr@sda21(r13)
 /* 8014F910 0014C870  38 BE 00 08 */	addi r5, r30, 8
@@ -2278,7 +2274,6 @@ lbl_8014F90C:
 /* 8014F920 0014C880  48 04 D2 19 */	bl "create__9EffectMgrFQ29EffectMgr12effTypeTableR8Vector3fPQ23zen37CallBack1<PQ23zen17particleGenerator>PQ23zen58CallBack2<PQ23zen17particleGenerator,PQ23zen11particleMdl>"
 /* 8014F924 0014C884  38 60 00 01 */	li r3, 1
 /* 8014F928 0014C888  48 00 00 08 */	b lbl_8014F930
-.global lbl_8014F92C
 lbl_8014F92C:
 /* 8014F92C 0014C88C  38 60 00 00 */	li r3, 0
 lbl_8014F930:
@@ -2409,3 +2404,373 @@ read__8BossPropFR18RandomAccessStream:
 /* 8014FA5C 0014C9BC  38 21 00 18 */	addi r1, r1, 0x18
 /* 8014FA60 0014C9C0  7C 08 03 A6 */	mtlr r0
 /* 8014FA64 0014C9C4  4E 80 00 20 */	blr 
+
+.section .data, "wa"  # 0x80222DC0 - 0x802E9640
+.balign 8
+lbl_802CE7E0:
+	.asciz "Boss.cpp"
+.balign 4
+lbl_802CE7EC:
+	.4byte lbl_8014F87C
+	.4byte lbl_8014F92C
+	.4byte lbl_8014F89C
+	.4byte lbl_8014F92C
+	.4byte lbl_8014F8BC
+	.4byte lbl_8014F92C
+	.4byte lbl_8014F92C
+	.4byte lbl_8014F90C
+.balign 4
+lbl_802CE80C:
+	.asciz "EventTalker"
+.balign 4
+lbl_802CE818:
+	.asciz "RefCountable"
+.balign 4
+lbl_802CE828:
+	.asciz "Creature"
+.balign 4
+lbl_802CE834:
+	.4byte 0x803E4844
+	.4byte 0x00000008
+	.4byte 0x803E484C
+	.4byte 0x00000000
+	.4byte 0x00000000
+lbl_802CE848:
+	.4byte 0x803E4844
+	.4byte 0x00000008
+	.4byte 0x803E484C
+	.4byte 0x00000000
+	.4byte 0x803E4854
+	.4byte 0x00000000
+	.4byte 0x00000000
+.global __vt__4Boss
+__vt__4Boss:
+	.4byte 0x803e485c
+	.4byte 0
+	.4byte addCntCallback__12RefCountableFv
+	.4byte subCntCallback__12RefCountableFv
+	.4byte insideSafeArea__8CreatureFR8Vector3f
+	.4byte platAttachable__8CreatureFv
+	.4byte alwaysUpdatePlatform__8CreatureFv
+	.4byte doDoAI__8CreatureFv
+	.4byte setRouteTracer__8CreatureFP11RouteTracer
+	.4byte init__8CreatureFv
+	.4byte init__8CreatureFR8Vector3f
+	.4byte resetPosition__8CreatureFR8Vector3f
+	.4byte initParam__8CreatureFi
+	.4byte startAI__8CreatureFi
+	.4byte getiMass__8CreatureFv
+	.4byte getSize__8CreatureFv
+	.4byte getHeight__8CreatureFv
+	.4byte getCylinderHeight__8CreatureFv
+	.4byte doStore__8CreatureFP11CreatureInf
+	.4byte doRestore__8CreatureFP11CreatureInf
+	.4byte doSave__8CreatureFR18RandomAccessStream
+	.4byte doLoad__8CreatureFR18RandomAccessStream
+	.4byte getCentre__4BossFv
+	.4byte getCentreSize__8CreatureFv
+	.4byte getBoundingSphereCentre__8CreatureFv
+	.4byte getBoundingSphereRadius__8CreatureFv
+	.4byte getShadowPos__8CreatureFv
+	.4byte setCentre__8CreatureFR8Vector3f
+	.4byte getShadowSize__4BossFv
+	.4byte isVisible__4BossFv
+	.4byte isOrganic__4BossFv
+	.4byte isTerrible__8CreatureFv
+	.4byte isBuried__8CreatureFv
+	.4byte isAtari__4BossFv
+	.4byte isAlive__4BossFv
+	.4byte isFixed__4BossFv
+	.4byte needShadow__4BossFv
+	.4byte needFlick__8CreatureFP8Creature
+	.4byte ignoreAtari__4BossFP8Creature
+	.4byte isFree__8CreatureFv
+	.4byte stimulate__4BossFR11Interaction
+	.4byte sendMsg__8CreatureFP3Msg
+	.4byte collisionCallback__4BossFR9CollEvent
+	.4byte bounceCallback__8CreatureFv
+	.4byte jumpCallback__8CreatureFv
+	.4byte wallCallback__4BossFR5PlaneP13DynCollObject
+	.4byte offwallCallback__8CreatureFP13DynCollObject
+	.4byte stickCallback__8CreatureFP8Creature
+	.4byte offstickCallback__8CreatureFP8Creature
+	.4byte stickToCallback__8CreatureFP8Creature
+	.4byte dump__8CreatureFv
+	.4byte startWaterEffect__8CreatureFv
+	.4byte finishWaterEffect__8CreatureFv
+	.4byte isRopable__8CreatureFv
+	.4byte mayIstick__8CreatureFv
+	.4byte getFormationPri__8CreatureFv
+	.4byte update__4BossFv
+	.4byte postUpdate__8CreatureFif
+	.4byte stickUpdate__8CreatureFv
+	.4byte refresh__4BossFR8Graphics
+	.4byte refresh2d__4BossFR8Graphics
+	.4byte renderAtari__8CreatureFR8Graphics
+	.4byte drawShadow__8CreatureFR8Graphics
+	.4byte demoDraw__8CreatureFR8GraphicsP8Matrix4f
+	.4byte getCatchPos__8CreatureFP8Creature
+	.4byte doAI__8CreatureFv
+	.4byte doAnimation__8CreatureFv
+	.4byte doKill__4BossFv
+	.4byte exitCourse__4BossFv
+	.4byte isBossBgm__4BossFv
+	.4byte attackDefaultPortion__4BossFv
+	.4byte bombDamageCounter__4BossFP8CollPart
+	.4byte drawShape__4BossFR8Graphics
+.balign 4
+lbl_802CE988:
+	.asciz "Condition"
+.balign 4
+	.4byte 0
+	.4byte 0
+	.4byte 0
+.balign 4
+lbl_802CE9A0:
+	.asciz "Interaction"
+.balign 4
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+.balign 4
+lbl_802CE9D8:
+	.asciz "Parm<int>"
+.balign 4
+lbl_802CE9E4:
+	.asciz "BaseParm"
+.balign 4
+lbl_802CE9F0:
+	.4byte 0x803e4864
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+.balign 4
+lbl_802CEA10:
+	.asciz "BossProp"
+.balign 4
+lbl_802CEA1C:
+	.asciz "CreatureProp"
+.balign 4
+lbl_802CEA2C:
+	.4byte 0x803e486c
+	.4byte 0
+	.4byte 0
+.global __vt__8BossProp
+__vt__8BossProp:
+	.4byte 0x803e4874
+	.4byte 0
+	.4byte read__8BossPropFR18RandomAccessStream
+.balign 4
+lbl_802CEA44:
+	.asciz "Parm<float>"
+.balign 4
+lbl_802CEA50:
+	.4byte 0x803e4864
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+
+.section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
+.balign 8
+lbl_803E47A0:
+	.asciz "Boss"
+.balign 4
+lbl_803E47A8:
+	.asciz "s00"
+.balign 4
+lbl_803E47AC:
+	.asciz "s01"
+.balign 4
+lbl_803E47B0:
+	.asciz "s02"
+.balign 4
+lbl_803E47B4:
+	.asciz "s03"
+.balign 4
+lbl_803E47B8:
+	.asciz "s04"
+.balign 4
+lbl_803E47BC:
+	.asciz "b00"
+.balign 4
+lbl_803E47C0:
+	.asciz "b01"
+.balign 4
+lbl_803E47C4:
+	.asciz "b02"
+.balign 4
+lbl_803E47C8:
+	.asciz "b03"
+.balign 4
+lbl_803E47CC:
+	.asciz "b10"
+.balign 4
+lbl_803E47D0:
+	.asciz "b13"
+.balign 4
+lbl_803E47D4:
+	.asciz "b11"
+.balign 4
+lbl_803E47D8:
+	.asciz "b14"
+.balign 4
+lbl_803E47DC:
+	.asciz "b12"
+.balign 4
+lbl_803E47E0:
+	.asciz "c00"
+.balign 4
+lbl_803E47E4:
+	.asciz "c01"
+.balign 4
+lbl_803E47E8:
+	.asciz "d00"
+.balign 4
+lbl_803E47EC:
+	.asciz "d01"
+.balign 4
+lbl_803E47F0:
+	.asciz "d02"
+.balign 4
+lbl_803E47F4:
+	.asciz "p00"
+.balign 4
+lbl_803E47F8:
+	.asciz "p01"
+.balign 4
+lbl_803E47FC:
+	.asciz "i10"
+.balign 4
+lbl_803E4800:
+	.asciz "i00"
+.balign 4
+lbl_803E4804:
+	.asciz "i01"
+.balign 4
+lbl_803E4808:
+	.asciz "i02"
+.balign 4
+lbl_803E480C:
+	.asciz "i03"
+.balign 4
+lbl_803E4810:
+	.asciz "i04"
+.balign 4
+lbl_803E4814:
+	.asciz "i05"
+.balign 4
+lbl_803E4818:
+	.asciz "i06"
+.balign 4
+lbl_803E481C:
+	.asciz "i90"
+.balign 4
+lbl_803E4820:
+	.float 0.0
+lbl_803E4824:
+	.float 0.0
+lbl_803E4828:
+	.float 0.0
+lbl_803E482C:
+	.float 0.0
+lbl_803E4830:
+	.float 0.0
+lbl_803E4834:
+	.float 0.0
+lbl_803E4838:
+	.float 0.0
+lbl_803E483C:
+	.float 0.0
+lbl_803E4840:
+	.float 0.0
+__RTTI__11EventTalker:
+	.4byte lbl_802CE80C
+	.4byte 0x00000000
+__RTTI__12RefCountable:
+	.4byte lbl_802CE818
+	.4byte 0x00000000
+__RTTI__8Creature:
+	.4byte lbl_802CE828
+	.4byte lbl_802CE834
+__RTTI__4Boss:
+	.4byte lbl_803E47A0
+	.4byte lbl_802CE848
+__RTTI__8BaseParm:
+	.4byte lbl_802CE9E4
+	.4byte 0x00000000
+__RTTI__12CreatureProp:
+	.4byte lbl_802CEA1C
+	.4byte 0x00000000
+__RTTI__8BossProp:
+	.4byte lbl_802CEA10
+	.4byte lbl_802CEA2C
+
+.section .sdata2, "a"  # 0x803E8200 - 0x803EC840
+.balign 8
+lbl_803EAA00:
+	.float 0.5
+lbl_803EAA04:
+	.4byte 0x3E800000
+lbl_803EAA08:
+	.4byte 0x3DCCCCCD
+lbl_803EAA0C:
+	.4byte 0x3E99999A
+lbl_803EAA10:
+	.4byte 0x43480000
+lbl_803EAA14:
+	.4byte 0x42C80000
+lbl_803EAA18:
+	.4byte 0x43B40000
+lbl_803EAA1C:
+	.4byte 0x447A0000
+lbl_803EAA20:
+	.float 1.0
+lbl_803EAA24:
+	.float 0.0
+lbl_803EAA28:
+	.4byte 0x459C4000
+lbl_803EAA2C:
+	.4byte 0x41F00000
+lbl_803EAA30:
+	.4byte 0x41200000
+lbl_803EAA34:
+	.4byte 0x40490FDB
+lbl_803EAA38:
+	.4byte 0xC47A0000
+lbl_803EAA3C:
+	.4byte 0x46FFFE00
+lbl_803EAA40:
+	.4byte 0x40C90FDB
+lbl_803EAA44:
+	.4byte 0x403FFFF3
+lbl_803EAA48:
+	.4byte 0x43300000
+	.4byte 0x80000000
+lbl_803EAA50:
+	.4byte 0x40A00000
+lbl_803EAA54:
+	.4byte 0x40C90FCE
+lbl_803EAA58:
+	.4byte 0x3F7FFFEF
+lbl_803EAA5C:
+	.4byte 0x46480000

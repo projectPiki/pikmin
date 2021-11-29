@@ -1,5 +1,5 @@
 .include "macros.inc"
-
+.section .text, "ax"  # 0x80005560 - 0x80221F60
 .global makeObjectBoss__Fv
 makeObjectBoss__Fv:
 /* 8014D2D0 0014A230  7C 08 02 A6 */	mflr r0
