@@ -3127,21 +3127,3 @@ lbl_803EA9E0:
 .global lbl_803EA9E4
 lbl_803EA9E4:
 	.4byte 0x43C80000
-.global lbl_803EA9E8
-lbl_803EA9E8:
-	.4byte 0x00000000
-.global lbl_803EA9EC
-lbl_803EA9EC:
-	.4byte 0x3DCCCCCD
-.global lbl_803EA9F0
-lbl_803EA9F0:
-	.4byte 0x41200000
-.global lbl_803EA9F4
-lbl_803EA9F4:
-	.4byte 0x42C80000
-.global lbl_803EA9F8
-lbl_803EA9F8:
-	.4byte 0x461C4000
-.global lbl_803EA9FC
-lbl_803EA9FC:
-	.float 1.0

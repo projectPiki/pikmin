@@ -15785,29 +15785,3 @@ lbl_803E4710:
 	.4byte 0x802CE53C
 	.4byte 0x802CE514
 	.4byte 0x802CE550
-.global lbl_803E4748
-lbl_803E4748:
-	.4byte 0x53495A45
-	.4byte 0x00000000
-.global lbl_803E4750
-lbl_803E4750:
-	.4byte 0x00000000
-.global lbl_803E4754
-lbl_803E4754:
-	.4byte 0x00000000
-.global lbl_803E4758
-lbl_803E4758:
-	.4byte 0x00000000
-.global lbl_803E475C
-lbl_803E475C:
-	.4byte 0x00000000
-.global lbl_803E4760
-lbl_803E4760:
-	.4byte 0x00000000
-.global lbl_803E4764
-lbl_803E4764:
-	.4byte 0x00000000
-.global __RTTI__15TekiPersonality
-__RTTI__15TekiPersonality:
-	.4byte 0x802ce68c
-	.4byte 0
