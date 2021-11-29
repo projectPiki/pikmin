@@ -436,3 +436,84 @@ lbl_8014D8BC:
 /* 8014D8C0 0014A820  38 21 00 08 */	addi r1, r1, 8
 /* 8014D8C4 0014A824  7C 08 03 A6 */	mtlr r0
 /* 8014D8C8 0014A828  4E 80 00 20 */	blr 
+
+.section .data, "wa"  # 0x80222DC0 - 0x802E9640
+.balign 8
+lbl_802CE710:
+	.asciz "genBoss.cpp"
+.balign 4
+lbl_802CE71C:
+	.asciz "object type"
+.balign 4
+lbl_802CE728:
+	.4byte 0x837B8358
+	.4byte 0x82F090B6
+	.4byte 0x82DE0000
+lbl_802CE734:
+	.4byte 0x837B8358
+	.4byte 0x82F094AD
+	.4byte 0x90B60000
+.balign 4
+lbl_802CE740:
+	.asciz "GenObjectBoss"
+.balign 4
+lbl_802CE750:
+	.asciz "Parameters"
+.balign 4
+lbl_802CE75C:
+	.4byte __RTTI__10Parameters
+	.4byte 0x00000000
+	.4byte 0x00000000
+.balign 4
+lbl_802CE768:
+	.asciz "GenObject"
+.balign 4
+lbl_802CE774:
+	.4byte __RTTI__10Parameters
+	.4byte 0x00000000
+	.4byte __RTTI__7GenBase
+	.4byte 0x00000000
+	.4byte 0x00000000
+lbl_802CE788:
+	.4byte __RTTI__10Parameters
+	.4byte 0x00000000
+	.4byte __RTTI__7GenBase
+	.4byte 0x00000000
+	.4byte __RTTI__9GenObject
+	.4byte 0x00000000
+	.4byte 0x00000000
+.global __vt__13GenObjectBoss
+__vt__13GenObjectBoss:
+	.4byte __RTTI__13GenObjectBoss
+	.4byte 0
+	.4byte doWrite__13GenObjectBossFR18RandomAccessStream
+	.4byte ramSaveParameters__13GenObjectBossFR18RandomAccessStream
+	.4byte ramLoadParameters__13GenObjectBossFR18RandomAccessStream
+	.4byte doRead__13GenObjectBossFR18RandomAccessStream
+	.4byte update__7GenBaseFv
+	.4byte render__7GenBaseFR8Graphics
+	.4byte getLatestVersion__9GenObjectFv
+	.4byte updateUseList__13GenObjectBossFP9Generatori
+	.4byte init__9GenObjectFP9Generator
+	.4byte update__9GenObjectFP9Generator
+	.4byte render__9GenObjectFR8GraphicsP9Generator
+	.4byte birth__13GenObjectBossFR9BirthInfo
+
+.section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
+.balign 8
+__RTTI__10Parameters:
+	.4byte lbl_802CE750
+	.4byte 0
+.balign 4
+lbl_803E4780:
+	.asciz "GenBase"
+.balign 4
+__RTTI__7GenBase:
+	.4byte lbl_803E4780
+	.4byte lbl_802CE75C
+__RTTI__9GenObject:
+	.4byte lbl_802CE768
+	.4byte lbl_802CE774
+__RTTI__13GenObjectBoss:
+	.4byte lbl_802CE740
+	.4byte lbl_802CE788

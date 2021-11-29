@@ -7216,18 +7216,18 @@ lbl_803E0230:
 	.4byte 0x00000000
 .global __RTTI__17SlotChangeListner
 __RTTI__17SlotChangeListner:
-	.4byte 0x802b62d0
+	.4byte 0x802B62D0
 	.4byte 0
-	.4byte 0x802b62e4
+	.4byte 0x802B62E4
 	.4byte 0
 	.4byte 0x41637469
-	.4byte 0x6f6e0000
-	.4byte 0x803e0244
-	.4byte 0x802b62f4
+	.4byte 0x6F6E0000
+	.4byte 0x803E0244
+	.4byte 0x802B62F4
 .global __RTTI__8ActCrowd
 __RTTI__8ActCrowd:
-	.4byte 0x802b62c4
-	.4byte 0x802b6300
+	.4byte 0x802B62C4
+	.4byte 0x802B6300
 	.4byte 0
 .global lbl_803E0260
 lbl_803E0260:
@@ -11439,7 +11439,7 @@ lbl_803E21B4:
 	.4byte 0x00000000
 .global lbl_803E21B8
 lbl_803E21B8:
-	.4byte 0x3F800000
+	.float 1.0
 .global lbl_803E21BC
 lbl_803E21BC:
 	.4byte 0x00000000
@@ -15813,15 +15813,3 @@ __RTTI__15TekiPersonality:
 	.4byte 0
 	.4byte 0x802ce6d4
 	.4byte 0
-	.4byte 0x802ce750
-	.4byte 0
-	.4byte 0x47656e42
-	.4byte 0x61736500
-	.4byte 0x803e4780
-	.4byte 0x802ce75c
-	.4byte 0x802ce768
-	.4byte 0x802ce774
-.global __RTTI__13GenObjectBoss
-__RTTI__13GenObjectBoss:
-	.4byte 0x802ce740
-	.4byte 0x802ce788
