@@ -1,7 +1,6 @@
 .include "macros.inc"
-
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-
+.balign 0x20
 .global Probe_Start
 Probe_Start:
 /* 80005600 00002560  4E 80 00 20 */	blr 

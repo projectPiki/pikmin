@@ -4,7 +4,6 @@ GROUP_0_FILES :=\
 	$(BUILD_DIR)/asm/ctors.o\
 	$(BUILD_DIR)/asm/dtors.o\
 	$(BUILD_DIR)/asm/rodata.o\
-	$(BUILD_DIR)/asm/data.o\
 	$(BUILD_DIR)/asm/bss.o\
 	$(BUILD_DIR)/asm/sdata.o\
 	$(BUILD_DIR)/asm/sbss.o\
@@ -15,7 +14,8 @@ GROUP_0_FILES :=\
 	$(BUILD_DIR)/asm/sdata2_1a.o\
 
 TEXT_O_FILES :=\
-	$(BUILD_DIR)/asm/sysBootup.o\
+	$(BUILD_DIR)/src/sysBootup.o\
+	$(BUILD_DIR)/asm/data.o\
 	$(BUILD_DIR)/asm/text_0.o\
 	$(BUILD_DIR)/src/sysCommon/string.o\
 	$(BUILD_DIR)/asm/text_80025914.o\

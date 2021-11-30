@@ -1,14 +1,6 @@
 .include "macros.inc"
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-.global lbl_80222DC0
-lbl_80222DC0:
-	.asciz "sysBootup.cpp"
-.balign 4
-.global lbl_80222DD0
-lbl_80222DD0:
-	.asciz "End of demo"
-.balign 8
 .global J_STREAMNAME
 J_STREAMNAME:
 	.asciz "/stream00.adp"
