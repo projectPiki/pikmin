@@ -13,9 +13,15 @@ GROUP_0_FILES :=\
 	$(BUILD_DIR)/asm/sdata2_1b.o\
 	$(BUILD_DIR)/asm/sdata2_1a.o\
 
-TEXT_O_FILES :=\
+SYSBOOTUP :=\
 	$(BUILD_DIR)/src/sysBootup.o\
 	$(BUILD_DIR)/asm/data.o\
+
+JAUDIO :=\
+	$(BUILD_DIR)/src/jaudio/dummyprobe.o\
+	$(BUILD_DIR)/asm/jaudio.o\
+
+TEXT_O_FILES :=\
 	$(BUILD_DIR)/asm/text_0.o\
 	$(BUILD_DIR)/src/sysCommon/string.o\
 	$(BUILD_DIR)/asm/text_80025914.o\

@@ -42,7 +42,7 @@ MAP     := $(BUILD_DIR)/pikmin1.map
 
 include obj_files.mk
 
-O_FILES := $(GROUP_0_FILES) $(TEXT_O_FILES)\
+O_FILES := $(GROUP_0_FILES) $(SYSBOOTUP) $(JAUDIO) $(TEXT_O_FILES)\
 
 #-------------------------------------------------------------------------------
 # Tools
@@ -74,10 +74,12 @@ INCLUDES := -i include/
 
 ASFLAGS := -mgekko -I include/ 
 LDFLAGS := -map $(MAP) -fp hard -nodefaults
-CFLAGS  := -Cpp_exceptions off -O4,p -fp hard -proc gekko -nodefaults -RTTI on -msgstyle gcc $(INCLUDES)
+CFLAGS  = -Cpp_exceptions off -O4,p -fp hard -proc gekko -nodefaults -RTTI on -msgstyle gcc $(INCLUDES)
 
 # for postprocess.py
 PROCFLAGS := -fprologue-fixup=old_stack
+
+$(JAUDIO): CFLAGS += -func_align 32
 
 #-------------------------------------------------------------------------------
 # Recipes
