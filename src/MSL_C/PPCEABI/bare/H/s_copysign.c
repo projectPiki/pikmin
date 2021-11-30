@@ -1,24 +1,36 @@
 
+/* @(#)s_copysign.c 1.3 95/01/18 */
+/*
+ * ====================================================
+ * Copyright (C) 1993 by Sun Microsystems, Inc. All rights reserved.
+ *
+ * Developed at SunSoft, a Sun Microsystems, Inc. business.
+ * Permission to use, copy, modify, and distribute this
+ * software is freely granted, provided that this notice
+ * is preserved.
+ * ====================================================
+ */
 
 /*
  * --INFO--
  * Address:	8021B4A8
  * Size:	00002C
  */
-void copysign(void)
-{
+
 /*
-.loc_0x0:
-  stwu      r1, -0x18(r1)
-  stfd      f1, 0x8(r1)
-  stfd      f2, 0x10(r1)
-  lwz       r3, 0x8(r1)
-  lwz       r0, 0x10(r1)
-  rlwinm    r0,r0,0,0,0
-  rlwimi    r0,r3,0,1,31
-  stw       r0, 0x8(r1)
-  lfd       f1, 0x8(r1)
-  addi      r1, r1, 0x18
-  blr
-*/
+ * copysign(double x, double y)
+ * copysign(x,y) returns a value with the magnitude of x and
+ * with the sign bit of y.
+ */
+
+#include "fdlibm.h"
+
+#ifdef __STDC__
+double copysign(double x, double y)
+#else
+double copysign(x, y) double x, y;
+#endif
+{
+	__HI(x) = (__HI(x) & 0x7fffffff) | (__HI(y) & 0x80000000);
+	return x;
 }

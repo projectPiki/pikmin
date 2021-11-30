@@ -261,7 +261,7 @@ TEXT_O_FILES :=\
 	$(BUILD_DIR)/asm/Runtime/PPCEABI/H/runtime.o\
 	$(BUILD_DIR)/asm/Runtime/PPCEABI/H/__init_cpp_exceptions.o\
 	$(BUILD_DIR)/asm/MSL_C/PPCEABI/bare/H/abort_exit.o\
-	$(BUILD_DIR)/asm/MSL_C/PPCEABI/bare/H/errno.o\
+	$(BUILD_DIR)/src/MSL_C/PPCEABI/bare/H/errno.o\
 	$(BUILD_DIR)/asm/MSL_C/PPCEABI/bare/H/ansi_fp.o\
 	$(BUILD_DIR)/asm/MSL_C/PPCEABI/bare/H/arith.o\
 	$(BUILD_DIR)/asm/MSL_C/PPCEABI/bare/H/buffer_io.o\
@@ -275,7 +275,7 @@ TEXT_O_FILES :=\
 	$(BUILD_DIR)/asm/MSL_C/PPCEABI/bare/H/mem_funcs.o\
 	$(BUILD_DIR)/src/MSL_C/PPCEABI/bare/H/misc_io.o\
 	$(BUILD_DIR)/asm/MSL_C/PPCEABI/bare/H/printf.o\
-	$(BUILD_DIR)/asm/MSL_C/PPCEABI/bare/H/rand.o\
+	$(BUILD_DIR)/src/MSL_C/PPCEABI/bare/H/rand.o\
 	$(BUILD_DIR)/asm/MSL_C/PPCEABI/bare/H/scanf.o\
 	$(BUILD_DIR)/asm/MSL_C/PPCEABI/bare/H/string.o\
 	$(BUILD_DIR)/asm/MSL_C/PPCEABI/bare/H/strtold.o\
@@ -288,7 +288,7 @@ TEXT_O_FILES :=\
 	$(BUILD_DIR)/asm/MSL_C/PPCEABI/bare/H/e_pow.o\
 	$(BUILD_DIR)/asm/MSL_C/PPCEABI/bare/H/fminmaxdim.o\
 	$(BUILD_DIR)/asm/MSL_C/PPCEABI/bare/H/s_atan.o\
-	$(BUILD_DIR)/asm/MSL_C/PPCEABI/bare/H/s_copysign.o\
+	$(BUILD_DIR)/src/MSL_C/PPCEABI/bare/H/s_copysign.o\
 	$(BUILD_DIR)/asm/MSL_C/PPCEABI/bare/H/s_frexp.o\
 	$(BUILD_DIR)/asm/MSL_C/PPCEABI/bare/H/s_ldexp.o\
 	$(BUILD_DIR)/asm/MSL_C/PPCEABI/bare/H/w_atan2.o\
