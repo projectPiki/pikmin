@@ -112,7 +112,7 @@ TEXT_O_FILES :=\
 	$(BUILD_DIR)/asm/plugPikiYamashita/simpleParticle.o\
 	$(BUILD_DIR)/asm/plugPikiYamashita/tekiyteki.o\
 	$(BUILD_DIR)/asm/plugPikiYamashita/tekiyamashita.o\
-	$(BUILD_DIR)/asm/plugPikiYamashita/TAIanimation.o\
+	$(BUILD_DIR)/src/plugPikiYamashita/TAIanimation.o\
 	$(BUILD_DIR)/asm/plugPikiYamashita/TAItank.o\
 	$(BUILD_DIR)/asm/plugPikiYamashita/TAImar.o\
 	$(BUILD_DIR)/asm/plugPikiYamashita/TAIAreaction.o\

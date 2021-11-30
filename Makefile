@@ -79,6 +79,8 @@ CFLAGS  = -Cpp_exceptions off -O4,p -fp hard -proc gekko -nodefaults -RTTI on -m
 # for postprocess.py
 PROCFLAGS := -fprologue-fixup=old_stack
 
+$(BUILD_DIR)/src/plugPikiYamashita/TAIanimation.o: MWCC_VERSION := 1.0e
+
 $(JAUDIO): CFLAGS += -func_align 32
 
 #-------------------------------------------------------------------------------
