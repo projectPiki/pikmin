@@ -46,7 +46,6 @@ init__18GameCreditsSectionFv:
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-.balign 4
 lbl_802D6B90:
 	.asciz "gameCredits.cpp"
 .balign 4

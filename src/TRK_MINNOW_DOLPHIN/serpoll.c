@@ -1,3 +1,4 @@
+#include "serpoll.h"
 
 #ifdef NOMATCH
 /*
@@ -190,32 +191,25 @@ void TRKProcessInput(void)
   blr
 */
 }
+#endif
 
 /*
  * --INFO--
  * Address:	8021CEB0
  * Size:	000024
  */
-void TRKInitializeSerialHandler(void)
+u32 TRKInitializeSerialHandler(void)
 {
-/*
-.loc_0x0:
-  lis       r3, 0x803D
-  addi      r4, r3, 0x5CD0
-  li        r0, -0x1
-  stw       r0, 0x0(r4)
-  li        r0, 0
-  li        r3, 0
-  stb       r0, 0x8(r4)
-  stw       r0, 0xC(r4)
-  blr
-*/
+	gTRKFramingState.field0_0x0 = -1;
+	gTRKFramingState.field2_0x8 = 0;
+	gTRKFramingState.field3_0xc = 0;
+	return 0;
 }
-#endif
+
 /*
  * --INFO--
  * Address:	8021CED4
  * Size:	000008
  */
-int TRKTerminateSerialHandler(void)
+s32 TRKTerminateSerialHandler(void)
 { return 0; }
