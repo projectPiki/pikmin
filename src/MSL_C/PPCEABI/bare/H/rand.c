@@ -19,6 +19,6 @@ void srand(u32 seed)
  */
 s16 rand(void)
 {
-	next = next * 0x41c64e6d + 0x3039;
+	next = next * 1103515245 + 12345;
 	return (s16)((u16)((u32)next >> 0x10) & 0x7fff);
 }
