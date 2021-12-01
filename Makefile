@@ -16,6 +16,7 @@ VERSION := usa.1
 BUILD_DIR := build/$(NAME).$(VERSION)
 
 SRC_DIRS := $(shell find src/ -type f -name '*.c')
+SRC_DIRS += $(shell find src/ -type f -name '*.cp')
 SRC_DIRS += $(shell find src/ -type f -name '*.cpp')
 ASM_DIRS := $(shell find asm/ -type f -name '*.s')
 
@@ -23,6 +24,7 @@ ASM_DIRS := $(shell find asm/ -type f -name '*.s')
 S_FILES := $(wildcard asm/*.s)
 C_FILES := $(wildcard src/*.c)
 CPP_FILES := $(wildcard src/*.cpp)
+CPP_FILES += $(wildcard src/*.cp)
 LDSCRIPT := $(BUILD_DIR)/ldscript.lcf
 
 # Outputs
