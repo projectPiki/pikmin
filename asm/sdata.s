@@ -15737,23 +15737,3 @@ lbl_803E4658:
 __RTTI__7TekiMgr:
 	.4byte 0x803E4660
 	.4byte 0x802CDC64
-	.4byte 0x4E54656B
-	.4byte 0x69000000
-.global __RTTI__10PelletView_3
-__RTTI__10PelletView_3:
-	.4byte 0x802CDD3C
-	.4byte 0
-	.4byte 0x802CDD48
-	.4byte 0
-	.4byte 0x802CDD5C
-	.4byte 0
-	.4byte 0x802CDD68
-	.4byte 0
-	.4byte 0x802CDD78
-	.4byte 0x802CDD84
-	.4byte 0x4254656B
-	.4byte 0x69000000
-	.4byte 0x803E46E0
-	.4byte 0x802CDD98
-	.4byte 0x803E46B0
-	.4byte 0x802CDDC4
