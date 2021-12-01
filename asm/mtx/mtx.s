@@ -251,25 +251,19 @@ MTXLightPerspective:
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 0x8
-.global Unit01
 Unit01:
 	.4byte 0x00000000
 	.4byte 0x3F800000
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 0x8
-.global lbl_803EC4D8
 lbl_803EC4D8:
-	.4byte 0x3F800000
-.global lbl_803EC4DC
+	.float 1.0
 lbl_803EC4DC:
-	.4byte 0x00000000
-.global lbl_803EC4E0
+	.float 0.0
 lbl_803EC4E0:
-	.4byte 0xBF800000
-.global lbl_803EC4E4
+	.float -1.0
 lbl_803EC4E4:
-	.4byte 0x3F000000
-.global lbl_803EC4E8
+	.float 0.5
 lbl_803EC4E8:
 	.4byte 0x3C8EFA35

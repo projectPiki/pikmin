@@ -98,21 +98,16 @@ MTXOrtho:
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 0x8
-.global lbl_803EC4F0
 lbl_803EC4F0:
-	.4byte 0x3F800000
-.global lbl_803EC4F4
+	.float 1.0
 lbl_803EC4F4:
-	.4byte 0x40000000
+	.float 2.0
 .global lbl_803EC4F8
 lbl_803EC4F8:
-	.4byte 0x00000000
-.global lbl_803EC4FC
+	.float 0.0
 lbl_803EC4FC:
-	.4byte 0xBF800000
-.global lbl_803EC500
+	.float -1.0
 lbl_803EC500:
-	.4byte 0x3F000000
-.global lbl_803EC504
+	.float 0.5
 lbl_803EC504:
 	.4byte 0x3C8EFA35

@@ -20,8 +20,8 @@ VECMag:
 /* 801FE0B8 001FB018  FC 01 00 40 */	fcmpo cr0, f1, f0
 /* 801FE0BC 001FB01C  40 81 00 60 */	ble lbl_801FE11C
 /* 801FE0C0 001FB020  FC 40 08 34 */	frsqrte f2, f1
-/* 801FE0C4 001FB024  C8 82 C3 10 */	lfd f4, "@112"@sda21(r2)
-/* 801FE0C8 001FB028  C8 62 C3 18 */	lfd f3, "@113"@sda21(r2)
+/* 801FE0C4 001FB024  C8 82 C3 10 */	lfd f4, lbl_803EC510@sda21(r2)
+/* 801FE0C8 001FB028  C8 62 C3 18 */	lfd f3, lbl_803EC518@sda21(r2)
 /* 801FE0CC 001FB02C  FC 02 00 B2 */	fmul f0, f2, f2
 /* 801FE0D0 001FB030  FC 44 00 B2 */	fmul f2, f4, f2
 /* 801FE0D4 001FB034  FC 01 00 32 */	fmul f0, f1, f0
@@ -50,15 +50,10 @@ lbl_801FE11C:
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 0x8
-.global lbl_803EC508
 lbl_803EC508:
-	.4byte 0x00000000
-	.4byte 0x00000000
-.global "@112"
-"@112":
-	.4byte 0x3FE00000
-	.4byte 0x00000000
-.global "@113"
-"@113":
-	.4byte 0x40080000
-	.4byte 0x00000000
+	.float 0.0
+.balign 8
+lbl_803EC510:
+	.double 0.5
+lbl_803EC518:
+	.double 3.0

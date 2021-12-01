@@ -77,14 +77,9 @@ lbl_801FDB6C:
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 0x8
-.global lbl_802E8448
 lbl_802E8448:
-	.4byte 0x44424578
-	.4byte 0x63657074
-	.4byte 0x696F6E44
-	.4byte 0x65737469
-	.4byte 0x6E617469
-	.4byte 0x6F6E0A00
+	.asciz "DBExceptionDestination\n"
+.balign 4
 
 .section .sbss, "wa"
 .balign 0x8
