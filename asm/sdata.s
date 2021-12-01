@@ -15735,53 +15735,25 @@ lbl_803E4658:
 	.4byte 0x802CDC38
 .global __RTTI__7TekiMgr
 __RTTI__7TekiMgr:
-	.4byte 0x803e4660
-	.4byte 0x802cdc64
-	.4byte 0x4e54656b
+	.4byte 0x803E4660
+	.4byte 0x802CDC64
+	.4byte 0x4E54656B
 	.4byte 0x69000000
 .global __RTTI__10PelletView_3
 __RTTI__10PelletView_3:
-	.4byte 0x802cdd3c
+	.4byte 0x802CDD3C
 	.4byte 0
-	.4byte 0x802cdd48
+	.4byte 0x802CDD48
 	.4byte 0
-	.4byte 0x802cdd5c
+	.4byte 0x802CDD5C
 	.4byte 0
-	.4byte 0x802cdd68
+	.4byte 0x802CDD68
 	.4byte 0
-	.4byte 0x802cdd78
-	.4byte 0x802cdd84
-	.4byte 0x4254656b
+	.4byte 0x802CDD78
+	.4byte 0x802CDD84
+	.4byte 0x4254656B
 	.4byte 0x69000000
-	.4byte 0x803e46e0
-	.4byte 0x802cdd98
-	.4byte 0x803e46b0
-	.4byte 0x802cddc4
-.global lbl_803E46F8
-lbl_803E46F8:
-	.4byte 0x3C4E6F64
-	.4byte 0x653E0000
-.global lbl_803E4700
-lbl_803E4700:
-	.4byte 0x4C494645
-	.4byte 0x00000000
-.global lbl_803E4708
-lbl_803E4708:
-	.4byte 0x5343414C
-	.4byte 0x45000000
-.global lbl_803E4710
-lbl_803E4710:
-	.4byte 0x57454947
-	.4byte 0x48540000
-	.4byte 0x414E6F64
-	.4byte 0x65000000
-	.4byte 0x803E4718
-	.4byte 0x00000000
-	.4byte 0x802CE524
-	.4byte 0x802CE530
-	.4byte 0x4E6F6465
-	.4byte 0x00000000
-	.4byte 0x803E4730
-	.4byte 0x802CE53C
-	.4byte 0x802CE514
-	.4byte 0x802CE550
+	.4byte 0x803E46E0
+	.4byte 0x802CDD98
+	.4byte 0x803E46B0
+	.4byte 0x802CDDC4
