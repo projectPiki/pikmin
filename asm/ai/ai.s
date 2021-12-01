@@ -371,25 +371,25 @@ AIInit:
 /* 802064DC 0020343C  7C 6A 18 16 */	mulhwu r3, r10, r3
 /* 802064E0 00203440  55 08 BA 7E */	srwi r8, r8, 9
 /* 802064E4 00203444  54 E7 BA 7E */	srwi r7, r7, 9
-/* 802064E8 00203448  91 0D 33 A4 */	stw r8, lbl_803E80C4@sda21(r13)
+/* 802064E8 00203448  91 0D 33 A4 */	stw r8, bound_32KHz+4@sda21(r13)
 /* 802064EC 0020344C  54 A5 BA 7E */	srwi r5, r5, 9
 /* 802064F0 00203450  54 84 BA 7E */	srwi r4, r4, 9
-/* 802064F4 00203454  90 ED 33 AC */	stw r7, lbl_803E80CC@sda21(r13)
+/* 802064F4 00203454  90 ED 33 AC */	stw r7, bound_48KHz+4@sda21(r13)
 /* 802064F8 00203458  3B E0 00 00 */	li r31, 0
 /* 802064FC 0020345C  54 63 BA 7E */	srwi r3, r3, 9
-/* 80206500 00203460  90 AD 33 B4 */	stw r5, lbl_803E80D4@sda21(r13)
+/* 80206500 00203460  90 AD 33 B4 */	stw r5, min_wait+4@sda21(r13)
 /* 80206504 00203464  3C C0 CC 00 */	lis r6, 0xCC006C00@ha
-/* 80206508 00203468  90 6D 33 C4 */	stw r3, lbl_803E80E4@sda21(r13)
+/* 80206508 00203468  90 6D 33 C4 */	stw r3, buffer+4@sda21(r13)
 /* 8020650C 0020346C  38 60 00 01 */	li r3, 1
 /* 80206510 00203470  80 06 6C 00 */	lwz r0, 0xCC006C00@l(r6)
-/* 80206514 00203474  90 8D 33 BC */	stw r4, lbl_803E80DC@sda21(r13)
+/* 80206514 00203474  90 8D 33 BC */	stw r4, max_wait+4@sda21(r13)
 /* 80206518 00203478  54 00 06 F2 */	rlwinm r0, r0, 0, 0x1b, 0x19
 /* 8020651C 0020347C  60 00 00 20 */	ori r0, r0, 0x20
 /* 80206520 00203480  93 ED 33 A0 */	stw r31, bound_32KHz@sda21(r13)
 /* 80206524 00203484  93 ED 33 A8 */	stw r31, bound_48KHz@sda21(r13)
 /* 80206528 00203488  93 ED 33 B0 */	stw r31, min_wait@sda21(r13)
 /* 8020652C 0020348C  93 ED 33 B8 */	stw r31, max_wait@sda21(r13)
-/* 80206530 00203490  93 ED 33 C0 */	stw r31, buffer_1@sda21(r13)
+/* 80206530 00203490  93 ED 33 C0 */	stw r31, buffer@sda21(r13)
 /* 80206534 00203494  80 A6 6C 04 */	lwz r5, 0x6c04(r6)
 /* 80206538 00203498  90 06 6C 00 */	stw r0, 0x6c00(r6)
 /* 8020653C 0020349C  54 A0 06 1E */	rlwinm r0, r5, 0, 0x18, 0xf
@@ -589,15 +589,15 @@ lbl_802067E0:
 /* 802067E8 00203748  41 82 FF F8 */	beq lbl_802067E0
 /* 802067EC 0020374C  4B FF 6B B5 */	bl OSGetTime
 /* 802067F0 00203750  7D 1A 20 10 */	subfc r8, r26, r4
-/* 802067F4 00203754  81 8D 33 A4 */	lwz r12, lbl_803E80C4@sda21(r13)
+/* 802067F4 00203754  81 8D 33 A4 */	lwz r12, bound_32KHz+4@sda21(r13)
 /* 802067F8 00203758  80 BF 6C 00 */	lwz r5, 0x6c00(r31)
 /* 802067FC 0020375C  7C FB 19 10 */	subfe r7, r27, r3
-/* 80206800 00203760  81 4D 33 C4 */	lwz r10, lbl_803E80E4@sda21(r13)
+/* 80206800 00203760  81 4D 33 C4 */	lwz r10, buffer+4@sda21(r13)
 /* 80206804 00203764  6C E7 80 00 */	xoris r7, r7, 0x8000
 /* 80206808 00203768  54 A5 07 FA */	rlwinm r5, r5, 0, 0x1f, 0x1d
 /* 8020680C 0020376C  81 6D 33 A0 */	lwz r11, bound_32KHz@sda21(r13)
 /* 80206810 00203770  7C CA 60 10 */	subfc r6, r10, r12
-/* 80206814 00203774  81 2D 33 C0 */	lwz r9, buffer_1@sda21(r13)
+/* 80206814 00203774  81 2D 33 C0 */	lwz r9, buffer@sda21(r13)
 /* 80206818 00203778  90 BF 6C 00 */	stw r5, 0x6c00(r31)
 /* 8020681C 0020377C  7C 09 59 10 */	subfe r0, r9, r11
 /* 80206820 00203780  6C 05 80 00 */	xoris r5, r0, 0x8000
@@ -612,7 +612,7 @@ lbl_802067E0:
 /* 80206844 002037A4  41 82 00 14 */	beq lbl_80206858
 /* 80206848 002037A8  83 AD 33 B0 */	lwz r29, min_wait@sda21(r13)
 /* 8020684C 002037AC  38 00 00 01 */	li r0, 1
-/* 80206850 002037B0  83 8D 33 B4 */	lwz r28, lbl_803E80D4@sda21(r13)
+/* 80206850 002037B0  83 8D 33 B4 */	lwz r28, min_wait+4@sda21(r13)
 /* 80206854 002037B4  48 00 00 68 */	b lbl_802068BC
 lbl_80206858:
 /* 80206858 002037B8  7C CC 50 14 */	addc r6, r12, r10
@@ -624,7 +624,7 @@ lbl_80206858:
 /* 80206870 002037D0  7C A5 00 D0 */	neg r5, r5
 /* 80206874 002037D4  2C 05 00 00 */	cmpwi r5, 0
 /* 80206878 002037D8  40 82 00 40 */	bne lbl_802068B8
-/* 8020687C 002037DC  80 AD 33 AC */	lwz r5, lbl_803E80CC@sda21(r13)
+/* 8020687C 002037DC  80 AD 33 AC */	lwz r5, bound_48KHz+4@sda21(r13)
 /* 80206880 002037E0  80 0D 33 A8 */	lwz r0, bound_48KHz@sda21(r13)
 /* 80206884 002037E4  7C CA 28 10 */	subfc r6, r10, r5
 /* 80206888 002037E8  7C 09 01 10 */	subfe r0, r9, r0
@@ -637,7 +637,7 @@ lbl_80206858:
 /* 802068A4 00203804  41 82 00 14 */	beq lbl_802068B8
 /* 802068A8 00203808  83 AD 33 B8 */	lwz r29, max_wait@sda21(r13)
 /* 802068AC 0020380C  38 00 00 01 */	li r0, 1
-/* 802068B0 00203810  83 8D 33 BC */	lwz r28, lbl_803E80DC@sda21(r13)
+/* 802068B0 00203810  83 8D 33 BC */	lwz r28, max_wait+4@sda21(r13)
 /* 802068B4 00203814  48 00 00 08 */	b lbl_802068BC
 lbl_802068B8:
 /* 802068B8 00203818  38 00 00 00 */	li r0, 0
@@ -667,48 +667,24 @@ lbl_802068D4:
 
 .section .sbss, "wa"
 .balign 0x8
-.global __AIS_Callback
 __AIS_Callback:
 	.skip 0x4
-.global __AID_Callback
 __AID_Callback:
 	.skip 0x4
-.global __CallbackStack
 __CallbackStack:
 	.skip 0x4
-.global __OldStack
 __OldStack:
 	.skip 0x4
-.global __AI_init_flag
 __AI_init_flag:
-	.skip 0x8
-.global bound_32KHz
+	.skip 0x4
+.balign 8
 bound_32KHz:
-	.skip 0x4
-.global lbl_803E80C4
-lbl_803E80C4:
-	.skip 0x4
-.global bound_48KHz
+	.skip 0x8
 bound_48KHz:
-	.skip 0x4
-.global lbl_803E80CC
-lbl_803E80CC:
-	.skip 0x4
-.global min_wait
+	.skip 0x8
 min_wait:
-	.skip 0x4
-.global lbl_803E80D4
-lbl_803E80D4:
-	.skip 0x4
-.global max_wait
+	.skip 0x8
 max_wait:
-	.skip 0x4
-.global lbl_803E80DC
-lbl_803E80DC:
-	.skip 0x4
-.global buffer_1
-buffer_1:
-	.skip 0x4
-.global lbl_803E80E4
-lbl_803E80E4:
-	.skip 0x4
+	.skip 0x8
+buffer:
+	.skip 0x8

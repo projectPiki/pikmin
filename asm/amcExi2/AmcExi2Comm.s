@@ -496,24 +496,19 @@ EXI2_Unreserve:
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 0x8
-.global lbl_802E9610
 lbl_802E9610:
 	.asciz "Can't select EXI2 port!\n"
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 0x8
-.global pucEXI2InputPending
 pucEXI2InputPending:
 	.4byte ucEXI2InputPending
 
 .section .sbss, "wa"
 .balign 0x8
-.global ucEXI2InputPending
 ucEXI2InputPending:
 	.skip 0x4
-.global fExi2Selected
 fExi2Selected:
 	.skip 0x4
-.global TRK_Callback
 TRK_Callback:
 	.skip 0x4

@@ -110,7 +110,7 @@ lbl_80206A74:
 /* 80206A94 002039F4  3C 60 02 00 */	lis r3, 0x200
 /* 80206A98 002039F8  4B FF 29 0D */	bl __OSUnmaskInterrupts
 /* 80206A9C 002039FC  3C 60 80 00 */	lis r3, 0x800000F8@ha
-/* 80206AA0 00203A00  C8 42 C3 28 */	lfd f2, "@114"@sda21(r2)
+/* 80206AA0 00203A00  C8 42 C3 28 */	lfd f2, lbl_803EC528@sda21(r2)
 /* 80206AA4 00203A04  80 03 00 F8 */	lwz r0, 0x800000F8@l(r3)
 /* 80206AA8 00203A08  38 80 40 00 */	li r4, 0x4000
 /* 80206AAC 00203A0C  3C 60 CC 00 */	lis r3, 0xCC005000@ha
@@ -1174,34 +1174,25 @@ lbl_80207A60:
 
 .section .sbss, "wa"
 .balign 0x8
-.global __AR_Callback
 __AR_Callback:
 	.skip 0x4
-.global __AR_Size
 __AR_Size:
 	.skip 0x4
-.global __AR_StackPointer
 __AR_StackPointer:
 	.skip 0x4
-.global __AR_FreeBlocks
 __AR_FreeBlocks:
 	.skip 0x4
-.global __AR_BlockLength
 __AR_BlockLength:
 	.skip 0x4
-.global __AR_init_flag
 __AR_init_flag:
 	.skip 0x4
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 0x8
-.global lbl_803EC520
 lbl_803EC520:
 	.4byte 0x43440000
-.global lbl_803EC524
 lbl_803EC524:
 	.4byte 0x4D411E7A
-.global "@114"
-"@114":
+lbl_803EC528:
 	.4byte 0x43300000
 	.4byte 0x00000000

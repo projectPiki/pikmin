@@ -458,6 +458,5 @@ AmcEXIInit:
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 0x8
-.global exi
 exi:
 	.4byte Ecb_1

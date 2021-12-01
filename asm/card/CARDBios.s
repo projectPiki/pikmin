@@ -1140,8 +1140,8 @@ lbl_80208E00:
 /* 80208E20 00205D80  41 80 FF E0 */	blt lbl_80208E00
 /* 80208E24 00205D84  3C 60 80 00 */	lis r3, 0x8000
 /* 80208E28 00205D88  48 00 00 2D */	bl __CARDSetDiskID
-/* 80208E2C 00205D8C  3C 60 80 2F */	lis r3, ResetFunctionInfo_1@ha
-/* 80208E30 00205D90  38 63 8B B0 */	addi r3, r3, ResetFunctionInfo_1@l
+/* 80208E2C 00205D8C  3C 60 80 2F */	lis r3, ResetFunctionInfo@ha
+/* 80208E30 00205D90  38 63 8B B0 */	addi r3, r3, ResetFunctionInfo@l
 /* 80208E34 00205D94  4B FF 12 8D */	bl OSRegisterResetFunction
 lbl_80208E38:
 /* 80208E38 00205D98  80 01 00 1C */	lwz r0, 0x1c(r1)
@@ -1423,8 +1423,7 @@ lbl_8020918C:
 /* 802091BC 0020611C  38 21 00 20 */	addi r1, r1, 0x20
 /* 802091C0 00206120  4E 80 00 20 */	blr 
 
-.global OnReset_1
-OnReset_1:
+OnReset:
 /* 802091C4 00206124  7C 08 02 A6 */	mflr r0
 /* 802091C8 00206128  2C 03 00 00 */	cmpwi r3, 0
 /* 802091CC 0020612C  90 01 00 04 */	stw r0, 4(r1)
@@ -1451,9 +1450,8 @@ lbl_80209204:
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 0x8
-.global ResetFunctionInfo_1
-ResetFunctionInfo_1:
-	.4byte OnReset_1
+ResetFunctionInfo:
+	.4byte OnReset
 	.4byte 0x0000007F
 	.4byte 0x00000000
 	.4byte 0x00000000
