@@ -15631,13 +15631,3 @@ __RTTI__18TekiStateCondition:
 __RTTI__22TekiPikiStateCondition:
 	.4byte 0x802cd8ec
 	.4byte 0x802cd904
-	.4byte 0x802cd960
-	.4byte 0
-.global __RTTI__17InteractHitEffect
-__RTTI__17InteractHitEffect:
-	.4byte 0x802cd94c
-	.4byte 0x802cd96c
-.global __RTTI__12InteractBomb
-__RTTI__12InteractBomb:
-	.4byte 0x802cd9d0
-	.4byte 0x802cd9e0

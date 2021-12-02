@@ -1170,6 +1170,7 @@ __RTTI__5ANode:
 __RTTI__8CoreNode:
 	.4byte lbl_802CDBC0
 	.4byte lbl_802CDBCC
+.balign 4
 lbl_803E4680:
 	.asciz "Node"
 .balign 4
