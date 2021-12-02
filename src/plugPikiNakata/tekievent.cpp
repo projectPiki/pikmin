@@ -1,34 +1,14 @@
 #include "types.h"
-
-
-
-/*
- * --INFO--
- * Address:	........
- * Size:	00009C
- */
-void _Error(char *, ...)
-{
-	// UNUSED FUNCTION
-}
-
-/*
- * --INFO--
- * Address:	........
- * Size:	0000F4
- */
-void _Print(char *, ...)
-{
-	// UNUSED FUNCTION
-}
+#include "teki.h"
 
 /*
  * --INFO--
  * Address:	8014A398
  * Size:	000034
  */
-TekiEvent::TekiEvent(int, Teki *)
+TekiEvent::TekiEvent(int int_arg, Teki* teki_arg)
 {
+	init(int_arg, teki_arg, nullptr);
 /*
 .loc_0x0:
   mflr      r0
@@ -52,8 +32,9 @@ TekiEvent::TekiEvent(int, Teki *)
  * Address:	8014A3CC
  * Size:	000030
  */
-TekiEvent::TekiEvent(int, Teki *, Creature *)
+TekiEvent::TekiEvent(int int_arg, Teki* teki_arg, Creature* creature_arg)
 {
+	init(int_arg, teki_arg, creature_arg);
 /*
 .loc_0x0:
   mflr      r0
@@ -78,8 +59,11 @@ TekiEvent::TekiEvent(int, Teki *, Creature *)
  * Address:	8014A3FC
  * Size:	000010
  */
-void TekiEvent::init(int, Teki *, Creature *)
+void TekiEvent::init(int int_arg, Teki* teki_arg, Creature* creature_arg)
 {
+	m_int = int_arg;
+	m_tekiptr = teki_arg;
+	m_creatureptr = creature_arg;
 /*
 .loc_0x0:
   stw       r4, 0x0(r3)
