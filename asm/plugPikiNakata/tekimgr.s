@@ -901,41 +901,41 @@ typeNames__7TekiMgr:
 	.4byte lbl_803E464C
 .global typeIds__7TekiMgr
 typeIds__7TekiMgr:
-	.4byte 0x746B6672
-	.4byte 0x746B6967
-	.4byte 0x746B6977
-	.4byte 0x746B6368
-	.4byte 0x746B7377
-	.4byte 0x746B6D69
-	.4byte 0x746B7175
-	.4byte 0x746B7061
-	.4byte 0x746B636F
-	.4byte 0x746B6B69
-	.4byte 0x746B7368
-	.4byte 0x746B6E61
-	.4byte 0x746B686F
-	.4byte 0x746B7065
-	.4byte 0x746B726F
-	.4byte 0x746B7461
-	.4byte 0x746B6D61
-	.4byte 0x746B6265
-	.4byte 0x746B6B61
-	.4byte 0x746B6B62
-	.4byte 0x746B6B63
-	.4byte 0x746B746D
-	.4byte 0x746B646F
-	.4byte 0x746B6869
-	.4byte 0x746B6D75
-	.4byte 0x746B6F74
-	.4byte 0x746B7573
-	.4byte 0x746B7933
-	.4byte 0x746B7934
-	.4byte 0x746B7935
-	.4byte 0x746B6E6D
-	.4byte 0x746B6362
-	.4byte 0x746B7362
-	.4byte 0x746B6677
-	.4byte 0x746B6E31
+	.ascii "tkfr"
+	.ascii "tkig"
+	.ascii "tkiw"
+	.ascii "tkch"
+	.ascii "tksw"
+	.ascii "tkmi"
+	.ascii "tkqu"
+	.ascii "tkpa"
+	.ascii "tkco"
+	.ascii "tkki"
+	.ascii "tksh"
+	.ascii "tkna"
+	.ascii "tkho"
+	.ascii "tkpe"
+	.ascii "tkro"
+	.ascii "tkta"
+	.ascii "tkma"
+	.ascii "tkbe"
+	.ascii "tkka"
+	.ascii "tkkb"
+	.ascii "tkkc"
+	.ascii "tktm"
+	.ascii "tkdo"
+	.ascii "tkhi"
+	.ascii "tkmu"
+	.ascii "tkot"
+	.ascii "tkus"
+	.ascii "tky3"
+	.ascii "tky4"
+	.ascii "tky5"
+	.ascii "tknm"
+	.ascii "tkcb"
+	.ascii "tksb"
+	.ascii "tkfw"
+	.ascii "tkn1"
 .balign 4
 lbl_802CDB60:
 	.asciz "tekipara/%s.bin"
