@@ -1128,6 +1128,3 @@ system__7NSystem:
 .global motionTable__15PaniPikiAnimMgr
 motionTable__15PaniPikiAnimMgr:
 	.skip 0x8
-.global tekiMgr
-tekiMgr:
-	.skip 0x4

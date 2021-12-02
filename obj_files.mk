@@ -38,6 +38,7 @@ TEXT_O_FILES :=\
 	$(BUILD_DIR)/asm/sysCommon/atx.o\
 	$(BUILD_DIR)/asm/sysCommon/id32.o\
 	$(BUILD_DIR)/asm/text_80044194.o\
+	$(BUILD_DIR)/asm/plugPikiNakata/tekimgr.o\
 	$(BUILD_DIR)/asm/plugPikiNakata/tekinakata.o\
 	$(BUILD_DIR)/asm/plugPikiNakata/tekinteki.o\
 	$(BUILD_DIR)/asm/plugPikiNakata/tekiparameters.o\
