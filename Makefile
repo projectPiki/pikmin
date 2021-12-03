@@ -82,7 +82,7 @@ LDFLAGS := -map $(MAP) -fp hard -nodefaults
 CFLAGS  = -Cpp_exceptions off -O4,p -fp hard -proc gekko -nodefaults -RTTI on -msgstyle gcc $(INCLUDES)
 
 # for postprocess.py
-PROCFLAGS := -fprologue-fixup=old_stack
+PROCFLAGS := -fepilogue-fixup=old_stack
 
 $(BUILD_DIR)/src/plugPikiYamashita/TAIanimation.o: MWCC_VERSION := 1.0e
 $(BUILD_DIR)/src/TRK_MINNOW_DOLPHIN/serpoll.o: MWCC_VERSION := 1.0

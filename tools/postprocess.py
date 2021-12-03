@@ -27,7 +27,7 @@ BANNER = """
 #
 # 3) CodeWarrior versions below 2.3 used a different scheduler model.
 #    The script can currently adjust function epilogues with the old_stack option.
-#    -fprologue-fixup=[default=none, none, old_stack]
+#    -fepilogue-fixup=[default=none, none, old_stack]
 """
 
 import struct
@@ -318,8 +318,8 @@ def frontend(args):
                 do_ctor_realign = not negated
             elif arg == 'symbol-fixup':
                 do_symbol_fixup = not negated
-            elif arg.startswith('prologue-fixup='):
-                do_old_stack = arg[len('prologue-fixup='):] == 'old_stack'
+            elif arg.startswith('epilogue-fixup='):
+                do_old_stack = arg[len('epilogue-fixup='):] == 'old_stack'
             else:
                 print("Unknown argument: %s" % arg)
         elif arg.startswith('-'):
