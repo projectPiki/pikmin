@@ -962,7 +962,6 @@ __vt__22TekiPikiStateCondition:
 	.4byte __RTTI__22TekiPikiStateCondition
 	.4byte 0
 	.4byte satisfy__22TekiPikiStateConditionFP8Creature
-	.4byte 0
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
