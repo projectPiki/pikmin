@@ -115,7 +115,7 @@ tools:
 	$(MAKE) -C tools
 
 # ELF creation makefile instructions
-$(ELF): $(O_FILES) $(LDSCRIPT)
+$(ELF): $(O_FILES) $(E_FILES) $(LDSCRIPT)
 	@echo $(O_FILES) > build/o_files
 	$(LD) $(LDFLAGS) -o $@ -lcf $(LDSCRIPT) @build/o_files
 
