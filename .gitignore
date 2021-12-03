@@ -20,6 +20,7 @@
 *.7z
 *.bat
 build
+epilogue
 tools/mwcc_compiler/
 *.sln
 *.vcxproj

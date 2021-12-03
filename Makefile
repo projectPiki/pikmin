@@ -15,11 +15,6 @@ VERSION := usa.1
 
 BUILD_DIR := build/$(NAME).$(VERSION)
 
-SRC_DIRS := $(shell find src/ -type f -name '*.c')
-SRC_DIRS += $(shell find src/ -type f -name '*.cp')
-SRC_DIRS += $(shell find src/ -type f -name '*.cpp')
-ASM_DIRS := $(shell find asm/ -type f -name '*.s')
-
 # Inputs
 S_FILES := $(wildcard asm/*.s)
 C_FILES := $(wildcard src/*.c)
@@ -49,7 +44,7 @@ ifeq ($(WINDOWS),1)
   AS      := $(DEVKITPPC)/bin/powerpc-eabi-as.exe
   CPP     := $(DEVKITPPC)/bin/powerpc-eabi-cpp.exe -P
 else
-  WINE := wine
+  WINE ?= wine
   AS      := $(DEVKITPPC)/bin/powerpc-eabi-as
   CPP     := $(DEVKITPPC)/bin/powerpc-eabi-cpp -P
 endif
@@ -86,7 +81,7 @@ default: all
 
 all: $(DOL)
 
-ALL_DIRS := build $(BUILD_DIR) $(addprefix $(BUILD_DIR)/,$(SRC_DIRS) $(ASM_DIRS))
+ALL_DIRS := $(sort $(dir $(O_FILES)))
 
 # Make sure build directory exists before compiling anything
 DUMMY != mkdir -p $(ALL_DIRS)
