@@ -2,7 +2,7 @@
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .global JAC_DAC_RATE
 JAC_DAC_RATE:
-	.4byte 0x46FA3900
+	.float 32028.5
 .global JAC_SUBFRAMES
 JAC_SUBFRAMES:
 	.4byte 0x00000007
@@ -14,11 +14,13 @@ DAC_SIZE:
 	.4byte 0x00000460
 .global DSP_MIXERLEVEL
 DSP_MIXERLEVEL:
-	.4byte 0x40000000
+	.2byte 0x4000
+	.2byte 0x0000
 	.4byte 0x00000000
 .global MAX_MIXERLEVEL
 MAX_MIXERLEVEL:
-	.4byte 0x2EE00000
+	.2byte 0x2EE0
+	.2byte 0x0000
 .global JAC_SYSTEM_OUTPUT_MODE
 JAC_SYSTEM_OUTPUT_MODE:
 	.4byte 0x00000001
@@ -101,36 +103,36 @@ bgm5_set:
 	.4byte 0x0A780AFA
 .global bgm0_volset
 bgm0_volset:
-	.4byte 0x3F000000
-	.4byte 0x3E19999A
+	.float 0.5
+	.float 0.15
 .global bgm1_volset
 bgm1_volset:
-	.4byte 0x3F000000
-	.4byte 0x3E19999A
+	.float 0.5
+	.float 0.15
 .global bgm2_volset
 bgm2_volset:
-	.4byte 0x3F000000
-	.4byte 0x3E19999A
+	.float 0.5
+	.float 0.15
 .global bgm3_volset
 bgm3_volset:
-	.4byte 0x3F000000
-	.4byte 0x3E19999A
+	.float 0.5
+	.float 0.15
 .global bgm4_volset
 bgm4_volset:
-	.4byte 0x3F000000
-	.4byte 0x3E19999A
+	.float 0.5
+	.float 0.15
 .global bgm5_volset
 bgm5_volset:
-	.4byte 0x3F0CCCCD
-	.4byte 0x3E19999A
+	.float 0.55
+	.float 0.15
 .global cresult_volset
 cresult_volset:
-	.4byte 0x3EB33333
-	.4byte 0x3E19999A
+	.float 0.35
+	.float 0.15
 .global last_bgm_level
 last_bgm_level:
-	.4byte 0xFF000000
-	.4byte 0x00000000
+	.byte 0xFF
+	.balign 8
 .global current_scene
 current_scene:
 	.4byte 0xFFFFFFFF
@@ -204,30 +206,38 @@ hvqm_first:
 	.4byte 0x00000000
 .global lbl_803DCE70
 lbl_803DCE70:
-	.4byte 0x3C4E6F64
-	.4byte 0x653E0000
-	.4byte 0x42617365
-	.4byte 0x41707000
-	.4byte 0x414E6F64
-	.4byte 0x65000000
+	.asciz "<Node>"
+.balign 4
+lbl_803DCE78:
+	.asciz "BaseApp"
+.balign 4
+lbl_803DCE80:
+	.asciz "ANode"
+.balign 4
 	.4byte 0x803DCE80
 	.4byte 0x00000000
 	.4byte 0x802272E8
 	.4byte 0x802272F4
-	.4byte 0x4E6F6465
-	.4byte 0x00000000
+.balign 4
+lbl_803DCE98:
+	.asciz "Node"
+.balign 4
 	.4byte 0x803DCE98
 	.4byte 0x80227300
 .global __RTTI__7BaseApp
 __RTTI__7BaseApp:
 	.4byte 0x803DCE78
 	.4byte 0x80227314
-	.4byte 0x53747265
-	.4byte 0x616D0000
+.balign 4
+lbl_803DCEB0:
+	.asciz "Stream"
+.balign 4
 	.4byte 0x803DCEB0
 	.4byte 0
-	.4byte 0x53747265
-	.4byte 0x616D0000
+.balign 4
+lbl_803DCEC0:
+	.asciz "Stream"
+.balign 4
 	.4byte 0x803DCEC0
 	.4byte 0
 	.4byte 0x80227430
@@ -244,50 +254,55 @@ lbl_803DCEE4:
 	.float 1.0
 .global lbl_803DCEE8
 lbl_803DCEE8:
-	.4byte 0x00000000
+	.float 0.0
 .global lbl_803DCEEC
 lbl_803DCEEC:
-	.4byte 0x00000000
+	.float 0.0
 .global lbl_803DCEF0
 lbl_803DCEF0:
-	.4byte 0x00000000
+	.float 0.0
 .global lbl_803DCEF4
 lbl_803DCEF4:
-	.4byte 0x00000000
+	.float 0.0
 .global lbl_803DCEF8
 lbl_803DCEF8:
-	.4byte 0x00000000
+	.float 0.0
 .global lbl_803DCEFC
 lbl_803DCEFC:
-	.4byte 0x00000000
+	.float 0.0
 .global lbl_803DCF00
 lbl_803DCF00:
-	.4byte 0x00000000
+	.float 0.0
 .global lbl_803DCF04
 lbl_803DCF04:
-	.4byte 0x00000000
+	.float 0.0
 .global lbl_803DCF08
 lbl_803DCF08:
-	.4byte 0x00000000
+	.float 0.0
 .global lbl_803DCF0C
 lbl_803DCF0C:
-	.4byte 0x00000000
+	.float 0.0
 .global lbl_803DCF10
 lbl_803DCF10:
-	.4byte 0x00000000
-	.4byte 0x4E6F726D
-	.4byte 0x616C0000
-	.4byte 0x456E7669
-	.4byte 0x726F6E00
+	.float 0.0
+.balign 4
+lbl_803DCF14:
+	.asciz "Normal"
+.balign 4
+lbl_803DCF1C:
+	.asciz "Environ"
+.balign 4
 .global lbl_803DCF24
 lbl_803DCF24:
 	.4byte 0x00000000
-	.4byte 0x494E5641
-	.4byte 0x4C494400
+.balign 4
+lbl_803DCF28:
+	.asciz "INVALID"
+.balign 4
 .global lbl_803DCF30
 lbl_803DCF30:
-	.4byte 0x25733A25
-	.4byte 0x64000000
+	.asciz "%s:%d"
+.balign 4
 .global lbl_803DCF38
 lbl_803DCF38:
 	.float 1.0
@@ -299,16 +314,16 @@ lbl_803DCF40:
 	.float 1.0
 .global lbl_803DCF44
 lbl_803DCF44:
-	.4byte 0x00000000
+	.float 0.0
 .global lbl_803DCF48
 lbl_803DCF48:
-	.4byte 0x00000000
+	.float 0.0
 .global lbl_803DCF4C
 lbl_803DCF4C:
-	.4byte 0x00000000
+	.float 0.0
 .global lbl_803DCF50
 lbl_803DCF50:
-	.4byte 0x00000000
+	.float 0.0
 .global lbl_803DCF54
 lbl_803DCF54:
 	.float 1.0
@@ -320,30 +335,32 @@ lbl_803DCF5C:
 	.float 1.0
 .global lbl_803DCF60
 lbl_803DCF60:
-	.4byte 0x00000000
+	.float 0.0
 .global lbl_803DCF64
 lbl_803DCF64:
-	.4byte 0x00000000
+	.float 0.0
 .global lbl_803DCF68
 lbl_803DCF68:
-	.4byte 0x00000000
+	.float 0.0
 .global lbl_803DCF6C
 lbl_803DCF6C:
-	.4byte 0x00000000
+	.float 0.0
 .global __RTTI__9GfxObject
 __RTTI__9GfxObject:
-	.4byte 0x802280B4
+	.4byte lbl_802280B4
 	.4byte 0
-	.4byte 0x54657874
-	.4byte 0x75726500
+.balign 4
+lbl_803DCF78:
+	.asciz "Texture"
+.balign 4
 .global __RTTI__7Texture
 __RTTI__7Texture:
-	.4byte 0x803DCF78
-	.4byte 0x802280C0
+	.4byte lbl_803DCF78
+	.4byte lbl_802280C0
 .global __RTTI__12CacheTexture
 __RTTI__12CacheTexture:
-	.4byte 0x802280A4
-	.4byte 0x802280CC
+	.4byte lbl_802280A4
+	.4byte lbl_802280CC
 	.4byte 0x54657841
 	.4byte 0x74747200
 	.4byte 0x414E6F64

@@ -5472,30 +5472,37 @@ btitexFmts:
 	.4byte 0x803DCF28
 	.4byte 0x803DCF28
 	.4byte 0x8022802C
-	.4byte 0x47585F54
-	.4byte 0x465F4334
-	.4byte 0x00000000
-	.4byte 0x47585F54
-	.4byte 0x465F4338
-	.4byte 0x00000000
-	.4byte 0x47585F54
-	.4byte 0x465F4331
-	.4byte 0x34583200
+.balign 4
+lbl_80228074:
+	.asciz "GX_TF_C4"
+.balign 4
+lbl_80228080:
+	.asciz "GX_TF_C8"
+.balign 4
+lbl_8022808C:
+	.asciz "GX_TF_C14X2"
+.balign 4
 .global btipalFmts
 btipalFmts:
-	.4byte 0x80228074
-	.4byte 0x80228080
-	.4byte 0x8022808C
-	.4byte 0x43616368
-	.4byte 0x65546578
-	.4byte 0x74757265
-	.4byte 0x00000000
-	.4byte 0x4766784F
-	.4byte 0x626A6563
-	.4byte 0x74000000
+	.4byte lbl_80228074
+	.4byte lbl_80228080
+	.4byte lbl_8022808C
+.balign 4
+.global lbl_802280A4
+lbl_802280A4:
+	.asciz "CacheTexture"
+.balign 4
+.global lbl_802280B4
+lbl_802280B4:
+	.asciz "GfxObject"
+.balign 4
+.global lbl_802280C0
+lbl_802280C0:
 	.4byte 0x803DCF70
 	.4byte 0x00000000
 	.4byte 0x00000000
+.global lbl_802280CC
+lbl_802280CC:
 	.4byte 0x803DCF70
 	.4byte 0x00000000
 	.4byte 0x803DCF80
