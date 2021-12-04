@@ -2997,23 +2997,3 @@ lbl_803EA918:
 "@1697_2":
 	.4byte 0x43300000
 	.4byte 0x80000000
-.global lbl_803EA928
-lbl_803EA928:
-	.float 1.0
-.global lbl_803EA92C
-lbl_803EA92C:
-	.4byte 0x46FFFE00
-.global lbl_803EA930
-lbl_803EA930:
-	.4byte 0x40000000
-	.4byte 0x00000000
-.global "@1688"
-"@1688":
-	.4byte 0x43300000
-	.4byte 0x80000000
-.global lbl_803EA940
-lbl_803EA940:
-	.4byte 0x00000000
-.global lbl_803EA944
-lbl_803EA944:
-	.4byte 0x3DCCCCCD

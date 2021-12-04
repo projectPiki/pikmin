@@ -15298,11 +15298,3 @@ __RTTI__21TaiTimerElapsedAction:
 __RTTI__19TaiResetTimerAction:
 	.4byte 0x802CC9EC
 	.4byte 0x802CCA00
-	.4byte 0x802CCA84
-	.4byte 0
-	.4byte 0x802CCA90
-	.4byte 0x802CCAA0
-.global __RTTI__20TaiWaitTurningAction
-__RTTI__20TaiWaitTurningAction:
-	.4byte 0x802CCA6C
-	.4byte 0x802CCAAC
