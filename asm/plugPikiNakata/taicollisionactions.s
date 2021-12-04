@@ -29,10 +29,10 @@
 	.4byte 0x73696f6e
 	.4byte 0x41637469
 	.4byte 0x6f6e0000
-	.4byte 0x803e3778
+	.4byte 0x803E3778
 	.4byte 0
 	.4byte 0
-	.4byte 0x803e3778
+	.4byte 0x803E3778
 	.4byte 0
 	.4byte __RTTI__26TaiCreatureCollisionAction
 	.4byte 0
@@ -52,7 +52,7 @@ __vt__26TaiTekiTypeCollisionAction:
 	.4byte 0x73696f6e
 	.4byte 0x41637469
 	.4byte 0x6f6e0000
-	.4byte 0x803e3778
+	.4byte 0x803E3778
 	.4byte 0
 	.4byte __RTTI__26TaiCreatureCollisionAction
 	.4byte 0
@@ -72,7 +72,7 @@ __vt__22TaiNaviCollisionAction:
 	.4byte 0x73696f6e
 	.4byte 0x41637469
 	.4byte 0x6f6e0000
-	.4byte 0x803e3778
+	.4byte 0x803E3778
 	.4byte 0
 	.4byte __RTTI__26TaiCreatureCollisionAction
 	.4byte 0
@@ -101,7 +101,7 @@ __vt__26TaiCreatureCollisionAction:
 	.4byte 0x73696f6e
 	.4byte 0x41637469
 	.4byte 0x6f6e0000
-	.4byte 0x803e3778
+	.4byte 0x803E3778
 	.4byte 0
 	.4byte 0
 .global __vt__22TaiWallCollisionAction
@@ -120,7 +120,7 @@ __vt__22TaiWallCollisionAction:
 	.4byte 0x6f6e4163
 	.4byte 0x74696f6e
 	.4byte 0
-	.4byte 0x803e3778
+	.4byte 0x803E3778
 	.4byte 0
 	.4byte 0
 .global __vt__24TaiGroundCollisionAction
@@ -136,7 +136,7 @@ __vt__24TaiGroundCollisionAction:
 	.4byte 0x6f756e63
 	.4byte 0x65416374
 	.4byte 0x696f6e00
-	.4byte 0x803e3778
+	.4byte 0x803E3778
 	.4byte 0
 	.4byte 0
 .global __vt__15TaiBounceAction

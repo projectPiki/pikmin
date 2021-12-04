@@ -529,7 +529,7 @@ AtanTable:
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .global __RTTI__5NLine
 __RTTI__5NLine:
-	.4byte 0x803e3038
+	.4byte 0x803E3038
 	.4byte 0
 	.4byte 0x4e506c61
 	.4byte 0x6e650000

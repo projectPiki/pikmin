@@ -915,14 +915,14 @@ __ct__8NaviPropFv:
 	.4byte 0x69766572
 	.4byte 0x3c50696b
 	.4byte 0x693e0000
-	.4byte 0x803e043c
+	.4byte 0x803E043c
 	.4byte 0
 	.4byte 0
-	.4byte 0x803e0434
+	.4byte 0x803E0434
 	.4byte 0x14
-	.4byte 0x803e043c
+	.4byte 0x803E043c
 	.4byte 0
-	.4byte 0x803e044c
+	.4byte 0x803E044c
 	.4byte 0
 	.4byte 0
 .global __vt__12ActFormation
@@ -985,7 +985,7 @@ __vt__12ActFormation:
 	.4byte 0x802B6828
 .global __RTTI__7ActMine
 __RTTI__7ActMine:
-	.4byte 0x803e03d8
+	.4byte 0x803E03d8
 	.4byte 0x802b6834
 .global lbl_803E0408
 lbl_803E0408:

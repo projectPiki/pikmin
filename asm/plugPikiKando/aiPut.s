@@ -2189,12 +2189,12 @@ lbl_800FF61C:
 	.4byte 0x69766572
 	.4byte 0x3c50696b
 	.4byte 0x693e0000
-	.4byte 0x803e06d8
+	.4byte 0x803E06d8
 	.4byte 0
 	.4byte 0
-	.4byte 0x803e06d8
+	.4byte 0x803E06d8
 	.4byte 0
-	.4byte 0x803e06e8
+	.4byte 0x803E06e8
 	.4byte 0
 	.4byte 0
 .global __vt__10ActPutItem
@@ -2232,11 +2232,11 @@ __vt__10ActPutItem:
 	.4byte 0x4b65794c
 	.4byte 0x69737465
 	.4byte 0x6e657200
-	.4byte 0x803e06f8
+	.4byte 0x803E06f8
 	.4byte 0x28
-	.4byte 0x803e06d8
+	.4byte 0x803E06d8
 	.4byte 0
-	.4byte 0x803e06e8
+	.4byte 0x803E06e8
 	.4byte 0
 	.4byte 0
 .global __vt__10ActPutBomb
@@ -2312,7 +2312,7 @@ __vt__10ActPutBomb:
 	.4byte 0x802B740C
 .global __RTTI__7ActPush
 __RTTI__7ActPush:
-	.4byte 0x803e0648
+	.4byte 0x803E0648
 	.4byte 0x802b7418
 .global lbl_803E0678
 lbl_803E0678:

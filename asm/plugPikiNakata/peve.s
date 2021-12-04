@@ -119,12 +119,12 @@ __vt__11NVector3fIO:
 	.4byte 0x50657665
 	.4byte 0x4576656e
 	.4byte 0x74000000
-	.4byte 0x803e3358
+	.4byte 0x803E3358
 	.4byte 0
 	.4byte 0
-	.4byte 0x803e3358
+	.4byte 0x803E3358
 	.4byte 0
-	.4byte 0x803e3360
+	.4byte 0x803E3360
 	.4byte 0
 	.4byte 0
 .global __vt__15PeveSerialEvent
@@ -149,14 +149,14 @@ __vt__15PeveSerialEvent:
 	.4byte 0x6c6c656c
 	.4byte 0x4576656e
 	.4byte 0x74000000
-	.4byte 0x803e3358
+	.4byte 0x803E3358
 	.4byte 0
-	.4byte 0x803e3360
+	.4byte 0x803E3360
 	.4byte 0
 	.4byte 0
 .global __vt__17PeveParallelEvent
 __vt__17PeveParallelEvent:
-	.4byte 0x803e3370
+	.4byte 0x803E3370
 	.4byte 0
 	.4byte setChild__5NNodeFiP5NNode
 	.4byte addChild__5NNodeFP5NNode
@@ -173,7 +173,7 @@ __vt__17PeveParallelEvent:
 	.4byte setEventOptions__9PeveEventFi
 .global __vt__9PeveEvent
 __vt__9PeveEvent:
-	.4byte 0x803e3360
+	.4byte 0x803E3360
 	.4byte 0
 	.4byte setChild__5NNodeFiP5NNode
 	.4byte addChild__5NNodeFP5NNode

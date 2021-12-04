@@ -438,12 +438,12 @@ lbl_800F7ED8:
 	.4byte 0x69766572
 	.4byte 0x3c50696b
 	.4byte 0x693e0000
-	.4byte 0x803e039c
+	.4byte 0x803E039c
 	.4byte 0
 	.4byte 0
-	.4byte 0x803e039c
+	.4byte 0x803E039c
 	.4byte 0
-	.4byte 0x803e03ac
+	.4byte 0x803E03ac
 	.4byte 0
 	.4byte 0
 .global __vt__7ActExit

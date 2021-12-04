@@ -42,7 +42,7 @@ startMotion__10PcamCameraFii:
 	.4byte 0
 .global __vt__12RefCountable
 __vt__12RefCountable:
-	.4byte 0x803e14b0
+	.4byte 0x803E14b0
 	.4byte 0
 	.4byte addCntCallback__12RefCountableFv
 	.4byte subCntCallback__12RefCountableFv

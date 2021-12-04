@@ -54,7 +54,7 @@ __vt__26TaiPalmChangingColorAction:
 	.4byte 0x6c6c6574
 	.4byte 0x41637469
 	.4byte 0x6f6e0000
-	.4byte 0x803e3f20
+	.4byte 0x803E3f20
 	.4byte 0
 	.4byte 0
 .global __vt__26TaiPalmSettingPelletAction
@@ -72,7 +72,7 @@ __vt__26TaiPalmSettingPelletAction:
 	.4byte 0x6f776572
 	.4byte 0x41637469
 	.4byte 0x6f6e0000
-	.4byte 0x803e3f20
+	.4byte 0x803E3f20
 	.4byte 0
 	.4byte 0
 .global __vt__22TaiPalmSunflowerAction
@@ -91,7 +91,7 @@ __vt__22TaiPalmSunflowerAction:
 	.4byte 0x61676541
 	.4byte 0x6374696f
 	.4byte 0x6e000000
-	.4byte 0x803e3f20
+	.4byte 0x803E3f20
 	.4byte 0
 	.4byte 0
 .global __vt__25TaiPalmFlowerDamageAction
@@ -108,7 +108,7 @@ __vt__25TaiPalmFlowerDamageAction:
 	.4byte 0x726f7741
 	.4byte 0x6374696f
 	.4byte 0x6e000000
-	.4byte 0x803e3f20
+	.4byte 0x803E3f20
 	.4byte 0
 	.4byte 0
 .global __vt__17TaiPalmGrowAction
@@ -126,7 +126,7 @@ __vt__17TaiPalmGrowAction:
 	.4byte 0x6e674163
 	.4byte 0x74696f6e
 	.4byte 0
-	.4byte 0x803e3f20
+	.4byte 0x803E3f20
 	.4byte 0
 	.4byte 0
 .global __vt__20TaiPalmGrowingAction
@@ -148,7 +148,7 @@ __vt__20TaiPalmGrowingAction:
 	.4byte 0x6f74696f
 	.4byte 0x6e416374
 	.4byte 0x696f6e00
-	.4byte 0x803e3f20
+	.4byte 0x803E3f20
 	.4byte 0
 	.4byte 0
 	.4byte 0x54616944
@@ -156,14 +156,14 @@ __vt__20TaiPalmGrowingAction:
 	.4byte 0x696e6741
 	.4byte 0x6374696f
 	.4byte 0x6e000000
-	.4byte 0x803e3f20
+	.4byte 0x803E3f20
 	.4byte 0
-	.4byte 0x803e3f58
+	.4byte 0x803E3f58
 	.4byte 0
 	.4byte 0
-	.4byte 0x803e3f20
+	.4byte 0x803E3f20
 	.4byte 0
-	.4byte 0x803e3f58
+	.4byte 0x803E3f58
 	.4byte 0
 	.4byte __RTTI__17TaiDamagingAction
 	.4byte 0
@@ -186,14 +186,14 @@ __vt__21TaiPalmDamagingAction:
 	.4byte 0x79696e67
 	.4byte 0x41637469
 	.4byte 0x6f6e0000
-	.4byte 0x803e3f20
+	.4byte 0x803E3f20
 	.4byte 0
-	.4byte 0x803e3f58
+	.4byte 0x803E3f58
 	.4byte 0
 	.4byte 0
-	.4byte 0x803e3f20
+	.4byte 0x803E3f20
 	.4byte 0
-	.4byte 0x803e3f58
+	.4byte 0x803E3f58
 	.4byte 0
 	.4byte __RTTI__14TaiDyingAction
 	.4byte 0
@@ -212,9 +212,9 @@ __vt__18TaiPalmDyingAction:
 	.4byte 0x6f74696f
 	.4byte 0x6e416374
 	.4byte 0x696f6e00
-	.4byte 0x803e3f20
+	.4byte 0x803E3f20
 	.4byte 0
-	.4byte 0x803e3f58
+	.4byte 0x803E3f58
 	.4byte 0
 	.4byte 0
 .global __vt__19TaiPalmMotionAction
@@ -238,12 +238,12 @@ __vt__19TaiPalmMotionAction:
 	.4byte 0x436f6e64
 	.4byte 0x6974696f
 	.4byte 0x6e000000
-	.4byte 0x803e3f88
+	.4byte 0x803E3f88
 	.4byte 0
 	.4byte 0
-	.4byte 0x803e3f88
+	.4byte 0x803E3f88
 	.4byte 0
-	.4byte 0x803e3f90
+	.4byte 0x803E3f90
 	.4byte 0
 	.4byte 0
 	.4byte 0
@@ -254,9 +254,9 @@ __vt__19TaiPalmMotionAction:
 	.4byte 0x6f6e6469
 	.4byte 0x74696f6e
 	.4byte 0
-	.4byte 0x803e3f88
+	.4byte 0x803E3f88
 	.4byte 0
-	.4byte 0x803e3f90
+	.4byte 0x803E3f90
 	.4byte 0
 	.4byte 0
 	.4byte 0
@@ -279,12 +279,12 @@ __vt__19TaiPalmMotionAction:
 	.4byte 0x54616953
 	.4byte 0x74726174
 	.4byte 0x65677900
-	.4byte 0x803e3f98
+	.4byte 0x803E3f98
 	.4byte 0
 	.4byte 0
-	.4byte 0x803e3f98
+	.4byte 0x803E3f98
 	.4byte 0
-	.4byte 0x803e3fa0
+	.4byte 0x803E3fa0
 	.4byte 0
 	.4byte 0
 .global __vt__15TaiPalmStrategy
@@ -314,32 +314,32 @@ __vt__15TaiPalmStrategy:
 	.4byte 0x436f7265
 	.4byte 0x4e6f6465
 	.4byte 0
-	.4byte 0x803e3fb8
+	.4byte 0x803E3fb8
 	.4byte 0
 	.4byte 0
-	.4byte 0x803e3fb8
+	.4byte 0x803E3fb8
 	.4byte 0
-	.4byte 0x803e3fc0
+	.4byte 0x803E3fc0
 	.4byte 0
 	.4byte 0
 	.4byte 0x54656b69
 	.4byte 0x50617261
 	.4byte 0x6d657465
 	.4byte 0x72730000
-	.4byte 0x803e3fb8
+	.4byte 0x803E3fb8
 	.4byte 0
-	.4byte 0x803e3fc0
+	.4byte 0x803E3fc0
 	.4byte 0
-	.4byte 0x803e3fd0
+	.4byte 0x803E3fd0
 	.4byte 0
 	.4byte 0
-	.4byte 0x803e3fb8
+	.4byte 0x803E3fb8
 	.4byte 0
-	.4byte 0x803e3fc0
+	.4byte 0x803E3fc0
 	.4byte 0
-	.4byte 0x803e3fd0
+	.4byte 0x803E3fd0
 	.4byte 0
-	.4byte 0x803e3fd8
+	.4byte 0x803E3fd8
 	.4byte 0
 	.4byte 0
 .global __vt__17TaiPalmParameters
@@ -362,7 +362,7 @@ __vt__17TaiPalmParameters:
 	.4byte 0x802cb088
 	.4byte 0x4e6f6465
 	.4byte 0
-	.4byte 0x803e3ee4
+	.4byte 0x803E3ee4
 	.4byte 0x802cb094
 	.4byte 0x802cb0a8
 	.4byte 0x802cb0b8

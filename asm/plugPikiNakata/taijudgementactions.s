@@ -22,7 +22,7 @@
 	.4byte 0x54616941
 	.4byte 0x6374696f
 	.4byte 0x6e000000
-	.4byte 0x803e38a0
+	.4byte 0x803E38a0
 	.4byte 0
 	.4byte 0
 .global __vt__26TaiHasStickersOnBodyAction
@@ -41,7 +41,7 @@ __vt__26TaiHasStickersOnBodyAction:
 	.4byte 0x4d6f7574
 	.4byte 0x68416374
 	.4byte 0x696f6e00
-	.4byte 0x803e38a0
+	.4byte 0x803E38a0
 	.4byte 0
 	.4byte 0
 .global __vt__27TaiHasStickersInMouthAction
@@ -65,12 +65,12 @@ __vt__27TaiHasStickersInMouthAction:
 	.4byte 0x436f6e64
 	.4byte 0x6974696f
 	.4byte 0x6e000000
-	.4byte 0x803e38b8
+	.4byte 0x803E38b8
 	.4byte 0
 	.4byte 0
-	.4byte 0x803e38b8
+	.4byte 0x803E38b8
 	.4byte 0
-	.4byte 0x803e38c0
+	.4byte 0x803E38c0
 	.4byte 0
 	.4byte 0
 	.4byte 0
@@ -83,7 +83,7 @@ __vt__27TaiHasStickersInMouthAction:
 	.4byte 0x4e617669
 	.4byte 0x41637469
 	.4byte 0x6f6e0000
-	.4byte 0x803e38a0
+	.4byte 0x803E38a0
 	.4byte 0
 	.4byte 0
 .global __vt__26TaiTargetVisibleNaviAction
@@ -109,7 +109,7 @@ __vt__26TaiTargetVisibleNaviAction:
 	.4byte 0x50696b69
 	.4byte 0x41637469
 	.4byte 0x6f6e0000
-	.4byte 0x803e38a0
+	.4byte 0x803E38a0
 	.4byte 0
 	.4byte 0
 .global __vt__30TaiTargetVisibleNaviPikiAction
@@ -128,7 +128,7 @@ __vt__30TaiTargetVisibleNaviPikiAction:
 	.4byte 0x72794163
 	.4byte 0x74696f6e
 	.4byte 0
-	.4byte 0x803e38a0
+	.4byte 0x803E38a0
 	.4byte 0
 	.4byte 0
 .global __vt__24TaiInsideTerritoryAction
@@ -147,7 +147,7 @@ __vt__24TaiInsideTerritoryAction:
 	.4byte 0x6f727941
 	.4byte 0x6374696f
 	.4byte 0x6e000000
-	.4byte 0x803e38a0
+	.4byte 0x803E38a0
 	.4byte 0
 	.4byte 0
 .global __vt__25TaiOutsideTerritoryAction
@@ -164,7 +164,7 @@ __vt__25TaiOutsideTerritoryAction:
 	.4byte 0x744c6f73
 	.4byte 0x74416374
 	.4byte 0x696f6e00
-	.4byte 0x803e38a0
+	.4byte 0x803E38a0
 	.4byte 0
 	.4byte 0
 .global __vt__19TaiTargetLostAction
@@ -182,7 +182,7 @@ __vt__19TaiTargetLostAction:
 	.4byte 0x61726765
 	.4byte 0x74416374
 	.4byte 0x696f6e00
-	.4byte 0x803e38a0
+	.4byte 0x803E38a0
 	.4byte 0
 	.4byte 0
 .global __vt__23TaiSeparateTargetAction
@@ -200,7 +200,7 @@ __vt__23TaiSeparateTargetAction:
 	.4byte 0x72676574
 	.4byte 0x41637469
 	.4byte 0x6f6e0000
-	.4byte 0x803e38a0
+	.4byte 0x803E38a0
 	.4byte 0
 	.4byte 0
 .global __vt__22TaiContactTargetAction
@@ -218,7 +218,7 @@ __vt__22TaiContactTargetAction:
 	.4byte 0x72676574
 	.4byte 0x41637469
 	.4byte 0x6f6e0000
-	.4byte 0x803e38a0
+	.4byte 0x803E38a0
 	.4byte 0
 	.4byte 0
 .global __vt__22TaiVisibleTargetAction

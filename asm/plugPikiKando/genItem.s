@@ -808,7 +808,7 @@ __vt__13GenObjectItem:
 	.4byte 0x42617365
 	.4byte 0x5061726d
 	.4byte 0
-	.4byte 0x803e1a94
+	.4byte 0x803E1a94
 	.4byte 0
 	.4byte 0
 	.4byte 0

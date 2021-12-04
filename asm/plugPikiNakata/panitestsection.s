@@ -111,13 +111,13 @@ __vt__15PaniTestSection:
 	.4byte 0x4b65794c
 	.4byte 0x69737465
 	.4byte 0x6e657200
-	.4byte 0x803e31f8
+	.4byte 0x803E31f8
 	.4byte 0x20
-	.4byte 0x803e31c0
+	.4byte 0x803E31c0
 	.4byte 0
-	.4byte 0x803e31c8
+	.4byte 0x803E31c8
 	.4byte 0
-	.4byte 0x803e31d8
+	.4byte 0x803E31d8
 	.4byte 0
 	.4byte 0
 .global __vt__12PaniTestNode

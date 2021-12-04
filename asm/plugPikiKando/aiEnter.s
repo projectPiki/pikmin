@@ -650,12 +650,12 @@ __ct__11PikiHeadMgrFP7ItemMgr:
 	.4byte 0x69766572
 	.4byte 0x3c50696b
 	.4byte 0x693e0000
-	.4byte 0x803e02cc
+	.4byte 0x803E02cc
 	.4byte 0
 	.4byte 0
-	.4byte 0x803e02cc
+	.4byte 0x803E02cc
 	.4byte 0
-	.4byte 0x803e02dc
+	.4byte 0x803E02dc
 	.4byte 0
 	.4byte 0
 .global __vt__8ActEnter

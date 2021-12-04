@@ -82,10 +82,10 @@ __vt__24TaiChappyLegEffectAction:
 	.4byte 0x65644163
 	.4byte 0x74696f6e
 	.4byte 0
-	.4byte 0x803e3510
+	.4byte 0x803E3510
 	.4byte 0
 	.4byte 0
-	.4byte 0x803e3510
+	.4byte 0x803E3510
 	.4byte 0
 	.4byte __RTTI__16TaiSmashedAction
 	.4byte 0
@@ -111,12 +111,12 @@ __vt__22TaiChappySmashedAction:
 	.4byte 0x436f6e64
 	.4byte 0x6974696f
 	.4byte 0x6e000000
-	.4byte 0x803e3540
+	.4byte 0x803E3540
 	.4byte 0
 	.4byte 0
-	.4byte 0x803e3540
+	.4byte 0x803E3540
 	.4byte 0
-	.4byte 0x803e3548
+	.4byte 0x803E3548
 	.4byte 0
 	.4byte 0
 	.4byte 0
@@ -126,9 +126,9 @@ __vt__22TaiChappySmashedAction:
 	.4byte 0x4f72436f
 	.4byte 0x6e646974
 	.4byte 0x696f6e00
-	.4byte 0x803e3540
+	.4byte 0x803E3540
 	.4byte 0
-	.4byte 0x803e3548
+	.4byte 0x803E3548
 	.4byte 0
 	.4byte 0
 .global __vt__15TekiOrCondition
@@ -147,7 +147,7 @@ __vt__15TekiOrCondition:
 	.4byte 0x79437279
 	.4byte 0x41637469
 	.4byte 0x6f6e0000
-	.4byte 0x803e3510
+	.4byte 0x803E3510
 	.4byte 0
 	.4byte 0
 .global __vt__18TaiChappyCryAction
@@ -163,7 +163,7 @@ __vt__18TaiChappyCryAction:
 	.4byte 0x6e636541
 	.4byte 0x6374696f
 	.4byte 0x6e000000
-	.4byte 0x803e3510
+	.4byte 0x803E3510
 	.4byte 0
 	.4byte 0
 .global __vt__13TaiOnceAction
@@ -179,7 +179,7 @@ __vt__13TaiOnceAction:
 	.4byte 0x6e644163
 	.4byte 0x74696f6e
 	.4byte 0
-	.4byte 0x803e3510
+	.4byte 0x803E3510
 	.4byte 0
 	.4byte 0
 .global __vt__12TaiAndAction
@@ -210,12 +210,12 @@ __vt__12TaiAndAction:
 	.4byte 0x54616953
 	.4byte 0x74726174
 	.4byte 0x65677900
-	.4byte 0x803e3570
+	.4byte 0x803E3570
 	.4byte 0
 	.4byte 0
-	.4byte 0x803e3570
+	.4byte 0x803E3570
 	.4byte 0
-	.4byte 0x803e3578
+	.4byte 0x803E3578
 	.4byte 0
 	.4byte 0
 .global __vt__17TaiChappyStrategy
@@ -239,32 +239,32 @@ __vt__17TaiChappyStrategy:
 	.4byte 0x436f7265
 	.4byte 0x4e6f6465
 	.4byte 0
-	.4byte 0x803e3590
+	.4byte 0x803E3590
 	.4byte 0
 	.4byte 0
-	.4byte 0x803e3590
+	.4byte 0x803E3590
 	.4byte 0
-	.4byte 0x803e3598
+	.4byte 0x803E3598
 	.4byte 0
 	.4byte 0
 	.4byte 0x54656b69
 	.4byte 0x50617261
 	.4byte 0x6d657465
 	.4byte 0x72730000
-	.4byte 0x803e3590
+	.4byte 0x803E3590
 	.4byte 0
-	.4byte 0x803e3598
+	.4byte 0x803E3598
 	.4byte 0
-	.4byte 0x803e35a8
+	.4byte 0x803E35a8
 	.4byte 0
 	.4byte 0
-	.4byte 0x803e3590
+	.4byte 0x803E3590
 	.4byte 0
-	.4byte 0x803e3598
+	.4byte 0x803E3598
 	.4byte 0
-	.4byte 0x803e35a8
+	.4byte 0x803E35a8
 	.4byte 0
-	.4byte 0x803e35b0
+	.4byte 0x803E35b0
 	.4byte 0
 	.4byte 0
 .global __vt__20TaiCatfishParameters
@@ -288,13 +288,13 @@ __vt__20TaiCatfishParameters:
 	.4byte 0x72616d65
 	.4byte 0x74657273
 	.4byte 0
-	.4byte 0x803e3590
+	.4byte 0x803E3590
 	.4byte 0
-	.4byte 0x803e3598
+	.4byte 0x803E3598
 	.4byte 0
-	.4byte 0x803e35a8
+	.4byte 0x803E35a8
 	.4byte 0
-	.4byte 0x803e35b0
+	.4byte 0x803E35b0
 	.4byte 0
 	.4byte 0
 .global __vt__24TaiBlackChappyParameters
@@ -316,13 +316,13 @@ __vt__24TaiBlackChappyParameters:
 	.4byte 0x79506172
 	.4byte 0x616d6574
 	.4byte 0x65727300
-	.4byte 0x803e3590
+	.4byte 0x803E3590
 	.4byte 0
-	.4byte 0x803e3598
+	.4byte 0x803E3598
 	.4byte 0
-	.4byte 0x803e35a8
+	.4byte 0x803E35a8
 	.4byte 0
-	.4byte 0x803e35b0
+	.4byte 0x803E35b0
 	.4byte 0
 	.4byte 0
 .global __vt__19TaiChappyParameters
@@ -413,7 +413,7 @@ __RTTI__17TaiChappyStrategy:
 	.4byte 0x802c6e88
 	.4byte 0x414e6f64
 	.4byte 0x65000000
-	.4byte 0x803e3588
+	.4byte 0x803E3588
 	.4byte 0
 	.4byte 0x802c6edc
 	.4byte 0x802c6ee8

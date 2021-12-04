@@ -151,49 +151,49 @@ lbl_801369E0:
 	.4byte 0x43726561
 	.4byte 0x74757265
 	.4byte 0
-	.4byte 0x803e1ef0
+	.4byte 0x803E1ef0
 	.4byte 0x8
-	.4byte 0x803e1ef8
+	.4byte 0x803E1ef8
 	.4byte 0
 	.4byte 0
 	.4byte 0x41494372
 	.4byte 0x65617475
 	.4byte 0x72650000
-	.4byte 0x803e1ee8
+	.4byte 0x803E1ee8
 	.4byte 0x2b8
-	.4byte 0x803e1ef0
+	.4byte 0x803E1ef0
 	.4byte 0x8
-	.4byte 0x803e1ef8
+	.4byte 0x803E1ef8
 	.4byte 0
-	.4byte 0x803e1f00
+	.4byte 0x803E1f00
 	.4byte 0
 	.4byte 0
 	.4byte 0x4974656d
 	.4byte 0x43726561
 	.4byte 0x74757265
 	.4byte 0
-	.4byte 0x803e1ee8
+	.4byte 0x803E1ee8
 	.4byte 0x2b8
-	.4byte 0x803e1ef0
+	.4byte 0x803E1ef0
 	.4byte 0x8
-	.4byte 0x803e1ef8
+	.4byte 0x803E1ef8
 	.4byte 0
-	.4byte 0x803e1f00
+	.4byte 0x803E1f00
 	.4byte 0
-	.4byte 0x803e1f08
+	.4byte 0x803E1f08
 	.4byte 0
 	.4byte 0
-	.4byte 0x803e1ee8
+	.4byte 0x803E1ee8
 	.4byte 0x2b8
-	.4byte 0x803e1ef0
+	.4byte 0x803E1ef0
 	.4byte 0x8
-	.4byte 0x803e1ef8
+	.4byte 0x803E1ef8
 	.4byte 0
-	.4byte 0x803e1f00
+	.4byte 0x803E1f00
 	.4byte 0
-	.4byte 0x803e1f08
+	.4byte 0x803E1f08
 	.4byte 0
-	.4byte 0x803e1f10
+	.4byte 0x803E1f10
 	.4byte 0
 	.4byte 0
 .global __vt__8MizuItem
@@ -300,7 +300,7 @@ __RTTI__19NaviDemoSunsetStart:
 	.4byte 0x72756d00
 .global __RTTI__7Fulcrum
 __RTTI__7Fulcrum:
-	.4byte 0x803e1ec8
+	.4byte 0x803E1ec8
 	.4byte 0x802bf630
 .global __RTTI__11BombGenItem
 __RTTI__11BombGenItem:

@@ -87,7 +87,7 @@ __vt__17GenObjectMapParts:
 	.4byte 0x42617365
 	.4byte 0x5061726d
 	.4byte 0
-	.4byte 0x803e2af4
+	.4byte 0x803E2af4
 	.4byte 0
 	.4byte 0
 	.4byte 0
@@ -98,7 +98,7 @@ __vt__17GenObjectMapParts:
 	.4byte 0x5061726d
 	.4byte 0x3c696e74
 	.4byte 0x3e000000
-	.4byte 0x803e2af4
+	.4byte 0x803E2af4
 	.4byte 0
 	.4byte 0
 	.4byte 0
@@ -121,7 +121,7 @@ __vt__17GenObjectMapParts:
 	.4byte 0x802C2F78
 .global __RTTI__7NaviMgr
 __RTTI__7NaviMgr:
-	.4byte 0x803e29d8
+	.4byte 0x803E29d8
 	.4byte 0x802c2fa4
 .global lbl_803E2A28
 lbl_803E2A28:

@@ -26,17 +26,17 @@
 	.4byte 0x6c6f7564
 	.4byte 0x4f664475
 	.4byte 0x73740000
-	.4byte 0x803e37b8
+	.4byte 0x803E37b8
 	.4byte 0
 	.4byte 0
-	.4byte 0x803e37b8
+	.4byte 0x803E37b8
 	.4byte 0
-	.4byte 0x803e37c0
+	.4byte 0x803E37c0
 	.4byte 0
 	.4byte 0
 .global __vt__20TaiJointEffectAction
 __vt__20TaiJointEffectAction:
-	.4byte 0x803e37c8
+	.4byte 0x803E37c8
 	.4byte 0
 	.4byte start__18TAIAeffCloudOfDustFR4Teki
 	.4byte finish__9TaiActionFR4Teki
@@ -60,7 +60,7 @@ __vt__20TaiJointEffectAction:
 	.4byte 0x746f7241
 	.4byte 0x6374696f
 	.4byte 0x6e000000
-	.4byte 0x803e37b8
+	.4byte 0x803E37b8
 	.4byte 0
 	.4byte 0
 .global __vt__33TaiStopGenParticleGeneratorAction
@@ -81,7 +81,7 @@ __vt__33TaiStopGenParticleGeneratorAction:
 	.4byte 0x61746f72
 	.4byte 0x41637469
 	.4byte 0x6f6e0000
-	.4byte 0x803e37b8
+	.4byte 0x803E37b8
 	.4byte 0
 	.4byte 0
 .global __vt__34TaiStartGenParticleGeneratorAction
@@ -97,7 +97,7 @@ __vt__34TaiStartGenParticleGeneratorAction:
 	.4byte 0x66666563
 	.4byte 0x74416374
 	.4byte 0x696f6e00
-	.4byte 0x803e37b8
+	.4byte 0x803E37b8
 	.4byte 0
 	.4byte 0
 .global __vt__15TaiEffectAction

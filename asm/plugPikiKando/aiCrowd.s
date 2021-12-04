@@ -2068,14 +2068,14 @@ lbl_800F63C8:
 	.4byte 0x69766572
 	.4byte 0x3c50696b
 	.4byte 0x693e0000
-	.4byte 0x803e023c
+	.4byte 0x803E023c
 	.4byte 0
 	.4byte 0
 	.4byte __RTTI__17SlotChangeListner
 	.4byte 0x80
-	.4byte 0x803e023c
+	.4byte 0x803E023c
 	.4byte 0
-	.4byte 0x803e024c
+	.4byte 0x803E024c
 	.4byte 0
 	.4byte 0
 .global __vt__8ActCrowd

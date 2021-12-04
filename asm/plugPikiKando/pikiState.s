@@ -10704,7 +10704,7 @@ __vt__16PikiEmotionState:
 	.4byte 0x44656164
 	.4byte 0x53746174
 	.4byte 0x65000000
-	.4byte 0x803e105c
+	.4byte 0x803E105c
 	.4byte 0
 	.4byte "__RTTI__13AState<4Piki>"
 	.4byte 0
@@ -10744,7 +10744,7 @@ __vt__13PikiDeadState:
 	.4byte 0x4479696e
 	.4byte 0x67537461
 	.4byte 0x74650000
-	.4byte 0x803e105c
+	.4byte 0x803E105c
 	.4byte 0
 	.4byte "__RTTI__13AState<4Piki>"
 	.4byte 0
@@ -10785,7 +10785,7 @@ __vt__14PikiDyingState:
 	.4byte 0x73656453
 	.4byte 0x74617465
 	.4byte 0
-	.4byte 0x803e105c
+	.4byte 0x803E105c
 	.4byte 0
 	.4byte "__RTTI__13AState<4Piki>"
 	.4byte 0
@@ -10826,7 +10826,7 @@ __vt__16PikiPressedState:
 	.4byte 0x4e756b69
 	.4byte 0x53746174
 	.4byte 0x65000000
-	.4byte 0x803e105c
+	.4byte 0x803E105c
 	.4byte 0
 	.4byte "__RTTI__13AState<4Piki>"
 	.4byte 0
@@ -10866,7 +10866,7 @@ __vt__17PikiAutoNukiState:
 	.4byte 0x4e756b61
 	.4byte 0x72655374
 	.4byte 0x61746500
-	.4byte 0x803e105c
+	.4byte 0x803E105c
 	.4byte 0
 	.4byte "__RTTI__13AState<4Piki>"
 	.4byte 0
@@ -10907,7 +10907,7 @@ __vt__15PikiNukareState:
 	.4byte 0x72655761
 	.4byte 0x69745374
 	.4byte 0x61746500
-	.4byte 0x803e105c
+	.4byte 0x803E105c
 	.4byte 0
 	.4byte "__RTTI__13AState<4Piki>"
 	.4byte 0
@@ -10947,7 +10947,7 @@ __vt__19PikiNukareWaitState:
 	.4byte 0x42757279
 	.4byte 0x53746174
 	.4byte 0x65000000
-	.4byte 0x803e105c
+	.4byte 0x803E105c
 	.4byte 0
 	.4byte "__RTTI__13AState<4Piki>"
 	.4byte 0
@@ -10988,7 +10988,7 @@ __vt__13PikiBuryState:
 	.4byte 0x50696b69
 	.4byte 0x53746174
 	.4byte 0x65000000
-	.4byte 0x803e105c
+	.4byte 0x803E105c
 	.4byte 0
 	.4byte "__RTTI__13AState<4Piki>"
 	.4byte 0
@@ -11028,7 +11028,7 @@ __vt__17PikiPushPikiState:
 	.4byte 0x50757368
 	.4byte 0x53746174
 	.4byte 0x65000000
-	.4byte 0x803e105c
+	.4byte 0x803E105c
 	.4byte 0
 	.4byte "__RTTI__13AState<4Piki>"
 	.4byte 0
@@ -11068,7 +11068,7 @@ __vt__13PikiPushState:
 	.4byte 0x57617665
 	.4byte 0x53746174
 	.4byte 0x65000000
-	.4byte 0x803e105c
+	.4byte 0x803E105c
 	.4byte 0
 	.4byte "__RTTI__13AState<4Piki>"
 	.4byte 0
@@ -11108,7 +11108,7 @@ __vt__13PikiWaveState:
 	.4byte 0x47726f77
 	.4byte 0x75705374
 	.4byte 0x61746500
-	.4byte 0x803e105c
+	.4byte 0x803E105c
 	.4byte 0
 	.4byte "__RTTI__13AState<4Piki>"
 	.4byte 0
@@ -11150,7 +11150,7 @@ __vt__15PikiGrowupState:
 	.4byte 0x616e6765
 	.4byte 0x53746174
 	.4byte 0x65000000
-	.4byte 0x803e105c
+	.4byte 0x803E105c
 	.4byte 0
 	.4byte "__RTTI__13AState<4Piki>"
 	.4byte 0
@@ -11190,7 +11190,7 @@ __vt__21PikiKinokoChangeState:
 	.4byte 0x47726f77
 	.4byte 0x53746174
 	.4byte 0x65000000
-	.4byte 0x803e105c
+	.4byte 0x803E105c
 	.4byte 0
 	.4byte "__RTTI__13AState<4Piki>"
 	.4byte 0
@@ -11230,7 +11230,7 @@ __vt__13PikiGrowState:
 	.4byte 0x466c7969
 	.4byte 0x6e675374
 	.4byte 0x61746500
-	.4byte 0x803e105c
+	.4byte 0x803E105c
 	.4byte 0
 	.4byte "__RTTI__13AState<4Piki>"
 	.4byte 0
@@ -11270,7 +11270,7 @@ __vt__15PikiFlyingState:
 	.4byte 0x456d6974
 	.4byte 0x53746174
 	.4byte 0x65000000
-	.4byte 0x803e105c
+	.4byte 0x803E105c
 	.4byte 0
 	.4byte "__RTTI__13AState<4Piki>"
 	.4byte 0
@@ -11312,7 +11312,7 @@ __vt__13PikiEmitState:
 	.4byte 0x67656453
 	.4byte 0x74617465
 	.4byte 0
-	.4byte 0x803e105c
+	.4byte 0x803E105c
 	.4byte 0
 	.4byte "__RTTI__13AState<4Piki>"
 	.4byte 0
@@ -11352,7 +11352,7 @@ __vt__20PikiWaterHangedState:
 	.4byte 0x48616e67
 	.4byte 0x65645374
 	.4byte 0x61746500
-	.4byte 0x803e105c
+	.4byte 0x803E105c
 	.4byte 0
 	.4byte "__RTTI__13AState<4Piki>"
 	.4byte 0
@@ -11392,7 +11392,7 @@ __vt__15PikiHangedState:
 	.4byte 0x476f4861
 	.4byte 0x6e675374
 	.4byte 0x61746500
-	.4byte 0x803e105c
+	.4byte 0x803E105c
 	.4byte 0
 	.4byte "__RTTI__13AState<4Piki>"
 	.4byte 0
@@ -11432,7 +11432,7 @@ __vt__15PikiGoHangState:
 	.4byte 0x436c6966
 	.4byte 0x66537461
 	.4byte 0x74650000
-	.4byte 0x803e105c
+	.4byte 0x803E105c
 	.4byte 0
 	.4byte "__RTTI__13AState<4Piki>"
 	.4byte 0
@@ -11472,7 +11472,7 @@ __vt__14PikiCliffState:
 	.4byte 0x46616c6c
 	.4byte 0x53746174
 	.4byte 0x65000000
-	.4byte 0x803e105c
+	.4byte 0x803E105c
 	.4byte 0
 	.4byte "__RTTI__13AState<4Piki>"
 	.4byte 0
@@ -11513,7 +11513,7 @@ __vt__13PikiFallState:
 	.4byte 0x4d65636b
 	.4byte 0x53746174
 	.4byte 0x65000000
-	.4byte 0x803e105c
+	.4byte 0x803E105c
 	.4byte 0
 	.4byte "__RTTI__13AState<4Piki>"
 	.4byte 0
@@ -11553,7 +11553,7 @@ __vt__17PikiFallMeckState:
 	.4byte 0x466c6f77
 	.4byte 0x6e537461
 	.4byte 0x74650000
-	.4byte 0x803e105c
+	.4byte 0x803E105c
 	.4byte 0
 	.4byte "__RTTI__13AState<4Piki>"
 	.4byte 0
@@ -11593,7 +11593,7 @@ __vt__14PikiFlownState:
 	.4byte 0x466c6963
 	.4byte 0x6b537461
 	.4byte 0x74650000
-	.4byte 0x803e105c
+	.4byte 0x803E105c
 	.4byte 0
 	.4byte "__RTTI__13AState<4Piki>"
 	.4byte 0
@@ -11633,7 +11633,7 @@ __vt__14PikiFlickState:
 	.4byte 0x42756c6c
 	.4byte 0x65745374
 	.4byte 0x61746500
-	.4byte 0x803e105c
+	.4byte 0x803E105c
 	.4byte 0
 	.4byte "__RTTI__13AState<4Piki>"
 	.4byte 0
@@ -11674,7 +11674,7 @@ __vt__15PikiBulletState:
 	.4byte 0x6c6f7765
 	.4byte 0x64537461
 	.4byte 0x74650000
-	.4byte 0x803e105c
+	.4byte 0x803E105c
 	.4byte 0
 	.4byte "__RTTI__13AState<4Piki>"
 	.4byte 0
@@ -11714,7 +11714,7 @@ __vt__18PikiSwallowedState:
 	.4byte 0x46697265
 	.4byte 0x64537461
 	.4byte 0x74650000
-	.4byte 0x803e105c
+	.4byte 0x803E105c
 	.4byte 0
 	.4byte "__RTTI__13AState<4Piki>"
 	.4byte 0
@@ -11754,7 +11754,7 @@ __vt__14PikiFiredState:
 	.4byte 0x42756262
 	.4byte 0x6c655374
 	.4byte 0x61746500
-	.4byte 0x803e105c
+	.4byte 0x803E105c
 	.4byte 0
 	.4byte "__RTTI__13AState<4Piki>"
 	.4byte 0
@@ -11794,7 +11794,7 @@ __vt__15PikiBubbleState:
 	.4byte 0x4b696e6f
 	.4byte 0x6b6f5374
 	.4byte 0x61746500
-	.4byte 0x803e105c
+	.4byte 0x803E105c
 	.4byte 0
 	.4byte "__RTTI__13AState<4Piki>"
 	.4byte 0
@@ -11848,7 +11848,7 @@ __vt__15PikiKinokoState:
 	.4byte 0x44726f77
 	.4byte 0x6e537461
 	.4byte 0x74650000
-	.4byte 0x803e105c
+	.4byte 0x803E105c
 	.4byte 0
 	.4byte "__RTTI__13AState<4Piki>"
 	.4byte 0
@@ -11888,7 +11888,7 @@ __vt__14PikiDrownState:
 	.4byte 0x4162736f
 	.4byte 0x72625374
 	.4byte 0x61746500
-	.4byte 0x803e105c
+	.4byte 0x803E105c
 	.4byte 0
 	.4byte "__RTTI__13AState<4Piki>"
 	.4byte 0
@@ -11928,7 +11928,7 @@ __vt__15PikiAbsorbState:
 	.4byte 0x4e6f726d
 	.4byte 0x616c5374
 	.4byte 0x61746500
-	.4byte 0x803e105c
+	.4byte 0x803E105c
 	.4byte 0
 	.4byte "__RTTI__13AState<4Piki>"
 	.4byte 0
@@ -11968,7 +11968,7 @@ __vt__15PikiNormalState:
 	.4byte 0x4c6f6f6b
 	.4byte 0x41745374
 	.4byte 0x61746500
-	.4byte 0x803e105c
+	.4byte 0x803E105c
 	.4byte 0
 	.4byte "__RTTI__13AState<4Piki>"
 	.4byte 0
@@ -12109,7 +12109,7 @@ __vt__16PikiStateMachine:
 	.4byte 0x802B8B34
 .global __RTTI__7PikiMgr
 __RTTI__7PikiMgr:
-	.4byte 0x803e0cd8
+	.4byte 0x803E0cd8
 	.4byte 0x802b8b60
 	.4byte 0x802b8c28
 	.4byte 0

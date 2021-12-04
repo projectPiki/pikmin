@@ -4616,18 +4616,18 @@ __vt__7BaseApp:
 	.4byte procCmd__7BaseAppFPc
 .global __vt__8CoreNode
 __vt__8CoreNode:
-	.4byte 0x803dce90
+	.4byte 0x803DCE90
 	.4byte 0
 	.4byte getAgeNodeType__5ANodeFv
 	.4byte read__8CoreNodeFR18RandomAccessStream
 .global __vt__5ANode
 __vt__5ANode:
-	.4byte 0x803dce88
+	.4byte 0x803DCE88
 	.4byte 0
 	.4byte getAgeNodeType__5ANodeFv
 .global __vt__6Stream
 __vt__6Stream:
-	.4byte 0x803dceb8
+	.4byte 0x803DCEB8
 	.4byte 0
 	.4byte readInt__6StreamFv
 	.4byte readByte__6StreamFv
@@ -4650,32 +4650,32 @@ __vt__6Stream:
 	.4byte getClosing__6StreamFv
 	.4byte flush__6StreamFv
 	.4byte 0x73747265
-	.4byte 0x616d4275
+	.4byte 0x616D4275
 	.4byte 0x66666572
-	.4byte 0x6564496e
-	.4byte 0x7075742e
+	.4byte 0x6564496E
+	.4byte 0x7075742E
 	.4byte 0x63707000
 	.4byte 0x73747265
-	.4byte 0x616d4275
+	.4byte 0x616D4275
 	.4byte 0x66666572
-	.4byte 0x6564496e
+	.4byte 0x6564496E
 	.4byte 0x70757400
 	.4byte 0x42756666
 	.4byte 0x65726564
-	.4byte 0x496e7075
+	.4byte 0x496E7075
 	.4byte 0x74537472
-	.4byte 0x65616d00
-	.4byte 0x52616e64
-	.4byte 0x6f6d4163
+	.4byte 0x65616D00
+	.4byte 0x52616E64
+	.4byte 0x6F6D4163
 	.4byte 0x63657373
 	.4byte 0x53747265
-	.4byte 0x616d0000
-	.4byte 0x803dcec8
+	.4byte 0x616D0000
+	.4byte 0x803DCEC8
 	.4byte 0
 	.4byte 0
-	.4byte 0x803dcec8
+	.4byte 0x803DCEC8
 	.4byte 0
-	.4byte 0x803dced0
+	.4byte 0x803DCED0
 	.4byte 0
 	.4byte 0
 .global __vt__19BufferedInputStream
@@ -4707,7 +4707,7 @@ __vt__19BufferedInputStream:
 	.4byte getLength__18RandomAccessStreamFv
 .global __vt__18RandomAccessStream
 __vt__18RandomAccessStream:
-	.4byte 0x803dced0
+	.4byte 0x803DCED0
 	.4byte 0
 	.4byte readInt__6StreamFv
 	.4byte readByte__6StreamFv
@@ -5506,15 +5506,15 @@ __vt__12CacheTexture:
 	.4byte attach__7TextureFv
 	.4byte detach__7TextureFv
 	.4byte makeResident__12CacheTextureFv
-	.4byte 0x436f7265
-	.4byte 0x4e6f6465
+	.4byte 0x436F7265
+	.4byte 0x4E6F6465
 	.4byte 0
-	.4byte 0x803dcfa0
+	.4byte 0x803DCFA0
 	.4byte 0
 	.4byte 0
-	.4byte 0x803dcfa0
+	.4byte 0x803DCFA0
 	.4byte 0
-	.4byte 0x803dcfa8
+	.4byte 0x803DCFA8
 	.4byte 0
 	.4byte 0
 .global __vt__7TexAttr
@@ -5523,9 +5523,9 @@ __vt__7TexAttr:
 	.4byte 0
 	.4byte getAgeNodeType__5ANodeFv
 	.4byte read__7TexAttrFR18RandomAccessStream
-	.4byte 0x803dcfa0
+	.4byte 0x803DCFA0
 	.4byte 0
-	.4byte 0x803dcfa8
+	.4byte 0x803DCFA8
 	.4byte 0
 	.4byte 0
 .global __vt__6TexImg
@@ -5597,22 +5597,22 @@ __vt__8Graphics:
 	.4byte 0
 	.4byte 0
 	.4byte perspPrintf__8GraphicsFP4FontR8Vector3fiiPce
-	.4byte 0x4d617465
-	.4byte 0x7269616c
-	.4byte 0x48616e64
-	.4byte 0x6c657200
+	.4byte 0x4D617465
+	.4byte 0x7269616C
+	.4byte 0x48616E64
+	.4byte 0x6C657200
 .global __vt__15MaterialHandler
 __vt__15MaterialHandler:
 	.4byte __RTTI__15MaterialHandler
 	.4byte 0
 	.4byte setMaterial__15MaterialHandlerFP8Material
 	.4byte setTexMatrix__15MaterialHandlerFb
-	.4byte 0x4d617465
-	.4byte 0x7269616c
+	.4byte 0x4D617465
+	.4byte 0x7269616C
 	.4byte 0
-	.4byte 0x803dcfa0
+	.4byte 0x803DCFA0
 	.4byte 0
-	.4byte 0x803dcfa8
+	.4byte 0x803DCFA8
 	.4byte 0
 	.4byte 0
 .global __vt__8Material
@@ -5623,8 +5623,8 @@ __vt__8Material:
 	.4byte read__8MaterialFR18RandomAccessStream
 	.4byte attach__8MaterialFv
 	.4byte 0
-	.4byte 0x67724c69
-	.4byte 0x6768742e
+	.4byte 0x67724C69
+	.4byte 0x6768742E
 	.4byte 0x63707000
 .global lbl_802282AC
 lbl_802282AC:
@@ -5890,19 +5890,19 @@ __vt__10MatobjInfo:
 	.4byte detach__10MatobjInfoFv
 .global __vt__10GfxobjInfo
 __vt__10GfxobjInfo:
-	.4byte 0x803dd114
+	.4byte 0x803DD114
 	.4byte 0
 	.4byte attach__10GfxobjInfoFv
 	.4byte detach__10GfxobjInfoFv
 	.4byte 0x42617365
 	.4byte 0x53686170
 	.4byte 0x65000000
-	.4byte 0x803dd12c
+	.4byte 0x803DD12C
 	.4byte 0
 	.4byte 0
-	.4byte 0x803dd12c
+	.4byte 0x803DD12C
 	.4byte 0
-	.4byte 0x803dd134
+	.4byte 0x803DD134
 	.4byte 0
 	.4byte 0
 .global __vt__9BaseShape
@@ -5916,27 +5916,27 @@ __vt__9BaseShape:
 	.4byte render__9BaseShapeFR8Graphics
 	.4byte render2d__9BaseShapeFR8Graphics
 	.4byte makeRouteGroup__9BaseShapeFv
-	.4byte 0x44656c65
+	.4byte 0x44656C65
 	.4byte 0x67617465
-	.4byte 0x323c4261
+	.4byte 0x323C4261
 	.4byte 0x73655368
-	.4byte 0x6170652c
-	.4byte 0x204a6f69
-	.4byte 0x6e74202a
-	.4byte 0x2c20756e
-	.4byte 0x7369676e
-	.4byte 0x6564206c
-	.4byte 0x6f6e673e
+	.4byte 0x6170652C
+	.4byte 0x204A6F69
+	.4byte 0x6E74202A
+	.4byte 0x2C20756E
+	.4byte 0x7369676E
+	.4byte 0x6564206C
+	.4byte 0x6F6E673E
 	.4byte 0
-	.4byte 0x4944656c
+	.4byte 0x4944656C
 	.4byte 0x65676174
-	.4byte 0x65323c4a
-	.4byte 0x6f696e74
-	.4byte 0x202a2c20
-	.4byte 0x756e7369
-	.4byte 0x676e6564
-	.4byte 0x206c6f6e
-	.4byte 0x673e0000
+	.4byte 0x65323C4A
+	.4byte 0x6F696E74
+	.4byte 0x202A2C20
+	.4byte 0x756E7369
+	.4byte 0x676E6564
+	.4byte 0x206C6F6E
+	.4byte 0x673E0000
 	.4byte "__RTTI__22IDelegate2<P5Joint,Ul>"
 	.4byte 0
 	.4byte 0
@@ -5950,12 +5950,12 @@ __vt__9BaseShape:
 	.4byte "__RTTI__22IDelegate2<P5Joint,Ul>"
 	.4byte 0
 	.4byte 0
-	.4byte 0x4c696768
-	.4byte 0x74466c61
+	.4byte 0x4C696768
+	.4byte 0x74466C61
 	.4byte 0x72650000
-	.4byte 0x803dd12c
+	.4byte 0x803DD12C
 	.4byte 0
-	.4byte 0x803dd134
+	.4byte 0x803DD134
 	.4byte 0
 	.4byte 0
 .global __vt__10LightFlare
@@ -5964,12 +5964,12 @@ __vt__10LightFlare:
 	.4byte 0
 	.4byte getAgeNodeType__5ANodeFv
 	.4byte read__8CoreNodeFR18RandomAccessStream
-	.4byte 0x4c696768
-	.4byte 0x7447726f
+	.4byte 0x4C696768
+	.4byte 0x7447726F
 	.4byte 0x75700000
-	.4byte 0x803dd12c
+	.4byte 0x803DD12C
 	.4byte 0
-	.4byte 0x803dd134
+	.4byte 0x803DD134
 	.4byte 0
 	.4byte 0
 .global __vt__10LightGroup
@@ -5978,12 +5978,12 @@ __vt__10LightGroup:
 	.4byte 0
 	.4byte getAgeNodeType__5ANodeFv
 	.4byte read__8CoreNodeFR18RandomAccessStream
-	.4byte 0x4f626a43
-	.4byte 0x6f6c6c49
-	.4byte 0x6e666f00
-	.4byte 0x803dd12c
+	.4byte 0x4F626A43
+	.4byte 0x6F6C6C49
+	.4byte 0x6E666F00
+	.4byte 0x803DD12C
 	.4byte 0
-	.4byte 0x803dd134
+	.4byte 0x803DD134
 	.4byte 0
 	.4byte 0
 .global __vt__11ObjCollInfo
@@ -5992,17 +5992,17 @@ __vt__11ObjCollInfo:
 	.4byte 0
 	.4byte getAgeNodeType__5ANodeFv
 	.4byte read__8CoreNodeFR18RandomAccessStream
-	.4byte 0x416e696d
+	.4byte 0x416E696D
 	.4byte 0x44617461
 	.4byte 0
-	.4byte 0x803dd12c
+	.4byte 0x803DD12C
 	.4byte 0
-	.4byte 0x803dd134
+	.4byte 0x803DD134
 	.4byte 0
 	.4byte 0
-	.4byte 0x803dd12c
+	.4byte 0x803DD12C
 	.4byte 0
-	.4byte 0x803dd134
+	.4byte 0x803DD134
 	.4byte 0
 	.4byte __RTTI__8AnimData
 	.4byte 0
@@ -6017,9 +6017,9 @@ __vt__7AnimDck:
 	.4byte makeAnimSRT__7AnimDckFiP8Matrix4fP8Matrix4fP12AnimDataInfof
 	.4byte detach__8AnimDataFv
 	.4byte writeType__8AnimDataFR18RandomAccessStream
-	.4byte 0x803dd12c
+	.4byte 0x803DD12C
 	.4byte 0
-	.4byte 0x803dd134
+	.4byte 0x803DD134
 	.4byte 0
 	.4byte __RTTI__8AnimData
 	.4byte 0
@@ -6044,21 +6044,21 @@ __vt__8AnimData:
 	.4byte makeAnimSRT__8AnimDataFiP8Matrix4fP8Matrix4fP12AnimDataInfof
 	.4byte detach__8AnimDataFv
 	.4byte writeType__8AnimDataFR18RandomAccessStream
-	.4byte 0x416e696d
-	.4byte 0x436f6e74
+	.4byte 0x416E696D
+	.4byte 0x436F6E74
 	.4byte 0x65787400
 .global __vt__11AnimContext
 __vt__11AnimContext:
 	.4byte __RTTI__11AnimContext
 	.4byte 0
 	.4byte animate__11AnimContextFf
-	.4byte 0x4a6f696e
-	.4byte 0x743a3a4d
-	.4byte 0x6174506f
-	.4byte 0x6c790000
-	.4byte 0x803dd12c
+	.4byte 0x4A6F696E
+	.4byte 0x743A3A4D
+	.4byte 0x6174506F
+	.4byte 0x6C790000
+	.4byte 0x803DD12C
 	.4byte 0
-	.4byte 0x803dd134
+	.4byte 0x803DD134
 	.4byte 0
 	.4byte 0
 .global __vt__Q25Joint7MatPoly
@@ -6067,9 +6067,9 @@ __vt__Q25Joint7MatPoly:
 	.4byte 0
 	.4byte getAgeNodeType__5ANodeFv
 	.4byte read__8CoreNodeFR18RandomAccessStream
-	.4byte 0x803dd12c
+	.4byte 0x803DD12C
 	.4byte 0
-	.4byte 0x803dd134
+	.4byte 0x803DD134
 	.4byte 0
 	.4byte 0
 .global __vt__5Joint
@@ -6078,9 +6078,9 @@ __vt__5Joint:
 	.4byte 0
 	.4byte getAgeNodeType__5ANodeFv
 	.4byte read__5JointFR18RandomAccessStream
-	.4byte 0x803dd12c
+	.4byte 0x803DD12C
 	.4byte 0
-	.4byte 0x803dd134
+	.4byte 0x803DD134
 	.4byte 0
 	.4byte 0
 .global __vt__4Mesh
@@ -6090,11 +6090,11 @@ __vt__4Mesh:
 	.4byte getAgeNodeType__5ANodeFv
 	.4byte read__4MeshFR18RandomAccessStream
 	.4byte 0x46616365
-	.4byte 0x4e6f6465
+	.4byte 0x4E6F6465
 	.4byte 0
-	.4byte 0x803dd12c
+	.4byte 0x803DD12C
 	.4byte 0
-	.4byte 0x803dd134
+	.4byte 0x803DD134
 	.4byte 0
 	.4byte 0
 .global __vt__8FaceNode
@@ -6111,11 +6111,11 @@ __vt__8FaceNode:
 	.4byte 0
 	.4byte 0
 	.4byte 0x44697370
-	.4byte 0x4c697374
+	.4byte 0x4C697374
 	.4byte 0
-	.4byte 0x803dd12c
+	.4byte 0x803DD12C
 	.4byte 0
-	.4byte 0x803dd134
+	.4byte 0x803DD134
 	.4byte 0
 	.4byte 0
 .global __vt__8DispList
@@ -6242,12 +6242,12 @@ __vt__8EditNode:
 	.4byte read__8CoreNodeFR18RandomAccessStream
 	.4byte msgCommand__8EditNodeFR7DataMsg
 	.4byte render2d__8EditNodeFR8GraphicsRi
-	.4byte 0x526f7574
-	.4byte 0x654c696e
-	.4byte 0x6b000000
-	.4byte 0x803dd2c4
+	.4byte 0x526F7574
+	.4byte 0x654C696E
+	.4byte 0x6B000000
+	.4byte 0x803DD2C4
 	.4byte 0
-	.4byte 0x803dd2cc
+	.4byte 0x803DD2CC
 	.4byte 0
 	.4byte 0
 .global __vt__9RouteLink
@@ -6256,12 +6256,12 @@ __vt__9RouteLink:
 	.4byte 0
 	.4byte getAgeNodeType__5ANodeFv
 	.4byte read__8CoreNodeFR18RandomAccessStream
-	.4byte 0x526f7574
-	.4byte 0x65506f69
-	.4byte 0x6e740000
-	.4byte 0x803dd2c4
+	.4byte 0x526F7574
+	.4byte 0x65506F69
+	.4byte 0x6E740000
+	.4byte 0x803DD2C4
 	.4byte 0
-	.4byte 0x803dd2cc
+	.4byte 0x803DD2CC
 	.4byte 0
 	.4byte 0
 .global __vt__10RoutePoint
@@ -6311,15 +6311,15 @@ __vt__10BinobjInfo:
 	.4byte 0
 	.4byte attach__10GfxobjInfoFv
 	.4byte detach__10GfxobjInfoFv
-	.4byte 0x4c466c61
+	.4byte 0x4C466C61
 	.4byte 0x72654772
-	.4byte 0x6f757000
-	.4byte 0x803dd348
+	.4byte 0x6F757000
+	.4byte 0x803DD348
 	.4byte 0
 	.4byte 0
-	.4byte 0x803dd348
+	.4byte 0x803DD348
 	.4byte 0
-	.4byte 0x803dd350
+	.4byte 0x803DD350
 	.4byte 0
 	.4byte 0
 .global __vt__11LFlareGroup
@@ -6343,10 +6343,10 @@ __vt__9StdSystem:
 	.4byte 0
 	.4byte startLoading__9StdSystemFP9LoadIdlerbUl
 	.4byte endLoading__9StdSystemFv
-	.4byte 0x5465786f
-	.4byte 0x626a496e
-	.4byte 0x666f0000
-	.4byte 0x803dd330
+	.4byte 0x5465786F
+	.4byte 0x626A496E
+	.4byte 0x666F0000
+	.4byte 0x803DD330
 	.4byte 0
 	.4byte 0
 .global __vt__10TexobjInfo
@@ -6355,10 +6355,10 @@ __vt__10TexobjInfo:
 	.4byte 0
 	.4byte attach__10TexobjInfoFv
 	.4byte detach__10TexobjInfoFv
-	.4byte 0x5368706f
-	.4byte 0x626a496e
-	.4byte 0x666f0000
-	.4byte 0x803dd330
+	.4byte 0x5368706F
+	.4byte 0x626A496E
+	.4byte 0x666F0000
+	.4byte 0x803DD330
 	.4byte 0
 	.4byte 0
 .global __vt__10ShpobjInfo
@@ -6378,10 +6378,10 @@ __vt__10ShpobjInfo:
 	.4byte 0
 	.4byte 0
 	.4byte 0
-	.4byte 0x416e6d6f
-	.4byte 0x626a496e
-	.4byte 0x666f0000
-	.4byte 0x803dd330
+	.4byte 0x416E6D6F
+	.4byte 0x626A496E
+	.4byte 0x666F0000
+	.4byte 0x803DD330
 	.4byte 0
 	.4byte 0
 .global __vt__10AnmobjInfo
@@ -6391,8 +6391,8 @@ __vt__10AnmobjInfo:
 	.4byte attach__10GfxobjInfoFv
 	.4byte detach__10AnmobjInfoFv
 	.4byte 0
-	.4byte 0x6e6f6465
-	.4byte 0x2e637070
+	.4byte 0x6E6F6465
+	.4byte 0x2E637070
 	.4byte 0
 .global lbl_80228D8C
 lbl_80228D8C:
@@ -6437,7 +6437,7 @@ __vt__7SRTNode:
 	.4byte 0
 .global __vt__4Node
 __vt__4Node:
-	.4byte 0x803dd3b0
+	.4byte 0x803DD3B0
 	.4byte 0
 	.4byte getAgeNodeType__5ANodeFv
 	.4byte read__8CoreNodeFR18RandomAccessStream
@@ -6449,29 +6449,29 @@ __vt__4Node:
 	.4byte concat__4NodeFR3SRT
 	.4byte concat__4NodeFR8Matrix4f
 	.4byte getModelMatrix__4NodeFv
-	.4byte 0x636f6e74
-	.4byte 0x726f6c6c
-	.4byte 0x65722e63
+	.4byte 0x636F6E74
+	.4byte 0x726F6C6C
+	.4byte 0x65722E63
 	.4byte 0x70700000
-	.4byte 0x436f6e74
-	.4byte 0x726f6c6c
+	.4byte 0x436F6E74
+	.4byte 0x726F6C6C
 	.4byte 0x65720000
-	.4byte 0x436f7265
-	.4byte 0x4e6f6465
+	.4byte 0x436F7265
+	.4byte 0x4E6F6465
 	.4byte 0
-	.4byte 0x803dd3c8
-	.4byte 0
-	.4byte 0
-	.4byte 0x803dd3c8
-	.4byte 0
-	.4byte 0x803dd3d0
+	.4byte 0x803DD3C8
 	.4byte 0
 	.4byte 0
-	.4byte 0x803dd3c8
+	.4byte 0x803DD3C8
 	.4byte 0
-	.4byte 0x803dd3d0
+	.4byte 0x803DD3D0
 	.4byte 0
-	.4byte 0x803dd3e0
+	.4byte 0
+	.4byte 0x803DD3C8
+	.4byte 0
+	.4byte 0x803DD3D0
+	.4byte 0
+	.4byte 0x803DD3E0
 	.4byte 0
 	.4byte 0
 .global __vt__10Controller
@@ -6544,13 +6544,13 @@ __vt__13AtxFileStream:
 	.4byte setLength__13AtxFileStreamFi
 	.4byte 0x41747853
 	.4byte 0x74726561
-	.4byte 0x6d000000
-	.4byte 0x803dd478
+	.4byte 0x6D000000
+	.4byte 0x803DD478
 	.4byte 0
 	.4byte 0
 .global __vt__9AtxStream
 __vt__9AtxStream:
-	.4byte 0x803dd490
+	.4byte 0x803DD490
 	.4byte 0
 	.4byte readInt__6StreamFv
 	.4byte readByte__6StreamFv
@@ -6574,7 +6574,7 @@ __vt__9AtxStream:
 	.4byte flush__9AtxStreamFv
 	.4byte 0
 	.4byte 0x74657874
-	.4byte 0x7572652e
+	.4byte 0x7572652E
 	.4byte 0x63707000
 .global gxTexFmts
 gxTexFmts:
@@ -6600,10 +6600,10 @@ __vt__7Texture:
 	.4byte attach__7TextureFv
 	.4byte detach__7TextureFv
 	.4byte makeResident__7TextureFv
-	.4byte 0x436f7265
-	.4byte 0x4e6f6465
+	.4byte 0x436F7265
+	.4byte 0x4E6F6465
 	.4byte 0
-	.4byte 0x803dd4c8
+	.4byte 0x803DD4C8
 	.4byte 0
 	.4byte 0
 	.4byte 0
@@ -6737,10 +6737,10 @@ errorList:
 	.4byte "__RTTI__22IDelegate1<R8Graphics>"
 	.4byte 0
 	.4byte 0
-	.4byte 0x4c6f6753
+	.4byte 0x4C6F6753
 	.4byte 0x74726561
-	.4byte 0x6d000000
-	.4byte 0x803dd540
+	.4byte 0x6D000000
+	.4byte 0x803DD540
 	.4byte 0
 	.4byte 0
 .global __vt__9LogStream
@@ -6768,17 +6768,17 @@ __vt__9LogStream:
 	.4byte getClosing__6StreamFv
 	.4byte flush__9LogStreamFv
 	.4byte 0x41646472
-	.4byte 0x6573734e
-	.4byte 0x6f646500
-	.4byte 0x436f7265
-	.4byte 0x4e6f6465
+	.4byte 0x6573734E
+	.4byte 0x6F646500
+	.4byte 0x436F7265
+	.4byte 0x4E6F6465
 	.4byte 0
-	.4byte 0x803dd55c
+	.4byte 0x803DD55C
 	.4byte 0
 	.4byte 0
-	.4byte 0x803dd55c
+	.4byte 0x803DD55C
 	.4byte 0
-	.4byte 0x803dd564
+	.4byte 0x803DD564
 	.4byte 0
 	.4byte 0
 .global __vt__11AddressNode
@@ -6788,11 +6788,11 @@ __vt__11AddressNode:
 	.4byte getAgeNodeType__5ANodeFv
 	.4byte read__8CoreNodeFR18RandomAccessStream
 	.4byte 0x44697245
-	.4byte 0x6e747279
+	.4byte 0x6E747279
 	.4byte 0
-	.4byte 0x803dd55c
+	.4byte 0x803DD55C
 	.4byte 0
-	.4byte 0x803dd564
+	.4byte 0x803DD564
 	.4byte 0
 	.4byte 0
 .global __vt__8DirEntry
@@ -6810,18 +6810,18 @@ __vt__8DirEntry:
 	.4byte 0
 	.4byte 0x44564453
 	.4byte 0x74726561
-	.4byte 0x6d000000
-	.4byte 0x52616e64
-	.4byte 0x6f6d4163
+	.4byte 0x6D000000
+	.4byte 0x52616E64
+	.4byte 0x6F6D4163
 	.4byte 0x63657373
 	.4byte 0x53747265
-	.4byte 0x616d0000
-	.4byte 0x803dd540
+	.4byte 0x616D0000
+	.4byte 0x803DD540
 	.4byte 0
 	.4byte 0
-	.4byte 0x803dd540
+	.4byte 0x803DD540
 	.4byte 0
-	.4byte 0x803dd57c
+	.4byte 0x803DD57C
 	.4byte 0
 	.4byte 0
 .global __vt__9DVDStream
@@ -6878,7 +6878,7 @@ __vt__9DVDStream:
 	.4byte 0
 	.4byte 0x53746453
 	.4byte 0x79737465
-	.4byte 0x6d000000
+	.4byte 0x6D000000
 	.4byte __RTTI__9StdSystem_1
 	.4byte 0
 	.4byte 0
@@ -6897,12 +6897,12 @@ __vt__6System:
 	.4byte sndPlaySe__6SystemFUl
 	.4byte startLoading__6SystemFP9LoadIdlerbUl
 	.4byte endLoading__6SystemFv
-	.4byte 0x4172616d
+	.4byte 0x4172616D
 	.4byte 0x53747265
-	.4byte 0x616d0000
-	.4byte 0x803dd540
+	.4byte 0x616D0000
+	.4byte 0x803DD540
 	.4byte 0
-	.4byte 0x803dd57c
+	.4byte 0x803DD57C
 	.4byte 0
 	.4byte 0
 .global __vt__10AramStream
@@ -6932,14 +6932,14 @@ __vt__10AramStream:
 	.4byte getPosition__18RandomAccessStreamFv
 	.4byte setPosition__18RandomAccessStreamFi
 	.4byte getLength__18RandomAccessStreamFv
-	.4byte 0x636f6e74
-	.4byte 0x726f6c6c
-	.4byte 0x65724d67
-	.4byte 0x722e6370
+	.4byte 0x636F6E74
+	.4byte 0x726F6C6C
+	.4byte 0x65724D67
+	.4byte 0x722E6370
 	.4byte 0x70000000
-	.4byte 0x436f6e74
-	.4byte 0x726f6c6c
-	.4byte 0x65724d67
+	.4byte 0x436F6E74
+	.4byte 0x726F6C6C
+	.4byte 0x65724D67
 	.4byte 0x72000000
 .global padChannels
 padChannels:
@@ -7550,8 +7550,8 @@ __vt__9RigidBody:
 	.4byte getViewScale__9RigidBodyFv
 	.4byte updateCont__9RigidBodyFv
 	.4byte applyGroundForces__9RigidBodyFiP9CollGroup
-	.4byte 0x616e696d
-	.4byte 0x4d67722e
+	.4byte 0x616E696D
+	.4byte 0x4D67722E
 	.4byte 0x63707000
 .global lbl_802A5FCC
 lbl_802A5FCC:
@@ -7573,18 +7573,18 @@ lbl_802A5FE4:
 	.4byte 0x00000000
 .global __vt__8Animator
 __vt__8Animator:
-	.4byte 0x803dd720
+	.4byte 0x803DD720
 	.4byte 0
 	.4byte changeContext__8AnimatorFP11AnimContext
 	.4byte animate__8AnimatorFf
 	.4byte finishOneShot__8AnimatorFv
 	.4byte finishLoop__8AnimatorFv
-	.4byte 0x803dd730
+	.4byte 0x803DD730
 	.4byte 0
 	.4byte 0
-	.4byte 0x803dd730
+	.4byte 0x803DD730
 	.4byte 0
-	.4byte 0x803dd738
+	.4byte 0x803DD738
 	.4byte 0
 	.4byte 0
 .global __vt__7AnimMgr
@@ -7593,14 +7593,14 @@ __vt__7AnimMgr:
 	.4byte 0
 	.4byte getAgeNodeType__5ANodeFv
 	.4byte read__7AnimMgrFR18RandomAccessStream
-	.4byte 0x5061726d
-	.4byte 0x3c537472
-	.4byte 0x696e673e
+	.4byte 0x5061726D
+	.4byte 0x3C537472
+	.4byte 0x696E673E
 	.4byte 0
 	.4byte 0x42617365
-	.4byte 0x5061726d
+	.4byte 0x5061726D
 	.4byte 0
-	.4byte 0x803dd748
+	.4byte 0x803DD748
 	.4byte 0
 	.4byte 0
 .global "__vt__13Parm<6String>"
@@ -7610,10 +7610,10 @@ __vt__7AnimMgr:
 	.4byte "size__13Parm<6String>Fv"
 	.4byte "write__13Parm<6String>FR18RandomAccessStream"
 	.4byte "read__13Parm<6String>FR18RandomAccessStream"
-	.4byte 0x5061726d
-	.4byte 0x3c666c6f
-	.4byte 0x61743e00
-	.4byte 0x803dd748
+	.4byte 0x5061726D
+	.4byte 0x3C666C6F
+	.4byte 0x61743E00
+	.4byte 0x803DD748
 	.4byte 0
 	.4byte 0
 .global "__vt__7Parm<f>"
@@ -7623,10 +7623,10 @@ __vt__7AnimMgr:
 	.4byte "size__7Parm<f>Fv"
 	.4byte "write__7Parm<f>FR18RandomAccessStream"
 	.4byte "read__7Parm<f>FR18RandomAccessStream"
-	.4byte 0x5061726d
-	.4byte 0x3c696e74
-	.4byte 0x3e000000
-	.4byte 0x803dd748
+	.4byte 0x5061726D
+	.4byte 0x3C696E74
+	.4byte 0x3E000000
+	.4byte 0x803DD748
 	.4byte 0
 	.4byte 0
 .global "__vt__7Parm<i>"
@@ -7636,12 +7636,12 @@ __vt__7AnimMgr:
 	.4byte "size__7Parm<i>Fv"
 	.4byte "write__7Parm<i>FR18RandomAccessStream"
 	.4byte "read__7Parm<i>FR18RandomAccessStream"
-	.4byte 0x416e696d
-	.4byte 0x496e666f
+	.4byte 0x416E696D
+	.4byte 0x496E666F
 	.4byte 0
-	.4byte 0x803dd730
+	.4byte 0x803DD730
 	.4byte 0
-	.4byte 0x803dd738
+	.4byte 0x803DD738
 	.4byte 0
 	.4byte 0
 .global __vt__8AnimInfo
@@ -7858,28 +7858,28 @@ __vt__11GameGenNode:
 	.4byte concat__4NodeFR3SRT
 	.4byte concat__4NodeFR8Matrix4f
 	.4byte getModelMatrix__4NodeFv
-	.4byte 0x4c466c61
+	.4byte 0x4C466C61
 	.4byte 0x72654772
-	.4byte 0x6f757000
-	.4byte 0x803dd81c
+	.4byte 0x6F757000
+	.4byte 0x803DD81C
 	.4byte 0
-	.4byte 0x803dd824
-	.4byte 0
-	.4byte 0
+	.4byte 0x803DD824
 	.4byte 0
 	.4byte 0
 	.4byte 0
 	.4byte 0
-	.4byte 0x803dd81c
 	.4byte 0
-	.4byte 0x803dd824
 	.4byte 0
-	.4byte 0x803dd834
+	.4byte 0x803DD81C
+	.4byte 0
+	.4byte 0x803DD824
+	.4byte 0
+	.4byte 0x803DD834
 	.4byte 0
 	.4byte 0
 .global __vt__7Section
 __vt__7Section:
-	.4byte 0x803dd84c
+	.4byte 0x803DD84C
 	.4byte 0
 	.4byte getAgeNodeType__5ANodeFv
 	.4byte read__8CoreNodeFR18RandomAccessStream
@@ -7892,11 +7892,11 @@ __vt__7Section:
 	.4byte concat__4NodeFR8Matrix4f
 	.4byte getModelMatrix__4NodeFv
 	.4byte 0
-	.4byte 0x803dd81c
+	.4byte 0x803DD81C
 	.4byte 0
-	.4byte 0x803dd824
+	.4byte 0x803DD824
 	.4byte 0
-	.4byte 0x803dd834
+	.4byte 0x803DD834
 	.4byte 0
 	.4byte 0
 .global __vt__11GameGenFlow
@@ -7920,25 +7920,14 @@ __vt__11GameGenFlow:
 	.4byte 0
 	.4byte 0
 	.4byte 0
-	.4byte 0x5061726d
-	.4byte 0x3c537472
-	.4byte 0x696e673e
+	.4byte 0x5061726D
+	.4byte 0x3C537472
+	.4byte 0x696E673E
 	.4byte 0
 	.4byte 0x42617365
-	.4byte 0x5061726d
+	.4byte 0x5061726D
 	.4byte 0
-	.4byte 0x803dd85c
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0x5061726d
-	.4byte 0x3c696e74
-	.4byte 0x3e000000
-	.4byte 0x803dd85c
+	.4byte 0x803DD85C
 	.4byte 0
 	.4byte 0
 	.4byte 0
@@ -7946,10 +7935,10 @@ __vt__11GameGenFlow:
 	.4byte 0
 	.4byte 0
 	.4byte 0
-	.4byte 0x5061726d
-	.4byte 0x3c666c6f
-	.4byte 0x61743e00
-	.4byte 0x803dd85c
+	.4byte 0x5061726D
+	.4byte 0x3C696E74
+	.4byte 0x3E000000
+	.4byte 0x803DD85C
 	.4byte 0
 	.4byte 0
 	.4byte 0
@@ -7957,11 +7946,22 @@ __vt__11GameGenFlow:
 	.4byte 0
 	.4byte 0
 	.4byte 0
-	.4byte 0x803dd81c
+	.4byte 0x5061726D
+	.4byte 0x3C666C6F
+	.4byte 0x61743E00
+	.4byte 0x803DD85C
 	.4byte 0
-	.4byte 0x803dd824
 	.4byte 0
-	.4byte 0x803dd834
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0x803DD81C
+	.4byte 0
+	.4byte 0x803DD824
+	.4byte 0
+	.4byte 0x803DD834
 	.4byte 0
 	.4byte 0
 .global __vt__8GameFlow
@@ -7978,18 +7978,18 @@ __vt__8GameFlow:
 	.4byte concat__4NodeFR3SRT
 	.4byte concat__4NodeFR8Matrix4f
 	.4byte getModelMatrix__4NodeFv
-	.4byte 0x44656c65
+	.4byte 0x44656C65
 	.4byte 0x67617465
-	.4byte 0x313c4761
-	.4byte 0x6d65466c
-	.4byte 0x6f772c20
-	.4byte 0x4d656e75
-	.4byte 0x20263e00
-	.4byte 0x4944656c
+	.4byte 0x313C4761
+	.4byte 0x6D65466C
+	.4byte 0x6F772C20
+	.4byte 0x4D656E75
+	.4byte 0x20263E00
+	.4byte 0x4944656C
 	.4byte 0x65676174
-	.4byte 0x65313c4d
-	.4byte 0x656e7520
-	.4byte 0x263e0000
+	.4byte 0x65313C4D
+	.4byte 0x656E7520
+	.4byte 0x263E0000
 	.4byte "__RTTI__18IDelegate1<R4Menu>"
 	.4byte 0
 	.4byte 0
@@ -8003,21 +8003,21 @@ __vt__8GameFlow:
 	.4byte "__RTTI__18IDelegate1<R4Menu>"
 	.4byte 0
 	.4byte 0
-	.4byte 0x47616d65
-	.4byte 0x4c6f6164
-	.4byte 0x49646c65
+	.4byte 0x47616D65
+	.4byte 0x4C6F6164
+	.4byte 0x49646C65
 	.4byte 0x72000000
-	.4byte 0x4c6f6164
-	.4byte 0x49646c65
+	.4byte 0x4C6F6164
+	.4byte 0x49646C65
 	.4byte 0x72000000
-	.4byte 0x803dd81c
+	.4byte 0x803DD81C
 	.4byte 0
-	.4byte 0x803dd824
+	.4byte 0x803DD824
 	.4byte 0
 	.4byte 0
-	.4byte 0x803dd81c
+	.4byte 0x803DD81C
 	.4byte 0
-	.4byte 0x803dd824
+	.4byte 0x803DD824
 	.4byte 0
 	.4byte __RTTI__9LoadIdler
 	.4byte 0
@@ -8030,13 +8030,13 @@ __vt__13GameLoadIdler:
 	.4byte read__8CoreNodeFR18RandomAccessStream
 	.4byte init__13GameLoadIdlerFv
 	.4byte draw__13GameLoadIdlerFR8Graphics
-	.4byte 0x6d656d6f
+	.4byte 0x6D656D6F
 	.4byte 0x72794361
 	.4byte 0x72640000
-	.4byte 0x67616d65
+	.4byte 0x67616D65
 	.4byte 0x50726566
 	.4byte 0x73000000
-	.4byte 0x706c6179
+	.4byte 0x706C6179
 	.4byte 0x53746174
 	.4byte 0x65000000
 .global __vt__9LoadIdler
@@ -8047,12 +8047,12 @@ __vt__9LoadIdler:
 	.4byte read__8CoreNodeFR18RandomAccessStream
 	.4byte init__9LoadIdlerFv
 	.4byte draw__9LoadIdlerFR8Graphics
-	.4byte 0x4d656d6f
+	.4byte 0x4D656D6F
 	.4byte 0x72794361
 	.4byte 0x72640000
-	.4byte 0x803dd81c
+	.4byte 0x803DD81C
 	.4byte 0
-	.4byte 0x803dd824
+	.4byte 0x803DD824
 	.4byte 0
 	.4byte 0
 .global __vt__10MemoryCard
@@ -8187,12 +8187,12 @@ __vt__16OnePlayerSection:
 	.4byte concat__4NodeFR8Matrix4f
 	.4byte getModelMatrix__4NodeFv
 	.4byte init__16OnePlayerSectionFv
-	.4byte 0x47656e46
-	.4byte 0x696c6549
-	.4byte 0x6e666f00
-	.4byte 0x803dd8e8
+	.4byte 0x47656E46
+	.4byte 0x696C6549
+	.4byte 0x6E666F00
+	.4byte 0x803DD8E8
 	.4byte 0
-	.4byte 0x803dd8f0
+	.4byte 0x803DD8F0
 	.4byte 0
 	.4byte 0
 .global __vt__11GenFileInfo
@@ -8209,11 +8209,11 @@ __vt__11GenFileInfo:
 	.4byte 0
 	.4byte 0
 	.4byte 0x53746167
-	.4byte 0x65496e66
-	.4byte 0x6f000000
-	.4byte 0x803dd8e8
+	.4byte 0x65496E66
+	.4byte 0x6F000000
+	.4byte 0x803DD8E8
 	.4byte 0
-	.4byte 0x803dd8f0
+	.4byte 0x803DD8F0
 	.4byte 0
 	.4byte 0
 .global __vt__9StageInfo
@@ -8222,25 +8222,25 @@ __vt__9StageInfo:
 	.4byte 0
 	.4byte getAgeNodeType__5ANodeFv
 	.4byte read__9StageInfoFR18RandomAccessStream
-	.4byte 0x67616d65
+	.4byte 0x67616D65
 	.4byte 0x50726566
-	.4byte 0x732e6370
+	.4byte 0x732E6370
 	.4byte 0x70000000
-	.4byte 0x47616d65
+	.4byte 0x47616D65
 	.4byte 0x50726566
 	.4byte 0x73000000
-	.4byte 0x506c6179
+	.4byte 0x506C6179
 	.4byte 0x53746174
 	.4byte 0x65000000
-	.4byte 0x436f7265
-	.4byte 0x4e6f6465
+	.4byte 0x436F7265
+	.4byte 0x4E6F6465
 	.4byte 0
-	.4byte 0x803dd938
+	.4byte 0x803DD938
 	.4byte 0
 	.4byte 0
-	.4byte 0x803dd938
+	.4byte 0x803DD938
 	.4byte 0
-	.4byte 0x803dd940
+	.4byte 0x803DD940
 	.4byte 0
 	.4byte 0
 .global __vt__9PlayState
@@ -8250,9 +8250,9 @@ __vt__9PlayState:
 	.4byte getAgeNodeType__5ANodeFv
 	.4byte read__9PlayStateFR18RandomAccessStream
 	.4byte write__9PlayStateFR18RandomAccessStream
-	.4byte 0x803dd938
+	.4byte 0x803DD938
 	.4byte 0
-	.4byte 0x803dd940
+	.4byte 0x803DD940
 	.4byte 0
 	.4byte 0
 .global __vt__9GamePrefs
@@ -9005,20 +9005,20 @@ __vt__16GameSetupSection:
 	.4byte 0
 	.4byte 0
 	.4byte 0
-	.4byte 0x52616d53
+	.4byte 0x52616D53
 	.4byte 0x74726561
-	.4byte 0x6d000000
-	.4byte 0x52616e64
-	.4byte 0x6f6d4163
+	.4byte 0x6D000000
+	.4byte 0x52616E64
+	.4byte 0x6F6D4163
 	.4byte 0x63657373
 	.4byte 0x53747265
-	.4byte 0x616d0000
-	.4byte 0x803dd9b4
+	.4byte 0x616D0000
+	.4byte 0x803DD9B4
 	.4byte 0
 	.4byte 0
-	.4byte 0x803dd9b4
+	.4byte 0x803DD9B4
 	.4byte 0
-	.4byte 0x803dd9bc
+	.4byte 0x803DD9BC
 	.4byte 0
 	.4byte 0
 .global __vt__9RamStream
@@ -9157,24 +9157,24 @@ __vt__22CardSelectSetupSection:
 	.4byte concat__4NodeFR8Matrix4f
 	.4byte getModelMatrix__4NodeFv
 	.4byte 0x43617264
-	.4byte 0x53656c65
+	.4byte 0x53656C65
 	.4byte 0x63745365
-	.4byte 0x6374696f
-	.4byte 0x6e000000
-	.4byte 0x803dd9e0
+	.4byte 0x6374696F
+	.4byte 0x6E000000
+	.4byte 0x803DD9E0
 	.4byte 0
-	.4byte 0x803dd9e8
+	.4byte 0x803DD9E8
 	.4byte 0
-	.4byte 0x803dd9f8
+	.4byte 0x803DD9F8
 	.4byte 0
 	.4byte 0
-	.4byte 0x803dd9e0
+	.4byte 0x803DD9E0
 	.4byte 0
-	.4byte 0x803dd9e8
+	.4byte 0x803DD9E8
 	.4byte 0
-	.4byte 0x803dd9f8
+	.4byte 0x803DD9F8
 	.4byte 0
-	.4byte 0x803dda14
+	.4byte 0x803DDA14
 	.4byte 0
 	.4byte 0
 .global __vt__17CardSelectSection
@@ -9305,25 +9305,25 @@ __vt__21MapSelectSetupSection:
 	.4byte concat__4NodeFR3SRT
 	.4byte concat__4NodeFR8Matrix4f
 	.4byte getModelMatrix__4NodeFv
-	.4byte 0x4d617053
-	.4byte 0x656c6563
+	.4byte 0x4D617053
+	.4byte 0x656C6563
 	.4byte 0x74536563
-	.4byte 0x74696f6e
+	.4byte 0x74696F6E
 	.4byte 0
-	.4byte 0x803dda48
+	.4byte 0x803DDA48
 	.4byte 0
-	.4byte 0x803dda50
+	.4byte 0x803DDA50
 	.4byte 0
-	.4byte 0x803dda60
+	.4byte 0x803DDA60
 	.4byte 0
 	.4byte 0
-	.4byte 0x803dda48
+	.4byte 0x803DDA48
 	.4byte 0
-	.4byte 0x803dda50
+	.4byte 0x803DDA50
 	.4byte 0
-	.4byte 0x803dda60
+	.4byte 0x803DDA60
 	.4byte 0
-	.4byte 0x803dda78
+	.4byte 0x803DDA78
 	.4byte 0
 	.4byte 0
 .global __vt__16MapSelectSection
@@ -9354,17 +9354,17 @@ __vt__16MapSelectSection:
 	.4byte 0
 	.4byte 0
 	.4byte 0
-	.4byte 0x44656c65
+	.4byte 0x44656C65
 	.4byte 0x67617465
-	.4byte 0x313c4d65
-	.4byte 0x6e752c20
-	.4byte 0x4d656e75
-	.4byte 0x20263e00
-	.4byte 0x4944656c
+	.4byte 0x313C4D65
+	.4byte 0x6E752C20
+	.4byte 0x4D656E75
+	.4byte 0x20263E00
+	.4byte 0x4944656C
 	.4byte 0x65676174
-	.4byte 0x65313c4d
-	.4byte 0x656e7520
-	.4byte 0x263e0000
+	.4byte 0x65313C4D
+	.4byte 0x656E7520
+	.4byte 0x263E0000
 	.4byte "__RTTI__18IDelegate1<R4Menu>_1"
 	.4byte 0
 	.4byte 0
@@ -9373,16 +9373,16 @@ __vt__16MapSelectSection:
 	.4byte "__RTTI__23Delegate1<4Menu,R4Menu>"
 	.4byte 0
 	.4byte "invoke__23Delegate1<4Menu,R4Menu>FR4Menu"
-	.4byte 0x44656c65
+	.4byte 0x44656C65
 	.4byte 0x67617465
-	.4byte 0x313c4d61
-	.4byte 0x7053656c
+	.4byte 0x313C4D61
+	.4byte 0x7053656C
 	.4byte 0x65637453
 	.4byte 0x65747570
 	.4byte 0x53656374
-	.4byte 0x696f6e2c
-	.4byte 0x204d656e
-	.4byte 0x7520263e
+	.4byte 0x696F6E2C
+	.4byte 0x204D656E
+	.4byte 0x7520263E
 	.4byte 0
 	.4byte "__RTTI__18IDelegate1<R4Menu>_1"
 	.4byte 0
@@ -9472,24 +9472,24 @@ lbl_802A7BB4:
 	.4byte 0x65000000
 .global __vt__13GameInterface
 __vt__13GameInterface:
-	.4byte 0x803ddb6c
+	.4byte 0x803DDB6C
 	.4byte 0
 	.4byte message__13GameInterfaceFii
 	.4byte movie__13GameInterfaceFiiP8CreatureP8Vector3fP8Vector3fUlb
 	.4byte parseMessages__13GameInterfaceFv
 	.4byte parse__13GameInterfaceFii
 	.4byte 0x47617567
-	.4byte 0x65496e66
-	.4byte 0x6f000000
-	.4byte 0x436f7265
-	.4byte 0x4e6f6465
+	.4byte 0x65496E66
+	.4byte 0x6F000000
+	.4byte 0x436F7265
+	.4byte 0x4E6F6465
 	.4byte 0
-	.4byte 0x803ddb7c
+	.4byte 0x803DDB7C
 	.4byte 0
 	.4byte 0
-	.4byte 0x803ddb7c
+	.4byte 0x803DDB7C
 	.4byte 0
-	.4byte 0x803ddb84
+	.4byte 0x803DDB84
 	.4byte 0
 	.4byte 0
 .global __vt__9GaugeInfo
@@ -9498,33 +9498,33 @@ __vt__9GaugeInfo:
 	.4byte 0
 	.4byte getAgeNodeType__5ANodeFv
 	.4byte read__8CoreNodeFR18RandomAccessStream
-	.4byte 0x4e657750
-	.4byte 0x696b6947
-	.4byte 0x616d6553
+	.4byte 0x4E657750
+	.4byte 0x696B6947
+	.4byte 0x616D6553
 	.4byte 0x65747570
 	.4byte 0x53656374
-	.4byte 0x696f6e00
-	.4byte 0x803ddb7c
+	.4byte 0x696F6E00
+	.4byte 0x803DDB7C
 	.4byte 0
-	.4byte 0x803ddb84
+	.4byte 0x803DDB84
 	.4byte 0
 	.4byte 0
 	.4byte 0x42617365
-	.4byte 0x47616d65
+	.4byte 0x47616D65
 	.4byte 0x53656374
-	.4byte 0x696f6e00
-	.4byte 0x803ddb7c
+	.4byte 0x696F6E00
+	.4byte 0x803DDB7C
 	.4byte 0
-	.4byte 0x803ddb84
+	.4byte 0x803DDB84
 	.4byte 0
-	.4byte 0x803ddb9c
+	.4byte 0x803DDB9C
 	.4byte 0
 	.4byte 0
-	.4byte 0x803ddb7c
+	.4byte 0x803DDB7C
 	.4byte 0
-	.4byte 0x803ddb84
+	.4byte 0x803DDB84
 	.4byte 0
-	.4byte 0x803ddb9c
+	.4byte 0x803DDB9C
 	.4byte 0
 	.4byte __RTTI__15BaseGameSection
 	.4byte 0
@@ -9544,25 +9544,25 @@ __vt__23NewPikiGameSetupSection:
 	.4byte concat__4NodeFR8Matrix4f
 	.4byte getModelMatrix__4NodeFv
 	.4byte openMenu__23NewPikiGameSetupSectionFv
-	.4byte 0x4e657750
-	.4byte 0x696b6947
-	.4byte 0x616d6553
+	.4byte 0x4E657750
+	.4byte 0x696B6947
+	.4byte 0x616D6553
 	.4byte 0x65637469
-	.4byte 0x6f6e0000
-	.4byte 0x803ddb7c
+	.4byte 0x6F6E0000
+	.4byte 0x803DDB7C
 	.4byte 0
-	.4byte 0x803ddb84
+	.4byte 0x803DDB84
 	.4byte 0
-	.4byte 0x803ddb9c
+	.4byte 0x803DDB9C
 	.4byte 0
 	.4byte 0
-	.4byte 0x803ddb7c
+	.4byte 0x803DDB7C
 	.4byte 0
-	.4byte 0x803ddb84
+	.4byte 0x803DDB84
 	.4byte 0
-	.4byte 0x803ddb9c
+	.4byte 0x803DDB9C
 	.4byte 0
-	.4byte 0x803ddbbc
+	.4byte 0x803DDBBC
 	.4byte 0
 	.4byte 0
 .global __vt__18NewPikiGameSection
@@ -9593,12 +9593,12 @@ __vt__18NewPikiGameSection:
 	.4byte 0
 	.4byte 0
 	.4byte 0
-	.4byte 0x47616d65
-	.4byte 0x4d6f7669
-	.4byte 0x65496e74
+	.4byte 0x47616D65
+	.4byte 0x4D6F7669
+	.4byte 0x65496E74
 	.4byte 0x65726661
 	.4byte 0x63650000
-	.4byte 0x803ddb6c
+	.4byte 0x803DDB6C
 	.4byte 0
 	.4byte 0
 .global __vt__18GameMovieInterface
@@ -9611,12 +9611,12 @@ __vt__18GameMovieInterface:
 	.4byte parse__13GameInterfaceFii
 	.4byte parse__18GameMovieInterfaceFRQ218GameMovieInterface13SimpleMessage
 	.4byte parse__18GameMovieInterfaceFRQ218GameMovieInterface14ComplexMessage
-	.4byte 0x4461794f
-	.4byte 0x7665724d
-	.4byte 0x6f646553
+	.4byte 0x4461794F
+	.4byte 0x7665724D
+	.4byte 0x6F646553
 	.4byte 0x74617465
 	.4byte 0
-	.4byte 0x4d6f6465
+	.4byte 0x4D6F6465
 	.4byte 0x53746174
 	.4byte 0x65000000
 	.4byte __RTTI__9ModeState
@@ -9629,9 +9629,9 @@ __vt__16DayOverModeState:
 	.4byte update__16DayOverModeStateFRUl
 	.4byte postRender__16DayOverModeStateFR8Graphics
 	.4byte postUpdate__9ModeStateFv
-	.4byte 0x4d657373
-	.4byte 0x6167654d
-	.4byte 0x6f646553
+	.4byte 0x4D657373
+	.4byte 0x6167654D
+	.4byte 0x6F646553
 	.4byte 0x74617465
 	.4byte 0
 	.4byte __RTTI__9ModeState
@@ -9644,9 +9644,9 @@ __vt__16MessageModeState:
 	.4byte update__16MessageModeStateFRUl
 	.4byte postRender__16MessageModeStateFR8Graphics
 	.4byte postUpdate__9ModeStateFv
-	.4byte 0x52756e6e
-	.4byte 0x696e674d
-	.4byte 0x6f646553
+	.4byte 0x52756E6E
+	.4byte 0x696E674D
+	.4byte 0x6F646553
 	.4byte 0x74617465
 	.4byte 0
 	.4byte __RTTI__9ModeState
@@ -9660,9 +9660,9 @@ __vt__16RunningModeState:
 	.4byte postRender__16RunningModeStateFR8Graphics
 	.4byte postUpdate__9ModeStateFv
 	.4byte 0x51756974
-	.4byte 0x74696e67
-	.4byte 0x47616d65
-	.4byte 0x4d6f6465
+	.4byte 0x74696E67
+	.4byte 0x47616D65
+	.4byte 0x4D6F6465
 	.4byte 0x53746174
 	.4byte 0x65000000
 	.4byte __RTTI__9ModeState
@@ -9682,9 +9682,9 @@ __vt__9ModeState:
 	.4byte update__9ModeStateFRUl
 	.4byte postRender__9ModeStateFR8Graphics
 	.4byte postUpdate__9ModeStateFv
-	.4byte 0x496e7472
-	.4byte 0x6f47616d
-	.4byte 0x654d6f64
+	.4byte 0x496E7472
+	.4byte 0x6F47616D
+	.4byte 0x654D6F64
 	.4byte 0x65537461
 	.4byte 0x74650000
 	.4byte __RTTI__9ModeState
@@ -9720,12 +9720,12 @@ __vt__15BaseGameSection:
 	.4byte 0
 	.4byte 0
 	.4byte 0
-	.4byte 0x696e7472
-	.4byte 0x6f47616d
-	.4byte 0x652e6370
+	.4byte 0x696E7472
+	.4byte 0x6F47616D
+	.4byte 0x652E6370
 	.4byte 0x70000000
-	.4byte 0x696e7472
-	.4byte 0x6f47616d
+	.4byte 0x696E7472
+	.4byte 0x6F47616D
 	.4byte 0x65000000
 .global lbl_802A7F84
 lbl_802A7F84:
@@ -9765,8 +9765,8 @@ __vt__14IntroModeState:
 	.4byte postRender__14IntroModeStateFR8Graphics
 	.4byte postUpdate__9ModeStateFv
 	.4byte 0x51756974
-	.4byte 0x74696e67
-	.4byte 0x4d6f6465
+	.4byte 0x74696E67
+	.4byte 0x4D6F6465
 	.4byte 0x53746174
 	.4byte 0x65000000
 	.4byte __RTTI__9ModeState_1
@@ -9784,33 +9784,33 @@ __vt__17QuittingModeState:
 	.4byte 0
 	.4byte 0
 	.4byte 0
-	.4byte 0x496e7472
-	.4byte 0x6f47616d
+	.4byte 0x496E7472
+	.4byte 0x6F47616D
 	.4byte 0x65536574
 	.4byte 0x75705365
-	.4byte 0x6374696f
-	.4byte 0x6e000000
-	.4byte 0x803ddc5c
+	.4byte 0x6374696F
+	.4byte 0x6E000000
+	.4byte 0x803DDC5C
 	.4byte 0
-	.4byte 0x803ddc64
+	.4byte 0x803DDC64
 	.4byte 0
 	.4byte 0
 	.4byte 0x42617365
-	.4byte 0x47616d65
+	.4byte 0x47616D65
 	.4byte 0x53656374
-	.4byte 0x696f6e00
-	.4byte 0x803ddc5c
+	.4byte 0x696F6E00
+	.4byte 0x803DDC5C
 	.4byte 0
-	.4byte 0x803ddc64
+	.4byte 0x803DDC64
 	.4byte 0
-	.4byte 0x803ddc8c
+	.4byte 0x803DDC8C
 	.4byte 0
 	.4byte 0
-	.4byte 0x803ddc5c
+	.4byte 0x803DDC5C
 	.4byte 0
-	.4byte 0x803ddc64
+	.4byte 0x803DDC64
 	.4byte 0
-	.4byte 0x803ddc8c
+	.4byte 0x803DDC8C
 	.4byte 0
 	.4byte __RTTI__15BaseGameSection_1
 	.4byte 0
@@ -9830,25 +9830,25 @@ __vt__21IntroGameSetupSection:
 	.4byte concat__4NodeFR8Matrix4f
 	.4byte getModelMatrix__4NodeFv
 	.4byte openMenu__15BaseGameSectionFv
-	.4byte 0x496e7472
-	.4byte 0x6f47616d
+	.4byte 0x496E7472
+	.4byte 0x6F47616D
 	.4byte 0x65536563
-	.4byte 0x74696f6e
+	.4byte 0x74696F6E
 	.4byte 0
-	.4byte 0x803ddc5c
+	.4byte 0x803DDC5C
 	.4byte 0
-	.4byte 0x803ddc64
+	.4byte 0x803DDC64
 	.4byte 0
-	.4byte 0x803ddc8c
+	.4byte 0x803DDC8C
 	.4byte 0
 	.4byte 0
-	.4byte 0x803ddc5c
+	.4byte 0x803DDC5C
 	.4byte 0
-	.4byte 0x803ddc64
+	.4byte 0x803DDC64
 	.4byte 0
-	.4byte 0x803ddc8c
+	.4byte 0x803DDC8C
 	.4byte 0
-	.4byte 0x803ddcac
+	.4byte 0x803DDCAC
 	.4byte 0
 	.4byte 0
 .global __vt__16IntroGameSection
@@ -9880,42 +9880,42 @@ __vt__16IntroGameSection:
 	.4byte 0
 	.4byte 0
 	.4byte 0
-	.4byte 0x67616d65
+	.4byte 0x67616D65
 	.4byte 0x45786974
-	.4byte 0x2e637070
+	.4byte 0x2E637070
 	.4byte 0
-	.4byte 0x47616d65
+	.4byte 0x47616D65
 	.4byte 0x45786974
 	.4byte 0
-	.4byte 0x47616d65
+	.4byte 0x47616D65
 	.4byte 0x45786974
 	.4byte 0x53656374
-	.4byte 0x696f6e00
-	.4byte 0x436f7265
-	.4byte 0x4e6f6465
+	.4byte 0x696F6E00
+	.4byte 0x436F7265
+	.4byte 0x4E6F6465
 	.4byte 0
-	.4byte 0x803ddcd4
-	.4byte 0
-	.4byte 0
-	.4byte 0x803ddcd4
-	.4byte 0
-	.4byte 0x803ddcdc
+	.4byte 0x803DDCD4
 	.4byte 0
 	.4byte 0
-	.4byte 0x803ddcd4
+	.4byte 0x803DDCD4
 	.4byte 0
-	.4byte 0x803ddcdc
-	.4byte 0
-	.4byte 0x803ddcec
+	.4byte 0x803DDCDC
 	.4byte 0
 	.4byte 0
-	.4byte 0x803ddcd4
+	.4byte 0x803DDCD4
 	.4byte 0
-	.4byte 0x803ddcdc
+	.4byte 0x803DDCDC
 	.4byte 0
-	.4byte 0x803ddcec
+	.4byte 0x803DDCEC
 	.4byte 0
-	.4byte 0x803ddcfc
+	.4byte 0
+	.4byte 0x803DDCD4
+	.4byte 0
+	.4byte 0x803DDCDC
+	.4byte 0
+	.4byte 0x803DDCEC
+	.4byte 0
+	.4byte 0x803DDCFC
 	.4byte 0
 	.4byte 0
 .global __vt__15GameExitSection
@@ -10075,30 +10075,30 @@ __vt__12DynObjBridge:
 	.4byte applyGroundForces__12DynObjBridgeFiP9CollGroup
 	.4byte touchCallback__10DynObjBodyFR5PlaneR8Vector3fR8Vector3f
 	.4byte applyVelocity__10DynObjBodyFR5PlaneR8Vector3fR8Vector3f
-	.4byte 0x47656e4f
-	.4byte 0x626a6563
-	.4byte 0x744d6170
-	.4byte 0x4f626a65
+	.4byte 0x47656E4F
+	.4byte 0x626A6563
+	.4byte 0x744D6170
+	.4byte 0x4F626A65
 	.4byte 0x63740000
 	.4byte 0x50617261
-	.4byte 0x6d657465
+	.4byte 0x6D657465
 	.4byte 0x72730000
-	.4byte 0x803dddb8
+	.4byte 0x803DDDB8
 	.4byte 0
 	.4byte 0
-	.4byte 0x47656e4f
-	.4byte 0x626a6563
+	.4byte 0x47656E4F
+	.4byte 0x626A6563
 	.4byte 0x74000000
-	.4byte 0x803dddb8
+	.4byte 0x803DDDB8
 	.4byte 0
-	.4byte 0x803dddc8
+	.4byte 0x803DDDC8
 	.4byte 0
 	.4byte 0
-	.4byte 0x803dddb8
+	.4byte 0x803DDDB8
 	.4byte 0
-	.4byte 0x803dddc8
+	.4byte 0x803DDDC8
 	.4byte 0
-	.4byte 0x803dddd0
+	.4byte 0x803DDDD0
 	.4byte 0
 	.4byte 0
 .global __vt__18GenObjectMapObject
@@ -10203,15 +10203,15 @@ __vt__4Menu:
 	.4byte 0
 	.4byte 0
 	.4byte 0x70617261
-	.4byte 0x6d657465
-	.4byte 0x72732e63
+	.4byte 0x6D657465
+	.4byte 0x72732E63
 	.4byte 0x70700000
 	.4byte 0x42617365
-	.4byte 0x5061726d
+	.4byte 0x5061726D
 	.4byte 0
 .global __vt__8BaseParm
 __vt__8BaseParm:
-	.4byte 0x803dde30
+	.4byte 0x803DDE30
 	.4byte 0
 	.4byte 0
 	.4byte write__8BaseParmFR18RandomAccessStream
@@ -10299,29 +10299,29 @@ __vt__16AtxCommandStream:
 	.4byte close__9AtxStreamFv
 	.4byte getClosing__6StreamFv
 	.4byte flush__9AtxStreamFv
-	.4byte 0x436f7265
-	.4byte 0x4e6f6465
+	.4byte 0x436F7265
+	.4byte 0x4E6F6465
 	.4byte 0
-	.4byte 0x803dde84
-	.4byte 0
-	.4byte 0
-	.4byte 0x803dde84
-	.4byte 0
-	.4byte 0x803dde8c
+	.4byte 0x803DDE84
 	.4byte 0
 	.4byte 0
-	.4byte 0x803dde84
+	.4byte 0x803DDE84
 	.4byte 0
-	.4byte 0x803dde8c
-	.4byte 0
-	.4byte 0x803dde9c
+	.4byte 0x803DDE8C
 	.4byte 0
 	.4byte 0
-	.4byte 0x803dde84
+	.4byte 0x803DDE84
 	.4byte 0
-	.4byte 0x803dde8c
+	.4byte 0x803DDE8C
 	.4byte 0
-	.4byte 0x803dde9c
+	.4byte 0x803DDE9C
+	.4byte 0
+	.4byte 0
+	.4byte 0x803DDE84
+	.4byte 0
+	.4byte 0x803DDE8C
+	.4byte 0
+	.4byte 0x803DDE9C
 	.4byte 0
 	.4byte __RTTI__7BaseApp_1
 	.4byte 0
@@ -10347,14 +10347,14 @@ __vt__7GameApp:
 	.4byte softReset__7BaseAppFv
 	.4byte useHeap__7BaseAppFi
 	.4byte procCmd__7BaseAppFPc
-	.4byte 0x506c7567
-	.4byte 0x50696b69
+	.4byte 0x506C7567
+	.4byte 0x50696B69
 	.4byte 0x41707000
-	.4byte 0x803dde84
+	.4byte 0x803DDE84
 	.4byte 0
-	.4byte 0x803dde8c
+	.4byte 0x803DDE8C
 	.4byte 0
-	.4byte 0x803dde9c
+	.4byte 0x803DDE9C
 	.4byte 0
 	.4byte __RTTI__7BaseApp_1
 	.4byte 0
@@ -10481,8 +10481,8 @@ lbl_802A8920:
 	.4byte 0
 	.4byte 0
 	.4byte 0
-	.4byte 0x47616d65
-	.4byte 0x496e7465
+	.4byte 0x47616D65
+	.4byte 0x496E7465
 	.4byte 0x72666163
 	.4byte 0x65000000
 	.4byte 0
@@ -10491,21 +10491,21 @@ lbl_802A8920:
 	.4byte 0
 	.4byte 0
 	.4byte 0
-	.4byte 0x5469746c
+	.4byte 0x5469746C
 	.4byte 0x65536574
 	.4byte 0x75705365
-	.4byte 0x6374696f
-	.4byte 0x6e000000
-	.4byte 0x803ddf54
+	.4byte 0x6374696F
+	.4byte 0x6E000000
+	.4byte 0x803DDF54
 	.4byte 0
-	.4byte 0x803ddf5c
+	.4byte 0x803DDF5C
 	.4byte 0
 	.4byte 0
-	.4byte 0x803ddf54
+	.4byte 0x803DDF54
 	.4byte 0
-	.4byte 0x803ddf5c
+	.4byte 0x803DDF5C
 	.4byte 0
-	.4byte 0x803ddf84
+	.4byte 0x803DDF84
 	.4byte 0
 	.4byte 0
 .global __vt__17TitleSetupSection
@@ -10522,24 +10522,24 @@ __vt__17TitleSetupSection:
 	.4byte concat__4NodeFR3SRT
 	.4byte concat__4NodeFR8Matrix4f
 	.4byte getModelMatrix__4NodeFv
-	.4byte 0x5469746c
+	.4byte 0x5469746C
 	.4byte 0x65735365
-	.4byte 0x6374696f
-	.4byte 0x6e000000
-	.4byte 0x803ddf54
+	.4byte 0x6374696F
+	.4byte 0x6E000000
+	.4byte 0x803DDF54
 	.4byte 0
-	.4byte 0x803ddf5c
+	.4byte 0x803DDF5C
 	.4byte 0
-	.4byte 0x803ddf84
+	.4byte 0x803DDF84
 	.4byte 0
 	.4byte 0
-	.4byte 0x803ddf54
+	.4byte 0x803DDF54
 	.4byte 0
-	.4byte 0x803ddf5c
+	.4byte 0x803DDF5C
 	.4byte 0
-	.4byte 0x803ddf84
+	.4byte 0x803DDF84
 	.4byte 0
-	.4byte 0x803ddfa0
+	.4byte 0x803DDFA0
 	.4byte 0
 	.4byte 0
 .global __vt__13TitlesSection
@@ -10557,13 +10557,13 @@ __vt__13TitlesSection:
 	.4byte concat__4NodeFR8Matrix4f
 	.4byte getModelMatrix__4NodeFv
 	.4byte init__13TitlesSectionFv
-	.4byte 0x5469746c
-	.4byte 0x65734d6f
+	.4byte 0x5469746C
+	.4byte 0x65734D6F
 	.4byte 0x76696549
-	.4byte 0x6e746572
+	.4byte 0x6E746572
 	.4byte 0x66616365
 	.4byte 0
-	.4byte 0x803ddf74
+	.4byte 0x803DDF74
 	.4byte 0
 	.4byte 0
 .global __vt__20TitlesMovieInterface
@@ -10636,24 +10636,24 @@ __vt__19NinLogoSetupSection:
 	.4byte concat__4NodeFR3SRT
 	.4byte concat__4NodeFR8Matrix4f
 	.4byte getModelMatrix__4NodeFv
-	.4byte 0x4e696e4c
-	.4byte 0x6f676f53
+	.4byte 0x4E696E4C
+	.4byte 0x6F676F53
 	.4byte 0x65637469
-	.4byte 0x6f6e0000
-	.4byte 0x803ddfc8
+	.4byte 0x6F6E0000
+	.4byte 0x803DDFC8
 	.4byte 0
-	.4byte 0x803ddfd0
+	.4byte 0x803DDFD0
 	.4byte 0
-	.4byte 0x803ddfe0
+	.4byte 0x803DDFE0
 	.4byte 0
 	.4byte 0
-	.4byte 0x803ddfc8
+	.4byte 0x803DDFC8
 	.4byte 0
-	.4byte 0x803ddfd0
+	.4byte 0x803DDFD0
 	.4byte 0
-	.4byte 0x803ddfe0
+	.4byte 0x803DDFE0
 	.4byte 0
-	.4byte 0x803ddff8
+	.4byte 0x803DDFF8
 	.4byte 0
 	.4byte 0
 .global __vt__14NinLogoSection
@@ -10751,20 +10751,20 @@ __vt__12ShadowCaster:
 	.4byte 0
 	.4byte getAgeNodeType__5ANodeFv
 	.4byte read__8CoreNodeFR18RandomAccessStream
-	.4byte 0x44796e53
-	.4byte 0x696d756c
-	.4byte 0x61746f72
+	.4byte 0x44796E53
+	.4byte 0x696D756C
+	.4byte 0x61746F72
 	.4byte 0
-	.4byte 0x803de1a4
+	.4byte 0x803DE1A4
 	.4byte 0
-	.4byte 0x803de1ac
+	.4byte 0x803DE1AC
 	.4byte 0
 	.4byte 0
-	.4byte 0x803de1a4
+	.4byte 0x803DE1A4
 	.4byte 0
-	.4byte 0x803de1ac
+	.4byte 0x803DE1AC
 	.4byte 0
-	.4byte 0x803de1c4
+	.4byte 0x803DE1C4
 	.4byte 0
 	.4byte 0
 .global __vt__12DynSimulator
@@ -10781,15 +10781,15 @@ __vt__12DynSimulator:
 	.4byte concat__4NodeFR3SRT
 	.4byte concat__4NodeFR8Matrix4f
 	.4byte getModelMatrix__4NodeFv
-	.4byte 0x4d617050
-	.4byte 0x726f6a4d
+	.4byte 0x4D617050
+	.4byte 0x726F6A4D
 	.4byte 0x61744861
-	.4byte 0x6e646c65
+	.4byte 0x6E646C65
 	.4byte 0x72000000
-	.4byte 0x4d617465
-	.4byte 0x7269616c
-	.4byte 0x48616e64
-	.4byte 0x6c657200
+	.4byte 0x4D617465
+	.4byte 0x7269616C
+	.4byte 0x48616E64
+	.4byte 0x6C657200
 	.4byte __RTTI__15MaterialHandler_1
 	.4byte 0
 	.4byte 0
@@ -10799,10 +10799,10 @@ __vt__17MapProjMatHandler:
 	.4byte 0
 	.4byte setMaterial__17MapProjMatHandlerFP8Material
 	.4byte setTexMatrix__17MapProjMatHandlerFb
-	.4byte 0x4d617053
-	.4byte 0x6861644d
+	.4byte 0x4D617053
+	.4byte 0x6861644D
 	.4byte 0x61744861
-	.4byte 0x6e646c65
+	.4byte 0x6E646C65
 	.4byte 0x72000000
 	.4byte __RTTI__15MaterialHandler_1
 	.4byte 0
@@ -10813,37 +10813,37 @@ __vt__17MapShadMatHandler:
 	.4byte 0
 	.4byte setMaterial__17MapShadMatHandlerFP8Material
 	.4byte setTexMatrix__15MaterialHandlerFb
-	.4byte 0x44796e4f
-	.4byte 0x626a5075
+	.4byte 0x44796E4F
+	.4byte 0x626A5075
 	.4byte 0x73686162
-	.4byte 0x6c650000
+	.4byte 0x6C650000
 	.4byte 0x52696769
-	.4byte 0x64426f64
+	.4byte 0x64426F64
 	.4byte 0x79000000
-	.4byte 0x803de1a4
+	.4byte 0x803DE1A4
 	.4byte 0
-	.4byte 0x803de1ac
+	.4byte 0x803DE1AC
 	.4byte 0
-	.4byte 0x803de1c4
+	.4byte 0x803DE1C4
 	.4byte 0
 	.4byte 0
-	.4byte 0x44796e4f
-	.4byte 0x626a426f
+	.4byte 0x44796E4F
+	.4byte 0x626A426F
 	.4byte 0x64790000
-	.4byte 0x803de1a4
+	.4byte 0x803DE1A4
 	.4byte 0
-	.4byte 0x803de1ac
+	.4byte 0x803DE1AC
 	.4byte 0
-	.4byte 0x803de1c4
+	.4byte 0x803DE1C4
 	.4byte 0
 	.4byte __RTTI__9RigidBody_2
 	.4byte 0
 	.4byte 0
-	.4byte 0x803de1a4
+	.4byte 0x803DE1A4
 	.4byte 0
-	.4byte 0x803de1ac
+	.4byte 0x803DE1AC
 	.4byte 0
-	.4byte 0x803de1c4
+	.4byte 0x803DE1C4
 	.4byte 0
 	.4byte __RTTI__9RigidBody_2
 	.4byte 0
@@ -10914,15 +10914,15 @@ __vt__10DynObjBody:
 	.4byte applyGroundForces__9RigidBodyFiP9CollGroup
 	.4byte touchCallback__10DynObjBodyFR5PlaneR8Vector3fR8Vector3f
 	.4byte applyVelocity__10DynObjBodyFR5PlaneR8Vector3fR8Vector3f
-	.4byte 0x44796e4f
-	.4byte 0x626a5365
+	.4byte 0x44796E4F
+	.4byte 0x626A5365
 	.4byte 0x65536177
 	.4byte 0
-	.4byte 0x803de1a4
+	.4byte 0x803DE1A4
 	.4byte 0
-	.4byte 0x803de1ac
+	.4byte 0x803DE1AC
 	.4byte 0
-	.4byte 0x803de1c4
+	.4byte 0x803DE1C4
 	.4byte 0
 	.4byte __RTTI__9RigidBody_2
 	.4byte 0
@@ -10961,41 +10961,41 @@ __vt__12DynObjSeeSaw:
 	.4byte applyGroundForces__9RigidBodyFiP9CollGroup
 	.4byte touchCallback__10DynObjBodyFR5PlaneR8Vector3fR8Vector3f
 	.4byte applyVelocity__10DynObjBodyFR5PlaneR8Vector3fR8Vector3f
-	.4byte 0x44796e43
-	.4byte 0x6f6c6c4f
-	.4byte 0x626a426f
+	.4byte 0x44796E43
+	.4byte 0x6F6C6C4F
+	.4byte 0x626A426F
 	.4byte 0x64790000
-	.4byte 0x44796e43
-	.4byte 0x6f6c6c4f
-	.4byte 0x626a6563
+	.4byte 0x44796E43
+	.4byte 0x6F6C6C4F
+	.4byte 0x626A6563
 	.4byte 0x74000000
-	.4byte 0x803de1a4
+	.4byte 0x803DE1A4
 	.4byte 0
-	.4byte 0x803de1ac
+	.4byte 0x803DE1AC
 	.4byte 0
-	.4byte 0x803de1c4
+	.4byte 0x803DE1C4
 	.4byte 0
 	.4byte 0
-	.4byte 0x44796e43
-	.4byte 0x6f6c6c53
+	.4byte 0x44796E43
+	.4byte 0x6F6C6C53
 	.4byte 0x68617065
 	.4byte 0
-	.4byte 0x803de1a4
+	.4byte 0x803DE1A4
 	.4byte 0
-	.4byte 0x803de1ac
+	.4byte 0x803DE1AC
 	.4byte 0
-	.4byte 0x803de1c4
+	.4byte 0x803DE1C4
 	.4byte 0
-	.4byte 0x803de20c
+	.4byte 0x803DE20C
 	.4byte 0
 	.4byte 0
-	.4byte 0x803de1a4
+	.4byte 0x803DE1A4
 	.4byte 0
-	.4byte 0x803de1ac
+	.4byte 0x803DE1AC
 	.4byte 0
-	.4byte 0x803de1c4
+	.4byte 0x803DE1C4
 	.4byte 0
-	.4byte 0x803de20c
+	.4byte 0x803DE20C
 	.4byte 0
 	.4byte __RTTI__12DynCollShape
 	.4byte 0
@@ -11020,17 +11020,17 @@ __vt__14DynCollObjBody:
 	.4byte getShape__12DynCollShapeFv
 	.4byte jointVisible__12DynCollShapeFii
 	.4byte refresh__12DynCollShapeFR8Graphics
-	.4byte 0x44796e4d
-	.4byte 0x61704f62
-	.4byte 0x6a656374
+	.4byte 0x44796E4D
+	.4byte 0x61704F62
+	.4byte 0x6A656374
 	.4byte 0
-	.4byte 0x803de1a4
+	.4byte 0x803DE1A4
 	.4byte 0
-	.4byte 0x803de1ac
+	.4byte 0x803DE1AC
 	.4byte 0
-	.4byte 0x803de1c4
+	.4byte 0x803DE1C4
 	.4byte 0
-	.4byte 0x803de20c
+	.4byte 0x803DE20C
 	.4byte 0
 	.4byte __RTTI__12DynCollShape
 	.4byte 0
@@ -11062,17 +11062,17 @@ __vt__12DynMapObject:
 	.4byte 0
 	.4byte 0
 	.4byte 0
-	.4byte 0x4d61704f
-	.4byte 0x626a6563
+	.4byte 0x4D61704F
+	.4byte 0x626A6563
 	.4byte 0x74506172
 	.4byte 0x74000000
-	.4byte 0x803de1a4
+	.4byte 0x803DE1A4
 	.4byte 0
-	.4byte 0x803de1ac
+	.4byte 0x803DE1AC
 	.4byte 0
-	.4byte 0x803de1c4
+	.4byte 0x803DE1C4
 	.4byte 0
-	.4byte 0x803de20c
+	.4byte 0x803DE20C
 	.4byte 0
 	.4byte __RTTI__12DynCollShape
 	.4byte 0
@@ -11099,7 +11099,7 @@ __vt__13MapObjectPart:
 	.4byte refresh__13MapObjectPartFR8Graphics
 .global __vt__13DynCollObject
 __vt__13DynCollObject:
-	.4byte 0x803de20c
+	.4byte 0x803DE20C
 	.4byte 0
 	.4byte getAgeNodeType__5ANodeFv
 	.4byte read__8CoreNodeFR18RandomAccessStream
@@ -11115,14 +11115,14 @@ __vt__13DynCollObject:
 	.4byte applyVelocity__13DynCollObjectFR5PlaneR8Vector3fR8Vector3f
 	.4byte touchCallback__13DynCollObjectFR5PlaneR8Vector3fR8Vector3f
 	.4byte getShape__13DynCollObjectFv
-	.4byte 0x4d61704f
-	.4byte 0x626a416e
-	.4byte 0x696d6174
-	.4byte 0x6f720000
-	.4byte 0x416e696d
-	.4byte 0x61746f72
+	.4byte 0x4D61704F
+	.4byte 0x626A416E
+	.4byte 0x696D6174
+	.4byte 0x6F720000
+	.4byte 0x416E696D
+	.4byte 0x61746F72
 	.4byte 0
-	.4byte 0x803de234
+	.4byte 0x803DE234
 	.4byte 0
 	.4byte 0
 .global __vt__14MapObjAnimator
@@ -11465,29 +11465,29 @@ lightnames$2816:
 	.4byte "__RTTI__26Delegate1<7FogMenu,R4Menu>"
 	.4byte 0
 	.4byte "invoke__26Delegate1<7FogMenu,R4Menu>FR4Menu"
-	.4byte 0x436f7265
-	.4byte 0x4e6f6465
+	.4byte 0x436F7265
+	.4byte 0x4E6F6465
 	.4byte 0
-	.4byte 0x803de460
-	.4byte 0
-	.4byte 0
-	.4byte 0x803de460
-	.4byte 0
-	.4byte 0x803de468
+	.4byte 0x803DE460
 	.4byte 0
 	.4byte 0
-	.4byte 0x803de460
+	.4byte 0x803DE460
 	.4byte 0
-	.4byte 0x803de468
-	.4byte 0
-	.4byte 0x803de478
+	.4byte 0x803DE468
 	.4byte 0
 	.4byte 0
-	.4byte 0x803de460
+	.4byte 0x803DE460
 	.4byte 0
-	.4byte 0x803de468
+	.4byte 0x803DE468
 	.4byte 0
-	.4byte 0x803de478
+	.4byte 0x803DE478
+	.4byte 0
+	.4byte 0
+	.4byte 0x803DE460
+	.4byte 0
+	.4byte 0x803DE468
+	.4byte 0
+	.4byte 0x803DE478
 	.4byte 0
 	.4byte __RTTI__4Menu_1
 	.4byte 0
@@ -11515,14 +11515,14 @@ __vt__7FogMenu:
 	.4byte open__4MenuFb
 	.4byte close__4MenuFv
 	.4byte doUpdate__4MenuFb
-	.4byte 0x4c696768
-	.4byte 0x744d656e
+	.4byte 0x4C696768
+	.4byte 0x744D656E
 	.4byte 0x75000000
-	.4byte 0x803de460
+	.4byte 0x803DE460
 	.4byte 0
-	.4byte 0x803de468
+	.4byte 0x803DE468
 	.4byte 0
-	.4byte 0x803de478
+	.4byte 0x803DE478
 	.4byte 0
 	.4byte __RTTI__4Menu_1
 	.4byte 0
@@ -11551,13 +11551,13 @@ __vt__9LightMenu:
 	.4byte close__4MenuFv
 	.4byte doUpdate__4MenuFb
 	.4byte 0x44617953
-	.4byte 0x65744d65
-	.4byte 0x6e750000
-	.4byte 0x803de460
+	.4byte 0x65744D65
+	.4byte 0x6E750000
+	.4byte 0x803DE460
 	.4byte 0
-	.4byte 0x803de468
+	.4byte 0x803DE468
 	.4byte 0
-	.4byte 0x803de478
+	.4byte 0x803DE478
 	.4byte 0
 	.4byte __RTTI__4Menu_1
 	.4byte 0
@@ -11585,13 +11585,13 @@ __vt__10DaySetMenu:
 	.4byte open__4MenuFb
 	.4byte close__4MenuFv
 	.4byte doUpdate__4MenuFb
-	.4byte 0x44656c65
+	.4byte 0x44656C65
 	.4byte 0x67617465
-	.4byte 0x313c4461
-	.4byte 0x794d6772
-	.4byte 0x2c204d65
-	.4byte 0x6e752026
-	.4byte 0x3e000000
+	.4byte 0x313C4461
+	.4byte 0x794D6772
+	.4byte 0x2C204D65
+	.4byte 0x6E752026
+	.4byte 0x3E000000
 	.4byte "__RTTI__18IDelegate1<R4Menu>_3"
 	.4byte 0
 	.4byte 0
@@ -11600,14 +11600,14 @@ __vt__10DaySetMenu:
 	.4byte "__RTTI__25Delegate1<6DayMgr,R4Menu>"
 	.4byte 0
 	.4byte "invoke__25Delegate1<6DayMgr,R4Menu>FR4Menu"
-	.4byte 0x44656c65
+	.4byte 0x44656C65
 	.4byte 0x67617465
-	.4byte 0x313c506f
+	.4byte 0x313C506F
 	.4byte 0x73697469
-	.4byte 0x6f6e4d65
-	.4byte 0x6e752c20
-	.4byte 0x4d656e75
-	.4byte 0x20263e00
+	.4byte 0x6F6E4D65
+	.4byte 0x6E752C20
+	.4byte 0x4D656E75
+	.4byte 0x20263E00
 	.4byte "__RTTI__18IDelegate1<R4Menu>_3"
 	.4byte 0
 	.4byte 0
@@ -11616,15 +11616,15 @@ __vt__10DaySetMenu:
 	.4byte "__RTTI__32Delegate1<12PositionMenu,R4Menu>"
 	.4byte 0
 	.4byte "invoke__32Delegate1<12PositionMenu,R4Menu>FR4Menu"
-	.4byte 0x506f7369
-	.4byte 0x74696f6e
-	.4byte 0x4d656e75
+	.4byte 0x506F7369
+	.4byte 0x74696F6E
+	.4byte 0x4D656E75
 	.4byte 0
-	.4byte 0x803de460
+	.4byte 0x803DE460
 	.4byte 0
-	.4byte 0x803de468
+	.4byte 0x803DE468
 	.4byte 0
-	.4byte 0x803de478
+	.4byte 0x803DE478
 	.4byte 0
 	.4byte __RTTI__4Menu_1
 	.4byte 0
@@ -11652,14 +11652,14 @@ __vt__12PositionMenu:
 	.4byte open__4MenuFb
 	.4byte close__4MenuFv
 	.4byte doUpdate__4MenuFb
-	.4byte 0x44656c65
+	.4byte 0x44656C65
 	.4byte 0x67617465
-	.4byte 0x313c436f
-	.4byte 0x6c6f7572
-	.4byte 0x4d656e75
-	.4byte 0x2c204d65
-	.4byte 0x6e752026
-	.4byte 0x3e000000
+	.4byte 0x313C436F
+	.4byte 0x6C6F7572
+	.4byte 0x4D656E75
+	.4byte 0x2C204D65
+	.4byte 0x6E752026
+	.4byte 0x3E000000
 	.4byte "__RTTI__18IDelegate1<R4Menu>_3"
 	.4byte 0
 	.4byte 0
@@ -11668,26 +11668,26 @@ __vt__12PositionMenu:
 	.4byte "__RTTI__30Delegate1<10ColourMenu,R4Menu>"
 	.4byte 0
 	.4byte "invoke__30Delegate1<10ColourMenu,R4Menu>FR4Menu"
-	.4byte 0x44656c65
+	.4byte 0x44656C65
 	.4byte 0x67617465
-	.4byte 0x313c4d65
-	.4byte 0x6e752c20
-	.4byte 0x4d656e75
-	.4byte 0x20263e00
+	.4byte 0x313C4D65
+	.4byte 0x6E752C20
+	.4byte 0x4D656E75
+	.4byte 0x20263E00
 	.4byte "__RTTI__18IDelegate1<R4Menu>_3"
 	.4byte 0
 	.4byte 0
 	.4byte 0
 	.4byte 0
 	.4byte 0
-	.4byte 0x436f6c6f
-	.4byte 0x75724d65
-	.4byte 0x6e750000
-	.4byte 0x803de460
+	.4byte 0x436F6C6F
+	.4byte 0x75724D65
+	.4byte 0x6E750000
+	.4byte 0x803DE460
 	.4byte 0
-	.4byte 0x803de468
+	.4byte 0x803DE468
 	.4byte 0
-	.4byte 0x803de478
+	.4byte 0x803DE478
 	.4byte 0
 	.4byte __RTTI__4Menu_1
 	.4byte 0
@@ -11715,13 +11715,13 @@ __vt__10ColourMenu:
 	.4byte open__4MenuFb
 	.4byte close__4MenuFv
 	.4byte doUpdate__4MenuFb
-	.4byte 0x44656c65
+	.4byte 0x44656C65
 	.4byte 0x67617465
-	.4byte 0x313c4c69
-	.4byte 0x6768744d
-	.4byte 0x656e752c
-	.4byte 0x204d656e
-	.4byte 0x7520263e
+	.4byte 0x313C4C69
+	.4byte 0x6768744D
+	.4byte 0x656E752C
+	.4byte 0x204D656E
+	.4byte 0x7520263E
 	.4byte 0
 	.4byte "__RTTI__18IDelegate1<R4Menu>_3"
 	.4byte 0
@@ -11855,12 +11855,12 @@ __vt__13ActorInstance:
 	.4byte 0
 	.4byte getAgeNodeType__5ANodeFv
 	.4byte read__8CoreNodeFR18RandomAccessStream
-	.4byte 0x5363656e
+	.4byte 0x5363656E
 	.4byte 0x65437574
 	.4byte 0
-	.4byte 0x803de73c
+	.4byte 0x803DE73C
 	.4byte 0
-	.4byte 0x803de744
+	.4byte 0x803DE744
 	.4byte 0
 	.4byte 0
 .global __vt__8SceneCut
@@ -11869,13 +11869,13 @@ __vt__8SceneCut:
 	.4byte 0
 	.4byte getAgeNodeType__5ANodeFv
 	.4byte read__8CoreNodeFR18RandomAccessStream
-	.4byte 0x43696e65
+	.4byte 0x43696E65
 	.4byte 0x53686170
-	.4byte 0x654f626a
+	.4byte 0x654F626A
 	.4byte 0x65637400
-	.4byte 0x803de73c
+	.4byte 0x803DE73C
 	.4byte 0
-	.4byte 0x803de744
+	.4byte 0x803DE744
 	.4byte 0
 	.4byte 0
 .global __vt__15CineShapeObject
@@ -11884,12 +11884,12 @@ __vt__15CineShapeObject:
 	.4byte 0
 	.4byte getAgeNodeType__5ANodeFv
 	.4byte read__8CoreNodeFR18RandomAccessStream
-	.4byte 0x5363656e
+	.4byte 0x5363656E
 	.4byte 0x65446174
 	.4byte 0x61000000
-	.4byte 0x803de73c
+	.4byte 0x803DE73C
 	.4byte 0
-	.4byte 0x803de744
+	.4byte 0x803DE744
 	.4byte 0
 	.4byte 0
 .global __vt__9SceneData
@@ -11906,29 +11906,29 @@ __vt__9SceneData:
 	.4byte 0
 	.4byte 0
 	.4byte 0
-	.4byte 0x6c696768
-	.4byte 0x74506f6f
-	.4byte 0x6c2e6370
+	.4byte 0x6C696768
+	.4byte 0x74506F6F
+	.4byte 0x6C2E6370
 	.4byte 0x70000000
-	.4byte 0x4c696768
-	.4byte 0x74506f6f
-	.4byte 0x6c000000
-	.4byte 0x436f7265
-	.4byte 0x4e6f6465
+	.4byte 0x4C696768
+	.4byte 0x74506F6F
+	.4byte 0x6C000000
+	.4byte 0x436F7265
+	.4byte 0x4E6F6465
 	.4byte 0
-	.4byte 0x803de7a4
-	.4byte 0
-	.4byte 0
-	.4byte 0x803de7a4
-	.4byte 0
-	.4byte 0x803de7ac
+	.4byte 0x803DE7A4
 	.4byte 0
 	.4byte 0
-	.4byte 0x803de7a4
+	.4byte 0x803DE7A4
 	.4byte 0
-	.4byte 0x803de7ac
+	.4byte 0x803DE7AC
 	.4byte 0
-	.4byte 0x803de7bc
+	.4byte 0
+	.4byte 0x803DE7A4
+	.4byte 0
+	.4byte 0x803DE7AC
+	.4byte 0
+	.4byte 0x803DE7BC
 	.4byte 0
 	.4byte 0
 .global __vt__9LightPool
@@ -14736,25 +14736,25 @@ __vt__21MovSampleSetupSection:
 	.4byte concat__4NodeFR3SRT
 	.4byte concat__4NodeFR8Matrix4f
 	.4byte getModelMatrix__4NodeFv
-	.4byte 0x4d6f7653
-	.4byte 0x616d706c
+	.4byte 0x4D6F7653
+	.4byte 0x616D706C
 	.4byte 0x65536563
-	.4byte 0x74696f6e
+	.4byte 0x74696F6E
 	.4byte 0
-	.4byte 0x803de870
+	.4byte 0x803DE870
 	.4byte 0
-	.4byte 0x803de878
+	.4byte 0x803DE878
 	.4byte 0
-	.4byte 0x803de888
+	.4byte 0x803DE888
 	.4byte 0
 	.4byte 0
-	.4byte 0x803de870
+	.4byte 0x803DE870
 	.4byte 0
-	.4byte 0x803de878
+	.4byte 0x803DE878
 	.4byte 0
-	.4byte 0x803de888
+	.4byte 0x803DE888
 	.4byte 0
-	.4byte 0x803de8a0
+	.4byte 0x803DE8A0
 	.4byte 0
 	.4byte 0
 .global __vt__16MovSampleSection
@@ -14772,21 +14772,21 @@ __vt__16MovSampleSection:
 	.4byte concat__4NodeFR8Matrix4f
 	.4byte getModelMatrix__4NodeFv
 	.4byte init__16MovSampleSectionFv
-	.4byte 0x6f6d616b
-	.4byte 0x652e6370
+	.4byte 0x6F6D616B
+	.4byte 0x652E6370
 	.4byte 0x70000000
 	.4byte 0x61747465
-	.4byte 0x6e74696f
-	.4byte 0x6e43616d
+	.4byte 0x6E74696F
+	.4byte 0x6E43616D
 	.4byte 0x65726100
-	.4byte 0x436c6f74
+	.4byte 0x436C6F74
 	.4byte 0x68466164
 	.4byte 0x65720000
 	.4byte 0x41747465
-	.4byte 0x6e74696f
-	.4byte 0x6e43616d
-	.4byte 0x6572613a
-	.4byte 0x3a466164
+	.4byte 0x6E74696F
+	.4byte 0x6E43616D
+	.4byte 0x6572613A
+	.4byte 0x3A466164
 	.4byte 0x65720000
 	.4byte __RTTI__Q215AttentionCamera5Fader
 	.4byte 0
@@ -14801,8 +14801,8 @@ __vt__10ClothFader:
 	.4byte initFadeOut__10ClothFaderFv
 	.4byte updateFadeOut__10ClothFaderFv
 	.4byte drawFadeOut__10ClothFaderFR8Graphics
-	.4byte 0x53696d70
-	.4byte 0x6c654661
+	.4byte 0x53696D70
+	.4byte 0x6C654661
 	.4byte 0x64657200
 	.4byte __RTTI__Q215AttentionCamera5Fader
 	.4byte 0
@@ -14818,7 +14818,7 @@ __vt__11SimpleFader:
 	.4byte updateFadeOut__11SimpleFaderFv
 	.4byte drawFadeOut__11SimpleFaderFR8Graphics
 	.4byte 0x44656661
-	.4byte 0x756c7446
+	.4byte 0x756C7446
 	.4byte 0x61646572
 	.4byte 0
 	.4byte __RTTI__Q215AttentionCamera5Fader
@@ -14845,12 +14845,12 @@ __vt__Q215AttentionCamera5Fader:
 	.4byte updateFadeOut__Q215AttentionCamera5FaderFv
 	.4byte drawFadeOut__Q215AttentionCamera5FaderFR8Graphics
 	.4byte 0x72616461
-	.4byte 0x72496e66
-	.4byte 0x6f2e6370
+	.4byte 0x72496E66
+	.4byte 0x6F2E6370
 	.4byte 0x70000000
 	.4byte 0x72616461
-	.4byte 0x72496e66
-	.4byte 0x6f000000
+	.4byte 0x72496E66
+	.4byte 0x6F000000
 .global lbl_802ACC24
 lbl_802ACC24:
 	.4byte 0x436F7265
@@ -14884,23 +14884,23 @@ __vt__Q29RadarInfo9PartsInfo:
 	.4byte 0
 	.4byte 0
 	.4byte 0
-	.4byte 0x696e7465
+	.4byte 0x696E7465
 	.4byte 0x72616374
 	.4byte 0x42617474
-	.4byte 0x6c652e63
+	.4byte 0x6C652E63
 	.4byte 0x70700000
-	.4byte 0x696e7465
+	.4byte 0x696E7465
 	.4byte 0x72616374
 	.4byte 0x42617474
-	.4byte 0x6c650000
-	.4byte 0x496e7465
+	.4byte 0x6C650000
+	.4byte 0x496E7465
 	.4byte 0x72616374
-	.4byte 0x466c7574
+	.4byte 0x466C7574
 	.4byte 0x65000000
-	.4byte 0x496e7465
+	.4byte 0x496E7465
 	.4byte 0x72616374
-	.4byte 0x696f6e00
-	.4byte 0x803de948
+	.4byte 0x696F6E00
+	.4byte 0x803DE948
 	.4byte 0
 	.4byte 0
 .global __vt__13InteractFlute
@@ -14916,11 +14916,11 @@ __vt__13InteractFlute:
 	.4byte actHinderRock__11InteractionFP10HinderRock
 	.4byte actBridge__11InteractionFP6Bridge
 	.4byte actItem__11InteractionFP12ItemCreature
-	.4byte 0x496e7465
+	.4byte 0x496E7465
 	.4byte 0x72616374
 	.4byte 0x50726573
 	.4byte 0x73000000
-	.4byte 0x803de948
+	.4byte 0x803DE948
 	.4byte 0
 	.4byte 0
 .global __vt__13InteractPress
@@ -14936,11 +14936,11 @@ __vt__13InteractPress:
 	.4byte actHinderRock__11InteractionFP10HinderRock
 	.4byte actBridge__11InteractionFP6Bridge
 	.4byte actItem__11InteractionFP12ItemCreature
-	.4byte 0x496e7465
+	.4byte 0x496E7465
 	.4byte 0x72616374
-	.4byte 0x4b696c6c
+	.4byte 0x4B696C6C
 	.4byte 0
-	.4byte 0x803de948
+	.4byte 0x803DE948
 	.4byte 0
 	.4byte 0
 .global __vt__12InteractKill
@@ -14956,11 +14956,11 @@ __vt__12InteractKill:
 	.4byte actHinderRock__11InteractionFP10HinderRock
 	.4byte actBridge__11InteractionFP6Bridge
 	.4byte actItem__11InteractionFP12ItemCreature
-	.4byte 0x496e7465
+	.4byte 0x496E7465
 	.4byte 0x72616374
-	.4byte 0x5377616c
-	.4byte 0x6c6f7700
-	.4byte 0x803de948
+	.4byte 0x5377616C
+	.4byte 0x6C6F7700
+	.4byte 0x803DE948
 	.4byte 0
 	.4byte 0
 .global __vt__15InteractSwallow
@@ -14976,11 +14976,11 @@ __vt__15InteractSwallow:
 	.4byte actHinderRock__11InteractionFP10HinderRock
 	.4byte actBridge__11InteractionFP6Bridge
 	.4byte actItem__15InteractSwallowFP12ItemCreature
-	.4byte 0x496e7465
+	.4byte 0x496E7465
 	.4byte 0x72616374
 	.4byte 0x41747461
-	.4byte 0x636b0000
-	.4byte 0x803de948
+	.4byte 0x636B0000
+	.4byte 0x803DE948
 	.4byte 0
 	.4byte 0
 .global __vt__14InteractAttack
@@ -14996,12 +14996,12 @@ __vt__14InteractAttack:
 	.4byte actHinderRock__11InteractionFP10HinderRock
 	.4byte actBridge__11InteractionFP6Bridge
 	.4byte actItem__14InteractAttackFP12ItemCreature
-	.4byte 0x496e7465
+	.4byte 0x496E7465
 	.4byte 0x72616374
-	.4byte 0x536c696d
+	.4byte 0x536C696D
 	.4byte 0x65417474
-	.4byte 0x61636b00
-	.4byte 0x803de948
+	.4byte 0x61636B00
+	.4byte 0x803DE948
 	.4byte 0
 	.4byte 0
 .global __vt__19InteractSlimeAttack
@@ -15017,11 +15017,11 @@ __vt__19InteractSlimeAttack:
 	.4byte actHinderRock__11InteractionFP10HinderRock
 	.4byte actBridge__11InteractionFP6Bridge
 	.4byte actItem__11InteractionFP12ItemCreature
-	.4byte 0x496e7465
+	.4byte 0x496E7465
 	.4byte 0x72616374
-	.4byte 0x466c6963
-	.4byte 0x6b000000
-	.4byte 0x803de948
+	.4byte 0x466C6963
+	.4byte 0x6B000000
+	.4byte 0x803DE948
 	.4byte 0
 	.4byte 0
 .global __vt__13InteractFlick
@@ -15037,11 +15037,11 @@ __vt__13InteractFlick:
 	.4byte actHinderRock__11InteractionFP10HinderRock
 	.4byte actBridge__11InteractionFP6Bridge
 	.4byte actItem__13InteractFlickFP12ItemCreature
-	.4byte 0x496e7465
+	.4byte 0x496E7465
 	.4byte 0x72616374
-	.4byte 0x57696e64
+	.4byte 0x57696E64
 	.4byte 0
-	.4byte 0x803de948
+	.4byte 0x803DE948
 	.4byte 0
 	.4byte 0
 .global __vt__12InteractWind
@@ -15057,11 +15057,11 @@ __vt__12InteractWind:
 	.4byte actHinderRock__11InteractionFP10HinderRock
 	.4byte actBridge__11InteractionFP6Bridge
 	.4byte actItem__11InteractionFP12ItemCreature
-	.4byte 0x496e7465
+	.4byte 0x496E7465
 	.4byte 0x72616374
 	.4byte 0x46697265
 	.4byte 0
-	.4byte 0x803de948
+	.4byte 0x803DE948
 	.4byte 0
 	.4byte 0
 .global __vt__12InteractFire
@@ -15077,11 +15077,11 @@ __vt__12InteractFire:
 	.4byte actHinderRock__11InteractionFP10HinderRock
 	.4byte actBridge__11InteractionFP6Bridge
 	.4byte actItem__11InteractionFP12ItemCreature
-	.4byte 0x496e7465
+	.4byte 0x496E7465
 	.4byte 0x72616374
 	.4byte 0x42756262
-	.4byte 0x6c650000
-	.4byte 0x803de948
+	.4byte 0x6C650000
+	.4byte 0x803DE948
 	.4byte 0
 	.4byte 0
 .global __vt__14InteractBubble
@@ -15099,7 +15099,7 @@ __vt__14InteractBubble:
 	.4byte actItem__11InteractionFP12ItemCreature
 .global __vt__11Interaction
 __vt__11Interaction:
-	.4byte 0x803de948
+	.4byte 0x803DE948
 	.4byte 0
 	.4byte actCommon__11InteractionFP8Creature
 	.4byte actPiki__11InteractionFP4Piki
@@ -15110,11 +15110,11 @@ __vt__11Interaction:
 	.4byte actHinderRock__11InteractionFP10HinderRock
 	.4byte actBridge__11InteractionFP6Bridge
 	.4byte actItem__11InteractionFP12ItemCreature
-	.4byte 0x496e7465
+	.4byte 0x496E7465
 	.4byte 0x72616374
-	.4byte 0x53706f72
+	.4byte 0x53706F72
 	.4byte 0x65000000
-	.4byte 0x803de948
+	.4byte 0x803DE948
 	.4byte 0
 	.4byte 0
 .global __vt__13InteractSpore
@@ -15130,12 +15130,12 @@ __vt__13InteractSpore:
 	.4byte actHinderRock__11InteractionFP10HinderRock
 	.4byte actBridge__11InteractionFP6Bridge
 	.4byte actItem__11InteractionFP12ItemCreature
-	.4byte 0x496e7465
+	.4byte 0x496E7465
 	.4byte 0x72616374
-	.4byte 0x4368616e
+	.4byte 0x4368616E
 	.4byte 0x67654861
 	.4byte 0x70706100
-	.4byte 0x803de948
+	.4byte 0x803DE948
 	.4byte 0
 	.4byte 0
 .global __vt__19InteractChangeHappa
@@ -15151,12 +15151,12 @@ __vt__19InteractChangeHappa:
 	.4byte actHinderRock__11InteractionFP10HinderRock
 	.4byte actBridge__11InteractionFP6Bridge
 	.4byte actItem__11InteractionFP12ItemCreature
-	.4byte 0x496e7465
+	.4byte 0x496E7465
 	.4byte 0x72616374
-	.4byte 0x4368616e
-	.4byte 0x6765436f
-	.4byte 0x6c6f7200
-	.4byte 0x803de948
+	.4byte 0x4368616E
+	.4byte 0x6765436F
+	.4byte 0x6C6F7200
+	.4byte 0x803DE948
 	.4byte 0
 	.4byte 0
 .global __vt__19InteractChangeColor
@@ -15172,12 +15172,12 @@ __vt__19InteractChangeColor:
 	.4byte actHinderRock__11InteractionFP10HinderRock
 	.4byte actBridge__11InteractionFP6Bridge
 	.4byte actItem__11InteractionFP12ItemCreature
-	.4byte 0x496e7465
+	.4byte 0x496E7465
 	.4byte 0x72616374
-	.4byte 0x5468726f
+	.4byte 0x5468726F
 	.4byte 0x77417761
 	.4byte 0x79000000
-	.4byte 0x803de948
+	.4byte 0x803DE948
 	.4byte 0
 	.4byte 0
 .global __vt__17InteractThrowAway
@@ -15193,11 +15193,11 @@ __vt__17InteractThrowAway:
 	.4byte actHinderRock__11InteractionFP10HinderRock
 	.4byte actBridge__11InteractionFP6Bridge
 	.4byte actItem__11InteractionFP12ItemCreature
-	.4byte 0x496e7465
+	.4byte 0x496E7465
 	.4byte 0x72616374
 	.4byte 0x42757279
 	.4byte 0
-	.4byte 0x803de948
+	.4byte 0x803DE948
 	.4byte 0
 	.4byte 0
 .global __vt__12InteractBury
@@ -15214,23 +15214,23 @@ __vt__12InteractBury:
 	.4byte actBridge__11InteractionFP6Bridge
 	.4byte actItem__11InteractionFP12ItemCreature
 	.4byte 0
-	.4byte 0x696e7465
+	.4byte 0x696E7465
 	.4byte 0x72616374
 	.4byte 0x47726162
-	.4byte 0x2e637070
+	.4byte 0x2E637070
 	.4byte 0
-	.4byte 0x696e7465
+	.4byte 0x696E7465
 	.4byte 0x72616374
 	.4byte 0x47726162
 	.4byte 0
-	.4byte 0x496e7465
+	.4byte 0x496E7465
 	.4byte 0x72616374
-	.4byte 0x52656c65
+	.4byte 0x52656C65
 	.4byte 0x61736500
-	.4byte 0x496e7465
+	.4byte 0x496E7465
 	.4byte 0x72616374
-	.4byte 0x696f6e00
-	.4byte 0x803de9dc
+	.4byte 0x696F6E00
+	.4byte 0x803DE9DC
 	.4byte 0
 	.4byte 0
 .global __vt__15InteractRelease
@@ -15246,11 +15246,11 @@ __vt__15InteractRelease:
 	.4byte actHinderRock__11InteractionFP10HinderRock
 	.4byte actBridge__11InteractionFP6Bridge
 	.4byte actItem__11InteractionFP12ItemCreature
-	.4byte 0x496e7465
+	.4byte 0x496E7465
 	.4byte 0x72616374
 	.4byte 0x47726162
 	.4byte 0
-	.4byte 0x803de9dc
+	.4byte 0x803DE9DC
 	.4byte 0
 	.4byte 0
 .global __vt__12InteractGrab
@@ -15266,21 +15266,21 @@ __vt__12InteractGrab:
 	.4byte actHinderRock__11InteractionFP10HinderRock
 	.4byte actBridge__11InteractionFP6Bridge
 	.4byte actItem__11InteractionFP12ItemCreature
-	.4byte 0x696e7465
+	.4byte 0x696E7465
 	.4byte 0x72616374
-	.4byte 0x4574632e
+	.4byte 0x4574632E
 	.4byte 0x63707000
-	.4byte 0x696e7465
+	.4byte 0x696E7465
 	.4byte 0x72616374
 	.4byte 0x45746300
-	.4byte 0x496e7465
+	.4byte 0x496E7465
 	.4byte 0x72616374
-	.4byte 0x5761726e
+	.4byte 0x5761726E
 	.4byte 0
-	.4byte 0x496e7465
+	.4byte 0x496E7465
 	.4byte 0x72616374
-	.4byte 0x696f6e00
-	.4byte 0x803de9f8
+	.4byte 0x696F6E00
+	.4byte 0x803DE9F8
 	.4byte 0
 	.4byte 0
 .global __vt__12InteractWarn
@@ -15296,11 +15296,11 @@ __vt__12InteractWarn:
 	.4byte actHinderRock__11InteractionFP10HinderRock
 	.4byte actBridge__11InteractionFP6Bridge
 	.4byte actItem__11InteractionFP12ItemCreature
-	.4byte 0x496e7465
+	.4byte 0x496E7465
 	.4byte 0x72616374
-	.4byte 0x54616c6b
+	.4byte 0x54616C6B
 	.4byte 0
-	.4byte 0x803de9f8
+	.4byte 0x803DE9F8
 	.4byte 0
 	.4byte 0
 .global __vt__12InteractTalk
@@ -15316,23 +15316,23 @@ __vt__12InteractTalk:
 	.4byte actHinderRock__11InteractionFP10HinderRock
 	.4byte actBridge__11InteractionFP6Bridge
 	.4byte actItem__11InteractionFP12ItemCreature
-	.4byte 0x696e7465
+	.4byte 0x696E7465
 	.4byte 0x72616374
-	.4byte 0x50756c6c
-	.4byte 0x6f75742e
+	.4byte 0x50756C6C
+	.4byte 0x6F75742E
 	.4byte 0x63707000
-	.4byte 0x696e7465
+	.4byte 0x696E7465
 	.4byte 0x72616374
-	.4byte 0x50756c6c
-	.4byte 0x6f757400
-	.4byte 0x496e7465
+	.4byte 0x50756C6C
+	.4byte 0x6F757400
+	.4byte 0x496E7465
 	.4byte 0x72616374
-	.4byte 0x50756c6c
-	.4byte 0x6f757400
-	.4byte 0x496e7465
+	.4byte 0x50756C6C
+	.4byte 0x6F757400
+	.4byte 0x496E7465
 	.4byte 0x72616374
-	.4byte 0x696f6e00
-	.4byte 0x803dea20
+	.4byte 0x696F6E00
+	.4byte 0x803DEA20
 	.4byte 0
 	.4byte 0
 .global __vt__15InteractPullout
@@ -15349,24 +15349,24 @@ __vt__15InteractPullout:
 	.4byte actBridge__11InteractionFP6Bridge
 	.4byte actItem__15InteractPulloutFP12ItemCreature
 	.4byte 0x73616945
-	.4byte 0x76656e74
-	.4byte 0x732e6370
+	.4byte 0x76656E74
+	.4byte 0x732E6370
 	.4byte 0x70000000
 	.4byte 0x73616945
-	.4byte 0x76656e74
+	.4byte 0x76656E74
 	.4byte 0
 	.4byte 0x53414955
 	.4byte 0x73657245
-	.4byte 0x76656e74
+	.4byte 0x76656E74
 	.4byte 0
 	.4byte 0x52656365
 	.4byte 0x69766572
-	.4byte 0x3c414943
+	.4byte 0x3C414943
 	.4byte 0x72656174
-	.4byte 0x7572653e
+	.4byte 0x7572653E
 	.4byte 0
 	.4byte 0x53414945
-	.4byte 0x76656e74
+	.4byte 0x76656E74
 	.4byte 0
 	.4byte "__RTTI__22Receiver<10AICreature>"
 	.4byte 0
@@ -15393,9 +15393,9 @@ __vt__12SAIUserEvent:
 	.4byte procUserMsg__12SAIUserEventFP10AICreatureP7MsgUser
 	.4byte "procGroundMsg__22Receiver<10AICreature>FP10AICreatureP9MsgGround"
 	.4byte 0x53414947
-	.4byte 0x726f756e
+	.4byte 0x726F756E
 	.4byte 0x64457665
-	.4byte 0x6e740000
+	.4byte 0x6E740000
 	.4byte "__RTTI__22Receiver<10AICreature>"
 	.4byte 0
 	.4byte __RTTI__8SAIEvent
@@ -15418,9 +15418,9 @@ __vt__14SAIGroundEvent:
 	.4byte "procUserMsg__22Receiver<10AICreature>FP10AICreatureP7MsgUser"
 	.4byte procGroundMsg__14SAIGroundEventFP10AICreatureP9MsgGround
 	.4byte 0x53414943
-	.4byte 0x6f6c6c69
+	.4byte 0x6F6C6C69
 	.4byte 0x64654576
-	.4byte 0x656e7400
+	.4byte 0x656E7400
 	.4byte "__RTTI__22Receiver<10AICreature>"
 	.4byte 0
 	.4byte __RTTI__8SAIEvent
@@ -15443,9 +15443,9 @@ __vt__15SAICollideEvent:
 	.4byte "procUserMsg__22Receiver<10AICreature>FP10AICreatureP7MsgUser"
 	.4byte "procGroundMsg__22Receiver<10AICreature>FP10AICreatureP9MsgGround"
 	.4byte 0x53414942
-	.4byte 0x6f756e63
+	.4byte 0x6F756E63
 	.4byte 0x65457665
-	.4byte 0x6e740000
+	.4byte 0x6E740000
 	.4byte "__RTTI__22Receiver<10AICreature>"
 	.4byte 0
 	.4byte __RTTI__8SAIEvent
@@ -15467,11 +15467,11 @@ __vt__14SAIBounceEvent:
 	.4byte "procOffWallMsg__22Receiver<10AICreature>FP10AICreatureP10MsgOffWall"
 	.4byte "procUserMsg__22Receiver<10AICreature>FP10AICreatureP7MsgUser"
 	.4byte "procGroundMsg__22Receiver<10AICreature>FP10AICreatureP9MsgGround"
-	.4byte 0x5341494d
-	.4byte 0x6f74696f
-	.4byte 0x6e4c6f6f
-	.4byte 0x70456e64
-	.4byte 0x4576656e
+	.4byte 0x5341494D
+	.4byte 0x6F74696F
+	.4byte 0x6E4C6F6F
+	.4byte 0x70456E64
+	.4byte 0x4576656E
 	.4byte 0x74000000
 	.4byte "__RTTI__22Receiver<10AICreature>"
 	.4byte 0
@@ -15494,12 +15494,12 @@ __vt__21SAIMotionLoopEndEvent:
 	.4byte "procOffWallMsg__22Receiver<10AICreature>FP10AICreatureP10MsgOffWall"
 	.4byte "procUserMsg__22Receiver<10AICreature>FP10AICreatureP7MsgUser"
 	.4byte "procGroundMsg__22Receiver<10AICreature>FP10AICreatureP9MsgGround"
-	.4byte 0x5341494d
-	.4byte 0x6f74696f
-	.4byte 0x6e4c6f6f
+	.4byte 0x5341494D
+	.4byte 0x6F74696F
+	.4byte 0x6E4C6F6F
 	.4byte 0x70537461
 	.4byte 0x72744576
-	.4byte 0x656e7400
+	.4byte 0x656E7400
 	.4byte "__RTTI__22Receiver<10AICreature>"
 	.4byte 0
 	.4byte __RTTI__8SAIEvent
@@ -15521,11 +15521,11 @@ __vt__23SAIMotionLoopStartEvent:
 	.4byte "procOffWallMsg__22Receiver<10AICreature>FP10AICreatureP10MsgOffWall"
 	.4byte "procUserMsg__22Receiver<10AICreature>FP10AICreatureP7MsgUser"
 	.4byte "procGroundMsg__22Receiver<10AICreature>FP10AICreatureP9MsgGround"
-	.4byte 0x5341494d
-	.4byte 0x6f74696f
-	.4byte 0x6e416374
-	.4byte 0x696f6e30
-	.4byte 0x4576656e
+	.4byte 0x5341494D
+	.4byte 0x6F74696F
+	.4byte 0x6E416374
+	.4byte 0x696F6E30
+	.4byte 0x4576656E
 	.4byte 0x74000000
 	.4byte "__RTTI__22Receiver<10AICreature>"
 	.4byte 0
@@ -15548,11 +15548,11 @@ __vt__21SAIMotionAction0Event:
 	.4byte "procOffWallMsg__22Receiver<10AICreature>FP10AICreatureP10MsgOffWall"
 	.4byte "procUserMsg__22Receiver<10AICreature>FP10AICreatureP7MsgUser"
 	.4byte "procGroundMsg__22Receiver<10AICreature>FP10AICreatureP9MsgGround"
-	.4byte 0x5341494d
-	.4byte 0x6f74696f
-	.4byte 0x6e446f6e
+	.4byte 0x5341494D
+	.4byte 0x6F74696F
+	.4byte 0x6E446F6E
 	.4byte 0x65457665
-	.4byte 0x6e740000
+	.4byte 0x6E740000
 	.4byte "__RTTI__22Receiver<10AICreature>"
 	.4byte 0
 	.4byte __RTTI__8SAIEvent
@@ -15742,15 +15742,15 @@ __vt__8SAIState:
 	.4byte 0
 	.4byte 0
 	.4byte 0x53414943
-	.4byte 0x6f6e6469
-	.4byte 0x74696f6e
+	.4byte 0x6F6E6469
+	.4byte 0x74696F6E
 	.4byte 0
-	.4byte 0x803deab8
+	.4byte 0x803DEAB8
 	.4byte 0
 	.4byte 0
-	.4byte 0x803deab8
+	.4byte 0x803DEAB8
 	.4byte 0
-	.4byte 0x803deac0
+	.4byte 0x803DEAC0
 	.4byte 0
 	.4byte 0
 .global __vt__12SAICondition
@@ -15760,9 +15760,9 @@ __vt__12SAICondition:
 	.4byte getAgeNodeType__5ANodeFv
 	.4byte read__8CoreNodeFR18RandomAccessStream
 	.4byte satisfy__12SAIConditionFP10AICreature
-	.4byte 0x803deab8
+	.4byte 0x803DEAB8
 	.4byte 0
-	.4byte 0x803deac0
+	.4byte 0x803DEAC0
 	.4byte 0
 	.4byte 0
 .global __vt__8SAIArrow
@@ -15778,15 +15778,15 @@ __vt__8SAIArrow:
 	.4byte 0
 	.4byte 0
 	.4byte 0
-	.4byte 0x53696d70
-	.4byte 0x6c654149
+	.4byte 0x53696D70
+	.4byte 0x6C654149
 	.4byte 0
 	.4byte 0x53746174
-	.4byte 0x654d6163
-	.4byte 0x68696e65
-	.4byte 0x3c414943
+	.4byte 0x654D6163
+	.4byte 0x68696E65
+	.4byte 0x3C414943
 	.4byte 0x72656174
-	.4byte 0x7572653e
+	.4byte 0x7572653E
 	.4byte 0
 	.4byte "__RTTI__26StateMachine<10AICreature>"
 	.4byte 0
@@ -15810,38 +15810,38 @@ __vt__8SimpleAI:
 	.4byte 0x41494372
 	.4byte 0x65617475
 	.4byte 0x72650000
-	.4byte 0x50616e69
-	.4byte 0x416e696d
-	.4byte 0x4b65794c
+	.4byte 0x50616E69
+	.4byte 0x416E696D
+	.4byte 0x4B65794C
 	.4byte 0x69737465
-	.4byte 0x6e657200
-	.4byte 0x4576656e
-	.4byte 0x7454616c
-	.4byte 0x6b657200
+	.4byte 0x6E657200
+	.4byte 0x4576656E
+	.4byte 0x7454616C
+	.4byte 0x6B657200
 	.4byte 0x52656643
-	.4byte 0x6f756e74
-	.4byte 0x61626c65
+	.4byte 0x6F756E74
+	.4byte 0x61626C65
 	.4byte 0
 	.4byte 0x43726561
 	.4byte 0x74757265
 	.4byte 0
-	.4byte 0x803deaf0
+	.4byte 0x803DEAF0
 	.4byte 0x8
-	.4byte 0x803deaf8
+	.4byte 0x803DEAF8
 	.4byte 0
 	.4byte 0
-	.4byte 0x803deae8
-	.4byte 0x2b8
-	.4byte 0x803deaf0
+	.4byte 0x803DEAE8
+	.4byte 0x2B8
+	.4byte 0x803DEAF0
 	.4byte 0x8
-	.4byte 0x803deaf8
+	.4byte 0x803DEAF8
 	.4byte 0
-	.4byte 0x803deb00
+	.4byte 0x803DEB00
 	.4byte 0
 	.4byte 0
 .global __vt__10AICreature
 __vt__10AICreature:
-	.4byte 0x803deb08
+	.4byte 0x803DEB08
 	.4byte 0
 	.4byte addCntCallback__12RefCountableFv
 	.4byte subCntCallback__12RefCountableFv
@@ -15910,8 +15910,8 @@ __vt__10AICreature:
 	.4byte doAnimation__8CreatureFv
 	.4byte 0
 	.4byte exitCourse__8CreatureFv
-	.4byte 0x803deb08
-	.4byte 0xfffffd48
+	.4byte 0x803DEB08
+	.4byte 0xFFFFFD48
 	.4byte lbl_8007DF54
 	.4byte getCurrState__10AICreatureFv
 	.4byte "setCurrState__10AICreatureFP20AState<10AICreature>"
@@ -15929,24 +15929,24 @@ __vt__10AICreature:
 	.4byte animationKeyUpdated__10AICreatureFR16PaniAnimKeyEvent
 .global __vt__19PaniAnimKeyListener
 __vt__19PaniAnimKeyListener:
-	.4byte 0x803deae8
+	.4byte 0x803DEAE8
 	.4byte 0
 	.4byte 0
-	.4byte 0x666f726d
-	.4byte 0x6174696f
-	.4byte 0x6e4d6772
-	.4byte 0x2e637070
+	.4byte 0x666F726D
+	.4byte 0x6174696F
+	.4byte 0x6E4D6772
+	.4byte 0x2E637070
 	.4byte 0
-	.4byte 0x666f726d
-	.4byte 0x6174696f
-	.4byte 0x6e000000
-	.4byte 0x57696e67
+	.4byte 0x666F726D
+	.4byte 0x6174696F
+	.4byte 0x6E000000
+	.4byte 0x57696E67
 	.4byte 0x41727261
-	.4byte 0x6e676572
+	.4byte 0x6E676572
 	.4byte 0
-	.4byte 0x466f726d
+	.4byte 0x466F726D
 	.4byte 0x41727261
-	.4byte 0x6e676572
+	.4byte 0x6E676572
 	.4byte 0
 	.4byte __RTTI__12FormArranger
 	.4byte 0
@@ -15957,9 +15957,9 @@ __vt__12WingArranger:
 	.4byte 0
 	.4byte arrange__12WingArrangerFP12FormationMgr
 	.4byte getLength__12FormArrangerFP12FormationMgr
-	.4byte 0x4c696e65
+	.4byte 0x4C696E65
 	.4byte 0x41727261
-	.4byte 0x6e676572
+	.4byte 0x6E676572
 	.4byte 0
 	.4byte __RTTI__12FormArranger
 	.4byte 0
@@ -15971,8 +15971,8 @@ __vt__12LineArranger:
 	.4byte arrange__12LineArrangerFP12FormationMgr
 	.4byte getLength__12FormArrangerFP12FormationMgr
 	.4byte 0x50797261
-	.4byte 0x6d696441
-	.4byte 0x7272616e
+	.4byte 0x6D696441
+	.4byte 0x7272616E
 	.4byte 0x67657200
 	.4byte __RTTI__12FormArranger
 	.4byte 0
@@ -15984,8 +15984,8 @@ __vt__15PyramidArranger:
 	.4byte arrange__15PyramidArrangerFP12FormationMgr
 	.4byte getLength__15PyramidArrangerFP12FormationMgr
 	.4byte 0x43697263
-	.4byte 0x6c654172
-	.4byte 0x72616e67
+	.4byte 0x6C654172
+	.4byte 0x72616E67
 	.4byte 0x65720000
 	.4byte __RTTI__12FormArranger
 	.4byte 0
@@ -15998,20 +15998,20 @@ __vt__14CircleArranger:
 	.4byte getLength__12FormArrangerFP12FormationMgr
 	.4byte 0x54726176
 	.4byte 0x65727361
-	.4byte 0x626c6500
+	.4byte 0x626C6500
 .global __vt__11Traversable
 __vt__11Traversable:
-	.4byte 0x803debc4
+	.4byte 0x803DEBC4
 	.4byte 0
 	.4byte 0
 	.4byte 0
 	.4byte 0
 	.4byte 0
-	.4byte 0x466f726d
-	.4byte 0x6174696f
-	.4byte 0x6e4d6772
+	.4byte 0x466F726D
+	.4byte 0x6174696F
+	.4byte 0x6E4D6772
 	.4byte 0
-	.4byte 0x803debc4
+	.4byte 0x803DEBC4
 	.4byte 0
 	.4byte 0
 .global __vt__12FormationMgr
@@ -16805,14 +16805,14 @@ __vt__Q29KeyConfig3Key:
 	.4byte concat__4NodeFR3SRT
 	.4byte concat__4NodeFR8Matrix4f
 	.4byte getModelMatrix__4NodeFv
-	.4byte 0x4b657943
-	.4byte 0x6f6e6669
+	.4byte 0x4B657943
+	.4byte 0x6F6E6669
 	.4byte 0x67000000
-	.4byte 0x803dedd8
+	.4byte 0x803DEDD8
 	.4byte 0
-	.4byte 0x803dede0
+	.4byte 0x803DEDE0
 	.4byte 0
-	.4byte 0x803dedf0
+	.4byte 0x803DEDF0
 	.4byte 0
 	.4byte 0
 .global __vt__9KeyConfig
@@ -17198,12 +17198,12 @@ lbl_802AED40:
 	.4byte "__RTTI__25Delegate1<6AIPerf,R4Menu>"
 	.4byte 0
 	.4byte "invoke__25Delegate1<6AIPerf,R4Menu>FR4Menu"
-	.4byte 0x44656c65
+	.4byte 0x44656C65
 	.4byte 0x67617465
-	.4byte 0x313c4d65
-	.4byte 0x6e752c20
-	.4byte 0x4d656e75
-	.4byte 0x20263e00
+	.4byte 0x313C4D65
+	.4byte 0x6E752C20
+	.4byte 0x4D656E75
+	.4byte 0x20263E00
 	.4byte "__RTTI__18IDelegate1<R4Menu>_4"
 	.4byte 0
 	.4byte 0
@@ -17214,11 +17214,11 @@ lbl_802AED40:
 	.4byte 0
 	.4byte 0
 	.4byte 0
-	.4byte 0x636f7572
+	.4byte 0x636F7572
 	.4byte 0x73654465
-	.4byte 0x6275672e
+	.4byte 0x6275672E
 	.4byte 0x63707000
-	.4byte 0x636f7572
+	.4byte 0x636F7572
 	.4byte 0x73654465
 	.4byte 0x62756700
 .global lbl_802AEE54
@@ -17273,23 +17273,23 @@ __vt__14GenObjectDebug:
 	.4byte update__9GenObjectFP9Generator
 	.4byte render__9GenObjectFR8GraphicsP9Generator
 	.4byte birth__14GenObjectDebugFR9BirthInfo
-	.4byte 0x5061726d
-	.4byte 0x3c696e74
-	.4byte 0x3e000000
+	.4byte 0x5061726D
+	.4byte 0x3C696E74
+	.4byte 0x3E000000
 	.4byte 0x42617365
-	.4byte 0x5061726d
+	.4byte 0x5061726D
 	.4byte 0
-	.4byte 0x803dee88
-	.4byte 0
-	.4byte 0
+	.4byte 0x803DEE88
 	.4byte 0
 	.4byte 0
 	.4byte 0
 	.4byte 0
 	.4byte 0
 	.4byte 0
-	.4byte 0x6d656d53
-	.4byte 0x7461742e
+	.4byte 0
+	.4byte 0
+	.4byte 0x6D656D53
+	.4byte 0x7461742E
 	.4byte 0x63707000
 .global lbl_802AEF54
 lbl_802AEF54:
@@ -17336,31 +17336,31 @@ __vt__11MemInfoNode:
 	.4byte 0
 	.4byte 0
 	.4byte 0
-	.4byte 0x636f6c6c
-	.4byte 0x496e666f
-	.4byte 0x2e637070
+	.4byte 0x636F6C6C
+	.4byte 0x496E666F
+	.4byte 0x2E637070
 	.4byte 0
-	.4byte 0x636f6c6c
-	.4byte 0x496e666f
+	.4byte 0x636F6C6C
+	.4byte 0x496E666F
 	.4byte 0
-	.4byte 0x434f4c4c
-	.4byte 0x4953494f
-	.4byte 0x4e000000
-	.4byte 0x424f554e
+	.4byte 0x434F4C4C
+	.4byte 0x4953494F
+	.4byte 0x4E000000
+	.4byte 0x424F554E
 	.4byte 0x44535048
 	.4byte 0x45524500
 	.4byte 0x52454645
-	.4byte 0x52454e43
+	.4byte 0x52454E43
 	.4byte 0x45000000
-	.4byte 0x504c4154
-	.4byte 0x464f524d
+	.4byte 0x504C4154
+	.4byte 0x464F524D
 	.4byte 0
-	.4byte 0x43594c49
-	.4byte 0x4e444552
+	.4byte 0x43594C49
+	.4byte 0x4E444552
 	.4byte 0
 	.4byte 0x54554245
-	.4byte 0x5f434849
-	.4byte 0x4c440000
+	.4byte 0x5F434849
+	.4byte 0x4C440000
 .global _typeStr
 _typeStr:
 	.4byte 0x802AF00C
@@ -17382,24 +17382,24 @@ _typeStr:
 	.4byte 0x6E000000
 .global __vt__9Condition
 __vt__9Condition:
-	.4byte 0x803df030
+	.4byte 0x803DF030
 	.4byte 0
 	.4byte satisfy__9ConditionFP8Creature
-	.4byte 0x4576656e
-	.4byte 0x7454616c
-	.4byte 0x6b657200
+	.4byte 0x4576656E
+	.4byte 0x7454616C
+	.4byte 0x6B657200
 	.4byte 0x52656643
-	.4byte 0x6f756e74
-	.4byte 0x61626c65
+	.4byte 0x6F756E74
+	.4byte 0x61626C65
 	.4byte 0
-	.4byte 0x803df038
+	.4byte 0x803DF038
 	.4byte 0x8
-	.4byte 0x803df040
+	.4byte 0x803DF040
 	.4byte 0
 	.4byte 0
 .global __vt__8Creature
 __vt__8Creature:
-	.4byte 0x803df048
+	.4byte 0x803DF048
 	.4byte 0
 	.4byte addCntCallback__12RefCountableFv
 	.4byte subCntCallback__12RefCountableFv
@@ -17470,62 +17470,62 @@ __vt__8Creature:
 	.4byte exitCourse__8CreatureFv
 	.4byte 0x63726561
 	.4byte 0x74757265
-	.4byte 0x436f6c6c
+	.4byte 0x436F6C6C
 	.4byte 0x50617274
-	.4byte 0x2e637070
+	.4byte 0x2E637070
 	.4byte 0
 	.4byte 0x63726561
 	.4byte 0x74757265
-	.4byte 0x436f6c6c
+	.4byte 0x436F6C6C
 	.4byte 0x50617274
 	.4byte 0
 	.4byte 0x43726561
 	.4byte 0x74757265
-	.4byte 0x436f6c6c
+	.4byte 0x436F6C6C
 	.4byte 0x50617274
 	.4byte 0
-	.4byte 0x436f7265
-	.4byte 0x4e6f6465
+	.4byte 0x436F7265
+	.4byte 0x4E6F6465
 	.4byte 0
-	.4byte 0x803df060
-	.4byte 0
-	.4byte 0
-	.4byte 0x803df060
-	.4byte 0
-	.4byte 0x803df068
+	.4byte 0x803DF060
 	.4byte 0
 	.4byte 0
-	.4byte 0x44796e43
-	.4byte 0x6f6c6c4f
-	.4byte 0x626a6563
+	.4byte 0x803DF060
+	.4byte 0
+	.4byte 0x803DF068
+	.4byte 0
+	.4byte 0
+	.4byte 0x44796E43
+	.4byte 0x6F6C6C4F
+	.4byte 0x626A6563
 	.4byte 0x74000000
-	.4byte 0x803df060
+	.4byte 0x803DF060
 	.4byte 0
-	.4byte 0x803df068
+	.4byte 0x803DF068
 	.4byte 0
-	.4byte 0x803df078
+	.4byte 0x803DF078
 	.4byte 0
 	.4byte 0
-	.4byte 0x44796e43
-	.4byte 0x6f6c6c53
+	.4byte 0x44796E43
+	.4byte 0x6F6C6C53
 	.4byte 0x68617065
 	.4byte 0
-	.4byte 0x803df060
+	.4byte 0x803DF060
 	.4byte 0
-	.4byte 0x803df068
+	.4byte 0x803DF068
 	.4byte 0
-	.4byte 0x803df078
+	.4byte 0x803DF078
 	.4byte 0
-	.4byte 0x803df080
+	.4byte 0x803DF080
 	.4byte 0
 	.4byte 0
-	.4byte 0x803df060
+	.4byte 0x803DF060
 	.4byte 0
-	.4byte 0x803df068
+	.4byte 0x803DF068
 	.4byte 0
-	.4byte 0x803df078
+	.4byte 0x803DF078
 	.4byte 0
-	.4byte 0x803df080
+	.4byte 0x803DF080
 	.4byte 0
 	.4byte __RTTI__12DynCollShape_1
 	.4byte 0
@@ -17553,14 +17553,14 @@ __vt__16CreatureCollPart:
 	.4byte 0x63726561
 	.4byte 0x74757265
 	.4byte 0x53746963
-	.4byte 0x6b2e6370
+	.4byte 0x6B2E6370
 	.4byte 0x70000000
 	.4byte 0x43726561
 	.4byte 0x74757265
 	.4byte 0x53746963
-	.4byte 0x6b000000
-	.4byte 0x54454b49
-	.4byte 0x504c4154
+	.4byte 0x6B000000
+	.4byte 0x54454B49
+	.4byte 0x504C4154
 	.4byte 0
 .global _standType
 _standType:
@@ -17597,9 +17597,9 @@ __vt__8Stickers:
 	.4byte 0
 	.4byte 0
 	.4byte 0
-	.4byte 0x496e7465
+	.4byte 0x496E7465
 	.4byte 0x72616374
-	.4byte 0x696f6e00
+	.4byte 0x696F6E00
 	.4byte 0
 	.4byte 0
 	.4byte 0
@@ -17612,59 +17612,59 @@ __vt__8Stickers:
 	.4byte 0
 	.4byte 0
 	.4byte 0
-	.4byte 0x6475616c
+	.4byte 0x6475616C
 	.4byte 0x43726561
 	.4byte 0x74757265
-	.4byte 0x2e637070
+	.4byte 0x2E637070
 	.4byte 0
-	.4byte 0x50656c43
+	.4byte 0x50656C43
 	.4byte 0x72656174
 	.4byte 0x75726500
-	.4byte 0x4576656e
-	.4byte 0x7454616c
-	.4byte 0x6b657200
+	.4byte 0x4576656E
+	.4byte 0x7454616C
+	.4byte 0x6B657200
 	.4byte 0x52656643
-	.4byte 0x6f756e74
-	.4byte 0x61626c65
+	.4byte 0x6F756E74
+	.4byte 0x61626C65
 	.4byte 0
 	.4byte 0x43726561
 	.4byte 0x74757265
 	.4byte 0
-	.4byte 0x803df1bc
+	.4byte 0x803DF1BC
 	.4byte 0x8
-	.4byte 0x803df1c4
+	.4byte 0x803DF1C4
 	.4byte 0
 	.4byte 0
-	.4byte 0x44796e43
+	.4byte 0x44796E43
 	.4byte 0x72656174
 	.4byte 0x75726500
-	.4byte 0x803df1bc
+	.4byte 0x803DF1BC
 	.4byte 0x8
-	.4byte 0x803df1c4
+	.4byte 0x803DF1C4
 	.4byte 0
-	.4byte 0x803df1cc
+	.4byte 0x803DF1CC
 	.4byte 0
 	.4byte 0
-	.4byte 0x4475616c
+	.4byte 0x4475616C
 	.4byte 0x43726561
 	.4byte 0x74757265
 	.4byte 0
-	.4byte 0x803df1bc
+	.4byte 0x803DF1BC
 	.4byte 0x8
-	.4byte 0x803df1c4
+	.4byte 0x803DF1C4
 	.4byte 0
-	.4byte 0x803df1cc
+	.4byte 0x803DF1CC
 	.4byte 0
-	.4byte 0x803df1d4
+	.4byte 0x803DF1D4
 	.4byte 0
 	.4byte 0
-	.4byte 0x803df1bc
+	.4byte 0x803DF1BC
 	.4byte 0x8
-	.4byte 0x803df1c4
+	.4byte 0x803DF1C4
 	.4byte 0
-	.4byte 0x803df1cc
+	.4byte 0x803DF1CC
 	.4byte 0
-	.4byte 0x803df1d4
+	.4byte 0x803DF1D4
 	.4byte 0
 	.4byte __RTTI__12DualCreature
 	.4byte 0
@@ -17818,9 +17818,9 @@ __vt__12DualCreature:
 	.4byte 0
 	.4byte 0
 	.4byte 0
-	.4byte 0x64796e43
+	.4byte 0x64796E43
 	.4byte 0x72656174
-	.4byte 0x7572652e
+	.4byte 0x7572652E
 	.4byte 0x63707000
 .global lbl_802AF740
 lbl_802AF740:
@@ -17871,7 +17871,7 @@ lbl_802AF768:
 	.4byte 0x00000000
 .global __vt__11DynCreature
 __vt__11DynCreature:
-	.4byte 0x803df2bc
+	.4byte 0x803DF2BC
 	.4byte 0
 	.4byte addCntCallback__12RefCountableFv
 	.4byte subCntCallback__12RefCountableFv
@@ -17940,13 +17940,13 @@ __vt__11DynCreature:
 	.4byte doAnimation__8CreatureFv
 	.4byte doKill__11DynCreatureFv
 	.4byte exitCourse__8CreatureFv
-	.4byte 0x5061726d
-	.4byte 0x3c666c6f
-	.4byte 0x61743e00
+	.4byte 0x5061726D
+	.4byte 0x3C666C6F
+	.4byte 0x61743E00
 	.4byte 0x42617365
-	.4byte 0x5061726d
+	.4byte 0x5061726D
 	.4byte 0
-	.4byte 0x803df2c4
+	.4byte 0x803DF2C4
 	.4byte 0
 	.4byte 0
 	.4byte 0
@@ -17956,22 +17956,22 @@ __vt__11DynCreature:
 	.4byte 0
 	.4byte 0x43726561
 	.4byte 0x74757265
-	.4byte 0x50726f70
+	.4byte 0x50726F70
 	.4byte 0
 .global __vt__12CreatureProp
 __vt__12CreatureProp:
-	.4byte 0x803df2cc
+	.4byte 0x803DF2CC
 	.4byte 0
 	.4byte read__12CreaturePropFR18RandomAccessStream
-	.4byte 0x44796e50
+	.4byte 0x44796E50
 	.4byte 0x61727469
-	.4byte 0x636c6500
-	.4byte 0x803df2dc
+	.4byte 0x636C6500
+	.4byte 0x803DF2DC
 	.4byte 0
 	.4byte 0
-	.4byte 0x803df2dc
+	.4byte 0x803DF2DC
 	.4byte 0
-	.4byte 0x803df2e4
+	.4byte 0x803DF2E4
 	.4byte 0
 	.4byte 0
 .global __vt__11DynParticle
@@ -17992,14 +17992,14 @@ __vt__11DynParticle:
 	.4byte 0
 	.4byte 0
 	.4byte 0
-	.4byte 0x6576656e
-	.4byte 0x744c6973
-	.4byte 0x74656e65
-	.4byte 0x722e6370
+	.4byte 0x6576656E
+	.4byte 0x744C6973
+	.4byte 0x74656E65
+	.4byte 0x722E6370
 	.4byte 0x70000000
-	.4byte 0x6576656e
-	.4byte 0x744c6973
-	.4byte 0x74656e65
+	.4byte 0x6576656E
+	.4byte 0x744C6973
+	.4byte 0x74656E65
 	.4byte 0x72000000
 .global lbl_802AF9D4
 lbl_802AF9D4:
@@ -18038,44 +18038,44 @@ __vt__13EventListener:
 	.4byte 0
 	.4byte 0
 	.4byte 0
-	.4byte 0x726f7065
+	.4byte 0x726F7065
 	.4byte 0x43726561
 	.4byte 0x74757265
-	.4byte 0x2e637070
+	.4byte 0x2E637070
 	.4byte 0
-	.4byte 0x726f7065
-	.4byte 0x43726561
-	.4byte 0x74757265
-	.4byte 0
-	.4byte 0x526f7065
+	.4byte 0x726F7065
 	.4byte 0x43726561
 	.4byte 0x74757265
 	.4byte 0
-	.4byte 0x4576656e
-	.4byte 0x7454616c
-	.4byte 0x6b657200
+	.4byte 0x526F7065
+	.4byte 0x43726561
+	.4byte 0x74757265
+	.4byte 0
+	.4byte 0x4576656E
+	.4byte 0x7454616C
+	.4byte 0x6B657200
 	.4byte 0x52656643
-	.4byte 0x6f756e74
-	.4byte 0x61626c65
+	.4byte 0x6F756E74
+	.4byte 0x61626C65
 	.4byte 0
 	.4byte 0x43726561
 	.4byte 0x74757265
 	.4byte 0
-	.4byte 0x803df328
+	.4byte 0x803DF328
 	.4byte 0x8
-	.4byte 0x803df330
+	.4byte 0x803DF330
 	.4byte 0
 	.4byte 0
-	.4byte 0x803df328
+	.4byte 0x803DF328
 	.4byte 0x8
-	.4byte 0x803df330
+	.4byte 0x803DF330
 	.4byte 0
-	.4byte 0x803df338
+	.4byte 0x803DF338
 	.4byte 0
 	.4byte 0
 .global __vt__12RopeCreature
 __vt__12RopeCreature:
-	.4byte 0x803df340
+	.4byte 0x803DF340
 	.4byte 0
 	.4byte addCntCallback__12RefCountableFv
 	.4byte subCntCallback__12RefCountableFv
@@ -18533,7 +18533,7 @@ __vt__9PelletMgr:
 	.4byte getNext__13MonoObjectMgrFi
 	.4byte isDone__13MonoObjectMgrFi
 	.4byte __RTTI__9PelletMgr
-	.4byte 0xfffffff8
+	.4byte 0xFFFFFFF8
 	.4byte getAgeNodeType__5ANodeFv
 	.4byte lbl_80099538
 	.4byte lbl_80099540
@@ -18560,14 +18560,14 @@ __vt__9PelletMgr:
 	.4byte kill__13MonoObjectMgrFP8Creature
 	.4byte createObject__9PelletMgrFv
 	.4byte read__9PelletMgrFR18RandomAccessStream
-	.4byte 0x50656c6c
+	.4byte 0x50656C6C
 	.4byte 0x65745072
-	.4byte 0x6f700000
+	.4byte 0x6F700000
 	.4byte 0x43726561
 	.4byte 0x74757265
-	.4byte 0x50726f70
+	.4byte 0x50726F70
 	.4byte 0
-	.4byte 0x803df5d0
+	.4byte 0x803DF5D0
 	.4byte 0
 	.4byte 0
 .global __vt__10PelletProp
@@ -18578,14 +18578,14 @@ __vt__10PelletProp:
 	.4byte 0
 	.4byte 0
 	.4byte 0
-	.4byte 0x50656c6c
-	.4byte 0x65744d67
-	.4byte 0x723a3a55
-	.4byte 0x73654e6f
+	.4byte 0x50656C6C
+	.4byte 0x65744D67
+	.4byte 0x723A3A55
+	.4byte 0x73654E6F
 	.4byte 0x64650000
-	.4byte 0x803df590
+	.4byte 0x803DF590
 	.4byte 0
-	.4byte 0x803df598
+	.4byte 0x803DF598
 	.4byte 0
 	.4byte 0
 .global __vt__Q29PelletMgr7UseNode
@@ -18594,9 +18594,9 @@ __vt__Q29PelletMgr7UseNode:
 	.4byte 0
 	.4byte getAgeNodeType__5ANodeFv
 	.4byte read__8CoreNodeFR18RandomAccessStream
-	.4byte 0x496e7465
+	.4byte 0x496E7465
 	.4byte 0x72616374
-	.4byte 0x696f6e00
+	.4byte 0x696F6E00
 	.4byte 0
 	.4byte 0
 	.4byte 0
@@ -18608,58 +18608,58 @@ __vt__Q29PelletMgr7UseNode:
 	.4byte 0
 	.4byte 0
 	.4byte 0
-	.4byte 0x50616e69
-	.4byte 0x416e696d
-	.4byte 0x4b65794c
+	.4byte 0x50616E69
+	.4byte 0x416E696D
+	.4byte 0x4B65794C
 	.4byte 0x69737465
-	.4byte 0x6e657200
-	.4byte 0x4576656e
-	.4byte 0x7454616c
-	.4byte 0x6b657200
+	.4byte 0x6E657200
+	.4byte 0x4576656E
+	.4byte 0x7454616C
+	.4byte 0x6B657200
 	.4byte 0x52656643
-	.4byte 0x6f756e74
-	.4byte 0x61626c65
+	.4byte 0x6F756E74
+	.4byte 0x61626C65
 	.4byte 0
 	.4byte 0x43726561
 	.4byte 0x74757265
 	.4byte 0
-	.4byte 0x803df5f8
+	.4byte 0x803DF5F8
 	.4byte 0x8
-	.4byte 0x803df600
+	.4byte 0x803DF600
 	.4byte 0
 	.4byte 0
-	.4byte 0x44796e43
+	.4byte 0x44796E43
 	.4byte 0x72656174
 	.4byte 0x75726500
-	.4byte 0x803df5f8
+	.4byte 0x803DF5F8
 	.4byte 0x8
-	.4byte 0x803df600
+	.4byte 0x803DF600
 	.4byte 0
-	.4byte 0x803df608
+	.4byte 0x803DF608
 	.4byte 0
 	.4byte 0
-	.4byte 0x4475616c
+	.4byte 0x4475616C
 	.4byte 0x43726561
 	.4byte 0x74757265
 	.4byte 0
-	.4byte 0x803df5f8
+	.4byte 0x803DF5F8
 	.4byte 0x8
-	.4byte 0x803df600
+	.4byte 0x803DF600
 	.4byte 0
-	.4byte 0x803df608
+	.4byte 0x803DF608
 	.4byte 0
-	.4byte 0x803df610
+	.4byte 0x803DF610
 	.4byte 0
 	.4byte 0
-	.4byte 0x803df5f0
+	.4byte 0x803DF5F0
 	.4byte 0x440
-	.4byte 0x803df5f8
+	.4byte 0x803DF5F8
 	.4byte 0x8
-	.4byte 0x803df600
+	.4byte 0x803DF600
 	.4byte 0
-	.4byte 0x803df608
+	.4byte 0x803DF608
 	.4byte 0
-	.4byte 0x803df610
+	.4byte 0x803DF610
 	.4byte 0
 	.4byte __RTTI__12DualCreature_1
 	.4byte 0
@@ -18739,14 +18739,14 @@ __vt__6Pellet:
 	.4byte doRender__6PelletFR8GraphicsR8Matrix4f
 	.4byte doCreateColls__6PelletFR8Graphics
 	.4byte __RTTI__6Pellet
-	.4byte 0xfffffbc0
+	.4byte 0xFFFFFBC0
 	.4byte lbl_80099530
 	.4byte animationKeyUpdated__6PelletFR16PaniAnimKeyEvent
 	.4byte 0x53746174
-	.4byte 0x654d6163
-	.4byte 0x68696e65
-	.4byte 0x3c50656c
-	.4byte 0x6c65743e
+	.4byte 0x654D6163
+	.4byte 0x68696E65
+	.4byte 0x3C50656C
+	.4byte 0x6C65743E
 	.4byte 0
 .global "__vt__21StateMachine<6Pellet>"
 "__vt__21StateMachine<6Pellet>":
@@ -18756,47 +18756,47 @@ __vt__6Pellet:
 	.4byte "exec__21StateMachine<6Pellet>FP6Pellet"
 	.4byte "procMsg__21StateMachine<6Pellet>FP6PelletP3Msg"
 	.4byte "transit__21StateMachine<6Pellet>FP6Pelleti"
-	.4byte 0x7a656e3a
-	.4byte 0x3a43616c
-	.4byte 0x6c426163
-	.4byte 0x6b313c7a
-	.4byte 0x656e3a3a
+	.4byte 0x7A656E3A
+	.4byte 0x3A43616C
+	.4byte 0x6C426163
+	.4byte 0x6B313C7A
+	.4byte 0x656E3A3A
 	.4byte 0x70617274
-	.4byte 0x69636c65
-	.4byte 0x4d646c20
-	.4byte 0x2a3e0000
-	.4byte 0x7a656e3a
-	.4byte 0x3a43616c
-	.4byte 0x6c426163
-	.4byte 0x6b323c7a
-	.4byte 0x656e3a3a
+	.4byte 0x69636C65
+	.4byte 0x4D646C20
+	.4byte 0x2A3E0000
+	.4byte 0x7A656E3A
+	.4byte 0x3A43616C
+	.4byte 0x6C426163
+	.4byte 0x6B323C7A
+	.4byte 0x656E3A3A
 	.4byte 0x70617274
-	.4byte 0x69636c65
-	.4byte 0x47656e65
-	.4byte 0x7261746f
-	.4byte 0x72202a2c
-	.4byte 0x207a656e
-	.4byte 0x3a3a7061
+	.4byte 0x69636C65
+	.4byte 0x47656E65
+	.4byte 0x7261746F
+	.4byte 0x72202A2C
+	.4byte 0x207A656E
+	.4byte 0x3A3A7061
 	.4byte 0x72746963
-	.4byte 0x6c654d64
-	.4byte 0x6c202a3e
+	.4byte 0x6C654D64
+	.4byte 0x6C202A3E
 	.4byte 0
-	.4byte 0x7a656e3a
-	.4byte 0x3a43616c
-	.4byte 0x6c426163
-	.4byte 0x6b313c7a
-	.4byte 0x656e3a3a
+	.4byte 0x7A656E3A
+	.4byte 0x3A43616C
+	.4byte 0x6C426163
+	.4byte 0x6B313C7A
+	.4byte 0x656E3A3A
 	.4byte 0x70617274
-	.4byte 0x69636c65
-	.4byte 0x47656e65
-	.4byte 0x7261746f
-	.4byte 0x72202a3e
+	.4byte 0x69636C65
+	.4byte 0x47656E65
+	.4byte 0x7261746F
+	.4byte 0x72202A3E
 	.4byte 0
-	.4byte 0x803df638
+	.4byte 0x803DF638
 	.4byte 0x8
-	.4byte 0x803df640
+	.4byte 0x803DF640
 	.4byte 0x4
-	.4byte 0x803df648
+	.4byte 0x803DF648
 	.4byte 0
 	.4byte 0
 .global __vt__7KEffect
@@ -18805,10 +18805,10 @@ __vt__7KEffect:
 	.4byte 0
 	.4byte invoke__7KEffectFPQ23zen17particleGenerator
 	.4byte __RTTI__7KEffect
-	.4byte 0xfffffffc
+	.4byte 0xFFFFFFFC
 	.4byte lbl_80099520
 	.4byte __RTTI__7KEffect
-	.4byte 0xfffffff8
+	.4byte 0xFFFFFFF8
 	.4byte lbl_80099528
 	.4byte invoke__7KEffectFPQ23zen17particleGeneratorPQ23zen11particleMdl
 	.4byte invoke__7KEffectFPQ23zen11particleMdl
@@ -18818,34 +18818,34 @@ __vt__7KEffect:
 	.4byte restart__7KEffectFv
 .global "__vt__Q23zen31CallBack1<PQ23zen11particleMdl>"
 "__vt__Q23zen31CallBack1<PQ23zen11particleMdl>":
-	.4byte 0x803df638
+	.4byte 0x803DF638
 	.4byte 0
 	.4byte 0
 .global "__vt__Q23zen58CallBack2<PQ23zen17particleGenerator,PQ23zen11particleMdl>"
 "__vt__Q23zen58CallBack2<PQ23zen17particleGenerator,PQ23zen11particleMdl>":
-	.4byte 0x803df640
+	.4byte 0x803DF640
 	.4byte 0
 	.4byte 0
 .global "__vt__Q23zen37CallBack1<PQ23zen17particleGenerator>"
 "__vt__Q23zen37CallBack1<PQ23zen17particleGenerator>":
-	.4byte 0x803df648
+	.4byte 0x803DF648
 	.4byte 0
 	.4byte 0
 	.4byte 0
 	.4byte 0
 	.4byte 0
-	.4byte 0x50656c6c
-	.4byte 0x6574436f
-	.4byte 0x6e666967
+	.4byte 0x50656C6C
+	.4byte 0x6574436F
+	.4byte 0x6E666967
 	.4byte 0
 	.4byte 0x50617261
-	.4byte 0x6d657465
+	.4byte 0x6D657465
 	.4byte 0x72730000
-	.4byte 0x803df590
+	.4byte 0x803DF590
 	.4byte 0x4
-	.4byte 0x803df598
+	.4byte 0x803DF598
 	.4byte 0x4
-	.4byte 0x803df658
+	.4byte 0x803DF658
 	.4byte 0
 	.4byte 0
 .global __vt__12PelletConfig
@@ -18853,28 +18853,17 @@ __vt__12PelletConfig:
 	.4byte __RTTI__12PelletConfig
 	.4byte 0
 	.4byte __RTTI__12PelletConfig
-	.4byte 0xfffffffc
+	.4byte 0xFFFFFFFC
 	.4byte getAgeNodeType__5ANodeFv
 	.4byte lbl_80099518
 	.4byte read__12PelletConfigFR18RandomAccessStream
-	.4byte 0x5061726d
-	.4byte 0x3c666c6f
-	.4byte 0x61743e00
+	.4byte 0x5061726D
+	.4byte 0x3C666C6F
+	.4byte 0x61743E00
 	.4byte 0x42617365
-	.4byte 0x5061726d
+	.4byte 0x5061726D
 	.4byte 0
-	.4byte 0x803df668
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0x5061726d
-	.4byte 0x3c696e74
-	.4byte 0x3e000000
-	.4byte 0x803df668
+	.4byte 0x803DF668
 	.4byte 0
 	.4byte 0
 	.4byte 0
@@ -18882,11 +18871,22 @@ __vt__12PelletConfig:
 	.4byte 0
 	.4byte 0
 	.4byte 0
-	.4byte 0x5061726d
-	.4byte 0x3c537472
-	.4byte 0x696e673e
+	.4byte 0x5061726D
+	.4byte 0x3C696E74
+	.4byte 0x3E000000
+	.4byte 0x803DF668
 	.4byte 0
-	.4byte 0x803df668
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0x5061726D
+	.4byte 0x3C537472
+	.4byte 0x696E673E
+	.4byte 0
+	.4byte 0x803DF668
 	.4byte 0
 	.4byte 0
 	.4byte 0
@@ -18983,21 +18983,21 @@ __vt__18PaniPelletAnimator:
 	.4byte finishOneShot__8AnimatorFv
 	.4byte finishLoop__8AnimatorFv
 	.4byte updateContext__12PaniAnimatorFv
-	.4byte 0x50656c6c
-	.4byte 0x6574416e
-	.4byte 0x696d496e
-	.4byte 0x666f0000
-	.4byte 0x803df6d4
+	.4byte 0x50656C6C
+	.4byte 0x6574416E
+	.4byte 0x696D496E
+	.4byte 0x666F0000
+	.4byte 0x803DF6D4
 	.4byte 0
 	.4byte 0
 	.4byte 0x50617261
-	.4byte 0x6d657465
+	.4byte 0x6D657465
 	.4byte 0x72730000
-	.4byte 0x803df6d4
+	.4byte 0x803DF6D4
 	.4byte 0x4
-	.4byte 0x803df6dc
+	.4byte 0x803DF6DC
 	.4byte 0x4
-	.4byte 0x803df6e4
+	.4byte 0x803DF6E4
 	.4byte 0
 	.4byte 0
 .global __vt__14PelletAnimInfo
@@ -19005,20 +19005,18 @@ __vt__14PelletAnimInfo:
 	.4byte __RTTI__14PelletAnimInfo
 	.4byte 0
 	.4byte __RTTI__14PelletAnimInfo
-	.4byte 0xfffffffc
+	.4byte 0xFFFFFFFC
 	.4byte getAgeNodeType__5ANodeFv
 	.4byte lbl_80099D14
 	.4byte read__14PelletAnimInfoFR18RandomAccessStream
-	.4byte 0x5061726d
-	.4byte 0x3c537472
-	.4byte 0x696e673e
+	.4byte 0x5061726D
+	.4byte 0x3C537472
+	.4byte 0x696E673E
 	.4byte 0
 	.4byte 0x42617365
-	.4byte 0x5061726d
+	.4byte 0x5061726D
 	.4byte 0
-	.4byte 0x803df6f4
-	.4byte 0
-	.4byte 0
+	.4byte 0x803DF6F4
 	.4byte 0
 	.4byte 0
 	.4byte 0
@@ -19032,12 +19030,14 @@ __vt__14PelletAnimInfo:
 	.4byte 0
 	.4byte 0
 	.4byte 0
-	.4byte 0x67656e50
-	.4byte 0x656c6c65
-	.4byte 0x742e6370
+	.4byte 0
+	.4byte 0
+	.4byte 0x67656E50
+	.4byte 0x656C6C65
+	.4byte 0x742E6370
 	.4byte 0x70000000
-	.4byte 0x67656e50
-	.4byte 0x656c6c65
+	.4byte 0x67656E50
+	.4byte 0x656C6C65
 	.4byte 0x74000000
 .global lbl_802B0904
 lbl_802B0904:
@@ -19092,11 +19092,11 @@ __vt__15GenObjectPellet:
 	.4byte render__9GenObjectFR8GraphicsP9Generator
 	.4byte birth__15GenObjectPelletFR9BirthInfo
 	.4byte 0
-	.4byte 0x70656c6c
+	.4byte 0x70656C6C
 	.4byte 0x65745374
-	.4byte 0x6174652e
+	.4byte 0x6174652E
 	.4byte 0x63707000
-	.4byte 0x70656c6c
+	.4byte 0x70656C6C
 	.4byte 0x65745374
 	.4byte 0x61746500
 .global lbl_802B09DC
@@ -19157,7 +19157,7 @@ __vt__15PelletGoalState:
 	.4byte "resume__15AState<6Pellet>FP6Pellet"
 	.4byte "restart__15AState<6Pellet>FP6Pellet"
 	.4byte "transit__15AState<6Pellet>FP6Pelleti"
-	.4byte 0x50656c6c
+	.4byte 0x50656C6C
 	.4byte 0x65744170
 	.4byte 0x70656172
 	.4byte 0x53746174
@@ -19191,9 +19191,9 @@ __vt__17PelletAppearState:
 	.4byte "resume__15AState<6Pellet>FP6Pellet"
 	.4byte "restart__15AState<6Pellet>FP6Pellet"
 	.4byte "transit__15AState<6Pellet>FP6Pelleti"
-	.4byte 0x50656c6c
+	.4byte 0x50656C6C
 	.4byte 0x65745377
-	.4byte 0x616c6c6f
+	.4byte 0x616C6C6F
 	.4byte 0x77656453
 	.4byte 0x74617465
 	.4byte 0
@@ -19226,9 +19226,9 @@ __vt__20PelletSwallowedState:
 	.4byte "resume__15AState<6Pellet>FP6Pellet"
 	.4byte "restart__15AState<6Pellet>FP6Pellet"
 	.4byte "transit__15AState<6Pellet>FP6Pelleti"
-	.4byte 0x50656c6c
-	.4byte 0x65744e6f
-	.4byte 0x726d616c
+	.4byte 0x50656C6C
+	.4byte 0x65744E6F
+	.4byte 0x726D616C
 	.4byte 0x53746174
 	.4byte 0x65000000
 	.4byte "__RTTI__17Receiver<6Pellet>"
@@ -19260,7 +19260,7 @@ __vt__17PelletNormalState:
 	.4byte "resume__15AState<6Pellet>FP6Pellet"
 	.4byte "restart__15AState<6Pellet>FP6Pellet"
 	.4byte "transit__15AState<6Pellet>FP6Pelleti"
-	.4byte 0x50656c6c
+	.4byte 0x50656C6C
 	.4byte 0x65744465
 	.4byte 0x61645374
 	.4byte 0x61746500
@@ -19293,9 +19293,9 @@ __vt__15PelletDeadState:
 	.4byte "resume__15AState<6Pellet>FP6Pellet"
 	.4byte "restart__15AState<6Pellet>FP6Pellet"
 	.4byte "transit__15AState<6Pellet>FP6Pelleti"
-	.4byte 0x50656c6c
+	.4byte 0x50656C6C
 	.4byte 0x65745566
-	.4byte 0x6f4c6f61
+	.4byte 0x6F4C6F61
 	.4byte 0x64537461
 	.4byte 0x74650000
 	.4byte "__RTTI__17Receiver<6Pellet>"
@@ -19387,16 +19387,16 @@ __vt__11PelletState:
 	.4byte "procOffWallMsg__17Receiver<6Pellet>FP6PelletP10MsgOffWall"
 	.4byte "procUserMsg__17Receiver<6Pellet>FP6PelletP7MsgUser"
 	.4byte "procGroundMsg__17Receiver<6Pellet>FP6PelletP9MsgGround"
-	.4byte 0x50656c6c
+	.4byte 0x50656C6C
 	.4byte 0x65745374
-	.4byte 0x6174654d
+	.4byte 0x6174654D
 	.4byte 0x61636869
-	.4byte 0x6e650000
+	.4byte 0x6E650000
 	.4byte 0x53746174
-	.4byte 0x654d6163
-	.4byte 0x68696e65
-	.4byte 0x3c50656c
-	.4byte 0x6c65743e
+	.4byte 0x654D6163
+	.4byte 0x68696E65
+	.4byte 0x3C50656C
+	.4byte 0x6C65743E
 	.4byte 0
 	.4byte "__RTTI__21StateMachine<6Pellet>_1"
 	.4byte 0
@@ -19585,11 +19585,11 @@ __vt__13InteractBreak:
 	.4byte actHinderRock__11InteractionFP10HinderRock
 	.4byte actBridge__13InteractBreakFP6Bridge
 	.4byte actItem__11InteractionFP12ItemCreature
-	.4byte 0x496e7465
+	.4byte 0x496E7465
 	.4byte 0x72616374
-	.4byte 0x4275696c
+	.4byte 0x4275696C
 	.4byte 0x64000000
-	.4byte 0x803df854
+	.4byte 0x803DF854
 	.4byte 0
 	.4byte 0
 .global __vt__13InteractBuild
@@ -19605,80 +19605,80 @@ __vt__13InteractBuild:
 	.4byte actHinderRock__11InteractionFP10HinderRock
 	.4byte actBridge__13InteractBuildFP6Bridge
 	.4byte actItem__13InteractBuildFP12ItemCreature
-	.4byte 0x50616e69
-	.4byte 0x416e696d
-	.4byte 0x4b65794c
+	.4byte 0x50616E69
+	.4byte 0x416E696D
+	.4byte 0x4B65794C
 	.4byte 0x69737465
-	.4byte 0x6e657200
-	.4byte 0x4576656e
-	.4byte 0x7454616c
-	.4byte 0x6b657200
+	.4byte 0x6E657200
+	.4byte 0x4576656E
+	.4byte 0x7454616C
+	.4byte 0x6B657200
 	.4byte 0x52656643
-	.4byte 0x6f756e74
-	.4byte 0x61626c65
+	.4byte 0x6F756E74
+	.4byte 0x61626C65
 	.4byte 0
 	.4byte 0x43726561
 	.4byte 0x74757265
 	.4byte 0
-	.4byte 0x803df87c
+	.4byte 0x803DF87C
 	.4byte 0x8
-	.4byte 0x803df884
+	.4byte 0x803DF884
 	.4byte 0
 	.4byte 0
 	.4byte 0x41494372
 	.4byte 0x65617475
 	.4byte 0x72650000
-	.4byte 0x803df874
-	.4byte 0x2b8
-	.4byte 0x803df87c
+	.4byte 0x803DF874
+	.4byte 0x2B8
+	.4byte 0x803DF87C
 	.4byte 0x8
-	.4byte 0x803df884
+	.4byte 0x803DF884
 	.4byte 0
-	.4byte 0x803df88c
+	.4byte 0x803DF88C
 	.4byte 0
 	.4byte 0
-	.4byte 0x4974656d
+	.4byte 0x4974656D
 	.4byte 0x43726561
 	.4byte 0x74757265
 	.4byte 0
-	.4byte 0x803df874
-	.4byte 0x2b8
-	.4byte 0x803df87c
+	.4byte 0x803DF874
+	.4byte 0x2B8
+	.4byte 0x803DF87C
 	.4byte 0x8
-	.4byte 0x803df884
+	.4byte 0x803DF884
 	.4byte 0
-	.4byte 0x803df88c
+	.4byte 0x803DF88C
 	.4byte 0
-	.4byte 0x803df894
+	.4byte 0x803DF894
 	.4byte 0
 	.4byte 0
-	.4byte 0x576f726b
-	.4byte 0x4f626a65
+	.4byte 0x576F726B
+	.4byte 0x4F626A65
 	.4byte 0x63740000
-	.4byte 0x803df874
-	.4byte 0x2b8
-	.4byte 0x803df87c
+	.4byte 0x803DF874
+	.4byte 0x2B8
+	.4byte 0x803DF87C
 	.4byte 0x8
-	.4byte 0x803df884
+	.4byte 0x803DF884
 	.4byte 0
-	.4byte 0x803df88c
+	.4byte 0x803DF88C
 	.4byte 0
-	.4byte 0x803df894
+	.4byte 0x803DF894
 	.4byte 0
-	.4byte 0x803df89c
+	.4byte 0x803DF89C
 	.4byte 0
 	.4byte 0
-	.4byte 0x803df874
-	.4byte 0x2b8
-	.4byte 0x803df87c
+	.4byte 0x803DF874
+	.4byte 0x2B8
+	.4byte 0x803DF87C
 	.4byte 0x8
-	.4byte 0x803df884
+	.4byte 0x803DF884
 	.4byte 0
-	.4byte 0x803df88c
+	.4byte 0x803DF88C
 	.4byte 0
-	.4byte 0x803df894
+	.4byte 0x803DF894
 	.4byte 0
-	.4byte 0x803df89c
+	.4byte 0x803DF89C
 	.4byte 0
 	.4byte __RTTI__10WorkObject
 	.4byte 0
@@ -19755,7 +19755,7 @@ __vt__6Bridge:
 	.4byte doKill__10WorkObjectFv
 	.4byte exitCourse__8CreatureFv
 	.4byte __RTTI__6Bridge
-	.4byte 0xfffffd48
+	.4byte 0xFFFFFD48
 	.4byte lbl_8007DF54
 	.4byte getCurrState__10AICreatureFv
 	.4byte "setCurrState__10AICreatureFP20AState<10AICreature>"
@@ -19776,11 +19776,11 @@ __vt__6Bridge:
 	.4byte isHinderRock__10WorkObjectFv
 	.4byte isFinished__6BridgeFv
 	.4byte workable__6BridgeFR8Vector3f
-	.4byte 0x496e7465
+	.4byte 0x496E7465
 	.4byte 0x72616374
 	.4byte 0x50757368
 	.4byte 0
-	.4byte 0x803df854
+	.4byte 0x803DF854
 	.4byte 0
 	.4byte 0
 .global __vt__12InteractPush
@@ -19796,20 +19796,20 @@ __vt__12InteractPush:
 	.4byte actHinderRock__12InteractPushFP10HinderRock
 	.4byte actBridge__11InteractionFP6Bridge
 	.4byte actItem__11InteractionFP12ItemCreature
-	.4byte 0x48696e64
-	.4byte 0x6572526f
-	.4byte 0x636b0000
-	.4byte 0x803df874
-	.4byte 0x2b8
-	.4byte 0x803df87c
+	.4byte 0x48696E64
+	.4byte 0x6572526F
+	.4byte 0x636B0000
+	.4byte 0x803DF874
+	.4byte 0x2B8
+	.4byte 0x803DF87C
 	.4byte 0x8
-	.4byte 0x803df884
+	.4byte 0x803DF884
 	.4byte 0
-	.4byte 0x803df88c
+	.4byte 0x803DF88C
 	.4byte 0
-	.4byte 0x803df894
+	.4byte 0x803DF894
 	.4byte 0
-	.4byte 0x803df89c
+	.4byte 0x803DF89C
 	.4byte 0
 	.4byte __RTTI__10WorkObject
 	.4byte 0
@@ -19886,7 +19886,7 @@ __vt__10HinderRock:
 	.4byte doKill__10WorkObjectFv
 	.4byte exitCourse__8CreatureFv
 	.4byte __RTTI__10HinderRock
-	.4byte 0xfffffd48
+	.4byte 0xFFFFFD48
 	.4byte lbl_8007DF54
 	.4byte getCurrState__10AICreatureFv
 	.4byte "setCurrState__10AICreatureFP20AState<10AICreature>"
@@ -19907,26 +19907,23 @@ __vt__10HinderRock:
 	.4byte isHinderRock__10HinderRockFv
 	.4byte isFinished__10HinderRockFv
 	.4byte workable__10HinderRockFR8Vector3f
-	.4byte 0x44796e43
-	.4byte 0x6f6c6c4f
-	.4byte 0x626a6563
+	.4byte 0x44796E43
+	.4byte 0x6F6C6C4F
+	.4byte 0x626A6563
 	.4byte 0x74000000
-	.4byte 0x803df8cc
+	.4byte 0x803DF8CC
 	.4byte 0
 	.4byte 0
-	.4byte 0x803df8cc
+	.4byte 0x803DF8CC
 	.4byte 0
-	.4byte 0x803df8d4
-	.4byte 0
-	.4byte 0
-	.4byte 0x803df8cc
-	.4byte 0
-	.4byte 0x803df8d4
-	.4byte 0
-	.4byte 0x803df8e4
+	.4byte 0x803DF8D4
 	.4byte 0
 	.4byte 0
+	.4byte 0x803DF8CC
 	.4byte 0
+	.4byte 0x803DF8D4
+	.4byte 0
+	.4byte 0x803DF8E4
 	.4byte 0
 	.4byte 0
 	.4byte 0
@@ -19942,30 +19939,33 @@ __vt__10HinderRock:
 	.4byte 0
 	.4byte 0
 	.4byte 0
-	.4byte 0x44796e42
-	.4byte 0x75696c64
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0x44796E42
+	.4byte 0x75696C64
 	.4byte 0x53686170
 	.4byte 0x65000000
-	.4byte 0x44796e43
-	.4byte 0x6f6c6c53
+	.4byte 0x44796E43
+	.4byte 0x6F6C6C53
 	.4byte 0x68617065
 	.4byte 0
-	.4byte 0x803df8cc
+	.4byte 0x803DF8CC
 	.4byte 0
-	.4byte 0x803df8d4
+	.4byte 0x803DF8D4
 	.4byte 0
-	.4byte 0x803df8e4
+	.4byte 0x803DF8E4
 	.4byte 0
-	.4byte 0x803df8ec
+	.4byte 0x803DF8EC
 	.4byte 0
 	.4byte 0
-	.4byte 0x803df8cc
+	.4byte 0x803DF8CC
 	.4byte 0
-	.4byte 0x803df8d4
+	.4byte 0x803DF8D4
 	.4byte 0
-	.4byte 0x803df8e4
+	.4byte 0x803DF8E4
 	.4byte 0
-	.4byte 0x803df8ec
+	.4byte 0x803DF8EC
 	.4byte 0
 	.4byte __RTTI__12DynCollShape_2
 	.4byte 0
@@ -19990,30 +19990,30 @@ __vt__13DynBuildShape:
 	.4byte getShape__12DynCollShapeFv
 	.4byte jointVisible__12DynCollShapeFii
 	.4byte refresh__13DynBuildShapeFR8Graphics
-	.4byte 0x47656e4f
-	.4byte 0x626a6563
-	.4byte 0x74576f72
-	.4byte 0x6b4f626a
+	.4byte 0x47656E4F
+	.4byte 0x626A6563
+	.4byte 0x74576F72
+	.4byte 0x6B4F626A
 	.4byte 0x65637400
 	.4byte 0x50617261
-	.4byte 0x6d657465
+	.4byte 0x6D657465
 	.4byte 0x72730000
-	.4byte 0x803df904
+	.4byte 0x803DF904
 	.4byte 0
 	.4byte 0
-	.4byte 0x47656e4f
-	.4byte 0x626a6563
+	.4byte 0x47656E4F
+	.4byte 0x626A6563
 	.4byte 0x74000000
-	.4byte 0x803df904
+	.4byte 0x803DF904
 	.4byte 0
-	.4byte 0x803df914
+	.4byte 0x803DF914
 	.4byte 0
 	.4byte 0
-	.4byte 0x803df904
+	.4byte 0x803DF904
 	.4byte 0
-	.4byte 0x803df914
+	.4byte 0x803DF914
 	.4byte 0
-	.4byte 0x803df91c
+	.4byte 0x803DF91C
 	.4byte 0
 	.4byte 0
 .global __vt__19GenObjectWorkObject
@@ -20032,24 +20032,13 @@ __vt__19GenObjectWorkObject:
 	.4byte update__9GenObjectFP9Generator
 	.4byte render__9GenObjectFR8GraphicsP9Generator
 	.4byte birth__19GenObjectWorkObjectFR9BirthInfo
-	.4byte 0x5061726d
-	.4byte 0x3c666c6f
-	.4byte 0x61743e00
+	.4byte 0x5061726D
+	.4byte 0x3C666C6F
+	.4byte 0x61743E00
 	.4byte 0x42617365
-	.4byte 0x5061726d
+	.4byte 0x5061726D
 	.4byte 0
-	.4byte 0x803df92c
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0x5061726d
-	.4byte 0x3c696e74
-	.4byte 0x3e000000
-	.4byte 0x803df92c
+	.4byte 0x803DF92C
 	.4byte 0
 	.4byte 0
 	.4byte 0
@@ -20057,34 +20046,45 @@ __vt__19GenObjectWorkObject:
 	.4byte 0
 	.4byte 0
 	.4byte 0
-	.4byte 0x576f726b
-	.4byte 0x4f626a65
-	.4byte 0x63744d67
+	.4byte 0x5061726D
+	.4byte 0x3C696E74
+	.4byte 0x3E000000
+	.4byte 0x803DF92C
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0x576F726B
+	.4byte 0x4F626A65
+	.4byte 0x63744D67
 	.4byte 0x72000000
 	.4byte 0x54726176
 	.4byte 0x65727361
-	.4byte 0x626c6500
-	.4byte 0x4f626a65
-	.4byte 0x63744d67
+	.4byte 0x626C6500
+	.4byte 0x4F626A65
+	.4byte 0x63744D67
 	.4byte 0x72000000
-	.4byte 0x803df8cc
+	.4byte 0x803DF8CC
 	.4byte 0x8
-	.4byte 0x803df8d4
+	.4byte 0x803DF8D4
 	.4byte 0x8
-	.4byte 0x803df8e4
+	.4byte 0x803DF8E4
 	.4byte 0x8
-	.4byte 0x803df934
+	.4byte 0x803DF934
 	.4byte 0
 	.4byte 0
-	.4byte 0x803df8cc
+	.4byte 0x803DF8CC
 	.4byte 0x8
-	.4byte 0x803df8d4
+	.4byte 0x803DF8D4
 	.4byte 0x8
-	.4byte 0x803df8e4
+	.4byte 0x803DF8E4
 	.4byte 0x8
-	.4byte 0x803df934
+	.4byte 0x803DF934
 	.4byte 0
-	.4byte 0x803df93c
+	.4byte 0x803DF93C
 	.4byte 0
 	.4byte 0
 .global __vt__13WorkObjectMgr
@@ -20096,7 +20096,7 @@ __vt__13WorkObjectMgr:
 	.4byte getNext__13WorkObjectMgrFi
 	.4byte isDone__13WorkObjectMgrFi
 	.4byte __RTTI__13WorkObjectMgr
-	.4byte 0xfffffff8
+	.4byte 0xFFFFFFF8
 	.4byte getAgeNodeType__5ANodeFv
 	.4byte read__8CoreNodeFR18RandomAccessStream
 	.4byte lbl_8009F5DC
@@ -20119,13 +20119,13 @@ __vt__13WorkObjectMgr:
 	.4byte findClosest__9ObjectMgrFR8Vector3fP9Condition
 	.4byte search__9ObjectMgrFP9ObjectMgr
 	.4byte killAll__9ObjectMgrFv
-	.4byte 0x576f726b
-	.4byte 0x4f626a65
-	.4byte 0x63744e6f
+	.4byte 0x576F726B
+	.4byte 0x4F626A65
+	.4byte 0x63744E6F
 	.4byte 0x64650000
-	.4byte 0x803df8cc
+	.4byte 0x803DF8CC
 	.4byte 0
-	.4byte 0x803df8d4
+	.4byte 0x803DF8D4
 	.4byte 0
 	.4byte 0
 .global __vt__14WorkObjectNode
@@ -20219,7 +20219,7 @@ __vt__10WorkObject:
 	.4byte doKill__10WorkObjectFv
 	.4byte exitCourse__8CreatureFv
 	.4byte __RTTI__10WorkObject
-	.4byte 0xfffffd48
+	.4byte 0xFFFFFD48
 	.4byte lbl_8007DF54
 	.4byte getCurrState__10AICreatureFv
 	.4byte "setCurrState__10AICreatureFP20AState<10AICreature>"
@@ -20240,19 +20240,17 @@ __vt__10WorkObject:
 	.4byte isHinderRock__10WorkObjectFv
 	.4byte isFinished__10WorkObjectFv
 	.4byte workable__10WorkObjectFR8Vector3f
-	.4byte 0x726f7574
-	.4byte 0x654d6772
-	.4byte 0x2e637070
+	.4byte 0x726F7574
+	.4byte 0x654D6772
+	.4byte 0x2E637070
 	.4byte 0
-	.4byte 0x726f7574
-	.4byte 0x654d6772
+	.4byte 0x726F7574
+	.4byte 0x654D6772
 	.4byte 0
-	.4byte 0x436f7265
-	.4byte 0x4e6f6465
+	.4byte 0x436F7265
+	.4byte 0x4E6F6465
 	.4byte 0
-	.4byte 0x803df978
-	.4byte 0
-	.4byte 0
+	.4byte 0x803DF978
 	.4byte 0
 	.4byte 0
 	.4byte 0
@@ -20260,19 +20258,21 @@ __vt__10WorkObject:
 	.4byte 0
 	.4byte 0
 	.4byte 0
-	.4byte 0x526f7574
-	.4byte 0x654d6772
-	.4byte 0
-	.4byte 0x803df978
-	.4byte 0
-	.4byte 0x803df980
 	.4byte 0
 	.4byte 0
-	.4byte 0x803df978
+	.4byte 0x526F7574
+	.4byte 0x654D6772
 	.4byte 0
-	.4byte 0x803df980
+	.4byte 0x803DF978
 	.4byte 0
-	.4byte 0x803df990
+	.4byte 0x803DF980
+	.4byte 0
+	.4byte 0
+	.4byte 0x803DF978
+	.4byte 0
+	.4byte 0x803DF980
+	.4byte 0
+	.4byte 0x803DF990
 	.4byte 0
 	.4byte 0
 .global __vt__8RouteMgr
@@ -20369,16 +20369,16 @@ __vt__5SeWin:
 	.4byte texturecentre__5GmWinFR8GraphicsP7Textureiii8RectArea
 	.4byte textureleft__5GmWinFR8GraphicsP7Textureiii8RectArea
 	.4byte textureright__5GmWinFR8GraphicsP7Textureiii8RectArea
-	.4byte 0x803df9dc
+	.4byte 0x803DF9DC
 	.4byte 0
-	.4byte 0x803df9e4
+	.4byte 0x803DF9E4
 	.4byte 0
 	.4byte 0
-	.4byte 0x803df9dc
+	.4byte 0x803DF9DC
 	.4byte 0
-	.4byte 0x803df9e4
+	.4byte 0x803DF9E4
 	.4byte 0
-	.4byte 0x803dfa14
+	.4byte 0x803DFA14
 	.4byte 0
 	.4byte 0
 .global __vt__5SeMgr
@@ -20402,13 +20402,13 @@ __vt__5SeMgr:
 	.4byte 0
 	.4byte 0
 	.4byte 0
-	.4byte 0x7365436f
-	.4byte 0x6e737461
-	.4byte 0x6e74732e
+	.4byte 0x7365436F
+	.4byte 0x6E737461
+	.4byte 0x6E74732E
 	.4byte 0x63707000
-	.4byte 0x7365436f
-	.4byte 0x6e737461
-	.4byte 0x6e740000
+	.4byte 0x7365436F
+	.4byte 0x6E737461
+	.4byte 0x6E740000
 .global lbl_802B1D2C
 lbl_802B1D2C:
 	.4byte 0x736F756E
@@ -23532,7 +23532,7 @@ __vt__6CPlate:
 	.4byte getNext__6CPlateFi
 	.4byte isDone__6CPlateFi
 	.4byte __RTTI__6CPlate
-	.4byte 0xfffffff8
+	.4byte 0xFFFFFFF8
 	.4byte getAgeNodeType__5ANodeFv
 	.4byte lbl_800A6D7C
 	.4byte lbl_800A6D8C
@@ -23546,13 +23546,13 @@ __vt__6CPlate:
 	.4byte read__6CPlateFR18RandomAccessStream
 	.4byte update__6CPlateFv
 	.4byte render__6CPlateFR8Graphics
-	.4byte 0x5061726d
-	.4byte 0x3c666c6f
-	.4byte 0x61743e00
+	.4byte 0x5061726D
+	.4byte 0x3C666C6F
+	.4byte 0x61743E00
 	.4byte 0x42617365
-	.4byte 0x5061726d
+	.4byte 0x5061726D
 	.4byte 0
-	.4byte 0x803dfc28
+	.4byte 0x803DFC28
 	.4byte 0
 	.4byte 0
 	.4byte 0
@@ -23575,21 +23575,21 @@ __vt__6CPlate:
 	.4byte 0
 	.4byte 0
 	.4byte 0x61695374
-	.4byte 0x6f6e652e
+	.4byte 0x6F6E652E
 	.4byte 0x63707000
 	.4byte 0x41637453
-	.4byte 0x746f6e65
+	.4byte 0x746F6E65
 	.4byte 0
 	.4byte 0x52656365
 	.4byte 0x69766572
-	.4byte 0x3c50696b
-	.4byte 0x693e0000
-	.4byte 0x803dfc68
+	.4byte 0x3C50696B
+	.4byte 0x693E0000
+	.4byte 0x803DFC68
 	.4byte 0
 	.4byte 0
-	.4byte 0x803dfc68
+	.4byte 0x803DFC68
 	.4byte 0
-	.4byte 0x803dfc78
+	.4byte 0x803DFC78
 	.4byte 0
 	.4byte 0
 .global __vt__8ActStone
@@ -23620,14 +23620,14 @@ __vt__8ActStone:
 	.4byte resumable__6ActionFv
 	.4byte getInfo__6ActionFPc
 	.4byte __RTTI__8ActStone
-	.4byte 0xffffffec
+	.4byte 0xFFFFFFEC
 	.4byte lbl_800A79F0
 	.4byte animationKeyUpdated__8ActStoneFR16PaniAnimKeyEvent
-	.4byte 0x50616e69
-	.4byte 0x416e696d
-	.4byte 0x4b65794c
+	.4byte 0x50616E69
+	.4byte 0x416E696D
+	.4byte 0x4B65794C
 	.4byte 0x69737465
-	.4byte 0x6e657200
+	.4byte 0x6E657200
 	.4byte 0
 	.4byte 0
 	.4byte 0
@@ -23694,17 +23694,17 @@ __vt__9ActAdjust:
 	.4byte resumable__6ActionFv
 	.4byte getInfo__6ActionFPc
 	.4byte 0x41637441
-	.4byte 0x646a7573
-	.4byte 0x743a3a49
-	.4byte 0x6e697469
-	.4byte 0x616c6973
+	.4byte 0x646A7573
+	.4byte 0x743A3A49
+	.4byte 0x6E697469
+	.4byte 0x616C6973
 	.4byte 0x65720000
 	.4byte 0x41637469
-	.4byte 0x6f6e3a3a
-	.4byte 0x496e6974
-	.4byte 0x69616c69
+	.4byte 0x6F6E3A3A
+	.4byte 0x496E6974
+	.4byte 0x69616C69
 	.4byte 0x73657200
-	.4byte 0x803dfcd0
+	.4byte 0x803DFCD0
 	.4byte 0
 	.4byte 0
 .global __vt__Q29ActAdjust11Initialiser
@@ -23712,9 +23712,9 @@ __vt__Q29ActAdjust11Initialiser:
 	.4byte __RTTI__Q29ActAdjust11Initialiser
 	.4byte 0
 	.4byte initialise__Q29ActAdjust11InitialiserFP6Action
-	.4byte 0x803dfcb0
+	.4byte 0x803DFCB0
 	.4byte 0
-	.4byte 0x803dfcc0
+	.4byte 0x803DFCC0
 	.4byte 0
 	.4byte 0
 .global __vt__6ActPut
@@ -23745,11 +23745,11 @@ __vt__6ActPut:
 	.4byte resumable__6ActionFv
 	.4byte getInfo__6ActionFPc
 	.4byte 0x41637450
-	.4byte 0x75743a3a
-	.4byte 0x496e6974
-	.4byte 0x69616c69
+	.4byte 0x75743A3A
+	.4byte 0x496E6974
+	.4byte 0x69616C69
 	.4byte 0x73657200
-	.4byte 0x803dfcd0
+	.4byte 0x803DFCD0
 	.4byte 0
 	.4byte 0
 .global __vt__Q26ActPut11Initialiser
@@ -23757,9 +23757,9 @@ __vt__Q26ActPut11Initialiser:
 	.4byte __RTTI__Q26ActPut11Initialiser
 	.4byte 0
 	.4byte initialise__Q26ActPut11InitialiserFP6Action
-	.4byte 0x496e7465
+	.4byte 0x496E7465
 	.4byte 0x72616374
-	.4byte 0x696f6e00
+	.4byte 0x696F6E00
 	.4byte 0
 	.4byte 0
 	.4byte 0
@@ -23771,16 +23771,16 @@ __vt__Q26ActPut11Initialiser:
 	.4byte 0
 	.4byte 0
 	.4byte 0
-	.4byte 0x50616e69
-	.4byte 0x416e696d
-	.4byte 0x4b65794c
+	.4byte 0x50616E69
+	.4byte 0x416E696D
+	.4byte 0x4B65794C
 	.4byte 0x69737465
-	.4byte 0x6e657200
-	.4byte 0x803dfd00
+	.4byte 0x6E657200
+	.4byte 0x803DFD00
 	.4byte 0x14
-	.4byte 0x803dfcb0
+	.4byte 0x803DFCB0
 	.4byte 0
-	.4byte 0x803dfcc0
+	.4byte 0x803DFCC0
 	.4byte 0
 	.4byte 0
 .global __vt__7ActPick
@@ -23811,16 +23811,16 @@ __vt__7ActPick:
 	.4byte resumable__6ActionFv
 	.4byte getInfo__6ActionFPc
 	.4byte __RTTI__7ActPick
-	.4byte 0xffffffec
+	.4byte 0xFFFFFFEC
 	.4byte lbl_800A82E0
 	.4byte animationKeyUpdated__7ActPickFR16PaniAnimKeyEvent
 	.4byte 0x41637450
-	.4byte 0x69636b3a
-	.4byte 0x3a496e69
-	.4byte 0x7469616c
+	.4byte 0x69636B3A
+	.4byte 0x3A496E69
+	.4byte 0x7469616C
 	.4byte 0x69736572
 	.4byte 0
-	.4byte 0x803dfcd0
+	.4byte 0x803DFCD0
 	.4byte 0
 	.4byte 0
 .global __vt__Q27ActPick11Initialiser
@@ -23843,11 +23843,11 @@ __vt__Q27ActPick11Initialiser:
 	.4byte lbl_800A79D0
 	.4byte lbl_800A79BC
 	.4byte 0x61694174
-	.4byte 0x7461636b
-	.4byte 0x2e637070
+	.4byte 0x7461636B
+	.4byte 0x2E637070
 	.4byte 0
 	.4byte 0x61694174
-	.4byte 0x7461636b
+	.4byte 0x7461636B
 	.4byte 0
 .global lbl_802B5374
 lbl_802B5374:
@@ -23923,27 +23923,27 @@ __vt__13ActJumpAttack:
 	.4byte resumable__6ActionFv
 	.4byte getInfo__6ActionFPc
 	.4byte __RTTI__13ActJumpAttack
-	.4byte 0xffffffec
+	.4byte 0xFFFFFFEC
 	.4byte lbl_800AA514
 	.4byte animationKeyUpdated__13ActJumpAttackFR16PaniAnimKeyEvent
 	.4byte 0x41637441
 	.4byte 0x74746163
-	.4byte 0x6b000000
-	.4byte 0x416e6441
-	.4byte 0x6374696f
-	.4byte 0x6e000000
-	.4byte 0x803dfd9c
+	.4byte 0x6B000000
+	.4byte 0x416E6441
+	.4byte 0x6374696F
+	.4byte 0x6E000000
+	.4byte 0x803DFD9C
 	.4byte 0
-	.4byte 0x803dfdac
+	.4byte 0x803DFDAC
 	.4byte 0
 	.4byte 0
-	.4byte 0x803dfd94
+	.4byte 0x803DFD94
 	.4byte 0x18
-	.4byte 0x803dfd9c
+	.4byte 0x803DFD9C
 	.4byte 0
-	.4byte 0x803dfdac
+	.4byte 0x803DFDAC
 	.4byte 0
-	.4byte 0x803dfdbc
+	.4byte 0x803DFDBC
 	.4byte 0
 	.4byte 0
 .global __vt__9ActAttack
@@ -23974,7 +23974,7 @@ __vt__9ActAttack:
 	.4byte resumable__9ActAttackFv
 	.4byte getInfo__6ActionFPc
 	.4byte __RTTI__9ActAttack
-	.4byte 0xffffffe8
+	.4byte 0xFFFFFFE8
 	.4byte lbl_800AA50C
 	.4byte animationKeyUpdated__9ActAttackFR16PaniAnimKeyEvent
 	.4byte 0
@@ -23992,8 +23992,8 @@ __vt__9ActAttack:
 	.4byte lbl_800A79D0
 	.4byte lbl_800A79BC
 	.4byte 0
-	.4byte 0x6169426f
-	.4byte 0x72652e63
+	.4byte 0x6169426F
+	.4byte 0x72652E63
 	.4byte 0x70700000
 .global lbl_802B55A4
 lbl_802B55A4:
@@ -24051,17 +24051,17 @@ __vt__11ActBoreRest:
 	.4byte getInfo__6ActionFPc
 	.4byte animationKeyUpdated__11ActBoreRestFR16PaniAnimKeyEvent
 	.4byte __RTTI__11ActBoreRest
-	.4byte 0xffffffd8
+	.4byte 0xFFFFFFD8
 	.4byte lbl_800AC2F8
 	.4byte 0x41637442
-	.4byte 0x6f72654f
-	.4byte 0x6e657368
-	.4byte 0x6f740000
-	.4byte 0x803dfdf0
-	.4byte 0x1c
-	.4byte 0x803dfdf8
+	.4byte 0x6F72654F
+	.4byte 0x6E657368
+	.4byte 0x6F740000
+	.4byte 0x803DFDF0
+	.4byte 0x1C
+	.4byte 0x803DFDF8
 	.4byte 0
-	.4byte 0x803dfe08
+	.4byte 0x803DFE08
 	.4byte 0
 	.4byte 0
 .global __vt__14ActBoreOneshot
@@ -24093,15 +24093,15 @@ __vt__14ActBoreOneshot:
 	.4byte getInfo__6ActionFPc
 	.4byte animationKeyUpdated__14ActBoreOneshotFR16PaniAnimKeyEvent
 	.4byte __RTTI__14ActBoreOneshot
-	.4byte 0xffffffe4
+	.4byte 0xFFFFFFE4
 	.4byte lbl_800AC2E4
 	.4byte 0x41637442
-	.4byte 0x6f72654c
+	.4byte 0x6F72654C
 	.4byte 0x69737465
-	.4byte 0x6e000000
-	.4byte 0x803dfdf8
+	.4byte 0x6E000000
+	.4byte 0x803DFDF8
 	.4byte 0
-	.4byte 0x803dfe08
+	.4byte 0x803DFE08
 	.4byte 0
 	.4byte 0
 .global __vt__13ActBoreListen
@@ -24131,9 +24131,9 @@ __vt__13ActBoreListen:
 	.4byte restart__6ActionFv
 	.4byte resumable__6ActionFv
 	.4byte getInfo__6ActionFPc
-	.4byte 0x496e7465
+	.4byte 0x496E7465
 	.4byte 0x72616374
-	.4byte 0x696f6e00
+	.4byte 0x696F6E00
 	.4byte 0
 	.4byte 0
 	.4byte 0
@@ -24146,13 +24146,13 @@ __vt__13ActBoreListen:
 	.4byte 0
 	.4byte 0
 	.4byte 0x41637442
-	.4byte 0x6f726554
-	.4byte 0x616c6b00
-	.4byte 0x803dfdf0
+	.4byte 0x6F726554
+	.4byte 0x616C6B00
+	.4byte 0x803DFDF0
 	.4byte 0x28
-	.4byte 0x803dfdf8
+	.4byte 0x803DFDF8
 	.4byte 0
-	.4byte 0x803dfe08
+	.4byte 0x803DFE08
 	.4byte 0
 	.4byte 0
 .global __vt__11ActBoreTalk
@@ -24184,18 +24184,18 @@ __vt__11ActBoreTalk:
 	.4byte getInfo__6ActionFPc
 	.4byte animationKeyUpdated__11ActBoreTalkFR16PaniAnimKeyEvent
 	.4byte __RTTI__11ActBoreTalk
-	.4byte 0xffffffd8
+	.4byte 0xFFFFFFD8
 	.4byte lbl_800AC2D0
 	.4byte 0
 	.4byte 0
 	.4byte 0
 	.4byte 0x41637442
-	.4byte 0x6f726553
-	.4byte 0x656c6563
+	.4byte 0x6F726553
+	.4byte 0x656C6563
 	.4byte 0x74000000
-	.4byte 0x803dfdf8
+	.4byte 0x803DFDF8
 	.4byte 0
-	.4byte 0x803dfe08
+	.4byte 0x803DFE08
 	.4byte 0
 	.4byte 0
 .global __vt__13ActBoreSelect
@@ -24227,11 +24227,11 @@ __vt__13ActBoreSelect:
 	.4byte getInfo__6ActionFPc
 	.4byte 0x41637446
 	.4byte 0x72656553
-	.4byte 0x656c6563
+	.4byte 0x656C6563
 	.4byte 0x74000000
-	.4byte 0x803dfdf8
+	.4byte 0x803DFDF8
 	.4byte 0
-	.4byte 0x803dfe08
+	.4byte 0x803DFE08
 	.4byte 0
 	.4byte 0
 .global __vt__13ActFreeSelect
@@ -24272,16 +24272,16 @@ __vt__13ActFreeSelect:
 	.4byte lbl_800A791C
 	.4byte lbl_800A79D0
 	.4byte lbl_800A79BC
-	.4byte 0x6169426f
-	.4byte 0x4d616b65
-	.4byte 0x2e637070
+	.4byte 0x6169426F
+	.4byte 0x4D616B65
+	.4byte 0x2E637070
 	.4byte 0
-	.4byte 0x6169426f
-	.4byte 0x4d616b65
+	.4byte 0x6169426F
+	.4byte 0x4D616B65
 	.4byte 0
-	.4byte 0x496e7465
+	.4byte 0x496E7465
 	.4byte 0x72616374
-	.4byte 0x696f6e00
+	.4byte 0x696F6E00
 	.4byte 0
 	.4byte 0
 	.4byte 0
@@ -24294,18 +24294,18 @@ __vt__13ActFreeSelect:
 	.4byte 0
 	.4byte 0
 	.4byte 0x41637442
-	.4byte 0x6f4d616b
+	.4byte 0x6F4D616B
 	.4byte 0x65000000
 	.4byte 0x52656365
 	.4byte 0x69766572
-	.4byte 0x3c50696b
-	.4byte 0x693e0000
-	.4byte 0x803dfe40
+	.4byte 0x3C50696B
+	.4byte 0x693E0000
+	.4byte 0x803DFE40
 	.4byte 0
 	.4byte 0
-	.4byte 0x803dfe40
+	.4byte 0x803DFE40
 	.4byte 0
-	.4byte 0x803dfe50
+	.4byte 0x803DFE50
 	.4byte 0
 	.4byte 0
 .global __vt__9ActBoMake
@@ -24336,14 +24336,14 @@ __vt__9ActBoMake:
 	.4byte resumable__6ActionFv
 	.4byte getInfo__6ActionFPc
 	.4byte __RTTI__9ActBoMake
-	.4byte 0xffffffec
+	.4byte 0xFFFFFFEC
 	.4byte lbl_800AC794
 	.4byte animationKeyUpdated__9ActBoMakeFR16PaniAnimKeyEvent
-	.4byte 0x50616e69
-	.4byte 0x416e696d
-	.4byte 0x4b65794c
+	.4byte 0x50616E69
+	.4byte 0x416E696D
+	.4byte 0x4B65794C
 	.4byte 0x69737465
-	.4byte 0x6e657200
+	.4byte 0x6E657200
 	.4byte 0
 	.4byte 0
 	.4byte 0
@@ -24358,19 +24358,19 @@ __vt__9ActBoMake:
 	.4byte lbl_800A791C
 	.4byte lbl_800A79D0
 	.4byte lbl_800A79BC
-	.4byte 0x6169426f
-	.4byte 0x752e6370
+	.4byte 0x6169426F
+	.4byte 0x752E6370
 	.4byte 0x70000000
 	.4byte 0x52656365
 	.4byte 0x69766572
-	.4byte 0x3c50696b
-	.4byte 0x693e0000
-	.4byte 0x803dfe88
+	.4byte 0x3C50696B
+	.4byte 0x693E0000
+	.4byte 0x803DFE88
 	.4byte 0
 	.4byte 0
-	.4byte 0x803dfe88
+	.4byte 0x803DFE88
 	.4byte 0
-	.4byte 0x803dfe98
+	.4byte 0x803DFE98
 	.4byte 0
 	.4byte 0
 .global __vt__6ActBou
@@ -24447,16 +24447,16 @@ lbl_802B5C08:
 	.balign 4
 .global lbl_802B5C70
 lbl_802B5C70:
-	.4byte 0x803dfed8
+	.4byte 0x803DFED8
 	.4byte 0
 	.4byte 0
 .global lbl_802B5C7C
 lbl_802B5C7C:
-	.4byte 0x803dfed0
+	.4byte 0x803DFED0
 	.4byte 0x50
-	.4byte 0x803dfed8
+	.4byte 0x803DFED8
 	.4byte 0
-	.4byte 0x803dfee8
+	.4byte 0x803DFEE8
 	.4byte 0
 	.4byte 0
 .global __vt__9ActBridge
@@ -24488,7 +24488,7 @@ __vt__9ActBridge:
 	.4byte getInfo__6ActionFPc
 	.4byte animationKeyUpdated__9ActBridgeFR16PaniAnimKeyEvent
 	.4byte __RTTI__9ActBridge
-	.4byte 0xffffffb0
+	.4byte 0xFFFFFFB0
 	.4byte lbl_800AE128
 	.4byte 0
 	.4byte 0
@@ -24588,7 +24588,7 @@ __vt__12ActBreakWall:
 	.4byte resumable__6ActionFv
 	.4byte getInfo__6ActionFPc
 	.4byte __RTTI__12ActBreakWall
-	.4byte 0xffffffec
+	.4byte 0xFFFFFFEC
 	.4byte lbl_800AEC78
 	.4byte animationKeyUpdated__12ActBreakWallFR16PaniAnimKeyEvent
 	.4byte 0
@@ -24682,7 +24682,7 @@ __vt__12ActTransport:
 	.4byte getInfo__6ActionFPc
 	.4byte animationKeyUpdated__12ActTransportFR16PaniAnimKeyEvent
 	.4byte __RTTI__12ActTransport
-	.4byte 0xffffff48
+	.4byte 0xFFFFFF48
 	.4byte lbl_800B455C
 	.4byte 0
 	.4byte 0
@@ -24698,16 +24698,16 @@ __vt__12ActTransport:
 	.4byte lbl_800A791C
 	.4byte lbl_800A79D0
 	.4byte lbl_800A79BC
-	.4byte 0x61694b69
-	.4byte 0x6e6f6b6f
-	.4byte 0x2e637070
+	.4byte 0x61694B69
+	.4byte 0x6E6F6B6F
+	.4byte 0x2E637070
 	.4byte 0
-	.4byte 0x61694b69
-	.4byte 0x6e6f6b6f
+	.4byte 0x61694B69
+	.4byte 0x6E6F6B6F
 	.4byte 0
-	.4byte 0x496e7465
+	.4byte 0x496E7465
 	.4byte 0x72616374
-	.4byte 0x696f6e00
+	.4byte 0x696F6E00
 	.4byte 0
 	.4byte 0
 	.4byte 0
@@ -24719,26 +24719,26 @@ __vt__12ActTransport:
 	.4byte 0
 	.4byte 0
 	.4byte 0
-	.4byte 0x4163744b
-	.4byte 0x696e6f6b
-	.4byte 0x6f000000
-	.4byte 0x50616e69
-	.4byte 0x416e696d
-	.4byte 0x4b65794c
+	.4byte 0x4163744B
+	.4byte 0x696E6F6B
+	.4byte 0x6F000000
+	.4byte 0x50616E69
+	.4byte 0x416E696D
+	.4byte 0x4B65794C
 	.4byte 0x69737465
-	.4byte 0x6e657200
+	.4byte 0x6E657200
 	.4byte 0x52656365
 	.4byte 0x69766572
-	.4byte 0x3c50696b
-	.4byte 0x693e0000
-	.4byte 0x803e0168
+	.4byte 0x3C50696B
+	.4byte 0x693E0000
+	.4byte 0x803E0168
 	.4byte 0
 	.4byte 0
-	.4byte 0x803e0160
+	.4byte 0x803E0160
 	.4byte 0x30
-	.4byte 0x803e0168
+	.4byte 0x803E0168
 	.4byte 0
-	.4byte 0x803e0178
+	.4byte 0x803E0178
 	.4byte 0
 	.4byte 0
 .global __vt__9ActKinoko
@@ -24770,7 +24770,7 @@ __vt__9ActKinoko:
 	.4byte getInfo__6ActionFPc
 	.4byte animationKeyUpdated__9ActKinokoFR16PaniAnimKeyEvent
 	.4byte __RTTI__9ActKinoko
-	.4byte 0xffffffd0
+	.4byte 0xFFFFFFD0
 	.4byte lbl_800B5674
 	.4byte 0
 	.4byte 0
@@ -24787,25 +24787,25 @@ __vt__9ActKinoko:
 	.4byte lbl_800A79D0
 	.4byte lbl_800A79BC
 	.4byte 0x61694368
-	.4byte 0x6173652e
+	.4byte 0x6173652E
 	.4byte 0x63707000
 	.4byte 0x61695261
-	.4byte 0x6e646f6d
-	.4byte 0x426f6964
+	.4byte 0x6E646F6D
+	.4byte 0x426F6964
 	.4byte 0
 	.4byte 0x41637443
 	.4byte 0x68617365
 	.4byte 0
 	.4byte 0x52656365
 	.4byte 0x69766572
-	.4byte 0x3c50696b
-	.4byte 0x693e0000
-	.4byte 0x803e0198
+	.4byte 0x3C50696B
+	.4byte 0x693E0000
+	.4byte 0x803E0198
 	.4byte 0
 	.4byte 0
-	.4byte 0x803e0198
+	.4byte 0x803E0198
 	.4byte 0
-	.4byte 0x803e01a8
+	.4byte 0x803E01A8
 	.4byte 0
 	.4byte 0
 .global __vt__8ActChase
@@ -24837,16 +24837,16 @@ __vt__8ActChase:
 	.4byte getInfo__6ActionFPc
 	.4byte 0x41637443
 	.4byte 0x68617365
-	.4byte 0x3a3a496e
+	.4byte 0x3A3A496E
 	.4byte 0x69746961
-	.4byte 0x6c697365
+	.4byte 0x6C697365
 	.4byte 0x72000000
 	.4byte 0x41637469
-	.4byte 0x6f6e3a3a
-	.4byte 0x496e6974
-	.4byte 0x69616c69
+	.4byte 0x6F6E3A3A
+	.4byte 0x496E6974
+	.4byte 0x69616C69
 	.4byte 0x73657200
-	.4byte 0x803e01b8
+	.4byte 0x803E01B8
 	.4byte 0
 	.4byte 0
 .global __vt__Q28ActChase11Initialiser
@@ -24867,28 +24867,28 @@ __vt__Q28ActChase11Initialiser:
 	.4byte lbl_800A79BC
 	.4byte 0
 	.4byte 0x61694372
-	.4byte 0x6f77642e
+	.4byte 0x6F77642E
 	.4byte 0x63707000
 	.4byte 0x41637443
-	.4byte 0x726f7764
+	.4byte 0x726F7764
 	.4byte 0
-	.4byte 0x536c6f74
-	.4byte 0x4368616e
-	.4byte 0x67654c69
-	.4byte 0x73746e65
+	.4byte 0x536C6F74
+	.4byte 0x4368616E
+	.4byte 0x67654C69
+	.4byte 0x73746E65
 	.4byte 0x72000000
 	.4byte 0x52656365
 	.4byte 0x69766572
-	.4byte 0x3c50696b
-	.4byte 0x693e0000
-	.4byte 0x803e023c
+	.4byte 0x3C50696B
+	.4byte 0x693E0000
+	.4byte 0x803E023C
 	.4byte 0
 	.4byte 0
 	.4byte __RTTI__17SlotChangeListner
 	.4byte 0x80
-	.4byte 0x803e023c
+	.4byte 0x803E023C
 	.4byte 0
-	.4byte 0x803e024c
+	.4byte 0x803E024C
 	.4byte 0
 	.4byte 0
 .global __vt__8ActCrowd
@@ -24920,7 +24920,7 @@ __vt__8ActCrowd:
 	.4byte getInfo__6ActionFPc
 	.4byte inform__8ActCrowdFi
 	.4byte __RTTI__8ActCrowd
-	.4byte 0xffffff80
+	.4byte 0xFFFFFF80
 	.4byte lbl_800B7798
 .global __vt__17SlotChangeListner
 __vt__17SlotChangeListner:
@@ -24939,28 +24939,28 @@ __vt__17SlotChangeListner:
 	.4byte lbl_800A79D0
 	.4byte lbl_800A79BC
 	.4byte 0x61694465
-	.4byte 0x636f792e
+	.4byte 0x636F792E
 	.4byte 0x63707000
 	.4byte 0x41637444
-	.4byte 0x65636f79
+	.4byte 0x65636F79
 	.4byte 0
-	.4byte 0x50616e69
-	.4byte 0x416e696d
-	.4byte 0x4b65794c
+	.4byte 0x50616E69
+	.4byte 0x416E696D
+	.4byte 0x4B65794C
 	.4byte 0x69737465
-	.4byte 0x6e657200
+	.4byte 0x6E657200
 	.4byte 0x52656365
 	.4byte 0x69766572
-	.4byte 0x3c50696b
-	.4byte 0x693e0000
-	.4byte 0x803e0284
+	.4byte 0x3C50696B
+	.4byte 0x693E0000
+	.4byte 0x803E0284
 	.4byte 0
 	.4byte 0
-	.4byte 0x803e027c
+	.4byte 0x803E027C
 	.4byte 0x14
-	.4byte 0x803e0284
+	.4byte 0x803E0284
 	.4byte 0
-	.4byte 0x803e0294
+	.4byte 0x803E0294
 	.4byte 0
 	.4byte 0
 .global __vt__8ActDecoy
@@ -24991,7 +24991,7 @@ __vt__8ActDecoy:
 	.4byte resumable__6ActionFv
 	.4byte getInfo__6ActionFPc
 	.4byte __RTTI__8ActDecoy
-	.4byte 0xffffffec
+	.4byte 0xFFFFFFEC
 	.4byte lbl_800B7F5C
 	.4byte animationKeyUpdated__8ActDecoyFR16PaniAnimKeyEvent
 	.4byte 0
@@ -25008,12 +25008,12 @@ __vt__8ActDecoy:
 	.4byte lbl_800A791C
 	.4byte lbl_800A79D0
 	.4byte lbl_800A79BC
-	.4byte 0x6169456e
-	.4byte 0x7465722e
+	.4byte 0x6169456E
+	.4byte 0x7465722E
 	.4byte 0x63707000
-	.4byte 0x496e7465
+	.4byte 0x496E7465
 	.4byte 0x72616374
-	.4byte 0x696f6e00
+	.4byte 0x696F6E00
 	.4byte 0
 	.4byte 0
 	.4byte 0
@@ -25026,18 +25026,18 @@ __vt__8ActDecoy:
 	.4byte 0
 	.4byte 0
 	.4byte 0x41637445
-	.4byte 0x6e746572
+	.4byte 0x6E746572
 	.4byte 0
 	.4byte 0x52656365
 	.4byte 0x69766572
-	.4byte 0x3c50696b
-	.4byte 0x693e0000
-	.4byte 0x803e02cc
+	.4byte 0x3C50696B
+	.4byte 0x693E0000
+	.4byte 0x803E02CC
 	.4byte 0
 	.4byte 0
-	.4byte 0x803e02cc
+	.4byte 0x803E02CC
 	.4byte 0
-	.4byte 0x803e02dc
+	.4byte 0x803E02DC
 	.4byte 0
 	.4byte 0
 .global __vt__8ActEnter
@@ -25080,7 +25080,7 @@ __vt__8ActEnter:
 	.4byte lbl_800A79BC
 	.4byte 0x61694573
 	.4byte 0x63617065
-	.4byte 0x2e637070
+	.4byte 0x2E637070
 	.4byte 0
 	.4byte 0x61694573
 	.4byte 0x63617065
@@ -25136,16 +25136,16 @@ __vt__9ActEscape:
 	.4byte getInfo__9ActEscapeFPc
 	.4byte 0x41637445
 	.4byte 0x73636170
-	.4byte 0x653a3a49
-	.4byte 0x6e697469
-	.4byte 0x616c6973
+	.4byte 0x653A3A49
+	.4byte 0x6E697469
+	.4byte 0x616C6973
 	.4byte 0x65720000
 	.4byte 0x41637469
-	.4byte 0x6f6e3a3a
-	.4byte 0x496e6974
-	.4byte 0x69616c69
+	.4byte 0x6F6E3A3A
+	.4byte 0x496E6974
+	.4byte 0x69616C69
 	.4byte 0x73657200
-	.4byte 0x803e0338
+	.4byte 0x803E0338
 	.4byte 0
 	.4byte 0
 .global __vt__Q29ActEscape11Initialiser
@@ -25165,18 +25165,18 @@ __vt__Q29ActEscape11Initialiser:
 	.4byte lbl_800A79D0
 	.4byte lbl_800A79BC
 	.4byte 0x61694578
-	.4byte 0x69742e63
+	.4byte 0x69742E63
 	.4byte 0x70700000
 	.4byte 0x52656365
 	.4byte 0x69766572
-	.4byte 0x3c50696b
-	.4byte 0x693e0000
-	.4byte 0x803e039c
+	.4byte 0x3C50696B
+	.4byte 0x693E0000
+	.4byte 0x803E039C
 	.4byte 0
 	.4byte 0
-	.4byte 0x803e039c
+	.4byte 0x803E039C
 	.4byte 0
-	.4byte 0x803e03ac
+	.4byte 0x803E03AC
 	.4byte 0
 	.4byte 0
 .global __vt__7ActExit
@@ -25218,26 +25218,26 @@ __vt__7ActExit:
 	.4byte lbl_800A79D0
 	.4byte lbl_800A79BC
 	.4byte 0
-	.4byte 0x61694d69
-	.4byte 0x6e652e63
+	.4byte 0x61694D69
+	.4byte 0x6E652E63
 	.4byte 0x70700000
-	.4byte 0x50616e69
-	.4byte 0x416e696d
-	.4byte 0x4b65794c
+	.4byte 0x50616E69
+	.4byte 0x416E696D
+	.4byte 0x4B65794C
 	.4byte 0x69737465
-	.4byte 0x6e657200
+	.4byte 0x6E657200
 	.4byte 0x52656365
 	.4byte 0x69766572
-	.4byte 0x3c50696b
-	.4byte 0x693e0000
-	.4byte 0x803e03e8
+	.4byte 0x3C50696B
+	.4byte 0x693E0000
+	.4byte 0x803E03E8
 	.4byte 0
 	.4byte 0
-	.4byte 0x803e03e0
+	.4byte 0x803E03E0
 	.4byte 0x28
-	.4byte 0x803e03e8
+	.4byte 0x803E03E8
 	.4byte 0
-	.4byte 0x803e03f8
+	.4byte 0x803E03F8
 	.4byte 0
 	.4byte 0
 .global __vt__7ActMine
@@ -25269,11 +25269,11 @@ __vt__7ActMine:
 	.4byte getInfo__6ActionFPc
 	.4byte animationKeyUpdated__7ActMineFR16PaniAnimKeyEvent
 	.4byte __RTTI__7ActMine
-	.4byte 0xffffffd8
+	.4byte 0xFFFFFFD8
 	.4byte lbl_800B98C4
-	.4byte 0x496e7465
+	.4byte 0x496E7465
 	.4byte 0x72616374
-	.4byte 0x696f6e00
+	.4byte 0x696F6E00
 	.4byte 0
 	.4byte 0
 	.4byte 0
@@ -25300,34 +25300,34 @@ __vt__7ActMine:
 	.4byte lbl_800A79D0
 	.4byte lbl_800A79BC
 	.4byte 0
-	.4byte 0x6169466f
-	.4byte 0x726d6174
-	.4byte 0x696f6e2e
+	.4byte 0x6169466F
+	.4byte 0x726D6174
+	.4byte 0x696F6E2E
 	.4byte 0x63707000
-	.4byte 0x6169466f
-	.4byte 0x726d6174
-	.4byte 0x696f6e00
+	.4byte 0x6169466F
+	.4byte 0x726D6174
+	.4byte 0x696F6E00
 	.4byte 0x41637446
-	.4byte 0x6f726d61
-	.4byte 0x74696f6e
+	.4byte 0x6F726D61
+	.4byte 0x74696F6E
 	.4byte 0
-	.4byte 0x50616e69
-	.4byte 0x416e696d
-	.4byte 0x4b65794c
+	.4byte 0x50616E69
+	.4byte 0x416E696D
+	.4byte 0x4B65794C
 	.4byte 0x69737465
-	.4byte 0x6e657200
+	.4byte 0x6E657200
 	.4byte 0x52656365
 	.4byte 0x69766572
-	.4byte 0x3c50696b
-	.4byte 0x693e0000
-	.4byte 0x803e043c
+	.4byte 0x3C50696B
+	.4byte 0x693E0000
+	.4byte 0x803E043C
 	.4byte 0
 	.4byte 0
-	.4byte 0x803e0434
+	.4byte 0x803E0434
 	.4byte 0x14
-	.4byte 0x803e043c
+	.4byte 0x803E043C
 	.4byte 0
-	.4byte 0x803e044c
+	.4byte 0x803E044C
 	.4byte 0
 	.4byte 0
 .global __vt__12ActFormation
@@ -25358,7 +25358,7 @@ __vt__12ActFormation:
 	.4byte resumable__6ActionFv
 	.4byte getInfo__6ActionFPc
 	.4byte __RTTI__12ActFormation
-	.4byte 0xffffffec
+	.4byte 0xFFFFFFEC
 	.4byte lbl_800BA5F8
 	.4byte animationKeyUpdated__12ActFormationFR16PaniAnimKeyEvent
 	.4byte 0
@@ -25377,7 +25377,7 @@ __vt__12ActFormation:
 	.4byte lbl_800A79BC
 	.4byte 0
 	.4byte 0x61694672
-	.4byte 0x65652e63
+	.4byte 0x65652E63
 	.4byte 0x70700000
 .global motions
 motions:
@@ -25433,7 +25433,7 @@ __vt__7ActFree:
 	.4byte getInfo__6ActionFPc
 	.4byte animationKeyUpdated__7ActFreeFR16PaniAnimKeyEvent
 	.4byte __RTTI__7ActFree
-	.4byte 0xffffffb8
+	.4byte 0xFFFFFFB8
 	.4byte lbl_800BAF54
 	.4byte 0
 	.4byte 0
@@ -25450,19 +25450,19 @@ __vt__7ActFree:
 	.4byte lbl_800A79D0
 	.4byte lbl_800A79BC
 	.4byte 0
-	.4byte 0x6169476f
-	.4byte 0x746f2e63
+	.4byte 0x6169476F
+	.4byte 0x746F2E63
 	.4byte 0x70700000
 	.4byte 0x52656365
 	.4byte 0x69766572
-	.4byte 0x3c50696b
-	.4byte 0x693e0000
-	.4byte 0x803e04d0
+	.4byte 0x3C50696B
+	.4byte 0x693E0000
+	.4byte 0x803E04D0
 	.4byte 0
 	.4byte 0
-	.4byte 0x803e04d0
+	.4byte 0x803E04D0
 	.4byte 0
-	.4byte 0x803e04e0
+	.4byte 0x803E04E0
 	.4byte 0
 	.4byte 0
 .global __vt__7ActGoto
@@ -25493,17 +25493,17 @@ __vt__7ActGoto:
 	.4byte resumable__6ActionFv
 	.4byte getInfo__6ActionFPc
 	.4byte 0x41637447
-	.4byte 0x6f746f3a
-	.4byte 0x3a496e69
-	.4byte 0x7469616c
+	.4byte 0x6F746F3A
+	.4byte 0x3A496E69
+	.4byte 0x7469616C
 	.4byte 0x69736572
 	.4byte 0
 	.4byte 0x41637469
-	.4byte 0x6f6e3a3a
-	.4byte 0x496e6974
-	.4byte 0x69616c69
+	.4byte 0x6F6E3A3A
+	.4byte 0x496E6974
+	.4byte 0x69616C69
 	.4byte 0x73657200
-	.4byte 0x803e04f0
+	.4byte 0x803E04F0
 	.4byte 0
 	.4byte 0
 .global __vt__Q27ActGoto11Initialiser
@@ -25523,21 +25523,21 @@ __vt__Q27ActGoto11Initialiser:
 	.4byte lbl_800A79D0
 	.4byte lbl_800A79BC
 	.4byte 0x61694775
-	.4byte 0x6172642e
+	.4byte 0x6172642E
 	.4byte 0x63707000
 	.4byte 0x41637447
 	.4byte 0x75617264
 	.4byte 0
 	.4byte 0x52656365
 	.4byte 0x69766572
-	.4byte 0x3c50696b
-	.4byte 0x693e0000
-	.4byte 0x803e052c
+	.4byte 0x3C50696B
+	.4byte 0x693E0000
+	.4byte 0x803E052C
 	.4byte 0
 	.4byte 0
-	.4byte 0x803e052c
+	.4byte 0x803E052C
 	.4byte 0
-	.4byte 0x803e053c
+	.4byte 0x803E053C
 	.4byte 0
 	.4byte 0
 .global __vt__8ActGuard
@@ -25579,10 +25579,10 @@ __vt__8ActGuard:
 	.4byte lbl_800A79D0
 	.4byte lbl_800A79BC
 	.4byte 0x61695069
-	.4byte 0x636b2e63
+	.4byte 0x636B2E63
 	.4byte 0x70700000
-	.4byte 0x5069636b
-	.4byte 0x4974656d
+	.4byte 0x5069636B
+	.4byte 0x4974656D
 	.4byte 0
 .global lbl_802B6D78
 lbl_802B6D78:
@@ -25654,27 +25654,27 @@ __vt__9ActFlower:
 	.4byte getInfo__6ActionFPc
 	.4byte animationKeyUpdated__9ActFlowerFR16PaniAnimKeyEvent
 	.4byte __RTTI__9ActFlower
-	.4byte 0xffffffe0
+	.4byte 0xFFFFFFE0
 	.4byte lbl_800BD350
 	.4byte 0
 	.4byte 0
 	.4byte 0
 	.4byte 0x41637450
-	.4byte 0x69636b49
-	.4byte 0x74656d00
-	.4byte 0x416e6441
-	.4byte 0x6374696f
-	.4byte 0x6e000000
-	.4byte 0x803e0570
+	.4byte 0x69636B49
+	.4byte 0x74656D00
+	.4byte 0x416E6441
+	.4byte 0x6374696F
+	.4byte 0x6E000000
+	.4byte 0x803E0570
 	.4byte 0
-	.4byte 0x803e0580
+	.4byte 0x803E0580
 	.4byte 0
 	.4byte 0
-	.4byte 0x803e0570
+	.4byte 0x803E0570
 	.4byte 0
-	.4byte 0x803e0580
+	.4byte 0x803E0580
 	.4byte 0
-	.4byte 0x803e0590
+	.4byte 0x803E0590
 	.4byte 0
 	.4byte 0
 .global __vt__11ActPickItem
@@ -25717,37 +25717,37 @@ __vt__11ActPickItem:
 	.4byte lbl_800A79BC
 	.4byte 0
 	.4byte 0x61695069
-	.4byte 0x636b4372
+	.4byte 0x636B4372
 	.4byte 0x65617475
-	.4byte 0x72652e63
+	.4byte 0x72652E63
 	.4byte 0x70700000
-	.4byte 0x7069636b
+	.4byte 0x7069636B
 	.4byte 0x43726561
 	.4byte 0x74757265
-	.4byte 0xa000000
+	.4byte 0xA000000
 	.4byte 0x41637444
-	.4byte 0x656c6976
+	.4byte 0x656C6976
 	.4byte 0x65720000
 	.4byte 0x52656365
 	.4byte 0x69766572
-	.4byte 0x3c50696b
-	.4byte 0x693e0000
-	.4byte 0x803e05a0
+	.4byte 0x3C50696B
+	.4byte 0x693E0000
+	.4byte 0x803E05A0
 	.4byte 0
 	.4byte 0
-	.4byte 0x416e6441
-	.4byte 0x6374696f
-	.4byte 0x6e000000
-	.4byte 0x803e05a0
+	.4byte 0x416E6441
+	.4byte 0x6374696F
+	.4byte 0x6E000000
+	.4byte 0x803E05A0
 	.4byte 0
-	.4byte 0x803e05b0
+	.4byte 0x803E05B0
 	.4byte 0
 	.4byte 0
-	.4byte 0x803e05a0
+	.4byte 0x803E05A0
 	.4byte 0
-	.4byte 0x803e05b0
+	.4byte 0x803E05B0
 	.4byte 0
-	.4byte 0x803e05b8
+	.4byte 0x803E05B8
 	.4byte 0
 	.4byte 0
 .global __vt__10ActDeliver
@@ -25778,17 +25778,17 @@ __vt__10ActDeliver:
 	.4byte resumable__6ActionFv
 	.4byte getInfo__6ActionFPc
 	.4byte 0x41637444
-	.4byte 0x656c6976
-	.4byte 0x65723a3a
-	.4byte 0x496e6974
-	.4byte 0x69616c69
+	.4byte 0x656C6976
+	.4byte 0x65723A3A
+	.4byte 0x496E6974
+	.4byte 0x69616C69
 	.4byte 0x73657200
 	.4byte 0x41637469
-	.4byte 0x6f6e3a3a
-	.4byte 0x496e6974
-	.4byte 0x69616c69
+	.4byte 0x6F6E3A3A
+	.4byte 0x496E6974
+	.4byte 0x69616C69
 	.4byte 0x73657200
-	.4byte 0x803e05c8
+	.4byte 0x803E05C8
 	.4byte 0
 	.4byte 0
 .global __vt__Q210ActDeliver11Initialiser
@@ -25798,18 +25798,18 @@ __vt__Q210ActDeliver11Initialiser:
 	.4byte initialise__Q210ActDeliver11InitialiserFP6Action
 .global __vt__Q26Action11Initialiser
 __vt__Q26Action11Initialiser:
-	.4byte 0x803e05c8
+	.4byte 0x803E05C8
 	.4byte 0
 	.4byte initialise__Q26Action11InitialiserFP6Action
 	.4byte 0x41637450
-	.4byte 0x69636b43
+	.4byte 0x69636B43
 	.4byte 0x72656174
 	.4byte 0x75726500
-	.4byte 0x803e05a0
+	.4byte 0x803E05A0
 	.4byte 0
-	.4byte 0x803e05b0
+	.4byte 0x803E05B0
 	.4byte 0
-	.4byte 0x803e05b8
+	.4byte 0x803E05B8
 	.4byte 0
 	.4byte 0
 .global __vt__15ActPickCreature
@@ -25851,15 +25851,15 @@ __vt__15ActPickCreature:
 	.4byte lbl_800A79D0
 	.4byte lbl_800A79BC
 	.4byte 0x61695075
-	.4byte 0x6c6c6f75
-	.4byte 0x742e6370
+	.4byte 0x6C6C6F75
+	.4byte 0x742E6370
 	.4byte 0x70000000
 	.4byte 0x61695075
-	.4byte 0x6c6c6f75
+	.4byte 0x6C6C6F75
 	.4byte 0x74000000
-	.4byte 0x496e7465
+	.4byte 0x496E7465
 	.4byte 0x72616374
-	.4byte 0x696f6e00
+	.4byte 0x696F6E00
 	.4byte 0
 	.4byte 0
 	.4byte 0
@@ -25872,20 +25872,20 @@ __vt__15ActPickCreature:
 	.4byte 0
 	.4byte 0
 	.4byte 0x41637450
-	.4byte 0x756c6c6f
+	.4byte 0x756C6C6F
 	.4byte 0x75744372
 	.4byte 0x65617475
 	.4byte 0x72650000
 	.4byte 0x52656365
 	.4byte 0x69766572
-	.4byte 0x3c50696b
-	.4byte 0x693e0000
-	.4byte 0x803e0610
+	.4byte 0x3C50696B
+	.4byte 0x693E0000
+	.4byte 0x803E0610
 	.4byte 0
 	.4byte 0
-	.4byte 0x803e0610
+	.4byte 0x803E0610
 	.4byte 0
-	.4byte 0x803e0620
+	.4byte 0x803E0620
 	.4byte 0
 	.4byte 0
 .global __vt__18ActPulloutCreature
@@ -25916,33 +25916,33 @@ __vt__18ActPulloutCreature:
 	.4byte resumable__6ActionFv
 	.4byte getInfo__6ActionFPc
 	.4byte __RTTI__18ActPulloutCreature
-	.4byte 0xffffffec
+	.4byte 0xFFFFFFEC
 	.4byte lbl_800BDFE8
 	.4byte animationKeyUpdated__18ActPulloutCreatureFR16PaniAnimKeyEvent
-	.4byte 0x50616e69
-	.4byte 0x416e696d
-	.4byte 0x4b65794c
+	.4byte 0x50616E69
+	.4byte 0x416E696D
+	.4byte 0x4B65794C
 	.4byte 0x69737465
-	.4byte 0x6e657200
+	.4byte 0x6E657200
 	.4byte 0
 	.4byte 0
 	.4byte 0
 	.4byte 0x41637450
-	.4byte 0x756c6c6f
+	.4byte 0x756C6C6F
 	.4byte 0x75740000
-	.4byte 0x416e6441
-	.4byte 0x6374696f
-	.4byte 0x6e000000
-	.4byte 0x803e0610
+	.4byte 0x416E6441
+	.4byte 0x6374696F
+	.4byte 0x6E000000
+	.4byte 0x803E0610
 	.4byte 0
-	.4byte 0x803e0620
+	.4byte 0x803E0620
 	.4byte 0
 	.4byte 0
-	.4byte 0x803e0610
+	.4byte 0x803E0610
 	.4byte 0
-	.4byte 0x803e0620
+	.4byte 0x803E0620
 	.4byte 0
-	.4byte 0x803e0630
+	.4byte 0x803E0630
 	.4byte 0
 	.4byte 0
 .global __vt__10ActPullout
@@ -25985,7 +25985,7 @@ __vt__10ActPullout:
 	.4byte lbl_800A79BC
 	.4byte 0
 	.4byte 0x61695075
-	.4byte 0x73682e63
+	.4byte 0x73682E63
 	.4byte 0x70700000
 .global lbl_802B737C
 lbl_802B737C:
@@ -26064,7 +26064,7 @@ __vt__7ActPush:
 	.4byte getInfo__6ActionFPc
 	.4byte animationKeyUpdated__7ActPushFR16PaniAnimKeyEvent
 	.4byte __RTTI__7ActPush
-	.4byte 0xffffffb8
+	.4byte 0xFFFFFFB8
 	.4byte lbl_800BE9E0
 	.4byte 0
 	.4byte 0
@@ -26081,24 +26081,24 @@ __vt__7ActPush:
 	.4byte lbl_800A79D0
 	.4byte lbl_800A79BC
 	.4byte 0x61695075
-	.4byte 0x742e6370
+	.4byte 0x742E6370
 	.4byte 0x70000000
-	.4byte 0x5069636b
-	.4byte 0x4974656d
+	.4byte 0x5069636B
+	.4byte 0x4974656D
 	.4byte 0
 	.4byte 0x41637450
 	.4byte 0x75744974
-	.4byte 0x656d0000
+	.4byte 0x656D0000
 	.4byte 0x52656365
 	.4byte 0x69766572
-	.4byte 0x3c50696b
-	.4byte 0x693e0000
-	.4byte 0x803e06d8
+	.4byte 0x3C50696B
+	.4byte 0x693E0000
+	.4byte 0x803E06D8
 	.4byte 0
 	.4byte 0
-	.4byte 0x803e06d8
+	.4byte 0x803E06D8
 	.4byte 0
-	.4byte 0x803e06e8
+	.4byte 0x803E06E8
 	.4byte 0
 	.4byte 0
 .global __vt__10ActPutItem
@@ -26129,18 +26129,18 @@ __vt__10ActPutItem:
 	.4byte resumable__6ActionFv
 	.4byte getInfo__6ActionFPc
 	.4byte 0x41637450
-	.4byte 0x7574426f
-	.4byte 0x6d620000
-	.4byte 0x50616e69
-	.4byte 0x416e696d
-	.4byte 0x4b65794c
+	.4byte 0x7574426F
+	.4byte 0x6D620000
+	.4byte 0x50616E69
+	.4byte 0x416E696D
+	.4byte 0x4B65794C
 	.4byte 0x69737465
-	.4byte 0x6e657200
-	.4byte 0x803e06f8
+	.4byte 0x6E657200
+	.4byte 0x803E06F8
 	.4byte 0x28
-	.4byte 0x803e06d8
+	.4byte 0x803E06D8
 	.4byte 0
-	.4byte 0x803e06e8
+	.4byte 0x803E06E8
 	.4byte 0
 	.4byte 0
 .global __vt__10ActPutBomb
@@ -26172,11 +26172,11 @@ __vt__10ActPutBomb:
 	.4byte getInfo__6ActionFPc
 	.4byte animationKeyUpdated__10ActPutBombFR16PaniAnimKeyEvent
 	.4byte __RTTI__10ActPutBomb
-	.4byte 0xffffffd8
+	.4byte 0xFFFFFFD8
 	.4byte lbl_800C09FC
-	.4byte 0x496e7465
+	.4byte 0x496E7465
 	.4byte 0x72616374
-	.4byte 0x696f6e00
+	.4byte 0x696F6E00
 	.4byte 0
 	.4byte 0
 	.4byte 0
@@ -26203,16 +26203,16 @@ __vt__10ActPutBomb:
 	.4byte lbl_800A79D0
 	.4byte lbl_800A79BC
 	.4byte 0x61695261
-	.4byte 0x6e646f6d
-	.4byte 0x426f6964
-	.4byte 0x2e637070
+	.4byte 0x6E646F6D
+	.4byte 0x426F6964
+	.4byte 0x2E637070
 	.4byte 0
 	.4byte 0x61695261
-	.4byte 0x6e646f6d
-	.4byte 0x426f6964
+	.4byte 0x6E646F6D
+	.4byte 0x426F6964
 	.4byte 0
 	.4byte 0x83898393
-	.4byte 0x835f8380
+	.4byte 0x835F8380
 	.4byte 0
 .global stateName
 stateName:
@@ -26263,18 +26263,18 @@ __vt__13ActRandomBoid:
 	.4byte resumable__6ActionFv
 	.4byte getInfo__13ActRandomBoidFPc
 	.4byte 0x41637452
-	.4byte 0x616e646f
-	.4byte 0x6d426f69
-	.4byte 0x643a3a49
-	.4byte 0x6e697469
-	.4byte 0x616c6973
+	.4byte 0x616E646F
+	.4byte 0x6D426F69
+	.4byte 0x643A3A49
+	.4byte 0x6E697469
+	.4byte 0x616C6973
 	.4byte 0x65720000
 	.4byte 0x41637469
-	.4byte 0x6f6e3a3a
-	.4byte 0x496e6974
-	.4byte 0x69616c69
+	.4byte 0x6F6E3A3A
+	.4byte 0x496E6974
+	.4byte 0x69616C69
 	.4byte 0x73657200
-	.4byte 0x803e078c
+	.4byte 0x803E078C
 	.4byte 0
 	.4byte 0
 .global __vt__Q213ActRandomBoid11Initialiser
@@ -26282,22 +26282,22 @@ __vt__Q213ActRandomBoid11Initialiser:
 	.4byte __RTTI__Q213ActRandomBoid11Initialiser
 	.4byte 0
 	.4byte initialise__Q213ActRandomBoid11InitialiserFP6Action
-	.4byte 0x50616e69
-	.4byte 0x416e696d
-	.4byte 0x4b65794c
+	.4byte 0x50616E69
+	.4byte 0x416E696D
+	.4byte 0x4B65794C
 	.4byte 0x69737465
-	.4byte 0x6e657200
+	.4byte 0x6E657200
 	.4byte 0
 	.4byte 0
 	.4byte 0
 	.4byte 0x41637452
-	.4byte 0x616e646f
-	.4byte 0x6d426f69
-	.4byte 0x643a3a41
-	.4byte 0x6e696d4c
+	.4byte 0x616E646F
+	.4byte 0x6D426F69
+	.4byte 0x643A3A41
+	.4byte 0x6E696D4C
 	.4byte 0x69737465
-	.4byte 0x6e657200
-	.4byte 0x803e079c
+	.4byte 0x6E657200
+	.4byte 0x803E079C
 	.4byte 0
 	.4byte 0
 .global __vt__Q213ActRandomBoid12AnimListener
@@ -26318,7 +26318,7 @@ __vt__Q213ActRandomBoid12AnimListener:
 	.4byte lbl_800A79BC
 	.4byte 0x61695265
 	.4byte 0x73637565
-	.4byte 0x2e637070
+	.4byte 0x2E637070
 	.4byte 0
 	.4byte 0x61695265
 	.4byte 0x73637565
@@ -26326,23 +26326,23 @@ __vt__Q213ActRandomBoid12AnimListener:
 	.4byte 0x41637452
 	.4byte 0x65736375
 	.4byte 0x65000000
-	.4byte 0x50616e69
-	.4byte 0x416e696d
-	.4byte 0x4b65794c
+	.4byte 0x50616E69
+	.4byte 0x416E696D
+	.4byte 0x4B65794C
 	.4byte 0x69737465
-	.4byte 0x6e657200
+	.4byte 0x6E657200
 	.4byte 0x52656365
 	.4byte 0x69766572
-	.4byte 0x3c50696b
-	.4byte 0x693e0000
-	.4byte 0x803e07ec
+	.4byte 0x3C50696B
+	.4byte 0x693E0000
+	.4byte 0x803E07EC
 	.4byte 0
 	.4byte 0
-	.4byte 0x803e07e4
+	.4byte 0x803E07E4
 	.4byte 0x34
-	.4byte 0x803e07ec
+	.4byte 0x803E07EC
 	.4byte 0
-	.4byte 0x803e07fc
+	.4byte 0x803E07FC
 	.4byte 0
 	.4byte 0
 .global __vt__9ActRescue
@@ -26374,7 +26374,7 @@ __vt__9ActRescue:
 	.4byte getInfo__6ActionFPc
 	.4byte animationKeyUpdated__9ActRescueFR16PaniAnimKeyEvent
 	.4byte __RTTI__9ActRescue
-	.4byte 0xffffffcc
+	.4byte 0xFFFFFFCC
 	.4byte lbl_800C1E10
 	.4byte 0
 	.4byte 0
@@ -26390,19 +26390,19 @@ __vt__9ActRescue:
 	.4byte lbl_800A791C
 	.4byte lbl_800A79D0
 	.4byte lbl_800A79BC
-	.4byte 0x6169526f
-	.4byte 0x70652e63
+	.4byte 0x6169526F
+	.4byte 0x70652E63
 	.4byte 0x70700000
 	.4byte 0x52656365
 	.4byte 0x69766572
-	.4byte 0x3c50696b
-	.4byte 0x693e0000
-	.4byte 0x803e0830
+	.4byte 0x3C50696B
+	.4byte 0x693E0000
+	.4byte 0x803E0830
 	.4byte 0
 	.4byte 0
-	.4byte 0x803e0830
+	.4byte 0x803E0830
 	.4byte 0
-	.4byte 0x803e0840
+	.4byte 0x803E0840
 	.4byte 0
 	.4byte 0
 .global __vt__7ActRope
@@ -26445,30 +26445,30 @@ __vt__7ActRope:
 	.4byte lbl_800A79BC
 	.4byte 0
 	.4byte 0x61695368
-	.4byte 0x6f6f742e
+	.4byte 0x6F6F742E
 	.4byte 0x63707000
 	.4byte 0x41637453
-	.4byte 0x686f6f74
+	.4byte 0x686F6F74
 	.4byte 0x43726561
 	.4byte 0x74757265
 	.4byte 0
-	.4byte 0x50616e69
-	.4byte 0x416e696d
-	.4byte 0x4b65794c
+	.4byte 0x50616E69
+	.4byte 0x416E696D
+	.4byte 0x4B65794C
 	.4byte 0x69737465
-	.4byte 0x6e657200
+	.4byte 0x6E657200
 	.4byte 0x52656365
 	.4byte 0x69766572
-	.4byte 0x3c50696b
-	.4byte 0x693e0000
-	.4byte 0x803e0874
+	.4byte 0x3C50696B
+	.4byte 0x693E0000
+	.4byte 0x803E0874
 	.4byte 0
 	.4byte 0
-	.4byte 0x803e086c
+	.4byte 0x803E086C
 	.4byte 0x14
-	.4byte 0x803e0874
+	.4byte 0x803E0874
 	.4byte 0
-	.4byte 0x803e0884
+	.4byte 0x803E0884
 	.4byte 0
 	.4byte 0
 .global __vt__16ActShootCreature
@@ -26499,28 +26499,28 @@ __vt__16ActShootCreature:
 	.4byte resumable__6ActionFv
 	.4byte getInfo__6ActionFPc
 	.4byte __RTTI__16ActShootCreature
-	.4byte 0xffffffec
+	.4byte 0xFFFFFFEC
 	.4byte lbl_800C2C4C
 	.4byte animationKeyUpdated__16ActShootCreatureFR16PaniAnimKeyEvent
 	.4byte 0
 	.4byte 0
 	.4byte 0
 	.4byte 0x41637453
-	.4byte 0x686f6f74
+	.4byte 0x686F6F74
 	.4byte 0
-	.4byte 0x416e6441
-	.4byte 0x6374696f
-	.4byte 0x6e000000
-	.4byte 0x803e0874
+	.4byte 0x416E6441
+	.4byte 0x6374696F
+	.4byte 0x6E000000
+	.4byte 0x803E0874
 	.4byte 0
-	.4byte 0x803e0884
+	.4byte 0x803E0884
 	.4byte 0
 	.4byte 0
-	.4byte 0x803e0874
+	.4byte 0x803E0874
 	.4byte 0
-	.4byte 0x803e0884
+	.4byte 0x803E0884
 	.4byte 0
-	.4byte 0x803e0894
+	.4byte 0x803E0894
 	.4byte 0
 	.4byte 0
 .global __vt__8ActShoot
@@ -26551,9 +26551,9 @@ __vt__8ActShoot:
 	.4byte resumable__6ActionFv
 	.4byte getInfo__6ActionFPc
 	.4byte 0x41637469
-	.4byte 0x6f6e3a3a
-	.4byte 0x496e6974
-	.4byte 0x69616c69
+	.4byte 0x6F6E3A3A
+	.4byte 0x496E6974
+	.4byte 0x69616C69
 	.4byte 0x73657200
 	.4byte 0
 	.4byte 0
@@ -26571,7 +26571,7 @@ __vt__8ActShoot:
 	.4byte lbl_800A79BC
 	.4byte 0
 	.4byte 0x61695761
-	.4byte 0x7463682e
+	.4byte 0x7463682E
 	.4byte 0x63707000
 .global lbl_802B7C44
 lbl_802B7C44:
@@ -26622,16 +26622,16 @@ __vt__8ActWatch:
 	.4byte getInfo__8ActWatchFPc
 	.4byte 0x41637457
 	.4byte 0x61746368
-	.4byte 0x3a3a496e
+	.4byte 0x3A3A496E
 	.4byte 0x69746961
-	.4byte 0x6c697365
+	.4byte 0x6C697365
 	.4byte 0x72000000
 	.4byte 0x41637469
-	.4byte 0x6f6e3a3a
-	.4byte 0x496e6974
-	.4byte 0x69616c69
+	.4byte 0x6F6E3A3A
+	.4byte 0x496E6974
+	.4byte 0x69616C69
 	.4byte 0x73657200
-	.4byte 0x803e08dc
+	.4byte 0x803E08DC
 	.4byte 0
 	.4byte 0
 .global __vt__Q28ActWatch11Initialiser
@@ -26639,21 +26639,21 @@ __vt__Q28ActWatch11Initialiser:
 	.4byte __RTTI__Q28ActWatch11Initialiser
 	.4byte 0
 	.4byte initialise__Q28ActWatch11InitialiserFP6Action
-	.4byte 0x50616e69
-	.4byte 0x416e696d
-	.4byte 0x4b65794c
+	.4byte 0x50616E69
+	.4byte 0x416E696D
+	.4byte 0x4B65794C
 	.4byte 0x69737465
-	.4byte 0x6e657200
+	.4byte 0x6E657200
 	.4byte 0
 	.4byte 0
 	.4byte 0
 	.4byte 0x41637457
 	.4byte 0x61746368
-	.4byte 0x3a3a416e
-	.4byte 0x696d4c69
-	.4byte 0x7374656e
+	.4byte 0x3A3A416E
+	.4byte 0x696D4C69
+	.4byte 0x7374656E
 	.4byte 0x65720000
-	.4byte 0x803e08ec
+	.4byte 0x803E08EC
 	.4byte 0
 	.4byte 0
 .global __vt__Q28ActWatch12AnimListener
@@ -26673,18 +26673,18 @@ __vt__Q28ActWatch12AnimListener:
 	.4byte lbl_800A79D0
 	.4byte lbl_800A79BC
 	.4byte 0x61695765
-	.4byte 0x65642e63
+	.4byte 0x65642E63
 	.4byte 0x70700000
 	.4byte 0x52656365
 	.4byte 0x69766572
-	.4byte 0x3c50696b
-	.4byte 0x693e0000
-	.4byte 0x803e0944
+	.4byte 0x3C50696B
+	.4byte 0x693E0000
+	.4byte 0x803E0944
 	.4byte 0
 	.4byte 0
-	.4byte 0x803e0944
+	.4byte 0x803E0944
 	.4byte 0
-	.4byte 0x803e0954
+	.4byte 0x803E0954
 	.4byte 0
 	.4byte 0
 .global __vt__7ActWeed
@@ -26715,14 +26715,14 @@ __vt__7ActWeed:
 	.4byte resumable__6ActionFv
 	.4byte getInfo__6ActionFPc
 	.4byte __RTTI__7ActWeed
-	.4byte 0xffffffec
+	.4byte 0xFFFFFFEC
 	.4byte lbl_800C3ADC
 	.4byte animationKeyUpdated__7ActWeedFR16PaniAnimKeyEvent
-	.4byte 0x50616e69
-	.4byte 0x416e696d
-	.4byte 0x4b65794c
+	.4byte 0x50616E69
+	.4byte 0x416E696D
+	.4byte 0x4B65794C
 	.4byte 0x69737465
-	.4byte 0x6e657200
+	.4byte 0x6E657200
 	.4byte 0
 	.4byte 0
 	.4byte 0
@@ -26844,22 +26844,22 @@ __vt__9TopAction:
 	.4byte restart__9TopActionFv
 	.4byte resumable__9TopActionFv
 	.4byte getInfo__9TopActionFPc
-	.4byte 0x50616e69
-	.4byte 0x416e696d
-	.4byte 0x4b65794c
+	.4byte 0x50616E69
+	.4byte 0x416E696D
+	.4byte 0x4B65794C
 	.4byte 0x69737465
-	.4byte 0x6e657200
+	.4byte 0x6E657200
 	.4byte 0
 	.4byte 0
 	.4byte 0
-	.4byte 0x546f7041
-	.4byte 0x6374696f
-	.4byte 0x6e3a3a4d
-	.4byte 0x6f74696f
-	.4byte 0x6e4c6973
-	.4byte 0x74656e65
+	.4byte 0x546F7041
+	.4byte 0x6374696F
+	.4byte 0x6E3A3A4D
+	.4byte 0x6F74696F
+	.4byte 0x6E4C6973
+	.4byte 0x74656E65
 	.4byte 0x72000000
-	.4byte 0x803e09c8
+	.4byte 0x803E09C8
 	.4byte 0
 	.4byte 0
 .global __vt__Q29TopAction14MotionListener
@@ -26867,12 +26867,12 @@ __vt__Q29TopAction14MotionListener:
 	.4byte __RTTI__Q29TopAction14MotionListener
 	.4byte 0
 	.4byte animationKeyUpdated__Q29TopAction14MotionListenerFR16PaniAnimKeyEvent
-	.4byte 0x4f724163
-	.4byte 0x74696f6e
+	.4byte 0x4F724163
+	.4byte 0x74696F6E
 	.4byte 0
-	.4byte 0x803e09a8
+	.4byte 0x803E09A8
 	.4byte 0
-	.4byte 0x803e09b8
+	.4byte 0x803E09B8
 	.4byte 0
 	.4byte 0
 .global __vt__8OrAction
@@ -26902,17 +26902,17 @@ __vt__8OrAction:
 	.4byte restart__6ActionFv
 	.4byte resumable__6ActionFv
 	.4byte getInfo__6ActionFPc
-	.4byte 0x416e6441
-	.4byte 0x6374696f
-	.4byte 0x6e000000
-	.4byte 0x803e09a8
+	.4byte 0x416E6441
+	.4byte 0x6374696F
+	.4byte 0x6E000000
+	.4byte 0x803E09A8
 	.4byte 0
-	.4byte 0x803e09b8
+	.4byte 0x803E09B8
 	.4byte 0
 	.4byte 0
 .global __vt__9AndAction
 __vt__9AndAction:
-	.4byte 0x803e09e0
+	.4byte 0x803E09E0
 	.4byte 0
 	.4byte "procMsg__15Receiver<4Piki>FP4PikiP3Msg"
 	.4byte "procBounceMsg__15Receiver<4Piki>FP4PikiP9MsgBounce"
@@ -26939,7 +26939,7 @@ __vt__9AndAction:
 	.4byte getInfo__6ActionFPc
 .global __vt__6Action
 __vt__6Action:
-	.4byte 0x803e09b8
+	.4byte 0x803E09B8
 	.4byte 0
 	.4byte "procMsg__15Receiver<4Piki>FP4PikiP3Msg"
 	.4byte "procBounceMsg__15Receiver<4Piki>FP4PikiP9MsgBounce"
@@ -26966,7 +26966,7 @@ __vt__6Action:
 	.4byte getInfo__6ActionFPc
 .global "__vt__15Receiver<4Piki>"
 "__vt__15Receiver<4Piki>":
-	.4byte 0x803e09a8
+	.4byte 0x803E09A8
 	.4byte 0
 	.4byte "procMsg__15Receiver<4Piki>FP4PikiP3Msg"
 	.4byte "procBounceMsg__15Receiver<4Piki>FP4PikiP9MsgBounce"
@@ -26980,8 +26980,8 @@ __vt__6Action:
 	.4byte "procOffWallMsg__15Receiver<4Piki>FP4PikiP10MsgOffWall"
 	.4byte "procUserMsg__15Receiver<4Piki>FP4PikiP7MsgUser"
 	.4byte "procGroundMsg__15Receiver<4Piki>FP4PikiP9MsgGround"
-	.4byte 0x70696b69
-	.4byte 0x496e662e
+	.4byte 0x70696B69
+	.4byte 0x496E662E
 	.4byte 0x63707000
 .global lbl_802B823C
 lbl_802B823C:
@@ -27028,10 +27028,10 @@ __vt__11CreatureInf:
 	.4byte loadCard__7BaseInfFR18RandomAccessStream
 	.4byte 0x43726561
 	.4byte 0x74757265
-	.4byte 0x496e664d
+	.4byte 0x496E664D
 	.4byte 0x67720000
-	.4byte 0x4d6f6e6f
-	.4byte 0x496e664d
+	.4byte 0x4D6F6E6F
+	.4byte 0x496E664D
 	.4byte 0x67720000
 	.4byte __RTTI__6InfMgr
 	.4byte 0
@@ -27051,9 +27051,9 @@ __vt__14CreatureInfMgr:
 	.4byte getFreeNum__10MonoInfMgrFv
 	.4byte getActiveNum__10MonoInfMgrFv
 	.4byte newInf__14CreatureInfMgrFv
-	.4byte 0x4250696b
-	.4byte 0x69496e66
-	.4byte 0x4d677200
+	.4byte 0x4250696B
+	.4byte 0x69496E66
+	.4byte 0x4D677200
 	.4byte __RTTI__6InfMgr
 	.4byte 0
 	.4byte __RTTI__10MonoInfMgr
@@ -27088,12 +27088,12 @@ __vt__6InfMgr:
 	.4byte 0
 	.4byte 0
 	.4byte 0
-	.4byte 0x4250696b
-	.4byte 0x69496e66
+	.4byte 0x4250696B
+	.4byte 0x69496E66
 	.4byte 0
-	.4byte 0x803e0a1c
+	.4byte 0x803E0A1C
 	.4byte 0
-	.4byte 0x803e0a24
+	.4byte 0x803E0A24
 	.4byte 0
 	.4byte __RTTI__7BaseInf
 	.4byte 0
@@ -27363,64 +27363,57 @@ _colorNames:
 	.4byte "exec__19StateMachine<4Piki>FP4Piki"
 	.4byte "procMsg__19StateMachine<4Piki>FP4PikiP3Msg"
 	.4byte "transit__19StateMachine<4Piki>FP4Pikii"
-	.4byte 0x7a656e3a
-	.4byte 0x3a43616c
-	.4byte 0x6c426163
-	.4byte 0x6b313c7a
-	.4byte 0x656e3a3a
+	.4byte 0x7A656E3A
+	.4byte 0x3A43616C
+	.4byte 0x6C426163
+	.4byte 0x6B313C7A
+	.4byte 0x656E3A3A
 	.4byte 0x70617274
-	.4byte 0x69636c65
-	.4byte 0x4d646c20
-	.4byte 0x2a3e0000
-	.4byte 0x7a656e3a
-	.4byte 0x3a43616c
-	.4byte 0x6c426163
-	.4byte 0x6b323c7a
-	.4byte 0x656e3a3a
+	.4byte 0x69636C65
+	.4byte 0x4D646C20
+	.4byte 0x2A3E0000
+	.4byte 0x7A656E3A
+	.4byte 0x3A43616C
+	.4byte 0x6C426163
+	.4byte 0x6B323C7A
+	.4byte 0x656E3A3A
 	.4byte 0x70617274
-	.4byte 0x69636c65
-	.4byte 0x47656e65
-	.4byte 0x7261746f
-	.4byte 0x72202a2c
-	.4byte 0x207a656e
-	.4byte 0x3a3a7061
+	.4byte 0x69636C65
+	.4byte 0x47656E65
+	.4byte 0x7261746F
+	.4byte 0x72202A2C
+	.4byte 0x207A656E
+	.4byte 0x3A3A7061
 	.4byte 0x72746963
-	.4byte 0x6c654d64
-	.4byte 0x6c202a3e
+	.4byte 0x6C654D64
+	.4byte 0x6C202A3E
 	.4byte 0
-	.4byte 0x7a656e3a
-	.4byte 0x3a43616c
-	.4byte 0x6c426163
-	.4byte 0x6b313c7a
-	.4byte 0x656e3a3a
+	.4byte 0x7A656E3A
+	.4byte 0x3A43616C
+	.4byte 0x6C426163
+	.4byte 0x6B313C7A
+	.4byte 0x656E3A3A
 	.4byte 0x70617274
-	.4byte 0x69636c65
-	.4byte 0x47656e65
-	.4byte 0x7261746f
-	.4byte 0x72202a3e
+	.4byte 0x69636C65
+	.4byte 0x47656E65
+	.4byte 0x7261746F
+	.4byte 0x72202A3E
 	.4byte 0
-	.4byte 0x803e0b38
+	.4byte 0x803E0B38
 	.4byte 0x8
-	.4byte 0x803e0b40
+	.4byte 0x803E0B40
 	.4byte 0x4
-	.4byte 0x803e0b48
+	.4byte 0x803E0B48
 	.4byte 0
 	.4byte 0
 	.4byte 0
 	.4byte 0
 	.4byte 0
 	.4byte 0
-	.4byte 0xfffffffc
+	.4byte 0xFFFFFFFC
 	.4byte 0
 	.4byte 0
-	.4byte 0xfffffff8
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
+	.4byte 0xFFFFFFF8
 	.4byte 0
 	.4byte 0
 	.4byte 0
@@ -27430,36 +27423,43 @@ _colorNames:
 	.4byte 0
 	.4byte 0
 	.4byte 0
-	.4byte 0x50616e69
-	.4byte 0x416e696d
-	.4byte 0x4b65794c
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0x50616E69
+	.4byte 0x416E696D
+	.4byte 0x4B65794C
 	.4byte 0x69737465
-	.4byte 0x6e657200
+	.4byte 0x6E657200
 	.4byte 0
 	.4byte 0
 	.4byte 0
-	.4byte 0x4576656e
-	.4byte 0x7454616c
-	.4byte 0x6b657200
+	.4byte 0x4576656E
+	.4byte 0x7454616C
+	.4byte 0x6B657200
 	.4byte 0x52656643
-	.4byte 0x6f756e74
-	.4byte 0x61626c65
+	.4byte 0x6F756E74
+	.4byte 0x61626C65
 	.4byte 0
 	.4byte 0x43726561
 	.4byte 0x74757265
 	.4byte 0
-	.4byte 0x803e0b60
+	.4byte 0x803E0B60
 	.4byte 0x8
-	.4byte 0x803e0b68
+	.4byte 0x803E0B68
 	.4byte 0
 	.4byte 0
-	.4byte 0x803e0b50
-	.4byte 0x2b8
-	.4byte 0x803e0b60
+	.4byte 0x803E0B50
+	.4byte 0x2B8
+	.4byte 0x803E0B60
 	.4byte 0x8
-	.4byte 0x803e0b68
+	.4byte 0x803E0B68
 	.4byte 0
-	.4byte 0x803e0b70
+	.4byte 0x803E0B70
 	.4byte 0
 	.4byte 0
 .global __vt__4Piki
@@ -27534,7 +27534,7 @@ __vt__4Piki:
 	.4byte doKill__4PikiFv
 	.4byte exitCourse__8CreatureFv
 	.4byte __RTTI__4Piki
-	.4byte 0xfffffd48
+	.4byte 0xFFFFFD48
 	.4byte lbl_800CD7FC
 	.4byte 0
 	.4byte animationKeyUpdated__4PikiFR16PaniAnimKeyEvent
@@ -27634,7 +27634,7 @@ __vt__7PikiMgr:
 	.4byte getNext__13MonoObjectMgrFi
 	.4byte isDone__13MonoObjectMgrFi
 	.4byte __RTTI__7PikiMgr
-	.4byte 0xfffffff8
+	.4byte 0xFFFFFFF8
 	.4byte getAgeNodeType__5ANodeFv
 	.4byte lbl_800CF0D8
 	.4byte lbl_800CF0E0
@@ -27661,24 +27661,13 @@ __vt__7PikiMgr:
 	.4byte kill__13MonoObjectMgrFP8Creature
 	.4byte createObject__7PikiMgrFv
 	.4byte read__7PikiMgrFR18RandomAccessStream
-	.4byte 0x5061726d
-	.4byte 0x3c696e74
-	.4byte 0x3e000000
+	.4byte 0x5061726D
+	.4byte 0x3C696E74
+	.4byte 0x3E000000
 	.4byte 0x42617365
-	.4byte 0x5061726d
+	.4byte 0x5061726D
 	.4byte 0
-	.4byte 0x803e0d28
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0x5061726d
-	.4byte 0x3c666c6f
-	.4byte 0x61743e00
-	.4byte 0x803e0d28
+	.4byte 0x803E0D28
 	.4byte 0
 	.4byte 0
 	.4byte 0
@@ -27686,14 +27675,25 @@ __vt__7PikiMgr:
 	.4byte 0
 	.4byte 0
 	.4byte 0
-	.4byte 0x50696b69
-	.4byte 0x50726f70
+	.4byte 0x5061726D
+	.4byte 0x3C666C6F
+	.4byte 0x61743E00
+	.4byte 0x803E0D28
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0x50696B69
+	.4byte 0x50726F70
 	.4byte 0
 	.4byte 0x43726561
 	.4byte 0x74757265
-	.4byte 0x50726f70
+	.4byte 0x50726F70
 	.4byte 0
-	.4byte 0x803e0d30
+	.4byte 0x803E0D30
 	.4byte 0
 	.4byte 0
 .global __vt__8PikiProp
@@ -27704,11 +27704,11 @@ __vt__8PikiProp:
 	.4byte 0
 	.4byte 0
 	.4byte 0
-	.4byte 0x70696b69
+	.4byte 0x70696B69
 	.4byte 0x53746174
-	.4byte 0x652e6370
+	.4byte 0x652E6370
 	.4byte 0x70000000
-	.4byte 0x70696b69
+	.4byte 0x70696B69
 	.4byte 0x53746174
 	.4byte 0x65000000
 .global lbl_802B8CDC
@@ -27825,11 +27825,11 @@ __vt__16PikiEmotionState:
 	.4byte useLookUpdate__9PikiStateFv
 	.4byte collideAI__9PikiStateFv
 	.4byte freeAI__9PikiStateFv
-	.4byte 0x50696b69
+	.4byte 0x50696B69
 	.4byte 0x44656164
 	.4byte 0x53746174
 	.4byte 0x65000000
-	.4byte 0x803e105c
+	.4byte 0x803E105C
 	.4byte 0
 	.4byte "__RTTI__13AState<4Piki>"
 	.4byte 0
@@ -27865,11 +27865,11 @@ __vt__13PikiDeadState:
 	.4byte useLookUpdate__13PikiDeadStateFv
 	.4byte collideAI__9PikiStateFv
 	.4byte freeAI__9PikiStateFv
-	.4byte 0x50696b69
-	.4byte 0x4479696e
+	.4byte 0x50696B69
+	.4byte 0x4479696E
 	.4byte 0x67537461
 	.4byte 0x74650000
-	.4byte 0x803e105c
+	.4byte 0x803E105C
 	.4byte 0
 	.4byte "__RTTI__13AState<4Piki>"
 	.4byte 0
@@ -27905,12 +27905,12 @@ __vt__14PikiDyingState:
 	.4byte useLookUpdate__14PikiDyingStateFv
 	.4byte collideAI__9PikiStateFv
 	.4byte freeAI__9PikiStateFv
-	.4byte 0x50696b69
+	.4byte 0x50696B69
 	.4byte 0x50726573
 	.4byte 0x73656453
 	.4byte 0x74617465
 	.4byte 0
-	.4byte 0x803e105c
+	.4byte 0x803E105C
 	.4byte 0
 	.4byte "__RTTI__13AState<4Piki>"
 	.4byte 0
@@ -27946,12 +27946,12 @@ __vt__16PikiPressedState:
 	.4byte useLookUpdate__16PikiPressedStateFv
 	.4byte collideAI__9PikiStateFv
 	.4byte freeAI__9PikiStateFv
-	.4byte 0x50696b69
-	.4byte 0x4175746f
-	.4byte 0x4e756b69
+	.4byte 0x50696B69
+	.4byte 0x4175746F
+	.4byte 0x4E756B69
 	.4byte 0x53746174
 	.4byte 0x65000000
-	.4byte 0x803e105c
+	.4byte 0x803E105C
 	.4byte 0
 	.4byte "__RTTI__13AState<4Piki>"
 	.4byte 0
@@ -27987,11 +27987,11 @@ __vt__17PikiAutoNukiState:
 	.4byte useLookUpdate__17PikiAutoNukiStateFv
 	.4byte collideAI__9PikiStateFv
 	.4byte freeAI__9PikiStateFv
-	.4byte 0x50696b69
-	.4byte 0x4e756b61
+	.4byte 0x50696B69
+	.4byte 0x4E756B61
 	.4byte 0x72655374
 	.4byte 0x61746500
-	.4byte 0x803e105c
+	.4byte 0x803E105C
 	.4byte 0
 	.4byte "__RTTI__13AState<4Piki>"
 	.4byte 0
@@ -28027,12 +28027,12 @@ __vt__15PikiNukareState:
 	.4byte useLookUpdate__15PikiNukareStateFv
 	.4byte collideAI__9PikiStateFv
 	.4byte freeAI__9PikiStateFv
-	.4byte 0x50696b69
-	.4byte 0x4e756b61
+	.4byte 0x50696B69
+	.4byte 0x4E756B61
 	.4byte 0x72655761
 	.4byte 0x69745374
 	.4byte 0x61746500
-	.4byte 0x803e105c
+	.4byte 0x803E105C
 	.4byte 0
 	.4byte "__RTTI__13AState<4Piki>"
 	.4byte 0
@@ -28068,11 +28068,11 @@ __vt__19PikiNukareWaitState:
 	.4byte useLookUpdate__19PikiNukareWaitStateFv
 	.4byte collideAI__9PikiStateFv
 	.4byte freeAI__9PikiStateFv
-	.4byte 0x50696b69
+	.4byte 0x50696B69
 	.4byte 0x42757279
 	.4byte 0x53746174
 	.4byte 0x65000000
-	.4byte 0x803e105c
+	.4byte 0x803E105C
 	.4byte 0
 	.4byte "__RTTI__13AState<4Piki>"
 	.4byte 0
@@ -28108,12 +28108,12 @@ __vt__13PikiBuryState:
 	.4byte useLookUpdate__9PikiStateFv
 	.4byte collideAI__9PikiStateFv
 	.4byte freeAI__9PikiStateFv
-	.4byte 0x50696b69
+	.4byte 0x50696B69
 	.4byte 0x50757368
-	.4byte 0x50696b69
+	.4byte 0x50696B69
 	.4byte 0x53746174
 	.4byte 0x65000000
-	.4byte 0x803e105c
+	.4byte 0x803E105C
 	.4byte 0
 	.4byte "__RTTI__13AState<4Piki>"
 	.4byte 0
@@ -28149,11 +28149,11 @@ __vt__17PikiPushPikiState:
 	.4byte useLookUpdate__9PikiStateFv
 	.4byte collideAI__9PikiStateFv
 	.4byte freeAI__9PikiStateFv
-	.4byte 0x50696b69
+	.4byte 0x50696B69
 	.4byte 0x50757368
 	.4byte 0x53746174
 	.4byte 0x65000000
-	.4byte 0x803e105c
+	.4byte 0x803E105C
 	.4byte 0
 	.4byte "__RTTI__13AState<4Piki>"
 	.4byte 0
@@ -28189,11 +28189,11 @@ __vt__13PikiPushState:
 	.4byte useLookUpdate__9PikiStateFv
 	.4byte collideAI__9PikiStateFv
 	.4byte freeAI__9PikiStateFv
-	.4byte 0x50696b69
+	.4byte 0x50696B69
 	.4byte 0x57617665
 	.4byte 0x53746174
 	.4byte 0x65000000
-	.4byte 0x803e105c
+	.4byte 0x803E105C
 	.4byte 0
 	.4byte "__RTTI__13AState<4Piki>"
 	.4byte 0
@@ -28229,11 +28229,11 @@ __vt__13PikiWaveState:
 	.4byte useLookUpdate__9PikiStateFv
 	.4byte collideAI__9PikiStateFv
 	.4byte freeAI__9PikiStateFv
-	.4byte 0x50696b69
-	.4byte 0x47726f77
+	.4byte 0x50696B69
+	.4byte 0x47726F77
 	.4byte 0x75705374
 	.4byte 0x61746500
-	.4byte 0x803e105c
+	.4byte 0x803E105C
 	.4byte 0
 	.4byte "__RTTI__13AState<4Piki>"
 	.4byte 0
@@ -28269,13 +28269,13 @@ __vt__15PikiGrowupState:
 	.4byte useLookUpdate__15PikiGrowupStateFv
 	.4byte collideAI__9PikiStateFv
 	.4byte freeAI__9PikiStateFv
-	.4byte 0x50696b69
-	.4byte 0x4b696e6f
-	.4byte 0x6b6f4368
-	.4byte 0x616e6765
+	.4byte 0x50696B69
+	.4byte 0x4B696E6F
+	.4byte 0x6B6F4368
+	.4byte 0x616E6765
 	.4byte 0x53746174
 	.4byte 0x65000000
-	.4byte 0x803e105c
+	.4byte 0x803E105C
 	.4byte 0
 	.4byte "__RTTI__13AState<4Piki>"
 	.4byte 0
@@ -28311,11 +28311,11 @@ __vt__21PikiKinokoChangeState:
 	.4byte useLookUpdate__21PikiKinokoChangeStateFv
 	.4byte collideAI__9PikiStateFv
 	.4byte freeAI__9PikiStateFv
-	.4byte 0x50696b69
-	.4byte 0x47726f77
+	.4byte 0x50696B69
+	.4byte 0x47726F77
 	.4byte 0x53746174
 	.4byte 0x65000000
-	.4byte 0x803e105c
+	.4byte 0x803E105C
 	.4byte 0
 	.4byte "__RTTI__13AState<4Piki>"
 	.4byte 0
@@ -28351,11 +28351,11 @@ __vt__13PikiGrowState:
 	.4byte useLookUpdate__13PikiGrowStateFv
 	.4byte collideAI__9PikiStateFv
 	.4byte freeAI__9PikiStateFv
-	.4byte 0x50696b69
-	.4byte 0x466c7969
-	.4byte 0x6e675374
+	.4byte 0x50696B69
+	.4byte 0x466C7969
+	.4byte 0x6E675374
 	.4byte 0x61746500
-	.4byte 0x803e105c
+	.4byte 0x803E105C
 	.4byte 0
 	.4byte "__RTTI__13AState<4Piki>"
 	.4byte 0
@@ -28391,11 +28391,11 @@ __vt__15PikiFlyingState:
 	.4byte useLookUpdate__9PikiStateFv
 	.4byte collideAI__9PikiStateFv
 	.4byte freeAI__9PikiStateFv
-	.4byte 0x50696b69
-	.4byte 0x456d6974
+	.4byte 0x50696B69
+	.4byte 0x456D6974
 	.4byte 0x53746174
 	.4byte 0x65000000
-	.4byte 0x803e105c
+	.4byte 0x803E105C
 	.4byte 0
 	.4byte "__RTTI__13AState<4Piki>"
 	.4byte 0
@@ -28431,13 +28431,13 @@ __vt__13PikiEmitState:
 	.4byte useLookUpdate__9PikiStateFv
 	.4byte collideAI__9PikiStateFv
 	.4byte freeAI__9PikiStateFv
-	.4byte 0x50696b69
+	.4byte 0x50696B69
 	.4byte 0x57617465
-	.4byte 0x7248616e
+	.4byte 0x7248616E
 	.4byte 0x67656453
 	.4byte 0x74617465
 	.4byte 0
-	.4byte 0x803e105c
+	.4byte 0x803E105C
 	.4byte 0
 	.4byte "__RTTI__13AState<4Piki>"
 	.4byte 0
@@ -28473,11 +28473,11 @@ __vt__20PikiWaterHangedState:
 	.4byte useLookUpdate__9PikiStateFv
 	.4byte collideAI__9PikiStateFv
 	.4byte freeAI__9PikiStateFv
-	.4byte 0x50696b69
-	.4byte 0x48616e67
+	.4byte 0x50696B69
+	.4byte 0x48616E67
 	.4byte 0x65645374
 	.4byte 0x61746500
-	.4byte 0x803e105c
+	.4byte 0x803E105C
 	.4byte 0
 	.4byte "__RTTI__13AState<4Piki>"
 	.4byte 0
@@ -28513,11 +28513,11 @@ __vt__15PikiHangedState:
 	.4byte useLookUpdate__9PikiStateFv
 	.4byte collideAI__9PikiStateFv
 	.4byte freeAI__9PikiStateFv
-	.4byte 0x50696b69
-	.4byte 0x476f4861
-	.4byte 0x6e675374
+	.4byte 0x50696B69
+	.4byte 0x476F4861
+	.4byte 0x6E675374
 	.4byte 0x61746500
-	.4byte 0x803e105c
+	.4byte 0x803E105C
 	.4byte 0
 	.4byte "__RTTI__13AState<4Piki>"
 	.4byte 0
@@ -28553,11 +28553,11 @@ __vt__15PikiGoHangState:
 	.4byte useLookUpdate__9PikiStateFv
 	.4byte collideAI__9PikiStateFv
 	.4byte freeAI__9PikiStateFv
-	.4byte 0x50696b69
-	.4byte 0x436c6966
+	.4byte 0x50696B69
+	.4byte 0x436C6966
 	.4byte 0x66537461
 	.4byte 0x74650000
-	.4byte 0x803e105c
+	.4byte 0x803E105C
 	.4byte 0
 	.4byte "__RTTI__13AState<4Piki>"
 	.4byte 0
@@ -28593,11 +28593,11 @@ __vt__14PikiCliffState:
 	.4byte useLookUpdate__9PikiStateFv
 	.4byte collideAI__9PikiStateFv
 	.4byte freeAI__9PikiStateFv
-	.4byte 0x50696b69
-	.4byte 0x46616c6c
+	.4byte 0x50696B69
+	.4byte 0x46616C6C
 	.4byte 0x53746174
 	.4byte 0x65000000
-	.4byte 0x803e105c
+	.4byte 0x803E105C
 	.4byte 0
 	.4byte "__RTTI__13AState<4Piki>"
 	.4byte 0
@@ -28633,12 +28633,12 @@ __vt__13PikiFallState:
 	.4byte useLookUpdate__9PikiStateFv
 	.4byte collideAI__9PikiStateFv
 	.4byte freeAI__9PikiStateFv
-	.4byte 0x50696b69
-	.4byte 0x46616c6c
-	.4byte 0x4d65636b
+	.4byte 0x50696B69
+	.4byte 0x46616C6C
+	.4byte 0x4D65636B
 	.4byte 0x53746174
 	.4byte 0x65000000
-	.4byte 0x803e105c
+	.4byte 0x803E105C
 	.4byte 0
 	.4byte "__RTTI__13AState<4Piki>"
 	.4byte 0
@@ -28674,11 +28674,11 @@ __vt__17PikiFallMeckState:
 	.4byte useLookUpdate__9PikiStateFv
 	.4byte collideAI__9PikiStateFv
 	.4byte freeAI__9PikiStateFv
-	.4byte 0x50696b69
-	.4byte 0x466c6f77
-	.4byte 0x6e537461
+	.4byte 0x50696B69
+	.4byte 0x466C6F77
+	.4byte 0x6E537461
 	.4byte 0x74650000
-	.4byte 0x803e105c
+	.4byte 0x803E105C
 	.4byte 0
 	.4byte "__RTTI__13AState<4Piki>"
 	.4byte 0
@@ -28714,11 +28714,11 @@ __vt__14PikiFlownState:
 	.4byte useLookUpdate__9PikiStateFv
 	.4byte collideAI__9PikiStateFv
 	.4byte freeAI__9PikiStateFv
-	.4byte 0x50696b69
-	.4byte 0x466c6963
-	.4byte 0x6b537461
+	.4byte 0x50696B69
+	.4byte 0x466C6963
+	.4byte 0x6B537461
 	.4byte 0x74650000
-	.4byte 0x803e105c
+	.4byte 0x803E105C
 	.4byte 0
 	.4byte "__RTTI__13AState<4Piki>"
 	.4byte 0
@@ -28754,11 +28754,11 @@ __vt__14PikiFlickState:
 	.4byte useLookUpdate__9PikiStateFv
 	.4byte collideAI__9PikiStateFv
 	.4byte freeAI__9PikiStateFv
-	.4byte 0x50696b69
-	.4byte 0x42756c6c
+	.4byte 0x50696B69
+	.4byte 0x42756C6C
 	.4byte 0x65745374
 	.4byte 0x61746500
-	.4byte 0x803e105c
+	.4byte 0x803E105C
 	.4byte 0
 	.4byte "__RTTI__13AState<4Piki>"
 	.4byte 0
@@ -28794,12 +28794,12 @@ __vt__15PikiBulletState:
 	.4byte useLookUpdate__9PikiStateFv
 	.4byte collideAI__9PikiStateFv
 	.4byte freeAI__9PikiStateFv
-	.4byte 0x50696b69
-	.4byte 0x5377616c
-	.4byte 0x6c6f7765
+	.4byte 0x50696B69
+	.4byte 0x5377616C
+	.4byte 0x6C6F7765
 	.4byte 0x64537461
 	.4byte 0x74650000
-	.4byte 0x803e105c
+	.4byte 0x803E105C
 	.4byte 0
 	.4byte "__RTTI__13AState<4Piki>"
 	.4byte 0
@@ -28835,11 +28835,11 @@ __vt__18PikiSwallowedState:
 	.4byte useLookUpdate__9PikiStateFv
 	.4byte collideAI__9PikiStateFv
 	.4byte freeAI__9PikiStateFv
-	.4byte 0x50696b69
+	.4byte 0x50696B69
 	.4byte 0x46697265
 	.4byte 0x64537461
 	.4byte 0x74650000
-	.4byte 0x803e105c
+	.4byte 0x803E105C
 	.4byte 0
 	.4byte "__RTTI__13AState<4Piki>"
 	.4byte 0
@@ -28875,11 +28875,11 @@ __vt__14PikiFiredState:
 	.4byte useLookUpdate__9PikiStateFv
 	.4byte collideAI__9PikiStateFv
 	.4byte freeAI__9PikiStateFv
-	.4byte 0x50696b69
+	.4byte 0x50696B69
 	.4byte 0x42756262
-	.4byte 0x6c655374
+	.4byte 0x6C655374
 	.4byte 0x61746500
-	.4byte 0x803e105c
+	.4byte 0x803E105C
 	.4byte 0
 	.4byte "__RTTI__13AState<4Piki>"
 	.4byte 0
@@ -28915,11 +28915,11 @@ __vt__15PikiBubbleState:
 	.4byte useLookUpdate__9PikiStateFv
 	.4byte collideAI__9PikiStateFv
 	.4byte freeAI__9PikiStateFv
-	.4byte 0x50696b69
-	.4byte 0x4b696e6f
-	.4byte 0x6b6f5374
+	.4byte 0x50696B69
+	.4byte 0x4B696E6F
+	.4byte 0x6B6F5374
 	.4byte 0x61746500
-	.4byte 0x803e105c
+	.4byte 0x803E105C
 	.4byte 0
 	.4byte "__RTTI__13AState<4Piki>"
 	.4byte 0
@@ -28955,9 +28955,9 @@ __vt__15PikiKinokoState:
 	.4byte useLookUpdate__9PikiStateFv
 	.4byte collideAI__9PikiStateFv
 	.4byte freeAI__9PikiStateFv
-	.4byte 0x496e7465
+	.4byte 0x496E7465
 	.4byte 0x72616374
-	.4byte 0x696f6e00
+	.4byte 0x696F6E00
 	.4byte 0
 	.4byte 0
 	.4byte 0
@@ -28969,11 +28969,11 @@ __vt__15PikiKinokoState:
 	.4byte 0
 	.4byte 0
 	.4byte 0
-	.4byte 0x50696b69
-	.4byte 0x44726f77
-	.4byte 0x6e537461
+	.4byte 0x50696B69
+	.4byte 0x44726F77
+	.4byte 0x6E537461
 	.4byte 0x74650000
-	.4byte 0x803e105c
+	.4byte 0x803E105C
 	.4byte 0
 	.4byte "__RTTI__13AState<4Piki>"
 	.4byte 0
@@ -29009,11 +29009,11 @@ __vt__14PikiDrownState:
 	.4byte useLookUpdate__9PikiStateFv
 	.4byte collideAI__9PikiStateFv
 	.4byte freeAI__9PikiStateFv
-	.4byte 0x50696b69
-	.4byte 0x4162736f
+	.4byte 0x50696B69
+	.4byte 0x4162736F
 	.4byte 0x72625374
 	.4byte 0x61746500
-	.4byte 0x803e105c
+	.4byte 0x803E105C
 	.4byte 0
 	.4byte "__RTTI__13AState<4Piki>"
 	.4byte 0
@@ -29049,11 +29049,11 @@ __vt__15PikiAbsorbState:
 	.4byte useLookUpdate__9PikiStateFv
 	.4byte collideAI__9PikiStateFv
 	.4byte freeAI__9PikiStateFv
-	.4byte 0x50696b69
-	.4byte 0x4e6f726d
-	.4byte 0x616c5374
+	.4byte 0x50696B69
+	.4byte 0x4E6F726D
+	.4byte 0x616C5374
 	.4byte 0x61746500
-	.4byte 0x803e105c
+	.4byte 0x803E105C
 	.4byte 0
 	.4byte "__RTTI__13AState<4Piki>"
 	.4byte 0
@@ -29089,11 +29089,11 @@ __vt__15PikiNormalState:
 	.4byte useLookUpdate__9PikiStateFv
 	.4byte collideAI__15PikiNormalStateFv
 	.4byte freeAI__15PikiNormalStateFv
-	.4byte 0x50696b69
-	.4byte 0x4c6f6f6b
+	.4byte 0x50696B69
+	.4byte 0x4C6F6F6B
 	.4byte 0x41745374
 	.4byte 0x61746500
-	.4byte 0x803e105c
+	.4byte 0x803E105C
 	.4byte 0
 	.4byte "__RTTI__13AState<4Piki>"
 	.4byte 0
@@ -29194,16 +29194,16 @@ __vt__9PikiState:
 	.4byte useLookUpdate__9PikiStateFv
 	.4byte collideAI__9PikiStateFv
 	.4byte freeAI__9PikiStateFv
-	.4byte 0x50696b69
+	.4byte 0x50696B69
 	.4byte 0x53746174
-	.4byte 0x654d6163
-	.4byte 0x68696e65
+	.4byte 0x654D6163
+	.4byte 0x68696E65
 	.4byte 0
 	.4byte 0x53746174
-	.4byte 0x654d6163
-	.4byte 0x68696e65
-	.4byte 0x3c50696b
-	.4byte 0x693e0000
+	.4byte 0x654D6163
+	.4byte 0x68696E65
+	.4byte 0x3C50696B
+	.4byte 0x693E0000
 	.4byte "__RTTI__19StateMachine<4Piki>_1"
 	.4byte 0
 	.4byte 0
@@ -29384,7 +29384,7 @@ __vt__8ViewPiki:
 	.4byte doKill__4PikiFv
 	.4byte exitCourse__8CreatureFv
 	.4byte __RTTI__8ViewPiki
-	.4byte 0xfffffd48
+	.4byte 0xFFFFFD48
 	.4byte lbl_800CD7FC
 	.4byte isKinoko__8ViewPikiFv
 	.4byte animationKeyUpdated__4PikiFR16PaniAnimKeyEvent
@@ -29392,14 +29392,14 @@ __vt__8ViewPiki:
 	.4byte changeShape__8ViewPikiFi
 	.4byte setFlower__8ViewPikiFi
 	.4byte setLeaves__8ViewPikiFi
-	.4byte 0x436e6453
-	.4byte 0x7469636b
-	.4byte 0x4d6f7574
+	.4byte 0x436E6453
+	.4byte 0x7469636B
+	.4byte 0x4D6F7574
 	.4byte 0x68000000
-	.4byte 0x436f6e64
-	.4byte 0x6974696f
-	.4byte 0x6e000000
-	.4byte 0x803e1290
+	.4byte 0x436F6E64
+	.4byte 0x6974696F
+	.4byte 0x6E000000
+	.4byte 0x803E1290
 	.4byte 0
 	.4byte 0
 .global __vt__13CndStickMouth
@@ -29407,10 +29407,10 @@ __vt__13CndStickMouth:
 	.4byte __RTTI__13CndStickMouth
 	.4byte 0
 	.4byte satisfy__13CndStickMouthFP8Creature
-	.4byte 0x436e6449
+	.4byte 0x436E6449
 	.4byte 0x73417461
 	.4byte 0x72690000
-	.4byte 0x803e1290
+	.4byte 0x803E1290
 	.4byte 0
 	.4byte 0
 .global __vt__10CndIsAtari
@@ -29418,11 +29418,11 @@ __vt__10CndIsAtari:
 	.4byte __RTTI__10CndIsAtari
 	.4byte 0
 	.4byte satisfy__10CndIsAtariFP8Creature
-	.4byte 0x436e6449
+	.4byte 0x436E6449
 	.4byte 0x73566973
-	.4byte 0x69626c65
+	.4byte 0x69626C65
 	.4byte 0
-	.4byte 0x803e1290
+	.4byte 0x803E1290
 	.4byte 0
 	.4byte 0
 .global __vt__12CndIsVisible
@@ -29556,13 +29556,13 @@ __vt__13GenAreaCircle:
 	.4byte render__13GenAreaCircleFR8GraphicsP9Generator
 	.4byte getPos__13GenAreaCircleFP9Generator
 	.4byte getRadius__13GenAreaCircleFv
-	.4byte 0x47656e41
+	.4byte 0x47656E41
 	.4byte 0x72656150
-	.4byte 0x6f696e74
+	.4byte 0x6F696E74
 	.4byte 0
-	.4byte 0x803e1358
+	.4byte 0x803E1358
 	.4byte 0
-	.4byte 0x803e1368
+	.4byte 0x803E1368
 	.4byte 0
 	.4byte __RTTI__7GenArea
 	.4byte 0
@@ -29583,18 +29583,18 @@ __vt__12GenAreaPoint:
 	.4byte render__12GenAreaPointFR8GraphicsP9Generator
 	.4byte getPos__12GenAreaPointFP9Generator
 	.4byte getRadius__7GenAreaFv
-	.4byte 0x47656e54
+	.4byte 0x47656E54
 	.4byte 0x79706549
-	.4byte 0x6e697452
-	.4byte 0x616e6400
-	.4byte 0x803e1358
+	.4byte 0x6E697452
+	.4byte 0x616E6400
+	.4byte 0x803E1358
 	.4byte 0
-	.4byte 0x803e1368
+	.4byte 0x803E1368
 	.4byte 0
 	.4byte 0
-	.4byte 0x803e1358
+	.4byte 0x803E1358
 	.4byte 0
-	.4byte 0x803e1368
+	.4byte 0x803E1368
 	.4byte 0
 	.4byte __RTTI__7GenType
 	.4byte 0
@@ -29615,13 +29615,13 @@ __vt__15GenTypeInitRand:
 	.4byte render__7GenTypeFR8GraphicsP9Generator
 	.4byte setBirthInfo__15GenTypeInitRandFR9BirthInfoP9Generator
 	.4byte getMaxCount__15GenTypeInitRandFv
-	.4byte 0x47656e54
+	.4byte 0x47656E54
 	.4byte 0x79706541
-	.4byte 0x744f6e63
+	.4byte 0x744F6E63
 	.4byte 0x65000000
-	.4byte 0x803e1358
+	.4byte 0x803E1358
 	.4byte 0
-	.4byte 0x803e1368
+	.4byte 0x803E1368
 	.4byte 0
 	.4byte __RTTI__7GenType
 	.4byte 0
@@ -29642,12 +29642,12 @@ __vt__13GenTypeAtOnce:
 	.4byte render__7GenTypeFR8GraphicsP9Generator
 	.4byte setBirthInfo__13GenTypeAtOnceFR9BirthInfoP9Generator
 	.4byte getMaxCount__13GenTypeAtOnceFv
-	.4byte 0x47656e54
-	.4byte 0x7970654f
-	.4byte 0x6e650000
-	.4byte 0x803e1358
+	.4byte 0x47656E54
+	.4byte 0x7970654F
+	.4byte 0x6E650000
+	.4byte 0x803E1358
 	.4byte 0
-	.4byte 0x803e1368
+	.4byte 0x803E1368
 	.4byte 0
 	.4byte __RTTI__7GenType
 	.4byte 0
@@ -29668,23 +29668,23 @@ __vt__10GenTypeOne:
 	.4byte render__10GenTypeOneFR8GraphicsP9Generator
 	.4byte setBirthInfo__10GenTypeOneFR9BirthInfoP9Generator
 	.4byte getMaxCount__10GenTypeOneFv
-	.4byte 0x47656e4f
-	.4byte 0x626a6563
-	.4byte 0x7450696b
+	.4byte 0x47656E4F
+	.4byte 0x626A6563
+	.4byte 0x7450696B
 	.4byte 0x69000000
-	.4byte 0x47656e4f
-	.4byte 0x626a6563
+	.4byte 0x47656E4F
+	.4byte 0x626A6563
 	.4byte 0x74000000
-	.4byte 0x803e1358
+	.4byte 0x803E1358
 	.4byte 0
-	.4byte 0x803e1368
+	.4byte 0x803E1368
 	.4byte 0
 	.4byte 0
-	.4byte 0x803e1358
+	.4byte 0x803E1358
 	.4byte 0
-	.4byte 0x803e1368
+	.4byte 0x803E1368
 	.4byte 0
-	.4byte 0x803e13b8
+	.4byte 0x803E13B8
 	.4byte 0
 	.4byte 0
 .global __vt__13GenObjectPiki
@@ -29703,22 +29703,22 @@ __vt__13GenObjectPiki:
 	.4byte update__9GenObjectFP9Generator
 	.4byte render__9GenObjectFR8GraphicsP9Generator
 	.4byte birth__13GenObjectPikiFR9BirthInfo
-	.4byte 0x436f7265
-	.4byte 0x4e6f6465
+	.4byte 0x436F7265
+	.4byte 0x4E6F6465
 	.4byte 0
-	.4byte 0x803e13d0
-	.4byte 0
-	.4byte 0
-	.4byte 0x803e13d0
-	.4byte 0
-	.4byte 0x803e13d8
+	.4byte 0x803E13D0
 	.4byte 0
 	.4byte 0
-	.4byte 0x803e13d0
+	.4byte 0x803E13D0
 	.4byte 0
-	.4byte 0x803e13d8
+	.4byte 0x803E13D8
 	.4byte 0
-	.4byte 0x803e13e8
+	.4byte 0
+	.4byte 0x803E13D0
+	.4byte 0
+	.4byte 0x803E13D8
+	.4byte 0
+	.4byte 0x803E13E8
 	.4byte 0
 	.4byte 0
 .global __vt__12GeneratorMgr
@@ -29735,14 +29735,14 @@ __vt__12GeneratorMgr:
 	.4byte concat__4NodeFR3SRT
 	.4byte concat__4NodeFR8Matrix4f
 	.4byte getModelMatrix__4NodeFv
-	.4byte 0x47656e65
-	.4byte 0x7261746f
+	.4byte 0x47656E65
+	.4byte 0x7261746F
 	.4byte 0x72000000
-	.4byte 0x803e13d0
+	.4byte 0x803E13D0
 	.4byte 0
-	.4byte 0x803e13d8
+	.4byte 0x803E13D8
 	.4byte 0
-	.4byte 0x803e13e8
+	.4byte 0x803E13E8
 	.4byte 0
 	.4byte 0
 .global __vt__9Generator
@@ -29782,13 +29782,13 @@ __vt__7GenArea:
 	.4byte render__7GenAreaFR8GraphicsP9Generator
 	.4byte 0
 	.4byte getRadius__7GenAreaFv
-	.4byte 0x5061726d
-	.4byte 0x3c666c6f
-	.4byte 0x61743e00
+	.4byte 0x5061726D
+	.4byte 0x3C666C6F
+	.4byte 0x61743E00
 	.4byte 0x42617365
-	.4byte 0x5061726d
+	.4byte 0x5061726D
 	.4byte 0
-	.4byte 0x803e1400
+	.4byte 0x803E1400
 	.4byte 0
 	.4byte 0
 	.4byte 0
@@ -29814,7 +29814,7 @@ __vt__7GenType:
 	.4byte 0
 .global __vt__9GenObject
 __vt__9GenObject:
-	.4byte 0x803e13b8
+	.4byte 0x803E13B8
 	.4byte 0
 	.4byte doWrite__7GenBaseFR18RandomAccessStream
 	.4byte ramSaveParameters__7GenBaseFR18RandomAccessStream
@@ -29828,10 +29828,10 @@ __vt__9GenObject:
 	.4byte update__9GenObjectFP9Generator
 	.4byte render__9GenObjectFR8GraphicsP9Generator
 	.4byte 0
-	.4byte 0x5061726d
-	.4byte 0x3c696e74
-	.4byte 0x3e000000
-	.4byte 0x803e1400
+	.4byte 0x5061726D
+	.4byte 0x3C696E74
+	.4byte 0x3E000000
+	.4byte 0x803E1400
 	.4byte 0
 	.4byte 0
 	.4byte 0
@@ -29841,7 +29841,7 @@ __vt__9GenObject:
 	.4byte 0
 .global __vt__7GenBase
 __vt__7GenBase:
-	.4byte 0x803e1368
+	.4byte 0x803E1368
 	.4byte 0
 	.4byte doWrite__7GenBaseFR18RandomAccessStream
 	.4byte ramSaveParameters__7GenBaseFR18RandomAccessStream
@@ -29850,13 +29850,13 @@ __vt__7GenBase:
 	.4byte update__7GenBaseFv
 	.4byte render__7GenBaseFR8Graphics
 	.4byte getLatestVersion__7GenBaseFv
-	.4byte 0x67656e65
-	.4byte 0x7261746f
+	.4byte 0x67656E65
+	.4byte 0x7261746F
 	.4byte 0x72436163
-	.4byte 0x68652e63
+	.4byte 0x68652E63
 	.4byte 0x70700000
-	.4byte 0x47656e65
-	.4byte 0x7261746f
+	.4byte 0x47656E65
+	.4byte 0x7261746F
 	.4byte 0x72436163
 	.4byte 0x68650000
 .global lbl_802BAC1C
@@ -29958,52 +29958,52 @@ __vt__Q214GeneratorCache5Cache:
 	.4byte 0
 	.4byte 0
 	.4byte 0
-	.4byte 0x6f626a65
-	.4byte 0x63744d67
-	.4byte 0x722e6370
+	.4byte 0x6F626A65
+	.4byte 0x63744D67
+	.4byte 0x722E6370
 	.4byte 0x70000000
-	.4byte 0x6f626a65
-	.4byte 0x63744d67
+	.4byte 0x6F626A65
+	.4byte 0x63744D67
 	.4byte 0x72000000
 	.4byte 0x43726561
 	.4byte 0x74757265
-	.4byte 0x4e6f6465
-	.4byte 0x4d677200
-	.4byte 0x436f7265
-	.4byte 0x4e6f6465
+	.4byte 0x4E6F6465
+	.4byte 0x4D677200
+	.4byte 0x436F7265
+	.4byte 0x4E6F6465
 	.4byte 0
-	.4byte 0x803e1458
+	.4byte 0x803E1458
 	.4byte 0
 	.4byte 0
-	.4byte 0x803e1458
+	.4byte 0x803E1458
 	.4byte 0
-	.4byte 0x803e1460
+	.4byte 0x803E1460
 	.4byte 0
 	.4byte 0
 	.4byte 0x54726176
 	.4byte 0x65727361
-	.4byte 0x626c6500
-	.4byte 0x4f626a65
-	.4byte 0x63744d67
+	.4byte 0x626C6500
+	.4byte 0x4F626A65
+	.4byte 0x63744D67
 	.4byte 0x72000000
-	.4byte 0x803e1458
+	.4byte 0x803E1458
 	.4byte 0x8
-	.4byte 0x803e1460
+	.4byte 0x803E1460
 	.4byte 0x8
-	.4byte 0x803e1470
+	.4byte 0x803E1470
 	.4byte 0x8
-	.4byte 0x803e1478
+	.4byte 0x803E1478
 	.4byte 0
 	.4byte 0
-	.4byte 0x803e1458
+	.4byte 0x803E1458
 	.4byte 0x8
-	.4byte 0x803e1460
+	.4byte 0x803E1460
 	.4byte 0x8
-	.4byte 0x803e1470
+	.4byte 0x803E1470
 	.4byte 0x8
-	.4byte 0x803e1478
+	.4byte 0x803E1478
 	.4byte 0
-	.4byte 0x803e1480
+	.4byte 0x803E1480
 	.4byte 0
 	.4byte 0
 .global __vt__15CreatureNodeMgr
@@ -30015,7 +30015,7 @@ __vt__15CreatureNodeMgr:
 	.4byte getNext__15CreatureNodeMgrFi
 	.4byte isDone__15CreatureNodeMgrFi
 	.4byte __RTTI__15CreatureNodeMgr
-	.4byte 0xfffffff8
+	.4byte 0xFFFFFFF8
 	.4byte getAgeNodeType__5ANodeFv
 	.4byte read__8CoreNodeFR18RandomAccessStream
 	.4byte lbl_8009F5DC
@@ -30038,19 +30038,19 @@ __vt__15CreatureNodeMgr:
 	.4byte findClosest__9ObjectMgrFR8Vector3fP9Condition
 	.4byte search__9ObjectMgrFP9ObjectMgr
 	.4byte killAll__9ObjectMgrFv
-	.4byte 0x506f6c79
-	.4byte 0x4f626a65
-	.4byte 0x63744d67
+	.4byte 0x506F6C79
+	.4byte 0x4F626A65
+	.4byte 0x63744D67
 	.4byte 0x72000000
-	.4byte 0x803e1458
+	.4byte 0x803E1458
 	.4byte 0x8
-	.4byte 0x803e1460
+	.4byte 0x803E1460
 	.4byte 0x8
-	.4byte 0x803e1470
+	.4byte 0x803E1470
 	.4byte 0x8
-	.4byte 0x803e1478
+	.4byte 0x803E1478
 	.4byte 0
-	.4byte 0x803e1480
+	.4byte 0x803E1480
 	.4byte 0
 	.4byte 0
 .global __vt__13PolyObjectMgr
@@ -30062,7 +30062,7 @@ __vt__13PolyObjectMgr:
 	.4byte getNext__13PolyObjectMgrFi
 	.4byte isDone__13PolyObjectMgrFi
 	.4byte __RTTI__13PolyObjectMgr
-	.4byte 0xfffffff8
+	.4byte 0xFFFFFFF8
 	.4byte getAgeNodeType__5ANodeFv
 	.4byte read__8CoreNodeFR18RandomAccessStream
 	.4byte lbl_800E2FAC
@@ -30087,31 +30087,31 @@ __vt__13PolyObjectMgr:
 	.4byte killAll__9ObjectMgrFv
 	.4byte birth__13PolyObjectMgrFi
 	.4byte kill__13PolyObjectMgrFP8Creature
-	.4byte 0x4d6f6e6f
-	.4byte 0x4f626a65
-	.4byte 0x63744d67
+	.4byte 0x4D6F6E6F
+	.4byte 0x4F626A65
+	.4byte 0x63744D67
 	.4byte 0x72000000
-	.4byte 0x803e1458
+	.4byte 0x803E1458
 	.4byte 0x8
-	.4byte 0x803e1460
+	.4byte 0x803E1460
 	.4byte 0x8
-	.4byte 0x803e1470
+	.4byte 0x803E1470
 	.4byte 0x8
-	.4byte 0x803e1478
+	.4byte 0x803E1478
 	.4byte 0
-	.4byte 0x803e1480
+	.4byte 0x803E1480
 	.4byte 0
 	.4byte 0
 .global __vt__13MonoObjectMgr
 __vt__13MonoObjectMgr:
-	.4byte 0x803e1498
+	.4byte 0x803E1498
 	.4byte 0
 	.4byte getCreature__13MonoObjectMgrFi
 	.4byte getFirst__13MonoObjectMgrFv
 	.4byte getNext__13MonoObjectMgrFi
 	.4byte isDone__13MonoObjectMgrFi
-	.4byte 0x803e1498
-	.4byte 0xfffffff8
+	.4byte 0x803E1498
+	.4byte 0xFFFFFFF8
 	.4byte getAgeNodeType__5ANodeFv
 	.4byte read__8CoreNodeFR18RandomAccessStream
 	.4byte lbl_80099540
@@ -30152,14 +30152,14 @@ __vt__13MonoObjectMgr:
 	.4byte 0
 .global __vt__9ObjectMgr
 __vt__9ObjectMgr:
-	.4byte 0x803e1480
+	.4byte 0x803E1480
 	.4byte 0
 	.4byte 0
 	.4byte 0
 	.4byte 0
 	.4byte 0
-	.4byte 0x803e1480
-	.4byte 0xfffffff8
+	.4byte 0x803E1480
+	.4byte 0xFFFFFFF8
 	.4byte getAgeNodeType__5ANodeFv
 	.4byte read__8CoreNodeFR18RandomAccessStream
 	.4byte lbl_8009F5DC
@@ -30184,8 +30184,8 @@ __vt__9ObjectMgr:
 	.4byte killAll__9ObjectMgrFv
 	.4byte 0x73656172
 	.4byte 0x63685379
-	.4byte 0x7374656d
-	.4byte 0x2e637070
+	.4byte 0x7374656D
+	.4byte 0x2E637070
 	.4byte 0
 	.4byte 0x73656172
 	.4byte 0x63685379
@@ -30196,8 +30196,8 @@ __vt__9ObjectMgr:
 	.4byte 0
 	.4byte 0x54726176
 	.4byte 0x65727361
-	.4byte 0x626c6500
-	.4byte 0x803e14a0
+	.4byte 0x626C6500
+	.4byte 0x803E14A0
 	.4byte 0
 	.4byte 0
 .global __vt__12SearchBuffer
@@ -30214,20 +30214,20 @@ __vt__12SearchBuffer:
 	.4byte 0
 	.4byte 0
 	.4byte 0
-	.4byte 0x736d6172
+	.4byte 0x736D6172
 	.4byte 0x74507472
-	.4byte 0x2e637070
+	.4byte 0x2E637070
 	.4byte 0
-	.4byte 0x736d6172
+	.4byte 0x736D6172
 	.4byte 0x74507472
 	.4byte 0
 	.4byte 0x52656643
-	.4byte 0x6f756e74
-	.4byte 0x61626c65
+	.4byte 0x6F756E74
+	.4byte 0x61626C65
 	.4byte 0
 .global __vt__12RefCountable
 __vt__12RefCountable:
-	.4byte 0x803e14b0
+	.4byte 0x803E14B0
 	.4byte 0
 	.4byte addCntCallback__12RefCountableFv
 	.4byte subCntCallback__12RefCountableFv
@@ -30406,7 +30406,7 @@ __vt__4Weed:
 	.4byte doKill__12ItemCreatureFv
 	.4byte exitCourse__8CreatureFv
 	.4byte __RTTI__4Weed
-	.4byte 0xfffffd48
+	.4byte 0xFFFFFD48
 	.4byte lbl_8007DF54
 	.4byte getCurrState__10AICreatureFv
 	.4byte "setCurrState__10AICreatureFP20AState<10AICreature>"
@@ -30424,19 +30424,19 @@ __vt__4Weed:
 	.4byte animationKeyUpdated__10AICreatureFR16PaniAnimKeyEvent
 	.4byte finalSetup__12ItemCreatureFv
 	.4byte 0x57656564
-	.4byte 0x7347656e
+	.4byte 0x7347656E
 	.4byte 0
-	.4byte 0x803e150c
-	.4byte 0x2b8
-	.4byte 0x803e1514
+	.4byte 0x803E150C
+	.4byte 0x2B8
+	.4byte 0x803E1514
 	.4byte 0x8
-	.4byte 0x803e151c
+	.4byte 0x803E151C
 	.4byte 0
-	.4byte 0x803e1524
+	.4byte 0x803E1524
 	.4byte 0
-	.4byte 0x803e152c
+	.4byte 0x803E152C
 	.4byte 0
-	.4byte 0x803e1534
+	.4byte 0x803E1534
 	.4byte 0
 	.4byte 0
 .global __vt__8WeedsGen
@@ -30511,7 +30511,7 @@ __vt__8WeedsGen:
 	.4byte doKill__12ItemCreatureFv
 	.4byte exitCourse__8CreatureFv
 	.4byte __RTTI__8WeedsGen
-	.4byte 0xfffffd48
+	.4byte 0xFFFFFD48
 	.4byte lbl_8007DF54
 	.4byte getCurrState__10AICreatureFv
 	.4byte "setCurrState__10AICreatureFP20AState<10AICreature>"
@@ -30529,19 +30529,19 @@ __vt__8WeedsGen:
 	.4byte animationKeyUpdated__10AICreatureFR16PaniAnimKeyEvent
 	.4byte finalSetup__12ItemCreatureFv
 	.4byte 0x47726173
-	.4byte 0x7347656e
+	.4byte 0x7347656E
 	.4byte 0
-	.4byte 0x803e150c
-	.4byte 0x2b8
-	.4byte 0x803e1514
+	.4byte 0x803E150C
+	.4byte 0x2B8
+	.4byte 0x803E1514
 	.4byte 0x8
-	.4byte 0x803e151c
+	.4byte 0x803E151C
 	.4byte 0
-	.4byte 0x803e1524
+	.4byte 0x803E1524
 	.4byte 0
-	.4byte 0x803e152c
+	.4byte 0x803E152C
 	.4byte 0
-	.4byte 0x803e1534
+	.4byte 0x803E1534
 	.4byte 0
 	.4byte 0
 .global __vt__8GrassGen
@@ -30616,7 +30616,7 @@ __vt__8GrassGen:
 	.4byte doKill__12ItemCreatureFv
 	.4byte exitCourse__8CreatureFv
 	.4byte __RTTI__8GrassGen
-	.4byte 0xfffffd48
+	.4byte 0xFFFFFD48
 	.4byte lbl_8007DF54
 	.4byte getCurrState__10AICreatureFv
 	.4byte "setCurrState__10AICreatureFP20AState<10AICreature>"
@@ -30633,17 +30633,17 @@ __vt__8GrassGen:
 	.4byte stopMotion__12ItemCreatureFv
 	.4byte animationKeyUpdated__10AICreatureFR16PaniAnimKeyEvent
 	.4byte finalSetup__12ItemCreatureFv
-	.4byte 0x803e150c
-	.4byte 0x2b8
-	.4byte 0x803e1514
+	.4byte 0x803E150C
+	.4byte 0x2B8
+	.4byte 0x803E1514
 	.4byte 0x8
-	.4byte 0x803e151c
+	.4byte 0x803E151C
 	.4byte 0
-	.4byte 0x803e1524
+	.4byte 0x803E1524
 	.4byte 0
-	.4byte 0x803e152c
+	.4byte 0x803E152C
 	.4byte 0
-	.4byte 0x803e1534
+	.4byte 0x803E1534
 	.4byte 0
 	.4byte 0
 .global __vt__7RockGen
@@ -30718,7 +30718,7 @@ __vt__7RockGen:
 	.4byte doKill__12ItemCreatureFv
 	.4byte exitCourse__8CreatureFv
 	.4byte __RTTI__7RockGen
-	.4byte 0xfffffd48
+	.4byte 0xFFFFFD48
 	.4byte lbl_8007DF54
 	.4byte getCurrState__10AICreatureFv
 	.4byte "setCurrState__10AICreatureFP20AState<10AICreature>"
@@ -30736,71 +30736,71 @@ __vt__7RockGen:
 	.4byte animationKeyUpdated__10AICreatureFR16PaniAnimKeyEvent
 	.4byte finalSetup__12ItemCreatureFv
 	.4byte 0
-	.4byte 0x6b757361
-	.4byte 0x4974656d
-	.4byte 0x2e637070
+	.4byte 0x6B757361
+	.4byte 0x4974656D
+	.4byte 0x2E637070
 	.4byte 0
-	.4byte 0x426f4261
+	.4byte 0x426F4261
 	.4byte 0x73654974
-	.4byte 0x656d0000
-	.4byte 0x50616e69
-	.4byte 0x416e696d
-	.4byte 0x4b65794c
+	.4byte 0x656D0000
+	.4byte 0x50616E69
+	.4byte 0x416E696D
+	.4byte 0x4B65794C
 	.4byte 0x69737465
-	.4byte 0x6e657200
-	.4byte 0x4576656e
-	.4byte 0x7454616c
-	.4byte 0x6b657200
+	.4byte 0x6E657200
+	.4byte 0x4576656E
+	.4byte 0x7454616C
+	.4byte 0x6B657200
 	.4byte 0x52656643
-	.4byte 0x6f756e74
-	.4byte 0x61626c65
+	.4byte 0x6F756E74
+	.4byte 0x61626C65
 	.4byte 0
 	.4byte 0x43726561
 	.4byte 0x74757265
 	.4byte 0
-	.4byte 0x803e15a8
+	.4byte 0x803E15A8
 	.4byte 0x8
-	.4byte 0x803e15b0
+	.4byte 0x803E15B0
 	.4byte 0
 	.4byte 0
 	.4byte 0x41494372
 	.4byte 0x65617475
 	.4byte 0x72650000
-	.4byte 0x803e15a0
-	.4byte 0x2b8
-	.4byte 0x803e15a8
+	.4byte 0x803E15A0
+	.4byte 0x2B8
+	.4byte 0x803E15A8
 	.4byte 0x8
-	.4byte 0x803e15b0
+	.4byte 0x803E15B0
 	.4byte 0
-	.4byte 0x803e15b8
+	.4byte 0x803E15B8
 	.4byte 0
 	.4byte 0
-	.4byte 0x4974656d
+	.4byte 0x4974656D
 	.4byte 0x43726561
 	.4byte 0x74757265
 	.4byte 0
-	.4byte 0x803e15a0
-	.4byte 0x2b8
-	.4byte 0x803e15a8
+	.4byte 0x803E15A0
+	.4byte 0x2B8
+	.4byte 0x803E15A8
 	.4byte 0x8
-	.4byte 0x803e15b0
+	.4byte 0x803E15B0
 	.4byte 0
-	.4byte 0x803e15b8
+	.4byte 0x803E15B8
 	.4byte 0
-	.4byte 0x803e15c0
+	.4byte 0x803E15C0
 	.4byte 0
 	.4byte 0
-	.4byte 0x803e15a0
-	.4byte 0x2b8
-	.4byte 0x803e15a8
+	.4byte 0x803E15A0
+	.4byte 0x2B8
+	.4byte 0x803E15A8
 	.4byte 0x8
-	.4byte 0x803e15b0
+	.4byte 0x803E15B0
 	.4byte 0
-	.4byte 0x803e15b8
+	.4byte 0x803E15B8
 	.4byte 0
-	.4byte 0x803e15c0
+	.4byte 0x803E15C0
 	.4byte 0
-	.4byte 0x803e15c8
+	.4byte 0x803E15C8
 	.4byte 0
 	.4byte 0
 .global __vt__10BoBaseItem
@@ -30875,7 +30875,7 @@ __vt__10BoBaseItem:
 	.4byte doKill__12ItemCreatureFv
 	.4byte exitCourse__8CreatureFv
 	.4byte __RTTI__10BoBaseItem
-	.4byte 0xfffffd48
+	.4byte 0xFFFFFD48
 	.4byte lbl_8007DF54
 	.4byte getCurrState__10AICreatureFv
 	.4byte "setCurrState__10AICreatureFP20AState<10AICreature>"
@@ -30892,20 +30892,20 @@ __vt__10BoBaseItem:
 	.4byte stopMotion__12ItemCreatureFv
 	.4byte animationKeyUpdated__10AICreatureFR16PaniAnimKeyEvent
 	.4byte finalSetup__12ItemCreatureFv
-	.4byte 0x4b757361
-	.4byte 0x4974656d
+	.4byte 0x4B757361
+	.4byte 0x4974656D
 	.4byte 0
-	.4byte 0x803e15a0
-	.4byte 0x2b8
-	.4byte 0x803e15a8
+	.4byte 0x803E15A0
+	.4byte 0x2B8
+	.4byte 0x803E15A8
 	.4byte 0x8
-	.4byte 0x803e15b0
+	.4byte 0x803E15B0
 	.4byte 0
-	.4byte 0x803e15b8
+	.4byte 0x803E15B8
 	.4byte 0
-	.4byte 0x803e15c0
+	.4byte 0x803E15C0
 	.4byte 0
-	.4byte 0x803e15c8
+	.4byte 0x803E15C8
 	.4byte 0
 	.4byte 0
 .global __vt__8KusaItem
@@ -30980,7 +30980,7 @@ __vt__8KusaItem:
 	.4byte doKill__12ItemCreatureFv
 	.4byte exitCourse__8CreatureFv
 	.4byte __RTTI__8KusaItem
-	.4byte 0xfffffd48
+	.4byte 0xFFFFFD48
 	.4byte lbl_8007DF54
 	.4byte getCurrState__10AICreatureFv
 	.4byte "setCurrState__10AICreatureFP20AState<10AICreature>"
@@ -30999,71 +30999,71 @@ __vt__8KusaItem:
 	.4byte finalSetup__12ItemCreatureFv
 	.4byte 0
 	.4byte 0x66697368
-	.4byte 0x4974656d
-	.4byte 0x2e637070
+	.4byte 0x4974656D
+	.4byte 0x2E637070
 	.4byte 0
 	.4byte 0x46697368
-	.4byte 0x47656e65
-	.4byte 0x7261746f
+	.4byte 0x47656E65
+	.4byte 0x7261746F
 	.4byte 0x72000000
-	.4byte 0x50616e69
-	.4byte 0x416e696d
-	.4byte 0x4b65794c
+	.4byte 0x50616E69
+	.4byte 0x416E696D
+	.4byte 0x4B65794C
 	.4byte 0x69737465
-	.4byte 0x6e657200
-	.4byte 0x4576656e
-	.4byte 0x7454616c
-	.4byte 0x6b657200
+	.4byte 0x6E657200
+	.4byte 0x4576656E
+	.4byte 0x7454616C
+	.4byte 0x6B657200
 	.4byte 0x52656643
-	.4byte 0x6f756e74
-	.4byte 0x61626c65
+	.4byte 0x6F756E74
+	.4byte 0x61626C65
 	.4byte 0
 	.4byte 0x43726561
 	.4byte 0x74757265
 	.4byte 0
-	.4byte 0x803e1644
+	.4byte 0x803E1644
 	.4byte 0x8
-	.4byte 0x803e164c
+	.4byte 0x803E164C
 	.4byte 0
 	.4byte 0
 	.4byte 0x41494372
 	.4byte 0x65617475
 	.4byte 0x72650000
-	.4byte 0x803e163c
-	.4byte 0x2b8
-	.4byte 0x803e1644
+	.4byte 0x803E163C
+	.4byte 0x2B8
+	.4byte 0x803E1644
 	.4byte 0x8
-	.4byte 0x803e164c
+	.4byte 0x803E164C
 	.4byte 0
-	.4byte 0x803e1654
+	.4byte 0x803E1654
 	.4byte 0
 	.4byte 0
-	.4byte 0x4974656d
+	.4byte 0x4974656D
 	.4byte 0x43726561
 	.4byte 0x74757265
 	.4byte 0
-	.4byte 0x803e163c
-	.4byte 0x2b8
-	.4byte 0x803e1644
+	.4byte 0x803E163C
+	.4byte 0x2B8
+	.4byte 0x803E1644
 	.4byte 0x8
-	.4byte 0x803e164c
+	.4byte 0x803E164C
 	.4byte 0
-	.4byte 0x803e1654
+	.4byte 0x803E1654
 	.4byte 0
-	.4byte 0x803e165c
+	.4byte 0x803E165C
 	.4byte 0
 	.4byte 0
-	.4byte 0x803e163c
-	.4byte 0x2b8
-	.4byte 0x803e1644
+	.4byte 0x803E163C
+	.4byte 0x2B8
+	.4byte 0x803E1644
 	.4byte 0x8
-	.4byte 0x803e164c
+	.4byte 0x803E164C
 	.4byte 0
-	.4byte 0x803e1654
+	.4byte 0x803E1654
 	.4byte 0
-	.4byte 0x803e165c
+	.4byte 0x803E165C
 	.4byte 0
-	.4byte 0x803e1664
+	.4byte 0x803E1664
 	.4byte 0
 	.4byte 0
 .global __vt__13FishGenerator
@@ -31138,7 +31138,7 @@ __vt__13FishGenerator:
 	.4byte doKill__12ItemCreatureFv
 	.4byte exitCourse__8CreatureFv
 	.4byte __RTTI__13FishGenerator
-	.4byte 0xfffffd48
+	.4byte 0xFFFFFD48
 	.4byte lbl_8007DF54
 	.4byte getCurrState__10AICreatureFv
 	.4byte "setCurrState__10AICreatureFP20AState<10AICreature>"
@@ -31270,7 +31270,7 @@ effects:
 	.4byte 0x00000000
 .global __vt__8Suckable
 __vt__8Suckable:
-	.4byte 0x803e17a4
+	.4byte 0x803E17A4
 	.4byte 0
 	.4byte addCntCallback__12RefCountableFv
 	.4byte subCntCallback__12RefCountableFv
@@ -31339,8 +31339,8 @@ __vt__8Suckable:
 	.4byte doAnimation__12ItemCreatureFv
 	.4byte doKill__12ItemCreatureFv
 	.4byte exitCourse__8CreatureFv
-	.4byte 0x803e17a4
-	.4byte 0xfffffd48
+	.4byte 0x803E17A4
+	.4byte 0xFFFFFD48
 	.4byte lbl_8007DF54
 	.4byte getCurrState__10AICreatureFv
 	.4byte "setCurrState__10AICreatureFP20AState<10AICreature>"
@@ -31363,19 +31363,19 @@ __vt__8Suckable:
 	.4byte 0
 	.4byte finishSuck__8SuckableFP6Pellet
 	.4byte 0
-	.4byte 0x803e1774
-	.4byte 0x2b8
-	.4byte 0x803e177c
+	.4byte 0x803E1774
+	.4byte 0x2B8
+	.4byte 0x803E177C
 	.4byte 0x8
-	.4byte 0x803e1784
+	.4byte 0x803E1784
 	.4byte 0
-	.4byte 0x803e178c
+	.4byte 0x803E178C
 	.4byte 0
-	.4byte 0x803e1794
+	.4byte 0x803E1794
 	.4byte 0
-	.4byte 0x803e179c
+	.4byte 0x803E179C
 	.4byte 0
-	.4byte 0x803e17a4
+	.4byte 0x803E17A4
 	.4byte 0
 	.4byte 0
 .global __vt__7UfoItem
@@ -31450,7 +31450,7 @@ __vt__7UfoItem:
 	.4byte doKill__12ItemCreatureFv
 	.4byte exitCourse__8CreatureFv
 	.4byte __RTTI__7UfoItem
-	.4byte 0xfffffd48
+	.4byte 0xFFFFFD48
 	.4byte lbl_800E97A4
 	.4byte getCurrState__10AICreatureFv
 	.4byte "setCurrState__10AICreatureFP20AState<10AICreature>"
@@ -31474,8 +31474,8 @@ __vt__7UfoItem:
 	.4byte finishSuck__7UfoItemFP6Pellet
 	.4byte getRouteIndex__7UfoItemFv
 	.4byte 0
-	.4byte 0x75666f41
-	.4byte 0x6e696d2e
+	.4byte 0x75666F41
+	.4byte 0x6E696D2E
 	.4byte 0x63707000
 .global lbl_802BC4B4
 lbl_802BC4B4:
@@ -31558,74 +31558,74 @@ __vt__15PaniUfoAnimator:
 	.4byte finishOneShot__8AnimatorFv
 	.4byte finishLoop__8AnimatorFv
 	.4byte updateContext__12PaniAnimatorFv
-	.4byte 0x626f6d62
-	.4byte 0x4974656d
-	.4byte 0x2e637070
+	.4byte 0x626F6D62
+	.4byte 0x4974656D
+	.4byte 0x2E637070
 	.4byte 0
-	.4byte 0x626f6d62
-	.4byte 0x4974656d
+	.4byte 0x626F6D62
+	.4byte 0x4974656D
 	.4byte 0
-	.4byte 0x426f6d62
-	.4byte 0x4974656d
+	.4byte 0x426F6D62
+	.4byte 0x4974656D
 	.4byte 0
-	.4byte 0x50616e69
-	.4byte 0x416e696d
-	.4byte 0x4b65794c
+	.4byte 0x50616E69
+	.4byte 0x416E696D
+	.4byte 0x4B65794C
 	.4byte 0x69737465
-	.4byte 0x6e657200
-	.4byte 0x4576656e
-	.4byte 0x7454616c
-	.4byte 0x6b657200
+	.4byte 0x6E657200
+	.4byte 0x4576656E
+	.4byte 0x7454616C
+	.4byte 0x6B657200
 	.4byte 0x52656643
-	.4byte 0x6f756e74
-	.4byte 0x61626c65
+	.4byte 0x6F756E74
+	.4byte 0x61626C65
 	.4byte 0
 	.4byte 0x43726561
 	.4byte 0x74757265
 	.4byte 0
-	.4byte 0x803e183c
+	.4byte 0x803E183C
 	.4byte 0x8
-	.4byte 0x803e1844
+	.4byte 0x803E1844
 	.4byte 0
 	.4byte 0
 	.4byte 0x41494372
 	.4byte 0x65617475
 	.4byte 0x72650000
-	.4byte 0x803e1834
-	.4byte 0x2b8
-	.4byte 0x803e183c
+	.4byte 0x803E1834
+	.4byte 0x2B8
+	.4byte 0x803E183C
 	.4byte 0x8
-	.4byte 0x803e1844
+	.4byte 0x803E1844
 	.4byte 0
-	.4byte 0x803e184c
+	.4byte 0x803E184C
 	.4byte 0
 	.4byte 0
-	.4byte 0x4974656d
+	.4byte 0x4974656D
 	.4byte 0x43726561
 	.4byte 0x74757265
 	.4byte 0
-	.4byte 0x803e1834
-	.4byte 0x2b8
-	.4byte 0x803e183c
+	.4byte 0x803E1834
+	.4byte 0x2B8
+	.4byte 0x803E183C
 	.4byte 0x8
-	.4byte 0x803e1844
+	.4byte 0x803E1844
 	.4byte 0
-	.4byte 0x803e184c
+	.4byte 0x803E184C
 	.4byte 0
-	.4byte 0x803e1854
+	.4byte 0x803E1854
 	.4byte 0
 	.4byte 0
-	.4byte 0x803e1834
-	.4byte 0x2b8
-	.4byte 0x803e183c
+	.4byte 0x803E1834
+	.4byte 0x2B8
+	.4byte 0x803E183C
 	.4byte 0x8
-	.4byte 0x803e1844
+	.4byte 0x803E1844
 	.4byte 0
-	.4byte 0x803e184c
+	.4byte 0x803E184C
 	.4byte 0
-	.4byte 0x803e1854
+	.4byte 0x803E1854
 	.4byte 0
-	.4byte 0x803e185c
+	.4byte 0x803E185C
 	.4byte 0
 	.4byte 0
 .global __vt__8BombItem
@@ -31700,7 +31700,7 @@ __vt__8BombItem:
 	.4byte doKill__12ItemCreatureFv
 	.4byte exitCourse__8CreatureFv
 	.4byte __RTTI__8BombItem
-	.4byte 0xfffffd48
+	.4byte 0xFFFFFD48
 	.4byte lbl_8007DF54
 	.4byte getCurrState__10AICreatureFv
 	.4byte "setCurrState__10AICreatureFP20AState<10AICreature>"
@@ -31720,12 +31720,12 @@ __vt__8BombItem:
 	.4byte renderTimer__8BombItemFR8Graphics
 	.4byte renderBlast__8BombItemFR8Graphics
 	.4byte 0
-	.4byte 0x676f616c
-	.4byte 0x4974656d
-	.4byte 0x2e637070
+	.4byte 0x676F616C
+	.4byte 0x4974656D
+	.4byte 0x2E637070
 	.4byte 0
-	.4byte 0x676f616c
-	.4byte 0x4974656d
+	.4byte 0x676F616C
+	.4byte 0x4974656D
 	.4byte 0
 .global leg_ids_1
 leg_ids_1:
@@ -31999,7 +31999,7 @@ __vt__8GoalItem:
 	.4byte doKill__12ItemCreatureFv
 	.4byte exitCourse__8CreatureFv
 	.4byte __RTTI__8GoalItem
-	.4byte 0xfffffd48
+	.4byte 0xFFFFFD48
 	.4byte lbl_8007DF54
 	.4byte getCurrState__10AICreatureFv
 	.4byte "setCurrState__10AICreatureFP20AState<10AICreature>"
@@ -32023,80 +32023,80 @@ __vt__8GoalItem:
 	.4byte finishSuck__8SuckableFP6Pellet
 	.4byte getRouteIndex__8GoalItemFv
 	.4byte __RTTI__8GoalItem
-	.4byte 0xfffffc38
+	.4byte 0xFFFFFC38
 	.4byte lbl_800EC4C0
 	.4byte invoke__8GoalItemFPQ23zen17particleGeneratorPQ23zen11particleMdl
-	.4byte 0x70696b69
+	.4byte 0x70696B69
 	.4byte 0x68656164
-	.4byte 0x4974656d
-	.4byte 0x2e637070
+	.4byte 0x4974656D
+	.4byte 0x2E637070
 	.4byte 0
-	.4byte 0x70696b69
+	.4byte 0x70696B69
 	.4byte 0x68656164
-	.4byte 0x4974656d
+	.4byte 0x4974656D
 	.4byte 0
-	.4byte 0x50696b69
+	.4byte 0x50696B69
 	.4byte 0x48656164
-	.4byte 0x4974656d
+	.4byte 0x4974656D
 	.4byte 0
-	.4byte 0x50616e69
-	.4byte 0x416e696d
-	.4byte 0x4b65794c
+	.4byte 0x50616E69
+	.4byte 0x416E696D
+	.4byte 0x4B65794C
 	.4byte 0x69737465
-	.4byte 0x6e657200
-	.4byte 0x4576656e
-	.4byte 0x7454616c
-	.4byte 0x6b657200
+	.4byte 0x6E657200
+	.4byte 0x4576656E
+	.4byte 0x7454616C
+	.4byte 0x6B657200
 	.4byte 0x52656643
-	.4byte 0x6f756e74
-	.4byte 0x61626c65
+	.4byte 0x6F756E74
+	.4byte 0x61626C65
 	.4byte 0
 	.4byte 0x43726561
 	.4byte 0x74757265
 	.4byte 0
-	.4byte 0x803e195c
+	.4byte 0x803E195C
 	.4byte 0x8
-	.4byte 0x803e1964
+	.4byte 0x803E1964
 	.4byte 0
 	.4byte 0
 	.4byte 0x41494372
 	.4byte 0x65617475
 	.4byte 0x72650000
-	.4byte 0x803e1954
-	.4byte 0x2b8
-	.4byte 0x803e195c
+	.4byte 0x803E1954
+	.4byte 0x2B8
+	.4byte 0x803E195C
 	.4byte 0x8
-	.4byte 0x803e1964
+	.4byte 0x803E1964
 	.4byte 0
-	.4byte 0x803e196c
+	.4byte 0x803E196C
 	.4byte 0
 	.4byte 0
-	.4byte 0x4974656d
+	.4byte 0x4974656D
 	.4byte 0x43726561
 	.4byte 0x74757265
 	.4byte 0
-	.4byte 0x803e1954
-	.4byte 0x2b8
-	.4byte 0x803e195c
+	.4byte 0x803E1954
+	.4byte 0x2B8
+	.4byte 0x803E195C
 	.4byte 0x8
-	.4byte 0x803e1964
+	.4byte 0x803E1964
 	.4byte 0
-	.4byte 0x803e196c
+	.4byte 0x803E196C
 	.4byte 0
-	.4byte 0x803e1974
+	.4byte 0x803E1974
 	.4byte 0
 	.4byte 0
-	.4byte 0x803e1954
-	.4byte 0x2b8
-	.4byte 0x803e195c
+	.4byte 0x803E1954
+	.4byte 0x2B8
+	.4byte 0x803E195C
 	.4byte 0x8
-	.4byte 0x803e1964
+	.4byte 0x803E1964
 	.4byte 0
-	.4byte 0x803e196c
+	.4byte 0x803E196C
 	.4byte 0
-	.4byte 0x803e1974
+	.4byte 0x803E1974
 	.4byte 0
-	.4byte 0x803e197c
+	.4byte 0x803E197C
 	.4byte 0
 	.4byte 0
 .global __vt__12PikiHeadItem
@@ -32171,7 +32171,7 @@ __vt__12PikiHeadItem:
 	.4byte doKill__12PikiHeadItemFv
 	.4byte exitCourse__8CreatureFv
 	.4byte __RTTI__12PikiHeadItem
-	.4byte 0xfffffd48
+	.4byte 0xFFFFFD48
 	.4byte lbl_8007DF54
 	.4byte getCurrState__10AICreatureFv
 	.4byte "setCurrState__10AICreatureFP20AState<10AICreature>"
@@ -32188,64 +32188,57 @@ __vt__12PikiHeadItem:
 	.4byte stopMotion__12ItemCreatureFv
 	.4byte animationKeyUpdated__10AICreatureFR16PaniAnimKeyEvent
 	.4byte finalSetup__12ItemCreatureFv
-	.4byte 0x7a656e3a
-	.4byte 0x3a43616c
-	.4byte 0x6c426163
-	.4byte 0x6b313c7a
-	.4byte 0x656e3a3a
+	.4byte 0x7A656E3A
+	.4byte 0x3A43616C
+	.4byte 0x6C426163
+	.4byte 0x6B313C7A
+	.4byte 0x656E3A3A
 	.4byte 0x70617274
-	.4byte 0x69636c65
-	.4byte 0x4d646c20
-	.4byte 0x2a3e0000
-	.4byte 0x7a656e3a
-	.4byte 0x3a43616c
-	.4byte 0x6c426163
-	.4byte 0x6b323c7a
-	.4byte 0x656e3a3a
+	.4byte 0x69636C65
+	.4byte 0x4D646C20
+	.4byte 0x2A3E0000
+	.4byte 0x7A656E3A
+	.4byte 0x3A43616C
+	.4byte 0x6C426163
+	.4byte 0x6B323C7A
+	.4byte 0x656E3A3A
 	.4byte 0x70617274
-	.4byte 0x69636c65
-	.4byte 0x47656e65
-	.4byte 0x7261746f
-	.4byte 0x72202a2c
-	.4byte 0x207a656e
-	.4byte 0x3a3a7061
+	.4byte 0x69636C65
+	.4byte 0x47656E65
+	.4byte 0x7261746F
+	.4byte 0x72202A2C
+	.4byte 0x207A656E
+	.4byte 0x3A3A7061
 	.4byte 0x72746963
-	.4byte 0x6c654d64
-	.4byte 0x6c202a3e
+	.4byte 0x6C654D64
+	.4byte 0x6C202A3E
 	.4byte 0
-	.4byte 0x7a656e3a
-	.4byte 0x3a43616c
-	.4byte 0x6c426163
-	.4byte 0x6b313c7a
-	.4byte 0x656e3a3a
+	.4byte 0x7A656E3A
+	.4byte 0x3A43616C
+	.4byte 0x6C426163
+	.4byte 0x6B313C7A
+	.4byte 0x656E3A3A
 	.4byte 0x70617274
-	.4byte 0x69636c65
-	.4byte 0x47656e65
-	.4byte 0x7261746f
-	.4byte 0x72202a3e
+	.4byte 0x69636C65
+	.4byte 0x47656E65
+	.4byte 0x7261746F
+	.4byte 0x72202A3E
 	.4byte 0
-	.4byte 0x803e198c
+	.4byte 0x803E198C
 	.4byte 0x8
-	.4byte 0x803e1994
+	.4byte 0x803E1994
 	.4byte 0x4
-	.4byte 0x803e199c
+	.4byte 0x803E199C
 	.4byte 0
 	.4byte 0
 	.4byte 0
 	.4byte 0
 	.4byte 0
 	.4byte 0
-	.4byte 0xfffffffc
+	.4byte 0xFFFFFFFC
 	.4byte 0
 	.4byte 0
-	.4byte 0xfffffff8
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
+	.4byte 0xFFFFFFF8
 	.4byte 0
 	.4byte 0
 	.4byte 0
@@ -32256,70 +32249,77 @@ __vt__12PikiHeadItem:
 	.4byte 0
 	.4byte 0
 	.4byte 0
-	.4byte 0x6b657949
-	.4byte 0x74656d2e
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0x6B657949
+	.4byte 0x74656D2E
 	.4byte 0x63707000
-	.4byte 0x446f6f72
-	.4byte 0x4974656d
+	.4byte 0x446F6F72
+	.4byte 0x4974656D
 	.4byte 0
-	.4byte 0x50616e69
-	.4byte 0x416e696d
-	.4byte 0x4b65794c
+	.4byte 0x50616E69
+	.4byte 0x416E696D
+	.4byte 0x4B65794C
 	.4byte 0x69737465
-	.4byte 0x6e657200
-	.4byte 0x4576656e
-	.4byte 0x7454616c
-	.4byte 0x6b657200
+	.4byte 0x6E657200
+	.4byte 0x4576656E
+	.4byte 0x7454616C
+	.4byte 0x6B657200
 	.4byte 0x52656643
-	.4byte 0x6f756e74
-	.4byte 0x61626c65
+	.4byte 0x6F756E74
+	.4byte 0x61626C65
 	.4byte 0
 	.4byte 0x43726561
 	.4byte 0x74757265
 	.4byte 0
-	.4byte 0x803e19c8
+	.4byte 0x803E19C8
 	.4byte 0x8
-	.4byte 0x803e19d0
+	.4byte 0x803E19D0
 	.4byte 0
 	.4byte 0
 	.4byte 0x41494372
 	.4byte 0x65617475
 	.4byte 0x72650000
-	.4byte 0x803e19c0
-	.4byte 0x2b8
-	.4byte 0x803e19c8
+	.4byte 0x803E19C0
+	.4byte 0x2B8
+	.4byte 0x803E19C8
 	.4byte 0x8
-	.4byte 0x803e19d0
+	.4byte 0x803E19D0
 	.4byte 0
-	.4byte 0x803e19d8
+	.4byte 0x803E19D8
 	.4byte 0
 	.4byte 0
-	.4byte 0x4974656d
+	.4byte 0x4974656D
 	.4byte 0x43726561
 	.4byte 0x74757265
 	.4byte 0
-	.4byte 0x803e19c0
-	.4byte 0x2b8
-	.4byte 0x803e19c8
+	.4byte 0x803E19C0
+	.4byte 0x2B8
+	.4byte 0x803E19C8
 	.4byte 0x8
-	.4byte 0x803e19d0
+	.4byte 0x803E19D0
 	.4byte 0
-	.4byte 0x803e19d8
+	.4byte 0x803E19D8
 	.4byte 0
-	.4byte 0x803e19e0
+	.4byte 0x803E19E0
 	.4byte 0
 	.4byte 0
-	.4byte 0x803e19c0
-	.4byte 0x2b8
-	.4byte 0x803e19c8
+	.4byte 0x803E19C0
+	.4byte 0x2B8
+	.4byte 0x803E19C8
 	.4byte 0x8
-	.4byte 0x803e19d0
+	.4byte 0x803E19D0
 	.4byte 0
-	.4byte 0x803e19d8
+	.4byte 0x803E19D8
 	.4byte 0
-	.4byte 0x803e19e0
+	.4byte 0x803E19E0
 	.4byte 0
-	.4byte 0x803e19e8
+	.4byte 0x803E19E8
 	.4byte 0
 	.4byte 0
 .global __vt__8DoorItem
@@ -32394,7 +32394,7 @@ __vt__8DoorItem:
 	.4byte doKill__12ItemCreatureFv
 	.4byte exitCourse__8CreatureFv
 	.4byte __RTTI__8DoorItem
-	.4byte 0xfffffd48
+	.4byte 0xFFFFFD48
 	.4byte lbl_8007DF54
 	.4byte getCurrState__10AICreatureFv
 	.4byte "setCurrState__10AICreatureFP20AState<10AICreature>"
@@ -32411,11 +32411,11 @@ __vt__8DoorItem:
 	.4byte stopMotion__12ItemCreatureFv
 	.4byte animationKeyUpdated__10AICreatureFR16PaniAnimKeyEvent
 	.4byte finalSetup__12ItemCreatureFv
-	.4byte 0x803e19c8
+	.4byte 0x803E19C8
 	.4byte 0x8
-	.4byte 0x803e19d0
+	.4byte 0x803E19D0
 	.4byte 0
-	.4byte 0x803e19d8
+	.4byte 0x803E19D8
 	.4byte 0
 	.4byte 0
 .global __vt__7KeyItem
@@ -32490,49 +32490,49 @@ __vt__7KeyItem:
 	.4byte doKill__7KeyItemFv
 	.4byte exitCourse__8CreatureFv
 	.4byte 0
-	.4byte 0x726f7065
-	.4byte 0x4974656d
-	.4byte 0x2e637070
+	.4byte 0x726F7065
+	.4byte 0x4974656D
+	.4byte 0x2E637070
 	.4byte 0
-	.4byte 0x726f7065
-	.4byte 0x4974656d
+	.4byte 0x726F7065
+	.4byte 0x4974656D
 	.4byte 0
-	.4byte 0x526f7065
-	.4byte 0x4974656d
+	.4byte 0x526F7065
+	.4byte 0x4974656D
 	.4byte 0
-	.4byte 0x4576656e
-	.4byte 0x7454616c
-	.4byte 0x6b657200
+	.4byte 0x4576656E
+	.4byte 0x7454616C
+	.4byte 0x6B657200
 	.4byte 0x52656643
-	.4byte 0x6f756e74
-	.4byte 0x61626c65
+	.4byte 0x6F756E74
+	.4byte 0x61626C65
 	.4byte 0
 	.4byte 0x43726561
 	.4byte 0x74757265
 	.4byte 0
-	.4byte 0x803e1a08
+	.4byte 0x803E1A08
 	.4byte 0x8
-	.4byte 0x803e1a10
+	.4byte 0x803E1A10
 	.4byte 0
 	.4byte 0
-	.4byte 0x526f7065
+	.4byte 0x526F7065
 	.4byte 0x43726561
 	.4byte 0x74757265
 	.4byte 0
-	.4byte 0x803e1a08
+	.4byte 0x803E1A08
 	.4byte 0x8
-	.4byte 0x803e1a10
+	.4byte 0x803E1A10
 	.4byte 0
-	.4byte 0x803e1a18
+	.4byte 0x803E1A18
 	.4byte 0
 	.4byte 0
-	.4byte 0x803e1a08
+	.4byte 0x803E1A08
 	.4byte 0x8
-	.4byte 0x803e1a10
+	.4byte 0x803E1A10
 	.4byte 0
-	.4byte 0x803e1a18
+	.4byte 0x803E1A18
 	.4byte 0
-	.4byte 0x803e1a20
+	.4byte 0x803E1A20
 	.4byte 0
 	.4byte 0
 .global __vt__8RopeItem
@@ -32607,35 +32607,35 @@ __vt__8RopeItem:
 	.4byte doKill__8RopeItemFv
 	.4byte exitCourse__8CreatureFv
 	.4byte 0x73656564
-	.4byte 0x4974656d
-	.4byte 0x2e637070
+	.4byte 0x4974656D
+	.4byte 0x2E637070
 	.4byte 0
 	.4byte 0x73656564
-	.4byte 0x4974656d
+	.4byte 0x4974656D
 	.4byte 0
 	.4byte 0x53656564
-	.4byte 0x4974656d
+	.4byte 0x4974656D
 	.4byte 0
-	.4byte 0x4576656e
-	.4byte 0x7454616c
-	.4byte 0x6b657200
+	.4byte 0x4576656E
+	.4byte 0x7454616C
+	.4byte 0x6B657200
 	.4byte 0x52656643
-	.4byte 0x6f756e74
-	.4byte 0x61626c65
+	.4byte 0x6F756E74
+	.4byte 0x61626C65
 	.4byte 0
 	.4byte 0x43726561
 	.4byte 0x74757265
 	.4byte 0
-	.4byte 0x803e1a38
+	.4byte 0x803E1A38
 	.4byte 0x8
-	.4byte 0x803e1a40
+	.4byte 0x803E1A40
 	.4byte 0
 	.4byte 0
-	.4byte 0x803e1a38
+	.4byte 0x803E1A38
 	.4byte 0x8
-	.4byte 0x803e1a40
+	.4byte 0x803E1A40
 	.4byte 0
-	.4byte 0x803e1a48
+	.4byte 0x803E1A48
 	.4byte 0
 	.4byte 0
 .global __vt__8SeedItem
@@ -32710,8 +32710,8 @@ __vt__8SeedItem:
 	.4byte doKill__8SeedItemFv
 	.4byte exitCourse__8CreatureFv
 	.4byte 0
-	.4byte 0x67656e49
-	.4byte 0x74656d2e
+	.4byte 0x67656E49
+	.4byte 0x74656D2E
 	.4byte 0x63707000
 .global lbl_802BD7A4
 lbl_802BD7A4:
@@ -32796,22 +32796,22 @@ __vt__13GenObjectItem:
 	.4byte update__9GenObjectFP9Generator
 	.4byte render__9GenObjectFR8GraphicsP9Generator
 	.4byte birth__13GenObjectItemFR9BirthInfo
-	.4byte 0x5061726d
-	.4byte 0x3c696e74
-	.4byte 0x3e000000
+	.4byte 0x5061726D
+	.4byte 0x3C696E74
+	.4byte 0x3E000000
 	.4byte 0x42617365
-	.4byte 0x5061726d
+	.4byte 0x5061726D
 	.4byte 0
-	.4byte 0x803e1a94
-	.4byte 0
-	.4byte 0
+	.4byte 0x803E1A94
 	.4byte 0
 	.4byte 0
 	.4byte 0
 	.4byte 0
 	.4byte 0
-	.4byte 0x6974656d
-	.4byte 0x41492e63
+	.4byte 0
+	.4byte 0
+	.4byte 0x6974656D
+	.4byte 0x41492E63
 	.4byte 0x70700000
 .global lbl_802BD90C
 lbl_802BD90C:
@@ -32842,11 +32842,11 @@ __vt__Q211FallWaterAI13DisappearInit:
 	.4byte __RTTI__Q211FallWaterAI13DisappearInit
 	.4byte 0
 	.4byte act__Q211FallWaterAI13DisappearInitFP10AICreature
-	.4byte 0x46616c6c
+	.4byte 0x46616C6C
 	.4byte 0x57617465
-	.4byte 0x7241493a
-	.4byte 0x3a456d69
-	.4byte 0x74496e69
+	.4byte 0x7241493A
+	.4byte 0x3A456D69
+	.4byte 0x74496E69
 	.4byte 0x74000000
 	.4byte __RTTI__9SAIAction
 	.4byte 0
@@ -32856,12 +32856,12 @@ __vt__Q211FallWaterAI8EmitInit:
 	.4byte __RTTI__Q211FallWaterAI8EmitInit
 	.4byte 0
 	.4byte act__Q211FallWaterAI8EmitInitFP10AICreature
-	.4byte 0x46616c6c
+	.4byte 0x46616C6C
 	.4byte 0x57617465
-	.4byte 0x7241493a
-	.4byte 0x3a436f6c
-	.4byte 0x6c696465
-	.4byte 0x496e6974
+	.4byte 0x7241493A
+	.4byte 0x3A436F6C
+	.4byte 0x6C696465
+	.4byte 0x496E6974
 	.4byte 0
 	.4byte __RTTI__9SAIAction
 	.4byte 0
@@ -32871,18 +32871,18 @@ __vt__Q211FallWaterAI11CollideInit:
 	.4byte __RTTI__Q211FallWaterAI11CollideInit
 	.4byte 0
 	.4byte act__Q211FallWaterAI11CollideInitFP10AICreature
-	.4byte 0x46616c6c
+	.4byte 0x46616C6C
 	.4byte 0x57617465
 	.4byte 0x72414900
 	.4byte 0x53746174
-	.4byte 0x654d6163
-	.4byte 0x68696e65
-	.4byte 0x3c414943
+	.4byte 0x654D6163
+	.4byte 0x68696E65
+	.4byte 0x3C414943
 	.4byte 0x72656174
-	.4byte 0x7572653e
+	.4byte 0x7572653E
 	.4byte 0
-	.4byte 0x53696d70
-	.4byte 0x6c654149
+	.4byte 0x53696D70
+	.4byte 0x6C654149
 	.4byte 0
 	.4byte "__RTTI__26StateMachine<10AICreature>_1"
 	.4byte 0
@@ -32901,8 +32901,8 @@ __vt__11FallWaterAI:
 	.4byte procMsg__8SimpleAIFP10AICreatureP3Msg
 	.4byte "transit__26StateMachine<10AICreature>FP10AICreaturei"
 	.4byte 0x57617465
-	.4byte 0x7241493a
-	.4byte 0x3a446965
+	.4byte 0x7241493A
+	.4byte 0x3A446965
 	.4byte 0
 	.4byte __RTTI__9SAIAction
 	.4byte 0
@@ -32913,26 +32913,26 @@ __vt__Q27WaterAI3Die:
 	.4byte 0
 	.4byte act__Q27WaterAI3DieFP10AICreature
 	.4byte 0x57617465
-	.4byte 0x7241493a
-	.4byte 0x3a436f6c
-	.4byte 0x6c696465
+	.4byte 0x7241493A
+	.4byte 0x3A436F6C
+	.4byte 0x6C696465
 	.4byte 0x43686172
 	.4byte 0
-	.4byte 0x803e1b0c
+	.4byte 0x803E1B0C
 	.4byte 0
 	.4byte 0
 	.4byte 0x53414943
-	.4byte 0x6f6e6469
-	.4byte 0x74696f6e
+	.4byte 0x6F6E6469
+	.4byte 0x74696F6E
 	.4byte 0
-	.4byte 0x803e1b0c
+	.4byte 0x803E1B0C
 	.4byte 0
-	.4byte 0x803e1b14
+	.4byte 0x803E1B14
 	.4byte 0
 	.4byte 0
-	.4byte 0x803e1b0c
+	.4byte 0x803E1B0C
 	.4byte 0
-	.4byte 0x803e1b14
+	.4byte 0x803E1B14
 	.4byte 0
 	.4byte __RTTI__12SAICondition_1
 	.4byte 0
@@ -32957,8 +32957,8 @@ __vt__7WaterAI:
 	.4byte exec__8SimpleAIFP10AICreature
 	.4byte procMsg__8SimpleAIFP10AICreatureP3Msg
 	.4byte "transit__26StateMachine<10AICreature>FP10AICreaturei"
-	.4byte 0x47656d41
-	.4byte 0x493a3a44
+	.4byte 0x47656D41
+	.4byte 0x493A3A44
 	.4byte 0x69650000
 	.4byte __RTTI__9SAIAction
 	.4byte 0
@@ -32968,8 +32968,8 @@ __vt__Q25GemAI3Die:
 	.4byte __RTTI__Q25GemAI3Die
 	.4byte 0
 	.4byte act__Q25GemAI3DieFP10AICreature
-	.4byte 0x47656d41
-	.4byte 0x493a3a52
+	.4byte 0x47656D41
+	.4byte 0x493A3A52
 	.4byte 0x69736545
 	.4byte 0x78656300
 	.4byte __RTTI__9SAIAction
@@ -32980,10 +32980,10 @@ __vt__Q25GemAI8RiseExec:
 	.4byte __RTTI__Q25GemAI8RiseExec
 	.4byte 0
 	.4byte act__Q25GemAI8RiseExecFP10AICreature
-	.4byte 0x47656d41
-	.4byte 0x493a3a52
+	.4byte 0x47656D41
+	.4byte 0x493A3A52
 	.4byte 0x69736549
-	.4byte 0x6e697400
+	.4byte 0x6E697400
 	.4byte __RTTI__9SAIAction
 	.4byte 0
 	.4byte 0
@@ -33005,8 +33005,8 @@ __vt__5GemAI:
 	.4byte exec__8SimpleAIFP10AICreature
 	.4byte procMsg__8SimpleAIFP10AICreatureP3Msg
 	.4byte "transit__26StateMachine<10AICreature>FP10AICreaturei"
-	.4byte 0x476f616c
-	.4byte 0x41493a3a
+	.4byte 0x476F616C
+	.4byte 0x41493A3A
 	.4byte 0x45666665
 	.4byte 0x63740000
 	.4byte __RTTI__9SAIAction
@@ -33017,9 +33017,9 @@ __vt__Q26GoalAI6Effect:
 	.4byte __RTTI__Q26GoalAI6Effect
 	.4byte 0
 	.4byte act__Q26GoalAI6EffectFP10AICreature
-	.4byte 0x476f616c
-	.4byte 0x41493a3a
-	.4byte 0x456d6974
+	.4byte 0x476F616C
+	.4byte 0x41493A3A
+	.4byte 0x456D6974
 	.4byte 0x57616974
 	.4byte 0
 	.4byte __RTTI__9SAIAction
@@ -33030,10 +33030,10 @@ __vt__Q26GoalAI8EmitWait:
 	.4byte __RTTI__Q26GoalAI8EmitWait
 	.4byte 0
 	.4byte act__Q26GoalAI8EmitWaitFP10AICreature
-	.4byte 0x476f616c
-	.4byte 0x41493a3a
-	.4byte 0x456d6974
-	.4byte 0x50696b69
+	.4byte 0x476F616C
+	.4byte 0x41493A3A
+	.4byte 0x456D6974
+	.4byte 0x50696B69
 	.4byte 0
 	.4byte __RTTI__9SAIAction
 	.4byte 0
@@ -33043,10 +33043,10 @@ __vt__Q26GoalAI8EmitPiki:
 	.4byte __RTTI__Q26GoalAI8EmitPiki
 	.4byte 0
 	.4byte act__Q26GoalAI8EmitPikiFP10AICreature
-	.4byte 0x476f616c
-	.4byte 0x41493a3a
-	.4byte 0x426f6f74
-	.4byte 0x446f6e65
+	.4byte 0x476F616C
+	.4byte 0x41493A3A
+	.4byte 0x426F6F74
+	.4byte 0x446F6E65
 	.4byte 0
 	.4byte __RTTI__9SAIAction
 	.4byte 0
@@ -33056,10 +33056,10 @@ __vt__Q26GoalAI8BootDone:
 	.4byte __RTTI__Q26GoalAI8BootDone
 	.4byte 0
 	.4byte act__Q26GoalAI8BootDoneFP10AICreature
-	.4byte 0x476f616c
-	.4byte 0x41493a3a
-	.4byte 0x426f6f74
-	.4byte 0x456d6974
+	.4byte 0x476F616C
+	.4byte 0x41493A3A
+	.4byte 0x426F6F74
+	.4byte 0x456D6974
 	.4byte 0
 	.4byte __RTTI__9SAIAction
 	.4byte 0
@@ -33069,10 +33069,10 @@ __vt__Q26GoalAI8BootEmit:
 	.4byte __RTTI__Q26GoalAI8BootEmit
 	.4byte 0
 	.4byte act__Q26GoalAI8BootEmitFP10AICreature
-	.4byte 0x476f616c
-	.4byte 0x41493a3a
-	.4byte 0x426f6f74
-	.4byte 0x496e6974
+	.4byte 0x476F616C
+	.4byte 0x41493A3A
+	.4byte 0x426F6F74
+	.4byte 0x496E6974
 	.4byte 0
 	.4byte __RTTI__9SAIAction
 	.4byte 0
@@ -33082,10 +33082,10 @@ __vt__Q26GoalAI8BootInit:
 	.4byte __RTTI__Q26GoalAI8BootInit
 	.4byte 0
 	.4byte act__Q26GoalAI8BootInitFP10AICreature
-	.4byte 0x476f616c
-	.4byte 0x41493a3a
+	.4byte 0x476F616C
+	.4byte 0x41493A3A
 	.4byte 0x57616974
-	.4byte 0x496e6974
+	.4byte 0x496E6974
 	.4byte 0
 	.4byte __RTTI__9SAIAction
 	.4byte 0
@@ -33095,14 +33095,14 @@ __vt__Q26GoalAI8WaitInit:
 	.4byte __RTTI__Q26GoalAI8WaitInit
 	.4byte 0
 	.4byte act__Q26GoalAI8WaitInitFP10AICreature
-	.4byte 0x476f616c
-	.4byte 0x41493a3a
-	.4byte 0x4e6f7446
-	.4byte 0x696e6973
+	.4byte 0x476F616C
+	.4byte 0x41493A3A
+	.4byte 0x4E6F7446
+	.4byte 0x696E6973
 	.4byte 0x68656400
-	.4byte 0x803e1b0c
+	.4byte 0x803E1B0C
 	.4byte 0
-	.4byte 0x803e1b14
+	.4byte 0x803E1B14
 	.4byte 0
 	.4byte __RTTI__12SAICondition_1
 	.4byte 0
@@ -33139,8 +33139,8 @@ __vt__6GoalAI:
 	.4byte exec__8SimpleAIFP10AICreature
 	.4byte procMsg__8SimpleAIFP10AICreatureP3Msg
 	.4byte "transit__26StateMachine<10AICreature>FP10AICreaturei"
-	.4byte 0x426f6d62
-	.4byte 0x41493a3a
+	.4byte 0x426F6D62
+	.4byte 0x41493A3A
 	.4byte 0x44696545
 	.4byte 0x78656300
 	.4byte __RTTI__9SAIAction
@@ -33151,10 +33151,10 @@ __vt__Q26BombAI7DieExec:
 	.4byte __RTTI__Q26BombAI7DieExec
 	.4byte 0
 	.4byte act__Q26BombAI7DieExecFP10AICreature
-	.4byte 0x426f6d62
-	.4byte 0x41493a3a
+	.4byte 0x426F6D62
+	.4byte 0x41493A3A
 	.4byte 0x44696549
-	.4byte 0x6e697400
+	.4byte 0x6E697400
 	.4byte __RTTI__9SAIAction
 	.4byte 0
 	.4byte 0
@@ -33163,9 +33163,9 @@ __vt__Q26BombAI7DieInit:
 	.4byte __RTTI__Q26BombAI7DieInit
 	.4byte 0
 	.4byte act__Q26BombAI7DieInitFP10AICreature
-	.4byte 0x426f6d62
-	.4byte 0x41493a3a
-	.4byte 0x4d697a75
+	.4byte 0x426F6D62
+	.4byte 0x41493A3A
+	.4byte 0x4D697A75
 	.4byte 0x45786563
 	.4byte 0
 	.4byte __RTTI__9SAIAction
@@ -33176,10 +33176,10 @@ __vt__Q26BombAI8MizuExec:
 	.4byte __RTTI__Q26BombAI8MizuExec
 	.4byte 0
 	.4byte act__Q26BombAI8MizuExecFP10AICreature
-	.4byte 0x426f6d62
-	.4byte 0x41493a3a
-	.4byte 0x4d697a75
-	.4byte 0x496e6974
+	.4byte 0x426F6D62
+	.4byte 0x41493A3A
+	.4byte 0x4D697A75
+	.4byte 0x496E6974
 	.4byte 0
 	.4byte __RTTI__9SAIAction
 	.4byte 0
@@ -33189,9 +33189,9 @@ __vt__Q26BombAI8MizuInit:
 	.4byte __RTTI__Q26BombAI8MizuInit
 	.4byte 0
 	.4byte act__Q26BombAI8MizuInitFP10AICreature
-	.4byte 0x426f6d62
-	.4byte 0x41493a3a
-	.4byte 0x426f6d62
+	.4byte 0x426F6D62
+	.4byte 0x41493A3A
+	.4byte 0x426F6D62
 	.4byte 0x45786563
 	.4byte 0
 	.4byte __RTTI__9SAIAction
@@ -33202,9 +33202,9 @@ __vt__Q26BombAI8BombExec:
 	.4byte __RTTI__Q26BombAI8BombExec
 	.4byte 0
 	.4byte act__Q26BombAI8BombExecFP10AICreature
-	.4byte 0x496e7465
+	.4byte 0x496E7465
 	.4byte 0x72616374
-	.4byte 0x696f6e00
+	.4byte 0x696F6E00
 	.4byte 0
 	.4byte 0
 	.4byte 0
@@ -33216,11 +33216,11 @@ __vt__Q26BombAI8BombExec:
 	.4byte 0
 	.4byte 0
 	.4byte 0
-	.4byte 0x436e6442
-	.4byte 0x6f6d6261
-	.4byte 0x626c6500
-	.4byte 0x436e6443
-	.4byte 0x6f6c6c50
+	.4byte 0x436E6442
+	.4byte 0x6F6D6261
+	.4byte 0x626C6500
+	.4byte 0x436E6443
+	.4byte 0x6F6C6C50
 	.4byte 0x61727400
 	.4byte __RTTI__11CndCollPart
 	.4byte 0
@@ -33235,10 +33235,10 @@ __vt__11CndCollPart:
 	.4byte __RTTI__11CndCollPart
 	.4byte 0
 	.4byte satisfy__11CndCollPartFP8CollPart
-	.4byte 0x426f6d62
-	.4byte 0x41493a3a
-	.4byte 0x426f6d62
-	.4byte 0x496e6974
+	.4byte 0x426F6D62
+	.4byte 0x41493A3A
+	.4byte 0x426F6D62
+	.4byte 0x496E6974
 	.4byte 0
 	.4byte __RTTI__9SAIAction
 	.4byte 0
@@ -33248,8 +33248,8 @@ __vt__Q26BombAI8BombInit:
 	.4byte __RTTI__Q26BombAI8BombInit
 	.4byte 0
 	.4byte act__Q26BombAI8BombInitFP10AICreature
-	.4byte 0x426f6d62
-	.4byte 0x41493a3a
+	.4byte 0x426F6D62
+	.4byte 0x41493A3A
 	.4byte 0x53657445
 	.4byte 0x78656300
 	.4byte __RTTI__9SAIAction
@@ -33260,10 +33260,10 @@ __vt__Q26BombAI7SetExec:
 	.4byte __RTTI__Q26BombAI7SetExec
 	.4byte 0
 	.4byte act__Q26BombAI7SetExecFP10AICreature
-	.4byte 0x426f6d62
-	.4byte 0x41493a3a
+	.4byte 0x426F6D62
+	.4byte 0x41493A3A
 	.4byte 0x53657449
-	.4byte 0x6e697400
+	.4byte 0x6E697400
 	.4byte __RTTI__9SAIAction
 	.4byte 0
 	.4byte 0
@@ -33285,9 +33285,9 @@ __vt__6BombAI:
 	.4byte exec__8SimpleAIFP10AICreature
 	.4byte procMsg__8SimpleAIFP10AICreatureP3Msg
 	.4byte "transit__26StateMachine<10AICreature>FP10AICreaturei"
-	.4byte 0x50696b69
+	.4byte 0x50696B69
 	.4byte 0x48656164
-	.4byte 0x41493a3a
+	.4byte 0x41493A3A
 	.4byte 0x44656164
 	.4byte 0
 	.4byte __RTTI__9SAIAction
@@ -33298,10 +33298,10 @@ __vt__Q210PikiHeadAI4Dead:
 	.4byte __RTTI__Q210PikiHeadAI4Dead
 	.4byte 0
 	.4byte act__Q210PikiHeadAI4DeadFP10AICreature
-	.4byte 0x50696b69
+	.4byte 0x50696B69
 	.4byte 0x48656164
-	.4byte 0x41493a3a
-	.4byte 0x4b617265
+	.4byte 0x41493A3A
+	.4byte 0x4B617265
 	.4byte 0x74614578
 	.4byte 0x65630000
 	.4byte __RTTI__9SAIAction
@@ -33312,11 +33312,11 @@ __vt__Q210PikiHeadAI10KaretaExec:
 	.4byte __RTTI__Q210PikiHeadAI10KaretaExec
 	.4byte 0
 	.4byte act__Q210PikiHeadAI10KaretaExecFP10AICreature
-	.4byte 0x50696b69
+	.4byte 0x50696B69
 	.4byte 0x48656164
-	.4byte 0x41493a3a
-	.4byte 0x4b617265
-	.4byte 0x7461496e
+	.4byte 0x41493A3A
+	.4byte 0x4B617265
+	.4byte 0x7461496E
 	.4byte 0x69740000
 	.4byte __RTTI__9SAIAction
 	.4byte 0
@@ -33326,10 +33326,10 @@ __vt__Q210PikiHeadAI10KaretaInit:
 	.4byte __RTTI__Q210PikiHeadAI10KaretaInit
 	.4byte 0
 	.4byte act__Q210PikiHeadAI10KaretaInitFP10AICreature
-	.4byte 0x50696b69
+	.4byte 0x50696B69
 	.4byte 0x48656164
-	.4byte 0x41493a3a
-	.4byte 0x47726f77
+	.4byte 0x41493A3A
+	.4byte 0x47726F77
 	.4byte 0x45666665
 	.4byte 0x63740000
 	.4byte __RTTI__9SAIAction
@@ -33340,10 +33340,10 @@ __vt__Q210PikiHeadAI10GrowEffect:
 	.4byte __RTTI__Q210PikiHeadAI10GrowEffect
 	.4byte 0
 	.4byte act__Q210PikiHeadAI10GrowEffectFP10AICreature
-	.4byte 0x50696b69
+	.4byte 0x50696B69
 	.4byte 0x48656164
-	.4byte 0x41493a3a
-	.4byte 0x47726f77
+	.4byte 0x41493A3A
+	.4byte 0x47726F77
 	.4byte 0x75706564
 	.4byte 0x45786563
 	.4byte 0
@@ -33355,9 +33355,9 @@ __vt__Q210PikiHeadAI12GrowupedExec:
 	.4byte __RTTI__Q210PikiHeadAI12GrowupedExec
 	.4byte 0
 	.4byte act__Q210PikiHeadAI12GrowupedExecFP10AICreature
-	.4byte 0x50696b69
+	.4byte 0x50696B69
 	.4byte 0x48656164
-	.4byte 0x41493a3a
+	.4byte 0x41493A3A
 	.4byte 0x57616974
 	.4byte 0x45786563
 	.4byte 0
@@ -33369,11 +33369,11 @@ __vt__Q210PikiHeadAI8WaitExec:
 	.4byte __RTTI__Q210PikiHeadAI8WaitExec
 	.4byte 0
 	.4byte act__Q210PikiHeadAI8WaitExecFP10AICreature
-	.4byte 0x50696b69
+	.4byte 0x50696B69
 	.4byte 0x48656164
-	.4byte 0x41493a3a
+	.4byte 0x41493A3A
 	.4byte 0x57616974
-	.4byte 0x496e6974
+	.4byte 0x496E6974
 	.4byte 0
 	.4byte __RTTI__9SAIAction
 	.4byte 0
@@ -33383,10 +33383,10 @@ __vt__Q210PikiHeadAI8WaitInit:
 	.4byte __RTTI__Q210PikiHeadAI8WaitInit
 	.4byte 0
 	.4byte act__Q210PikiHeadAI8WaitInitFP10AICreature
-	.4byte 0x50696b69
+	.4byte 0x50696B69
 	.4byte 0x48656164
-	.4byte 0x41493a3a
-	.4byte 0x54616e65
+	.4byte 0x41493A3A
+	.4byte 0x54616E65
 	.4byte 0x45786563
 	.4byte 0
 	.4byte __RTTI__9SAIAction
@@ -33397,11 +33397,11 @@ __vt__Q210PikiHeadAI8TaneExec:
 	.4byte __RTTI__Q210PikiHeadAI8TaneExec
 	.4byte 0
 	.4byte act__Q210PikiHeadAI8TaneExecFP10AICreature
-	.4byte 0x50696b69
+	.4byte 0x50696B69
 	.4byte 0x48656164
-	.4byte 0x41493a3a
-	.4byte 0x54616e65
-	.4byte 0x496e6974
+	.4byte 0x41493A3A
+	.4byte 0x54616E65
+	.4byte 0x496E6974
 	.4byte 0
 	.4byte __RTTI__9SAIAction
 	.4byte 0
@@ -33411,9 +33411,9 @@ __vt__Q210PikiHeadAI8TaneInit:
 	.4byte __RTTI__Q210PikiHeadAI8TaneInit
 	.4byte 0
 	.4byte act__Q210PikiHeadAI8TaneInitFP10AICreature
-	.4byte 0x50696b69
+	.4byte 0x50696B69
 	.4byte 0x48656164
-	.4byte 0x41493a3a
+	.4byte 0x41493A3A
 	.4byte 0x42757279
 	.4byte 0x45786563
 	.4byte 0
@@ -33425,11 +33425,11 @@ __vt__Q210PikiHeadAI8BuryExec:
 	.4byte __RTTI__Q210PikiHeadAI8BuryExec
 	.4byte 0
 	.4byte act__Q210PikiHeadAI8BuryExecFP10AICreature
-	.4byte 0x50696b69
+	.4byte 0x50696B69
 	.4byte 0x48656164
-	.4byte 0x41493a3a
+	.4byte 0x41493A3A
 	.4byte 0x42757279
-	.4byte 0x496e6974
+	.4byte 0x496E6974
 	.4byte 0
 	.4byte __RTTI__9SAIAction
 	.4byte 0
@@ -33439,9 +33439,9 @@ __vt__Q210PikiHeadAI8BuryInit:
 	.4byte __RTTI__Q210PikiHeadAI8BuryInit
 	.4byte 0
 	.4byte act__Q210PikiHeadAI8BuryInitFP10AICreature
-	.4byte 0x50696b69
+	.4byte 0x50696B69
 	.4byte 0x48656164
-	.4byte 0x41493a3a
+	.4byte 0x41493A3A
 	.4byte 0x42757279
 	.4byte 0x45786563
 	.4byte 0x32000000
@@ -33453,11 +33453,11 @@ __vt__Q210PikiHeadAI9BuryExec2:
 	.4byte __RTTI__Q210PikiHeadAI9BuryExec2
 	.4byte 0
 	.4byte act__Q210PikiHeadAI9BuryExec2FP10AICreature
-	.4byte 0x50696b69
+	.4byte 0x50696B69
 	.4byte 0x48656164
-	.4byte 0x41493a3a
+	.4byte 0x41493A3A
 	.4byte 0x42757279
-	.4byte 0x496e6974
+	.4byte 0x496E6974
 	.4byte 0x32000000
 	.4byte __RTTI__9SAIAction
 	.4byte 0
@@ -33467,12 +33467,12 @@ __vt__Q210PikiHeadAI9BuryInit2:
 	.4byte __RTTI__Q210PikiHeadAI9BuryInit2
 	.4byte 0
 	.4byte act__Q210PikiHeadAI9BuryInit2FP10AICreature
-	.4byte 0x50696b69
+	.4byte 0x50696B69
 	.4byte 0x48656164
-	.4byte 0x41493a3a
-	.4byte 0x466c7969
-	.4byte 0x6e67436c
-	.4byte 0x65616e75
+	.4byte 0x41493A3A
+	.4byte 0x466C7969
+	.4byte 0x6E67436C
+	.4byte 0x65616E75
 	.4byte 0x70000000
 	.4byte __RTTI__9SAIAction
 	.4byte 0
@@ -33482,11 +33482,11 @@ __vt__Q210PikiHeadAI13FlyingCleanup:
 	.4byte __RTTI__Q210PikiHeadAI13FlyingCleanup
 	.4byte 0
 	.4byte act__Q210PikiHeadAI13FlyingCleanupFP10AICreature
-	.4byte 0x50696b69
+	.4byte 0x50696B69
 	.4byte 0x48656164
-	.4byte 0x41493a3a
-	.4byte 0x466c7969
-	.4byte 0x6e674578
+	.4byte 0x41493A3A
+	.4byte 0x466C7969
+	.4byte 0x6E674578
 	.4byte 0x65630000
 	.4byte __RTTI__9SAIAction
 	.4byte 0
@@ -33496,11 +33496,11 @@ __vt__Q210PikiHeadAI10FlyingExec:
 	.4byte __RTTI__Q210PikiHeadAI10FlyingExec
 	.4byte 0
 	.4byte act__Q210PikiHeadAI10FlyingExecFP10AICreature
-	.4byte 0x50696b69
+	.4byte 0x50696B69
 	.4byte 0x48656164
-	.4byte 0x41493a3a
-	.4byte 0x466c7969
-	.4byte 0x6e674566
+	.4byte 0x41493A3A
+	.4byte 0x466C7969
+	.4byte 0x6E674566
 	.4byte 0x66656374
 	.4byte 0
 	.4byte __RTTI__9SAIAction
@@ -33511,12 +33511,12 @@ __vt__Q210PikiHeadAI12FlyingEffect:
 	.4byte __RTTI__Q210PikiHeadAI12FlyingEffect
 	.4byte 0
 	.4byte act__Q210PikiHeadAI12FlyingEffectFP10AICreature
-	.4byte 0x50696b69
+	.4byte 0x50696B69
 	.4byte 0x48656164
-	.4byte 0x41493a3a
-	.4byte 0x426f756e
-	.4byte 0x6365536f
-	.4byte 0x756e6400
+	.4byte 0x41493A3A
+	.4byte 0x426F756E
+	.4byte 0x6365536F
+	.4byte 0x756E6400
 	.4byte __RTTI__9SAIAction
 	.4byte 0
 	.4byte 0
@@ -33525,7 +33525,7 @@ __vt__Q210PikiHeadAI11BounceSound:
 	.4byte __RTTI__Q210PikiHeadAI11BounceSound
 	.4byte 0
 	.4byte act__Q210PikiHeadAI11BounceSoundFP10AICreature
-	.4byte 0x50696b69
+	.4byte 0x50696B69
 	.4byte 0x48656164
 	.4byte 0x41490000
 	.4byte "__RTTI__26StateMachine<10AICreature>_1"
@@ -33541,11 +33541,11 @@ __vt__10PikiHeadAI:
 	.4byte exec__8SimpleAIFP10AICreature
 	.4byte procMsg__8SimpleAIFP10AICreatureP3Msg
 	.4byte "transit__26StateMachine<10AICreature>FP10AICreaturei"
-	.4byte 0x536c7569
+	.4byte 0x536C7569
 	.4byte 0x63654149
-	.4byte 0x3a3a4461
-	.4byte 0x6d616765
-	.4byte 0x496e6974
+	.4byte 0x3A3A4461
+	.4byte 0x6D616765
+	.4byte 0x496E6974
 	.4byte 0
 	.4byte __RTTI__9SAIAction
 	.4byte 0
@@ -33555,11 +33555,11 @@ __vt__Q28SluiceAI10DamageInit:
 	.4byte __RTTI__Q28SluiceAI10DamageInit
 	.4byte 0
 	.4byte act__Q28SluiceAI10DamageInitFP10AICreature
-	.4byte 0x536c7569
+	.4byte 0x536C7569
 	.4byte 0x63654149
-	.4byte 0x3a3a4368
-	.4byte 0x616e6765
-	.4byte 0x496e6974
+	.4byte 0x3A3A4368
+	.4byte 0x616E6765
+	.4byte 0x496E6974
 	.4byte 0
 	.4byte __RTTI__9SAIAction
 	.4byte 0
@@ -33569,10 +33569,10 @@ __vt__Q28SluiceAI10ChangeInit:
 	.4byte __RTTI__Q28SluiceAI10ChangeInit
 	.4byte 0
 	.4byte act__Q28SluiceAI10ChangeInitFP10AICreature
-	.4byte 0x536c7569
+	.4byte 0x536C7569
 	.4byte 0x63654149
-	.4byte 0x3a3a5761
-	.4byte 0x6974496e
+	.4byte 0x3A3A5761
+	.4byte 0x6974496E
 	.4byte 0x69740000
 	.4byte __RTTI__9SAIAction
 	.4byte 0
@@ -33582,11 +33582,11 @@ __vt__Q28SluiceAI8WaitInit:
 	.4byte __RTTI__Q28SluiceAI8WaitInit
 	.4byte 0
 	.4byte act__Q28SluiceAI8WaitInitFP10AICreature
-	.4byte 0x536c7569
+	.4byte 0x536C7569
 	.4byte 0x63654149
-	.4byte 0x3a3a4164
-	.4byte 0x64436f75
-	.4byte 0x6e740000
+	.4byte 0x3A3A4164
+	.4byte 0x64436F75
+	.4byte 0x6E740000
 	.4byte __RTTI__9SAIAction
 	.4byte 0
 	.4byte 0
@@ -33595,11 +33595,11 @@ __vt__Q28SluiceAI8AddCount:
 	.4byte __RTTI__Q28SluiceAI8AddCount
 	.4byte 0
 	.4byte act__Q28SluiceAI8AddCountFP10AICreature
-	.4byte 0x536c7569
+	.4byte 0x536C7569
 	.4byte 0x63654149
-	.4byte 0x3a3a4d6f
-	.4byte 0x74696f6e
-	.4byte 0x446f6e65
+	.4byte 0x3A3A4D6F
+	.4byte 0x74696F6E
+	.4byte 0x446F6E65
 	.4byte 0
 	.4byte __RTTI__9SAIAction
 	.4byte 0
@@ -33609,9 +33609,9 @@ __vt__Q28SluiceAI10MotionDone:
 	.4byte __RTTI__Q28SluiceAI10MotionDone
 	.4byte 0
 	.4byte act__Q28SluiceAI10MotionDoneFP10AICreature
-	.4byte 0x536c7569
+	.4byte 0x536C7569
 	.4byte 0x63654149
-	.4byte 0x3a3a496e
+	.4byte 0x3A3A496E
 	.4byte 0x69740000
 	.4byte __RTTI__9SAIAction
 	.4byte 0
@@ -33627,13 +33627,13 @@ __vt__9SAIAction:
 	.4byte 0
 	.4byte 0
 	.4byte 0x53414945
-	.4byte 0x76656e74
+	.4byte 0x76656E74
 	.4byte 0
 	.4byte 0x52656365
 	.4byte 0x69766572
-	.4byte 0x3c414943
+	.4byte 0x3C414943
 	.4byte 0x72656174
-	.4byte 0x7572653e
+	.4byte 0x7572653E
 	.4byte 0
 	.4byte "__RTTI__22Receiver<10AICreature>_2"
 	.4byte 0
@@ -33666,7 +33666,7 @@ __vt__9SAIAction:
 	.4byte 0
 	.4byte 0
 	.4byte 0
-	.4byte 0x536c7569
+	.4byte 0x536C7569
 	.4byte 0x63654149
 	.4byte 0
 	.4byte "__RTTI__26StateMachine<10AICreature>_1"
@@ -33953,7 +33953,7 @@ __vt__11PikiHeadMgr:
 	.4byte getNext__13MonoObjectMgrFi
 	.4byte isDone__13MonoObjectMgrFi
 	.4byte __RTTI__11PikiHeadMgr
-	.4byte 0xfffffff8
+	.4byte 0xFFFFFFF8
 	.4byte getAgeNodeType__5ANodeFv
 	.4byte read__8CoreNodeFR18RandomAccessStream
 	.4byte lbl_80099540
@@ -33979,16 +33979,16 @@ __vt__11PikiHeadMgr:
 	.4byte birth__11PikiHeadMgrFv
 	.4byte kill__13MonoObjectMgrFP8Creature
 	.4byte createObject__11PikiHeadMgrFv
-	.4byte 0x50696b69
+	.4byte 0x50696B69
 	.4byte 0x48656164
-	.4byte 0x4974656d
-	.4byte 0x50726f70
+	.4byte 0x4974656D
+	.4byte 0x50726F70
 	.4byte 0
 	.4byte 0x43726561
 	.4byte 0x74757265
-	.4byte 0x50726f70
+	.4byte 0x50726F70
 	.4byte 0
-	.4byte 0x803e1d90
+	.4byte 0x803E1D90
 	.4byte 0
 	.4byte 0
 .global __vt__16PikiHeadItemProp
@@ -33996,30 +33996,30 @@ __vt__16PikiHeadItemProp:
 	.4byte __RTTI__16PikiHeadItemProp
 	.4byte 0
 	.4byte read__12CreaturePropFR18RandomAccessStream
-	.4byte 0x506f6c79
-	.4byte 0x4f626a65
-	.4byte 0x63744d67
+	.4byte 0x506F6C79
+	.4byte 0x4F626A65
+	.4byte 0x63744D67
 	.4byte 0x72000000
-	.4byte 0x803e1d50
+	.4byte 0x803E1D50
 	.4byte 0x8
-	.4byte 0x803e1d58
+	.4byte 0x803E1D58
 	.4byte 0x8
-	.4byte 0x803e1d68
+	.4byte 0x803E1D68
 	.4byte 0x8
-	.4byte 0x803e1d70
+	.4byte 0x803E1D70
 	.4byte 0
-	.4byte 0x803e1d78
+	.4byte 0x803E1D78
 	.4byte 0
 	.4byte 0
-	.4byte 0x803e1d50
+	.4byte 0x803E1D50
 	.4byte 0x8
-	.4byte 0x803e1d58
+	.4byte 0x803E1D58
 	.4byte 0x8
-	.4byte 0x803e1d68
+	.4byte 0x803E1D68
 	.4byte 0x8
-	.4byte 0x803e1d70
+	.4byte 0x803E1D70
 	.4byte 0
-	.4byte 0x803e1d78
+	.4byte 0x803E1D78
 	.4byte 0
 	.4byte __RTTI__13PolyObjectMgr_1
 	.4byte 0
@@ -34033,7 +34033,7 @@ __vt__7ItemMgr:
 	.4byte getNext__13PolyObjectMgrFi
 	.4byte isDone__13PolyObjectMgrFi
 	.4byte __RTTI__7ItemMgr
-	.4byte 0xfffffff8
+	.4byte 0xFFFFFFF8
 	.4byte getAgeNodeType__5ANodeFv
 	.4byte read__8CoreNodeFR18RandomAccessStream
 	.4byte lbl_800F7950
@@ -34059,14 +34059,14 @@ __vt__7ItemMgr:
 	.4byte birth__7ItemMgrFi
 	.4byte kill__7ItemMgrFP8Creature
 	.4byte refresh2d__7ItemMgrFR8Graphics
-	.4byte 0x496e7465
+	.4byte 0x496E7465
 	.4byte 0x72616374
-	.4byte 0x42696b6b
+	.4byte 0x42696B6B
 	.4byte 0x75726900
-	.4byte 0x496e7465
+	.4byte 0x496E7465
 	.4byte 0x72616374
-	.4byte 0x696f6e00
-	.4byte 0x803e1db8
+	.4byte 0x696F6E00
+	.4byte 0x803E1DB8
 	.4byte 0
 	.4byte 0
 .global __vt__15InteractBikkuri
@@ -34082,56 +34082,56 @@ __vt__15InteractBikkuri:
 	.4byte actHinderRock__11InteractionFP10HinderRock
 	.4byte actBridge__11InteractionFP6Bridge
 	.4byte actItem__15InteractBikkuriFP12ItemCreature
-	.4byte 0x4974656d
+	.4byte 0x4974656D
 	.4byte 0x43726561
 	.4byte 0x74757265
 	.4byte 0
-	.4byte 0x50616e69
-	.4byte 0x416e696d
-	.4byte 0x4b65794c
+	.4byte 0x50616E69
+	.4byte 0x416E696D
+	.4byte 0x4B65794C
 	.4byte 0x69737465
-	.4byte 0x6e657200
-	.4byte 0x4576656e
-	.4byte 0x7454616c
-	.4byte 0x6b657200
+	.4byte 0x6E657200
+	.4byte 0x4576656E
+	.4byte 0x7454616C
+	.4byte 0x6B657200
 	.4byte 0x52656643
-	.4byte 0x6f756e74
-	.4byte 0x61626c65
+	.4byte 0x6F756E74
+	.4byte 0x61626C65
 	.4byte 0
 	.4byte 0x43726561
 	.4byte 0x74757265
 	.4byte 0
-	.4byte 0x803e1dd0
+	.4byte 0x803E1DD0
 	.4byte 0x8
-	.4byte 0x803e1dd8
+	.4byte 0x803E1DD8
 	.4byte 0
 	.4byte 0
 	.4byte 0x41494372
 	.4byte 0x65617475
 	.4byte 0x72650000
-	.4byte 0x803e1dc8
-	.4byte 0x2b8
-	.4byte 0x803e1dd0
+	.4byte 0x803E1DC8
+	.4byte 0x2B8
+	.4byte 0x803E1DD0
 	.4byte 0x8
-	.4byte 0x803e1dd8
+	.4byte 0x803E1DD8
 	.4byte 0
-	.4byte 0x803e1de0
+	.4byte 0x803E1DE0
 	.4byte 0
 	.4byte 0
-	.4byte 0x803e1dc8
-	.4byte 0x2b8
-	.4byte 0x803e1dd0
+	.4byte 0x803E1DC8
+	.4byte 0x2B8
+	.4byte 0x803E1DD0
 	.4byte 0x8
-	.4byte 0x803e1dd8
+	.4byte 0x803E1DD8
 	.4byte 0
-	.4byte 0x803e1de0
+	.4byte 0x803E1DE0
 	.4byte 0
-	.4byte 0x803e1de8
+	.4byte 0x803E1DE8
 	.4byte 0
 	.4byte 0
 .global __vt__12ItemCreature
 __vt__12ItemCreature:
-	.4byte 0x803e1df0
+	.4byte 0x803E1DF0
 	.4byte 0
 	.4byte addCntCallback__12RefCountableFv
 	.4byte subCntCallback__12RefCountableFv
@@ -34200,8 +34200,8 @@ __vt__12ItemCreature:
 	.4byte doAnimation__12ItemCreatureFv
 	.4byte doKill__12ItemCreatureFv
 	.4byte exitCourse__8CreatureFv
-	.4byte 0x803e1df0
-	.4byte 0xfffffd48
+	.4byte 0x803E1DF0
+	.4byte 0xFFFFFD48
 	.4byte lbl_8007DF54
 	.4byte getCurrState__10AICreatureFv
 	.4byte "setCurrState__10AICreatureFP20AState<10AICreature>"
@@ -34218,10 +34218,10 @@ __vt__12ItemCreature:
 	.4byte stopMotion__12ItemCreatureFv
 	.4byte animationKeyUpdated__10AICreatureFR16PaniAnimKeyEvent
 	.4byte finalSetup__12ItemCreatureFv
-	.4byte 0x446f6f72
-	.4byte 0x50726f70
+	.4byte 0x446F6F72
+	.4byte 0x50726F70
 	.4byte 0
-	.4byte 0x803e1d90
+	.4byte 0x803E1D90
 	.4byte 0
 	.4byte 0
 .global __vt__8DoorProp
@@ -34229,7 +34229,7 @@ __vt__8DoorProp:
 	.4byte __RTTI__8DoorProp
 	.4byte 0
 	.4byte read__12CreaturePropFR18RandomAccessStream
-	.4byte 0x803e1d90
+	.4byte 0x803E1D90
 	.4byte 0
 	.4byte 0
 .global __vt__7KeyProp
@@ -34238,9 +34238,9 @@ __vt__7KeyProp:
 	.4byte 0
 	.4byte read__12CreaturePropFR18RandomAccessStream
 	.4byte 0x53656564
-	.4byte 0x50726f70
+	.4byte 0x50726F70
 	.4byte 0
-	.4byte 0x803e1d90
+	.4byte 0x803E1D90
 	.4byte 0
 	.4byte 0
 .global __vt__8SeedProp
@@ -34248,10 +34248,10 @@ __vt__8SeedProp:
 	.4byte __RTTI__8SeedProp
 	.4byte 0
 	.4byte read__12CreaturePropFR18RandomAccessStream
-	.4byte 0x526f7065
-	.4byte 0x50726f70
+	.4byte 0x526F7065
+	.4byte 0x50726F70
 	.4byte 0
-	.4byte 0x803e1d90
+	.4byte 0x803E1D90
 	.4byte 0
 	.4byte 0
 .global __vt__8RopeProp
@@ -34259,11 +34259,11 @@ __vt__8RopeProp:
 	.4byte __RTTI__8RopeProp
 	.4byte 0
 	.4byte read__12CreaturePropFR18RandomAccessStream
-	.4byte 0x4d697a75
-	.4byte 0x4974656d
-	.4byte 0x50726f70
+	.4byte 0x4D697A75
+	.4byte 0x4974656D
+	.4byte 0x50726F70
 	.4byte 0
-	.4byte 0x803e1d90
+	.4byte 0x803E1D90
 	.4byte 0
 	.4byte 0
 .global __vt__12MizuItemProp
@@ -34271,11 +34271,11 @@ __vt__12MizuItemProp:
 	.4byte __RTTI__12MizuItemProp
 	.4byte 0
 	.4byte read__12CreaturePropFR18RandomAccessStream
-	.4byte 0x426f6d62
-	.4byte 0x4974656d
-	.4byte 0x50726f70
+	.4byte 0x426F6D62
+	.4byte 0x4974656D
+	.4byte 0x50726F70
 	.4byte 0
-	.4byte 0x803e1d90
+	.4byte 0x803E1D90
 	.4byte 0
 	.4byte 0
 .global __vt__12BombItemProp
@@ -34283,14 +34283,14 @@ __vt__12BombItemProp:
 	.4byte __RTTI__12BombItemProp
 	.4byte 0
 	.4byte read__12CreaturePropFR18RandomAccessStream
-	.4byte 0x4974656d
-	.4byte 0x4d67723a
-	.4byte 0x3a557365
-	.4byte 0x4e6f6465
+	.4byte 0x4974656D
+	.4byte 0x4D67723A
+	.4byte 0x3A557365
+	.4byte 0x4E6F6465
 	.4byte 0
-	.4byte 0x803e1d50
+	.4byte 0x803E1D50
 	.4byte 0
-	.4byte 0x803e1d58
+	.4byte 0x803E1D58
 	.4byte 0
 	.4byte 0
 .global __vt__Q27ItemMgr7UseNode
@@ -34299,11 +34299,11 @@ __vt__Q27ItemMgr7UseNode:
 	.4byte 0
 	.4byte getAgeNodeType__5ANodeFv
 	.4byte read__8CoreNodeFR18RandomAccessStream
-	.4byte 0x4b757361
-	.4byte 0x4974656d
-	.4byte 0x50726f70
+	.4byte 0x4B757361
+	.4byte 0x4974656D
+	.4byte 0x50726F70
 	.4byte 0
-	.4byte 0x803e1d90
+	.4byte 0x803E1D90
 	.4byte 0
 	.4byte 0
 .global __vt__12KusaItemProp
@@ -34311,12 +34311,12 @@ __vt__12KusaItemProp:
 	.4byte __RTTI__12KusaItemProp
 	.4byte 0
 	.4byte read__12CreaturePropFR18RandomAccessStream
-	.4byte 0x4275696c
-	.4byte 0x64696e67
-	.4byte 0x4974656d
-	.4byte 0x50726f70
+	.4byte 0x4275696C
+	.4byte 0x64696E67
+	.4byte 0x4974656D
+	.4byte 0x50726F70
 	.4byte 0
-	.4byte 0x803e1d90
+	.4byte 0x803E1D90
 	.4byte 0
 	.4byte 0
 .global __vt__16BuildingItemProp
@@ -34324,24 +34324,24 @@ __vt__16BuildingItemProp:
 	.4byte __RTTI__16BuildingItemProp
 	.4byte 0
 	.4byte read__12CreaturePropFR18RandomAccessStream
-	.4byte 0x5061726d
-	.4byte 0x3c666c6f
-	.4byte 0x61743e00
+	.4byte 0x5061726D
+	.4byte 0x3C666C6F
+	.4byte 0x61743E00
 	.4byte 0x42617365
-	.4byte 0x5061726d
+	.4byte 0x5061726D
 	.4byte 0
-	.4byte 0x803e1e48
-	.4byte 0
-	.4byte 0
+	.4byte 0x803E1E48
 	.4byte 0
 	.4byte 0
 	.4byte 0
 	.4byte 0
 	.4byte 0
-	.4byte 0x55666f49
-	.4byte 0x74656d50
-	.4byte 0x726f7000
-	.4byte 0x803e1d90
+	.4byte 0
+	.4byte 0
+	.4byte 0x55666F49
+	.4byte 0x74656D50
+	.4byte 0x726F7000
+	.4byte 0x803E1D90
 	.4byte 0
 	.4byte 0
 .global __vt__11UfoItemProp
@@ -34349,11 +34349,11 @@ __vt__11UfoItemProp:
 	.4byte __RTTI__11UfoItemProp
 	.4byte 0
 	.4byte read__12CreaturePropFR18RandomAccessStream
-	.4byte 0x476f616c
-	.4byte 0x4974656d
-	.4byte 0x50726f70
+	.4byte 0x476F616C
+	.4byte 0x4974656D
+	.4byte 0x50726F70
 	.4byte 0
-	.4byte 0x803e1d90
+	.4byte 0x803E1D90
 	.4byte 0
 	.4byte 0
 .global __vt__12GoalItemProp
@@ -34364,34 +34364,34 @@ __vt__12GoalItemProp:
 	.4byte 0
 	.4byte 0
 	.4byte 0
-	.4byte 0x4d656c74
-	.4byte 0x696e6750
-	.4byte 0x6f744d67
+	.4byte 0x4D656C74
+	.4byte 0x696E6750
+	.4byte 0x6F744D67
 	.4byte 0x72000000
 	.4byte 0x43726561
 	.4byte 0x74757265
-	.4byte 0x4e6f6465
-	.4byte 0x4d677200
-	.4byte 0x803e1d50
+	.4byte 0x4E6F6465
+	.4byte 0x4D677200
+	.4byte 0x803E1D50
 	.4byte 0x8
-	.4byte 0x803e1d58
+	.4byte 0x803E1D58
 	.4byte 0x8
-	.4byte 0x803e1d68
+	.4byte 0x803E1D68
 	.4byte 0x8
-	.4byte 0x803e1d70
+	.4byte 0x803E1D70
 	.4byte 0
-	.4byte 0x803e1d78
+	.4byte 0x803E1D78
 	.4byte 0
 	.4byte 0
-	.4byte 0x803e1d50
+	.4byte 0x803E1D50
 	.4byte 0x8
-	.4byte 0x803e1d58
+	.4byte 0x803E1D58
 	.4byte 0x8
-	.4byte 0x803e1d68
+	.4byte 0x803E1D68
 	.4byte 0x8
-	.4byte 0x803e1d70
+	.4byte 0x803E1D70
 	.4byte 0
-	.4byte 0x803e1d78
+	.4byte 0x803E1D78
 	.4byte 0
 	.4byte __RTTI__15CreatureNodeMgr_1
 	.4byte 0
@@ -34405,7 +34405,7 @@ __vt__13MeltingPotMgr:
 	.4byte getNext__15CreatureNodeMgrFi
 	.4byte isDone__15CreatureNodeMgrFi
 	.4byte __RTTI__13MeltingPotMgr
-	.4byte 0xfffffff8
+	.4byte 0xFFFFFFF8
 	.4byte getAgeNodeType__5ANodeFv
 	.4byte read__8CoreNodeFR18RandomAccessStream
 	.4byte lbl_8009F5DC
@@ -34430,11 +34430,11 @@ __vt__13MeltingPotMgr:
 	.4byte killAll__9ObjectMgrFv
 	.4byte 0x43726561
 	.4byte 0x74757265
-	.4byte 0x4e6f6465
+	.4byte 0x4E6F6465
 	.4byte 0
-	.4byte 0x803e1d50
+	.4byte 0x803E1D50
 	.4byte 0
-	.4byte 0x803e1d58
+	.4byte 0x803E1D58
 	.4byte 0
 	.4byte 0
 .global __vt__12CreatureNode
@@ -34456,21 +34456,21 @@ __vt__12CreatureNode:
 	.4byte 0
 	.4byte 0
 	.4byte 0
-	.4byte 0x4275696c
-	.4byte 0x64696e67
-	.4byte 0x4974656d
+	.4byte 0x4275696C
+	.4byte 0x64696E67
+	.4byte 0x4974656D
 	.4byte 0
-	.4byte 0x803e1dc8
-	.4byte 0x2b8
-	.4byte 0x803e1dd0
+	.4byte 0x803E1DC8
+	.4byte 0x2B8
+	.4byte 0x803E1DD0
 	.4byte 0x8
-	.4byte 0x803e1dd8
+	.4byte 0x803E1DD8
 	.4byte 0
-	.4byte 0x803e1de0
+	.4byte 0x803E1DE0
 	.4byte 0
-	.4byte 0x803e1de8
+	.4byte 0x803E1DE8
 	.4byte 0
-	.4byte 0x803e1df0
+	.4byte 0x803E1DF0
 	.4byte 0
 	.4byte 0
 .global __vt__12BuildingItem
@@ -34545,7 +34545,7 @@ __vt__12BuildingItem:
 	.4byte doKill__12BuildingItemFv
 	.4byte exitCourse__8CreatureFv
 	.4byte __RTTI__12BuildingItem
-	.4byte 0xfffffd48
+	.4byte 0xFFFFFD48
 	.4byte lbl_8007DF54
 	.4byte getCurrState__10AICreatureFv
 	.4byte "setCurrState__10AICreatureFP20AState<10AICreature>"
@@ -34564,92 +34564,92 @@ __vt__12BuildingItem:
 	.4byte finalSetup__12ItemCreatureFv
 	.4byte isCompleted__12BuildingItemFv
 	.4byte 0
-	.4byte 0x6974656d
-	.4byte 0x4f626a65
-	.4byte 0x63742e63
+	.4byte 0x6974656D
+	.4byte 0x4F626A65
+	.4byte 0x63742E63
 	.4byte 0x70700000
-	.4byte 0x6974656d
-	.4byte 0x4f626a65
+	.4byte 0x6974656D
+	.4byte 0x4F626A65
 	.4byte 0x63740000
-	.4byte 0x4e617669
-	.4byte 0x44656d6f
-	.4byte 0x53756e73
-	.4byte 0x6574476f
-	.4byte 0x616c0000
-	.4byte 0x50616e69
-	.4byte 0x416e696d
-	.4byte 0x4b65794c
+	.4byte 0x4E617669
+	.4byte 0x44656D6F
+	.4byte 0x53756E73
+	.4byte 0x6574476F
+	.4byte 0x616C0000
+	.4byte 0x50616E69
+	.4byte 0x416E696D
+	.4byte 0x4B65794C
 	.4byte 0x69737465
-	.4byte 0x6e657200
-	.4byte 0x4576656e
-	.4byte 0x7454616c
-	.4byte 0x6b657200
+	.4byte 0x6E657200
+	.4byte 0x4576656E
+	.4byte 0x7454616C
+	.4byte 0x6B657200
 	.4byte 0x52656643
-	.4byte 0x6f756e74
-	.4byte 0x61626c65
+	.4byte 0x6F756E74
+	.4byte 0x61626C65
 	.4byte 0
 	.4byte 0x43726561
 	.4byte 0x74757265
 	.4byte 0
-	.4byte 0x803e1e88
+	.4byte 0x803E1E88
 	.4byte 0x8
-	.4byte 0x803e1e90
+	.4byte 0x803E1E90
 	.4byte 0
 	.4byte 0
 	.4byte 0x41494372
 	.4byte 0x65617475
 	.4byte 0x72650000
-	.4byte 0x803e1e80
-	.4byte 0x2b8
-	.4byte 0x803e1e88
+	.4byte 0x803E1E80
+	.4byte 0x2B8
+	.4byte 0x803E1E88
 	.4byte 0x8
-	.4byte 0x803e1e90
+	.4byte 0x803E1E90
 	.4byte 0
-	.4byte 0x803e1e98
+	.4byte 0x803E1E98
 	.4byte 0
 	.4byte 0
-	.4byte 0x4974656d
+	.4byte 0x4974656D
 	.4byte 0x43726561
 	.4byte 0x74757265
 	.4byte 0
-	.4byte 0x803e1e80
-	.4byte 0x2b8
-	.4byte 0x803e1e88
+	.4byte 0x803E1E80
+	.4byte 0x2B8
+	.4byte 0x803E1E88
 	.4byte 0x8
-	.4byte 0x803e1e90
+	.4byte 0x803E1E90
 	.4byte 0
-	.4byte 0x803e1e98
+	.4byte 0x803E1E98
 	.4byte 0
-	.4byte 0x803e1ea0
+	.4byte 0x803E1EA0
 	.4byte 0
 	.4byte 0
-	.4byte 0x4974656d
-	.4byte 0x4f626a65
+	.4byte 0x4974656D
+	.4byte 0x4F626A65
 	.4byte 0x63740000
-	.4byte 0x803e1e80
-	.4byte 0x2b8
-	.4byte 0x803e1e88
+	.4byte 0x803E1E80
+	.4byte 0x2B8
+	.4byte 0x803E1E88
 	.4byte 0x8
-	.4byte 0x803e1e90
+	.4byte 0x803E1E90
 	.4byte 0
-	.4byte 0x803e1e98
+	.4byte 0x803E1E98
 	.4byte 0
-	.4byte 0x803e1ea0
+	.4byte 0x803E1EA0
 	.4byte 0
-	.4byte 0x803e1ea8
+	.4byte 0x803E1EA8
 	.4byte 0
 	.4byte 0
-	.4byte 0x803e1e80
-	.4byte 0x2b8
-	.4byte 0x803e1e88
+	.4byte 0x803E1E80
+	.4byte 0x2B8
+	.4byte 0x803E1E88
 	.4byte 0x8
-	.4byte 0x803e1e90
+	.4byte 0x803E1E90
 	.4byte 0
-	.4byte 0x803e1e98
+	.4byte 0x803E1E98
 	.4byte 0
-	.4byte 0x803e1ea0
+	.4byte 0x803E1EA0
 	.4byte 0
-	.4byte 0x803e1ea8
+	.4byte 0x803E1EA8
 	.4byte 0
 	.4byte __RTTI__10ItemObject
 	.4byte 0
@@ -34726,7 +34726,7 @@ __vt__18NaviDemoSunsetGoal:
 	.4byte doKill__12ItemCreatureFv
 	.4byte exitCourse__8CreatureFv
 	.4byte __RTTI__18NaviDemoSunsetGoal
-	.4byte 0xfffffd48
+	.4byte 0xFFFFFD48
 	.4byte lbl_8007DF54
 	.4byte getCurrState__10AICreatureFv
 	.4byte "setCurrState__10AICreatureFP20AState<10AICreature>"
@@ -34743,22 +34743,22 @@ __vt__18NaviDemoSunsetGoal:
 	.4byte stopMotion__12ItemCreatureFv
 	.4byte animationKeyUpdated__10AICreatureFR16PaniAnimKeyEvent
 	.4byte finalSetup__12ItemCreatureFv
-	.4byte 0x4e617669
-	.4byte 0x44656d6f
-	.4byte 0x53756e73
+	.4byte 0x4E617669
+	.4byte 0x44656D6F
+	.4byte 0x53756E73
 	.4byte 0x65745374
 	.4byte 0x61727400
-	.4byte 0x803e1e80
-	.4byte 0x2b8
-	.4byte 0x803e1e88
+	.4byte 0x803E1E80
+	.4byte 0x2B8
+	.4byte 0x803E1E88
 	.4byte 0x8
-	.4byte 0x803e1e90
+	.4byte 0x803E1E90
 	.4byte 0
-	.4byte 0x803e1e98
+	.4byte 0x803E1E98
 	.4byte 0
-	.4byte 0x803e1ea0
+	.4byte 0x803E1EA0
 	.4byte 0
-	.4byte 0x803e1ea8
+	.4byte 0x803E1EA8
 	.4byte 0
 	.4byte __RTTI__10ItemObject
 	.4byte 0
@@ -34835,7 +34835,7 @@ __vt__19NaviDemoSunsetStart:
 	.4byte doKill__12ItemCreatureFv
 	.4byte exitCourse__8CreatureFv
 	.4byte __RTTI__19NaviDemoSunsetStart
-	.4byte 0xfffffd48
+	.4byte 0xFFFFFD48
 	.4byte lbl_8007DF54
 	.4byte getCurrState__10AICreatureFv
 	.4byte "setCurrState__10AICreatureFP20AState<10AICreature>"
@@ -34852,17 +34852,17 @@ __vt__19NaviDemoSunsetStart:
 	.4byte stopMotion__12ItemCreatureFv
 	.4byte animationKeyUpdated__10AICreatureFR16PaniAnimKeyEvent
 	.4byte finalSetup__12ItemCreatureFv
-	.4byte 0x803e1e80
-	.4byte 0x2b8
-	.4byte 0x803e1e88
+	.4byte 0x803E1E80
+	.4byte 0x2B8
+	.4byte 0x803E1E88
 	.4byte 0x8
-	.4byte 0x803e1e90
+	.4byte 0x803E1E90
 	.4byte 0
-	.4byte 0x803e1e98
+	.4byte 0x803E1E98
 	.4byte 0
-	.4byte 0x803e1ea0
+	.4byte 0x803E1EA0
 	.4byte 0
-	.4byte 0x803e1ea8
+	.4byte 0x803E1EA8
 	.4byte 0
 	.4byte __RTTI__10ItemObject
 	.4byte 0
@@ -34939,7 +34939,7 @@ __vt__7Fulcrum:
 	.4byte doKill__12ItemCreatureFv
 	.4byte exitCourse__8CreatureFv
 	.4byte __RTTI__7Fulcrum
-	.4byte 0xfffffd48
+	.4byte 0xFFFFFD48
 	.4byte lbl_8007DF54
 	.4byte getCurrState__10AICreatureFv
 	.4byte "setCurrState__10AICreatureFP20AState<10AICreature>"
@@ -34956,20 +34956,20 @@ __vt__7Fulcrum:
 	.4byte stopMotion__12ItemCreatureFv
 	.4byte animationKeyUpdated__10AICreatureFR16PaniAnimKeyEvent
 	.4byte finalSetup__12ItemCreatureFv
-	.4byte 0x426f6d62
-	.4byte 0x47656e49
-	.4byte 0x74656d00
-	.4byte 0x803e1e80
-	.4byte 0x2b8
-	.4byte 0x803e1e88
+	.4byte 0x426F6D62
+	.4byte 0x47656E49
+	.4byte 0x74656D00
+	.4byte 0x803E1E80
+	.4byte 0x2B8
+	.4byte 0x803E1E88
 	.4byte 0x8
-	.4byte 0x803e1e90
+	.4byte 0x803E1E90
 	.4byte 0
-	.4byte 0x803e1e98
+	.4byte 0x803E1E98
 	.4byte 0
-	.4byte 0x803e1ea0
+	.4byte 0x803E1EA0
 	.4byte 0
-	.4byte 0x803e1ea8
+	.4byte 0x803E1EA8
 	.4byte 0
 	.4byte __RTTI__10ItemObject
 	.4byte 0
@@ -35046,7 +35046,7 @@ __vt__11BombGenItem:
 	.4byte doKill__12ItemCreatureFv
 	.4byte exitCourse__8CreatureFv
 	.4byte __RTTI__11BombGenItem
-	.4byte 0xfffffd48
+	.4byte 0xFFFFFD48
 	.4byte lbl_8007DF54
 	.4byte getCurrState__10AICreatureFv
 	.4byte "setCurrState__10AICreatureFP20AState<10AICreature>"
@@ -35135,7 +35135,7 @@ __vt__10ItemObject:
 	.4byte doKill__12ItemCreatureFv
 	.4byte exitCourse__8CreatureFv
 	.4byte __RTTI__10ItemObject
-	.4byte 0xfffffd48
+	.4byte 0xFFFFFD48
 	.4byte lbl_8007DF54
 	.4byte getCurrState__10AICreatureFv
 	.4byte "setCurrState__10AICreatureFP20AState<10AICreature>"
@@ -35152,20 +35152,20 @@ __vt__10ItemObject:
 	.4byte stopMotion__12ItemCreatureFv
 	.4byte animationKeyUpdated__10AICreatureFR16PaniAnimKeyEvent
 	.4byte finalSetup__12ItemCreatureFv
-	.4byte 0x4974656d
-	.4byte 0x42616c6c
+	.4byte 0x4974656D
+	.4byte 0x42616C6C
 	.4byte 0
-	.4byte 0x803e1e80
-	.4byte 0x2b8
-	.4byte 0x803e1e88
+	.4byte 0x803E1E80
+	.4byte 0x2B8
+	.4byte 0x803E1E88
 	.4byte 0x8
-	.4byte 0x803e1e90
+	.4byte 0x803E1E90
 	.4byte 0
-	.4byte 0x803e1e98
+	.4byte 0x803E1E98
 	.4byte 0
-	.4byte 0x803e1ea0
+	.4byte 0x803E1EA0
 	.4byte 0
-	.4byte 0x803e1ea8
+	.4byte 0x803E1EA8
 	.4byte 0
 	.4byte 0
 .global __vt__8ItemBall
@@ -35240,7 +35240,7 @@ __vt__8ItemBall:
 	.4byte doKill__12ItemCreatureFv
 	.4byte exitCourse__8CreatureFv
 	.4byte __RTTI__8ItemBall
-	.4byte 0xfffffd48
+	.4byte 0xFFFFFD48
 	.4byte lbl_8007DF54
 	.4byte getCurrState__10AICreatureFv
 	.4byte "setCurrState__10AICreatureFP20AState<10AICreature>"
@@ -35258,74 +35258,74 @@ __vt__8ItemBall:
 	.4byte animationKeyUpdated__10AICreatureFR16PaniAnimKeyEvent
 	.4byte finalSetup__12ItemCreatureFv
 	.4byte 0
-	.4byte 0x6d697a75
-	.4byte 0x4974656d
-	.4byte 0x2e637070
+	.4byte 0x6D697A75
+	.4byte 0x4974656D
+	.4byte 0x2E637070
 	.4byte 0
-	.4byte 0x6d61746f
-	.4byte 0x4974656d
+	.4byte 0x6D61746F
+	.4byte 0x4974656D
 	.4byte 0
-	.4byte 0x4d697a75
-	.4byte 0x4974656d
+	.4byte 0x4D697A75
+	.4byte 0x4974656D
 	.4byte 0
-	.4byte 0x50616e69
-	.4byte 0x416e696d
-	.4byte 0x4b65794c
+	.4byte 0x50616E69
+	.4byte 0x416E696D
+	.4byte 0x4B65794C
 	.4byte 0x69737465
-	.4byte 0x6e657200
-	.4byte 0x4576656e
-	.4byte 0x7454616c
-	.4byte 0x6b657200
+	.4byte 0x6E657200
+	.4byte 0x4576656E
+	.4byte 0x7454616C
+	.4byte 0x6B657200
 	.4byte 0x52656643
-	.4byte 0x6f756e74
-	.4byte 0x61626c65
+	.4byte 0x6F756E74
+	.4byte 0x61626C65
 	.4byte 0
 	.4byte 0x43726561
 	.4byte 0x74757265
 	.4byte 0
-	.4byte 0x803e1ef0
+	.4byte 0x803E1EF0
 	.4byte 0x8
-	.4byte 0x803e1ef8
+	.4byte 0x803E1EF8
 	.4byte 0
 	.4byte 0
 	.4byte 0x41494372
 	.4byte 0x65617475
 	.4byte 0x72650000
-	.4byte 0x803e1ee8
-	.4byte 0x2b8
-	.4byte 0x803e1ef0
+	.4byte 0x803E1EE8
+	.4byte 0x2B8
+	.4byte 0x803E1EF0
 	.4byte 0x8
-	.4byte 0x803e1ef8
+	.4byte 0x803E1EF8
 	.4byte 0
-	.4byte 0x803e1f00
+	.4byte 0x803E1F00
 	.4byte 0
 	.4byte 0
-	.4byte 0x4974656d
+	.4byte 0x4974656D
 	.4byte 0x43726561
 	.4byte 0x74757265
 	.4byte 0
-	.4byte 0x803e1ee8
-	.4byte 0x2b8
-	.4byte 0x803e1ef0
+	.4byte 0x803E1EE8
+	.4byte 0x2B8
+	.4byte 0x803E1EF0
 	.4byte 0x8
-	.4byte 0x803e1ef8
+	.4byte 0x803E1EF8
 	.4byte 0
-	.4byte 0x803e1f00
+	.4byte 0x803E1F00
 	.4byte 0
-	.4byte 0x803e1f08
+	.4byte 0x803E1F08
 	.4byte 0
 	.4byte 0
-	.4byte 0x803e1ee8
-	.4byte 0x2b8
-	.4byte 0x803e1ef0
+	.4byte 0x803E1EE8
+	.4byte 0x2B8
+	.4byte 0x803E1EF0
 	.4byte 0x8
-	.4byte 0x803e1ef8
+	.4byte 0x803E1EF8
 	.4byte 0
-	.4byte 0x803e1f00
+	.4byte 0x803E1F00
 	.4byte 0
-	.4byte 0x803e1f08
+	.4byte 0x803E1F08
 	.4byte 0
-	.4byte 0x803e1f10
+	.4byte 0x803E1F10
 	.4byte 0
 	.4byte 0
 .global __vt__8MizuItem
@@ -35400,7 +35400,7 @@ __vt__8MizuItem:
 	.4byte doKill__12ItemCreatureFv
 	.4byte exitCourse__8CreatureFv
 	.4byte __RTTI__8MizuItem
-	.4byte 0xfffffd48
+	.4byte 0xFFFFFD48
 	.4byte lbl_8007DF54
 	.4byte getCurrState__10AICreatureFv
 	.4byte "setCurrState__10AICreatureFP20AState<10AICreature>"
@@ -35418,16 +35418,16 @@ __vt__8MizuItem:
 	.4byte animationKeyUpdated__10AICreatureFR16PaniAnimKeyEvent
 	.4byte finalSetup__12ItemCreatureFv
 	.4byte 0
-	.4byte 0x70616e69
-	.4byte 0x4974656d
-	.4byte 0x416e696d
-	.4byte 0x61746f72
-	.4byte 0x2e637070
+	.4byte 0x70616E69
+	.4byte 0x4974656D
+	.4byte 0x416E696D
+	.4byte 0x61746F72
+	.4byte 0x2E637070
 	.4byte 0
-	.4byte 0x70616e69
-	.4byte 0x4974656d
-	.4byte 0x416e696d
-	.4byte 0x61746f72
+	.4byte 0x70616E69
+	.4byte 0x4974656D
+	.4byte 0x416E696D
+	.4byte 0x61746F72
 	.4byte 0
 .global motionLabels__16PaniItemAnimator
 motionLabels__16PaniItemAnimator:
@@ -35476,8 +35476,8 @@ __vt__16PaniItemAnimator:
 	.4byte finishLoop__8AnimatorFv
 	.4byte updateContext__12PaniAnimatorFv
 	.4byte 0
-	.4byte 0x67656e4e
-	.4byte 0x6176692e
+	.4byte 0x67656E4E
+	.4byte 0x6176692E
 	.4byte 0x63707000
 .global lbl_802BFFC4
 lbl_802BFFC4:
@@ -35598,11 +35598,11 @@ __vt__12InteractSuck:
 	.4byte actHinderRock__11InteractionFP10HinderRock
 	.4byte actBridge__11InteractionFP6Bridge
 	.4byte actItem__11InteractionFP12ItemCreature
-	.4byte 0x496e7465
+	.4byte 0x496E7465
 	.4byte 0x72616374
-	.4byte 0x4765797a
+	.4byte 0x4765797A
 	.4byte 0x65720000
-	.4byte 0x803e21e8
+	.4byte 0x803E21E8
 	.4byte 0
 	.4byte 0
 .global __vt__14InteractGeyzer
@@ -35630,10 +35630,10 @@ __vt__14InteractGeyzer:
 	.4byte 0
 	.4byte 0
 	.4byte 0x53746174
-	.4byte 0x654d6163
-	.4byte 0x68696e65
-	.4byte 0x3c4e6176
-	.4byte 0x693e0000
+	.4byte 0x654D6163
+	.4byte 0x68696E65
+	.4byte 0x3C4E6176
+	.4byte 0x693E0000
 .global "__vt__19StateMachine<4Navi>"
 "__vt__19StateMachine<4Navi>":
 	.4byte "__RTTI__19StateMachine<4Navi>"
@@ -35642,64 +35642,57 @@ __vt__14InteractGeyzer:
 	.4byte "exec__19StateMachine<4Navi>FP4Navi"
 	.4byte "procMsg__19StateMachine<4Navi>FP4NaviP3Msg"
 	.4byte "transit__19StateMachine<4Navi>FP4Navii"
-	.4byte 0x7a656e3a
-	.4byte 0x3a43616c
-	.4byte 0x6c426163
-	.4byte 0x6b313c7a
-	.4byte 0x656e3a3a
+	.4byte 0x7A656E3A
+	.4byte 0x3A43616C
+	.4byte 0x6C426163
+	.4byte 0x6B313C7A
+	.4byte 0x656E3A3A
 	.4byte 0x70617274
-	.4byte 0x69636c65
-	.4byte 0x4d646c20
-	.4byte 0x2a3e0000
-	.4byte 0x7a656e3a
-	.4byte 0x3a43616c
-	.4byte 0x6c426163
-	.4byte 0x6b323c7a
-	.4byte 0x656e3a3a
+	.4byte 0x69636C65
+	.4byte 0x4D646C20
+	.4byte 0x2A3E0000
+	.4byte 0x7A656E3A
+	.4byte 0x3A43616C
+	.4byte 0x6C426163
+	.4byte 0x6B323C7A
+	.4byte 0x656E3A3A
 	.4byte 0x70617274
-	.4byte 0x69636c65
-	.4byte 0x47656e65
-	.4byte 0x7261746f
-	.4byte 0x72202a2c
-	.4byte 0x207a656e
-	.4byte 0x3a3a7061
+	.4byte 0x69636C65
+	.4byte 0x47656E65
+	.4byte 0x7261746F
+	.4byte 0x72202A2C
+	.4byte 0x207A656E
+	.4byte 0x3A3A7061
 	.4byte 0x72746963
-	.4byte 0x6c654d64
-	.4byte 0x6c202a3e
+	.4byte 0x6C654D64
+	.4byte 0x6C202A3E
 	.4byte 0
-	.4byte 0x7a656e3a
-	.4byte 0x3a43616c
-	.4byte 0x6c426163
-	.4byte 0x6b313c7a
-	.4byte 0x656e3a3a
+	.4byte 0x7A656E3A
+	.4byte 0x3A43616C
+	.4byte 0x6C426163
+	.4byte 0x6B313C7A
+	.4byte 0x656E3A3A
 	.4byte 0x70617274
-	.4byte 0x69636c65
-	.4byte 0x47656e65
-	.4byte 0x7261746f
-	.4byte 0x72202a3e
+	.4byte 0x69636C65
+	.4byte 0x47656E65
+	.4byte 0x7261746F
+	.4byte 0x72202A3E
 	.4byte 0
-	.4byte 0x803e2208
+	.4byte 0x803E2208
 	.4byte 0x8
-	.4byte 0x803e2210
+	.4byte 0x803E2210
 	.4byte 0x4
-	.4byte 0x803e2218
+	.4byte 0x803E2218
 	.4byte 0
 	.4byte 0
 	.4byte 0
 	.4byte 0
 	.4byte 0
 	.4byte 0
-	.4byte 0xfffffffc
+	.4byte 0xFFFFFFFC
 	.4byte 0
 	.4byte 0
-	.4byte 0xfffffff8
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
+	.4byte 0xFFFFFFF8
 	.4byte 0
 	.4byte 0
 	.4byte 0
@@ -35709,25 +35702,32 @@ __vt__14InteractGeyzer:
 	.4byte 0
 	.4byte 0
 	.4byte 0
-	.4byte 0x4e617669
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0x4E617669
 	.4byte 0x44726177
 	.4byte 0x65720000
-	.4byte 0x436f7265
-	.4byte 0x4e6f6465
+	.4byte 0x436F7265
+	.4byte 0x4E6F6465
 	.4byte 0
-	.4byte 0x803e2228
-	.4byte 0
-	.4byte 0
-	.4byte 0x803e2228
-	.4byte 0
-	.4byte 0x803e2230
+	.4byte 0x803E2228
 	.4byte 0
 	.4byte 0
-	.4byte 0x803e2228
+	.4byte 0x803E2228
 	.4byte 0
-	.4byte 0x803e2230
+	.4byte 0x803E2230
 	.4byte 0
-	.4byte 0x803e2240
+	.4byte 0
+	.4byte 0x803E2228
+	.4byte 0
+	.4byte 0x803E2230
+	.4byte 0
+	.4byte 0x803E2240
 	.4byte 0
 	.4byte 0
 .global __vt__10NaviDrawer
@@ -35751,7 +35751,7 @@ __vt__10NaviDrawer:
 	.4byte 0
 	.4byte 0
 	.4byte 0
-	.4byte 0x50656c6c
+	.4byte 0x50656C6C
 	.4byte 0x65745669
 	.4byte 0x65770000
 .global __vt__10PelletView
@@ -35769,36 +35769,36 @@ __vt__10PelletView:
 	.4byte 0
 	.4byte 0
 	.4byte viewGetScale__10PelletViewFv
-	.4byte 0x50616e69
-	.4byte 0x416e696d
-	.4byte 0x4b65794c
+	.4byte 0x50616E69
+	.4byte 0x416E696D
+	.4byte 0x4B65794C
 	.4byte 0x69737465
-	.4byte 0x6e657200
+	.4byte 0x6E657200
 	.4byte 0
 	.4byte 0
 	.4byte 0
-	.4byte 0x5061726d
-	.4byte 0x3c696e74
-	.4byte 0x3e000000
+	.4byte 0x5061726D
+	.4byte 0x3C696E74
+	.4byte 0x3E000000
 	.4byte 0x42617365
-	.4byte 0x5061726d
+	.4byte 0x5061726D
 	.4byte 0
-	.4byte 0x803e2260
-	.4byte 0
-	.4byte 0
+	.4byte 0x803E2260
 	.4byte 0
 	.4byte 0
 	.4byte 0
 	.4byte 0
 	.4byte 0
-	.4byte 0x4e617669
-	.4byte 0x50726f70
+	.4byte 0
+	.4byte 0
+	.4byte 0x4E617669
+	.4byte 0x50726F70
 	.4byte 0
 	.4byte 0x43726561
 	.4byte 0x74757265
-	.4byte 0x50726f70
+	.4byte 0x50726F70
 	.4byte 0
-	.4byte 0x803e2268
+	.4byte 0x803E2268
 	.4byte 0
 	.4byte 0
 .global __vt__8NaviProp
@@ -35806,10 +35806,10 @@ __vt__8NaviProp:
 	.4byte __RTTI__8NaviProp
 	.4byte 0
 	.4byte read__8NaviPropFR18RandomAccessStream
-	.4byte 0x5061726d
-	.4byte 0x3c666c6f
-	.4byte 0x61743e00
-	.4byte 0x803e2260
+	.4byte 0x5061726D
+	.4byte 0x3C666C6F
+	.4byte 0x61743E00
+	.4byte 0x803E2260
 	.4byte 0
 	.4byte 0
 	.4byte 0
@@ -35820,30 +35820,30 @@ __vt__8NaviProp:
 	.4byte 0
 	.4byte 0
 	.4byte 0
-	.4byte 0x4576656e
-	.4byte 0x7454616c
-	.4byte 0x6b657200
+	.4byte 0x4576656E
+	.4byte 0x7454616C
+	.4byte 0x6B657200
 	.4byte 0x52656643
-	.4byte 0x6f756e74
-	.4byte 0x61626c65
+	.4byte 0x6F756E74
+	.4byte 0x61626C65
 	.4byte 0
 	.4byte 0x43726561
 	.4byte 0x74757265
 	.4byte 0
-	.4byte 0x803e2280
+	.4byte 0x803E2280
 	.4byte 0x8
-	.4byte 0x803e2288
+	.4byte 0x803E2288
 	.4byte 0
 	.4byte 0
 	.4byte __RTTI__10PelletView
-	.4byte 0x2bc
-	.4byte 0x803e2258
-	.4byte 0x2b8
-	.4byte 0x803e2280
+	.4byte 0x2BC
+	.4byte 0x803E2258
+	.4byte 0x2B8
+	.4byte 0x803E2280
 	.4byte 0x8
-	.4byte 0x803e2288
+	.4byte 0x803E2288
 	.4byte 0
-	.4byte 0x803e2290
+	.4byte 0x803E2290
 	.4byte 0
 	.4byte 0
 .global __vt__4Navi
@@ -35918,10 +35918,10 @@ __vt__4Navi:
 	.4byte doKill__4NaviFv
 	.4byte exitCourse__8CreatureFv
 	.4byte __RTTI__4Navi
-	.4byte 0xfffffd48
+	.4byte 0xFFFFFD48
 	.4byte lbl_80101110
 	.4byte __RTTI__4Navi
-	.4byte 0xfffffd44
+	.4byte 0xFFFFFD44
 	.4byte viewInit__10PelletViewFv
 	.4byte lbl_80101138
 	.4byte lbl_80101130
@@ -35940,42 +35940,42 @@ __vt__4Navi:
 	.4byte viewStartTrembleMotion__4NaviFf
 	.4byte animationKeyUpdated__4NaviFR16PaniAnimKeyEvent
 	.4byte 0
-	.4byte 0x6e617669
+	.4byte 0x6E617669
 	.4byte 0x53746174
-	.4byte 0x652e6370
+	.4byte 0x652E6370
 	.4byte 0x70000000
-	.4byte 0x6e617669
+	.4byte 0x6E617669
 	.4byte 0x53746174
 	.4byte 0x65000000
-	.4byte 0x4e617669
-	.4byte 0x55666f41
+	.4byte 0x4E617669
+	.4byte 0x55666F41
 	.4byte 0x63636573
 	.4byte 0x73537461
 	.4byte 0x74650000
 	.4byte 0x52656365
 	.4byte 0x69766572
-	.4byte 0x3c4e6176
-	.4byte 0x693e0000
+	.4byte 0x3C4E6176
+	.4byte 0x693E0000
 	.4byte 0x41537461
-	.4byte 0x74653c4e
-	.4byte 0x6176693e
+	.4byte 0x74653C4E
+	.4byte 0x6176693E
 	.4byte 0
-	.4byte 0x803e2544
+	.4byte 0x803E2544
 	.4byte 0
 	.4byte 0
-	.4byte 0x4e617669
+	.4byte 0x4E617669
 	.4byte 0x53746174
 	.4byte 0x65000000
-	.4byte 0x803e2544
+	.4byte 0x803E2544
 	.4byte 0
 	.4byte "__RTTI__13AState<4Navi>"
 	.4byte 0
 	.4byte 0
-	.4byte 0x803e2544
+	.4byte 0x803E2544
 	.4byte 0
 	.4byte "__RTTI__13AState<4Navi>"
 	.4byte 0
-	.4byte 0x803e2554
+	.4byte 0x803E2554
 	.4byte 0
 	.4byte 0
 .global __vt__18NaviUfoAccessState
@@ -36001,17 +36001,17 @@ __vt__18NaviUfoAccessState:
 	.4byte "restart__13AState<4Navi>FP4Navi"
 	.4byte "transit__13AState<4Navi>FP4Navii"
 	.4byte invincible__18NaviUfoAccessStateFP4Navi
-	.4byte 0x4e617669
+	.4byte 0x4E617669
 	.4byte 0x50617274
 	.4byte 0x73416363
 	.4byte 0x65737353
 	.4byte 0x74617465
 	.4byte 0
-	.4byte 0x803e2544
+	.4byte 0x803E2544
 	.4byte 0
 	.4byte "__RTTI__13AState<4Navi>"
 	.4byte 0
-	.4byte 0x803e2554
+	.4byte 0x803E2554
 	.4byte 0
 	.4byte 0
 .global __vt__20NaviPartsAccessState
@@ -36037,16 +36037,16 @@ __vt__20NaviPartsAccessState:
 	.4byte "restart__13AState<4Navi>FP4Navi"
 	.4byte "transit__13AState<4Navi>FP4Navii"
 	.4byte invincible__20NaviPartsAccessStateFP4Navi
-	.4byte 0x4e617669
+	.4byte 0x4E617669
 	.4byte 0x53746172
-	.4byte 0x74696e67
+	.4byte 0x74696E67
 	.4byte 0x53746174
 	.4byte 0x65000000
-	.4byte 0x803e2544
+	.4byte 0x803E2544
 	.4byte 0
 	.4byte "__RTTI__13AState<4Navi>"
 	.4byte 0
-	.4byte 0x803e2554
+	.4byte 0x803E2554
 	.4byte 0
 	.4byte 0
 .global __vt__17NaviStartingState
@@ -36072,16 +36072,16 @@ __vt__17NaviStartingState:
 	.4byte "restart__13AState<4Navi>FP4Navi"
 	.4byte "transit__13AState<4Navi>FP4Navii"
 	.4byte invincible__9NaviStateFP4Navi
-	.4byte 0x4e617669
-	.4byte 0x50696b69
-	.4byte 0x5a65726f
+	.4byte 0x4E617669
+	.4byte 0x50696B69
+	.4byte 0x5A65726F
 	.4byte 0x53746174
 	.4byte 0x65000000
-	.4byte 0x803e2544
+	.4byte 0x803E2544
 	.4byte 0
 	.4byte "__RTTI__13AState<4Navi>"
 	.4byte 0
-	.4byte 0x803e2554
+	.4byte 0x803E2554
 	.4byte 0
 	.4byte 0
 .global __vt__17NaviPikiZeroState
@@ -36107,15 +36107,15 @@ __vt__17NaviPikiZeroState:
 	.4byte "restart__13AState<4Navi>FP4Navi"
 	.4byte "transit__13AState<4Navi>FP4Navii"
 	.4byte invincible__17NaviPikiZeroStateFP4Navi
-	.4byte 0x4e617669
+	.4byte 0x4E617669
 	.4byte 0x44656164
 	.4byte 0x53746174
 	.4byte 0x65000000
-	.4byte 0x803e2544
+	.4byte 0x803E2544
 	.4byte 0
 	.4byte "__RTTI__13AState<4Navi>"
 	.4byte 0
-	.4byte 0x803e2554
+	.4byte 0x803E2554
 	.4byte 0
 	.4byte 0
 .global __vt__13NaviDeadState
@@ -36141,15 +36141,15 @@ __vt__13NaviDeadState:
 	.4byte restart__13NaviDeadStateFP4Navi
 	.4byte "transit__13AState<4Navi>FP4Navii"
 	.4byte invincible__13NaviDeadStateFP4Navi
-	.4byte 0x4e617669
-	.4byte 0x49726f49
-	.4byte 0x726f5374
+	.4byte 0x4E617669
+	.4byte 0x49726F49
+	.4byte 0x726F5374
 	.4byte 0x61746500
-	.4byte 0x803e2544
+	.4byte 0x803E2544
 	.4byte 0
 	.4byte "__RTTI__13AState<4Navi>"
 	.4byte 0
-	.4byte 0x803e2554
+	.4byte 0x803E2554
 	.4byte 0
 	.4byte 0
 .global __vt__15NaviIroIroState
@@ -36175,15 +36175,15 @@ __vt__15NaviIroIroState:
 	.4byte "restart__13AState<4Navi>FP4Navi"
 	.4byte "transit__13AState<4Navi>FP4Navii"
 	.4byte invincible__9NaviStateFP4Navi
-	.4byte 0x4e617669
-	.4byte 0x436c6561
+	.4byte 0x4E617669
+	.4byte 0x436C6561
 	.4byte 0x72537461
 	.4byte 0x74650000
-	.4byte 0x803e2544
+	.4byte 0x803E2544
 	.4byte 0
 	.4byte "__RTTI__13AState<4Navi>"
 	.4byte 0
-	.4byte 0x803e2554
+	.4byte 0x803E2554
 	.4byte 0
 	.4byte 0
 .global __vt__14NaviClearState
@@ -36209,15 +36209,15 @@ __vt__14NaviClearState:
 	.4byte "restart__13AState<4Navi>FP4Navi"
 	.4byte "transit__13AState<4Navi>FP4Navii"
 	.4byte invincible__9NaviStateFP4Navi
-	.4byte 0x4e617669
-	.4byte 0x4c6f636b
+	.4byte 0x4E617669
+	.4byte 0x4C6F636B
 	.4byte 0x53746174
 	.4byte 0x65000000
-	.4byte 0x803e2544
+	.4byte 0x803E2544
 	.4byte 0
 	.4byte "__RTTI__13AState<4Navi>"
 	.4byte 0
-	.4byte 0x803e2554
+	.4byte 0x803E2554
 	.4byte 0
 	.4byte 0
 .global __vt__13NaviLockState
@@ -36243,15 +36243,15 @@ __vt__13NaviLockState:
 	.4byte "restart__13AState<4Navi>FP4Navi"
 	.4byte "transit__13AState<4Navi>FP4Navii"
 	.4byte invincible__9NaviStateFP4Navi
-	.4byte 0x4e617669
+	.4byte 0x4E617669
 	.4byte 0x41747461
-	.4byte 0x636b5374
+	.4byte 0x636B5374
 	.4byte 0x61746500
-	.4byte 0x803e2544
+	.4byte 0x803E2544
 	.4byte 0
 	.4byte "__RTTI__13AState<4Navi>"
 	.4byte 0
-	.4byte 0x803e2554
+	.4byte 0x803E2554
 	.4byte 0
 	.4byte 0
 .global __vt__15NaviAttackState
@@ -36277,15 +36277,15 @@ __vt__15NaviAttackState:
 	.4byte restart__15NaviAttackStateFP4Navi
 	.4byte "transit__13AState<4Navi>FP4Navii"
 	.4byte invincible__9NaviStateFP4Navi
-	.4byte 0x4e617669
+	.4byte 0x4E617669
 	.4byte 0x57617465
 	.4byte 0x72537461
 	.4byte 0x74650000
-	.4byte 0x803e2544
+	.4byte 0x803E2544
 	.4byte 0
 	.4byte "__RTTI__13AState<4Navi>"
 	.4byte 0
-	.4byte 0x803e2554
+	.4byte 0x803E2554
 	.4byte 0
 	.4byte 0
 .global __vt__14NaviWaterState
@@ -36311,15 +36311,15 @@ __vt__14NaviWaterState:
 	.4byte "restart__13AState<4Navi>FP4Navi"
 	.4byte "transit__13AState<4Navi>FP4Navii"
 	.4byte invincible__9NaviStateFP4Navi
-	.4byte 0x4e617669
-	.4byte 0x536f7753
+	.4byte 0x4E617669
+	.4byte 0x536F7753
 	.4byte 0x74617465
 	.4byte 0
-	.4byte 0x803e2544
+	.4byte 0x803E2544
 	.4byte 0
 	.4byte "__RTTI__13AState<4Navi>"
 	.4byte 0
-	.4byte 0x803e2554
+	.4byte 0x803E2554
 	.4byte 0
 	.4byte 0
 .global __vt__12NaviSowState
@@ -36345,16 +36345,16 @@ __vt__12NaviSowState:
 	.4byte "restart__13AState<4Navi>FP4Navi"
 	.4byte "transit__13AState<4Navi>FP4Navii"
 	.4byte invincible__9NaviStateFP4Navi
-	.4byte 0x4e617669
+	.4byte 0x4E617669
 	.4byte 0x50726573
 	.4byte 0x73656453
 	.4byte 0x74617465
 	.4byte 0
-	.4byte 0x803e2544
+	.4byte 0x803E2544
 	.4byte 0
 	.4byte "__RTTI__13AState<4Navi>"
 	.4byte 0
-	.4byte 0x803e2554
+	.4byte 0x803E2554
 	.4byte 0
 	.4byte 0
 .global __vt__16NaviPressedState
@@ -36380,16 +36380,16 @@ __vt__16NaviPressedState:
 	.4byte "restart__13AState<4Navi>FP4Navi"
 	.4byte "transit__13AState<4Navi>FP4Navii"
 	.4byte invincible__16NaviPressedStateFP4Navi
-	.4byte 0x4e617669
-	.4byte 0x4e756b75
-	.4byte 0x41646a75
+	.4byte 0x4E617669
+	.4byte 0x4E756B75
+	.4byte 0x41646A75
 	.4byte 0x73745374
 	.4byte 0x61746500
-	.4byte 0x803e2544
+	.4byte 0x803E2544
 	.4byte 0
 	.4byte "__RTTI__13AState<4Navi>"
 	.4byte 0
-	.4byte 0x803e2554
+	.4byte 0x803E2554
 	.4byte 0
 	.4byte 0
 .global __vt__19NaviNukuAdjustState
@@ -36415,15 +36415,15 @@ __vt__19NaviNukuAdjustState:
 	.4byte restart__19NaviNukuAdjustStateFP4Navi
 	.4byte "transit__13AState<4Navi>FP4Navii"
 	.4byte invincible__9NaviStateFP4Navi
-	.4byte 0x4e617669
-	.4byte 0x4e756b75
+	.4byte 0x4E617669
+	.4byte 0x4E756B75
 	.4byte 0x53746174
 	.4byte 0x65000000
-	.4byte 0x803e2544
+	.4byte 0x803E2544
 	.4byte 0
 	.4byte "__RTTI__13AState<4Navi>"
 	.4byte 0
-	.4byte 0x803e2554
+	.4byte 0x803E2554
 	.4byte 0
 	.4byte 0
 .global __vt__13NaviNukuState
@@ -36449,16 +36449,16 @@ __vt__13NaviNukuState:
 	.4byte "restart__13AState<4Navi>FP4Navi"
 	.4byte "transit__13AState<4Navi>FP4Navii"
 	.4byte invincible__13NaviNukuStateFP4Navi
-	.4byte 0x4e617669
+	.4byte 0x4E617669
 	.4byte 0x50757368
-	.4byte 0x50696b69
+	.4byte 0x50696B69
 	.4byte 0x53746174
 	.4byte 0x65000000
-	.4byte 0x803e2544
+	.4byte 0x803E2544
 	.4byte 0
 	.4byte "__RTTI__13AState<4Navi>"
 	.4byte 0
-	.4byte 0x803e2554
+	.4byte 0x803E2554
 	.4byte 0
 	.4byte 0
 .global __vt__17NaviPushPikiState
@@ -36484,15 +36484,15 @@ __vt__17NaviPushPikiState:
 	.4byte "restart__13AState<4Navi>FP4Navi"
 	.4byte "transit__13AState<4Navi>FP4Navii"
 	.4byte invincible__9NaviStateFP4Navi
-	.4byte 0x4e617669
+	.4byte 0x4E617669
 	.4byte 0x50757368
 	.4byte 0x53746174
 	.4byte 0x65000000
-	.4byte 0x803e2544
+	.4byte 0x803E2544
 	.4byte 0
 	.4byte "__RTTI__13AState<4Navi>"
 	.4byte 0
-	.4byte 0x803e2554
+	.4byte 0x803E2554
 	.4byte 0
 	.4byte 0
 .global __vt__13NaviPushState
@@ -36518,15 +36518,15 @@ __vt__13NaviPushState:
 	.4byte "restart__13AState<4Navi>FP4Navi"
 	.4byte "transit__13AState<4Navi>FP4Navii"
 	.4byte invincible__9NaviStateFP4Navi
-	.4byte 0x4e617669
-	.4byte 0x5468726f
+	.4byte 0x4E617669
+	.4byte 0x5468726F
 	.4byte 0x77537461
 	.4byte 0x74650000
-	.4byte 0x803e2544
+	.4byte 0x803E2544
 	.4byte 0
 	.4byte "__RTTI__13AState<4Navi>"
 	.4byte 0
-	.4byte 0x803e2554
+	.4byte 0x803E2554
 	.4byte 0
 	.4byte 0
 .global __vt__14NaviThrowState
@@ -36552,16 +36552,16 @@ __vt__14NaviThrowState:
 	.4byte "restart__13AState<4Navi>FP4Navi"
 	.4byte "transit__13AState<4Navi>FP4Navii"
 	.4byte invincible__9NaviStateFP4Navi
-	.4byte 0x4e617669
-	.4byte 0x5468726f
+	.4byte 0x4E617669
+	.4byte 0x5468726F
 	.4byte 0x77576169
 	.4byte 0x74537461
 	.4byte 0x74650000
-	.4byte 0x803e2544
+	.4byte 0x803E2544
 	.4byte 0
 	.4byte "__RTTI__13AState<4Navi>"
 	.4byte 0
-	.4byte 0x803e2554
+	.4byte 0x803E2554
 	.4byte 0
 	.4byte 0
 .global __vt__18NaviThrowWaitState
@@ -36587,16 +36587,16 @@ __vt__18NaviThrowWaitState:
 	.4byte restart__18NaviThrowWaitStateFP4Navi
 	.4byte "transit__13AState<4Navi>FP4Navii"
 	.4byte invincible__9NaviStateFP4Navi
-	.4byte 0x4e617669
-	.4byte 0x52656c65
+	.4byte 0x4E617669
+	.4byte 0x52656C65
 	.4byte 0x61736553
 	.4byte 0x74617465
 	.4byte 0
-	.4byte 0x803e2544
+	.4byte 0x803E2544
 	.4byte 0
 	.4byte "__RTTI__13AState<4Navi>"
 	.4byte 0
-	.4byte 0x803e2554
+	.4byte 0x803E2554
 	.4byte 0
 	.4byte 0
 .global __vt__16NaviReleaseState
@@ -36622,15 +36622,15 @@ __vt__16NaviReleaseState:
 	.4byte "restart__13AState<4Navi>FP4Navi"
 	.4byte "transit__13AState<4Navi>FP4Navii"
 	.4byte invincible__9NaviStateFP4Navi
-	.4byte 0x4e617669
+	.4byte 0x4E617669
 	.4byte 0x47617468
 	.4byte 0x65725374
 	.4byte 0x61746500
-	.4byte 0x803e2544
+	.4byte 0x803E2544
 	.4byte 0
 	.4byte "__RTTI__13AState<4Navi>"
 	.4byte 0
-	.4byte 0x803e2554
+	.4byte 0x803E2554
 	.4byte 0
 	.4byte 0
 .global __vt__15NaviGatherState
@@ -36656,15 +36656,15 @@ __vt__15NaviGatherState:
 	.4byte restart__15NaviGatherStateFP4Navi
 	.4byte "transit__13AState<4Navi>FP4Navii"
 	.4byte invincible__9NaviStateFP4Navi
-	.4byte 0x4e617669
-	.4byte 0x4765797a
+	.4byte 0x4E617669
+	.4byte 0x4765797A
 	.4byte 0x65725374
 	.4byte 0x61746500
-	.4byte 0x803e2544
+	.4byte 0x803E2544
 	.4byte 0
 	.4byte "__RTTI__13AState<4Navi>"
 	.4byte 0
-	.4byte 0x803e2554
+	.4byte 0x803E2554
 	.4byte 0
 	.4byte 0
 .global __vt__15NaviGeyzerState
@@ -36690,15 +36690,15 @@ __vt__15NaviGeyzerState:
 	.4byte "restart__13AState<4Navi>FP4Navi"
 	.4byte "transit__13AState<4Navi>FP4Navii"
 	.4byte invincible__15NaviGeyzerStateFP4Navi
-	.4byte 0x4e617669
-	.4byte 0x466c6963
-	.4byte 0x6b537461
+	.4byte 0x4E617669
+	.4byte 0x466C6963
+	.4byte 0x6B537461
 	.4byte 0x74650000
-	.4byte 0x803e2544
+	.4byte 0x803E2544
 	.4byte 0
 	.4byte "__RTTI__13AState<4Navi>"
 	.4byte 0
-	.4byte 0x803e2554
+	.4byte 0x803E2554
 	.4byte 0
 	.4byte 0
 .global __vt__14NaviFlickState
@@ -36724,15 +36724,15 @@ __vt__14NaviFlickState:
 	.4byte "restart__13AState<4Navi>FP4Navi"
 	.4byte "transit__13AState<4Navi>FP4Navii"
 	.4byte invincible__14NaviFlickStateFP4Navi
-	.4byte 0x4e617669
-	.4byte 0x49646c65
+	.4byte 0x4E617669
+	.4byte 0x49646C65
 	.4byte 0x53746174
 	.4byte 0x65000000
-	.4byte 0x803e2544
+	.4byte 0x803E2544
 	.4byte 0
 	.4byte "__RTTI__13AState<4Navi>"
 	.4byte 0
-	.4byte 0x803e2554
+	.4byte 0x803E2554
 	.4byte 0
 	.4byte 0
 .global __vt__13NaviIdleState
@@ -36758,16 +36758,16 @@ __vt__13NaviIdleState:
 	.4byte "restart__13AState<4Navi>FP4Navi"
 	.4byte "transit__13AState<4Navi>FP4Navii"
 	.4byte invincible__9NaviStateFP4Navi
-	.4byte 0x4e617669
-	.4byte 0x46756e62
+	.4byte 0x4E617669
+	.4byte 0x46756E62
 	.4byte 0x61726953
 	.4byte 0x74617465
 	.4byte 0
-	.4byte 0x803e2544
+	.4byte 0x803E2544
 	.4byte 0
 	.4byte "__RTTI__13AState<4Navi>"
 	.4byte 0
-	.4byte 0x803e2554
+	.4byte 0x803E2554
 	.4byte 0
 	.4byte 0
 .global __vt__16NaviFunbariState
@@ -36793,16 +36793,16 @@ __vt__16NaviFunbariState:
 	.4byte "restart__13AState<4Navi>FP4Navi"
 	.4byte "transit__13AState<4Navi>FP4Navii"
 	.4byte invincible__9NaviStateFP4Navi
-	.4byte 0x4e617669
-	.4byte 0x526f7065
+	.4byte 0x4E617669
+	.4byte 0x526F7065
 	.4byte 0x45786974
 	.4byte 0x53746174
 	.4byte 0x65000000
-	.4byte 0x803e2544
+	.4byte 0x803E2544
 	.4byte 0
 	.4byte "__RTTI__13AState<4Navi>"
 	.4byte 0
-	.4byte 0x803e2554
+	.4byte 0x803E2554
 	.4byte 0
 	.4byte 0
 .global __vt__17NaviRopeExitState
@@ -36828,15 +36828,15 @@ __vt__17NaviRopeExitState:
 	.4byte "restart__13AState<4Navi>FP4Navi"
 	.4byte "transit__13AState<4Navi>FP4Navii"
 	.4byte invincible__9NaviStateFP4Navi
-	.4byte 0x4e617669
-	.4byte 0x526f7065
+	.4byte 0x4E617669
+	.4byte 0x526F7065
 	.4byte 0x53746174
 	.4byte 0x65000000
-	.4byte 0x803e2544
+	.4byte 0x803E2544
 	.4byte 0
 	.4byte "__RTTI__13AState<4Navi>"
 	.4byte 0
-	.4byte 0x803e2554
+	.4byte 0x803E2554
 	.4byte 0
 	.4byte 0
 .global __vt__13NaviRopeState
@@ -36862,15 +36862,15 @@ __vt__13NaviRopeState:
 	.4byte "restart__13AState<4Navi>FP4Navi"
 	.4byte "transit__13AState<4Navi>FP4Navii"
 	.4byte invincible__9NaviStateFP4Navi
-	.4byte 0x4e617669
-	.4byte 0x5069636b
+	.4byte 0x4E617669
+	.4byte 0x5069636B
 	.4byte 0x53746174
 	.4byte 0x65000000
-	.4byte 0x803e2544
+	.4byte 0x803E2544
 	.4byte 0
 	.4byte "__RTTI__13AState<4Navi>"
 	.4byte 0
-	.4byte 0x803e2554
+	.4byte 0x803E2554
 	.4byte 0
 	.4byte 0
 .global __vt__13NaviPickState
@@ -36896,32 +36896,32 @@ __vt__13NaviPickState:
 	.4byte "restart__13AState<4Navi>FP4Navi"
 	.4byte "transit__13AState<4Navi>FP4Navii"
 	.4byte invincible__9NaviStateFP4Navi
-	.4byte 0x4e617669
-	.4byte 0x436f6e74
-	.4byte 0x61696e65
+	.4byte 0x4E617669
+	.4byte 0x436F6E74
+	.4byte 0x61696E65
 	.4byte 0x72537461
 	.4byte 0x74650000
-	.4byte 0x476d5769
-	.4byte 0x6e3a3a43
-	.4byte 0x6c6f7365
-	.4byte 0x4c697374
-	.4byte 0x656e6572
+	.4byte 0x476D5769
+	.4byte 0x6E3A3A43
+	.4byte 0x6C6F7365
+	.4byte 0x4C697374
+	.4byte 0x656E6572
 	.4byte 0
-	.4byte 0x436f6e74
-	.4byte 0x61696e65
-	.4byte 0x7257696e
-	.4byte 0x3a3a4c69
-	.4byte 0x7374656e
+	.4byte 0x436F6E74
+	.4byte 0x61696E65
+	.4byte 0x7257696E
+	.4byte 0x3A3A4C69
+	.4byte 0x7374656E
 	.4byte 0x65720000
 	.4byte __RTTI__Q25GmWin13CloseListener
 	.4byte 0x28
 	.4byte __RTTI__Q212ContainerWin8Listener
 	.4byte 0x20
-	.4byte 0x803e2544
+	.4byte 0x803E2544
 	.4byte 0
 	.4byte "__RTTI__13AState<4Navi>"
 	.4byte 0
-	.4byte 0x803e2554
+	.4byte 0x803E2554
 	.4byte 0
 	.4byte 0
 .global __vt__18NaviContainerState
@@ -36950,10 +36950,10 @@ __vt__18NaviContainerState:
 	.4byte informWin__18NaviContainerStateFi
 	.4byte onCloseWindow__18NaviContainerStateFv
 	.4byte __RTTI__18NaviContainerState
-	.4byte 0xffffffe0
+	.4byte 0xFFFFFFE0
 	.4byte lbl_8010B0B8
 	.4byte __RTTI__18NaviContainerState
-	.4byte 0xffffffd8
+	.4byte 0xFFFFFFD8
 	.4byte lbl_8010B0CC
 .global __vt__Q25GmWin13CloseListener
 __vt__Q25GmWin13CloseListener:
@@ -36965,15 +36965,15 @@ __vt__Q212ContainerWin8Listener:
 	.4byte __RTTI__Q212ContainerWin8Listener
 	.4byte 0
 	.4byte 0
-	.4byte 0x4e617669
-	.4byte 0x55666f53
+	.4byte 0x4E617669
+	.4byte 0x55666F53
 	.4byte 0x74617465
 	.4byte 0
-	.4byte 0x803e2544
+	.4byte 0x803E2544
 	.4byte 0
 	.4byte "__RTTI__13AState<4Navi>"
 	.4byte 0
-	.4byte 0x803e2554
+	.4byte 0x803E2554
 	.4byte 0
 	.4byte 0
 .global __vt__12NaviUfoState
@@ -36999,15 +36999,15 @@ __vt__12NaviUfoState:
 	.4byte "restart__13AState<4Navi>FP4Navi"
 	.4byte "transit__13AState<4Navi>FP4Navii"
 	.4byte invincible__12NaviUfoStateFP4Navi
-	.4byte 0x4e617669
-	.4byte 0x57616c6b
+	.4byte 0x4E617669
+	.4byte 0x57616C6B
 	.4byte 0x53746174
 	.4byte 0x65000000
-	.4byte 0x803e2544
+	.4byte 0x803E2544
 	.4byte 0
 	.4byte "__RTTI__13AState<4Navi>"
 	.4byte 0
-	.4byte 0x803e2554
+	.4byte 0x803E2554
 	.4byte 0
 	.4byte 0
 .global __vt__13NaviWalkState
@@ -37033,15 +37033,15 @@ __vt__13NaviWalkState:
 	.4byte restart__13NaviWalkStateFP4Navi
 	.4byte "transit__13AState<4Navi>FP4Navii"
 	.4byte invincible__9NaviStateFP4Navi
-	.4byte 0x4e617669
+	.4byte 0x4E617669
 	.4byte 0x42757279
 	.4byte 0x53746174
 	.4byte 0x65000000
-	.4byte 0x803e2544
+	.4byte 0x803E2544
 	.4byte 0
 	.4byte "__RTTI__13AState<4Navi>"
 	.4byte 0
-	.4byte 0x803e2554
+	.4byte 0x803E2554
 	.4byte 0
 	.4byte 0
 .global __vt__13NaviBuryState
@@ -37067,9 +37067,9 @@ __vt__13NaviBuryState:
 	.4byte "restart__13AState<4Navi>FP4Navi"
 	.4byte "transit__13AState<4Navi>FP4Navii"
 	.4byte invincible__13NaviBuryStateFP4Navi
-	.4byte 0x496e7465
+	.4byte 0x496E7465
 	.4byte 0x72616374
-	.4byte 0x696f6e00
+	.4byte 0x696F6E00
 	.4byte 0
 	.4byte 0
 	.4byte 0
@@ -37081,15 +37081,15 @@ __vt__13NaviBuryState:
 	.4byte 0
 	.4byte 0
 	.4byte 0
-	.4byte 0x4e617669
+	.4byte 0x4E617669
 	.4byte 0x53747563
-	.4byte 0x6b537461
+	.4byte 0x6B537461
 	.4byte 0x74650000
-	.4byte 0x803e2544
+	.4byte 0x803E2544
 	.4byte 0
 	.4byte "__RTTI__13AState<4Navi>"
 	.4byte 0
-	.4byte 0x803e2554
+	.4byte 0x803E2554
 	.4byte 0
 	.4byte 0
 .global __vt__14NaviStuckState
@@ -37115,16 +37115,16 @@ __vt__14NaviStuckState:
 	.4byte "restart__13AState<4Navi>FP4Navi"
 	.4byte "transit__13AState<4Navi>FP4Navii"
 	.4byte invincible__9NaviStateFP4Navi
-	.4byte 0x4e617669
-	.4byte 0x44656d6f
-	.4byte 0x496e6653
+	.4byte 0x4E617669
+	.4byte 0x44656D6F
+	.4byte 0x496E6653
 	.4byte 0x74617465
 	.4byte 0
-	.4byte 0x803e2544
+	.4byte 0x803E2544
 	.4byte 0
 	.4byte "__RTTI__13AState<4Navi>"
 	.4byte 0
-	.4byte 0x803e2554
+	.4byte 0x803E2554
 	.4byte 0
 	.4byte 0
 .global __vt__16NaviDemoInfState
@@ -37150,16 +37150,16 @@ __vt__16NaviDemoInfState:
 	.4byte "restart__13AState<4Navi>FP4Navi"
 	.4byte "transit__13AState<4Navi>FP4Navii"
 	.4byte invincible__16NaviDemoInfStateFP4Navi
-	.4byte 0x4e617669
-	.4byte 0x44656d6f
+	.4byte 0x4E617669
+	.4byte 0x44656D6F
 	.4byte 0x57616974
 	.4byte 0x53746174
 	.4byte 0x65000000
-	.4byte 0x803e2544
+	.4byte 0x803E2544
 	.4byte 0
 	.4byte "__RTTI__13AState<4Navi>"
 	.4byte 0
-	.4byte 0x803e2554
+	.4byte 0x803E2554
 	.4byte 0
 	.4byte 0
 .global __vt__17NaviDemoWaitState
@@ -37185,15 +37185,15 @@ __vt__17NaviDemoWaitState:
 	.4byte "restart__13AState<4Navi>FP4Navi"
 	.4byte "transit__13AState<4Navi>FP4Navii"
 	.4byte invincible__17NaviDemoWaitStateFP4Navi
-	.4byte 0x4e617669
-	.4byte 0x50656c6c
+	.4byte 0x4E617669
+	.4byte 0x50656C6C
 	.4byte 0x65745374
 	.4byte 0x61746500
-	.4byte 0x803e2544
+	.4byte 0x803E2544
 	.4byte 0
 	.4byte "__RTTI__13AState<4Navi>"
 	.4byte 0
-	.4byte 0x803e2554
+	.4byte 0x803E2554
 	.4byte 0
 	.4byte 0
 .global __vt__15NaviPelletState
@@ -37221,7 +37221,7 @@ __vt__15NaviPelletState:
 	.4byte invincible__15NaviPelletStateFP4Navi
 .global __vt__9NaviState
 __vt__9NaviState:
-	.4byte 0x803e2554
+	.4byte 0x803E2554
 	.4byte 0
 	.4byte "procMsg__15Receiver<4Navi>FP4NaviP3Msg"
 	.4byte "procBounceMsg__15Receiver<4Navi>FP4NaviP9MsgBounce"
@@ -37266,7 +37266,7 @@ __vt__9NaviState:
 	.4byte "transit__13AState<4Navi>FP4Navii"
 .global "__vt__15Receiver<4Navi>"
 "__vt__15Receiver<4Navi>":
-	.4byte 0x803e2544
+	.4byte 0x803E2544
 	.4byte 0
 	.4byte "procMsg__15Receiver<4Navi>FP4NaviP3Msg"
 	.4byte "procBounceMsg__15Receiver<4Navi>FP4NaviP9MsgBounce"
@@ -37280,16 +37280,16 @@ __vt__9NaviState:
 	.4byte "procOffWallMsg__15Receiver<4Navi>FP4NaviP10MsgOffWall"
 	.4byte "procUserMsg__15Receiver<4Navi>FP4NaviP7MsgUser"
 	.4byte "procGroundMsg__15Receiver<4Navi>FP4NaviP9MsgGround"
-	.4byte 0x4e617669
+	.4byte 0x4E617669
 	.4byte 0x53746174
-	.4byte 0x654d6163
-	.4byte 0x68696e65
+	.4byte 0x654D6163
+	.4byte 0x68696E65
 	.4byte 0
 	.4byte 0x53746174
-	.4byte 0x654d6163
-	.4byte 0x68696e65
-	.4byte 0x3c4e6176
-	.4byte 0x693e0000
+	.4byte 0x654D6163
+	.4byte 0x68696E65
+	.4byte 0x3C4E6176
+	.4byte 0x693E0000
 	.4byte "__RTTI__19StateMachine<4Navi>_1"
 	.4byte 0
 	.4byte 0
@@ -37312,13 +37312,13 @@ __vt__16NaviStateMachine:
 	.4byte lbl_800FF868
 	.4byte lbl_800FF91C
 	.4byte lbl_800FF908
-	.4byte 0x6e617669
-	.4byte 0x44656d6f
+	.4byte 0x6E617669
+	.4byte 0x44656D6F
 	.4byte 0x53746174
-	.4byte 0x652e6370
+	.4byte 0x652E6370
 	.4byte 0x70000000
-	.4byte 0x6e617669
-	.4byte 0x44656d6f
+	.4byte 0x6E617669
+	.4byte 0x44656D6F
 	.4byte 0
 .global lbl_802C1AC8
 lbl_802C1AC8:
@@ -37399,14 +37399,14 @@ __vt__19NaviDemoSunsetState:
 	.4byte "transit__13AState<4Navi>FP4Navii"
 	.4byte invincible__9NaviStateFP4Navi
 	.4byte 0x53746174
-	.4byte 0x654d6163
-	.4byte 0x68696e65
-	.4byte 0x3c4e6176
-	.4byte 0x6944656d
-	.4byte 0x6f53756e
+	.4byte 0x654D6163
+	.4byte 0x68696E65
+	.4byte 0x3C4E6176
+	.4byte 0x6944656D
+	.4byte 0x6F53756E
 	.4byte 0x73657453
 	.4byte 0x74617465
-	.4byte 0x3e000000
+	.4byte 0x3E000000
 .global "__vt__35StateMachine<19NaviDemoSunsetState>"
 "__vt__35StateMachine<19NaviDemoSunsetState>":
 	.4byte "__RTTI__35StateMachine<19NaviDemoSunsetState>"
@@ -37470,39 +37470,39 @@ __vt__19NaviDemoSunsetState:
 	.4byte 0
 	.4byte 0
 	.4byte 0
-	.4byte 0x4e617669
-	.4byte 0x44656d6f
-	.4byte 0x53756e73
+	.4byte 0x4E617669
+	.4byte 0x44656D6F
+	.4byte 0x53756E73
 	.4byte 0x65745374
-	.4byte 0x6174653a
-	.4byte 0x3a536974
+	.4byte 0x6174653A
+	.4byte 0x3A536974
 	.4byte 0x53746174
 	.4byte 0x65000000
 	.4byte 0x52656365
 	.4byte 0x69766572
-	.4byte 0x3c4e6176
-	.4byte 0x6944656d
-	.4byte 0x6f53756e
+	.4byte 0x3C4E6176
+	.4byte 0x6944656D
+	.4byte 0x6F53756E
 	.4byte 0x73657453
 	.4byte 0x74617465
-	.4byte 0x3e000000
+	.4byte 0x3E000000
 	.4byte 0x41537461
-	.4byte 0x74653c4e
+	.4byte 0x74653C4E
 	.4byte 0x61766944
-	.4byte 0x656d6f53
-	.4byte 0x756e7365
+	.4byte 0x656D6F53
+	.4byte 0x756E7365
 	.4byte 0x74537461
-	.4byte 0x74653e00
+	.4byte 0x74653E00
 	.4byte "__RTTI__31Receiver<19NaviDemoSunsetState>"
 	.4byte 0
 	.4byte 0
-	.4byte 0x4e617669
-	.4byte 0x44656d6f
-	.4byte 0x53756e73
+	.4byte 0x4E617669
+	.4byte 0x44656D6F
+	.4byte 0x53756E73
 	.4byte 0x65745374
-	.4byte 0x6174653a
-	.4byte 0x3a44656d
-	.4byte 0x6f537461
+	.4byte 0x6174653A
+	.4byte 0x3A44656D
+	.4byte 0x6F537461
 	.4byte 0x74650000
 	.4byte "__RTTI__31Receiver<19NaviDemoSunsetState>"
 	.4byte 0
@@ -37538,12 +37538,12 @@ __vt__Q219NaviDemoSunsetState8SitState:
 	.4byte "resume__29AState<19NaviDemoSunsetState>FP19NaviDemoSunsetState"
 	.4byte "restart__29AState<19NaviDemoSunsetState>FP19NaviDemoSunsetState"
 	.4byte "transit__29AState<19NaviDemoSunsetState>FP19NaviDemoSunsetStatei"
-	.4byte 0x4e617669
-	.4byte 0x44656d6f
-	.4byte 0x53756e73
+	.4byte 0x4E617669
+	.4byte 0x44656D6F
+	.4byte 0x53756E73
 	.4byte 0x65745374
-	.4byte 0x6174653a
-	.4byte 0x3a576169
+	.4byte 0x6174653A
+	.4byte 0x3A576169
 	.4byte 0x74537461
 	.4byte 0x74650000
 	.4byte "__RTTI__31Receiver<19NaviDemoSunsetState>"
@@ -37575,13 +37575,13 @@ __vt__Q219NaviDemoSunsetState9WaitState:
 	.4byte "resume__29AState<19NaviDemoSunsetState>FP19NaviDemoSunsetState"
 	.4byte "restart__29AState<19NaviDemoSunsetState>FP19NaviDemoSunsetState"
 	.4byte "transit__29AState<19NaviDemoSunsetState>FP19NaviDemoSunsetStatei"
-	.4byte 0x4e617669
-	.4byte 0x44656d6f
-	.4byte 0x53756e73
+	.4byte 0x4E617669
+	.4byte 0x44656D6F
+	.4byte 0x53756E73
 	.4byte 0x65745374
-	.4byte 0x6174653a
-	.4byte 0x3a576869
-	.4byte 0x73746c65
+	.4byte 0x6174653A
+	.4byte 0x3A576869
+	.4byte 0x73746C65
 	.4byte 0x53746174
 	.4byte 0x65000000
 	.4byte "__RTTI__31Receiver<19NaviDemoSunsetState>"
@@ -37613,13 +37613,13 @@ __vt__Q219NaviDemoSunsetState12WhistleState:
 	.4byte "resume__29AState<19NaviDemoSunsetState>FP19NaviDemoSunsetState"
 	.4byte "restart__29AState<19NaviDemoSunsetState>FP19NaviDemoSunsetState"
 	.4byte "transit__29AState<19NaviDemoSunsetState>FP19NaviDemoSunsetStatei"
-	.4byte 0x4e617669
-	.4byte 0x44656d6f
-	.4byte 0x53756e73
+	.4byte 0x4E617669
+	.4byte 0x44656D6F
+	.4byte 0x53756E73
 	.4byte 0x65745374
-	.4byte 0x6174653a
-	.4byte 0x3a4c6f6f
-	.4byte 0x6b537461
+	.4byte 0x6174653A
+	.4byte 0x3A4C6F6F
+	.4byte 0x6B537461
 	.4byte 0x74650000
 	.4byte "__RTTI__31Receiver<19NaviDemoSunsetState>"
 	.4byte 0
@@ -37650,12 +37650,12 @@ __vt__Q219NaviDemoSunsetState9LookState:
 	.4byte "resume__29AState<19NaviDemoSunsetState>FP19NaviDemoSunsetState"
 	.4byte "restart__29AState<19NaviDemoSunsetState>FP19NaviDemoSunsetState"
 	.4byte "transit__29AState<19NaviDemoSunsetState>FP19NaviDemoSunsetStatei"
-	.4byte 0x4e617669
-	.4byte 0x44656d6f
-	.4byte 0x53756e73
+	.4byte 0x4E617669
+	.4byte 0x44656D6F
+	.4byte 0x53756E73
 	.4byte 0x65745374
-	.4byte 0x6174653a
-	.4byte 0x3a476f53
+	.4byte 0x6174653A
+	.4byte 0x3A476F53
 	.4byte 0x74617465
 	.4byte 0
 	.4byte "__RTTI__31Receiver<19NaviDemoSunsetState>"
@@ -37747,15 +37747,15 @@ __vt__Q219NaviDemoSunsetState9DemoState:
 	.4byte "procOffWallMsg__31Receiver<19NaviDemoSunsetState>FP19NaviDemoSunsetStateP10MsgOffWall"
 	.4byte "procUserMsg__31Receiver<19NaviDemoSunsetState>FP19NaviDemoSunsetStateP7MsgUser"
 	.4byte "procGroundMsg__31Receiver<19NaviDemoSunsetState>FP19NaviDemoSunsetStateP9MsgGround"
-	.4byte 0x4e617669
-	.4byte 0x44656d6f
-	.4byte 0x53756e73
+	.4byte 0x4E617669
+	.4byte 0x44656D6F
+	.4byte 0x53756E73
 	.4byte 0x65745374
-	.4byte 0x6174653a
-	.4byte 0x3a44656d
-	.4byte 0x6f537461
-	.4byte 0x74654d61
-	.4byte 0x6368696e
+	.4byte 0x6174653A
+	.4byte 0x3A44656D
+	.4byte 0x6F537461
+	.4byte 0x74654D61
+	.4byte 0x6368696E
 	.4byte 0x65000000
 	.4byte "__RTTI__35StateMachine<19NaviDemoSunsetState>"
 	.4byte 0
@@ -37996,9 +37996,9 @@ __vt__15GameCoreSection:
 	.4byte 0
 	.4byte 0
 	.4byte 0
-	.4byte 0x496e7465
+	.4byte 0x496E7465
 	.4byte 0x72616374
-	.4byte 0x696f6e00
+	.4byte 0x696F6E00
 	.4byte 0
 	.4byte 0
 	.4byte 0
@@ -38012,62 +38012,62 @@ __vt__15GameCoreSection:
 	.4byte 0
 	.4byte 0x75746566
 	.4byte 0x66656374
-	.4byte 0x2e637070
+	.4byte 0x2E637070
 	.4byte 0
 	.4byte 0x75744566
 	.4byte 0x66656374
 	.4byte 0
-	.4byte 0x4275726e
+	.4byte 0x4275726E
 	.4byte 0x45666665
 	.4byte 0x63740000
-	.4byte 0x7a656e3a
-	.4byte 0x3a43616c
-	.4byte 0x6c426163
-	.4byte 0x6b313c7a
-	.4byte 0x656e3a3a
+	.4byte 0x7A656E3A
+	.4byte 0x3A43616C
+	.4byte 0x6C426163
+	.4byte 0x6B313C7A
+	.4byte 0x656E3A3A
 	.4byte 0x70617274
-	.4byte 0x69636c65
-	.4byte 0x4d646c20
-	.4byte 0x2a3e0000
-	.4byte 0x7a656e3a
-	.4byte 0x3a43616c
-	.4byte 0x6c426163
-	.4byte 0x6b323c7a
-	.4byte 0x656e3a3a
+	.4byte 0x69636C65
+	.4byte 0x4D646C20
+	.4byte 0x2A3E0000
+	.4byte 0x7A656E3A
+	.4byte 0x3A43616C
+	.4byte 0x6C426163
+	.4byte 0x6B323C7A
+	.4byte 0x656E3A3A
 	.4byte 0x70617274
-	.4byte 0x69636c65
-	.4byte 0x47656e65
-	.4byte 0x7261746f
-	.4byte 0x72202a2c
-	.4byte 0x207a656e
-	.4byte 0x3a3a7061
+	.4byte 0x69636C65
+	.4byte 0x47656E65
+	.4byte 0x7261746F
+	.4byte 0x72202A2C
+	.4byte 0x207A656E
+	.4byte 0x3A3A7061
 	.4byte 0x72746963
-	.4byte 0x6c654d64
-	.4byte 0x6c202a3e
+	.4byte 0x6C654D64
+	.4byte 0x6C202A3E
 	.4byte 0
-	.4byte 0x7a656e3a
-	.4byte 0x3a43616c
-	.4byte 0x6c426163
-	.4byte 0x6b313c7a
-	.4byte 0x656e3a3a
+	.4byte 0x7A656E3A
+	.4byte 0x3A43616C
+	.4byte 0x6C426163
+	.4byte 0x6B313C7A
+	.4byte 0x656E3A3A
 	.4byte 0x70617274
-	.4byte 0x69636c65
-	.4byte 0x47656e65
-	.4byte 0x7261746f
-	.4byte 0x72202a3e
+	.4byte 0x69636C65
+	.4byte 0x47656E65
+	.4byte 0x7261746F
+	.4byte 0x72202A3E
 	.4byte 0
-	.4byte 0x803e28c0
+	.4byte 0x803E28C0
 	.4byte 0x8
-	.4byte 0x803e28c8
+	.4byte 0x803E28C8
 	.4byte 0x4
-	.4byte 0x803e28d0
+	.4byte 0x803E28D0
 	.4byte 0
 	.4byte 0
-	.4byte 0x803e28c0
+	.4byte 0x803E28C0
 	.4byte 0x8
-	.4byte 0x803e28c8
+	.4byte 0x803E28C8
 	.4byte 0x4
-	.4byte 0x803e28d0
+	.4byte 0x803E28D0
 	.4byte 0
 	.4byte __RTTI__7KEffect_1
 	.4byte 0
@@ -38078,10 +38078,10 @@ __vt__10BurnEffect:
 	.4byte 0
 	.4byte invoke__10BurnEffectFPQ23zen17particleGenerator
 	.4byte __RTTI__10BurnEffect
-	.4byte 0xfffffffc
+	.4byte 0xFFFFFFFC
 	.4byte lbl_80099520
 	.4byte __RTTI__10BurnEffect
-	.4byte 0xfffffff8
+	.4byte 0xFFFFFFF8
 	.4byte lbl_80099528
 	.4byte invoke__7KEffectFPQ23zen17particleGeneratorPQ23zen11particleMdl
 	.4byte invoke__7KEffectFPQ23zen11particleMdl
@@ -38090,14 +38090,14 @@ __vt__10BurnEffect:
 	.4byte stop__10BurnEffectFv
 	.4byte restart__10BurnEffectFv
 	.4byte 0x52697070
-	.4byte 0x6c654566
+	.4byte 0x6C654566
 	.4byte 0x66656374
 	.4byte 0
-	.4byte 0x803e28c0
+	.4byte 0x803E28C0
 	.4byte 0x8
-	.4byte 0x803e28c8
+	.4byte 0x803E28C8
 	.4byte 0x4
-	.4byte 0x803e28d0
+	.4byte 0x803E28D0
 	.4byte 0
 	.4byte __RTTI__7KEffect_1
 	.4byte 0
@@ -38108,10 +38108,10 @@ __vt__12RippleEffect:
 	.4byte 0
 	.4byte invoke__7KEffectFPQ23zen17particleGenerator
 	.4byte __RTTI__12RippleEffect
-	.4byte 0xfffffffc
+	.4byte 0xFFFFFFFC
 	.4byte lbl_80099520
 	.4byte __RTTI__12RippleEffect
-	.4byte 0xfffffff8
+	.4byte 0xFFFFFFF8
 	.4byte lbl_80099528
 	.4byte invoke__7KEffectFPQ23zen17particleGeneratorPQ23zen11particleMdl
 	.4byte invoke__7KEffectFPQ23zen11particleMdl
@@ -38120,14 +38120,14 @@ __vt__12RippleEffect:
 	.4byte stop__12RippleEffectFv
 	.4byte restart__12RippleEffectFv
 	.4byte 0x46726565
-	.4byte 0x4c696768
+	.4byte 0x4C696768
 	.4byte 0x74456666
 	.4byte 0x65637400
-	.4byte 0x803e28c0
+	.4byte 0x803E28C0
 	.4byte 0x8
-	.4byte 0x803e28c8
+	.4byte 0x803E28C8
 	.4byte 0x4
-	.4byte 0x803e28d0
+	.4byte 0x803E28D0
 	.4byte 0
 	.4byte __RTTI__7KEffect_1
 	.4byte 0
@@ -38138,10 +38138,10 @@ __vt__15FreeLightEffect:
 	.4byte 0
 	.4byte invoke__7KEffectFPQ23zen17particleGenerator
 	.4byte __RTTI__15FreeLightEffect
-	.4byte 0xfffffffc
+	.4byte 0xFFFFFFFC
 	.4byte lbl_80099520
 	.4byte __RTTI__15FreeLightEffect
-	.4byte 0xfffffff8
+	.4byte 0xFFFFFFF8
 	.4byte lbl_80099528
 	.4byte invoke__7KEffectFPQ23zen17particleGeneratorPQ23zen11particleMdl
 	.4byte invoke__7KEffectFPQ23zen11particleMdl
@@ -38149,16 +38149,16 @@ __vt__15FreeLightEffect:
 	.4byte kill__15FreeLightEffectFv
 	.4byte stop__15FreeLightEffectFv
 	.4byte restart__15FreeLightEffectFv
-	.4byte 0x55666f53
-	.4byte 0x75696b6f
-	.4byte 0x6d694566
+	.4byte 0x55666F53
+	.4byte 0x75696B6F
+	.4byte 0x6D694566
 	.4byte 0x66656374
 	.4byte 0
-	.4byte 0x803e28c0
+	.4byte 0x803E28C0
 	.4byte 0x8
-	.4byte 0x803e28c8
+	.4byte 0x803E28C8
 	.4byte 0x4
-	.4byte 0x803e28d0
+	.4byte 0x803E28D0
 	.4byte 0
 	.4byte __RTTI__7KEffect_1
 	.4byte 0
@@ -38169,10 +38169,10 @@ __vt__16UfoSuikomiEffect:
 	.4byte 0
 	.4byte invoke__7KEffectFPQ23zen17particleGenerator
 	.4byte __RTTI__16UfoSuikomiEffect
-	.4byte 0xfffffffc
+	.4byte 0xFFFFFFFC
 	.4byte lbl_80099520
 	.4byte __RTTI__16UfoSuikomiEffect
-	.4byte 0xfffffff8
+	.4byte 0xFFFFFFF8
 	.4byte lbl_80099528
 	.4byte invoke__7KEffectFPQ23zen17particleGeneratorPQ23zen11particleMdl
 	.4byte invoke__7KEffectFPQ23zen11particleMdl
@@ -38180,28 +38180,28 @@ __vt__16UfoSuikomiEffect:
 	.4byte kill__16UfoSuikomiEffectFv
 	.4byte stop__7KEffectFv
 	.4byte restart__7KEffectFv
-	.4byte 0x55666f53
-	.4byte 0x75636b45
+	.4byte 0x55666F53
+	.4byte 0x75636B45
 	.4byte 0x66666563
 	.4byte 0x74000000
 	.4byte 0x57686973
-	.4byte 0x746c6554
-	.4byte 0x656d706c
+	.4byte 0x746C6554
+	.4byte 0x656D706C
 	.4byte 0x61746500
-	.4byte 0x803e28c0
+	.4byte 0x803E28C0
 	.4byte 0x8
-	.4byte 0x803e28c8
+	.4byte 0x803E28C8
 	.4byte 0x4
-	.4byte 0x803e28d0
+	.4byte 0x803E28D0
 	.4byte 0
 	.4byte __RTTI__7KEffect_1
 	.4byte 0
 	.4byte 0
-	.4byte 0x803e28c0
+	.4byte 0x803E28C0
 	.4byte 0x8
-	.4byte 0x803e28c8
+	.4byte 0x803E28C8
 	.4byte 0x4
-	.4byte 0x803e28d0
+	.4byte 0x803E28D0
 	.4byte 0
 	.4byte __RTTI__7KEffect_1
 	.4byte 0
@@ -38214,10 +38214,10 @@ __vt__13UfoSuckEffect:
 	.4byte 0
 	.4byte invoke__7KEffectFPQ23zen17particleGenerator
 	.4byte __RTTI__13UfoSuckEffect
-	.4byte 0xfffffffc
+	.4byte 0xFFFFFFFC
 	.4byte lbl_80115B84
 	.4byte __RTTI__13UfoSuckEffect
-	.4byte 0xfffffff8
+	.4byte 0xFFFFFFF8
 	.4byte lbl_80099528
 	.4byte invoke__15WhistleTemplateFPQ23zen17particleGeneratorPQ23zen11particleMdl
 	.4byte invoke__7KEffectFPQ23zen11particleMdl
@@ -38231,10 +38231,10 @@ __vt__15WhistleTemplate:
 	.4byte 0
 	.4byte invoke__7KEffectFPQ23zen17particleGenerator
 	.4byte __RTTI__15WhistleTemplate
-	.4byte 0xfffffffc
+	.4byte 0xFFFFFFFC
 	.4byte lbl_80115B84
 	.4byte __RTTI__15WhistleTemplate
-	.4byte 0xfffffff8
+	.4byte 0xFFFFFFF8
 	.4byte lbl_80099528
 	.4byte invoke__15WhistleTemplateFPQ23zen17particleGeneratorPQ23zen11particleMdl
 	.4byte invoke__7KEffectFPQ23zen11particleMdl
@@ -38242,15 +38242,15 @@ __vt__15WhistleTemplate:
 	.4byte kill__15WhistleTemplateFv
 	.4byte stop__7KEffectFv
 	.4byte restart__7KEffectFv
-	.4byte 0x426f6d62
+	.4byte 0x426F6D62
 	.4byte 0x45666665
-	.4byte 0x63744c69
+	.4byte 0x63744C69
 	.4byte 0x67687400
-	.4byte 0x803e28c0
+	.4byte 0x803E28C0
 	.4byte 0x8
-	.4byte 0x803e28c8
+	.4byte 0x803E28C8
 	.4byte 0x4
-	.4byte 0x803e28d0
+	.4byte 0x803E28D0
 	.4byte 0
 	.4byte __RTTI__7KEffect_1
 	.4byte 0
@@ -38261,10 +38261,10 @@ __vt__15BombEffectLight:
 	.4byte 0
 	.4byte invoke__7KEffectFPQ23zen17particleGenerator
 	.4byte __RTTI__15BombEffectLight
-	.4byte 0xfffffffc
+	.4byte 0xFFFFFFFC
 	.4byte lbl_80099520
 	.4byte __RTTI__15BombEffectLight
-	.4byte 0xfffffff8
+	.4byte 0xFFFFFFF8
 	.4byte lbl_80099528
 	.4byte invoke__7KEffectFPQ23zen17particleGeneratorPQ23zen11particleMdl
 	.4byte invoke__7KEffectFPQ23zen11particleMdl
@@ -38272,14 +38272,14 @@ __vt__15BombEffectLight:
 	.4byte kill__15BombEffectLightFv
 	.4byte stop__7KEffectFv
 	.4byte restart__7KEffectFv
-	.4byte 0x426f6d62
+	.4byte 0x426F6D62
 	.4byte 0x45666665
 	.4byte 0x63740000
-	.4byte 0x803e28c0
+	.4byte 0x803E28C0
 	.4byte 0x8
-	.4byte 0x803e28c8
+	.4byte 0x803E28C8
 	.4byte 0x4
-	.4byte 0x803e28d0
+	.4byte 0x803E28D0
 	.4byte 0
 	.4byte __RTTI__7KEffect_1
 	.4byte 0
@@ -38290,10 +38290,10 @@ __vt__10BombEffect:
 	.4byte 0
 	.4byte invoke__7KEffectFPQ23zen17particleGenerator
 	.4byte __RTTI__10BombEffect
-	.4byte 0xfffffffc
+	.4byte 0xFFFFFFFC
 	.4byte lbl_80099520
 	.4byte __RTTI__10BombEffect
-	.4byte 0xfffffff8
+	.4byte 0xFFFFFFF8
 	.4byte lbl_80099528
 	.4byte invoke__7KEffectFPQ23zen17particleGeneratorPQ23zen11particleMdl
 	.4byte invoke__7KEffectFPQ23zen11particleMdl
@@ -38301,15 +38301,15 @@ __vt__10BombEffect:
 	.4byte kill__10BombEffectFv
 	.4byte stop__7KEffectFv
 	.4byte restart__7KEffectFv
-	.4byte 0x53696d70
-	.4byte 0x6c654566
+	.4byte 0x53696D70
+	.4byte 0x6C654566
 	.4byte 0x66656374
 	.4byte 0
-	.4byte 0x803e28c0
+	.4byte 0x803E28C0
 	.4byte 0x8
-	.4byte 0x803e28c8
+	.4byte 0x803E28C8
 	.4byte 0x4
-	.4byte 0x803e28d0
+	.4byte 0x803E28D0
 	.4byte 0
 	.4byte __RTTI__7KEffect_1
 	.4byte 0
@@ -38320,10 +38320,10 @@ __vt__12SimpleEffect:
 	.4byte 0
 	.4byte invoke__7KEffectFPQ23zen17particleGenerator
 	.4byte __RTTI__12SimpleEffect
-	.4byte 0xfffffffc
+	.4byte 0xFFFFFFFC
 	.4byte lbl_80099520
 	.4byte __RTTI__12SimpleEffect
-	.4byte 0xfffffff8
+	.4byte 0xFFFFFFF8
 	.4byte lbl_80099528
 	.4byte invoke__7KEffectFPQ23zen17particleGeneratorPQ23zen11particleMdl
 	.4byte invoke__7KEffectFPQ23zen11particleMdl
@@ -38331,11 +38331,11 @@ __vt__12SimpleEffect:
 	.4byte kill__12SimpleEffectFv
 	.4byte stop__7KEffectFv
 	.4byte restart__7KEffectFv
-	.4byte 0x803e28c0
+	.4byte 0x803E28C0
 	.4byte 0x8
-	.4byte 0x803e28c8
+	.4byte 0x803E28C8
 	.4byte 0x4
-	.4byte 0x803e28d0
+	.4byte 0x803E28D0
 	.4byte 0
 	.4byte __RTTI__7KEffect_1
 	.4byte 0
@@ -38346,10 +38346,10 @@ __vt__7NaviFue:
 	.4byte 0
 	.4byte invoke__7NaviFueFPQ23zen17particleGenerator
 	.4byte __RTTI__7NaviFue
-	.4byte 0xfffffffc
+	.4byte 0xFFFFFFFC
 	.4byte lbl_80099520
 	.4byte __RTTI__7NaviFue
-	.4byte 0xfffffff8
+	.4byte 0xFFFFFFF8
 	.4byte lbl_80099528
 	.4byte invoke__7KEffectFPQ23zen17particleGeneratorPQ23zen11particleMdl
 	.4byte invoke__7KEffectFPQ23zen11particleMdl
@@ -38357,15 +38357,15 @@ __vt__7NaviFue:
 	.4byte kill__7NaviFueFv
 	.4byte stop__7KEffectFv
 	.4byte restart__7KEffectFv
-	.4byte 0x536d6f6b
+	.4byte 0x536D6F6B
 	.4byte 0x65547265
 	.4byte 0x65456666
 	.4byte 0x65637400
-	.4byte 0x803e28c0
+	.4byte 0x803E28C0
 	.4byte 0x8
-	.4byte 0x803e28c8
+	.4byte 0x803E28C8
 	.4byte 0x4
-	.4byte 0x803e28d0
+	.4byte 0x803E28D0
 	.4byte 0
 	.4byte __RTTI__7KEffect_1
 	.4byte 0
@@ -38376,10 +38376,10 @@ __vt__15SmokeTreeEffect:
 	.4byte 0
 	.4byte invoke__7KEffectFPQ23zen17particleGenerator
 	.4byte __RTTI__15SmokeTreeEffect
-	.4byte 0xfffffffc
+	.4byte 0xFFFFFFFC
 	.4byte lbl_80099520
 	.4byte __RTTI__15SmokeTreeEffect
-	.4byte 0xfffffff8
+	.4byte 0xFFFFFFF8
 	.4byte lbl_80099528
 	.4byte invoke__7KEffectFPQ23zen17particleGeneratorPQ23zen11particleMdl
 	.4byte invoke__7KEffectFPQ23zen11particleMdl
@@ -38387,15 +38387,15 @@ __vt__15SmokeTreeEffect:
 	.4byte kill__7KEffectFv
 	.4byte stop__7KEffectFv
 	.4byte restart__7KEffectFv
-	.4byte 0x536d6f6b
-	.4byte 0x65526f63
-	.4byte 0x6b456666
+	.4byte 0x536D6F6B
+	.4byte 0x65526F63
+	.4byte 0x6B456666
 	.4byte 0x65637400
-	.4byte 0x803e28c0
+	.4byte 0x803E28C0
 	.4byte 0x8
-	.4byte 0x803e28c8
+	.4byte 0x803E28C8
 	.4byte 0x4
-	.4byte 0x803e28d0
+	.4byte 0x803E28D0
 	.4byte 0
 	.4byte __RTTI__7KEffect_1
 	.4byte 0
@@ -38406,10 +38406,10 @@ __vt__15SmokeRockEffect:
 	.4byte 0
 	.4byte invoke__7KEffectFPQ23zen17particleGenerator
 	.4byte __RTTI__15SmokeRockEffect
-	.4byte 0xfffffffc
+	.4byte 0xFFFFFFFC
 	.4byte lbl_80099520
 	.4byte __RTTI__15SmokeRockEffect
-	.4byte 0xfffffff8
+	.4byte 0xFFFFFFF8
 	.4byte lbl_80099528
 	.4byte invoke__7KEffectFPQ23zen17particleGeneratorPQ23zen11particleMdl
 	.4byte invoke__7KEffectFPQ23zen11particleMdl
@@ -38417,16 +38417,16 @@ __vt__15SmokeRockEffect:
 	.4byte kill__7KEffectFv
 	.4byte stop__7KEffectFv
 	.4byte restart__7KEffectFv
-	.4byte 0x536d6f6b
+	.4byte 0x536D6F6B
 	.4byte 0x65477261
 	.4byte 0x73734566
 	.4byte 0x66656374
 	.4byte 0
-	.4byte 0x803e28c0
+	.4byte 0x803E28C0
 	.4byte 0x8
-	.4byte 0x803e28c8
+	.4byte 0x803E28C8
 	.4byte 0x4
-	.4byte 0x803e28d0
+	.4byte 0x803E28D0
 	.4byte 0
 	.4byte __RTTI__7KEffect_1
 	.4byte 0
@@ -38437,10 +38437,10 @@ __vt__16SmokeGrassEffect:
 	.4byte 0
 	.4byte invoke__7KEffectFPQ23zen17particleGenerator
 	.4byte __RTTI__16SmokeGrassEffect
-	.4byte 0xfffffffc
+	.4byte 0xFFFFFFFC
 	.4byte lbl_80099520
 	.4byte __RTTI__16SmokeGrassEffect
-	.4byte 0xfffffff8
+	.4byte 0xFFFFFFF8
 	.4byte lbl_80099528
 	.4byte invoke__7KEffectFPQ23zen17particleGeneratorPQ23zen11particleMdl
 	.4byte invoke__7KEffectFPQ23zen11particleMdl
@@ -38448,15 +38448,15 @@ __vt__16SmokeGrassEffect:
 	.4byte kill__7KEffectFv
 	.4byte stop__7KEffectFv
 	.4byte restart__7KEffectFv
-	.4byte 0x536d6f6b
-	.4byte 0x65536f69
-	.4byte 0x6c456666
+	.4byte 0x536D6F6B
+	.4byte 0x65536F69
+	.4byte 0x6C456666
 	.4byte 0x65637400
-	.4byte 0x803e28c0
+	.4byte 0x803E28C0
 	.4byte 0x8
-	.4byte 0x803e28c8
+	.4byte 0x803E28C8
 	.4byte 0x4
-	.4byte 0x803e28d0
+	.4byte 0x803E28D0
 	.4byte 0
 	.4byte __RTTI__7KEffect_1
 	.4byte 0
@@ -38467,10 +38467,10 @@ __vt__15SmokeSoilEffect:
 	.4byte 0
 	.4byte invoke__7KEffectFPQ23zen17particleGenerator
 	.4byte __RTTI__15SmokeSoilEffect
-	.4byte 0xfffffffc
+	.4byte 0xFFFFFFFC
 	.4byte lbl_80099520
 	.4byte __RTTI__15SmokeSoilEffect
-	.4byte 0xfffffff8
+	.4byte 0xFFFFFFF8
 	.4byte lbl_80099528
 	.4byte invoke__7KEffectFPQ23zen17particleGeneratorPQ23zen11particleMdl
 	.4byte invoke__7KEffectFPQ23zen11particleMdl
@@ -38478,14 +38478,14 @@ __vt__15SmokeSoilEffect:
 	.4byte kill__7KEffectFv
 	.4byte stop__7KEffectFv
 	.4byte restart__7KEffectFv
-	.4byte 0x4e617669
+	.4byte 0x4E617669
 	.4byte 0x57686973
-	.4byte 0x746c6500
-	.4byte 0x803e28c0
+	.4byte 0x746C6500
+	.4byte 0x803E28C0
 	.4byte 0x8
-	.4byte 0x803e28c8
+	.4byte 0x803E28C8
 	.4byte 0x4
-	.4byte 0x803e28d0
+	.4byte 0x803E28D0
 	.4byte 0
 	.4byte __RTTI__7KEffect_1
 	.4byte 0
@@ -38496,10 +38496,10 @@ __vt__11NaviWhistle:
 	.4byte 0
 	.4byte invoke__7KEffectFPQ23zen17particleGenerator
 	.4byte __RTTI__11NaviWhistle
-	.4byte 0xfffffffc
+	.4byte 0xFFFFFFFC
 	.4byte lbl_80115B7C
 	.4byte __RTTI__11NaviWhistle
-	.4byte 0xfffffff8
+	.4byte 0xFFFFFFF8
 	.4byte lbl_80099528
 	.4byte invoke__11NaviWhistleFPQ23zen17particleGeneratorPQ23zen11particleMdl
 	.4byte invoke__7KEffectFPQ23zen11particleMdl
@@ -38507,14 +38507,14 @@ __vt__11NaviWhistle:
 	.4byte kill__11NaviWhistleFv
 	.4byte stop__7KEffectFv
 	.4byte restart__7KEffectFv
-	.4byte 0x476f616c
+	.4byte 0x476F616C
 	.4byte 0x45666665
 	.4byte 0x63740000
-	.4byte 0x803e28c0
+	.4byte 0x803E28C0
 	.4byte 0x8
-	.4byte 0x803e28c8
+	.4byte 0x803E28C8
 	.4byte 0x4
-	.4byte 0x803e28d0
+	.4byte 0x803E28D0
 	.4byte 0
 	.4byte __RTTI__7KEffect_1
 	.4byte 0
@@ -38525,10 +38525,10 @@ __vt__10GoalEffect:
 	.4byte 0
 	.4byte invoke__10GoalEffectFPQ23zen17particleGenerator
 	.4byte __RTTI__10GoalEffect
-	.4byte 0xfffffffc
+	.4byte 0xFFFFFFFC
 	.4byte lbl_80099520
 	.4byte __RTTI__10GoalEffect
-	.4byte 0xfffffff8
+	.4byte 0xFFFFFFF8
 	.4byte lbl_80099528
 	.4byte invoke__7KEffectFPQ23zen17particleGeneratorPQ23zen11particleMdl
 	.4byte invoke__7KEffectFPQ23zen11particleMdl
@@ -38536,14 +38536,14 @@ __vt__10GoalEffect:
 	.4byte kill__7KEffectFv
 	.4byte stop__7KEffectFv
 	.4byte restart__7KEffectFv
-	.4byte 0x536c696d
+	.4byte 0x536C696D
 	.4byte 0x65456666
 	.4byte 0x65637400
-	.4byte 0x803e28c0
+	.4byte 0x803E28C0
 	.4byte 0x8
-	.4byte 0x803e28c8
+	.4byte 0x803E28C8
 	.4byte 0x4
-	.4byte 0x803e28d0
+	.4byte 0x803E28D0
 	.4byte 0
 	.4byte __RTTI__7KEffect_1
 	.4byte 0
@@ -38554,10 +38554,10 @@ __vt__11SlimeEffect:
 	.4byte 0
 	.4byte invoke__7KEffectFPQ23zen17particleGenerator
 	.4byte __RTTI__11SlimeEffect
-	.4byte 0xfffffffc
+	.4byte 0xFFFFFFFC
 	.4byte lbl_80115B74
 	.4byte __RTTI__11SlimeEffect
-	.4byte 0xfffffff8
+	.4byte 0xFFFFFFF8
 	.4byte lbl_80099528
 	.4byte invoke__11SlimeEffectFPQ23zen17particleGeneratorPQ23zen11particleMdl
 	.4byte invoke__7KEffectFPQ23zen11particleMdl
@@ -38569,13 +38569,10 @@ __vt__11SlimeEffect:
 	.4byte 0
 	.4byte 0
 	.4byte 0
-	.4byte 0xfffffffc
+	.4byte 0xFFFFFFFC
 	.4byte 0
 	.4byte 0
-	.4byte 0xfffffff8
-	.4byte 0
-	.4byte 0
-	.4byte 0
+	.4byte 0xFFFFFFF8
 	.4byte 0
 	.4byte 0
 	.4byte 0
@@ -38590,12 +38587,15 @@ __vt__11SlimeEffect:
 	.4byte 0
 	.4byte 0
 	.4byte 0
-	.4byte 0x6b6f6e74
-	.4byte 0x726f6c6c
-	.4byte 0x65722e63
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0x6B6F6E74
+	.4byte 0x726F6C6C
+	.4byte 0x65722E63
 	.4byte 0x70700000
-	.4byte 0x4b6f6e74
-	.4byte 0x726f6c6c
+	.4byte 0x4B6F6E74
+	.4byte 0x726F6C6C
 	.4byte 0x65720000
 .global lbl_802C2D9C
 lbl_802C2D9C:
@@ -38755,7 +38755,7 @@ __vt__7NaviMgr:
 	.4byte getNext__13MonoObjectMgrFi
 	.4byte isDone__13MonoObjectMgrFi
 	.4byte __RTTI__7NaviMgr
-	.4byte 0xfffffff8
+	.4byte 0xFFFFFFF8
 	.4byte getAgeNodeType__5ANodeFv
 	.4byte lbl_8011784C
 	.4byte lbl_80117854
@@ -38782,11 +38782,11 @@ __vt__7NaviMgr:
 	.4byte kill__13MonoObjectMgrFP8Creature
 	.4byte createObject__7NaviMgrFv
 	.4byte read__7NaviMgrFR18RandomAccessStream
-	.4byte 0x67656e4d
+	.4byte 0x67656E4D
 	.4byte 0x61705061
-	.4byte 0x7274732e
+	.4byte 0x7274732E
 	.4byte 0x63707000
-	.4byte 0x67656e4d
+	.4byte 0x67656E4D
 	.4byte 0x61705061
 	.4byte 0x72747300
 .global shapeNames
@@ -38862,24 +38862,13 @@ __vt__17GenObjectMapParts:
 	.4byte update__9GenObjectFP9Generator
 	.4byte render__17GenObjectMapPartsFR8GraphicsP9Generator
 	.4byte birth__17GenObjectMapPartsFR9BirthInfo
-	.4byte 0x5061726d
-	.4byte 0x3c666c6f
-	.4byte 0x61743e00
+	.4byte 0x5061726D
+	.4byte 0x3C666C6F
+	.4byte 0x61743E00
 	.4byte 0x42617365
-	.4byte 0x5061726d
+	.4byte 0x5061726D
 	.4byte 0
-	.4byte 0x803e2af4
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0x5061726d
-	.4byte 0x3c696e74
-	.4byte 0x3e000000
-	.4byte 0x803e2af4
+	.4byte 0x803E2AF4
 	.4byte 0
 	.4byte 0
 	.4byte 0
@@ -38887,35 +38876,46 @@ __vt__17GenObjectMapParts:
 	.4byte 0
 	.4byte 0
 	.4byte 0
+	.4byte 0x5061726D
+	.4byte 0x3C696E74
+	.4byte 0x3E000000
+	.4byte 0x803E2AF4
 	.4byte 0
-	.4byte 0x6d617050
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0x6D617050
 	.4byte 0x61727473
-	.4byte 0x2e637070
+	.4byte 0x2E637070
 	.4byte 0
-	.4byte 0x6d617050
+	.4byte 0x6D617050
 	.4byte 0x61727473
 	.4byte 0
-	.4byte 0x6d617070
+	.4byte 0x6D617070
 	.4byte 0x61727473
-	.4byte 0x2f636f6e
-	.4byte 0x652e6d6f
+	.4byte 0x2F636F6E
+	.4byte 0x652E6D6F
 	.4byte 0x64000000
-	.4byte 0x6d617070
+	.4byte 0x6D617070
 	.4byte 0x61727473
-	.4byte 0x2f63796c
-	.4byte 0x696e6465
-	.4byte 0x722e6d6f
+	.4byte 0x2F63796C
+	.4byte 0x696E6465
+	.4byte 0x722E6D6F
 	.4byte 0x64000000
-	.4byte 0x6d617070
+	.4byte 0x6D617070
 	.4byte 0x61727473
-	.4byte 0x2f637562
-	.4byte 0x652e6d6f
+	.4byte 0x2F637562
+	.4byte 0x652E6D6F
 	.4byte 0x64000000
-	.4byte 0x6d617070
+	.4byte 0x6D617070
 	.4byte 0x61727473
-	.4byte 0x2f626f61
-	.4byte 0x72642e6d
-	.4byte 0x6f640000
+	.4byte 0x2F626F61
+	.4byte 0x72642E6D
+	.4byte 0x6F640000
 .global shapeFiles__8MapParts
 shapeFiles__8MapParts:
 	.4byte 0x802C31F4
@@ -39013,16 +39013,16 @@ __vt__9MapSlider:
 	.4byte jointVisible__12DynCollShapeFii
 	.4byte refresh__9MapSliderFR8Graphics
 	.4byte init__9MapSliderFv
-	.4byte 0x4d617045
-	.4byte 0x6e746974
+	.4byte 0x4D617045
+	.4byte 0x6E746974
 	.4byte 0x79000000
-	.4byte 0x803e2b3c
+	.4byte 0x803E2B3C
 	.4byte 0
-	.4byte 0x803e2b44
+	.4byte 0x803E2B44
 	.4byte 0
-	.4byte 0x803e2b54
+	.4byte 0x803E2B54
 	.4byte 0
-	.4byte 0x803e2b5c
+	.4byte 0x803E2B5C
 	.4byte 0
 	.4byte __RTTI__12DynCollShape_3
 	.4byte 0
@@ -39094,70 +39094,70 @@ __vt__8MapParts:
 	.4byte jointVisible__12DynCollShapeFii
 	.4byte refresh__12DynCollShapeFR8Graphics
 	.4byte init__8MapPartsFv
-	.4byte 0x70616e69
-	.4byte 0x70696b69
-	.4byte 0x616e696d
-	.4byte 0x61746f72
-	.4byte 0x2e637070
+	.4byte 0x70616E69
+	.4byte 0x70696B69
+	.4byte 0x616E696D
+	.4byte 0x61746F72
+	.4byte 0x2E637070
 	.4byte 0
-	.4byte 0x70616e69
-	.4byte 0x70696b69
-	.4byte 0x616e696d
-	.4byte 0x61746f72
+	.4byte 0x70616E69
+	.4byte 0x70696B69
+	.4byte 0x616E696D
+	.4byte 0x61746F72
 	.4byte 0
-	.4byte 0x4e554b41
+	.4byte 0x4E554B41
 	.4byte 0x52455255
 	.4byte 0
-	.4byte 0x54414e45
-	.4byte 0x4d414b49
+	.4byte 0x54414E45
+	.4byte 0x4D414B49
 	.4byte 0
-	.4byte 0x5354494c
-	.4byte 0x4c4a554d
+	.4byte 0x5354494C
+	.4byte 0x4C4A554D
 	.4byte 0x50000000
 	.4byte 0x42555455
-	.4byte 0x4b415255
+	.4byte 0x4B415255
 	.4byte 0
-	.4byte 0x5448524f
+	.4byte 0x5448524F
 	.4byte 0x57574149
 	.4byte 0x54000000
 	.4byte 0x46555249
-	.4byte 0x4d554b55
+	.4byte 0x4D554B55
 	.4byte 0
-	.4byte 0x4a554d50
-	.4byte 0x4b49434b
+	.4byte 0x4A554D50
+	.4byte 0x4B49434B
 	.4byte 0
-	.4byte 0x5049434b
-	.4byte 0x4c4f4f50
+	.4byte 0x5049434B
+	.4byte 0x4C4F4F50
 	.4byte 0
-	.4byte 0x4d495a55
-	.4byte 0x4e4f4d49
+	.4byte 0x4D495A55
+	.4byte 0x4E4F4D49
 	.4byte 0
-	.4byte 0x5459414b
+	.4byte 0x5459414B
 	.4byte 0x55535549
 	.4byte 0
-	.4byte 0x48494b41
-	.4byte 0x4b415255
+	.4byte 0x48494B41
+	.4byte 0x4B415255
 	.4byte 0
 	.4byte 0x43484154
-	.4byte 0x54494e47
+	.4byte 0x54494E47
 	.4byte 0
-	.4byte 0x4f54494b
-	.4byte 0x414b4532
+	.4byte 0x4F54494B
+	.4byte 0x414B4532
 	.4byte 0
-	.4byte 0x4b414946
-	.4byte 0x554b5533
+	.4byte 0x4B414946
+	.4byte 0x554B5533
 	.4byte 0
-	.4byte 0x47414d45
-	.4byte 0x4f564552
+	.4byte 0x47414D45
+	.4byte 0x4F564552
 	.4byte 0
-	.4byte 0x6e756b75
+	.4byte 0x6E756B75
 	.4byte 0x20666173
 	.4byte 0x74000000
-	.4byte 0x6e756b61
+	.4byte 0x6E756B61
 	.4byte 0x72652066
 	.4byte 0x61737400
-	.4byte 0x6f73752d
-	.4byte 0x77616c6b
+	.4byte 0x6F73752D
+	.4byte 0x77616C6B
 	.4byte 0
 .global motionLabels__16PaniPikiAnimator
 motionLabels__16PaniPikiAnimator:
@@ -39280,12 +39280,12 @@ __vt__16PaniPikiAnimator:
 	.4byte finishOneShot__8AnimatorFv
 	.4byte finishLoop__8AnimatorFv
 	.4byte updateContext__12PaniAnimatorFv
-	.4byte 0x67656e41
-	.4byte 0x63746f72
-	.4byte 0x2e637070
+	.4byte 0x67656E41
+	.4byte 0x63746F72
+	.4byte 0x2E637070
 	.4byte 0
-	.4byte 0x67656e41
-	.4byte 0x63746f72
+	.4byte 0x67656E41
+	.4byte 0x63746F72
 	.4byte 0
 .global lbl_802C37DC
 lbl_802C37DC:
@@ -39464,56 +39464,56 @@ __vt__14GenObjectPlant:
 	.4byte update__9GenObjectFP9Generator
 	.4byte render__14GenObjectPlantFR8GraphicsP9Generator
 	.4byte birth__14GenObjectPlantFR9BirthInfo
-	.4byte 0x506c616e
-	.4byte 0x744d6772
+	.4byte 0x506C616E
+	.4byte 0x744D6772
 	.4byte 0
-	.4byte 0x803e2e90
+	.4byte 0x803E2E90
 	.4byte 0
 	.4byte 0
-	.4byte 0x803e2e90
+	.4byte 0x803E2E90
 	.4byte 0
-	.4byte 0x803e2e98
+	.4byte 0x803E2E98
 	.4byte 0
 	.4byte 0
 	.4byte 0x54726176
 	.4byte 0x65727361
-	.4byte 0x626c6500
-	.4byte 0x4f626a65
-	.4byte 0x63744d67
+	.4byte 0x626C6500
+	.4byte 0x4F626A65
+	.4byte 0x63744D67
 	.4byte 0x72000000
-	.4byte 0x803e2e90
+	.4byte 0x803E2E90
 	.4byte 0x8
-	.4byte 0x803e2e98
+	.4byte 0x803E2E98
 	.4byte 0x8
-	.4byte 0x803e2ea8
+	.4byte 0x803E2EA8
 	.4byte 0x8
-	.4byte 0x803e2eb0
+	.4byte 0x803E2EB0
 	.4byte 0
 	.4byte 0
 	.4byte 0x43726561
 	.4byte 0x74757265
-	.4byte 0x4e6f6465
-	.4byte 0x4d677200
-	.4byte 0x803e2e90
+	.4byte 0x4E6F6465
+	.4byte 0x4D677200
+	.4byte 0x803E2E90
 	.4byte 0x8
-	.4byte 0x803e2e98
+	.4byte 0x803E2E98
 	.4byte 0x8
-	.4byte 0x803e2ea8
+	.4byte 0x803E2EA8
 	.4byte 0x8
-	.4byte 0x803e2eb0
+	.4byte 0x803E2EB0
 	.4byte 0
-	.4byte 0x803e2eb8
+	.4byte 0x803E2EB8
 	.4byte 0
 	.4byte 0
-	.4byte 0x803e2e90
+	.4byte 0x803E2E90
 	.4byte 0x8
-	.4byte 0x803e2e98
+	.4byte 0x803E2E98
 	.4byte 0x8
-	.4byte 0x803e2ea8
+	.4byte 0x803E2EA8
 	.4byte 0x8
-	.4byte 0x803e2eb0
+	.4byte 0x803E2EB0
 	.4byte 0
-	.4byte 0x803e2eb8
+	.4byte 0x803E2EB8
 	.4byte 0
 	.4byte __RTTI__15CreatureNodeMgr_2
 	.4byte 0
@@ -39527,7 +39527,7 @@ __vt__8PlantMgr:
 	.4byte getNext__15CreatureNodeMgrFi
 	.4byte isDone__15CreatureNodeMgrFi
 	.4byte __RTTI__8PlantMgr
-	.4byte 0xfffffff8
+	.4byte 0xFFFFFFF8
 	.4byte getAgeNodeType__5ANodeFv
 	.4byte read__8CoreNodeFR18RandomAccessStream
 	.4byte lbl_8009F5DC
@@ -39551,13 +39551,13 @@ __vt__8PlantMgr:
 	.4byte search__9ObjectMgrFP9ObjectMgr
 	.4byte killAll__9ObjectMgrFv
 	.4byte createObject__8PlantMgrFv
-	.4byte 0x5061726d
-	.4byte 0x3c666c6f
-	.4byte 0x61743e00
+	.4byte 0x5061726D
+	.4byte 0x3C666C6F
+	.4byte 0x61743E00
 	.4byte 0x42617365
-	.4byte 0x5061726d
+	.4byte 0x5061726D
 	.4byte 0
-	.4byte 0x803e2ed0
+	.4byte 0x803E2ED0
 	.4byte 0
 	.4byte 0
 	.4byte 0
@@ -39567,19 +39567,19 @@ __vt__8PlantMgr:
 	.4byte 0
 	.4byte 0x43726561
 	.4byte 0x74757265
-	.4byte 0x50726f70
+	.4byte 0x50726F70
 	.4byte 0
 	.4byte 0
 	.4byte 0
 	.4byte 0
-	.4byte 0x506c616e
-	.4byte 0x744d6772
-	.4byte 0x3a3a5573
-	.4byte 0x654e6f64
+	.4byte 0x506C616E
+	.4byte 0x744D6772
+	.4byte 0x3A3A5573
+	.4byte 0x654E6F64
 	.4byte 0x65000000
-	.4byte 0x803e2e90
+	.4byte 0x803E2E90
 	.4byte 0
-	.4byte 0x803e2e98
+	.4byte 0x803E2E98
 	.4byte 0
 	.4byte 0
 .global __vt__Q28PlantMgr7UseNode
@@ -39590,13 +39590,11 @@ __vt__Q28PlantMgr7UseNode:
 	.4byte read__8CoreNodeFR18RandomAccessStream
 	.4byte 0x43726561
 	.4byte 0x74757265
-	.4byte 0x4e6f6465
+	.4byte 0x4E6F6465
 	.4byte 0
-	.4byte 0x803e2e90
+	.4byte 0x803E2E90
 	.4byte 0
-	.4byte 0x803e2e98
-	.4byte 0
-	.4byte 0
+	.4byte 0x803E2E98
 	.4byte 0
 	.4byte 0
 	.4byte 0
@@ -39607,14 +39605,16 @@ __vt__Q28PlantMgr7UseNode:
 	.4byte 0
 	.4byte 0
 	.4byte 0
-	.4byte 0x506c616e
-	.4byte 0x7441493a
-	.4byte 0x3a546f75
-	.4byte 0x6368496e
+	.4byte 0
+	.4byte 0
+	.4byte 0x506C616E
+	.4byte 0x7441493A
+	.4byte 0x3A546F75
+	.4byte 0x6368496E
 	.4byte 0x69740000
 	.4byte 0x53414941
-	.4byte 0x6374696f
-	.4byte 0x6e000000
+	.4byte 0x6374696F
+	.4byte 0x6E000000
 	.4byte __RTTI__9SAIAction_1
 	.4byte 0
 	.4byte 0
@@ -39623,10 +39623,10 @@ __vt__Q27PlantAI9TouchInit:
 	.4byte __RTTI__Q27PlantAI9TouchInit
 	.4byte 0
 	.4byte act__Q27PlantAI9TouchInitFP10AICreature
-	.4byte 0x506c616e
-	.4byte 0x7441493a
-	.4byte 0x3a576169
-	.4byte 0x74496e69
+	.4byte 0x506C616E
+	.4byte 0x7441493A
+	.4byte 0x3A576169
+	.4byte 0x74496E69
 	.4byte 0x74000000
 	.4byte __RTTI__9SAIAction_1
 	.4byte 0
@@ -39636,24 +39636,24 @@ __vt__Q27PlantAI8WaitInit:
 	.4byte __RTTI__Q27PlantAI8WaitInit
 	.4byte 0
 	.4byte act__Q27PlantAI8WaitInitFP10AICreature
-	.4byte 0x506c616e
-	.4byte 0x7441493a
-	.4byte 0x3a4f7070
-	.4byte 0x6f6e656e
-	.4byte 0x744d6f76
+	.4byte 0x506C616E
+	.4byte 0x7441493A
+	.4byte 0x3A4F7070
+	.4byte 0x6F6E656E
+	.4byte 0x744D6F76
 	.4byte 0x65000000
 	.4byte 0x53414943
-	.4byte 0x6f6e6469
-	.4byte 0x74696f6e
+	.4byte 0x6F6E6469
+	.4byte 0x74696F6E
 	.4byte 0
-	.4byte 0x803e2e90
+	.4byte 0x803E2E90
 	.4byte 0
-	.4byte 0x803e2e98
+	.4byte 0x803E2E98
 	.4byte 0
 	.4byte 0
-	.4byte 0x803e2e90
+	.4byte 0x803E2E90
 	.4byte 0
-	.4byte 0x803e2e98
+	.4byte 0x803E2E98
 	.4byte 0
 	.4byte __RTTI__12SAICondition_2
 	.4byte 0
@@ -39681,14 +39681,14 @@ __vt__Q27PlantAI12OpponentMove:
 	.4byte 0
 	.4byte 0
 	.4byte 0x53746174
-	.4byte 0x654d6163
-	.4byte 0x68696e65
-	.4byte 0x3c414943
+	.4byte 0x654D6163
+	.4byte 0x68696E65
+	.4byte 0x3C414943
 	.4byte 0x72656174
-	.4byte 0x7572653e
+	.4byte 0x7572653E
 	.4byte 0
-	.4byte 0x53696d70
-	.4byte 0x6c654149
+	.4byte 0x53696D70
+	.4byte 0x6C654149
 	.4byte 0
 	.4byte "__RTTI__26StateMachine<10AICreature>_2"
 	.4byte 0
@@ -39706,47 +39706,47 @@ __vt__7PlantAI:
 	.4byte exec__8SimpleAIFP10AICreature
 	.4byte procMsg__8SimpleAIFP10AICreatureP3Msg
 	.4byte "transit__26StateMachine<10AICreature>FP10AICreaturei"
-	.4byte 0x50616e69
-	.4byte 0x416e696d
-	.4byte 0x4b65794c
+	.4byte 0x50616E69
+	.4byte 0x416E696D
+	.4byte 0x4B65794C
 	.4byte 0x69737465
-	.4byte 0x6e657200
-	.4byte 0x4576656e
-	.4byte 0x7454616c
-	.4byte 0x6b657200
+	.4byte 0x6E657200
+	.4byte 0x4576656E
+	.4byte 0x7454616C
+	.4byte 0x6B657200
 	.4byte 0x52656643
-	.4byte 0x6f756e74
-	.4byte 0x61626c65
+	.4byte 0x6F756E74
+	.4byte 0x61626C65
 	.4byte 0
 	.4byte 0x43726561
 	.4byte 0x74757265
 	.4byte 0
-	.4byte 0x803e2f38
+	.4byte 0x803E2F38
 	.4byte 0x8
-	.4byte 0x803e2f40
+	.4byte 0x803E2F40
 	.4byte 0
 	.4byte 0
 	.4byte 0x41494372
 	.4byte 0x65617475
 	.4byte 0x72650000
-	.4byte 0x803e2f30
-	.4byte 0x2b8
-	.4byte 0x803e2f38
+	.4byte 0x803E2F30
+	.4byte 0x2B8
+	.4byte 0x803E2F38
 	.4byte 0x8
-	.4byte 0x803e2f40
+	.4byte 0x803E2F40
 	.4byte 0
-	.4byte 0x803e2f48
+	.4byte 0x803E2F48
 	.4byte 0
 	.4byte 0
-	.4byte 0x803e2f30
-	.4byte 0x2b8
-	.4byte 0x803e2f38
+	.4byte 0x803E2F30
+	.4byte 0x2B8
+	.4byte 0x803E2F38
 	.4byte 0x8
-	.4byte 0x803e2f40
+	.4byte 0x803E2F40
 	.4byte 0
-	.4byte 0x803e2f48
+	.4byte 0x803E2F48
 	.4byte 0
-	.4byte 0x803e2f50
+	.4byte 0x803E2F50
 	.4byte 0
 	.4byte 0
 .global __vt__5Plant
@@ -39821,7 +39821,7 @@ __vt__5Plant:
 	.4byte doKill__5PlantFv
 	.4byte exitCourse__8CreatureFv
 	.4byte __RTTI__5Plant
-	.4byte 0xfffffd48
+	.4byte 0xFFFFFD48
 	.4byte lbl_8007DF54
 	.4byte getCurrState__10AICreatureFv
 	.4byte "setCurrState__10AICreatureFP20AState<10AICreature>"
@@ -39838,16 +39838,16 @@ __vt__5Plant:
 	.4byte stopMotion__5PlantFv
 	.4byte animationKeyUpdated__10AICreatureFR16PaniAnimKeyEvent
 	.4byte 0
-	.4byte 0x70616e69
-	.4byte 0x506c616e
-	.4byte 0x74416e69
-	.4byte 0x6d61746f
-	.4byte 0x722e6370
+	.4byte 0x70616E69
+	.4byte 0x506C616E
+	.4byte 0x74416E69
+	.4byte 0x6D61746F
+	.4byte 0x722E6370
 	.4byte 0x70000000
-	.4byte 0x70616e69
-	.4byte 0x506c616e
-	.4byte 0x74416e69
-	.4byte 0x6d61746f
+	.4byte 0x70616E69
+	.4byte 0x506C616E
+	.4byte 0x74416E69
+	.4byte 0x6D61746F
 	.4byte 0x72000000
 .global motionLabels__17PaniPlantAnimator
 motionLabels__17PaniPlantAnimator:
@@ -39888,8 +39888,8 @@ __vt__17PaniPlantAnimator:
 	.4byte finishLoop__8AnimatorFv
 	.4byte updateContext__12PaniAnimatorFv
 	.4byte 0
-	.4byte 0x67656e74
-	.4byte 0x656b692e
+	.4byte 0x67656E74
+	.4byte 0x656B692E
 	.4byte 0x63707000
 .global lbl_802C4094
 lbl_802C4094:
@@ -39948,23 +39948,23 @@ __vt__13GenObjectTeki:
 	.4byte render__9GenObjectFR8GraphicsP9Generator
 	.4byte birth__13GenObjectTekiFR9BirthInfo
 	.4byte 0
-	.4byte 0x6e6c6962
-	.4byte 0x66756e63
-	.4byte 0x74696f6e
-	.4byte 0x2e637070
+	.4byte 0x6E6C6962
+	.4byte 0x66756E63
+	.4byte 0x74696F6E
+	.4byte 0x2E637070
 	.4byte 0
-	.4byte 0x6e6c6962
-	.4byte 0x66756e63
-	.4byte 0x74696f6e
+	.4byte 0x6E6C6962
+	.4byte 0x66756E63
+	.4byte 0x74696F6E
 	.4byte 0
-	.4byte 0x4e566962
+	.4byte 0x4E566962
 	.4byte 0x72617469
-	.4byte 0x6f6e4675
-	.4byte 0x6e637469
-	.4byte 0x6f6e0000
-	.4byte 0x4e46756e
-	.4byte 0x6374696f
-	.4byte 0x6e000000
+	.4byte 0x6F6E4675
+	.4byte 0x6E637469
+	.4byte 0x6F6E0000
+	.4byte 0x4E46756E
+	.4byte 0x6374696F
+	.4byte 0x6E000000
 	.4byte __RTTI__9NFunction
 	.4byte 0
 	.4byte 0
@@ -39973,24 +39973,24 @@ __vt__18NVibrationFunction:
 	.4byte __RTTI__18NVibrationFunction
 	.4byte 0
 	.4byte getValue__18NVibrationFunctionFf
-	.4byte 0x4e436c61
-	.4byte 0x6d704c69
-	.4byte 0x6e656172
-	.4byte 0x46756e63
-	.4byte 0x74696f6e
+	.4byte 0x4E436C61
+	.4byte 0x6D704C69
+	.4byte 0x6E656172
+	.4byte 0x46756E63
+	.4byte 0x74696F6E
 	.4byte 0
-	.4byte 0x4e506f6c
-	.4byte 0x796e6f6d
-	.4byte 0x69616c46
-	.4byte 0x756e6374
-	.4byte 0x696f6e00
+	.4byte 0x4E506F6C
+	.4byte 0x796E6F6D
+	.4byte 0x69616C46
+	.4byte 0x756E6374
+	.4byte 0x696F6E00
 	.4byte __RTTI__9NFunction
 	.4byte 0
 	.4byte 0
-	.4byte 0x4e4c696e
+	.4byte 0x4E4C696E
 	.4byte 0x65617246
-	.4byte 0x756e6374
-	.4byte 0x696f6e00
+	.4byte 0x756E6374
+	.4byte 0x696F6E00
 	.4byte __RTTI__9NFunction
 	.4byte 0
 	.4byte __RTTI__19NPolynomialFunction
@@ -40026,13 +40026,13 @@ __vt__9NFunction:
 	.4byte __RTTI__9NFunction
 	.4byte 0
 	.4byte 0
-	.4byte 0x6e6c6962
-	.4byte 0x67656f6d
+	.4byte 0x6E6C6962
+	.4byte 0x67656F6D
 	.4byte 0x65747279
-	.4byte 0x2e637070
+	.4byte 0x2E637070
 	.4byte 0
-	.4byte 0x6e6c6962
-	.4byte 0x67656f6d
+	.4byte 0x6E6C6962
+	.4byte 0x67656F6D
 	.4byte 0x65747279
 	.4byte 0
 .global __vt__6NAlpha
@@ -40040,12 +40040,12 @@ __vt__6NAlpha:
 	.4byte __RTTI__6NAlpha
 	.4byte 0
 	.4byte readData__6NAlphaFR6Stream
-	.4byte 0x4c554d61
+	.4byte 0x4C554D61
 	.4byte 0x74726978
 	.4byte 0
-	.4byte 0x4e537065
-	.4byte 0x6369616c
-	.4byte 0x4d617472
+	.4byte 0x4E537065
+	.4byte 0x6369616C
+	.4byte 0x4D617472
 	.4byte 0x69780000
 	.4byte __RTTI__14NSpecialMatrix
 	.4byte 0
@@ -40055,8 +40055,8 @@ __vt__8LUMatrix:
 	.4byte __RTTI__8LUMatrix
 	.4byte 0
 	.4byte setDimension__8LUMatrixFi
-	.4byte 0x4e557070
-	.4byte 0x65724d61
+	.4byte 0x4E557070
+	.4byte 0x65724D61
 	.4byte 0x74726978
 	.4byte 0
 	.4byte __RTTI__14NSpecialMatrix
@@ -40067,8 +40067,8 @@ __vt__12NUpperMatrix:
 	.4byte __RTTI__12NUpperMatrix
 	.4byte 0
 	.4byte setDimension__14NSpecialMatrixFi
-	.4byte 0x4e4c6f77
-	.4byte 0x65724d61
+	.4byte 0x4E4C6F77
+	.4byte 0x65724D61
 	.4byte 0x74726978
 	.4byte 0
 	.4byte __RTTI__14NSpecialMatrix
@@ -40084,7 +40084,7 @@ __vt__14NSpecialMatrix:
 	.4byte __RTTI__14NSpecialMatrix
 	.4byte 0
 	.4byte setDimension__14NSpecialMatrixFi
-	.4byte 0x4e506f73
+	.4byte 0x4E506F73
 	.4byte 0x74757265
 	.4byte 0x33440000
 .global __vt__10NPosture3D
@@ -40092,7 +40092,7 @@ __vt__10NPosture3D:
 	.4byte __RTTI__10NPosture3D
 	.4byte 0
 	.4byte readData__10NPosture3DFR6Stream
-	.4byte 0x4e506f73
+	.4byte 0x4E506F73
 	.4byte 0x74757265
 	.4byte 0x32440000
 .global __vt__10NPosture2D
@@ -40649,10 +40649,10 @@ __vt__5NHeap:
 	.4byte 0
 	.4byte release__5NHeapFv
 	.4byte addHeap__5NHeapFP5NHeap
-	.4byte 0x4e417272
-	.4byte 0x61793c4e
+	.4byte 0x4E417272
+	.4byte 0x61793C4E
 	.4byte 0x48656170
-	.4byte 0x3e000000
+	.4byte 0x3E000000
 .global "__vt__14NArray<5NHeap>"
 "__vt__14NArray<5NHeap>":
 	.4byte "__RTTI__14NArray<5NHeap>"
@@ -40673,7 +40673,7 @@ __vt__5NHeap:
 	.4byte "lastElement__14NArray<5NHeap>Fv"
 .global __vt__5NNode
 __vt__5NNode:
-	.4byte 0x803e30a0
+	.4byte 0x803E30A0
 	.4byte 0
 	.4byte setChild__5NNodeFiP5NNode
 	.4byte addChild__5NNodeFP5NNode
@@ -40681,10 +40681,10 @@ __vt__5NNode:
 	.4byte removeChild__5NNodeFP5NNode
 	.4byte removeChild__5NNodeFi
 	.4byte removeAllChildren__5NNodeFv
-	.4byte 0x4e417272
-	.4byte 0x61793c4e
-	.4byte 0x4e6f6465
-	.4byte 0x3e000000
+	.4byte 0x4E417272
+	.4byte 0x61793C4E
+	.4byte 0x4E6F6465
+	.4byte 0x3E000000
 .global "__vt__14NArray<5NNode>"
 "__vt__14NArray<5NNode>":
 	.4byte "__RTTI__14NArray<5NNode>"
@@ -40704,32 +40704,32 @@ __vt__5NNode:
 	.4byte "firstElement__14NArray<5NNode>Fv"
 	.4byte "lastElement__14NArray<5NNode>Fv"
 	.4byte 0
-	.4byte 0x70616e69
-	.4byte 0x616e696d
-	.4byte 0x61746f72
-	.4byte 0x2e637070
+	.4byte 0x70616E69
+	.4byte 0x616E696D
+	.4byte 0x61746F72
+	.4byte 0x2E637070
 	.4byte 0
-	.4byte 0x70616e69
-	.4byte 0x616e696d
-	.4byte 0x61746f72
+	.4byte 0x70616E69
+	.4byte 0x616E696D
+	.4byte 0x61746F72
 	.4byte 0
-	.4byte 0x6c6f6f70
+	.4byte 0x6C6F6F70
 	.4byte 0x20737461
 	.4byte 0x72740000
-	.4byte 0x6c6f6f70
-	.4byte 0x20656e64
+	.4byte 0x6C6F6F70
+	.4byte 0x20656E64
 	.4byte 0
 	.4byte 0x61637469
-	.4byte 0x6f6e2030
+	.4byte 0x6F6E2030
 	.4byte 0
 	.4byte 0x61637469
-	.4byte 0x6f6e2031
+	.4byte 0x6F6E2031
 	.4byte 0
 	.4byte 0x61637469
-	.4byte 0x6f6e2032
+	.4byte 0x6F6E2032
 	.4byte 0
 	.4byte 0x61637469
-	.4byte 0x6f6e2033
+	.4byte 0x6F6E2033
 	.4byte 0
 .global keyNames__12PaniAnimator
 keyNames__12PaniAnimator:
@@ -40751,31 +40751,31 @@ keyNames__12PaniAnimator:
 	.4byte 0x00000000
 .global __vt__12PaniAnimator
 __vt__12PaniAnimator:
-	.4byte 0x803e30b8
+	.4byte 0x803E30B8
 	.4byte 0
 	.4byte changeContext__12PaniAnimatorFP11AnimContext
 	.4byte animate__12PaniAnimatorFf
 	.4byte finishOneShot__8AnimatorFv
 	.4byte finishLoop__8AnimatorFv
 	.4byte updateContext__12PaniAnimatorFv
-	.4byte 0x70616e69
-	.4byte 0x74656b69
-	.4byte 0x616e696d
-	.4byte 0x61746f72
-	.4byte 0x2e637070
+	.4byte 0x70616E69
+	.4byte 0x74656B69
+	.4byte 0x616E696D
+	.4byte 0x61746F72
+	.4byte 0x2E637070
 	.4byte 0
-	.4byte 0x70616e69
-	.4byte 0x74656b69
-	.4byte 0x616e696d
-	.4byte 0x61746f72
-	.4byte 0
-	.4byte 0x57414954
-	.4byte 0x41435449
-	.4byte 0x4f4e5f31
+	.4byte 0x70616E69
+	.4byte 0x74656B69
+	.4byte 0x616E696D
+	.4byte 0x61746F72
 	.4byte 0
 	.4byte 0x57414954
 	.4byte 0x41435449
-	.4byte 0x4f4e5f32
+	.4byte 0x4F4E5F31
+	.4byte 0
+	.4byte 0x57414954
+	.4byte 0x41435449
+	.4byte 0x4F4E5F32
 	.4byte 0
 .global motionLabels__16PaniTekiAnimator
 motionLabels__16PaniTekiAnimator:
@@ -40929,18 +40929,18 @@ __vt__15PaniTestSection:
 	.4byte concat__4NodeFR8Matrix4f
 	.4byte getModelMatrix__4NodeFv
 	.4byte init__15PaniTestSectionFv
-	.4byte 0x50616e69
-	.4byte 0x416e696d
-	.4byte 0x4b65794c
+	.4byte 0x50616E69
+	.4byte 0x416E696D
+	.4byte 0x4B65794C
 	.4byte 0x69737465
-	.4byte 0x6e657200
-	.4byte 0x803e31f8
+	.4byte 0x6E657200
+	.4byte 0x803E31F8
 	.4byte 0x20
-	.4byte 0x803e31c0
+	.4byte 0x803E31C0
 	.4byte 0
-	.4byte 0x803e31c8
+	.4byte 0x803E31C8
 	.4byte 0
-	.4byte 0x803e31d8
+	.4byte 0x803E31D8
 	.4byte 0
 	.4byte 0
 .global __vt__12PaniTestNode
@@ -40958,7 +40958,7 @@ __vt__12PaniTestNode:
 	.4byte concat__4NodeFR8Matrix4f
 	.4byte getModelMatrix__4NodeFv
 	.4byte __RTTI__12PaniTestNode
-	.4byte 0xffffffe0
+	.4byte 0xFFFFFFE0
 	.4byte lbl_8012159C
 	.4byte animationKeyUpdated__12PaniTestNodeFR16PaniAnimKeyEvent
 	.4byte 0
@@ -40974,17 +40974,17 @@ __vt__12PaniTestNode:
 	.4byte 0
 	.4byte 0x70617261
 	.4byte 0x70617261
-	.4byte 0x6d657465
-	.4byte 0x72732e63
+	.4byte 0x6D657465
+	.4byte 0x72732E63
 	.4byte 0x70700000
 	.4byte 0x70617261
 	.4byte 0x70617261
-	.4byte 0x6d657465
+	.4byte 0x6D657465
 	.4byte 0x72730000
 	.4byte 0x50617261
-	.4byte 0x4d756c74
+	.4byte 0x4D756C74
 	.4byte 0x69506172
-	.4byte 0x616d6574
+	.4byte 0x616D6574
 	.4byte 0x65727300
 .global __vt__19ParaMultiParameters
 __vt__19ParaMultiParameters:
@@ -40995,14 +40995,14 @@ __vt__19ParaMultiParameters:
 	.4byte print__19ParaMultiParametersFv
 	.4byte 0x50617261
 	.4byte 0x50617261
-	.4byte 0x6d657465
+	.4byte 0x6D657465
 	.4byte 0x72734600
 	.4byte 0x50617261
 	.4byte 0x50617261
-	.4byte 0x6d657465
-	.4byte 0x72733c66
-	.4byte 0x6c6f6174
-	.4byte 0x3e000000
+	.4byte 0x6D657465
+	.4byte 0x72733C66
+	.4byte 0x6C6F6174
+	.4byte 0x3E000000
 	.4byte "__RTTI__17ParaParameters<f>"
 	.4byte 0
 	.4byte 0
@@ -41022,13 +41022,13 @@ __vt__15ParaParametersF:
 	.4byte "print__17ParaParameters<f>Fv"
 	.4byte 0x50617261
 	.4byte 0x50617261
-	.4byte 0x6d657465
+	.4byte 0x6D657465
 	.4byte 0x72734900
 	.4byte 0x50617261
 	.4byte 0x50617261
-	.4byte 0x6d657465
-	.4byte 0x72733c69
-	.4byte 0x6e743e00
+	.4byte 0x6D657465
+	.4byte 0x72733C69
+	.4byte 0x6E743E00
 	.4byte "__RTTI__17ParaParameters<i>"
 	.4byte 0
 	.4byte 0
@@ -41046,12 +41046,12 @@ __vt__15ParaParametersI:
 	.4byte "read__17ParaParameters<i>FR6Stream"
 	.4byte "write__17ParaParameters<i>FR6Stream"
 	.4byte "print__17ParaParameters<i>Fv"
-	.4byte 0x7063616d
-	.4byte 0x63616d65
-	.4byte 0x72612e63
+	.4byte 0x7063616D
+	.4byte 0x63616D65
+	.4byte 0x72612E63
 	.4byte 0x70700000
-	.4byte 0x7063616d
-	.4byte 0x63616d65
+	.4byte 0x7063616D
+	.4byte 0x63616D65
 	.4byte 0x72610000
 .global lbl_802C5194
 lbl_802C5194:
@@ -41081,10 +41081,10 @@ __vt__10PcamCamera:
 	.4byte __RTTI__10PcamCamera
 	.4byte 0
 	.4byte update__10PcamCameraFv
-	.4byte 0x4e417272
-	.4byte 0x61793c43
+	.4byte 0x4E417272
+	.4byte 0x61793C43
 	.4byte 0x72656174
-	.4byte 0x7572653e
+	.4byte 0x7572653E
 	.4byte 0
 .global "__vt__17NArray<8Creature>"
 "__vt__17NArray<8Creature>":
@@ -41104,16 +41104,16 @@ __vt__10PcamCamera:
 	.4byte "get__17NArray<8Creature>Fi"
 	.4byte "firstElement__17NArray<8Creature>Fv"
 	.4byte "lastElement__17NArray<8Creature>Fv"
-	.4byte 0x7063616d
-	.4byte 0x63616d65
-	.4byte 0x72616d61
-	.4byte 0x6e616765
-	.4byte 0x722e6370
+	.4byte 0x7063616D
+	.4byte 0x63616D65
+	.4byte 0x72616D61
+	.4byte 0x6E616765
+	.4byte 0x722E6370
 	.4byte 0x70000000
-	.4byte 0x7063616d
-	.4byte 0x63616d65
-	.4byte 0x72616d61
-	.4byte 0x6e616765
+	.4byte 0x7063616D
+	.4byte 0x63616D65
+	.4byte 0x72616D61
+	.4byte 0x6E616765
 	.4byte 0x72000000
 .global lbl_802C5274
 lbl_802C5274:
@@ -41162,32 +41162,32 @@ __vt__17PcamCameraManager:
 	.4byte 0
 	.4byte 0
 	.4byte 0
-	.4byte 0x7063616d
-	.4byte 0x6d6f7469
-	.4byte 0x6f6e6576
-	.4byte 0x656e7473
-	.4byte 0x2e637070
+	.4byte 0x7063616D
+	.4byte 0x6D6F7469
+	.4byte 0x6F6E6576
+	.4byte 0x656E7473
+	.4byte 0x2E637070
 	.4byte 0
-	.4byte 0x7063616d
-	.4byte 0x6d6f7469
-	.4byte 0x6f6e6576
-	.4byte 0x656e7473
+	.4byte 0x7063616D
+	.4byte 0x6D6F7469
+	.4byte 0x6F6E6576
+	.4byte 0x656E7473
 	.4byte 0
-	.4byte 0x5063616d
+	.4byte 0x5063616D
 	.4byte 0x53696465
 	.4byte 0x56696272
-	.4byte 0x6174696f
-	.4byte 0x6e457665
-	.4byte 0x6e740000
+	.4byte 0x6174696F
+	.4byte 0x6E457665
+	.4byte 0x6E740000
 	.4byte 0x50657665
-	.4byte 0x4576656e
+	.4byte 0x4576656E
 	.4byte 0x74000000
-	.4byte 0x803e3290
+	.4byte 0x803E3290
 	.4byte 0
 	.4byte 0
-	.4byte 0x803e3290
+	.4byte 0x803E3290
 	.4byte 0
-	.4byte 0x803e3298
+	.4byte 0x803E3298
 	.4byte 0
 	.4byte 0
 .global __vt__22PcamSideVibrationEvent
@@ -41207,20 +41207,20 @@ __vt__22PcamSideVibrationEvent:
 	.4byte setEventOption__9PeveEventFi
 	.4byte clearEventOption__9PeveEventFi
 	.4byte setEventOptions__9PeveEventFi
-	.4byte 0x4e46756e
-	.4byte 0x6374696f
-	.4byte 0x6e000000
+	.4byte 0x4E46756E
+	.4byte 0x6374696F
+	.4byte 0x6E000000
 	.4byte 0
 	.4byte 0
 	.4byte 0
-	.4byte 0x5063616d
-	.4byte 0x52616e64
-	.4byte 0x6f6d4d6f
+	.4byte 0x5063616D
+	.4byte 0x52616E64
+	.4byte 0x6F6D4D6F
 	.4byte 0x76654576
-	.4byte 0x656e7400
-	.4byte 0x803e3290
+	.4byte 0x656E7400
+	.4byte 0x803E3290
 	.4byte 0
-	.4byte 0x803e3298
+	.4byte 0x803E3298
 	.4byte 0
 	.4byte 0
 .global __vt__19PcamRandomMoveEvent
@@ -41240,25 +41240,25 @@ __vt__19PcamRandomMoveEvent:
 	.4byte setEventOption__9PeveEventFi
 	.4byte clearEventOption__9PeveEventFi
 	.4byte setEventOptions__9PeveEventFi
-	.4byte 0x5063616d
-	.4byte 0x44616d61
+	.4byte 0x5063616D
+	.4byte 0x44616D61
 	.4byte 0x67654576
-	.4byte 0x656e7400
+	.4byte 0x656E7400
 	.4byte 0x50657665
 	.4byte 0x56696272
-	.4byte 0x6174696f
-	.4byte 0x6e457665
-	.4byte 0x6e740000
-	.4byte 0x803e3290
+	.4byte 0x6174696F
+	.4byte 0x6E457665
+	.4byte 0x6E740000
+	.4byte 0x803E3290
 	.4byte 0
-	.4byte 0x803e3298
+	.4byte 0x803E3298
 	.4byte 0
 	.4byte 0
-	.4byte 0x803e3290
+	.4byte 0x803E3290
 	.4byte 0
-	.4byte 0x803e3298
+	.4byte 0x803E3298
 	.4byte 0
-	.4byte 0x803e32b0
+	.4byte 0x803E32B0
 	.4byte 0
 	.4byte 0
 .global __vt__15PcamDamageEvent
@@ -41278,16 +41278,16 @@ __vt__15PcamDamageEvent:
 	.4byte setEventOption__9PeveEventFi
 	.4byte clearEventOption__9PeveEventFi
 	.4byte setEventOptions__9PeveEventFi
-	.4byte 0x5063616d
+	.4byte 0x5063616D
 	.4byte 0x56696272
-	.4byte 0x6174696f
-	.4byte 0x6e457665
-	.4byte 0x6e740000
-	.4byte 0x803e3290
+	.4byte 0x6174696F
+	.4byte 0x6E457665
+	.4byte 0x6E740000
+	.4byte 0x803E3290
 	.4byte 0
-	.4byte 0x803e3298
+	.4byte 0x803E3298
 	.4byte 0
-	.4byte 0x803e32b0
+	.4byte 0x803E32B0
 	.4byte 0
 	.4byte 0
 .global __vt__18PcamVibrationEvent
@@ -41307,24 +41307,24 @@ __vt__18PcamVibrationEvent:
 	.4byte setEventOption__9PeveEventFi
 	.4byte clearEventOption__9PeveEventFi
 	.4byte setEventOptions__9PeveEventFi
-	.4byte 0x5063616d
-	.4byte 0x4c6f6e67
+	.4byte 0x5063616D
+	.4byte 0x4C6F6E67
 	.4byte 0x56696272
-	.4byte 0x6174696f
-	.4byte 0x6e457665
-	.4byte 0x6e740000
+	.4byte 0x6174696F
+	.4byte 0x6E457665
+	.4byte 0x6E740000
 	.4byte 0x50657665
 	.4byte 0x53657269
-	.4byte 0x616c4576
-	.4byte 0x656e7400
-	.4byte 0x803e3290
+	.4byte 0x616C4576
+	.4byte 0x656E7400
+	.4byte 0x803E3290
 	.4byte 0
-	.4byte 0x803e3298
+	.4byte 0x803E3298
 	.4byte 0
 	.4byte 0
-	.4byte 0x803e3290
+	.4byte 0x803E3290
 	.4byte 0
-	.4byte 0x803e3298
+	.4byte 0x803E3298
 	.4byte 0
 	.4byte __RTTI__15PeveSerialEvent
 	.4byte 0
@@ -41659,20 +41659,20 @@ __vt__20PcamCameraParameters:
 	.4byte 0
 	.4byte 0
 	.4byte 0x70657665
-	.4byte 0x2e637070
+	.4byte 0x2E637070
 	.4byte 0
 	.4byte 0x50657665
-	.4byte 0x436c616d
+	.4byte 0x436C616D
 	.4byte 0x70566563
-	.4byte 0x746f7233
-	.4byte 0x66494f00
-	.4byte 0x4e566563
-	.4byte 0x746f7233
-	.4byte 0x66494f00
-	.4byte 0x4e566563
-	.4byte 0x746f7233
-	.4byte 0x66494f43
-	.4byte 0x6c617373
+	.4byte 0x746F7233
+	.4byte 0x66494F00
+	.4byte 0x4E566563
+	.4byte 0x746F7233
+	.4byte 0x66494F00
+	.4byte 0x4E566563
+	.4byte 0x746F7233
+	.4byte 0x66494F43
+	.4byte 0x6C617373
 	.4byte 0
 	.4byte __RTTI__11NVector3fIO
 	.4byte 0
@@ -41697,9 +41697,9 @@ __vt__16NVector3fIOClass:
 	.4byte 0x50657665
 	.4byte 0x43726561
 	.4byte 0x74757265
-	.4byte 0x506f7369
-	.4byte 0x74696f6e
-	.4byte 0x494f0000
+	.4byte 0x506F7369
+	.4byte 0x74696F6E
+	.4byte 0x494F0000
 	.4byte __RTTI__11NVector3fIO
 	.4byte 0
 	.4byte 0
@@ -41710,13 +41710,13 @@ __vt__22PeveCreaturePositionIO:
 	.4byte input__22PeveCreaturePositionIOFR9NVector3f
 	.4byte output__22PeveCreaturePositionIOFR9NVector3f
 	.4byte 0x50657665
-	.4byte 0x43616d65
-	.4byte 0x7261506f
+	.4byte 0x43616D65
+	.4byte 0x7261506F
 	.4byte 0x73747572
-	.4byte 0x65494f00
-	.4byte 0x4e506f73
+	.4byte 0x65494F00
+	.4byte 0x4E506F73
 	.4byte 0x74757265
-	.4byte 0x3344494f
+	.4byte 0x3344494F
 	.4byte 0
 	.4byte __RTTI__12NPosture3DIO
 	.4byte 0
@@ -41734,11 +41734,11 @@ __vt__12NPosture3DIO:
 	.4byte 0
 	.4byte 0
 	.4byte 0x50657665
-	.4byte 0x43616d65
+	.4byte 0x43616D65
 	.4byte 0x72615761
 	.4byte 0x74636870
-	.4byte 0x6f696e74
-	.4byte 0x494f0000
+	.4byte 0x6F696E74
+	.4byte 0x494F0000
 	.4byte __RTTI__11NVector3fIO
 	.4byte 0
 	.4byte 0
@@ -41749,11 +41749,11 @@ __vt__22PeveCameraWatchpointIO:
 	.4byte input__22PeveCameraWatchpointIOFR9NVector3f
 	.4byte output__22PeveCameraWatchpointIOFR9NVector3f
 	.4byte 0x50657665
-	.4byte 0x43616d65
+	.4byte 0x43616D65
 	.4byte 0x72615669
-	.4byte 0x6577706f
-	.4byte 0x696e7449
-	.4byte 0x4f000000
+	.4byte 0x6577706F
+	.4byte 0x696E7449
+	.4byte 0x4F000000
 	.4byte __RTTI__11NVector3fIO
 	.4byte 0
 	.4byte 0
@@ -41771,17 +41771,17 @@ __vt__11NVector3fIO:
 	.4byte 0
 	.4byte 0x50657665
 	.4byte 0x53657269
-	.4byte 0x616c4576
-	.4byte 0x656e7400
+	.4byte 0x616C4576
+	.4byte 0x656E7400
 	.4byte 0x50657665
-	.4byte 0x4576656e
+	.4byte 0x4576656E
 	.4byte 0x74000000
-	.4byte 0x803e3358
+	.4byte 0x803E3358
 	.4byte 0
 	.4byte 0
-	.4byte 0x803e3358
+	.4byte 0x803E3358
 	.4byte 0
-	.4byte 0x803e3360
+	.4byte 0x803E3360
 	.4byte 0
 	.4byte 0
 .global __vt__15PeveSerialEvent
@@ -41803,17 +41803,17 @@ __vt__15PeveSerialEvent:
 	.4byte setEventOptions__9PeveEventFi
 	.4byte 0x50657665
 	.4byte 0x50617261
-	.4byte 0x6c6c656c
-	.4byte 0x4576656e
+	.4byte 0x6C6C656C
+	.4byte 0x4576656E
 	.4byte 0x74000000
-	.4byte 0x803e3358
+	.4byte 0x803E3358
 	.4byte 0
-	.4byte 0x803e3360
+	.4byte 0x803E3360
 	.4byte 0
 	.4byte 0
 .global __vt__17PeveParallelEvent
 __vt__17PeveParallelEvent:
-	.4byte 0x803e3370
+	.4byte 0x803E3370
 	.4byte 0
 	.4byte setChild__5NNodeFiP5NNode
 	.4byte addChild__5NNodeFP5NNode
@@ -41830,7 +41830,7 @@ __vt__17PeveParallelEvent:
 	.4byte setEventOptions__9PeveEventFi
 .global __vt__9PeveEvent
 __vt__9PeveEvent:
-	.4byte 0x803e3360
+	.4byte 0x803E3360
 	.4byte 0
 	.4byte setChild__5NNodeFiP5NNode
 	.4byte addChild__5NNodeFP5NNode
@@ -41846,9 +41846,9 @@ __vt__9PeveEvent:
 	.4byte clearEventOption__9PeveEventFi
 	.4byte setEventOptions__9PeveEventFi
 	.4byte 0x50657665
-	.4byte 0x436f6e64
-	.4byte 0x6974696f
-	.4byte 0x6e000000
+	.4byte 0x436F6E64
+	.4byte 0x6974696F
+	.4byte 0x6E000000
 .global __vt__13PeveCondition
 __vt__13PeveCondition:
 	.4byte __RTTI__13PeveCondition
@@ -41857,30 +41857,30 @@ __vt__13PeveCondition:
 	.4byte reset__13PeveConditionFv
 	.4byte update__13PeveConditionFv
 	.4byte 0x70657665
-	.4byte 0x636f6e64
-	.4byte 0x6974696f
-	.4byte 0x6e732e63
+	.4byte 0x636F6E64
+	.4byte 0x6974696F
+	.4byte 0x6E732E63
 	.4byte 0x70700000
 	.4byte 0x70657665
-	.4byte 0x636f6e64
-	.4byte 0x6974696f
-	.4byte 0x6e730000
+	.4byte 0x636F6E64
+	.4byte 0x6974696F
+	.4byte 0x6E730000
 	.4byte 0x50657665
-	.4byte 0x436f6d70
+	.4byte 0x436F6D70
 	.4byte 0x61726973
-	.4byte 0x6f6e5943
-	.4byte 0x6f6e6469
-	.4byte 0x74696f6e
+	.4byte 0x6F6E5943
+	.4byte 0x6F6E6469
+	.4byte 0x74696F6E
 	.4byte 0
 	.4byte 0x50657665
-	.4byte 0x436f6e64
-	.4byte 0x6974696f
-	.4byte 0x6e000000
+	.4byte 0x436F6E64
+	.4byte 0x6974696F
+	.4byte 0x6E000000
 	.4byte 0x50657665
-	.4byte 0x426f6f6c
-	.4byte 0x65616e43
-	.4byte 0x6f6e6469
-	.4byte 0x74696f6e
+	.4byte 0x426F6F6C
+	.4byte 0x65616E43
+	.4byte 0x6F6E6469
+	.4byte 0x74696F6E
 	.4byte 0
 	.4byte __RTTI__13PeveCondition_1
 	.4byte 0
@@ -41899,10 +41899,10 @@ __vt__24PeveComparisonYCondition:
 	.4byte update__24PeveComparisonYConditionFv
 	.4byte 0x50657665
 	.4byte 0x44697374
-	.4byte 0x616e6365
-	.4byte 0x436f6e64
-	.4byte 0x6974696f
-	.4byte 0x6e000000
+	.4byte 0x616E6365
+	.4byte 0x436F6E64
+	.4byte 0x6974696F
+	.4byte 0x6E000000
 	.4byte __RTTI__13PeveCondition_1
 	.4byte 0
 	.4byte __RTTI__20PeveBooleanCondition
@@ -41916,10 +41916,10 @@ __vt__21PeveDistanceCondition:
 	.4byte reset__21PeveDistanceConditionFv
 	.4byte update__21PeveDistanceConditionFv
 	.4byte 0x50657665
-	.4byte 0x54696d65
-	.4byte 0x436f6e64
-	.4byte 0x6974696f
-	.4byte 0x6e000000
+	.4byte 0x54696D65
+	.4byte 0x436F6E64
+	.4byte 0x6974696F
+	.4byte 0x6E000000
 	.4byte __RTTI__13PeveCondition_1
 	.4byte 0
 	.4byte 0
@@ -41932,10 +41932,10 @@ __vt__17PeveTimeCondition:
 	.4byte update__17PeveTimeConditionFv
 	.4byte 0x50657665
 	.4byte 0x44657065
-	.4byte 0x6e64656e
-	.4byte 0x6365436f
-	.4byte 0x6e646974
-	.4byte 0x696f6e00
+	.4byte 0x6E64656E
+	.4byte 0x6365436F
+	.4byte 0x6E646974
+	.4byte 0x696F6E00
 	.4byte __RTTI__13PeveCondition_1
 	.4byte 0
 	.4byte 0
@@ -41955,35 +41955,35 @@ __vt__20PeveBooleanCondition:
 	.4byte update__13PeveConditionFv
 	.4byte 0
 	.4byte 0x70657665
-	.4byte 0x6d6f7469
-	.4byte 0x6f6e6576
-	.4byte 0x656e7473
-	.4byte 0x2e637070
+	.4byte 0x6D6F7469
+	.4byte 0x6F6E6576
+	.4byte 0x656E7473
+	.4byte 0x2E637070
 	.4byte 0
 	.4byte 0x70657665
-	.4byte 0x6d6f7469
-	.4byte 0x6f6e6576
-	.4byte 0x656e7473
+	.4byte 0x6D6F7469
+	.4byte 0x6F6E6576
+	.4byte 0x656E7473
 	.4byte 0
 	.4byte 0x50657665
 	.4byte 0x56696272
-	.4byte 0x6174696f
-	.4byte 0x6e457665
-	.4byte 0x6e740000
+	.4byte 0x6174696F
+	.4byte 0x6E457665
+	.4byte 0x6E740000
 	.4byte 0x50657665
-	.4byte 0x4576656e
+	.4byte 0x4576656E
 	.4byte 0x74000000
-	.4byte 0x803e33b8
+	.4byte 0x803E33B8
 	.4byte 0
 	.4byte 0
-	.4byte 0x803e33b8
+	.4byte 0x803E33B8
 	.4byte 0
-	.4byte 0x803e33c0
+	.4byte 0x803E33C0
 	.4byte 0
 	.4byte 0
 .global __vt__18PeveVibrationEvent
 __vt__18PeveVibrationEvent:
-	.4byte 0x803e33c8
+	.4byte 0x803E33C8
 	.4byte 0
 	.4byte setChild__5NNodeFiP5NNode
 	.4byte addChild__5NNodeFP5NNode
@@ -41998,19 +41998,19 @@ __vt__18PeveVibrationEvent:
 	.4byte setEventOption__9PeveEventFi
 	.4byte clearEventOption__9PeveEventFi
 	.4byte setEventOptions__9PeveEventFi
-	.4byte 0x4e46756e
-	.4byte 0x6374696f
-	.4byte 0x6e000000
+	.4byte 0x4E46756E
+	.4byte 0x6374696F
+	.4byte 0x6E000000
 	.4byte 0
 	.4byte 0
 	.4byte 0
 	.4byte 0x50657665
-	.4byte 0x4d6f7665
-	.4byte 0x4576656e
+	.4byte 0x4D6F7665
+	.4byte 0x4576656E
 	.4byte 0x74000000
-	.4byte 0x803e33b8
+	.4byte 0x803E33B8
 	.4byte 0
-	.4byte 0x803e33c0
+	.4byte 0x803E33C0
 	.4byte 0
 	.4byte 0
 .global __vt__13PeveMoveEvent
@@ -42031,14 +42031,14 @@ __vt__13PeveMoveEvent:
 	.4byte clearEventOption__9PeveEventFi
 	.4byte setEventOptions__9PeveEventFi
 	.4byte 0x50657665
-	.4byte 0x496e7465
-	.4byte 0x72706f6c
-	.4byte 0x6174696f
-	.4byte 0x6e457665
-	.4byte 0x6e740000
-	.4byte 0x803e33b8
+	.4byte 0x496E7465
+	.4byte 0x72706F6C
+	.4byte 0x6174696F
+	.4byte 0x6E457665
+	.4byte 0x6E740000
+	.4byte 0x803E33B8
 	.4byte 0
-	.4byte 0x803e33c0
+	.4byte 0x803E33C0
 	.4byte 0
 	.4byte 0
 .global __vt__22PeveInterpolationEvent
@@ -42066,26 +42066,26 @@ __vt__22PeveInterpolationEvent:
 	.4byte getTime__22PeveInterpolationEventFv
 	.4byte getEndTime__22PeveInterpolationEventFv
 	.4byte 0x50657665
-	.4byte 0x486f6d69
-	.4byte 0x6e67506f
+	.4byte 0x486F6D69
+	.4byte 0x6E67506F
 	.4byte 0x73747572
 	.4byte 0x65457665
-	.4byte 0x6e740000
+	.4byte 0x6E740000
 	.4byte 0x50657665
 	.4byte 0x50617261
-	.4byte 0x6c6c656c
-	.4byte 0x4576656e
+	.4byte 0x6C6C656C
+	.4byte 0x4576656E
 	.4byte 0x74000000
-	.4byte 0x803e33b8
+	.4byte 0x803E33B8
 	.4byte 0
-	.4byte 0x803e33c0
+	.4byte 0x803E33C0
 	.4byte 0
 	.4byte 0
-	.4byte 0x803e33b8
+	.4byte 0x803E33B8
 	.4byte 0
-	.4byte 0x803e33c0
+	.4byte 0x803E33C0
 	.4byte 0
-	.4byte 0x803e33e0
+	.4byte 0x803E33E0
 	.4byte 0
 	.4byte 0
 .global __vt__22PeveHomingPostureEvent
@@ -42106,14 +42106,14 @@ __vt__22PeveHomingPostureEvent:
 	.4byte clearEventOption__9PeveEventFi
 	.4byte setEventOptions__9PeveEventFi
 	.4byte 0x50657665
-	.4byte 0x486f6d69
-	.4byte 0x6e67506f
+	.4byte 0x486F6D69
+	.4byte 0x6E67506F
 	.4byte 0x73697469
-	.4byte 0x6f6e4576
-	.4byte 0x656e7400
-	.4byte 0x803e33b8
+	.4byte 0x6F6E4576
+	.4byte 0x656E7400
+	.4byte 0x803E33B8
 	.4byte 0
-	.4byte 0x803e33c0
+	.4byte 0x803E33C0
 	.4byte 0
 	.4byte 0
 .global __vt__23PeveHomingPositionEvent
@@ -42134,14 +42134,14 @@ __vt__23PeveHomingPositionEvent:
 	.4byte clearEventOption__9PeveEventFi
 	.4byte setEventOptions__9PeveEventFi
 	.4byte 0x50657665
-	.4byte 0x46756e63
-	.4byte 0x74696f6e
+	.4byte 0x46756E63
+	.4byte 0x74696F6E
 	.4byte 0x43757276
 	.4byte 0x65457665
-	.4byte 0x6e740000
-	.4byte 0x803e33b8
+	.4byte 0x6E740000
+	.4byte 0x803E33B8
 	.4byte 0
-	.4byte 0x803e33c0
+	.4byte 0x803E33C0
 	.4byte 0
 	.4byte 0
 .global __vt__22PeveFunctionCurveEvent
@@ -42163,16 +42163,16 @@ __vt__22PeveFunctionCurveEvent:
 	.4byte setEventOptions__9PeveEventFi
 	.4byte 0x50657665
 	.4byte 0x43697263
-	.4byte 0x6c654d6f
+	.4byte 0x6C654D6F
 	.4byte 0x76655761
 	.4byte 0x74636845
-	.4byte 0x76656e74
+	.4byte 0x76656E74
 	.4byte 0
-	.4byte 0x803e33b8
+	.4byte 0x803E33B8
 	.4byte 0
-	.4byte 0x803e33c0
+	.4byte 0x803E33C0
 	.4byte 0
-	.4byte 0x803e33e0
+	.4byte 0x803E33E0
 	.4byte 0
 	.4byte 0
 .global __vt__24PeveCircleMoveWatchEvent
@@ -42194,12 +42194,12 @@ __vt__24PeveCircleMoveWatchEvent:
 	.4byte setEventOptions__9PeveEventFi
 	.4byte 0x50657665
 	.4byte 0x43697263
-	.4byte 0x6c654d6f
+	.4byte 0x6C654D6F
 	.4byte 0x76654576
-	.4byte 0x656e7400
-	.4byte 0x803e33b8
+	.4byte 0x656E7400
+	.4byte 0x803E33B8
 	.4byte 0
-	.4byte 0x803e33c0
+	.4byte 0x803E33C0
 	.4byte 0
 	.4byte 0
 .global __vt__19PeveCircleMoveEvent
@@ -42220,15 +42220,15 @@ __vt__19PeveCircleMoveEvent:
 	.4byte clearEventOption__9PeveEventFi
 	.4byte setEventOptions__9PeveEventFi
 	.4byte 0x50657665
-	.4byte 0x486f7269
-	.4byte 0x7a6f6e74
-	.4byte 0x616c5369
-	.4byte 0x6e576176
+	.4byte 0x486F7269
+	.4byte 0x7A6F6E74
+	.4byte 0x616C5369
+	.4byte 0x6E576176
 	.4byte 0x65457665
-	.4byte 0x6e740000
-	.4byte 0x803e33b8
+	.4byte 0x6E740000
+	.4byte 0x803E33B8
 	.4byte 0
-	.4byte 0x803e33c0
+	.4byte 0x803E33C0
 	.4byte 0
 	.4byte 0
 .global __vt__26PeveHorizontalSinWaveEvent
@@ -42248,14 +42248,14 @@ __vt__26PeveHorizontalSinWaveEvent:
 	.4byte setEventOption__9PeveEventFi
 	.4byte clearEventOption__9PeveEventFi
 	.4byte setEventOptions__9PeveEventFi
-	.4byte 0x4e566563
-	.4byte 0x746f7233
-	.4byte 0x66494f43
-	.4byte 0x6c617373
+	.4byte 0x4E566563
+	.4byte 0x746F7233
+	.4byte 0x66494F43
+	.4byte 0x6C617373
 	.4byte 0
-	.4byte 0x4e566563
-	.4byte 0x746f7233
-	.4byte 0x66494f00
+	.4byte 0x4E566563
+	.4byte 0x746F7233
+	.4byte 0x66494F00
 	.4byte __RTTI__11NVector3fIO_1
 	.4byte 0
 	.4byte 0
@@ -42269,23 +42269,23 @@ __vt__26PeveHorizontalSinWaveEvent:
 	.4byte 0
 	.4byte 0x50657665
 	.4byte 0x50617261
-	.4byte 0x626f6c61
-	.4byte 0x4576656e
+	.4byte 0x626F6C61
+	.4byte 0x4576656E
 	.4byte 0x74000000
 	.4byte 0x50657665
 	.4byte 0x41636365
-	.4byte 0x6c657261
-	.4byte 0x74696f6e
-	.4byte 0x4576656e
+	.4byte 0x6C657261
+	.4byte 0x74696F6E
+	.4byte 0x4576656E
 	.4byte 0x74000000
-	.4byte 0x803e33b8
+	.4byte 0x803E33B8
 	.4byte 0
-	.4byte 0x803e33c0
+	.4byte 0x803E33C0
 	.4byte 0
 	.4byte 0
-	.4byte 0x803e33b8
+	.4byte 0x803E33B8
 	.4byte 0
-	.4byte 0x803e33c0
+	.4byte 0x803E33C0
 	.4byte 0
 	.4byte __RTTI__21PeveAccelerationEvent
 	.4byte 0
@@ -42326,11 +42326,11 @@ __vt__21PeveAccelerationEvent:
 	.4byte setEventOptions__9PeveEventFi
 	.4byte 0x50657665
 	.4byte 0x57616974
-	.4byte 0x4576656e
+	.4byte 0x4576656E
 	.4byte 0x74000000
-	.4byte 0x803e33b8
+	.4byte 0x803E33B8
 	.4byte 0
-	.4byte 0x803e33c0
+	.4byte 0x803E33C0
 	.4byte 0
 	.4byte 0
 .global __vt__13PeveWaitEvent
@@ -42353,16 +42353,16 @@ __vt__13PeveWaitEvent:
 	.4byte 0x54616953
 	.4byte 0x74726174
 	.4byte 0x65677900
-	.4byte 0x54656b69
+	.4byte 0x54656B69
 	.4byte 0x53747261
 	.4byte 0x74656779
 	.4byte 0
-	.4byte 0x803e3438
+	.4byte 0x803E3438
 	.4byte 0
 	.4byte 0
 .global __vt__11TaiStrategy
 __vt__11TaiStrategy:
-	.4byte 0x803e3440
+	.4byte 0x803E3440
 	.4byte 0
 	.4byte start__11TaiStrategyFR4Teki
 	.4byte act__11TaiStrategyFR4Teki
@@ -42385,12 +42385,12 @@ __vt__8TaiState:
 	.4byte eventPerformed__8TaiStateFR9TekiEvent
 	.4byte 0x54616953
 	.4byte 0x65726961
-	.4byte 0x6c416374
-	.4byte 0x696f6e00
+	.4byte 0x6C416374
+	.4byte 0x696F6E00
 	.4byte 0x54616941
-	.4byte 0x6374696f
-	.4byte 0x6e000000
-	.4byte 0x803e3450
+	.4byte 0x6374696F
+	.4byte 0x6E000000
+	.4byte 0x803E3450
 	.4byte 0
 	.4byte 0
 .global __vt__15TaiSerialAction
@@ -42404,7 +42404,7 @@ __vt__15TaiSerialAction:
 	.4byte hasNextState__9TaiActionFv
 .global __vt__9TaiAction
 __vt__9TaiAction:
-	.4byte 0x803e3450
+	.4byte 0x803E3450
 	.4byte 0
 	.4byte start__9TaiActionFR4Teki
 	.4byte finish__9TaiActionFR4Teki
@@ -42414,34 +42414,34 @@ __vt__9TaiAction:
 	.4byte 0
 	.4byte 0x74616961
 	.4byte 0x74746163
-	.4byte 0x6b616374
-	.4byte 0x696f6e73
-	.4byte 0x2e637070
+	.4byte 0x6B616374
+	.4byte 0x696F6E73
+	.4byte 0x2E637070
 	.4byte 0
 	.4byte 0x74616961
 	.4byte 0x74746163
-	.4byte 0x6b616374
-	.4byte 0x696f6e73
+	.4byte 0x6B616374
+	.4byte 0x696F6E73
 	.4byte 0
 	.4byte 0x54616946
-	.4byte 0x6c69636b
-	.4byte 0x696e6755
+	.4byte 0x6C69636B
+	.4byte 0x696E6755
 	.4byte 0x70706572
 	.4byte 0x41637469
-	.4byte 0x6f6e0000
+	.4byte 0x6F6E0000
 	.4byte 0x54616941
-	.4byte 0x6374696f
-	.4byte 0x6e000000
-	.4byte 0x5461694d
-	.4byte 0x6f74696f
-	.4byte 0x6e416374
-	.4byte 0x696f6e00
-	.4byte 0x803e3460
+	.4byte 0x6374696F
+	.4byte 0x6E000000
+	.4byte 0x5461694D
+	.4byte 0x6F74696F
+	.4byte 0x6E416374
+	.4byte 0x696F6E00
+	.4byte 0x803E3460
 	.4byte 0
 	.4byte 0
-	.4byte 0x803e3460
+	.4byte 0x803E3460
 	.4byte 0
-	.4byte 0x803e3468
+	.4byte 0x803E3468
 	.4byte 0
 	.4byte 0
 .global __vt__22TaiFlickingUpperAction
@@ -42454,13 +42454,13 @@ __vt__22TaiFlickingUpperAction:
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
 	.4byte 0x54616946
-	.4byte 0x6c69636b
-	.4byte 0x696e6741
-	.4byte 0x6374696f
-	.4byte 0x6e000000
-	.4byte 0x803e3460
+	.4byte 0x6C69636B
+	.4byte 0x696E6741
+	.4byte 0x6374696F
+	.4byte 0x6E000000
+	.4byte 0x803E3460
 	.4byte 0
-	.4byte 0x803e3468
+	.4byte 0x803E3468
 	.4byte 0
 	.4byte 0
 .global __vt__17TaiFlickingAction
@@ -42475,10 +42475,10 @@ __vt__17TaiFlickingAction:
 	.4byte 0x54616954
 	.4byte 0x61726765
 	.4byte 0x74537469
-	.4byte 0x636b4163
-	.4byte 0x74696f6e
+	.4byte 0x636B4163
+	.4byte 0x74696F6E
 	.4byte 0
-	.4byte 0x803e3460
+	.4byte 0x803E3460
 	.4byte 0
 	.4byte 0
 .global __vt__20TaiTargetStickAction
@@ -42491,10 +42491,10 @@ __vt__20TaiTargetStickAction:
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
 	.4byte 0x54616946
-	.4byte 0x6c69636b
+	.4byte 0x6C69636B
 	.4byte 0x41637469
-	.4byte 0x6f6e0000
-	.4byte 0x803e3460
+	.4byte 0x6F6E0000
+	.4byte 0x803E3460
 	.4byte 0
 	.4byte 0
 .global __vt__14TaiFlickAction
@@ -42507,11 +42507,11 @@ __vt__14TaiFlickAction:
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
 	.4byte 0x54616942
-	.4byte 0x616e6769
-	.4byte 0x6e674163
-	.4byte 0x74696f6e
+	.4byte 0x616E6769
+	.4byte 0x6E674163
+	.4byte 0x74696F6E
 	.4byte 0
-	.4byte 0x803e3460
+	.4byte 0x803E3460
 	.4byte 0
 	.4byte 0
 .global __vt__16TaiBangingAction
@@ -42523,9 +42523,9 @@ __vt__16TaiBangingAction:
 	.4byte act__9TaiActionFR4Teki
 	.4byte actByEvent__16TaiBangingActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
-	.4byte 0x496e7465
+	.4byte 0x496E7465
 	.4byte 0x72616374
-	.4byte 0x696f6e00
+	.4byte 0x696F6E00
 	.4byte 0
 	.4byte 0
 	.4byte 0
@@ -42537,24 +42537,24 @@ __vt__16TaiBangingAction:
 	.4byte 0
 	.4byte 0
 	.4byte 0
-	.4byte 0x54656b69
-	.4byte 0x416e6443
-	.4byte 0x6f6e6469
-	.4byte 0x74696f6e
+	.4byte 0x54656B69
+	.4byte 0x416E6443
+	.4byte 0x6F6E6469
+	.4byte 0x74696F6E
 	.4byte 0
-	.4byte 0x436f6e64
-	.4byte 0x6974696f
-	.4byte 0x6e000000
-	.4byte 0x54656b69
-	.4byte 0x436f6e64
-	.4byte 0x6974696f
-	.4byte 0x6e000000
-	.4byte 0x803e3498
+	.4byte 0x436F6E64
+	.4byte 0x6974696F
+	.4byte 0x6E000000
+	.4byte 0x54656B69
+	.4byte 0x436F6E64
+	.4byte 0x6974696F
+	.4byte 0x6E000000
+	.4byte 0x803E3498
 	.4byte 0
 	.4byte 0
-	.4byte 0x803e3498
+	.4byte 0x803E3498
 	.4byte 0
-	.4byte 0x803e34a0
+	.4byte 0x803E34A0
 	.4byte 0
 	.4byte 0
 .global __vt__16TekiAndCondition
@@ -42562,14 +42562,14 @@ __vt__16TekiAndCondition:
 	.4byte __RTTI__16TekiAndCondition
 	.4byte 0
 	.4byte satisfy__16TekiAndConditionFP8Creature
-	.4byte 0x54656b69
-	.4byte 0x4e6f7443
-	.4byte 0x6f6e6469
-	.4byte 0x74696f6e
+	.4byte 0x54656B69
+	.4byte 0x4E6F7443
+	.4byte 0x6F6E6469
+	.4byte 0x74696F6E
 	.4byte 0
-	.4byte 0x803e3498
+	.4byte 0x803E3498
 	.4byte 0
-	.4byte 0x803e34a0
+	.4byte 0x803E34A0
 	.4byte 0
 	.4byte 0
 .global __vt__16TekiNotCondition
@@ -42578,14 +42578,14 @@ __vt__16TekiNotCondition:
 	.4byte 0
 	.4byte satisfy__16TekiNotConditionFP8Creature
 	.4byte 0x54616941
-	.4byte 0x6e696d61
-	.4byte 0x74696f6e
-	.4byte 0x5377616c
-	.4byte 0x6c6f7769
-	.4byte 0x6e674163
-	.4byte 0x74696f6e
+	.4byte 0x6E696D61
+	.4byte 0x74696F6E
+	.4byte 0x5377616C
+	.4byte 0x6C6F7769
+	.4byte 0x6E674163
+	.4byte 0x74696F6E
 	.4byte 0
-	.4byte 0x803e3460
+	.4byte 0x803E3460
 	.4byte 0
 	.4byte 0
 .global __vt__28TaiAnimationSwallowingAction
@@ -42599,11 +42599,11 @@ __vt__28TaiAnimationSwallowingAction:
 	.4byte hasNextState__9TaiActionFv
 	.4byte 0x54616941
 	.4byte 0x74746163
-	.4byte 0x6b61626c
-	.4byte 0x6550696b
+	.4byte 0x6B61626C
+	.4byte 0x6550696B
 	.4byte 0x69416374
-	.4byte 0x696f6e00
-	.4byte 0x803e3460
+	.4byte 0x696F6E00
+	.4byte 0x803E3460
 	.4byte 0
 	.4byte 0
 .global __vt__23TaiAttackablePikiAction
@@ -42617,11 +42617,11 @@ __vt__23TaiAttackablePikiAction:
 	.4byte hasNextState__9TaiActionFv
 	.4byte 0x54616941
 	.4byte 0x74746163
-	.4byte 0x6b61626c
-	.4byte 0x654e6176
+	.4byte 0x6B61626C
+	.4byte 0x654E6176
 	.4byte 0x69416374
-	.4byte 0x696f6e00
-	.4byte 0x803e3460
+	.4byte 0x696F6E00
+	.4byte 0x803E3460
 	.4byte 0
 	.4byte 0
 .global __vt__23TaiAttackableNaviAction
@@ -42635,7 +42635,7 @@ __vt__23TaiAttackableNaviAction:
 	.4byte hasNextState__9TaiActionFv
 .global __vt__13TekiCondition
 __vt__13TekiCondition:
-	.4byte 0x803e34a0
+	.4byte 0x803E34A0
 	.4byte 0
 	.4byte satisfy__13TekiConditionFP8Creature
 	.4byte 0
@@ -42643,12 +42643,12 @@ __vt__13TekiCondition:
 	.4byte 0
 	.4byte 0x54616941
 	.4byte 0x74746163
-	.4byte 0x6b61626c
-	.4byte 0x654e6176
-	.4byte 0x6950696b
+	.4byte 0x6B61626C
+	.4byte 0x654E6176
+	.4byte 0x6950696B
 	.4byte 0x69416374
-	.4byte 0x696f6e00
-	.4byte 0x803e3460
+	.4byte 0x696F6E00
+	.4byte 0x803E3460
 	.4byte 0
 	.4byte 0
 .global __vt__27TaiAttackableNaviPikiAction
@@ -42663,23 +42663,23 @@ __vt__27TaiAttackableNaviPikiAction:
 	.4byte 0x74616962
 	.4byte 0x61736963
 	.4byte 0x61637469
-	.4byte 0x6f6e732e
+	.4byte 0x6F6E732E
 	.4byte 0x63707000
 	.4byte 0x74616962
 	.4byte 0x61736963
 	.4byte 0x61637469
-	.4byte 0x6f6e7300
-	.4byte 0x5461694e
+	.4byte 0x6F6E7300
+	.4byte 0x5461694E
 	.4byte 0x61766957
 	.4byte 0x61746368
 	.4byte 0x52657375
-	.4byte 0x6c744f6e
+	.4byte 0x6C744F6E
 	.4byte 0x41637469
-	.4byte 0x6f6e0000
+	.4byte 0x6F6E0000
 	.4byte 0x54616941
-	.4byte 0x6374696f
-	.4byte 0x6e000000
-	.4byte 0x803e34d8
+	.4byte 0x6374696F
+	.4byte 0x6E000000
+	.4byte 0x803E34D8
 	.4byte 0
 	.4byte 0
 .global __vt__26TaiNaviWatchResultOnAction
@@ -42692,14 +42692,14 @@ __vt__26TaiNaviWatchResultOnAction:
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
 	.4byte 0x54616954
-	.4byte 0x7970654e
+	.4byte 0x7970654E
 	.4byte 0x61766957
 	.4byte 0x61746368
 	.4byte 0x52657375
-	.4byte 0x6c744f6e
+	.4byte 0x6C744F6E
 	.4byte 0x41637469
-	.4byte 0x6f6e0000
-	.4byte 0x803e34d8
+	.4byte 0x6F6E0000
+	.4byte 0x803E34D8
 	.4byte 0
 	.4byte 0
 .global __vt__30TaiTypeNaviWatchResultOnAction
@@ -42712,11 +42712,11 @@ __vt__30TaiTypeNaviWatchResultOnAction:
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
 	.4byte 0x54616953
-	.4byte 0x746f7053
-	.4byte 0x6f756e64
+	.4byte 0x746F7053
+	.4byte 0x6F756E64
 	.4byte 0x41637469
-	.4byte 0x6f6e0000
-	.4byte 0x803e34d8
+	.4byte 0x6F6E0000
+	.4byte 0x803E34D8
 	.4byte 0
 	.4byte 0
 .global __vt__18TaiStopSoundAction
@@ -42729,11 +42729,11 @@ __vt__18TaiStopSoundAction:
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
 	.4byte 0x54616950
-	.4byte 0x6c617953
-	.4byte 0x6f756e64
+	.4byte 0x6C617953
+	.4byte 0x6F756E64
 	.4byte 0x41637469
-	.4byte 0x6f6e0000
-	.4byte 0x803e34d8
+	.4byte 0x6F6E0000
+	.4byte 0x803E34D8
 	.4byte 0
 	.4byte 0
 .global __vt__18TaiPlaySoundAction
@@ -42746,11 +42746,11 @@ __vt__18TaiPlaySoundAction:
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
 	.4byte 0x54616953
-	.4byte 0x65744f70
-	.4byte 0x74696f6e
+	.4byte 0x65744F70
+	.4byte 0x74696F6E
 	.4byte 0x41637469
-	.4byte 0x6f6e0000
-	.4byte 0x803e34d8
+	.4byte 0x6F6E0000
+	.4byte 0x803E34D8
 	.4byte 0
 	.4byte 0
 .global __vt__18TaiSetOptionAction
@@ -42763,12 +42763,12 @@ __vt__18TaiSetOptionAction:
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
 	.4byte 0x54616941
-	.4byte 0x6374696f
-	.4byte 0x6e537461
+	.4byte 0x6374696F
+	.4byte 0x6E537461
 	.4byte 0x74654163
-	.4byte 0x74696f6e
+	.4byte 0x74696F6E
 	.4byte 0
-	.4byte 0x803e34d8
+	.4byte 0x803E34D8
 	.4byte 0
 	.4byte 0
 .global __vt__20TaiActionStateAction
@@ -42852,19 +42852,19 @@ __vt__24TaiChappyLegEffectAction:
 	.4byte setType__24TaiChappyLegEffectActionFR8Vector3fii
 	.4byte 0x54616943
 	.4byte 0x68617070
-	.4byte 0x79536d61
+	.4byte 0x79536D61
 	.4byte 0x73686564
 	.4byte 0x41637469
-	.4byte 0x6f6e0000
+	.4byte 0x6F6E0000
 	.4byte 0x54616953
-	.4byte 0x6d617368
+	.4byte 0x6D617368
 	.4byte 0x65644163
-	.4byte 0x74696f6e
+	.4byte 0x74696F6E
 	.4byte 0
-	.4byte 0x803e3510
+	.4byte 0x803E3510
 	.4byte 0
 	.4byte 0
-	.4byte 0x803e3510
+	.4byte 0x803E3510
 	.4byte 0
 	.4byte __RTTI__16TaiSmashedAction
 	.4byte 0
@@ -42878,36 +42878,36 @@ __vt__22TaiChappySmashedAction:
 	.4byte act__9TaiActionFR4Teki
 	.4byte actByEvent__22TaiChappySmashedActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
-	.4byte 0x54656b69
-	.4byte 0x416e6443
-	.4byte 0x6f6e6469
-	.4byte 0x74696f6e
+	.4byte 0x54656B69
+	.4byte 0x416E6443
+	.4byte 0x6F6E6469
+	.4byte 0x74696F6E
 	.4byte 0
-	.4byte 0x436f6e64
-	.4byte 0x6974696f
-	.4byte 0x6e000000
-	.4byte 0x54656b69
-	.4byte 0x436f6e64
-	.4byte 0x6974696f
-	.4byte 0x6e000000
-	.4byte 0x803e3540
-	.4byte 0
-	.4byte 0
-	.4byte 0x803e3540
-	.4byte 0
-	.4byte 0x803e3548
+	.4byte 0x436F6E64
+	.4byte 0x6974696F
+	.4byte 0x6E000000
+	.4byte 0x54656B69
+	.4byte 0x436F6E64
+	.4byte 0x6974696F
+	.4byte 0x6E000000
+	.4byte 0x803E3540
 	.4byte 0
 	.4byte 0
+	.4byte 0x803E3540
+	.4byte 0
+	.4byte 0x803E3548
 	.4byte 0
 	.4byte 0
 	.4byte 0
-	.4byte 0x54656b69
-	.4byte 0x4f72436f
-	.4byte 0x6e646974
-	.4byte 0x696f6e00
-	.4byte 0x803e3540
 	.4byte 0
-	.4byte 0x803e3548
+	.4byte 0
+	.4byte 0x54656B69
+	.4byte 0x4F72436F
+	.4byte 0x6E646974
+	.4byte 0x696F6E00
+	.4byte 0x803E3540
+	.4byte 0
+	.4byte 0x803E3548
 	.4byte 0
 	.4byte 0
 .global __vt__15TekiOrCondition
@@ -42925,8 +42925,8 @@ __vt__15TekiOrCondition:
 	.4byte 0x68617070
 	.4byte 0x79437279
 	.4byte 0x41637469
-	.4byte 0x6f6e0000
-	.4byte 0x803e3510
+	.4byte 0x6F6E0000
+	.4byte 0x803E3510
 	.4byte 0
 	.4byte 0
 .global __vt__18TaiChappyCryAction
@@ -42938,11 +42938,11 @@ __vt__18TaiChappyCryAction:
 	.4byte act__18TaiChappyCryActionFR4Teki
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
-	.4byte 0x5461694f
-	.4byte 0x6e636541
-	.4byte 0x6374696f
-	.4byte 0x6e000000
-	.4byte 0x803e3510
+	.4byte 0x5461694F
+	.4byte 0x6E636541
+	.4byte 0x6374696F
+	.4byte 0x6E000000
+	.4byte 0x803E3510
 	.4byte 0
 	.4byte 0
 .global __vt__13TaiOnceAction
@@ -42955,10 +42955,10 @@ __vt__13TaiOnceAction:
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
 	.4byte 0x54616941
-	.4byte 0x6e644163
-	.4byte 0x74696f6e
+	.4byte 0x6E644163
+	.4byte 0x74696F6E
 	.4byte 0
-	.4byte 0x803e3510
+	.4byte 0x803E3510
 	.4byte 0
 	.4byte 0
 .global __vt__12TaiAndAction
@@ -42982,19 +42982,19 @@ __vt__12TaiAndAction:
 	.4byte 0x79537472
 	.4byte 0x61746567
 	.4byte 0x79000000
-	.4byte 0x54656b69
+	.4byte 0x54656B69
 	.4byte 0x53747261
 	.4byte 0x74656779
 	.4byte 0
 	.4byte 0x54616953
 	.4byte 0x74726174
 	.4byte 0x65677900
-	.4byte 0x803e3570
+	.4byte 0x803E3570
 	.4byte 0
 	.4byte 0
-	.4byte 0x803e3570
+	.4byte 0x803E3570
 	.4byte 0
-	.4byte 0x803e3578
+	.4byte 0x803E3578
 	.4byte 0
 	.4byte 0
 .global __vt__17TaiChappyStrategy
@@ -43012,38 +43012,38 @@ __vt__17TaiChappyStrategy:
 	.4byte 0x54616943
 	.4byte 0x61746669
 	.4byte 0x73685061
-	.4byte 0x72616d65
+	.4byte 0x72616D65
 	.4byte 0x74657273
 	.4byte 0
-	.4byte 0x436f7265
-	.4byte 0x4e6f6465
+	.4byte 0x436F7265
+	.4byte 0x4E6F6465
 	.4byte 0
-	.4byte 0x803e3590
-	.4byte 0
-	.4byte 0
-	.4byte 0x803e3590
-	.4byte 0
-	.4byte 0x803e3598
+	.4byte 0x803E3590
 	.4byte 0
 	.4byte 0
-	.4byte 0x54656b69
+	.4byte 0x803E3590
+	.4byte 0
+	.4byte 0x803E3598
+	.4byte 0
+	.4byte 0
+	.4byte 0x54656B69
 	.4byte 0x50617261
-	.4byte 0x6d657465
+	.4byte 0x6D657465
 	.4byte 0x72730000
-	.4byte 0x803e3590
+	.4byte 0x803E3590
 	.4byte 0
-	.4byte 0x803e3598
+	.4byte 0x803E3598
 	.4byte 0
-	.4byte 0x803e35a8
+	.4byte 0x803E35A8
 	.4byte 0
 	.4byte 0
-	.4byte 0x803e3590
+	.4byte 0x803E3590
 	.4byte 0
-	.4byte 0x803e3598
+	.4byte 0x803E3598
 	.4byte 0
-	.4byte 0x803e35a8
+	.4byte 0x803E35A8
 	.4byte 0
-	.4byte 0x803e35b0
+	.4byte 0x803E35B0
 	.4byte 0
 	.4byte 0
 .global __vt__20TaiCatfishParameters
@@ -43061,19 +43061,19 @@ __vt__20TaiCatfishParameters:
 	.4byte concat__4NodeFR8Matrix4f
 	.4byte getModelMatrix__4NodeFv
 	.4byte 0x54616942
-	.4byte 0x6c61636b
+	.4byte 0x6C61636B
 	.4byte 0x43686170
 	.4byte 0x70795061
-	.4byte 0x72616d65
+	.4byte 0x72616D65
 	.4byte 0x74657273
 	.4byte 0
-	.4byte 0x803e3590
+	.4byte 0x803E3590
 	.4byte 0
-	.4byte 0x803e3598
+	.4byte 0x803E3598
 	.4byte 0
-	.4byte 0x803e35a8
+	.4byte 0x803E35A8
 	.4byte 0
-	.4byte 0x803e35b0
+	.4byte 0x803E35B0
 	.4byte 0
 	.4byte 0
 .global __vt__24TaiBlackChappyParameters
@@ -43093,15 +43093,15 @@ __vt__24TaiBlackChappyParameters:
 	.4byte 0x54616943
 	.4byte 0x68617070
 	.4byte 0x79506172
-	.4byte 0x616d6574
+	.4byte 0x616D6574
 	.4byte 0x65727300
-	.4byte 0x803e3590
+	.4byte 0x803E3590
 	.4byte 0
-	.4byte 0x803e3598
+	.4byte 0x803E3598
 	.4byte 0
-	.4byte 0x803e35a8
+	.4byte 0x803E35A8
 	.4byte 0
-	.4byte 0x803e35b0
+	.4byte 0x803E35B0
 	.4byte 0
 	.4byte 0
 .global __vt__19TaiChappyParameters
@@ -43216,39 +43216,39 @@ __vt__17TaiHollecStrategy:
 	.4byte interact__12TekiStrategyFR4TekiR18TekiInteractionKey
 	.4byte spawnCorpseParts__12TekiStrategyFR4Teki
 	.4byte 0x54616948
-	.4byte 0x6f6c6c65
+	.4byte 0x6F6C6C65
 	.4byte 0x63506172
-	.4byte 0x616d6574
+	.4byte 0x616D6574
 	.4byte 0x65727300
-	.4byte 0x436f7265
-	.4byte 0x4e6f6465
+	.4byte 0x436F7265
+	.4byte 0x4E6F6465
 	.4byte 0
-	.4byte 0x803e3624
-	.4byte 0
-	.4byte 0
-	.4byte 0x803e3624
-	.4byte 0
-	.4byte 0x803e362c
+	.4byte 0x803E3624
 	.4byte 0
 	.4byte 0
-	.4byte 0x54656b69
+	.4byte 0x803E3624
+	.4byte 0
+	.4byte 0x803E362C
+	.4byte 0
+	.4byte 0
+	.4byte 0x54656B69
 	.4byte 0x50617261
-	.4byte 0x6d657465
+	.4byte 0x6D657465
 	.4byte 0x72730000
-	.4byte 0x803e3624
+	.4byte 0x803E3624
 	.4byte 0
-	.4byte 0x803e362c
+	.4byte 0x803E362C
 	.4byte 0
-	.4byte 0x803e363c
+	.4byte 0x803E363C
 	.4byte 0
 	.4byte 0
-	.4byte 0x803e3624
+	.4byte 0x803E3624
 	.4byte 0
-	.4byte 0x803e362c
+	.4byte 0x803E362C
 	.4byte 0
-	.4byte 0x803e363c
+	.4byte 0x803E363C
 	.4byte 0
-	.4byte 0x803e3644
+	.4byte 0x803E3644
 	.4byte 0
 	.4byte 0
 .global __vt__19TaiHollecParameters
@@ -43266,39 +43266,39 @@ __vt__19TaiHollecParameters:
 	.4byte concat__4NodeFR8Matrix4f
 	.4byte getModelMatrix__4NodeFv
 	.4byte 0x54616943
-	.4byte 0x6f6c6c65
-	.4byte 0x634c6567
+	.4byte 0x6F6C6C65
+	.4byte 0x634C6567
 	.4byte 0x45666665
 	.4byte 0x63744163
-	.4byte 0x74696f6e
+	.4byte 0x74696F6E
 	.4byte 0
 	.4byte 0x54616941
-	.4byte 0x6374696f
-	.4byte 0x6e000000
+	.4byte 0x6374696F
+	.4byte 0x6E000000
 	.4byte 0x54414941
 	.4byte 0x65666643
-	.4byte 0x6c6f7564
-	.4byte 0x4f664475
+	.4byte 0x6C6F7564
+	.4byte 0x4F664475
 	.4byte 0x73740000
-	.4byte 0x803e3654
+	.4byte 0x803E3654
 	.4byte 0
 	.4byte 0
-	.4byte 0x5461694a
-	.4byte 0x6f696e74
+	.4byte 0x5461694A
+	.4byte 0x6F696E74
 	.4byte 0x45666665
 	.4byte 0x63744163
-	.4byte 0x74696f6e
+	.4byte 0x74696F6E
 	.4byte 0
-	.4byte 0x803e3654
+	.4byte 0x803E3654
 	.4byte 0
-	.4byte 0x803e365c
+	.4byte 0x803E365C
 	.4byte 0
 	.4byte 0
-	.4byte 0x803e3654
+	.4byte 0x803E3654
 	.4byte 0
-	.4byte 0x803e365c
+	.4byte 0x803E365C
 	.4byte 0
-	.4byte 0x803e3664
+	.4byte 0x803E3664
 	.4byte 0
 	.4byte 0
 .global __vt__24TaiCollecLegEffectAction
@@ -43312,12 +43312,12 @@ __vt__24TaiCollecLegEffectAction:
 	.4byte hasNextState__9TaiActionFv
 	.4byte setType__24TaiCollecLegEffectActionFR8Vector3fii
 	.4byte 0x54616943
-	.4byte 0x6f6c6c65
+	.4byte 0x6F6C6C65
 	.4byte 0x63476574
-	.4byte 0x4f757441
-	.4byte 0x6374696f
-	.4byte 0x6e000000
-	.4byte 0x803e3654
+	.4byte 0x4F757441
+	.4byte 0x6374696F
+	.4byte 0x6E000000
+	.4byte 0x803E3654
 	.4byte 0
 	.4byte 0
 .global __vt__21TaiCollecGetOutAction
@@ -43330,12 +43330,12 @@ __vt__21TaiCollecGetOutAction:
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
 	.4byte 0x54616943
-	.4byte 0x6f6c6c65
-	.4byte 0x6346616c
-	.4byte 0x6c696e67
+	.4byte 0x6F6C6C65
+	.4byte 0x6346616C
+	.4byte 0x6C696E67
 	.4byte 0x41637469
-	.4byte 0x6f6e0000
-	.4byte 0x803e3654
+	.4byte 0x6F6E0000
+	.4byte 0x803E3654
 	.4byte 0
 	.4byte 0
 .global __vt__22TaiCollecFallingAction
@@ -43348,13 +43348,13 @@ __vt__22TaiCollecFallingAction:
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
 	.4byte 0x54616943
-	.4byte 0x6f6c6c65
+	.4byte 0x6F6C6C65
 	.4byte 0x63446561
-	.4byte 0x6446616c
-	.4byte 0x6c696e67
+	.4byte 0x6446616C
+	.4byte 0x6C696E67
 	.4byte 0x41637469
-	.4byte 0x6f6e0000
-	.4byte 0x803e3654
+	.4byte 0x6F6E0000
+	.4byte 0x803E3654
 	.4byte 0
 	.4byte 0
 .global __vt__26TaiCollecDeadFallingAction
@@ -43367,17 +43367,17 @@ __vt__26TaiCollecDeadFallingAction:
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
 	.4byte 0x54616943
-	.4byte 0x6f6c6c65
-	.4byte 0x6350656c
-	.4byte 0x6c657446
-	.4byte 0x696e6973
-	.4byte 0x68436f6e
-	.4byte 0x7461696e
-	.4byte 0x6572697a
+	.4byte 0x6F6C6C65
+	.4byte 0x6350656C
+	.4byte 0x6C657446
+	.4byte 0x696E6973
+	.4byte 0x68436F6E
+	.4byte 0x7461696E
+	.4byte 0x6572697A
 	.4byte 0x65644163
-	.4byte 0x74696f6e
+	.4byte 0x74696F6E
 	.4byte 0
-	.4byte 0x803e3654
+	.4byte 0x803E3654
 	.4byte 0
 	.4byte 0
 .global __vt__40TaiCollecPelletFinishContainerizedAction
@@ -43390,16 +43390,16 @@ __vt__40TaiCollecPelletFinishContainerizedAction:
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
 	.4byte 0x54616943
-	.4byte 0x6f6c6c65
-	.4byte 0x6350656c
-	.4byte 0x6c657453
+	.4byte 0x6F6C6C65
+	.4byte 0x6350656C
+	.4byte 0x6C657453
 	.4byte 0x74617274
-	.4byte 0x436f6e74
-	.4byte 0x61696e65
-	.4byte 0x72697a65
+	.4byte 0x436F6E74
+	.4byte 0x61696E65
+	.4byte 0x72697A65
 	.4byte 0x64416374
-	.4byte 0x696f6e00
-	.4byte 0x803e3654
+	.4byte 0x696F6E00
+	.4byte 0x803E3654
 	.4byte 0
 	.4byte 0
 .global __vt__39TaiCollecPelletStartContainerizedAction
@@ -43412,13 +43412,13 @@ __vt__39TaiCollecPelletStartContainerizedAction:
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
 	.4byte 0x54616943
-	.4byte 0x6f6c6c65
-	.4byte 0x63526f75
-	.4byte 0x6e644361
+	.4byte 0x6F6C6C65
+	.4byte 0x63526F75
+	.4byte 0x6E644361
 	.4byte 0x72727941
-	.4byte 0x6374696f
-	.4byte 0x6e000000
-	.4byte 0x803e3654
+	.4byte 0x6374696F
+	.4byte 0x6E000000
+	.4byte 0x803E3654
 	.4byte 0
 	.4byte 0
 .global __vt__25TaiCollecRoundCarryAction
@@ -43431,14 +43431,14 @@ __vt__25TaiCollecRoundCarryAction:
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
 	.4byte 0x54616943
-	.4byte 0x6f6c6c65
-	.4byte 0x63526f75
-	.4byte 0x7465496d
+	.4byte 0x6F6C6C65
+	.4byte 0x63526F75
+	.4byte 0x7465496D
 	.4byte 0x70617373
-	.4byte 0x61626c65
+	.4byte 0x61626C65
 	.4byte 0x41637469
-	.4byte 0x6f6e0000
-	.4byte 0x803e3654
+	.4byte 0x6F6E0000
+	.4byte 0x803E3654
 	.4byte 0
 	.4byte 0
 .global __vt__30TaiCollecRouteImpassableAction
@@ -43451,37 +43451,37 @@ __vt__30TaiCollecRouteImpassableAction:
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
 	.4byte 0x54616943
-	.4byte 0x6f6c6c65
+	.4byte 0x6F6C6C65
 	.4byte 0x63436172
-	.4byte 0x7279696e
-	.4byte 0x67546f4e
+	.4byte 0x7279696E
+	.4byte 0x67546F4E
 	.4byte 0x65737441
-	.4byte 0x6374696f
-	.4byte 0x6e000000
-	.4byte 0x5461694d
-	.4byte 0x6f74696f
-	.4byte 0x6e416374
-	.4byte 0x696f6e00
-	.4byte 0x803e3654
+	.4byte 0x6374696F
+	.4byte 0x6E000000
+	.4byte 0x5461694D
+	.4byte 0x6F74696F
+	.4byte 0x6E416374
+	.4byte 0x696F6E00
+	.4byte 0x803E3654
 	.4byte 0
 	.4byte 0
 	.4byte 0x54616943
-	.4byte 0x6f6e7469
-	.4byte 0x6e756f75
-	.4byte 0x734d6f74
-	.4byte 0x696f6e41
-	.4byte 0x6374696f
-	.4byte 0x6e000000
-	.4byte 0x803e3654
+	.4byte 0x6F6E7469
+	.4byte 0x6E756F75
+	.4byte 0x734D6F74
+	.4byte 0x696F6E41
+	.4byte 0x6374696F
+	.4byte 0x6E000000
+	.4byte 0x803E3654
 	.4byte 0
-	.4byte 0x803e36ac
+	.4byte 0x803E36AC
 	.4byte 0
 	.4byte 0
-	.4byte 0x803e3654
+	.4byte 0x803E3654
 	.4byte 0
-	.4byte 0x803e36ac
+	.4byte 0x803E36AC
 	.4byte 0
-	.4byte 0x803e36b4
+	.4byte 0x803E36B4
 	.4byte 0
 	.4byte 0
 .global __vt__29TaiCollecCarryingToNestAction
@@ -43494,9 +43494,9 @@ __vt__29TaiCollecCarryingToNestAction:
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
 	.4byte motionStarted__25TaiContinuousMotionActionFR4Teki
-	.4byte 0x496e7465
+	.4byte 0x496E7465
 	.4byte 0x72616374
-	.4byte 0x696f6e00
+	.4byte 0x696F6E00
 	.4byte 0
 	.4byte 0
 	.4byte 0
@@ -43509,14 +43509,14 @@ __vt__29TaiCollecCarryingToNestAction:
 	.4byte 0
 	.4byte 0
 	.4byte 0x54616943
-	.4byte 0x6f6c6c65
+	.4byte 0x6F6C6C65
 	.4byte 0x63507574
-	.4byte 0x74696e67
-	.4byte 0x50656c6c
+	.4byte 0x74696E67
+	.4byte 0x50656C6C
 	.4byte 0x65744163
-	.4byte 0x74696f6e
+	.4byte 0x74696F6E
 	.4byte 0
-	.4byte 0x803e3654
+	.4byte 0x803E3654
 	.4byte 0
 	.4byte 0
 .global __vt__28TaiCollecPuttingPelletAction
@@ -43529,11 +43529,11 @@ __vt__28TaiCollecPuttingPelletAction:
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
 	.4byte 0x54616943
-	.4byte 0x6f6c6c65
+	.4byte 0x6F6C6C65
 	.4byte 0x63507574
 	.4byte 0x41637469
-	.4byte 0x6f6e0000
-	.4byte 0x803e3654
+	.4byte 0x6F6E0000
+	.4byte 0x803E3654
 	.4byte 0
 	.4byte 0
 .global __vt__18TaiCollecPutAction
@@ -43546,14 +43546,14 @@ __vt__18TaiCollecPutAction:
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
 	.4byte 0x54616943
-	.4byte 0x6f6c6c65
+	.4byte 0x6F6C6C65
 	.4byte 0x63446566
 	.4byte 0x65617443
 	.4byte 0x61727279
-	.4byte 0x696e6741
-	.4byte 0x6374696f
-	.4byte 0x6e000000
-	.4byte 0x803e3654
+	.4byte 0x696E6741
+	.4byte 0x6374696F
+	.4byte 0x6E000000
+	.4byte 0x803E3654
 	.4byte 0
 	.4byte 0
 .global __vt__29TaiCollecDefeatCarryingAction
@@ -43566,13 +43566,13 @@ __vt__29TaiCollecDefeatCarryingAction:
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
 	.4byte 0x54616943
-	.4byte 0x6f6c6c65
-	.4byte 0x6357696e
+	.4byte 0x6F6C6C65
+	.4byte 0x6357696E
 	.4byte 0x43617272
-	.4byte 0x79696e67
+	.4byte 0x79696E67
 	.4byte 0x41637469
-	.4byte 0x6f6e0000
-	.4byte 0x803e3654
+	.4byte 0x6F6E0000
+	.4byte 0x803E3654
 	.4byte 0
 	.4byte 0
 .global __vt__26TaiCollecWinCarryingAction
@@ -43585,13 +43585,13 @@ __vt__26TaiCollecWinCarryingAction:
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
 	.4byte 0x54616943
-	.4byte 0x6f6c6c65
+	.4byte 0x6F6C6C65
 	.4byte 0x63426569
-	.4byte 0x6e674472
+	.4byte 0x6E674472
 	.4byte 0x61676765
 	.4byte 0x64416374
-	.4byte 0x696f6e00
-	.4byte 0x803e3654
+	.4byte 0x696F6E00
+	.4byte 0x803E3654
 	.4byte 0
 	.4byte 0
 .global __vt__27TaiCollecBeingDraggedAction
@@ -43604,12 +43604,12 @@ __vt__27TaiCollecBeingDraggedAction:
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
 	.4byte 0x54616943
-	.4byte 0x6f6c6c65
+	.4byte 0x6F6C6C65
 	.4byte 0x63436172
-	.4byte 0x7279696e
+	.4byte 0x7279696E
 	.4byte 0x67416374
-	.4byte 0x696f6e00
-	.4byte 0x803e3654
+	.4byte 0x696F6E00
+	.4byte 0x803E3654
 	.4byte 0
 	.4byte 0
 .global __vt__23TaiCollecCarryingAction
@@ -43622,12 +43622,12 @@ __vt__23TaiCollecCarryingAction:
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
 	.4byte 0x54616943
-	.4byte 0x6f6c6c65
+	.4byte 0x6F6C6C65
 	.4byte 0x63436174
-	.4byte 0x6368696e
+	.4byte 0x6368696E
 	.4byte 0x67416374
-	.4byte 0x696f6e00
-	.4byte 0x803e3654
+	.4byte 0x696F6E00
+	.4byte 0x803E3654
 	.4byte 0
 	.4byte 0
 .global __vt__23TaiCollecCatchingAction
@@ -43640,13 +43640,13 @@ __vt__23TaiCollecCatchingAction:
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
 	.4byte 0x54616943
-	.4byte 0x6f6c6c65
-	.4byte 0x63486f6c
-	.4byte 0x6450656c
-	.4byte 0x6c657441
-	.4byte 0x6374696f
-	.4byte 0x6e000000
-	.4byte 0x803e3654
+	.4byte 0x6F6C6C65
+	.4byte 0x63486F6C
+	.4byte 0x6450656C
+	.4byte 0x6C657441
+	.4byte 0x6374696F
+	.4byte 0x6E000000
+	.4byte 0x803E3654
 	.4byte 0
 	.4byte 0
 .global __vt__25TaiCollecHoldPelletAction
@@ -43659,15 +43659,15 @@ __vt__25TaiCollecHoldPelletAction:
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
 	.4byte 0x54616943
-	.4byte 0x6f6c6c65
-	.4byte 0x6350656c
-	.4byte 0x6c657444
+	.4byte 0x6F6C6C65
+	.4byte 0x6350656C
+	.4byte 0x6C657444
 	.4byte 0x69736170
 	.4byte 0x70656172
 	.4byte 0x65644163
-	.4byte 0x74696f6e
+	.4byte 0x74696F6E
 	.4byte 0
-	.4byte 0x803e3654
+	.4byte 0x803E3654
 	.4byte 0
 	.4byte 0
 .global __vt__32TaiCollecPelletDisappearedAction
@@ -43680,13 +43680,13 @@ __vt__32TaiCollecPelletDisappearedAction:
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
 	.4byte 0x54616943
-	.4byte 0x6f6c6c65
-	.4byte 0x6350656c
-	.4byte 0x6c65744c
-	.4byte 0x6f737441
-	.4byte 0x6374696f
-	.4byte 0x6e000000
-	.4byte 0x803e3654
+	.4byte 0x6F6C6C65
+	.4byte 0x6350656C
+	.4byte 0x6C65744C
+	.4byte 0x6F737441
+	.4byte 0x6374696F
+	.4byte 0x6E000000
+	.4byte 0x803E3654
 	.4byte 0
 	.4byte 0
 .global __vt__25TaiCollecPelletLostAction
@@ -43699,26 +43699,26 @@ __vt__25TaiCollecPelletLostAction:
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
 	.4byte 0x54616943
-	.4byte 0x6f6c6c65
+	.4byte 0x6F6C6C65
 	.4byte 0x63566973
-	.4byte 0x69626c65
+	.4byte 0x69626C65
 	.4byte 0x48656967
 	.4byte 0x68745065
-	.4byte 0x6c6c6574
-	.4byte 0x4c6f7374
-	.4byte 0x54696d65
+	.4byte 0x6C6C6574
+	.4byte 0x4C6F7374
+	.4byte 0x54696D65
 	.4byte 0x72416374
-	.4byte 0x696f6e00
+	.4byte 0x696F6E00
 	.4byte 0x54616954
-	.4byte 0x696d6572
+	.4byte 0x696D6572
 	.4byte 0x41637469
-	.4byte 0x6f6e0000
-	.4byte 0x803e3654
+	.4byte 0x6F6E0000
+	.4byte 0x803E3654
 	.4byte 0
 	.4byte 0
-	.4byte 0x803e3654
+	.4byte 0x803E3654
 	.4byte 0
-	.4byte 0x803e3714
+	.4byte 0x803E3714
 	.4byte 0
 	.4byte 0
 .global __vt__43TaiCollecVisibleHeightPelletLostTimerAction
@@ -43731,16 +43731,16 @@ __vt__43TaiCollecVisibleHeightPelletLostTimerAction:
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
 	.4byte 0x54616943
-	.4byte 0x6f6c6c65
+	.4byte 0x6F6C6C65
 	.4byte 0x63566973
-	.4byte 0x69626c65
+	.4byte 0x69626C65
 	.4byte 0x48656967
 	.4byte 0x68745065
-	.4byte 0x6c6c6574
-	.4byte 0x4c6f7374
+	.4byte 0x6C6C6574
+	.4byte 0x4C6F7374
 	.4byte 0x41637469
-	.4byte 0x6f6e0000
-	.4byte 0x803e3654
+	.4byte 0x6F6E0000
+	.4byte 0x803E3654
 	.4byte 0
 	.4byte 0
 .global __vt__38TaiCollecVisibleHeightPelletLostAction
@@ -43752,37 +43752,37 @@ __vt__38TaiCollecVisibleHeightPelletLostAction:
 	.4byte act__38TaiCollecVisibleHeightPelletLostActionFR4Teki
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
-	.4byte 0x54656b69
-	.4byte 0x416e6443
-	.4byte 0x6f6e6469
-	.4byte 0x74696f6e
+	.4byte 0x54656B69
+	.4byte 0x416E6443
+	.4byte 0x6F6E6469
+	.4byte 0x74696F6E
 	.4byte 0
-	.4byte 0x436f6e64
-	.4byte 0x6974696f
-	.4byte 0x6e000000
-	.4byte 0x54656b69
-	.4byte 0x436f6e64
-	.4byte 0x6974696f
-	.4byte 0x6e000000
-	.4byte 0x803e372c
-	.4byte 0
-	.4byte 0
-	.4byte 0x803e372c
-	.4byte 0
-	.4byte 0x803e3734
+	.4byte 0x436F6E64
+	.4byte 0x6974696F
+	.4byte 0x6E000000
+	.4byte 0x54656B69
+	.4byte 0x436F6E64
+	.4byte 0x6974696F
+	.4byte 0x6E000000
+	.4byte 0x803E372C
 	.4byte 0
 	.4byte 0
+	.4byte 0x803E372C
+	.4byte 0
+	.4byte 0x803E3734
 	.4byte 0
 	.4byte 0
 	.4byte 0
-	.4byte 0x54656b69
-	.4byte 0x4e6f7443
-	.4byte 0x6f6e6469
-	.4byte 0x74696f6e
 	.4byte 0
-	.4byte 0x803e372c
 	.4byte 0
-	.4byte 0x803e3734
+	.4byte 0x54656B69
+	.4byte 0x4E6F7443
+	.4byte 0x6F6E6469
+	.4byte 0x74696F6E
+	.4byte 0
+	.4byte 0x803E372C
+	.4byte 0
+	.4byte 0x803E3734
 	.4byte 0
 	.4byte 0
 	.4byte 0
@@ -43795,13 +43795,13 @@ __vt__38TaiCollecVisibleHeightPelletLostAction:
 	.4byte 0
 	.4byte 0
 	.4byte 0x54616943
-	.4byte 0x6f6c6c65
+	.4byte 0x6F6C6C65
 	.4byte 0x63546172
 	.4byte 0x67657450
-	.4byte 0x656c6c65
+	.4byte 0x656C6C65
 	.4byte 0x74416374
-	.4byte 0x696f6e00
-	.4byte 0x803e3654
+	.4byte 0x696F6E00
+	.4byte 0x803E3654
 	.4byte 0
 	.4byte 0
 .global __vt__27TaiCollecTargetPelletAction
@@ -43814,14 +43814,14 @@ __vt__27TaiCollecTargetPelletAction:
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
 	.4byte 0x54616943
-	.4byte 0x6f6c6c65
-	.4byte 0x634c6574
-	.4byte 0x476f4f66
-	.4byte 0x50656c6c
+	.4byte 0x6F6C6C65
+	.4byte 0x634C6574
+	.4byte 0x476F4F66
+	.4byte 0x50656C6C
 	.4byte 0x65744163
-	.4byte 0x74696f6e
+	.4byte 0x74696F6E
 	.4byte 0
-	.4byte 0x803e3654
+	.4byte 0x803E3654
 	.4byte 0
 	.4byte 0
 .global __vt__28TaiCollecLetGoOfPelletAction
@@ -43834,13 +43834,13 @@ __vt__28TaiCollecLetGoOfPelletAction:
 	.4byte actByEvent__28TaiCollecLetGoOfPelletActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
 	.4byte 0x54616943
-	.4byte 0x6f6c6c65
-	.4byte 0x63496d70
+	.4byte 0x6F6C6C65
+	.4byte 0x63496D70
 	.4byte 0x61737361
-	.4byte 0x626c6541
-	.4byte 0x6374696f
-	.4byte 0x6e000000
-	.4byte 0x803e3654
+	.4byte 0x626C6541
+	.4byte 0x6374696F
+	.4byte 0x6E000000
+	.4byte 0x803E3654
 	.4byte 0
 	.4byte 0
 .global __vt__25TaiCollecImpassableAction
@@ -43852,17 +43852,17 @@ __vt__25TaiCollecImpassableAction:
 	.4byte act__25TaiCollecImpassableActionFR4Teki
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
-	.4byte 0x54656b69
-	.4byte 0x436f6c6c
+	.4byte 0x54656B69
+	.4byte 0x436F6C6C
 	.4byte 0x65635461
 	.4byte 0x72676574
-	.4byte 0x50656c6c
-	.4byte 0x6574436f
-	.4byte 0x6e646974
-	.4byte 0x696f6e00
-	.4byte 0x803e372c
+	.4byte 0x50656C6C
+	.4byte 0x6574436F
+	.4byte 0x6E646974
+	.4byte 0x696F6E00
+	.4byte 0x803E372C
 	.4byte 0
-	.4byte 0x803e3734
+	.4byte 0x803E3734
 	.4byte 0
 	.4byte 0
 .global __vt__31TekiCollecTargetPelletCondition
@@ -43871,13 +43871,13 @@ __vt__31TekiCollecTargetPelletCondition:
 	.4byte 0
 	.4byte satisfy__31TekiCollecTargetPelletConditionFP8Creature
 	.4byte 0x54616943
-	.4byte 0x6f6c6c65
+	.4byte 0x6F6C6C65
 	.4byte 0x63537472
 	.4byte 0x61746567
 	.4byte 0x79000000
-	.4byte 0x803e3604
+	.4byte 0x803E3604
 	.4byte 0
-	.4byte 0x803e360c
+	.4byte 0x803E360C
 	.4byte 0
 	.4byte 0
 .global __vt__17TaiCollecStrategy
@@ -43893,11 +43893,11 @@ __vt__17TaiCollecStrategy:
 	.4byte interact__12TekiStrategyFR4TekiR18TekiInteractionKey
 	.4byte spawnCorpseParts__12TekiStrategyFR4Teki
 	.4byte 0x54616944
-	.4byte 0x6570656e
-	.4byte 0x64656e63
+	.4byte 0x6570656E
+	.4byte 0x64656E63
 	.4byte 0x65416374
-	.4byte 0x696f6e00
-	.4byte 0x803e3654
+	.4byte 0x696F6E00
+	.4byte 0x803E3654
 	.4byte 0
 	.4byte 0
 .global __vt__19TaiDependenceAction
@@ -43917,17 +43917,17 @@ __vt__19TaiDependenceAction:
 	.4byte 0
 	.4byte 0
 	.4byte 0x54616943
-	.4byte 0x6f6c6c65
+	.4byte 0x6F6C6C65
 	.4byte 0x63506172
-	.4byte 0x616d6574
+	.4byte 0x616D6574
 	.4byte 0x65727300
-	.4byte 0x803e3624
+	.4byte 0x803E3624
 	.4byte 0
-	.4byte 0x803e362c
+	.4byte 0x803E362C
 	.4byte 0
-	.4byte 0x803e363c
+	.4byte 0x803E363C
 	.4byte 0
-	.4byte 0x803e3644
+	.4byte 0x803E3644
 	.4byte 0
 	.4byte 0
 .global __vt__19TaiCollecParameters
@@ -43945,37 +43945,37 @@ __vt__19TaiCollecParameters:
 	.4byte concat__4NodeFR8Matrix4f
 	.4byte getModelMatrix__4NodeFv
 	.4byte 0x74616963
-	.4byte 0x6f6c6c69
-	.4byte 0x73696f6e
+	.4byte 0x6F6C6C69
+	.4byte 0x73696F6E
 	.4byte 0x61637469
-	.4byte 0x6f6e732e
+	.4byte 0x6F6E732E
 	.4byte 0x63707000
 	.4byte 0x74616963
-	.4byte 0x6f6c6c69
-	.4byte 0x73696f6e
+	.4byte 0x6F6C6C69
+	.4byte 0x73696F6E
 	.4byte 0x61637469
-	.4byte 0x6f6e7300
+	.4byte 0x6F6E7300
 	.4byte 0x54616954
-	.4byte 0x656b6954
+	.4byte 0x656B6954
 	.4byte 0x79706543
-	.4byte 0x6f6c6c69
-	.4byte 0x73696f6e
+	.4byte 0x6F6C6C69
+	.4byte 0x73696F6E
 	.4byte 0x41637469
-	.4byte 0x6f6e0000
+	.4byte 0x6F6E0000
 	.4byte 0x54616941
-	.4byte 0x6374696f
-	.4byte 0x6e000000
+	.4byte 0x6374696F
+	.4byte 0x6E000000
 	.4byte 0x54616943
 	.4byte 0x72656174
 	.4byte 0x75726543
-	.4byte 0x6f6c6c69
-	.4byte 0x73696f6e
+	.4byte 0x6F6C6C69
+	.4byte 0x73696F6E
 	.4byte 0x41637469
-	.4byte 0x6f6e0000
-	.4byte 0x803e3778
+	.4byte 0x6F6E0000
+	.4byte 0x803E3778
 	.4byte 0
 	.4byte 0
-	.4byte 0x803e3778
+	.4byte 0x803E3778
 	.4byte 0
 	.4byte __RTTI__26TaiCreatureCollisionAction
 	.4byte 0
@@ -43989,13 +43989,13 @@ __vt__26TaiTekiTypeCollisionAction:
 	.4byte act__9TaiActionFR4Teki
 	.4byte actByEvent__26TaiTekiTypeCollisionActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
-	.4byte 0x5461694e
+	.4byte 0x5461694E
 	.4byte 0x61766943
-	.4byte 0x6f6c6c69
-	.4byte 0x73696f6e
+	.4byte 0x6F6C6C69
+	.4byte 0x73696F6E
 	.4byte 0x41637469
-	.4byte 0x6f6e0000
-	.4byte 0x803e3778
+	.4byte 0x6F6E0000
+	.4byte 0x803E3778
 	.4byte 0
 	.4byte __RTTI__26TaiCreatureCollisionAction
 	.4byte 0
@@ -44010,12 +44010,12 @@ __vt__22TaiNaviCollisionAction:
 	.4byte actByEvent__22TaiNaviCollisionActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
 	.4byte 0x54616950
-	.4byte 0x696b6943
-	.4byte 0x6f6c6c69
-	.4byte 0x73696f6e
+	.4byte 0x696B6943
+	.4byte 0x6F6C6C69
+	.4byte 0x73696F6E
 	.4byte 0x41637469
-	.4byte 0x6f6e0000
-	.4byte 0x803e3778
+	.4byte 0x6F6E0000
+	.4byte 0x803E3778
 	.4byte 0
 	.4byte __RTTI__26TaiCreatureCollisionAction
 	.4byte 0
@@ -44039,12 +44039,12 @@ __vt__26TaiCreatureCollisionAction:
 	.4byte actByEvent__26TaiCreatureCollisionActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
 	.4byte 0x54616957
-	.4byte 0x616c6c43
-	.4byte 0x6f6c6c69
-	.4byte 0x73696f6e
+	.4byte 0x616C6C43
+	.4byte 0x6F6C6C69
+	.4byte 0x73696F6E
 	.4byte 0x41637469
-	.4byte 0x6f6e0000
-	.4byte 0x803e3778
+	.4byte 0x6F6E0000
+	.4byte 0x803E3778
 	.4byte 0
 	.4byte 0
 .global __vt__22TaiWallCollisionAction
@@ -44057,13 +44057,13 @@ __vt__22TaiWallCollisionAction:
 	.4byte actByEvent__22TaiWallCollisionActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
 	.4byte 0x54616947
-	.4byte 0x726f756e
-	.4byte 0x64436f6c
-	.4byte 0x6c697369
-	.4byte 0x6f6e4163
-	.4byte 0x74696f6e
+	.4byte 0x726F756E
+	.4byte 0x64436F6C
+	.4byte 0x6C697369
+	.4byte 0x6F6E4163
+	.4byte 0x74696F6E
 	.4byte 0
-	.4byte 0x803e3778
+	.4byte 0x803E3778
 	.4byte 0
 	.4byte 0
 .global __vt__24TaiGroundCollisionAction
@@ -44076,10 +44076,10 @@ __vt__24TaiGroundCollisionAction:
 	.4byte actByEvent__24TaiGroundCollisionActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
 	.4byte 0x54616942
-	.4byte 0x6f756e63
+	.4byte 0x6F756E63
 	.4byte 0x65416374
-	.4byte 0x696f6e00
-	.4byte 0x803e3778
+	.4byte 0x696F6E00
+	.4byte 0x803E3778
 	.4byte 0
 	.4byte 0
 .global __vt__15TaiBounceAction
@@ -44095,39 +44095,39 @@ __vt__15TaiBounceAction:
 	.4byte 0x74616965
 	.4byte 0x66666563
 	.4byte 0x74616374
-	.4byte 0x696f6e73
-	.4byte 0x2e637070
+	.4byte 0x696F6E73
+	.4byte 0x2E637070
 	.4byte 0
 	.4byte 0x74616965
 	.4byte 0x66666563
 	.4byte 0x74616374
-	.4byte 0x696f6e73
+	.4byte 0x696F6E73
 	.4byte 0
-	.4byte 0x5461694a
-	.4byte 0x6f696e74
+	.4byte 0x5461694A
+	.4byte 0x6F696E74
 	.4byte 0x45666665
 	.4byte 0x63744163
-	.4byte 0x74696f6e
+	.4byte 0x74696F6E
 	.4byte 0
 	.4byte 0x54616941
-	.4byte 0x6374696f
-	.4byte 0x6e000000
+	.4byte 0x6374696F
+	.4byte 0x6E000000
 	.4byte 0x54414941
 	.4byte 0x65666643
-	.4byte 0x6c6f7564
-	.4byte 0x4f664475
+	.4byte 0x6C6F7564
+	.4byte 0x4F664475
 	.4byte 0x73740000
-	.4byte 0x803e37b8
+	.4byte 0x803E37B8
 	.4byte 0
 	.4byte 0
-	.4byte 0x803e37b8
+	.4byte 0x803E37B8
 	.4byte 0
-	.4byte 0x803e37c0
+	.4byte 0x803E37C0
 	.4byte 0
 	.4byte 0
 .global __vt__20TaiJointEffectAction
 __vt__20TaiJointEffectAction:
-	.4byte 0x803e37c8
+	.4byte 0x803E37C8
 	.4byte 0
 	.4byte start__18TAIAeffCloudOfDustFR4Teki
 	.4byte finish__9TaiActionFR4Teki
@@ -44143,15 +44143,15 @@ __vt__20TaiJointEffectAction:
 	.4byte 0
 	.4byte 0
 	.4byte 0x54616953
-	.4byte 0x746f7047
-	.4byte 0x656e5061
+	.4byte 0x746F7047
+	.4byte 0x656E5061
 	.4byte 0x72746963
-	.4byte 0x6c654765
-	.4byte 0x6e657261
-	.4byte 0x746f7241
-	.4byte 0x6374696f
-	.4byte 0x6e000000
-	.4byte 0x803e37b8
+	.4byte 0x6C654765
+	.4byte 0x6E657261
+	.4byte 0x746F7241
+	.4byte 0x6374696F
+	.4byte 0x6E000000
+	.4byte 0x803E37B8
 	.4byte 0
 	.4byte 0
 .global __vt__33TaiStopGenParticleGeneratorAction
@@ -44165,14 +44165,14 @@ __vt__33TaiStopGenParticleGeneratorAction:
 	.4byte hasNextState__9TaiActionFv
 	.4byte 0x54616953
 	.4byte 0x74617274
-	.4byte 0x47656e50
+	.4byte 0x47656E50
 	.4byte 0x61727469
-	.4byte 0x636c6547
-	.4byte 0x656e6572
-	.4byte 0x61746f72
+	.4byte 0x636C6547
+	.4byte 0x656E6572
+	.4byte 0x61746F72
 	.4byte 0x41637469
-	.4byte 0x6f6e0000
-	.4byte 0x803e37b8
+	.4byte 0x6F6E0000
+	.4byte 0x803E37B8
 	.4byte 0
 	.4byte 0
 .global __vt__34TaiStartGenParticleGeneratorAction
@@ -44187,8 +44187,8 @@ __vt__34TaiStartGenParticleGeneratorAction:
 	.4byte 0x54616945
 	.4byte 0x66666563
 	.4byte 0x74416374
-	.4byte 0x696f6e00
-	.4byte 0x803e37b8
+	.4byte 0x696F6E00
+	.4byte 0x803E37B8
 	.4byte 0
 	.4byte 0
 .global __vt__15TaiEffectAction
@@ -44202,11 +44202,11 @@ __vt__15TaiEffectAction:
 	.4byte hasNextState__9TaiActionFv
 	.4byte 0x74616969
 	.4byte 0x77616765
-	.4byte 0x6e2e6370
+	.4byte 0x6E2E6370
 	.4byte 0x70000000
 	.4byte 0x74616969
 	.4byte 0x77616765
-	.4byte 0x6e000000
+	.4byte 0x6E000000
 .global lbl_802C8014
 lbl_802C8014:
 	.4byte 0x49574147
@@ -44236,22 +44236,22 @@ __vt__23TaiIwagenShootingAction:
 	.4byte hasNextState__9TaiActionFv
 	.4byte 0x54616949
 	.4byte 0x77616765
-	.4byte 0x6e537472
+	.4byte 0x6E537472
 	.4byte 0x61746567
 	.4byte 0x79000000
-	.4byte 0x54656b69
+	.4byte 0x54656B69
 	.4byte 0x53747261
 	.4byte 0x74656779
 	.4byte 0
 	.4byte 0x54616953
 	.4byte 0x74726174
 	.4byte 0x65677900
-	.4byte 0x803e382c
+	.4byte 0x803E382C
 	.4byte 0
 	.4byte 0
-	.4byte 0x803e382c
+	.4byte 0x803E382C
 	.4byte 0
-	.4byte 0x803e3834
+	.4byte 0x803E3834
 	.4byte 0
 	.4byte 0
 .global __vt__17TaiIwagenStrategy
@@ -44268,38 +44268,38 @@ __vt__17TaiIwagenStrategy:
 	.4byte spawnCorpseParts__12TekiStrategyFR4Teki
 	.4byte 0x54616949
 	.4byte 0x77616765
-	.4byte 0x6e506172
-	.4byte 0x616d6574
+	.4byte 0x6E506172
+	.4byte 0x616D6574
 	.4byte 0x65727300
-	.4byte 0x436f7265
-	.4byte 0x4e6f6465
+	.4byte 0x436F7265
+	.4byte 0x4E6F6465
 	.4byte 0
-	.4byte 0x803e384c
-	.4byte 0
-	.4byte 0
-	.4byte 0x803e384c
-	.4byte 0
-	.4byte 0x803e3854
+	.4byte 0x803E384C
 	.4byte 0
 	.4byte 0
-	.4byte 0x54656b69
+	.4byte 0x803E384C
+	.4byte 0
+	.4byte 0x803E3854
+	.4byte 0
+	.4byte 0
+	.4byte 0x54656B69
 	.4byte 0x50617261
-	.4byte 0x6d657465
+	.4byte 0x6D657465
 	.4byte 0x72730000
-	.4byte 0x803e384c
+	.4byte 0x803E384C
 	.4byte 0
-	.4byte 0x803e3854
+	.4byte 0x803E3854
 	.4byte 0
-	.4byte 0x803e3864
+	.4byte 0x803E3864
 	.4byte 0
 	.4byte 0
-	.4byte 0x803e384c
+	.4byte 0x803E384C
 	.4byte 0
-	.4byte 0x803e3854
+	.4byte 0x803E3854
 	.4byte 0
-	.4byte 0x803e3864
+	.4byte 0x803E3864
 	.4byte 0
-	.4byte 0x803e386c
+	.4byte 0x803E386C
 	.4byte 0
 	.4byte 0
 .global __vt__19TaiIwagenParameters
@@ -44317,12 +44317,12 @@ __vt__19TaiIwagenParameters:
 	.4byte concat__4NodeFR8Matrix4f
 	.4byte getModelMatrix__4NodeFv
 	.4byte 0x54616949
-	.4byte 0x7761676f
-	.4byte 0x6e526f6c
-	.4byte 0x6c696e67
+	.4byte 0x7761676F
+	.4byte 0x6E526F6C
+	.4byte 0x6C696E67
 	.4byte 0x41637469
-	.4byte 0x6f6e0000
-	.4byte 0x803e381c
+	.4byte 0x6F6E0000
+	.4byte 0x803E381C
 	.4byte 0
 	.4byte 0
 .global __vt__22TaiIwagonRollingAction
@@ -44335,13 +44335,13 @@ __vt__22TaiIwagonRollingAction:
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
 	.4byte 0x54616949
-	.4byte 0x7761676f
-	.4byte 0x6e447573
+	.4byte 0x7761676F
+	.4byte 0x6E447573
 	.4byte 0x74456666
 	.4byte 0x65637441
-	.4byte 0x6374696f
-	.4byte 0x6e000000
-	.4byte 0x803e381c
+	.4byte 0x6374696F
+	.4byte 0x6E000000
+	.4byte 0x803E381C
 	.4byte 0
 	.4byte 0
 .global __vt__25TaiIwagonDustEffectAction
@@ -44354,13 +44354,13 @@ __vt__25TaiIwagonDustEffectAction:
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
 	.4byte 0x54616949
-	.4byte 0x7761676f
-	.4byte 0x6e537472
+	.4byte 0x7761676F
+	.4byte 0x6E537472
 	.4byte 0x61746567
 	.4byte 0x79000000
-	.4byte 0x803e382c
+	.4byte 0x803E382C
 	.4byte 0
-	.4byte 0x803e3834
+	.4byte 0x803E3834
 	.4byte 0
 	.4byte 0
 .global __vt__17TaiIwagonStrategy
@@ -44383,17 +44383,17 @@ __vt__17TaiIwagonStrategy:
 	.4byte 0
 	.4byte 0
 	.4byte 0x54616949
-	.4byte 0x7761676f
-	.4byte 0x6e506172
-	.4byte 0x616d6574
+	.4byte 0x7761676F
+	.4byte 0x6E506172
+	.4byte 0x616D6574
 	.4byte 0x65727300
-	.4byte 0x803e384c
+	.4byte 0x803E384C
 	.4byte 0
-	.4byte 0x803e3854
+	.4byte 0x803E3854
 	.4byte 0
-	.4byte 0x803e3864
+	.4byte 0x803E3864
 	.4byte 0
-	.4byte 0x803e386c
+	.4byte 0x803E386C
 	.4byte 0
 	.4byte 0
 .global __vt__19TaiIwagonParameters
@@ -44410,28 +44410,28 @@ __vt__19TaiIwagonParameters:
 	.4byte concat__4NodeFR3SRT
 	.4byte concat__4NodeFR8Matrix4f
 	.4byte getModelMatrix__4NodeFv
-	.4byte 0x7461696a
+	.4byte 0x7461696A
 	.4byte 0x75646765
-	.4byte 0x6d656e74
+	.4byte 0x6D656E74
 	.4byte 0x61637469
-	.4byte 0x6f6e732e
+	.4byte 0x6F6E732E
 	.4byte 0x63707000
-	.4byte 0x7461696a
+	.4byte 0x7461696A
 	.4byte 0x75646765
-	.4byte 0x6d656e74
+	.4byte 0x6D656E74
 	.4byte 0x61637469
-	.4byte 0x6f6e7300
+	.4byte 0x6F6E7300
 	.4byte 0x54616948
 	.4byte 0x61735374
-	.4byte 0x69636b65
-	.4byte 0x72734f6e
-	.4byte 0x426f6479
+	.4byte 0x69636B65
+	.4byte 0x72734F6E
+	.4byte 0x426F6479
 	.4byte 0x41637469
-	.4byte 0x6f6e0000
+	.4byte 0x6F6E0000
 	.4byte 0x54616941
-	.4byte 0x6374696f
-	.4byte 0x6e000000
-	.4byte 0x803e38a0
+	.4byte 0x6374696F
+	.4byte 0x6E000000
+	.4byte 0x803E38A0
 	.4byte 0
 	.4byte 0
 .global __vt__26TaiHasStickersOnBodyAction
@@ -44445,12 +44445,12 @@ __vt__26TaiHasStickersOnBodyAction:
 	.4byte hasNextState__9TaiActionFv
 	.4byte 0x54616948
 	.4byte 0x61735374
-	.4byte 0x69636b65
-	.4byte 0x7273496e
-	.4byte 0x4d6f7574
+	.4byte 0x69636B65
+	.4byte 0x7273496E
+	.4byte 0x4D6F7574
 	.4byte 0x68416374
-	.4byte 0x696f6e00
-	.4byte 0x803e38a0
+	.4byte 0x696F6E00
+	.4byte 0x803E38A0
 	.4byte 0
 	.4byte 0
 .global __vt__27TaiHasStickersInMouthAction
@@ -44462,24 +44462,24 @@ __vt__27TaiHasStickersInMouthAction:
 	.4byte act__27TaiHasStickersInMouthActionFR4Teki
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
-	.4byte 0x54656b69
-	.4byte 0x416e6443
-	.4byte 0x6f6e6469
-	.4byte 0x74696f6e
+	.4byte 0x54656B69
+	.4byte 0x416E6443
+	.4byte 0x6F6E6469
+	.4byte 0x74696F6E
 	.4byte 0
-	.4byte 0x436f6e64
-	.4byte 0x6974696f
-	.4byte 0x6e000000
-	.4byte 0x54656b69
-	.4byte 0x436f6e64
-	.4byte 0x6974696f
-	.4byte 0x6e000000
-	.4byte 0x803e38b8
+	.4byte 0x436F6E64
+	.4byte 0x6974696F
+	.4byte 0x6E000000
+	.4byte 0x54656B69
+	.4byte 0x436F6E64
+	.4byte 0x6974696F
+	.4byte 0x6E000000
+	.4byte 0x803E38B8
 	.4byte 0
 	.4byte 0
-	.4byte 0x803e38b8
+	.4byte 0x803E38B8
 	.4byte 0
-	.4byte 0x803e38c0
+	.4byte 0x803E38C0
 	.4byte 0
 	.4byte 0
 	.4byte 0
@@ -44488,11 +44488,11 @@ __vt__27TaiHasStickersInMouthAction:
 	.4byte 0x54616954
 	.4byte 0x61726765
 	.4byte 0x74566973
-	.4byte 0x69626c65
-	.4byte 0x4e617669
+	.4byte 0x69626C65
+	.4byte 0x4E617669
 	.4byte 0x41637469
-	.4byte 0x6f6e0000
-	.4byte 0x803e38a0
+	.4byte 0x6F6E0000
+	.4byte 0x803E38A0
 	.4byte 0
 	.4byte 0
 .global __vt__26TaiTargetVisibleNaviAction
@@ -44513,12 +44513,12 @@ __vt__26TaiTargetVisibleNaviAction:
 	.4byte 0x54616954
 	.4byte 0x61726765
 	.4byte 0x74566973
-	.4byte 0x69626c65
-	.4byte 0x4e617669
-	.4byte 0x50696b69
+	.4byte 0x69626C65
+	.4byte 0x4E617669
+	.4byte 0x50696B69
 	.4byte 0x41637469
-	.4byte 0x6f6e0000
-	.4byte 0x803e38a0
+	.4byte 0x6F6E0000
+	.4byte 0x803E38A0
 	.4byte 0
 	.4byte 0
 .global __vt__30TaiTargetVisibleNaviPikiAction
@@ -44531,13 +44531,13 @@ __vt__30TaiTargetVisibleNaviPikiAction:
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
 	.4byte 0x54616949
-	.4byte 0x6e736964
+	.4byte 0x6E736964
 	.4byte 0x65546572
-	.4byte 0x7269746f
+	.4byte 0x7269746F
 	.4byte 0x72794163
-	.4byte 0x74696f6e
+	.4byte 0x74696F6E
 	.4byte 0
-	.4byte 0x803e38a0
+	.4byte 0x803E38A0
 	.4byte 0
 	.4byte 0
 .global __vt__24TaiInsideTerritoryAction
@@ -44549,14 +44549,14 @@ __vt__24TaiInsideTerritoryAction:
 	.4byte act__24TaiInsideTerritoryActionFR4Teki
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
-	.4byte 0x5461694f
+	.4byte 0x5461694F
 	.4byte 0x75747369
 	.4byte 0x64655465
 	.4byte 0x72726974
-	.4byte 0x6f727941
-	.4byte 0x6374696f
-	.4byte 0x6e000000
-	.4byte 0x803e38a0
+	.4byte 0x6F727941
+	.4byte 0x6374696F
+	.4byte 0x6E000000
+	.4byte 0x803E38A0
 	.4byte 0
 	.4byte 0
 .global __vt__25TaiOutsideTerritoryAction
@@ -44570,10 +44570,10 @@ __vt__25TaiOutsideTerritoryAction:
 	.4byte hasNextState__9TaiActionFv
 	.4byte 0x54616954
 	.4byte 0x61726765
-	.4byte 0x744c6f73
+	.4byte 0x744C6F73
 	.4byte 0x74416374
-	.4byte 0x696f6e00
-	.4byte 0x803e38a0
+	.4byte 0x696F6E00
+	.4byte 0x803E38A0
 	.4byte 0
 	.4byte 0
 .global __vt__19TaiTargetLostAction
@@ -44590,8 +44590,8 @@ __vt__19TaiTargetLostAction:
 	.4byte 0x61746554
 	.4byte 0x61726765
 	.4byte 0x74416374
-	.4byte 0x696f6e00
-	.4byte 0x803e38a0
+	.4byte 0x696F6E00
+	.4byte 0x803E38A0
 	.4byte 0
 	.4byte 0
 .global __vt__23TaiSeparateTargetAction
@@ -44604,12 +44604,12 @@ __vt__23TaiSeparateTargetAction:
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
 	.4byte 0x54616943
-	.4byte 0x6f6e7461
+	.4byte 0x6F6E7461
 	.4byte 0x63745461
 	.4byte 0x72676574
 	.4byte 0x41637469
-	.4byte 0x6f6e0000
-	.4byte 0x803e38a0
+	.4byte 0x6F6E0000
+	.4byte 0x803E38A0
 	.4byte 0
 	.4byte 0
 .global __vt__22TaiContactTargetAction
@@ -44623,11 +44623,11 @@ __vt__22TaiContactTargetAction:
 	.4byte hasNextState__9TaiActionFv
 	.4byte 0x54616956
 	.4byte 0x69736962
-	.4byte 0x6c655461
+	.4byte 0x6C655461
 	.4byte 0x72676574
 	.4byte 0x41637469
-	.4byte 0x6f6e0000
-	.4byte 0x803e38a0
+	.4byte 0x6F6E0000
+	.4byte 0x803E38A0
 	.4byte 0
 	.4byte 0
 .global __vt__22TaiVisibleTargetAction
@@ -44757,16 +44757,16 @@ __vt__24TaiKinokoLegEffectAction:
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
 	.4byte setType__24TaiKinokoLegEffectActionFR8Vector3fii
-	.4byte 0x5461694b
-	.4byte 0x696e6f6b
-	.4byte 0x6f546572
-	.4byte 0x7269746f
+	.4byte 0x5461694B
+	.4byte 0x696E6F6B
+	.4byte 0x6F546572
+	.4byte 0x7269746F
 	.4byte 0x72795275
-	.4byte 0x6e6e696e
+	.4byte 0x6E6E696E
 	.4byte 0x67417761
 	.4byte 0x79416374
-	.4byte 0x696f6e00
-	.4byte 0x803e3924
+	.4byte 0x696F6E00
+	.4byte 0x803E3924
 	.4byte 0
 	.4byte 0
 .global __vt__35TaiKinokoTerritoryRunningAwayAction
@@ -44778,26 +44778,24 @@ __vt__35TaiKinokoTerritoryRunningAwayAction:
 	.4byte act__35TaiKinokoTerritoryRunningAwayActionFR4Teki
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
-	.4byte 0x54656b69
-	.4byte 0x416e6443
-	.4byte 0x6f6e6469
-	.4byte 0x74696f6e
+	.4byte 0x54656B69
+	.4byte 0x416E6443
+	.4byte 0x6F6E6469
+	.4byte 0x74696F6E
 	.4byte 0
-	.4byte 0x436f6e64
-	.4byte 0x6974696f
-	.4byte 0x6e000000
-	.4byte 0x54656b69
-	.4byte 0x436f6e64
-	.4byte 0x6974696f
-	.4byte 0x6e000000
-	.4byte 0x803e394c
-	.4byte 0
-	.4byte 0
-	.4byte 0x803e394c
-	.4byte 0
-	.4byte 0x803e3954
+	.4byte 0x436F6E64
+	.4byte 0x6974696F
+	.4byte 0x6E000000
+	.4byte 0x54656B69
+	.4byte 0x436F6E64
+	.4byte 0x6974696F
+	.4byte 0x6E000000
+	.4byte 0x803E394C
 	.4byte 0
 	.4byte 0
+	.4byte 0x803E394C
+	.4byte 0
+	.4byte 0x803E3954
 	.4byte 0
 	.4byte 0
 	.4byte 0
@@ -44807,9 +44805,11 @@ __vt__35TaiKinokoTerritoryRunningAwayAction:
 	.4byte 0
 	.4byte 0
 	.4byte 0
-	.4byte 0x496e7465
+	.4byte 0
+	.4byte 0
+	.4byte 0x496E7465
 	.4byte 0x72616374
-	.4byte 0x696f6e00
+	.4byte 0x696F6E00
 	.4byte 0
 	.4byte 0
 	.4byte 0
@@ -44821,16 +44821,16 @@ __vt__35TaiKinokoTerritoryRunningAwayAction:
 	.4byte 0
 	.4byte 0
 	.4byte 0
-	.4byte 0x5461694b
-	.4byte 0x696e6f6b
-	.4byte 0x6f446973
+	.4byte 0x5461694B
+	.4byte 0x696E6F6B
+	.4byte 0x6F446973
 	.4byte 0x63686172
-	.4byte 0x67696e67
-	.4byte 0x53706f72
+	.4byte 0x67696E67
+	.4byte 0x53706F72
 	.4byte 0x65734163
-	.4byte 0x74696f6e
+	.4byte 0x74696F6E
 	.4byte 0
-	.4byte 0x803e3924
+	.4byte 0x803E3924
 	.4byte 0
 	.4byte 0
 .global __vt__32TaiKinokoDischargingSporesAction
@@ -44842,15 +44842,15 @@ __vt__32TaiKinokoDischargingSporesAction:
 	.4byte act__32TaiKinokoDischargingSporesActionFR4Teki
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
-	.4byte 0x5461694b
-	.4byte 0x696e6f6b
-	.4byte 0x6f436861
-	.4byte 0x7267696e
-	.4byte 0x6753706f
+	.4byte 0x5461694B
+	.4byte 0x696E6F6B
+	.4byte 0x6F436861
+	.4byte 0x7267696E
+	.4byte 0x6753706F
 	.4byte 0x72657341
-	.4byte 0x6374696f
-	.4byte 0x6e000000
-	.4byte 0x803e3924
+	.4byte 0x6374696F
+	.4byte 0x6E000000
+	.4byte 0x803E3924
 	.4byte 0
 	.4byte 0
 .global __vt__29TaiKinokoChargingSporesAction
@@ -44862,14 +44862,14 @@ __vt__29TaiKinokoChargingSporesAction:
 	.4byte act__29TaiKinokoChargingSporesActionFR4Teki
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
-	.4byte 0x5461694b
-	.4byte 0x696e6f6b
-	.4byte 0x6f547572
-	.4byte 0x6e696e67
-	.4byte 0x4f766572
+	.4byte 0x5461694B
+	.4byte 0x696E6F6B
+	.4byte 0x6F547572
+	.4byte 0x6E696E67
+	.4byte 0x4F766572
 	.4byte 0x41637469
-	.4byte 0x6f6e0000
-	.4byte 0x803e3924
+	.4byte 0x6F6E0000
+	.4byte 0x803E3924
 	.4byte 0
 	.4byte 0
 .global __vt__26TaiKinokoTurningOverAction
@@ -44881,24 +44881,24 @@ __vt__26TaiKinokoTurningOverAction:
 	.4byte act__9TaiActionFR4Teki
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
-	.4byte 0x5461694b
-	.4byte 0x696e6f6b
-	.4byte 0x6f537472
+	.4byte 0x5461694B
+	.4byte 0x696E6F6B
+	.4byte 0x6F537472
 	.4byte 0x61746567
 	.4byte 0x79000000
-	.4byte 0x54656b69
+	.4byte 0x54656B69
 	.4byte 0x53747261
 	.4byte 0x74656779
 	.4byte 0
 	.4byte 0x54616953
 	.4byte 0x74726174
 	.4byte 0x65677900
-	.4byte 0x803e3974
+	.4byte 0x803E3974
 	.4byte 0
 	.4byte 0
-	.4byte 0x803e3974
+	.4byte 0x803E3974
 	.4byte 0
-	.4byte 0x803e397c
+	.4byte 0x803E397C
 	.4byte 0
 	.4byte 0
 .global __vt__17TaiKinokoStrategy
@@ -44913,11 +44913,11 @@ __vt__17TaiKinokoStrategy:
 	.4byte drawDebugInfo__12TekiStrategyFR4TekiR8Graphics
 	.4byte interact__12TekiStrategyFR4TekiR18TekiInteractionKey
 	.4byte spawnCorpseParts__12TekiStrategyFR4Teki
-	.4byte 0x5461694e
-	.4byte 0x6f744163
-	.4byte 0x74696f6e
+	.4byte 0x5461694E
+	.4byte 0x6F744163
+	.4byte 0x74696F6E
 	.4byte 0
-	.4byte 0x803e3924
+	.4byte 0x803E3924
 	.4byte 0
 	.4byte 0
 .global __vt__12TaiNotAction
@@ -44930,12 +44930,10 @@ __vt__12TaiNotAction:
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
 	.4byte 0x54616941
-	.4byte 0x6e644163
-	.4byte 0x74696f6e
+	.4byte 0x6E644163
+	.4byte 0x74696F6E
 	.4byte 0
-	.4byte 0x803e3924
-	.4byte 0
-	.4byte 0
+	.4byte 0x803E3924
 	.4byte 0
 	.4byte 0
 	.4byte 0
@@ -44950,40 +44948,42 @@ __vt__12TaiNotAction:
 	.4byte 0
 	.4byte 0
 	.4byte 0
-	.4byte 0x5461694b
-	.4byte 0x696e6f6b
-	.4byte 0x6f506172
-	.4byte 0x616d6574
+	.4byte 0
+	.4byte 0
+	.4byte 0x5461694B
+	.4byte 0x696E6F6B
+	.4byte 0x6F506172
+	.4byte 0x616D6574
 	.4byte 0x65727300
-	.4byte 0x436f7265
-	.4byte 0x4e6f6465
+	.4byte 0x436F7265
+	.4byte 0x4E6F6465
 	.4byte 0
-	.4byte 0x803e399c
-	.4byte 0
-	.4byte 0
-	.4byte 0x803e399c
-	.4byte 0
-	.4byte 0x803e39a4
+	.4byte 0x803E399C
 	.4byte 0
 	.4byte 0
-	.4byte 0x54656b69
+	.4byte 0x803E399C
+	.4byte 0
+	.4byte 0x803E39A4
+	.4byte 0
+	.4byte 0
+	.4byte 0x54656B69
 	.4byte 0x50617261
-	.4byte 0x6d657465
+	.4byte 0x6D657465
 	.4byte 0x72730000
-	.4byte 0x803e399c
+	.4byte 0x803E399C
 	.4byte 0
-	.4byte 0x803e39a4
+	.4byte 0x803E39A4
 	.4byte 0
-	.4byte 0x803e39b4
+	.4byte 0x803E39B4
 	.4byte 0
 	.4byte 0
-	.4byte 0x803e399c
+	.4byte 0x803E399C
 	.4byte 0
-	.4byte 0x803e39a4
+	.4byte 0x803E39A4
 	.4byte 0
-	.4byte 0x803e39b4
+	.4byte 0x803E39B4
 	.4byte 0
-	.4byte 0x803e39bc
+	.4byte 0x803E39BC
 	.4byte 0
 	.4byte 0
 .global __vt__19TaiKinokoParameters
@@ -45000,27 +45000,27 @@ __vt__19TaiKinokoParameters:
 	.4byte concat__4NodeFR3SRT
 	.4byte concat__4NodeFR8Matrix4f
 	.4byte getModelMatrix__4NodeFv
-	.4byte 0x7461696d
+	.4byte 0x7461696D
 	.4byte 0x65737361
 	.4byte 0x67656163
-	.4byte 0x74696f6e
-	.4byte 0x732e6370
+	.4byte 0x74696F6E
+	.4byte 0x732E6370
 	.4byte 0x70000000
-	.4byte 0x7461696d
+	.4byte 0x7461696D
 	.4byte 0x65737361
 	.4byte 0x67656163
-	.4byte 0x74696f6e
+	.4byte 0x74696F6E
 	.4byte 0x73000000
-	.4byte 0x5461694b
+	.4byte 0x5461694B
 	.4byte 0x65795365
-	.4byte 0x6e644d65
+	.4byte 0x6E644D65
 	.4byte 0x73736167
 	.4byte 0x65416374
-	.4byte 0x696f6e00
+	.4byte 0x696F6E00
 	.4byte 0x54616941
-	.4byte 0x6374696f
-	.4byte 0x6e000000
-	.4byte 0x803e39d0
+	.4byte 0x6374696F
+	.4byte 0x6E000000
+	.4byte 0x803E39D0
 	.4byte 0
 	.4byte 0
 .global __vt__23TaiKeySendMessageAction
@@ -45033,12 +45033,12 @@ __vt__23TaiKeySendMessageAction:
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
 	.4byte 0x54616953
-	.4byte 0x656e644d
+	.4byte 0x656E644D
 	.4byte 0x65737361
 	.4byte 0x67654163
-	.4byte 0x74696f6e
+	.4byte 0x74696F6E
 	.4byte 0
-	.4byte 0x803e39d0
+	.4byte 0x803E39D0
 	.4byte 0
 	.4byte 0
 .global __vt__20TaiSendMessageAction
@@ -45158,13 +45158,13 @@ __vt__26TaiMizinkoFlyingAwayAction:
 	.4byte act__9TaiActionFR4Teki
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
-	.4byte 0x5461694d
-	.4byte 0x697a696e
-	.4byte 0x6b6f5761
-	.4byte 0x6974696e
+	.4byte 0x5461694D
+	.4byte 0x697A696E
+	.4byte 0x6B6F5761
+	.4byte 0x6974696E
 	.4byte 0x67416374
-	.4byte 0x696f6e00
-	.4byte 0x803e3a28
+	.4byte 0x696F6E00
+	.4byte 0x803E3A28
 	.4byte 0
 	.4byte 0
 .global __vt__23TaiMizinkoWaitingAction
@@ -45176,14 +45176,14 @@ __vt__23TaiMizinkoWaitingAction:
 	.4byte act__9TaiActionFR4Teki
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
-	.4byte 0x5461694d
-	.4byte 0x697a696e
-	.4byte 0x6b6f4472
-	.4byte 0x6f705761
+	.4byte 0x5461694D
+	.4byte 0x697A696E
+	.4byte 0x6B6F4472
+	.4byte 0x6F705761
 	.4byte 0x74657241
-	.4byte 0x6374696f
-	.4byte 0x6e000000
-	.4byte 0x803e3a28
+	.4byte 0x6374696F
+	.4byte 0x6E000000
+	.4byte 0x803E3A28
 	.4byte 0
 	.4byte 0
 .global __vt__25TaiMizinkoDropWaterAction
@@ -45195,13 +45195,13 @@ __vt__25TaiMizinkoDropWaterAction:
 	.4byte act__25TaiMizinkoDropWaterActionFR4Teki
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
-	.4byte 0x5461694d
-	.4byte 0x697a696e
-	.4byte 0x6b6f436f
-	.4byte 0x6d696e67
+	.4byte 0x5461694D
+	.4byte 0x697A696E
+	.4byte 0x6B6F436F
+	.4byte 0x6D696E67
 	.4byte 0x41637469
-	.4byte 0x6f6e0000
-	.4byte 0x803e3a28
+	.4byte 0x6F6E0000
+	.4byte 0x803E3A28
 	.4byte 0
 	.4byte 0
 .global __vt__22TaiMizinkoComingAction
@@ -45213,13 +45213,13 @@ __vt__22TaiMizinkoComingAction:
 	.4byte act__9TaiActionFR4Teki
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
-	.4byte 0x5461694d
-	.4byte 0x697a696e
-	.4byte 0x6b6f476f
-	.4byte 0x696e6741
-	.4byte 0x6374696f
-	.4byte 0x6e000000
-	.4byte 0x803e3a28
+	.4byte 0x5461694D
+	.4byte 0x697A696E
+	.4byte 0x6B6F476F
+	.4byte 0x696E6741
+	.4byte 0x6374696F
+	.4byte 0x6E000000
+	.4byte 0x803E3A28
 	.4byte 0
 	.4byte 0
 .global __vt__21TaiMizinkoGoingAction
@@ -45231,13 +45231,13 @@ __vt__21TaiMizinkoGoingAction:
 	.4byte act__9TaiActionFR4Teki
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
-	.4byte 0x5461694d
-	.4byte 0x697a696e
-	.4byte 0x6b6f4661
-	.4byte 0x64696e67
+	.4byte 0x5461694D
+	.4byte 0x697A696E
+	.4byte 0x6B6F4661
+	.4byte 0x64696E67
 	.4byte 0x41637469
-	.4byte 0x6f6e0000
-	.4byte 0x803e3a28
+	.4byte 0x6F6E0000
+	.4byte 0x803E3A28
 	.4byte 0
 	.4byte 0
 .global __vt__22TaiMizinkoFadingAction
@@ -45249,23 +45249,23 @@ __vt__22TaiMizinkoFadingAction:
 	.4byte act__22TaiMizinkoFadingActionFR4Teki
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
-	.4byte 0x5461694d
-	.4byte 0x697a696e
-	.4byte 0x6b6f4d6f
-	.4byte 0x76696e67
-	.4byte 0x54696d65
+	.4byte 0x5461694D
+	.4byte 0x697A696E
+	.4byte 0x6B6F4D6F
+	.4byte 0x76696E67
+	.4byte 0x54696D65
 	.4byte 0x72416374
-	.4byte 0x696f6e00
+	.4byte 0x696F6E00
 	.4byte 0x54616954
-	.4byte 0x696d6572
+	.4byte 0x696D6572
 	.4byte 0x41637469
-	.4byte 0x6f6e0000
-	.4byte 0x803e3a28
+	.4byte 0x6F6E0000
+	.4byte 0x803E3A28
 	.4byte 0
 	.4byte 0
-	.4byte 0x803e3a28
+	.4byte 0x803E3A28
 	.4byte 0
-	.4byte 0x803e3a60
+	.4byte 0x803E3A60
 	.4byte 0
 	.4byte 0
 .global __vt__27TaiMizinkoMovingTimerAction
@@ -45277,16 +45277,16 @@ __vt__27TaiMizinkoMovingTimerAction:
 	.4byte act__14TaiTimerActionFR4Teki
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
-	.4byte 0x5461694d
-	.4byte 0x697a696e
-	.4byte 0x6b6f4372
-	.4byte 0x7954696d
+	.4byte 0x5461694D
+	.4byte 0x697A696E
+	.4byte 0x6B6F4372
+	.4byte 0x7954696D
 	.4byte 0x65724163
-	.4byte 0x74696f6e
+	.4byte 0x74696F6E
 	.4byte 0
-	.4byte 0x803e3a28
+	.4byte 0x803E3A28
 	.4byte 0
-	.4byte 0x803e3a60
+	.4byte 0x803E3A60
 	.4byte 0
 	.4byte 0
 .global __vt__24TaiMizinkoCryTimerAction
@@ -45298,24 +45298,24 @@ __vt__24TaiMizinkoCryTimerAction:
 	.4byte act__24TaiMizinkoCryTimerActionFR4Teki
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
-	.4byte 0x5461694d
-	.4byte 0x697a696e
-	.4byte 0x6b6f5374
+	.4byte 0x5461694D
+	.4byte 0x697A696E
+	.4byte 0x6B6F5374
 	.4byte 0x72617465
 	.4byte 0x67790000
-	.4byte 0x54656b69
+	.4byte 0x54656B69
 	.4byte 0x53747261
 	.4byte 0x74656779
 	.4byte 0
 	.4byte 0x54616953
 	.4byte 0x74726174
 	.4byte 0x65677900
-	.4byte 0x803e3a78
+	.4byte 0x803E3A78
 	.4byte 0
 	.4byte 0
-	.4byte 0x803e3a78
+	.4byte 0x803E3A78
 	.4byte 0
-	.4byte 0x803e3a80
+	.4byte 0x803E3A80
 	.4byte 0
 	.4byte 0
 .global __vt__18TaiMizinkoStrategy
@@ -45330,41 +45330,41 @@ __vt__18TaiMizinkoStrategy:
 	.4byte drawDebugInfo__12TekiStrategyFR4TekiR8Graphics
 	.4byte interact__12TekiStrategyFR4TekiR18TekiInteractionKey
 	.4byte spawnCorpseParts__12TekiStrategyFR4Teki
-	.4byte 0x5461694d
-	.4byte 0x697a696e
-	.4byte 0x6b6f5061
-	.4byte 0x72616d65
+	.4byte 0x5461694D
+	.4byte 0x697A696E
+	.4byte 0x6B6F5061
+	.4byte 0x72616D65
 	.4byte 0x74657273
 	.4byte 0
-	.4byte 0x436f7265
-	.4byte 0x4e6f6465
+	.4byte 0x436F7265
+	.4byte 0x4E6F6465
 	.4byte 0
-	.4byte 0x803e3a98
-	.4byte 0
-	.4byte 0
-	.4byte 0x803e3a98
-	.4byte 0
-	.4byte 0x803e3aa0
+	.4byte 0x803E3A98
 	.4byte 0
 	.4byte 0
-	.4byte 0x54656b69
+	.4byte 0x803E3A98
+	.4byte 0
+	.4byte 0x803E3AA0
+	.4byte 0
+	.4byte 0
+	.4byte 0x54656B69
 	.4byte 0x50617261
-	.4byte 0x6d657465
+	.4byte 0x6D657465
 	.4byte 0x72730000
-	.4byte 0x803e3a98
+	.4byte 0x803E3A98
 	.4byte 0
-	.4byte 0x803e3aa0
+	.4byte 0x803E3AA0
 	.4byte 0
-	.4byte 0x803e3ab0
+	.4byte 0x803E3AB0
 	.4byte 0
 	.4byte 0
-	.4byte 0x803e3a98
+	.4byte 0x803E3A98
 	.4byte 0
-	.4byte 0x803e3aa0
+	.4byte 0x803E3AA0
 	.4byte 0
-	.4byte 0x803e3ab0
+	.4byte 0x803E3AB0
 	.4byte 0
-	.4byte 0x803e3ab8
+	.4byte 0x803E3AB8
 	.4byte 0
 	.4byte 0
 .global __vt__20TaiMizinkoParameters
@@ -45381,15 +45381,15 @@ __vt__20TaiMizinkoParameters:
 	.4byte concat__4NodeFR3SRT
 	.4byte concat__4NodeFR8Matrix4f
 	.4byte getModelMatrix__4NodeFv
-	.4byte 0x5461694d
-	.4byte 0x697a6967
-	.4byte 0x656e4e61
+	.4byte 0x5461694D
+	.4byte 0x697A6967
+	.4byte 0x656E4E61
 	.4byte 0x76694170
-	.4byte 0x70726f75
+	.4byte 0x70726F75
 	.4byte 0x63684163
-	.4byte 0x74696f6e
+	.4byte 0x74696F6E
 	.4byte 0
-	.4byte 0x803e3a28
+	.4byte 0x803E3A28
 	.4byte 0
 	.4byte 0
 .global __vt__28TaiMizigenNaviApprouchAction
@@ -45401,14 +45401,14 @@ __vt__28TaiMizigenNaviApprouchAction:
 	.4byte act__28TaiMizigenNaviApprouchActionFR4Teki
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
-	.4byte 0x5461694d
-	.4byte 0x697a6967
-	.4byte 0x656e4765
-	.4byte 0x6e657261
-	.4byte 0x74696e67
+	.4byte 0x5461694D
+	.4byte 0x697A6967
+	.4byte 0x656E4765
+	.4byte 0x6E657261
+	.4byte 0x74696E67
 	.4byte 0x41637469
-	.4byte 0x6f6e0000
-	.4byte 0x803e3a28
+	.4byte 0x6F6E0000
+	.4byte 0x803E3A28
 	.4byte 0
 	.4byte 0
 .global __vt__26TaiMizigenGeneratingAction
@@ -45420,14 +45420,14 @@ __vt__26TaiMizigenGeneratingAction:
 	.4byte act__26TaiMizigenGeneratingActionFR4Teki
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
-	.4byte 0x5461694d
-	.4byte 0x697a6967
-	.4byte 0x656e5374
+	.4byte 0x5461694D
+	.4byte 0x697A6967
+	.4byte 0x656E5374
 	.4byte 0x72617465
 	.4byte 0x67790000
-	.4byte 0x803e3a78
+	.4byte 0x803E3A78
 	.4byte 0
-	.4byte 0x803e3a80
+	.4byte 0x803E3A80
 	.4byte 0
 	.4byte 0
 .global __vt__18TaiMizigenStrategy
@@ -45449,19 +45449,19 @@ __vt__18TaiMizigenStrategy:
 	.4byte 0
 	.4byte 0
 	.4byte 0
-	.4byte 0x5461694d
-	.4byte 0x697a6967
-	.4byte 0x656e5061
-	.4byte 0x72616d65
+	.4byte 0x5461694D
+	.4byte 0x697A6967
+	.4byte 0x656E5061
+	.4byte 0x72616D65
 	.4byte 0x74657273
 	.4byte 0
-	.4byte 0x803e3a98
+	.4byte 0x803E3A98
 	.4byte 0
-	.4byte 0x803e3aa0
+	.4byte 0x803E3AA0
 	.4byte 0
-	.4byte 0x803e3ab0
+	.4byte 0x803E3AB0
 	.4byte 0
-	.4byte 0x803e3ab8
+	.4byte 0x803E3AB8
 	.4byte 0
 	.4byte 0
 .global __vt__20TaiMizigenParameters
@@ -45478,30 +45478,30 @@ __vt__20TaiMizigenParameters:
 	.4byte concat__4NodeFR3SRT
 	.4byte concat__4NodeFR8Matrix4f
 	.4byte getModelMatrix__4NodeFv
-	.4byte 0x7461696d
-	.4byte 0x6f74696f
-	.4byte 0x6e616374
-	.4byte 0x696f6e73
-	.4byte 0x2e637070
+	.4byte 0x7461696D
+	.4byte 0x6F74696F
+	.4byte 0x6E616374
+	.4byte 0x696F6E73
+	.4byte 0x2E637070
 	.4byte 0
-	.4byte 0x7461696d
-	.4byte 0x6f74696f
-	.4byte 0x6e616374
-	.4byte 0x696f6e73
+	.4byte 0x7461696D
+	.4byte 0x6F74696F
+	.4byte 0x6E616374
+	.4byte 0x696F6E73
 	.4byte 0
 	.4byte 0x54616952
-	.4byte 0x616e646f
-	.4byte 0x6d536574
-	.4byte 0x416e696d
-	.4byte 0x6174696f
-	.4byte 0x6e436f75
-	.4byte 0x6e746572
+	.4byte 0x616E646F
+	.4byte 0x6D536574
+	.4byte 0x416E696D
+	.4byte 0x6174696F
+	.4byte 0x6E436F75
+	.4byte 0x6E746572
 	.4byte 0x41637469
-	.4byte 0x6f6e0000
+	.4byte 0x6F6E0000
 	.4byte 0x54616941
-	.4byte 0x6374696f
-	.4byte 0x6e000000
-	.4byte 0x803e3b00
+	.4byte 0x6374696F
+	.4byte 0x6E000000
+	.4byte 0x803E3B00
 	.4byte 0
 	.4byte 0
 .global __vt__34TaiRandomSetAnimationCounterAction
@@ -45515,11 +45515,11 @@ __vt__34TaiRandomSetAnimationCounterAction:
 	.4byte hasNextState__9TaiActionFv
 	.4byte 0x54616953
 	.4byte 0x65744672
-	.4byte 0x616d654d
-	.4byte 0x6f74696f
-	.4byte 0x6e416374
-	.4byte 0x696f6e00
-	.4byte 0x803e3b00
+	.4byte 0x616D654D
+	.4byte 0x6F74696F
+	.4byte 0x6E416374
+	.4byte 0x696F6E00
+	.4byte 0x803E3B00
 	.4byte 0
 	.4byte 0
 .global __vt__23TaiSetFrameMotionAction
@@ -45532,13 +45532,13 @@ __vt__23TaiSetFrameMotionAction:
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
 	.4byte 0x54616946
-	.4byte 0x696e6973
-	.4byte 0x6853746f
-	.4byte 0x7070696e
-	.4byte 0x674d6f76
+	.4byte 0x696E6973
+	.4byte 0x6853746F
+	.4byte 0x7070696E
+	.4byte 0x674D6F76
 	.4byte 0x65416374
-	.4byte 0x696f6e00
-	.4byte 0x803e3b00
+	.4byte 0x696F6E00
+	.4byte 0x803E3B00
 	.4byte 0
 	.4byte 0
 .global __vt__27TaiFinishStoppingMoveAction
@@ -45551,12 +45551,12 @@ __vt__27TaiFinishStoppingMoveAction:
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
 	.4byte 0x54616953
-	.4byte 0x746f7070
-	.4byte 0x696e674d
-	.4byte 0x6f766541
-	.4byte 0x6374696f
-	.4byte 0x6e000000
-	.4byte 0x803e3b00
+	.4byte 0x746F7070
+	.4byte 0x696E674D
+	.4byte 0x6F766541
+	.4byte 0x6374696F
+	.4byte 0x6E000000
+	.4byte 0x803E3B00
 	.4byte 0
 	.4byte 0
 .global __vt__21TaiStoppingMoveAction
@@ -45568,14 +45568,14 @@ __vt__21TaiStoppingMoveAction:
 	.4byte act__21TaiStoppingMoveActionFR4Teki
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
-	.4byte 0x5461694f
+	.4byte 0x5461694F
 	.4byte 0x75747369
-	.4byte 0x64654b65
-	.4byte 0x7953746f
-	.4byte 0x704d6f76
+	.4byte 0x64654B65
+	.4byte 0x7953746F
+	.4byte 0x704D6F76
 	.4byte 0x65416374
-	.4byte 0x696f6e00
-	.4byte 0x803e3b00
+	.4byte 0x696F6E00
+	.4byte 0x803E3B00
 	.4byte 0
 	.4byte 0
 .global __vt__27TaiOutsideKeyStopMoveAction
@@ -45589,20 +45589,20 @@ __vt__27TaiOutsideKeyStopMoveAction:
 	.4byte hasNextState__9TaiActionFv
 	.4byte 0x54616953
 	.4byte 0x77697463
-	.4byte 0x684d6f74
-	.4byte 0x696f6e41
-	.4byte 0x6374696f
-	.4byte 0x6e000000
-	.4byte 0x5461694d
-	.4byte 0x6f74696f
-	.4byte 0x6e416374
-	.4byte 0x696f6e00
-	.4byte 0x803e3b00
+	.4byte 0x684D6F74
+	.4byte 0x696F6E41
+	.4byte 0x6374696F
+	.4byte 0x6E000000
+	.4byte 0x5461694D
+	.4byte 0x6F74696F
+	.4byte 0x6E416374
+	.4byte 0x696F6E00
+	.4byte 0x803E3B00
 	.4byte 0
 	.4byte 0
-	.4byte 0x803e3b00
+	.4byte 0x803E3B00
 	.4byte 0
-	.4byte 0x803e3b30
+	.4byte 0x803E3B30
 	.4byte 0
 	.4byte 0
 .global __vt__21TaiSwitchMotionAction
@@ -45615,11 +45615,11 @@ __vt__21TaiSwitchMotionAction:
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
 	.4byte 0x54616943
-	.4byte 0x6f756e74
-	.4byte 0x4c6f6f70
+	.4byte 0x6F756E74
+	.4byte 0x4C6F6F70
 	.4byte 0x41637469
-	.4byte 0x6f6e0000
-	.4byte 0x803e3b00
+	.4byte 0x6F6E0000
+	.4byte 0x803E3B00
 	.4byte 0
 	.4byte 0
 .global __vt__18TaiCountLoopAction
@@ -45632,12 +45632,12 @@ __vt__18TaiCountLoopAction:
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
 	.4byte 0x54616941
-	.4byte 0x6e696d61
-	.4byte 0x74696f6e
-	.4byte 0x4b657941
-	.4byte 0x6374696f
-	.4byte 0x6e000000
-	.4byte 0x803e3b00
+	.4byte 0x6E696D61
+	.4byte 0x74696F6E
+	.4byte 0x4B657941
+	.4byte 0x6374696F
+	.4byte 0x6E000000
+	.4byte 0x803E3B00
 	.4byte 0
 	.4byte 0
 .global __vt__21TaiAnimationKeyAction
@@ -45650,14 +45650,14 @@ __vt__21TaiAnimationKeyAction:
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
 	.4byte 0x54616946
-	.4byte 0x696e6973
-	.4byte 0x684d6f74
-	.4byte 0x696f6e41
-	.4byte 0x6374696f
-	.4byte 0x6e000000
-	.4byte 0x803e3b00
+	.4byte 0x696E6973
+	.4byte 0x684D6F74
+	.4byte 0x696F6E41
+	.4byte 0x6374696F
+	.4byte 0x6E000000
+	.4byte 0x803E3B00
 	.4byte 0
-	.4byte 0x803e3b30
+	.4byte 0x803E3B30
 	.4byte 0
 	.4byte 0
 .global __vt__21TaiFinishMotionAction
@@ -45670,20 +45670,20 @@ __vt__21TaiFinishMotionAction:
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
 	.4byte 0x54616943
-	.4byte 0x6f6e7469
-	.4byte 0x6e756f75
-	.4byte 0x734d6f74
-	.4byte 0x696f6e41
-	.4byte 0x6374696f
-	.4byte 0x6e000000
-	.4byte 0x803e3b00
+	.4byte 0x6F6E7469
+	.4byte 0x6E756F75
+	.4byte 0x734D6F74
+	.4byte 0x696F6E41
+	.4byte 0x6374696F
+	.4byte 0x6E000000
+	.4byte 0x803E3B00
 	.4byte 0
-	.4byte 0x803e3b30
+	.4byte 0x803E3B30
 	.4byte 0
 	.4byte 0
 .global __vt__25TaiContinuousMotionAction
 __vt__25TaiContinuousMotionAction:
-	.4byte 0x803e3b58
+	.4byte 0x803E3B58
 	.4byte 0
 	.4byte start__25TaiContinuousMotionActionFR4Teki
 	.4byte finish__9TaiActionFR4Teki
@@ -45693,35 +45693,35 @@ __vt__25TaiContinuousMotionAction:
 	.4byte motionStarted__25TaiContinuousMotionActionFR4Teki
 .global __vt__15TaiMotionAction
 __vt__15TaiMotionAction:
-	.4byte 0x803e3b30
+	.4byte 0x803E3B30
 	.4byte 0
 	.4byte start__15TaiMotionActionFR4Teki
 	.4byte finish__9TaiActionFR4Teki
 	.4byte act__15TaiMotionActionFR4Teki
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
-	.4byte 0x7461696d
-	.4byte 0x6f766561
-	.4byte 0x6374696f
-	.4byte 0x6e732e63
+	.4byte 0x7461696D
+	.4byte 0x6F766561
+	.4byte 0x6374696F
+	.4byte 0x6E732E63
 	.4byte 0x70700000
-	.4byte 0x7461696d
-	.4byte 0x6f766561
-	.4byte 0x6374696f
-	.4byte 0x6e730000
+	.4byte 0x7461696D
+	.4byte 0x6F766561
+	.4byte 0x6374696F
+	.4byte 0x6E730000
 	.4byte 0x54616948
-	.4byte 0x6561644f
-	.4byte 0x6e436f6c
-	.4byte 0x6c697369
-	.4byte 0x6f6e4176
-	.4byte 0x6f696461
-	.4byte 0x6e636541
-	.4byte 0x6374696f
-	.4byte 0x6e000000
+	.4byte 0x6561644F
+	.4byte 0x6E436F6C
+	.4byte 0x6C697369
+	.4byte 0x6F6E4176
+	.4byte 0x6F696461
+	.4byte 0x6E636541
+	.4byte 0x6374696F
+	.4byte 0x6E000000
 	.4byte 0x54616941
-	.4byte 0x6374696f
-	.4byte 0x6e000000
-	.4byte 0x803e3b7c
+	.4byte 0x6374696F
+	.4byte 0x6E000000
+	.4byte 0x803E3B7C
 	.4byte 0
 	.4byte 0
 .global __vt__33TaiHeadOnCollisionAvoidanceAction
@@ -45735,10 +45735,10 @@ __vt__33TaiHeadOnCollisionAvoidanceAction:
 	.4byte hasNextState__9TaiActionFv
 	.4byte 0x54616954
 	.4byte 0x61726765
-	.4byte 0x744e6573
+	.4byte 0x744E6573
 	.4byte 0x74416374
-	.4byte 0x696f6e00
-	.4byte 0x803e3b7c
+	.4byte 0x696F6E00
+	.4byte 0x803E3B7C
 	.4byte 0
 	.4byte 0
 .global __vt__19TaiTargetNestAction
@@ -45752,14 +45752,14 @@ __vt__19TaiTargetNestAction:
 	.4byte hasNextState__9TaiActionFv
 	.4byte 0x54616957
 	.4byte 0x61746368
-	.4byte 0x4f666654
+	.4byte 0x4F666654
 	.4byte 0x65727269
-	.4byte 0x746f7279
-	.4byte 0x43656e74
+	.4byte 0x746F7279
+	.4byte 0x43656E74
 	.4byte 0x65724163
-	.4byte 0x74696f6e
+	.4byte 0x74696F6E
 	.4byte 0
-	.4byte 0x803e3b7c
+	.4byte 0x803E3B7C
 	.4byte 0
 	.4byte 0
 .global __vt__32TaiWatchOffTerritoryCenterAction
@@ -45772,35 +45772,35 @@ __vt__32TaiWatchOffTerritoryCenterAction:
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
 	.4byte 0x54616952
-	.4byte 0x756e6e69
-	.4byte 0x6e674177
+	.4byte 0x756E6E69
+	.4byte 0x6E674177
 	.4byte 0x61794163
-	.4byte 0x74696f6e
+	.4byte 0x74696F6E
 	.4byte 0
-	.4byte 0x5461694d
-	.4byte 0x6f74696f
-	.4byte 0x6e416374
-	.4byte 0x696f6e00
-	.4byte 0x803e3b7c
+	.4byte 0x5461694D
+	.4byte 0x6F74696F
+	.4byte 0x6E416374
+	.4byte 0x696F6E00
+	.4byte 0x803E3B7C
 	.4byte 0
 	.4byte 0
 	.4byte 0x54616943
-	.4byte 0x6f6e7469
-	.4byte 0x6e756f75
-	.4byte 0x734d6f74
-	.4byte 0x696f6e41
-	.4byte 0x6374696f
-	.4byte 0x6e000000
-	.4byte 0x803e3b7c
+	.4byte 0x6F6E7469
+	.4byte 0x6E756F75
+	.4byte 0x734D6F74
+	.4byte 0x696F6E41
+	.4byte 0x6374696F
+	.4byte 0x6E000000
+	.4byte 0x803E3B7C
 	.4byte 0
-	.4byte 0x803e3b9c
+	.4byte 0x803E3B9C
 	.4byte 0
 	.4byte 0
-	.4byte 0x803e3b7c
+	.4byte 0x803E3B7C
 	.4byte 0
-	.4byte 0x803e3b9c
+	.4byte 0x803E3B9C
 	.4byte 0
-	.4byte 0x803e3ba4
+	.4byte 0x803E3BA4
 	.4byte 0
 	.4byte 0
 .global __vt__20TaiRunningAwayAction
@@ -45814,20 +45814,20 @@ __vt__20TaiRunningAwayAction:
 	.4byte hasNextState__9TaiActionFv
 	.4byte motionStarted__25TaiContinuousMotionActionFR4Teki
 	.4byte 0x54616952
-	.4byte 0x756e6e69
-	.4byte 0x6e674177
-	.4byte 0x6179546f
+	.4byte 0x756E6E69
+	.4byte 0x6E674177
+	.4byte 0x6179546F
 	.4byte 0x54617267
 	.4byte 0x65744469
 	.4byte 0x72656374
-	.4byte 0x696f6e41
-	.4byte 0x6374696f
-	.4byte 0x6e000000
-	.4byte 0x803e3b7c
+	.4byte 0x696F6E41
+	.4byte 0x6374696F
+	.4byte 0x6E000000
+	.4byte 0x803E3B7C
 	.4byte 0
-	.4byte 0x803e3b9c
+	.4byte 0x803E3B9C
 	.4byte 0
-	.4byte 0x803e3ba4
+	.4byte 0x803E3BA4
 	.4byte 0
 	.4byte 0
 .global __vt__37TaiRunningAwayToTargetDirectionAction
@@ -45841,11 +45841,11 @@ __vt__37TaiRunningAwayToTargetDirectionAction:
 	.4byte hasNextState__9TaiActionFv
 	.4byte motionStarted__25TaiContinuousMotionActionFR4Teki
 	.4byte 0x54616952
-	.4byte 0x6f746174
-	.4byte 0x696e6741
-	.4byte 0x6374696f
-	.4byte 0x6e000000
-	.4byte 0x803e3b7c
+	.4byte 0x6F746174
+	.4byte 0x696E6741
+	.4byte 0x6374696F
+	.4byte 0x6E000000
+	.4byte 0x803E3B7C
 	.4byte 0
 	.4byte 0
 .global __vt__17TaiRotatingAction
@@ -45858,19 +45858,19 @@ __vt__17TaiRotatingAction:
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
 	.4byte 0x54616954
-	.4byte 0x75726e69
-	.4byte 0x6e67546f
+	.4byte 0x75726E69
+	.4byte 0x6E67546F
 	.4byte 0x54617267
-	.4byte 0x6574506f
+	.4byte 0x6574506F
 	.4byte 0x73697469
-	.4byte 0x6f6e4163
-	.4byte 0x74696f6e
+	.4byte 0x6F6E4163
+	.4byte 0x74696F6E
 	.4byte 0
-	.4byte 0x803e3b7c
+	.4byte 0x803E3B7C
 	.4byte 0
-	.4byte 0x803e3b9c
+	.4byte 0x803E3B9C
 	.4byte 0
-	.4byte 0x803e3ba4
+	.4byte 0x803E3BA4
 	.4byte 0
 	.4byte 0
 .global __vt__32TaiTurningToTargetPositionAction
@@ -45883,14 +45883,14 @@ __vt__32TaiTurningToTargetPositionAction:
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
 	.4byte motionStarted__25TaiContinuousMotionActionFR4Teki
-	.4byte 0x5461694f
-	.4byte 0x75744f66
+	.4byte 0x5461694F
+	.4byte 0x75744F66
 	.4byte 0x54726163
-	.4byte 0x65416e67
-	.4byte 0x6c654163
-	.4byte 0x74696f6e
+	.4byte 0x65416E67
+	.4byte 0x6C654163
+	.4byte 0x74696F6E
 	.4byte 0
-	.4byte 0x803e3b7c
+	.4byte 0x803E3B7C
 	.4byte 0
 	.4byte 0
 .global __vt__24TaiOutOfTraceAngleAction
@@ -45904,15 +45904,15 @@ __vt__24TaiOutOfTraceAngleAction:
 	.4byte hasNextState__9TaiActionFv
 	.4byte 0x54616954
 	.4byte 0x72616365
-	.4byte 0x5475726e
-	.4byte 0x696e6741
-	.4byte 0x6374696f
-	.4byte 0x6e000000
-	.4byte 0x803e3b7c
+	.4byte 0x5475726E
+	.4byte 0x696E6741
+	.4byte 0x6374696F
+	.4byte 0x6E000000
+	.4byte 0x803E3B7C
 	.4byte 0
-	.4byte 0x803e3b9c
+	.4byte 0x803E3B9C
 	.4byte 0
-	.4byte 0x803e3ba4
+	.4byte 0x803E3BA4
 	.4byte 0
 	.4byte 0
 .global __vt__21TaiTraceTurningAction
@@ -45926,16 +45926,16 @@ __vt__21TaiTraceTurningAction:
 	.4byte hasNextState__9TaiActionFv
 	.4byte motionStarted__25TaiContinuousMotionActionFR4Teki
 	.4byte 0x54616954
-	.4byte 0x75726e69
-	.4byte 0x6e674177
+	.4byte 0x75726E69
+	.4byte 0x6E674177
 	.4byte 0x61794163
-	.4byte 0x74696f6e
+	.4byte 0x74696F6E
 	.4byte 0
-	.4byte 0x803e3b7c
+	.4byte 0x803E3B7C
 	.4byte 0
-	.4byte 0x803e3b9c
+	.4byte 0x803E3B9C
 	.4byte 0
-	.4byte 0x803e3ba4
+	.4byte 0x803E3BA4
 	.4byte 0
 	.4byte 0
 .global __vt__20TaiTurningAwayAction
@@ -45948,14 +45948,14 @@ __vt__20TaiTurningAwayAction:
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
 	.4byte motionStarted__25TaiContinuousMotionActionFR4Teki
-	.4byte 0x54656b69
-	.4byte 0x436f6e64
-	.4byte 0x6974696f
-	.4byte 0x6e000000
-	.4byte 0x436f6e64
-	.4byte 0x6974696f
-	.4byte 0x6e000000
-	.4byte 0x803e3be4
+	.4byte 0x54656B69
+	.4byte 0x436F6E64
+	.4byte 0x6974696F
+	.4byte 0x6E000000
+	.4byte 0x436F6E64
+	.4byte 0x6974696F
+	.4byte 0x6E000000
+	.4byte 0x803E3BE4
 	.4byte 0
 	.4byte 0
 	.4byte 0
@@ -45965,15 +45965,15 @@ __vt__20TaiTurningAwayAction:
 	.4byte 0
 	.4byte 0
 	.4byte 0x54616954
-	.4byte 0x75726e69
-	.4byte 0x6e674163
-	.4byte 0x74696f6e
+	.4byte 0x75726E69
+	.4byte 0x6E674163
+	.4byte 0x74696F6E
 	.4byte 0
-	.4byte 0x803e3b7c
+	.4byte 0x803E3B7C
 	.4byte 0
-	.4byte 0x803e3b9c
+	.4byte 0x803E3B9C
 	.4byte 0
-	.4byte 0x803e3ba4
+	.4byte 0x803E3BA4
 	.4byte 0
 	.4byte 0
 .global __vt__16TaiTurningAction
@@ -45989,9 +45989,9 @@ __vt__16TaiTurningAction:
 	.4byte 0x54616944
 	.4byte 0x69726563
 	.4byte 0x74547572
-	.4byte 0x6e416374
-	.4byte 0x696f6e00
-	.4byte 0x803e3b7c
+	.4byte 0x6E416374
+	.4byte 0x696F6E00
+	.4byte 0x803E3B7C
 	.4byte 0
 	.4byte 0
 .global __vt__19TaiDirectTurnAction
@@ -46004,15 +46004,15 @@ __vt__19TaiDirectTurnAction:
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
 	.4byte 0x54616947
-	.4byte 0x6f696e67
-	.4byte 0x486f6d65
+	.4byte 0x6F696E67
+	.4byte 0x486F6D65
 	.4byte 0x41637469
-	.4byte 0x6f6e0000
-	.4byte 0x803e3b7c
+	.4byte 0x6F6E0000
+	.4byte 0x803E3B7C
 	.4byte 0
-	.4byte 0x803e3b9c
+	.4byte 0x803E3B9C
 	.4byte 0
-	.4byte 0x803e3ba4
+	.4byte 0x803E3BA4
 	.4byte 0
 	.4byte 0
 .global __vt__18TaiGoingHomeAction
@@ -46027,14 +46027,14 @@ __vt__18TaiGoingHomeAction:
 	.4byte motionStarted__25TaiContinuousMotionActionFR4Teki
 	.4byte 0x54616954
 	.4byte 0x72616369
-	.4byte 0x6e674163
-	.4byte 0x74696f6e
+	.4byte 0x6E674163
+	.4byte 0x74696F6E
 	.4byte 0
-	.4byte 0x803e3b7c
+	.4byte 0x803E3B7C
 	.4byte 0
-	.4byte 0x803e3b9c
+	.4byte 0x803E3B9C
 	.4byte 0
-	.4byte 0x803e3ba4
+	.4byte 0x803E3BA4
 	.4byte 0
 	.4byte 0
 .global __vt__16TaiTracingAction
@@ -46048,18 +46048,18 @@ __vt__16TaiTracingAction:
 	.4byte hasNextState__9TaiActionFv
 	.4byte motionStarted__25TaiContinuousMotionActionFR4Teki
 	.4byte 0x54616952
-	.4byte 0x616e646f
-	.4byte 0x6d57616e
+	.4byte 0x616E646F
+	.4byte 0x6D57616E
 	.4byte 0x64657269
-	.4byte 0x6e67526f
+	.4byte 0x6E67526F
 	.4byte 0x75746541
-	.4byte 0x6374696f
-	.4byte 0x6e000000
-	.4byte 0x803e3b7c
+	.4byte 0x6374696F
+	.4byte 0x6E000000
+	.4byte 0x803E3B7C
 	.4byte 0
-	.4byte 0x803e3b9c
+	.4byte 0x803E3B9C
 	.4byte 0
-	.4byte 0x803e3ba4
+	.4byte 0x803E3BA4
 	.4byte 0
 	.4byte 0
 .global __vt__29TaiRandomWanderingRouteAction
@@ -46073,11 +46073,11 @@ __vt__29TaiRandomWanderingRouteAction:
 	.4byte hasNextState__9TaiActionFv
 	.4byte motionStarted__25TaiContinuousMotionActionFR4Teki
 	.4byte 0x54616949
-	.4byte 0x6d706173
-	.4byte 0x7361626c
+	.4byte 0x6D706173
+	.4byte 0x7361626C
 	.4byte 0x65416374
-	.4byte 0x696f6e00
-	.4byte 0x803e3b7c
+	.4byte 0x696F6E00
+	.4byte 0x803E3B7C
 	.4byte 0
 	.4byte 0
 .global __vt__19TaiImpassableAction
@@ -46090,13 +46090,13 @@ __vt__19TaiImpassableAction:
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
 	.4byte 0x54616943
-	.4byte 0x6c616d70
-	.4byte 0x4d696e56
-	.4byte 0x656c6f63
+	.4byte 0x6C616D70
+	.4byte 0x4D696E56
+	.4byte 0x656C6F63
 	.4byte 0x69747959
 	.4byte 0x41637469
-	.4byte 0x6f6e0000
-	.4byte 0x803e3b7c
+	.4byte 0x6F6E0000
+	.4byte 0x803E3B7C
 	.4byte 0
 	.4byte 0
 .global __vt__26TaiClampMinVelocityYAction
@@ -46109,12 +46109,12 @@ __vt__26TaiClampMinVelocityYAction:
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
 	.4byte 0x54616943
-	.4byte 0x6c616d70
-	.4byte 0x4d696e48
+	.4byte 0x6C616D70
+	.4byte 0x4D696E48
 	.4byte 0x65696768
 	.4byte 0x74416374
-	.4byte 0x696f6e00
-	.4byte 0x803e3b7c
+	.4byte 0x696F6E00
+	.4byte 0x803E3B7C
 	.4byte 0
 	.4byte 0
 .global __vt__23TaiClampMinHeightAction
@@ -46127,12 +46127,12 @@ __vt__23TaiClampMinHeightAction:
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
 	.4byte 0x54616943
-	.4byte 0x6c616d70
-	.4byte 0x4d617848
+	.4byte 0x6C616D70
+	.4byte 0x4D617848
 	.4byte 0x65696768
 	.4byte 0x74416374
-	.4byte 0x696f6e00
-	.4byte 0x803e3b7c
+	.4byte 0x696F6E00
+	.4byte 0x803E3B7C
 	.4byte 0
 	.4byte 0
 .global __vt__23TaiClampMaxHeightAction
@@ -46145,13 +46145,13 @@ __vt__23TaiClampMaxHeightAction:
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
 	.4byte 0x54616948
-	.4byte 0x6f72697a
-	.4byte 0x6f6e7461
-	.4byte 0x6c53696e
+	.4byte 0x6F72697A
+	.4byte 0x6F6E7461
+	.4byte 0x6C53696E
 	.4byte 0x57617665
 	.4byte 0x41637469
-	.4byte 0x6f6e0000
-	.4byte 0x803e3b7c
+	.4byte 0x6F6E0000
+	.4byte 0x803E3B7C
 	.4byte 0
 	.4byte 0
 .global __vt__26TaiHorizontalSinWaveAction
@@ -46164,11 +46164,11 @@ __vt__26TaiHorizontalSinWaveAction:
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
 	.4byte 0x54616943
-	.4byte 0x6972636c
-	.4byte 0x654d6f76
+	.4byte 0x6972636C
+	.4byte 0x654D6F76
 	.4byte 0x65416374
-	.4byte 0x696f6e00
-	.4byte 0x803e3b7c
+	.4byte 0x696F6E00
+	.4byte 0x803E3B7C
 	.4byte 0
 	.4byte 0
 .global __vt__19TaiCircleMoveAction
@@ -46182,10 +46182,10 @@ __vt__19TaiCircleMoveAction:
 	.4byte hasNextState__9TaiActionFv
 	.4byte 0x54616950
 	.4byte 0x61726162
-	.4byte 0x6f6c6141
-	.4byte 0x6374696f
-	.4byte 0x6e000000
-	.4byte 0x803e3b7c
+	.4byte 0x6F6C6141
+	.4byte 0x6374696F
+	.4byte 0x6E000000
+	.4byte 0x803E3B7C
 	.4byte 0
 	.4byte 0
 .global __vt__17TaiParabolaAction
@@ -46198,12 +46198,12 @@ __vt__17TaiParabolaAction:
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
 	.4byte 0x54616941
-	.4byte 0x6363656c
+	.4byte 0x6363656C
 	.4byte 0x65726174
-	.4byte 0x696f6e41
-	.4byte 0x6374696f
-	.4byte 0x6e000000
-	.4byte 0x803e3b7c
+	.4byte 0x696F6E41
+	.4byte 0x6374696F
+	.4byte 0x6E000000
+	.4byte 0x803E3B7C
 	.4byte 0
 	.4byte 0
 .global __vt__21TaiAccelerationAction
@@ -46215,14 +46215,14 @@ __vt__21TaiAccelerationAction:
 	.4byte act__21TaiAccelerationActionFR4Teki
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
-	.4byte 0x5461694d
-	.4byte 0x616b696e
-	.4byte 0x674e6578
+	.4byte 0x5461694D
+	.4byte 0x616B696E
+	.4byte 0x674E6578
 	.4byte 0x74447269
 	.4byte 0x76654163
-	.4byte 0x74696f6e
+	.4byte 0x74696F6E
 	.4byte 0
-	.4byte 0x803e3b7c
+	.4byte 0x803E3B7C
 	.4byte 0
 	.4byte 0
 .global __vt__24TaiMakingNextDriveAction
@@ -46234,14 +46234,14 @@ __vt__24TaiMakingNextDriveAction:
 	.4byte act__24TaiMakingNextDriveActionFR4Teki
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
-	.4byte 0x5461694d
-	.4byte 0x616b696e
-	.4byte 0x674e6578
-	.4byte 0x7456656c
-	.4byte 0x6f636974
+	.4byte 0x5461694D
+	.4byte 0x616B696E
+	.4byte 0x674E6578
+	.4byte 0x7456656C
+	.4byte 0x6F636974
 	.4byte 0x79416374
-	.4byte 0x696f6e00
-	.4byte 0x803e3b7c
+	.4byte 0x696F6E00
+	.4byte 0x803E3B7C
 	.4byte 0
 	.4byte 0
 .global __vt__27TaiMakingNextVelocityAction
@@ -46253,16 +46253,16 @@ __vt__27TaiMakingNextVelocityAction:
 	.4byte act__27TaiMakingNextVelocityActionFR4Teki
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
-	.4byte 0x5461694d
-	.4byte 0x616b6541
-	.4byte 0x6363656c
+	.4byte 0x5461694D
+	.4byte 0x616B6541
+	.4byte 0x6363656C
 	.4byte 0x65726174
-	.4byte 0x696f6e44
+	.4byte 0x696F6E44
 	.4byte 0x69726563
-	.4byte 0x74696f6e
+	.4byte 0x74696F6E
 	.4byte 0x41637469
-	.4byte 0x6f6e0000
-	.4byte 0x803e3b7c
+	.4byte 0x6F6E0000
+	.4byte 0x803E3B7C
 	.4byte 0
 	.4byte 0
 .global __vt__34TaiMakeAccelerationDirectionAction
@@ -46274,15 +46274,15 @@ __vt__34TaiMakeAccelerationDirectionAction:
 	.4byte act__34TaiMakeAccelerationDirectionActionFR4Teki
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
-	.4byte 0x5461694d
-	.4byte 0x616b6556
-	.4byte 0x656c6f63
+	.4byte 0x5461694D
+	.4byte 0x616B6556
+	.4byte 0x656C6F63
 	.4byte 0x69747944
 	.4byte 0x69726563
-	.4byte 0x74696f6e
+	.4byte 0x74696F6E
 	.4byte 0x41637469
-	.4byte 0x6f6e0000
-	.4byte 0x803e3b7c
+	.4byte 0x6F6E0000
+	.4byte 0x803E3B7C
 	.4byte 0
 	.4byte 0
 .global __vt__30TaiMakeVelocityDirectionAction
@@ -46295,12 +46295,12 @@ __vt__30TaiMakeVelocityDirectionAction:
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
 	.4byte 0x54616946
-	.4byte 0x696e6973
-	.4byte 0x68466c79
-	.4byte 0x696e6741
-	.4byte 0x6374696f
-	.4byte 0x6e000000
-	.4byte 0x803e3b7c
+	.4byte 0x696E6973
+	.4byte 0x68466C79
+	.4byte 0x696E6741
+	.4byte 0x6374696F
+	.4byte 0x6E000000
+	.4byte 0x803E3B7C
 	.4byte 0
 	.4byte 0
 .global __vt__21TaiFinishFlyingAction
@@ -46314,11 +46314,11 @@ __vt__21TaiFinishFlyingAction:
 	.4byte hasNextState__9TaiActionFv
 	.4byte 0x54616953
 	.4byte 0x74617274
-	.4byte 0x466c7969
-	.4byte 0x6e674163
-	.4byte 0x74696f6e
+	.4byte 0x466C7969
+	.4byte 0x6E674163
+	.4byte 0x74696F6E
 	.4byte 0
-	.4byte 0x803e3b7c
+	.4byte 0x803E3B7C
 	.4byte 0
 	.4byte 0
 .global __vt__20TaiStartFlyingAction
@@ -46331,11 +46331,11 @@ __vt__20TaiStartFlyingAction:
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
 	.4byte 0x54616953
-	.4byte 0x746f704d
-	.4byte 0x6f766541
-	.4byte 0x6374696f
-	.4byte 0x6e000000
-	.4byte 0x803e3b7c
+	.4byte 0x746F704D
+	.4byte 0x6F766541
+	.4byte 0x6374696F
+	.4byte 0x6E000000
+	.4byte 0x803E3B7C
 	.4byte 0
 	.4byte 0
 .global __vt__17TaiStopMoveAction
@@ -46347,14 +46347,14 @@ __vt__17TaiStopMoveAction:
 	.4byte act__9TaiActionFR4Teki
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
-	.4byte 0x5461694d
-	.4byte 0x6f76654e
+	.4byte 0x5461694D
+	.4byte 0x6F76654E
 	.4byte 0x65737450
-	.4byte 0x6f736974
-	.4byte 0x696f6e41
-	.4byte 0x6374696f
-	.4byte 0x6e000000
-	.4byte 0x803e3b7c
+	.4byte 0x6F736974
+	.4byte 0x696F6E41
+	.4byte 0x6374696F
+	.4byte 0x6E000000
+	.4byte 0x803E3B7C
 	.4byte 0
 	.4byte 0
 .global __vt__25TaiMoveNestPositionAction
@@ -46418,7 +46418,7 @@ __vt__33TaiNapkidStartDroppingWaterAction:
 	.4byte hasNextState__9TaiActionFv
 	.asciz "TaiNapkidFallingWaterEffectAction"
 	.balign 4
-	.4byte 0x803e3cc0
+	.4byte 0x803E3CC0
 	.4byte 0
 	.4byte 0
 .global __vt__33TaiNapkidFallingWaterEffectAction
@@ -46432,7 +46432,7 @@ __vt__33TaiNapkidFallingWaterEffectAction:
 	.4byte hasNextState__9TaiActionFv
 	.asciz "TaiNapkidShockFallingAction"
 	.balign 4
-	.4byte 0x803e3cc0
+	.4byte 0x803E3CC0
 	.4byte 0
 	.4byte 0
 .global __vt__27TaiNapkidShockFallingAction
@@ -46446,7 +46446,7 @@ __vt__27TaiNapkidShockFallingAction:
 	.4byte hasNextState__9TaiActionFv
 	.asciz "TaiNapkidFallingAction"
 	.balign 4
-	.4byte 0x803e3cc0
+	.4byte 0x803E3CC0
 	.4byte 0
 	.4byte 0
 .global __vt__22TaiNapkidFallingAction
@@ -46460,7 +46460,7 @@ __vt__22TaiNapkidFallingAction:
 	.4byte hasNextState__9TaiActionFv
 	.asciz "TaiNapkidFlickAction"
 	.balign 4
-	.4byte 0x803e3cc0
+	.4byte 0x803E3CC0
 	.4byte 0
 	.4byte 0
 .global __vt__20TaiNapkidFlickAction
@@ -46474,7 +46474,7 @@ __vt__20TaiNapkidFlickAction:
 	.4byte hasNextState__9TaiActionFv
 	.asciz "TaiNapkidThrowingPikiAction"
 	.balign 4
-	.4byte 0x803e3cc0
+	.4byte 0x803E3CC0
 	.4byte 0
 	.4byte 0
 .global __vt__27TaiNapkidThrowingPikiAction
@@ -46488,7 +46488,7 @@ __vt__27TaiNapkidThrowingPikiAction:
 	.4byte hasNextState__9TaiActionFv
 	.asciz "TaiNapkidRisingAscendingAction"
 	.balign 4
-	.4byte 0x803e3cc0
+	.4byte 0x803E3CC0
 	.4byte 0
 	.4byte 0
 .global __vt__30TaiNapkidRisingAscendingAction
@@ -46502,7 +46502,7 @@ __vt__30TaiNapkidRisingAscendingAction:
 	.4byte hasNextState__9TaiActionFv
 	.asciz "TaiNapkidTakingOffAscendingAction"
 	.balign 4
-	.4byte 0x803e3cc0
+	.4byte 0x803E3CC0
 	.4byte 0
 	.4byte 0
 .global __vt__33TaiNapkidTakingOffAscendingAction
@@ -46516,7 +46516,7 @@ __vt__33TaiNapkidTakingOffAscendingAction:
 	.4byte hasNextState__9TaiActionFv
 	.asciz "TaiNapkidCatchAscendingAction"
 	.balign 4
-	.4byte 0x803e3cc0
+	.4byte 0x803E3CC0
 	.4byte 0
 	.4byte 0
 .global __vt__29TaiNapkidCatchAscendingAction
@@ -46530,7 +46530,7 @@ __vt__29TaiNapkidCatchAscendingAction:
 	.4byte hasNextState__9TaiActionFv
 	.asciz "TaiNapkidCatchFlyingAction"
 	.balign 4
-	.4byte 0x803e3cc0
+	.4byte 0x803E3CC0
 	.4byte 0
 	.4byte 0
 .global __vt__26TaiNapkidCatchFlyingAction
@@ -46544,7 +46544,7 @@ __vt__26TaiNapkidCatchFlyingAction:
 	.4byte hasNextState__9TaiActionFv
 	.asciz "TaiNapkidCatchTracingAction"
 	.balign 4
-	.4byte 0x803e3cc0
+	.4byte 0x803E3CC0
 	.4byte 0
 	.4byte 0
 .global __vt__27TaiNapkidCatchTracingAction
@@ -46558,7 +46558,7 @@ __vt__27TaiNapkidCatchTracingAction:
 	.4byte hasNextState__9TaiActionFv
 	.asciz "TaiNapkidCatchDescendingAction"
 	.balign 4
-	.4byte 0x803e3cc0
+	.4byte 0x803E3CC0
 	.4byte 0
 	.4byte 0
 .global __vt__30TaiNapkidCatchDescendingAction
@@ -46589,12 +46589,12 @@ __vt__30TaiNapkidCatchDescendingAction:
 	.balign 4
 	.asciz "TekiCondition"
 	.balign 4
-	.4byte 0x803e3d28
+	.4byte 0x803E3D28
 	.4byte 0
 	.4byte 0
-	.4byte 0x803e3d28
+	.4byte 0x803E3D28
 	.4byte 0
-	.4byte 0x803e3d30
+	.4byte 0x803E3D30
 	.4byte 0
 	.4byte 0
 	.4byte 0
@@ -46602,9 +46602,9 @@ __vt__30TaiNapkidCatchDescendingAction:
 	.4byte 0
 	.asciz "TekiNotCondition"
 	.balign 4
-	.4byte 0x803e3d28
+	.4byte 0x803E3D28
 	.4byte 0
-	.4byte 0x803e3d30
+	.4byte 0x803E3D30
 	.4byte 0
 	.4byte 0
 	.4byte 0
@@ -46612,7 +46612,7 @@ __vt__30TaiNapkidCatchDescendingAction:
 	.4byte 0
 	.asciz "TaiNapkidCatchingAction"
 	.balign 4
-	.4byte 0x803e3cc0
+	.4byte 0x803E3CC0
 	.4byte 0
 	.4byte 0
 .global __vt__23TaiNapkidCatchingAction
@@ -46626,7 +46626,7 @@ __vt__23TaiNapkidCatchingAction:
 	.4byte hasNextState__9TaiActionFv
 	.asciz "TaiNapkidApproachPikiAction"
 	.balign 4
-	.4byte 0x803e3cc0
+	.4byte 0x803E3CC0
 	.4byte 0
 	.4byte 0
 .global __vt__27TaiNapkidApproachPikiAction
@@ -46640,7 +46640,7 @@ __vt__27TaiNapkidApproachPikiAction:
 	.4byte hasNextState__9TaiActionFv
 	.asciz "TaiNapkidAscendingAction"
 	.balign 4
-	.4byte 0x803e3cc0
+	.4byte 0x803E3CC0
 	.4byte 0
 	.4byte 0
 .global __vt__24TaiNapkidAscendingAction
@@ -46654,7 +46654,7 @@ __vt__24TaiNapkidAscendingAction:
 	.4byte hasNextState__9TaiActionFv
 	.asciz "TaiNapkidFlyingAction"
 	.balign 4
-	.4byte 0x803e3cc0
+	.4byte 0x803E3CC0
 	.4byte 0
 	.4byte 0
 .global __vt__21TaiNapkidFlyingAction
@@ -46668,7 +46668,7 @@ __vt__21TaiNapkidFlyingAction:
 	.4byte hasNextState__9TaiActionFv
 	.asciz "TaiNapkidCirclingAction"
 	.balign 4
-	.4byte 0x803e3cc0
+	.4byte 0x803E3CC0
 	.4byte 0
 	.4byte 0
 .global __vt__23TaiNapkidCirclingAction
@@ -46682,7 +46682,7 @@ __vt__23TaiNapkidCirclingAction:
 	.4byte hasNextState__9TaiActionFv
 	.asciz "TaiNapkidStraightFlyingAction"
 	.balign 4
-	.4byte 0x803e3cc0
+	.4byte 0x803E3CC0
 	.4byte 0
 	.4byte 0
 .global __vt__29TaiNapkidStraightFlyingAction
@@ -46696,7 +46696,7 @@ __vt__29TaiNapkidStraightFlyingAction:
 	.4byte hasNextState__9TaiActionFv
 	.asciz "TaiNapkidShortRangeAction"
 	.balign 4
-	.4byte 0x803e3cc0
+	.4byte 0x803E3CC0
 	.4byte 0
 	.4byte 0
 .global __vt__25TaiNapkidShortRangeAction
@@ -46710,7 +46710,7 @@ __vt__25TaiNapkidShortRangeAction:
 	.4byte hasNextState__9TaiActionFv
 	.asciz "TaiNapkidPikiLostAction"
 	.balign 4
-	.4byte 0x803e3cc0
+	.4byte 0x803E3CC0
 	.4byte 0
 	.4byte 0
 .global __vt__23TaiNapkidPikiLostAction
@@ -46724,7 +46724,7 @@ __vt__23TaiNapkidPikiLostAction:
 	.4byte hasNextState__9TaiActionFv
 	.asciz "TaiNapkidTargetPikiAction"
 	.balign 4
-	.4byte 0x803e3cc0
+	.4byte 0x803E3CC0
 	.4byte 0
 	.4byte 0
 .global __vt__25TaiNapkidTargetPikiAction
@@ -46740,21 +46740,21 @@ __vt__25TaiNapkidTargetPikiAction:
 	.balign 4
 	.asciz "TaiMotionAction"
 	.balign 4
-	.4byte 0x803e3cc0
+	.4byte 0x803E3CC0
 	.4byte 0
 	.4byte 0
 	.asciz "TaiContinuousMotionAction"
 	.balign 4
-	.4byte 0x803e3cc0
+	.4byte 0x803E3CC0
 	.4byte 0
-	.4byte 0x803e3d80
+	.4byte 0x803E3D80
 	.4byte 0
 	.4byte 0
-	.4byte 0x803e3cc0
+	.4byte 0x803E3CC0
 	.4byte 0
-	.4byte 0x803e3d80
+	.4byte 0x803E3D80
 	.4byte 0
-	.4byte 0x803e3d88
+	.4byte 0x803E3D88
 	.4byte 0
 	.4byte 0
 .global __vt__29TaiNapkidWanderingRouteAction
@@ -46769,9 +46769,9 @@ __vt__29TaiNapkidWanderingRouteAction:
 	.4byte motionStarted__25TaiContinuousMotionActionFR4Teki
 	.asciz "TekiNapkidShortRangeCondition"
 	.balign 4
-	.4byte 0x803e3d28
+	.4byte 0x803E3D28
 	.4byte 0
-	.4byte 0x803e3d30
+	.4byte 0x803E3D30
 	.4byte 0
 	.4byte 0
 .global __vt__29TekiNapkidShortRangeCondition
@@ -46787,9 +46787,9 @@ __vt__29TekiNapkidShortRangeCondition:
 	.4byte 0
 	.asciz "TekiNapkidTargetPikiCondition"
 	.balign 4
-	.4byte 0x803e3d28
+	.4byte 0x803E3D28
 	.4byte 0
-	.4byte 0x803e3d30
+	.4byte 0x803E3D30
 	.4byte 0
 	.4byte 0
 .global __vt__29TekiNapkidTargetPikiCondition
@@ -46803,12 +46803,12 @@ __vt__29TekiNapkidTargetPikiCondition:
 	.balign 4
 	.asciz "TaiStrategy"
 	.balign 4
-	.4byte 0x803e3da8
+	.4byte 0x803E3DA8
 	.4byte 0
 	.4byte 0
-	.4byte 0x803e3da8
+	.4byte 0x803E3DA8
 	.4byte 0
-	.4byte 0x803e3db0
+	.4byte 0x803E3DB0
 	.4byte 0
 	.4byte 0
 .global __vt__17TaiNapkidStrategy
@@ -46825,7 +46825,7 @@ __vt__17TaiNapkidStrategy:
 	.4byte spawnCorpseParts__12TekiStrategyFR4Teki
 	.asciz "TaiNotAction"
 	.balign 4
-	.4byte 0x803e3cc0
+	.4byte 0x803E3CC0
 	.4byte 0
 	.4byte 0
 	.4byte 0
@@ -46837,7 +46837,7 @@ __vt__17TaiNapkidStrategy:
 	.4byte 0
 	.asciz "TaiOnceAction"
 	.balign 4
-	.4byte 0x803e3cc0
+	.4byte 0x803E3CC0
 	.4byte 0
 	.4byte 0
 	.4byte 0
@@ -46858,30 +46858,30 @@ __vt__17TaiNapkidStrategy:
 	.balign 4
 	.asciz "CoreNode"
 	.balign 4
-	.4byte 0x803e3dc8
+	.4byte 0x803E3DC8
 	.4byte 0
 	.4byte 0
-	.4byte 0x803e3dc8
+	.4byte 0x803E3DC8
 	.4byte 0
-	.4byte 0x803e3dd0
+	.4byte 0x803E3DD0
 	.4byte 0
 	.4byte 0
 	.asciz "TekiParameters"
 	.balign 4
-	.4byte 0x803e3dc8
+	.4byte 0x803E3DC8
 	.4byte 0
-	.4byte 0x803e3dd0
+	.4byte 0x803E3DD0
 	.4byte 0
-	.4byte 0x803e3de0
+	.4byte 0x803E3DE0
 	.4byte 0
 	.4byte 0
-	.4byte 0x803e3dc8
+	.4byte 0x803E3DC8
 	.4byte 0
-	.4byte 0x803e3dd0
+	.4byte 0x803E3DD0
 	.4byte 0
-	.4byte 0x803e3de0
+	.4byte 0x803E3DE0
 	.4byte 0
-	.4byte 0x803e3de8
+	.4byte 0x803E3DE8
 	.4byte 0
 	.4byte 0
 .global __vt__19TaiNapkidParameters
@@ -47024,15 +47024,15 @@ __vt__25TaiOtimotiLegEffectAction:
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
 	.4byte setType__25TaiOtimotiLegEffectActionFR8Vector3fii
-	.4byte 0x5461694f
-	.4byte 0x74696d6f
+	.4byte 0x5461694F
+	.4byte 0x74696D6F
 	.4byte 0x74694174
-	.4byte 0x7461636b
-	.4byte 0x696e6745
+	.4byte 0x7461636B
+	.4byte 0x696E6745
 	.4byte 0x66666563
 	.4byte 0x74416374
-	.4byte 0x696f6e00
-	.4byte 0x803e3e34
+	.4byte 0x696F6E00
+	.4byte 0x803E3E34
 	.4byte 0
 	.4byte 0
 .global __vt__31TaiOtimotiAttackingEffectAction
@@ -47044,14 +47044,14 @@ __vt__31TaiOtimotiAttackingEffectAction:
 	.4byte act__9TaiActionFR4Teki
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
-	.4byte 0x5461694f
-	.4byte 0x74696d6f
+	.4byte 0x5461694F
+	.4byte 0x74696D6F
 	.4byte 0x74694174
-	.4byte 0x7461636b
-	.4byte 0x696e6741
-	.4byte 0x6374696f
-	.4byte 0x6e000000
-	.4byte 0x803e3e34
+	.4byte 0x7461636B
+	.4byte 0x696E6741
+	.4byte 0x6374696F
+	.4byte 0x6E000000
+	.4byte 0x803E3E34
 	.4byte 0
 	.4byte 0
 .global __vt__25TaiOtimotiAttackingAction
@@ -47063,14 +47063,14 @@ __vt__25TaiOtimotiAttackingAction:
 	.4byte act__25TaiOtimotiAttackingActionFR4Teki
 	.4byte actByEvent__25TaiOtimotiAttackingActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
-	.4byte 0x5461694f
-	.4byte 0x74696d6f
-	.4byte 0x7469426f
-	.4byte 0x756e6369
-	.4byte 0x6e674163
-	.4byte 0x74696f6e
+	.4byte 0x5461694F
+	.4byte 0x74696D6F
+	.4byte 0x7469426F
+	.4byte 0x756E6369
+	.4byte 0x6E674163
+	.4byte 0x74696F6E
 	.4byte 0
-	.4byte 0x803e3e34
+	.4byte 0x803E3E34
 	.4byte 0
 	.4byte 0
 .global __vt__24TaiOtimotiBouncingAction
@@ -47082,32 +47082,32 @@ __vt__24TaiOtimotiBouncingAction:
 	.4byte act__24TaiOtimotiBouncingActionFR4Teki
 	.4byte actByEvent__24TaiOtimotiBouncingActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
-	.4byte 0x54656b69
-	.4byte 0x4e6f7443
-	.4byte 0x6f6e6469
-	.4byte 0x74696f6e
+	.4byte 0x54656B69
+	.4byte 0x4E6F7443
+	.4byte 0x6F6E6469
+	.4byte 0x74696F6E
 	.4byte 0
-	.4byte 0x436f6e64
-	.4byte 0x6974696f
-	.4byte 0x6e000000
-	.4byte 0x54656b69
-	.4byte 0x436f6e64
-	.4byte 0x6974696f
-	.4byte 0x6e000000
-	.4byte 0x803e3e6c
-	.4byte 0
-	.4byte 0
-	.4byte 0x803e3e6c
-	.4byte 0
-	.4byte 0x803e3e74
+	.4byte 0x436F6E64
+	.4byte 0x6974696F
+	.4byte 0x6E000000
+	.4byte 0x54656B69
+	.4byte 0x436F6E64
+	.4byte 0x6974696F
+	.4byte 0x6E000000
+	.4byte 0x803E3E6C
 	.4byte 0
 	.4byte 0
+	.4byte 0x803E3E6C
+	.4byte 0
+	.4byte 0x803E3E74
 	.4byte 0
 	.4byte 0
 	.4byte 0
-	.4byte 0x496e7465
+	.4byte 0
+	.4byte 0
+	.4byte 0x496E7465
 	.4byte 0x72616374
-	.4byte 0x696f6e00
+	.4byte 0x696F6E00
 	.4byte 0
 	.4byte 0
 	.4byte 0
@@ -47119,14 +47119,14 @@ __vt__24TaiOtimotiBouncingAction:
 	.4byte 0
 	.4byte 0
 	.4byte 0
-	.4byte 0x5461694f
-	.4byte 0x74696d6f
+	.4byte 0x5461694F
+	.4byte 0x74696D6F
 	.4byte 0x74695072
 	.4byte 0x65737369
-	.4byte 0x6e674163
-	.4byte 0x74696f6e
+	.4byte 0x6E674163
+	.4byte 0x74696F6E
 	.4byte 0
-	.4byte 0x803e3e34
+	.4byte 0x803E3E34
 	.4byte 0
 	.4byte 0
 .global __vt__24TaiOtimotiPressingAction
@@ -47138,14 +47138,14 @@ __vt__24TaiOtimotiPressingAction:
 	.4byte act__24TaiOtimotiPressingActionFR4Teki
 	.4byte actByEvent__24TaiOtimotiPressingActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
-	.4byte 0x5461694f
-	.4byte 0x74696d6f
+	.4byte 0x5461694F
+	.4byte 0x74696D6F
 	.4byte 0x74694472
-	.4byte 0x6f707069
-	.4byte 0x6e674163
-	.4byte 0x74696f6e
+	.4byte 0x6F707069
+	.4byte 0x6E674163
+	.4byte 0x74696F6E
 	.4byte 0
-	.4byte 0x803e3e34
+	.4byte 0x803E3E34
 	.4byte 0
 	.4byte 0
 .global __vt__24TaiOtimotiDroppingAction
@@ -47157,14 +47157,14 @@ __vt__24TaiOtimotiDroppingAction:
 	.4byte act__24TaiOtimotiDroppingActionFR4Teki
 	.4byte actByEvent__24TaiOtimotiDroppingActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
-	.4byte 0x5461694f
-	.4byte 0x74696d6f
+	.4byte 0x5461694F
+	.4byte 0x74696D6F
 	.4byte 0x74694169
 	.4byte 0x72576169
-	.4byte 0x74696e67
+	.4byte 0x74696E67
 	.4byte 0x41637469
-	.4byte 0x6f6e0000
-	.4byte 0x803e3e34
+	.4byte 0x6F6E0000
+	.4byte 0x803E3E34
 	.4byte 0
 	.4byte 0
 .global __vt__26TaiOtimotiAirWaitingAction
@@ -47176,13 +47176,13 @@ __vt__26TaiOtimotiAirWaitingAction:
 	.4byte act__26TaiOtimotiAirWaitingActionFR4Teki
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
-	.4byte 0x5461694f
-	.4byte 0x74696d6f
-	.4byte 0x74694a75
-	.4byte 0x6d70696e
+	.4byte 0x5461694F
+	.4byte 0x74696D6F
+	.4byte 0x74694A75
+	.4byte 0x6D70696E
 	.4byte 0x67416374
-	.4byte 0x696f6e00
-	.4byte 0x803e3e34
+	.4byte 0x696F6E00
+	.4byte 0x803E3E34
 	.4byte 0
 	.4byte 0
 .global __vt__23TaiOtimotiJumpingAction
@@ -47194,14 +47194,14 @@ __vt__23TaiOtimotiJumpingAction:
 	.4byte act__23TaiOtimotiJumpingActionFR4Teki
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
-	.4byte 0x5461694f
-	.4byte 0x74696d6f
+	.4byte 0x5461694F
+	.4byte 0x74696D6F
 	.4byte 0x74694661
-	.4byte 0x696c546f
-	.4byte 0x4a756d70
+	.4byte 0x696C546F
+	.4byte 0x4A756D70
 	.4byte 0x41637469
-	.4byte 0x6f6e0000
-	.4byte 0x803e3e34
+	.4byte 0x6F6E0000
+	.4byte 0x803E3E34
 	.4byte 0
 	.4byte 0
 .global __vt__26TaiOtimotiFailToJumpAction
@@ -47213,16 +47213,14 @@ __vt__26TaiOtimotiFailToJumpAction:
 	.4byte act__26TaiOtimotiFailToJumpActionFR4Teki
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
-	.4byte 0x54656b69
-	.4byte 0x416e6443
-	.4byte 0x6f6e6469
-	.4byte 0x74696f6e
+	.4byte 0x54656B69
+	.4byte 0x416E6443
+	.4byte 0x6F6E6469
+	.4byte 0x74696F6E
 	.4byte 0
-	.4byte 0x803e3e6c
+	.4byte 0x803E3E6C
 	.4byte 0
-	.4byte 0x803e3e74
-	.4byte 0
-	.4byte 0
+	.4byte 0x803E3E74
 	.4byte 0
 	.4byte 0
 	.4byte 0
@@ -47232,13 +47230,15 @@ __vt__26TaiOtimotiFailToJumpAction:
 	.4byte 0
 	.4byte 0
 	.4byte 0
-	.4byte 0x5461694f
-	.4byte 0x74696d6f
-	.4byte 0x7469466c
-	.4byte 0x69636b41
-	.4byte 0x6374696f
-	.4byte 0x6e000000
-	.4byte 0x803e3e34
+	.4byte 0
+	.4byte 0
+	.4byte 0x5461694F
+	.4byte 0x74696D6F
+	.4byte 0x7469466C
+	.4byte 0x69636B41
+	.4byte 0x6374696F
+	.4byte 0x6E000000
+	.4byte 0x803E3E34
 	.4byte 0
 	.4byte 0
 .global __vt__21TaiOtimotiFlickAction
@@ -47250,16 +47250,16 @@ __vt__21TaiOtimotiFlickAction:
 	.4byte act__21TaiOtimotiFlickActionFR4Teki
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
-	.4byte 0x5461694f
-	.4byte 0x74696d6f
+	.4byte 0x5461694F
+	.4byte 0x74696D6F
 	.4byte 0x74695374
 	.4byte 0x61727444
-	.4byte 0x726f7070
-	.4byte 0x696e6757
+	.4byte 0x726F7070
+	.4byte 0x696E6757
 	.4byte 0x61746572
 	.4byte 0x41637469
-	.4byte 0x6f6e0000
-	.4byte 0x803e3e34
+	.4byte 0x6F6E0000
+	.4byte 0x803E3E34
 	.4byte 0
 	.4byte 0
 .global __vt__34TaiOtimotiStartDroppingWaterAction
@@ -47271,24 +47271,24 @@ __vt__34TaiOtimotiStartDroppingWaterAction:
 	.4byte act__9TaiActionFR4Teki
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
-	.4byte 0x5461694f
-	.4byte 0x74696d6f
+	.4byte 0x5461694F
+	.4byte 0x74696D6F
 	.4byte 0x74695374
 	.4byte 0x72617465
 	.4byte 0x67790000
-	.4byte 0x54656b69
+	.4byte 0x54656B69
 	.4byte 0x53747261
 	.4byte 0x74656779
 	.4byte 0
 	.4byte 0x54616953
 	.4byte 0x74726174
 	.4byte 0x65677900
-	.4byte 0x803e3eb4
+	.4byte 0x803E3EB4
 	.4byte 0
 	.4byte 0
-	.4byte 0x803e3eb4
+	.4byte 0x803E3EB4
 	.4byte 0
-	.4byte 0x803e3ebc
+	.4byte 0x803E3EBC
 	.4byte 0
 	.4byte 0
 .global __vt__18TaiOtimotiStrategy
@@ -47303,11 +47303,11 @@ __vt__18TaiOtimotiStrategy:
 	.4byte drawDebugInfo__18TaiOtimotiStrategyFR4TekiR8Graphics
 	.4byte interact__12TekiStrategyFR4TekiR18TekiInteractionKey
 	.4byte spawnCorpseParts__12TekiStrategyFR4Teki
-	.4byte 0x5461694f
-	.4byte 0x6e636541
-	.4byte 0x6374696f
-	.4byte 0x6e000000
-	.4byte 0x803e3e34
+	.4byte 0x5461694F
+	.4byte 0x6E636541
+	.4byte 0x6374696F
+	.4byte 0x6E000000
+	.4byte 0x803E3E34
 	.4byte 0
 	.4byte 0
 	.4byte 0
@@ -47325,40 +47325,40 @@ __vt__18TaiOtimotiStrategy:
 	.4byte 0
 	.4byte 0
 	.4byte 0x54616942
-	.4byte 0x6c61636b
-	.4byte 0x46726f67
+	.4byte 0x6C61636B
+	.4byte 0x46726F67
 	.4byte 0x50617261
-	.4byte 0x6d657465
+	.4byte 0x6D657465
 	.4byte 0x72730000
-	.4byte 0x436f7265
-	.4byte 0x4e6f6465
+	.4byte 0x436F7265
+	.4byte 0x4E6F6465
 	.4byte 0
-	.4byte 0x803e3ed4
-	.4byte 0
-	.4byte 0
-	.4byte 0x803e3ed4
-	.4byte 0
-	.4byte 0x803e3edc
+	.4byte 0x803E3ED4
 	.4byte 0
 	.4byte 0
-	.4byte 0x54656b69
+	.4byte 0x803E3ED4
+	.4byte 0
+	.4byte 0x803E3EDC
+	.4byte 0
+	.4byte 0
+	.4byte 0x54656B69
 	.4byte 0x50617261
-	.4byte 0x6d657465
+	.4byte 0x6D657465
 	.4byte 0x72730000
-	.4byte 0x803e3ed4
+	.4byte 0x803E3ED4
 	.4byte 0
-	.4byte 0x803e3edc
+	.4byte 0x803E3EDC
 	.4byte 0
-	.4byte 0x803e3eec
+	.4byte 0x803E3EEC
 	.4byte 0
 	.4byte 0
-	.4byte 0x803e3ed4
+	.4byte 0x803E3ED4
 	.4byte 0
-	.4byte 0x803e3edc
+	.4byte 0x803E3EDC
 	.4byte 0
-	.4byte 0x803e3eec
+	.4byte 0x803E3EEC
 	.4byte 0
-	.4byte 0x803e3ef4
+	.4byte 0x803E3EF4
 	.4byte 0
 	.4byte 0
 .global __vt__22TaiBlackFrogParameters
@@ -47375,19 +47375,19 @@ __vt__22TaiBlackFrogParameters:
 	.4byte concat__4NodeFR3SRT
 	.4byte concat__4NodeFR8Matrix4f
 	.4byte getModelMatrix__4NodeFv
-	.4byte 0x5461694f
-	.4byte 0x74696d6f
+	.4byte 0x5461694F
+	.4byte 0x74696D6F
 	.4byte 0x74695061
-	.4byte 0x72616d65
+	.4byte 0x72616D65
 	.4byte 0x74657273
 	.4byte 0
-	.4byte 0x803e3ed4
+	.4byte 0x803E3ED4
 	.4byte 0
-	.4byte 0x803e3edc
+	.4byte 0x803E3EDC
 	.4byte 0
-	.4byte 0x803e3eec
+	.4byte 0x803E3EEC
 	.4byte 0
-	.4byte 0x803e3ef4
+	.4byte 0x803E3EF4
 	.4byte 0
 	.4byte 0
 .global __vt__20TaiOtimotiParameters
@@ -47452,13 +47452,13 @@ __vt__26TaiPalmChangingColorAction:
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
 	.4byte 0x54616950
-	.4byte 0x616c6d53
+	.4byte 0x616C6D53
 	.4byte 0x65747469
-	.4byte 0x6e675065
-	.4byte 0x6c6c6574
+	.4byte 0x6E675065
+	.4byte 0x6C6C6574
 	.4byte 0x41637469
-	.4byte 0x6f6e0000
-	.4byte 0x803e3f20
+	.4byte 0x6F6E0000
+	.4byte 0x803E3F20
 	.4byte 0
 	.4byte 0
 .global __vt__26TaiPalmSettingPelletAction
@@ -47471,12 +47471,12 @@ __vt__26TaiPalmSettingPelletAction:
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
 	.4byte 0x54616950
-	.4byte 0x616c6d53
-	.4byte 0x756e666c
-	.4byte 0x6f776572
+	.4byte 0x616C6D53
+	.4byte 0x756E666C
+	.4byte 0x6F776572
 	.4byte 0x41637469
-	.4byte 0x6f6e0000
-	.4byte 0x803e3f20
+	.4byte 0x6F6E0000
+	.4byte 0x803E3F20
 	.4byte 0
 	.4byte 0
 .global __vt__22TaiPalmSunflowerAction
@@ -47489,13 +47489,13 @@ __vt__22TaiPalmSunflowerAction:
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
 	.4byte 0x54616950
-	.4byte 0x616c6d46
-	.4byte 0x6c6f7765
-	.4byte 0x7244616d
+	.4byte 0x616C6D46
+	.4byte 0x6C6F7765
+	.4byte 0x7244616D
 	.4byte 0x61676541
-	.4byte 0x6374696f
-	.4byte 0x6e000000
-	.4byte 0x803e3f20
+	.4byte 0x6374696F
+	.4byte 0x6E000000
+	.4byte 0x803E3F20
 	.4byte 0
 	.4byte 0
 .global __vt__25TaiPalmFlowerDamageAction
@@ -47508,11 +47508,11 @@ __vt__25TaiPalmFlowerDamageAction:
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
 	.4byte 0x54616950
-	.4byte 0x616c6d47
-	.4byte 0x726f7741
-	.4byte 0x6374696f
-	.4byte 0x6e000000
-	.4byte 0x803e3f20
+	.4byte 0x616C6D47
+	.4byte 0x726F7741
+	.4byte 0x6374696F
+	.4byte 0x6E000000
+	.4byte 0x803E3F20
 	.4byte 0
 	.4byte 0
 .global __vt__17TaiPalmGrowAction
@@ -47525,12 +47525,12 @@ __vt__17TaiPalmGrowAction:
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
 	.4byte 0x54616950
-	.4byte 0x616c6d47
-	.4byte 0x726f7769
-	.4byte 0x6e674163
-	.4byte 0x74696f6e
+	.4byte 0x616C6D47
+	.4byte 0x726F7769
+	.4byte 0x6E674163
+	.4byte 0x74696F6E
 	.4byte 0
-	.4byte 0x803e3f20
+	.4byte 0x803E3F20
 	.4byte 0
 	.4byte 0
 .global __vt__20TaiPalmGrowingAction
@@ -47543,31 +47543,31 @@ __vt__20TaiPalmGrowingAction:
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
 	.4byte 0x54616950
-	.4byte 0x616c6d44
-	.4byte 0x616d6167
-	.4byte 0x696e6741
-	.4byte 0x6374696f
-	.4byte 0x6e000000
-	.4byte 0x5461694d
-	.4byte 0x6f74696f
-	.4byte 0x6e416374
-	.4byte 0x696f6e00
-	.4byte 0x803e3f20
+	.4byte 0x616C6D44
+	.4byte 0x616D6167
+	.4byte 0x696E6741
+	.4byte 0x6374696F
+	.4byte 0x6E000000
+	.4byte 0x5461694D
+	.4byte 0x6F74696F
+	.4byte 0x6E416374
+	.4byte 0x696F6E00
+	.4byte 0x803E3F20
 	.4byte 0
 	.4byte 0
 	.4byte 0x54616944
-	.4byte 0x616d6167
-	.4byte 0x696e6741
-	.4byte 0x6374696f
-	.4byte 0x6e000000
-	.4byte 0x803e3f20
+	.4byte 0x616D6167
+	.4byte 0x696E6741
+	.4byte 0x6374696F
+	.4byte 0x6E000000
+	.4byte 0x803E3F20
 	.4byte 0
-	.4byte 0x803e3f58
+	.4byte 0x803E3F58
 	.4byte 0
 	.4byte 0
-	.4byte 0x803e3f20
+	.4byte 0x803E3F20
 	.4byte 0
-	.4byte 0x803e3f58
+	.4byte 0x803E3F58
 	.4byte 0
 	.4byte __RTTI__17TaiDamagingAction
 	.4byte 0
@@ -47582,22 +47582,22 @@ __vt__21TaiPalmDamagingAction:
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
 	.4byte 0x54616950
-	.4byte 0x616c6d44
-	.4byte 0x79696e67
+	.4byte 0x616C6D44
+	.4byte 0x79696E67
 	.4byte 0x41637469
-	.4byte 0x6f6e0000
+	.4byte 0x6F6E0000
 	.4byte 0x54616944
-	.4byte 0x79696e67
+	.4byte 0x79696E67
 	.4byte 0x41637469
-	.4byte 0x6f6e0000
-	.4byte 0x803e3f20
+	.4byte 0x6F6E0000
+	.4byte 0x803E3F20
 	.4byte 0
-	.4byte 0x803e3f58
+	.4byte 0x803E3F58
 	.4byte 0
 	.4byte 0
-	.4byte 0x803e3f20
+	.4byte 0x803E3F20
 	.4byte 0
-	.4byte 0x803e3f58
+	.4byte 0x803E3F58
 	.4byte 0
 	.4byte __RTTI__14TaiDyingAction
 	.4byte 0
@@ -47612,13 +47612,13 @@ __vt__18TaiPalmDyingAction:
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
 	.4byte 0x54616950
-	.4byte 0x616c6d4d
-	.4byte 0x6f74696f
-	.4byte 0x6e416374
-	.4byte 0x696f6e00
-	.4byte 0x803e3f20
+	.4byte 0x616C6D4D
+	.4byte 0x6F74696F
+	.4byte 0x6E416374
+	.4byte 0x696F6E00
+	.4byte 0x803E3F20
 	.4byte 0
-	.4byte 0x803e3f58
+	.4byte 0x803E3F58
 	.4byte 0
 	.4byte 0
 .global __vt__19TaiPalmMotionAction
@@ -47630,37 +47630,37 @@ __vt__19TaiPalmMotionAction:
 	.4byte act__15TaiMotionActionFR4Teki
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
-	.4byte 0x54656b69
-	.4byte 0x4e6f7443
-	.4byte 0x6f6e6469
-	.4byte 0x74696f6e
+	.4byte 0x54656B69
+	.4byte 0x4E6F7443
+	.4byte 0x6F6E6469
+	.4byte 0x74696F6E
 	.4byte 0
-	.4byte 0x436f6e64
-	.4byte 0x6974696f
-	.4byte 0x6e000000
-	.4byte 0x54656b69
-	.4byte 0x436f6e64
-	.4byte 0x6974696f
-	.4byte 0x6e000000
-	.4byte 0x803e3f88
-	.4byte 0
-	.4byte 0
-	.4byte 0x803e3f88
-	.4byte 0
-	.4byte 0x803e3f90
+	.4byte 0x436F6E64
+	.4byte 0x6974696F
+	.4byte 0x6E000000
+	.4byte 0x54656B69
+	.4byte 0x436F6E64
+	.4byte 0x6974696F
+	.4byte 0x6E000000
+	.4byte 0x803E3F88
 	.4byte 0
 	.4byte 0
+	.4byte 0x803E3F88
+	.4byte 0
+	.4byte 0x803E3F90
 	.4byte 0
 	.4byte 0
 	.4byte 0
-	.4byte 0x54656b69
-	.4byte 0x416e6443
-	.4byte 0x6f6e6469
-	.4byte 0x74696f6e
 	.4byte 0
-	.4byte 0x803e3f88
 	.4byte 0
-	.4byte 0x803e3f90
+	.4byte 0x54656B69
+	.4byte 0x416E6443
+	.4byte 0x6F6E6469
+	.4byte 0x74696F6E
+	.4byte 0
+	.4byte 0x803E3F88
+	.4byte 0
+	.4byte 0x803E3F90
 	.4byte 0
 	.4byte 0
 	.4byte 0
@@ -47673,22 +47673,22 @@ __vt__19TaiPalmMotionAction:
 	.4byte 0
 	.4byte 0
 	.4byte 0x54616950
-	.4byte 0x616c6d53
+	.4byte 0x616C6D53
 	.4byte 0x74726174
 	.4byte 0x65677900
-	.4byte 0x54656b69
+	.4byte 0x54656B69
 	.4byte 0x53747261
 	.4byte 0x74656779
 	.4byte 0
 	.4byte 0x54616953
 	.4byte 0x74726174
 	.4byte 0x65677900
-	.4byte 0x803e3f98
+	.4byte 0x803E3F98
 	.4byte 0
 	.4byte 0
-	.4byte 0x803e3f98
+	.4byte 0x803E3F98
 	.4byte 0
-	.4byte 0x803e3fa0
+	.4byte 0x803E3FA0
 	.4byte 0
 	.4byte 0
 .global __vt__15TaiPalmStrategy
@@ -47711,39 +47711,39 @@ __vt__15TaiPalmStrategy:
 	.4byte 0
 	.4byte 0
 	.4byte 0x54616950
-	.4byte 0x616c6d50
-	.4byte 0x6172616d
+	.4byte 0x616C6D50
+	.4byte 0x6172616D
 	.4byte 0x65746572
 	.4byte 0x73000000
-	.4byte 0x436f7265
-	.4byte 0x4e6f6465
+	.4byte 0x436F7265
+	.4byte 0x4E6F6465
 	.4byte 0
-	.4byte 0x803e3fb8
-	.4byte 0
-	.4byte 0
-	.4byte 0x803e3fb8
-	.4byte 0
-	.4byte 0x803e3fc0
+	.4byte 0x803E3FB8
 	.4byte 0
 	.4byte 0
-	.4byte 0x54656b69
+	.4byte 0x803E3FB8
+	.4byte 0
+	.4byte 0x803E3FC0
+	.4byte 0
+	.4byte 0
+	.4byte 0x54656B69
 	.4byte 0x50617261
-	.4byte 0x6d657465
+	.4byte 0x6D657465
 	.4byte 0x72730000
-	.4byte 0x803e3fb8
+	.4byte 0x803E3FB8
 	.4byte 0
-	.4byte 0x803e3fc0
+	.4byte 0x803E3FC0
 	.4byte 0
-	.4byte 0x803e3fd0
+	.4byte 0x803E3FD0
 	.4byte 0
 	.4byte 0
-	.4byte 0x803e3fb8
+	.4byte 0x803E3FB8
 	.4byte 0
-	.4byte 0x803e3fc0
+	.4byte 0x803E3FC0
 	.4byte 0
-	.4byte 0x803e3fd0
+	.4byte 0x803E3FD0
 	.4byte 0
-	.4byte 0x803e3fd8
+	.4byte 0x803E3FD8
 	.4byte 0
 	.4byte 0
 .global __vt__17TaiPalmParameters
@@ -47763,24 +47763,24 @@ __vt__17TaiPalmParameters:
 	.4byte 0
 	.4byte 0x74616972
 	.4byte 0x65616374
-	.4byte 0x696f6e61
-	.4byte 0x6374696f
-	.4byte 0x6e732e63
+	.4byte 0x696F6E61
+	.4byte 0x6374696F
+	.4byte 0x6E732E63
 	.4byte 0x70700000
 	.4byte 0x74616972
 	.4byte 0x65616374
-	.4byte 0x696f6e61
-	.4byte 0x6374696f
-	.4byte 0x6e730000
+	.4byte 0x696F6E61
+	.4byte 0x6374696F
+	.4byte 0x6E730000
 	.4byte 0x54616944
-	.4byte 0x616e6765
-	.4byte 0x724c6966
+	.4byte 0x616E6765
+	.4byte 0x724C6966
 	.4byte 0x65416374
-	.4byte 0x696f6e00
+	.4byte 0x696F6E00
 	.4byte 0x54616941
-	.4byte 0x6374696f
-	.4byte 0x6e000000
-	.4byte 0x803e3fe8
+	.4byte 0x6374696F
+	.4byte 0x6E000000
+	.4byte 0x803E3FE8
 	.4byte 0
 	.4byte 0
 .global __vt__19TaiDangerLifeAction
@@ -47793,10 +47793,10 @@ __vt__19TaiDangerLifeAction:
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
 	.4byte 0x54616957
-	.4byte 0x61726e41
-	.4byte 0x6374696f
-	.4byte 0x6e000000
-	.4byte 0x803e3fe8
+	.4byte 0x61726E41
+	.4byte 0x6374696F
+	.4byte 0x6E000000
+	.4byte 0x803E3FE8
 	.4byte 0
 	.4byte 0
 .global __vt__13TaiWarnAction
@@ -47811,9 +47811,9 @@ __vt__13TaiWarnAction:
 	.4byte 0x54616950
 	.4byte 0x72657373
 	.4byte 0x65644163
-	.4byte 0x74696f6e
+	.4byte 0x74696F6E
 	.4byte 0
-	.4byte 0x803e3fe8
+	.4byte 0x803E3FE8
 	.4byte 0
 	.4byte 0
 .global __vt__16TaiPressedAction
@@ -47826,12 +47826,12 @@ __vt__16TaiPressedAction:
 	.4byte actByEvent__16TaiPressedActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
 	.4byte 0x54616942
-	.4byte 0x65696e67
+	.4byte 0x65696E67
 	.4byte 0x50726573
 	.4byte 0x73656441
-	.4byte 0x6374696f
-	.4byte 0x6e000000
-	.4byte 0x803e3fe8
+	.4byte 0x6374696F
+	.4byte 0x6E000000
+	.4byte 0x803E3FE8
 	.4byte 0
 	.4byte 0
 .global __vt__21TaiBeingPressedAction
@@ -47844,11 +47844,11 @@ __vt__21TaiBeingPressedAction:
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
 	.4byte 0x54616953
-	.4byte 0x6d617368
+	.4byte 0x6D617368
 	.4byte 0x65644163
-	.4byte 0x74696f6e
+	.4byte 0x74696F6E
 	.4byte 0
-	.4byte 0x803e3fe8
+	.4byte 0x803E3FE8
 	.4byte 0
 	.4byte 0
 .global __vt__16TaiSmashedAction
@@ -47861,11 +47861,11 @@ __vt__16TaiSmashedAction:
 	.4byte actByEvent__16TaiSmashedActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
 	.4byte 0x54616953
-	.4byte 0x7469636b
+	.4byte 0x7469636B
 	.4byte 0x65644163
-	.4byte 0x74696f6e
+	.4byte 0x74696F6E
 	.4byte 0
-	.4byte 0x803e3fe8
+	.4byte 0x803E3FE8
 	.4byte 0
 	.4byte 0
 .global __vt__16TaiStickedAction
@@ -47877,24 +47877,24 @@ __vt__16TaiStickedAction:
 	.4byte act__16TaiStickedActionFR4Teki
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
-	.4byte 0x54656b69
-	.4byte 0x416e6443
-	.4byte 0x6f6e6469
-	.4byte 0x74696f6e
+	.4byte 0x54656B69
+	.4byte 0x416E6443
+	.4byte 0x6F6E6469
+	.4byte 0x74696F6E
 	.4byte 0
-	.4byte 0x436f6e64
-	.4byte 0x6974696f
-	.4byte 0x6e000000
-	.4byte 0x54656b69
-	.4byte 0x436f6e64
-	.4byte 0x6974696f
-	.4byte 0x6e000000
-	.4byte 0x803e4020
+	.4byte 0x436F6E64
+	.4byte 0x6974696F
+	.4byte 0x6E000000
+	.4byte 0x54656B69
+	.4byte 0x436F6E64
+	.4byte 0x6974696F
+	.4byte 0x6E000000
+	.4byte 0x803E4020
 	.4byte 0
 	.4byte 0
-	.4byte 0x803e4020
+	.4byte 0x803E4020
 	.4byte 0
-	.4byte 0x803e4028
+	.4byte 0x803E4028
 	.4byte 0
 	.4byte 0
 	.4byte 0
@@ -47908,13 +47908,13 @@ __vt__16TaiStickedAction:
 	.4byte 0
 	.4byte 0x54616954
 	.4byte 0x61726765
-	.4byte 0x744e6561
+	.4byte 0x744E6561
 	.4byte 0x72657374
-	.4byte 0x436f6c6c
-	.4byte 0x6973696f
-	.4byte 0x6e416374
-	.4byte 0x696f6e00
-	.4byte 0x803e3fe8
+	.4byte 0x436F6C6C
+	.4byte 0x6973696F
+	.4byte 0x6E416374
+	.4byte 0x696F6E00
+	.4byte 0x803E3FE8
 	.4byte 0
 	.4byte 0
 .global __vt__31TaiTargetNearestCollisionAction
@@ -47928,13 +47928,13 @@ __vt__31TaiTargetNearestCollisionAction:
 	.4byte hasNextState__9TaiActionFv
 	.4byte 0x54616954
 	.4byte 0x61726765
-	.4byte 0x744e6561
+	.4byte 0x744E6561
 	.4byte 0x72657374
 	.4byte 0x41737361
-	.4byte 0x696c616e
+	.4byte 0x696C616E
 	.4byte 0x74416374
-	.4byte 0x696f6e00
-	.4byte 0x803e3fe8
+	.4byte 0x696F6E00
+	.4byte 0x803E3FE8
 	.4byte 0
 	.4byte 0
 .global __vt__31TaiTargetNearestAssailantAction
@@ -47947,20 +47947,20 @@ __vt__31TaiTargetNearestAssailantAction:
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
 	.4byte 0x54616944
-	.4byte 0x616d6167
-	.4byte 0x696e6741
-	.4byte 0x6374696f
-	.4byte 0x6e000000
-	.4byte 0x5461694d
-	.4byte 0x6f74696f
-	.4byte 0x6e416374
-	.4byte 0x696f6e00
-	.4byte 0x803e3fe8
+	.4byte 0x616D6167
+	.4byte 0x696E6741
+	.4byte 0x6374696F
+	.4byte 0x6E000000
+	.4byte 0x5461694D
+	.4byte 0x6F74696F
+	.4byte 0x6E416374
+	.4byte 0x696F6E00
+	.4byte 0x803E3FE8
 	.4byte 0
 	.4byte 0
-	.4byte 0x803e3fe8
+	.4byte 0x803E3FE8
 	.4byte 0
-	.4byte 0x803e4040
+	.4byte 0x803E4040
 	.4byte 0
 	.4byte 0
 .global __vt__17TaiDamagingAction
@@ -47973,17 +47973,17 @@ __vt__17TaiDamagingAction:
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
 	.4byte 0x54616943
-	.4byte 0x6f756e74
+	.4byte 0x6F756E74
 	.4byte 0x65726174
-	.4byte 0x7461636b
-	.4byte 0x53696d75
-	.4byte 0x6c74616e
-	.4byte 0x656f7573
-	.4byte 0x44616d61
+	.4byte 0x7461636B
+	.4byte 0x53696D75
+	.4byte 0x6C74616E
+	.4byte 0x656F7573
+	.4byte 0x44616D61
 	.4byte 0x67654163
-	.4byte 0x74696f6e
+	.4byte 0x74696F6E
 	.4byte 0
-	.4byte 0x803e3fe8
+	.4byte 0x803E3FE8
 	.4byte 0
 	.4byte 0
 .global __vt__40TaiCounterattackSimultaneousDamageAction
@@ -47996,13 +47996,13 @@ __vt__40TaiCounterattackSimultaneousDamageAction:
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
 	.4byte 0x54616953
-	.4byte 0x696d756c
-	.4byte 0x74616e65
-	.4byte 0x6f757344
-	.4byte 0x616d6167
+	.4byte 0x696D756C
+	.4byte 0x74616E65
+	.4byte 0x6F757344
+	.4byte 0x616D6167
 	.4byte 0x65416374
-	.4byte 0x696f6e00
-	.4byte 0x803e3fe8
+	.4byte 0x696F6E00
+	.4byte 0x803E3FE8
 	.4byte 0
 	.4byte 0
 .global __vt__27TaiSimultaneousDamageAction
@@ -48015,10 +48015,10 @@ __vt__27TaiSimultaneousDamageAction:
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
 	.4byte 0x54616944
-	.4byte 0x616d6167
+	.4byte 0x616D6167
 	.4byte 0x65416374
-	.4byte 0x696f6e00
-	.4byte 0x803e3fe8
+	.4byte 0x696F6E00
+	.4byte 0x803E3FE8
 	.4byte 0
 	.4byte 0
 .global __vt__15TaiDamageAction
@@ -48031,12 +48031,12 @@ __vt__15TaiDamageAction:
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
 	.4byte 0x54616944
-	.4byte 0x616d6167
+	.4byte 0x616D6167
 	.4byte 0x65536361
-	.4byte 0x6c654163
-	.4byte 0x74696f6e
+	.4byte 0x6C654163
+	.4byte 0x74696F6E
 	.4byte 0
-	.4byte 0x803e3fe8
+	.4byte 0x803E3FE8
 	.4byte 0
 	.4byte 0
 .global __vt__20TaiDamageScaleAction
@@ -48049,12 +48049,12 @@ __vt__20TaiDamageScaleAction:
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
 	.4byte 0x54616944
-	.4byte 0x616d6167
-	.4byte 0x65436f75
-	.4byte 0x6e744163
-	.4byte 0x74696f6e
+	.4byte 0x616D6167
+	.4byte 0x65436F75
+	.4byte 0x6E744163
+	.4byte 0x74696F6E
 	.4byte 0
-	.4byte 0x803e3fe8
+	.4byte 0x803E3FE8
 	.4byte 0
 	.4byte 0
 .global __vt__20TaiDamageCountAction
@@ -48067,13 +48067,13 @@ __vt__20TaiDamageCountAction:
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
 	.4byte 0x54616944
-	.4byte 0x616d6167
-	.4byte 0x65436f75
-	.4byte 0x6e745265
+	.4byte 0x616D6167
+	.4byte 0x65436F75
+	.4byte 0x6E745265
 	.4byte 0x73657441
-	.4byte 0x6374696f
-	.4byte 0x6e000000
-	.4byte 0x803e3fe8
+	.4byte 0x6374696F
+	.4byte 0x6E000000
+	.4byte 0x803E3FE8
 	.4byte 0
 	.4byte 0
 .global __vt__25TaiDamageCountResetAction
@@ -48086,12 +48086,12 @@ __vt__25TaiDamageCountResetAction:
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
 	.4byte 0x54616944
-	.4byte 0x79696e67
+	.4byte 0x79696E67
 	.4byte 0x41637469
-	.4byte 0x6f6e0000
-	.4byte 0x803e3fe8
+	.4byte 0x6F6E0000
+	.4byte 0x803E3FE8
 	.4byte 0
-	.4byte 0x803e4040
+	.4byte 0x803E4040
 	.4byte 0
 	.4byte 0
 .global __vt__14TaiDyingAction
@@ -48108,9 +48108,9 @@ __vt__14TaiDyingAction:
 	.4byte 0x65446561
 	.4byte 0x64456666
 	.4byte 0x65637441
-	.4byte 0x6374696f
-	.4byte 0x6e000000
-	.4byte 0x803e3fe8
+	.4byte 0x6374696F
+	.4byte 0x6E000000
+	.4byte 0x803E3FE8
 	.4byte 0
 	.4byte 0
 .global __vt__25TaiCreateDeadEffectAction
@@ -48123,11 +48123,11 @@ __vt__25TaiCreateDeadEffectAction:
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
 	.4byte 0x54616953
-	.4byte 0x7061776e
-	.4byte 0x4974656d
+	.4byte 0x7061776E
+	.4byte 0x4974656D
 	.4byte 0x73416374
-	.4byte 0x696f6e00
-	.4byte 0x803e3fe8
+	.4byte 0x696F6E00
+	.4byte 0x803E3FE8
 	.4byte 0
 	.4byte 0
 .global __vt__19TaiSpawnItemsAction
@@ -48141,10 +48141,10 @@ __vt__19TaiSpawnItemsAction:
 	.4byte hasNextState__9TaiActionFv
 	.4byte 0x54616953
 	.4byte 0x74617274
-	.4byte 0x4479696e
+	.4byte 0x4479696E
 	.4byte 0x67416374
-	.4byte 0x696f6e00
-	.4byte 0x803e3fe8
+	.4byte 0x696F6E00
+	.4byte 0x803E3FE8
 	.4byte 0
 	.4byte 0
 .global __vt__19TaiStartDyingAction
@@ -48158,9 +48158,9 @@ __vt__19TaiStartDyingAction:
 	.4byte hasNextState__9TaiActionFv
 	.4byte 0x54616944
 	.4byte 0x79654163
-	.4byte 0x74696f6e
+	.4byte 0x74696F6E
 	.4byte 0
-	.4byte 0x803e3fe8
+	.4byte 0x803E3FE8
 	.4byte 0
 	.4byte 0
 .global __vt__12TaiDyeAction
@@ -48172,12 +48172,12 @@ __vt__12TaiDyeAction:
 	.4byte act__9TaiActionFR4Teki
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
-	.4byte 0x5461694c
+	.4byte 0x5461694C
 	.4byte 0x69666544
-	.4byte 0x616d6167
+	.4byte 0x616D6167
 	.4byte 0x65416374
-	.4byte 0x696f6e00
-	.4byte 0x803e3fe8
+	.4byte 0x696F6E00
+	.4byte 0x803E3FE8
 	.4byte 0
 	.4byte 0
 .global __vt__19TaiLifeDamageAction
@@ -48189,12 +48189,12 @@ __vt__19TaiLifeDamageAction:
 	.4byte act__9TaiActionFR4Teki
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
-	.4byte 0x5461694c
-	.4byte 0x6966655a
-	.4byte 0x65726f41
-	.4byte 0x6374696f
-	.4byte 0x6e000000
-	.4byte 0x803e3fe8
+	.4byte 0x5461694C
+	.4byte 0x6966655A
+	.4byte 0x65726F41
+	.4byte 0x6374696F
+	.4byte 0x6E000000
+	.4byte 0x803E3FE8
 	.4byte 0
 	.4byte 0
 .global __vt__17TaiLifeZeroAction
@@ -48208,9 +48208,9 @@ __vt__17TaiLifeZeroAction:
 	.4byte hasNextState__9TaiActionFv
 	.4byte 0x54616944
 	.4byte 0x65616441
-	.4byte 0x6374696f
-	.4byte 0x6e000000
-	.4byte 0x803e3fe8
+	.4byte 0x6374696F
+	.4byte 0x6E000000
+	.4byte 0x803E3FE8
 	.4byte 0
 	.4byte 0
 .global __vt__13TaiDeadAction
@@ -48318,17 +48318,17 @@ __vt__35TaiSwallowMissAttackingEffectAction:
 	.4byte hasNextState__9TaiActionFv
 	.4byte setType__35TaiSwallowMissAttackingEffectActionFR8Vector3fii
 	.4byte 0x54616953
-	.4byte 0x77616c6c
-	.4byte 0x6f774c65
+	.4byte 0x77616C6C
+	.4byte 0x6F774C65
 	.4byte 0x67456666
 	.4byte 0x65637441
-	.4byte 0x6374696f
-	.4byte 0x6e000000
-	.4byte 0x803e40d0
+	.4byte 0x6374696F
+	.4byte 0x6E000000
+	.4byte 0x803E40D0
 	.4byte 0
-	.4byte 0x803e40d8
+	.4byte 0x803E40D8
 	.4byte 0
-	.4byte 0x803e40e0
+	.4byte 0x803E40E0
 	.4byte 0
 	.4byte 0
 .global __vt__25TaiSwallowLegEffectAction
@@ -48342,12 +48342,12 @@ __vt__25TaiSwallowLegEffectAction:
 	.4byte hasNextState__9TaiActionFv
 	.4byte setType__25TaiSwallowLegEffectActionFR8Vector3fii
 	.4byte 0x54616953
-	.4byte 0x77616c6c
-	.4byte 0x6f774e6f
+	.4byte 0x77616C6C
+	.4byte 0x6F774E6F
 	.4byte 0x74696365
 	.4byte 0x41637469
-	.4byte 0x6f6e0000
-	.4byte 0x803e40d0
+	.4byte 0x6F6E0000
+	.4byte 0x803E40D0
 	.4byte 0
 	.4byte 0
 .global __vt__22TaiSwallowNoticeAction
@@ -48360,12 +48360,12 @@ __vt__22TaiSwallowNoticeAction:
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
 	.4byte 0x54616953
-	.4byte 0x77616c6c
-	.4byte 0x6f77536e
-	.4byte 0x6f726541
-	.4byte 0x6374696f
-	.4byte 0x6e000000
-	.4byte 0x803e40d0
+	.4byte 0x77616C6C
+	.4byte 0x6F77536E
+	.4byte 0x6F726541
+	.4byte 0x6374696F
+	.4byte 0x6E000000
+	.4byte 0x803E40D0
 	.4byte 0
 	.4byte 0
 .global __vt__21TaiSwallowSnoreAction
@@ -48378,14 +48378,14 @@ __vt__21TaiSwallowSnoreAction:
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
 	.4byte 0x54616953
-	.4byte 0x77616c6c
-	.4byte 0x6f775377
-	.4byte 0x616c6c6f
-	.4byte 0x77696e67
-	.4byte 0x466c6963
-	.4byte 0x6b416374
-	.4byte 0x696f6e00
-	.4byte 0x803e40d0
+	.4byte 0x77616C6C
+	.4byte 0x6F775377
+	.4byte 0x616C6C6F
+	.4byte 0x77696E67
+	.4byte 0x466C6963
+	.4byte 0x6B416374
+	.4byte 0x696F6E00
+	.4byte 0x803E40D0
 	.4byte 0
 	.4byte 0
 .global __vt__31TaiSwallowSwallowingFlickAction
@@ -48397,32 +48397,32 @@ __vt__31TaiSwallowSwallowingFlickAction:
 	.4byte act__31TaiSwallowSwallowingFlickActionFR4Teki
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
-	.4byte 0x54656b69
-	.4byte 0x4e6f7443
-	.4byte 0x6f6e6469
-	.4byte 0x74696f6e
+	.4byte 0x54656B69
+	.4byte 0x4E6F7443
+	.4byte 0x6F6E6469
+	.4byte 0x74696F6E
 	.4byte 0
-	.4byte 0x436f6e64
-	.4byte 0x6974696f
-	.4byte 0x6e000000
-	.4byte 0x54656b69
-	.4byte 0x436f6e64
-	.4byte 0x6974696f
-	.4byte 0x6e000000
-	.4byte 0x803e4110
-	.4byte 0
-	.4byte 0
-	.4byte 0x803e4110
-	.4byte 0
-	.4byte 0x803e4118
+	.4byte 0x436F6E64
+	.4byte 0x6974696F
+	.4byte 0x6E000000
+	.4byte 0x54656B69
+	.4byte 0x436F6E64
+	.4byte 0x6974696F
+	.4byte 0x6E000000
+	.4byte 0x803E4110
 	.4byte 0
 	.4byte 0
+	.4byte 0x803E4110
+	.4byte 0
+	.4byte 0x803E4118
 	.4byte 0
 	.4byte 0
 	.4byte 0
-	.4byte 0x496e7465
+	.4byte 0
+	.4byte 0
+	.4byte 0x496E7465
 	.4byte 0x72616374
-	.4byte 0x696f6e00
+	.4byte 0x696F6E00
 	.4byte 0
 	.4byte 0
 	.4byte 0
@@ -48435,22 +48435,22 @@ __vt__31TaiSwallowSwallowingFlickAction:
 	.4byte 0
 	.4byte 0
 	.4byte 0x54616953
-	.4byte 0x77616c6c
-	.4byte 0x6f77466c
-	.4byte 0x69636b69
-	.4byte 0x6e674163
-	.4byte 0x74696f6e
+	.4byte 0x77616C6C
+	.4byte 0x6F77466C
+	.4byte 0x69636B69
+	.4byte 0x6E674163
+	.4byte 0x74696F6E
 	.4byte 0
-	.4byte 0x5461694d
-	.4byte 0x6f74696f
-	.4byte 0x6e416374
-	.4byte 0x696f6e00
-	.4byte 0x803e40d0
+	.4byte 0x5461694D
+	.4byte 0x6F74696F
+	.4byte 0x6E416374
+	.4byte 0x696F6E00
+	.4byte 0x803E40D0
 	.4byte 0
 	.4byte 0
-	.4byte 0x803e40d0
+	.4byte 0x803E40D0
 	.4byte 0
-	.4byte 0x803e4120
+	.4byte 0x803E4120
 	.4byte 0
 	.4byte 0
 .global __vt__24TaiSwallowFlickingAction
@@ -48462,14 +48462,14 @@ __vt__24TaiSwallowFlickingAction:
 	.4byte act__24TaiSwallowFlickingActionFR4Teki
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
-	.4byte 0x54656b69
-	.4byte 0x416e6443
-	.4byte 0x6f6e6469
-	.4byte 0x74696f6e
+	.4byte 0x54656B69
+	.4byte 0x416E6443
+	.4byte 0x6F6E6469
+	.4byte 0x74696F6E
 	.4byte 0
-	.4byte 0x803e4110
+	.4byte 0x803E4110
 	.4byte 0
-	.4byte 0x803e4118
+	.4byte 0x803E4118
 	.4byte 0
 	.4byte 0
 	.4byte 0
@@ -48482,28 +48482,28 @@ __vt__24TaiSwallowFlickingAction:
 	.4byte 0
 	.4byte 0
 	.4byte 0x54616953
-	.4byte 0x77616c6c
-	.4byte 0x6f775475
-	.4byte 0x726e696e
+	.4byte 0x77616C6C
+	.4byte 0x6F775475
+	.4byte 0x726E696E
 	.4byte 0x67416374
-	.4byte 0x696f6e00
+	.4byte 0x696F6E00
 	.4byte 0x54616943
-	.4byte 0x6f6e7469
-	.4byte 0x6e756f75
-	.4byte 0x734d6f74
-	.4byte 0x696f6e41
-	.4byte 0x6374696f
-	.4byte 0x6e000000
-	.4byte 0x803e40d0
+	.4byte 0x6F6E7469
+	.4byte 0x6E756F75
+	.4byte 0x734D6F74
+	.4byte 0x696F6E41
+	.4byte 0x6374696F
+	.4byte 0x6E000000
+	.4byte 0x803E40D0
 	.4byte 0
-	.4byte 0x803e4120
+	.4byte 0x803E4120
 	.4byte 0
 	.4byte 0
-	.4byte 0x803e40d0
+	.4byte 0x803E40D0
 	.4byte 0
-	.4byte 0x803e4120
+	.4byte 0x803E4120
 	.4byte 0
-	.4byte 0x803e4130
+	.4byte 0x803E4130
 	.4byte 0
 	.4byte 0
 .global __vt__23TaiSwallowTurningAction
@@ -48517,14 +48517,14 @@ __vt__23TaiSwallowTurningAction:
 	.4byte hasNextState__9TaiActionFv
 	.4byte motionStarted__25TaiContinuousMotionActionFR4Teki
 	.4byte 0x54616953
-	.4byte 0x77616c6c
-	.4byte 0x6f775265
+	.4byte 0x77616C6C
+	.4byte 0x6F775265
 	.4byte 0x63656976
-	.4byte 0x654d6573
+	.4byte 0x654D6573
 	.4byte 0x73616765
 	.4byte 0x41637469
-	.4byte 0x6f6e0000
-	.4byte 0x803e40d0
+	.4byte 0x6F6E0000
+	.4byte 0x803E40D0
 	.4byte 0
 	.4byte 0
 .global __vt__30TaiSwallowReceiveMessageAction
@@ -48537,23 +48537,23 @@ __vt__30TaiSwallowReceiveMessageAction:
 	.4byte actByEvent__30TaiSwallowReceiveMessageActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
 	.4byte 0x54616953
-	.4byte 0x77616c6c
-	.4byte 0x6f775374
+	.4byte 0x77616C6C
+	.4byte 0x6F775374
 	.4byte 0x72617465
 	.4byte 0x67790000
-	.4byte 0x54656b69
+	.4byte 0x54656B69
 	.4byte 0x53747261
 	.4byte 0x74656779
 	.4byte 0
 	.4byte 0x54616953
 	.4byte 0x74726174
 	.4byte 0x65677900
-	.4byte 0x803e4148
+	.4byte 0x803E4148
 	.4byte 0
 	.4byte 0
-	.4byte 0x803e4148
+	.4byte 0x803E4148
 	.4byte 0
-	.4byte 0x803e4150
+	.4byte 0x803E4150
 	.4byte 0
 	.4byte 0
 .global __vt__18TaiSwallowStrategy
@@ -48568,11 +48568,11 @@ __vt__18TaiSwallowStrategy:
 	.4byte drawDebugInfo__18TaiSwallowStrategyFR4TekiR8Graphics
 	.4byte interact__18TaiSwallowStrategyFR4TekiR18TekiInteractionKey
 	.4byte spawnCorpseParts__12TekiStrategyFR4Teki
-	.4byte 0x5461694f
-	.4byte 0x6e636541
-	.4byte 0x6374696f
-	.4byte 0x6e000000
-	.4byte 0x803e40d0
+	.4byte 0x5461694F
+	.4byte 0x6E636541
+	.4byte 0x6374696F
+	.4byte 0x6E000000
+	.4byte 0x803E40D0
 	.4byte 0
 	.4byte 0
 	.4byte 0
@@ -48590,41 +48590,41 @@ __vt__18TaiSwallowStrategy:
 	.4byte 0
 	.4byte 0
 	.4byte 0x54616942
-	.4byte 0x6c61636b
-	.4byte 0x5377616c
-	.4byte 0x6c6f7750
-	.4byte 0x6172616d
+	.4byte 0x6C61636B
+	.4byte 0x5377616C
+	.4byte 0x6C6F7750
+	.4byte 0x6172616D
 	.4byte 0x65746572
 	.4byte 0x73000000
-	.4byte 0x436f7265
-	.4byte 0x4e6f6465
+	.4byte 0x436F7265
+	.4byte 0x4E6F6465
 	.4byte 0
-	.4byte 0x803e4168
-	.4byte 0
-	.4byte 0
-	.4byte 0x803e4168
-	.4byte 0
-	.4byte 0x803e4170
+	.4byte 0x803E4168
 	.4byte 0
 	.4byte 0
-	.4byte 0x54656b69
+	.4byte 0x803E4168
+	.4byte 0
+	.4byte 0x803E4170
+	.4byte 0
+	.4byte 0
+	.4byte 0x54656B69
 	.4byte 0x50617261
-	.4byte 0x6d657465
+	.4byte 0x6D657465
 	.4byte 0x72730000
-	.4byte 0x803e4168
+	.4byte 0x803E4168
 	.4byte 0
-	.4byte 0x803e4170
+	.4byte 0x803E4170
 	.4byte 0
-	.4byte 0x803e4180
+	.4byte 0x803E4180
 	.4byte 0
 	.4byte 0
-	.4byte 0x803e4168
+	.4byte 0x803E4168
 	.4byte 0
-	.4byte 0x803e4170
+	.4byte 0x803E4170
 	.4byte 0
-	.4byte 0x803e4180
+	.4byte 0x803E4180
 	.4byte 0
-	.4byte 0x803e4188
+	.4byte 0x803E4188
 	.4byte 0
 	.4byte 0
 .global __vt__25TaiBlackSwallowParameters
@@ -48642,18 +48642,18 @@ __vt__25TaiBlackSwallowParameters:
 	.4byte concat__4NodeFR8Matrix4f
 	.4byte getModelMatrix__4NodeFv
 	.4byte 0x54616953
-	.4byte 0x77616c6c
-	.4byte 0x6f775061
-	.4byte 0x72616d65
+	.4byte 0x77616C6C
+	.4byte 0x6F775061
+	.4byte 0x72616D65
 	.4byte 0x74657273
 	.4byte 0
-	.4byte 0x803e4168
+	.4byte 0x803E4168
 	.4byte 0
-	.4byte 0x803e4170
+	.4byte 0x803E4170
 	.4byte 0
-	.4byte 0x803e4180
+	.4byte 0x803E4180
 	.4byte 0
-	.4byte 0x803e4188
+	.4byte 0x803E4188
 	.4byte 0
 	.4byte 0
 .global __vt__20TaiSwallowParameters
@@ -48672,11 +48672,11 @@ __vt__20TaiSwallowParameters:
 	.4byte getModelMatrix__4NodeFv
 	.4byte 0
 	.4byte 0x74616973
-	.4byte 0x68656c6c
-	.4byte 0x2e637070
+	.4byte 0x68656C6C
+	.4byte 0x2E637070
 	.4byte 0
 	.4byte 0x74616973
-	.4byte 0x68656c6c
+	.4byte 0x68656C6C
 	.4byte 0
 .global lbl_802CC404
 lbl_802CC404:
@@ -48714,23 +48714,23 @@ __vt__26TaiPearlTresureSoundAction:
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
 	.4byte 0x54616950
-	.4byte 0x6561726c
+	.4byte 0x6561726C
 	.4byte 0x53747261
 	.4byte 0x74656779
 	.4byte 0
-	.4byte 0x54656b69
+	.4byte 0x54656B69
 	.4byte 0x53747261
 	.4byte 0x74656779
 	.4byte 0
 	.4byte 0x54616953
 	.4byte 0x74726174
 	.4byte 0x65677900
-	.4byte 0x803e41bc
+	.4byte 0x803E41BC
 	.4byte 0
 	.4byte 0
-	.4byte 0x803e41bc
+	.4byte 0x803E41BC
 	.4byte 0
-	.4byte 0x803e41c4
+	.4byte 0x803E41C4
 	.4byte 0
 	.4byte 0
 .global __vt__16TaiPearlStrategy
@@ -48746,40 +48746,40 @@ __vt__16TaiPearlStrategy:
 	.4byte interact__12TekiStrategyFR4TekiR18TekiInteractionKey
 	.4byte spawnCorpseParts__12TekiStrategyFR4Teki
 	.4byte 0x54616952
-	.4byte 0x6f637065
-	.4byte 0x61726c50
-	.4byte 0x6172616d
+	.4byte 0x6F637065
+	.4byte 0x61726C50
+	.4byte 0x6172616D
 	.4byte 0x65746572
 	.4byte 0x73000000
-	.4byte 0x436f7265
-	.4byte 0x4e6f6465
+	.4byte 0x436F7265
+	.4byte 0x4E6F6465
 	.4byte 0
-	.4byte 0x803e41dc
-	.4byte 0
-	.4byte 0
-	.4byte 0x803e41dc
-	.4byte 0
-	.4byte 0x803e41e4
+	.4byte 0x803E41DC
 	.4byte 0
 	.4byte 0
-	.4byte 0x54656b69
+	.4byte 0x803E41DC
+	.4byte 0
+	.4byte 0x803E41E4
+	.4byte 0
+	.4byte 0
+	.4byte 0x54656B69
 	.4byte 0x50617261
-	.4byte 0x6d657465
+	.4byte 0x6D657465
 	.4byte 0x72730000
-	.4byte 0x803e41dc
+	.4byte 0x803E41DC
 	.4byte 0
-	.4byte 0x803e41e4
+	.4byte 0x803E41E4
 	.4byte 0
-	.4byte 0x803e41f4
+	.4byte 0x803E41F4
 	.4byte 0
 	.4byte 0
-	.4byte 0x803e41dc
+	.4byte 0x803E41DC
 	.4byte 0
-	.4byte 0x803e41e4
+	.4byte 0x803E41E4
 	.4byte 0
-	.4byte 0x803e41f4
+	.4byte 0x803E41F4
 	.4byte 0
-	.4byte 0x803e41fc
+	.4byte 0x803E41FC
 	.4byte 0
 	.4byte 0
 .global __vt__21TaiRocpearlParameters
@@ -48797,17 +48797,17 @@ __vt__21TaiRocpearlParameters:
 	.4byte concat__4NodeFR8Matrix4f
 	.4byte getModelMatrix__4NodeFv
 	.4byte 0x54616950
-	.4byte 0x6561726c
+	.4byte 0x6561726C
 	.4byte 0x50617261
-	.4byte 0x6d657465
+	.4byte 0x6D657465
 	.4byte 0x72730000
-	.4byte 0x803e41dc
+	.4byte 0x803E41DC
 	.4byte 0
-	.4byte 0x803e41e4
+	.4byte 0x803E41E4
 	.4byte 0
-	.4byte 0x803e41f4
+	.4byte 0x803E41F4
 	.4byte 0
-	.4byte 0x803e41fc
+	.4byte 0x803E41FC
 	.4byte 0
 	.4byte 0
 .global __vt__18TaiPearlParameters
@@ -48824,9 +48824,9 @@ __vt__18TaiPearlParameters:
 	.4byte concat__4NodeFR3SRT
 	.4byte concat__4NodeFR8Matrix4f
 	.4byte getModelMatrix__4NodeFv
-	.4byte 0x496e7465
+	.4byte 0x496E7465
 	.4byte 0x72616374
-	.4byte 0x696f6e00
+	.4byte 0x696F6E00
 	.4byte 0
 	.4byte 0
 	.4byte 0
@@ -48838,48 +48838,48 @@ __vt__18TaiPearlParameters:
 	.4byte 0
 	.4byte 0
 	.4byte 0
-	.4byte 0x54656b69
-	.4byte 0x416e6443
-	.4byte 0x6f6e6469
-	.4byte 0x74696f6e
+	.4byte 0x54656B69
+	.4byte 0x416E6443
+	.4byte 0x6F6E6469
+	.4byte 0x74696F6E
 	.4byte 0
-	.4byte 0x436f6e64
-	.4byte 0x6974696f
-	.4byte 0x6e000000
-	.4byte 0x54656b69
-	.4byte 0x436f6e64
-	.4byte 0x6974696f
-	.4byte 0x6e000000
-	.4byte 0x803e4214
-	.4byte 0
-	.4byte 0
-	.4byte 0x803e4214
-	.4byte 0
-	.4byte 0x803e421c
+	.4byte 0x436F6E64
+	.4byte 0x6974696F
+	.4byte 0x6E000000
+	.4byte 0x54656B69
+	.4byte 0x436F6E64
+	.4byte 0x6974696F
+	.4byte 0x6E000000
+	.4byte 0x803E4214
 	.4byte 0
 	.4byte 0
+	.4byte 0x803E4214
+	.4byte 0
+	.4byte 0x803E421C
 	.4byte 0
 	.4byte 0
 	.4byte 0
-	.4byte 0x54656b69
-	.4byte 0x4e6f7443
-	.4byte 0x6f6e6469
-	.4byte 0x74696f6e
 	.4byte 0
-	.4byte 0x803e4214
 	.4byte 0
-	.4byte 0x803e421c
+	.4byte 0x54656B69
+	.4byte 0x4E6F7443
+	.4byte 0x6F6E6469
+	.4byte 0x74696F6E
+	.4byte 0
+	.4byte 0x803E4214
+	.4byte 0
+	.4byte 0x803E421C
 	.4byte 0
 	.4byte 0
 	.4byte 0
 	.4byte 0
 	.4byte 0
 	.4byte 0x54616953
-	.4byte 0x68656c6c
+	.4byte 0x68656C6C
 	.4byte 0x45617441
-	.4byte 0x6374696f
-	.4byte 0x6e000000
-	.4byte 0x803e41ac
+	.4byte 0x6374696F
+	.4byte 0x6E000000
+	.4byte 0x803E41AC
 	.4byte 0
 	.4byte 0
 .global __vt__17TaiShellEatAction
@@ -48898,14 +48898,14 @@ __vt__17TaiShellEatAction:
 	.4byte 0
 	.4byte 0
 	.4byte 0x54616953
-	.4byte 0x68656c6c
-	.4byte 0x4e617669
-	.4byte 0x50696b69
-	.4byte 0x496e7369
+	.4byte 0x68656C6C
+	.4byte 0x4E617669
+	.4byte 0x50696B69
+	.4byte 0x496E7369
 	.4byte 0x64654163
-	.4byte 0x74696f6e
+	.4byte 0x74696F6E
 	.4byte 0
-	.4byte 0x803e41ac
+	.4byte 0x803E41AC
 	.4byte 0
 	.4byte 0
 .global __vt__28TaiShellNaviPikiInsideAction
@@ -48918,14 +48918,14 @@ __vt__28TaiShellNaviPikiInsideAction:
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
 	.4byte 0x54616953
-	.4byte 0x68656c6c
+	.4byte 0x68656C6C
 	.4byte 0x53617665
-	.4byte 0x4974656d
-	.4byte 0x506f7369
-	.4byte 0x74696f6e
+	.4byte 0x4974656D
+	.4byte 0x506F7369
+	.4byte 0x74696F6E
 	.4byte 0x41637469
-	.4byte 0x6f6e0000
-	.4byte 0x803e41ac
+	.4byte 0x6F6E0000
+	.4byte 0x803E41AC
 	.4byte 0
 	.4byte 0
 .global __vt__30TaiShellSaveItemPositionAction
@@ -48938,13 +48938,13 @@ __vt__30TaiShellSaveItemPositionAction:
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
 	.4byte 0x54616953
-	.4byte 0x68656c6c
+	.4byte 0x68656C6C
 	.4byte 0x53657450
-	.4byte 0x6f736974
-	.4byte 0x696f6e41
-	.4byte 0x6374696f
-	.4byte 0x6e000000
-	.4byte 0x803e41ac
+	.4byte 0x6F736974
+	.4byte 0x696F6E41
+	.4byte 0x6374696F
+	.4byte 0x6E000000
+	.4byte 0x803E41AC
 	.4byte 0
 	.4byte 0
 .global __vt__25TaiShellSetPositionAction
@@ -48957,13 +48957,13 @@ __vt__25TaiShellSetPositionAction:
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
 	.4byte 0x54616953
-	.4byte 0x68656c6c
+	.4byte 0x68656C6C
 	.4byte 0x53747261
 	.4byte 0x74656779
 	.4byte 0
-	.4byte 0x803e41bc
+	.4byte 0x803E41BC
 	.4byte 0
-	.4byte 0x803e41c4
+	.4byte 0x803E41C4
 	.4byte 0
 	.4byte 0
 .global __vt__16TaiShellStrategy
@@ -48978,11 +48978,11 @@ __vt__16TaiShellStrategy:
 	.4byte drawDebugInfo__12TekiStrategyFR4TekiR8Graphics
 	.4byte interact__12TekiStrategyFR4TekiR18TekiInteractionKey
 	.4byte spawnCorpseParts__12TekiStrategyFR4Teki
-	.4byte 0x5461694f
-	.4byte 0x6e636541
-	.4byte 0x6374696f
-	.4byte 0x6e000000
-	.4byte 0x803e41ac
+	.4byte 0x5461694F
+	.4byte 0x6E636541
+	.4byte 0x6374696F
+	.4byte 0x6E000000
+	.4byte 0x803E41AC
 	.4byte 0
 	.4byte 0
 	.4byte 0
@@ -49000,17 +49000,17 @@ __vt__16TaiShellStrategy:
 	.4byte 0
 	.4byte 0
 	.4byte 0x54616953
-	.4byte 0x68656c6c
+	.4byte 0x68656C6C
 	.4byte 0x50617261
-	.4byte 0x6d657465
+	.4byte 0x6D657465
 	.4byte 0x72730000
-	.4byte 0x803e41dc
+	.4byte 0x803E41DC
 	.4byte 0
-	.4byte 0x803e41e4
+	.4byte 0x803E41E4
 	.4byte 0
-	.4byte 0x803e41f4
+	.4byte 0x803E41F4
 	.4byte 0
-	.4byte 0x803e41fc
+	.4byte 0x803E41FC
 	.4byte 0
 	.4byte 0
 .global __vt__18TaiShellParameters
@@ -49028,33 +49028,33 @@ __vt__18TaiShellParameters:
 	.4byte concat__4NodeFR8Matrix4f
 	.4byte getModelMatrix__4NodeFv
 	.4byte 0x74616974
-	.4byte 0x696d6572
+	.4byte 0x696D6572
 	.4byte 0x61637469
-	.4byte 0x6f6e732e
+	.4byte 0x6F6E732E
 	.4byte 0x63707000
 	.4byte 0x74616974
-	.4byte 0x696d6572
+	.4byte 0x696D6572
 	.4byte 0x61637469
-	.4byte 0x6f6e7300
+	.4byte 0x6F6E7300
 	.4byte 0x54616953
 	.4byte 0x74617274
-	.4byte 0x696e6754
-	.4byte 0x696d6572
+	.4byte 0x696E6754
+	.4byte 0x696D6572
 	.4byte 0x41637469
-	.4byte 0x6f6e0000
+	.4byte 0x6F6E0000
 	.4byte 0x54616941
-	.4byte 0x6374696f
-	.4byte 0x6e000000
+	.4byte 0x6374696F
+	.4byte 0x6E000000
 	.4byte 0x54616954
-	.4byte 0x696d6572
+	.4byte 0x696D6572
 	.4byte 0x41637469
-	.4byte 0x6f6e0000
-	.4byte 0x803e4258
+	.4byte 0x6F6E0000
+	.4byte 0x803E4258
 	.4byte 0
 	.4byte 0
-	.4byte 0x803e4258
+	.4byte 0x803E4258
 	.4byte 0
-	.4byte 0x803e4260
+	.4byte 0x803E4260
 	.4byte 0
 	.4byte 0
 .global __vt__22TaiStartingTimerAction
@@ -49067,12 +49067,12 @@ __vt__22TaiStartingTimerAction:
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
 	.4byte 0x54616954
-	.4byte 0x696d6572
-	.4byte 0x456c6170
+	.4byte 0x696D6572
+	.4byte 0x456C6170
 	.4byte 0x73656441
-	.4byte 0x6374696f
-	.4byte 0x6e000000
-	.4byte 0x803e4258
+	.4byte 0x6374696F
+	.4byte 0x6E000000
+	.4byte 0x803E4258
 	.4byte 0
 	.4byte 0
 .global __vt__21TaiTimerElapsedAction
@@ -49086,10 +49086,10 @@ __vt__21TaiTimerElapsedAction:
 	.4byte hasNextState__9TaiActionFv
 	.4byte 0x54616952
 	.4byte 0x65736574
-	.4byte 0x54696d65
+	.4byte 0x54696D65
 	.4byte 0x72416374
-	.4byte 0x696f6e00
-	.4byte 0x803e4258
+	.4byte 0x696F6E00
+	.4byte 0x803E4258
 	.4byte 0
 	.4byte 0
 .global __vt__19TaiResetTimerAction
@@ -49103,7 +49103,7 @@ __vt__19TaiResetTimerAction:
 	.4byte hasNextState__9TaiActionFv
 .global __vt__14TaiTimerAction
 __vt__14TaiTimerAction:
-	.4byte 0x803e4260
+	.4byte 0x803E4260
 	.4byte 0
 	.4byte start__14TaiTimerActionFR4Teki
 	.4byte finish__9TaiActionFR4Teki
@@ -49113,32 +49113,32 @@ __vt__14TaiTimerAction:
 	.4byte 0
 	.4byte 0x74616977
 	.4byte 0x61697461
-	.4byte 0x6374696f
-	.4byte 0x6e732e63
+	.4byte 0x6374696F
+	.4byte 0x6E732E63
 	.4byte 0x70700000
 	.4byte 0x74616977
 	.4byte 0x61697461
-	.4byte 0x6374696f
-	.4byte 0x6e730000
+	.4byte 0x6374696F
+	.4byte 0x6E730000
 	.4byte 0x54616957
 	.4byte 0x61697454
-	.4byte 0x75726e69
-	.4byte 0x6e674163
-	.4byte 0x74696f6e
+	.4byte 0x75726E69
+	.4byte 0x6E674163
+	.4byte 0x74696F6E
 	.4byte 0
 	.4byte 0x54616941
-	.4byte 0x6374696f
-	.4byte 0x6e000000
-	.4byte 0x5461694d
-	.4byte 0x6f74696f
-	.4byte 0x6e416374
-	.4byte 0x696f6e00
-	.4byte 0x803e4280
+	.4byte 0x6374696F
+	.4byte 0x6E000000
+	.4byte 0x5461694D
+	.4byte 0x6F74696F
+	.4byte 0x6E416374
+	.4byte 0x696F6E00
+	.4byte 0x803E4280
 	.4byte 0
 	.4byte 0
-	.4byte 0x803e4280
+	.4byte 0x803E4280
 	.4byte 0
-	.4byte 0x803e4288
+	.4byte 0x803E4288
 	.4byte 0
 	.4byte 0
 .global __vt__20TaiWaitTurningAction
@@ -49151,86 +49151,86 @@ __vt__20TaiWaitTurningAction:
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
 	.4byte 0
-	.4byte 0x74656b69
-	.4byte 0x2e637070
+	.4byte 0x74656B69
+	.4byte 0x2E637070
 	.4byte 0
-	.4byte 0x50656c6c
+	.4byte 0x50656C6C
 	.4byte 0x65745669
 	.4byte 0x65770000
-	.4byte 0x50616e69
-	.4byte 0x416e696d
-	.4byte 0x4b65794c
+	.4byte 0x50616E69
+	.4byte 0x416E696D
+	.4byte 0x4B65794C
 	.4byte 0x69737465
-	.4byte 0x6e657200
-	.4byte 0x4576656e
-	.4byte 0x7454616c
-	.4byte 0x6b657200
+	.4byte 0x6E657200
+	.4byte 0x4576656E
+	.4byte 0x7454616C
+	.4byte 0x6B657200
 	.4byte 0x52656643
-	.4byte 0x6f756e74
-	.4byte 0x61626c65
+	.4byte 0x6F756E74
+	.4byte 0x61626C65
 	.4byte 0
 	.4byte 0x43726561
 	.4byte 0x74757265
 	.4byte 0
-	.4byte 0x803e42b0
+	.4byte 0x803E42B0
 	.4byte 0x8
-	.4byte 0x803e42b8
+	.4byte 0x803E42B8
 	.4byte 0
 	.4byte 0
 	.4byte __RTTI__10PelletView_1
-	.4byte 0x2b8
-	.4byte 0x803e42a8
+	.4byte 0x2B8
+	.4byte 0x803E42A8
 	.4byte 0x454
-	.4byte 0x803e42b0
+	.4byte 0x803E42B0
 	.4byte 0x8
-	.4byte 0x803e42b8
+	.4byte 0x803E42B8
 	.4byte 0
-	.4byte 0x803e42c0
+	.4byte 0x803E42C0
 	.4byte 0
 	.4byte 0
 	.4byte __RTTI__10PelletView_1
-	.4byte 0x2b8
-	.4byte 0x803e42a8
-	.4byte 0x46c
-	.4byte 0x803e42b0
+	.4byte 0x2B8
+	.4byte 0x803E42A8
+	.4byte 0x46C
+	.4byte 0x803E42B0
 	.4byte 0x8
-	.4byte 0x803e42b8
+	.4byte 0x803E42B8
 	.4byte 0
-	.4byte 0x803e42c0
+	.4byte 0x803E42C0
 	.4byte 0
-	.4byte 0x803e42d0
+	.4byte 0x803E42D0
 	.4byte 0
 	.4byte 0
 	.4byte __RTTI__10PelletView_1
-	.4byte 0x2b8
-	.4byte 0x803e42a8
+	.4byte 0x2B8
+	.4byte 0x803E42A8
 	.4byte 0x538
-	.4byte 0x803e42b0
+	.4byte 0x803E42B0
 	.4byte 0x8
-	.4byte 0x803e42b8
+	.4byte 0x803E42B8
 	.4byte 0
-	.4byte 0x803e42c0
+	.4byte 0x803E42C0
 	.4byte 0
-	.4byte 0x803e42d0
+	.4byte 0x803E42D0
 	.4byte 0
-	.4byte 0x803e42e0
+	.4byte 0x803E42E0
 	.4byte 0
 	.4byte 0
 	.4byte __RTTI__10PelletView_1
-	.4byte 0x2b8
-	.4byte 0x803e42a8
+	.4byte 0x2B8
+	.4byte 0x803E42A8
 	.4byte 0x538
-	.4byte 0x803e42b0
+	.4byte 0x803E42B0
 	.4byte 0x8
-	.4byte 0x803e42b8
+	.4byte 0x803E42B8
 	.4byte 0
-	.4byte 0x803e42c0
+	.4byte 0x803E42C0
 	.4byte 0
-	.4byte 0x803e42d0
+	.4byte 0x803E42D0
 	.4byte 0
-	.4byte 0x803e42e0
+	.4byte 0x803E42E0
 	.4byte 0
-	.4byte 0x803e42f0
+	.4byte 0x803E42F0
 	.4byte 0
 	.4byte 0
 .global __vt__4Teki
@@ -49305,7 +49305,7 @@ __vt__4Teki:
 	.4byte doKill__5YTekiFv
 	.4byte exitCourse__5YTekiFv
 	.4byte __RTTI__4Teki
-	.4byte 0xfffffd48
+	.4byte 0xFFFFFD48
 	.4byte viewInit__10PelletViewFv
 	.4byte lbl_80143E40
 	.4byte lbl_80143E38
@@ -49361,23 +49361,23 @@ __vt__4Teki:
 	.4byte dieSoon__5BTekiFv
 	.4byte becomeCorpse__5BTekiFv
 	.4byte __RTTI__4Teki
-	.4byte 0xfffffac8
+	.4byte 0xFFFFFAC8
 	.4byte lbl_80143DEC
 	.4byte 0
 	.4byte 0
 	.4byte 0
 	.4byte 0
-	.4byte 0x74656b69
-	.4byte 0x616e696d
-	.4byte 0x6174696f
-	.4byte 0x6e6d616e
+	.4byte 0x74656B69
+	.4byte 0x616E696D
+	.4byte 0x6174696F
+	.4byte 0x6E6D616E
 	.4byte 0x61676572
-	.4byte 0x2e637070
+	.4byte 0x2E637070
 	.4byte 0
-	.4byte 0x74656b69
-	.4byte 0x616e696d
-	.4byte 0x6174696f
-	.4byte 0x6e6d616e
+	.4byte 0x74656B69
+	.4byte 0x616E696D
+	.4byte 0x6174696F
+	.4byte 0x6E6D616E
 	.4byte 0x61676572
 	.4byte 0
 .global lbl_802CCE6C

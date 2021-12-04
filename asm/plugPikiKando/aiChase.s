@@ -297,12 +297,12 @@ lbl_800F4594:
 	.4byte 0x69766572
 	.4byte 0x3c50696b
 	.4byte 0x693e0000
-	.4byte 0x803e0198
+	.4byte 0x803E0198
 	.4byte 0
 	.4byte 0
-	.4byte 0x803e0198
+	.4byte 0x803E0198
 	.4byte 0
-	.4byte 0x803e01a8
+	.4byte 0x803E01a8
 	.4byte 0
 	.4byte 0
 .global __vt__8ActChase
@@ -343,7 +343,7 @@ __vt__8ActChase:
 	.4byte 0x496e6974
 	.4byte 0x69616c69
 	.4byte 0x73657200
-	.4byte 0x803e01b8
+	.4byte 0x803E01b8
 	.4byte 0
 	.4byte 0
 .global __vt__Q28ActChase11Initialiser

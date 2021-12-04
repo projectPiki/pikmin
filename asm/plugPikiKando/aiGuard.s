@@ -1534,12 +1534,12 @@ lbl_800FB728:
 	.4byte 0x69766572
 	.4byte 0x3c50696b
 	.4byte 0x693e0000
-	.4byte 0x803e052c
+	.4byte 0x803E052c
 	.4byte 0
 	.4byte 0
-	.4byte 0x803e052c
+	.4byte 0x803E052c
 	.4byte 0
-	.4byte 0x803e053c
+	.4byte 0x803E053c
 	.4byte 0
 	.4byte 0
 .global __vt__8ActGuard
@@ -1590,7 +1590,7 @@ __vt__8ActGuard:
 	.4byte 0x802B6B94
 .global __RTTI__7ActGoto
 __RTTI__7ActGoto:
-	.4byte 0x803e04c8
+	.4byte 0x803E04c8
 	.4byte 0x802b6ba0
 	.4byte 0x802b6c30
 	.4byte 0

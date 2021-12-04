@@ -8,12 +8,12 @@
 	.4byte 0x53747261
 	.4byte 0x74656779
 	.4byte 0
-	.4byte 0x803e3438
+	.4byte 0x803E3438
 	.4byte 0
 	.4byte 0
 .global __vt__11TaiStrategy
 __vt__11TaiStrategy:
-	.4byte 0x803e3440
+	.4byte 0x803E3440
 	.4byte 0
 	.4byte start__11TaiStrategyFR4Teki
 	.4byte act__11TaiStrategyFR4Teki
@@ -41,7 +41,7 @@ __vt__8TaiState:
 	.4byte 0x54616941
 	.4byte 0x6374696f
 	.4byte 0x6e000000
-	.4byte 0x803e3450
+	.4byte 0x803E3450
 	.4byte 0
 	.4byte 0
 .global __vt__15TaiSerialAction
@@ -55,7 +55,7 @@ __vt__15TaiSerialAction:
 	.4byte hasNextState__9TaiActionFv
 .global __vt__9TaiAction
 __vt__9TaiAction:
-	.4byte 0x803e3450
+	.4byte 0x803E3450
 	.4byte 0
 	.4byte start__9TaiActionFR4Teki
 	.4byte finish__9TaiActionFR4Teki

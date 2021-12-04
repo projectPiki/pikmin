@@ -471,14 +471,14 @@ startMovieInf__4NaviFv:
 	.4byte 0x69766572
 	.4byte 0x3c50696b
 	.4byte 0x693e0000
-	.4byte 0x803e03e8
+	.4byte 0x803E03e8
 	.4byte 0
 	.4byte 0
-	.4byte 0x803e03e0
+	.4byte 0x803E03e0
 	.4byte 0x28
-	.4byte 0x803e03e8
+	.4byte 0x803E03e8
 	.4byte 0
-	.4byte 0x803e03f8
+	.4byte 0x803E03f8
 	.4byte 0
 	.4byte 0
 .global __vt__7ActMine
@@ -556,7 +556,7 @@ lbl_803E0390:
 	.4byte 0x802B6744
 .global __RTTI__7ActExit
 __RTTI__7ActExit:
-	.4byte 0x803e0394
+	.4byte 0x803E0394
 	.4byte 0x802b6750
 	.4byte 0
 .global lbl_803E03C0

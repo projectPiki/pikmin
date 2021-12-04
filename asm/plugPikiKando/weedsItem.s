@@ -1843,17 +1843,17 @@ __vt__4Weed:
 	.4byte 0x57656564
 	.4byte 0x7347656e
 	.4byte 0
-	.4byte 0x803e150c
+	.4byte 0x803E150c
 	.4byte 0x2b8
-	.4byte 0x803e1514
+	.4byte 0x803E1514
 	.4byte 0x8
-	.4byte 0x803e151c
+	.4byte 0x803E151c
 	.4byte 0
-	.4byte 0x803e1524
+	.4byte 0x803E1524
 	.4byte 0
-	.4byte 0x803e152c
+	.4byte 0x803E152c
 	.4byte 0
-	.4byte 0x803e1534
+	.4byte 0x803E1534
 	.4byte 0
 	.4byte 0
 .global __vt__8WeedsGen
@@ -1948,17 +1948,17 @@ __vt__8WeedsGen:
 	.4byte 0x47726173
 	.4byte 0x7347656e
 	.4byte 0
-	.4byte 0x803e150c
+	.4byte 0x803E150c
 	.4byte 0x2b8
-	.4byte 0x803e1514
+	.4byte 0x803E1514
 	.4byte 0x8
-	.4byte 0x803e151c
+	.4byte 0x803E151c
 	.4byte 0
-	.4byte 0x803e1524
+	.4byte 0x803E1524
 	.4byte 0
-	.4byte 0x803e152c
+	.4byte 0x803E152c
 	.4byte 0
-	.4byte 0x803e1534
+	.4byte 0x803E1534
 	.4byte 0
 	.4byte 0
 .global __vt__8GrassGen
@@ -2050,17 +2050,17 @@ __vt__8GrassGen:
 	.4byte stopMotion__12ItemCreatureFv
 	.4byte animationKeyUpdated__10AICreatureFR16PaniAnimKeyEvent
 	.4byte finalSetup__12ItemCreatureFv
-	.4byte 0x803e150c
+	.4byte 0x803E150c
 	.4byte 0x2b8
-	.4byte 0x803e1514
+	.4byte 0x803E1514
 	.4byte 0x8
-	.4byte 0x803e151c
+	.4byte 0x803E151c
 	.4byte 0
-	.4byte 0x803e1524
+	.4byte 0x803E1524
 	.4byte 0
-	.4byte 0x803e152c
+	.4byte 0x803E152c
 	.4byte 0
-	.4byte 0x803e1534
+	.4byte 0x803E1534
 	.4byte 0
 	.4byte 0
 .global __vt__7RockGen

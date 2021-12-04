@@ -75,7 +75,7 @@ __vt__16PaniTekiAnimator:
 	.4byte 0
 	.4byte 0x4e4e6f64
 	.4byte 0x65000000
-	.4byte 0x803e3098
+	.4byte 0x803E3098
 	.4byte 0
 .global "__RTTI__14NArray<5NNode>"
 "__RTTI__14NArray<5NNode>":

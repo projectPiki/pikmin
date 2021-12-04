@@ -20,7 +20,7 @@
 	.4byte 0x54616941
 	.4byte 0x6374696f
 	.4byte 0x6e000000
-	.4byte 0x803e3fe8
+	.4byte 0x803E3fe8
 	.4byte 0
 	.4byte 0
 .global __vt__19TaiDangerLifeAction
@@ -36,7 +36,7 @@ __vt__19TaiDangerLifeAction:
 	.4byte 0x61726e41
 	.4byte 0x6374696f
 	.4byte 0x6e000000
-	.4byte 0x803e3fe8
+	.4byte 0x803E3fe8
 	.4byte 0
 	.4byte 0
 .global __vt__13TaiWarnAction
@@ -53,7 +53,7 @@ __vt__13TaiWarnAction:
 	.4byte 0x65644163
 	.4byte 0x74696f6e
 	.4byte 0
-	.4byte 0x803e3fe8
+	.4byte 0x803E3fe8
 	.4byte 0
 	.4byte 0
 .global __vt__16TaiPressedAction
@@ -71,7 +71,7 @@ __vt__16TaiPressedAction:
 	.4byte 0x73656441
 	.4byte 0x6374696f
 	.4byte 0x6e000000
-	.4byte 0x803e3fe8
+	.4byte 0x803E3fe8
 	.4byte 0
 	.4byte 0
 .global __vt__21TaiBeingPressedAction
@@ -88,7 +88,7 @@ __vt__21TaiBeingPressedAction:
 	.4byte 0x65644163
 	.4byte 0x74696f6e
 	.4byte 0
-	.4byte 0x803e3fe8
+	.4byte 0x803E3fe8
 	.4byte 0
 	.4byte 0
 .global __vt__16TaiSmashedAction
@@ -105,7 +105,7 @@ __vt__16TaiSmashedAction:
 	.4byte 0x65644163
 	.4byte 0x74696f6e
 	.4byte 0
-	.4byte 0x803e3fe8
+	.4byte 0x803E3fe8
 	.4byte 0
 	.4byte 0
 .global __vt__16TaiStickedAction
@@ -129,12 +129,12 @@ __vt__16TaiStickedAction:
 	.4byte 0x436f6e64
 	.4byte 0x6974696f
 	.4byte 0x6e000000
-	.4byte 0x803e4020
+	.4byte 0x803E4020
 	.4byte 0
 	.4byte 0
-	.4byte 0x803e4020
+	.4byte 0x803E4020
 	.4byte 0
-	.4byte 0x803e4028
+	.4byte 0x803E4028
 	.4byte 0
 	.4byte 0
 	.4byte 0
@@ -154,7 +154,7 @@ __vt__16TaiStickedAction:
 	.4byte 0x6973696f
 	.4byte 0x6e416374
 	.4byte 0x696f6e00
-	.4byte 0x803e3fe8
+	.4byte 0x803E3fe8
 	.4byte 0
 	.4byte 0
 .global __vt__31TaiTargetNearestCollisionAction
@@ -174,7 +174,7 @@ __vt__31TaiTargetNearestCollisionAction:
 	.4byte 0x696c616e
 	.4byte 0x74416374
 	.4byte 0x696f6e00
-	.4byte 0x803e3fe8
+	.4byte 0x803E3fe8
 	.4byte 0
 	.4byte 0
 .global __vt__31TaiTargetNearestAssailantAction
@@ -195,12 +195,12 @@ __vt__31TaiTargetNearestAssailantAction:
 	.4byte 0x6f74696f
 	.4byte 0x6e416374
 	.4byte 0x696f6e00
-	.4byte 0x803e3fe8
+	.4byte 0x803E3fe8
 	.4byte 0
 	.4byte 0
-	.4byte 0x803e3fe8
+	.4byte 0x803E3fe8
 	.4byte 0
-	.4byte 0x803e4040
+	.4byte 0x803E4040
 	.4byte 0
 	.4byte 0
 .global __vt__17TaiDamagingAction
@@ -223,7 +223,7 @@ __vt__17TaiDamagingAction:
 	.4byte 0x67654163
 	.4byte 0x74696f6e
 	.4byte 0
-	.4byte 0x803e3fe8
+	.4byte 0x803E3fe8
 	.4byte 0
 	.4byte 0
 .global __vt__40TaiCounterattackSimultaneousDamageAction
@@ -242,7 +242,7 @@ __vt__40TaiCounterattackSimultaneousDamageAction:
 	.4byte 0x616d6167
 	.4byte 0x65416374
 	.4byte 0x696f6e00
-	.4byte 0x803e3fe8
+	.4byte 0x803E3fe8
 	.4byte 0
 	.4byte 0
 .global __vt__27TaiSimultaneousDamageAction
@@ -258,7 +258,7 @@ __vt__27TaiSimultaneousDamageAction:
 	.4byte 0x616d6167
 	.4byte 0x65416374
 	.4byte 0x696f6e00
-	.4byte 0x803e3fe8
+	.4byte 0x803E3fe8
 	.4byte 0
 	.4byte 0
 .global __vt__15TaiDamageAction
@@ -276,7 +276,7 @@ __vt__15TaiDamageAction:
 	.4byte 0x6c654163
 	.4byte 0x74696f6e
 	.4byte 0
-	.4byte 0x803e3fe8
+	.4byte 0x803E3fe8
 	.4byte 0
 	.4byte 0
 .global __vt__20TaiDamageScaleAction
@@ -294,7 +294,7 @@ __vt__20TaiDamageScaleAction:
 	.4byte 0x6e744163
 	.4byte 0x74696f6e
 	.4byte 0
-	.4byte 0x803e3fe8
+	.4byte 0x803E3fe8
 	.4byte 0
 	.4byte 0
 .global __vt__20TaiDamageCountAction
@@ -313,7 +313,7 @@ __vt__20TaiDamageCountAction:
 	.4byte 0x73657441
 	.4byte 0x6374696f
 	.4byte 0x6e000000
-	.4byte 0x803e3fe8
+	.4byte 0x803E3fe8
 	.4byte 0
 	.4byte 0
 .global __vt__25TaiDamageCountResetAction
@@ -329,9 +329,9 @@ __vt__25TaiDamageCountResetAction:
 	.4byte 0x79696e67
 	.4byte 0x41637469
 	.4byte 0x6f6e0000
-	.4byte 0x803e3fe8
+	.4byte 0x803E3fe8
 	.4byte 0
-	.4byte 0x803e4040
+	.4byte 0x803E4040
 	.4byte 0
 	.4byte 0
 .global __vt__14TaiDyingAction
@@ -350,7 +350,7 @@ __vt__14TaiDyingAction:
 	.4byte 0x65637441
 	.4byte 0x6374696f
 	.4byte 0x6e000000
-	.4byte 0x803e3fe8
+	.4byte 0x803E3fe8
 	.4byte 0
 	.4byte 0
 .global __vt__25TaiCreateDeadEffectAction
@@ -367,7 +367,7 @@ __vt__25TaiCreateDeadEffectAction:
 	.4byte 0x4974656d
 	.4byte 0x73416374
 	.4byte 0x696f6e00
-	.4byte 0x803e3fe8
+	.4byte 0x803E3fe8
 	.4byte 0
 	.4byte 0
 .global __vt__19TaiSpawnItemsAction
@@ -384,7 +384,7 @@ __vt__19TaiSpawnItemsAction:
 	.4byte 0x4479696e
 	.4byte 0x67416374
 	.4byte 0x696f6e00
-	.4byte 0x803e3fe8
+	.4byte 0x803E3fe8
 	.4byte 0
 	.4byte 0
 .global __vt__19TaiStartDyingAction
@@ -400,7 +400,7 @@ __vt__19TaiStartDyingAction:
 	.4byte 0x79654163
 	.4byte 0x74696f6e
 	.4byte 0
-	.4byte 0x803e3fe8
+	.4byte 0x803E3fe8
 	.4byte 0
 	.4byte 0
 .global __vt__12TaiDyeAction
@@ -417,7 +417,7 @@ __vt__12TaiDyeAction:
 	.4byte 0x616d6167
 	.4byte 0x65416374
 	.4byte 0x696f6e00
-	.4byte 0x803e3fe8
+	.4byte 0x803E3fe8
 	.4byte 0
 	.4byte 0
 .global __vt__19TaiLifeDamageAction
@@ -434,7 +434,7 @@ __vt__19TaiLifeDamageAction:
 	.4byte 0x65726f41
 	.4byte 0x6374696f
 	.4byte 0x6e000000
-	.4byte 0x803e3fe8
+	.4byte 0x803E3fe8
 	.4byte 0
 	.4byte 0
 .global __vt__17TaiLifeZeroAction
@@ -450,7 +450,7 @@ __vt__17TaiLifeZeroAction:
 	.4byte 0x65616441
 	.4byte 0x6374696f
 	.4byte 0x6e000000
-	.4byte 0x803e3fe8
+	.4byte 0x803E3fe8
 	.4byte 0
 	.4byte 0
 .global __vt__13TaiDeadAction
@@ -465,13 +465,13 @@ __vt__13TaiDeadAction:
 	.4byte 0
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
-	.4byte 0x803e3fb0
+	.4byte 0x803E3fb0
 	.4byte 0
 	.4byte 0x802cb618
 	.4byte 0x802cb624
 	.4byte 0x4e6f6465
 	.4byte 0
-	.4byte 0x803e3fc8
+	.4byte 0x803E3fc8
 	.4byte 0x802cb630
 	.4byte 0x802cb644
 	.4byte 0x802cb654

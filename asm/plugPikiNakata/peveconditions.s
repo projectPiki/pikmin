@@ -103,7 +103,7 @@ __vt__20PeveBooleanCondition:
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 	.4byte 0x4e4e6f64
 	.4byte 0x65000000
-	.4byte 0x803e3350
+	.4byte 0x803E3350
 	.4byte 0
 	.4byte 0x802c5d0c
 	.4byte 0x802c5d18

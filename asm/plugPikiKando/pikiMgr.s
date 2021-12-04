@@ -1613,7 +1613,7 @@ __vt__7PikiMgr:
 	.4byte 0x42617365
 	.4byte 0x5061726d
 	.4byte 0
-	.4byte 0x803e0d28
+	.4byte 0x803E0d28
 	.4byte 0
 	.4byte 0
 	.4byte 0
@@ -1624,7 +1624,7 @@ __vt__7PikiMgr:
 	.4byte 0x5061726d
 	.4byte 0x3c666c6f
 	.4byte 0x61743e00
-	.4byte 0x803e0d28
+	.4byte 0x803E0d28
 	.4byte 0
 	.4byte 0
 	.4byte 0
@@ -1639,7 +1639,7 @@ __vt__7PikiMgr:
 	.4byte 0x74757265
 	.4byte 0x50726f70
 	.4byte 0
-	.4byte 0x803e0d30
+	.4byte 0x803E0d30
 	.4byte 0
 	.4byte 0
 .global __vt__8PikiProp
@@ -1664,7 +1664,7 @@ __vt__8PikiProp:
 	.4byte 0x802b88e0
 .global __RTTI__4Piki
 __RTTI__4Piki:
-	.4byte 0x803e0b58
+	.4byte 0x803E0b58
 	.4byte 0x802b88f4
 .global lbl_803E0B80
 lbl_803E0B80:

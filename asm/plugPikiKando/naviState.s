@@ -11292,22 +11292,22 @@ lbl_80222680:
 	.4byte 0x74653c4e
 	.4byte 0x6176693e
 	.4byte 0
-	.4byte 0x803e2544
+	.4byte 0x803E2544
 	.4byte 0
 	.4byte 0
 	.4byte 0x4e617669
 	.4byte 0x53746174
 	.4byte 0x65000000
-	.4byte 0x803e2544
+	.4byte 0x803E2544
 	.4byte 0
 	.4byte "__RTTI__13AState<4Navi>"
 	.4byte 0
 	.4byte 0
-	.4byte 0x803e2544
+	.4byte 0x803E2544
 	.4byte 0
 	.4byte "__RTTI__13AState<4Navi>"
 	.4byte 0
-	.4byte 0x803e2554
+	.4byte 0x803E2554
 	.4byte 0
 	.4byte 0
 .global __vt__18NaviUfoAccessState
@@ -11339,11 +11339,11 @@ __vt__18NaviUfoAccessState:
 	.4byte 0x65737353
 	.4byte 0x74617465
 	.4byte 0
-	.4byte 0x803e2544
+	.4byte 0x803E2544
 	.4byte 0
 	.4byte "__RTTI__13AState<4Navi>"
 	.4byte 0
-	.4byte 0x803e2554
+	.4byte 0x803E2554
 	.4byte 0
 	.4byte 0
 .global __vt__20NaviPartsAccessState
@@ -11374,11 +11374,11 @@ __vt__20NaviPartsAccessState:
 	.4byte 0x74696e67
 	.4byte 0x53746174
 	.4byte 0x65000000
-	.4byte 0x803e2544
+	.4byte 0x803E2544
 	.4byte 0
 	.4byte "__RTTI__13AState<4Navi>"
 	.4byte 0
-	.4byte 0x803e2554
+	.4byte 0x803E2554
 	.4byte 0
 	.4byte 0
 .global __vt__17NaviStartingState
@@ -11409,11 +11409,11 @@ __vt__17NaviStartingState:
 	.4byte 0x5a65726f
 	.4byte 0x53746174
 	.4byte 0x65000000
-	.4byte 0x803e2544
+	.4byte 0x803E2544
 	.4byte 0
 	.4byte "__RTTI__13AState<4Navi>"
 	.4byte 0
-	.4byte 0x803e2554
+	.4byte 0x803E2554
 	.4byte 0
 	.4byte 0
 .global __vt__17NaviPikiZeroState
@@ -11443,11 +11443,11 @@ __vt__17NaviPikiZeroState:
 	.4byte 0x44656164
 	.4byte 0x53746174
 	.4byte 0x65000000
-	.4byte 0x803e2544
+	.4byte 0x803E2544
 	.4byte 0
 	.4byte "__RTTI__13AState<4Navi>"
 	.4byte 0
-	.4byte 0x803e2554
+	.4byte 0x803E2554
 	.4byte 0
 	.4byte 0
 .global __vt__13NaviDeadState
@@ -11477,11 +11477,11 @@ __vt__13NaviDeadState:
 	.4byte 0x49726f49
 	.4byte 0x726f5374
 	.4byte 0x61746500
-	.4byte 0x803e2544
+	.4byte 0x803E2544
 	.4byte 0
 	.4byte "__RTTI__13AState<4Navi>"
 	.4byte 0
-	.4byte 0x803e2554
+	.4byte 0x803E2554
 	.4byte 0
 	.4byte 0
 .global __vt__15NaviIroIroState
@@ -11511,11 +11511,11 @@ __vt__15NaviIroIroState:
 	.4byte 0x436c6561
 	.4byte 0x72537461
 	.4byte 0x74650000
-	.4byte 0x803e2544
+	.4byte 0x803E2544
 	.4byte 0
 	.4byte "__RTTI__13AState<4Navi>"
 	.4byte 0
-	.4byte 0x803e2554
+	.4byte 0x803E2554
 	.4byte 0
 	.4byte 0
 .global __vt__14NaviClearState
@@ -11545,11 +11545,11 @@ __vt__14NaviClearState:
 	.4byte 0x4c6f636b
 	.4byte 0x53746174
 	.4byte 0x65000000
-	.4byte 0x803e2544
+	.4byte 0x803E2544
 	.4byte 0
 	.4byte "__RTTI__13AState<4Navi>"
 	.4byte 0
-	.4byte 0x803e2554
+	.4byte 0x803E2554
 	.4byte 0
 	.4byte 0
 .global __vt__13NaviLockState
@@ -11579,11 +11579,11 @@ __vt__13NaviLockState:
 	.4byte 0x41747461
 	.4byte 0x636b5374
 	.4byte 0x61746500
-	.4byte 0x803e2544
+	.4byte 0x803E2544
 	.4byte 0
 	.4byte "__RTTI__13AState<4Navi>"
 	.4byte 0
-	.4byte 0x803e2554
+	.4byte 0x803E2554
 	.4byte 0
 	.4byte 0
 .global __vt__15NaviAttackState
@@ -11613,11 +11613,11 @@ __vt__15NaviAttackState:
 	.4byte 0x57617465
 	.4byte 0x72537461
 	.4byte 0x74650000
-	.4byte 0x803e2544
+	.4byte 0x803E2544
 	.4byte 0
 	.4byte "__RTTI__13AState<4Navi>"
 	.4byte 0
-	.4byte 0x803e2554
+	.4byte 0x803E2554
 	.4byte 0
 	.4byte 0
 .global __vt__14NaviWaterState
@@ -11647,11 +11647,11 @@ __vt__14NaviWaterState:
 	.4byte 0x536f7753
 	.4byte 0x74617465
 	.4byte 0
-	.4byte 0x803e2544
+	.4byte 0x803E2544
 	.4byte 0
 	.4byte "__RTTI__13AState<4Navi>"
 	.4byte 0
-	.4byte 0x803e2554
+	.4byte 0x803E2554
 	.4byte 0
 	.4byte 0
 .global __vt__12NaviSowState
@@ -11682,11 +11682,11 @@ __vt__12NaviSowState:
 	.4byte 0x73656453
 	.4byte 0x74617465
 	.4byte 0
-	.4byte 0x803e2544
+	.4byte 0x803E2544
 	.4byte 0
 	.4byte "__RTTI__13AState<4Navi>"
 	.4byte 0
-	.4byte 0x803e2554
+	.4byte 0x803E2554
 	.4byte 0
 	.4byte 0
 .global __vt__16NaviPressedState
@@ -11717,11 +11717,11 @@ __vt__16NaviPressedState:
 	.4byte 0x41646a75
 	.4byte 0x73745374
 	.4byte 0x61746500
-	.4byte 0x803e2544
+	.4byte 0x803E2544
 	.4byte 0
 	.4byte "__RTTI__13AState<4Navi>"
 	.4byte 0
-	.4byte 0x803e2554
+	.4byte 0x803E2554
 	.4byte 0
 	.4byte 0
 .global __vt__19NaviNukuAdjustState
@@ -11751,11 +11751,11 @@ __vt__19NaviNukuAdjustState:
 	.4byte 0x4e756b75
 	.4byte 0x53746174
 	.4byte 0x65000000
-	.4byte 0x803e2544
+	.4byte 0x803E2544
 	.4byte 0
 	.4byte "__RTTI__13AState<4Navi>"
 	.4byte 0
-	.4byte 0x803e2554
+	.4byte 0x803E2554
 	.4byte 0
 	.4byte 0
 .global __vt__13NaviNukuState
@@ -11786,11 +11786,11 @@ __vt__13NaviNukuState:
 	.4byte 0x50696b69
 	.4byte 0x53746174
 	.4byte 0x65000000
-	.4byte 0x803e2544
+	.4byte 0x803E2544
 	.4byte 0
 	.4byte "__RTTI__13AState<4Navi>"
 	.4byte 0
-	.4byte 0x803e2554
+	.4byte 0x803E2554
 	.4byte 0
 	.4byte 0
 .global __vt__17NaviPushPikiState
@@ -11820,11 +11820,11 @@ __vt__17NaviPushPikiState:
 	.4byte 0x50757368
 	.4byte 0x53746174
 	.4byte 0x65000000
-	.4byte 0x803e2544
+	.4byte 0x803E2544
 	.4byte 0
 	.4byte "__RTTI__13AState<4Navi>"
 	.4byte 0
-	.4byte 0x803e2554
+	.4byte 0x803E2554
 	.4byte 0
 	.4byte 0
 .global __vt__13NaviPushState
@@ -11854,11 +11854,11 @@ __vt__13NaviPushState:
 	.4byte 0x5468726f
 	.4byte 0x77537461
 	.4byte 0x74650000
-	.4byte 0x803e2544
+	.4byte 0x803E2544
 	.4byte 0
 	.4byte "__RTTI__13AState<4Navi>"
 	.4byte 0
-	.4byte 0x803e2554
+	.4byte 0x803E2554
 	.4byte 0
 	.4byte 0
 .global __vt__14NaviThrowState
@@ -11889,11 +11889,11 @@ __vt__14NaviThrowState:
 	.4byte 0x77576169
 	.4byte 0x74537461
 	.4byte 0x74650000
-	.4byte 0x803e2544
+	.4byte 0x803E2544
 	.4byte 0
 	.4byte "__RTTI__13AState<4Navi>"
 	.4byte 0
-	.4byte 0x803e2554
+	.4byte 0x803E2554
 	.4byte 0
 	.4byte 0
 .global __vt__18NaviThrowWaitState
@@ -11924,11 +11924,11 @@ __vt__18NaviThrowWaitState:
 	.4byte 0x61736553
 	.4byte 0x74617465
 	.4byte 0
-	.4byte 0x803e2544
+	.4byte 0x803E2544
 	.4byte 0
 	.4byte "__RTTI__13AState<4Navi>"
 	.4byte 0
-	.4byte 0x803e2554
+	.4byte 0x803E2554
 	.4byte 0
 	.4byte 0
 .global __vt__16NaviReleaseState
@@ -11958,11 +11958,11 @@ __vt__16NaviReleaseState:
 	.4byte 0x47617468
 	.4byte 0x65725374
 	.4byte 0x61746500
-	.4byte 0x803e2544
+	.4byte 0x803E2544
 	.4byte 0
 	.4byte "__RTTI__13AState<4Navi>"
 	.4byte 0
-	.4byte 0x803e2554
+	.4byte 0x803E2554
 	.4byte 0
 	.4byte 0
 .global __vt__15NaviGatherState
@@ -11992,11 +11992,11 @@ __vt__15NaviGatherState:
 	.4byte 0x4765797a
 	.4byte 0x65725374
 	.4byte 0x61746500
-	.4byte 0x803e2544
+	.4byte 0x803E2544
 	.4byte 0
 	.4byte "__RTTI__13AState<4Navi>"
 	.4byte 0
-	.4byte 0x803e2554
+	.4byte 0x803E2554
 	.4byte 0
 	.4byte 0
 .global __vt__15NaviGeyzerState
@@ -12026,11 +12026,11 @@ __vt__15NaviGeyzerState:
 	.4byte 0x466c6963
 	.4byte 0x6b537461
 	.4byte 0x74650000
-	.4byte 0x803e2544
+	.4byte 0x803E2544
 	.4byte 0
 	.4byte "__RTTI__13AState<4Navi>"
 	.4byte 0
-	.4byte 0x803e2554
+	.4byte 0x803E2554
 	.4byte 0
 	.4byte 0
 .global __vt__14NaviFlickState
@@ -12060,11 +12060,11 @@ __vt__14NaviFlickState:
 	.4byte 0x49646c65
 	.4byte 0x53746174
 	.4byte 0x65000000
-	.4byte 0x803e2544
+	.4byte 0x803E2544
 	.4byte 0
 	.4byte "__RTTI__13AState<4Navi>"
 	.4byte 0
-	.4byte 0x803e2554
+	.4byte 0x803E2554
 	.4byte 0
 	.4byte 0
 .global __vt__13NaviIdleState
@@ -12095,11 +12095,11 @@ __vt__13NaviIdleState:
 	.4byte 0x61726953
 	.4byte 0x74617465
 	.4byte 0
-	.4byte 0x803e2544
+	.4byte 0x803E2544
 	.4byte 0
 	.4byte "__RTTI__13AState<4Navi>"
 	.4byte 0
-	.4byte 0x803e2554
+	.4byte 0x803E2554
 	.4byte 0
 	.4byte 0
 .global __vt__16NaviFunbariState
@@ -12130,11 +12130,11 @@ __vt__16NaviFunbariState:
 	.4byte 0x45786974
 	.4byte 0x53746174
 	.4byte 0x65000000
-	.4byte 0x803e2544
+	.4byte 0x803E2544
 	.4byte 0
 	.4byte "__RTTI__13AState<4Navi>"
 	.4byte 0
-	.4byte 0x803e2554
+	.4byte 0x803E2554
 	.4byte 0
 	.4byte 0
 .global __vt__17NaviRopeExitState
@@ -12164,11 +12164,11 @@ __vt__17NaviRopeExitState:
 	.4byte 0x526f7065
 	.4byte 0x53746174
 	.4byte 0x65000000
-	.4byte 0x803e2544
+	.4byte 0x803E2544
 	.4byte 0
 	.4byte "__RTTI__13AState<4Navi>"
 	.4byte 0
-	.4byte 0x803e2554
+	.4byte 0x803E2554
 	.4byte 0
 	.4byte 0
 .global __vt__13NaviRopeState
@@ -12198,11 +12198,11 @@ __vt__13NaviRopeState:
 	.4byte 0x5069636b
 	.4byte 0x53746174
 	.4byte 0x65000000
-	.4byte 0x803e2544
+	.4byte 0x803E2544
 	.4byte 0
 	.4byte "__RTTI__13AState<4Navi>"
 	.4byte 0
-	.4byte 0x803e2554
+	.4byte 0x803E2554
 	.4byte 0
 	.4byte 0
 .global __vt__13NaviPickState
@@ -12249,11 +12249,11 @@ __vt__13NaviPickState:
 	.4byte 0x28
 	.4byte __RTTI__Q212ContainerWin8Listener
 	.4byte 0x20
-	.4byte 0x803e2544
+	.4byte 0x803E2544
 	.4byte 0
 	.4byte "__RTTI__13AState<4Navi>"
 	.4byte 0
-	.4byte 0x803e2554
+	.4byte 0x803E2554
 	.4byte 0
 	.4byte 0
 .global __vt__18NaviContainerState
@@ -12301,11 +12301,11 @@ __vt__Q212ContainerWin8Listener:
 	.4byte 0x55666f53
 	.4byte 0x74617465
 	.4byte 0
-	.4byte 0x803e2544
+	.4byte 0x803E2544
 	.4byte 0
 	.4byte "__RTTI__13AState<4Navi>"
 	.4byte 0
-	.4byte 0x803e2554
+	.4byte 0x803E2554
 	.4byte 0
 	.4byte 0
 .global __vt__12NaviUfoState
@@ -12335,11 +12335,11 @@ __vt__12NaviUfoState:
 	.4byte 0x57616c6b
 	.4byte 0x53746174
 	.4byte 0x65000000
-	.4byte 0x803e2544
+	.4byte 0x803E2544
 	.4byte 0
 	.4byte "__RTTI__13AState<4Navi>"
 	.4byte 0
-	.4byte 0x803e2554
+	.4byte 0x803E2554
 	.4byte 0
 	.4byte 0
 .global __vt__13NaviWalkState
@@ -12369,11 +12369,11 @@ __vt__13NaviWalkState:
 	.4byte 0x42757279
 	.4byte 0x53746174
 	.4byte 0x65000000
-	.4byte 0x803e2544
+	.4byte 0x803E2544
 	.4byte 0
 	.4byte "__RTTI__13AState<4Navi>"
 	.4byte 0
-	.4byte 0x803e2554
+	.4byte 0x803E2554
 	.4byte 0
 	.4byte 0
 .global __vt__13NaviBuryState
@@ -12417,11 +12417,11 @@ __vt__13NaviBuryState:
 	.4byte 0x53747563
 	.4byte 0x6b537461
 	.4byte 0x74650000
-	.4byte 0x803e2544
+	.4byte 0x803E2544
 	.4byte 0
 	.4byte "__RTTI__13AState<4Navi>"
 	.4byte 0
-	.4byte 0x803e2554
+	.4byte 0x803E2554
 	.4byte 0
 	.4byte 0
 .global __vt__14NaviStuckState
@@ -12452,11 +12452,11 @@ __vt__14NaviStuckState:
 	.4byte 0x496e6653
 	.4byte 0x74617465
 	.4byte 0
-	.4byte 0x803e2544
+	.4byte 0x803E2544
 	.4byte 0
 	.4byte "__RTTI__13AState<4Navi>"
 	.4byte 0
-	.4byte 0x803e2554
+	.4byte 0x803E2554
 	.4byte 0
 	.4byte 0
 .global __vt__16NaviDemoInfState
@@ -12487,11 +12487,11 @@ __vt__16NaviDemoInfState:
 	.4byte 0x57616974
 	.4byte 0x53746174
 	.4byte 0x65000000
-	.4byte 0x803e2544
+	.4byte 0x803E2544
 	.4byte 0
 	.4byte "__RTTI__13AState<4Navi>"
 	.4byte 0
-	.4byte 0x803e2554
+	.4byte 0x803E2554
 	.4byte 0
 	.4byte 0
 .global __vt__17NaviDemoWaitState
@@ -12521,11 +12521,11 @@ __vt__17NaviDemoWaitState:
 	.4byte 0x50656c6c
 	.4byte 0x65745374
 	.4byte 0x61746500
-	.4byte 0x803e2544
+	.4byte 0x803E2544
 	.4byte 0
 	.4byte "__RTTI__13AState<4Navi>"
 	.4byte 0
-	.4byte 0x803e2554
+	.4byte 0x803E2554
 	.4byte 0
 	.4byte 0
 .global __vt__15NaviPelletState
@@ -12553,7 +12553,7 @@ __vt__15NaviPelletState:
 	.4byte invincible__15NaviPelletStateFP4Navi
 .global __vt__9NaviState
 __vt__9NaviState:
-	.4byte 0x803e2554
+	.4byte 0x803E2554
 	.4byte 0
 	.4byte "procMsg__15Receiver<4Navi>FP4NaviP3Msg"
 	.4byte "procBounceMsg__15Receiver<4Navi>FP4NaviP9MsgBounce"
@@ -12598,7 +12598,7 @@ __vt__9NaviState:
 	.4byte "transit__13AState<4Navi>FP4Navii"
 .global "__vt__15Receiver<4Navi>"
 "__vt__15Receiver<4Navi>":
-	.4byte 0x803e2544
+	.4byte 0x803E2544
 	.4byte 0
 	.4byte "procMsg__15Receiver<4Navi>FP4NaviP3Msg"
 	.4byte "procBounceMsg__15Receiver<4Navi>FP4NaviP9MsgBounce"
@@ -12660,7 +12660,7 @@ __RTTI__8NaviProp:
 	.4byte 0x802c04d0
 .global __RTTI__4Navi
 __RTTI__4Navi:
-	.4byte 0x803e2278
+	.4byte 0x803E2278
 	.4byte 0x802c04e4
 .global lbl_803E22A0
 lbl_803E22A0:

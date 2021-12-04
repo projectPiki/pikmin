@@ -49,7 +49,7 @@ lbl_801198D8:
 	.4byte 0x436f6e64
 	.4byte 0x6974696f
 	.4byte 0x6e000000
-	.4byte 0x803e1290
+	.4byte 0x803E1290
 	.4byte 0
 	.4byte 0
 .global __vt__13CndStickMouth
@@ -60,7 +60,7 @@ __vt__13CndStickMouth:
 	.4byte 0x436e6449
 	.4byte 0x73417461
 	.4byte 0x72690000
-	.4byte 0x803e1290
+	.4byte 0x803E1290
 	.4byte 0
 	.4byte 0
 .global __vt__10CndIsAtari
@@ -72,7 +72,7 @@ __vt__10CndIsAtari:
 	.4byte 0x73566973
 	.4byte 0x69626c65
 	.4byte 0
-	.4byte 0x803e1290
+	.4byte 0x803E1290
 	.4byte 0
 	.4byte 0
 .global __vt__12CndIsVisible

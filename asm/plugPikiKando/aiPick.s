@@ -677,16 +677,16 @@ __vt__9ActFlower:
 	.4byte 0x416e6441
 	.4byte 0x6374696f
 	.4byte 0x6e000000
-	.4byte 0x803e0570
+	.4byte 0x803E0570
 	.4byte 0
-	.4byte 0x803e0580
+	.4byte 0x803E0580
 	.4byte 0
 	.4byte 0
-	.4byte 0x803e0570
+	.4byte 0x803E0570
 	.4byte 0
-	.4byte 0x803e0580
+	.4byte 0x803E0580
 	.4byte 0
-	.4byte 0x803e0590
+	.4byte 0x803E0590
 	.4byte 0
 	.4byte 0
 .global __vt__11ActPickItem

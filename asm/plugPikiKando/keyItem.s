@@ -551,49 +551,49 @@ lbl_8012C580:
 	.4byte 0x43726561
 	.4byte 0x74757265
 	.4byte 0
-	.4byte 0x803e19c8
+	.4byte 0x803E19c8
 	.4byte 0x8
-	.4byte 0x803e19d0
+	.4byte 0x803E19d0
 	.4byte 0
 	.4byte 0
 	.4byte 0x41494372
 	.4byte 0x65617475
 	.4byte 0x72650000
-	.4byte 0x803e19c0
+	.4byte 0x803E19c0
 	.4byte 0x2b8
-	.4byte 0x803e19c8
+	.4byte 0x803E19c8
 	.4byte 0x8
-	.4byte 0x803e19d0
+	.4byte 0x803E19d0
 	.4byte 0
-	.4byte 0x803e19d8
+	.4byte 0x803E19d8
 	.4byte 0
 	.4byte 0
 	.4byte 0x4974656d
 	.4byte 0x43726561
 	.4byte 0x74757265
 	.4byte 0
-	.4byte 0x803e19c0
+	.4byte 0x803E19c0
 	.4byte 0x2b8
-	.4byte 0x803e19c8
+	.4byte 0x803E19c8
 	.4byte 0x8
-	.4byte 0x803e19d0
+	.4byte 0x803E19d0
 	.4byte 0
-	.4byte 0x803e19d8
+	.4byte 0x803E19d8
 	.4byte 0
-	.4byte 0x803e19e0
+	.4byte 0x803E19e0
 	.4byte 0
 	.4byte 0
-	.4byte 0x803e19c0
+	.4byte 0x803E19c0
 	.4byte 0x2b8
-	.4byte 0x803e19c8
+	.4byte 0x803E19c8
 	.4byte 0x8
-	.4byte 0x803e19d0
+	.4byte 0x803E19d0
 	.4byte 0
-	.4byte 0x803e19d8
+	.4byte 0x803E19d8
 	.4byte 0
-	.4byte 0x803e19e0
+	.4byte 0x803E19e0
 	.4byte 0
-	.4byte 0x803e19e8
+	.4byte 0x803E19e8
 	.4byte 0
 	.4byte 0
 .global __vt__8DoorItem
@@ -685,11 +685,11 @@ __vt__8DoorItem:
 	.4byte stopMotion__12ItemCreatureFv
 	.4byte animationKeyUpdated__10AICreatureFR16PaniAnimKeyEvent
 	.4byte finalSetup__12ItemCreatureFv
-	.4byte 0x803e19c8
+	.4byte 0x803E19c8
 	.4byte 0x8
-	.4byte 0x803e19d0
+	.4byte 0x803E19d0
 	.4byte 0
-	.4byte 0x803e19d8
+	.4byte 0x803E19d8
 	.4byte 0
 	.4byte 0
 .global __vt__7KeyItem

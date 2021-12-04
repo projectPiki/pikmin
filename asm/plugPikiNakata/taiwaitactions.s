@@ -23,12 +23,12 @@
 	.4byte 0x6f74696f
 	.4byte 0x6e416374
 	.4byte 0x696f6e00
-	.4byte 0x803e4280
+	.4byte 0x803E4280
 	.4byte 0
 	.4byte 0
-	.4byte 0x803e4280
+	.4byte 0x803E4280
 	.4byte 0
-	.4byte 0x803e4288
+	.4byte 0x803E4288
 	.4byte 0
 	.4byte 0
 .global __vt__20TaiWaitTurningAction

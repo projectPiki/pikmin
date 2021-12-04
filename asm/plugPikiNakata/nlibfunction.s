@@ -87,7 +87,7 @@ __vt__9NFunction:
 	.4byte 0
 	.4byte 0x47656e42
 	.4byte 0x61736500
-	.4byte 0x803e2fa0
+	.4byte 0x803E2fa0
 	.4byte 0x802c40d4
 	.4byte 0x802c40e0
 	.4byte 0x802c40ec

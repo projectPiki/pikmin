@@ -122,12 +122,12 @@ __vt__14GenObjectPlant:
 	.4byte 0x506c616e
 	.4byte 0x744d6772
 	.4byte 0
-	.4byte 0x803e2e90
+	.4byte 0x803E2e90
 	.4byte 0
 	.4byte 0
-	.4byte 0x803e2e90
+	.4byte 0x803E2e90
 	.4byte 0
-	.4byte 0x803e2e98
+	.4byte 0x803E2e98
 	.4byte 0
 	.4byte 0
 	.4byte 0x54726176
@@ -136,39 +136,39 @@ __vt__14GenObjectPlant:
 	.4byte 0x4f626a65
 	.4byte 0x63744d67
 	.4byte 0x72000000
-	.4byte 0x803e2e90
+	.4byte 0x803E2e90
 	.4byte 0x8
-	.4byte 0x803e2e98
+	.4byte 0x803E2e98
 	.4byte 0x8
-	.4byte 0x803e2ea8
+	.4byte 0x803E2ea8
 	.4byte 0x8
-	.4byte 0x803e2eb0
+	.4byte 0x803E2eb0
 	.4byte 0
 	.4byte 0
 	.4byte 0x43726561
 	.4byte 0x74757265
 	.4byte 0x4e6f6465
 	.4byte 0x4d677200
-	.4byte 0x803e2e90
+	.4byte 0x803E2e90
 	.4byte 0x8
-	.4byte 0x803e2e98
+	.4byte 0x803E2e98
 	.4byte 0x8
-	.4byte 0x803e2ea8
+	.4byte 0x803E2ea8
 	.4byte 0x8
-	.4byte 0x803e2eb0
+	.4byte 0x803E2eb0
 	.4byte 0
-	.4byte 0x803e2eb8
+	.4byte 0x803E2eb8
 	.4byte 0
 	.4byte 0
-	.4byte 0x803e2e90
+	.4byte 0x803E2e90
 	.4byte 0x8
-	.4byte 0x803e2e98
+	.4byte 0x803E2e98
 	.4byte 0x8
-	.4byte 0x803e2ea8
+	.4byte 0x803E2ea8
 	.4byte 0x8
-	.4byte 0x803e2eb0
+	.4byte 0x803E2eb0
 	.4byte 0
-	.4byte 0x803e2eb8
+	.4byte 0x803E2eb8
 	.4byte 0
 	.4byte __RTTI__15CreatureNodeMgr_2
 	.4byte 0
@@ -212,7 +212,7 @@ __vt__8PlantMgr:
 	.4byte 0x42617365
 	.4byte 0x5061726d
 	.4byte 0
-	.4byte 0x803e2ed0
+	.4byte 0x803E2ed0
 	.4byte 0
 	.4byte 0
 	.4byte 0
@@ -232,9 +232,9 @@ __vt__8PlantMgr:
 	.4byte 0x3a3a5573
 	.4byte 0x654e6f64
 	.4byte 0x65000000
-	.4byte 0x803e2e90
+	.4byte 0x803E2e90
 	.4byte 0
-	.4byte 0x803e2e98
+	.4byte 0x803E2e98
 	.4byte 0
 	.4byte 0
 .global __vt__Q28PlantMgr7UseNode
@@ -247,9 +247,9 @@ __vt__Q28PlantMgr7UseNode:
 	.4byte 0x74757265
 	.4byte 0x4e6f6465
 	.4byte 0
-	.4byte 0x803e2e90
+	.4byte 0x803E2e90
 	.4byte 0
-	.4byte 0x803e2e98
+	.4byte 0x803E2e98
 	.4byte 0
 	.4byte 0
 	.4byte 0
@@ -301,14 +301,14 @@ __vt__Q27PlantAI8WaitInit:
 	.4byte 0x6f6e6469
 	.4byte 0x74696f6e
 	.4byte 0
-	.4byte 0x803e2e90
+	.4byte 0x803E2e90
 	.4byte 0
-	.4byte 0x803e2e98
+	.4byte 0x803E2e98
 	.4byte 0
 	.4byte 0
-	.4byte 0x803e2e90
+	.4byte 0x803E2e90
 	.4byte 0
-	.4byte 0x803e2e98
+	.4byte 0x803E2e98
 	.4byte 0
 	.4byte __RTTI__12SAICondition_2
 	.4byte 0
@@ -376,32 +376,32 @@ __vt__7PlantAI:
 	.4byte 0x43726561
 	.4byte 0x74757265
 	.4byte 0
-	.4byte 0x803e2f38
+	.4byte 0x803E2f38
 	.4byte 0x8
-	.4byte 0x803e2f40
+	.4byte 0x803E2f40
 	.4byte 0
 	.4byte 0
 	.4byte 0x41494372
 	.4byte 0x65617475
 	.4byte 0x72650000
-	.4byte 0x803e2f30
+	.4byte 0x803E2f30
 	.4byte 0x2b8
-	.4byte 0x803e2f38
+	.4byte 0x803E2f38
 	.4byte 0x8
-	.4byte 0x803e2f40
+	.4byte 0x803E2f40
 	.4byte 0
-	.4byte 0x803e2f48
+	.4byte 0x803E2f48
 	.4byte 0
 	.4byte 0
-	.4byte 0x803e2f30
+	.4byte 0x803E2f30
 	.4byte 0x2b8
-	.4byte 0x803e2f38
+	.4byte 0x803E2f38
 	.4byte 0x8
-	.4byte 0x803e2f40
+	.4byte 0x803E2f40
 	.4byte 0
-	.4byte 0x803e2f48
+	.4byte 0x803E2f48
 	.4byte 0
-	.4byte 0x803e2f50
+	.4byte 0x803E2f50
 	.4byte 0
 	.4byte 0
 .global __vt__5Plant
@@ -503,7 +503,7 @@ __RTTI__16PaniPikiAnimator:
 	.4byte 0
 	.4byte 0x47656e42
 	.4byte 0x61736500
-	.4byte 0x803e2dd8
+	.4byte 0x803E2dd8
 	.4byte 0x802c3824
 	.4byte 0x802c3830
 	.4byte 0x802c383c
@@ -569,13 +569,13 @@ __RTTI__14GenObjectPlant:
 	.4byte 0x802c39dc
 	.4byte 0x414e6f64
 	.4byte 0x65000000
-	.4byte 0x803e2e88
+	.4byte 0x803E2e88
 	.4byte 0
 	.4byte lbl_802C38C4
 	.4byte 0x802c3a3c
 	.4byte 0x4e6f6465
 	.4byte 0
-	.4byte 0x803e2ea0
+	.4byte 0x803E2ea0
 	.4byte 0x802c3a48
 	.4byte 0x802c3a5c
 	.4byte 0
@@ -627,7 +627,7 @@ __RTTI__8SimpleAI_2:
 	.4byte 0x802c3d90
 .global __RTTI__7PlantAI
 __RTTI__7PlantAI:
-	.4byte 0x803e2f08
+	.4byte 0x803E2f08
 	.4byte 0x802c3d9c
 	.4byte 0x506c616e
 	.4byte 0x74000000

@@ -126,7 +126,7 @@ __vt__33TaiNapkidStartDroppingWaterAction:
 	.4byte 0x65637441
 	.4byte 0x6374696f
 	.4byte 0x6e000000
-	.4byte 0x803e3cc0
+	.4byte 0x803E3cc0
 	.4byte 0
 	.4byte 0
 .global __vt__33TaiNapkidFallingWaterEffectAction
@@ -145,7 +145,7 @@ __vt__33TaiNapkidFallingWaterEffectAction:
 	.4byte 0x6c6c696e
 	.4byte 0x67416374
 	.4byte 0x696f6e00
-	.4byte 0x803e3cc0
+	.4byte 0x803E3cc0
 	.4byte 0
 	.4byte 0
 .global __vt__27TaiNapkidShockFallingAction
@@ -163,7 +163,7 @@ __vt__27TaiNapkidShockFallingAction:
 	.4byte 0x6c696e67
 	.4byte 0x41637469
 	.4byte 0x6f6e0000
-	.4byte 0x803e3cc0
+	.4byte 0x803E3cc0
 	.4byte 0
 	.4byte 0
 .global __vt__22TaiNapkidFallingAction
@@ -181,7 +181,7 @@ __vt__22TaiNapkidFallingAction:
 	.4byte 0x636b4163
 	.4byte 0x74696f6e
 	.4byte 0
-	.4byte 0x803e3cc0
+	.4byte 0x803E3cc0
 	.4byte 0
 	.4byte 0
 .global __vt__20TaiNapkidFlickAction
@@ -200,7 +200,7 @@ __vt__20TaiNapkidFlickAction:
 	.4byte 0x6750696b
 	.4byte 0x69416374
 	.4byte 0x696f6e00
-	.4byte 0x803e3cc0
+	.4byte 0x803E3cc0
 	.4byte 0
 	.4byte 0
 .global __vt__27TaiNapkidThrowingPikiAction
@@ -220,7 +220,7 @@ __vt__27TaiNapkidThrowingPikiAction:
 	.4byte 0x64696e67
 	.4byte 0x41637469
 	.4byte 0x6f6e0000
-	.4byte 0x803e3cc0
+	.4byte 0x803E3cc0
 	.4byte 0
 	.4byte 0
 .global __vt__30TaiNapkidRisingAscendingAction
@@ -241,7 +241,7 @@ __vt__30TaiNapkidRisingAscendingAction:
 	.4byte 0x696e6741
 	.4byte 0x6374696f
 	.4byte 0x6e000000
-	.4byte 0x803e3cc0
+	.4byte 0x803E3cc0
 	.4byte 0
 	.4byte 0
 .global __vt__33TaiNapkidTakingOffAscendingAction
@@ -261,7 +261,7 @@ __vt__33TaiNapkidTakingOffAscendingAction:
 	.4byte 0x696e6741
 	.4byte 0x6374696f
 	.4byte 0x6e000000
-	.4byte 0x803e3cc0
+	.4byte 0x803E3cc0
 	.4byte 0
 	.4byte 0
 .global __vt__29TaiNapkidCatchAscendingAction
@@ -280,7 +280,7 @@ __vt__29TaiNapkidCatchAscendingAction:
 	.4byte 0x79696e67
 	.4byte 0x41637469
 	.4byte 0x6f6e0000
-	.4byte 0x803e3cc0
+	.4byte 0x803E3cc0
 	.4byte 0
 	.4byte 0
 .global __vt__26TaiNapkidCatchFlyingAction
@@ -299,7 +299,7 @@ __vt__26TaiNapkidCatchFlyingAction:
 	.4byte 0x6163696e
 	.4byte 0x67416374
 	.4byte 0x696f6e00
-	.4byte 0x803e3cc0
+	.4byte 0x803E3cc0
 	.4byte 0
 	.4byte 0
 .global __vt__27TaiNapkidCatchTracingAction
@@ -319,7 +319,7 @@ __vt__27TaiNapkidCatchTracingAction:
 	.4byte 0x64696e67
 	.4byte 0x41637469
 	.4byte 0x6f6e0000
-	.4byte 0x803e3cc0
+	.4byte 0x803E3cc0
 	.4byte 0
 	.4byte 0
 .global __vt__30TaiNapkidCatchDescendingAction
@@ -357,12 +357,12 @@ __vt__30TaiNapkidCatchDescendingAction:
 	.4byte 0x436f6e64
 	.4byte 0x6974696f
 	.4byte 0x6e000000
-	.4byte 0x803e3d28
+	.4byte 0x803E3d28
 	.4byte 0
 	.4byte 0
-	.4byte 0x803e3d28
+	.4byte 0x803E3d28
 	.4byte 0
-	.4byte 0x803e3d30
+	.4byte 0x803E3d30
 	.4byte 0
 	.4byte 0
 	.4byte 0
@@ -373,9 +373,9 @@ __vt__30TaiNapkidCatchDescendingAction:
 	.4byte 0x6f6e6469
 	.4byte 0x74696f6e
 	.4byte 0
-	.4byte 0x803e3d28
+	.4byte 0x803E3d28
 	.4byte 0
-	.4byte 0x803e3d30
+	.4byte 0x803E3d30
 	.4byte 0
 	.4byte 0
 	.4byte 0
@@ -387,7 +387,7 @@ __vt__30TaiNapkidCatchDescendingAction:
 	.4byte 0x6368696e
 	.4byte 0x67416374
 	.4byte 0x696f6e00
-	.4byte 0x803e3cc0
+	.4byte 0x803E3cc0
 	.4byte 0
 	.4byte 0
 .global __vt__23TaiNapkidCatchingAction
@@ -406,7 +406,7 @@ __vt__23TaiNapkidCatchingAction:
 	.4byte 0x6850696b
 	.4byte 0x69416374
 	.4byte 0x696f6e00
-	.4byte 0x803e3cc0
+	.4byte 0x803E3cc0
 	.4byte 0
 	.4byte 0
 .global __vt__27TaiNapkidApproachPikiAction
@@ -425,7 +425,7 @@ __vt__27TaiNapkidApproachPikiAction:
 	.4byte 0x6e674163
 	.4byte 0x74696f6e
 	.4byte 0
-	.4byte 0x803e3cc0
+	.4byte 0x803E3cc0
 	.4byte 0
 	.4byte 0
 .global __vt__24TaiNapkidAscendingAction
@@ -443,7 +443,7 @@ __vt__24TaiNapkidAscendingAction:
 	.4byte 0x696e6741
 	.4byte 0x6374696f
 	.4byte 0x6e000000
-	.4byte 0x803e3cc0
+	.4byte 0x803E3cc0
 	.4byte 0
 	.4byte 0
 .global __vt__21TaiNapkidFlyingAction
@@ -461,7 +461,7 @@ __vt__21TaiNapkidFlyingAction:
 	.4byte 0x636c696e
 	.4byte 0x67416374
 	.4byte 0x696f6e00
-	.4byte 0x803e3cc0
+	.4byte 0x803E3cc0
 	.4byte 0
 	.4byte 0
 .global __vt__23TaiNapkidCirclingAction
@@ -481,7 +481,7 @@ __vt__23TaiNapkidCirclingAction:
 	.4byte 0x696e6741
 	.4byte 0x6374696f
 	.4byte 0x6e000000
-	.4byte 0x803e3cc0
+	.4byte 0x803E3cc0
 	.4byte 0
 	.4byte 0
 .global __vt__29TaiNapkidStraightFlyingAction
@@ -500,7 +500,7 @@ __vt__29TaiNapkidStraightFlyingAction:
 	.4byte 0x6e676541
 	.4byte 0x6374696f
 	.4byte 0x6e000000
-	.4byte 0x803e3cc0
+	.4byte 0x803E3cc0
 	.4byte 0
 	.4byte 0
 .global __vt__25TaiNapkidShortRangeAction
@@ -518,7 +518,7 @@ __vt__25TaiNapkidShortRangeAction:
 	.4byte 0x694c6f73
 	.4byte 0x74416374
 	.4byte 0x696f6e00
-	.4byte 0x803e3cc0
+	.4byte 0x803E3cc0
 	.4byte 0
 	.4byte 0
 .global __vt__23TaiNapkidPikiLostAction
@@ -537,7 +537,7 @@ __vt__23TaiNapkidPikiLostAction:
 	.4byte 0x696b6941
 	.4byte 0x6374696f
 	.4byte 0x6e000000
-	.4byte 0x803e3cc0
+	.4byte 0x803E3cc0
 	.4byte 0
 	.4byte 0
 .global __vt__25TaiNapkidTargetPikiAction
@@ -561,7 +561,7 @@ __vt__25TaiNapkidTargetPikiAction:
 	.4byte 0x6f74696f
 	.4byte 0x6e416374
 	.4byte 0x696f6e00
-	.4byte 0x803e3cc0
+	.4byte 0x803E3cc0
 	.4byte 0
 	.4byte 0
 	.4byte 0x54616943
@@ -571,16 +571,16 @@ __vt__25TaiNapkidTargetPikiAction:
 	.4byte 0x696f6e41
 	.4byte 0x6374696f
 	.4byte 0x6e000000
-	.4byte 0x803e3cc0
+	.4byte 0x803E3cc0
 	.4byte 0
-	.4byte 0x803e3d80
+	.4byte 0x803E3d80
 	.4byte 0
 	.4byte 0
-	.4byte 0x803e3cc0
+	.4byte 0x803E3cc0
 	.4byte 0
-	.4byte 0x803e3d80
+	.4byte 0x803E3d80
 	.4byte 0
-	.4byte 0x803e3d88
+	.4byte 0x803E3d88
 	.4byte 0
 	.4byte 0
 .global __vt__29TaiNapkidWanderingRouteAction
@@ -601,9 +601,9 @@ __vt__29TaiNapkidWanderingRouteAction:
 	.4byte 0x436f6e64
 	.4byte 0x6974696f
 	.4byte 0x6e000000
-	.4byte 0x803e3d28
+	.4byte 0x803E3d28
 	.4byte 0
-	.4byte 0x803e3d30
+	.4byte 0x803E3d30
 	.4byte 0
 	.4byte 0
 .global __vt__29TekiNapkidShortRangeCondition
@@ -625,9 +625,9 @@ __vt__29TekiNapkidShortRangeCondition:
 	.4byte 0x436f6e64
 	.4byte 0x6974696f
 	.4byte 0x6e000000
-	.4byte 0x803e3d28
+	.4byte 0x803E3d28
 	.4byte 0
-	.4byte 0x803e3d30
+	.4byte 0x803E3d30
 	.4byte 0
 	.4byte 0
 .global __vt__29TekiNapkidTargetPikiCondition
@@ -647,12 +647,12 @@ __vt__29TekiNapkidTargetPikiCondition:
 	.4byte 0x54616953
 	.4byte 0x74726174
 	.4byte 0x65677900
-	.4byte 0x803e3da8
+	.4byte 0x803E3da8
 	.4byte 0
 	.4byte 0
-	.4byte 0x803e3da8
+	.4byte 0x803E3da8
 	.4byte 0
-	.4byte 0x803e3db0
+	.4byte 0x803E3db0
 	.4byte 0
 	.4byte 0
 .global __vt__17TaiNapkidStrategy
@@ -671,7 +671,7 @@ __vt__17TaiNapkidStrategy:
 	.4byte 0x6f744163
 	.4byte 0x74696f6e
 	.4byte 0
-	.4byte 0x803e3cc0
+	.4byte 0x803E3cc0
 	.4byte 0
 	.4byte 0
 	.4byte 0
@@ -685,7 +685,7 @@ __vt__17TaiNapkidStrategy:
 	.4byte 0x6e636541
 	.4byte 0x6374696f
 	.4byte 0x6e000000
-	.4byte 0x803e3cc0
+	.4byte 0x803E3cc0
 	.4byte 0
 	.4byte 0
 	.4byte 0
@@ -710,32 +710,32 @@ __vt__17TaiNapkidStrategy:
 	.4byte 0x436f7265
 	.4byte 0x4e6f6465
 	.4byte 0
-	.4byte 0x803e3dc8
+	.4byte 0x803E3dc8
 	.4byte 0
 	.4byte 0
-	.4byte 0x803e3dc8
+	.4byte 0x803E3dc8
 	.4byte 0
-	.4byte 0x803e3dd0
+	.4byte 0x803E3dd0
 	.4byte 0
 	.4byte 0
 	.4byte 0x54656b69
 	.4byte 0x50617261
 	.4byte 0x6d657465
 	.4byte 0x72730000
-	.4byte 0x803e3dc8
+	.4byte 0x803E3dc8
 	.4byte 0
-	.4byte 0x803e3dd0
+	.4byte 0x803E3dd0
 	.4byte 0
-	.4byte 0x803e3de0
+	.4byte 0x803E3de0
 	.4byte 0
 	.4byte 0
-	.4byte 0x803e3dc8
+	.4byte 0x803E3dc8
 	.4byte 0
-	.4byte 0x803e3dd0
+	.4byte 0x803E3dd0
 	.4byte 0
-	.4byte 0x803e3de0
+	.4byte 0x803E3de0
 	.4byte 0
-	.4byte 0x803e3de8
+	.4byte 0x803E3de8
 	.4byte 0
 	.4byte 0
 .global __vt__19TaiNapkidParameters

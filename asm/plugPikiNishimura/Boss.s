@@ -2445,7 +2445,7 @@ lbl_802CE848:
 	.4byte 0x00000000
 .global __vt__4Boss
 __vt__4Boss:
-	.4byte 0x803e485c
+	.4byte 0x803E485c
 	.4byte 0
 	.4byte addCntCallback__12RefCountableFv
 	.4byte subCntCallback__12RefCountableFv
@@ -2548,7 +2548,7 @@ lbl_802CE9E4:
 	.asciz "BaseParm"
 .balign 4
 lbl_802CE9F0:
-	.4byte 0x803e4864
+	.4byte 0x803E4864
 	.4byte 0
 	.4byte 0
 	.4byte 0
@@ -2564,12 +2564,12 @@ lbl_802CEA1C:
 	.asciz "CreatureProp"
 .balign 4
 lbl_802CEA2C:
-	.4byte 0x803e486c
+	.4byte 0x803E486c
 	.4byte 0
 	.4byte 0
 .global __vt__8BossProp
 __vt__8BossProp:
-	.4byte 0x803e4874
+	.4byte 0x803E4874
 	.4byte 0
 	.4byte read__8BossPropFR18RandomAccessStream
 .balign 4
@@ -2577,7 +2577,7 @@ lbl_802CEA44:
 	.asciz "Parm<float>"
 .balign 4
 lbl_802CEA50:
-	.4byte 0x803e4864
+	.4byte 0x803E4864
 	.4byte 0
 	.4byte 0
 	.4byte 0

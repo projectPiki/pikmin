@@ -48,7 +48,7 @@ keyNames__12PaniAnimator:
 	.4byte 0x00000000
 .global __vt__12PaniAnimator
 __vt__12PaniAnimator:
-	.4byte 0x803e30b8
+	.4byte 0x803E30b8
 	.4byte 0
 	.4byte changeContext__12PaniAnimatorFP11AnimContext
 	.4byte animate__12PaniAnimatorFf
@@ -61,5 +61,5 @@ __vt__12PaniAnimator:
 	.4byte 0x70000000
 .global __RTTI__5NHeap
 __RTTI__5NHeap:
-	.4byte 0x803e3080
+	.4byte 0x803E3080
 	.4byte 0

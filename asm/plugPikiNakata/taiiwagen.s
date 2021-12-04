@@ -47,12 +47,12 @@ __vt__23TaiIwagenShootingAction:
 	.4byte 0x54616953
 	.4byte 0x74726174
 	.4byte 0x65677900
-	.4byte 0x803e382c
+	.4byte 0x803E382c
 	.4byte 0
 	.4byte 0
-	.4byte 0x803e382c
+	.4byte 0x803E382c
 	.4byte 0
-	.4byte 0x803e3834
+	.4byte 0x803E3834
 	.4byte 0
 	.4byte 0
 .global __vt__17TaiIwagenStrategy
@@ -75,32 +75,32 @@ __vt__17TaiIwagenStrategy:
 	.4byte 0x436f7265
 	.4byte 0x4e6f6465
 	.4byte 0
-	.4byte 0x803e384c
+	.4byte 0x803E384c
 	.4byte 0
 	.4byte 0
-	.4byte 0x803e384c
+	.4byte 0x803E384c
 	.4byte 0
-	.4byte 0x803e3854
+	.4byte 0x803E3854
 	.4byte 0
 	.4byte 0
 	.4byte 0x54656b69
 	.4byte 0x50617261
 	.4byte 0x6d657465
 	.4byte 0x72730000
-	.4byte 0x803e384c
+	.4byte 0x803E384c
 	.4byte 0
-	.4byte 0x803e3854
+	.4byte 0x803E3854
 	.4byte 0
-	.4byte 0x803e3864
+	.4byte 0x803E3864
 	.4byte 0
 	.4byte 0
-	.4byte 0x803e384c
+	.4byte 0x803E384c
 	.4byte 0
-	.4byte 0x803e3854
+	.4byte 0x803E3854
 	.4byte 0
-	.4byte 0x803e3864
+	.4byte 0x803E3864
 	.4byte 0
-	.4byte 0x803e386c
+	.4byte 0x803E386c
 	.4byte 0
 	.4byte 0
 .global __vt__19TaiIwagenParameters
@@ -123,7 +123,7 @@ __vt__19TaiIwagenParameters:
 	.4byte 0x6c696e67
 	.4byte 0x41637469
 	.4byte 0x6f6e0000
-	.4byte 0x803e381c
+	.4byte 0x803E381c
 	.4byte 0
 	.4byte 0
 .global __vt__22TaiIwagonRollingAction
@@ -142,7 +142,7 @@ __vt__22TaiIwagonRollingAction:
 	.4byte 0x65637441
 	.4byte 0x6374696f
 	.4byte 0x6e000000
-	.4byte 0x803e381c
+	.4byte 0x803E381c
 	.4byte 0
 	.4byte 0
 .global __vt__25TaiIwagonDustEffectAction
@@ -159,9 +159,9 @@ __vt__25TaiIwagonDustEffectAction:
 	.4byte 0x6e537472
 	.4byte 0x61746567
 	.4byte 0x79000000
-	.4byte 0x803e382c
+	.4byte 0x803E382c
 	.4byte 0
-	.4byte 0x803e3834
+	.4byte 0x803E3834
 	.4byte 0
 	.4byte 0
 .global __vt__17TaiIwagonStrategy
@@ -188,13 +188,13 @@ __vt__17TaiIwagonStrategy:
 	.4byte 0x6e506172
 	.4byte 0x616d6574
 	.4byte 0x65727300
-	.4byte 0x803e384c
+	.4byte 0x803E384c
 	.4byte 0
-	.4byte 0x803e3854
+	.4byte 0x803E3854
 	.4byte 0
-	.4byte 0x803e3864
+	.4byte 0x803E3864
 	.4byte 0
-	.4byte 0x803e386c
+	.4byte 0x803E386c
 	.4byte 0
 	.4byte 0
 .global __vt__19TaiIwagonParameters
@@ -286,12 +286,12 @@ __RTTI__17TaiIwagenStrategy:
 	.4byte 0x802c80ac
 	.4byte 0x414e6f64
 	.4byte 0x65000000
-	.4byte 0x803e3844
+	.4byte 0x803E3844
 	.4byte 0
 	.4byte 0x802c80fc
 	.4byte 0x802c8108
 	.4byte 0x4e6f6465
 	.4byte 0
-	.4byte 0x803e385c
+	.4byte 0x803E385c
 	.4byte 0x802c8114
 	.4byte 0x802c8128

@@ -253,65 +253,65 @@ lbl_80136808:
 	.4byte 0x43726561
 	.4byte 0x74757265
 	.4byte 0
-	.4byte 0x803e1e88
+	.4byte 0x803E1e88
 	.4byte 0x8
-	.4byte 0x803e1e90
+	.4byte 0x803E1e90
 	.4byte 0
 	.4byte 0
 	.4byte 0x41494372
 	.4byte 0x65617475
 	.4byte 0x72650000
-	.4byte 0x803e1e80
+	.4byte 0x803E1e80
 	.4byte 0x2b8
-	.4byte 0x803e1e88
+	.4byte 0x803E1e88
 	.4byte 0x8
-	.4byte 0x803e1e90
+	.4byte 0x803E1e90
 	.4byte 0
-	.4byte 0x803e1e98
+	.4byte 0x803E1e98
 	.4byte 0
 	.4byte 0
 	.4byte 0x4974656d
 	.4byte 0x43726561
 	.4byte 0x74757265
 	.4byte 0
-	.4byte 0x803e1e80
+	.4byte 0x803E1e80
 	.4byte 0x2b8
-	.4byte 0x803e1e88
+	.4byte 0x803E1e88
 	.4byte 0x8
-	.4byte 0x803e1e90
+	.4byte 0x803E1e90
 	.4byte 0
-	.4byte 0x803e1e98
+	.4byte 0x803E1e98
 	.4byte 0
-	.4byte 0x803e1ea0
+	.4byte 0x803E1ea0
 	.4byte 0
 	.4byte 0
 	.4byte 0x4974656d
 	.4byte 0x4f626a65
 	.4byte 0x63740000
-	.4byte 0x803e1e80
+	.4byte 0x803E1e80
 	.4byte 0x2b8
-	.4byte 0x803e1e88
+	.4byte 0x803E1e88
 	.4byte 0x8
-	.4byte 0x803e1e90
+	.4byte 0x803E1e90
 	.4byte 0
-	.4byte 0x803e1e98
+	.4byte 0x803E1e98
 	.4byte 0
-	.4byte 0x803e1ea0
+	.4byte 0x803E1ea0
 	.4byte 0
-	.4byte 0x803e1ea8
+	.4byte 0x803E1ea8
 	.4byte 0
 	.4byte 0
-	.4byte 0x803e1e80
+	.4byte 0x803E1e80
 	.4byte 0x2b8
-	.4byte 0x803e1e88
+	.4byte 0x803E1e88
 	.4byte 0x8
-	.4byte 0x803e1e90
+	.4byte 0x803E1e90
 	.4byte 0
-	.4byte 0x803e1e98
+	.4byte 0x803E1e98
 	.4byte 0
-	.4byte 0x803e1ea0
+	.4byte 0x803E1ea0
 	.4byte 0
-	.4byte 0x803e1ea8
+	.4byte 0x803E1ea8
 	.4byte 0
 	.4byte __RTTI__10ItemObject
 	.4byte 0
@@ -410,17 +410,17 @@ __vt__18NaviDemoSunsetGoal:
 	.4byte 0x53756e73
 	.4byte 0x65745374
 	.4byte 0x61727400
-	.4byte 0x803e1e80
+	.4byte 0x803E1e80
 	.4byte 0x2b8
-	.4byte 0x803e1e88
+	.4byte 0x803E1e88
 	.4byte 0x8
-	.4byte 0x803e1e90
+	.4byte 0x803E1e90
 	.4byte 0
-	.4byte 0x803e1e98
+	.4byte 0x803E1e98
 	.4byte 0
-	.4byte 0x803e1ea0
+	.4byte 0x803E1ea0
 	.4byte 0
-	.4byte 0x803e1ea8
+	.4byte 0x803E1ea8
 	.4byte 0
 	.4byte __RTTI__10ItemObject
 	.4byte 0
@@ -514,17 +514,17 @@ __vt__19NaviDemoSunsetStart:
 	.4byte stopMotion__12ItemCreatureFv
 	.4byte animationKeyUpdated__10AICreatureFR16PaniAnimKeyEvent
 	.4byte finalSetup__12ItemCreatureFv
-	.4byte 0x803e1e80
+	.4byte 0x803E1e80
 	.4byte 0x2b8
-	.4byte 0x803e1e88
+	.4byte 0x803E1e88
 	.4byte 0x8
-	.4byte 0x803e1e90
+	.4byte 0x803E1e90
 	.4byte 0
-	.4byte 0x803e1e98
+	.4byte 0x803E1e98
 	.4byte 0
-	.4byte 0x803e1ea0
+	.4byte 0x803E1ea0
 	.4byte 0
-	.4byte 0x803e1ea8
+	.4byte 0x803E1ea8
 	.4byte 0
 	.4byte __RTTI__10ItemObject
 	.4byte 0
@@ -621,17 +621,17 @@ __vt__7Fulcrum:
 	.4byte 0x426f6d62
 	.4byte 0x47656e49
 	.4byte 0x74656d00
-	.4byte 0x803e1e80
+	.4byte 0x803E1e80
 	.4byte 0x2b8
-	.4byte 0x803e1e88
+	.4byte 0x803E1e88
 	.4byte 0x8
-	.4byte 0x803e1e90
+	.4byte 0x803E1e90
 	.4byte 0
-	.4byte 0x803e1e98
+	.4byte 0x803E1e98
 	.4byte 0
-	.4byte 0x803e1ea0
+	.4byte 0x803E1ea0
 	.4byte 0
-	.4byte 0x803e1ea8
+	.4byte 0x803E1ea8
 	.4byte 0
 	.4byte __RTTI__10ItemObject
 	.4byte 0
@@ -817,17 +817,17 @@ __vt__10ItemObject:
 	.4byte 0x4974656d
 	.4byte 0x42616c6c
 	.4byte 0
-	.4byte 0x803e1e80
+	.4byte 0x803E1e80
 	.4byte 0x2b8
-	.4byte 0x803e1e88
+	.4byte 0x803E1e88
 	.4byte 0x8
-	.4byte 0x803e1e90
+	.4byte 0x803E1e90
 	.4byte 0
-	.4byte 0x803e1e98
+	.4byte 0x803E1e98
 	.4byte 0
-	.4byte 0x803e1ea0
+	.4byte 0x803E1ea0
 	.4byte 0
-	.4byte 0x803e1ea8
+	.4byte 0x803E1ea8
 	.4byte 0
 	.4byte 0
 .global __vt__8ItemBall

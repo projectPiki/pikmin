@@ -114,7 +114,7 @@ lbl_803E2FF0:
 	.4byte 0x68610000
 .global __RTTI__6NAlpha
 __RTTI__6NAlpha:
-	.4byte 0x803e2ff4
+	.4byte 0x803E2ff4
 	.4byte 0
 .global __RTTI__14NSpecialMatrix
 __RTTI__14NSpecialMatrix:

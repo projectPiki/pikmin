@@ -24,7 +24,7 @@
 	.4byte 0x54616941
 	.4byte 0x6374696f
 	.4byte 0x6e000000
-	.4byte 0x803e3b00
+	.4byte 0x803E3b00
 	.4byte 0
 	.4byte 0
 .global __vt__34TaiRandomSetAnimationCounterAction
@@ -42,7 +42,7 @@ __vt__34TaiRandomSetAnimationCounterAction:
 	.4byte 0x6f74696f
 	.4byte 0x6e416374
 	.4byte 0x696f6e00
-	.4byte 0x803e3b00
+	.4byte 0x803E3b00
 	.4byte 0
 	.4byte 0
 .global __vt__23TaiSetFrameMotionAction
@@ -61,7 +61,7 @@ __vt__23TaiSetFrameMotionAction:
 	.4byte 0x674d6f76
 	.4byte 0x65416374
 	.4byte 0x696f6e00
-	.4byte 0x803e3b00
+	.4byte 0x803E3b00
 	.4byte 0
 	.4byte 0
 .global __vt__27TaiFinishStoppingMoveAction
@@ -79,7 +79,7 @@ __vt__27TaiFinishStoppingMoveAction:
 	.4byte 0x6f766541
 	.4byte 0x6374696f
 	.4byte 0x6e000000
-	.4byte 0x803e3b00
+	.4byte 0x803E3b00
 	.4byte 0
 	.4byte 0
 .global __vt__21TaiStoppingMoveAction
@@ -98,7 +98,7 @@ __vt__21TaiStoppingMoveAction:
 	.4byte 0x704d6f76
 	.4byte 0x65416374
 	.4byte 0x696f6e00
-	.4byte 0x803e3b00
+	.4byte 0x803E3b00
 	.4byte 0
 	.4byte 0
 .global __vt__27TaiOutsideKeyStopMoveAction
@@ -120,12 +120,12 @@ __vt__27TaiOutsideKeyStopMoveAction:
 	.4byte 0x6f74696f
 	.4byte 0x6e416374
 	.4byte 0x696f6e00
-	.4byte 0x803e3b00
+	.4byte 0x803E3b00
 	.4byte 0
 	.4byte 0
-	.4byte 0x803e3b00
+	.4byte 0x803E3b00
 	.4byte 0
-	.4byte 0x803e3b30
+	.4byte 0x803E3b30
 	.4byte 0
 	.4byte 0
 .global __vt__21TaiSwitchMotionAction
@@ -142,7 +142,7 @@ __vt__21TaiSwitchMotionAction:
 	.4byte 0x4c6f6f70
 	.4byte 0x41637469
 	.4byte 0x6f6e0000
-	.4byte 0x803e3b00
+	.4byte 0x803E3b00
 	.4byte 0
 	.4byte 0
 .global __vt__18TaiCountLoopAction
@@ -160,7 +160,7 @@ __vt__18TaiCountLoopAction:
 	.4byte 0x4b657941
 	.4byte 0x6374696f
 	.4byte 0x6e000000
-	.4byte 0x803e3b00
+	.4byte 0x803E3b00
 	.4byte 0
 	.4byte 0
 .global __vt__21TaiAnimationKeyAction
@@ -178,9 +178,9 @@ __vt__21TaiAnimationKeyAction:
 	.4byte 0x696f6e41
 	.4byte 0x6374696f
 	.4byte 0x6e000000
-	.4byte 0x803e3b00
+	.4byte 0x803E3b00
 	.4byte 0
-	.4byte 0x803e3b30
+	.4byte 0x803E3b30
 	.4byte 0
 	.4byte 0
 .global __vt__21TaiFinishMotionAction
@@ -199,14 +199,14 @@ __vt__21TaiFinishMotionAction:
 	.4byte 0x696f6e41
 	.4byte 0x6374696f
 	.4byte 0x6e000000
-	.4byte 0x803e3b00
+	.4byte 0x803E3b00
 	.4byte 0
-	.4byte 0x803e3b30
+	.4byte 0x803E3b30
 	.4byte 0
 	.4byte 0
 .global __vt__25TaiContinuousMotionAction
 __vt__25TaiContinuousMotionAction:
-	.4byte 0x803e3b58
+	.4byte 0x803E3b58
 	.4byte 0
 	.4byte start__25TaiContinuousMotionActionFR4Teki
 	.4byte finish__9TaiActionFR4Teki
@@ -216,7 +216,7 @@ __vt__25TaiContinuousMotionAction:
 	.4byte motionStarted__25TaiContinuousMotionActionFR4Teki
 .global __vt__15TaiMotionAction
 __vt__15TaiMotionAction:
-	.4byte 0x803e3b30
+	.4byte 0x803E3b30
 	.4byte 0
 	.4byte start__15TaiMotionActionFR4Teki
 	.4byte finish__9TaiActionFR4Teki

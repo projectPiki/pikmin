@@ -129,13 +129,13 @@ __vt__9MapSlider:
 	.4byte 0x4d617045
 	.4byte 0x6e746974
 	.4byte 0x79000000
-	.4byte 0x803e2b3c
+	.4byte 0x803E2b3c
 	.4byte 0
-	.4byte 0x803e2b44
+	.4byte 0x803E2b44
 	.4byte 0
-	.4byte 0x803e2b54
+	.4byte 0x803E2b54
 	.4byte 0
-	.4byte 0x803e2b5c
+	.4byte 0x803E2b5c
 	.4byte 0
 	.4byte __RTTI__12DynCollShape_3
 	.4byte 0

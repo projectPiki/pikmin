@@ -393,12 +393,12 @@ lbl_800FA15C:
 	.4byte 0x69766572
 	.4byte 0x3c50696b
 	.4byte 0x693e0000
-	.4byte 0x803e04d0
+	.4byte 0x803E04d0
 	.4byte 0
 	.4byte 0
-	.4byte 0x803e04d0
+	.4byte 0x803E04d0
 	.4byte 0
-	.4byte 0x803e04e0
+	.4byte 0x803E04e0
 	.4byte 0
 	.4byte 0
 .global __vt__7ActGoto
@@ -439,7 +439,7 @@ __vt__7ActGoto:
 	.4byte 0x496e6974
 	.4byte 0x69616c69
 	.4byte 0x73657200
-	.4byte 0x803e04f0
+	.4byte 0x803E04f0
 	.4byte 0
 	.4byte 0
 .global __vt__Q27ActGoto11Initialiser
@@ -471,7 +471,7 @@ __vt__Q27ActGoto11Initialiser:
 	.4byte 0x802B6AA0
 .global __RTTI__7ActFree
 __RTTI__7ActFree:
-	.4byte 0x803e0484
+	.4byte 0x803E0484
 	.4byte 0x802b6aac
 	.4byte 0
 .global lbl_803E04B8

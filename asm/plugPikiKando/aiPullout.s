@@ -691,12 +691,12 @@ lbl_800FCBF4:
 	.4byte 0x69766572
 	.4byte 0x3c50696b
 	.4byte 0x693e0000
-	.4byte 0x803e0610
+	.4byte 0x803E0610
 	.4byte 0
 	.4byte 0
-	.4byte 0x803e0610
+	.4byte 0x803E0610
 	.4byte 0
-	.4byte 0x803e0620
+	.4byte 0x803E0620
 	.4byte 0
 	.4byte 0
 .global __vt__18ActPulloutCreature
@@ -744,16 +744,16 @@ __vt__18ActPulloutCreature:
 	.4byte 0x416e6441
 	.4byte 0x6374696f
 	.4byte 0x6e000000
-	.4byte 0x803e0610
+	.4byte 0x803E0610
 	.4byte 0
-	.4byte 0x803e0620
+	.4byte 0x803E0620
 	.4byte 0
 	.4byte 0
-	.4byte 0x803e0610
+	.4byte 0x803E0610
 	.4byte 0
-	.4byte 0x803e0620
+	.4byte 0x803E0620
 	.4byte 0
-	.4byte 0x803e0630
+	.4byte 0x803E0630
 	.4byte 0
 	.4byte 0
 .global __vt__10ActPullout
@@ -797,7 +797,7 @@ __vt__10ActPullout:
 	.4byte 0
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
-	.4byte 0x803e05a8
+	.4byte 0x803E05a8
 	.4byte 0x802b6fb0
 	.4byte 0x802b6fbc
 	.4byte 0x802b6fc8

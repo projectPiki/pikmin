@@ -65,7 +65,7 @@ __vt__17PaniPlantAnimator:
 	.4byte 0x802c3e24
 .global __RTTI__5Plant
 __RTTI__5Plant:
-	.4byte 0x803e2f28
+	.4byte 0x803E2f28
 	.4byte 0x802c3e48
 	.4byte 0x31000000
 	.4byte 0x32000000

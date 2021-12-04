@@ -9855,7 +9855,7 @@ __vt__12InteractSuck:
 	.4byte 0x72616374
 	.4byte 0x4765797a
 	.4byte 0x65720000
-	.4byte 0x803e21e8
+	.4byte 0x803E21e8
 	.4byte 0
 	.4byte 0
 .global __vt__14InteractGeyzer
@@ -9931,11 +9931,11 @@ __vt__14InteractGeyzer:
 	.4byte 0x7261746f
 	.4byte 0x72202a3e
 	.4byte 0
-	.4byte 0x803e2208
+	.4byte 0x803E2208
 	.4byte 0x8
-	.4byte 0x803e2210
+	.4byte 0x803E2210
 	.4byte 0x4
-	.4byte 0x803e2218
+	.4byte 0x803E2218
 	.4byte 0
 	.4byte 0
 	.4byte 0
@@ -9968,19 +9968,19 @@ __vt__14InteractGeyzer:
 	.4byte 0x436f7265
 	.4byte 0x4e6f6465
 	.4byte 0
-	.4byte 0x803e2228
+	.4byte 0x803E2228
 	.4byte 0
 	.4byte 0
-	.4byte 0x803e2228
+	.4byte 0x803E2228
 	.4byte 0
-	.4byte 0x803e2230
+	.4byte 0x803E2230
 	.4byte 0
 	.4byte 0
-	.4byte 0x803e2228
+	.4byte 0x803E2228
 	.4byte 0
-	.4byte 0x803e2230
+	.4byte 0x803E2230
 	.4byte 0
-	.4byte 0x803e2240
+	.4byte 0x803E2240
 	.4byte 0
 	.4byte 0
 .global __vt__10NaviDrawer
@@ -10036,7 +10036,7 @@ __vt__10PelletView:
 	.4byte 0x42617365
 	.4byte 0x5061726d
 	.4byte 0
-	.4byte 0x803e2260
+	.4byte 0x803E2260
 	.4byte 0
 	.4byte 0
 	.4byte 0
@@ -10051,7 +10051,7 @@ __vt__10PelletView:
 	.4byte 0x74757265
 	.4byte 0x50726f70
 	.4byte 0
-	.4byte 0x803e2268
+	.4byte 0x803E2268
 	.4byte 0
 	.4byte 0
 .global __vt__8NaviProp
@@ -10062,7 +10062,7 @@ __vt__8NaviProp:
 	.4byte 0x5061726d
 	.4byte 0x3c666c6f
 	.4byte 0x61743e00
-	.4byte 0x803e2260
+	.4byte 0x803E2260
 	.4byte 0
 	.4byte 0
 	.4byte 0
@@ -10083,20 +10083,20 @@ __vt__8NaviProp:
 	.4byte 0x43726561
 	.4byte 0x74757265
 	.4byte 0
-	.4byte 0x803e2280
+	.4byte 0x803E2280
 	.4byte 0x8
-	.4byte 0x803e2288
+	.4byte 0x803E2288
 	.4byte 0
 	.4byte 0
 	.4byte __RTTI__10PelletView
 	.4byte 0x2bc
-	.4byte 0x803e2258
+	.4byte 0x803E2258
 	.4byte 0x2b8
-	.4byte 0x803e2280
+	.4byte 0x803E2280
 	.4byte 0x8
-	.4byte 0x803e2288
+	.4byte 0x803E2288
 	.4byte 0
-	.4byte 0x803e2290
+	.4byte 0x803E2290
 	.4byte 0
 	.4byte 0
 .global __vt__4Navi
@@ -10201,7 +10201,7 @@ __vt__4Navi:
 	.4byte 0
 	.4byte 0x47656e42
 	.4byte 0x61736500
-	.4byte 0x803e1f80
+	.4byte 0x803E1f80
 	.4byte 0x802c0018
 	.4byte 0x802c0024
 	.4byte 0x802c0030
@@ -10667,13 +10667,13 @@ __RTTI__14InteractGeyzer:
 	.4byte 0
 	.4byte 0x414e6f64
 	.4byte 0x65000000
-	.4byte 0x803e2220
+	.4byte 0x803E2220
 	.4byte 0
 	.4byte 0x802c0310
 	.4byte 0x802c031c
 	.4byte 0x4e6f6465
 	.4byte 0
-	.4byte 0x803e2238
+	.4byte 0x803E2238
 	.4byte 0x802c0328
 .global __RTTI__10NaviDrawer
 __RTTI__10NaviDrawer:

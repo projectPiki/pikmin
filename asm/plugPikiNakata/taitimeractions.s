@@ -23,12 +23,12 @@
 	.4byte 0x696d6572
 	.4byte 0x41637469
 	.4byte 0x6f6e0000
-	.4byte 0x803e4258
+	.4byte 0x803E4258
 	.4byte 0
 	.4byte 0
-	.4byte 0x803e4258
+	.4byte 0x803E4258
 	.4byte 0
-	.4byte 0x803e4260
+	.4byte 0x803E4260
 	.4byte 0
 	.4byte 0
 .global __vt__22TaiStartingTimerAction
@@ -46,7 +46,7 @@ __vt__22TaiStartingTimerAction:
 	.4byte 0x73656441
 	.4byte 0x6374696f
 	.4byte 0x6e000000
-	.4byte 0x803e4258
+	.4byte 0x803E4258
 	.4byte 0
 	.4byte 0
 .global __vt__21TaiTimerElapsedAction
@@ -63,7 +63,7 @@ __vt__21TaiTimerElapsedAction:
 	.4byte 0x54696d65
 	.4byte 0x72416374
 	.4byte 0x696f6e00
-	.4byte 0x803e4258
+	.4byte 0x803E4258
 	.4byte 0
 	.4byte 0
 .global __vt__19TaiResetTimerAction
@@ -77,7 +77,7 @@ __vt__19TaiResetTimerAction:
 	.4byte hasNextState__9TaiActionFv
 .global __vt__14TaiTimerAction
 __vt__14TaiTimerAction:
-	.4byte 0x803e4260
+	.4byte 0x803E4260
 	.4byte 0
 	.4byte start__14TaiTimerActionFR4Teki
 	.4byte finish__9TaiActionFR4Teki

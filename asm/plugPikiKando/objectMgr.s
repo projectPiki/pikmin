@@ -3311,12 +3311,12 @@ init__15PcamControlInfoFbbbbbbbfff:
 	.4byte 0x436f7265
 	.4byte 0x4e6f6465
 	.4byte 0
-	.4byte 0x803e1458
+	.4byte 0x803E1458
 	.4byte 0
 	.4byte 0
-	.4byte 0x803e1458
+	.4byte 0x803E1458
 	.4byte 0
-	.4byte 0x803e1460
+	.4byte 0x803E1460
 	.4byte 0
 	.4byte 0
 	.4byte 0x54726176
@@ -3325,24 +3325,24 @@ init__15PcamControlInfoFbbbbbbbfff:
 	.4byte 0x4f626a65
 	.4byte 0x63744d67
 	.4byte 0x72000000
-	.4byte 0x803e1458
+	.4byte 0x803E1458
 	.4byte 0x8
-	.4byte 0x803e1460
+	.4byte 0x803E1460
 	.4byte 0x8
-	.4byte 0x803e1470
+	.4byte 0x803E1470
 	.4byte 0x8
-	.4byte 0x803e1478
+	.4byte 0x803E1478
 	.4byte 0
 	.4byte 0
-	.4byte 0x803e1458
+	.4byte 0x803E1458
 	.4byte 0x8
-	.4byte 0x803e1460
+	.4byte 0x803E1460
 	.4byte 0x8
-	.4byte 0x803e1470
+	.4byte 0x803E1470
 	.4byte 0x8
-	.4byte 0x803e1478
+	.4byte 0x803E1478
 	.4byte 0
-	.4byte 0x803e1480
+	.4byte 0x803E1480
 	.4byte 0
 	.4byte 0
 .global __vt__15CreatureNodeMgr
@@ -3381,15 +3381,15 @@ __vt__15CreatureNodeMgr:
 	.4byte 0x4f626a65
 	.4byte 0x63744d67
 	.4byte 0x72000000
-	.4byte 0x803e1458
+	.4byte 0x803E1458
 	.4byte 0x8
-	.4byte 0x803e1460
+	.4byte 0x803E1460
 	.4byte 0x8
-	.4byte 0x803e1470
+	.4byte 0x803E1470
 	.4byte 0x8
-	.4byte 0x803e1478
+	.4byte 0x803E1478
 	.4byte 0
-	.4byte 0x803e1480
+	.4byte 0x803E1480
 	.4byte 0
 	.4byte 0
 .global __vt__13PolyObjectMgr
@@ -3430,26 +3430,26 @@ __vt__13PolyObjectMgr:
 	.4byte 0x4f626a65
 	.4byte 0x63744d67
 	.4byte 0x72000000
-	.4byte 0x803e1458
+	.4byte 0x803E1458
 	.4byte 0x8
-	.4byte 0x803e1460
+	.4byte 0x803E1460
 	.4byte 0x8
-	.4byte 0x803e1470
+	.4byte 0x803E1470
 	.4byte 0x8
-	.4byte 0x803e1478
+	.4byte 0x803E1478
 	.4byte 0
-	.4byte 0x803e1480
+	.4byte 0x803E1480
 	.4byte 0
 	.4byte 0
 .global __vt__13MonoObjectMgr
 __vt__13MonoObjectMgr:
-	.4byte 0x803e1498
+	.4byte 0x803E1498
 	.4byte 0
 	.4byte getCreature__13MonoObjectMgrFi
 	.4byte getFirst__13MonoObjectMgrFv
 	.4byte getNext__13MonoObjectMgrFi
 	.4byte isDone__13MonoObjectMgrFi
-	.4byte 0x803e1498
+	.4byte 0x803E1498
 	.4byte 0xfffffff8
 	.4byte getAgeNodeType__5ANodeFv
 	.4byte read__8CoreNodeFR18RandomAccessStream
@@ -3491,13 +3491,13 @@ __vt__13MonoObjectMgr:
 	.4byte 0
 .global __vt__9ObjectMgr
 __vt__9ObjectMgr:
-	.4byte 0x803e1480
+	.4byte 0x803E1480
 	.4byte 0
 	.4byte 0
 	.4byte 0
 	.4byte 0
 	.4byte 0
-	.4byte 0x803e1480
+	.4byte 0x803E1480
 	.4byte 0xfffffff8
 	.4byte getAgeNodeType__5ANodeFv
 	.4byte read__8CoreNodeFR18RandomAccessStream

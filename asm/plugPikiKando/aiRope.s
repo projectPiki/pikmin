@@ -238,12 +238,12 @@ lbl_80100D4C:
 	.4byte 0x69766572
 	.4byte 0x3c50696b
 	.4byte 0x693e0000
-	.4byte 0x803e0830
+	.4byte 0x803E0830
 	.4byte 0
 	.4byte 0
-	.4byte 0x803e0830
+	.4byte 0x803E0830
 	.4byte 0
-	.4byte 0x803e0840
+	.4byte 0x803E0840
 	.4byte 0
 	.4byte 0
 .global __vt__7ActRope

@@ -1358,7 +1358,7 @@ lbl_80122F60:
 	.4byte 0x54726176
 	.4byte 0x65727361
 	.4byte 0x626c6500
-	.4byte 0x803e14a0
+	.4byte 0x803E14a0
 	.4byte 0
 	.4byte 0
 .global __vt__12SearchBuffer

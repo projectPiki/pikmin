@@ -22,7 +22,7 @@
 	.4byte 0x54616941
 	.4byte 0x6374696f
 	.4byte 0x6e000000
-	.4byte 0x803e3b7c
+	.4byte 0x803E3b7c
 	.4byte 0
 	.4byte 0
 .global __vt__33TaiHeadOnCollisionAvoidanceAction
@@ -39,7 +39,7 @@ __vt__33TaiHeadOnCollisionAvoidanceAction:
 	.4byte 0x744e6573
 	.4byte 0x74416374
 	.4byte 0x696f6e00
-	.4byte 0x803e3b7c
+	.4byte 0x803E3b7c
 	.4byte 0
 	.4byte 0
 .global __vt__19TaiTargetNestAction
@@ -60,7 +60,7 @@ __vt__19TaiTargetNestAction:
 	.4byte 0x65724163
 	.4byte 0x74696f6e
 	.4byte 0
-	.4byte 0x803e3b7c
+	.4byte 0x803E3b7c
 	.4byte 0
 	.4byte 0
 .global __vt__32TaiWatchOffTerritoryCenterAction
@@ -82,7 +82,7 @@ __vt__32TaiWatchOffTerritoryCenterAction:
 	.4byte 0x6f74696f
 	.4byte 0x6e416374
 	.4byte 0x696f6e00
-	.4byte 0x803e3b7c
+	.4byte 0x803E3b7c
 	.4byte 0
 	.4byte 0
 	.4byte 0x54616943
@@ -92,16 +92,16 @@ __vt__32TaiWatchOffTerritoryCenterAction:
 	.4byte 0x696f6e41
 	.4byte 0x6374696f
 	.4byte 0x6e000000
-	.4byte 0x803e3b7c
+	.4byte 0x803E3b7c
 	.4byte 0
-	.4byte 0x803e3b9c
+	.4byte 0x803E3b9c
 	.4byte 0
 	.4byte 0
-	.4byte 0x803e3b7c
+	.4byte 0x803E3b7c
 	.4byte 0
-	.4byte 0x803e3b9c
+	.4byte 0x803E3b9c
 	.4byte 0
-	.4byte 0x803e3ba4
+	.4byte 0x803E3ba4
 	.4byte 0
 	.4byte 0
 .global __vt__20TaiRunningAwayAction
@@ -124,11 +124,11 @@ __vt__20TaiRunningAwayAction:
 	.4byte 0x696f6e41
 	.4byte 0x6374696f
 	.4byte 0x6e000000
-	.4byte 0x803e3b7c
+	.4byte 0x803E3b7c
 	.4byte 0
-	.4byte 0x803e3b9c
+	.4byte 0x803E3b9c
 	.4byte 0
-	.4byte 0x803e3ba4
+	.4byte 0x803E3ba4
 	.4byte 0
 	.4byte 0
 .global __vt__37TaiRunningAwayToTargetDirectionAction
@@ -146,7 +146,7 @@ __vt__37TaiRunningAwayToTargetDirectionAction:
 	.4byte 0x696e6741
 	.4byte 0x6374696f
 	.4byte 0x6e000000
-	.4byte 0x803e3b7c
+	.4byte 0x803E3b7c
 	.4byte 0
 	.4byte 0
 .global __vt__17TaiRotatingAction
@@ -167,11 +167,11 @@ __vt__17TaiRotatingAction:
 	.4byte 0x6f6e4163
 	.4byte 0x74696f6e
 	.4byte 0
-	.4byte 0x803e3b7c
+	.4byte 0x803E3b7c
 	.4byte 0
-	.4byte 0x803e3b9c
+	.4byte 0x803E3b9c
 	.4byte 0
-	.4byte 0x803e3ba4
+	.4byte 0x803E3ba4
 	.4byte 0
 	.4byte 0
 .global __vt__32TaiTurningToTargetPositionAction
@@ -191,7 +191,7 @@ __vt__32TaiTurningToTargetPositionAction:
 	.4byte 0x6c654163
 	.4byte 0x74696f6e
 	.4byte 0
-	.4byte 0x803e3b7c
+	.4byte 0x803E3b7c
 	.4byte 0
 	.4byte 0
 .global __vt__24TaiOutOfTraceAngleAction
@@ -209,11 +209,11 @@ __vt__24TaiOutOfTraceAngleAction:
 	.4byte 0x696e6741
 	.4byte 0x6374696f
 	.4byte 0x6e000000
-	.4byte 0x803e3b7c
+	.4byte 0x803E3b7c
 	.4byte 0
-	.4byte 0x803e3b9c
+	.4byte 0x803E3b9c
 	.4byte 0
-	.4byte 0x803e3ba4
+	.4byte 0x803E3ba4
 	.4byte 0
 	.4byte 0
 .global __vt__21TaiTraceTurningAction
@@ -232,11 +232,11 @@ __vt__21TaiTraceTurningAction:
 	.4byte 0x61794163
 	.4byte 0x74696f6e
 	.4byte 0
-	.4byte 0x803e3b7c
+	.4byte 0x803E3b7c
 	.4byte 0
-	.4byte 0x803e3b9c
+	.4byte 0x803E3b9c
 	.4byte 0
-	.4byte 0x803e3ba4
+	.4byte 0x803E3ba4
 	.4byte 0
 	.4byte 0
 .global __vt__20TaiTurningAwayAction
@@ -256,7 +256,7 @@ __vt__20TaiTurningAwayAction:
 	.4byte 0x436f6e64
 	.4byte 0x6974696f
 	.4byte 0x6e000000
-	.4byte 0x803e3be4
+	.4byte 0x803E3be4
 	.4byte 0
 	.4byte 0
 	.4byte 0
@@ -270,11 +270,11 @@ __vt__20TaiTurningAwayAction:
 	.4byte 0x6e674163
 	.4byte 0x74696f6e
 	.4byte 0
-	.4byte 0x803e3b7c
+	.4byte 0x803E3b7c
 	.4byte 0
-	.4byte 0x803e3b9c
+	.4byte 0x803E3b9c
 	.4byte 0
-	.4byte 0x803e3ba4
+	.4byte 0x803E3ba4
 	.4byte 0
 	.4byte 0
 .global __vt__16TaiTurningAction
@@ -292,7 +292,7 @@ __vt__16TaiTurningAction:
 	.4byte 0x74547572
 	.4byte 0x6e416374
 	.4byte 0x696f6e00
-	.4byte 0x803e3b7c
+	.4byte 0x803E3b7c
 	.4byte 0
 	.4byte 0
 .global __vt__19TaiDirectTurnAction
@@ -309,11 +309,11 @@ __vt__19TaiDirectTurnAction:
 	.4byte 0x486f6d65
 	.4byte 0x41637469
 	.4byte 0x6f6e0000
-	.4byte 0x803e3b7c
+	.4byte 0x803E3b7c
 	.4byte 0
-	.4byte 0x803e3b9c
+	.4byte 0x803E3b9c
 	.4byte 0
-	.4byte 0x803e3ba4
+	.4byte 0x803E3ba4
 	.4byte 0
 	.4byte 0
 .global __vt__18TaiGoingHomeAction
@@ -331,11 +331,11 @@ __vt__18TaiGoingHomeAction:
 	.4byte 0x6e674163
 	.4byte 0x74696f6e
 	.4byte 0
-	.4byte 0x803e3b7c
+	.4byte 0x803E3b7c
 	.4byte 0
-	.4byte 0x803e3b9c
+	.4byte 0x803E3b9c
 	.4byte 0
-	.4byte 0x803e3ba4
+	.4byte 0x803E3ba4
 	.4byte 0
 	.4byte 0
 .global __vt__16TaiTracingAction
@@ -356,11 +356,11 @@ __vt__16TaiTracingAction:
 	.4byte 0x75746541
 	.4byte 0x6374696f
 	.4byte 0x6e000000
-	.4byte 0x803e3b7c
+	.4byte 0x803E3b7c
 	.4byte 0
-	.4byte 0x803e3b9c
+	.4byte 0x803E3b9c
 	.4byte 0
-	.4byte 0x803e3ba4
+	.4byte 0x803E3ba4
 	.4byte 0
 	.4byte 0
 .global __vt__29TaiRandomWanderingRouteAction
@@ -378,7 +378,7 @@ __vt__29TaiRandomWanderingRouteAction:
 	.4byte 0x7361626c
 	.4byte 0x65416374
 	.4byte 0x696f6e00
-	.4byte 0x803e3b7c
+	.4byte 0x803E3b7c
 	.4byte 0
 	.4byte 0
 .global __vt__19TaiImpassableAction
@@ -397,7 +397,7 @@ __vt__19TaiImpassableAction:
 	.4byte 0x69747959
 	.4byte 0x41637469
 	.4byte 0x6f6e0000
-	.4byte 0x803e3b7c
+	.4byte 0x803E3b7c
 	.4byte 0
 	.4byte 0
 .global __vt__26TaiClampMinVelocityYAction
@@ -415,7 +415,7 @@ __vt__26TaiClampMinVelocityYAction:
 	.4byte 0x65696768
 	.4byte 0x74416374
 	.4byte 0x696f6e00
-	.4byte 0x803e3b7c
+	.4byte 0x803E3b7c
 	.4byte 0
 	.4byte 0
 .global __vt__23TaiClampMinHeightAction
@@ -433,7 +433,7 @@ __vt__23TaiClampMinHeightAction:
 	.4byte 0x65696768
 	.4byte 0x74416374
 	.4byte 0x696f6e00
-	.4byte 0x803e3b7c
+	.4byte 0x803E3b7c
 	.4byte 0
 	.4byte 0
 .global __vt__23TaiClampMaxHeightAction
@@ -452,7 +452,7 @@ __vt__23TaiClampMaxHeightAction:
 	.4byte 0x57617665
 	.4byte 0x41637469
 	.4byte 0x6f6e0000
-	.4byte 0x803e3b7c
+	.4byte 0x803E3b7c
 	.4byte 0
 	.4byte 0
 .global __vt__26TaiHorizontalSinWaveAction
@@ -469,7 +469,7 @@ __vt__26TaiHorizontalSinWaveAction:
 	.4byte 0x654d6f76
 	.4byte 0x65416374
 	.4byte 0x696f6e00
-	.4byte 0x803e3b7c
+	.4byte 0x803E3b7c
 	.4byte 0
 	.4byte 0
 .global __vt__19TaiCircleMoveAction
@@ -486,7 +486,7 @@ __vt__19TaiCircleMoveAction:
 	.4byte 0x6f6c6141
 	.4byte 0x6374696f
 	.4byte 0x6e000000
-	.4byte 0x803e3b7c
+	.4byte 0x803E3b7c
 	.4byte 0
 	.4byte 0
 .global __vt__17TaiParabolaAction
@@ -504,7 +504,7 @@ __vt__17TaiParabolaAction:
 	.4byte 0x696f6e41
 	.4byte 0x6374696f
 	.4byte 0x6e000000
-	.4byte 0x803e3b7c
+	.4byte 0x803E3b7c
 	.4byte 0
 	.4byte 0
 .global __vt__21TaiAccelerationAction
@@ -523,7 +523,7 @@ __vt__21TaiAccelerationAction:
 	.4byte 0x76654163
 	.4byte 0x74696f6e
 	.4byte 0
-	.4byte 0x803e3b7c
+	.4byte 0x803E3b7c
 	.4byte 0
 	.4byte 0
 .global __vt__24TaiMakingNextDriveAction
@@ -542,7 +542,7 @@ __vt__24TaiMakingNextDriveAction:
 	.4byte 0x6f636974
 	.4byte 0x79416374
 	.4byte 0x696f6e00
-	.4byte 0x803e3b7c
+	.4byte 0x803E3b7c
 	.4byte 0
 	.4byte 0
 .global __vt__27TaiMakingNextVelocityAction
@@ -563,7 +563,7 @@ __vt__27TaiMakingNextVelocityAction:
 	.4byte 0x74696f6e
 	.4byte 0x41637469
 	.4byte 0x6f6e0000
-	.4byte 0x803e3b7c
+	.4byte 0x803E3b7c
 	.4byte 0
 	.4byte 0
 .global __vt__34TaiMakeAccelerationDirectionAction
@@ -583,7 +583,7 @@ __vt__34TaiMakeAccelerationDirectionAction:
 	.4byte 0x74696f6e
 	.4byte 0x41637469
 	.4byte 0x6f6e0000
-	.4byte 0x803e3b7c
+	.4byte 0x803E3b7c
 	.4byte 0
 	.4byte 0
 .global __vt__30TaiMakeVelocityDirectionAction
@@ -601,7 +601,7 @@ __vt__30TaiMakeVelocityDirectionAction:
 	.4byte 0x696e6741
 	.4byte 0x6374696f
 	.4byte 0x6e000000
-	.4byte 0x803e3b7c
+	.4byte 0x803E3b7c
 	.4byte 0
 	.4byte 0
 .global __vt__21TaiFinishFlyingAction
@@ -619,7 +619,7 @@ __vt__21TaiFinishFlyingAction:
 	.4byte 0x6e674163
 	.4byte 0x74696f6e
 	.4byte 0
-	.4byte 0x803e3b7c
+	.4byte 0x803E3b7c
 	.4byte 0
 	.4byte 0
 .global __vt__20TaiStartFlyingAction
@@ -636,7 +636,7 @@ __vt__20TaiStartFlyingAction:
 	.4byte 0x6f766541
 	.4byte 0x6374696f
 	.4byte 0x6e000000
-	.4byte 0x803e3b7c
+	.4byte 0x803E3b7c
 	.4byte 0
 	.4byte 0
 .global __vt__17TaiStopMoveAction
@@ -655,7 +655,7 @@ __vt__17TaiStopMoveAction:
 	.4byte 0x696f6e41
 	.4byte 0x6374696f
 	.4byte 0x6e000000
-	.4byte 0x803e3b7c
+	.4byte 0x803E3b7c
 	.4byte 0
 	.4byte 0
 .global __vt__25TaiMoveNestPositionAction

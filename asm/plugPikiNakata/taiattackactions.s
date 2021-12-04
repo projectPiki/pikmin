@@ -25,12 +25,12 @@
 	.4byte 0x6f74696f
 	.4byte 0x6e416374
 	.4byte 0x696f6e00
-	.4byte 0x803e3460
+	.4byte 0x803E3460
 	.4byte 0
 	.4byte 0
-	.4byte 0x803e3460
+	.4byte 0x803E3460
 	.4byte 0
-	.4byte 0x803e3468
+	.4byte 0x803E3468
 	.4byte 0
 	.4byte 0
 .global __vt__22TaiFlickingUpperAction
@@ -47,9 +47,9 @@ __vt__22TaiFlickingUpperAction:
 	.4byte 0x696e6741
 	.4byte 0x6374696f
 	.4byte 0x6e000000
-	.4byte 0x803e3460
+	.4byte 0x803E3460
 	.4byte 0
-	.4byte 0x803e3468
+	.4byte 0x803E3468
 	.4byte 0
 	.4byte 0
 .global __vt__17TaiFlickingAction
@@ -67,7 +67,7 @@ __vt__17TaiFlickingAction:
 	.4byte 0x636b4163
 	.4byte 0x74696f6e
 	.4byte 0
-	.4byte 0x803e3460
+	.4byte 0x803E3460
 	.4byte 0
 	.4byte 0
 .global __vt__20TaiTargetStickAction
@@ -83,7 +83,7 @@ __vt__20TaiTargetStickAction:
 	.4byte 0x6c69636b
 	.4byte 0x41637469
 	.4byte 0x6f6e0000
-	.4byte 0x803e3460
+	.4byte 0x803E3460
 	.4byte 0
 	.4byte 0
 .global __vt__14TaiFlickAction
@@ -100,7 +100,7 @@ __vt__14TaiFlickAction:
 	.4byte 0x6e674163
 	.4byte 0x74696f6e
 	.4byte 0
-	.4byte 0x803e3460
+	.4byte 0x803E3460
 	.4byte 0
 	.4byte 0
 .global __vt__16TaiBangingAction
@@ -138,12 +138,12 @@ __vt__16TaiBangingAction:
 	.4byte 0x436f6e64
 	.4byte 0x6974696f
 	.4byte 0x6e000000
-	.4byte 0x803e3498
+	.4byte 0x803E3498
 	.4byte 0
 	.4byte 0
-	.4byte 0x803e3498
+	.4byte 0x803E3498
 	.4byte 0
-	.4byte 0x803e34a0
+	.4byte 0x803E34a0
 	.4byte 0
 	.4byte 0
 .global __vt__16TekiAndCondition
@@ -156,9 +156,9 @@ __vt__16TekiAndCondition:
 	.4byte 0x6f6e6469
 	.4byte 0x74696f6e
 	.4byte 0
-	.4byte 0x803e3498
+	.4byte 0x803E3498
 	.4byte 0
-	.4byte 0x803e34a0
+	.4byte 0x803E34a0
 	.4byte 0
 	.4byte 0
 .global __vt__16TekiNotCondition
@@ -174,7 +174,7 @@ __vt__16TekiNotCondition:
 	.4byte 0x6e674163
 	.4byte 0x74696f6e
 	.4byte 0
-	.4byte 0x803e3460
+	.4byte 0x803E3460
 	.4byte 0
 	.4byte 0
 .global __vt__28TaiAnimationSwallowingAction
@@ -192,7 +192,7 @@ __vt__28TaiAnimationSwallowingAction:
 	.4byte 0x6550696b
 	.4byte 0x69416374
 	.4byte 0x696f6e00
-	.4byte 0x803e3460
+	.4byte 0x803E3460
 	.4byte 0
 	.4byte 0
 .global __vt__23TaiAttackablePikiAction
@@ -210,7 +210,7 @@ __vt__23TaiAttackablePikiAction:
 	.4byte 0x654e6176
 	.4byte 0x69416374
 	.4byte 0x696f6e00
-	.4byte 0x803e3460
+	.4byte 0x803E3460
 	.4byte 0
 	.4byte 0
 .global __vt__23TaiAttackableNaviAction
@@ -224,7 +224,7 @@ __vt__23TaiAttackableNaviAction:
 	.4byte hasNextState__9TaiActionFv
 .global __vt__13TekiCondition
 __vt__13TekiCondition:
-	.4byte 0x803e34a0
+	.4byte 0x803E34a0
 	.4byte 0
 	.4byte satisfy__13TekiConditionFP8Creature
 	.4byte 0
@@ -237,7 +237,7 @@ __vt__13TekiCondition:
 	.4byte 0x6950696b
 	.4byte 0x69416374
 	.4byte 0x696f6e00
-	.4byte 0x803e3460
+	.4byte 0x803E3460
 	.4byte 0
 	.4byte 0
 .global __vt__27TaiAttackableNaviPikiAction

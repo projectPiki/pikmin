@@ -574,49 +574,49 @@ lbl_8012510C:
 	.4byte 0x43726561
 	.4byte 0x74757265
 	.4byte 0
-	.4byte 0x803e15a8
+	.4byte 0x803E15a8
 	.4byte 0x8
-	.4byte 0x803e15b0
+	.4byte 0x803E15b0
 	.4byte 0
 	.4byte 0
 	.4byte 0x41494372
 	.4byte 0x65617475
 	.4byte 0x72650000
-	.4byte 0x803e15a0
+	.4byte 0x803E15a0
 	.4byte 0x2b8
-	.4byte 0x803e15a8
+	.4byte 0x803E15a8
 	.4byte 0x8
-	.4byte 0x803e15b0
+	.4byte 0x803E15b0
 	.4byte 0
-	.4byte 0x803e15b8
+	.4byte 0x803E15b8
 	.4byte 0
 	.4byte 0
 	.4byte 0x4974656d
 	.4byte 0x43726561
 	.4byte 0x74757265
 	.4byte 0
-	.4byte 0x803e15a0
+	.4byte 0x803E15a0
 	.4byte 0x2b8
-	.4byte 0x803e15a8
+	.4byte 0x803E15a8
 	.4byte 0x8
-	.4byte 0x803e15b0
+	.4byte 0x803E15b0
 	.4byte 0
-	.4byte 0x803e15b8
+	.4byte 0x803E15b8
 	.4byte 0
-	.4byte 0x803e15c0
+	.4byte 0x803E15c0
 	.4byte 0
 	.4byte 0
-	.4byte 0x803e15a0
+	.4byte 0x803E15a0
 	.4byte 0x2b8
-	.4byte 0x803e15a8
+	.4byte 0x803E15a8
 	.4byte 0x8
-	.4byte 0x803e15b0
+	.4byte 0x803E15b0
 	.4byte 0
-	.4byte 0x803e15b8
+	.4byte 0x803E15b8
 	.4byte 0
-	.4byte 0x803e15c0
+	.4byte 0x803E15c0
 	.4byte 0
-	.4byte 0x803e15c8
+	.4byte 0x803E15c8
 	.4byte 0
 	.4byte 0
 .global __vt__10BoBaseItem
@@ -711,17 +711,17 @@ __vt__10BoBaseItem:
 	.4byte 0x4b757361
 	.4byte 0x4974656d
 	.4byte 0
-	.4byte 0x803e15a0
+	.4byte 0x803E15a0
 	.4byte 0x2b8
-	.4byte 0x803e15a8
+	.4byte 0x803E15a8
 	.4byte 0x8
-	.4byte 0x803e15b0
+	.4byte 0x803E15b0
 	.4byte 0
-	.4byte 0x803e15b8
+	.4byte 0x803E15b8
 	.4byte 0
-	.4byte 0x803e15c0
+	.4byte 0x803E15c0
 	.4byte 0
-	.4byte 0x803e15c8
+	.4byte 0x803E15c8
 	.4byte 0
 	.4byte 0
 .global __vt__8KusaItem
@@ -819,7 +819,7 @@ __vt__8KusaItem:
 	.4byte 0x802BB2E0
 .global __RTTI__4Weed
 __RTTI__4Weed:
-	.4byte 0x803e1504
+	.4byte 0x803E1504
 	.4byte 0x802bb30c
 .global __RTTI__8WeedsGen
 __RTTI__8WeedsGen:
@@ -833,7 +833,7 @@ __RTTI__8GrassGen:
 	.4byte 0x47656e00
 .global __RTTI__7RockGen
 __RTTI__7RockGen:
-	.4byte 0x803e1554
+	.4byte 0x803E1554
 	.4byte 0x802bb7d4
 	.4byte 0
 .global lbl_803E1568

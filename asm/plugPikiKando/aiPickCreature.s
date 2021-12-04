@@ -227,22 +227,22 @@ lbl_800FC294:
 	.4byte 0x69766572
 	.4byte 0x3c50696b
 	.4byte 0x693e0000
-	.4byte 0x803e05a0
+	.4byte 0x803E05a0
 	.4byte 0
 	.4byte 0
 	.4byte 0x416e6441
 	.4byte 0x6374696f
 	.4byte 0x6e000000
-	.4byte 0x803e05a0
+	.4byte 0x803E05a0
 	.4byte 0
-	.4byte 0x803e05b0
+	.4byte 0x803E05b0
 	.4byte 0
 	.4byte 0
-	.4byte 0x803e05a0
+	.4byte 0x803E05a0
 	.4byte 0
-	.4byte 0x803e05b0
+	.4byte 0x803E05b0
 	.4byte 0
-	.4byte 0x803e05b8
+	.4byte 0x803E05b8
 	.4byte 0
 	.4byte 0
 .global __vt__10ActDeliver
@@ -283,7 +283,7 @@ __vt__10ActDeliver:
 	.4byte 0x496e6974
 	.4byte 0x69616c69
 	.4byte 0x73657200
-	.4byte 0x803e05c8
+	.4byte 0x803E05c8
 	.4byte 0
 	.4byte 0
 .global __vt__Q210ActDeliver11Initialiser
@@ -293,18 +293,18 @@ __vt__Q210ActDeliver11Initialiser:
 	.4byte initialise__Q210ActDeliver11InitialiserFP6Action
 .global __vt__Q26Action11Initialiser
 __vt__Q26Action11Initialiser:
-	.4byte 0x803e05c8
+	.4byte 0x803E05c8
 	.4byte 0
 	.4byte initialise__Q26Action11InitialiserFP6Action
 	.4byte 0x41637450
 	.4byte 0x69636b43
 	.4byte 0x72656174
 	.4byte 0x75726500
-	.4byte 0x803e05a0
+	.4byte 0x803E05a0
 	.4byte 0
-	.4byte 0x803e05b0
+	.4byte 0x803E05b0
 	.4byte 0
-	.4byte 0x803e05b8
+	.4byte 0x803E05b8
 	.4byte 0
 	.4byte 0
 .global __vt__15ActPickCreature

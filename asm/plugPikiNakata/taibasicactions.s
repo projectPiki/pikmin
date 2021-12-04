@@ -20,7 +20,7 @@
 	.4byte 0x54616941
 	.4byte 0x6374696f
 	.4byte 0x6e000000
-	.4byte 0x803e34d8
+	.4byte 0x803E34d8
 	.4byte 0
 	.4byte 0
 .global __vt__26TaiNaviWatchResultOnAction
@@ -40,7 +40,7 @@ __vt__26TaiNaviWatchResultOnAction:
 	.4byte 0x6c744f6e
 	.4byte 0x41637469
 	.4byte 0x6f6e0000
-	.4byte 0x803e34d8
+	.4byte 0x803E34d8
 	.4byte 0
 	.4byte 0
 .global __vt__30TaiTypeNaviWatchResultOnAction
@@ -57,7 +57,7 @@ __vt__30TaiTypeNaviWatchResultOnAction:
 	.4byte 0x6f756e64
 	.4byte 0x41637469
 	.4byte 0x6f6e0000
-	.4byte 0x803e34d8
+	.4byte 0x803E34d8
 	.4byte 0
 	.4byte 0
 .global __vt__18TaiStopSoundAction
@@ -74,7 +74,7 @@ __vt__18TaiStopSoundAction:
 	.4byte 0x6f756e64
 	.4byte 0x41637469
 	.4byte 0x6f6e0000
-	.4byte 0x803e34d8
+	.4byte 0x803E34d8
 	.4byte 0
 	.4byte 0
 .global __vt__18TaiPlaySoundAction
@@ -91,7 +91,7 @@ __vt__18TaiPlaySoundAction:
 	.4byte 0x74696f6e
 	.4byte 0x41637469
 	.4byte 0x6f6e0000
-	.4byte 0x803e34d8
+	.4byte 0x803E34d8
 	.4byte 0
 	.4byte 0
 .global __vt__18TaiSetOptionAction
@@ -109,7 +109,7 @@ __vt__18TaiSetOptionAction:
 	.4byte 0x74654163
 	.4byte 0x74696f6e
 	.4byte 0
-	.4byte 0x803e34d8
+	.4byte 0x803E34d8
 	.4byte 0
 	.4byte 0
 .global __vt__20TaiActionStateAction

@@ -460,7 +460,7 @@ __vt__9ActEscape:
 	.4byte 0x496e6974
 	.4byte 0x69616c69
 	.4byte 0x73657200
-	.4byte 0x803e0338
+	.4byte 0x803E0338
 	.4byte 0
 	.4byte 0
 .global __vt__Q29ActEscape11Initialiser

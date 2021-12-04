@@ -5861,7 +5861,7 @@ __vt__11PikiHeadMgr:
 	.4byte 0x74757265
 	.4byte 0x50726f70
 	.4byte 0
-	.4byte 0x803e1d90
+	.4byte 0x803E1d90
 	.4byte 0
 	.4byte 0
 .global __vt__16PikiHeadItemProp
@@ -5873,26 +5873,26 @@ __vt__16PikiHeadItemProp:
 	.4byte 0x4f626a65
 	.4byte 0x63744d67
 	.4byte 0x72000000
-	.4byte 0x803e1d50
+	.4byte 0x803E1d50
 	.4byte 0x8
-	.4byte 0x803e1d58
+	.4byte 0x803E1d58
 	.4byte 0x8
-	.4byte 0x803e1d68
+	.4byte 0x803E1d68
 	.4byte 0x8
-	.4byte 0x803e1d70
+	.4byte 0x803E1d70
 	.4byte 0
-	.4byte 0x803e1d78
+	.4byte 0x803E1d78
 	.4byte 0
 	.4byte 0
-	.4byte 0x803e1d50
+	.4byte 0x803E1d50
 	.4byte 0x8
-	.4byte 0x803e1d58
+	.4byte 0x803E1d58
 	.4byte 0x8
-	.4byte 0x803e1d68
+	.4byte 0x803E1d68
 	.4byte 0x8
-	.4byte 0x803e1d70
+	.4byte 0x803E1d70
 	.4byte 0
-	.4byte 0x803e1d78
+	.4byte 0x803E1d78
 	.4byte 0
 	.4byte __RTTI__13PolyObjectMgr_1
 	.4byte 0
@@ -5939,7 +5939,7 @@ __vt__7ItemMgr:
 	.4byte 0x496e7465
 	.4byte 0x72616374
 	.4byte 0x696f6e00
-	.4byte 0x803e1db8
+	.4byte 0x803E1db8
 	.4byte 0
 	.4byte 0
 .global __vt__15InteractBikkuri
@@ -5974,37 +5974,37 @@ __vt__15InteractBikkuri:
 	.4byte 0x43726561
 	.4byte 0x74757265
 	.4byte 0
-	.4byte 0x803e1dd0
+	.4byte 0x803E1dd0
 	.4byte 0x8
-	.4byte 0x803e1dd8
+	.4byte 0x803E1dd8
 	.4byte 0
 	.4byte 0
 	.4byte 0x41494372
 	.4byte 0x65617475
 	.4byte 0x72650000
-	.4byte 0x803e1dc8
+	.4byte 0x803E1dc8
 	.4byte 0x2b8
-	.4byte 0x803e1dd0
+	.4byte 0x803E1dd0
 	.4byte 0x8
-	.4byte 0x803e1dd8
+	.4byte 0x803E1dd8
 	.4byte 0
-	.4byte 0x803e1de0
+	.4byte 0x803E1de0
 	.4byte 0
 	.4byte 0
-	.4byte 0x803e1dc8
+	.4byte 0x803E1dc8
 	.4byte 0x2b8
-	.4byte 0x803e1dd0
+	.4byte 0x803E1dd0
 	.4byte 0x8
-	.4byte 0x803e1dd8
+	.4byte 0x803E1dd8
 	.4byte 0
-	.4byte 0x803e1de0
+	.4byte 0x803E1de0
 	.4byte 0
-	.4byte 0x803e1de8
+	.4byte 0x803E1de8
 	.4byte 0
 	.4byte 0
 .global __vt__12ItemCreature
 __vt__12ItemCreature:
-	.4byte 0x803e1df0
+	.4byte 0x803E1df0
 	.4byte 0
 	.4byte addCntCallback__12RefCountableFv
 	.4byte subCntCallback__12RefCountableFv
@@ -6073,7 +6073,7 @@ __vt__12ItemCreature:
 	.4byte doAnimation__12ItemCreatureFv
 	.4byte doKill__12ItemCreatureFv
 	.4byte exitCourse__8CreatureFv
-	.4byte 0x803e1df0
+	.4byte 0x803E1df0
 	.4byte 0xfffffd48
 	.4byte lbl_8007DF54
 	.4byte getCurrState__10AICreatureFv
@@ -6094,7 +6094,7 @@ __vt__12ItemCreature:
 	.4byte 0x446f6f72
 	.4byte 0x50726f70
 	.4byte 0
-	.4byte 0x803e1d90
+	.4byte 0x803E1d90
 	.4byte 0
 	.4byte 0
 .global __vt__8DoorProp
@@ -6102,7 +6102,7 @@ __vt__8DoorProp:
 	.4byte __RTTI__8DoorProp
 	.4byte 0
 	.4byte read__12CreaturePropFR18RandomAccessStream
-	.4byte 0x803e1d90
+	.4byte 0x803E1d90
 	.4byte 0
 	.4byte 0
 .global __vt__7KeyProp
@@ -6113,7 +6113,7 @@ __vt__7KeyProp:
 	.4byte 0x53656564
 	.4byte 0x50726f70
 	.4byte 0
-	.4byte 0x803e1d90
+	.4byte 0x803E1d90
 	.4byte 0
 	.4byte 0
 .global __vt__8SeedProp
@@ -6124,7 +6124,7 @@ __vt__8SeedProp:
 	.4byte 0x526f7065
 	.4byte 0x50726f70
 	.4byte 0
-	.4byte 0x803e1d90
+	.4byte 0x803E1d90
 	.4byte 0
 	.4byte 0
 .global __vt__8RopeProp
@@ -6136,7 +6136,7 @@ __vt__8RopeProp:
 	.4byte 0x4974656d
 	.4byte 0x50726f70
 	.4byte 0
-	.4byte 0x803e1d90
+	.4byte 0x803E1d90
 	.4byte 0
 	.4byte 0
 .global __vt__12MizuItemProp
@@ -6148,7 +6148,7 @@ __vt__12MizuItemProp:
 	.4byte 0x4974656d
 	.4byte 0x50726f70
 	.4byte 0
-	.4byte 0x803e1d90
+	.4byte 0x803E1d90
 	.4byte 0
 	.4byte 0
 .global __vt__12BombItemProp
@@ -6161,9 +6161,9 @@ __vt__12BombItemProp:
 	.4byte 0x3a557365
 	.4byte 0x4e6f6465
 	.4byte 0
-	.4byte 0x803e1d50
+	.4byte 0x803E1d50
 	.4byte 0
-	.4byte 0x803e1d58
+	.4byte 0x803E1d58
 	.4byte 0
 	.4byte 0
 .global __vt__Q27ItemMgr7UseNode
@@ -6176,7 +6176,7 @@ __vt__Q27ItemMgr7UseNode:
 	.4byte 0x4974656d
 	.4byte 0x50726f70
 	.4byte 0
-	.4byte 0x803e1d90
+	.4byte 0x803E1d90
 	.4byte 0
 	.4byte 0
 .global __vt__12KusaItemProp
@@ -6189,7 +6189,7 @@ __vt__12KusaItemProp:
 	.4byte 0x4974656d
 	.4byte 0x50726f70
 	.4byte 0
-	.4byte 0x803e1d90
+	.4byte 0x803E1d90
 	.4byte 0
 	.4byte 0
 .global __vt__16BuildingItemProp
@@ -6203,7 +6203,7 @@ __vt__16BuildingItemProp:
 	.4byte 0x42617365
 	.4byte 0x5061726d
 	.4byte 0
-	.4byte 0x803e1e48
+	.4byte 0x803E1e48
 	.4byte 0
 	.4byte 0
 	.4byte 0
@@ -6214,7 +6214,7 @@ __vt__16BuildingItemProp:
 	.4byte 0x55666f49
 	.4byte 0x74656d50
 	.4byte 0x726f7000
-	.4byte 0x803e1d90
+	.4byte 0x803E1d90
 	.4byte 0
 	.4byte 0
 .global __vt__11UfoItemProp
@@ -6226,7 +6226,7 @@ __vt__11UfoItemProp:
 	.4byte 0x4974656d
 	.4byte 0x50726f70
 	.4byte 0
-	.4byte 0x803e1d90
+	.4byte 0x803E1d90
 	.4byte 0
 	.4byte 0
 .global __vt__12GoalItemProp
@@ -6245,26 +6245,26 @@ __vt__12GoalItemProp:
 	.4byte 0x74757265
 	.4byte 0x4e6f6465
 	.4byte 0x4d677200
-	.4byte 0x803e1d50
+	.4byte 0x803E1d50
 	.4byte 0x8
-	.4byte 0x803e1d58
+	.4byte 0x803E1d58
 	.4byte 0x8
-	.4byte 0x803e1d68
+	.4byte 0x803E1d68
 	.4byte 0x8
-	.4byte 0x803e1d70
+	.4byte 0x803E1d70
 	.4byte 0
-	.4byte 0x803e1d78
+	.4byte 0x803E1d78
 	.4byte 0
 	.4byte 0
-	.4byte 0x803e1d50
+	.4byte 0x803E1d50
 	.4byte 0x8
-	.4byte 0x803e1d58
+	.4byte 0x803E1d58
 	.4byte 0x8
-	.4byte 0x803e1d68
+	.4byte 0x803E1d68
 	.4byte 0x8
-	.4byte 0x803e1d70
+	.4byte 0x803E1d70
 	.4byte 0
-	.4byte 0x803e1d78
+	.4byte 0x803E1d78
 	.4byte 0
 	.4byte __RTTI__15CreatureNodeMgr_1
 	.4byte 0
@@ -6305,9 +6305,9 @@ __vt__13MeltingPotMgr:
 	.4byte 0x74757265
 	.4byte 0x4e6f6465
 	.4byte 0
-	.4byte 0x803e1d50
+	.4byte 0x803E1d50
 	.4byte 0
-	.4byte 0x803e1d58
+	.4byte 0x803E1d58
 	.4byte 0
 	.4byte 0
 .global __vt__12CreatureNode
@@ -6333,17 +6333,17 @@ __vt__12CreatureNode:
 	.4byte 0x64696e67
 	.4byte 0x4974656d
 	.4byte 0
-	.4byte 0x803e1dc8
+	.4byte 0x803E1dc8
 	.4byte 0x2b8
-	.4byte 0x803e1dd0
+	.4byte 0x803E1dd0
 	.4byte 0x8
-	.4byte 0x803e1dd8
+	.4byte 0x803E1dd8
 	.4byte 0
-	.4byte 0x803e1de0
+	.4byte 0x803E1de0
 	.4byte 0
-	.4byte 0x803e1de8
+	.4byte 0x803E1de8
 	.4byte 0
-	.4byte 0x803e1df0
+	.4byte 0x803E1df0
 	.4byte 0
 	.4byte 0
 .global __vt__12BuildingItem
@@ -6551,7 +6551,7 @@ __RTTI__13PolyObjectMgr_1:
 	.4byte 0x802be978
 .global __RTTI__7ItemMgr
 __RTTI__7ItemMgr:
-	.4byte 0x803e1da0
+	.4byte 0x803E1da0
 	.4byte 0x802be9a4
 	.4byte 0x802bea6c
 	.4byte 0
@@ -6579,7 +6579,7 @@ __RTTI__8DoorProp:
 	.4byte 0x726f7000
 .global __RTTI__7KeyProp
 __RTTI__7KeyProp:
-	.4byte 0x803e1e00
+	.4byte 0x803E1e00
 	.4byte 0x802becec
 .global __RTTI__8SeedProp
 __RTTI__8SeedProp:

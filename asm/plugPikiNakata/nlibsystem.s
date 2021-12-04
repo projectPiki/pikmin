@@ -38,7 +38,7 @@ __vt__5NHeap:
 	.4byte "lastElement__14NArray<5NHeap>Fv"
 .global __vt__5NNode
 __vt__5NNode:
-	.4byte 0x803e30a0
+	.4byte 0x803E30a0
 	.4byte 0
 	.4byte setChild__5NNodeFiP5NNode
 	.4byte addChild__5NNodeFP5NNode
@@ -73,7 +73,7 @@ __vt__5NNode:
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .global __RTTI__6NPlane
 __RTTI__6NPlane:
-	.4byte 0x803e3048
+	.4byte 0x803E3048
 	.4byte 0
 .global lbl_803E3058
 lbl_803E3058:

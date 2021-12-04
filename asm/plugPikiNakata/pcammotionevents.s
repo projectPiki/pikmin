@@ -21,12 +21,12 @@
 	.4byte 0x50657665
 	.4byte 0x4576656e
 	.4byte 0x74000000
-	.4byte 0x803e3290
+	.4byte 0x803E3290
 	.4byte 0
 	.4byte 0
-	.4byte 0x803e3290
+	.4byte 0x803E3290
 	.4byte 0
-	.4byte 0x803e3298
+	.4byte 0x803E3298
 	.4byte 0
 	.4byte 0
 .global __vt__22PcamSideVibrationEvent
@@ -57,9 +57,9 @@ __vt__22PcamSideVibrationEvent:
 	.4byte 0x6f6d4d6f
 	.4byte 0x76654576
 	.4byte 0x656e7400
-	.4byte 0x803e3290
+	.4byte 0x803E3290
 	.4byte 0
-	.4byte 0x803e3298
+	.4byte 0x803E3298
 	.4byte 0
 	.4byte 0
 .global __vt__19PcamRandomMoveEvent
@@ -88,16 +88,16 @@ __vt__19PcamRandomMoveEvent:
 	.4byte 0x6174696f
 	.4byte 0x6e457665
 	.4byte 0x6e740000
-	.4byte 0x803e3290
+	.4byte 0x803E3290
 	.4byte 0
-	.4byte 0x803e3298
+	.4byte 0x803E3298
 	.4byte 0
 	.4byte 0
-	.4byte 0x803e3290
+	.4byte 0x803E3290
 	.4byte 0
-	.4byte 0x803e3298
+	.4byte 0x803E3298
 	.4byte 0
-	.4byte 0x803e32b0
+	.4byte 0x803E32b0
 	.4byte 0
 	.4byte 0
 .global __vt__15PcamDamageEvent
@@ -122,11 +122,11 @@ __vt__15PcamDamageEvent:
 	.4byte 0x6174696f
 	.4byte 0x6e457665
 	.4byte 0x6e740000
-	.4byte 0x803e3290
+	.4byte 0x803E3290
 	.4byte 0
-	.4byte 0x803e3298
+	.4byte 0x803E3298
 	.4byte 0
-	.4byte 0x803e32b0
+	.4byte 0x803E32b0
 	.4byte 0
 	.4byte 0
 .global __vt__18PcamVibrationEvent
@@ -156,14 +156,14 @@ __vt__18PcamVibrationEvent:
 	.4byte 0x53657269
 	.4byte 0x616c4576
 	.4byte 0x656e7400
-	.4byte 0x803e3290
+	.4byte 0x803E3290
 	.4byte 0
-	.4byte 0x803e3298
+	.4byte 0x803E3298
 	.4byte 0
 	.4byte 0
-	.4byte 0x803e3290
+	.4byte 0x803E3290
 	.4byte 0
-	.4byte 0x803e3298
+	.4byte 0x803E3298
 	.4byte 0
 	.4byte __RTTI__15PeveSerialEvent
 	.4byte 0
@@ -189,13 +189,13 @@ __vt__22PcamLongVibrationEvent:
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 	.4byte 0x414e6f64
 	.4byte 0x65000000
-	.4byte 0x803e3258
+	.4byte 0x803E3258
 	.4byte 0
 	.4byte 0x802c5288
 	.4byte 0x802c5294
 	.4byte 0x4e6f6465
 	.4byte 0
-	.4byte 0x803e3270
+	.4byte 0x803E3270
 	.4byte 0x802c52a0
 .global __RTTI__17PcamCameraManager
 __RTTI__17PcamCameraManager:
@@ -203,7 +203,7 @@ __RTTI__17PcamCameraManager:
 	.4byte 0x802c52b4
 	.4byte 0x4e4e6f64
 	.4byte 0x65000000
-	.4byte 0x803e3288
+	.4byte 0x803E3288
 	.4byte 0
 	.4byte 0x802c5364
 	.4byte 0x802c5370

@@ -55,12 +55,12 @@ __vt__26TaiPearlTresureSoundAction:
 	.4byte 0x54616953
 	.4byte 0x74726174
 	.4byte 0x65677900
-	.4byte 0x803e41bc
+	.4byte 0x803E41bc
 	.4byte 0
 	.4byte 0
-	.4byte 0x803e41bc
+	.4byte 0x803E41bc
 	.4byte 0
-	.4byte 0x803e41c4
+	.4byte 0x803E41c4
 	.4byte 0
 	.4byte 0
 .global __vt__16TaiPearlStrategy
@@ -84,32 +84,32 @@ __vt__16TaiPearlStrategy:
 	.4byte 0x436f7265
 	.4byte 0x4e6f6465
 	.4byte 0
-	.4byte 0x803e41dc
+	.4byte 0x803E41dc
 	.4byte 0
 	.4byte 0
-	.4byte 0x803e41dc
+	.4byte 0x803E41dc
 	.4byte 0
-	.4byte 0x803e41e4
+	.4byte 0x803E41e4
 	.4byte 0
 	.4byte 0
 	.4byte 0x54656b69
 	.4byte 0x50617261
 	.4byte 0x6d657465
 	.4byte 0x72730000
-	.4byte 0x803e41dc
+	.4byte 0x803E41dc
 	.4byte 0
-	.4byte 0x803e41e4
+	.4byte 0x803E41e4
 	.4byte 0
-	.4byte 0x803e41f4
+	.4byte 0x803E41f4
 	.4byte 0
 	.4byte 0
-	.4byte 0x803e41dc
+	.4byte 0x803E41dc
 	.4byte 0
-	.4byte 0x803e41e4
+	.4byte 0x803E41e4
 	.4byte 0
-	.4byte 0x803e41f4
+	.4byte 0x803E41f4
 	.4byte 0
-	.4byte 0x803e41fc
+	.4byte 0x803E41fc
 	.4byte 0
 	.4byte 0
 .global __vt__21TaiRocpearlParameters
@@ -131,13 +131,13 @@ __vt__21TaiRocpearlParameters:
 	.4byte 0x50617261
 	.4byte 0x6d657465
 	.4byte 0x72730000
-	.4byte 0x803e41dc
+	.4byte 0x803E41dc
 	.4byte 0
-	.4byte 0x803e41e4
+	.4byte 0x803E41e4
 	.4byte 0
-	.4byte 0x803e41f4
+	.4byte 0x803E41f4
 	.4byte 0
-	.4byte 0x803e41fc
+	.4byte 0x803E41fc
 	.4byte 0
 	.4byte 0
 .global __vt__18TaiPearlParameters
@@ -180,12 +180,12 @@ __vt__18TaiPearlParameters:
 	.4byte 0x436f6e64
 	.4byte 0x6974696f
 	.4byte 0x6e000000
-	.4byte 0x803e4214
+	.4byte 0x803E4214
 	.4byte 0
 	.4byte 0
-	.4byte 0x803e4214
+	.4byte 0x803E4214
 	.4byte 0
-	.4byte 0x803e421c
+	.4byte 0x803E421c
 	.4byte 0
 	.4byte 0
 	.4byte 0
@@ -196,9 +196,9 @@ __vt__18TaiPearlParameters:
 	.4byte 0x6f6e6469
 	.4byte 0x74696f6e
 	.4byte 0
-	.4byte 0x803e4214
+	.4byte 0x803E4214
 	.4byte 0
-	.4byte 0x803e421c
+	.4byte 0x803E421c
 	.4byte 0
 	.4byte 0
 	.4byte 0
@@ -209,7 +209,7 @@ __vt__18TaiPearlParameters:
 	.4byte 0x45617441
 	.4byte 0x6374696f
 	.4byte 0x6e000000
-	.4byte 0x803e41ac
+	.4byte 0x803E41ac
 	.4byte 0
 	.4byte 0
 .global __vt__17TaiShellEatAction
@@ -235,7 +235,7 @@ __vt__17TaiShellEatAction:
 	.4byte 0x64654163
 	.4byte 0x74696f6e
 	.4byte 0
-	.4byte 0x803e41ac
+	.4byte 0x803E41ac
 	.4byte 0
 	.4byte 0
 .global __vt__28TaiShellNaviPikiInsideAction
@@ -255,7 +255,7 @@ __vt__28TaiShellNaviPikiInsideAction:
 	.4byte 0x74696f6e
 	.4byte 0x41637469
 	.4byte 0x6f6e0000
-	.4byte 0x803e41ac
+	.4byte 0x803E41ac
 	.4byte 0
 	.4byte 0
 .global __vt__30TaiShellSaveItemPositionAction
@@ -274,7 +274,7 @@ __vt__30TaiShellSaveItemPositionAction:
 	.4byte 0x696f6e41
 	.4byte 0x6374696f
 	.4byte 0x6e000000
-	.4byte 0x803e41ac
+	.4byte 0x803E41ac
 	.4byte 0
 	.4byte 0
 .global __vt__25TaiShellSetPositionAction
@@ -291,9 +291,9 @@ __vt__25TaiShellSetPositionAction:
 	.4byte 0x53747261
 	.4byte 0x74656779
 	.4byte 0
-	.4byte 0x803e41bc
+	.4byte 0x803E41bc
 	.4byte 0
-	.4byte 0x803e41c4
+	.4byte 0x803E41c4
 	.4byte 0
 	.4byte 0
 .global __vt__16TaiShellStrategy
@@ -312,7 +312,7 @@ __vt__16TaiShellStrategy:
 	.4byte 0x6e636541
 	.4byte 0x6374696f
 	.4byte 0x6e000000
-	.4byte 0x803e41ac
+	.4byte 0x803E41ac
 	.4byte 0
 	.4byte 0
 	.4byte 0
@@ -334,13 +334,13 @@ __vt__16TaiShellStrategy:
 	.4byte 0x50617261
 	.4byte 0x6d657465
 	.4byte 0x72730000
-	.4byte 0x803e41dc
+	.4byte 0x803E41dc
 	.4byte 0
-	.4byte 0x803e41e4
+	.4byte 0x803E41e4
 	.4byte 0
-	.4byte 0x803e41f4
+	.4byte 0x803E41f4
 	.4byte 0
-	.4byte 0x803e41fc
+	.4byte 0x803E41fc
 	.4byte 0
 	.4byte 0
 .global __vt__18TaiShellParameters
@@ -363,7 +363,7 @@ __vt__18TaiShellParameters:
 	.4byte 0x802cc2d8
 	.4byte 0x4e6f6465
 	.4byte 0
-	.4byte 0x803e4178
+	.4byte 0x803E4178
 	.4byte 0x802cc2e4
 	.4byte 0x802cc2f8
 	.4byte 0x802cc308
@@ -400,13 +400,13 @@ __RTTI__16TaiPearlStrategy:
 	.4byte 0x802cc4b4
 	.4byte 0x414e6f64
 	.4byte 0x65000000
-	.4byte 0x803e41d4
+	.4byte 0x803E41d4
 	.4byte 0
 	.4byte 0x802cc508
 	.4byte 0x802cc514
 	.4byte 0x4e6f6465
 	.4byte 0
-	.4byte 0x803e41ec
+	.4byte 0x803E41ec
 	.4byte 0x802cc520
 	.4byte 0x802cc534
 	.4byte 0x802cc544

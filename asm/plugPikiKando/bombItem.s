@@ -392,49 +392,49 @@ lbl_80129328:
 	.4byte 0x43726561
 	.4byte 0x74757265
 	.4byte 0
-	.4byte 0x803e183c
+	.4byte 0x803E183c
 	.4byte 0x8
-	.4byte 0x803e1844
+	.4byte 0x803E1844
 	.4byte 0
 	.4byte 0
 	.4byte 0x41494372
 	.4byte 0x65617475
 	.4byte 0x72650000
-	.4byte 0x803e1834
+	.4byte 0x803E1834
 	.4byte 0x2b8
-	.4byte 0x803e183c
+	.4byte 0x803E183c
 	.4byte 0x8
-	.4byte 0x803e1844
+	.4byte 0x803E1844
 	.4byte 0
-	.4byte 0x803e184c
+	.4byte 0x803E184c
 	.4byte 0
 	.4byte 0
 	.4byte 0x4974656d
 	.4byte 0x43726561
 	.4byte 0x74757265
 	.4byte 0
-	.4byte 0x803e1834
+	.4byte 0x803E1834
 	.4byte 0x2b8
-	.4byte 0x803e183c
+	.4byte 0x803E183c
 	.4byte 0x8
-	.4byte 0x803e1844
+	.4byte 0x803E1844
 	.4byte 0
-	.4byte 0x803e184c
+	.4byte 0x803E184c
 	.4byte 0
-	.4byte 0x803e1854
+	.4byte 0x803E1854
 	.4byte 0
 	.4byte 0
-	.4byte 0x803e1834
+	.4byte 0x803E1834
 	.4byte 0x2b8
-	.4byte 0x803e183c
+	.4byte 0x803E183c
 	.4byte 0x8
-	.4byte 0x803e1844
+	.4byte 0x803E1844
 	.4byte 0
-	.4byte 0x803e184c
+	.4byte 0x803E184c
 	.4byte 0
-	.4byte 0x803e1854
+	.4byte 0x803E1854
 	.4byte 0
-	.4byte 0x803e185c
+	.4byte 0x803E185c
 	.4byte 0
 	.4byte 0
 .global __vt__8BombItem

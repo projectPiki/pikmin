@@ -3081,7 +3081,7 @@ effects:
 	.4byte 0x00000000
 .global __vt__8Suckable
 __vt__8Suckable:
-	.4byte 0x803e17a4
+	.4byte 0x803E17a4
 	.4byte 0
 	.4byte addCntCallback__12RefCountableFv
 	.4byte subCntCallback__12RefCountableFv
@@ -3150,7 +3150,7 @@ __vt__8Suckable:
 	.4byte doAnimation__12ItemCreatureFv
 	.4byte doKill__12ItemCreatureFv
 	.4byte exitCourse__8CreatureFv
-	.4byte 0x803e17a4
+	.4byte 0x803E17a4
 	.4byte 0xfffffd48
 	.4byte lbl_8007DF54
 	.4byte getCurrState__10AICreatureFv
@@ -3174,19 +3174,19 @@ __vt__8Suckable:
 	.4byte 0
 	.4byte finishSuck__8SuckableFP6Pellet
 	.4byte 0
-	.4byte 0x803e1774
+	.4byte 0x803E1774
 	.4byte 0x2b8
-	.4byte 0x803e177c
+	.4byte 0x803E177c
 	.4byte 0x8
-	.4byte 0x803e1784
+	.4byte 0x803E1784
 	.4byte 0
-	.4byte 0x803e178c
+	.4byte 0x803E178c
 	.4byte 0
-	.4byte 0x803e1794
+	.4byte 0x803E1794
 	.4byte 0
-	.4byte 0x803e179c
+	.4byte 0x803E179c
 	.4byte 0
-	.4byte 0x803e17a4
+	.4byte 0x803E17a4
 	.4byte 0
 	.4byte 0
 .global __vt__7UfoItem

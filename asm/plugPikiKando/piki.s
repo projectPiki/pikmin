@@ -8539,11 +8539,11 @@ _colorNames:
 	.4byte 0x7261746f
 	.4byte 0x72202a3e
 	.4byte 0
-	.4byte 0x803e0b38
+	.4byte 0x803E0b38
 	.4byte 0x8
-	.4byte 0x803e0b40
+	.4byte 0x803E0b40
 	.4byte 0x4
-	.4byte 0x803e0b48
+	.4byte 0x803E0b48
 	.4byte 0
 	.4byte 0
 	.4byte 0
@@ -8588,18 +8588,18 @@ _colorNames:
 	.4byte 0x43726561
 	.4byte 0x74757265
 	.4byte 0
-	.4byte 0x803e0b60
+	.4byte 0x803E0b60
 	.4byte 0x8
-	.4byte 0x803e0b68
+	.4byte 0x803E0b68
 	.4byte 0
 	.4byte 0
-	.4byte 0x803e0b50
+	.4byte 0x803E0b50
 	.4byte 0x2b8
-	.4byte 0x803e0b60
+	.4byte 0x803E0b60
 	.4byte 0x8
-	.4byte 0x803e0b68
+	.4byte 0x803E0b68
 	.4byte 0
-	.4byte 0x803e0b70
+	.4byte 0x803E0b70
 	.4byte 0
 	.4byte 0
 .global __vt__4Piki
@@ -8687,7 +8687,7 @@ __vt__4Piki:
 	.4byte 0x67720000
 .global __RTTI__6InfMgr
 __RTTI__6InfMgr:
-	.4byte 0x803e0a44
+	.4byte 0x803E0a44
 	.4byte 0
 .global __RTTI__10MonoInfMgr
 __RTTI__10MonoInfMgr:

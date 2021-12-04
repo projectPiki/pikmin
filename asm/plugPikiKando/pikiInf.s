@@ -1125,9 +1125,9 @@ __vt__6InfMgr:
 	.4byte 0x4250696b
 	.4byte 0x69496e66
 	.4byte 0
-	.4byte 0x803e0a1c
+	.4byte 0x803E0a1c
 	.4byte 0
-	.4byte 0x803e0a24
+	.4byte 0x803E0a24
 	.4byte 0
 	.4byte __RTTI__7BaseInf
 	.4byte 0
@@ -1221,7 +1221,7 @@ lbl_803E0A10:
 	.4byte 0x496E6600
 .global __RTTI__7BaseInf
 __RTTI__7BaseInf:
-	.4byte 0x803e0a2c
+	.4byte 0x803E0a2c
 	.4byte 0x802b8278
 .global __RTTI__11CreatureInf
 __RTTI__11CreatureInf:

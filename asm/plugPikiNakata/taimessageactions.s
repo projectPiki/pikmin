@@ -21,7 +21,7 @@
 	.4byte 0x54616941
 	.4byte 0x6374696f
 	.4byte 0x6e000000
-	.4byte 0x803e39d0
+	.4byte 0x803E39d0
 	.4byte 0
 	.4byte 0
 .global __vt__23TaiKeySendMessageAction
@@ -39,7 +39,7 @@ __vt__23TaiKeySendMessageAction:
 	.4byte 0x67654163
 	.4byte 0x74696f6e
 	.4byte 0
-	.4byte 0x803e39d0
+	.4byte 0x803E39d0
 	.4byte 0
 	.4byte 0
 .global __vt__20TaiSendMessageAction
@@ -58,4 +58,4 @@ __vt__20TaiSendMessageAction:
 	.4byte 0x802c8b00
 	.4byte 0x4e6f6465
 	.4byte 0
-	.4byte 0x803e39ac
+	.4byte 0x803E39ac

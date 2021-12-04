@@ -22,65 +22,65 @@
 	.4byte 0x43726561
 	.4byte 0x74757265
 	.4byte 0
-	.4byte 0x803e42b0
+	.4byte 0x803E42b0
 	.4byte 0x8
-	.4byte 0x803e42b8
+	.4byte 0x803E42b8
 	.4byte 0
 	.4byte 0
 	.4byte __RTTI__10PelletView_1
 	.4byte 0x2b8
-	.4byte 0x803e42a8
+	.4byte 0x803E42a8
 	.4byte 0x454
-	.4byte 0x803e42b0
+	.4byte 0x803E42b0
 	.4byte 0x8
-	.4byte 0x803e42b8
+	.4byte 0x803E42b8
 	.4byte 0
-	.4byte 0x803e42c0
+	.4byte 0x803E42c0
 	.4byte 0
 	.4byte 0
 	.4byte __RTTI__10PelletView_1
 	.4byte 0x2b8
-	.4byte 0x803e42a8
+	.4byte 0x803E42a8
 	.4byte 0x46c
-	.4byte 0x803e42b0
+	.4byte 0x803E42b0
 	.4byte 0x8
-	.4byte 0x803e42b8
+	.4byte 0x803E42b8
 	.4byte 0
-	.4byte 0x803e42c0
+	.4byte 0x803E42c0
 	.4byte 0
-	.4byte 0x803e42d0
+	.4byte 0x803E42d0
 	.4byte 0
 	.4byte 0
 	.4byte __RTTI__10PelletView_1
 	.4byte 0x2b8
-	.4byte 0x803e42a8
+	.4byte 0x803E42a8
 	.4byte 0x538
-	.4byte 0x803e42b0
+	.4byte 0x803E42b0
 	.4byte 0x8
-	.4byte 0x803e42b8
+	.4byte 0x803E42b8
 	.4byte 0
-	.4byte 0x803e42c0
+	.4byte 0x803E42c0
 	.4byte 0
-	.4byte 0x803e42d0
+	.4byte 0x803E42d0
 	.4byte 0
-	.4byte 0x803e42e0
+	.4byte 0x803E42e0
 	.4byte 0
 	.4byte 0
 	.4byte __RTTI__10PelletView_1
 	.4byte 0x2b8
-	.4byte 0x803e42a8
+	.4byte 0x803E42a8
 	.4byte 0x538
-	.4byte 0x803e42b0
+	.4byte 0x803E42b0
 	.4byte 0x8
-	.4byte 0x803e42b8
+	.4byte 0x803E42b8
 	.4byte 0
-	.4byte 0x803e42c0
+	.4byte 0x803E42c0
 	.4byte 0
-	.4byte 0x803e42d0
+	.4byte 0x803E42d0
 	.4byte 0
-	.4byte 0x803e42e0
+	.4byte 0x803E42e0
 	.4byte 0
-	.4byte 0x803e42f0
+	.4byte 0x803E42f0
 	.4byte 0
 	.4byte 0
 .global __vt__4Teki

@@ -770,7 +770,7 @@ __vt__15PaniUfoAnimator:
 	.4byte 0x74656D00
 .global __RTTI__7UfoItem
 __RTTI__7UfoItem:
-	.4byte 0x803e17ac
+	.4byte 0x803E17ac
 	.4byte 0x802bc2f4
 	.4byte 0
 	.4byte 0x77616974

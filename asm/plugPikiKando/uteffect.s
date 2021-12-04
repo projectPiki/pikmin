@@ -47,18 +47,18 @@
 	.4byte 0x7261746f
 	.4byte 0x72202a3e
 	.4byte 0
-	.4byte 0x803e28c0
+	.4byte 0x803E28c0
 	.4byte 0x8
-	.4byte 0x803e28c8
+	.4byte 0x803E28c8
 	.4byte 0x4
-	.4byte 0x803e28d0
+	.4byte 0x803E28d0
 	.4byte 0
 	.4byte 0
-	.4byte 0x803e28c0
+	.4byte 0x803E28c0
 	.4byte 0x8
-	.4byte 0x803e28c8
+	.4byte 0x803E28c8
 	.4byte 0x4
-	.4byte 0x803e28d0
+	.4byte 0x803E28d0
 	.4byte 0
 	.4byte __RTTI__7KEffect_1
 	.4byte 0
@@ -84,11 +84,11 @@ __vt__10BurnEffect:
 	.4byte 0x6c654566
 	.4byte 0x66656374
 	.4byte 0
-	.4byte 0x803e28c0
+	.4byte 0x803E28c0
 	.4byte 0x8
-	.4byte 0x803e28c8
+	.4byte 0x803E28c8
 	.4byte 0x4
-	.4byte 0x803e28d0
+	.4byte 0x803E28d0
 	.4byte 0
 	.4byte __RTTI__7KEffect_1
 	.4byte 0
@@ -114,11 +114,11 @@ __vt__12RippleEffect:
 	.4byte 0x4c696768
 	.4byte 0x74456666
 	.4byte 0x65637400
-	.4byte 0x803e28c0
+	.4byte 0x803E28c0
 	.4byte 0x8
-	.4byte 0x803e28c8
+	.4byte 0x803E28c8
 	.4byte 0x4
-	.4byte 0x803e28d0
+	.4byte 0x803E28d0
 	.4byte 0
 	.4byte __RTTI__7KEffect_1
 	.4byte 0
@@ -145,11 +145,11 @@ __vt__15FreeLightEffect:
 	.4byte 0x6d694566
 	.4byte 0x66656374
 	.4byte 0
-	.4byte 0x803e28c0
+	.4byte 0x803E28c0
 	.4byte 0x8
-	.4byte 0x803e28c8
+	.4byte 0x803E28c8
 	.4byte 0x4
-	.4byte 0x803e28d0
+	.4byte 0x803E28d0
 	.4byte 0
 	.4byte __RTTI__7KEffect_1
 	.4byte 0
@@ -179,20 +179,20 @@ __vt__16UfoSuikomiEffect:
 	.4byte 0x746c6554
 	.4byte 0x656d706c
 	.4byte 0x61746500
-	.4byte 0x803e28c0
+	.4byte 0x803E28c0
 	.4byte 0x8
-	.4byte 0x803e28c8
+	.4byte 0x803E28c8
 	.4byte 0x4
-	.4byte 0x803e28d0
+	.4byte 0x803E28d0
 	.4byte 0
 	.4byte __RTTI__7KEffect_1
 	.4byte 0
 	.4byte 0
-	.4byte 0x803e28c0
+	.4byte 0x803E28c0
 	.4byte 0x8
-	.4byte 0x803e28c8
+	.4byte 0x803E28c8
 	.4byte 0x4
-	.4byte 0x803e28d0
+	.4byte 0x803E28d0
 	.4byte 0
 	.4byte __RTTI__7KEffect_1
 	.4byte 0
@@ -237,11 +237,11 @@ __vt__15WhistleTemplate:
 	.4byte 0x45666665
 	.4byte 0x63744c69
 	.4byte 0x67687400
-	.4byte 0x803e28c0
+	.4byte 0x803E28c0
 	.4byte 0x8
-	.4byte 0x803e28c8
+	.4byte 0x803E28c8
 	.4byte 0x4
-	.4byte 0x803e28d0
+	.4byte 0x803E28d0
 	.4byte 0
 	.4byte __RTTI__7KEffect_1
 	.4byte 0
@@ -266,11 +266,11 @@ __vt__15BombEffectLight:
 	.4byte 0x426f6d62
 	.4byte 0x45666665
 	.4byte 0x63740000
-	.4byte 0x803e28c0
+	.4byte 0x803E28c0
 	.4byte 0x8
-	.4byte 0x803e28c8
+	.4byte 0x803E28c8
 	.4byte 0x4
-	.4byte 0x803e28d0
+	.4byte 0x803E28d0
 	.4byte 0
 	.4byte __RTTI__7KEffect_1
 	.4byte 0
@@ -296,11 +296,11 @@ __vt__10BombEffect:
 	.4byte 0x6c654566
 	.4byte 0x66656374
 	.4byte 0
-	.4byte 0x803e28c0
+	.4byte 0x803E28c0
 	.4byte 0x8
-	.4byte 0x803e28c8
+	.4byte 0x803E28c8
 	.4byte 0x4
-	.4byte 0x803e28d0
+	.4byte 0x803E28d0
 	.4byte 0
 	.4byte __RTTI__7KEffect_1
 	.4byte 0
@@ -322,11 +322,11 @@ __vt__12SimpleEffect:
 	.4byte kill__12SimpleEffectFv
 	.4byte stop__7KEffectFv
 	.4byte restart__7KEffectFv
-	.4byte 0x803e28c0
+	.4byte 0x803E28c0
 	.4byte 0x8
-	.4byte 0x803e28c8
+	.4byte 0x803E28c8
 	.4byte 0x4
-	.4byte 0x803e28d0
+	.4byte 0x803E28d0
 	.4byte 0
 	.4byte __RTTI__7KEffect_1
 	.4byte 0
@@ -352,11 +352,11 @@ __vt__7NaviFue:
 	.4byte 0x65547265
 	.4byte 0x65456666
 	.4byte 0x65637400
-	.4byte 0x803e28c0
+	.4byte 0x803E28c0
 	.4byte 0x8
-	.4byte 0x803e28c8
+	.4byte 0x803E28c8
 	.4byte 0x4
-	.4byte 0x803e28d0
+	.4byte 0x803E28d0
 	.4byte 0
 	.4byte __RTTI__7KEffect_1
 	.4byte 0
@@ -382,11 +382,11 @@ __vt__15SmokeTreeEffect:
 	.4byte 0x65526f63
 	.4byte 0x6b456666
 	.4byte 0x65637400
-	.4byte 0x803e28c0
+	.4byte 0x803E28c0
 	.4byte 0x8
-	.4byte 0x803e28c8
+	.4byte 0x803E28c8
 	.4byte 0x4
-	.4byte 0x803e28d0
+	.4byte 0x803E28d0
 	.4byte 0
 	.4byte __RTTI__7KEffect_1
 	.4byte 0
@@ -413,11 +413,11 @@ __vt__15SmokeRockEffect:
 	.4byte 0x73734566
 	.4byte 0x66656374
 	.4byte 0
-	.4byte 0x803e28c0
+	.4byte 0x803E28c0
 	.4byte 0x8
-	.4byte 0x803e28c8
+	.4byte 0x803E28c8
 	.4byte 0x4
-	.4byte 0x803e28d0
+	.4byte 0x803E28d0
 	.4byte 0
 	.4byte __RTTI__7KEffect_1
 	.4byte 0
@@ -443,11 +443,11 @@ __vt__16SmokeGrassEffect:
 	.4byte 0x65536f69
 	.4byte 0x6c456666
 	.4byte 0x65637400
-	.4byte 0x803e28c0
+	.4byte 0x803E28c0
 	.4byte 0x8
-	.4byte 0x803e28c8
+	.4byte 0x803E28c8
 	.4byte 0x4
-	.4byte 0x803e28d0
+	.4byte 0x803E28d0
 	.4byte 0
 	.4byte __RTTI__7KEffect_1
 	.4byte 0
@@ -472,11 +472,11 @@ __vt__15SmokeSoilEffect:
 	.4byte 0x4e617669
 	.4byte 0x57686973
 	.4byte 0x746c6500
-	.4byte 0x803e28c0
+	.4byte 0x803E28c0
 	.4byte 0x8
-	.4byte 0x803e28c8
+	.4byte 0x803E28c8
 	.4byte 0x4
-	.4byte 0x803e28d0
+	.4byte 0x803E28d0
 	.4byte 0
 	.4byte __RTTI__7KEffect_1
 	.4byte 0
@@ -501,11 +501,11 @@ __vt__11NaviWhistle:
 	.4byte 0x476f616c
 	.4byte 0x45666665
 	.4byte 0x63740000
-	.4byte 0x803e28c0
+	.4byte 0x803E28c0
 	.4byte 0x8
-	.4byte 0x803e28c8
+	.4byte 0x803E28c8
 	.4byte 0x4
-	.4byte 0x803e28d0
+	.4byte 0x803E28d0
 	.4byte 0
 	.4byte __RTTI__7KEffect_1
 	.4byte 0
@@ -530,11 +530,11 @@ __vt__10GoalEffect:
 	.4byte 0x536c696d
 	.4byte 0x65456666
 	.4byte 0x65637400
-	.4byte 0x803e28c0
+	.4byte 0x803E28c0
 	.4byte 0x8
-	.4byte 0x803e28c8
+	.4byte 0x803E28c8
 	.4byte 0x4
-	.4byte 0x803e28d0
+	.4byte 0x803E28d0
 	.4byte 0
 	.4byte __RTTI__7KEffect_1
 	.4byte 0
@@ -681,7 +681,7 @@ lbl_803E28BC:
 	.4byte 0x65637400
 .global __RTTI__7KEffect_1
 __RTTI__7KEffect_1:
-	.4byte 0x803e28d8
+	.4byte 0x803E28d8
 	.4byte 0x802c25b0
 .global __RTTI__10BurnEffect
 __RTTI__10BurnEffect:
@@ -723,7 +723,7 @@ __RTTI__12SimpleEffect:
 	.4byte 0x46756500
 .global __RTTI__7NaviFue
 __RTTI__7NaviFue:
-	.4byte 0x803e2930
+	.4byte 0x803E2930
 	.4byte 0x802c29b4
 .global __RTTI__15SmokeTreeEffect
 __RTTI__15SmokeTreeEffect:

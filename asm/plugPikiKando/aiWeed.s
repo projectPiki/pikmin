@@ -751,12 +751,12 @@ lbl_80102704:
 	.4byte 0x69766572
 	.4byte 0x3c50696b
 	.4byte 0x693e0000
-	.4byte 0x803e0944
+	.4byte 0x803E0944
 	.4byte 0
 	.4byte 0
-	.4byte 0x803e0944
+	.4byte 0x803E0944
 	.4byte 0
-	.4byte 0x803e0954
+	.4byte 0x803E0954
 	.4byte 0
 	.4byte 0
 .global __vt__7ActWeed

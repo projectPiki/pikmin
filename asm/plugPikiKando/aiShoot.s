@@ -806,14 +806,14 @@ lbl_80101884:
 	.4byte 0x69766572
 	.4byte 0x3c50696b
 	.4byte 0x693e0000
-	.4byte 0x803e0874
+	.4byte 0x803E0874
 	.4byte 0
 	.4byte 0
-	.4byte 0x803e086c
+	.4byte 0x803E086c
 	.4byte 0x14
-	.4byte 0x803e0874
+	.4byte 0x803E0874
 	.4byte 0
-	.4byte 0x803e0884
+	.4byte 0x803E0884
 	.4byte 0
 	.4byte 0
 .global __vt__16ActShootCreature
@@ -856,16 +856,16 @@ __vt__16ActShootCreature:
 	.4byte 0x416e6441
 	.4byte 0x6374696f
 	.4byte 0x6e000000
-	.4byte 0x803e0874
+	.4byte 0x803E0874
 	.4byte 0
-	.4byte 0x803e0884
+	.4byte 0x803E0884
 	.4byte 0
 	.4byte 0
-	.4byte 0x803e0874
+	.4byte 0x803E0874
 	.4byte 0
-	.4byte 0x803e0884
+	.4byte 0x803E0884
 	.4byte 0
-	.4byte 0x803e0894
+	.4byte 0x803E0894
 	.4byte 0
 	.4byte 0
 .global __vt__8ActShoot
@@ -933,7 +933,7 @@ lbl_803E0824:
 	.4byte 0x802B799C
 .global __RTTI__7ActRope
 __RTTI__7ActRope:
-	.4byte 0x803e0828
+	.4byte 0x803E0828
 	.4byte 0x802b79a8
 .global lbl_803E0850
 lbl_803E0850:

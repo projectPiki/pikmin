@@ -742,7 +742,7 @@ __vt__13ActRandomBoid:
 	.4byte 0x496e6974
 	.4byte 0x69616c69
 	.4byte 0x73657200
-	.4byte 0x803e078c
+	.4byte 0x803E078c
 	.4byte 0
 	.4byte 0
 .global __vt__Q213ActRandomBoid11Initialiser
@@ -765,7 +765,7 @@ __vt__Q213ActRandomBoid11Initialiser:
 	.4byte 0x6e696d4c
 	.4byte 0x69737465
 	.4byte 0x6e657200
-	.4byte 0x803e079c
+	.4byte 0x803E079c
 	.4byte 0
 	.4byte 0
 .global __vt__Q213ActRandomBoid12AnimListener

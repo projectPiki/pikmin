@@ -376,7 +376,7 @@ __vt__8ActWatch:
 	.4byte 0x496e6974
 	.4byte 0x69616c69
 	.4byte 0x73657200
-	.4byte 0x803e08dc
+	.4byte 0x803E08dc
 	.4byte 0
 	.4byte 0
 .global __vt__Q28ActWatch11Initialiser
@@ -398,7 +398,7 @@ __vt__Q28ActWatch11Initialiser:
 	.4byte 0x696d4c69
 	.4byte 0x7374656e
 	.4byte 0x65720000
-	.4byte 0x803e08ec
+	.4byte 0x803E08ec
 	.4byte 0
 	.4byte 0
 .global __vt__Q28ActWatch12AnimListener

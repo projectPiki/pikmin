@@ -127,7 +127,7 @@ __vt__24TaiKinokoLegEffectAction:
 	.4byte 0x67417761
 	.4byte 0x79416374
 	.4byte 0x696f6e00
-	.4byte 0x803e3924
+	.4byte 0x803E3924
 	.4byte 0
 	.4byte 0
 .global __vt__35TaiKinokoTerritoryRunningAwayAction
@@ -151,12 +151,12 @@ __vt__35TaiKinokoTerritoryRunningAwayAction:
 	.4byte 0x436f6e64
 	.4byte 0x6974696f
 	.4byte 0x6e000000
-	.4byte 0x803e394c
+	.4byte 0x803E394c
 	.4byte 0
 	.4byte 0
-	.4byte 0x803e394c
+	.4byte 0x803E394c
 	.4byte 0
-	.4byte 0x803e3954
+	.4byte 0x803E3954
 	.4byte 0
 	.4byte 0
 	.4byte 0
@@ -191,7 +191,7 @@ __vt__35TaiKinokoTerritoryRunningAwayAction:
 	.4byte 0x65734163
 	.4byte 0x74696f6e
 	.4byte 0
-	.4byte 0x803e3924
+	.4byte 0x803E3924
 	.4byte 0
 	.4byte 0
 .global __vt__32TaiKinokoDischargingSporesAction
@@ -211,7 +211,7 @@ __vt__32TaiKinokoDischargingSporesAction:
 	.4byte 0x72657341
 	.4byte 0x6374696f
 	.4byte 0x6e000000
-	.4byte 0x803e3924
+	.4byte 0x803E3924
 	.4byte 0
 	.4byte 0
 .global __vt__29TaiKinokoChargingSporesAction
@@ -230,7 +230,7 @@ __vt__29TaiKinokoChargingSporesAction:
 	.4byte 0x4f766572
 	.4byte 0x41637469
 	.4byte 0x6f6e0000
-	.4byte 0x803e3924
+	.4byte 0x803E3924
 	.4byte 0
 	.4byte 0
 .global __vt__26TaiKinokoTurningOverAction
@@ -254,12 +254,12 @@ __vt__26TaiKinokoTurningOverAction:
 	.4byte 0x54616953
 	.4byte 0x74726174
 	.4byte 0x65677900
-	.4byte 0x803e3974
+	.4byte 0x803E3974
 	.4byte 0
 	.4byte 0
-	.4byte 0x803e3974
+	.4byte 0x803E3974
 	.4byte 0
-	.4byte 0x803e397c
+	.4byte 0x803E397c
 	.4byte 0
 	.4byte 0
 .global __vt__17TaiKinokoStrategy
@@ -278,7 +278,7 @@ __vt__17TaiKinokoStrategy:
 	.4byte 0x6f744163
 	.4byte 0x74696f6e
 	.4byte 0
-	.4byte 0x803e3924
+	.4byte 0x803E3924
 	.4byte 0
 	.4byte 0
 .global __vt__12TaiNotAction
@@ -294,7 +294,7 @@ __vt__12TaiNotAction:
 	.4byte 0x6e644163
 	.4byte 0x74696f6e
 	.4byte 0
-	.4byte 0x803e3924
+	.4byte 0x803E3924
 	.4byte 0
 	.4byte 0
 	.4byte 0
@@ -319,32 +319,32 @@ __vt__12TaiNotAction:
 	.4byte 0x436f7265
 	.4byte 0x4e6f6465
 	.4byte 0
-	.4byte 0x803e399c
+	.4byte 0x803E399c
 	.4byte 0
 	.4byte 0
-	.4byte 0x803e399c
+	.4byte 0x803E399c
 	.4byte 0
-	.4byte 0x803e39a4
+	.4byte 0x803E39a4
 	.4byte 0
 	.4byte 0
 	.4byte 0x54656b69
 	.4byte 0x50617261
 	.4byte 0x6d657465
 	.4byte 0x72730000
-	.4byte 0x803e399c
+	.4byte 0x803E399c
 	.4byte 0
-	.4byte 0x803e39a4
+	.4byte 0x803E39a4
 	.4byte 0
-	.4byte 0x803e39b4
+	.4byte 0x803E39b4
 	.4byte 0
 	.4byte 0
-	.4byte 0x803e399c
+	.4byte 0x803E399c
 	.4byte 0
-	.4byte 0x803e39a4
+	.4byte 0x803E39a4
 	.4byte 0
-	.4byte 0x803e39b4
+	.4byte 0x803E39b4
 	.4byte 0
-	.4byte 0x803e39bc
+	.4byte 0x803E39bc
 	.4byte 0
 	.4byte 0
 .global __vt__19TaiKinokoParameters
@@ -452,4 +452,4 @@ __RTTI__12TaiNotAction:
 	.4byte 0x802c8a64
 	.4byte 0x414e6f64
 	.4byte 0x65000000
-	.4byte 0x803e3994
+	.4byte 0x803E3994

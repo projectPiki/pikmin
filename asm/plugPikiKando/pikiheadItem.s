@@ -921,49 +921,49 @@ lbl_8012BE34:
 	.4byte 0x43726561
 	.4byte 0x74757265
 	.4byte 0
-	.4byte 0x803e195c
+	.4byte 0x803E195c
 	.4byte 0x8
-	.4byte 0x803e1964
+	.4byte 0x803E1964
 	.4byte 0
 	.4byte 0
 	.4byte 0x41494372
 	.4byte 0x65617475
 	.4byte 0x72650000
-	.4byte 0x803e1954
+	.4byte 0x803E1954
 	.4byte 0x2b8
-	.4byte 0x803e195c
+	.4byte 0x803E195c
 	.4byte 0x8
-	.4byte 0x803e1964
+	.4byte 0x803E1964
 	.4byte 0
-	.4byte 0x803e196c
+	.4byte 0x803E196c
 	.4byte 0
 	.4byte 0
 	.4byte 0x4974656d
 	.4byte 0x43726561
 	.4byte 0x74757265
 	.4byte 0
-	.4byte 0x803e1954
+	.4byte 0x803E1954
 	.4byte 0x2b8
-	.4byte 0x803e195c
+	.4byte 0x803E195c
 	.4byte 0x8
-	.4byte 0x803e1964
+	.4byte 0x803E1964
 	.4byte 0
-	.4byte 0x803e196c
+	.4byte 0x803E196c
 	.4byte 0
-	.4byte 0x803e1974
+	.4byte 0x803E1974
 	.4byte 0
 	.4byte 0
-	.4byte 0x803e1954
+	.4byte 0x803E1954
 	.4byte 0x2b8
-	.4byte 0x803e195c
+	.4byte 0x803E195c
 	.4byte 0x8
-	.4byte 0x803e1964
+	.4byte 0x803E1964
 	.4byte 0
-	.4byte 0x803e196c
+	.4byte 0x803E196c
 	.4byte 0
-	.4byte 0x803e1974
+	.4byte 0x803E1974
 	.4byte 0
-	.4byte 0x803e197c
+	.4byte 0x803E197c
 	.4byte 0
 	.4byte 0
 .global __vt__12PikiHeadItem
@@ -1091,11 +1091,11 @@ __vt__12PikiHeadItem:
 	.4byte 0x7261746f
 	.4byte 0x72202a3e
 	.4byte 0
-	.4byte 0x803e198c
+	.4byte 0x803E198c
 	.4byte 0x8
-	.4byte 0x803e1994
+	.4byte 0x803E1994
 	.4byte 0x4
-	.4byte 0x803e199c
+	.4byte 0x803E199c
 	.4byte 0
 	.4byte 0
 	.4byte 0

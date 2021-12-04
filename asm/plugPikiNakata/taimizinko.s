@@ -115,7 +115,7 @@ __vt__26TaiMizinkoFlyingAwayAction:
 	.4byte 0x6974696e
 	.4byte 0x67416374
 	.4byte 0x696f6e00
-	.4byte 0x803e3a28
+	.4byte 0x803E3a28
 	.4byte 0
 	.4byte 0
 .global __vt__23TaiMizinkoWaitingAction
@@ -134,7 +134,7 @@ __vt__23TaiMizinkoWaitingAction:
 	.4byte 0x74657241
 	.4byte 0x6374696f
 	.4byte 0x6e000000
-	.4byte 0x803e3a28
+	.4byte 0x803E3a28
 	.4byte 0
 	.4byte 0
 .global __vt__25TaiMizinkoDropWaterAction
@@ -152,7 +152,7 @@ __vt__25TaiMizinkoDropWaterAction:
 	.4byte 0x6d696e67
 	.4byte 0x41637469
 	.4byte 0x6f6e0000
-	.4byte 0x803e3a28
+	.4byte 0x803E3a28
 	.4byte 0
 	.4byte 0
 .global __vt__22TaiMizinkoComingAction
@@ -170,7 +170,7 @@ __vt__22TaiMizinkoComingAction:
 	.4byte 0x696e6741
 	.4byte 0x6374696f
 	.4byte 0x6e000000
-	.4byte 0x803e3a28
+	.4byte 0x803E3a28
 	.4byte 0
 	.4byte 0
 .global __vt__21TaiMizinkoGoingAction
@@ -188,7 +188,7 @@ __vt__21TaiMizinkoGoingAction:
 	.4byte 0x64696e67
 	.4byte 0x41637469
 	.4byte 0x6f6e0000
-	.4byte 0x803e3a28
+	.4byte 0x803E3a28
 	.4byte 0
 	.4byte 0
 .global __vt__22TaiMizinkoFadingAction
@@ -211,12 +211,12 @@ __vt__22TaiMizinkoFadingAction:
 	.4byte 0x696d6572
 	.4byte 0x41637469
 	.4byte 0x6f6e0000
-	.4byte 0x803e3a28
+	.4byte 0x803E3a28
 	.4byte 0
 	.4byte 0
-	.4byte 0x803e3a28
+	.4byte 0x803E3a28
 	.4byte 0
-	.4byte 0x803e3a60
+	.4byte 0x803E3a60
 	.4byte 0
 	.4byte 0
 .global __vt__27TaiMizinkoMovingTimerAction
@@ -235,9 +235,9 @@ __vt__27TaiMizinkoMovingTimerAction:
 	.4byte 0x65724163
 	.4byte 0x74696f6e
 	.4byte 0
-	.4byte 0x803e3a28
+	.4byte 0x803E3a28
 	.4byte 0
-	.4byte 0x803e3a60
+	.4byte 0x803E3a60
 	.4byte 0
 	.4byte 0
 .global __vt__24TaiMizinkoCryTimerAction
@@ -261,12 +261,12 @@ __vt__24TaiMizinkoCryTimerAction:
 	.4byte 0x54616953
 	.4byte 0x74726174
 	.4byte 0x65677900
-	.4byte 0x803e3a78
+	.4byte 0x803E3a78
 	.4byte 0
 	.4byte 0
-	.4byte 0x803e3a78
+	.4byte 0x803E3a78
 	.4byte 0
-	.4byte 0x803e3a80
+	.4byte 0x803E3a80
 	.4byte 0
 	.4byte 0
 .global __vt__18TaiMizinkoStrategy
@@ -290,32 +290,32 @@ __vt__18TaiMizinkoStrategy:
 	.4byte 0x436f7265
 	.4byte 0x4e6f6465
 	.4byte 0
-	.4byte 0x803e3a98
+	.4byte 0x803E3a98
 	.4byte 0
 	.4byte 0
-	.4byte 0x803e3a98
+	.4byte 0x803E3a98
 	.4byte 0
-	.4byte 0x803e3aa0
+	.4byte 0x803E3aa0
 	.4byte 0
 	.4byte 0
 	.4byte 0x54656b69
 	.4byte 0x50617261
 	.4byte 0x6d657465
 	.4byte 0x72730000
-	.4byte 0x803e3a98
+	.4byte 0x803E3a98
 	.4byte 0
-	.4byte 0x803e3aa0
+	.4byte 0x803E3aa0
 	.4byte 0
-	.4byte 0x803e3ab0
+	.4byte 0x803E3ab0
 	.4byte 0
 	.4byte 0
-	.4byte 0x803e3a98
+	.4byte 0x803E3a98
 	.4byte 0
-	.4byte 0x803e3aa0
+	.4byte 0x803E3aa0
 	.4byte 0
-	.4byte 0x803e3ab0
+	.4byte 0x803E3ab0
 	.4byte 0
-	.4byte 0x803e3ab8
+	.4byte 0x803E3ab8
 	.4byte 0
 	.4byte 0
 .global __vt__20TaiMizinkoParameters
@@ -340,7 +340,7 @@ __vt__20TaiMizinkoParameters:
 	.4byte 0x63684163
 	.4byte 0x74696f6e
 	.4byte 0
-	.4byte 0x803e3a28
+	.4byte 0x803E3a28
 	.4byte 0
 	.4byte 0
 .global __vt__28TaiMizigenNaviApprouchAction
@@ -359,7 +359,7 @@ __vt__28TaiMizigenNaviApprouchAction:
 	.4byte 0x74696e67
 	.4byte 0x41637469
 	.4byte 0x6f6e0000
-	.4byte 0x803e3a28
+	.4byte 0x803E3a28
 	.4byte 0
 	.4byte 0
 .global __vt__26TaiMizigenGeneratingAction
@@ -376,9 +376,9 @@ __vt__26TaiMizigenGeneratingAction:
 	.4byte 0x656e5374
 	.4byte 0x72617465
 	.4byte 0x67790000
-	.4byte 0x803e3a78
+	.4byte 0x803E3a78
 	.4byte 0
-	.4byte 0x803e3a80
+	.4byte 0x803E3a80
 	.4byte 0
 	.4byte 0
 .global __vt__18TaiMizigenStrategy
@@ -406,13 +406,13 @@ __vt__18TaiMizigenStrategy:
 	.4byte 0x72616d65
 	.4byte 0x74657273
 	.4byte 0
-	.4byte 0x803e3a98
+	.4byte 0x803E3a98
 	.4byte 0
-	.4byte 0x803e3aa0
+	.4byte 0x803E3aa0
 	.4byte 0
-	.4byte 0x803e3ab0
+	.4byte 0x803E3ab0
 	.4byte 0
-	.4byte 0x803e3ab8
+	.4byte 0x803E3ab8
 	.4byte 0
 	.4byte 0
 .global __vt__20TaiMizigenParameters
@@ -543,11 +543,11 @@ __RTTI__18TaiMizinkoStrategy:
 	.4byte 0x802c902c
 	.4byte 0x414e6f64
 	.4byte 0x65000000
-	.4byte 0x803e3a90
+	.4byte 0x803E3a90
 	.4byte 0
 	.4byte 0x802c9080
 	.4byte 0x802c908c
 	.4byte 0x4e6f6465
 	.4byte 0
-	.4byte 0x803e3aa8
+	.4byte 0x803E3aa8
 	.4byte 0x802c9098

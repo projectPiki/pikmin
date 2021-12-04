@@ -4372,21 +4372,21 @@ __vt__Q27WaterAI3Die:
 	.4byte 0x6c696465
 	.4byte 0x43686172
 	.4byte 0
-	.4byte 0x803e1b0c
+	.4byte 0x803E1b0c
 	.4byte 0
 	.4byte 0
 	.4byte 0x53414943
 	.4byte 0x6f6e6469
 	.4byte 0x74696f6e
 	.4byte 0
-	.4byte 0x803e1b0c
+	.4byte 0x803E1b0c
 	.4byte 0
-	.4byte 0x803e1b14
+	.4byte 0x803E1b14
 	.4byte 0
 	.4byte 0
-	.4byte 0x803e1b0c
+	.4byte 0x803E1b0c
 	.4byte 0
-	.4byte 0x803e1b14
+	.4byte 0x803E1b14
 	.4byte 0
 	.4byte __RTTI__12SAICondition_1
 	.4byte 0
@@ -4554,9 +4554,9 @@ __vt__Q26GoalAI8WaitInit:
 	.4byte 0x4e6f7446
 	.4byte 0x696e6973
 	.4byte 0x68656400
-	.4byte 0x803e1b0c
+	.4byte 0x803E1b0c
 	.4byte 0
-	.4byte 0x803e1b14
+	.4byte 0x803E1b14
 	.4byte 0
 	.4byte __RTTI__12SAICondition_1
 	.4byte 0
@@ -5225,7 +5225,7 @@ __RTTI__Q27WaterAI3Die:
 	.4byte 0x802bda48
 	.4byte 0x414e6f64
 	.4byte 0x65000000
-	.4byte 0x803e1b04
+	.4byte 0x803E1b04
 	.4byte 0
 	.4byte lbl_802BD90C
 	.4byte 0x802bda78
@@ -5241,7 +5241,7 @@ __RTTI__Q27WaterAI11CollideChar:
 	.4byte 0x72414900
 .global __RTTI__7WaterAI
 __RTTI__7WaterAI:
-	.4byte 0x803e1b2c
+	.4byte 0x803E1b2c
 	.4byte 0x802bdad8
 .global __RTTI__Q25GemAI3Die
 __RTTI__Q25GemAI3Die:
@@ -5259,7 +5259,7 @@ __RTTI__Q25GemAI8RiseInit:
 	.4byte 0x49000000
 .global __RTTI__5GemAI
 __RTTI__5GemAI:
-	.4byte 0x803e1b54
+	.4byte 0x803E1b54
 	.4byte 0x802bdb78
 .global __RTTI__Q26GoalAI6Effect
 __RTTI__Q26GoalAI6Effect:
@@ -5297,7 +5297,7 @@ __RTTI__Q26GoalAI11NotFinished:
 	.4byte 0x41490000
 .global __RTTI__6GoalAI
 __RTTI__6GoalAI:
-	.4byte 0x803e1ba4
+	.4byte 0x803E1ba4
 	.4byte 0x802bdd48
 .global __RTTI__Q26BombAI7DieExec
 __RTTI__Q26BombAI7DieExec:
@@ -5343,7 +5343,7 @@ __RTTI__Q26BombAI7SetInit:
 	.4byte 0x41490000
 .global __RTTI__6BombAI
 __RTTI__6BombAI:
-	.4byte 0x803e1c04
+	.4byte 0x803E1c04
 	.4byte 0x802bdf38
 .global __RTTI__Q210PikiHeadAI4Dead
 __RTTI__Q210PikiHeadAI4Dead:

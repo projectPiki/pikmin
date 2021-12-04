@@ -20,17 +20,17 @@
 	.4byte 0x50657665
 	.4byte 0x4576656e
 	.4byte 0x74000000
-	.4byte 0x803e33b8
+	.4byte 0x803E33b8
 	.4byte 0
 	.4byte 0
-	.4byte 0x803e33b8
+	.4byte 0x803E33b8
 	.4byte 0
-	.4byte 0x803e33c0
+	.4byte 0x803E33c0
 	.4byte 0
 	.4byte 0
 .global __vt__18PeveVibrationEvent
 __vt__18PeveVibrationEvent:
-	.4byte 0x803e33c8
+	.4byte 0x803E33c8
 	.4byte 0
 	.4byte setChild__5NNodeFiP5NNode
 	.4byte addChild__5NNodeFP5NNode
@@ -55,9 +55,9 @@ __vt__18PeveVibrationEvent:
 	.4byte 0x4d6f7665
 	.4byte 0x4576656e
 	.4byte 0x74000000
-	.4byte 0x803e33b8
+	.4byte 0x803E33b8
 	.4byte 0
-	.4byte 0x803e33c0
+	.4byte 0x803E33c0
 	.4byte 0
 	.4byte 0
 .global __vt__13PeveMoveEvent
@@ -83,9 +83,9 @@ __vt__13PeveMoveEvent:
 	.4byte 0x6174696f
 	.4byte 0x6e457665
 	.4byte 0x6e740000
-	.4byte 0x803e33b8
+	.4byte 0x803E33b8
 	.4byte 0
-	.4byte 0x803e33c0
+	.4byte 0x803E33c0
 	.4byte 0
 	.4byte 0
 .global __vt__22PeveInterpolationEvent
@@ -123,16 +123,16 @@ __vt__22PeveInterpolationEvent:
 	.4byte 0x6c6c656c
 	.4byte 0x4576656e
 	.4byte 0x74000000
-	.4byte 0x803e33b8
+	.4byte 0x803E33b8
 	.4byte 0
-	.4byte 0x803e33c0
+	.4byte 0x803E33c0
 	.4byte 0
 	.4byte 0
-	.4byte 0x803e33b8
+	.4byte 0x803E33b8
 	.4byte 0
-	.4byte 0x803e33c0
+	.4byte 0x803E33c0
 	.4byte 0
-	.4byte 0x803e33e0
+	.4byte 0x803E33e0
 	.4byte 0
 	.4byte 0
 .global __vt__22PeveHomingPostureEvent
@@ -158,9 +158,9 @@ __vt__22PeveHomingPostureEvent:
 	.4byte 0x73697469
 	.4byte 0x6f6e4576
 	.4byte 0x656e7400
-	.4byte 0x803e33b8
+	.4byte 0x803E33b8
 	.4byte 0
-	.4byte 0x803e33c0
+	.4byte 0x803E33c0
 	.4byte 0
 	.4byte 0
 .global __vt__23PeveHomingPositionEvent
@@ -186,9 +186,9 @@ __vt__23PeveHomingPositionEvent:
 	.4byte 0x43757276
 	.4byte 0x65457665
 	.4byte 0x6e740000
-	.4byte 0x803e33b8
+	.4byte 0x803E33b8
 	.4byte 0
-	.4byte 0x803e33c0
+	.4byte 0x803E33c0
 	.4byte 0
 	.4byte 0
 .global __vt__22PeveFunctionCurveEvent
@@ -215,11 +215,11 @@ __vt__22PeveFunctionCurveEvent:
 	.4byte 0x74636845
 	.4byte 0x76656e74
 	.4byte 0
-	.4byte 0x803e33b8
+	.4byte 0x803E33b8
 	.4byte 0
-	.4byte 0x803e33c0
+	.4byte 0x803E33c0
 	.4byte 0
-	.4byte 0x803e33e0
+	.4byte 0x803E33e0
 	.4byte 0
 	.4byte 0
 .global __vt__24PeveCircleMoveWatchEvent
@@ -244,9 +244,9 @@ __vt__24PeveCircleMoveWatchEvent:
 	.4byte 0x6c654d6f
 	.4byte 0x76654576
 	.4byte 0x656e7400
-	.4byte 0x803e33b8
+	.4byte 0x803E33b8
 	.4byte 0
-	.4byte 0x803e33c0
+	.4byte 0x803E33c0
 	.4byte 0
 	.4byte 0
 .global __vt__19PeveCircleMoveEvent
@@ -273,9 +273,9 @@ __vt__19PeveCircleMoveEvent:
 	.4byte 0x6e576176
 	.4byte 0x65457665
 	.4byte 0x6e740000
-	.4byte 0x803e33b8
+	.4byte 0x803E33b8
 	.4byte 0
-	.4byte 0x803e33c0
+	.4byte 0x803E33c0
 	.4byte 0
 	.4byte 0
 .global __vt__26PeveHorizontalSinWaveEvent
@@ -325,14 +325,14 @@ __vt__26PeveHorizontalSinWaveEvent:
 	.4byte 0x74696f6e
 	.4byte 0x4576656e
 	.4byte 0x74000000
-	.4byte 0x803e33b8
+	.4byte 0x803E33b8
 	.4byte 0
-	.4byte 0x803e33c0
+	.4byte 0x803E33c0
 	.4byte 0
 	.4byte 0
-	.4byte 0x803e33b8
+	.4byte 0x803E33b8
 	.4byte 0
-	.4byte 0x803e33c0
+	.4byte 0x803E33c0
 	.4byte 0
 	.4byte __RTTI__21PeveAccelerationEvent
 	.4byte 0
@@ -375,9 +375,9 @@ __vt__21PeveAccelerationEvent:
 	.4byte 0x57616974
 	.4byte 0x4576656e
 	.4byte 0x74000000
-	.4byte 0x803e33b8
+	.4byte 0x803E33b8
 	.4byte 0
-	.4byte 0x803e33c0
+	.4byte 0x803E33c0
 	.4byte 0
 	.4byte 0
 .global __vt__13PeveWaitEvent
@@ -425,7 +425,7 @@ __RTTI__23PeveDependenceCondition:
 	.4byte 0x802c5f60
 	.4byte 0x4e4e6f64
 	.4byte 0x65000000
-	.4byte 0x803e33b0
+	.4byte 0x803E33b0
 	.4byte 0
 	.4byte 0x802c5fd8
 	.4byte 0x802c5fe4

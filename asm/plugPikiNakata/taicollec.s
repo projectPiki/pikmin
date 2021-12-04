@@ -106,32 +106,32 @@ __vt__17TaiHollecStrategy:
 	.4byte 0x436f7265
 	.4byte 0x4e6f6465
 	.4byte 0
-	.4byte 0x803e3624
+	.4byte 0x803E3624
 	.4byte 0
 	.4byte 0
-	.4byte 0x803e3624
+	.4byte 0x803E3624
 	.4byte 0
-	.4byte 0x803e362c
+	.4byte 0x803E362c
 	.4byte 0
 	.4byte 0
 	.4byte 0x54656b69
 	.4byte 0x50617261
 	.4byte 0x6d657465
 	.4byte 0x72730000
-	.4byte 0x803e3624
+	.4byte 0x803E3624
 	.4byte 0
-	.4byte 0x803e362c
+	.4byte 0x803E362c
 	.4byte 0
-	.4byte 0x803e363c
+	.4byte 0x803E363c
 	.4byte 0
 	.4byte 0
-	.4byte 0x803e3624
+	.4byte 0x803E3624
 	.4byte 0
-	.4byte 0x803e362c
+	.4byte 0x803E362c
 	.4byte 0
-	.4byte 0x803e363c
+	.4byte 0x803E363c
 	.4byte 0
-	.4byte 0x803e3644
+	.4byte 0x803E3644
 	.4byte 0
 	.4byte 0
 .global __vt__19TaiHollecParameters
@@ -163,7 +163,7 @@ __vt__19TaiHollecParameters:
 	.4byte 0x6c6f7564
 	.4byte 0x4f664475
 	.4byte 0x73740000
-	.4byte 0x803e3654
+	.4byte 0x803E3654
 	.4byte 0
 	.4byte 0
 	.4byte 0x5461694a
@@ -172,16 +172,16 @@ __vt__19TaiHollecParameters:
 	.4byte 0x63744163
 	.4byte 0x74696f6e
 	.4byte 0
-	.4byte 0x803e3654
+	.4byte 0x803E3654
 	.4byte 0
-	.4byte 0x803e365c
+	.4byte 0x803E365c
 	.4byte 0
 	.4byte 0
-	.4byte 0x803e3654
+	.4byte 0x803E3654
 	.4byte 0
-	.4byte 0x803e365c
+	.4byte 0x803E365c
 	.4byte 0
-	.4byte 0x803e3664
+	.4byte 0x803E3664
 	.4byte 0
 	.4byte 0
 .global __vt__24TaiCollecLegEffectAction
@@ -200,7 +200,7 @@ __vt__24TaiCollecLegEffectAction:
 	.4byte 0x4f757441
 	.4byte 0x6374696f
 	.4byte 0x6e000000
-	.4byte 0x803e3654
+	.4byte 0x803E3654
 	.4byte 0
 	.4byte 0
 .global __vt__21TaiCollecGetOutAction
@@ -218,7 +218,7 @@ __vt__21TaiCollecGetOutAction:
 	.4byte 0x6c696e67
 	.4byte 0x41637469
 	.4byte 0x6f6e0000
-	.4byte 0x803e3654
+	.4byte 0x803E3654
 	.4byte 0
 	.4byte 0
 .global __vt__22TaiCollecFallingAction
@@ -237,7 +237,7 @@ __vt__22TaiCollecFallingAction:
 	.4byte 0x6c696e67
 	.4byte 0x41637469
 	.4byte 0x6f6e0000
-	.4byte 0x803e3654
+	.4byte 0x803E3654
 	.4byte 0
 	.4byte 0
 .global __vt__26TaiCollecDeadFallingAction
@@ -260,7 +260,7 @@ __vt__26TaiCollecDeadFallingAction:
 	.4byte 0x65644163
 	.4byte 0x74696f6e
 	.4byte 0
-	.4byte 0x803e3654
+	.4byte 0x803E3654
 	.4byte 0
 	.4byte 0
 .global __vt__40TaiCollecPelletFinishContainerizedAction
@@ -282,7 +282,7 @@ __vt__40TaiCollecPelletFinishContainerizedAction:
 	.4byte 0x72697a65
 	.4byte 0x64416374
 	.4byte 0x696f6e00
-	.4byte 0x803e3654
+	.4byte 0x803E3654
 	.4byte 0
 	.4byte 0
 .global __vt__39TaiCollecPelletStartContainerizedAction
@@ -301,7 +301,7 @@ __vt__39TaiCollecPelletStartContainerizedAction:
 	.4byte 0x72727941
 	.4byte 0x6374696f
 	.4byte 0x6e000000
-	.4byte 0x803e3654
+	.4byte 0x803E3654
 	.4byte 0
 	.4byte 0
 .global __vt__25TaiCollecRoundCarryAction
@@ -321,7 +321,7 @@ __vt__25TaiCollecRoundCarryAction:
 	.4byte 0x61626c65
 	.4byte 0x41637469
 	.4byte 0x6f6e0000
-	.4byte 0x803e3654
+	.4byte 0x803E3654
 	.4byte 0
 	.4byte 0
 .global __vt__30TaiCollecRouteImpassableAction
@@ -345,7 +345,7 @@ __vt__30TaiCollecRouteImpassableAction:
 	.4byte 0x6f74696f
 	.4byte 0x6e416374
 	.4byte 0x696f6e00
-	.4byte 0x803e3654
+	.4byte 0x803E3654
 	.4byte 0
 	.4byte 0
 	.4byte 0x54616943
@@ -355,16 +355,16 @@ __vt__30TaiCollecRouteImpassableAction:
 	.4byte 0x696f6e41
 	.4byte 0x6374696f
 	.4byte 0x6e000000
-	.4byte 0x803e3654
+	.4byte 0x803E3654
 	.4byte 0
-	.4byte 0x803e36ac
+	.4byte 0x803E36ac
 	.4byte 0
 	.4byte 0
-	.4byte 0x803e3654
+	.4byte 0x803E3654
 	.4byte 0
-	.4byte 0x803e36ac
+	.4byte 0x803E36ac
 	.4byte 0
-	.4byte 0x803e36b4
+	.4byte 0x803E36b4
 	.4byte 0
 	.4byte 0
 .global __vt__29TaiCollecCarryingToNestAction
@@ -399,7 +399,7 @@ __vt__29TaiCollecCarryingToNestAction:
 	.4byte 0x65744163
 	.4byte 0x74696f6e
 	.4byte 0
-	.4byte 0x803e3654
+	.4byte 0x803E3654
 	.4byte 0
 	.4byte 0
 .global __vt__28TaiCollecPuttingPelletAction
@@ -416,7 +416,7 @@ __vt__28TaiCollecPuttingPelletAction:
 	.4byte 0x63507574
 	.4byte 0x41637469
 	.4byte 0x6f6e0000
-	.4byte 0x803e3654
+	.4byte 0x803E3654
 	.4byte 0
 	.4byte 0
 .global __vt__18TaiCollecPutAction
@@ -436,7 +436,7 @@ __vt__18TaiCollecPutAction:
 	.4byte 0x696e6741
 	.4byte 0x6374696f
 	.4byte 0x6e000000
-	.4byte 0x803e3654
+	.4byte 0x803E3654
 	.4byte 0
 	.4byte 0
 .global __vt__29TaiCollecDefeatCarryingAction
@@ -455,7 +455,7 @@ __vt__29TaiCollecDefeatCarryingAction:
 	.4byte 0x79696e67
 	.4byte 0x41637469
 	.4byte 0x6f6e0000
-	.4byte 0x803e3654
+	.4byte 0x803E3654
 	.4byte 0
 	.4byte 0
 .global __vt__26TaiCollecWinCarryingAction
@@ -474,7 +474,7 @@ __vt__26TaiCollecWinCarryingAction:
 	.4byte 0x61676765
 	.4byte 0x64416374
 	.4byte 0x696f6e00
-	.4byte 0x803e3654
+	.4byte 0x803E3654
 	.4byte 0
 	.4byte 0
 .global __vt__27TaiCollecBeingDraggedAction
@@ -492,7 +492,7 @@ __vt__27TaiCollecBeingDraggedAction:
 	.4byte 0x7279696e
 	.4byte 0x67416374
 	.4byte 0x696f6e00
-	.4byte 0x803e3654
+	.4byte 0x803E3654
 	.4byte 0
 	.4byte 0
 .global __vt__23TaiCollecCarryingAction
@@ -510,7 +510,7 @@ __vt__23TaiCollecCarryingAction:
 	.4byte 0x6368696e
 	.4byte 0x67416374
 	.4byte 0x696f6e00
-	.4byte 0x803e3654
+	.4byte 0x803E3654
 	.4byte 0
 	.4byte 0
 .global __vt__23TaiCollecCatchingAction
@@ -529,7 +529,7 @@ __vt__23TaiCollecCatchingAction:
 	.4byte 0x6c657441
 	.4byte 0x6374696f
 	.4byte 0x6e000000
-	.4byte 0x803e3654
+	.4byte 0x803E3654
 	.4byte 0
 	.4byte 0
 .global __vt__25TaiCollecHoldPelletAction
@@ -550,7 +550,7 @@ __vt__25TaiCollecHoldPelletAction:
 	.4byte 0x65644163
 	.4byte 0x74696f6e
 	.4byte 0
-	.4byte 0x803e3654
+	.4byte 0x803E3654
 	.4byte 0
 	.4byte 0
 .global __vt__32TaiCollecPelletDisappearedAction
@@ -569,7 +569,7 @@ __vt__32TaiCollecPelletDisappearedAction:
 	.4byte 0x6f737441
 	.4byte 0x6374696f
 	.4byte 0x6e000000
-	.4byte 0x803e3654
+	.4byte 0x803E3654
 	.4byte 0
 	.4byte 0
 .global __vt__25TaiCollecPelletLostAction
@@ -596,12 +596,12 @@ __vt__25TaiCollecPelletLostAction:
 	.4byte 0x696d6572
 	.4byte 0x41637469
 	.4byte 0x6f6e0000
-	.4byte 0x803e3654
+	.4byte 0x803E3654
 	.4byte 0
 	.4byte 0
-	.4byte 0x803e3654
+	.4byte 0x803E3654
 	.4byte 0
-	.4byte 0x803e3714
+	.4byte 0x803E3714
 	.4byte 0
 	.4byte 0
 .global __vt__43TaiCollecVisibleHeightPelletLostTimerAction
@@ -623,7 +623,7 @@ __vt__43TaiCollecVisibleHeightPelletLostTimerAction:
 	.4byte 0x4c6f7374
 	.4byte 0x41637469
 	.4byte 0x6f6e0000
-	.4byte 0x803e3654
+	.4byte 0x803E3654
 	.4byte 0
 	.4byte 0
 .global __vt__38TaiCollecVisibleHeightPelletLostAction
@@ -647,12 +647,12 @@ __vt__38TaiCollecVisibleHeightPelletLostAction:
 	.4byte 0x436f6e64
 	.4byte 0x6974696f
 	.4byte 0x6e000000
-	.4byte 0x803e372c
+	.4byte 0x803E372c
 	.4byte 0
 	.4byte 0
-	.4byte 0x803e372c
+	.4byte 0x803E372c
 	.4byte 0
-	.4byte 0x803e3734
+	.4byte 0x803E3734
 	.4byte 0
 	.4byte 0
 	.4byte 0
@@ -663,9 +663,9 @@ __vt__38TaiCollecVisibleHeightPelletLostAction:
 	.4byte 0x6f6e6469
 	.4byte 0x74696f6e
 	.4byte 0
-	.4byte 0x803e372c
+	.4byte 0x803E372c
 	.4byte 0
-	.4byte 0x803e3734
+	.4byte 0x803E3734
 	.4byte 0
 	.4byte 0
 	.4byte 0
@@ -684,7 +684,7 @@ __vt__38TaiCollecVisibleHeightPelletLostAction:
 	.4byte 0x656c6c65
 	.4byte 0x74416374
 	.4byte 0x696f6e00
-	.4byte 0x803e3654
+	.4byte 0x803E3654
 	.4byte 0
 	.4byte 0
 .global __vt__27TaiCollecTargetPelletAction
@@ -704,7 +704,7 @@ __vt__27TaiCollecTargetPelletAction:
 	.4byte 0x65744163
 	.4byte 0x74696f6e
 	.4byte 0
-	.4byte 0x803e3654
+	.4byte 0x803E3654
 	.4byte 0
 	.4byte 0
 .global __vt__28TaiCollecLetGoOfPelletAction
@@ -723,7 +723,7 @@ __vt__28TaiCollecLetGoOfPelletAction:
 	.4byte 0x626c6541
 	.4byte 0x6374696f
 	.4byte 0x6e000000
-	.4byte 0x803e3654
+	.4byte 0x803E3654
 	.4byte 0
 	.4byte 0
 .global __vt__25TaiCollecImpassableAction
@@ -743,9 +743,9 @@ __vt__25TaiCollecImpassableAction:
 	.4byte 0x6574436f
 	.4byte 0x6e646974
 	.4byte 0x696f6e00
-	.4byte 0x803e372c
+	.4byte 0x803E372c
 	.4byte 0
-	.4byte 0x803e3734
+	.4byte 0x803E3734
 	.4byte 0
 	.4byte 0
 .global __vt__31TekiCollecTargetPelletCondition
@@ -758,9 +758,9 @@ __vt__31TekiCollecTargetPelletCondition:
 	.4byte 0x63537472
 	.4byte 0x61746567
 	.4byte 0x79000000
-	.4byte 0x803e3604
+	.4byte 0x803E3604
 	.4byte 0
-	.4byte 0x803e360c
+	.4byte 0x803E360c
 	.4byte 0
 	.4byte 0
 .global __vt__17TaiCollecStrategy
@@ -780,7 +780,7 @@ __vt__17TaiCollecStrategy:
 	.4byte 0x64656e63
 	.4byte 0x65416374
 	.4byte 0x696f6e00
-	.4byte 0x803e3654
+	.4byte 0x803E3654
 	.4byte 0
 	.4byte 0
 .global __vt__19TaiDependenceAction
@@ -804,13 +804,13 @@ __vt__19TaiDependenceAction:
 	.4byte 0x63506172
 	.4byte 0x616d6574
 	.4byte 0x65727300
-	.4byte 0x803e3624
+	.4byte 0x803E3624
 	.4byte 0
-	.4byte 0x803e362c
+	.4byte 0x803E362c
 	.4byte 0
-	.4byte 0x803e363c
+	.4byte 0x803E363c
 	.4byte 0
-	.4byte 0x803e3644
+	.4byte 0x803E3644
 	.4byte 0
 	.4byte 0
 .global __vt__19TaiCollecParameters
@@ -831,7 +831,7 @@ __vt__19TaiCollecParameters:
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 	.4byte 0x4e6f6465
 	.4byte 0
-	.4byte 0x803e35a0
+	.4byte 0x803E35a0
 	.4byte 0x802c6ef4
 	.4byte 0x802c6f08
 	.4byte 0x802c6f18
@@ -896,13 +896,13 @@ __RTTI__17TaiHollecStrategy:
 	.4byte 0x802c7198
 	.4byte 0x414e6f64
 	.4byte 0x65000000
-	.4byte 0x803e361c
+	.4byte 0x803E361c
 	.4byte 0
 	.4byte 0x802c71e8
 	.4byte 0x802c71f4
 	.4byte 0x4e6f6465
 	.4byte 0
-	.4byte 0x803e3634
+	.4byte 0x803E3634
 	.4byte 0x802c7200
 	.4byte 0x802c7214
 	.4byte 0x802c7224

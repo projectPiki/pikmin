@@ -416,16 +416,16 @@ act__38TaiCollecVisibleHeightPelletLostActionFR4Teki:
 	.4byte 0x43726561
 	.4byte 0x74757265
 	.4byte 0
-	.4byte 0x803e1a38
+	.4byte 0x803E1a38
 	.4byte 0x8
-	.4byte 0x803e1a40
+	.4byte 0x803E1a40
 	.4byte 0
 	.4byte 0
-	.4byte 0x803e1a38
+	.4byte 0x803E1a38
 	.4byte 0x8
-	.4byte 0x803e1a40
+	.4byte 0x803E1a40
 	.4byte 0
-	.4byte 0x803e1a48
+	.4byte 0x803E1a48
 	.4byte 0
 	.4byte 0
 .global __vt__8SeedItem
@@ -504,7 +504,7 @@ __vt__8SeedItem:
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .global __RTTI__7KeyItem
 __RTTI__7KeyItem:
-	.4byte 0x803e19f8
+	.4byte 0x803E19f8
 	.4byte 0x802bd304
 	.4byte 0x802bd460
 	.4byte 0

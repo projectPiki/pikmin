@@ -559,14 +559,14 @@ lbl_800F6B5C:
 	.4byte 0x69766572
 	.4byte 0x3c50696b
 	.4byte 0x693e0000
-	.4byte 0x803e0284
+	.4byte 0x803E0284
 	.4byte 0
 	.4byte 0
-	.4byte 0x803e027c
+	.4byte 0x803E027c
 	.4byte 0x14
-	.4byte 0x803e0284
+	.4byte 0x803E0284
 	.4byte 0
-	.4byte 0x803e0294
+	.4byte 0x803E0294
 	.4byte 0
 	.4byte 0
 .global __vt__8ActDecoy
@@ -627,7 +627,7 @@ __RTTI__17SlotChangeListner:
 	.4byte 0
 	.4byte 0x41637469
 	.4byte 0x6f6e0000
-	.4byte 0x803e0244
+	.4byte 0x803E0244
 	.4byte 0x802b62f4
 .global __RTTI__8ActCrowd
 __RTTI__8ActCrowd:

@@ -4793,9 +4793,9 @@ __vt__13GenAreaCircle:
 	.4byte 0x72656150
 	.4byte 0x6f696e74
 	.4byte 0
-	.4byte 0x803e1358
+	.4byte 0x803E1358
 	.4byte 0
-	.4byte 0x803e1368
+	.4byte 0x803E1368
 	.4byte 0
 	.4byte __RTTI__7GenArea
 	.4byte 0
@@ -4820,14 +4820,14 @@ __vt__12GenAreaPoint:
 	.4byte 0x79706549
 	.4byte 0x6e697452
 	.4byte 0x616e6400
-	.4byte 0x803e1358
+	.4byte 0x803E1358
 	.4byte 0
-	.4byte 0x803e1368
+	.4byte 0x803E1368
 	.4byte 0
 	.4byte 0
-	.4byte 0x803e1358
+	.4byte 0x803E1358
 	.4byte 0
-	.4byte 0x803e1368
+	.4byte 0x803E1368
 	.4byte 0
 	.4byte __RTTI__7GenType
 	.4byte 0
@@ -4852,9 +4852,9 @@ __vt__15GenTypeInitRand:
 	.4byte 0x79706541
 	.4byte 0x744f6e63
 	.4byte 0x65000000
-	.4byte 0x803e1358
+	.4byte 0x803E1358
 	.4byte 0
-	.4byte 0x803e1368
+	.4byte 0x803E1368
 	.4byte 0
 	.4byte __RTTI__7GenType
 	.4byte 0
@@ -4878,9 +4878,9 @@ __vt__13GenTypeAtOnce:
 	.4byte 0x47656e54
 	.4byte 0x7970654f
 	.4byte 0x6e650000
-	.4byte 0x803e1358
+	.4byte 0x803E1358
 	.4byte 0
-	.4byte 0x803e1368
+	.4byte 0x803E1368
 	.4byte 0
 	.4byte __RTTI__7GenType
 	.4byte 0
@@ -4908,16 +4908,16 @@ __vt__10GenTypeOne:
 	.4byte 0x47656e4f
 	.4byte 0x626a6563
 	.4byte 0x74000000
-	.4byte 0x803e1358
+	.4byte 0x803E1358
 	.4byte 0
-	.4byte 0x803e1368
+	.4byte 0x803E1368
 	.4byte 0
 	.4byte 0
-	.4byte 0x803e1358
+	.4byte 0x803E1358
 	.4byte 0
-	.4byte 0x803e1368
+	.4byte 0x803E1368
 	.4byte 0
-	.4byte 0x803e13b8
+	.4byte 0x803E13b8
 	.4byte 0
 	.4byte 0
 .global __vt__13GenObjectPiki
@@ -4939,19 +4939,19 @@ __vt__13GenObjectPiki:
 	.4byte 0x436f7265
 	.4byte 0x4e6f6465
 	.4byte 0
-	.4byte 0x803e13d0
+	.4byte 0x803E13d0
 	.4byte 0
 	.4byte 0
-	.4byte 0x803e13d0
+	.4byte 0x803E13d0
 	.4byte 0
-	.4byte 0x803e13d8
+	.4byte 0x803E13d8
 	.4byte 0
 	.4byte 0
-	.4byte 0x803e13d0
+	.4byte 0x803E13d0
 	.4byte 0
-	.4byte 0x803e13d8
+	.4byte 0x803E13d8
 	.4byte 0
-	.4byte 0x803e13e8
+	.4byte 0x803E13e8
 	.4byte 0
 	.4byte 0
 .global __vt__12GeneratorMgr
@@ -4971,11 +4971,11 @@ __vt__12GeneratorMgr:
 	.4byte 0x47656e65
 	.4byte 0x7261746f
 	.4byte 0x72000000
-	.4byte 0x803e13d0
+	.4byte 0x803E13d0
 	.4byte 0
-	.4byte 0x803e13d8
+	.4byte 0x803E13d8
 	.4byte 0
-	.4byte 0x803e13e8
+	.4byte 0x803E13e8
 	.4byte 0
 	.4byte 0
 .global __vt__9Generator
@@ -5021,7 +5021,7 @@ __vt__7GenArea:
 	.4byte 0x42617365
 	.4byte 0x5061726d
 	.4byte 0
-	.4byte 0x803e1400
+	.4byte 0x803E1400
 	.4byte 0
 	.4byte 0
 	.4byte 0
@@ -5047,7 +5047,7 @@ __vt__7GenType:
 	.4byte 0
 .global __vt__9GenObject
 __vt__9GenObject:
-	.4byte 0x803e13b8
+	.4byte 0x803E13b8
 	.4byte 0
 	.4byte doWrite__7GenBaseFR18RandomAccessStream
 	.4byte ramSaveParameters__7GenBaseFR18RandomAccessStream
@@ -5064,7 +5064,7 @@ __vt__9GenObject:
 	.4byte 0x5061726d
 	.4byte 0x3c696e74
 	.4byte 0x3e000000
-	.4byte 0x803e1400
+	.4byte 0x803E1400
 	.4byte 0
 	.4byte 0
 	.4byte 0
@@ -5074,7 +5074,7 @@ __vt__9GenObject:
 	.4byte 0
 .global __vt__7GenBase
 __vt__7GenBase:
-	.4byte 0x803e1368
+	.4byte 0x803E1368
 	.4byte 0
 	.4byte doWrite__7GenBaseFR18RandomAccessStream
 	.4byte ramSaveParameters__7GenBaseFR18RandomAccessStream
@@ -5087,7 +5087,7 @@ __vt__7GenBase:
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .global __RTTI__4Piki_1
 __RTTI__4Piki_1:
-	.4byte 0x803e1278
+	.4byte 0x803E1278
 	.4byte 0x802ba418
 .global __RTTI__8ViewPiki
 __RTTI__8ViewPiki:
@@ -5229,7 +5229,7 @@ lbl_803E1354:
 	.4byte 0x72656100
 .global __RTTI__7GenArea
 __RTTI__7GenArea:
-	.4byte 0x803e1370
+	.4byte 0x803E1370
 	.4byte 0x802ba750
 .global __RTTI__13GenAreaCircle
 __RTTI__13GenAreaCircle:
@@ -5243,7 +5243,7 @@ __RTTI__12GenAreaPoint:
 	.4byte 0x79706500
 .global __RTTI__7GenType
 __RTTI__7GenType:
-	.4byte 0x803e1390
+	.4byte 0x803E1390
 	.4byte 0x802ba82c
 .global __RTTI__15GenTypeInitRand
 __RTTI__15GenTypeInitRand:
@@ -5265,7 +5265,7 @@ __RTTI__13GenObjectPiki:
 	.4byte 0x802ba988
 	.4byte 0x414e6f64
 	.4byte 0x65000000
-	.4byte 0x803e13c8
+	.4byte 0x803E13c8
 	.4byte 0
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840

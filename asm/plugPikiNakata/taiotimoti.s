@@ -142,7 +142,7 @@ __vt__25TaiOtimotiLegEffectAction:
 	.4byte 0x66666563
 	.4byte 0x74416374
 	.4byte 0x696f6e00
-	.4byte 0x803e3e34
+	.4byte 0x803E3e34
 	.4byte 0
 	.4byte 0
 .global __vt__31TaiOtimotiAttackingEffectAction
@@ -161,7 +161,7 @@ __vt__31TaiOtimotiAttackingEffectAction:
 	.4byte 0x696e6741
 	.4byte 0x6374696f
 	.4byte 0x6e000000
-	.4byte 0x803e3e34
+	.4byte 0x803E3e34
 	.4byte 0
 	.4byte 0
 .global __vt__25TaiOtimotiAttackingAction
@@ -180,7 +180,7 @@ __vt__25TaiOtimotiAttackingAction:
 	.4byte 0x6e674163
 	.4byte 0x74696f6e
 	.4byte 0
-	.4byte 0x803e3e34
+	.4byte 0x803E3e34
 	.4byte 0
 	.4byte 0
 .global __vt__24TaiOtimotiBouncingAction
@@ -204,12 +204,12 @@ __vt__24TaiOtimotiBouncingAction:
 	.4byte 0x436f6e64
 	.4byte 0x6974696f
 	.4byte 0x6e000000
-	.4byte 0x803e3e6c
+	.4byte 0x803E3e6c
 	.4byte 0
 	.4byte 0
-	.4byte 0x803e3e6c
+	.4byte 0x803E3e6c
 	.4byte 0
-	.4byte 0x803e3e74
+	.4byte 0x803E3e74
 	.4byte 0
 	.4byte 0
 	.4byte 0
@@ -236,7 +236,7 @@ __vt__24TaiOtimotiBouncingAction:
 	.4byte 0x6e674163
 	.4byte 0x74696f6e
 	.4byte 0
-	.4byte 0x803e3e34
+	.4byte 0x803E3e34
 	.4byte 0
 	.4byte 0
 .global __vt__24TaiOtimotiPressingAction
@@ -255,7 +255,7 @@ __vt__24TaiOtimotiPressingAction:
 	.4byte 0x6e674163
 	.4byte 0x74696f6e
 	.4byte 0
-	.4byte 0x803e3e34
+	.4byte 0x803E3e34
 	.4byte 0
 	.4byte 0
 .global __vt__24TaiOtimotiDroppingAction
@@ -274,7 +274,7 @@ __vt__24TaiOtimotiDroppingAction:
 	.4byte 0x74696e67
 	.4byte 0x41637469
 	.4byte 0x6f6e0000
-	.4byte 0x803e3e34
+	.4byte 0x803E3e34
 	.4byte 0
 	.4byte 0
 .global __vt__26TaiOtimotiAirWaitingAction
@@ -292,7 +292,7 @@ __vt__26TaiOtimotiAirWaitingAction:
 	.4byte 0x6d70696e
 	.4byte 0x67416374
 	.4byte 0x696f6e00
-	.4byte 0x803e3e34
+	.4byte 0x803E3e34
 	.4byte 0
 	.4byte 0
 .global __vt__23TaiOtimotiJumpingAction
@@ -311,7 +311,7 @@ __vt__23TaiOtimotiJumpingAction:
 	.4byte 0x4a756d70
 	.4byte 0x41637469
 	.4byte 0x6f6e0000
-	.4byte 0x803e3e34
+	.4byte 0x803E3e34
 	.4byte 0
 	.4byte 0
 .global __vt__26TaiOtimotiFailToJumpAction
@@ -328,9 +328,9 @@ __vt__26TaiOtimotiFailToJumpAction:
 	.4byte 0x6f6e6469
 	.4byte 0x74696f6e
 	.4byte 0
-	.4byte 0x803e3e6c
+	.4byte 0x803E3e6c
 	.4byte 0
-	.4byte 0x803e3e74
+	.4byte 0x803E3e74
 	.4byte 0
 	.4byte 0
 	.4byte 0
@@ -348,7 +348,7 @@ __vt__26TaiOtimotiFailToJumpAction:
 	.4byte 0x69636b41
 	.4byte 0x6374696f
 	.4byte 0x6e000000
-	.4byte 0x803e3e34
+	.4byte 0x803E3e34
 	.4byte 0
 	.4byte 0
 .global __vt__21TaiOtimotiFlickAction
@@ -369,7 +369,7 @@ __vt__21TaiOtimotiFlickAction:
 	.4byte 0x61746572
 	.4byte 0x41637469
 	.4byte 0x6f6e0000
-	.4byte 0x803e3e34
+	.4byte 0x803E3e34
 	.4byte 0
 	.4byte 0
 .global __vt__34TaiOtimotiStartDroppingWaterAction
@@ -393,12 +393,12 @@ __vt__34TaiOtimotiStartDroppingWaterAction:
 	.4byte 0x54616953
 	.4byte 0x74726174
 	.4byte 0x65677900
-	.4byte 0x803e3eb4
+	.4byte 0x803E3eb4
 	.4byte 0
 	.4byte 0
-	.4byte 0x803e3eb4
+	.4byte 0x803E3eb4
 	.4byte 0
-	.4byte 0x803e3ebc
+	.4byte 0x803E3ebc
 	.4byte 0
 	.4byte 0
 .global __vt__18TaiOtimotiStrategy
@@ -417,7 +417,7 @@ __vt__18TaiOtimotiStrategy:
 	.4byte 0x6e636541
 	.4byte 0x6374696f
 	.4byte 0x6e000000
-	.4byte 0x803e3e34
+	.4byte 0x803E3e34
 	.4byte 0
 	.4byte 0
 	.4byte 0
@@ -443,32 +443,32 @@ __vt__18TaiOtimotiStrategy:
 	.4byte 0x436f7265
 	.4byte 0x4e6f6465
 	.4byte 0
-	.4byte 0x803e3ed4
+	.4byte 0x803E3ed4
 	.4byte 0
 	.4byte 0
-	.4byte 0x803e3ed4
+	.4byte 0x803E3ed4
 	.4byte 0
-	.4byte 0x803e3edc
+	.4byte 0x803E3edc
 	.4byte 0
 	.4byte 0
 	.4byte 0x54656b69
 	.4byte 0x50617261
 	.4byte 0x6d657465
 	.4byte 0x72730000
-	.4byte 0x803e3ed4
+	.4byte 0x803E3ed4
 	.4byte 0
-	.4byte 0x803e3edc
+	.4byte 0x803E3edc
 	.4byte 0
-	.4byte 0x803e3eec
+	.4byte 0x803E3eec
 	.4byte 0
 	.4byte 0
-	.4byte 0x803e3ed4
+	.4byte 0x803E3ed4
 	.4byte 0
-	.4byte 0x803e3edc
+	.4byte 0x803E3edc
 	.4byte 0
-	.4byte 0x803e3eec
+	.4byte 0x803E3eec
 	.4byte 0
-	.4byte 0x803e3ef4
+	.4byte 0x803E3ef4
 	.4byte 0
 	.4byte 0
 .global __vt__22TaiBlackFrogParameters
@@ -491,13 +491,13 @@ __vt__22TaiBlackFrogParameters:
 	.4byte 0x72616d65
 	.4byte 0x74657273
 	.4byte 0
-	.4byte 0x803e3ed4
+	.4byte 0x803E3ed4
 	.4byte 0
-	.4byte 0x803e3edc
+	.4byte 0x803E3edc
 	.4byte 0
-	.4byte 0x803e3eec
+	.4byte 0x803E3eec
 	.4byte 0
-	.4byte 0x803e3ef4
+	.4byte 0x803E3ef4
 	.4byte 0
 	.4byte 0
 .global __vt__20TaiOtimotiParameters
@@ -517,13 +517,13 @@ __vt__20TaiOtimotiParameters:
 	.4byte 0
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
-	.4byte 0x803e3dc0
+	.4byte 0x803E3dc0
 	.4byte 0
 	.4byte 0x802ca958
 	.4byte 0x802ca964
 	.4byte 0x4e6f6465
 	.4byte 0
-	.4byte 0x803e3dd8
+	.4byte 0x803E3dd8
 	.4byte 0x802ca970
 	.4byte 0x802ca984
 	.4byte 0x802ca994
@@ -640,6 +640,6 @@ __RTTI__18TaiOtimotiStrategy:
 	.4byte 0x802cafd4
 	.4byte 0x414e6f64
 	.4byte 0x65000000
-	.4byte 0x803e3ecc
+	.4byte 0x803E3ecc
 	.4byte 0
 	.4byte 0x802cb07c

@@ -817,14 +817,14 @@ updateLook__4NaviFv:
 	.4byte 0x69766572
 	.4byte 0x3c50696b
 	.4byte 0x693e0000
-	.4byte 0x803e07ec
+	.4byte 0x803E07ec
 	.4byte 0
 	.4byte 0
-	.4byte 0x803e07e4
+	.4byte 0x803E07e4
 	.4byte 0x34
-	.4byte 0x803e07ec
+	.4byte 0x803E07ec
 	.4byte 0
-	.4byte 0x803e07fc
+	.4byte 0x803E07fc
 	.4byte 0
 	.4byte 0
 .global __vt__9ActRescue

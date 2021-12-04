@@ -293,29 +293,29 @@ satisfy__31TekiCollecTargetPelletConditionFP8Creature:
 	.4byte 0x43726561
 	.4byte 0x74757265
 	.4byte 0
-	.4byte 0x803e1a08
+	.4byte 0x803E1a08
 	.4byte 0x8
-	.4byte 0x803e1a10
+	.4byte 0x803E1a10
 	.4byte 0
 	.4byte 0
 	.4byte 0x526f7065
 	.4byte 0x43726561
 	.4byte 0x74757265
 	.4byte 0
-	.4byte 0x803e1a08
+	.4byte 0x803E1a08
 	.4byte 0x8
-	.4byte 0x803e1a10
+	.4byte 0x803E1a10
 	.4byte 0
-	.4byte 0x803e1a18
+	.4byte 0x803E1a18
 	.4byte 0
 	.4byte 0
-	.4byte 0x803e1a08
+	.4byte 0x803E1a08
 	.4byte 0x8
-	.4byte 0x803e1a10
+	.4byte 0x803E1a10
 	.4byte 0
-	.4byte 0x803e1a18
+	.4byte 0x803E1a18
 	.4byte 0
-	.4byte 0x803e1a20
+	.4byte 0x803E1a20
 	.4byte 0
 	.4byte 0
 .global __vt__8RopeItem

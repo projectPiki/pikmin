@@ -73,7 +73,7 @@ lbl_803E3230:
 	.4byte 0x65726100
 .global __RTTI__7NCamera
 __RTTI__7NCamera:
-	.4byte 0x803e3238
+	.4byte 0x803E3238
 	.4byte 0
 .global __RTTI__10PcamCamera
 __RTTI__10PcamCamera:

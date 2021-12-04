@@ -2079,7 +2079,7 @@ __vt__9TopAction:
 	.4byte 0x6e4c6973
 	.4byte 0x74656e65
 	.4byte 0x72000000
-	.4byte 0x803e09c8
+	.4byte 0x803E09c8
 	.4byte 0
 	.4byte 0
 .global __vt__Q29TopAction14MotionListener
@@ -2090,9 +2090,9 @@ __vt__Q29TopAction14MotionListener:
 	.4byte 0x4f724163
 	.4byte 0x74696f6e
 	.4byte 0
-	.4byte 0x803e09a8
+	.4byte 0x803E09a8
 	.4byte 0
-	.4byte 0x803e09b8
+	.4byte 0x803E09b8
 	.4byte 0
 	.4byte 0
 .global __vt__8OrAction
@@ -2125,14 +2125,14 @@ __vt__8OrAction:
 	.4byte 0x416e6441
 	.4byte 0x6374696f
 	.4byte 0x6e000000
-	.4byte 0x803e09a8
+	.4byte 0x803E09a8
 	.4byte 0
-	.4byte 0x803e09b8
+	.4byte 0x803E09b8
 	.4byte 0
 	.4byte 0
 .global __vt__9AndAction
 __vt__9AndAction:
-	.4byte 0x803e09e0
+	.4byte 0x803E09e0
 	.4byte 0
 	.4byte "procMsg__15Receiver<4Piki>FP4PikiP3Msg"
 	.4byte "procBounceMsg__15Receiver<4Piki>FP4PikiP9MsgBounce"
@@ -2159,7 +2159,7 @@ __vt__9AndAction:
 	.4byte getInfo__6ActionFPc
 .global __vt__6Action
 __vt__6Action:
-	.4byte 0x803e09b8
+	.4byte 0x803E09b8
 	.4byte 0
 	.4byte "procMsg__15Receiver<4Piki>FP4PikiP3Msg"
 	.4byte "procBounceMsg__15Receiver<4Piki>FP4PikiP9MsgBounce"
@@ -2186,7 +2186,7 @@ __vt__6Action:
 	.4byte getInfo__6ActionFPc
 .global "__vt__15Receiver<4Piki>"
 "__vt__15Receiver<4Piki>":
-	.4byte 0x803e09a8
+	.4byte 0x803E09a8
 	.4byte 0
 	.4byte "procMsg__15Receiver<4Piki>FP4PikiP3Msg"
 	.4byte "procBounceMsg__15Receiver<4Piki>FP4PikiP9MsgBounce"
@@ -2215,7 +2215,7 @@ lbl_803E0938:
 	.4byte 0x802B7DCC
 .global __RTTI__7ActWeed
 __RTTI__7ActWeed:
-	.4byte 0x803e093c
+	.4byte 0x803E093c
 	.4byte 0x802b7dd8
 	.4byte 0
 	.4byte 0x2d000000

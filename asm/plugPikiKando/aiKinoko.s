@@ -1256,14 +1256,14 @@ lbl_800F42A4:
 	.4byte 0x69766572
 	.4byte 0x3c50696b
 	.4byte 0x693e0000
-	.4byte 0x803e0168
+	.4byte 0x803E0168
 	.4byte 0
 	.4byte 0
-	.4byte 0x803e0160
+	.4byte 0x803E0160
 	.4byte 0x30
-	.4byte 0x803e0168
+	.4byte 0x803E0168
 	.4byte 0
-	.4byte 0x803e0178
+	.4byte 0x803E0178
 	.4byte 0
 	.4byte 0
 .global __vt__9ActKinoko

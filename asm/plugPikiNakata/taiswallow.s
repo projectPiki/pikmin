@@ -102,11 +102,11 @@ __vt__35TaiSwallowMissAttackingEffectAction:
 	.4byte 0x65637441
 	.4byte 0x6374696f
 	.4byte 0x6e000000
-	.4byte 0x803e40d0
+	.4byte 0x803E40d0
 	.4byte 0
-	.4byte 0x803e40d8
+	.4byte 0x803E40d8
 	.4byte 0
-	.4byte 0x803e40e0
+	.4byte 0x803E40e0
 	.4byte 0
 	.4byte 0
 .global __vt__25TaiSwallowLegEffectAction
@@ -125,7 +125,7 @@ __vt__25TaiSwallowLegEffectAction:
 	.4byte 0x74696365
 	.4byte 0x41637469
 	.4byte 0x6f6e0000
-	.4byte 0x803e40d0
+	.4byte 0x803E40d0
 	.4byte 0
 	.4byte 0
 .global __vt__22TaiSwallowNoticeAction
@@ -143,7 +143,7 @@ __vt__22TaiSwallowNoticeAction:
 	.4byte 0x6f726541
 	.4byte 0x6374696f
 	.4byte 0x6e000000
-	.4byte 0x803e40d0
+	.4byte 0x803E40d0
 	.4byte 0
 	.4byte 0
 .global __vt__21TaiSwallowSnoreAction
@@ -163,7 +163,7 @@ __vt__21TaiSwallowSnoreAction:
 	.4byte 0x466c6963
 	.4byte 0x6b416374
 	.4byte 0x696f6e00
-	.4byte 0x803e40d0
+	.4byte 0x803E40d0
 	.4byte 0
 	.4byte 0
 .global __vt__31TaiSwallowSwallowingFlickAction
@@ -187,12 +187,12 @@ __vt__31TaiSwallowSwallowingFlickAction:
 	.4byte 0x436f6e64
 	.4byte 0x6974696f
 	.4byte 0x6e000000
-	.4byte 0x803e4110
+	.4byte 0x803E4110
 	.4byte 0
 	.4byte 0
-	.4byte 0x803e4110
+	.4byte 0x803E4110
 	.4byte 0
-	.4byte 0x803e4118
+	.4byte 0x803E4118
 	.4byte 0
 	.4byte 0
 	.4byte 0
@@ -223,12 +223,12 @@ __vt__31TaiSwallowSwallowingFlickAction:
 	.4byte 0x6f74696f
 	.4byte 0x6e416374
 	.4byte 0x696f6e00
-	.4byte 0x803e40d0
+	.4byte 0x803E40d0
 	.4byte 0
 	.4byte 0
-	.4byte 0x803e40d0
+	.4byte 0x803E40d0
 	.4byte 0
-	.4byte 0x803e4120
+	.4byte 0x803E4120
 	.4byte 0
 	.4byte 0
 .global __vt__24TaiSwallowFlickingAction
@@ -245,9 +245,9 @@ __vt__24TaiSwallowFlickingAction:
 	.4byte 0x6f6e6469
 	.4byte 0x74696f6e
 	.4byte 0
-	.4byte 0x803e4110
+	.4byte 0x803E4110
 	.4byte 0
-	.4byte 0x803e4118
+	.4byte 0x803E4118
 	.4byte 0
 	.4byte 0
 	.4byte 0
@@ -272,16 +272,16 @@ __vt__24TaiSwallowFlickingAction:
 	.4byte 0x696f6e41
 	.4byte 0x6374696f
 	.4byte 0x6e000000
-	.4byte 0x803e40d0
+	.4byte 0x803E40d0
 	.4byte 0
-	.4byte 0x803e4120
+	.4byte 0x803E4120
 	.4byte 0
 	.4byte 0
-	.4byte 0x803e40d0
+	.4byte 0x803E40d0
 	.4byte 0
-	.4byte 0x803e4120
+	.4byte 0x803E4120
 	.4byte 0
-	.4byte 0x803e4130
+	.4byte 0x803E4130
 	.4byte 0
 	.4byte 0
 .global __vt__23TaiSwallowTurningAction
@@ -302,7 +302,7 @@ __vt__23TaiSwallowTurningAction:
 	.4byte 0x73616765
 	.4byte 0x41637469
 	.4byte 0x6f6e0000
-	.4byte 0x803e40d0
+	.4byte 0x803E40d0
 	.4byte 0
 	.4byte 0
 .global __vt__30TaiSwallowReceiveMessageAction
@@ -326,12 +326,12 @@ __vt__30TaiSwallowReceiveMessageAction:
 	.4byte 0x54616953
 	.4byte 0x74726174
 	.4byte 0x65677900
-	.4byte 0x803e4148
+	.4byte 0x803E4148
 	.4byte 0
 	.4byte 0
-	.4byte 0x803e4148
+	.4byte 0x803E4148
 	.4byte 0
-	.4byte 0x803e4150
+	.4byte 0x803E4150
 	.4byte 0
 	.4byte 0
 .global __vt__18TaiSwallowStrategy
@@ -350,7 +350,7 @@ __vt__18TaiSwallowStrategy:
 	.4byte 0x6e636541
 	.4byte 0x6374696f
 	.4byte 0x6e000000
-	.4byte 0x803e40d0
+	.4byte 0x803E40d0
 	.4byte 0
 	.4byte 0
 	.4byte 0
@@ -377,32 +377,32 @@ __vt__18TaiSwallowStrategy:
 	.4byte 0x436f7265
 	.4byte 0x4e6f6465
 	.4byte 0
-	.4byte 0x803e4168
+	.4byte 0x803E4168
 	.4byte 0
 	.4byte 0
-	.4byte 0x803e4168
+	.4byte 0x803E4168
 	.4byte 0
-	.4byte 0x803e4170
+	.4byte 0x803E4170
 	.4byte 0
 	.4byte 0
 	.4byte 0x54656b69
 	.4byte 0x50617261
 	.4byte 0x6d657465
 	.4byte 0x72730000
-	.4byte 0x803e4168
+	.4byte 0x803E4168
 	.4byte 0
-	.4byte 0x803e4170
+	.4byte 0x803E4170
 	.4byte 0
-	.4byte 0x803e4180
+	.4byte 0x803E4180
 	.4byte 0
 	.4byte 0
-	.4byte 0x803e4168
+	.4byte 0x803E4168
 	.4byte 0
-	.4byte 0x803e4170
+	.4byte 0x803E4170
 	.4byte 0
-	.4byte 0x803e4180
+	.4byte 0x803E4180
 	.4byte 0
-	.4byte 0x803e4188
+	.4byte 0x803E4188
 	.4byte 0
 	.4byte 0
 .global __vt__25TaiBlackSwallowParameters
@@ -425,13 +425,13 @@ __vt__25TaiBlackSwallowParameters:
 	.4byte 0x72616d65
 	.4byte 0x74657273
 	.4byte 0
-	.4byte 0x803e4168
+	.4byte 0x803E4168
 	.4byte 0
-	.4byte 0x803e4170
+	.4byte 0x803E4170
 	.4byte 0
-	.4byte 0x803e4180
+	.4byte 0x803E4180
 	.4byte 0
-	.4byte 0x803e4188
+	.4byte 0x803E4188
 	.4byte 0
 	.4byte 0
 .global __vt__20TaiSwallowParameters
@@ -543,5 +543,5 @@ __RTTI__18TaiSwallowStrategy:
 	.4byte 0x802cc220
 	.4byte 0x414e6f64
 	.4byte 0x65000000
-	.4byte 0x803e4160
+	.4byte 0x803E4160
 	.4byte 0
