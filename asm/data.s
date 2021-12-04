@@ -18022,95 +18022,61 @@ __vt__12RopeCreature:
 	.4byte doAnimation__8CreatureFv
 	.4byte 0
 	.4byte exitCourse__8CreatureFv
+.balign 4
 .global lbl_802AFBF0
 lbl_802AFBF0:
-	.4byte 0x66616C6C
-	.4byte 0x20776174
-	.4byte 0x65720000
-	.4byte 0x6E657665
-	.4byte 0x72207573
-	.4byte 0x65207468
-	.4byte 0x69730000
-	.4byte 0x626F6D62
-	.4byte 0x2067656E
-	.4byte 0x00000000
-	.4byte 0x70696B69
-	.4byte 0x68656164
-	.4byte 0x00000000
-	.4byte 0x63796C69
-	.4byte 0x6E646572
-	.4byte 0x20746573
-	.4byte 0x74000000
-	.4byte 0x736C7569
-	.4byte 0x63652073
-	.4byte 0x6F667400
-	.4byte 0x736C7569
-	.4byte 0x63652068
-	.4byte 0x61726400
-	.4byte 0x736C7569
-	.4byte 0x63652062
-	.4byte 0x6F6D6200
-	.4byte 0x736C7569
-	.4byte 0x63652062
-	.4byte 0x6F6D6268
-	.4byte 0x61726400
-	.4byte 0x6475616C
-	.4byte 0x20746573
-	.4byte 0x74000000
-	.4byte 0x3C64656D
-	.4byte 0x6F3A7375
-	.4byte 0x6E736574
-	.4byte 0x3E207374
-	.4byte 0x61727400
-	.4byte 0x3C64656D
-	.4byte 0x6F3A7375
-	.4byte 0x6E736574
-	.4byte 0x3E20676F
-	.4byte 0x616C0000
-	.4byte 0x67726173
-	.4byte 0x7367656E
-	.4byte 0x00000000
-	.4byte 0x3C626F20
-	.4byte 0x62617365
-	.4byte 0x3E000000
-	.4byte 0x776F726B
-	.4byte 0x6F626A65
-	.4byte 0x63740000
-	.4byte 0x626F7373
-	.4byte 0x3A537069
-	.4byte 0x64657200
-	.4byte 0x626F7373
-	.4byte 0x3A476961
-	.4byte 0x6E740000
-	.4byte 0x626F7373
-	.4byte 0x3A536E61
-	.4byte 0x6B650000
-	.4byte 0x626F7373
-	.4byte 0x3A547753
-	.4byte 0x6E616B65
-	.4byte 0x00000000
-	.4byte 0x626F7373
-	.4byte 0x3A4B696E
-	.4byte 0x67000000
-	.4byte 0x626F7373
-	.4byte 0x3A536C69
-	.4byte 0x6D650000
-	.4byte 0x626F7373
-	.4byte 0x3A4B6F67
-	.4byte 0x616E6500
-	.4byte 0x626F7373
-	.4byte 0x3A506F6D
-	.4byte 0x00000000
-	.4byte 0x626F7373
-	.4byte 0x3A4B696E
-	.4byte 0x67426163
-	.4byte 0x6B000000
-	.4byte 0x626F7373
-	.4byte 0x3A4D697A
-	.4byte 0x75000000
-	.4byte 0x626F7373
-	.4byte 0x3A585858
-	.4byte 0x33000000
+	.asciz "fall water"
+.balign 4
+	.asciz "never use this"
+.balign 4
+	.asciz "bomb gen"
+.balign 4
+	.asciz "pikihead"
+.balign 4
+	.asciz "cylinder test"
+.balign 4
+	.asciz "sluice soft"
+.balign 4
+	.asciz "sluice hard"
+.balign 4
+	.asciz "sluice bomb"
+.balign 4
+	.asciz "sluice bombhard"
+.balign 4
+	.asciz "dual test"
+.balign 4
+	.asciz "<demo:sunset> start"
+.balign 4
+	.asciz "<demo:sunset> goal"
+.balign 4
+	.asciz "grassgen"
+.balign 4
+	.asciz "<bo base>"
+.balign 4
+	.asciz "workobject"
+.balign 4
+	.asciz "boss:Spider"
+.balign 4
+	.asciz "boss:Giant"
+.balign 4
+	.asciz "boss:Snake"
+.balign 4
+	.asciz "boss:TwSnake"
+.balign 4
+	.asciz "boss:King"
+.balign 4
+	.asciz "boss:Slime"
+.balign 4
+	.asciz "boss:Kogane"
+.balign 4
+	.asciz "boss:Pom"
+.balign 4
+	.asciz "boss:KingBack"
+.balign 4
+	.asciz "boss:Mizu"
+.balign 4
+	.asciz "boss:XXX3"
+.balign 4
 .global _info
 _info:
 	.4byte 0x00000000
@@ -18236,48 +18202,46 @@ lbl_802AFF18:
 	.4byte 0x70000000
 .global _ufoIDTable
 _ufoIDTable:
-	.4byte 0x75737431
-	.4byte 0x75737432
-	.4byte 0x75737433
-	.4byte 0x75737434
-	.4byte 0x75737435
-	.4byte 0x75663031
-	.4byte 0x75663032
-	.4byte 0x75663033
-	.4byte 0x75663034
-	.4byte 0x75663035
-	.4byte 0x75663036
-	.4byte 0x75663037
-	.4byte 0x75663038
-	.4byte 0x75663039
-	.4byte 0x75663130
-	.4byte 0x75663131
-	.4byte 0x756E3031
-	.4byte 0x756E3032
-	.4byte 0x756E3033
-	.4byte 0x756E3034
-	.4byte 0x756E3035
-	.4byte 0x756E3036
-	.4byte 0x756E3037
-	.4byte 0x756E3038
-	.4byte 0x756E3039
-	.4byte 0x756E3130
-	.4byte 0x756E3131
-	.4byte 0x756E3132
-	.4byte 0x756E3133
-	.4byte 0x756E3134
-	.4byte 0x75646566
+	.ascii "ust1"
+	.ascii "ust2"
+	.ascii "ust3"
+	.ascii "ust4"
+	.ascii "ust5"
+	.ascii "uf01"
+	.ascii "uf02"
+	.ascii "uf03"
+	.ascii "uf04"
+	.ascii "uf05"
+	.ascii "uf06"
+	.ascii "uf07"
+	.ascii "uf08"
+	.ascii "uf09"
+	.ascii "uf10"
+	.ascii "uf11"
+	.ascii "un01"
+	.ascii "un02"
+	.ascii "un03"
+	.ascii "un04"
+	.ascii "un05"
+	.ascii "un06"
+	.ascii "un07"
+	.ascii "un08"
+	.ascii "un09"
+	.ascii "un10"
+	.ascii "un11"
+	.ascii "un12"
+	.ascii "un13"
+	.ascii "un14"
+	.ascii "udef"
+.balign 4
 .global lbl_802AFFA4
 lbl_802AFFA4:
-	.4byte 0x436F7265
-	.4byte 0x4E6F6465
-	.4byte 0x00000000
+	.asciz "CoreNode"
+.balign 4
 .global lbl_802AFFB0
 lbl_802AFFB0:
-	.4byte 0x70656C6C
-	.4byte 0x6574436F
-	.4byte 0x6E666967
-	.4byte 0x00000000
+	.asciz "pelletConfig"
+.balign 4
 .global bounceSounds
 bounceSounds:
 	.4byte 0x000000BC
@@ -18296,43 +18260,43 @@ bounceSounds:
 numberPellets:
 	.4byte 0x00000000
 	.4byte 0x00000000
-	.4byte 0x70623031
+	.ascii "pb01"
 	.4byte 0x00000000
 	.4byte 0x00000001
-	.4byte 0x70623035
+	.ascii "pb05"
 	.4byte 0x00000000
 	.4byte 0x00000002
-	.4byte 0x70623130
+	.ascii "pb10"
 	.4byte 0x00000000
 	.4byte 0x00000003
-	.4byte 0x70623230
+	.ascii "pb20"
 	.4byte 0x00000001
 	.4byte 0x00000000
-	.4byte 0x70723031
+	.ascii "pr01"
 	.4byte 0x00000001
 	.4byte 0x00000001
-	.4byte 0x70723035
+	.ascii "pr05"
 	.4byte 0x00000001
 	.4byte 0x00000002
-	.4byte 0x70723130
+	.ascii "pr10"
 	.4byte 0x00000001
 	.4byte 0x00000003
-	.4byte 0x70723230
+	.ascii "pr20"
 	.4byte 0x00000002
 	.4byte 0x00000000
-	.4byte 0x70793031
+	.ascii "py01"
 	.4byte 0x00000002
 	.4byte 0x00000001
-	.4byte 0x70793035
+	.ascii "py05"
 	.4byte 0x00000002
 	.4byte 0x00000002
-	.4byte 0x70793130
+	.ascii "py10"
 	.4byte 0x00000002
 	.4byte 0x00000003
-	.4byte 0x70793230
+	.ascii "py20"
 	.4byte 0xFFFFFFFF
 	.4byte 0xFFFFFFFF
-	.4byte 0x756A6161
+	.ascii "ujaa"
 .global lbl_802B008C
 lbl_802B008C:
 	.4byte 0x70656C4D
