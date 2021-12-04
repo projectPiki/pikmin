@@ -4570,14 +4570,16 @@ func$793:
 	.4byte _MotionComp_01
 	.4byte _MotionComp_10
 	.4byte _MotionComp_11
+.balign 4
 lbl_802272D0:
 	.asciz "baseApp.cpp"
+.balign 4
 .global lbl_802272DC
 lbl_802272DC:
 	.asciz "[Windows]"
-	.skip 2
+.balign 4
 	.asciz "CoreNode"
-	.skip 3
+.balign 4
 	.4byte 0x803DCE88
 	.4byte 0x00000000
 	.4byte 0x00000000
@@ -24481,17 +24483,19 @@ __vt__12ActBreakWall:
 	.4byte lbl_800A791C
 	.4byte lbl_800A79D0
 	.4byte lbl_800A79BC
+.balign 4
 .global lbl_802B5EB0
 lbl_802B5EB0:
 	.asciz "aiTransport.cpp"
+.balign 4
 .global lbl_802B5EC0
 lbl_802B5EC0:
 	.asciz "Transport"
-	.skip 2
+.balign 4
 .global lbl_802B5ECC
 lbl_802B5ECC:
 	.asciz "carry-endstick"
-	.skip 1
+.balign 4
 .global lbl_802B5EDC
 lbl_802B5EDC:
 	.4byte lbl_800B0D0C
@@ -24502,14 +24506,15 @@ lbl_802B5EDC:
 	.4byte lbl_800B0D50
 	.4byte lbl_800B135C
 	.4byte lbl_800B0D38
+.balign 4
 	.asciz "%s %d %.1f"
-	.skip 1
+.balign 4
 	.asciz "%.1f/%.1f %s"
-	.skip 3
+.balign 4
 	.asciz "%s %d %.1f %s"
-	.skip 2
+.balign 4
 	.asciz "ActTransport"
-	.skip 3
+.balign 4
 	.4byte 0x50616E69
 	.4byte 0x416E696D
 	.4byte 0x4B65794C
