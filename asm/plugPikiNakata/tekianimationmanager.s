@@ -91,21 +91,21 @@ lbl_802CCE84:
 	.asciz "CoreNode"
 .balign 4
 lbl_802CCE90:
-	.4byte 0x803E4308
+	.4byte __RTTI__5ANode
 	.4byte 0x00000000
 	.4byte 0x00000000
 lbl_802CCE9C:
-	.4byte 0x803E4308
+	.4byte __RTTI__5ANode
 	.4byte 0x00000000
-	.4byte 0x803E4310
+	.4byte __RTTI__8CoreNode
 	.4byte 0x00000000
 	.4byte 0x00000000
 lbl_802CCEB0:
-	.4byte 0x803E4308
+	.4byte __RTTI__5ANode
 	.4byte 0x00000000
-	.4byte 0x803E4310
+	.4byte __RTTI__8CoreNode
 	.4byte 0x00000000
-	.4byte 0x803E4320
+	.4byte __RTTI__4Node
 	.4byte 0x00000000
 	.4byte 0x00000000
 .global __vt__20TekiAnimationManager
