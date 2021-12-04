@@ -6625,44 +6625,51 @@ bigFont_data:
 .global lbl_802A5140
 lbl_802A5140:
 	.asciz "system.cpp"
-	.skip 1
+.balign 4
 .global lbl_802A514C
 lbl_802A514C:
 	.asciz "build.map"
-	.skip 2
+.balign 4
 .global lbl_802A5158
 lbl_802A5158:
 	.asciz "language"
-	.skip 3
+.balign 4
 .global lbl_802A5164
 lbl_802A5164:
 	.asciz "bigFont.bti"
+.balign 4
 	.asciz "Reading Game Disc..."
-	.skip 3
+.balign 4
 	.asciz "An error has occurred."
-	.skip 1
+.balign 4
 	.asciz "Turn the power OFF and"
-	.skip 1
+.balign 4
 	.asciz "check the NINTENDO GAMECUBE"
+.balign 4
 	.asciz "Instruction Booklet for"
+.balign 4
 	.asciz "instructions."
-	.skip 2
+.balign 4
 	.asciz "The Game Disc could not be read."
-	.skip 3
+.balign 4
 	.asciz "Please read the"
+.balign 4
 	.asciz "NINTENDO GAMECUBE"
-	.skip 2
+.balign 4
 	.asciz "Instruction Booklet"
+.balign 4
 	.asciz "for more information."
-	.skip 2
+.balign 4
 	.asciz "Please insert a"
+.balign 4
 	.asciz "Pikmin Game Disc."
-	.skip 2
+.balign 4
 	.asciz "Please close the"
-	.skip 3
+.balign 4
 	.asciz "Disc Cover."
+.balign 4
 	.asciz "This is not a"
-	.skip 2
+.balign 4
 .global errorMessages
 errorMessages:
 	.4byte 0x802A5170
@@ -7241,18 +7248,11 @@ meshVAT:
 	.4byte 0x00000001
 	.4byte 0x00000003
 	.4byte 0x00000000
+.balign 4
 .global lbl_802A5B2C
 lbl_802A5B2C:
-	.4byte 0x25733A25
-	.4byte 0x64205761
-	.4byte 0x726E696E
-	.4byte 0x673A2063
-	.4byte 0x616D2D3E
-	.4byte 0x764E6561
-	.4byte 0x72203E3D
-	.4byte 0x2063616D
-	.4byte 0x2D3E7646
-	.4byte 0x61720A00
+	.asciz "%s:%d Warning: cam->vNear >= cam->vFar\n"
+.balign 4
 .global lbl_802A5B54
 lbl_802A5B54:
 	.4byte lbl_8004A534
@@ -7262,19 +7262,13 @@ lbl_802A5B54:
 	.4byte lbl_8004A604
 	.4byte lbl_8004A638
 	.4byte lbl_8004A684
-	.4byte 0x556E6B6E
-	.4byte 0x6F776E20
-	.4byte 0x61646472
-	.4byte 0x20212100
-	.4byte 0x4552524F
-	.4byte 0x523A2025
-	.4byte 0x73000000
-	.4byte 0x4552524F
-	.4byte 0x523A2069
-	.4byte 0x6E202573
-	.4byte 0x20617420
-	.4byte 0x6C696E65
-	.4byte 0x20256400
+.balign 4
+	.asciz "Unknown addr !!"
+.balign 4
+	.asciz "ERROR: %s"
+.balign 4
+	.asciz "ERROR: in %s at line %d"
+.balign 4
 .global sAsciiTable
 sAsciiTable:
 	.4byte 0xFFFFFFFF
@@ -7407,9 +7401,11 @@ __vt__5Shape:
 	.4byte render__9BaseShapeFR8Graphics
 	.4byte render2d__9BaseShapeFR8Graphics
 	.4byte makeRouteGroup__9BaseShapeFv
-	.4byte 0x47726170
-	.4byte 0x68696373
-	.4byte 0
+.balign 4
+lbl_802A5D9C:
+	.asciz "Graphics"
+.balign 4
+lbl_802A5DA8:
 	.4byte __RTTI__8Graphics_1
 	.4byte 0
 	.4byte 0
@@ -7490,21 +7486,15 @@ lbl_802A5EB0:
 	.4byte lbl_8004DAC0
 	.4byte lbl_8004DB3C
 	.4byte lbl_8004DAD8
-	.4byte 0x64796E73
-	.4byte 0x696D756C
-	.4byte 0x61746F72
-	.4byte 0x2E637070
-	.4byte 0x00000000
-	.4byte 0x44796E53
-	.4byte 0x696D756C
-	.4byte 0x61746F72
-	.4byte 0x00000000
-	.4byte 0x52696769
-	.4byte 0x64426F64
-	.4byte 0x79000000
-	.4byte 0x436F7265
-	.4byte 0x4E6F6465
-	.4byte 0x00000000
+.balign 4
+	.asciz "dynsimulator.cpp"
+.balign 4
+	.asciz "DynSimulator"
+.balign 4
+	.asciz "RigidBody"
+.balign 4
+	.asciz "CoreNode"
+.balign 4
 	.4byte 0x803DD6C4
 	.4byte 0x00000000
 	.4byte 0x00000000
@@ -7550,27 +7540,24 @@ __vt__9RigidBody:
 	.4byte getViewScale__9RigidBodyFv
 	.4byte updateCont__9RigidBodyFv
 	.4byte applyGroundForces__9RigidBodyFiP9CollGroup
-	.4byte 0x616E696D
-	.4byte 0x4D67722E
-	.4byte 0x63707000
+.balign 4
+lbl_802A5FC0:
+	.asciz "animMgr.cpp"
+.balign 4
 .global lbl_802A5FCC
 lbl_802A5FCC:
-	.4byte 0x436F7265
-	.4byte 0x4E6F6465
-	.4byte 0x00000000
+	.asciz "CoreNode"
+.balign 4
 .global lbl_802A5FD8
 lbl_802A5FD8:
-	.4byte 0x62617365
-	.4byte 0x20646972
-	.4byte 0x00000000
+	.asciz "base dir"
+.balign 4
 .global lbl_802A5FE4
 lbl_802A5FE4:
-	.4byte 0x4E756C6C
-	.4byte 0x20416E69
-	.4byte 0x6D000000
-	.4byte 0x416E696D
-	.4byte 0x61746F72
-	.4byte 0x00000000
+	.asciz "Null Anim"
+.balign 4
+	.asciz "Animator"
+.balign 4
 .global __vt__8Animator
 __vt__8Animator:
 	.4byte 0x803DD720
@@ -7593,13 +7580,11 @@ __vt__7AnimMgr:
 	.4byte 0
 	.4byte getAgeNodeType__5ANodeFv
 	.4byte read__7AnimMgrFR18RandomAccessStream
-	.4byte 0x5061726D
-	.4byte 0x3C537472
-	.4byte 0x696E673E
-	.4byte 0
-	.4byte 0x42617365
-	.4byte 0x5061726D
-	.4byte 0
+.balign 4
+	.asciz "Parm<String>"
+.balign 4
+	.asciz "BaseParm"
+.balign 4
 	.4byte 0x803DD748
 	.4byte 0
 	.4byte 0
@@ -7610,9 +7595,9 @@ __vt__7AnimMgr:
 	.4byte "size__13Parm<6String>Fv"
 	.4byte "write__13Parm<6String>FR18RandomAccessStream"
 	.4byte "read__13Parm<6String>FR18RandomAccessStream"
-	.4byte 0x5061726D
-	.4byte 0x3C666C6F
-	.4byte 0x61743E00
+.balign 4
+	.asciz "Parm<float>"
+.balign 4
 	.4byte 0x803DD748
 	.4byte 0
 	.4byte 0
@@ -7623,9 +7608,9 @@ __vt__7AnimMgr:
 	.4byte "size__7Parm<f>Fv"
 	.4byte "write__7Parm<f>FR18RandomAccessStream"
 	.4byte "read__7Parm<f>FR18RandomAccessStream"
-	.4byte 0x5061726D
-	.4byte 0x3C696E74
-	.4byte 0x3E000000
+.balign 4
+	.asciz "Parm<int>"
+.balign 4
 	.4byte 0x803DD748
 	.4byte 0
 	.4byte 0
@@ -16915,258 +16900,169 @@ gridStrings:
 	.4byte 0x00000000
 	.4byte 0xFFFFFFFF
 	.4byte fullfillPiki__6AIPerfFR4Menu
+.balign 4
 .global lbl_802AEA4C
 lbl_802AEA4C:
-	.4byte 0x42726964
-	.4byte 0x6765204F
-	.4byte 0x7074205B
-	.4byte 0x6F6E5D00
-	.4byte 0x42726964
-	.4byte 0x6765206F
-	.4byte 0x7074205B
-	.4byte 0x6F66665D
-	.4byte 0x00000000
+	.asciz "Bridge Opt [on]"
+.balign 4
+	.asciz "Bridge opt [off]"
+.balign 4
 .global lbl_802AEA70
 lbl_802AEA70:
-	.4byte 0x526F7574
-	.4byte 0x65204465
-	.4byte 0x62756720
-	.4byte 0x5B6F6E5D
-	.4byte 0x00000000
+	.asciz "Route Debug [on]"
+.balign 4
 .global lbl_802AEA84
 lbl_802AEA84:
-	.4byte 0x526F7574
-	.4byte 0x65204465
-	.4byte 0x62756720
-	.4byte 0x5B6F6666
-	.4byte 0x5D000000
+	.asciz "Route Debug [off]"
+.balign 4
 .global lbl_802AEA98
 lbl_802AEA98:
-	.4byte 0x4F707420
-	.4byte 0x4C657665
-	.4byte 0x6C202564
-	.4byte 0x00000000
+	.asciz "Opt Level %d"
+.balign 4
 .global lbl_802AEAA8
 lbl_802AEAA8:
-	.4byte 0x5B757365
-	.4byte 0x20436F6C
-	.4byte 0x6C20536F
-	.4byte 0x72745D00
+	.asciz "[use Coll Sort]"
+.balign 4
 .global lbl_802AEAB8
 lbl_802AEAB8:
-	.4byte 0x5B69676E
-	.4byte 0x6F726520
-	.4byte 0x436F6C6C
-	.4byte 0x20536F72
-	.4byte 0x745D0000
+	.asciz "[ignore Coll Sort]"
+.balign 4
 .global lbl_802AEACC
 lbl_802AEACC:
-	.4byte 0x4B616E64
-	.4byte 0x6F204465
-	.4byte 0x62756720
-	.4byte 0x5B6F6E5D
-	.4byte 0x00000000
-	.4byte 0x4B616E64
-	.4byte 0x6F204465
-	.4byte 0x62756720
-	.4byte 0x5B6F6666
-	.4byte 0x5D000000
+	.asciz "Kando Debug [on]"
+.balign 4
+	.asciz "Kando Debug [off]"
+.balign 4
 .global lbl_802AEAF4
 lbl_802AEAF4:
-	.4byte 0x536F756E
-	.4byte 0x64204465
-	.4byte 0x62756720
-	.4byte 0x5B6F6E5D
-	.4byte 0x00000000
+	.asciz "Sound Debug [on]"
+.balign 4
 .global lbl_802AEB08
 lbl_802AEB08:
-	.4byte 0x536F756E
-	.4byte 0x64204465
-	.4byte 0x62756720
-	.4byte 0x5B6F6666
-	.4byte 0x5D000000
+	.asciz "Sound Debug [off]"
+.balign 4
 .global lbl_802AEB1C
 lbl_802AEB1C:
-	.4byte 0x47656E65
-	.4byte 0x7261746F
-	.4byte 0x72204D6F
-	.4byte 0x64650000
+	.asciz "Generator Mode"
+.balign 4
 .global lbl_802AEB2C
 lbl_802AEB2C:
-	.4byte 0x47616D65
-	.4byte 0x204D6F64
-	.4byte 0x65000000
+	.asciz "Game Mode"
+.balign 4
 .global lbl_802AEB38
 lbl_802AEB38:
-	.4byte 0x4C4F4420
-	.4byte 0x5B6F6E5D
-	.4byte 0x00000000
+	.asciz "LOD [on]"
+.balign 4
 .global lbl_802AEB44
 lbl_802AEB44:
-	.4byte 0x4C4F4420
-	.4byte 0x5B6F6666
-	.4byte 0x5D000000
+	.asciz "LOD [off]"
+.balign 4
 .global lbl_802AEB50
 lbl_802AEB50:
-	.4byte 0x436F6C6C
-	.4byte 0x73205B6F
-	.4byte 0x6E5D0000
+	.asciz "Colls [on]"
+.balign 4
 .global lbl_802AEB5C
 lbl_802AEB5C:
-	.4byte 0x436F6C6C
-	.4byte 0x73205B6F
-	.4byte 0x66665D00
+	.asciz "Colls [off]"
+.balign 4
 .global lbl_802AEB68
 lbl_802AEB68:
-	.4byte 0x4153594E
-	.4byte 0x43205B6F
-	.4byte 0x6E5D0000
+	.asciz "ASYNC [on]"
+.balign 4
 .global lbl_802AEB74
 lbl_802AEB74:
-	.4byte 0x4153594E
-	.4byte 0x43205B6F
-	.4byte 0x66665D00
+	.asciz "ASYNC [off]"
+.balign 4
 .global lbl_802AEB80
 lbl_802AEB80:
-	.4byte 0x496E7320
-	.4byte 0x5B466173
-	.4byte 0x745D0000
+	.asciz "Ins [Fast]"
+.balign 4
 .global lbl_802AEB8C
 lbl_802AEB8C:
-	.4byte 0x496E7320
-	.4byte 0x5B536C6F
-	.4byte 0x775D0000
-	.4byte 0x55464F20
-	.4byte 0x4C455645
-	.4byte 0x4C202564
-	.4byte 0x00000000
-	.4byte 0x466C6F77
-	.4byte 0x65722050
-	.4byte 0x696B6973
-	.4byte 0x00000000
-	.4byte 0x42726561
-	.4byte 0x6B20736C
-	.4byte 0x75696365
-	.4byte 0x00000000
-	.4byte 0x434F4C4C
-	.4byte 0x45435420
-	.4byte 0x50494B49
-	.4byte 0x53000000
-	.4byte 0x46554C4C
-	.4byte 0x46494C4C
-	.4byte 0x2050494B
-	.4byte 0x49000000
+	.asciz "Ins [Slow]"
+.balign 4
+	.asciz "UFO LEVEL %d"
+.balign 4
+	.asciz "Flower Pikis"
+.balign 4
+	.asciz "Break sluice"
+.balign 4
+	.asciz "COLLECT PIKIS"
+.balign 4
+	.asciz "FULLFILL PIKI"
+.balign 4
 .global lbl_802AEBE8
 lbl_802AEBE8:
-	.4byte 0x42726964
-	.4byte 0x6765204F
-	.4byte 0x7074205B
-	.4byte 0x6F66665D
-	.4byte 0x00000000
-	.4byte 0x41492047
-	.4byte 0x52494420
-	.4byte 0x5B6F6E5D
-	.4byte 0x00000000
-	.4byte 0x41492047
-	.4byte 0x52494420
-	.4byte 0x5B6F6666
-	.4byte 0x5D000000
+	.asciz "Bridge Opt [off]"
+.balign 4
+	.asciz "AI GRID [on]"
+.balign 4
+	.asciz "AI GRID [off]"
+.balign 4
 .global lbl_802AEC1C
 lbl_802AEC1C:
-	.4byte 0x4B616E64
-	.4byte 0x6F446562
-	.4byte 0x7567205B
-	.4byte 0x6F66665D
-	.4byte 0x00000000
-	.4byte 0x75706461
-	.4byte 0x74654D67
-	.4byte 0x72205B6F
-	.4byte 0x6E5D0000
-	.4byte 0x75706461
-	.4byte 0x74654D67
-	.4byte 0x72205B6F
-	.4byte 0x66665D00
-	.4byte 0x70696B69
-	.4byte 0x4D616269
-	.4byte 0x6B69205B
-	.4byte 0x6F6E5D00
-	.4byte 0x70696B69
-	.4byte 0x4D616269
-	.4byte 0x6B69205B
-	.4byte 0x6F66665D
-	.4byte 0x00000000
-	.4byte 0x70734F70
-	.4byte 0x74696D69
-	.4byte 0x7365205B
-	.4byte 0x6F6E5D00
-	.4byte 0x70734F70
-	.4byte 0x74696D69
-	.4byte 0x7365205B
-	.4byte 0x6F66665D
-	.4byte 0x00000000
-	.4byte 0x5B69742D
-	.4byte 0x63756C6C
-	.4byte 0x206F6E5D
-	.4byte 0x00000000
-	.4byte 0x5B69742D
-	.4byte 0x63756C6C
-	.4byte 0x206F6666
-	.4byte 0x5D000000
-	.4byte 0x67726964
-	.4byte 0x20736869
-	.4byte 0x66742025
-	.4byte 0x64000000
+	.asciz "KandoDebug [off]"
+.balign 4
+	.asciz "updateMgr [on]"
+.balign 4
+	.asciz "updateMgr [off]"
+.balign 4
+	.asciz "pikiMabiki [on]"
+.balign 4
+	.asciz "pikiMabiki [off]"
+.balign 4
+	.asciz "psOptimise [on]"
+.balign 4
+	.asciz "psOptimise [off]"
+.balign 4
+	.asciz "[it-cull on]"
+.balign 4
+	.asciz "[it-cull off]"
+.balign 4
+	.asciz "grid shift %d"
+.balign 4
 .global ufoParts
 ufoParts:
-	.4byte 0x75737435
-	.4byte 0x75737431
-	.4byte 0x75737432
-	.4byte 0x75737433
-	.4byte 0x75737434
-	.4byte 0x75663031
-	.4byte 0x75663032
-	.4byte 0x75663033
-	.4byte 0x75663034
-	.4byte 0x75663035
-	.4byte 0x75663036
-	.4byte 0x75663037
-	.4byte 0x75663038
-	.4byte 0x75663039
-	.4byte 0x75663130
-	.4byte 0x75663131
-	.4byte 0x756E3031
-	.4byte 0x756E3032
-	.4byte 0x756E3033
-	.4byte 0x756E3034
-	.4byte 0x756E3035
-	.4byte 0x756E3036
-	.4byte 0x756E3037
-	.4byte 0x756E3038
-	.4byte 0x756E3039
-	.4byte 0x756E3130
-	.4byte 0x756E3131
-	.4byte 0x756E3132
-	.4byte 0x756E3133
-	.4byte 0x756E3134
+	.ascii "ust5"
+	.ascii "ust1"
+	.ascii "ust2"
+	.ascii "ust3"
+	.ascii "ust4"
+	.ascii "uf01"
+	.ascii "uf02"
+	.ascii "uf03"
+	.ascii "uf04"
+	.ascii "uf05"
+	.ascii "uf06"
+	.ascii "uf07"
+	.ascii "uf08"
+	.ascii "uf09"
+	.ascii "uf10"
+	.ascii "uf11"
+	.ascii "un01"
+	.ascii "un02"
+	.ascii "un03"
+	.ascii "un04"
+	.ascii "un05"
+	.ascii "un06"
+	.ascii "un07"
+	.ascii "un08"
+	.ascii "un09"
+	.ascii "un10"
+	.ascii "un11"
+	.ascii "un12"
+	.ascii "un13"
+	.ascii "un14"
 .global lbl_802AED40
 lbl_802AED40:
-	.4byte 0x55464F20
-	.4byte 0x4C657665
-	.4byte 0x6C202564
-	.4byte 0x00000000
-	.4byte 0x5B757064
-	.4byte 0x20737263
-	.4byte 0x68627566
-	.4byte 0x665D0000
-	.4byte 0x5B646F6E
-	.4byte 0x27742075
-	.4byte 0x70642073
-	.4byte 0x72636862
-	.4byte 0x7566665D
-	.4byte 0x00000000
-	.4byte 0x496E7465
-	.4byte 0x72616374
-	.4byte 0x696F6E00
+	.asciz "UFO Level %d"
+.balign 4
+	.asciz "[upd srchbuff]"
+.balign 4
+	.asciz "[don't upd srchbuff]"
+.balign 4
+	.asciz "Interaction"
+.balign 4
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x00000000
@@ -17178,18 +17074,11 @@ lbl_802AED40:
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x00000000
-	.4byte 0x44656C65
-	.4byte 0x67617465
-	.4byte 0x313C4149
-	.4byte 0x50657266
-	.4byte 0x2C204D65
-	.4byte 0x6E752026
-	.4byte 0x3E000000
-	.4byte 0x4944656C
-	.4byte 0x65676174
-	.4byte 0x65313C4D
-	.4byte 0x656E7520
-	.4byte 0x263E0000
+.balign 4
+	.asciz "Delegate1<AIPerf, Menu &>"
+.balign 4
+	.asciz "IDelegate1<Menu &>"
+.balign 4
 	.4byte 0x803DEE3C
 	.4byte 0x00000000
 	.4byte 0x00000000
@@ -17198,12 +17087,9 @@ lbl_802AED40:
 	.4byte "__RTTI__25Delegate1<6AIPerf,R4Menu>"
 	.4byte 0
 	.4byte "invoke__25Delegate1<6AIPerf,R4Menu>FR4Menu"
-	.4byte 0x44656C65
-	.4byte 0x67617465
-	.4byte 0x313C4D65
-	.4byte 0x6E752C20
-	.4byte 0x4D656E75
-	.4byte 0x20263E00
+.balign 4
+	.asciz "Delegate1<Menu, Menu &>"
+.balign 4
 	.4byte "__RTTI__18IDelegate1<R4Menu>_4"
 	.4byte 0
 	.4byte 0
@@ -17214,37 +17100,29 @@ lbl_802AED40:
 	.4byte 0
 	.4byte 0
 	.4byte 0
-	.4byte 0x636F7572
-	.4byte 0x73654465
-	.4byte 0x6275672E
-	.4byte 0x63707000
-	.4byte 0x636F7572
-	.4byte 0x73654465
-	.4byte 0x62756700
+.balign 4
+	.asciz "courseDebug.cpp"
+.balign 4
+	.asciz "courseDebug"
+.balign 4
 .global lbl_802AEE54
 lbl_802AEE54:
-	.4byte 0x6F626A65
-	.4byte 0x63742074
-	.4byte 0x79706500
+	.asciz "object type"
+.balign 4
 .global lbl_802AEE60
 lbl_802AEE60:
-	.4byte 0x44656275
-	.4byte 0x67205377
-	.4byte 0x69746368
-	.4byte 0x65730000
-	.4byte 0x47656E4F
-	.4byte 0x626A6563
-	.4byte 0x74446562
-	.4byte 0x75670000
-	.4byte 0x50617261
-	.4byte 0x6D657465
-	.4byte 0x72730000
+	.asciz "Debug Switches"
+.balign 4
+	.asciz "GenObjectDebug"
+.balign 4
+	.asciz "Parameters"
+.balign 4
 	.4byte 0x803DEE60
 	.4byte 0x00000000
 	.4byte 0x00000000
-	.4byte 0x47656E4F
-	.4byte 0x626A6563
-	.4byte 0x74000000
+.balign 4
+	.asciz "GenObject"
+.balign 4
 	.4byte 0x803DEE60
 	.4byte 0x00000000
 	.4byte 0x803DEE70
@@ -17273,12 +17151,11 @@ __vt__14GenObjectDebug:
 	.4byte update__9GenObjectFP9Generator
 	.4byte render__9GenObjectFR8GraphicsP9Generator
 	.4byte birth__14GenObjectDebugFR9BirthInfo
-	.4byte 0x5061726D
-	.4byte 0x3C696E74
-	.4byte 0x3E000000
-	.4byte 0x42617365
-	.4byte 0x5061726D
-	.4byte 0
+.balign 4
+	.asciz "Parm<int>"
+.balign 4
+	.asciz "BaseParm"
+.balign 4
 	.4byte 0x803DEE88
 	.4byte 0
 	.4byte 0
@@ -17288,17 +17165,16 @@ __vt__14GenObjectDebug:
 	.4byte 0
 	.4byte 0
 	.4byte 0
-	.4byte 0x6D656D53
-	.4byte 0x7461742E
-	.4byte 0x63707000
+.balign 4
+lbl_802AEF48:
+	.asciz "memStat.cpp"
+.balign 4
 .global lbl_802AEF54
 lbl_802AEF54:
-	.4byte 0x696E666F
-	.4byte 0x4C697374
-	.4byte 0x00000000
-	.4byte 0x436F7265
-	.4byte 0x4E6F6465
-	.4byte 0x00000000
+	.asciz "infoList"
+.balign 4
+	.asciz "CoreNode"
+.balign 4
 	.4byte 0x803DEEA8
 	.4byte 0x00000000
 	.4byte 0x00000000
