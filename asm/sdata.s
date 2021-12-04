@@ -15289,33 +15289,3 @@ __RTTI__19TaiResetTimerAction:
 __RTTI__20TaiWaitTurningAction:
 	.4byte 0x802CCA6C
 	.4byte 0x802CCAAC
-	.4byte 0x54656B69
-	.4byte 0
-.global __RTTI__10PelletView_1
-__RTTI__10PelletView_1:
-	.4byte 0x802CCAEC
-	.4byte 0
-	.4byte 0x802CCAF8
-	.4byte 0
-	.4byte 0x802CCB0C
-	.4byte 0
-	.4byte 0x802CCB18
-	.4byte 0
-	.4byte 0x802CCB28
-	.4byte 0x802CCB34
-	.4byte 0x4254656B
-	.4byte 0x69000000
-	.4byte 0x803E42C8
-	.4byte 0x802CCB48
-	.4byte 0x4E54656B
-	.4byte 0x69000000
-	.4byte 0x803E42D8
-	.4byte 0x802CCB74
-	.4byte 0x5954656B
-	.4byte 0x69000000
-	.4byte 0x803E42E8
-	.4byte 0x802CCBA8
-.global __RTTI__4Teki
-__RTTI__4Teki:
-	.4byte 0x803E4298
-	.4byte 0x802CCBE4

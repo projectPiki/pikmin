@@ -872,18 +872,18 @@ __vt__5YTeki:
 	.4byte doKill__5YTekiFv
 	.4byte exitCourse__5YTekiFv
 	.4byte __RTTI__5YTeki
-	.4byte 0xfffffd48
+	.4byte 0xFFFFFD48
 	.4byte viewInit__10PelletViewFv
-	.4byte lbl_80143E40
-	.4byte lbl_80143E38
-	.4byte lbl_80143E30
+	.4byte "@696@viewKill__5BTekiFv"
+	.4byte "@696@viewDraw__5BTekiFR8GraphicsR8Matrix4f"
+	.4byte "@696@viewStartTrembleMotion__5BTekiFf"
 	.4byte viewStartExplodeMotion__10PelletViewFf
-	.4byte lbl_80143E28
-	.4byte lbl_80143E20
-	.4byte lbl_80143E18
-	.4byte lbl_80143E10
-	.4byte lbl_80143E08
-	.4byte lbl_80143E00
+	.4byte "@696@viewSetMotionSpeed__5BTekiFf"
+	.4byte "@696@viewFinishMotion__5BTekiFv"
+	.4byte "@696@viewDoAnimation__5BTekiFv"
+	.4byte "@696@viewGetBottomRadius__5BTekiFv"
+	.4byte "@696@viewGetHeight__5BTekiFv"
+	.4byte "@696@viewGetScale__5BTekiFv"
 	.4byte viewStartTrembleMotion__5BTekiFf
 	.4byte viewSetMotionSpeed__5BTekiFf
 	.4byte viewDoAnimation__5BTekiFv
@@ -928,8 +928,8 @@ __vt__5YTeki:
 	.4byte dieSoon__5BTekiFv
 	.4byte becomeCorpse__5BTekiFv
 	.4byte __RTTI__5YTeki
-	.4byte 0xfffffac8
-	.4byte lbl_80143DEC
+	.4byte 0xFFFFFAC8
+	.4byte "@1336@4@animationKeyUpdated__5BTekiFR16PaniAnimKeyEvent"
 lbl_802DDBE4:
 	.asciz "zen::CallBack1<zen::particleGenerator *>"
 .balign 4

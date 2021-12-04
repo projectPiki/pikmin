@@ -3017,6 +3017,3 @@ lbl_803EA940:
 .global lbl_803EA944
 lbl_803EA944:
 	.4byte 0x3DCCCCCD
-.global lbl_803EA948
-lbl_803EA948:
-	.4byte 0x00000000

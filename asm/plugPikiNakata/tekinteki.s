@@ -365,16 +365,16 @@ __vt__5NTeki:
 	.4byte __RTTI__5NTeki
 	.4byte 0xfffffd48
 	.4byte viewInit__10PelletViewFv
-	.4byte lbl_80143E40
-	.4byte lbl_80143E38
-	.4byte lbl_80143E30
+	.4byte "@696@viewKill__5BTekiFv"
+	.4byte "@696@viewDraw__5BTekiFR8GraphicsR8Matrix4f"
+	.4byte "@696@viewStartTrembleMotion__5BTekiFf"
 	.4byte viewStartExplodeMotion__10PelletViewFf
-	.4byte lbl_80143E28
-	.4byte lbl_80143E20
-	.4byte lbl_80143E18
-	.4byte lbl_80143E10
-	.4byte lbl_80143E08
-	.4byte lbl_80143E00
+	.4byte "@696@viewSetMotionSpeed__5BTekiFf"
+	.4byte "@696@viewFinishMotion__5BTekiFv"
+	.4byte "@696@viewDoAnimation__5BTekiFv"
+	.4byte "@696@viewGetBottomRadius__5BTekiFv"
+	.4byte "@696@viewGetHeight__5BTekiFv"
+	.4byte "@696@viewGetScale__5BTekiFv"
 	.4byte viewStartTrembleMotion__5BTekiFf
 	.4byte viewSetMotionSpeed__5BTekiFf
 	.4byte viewDoAnimation__5BTekiFv
