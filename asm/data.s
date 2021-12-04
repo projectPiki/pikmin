@@ -18096,7 +18096,7 @@ _info:
 	.4byte 0x00000005
 	.4byte 0x803DF37C
 	.4byte 0x00000006
-	.4byte 0x802AFBF0
+	.4byte lbl_802AFBF0
 	.4byte 0x00000007
 	.4byte 0x803DF384
 	.4byte 0x00000008
@@ -18189,17 +18189,13 @@ _info:
 	.4byte 0x803DF414
 	.4byte 0x00000039
 	.4byte 0x803DF41C
-	.4byte 0x696E7661
-	.4byte 0x6C696420
-	.4byte 0x6F626A6E
-	.4byte 0x616D6500
-	.4byte 0x00000000
+.balign 4
+	.asciz "invalid objname"
+.balign 8
 .global lbl_802AFF18
 lbl_802AFF18:
-	.4byte 0x70656C6C
-	.4byte 0x65744D67
-	.4byte 0x722E6370
-	.4byte 0x70000000
+	.asciz "pelletMgr.cpp"
+.balign 4
 .global _ufoIDTable
 _ufoIDTable:
 	.ascii "ust1"
@@ -18260,61 +18256,83 @@ bounceSounds:
 numberPellets:
 	.4byte 0x00000000
 	.4byte 0x00000000
+	.balign 4
 	.ascii "pb01"
+	.balign 4
 	.4byte 0x00000000
 	.4byte 0x00000001
+	.balign 4
 	.ascii "pb05"
+	.balign 4
 	.4byte 0x00000000
 	.4byte 0x00000002
+	.balign 4
 	.ascii "pb10"
+	.balign 4
 	.4byte 0x00000000
 	.4byte 0x00000003
+	.balign 4
 	.ascii "pb20"
+	.balign 4
 	.4byte 0x00000001
 	.4byte 0x00000000
+	.balign 4
 	.ascii "pr01"
+	.balign 4
 	.4byte 0x00000001
 	.4byte 0x00000001
+	.balign 4
 	.ascii "pr05"
+	.balign 4
 	.4byte 0x00000001
 	.4byte 0x00000002
+	.balign 4
 	.ascii "pr10"
+	.balign 4
 	.4byte 0x00000001
 	.4byte 0x00000003
+	.balign 4
 	.ascii "pr20"
+	.balign 4
 	.4byte 0x00000002
 	.4byte 0x00000000
+	.balign 4
 	.ascii "py01"
+	.balign 4
 	.4byte 0x00000002
 	.4byte 0x00000001
+	.balign 4
 	.ascii "py05"
+	.balign 4
 	.4byte 0x00000002
 	.4byte 0x00000002
+	.balign 4
 	.ascii "py10"
+	.balign 4
 	.4byte 0x00000002
 	.4byte 0x00000003
+	.balign 4
 	.ascii "py20"
+	.balign 4
 	.4byte 0xFFFFFFFF
 	.4byte 0xFFFFFFFF
+	.balign 4
 	.ascii "ujaa"
+.balign 4
 .global lbl_802B008C
 lbl_802B008C:
-	.4byte 0x70656C4D
-	.4byte 0x67722E62
-	.4byte 0x696E0000
+	.asciz "pelMgr.bin"
+.balign 4
 .global lbl_802B0098
 lbl_802B0098:
-	.4byte 0x6F626A65
-	.4byte 0x6374732F
-	.4byte 0x00000000
+	.asciz "objects/"
+.balign 4
 .global lbl_802B00A4
 lbl_802B00A4:
-	.4byte 0x70656C41
-	.4byte 0x6E696D2E
-	.4byte 0x62696E00
-	.4byte 0x50656C6C
-	.4byte 0x65744D67
-	.4byte 0x72000000
+	.asciz "pelAnim.bin"
+.balign 4
+	.asciz "PelletMgr"
+.balign 4
 	.4byte 0x803DF590
 	.4byte 0x00000000
 	.4byte 0x00000000
@@ -18323,12 +18341,11 @@ lbl_802B00A4:
 	.4byte 0x803DF598
 	.4byte 0x00000000
 	.4byte 0x00000000
-	.4byte 0x54726176
-	.4byte 0x65727361
-	.4byte 0x626C6500
-	.4byte 0x4F626A65
-	.4byte 0x63744D67
-	.4byte 0x72000000
+.balign 4
+	.asciz "Traversable"
+.balign 4
+	.asciz "ObjectMgr"
+.balign 4
 	.4byte 0x803DF590
 	.4byte 0x00000008
 	.4byte 0x803DF598
@@ -18338,10 +18355,9 @@ lbl_802B00A4:
 	.4byte 0x803DF5B0
 	.4byte 0x00000000
 	.4byte 0x00000000
-	.4byte 0x4D6F6E6F
-	.4byte 0x4F626A65
-	.4byte 0x63744D67
-	.4byte 0x72000000
+.balign 4
+	.asciz "MonoObjectMgr"
+.balign 4
 	.4byte 0x803DF590
 	.4byte 0x00000008
 	.4byte 0x803DF598
@@ -18402,13 +18418,11 @@ __vt__9PelletMgr:
 	.4byte kill__13MonoObjectMgrFP8Creature
 	.4byte createObject__9PelletMgrFv
 	.4byte read__9PelletMgrFR18RandomAccessStream
-	.4byte 0x50656C6C
-	.4byte 0x65745072
-	.4byte 0x6F700000
-	.4byte 0x43726561
-	.4byte 0x74757265
-	.4byte 0x50726F70
-	.4byte 0
+.balign 4
+	.asciz "PelletProp"
+.balign 4
+	.asciz "CreatureProp"
+.balign 4
 	.4byte 0x803DF5D0
 	.4byte 0
 	.4byte 0
@@ -18420,11 +18434,9 @@ __vt__10PelletProp:
 	.4byte 0
 	.4byte 0
 	.4byte 0
-	.4byte 0x50656C6C
-	.4byte 0x65744D67
-	.4byte 0x723A3A55
-	.4byte 0x73654E6F
-	.4byte 0x64650000
+.balign 4
+	.asciz "PelletMgr::UseNode"
+.balign 4
 	.4byte 0x803DF590
 	.4byte 0
 	.4byte 0x803DF598
@@ -18436,9 +18448,9 @@ __vt__Q29PelletMgr7UseNode:
 	.4byte 0
 	.4byte getAgeNodeType__5ANodeFv
 	.4byte read__8CoreNodeFR18RandomAccessStream
-	.4byte 0x496E7465
-	.4byte 0x72616374
-	.4byte 0x696F6E00
+.balign 4
+	.asciz "Interaction"
+.balign 4
 	.4byte 0
 	.4byte 0
 	.4byte 0

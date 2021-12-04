@@ -230,7 +230,7 @@ _info:
 	.4byte 0x00000005
 	.4byte 0x803DF37C
 	.4byte 0x00000006
-	.4byte 0x802AFBF0
+	.4byte lbl_802AFBF0
 	.4byte 0x00000007
 	.4byte 0x803DF384
 	.4byte 0x00000008
