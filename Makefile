@@ -48,7 +48,7 @@ endif
 
 MWCC_VERSION := 1.0
 ifeq ($(EPILOGUE_PROCESS),1)
-MWCC_EPI_VERSION := 1.0e
+MWCC_EPI_VERSION := 1.0
 MWCC_EPI_EXE := mwcceppc_profile.exe
 endif
 MWLD_VERSION := 1.1
