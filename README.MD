@@ -1,10 +1,13 @@
 Pikmin 1 (USA Revision 1) disassembly/decompilation
 
-Copy the 1.0 Gamecube compiler folder and name the new folder 1.0e.
+Copy the 1.0 Gamecube compiler folder's mwcceppc.exe and name the copy "mwcceppc_profile.exe".
+Place the copy in the same folder as the original.
 
-Hex edit the copied mwcceppc.exe as follows:
+Hex edit mwcceppc_profile.exe as follows:
 
-set 0xA6CFF to 0xA6D03 as 0x90 (normally 0x25 0x10 0x00 0x00 0x00)
+set offset 0x333E2 to 0x01 (normally 0x00)
 
-These edits modify the compiler in such a way as to approximate older scheduling models.
+This edit modifies the compiler in such a way as to approximate older scheduling models.
 In this case, the epilogue should remain unscheduled.
+
+tool/frank.py cleans up the output.

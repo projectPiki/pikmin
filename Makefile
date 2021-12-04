@@ -14,7 +14,7 @@ VERSION := usa.1
 #VERSION := usa.0
 
 # Overkill epilogue fixup strategy. Set to 1 if necessary.
-EPILOGUE_PROCESS := 0
+EPILOGUE_PROCESS := 1
 
 BUILD_DIR := build/$(NAME).$(VERSION)
 ifeq ($(EPILOGUE_PROCESS),1)
@@ -73,6 +73,7 @@ SHA1SUM := sha1sum
 PYTHON  := python3
 
 POSTPROC := tools/postprocess.py
+FRANK := tools/frank.py
 
 # Options
 INCLUDES := -i include/
@@ -84,8 +85,8 @@ CFLAGS  = -Cpp_exceptions off -O4,p -fp hard -proc gekko -nodefaults -RTTI on -m
 # for postprocess.py
 PROCFLAGS := -fepilogue-fixup=old_stack
 
-$(BUILD_DIR)/src/plugPikiYamashita/TAIanimation.o: MWCC_VERSION := 1.0e
-$(BUILD_DIR)/src/TRK_MINNOW_DOLPHIN/serpoll.o: MWCC_VERSION := 1.0
+# $(BUILD_DIR)/src/plugPikiYamashita/TAIanimation.o: MWCC_VERSION := 1.0e
+# $(BUILD_DIR)/src/TRK_MINNOW_DOLPHIN/serpoll.o: MWCC_VERSION := 1.0
 
 $(JAUDIO): CFLAGS += -func_align 32
 
@@ -146,20 +147,28 @@ $(BUILD_DIR)/%.o: %.s
 
 $(BUILD_DIR)/%.o: %.c
 	$(CC) $(CFLAGS) -c -o $@ $<
-	$(PYTHON) $(POSTPROC) $(PROCFLAGS) $@
+	#$(PYTHON) $(POSTPROC) $(PROCFLAGS) $@
 
+$(BUILD_DIR)/%.o: %.cp
+	$(CC) $(CFLAGS) -c -o $@ $<
+	#$(PYTHON) $(POSTPROC) $(PROCFLAGS) $@
+	
 $(BUILD_DIR)/%.o: %.cpp
 	$(CC) $(CFLAGS) -c -o $@ $<
-	$(PYTHON) $(POSTPROC) $(PROCFLAGS) $@
+	#$(PYTHON) $(POSTPROC) $(PROCFLAGS) $@
 
 ifeq ($(EPILOGUE_PROCESS),1)
-$(EPILOGUE_DIR)/%.o: %.c
+$(EPILOGUE_DIR)/%.o: %.c $(BUILD_DIR)/%.o
 	$(CC_EPI) $(CFLAGS) -c -o $@ $<
-	#$(PYTHON) $(POSTPROC) $(PROCFLAGS) $@
+	$(PYTHON) $(FRANK) $(word 2,$^) $@ $(word 2,$^)
 
-$(EPILOGUE_DIR)/%.o: %.cpp
+$(EPILOGUE_DIR)/%.o: %.cp $(BUILD_DIR)/%.o
 	$(CC_EPI) $(CFLAGS) -c -o $@ $<
-	#$(PYTHON) $(POSTPROC) $(PROCFLAGS) $@
+	$(PYTHON) $(FRANK) $(word 2,$^) $@ $(word 2,$^)
+
+$(EPILOGUE_DIR)/%.o: %.cpp $(BUILD_DIR)/%.o
+	$(CC_EPI) $(CFLAGS) -c -o $@ $<
+	$(PYTHON) $(FRANK) $(word 2,$^) $@ $(word 2,$^)
 endif
 
 ### Debug Print ###
