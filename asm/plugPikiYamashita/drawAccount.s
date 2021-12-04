@@ -1491,19 +1491,19 @@ start__Q23zen11DrawAccountFRQ23zen11AccountData:
 .balign 0x8
 lbl_802E15A8:
 	.asciz "drawAccount.cpp"
-	.balign 4
+.balign 4
 lbl_802E15B8:
 	.asciz "DrawAccount"
-	.balign 4
+.balign 4
 lbl_802E15C4:
 	.asciz "screen/blo/account.blo"
-	.balign 4
+.balign 4
 lbl_802E15DC:
 	.asciz "zen::DrawAccount"
-	.balign 4
+.balign 4
 lbl_802E15F0:
 	.asciz "zen::DrawScreen"
-	.balign 4
+.balign 4
 lbl_802E1600:
 	.4byte __RTTI__Q23zen10DrawScreen
 	.4byte 0x00000000
@@ -1516,26 +1516,26 @@ __vt__Q23zen11DrawAccount:
 	.4byte draw__Q23zen10DrawScreenFv
 lbl_802E161C:
 	.asciz "zen::NumberPicCallBack<short>"
-	.balign 4
+.balign 4
 lbl_802E163C:
 	.asciz "zen::NumberTex"
-	.balign 4
+.balign 4
 lbl_802E164C:
 	.asciz "zen::FigureTex<short>"
-	.balign 4
+.balign 4
 lbl_802E1664:
 	.4byte __RTTI__Q23zen9NumberTex
 	.4byte 0
 	.4byte 0
 lbl_802E1670:
 	.asciz "P2DPaneCallBackBase"
-	.balign 4
+.balign 4
 lbl_802E1684:
 	.asciz "zen::CallBack1<P2DPane *>"
-	.balign 4
+.balign 4
 lbl_802E16A0:
 	.asciz "P2DPaneCallBack"
-	.balign 4
+.balign 4
 lbl_802E16B0:
 	.4byte __RTTI__19P2DPaneCallBackBase
 	.4byte 0x4

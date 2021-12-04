@@ -983,28 +983,28 @@ setGoalRotate__Q23zen11BalloonPaneFv:
 .balign 0x8
 lbl_802E1488:
 	.asciz "drawCommon.cpp"
-	.balign 4
+.balign 4
 lbl_802E1498:
 	.asciz "drawCommon"
-	.balign 4
+.balign 4
 lbl_802E14A4:
 	.asciz "%d_64.bti"
-	.balign 4
+.balign 4
 lbl_802E14B0:
 	.asciz "%d_sha64.bti"
-	.balign 4
+.balign 4
 lbl_802E14C0:
 	.asciz "zen::BalloonPane"
-	.balign 4
+.balign 4
 lbl_802E14D4:
 	.asciz "P2DPaneCallBackBase"
-	.balign 4
+.balign 4
 lbl_802E14E8:
 	.asciz "zen::CallBack1<P2DPane *>"
-	.balign 4
+.balign 4
 lbl_802E1504:
 	.asciz "P2DPaneCallBack"
-	.balign 4
+.balign 4
 lbl_802E1514:
 	.4byte __RTTI__19P2DPaneCallBackBase
 	.4byte 0x00000004
@@ -1034,7 +1034,7 @@ __vt__Q23zen11BalloonPane:
 	.4byte 0
 lbl_802E1570:
 	.asciz "zen::DrawScreen"
-	.balign 4
+.balign 4
 .global __vt__Q23zen10DrawScreen
 __vt__Q23zen10DrawScreen:
 	.4byte __RTTI__Q23zen10DrawScreen

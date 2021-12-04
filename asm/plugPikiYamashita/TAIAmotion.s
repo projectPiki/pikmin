@@ -325,19 +325,19 @@ getFrameMax__14TAIAmotionLoopFR4Teki:
 .balign 0x8
 lbl_802DFC30:
 	.asciz "TAIAmotion.cpp"
-	.balign 4
+.balign 4
 lbl_802DFC40:
 	.asciz "TAIAmotion"
-	.balign 4
+.balign 4
 lbl_802DFC4C:
 	.asciz "TAIAmotionLoop"
-	.balign 4
+.balign 4
 lbl_802DFC5C:
 	.asciz "TaiAction"
-	.balign 4
+.balign 4
 lbl_802DFC68:
 	.asciz "TAIAreserveMotion"
-	.balign 4
+.balign 4
 lbl_802DFC7C:
 	.4byte __RTTI__9TaiAction
 	.4byte 0

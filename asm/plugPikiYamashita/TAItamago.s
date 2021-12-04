@@ -1212,10 +1212,10 @@ lbl_801D0FA0:
 .balign 0x8
 lbl_802E38B0:
 	.asciz "TAItamago.cpp"
-	.balign 4
+.balign 4
 lbl_802E38C0:
 	.asciz "TAItamago"
-	.balign 4
+.balign 4
 lbl_802E38CC:
 	.4byte 0x894889BB
 	.4byte 0x82CC8DC5
@@ -1232,43 +1232,43 @@ lbl_802E38E4:
 	.4byte 0x00000000
 lbl_802E38FC:
 	.asciz "tekis/tamago/motion/dead.dca"
-	.balign 4
+.balign 4
 lbl_802E391C:
 	.asciz "tekis/tamago/motion/damage.dca"
-	.balign 4
+.balign 4
 lbl_802E393C:
 	.asciz "tekis/tamago/motion/wait1.dca"
-	.balign 4
+.balign 4
 lbl_802E395C:
 	.asciz "tekis/tamago/motion/wait2.dca"
-	.balign 4
+.balign 4
 lbl_802E397C:
 	.asciz "tekis/tamago/motion/waitact1.dck"
-	.balign 4
+.balign 4
 lbl_802E39A0:
 	.asciz "tekis/tamago/motion/waitact2.dca"
-	.balign 4
+.balign 4
 lbl_802E39C4:
 	.asciz "tekis/tamago/motion/move1.dck"
-	.balign 4
+.balign 4
 lbl_802E39E4:
 	.asciz "tekis/tamago/motion/move2.dck"
-	.balign 4
+.balign 4
 lbl_802E3A04:
 	.asciz "tekis/tamago/motion/attack.dca"
-	.balign 4
+.balign 4
 lbl_802E3A24:
 	.asciz "tekis/tamago/motion/type1.dck"
-	.balign 4
+.balign 4
 lbl_802E3A44:
 	.asciz "tekis/tamago/motion/type2.dca"
-	.balign 4
+.balign 4
 lbl_802E3A64:
 	.asciz "TAItamagoAnimation"
-	.balign 4
+.balign 4
 lbl_802E3A78:
 	.asciz "TAIanimation"
-	.balign 4
+.balign 4
 lbl_802E3A88:
 	.4byte __RTTI__12TAIanimation
 	.4byte 0x00000000
@@ -1280,10 +1280,10 @@ __vt__18TAItamagoAnimation:
 	.4byte makeDefaultAnimations__18TAItamagoAnimationFv
 lbl_802E3AA0:
 	.asciz "TAIAcountStartTamago"
-	.balign 4
+.balign 4
 lbl_802E3AB8:
 	.asciz "TaiAction"
-	.balign 4
+.balign 4
 lbl_802E3AC4:
 	.4byte __RTTI__9TaiAction
 	.4byte 0
@@ -1299,10 +1299,10 @@ __vt__20TAIAcountStartTamago:
 	.4byte hasNextState__9TaiActionFv
 lbl_802E3AEC:
 	.asciz "TAIAhatch"
-	.balign 4
+.balign 4
 lbl_802E3AF8:
 	.asciz "TAIAmotion"
-	.balign 4
+.balign 4
 lbl_802E3B04:
 	.4byte __RTTI__9TaiAction
 	.4byte 0
@@ -1324,10 +1324,10 @@ __vt__9TAIAhatch:
 	.4byte hasNextState__9TaiActionFv
 lbl_802E3B40:
 	.asciz "TAIAtimerReactionTamago"
-	.balign 4
+.balign 4
 lbl_802E3B58:
 	.asciz "TAIAtimerReaction"
-	.balign 4
+.balign 4
 lbl_802E3B6C:
 	.4byte __RTTI__9TaiAction
 	.4byte 0
@@ -1358,7 +1358,7 @@ __vt__23TAIAtimerReactionTamago:
 	.4byte 0
 lbl_802E3BCC:
 	.asciz "TAIAdyingTamago"
-	.balign 4
+.balign 4
 lbl_802E3BDC:
 	.4byte __RTTI__9TaiAction
 	.4byte 0
@@ -1383,13 +1383,13 @@ __vt__15TAIAdyingTamago:
 	.4byte 0
 lbl_802E3C28:
 	.asciz "TAItamagoStrategy"
-	.balign 4
+.balign 4
 lbl_802E3C3C:
 	.asciz "TekiStrategy"
-	.balign 4
+.balign 4
 lbl_802E3C4C:
 	.asciz "YaiStrategy"
-	.balign 4
+.balign 4
 lbl_802E3C58:
 	.4byte __RTTI__12TekiStrategy
 	.4byte 0
@@ -1414,10 +1414,10 @@ __vt__17TAItamagoStrategy:
 	.4byte spawnCorpseParts__12TekiStrategyFR4Teki
 lbl_802E3CA0:
 	.asciz "TAItamagoParameters"
-	.balign 4
+.balign 4
 lbl_802E3CB4:
 	.asciz "CoreNode"
-	.balign 4
+.balign 4
 lbl_802E3CC0:
 	.4byte __RTTI__5ANode
 	.4byte 0
@@ -1430,7 +1430,7 @@ lbl_802E3CCC:
 	.4byte 0
 lbl_802E3CE0:
 	.asciz "TekiParameters"
-	.balign 4
+.balign 4
 lbl_802E3CF0:
 	.4byte __RTTI__5ANode
 	.4byte 0
@@ -1504,7 +1504,7 @@ __RTTI__17TAItamagoStrategy:
 	.4byte lbl_802E3C64
 lbl_803E6DF0:
 	.asciz "ANode"
-	.balign 4
+.balign 4
 __RTTI__5ANode:
 	.4byte lbl_803E6DF0
 	.4byte 0
@@ -1513,7 +1513,7 @@ __RTTI__8CoreNode:
 	.4byte lbl_802E3CC0
 lbl_803E6E08:
 	.asciz "Node"
-	.balign 4
+.balign 4
 __RTTI__4Node:
 	.4byte lbl_803E6E08
 	.4byte lbl_802E3CCC

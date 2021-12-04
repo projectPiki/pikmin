@@ -719,13 +719,13 @@ hitCheckCulling__28TAIeffectAttackEventCallBackFPQ23zen17particleGeneratorP20TAI
 .balign 0x8
 lbl_802DD898:
 	.asciz "tekiyteki.cpp"
-	.balign 4
+.balign 4
 lbl_802DD8A8:
 	.asciz "tekiyteki"
-	.balign 4
+.balign 4
 lbl_802DD8B4:
 	.asciz "Interaction"
-	.balign 4
+.balign 4
 	.4byte 0
 	.4byte 0
 	.4byte 0
@@ -739,19 +739,19 @@ lbl_802DD8B4:
 	.4byte 0
 lbl_802DD8EC:
 	.asciz "PelletView"
-	.balign 4
+.balign 4
 lbl_802DD8F8:
 	.asciz "PaniAnimKeyListener"
-	.balign 4
+.balign 4
 lbl_802DD90C:
 	.asciz "EventTalker"
-	.balign 4
+.balign 4
 lbl_802DD918:
 	.asciz "RefCountable"
-	.balign 4
+.balign 4
 lbl_802DD928:
 	.asciz "Creature"
-	.balign 4
+.balign 4
 lbl_802DD934:
 	.4byte __RTTI__11EventTalker
 	.4byte 0x8
@@ -932,13 +932,13 @@ __vt__5YTeki:
 	.4byte lbl_80143DEC
 lbl_802DDBE4:
 	.asciz "zen::CallBack1<zen::particleGenerator *>"
-	.balign 4
+.balign 4
 	.4byte 0
 	.4byte 0
 	.4byte 0
 lbl_802DDC1C:
 	.asciz "TAIeffectAttackEventCallBack"
-	.balign 4
+.balign 4
 .global __vt__28TAIeffectAttackEventCallBack
 __vt__28TAIeffectAttackEventCallBack:
 	.4byte __RTTI__28TAIeffectAttackEventCallBack
@@ -987,7 +987,7 @@ lbl_803E5EBC:
 	.4byte 0x00000000
 lbl_803E5EC0:
 	.asciz "YTeki"
-	.balign 4
+.balign 4
 __RTTI__10PelletView:
 	.4byte lbl_802DD8EC
 	.4byte 0
@@ -1005,13 +1005,13 @@ __RTTI__8Creature:
 	.4byte lbl_802DD934
 lbl_803E5EF0:
 	.asciz "BTeki"
-	.balign 4
+.balign 4
 __RTTI__5BTeki:
 	.4byte lbl_803E5EF0
 	.4byte lbl_802DD948
 lbl_803E5F00:
 	.asciz "NTeki"
-	.balign 4
+.balign 4
 __RTTI__5NTeki:
 	.4byte lbl_803E5F00
 	.4byte lbl_802DD974

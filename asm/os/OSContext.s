@@ -608,40 +608,40 @@ __OSContextInit:
 .balign 0x8
 lbl_802E7718:
 	.asciz "------------------------- Context 0x%08x -------------------------\n"
-	.balign 4
+.balign 4
 lbl_802E775C:
 	.asciz "r%-2d  = 0x%08x (%14d)  r%-2d  = 0x%08x (%14d)\n"
-	.balign 4
+.balign 4
 lbl_802E778C:
 	.asciz "LR   = 0x%08x                   CR   = 0x%08x\n"
-	.balign 4
+.balign 4
 lbl_802E77BC:
 	.asciz "SRR0 = 0x%08x                   SRR1 = 0x%08x\n"
-	.balign 4
+.balign 4
 lbl_802E77EC:
 	.asciz "\nGQRs----------\n"
-	.balign 4
+.balign 4
 lbl_802E7800:
 	.asciz "gqr%d = 0x%08x \t gqr%d = 0x%08x\n"
-	.balign 4
+.balign 4
 lbl_802E7824:
 	.asciz "\n\nFPRs----------\n"
-	.balign 4
+.balign 4
 lbl_802E7838:
 	.asciz "fr%d \t= %d \t fr%d \t= %d\n"
-	.balign 4
+.balign 4
 lbl_802E7854:
 	.asciz "\n\nPSFs----------\n"
-	.balign 4
+.balign 4
 lbl_802E7868:
 	.asciz "ps%d \t= 0x%x \t ps%d \t= 0x%x\n"
-	.balign 4
+.balign 4
 lbl_802E7888:
 	.asciz "\nAddress:      Back Chain    LR Save\n"
-	.balign 4
+.balign 4
 lbl_802E78B0:
 	.asciz "0x%08x:   0x%08x    0x%08x\n"
-	.balign 4
+.balign 4
 lbl_802E78CC:
 	.asciz "FPU-unavailable handler installed\n"
-	.balign 4
+.balign 4

@@ -3886,10 +3886,10 @@ act__14TAIAinitDororoFR4Teki:
 .balign 0x8
 lbl_802E3D60:
 	.asciz "TAIdororo.cpp"
-	.balign 4
+.balign 4
 lbl_802E3D70:
 	.asciz "TAIdororo"
-	.balign 4
+.balign 4
 lbl_802E3D7C:
 	.4byte 0x8DC5925A
 	.4byte 0x8EF596BD
@@ -3931,43 +3931,43 @@ lbl_802E3DE8:
 	.4byte 0x00000000
 lbl_802E3E00:
 	.asciz "tekis/dororo/motion/dead.dca"
-	.balign 4
+.balign 4
 lbl_802E3E20:
 	.asciz "tekis/dororo/motion/damage.dca"
-	.balign 4
+.balign 4
 lbl_802E3E40:
 	.asciz "tekis/dororo/motion/wait1.dca"
-	.balign 4
+.balign 4
 lbl_802E3E60:
 	.asciz "tekis/dororo/motion/wait2.dca"
-	.balign 4
+.balign 4
 lbl_802E3E80:
 	.asciz "tekis/dororo/motion/waitact1.dck"
-	.balign 4
+.balign 4
 lbl_802E3EA4:
 	.asciz "tekis/dororo/motion/waitact2.dca"
-	.balign 4
+.balign 4
 lbl_802E3EC8:
 	.asciz "tekis/dororo/motion/move1.dck"
-	.balign 4
+.balign 4
 lbl_802E3EE8:
 	.asciz "tekis/dororo/motion/move2.dck"
-	.balign 4
+.balign 4
 lbl_802E3F08:
 	.asciz "tekis/dororo/motion/attack.dca"
-	.balign 4
+.balign 4
 lbl_802E3F28:
 	.asciz "tekis/dororo/motion/type1.dck"
-	.balign 4
+.balign 4
 lbl_802E3F48:
 	.asciz "tekis/dororo/motion/type2.dca"
-	.balign 4
+.balign 4
 lbl_802E3F68:
 	.asciz "TAIdororoAnimation"
-	.balign 4
+.balign 4
 lbl_802E3F7C:
 	.asciz "TAIanimation"
-	.balign 4
+.balign 4
 lbl_802E3F8C:
 	.4byte __RTTI__12TAIanimation
 	.4byte 0x00000000
@@ -3979,13 +3979,13 @@ __vt__18TAIdororoAnimation:
 	.4byte makeDefaultAnimations__18TAIdororoAnimationFv
 lbl_802E3FA4:
 	.asciz "TAIdororoStrategy"
-	.balign 4
+.balign 4
 lbl_802E3FB8:
 	.asciz "TekiStrategy"
-	.balign 4
+.balign 4
 lbl_802E3FC8:
 	.asciz "YaiStrategy"
-	.balign 4
+.balign 4
 lbl_802E3FD4:
 	.4byte __RTTI__12TekiStrategy
 	.4byte 0
@@ -4010,10 +4010,10 @@ __vt__17TAIdororoStrategy:
 	.4byte spawnCorpseParts__12TekiStrategyFR4Teki
 lbl_802E401C:
 	.asciz "TAIAgravityDororo"
-	.balign 4
+.balign 4
 lbl_802E4030:
 	.asciz "TaiAction"
-	.balign 4
+.balign 4
 lbl_802E403C:
 	.4byte __RTTI__9TaiAction
 	.4byte 0
@@ -4029,7 +4029,7 @@ __vt__17TAIAgravityDororo:
 	.4byte hasNextState__9TaiActionFv
 lbl_802E4064:
 	.asciz "TAIAcheckBarkDororo"
-	.balign 4
+.balign 4
 lbl_802E4078:
 	.4byte __RTTI__9TaiAction
 	.4byte 0
@@ -4045,17 +4045,17 @@ __vt__19TAIAcheckBarkDororo:
 	.4byte hasNextState__9TaiActionFv
 lbl_802E40A0:
 	.asciz "TAIAbarkDororo"
-	.balign 4
+.balign 4
 lbl_802E40B0:
 	.asciz "TAIAreserveMotion"
-	.balign 4
+.balign 4
 lbl_802E40C4:
 	.4byte __RTTI__9TaiAction
 	.4byte 0
 	.4byte 0
 lbl_802E40D0:
 	.asciz "TAIAmotionLoop"
-	.balign 4
+.balign 4
 lbl_802E40E0:
 	.4byte __RTTI__9TaiAction
 	.4byte 0
@@ -4082,7 +4082,7 @@ __vt__14TAIAbarkDororo:
 	.4byte getFrameMax__14TAIAmotionLoopFR4Teki
 lbl_802E4130:
 	.asciz "Interaction"
-	.balign 4
+.balign 4
 	.4byte 0
 	.4byte 0
 	.4byte 0
@@ -4096,7 +4096,7 @@ lbl_802E4130:
 	.4byte 0
 lbl_802E4168:
 	.asciz "TAIAtransformationDororo"
-	.balign 4
+.balign 4
 lbl_802E4184:
 	.4byte __RTTI__9TaiAction
 	.4byte 0
@@ -4114,7 +4114,7 @@ __vt__24TAIAtransformationDororo:
 	.4byte hasNextState__9TaiActionFv
 lbl_802E41B4:
 	.asciz "TAIAbirthDororo"
-	.balign 4
+.balign 4
 lbl_802E41C4:
 	.4byte __RTTI__9TaiAction
 	.4byte 0
@@ -4132,10 +4132,10 @@ __vt__15TAIAbirthDororo:
 	.4byte hasNextState__9TaiActionFv
 lbl_802E41F4:
 	.asciz "TAIAgoTargetPiki"
-	.balign 4
+.balign 4
 lbl_802E4208:
 	.asciz "TAIAgoTargetPriorityFaceDir"
-	.balign 4
+.balign 4
 lbl_802E4224:
 	.4byte __RTTI__9TaiAction
 	.4byte 0
@@ -4163,7 +4163,7 @@ __vt__16TAIAgoTargetPiki:
 	.4byte getWalkVelocity__27TAIAgoTargetPriorityFaceDirFR4Teki
 lbl_802E4278:
 	.asciz "TAIAnoReaction"
-	.balign 4
+.balign 4
 lbl_802E4288:
 	.4byte __RTTI__9TaiAction
 	.4byte 0
@@ -4177,10 +4177,10 @@ lbl_802E4288:
 	.4byte 0
 lbl_802E42B0:
 	.asciz "TAIAwaitDororo"
-	.balign 4
+.balign 4
 lbl_802E42C0:
 	.asciz "TAIAwait"
-	.balign 4
+.balign 4
 lbl_802E42CC:
 	.4byte __RTTI__9TaiAction
 	.4byte 0
@@ -4207,17 +4207,17 @@ __vt__14TAIAwaitDororo:
 	.4byte getWaitCounterMax__14TAIAwaitDororoFR4Teki
 lbl_802E431C:
 	.asciz "TAIAflickingDororo"
-	.balign 4
+.balign 4
 lbl_802E4330:
 	.asciz "TAIAmotion"
-	.balign 4
+.balign 4
 lbl_802E433C:
 	.4byte __RTTI__9TaiAction
 	.4byte 0
 	.4byte 0
 lbl_802E4348:
 	.asciz "TAIAflicking"
-	.balign 4
+.balign 4
 lbl_802E4358:
 	.4byte __RTTI__9TaiAction
 	.4byte 0
@@ -4245,10 +4245,10 @@ __vt__18TAIAflickingDororo:
 	.4byte getFlickDirection__12TAIAflickingFR4Teki
 lbl_802E43AC:
 	.asciz "TAIAgoGoalPathDororo"
-	.balign 4
+.balign 4
 lbl_802E43C4:
 	.asciz "TAIAgoGoalPath"
-	.balign 4
+.balign 4
 lbl_802E43D4:
 	.4byte __RTTI__9TaiAction
 	.4byte 0
@@ -4280,10 +4280,10 @@ __vt__20TAIAgoGoalPathDororo:
 	.4byte getWalkVelocity__20TAIAgoGoalPathDororoFR4Teki
 lbl_802E4438:
 	.asciz "TekiCondition"
-	.balign 4
+.balign 4
 lbl_802E4448:
 	.asciz "Condition"
-	.balign 4
+.balign 4
 lbl_802E4454:
 	.4byte __RTTI__9Condition
 	.4byte 0
@@ -4296,7 +4296,7 @@ lbl_802E4454:
 	.4byte 0
 lbl_802E4478:
 	.asciz "TAIAkillTouchPiki"
-	.balign 4
+.balign 4
 lbl_802E448C:
 	.4byte __RTTI__9TaiAction
 	.4byte 0
@@ -4312,10 +4312,10 @@ __vt__17TAIAkillTouchPiki:
 	.4byte hasNextState__9TaiActionFv
 lbl_802E44B4:
 	.asciz "TAIAdyingDororo"
-	.balign 4
+.balign 4
 lbl_802E44C4:
 	.asciz "TAIAdying"
-	.balign 4
+.balign 4
 lbl_802E44D0:
 	.4byte __RTTI__9TaiAction
 	.4byte 0
@@ -4341,7 +4341,7 @@ __vt__15TAIAdyingDororo:
 	.4byte hasNextState__9TaiActionFv
 lbl_802E451C:
 	.asciz "TAIAinitDororo"
-	.balign 4
+.balign 4
 lbl_802E452C:
 	.4byte __RTTI__9TaiAction
 	.4byte 0
@@ -4364,10 +4364,10 @@ __vt__14TAIAinitDororo:
 	.4byte 0
 lbl_802E4570:
 	.asciz "TAIdororoParameters"
-	.balign 4
+.balign 4
 lbl_802E4584:
 	.asciz "CoreNode"
-	.balign 4
+.balign 4
 lbl_802E4590:
 	.4byte __RTTI__5ANode
 	.4byte 0
@@ -4380,7 +4380,7 @@ lbl_802E459C:
 	.4byte 0
 lbl_802E45B0:
 	.asciz "TekiParameters"
-	.balign 4
+.balign 4
 lbl_802E45C0:
 	.4byte __RTTI__5ANode
 	.4byte 0
@@ -4523,7 +4523,7 @@ __RTTI__14TAIAinitDororo:
 	.4byte lbl_802E452C
 lbl_803E6F30:
 	.asciz "ANode"
-	.balign 4
+.balign 4
 __RTTI__5ANode:
 	.4byte lbl_803E6F30
 	.4byte 0
@@ -4532,7 +4532,7 @@ __RTTI__8CoreNode:
 	.4byte lbl_802E4590
 lbl_803E6F48:
 	.asciz "Node"
-	.balign 4
+.balign 4
 __RTTI__4Node:
 	.4byte lbl_803E6F48
 	.4byte lbl_802E459C

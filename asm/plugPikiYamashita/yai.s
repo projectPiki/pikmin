@@ -179,10 +179,10 @@ draw__11YaiStrategyFR4TekiR8Graphics:
 .balign 0x8
 lbl_802E5A80:
 	.asciz "YaiStrategy"
-	.balign 4
+.balign 4
 lbl_802E5A8C:
 	.asciz "TekiStrategy"
-	.balign 4
+.balign 4
 lbl_802E5A9C:
 	.4byte __RTTI__12TekiStrategy
 	.4byte 0x00000000

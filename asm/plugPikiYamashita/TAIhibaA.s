@@ -1533,10 +1533,10 @@ lbl_801D5E2C:
 .balign 0x8
 lbl_802E4630:
 	.asciz "TAIhibaA.cpp"
-	.balign 4
+.balign 4
 lbl_802E4640:
 	.asciz "TAIhibaA"
-	.balign 4
+.balign 4
 lbl_802E464C:
 	.4byte 0x91D282BF
 	.4byte 0x8E9E8AD4
@@ -1549,43 +1549,43 @@ lbl_802E465C:
 	.4byte 0x816A0000
 lbl_802E466C:
 	.asciz "tekis/hibaA/motion/dead.dca"
-	.balign 4
+.balign 4
 lbl_802E4688:
 	.asciz "tekis/hibaA/motion/damage.dca"
-	.balign 4
+.balign 4
 lbl_802E46A8:
 	.asciz "tekis/hibaA/motion/wait1.dca"
-	.balign 4
+.balign 4
 lbl_802E46C8:
 	.asciz "tekis/hibaA/motion/wait2.dca"
-	.balign 4
+.balign 4
 lbl_802E46E8:
 	.asciz "tekis/hibaA/motion/waitact1.dck"
-	.balign 4
+.balign 4
 lbl_802E4708:
 	.asciz "tekis/hibaA/motion/waitact2.dca"
-	.balign 4
+.balign 4
 lbl_802E4728:
 	.asciz "tekis/hibaA/motion/move1.dck"
-	.balign 4
+.balign 4
 lbl_802E4748:
 	.asciz "tekis/hibaA/motion/move2.dck"
-	.balign 4
+.balign 4
 lbl_802E4768:
 	.asciz "tekis/hibaA/motion/attack.dca"
-	.balign 4
+.balign 4
 lbl_802E4788:
 	.asciz "tekis/hibaA/motion/type1.dck"
-	.balign 4
+.balign 4
 lbl_802E47A8:
 	.asciz "tekis/hibaA/motion/type2.dca"
-	.balign 4
+.balign 4
 lbl_802E47C8:
 	.asciz "TAIhibaAAnimation"
-	.balign 4
+.balign 4
 lbl_802E47DC:
 	.asciz "TAIanimation"
-	.balign 4
+.balign 4
 lbl_802E47EC:
 	.4byte __RTTI__12TAIanimation
 	.4byte 0x00000000
@@ -1597,13 +1597,13 @@ __vt__17TAIhibaAAnimation:
 	.4byte makeDefaultAnimations__17TAIhibaAAnimationFv
 lbl_802E4804:
 	.asciz "TAIhibaAStrategy"
-	.balign 4
+.balign 4
 lbl_802E4818:
 	.asciz "TekiStrategy"
-	.balign 4
+.balign 4
 lbl_802E4828:
 	.asciz "YaiStrategy"
-	.balign 4
+.balign 4
 lbl_802E4834:
 	.4byte __RTTI__12TekiStrategy
 	.4byte 0
@@ -1628,13 +1628,13 @@ __vt__16TAIhibaAStrategy:
 	.4byte spawnCorpseParts__12TekiStrategyFR4Teki
 lbl_802E487C:
 	.asciz "TAIAfireAttackHibaA"
-	.balign 4
+.balign 4
 lbl_802E4890:
 	.asciz "TaiAction"
-	.balign 4
+.balign 4
 lbl_802E489C:
 	.asciz "TAIAreserveMotion"
-	.balign 4
+.balign 4
 lbl_802E48B0:
 	.4byte __RTTI__9TaiAction
 	.4byte 0
@@ -1656,10 +1656,10 @@ __vt__19TAIAfireAttackHibaA:
 	.4byte hasNextState__9TaiActionFv
 lbl_802E48EC:
 	.asciz "TAIAtimerReactionHibaA"
-	.balign 4
+.balign 4
 lbl_802E4904:
 	.asciz "TAIAtimerReaction"
-	.balign 4
+.balign 4
 lbl_802E4918:
 	.4byte __RTTI__9TaiAction
 	.4byte 0
@@ -1690,7 +1690,7 @@ __vt__22TAIAtimerReactionHibaA:
 	.4byte 0
 lbl_802E4978:
 	.asciz "TAIAinitHibaA"
-	.balign 4
+.balign 4
 lbl_802E4988:
 	.4byte __RTTI__9TaiAction
 	.4byte 0
@@ -1713,10 +1713,10 @@ __vt__13TAIAinitHibaA:
 	.4byte 0
 lbl_802E49CC:
 	.asciz "TAIhibaAParameters"
-	.balign 4
+.balign 4
 lbl_802E49E0:
 	.asciz "CoreNode"
-	.balign 4
+.balign 4
 lbl_802E49EC:
 	.4byte __RTTI__5ANode
 	.4byte 0
@@ -1729,7 +1729,7 @@ lbl_802E49F8:
 	.4byte 0
 lbl_802E4A0C:
 	.asciz "TekiParameters"
-	.balign 4
+.balign 4
 lbl_802E4A1C:
 	.4byte __RTTI__5ANode
 	.4byte 0
@@ -1764,10 +1764,10 @@ __vt__18TAIhibaAParameters:
 	.4byte getModelMatrix__4NodeFv
 lbl_802E4A8C:
 	.asciz "TAIeffectAttackEventCallBackHibaA"
-	.balign 4
+.balign 4
 lbl_802E4AB0:
 	.asciz "TAIeffectAttackEventCallBack"
-	.balign 4
+.balign 4
 lbl_802E4AD0:
 	.4byte __RTTI__28TAIeffectAttackEventCallBack
 	.4byte 0
@@ -1785,7 +1785,7 @@ __vt__33TAIeffectAttackEventCallBackHibaA:
 	.4byte hitCheckCulling__33TAIeffectAttackEventCallBackHibaAFPQ23zen17particleGeneratorP20TAIeffectAttackParamP8Creature
 lbl_802E4B00:
 	.asciz "Interaction"
-	.balign 4
+.balign 4
 	.4byte 0
 	.4byte 0
 	.4byte 0

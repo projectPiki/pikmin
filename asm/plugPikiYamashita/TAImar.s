@@ -3142,7 +3142,7 @@ lbl_801A8450:
 .balign 0x8
 lbl_802DE4E0:
 	.asciz "TAImar.cpp"
-	.balign 4
+.balign 4
 lbl_802DE4EC:
 	.4byte 0x8BF39286
 	.4byte 0x905582E8
@@ -3216,43 +3216,43 @@ lbl_802DE5D0:
 	.4byte 0x93780000
 lbl_802DE5E0:
 	.asciz "tekis/mar/motion/dead1.dca"
-	.balign 4
+.balign 4
 lbl_802DE5FC:
 	.asciz "tekis/mar/motion/damage.dca"
-	.balign 4
+.balign 4
 lbl_802DE618:
 	.asciz "tekis/mar/motion/wait1.dca"
-	.balign 4
+.balign 4
 lbl_802DE634:
 	.asciz "tekis/mar/motion/wait2.dca"
-	.balign 4
+.balign 4
 lbl_802DE650:
 	.asciz "tekis/mar/motion/waitact1.dca"
-	.balign 4
+.balign 4
 lbl_802DE670:
 	.asciz "tekis/mar/motion/waitact2.dca"
-	.balign 4
+.balign 4
 lbl_802DE690:
 	.asciz "tekis/mar/motion/move1.dck"
-	.balign 4
+.balign 4
 lbl_802DE6AC:
 	.asciz "tekis/mar/motion/move2.dca"
-	.balign 4
+.balign 4
 lbl_802DE6C8:
 	.asciz "tekis/mar/motion/attack.dca"
-	.balign 4
+.balign 4
 lbl_802DE6E4:
 	.asciz "tekis/mar/motion/type1.dca"
-	.balign 4
+.balign 4
 lbl_802DE700:
 	.asciz "tekis/mar/motion/type2.dca"
-	.balign 4
+.balign 4
 lbl_802DE71C:
 	.asciz "TAImarAnimation"
-	.balign 4
+.balign 4
 lbl_802DE72C:
 	.asciz "TAIanimation"
-	.balign 4
+.balign 4
 lbl_802DE73C:
 	.4byte __RTTI__12TAIanimation
 	.4byte 0x00000000
@@ -3264,13 +3264,13 @@ __vt__15TAImarAnimation:
 	.4byte makeDefaultAnimations__15TAImarAnimationFv
 lbl_802DE754:
 	.asciz "TAImarStrategy"
-	.balign 4
+.balign 4
 lbl_802DE764:
 	.asciz "TekiStrategy"
-	.balign 4
+.balign 4
 lbl_802DE774:
 	.asciz "YaiStrategy"
-	.balign 4
+.balign 4
 lbl_802DE780:
 	.4byte __RTTI__12TekiStrategy
 	.4byte 0
@@ -3295,10 +3295,10 @@ __vt__14TAImarStrategy:
 	.4byte spawnCorpseParts__12TekiStrategyFR4Teki
 lbl_802DE7C8:
 	.asciz "TAIAinitMar"
-	.balign 4
+.balign 4
 lbl_802DE7D4:
 	.asciz "TaiAction"
-	.balign 4
+.balign 4
 lbl_802DE7E0:
 	.4byte __RTTI__9TaiAction
 	.4byte 0
@@ -3314,7 +3314,7 @@ __vt__11TAIAinitMar:
 	.4byte hasNextState__9TaiActionFv
 lbl_802DE808:
 	.asciz "TAIAwatchNavi"
-	.balign 4
+.balign 4
 lbl_802DE818:
 	.4byte __RTTI__9TaiAction
 	.4byte 0
@@ -3330,20 +3330,20 @@ __vt__13TAIAwatchNavi:
 	.4byte hasNextState__9TaiActionFv
 lbl_802DE840:
 	.asciz "TAIAflyingDistanceInTerritoryMar"
-	.balign 4
+.balign 4
 lbl_802DE864:
 	.asciz "FlyingDistance"
-	.balign 4
+.balign 4
 lbl_802DE874:
 	.asciz "TAIAreserveMotion"
-	.balign 4
+.balign 4
 lbl_802DE888:
 	.4byte __RTTI__9TaiAction
 	.4byte 0
 	.4byte 0
 lbl_802DE894:
 	.asciz "TAIAflyingToGoal"
-	.balign 4
+.balign 4
 lbl_802DE8A8:
 	.4byte __RTTI__9TaiAction
 	.4byte 0
@@ -3352,7 +3352,7 @@ lbl_802DE8A8:
 	.4byte 0
 lbl_802DE8BC:
 	.asciz "TAIAflyingDistanceInTerritory"
-	.balign 4
+.balign 4
 lbl_802DE8DC:
 	.4byte __RTTI__14FlyingDistance
 	.4byte 0xc
@@ -3392,7 +3392,7 @@ __vt__32TAIAflyingDistanceInTerritoryMar:
 	.4byte getOffset__32TAIAflyingDistanceInTerritoryMarFR4Teki
 lbl_802DE960:
 	.asciz "TAIAoutsideTerritory"
-	.balign 4
+.balign 4
 lbl_802DE978:
 	.4byte __RTTI__9TaiAction
 	.4byte 0
@@ -3406,10 +3406,10 @@ lbl_802DE978:
 	.4byte 0
 lbl_802DE9A0:
 	.asciz "TAIAfireBreathMar"
-	.balign 4
+.balign 4
 lbl_802DE9B4:
 	.asciz "TAIAfireBreath"
-	.balign 4
+.balign 4
 lbl_802DE9C4:
 	.4byte __RTTI__9TaiAction
 	.4byte 0
@@ -3437,10 +3437,10 @@ __vt__17TAIAfireBreathMar:
 	.4byte getAttackAnimSpeed__17TAIAfireBreathMarFR4Teki
 lbl_802DEA18:
 	.asciz "BreathEffect"
-	.balign 4
+.balign 4
 lbl_802DEA28:
 	.asciz "zen::CallBack1<Teki &>"
-	.balign 4
+.balign 4
 lbl_802DEA40:
 	.4byte "__RTTI__Q23zen17CallBack1<R4Teki>"
 	.4byte 0
@@ -3455,10 +3455,10 @@ __vt__12BreathEffect:
 	.4byte 0
 lbl_802DEA64:
 	.asciz "TAIAflyingDistanceMar"
-	.balign 4
+.balign 4
 lbl_802DEA7C:
 	.asciz "TAIAflyingDistance"
-	.balign 4
+.balign 4
 lbl_802DEA90:
 	.4byte __RTTI__14FlyingDistance
 	.4byte 0x8
@@ -3494,10 +3494,10 @@ __vt__14FlyingDistance:
 	.4byte getOffset__14FlyingDistanceFR4Teki
 lbl_802DEAFC:
 	.asciz "TAIAtimerTakeOffMar"
-	.balign 4
+.balign 4
 lbl_802DEB10:
 	.asciz "TAIAtimerReaction"
-	.balign 4
+.balign 4
 lbl_802DEB24:
 	.4byte __RTTI__9TaiAction
 	.4byte 0
@@ -3530,10 +3530,10 @@ __vt__17TAIAtimerReaction:
 	.4byte getFrameMax__17TAIAtimerReactionFR4Teki
 lbl_802DEB84:
 	.asciz "TAIAtakeOffMar"
-	.balign 4
+.balign 4
 lbl_802DEB94:
 	.asciz "TAIAtakeOff"
-	.balign 4
+.balign 4
 lbl_802DEBA0:
 	.4byte __RTTI__9TaiAction
 	.4byte 0
@@ -3560,7 +3560,7 @@ __vt__14TAIAtakeOffMar:
 	.4byte startFlying__14TAIAtakeOffMarFR4Teki
 lbl_802DEBF0:
 	.asciz "TAIAnoReaction"
-	.balign 4
+.balign 4
 lbl_802DEC00:
 	.4byte __RTTI__9TaiAction
 	.4byte 0
@@ -3574,10 +3574,10 @@ lbl_802DEC00:
 	.4byte 0
 lbl_802DEC28:
 	.asciz "TAIAstickingPikiMar"
-	.balign 4
+.balign 4
 lbl_802DEC3C:
 	.asciz "TAIAstickingPiki"
-	.balign 4
+.balign 4
 lbl_802DEC50:
 	.4byte __RTTI__9TaiAction
 	.4byte 0
@@ -3600,10 +3600,10 @@ __vt__19TAIAstickingPikiMar:
 	.4byte getPikiNum__19TAIAstickingPikiMarFR4Teki
 lbl_802DEC90:
 	.asciz "TAIAflickCheckMar"
-	.balign 4
+.balign 4
 lbl_802DECA4:
 	.asciz "TAIAflickCheck"
-	.balign 4
+.balign 4
 lbl_802DECB4:
 	.4byte __RTTI__9TaiAction
 	.4byte 0
@@ -3626,10 +3626,10 @@ __vt__17TAIAflickCheckMar:
 	.4byte getDamageCountLimit__17TAIAflickCheckMarFR4Teki
 lbl_802DECF4:
 	.asciz "TAIAlandingMar"
-	.balign 4
+.balign 4
 lbl_802DED04:
 	.asciz "TAIAlanding"
-	.balign 4
+.balign 4
 lbl_802DED10:
 	.4byte __RTTI__9TaiAction
 	.4byte 0
@@ -3656,7 +3656,7 @@ __vt__14TAIAlandingMar:
 	.4byte landingEffect__14TAIAlandingMarFR4Teki
 lbl_802DED60:
 	.asciz "TAIAstickingPikiMarFly"
-	.balign 4
+.balign 4
 lbl_802DED78:
 	.4byte __RTTI__9TaiAction
 	.4byte 0
@@ -3675,17 +3675,17 @@ __vt__22TAIAstickingPikiMarFly:
 	.4byte getPikiNum__22TAIAstickingPikiMarFlyFR4Teki
 lbl_802DEDAC:
 	.asciz "TAIAflickingMar"
-	.balign 4
+.balign 4
 lbl_802DEDBC:
 	.asciz "TAIAmotion"
-	.balign 4
+.balign 4
 lbl_802DEDC8:
 	.4byte __RTTI__9TaiAction
 	.4byte 0
 	.4byte 0
 lbl_802DEDD4:
 	.asciz "TAIAflicking"
-	.balign 4
+.balign 4
 lbl_802DEDE4:
 	.4byte __RTTI__9TaiAction
 	.4byte 0
@@ -3713,7 +3713,7 @@ __vt__15TAIAflickingMar:
 	.4byte getFlickDirection__12TAIAflickingFR4Teki
 lbl_802DEE38:
 	.asciz "Interaction"
-	.balign 4
+.balign 4
 	.4byte 0
 	.4byte 0
 	.4byte 0
@@ -3727,7 +3727,7 @@ lbl_802DEE38:
 	.4byte 0
 lbl_802DEE70:
 	.asciz "TAIAflickCheckTimerMar"
-	.balign 4
+.balign 4
 lbl_802DEE88:
 	.4byte __RTTI__9TaiAction
 	.4byte 0
@@ -3743,10 +3743,10 @@ __vt__22TAIAflickCheckTimerMar:
 	.4byte hasNextState__9TaiActionFv
 lbl_802DEEB0:
 	.asciz "TekiCondition"
-	.balign 4
+.balign 4
 lbl_802DEEC0:
 	.asciz "Condition"
-	.balign 4
+.balign 4
 lbl_802DEECC:
 	.4byte __RTTI__9Condition
 	.4byte 0
@@ -3759,10 +3759,10 @@ lbl_802DEECC:
 	.4byte 0
 lbl_802DEEF0:
 	.asciz "TAIAflyingBaseMar"
-	.balign 4
+.balign 4
 lbl_802DEF04:
 	.asciz "TAIAflyingBase"
-	.balign 4
+.balign 4
 lbl_802DEF14:
 	.4byte __RTTI__9TaiAction
 	.4byte 0
@@ -3785,10 +3785,10 @@ __vt__17TAIAflyingBaseMar:
 	.4byte getFlyingStayVelocity__17TAIAflyingBaseMarFR4Teki
 lbl_802DEF54:
 	.asciz "TAIAdyingMar"
-	.balign 4
+.balign 4
 lbl_802DEF64:
 	.asciz "TAIAdying"
-	.balign 4
+.balign 4
 lbl_802DEF70:
 	.4byte __RTTI__9TaiAction
 	.4byte 0
@@ -3821,10 +3821,10 @@ __vt__12TAIAdyingMar:
 	.4byte 0
 lbl_802DEFD8:
 	.asciz "TAImarParameters"
-	.balign 4
+.balign 4
 lbl_802DEFEC:
 	.asciz "CoreNode"
-	.balign 4
+.balign 4
 lbl_802DEFF8:
 	.4byte __RTTI__5ANode
 	.4byte 0
@@ -3837,7 +3837,7 @@ lbl_802DF004:
 	.4byte 0
 lbl_802DF018:
 	.asciz "TekiParameters"
-	.balign 4
+.balign 4
 lbl_802DF028:
 	.4byte __RTTI__5ANode
 	.4byte 0
@@ -3872,10 +3872,10 @@ __vt__16TAImarParameters:
 	.4byte getModelMatrix__4NodeFv
 lbl_802DF098:
 	.asciz "TAIeffectAttackEventCallBackMar"
-	.balign 4
+.balign 4
 lbl_802DF0B8:
 	.asciz "TAIeffectAttackEventCallBack"
-	.balign 4
+.balign 4
 lbl_802DF0D8:
 	.4byte __RTTI__28TAIeffectAttackEventCallBack
 	.4byte 0
@@ -4043,7 +4043,7 @@ __RTTI__12TAIAdyingMar:
 	.4byte lbl_802DEF84
 lbl_803E61D8:
 	.asciz "ANode"
-	.balign 4
+.balign 4
 __RTTI__5ANode:
 	.4byte lbl_803E61D8
 	.4byte 0
@@ -4052,7 +4052,7 @@ __RTTI__8CoreNode:
 	.4byte lbl_802DEFF8
 lbl_803E61F0:
 	.asciz "Node"
-	.balign 4
+.balign 4
 __RTTI__4Node:
 	.4byte lbl_803E61F0
 	.4byte lbl_802DF004

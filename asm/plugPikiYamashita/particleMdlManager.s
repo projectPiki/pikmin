@@ -440,19 +440,19 @@ remove__Q23zen16particleChildMdlFv:
 .balign 0x8
 lbl_802DD7A0:
 	.asciz "particleMdlManager.cpp"
-	.balign 4
+.balign 4
 lbl_802DD7B8:
 	.asciz "particleMdlManager"
-	.balign 4
+.balign 4
 lbl_802DD7CC:
 	.asciz "zen::particleMdl"
-	.balign 4
+.balign 4
 lbl_802DD7E0:
 	.asciz "zen::zenList"
-	.balign 4
+.balign 4
 lbl_802DD7F0:
 	.asciz "zen::particleMdlBase"
-	.balign 4
+.balign 4
 lbl_802DD808:
 	.4byte __RTTI__Q23zen7zenList
 	.4byte 0x00000000
@@ -481,7 +481,7 @@ __vt__Q23zen15particleMdlBase:
 	.4byte remove__Q23zen15particleMdlBaseFv
 lbl_802DD858:
 	.asciz "zen::particleChildMdl"
-	.balign 4
+.balign 4
 lbl_802DD870:
 	.4byte __RTTI__Q23zen7zenList
 	.4byte 0

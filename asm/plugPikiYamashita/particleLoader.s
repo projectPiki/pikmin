@@ -137,16 +137,16 @@ lbl_801A10DC:
 .balign 0x8
 lbl_802DA718:
 	.asciz "particleLoader.cpp"
-	.balign 4
+.balign 4
 lbl_802DA72C:
 	.asciz "particleLoader"
-	.balign 4
+.balign 4
 lbl_802DA73C:
 	.asciz "zen::PCRData"
-	.balign 4
+.balign 4
 lbl_802DA74C:
 	.asciz "zen::zenList"
-	.balign 4
+.balign 4
 lbl_802DA75C:
 	.4byte __RTTI__Q23zen7zenList
 	.4byte 0x00000000

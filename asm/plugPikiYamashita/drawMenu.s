@@ -2321,16 +2321,16 @@ lbl_801C494C:
 .balign 0x8
 lbl_802E1720:
 	.asciz "drawMenu.cpp"
-	.balign 4
+.balign 4
 lbl_802E1730:
 	.asciz "drawMenu"
-	.balign 4
+.balign 4
 lbl_802E173C:
 	.asciz "zen::DrawMenu"
-	.balign 4
+.balign 4
 lbl_802E174C:
 	.asciz "zen::DrawScreen"
-	.balign 4
+.balign 4
 lbl_802E175C:
 	.4byte __RTTI__Q23zen10DrawScreen
 	.4byte 0
@@ -2350,22 +2350,22 @@ lbl_803E688C:
 	.float 1.0
 lbl_803E6890:
 	.asciz "he%02d"
-	.balign 4
+.balign 4
 lbl_803E6898:
 	.asciz "hm%02d"
-	.balign 4
+.balign 4
 lbl_803E68A0:
 	.asciz "i%02dl"
-	.balign 4
+.balign 4
 lbl_803E68A8:
 	.asciz "i%02dr"
-	.balign 4
+.balign 4
 lbl_803E68B0:
 	.asciz "z%02dl"
-	.balign 4
+.balign 4
 lbl_803E68B8:
 	.asciz "z%02dr"
-	.balign 4
+.balign 4
 __RTTI__Q23zen10DrawScreen:
 	.4byte lbl_802E174C
 	.4byte 0
@@ -2381,7 +2381,7 @@ lbl_803EBB74:
 	.float 0.0
 lbl_803EBB78:
 	.float 1.0
-	.balign 8
+.balign 8
 lbl_803EBB80:
 	.4byte 0x43300000
 	.4byte 0x00000000

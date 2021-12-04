@@ -818,7 +818,7 @@ lbl_801C108C:
 .balign 0x8
 lbl_802E1590:
 	.asciz "screen/blo/sund.blo"
-	.balign 4
+.balign 4
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 0x8

@@ -4521,19 +4521,19 @@ startFlying__11TAIAtakeOffFR4Teki:
 .balign 0x8
 lbl_802DF3A8:
 	.asciz "TAIAmove.cpp"
-	.balign 4
+.balign 4
 lbl_802DF3B8:
 	.asciz "TAIAmove"
-	.balign 4
+.balign 4
 lbl_802DF3C4:
 	.asciz "TAIAtakeOff"
-	.balign 4
+.balign 4
 lbl_802DF3D0:
 	.asciz "TaiAction"
-	.balign 4
+.balign 4
 lbl_802DF3DC:
 	.asciz "TAIAreserveMotion"
-	.balign 4
+.balign 4
 lbl_802DF3F0:
 	.4byte __RTTI__9TaiAction
 	.4byte 0
@@ -4556,7 +4556,7 @@ __vt__11TAIAtakeOff:
 	.4byte startFlying__11TAIAtakeOffFR4Teki
 lbl_802DF430:
 	.asciz "TAIAlanding"
-	.balign 4
+.balign 4
 lbl_802DF43C:
 	.4byte __RTTI__9TaiAction
 	.4byte 0
@@ -4575,7 +4575,7 @@ __vt__11TAIAlanding:
 	.4byte landingEffect__11TAIAlandingFR4Teki
 lbl_802DF470:
 	.asciz "TAIAdescent"
-	.balign 4
+.balign 4
 lbl_802DF47C:
 	.4byte __RTTI__9TaiAction
 	.4byte 0
@@ -4595,10 +4595,10 @@ __vt__11TAIAdescent:
 	.4byte getForceDescentFrame__11TAIAdescentFR4Teki
 lbl_802DF4B4:
 	.asciz "TAIAflyingDistance"
-	.balign 4
+.balign 4
 lbl_802DF4C8:
 	.asciz "FlyingDistance"
-	.balign 4
+.balign 4
 lbl_802DF4D8:
 	.4byte __RTTI__14FlyingDistance
 	.4byte 0x8
@@ -4620,10 +4620,10 @@ __vt__18TAIAflyingDistance:
 	.4byte getGoalAreaRange__18TAIAflyingDistanceFR4Teki
 lbl_802DF518:
 	.asciz "TAIAflyingDistanceInTerritory"
-	.balign 4
+.balign 4
 lbl_802DF538:
 	.asciz "TAIAflyingToGoal"
-	.balign 4
+.balign 4
 lbl_802DF54C:
 	.4byte __RTTI__9TaiAction
 	.4byte 0
@@ -4667,7 +4667,7 @@ __vt__16TAIAflyingToGoal:
 	.4byte getVelocity__16TAIAflyingToGoalFR4Teki
 lbl_802DF5D8:
 	.asciz "TAIAflyingInTerritory"
-	.balign 4
+.balign 4
 lbl_802DF5F0:
 	.4byte __RTTI__9TaiAction
 	.4byte 0
@@ -4683,7 +4683,7 @@ __vt__21TAIAflyingInTerritory:
 	.4byte hasNextState__9TaiActionFv
 lbl_802DF618:
 	.asciz "TAIAflyingBase"
-	.balign 4
+.balign 4
 lbl_802DF628:
 	.4byte __RTTI__9TaiAction
 	.4byte 0
@@ -4700,7 +4700,7 @@ __vt__14TAIAflyingBase:
 	.4byte getFlyingStayVelocity__14TAIAflyingBaseFR4Teki
 lbl_802DF654:
 	.asciz "TAIAgoingHomePriorityFaceDir"
-	.balign 4
+.balign 4
 lbl_802DF674:
 	.4byte __RTTI__9TaiAction
 	.4byte 0
@@ -4718,7 +4718,7 @@ __vt__28TAIAgoingHomePriorityFaceDir:
 	.4byte hasNextState__9TaiActionFv
 lbl_802DF6A4:
 	.asciz "TAIAgoingHome"
-	.balign 4
+.balign 4
 lbl_802DF6B4:
 	.4byte __RTTI__9TaiAction
 	.4byte 0
@@ -4736,10 +4736,10 @@ __vt__13TAIAgoingHome:
 	.4byte hasNextState__9TaiActionFv
 lbl_802DF6E4:
 	.asciz "TAIAturnHome"
-	.balign 4
+.balign 4
 lbl_802DF6F4:
 	.asciz "TAIAturnOccasion"
-	.balign 4
+.balign 4
 lbl_802DF708:
 	.4byte __RTTI__9TaiAction
 	.4byte 0
@@ -4765,7 +4765,7 @@ __vt__12TAIAturnHome:
 	.4byte hasNextState__9TaiActionFv
 lbl_802DF754:
 	.asciz "TAIAstepBack"
-	.balign 4
+.balign 4
 lbl_802DF764:
 	.4byte __RTTI__9TaiAction
 	.4byte 0
@@ -4784,10 +4784,10 @@ __vt__12TAIAstepBack:
 	.4byte getVelocity__12TAIAstepBackFR4Teki
 lbl_802DF798:
 	.asciz "TAIApatrol"
-	.balign 4
+.balign 4
 lbl_802DF7A4:
 	.asciz "TAIAturnToTarget"
-	.balign 4
+.balign 4
 lbl_802DF7B8:
 	.4byte __RTTI__9TaiAction
 	.4byte 0
@@ -4815,7 +4815,7 @@ __vt__10TAIApatrol:
 	.4byte getTimeout__10TAIApatrolFR4Teki
 lbl_802DF80C:
 	.asciz "TAIAwait"
-	.balign 4
+.balign 4
 lbl_802DF818:
 	.4byte __RTTI__9TaiAction
 	.4byte 0
@@ -4834,7 +4834,7 @@ __vt__8TAIAwait:
 	.4byte getWaitCounterMax__8TAIAwaitFR4Teki
 lbl_802DF84C:
 	.asciz "TAIAturnFocusCreature"
-	.balign 4
+.balign 4
 lbl_802DF864:
 	.4byte __RTTI__9TaiAction
 	.4byte 0
@@ -4864,7 +4864,7 @@ __vt__16TAIAturnOccasion:
 	.4byte hasNextState__9TaiActionFv
 lbl_802DF8BC:
 	.asciz "TAIArandomWalk"
-	.balign 4
+.balign 4
 lbl_802DF8CC:
 	.4byte __RTTI__9TaiAction
 	.4byte 0
@@ -4882,7 +4882,7 @@ __vt__14TAIArandomWalk:
 	.4byte hasNextState__9TaiActionFv
 lbl_802DF8FC:
 	.asciz "TAIAstop"
-	.balign 4
+.balign 4
 lbl_802DF908:
 	.4byte __RTTI__9TaiAction
 	.4byte 0
@@ -4908,7 +4908,7 @@ __vt__16TAIAturnToTarget:
 	.4byte getTurnVelocity__16TAIAturnToTargetFR4Teki
 lbl_802DF950:
 	.asciz "TAIAlookAround"
-	.balign 4
+.balign 4
 lbl_802DF960:
 	.4byte __RTTI__9TaiAction
 	.4byte 0
@@ -4926,7 +4926,7 @@ __vt__14TAIAlookAround:
 	.4byte hasNextState__9TaiActionFv
 lbl_802DF990:
 	.asciz "TAIAapproachTargetPriorityFaceDir"
-	.balign 4
+.balign 4
 lbl_802DF9B4:
 	.4byte __RTTI__9TaiAction
 	.4byte 0
@@ -4945,7 +4945,7 @@ __vt__33TAIAapproachTargetPriorityFaceDir:
 	.4byte getVelocity__33TAIAapproachTargetPriorityFaceDirFR4Teki
 lbl_802DF9E8:
 	.asciz "TAIAgoTargetPriorityFaceDir"
-	.balign 4
+.balign 4
 lbl_802DFA04:
 	.4byte __RTTI__9TaiAction
 	.4byte 0
@@ -4965,7 +4965,7 @@ __vt__27TAIAgoTargetPriorityFaceDir:
 	.4byte getWalkVelocity__27TAIAgoTargetPriorityFaceDirFR4Teki
 lbl_802DFA3C:
 	.asciz "TAIAgoTarget"
-	.balign 4
+.balign 4
 lbl_802DFA4C:
 	.4byte __RTTI__9TaiAction
 	.4byte 0
@@ -4984,7 +4984,7 @@ __vt__12TAIAgoTarget:
 	.4byte getVelocity__12TAIAgoTargetFR4Teki
 lbl_802DFA80:
 	.asciz "TAIAsetTargetPointCircle"
-	.balign 4
+.balign 4
 lbl_802DFA9C:
 	.4byte __RTTI__9TaiAction
 	.4byte 0
@@ -5000,7 +5000,7 @@ __vt__24TAIAsetTargetPointCircle:
 	.4byte hasNextState__9TaiActionFv
 lbl_802DFAC4:
 	.asciz "TAIAsetTargetPointCircleRandom"
-	.balign 4
+.balign 4
 lbl_802DFAE4:
 	.4byte __RTTI__9TaiAction
 	.4byte 0
@@ -5016,7 +5016,7 @@ __vt__30TAIAsetTargetPointCircleRandom:
 	.4byte hasNextState__9TaiActionFv
 lbl_802DFB0C:
 	.asciz "TAIAgoGoalPath"
-	.balign 4
+.balign 4
 lbl_802DFB1C:
 	.4byte __RTTI__9TaiAction
 	.4byte 0
@@ -5038,7 +5038,7 @@ __vt__14TAIAgoGoalPath:
 	.4byte getWalkVelocity__27TAIAgoTargetPriorityFaceDirFR4Teki
 lbl_802DFB5C:
 	.asciz "TAIAsetTargetPointWorkObject"
-	.balign 4
+.balign 4
 lbl_802DFB7C:
 	.4byte __RTTI__9TaiAction
 	.4byte 0
@@ -5054,17 +5054,17 @@ __vt__28TAIAsetTargetPointWorkObject:
 	.4byte hasNextState__9TaiActionFv
 lbl_802DFBA4:
 	.asciz "TAIAappearKabekui"
-	.balign 4
+.balign 4
 lbl_802DFBB8:
 	.asciz "TAIAmotion"
-	.balign 4
+.balign 4
 lbl_802DFBC4:
 	.4byte __RTTI__9TaiAction
 	.4byte 0
 	.4byte 0
 lbl_802DFBD0:
 	.asciz "TAIAsetMotionSpeed"
-	.balign 4
+.balign 4
 lbl_802DFBE4:
 	.4byte __RTTI__9TaiAction
 	.4byte 0

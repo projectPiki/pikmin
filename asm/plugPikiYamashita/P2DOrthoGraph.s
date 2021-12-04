@@ -317,10 +317,10 @@ lbl_801B0178:
 .balign 0x8
 lbl_802E05F8:
 	.asciz "P2DOrthoGraph"
-	.balign 4
+.balign 4
 lbl_802E0608:
 	.asciz "P2DGrafContext"
-	.balign 4
+.balign 4
 lbl_802E0618:
 	.4byte __RTTI__14P2DGrafContext
 	.4byte 0

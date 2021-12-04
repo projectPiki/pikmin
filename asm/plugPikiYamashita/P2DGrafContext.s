@@ -376,10 +376,10 @@ setLookat__14P2DGrafContextFv:
 .balign 0x8
 lbl_802E05B0:
 	.asciz "P2DGrafContext.cpp"
-	.balign 4
+.balign 4
 lbl_802E05C4:
 	.asciz "P2DGrafContext"
-	.balign 4
+.balign 4
 .global __vt__14P2DGrafContext
 __vt__14P2DGrafContext:
 	.4byte __RTTI__14P2DGrafContext

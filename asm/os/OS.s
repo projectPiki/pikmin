@@ -532,43 +532,43 @@ __OSGetDIConfig:
 .balign 0x8
 lbl_802E72A8:
 	.asciz "\nDolphin OS $Revision: 37 $.\n"
-	.balign 4
+.balign 4
 lbl_802E72C8:
 	.asciz "Kernel built : %s %s\n"
-	.balign 4
+.balign 4
 lbl_802E72E0:
 	.asciz "Jul 19 2001"
-	.balign 4
+.balign 4
 lbl_802E72EC:
 	.asciz "05:43:42"
-	.balign 4
+.balign 4
 lbl_802E72F8:
 	.asciz "Console Type : "
-	.balign 4
+.balign 4
 lbl_802E7308:
 	.asciz "Retail %d\n"
-	.balign 4
+.balign 4
 lbl_802E7314:
 	.asciz "Mac Emulator\n"
-	.balign 4
+.balign 4
 lbl_802E7324:
 	.asciz "PC Emulator\n"
-	.balign 4
+.balign 4
 lbl_802E7334:
 	.asciz "EPPC Arthur\n"
-	.balign 4
+.balign 4
 lbl_802E7344:
 	.asciz "EPPC Minnow\n"
-	.balign 4
+.balign 4
 lbl_802E7354:
 	.asciz "Development HW%d\n"
-	.balign 4
+.balign 4
 lbl_802E7368:
 	.asciz "Memory %d MB\n"
-	.balign 4
+.balign 4
 lbl_802E7378:
 	.asciz "Arena : 0x%x - 0x%x\n"
-	.balign 4
+.balign 4
 __OSExceptionLocations:
 	.4byte 0x00000100
 	.4byte 0x00000200
@@ -587,16 +587,16 @@ __OSExceptionLocations:
 	.4byte 0x00001700
 lbl_802E73CC:
 	.asciz "Installing OSDBIntegrator\n"
-	.balign 4
+.balign 4
 lbl_802E73E8:
 	.asciz ">>> OSINIT: exception %d commandeered by TRK\n"
-	.balign 4
+.balign 4
 lbl_802E7418:
 	.asciz ">>> OSINIT: exception %d vectored to debugger\n"
-	.balign 4
+.balign 4
 lbl_802E7448:
 	.asciz "Exceptions initialized...\n"
-	.balign 4
+.balign 4
 
 .section .sbss, "wa"
 .balign 0x8

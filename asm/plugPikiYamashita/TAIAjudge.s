@@ -1236,16 +1236,16 @@ lbl_801AE194:
 .balign 0x8
 lbl_802DFD20:
 	.asciz "TAIAjudge.cpp"
-	.balign 4
+.balign 4
 lbl_802DFD30:
 	.asciz "TAIAjudge"
-	.balign 4
+.balign 4
 lbl_802DFD3C:
 	.asciz "TAIAcheckTurnAngle"
-	.balign 4
+.balign 4
 lbl_802DFD50:
 	.asciz "TaiAction"
-	.balign 4
+.balign 4
 lbl_802DFD5C:
 	.4byte __RTTI__9TaiAction
 	.4byte 0
@@ -1261,7 +1261,7 @@ __vt__18TAIAcheckTurnAngle:
 	.4byte hasNextState__9TaiActionFv
 lbl_802DFD84:
 	.asciz "TAIAdistanceTarget"
-	.balign 4
+.balign 4
 lbl_802DFD98:
 	.4byte __RTTI__9TaiAction
 	.4byte 0
@@ -1277,10 +1277,10 @@ __vt__18TAIAdistanceTarget:
 	.4byte hasNextState__9TaiActionFv
 lbl_802DFDC0:
 	.asciz "TekiCondition"
-	.balign 4
+.balign 4
 lbl_802DFDD0:
 	.asciz "Condition"
-	.balign 4
+.balign 4
 lbl_802DFDDC:
 	.4byte __RTTI__9Condition
 	.4byte 0
@@ -1293,7 +1293,7 @@ lbl_802DFDDC:
 	.4byte 0
 lbl_802DFE00:
 	.asciz "TAIAstickingPiki"
-	.balign 4
+.balign 4
 lbl_802DFE14:
 	.4byte __RTTI__9TaiAction
 	.4byte 0
@@ -1310,7 +1310,7 @@ __vt__16TAIAstickingPiki:
 	.4byte getPikiNum__16TAIAstickingPikiFR4Teki
 lbl_802DFE40:
 	.asciz "TAIAunvisibleTarget"
-	.balign 4
+.balign 4
 lbl_802DFE54:
 	.4byte __RTTI__9TaiAction
 	.4byte 0
@@ -1326,7 +1326,7 @@ __vt__19TAIAunvisibleTarget:
 	.4byte hasNextState__9TaiActionFv
 lbl_802DFE7C:
 	.asciz "TAIAattackableTarget"
-	.balign 4
+.balign 4
 lbl_802DFE94:
 	.4byte __RTTI__9TaiAction
 	.4byte 0
@@ -1343,7 +1343,7 @@ __vt__20TAIAattackableTarget:
 	.4byte judge__20TAIAattackableTargetFR4Teki
 lbl_802DFEC0:
 	.asciz "TAIAvisiblePiki"
-	.balign 4
+.balign 4
 lbl_802DFED0:
 	.4byte __RTTI__9TaiAction
 	.4byte 0
@@ -1359,7 +1359,7 @@ __vt__15TAIAvisiblePiki:
 	.4byte hasNextState__9TaiActionFv
 lbl_802DFEF8:
 	.asciz "TAIAvisibleNavi"
-	.balign 4
+.balign 4
 lbl_802DFF08:
 	.4byte __RTTI__9TaiAction
 	.4byte 0
@@ -1375,7 +1375,7 @@ __vt__15TAIAvisibleNavi:
 	.4byte hasNextState__9TaiActionFv
 lbl_802DFF30:
 	.asciz "TAIAoutsideTerritoryRangeNavi"
-	.balign 4
+.balign 4
 lbl_802DFF50:
 	.4byte __RTTI__9TaiAction
 	.4byte 0
@@ -1391,7 +1391,7 @@ __vt__29TAIAoutsideTerritoryRangeNavi:
 	.4byte hasNextState__9TaiActionFv
 lbl_802DFF78:
 	.asciz "TAIAinsideTerritoryRangeNavi"
-	.balign 4
+.balign 4
 lbl_802DFF98:
 	.4byte __RTTI__9TaiAction
 	.4byte 0
@@ -1407,7 +1407,7 @@ __vt__28TAIAinsideTerritoryRangeNavi:
 	.4byte hasNextState__9TaiActionFv
 lbl_802DFFC0:
 	.asciz "TAIAcheckInsideRangePiki"
-	.balign 4
+.balign 4
 lbl_802DFFDC:
 	.4byte __RTTI__9TaiAction
 	.4byte 0
@@ -1425,10 +1425,10 @@ __vt__24TAIAcheckInsideRangePiki:
 	.4byte getRange__24TAIAcheckInsideRangePikiFR4Teki
 lbl_802E000C:
 	.asciz "TAIAoutsideOptionalRange"
-	.balign 4
+.balign 4
 lbl_802E0028:
 	.asciz "TAIAjudgeOptionalRange"
-	.balign 4
+.balign 4
 lbl_802E0040:
 	.4byte __RTTI__9TaiAction
 	.4byte 0
@@ -1453,7 +1453,7 @@ __vt__24TAIAoutsideOptionalRange:
 	.4byte judgement__24TAIAoutsideOptionalRangeFR4Teki
 lbl_802E0088:
 	.asciz "TAIAinsideOptionalRange"
-	.balign 4
+.balign 4
 lbl_802E00A0:
 	.4byte __RTTI__9TaiAction
 	.4byte 0
@@ -1486,10 +1486,10 @@ __vt__22TAIAjudgeOptionalRange:
 	.4byte 0
 lbl_802E0104:
 	.asciz "TAIAmoreLife"
-	.balign 4
+.balign 4
 lbl_802E0114:
 	.asciz "TAIAjudgeLife"
-	.balign 4
+.balign 4
 lbl_802E0124:
 	.4byte __RTTI__9TaiAction
 	.4byte 0
@@ -1512,7 +1512,7 @@ __vt__12TAIAmoreLife:
 	.4byte 0
 lbl_802E0164:
 	.asciz "TAIAlessLife"
-	.balign 4
+.balign 4
 lbl_802E0174:
 	.4byte __RTTI__9TaiAction
 	.4byte 0
@@ -1531,7 +1531,7 @@ __vt__12TAIAlessLife:
 	.4byte 0
 lbl_802E01A8:
 	.asciz "TAIAsearchWorkObject"
-	.balign 4
+.balign 4
 lbl_802E01C0:
 	.4byte __RTTI__9TaiAction
 	.4byte 0

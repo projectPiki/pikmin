@@ -352,10 +352,10 @@ lbl_801B4988:
 .balign 0x8
 lbl_802E0888:
 	.asciz "P2DTextBox.cpp"
-	.balign 4
+.balign 4
 lbl_802E0898:
 	.asciz "P2DTextBox"
-	.balign 4
+.balign 4
 lbl_802E08A4:
 	.4byte __RTTI__7P2DPane
 	.4byte 0
@@ -383,7 +383,7 @@ __vt__10P2DTextBox:
 .balign 0x8
 lbl_803E6670:
 	.asciz "P2DPane"
-	.balign 4
+.balign 4
 __RTTI__7P2DPane:
 	.4byte lbl_803E6670
 	.4byte 0

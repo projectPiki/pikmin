@@ -346,16 +346,16 @@ makeLookat__13P2DPerspGraphFv:
 .balign 0x8
 lbl_802E0648:
 	.asciz "P2DPerspGraph.cpp"
-	.balign 4
+.balign 4
 lbl_802E065C:
 	.asciz "P2DPersGraph"
-	.balign 4
+.balign 4
 lbl_802E066C:
 	.asciz "P2DPerspGraph"
-	.balign 4
+.balign 4
 lbl_802E067C:
 	.asciz "P2DGrafContext"
-	.balign 4
+.balign 4
 lbl_802E068C:
 	.4byte __RTTI__14P2DGrafContext
 	.4byte 0

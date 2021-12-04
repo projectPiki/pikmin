@@ -1314,10 +1314,10 @@ swap__10P2DPictureFRfRf:
 .balign 0x8
 lbl_802E0700:
 	.asciz "P2DPicture.cpp"
-	.balign 4
+.balign 4
 lbl_802E0710:
 	.asciz "P2DPicture"
-	.balign 4
+.balign 4
 lbl_802E071C:
 	.4byte __RTTI__7P2DPane
 	.4byte 0
@@ -1345,7 +1345,7 @@ __vt__10P2DPicture:
 .balign 0x8
 lbl_803E6628:
 	.asciz "P2DPane"
-	.balign 4
+.balign 4
 __RTTI__7P2DPane:
 	.4byte lbl_803E6628
 	.4byte 0x00000000

@@ -1693,10 +1693,10 @@ start__18TAIAsetMotionSpeedFR4Teki:
 .balign 0x8
 lbl_802E20C8:
 	.asciz "TAIkabekuiA.cpp"
-	.balign 4
+.balign 4
 lbl_802E20D8:
 	.asciz "TAIkabekuiA"
-	.balign 4
+.balign 4
 lbl_802E20E4:
 	.4byte 0x95C79048
 	.4byte 0x82A2837C
@@ -1724,43 +1724,43 @@ lbl_802E2124:
 	.4byte 0x816A0000
 lbl_802E2138:
 	.asciz "tekis/kabekuiA/motion/dead.dca"
-	.balign 4
+.balign 4
 lbl_802E2158:
 	.asciz "tekis/kabekuiA/motion/damage.dca"
-	.balign 4
+.balign 4
 lbl_802E217C:
 	.asciz "tekis/kabekuiA/motion/wait1.dca"
-	.balign 4
+.balign 4
 lbl_802E219C:
 	.asciz "tekis/kabekuiA/motion/wait2.dca"
-	.balign 4
+.balign 4
 lbl_802E21BC:
 	.asciz "tekis/kabekuiA/motion/waitact1.dck"
-	.balign 4
+.balign 4
 lbl_802E21E0:
 	.asciz "tekis/kabekuiA/motion/waitact2.dca"
-	.balign 4
+.balign 4
 lbl_802E2204:
 	.asciz "tekis/kabekuiA/motion/move1.dck"
-	.balign 4
+.balign 4
 lbl_802E2224:
 	.asciz "tekis/kabekuiA/motion/move2.dck"
-	.balign 4
+.balign 4
 lbl_802E2244:
 	.asciz "tekis/kabekuiA/motion/attack.dca"
-	.balign 4
+.balign 4
 lbl_802E2268:
 	.asciz "tekis/kabekuiA/motion/type1.dck"
-	.balign 4
+.balign 4
 lbl_802E2288:
 	.asciz "tekis/kabekuiA/motion/type2.dca"
-	.balign 4
+.balign 4
 lbl_802E22A8:
 	.asciz "TAIkabekuiAAnimation"
-	.balign 4
+.balign 4
 lbl_802E22C0:
 	.asciz "TAIanimation"
-	.balign 4
+.balign 4
 lbl_802E22D0:
 	.4byte __RTTI__12TAIanimation
 	.4byte 0x00000000
@@ -1772,10 +1772,10 @@ __vt__20TAIkabekuiAAnimation:
 	.4byte makeDefaultAnimations__20TAIkabekuiAAnimationFv
 lbl_802E22E8:
 	.asciz "TAIAshadowOff"
-	.balign 4
+.balign 4
 lbl_802E22F8:
 	.asciz "TaiAction"
-	.balign 4
+.balign 4
 lbl_802E2304:
 	.4byte __RTTI__9TaiAction
 	.4byte 0
@@ -1791,7 +1791,7 @@ __vt__13TAIAshadowOff:
 	.4byte hasNextState__9TaiActionFv
 lbl_802E232C:
 	.asciz "TAIAshadowOn"
-	.balign 4
+.balign 4
 lbl_802E233C:
 	.4byte __RTTI__9TaiAction
 	.4byte 0
@@ -1807,10 +1807,10 @@ __vt__12TAIAshadowOn:
 	.4byte hasNextState__9TaiActionFv
 lbl_802E2364:
 	.asciz "TAIAsleepKabekuiA"
-	.balign 4
+.balign 4
 lbl_802E2378:
 	.asciz "TAIAtimerReaction"
-	.balign 4
+.balign 4
 lbl_802E238C:
 	.4byte __RTTI__9TaiAction
 	.4byte 0
@@ -1833,7 +1833,7 @@ __vt__17TAIAsleepKabekuiA:
 	.4byte getFrameMax__17TAIAsleepKabekuiAFR4Teki
 lbl_802E23CC:
 	.asciz "TAIAdiveKabekuiA"
-	.balign 4
+.balign 4
 lbl_802E23E0:
 	.4byte __RTTI__9TaiAction
 	.4byte 0
@@ -1860,17 +1860,17 @@ __vt__16TAIAdiveKabekuiA:
 	.4byte 0
 lbl_802E2434:
 	.asciz "TAIAattackWorkObjectKabekuiA"
-	.balign 4
+.balign 4
 lbl_802E2454:
 	.asciz "TAIAreserveMotion"
-	.balign 4
+.balign 4
 lbl_802E2468:
 	.4byte __RTTI__9TaiAction
 	.4byte 0
 	.4byte 0
 lbl_802E2474:
 	.asciz "TAIAattackWorkObject"
-	.balign 4
+.balign 4
 lbl_802E248C:
 	.4byte __RTTI__9TaiAction
 	.4byte 0
@@ -1899,7 +1899,7 @@ __vt__28TAIAattackWorkObjectKabekuiA:
 	.4byte attackEffect__28TAIAattackWorkObjectKabekuiAFR4Teki
 lbl_802E24E4:
 	.asciz "TAIAinvincibleOff"
-	.balign 4
+.balign 4
 lbl_802E24F8:
 	.4byte __RTTI__9TaiAction
 	.4byte 0
@@ -1913,7 +1913,7 @@ lbl_802E24F8:
 	.4byte 0
 lbl_802E2520:
 	.asciz "TAIAinvincibleOn"
-	.balign 4
+.balign 4
 lbl_802E2534:
 	.4byte __RTTI__9TaiAction
 	.4byte 0
@@ -1929,10 +1929,10 @@ __vt__16TAIAinvincibleOn:
 	.4byte hasNextState__9TaiActionFv
 lbl_802E255C:
 	.asciz "TAIAsetMotionSpeed"
-	.balign 4
+.balign 4
 lbl_802E2570:
 	.asciz "TAIAmotion"
-	.balign 4
+.balign 4
 lbl_802E257C:
 	.4byte __RTTI__9TaiAction
 	.4byte 0
@@ -1961,13 +1961,13 @@ __vt__18TAIAsetMotionSpeed:
 	.4byte 0
 lbl_802E25D4:
 	.asciz "TAIkabekuiAStrategy"
-	.balign 4
+.balign 4
 lbl_802E25E8:
 	.asciz "TekiStrategy"
-	.balign 4
+.balign 4
 lbl_802E25F8:
 	.asciz "YaiStrategy"
-	.balign 4
+.balign 4
 lbl_802E2604:
 	.4byte __RTTI__12TekiStrategy
 	.4byte 0
@@ -1992,10 +1992,10 @@ __vt__19TAIkabekuiAStrategy:
 	.4byte spawnCorpseParts__12TekiStrategyFR4Teki
 lbl_802E264C:
 	.asciz "TAIkabekuiAParameters"
-	.balign 4
+.balign 4
 lbl_802E2664:
 	.asciz "CoreNode"
-	.balign 4
+.balign 4
 lbl_802E2670:
 	.4byte __RTTI__5ANode
 	.4byte 0
@@ -2008,7 +2008,7 @@ lbl_802E267C:
 	.4byte 0
 lbl_802E2690:
 	.asciz "TekiParameters"
-	.balign 4
+.balign 4
 lbl_802E26A0:
 	.4byte __RTTI__5ANode
 	.4byte 0
@@ -2109,7 +2109,7 @@ __RTTI__19TAIkabekuiAStrategy:
 	.4byte lbl_802E2610
 lbl_803E6B48:
 	.asciz "ANode"
-	.balign 4
+.balign 4
 __RTTI__5ANode:
 	.4byte lbl_803E6B48
 	.4byte 0
@@ -2118,7 +2118,7 @@ __RTTI__8CoreNode:
 	.4byte lbl_802E2670
 lbl_803E6B60:
 	.asciz "Node"
-	.balign 4
+.balign 4
 __RTTI__4Node:
 	.4byte lbl_803E6B60
 	.4byte lbl_802E267C

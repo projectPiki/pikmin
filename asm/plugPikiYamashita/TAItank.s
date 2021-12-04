@@ -2323,7 +2323,7 @@ lbl_801A574C:
 .balign 0x8
 lbl_802DDC70:
 	.asciz "TAItank.cpp"
-	.balign 4
+.balign 4
 lbl_802DDC7C:
 	.4byte 0x898A8D55
 	.4byte 0x8C828E9E
@@ -2349,43 +2349,43 @@ lbl_802DDCB0:
 	.4byte 0x83670000
 lbl_802DDCC8:
 	.asciz "tekis/tank/motion/dead.dca"
-	.balign 4
+.balign 4
 lbl_802DDCE4:
 	.asciz "tekis/tank/motion/damage.dca"
-	.balign 4
+.balign 4
 lbl_802DDD04:
 	.asciz "tekis/tank/motion/wait1.dca"
-	.balign 4
+.balign 4
 lbl_802DDD20:
 	.asciz "tekis/tank/motion/wait2.dca"
-	.balign 4
+.balign 4
 lbl_802DDD3C:
 	.asciz "tekis/tank/motion/waitact1.dck"
-	.balign 4
+.balign 4
 lbl_802DDD5C:
 	.asciz "tekis/tank/motion/waitact2.dca"
-	.balign 4
+.balign 4
 lbl_802DDD7C:
 	.asciz "tekis/tank/motion/move1.dck"
-	.balign 4
+.balign 4
 lbl_802DDD98:
 	.asciz "tekis/tank/motion/move2.dck"
-	.balign 4
+.balign 4
 lbl_802DDDB4:
 	.asciz "tekis/tank/motion/attack.dca"
-	.balign 4
+.balign 4
 lbl_802DDDD4:
 	.asciz "tekis/tank/motion/type1.dck"
-	.balign 4
+.balign 4
 lbl_802DDDF0:
 	.asciz "tekis/tank/motion/type2.dca"
-	.balign 4
+.balign 4
 lbl_802DDE0C:
 	.asciz "TAItankAnimation"
-	.balign 4
+.balign 4
 lbl_802DDE20:
 	.asciz "TAIanimation"
-	.balign 4
+.balign 4
 lbl_802DDE30:
 	.4byte __RTTI__12TAIanimation
 	.4byte 0x00000000
@@ -2397,13 +2397,13 @@ __vt__16TAItankAnimation:
 	.4byte makeDefaultAnimations__16TAItankAnimationFv
 lbl_802DDE48:
 	.asciz "TAItankStrategy"
-	.balign 4
+.balign 4
 lbl_802DDE58:
 	.asciz "TekiStrategy"
-	.balign 4
+.balign 4
 lbl_802DDE68:
 	.asciz "YaiStrategy"
-	.balign 4
+.balign 4
 lbl_802DDE74:
 	.4byte __RTTI__12TekiStrategy
 	.4byte 0
@@ -2428,10 +2428,10 @@ __vt__15TAItankStrategy:
 	.4byte spawnCorpseParts__12TekiStrategyFR4Teki
 lbl_802DDEBC:
 	.asciz "TAIAnoReaction"
-	.balign 4
+.balign 4
 lbl_802DDECC:
 	.asciz "TaiAction"
-	.balign 4
+.balign 4
 lbl_802DDED8:
 	.4byte __RTTI__9TaiAction
 	.4byte 0
@@ -2447,7 +2447,7 @@ __vt__14TAIAnoReaction:
 	.4byte hasNextState__9TaiActionFv
 lbl_802DDF00:
 	.asciz "TAIAinitTank"
-	.balign 4
+.balign 4
 lbl_802DDF10:
 	.4byte __RTTI__9TaiAction
 	.4byte 0
@@ -2463,7 +2463,7 @@ __vt__12TAIAinitTank:
 	.4byte hasNextState__9TaiActionFv
 lbl_802DDF38:
 	.asciz "TAIAoutsideTerritory"
-	.balign 4
+.balign 4
 lbl_802DDF50:
 	.4byte __RTTI__9TaiAction
 	.4byte 0
@@ -2479,17 +2479,17 @@ __vt__20TAIAoutsideTerritory:
 	.4byte hasNextState__9TaiActionFv
 lbl_802DDF78:
 	.asciz "TAIAflickingTank"
-	.balign 4
+.balign 4
 lbl_802DDF8C:
 	.asciz "TAIAmotion"
-	.balign 4
+.balign 4
 lbl_802DDF98:
 	.4byte __RTTI__9TaiAction
 	.4byte 0
 	.4byte 0
 lbl_802DDFA4:
 	.asciz "TAIAflicking"
-	.balign 4
+.balign 4
 lbl_802DDFB4:
 	.4byte __RTTI__9TaiAction
 	.4byte 0
@@ -2517,17 +2517,17 @@ __vt__16TAIAflickingTank:
 	.4byte getFlickDirection__16TAIAflickingTankFR4Teki
 lbl_802DE008:
 	.asciz "TAIAfireBreathTank"
-	.balign 4
+.balign 4
 lbl_802DE01C:
 	.asciz "TAIAreserveMotion"
-	.balign 4
+.balign 4
 lbl_802DE030:
 	.4byte __RTTI__9TaiAction
 	.4byte 0
 	.4byte 0
 lbl_802DE03C:
 	.asciz "TAIAfireBreath"
-	.balign 4
+.balign 4
 lbl_802DE04C:
 	.4byte __RTTI__9TaiAction
 	.4byte 0
@@ -2555,10 +2555,10 @@ __vt__18TAIAfireBreathTank:
 	.4byte getAttackAnimSpeed__18TAIAfireBreathTankFR4Teki
 lbl_802DE0A0:
 	.asciz "FireEffect"
-	.balign 4
+.balign 4
 lbl_802DE0AC:
 	.asciz "zen::CallBack1<Teki &>"
-	.balign 4
+.balign 4
 lbl_802DE0C4:
 	.4byte "__RTTI__Q23zen17CallBack1<R4Teki>"
 	.4byte 0
@@ -2575,10 +2575,10 @@ __vt__10FireEffect:
 	.4byte 0
 lbl_802DE0E8:
 	.asciz "TAIAstepBackTank"
-	.balign 4
+.balign 4
 lbl_802DE0FC:
 	.asciz "TAIAstepBack"
-	.balign 4
+.balign 4
 lbl_802DE10C:
 	.4byte __RTTI__9TaiAction
 	.4byte 0
@@ -2605,17 +2605,17 @@ __vt__16TAIAstepBackTank:
 	.4byte getVelocity__16TAIAstepBackTankFR4Teki
 lbl_802DE15C:
 	.asciz "TAIAoutsideOptionalRangeTank"
-	.balign 4
+.balign 4
 lbl_802DE17C:
 	.asciz "TAIAjudgeOptionalRange"
-	.balign 4
+.balign 4
 lbl_802DE194:
 	.4byte __RTTI__9TaiAction
 	.4byte 0
 	.4byte 0
 lbl_802DE1A0:
 	.asciz "TAIAoutsideOptionalRange"
-	.balign 4
+.balign 4
 lbl_802DE1BC:
 	.4byte __RTTI__9TaiAction
 	.4byte 0
@@ -2644,10 +2644,10 @@ __vt__28TAIAoutsideOptionalRangeTank:
 	.4byte judgement__24TAIAoutsideOptionalRangeFR4Teki
 lbl_802DE214:
 	.asciz "TAIAattackableAngleTarget"
-	.balign 4
+.balign 4
 lbl_802DE230:
 	.asciz "TAIAattackableTarget"
-	.balign 4
+.balign 4
 lbl_802DE248:
 	.4byte __RTTI__9TaiAction
 	.4byte 0
@@ -2670,10 +2670,10 @@ __vt__25TAIAattackableAngleTarget:
 	.4byte judge__25TAIAattackableAngleTargetFR4Teki
 lbl_802DE288:
 	.asciz "TAIApatrolTank"
-	.balign 4
+.balign 4
 lbl_802DE298:
 	.asciz "TAIAturnToTarget"
-	.balign 4
+.balign 4
 lbl_802DE2AC:
 	.4byte __RTTI__9TaiAction
 	.4byte 0
@@ -2682,7 +2682,7 @@ lbl_802DE2AC:
 	.4byte 0
 lbl_802DE2C0:
 	.asciz "TAIApatrol"
-	.balign 4
+.balign 4
 lbl_802DE2CC:
 	.4byte __RTTI__9TaiAction
 	.4byte 0
@@ -2721,10 +2721,10 @@ __vt__14TAIApatrolTank:
 	.4byte 0
 lbl_802DE34C:
 	.asciz "TAItankParameters"
-	.balign 4
+.balign 4
 lbl_802DE360:
 	.asciz "CoreNode"
-	.balign 4
+.balign 4
 lbl_802DE36C:
 	.4byte __RTTI__5ANode
 	.4byte 0
@@ -2737,7 +2737,7 @@ lbl_802DE378:
 	.4byte 0
 lbl_802DE38C:
 	.asciz "TekiParameters"
-	.balign 4
+.balign 4
 lbl_802DE39C:
 	.4byte __RTTI__5ANode
 	.4byte 0
@@ -2772,10 +2772,10 @@ __vt__17TAItankParameters:
 	.4byte getModelMatrix__4NodeFv
 lbl_802DE40C:
 	.asciz "TAIeffectAttackEventCallBackTank"
-	.balign 4
+.balign 4
 lbl_802DE430:
 	.asciz "TAIeffectAttackEventCallBack"
-	.balign 4
+.balign 4
 lbl_802DE450:
 	.4byte __RTTI__28TAIeffectAttackEventCallBack
 	.4byte 0
@@ -2793,7 +2793,7 @@ __vt__32TAIeffectAttackEventCallBackTank:
 	.4byte hitCheckCulling__28TAIeffectAttackEventCallBackFPQ23zen17particleGeneratorP20TAIeffectAttackParamP8Creature
 lbl_802DE480:
 	.asciz "Interaction"
-	.balign 4
+.balign 4
 	.4byte 0
 	.4byte 0
 	.4byte 0
@@ -2929,7 +2929,7 @@ __RTTI__14TAIApatrolTank:
 	.4byte lbl_802DE2E8
 lbl_803E6030:
 	.asciz "ANode"
-	.balign 4
+.balign 4
 __RTTI__5ANode:
 	.4byte lbl_803E6030
 	.4byte 0
@@ -2938,7 +2938,7 @@ __RTTI__8CoreNode:
 	.4byte lbl_802DE36C
 lbl_803E6048:
 	.asciz "Node"
-	.balign 4
+.balign 4
 __RTTI__4Node:
 	.4byte lbl_803E6048
 	.4byte lbl_802DE378

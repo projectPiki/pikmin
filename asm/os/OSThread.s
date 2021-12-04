@@ -1944,85 +1944,85 @@ lbl_801FD378:
 .balign 0x8
 lbl_802E7BD8:
 	.asciz "OSCheckActiveThreads: Failed RunQueue[prio].head != NULL && RunQueue[prio].tail != NULL in %d\n"
-	.balign 4
+.balign 4
 lbl_802E7C38:
 	.asciz "OSThread.c"
-	.balign 4
+.balign 4
 lbl_802E7C44:
 	.asciz "OSCheckActiveThreads: Failed RunQueue[prio].head == NULL && RunQueue[prio].tail == NULL in %d\n"
-	.balign 4
+.balign 4
 lbl_802E7CA4:
 	.asciz "OSCheckActiveThreads: Failed CheckThreadQueue(&RunQueue[prio]) in %d\n"
-	.balign 4
+.balign 4
 lbl_802E7CEC:
 	.asciz "OSCheckActiveThreads: Failed __OSActiveThreadQueue.head == NULL || __OSActiveThreadQueue.head->linkActive.prev == NULL in %d\n"
-	.balign 4
+.balign 4
 lbl_802E7D6C:
 	.asciz "OSCheckActiveThreads: Failed __OSActiveThreadQueue.tail == NULL || __OSActiveThreadQueue.tail->linkActive.next == NULL in %d\n"
-	.balign 4
+.balign 4
 lbl_802E7DEC:
 	.asciz "OSCheckActiveThreads: Failed thread->linkActive.next == NULL || thread == thread->linkActive.next->linkActive.prev in %d\n"
-	.balign 4
+.balign 4
 lbl_802E7E68:
 	.asciz "OSCheckActiveThreads: Failed thread->linkActive.prev == NULL || thread == thread->linkActive.prev->linkActive.next in %d\n"
-	.balign 4
+.balign 4
 lbl_802E7EE4:
 	.asciz "OSCheckActiveThreads: Failed *(thread->stackEnd) == OS_THREAD_STACK_MAGIC in %d\n"
-	.balign 4
+.balign 4
 lbl_802E7F38:
 	.asciz "OSCheckActiveThreads: Failed OS_PRIORITY_MIN <= thread->priority && thread->priority <= OS_PRIORITY_MAX+1 in %d\n"
-	.balign 4
+.balign 4
 lbl_802E7FAC:
 	.asciz "OSCheckActiveThreads: Failed 0 <= thread->suspend in %d\n"
-	.balign 4
+.balign 4
 lbl_802E7FE8:
 	.asciz "OSCheckActiveThreads: Failed CheckThreadQueue(&thread->queueJoin) in %d\n"
-	.balign 4
+.balign 4
 lbl_802E8034:
 	.asciz "OSCheckActiveThreads: Failed thread->queue == &RunQueue[thread->priority] in %d\n"
-	.balign 4
+.balign 4
 lbl_802E8088:
 	.asciz "OSCheckActiveThreads: Failed IsMember(&RunQueue[thread->priority], thread) in %d\n"
-	.balign 4
+.balign 4
 lbl_802E80DC:
 	.asciz "OSCheckActiveThreads: Failed thread->priority == __OSGetEffectivePriority(thread) in %d\n"
-	.balign 4
+.balign 4
 lbl_802E8138:
 	.asciz "OSCheckActiveThreads: Failed !IsSuspended(thread->suspend) in %d\n"
-	.balign 4
+.balign 4
 lbl_802E817C:
 	.asciz "OSCheckActiveThreads: Failed thread->queue == NULL in %d\n"
-	.balign 4
+.balign 4
 lbl_802E81B8:
 	.asciz "OSCheckActiveThreads: Failed thread->queue != NULL in %d\n"
-	.balign 4
+.balign 4
 lbl_802E81F4:
 	.asciz "OSCheckActiveThreads: Failed CheckThreadQueue(thread->queue) in %d\n"
-	.balign 4
+.balign 4
 lbl_802E8238:
 	.asciz "OSCheckActiveThreads: Failed IsMember(thread->queue, thread) in %d\n"
-	.balign 4
+.balign 4
 lbl_802E827C:
 	.asciz "OSCheckActiveThreads: Failed thread->priority == 32 in %d\n"
-	.balign 4
+.balign 4
 lbl_802E82B8:
 	.asciz "OSCheckActiveThreads: Failed !__OSCheckDeadLock(thread) in %d\n"
-	.balign 4
+.balign 4
 lbl_802E82F8:
 	.asciz "OSCheckActiveThreads: Failed thread->queueMutex.head == NULL && thread->queueMutex.tail == NULL in %d\n"
-	.balign 4
+.balign 4
 lbl_802E8360:
 	.asciz "OSCheckActiveThreads: Failed. unkown thread state (%d) of thread %p\n"
-	.balign 4
+.balign 4
 lbl_802E83A8:
 	.asciz "OSCheckActiveThreads: Failed __OSCheckMutexes(thread) in %d\n"
-	.balign 4
+.balign 4
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 0x8
 lbl_803E7718:
 	.byte 0
-	.balign 0x8
+.balign 0x8
 
 .section .sbss, "wa"
 .balign 0x8

@@ -5388,64 +5388,64 @@ lbl_801BF518:
 .balign 0x8
 lbl_802E1118:
 	.asciz "drawContainer.cpp"
-	.balign 4
+.balign 4
 lbl_802E112C:
 	.asciz "DrawContainer"
-	.balign 4
+.balign 4
 lbl_802E113C:
 	.asciz "<Controller>"
-	.balign 4
+.balign 4
 lbl_802E114C:
 	.asciz "screen/blo/con01.blo"
-	.balign 4
+.balign 4
 lbl_802E1164:
 	.asciz "ys_u.bti" # should be ya_u.bti, but the dev typo'd
-	.balign 4
+.balign 4
 lbl_802E1170:
 	.asciz "ya_l.bti"
-	.balign 4
+.balign 4
 lbl_802E117C:
 	.asciz "c_anim%02d.bti"
-	.balign 4
+.balign 4
 lbl_802E118C:
 	.asciz "screen/tex/p2b_64.bti"
-	.balign 4
+.balign 4
 lbl_802E11A4:
 	.asciz "screen/tex/p2r_64.bti"
-	.balign 4
+.balign 4
 lbl_802E11BC:
 	.asciz "screen/tex/p2y_64.bti"
-	.balign 4
+.balign 4
 lbl_802E11D4:
 	.asciz "screen/tex/ws08_160.bti"
-	.balign 4
+.balign 4
 lbl_802E11EC:
 	.asciz "screen/tex/ws08_red.bti"
-	.balign 4
+.balign 4
 lbl_802E1204:
 	.asciz "screen/tex/ws08_yel.bti"
-	.balign 4
+.balign 4
 lbl_802E121C:
 	.asciz "screen/tex/p2b_c_4.bti"
-	.balign 4
+.balign 4
 lbl_802E1234:
 	.asciz "screen/tex/p2b_c_r.bti"
-	.balign 4
+.balign 4
 lbl_802E124C:
 	.asciz "screen/tex/p2b_c_y.bti"
-	.balign 4
+.balign 4
 lbl_802E1264:
 	.asciz "zen::StickCallBack"
-	.balign 4
+.balign 4
 lbl_802E1278:
 	.asciz "P2DPaneCallBackBase"
-	.balign 4
+.balign 4
 lbl_802E128C:
 	.asciz "zen::CallBack1<P2DPane *>"
-	.balign 4
+.balign 4
 lbl_802E12A8:
 	.asciz "P2DPaneCallBack"
-	.balign 4
+.balign 4
 lbl_802E12B8:
 	.4byte __RTTI__19P2DPaneCallBackBase
 	.4byte 0x00000004
@@ -5468,10 +5468,10 @@ __vt__Q23zen13StickCallBack:
 	.4byte draw__15P2DPaneCallBackFP7P2DPane
 lbl_802E12F8:
 	.asciz "zen::ArrowLRCallBack"
-	.balign 4
+.balign 4
 lbl_802E1310:
 	.asciz "zen::ArrowBasicCallBack"
-	.balign 4
+.balign 4
 lbl_802E1328:
 	.4byte __RTTI__Q23zen18ArrowBasicCallBack
 	.4byte 0x4
@@ -5490,7 +5490,7 @@ __vt__Q23zen15ArrowLRCallBack:
 	.4byte draw__15P2DPaneCallBackFP7P2DPane
 lbl_802E135C:
 	.asciz "zen::ArrowCenterCallBack"
-	.balign 4
+.balign 4
 lbl_802E1378:
 	.4byte __RTTI__Q23zen18ArrowBasicCallBack
 	.4byte 0x4
@@ -5509,13 +5509,13 @@ __vt__Q23zen19ArrowCenterCallBack:
 	.4byte draw__15P2DPaneCallBackFP7P2DPane
 lbl_802E13AC:
 	.asciz "zen::NumberPicCallBack<int>"
-	.balign 4
+.balign 4
 lbl_802E13C8:
 	.asciz "zen::NumberTex"
-	.balign 4
+.balign 4
 lbl_802E13D8:
 	.asciz "zen::FigureTex<int>"
-	.balign 4
+.balign 4
 lbl_802E13EC:
 	.4byte __RTTI__Q23zen9NumberTex
 	.4byte 0
@@ -5545,7 +5545,7 @@ lbl_802E13F8:
 	.4byte 0
 lbl_802E1450:
 	.asciz "CoreNode"
-	.balign 4
+.balign 4
 lbl_802E145C:
 	.4byte __RTTI__5ANode
 	.4byte 0
@@ -5581,22 +5581,22 @@ weightPosGravity__Q23zen13WindowPaneMgr:
 	.float 9.8
 lbl_803E6774:
 	.asciz "rm%02d"
-	.balign 4
+.balign 4
 lbl_803E677C:
 	.asciz "rs%02d"
-	.balign 4
+.balign 4
 lbl_803E6784:
 	.asciz "bm%02d"
-	.balign 4
+.balign 4
 lbl_803E678C:
 	.asciz "bs%02d"
-	.balign 4
+.balign 4
 lbl_803E6794:
 	.asciz "ym%02d"
-	.balign 4
+.balign 4
 lbl_803E679C:
 	.asciz "ys%02d"
-	.balign 4
+.balign 4
 __RTTI__19P2DPaneCallBackBase:
 	.4byte lbl_802E1278
 	.4byte 0x00000000
@@ -5626,7 +5626,7 @@ __RTTI__Q23zen9NumberTex:
 	.4byte lbl_802E13EC
 lbl_803E67EC:
 	.asciz "ANode"
-	.balign 4
+.balign 4
 __RTTI__5ANode:
 	.4byte lbl_803E67EC
 	.4byte 0

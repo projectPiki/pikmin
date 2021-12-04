@@ -467,16 +467,16 @@ lbl_801B6088:
 .balign 0x8
 lbl_802E0950:
 	.asciz "P2DFont.cpp"
-	.balign 4
+.balign 4
 lbl_802E095C:
 	.asciz "bigFont.bti"
-	.balign 4
+.balign 4
 lbl_802E0968:
 	.asciz "FntobjInfo"
-	.balign 4
+.balign 4
 lbl_802E0974:
 	.asciz "GfxobjInfo"
-	.balign 4
+.balign 4
 lbl_802E0980:
 	.4byte __RTTI__10GfxobjInfo
 	.4byte 0x00000000
@@ -488,16 +488,16 @@ __vt__10FntobjInfo:
 	.4byte attach__10GfxobjInfoFv
 	.4byte detach__10GfxobjInfoFv
 	.skip 8
-	.balign 0x10
+.balign 0x10
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 0x8
 lbl_803E6688:
 	.asciz ""
-	.balign 4
+.balign 4
 lbl_803E668C:
 	.asciz "%s"
-	.balign 4
+.balign 4
 __RTTI__10GfxobjInfo:
 	.4byte lbl_802E0974
 	.4byte 0x00000000

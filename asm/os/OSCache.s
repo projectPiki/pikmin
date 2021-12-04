@@ -362,43 +362,43 @@ lbl_801F6FF4:
 .balign 0x8
 lbl_802E74E8:
 	.asciz ">>> L2 INVALIDATE : SHOULD NEVER HAPPEN\n"
-	.balign 4
+.balign 4
 lbl_802E7514:
 	.asciz "Machine check received\n"
-	.balign 4
+.balign 4
 lbl_802E752C:
 	.asciz "HID2 = 0x%x   SRR1 = 0x%x\n"
-	.balign 4
+.balign 4
 lbl_802E7548:
 	.asciz "Machine check was not DMA/locked cache related\n"
-	.balign 4
+.balign 4
 lbl_802E7578:
 	.asciz "DMAErrorHandler(): An error occurred while processing DMA.\n"
-	.balign 4
+.balign 4
 lbl_802E75B4:
 	.asciz "The following errors have been detected and cleared :\n"
-	.balign 4
+.balign 4
 lbl_802E75EC:
 	.asciz "\t- Requested a locked cache tag that was already in the cache\n"
-	.balign 4
+.balign 4
 lbl_802E762C:
 	.asciz "\t- DMA attempted to access normal cache\n"
-	.balign 4
+.balign 4
 lbl_802E7658:
 	.asciz "\t- DMA missed in data cache\n"
-	.balign 4
+.balign 4
 lbl_802E7678:
 	.asciz "\t- DMA queue overflowed\n"
-	.balign 4
+.balign 4
 lbl_802E7694:
 	.asciz "L1 i-caches initialized\n"
-	.balign 4
+.balign 4
 lbl_802E76B0:
 	.asciz "L1 d-caches initialized\n"
-	.balign 4
+.balign 4
 lbl_802E76CC:
 	.asciz "L2 cache initialized\n"
-	.balign 4
+.balign 4
 lbl_802E76E4:
 	.asciz "Locked cache machine check handler installed\n"
-	.balign 4
+.balign 4

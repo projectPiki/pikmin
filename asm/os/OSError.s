@@ -238,31 +238,31 @@ lbl_801F7BB4:
 .balign 0x8
 lbl_802E78F0:
 	.asciz " in \"%s\" on line %d.\n"
-	.balign 4
+.balign 4
 lbl_802E7908:
 	.asciz "\nAddress:      Back Chain    LR Save\n"
-	.balign 4
+.balign 4
 lbl_802E7930:
 	.asciz "0x%08x:   0x%08x    0x%08x\n"
-	.balign 4
+.balign 4
 lbl_802E794C:
 	.asciz "Non-recoverable Exception %d"
-	.balign 4
+.balign 4
 lbl_802E796C:
 	.asciz "Unhandled Exception %d"
-	.balign 4
+.balign 4
 lbl_802E7984:
 	.asciz "\nDSISR= 0x%08x                   DAR  = 0x%08x\n"
-	.balign 4
+.balign 4
 lbl_802E79B4:
 	.asciz "\nInstruction at 0x%x (read from SRR0) attempted to access invalid address 0x%x (read from DAR)\n"
-	.balign 4
+.balign 4
 lbl_802E7A14:
 	.asciz "\nAttempted to fetch instruction from invalid address 0x%x (read from SRR0)\n"
-	.balign 4
+.balign 4
 lbl_802E7A60:
 	.asciz "\nInstruction at 0x%x (read from SRR0) attempted to access unaligned address 0x%x (read from DAR)\n"
-	.balign 4
+.balign 4
 lbl_802E7AC4:
 	.asciz "\nProgram exception : Possible illegal instruction/operation at or around 0x%x (read from SRR0)\n"
 

@@ -954,22 +954,22 @@ lbl_801CA264:
 .balign 0x8
 lbl_802E1FF8:
 	.asciz "menuPanelMgr.cpp"
-	.balign 4
+.balign 4
 lbl_802E200C:
 	.asciz "menuPanelMgr"
-	.balign 4
+.balign 4
 lbl_802E201C:
 	.asciz "zen::MenuPanel"
-	.balign 4
+.balign 4
 lbl_802E202C:
 	.asciz "P2DPaneCallBackBase"
-	.balign 4
+.balign 4
 lbl_802E2040:
 	.asciz "zen::CallBack1<P2DPane *>"
-	.balign 4
+.balign 4
 lbl_802E205C:
 	.asciz "P2DPaneCallBack"
-	.balign 4
+.balign 4
 lbl_802E206C:
 	.4byte __RTTI__19P2DPaneCallBackBase
 	.4byte 0x4
@@ -1012,7 +1012,7 @@ lbl_803E6A78:
 	.4byte 0x00000000
 lbl_803E6A7C:
 	.asciz "p%03d"
-	.balign 4
+.balign 4
 __RTTI__19P2DPaneCallBackBase:
 	.4byte lbl_802E202C
 	.4byte 0x00000000

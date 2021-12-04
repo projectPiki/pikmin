@@ -1600,19 +1600,19 @@ getFrameMax__27TAIAflickingAfterMotionLoopFR4Teki:
 .balign 0x8
 lbl_802E01E8:
 	.asciz "TAIAattack.cpp"
-	.balign 4
+.balign 4
 lbl_802E01F8:
 	.asciz "TAIAattack"
-	.balign 4
+.balign 4
 lbl_802E0204:
 	.asciz "TAIAeatPiki"
-	.balign 4
+.balign 4
 lbl_802E0210:
 	.asciz "TaiAction"
-	.balign 4
+.balign 4
 lbl_802E021C:
 	.asciz "TAIAreserveMotion"
-	.balign 4
+.balign 4
 lbl_802E0230:
 	.4byte __RTTI__9TaiAction
 	.4byte 0
@@ -1635,7 +1635,7 @@ __vt__11TAIAeatPiki:
 	.4byte eatEffect__11TAIAeatPikiFR4Teki
 lbl_802E0270:
 	.asciz "TAIAbiteForKabekui"
-	.balign 4
+.balign 4
 lbl_802E0284:
 	.4byte __RTTI__9TaiAction
 	.4byte 0
@@ -1655,7 +1655,7 @@ __vt__18TAIAbiteForKabekui:
 	.4byte getNaviAttackSize__18TAIAbiteForKabekuiFR4Teki
 lbl_802E02BC:
 	.asciz "TAIAflickingReserveMotion"
-	.balign 4
+.balign 4
 lbl_802E02D8:
 	.4byte __RTTI__9TaiAction
 	.4byte 0
@@ -1675,10 +1675,10 @@ __vt__25TAIAflickingReserveMotion:
 	.4byte getFlickDirection__25TAIAflickingReserveMotionFR4Teki
 lbl_802E0310:
 	.asciz "TAIAflicking"
-	.balign 4
+.balign 4
 lbl_802E0320:
 	.asciz "TAIAmotion"
-	.balign 4
+.balign 4
 lbl_802E032C:
 	.4byte __RTTI__9TaiAction
 	.4byte 0
@@ -1702,10 +1702,10 @@ __vt__12TAIAflicking:
 	.4byte getFlickDirection__12TAIAflickingFR4Teki
 lbl_802E0370:
 	.asciz "TekiCondition"
-	.balign 4
+.balign 4
 lbl_802E0380:
 	.asciz "Condition"
-	.balign 4
+.balign 4
 lbl_802E038C:
 	.4byte __RTTI__9Condition
 	.4byte 0
@@ -1718,7 +1718,7 @@ lbl_802E038C:
 	.4byte 0
 lbl_802E03B0:
 	.asciz "TAIAflickCheck"
-	.balign 4
+.balign 4
 lbl_802E03C0:
 	.4byte __RTTI__9TaiAction
 	.4byte 0
@@ -1735,7 +1735,7 @@ __vt__14TAIAflickCheck:
 	.4byte getDamageCountLimit__14TAIAflickCheckFR4Teki
 lbl_802E03EC:
 	.asciz "TAIAfireBreath"
-	.balign 4
+.balign 4
 lbl_802E03FC:
 	.4byte __RTTI__9TaiAction
 	.4byte 0
@@ -1755,7 +1755,7 @@ __vt__14TAIAfireBreath:
 	.4byte getAttackAnimSpeed__14TAIAfireBreathFR4Teki
 lbl_802E0434:
 	.asciz "TAIAtargetPiki"
-	.balign 4
+.balign 4
 lbl_802E0444:
 	.4byte __RTTI__9TaiAction
 	.4byte 0
@@ -1771,7 +1771,7 @@ __vt__14TAIAtargetPiki:
 	.4byte hasNextState__9TaiActionFv
 lbl_802E046C:
 	.asciz "TAIAtargetNavi"
-	.balign 4
+.balign 4
 lbl_802E047C:
 	.4byte __RTTI__9TaiAction
 	.4byte 0
@@ -1787,10 +1787,10 @@ __vt__14TAIAtargetNavi:
 	.4byte hasNextState__9TaiActionFv
 lbl_802E04A4:
 	.asciz "TAIAflickingAfterMotionLoop"
-	.balign 4
+.balign 4
 lbl_802E04C0:
 	.asciz "TAIAmotionLoop"
-	.balign 4
+.balign 4
 lbl_802E04D0:
 	.4byte __RTTI__9TaiAction
 	.4byte 0
@@ -1818,7 +1818,7 @@ __vt__27TAIAflickingAfterMotionLoop:
 	.4byte permitFlick__27TAIAflickingAfterMotionLoopFR4Teki
 lbl_802E0524:
 	.asciz "Interaction"
-	.balign 4
+.balign 4
 	.4byte 0
 	.4byte 0
 	.4byte 0
@@ -1832,7 +1832,7 @@ lbl_802E0524:
 	.4byte 0
 lbl_802E055C:
 	.asciz "TAIAattackWorkObject"
-	.balign 4
+.balign 4
 lbl_802E0574:
 	.4byte __RTTI__9TaiAction
 	.4byte 0

@@ -3496,10 +3496,10 @@ lbl_803E5D88:
 	.4byte 0x00000000
 lbl_803E5D8C:
 	.asciz "ptclMgr"
-	.balign 4
+.balign 4
 lbl_803E5D94:
 	.asciz "ANode"
-	.balign 4
+.balign 4
 __RTTI__5ANode:
 	.4byte lbl_803E5D94
 	.4byte 0x00000000
@@ -3523,7 +3523,7 @@ __RTTI__26EffectParticleRegistration:
 	.4byte 0
 lbl_803E5DD4:
 	.asciz "Node"
-	.balign 4
+.balign 4
 __RTTI__4Node:
 	.4byte lbl_803E5DD4
 	.4byte lbl_802DA5A0

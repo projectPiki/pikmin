@@ -4248,67 +4248,67 @@ lbl_801BA0CC:
 .balign 0x8
 lbl_802E09B0:
 	.asciz "drawGameInfo.cpp"
-	.balign 4
+.balign 4
 lbl_802E09C4:
 	.asciz "drawGameInfo"
-	.balign 4
+.balign 4
 lbl_802E09D4:
 	.asciz "screen/tex/piki0.bti"
-	.balign 4
+.balign 4
 lbl_802E09EC:
 	.asciz "screen/tex/bp_l64.bti"
-	.balign 4
+.balign 4
 lbl_802E0A04:
 	.asciz "screen/tex/bp_b64.bti"
-	.balign 4
+.balign 4
 lbl_802E0A1C:
 	.asciz "screen/tex/bp_f64.bti"
-	.balign 4
+.balign 4
 lbl_802E0A34:
 	.asciz "screen/tex/bp_lb64.bti"
-	.balign 4
+.balign 4
 lbl_802E0A4C:
 	.asciz "screen/tex/bp_bb64.bti"
-	.balign 4
+.balign 4
 lbl_802E0A64:
 	.asciz "screen/tex/bp_fb64.bti"
-	.balign 4
+.balign 4
 lbl_802E0A7C:
 	.asciz "screen/tex/rp_l64.bti"
-	.balign 4
+.balign 4
 lbl_802E0A94:
 	.asciz "screen/tex/rp_b64.bti"
-	.balign 4
+.balign 4
 lbl_802E0AAC:
 	.asciz "screen/tex/rp_f64.bti"
-	.balign 4
+.balign 4
 lbl_802E0AC4:
 	.asciz "screen/tex/rp_lb64.bti"
-	.balign 4
+.balign 4
 lbl_802E0ADC:
 	.asciz "screen/tex/rp_bb64.bti"
-	.balign 4
+.balign 4
 lbl_802E0AF4:
 	.asciz "screen/tex/rp_fb64.bti"
-	.balign 4
+.balign 4
 lbl_802E0B0C:
 	.asciz "screen/tex/yp_l64.bti"
-	.balign 4
+.balign 4
 lbl_802E0B24:
 	.asciz "screen/tex/yp_b64.bti"
-	.balign 4
+.balign 4
 lbl_802E0B3C:
 	.asciz "screen/tex/yp_f64.bti"
-	.balign 4
+.balign 4
 lbl_802E0B54:
 	.asciz "screen/tex/yp_lb64.bti"
-	.balign 4
+.balign 4
 lbl_802E0B6C:
 	.asciz "screen/tex/yp_bb64.bti"
-	.balign 4
+.balign 4
 lbl_802E0B84:
 	.asciz "screen/tex/yp_fb64.bti"
-	.balign 4
+.balign 4
 "pikiTexNametable__9@unnamed@":
 	.4byte lbl_802E09D4
 	.4byte lbl_802E09EC
@@ -4331,31 +4331,31 @@ lbl_802E0B84:
 	.4byte lbl_802E0B84
 lbl_802E0BE8:
 	.asciz "screen/blo/play09.blo"
-	.balign 4
+.balign 4
 lbl_802E0C00:
 	.asciz "screen/blo/play10.blo"
-	.balign 4
+.balign 4
 lbl_802E0C18:
 	.asciz "screen/blo/play_day.blo"
-	.balign 4
+.balign 4
 lbl_802E0C30:
 	.asciz "screen/blo/play_cha.blo"
-	.balign 4
+.balign 4
 lbl_802E0C48:
 	.asciz "@unnamed@::DateCallBack"
-	.balign 4
+.balign 4
 lbl_802E0C60:
 	.asciz "zen::NumberTex"
-	.balign 4
+.balign 4
 lbl_802E0C70:
 	.asciz "P2DPaneCallBackBase"
-	.balign 4
+.balign 4
 lbl_802E0C84:
 	.asciz "zen::CallBack1<P2DPane *>"
-	.balign 4
+.balign 4
 lbl_802E0CA0:
 	.asciz "P2DPaneCallBack"
-	.balign 4
+.balign 4
 lbl_802E0CB0:
 	.4byte __RTTI__19P2DPaneCallBackBase
 	.4byte 0x00000004
@@ -4380,7 +4380,7 @@ lbl_802E0CC4:
 	.4byte draw__15P2DPaneCallBackFP7P2DPane
 lbl_802E0CF8:
 	.asciz "@unnamed@::LifePinchCallBack"
-	.balign 4
+.balign 4
 lbl_802E0D18:
 	.4byte __RTTI__19P2DPaneCallBackBase
 	.4byte 0x4
@@ -4397,7 +4397,7 @@ lbl_802E0D18:
 	.4byte draw__15P2DPaneCallBackFP7P2DPane
 lbl_802E0D44:
 	.asciz "@unnamed@::LifeIconCallBack"
-	.balign 4
+.balign 4
 lbl_802E0D60:
 	.4byte __RTTI__19P2DPaneCallBackBase
 	.4byte 0x4
@@ -4414,7 +4414,7 @@ lbl_802E0D60:
 	.4byte "draw__Q29@unnamed@16LifeIconCallBackFP7P2DPane"
 lbl_802E0D8C:
 	.asciz "@unnamed@::NaviTexCallBack"
-	.balign 4
+.balign 4
 lbl_802E0DA8:
 	.4byte __RTTI__19P2DPaneCallBackBase
 	.4byte 0x4
@@ -4431,7 +4431,7 @@ lbl_802E0DA8:
 	.4byte draw__15P2DPaneCallBackFP7P2DPane
 lbl_802E0DD4:
 	.asciz "@unnamed@::NaviIconCallBack"
-	.balign 4
+.balign 4
 lbl_802E0DF0:
 	.4byte __RTTI__19P2DPaneCallBackBase
 	.4byte 0x4
@@ -4448,10 +4448,10 @@ lbl_802E0DF0:
 	.4byte draw__15P2DPaneCallBackFP7P2DPane
 lbl_802E0E1C:
 	.asciz "@unnamed@::MoonIconCallBack"
-	.balign 4
+.balign 4
 lbl_802E0E38:
 	.asciz "@unnamed@::SunMove"
-	.balign 4
+.balign 4
 lbl_802E0E4C:
 	.4byte "__RTTI__Q29@unnamed@7SunMove"
 	.4byte 0x4
@@ -4470,10 +4470,10 @@ lbl_802E0E4C:
 	.4byte draw__15P2DPaneCallBackFP7P2DPane
 lbl_802E0E80:
 	.asciz "@unnamed@::SunIcon2CallBack"
-	.balign 4
+.balign 4
 lbl_802E0E9C:
 	.asciz "@unnamed@::SunAnim"
-	.balign 4
+.balign 4
 lbl_802E0EB0:
 	.4byte "__RTTI__Q29@unnamed@7SunAnim"
 	.4byte 0x14
@@ -4494,7 +4494,7 @@ lbl_802E0EB0:
 	.4byte draw__15P2DPaneCallBackFP7P2DPane
 lbl_802E0EEC:
 	.asciz "@unnamed@::SunIcon1CallBack"
-	.balign 4
+.balign 4
 lbl_802E0F08:
 	.4byte "__RTTI__Q29@unnamed@7SunAnim"
 	.4byte 0x4
@@ -4513,7 +4513,7 @@ lbl_802E0F08:
 	.4byte draw__15P2DPaneCallBackFP7P2DPane
 lbl_802E0F3C:
 	.asciz "@unnamed@::SunCapsuleCallBack"
-	.balign 4
+.balign 4
 lbl_802E0F5C:
 	.4byte __RTTI__19P2DPaneCallBackBase
 	.4byte 0x4
@@ -4530,7 +4530,7 @@ lbl_802E0F5C:
 	.4byte draw__15P2DPaneCallBackFP7P2DPane
 lbl_802E0F88:
 	.asciz "@unnamed@::SunBaseCallBack"
-	.balign 4
+.balign 4
 lbl_802E0FA4:
 	.4byte __RTTI__19P2DPaneCallBackBase
 	.4byte 0x14
@@ -4552,10 +4552,10 @@ lbl_802E0FA4:
 	.4byte "invoke__Q29@unnamed@15SunBaseCallBackFP7P2DPane"
 lbl_802E0FE4:
 	.asciz "zen::NumberPicCallBack<short>"
-	.balign 4
+.balign 4
 lbl_802E1004:
 	.asciz "zen::FigureTex<short>"
-	.balign 4
+.balign 4
 lbl_802E101C:
 	.4byte __RTTI__Q23zen9NumberTex
 	.4byte 0
@@ -4580,7 +4580,7 @@ lbl_802E1028:
 	.4byte draw__15P2DPaneCallBackFP7P2DPane
 lbl_802E1064:
 	.asciz "@unnamed@::MapPikminWindowCallBack"
-	.balign 4
+.balign 4
 lbl_802E1088:
 	.4byte __RTTI__19P2DPaneCallBackBase
 	.4byte 0x4
@@ -4597,7 +4597,7 @@ lbl_802E1088:
 	.4byte draw__15P2DPaneCallBackFP7P2DPane
 lbl_802E10B4:
 	.asciz "@unnamed@::PikiIconCallBack"
-	.balign 4
+.balign 4
 lbl_802E10D0:
 	.4byte __RTTI__19P2DPaneCallBackBase
 	.4byte 0x4

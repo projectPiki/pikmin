@@ -4026,10 +4026,10 @@ act__14TAIAinitBeatleFR4Teki:
 .balign 0x8
 lbl_802E1850:
 	.asciz "TAIbeatle.cpp"
-	.balign 4
+.balign 4
 lbl_802E1860:
 	.asciz "TAIbeatle"
-	.balign 4
+.balign 4
 lbl_802E186C:
 	.4byte 0x83738388
 	.4byte 0x838A8E9E
@@ -4059,10 +4059,10 @@ lbl_802E18B4:
 	.4byte 0x97A30000
 lbl_802E18C4:
 	.asciz "TAIbeatleAnimation"
-	.balign 4
+.balign 4
 lbl_802E18D8:
 	.asciz "TAIanimation"
-	.balign 4
+.balign 4
 lbl_802E18E8:
 	.4byte __RTTI__12TAIanimation
 	.4byte 0x00000000
@@ -4074,13 +4074,13 @@ __vt__18TAIbeatleAnimation:
 	.4byte makeDefaultAnimations__18TAIbeatleAnimationFv
 lbl_802E1900:
 	.asciz "TAIbeatleStrategy"
-	.balign 4
+.balign 4
 lbl_802E1914:
 	.asciz "TekiStrategy"
-	.balign 4
+.balign 4
 lbl_802E1924:
 	.asciz "YaiStrategy"
-	.balign 4
+.balign 4
 lbl_802E1930:
 	.4byte __RTTI__12TekiStrategy
 	.4byte 0
@@ -4105,13 +4105,13 @@ __vt__17TAIbeatleStrategy:
 	.4byte spawnCorpseParts__12TekiStrategyFR4Teki
 lbl_802E1978:
 	.asciz "TAIAcheckInsideRangePikiBeatle"
-	.balign 4
+.balign 4
 lbl_802E1998:
 	.asciz "TaiAction"
-	.balign 4
+.balign 4
 lbl_802E19A4:
 	.asciz "TAIAcheckInsideRangePiki"
-	.balign 4
+.balign 4
 lbl_802E19C0:
 	.4byte __RTTI__9TaiAction
 	.4byte 0
@@ -4135,7 +4135,7 @@ __vt__30TAIAcheckInsideRangePikiBeatle:
 	.4byte getRange__30TAIAcheckInsideRangePikiBeatleFR4Teki
 lbl_802E1A04:
 	.asciz "TAIAdisableStick"
-	.balign 4
+.balign 4
 lbl_802E1A18:
 	.4byte __RTTI__9TaiAction
 	.4byte 0
@@ -4151,7 +4151,7 @@ __vt__16TAIAdisableStick:
 	.4byte hasNextState__9TaiActionFv
 lbl_802E1A40:
 	.asciz "TAIAnoReaction"
-	.balign 4
+.balign 4
 lbl_802E1A50:
 	.4byte __RTTI__9TaiAction
 	.4byte 0
@@ -4165,17 +4165,17 @@ lbl_802E1A50:
 	.4byte 0
 lbl_802E1A78:
 	.asciz "TAIAflickingBeatle"
-	.balign 4
+.balign 4
 lbl_802E1A8C:
 	.asciz "TAIAmotion"
-	.balign 4
+.balign 4
 lbl_802E1A98:
 	.4byte __RTTI__9TaiAction
 	.4byte 0
 	.4byte 0
 lbl_802E1AA4:
 	.asciz "TAIAflicking"
-	.balign 4
+.balign 4
 lbl_802E1B4:
 	.4byte __RTTI__9TaiAction
 	.4byte 0
@@ -4203,7 +4203,7 @@ __vt__18TAIAflickingBeatle:
 	.4byte getFlickDirection__12TAIAflickingFR4Teki
 lbl_802E1B08:
 	.asciz "Interaction"
-	.balign 4
+.balign 4
 	.4byte 0
 	.4byte 0
 	.4byte 0
@@ -4217,7 +4217,7 @@ lbl_802E1B08:
 	.4byte 0
 lbl_802E1B40:
 	.asciz "TAIAinvincibleOff"
-	.balign 4
+.balign 4
 lbl_802E1B54:
 	.4byte __RTTI__9TaiAction
 	.4byte 0
@@ -4233,17 +4233,17 @@ __vt__17TAIAinvincibleOff:
 	.4byte hasNextState__9TaiActionFv
 lbl_802E1B7C:
 	.asciz "TAIAflickingAfterMotionLoopBeatle"
-	.balign 4
+.balign 4
 lbl_802E1BA0:
 	.asciz "TAIAreserveMotion"
-	.balign 4
+.balign 4
 lbl_802E1BB4:
 	.4byte __RTTI__9TaiAction
 	.4byte 0
 	.4byte 0
 lbl_802E1BC0:
 	.asciz "TAIAmotionLoop"
-	.balign 4
+.balign 4
 lbl_802E1BD0:
 	.4byte __RTTI__9TaiAction
 	.4byte 0
@@ -4252,7 +4252,7 @@ lbl_802E1BD0:
 	.4byte 0
 lbl_802E1BE4:
 	.asciz "TAIAflickingAfterMotionLoop"
-	.balign 4
+.balign 4
 lbl_802E1C00:
 	.4byte __RTTI__9TaiAction
 	.4byte 0
@@ -4284,7 +4284,7 @@ __vt__33TAIAflickingAfterMotionLoopBeatle:
 	.4byte permitFlick__33TAIAflickingAfterMotionLoopBeatleFR4Teki
 lbl_802E1C64:
 	.asciz "TAIAoutsideTerritory"
-	.balign 4
+.balign 4
 lbl_802E1C7C:
 	.4byte __RTTI__9TaiAction
 	.4byte 0
@@ -4298,7 +4298,7 @@ lbl_802E1C7C:
 	.4byte 0
 lbl_802E1CA4:
 	.asciz "TAIArockAttack"
-	.balign 4
+.balign 4
 lbl_802E1CB4:
 	.4byte __RTTI__9TaiAction
 	.4byte 0
@@ -4316,17 +4316,17 @@ __vt__14TAIArockAttack:
 	.4byte hasNextState__9TaiActionFv
 lbl_802E1CE4:
 	.asciz "TAIAinsideOptionalRangeBeatle"
-	.balign 4
+.balign 4
 lbl_802E1D04:
 	.asciz "TAIAjudgeOptionalRange"
-	.balign 4
+.balign 4
 lbl_802E1D1C:
 	.4byte __RTTI__9TaiAction
 	.4byte 0
 	.4byte 0
 lbl_802E1D28:
 	.asciz "TAIAinsideOptionalRange"
-	.balign 4
+.balign 4
 lbl_802E1D40:
 	.4byte __RTTI__9TaiAction
 	.4byte 0
@@ -4355,7 +4355,7 @@ __vt__29TAIAinsideOptionalRangeBeatle:
 	.4byte judgement__23TAIAinsideOptionalRangeFR4Teki
 lbl_802E1D98:
 	.asciz "TAIAvisiblePikiBeatle"
-	.balign 4
+.balign 4
 lbl_802E1DB0:
 	.4byte __RTTI__9TaiAction
 	.4byte 0
@@ -4371,7 +4371,7 @@ __vt__21TAIAvisiblePikiBeatle:
 	.4byte hasNextState__9TaiActionFv
 lbl_802E1DD8:
 	.asciz "TAIAtimerReaction"
-	.balign 4
+.balign 4
 lbl_802E1DEC:
 	.4byte __RTTI__9TaiAction
 	.4byte 0
@@ -4386,10 +4386,10 @@ lbl_802E1DEC:
 	.4byte 0
 lbl_802E1E18:
 	.asciz "TAIAdamageBeatle"
-	.balign 4
+.balign 4
 lbl_802E1E2C:
 	.asciz "TAIAdamage"
-	.balign 4
+.balign 4
 lbl_802E1E38:
 	.4byte __RTTI__9TaiAction
 	.4byte 0
@@ -4412,10 +4412,10 @@ __vt__16TAIAdamageBeatle:
 	.4byte judgeDamage__16TAIAdamageBeatleFR4Teki
 lbl_802E1E78:
 	.asciz "TAIAdyingBeatle"
-	.balign 4
+.balign 4
 lbl_802E1E88:
 	.asciz "TAIAdying"
-	.balign 4
+.balign 4
 lbl_802E1E94:
 	.4byte __RTTI__9TaiAction
 	.4byte 0
@@ -4441,7 +4441,7 @@ __vt__15TAIAdyingBeatle:
 	.4byte hasNextState__9TaiActionFv
 lbl_802E1EE0:
 	.asciz "TAIAinitBeatle"
-	.balign 4
+.balign 4
 lbl_802E1EF0:
 	.4byte __RTTI__9TaiAction
 	.4byte 0
@@ -4464,10 +4464,10 @@ __vt__14TAIAinitBeatle:
 	.4byte 0
 lbl_802E1F34:
 	.asciz "TAIbeatleParameters"
-	.balign 4
+.balign 4
 lbl_802E1F48:
 	.asciz "CoreNode"
-	.balign 4
+.balign 4
 lbl_802E1F54:
 	.4byte __RTTI__5ANode
 	.4byte 0
@@ -4480,7 +4480,7 @@ lbl_802E1F60:
 	.4byte 0
 lbl_802E1F74:
 	.asciz "TekiParameters"
-	.balign 4
+.balign 4
 lbl_802E1F84:
 	.4byte __RTTI__5ANode
 	.4byte 0
@@ -4617,7 +4617,7 @@ __RTTI__14TAIAinitBeatle:
 	.4byte lbl_802E1EF0
 lbl_803E6A2C:
 	.asciz "ANode"
-	.balign 4
+.balign 4
 __RTTI__5ANode:
 	.4byte lbl_803E6A2C
 	.4byte 0
@@ -4626,7 +4626,7 @@ __RTTI__8CoreNode:
 	.4byte lbl_802E1F54
 lbl_803E6A44:
 	.asciz "Node"
-	.balign 4
+.balign 4
 __RTTI__4Node:
 	.4byte lbl_803E6A44
 	.4byte lbl_802E1F60

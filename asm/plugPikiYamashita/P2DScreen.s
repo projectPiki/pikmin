@@ -520,10 +520,10 @@ makeResName__9P2DScreenFPCcPc:
 .balign 0x8
 lbl_802E0768:
 	.asciz "P2DScreen.cpp"
-	.balign 4
+.balign 4
 lbl_802E0778:
 	.asciz "P2DScreen"
-	.balign 4
+.balign 4
 lbl_802E0784:
 	.4byte lbl_801B2D8C
 	.4byte lbl_801B2D90
@@ -572,7 +572,7 @@ __vt__9P2DScreen:
 .balign 0x8
 lbl_803E6640:
 	.asciz "P2DPane"
-	.balign 4
+.balign 4
 __RTTI__7P2DPane:
 	.4byte lbl_803E6640
 	.4byte 0

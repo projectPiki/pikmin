@@ -1133,16 +1133,16 @@ lbl_801C5980:
 .balign 0x8
 lbl_802E1778:
 	.asciz "TAIeffectAttack.cpp"
-	.balign 4
+.balign 4
 lbl_802E178C:
 	.asciz "TAIeffectAttack"
-	.balign 4
+.balign 4
 lbl_802E179C:
 	.asciz "ConeTypeCallBack"
-	.balign 4
+.balign 4
 lbl_802E17B0:
 	.asciz "zen::CallBack1<zen::particleGenerator *>"
-	.balign 4
+.balign 4
 lbl_802E17DC:
 	.4byte "__RTTI__Q23zen37CallBack1<PQ23zen17particleGenerator>"
 	.4byte 0
@@ -1154,7 +1154,7 @@ __vt__16ConeTypeCallBack:
 	.4byte invoke__16ConeTypeCallBackFPQ23zen17particleGenerator
 lbl_802E17F4:
 	.asciz "CylinderTypeCallBack"
-	.balign 4
+.balign 4
 lbl_802E180C:
 	.4byte "__RTTI__Q23zen37CallBack1<PQ23zen17particleGenerator>"
 	.4byte 0
@@ -1166,7 +1166,7 @@ __vt__20CylinderTypeCallBack:
 	.4byte invoke__20CylinderTypeCallBackFPQ23zen17particleGenerator
 lbl_802E1824:
 	.asciz "EventTypeCallBack"
-	.balign 4
+.balign 4
 lbl_802E1838:
 	.4byte "__RTTI__Q23zen37CallBack1<PQ23zen17particleGenerator>"
 	.4byte 0

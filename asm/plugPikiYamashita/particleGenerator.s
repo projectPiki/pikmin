@@ -4520,9 +4520,9 @@ lbl_801A0F08:
 .balign 0x8
 lbl_802DA620:
 	.asciz "particleGenerator.cpp"
-	.balign 4
+.balign 4
 	.asciz "particleGenerator"
-	.balign 32
+.balign 32
 .global lpsPos
 lpsPos:
 	.4byte 0xFFE70019

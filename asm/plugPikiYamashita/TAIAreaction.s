@@ -574,19 +574,19 @@ createEffect__17TAIAinWaterDamageFR4Teki:
 .balign 0x8
 lbl_802DF130:
 	.asciz "TAIAreaction.cpp"
-	.balign 4
+.balign 4
 lbl_802DF144:
 	.asciz "TAIAreaction"
-	.balign 4
+.balign 4
 lbl_802DF154:
 	.asciz "TAIAinWaterDamage"
-	.balign 4
+.balign 4
 lbl_802DF168:
 	.asciz "TaiAction"
-	.balign 4
+.balign 4
 lbl_802DF174:
 	.asciz "TAIAinWater"
-	.balign 4
+.balign 4
 lbl_802DF180:
 	.4byte __RTTI__9TaiAction
 	.4byte 0
@@ -617,7 +617,7 @@ __vt__11TAIAinWater:
 	.4byte hasNextState__9TaiActionFv
 lbl_802DF1D8:
 	.asciz "TAIAdamage"
-	.balign 4
+.balign 4
 lbl_802DF1E4:
 	.4byte __RTTI__9TaiAction
 	.4byte 0
@@ -634,17 +634,17 @@ __vt__10TAIAdamage:
 	.4byte judgeDamage__10TAIAdamageFR4Teki
 lbl_802DF210:
 	.asciz "TAIAdyingCrushKabekui"
-	.balign 4
+.balign 4
 lbl_802DF228:
 	.asciz "TAIAmotion"
-	.balign 4
+.balign 4
 lbl_802DF234:
 	.4byte __RTTI__9TaiAction
 	.4byte 0
 	.4byte 0
 lbl_802DF240:
 	.asciz "TAIAdying"
-	.balign 4
+.balign 4
 lbl_802DF24C:
 	.4byte __RTTI__9TaiAction
 	.4byte 0
@@ -653,7 +653,7 @@ lbl_802DF24C:
 	.4byte 0
 lbl_802DF260:
 	.asciz "TAIAdyingKabekui"
-	.balign 4
+.balign 4
 lbl_802DF274:
 	.4byte __RTTI__9TaiAction
 	.4byte 0
@@ -714,7 +714,7 @@ __vt__7TAIAdie:
 	.4byte hasNextState__9TaiActionFv
 lbl_802DF330:
 	.asciz "TAIAdeadCheck"
-	.balign 4
+.balign 4
 lbl_802DF340:
 	.4byte __RTTI__9TaiAction
 	.4byte 0
@@ -730,7 +730,7 @@ __vt__13TAIAdeadCheck:
 	.4byte hasNextState__9TaiActionFv
 lbl_802DF368:
 	.asciz "TAIAhitCheckFlyingPiki"
-	.balign 4
+.balign 4
 lbl_802DF380:
 	.4byte __RTTI__9TaiAction
 	.4byte 0
@@ -773,7 +773,7 @@ __RTTI__21TAIAdyingCrushKabekui:
 	.4byte lbl_802DF290
 lbl_803E6260:
 	.asciz "TAIAdie"
-	.balign 4
+.balign 4
 __RTTI__7TAIAdie:
 	.4byte lbl_803E6260
 	.4byte lbl_802DF308

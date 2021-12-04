@@ -1309,7 +1309,7 @@ __vt__7P2DPane:
 .balign 0x8
 lbl_803E65F0:
 	.asciz "P2DPane"
-	.balign 4
+.balign 4
 lbl_803E65F8:
 	.float 1.0
 lbl_803E65FC:
