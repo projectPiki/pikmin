@@ -75,3 +75,79 @@ lbl_80143F08:
 /* 80143F50 00140EB0  38 21 00 20 */	addi r1, r1, 0x20
 /* 80143F54 00140EB4  7C 08 03 A6 */	mtlr r0
 /* 80143F58 00140EB8  4E 80 00 20 */	blr 
+
+.section .data, "wa"  # 0x80222DC0 - 0x802E9640
+.balign 8
+lbl_802CCE38:
+	.asciz "tekianimationmanager.cpp"
+.balign 4
+lbl_802CCE54:
+	.asciz "tekianimationmanager"
+.balign 4
+lbl_802CCE6C:
+	.asciz "TekiAnimationManager"
+.balign 4
+lbl_802CCE84:
+	.asciz "CoreNode"
+.balign 4
+lbl_802CCE90:
+	.4byte 0x803E4308
+	.4byte 0x00000000
+	.4byte 0x00000000
+lbl_802CCE9C:
+	.4byte 0x803E4308
+	.4byte 0x00000000
+	.4byte 0x803E4310
+	.4byte 0x00000000
+	.4byte 0x00000000
+lbl_802CCEB0:
+	.4byte 0x803E4308
+	.4byte 0x00000000
+	.4byte 0x803E4310
+	.4byte 0x00000000
+	.4byte 0x803E4320
+	.4byte 0x00000000
+	.4byte 0x00000000
+.global __vt__20TekiAnimationManager
+__vt__20TekiAnimationManager:
+	.4byte __RTTI__20TekiAnimationManager
+	.4byte 0
+	.4byte getAgeNodeType__5ANodeFv
+	.4byte read__20TekiAnimationManagerFR18RandomAccessStream
+	.4byte update__4NodeFv
+	.4byte draw__4NodeFR8Graphics
+	.4byte render__4NodeFR8Graphics
+	.4byte concat__4NodeFv
+	.4byte concat__4NodeFR3VQS
+	.4byte concat__4NodeFR3SRT
+	.4byte concat__4NodeFR8Matrix4f
+	.4byte getModelMatrix__4NodeFv
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+
+.section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
+.balign 8
+lbl_803E4300:
+	.asciz "ANode"
+.balign 4
+__RTTI__5ANode:
+	.4byte lbl_803E4300
+	.4byte 0
+__RTTI__8CoreNode:
+	.4byte lbl_802CCE84
+	.4byte lbl_802CCE90
+.balign 4
+lbl_803E4318:
+	.asciz "Node"
+.balign 4
+__RTTI__4Node:
+	.4byte lbl_803E4318
+	.4byte lbl_802CCE9C
+__RTTI__20TekiAnimationManager:
+	.4byte lbl_802CCE6C
+	.4byte lbl_802CCEB0

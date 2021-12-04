@@ -15319,17 +15319,3 @@ __RTTI__10PelletView_1:
 __RTTI__4Teki:
 	.4byte 0x803E4298
 	.4byte 0x802CCBE4
-	.4byte 0x414E6F64
-	.4byte 0x65000000
-	.4byte 0x803E4300
-	.4byte 0
-	.4byte 0x802CCE84
-	.4byte 0x802CCE90
-	.4byte 0x4E6F6465
-	.4byte 0
-	.4byte 0x803E4318
-	.4byte 0x802CCE9C
-.global __RTTI__20TekiAnimationManager
-__RTTI__20TekiAnimationManager:
-	.4byte lbl_802CCE6C
-	.4byte 0x802CCEB0
