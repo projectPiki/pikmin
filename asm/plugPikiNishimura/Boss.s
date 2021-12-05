@@ -2430,22 +2430,22 @@ lbl_802CE828:
 	.asciz "Creature"
 .balign 4
 lbl_802CE834:
-	.4byte 0x803E4844
+	.4byte __RTTI__11EventTalker
 	.4byte 0x00000008
-	.4byte 0x803E484C
+	.4byte __RTTI__12RefCountable
 	.4byte 0x00000000
 	.4byte 0x00000000
 lbl_802CE848:
-	.4byte 0x803E4844
+	.4byte __RTTI__11EventTalker
 	.4byte 0x00000008
-	.4byte 0x803E484C
+	.4byte __RTTI__12RefCountable
 	.4byte 0x00000000
-	.4byte 0x803E4854
+	.4byte __RTTI__8Creature
 	.4byte 0x00000000
 	.4byte 0x00000000
 .global __vt__4Boss
 __vt__4Boss:
-	.4byte 0x803E485c
+	.4byte __RTTI__4Boss
 	.4byte 0
 	.4byte addCntCallback__12RefCountableFv
 	.4byte subCntCallback__12RefCountableFv
@@ -2548,7 +2548,7 @@ lbl_802CE9E4:
 	.asciz "BaseParm"
 .balign 4
 lbl_802CE9F0:
-	.4byte 0x803E4864
+	.4byte __RTTI__8BaseParm
 	.4byte 0
 	.4byte 0
 	.4byte 0
@@ -2564,12 +2564,12 @@ lbl_802CEA1C:
 	.asciz "CreatureProp"
 .balign 4
 lbl_802CEA2C:
-	.4byte 0x803E486c
+	.4byte __RTTI__12CreatureProp
 	.4byte 0
 	.4byte 0
 .global __vt__8BossProp
 __vt__8BossProp:
-	.4byte 0x803E4874
+	.4byte __RTTI__8BossProp
 	.4byte 0
 	.4byte read__8BossPropFR18RandomAccessStream
 .balign 4
@@ -2577,7 +2577,7 @@ lbl_802CEA44:
 	.asciz "Parm<float>"
 .balign 4
 lbl_802CEA50:
-	.4byte 0x803E4864
+	.4byte __RTTI__8BaseParm
 	.4byte 0
 	.4byte 0
 	.4byte 0
