@@ -15281,20 +15281,3 @@ __RTTI__16TaiShellStrategy:
 __RTTI__18TaiShellParameters:
 	.4byte 0x802CC8B0
 	.4byte 0x802CC8C4
-	.4byte 0
-	.4byte 0x802CC954
-	.4byte 0
-	.4byte 0x802CC960
-	.4byte 0x802CC970
-.global __RTTI__22TaiStartingTimerAction
-__RTTI__22TaiStartingTimerAction:
-	.4byte 0x802CC93C
-	.4byte 0x802CC97C
-.global __RTTI__21TaiTimerElapsedAction
-__RTTI__21TaiTimerElapsedAction:
-	.4byte 0x802CC9AC
-	.4byte 0x802CC9C4
-.global __RTTI__19TaiResetTimerAction
-__RTTI__19TaiResetTimerAction:
-	.4byte 0x802CC9EC
-	.4byte 0x802CCA00

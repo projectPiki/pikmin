@@ -2976,24 +2976,3 @@ lbl_803EA8FC:
 .global lbl_803EA900
 lbl_803EA900:
 	.4byte 0x41800000
-	.4byte 0x00000000
-.global lbl_803EA908
-lbl_803EA908:
-	.4byte 0x00000000
-.global lbl_803EA90C
-lbl_803EA90C:
-	.float 1.0
-.global lbl_803EA910
-lbl_803EA910:
-	.4byte 0x46FFFE00
-.global lbl_803EA914
-lbl_803EA914:
-	.4byte 0x40000000
-.global lbl_803EA918
-lbl_803EA918:
-	.4byte 0x3F000000
-	.4byte 0x00000000
-.global "@1697_2"
-"@1697_2":
-	.4byte 0x43300000
-	.4byte 0x80000000
