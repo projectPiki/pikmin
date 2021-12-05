@@ -4,6 +4,8 @@
 # MIT License
 # Copyright 2021
 
+# Modified by EpochFlame
+
 import argparse
 
 # Byte sequences that mark end of code
@@ -63,6 +65,17 @@ for seq in CBLR_BYTES:
             vanilla_findpos = vanilla_bytes.find(seq, vanilla_findpos)
             final_bytes = final_bytes[:vanilla_findpos] + vanilla_bytes[vanilla_findpos:vanilla_findpos+4] + final_bytes[vanilla_findpos+4:]
             vanilla_findpos+=1
+
+# Fix remaining branches to link register
+seq = b"\x4E\x80\x00\x20"
+vanilla_idx = vanilla_bytes.count(seq)
+final_idx = final_bytes.count(seq)
+if vanilla_idx > final_idx:
+    vanilla_findpos = 0
+    for x in range(vanilla_idx):
+        vanilla_findpos = vanilla_bytes.find(seq, vanilla_findpos)
+        final_bytes = final_bytes[:vanilla_findpos] + vanilla_bytes[vanilla_findpos:vanilla_findpos+4] + final_bytes[vanilla_findpos+4:]
+        vanilla_findpos+=1
 
 with open(args.target, "wb") as f:
     f.write(final_bytes)
