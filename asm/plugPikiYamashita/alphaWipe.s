@@ -262,13 +262,13 @@ lbl_801F1D3C:
 .balign 0x8
 .global lbl_803EC438
 lbl_803EC438:
-	.4byte 0x00000000
+	.float 0.0
 .global lbl_803EC43C
 lbl_803EC43C:
-	.4byte 0x3F800000
+	.float 1.0
 .global lbl_803EC440
 lbl_803EC440:
-	.4byte 0x437F0000
+	.float 255.0
 .global lbl_803EC444
 lbl_803EC444:
-	.4byte 0x3F000000
+	.float 0.5
