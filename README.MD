@@ -11,3 +11,6 @@ This edit modifies the compiler in such a way as to approximate older scheduling
 In this case, the epilogue should remain unscheduled.
 
 tool/frank.py cleans up the output.
+
+If compiler version 1.2.5 is required:
+change offset 0x35092 in 1.2.5 to 0x01 (normally 0x00)
