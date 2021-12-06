@@ -5,6 +5,12 @@ ifneq ($(findstring MSYS,$(shell uname)),)
   WINDOWS := 1
 endif
 
+VERBOSE ?= 0
+
+ifeq ($(VERBOSE),0)
+  QUIET := @
+endif
+
 #-------------------------------------------------------------------------------
 # Files
 #-------------------------------------------------------------------------------
@@ -46,10 +52,10 @@ endif
 # Tools
 #-------------------------------------------------------------------------------
 
-MWCC_VERSION := 1.0
+MWCC_VERSION := 1.2.5
 ifeq ($(EPILOGUE_PROCESS),1)
-MWCC_EPI_VERSION := 1.0
-MWCC_EPI_EXE := mwcceppc_profile.exe
+MWCC_EPI_VERSION := 1.2.5e
+MWCC_EPI_EXE := mwcceppc.exe
 endif
 MWLD_VERSION := 1.1
 
@@ -72,7 +78,6 @@ ELF2DOL := tools/elf2dol
 SHA1SUM := sha1sum
 PYTHON  := python3
 
-POSTPROC := tools/postprocess.py
 FRANK := tools/frank.py
 
 # Options
@@ -81,9 +86,6 @@ INCLUDES := -i include/
 ASFLAGS := -mgekko -I include/ 
 LDFLAGS := -map $(MAP) -fp hard -nodefaults
 CFLAGS  = -Cpp_exceptions off -O4,p -fp hard -proc gekko -nodefaults -RTTI on -msgstyle gcc $(INCLUDES)
-
-# for postprocess.py
-PROCFLAGS := -fepilogue-fixup=old_stack
 
 # $(BUILD_DIR)/src/plugPikiYamashita/TAIanimation.o: MWCC_VERSION := 1.0e
 # $(BUILD_DIR)/src/TRK_MINNOW_DOLPHIN/serpoll.o: MWCC_VERSION := 1.0
@@ -116,13 +118,14 @@ endif
 .PHONY: tools
 
 $(LDSCRIPT): ldscript.lcf
-	$(CPP) -MMD -MP -MT $@ -MF $@.d -I include/ -I . -DBUILD_DIR=$(BUILD_DIR) -o $@ $<
+	$(QUIET) $(CPP) -MMD -MP -MT $@ -MF $@.d -I include/ -I . -DBUILD_DIR=$(BUILD_DIR) -o $@ $<
 
 # DOL creation makefile instructions
 $(DOL): $(ELF) | tools
-	$(ELF2DOL) $< $@
-	$(SHA1SUM) -c sha1/$(NAME).$(VERSION).sha1
-	$(PYTHON) tools/calcprogress.py $@
+	@echo Converting $< to $@
+	$(QUIET) $(ELF2DOL) $< $@
+	$(QUIET) $(SHA1SUM) -c sha1/$(NAME).$(VERSION).sha1
+	$(QUIET) $(PYTHON) tools/calcprogress.py $@
 
 clean:
 	rm -f -d -r build
@@ -133,42 +136,48 @@ tools:
 
 # ELF creation makefile instructions
 ifeq ($(EPILOGUE_PROCESS),1)
+	@echo Linking ELF $@
 $(ELF): $(O_FILES) $(E_FILES) $(LDSCRIPT)
-	@echo $(O_FILES) > build/o_files
-	$(LD) $(LDFLAGS) -o $@ -lcf $(LDSCRIPT) @build/o_files
+	$(QUIET) @echo $(O_FILES) > build/o_files
+	$(QUIET) $(LD) $(LDFLAGS) -o $@ -lcf $(LDSCRIPT) @build/o_files
 else
 $(ELF): $(O_FILES) $(LDSCRIPT)
-	@echo $(O_FILES) > build/o_files
-	$(LD) $(LDFLAGS) -o $@ -lcf $(LDSCRIPT) @build/o_files
+	@echo Linking ELF $@
+	$(QUIET) @echo $(O_FILES) > build/o_files
+	$(QUIET) $(LD) $(LDFLAGS) -o $@ -lcf $(LDSCRIPT) @build/o_files
 endif
 
 $(BUILD_DIR)/%.o: %.s
-	$(AS) $(ASFLAGS) -o $@ $<
+	@echo Assembling $<
+	$(QUIET) $(AS) $(ASFLAGS) -o $@ $<
 
 $(BUILD_DIR)/%.o: %.c
-	$(CC) $(CFLAGS) -c -o $@ $<
-	#$(PYTHON) $(POSTPROC) $(PROCFLAGS) $@
+	@echo Compiling $<
+	$(QUIET) $(CC) $(CFLAGS) -c -o $@ $<
 
 $(BUILD_DIR)/%.o: %.cp
-	$(CC) $(CFLAGS) -c -o $@ $<
-	#$(PYTHON) $(POSTPROC) $(PROCFLAGS) $@
+	@echo Compiling $<
+	$(QUIET) $(CC) $(CFLAGS) -c -o $@ $<
 	
 $(BUILD_DIR)/%.o: %.cpp
-	$(CC) $(CFLAGS) -c -o $@ $<
-	#$(PYTHON) $(POSTPROC) $(PROCFLAGS) $@
+	@echo Compiling $<
+	$(QUIET) $(CC) $(CFLAGS) -c -o $@ $<
 
 ifeq ($(EPILOGUE_PROCESS),1)
 $(EPILOGUE_DIR)/%.o: %.c $(BUILD_DIR)/%.o
-	$(CC_EPI) $(CFLAGS) -c -o $@ $<
-	$(PYTHON) $(FRANK) $(word 2,$^) $@ $(word 2,$^)
+	@echo Frank is fixing $<
+	$(QUIET) $(CC_EPI) $(CFLAGS) -c -o $@ $<
+	$(QUIET) $(PYTHON) $(FRANK) $(word 2,$^) $@ $(word 2,$^)
 
 $(EPILOGUE_DIR)/%.o: %.cp $(BUILD_DIR)/%.o
-	$(CC_EPI) $(CFLAGS) -c -o $@ $<
-	$(PYTHON) $(FRANK) $(word 2,$^) $@ $(word 2,$^)
+	@echo Frank is fixing $<
+	$(QUIET) $(CC_EPI) $(CFLAGS) -c -o $@ $<
+	$(QUIET) $(PYTHON) $(FRANK) $(word 2,$^) $@ $(word 2,$^)
 
 $(EPILOGUE_DIR)/%.o: %.cpp $(BUILD_DIR)/%.o
-	$(CC_EPI) $(CFLAGS) -c -o $@ $<
-	$(PYTHON) $(FRANK) $(word 2,$^) $@ $(word 2,$^)
+	@echo Frank is fixing $<
+	$(QUIET) $(CC_EPI) $(CFLAGS) -c -o $@ $<
+	$(QUIET) $(PYTHON) $(FRANK) $(word 2,$^) $@ $(word 2,$^)
 endif
 
 ### Debug Print ###
