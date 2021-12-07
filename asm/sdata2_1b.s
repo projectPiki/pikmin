@@ -1528,4 +1528,7 @@ lbl_803E97FC:
 	.4byte 0x00000000
 .global lbl_803E9808
 lbl_803E9808:
-	.4byte 0x3F333333
+	.float 0.7
+.global lbl_803E980C
+lbl_803E980C:
+	.float 10.0
