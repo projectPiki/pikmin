@@ -2470,28 +2470,3 @@ lbl_803EA630:
 "@2673":
 	.4byte 0x43300000
 	.4byte 0x80000000
-.global lbl_803EA640
-lbl_803EA640:
-	.float 1.0
-.global lbl_803EA644
-lbl_803EA644:
-	.4byte 0x46FFFE00
-.global "@1255_1"
-"@1255_1":
-	.4byte 0x43300000
-	.4byte 0x80000000
-.global lbl_803EA650
-lbl_803EA650:
-	.4byte 0x00000000
-.global lbl_803EA654
-lbl_803EA654:
-	.float 1.0
-.global lbl_803EA658
-lbl_803EA658:
-	.float 0.5
-.global lbl_803EA65C
-lbl_803EA65C:
-	.float 10.0
-.global lbl_803EA660
-lbl_803EA660:
-	.4byte 0x3DCCCCCD
