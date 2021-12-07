@@ -6061,107 +6061,115 @@ __RTTI__5SeWin:
 __RTTI__5SeMgr:
 	.4byte 0x803DFA04
 	.4byte 0x802B1CA8
-	.4byte 0
+.balign 8
 .global lbl_803DFA28
 lbl_803DFA28:
-	.4byte 0x3C4E6F64
-	.4byte 0x653E0000
+	.asciz "<Node>"
+.balign 4
 .global lbl_803DFA30
 lbl_803DFA30:
-	.4byte 0x70303000
+	.asciz "p00"
+.balign 4
 .global lbl_803DFA34
 lbl_803DFA34:
-	.4byte 0x70303100
+	.asciz "p01"
+.balign 4
 .global lbl_803DFA38
 lbl_803DFA38:
-	.4byte 0x70303200
+	.asciz "p02"
+.balign 4
 .global lbl_803DFA3C
 lbl_803DFA3C:
-	.4byte 0x7061726D
-	.4byte 0x732F0000
+	.asciz "parms/"
+.balign 4
 	.4byte 0x802B1D44
 	.4byte 0x00000000
-	.4byte 0x414E6F64
-	.4byte 0x65000000
+.balign 4
+	.asciz "ANode"
+.balign 4
 	.4byte 0x803DFA4C
 	.4byte 0x00000000
 	.4byte 0x802B1D7C
 	.4byte 0x802B1D88
-	.4byte 0x4E6F6465
-	.4byte 0x00000000
+.balign 4
+	.asciz "Node"
+.balign 4
 	.4byte 0x803DFA64
 	.4byte 0x802B1D94
 .global __RTTI__10SeConstant
 __RTTI__10SeConstant:
 	.4byte 0x802B1D70
 	.4byte 0x802B1DA8
-	.4byte 0
-	.4byte 0x53455F42
-	.4byte 0x4F4D4200
-	.4byte 0x64756D6D
-	.4byte 0x79203100
-	.4byte 0x64756D6D
-	.4byte 0x79203200
-	.4byte 0x64756D6D
-	.4byte 0x79203300
-	.4byte 0x64756D6D
-	.4byte 0x79203400
-	.4byte 0x64756D6D
-	.4byte 0x79203500
+.balign 8
+.global lbl_803DFA80
+lbl_803DFA80:
+	.asciz "SE_BOMB"
+.balign 4
+	.asciz "dummy 1"
+.balign 4
+	.asciz "dummy 2"
+.balign 4
+	.asciz "dummy 3"
+.balign 4
+	.asciz "dummy 4"
+.balign 4
+	.asciz "dummy 5"
+.balign 4
 .global lbl_803DFAB0
 lbl_803DFAB0:
-	.4byte 0x00000000
+	.float 0.0
 .global lbl_803DFAB4
 lbl_803DFAB4:
-	.4byte 0x00000000
+	.float 0.0
 .global lbl_803DFAB8
 lbl_803DFAB8:
-	.4byte 0x00000000
+	.float 0.0
 .global lbl_803DFABC
 lbl_803DFABC:
-	.4byte 0x00000000
+	.float 0.0
 .global lbl_803DFAC0
 lbl_803DFAC0:
-	.4byte 0x00000000
+	.float 0.0
 .global lbl_803DFAC4
 lbl_803DFAC4:
-	.4byte 0x00000000
+	.float 0.0
 .global lbl_803DFAC8
 lbl_803DFAC8:
-	.4byte 0x00000000
+	.float 0.0
 .global lbl_803DFACC
 lbl_803DFACC:
-	.4byte 0x00000000
+	.float 0.0
 .global lbl_803DFAD0
 lbl_803DFAD0:
-	.4byte 0x00000000
+	.float 0.0
 .global lbl_803DFAD4
 lbl_803DFAD4:
-	.4byte 0x00000000
+	.float 0.0
 .global lbl_803DFAD8
 lbl_803DFAD8:
-	.4byte 0x00000000
+	.float 0.0
 .global lbl_803DFADC
 lbl_803DFADC:
-	.4byte 0x00000000
+	.float 0.0
 .global lbl_803DFAE0
 lbl_803DFAE0:
-	.4byte 0x00000000
+	.float 0.0
 .global lbl_803DFAE4
 lbl_803DFAE4:
-	.4byte 0x00000000
+	.float 0.0
 .global lbl_803DFAE8
 lbl_803DFAE8:
-	.4byte 0x00000000
+	.float 0.0
 .global lbl_803DFAEC
 lbl_803DFAEC:
-	.4byte 0x00000000
+	.float 0.0
 .global lbl_803DFAF0
 lbl_803DFAF0:
-	.4byte 0x00000000
+	.float 0.0
 .global lbl_803DFAF4
 lbl_803DFAF4:
-	.4byte 0x00000000
+	.float 0.0
+.balign 4
 .global lbl_803DFAF8
 lbl_803DFAF8:
 	.asciz "SE %d"

@@ -15613,37 +15613,27 @@ lbl_802AD6E8:
 	.4byte lbl_8007D198
 	.4byte lbl_8007D24C
 	.4byte lbl_8007D238
-	.4byte 0x00000000
+.balign 8
 .global lbl_802AD718
 lbl_802AD718:
-	.4byte 0x73696D70
-	.4byte 0x6C654149
-	.4byte 0x2E637070
-	.4byte 0x00000000
-	.4byte 0x73696D70
-	.4byte 0x6C654149
-	.4byte 0x00000000
+	.asciz "simpleAI.cpp"
+.balign 4
+	.asciz "simpleAI"
+.balign 4
 .global lbl_802AD734
 lbl_802AD734:
-	.4byte 0x53414941
-	.4byte 0x72726F77
-	.4byte 0x00000000
+	.asciz "SAIArrow"
+.balign 4
 .global lbl_802AD740
 lbl_802AD740:
-	.4byte 0x436F7265
-	.4byte 0x4E6F6465
-	.4byte 0x00000000
-	.4byte 0x53414941
-	.4byte 0x72726F77
-	.4byte 0x526F6F74
-	.4byte 0x00000000
-	.4byte 0x73616943
-	.4byte 0x6F6E6469
-	.4byte 0x74696F6E
-	.4byte 0x00000000
-	.4byte 0x726F6F74
-	.4byte 0x4172726F
-	.4byte 0x77000000
+	.asciz "CoreNode"
+.balign 4
+	.asciz "SAIArrowRoot"
+.balign 4
+	.asciz "saiCondition"
+.balign 4
+	.asciz "rootArrow"
+.balign 4
 	.4byte lbl_8007D184
 	.4byte lbl_8007D1AC
 	.4byte lbl_8007D1C0
@@ -15655,20 +15645,13 @@ lbl_802AD740:
 	.4byte lbl_8007D198
 	.4byte lbl_8007D24C
 	.4byte lbl_8007D238
-	.4byte 0x53414953
-	.4byte 0x74617465
-	.4byte 0x00000000
-	.4byte 0x52656365
-	.4byte 0x69766572
-	.4byte 0x3C414943
-	.4byte 0x72656174
-	.4byte 0x7572653E
-	.4byte 0x00000000
-	.4byte 0x41537461
-	.4byte 0x74653C41
-	.4byte 0x49437265
-	.4byte 0x61747572
-	.4byte 0x653E0000
+.balign 4
+	.asciz "SAIState"
+.balign 4
+	.asciz "Receiver<AICreature>"
+.balign 4
+	.asciz "AState<AICreature>"
+.balign 4
 	.4byte 0x803DEA98
 	.4byte 0x00000000
 	.4byte 0x00000000
@@ -20331,1807 +20314,1225 @@ __vt__10SeConstant:
 	.4byte 0
 	.4byte 0
 	.4byte 0
+.balign 8
 .global lbl_802B1E10
 lbl_802B1E10:
 	.asciz "soundMgr.cpp"
 .balign 4
+lbl_802B1E20:
 	.asciz "soundMgr"
 .balign 4
+lbl_802B1E2C:
 	.asciz "SE_BATTLE_START"
 .balign 4
+lbl_802B1E3C:
 	.asciz "SE_CHAPPY_WALK"
 .balign 4
+lbl_802B1E4C:
 	.asciz "SE_CHAPPY_DIE"
 .balign 4
+lbl_802B1E5C:
 	.asciz "SE_CHAPPY_SWING"
 .balign 4
+lbl_802B1E6C:
 	.asciz "SE_CHAPPY_SLEEP"
 .balign 4
+lbl_802B1E7C:
 	.asciz "SE_CHAPPY_BITE"
 .balign 4
+lbl_802B1E8C:
 	.asciz "SE_CHAPPY_EAT"
 .balign 4
+lbl_802B1E9C:
 	.asciz "SE_CHAPPY_DOWN"
 .balign 4
+lbl_802B1EAC:
 	.asciz "SE_CHAPPY_FOOTDAMAGE"
 .balign 4
+lbl_802B1EC4:
 	.asciz "SE_CHAPPY_BITE2"
 .balign 4
+lbl_802B1ED4:
 	.asciz "SE_FLOG_WALK"
 .balign 4
+lbl_802B1EE4:
 	.asciz "SE_FLOG_DIE"
 .balign 4
+lbl_802B1EF0:
 	.asciz "SE_FLOG_FALL"
 .balign 4
+lbl_802B1F00:
 	.asciz "SE_FLOG_HIJUMP"
 .balign 4
+lbl_802B1F10:
 	.asciz "SE_FLOG_JUMP"
 .balign 4
+lbl_802B1F20:
 	.asciz "SE_FLOG_DOWN"
 .balign 4
+lbl_802B1F30:
 	.asciz "SE_FLOG_LAND"
 .balign 4
+lbl_802B1F40:
 	.asciz "SE_FLOG_VOICE"
 .balign 4
+lbl_802B1F50:
 	.asciz "SE_FLOG_ATTACK"
 .balign 4
+lbl_802B1F60:
 	.asciz "SE_FLOG_EAT"
 .balign 4
+lbl_802B1F6C:
 	.asciz "SE_FLOG_WATERJUMP"
 .balign 4
+lbl_802B1F80:
 	.asciz "SE_FLOG_WATERLAND"
 .balign 4
+lbl_802B1F94:
 	.asciz "SE_PIKI_EATEN"
 .balign 4
+lbl_802B1FA4:
 	.asciz "SE_PIKI_ATTACK_VOICE"
 .balign 4
+lbl_802B1FBC:
 	.asciz "SE_MISSHIT"
 .balign 4
+lbl_802B1FC8:
 	.asciz "SE_PIKI_ATTACK_HIT"
 .balign 4
+lbl_802B1FDC:
 	.asciz "SE_PIKI_DAMAGED"
 .balign 4
+lbl_802B1FEC:
 	.asciz "SE_PIKI_PRESSED"
 .balign 4
+lbl_802B1FFC:
 	.asciz "SE_WALL_HIT"
 .balign 4
-	.4byte 0x53455F53
-	.4byte 0x4F465457
-	.4byte 0x414C4C5F
-	.4byte 0x48495400
-	.4byte 0x53455F57
-	.4byte 0x414C4C5F
-	.4byte 0x444F574E
-	.4byte 0x00000000
-	.4byte 0x53455F4D
-	.4byte 0x494E4943
-	.4byte 0x5F57414C
-	.4byte 0x4B000000
-	.4byte 0x53455F4D
-	.4byte 0x494E4943
-	.4byte 0x5F464F4F
-	.4byte 0x5444414D
-	.4byte 0x41474500
-	.4byte 0x53455F4D
-	.4byte 0x494E4943
-	.4byte 0x5F444945
-	.4byte 0x00000000
-	.4byte 0x53455F4D
-	.4byte 0x494E4943
-	.4byte 0x5F535749
-	.4byte 0x4E470000
-	.4byte 0x53455F4D
-	.4byte 0x494E4943
-	.4byte 0x5F424954
-	.4byte 0x45000000
-	.4byte 0x53455F4D
-	.4byte 0x494E4943
-	.4byte 0x5F454154
-	.4byte 0x00000000
-	.4byte 0x53455F4D
-	.4byte 0x494E4943
-	.4byte 0x5F444F57
-	.4byte 0x4E000000
-	.4byte 0x53455F4D
-	.4byte 0x494E4943
-	.4byte 0x5F414C45
-	.4byte 0x52540000
-	.4byte 0x53455F53
-	.4byte 0x4E414B45
-	.4byte 0x5F415050
-	.4byte 0x45415200
-	.4byte 0x53455F53
-	.4byte 0x50494445
-	.4byte 0x525F5741
-	.4byte 0x4C4B0000
-	.4byte 0x53455F53
-	.4byte 0x50494445
-	.4byte 0x525F4C41
-	.4byte 0x4E440000
-	.4byte 0x53455F53
-	.4byte 0x50494445
-	.4byte 0x525F5357
-	.4byte 0x494E4700
-	.4byte 0x53455F53
-	.4byte 0x50494445
-	.4byte 0x525F4445
-	.4byte 0x41440000
-	.4byte 0x53455F53
-	.4byte 0x50494445
-	.4byte 0x525F424F
-	.4byte 0x4D420000
-	.4byte 0x53455F46
-	.4byte 0x4C4F5745
-	.4byte 0x525F444F
-	.4byte 0x574E0000
-	.4byte 0x53455F46
-	.4byte 0x4C4F5745
-	.4byte 0x525F434F
-	.4byte 0x4E56554C
-	.4byte 0x53494F4E
-	.4byte 0x00000000
-	.4byte 0x53455F46
-	.4byte 0x4C4F5745
-	.4byte 0x525F4752
-	.4byte 0x4F573000
-	.4byte 0x53455F46
-	.4byte 0x4C4F5745
-	.4byte 0x525F4752
-	.4byte 0x4F573100
-	.4byte 0x53455F46
-	.4byte 0x4C4F5745
-	.4byte 0x525F4752
-	.4byte 0x4F573200
-	.4byte 0x53455F50
-	.4byte 0x494B495F
-	.4byte 0x44454144
-	.4byte 0x00000000
-	.4byte 0x53455F53
-	.4byte 0x4E414B45
-	.4byte 0x5F444947
-	.4byte 0x00000000
-	.4byte 0x53455F53
-	.4byte 0x4E414B45
-	.4byte 0x5F53484F
-	.4byte 0x55540000
-	.4byte 0x53455F53
-	.4byte 0x4E414B45
-	.4byte 0x5F454154
-	.4byte 0x00000000
-	.4byte 0x53455F53
-	.4byte 0x4E414B45
-	.4byte 0x5F445249
-	.4byte 0x4E4B0000
-	.4byte 0x53455F53
-	.4byte 0x4E414B45
-	.4byte 0x5F545552
-	.4byte 0x4E000000
-	.4byte 0x53455F53
-	.4byte 0x4E414B45
-	.4byte 0x5F4D4F47
-	.4byte 0x414B5500
-	.4byte 0x53455F53
-	.4byte 0x4E414B45
-	.4byte 0x5F444541
-	.4byte 0x44310000
-	.4byte 0x53455F53
-	.4byte 0x4E414B45
-	.4byte 0x5F444541
-	.4byte 0x44320000
-	.4byte 0x53455F54
-	.4byte 0x414E4B5F
-	.4byte 0x46495245
-	.4byte 0x00000000
-	.4byte 0x53455F54
-	.4byte 0x414E4B5F
-	.4byte 0x42524541
-	.4byte 0x54480000
-	.4byte 0x53455F54
-	.4byte 0x414E4B5F
-	.4byte 0x57414C4B
-	.4byte 0x00000000
-	.4byte 0x53455F54
-	.4byte 0x414E4B5F
-	.4byte 0x5357494E
-	.4byte 0x47000000
-	.4byte 0x53455F54
-	.4byte 0x414E4B5F
-	.4byte 0x44414D41
-	.4byte 0x47450000
-	.4byte 0x53455F54
-	.4byte 0x414E4B5F
-	.4byte 0x44454144
-	.4byte 0x31000000
-	.4byte 0x53455F54
-	.4byte 0x414E4B5F
-	.4byte 0x44454144
-	.4byte 0x32000000
-	.4byte 0x53455F4D
-	.4byte 0x5553485F
-	.4byte 0x57414C4B
-	.4byte 0x00000000
-	.4byte 0x53455F4D
-	.4byte 0x5553485F
-	.4byte 0x464C4950
-	.4byte 0x00000000
-	.4byte 0x53455F4D
-	.4byte 0x5553485F
-	.4byte 0x54554D42
-	.4byte 0x4C450000
-	.4byte 0x53455F4D
-	.4byte 0x5553485F
-	.4byte 0x47455455
-	.4byte 0x50000000
-	.4byte 0x53455F4D
-	.4byte 0x5553485F
-	.4byte 0x4C414E44
-	.4byte 0x00000000
-	.4byte 0x53455F4D
-	.4byte 0x5553485F
-	.4byte 0x54414D45
-	.4byte 0x00000000
-	.4byte 0x53455F4D
-	.4byte 0x5553485F
-	.4byte 0x53504F52
-	.4byte 0x45000000
-	.4byte 0x53455F4D
-	.4byte 0x5553485F
-	.4byte 0x44414D41
-	.4byte 0x47450000
-	.4byte 0x53455F4D
-	.4byte 0x5553485F
-	.4byte 0x44454144
-	.4byte 0x31000000
-	.4byte 0x53455F4D
-	.4byte 0x5553485F
-	.4byte 0x44454144
-	.4byte 0x32000000
-	.4byte 0x53455F4B
-	.4byte 0x494E475F
-	.4byte 0x57414C4B
-	.4byte 0x00000000
-	.4byte 0x53455F4B
-	.4byte 0x494E475F
-	.4byte 0x52454144
-	.4byte 0x59000000
-	.4byte 0x53455F4B
-	.4byte 0x494E475F
-	.4byte 0x4245524F
-	.4byte 0x31000000
-	.4byte 0x53455F4B
-	.4byte 0x494E475F
-	.4byte 0x4245524F
-	.4byte 0x32000000
-	.4byte 0x53455F4B
-	.4byte 0x494E475F
-	.4byte 0x47455050
-	.4byte 0x55000000
-	.4byte 0x53455F4B
-	.4byte 0x494E475F
-	.4byte 0x4452494E
-	.4byte 0x4B000000
-	.4byte 0x53455F4B
-	.4byte 0x494E475F
-	.4byte 0x45415400
-	.4byte 0x53455F4B
-	.4byte 0x494E475F
-	.4byte 0x43484545
-	.4byte 0x4B000000
-	.4byte 0x53455F4B
-	.4byte 0x494E475F
-	.4byte 0x4E414D45
-	.4byte 0x00000000
-	.4byte 0x53455F4B
-	.4byte 0x494E475F
-	.4byte 0x48495000
-	.4byte 0x53455F4B
-	.4byte 0x494E475F
-	.4byte 0x44454144
-	.4byte 0x31000000
-	.4byte 0x53455F4B
-	.4byte 0x494E475F
-	.4byte 0x44454144
-	.4byte 0x32000000
-	.4byte 0x53455F4B
-	.4byte 0x494E475F
-	.4byte 0x41505045
-	.4byte 0x41520000
-	.4byte 0x53455F4B
-	.4byte 0x494E475F
-	.4byte 0x53494E4B
-	.4byte 0x00000000
-	.4byte 0x53455F4B
-	.4byte 0x41425554
-	.4byte 0x4F5F4252
-	.4byte 0x45415448
-	.4byte 0x00000000
-	.4byte 0x53455F4B
-	.4byte 0x41425554
-	.4byte 0x4F5F5455
-	.4byte 0x4D415249
-	.4byte 0x00000000
-	.4byte 0x53455F4B
-	.4byte 0x41425554
-	.4byte 0x4F5F4F50
-	.4byte 0x454E0000
-	.4byte 0x53455F4B
-	.4byte 0x41425554
-	.4byte 0x4F5F5348
-	.4byte 0x4F540000
-	.4byte 0x53455F4B
-	.4byte 0x41425554
-	.4byte 0x4F5F464C
-	.4byte 0x49500000
-	.4byte 0x53455F4B
-	.4byte 0x41425554
-	.4byte 0x4F5F5741
-	.4byte 0x4C4B0000
-	.4byte 0x53455F4B
-	.4byte 0x41425554
-	.4byte 0x4F5F434F
-	.4byte 0x4F4C444F
-	.4byte 0x574E0000
-	.4byte 0x53455F4B
-	.4byte 0x41425554
-	.4byte 0x4F5F4F56
-	.4byte 0x45524845
-	.4byte 0x41540000
-	.4byte 0x53455F4B
-	.4byte 0x41425554
-	.4byte 0x4F5F4445
-	.4byte 0x41440000
-	.4byte 0x53455F52
-	.4byte 0x4F434B5F
-	.4byte 0x524F4C4C
-	.4byte 0x00000000
-	.4byte 0x53455F52
-	.4byte 0x4F434B5F
-	.4byte 0x42524541
-	.4byte 0x4B000000
-	.4byte 0x53455F52
-	.4byte 0x4F434B5F
-	.4byte 0x47454E45
-	.4byte 0x5241544F
-	.4byte 0x52000000
-	.4byte 0x53455F53
-	.4byte 0x48454C4C
-	.4byte 0x5F434C4F
-	.4byte 0x53450000
-	.4byte 0x53455F53
-	.4byte 0x48454C4C
-	.4byte 0x5F524541
-	.4byte 0x44590000
-	.4byte 0x53455F53
-	.4byte 0x48454C4C
-	.4byte 0x5F545245
-	.4byte 0x53555245
-	.4byte 0x00000000
-	.4byte 0x53455F53
-	.4byte 0x48454C4C
-	.4byte 0x5F4F5045
-	.4byte 0x4E000000
-	.4byte 0x53455F53
-	.4byte 0x48454C4C
-	.4byte 0x5F454154
-	.4byte 0x00000000
-	.4byte 0x53455F4B
-	.4byte 0x494E4F4B
-	.4byte 0x4F50494B
-	.4byte 0x495F4D4F
-	.4byte 0x52504800
-	.4byte 0x53455F4B
-	.4byte 0x494E4F4B
-	.4byte 0x4F50494B
-	.4byte 0x495F4441
-	.4byte 0x4E434500
-	.4byte 0x53455F43
-	.4byte 0x4F4C4C45
-	.4byte 0x435F4252
-	.4byte 0x45415448
-	.4byte 0x00000000
-	.4byte 0x53455F43
-	.4byte 0x4F4C4C45
-	.4byte 0x435F5055
-	.4byte 0x4C4C0000
-	.4byte 0x53455F43
-	.4byte 0x4F4C4C45
-	.4byte 0x435F5741
-	.4byte 0x4C4B0000
-	.4byte 0x53455F43
-	.4byte 0x4F4C4C45
-	.4byte 0x435F5357
-	.4byte 0x494E4700
-	.4byte 0x53455F43
-	.4byte 0x4F4C4C45
-	.4byte 0x435F4445
-	.4byte 0x41440000
-	.4byte 0x53455F43
-	.4byte 0x4F4C4C45
-	.4byte 0x435F444F
-	.4byte 0x574E0000
-	.4byte 0x53455F43
-	.4byte 0x4F4C4C45
-	.4byte 0x435F4352
-	.4byte 0x59000000
-	.4byte 0x53455F43
-	.4byte 0x4F4C4C45
-	.4byte 0x435F4441
-	.4byte 0x4D414745
-	.4byte 0x00000000
-	.4byte 0x53455F4B
-	.4byte 0x4F47414E
-	.4byte 0x455F5741
-	.4byte 0x4C4B0000
-	.4byte 0x53455F4B
-	.4byte 0x4F47414E
-	.4byte 0x455F4441
-	.4byte 0x4D414745
-	.4byte 0x00000000
-	.4byte 0x53455F53
-	.4byte 0x41524149
-	.4byte 0x5F484F56
-	.4byte 0x45520000
-	.4byte 0x53455F53
-	.4byte 0x41524149
-	.4byte 0x5F44414D
-	.4byte 0x41474500
-	.4byte 0x53455F53
-	.4byte 0x41524149
-	.4byte 0x5F415454
-	.4byte 0x41434B00
-	.4byte 0x53455F53
-	.4byte 0x41524149
-	.4byte 0x5F444541
-	.4byte 0x44000000
-	.4byte 0x53455F57
-	.4byte 0x414C4C45
-	.4byte 0x41545F57
-	.4byte 0x414C4B00
-	.4byte 0x53455F57
-	.4byte 0x414C4C45
-	.4byte 0x41545F4E
-	.4byte 0x49500000
-	.4byte 0x53455F57
-	.4byte 0x414C4C45
-	.4byte 0x41545F45
-	.4byte 0x41540000
-	.4byte 0x53455F57
-	.4byte 0x414C4C45
-	.4byte 0x41545F41
-	.4byte 0x50504541
-	.4byte 0x52000000
-	.4byte 0x53455F4D
-	.4byte 0x41525F46
-	.4byte 0x4C590000
-	.4byte 0x53455F4D
-	.4byte 0x41525F42
-	.4byte 0x52454154
-	.4byte 0x48000000
-	.4byte 0x53455F4D
-	.4byte 0x41525F57
-	.4byte 0x494E4400
-	.4byte 0x53455F4D
-	.4byte 0x41525F44
-	.4byte 0x524F5000
-	.4byte 0x53455F4D
-	.4byte 0x41525F44
-	.4byte 0x45414431
-	.4byte 0x00000000
-	.4byte 0x53455F4D
-	.4byte 0x41525F44
-	.4byte 0x45414432
-	.4byte 0x00000000
-	.4byte 0x53455F4D
-	.4byte 0x49555249
-	.4byte 0x4E5F5741
-	.4byte 0x4C4B0000
-	.4byte 0x53455F4D
-	.4byte 0x49555249
-	.4byte 0x4E5F5055
-	.4byte 0x4E434800
-	.4byte 0x53455F4D
-	.4byte 0x49555249
-	.4byte 0x4E5F5349
-	.4byte 0x4E470000
-	.4byte 0x53455F4B
-	.4byte 0x5552494F
-	.4byte 0x4E455F48
-	.4byte 0x49540000
-	.4byte 0x53455F4B
-	.4byte 0x5552494F
-	.4byte 0x4E455F45
-	.4byte 0x53434150
-	.4byte 0x45000000
-	.4byte 0x53455F4B
-	.4byte 0x5552494F
-	.4byte 0x4E455F57
-	.4byte 0x41544552
-	.4byte 0x00000000
-	.4byte 0x53455F4B
-	.4byte 0x5552494F
-	.4byte 0x4E455F46
-	.4byte 0x4C59494E
-	.4byte 0x47000000
-	.4byte 0x53455F53
-	.4byte 0x4C494D45
-	.4byte 0x5F57414C
-	.4byte 0x4B000000
-	.4byte 0x53455F53
-	.4byte 0x4C494D45
-	.4byte 0x5F484954
-	.4byte 0x5F534D41
-	.4byte 0x4C4C0000
-	.4byte 0x53455F53
-	.4byte 0x4C494D45
-	.4byte 0x5F484954
-	.4byte 0x5F4D4944
-	.4byte 0x00000000
-	.4byte 0x53455F53
-	.4byte 0x4C494D45
-	.4byte 0x5F484954
-	.4byte 0x5F4C4152
-	.4byte 0x47450000
-	.4byte 0x53455F53
-	.4byte 0x4C494D45
-	.4byte 0x5F444541
-	.4byte 0x44000000
-	.4byte 0x53455F53
-	.4byte 0x4C494D45
-	.4byte 0x5F455854
-	.4byte 0x31000000
-	.4byte 0x53455F53
-	.4byte 0x4C494D45
-	.4byte 0x5F455854
-	.4byte 0x32000000
-	.4byte 0x53455F53
-	.4byte 0x4C494D45
-	.4byte 0x5F455854
-	.4byte 0x33000000
-	.4byte 0x53455F53
-	.4byte 0x4C494D45
-	.4byte 0x5F444953
-	.4byte 0x41505045
-	.4byte 0x41520000
-	.4byte 0x53455F44
-	.4byte 0x4F524F52
-	.4byte 0x4F5F5741
-	.4byte 0x4C4B0000
-	.4byte 0x53455F44
-	.4byte 0x4F524F52
-	.4byte 0x4F5F4352
-	.4byte 0x59000000
-	.4byte 0x53455F44
-	.4byte 0x4F524F52
-	.4byte 0x4F5F4445
-	.4byte 0x41440000
-	.4byte 0x53455F44
-	.4byte 0x4F524F52
-	.4byte 0x4F5F5357
-	.4byte 0x494E4700
-	.4byte 0x53455F44
-	.4byte 0x4F524F52
-	.4byte 0x4F5F4547
-	.4byte 0x475F4352
-	.4byte 0x41534800
-	.4byte 0x53455F44
-	.4byte 0x4F524F52
-	.4byte 0x4F5F4352
-	.4byte 0x41534800
-	.4byte 0x53455F50
-	.4byte 0x4F4E4741
-	.4byte 0x5348495F
-	.4byte 0x5448524F
-	.4byte 0x57494E00
-	.4byte 0x53455F50
-	.4byte 0x4F4E4741
-	.4byte 0x5348495F
-	.4byte 0x434C4F53
-	.4byte 0x45000000
-	.4byte 0x53455F50
-	.4byte 0x4F4E4741
-	.4byte 0x5348495F
-	.4byte 0x45415400
-	.4byte 0x53455F50
-	.4byte 0x4F4E4741
-	.4byte 0x5348495F
-	.4byte 0x53484F54
-	.4byte 0x00000000
-	.4byte 0x53455F50
-	.4byte 0x4F4E4741
-	.4byte 0x5348495F
-	.4byte 0x44454144
-	.4byte 0x00000000
-	.4byte 0x53455F50
-	.4byte 0x4F4E4741
-	.4byte 0x5348495F
-	.4byte 0x544F5543
-	.4byte 0x48000000
-	.4byte 0x53455F4E
-	.4byte 0x414D415A
-	.4byte 0x555F5741
-	.4byte 0x4C4B0000
-	.4byte 0x53455F4E
-	.4byte 0x414D415A
-	.4byte 0x555F4541
-	.4byte 0x54000000
-	.4byte 0x53455F4E
-	.4byte 0x414D415A
-	.4byte 0x555F4445
-	.4byte 0x41440000
-	.4byte 0x53455F4F
-	.4byte 0x54414D41
-	.4byte 0x5F4A554D
-	.4byte 0x50000000
-	.4byte 0x53455F4F
-	.4byte 0x54414D41
-	.4byte 0x5F444541
-	.4byte 0x44000000
-	.4byte 0x53455F4F
-	.4byte 0x54414D41
-	.4byte 0x5F574154
-	.4byte 0x45524A55
-	.4byte 0x4D500000
-	.4byte 0x53455F47
-	.4byte 0x45595345
-	.4byte 0x525F4E4F
-	.4byte 0x524D414C
-	.4byte 0x00000000
-	.4byte 0x53455F47
-	.4byte 0x45595345
-	.4byte 0x525F5350
-	.4byte 0x4F555400
-	.4byte 0x5345425F
-	.4byte 0x534F4654
-	.4byte 0x57414C4C
-	.4byte 0x5F484954
-	.4byte 0x00000000
-	.4byte 0x5345425F
-	.4byte 0x57414C4C
-	.4byte 0x5F444F57
-	.4byte 0x4E000000
-	.4byte 0x5345425F
-	.4byte 0x48415244
-	.4byte 0x45535457
-	.4byte 0x414C4C5F
-	.4byte 0x48495400
-	.4byte 0x5345425F
-	.4byte 0x434F4E53
-	.4byte 0x54525543
-	.4byte 0x54494F4E
-	.4byte 0x00000000
-	.4byte 0x5345425F
-	.4byte 0x424F584D
-	.4byte 0x4F564500
-	.4byte 0x5345425F
-	.4byte 0x48415244
-	.4byte 0x57414C4C
-	.4byte 0x5F484954
-	.4byte 0x00000000
-	.4byte 0x5345425F
-	.4byte 0x53544F4E
-	.4byte 0x455F4849
-	.4byte 0x54000000
-	.4byte 0x5345425F
-	.4byte 0x53544F4E
-	.4byte 0x455F4252
-	.4byte 0x45414B00
-	.4byte 0x5345425F
-	.4byte 0x47524153
-	.4byte 0x535F5055
-	.4byte 0x4C4C0000
-	.4byte 0x5345425F
-	.4byte 0x42524944
-	.4byte 0x47455F45
-	.4byte 0x5854454E
-	.4byte 0x44000000
-	.4byte 0x5345575F
-	.4byte 0x50494B49
-	.4byte 0x5F574154
-	.4byte 0x45524452
-	.4byte 0x4F500000
-	.4byte 0x5345575F
-	.4byte 0x50494B49
-	.4byte 0x5F44524F
-	.4byte 0x574E0000
-	.4byte 0x5345575F
-	.4byte 0x50494B49
-	.4byte 0x5F444541
-	.4byte 0x44000000
-	.4byte 0x5345575F
-	.4byte 0x50494B49
-	.4byte 0x5F53494E
-	.4byte 0x4B000000
-	.4byte 0x53455F4C
-	.4byte 0x4946545F
-	.4byte 0x54525900
-	.4byte 0x53455F4C
-	.4byte 0x4946545F
-	.4byte 0x4D4F5645
-	.4byte 0x00000000
-	.4byte 0x53455F50
-	.4byte 0x494B495F
-	.4byte 0x4C494654
-	.4byte 0x00000000
-	.4byte 0x53455F50
-	.4byte 0x454C4C45
-	.4byte 0x545F424F
-	.4byte 0x524E0000
-	.4byte 0x53455F50
-	.4byte 0x454C4C45
-	.4byte 0x545F424F
-	.4byte 0x554E4400
-	.4byte 0x53455F55
-	.4byte 0x464F5041
-	.4byte 0x5254535F
-	.4byte 0x424F554E
-	.4byte 0x44000000
-	.4byte 0x53455F55
-	.4byte 0x464F5041
-	.4byte 0x5254535F
-	.4byte 0x4F544845
-	.4byte 0x52000000
-	.4byte 0x53455F55
-	.4byte 0x464F5041
-	.4byte 0x5254535F
-	.4byte 0x454E4749
-	.4byte 0x4E450000
-	.4byte 0x53455F55
-	.4byte 0x464F5041
-	.4byte 0x5254535F
-	.4byte 0x47454152
-	.4byte 0x00000000
-	.4byte 0x53455F55
-	.4byte 0x464F5041
-	.4byte 0x5254535F
-	.4byte 0x52414445
-	.4byte 0x52000000
-	.4byte 0x53455F55
-	.4byte 0x464F5041
-	.4byte 0x5254535F
-	.4byte 0x53505249
-	.4byte 0x4E470000
-	.4byte 0x53455F55
-	.4byte 0x464F5041
-	.4byte 0x5254535F
-	.4byte 0x42415454
-	.4byte 0x45525900
-	.4byte 0x53455F55
-	.4byte 0x464F5041
-	.4byte 0x5254535F
-	.4byte 0x5A454E4D
-	.4byte 0x41490000
-	.4byte 0x53455F55
-	.4byte 0x464F5041
-	.4byte 0x5254535F
-	.4byte 0x4D4F4E45
-	.4byte 0x59424F58
-	.4byte 0x00000000
-	.4byte 0x53455F43
-	.4byte 0x4F4E5441
-	.4byte 0x494E4552
-	.4byte 0x5F50454C
-	.4byte 0x4C455449
-	.4byte 0x4E000000
-	.4byte 0x53455F43
-	.4byte 0x4F4E5441
-	.4byte 0x494E4552
-	.4byte 0x5F50494B
-	.4byte 0x49424F52
-	.4byte 0x4E000000
-	.4byte 0x53455F50
-	.4byte 0x494B495F
-	.4byte 0x47524F57
-	.4byte 0x31000000
-	.4byte 0x53455F50
-	.4byte 0x494B495F
-	.4byte 0x47524F57
-	.4byte 0x32000000
-	.4byte 0x53455F50
-	.4byte 0x494B495F
-	.4byte 0x47524F57
-	.4byte 0x33000000
-	.4byte 0x53455F50
-	.4byte 0x494B495F
-	.4byte 0x47524F57
-	.4byte 0x34000000
-	.4byte 0x53455F50
-	.4byte 0x494B495F
-	.4byte 0x47524F57
-	.4byte 0x35000000
-	.4byte 0x53455F50
-	.4byte 0x494B495F
-	.4byte 0x474F484F
-	.4byte 0x4D450000
-	.4byte 0x53455F50
-	.4byte 0x494B495F
-	.4byte 0x4F555448
-	.4byte 0x4F4D4500
-	.4byte 0x53455F50
-	.4byte 0x494B495F
-	.4byte 0x47524F57
-	.4byte 0x30000000
-	.4byte 0x53455F50
-	.4byte 0x494B495F
-	.4byte 0x47524F57
-	.4byte 0x305F5741
-	.4byte 0x54455200
-	.4byte 0x53455F43
-	.4byte 0x4F4E5441
-	.4byte 0x494E4552
-	.4byte 0x5F50454C
-	.4byte 0x4C455449
-	.4byte 0x4E320000
-	.4byte 0x53455F43
-	.4byte 0x4F4E5441
-	.4byte 0x494E4552
-	.4byte 0x5F50494B
-	.4byte 0x49000000
-	.4byte 0x53455F43
-	.4byte 0x4F4E5441
-	.4byte 0x494E4552
-	.4byte 0x5F48414E
-	.4byte 0x41424900
-	.4byte 0x53455F43
-	.4byte 0x4F4E5441
-	.4byte 0x494E4552
-	.4byte 0x5F434C49
-	.4byte 0x4D420000
-	.4byte 0x53455F55
-	.4byte 0x464F5F50
-	.4byte 0x41525453
-	.4byte 0x494E0000
-	.4byte 0x53455F55
-	.4byte 0x464F5F50
-	.4byte 0x41525453
-	.4byte 0x53455431
-	.4byte 0x00000000
-	.4byte 0x53455F55
-	.4byte 0x464F5F50
-	.4byte 0x41525453
-	.4byte 0x53455432
-	.4byte 0x00000000
-	.4byte 0x53455F55
-	.4byte 0x464F5F50
-	.4byte 0x41525453
-	.4byte 0x53455433
-	.4byte 0x00000000
-	.4byte 0x53455F55
-	.4byte 0x464F5F49
-	.4byte 0x444C494E
-	.4byte 0x47000000
-	.4byte 0x53455F55
-	.4byte 0x464F5F53
-	.4byte 0x5041524B
-	.4byte 0x00000000
-	.4byte 0x53455F55
-	.4byte 0x464F5F44
-	.4byte 0x45535452
-	.4byte 0x4F590000
-	.4byte 0x53455F55
-	.4byte 0x464F5F53
-	.4byte 0x4154454C
-	.4byte 0x4C495445
-	.4byte 0x00000000
-	.4byte 0x53455F55
-	.4byte 0x464F5F4C
-	.4byte 0x49474854
-	.4byte 0x00000000
-	.4byte 0x53455F55
-	.4byte 0x464F5F41
-	.4byte 0x4E54454E
-	.4byte 0x4E410000
-	.4byte 0x53455F55
-	.4byte 0x464F5F52
-	.4byte 0x41444552
-	.4byte 0x00000000
-	.4byte 0x53455F55
-	.4byte 0x464F5F4C
-	.4byte 0x49474854
-	.4byte 0x32000000
-	.4byte 0x53455F55
-	.4byte 0x464F5F45
-	.4byte 0x4E47494E
-	.4byte 0x45000000
-	.4byte 0x5345465F
-	.4byte 0x50494B49
-	.4byte 0x5F4B494E
-	.4byte 0x4F4B4F32
-	.4byte 0x00000000
-	.4byte 0x5345465F
-	.4byte 0x50494B49
-	.4byte 0x5F414B55
-	.4byte 0x42490000
-	.4byte 0x5345465F
-	.4byte 0x50494B49
-	.4byte 0x5F425552
-	.4byte 0x55425552
-	.4byte 0x55000000
-	.4byte 0x5345465F
-	.4byte 0x50494B49
-	.4byte 0x5F435241
-	.4byte 0x53480000
-	.4byte 0x5345465F
-	.4byte 0x50494B49
-	.4byte 0x5F444541
-	.4byte 0x44310000
-	.4byte 0x5345465F
-	.4byte 0x50494B49
-	.4byte 0x5F444541
-	.4byte 0x44320000
-	.4byte 0x5345465F
-	.4byte 0x50494B49
-	.4byte 0x5F444541
-	.4byte 0x44330000
-	.4byte 0x5345465F
-	.4byte 0x50494B49
-	.4byte 0x5F46414C
-	.4byte 0x4C000000
-	.4byte 0x5345465F
-	.4byte 0x50494B49
-	.4byte 0x5F47414B
-	.4byte 0x4B415249
-	.4byte 0x00000000
-	.4byte 0x5345465F
-	.4byte 0x50494B49
-	.4byte 0x5F48414E
-	.4byte 0x47000000
-	.4byte 0x5345465F
-	.4byte 0x50494B49
-	.4byte 0x5F4A554D
-	.4byte 0x50310000
-	.4byte 0x5345465F
-	.4byte 0x50494B49
-	.4byte 0x5F4A554D
-	.4byte 0x50320000
-	.4byte 0x5345465F
-	.4byte 0x50494B49
-	.4byte 0x5F4A554D
-	.4byte 0x50330000
-	.4byte 0x5345465F
-	.4byte 0x50494B49
-	.4byte 0x5F534E45
-	.4byte 0x455A4500
-	.4byte 0x5345465F
-	.4byte 0x50494B49
-	.4byte 0x5F534C45
-	.4byte 0x45500000
-	.4byte 0x5345465F
-	.4byte 0x50494B49
-	.4byte 0x5F4E4F42
-	.4byte 0x49000000
-	.4byte 0x5345465F
-	.4byte 0x50494B49
-	.4byte 0x5F414E47
-	.4byte 0x52593100
-	.4byte 0x5345465F
-	.4byte 0x50494B49
-	.4byte 0x5F414E47
-	.4byte 0x52593200
-	.4byte 0x5345465F
-	.4byte 0x50494B49
-	.4byte 0x5F4F5454
-	.4byte 0x4F54544F
-	.4byte 0x00000000
-	.4byte 0x5345465F
-	.4byte 0x50494B49
-	.4byte 0x5F534B49
-	.4byte 0x50000000
-	.4byte 0x5345465F
-	.4byte 0x50494B49
-	.4byte 0x5F534C49
-	.4byte 0x50310000
-	.4byte 0x5345465F
-	.4byte 0x50494B49
-	.4byte 0x5F534C49
-	.4byte 0x50320000
-	.4byte 0x5345465F
-	.4byte 0x50494B49
-	.4byte 0x5F4C414E
-	.4byte 0x44000000
-	.4byte 0x5345465F
-	.4byte 0x50494B49
-	.4byte 0x5F594154
-	.4byte 0x54410000
-	.4byte 0x5345465F
-	.4byte 0x50494B49
-	.4byte 0x5F425245
-	.4byte 0x414B5550
-	.4byte 0x00000000
-	.4byte 0x5345465F
-	.4byte 0x50494B49
-	.4byte 0x5F43414C
-	.4byte 0x4C454400
-	.4byte 0x5345465F
-	.4byte 0x50494B49
-	.4byte 0x5F46494E
-	.4byte 0x44000000
-	.4byte 0x5345465F
-	.4byte 0x50494B49
-	.4byte 0x5F464952
-	.4byte 0x45440000
-	.4byte 0x5345465F
-	.4byte 0x50494B49
-	.4byte 0x5F445249
-	.4byte 0x4E4B0000
-	.4byte 0x5345465F
-	.4byte 0x50494B49
-	.4byte 0x5F574154
-	.4byte 0x45524544
-	.4byte 0x00000000
-	.4byte 0x5345465F
-	.4byte 0x50494B49
-	.4byte 0x5F415454
-	.4byte 0x41434B5F
-	.4byte 0x564F4943
-	.4byte 0x45000000
-	.4byte 0x5345465F
-	.4byte 0x50494B49
-	.4byte 0x5F4D4953
-	.4byte 0x53484954
-	.4byte 0x00000000
-	.4byte 0x5345465F
-	.4byte 0x50494B49
-	.4byte 0x5F415454
-	.4byte 0x41434B5F
-	.4byte 0x48495400
-	.4byte 0x5345465F
-	.4byte 0x50494B49
-	.4byte 0x5F44414D
-	.4byte 0x41474544
-	.4byte 0x00000000
-	.4byte 0x5345465F
-	.4byte 0x50494B49
-	.4byte 0x5F47524F
-	.4byte 0x57310000
-	.4byte 0x5345465F
-	.4byte 0x50494B49
-	.4byte 0x5F47524F
-	.4byte 0x57320000
-	.4byte 0x5345465F
-	.4byte 0x50494B49
-	.4byte 0x5F47524F
-	.4byte 0x57330000
-	.4byte 0x5345465F
-	.4byte 0x50494B49
-	.4byte 0x5F47524F
-	.4byte 0x57340000
-	.4byte 0x5345465F
-	.4byte 0x50494B49
-	.4byte 0x5F47524F
-	.4byte 0x57350000
-	.4byte 0x5345465F
-	.4byte 0x50494B49
-	.4byte 0x5F47524F
-	.4byte 0x57300000
-	.4byte 0x5345465F
-	.4byte 0x50494B49
-	.4byte 0x5F47524F
-	.4byte 0x57305F57
-	.4byte 0x41544552
-	.4byte 0x00000000
-	.4byte 0x53595353
-	.4byte 0x455F414C
-	.4byte 0x4C53544F
-	.4byte 0x50000000
-	.4byte 0x53595353
-	.4byte 0x455F4445
-	.4byte 0x43494445
-	.4byte 0x31000000
-	.4byte 0x53595353
-	.4byte 0x455F4D4F
-	.4byte 0x56453100
-	.4byte 0x53595353
-	.4byte 0x455F5041
-	.4byte 0x55534500
-	.4byte 0x53595353
-	.4byte 0x455F4556
-	.4byte 0x454E494E
-	.4byte 0x475F414C
-	.4byte 0x45525400
-	.4byte 0x53595353
-	.4byte 0x455F434F
-	.4byte 0x554E5444
-	.4byte 0x4F574E00
-	.4byte 0x53595353
-	.4byte 0x455F434D
-	.4byte 0x454E555F
-	.4byte 0x4F4E0000
-	.4byte 0x53595353
-	.4byte 0x455F434D
-	.4byte 0x454E555F
-	.4byte 0x4F464600
-	.4byte 0x53595353
-	.4byte 0x455F434D
-	.4byte 0x454E555F
-	.4byte 0x53454C45
-	.4byte 0x43540000
-	.4byte 0x53595353
-	.4byte 0x455F434D
-	.4byte 0x454E555F
-	.4byte 0x4552524F
-	.4byte 0x52000000
-	.4byte 0x53595353
-	.4byte 0x455F4F52
-	.4byte 0x494D415F
-	.4byte 0x4C494645
-	.4byte 0x44494D00
-	.4byte 0x53595353
-	.4byte 0x455F574F
-	.4byte 0x524B5F46
-	.4byte 0x494E4953
-	.4byte 0x48000000
-	.4byte 0x53595353
-	.4byte 0x455F5649
-	.4byte 0x45575F43
-	.4byte 0x48414E47
-	.4byte 0x45000000
-	.4byte 0x53595353
-	.4byte 0x455F4341
-	.4byte 0x4E43454C
-	.4byte 0x00000000
-	.4byte 0x53595353
-	.4byte 0x455F5459
-	.4byte 0x50455752
-	.4byte 0x49544552
-	.4byte 0x00000000
-	.4byte 0x53595353
-	.4byte 0x455F554E
-	.4byte 0x50415553
-	.4byte 0x45000000
-	.4byte 0x53595353
-	.4byte 0x455F434F
-	.4byte 0x4E544149
-	.4byte 0x4E45525F
-	.4byte 0x4F4B0000
-	.4byte 0x53595353
-	.4byte 0x455F4A55
-	.4byte 0x4E474C45
-	.4byte 0x00000000
-	.4byte 0x53595353
-	.4byte 0x455F5041
-	.4byte 0x5254535F
-	.4byte 0x41505045
-	.4byte 0x41520000
-	.4byte 0x53595353
-	.4byte 0x455F5345
-	.4byte 0x4C454354
-	.4byte 0x5F4D4F56
-	.4byte 0x45000000
-	.4byte 0x53595353
-	.4byte 0x455F5345
-	.4byte 0x4C454354
-	.4byte 0x5F444543
-	.4byte 0x49444500
-	.4byte 0x53595353
-	.4byte 0x455F5449
-	.4byte 0x4D455F53
-	.4byte 0x49474E41
-	.4byte 0x4C000000
-	.4byte 0x53595353
-	.4byte 0x455F5345
-	.4byte 0x4C454354
-	.4byte 0x5F434F55
-	.4byte 0x5253454F
-	.4byte 0x50454E00
-	.4byte 0x53595353
-	.4byte 0x455F4D45
-	.4byte 0x53534147
-	.4byte 0x455F434C
-	.4byte 0x4F534500
-	.4byte 0x53595353
-	.4byte 0x455F4341
-	.4byte 0x52444143
-	.4byte 0x43455353
-	.4byte 0x00000000
-	.4byte 0x53595353
-	.4byte 0x455F4341
-	.4byte 0x52444F4B
-	.4byte 0x00000000
-	.4byte 0x53595353
-	.4byte 0x455F4341
-	.4byte 0x52444552
-	.4byte 0x524F5200
-	.4byte 0x53595353
-	.4byte 0x455F5449
-	.4byte 0x4D455F53
-	.4byte 0x4D414C4C
-	.4byte 0x5349474E
-	.4byte 0x414C0000
-	.4byte 0x53595353
-	.4byte 0x455F4348
-	.4byte 0x475F4849
-	.4byte 0x53434F52
-	.4byte 0x45000000
-	.4byte 0x594D454E
-	.4byte 0x55204F4E
-	.4byte 0x00000000
-	.4byte 0x594D454E
-	.4byte 0x55204F46
-	.4byte 0x46000000
-	.4byte 0x594D454E
-	.4byte 0x55205345
-	.4byte 0x4C454354
-	.4byte 0x00000000
-	.4byte 0x53595353
-	.4byte 0x455F594D
-	.4byte 0x454E555F
-	.4byte 0x5A4F4F4D
-	.4byte 0x494E0000
-	.4byte 0x53595353
-	.4byte 0x455F594D
-	.4byte 0x454E555F
-	.4byte 0x5A4F4F4D
-	.4byte 0x4F555400
-	.4byte 0x53595353
-	.4byte 0x455F594D
-	.4byte 0x454E555F
-	.4byte 0x5343524F
-	.4byte 0x4C4C0000
-	.4byte 0x536F756E
-	.4byte 0x6420436F
-	.4byte 0x6E666967
-	.4byte 0x00000000
-	.4byte 0x53455F4F
-	.4byte 0x52494D41
-	.4byte 0x5F544F55
-	.4byte 0x4348504C
-	.4byte 0x414E5453
-	.4byte 0x00000000
-	.4byte 0x53455F50
-	.4byte 0x494B495F
-	.4byte 0x50554C4C
-	.4byte 0x494E4700
-	.4byte 0x53455F50
-	.4byte 0x494B495F
-	.4byte 0x50554C4C
-	.4byte 0x45443200
-	.4byte 0x53455F50
-	.4byte 0x4C415945
-	.4byte 0x525F5055
-	.4byte 0x4E434800
-	.4byte 0x53455F54
-	.4byte 0x48524F57
-	.4byte 0x00000000
-	.4byte 0x53455F42
-	.4byte 0x5245414B
-	.4byte 0x55500000
-	.4byte 0x53455F47
-	.4byte 0x41544845
-	.4byte 0x52000000
-	.4byte 0x53455F4D
-	.4byte 0x4F56454F
-	.4byte 0x424A0000
-	.4byte 0x53455F44
-	.4byte 0x414D4147
-	.4byte 0x45440000
-	.4byte 0x53455F46
-	.4byte 0x49524544
-	.4byte 0x00000000
-	.4byte 0x53455F50
-	.4byte 0x4C415945
-	.4byte 0x525F444F
-	.4byte 0x574E0000
-	.4byte 0x53455F50
-	.4byte 0x4C415945
-	.4byte 0x525F544F
-	.4byte 0x55434848
-	.4byte 0x4F4E4559
-	.4byte 0x00000000
-	.4byte 0x53455F54
-	.4byte 0x48524F57
-	.4byte 0x48495400
-	.4byte 0x53455F50
-	.4byte 0x494B495F
-	.4byte 0x464C5900
-	.4byte 0x53455F42
-	.4byte 0x5245414B
-	.4byte 0x55505F50
-	.4byte 0x494B495F
-	.4byte 0x564F4943
-	.4byte 0x45000000
-	.4byte 0x53455F50
-	.4byte 0x494B495F
-	.4byte 0x464C5952
-	.4byte 0x45414459
-	.4byte 0x00000000
-	.4byte 0x53455F50
-	.4byte 0x494B495F
-	.4byte 0x43414C4C
-	.4byte 0x45440000
-	.4byte 0x53455F50
-	.4byte 0x494B495F
-	.4byte 0x46494E44
-	.4byte 0x00000000
-	.4byte 0x53455F50
-	.4byte 0x494B495F
-	.4byte 0x50554C4C
-	.4byte 0x45440000
-	.4byte 0x53455F50
-	.4byte 0x494B495F
-	.4byte 0x57415445
-	.4byte 0x5244524F
-	.4byte 0x50000000
-	.4byte 0x53455F50
-	.4byte 0x494B495F
-	.4byte 0x41545441
-	.4byte 0x4348454E
-	.4byte 0x454D5900
-	.4byte 0x53455F4B
-	.4byte 0x494E4F4B
-	.4byte 0x4F50494B
-	.4byte 0x495F4154
-	.4byte 0x5441434B
-	.4byte 0x00000000
+lbl_802B2008:
+	.asciz "SE_SOFTWALL_HIT"
+.balign 4
+lbl_802B2018:
+	.asciz "SE_WALL_DOWN"
+.balign 4
+lbl_802B2028:
+	.asciz "SE_MINIC_WALK"
+.balign 4
+lbl_802B2038:
+	.asciz "SE_MINIC_FOOTDAMAGE"
+.balign 4
+lbl_802B204C:
+	.asciz "SE_MINIC_DIE"
+.balign 4
+lbl_802B205C:
+	.asciz "SE_MINIC_SWING"
+.balign 4
+lbl_802B206C:
+	.asciz "SE_MINIC_BITE"
+.balign 4
+lbl_802B207C:
+	.asciz "SE_MINIC_EAT"
+.balign 4
+lbl_802B208C:
+	.asciz "SE_MINIC_DOWN"
+.balign 4
+lbl_802B209C:
+	.asciz "SE_MINIC_ALERT"
+.balign 4
+lbl_802B20AC:
+	.asciz "SE_SNAKE_APPEAR"
+.balign 4
+lbl_802B20BC:
+	.asciz "SE_SPIDER_WALK"
+.balign 4
+lbl_802B20CC:
+	.asciz "SE_SPIDER_LAND"
+.balign 4
+lbl_802B20DC:
+	.asciz "SE_SPIDER_SWING"
+.balign 4
+lbl_802B20EC:
+	.asciz "SE_SPIDER_DEAD"
+.balign 4
+lbl_802B20FC:
+	.asciz "SE_SPIDER_BOMB"
+.balign 4
+lbl_802B210C:
+	.asciz "SE_FLOWER_DOWN"
+.balign 4
+lbl_802B211C:
+	.asciz "SE_FLOWER_CONVULSION"
+.balign 4
+lbl_802B2134:
+	.asciz "SE_FLOWER_GROW0"
+.balign 4
+lbl_802B2144:
+	.asciz "SE_FLOWER_GROW1"
+.balign 4
+lbl_802B2154:
+	.asciz "SE_FLOWER_GROW2"
+.balign 4
+lbl_802B2164:
+	.asciz "SE_PIKI_DEAD"
+.balign 4
+lbl_802B2174:
+	.asciz "SE_SNAKE_DIG"
+.balign 4
+lbl_802B2184:
+	.asciz "SE_SNAKE_SHOUT"
+.balign 4
+lbl_802B2194:
+	.asciz "SE_SNAKE_EAT"
+.balign 4
+lbl_802B21A4:
+	.asciz "SE_SNAKE_DRINK"
+.balign 4
+lbl_802B21B4:
+	.asciz "SE_SNAKE_TURN"
+.balign 4
+lbl_802B21C4:
+	.asciz "SE_SNAKE_MOGAKU"
+.balign 4
+lbl_802B21D4:
+	.asciz "SE_SNAKE_DEAD1"
+.balign 4
+lbl_802B21E4:
+	.asciz "SE_SNAKE_DEAD2"
+.balign 4
+lbl_802B21F4:
+	.asciz "SE_TANK_FIRE"
+.balign 4
+lbl_802B2204:
+	.asciz "SE_TANK_BREATH"
+.balign 4
+lbl_802B2214:
+	.asciz "SE_TANK_WALK"
+.balign 4
+lbl_802B2224:
+	.asciz "SE_TANK_SWING"
+.balign 4
+lbl_802B2234:
+	.asciz "SE_TANK_DAMAGE"
+.balign 4
+lbl_802B2244:
+	.asciz "SE_TANK_DEAD1"
+.balign 4
+lbl_802B2254:
+	.asciz "SE_TANK_DEAD2"
+.balign 4
+lbl_802B2264:
+	.asciz "SE_MUSH_WALK"
+.balign 4
+lbl_802B2274:
+	.asciz "SE_MUSH_FLIP"
+.balign 4
+lbl_802B2284:
+	.asciz "SE_MUSH_TUMBLE"
+.balign 4
+lbl_802B2294:
+	.asciz "SE_MUSH_GETUP"
+.balign 4
+lbl_802B22A4:
+	.asciz "SE_MUSH_LAND"
+.balign 4
+lbl_802B22B4:
+	.asciz "SE_MUSH_TAME"
+.balign 4
+lbl_802B22C4:
+	.asciz "SE_MUSH_SPORE"
+.balign 4
+lbl_802B22D4:
+	.asciz "SE_MUSH_DAMAGE"
+.balign 4
+lbl_802B22E4:
+	.asciz "SE_MUSH_DEAD1"
+.balign 4
+lbl_802B22F4:
+	.asciz "SE_MUSH_DEAD2"
+.balign 4
+lbl_802B2304:
+	.asciz "SE_KING_WALK"
+.balign 4
+lbl_802B2314:
+	.asciz "SE_KING_READY"
+.balign 4
+lbl_802B2324:
+	.asciz "SE_KING_BERO1"
+.balign 4
+lbl_802B2334:
+	.asciz "SE_KING_BERO2"
+.balign 4
+lbl_802B2344:
+	.asciz "SE_KING_GEPPU"
+.balign 4
+lbl_802B2354:
+	.asciz "SE_KING_DRINK"
+.balign 4
+lbl_802B2364:
+	.asciz "SE_KING_EAT"
+.balign 4
+lbl_802B2370:
+	.asciz "SE_KING_CHEEK"
+.balign 4
+lbl_802B2380:
+	.asciz "SE_KING_NAME"
+.balign 4
+lbl_802B2390:
+	.asciz "SE_KING_HIP"
+.balign 4
+lbl_802B239C:
+	.asciz "SE_KING_DEAD1"
+.balign 4
+lbl_802B23AC:
+	.asciz "SE_KING_DEAD2"
+.balign 4
+lbl_802B23BC:
+	.asciz "SE_KING_APPEAR"
+.balign 4
+lbl_802B23CC:
+	.asciz "SE_KING_SINK"
+.balign 4
+lbl_802B23DC:
+	.asciz "SE_KABUTO_BREATH"
+.balign 4
+lbl_802B23F0:
+	.asciz "SE_KABUTO_TUMARI"
+.balign 4
+lbl_802B2404:
+	.asciz "SE_KABUTO_OPEN"
+.balign 4
+	.asciz "SE_KABUTO_SHOT"
+.balign 4
+	.asciz "SE_KABUTO_FLIP"
+.balign 4
+	.asciz "SE_KABUTO_WALK"
+.balign 4
+	.asciz "SE_KABUTO_COOLDOWN"
+.balign 4
+	.asciz "SE_KABUTO_OVERHEAT"
+.balign 4
+	.asciz "SE_KABUTO_DEAD"
+.balign 4
+	.asciz "SE_ROCK_ROLL"
+.balign 4
+	.asciz "SE_ROCK_BREAK"
+.balign 4
+	.asciz "SE_ROCK_GENERATOR"
+.balign 4
+	.asciz "SE_SHELL_CLOSE"
+.balign 4
+	.asciz "SE_SHELL_READY"
+.balign 4
+	.asciz "SE_SHELL_TRESURE"
+.balign 4
+	.asciz "SE_SHELL_OPEN"
+.balign 4
+	.asciz "SE_SHELL_EAT"
+.balign 4
+	.asciz "SE_KINOKOPIKI_MORPH"
+.balign 4
+	.asciz "SE_KINOKOPIKI_DANCE"
+.balign 4
+	.asciz "SE_COLLEC_BREATH"
+.balign 4
+	.asciz "SE_COLLEC_PULL"
+.balign 4
+	.asciz "SE_COLLEC_WALK"
+.balign 4
+	.asciz "SE_COLLEC_SWING"
+.balign 4
+	.asciz "SE_COLLEC_DEAD"
+.balign 4
+	.asciz "SE_COLLEC_DOWN"
+.balign 4
+	.asciz "SE_COLLEC_CRY"
+.balign 4
+	.asciz "SE_COLLEC_DAMAGE"
+.balign 4
+	.asciz "SE_KOGANE_WALK"
+.balign 4
+	.asciz "SE_KOGANE_DAMAGE"
+.balign 4
+	.asciz "SE_SARAI_HOVER"
+.balign 4
+	.asciz "SE_SARAI_DAMAGE"
+.balign 4
+	.asciz "SE_SARAI_ATTACK"
+.balign 4
+	.asciz "SE_SARAI_DEAD"
+.balign 4
+	.asciz "SE_WALLEAT_WALK"
+.balign 4
+	.asciz "SE_WALLEAT_NIP"
+.balign 4
+	.asciz "SE_WALLEAT_EAT"
+.balign 4
+	.asciz "SE_WALLEAT_APPEAR"
+.balign 4
+	.asciz "SE_MAR_FLY"
+.balign 4
+	.asciz "SE_MAR_BREATH"
+.balign 4
+	.asciz "SE_MAR_WIND"
+.balign 4
+	.asciz "SE_MAR_DROP"
+.balign 4
+	.asciz "SE_MAR_DEAD1"
+.balign 4
+	.asciz "SE_MAR_DEAD2"
+.balign 4
+	.asciz "SE_MIURIN_WALK"
+.balign 4
+	.asciz "SE_MIURIN_PUNCH"
+.balign 4
+	.asciz "SE_MIURIN_SING"
+.balign 4
+	.asciz "SE_KURIONE_HIT"
+.balign 4
+	.asciz "SE_KURIONE_ESCAPE"
+.balign 4
+	.asciz "SE_KURIONE_WATER"
+.balign 4
+	.asciz "SE_KURIONE_FLYING"
+.balign 4
+	.asciz "SE_SLIME_WALK"
+.balign 4
+	.asciz "SE_SLIME_HIT_SMALL"
+.balign 4
+	.asciz "SE_SLIME_HIT_MID"
+.balign 4
+	.asciz "SE_SLIME_HIT_LARGE"
+.balign 4
+	.asciz "SE_SLIME_DEAD"
+.balign 4
+	.asciz "SE_SLIME_EXT1"
+.balign 4
+	.asciz "SE_SLIME_EXT2"
+.balign 4
+	.asciz "SE_SLIME_EXT3"
+.balign 4
+	.asciz "SE_SLIME_DISAPPEAR"
+.balign 4
+	.asciz "SE_DORORO_WALK"
+.balign 4
+	.asciz "SE_DORORO_CRY"
+.balign 4
+	.asciz "SE_DORORO_DEAD"
+.balign 4
+	.asciz "SE_DORORO_SWING"
+.balign 4
+	.asciz "SE_DORORO_EGG_CRASH"
+.balign 4
+	.asciz "SE_DORORO_CRASH"
+.balign 4
+	.asciz "SE_PONGASHI_THROWIN"
+.balign 4
+	.asciz "SE_PONGASHI_CLOSE"
+.balign 4
+	.asciz "SE_PONGASHI_EAT"
+.balign 4
+	.asciz "SE_PONGASHI_SHOT"
+.balign 4
+	.asciz "SE_PONGASHI_DEAD"
+.balign 4
+	.asciz "SE_PONGASHI_TOUCH"
+.balign 4
+	.asciz "SE_NAMAZU_WALK"
+.balign 4
+	.asciz "SE_NAMAZU_EAT"
+.balign 4
+	.asciz "SE_NAMAZU_DEAD"
+.balign 4
+	.asciz "SE_OTAMA_JUMP"
+.balign 4
+	.asciz "SE_OTAMA_DEAD"
+.balign 4
+	.asciz "SE_OTAMA_WATERJUMP"
+.balign 4
+	.asciz "SE_GEYSER_NORMAL"
+.balign 4
+	.asciz "SE_GEYSER_SPOUT"
+.balign 4
+	.asciz "SEB_SOFTWALL_HIT"
+.balign 4
+	.asciz "SEB_WALL_DOWN"
+.balign 4
+	.asciz "SEB_HARDESTWALL_HIT"
+.balign 4
+	.asciz "SEB_CONSTRUCTION"
+.balign 4
+	.asciz "SEB_BOXMOVE"
+.balign 4
+	.asciz "SEB_HARDWALL_HIT"
+.balign 4
+	.asciz "SEB_STONE_HIT"
+.balign 4
+	.asciz "SEB_STONE_BREAK"
+.balign 4
+	.asciz "SEB_GRASS_PULL"
+.balign 4
+	.asciz "SEB_BRIDGE_EXTEND"
+.balign 4
+	.asciz "SEW_PIKI_WATERDROP"
+.balign 4
+	.asciz "SEW_PIKI_DROWN"
+.balign 4
+	.asciz "SEW_PIKI_DEAD"
+.balign 4
+	.asciz "SEW_PIKI_SINK"
+.balign 4
+	.asciz "SE_LIFT_TRY"
+.balign 4
+	.asciz "SE_LIFT_MOVE"
+.balign 4
+	.asciz "SE_PIKI_LIFT"
+.balign 4
+	.asciz "SE_PELLET_BORN"
+.balign 4
+	.asciz "SE_PELLET_BOUND"
+.balign 4
+	.asciz "SE_UFOPARTS_BOUND"
+.balign 4
+	.asciz "SE_UFOPARTS_OTHER"
+.balign 4
+	.asciz "SE_UFOPARTS_ENGINE"
+.balign 4
+	.asciz "SE_UFOPARTS_GEAR"
+.balign 4
+	.asciz "SE_UFOPARTS_RADER"
+.balign 4
+	.asciz "SE_UFOPARTS_SPRING"
+.balign 4
+	.asciz "SE_UFOPARTS_BATTERY"
+.balign 4
+	.asciz "SE_UFOPARTS_ZENMAI"
+.balign 4
+	.asciz "SE_UFOPARTS_MONEYBOX"
+.balign 4
+	.asciz "SE_CONTAINER_PELLETIN"
+.balign 4
+	.asciz "SE_CONTAINER_PIKIBORN"
+.balign 4
+	.asciz "SE_PIKI_GROW1"
+.balign 4
+	.asciz "SE_PIKI_GROW2"
+.balign 4
+	.asciz "SE_PIKI_GROW3"
+.balign 4
+	.asciz "SE_PIKI_GROW4"
+.balign 4
+	.asciz "SE_PIKI_GROW5"
+.balign 4
+	.asciz "SE_PIKI_GOHOME"
+.balign 4
+	.asciz "SE_PIKI_OUTHOME"
+.balign 4
+	.asciz "SE_PIKI_GROW0"
+.balign 4
+	.asciz "SE_PIKI_GROW0_WATER"
+.balign 4
+	.asciz "SE_CONTAINER_PELLETIN2"
+.balign 4
+	.asciz "SE_CONTAINER_PIKI"
+.balign 4
+	.asciz "SE_CONTAINER_HANABI"
+.balign 4
+	.asciz "SE_CONTAINER_CLIMB"
+.balign 4
+	.asciz "SE_UFO_PARTSIN"
+.balign 4
+	.asciz "SE_UFO_PARTSSET1"
+.balign 4
+	.asciz "SE_UFO_PARTSSET2"
+.balign 4
+	.asciz "SE_UFO_PARTSSET3"
+.balign 4
+	.asciz "SE_UFO_IDLING"
+.balign 4
+	.asciz "SE_UFO_SPARK"
+.balign 4
+	.asciz "SE_UFO_DESTROY"
+.balign 4
+	.asciz "SE_UFO_SATELLITE"
+.balign 4
+	.asciz "SE_UFO_LIGHT"
+.balign 4
+	.asciz "SE_UFO_ANTENNA"
+.balign 4
+	.asciz "SE_UFO_RADER"
+.balign 4
+	.asciz "SE_UFO_LIGHT2"
+.balign 4
+	.asciz "SE_UFO_ENGINE"
+.balign 4
+	.asciz "SEF_PIKI_KINOKO2"
+.balign 4
+	.asciz "SEF_PIKI_AKUBI"
+.balign 4
+	.asciz "SEF_PIKI_BURUBURU"
+.balign 4
+	.asciz "SEF_PIKI_CRASH"
+.balign 4
+	.asciz "SEF_PIKI_DEAD1"
+.balign 4
+	.asciz "SEF_PIKI_DEAD2"
+.balign 4
+	.asciz "SEF_PIKI_DEAD3"
+.balign 4
+	.asciz "SEF_PIKI_FALL"
+.balign 4
+	.asciz "SEF_PIKI_GAKKARI"
+.balign 4
+	.asciz "SEF_PIKI_HANG"
+.balign 4
+	.asciz "SEF_PIKI_JUMP1"
+.balign 4
+	.asciz "SEF_PIKI_JUMP2"
+.balign 4
+	.asciz "SEF_PIKI_JUMP3"
+.balign 4
+	.asciz "SEF_PIKI_SNEEZE"
+.balign 4
+	.asciz "SEF_PIKI_SLEEP"
+.balign 4
+	.asciz "SEF_PIKI_NOBI"
+.balign 4
+	.asciz "SEF_PIKI_ANGRY1"
+.balign 4
+	.asciz "SEF_PIKI_ANGRY2"
+.balign 4
+	.asciz "SEF_PIKI_OTTOTTO"
+.balign 4
+	.asciz "SEF_PIKI_SKIP"
+.balign 4
+	.asciz "SEF_PIKI_SLIP1"
+.balign 4
+	.asciz "SEF_PIKI_SLIP2"
+.balign 4
+	.asciz "SEF_PIKI_LAND"
+.balign 4
+	.asciz "SEF_PIKI_YATTA"
+.balign 4
+	.asciz "SEF_PIKI_BREAKUP"
+.balign 4
+	.asciz "SEF_PIKI_CALLED"
+.balign 4
+	.asciz "SEF_PIKI_FIND"
+.balign 4
+	.asciz "SEF_PIKI_FIRED"
+.balign 4
+	.asciz "SEF_PIKI_DRINK"
+.balign 4
+	.asciz "SEF_PIKI_WATERED"
+.balign 4
+	.asciz "SEF_PIKI_ATTACK_VOICE"
+.balign 4
+	.asciz "SEF_PIKI_MISSHIT"
+.balign 4
+	.asciz "SEF_PIKI_ATTACK_HIT"
+.balign 4
+	.asciz "SEF_PIKI_DAMAGED"
+.balign 4
+	.asciz "SEF_PIKI_GROW1"
+.balign 4
+	.asciz "SEF_PIKI_GROW2"
+.balign 4
+	.asciz "SEF_PIKI_GROW3"
+.balign 4
+	.asciz "SEF_PIKI_GROW4"
+.balign 4
+	.asciz "SEF_PIKI_GROW5"
+.balign 4
+	.asciz "SEF_PIKI_GROW0"
+.balign 4
+	.asciz "SEF_PIKI_GROW0_WATER"
+.balign 4
+	.asciz "SYSSE_ALLSTOP"
+.balign 4
+	.asciz "SYSSE_DECIDE1"
+.balign 4
+	.asciz "SYSSE_MOVE1"
+.balign 4
+	.asciz "SYSSE_PAUSE"
+.balign 4
+	.asciz "SYSSE_EVENING_ALERT"
+.balign 4
+	.asciz "SYSSE_COUNTDOWN"
+.balign 4
+	.asciz "SYSSE_CMENU_ON"
+.balign 4
+	.asciz "SYSSE_CMENU_OFF"
+.balign 4
+	.asciz "SYSSE_CMENU_SELECT"
+.balign 4
+	.asciz "SYSSE_CMENU_ERROR"
+.balign 4
+	.asciz "SYSSE_ORIMA_LIFEDIM"
+.balign 4
+	.asciz "SYSSE_WORK_FINISH"
+.balign 4
+	.asciz "SYSSE_VIEW_CHANGE"
+.balign 4
+	.asciz "SYSSE_CANCEL"
+.balign 4
+	.asciz "SYSSE_TYPEWRITER"
+.balign 4
+	.asciz "SYSSE_UNPAUSE"
+.balign 4
+	.asciz "SYSSE_CONTAINER_OK"
+.balign 4
+	.asciz "SYSSE_JUNGLE"
+.balign 4
+	.asciz "SYSSE_PARTS_APPEAR"
+.balign 4
+	.asciz "SYSSE_SELECT_MOVE"
+.balign 4
+	.asciz "SYSSE_SELECT_DECIDE"
+.balign 4
+	.asciz "SYSSE_TIME_SIGNAL"
+.balign 4
+	.asciz "SYSSE_SELECT_COURSEOPEN"
+.balign 4
+	.asciz "SYSSE_MESSAGE_CLOSE"
+.balign 4
+	.asciz "SYSSE_CARDACCESS"
+.balign 4
+	.asciz "SYSSE_CARDOK"
+.balign 4
+	.asciz "SYSSE_CARDERROR"
+.balign 4
+	.asciz "SYSSE_TIME_SMALLSIGNAL"
+.balign 4
+	.asciz "SYSSE_CHG_HISCORE"
+.balign 4
+	.asciz "YMENU ON"
+.balign 4
+	.asciz "YMENU OFF"
+.balign 4
+	.asciz "YMENU SELECT"
+.balign 4
+	.asciz "SYSSE_YMENU_ZOOMIN"
+.balign 4
+	.asciz "SYSSE_YMENU_ZOOMOUT"
+.balign 4
+	.asciz "SYSSE_YMENU_SCROLL"
+.balign 4
+	.asciz "Sound Config"
+.balign 4
+	.asciz "SE_ORIMA_TOUCHPLANTS"
+.balign 4
+	.asciz "SE_PIKI_PULLING"
+.balign 4
+	.asciz "SE_PIKI_PULLED2"
+.balign 4
+	.asciz "SE_PLAYER_PUNCH"
+.balign 4
+	.asciz "SE_THROW"
+.balign 4
+	.asciz "SE_BREAKUP"
+.balign 4
+	.asciz "SE_GATHER"
+.balign 4
+	.asciz "SE_MOVEOBJ"
+.balign 4
+	.asciz "SE_DAMAGED"
+.balign 4
+	.asciz "SE_FIRED"
+.balign 4
+	.asciz "SE_PLAYER_DOWN"
+.balign 4
+	.asciz "SE_PLAYER_TOUCHHONEY"
+.balign 4
+	.asciz "SE_THROWHIT"
+.balign 4
+	.asciz "SE_PIKI_FLY"
+.balign 4
+	.asciz "SE_BREAKUP_PIKI_VOICE"
+.balign 4
+	.asciz "SE_PIKI_FLYREADY"
+.balign 4
+	.asciz "SE_PIKI_CALLED"
+.balign 4
+	.asciz "SE_PIKI_FIND"
+.balign 4
+	.asciz "SE_PIKI_PULLED"
+.balign 4
+	.asciz "SE_PIKI_WATERDROP"
+.balign 4
+	.asciz "SE_PIKI_ATTACHENEMY"
+.balign 4
+	.asciz "SE_KINOKOPIKI_ATTACK"
+.balign 4
 .global soundTable
 soundTable:
 	.4byte 0x00000000
 	.4byte 0x00000000
-	.4byte 0x802B1E2C
+	.4byte lbl_802B1E2C
 	.4byte 0x00000001
 	.4byte 0x00000001
 	.4byte 0x00000001
 	.4byte 0x00000001
-	.4byte 0x802B1E3C
+	.4byte lbl_802B1E3C
 	.4byte 0x00000000
 	.4byte 0x00000001
 	.4byte 0x00000002
 	.4byte 0x00000002
-	.4byte 0x802B1E4C
+	.4byte lbl_802B1E4C
 	.4byte 0x00000000
 	.4byte 0x00000001
 	.4byte 0x00000003
 	.4byte 0x00000003
-	.4byte 0x802B1E5C
+	.4byte lbl_802B1E5C
 	.4byte 0x00000000
 	.4byte 0x00000001
 	.4byte 0x00000004
 	.4byte 0x00000004
-	.4byte 0x802B1E6C
+	.4byte lbl_802B1E6C
 	.4byte 0x00000000
 	.4byte 0x00000001
 	.4byte 0x00000005
 	.4byte 0x00000005
-	.4byte 0x802B1E7C
+	.4byte lbl_802B1E7C
 	.4byte 0x00000000
 	.4byte 0x00000001
 	.4byte 0x00000006
 	.4byte 0x00000006
-	.4byte 0x802B1E8C
+	.4byte lbl_802B1E8C
 	.4byte 0x00000000
 	.4byte 0x00000001
 	.4byte 0x00000007
 	.4byte 0x00000007
-	.4byte 0x802B1E9C
+	.4byte lbl_802B1E9C
 	.4byte 0x00000000
 	.4byte 0x00000001
 	.4byte 0x00000008
 	.4byte 0x00000008
-	.4byte 0x802B1EAC
+	.4byte lbl_802B1EAC
 	.4byte 0x00000000
 	.4byte 0x00000001
 	.4byte 0x00000009
 	.4byte 0x00000009
-	.4byte 0x802B1EC4
+	.4byte lbl_802B1EC4
 	.4byte 0x00000000
 	.4byte 0x00000001
 	.4byte 0x0000000A
 	.4byte 0x0000000A
-	.4byte 0x802B1ED4
+	.4byte lbl_802B1ED4
 	.4byte 0x00000000
 	.4byte 0x00000001
 	.4byte 0x0000000B
 	.4byte 0x0000000B
-	.4byte 0x802B1EE4
+	.4byte lbl_802B1EE4
 	.4byte 0x00000000
 	.4byte 0x00000001
 	.4byte 0x0000000C
 	.4byte 0x0000000C
-	.4byte 0x802B1EF0
+	.4byte lbl_802B1EF0
 	.4byte 0x00000000
 	.4byte 0x00000001
 	.4byte 0x0000000D
 	.4byte 0x0000000D
-	.4byte 0x802B1F00
+	.4byte lbl_802B1F00
 	.4byte 0x00000000
 	.4byte 0x00000001
 	.4byte 0x0000000E
 	.4byte 0x0000000E
-	.4byte 0x802B1F10
+	.4byte lbl_802B1F10
 	.4byte 0x00000000
 	.4byte 0x00000001
 	.4byte 0x0000000F
 	.4byte 0x0000000F
-	.4byte 0x802B1F20
+	.4byte lbl_802B1F20
 	.4byte 0x00000000
 	.4byte 0x00000001
 	.4byte 0x00000010
 	.4byte 0x00000010
-	.4byte 0x802B1F30
+	.4byte lbl_802B1F30
 	.4byte 0x00000000
 	.4byte 0x00000001
 	.4byte 0x00000011
 	.4byte 0x00000011
-	.4byte 0x802B1F40
+	.4byte lbl_802B1F40
 	.4byte 0x00000000
 	.4byte 0x00000001
 	.4byte 0x00000012
 	.4byte 0x00000012
-	.4byte 0x802B1F50
+	.4byte lbl_802B1F50
 	.4byte 0x00000000
 	.4byte 0x00000001
 	.4byte 0x00000013
 	.4byte 0x00000013
-	.4byte 0x802B1F60
+	.4byte lbl_802B1F60
 	.4byte 0x00000000
 	.4byte 0x00000001
 	.4byte 0x00000014
 	.4byte 0x00000014
-	.4byte 0x802B1F6C
+	.4byte lbl_802B1F6C
 	.4byte 0x00000000
 	.4byte 0x00000001
 	.4byte 0x00000015
 	.4byte 0x00000015
-	.4byte 0x802B1F80
+	.4byte lbl_802B1F80
 	.4byte 0x00000000
 	.4byte 0x00000001
 	.4byte 0x00000016
 	.4byte 0x00000016
-	.4byte 0x802B1F94
+	.4byte lbl_802B1F94
 	.4byte 0x00000000
 	.4byte 0x00000001
 	.4byte 0x00000017
 	.4byte 0x00000017
-	.4byte 0x802B1FA4
+	.4byte lbl_802B1FA4
 	.4byte 0x00000000
 	.4byte 0x00000001
 	.4byte 0x00000018
 	.4byte 0x00000018
-	.4byte 0x802B1FBC
+	.4byte lbl_802B1FBC
 	.4byte 0x00000000
 	.4byte 0x00000001
 	.4byte 0x00000019
 	.4byte 0x00000019
-	.4byte 0x802B1FC8
+	.4byte lbl_802B1FC8
 	.4byte 0x00000000
 	.4byte 0x00000001
 	.4byte 0x0000001A
 	.4byte 0x0000001A
-	.4byte 0x802B1FDC
+	.4byte lbl_802B1FDC
 	.4byte 0x00000000
 	.4byte 0x00000001
 	.4byte 0x0000001B
 	.4byte 0x0000001B
-	.4byte 0x802B1FEC
+	.4byte lbl_802B1FEC
 	.4byte 0x00000000
 	.4byte 0x00000001
 	.4byte 0x0000001C
 	.4byte 0x0000001E
-	.4byte 0x802B1FFC
+	.4byte lbl_802B1FFC
 	.4byte 0x00000000
 	.4byte 0x00000001
 	.4byte 0x0000001D
 	.4byte 0x0000002E
-	.4byte 0x802B2008
+	.4byte lbl_802B2008
 	.4byte 0x00000000
 	.4byte 0x00000001
 	.4byte 0x0000001E
 	.4byte 0x0000002F
-	.4byte 0x802B2018
+	.4byte lbl_802B2018
 	.4byte 0x00000000
 	.4byte 0x00000001
 	.4byte 0x0000001F
 	.4byte 0x0000001F
-	.4byte 0x803DFA80
+	.4byte lbl_803DFA80
 	.4byte 0x00000000
 	.4byte 0x00000001
 	.4byte 0x00000020
 	.4byte 0x00000020
-	.4byte 0x802B2028
+	.4byte lbl_802B2028
 	.4byte 0x00000000
 	.4byte 0x00000001
 	.4byte 0x00000021
 	.4byte 0x00000021
-	.4byte 0x802B2038
+	.4byte lbl_802B2038
 	.4byte 0x00000000
 	.4byte 0x00000001
 	.4byte 0x00000022
 	.4byte 0x00000022
-	.4byte 0x802B204C
+	.4byte lbl_802B204C
 	.4byte 0x00000000
 	.4byte 0x00000001
 	.4byte 0x00000023
 	.4byte 0x00000023
-	.4byte 0x802B205C
+	.4byte lbl_802B205C
 	.4byte 0x00000000
 	.4byte 0x00000001
 	.4byte 0x00000024
 	.4byte 0x00000024
-	.4byte 0x802B206C
+	.4byte lbl_802B206C
 	.4byte 0x00000000
 	.4byte 0x00000001
 	.4byte 0x00000025
 	.4byte 0x00000025
-	.4byte 0x802B207C
+	.4byte lbl_802B207C
 	.4byte 0x00000000
 	.4byte 0x00000001
 	.4byte 0x00000026
 	.4byte 0x00000026
-	.4byte 0x802B208C
+	.4byte lbl_802B208C
 	.4byte 0x00000000
 	.4byte 0x00000001
 	.4byte 0x00000027
 	.4byte 0x00000027
-	.4byte 0x802B209C
+	.4byte lbl_802B209C
 	.4byte 0x00000000
 	.4byte 0x00000001
 	.4byte 0x00000028
 	.4byte 0x00000035
-	.4byte 0x802B20AC
+	.4byte lbl_802B20AC
 	.4byte 0x00000000
 	.4byte 0x00000001
 	.4byte 0x00000029
 	.4byte 0x00000030
-	.4byte 0x802B20BC
+	.4byte lbl_802B20BC
 	.4byte 0x00000000
 	.4byte 0x00000001
 	.4byte 0x0000002A
 	.4byte 0x00000031
-	.4byte 0x802B20CC
+	.4byte lbl_802B20CC
 	.4byte 0x00000000
 	.4byte 0x00000001
 	.4byte 0x0000002B
 	.4byte 0x00000032
-	.4byte 0x802B20DC
+	.4byte lbl_802B20DC
 	.4byte 0x00000000
 	.4byte 0x00000001
 	.4byte 0x0000002C
 	.4byte 0x00000033
-	.4byte 0x802B20EC
+	.4byte lbl_802B20EC
 	.4byte 0x00000000
 	.4byte 0x00000001
 	.4byte 0x0000002D
 	.4byte 0x00000034
-	.4byte 0x802B20FC
+	.4byte lbl_802B20FC
 	.4byte 0x00000000
 	.4byte 0x00000001
 	.4byte 0x0000002E
 	.4byte 0x00000029
-	.4byte 0x802B210C
+	.4byte lbl_802B210C
 	.4byte 0x00000000
 	.4byte 0x00000001
 	.4byte 0x0000002F
 	.4byte 0x0000002A
-	.4byte 0x802B211C
+	.4byte lbl_802B211C
 	.4byte 0x00000000
 	.4byte 0x00000001
 	.4byte 0x00000030
 	.4byte 0x0000002B
-	.4byte 0x802B2134
+	.4byte lbl_802B2134
 	.4byte 0x00000000
 	.4byte 0x00000001
 	.4byte 0x00000031
 	.4byte 0x0000002C
-	.4byte 0x802B2144
+	.4byte lbl_802B2144
 	.4byte 0x00000000
 	.4byte 0x00000001
 	.4byte 0x00000032
 	.4byte 0x0000002D
-	.4byte 0x802B2154
+	.4byte lbl_802B2154
 	.4byte 0x00000000
 	.4byte 0x00000001
 	.4byte 0x00000033
 	.4byte 0x0000001C
-	.4byte 0x802B2164
+	.4byte lbl_802B2164
 	.4byte 0x00000000
 	.4byte 0x00000001
 	.4byte 0x00000034
 	.4byte 0x00000036
-	.4byte 0x802B2174
+	.4byte lbl_802B2174
 	.4byte 0x00000000
 	.4byte 0x00000001
 	.4byte 0x00000035
 	.4byte 0x00000037
-	.4byte 0x802B2184
+	.4byte lbl_802B2184
 	.4byte 0x00000000
 	.4byte 0x00000001
 	.4byte 0x00000036
 	.4byte 0x00000038
-	.4byte 0x802B2194
+	.4byte lbl_802B2194
 	.4byte 0x00000000
 	.4byte 0x00000001
 	.4byte 0x00000037
 	.4byte 0x00000039
-	.4byte 0x802B21A4
+	.4byte lbl_802B21A4
 	.4byte 0x00000000
 	.4byte 0x00000001
 	.4byte 0x00000038
 	.4byte 0x0000003A
-	.4byte 0x802B21B4
+	.4byte lbl_802B21B4
 	.4byte 0x00000000
 	.4byte 0x00000001
 	.4byte 0x00000039
 	.4byte 0x0000003B
-	.4byte 0x802B21C4
+	.4byte lbl_802B21C4
 	.4byte 0x00000000
 	.4byte 0x00000001
 	.4byte 0x0000003A
 	.4byte 0x0000003C
-	.4byte 0x802B21D4
+	.4byte lbl_802B21D4
 	.4byte 0x00000000
 	.4byte 0x00000001
 	.4byte 0x0000003B
 	.4byte 0x0000003D
-	.4byte 0x802B21E4
+	.4byte lbl_802B21E4
 	.4byte 0x00000000
 	.4byte 0x00000001
 	.4byte 0x0000003C
 	.4byte 0x0000003E
-	.4byte 0x802B21F4
+	.4byte lbl_802B21F4
 	.4byte 0x00000000
 	.4byte 0x00000001
 	.4byte 0x0000003D
 	.4byte 0x0000003F
-	.4byte 0x802B2204
+	.4byte lbl_802B2204
 	.4byte 0x00000000
 	.4byte 0x00000001
 	.4byte 0x0000003E
 	.4byte 0x00000040
-	.4byte 0x802B2214
+	.4byte lbl_802B2214
 	.4byte 0x00000000
 	.4byte 0x00000001
 	.4byte 0x0000003F
 	.4byte 0x00000041
-	.4byte 0x802B2224
+	.4byte lbl_802B2224
 	.4byte 0x00000000
 	.4byte 0x00000001
 	.4byte 0x00000040
 	.4byte 0x00000042
-	.4byte 0x802B2234
+	.4byte lbl_802B2234
 	.4byte 0x00000000
 	.4byte 0x00000001
 	.4byte 0x00000041
 	.4byte 0x00000043
-	.4byte 0x802B2244
+	.4byte lbl_802B2244
 	.4byte 0x00000000
 	.4byte 0x00000001
 	.4byte 0x00000042
 	.4byte 0x00000044
-	.4byte 0x802B2254
+	.4byte lbl_802B2254
 	.4byte 0x00000000
 	.4byte 0x00000001
 	.4byte 0x00000043
 	.4byte 0x00000045
-	.4byte 0x802B2264
+	.4byte lbl_802B2264
 	.4byte 0x00000000
 	.4byte 0x00000001
 	.4byte 0x00000044
 	.4byte 0x00000046
-	.4byte 0x802B2274
+	.4byte lbl_802B2274
 	.4byte 0x00000000
 	.4byte 0x00000001
 	.4byte 0x00000045
 	.4byte 0x00000047
-	.4byte 0x802B2284
+	.4byte lbl_802B2284
 	.4byte 0x00000000
 	.4byte 0x00000001
 	.4byte 0x00000046
 	.4byte 0x00000048
-	.4byte 0x802B2294
+	.4byte lbl_802B2294
 	.4byte 0x00000000
 	.4byte 0x00000001
 	.4byte 0x00000047
 	.4byte 0x00000049
-	.4byte 0x802B22A4
+	.4byte lbl_802B22A4
 	.4byte 0x00000000
 	.4byte 0x00000001
 	.4byte 0x00000048
 	.4byte 0x0000004A
-	.4byte 0x802B22B4
+	.4byte lbl_802B22B4
 	.4byte 0x00000000
 	.4byte 0x00000001
 	.4byte 0x00000049
 	.4byte 0x0000004B
-	.4byte 0x802B22C4
+	.4byte lbl_802B22C4
 	.4byte 0x00000000
 	.4byte 0x00000001
 	.4byte 0x0000004A
 	.4byte 0x0000004C
-	.4byte 0x802B22D4
+	.4byte lbl_802B22D4
 	.4byte 0x00000000
 	.4byte 0x00000001
 	.4byte 0x0000004B
 	.4byte 0x0000004D
-	.4byte 0x802B22E4
+	.4byte lbl_802B22E4
 	.4byte 0x00000000
 	.4byte 0x00000001
 	.4byte 0x0000004C
 	.4byte 0x0000004E
-	.4byte 0x802B22F4
+	.4byte lbl_802B22F4
 	.4byte 0x00000000
 	.4byte 0x00000001
 	.4byte 0x0000004D
 	.4byte 0x0000004F
-	.4byte 0x802B2304
+	.4byte lbl_802B2304
 	.4byte 0x00000000
 	.4byte 0x00000001
 	.4byte 0x0000004E
 	.4byte 0x00000050
-	.4byte 0x802B2314
+	.4byte lbl_802B2314
 	.4byte 0x00000000
 	.4byte 0x00000001
 	.4byte 0x0000004F
 	.4byte 0x00000051
-	.4byte 0x802B2324
+	.4byte lbl_802B2324
 	.4byte 0x00000000
 	.4byte 0x00000001
 	.4byte 0x00000050
 	.4byte 0x00000052
-	.4byte 0x802B2334
+	.4byte lbl_802B2334
 	.4byte 0x00000000
 	.4byte 0x00000001
 	.4byte 0x00000051
 	.4byte 0x00000053
-	.4byte 0x802B2344
+	.4byte lbl_802B2344
 	.4byte 0x00000000
 	.4byte 0x00000001
 	.4byte 0x00000052
 	.4byte 0x00000054
-	.4byte 0x802B2354
+	.4byte lbl_802B2354
 	.4byte 0x00000000
 	.4byte 0x00000001
 	.4byte 0x00000053
 	.4byte 0x00000055
-	.4byte 0x802B2364
+	.4byte lbl_802B2364
 	.4byte 0x00000000
 	.4byte 0x00000001
 	.4byte 0x00000054
 	.4byte 0x00000056
-	.4byte 0x802B2370
+	.4byte lbl_802B2370
 	.4byte 0x00000000
 	.4byte 0x00000001
 	.4byte 0x00000055
 	.4byte 0x00000057
-	.4byte 0x802B2380
+	.4byte lbl_802B2380
 	.4byte 0x00000000
 	.4byte 0x00000001
 	.4byte 0x00000056
 	.4byte 0x00000058
-	.4byte 0x802B2390
+	.4byte lbl_802B2390
 	.4byte 0x00000000
 	.4byte 0x00000001
 	.4byte 0x00000057
 	.4byte 0x00000059
-	.4byte 0x802B239C
+	.4byte lbl_802B239C
 	.4byte 0x00000000
 	.4byte 0x00000001
 	.4byte 0x00000058
 	.4byte 0x0000005A
-	.4byte 0x802B23AC
+	.4byte lbl_802B23AC
 	.4byte 0x00000000
 	.4byte 0x00000001
 	.4byte 0x00000059
 	.4byte 0x0000005B
-	.4byte 0x802B23BC
+	.4byte lbl_802B23BC
 	.4byte 0x00000000
 	.4byte 0x00000001
 	.4byte 0x0000005A
 	.4byte 0x0000005C
-	.4byte 0x802B23CC
+	.4byte lbl_802B23CC
 	.4byte 0x00000000
 	.4byte 0x00000001
 	.4byte 0x0000005B
 	.4byte 0x0000005D
-	.4byte 0x802B23DC
+	.4byte lbl_802B23DC
 	.4byte 0x00000000
 	.4byte 0x00000001
 	.4byte 0x0000005C
 	.4byte 0x0000005E
-	.4byte 0x802B23F0
+	.4byte lbl_802B23F0
 	.4byte 0x00000000
 	.4byte 0x00000001
 	.4byte 0x0000005D
 	.4byte 0x0000005F
-	.4byte 0x802B2404
+	.4byte lbl_802B2404
 	.4byte 0x00000000
 	.4byte 0x00000001
 	.4byte 0x0000005E
@@ -46230,6 +45631,7 @@ __vt__25TaiMoveNestPositionAction:
 	.4byte act__25TaiMoveNestPositionActionFR4Teki
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
+.balign 4
 .global lbl_802C9F20
 lbl_802C9F20:
 	.asciz "tainapkid.cpp"
@@ -46280,6 +45682,7 @@ __vt__33TaiNapkidStartDroppingWaterAction:
 	.4byte act__9TaiActionFR4Teki
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
+.balign 4
 	.asciz "TaiNapkidFallingWaterEffectAction"
 .balign 4
 	.4byte 0x803E3CC0
@@ -46294,6 +45697,7 @@ __vt__33TaiNapkidFallingWaterEffectAction:
 	.4byte act__9TaiActionFR4Teki
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
+.balign 4
 	.asciz "TaiNapkidShockFallingAction"
 .balign 4
 	.4byte 0x803E3CC0
@@ -46308,6 +45712,7 @@ __vt__27TaiNapkidShockFallingAction:
 	.4byte act__9TaiActionFR4Teki
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
+.balign 4
 	.asciz "TaiNapkidFallingAction"
 .balign 4
 	.4byte 0x803E3CC0
@@ -46322,6 +45727,7 @@ __vt__22TaiNapkidFallingAction:
 	.4byte act__22TaiNapkidFallingActionFR4Teki
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
+.balign 4
 	.asciz "TaiNapkidFlickAction"
 .balign 4
 	.4byte 0x803E3CC0
@@ -46336,6 +45742,7 @@ __vt__20TaiNapkidFlickAction:
 	.4byte act__20TaiNapkidFlickActionFR4Teki
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
+.balign 4
 	.asciz "TaiNapkidThrowingPikiAction"
 .balign 4
 	.4byte 0x803E3CC0
@@ -46350,6 +45757,7 @@ __vt__27TaiNapkidThrowingPikiAction:
 	.4byte act__27TaiNapkidThrowingPikiActionFR4Teki
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
+.balign 4
 	.asciz "TaiNapkidRisingAscendingAction"
 .balign 4
 	.4byte 0x803E3CC0
@@ -46364,6 +45772,7 @@ __vt__30TaiNapkidRisingAscendingAction:
 	.4byte act__9TaiActionFR4Teki
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
+.balign 4
 	.asciz "TaiNapkidTakingOffAscendingAction"
 .balign 4
 	.4byte 0x803E3CC0
@@ -46378,6 +45787,7 @@ __vt__33TaiNapkidTakingOffAscendingAction:
 	.4byte act__9TaiActionFR4Teki
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
+.balign 4
 	.asciz "TaiNapkidCatchAscendingAction"
 .balign 4
 	.4byte 0x803E3CC0
@@ -46392,6 +45802,7 @@ __vt__29TaiNapkidCatchAscendingAction:
 	.4byte act__9TaiActionFR4Teki
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
+.balign 4
 	.asciz "TaiNapkidCatchFlyingAction"
 .balign 4
 	.4byte 0x803E3CC0
@@ -46406,6 +45817,7 @@ __vt__26TaiNapkidCatchFlyingAction:
 	.4byte act__9TaiActionFR4Teki
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
+.balign 4
 	.asciz "TaiNapkidCatchTracingAction"
 .balign 4
 	.4byte 0x803E3CC0
@@ -46420,6 +45832,7 @@ __vt__27TaiNapkidCatchTracingAction:
 	.4byte act__27TaiNapkidCatchTracingActionFR4Teki
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
+.balign 4
 	.asciz "TaiNapkidCatchDescendingAction"
 .balign 4
 	.4byte 0x803E3CC0
@@ -46434,6 +45847,7 @@ __vt__30TaiNapkidCatchDescendingAction:
 	.4byte act__9TaiActionFR4Teki
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
+.balign 4
 	.asciz "Interaction"
 .balign 4
 	.4byte 0
@@ -46447,6 +45861,7 @@ __vt__30TaiNapkidCatchDescendingAction:
 	.4byte 0
 	.4byte 0
 	.4byte 0
+.balign 4
 	.asciz "TekiAndCondition"
 .balign 4
 	.asciz "Condition"
@@ -46464,6 +45879,7 @@ __vt__30TaiNapkidCatchDescendingAction:
 	.4byte 0
 	.4byte 0
 	.4byte 0
+.balign 4
 	.asciz "TekiNotCondition"
 .balign 4
 	.4byte 0x803E3D28
@@ -46474,6 +45890,7 @@ __vt__30TaiNapkidCatchDescendingAction:
 	.4byte 0
 	.4byte 0
 	.4byte 0
+.balign 4
 	.asciz "TaiNapkidCatchingAction"
 .balign 4
 	.4byte 0x803E3CC0
@@ -46488,6 +45905,7 @@ __vt__23TaiNapkidCatchingAction:
 	.4byte act__23TaiNapkidCatchingActionFR4Teki
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
+.balign 4
 	.asciz "TaiNapkidApproachPikiAction"
 .balign 4
 	.4byte 0x803E3CC0
@@ -46502,6 +45920,7 @@ __vt__27TaiNapkidApproachPikiAction:
 	.4byte act__27TaiNapkidApproachPikiActionFR4Teki
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
+.balign 4
 	.asciz "TaiNapkidAscendingAction"
 .balign 4
 	.4byte 0x803E3CC0
@@ -46516,6 +45935,7 @@ __vt__24TaiNapkidAscendingAction:
 	.4byte act__24TaiNapkidAscendingActionFR4Teki
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
+.balign 4
 	.asciz "TaiNapkidFlyingAction"
 .balign 4
 	.4byte 0x803E3CC0
@@ -46530,6 +45950,7 @@ __vt__21TaiNapkidFlyingAction:
 	.4byte act__21TaiNapkidFlyingActionFR4Teki
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
+.balign 4
 	.asciz "TaiNapkidCirclingAction"
 .balign 4
 	.4byte 0x803E3CC0
@@ -46544,6 +45965,7 @@ __vt__23TaiNapkidCirclingAction:
 	.4byte act__23TaiNapkidCirclingActionFR4Teki
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
+.balign 4
 	.asciz "TaiNapkidStraightFlyingAction"
 .balign 4
 	.4byte 0x803E3CC0
@@ -46558,6 +45980,7 @@ __vt__29TaiNapkidStraightFlyingAction:
 	.4byte act__29TaiNapkidStraightFlyingActionFR4Teki
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
+.balign 4
 	.asciz "TaiNapkidShortRangeAction"
 .balign 4
 	.4byte 0x803E3CC0
@@ -46572,6 +45995,7 @@ __vt__25TaiNapkidShortRangeAction:
 	.4byte act__25TaiNapkidShortRangeActionFR4Teki
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
+.balign 4
 	.asciz "TaiNapkidPikiLostAction"
 .balign 4
 	.4byte 0x803E3CC0
@@ -46586,6 +46010,7 @@ __vt__23TaiNapkidPikiLostAction:
 	.4byte act__23TaiNapkidPikiLostActionFR4Teki
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
+.balign 4
 	.asciz "TaiNapkidTargetPikiAction"
 .balign 4
 	.4byte 0x803E3CC0
@@ -46600,6 +46025,7 @@ __vt__25TaiNapkidTargetPikiAction:
 	.4byte act__25TaiNapkidTargetPikiActionFR4Teki
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
+.balign 4
 	.asciz "TaiNapkidWanderingRouteAction"
 .balign 4
 	.asciz "TaiMotionAction"
@@ -46607,6 +46033,7 @@ __vt__25TaiNapkidTargetPikiAction:
 	.4byte 0x803E3CC0
 	.4byte 0
 	.4byte 0
+.balign 4
 	.asciz "TaiContinuousMotionAction"
 .balign 4
 	.4byte 0x803E3CC0
@@ -46631,6 +46058,7 @@ __vt__29TaiNapkidWanderingRouteAction:
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
 	.4byte motionStarted__25TaiContinuousMotionActionFR4Teki
+.balign 4
 	.asciz "TekiNapkidShortRangeCondition"
 .balign 4
 	.4byte 0x803E3D28
@@ -46649,6 +46077,7 @@ __vt__29TekiNapkidShortRangeCondition:
 	.4byte 0
 	.4byte 0
 	.4byte 0
+.balign 4
 	.asciz "TekiNapkidTargetPikiCondition"
 .balign 4
 	.4byte 0x803E3D28
@@ -46661,6 +46090,7 @@ __vt__29TekiNapkidTargetPikiCondition:
 	.4byte __RTTI__29TekiNapkidTargetPikiCondition
 	.4byte 0
 	.4byte satisfy__29TekiNapkidTargetPikiConditionFP8Creature
+.balign 4
 	.asciz "TaiNapkidStrategy"
 .balign 4
 	.asciz "TekiStrategy"
@@ -46687,6 +46117,7 @@ __vt__17TaiNapkidStrategy:
 	.4byte drawDebugInfo__17TaiNapkidStrategyFR4TekiR8Graphics
 	.4byte interact__12TekiStrategyFR4TekiR18TekiInteractionKey
 	.4byte spawnCorpseParts__12TekiStrategyFR4Teki
+.balign 4
 	.asciz "TaiNotAction"
 .balign 4
 	.4byte 0x803E3CC0
@@ -46699,6 +46130,7 @@ __vt__17TaiNapkidStrategy:
 	.4byte 0
 	.4byte 0
 	.4byte 0
+.balign 4
 	.asciz "TaiOnceAction"
 .balign 4
 	.4byte 0x803E3CC0
@@ -46718,6 +46150,7 @@ __vt__17TaiNapkidStrategy:
 	.4byte 0
 	.4byte 0
 	.4byte 0
+.balign 4
 	.asciz "TaiNapkidParameters"
 .balign 4
 	.asciz "CoreNode"
@@ -46730,6 +46163,7 @@ __vt__17TaiNapkidStrategy:
 	.4byte 0x803E3DD0
 	.4byte 0
 	.4byte 0
+.balign 4
 	.asciz "TekiParameters"
 .balign 4
 	.4byte 0x803E3DC8
@@ -46763,6 +46197,7 @@ __vt__19TaiNapkidParameters:
 	.4byte concat__4NodeFR8Matrix4f
 	.4byte getModelMatrix__4NodeFv
 	.4byte 0
+.balign 4
 .global lbl_802CAA08
 lbl_802CAA08:
 	.asciz "taiotimoti.cpp"
