@@ -2813,11 +2813,3 @@ lbl_803EA818:
 .global lbl_803EA81C
 lbl_803EA81C:
 	.float 0.5
-.global lbl_803EA820
-lbl_803EA820:
-	.4byte 0x00000000
-	.4byte 0x00000000
-.global "@1708"
-"@1708":
-	.4byte 0x43300000
-	.4byte 0x80000000
