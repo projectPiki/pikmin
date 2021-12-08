@@ -1,6 +1,6 @@
 #include "types.h"
 #include "Vector3f.h"
-extern "C" void forceFinish__Q23zen17particleGeneratorFv();
+
 namespace zen {
 	struct particleGenerator {
 		u32 _00;
@@ -8,6 +8,8 @@ namespace zen {
 		Vector3f* m_vector_ptr; // _18
 		u8 filler2[100];
 		u32 m_pgen_thingy; // _80
+
+		void forceFinish();
 	};
 	class PtclGenPack {
 		u32 m_limit; // _00
@@ -77,8 +79,8 @@ namespace zen {
 		u32 i;
 		particleGenerator** pgen_ptr_ptr;
 
-		pgen_ptr_ptr = this->m_pgen_ptr_ptr;
-		for (i = 0; i < this->m_limit; i++, pgen_ptr_ptr++) {
+		pgen_ptr_ptr = m_pgen_ptr_ptr;
+		for (i = 0; i < m_limit; i++, pgen_ptr_ptr++) {
 			if (*pgen_ptr_ptr != nullptr) {
 				(*pgen_ptr_ptr)->m_vector_ptr = param_1;
 			}
@@ -117,8 +119,8 @@ namespace zen {
 		u32 i;
 		particleGenerator** pgen_ptr_ptr;
 
-		pgen_ptr_ptr = this->m_pgen_ptr_ptr;
-		for (i = 0; i < this->m_limit; i++, pgen_ptr_ptr++) {
+		pgen_ptr_ptr = m_pgen_ptr_ptr;
+		for (i = 0; i < m_limit; i++, pgen_ptr_ptr++) {
 			pgen_ptr = *pgen_ptr_ptr;
 			if (pgen_ptr != nullptr) {
 				pgen_ptr->m_pgen_thingy = pgen_ptr->m_pgen_thingy & 0xfffffff7;
@@ -138,8 +140,8 @@ namespace zen {
 		u32 i;
 		particleGenerator** pgen_ptr_ptr;
 
-		pgen_ptr_ptr = this->m_pgen_ptr_ptr;
-		for (i = 0; i < this->m_limit; i++, pgen_ptr_ptr++) {
+		pgen_ptr_ptr = m_pgen_ptr_ptr;
+		for (i = 0; i < m_limit; i++, pgen_ptr_ptr++) {
 			pgen_ptr = *pgen_ptr_ptr;
 			if (pgen_ptr != nullptr) {
 				pgen_ptr->m_pgen_thingy = pgen_ptr->m_pgen_thingy | 8;
@@ -179,8 +181,8 @@ namespace zen {
 		u32 i;
 		particleGenerator** pgen_ptr_ptr;
 
-		pgen_ptr_ptr = this->m_pgen_ptr_ptr;
-		for (i = 0; i < this->m_limit; i++, pgen_ptr_ptr++) {
+		pgen_ptr_ptr = m_pgen_ptr_ptr;
+		for (i = 0; i < m_limit; i++, pgen_ptr_ptr++) {
 			pgen_ptr = *pgen_ptr_ptr;
 			if (pgen_ptr != nullptr) {
 				pgen_ptr->m_pgen_thingy = pgen_ptr->m_pgen_thingy | 2;
@@ -221,59 +223,21 @@ namespace zen {
 	 * Address:	801DA194
 	 * Size:	000078
 	 */
-	void PtclGenPack::forceFinish()
+	void PtclGenPack::forceFinish() // matches
 	{
-		particleGenerator** pgen_ptr_ptr;
-		u32 i;
+			u32 i;
+			particleGenerator** pgen_ptr_ptr = m_pgen_ptr_ptr;
 
-		pgen_ptr_ptr = this->m_pgen_ptr_ptr;
-		for (i = 0; i < this->m_limit; i++, pgen_ptr_ptr++) {
-			if (*pgen_ptr_ptr != nullptr) {
-				// particleGenerator::forceFinish();
-				forceFinish__Q23zen17particleGeneratorFv();
+			for (i = 0; i < m_limit; i++, pgen_ptr_ptr++)
+			{
+				if (!*pgen_ptr_ptr)
+					continue;
+
+				(*pgen_ptr_ptr)->forceFinish();
 				*pgen_ptr_ptr = nullptr;
 			}
-		}
-		return;
-		/*
-		.loc_0x0:
-		  mflr      r0
-		  stw       r0, 0x4(r1)
-		  stwu      r1, -0x20(r1)
-		  stw       r31, 0x1C(r1)
-		  li        r31, 0
-		  stw       r30, 0x18(r1)
-		  li        r30, 0
-		  stw       r29, 0x14(r1)
-		  stw       r28, 0x10(r1)
-		  mr        r28, r3
-		  lwz       r29, 0x4(r3)
-		  b         .loc_0x4C
 
-		.loc_0x30:
-		  lwz       r3, 0x0(r29)
-		  cmplwi    r3, 0
-		  beq-      .loc_0x44
-		  bl        -0x395D4
-		  stw       r31, 0x0(r29)
-
-		.loc_0x44:
-		  addi      r30, r30, 0x1
-		  addi      r29, r29, 0x4
-
-		.loc_0x4C:
-		  lwz       r0, 0x0(r28)
-		  cmplw     r30, r0
-		  blt+      .loc_0x30
-		  lwz       r0, 0x24(r1)
-		  lwz       r31, 0x1C(r1)
-		  lwz       r30, 0x18(r1)
-		  lwz       r29, 0x14(r1)
-		  lwz       r28, 0x10(r1)
-		  addi      r1, r1, 0x20
-		  mtlr      r0
-		  blr
-		*/
+			return;
 	}
 
 	/*
@@ -286,8 +250,8 @@ namespace zen {
 		u32 counter;
 		particleGenerator** pgen_ptr_ptr;
 
-		counter = this->m_limit;
-		pgen_ptr_ptr = this->m_pgen_ptr_ptr;
+		counter = m_limit;
+		pgen_ptr_ptr = m_pgen_ptr_ptr;
 		while (true) {
 			if (counter == 0) {
 				return true;

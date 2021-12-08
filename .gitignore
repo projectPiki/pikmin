@@ -28,3 +28,4 @@ tools/mwcc_compiler/
 *.filters
 Debug
 .vs
+ctx.c
