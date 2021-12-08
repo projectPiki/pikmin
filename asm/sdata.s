@@ -14307,14 +14307,3 @@ __RTTI__12TaiNotAction:
 __RTTI__19TaiKinokoParameters:
 	.4byte 0x802C8AE0
 	.4byte 0x802C8B4C
-	.4byte 0
-	.4byte 0x802C8BE4
-	.4byte 0
-.global __RTTI__23TaiKeySendMessageAction
-__RTTI__23TaiKeySendMessageAction:
-	.4byte 0x802C8BCC
-	.4byte 0x802C8BF0
-.global __RTTI__20TaiSendMessageAction
-__RTTI__20TaiSendMessageAction:
-	.4byte 0x802C8C18
-	.4byte 0x802C8C30
