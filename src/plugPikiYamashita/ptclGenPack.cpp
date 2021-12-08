@@ -1,36 +1,34 @@
 #include "types.h"
 #include "Vector3f.h"
-
+extern "C" void forceFinish__Q23zen17particleGeneratorFv();
 namespace zen {
 	struct particleGenerator {
 		u32 _00;
+		u8 filler[20];
+		Vector3f* m_vector_ptr; // _18
+		u8 filler2[100];
+		u32 m_pgen_thingy; // _80
 	};
 	class PtclGenPack {
 		u32 m_limit; // _00
 		particleGenerator** m_pgen_ptr_ptr; // _04
 
 		void setPtclGenPtr(u32, particleGenerator*);
+		void getPtclGenPtr(u32);
+		void setEmitPos(Vector3f&);
+		void setEmitPosPtr(Vector3f*);
+		void setEmitDir(Vector3f&);
+		void startGen();
+		void stopGen();
+		void start();
+		void stop();
+		void finish();
+		void forceFinish();
+		bool checkStopGen();
+		void checkStop();
+		void checkEmit();
+		void checkActive();
 	};
-}
-
-/*
- * --INFO--
- * Address:	........
- * Size:	00009C
- */
-void _Error(char *, ...)
-{
-	// UNUSED FUNCTION
-}
-
-/*
- * --INFO--
- * Address:	........
- * Size:	0000F4
- */
-void _Print(char *, ...)
-{
-	// UNUSED FUNCTION
 }
 
 /*
@@ -54,7 +52,7 @@ namespace zen {
 	 * Address:	........
 	 * Size:	000010
 	 */
-	void PtclGenPack::getPtclGenPtr(unsigned long)
+	void PtclGenPack::getPtclGenPtr(u32)
 	{
 		// UNUSED FUNCTION
 	}
@@ -74,41 +72,18 @@ namespace zen {
 	 * Address:	801DA0A4
 	 * Size:	000034
 	 */
-	void PtclGenPack::setEmitPosPtr(Vector3f* param_1)
+	void PtclGenPack::setEmitPosPtr(Vector3f* param_1) // matching
 	{
 		u32 i;
 		particleGenerator** pgen_ptr_ptr;
 
 		pgen_ptr_ptr = this->m_pgen_ptr_ptr;
-		for (i = 0; i < this->m_limit; i = i + 1) {
+		for (i = 0; i < this->m_limit; i++, pgen_ptr_ptr++) {
 			if (*pgen_ptr_ptr != nullptr) {
 				(*pgen_ptr_ptr)->m_vector_ptr = param_1;
 			}
-			pgen_ptr_ptr = pgen_ptr_ptr + 1;
 		}
 		return;
-		/*
-		.loc_0x0:
-		  lwz       r7, 0x4(r3)
-		  li        r6, 0
-		  b         .loc_0x24
-
-		.loc_0xC:
-		  lwz       r5, 0x0(r7)
-		  cmplwi    r5, 0
-		  beq-      .loc_0x1C
-		  stw       r4, 0x18(r5)
-
-		.loc_0x1C:
-		  addi      r6, r6, 0x1
-		  addi      r7, r7, 0x4
-
-		.loc_0x24:
-		  lwz       r0, 0x0(r3)
-		  cmplw     r6, r0
-		  blt+      .loc_0xC
-		  blr
-		*/
 	}
 
 	/*
@@ -126,55 +101,30 @@ namespace zen {
 	 * Address:	........
 	 * Size:	000084
 	 */
-	void PtclGenPack::setCallBack(zen::CallBack1<zen::particleGenerator*>*, zen::CallBack2<zen::particleGenerator*, zen::particleMdl*>*)
-	{
-		// UNUSED FUNCTION
-	}
+	//void PtclGenPack::setCallBack(zen::CallBack1<zen::particleGenerator*>*, zen::CallBack2<zen::particleGenerator*, zen::particleMdl*>*)
+	//{
+	//	// UNUSED FUNCTION
+	//}
 
 	/*
 	 * --INFO--
 	 * Address:	801DA0D8
 	 * Size:	00003C
 	 */
-	void PtclGenPack::startGen()
+	void PtclGenPack::startGen() // matching
 	{
 		particleGenerator* pgen_ptr;
 		u32 i;
 		particleGenerator** pgen_ptr_ptr;
 
 		pgen_ptr_ptr = this->m_pgen_ptr_ptr;
-		for (i = 0; i < this->m_limit; i = i + 1) {
+		for (i = 0; i < this->m_limit; i++, pgen_ptr_ptr++) {
 			pgen_ptr = *pgen_ptr_ptr;
 			if (pgen_ptr != nullptr) {
 				pgen_ptr->m_pgen_thingy = pgen_ptr->m_pgen_thingy & 0xfffffff7;
 			}
-			pgen_ptr_ptr = pgen_ptr_ptr + 1;
 		}
 		return;
-		/*
-		.loc_0x0:
-		  lwz       r6, 0x4(r3)
-		  li        r5, 0
-		  b         .loc_0x2C
-
-		.loc_0xC:
-		  lwz       r4, 0x0(r6)
-		  cmplwi    r4, 0
-		  beq-      .loc_0x24
-		  lwz       r0, 0x80(r4)
-		  rlwinm    r0,r0,0,29,27
-		  stw       r0, 0x80(r4)
-
-		.loc_0x24:
-		  addi      r5, r5, 0x1
-		  addi      r6, r6, 0x4
-
-		.loc_0x2C:
-		  lwz       r0, 0x0(r3)
-		  cmplw     r5, r0
-		  blt+      .loc_0xC
-		  blr
-		*/
 	}
 
 	/*
@@ -182,45 +132,20 @@ namespace zen {
 	 * Address:	801DA114
 	 * Size:	00003C
 	 */
-	void PtclGenPack::stopGen()
+	void PtclGenPack::stopGen() // matching
 	{
-		particleGenerator* ppVar1;
-		u32 uVar2;
-		particleGenerator** pppVar3;
+		particleGenerator* pgen_ptr;
+		u32 i;
+		particleGenerator** pgen_ptr_ptr;
 
-		pppVar3 = this->m_pgen_ptr_ptr;
-		for (uVar2 = 0; uVar2 < this->m_limit; uVar2 = uVar2 + 1) {
-			ppVar1 = *pppVar3;
-			if (ppVar1 != nullptr) {
-				ppVar1->m_pgen_thingy = ppVar1->m_pgen_thingy | 8;
+		pgen_ptr_ptr = this->m_pgen_ptr_ptr;
+		for (i = 0; i < this->m_limit; i++, pgen_ptr_ptr++) {
+			pgen_ptr = *pgen_ptr_ptr;
+			if (pgen_ptr != nullptr) {
+				pgen_ptr->m_pgen_thingy = pgen_ptr->m_pgen_thingy | 8;
 			}
-			pppVar3 = pppVar3 + 1;
 		}
 		return;
-		/*
-		.loc_0x0:
-		  lwz       r6, 0x4(r3)
-		  li        r5, 0
-		  b         .loc_0x2C
-
-		.loc_0xC:
-		  lwz       r4, 0x0(r6)
-		  cmplwi    r4, 0
-		  beq-      .loc_0x24
-		  lwz       r0, 0x80(r4)
-		  ori       r0, r0, 0x8
-		  stw       r0, 0x80(r4)
-
-		.loc_0x24:
-		  addi      r5, r5, 0x1
-		  addi      r6, r6, 0x4
-
-		.loc_0x2C:
-		  lwz       r0, 0x0(r3)
-		  cmplw     r5, r0
-		  blt+      .loc_0xC
-		  blr
-		*/
 	}
 
 	/*
@@ -248,20 +173,19 @@ namespace zen {
 	 * Address:	801DA150
 	 * Size:	000044
 	 */
-	void PtclGenPack::finish()
+	void PtclGenPack::finish() // matching
 	{
 		particleGenerator* pgen_ptr;
 		u32 i;
 		particleGenerator** pgen_ptr_ptr;
 
 		pgen_ptr_ptr = this->m_pgen_ptr_ptr;
-		for (i = 0; i < this->m_limit; i = i + 1) {
+		for (i = 0; i < this->m_limit; i++, pgen_ptr_ptr++) {
 			pgen_ptr = *pgen_ptr_ptr;
 			if (pgen_ptr != nullptr) {
 				pgen_ptr->m_pgen_thingy = pgen_ptr->m_pgen_thingy | 2;
 				*pgen_ptr_ptr = nullptr;
 			}
-			pgen_ptr_ptr = pgen_ptr_ptr + 1;
 		}
 		return;
 		/*
@@ -303,12 +227,12 @@ namespace zen {
 		u32 i;
 
 		pgen_ptr_ptr = this->m_pgen_ptr_ptr;
-		for (i = 0; i < this->m_limit; i = i + 1) {
+		for (i = 0; i < this->m_limit; i++, pgen_ptr_ptr++) {
 			if (*pgen_ptr_ptr != nullptr) {
-				particleGenerator::forceFinish(*pgen_ptr_ptr);
+				// particleGenerator::forceFinish();
+				forceFinish__Q23zen17particleGeneratorFv();
 				*pgen_ptr_ptr = nullptr;
 			}
-			pgen_ptr_ptr = pgen_ptr_ptr + 1;
 		}
 		return;
 		/*
@@ -368,7 +292,7 @@ namespace zen {
 			if (counter == 0) {
 				return true;
 			}
-			if ((*pgen_ptr_ptr != (particleGenerator*)0x0) && (((*pgen_ptr_ptr)->m_pgen_thingy & 8) == 0)) break;
+			if ((*pgen_ptr_ptr != nullptr) && (((*pgen_ptr_ptr)->m_pgen_thingy & 8) == 0)) break;
 			pgen_ptr_ptr = pgen_ptr_ptr + 1;
 			counter = counter - 1;
 		}
