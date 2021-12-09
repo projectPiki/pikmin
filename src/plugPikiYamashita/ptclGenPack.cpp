@@ -7,7 +7,7 @@ namespace zen {
 		u8 filler[20];
 		Vector3f* m_vector_ptr; // _18
 		u8 filler2[100];
-		u32 m_pgen_thingy; // _80
+		u32 m_pgen_flags; // _80
 
 		void forceFinish();
 	};
@@ -123,7 +123,7 @@ namespace zen {
 		for (i = 0; i < m_limit; i++, particle_gen_list++) {
 			pgen_ptr = particle_gen_list[0];
 			if (pgen_ptr != nullptr) {
-				pgen_ptr->m_pgen_thingy = pgen_ptr->m_pgen_thingy & 0xfffffff7;
+				pgen_ptr->m_pgen_flags &= 0xFFFFFFF7;
 			}
 		}
 		return;
@@ -144,7 +144,7 @@ namespace zen {
 		for (i = 0; i < m_limit; i++, particle_gen_list++) {
 			pgen_ptr = particle_gen_list[0];
 			if (pgen_ptr != nullptr) {
-				pgen_ptr->m_pgen_thingy = pgen_ptr->m_pgen_thingy | 8;
+				pgen_ptr->m_pgen_flags |= 8;
 			}
 		}
 		return;
@@ -185,7 +185,7 @@ namespace zen {
 		for (i = 0; i < m_limit; i++, particle_gen_list++) {
 			pgen_ptr = particle_gen_list[0];
 			if (pgen_ptr != nullptr) {
-				pgen_ptr->m_pgen_thingy = pgen_ptr->m_pgen_thingy | 2;
+				pgen_ptr->m_pgen_flags |= 2;
 				particle_gen_list[0] = nullptr;
 			}
 		}
@@ -226,7 +226,7 @@ namespace zen {
 		particle_gen_list = m_ptcl_gen_list;
 		for (i = 0; i < m_limit; i++, particle_gen_list++) {
 			pgen_ptr = particle_gen_list[0];
-			if ((particle_gen_list[0] != nullptr) && (((*particle_gen_list)->m_pgen_thingy & 8) == 0))
+			if ((particle_gen_list[0] != nullptr) && (((*particle_gen_list)->m_pgen_flags & 8) == 0))
 				return false;
 		}
 		return true;
