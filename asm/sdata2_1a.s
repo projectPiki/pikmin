@@ -2072,11 +2072,3 @@ lbl_803EA408:
 .global lbl_803EA40C
 lbl_803EA40C:
 	.4byte 0x00000000
-.global lbl_803EA410
-lbl_803EA410:
-	.4byte 0x00000000
-	.4byte 0x00000000
-.global "@2065"
-"@2065":
-	.4byte 0x43300000
-	.4byte 0x80000000
