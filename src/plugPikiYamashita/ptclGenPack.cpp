@@ -13,7 +13,7 @@ namespace zen {
 	};
 	class PtclGenPack {
 		u32 m_limit; // _00
-		particleGenerator** m_pgen_ptr_ptr; // _04
+		particleGenerator** m_ptcl_gen_list; // _04
 
 		void setPtclGenPtr(u32, particleGenerator*);
 		void getPtclGenPtr(u32);
@@ -44,7 +44,7 @@ namespace zen {
 		{
 			return;
 		}
-		m_pgen_ptr_ptr[param_1] = param_2;
+		m_ptcl_gen_list[param_1] = param_2;
 		return;
 	};
 
@@ -77,12 +77,12 @@ namespace zen {
 	void PtclGenPack::setEmitPosPtr(Vector3f* param_1) // matching
 	{
 		u32 i;
-		particleGenerator** pgen_ptr_ptr;
+		particleGenerator** particle_gen_list;
 
-		pgen_ptr_ptr = m_pgen_ptr_ptr;
-		for (i = 0; i < m_limit; i++, pgen_ptr_ptr++) {
-			if (*pgen_ptr_ptr != nullptr) {
-				(*pgen_ptr_ptr)->m_vector_ptr = param_1;
+		particle_gen_list = m_ptcl_gen_list;
+		for (i = 0; i < m_limit; i++, particle_gen_list++) {
+			if (particle_gen_list[0] != nullptr) {
+				(*particle_gen_list)->m_vector_ptr = param_1;
 			}
 		}
 		return;
@@ -117,11 +117,11 @@ namespace zen {
 	{
 		particleGenerator* pgen_ptr;
 		u32 i;
-		particleGenerator** pgen_ptr_ptr;
+		particleGenerator** particle_gen_list;
 
-		pgen_ptr_ptr = m_pgen_ptr_ptr;
-		for (i = 0; i < m_limit; i++, pgen_ptr_ptr++) {
-			pgen_ptr = *pgen_ptr_ptr;
+		particle_gen_list = m_ptcl_gen_list;
+		for (i = 0; i < m_limit; i++, particle_gen_list++) {
+			pgen_ptr = particle_gen_list[0];
 			if (pgen_ptr != nullptr) {
 				pgen_ptr->m_pgen_thingy = pgen_ptr->m_pgen_thingy & 0xfffffff7;
 			}
@@ -138,11 +138,11 @@ namespace zen {
 	{
 		particleGenerator* pgen_ptr;
 		u32 i;
-		particleGenerator** pgen_ptr_ptr;
+		particleGenerator** particle_gen_list;
 
-		pgen_ptr_ptr = m_pgen_ptr_ptr;
-		for (i = 0; i < m_limit; i++, pgen_ptr_ptr++) {
-			pgen_ptr = *pgen_ptr_ptr;
+		particle_gen_list = m_ptcl_gen_list;
+		for (i = 0; i < m_limit; i++, particle_gen_list++) {
+			pgen_ptr = particle_gen_list[0];
 			if (pgen_ptr != nullptr) {
 				pgen_ptr->m_pgen_thingy = pgen_ptr->m_pgen_thingy | 8;
 			}
@@ -179,14 +179,14 @@ namespace zen {
 	{
 		particleGenerator* pgen_ptr;
 		u32 i;
-		particleGenerator** pgen_ptr_ptr;
+		particleGenerator** particle_gen_list;
 
-		pgen_ptr_ptr = m_pgen_ptr_ptr;
-		for (i = 0; i < m_limit; i++, pgen_ptr_ptr++) {
-			pgen_ptr = *pgen_ptr_ptr;
+		particle_gen_list = m_ptcl_gen_list;
+		for (i = 0; i < m_limit; i++, particle_gen_list++) {
+			pgen_ptr = particle_gen_list[0];
 			if (pgen_ptr != nullptr) {
 				pgen_ptr->m_pgen_thingy = pgen_ptr->m_pgen_thingy | 2;
-				*pgen_ptr_ptr = nullptr;
+				particle_gen_list[0] = nullptr;
 			}
 		}
 		return;
@@ -199,19 +199,17 @@ namespace zen {
 	 */
 	void PtclGenPack::forceFinish() // matches
 	{
-			u32 i;
-			particleGenerator** pgen_ptr_ptr = m_pgen_ptr_ptr;
+		u32 i;
+		particleGenerator** ptcl_list = &m_ptcl_gen_list[0];
 
-			for (i = 0; i < m_limit; i++, pgen_ptr_ptr++)
-			{
-				if (!*pgen_ptr_ptr)
-					continue;
+		for (i = 0; i < m_limit; i++, ptcl_list++)
+		{
+			if (!ptcl_list[0])
+				continue;
 
-				(*pgen_ptr_ptr)->forceFinish();
-				*pgen_ptr_ptr = nullptr;
-			}
-
-			return;
+			ptcl_list[0]->forceFinish();
+			ptcl_list[0] = nullptr;
+		}
 	}
 
 	/*
@@ -223,12 +221,12 @@ namespace zen {
 	{
 		particleGenerator* pgen_ptr;
 		u32 i;
-		particleGenerator** pgen_ptr_ptr;
+		particleGenerator** particle_gen_list;
 
-		pgen_ptr_ptr = m_pgen_ptr_ptr;
-		for (i = 0; i < m_limit; i++, pgen_ptr_ptr++) {
-			pgen_ptr = *pgen_ptr_ptr;
-			if ((*pgen_ptr_ptr != nullptr) && (((*pgen_ptr_ptr)->m_pgen_thingy & 8) == 0))
+		particle_gen_list = m_ptcl_gen_list;
+		for (i = 0; i < m_limit; i++, particle_gen_list++) {
+			pgen_ptr = particle_gen_list[0];
+			if ((particle_gen_list[0] != nullptr) && (((*particle_gen_list)->m_pgen_thingy & 8) == 0))
 				return false;
 		}
 		return true;
