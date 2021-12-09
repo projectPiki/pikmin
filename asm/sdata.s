@@ -13612,27 +13612,3 @@ __RTTI__15PeveSerialEvent_1:
 __RTTI__13PeveCondition:
 	.4byte 0x802C5E14
 	.4byte 0
-.global __RTTI__13PeveCondition_1
-__RTTI__13PeveCondition_1:
-	.4byte 0x802C5E78
-	.4byte 0
-.global __RTTI__20PeveBooleanCondition
-__RTTI__20PeveBooleanCondition:
-	.4byte 0x802C5E88
-	.4byte 0x802C5EA0
-.global __RTTI__24PeveComparisonYCondition
-__RTTI__24PeveComparisonYCondition:
-	.4byte 0x802C5E5C
-	.4byte 0x802C5EAC
-.global __RTTI__21PeveDistanceCondition
-__RTTI__21PeveDistanceCondition:
-	.4byte 0x802C5ED4
-	.4byte 0x802C5EEC
-.global __RTTI__17PeveTimeCondition
-__RTTI__17PeveTimeCondition:
-	.4byte 0x802C5F14
-	.4byte 0x802C5F28
-.global __RTTI__23PeveDependenceCondition
-__RTTI__23PeveDependenceCondition:
-	.4byte 0x802C5F48
-	.4byte 0x802C5F60

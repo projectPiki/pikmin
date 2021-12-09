@@ -2062,6 +2062,3 @@ lbl_803EA3EC:
 "@851":
 	.4byte 0x40080000
 	.4byte 0x00000000
-.global lbl_803EA400
-lbl_803EA400:
-	.4byte 0x00000000
