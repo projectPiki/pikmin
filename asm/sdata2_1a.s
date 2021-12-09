@@ -2065,10 +2065,3 @@ lbl_803EA3EC:
 .global lbl_803EA400
 lbl_803EA400:
 	.4byte 0x00000000
-	.4byte 0x00000000
-.global lbl_803EA408
-lbl_803EA408:
-	.float 1.0
-.global lbl_803EA40C
-lbl_803EA40C:
-	.4byte 0x00000000
