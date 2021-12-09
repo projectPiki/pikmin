@@ -13760,29 +13760,3 @@ __RTTI__23TaiAttackableNaviAction:
 __RTTI__27TaiAttackableNaviPikiAction:
 	.4byte 0x802C697C
 	.4byte 0x802C6998
-	.4byte 0x802C6A00
-	.4byte 0
-.global __RTTI__26TaiNaviWatchResultOnAction
-__RTTI__26TaiNaviWatchResultOnAction:
-	.4byte 0x802C69E4
-	.4byte 0x802C6A0C
-.global __RTTI__30TaiTypeNaviWatchResultOnAction
-__RTTI__30TaiTypeNaviWatchResultOnAction:
-	.4byte 0x802C6A34
-	.4byte 0x802C6A54
-.global __RTTI__18TaiStopSoundAction
-__RTTI__18TaiStopSoundAction:
-	.4byte 0x802C6A7C
-	.4byte 0x802C6A90
-.global __RTTI__18TaiPlaySoundAction
-__RTTI__18TaiPlaySoundAction:
-	.4byte 0x802C6AB8
-	.4byte 0x802C6ACC
-.global __RTTI__18TaiSetOptionAction
-__RTTI__18TaiSetOptionAction:
-	.4byte 0x802C6AF4
-	.4byte 0x802C6B08
-.global __RTTI__20TaiActionStateAction
-__RTTI__20TaiActionStateAction:
-	.4byte 0x802C6B30
-	.4byte 0x802C6B48
