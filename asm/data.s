@@ -20474,24 +20474,34 @@ lbl_802B23F0:
 lbl_802B2404:
 	.asciz "SE_KABUTO_OPEN"
 .balign 4
+lbl_802B2414:
 	.asciz "SE_KABUTO_SHOT"
 .balign 4
+lbl_802B2424:
 	.asciz "SE_KABUTO_FLIP"
 .balign 4
+lbl_802B2434:
 	.asciz "SE_KABUTO_WALK"
 .balign 4
+lbl_802B2444:
 	.asciz "SE_KABUTO_COOLDOWN"
 .balign 4
+lbl_802B2458:
 	.asciz "SE_KABUTO_OVERHEAT"
 .balign 4
+lbl_802B246C:
 	.asciz "SE_KABUTO_DEAD"
 .balign 4
+lbl_802B247C:
 	.asciz "SE_ROCK_ROLL"
 .balign 4
+lbl_802B248C:
 	.asciz "SE_ROCK_BREAK"
 .balign 4
+lbl_802B249C:
 	.asciz "SE_ROCK_GENERATOR"
 .balign 4
+lbl_802B24B0:
 	.asciz "SE_SHELL_CLOSE"
 .balign 4
 	.asciz "SE_SHELL_READY"
@@ -21410,52 +21420,52 @@ soundTable:
 	.4byte 0x00000001
 	.4byte 0x0000005E
 	.4byte 0x00000060
-	.4byte 0x802B2414
+	.4byte lbl_802B2414
 	.4byte 0x00000000
 	.4byte 0x00000001
 	.4byte 0x0000005F
 	.4byte 0x00000061
-	.4byte 0x802B2424
+	.4byte lbl_802B2424
 	.4byte 0x00000000
 	.4byte 0x00000001
 	.4byte 0x00000060
 	.4byte 0x00000062
-	.4byte 0x802B2434
+	.4byte lbl_802B2434
 	.4byte 0x00000000
 	.4byte 0x00000001
 	.4byte 0x00000061
 	.4byte 0x00000063
-	.4byte 0x802B2444
+	.4byte lbl_802B2444
 	.4byte 0x00000000
 	.4byte 0x00000001
 	.4byte 0x00000062
 	.4byte 0x00000064
-	.4byte 0x802B2458
+	.4byte lbl_802B2458
 	.4byte 0x00000000
 	.4byte 0x00000001
 	.4byte 0x00000063
 	.4byte 0x00000065
-	.4byte 0x802B246C
+	.4byte lbl_802B246C
 	.4byte 0x00000000
 	.4byte 0x00000001
 	.4byte 0x00000064
 	.4byte 0x00000066
-	.4byte 0x802B247C
+	.4byte lbl_802B247C
 	.4byte 0x00000000
 	.4byte 0x00000001
 	.4byte 0x00000065
 	.4byte 0x00000067
-	.4byte 0x802B248C
+	.4byte lbl_802B248C
 	.4byte 0x00000000
 	.4byte 0x00000001
 	.4byte 0x00000066
 	.4byte 0x00000068
-	.4byte 0x802B249C
+	.4byte lbl_802B249C
 	.4byte 0x00000000
 	.4byte 0x00000001
 	.4byte 0x00000067
 	.4byte 0x00000069
-	.4byte 0x802B24B0
+	.4byte lbl_802B24B0
 	.4byte 0x00000000
 	.4byte 0x00000001
 	.4byte 0x00000068
@@ -37999,12 +38009,14 @@ __vt__17GenObjectMapParts:
 	.4byte update__9GenObjectFP9Generator
 	.4byte render__17GenObjectMapPartsFR8GraphicsP9Generator
 	.4byte birth__17GenObjectMapPartsFR9BirthInfo
-	.4byte 0x5061726D
-	.4byte 0x3C666C6F
-	.4byte 0x61743E00
-	.4byte 0x42617365
-	.4byte 0x5061726D
-	.4byte 0
+.balign 4
+lbl_802C3170:
+	.asciz "Parm<float>"
+.balign 4
+lbl_802C317C:
+	.asciz "BaseParm"
+.balign 4
+lbl_802C3188:
 	.4byte 0x803E2AF4
 	.4byte 0
 	.4byte 0
@@ -38013,9 +38025,11 @@ __vt__17GenObjectMapParts:
 	.4byte 0
 	.4byte 0
 	.4byte 0
-	.4byte 0x5061726D
-	.4byte 0x3C696E74
-	.4byte 0x3E000000
+.balign 4
+lbl_802C31A8:
+	.asciz "Parm<int>"
+.balign 4
+lbl_802C31B4:
 	.4byte 0x803E2AF4
 	.4byte 0
 	.4byte 0
@@ -38025,63 +38039,56 @@ __vt__17GenObjectMapParts:
 	.4byte 0
 	.4byte 0
 	.4byte 0
-	.4byte 0x6D617050
-	.4byte 0x61727473
-	.4byte 0x2E637070
-	.4byte 0
-	.4byte 0x6D617050
-	.4byte 0x61727473
-	.4byte 0
-	.4byte 0x6D617070
-	.4byte 0x61727473
-	.4byte 0x2F636F6E
-	.4byte 0x652E6D6F
-	.4byte 0x64000000
-	.4byte 0x6D617070
-	.4byte 0x61727473
-	.4byte 0x2F63796C
-	.4byte 0x696E6465
-	.4byte 0x722E6D6F
-	.4byte 0x64000000
-	.4byte 0x6D617070
-	.4byte 0x61727473
-	.4byte 0x2F637562
-	.4byte 0x652E6D6F
-	.4byte 0x64000000
-	.4byte 0x6D617070
-	.4byte 0x61727473
-	.4byte 0x2F626F61
-	.4byte 0x72642E6D
-	.4byte 0x6F640000
+.balign 4
+lbl_802C31D8:
+	.asciz "mapParts.cpp"
+.balign 4
+lbl_802C31E8:
+	.asciz "mapParts"
+.balign 4
+lbl_802C31F4:
+	.asciz "mapparts/cone.mod"
+.balign 4
+lbl_802C3208:
+	.asciz "mapparts/cylinder.mod"
+.balign 4
+lbl_802C3220:
+	.asciz "mapparts/cube.mod"
+.balign 4
+lbl_802C3234:
+	.asciz "mapparts/board.mod"
+.balign 4
 .global shapeFiles__8MapParts
 shapeFiles__8MapParts:
-	.4byte 0x802C31F4
-	.4byte 0x802C3208
-	.4byte 0x802C3220
-	.4byte 0x802C3234
+	.4byte lbl_802C31F4
+	.4byte lbl_802C3208
+	.4byte lbl_802C3220
+	.4byte lbl_802C3234
 .global lbl_802C3258
 lbl_802C3258:
-	.4byte 0x25642074
-	.4byte 0x6F20676F
-	.4byte 0x210A0000
-	.4byte 0x4D617053
-	.4byte 0x6C696465
-	.4byte 0x72000000
-	.4byte 0x436F7265
-	.4byte 0x4E6F6465
-	.4byte 0x00000000
+	.asciz "%d to go!\n"
+.balign 4
+lbl_802C3264:
+	.asciz "MapSlider"
+.balign 4
+lbl_802C3270:
+	.asciz "CoreNode"
+.balign 4
+lbl_802C327C:
 	.4byte 0x803E2B3C
 	.4byte 0x00000000
 	.4byte 0x00000000
+lbl_802C3288:
 	.4byte 0x803E2B3C
 	.4byte 0x00000000
 	.4byte 0x803E2B44
 	.4byte 0x00000000
 	.4byte 0x00000000
-	.4byte 0x44796E43
-	.4byte 0x6F6C6C4F
-	.4byte 0x626A6563
-	.4byte 0x74000000
+.balign 4
+lbl_802C329C:
+	.asciz "DynCollObject"
+.balign 4
+lbl_802C32AC:
 	.4byte 0x803E2B3C
 	.4byte 0x00000000
 	.4byte 0x803E2B44
@@ -38089,10 +38096,11 @@ lbl_802C3258:
 	.4byte 0x803E2B54
 	.4byte 0x00000000
 	.4byte 0x00000000
-	.4byte 0x44796E43
-	.4byte 0x6F6C6C53
-	.4byte 0x68617065
-	.4byte 0x00000000
+.balign 4
+lbl_802C32C8:
+	.asciz "DynCollShape"
+.balign 4
+lbl_802C32D8:
 	.4byte 0x803E2B3C
 	.4byte 0x00000000
 	.4byte 0x803E2B44
@@ -38102,9 +38110,11 @@ lbl_802C3258:
 	.4byte 0x803E2B5C
 	.4byte 0x00000000
 	.4byte 0x00000000
-	.4byte 0x4D617050
-	.4byte 0x61727473
-	.4byte 0x00000000
+.balign 4
+lbl_802C32FC:
+	.asciz "MapParts"
+.balign 4
+lbl_802C3308:
 	.4byte 0x803E2B3C
 	.4byte 0x00000000
 	.4byte 0x803E2B44
@@ -38116,6 +38126,7 @@ lbl_802C3258:
 	.4byte 0x803E2B64
 	.4byte 0x00000000
 	.4byte 0x00000000
+lbl_802C3334:
 	.4byte 0x803E2B3C
 	.4byte 0x00000000
 	.4byte 0x803E2B44
