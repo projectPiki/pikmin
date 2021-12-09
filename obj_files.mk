@@ -178,7 +178,6 @@ TEXT_O_FILES :=\
 	$(BUILD_DIR)/asm/plugPikiYamashita/TAIAeffect.o\
 	$(BUILD_DIR)/asm/plugPikiYamashita/TAImiurin.o\
 	$(BUILD_DIR)/src/plugPikiYamashita/ptclGenPack.o\
-	$(BUILD_DIR)/asm/plugPikiYamashita/ptclGenPack.o\
 	$(BUILD_DIR)/asm/plugPikiYamashita/drawProgre.o\
 	$(BUILD_DIR)/asm/plugPikiYamashita/spectrumCursorMgr.o\
 	$(BUILD_DIR)/asm/plugPikiYamashita/drawWorldMap.o\

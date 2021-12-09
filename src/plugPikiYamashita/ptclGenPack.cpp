@@ -190,32 +190,6 @@ namespace zen {
 			}
 		}
 		return;
-		/*
-		.loc_0x0:
-		  lwz       r7, 0x4(r3)
-		  li        r6, 0
-		  li        r4, 0
-		  b         .loc_0x34
-
-		.loc_0x10:
-		  lwz       r5, 0x0(r7)
-		  cmplwi    r5, 0
-		  beq-      .loc_0x2C
-		  lwz       r0, 0x80(r5)
-		  ori       r0, r0, 0x2
-		  stw       r0, 0x80(r5)
-		  stw       r4, 0x0(r7)
-
-		.loc_0x2C:
-		  addi      r6, r6, 0x1
-		  addi      r7, r7, 0x4
-
-		.loc_0x34:
-		  lwz       r0, 0x0(r3)
-		  cmplw     r6, r0
-		  blt+      .loc_0x10
-		  blr
-		*/
 	}
 
 	/*
@@ -245,49 +219,20 @@ namespace zen {
 	 * Address:	801DA20C
 	 * Size:	000044
 	 */
-	//bool PtclGenPack::checkStopGen()
-	//{
-	//	u32 counter;
-	//	particleGenerator** pgen_ptr_ptr;
+	bool PtclGenPack::checkStopGen() // matching
+	{
+		particleGenerator* pgen_ptr;
+		u32 i;
+		particleGenerator** pgen_ptr_ptr;
 
-	//	counter = m_limit;
-	//	pgen_ptr_ptr = m_pgen_ptr_ptr;
-	//	while (true) {
-	//		if (counter == 0) {
-	//			return true;
-	//		}
-	//		if ((*pgen_ptr_ptr != nullptr) && (((*pgen_ptr_ptr)->m_pgen_thingy & 8) == 0)) break;
-	//		pgen_ptr_ptr = pgen_ptr_ptr + 1;
-	//		counter = counter - 1;
-	//	}
-	//	return false;
-	//	/*
-	//	.loc_0x0:
-	//	  lwz       r0, 0x0(r3)
-	//	  lwz       r4, 0x4(r3)
-	//	  cmplwi    r0, 0
-	//	  mtctr     r0
-	//	  ble-      .loc_0x3C
-
-	//	.loc_0x14:
-	//	  lwz       r3, 0x0(r4)
-	//	  cmplwi    r3, 0
-	//	  beq-      .loc_0x34
-	//	  lwz       r0, 0x80(r3)
-	//	  rlwinm.   r0,r0,0,28,28
-	//	  bne-      .loc_0x34
-	//	  li        r3, 0
-	//	  blr
-
-	//	.loc_0x34:
-	//	  addi      r4, r4, 0x4
-	//	  bdnz+     .loc_0x14
-
-	//	.loc_0x3C:
-	//	  li        r3, 0x1
-	//	  blr
-	//	*/
-	//}
+		pgen_ptr_ptr = m_pgen_ptr_ptr;
+		for (i = 0; i < m_limit; i++, pgen_ptr_ptr++) {
+			pgen_ptr = *pgen_ptr_ptr;
+			if ((*pgen_ptr_ptr != nullptr) && (((*pgen_ptr_ptr)->m_pgen_thingy & 8) == 0))
+				return false;
+		}
+		return true;
+	}
 
 	/*
 	 * --INFO--
