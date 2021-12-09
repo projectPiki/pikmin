@@ -214,7 +214,7 @@ lbl_803DCE78:
 lbl_803DCE80:
 	.asciz "ANode"
 .balign 4
-	.4byte 0x803DCE80
+	.4byte lbl_803DCE80
 	.4byte 0x00000000
 	.4byte 0x802272E8
 	.4byte 0x802272F4
@@ -222,23 +222,23 @@ lbl_803DCE80:
 lbl_803DCE98:
 	.asciz "Node"
 .balign 4
-	.4byte 0x803DCE98
+	.4byte lbl_803DCE98
 	.4byte 0x80227300
 .global __RTTI__7BaseApp
 __RTTI__7BaseApp:
-	.4byte 0x803DCE78
+	.4byte lbl_803DCE78
 	.4byte 0x80227314
 .balign 4
 lbl_803DCEB0:
 	.asciz "Stream"
 .balign 4
-	.4byte 0x803DCEB0
+	.4byte lbl_803DCEB0
 	.4byte 0
 .balign 4
 lbl_803DCEC0:
 	.asciz "Stream"
 .balign 4
-	.4byte 0x803DCEC0
+	.4byte lbl_803DCEC0
 	.4byte 0
 	.4byte 0x80227430
 	.4byte 0x80227444
