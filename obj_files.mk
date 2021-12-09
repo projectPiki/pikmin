@@ -38,6 +38,8 @@ TEXT_O_FILES :=\
 	$(BUILD_DIR)/asm/sysCommon/atx.o\
 	$(BUILD_DIR)/asm/sysCommon/id32.o\
 	$(BUILD_DIR)/asm/text_80044194.o\
+	$(BUILD_DIR)/asm/plugPikiNakata/taicollisionactions.o\
+	$(BUILD_DIR)/asm/plugPikiNakata/taieffectactions.o\
 	$(BUILD_DIR)/asm/plugPikiNakata/taiiwagen.o\
 	$(BUILD_DIR)/asm/plugPikiNakata/taijudgementactions.o\
 	$(BUILD_DIR)/asm/plugPikiNakata/taikinoko.o\
