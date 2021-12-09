@@ -13694,17 +13694,3 @@ __RTTI__17PeveParabolaEvent:
 __RTTI__13PeveWaitEvent:
 	.4byte 0x802C6508
 	.4byte 0x802C6518
-	.4byte 0x802C6574
-	.4byte 0
-	.4byte 0x802C6568
-	.4byte 0x802C6584
-.global __RTTI__8TaiState
-__RTTI__8TaiState:
-	.4byte 0x802C65B8
-	.4byte 0
-	.4byte 0x802C65EC
-	.4byte 0
-.global __RTTI__15TaiSerialAction
-__RTTI__15TaiSerialAction:
-	.4byte 0x802C65DC
-	.4byte 0x802C65F8
