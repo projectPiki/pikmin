@@ -505,3 +505,260 @@ lbl_8012FB80:
 /* 8012FB8C 0012CAEC  38 21 00 40 */	addi r1, r1, 0x40
 /* 8012FB90 0012CAF0  7C 08 03 A6 */	mtlr r0
 /* 8012FB94 0012CAF4  4E 80 00 20 */	blr 
+
+.section .data, "wa"  # 0x80222DC0 - 0x802E9640
+.balign 8
+lbl_802C8300:
+	.asciz "taijudgementactions.cpp"
+.balign 4
+lbl_802C8318:
+	.asciz "taijudgementactions"
+.balign 4
+lbl_802C832C:
+	.asciz "TaiHasStickersOnBodyAction"
+.balign 4
+lbl_802C8348:
+	.asciz "TaiAction"
+.balign 4
+lbl_802C8354:
+	.4byte __RTTI__9TaiAction
+	.4byte 0
+	.4byte 0
+.global __vt__26TaiHasStickersOnBodyAction
+__vt__26TaiHasStickersOnBodyAction:
+	.4byte __RTTI__26TaiHasStickersOnBodyAction
+	.4byte 0
+	.4byte start__9TaiActionFR4Teki
+	.4byte finish__9TaiActionFR4Teki
+	.4byte act__26TaiHasStickersOnBodyActionFR4Teki
+	.4byte actByEvent__9TaiActionFR9TekiEvent
+	.4byte hasNextState__9TaiActionFv
+.balign 4
+lbl_802C837C:
+	.asciz "TaiHasStickersInMouthAction"
+.balign 4
+lbl_802C8398:
+	.4byte __RTTI__9TaiAction
+	.4byte 0
+	.4byte 0
+.global __vt__27TaiHasStickersInMouthAction
+__vt__27TaiHasStickersInMouthAction:
+	.4byte __RTTI__27TaiHasStickersInMouthAction
+	.4byte 0
+	.4byte start__9TaiActionFR4Teki
+	.4byte finish__9TaiActionFR4Teki
+	.4byte act__27TaiHasStickersInMouthActionFR4Teki
+	.4byte actByEvent__9TaiActionFR9TekiEvent
+	.4byte hasNextState__9TaiActionFv
+.balign 4
+lbl_802C83C0:
+	.asciz "TekiAndCondition"
+.balign 4
+lbl_802C83D4:
+	.asciz "Condition"
+.balign 4
+lbl_802C83E0:
+	.asciz "TekiCondition"
+.balign 4
+lbl_802C83F0:
+	.4byte __RTTI__9Condition
+	.4byte 0
+	.4byte 0
+lbl_802C83FC:
+	.4byte __RTTI__9Condition
+	.4byte 0
+	.4byte __RTTI__13TekiCondition
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+.balign 4
+lbl_802C841C:
+	.asciz "TaiTargetVisibleNaviAction"
+.balign 4
+lbl_802C8438:
+	.4byte __RTTI__9TaiAction
+	.4byte 0
+	.4byte 0
+.global __vt__26TaiTargetVisibleNaviAction
+__vt__26TaiTargetVisibleNaviAction:
+	.4byte __RTTI__26TaiTargetVisibleNaviAction
+	.4byte 0
+	.4byte start__9TaiActionFR4Teki
+	.4byte finish__9TaiActionFR4Teki
+	.4byte act__26TaiTargetVisibleNaviActionFR4Teki
+	.4byte actByEvent__9TaiActionFR9TekiEvent
+	.4byte hasNextState__9TaiActionFv
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+.balign 4
+lbl_802C8478:
+	.asciz "TaiTargetVisibleNaviPikiAction"
+.balign 4
+lbl_802C8498:
+	.4byte __RTTI__9TaiAction
+	.4byte 0
+	.4byte 0
+.global __vt__30TaiTargetVisibleNaviPikiAction
+__vt__30TaiTargetVisibleNaviPikiAction:
+	.4byte __RTTI__30TaiTargetVisibleNaviPikiAction
+	.4byte 0
+	.4byte start__9TaiActionFR4Teki
+	.4byte finish__9TaiActionFR4Teki
+	.4byte act__30TaiTargetVisibleNaviPikiActionFR4Teki
+	.4byte actByEvent__9TaiActionFR9TekiEvent
+	.4byte hasNextState__9TaiActionFv
+.balign 4
+lbl_802C84C0:
+	.asciz "TaiInsideTerritoryAction"
+.balign 4
+lbl_802C84DC:
+	.4byte __RTTI__9TaiAction
+	.4byte 0
+	.4byte 0
+.global __vt__24TaiInsideTerritoryAction
+__vt__24TaiInsideTerritoryAction:
+	.4byte __RTTI__24TaiInsideTerritoryAction
+	.4byte 0
+	.4byte start__9TaiActionFR4Teki
+	.4byte finish__9TaiActionFR4Teki
+	.4byte act__24TaiInsideTerritoryActionFR4Teki
+	.4byte actByEvent__9TaiActionFR9TekiEvent
+	.4byte hasNextState__9TaiActionFv
+.balign 4
+lbl_802C8504:
+	.asciz "TaiOutsideTerritoryAction"
+.balign 4
+lbl_802C8520:
+	.4byte __RTTI__9TaiAction
+	.4byte 0
+	.4byte 0
+.global __vt__25TaiOutsideTerritoryAction
+__vt__25TaiOutsideTerritoryAction:
+	.4byte __RTTI__25TaiOutsideTerritoryAction
+	.4byte 0
+	.4byte start__9TaiActionFR4Teki
+	.4byte finish__9TaiActionFR4Teki
+	.4byte act__25TaiOutsideTerritoryActionFR4Teki
+	.4byte actByEvent__9TaiActionFR9TekiEvent
+	.4byte hasNextState__9TaiActionFv
+.balign 4
+lbl_802C8548:
+	.asciz "TaiTargetLostAction"
+.balign 4
+lbl_802C855C:
+	.4byte __RTTI__9TaiAction
+	.4byte 0
+	.4byte 0
+.global __vt__19TaiTargetLostAction
+__vt__19TaiTargetLostAction:
+	.4byte __RTTI__19TaiTargetLostAction
+	.4byte 0
+	.4byte start__9TaiActionFR4Teki
+	.4byte finish__9TaiActionFR4Teki
+	.4byte act__19TaiTargetLostActionFR4Teki
+	.4byte actByEvent__9TaiActionFR9TekiEvent
+	.4byte hasNextState__9TaiActionFv
+.balign 4
+lbl_802C8584:
+	.asciz "TaiSeparateTargetAction"
+.balign 4
+lbl_802C859C:
+	.4byte __RTTI__9TaiAction
+	.4byte 0
+	.4byte 0
+.global __vt__23TaiSeparateTargetAction
+__vt__23TaiSeparateTargetAction:
+	.4byte __RTTI__23TaiSeparateTargetAction
+	.4byte 0
+	.4byte start__9TaiActionFR4Teki
+	.4byte finish__9TaiActionFR4Teki
+	.4byte act__23TaiSeparateTargetActionFR4Teki
+	.4byte actByEvent__9TaiActionFR9TekiEvent
+	.4byte hasNextState__9TaiActionFv
+.balign 4
+lbl_802C85C4:
+	.asciz "TaiContactTargetAction"
+.balign 4
+lbl_802C85DC:
+	.4byte __RTTI__9TaiAction
+	.4byte 0
+	.4byte 0
+.global __vt__22TaiContactTargetAction
+__vt__22TaiContactTargetAction:
+	.4byte __RTTI__22TaiContactTargetAction
+	.4byte 0
+	.4byte start__9TaiActionFR4Teki
+	.4byte finish__9TaiActionFR4Teki
+	.4byte act__22TaiContactTargetActionFR4Teki
+	.4byte actByEvent__9TaiActionFR9TekiEvent
+	.4byte hasNextState__9TaiActionFv
+.balign 4
+lbl_802C8604:
+	.asciz "TaiVisibleTargetAction"
+.balign 4
+lbl_802C861C:
+	.4byte __RTTI__9TaiAction
+	.4byte 0
+	.4byte 0
+.global __vt__22TaiVisibleTargetAction
+__vt__22TaiVisibleTargetAction:
+	.4byte __RTTI__22TaiVisibleTargetAction
+	.4byte 0
+	.4byte start__9TaiActionFR4Teki
+	.4byte finish__9TaiActionFR4Teki
+	.4byte act__22TaiVisibleTargetActionFR4Teki
+	.4byte actByEvent__9TaiActionFR9TekiEvent
+	.4byte hasNextState__9TaiActionFv
+
+.section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
+.balign 8
+__RTTI__9TaiAction:
+	.4byte lbl_802C8348
+	.4byte 0
+__RTTI__26TaiHasStickersOnBodyAction:
+	.4byte lbl_802C832C
+	.4byte lbl_802C8354
+__RTTI__27TaiHasStickersInMouthAction:
+	.4byte lbl_802C837C
+	.4byte lbl_802C8398
+__RTTI__9Condition:
+	.4byte lbl_802C83D4
+	.4byte 0
+__RTTI__13TekiCondition:
+	.4byte lbl_802C83E0
+	.4byte lbl_802C83F0
+__RTTI__26TaiTargetVisibleNaviAction:
+	.4byte lbl_802C841C
+	.4byte lbl_802C8438
+__RTTI__30TaiTargetVisibleNaviPikiAction:
+	.4byte lbl_802C8478
+	.4byte lbl_802C8498
+__RTTI__24TaiInsideTerritoryAction:
+	.4byte lbl_802C84C0
+	.4byte lbl_802C84DC
+__RTTI__25TaiOutsideTerritoryAction:
+	.4byte lbl_802C8504
+	.4byte lbl_802C8520
+__RTTI__19TaiTargetLostAction:
+	.4byte lbl_802C8548
+	.4byte lbl_802C855C
+__RTTI__23TaiSeparateTargetAction:
+	.4byte lbl_802C8584
+	.4byte lbl_802C859C
+__RTTI__22TaiContactTargetAction:
+	.4byte lbl_802C85C4
+	.4byte lbl_802C85DC
+__RTTI__22TaiVisibleTargetAction:
+	.4byte lbl_802C8604
+	.4byte lbl_802C861C
+
+.section .sdata2, "a"  # 0x803E8200 - 0x803EC840
+.balign 8
+lbl_803EA548:
+	.float 0.0

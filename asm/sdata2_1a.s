@@ -2298,6 +2298,3 @@ lbl_803EA540:
 .global lbl_803EA544
 lbl_803EA544:
 	.float 0.5
-.global lbl_803EA548
-lbl_803EA548:
-	.float 0.0
