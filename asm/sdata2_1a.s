@@ -851,7 +851,7 @@ lbl_803E9D00:
 	.float 150.0
 .global lbl_803E9D04
 lbl_803E9D04:
-	.4byte 0x40000000
+	.float 2.0
 .global lbl_803E9D08
 lbl_803E9D08:
 	.4byte 0x40C90FDB
@@ -1834,47 +1834,4 @@ lbl_803EA2AC:
 	.4byte 0x80000000
 .global lbl_803EA2B8
 lbl_803EA2B8:
-	.4byte 0x00000000
-	.4byte 0x00000000
-.global lbl_803EA2C0
-lbl_803EA2C0:
-	.float 2000.0
-.global lbl_803EA2C4
-lbl_803EA2C4:
-	.4byte 0x40000000
-.global lbl_803EA2C8
-lbl_803EA2C8:
-	.float 80.0
-.global lbl_803EA2CC
-lbl_803EA2CC:
-	.float 1.0
-.global lbl_803EA2D0
-lbl_803EA2D0:
-	.4byte 0x00000000
-.global lbl_803EA2D4
-lbl_803EA2D4:
-	.4byte 0x42B40000
-.global lbl_803EA2D8
-lbl_803EA2D8:
-	.float 170.0
-	.4byte 0x00000000
-.global "@1977"
-"@1977":
-	.4byte 0x43300000
-	.4byte 0x00000000
-.global lbl_803EA2E8
-lbl_803EA2E8:
-	.4byte 0x3C23D70A
-.global lbl_803EA2EC
-lbl_803EA2EC:
-	.float 0.7
-.global lbl_803EA2F0
-lbl_803EA2F0:
-	.float 0.5
-.global lbl_803EA2F4
-lbl_803EA2F4:
-	.4byte 0x4F000000
-.global "@2532"
-"@2532":
-	.4byte 0x43300000
-	.4byte 0x80000000
+	.float 0.0

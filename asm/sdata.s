@@ -13482,21 +13482,3 @@ __RTTI__15ParaParametersF:
 __RTTI__15ParaParametersI:
 	.4byte 0x802C5120
 	.4byte 0x802C5144
-.global lbl_803E3230
-lbl_803E3230:
-	.4byte 0x63616D65
-	.4byte 0x72612F00
-	.4byte 0x4E43616D
-	.4byte 0x65726100
-.global __RTTI__7NCamera
-__RTTI__7NCamera:
-	.4byte 0x803E3238
-	.4byte 0
-.global __RTTI__10PcamCamera
-__RTTI__10PcamCamera:
-	.4byte 0x802C51D0
-	.4byte 0x802C51DC
-.global "__RTTI__17NArray<8Creature>"
-"__RTTI__17NArray<8Creature>":
-	.4byte 0x802C51F4
-	.4byte 0
