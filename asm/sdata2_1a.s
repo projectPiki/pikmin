@@ -1878,27 +1878,3 @@ lbl_803EA2F4:
 "@2532":
 	.4byte 0x43300000
 	.4byte 0x80000000
-.global lbl_803EA300
-lbl_803EA300:
-	.float 0.6
-.global lbl_803EA304
-lbl_803EA304:
-	.float 0.2
-.global lbl_803EA308
-lbl_803EA308:
-	.float 8.0
-.global lbl_803EA30C
-lbl_803EA30C:
-	.float 4.0
-.global lbl_803EA310
-lbl_803EA310:
-	.float 30.0
-.global lbl_803EA314
-lbl_803EA314:
-	.float 48.0
-.global lbl_803EA318
-lbl_803EA318:
-	.float 0.4
-.global lbl_803EA31C
-lbl_803EA31C:
-	.float 3.0

@@ -13500,17 +13500,3 @@ __RTTI__10PcamCamera:
 "__RTTI__17NArray<8Creature>":
 	.4byte 0x802C51F4
 	.4byte 0
-	.4byte 0x414E6F64
-	.4byte 0x65000000
-	.4byte 0x803E3258
-	.4byte 0
-	.4byte 0x802C5288
-	.4byte 0x802C5294
-	.4byte 0x4E6F6465
-	.4byte 0
-	.4byte 0x803E3270
-	.4byte 0x802C52A0
-.global __RTTI__17PcamCameraManager
-__RTTI__17PcamCameraManager:
-	.4byte lbl_802C5274
-	.4byte 0x802C52B4
