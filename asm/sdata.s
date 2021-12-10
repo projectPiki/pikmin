@@ -13462,23 +13462,3 @@ __RTTI__15PaniTestSection:
 __RTTI__12PaniTestNode:
 	.4byte 0x802C4E6C
 	.4byte 0x802C4FE8
-.global __RTTI__19ParaMultiParameters
-__RTTI__19ParaMultiParameters:
-	.4byte 0x802C509C
-	.4byte 0
-.global "__RTTI__17ParaParameters<f>"
-"__RTTI__17ParaParameters<f>":
-	.4byte 0x802C50D4
-	.4byte 0
-.global __RTTI__15ParaParametersF
-__RTTI__15ParaParametersF:
-	.4byte 0x802C50C4
-	.4byte 0x802C50EC
-.global "__RTTI__17ParaParameters<i>"
-"__RTTI__17ParaParameters<i>":
-	.4byte 0x802C5130
-	.4byte 0
-.global __RTTI__15ParaParametersI
-__RTTI__15ParaParametersI:
-	.4byte 0x802C5120
-	.4byte 0x802C5144

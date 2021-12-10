@@ -1806,7 +1806,7 @@ lbl_803EA28C:
 	.float 300.0
 .global lbl_803EA290
 lbl_803EA290:
-	.4byte 0x00000000
+	.float 0.0
 .global lbl_803EA294
 lbl_803EA294:
 	.float 1.0
@@ -1832,6 +1832,3 @@ lbl_803EA2AC:
 "@2313":
 	.4byte 0x43300000
 	.4byte 0x80000000
-.global lbl_803EA2B8
-lbl_803EA2B8:
-	.float 0.0
