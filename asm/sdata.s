@@ -13514,35 +13514,3 @@ __RTTI__10PcamCamera:
 __RTTI__17PcamCameraManager:
 	.4byte lbl_802C5274
 	.4byte 0x802C52B4
-	.4byte 0x4E4E6F64
-	.4byte 0x65000000
-	.4byte 0x803E3288
-	.4byte 0
-	.4byte 0x802C5364
-	.4byte 0x802C5370
-.global __RTTI__22PcamSideVibrationEvent
-__RTTI__22PcamSideVibrationEvent:
-	.4byte 0x802C534C
-	.4byte 0x802C537C
-.global __RTTI__19PcamRandomMoveEvent
-__RTTI__19PcamRandomMoveEvent:
-	.4byte 0x802C53E4
-	.4byte 0x802C53F8
-	.4byte 0x802C5458
-	.4byte 0x802C546C
-.global __RTTI__15PcamDamageEvent
-__RTTI__15PcamDamageEvent:
-	.4byte 0x802C5448
-	.4byte 0x802C5480
-.global __RTTI__18PcamVibrationEvent
-__RTTI__18PcamVibrationEvent:
-	.4byte 0x802C54D8
-	.4byte 0x802C54EC
-.global __RTTI__15PeveSerialEvent
-__RTTI__15PeveSerialEvent:
-	.4byte 0x802C555C
-	.4byte 0x802C556C
-.global __RTTI__22PcamLongVibrationEvent
-__RTTI__22PcamLongVibrationEvent:
-	.4byte 0x802C5544
-	.4byte 0x802C5580

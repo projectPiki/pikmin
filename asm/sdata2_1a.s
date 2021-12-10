@@ -1902,37 +1902,3 @@ lbl_803EA318:
 .global lbl_803EA31C
 lbl_803EA31C:
 	.float 3.0
-.global lbl_803EA320
-lbl_803EA320:
-	.float 0.0
-.global lbl_803EA324
-lbl_803EA324:
-	.float 0.8
-.global lbl_803EA328
-lbl_803EA328:
-	.float 0.2
-.global lbl_803EA32C
-lbl_803EA32C:
-	.float 16.0
-.global lbl_803EA330
-lbl_803EA330:
-	.float 1.0
-.global lbl_803EA334
-lbl_803EA334:
-	.float 32767.0
-.global lbl_803EA338
-lbl_803EA338:
-	.float -1.0
-.global lbl_803EA33C
-lbl_803EA33C:
-	.float 2.0
-.global "@831"
-"@831":
-	.4byte 0x43300000
-	.4byte 0x80000000
-.global lbl_803EA348
-lbl_803EA348:
-	.float 0.6
-.global lbl_803EA34C
-lbl_803EA34C:
-	.float 0.125
