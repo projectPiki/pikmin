@@ -13546,21 +13546,3 @@ __RTTI__15PeveSerialEvent:
 __RTTI__22PcamLongVibrationEvent:
 	.4byte 0x802C5544
 	.4byte 0x802C5580
-.global lbl_803E32D8
-lbl_803E32D8:
-	.4byte 0x3C4E6F64
-	.4byte 0x653E0000
-	.4byte 0x414E6F64
-	.4byte 0x65000000
-	.4byte 0x803E32E0
-	.4byte 0x00000000
-	.4byte 0x802C5AE8
-	.4byte 0x802C5AF4
-	.4byte 0x4E6F6465
-	.4byte 0x00000000
-	.4byte 0x803E32F8
-	.4byte 0x802C5B00
-.global __RTTI__20PcamCameraParameters
-__RTTI__20PcamCameraParameters:
-	.4byte 0x802C5AD0
-	.4byte 0x802C5B14
