@@ -82,8 +82,9 @@ FRANK := tools/frank.py
 
 # Options
 INCLUDES := -i include/
+ASM_INCLUDES := -I include/
 
-ASFLAGS := -mgekko -I include/ 
+ASFLAGS := -mgekko $(ASM_INCLUDES)
 LDFLAGS := -map $(MAP) -fp hard -nodefaults
 CFLAGS  = -Cpp_exceptions off -O4,p -fp hard -proc gekko -nodefaults -RTTI on -msgstyle gcc $(INCLUDES)
 
