@@ -1125,6 +1125,3 @@ nakataDebugMode:
 .global system__7NSystem
 system__7NSystem:
 	.skip 0x8
-.global motionTable__15PaniPikiAnimMgr
-motionTable__15PaniPikiAnimMgr:
-	.skip 0x8

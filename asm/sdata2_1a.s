@@ -1794,6 +1794,3 @@ lbl_803EA270:
 "@732":
 	.4byte 0x43300000
 	.4byte 0x80000000
-.global lbl_803EA280
-lbl_803EA280:
-	.float 30.0
