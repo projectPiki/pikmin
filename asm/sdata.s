@@ -13322,37 +13322,3 @@ __RTTI__5NHeap:
 	.4byte 0
 	.4byte 0x802C4D0C
 	.4byte 0x802C4D28
-	.4byte 0x44454144
-	.4byte 0
-	.4byte 0x44414D41
-	.4byte 0x47450000
-	.4byte 0x57414954
-	.4byte 0x5F310000
-	.4byte 0x57414954
-	.4byte 0x5F320000
-	.4byte 0x4D4F5645
-	.4byte 0x5F310000
-	.4byte 0x4D4F5645
-	.4byte 0x5F320000
-	.4byte 0x41545441
-	.4byte 0x434B0000
-	.4byte 0x464C4943
-	.4byte 0x4B000000
-	.4byte 0x54595045
-	.4byte 0x5F310000
-	.4byte 0x54595045
-	.4byte 0x5F320000
-	.4byte 0x54595045
-	.4byte 0x5F330000
-	.4byte 0x54595045
-	.4byte 0x5F340000
-	.4byte 0x54595045
-	.4byte 0x5F350000
-	.4byte 0x802C4DEC
-	.4byte 0
-	.4byte 0x802C4DF8
-	.4byte 0x802C4E08
-.global __RTTI__16PaniTekiAnimator
-__RTTI__16PaniTekiAnimator:
-	.4byte 0x802C4DD8
-	.4byte 0x802C4E14
