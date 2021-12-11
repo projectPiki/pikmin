@@ -1118,7 +1118,4 @@ pikiInfo:
 	.skip 0x8
 .global plantMgr
 plantMgr:
-	.skip 0x8
-.global nakataDebugMode
-nakataDebugMode:
-	.skip 0x8
+	.skip 0x4
