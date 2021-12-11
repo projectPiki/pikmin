@@ -13257,16 +13257,3 @@ __RTTI__10NPosture3D:
 __RTTI__10NPosture2D:
 	.4byte 0x802C4340
 	.4byte 0
-	.4byte 0
-	.4byte 0x4E4C696E
-	.4byte 0x65000000
-.global __RTTI__5NLine
-__RTTI__5NLine:
-	.4byte 0x803E3038
-	.4byte 0
-	.4byte 0x4E506C61
-	.4byte 0x6E650000
-.global __RTTI__6NPlane
-__RTTI__6NPlane:
-	.4byte 0x803E3048
-	.4byte 0

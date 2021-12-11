@@ -39309,15 +39309,3 @@ __vt__10NPosture2D:
 	.4byte __RTTI__10NPosture2D
 	.4byte 0
 	.4byte readData__10NPosture2DFR6Stream
-.global __vt__6NPlane
-__vt__6NPlane:
-	.4byte __RTTI__6NPlane
-	.4byte 0
-	.4byte transform__6NPlaneFR12NTransform3D
-	.4byte println__6NPlaneFv
-.global __vt__5NLine
-__vt__5NLine:
-	.4byte __RTTI__5NLine
-	.4byte 0
-	.4byte transform__5NLineFR12NTransform3D
-	.4byte println__5NLineFv
