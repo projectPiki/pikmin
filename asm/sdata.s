@@ -13185,16 +13185,3 @@ __RTTI__5Plant:
 __RTTI__17PaniPlantAnimator:
 	.4byte 0x802C4018
 	.4byte 0x802C4054
-	.4byte 0
-	.4byte 0x802C40C8
-	.4byte 0
-	.4byte 0x47656E42
-	.4byte 0x61736500
-	.4byte 0x803E2FA0
-	.4byte 0x802C40D4
-	.4byte 0x802C40E0
-	.4byte 0x802C40EC
-.global __RTTI__13GenObjectTeki
-__RTTI__13GenObjectTeki:
-	.4byte 0x802C40B8
-	.4byte 0x802C4100
