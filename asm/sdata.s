@@ -13198,23 +13198,3 @@ __RTTI__17PaniPlantAnimator:
 __RTTI__13GenObjectTeki:
 	.4byte 0x802C40B8
 	.4byte 0x802C4100
-.global __RTTI__9NFunction
-__RTTI__9NFunction:
-	.4byte 0x802C4190
-	.4byte 0
-.global __RTTI__18NVibrationFunction
-__RTTI__18NVibrationFunction:
-	.4byte 0x802C417C
-	.4byte 0x802C419C
-.global __RTTI__19NPolynomialFunction
-__RTTI__19NPolynomialFunction:
-	.4byte 0x802C41CC
-	.4byte 0x802C41E0
-.global __RTTI__15NLinearFunction
-__RTTI__15NLinearFunction:
-	.4byte 0x802C41EC
-	.4byte 0x802C41FC
-.global __RTTI__20NClampLinearFunction
-__RTTI__20NClampLinearFunction:
-	.4byte 0x802C41B4
-	.4byte 0x802C4210

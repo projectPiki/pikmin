@@ -1718,12 +1718,3 @@ lbl_803EA1F8:
 .global lbl_803EA1FC
 lbl_803EA1FC:
 	.float 1.0
-.global lbl_803EA200
-lbl_803EA200:
-	.float 0.0
-.global lbl_803EA204
-lbl_803EA204:
-	.float 1.0
-.global lbl_803EA208
-lbl_803EA208:
-	.float 2.0
