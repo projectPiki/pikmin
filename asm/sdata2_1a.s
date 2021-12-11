@@ -1720,32 +1720,10 @@ lbl_803EA1FC:
 	.float 1.0
 .global lbl_803EA200
 lbl_803EA200:
-	.4byte 0x00000000
+	.float 0.0
 .global lbl_803EA204
 lbl_803EA204:
 	.float 1.0
 .global lbl_803EA208
 lbl_803EA208:
-	.4byte 0x40000000
-	.4byte 0x00000000
-.global lbl_803EA210
-lbl_803EA210:
-	.4byte 0x00000000
-.global lbl_803EA214
-lbl_803EA214:
-	.float 1.0
-.global lbl_803EA218
-lbl_803EA218:
-	.float 0.5
-	.4byte 0x00000000
-.global "@883"
-"@883":
-	.4byte 0x3FE00000
-	.4byte 0x00000000
-.global "@884"
-"@884":
-	.4byte 0x40080000
-	.4byte 0x00000000
-.global lbl_803EA230
-lbl_803EA230:
-	.4byte 0x40000000
+	.float 2.0
