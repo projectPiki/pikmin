@@ -1115,7 +1115,4 @@ actorMgr:
 	.skip 0x8
 .global pikiInfo
 pikiInfo:
-	.skip 0x8
-.global plantMgr
-plantMgr:
 	.skip 0x4
