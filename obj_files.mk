@@ -38,6 +38,7 @@ TEXT_O_FILES :=\
 	$(BUILD_DIR)/asm/sysCommon/atx.o\
 	$(BUILD_DIR)/asm/sysCommon/id32.o\
 	$(BUILD_DIR)/asm/text_80044194.o\
+	$(BUILD_DIR)/asm/plugPikiNakata/panianimator.o\
 	$(BUILD_DIR)/asm/plugPikiNakata/panipikianimmgr.o\
 	$(BUILD_DIR)/asm/plugPikiNakata/panitekianimator.o\
 	$(BUILD_DIR)/asm/plugPikiNakata/panitestsection.o\

@@ -13318,7 +13318,3 @@ __RTTI__5NHeap:
 "__RTTI__14NArray<5NNode>":
 	.4byte 0x802C4C34
 	.4byte 0
-	.4byte 0x802C4D1C
-	.4byte 0
-	.4byte 0x802C4D0C
-	.4byte 0x802C4D28
