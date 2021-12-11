@@ -13270,21 +13270,3 @@ __RTTI__5NLine:
 __RTTI__6NPlane:
 	.4byte 0x803E3048
 	.4byte 0
-.global lbl_803E3058
-lbl_803E3058:
-	.4byte 0x00000000
-.global lbl_803E305C
-lbl_803E305C:
-	.4byte 0x00000000
-.global lbl_803E3060
-lbl_803E3060:
-	.4byte 0x00000000
-.global lbl_803E3064
-lbl_803E3064:
-	.4byte 0x00000000
-.global lbl_803E3068
-lbl_803E3068:
-	.4byte 0x00000000
-.global lbl_803E306C
-lbl_803E306C:
-	.float 1.0
