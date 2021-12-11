@@ -13300,21 +13300,3 @@ radianPerDegree__6NMathF:
 .global pi__6NMathF
 pi__6NMathF:
 	.4byte 0x40490FDB
-	.4byte 0x4E486561
-	.4byte 0x70000000
-.global __RTTI__5NHeap
-__RTTI__5NHeap:
-	.4byte 0x803E3080
-	.4byte 0
-.global "__RTTI__14NArray<5NHeap>"
-"__RTTI__14NArray<5NHeap>":
-	.4byte 0x802C4BC4
-	.4byte 0
-	.4byte 0x4E4E6F64
-	.4byte 0x65000000
-	.4byte 0x803E3098
-	.4byte 0
-.global "__RTTI__14NArray<5NNode>"
-"__RTTI__14NArray<5NNode>":
-	.4byte 0x802C4C34
-	.4byte 0

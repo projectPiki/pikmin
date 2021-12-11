@@ -1122,6 +1122,3 @@ plantMgr:
 .global nakataDebugMode
 nakataDebugMode:
 	.skip 0x8
-.global system__7NSystem
-system__7NSystem:
-	.skip 0x8
