@@ -13288,15 +13288,3 @@ lbl_803E3068:
 .global lbl_803E306C
 lbl_803E306C:
 	.float 1.0
-.global error__6NMathF
-error__6NMathF:
-	.float 0.0001
-.global degreePerRadian__6NMathF
-degreePerRadian__6NMathF:
-	.4byte 0x42652EE0
-.global radianPerDegree__6NMathF
-radianPerDegree__6NMathF:
-	.4byte 0x3C8EFA35
-.global pi__6NMathF
-pi__6NMathF:
-	.4byte 0x40490FDB

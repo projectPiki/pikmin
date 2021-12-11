@@ -1756,23 +1756,3 @@ lbl_803EA238:
 .global lbl_803EA23C
 lbl_803EA23C:
 	.float 0.5
-.global lbl_803EA240
-lbl_803EA240:
-	.4byte 0x00000000
-.global lbl_803EA244
-lbl_803EA244:
-	.float 0.5
-.global lbl_803EA248
-lbl_803EA248:
-	.4byte 0x44800000
-.global lbl_803EA24C
-lbl_803EA24C:
-	.4byte 0x40490FDB
-.global lbl_803EA250
-lbl_803EA250:
-	.4byte 0x47000000
-	.4byte 0x00000000
-.global "@536"
-"@536":
-	.4byte 0x43300000
-	.4byte 0x00000000
