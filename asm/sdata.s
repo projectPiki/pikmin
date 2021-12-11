@@ -13170,18 +13170,3 @@ __RTTI__7PlantAI:
 __RTTI__5Plant:
 	.4byte 0x803E2F28
 	.4byte 0x802C3E48
-	.4byte 0x31000000
-	.4byte 0x32000000
-	.4byte 0x33000000
-	.4byte 0x34000000
-	.4byte 0x35000000
-	.4byte 0x36000000
-	.4byte 0x37000000
-	.4byte 0x802C402C
-	.4byte 0
-	.4byte 0x802C4038
-	.4byte 0x802C4048
-.global __RTTI__17PaniPlantAnimator
-__RTTI__17PaniPlantAnimator:
-	.4byte 0x802C4018
-	.4byte 0x802C4054
