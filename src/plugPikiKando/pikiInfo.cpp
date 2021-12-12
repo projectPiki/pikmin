@@ -51,8 +51,8 @@ void PikiInfo::addFormationPiki(void) {
  */
 
 void PikiInfo::subFormationPiki(void) {
-    asm{ mr r4, r4 };
-    pikiCountA--;
+	BUMP_REGISTER(r4);
+	pikiCountA--;
 }
 
-// static PikiInfo* pikiInfo;
+// extern PikiInfo* pikiInfo;

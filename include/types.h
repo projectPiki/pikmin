@@ -45,4 +45,5 @@ typedef unsigned long size_t;
 
 #define NULL ((void*)0)
 #define nullptr 0
+
 #define BUMP_REGISTER(reg) { asm { mr reg, reg } }
