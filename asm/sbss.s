@@ -1109,7 +1109,4 @@ first$817:
 	.skip 0x1
 .global init$818
 init$818:
-	.skip 0x3
-.global actorMgr
-actorMgr:
-	.skip 0x4
+	.skip 0x1
