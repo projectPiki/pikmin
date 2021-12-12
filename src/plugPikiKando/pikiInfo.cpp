@@ -1,10 +1,5 @@
 #include "types.h"
 
-/*
- * --INFO--
- * Address:	80119CE4
- * Size:	000024
- */
 class PikiInfo {
     s32 pikiCountA; // _00
     s32 pikiCountB; // _04
@@ -18,6 +13,12 @@ class PikiInfo {
     void addFormationPiki();
     void subFormationPiki();
 };
+
+/*
+ * --INFO--
+ * Address:	80119CE4
+ * Size:	000024
+ */
 
 PikiInfo::PikiInfo()
 {
