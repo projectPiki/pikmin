@@ -1672,12 +1672,3 @@ lbl_803EA1B0:
 .global lbl_803EA1B4
 lbl_803EA1B4:
 	.float 0.2
-.global lbl_803EA1B8
-lbl_803EA1B8:
-	.float 0.0
-.global lbl_803EA1BC
-lbl_803EA1BC:
-	.float 1.0
-.global lbl_803EA1C0
-lbl_803EA1C0:
-	.float 0.5
