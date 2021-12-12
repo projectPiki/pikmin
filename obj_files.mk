@@ -39,6 +39,7 @@ TEXT_O_FILES :=\
 	$(BUILD_DIR)/asm/sysCommon/id32.o\
 	$(BUILD_DIR)/asm/text_80044194.o\
 	$(BUILD_DIR)/asm/plugPikiKando/pikiInfo.o\
+	$(BUILD_DIR)/src/plugPikiKando/pikiInfo.o\
 	$(BUILD_DIR)/asm/plugPikiKando/plantMgr.o\
 	$(BUILD_DIR)/asm/plugPikiKando/paniPlantAnimator.o\
 	$(BUILD_DIR)/asm/plugPikiNakata/genteki.o\

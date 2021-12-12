@@ -17,8 +17,6 @@ class PikiInfo {
     PikiInfo();
     void addFormationPiki();
     void subFormationPiki();
-    
-    static PikiInfo* pikiInfo;
 };
 
 PikiInfo::PikiInfo()
@@ -52,13 +50,9 @@ void PikiInfo::addFormationPiki(void) {
  * Size:	000010
  */
 
-// nonmatching due to r5 usage
-void PikiInfo::subFormationPiki(void) { pikiCountA--; }
+void PikiInfo::subFormationPiki(void) {
+    asm{ mr r4, r4 };
+    pikiCountA--;
+}
 
-/*
-.loc_0x0:
-  lwz       r5, 0x0(r3)
-  subi      r0, r5, 0x1
-  stw       r0, 0x0(r3)
-  blr
-*/
+// static PikiInfo* pikiInfo;
