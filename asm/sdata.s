@@ -13024,15 +13024,3 @@ __RTTI__9MapEntity:
 __RTTI__16PaniPikiAnimator:
 	.4byte 0x802C3754
 	.4byte 0x802C3790
-	.4byte 0x802C3818
-	.4byte 0
-	.4byte 0x47656E42
-	.4byte 0x61736500
-	.4byte 0x803E2DD8
-	.4byte 0x802C3824
-	.4byte 0x802C3830
-	.4byte 0x802C383C
-.global __RTTI__14GenObjectActor
-__RTTI__14GenObjectActor:
-	.4byte 0x802C3808
-	.4byte 0x802C3850
