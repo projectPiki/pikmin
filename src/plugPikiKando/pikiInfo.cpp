@@ -1,46 +1,35 @@
 #include "types.h"
 
-
-
-/*
- * --INFO--
- * Address:	........
- * Size:	00009C
- */
-void _Error(char *, ...)
-{
-	// UNUSED FUNCTION
-}
-
-/*
- * --INFO--
- * Address:	........
- * Size:	0000F4
- */
-void _Print(char *, ...)
-{
-	// UNUSED FUNCTION
-}
-
 /*
  * --INFO--
  * Address:	80119CE4
  * Size:	000024
  */
+class PikiInfo {
+    s32 pikiCountA; // _00
+    s32 pikiCountB; // _04
+    u32 _08;
+    u32 _0C;
+    u32 _10;
+    u32 _14;
+    u32 _18;
+
+    PikiInfo();
+    void addFormationPiki();
+    void subFormationPiki();
+    
+    static PikiInfo* pikiInfo;
+};
+
 PikiInfo::PikiInfo()
 {
-/*
-.loc_0x0:
-  li        r0, 0
-  stw       r0, 0x4(r3)
-  stw       r0, 0x0(r3)
-  stw       r0, 0x8(r3)
-  stw       r0, 0x18(r3)
-  stw       r0, 0x14(r3)
-  stw       r0, 0x10(r3)
-  stw       r0, 0xC(r3)
-  blr
-*/
+    pikiCountB = 0;
+    pikiCountA = 0;
+    _08 = 0;
+    _18 = 0;
+    _14 = 0;
+    _10 = 0;
+    _0C = 0;
 }
 
 /*
@@ -48,20 +37,13 @@ PikiInfo::PikiInfo()
  * Address:	80119D08
  * Size:	000024
  */
-void PikiInfo::addFormationPiki()
-{
-/*
-.loc_0x0:
-  lwz       r4, 0x0(r3)
-  addi      r0, r4, 0x1
-  stw       r0, 0x0(r3)
-  lwz       r0, 0x4(r3)
-  lwz       r4, 0x0(r3)
-  cmpw      r0, r4
-  bgelr-    
-  stw       r4, 0x4(r3)
-  blr
-*/
+void PikiInfo::addFormationPiki(void) {
+    pikiCountA += 1;
+    if (pikiCountB >= pikiCountA) {
+        return;
+    }
+    pikiCountB = pikiCountA;
+    return;
 }
 
 /*
@@ -69,8 +51,10 @@ void PikiInfo::addFormationPiki()
  * Address:	80119D2C
  * Size:	000010
  */
-void PikiInfo::subFormationPiki()
-{
+
+// nonmatching due to r5 usage
+void PikiInfo::subFormationPiki(void) { pikiCountA--; }
+
 /*
 .loc_0x0:
   lwz       r5, 0x0(r3)
@@ -78,4 +62,3 @@ void PikiInfo::subFormationPiki()
   stw       r0, 0x0(r3)
   blr
 */
-}

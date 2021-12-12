@@ -1112,7 +1112,4 @@ init$818:
 	.skip 0x3
 .global actorMgr
 actorMgr:
-	.skip 0x8
-.global pikiInfo
-pikiInfo:
 	.skip 0x4

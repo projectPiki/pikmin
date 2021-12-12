@@ -1483,26 +1483,26 @@ lbl_802C39A4:
 .balign 4
 lbl_802C39B0:
 	.4byte __RTTI__10Parameters
-	.4byte 0x00000000
-	.4byte 0x00000000
+	.4byte 0
+	.4byte 0
 .balign 4
 lbl_802C39BC:
 	.asciz "GenObject"
 .balign 4
 lbl_802C39C8:
 	.4byte __RTTI__10Parameters
-	.4byte 0x00000000
+	.4byte 0
 	.4byte __RTTI__7GenBase
-	.4byte 0x00000000
-	.4byte 0x00000000
+	.4byte 0
+	.4byte 0
 lbl_802C39DC:
 	.4byte __RTTI__10Parameters
-	.4byte 0x00000000
+	.4byte 0
 	.4byte __RTTI__7GenBase
-	.4byte 0x00000000
+	.4byte 0
 	.4byte __RTTI__9GenObject
-	.4byte 0x00000000
-	.4byte 0x00000000
+	.4byte 0
+	.4byte 0
 .global __vt__14GenObjectPlant
 __vt__14GenObjectPlant:
 	.4byte __RTTI__14GenObjectPlant
