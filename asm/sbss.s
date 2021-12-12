@@ -1100,13 +1100,4 @@ controllerBuffer:
 	.skip 0x8
 .global naviMgr
 naviMgr:
-	.skip 0x8
-.global mapMgr__17GenObjectMapParts
-mapMgr__17GenObjectMapParts:
 	.skip 0x4
-.global first$817
-first$817:
-	.skip 0x1
-.global init$818
-init$818:
-	.skip 0x1
