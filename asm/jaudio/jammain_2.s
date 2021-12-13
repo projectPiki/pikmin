@@ -1,5 +1,4 @@
 .include "macros.inc"
-
 .section .text, "ax"  # 0x80005560 - 0x80221F60
 lbl_8000F4A0:
 /* 8000F4A0 0000C400  38 60 00 00 */	li r3, 0
@@ -3010,11 +3009,11 @@ Cmd_CheckPortExport__Fv:
 
 .global Cmd_WaitReg__Fv
 Cmd_WaitReg__Fv:
-/* 80011D00 0000EC60  3C 80 80 32 */	lis r4, lbl_80320000@ha
+/* 80011D00 0000EC60  3C 80 80 32 */	lis r4, SEQ_ARG@ha
 /* 80011D04 0000EC64  80 6D 2C 30 */	lwz r3, SEQ_P@sda21(r13)
-/* 80011D08 0000EC68  84 04 FA 80 */	lwzu r0, -0x580(r4)
+/* 80011D08 0000EC68  84 04 FA 80 */	lwzu r0, SEQ_ARG@l(r4)
 /* 80011D0C 0000EC6C  90 03 00 8C */	stw r0, 0x8c(r3)
-/* 80011D10 0000EC70  80 04 00 00 */	lwz r0, lbl_80320000@l(r4)
+/* 80011D10 0000EC70  80 04 00 00 */	lwz r0, 0(r4)
 /* 80011D14 0000EC74  28 00 00 00 */	cmplwi r0, 0
 /* 80011D18 0000EC78  41 82 00 0C */	beq lbl_80011D24
 /* 80011D1C 0000EC7C  38 60 00 01 */	li r3, 1
@@ -3050,12 +3049,12 @@ Cmd_ConnectName__Fv:
 .global Cmd_ParentWritePort__Fv
 Cmd_ParentWritePort__Fv:
 /* 80011D80 0000ECE0  7C 08 02 A6 */	mflr r0
-/* 80011D84 0000ECE4  3C 60 80 32 */	lis r3, lbl_80320004@ha
+/* 80011D84 0000ECE4  3C 60 80 32 */	lis r3, SEQ_ARG@ha
 /* 80011D88 0000ECE8  90 01 00 04 */	stw r0, 4(r1)
 /* 80011D8C 0000ECEC  94 21 FF F8 */	stwu r1, -8(r1)
-/* 80011D90 0000ECF0  84 83 FA 80 */	lwzu r4, -0x580(r3)
+/* 80011D90 0000ECF0  84 83 FA 80 */	lwzu r4, SEQ_ARG@l(r3)
 /* 80011D94 0000ECF4  80 AD 2C 30 */	lwz r5, SEQ_P@sda21(r13)
-/* 80011D98 0000ECF8  80 03 00 04 */	lwz r0, lbl_80320004@l(r3)
+/* 80011D98 0000ECF8  80 03 00 04 */	lwz r0, 0x4(r3)
 /* 80011D9C 0000ECFC  54 84 07 3E */	clrlwi r4, r4, 0x1c
 /* 80011DA0 0000ED00  80 65 00 40 */	lwz r3, 0x40(r5)
 /* 80011DA4 0000ED04  54 05 04 3E */	clrlwi r5, r0, 0x10
@@ -3069,12 +3068,12 @@ Cmd_ParentWritePort__Fv:
 .global Cmd_ChildWritePort__Fv
 Cmd_ChildWritePort__Fv:
 /* 80011DC0 0000ED20  7C 08 02 A6 */	mflr r0
-/* 80011DC4 0000ED24  3C 60 80 32 */	lis r3, lbl_80320004@ha
+/* 80011DC4 0000ED24  3C 60 80 32 */	lis r3, SEQ_ARG@ha
 /* 80011DC8 0000ED28  90 01 00 04 */	stw r0, 4(r1)
 /* 80011DCC 0000ED2C  94 21 FF F8 */	stwu r1, -8(r1)
-/* 80011DD0 0000ED30  84 A3 FA 80 */	lwzu r5, -0x580(r3)
+/* 80011DD0 0000ED30  84 A3 FA 80 */	lwzu r5, SEQ_ARG@l(r3)
 /* 80011DD4 0000ED34  80 CD 2C 30 */	lwz r6, SEQ_P@sda21(r13)
-/* 80011DD8 0000ED38  80 03 00 04 */	lwz r0, lbl_80320004@l(r3)
+/* 80011DD8 0000ED38  80 03 00 04 */	lwz r0, 0x4(r3)
 /* 80011DDC 0000ED3C  54 A3 F0 BA */	rlwinm r3, r5, 0x1e, 2, 0x1d
 /* 80011DE0 0000ED40  7C 66 1A 14 */	add r3, r6, r3
 /* 80011DE4 0000ED44  54 A4 07 3E */	clrlwi r4, r5, 0x1c
@@ -3145,12 +3144,12 @@ Cmd_SimpleOsc__Fv:
 .global Cmd_SimpleEnv__Fv
 Cmd_SimpleEnv__Fv:
 /* 80011EC0 0000EE20  7C 08 02 A6 */	mflr r0
-/* 80011EC4 0000EE24  3C 80 80 32 */	lis r4, lbl_80320004@ha
+/* 80011EC4 0000EE24  3C 80 80 32 */	lis r4, SEQ_ARG@ha
 /* 80011EC8 0000EE28  90 01 00 04 */	stw r0, 4(r1)
 /* 80011ECC 0000EE2C  94 21 FF F8 */	stwu r1, -8(r1)
-/* 80011ED0 0000EE30  84 04 FA 80 */	lwzu r0, -0x580(r4)
+/* 80011ED0 0000EE30  84 04 FA 80 */	lwzu r0, SEQ_ARG@l(r4)
 /* 80011ED4 0000EE34  80 6D 2C 30 */	lwz r3, SEQ_P@sda21(r13)
-/* 80011ED8 0000EE38  80 A4 00 04 */	lwz r5, lbl_80320004@l(r4)
+/* 80011ED8 0000EE38  80 A4 00 04 */	lwz r5, 0x4(r4)
 /* 80011EDC 0000EE3C  54 04 06 3E */	clrlwi r4, r0, 0x18
 /* 80011EE0 0000EE40  48 00 2F E1 */	bl Osc_Setup_SimpleEnv
 /* 80011EE4 0000EE44  38 60 00 00 */	li r3, 0
@@ -3546,11 +3545,11 @@ Cmd_FlushRelease__Fv:
 
 .global Cmd_Wait3__Fv
 Cmd_Wait3__Fv:
-/* 80012400 0000F360  3C 80 80 32 */	lis r4, lbl_80320000@ha
+/* 80012400 0000F360  3C 80 80 32 */	lis r4, SEQ_ARG@ha
 /* 80012404 0000F364  80 6D 2C 30 */	lwz r3, SEQ_P@sda21(r13)
-/* 80012408 0000F368  84 04 FA 80 */	lwzu r0, -0x580(r4)
+/* 80012408 0000F368  84 04 FA 80 */	lwzu r0, SEQ_ARG@l(r4)
 /* 8001240C 0000F36C  90 03 00 8C */	stw r0, 0x8c(r3)
-/* 80012410 0000F370  80 04 00 00 */	lwz r0, lbl_80320000@l(r4)
+/* 80012410 0000F370  80 04 00 00 */	lwz r0, 0(r4)
 /* 80012414 0000F374  28 00 00 00 */	cmplwi r0, 0
 /* 80012418 0000F378  41 82 00 0C */	beq lbl_80012424
 /* 8001241C 0000F37C  38 60 00 01 */	li r3, 1

@@ -140,13 +140,7 @@ SEQ_ARG:
 	.skip 0x20
 .global seq
 seq:
-	.skip 0x560
-.global lbl_80320000
-lbl_80320000:
-	.skip 0x4
-.global lbl_80320004
-lbl_80320004:
-	.skip 0x42E9C
+	.skip 0x43400
 .global ROOT_OUTER
 ROOT_OUTER:
 	.skip 0x400

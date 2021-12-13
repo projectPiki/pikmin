@@ -8577,7 +8577,7 @@ p_card_v_data:
 	.4byte 0x43585C07
 	.4byte 0xAB073D3B
 	.4byte 0x44585A07
-	.4byte lbl_80077444
+	.4byte 0x80077444
 	.4byte 0x4C4F5A07
 	.4byte 0x27231F21
 	.4byte 0x2413FEF2
