@@ -1094,7 +1094,7 @@ start__Q23zen13ogDrawScrInfoFv:
 /* 801922DC 0018F23C  3C E0 80 3D */	lis r7, freePikis__8GameStat@ha
 /* 801922E0 0018F240  94 21 FF 70 */	stwu r1, -0x90(r1)
 /* 801922E4 0018F244  3D 00 80 3D */	lis r8, mePikis__8GameStat@ha
-/* 801922E8 0018F248  3C 80 80 3D */	lis r4, lbl_803D0004@ha
+/* 801922E8 0018F248  3C 80 80 3D */	lis r4, formationPikis__8GameStat@ha
 /* 801922EC 0018F24C  93 E1 00 8C */	stw r31, 0x8c(r1)
 /* 801922F0 0018F250  39 8A 1D F0 */	addi r12, r10, pikiInfMgr@l
 /* 801922F4 0018F254  3D 20 80 3D */	lis r9, containerPikis__8GameStat@ha
@@ -1104,10 +1104,10 @@ start__Q23zen13ogDrawScrInfoFv:
 /* 80192304 0018F264  93 A1 00 84 */	stw r29, 0x84(r1)
 /* 80192308 0018F268  3B A3 00 00 */	addi r29, r3, 0
 /* 8019230C 0018F26C  38 E7 1E 7C */	addi r7, r7, freePikis__8GameStat@l
-/* 80192310 0018F270  84 04 1E 70 */	lwzu r0, 0x1e70(r4)
+/* 80192310 0018F270  84 04 1E 70 */	lwzu r0, formationPikis__8GameStat@l(r4)
 /* 80192314 0018F274  39 08 1E 94 */	addi r8, r8, mePikis__8GameStat@l
 /* 80192318 0018F278  90 03 00 80 */	stw r0, 0x80(r3)
-/* 8019231C 0018F27C  80 04 00 04 */	lwz r0, lbl_803D0004@l(r4)
+/* 8019231C 0018F27C  80 04 00 04 */	lwz r0, 4@l(r4)
 /* 80192320 0018F280  90 1D 00 7C */	stw r0, 0x7c(r29)
 /* 80192324 0018F284  80 04 00 08 */	lwz r0, 8(r4)
 /* 80192328 0018F288  90 1D 00 84 */	stw r0, 0x84(r29)

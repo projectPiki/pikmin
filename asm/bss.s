@@ -323,10 +323,7 @@ cardData:
 	.skip 0x26000
 .global CardStack
 CardStack:
-	.skip 0x1DA4
-.global lbl_803D0004
-lbl_803D0004:
-	.skip 0x25C
+	.skip 0x2000
 .global YtexObj
 YtexObj:
 	.skip 0x20
