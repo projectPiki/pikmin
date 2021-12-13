@@ -12666,29 +12666,3 @@ lbl_803E29C8:
 .global lbl_803E29CC
 lbl_803E29CC:
 	.4byte 0x40800000
-.global lbl_803E29D0
-lbl_803E29D0:
-	.4byte 0x7061726D
-	.4byte 0x732F0000
-	.4byte 0x4E617669
-	.4byte 0x4D677200
-	.4byte 0x414E6F64
-	.4byte 0x65000000
-	.4byte 0x803E29E0
-	.4byte 0x00000000
-	.4byte 0x802C2F00
-	.4byte 0x802C2F0C
-	.4byte 0x4E6F6465
-	.4byte 0x00000000
-	.4byte 0x803E29F8
-	.4byte 0x802C2F18
-	.4byte 0x802C2F2C
-	.4byte 0x00000000
-	.4byte 0x802C2F38
-	.4byte 0x802C2F44
-	.4byte 0x802C2F68
-	.4byte 0x802C2F78
-.global __RTTI__7NaviMgr
-__RTTI__7NaviMgr:
-	.4byte 0x803E29D8
-	.4byte 0x802C2FA4

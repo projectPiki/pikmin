@@ -1097,7 +1097,4 @@ effects__11UtEffectMgr:
 	.skip 0x4
 .global controllerBuffer
 controllerBuffer:
-	.skip 0x8
-.global naviMgr
-naviMgr:
 	.skip 0x4
