@@ -1,0 +1,56 @@
+.include "macros.inc"
+.section .text, "ax"  # 0x80005560 - 0x80221F60
+.global getAttribute__7MapCodeFP11CollTriInfo
+getAttribute__7MapCodeFP11CollTriInfo:
+/* 80116080 00112FE0  80 03 00 00 */	lwz r0, 0(r3)
+/* 80116084 00112FE4  54 03 1F 7E */	srwi r3, r0, 0x1d
+/* 80116088 00112FE8  4E 80 00 20 */	blr 
+
+.global getSlipCode__7MapCodeFP11CollTriInfo
+getSlipCode__7MapCodeFP11CollTriInfo:
+/* 8011608C 00112FEC  28 03 00 00 */	cmplwi r3, 0
+/* 80116090 00112FF0  41 82 00 10 */	beq lbl_801160A0
+/* 80116094 00112FF4  80 03 00 00 */	lwz r0, 0(r3)
+/* 80116098 00112FF8  54 03 2F BE */	rlwinm r3, r0, 5, 0x1e, 0x1f
+/* 8011609C 00112FFC  4E 80 00 20 */	blr 
+lbl_801160A0:
+/* 801160A0 00113000  38 60 00 00 */	li r3, 0
+/* 801160A4 00113004  4E 80 00 20 */	blr 
+
+.global isBald__7MapCodeFP11CollTriInfo
+isBald__7MapCodeFP11CollTriInfo:
+/* 801160A8 00113008  7C 08 02 A6 */	mflr r0
+/* 801160AC 0011300C  90 01 00 04 */	stw r0, 4(r1)
+/* 801160B0 00113010  94 21 FF E8 */	stwu r1, -0x18(r1)
+/* 801160B4 00113014  93 E1 00 14 */	stw r31, 0x14(r1)
+/* 801160B8 00113018  7C 7F 1B 79 */	or. r31, r3, r3
+/* 801160BC 0011301C  41 82 00 3C */	beq lbl_801160F8
+/* 801160C0 00113020  C0 22 9F 80 */	lfs f1, lbl_803EA180@sda21(r2)
+/* 801160C4 00113024  48 10 5C 25 */	bl sinf
+/* 801160C8 00113028  C0 1F 00 1C */	lfs f0, 0x1c(r31)
+/* 801160CC 0011302C  FC 00 08 40 */	fcmpo cr0, f0, f1
+/* 801160D0 00113030  40 80 00 0C */	bge lbl_801160DC
+/* 801160D4 00113034  38 60 00 01 */	li r3, 1
+/* 801160D8 00113038  48 00 00 24 */	b lbl_801160FC
+lbl_801160DC:
+/* 801160DC 0011303C  80 1F 00 00 */	lwz r0, 0(r31)
+/* 801160E0 00113040  54 00 3F FF */	rlwinm. r0, r0, 7, 0x1f, 0x1f
+/* 801160E4 00113044  41 82 00 0C */	beq lbl_801160F0
+/* 801160E8 00113048  38 60 00 00 */	li r3, 0
+/* 801160EC 0011304C  48 00 00 10 */	b lbl_801160FC
+lbl_801160F0:
+/* 801160F0 00113050  38 60 00 01 */	li r3, 1
+/* 801160F4 00113054  48 00 00 08 */	b lbl_801160FC
+lbl_801160F8:
+/* 801160F8 00113058  38 60 00 01 */	li r3, 1
+lbl_801160FC:
+/* 801160FC 0011305C  80 01 00 1C */	lwz r0, 0x1c(r1)
+/* 80116100 00113060  83 E1 00 14 */	lwz r31, 0x14(r1)
+/* 80116104 00113064  38 21 00 18 */	addi r1, r1, 0x18
+/* 80116108 00113068  7C 08 03 A6 */	mtlr r0
+/* 8011610C 0011306C  4E 80 00 20 */	blr 
+
+.section .sdata2, "a"  # 0x803E8200 - 0x803EC840
+.balign 8
+lbl_803EA180:
+	.float 0.7853982

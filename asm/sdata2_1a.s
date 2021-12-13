@@ -1636,6 +1636,3 @@ lbl_803EA170:
 "@2099":
 	.4byte 0x43300000
 	.4byte 0x80000000
-.global lbl_803EA180
-lbl_803EA180:
-	.4byte 0x3F490FDB
