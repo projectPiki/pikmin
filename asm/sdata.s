@@ -12476,6 +12476,3 @@ lbl_803E2818:
 __RTTI__15GameCoreSection:
 	.4byte 0x802C241C
 	.4byte 0x802C2458
-.global lbl_803E2858
-lbl_803E2858:
-	.4byte 0x00000000
