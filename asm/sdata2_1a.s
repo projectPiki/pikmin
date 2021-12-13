@@ -1604,35 +1604,3 @@ lbl_803EA144:
 "@1061":
 	.4byte 0x43300000
 	.4byte 0x80000000
-.global lbl_803EA150
-lbl_803EA150:
-	.4byte 0x00000000
-.global lbl_803EA154
-lbl_803EA154:
-	.4byte 0x3C23D70A
-.global lbl_803EA158
-lbl_803EA158:
-	.4byte 0x3AD1B717
-.global lbl_803EA15C
-lbl_803EA15C:
-	.4byte 0xBDF5C28F
-.global lbl_803EA160
-lbl_803EA160:
-	.4byte 0xBDB851EC
-.global lbl_803EA164
-lbl_803EA164:
-	.float 0.3
-.global lbl_803EA168
-lbl_803EA168:
-	.float 400.0
-.global lbl_803EA16C
-lbl_803EA16C:
-	.float 15.0
-.global lbl_803EA170
-lbl_803EA170:
-	.float 1.0
-	.4byte 0x00000000
-.global "@2099"
-"@2099":
-	.4byte 0x43300000
-	.4byte 0x80000000

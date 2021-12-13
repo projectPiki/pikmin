@@ -1088,10 +1088,4 @@ maxPikis__8GameStat:
 	.skip 0x4
 .global orimaDead__8GameStat
 orimaDead__8GameStat:
-	.skip 0x8
-.global utEffectMgr
-utEffectMgr:
-	.skip 0x4
-.global effects__11UtEffectMgr
-effects__11UtEffectMgr:
-	.skip 0x4
+	.skip 0x1
