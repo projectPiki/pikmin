@@ -12642,27 +12642,3 @@ __RTTI__10Controller_1:
 __RTTI__10Kontroller:
 	.4byte 0x802C2D90
 	.4byte 0x802C2E00
-.global lbl_803E29B0
-lbl_803E29B0:
-	.4byte 0x00000000
-.global lbl_803E29B4
-lbl_803E29B4:
-	.4byte 0x00000000
-.global lbl_803E29B8
-lbl_803E29B8:
-	.4byte 0x00000000
-.global lbl_803E29BC
-lbl_803E29BC:
-	.4byte 0x00000000
-.global lbl_803E29C0
-lbl_803E29C0:
-	.4byte 0x00000000
-.global lbl_803E29C4
-lbl_803E29C4:
-	.4byte 0x40800000
-.global lbl_803E29C8
-lbl_803E29C8:
-	.4byte 0x00000000
-.global lbl_803E29CC
-lbl_803E29CC:
-	.4byte 0x40800000
