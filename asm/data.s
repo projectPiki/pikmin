@@ -1473,7 +1473,7 @@ jdsp:
 	.4byte 0x4600029F
 	.4byte 0x0B0E00DB
 	.4byte 0x03F7009E
-	.4byte Probe_Start
+	.4byte 0x80005600
 	.4byte 0x00FE03F5
 	.4byte 0x1FDA7C00
 	.4byte 0x1F5E00FE

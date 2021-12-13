@@ -1067,10 +1067,4 @@ timer$4155:
 	.skip 0x4
 .global init$4156
 init$4156:
-	.skip 0x4
-.global wintex
-wintex:
-	.skip 0x4
-.global font
-font:
-	.skip 0x4
+	.skip 0x1
