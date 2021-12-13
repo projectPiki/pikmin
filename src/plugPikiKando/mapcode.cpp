@@ -1,5 +1,7 @@
 #include "types.h"
 
+#define PI 3.14159265359
+
 extern "C" float sinf(float);
 
 struct CollTriInfo{
@@ -72,5 +74,5 @@ u32 MapCode::getSlipCode(CollTriInfo *)
  */
 bool MapCode::isBald(CollTriInfo *)
 {
-return (this != nullptr) ? ( _1C < sinf(0.7853982)) ? true : ((_00 >> 25 & 1) != 0) ? false : true : true;
+return (this != nullptr) ? ( _1C < sinf(45*PI/180)) ? true : ((_00 >> 25 & 1) != 0) ? false : true : true;
 }
