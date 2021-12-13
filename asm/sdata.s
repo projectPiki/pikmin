@@ -6105,14 +6105,24 @@ __RTTI__10SeConstant:
 lbl_803DFA80:
 	.asciz "SE_BOMB"
 .balign 4
+.global lbl_803DFA88
+lbl_803DFA88:
 	.asciz "dummy 1"
 .balign 4
+.global lbl_803DFA90
+lbl_803DFA90:
 	.asciz "dummy 2"
 .balign 4
+.global lbl_803DFA98
+lbl_803DFA98:
 	.asciz "dummy 3"
 .balign 4
+.global lbl_803DFAA0
+lbl_803DFAA0:
 	.asciz "dummy 4"
 .balign 4
+.global lbl_803DFAA8
+lbl_803DFAA8:
 	.asciz "dummy 5"
 .balign 4
 .global lbl_803DFAB0
