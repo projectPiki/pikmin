@@ -1028,43 +1028,4 @@ ang$5655:
 	.skip 0x4
 .global init$5656
 init$5656:
-	.skip 0x8
-.global lastDamage
-lastDamage:
-	.skip 0x1
-.global currDamage
-currDamage:
-	.skip 0x3
-.global damageParm
-damageParm:
-	.skip 0x4
-.global pauseFlag__15GameCoreSection
-pauseFlag__15GameCoreSection:
-	.skip 0x4
-.global textDemoState__15GameCoreSection
-textDemoState__15GameCoreSection:
-	.skip 0x4
-.global textDemoTimer__15GameCoreSection
-textDemoTimer__15GameCoreSection:
-	.skip 0x4
-.global textDemoIndex__15GameCoreSection
-textDemoIndex__15GameCoreSection:
-	.skip 0x4
-.global cameraMgr
-cameraMgr:
-	.skip 0x4
-.global containerWindow
-containerWindow:
-	.skip 0x4
-.global hurryupWindow
-hurryupWindow:
-	.skip 0x4
-.global accountWindow
-accountWindow:
-	.skip 0x4
-.global timer$4155
-timer$4155:
-	.skip 0x4
-.global init$4156
-init$4156:
 	.skip 0x1
