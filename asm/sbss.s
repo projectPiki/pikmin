@@ -1074,18 +1074,3 @@ wintex:
 .global font
 font:
 	.skip 0x4
-.global killTekis__8GameStat
-killTekis__8GameStat:
-	.skip 0x4
-.global getPellets__8GameStat
-getPellets__8GameStat:
-	.skip 0x4
-.global minPikis__8GameStat
-minPikis__8GameStat:
-	.skip 0x4
-.global maxPikis__8GameStat
-maxPikis__8GameStat:
-	.skip 0x4
-.global orimaDead__8GameStat
-orimaDead__8GameStat:
-	.skip 0x1
