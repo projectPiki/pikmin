@@ -12634,21 +12634,3 @@ __RTTI__10GoalEffect:
 __RTTI__11SlimeEffect:
 	.4byte 0x802C2CB0
 	.4byte 0x802C2CBC
-	.4byte 0x414E6F64
-	.4byte 0x65000000
-	.4byte 0x803E2978
-	.4byte 0
-	.4byte 0x802C2DAC
-	.4byte 0x802C2DB8
-	.4byte 0x4E6F6465
-	.4byte 0
-	.4byte 0x803E2990
-	.4byte 0x802C2DC4
-.global __RTTI__10Controller_1
-__RTTI__10Controller_1:
-	.4byte 0x802C2DD8
-	.4byte 0x802C2DE4
-.global __RTTI__10Kontroller
-__RTTI__10Kontroller:
-	.4byte 0x802C2D90
-	.4byte 0x802C2E00

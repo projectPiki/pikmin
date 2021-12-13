@@ -1095,6 +1095,3 @@ utEffectMgr:
 .global effects__11UtEffectMgr
 effects__11UtEffectMgr:
 	.skip 0x4
-.global controllerBuffer
-controllerBuffer:
-	.skip 0x4
