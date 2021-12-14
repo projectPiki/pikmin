@@ -1,127 +1,65 @@
 
-
+#ifndef _No_Floating_Point
+/* @(#)s_ldexp.c 1.2 95/01/04 */
+/* $Id: s_ldexp.c,v 1.3.14.1 2002/01/31 15:24:14 ceciliar Exp $ */
 /*
- * --INFO--
- * Address:	8021B570
- * Size:	000178
+ * ====================================================
+ * Copyright (C) 1993 by Sun Microsystems, Inc. All rights reserved.
+ *
+ * Developed at SunPro, a Sun Microsystems, Inc. business.
+ * Permission to use, copy, modify, and distribute this
+ * software is freely granted, provided that this notice
+ * is preserved.
+ * ====================================================
  */
-void ldexp(void)
+
+#include "fdlibm.h"
+//#include <errno.h>
+#include <math.h> /* for isfinite macro */
+static const double
+
+    two54
+    = 1.80143985094819840000e+16,        /* 0x43500000, 0x00000000 */
+    twom54 = 5.55111512312578270212e-17, /* 0x3C900000, 0x00000000 */
+    big = 1.0e+300, tiny = 1.0e-300;
+
+double ldexp(double x, int n)
 {
-/*
-.loc_0x0:
-  mflr      r0
-  stw       r0, 0x4(r1)
-  stwu      r1, -0x20(r1)
-  stw       r31, 0x1C(r1)
-  mr        r31, r3
-  stfd      f1, 0x8(r1)
-  lfd       f1, 0x8(r1)
-  bl        -0x3A4
-  cmpwi     r3, 0x2
-  ble-      .loc_0x38
-  lfd       f0, -0x3A38(r2)
-  lfd       f1, 0x8(r1)
-  fcmpu     cr0, f0, f1
-  bne-      .loc_0x40
+	_INT32 k, hx, lx; /*- cc 020130 -*/
+	if (!isfinite(x) || x == 0.0)
+		return x;
 
-.loc_0x38:
-  lfd       f1, 0x8(r1)
-  b         .loc_0x164
-
-.loc_0x40:
-  lwz       r0, 0x8(r1)
-  lwz       r6, 0xC(r1)
-  rlwinm.   r3,r0,12,21,31
-  mr        r5, r0
-  addi      r4, r3, 0
-  bne-      .loc_0xA4
-  rlwinm    r0,r5,0,1,31
-  or.       r0, r6, r0
-  bne-      .loc_0x68
-  b         .loc_0x164
-
-.loc_0x68:
-  lfd       f0, -0x3A30(r2)
-  lis       r3, 0xFFFF
-  addi      r0, r3, 0x3CB0
-  fmul      f0, f1, f0
-  cmpw      r31, r0
-  stfd      f0, 0x8(r1)
-  lwz       r0, 0x8(r1)
-  rlwinm    r3,r0,12,21,31
-  mr        r5, r0
-  subi      r4, r3, 0x36
-  bge-      .loc_0xA4
-  lfd       f1, -0x3A28(r2)
-  lfd       f0, 0x8(r1)
-  fmul      f1, f1, f0
-  b         .loc_0x164
-
-.loc_0xA4:
-  cmpwi     r4, 0x7FF
-  bne-      .loc_0xB8
-  lfd       f0, 0x8(r1)
-  fadd      f1, f0, f0
-  b         .loc_0x164
-
-.loc_0xB8:
-  add       r4, r4, r31
-  cmpwi     r4, 0x7FE
-  ble-      .loc_0xDC
-  lfd       f1, -0x3A20(r2)
-  lfd       f2, 0x8(r1)
-  bl        -0x194
-  lfd       f0, -0x3A20(r2)
-  fmul      f1, f0, f1
-  b         .loc_0x164
-
-.loc_0xDC:
-  cmpwi     r4, 0
-  ble-      .loc_0xFC
-  rlwinm    r3,r5,0,12,0
-  rlwinm    r0,r4,20,0,11
-  or        r0, r3, r0
-  stw       r0, 0x8(r1)
-  lfd       f1, 0x8(r1)
-  b         .loc_0x164
-
-.loc_0xFC:
-  cmpwi     r4, -0x36
-  bgt-      .loc_0x144
-  lis       r3, 0x1
-  subi      r0, r3, 0x3CB0
-  cmpw      r31, r0
-  ble-      .loc_0x12C
-  lfd       f1, -0x3A20(r2)
-  lfd       f2, 0x8(r1)
-  bl        -0x1E4
-  lfd       f0, -0x3A20(r2)
-  fmul      f1, f0, f1
-  b         .loc_0x164
-
-.loc_0x12C:
-  lfd       f1, -0x3A28(r2)
-  lfd       f2, 0x8(r1)
-  bl        -0x1FC
-  lfd       f0, -0x3A28(r2)
-  fmul      f1, f0, f1
-  b         .loc_0x164
-
-.loc_0x144:
-  addi      r0, r4, 0x36
-  lfd       f1, -0x3A18(r2)
-  rlwinm    r3,r5,0,12,0
-  rlwinm    r0,r0,20,0,11
-  or        r0, r3, r0
-  stw       r0, 0x8(r1)
-  lfd       f0, 0x8(r1)
-  fmul      f1, f1, f0
-
-.loc_0x164:
-  lwz       r0, 0x24(r1)
-  lwz       r31, 0x1C(r1)
-  addi      r1, r1, 0x20
-  mtlr      r0
-  blr
-*/
+	hx = __HI(x);
+	lx = __LO(x);
+	k  = (hx & 0x7ff00000) >> 20; /* extract exponent */
+	if (k == 0) {                 /* 0 or subnormal x */
+		if ((lx | (hx & 0x7fffffff)) == 0)
+			return x; /* +-0 */
+		x *= two54;
+		hx = __HI(x);
+		k  = ((hx & 0x7ff00000) >> 20) - 54;
+		if (n < -50000)
+			return tiny * x; /*underflow*/
+	}
+	if (k == 0x7ff)
+		return x + x; /* NaN or Inf */
+	k = k + n;
+	if (k > 0x7fe)
+		return big * copysign(big, x); /* overflow  */
+	if (k > 0)                         /* normal result */
+	{
+		__HI(x) = (hx & 0x800fffff) | (k << 20);
+		return x;
+	}
+	if (k <= -54)
+		if (n > 50000)                     /* in case integer overflow in n+k */
+			return big * copysign(big, x); /*overflow*/
+		else
+			return tiny * copysign(tiny, x); /*underflow*/
+	k += 54;                                 /* subnormal result */
+	__HI(x) = (hx & 0x800fffff) | (k << 20);
+	return x * twom54;
 }
+
+/* changed __finite to __isfinite to match new naming convention 141097 bds */
+#endif /* _No_Floating_Point  */
