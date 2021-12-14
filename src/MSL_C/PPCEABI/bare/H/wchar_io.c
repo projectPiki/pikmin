@@ -1,61 +1,37 @@
-
+#include "wchar_io.h"
 
 /*
  * --INFO--
  * Address:	8021A690
  * Size:	000080
  */
-void fwide(void)
+int fwide(FILE* stream, int mode)
 {
-/*
-.loc_0x0:
-  lhz       r0, 0x4(r3)
-  rlwinm.   r0,r0,26,29,31
-  bne-      .loc_0x14
-  li        r3, 0
-  blr       
+	int orientation;
+	int result;
 
-.loc_0x14:
-  lbz       r5, 0x5(r3)
-  rlwinm    r0,r5,28,30,31
-  cmpwi     r0, 0x1
-  beq-      .loc_0x78
-  bge-      .loc_0x34
-  cmpwi     r0, 0
-  bge-      .loc_0x40
-  blr       
+	if (stream->mode.file_kind == __closed_file)
+		return 0;
+	orientation = stream->mode.file_orientation;
+	switch (orientation)
+	{
+		case __unoriented:
+			if (mode > 0)
+				stream->mode.file_orientation = __wide_oriented;
+			else if (mode < 0)
+				stream->mode.file_orientation = __char_oriented;
+			result = mode;
+			break;
 
-.loc_0x34:
-  cmpwi     r0, 0x3
-  bgelr-    
-  b         .loc_0x70
+		case __wide_oriented:
+			result = 1;
+			break;
 
-.loc_0x40:
-  cmpwi     r4, 0
-  ble-      .loc_0x58
-  li        r0, 0x2
-  rlwimi    r5,r0,4,26,27
-  stb       r5, 0x5(r3)
-  b         .loc_0x68
-
-.loc_0x58:
-  bge-      .loc_0x68
-  li        r0, 0x1
-  rlwimi    r5,r0,4,26,27
-  stb       r5, 0x5(r3)
-
-.loc_0x68:
-  mr        r3, r4
-  blr       
-
-.loc_0x70:
-  li        r3, 0x1
-  blr       
-
-.loc_0x78:
-  li        r3, -0x1
-  blr
-*/
+		case __char_oriented:
+			result = -1;
+			break;
+	}
+	return result;
 }
 
 /*
