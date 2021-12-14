@@ -462,13 +462,3 @@ lbl_80222674:
 	.4byte 0x0000010B
 	.4byte 0x0000010A
 	.4byte 0x0000010C
-.global lbl_80222680
-lbl_80222680:
-	.4byte 0x00000028
-	.4byte 0x3DCCCCCD
-	.4byte 0x00000041
-	.4byte 0x3DCCCCCD
-	.4byte 0x00000003
-	.4byte 0x3F000000
-	.4byte 0x0000002A
-	.4byte 0x3E99999A
