@@ -11059,16 +11059,3 @@ __RTTI__8MizuItem:
 __RTTI__16PaniItemAnimator:
 	.4byte 0x802BFF48
 	.4byte 0x802BFF84
-	.4byte 0
-	.4byte 0x802C000C
-	.4byte 0
-	.4byte 0x47656E42
-	.4byte 0x61736500
-	.4byte 0x803E1F80
-	.4byte 0x802C0018
-	.4byte 0x802C0024
-	.4byte 0x802C0030
-.global __RTTI__13GenObjectNavi
-__RTTI__13GenObjectNavi:
-	.4byte 0x802BFFFC
-	.4byte 0x802C0044

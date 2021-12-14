@@ -1,168 +1,173 @@
 .include "macros.inc"
-
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-/* 80136D64 00133CC4  54 E8 10 3A */	slwi r8, r7, 2
-/* 80136D68 00133CC8  7F 45 01 2E */	stwx r26, r5, r0
-/* 80136D6C 00133CCC  54 C6 10 3A */	slwi r6, r6, 2
-/* 80136D70 00133CD0  54 67 10 3A */	slwi r7, r3, 2
-/* 80136D74 00133CD4  80 7F 00 08 */	lwz r3, 8(r31)
-/* 80136D78 00133CD8  54 80 10 3A */	slwi r0, r4, 2
-/* 80136D7C 00133CDC  55 25 10 3A */	slwi r5, r9, 2
-/* 80136D80 00133CE0  7F C3 41 2E */	stwx r30, r3, r8
-/* 80136D84 00133CE4  38 60 00 0C */	li r3, 0xc
-/* 80136D88 00133CE8  80 9F 00 08 */	lwz r4, 8(r31)
-/* 80136D8C 00133CEC  7F 84 31 2E */	stwx r28, r4, r6
-/* 80136D90 00133CF0  80 9F 00 08 */	lwz r4, 8(r31)
-/* 80136D94 00133CF4  7E E4 39 2E */	stwx r23, r4, r7
-/* 80136D98 00133CF8  80 9F 00 08 */	lwz r4, 8(r31)
-/* 80136D9C 00133CFC  7F 64 01 2E */	stwx r27, r4, r0
-/* 80136DA0 00133D00  80 9F 00 08 */	lwz r4, 8(r31)
-/* 80136DA4 00133D04  7F A4 29 2E */	stwx r29, r4, r5
-/* 80136DA8 00133D08  80 99 00 08 */	lwz r4, 8(r25)
-/* 80136DAC 00133D0C  93 E4 00 10 */	stw r31, 0x10(r4)
-/* 80136DB0 00133D10  4B F1 02 55 */	bl alloc__6SystemFUl
-/* 80136DB4 00133D14  3B 83 00 00 */	addi r28, r3, 0
-/* 80136DB8 00133D18  7F 80 E3 79 */	or. r0, r28, r28
-/* 80136DBC 00133D1C  41 82 00 2C */	beq lbl_80136DE8
-/* 80136DC0 00133D20  3C 60 80 2C */	lis r3, __vt__9TaiAction@ha
-/* 80136DC4 00133D24  38 03 66 20 */	addi r0, r3, __vt__9TaiAction@l
-/* 80136DC8 00133D28  90 1C 00 04 */	stw r0, 4(r28)
-/* 80136DCC 00133D2C  38 00 00 06 */	li r0, 6
-/* 80136DD0 00133D30  3C 60 80 2D */	lis r3, __vt__29TaiNapkidStraightFlyingAction@ha
-/* 80136DD4 00133D34  90 1C 00 00 */	stw r0, 0(r28)
-/* 80136DD8 00133D38  38 03 A6 1C */	addi r0, r3, __vt__29TaiNapkidStraightFlyingAction@l
-/* 80136DDC 00133D3C  90 1C 00 04 */	stw r0, 4(r28)
-/* 80136DE0 00133D40  C0 02 A4 D8 */	lfs f0, lbl_803EA6D8@sda21(r2)
-/* 80136DE4 00133D44  D0 1C 00 08 */	stfs f0, 8(r28)
-lbl_80136DE8:
-/* 80136DE8 00133D48  38 60 00 14 */	li r3, 0x14
-/* 80136DEC 00133D4C  4B F1 02 19 */	bl alloc__6SystemFUl
-/* 80136DF0 00133D50  3B A3 00 00 */	addi r29, r3, 0
-/* 80136DF4 00133D54  7F A0 EB 79 */	or. r0, r29, r29
-/* 80136DF8 00133D58  41 82 00 3C */	beq lbl_80136E34
-/* 80136DFC 00133D5C  3C 60 80 2C */	lis r3, __vt__9TaiAction@ha
-/* 80136E00 00133D60  38 03 66 20 */	addi r0, r3, __vt__9TaiAction@l
-/* 80136E04 00133D64  90 1D 00 04 */	stw r0, 4(r29)
-/* 80136E08 00133D68  38 00 00 06 */	li r0, 6
-/* 80136E0C 00133D6C  3C 60 80 2D */	lis r3, __vt__14TaiTimerAction@ha
-/* 80136E10 00133D70  90 1D 00 00 */	stw r0, 0(r29)
-/* 80136E14 00133D74  38 63 CA 28 */	addi r3, r3, __vt__14TaiTimerAction@l
-/* 80136E18 00133D78  38 00 00 00 */	li r0, 0
-/* 80136E1C 00133D7C  90 7D 00 04 */	stw r3, 4(r29)
-/* 80136E20 00133D80  90 1D 00 08 */	stw r0, 8(r29)
-/* 80136E24 00133D84  C0 02 A4 DC */	lfs f0, lbl_803EA6DC@sda21(r2)
-/* 80136E28 00133D88  D0 1D 00 0C */	stfs f0, 0xc(r29)
-/* 80136E2C 00133D8C  C0 02 A4 68 */	lfs f0, lbl_803EA668@sda21(r2)
-/* 80136E30 00133D90  D0 1D 00 10 */	stfs f0, 0x10(r29)
-lbl_80136E34:
-/* 80136E34 00133D94  38 60 00 0C */	li r3, 0xc
-/* 80136E38 00133D98  4B F1 01 CD */	bl alloc__6SystemFUl
-/* 80136E3C 00133D9C  3B C3 00 00 */	addi r30, r3, 0
-/* 80136E40 00133DA0  7F C0 F3 79 */	or. r0, r30, r30
-/* 80136E44 00133DA4  41 82 00 38 */	beq lbl_80136E7C
-/* 80136E48 00133DA8  3C 60 80 2C */	lis r3, __vt__9TaiAction@ha
-/* 80136E4C 00133DAC  38 03 66 20 */	addi r0, r3, __vt__9TaiAction@l
-/* 80136E50 00133DB0  90 1E 00 04 */	stw r0, 4(r30)
-/* 80136E54 00133DB4  38 00 FF FF */	li r0, -1
-/* 80136E58 00133DB8  3C 60 80 2D */	lis r3, __vt__15TaiMotionAction@ha
-/* 80136E5C 00133DBC  90 1E 00 00 */	stw r0, 0(r30)
-/* 80136E60 00133DC0  38 03 95 94 */	addi r0, r3, __vt__15TaiMotionAction@l
-/* 80136E64 00133DC4  3C 60 80 2D */	lis r3, __vt__25TaiContinuousMotionAction@ha
-/* 80136E68 00133DC8  90 1E 00 04 */	stw r0, 4(r30)
-/* 80136E6C 00133DCC  38 00 00 06 */	li r0, 6
-/* 80136E70 00133DD0  38 63 95 74 */	addi r3, r3, __vt__25TaiContinuousMotionAction@l
-/* 80136E74 00133DD4  90 1E 00 08 */	stw r0, 8(r30)
-/* 80136E78 00133DD8  90 7E 00 04 */	stw r3, 4(r30)
-lbl_80136E7C:
-/* 80136E7C 00133DDC  38 60 00 0C */	li r3, 0xc
-/* 80136E80 00133DE0  4B F1 01 85 */	bl alloc__6SystemFUl
-/* 80136E84 00133DE4  3B E3 00 00 */	addi r31, r3, 0
-/* 80136E88 00133DE8  7F E3 FB 79 */	or. r3, r31, r31
-/* 80136E8C 00133DEC  41 82 00 0C */	beq lbl_80136E98
-/* 80136E90 00133DF0  38 80 00 08 */	li r4, 8
-/* 80136E94 00133DF4  4B FF 02 05 */	bl __ct__8TaiStateFi
-lbl_80136E98:
-/* 80136E98 00133DF8  38 00 00 00 */	li r0, 0
-/* 80136E9C 00133DFC  80 7F 00 08 */	lwz r3, 8(r31)
-/* 80136EA0 00133E00  54 00 10 3A */	slwi r0, r0, 2
-/* 80136EA4 00133E04  7F 03 01 2E */	stwx r24, r3, r0
-/* 80136EA8 00133E08  38 80 00 01 */	li r4, 1
-/* 80136EAC 00133E0C  38 00 00 02 */	li r0, 2
-/* 80136EB0 00133E10  80 7F 00 08 */	lwz r3, 8(r31)
-/* 80136EB4 00133E14  54 84 10 3A */	slwi r4, r4, 2
-/* 80136EB8 00133E18  38 A0 00 03 */	li r5, 3
-/* 80136EBC 00133E1C  7E A3 21 2E */	stwx r21, r3, r4
-/* 80136EC0 00133E20  38 80 00 04 */	li r4, 4
-/* 80136EC4 00133E24  38 E0 00 05 */	li r7, 5
-/* 80136EC8 00133E28  80 7F 00 08 */	lwz r3, 8(r31)
-/* 80136ECC 00133E2C  54 00 10 3A */	slwi r0, r0, 2
-/* 80136ED0 00133E30  38 C0 00 06 */	li r6, 6
-/* 80136ED4 00133E34  7E 83 01 2E */	stwx r20, r3, r0
-/* 80136ED8 00133E38  38 00 00 07 */	li r0, 7
-/* 80136EDC 00133E3C  54 A5 10 3A */	slwi r5, r5, 2
-/* 80136EE0 00133E40  80 7F 00 08 */	lwz r3, 8(r31)
-/* 80136EE4 00133E44  54 84 10 3A */	slwi r4, r4, 2
-/* 80136EE8 00133E48  54 E7 10 3A */	slwi r7, r7, 2
-/* 80136EEC 00133E4C  7F 43 29 2E */	stwx r26, r3, r5
-/* 80136EF0 00133E50  54 C5 10 3A */	slwi r5, r6, 2
-/* 80136EF4 00133E54  54 00 10 3A */	slwi r0, r0, 2
-/* 80136EF8 00133E58  80 DF 00 08 */	lwz r6, 8(r31)
-/* 80136EFC 00133E5C  38 60 00 08 */	li r3, 8
-/* 80136F00 00133E60  7E E6 21 2E */	stwx r23, r6, r4
-/* 80136F04 00133E64  80 9F 00 08 */	lwz r4, 8(r31)
-/* 80136F08 00133E68  7F 84 39 2E */	stwx r28, r4, r7
-/* 80136F0C 00133E6C  80 9F 00 08 */	lwz r4, 8(r31)
-/* 80136F10 00133E70  7F A4 29 2E */	stwx r29, r4, r5
-/* 80136F14 00133E74  80 9F 00 08 */	lwz r4, 8(r31)
-/* 80136F18 00133E78  7F C4 01 2E */	stwx r30, r4, r0
+.global makeObjectNavi__Fv
+makeObjectNavi__Fv:
+/* 800F8130 000F5090  7C 08 02 A6 */	mflr r0
+/* 800F8134 000F5094  38 60 00 18 */	li r3, 0x18
+/* 800F8138 000F5098  90 01 00 04 */	stw r0, 4(r1)
+/* 800F813C 000F509C  94 21 FF F0 */	stwu r1, -0x10(r1)
+/* 800F8140 000F50A0  93 E1 00 0C */	stw r31, 0xc(r1)
+/* 800F8144 000F50A4  4B F4 EE C1 */	bl alloc__6SystemFUl
+/* 800F8148 000F50A8  3B E3 00 00 */	addi r31, r3, 0
+/* 800F814C 000F50AC  7F E3 FB 79 */	or. r3, r31, r31
+/* 800F8150 000F50B0  41 82 00 38 */	beq lbl_800F8188
+/* 800F8154 000F50B4  3C 80 80 2C */	lis r4, lbl_802BFFD0@ha
+/* 800F8158 000F50B8  3C A0 80 2C */	lis r5, lbl_802BFFC4@ha
+/* 800F815C 000F50BC  38 C4 FF D0 */	addi r6, r4, lbl_802BFFD0@l
+/* 800F8160 000F50C0  3C 80 6E 61 */	lis r4, 0x6E617669@ha
+/* 800F8164 000F50C4  38 A5 FF C4 */	addi r5, r5, lbl_802BFFC4@l
+/* 800F8168 000F50C8  38 84 76 69 */	addi r4, r4, 0x6E617669@l
+/* 800F816C 000F50CC  4B FE 2B 49 */	bl __ct__7GenBaseFUlPcPc
+/* 800F8170 000F50D0  3C 60 80 2C */	lis r3, __vt__9GenObject@ha
+/* 800F8174 000F50D4  38 03 AB 70 */	addi r0, r3, __vt__9GenObject@l
+/* 800F8178 000F50D8  3C 60 80 2C */	lis r3, __vt__13GenObjectNavi@ha
+/* 800F817C 000F50DC  90 1F 00 04 */	stw r0, 4(r31)
+/* 800F8180 000F50E0  38 03 00 60 */	addi r0, r3, __vt__13GenObjectNavi@l
+/* 800F8184 000F50E4  90 1F 00 04 */	stw r0, 4(r31)
+lbl_800F8188:
+/* 800F8188 000F50E8  7F E3 FB 78 */	mr r3, r31
+/* 800F818C 000F50EC  80 01 00 14 */	lwz r0, 0x14(r1)
+/* 800F8190 000F50F0  83 E1 00 0C */	lwz r31, 0xc(r1)
+/* 800F8194 000F50F4  38 21 00 10 */	addi r1, r1, 0x10
+/* 800F8198 000F50F8  7C 08 03 A6 */	mtlr r0
+/* 800F819C 000F50FC  4E 80 00 20 */	blr 
+
+.global initialise__13GenObjectNaviFv
+initialise__13GenObjectNaviFv:
+/* 800F81A0 000F5100  80 ED 30 74 */	lwz r7, factory__16GenObjectFactory@sda21(r13)
+/* 800F81A4 000F5104  80 A7 00 00 */	lwz r5, 0(r7)
+/* 800F81A8 000F5108  80 07 00 04 */	lwz r0, 4(r7)
+/* 800F81AC 000F510C  7C 05 00 00 */	cmpw r5, r0
+/* 800F81B0 000F5110  4C 80 00 20 */	bgelr 
+/* 800F81B4 000F5114  3C 80 6E 61 */	lis r4, 0x6E617669@ha
+/* 800F81B8 000F5118  80 67 00 08 */	lwz r3, 8(r7)
+/* 800F81BC 000F511C  38 84 76 69 */	addi r4, r4, 0x6E617669@l
+/* 800F81C0 000F5120  54 A0 20 36 */	slwi r0, r5, 4
+/* 800F81C4 000F5124  7C 83 01 2E */	stwx r4, r3, r0
+/* 800F81C8 000F5128  3C C0 80 10 */	lis r6, makeObjectNavi__Fv@ha
+/* 800F81CC 000F512C  3C 80 80 2C */	lis r4, lbl_802BFFE4@ha
+/* 800F81D0 000F5130  80 07 00 00 */	lwz r0, 0(r7)
+/* 800F81D4 000F5134  3C 60 76 30 */	lis r3, 0x76302E30@ha
+/* 800F81D8 000F5138  80 A7 00 08 */	lwz r5, 8(r7)
+/* 800F81DC 000F513C  38 C6 81 30 */	addi r6, r6, makeObjectNavi__Fv@l
+/* 800F81E0 000F5140  54 00 20 36 */	slwi r0, r0, 4
+/* 800F81E4 000F5144  7C A5 02 14 */	add r5, r5, r0
+/* 800F81E8 000F5148  90 C5 00 04 */	stw r6, 4(r5)
+/* 800F81EC 000F514C  38 A4 FF E4 */	addi r5, r4, lbl_802BFFE4@l
+/* 800F81F0 000F5150  38 83 2E 30 */	addi r4, r3, 0x76302E30@l
+/* 800F81F4 000F5154  80 07 00 00 */	lwz r0, 0(r7)
+/* 800F81F8 000F5158  80 67 00 08 */	lwz r3, 8(r7)
+/* 800F81FC 000F515C  54 00 20 36 */	slwi r0, r0, 4
+/* 800F8200 000F5160  7C 63 02 14 */	add r3, r3, r0
+/* 800F8204 000F5164  90 A3 00 08 */	stw r5, 8(r3)
+/* 800F8208 000F5168  80 07 00 00 */	lwz r0, 0(r7)
+/* 800F820C 000F516C  80 67 00 08 */	lwz r3, 8(r7)
+/* 800F8210 000F5170  54 00 20 36 */	slwi r0, r0, 4
+/* 800F8214 000F5174  7C 63 02 14 */	add r3, r3, r0
+/* 800F8218 000F5178  90 83 00 0C */	stw r4, 0xc(r3)
+/* 800F821C 000F517C  80 67 00 00 */	lwz r3, 0(r7)
+/* 800F8220 000F5180  38 03 00 01 */	addi r0, r3, 1
+/* 800F8224 000F5184  90 07 00 00 */	stw r0, 0(r7)
+/* 800F8228 000F5188  4E 80 00 20 */	blr 
+
+.global doRead__13GenObjectNaviFR18RandomAccessStream
+doRead__13GenObjectNaviFR18RandomAccessStream:
+/* 800F822C 000F518C  4E 80 00 20 */	blr 
+
+.global birth__13GenObjectNaviFR9BirthInfo
+birth__13GenObjectNaviFR9BirthInfo:
+/* 800F8230 000F5190  7C 08 02 A6 */	mflr r0
+/* 800F8234 000F5194  90 01 00 04 */	stw r0, 4(r1)
+/* 800F8238 000F5198  94 21 FF E8 */	stwu r1, -0x18(r1)
+/* 800F823C 000F519C  93 E1 00 14 */	stw r31, 0x14(r1)
+/* 800F8240 000F51A0  93 C1 00 10 */	stw r30, 0x10(r1)
+/* 800F8244 000F51A4  7C 9E 23 78 */	mr r30, r4
+/* 800F8248 000F51A8  80 6D 31 20 */	lwz r3, naviMgr@sda21(r13)
+/* 800F824C 000F51AC  81 83 00 00 */	lwz r12, 0(r3)
+/* 800F8250 000F51B0  81 8C 00 78 */	lwz r12, 0x78(r12)
+/* 800F8254 000F51B4  7D 88 03 A6 */	mtlr r12
+/* 800F8258 000F51B8  4E 80 00 21 */	blrl 
+/* 800F825C 000F51BC  7C 7F 1B 79 */	or. r31, r3, r3
+/* 800F8260 000F51C0  41 82 00 6C */	beq lbl_800F82CC
+/* 800F8264 000F51C4  81 9F 00 00 */	lwz r12, 0(r31)
+/* 800F8268 000F51C8  38 7F 00 00 */	addi r3, r31, 0
+/* 800F826C 000F51CC  38 9E 00 00 */	addi r4, r30, 0
+/* 800F8270 000F51D0  81 8C 00 28 */	lwz r12, 0x28(r12)
+/* 800F8274 000F51D4  7D 88 03 A6 */	mtlr r12
+/* 800F8278 000F51D8  4E 80 00 21 */	blrl 
+/* 800F827C 000F51DC  80 9E 00 0C */	lwz r4, 0xc(r30)
+/* 800F8280 000F51E0  7F E3 FB 78 */	mr r3, r31
+/* 800F8284 000F51E4  80 1E 00 10 */	lwz r0, 0x10(r30)
+/* 800F8288 000F51E8  90 9F 00 88 */	stw r4, 0x88(r31)
+/* 800F828C 000F51EC  90 1F 00 8C */	stw r0, 0x8c(r31)
+/* 800F8290 000F51F0  80 1E 00 14 */	lwz r0, 0x14(r30)
+/* 800F8294 000F51F4  90 1F 00 90 */	stw r0, 0x90(r31)
+/* 800F8298 000F51F8  C0 1F 00 8C */	lfs f0, 0x8c(r31)
+/* 800F829C 000F51FC  D0 1F 00 A0 */	stfs f0, 0xa0(r31)
+/* 800F82A0 000F5200  48 00 1F E9 */	bl reset__4NaviFv
+/* 800F82A4 000F5204  80 1E 00 24 */	lwz r0, 0x24(r30)
+/* 800F82A8 000F5208  90 1F 00 64 */	stw r0, 0x64(r31)
+/* 800F82AC 000F520C  80 6D 31 20 */	lwz r3, naviMgr@sda21(r13)
+/* 800F82B0 000F5210  48 01 F1 15 */	bl getNavi__7NaviMgrFv
+/* 800F82B4 000F5214  80 03 02 E8 */	lwz r0, 0x2e8(r3)
+/* 800F82B8 000F5218  3C 60 80 3A */	lis r3, flowCont@ha
+/* 800F82BC 000F521C  38 63 DB 20 */	addi r3, r3, flowCont@l
+/* 800F82C0 000F5220  90 1F 02 E8 */	stw r0, 0x2e8(r31)
+/* 800F82C4 000F5224  38 00 00 01 */	li r0, 1
+/* 800F82C8 000F5228  90 03 02 30 */	stw r0, 0x230(r3)
+lbl_800F82CC:
+/* 800F82CC 000F522C  7F E3 FB 78 */	mr r3, r31
+/* 800F82D0 000F5230  80 01 00 1C */	lwz r0, 0x1c(r1)
+/* 800F82D4 000F5234  83 E1 00 14 */	lwz r31, 0x14(r1)
+/* 800F82D8 000F5238  83 C1 00 10 */	lwz r30, 0x10(r1)
+/* 800F82DC 000F523C  38 21 00 18 */	addi r1, r1, 0x18
+/* 800F82E0 000F5240  7C 08 03 A6 */	mtlr r0
+/* 800F82E4 000F5244  4E 80 00 20 */	blr 
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
-	.4byte 0x67656e4e
-	.4byte 0x6176692e
-	.4byte 0x63707000
-.global lbl_802BFFC4
+.balign 8
+lbl_802BFFB8:
+	.asciz "genNavi.cpp"
+.balign 4
 lbl_802BFFC4:
-	.4byte 0x6F626A65
-	.4byte 0x63742074
-	.4byte 0x79706500
-.global lbl_802BFFD0
+	.asciz "object type"
+.balign 4
 lbl_802BFFD0:
 	.4byte 0x8376838C
 	.4byte 0x83438384
 	.4byte 0x815B8251
 	.4byte 0x82F090B6
 	.4byte 0x82DE0000
-.global lbl_802BFFE4
+.balign 4
 lbl_802BFFE4:
-	.4byte 0x67656E65
-	.4byte 0x72617465
-	.4byte 0x204E4156
-	.4byte 0x49202870
-	.4byte 0x6C617965
-	.4byte 0x72322900
-	.4byte 0x47656E4F
-	.4byte 0x626A6563
-	.4byte 0x744E6176
-	.4byte 0x69000000
-	.4byte 0x50617261
-	.4byte 0x6D657465
-	.4byte 0x72730000
-	.4byte 0x803E1F78
+	.asciz "generate NAVI (player2)"
+.balign 4
+lbl_802BFFFC:
+	.asciz "GenObjectNavi"
+.balign 4
+lbl_802C000C:
+	.asciz "Parameters"
+.balign 4
+lbl_802C0018:
+	.4byte __RTTI__10Parameters
 	.4byte 0x00000000
 	.4byte 0x00000000
-	.4byte 0x47656E4F
-	.4byte 0x626A6563
-	.4byte 0x74000000
-	.4byte 0x803E1F78
+.balign 4
+lbl_802C0024:
+	.asciz "GenObject"
+.balign 4
+lbl_802C0030:
+	.4byte __RTTI__10Parameters
 	.4byte 0x00000000
-	.4byte 0x803E1F88
+	.4byte __RTTI__7GenBase
 	.4byte 0x00000000
 	.4byte 0x00000000
-	.4byte 0x803E1F78
+lbl_802C0044:
+	.4byte __RTTI__10Parameters
 	.4byte 0x00000000
-	.4byte 0x803E1F88
+	.4byte __RTTI__7GenBase
 	.4byte 0x00000000
-	.4byte 0x803E1F90
+	.4byte __RTTI__9GenObject
 	.4byte 0x00000000
 	.4byte 0x00000000
 .global __vt__13GenObjectNavi
@@ -183,15 +188,20 @@ __vt__13GenObjectNavi:
 	.4byte birth__13GenObjectNaviFR9BirthInfo
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
-	.4byte 0x31310000
-	.4byte 0x31320000
-	.4byte 0x31330000
-	.4byte 0x31340000
-	.4byte 0x31350000
-	.4byte 0x802bff5c
+.balign 8
+__RTTI__10Parameters:
+	.4byte lbl_802C000C
 	.4byte 0
-	.4byte 0x802bff68
-	.4byte 0x802bff78
-.global __RTTI__16PaniItemAnimator
-__RTTI__16PaniItemAnimator:
-	.4byte 0x802bff48
+.balign 4
+lbl_803E1F80:
+	.asciz "GenBase"
+.balign 4
+__RTTI__7GenBase:
+	.4byte lbl_803E1F80
+	.4byte lbl_802C0018
+__RTTI__9GenObject:
+	.4byte lbl_802C0024
+	.4byte lbl_802C0030
+__RTTI__13GenObjectNavi:
+	.4byte lbl_802BFFFC
+	.4byte lbl_802C0044
