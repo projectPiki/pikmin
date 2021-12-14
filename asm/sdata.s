@@ -11020,19 +11020,3 @@ __RTTI__11BombGenItem:
 __RTTI__8ItemBall:
 	.4byte 0x802BFAC8
 	.4byte 0x802BFAD4
-	.4byte 0x802BFC90
-	.4byte 0
-	.4byte 0x802BFCA4
-	.4byte 0
-	.4byte 0x802BFCB0
-	.4byte 0
-	.4byte 0x802BFCC0
-	.4byte 0x802BFCCC
-	.4byte 0x802BFCE0
-	.4byte 0x802BFCEC
-	.4byte 0x802BFD10
-	.4byte 0x802BFD20
-.global __RTTI__8MizuItem
-__RTTI__8MizuItem:
-	.4byte 0x802BFC84
-	.4byte 0x802BFD4C

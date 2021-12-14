@@ -1074,6 +1074,3 @@ lbl_803E9E48:
 .global lbl_803E9E4C
 lbl_803E9E4C:
 	.float 3.0
-.global lbl_803E9E50
-lbl_803E9E50:
-	.float 1.0
