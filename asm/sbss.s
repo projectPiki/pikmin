@@ -1020,12 +1020,3 @@ buryMode__11PikiHeadMgr:
 .global itemMgr
 itemMgr:
 	.skip 0x4
-.global controllerLen
-controllerLen:
-	.skip 0x4
-.global ang$5655
-ang$5655:
-	.skip 0x4
-.global init$5656
-init$5656:
-	.skip 0x1
