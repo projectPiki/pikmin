@@ -11036,26 +11036,3 @@ __RTTI__8ItemBall:
 __RTTI__8MizuItem:
 	.4byte 0x802BFC84
 	.4byte 0x802BFD4C
-	.4byte 0x31000000
-	.4byte 0x32000000
-	.4byte 0x33000000
-	.4byte 0x34000000
-	.4byte 0x35000000
-	.4byte 0x36000000
-	.4byte 0x37000000
-	.4byte 0x38000000
-	.4byte 0x39000000
-	.4byte 0x31300000
-	.4byte 0x31310000
-	.4byte 0x31320000
-	.4byte 0x31330000
-	.4byte 0x31340000
-	.4byte 0x31350000
-	.4byte 0x802BFF5C
-	.4byte 0
-	.4byte 0x802BFF68
-	.4byte 0x802BFF78
-.global __RTTI__16PaniItemAnimator
-__RTTI__16PaniItemAnimator:
-	.4byte 0x802BFF48
-	.4byte 0x802BFF84
