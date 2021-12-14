@@ -1,5 +1,5 @@
-
-
+#include "types.h"
+#include "arith.h"
 /*
  * --INFO--
  * Address:	........
@@ -175,13 +175,10 @@ void labs(void)
  * Address:	80215CA0
  * Size:	000010
  */
-void abs(void)
+s32 abs(s32 __x)
 {
-/*
-.loc_0x0:
-  cmpwi     r3, 0
-  bgelr-    
-  neg       r3, r3
-  blr
-*/
+  if (0 <= __x) {
+    return __x;
+  }
+  return -__x;
 }

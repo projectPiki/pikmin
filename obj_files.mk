@@ -336,7 +336,7 @@ TEXT_O_FILES :=\
 	$(BUILD_DIR)/asm/MSL_C/PPCEABI/bare/H/abort_exit.o\
 	$(BUILD_DIR)/src/MSL_C/PPCEABI/bare/H/errno.o\
 	$(BUILD_DIR)/asm/MSL_C/PPCEABI/bare/H/ansi_fp.o\
-	$(BUILD_DIR)/asm/MSL_C/PPCEABI/bare/H/arith.o\
+	$(BUILD_DIR)/src/MSL_C/PPCEABI/bare/H/arith.o\
 	$(BUILD_DIR)/asm/MSL_C/PPCEABI/bare/H/buffer_io.o\
 	$(BUILD_DIR)/src/MSL_C/PPCEABI/bare/H/critical_regions.ppc_eabi.o\
 	$(BUILD_DIR)/asm/MSL_C/PPCEABI/bare/H/ctype.o\
