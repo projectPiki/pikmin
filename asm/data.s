@@ -3394,7 +3394,7 @@ bgm_volume_set:
 	.4byte bgm0_volset
 .global GAMEBGM_VOL_TABLE
 GAMEBGM_VOL_TABLE:
-	.4byte 0x00000000
+	.float 0.0
 	.4byte 0x3DCCCCCD
 	.4byte 0x3E4CCCCD
 	.4byte 0x3E99999A
@@ -3469,115 +3469,112 @@ tbl_stage_to_bgm:
 	.4byte 0x0000000A
 	.4byte 0x00000009
 	.4byte 0x00000011
+.balign 4
 .global filelist
 filelist:
-	.4byte 0x70696B69
-	.4byte 0x2E737478
+	.asciz "piki.stx"
+.balign 4
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x00000000
+.balign 4
+	.asciz "o_dead.stx"
+.balign 4
 	.4byte 0x00000000
-	.4byte 0x6F5F6465
-	.4byte 0x61642E73
-	.4byte 0x74780000
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x00000000
+.balign 4
+	.asciz "d_end1.stx"
+.balign 4
 	.4byte 0x00000000
-	.4byte 0x645F656E
-	.4byte 0x64312E73
-	.4byte 0x74780000
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x00000000
+.balign 4
+	.asciz "gyoku.stx"
+.balign 4
 	.4byte 0x00000000
-	.4byte 0x67796F6B
-	.4byte 0x752E7374
-	.4byte 0x78000000
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x00000000
+.balign 4
+	.asciz "d_end3.stx"
+.balign 4
 	.4byte 0x00000000
-	.4byte 0x645F656E
-	.4byte 0x64332E73
-	.4byte 0x74780000
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x00000000
+.balign 4
+	.asciz "fanf5.stx"
+.balign 4
 	.4byte 0x00000000
-	.4byte 0x66616E66
-	.4byte 0x352E7374
-	.4byte 0x78000000
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x00000000
+.balign 4
+	.asciz "badend0.stx"
+.balign 4
 	.4byte 0x00000000
-	.4byte 0x62616465
-	.4byte 0x6E64302E
-	.4byte 0x73747800
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x00000000
+.balign 4
+	.asciz "badend1.stx"
+.balign 4
 	.4byte 0x00000000
-	.4byte 0x62616465
-	.4byte 0x6E64312E
-	.4byte 0x73747800
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x00000000
+.balign 4
+	.asciz "opening.stx"
+.balign 4
 	.4byte 0x00000000
-	.4byte 0x6F70656E
-	.4byte 0x696E672E
-	.4byte 0x73747800
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x00000000
+.balign 4
+	.asciz "happyend1.stx"
+.balign 4
 	.4byte 0x00000000
-	.4byte 0x68617070
-	.4byte 0x79656E64
-	.4byte 0x312E7374
-	.4byte 0x78000000
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x00000000
+.balign 4
+	.asciz "compend1.stx"
+.balign 4
 	.4byte 0x00000000
-	.4byte 0x636F6D70
-	.4byte 0x656E6431
-	.4byte 0x2E737478
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x00000000
+.balign 4
+	.asciz "compend0.stx"
+.balign 4
 	.4byte 0x00000000
 	.4byte 0x00000000
-	.4byte 0x636F6D70
-	.4byte 0x656E6430
-	.4byte 0x2E737478
 	.4byte 0x00000000
 	.4byte 0x00000000
+.balign 4
+	.asciz "badend2.stx"
+.balign 4
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x00000000
-	.4byte 0x62616465
-	.4byte 0x6E64322E
-	.4byte 0x73747800
 	.4byte 0x00000000
 	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x6F6E696F
-	.4byte 0x6E2E7374
-	.4byte 0x78000000
+.balign 4
+	.asciz "onion.stx"
+.balign 4
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x00000000
@@ -4378,187 +4375,191 @@ table4:
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x00000000
+.balign 4
 .global HEAD_pikiseq
 HEAD_pikiseq:
-	.4byte 0x42415243
-	.4byte 0x2D2D2D2D
-	.4byte 0x00000000
+	.asciz "BARC----"
+.balign 4
 	.4byte 0x00000016
-	.4byte 0x70696B69
-	.4byte 0x7365712E
-	.4byte 0x61726300
+.balign 4
+	.asciz "pikiseq.arc"
+.balign 4
 	.4byte 0x00000000
-	.4byte 0x70696B69
-	.4byte 0x73652E6A
-	.4byte 0x616D0000
+.balign 4
+	.asciz "pikise.jam"
+.balign 4
 	.4byte 0x0000FFFF
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x00002C40
-	.4byte 0x73797365
-	.4byte 0x76656E74
-	.4byte 0x2E6A616D
+.balign 4
+	.ascii "sysevent.jam"
 	.4byte 0x0000FFFF
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x00002C40
 	.4byte 0x00001520
-	.4byte 0x64756D6D
-	.4byte 0x79000000
+.balign 4
+	.asciz "dummy"
+.balign 4
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x00000000
-	.4byte 0x64756D6D
-	.4byte 0x79000000
+.balign 4
+	.asciz "dummy"
+.balign 4
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x00000000
-	.4byte 0x7475746F
-	.4byte 0x7269616C
-	.4byte 0x2E6A616D
+.balign 4
+	.ascii "tutorial.jam"
 	.4byte 0x0000FFFF
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x00004160
 	.4byte 0x00006380
-	.4byte 0x706C6179
-	.4byte 0x332E6A61
-	.4byte 0x6D000000
+.balign 4
+	.asciz "play3.jam"
+.balign 4
 	.4byte 0x0000FFFF
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x0000A4E0
 	.4byte 0x00004260
-	.4byte 0x645F656E
-	.4byte 0x64322E6A
-	.4byte 0x616D0000
+.balign 4
+	.asciz "d_end2.jam"
+.balign 4
 	.4byte 0x0000FFFF
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x0000E740
 	.4byte 0x00002820
-	.4byte 0x6A756E67
-	.4byte 0x6C652E6A
-	.4byte 0x616D0000
+.balign 4
+	.asciz "jungle.jam"
+.balign 4
 	.4byte 0x0000FFFF
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x00010F60
 	.4byte 0x00003680
-	.4byte 0x64756D6D
-	.4byte 0x79000000
+.balign 4
+	.asciz "dummy"
+.balign 4
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x00000000
-	.4byte 0x79616B75
-	.4byte 0x2E6A616D
-	.4byte 0x00000000
+.balign 4
+	.asciz "yaku.jam"
+.balign 4
 	.4byte 0x0000FFFF
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x000145E0
 	.4byte 0x00003D00
-	.4byte 0x63617665
-	.4byte 0x2E6A616D
-	.4byte 0x00000000
+.balign 4
+	.asciz "cave.jam"
+.balign 4
 	.4byte 0x0000FFFF
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x000182E0
 	.4byte 0x000056A0
-	.4byte 0x626F7373
-	.4byte 0x322E6A61
-	.4byte 0x6D000000
+.balign 4
+	.asciz "boss2.jam"
+.balign 4
 	.4byte 0x0000FFFF
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x0001D980
 	.4byte 0x00002300
-	.4byte 0x6D61702E
-	.4byte 0x6A616D00
+.balign 4
+	.asciz "map.jam"
+.balign 4
 	.4byte 0x00000000
 	.4byte 0x0000FFFF
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x0001FC80
 	.4byte 0x00003020
-	.4byte 0x64656D6F
-	.4byte 0x62676D2E
-	.4byte 0x6A616D00
+.balign 4
+	.asciz "demobgm.jam"
+.balign 4
 	.4byte 0x0000FFFF
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x00022CA0
 	.4byte 0x00007400
-	.4byte 0x64756D6D
-	.4byte 0x79000000
+.balign 4
+	.asciz "dummy"
+.balign 4
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x00000000
-	.4byte 0x64756D6D
-	.4byte 0x79000000
+.balign 4
+	.asciz "dummy"
+.balign 4
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x00000000
-	.4byte 0x626F7373
-	.4byte 0x332E6A61
-	.4byte 0x6D000000
+.balign 4
+	.asciz "boss3.jam"
+.balign 4
 	.4byte 0x0000FFFF
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x0002A0A0
 	.4byte 0x000025A0
-	.4byte 0x666C6F77
-	.4byte 0x2E6A616D
-	.4byte 0x00000000
+.balign 4
+	.asciz "flow.jam"
+.balign 4
 	.4byte 0x0000FFFF
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x0002C640
 	.4byte 0x00004660
-	.4byte 0x73656C65
-	.4byte 0x63742E6A
-	.4byte 0x616D0000
+.balign 4
+	.asciz "select.jam"
+.balign 4
 	.4byte 0x0000FFFF
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x00030CA0
 	.4byte 0x00000460
-	.4byte 0x63686172
-	.4byte 0x2E6A616D
-	.4byte 0x00000000
+.balign 4
+	.asciz "char.jam"
+.balign 4
 	.4byte 0x0000FFFF
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x00031100
 	.4byte 0x000015C0
-	.4byte 0x63726573
-	.4byte 0x756C742E
-	.4byte 0x6A616D00
+.balign 4
+	.asciz "cresult.jam"
+.balign 4
 	.4byte 0x0000FFFF
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x000326C0
 	.4byte 0x000021C0
-	.4byte 0x66726573
-	.4byte 0x756C742E
-	.4byte 0x6A616D00
+.balign 4
+	.asciz "fresult.jam"
+.balign 4
 	.4byte 0x0000FFFF
 	.4byte 0x00000000
 	.4byte 0x00000000
@@ -4739,22 +4740,21 @@ __vt__18RandomAccessStream:
 	.4byte 0
 	.4byte 0
 	.4byte 0
+.balign 4
 .global lbl_80227540
 lbl_80227540:
-	.4byte 0x67726170
-	.4byte 0x68696373
-	.4byte 0x2E637070
-	.4byte 0x00000000
-	.4byte 0x47726170
-	.4byte 0x68696373
-	.4byte 0x00000000
-	.4byte 0x50726F6A
-	.4byte 0x65637469
-	.4byte 0x6F6E0000
+	.asciz "graphics.cpp"
+.balign 4
+lbl_80227550:
+	.asciz "Graphics"
+.balign 4
+lbl_8022755C:
+	.asciz "Projection"
+.balign 4
 .global mappingTypes$1231
 mappingTypes$1231:
 	.4byte 0x803DCF14
-	.4byte 0x8022755C
+	.4byte lbl_8022755C
 	.4byte 0x803DCF1C
 .global sjis_convert_table
 sjis_convert_table:
@@ -33061,873 +33061,3 @@ __vt__8SluiceAI:
 	.4byte lbl_8007D198
 	.4byte lbl_8007D24C
 	.4byte lbl_8007D238
-	.4byte 0
-.global lbl_802BE4F8
-lbl_802BE4F8:
-	.4byte 0x6974656D
-	.4byte 0x4D67722E
-	.4byte 0x63707000
-	.4byte 0x6F626A65
-	.4byte 0x6374732F
-	.4byte 0x25732F25
-	.4byte 0x73000000
-.global lbl_802BE514
-lbl_802BE514:
-	.4byte 0x6F626A65
-	.4byte 0x6374732F
-	.4byte 0x726F7065
-	.4byte 0x2F626F75
-	.4byte 0x2E6D6F64
-	.4byte 0x00000000
-.global lbl_802BE52C
-lbl_802BE52C:
-	.4byte 0x6F626A65
-	.4byte 0x6374732F
-	.4byte 0x726F7065
-	.4byte 0x2F626F62
-	.4byte 0x6173652E
-	.4byte 0x6D6F6400
-.global lbl_802BE544
-lbl_802BE544:
-	.4byte lbl_800F3648
-	.4byte lbl_800F381C
-	.4byte lbl_800F381C
-	.4byte lbl_800F381C
-	.4byte lbl_800F381C
-	.4byte lbl_800F381C
-	.4byte lbl_800F3700
-	.4byte lbl_800F3734
-	.4byte lbl_800F3768
-	.4byte lbl_800F379C
-	.4byte lbl_800F381C
-	.4byte lbl_800F381C
-	.4byte lbl_800F381C
-	.4byte lbl_800F36B0
-	.4byte lbl_800F3684
-	.4byte lbl_800F381C
-	.4byte lbl_800F381C
-	.4byte lbl_800F37D0
-	.4byte lbl_800F37F8
-	.4byte lbl_800F36D8
-	.4byte lbl_800F381C
-	.4byte lbl_800F3628
-.global lbl_802BE59C
-lbl_802BE59C:
-	.4byte 0x436F7265
-	.4byte 0x4E6F6465
-	.4byte 0x00000000
-.global lbl_802BE5A8
-lbl_802BE5A8:
-	.4byte 0x75736167
-	.4byte 0x654E6F64
-	.4byte 0x65000000
-	.4byte 0x6F626A65
-	.4byte 0x6374732F
-	.4byte 0x75666F2F
-	.4byte 0x75666F30
-	.4byte 0x3730352E
-	.4byte 0x6D6F6400
-	.4byte 0x6F626A65
-	.4byte 0x6374732F
-	.4byte 0x77656564
-	.4byte 0x732F7374
-	.4byte 0x6F6E6531
-	.4byte 0x2E6D6F64
-	.4byte 0x00000000
-	.4byte 0x6F626A65
-	.4byte 0x6374732F
-	.4byte 0x77656564
-	.4byte 0x732F7374
-	.4byte 0x6F6E6532
-	.4byte 0x2E6D6F64
-	.4byte 0x00000000
-	.4byte 0x6F626A65
-	.4byte 0x6374732F
-	.4byte 0x77656564
-	.4byte 0x732F7374
-	.4byte 0x6F6E6533
-	.4byte 0x2E6D6F64
-	.4byte 0x00000000
-	.4byte 0x6F626A65
-	.4byte 0x6374732F
-	.4byte 0x77656564
-	.4byte 0x732F7765
-	.4byte 0x6564312E
-	.4byte 0x6D6F6400
-	.4byte 0x6F626A65
-	.4byte 0x6374732F
-	.4byte 0x70696B69
-	.4byte 0x68656164
-	.4byte 0x2F70696B
-	.4byte 0x69686561
-	.4byte 0x642E6D6F
-	.4byte 0x64000000
-	.4byte 0x70696B69
-	.4byte 0x68656164
-	.4byte 0x00000000
-	.4byte 0x616E696D
-	.4byte 0x732E6269
-	.4byte 0x6E000000
-	.4byte 0x6F626A65
-	.4byte 0x6374732F
-	.4byte 0x626F6D62
-	.4byte 0x2F626F6D
-	.4byte 0x622E6D6F
-	.4byte 0x64000000
-	.4byte 0x6F626A65
-	.4byte 0x6374732F
-	.4byte 0x77617465
-	.4byte 0x722F7761
-	.4byte 0x7465722E
-	.4byte 0x6D6F6400
-	.4byte 0x6F626A65
-	.4byte 0x6374732F
-	.4byte 0x666C5F77
-	.4byte 0x61746572
-	.4byte 0x2F666C5F
-	.4byte 0x77617465
-	.4byte 0x722E6D6F
-	.4byte 0x64000000
-	.4byte 0x666C5F77
-	.4byte 0x61746572
-	.4byte 0x00000000
-	.4byte 0x70696B69
-	.4byte 0x732F6861
-	.4byte 0x70706173
-	.4byte 0x2F6C6561
-	.4byte 0x662E6D6F
-	.4byte 0x64000000
-	.4byte 0x736C7569
-	.4byte 0x63652073
-	.4byte 0x68617065
-	.4byte 0x00000000
-	.4byte 0x6F626A65
-	.4byte 0x6374732F
-	.4byte 0x67617465
-	.4byte 0x2F67745F
-	.4byte 0x736F6674
-	.4byte 0x2E6D6F64
-	.4byte 0x00000000
-	.4byte 0x67617465
-	.4byte 0x2E62696E
-	.4byte 0x00000000
-	.4byte 0x6F626A65
-	.4byte 0x6374732F
-	.4byte 0x67617465
-	.4byte 0x2F67745F
-	.4byte 0x68617264
-	.4byte 0x2E6D6F64
-	.4byte 0x00000000
-	.4byte 0x75666F20
-	.4byte 0x73686170
-	.4byte 0x65000000
-	.4byte 0x676F616C
-	.4byte 0x20736861
-	.4byte 0x70650000
-	.4byte 0x6F626A65
-	.4byte 0x6374732F
-	.4byte 0x676F616C
-	.4byte 0x2F676F61
-	.4byte 0x6C2E6D6F
-	.4byte 0x64000000
-	.4byte 0x72656769
-	.4byte 0x73746572
-	.4byte 0x00000000
-.global lbl_802BE774
-lbl_802BE774:
-	.4byte lbl_800F7024
-	.4byte lbl_800F703C
-	.4byte lbl_800F7048
-	.4byte lbl_800F7048
-	.4byte lbl_800F7048
-	.4byte lbl_800F7048
-	.4byte lbl_800F7048
-	.4byte lbl_800F703C
-	.4byte lbl_800F703C
-	.4byte lbl_800F703C
-	.4byte lbl_800F703C
-	.4byte lbl_800F7048
-	.4byte lbl_800F7048
-	.4byte lbl_800F7048
-	.4byte lbl_800F703C
-	.4byte lbl_800F703C
-	.4byte lbl_800F7048
-	.4byte lbl_800F7048
-	.4byte lbl_800F703C
-	.4byte lbl_800F703C
-	.4byte lbl_800F703C
-	.4byte lbl_800F7048
-	.4byte lbl_800F703C
-	.4byte 0x50696B69
-	.4byte 0x48656164
-	.4byte 0x4D677200
-	.4byte 0x803E1D50
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x803E1D50
-	.4byte 0x00000000
-	.4byte 0x803E1D58
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x54726176
-	.4byte 0x65727361
-	.4byte 0x626C6500
-	.4byte 0x4F626A65
-	.4byte 0x63744D67
-	.4byte 0x72000000
-	.4byte 0x803E1D50
-	.4byte 0x00000008
-	.4byte 0x803E1D58
-	.4byte 0x00000008
-	.4byte 0x803E1D68
-	.4byte 0x00000008
-	.4byte 0x803E1D70
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x4D6F6E6F
-	.4byte 0x4F626A65
-	.4byte 0x63744D67
-	.4byte 0x72000000
-	.4byte 0x803E1D50
-	.4byte 0x00000008
-	.4byte 0x803E1D58
-	.4byte 0x00000008
-	.4byte 0x803E1D68
-	.4byte 0x00000008
-	.4byte 0x803E1D70
-	.4byte 0x00000000
-	.4byte 0x803E1D78
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x803E1D50
-	.4byte 0x00000008
-	.4byte 0x803E1D58
-	.4byte 0x00000008
-	.4byte 0x803E1D68
-	.4byte 0x00000008
-	.4byte 0x803E1D70
-	.4byte 0x00000000
-	.4byte 0x803E1D78
-	.4byte 0x00000000
-	.4byte 0x803E1D80
-	.4byte 0x00000000
-	.4byte 0x00000000
-.global __vt__11PikiHeadMgr
-__vt__11PikiHeadMgr:
-	.4byte __RTTI__11PikiHeadMgr
-	.4byte 0
-	.4byte getCreature__13MonoObjectMgrFi
-	.4byte getFirst__13MonoObjectMgrFv
-	.4byte getNext__13MonoObjectMgrFi
-	.4byte isDone__13MonoObjectMgrFi
-	.4byte __RTTI__11PikiHeadMgr
-	.4byte 0xFFFFFFF8
-	.4byte getAgeNodeType__5ANodeFv
-	.4byte read__8CoreNodeFR18RandomAccessStream
-	.4byte lbl_80099540
-	.4byte draw__4NodeFR8Graphics
-	.4byte render__4NodeFR8Graphics
-	.4byte concat__4NodeFv
-	.4byte concat__4NodeFR3VQS
-	.4byte concat__4NodeFR3SRT
-	.4byte concat__4NodeFR8Matrix4f
-	.4byte getModelMatrix__4NodeFv
-	.4byte __dt__11PikiHeadMgrFv
-	.4byte update__13MonoObjectMgrFv
-	.4byte postUpdate__13MonoObjectMgrFif
-	.4byte stickUpdate__9ObjectMgrFv
-	.4byte refresh__13MonoObjectMgrFR8Graphics
-	.4byte drawShadow__13MonoObjectMgrFR8GraphicsP7Texture
-	.4byte getSize__13MonoObjectMgrFv
-	.4byte getMax__13MonoObjectMgrFv
-	.4byte findClosest__9ObjectMgrFR8Vector3ffP9Condition
-	.4byte findClosest__9ObjectMgrFR8Vector3fP9Condition
-	.4byte search__13MonoObjectMgrFP9ObjectMgr
-	.4byte killAll__9ObjectMgrFv
-	.4byte birth__11PikiHeadMgrFv
-	.4byte kill__13MonoObjectMgrFP8Creature
-	.4byte createObject__11PikiHeadMgrFv
-	.4byte 0x50696B69
-	.4byte 0x48656164
-	.4byte 0x4974656D
-	.4byte 0x50726F70
-	.4byte 0
-	.4byte 0x43726561
-	.4byte 0x74757265
-	.4byte 0x50726F70
-	.4byte 0
-	.4byte 0x803E1D90
-	.4byte 0
-	.4byte 0
-.global __vt__16PikiHeadItemProp
-__vt__16PikiHeadItemProp:
-	.4byte __RTTI__16PikiHeadItemProp
-	.4byte 0
-	.4byte read__12CreaturePropFR18RandomAccessStream
-	.4byte 0x506F6C79
-	.4byte 0x4F626A65
-	.4byte 0x63744D67
-	.4byte 0x72000000
-	.4byte 0x803E1D50
-	.4byte 0x8
-	.4byte 0x803E1D58
-	.4byte 0x8
-	.4byte 0x803E1D68
-	.4byte 0x8
-	.4byte 0x803E1D70
-	.4byte 0
-	.4byte 0x803E1D78
-	.4byte 0
-	.4byte 0
-	.4byte 0x803E1D50
-	.4byte 0x8
-	.4byte 0x803E1D58
-	.4byte 0x8
-	.4byte 0x803E1D68
-	.4byte 0x8
-	.4byte 0x803E1D70
-	.4byte 0
-	.4byte 0x803E1D78
-	.4byte 0
-	.4byte __RTTI__13PolyObjectMgr_1
-	.4byte 0
-	.4byte 0
-.global __vt__7ItemMgr
-__vt__7ItemMgr:
-	.4byte __RTTI__7ItemMgr
-	.4byte 0
-	.4byte getCreature__13PolyObjectMgrFi
-	.4byte getFirst__13PolyObjectMgrFv
-	.4byte getNext__13PolyObjectMgrFi
-	.4byte isDone__13PolyObjectMgrFi
-	.4byte __RTTI__7ItemMgr
-	.4byte 0xFFFFFFF8
-	.4byte getAgeNodeType__5ANodeFv
-	.4byte read__8CoreNodeFR18RandomAccessStream
-	.4byte lbl_800F7950
-	.4byte draw__4NodeFR8Graphics
-	.4byte render__4NodeFR8Graphics
-	.4byte concat__4NodeFv
-	.4byte concat__4NodeFR3VQS
-	.4byte concat__4NodeFR3SRT
-	.4byte concat__4NodeFR8Matrix4f
-	.4byte getModelMatrix__4NodeFv
-	.4byte __dt__7ItemMgrFv
-	.4byte update__7ItemMgrFv
-	.4byte postUpdate__13PolyObjectMgrFif
-	.4byte stickUpdate__9ObjectMgrFv
-	.4byte refresh__7ItemMgrFR8Graphics
-	.4byte drawShadow__13PolyObjectMgrFR8GraphicsP7Texture
-	.4byte getSize__13PolyObjectMgrFv
-	.4byte getMax__13PolyObjectMgrFv
-	.4byte findClosest__9ObjectMgrFR8Vector3ffP9Condition
-	.4byte findClosest__9ObjectMgrFR8Vector3fP9Condition
-	.4byte search__13PolyObjectMgrFP9ObjectMgr
-	.4byte killAll__9ObjectMgrFv
-	.4byte birth__7ItemMgrFi
-	.4byte kill__7ItemMgrFP8Creature
-	.4byte refresh2d__7ItemMgrFR8Graphics
-	.4byte 0x496E7465
-	.4byte 0x72616374
-	.4byte 0x42696B6B
-	.4byte 0x75726900
-	.4byte 0x496E7465
-	.4byte 0x72616374
-	.4byte 0x696F6E00
-	.4byte 0x803E1DB8
-	.4byte 0
-	.4byte 0
-.global __vt__15InteractBikkuri
-__vt__15InteractBikkuri:
-	.4byte __RTTI__15InteractBikkuri
-	.4byte 0
-	.4byte actCommon__11InteractionFP8Creature
-	.4byte actPiki__11InteractionFP4Piki
-	.4byte actTeki__11InteractionFP4Teki
-	.4byte actNavi__11InteractionFP4Navi
-	.4byte actBoss__11InteractionFP4Boss
-	.4byte actPellet__11InteractionFP6Pellet
-	.4byte actHinderRock__11InteractionFP10HinderRock
-	.4byte actBridge__11InteractionFP6Bridge
-	.4byte actItem__15InteractBikkuriFP12ItemCreature
-	.4byte 0x4974656D
-	.4byte 0x43726561
-	.4byte 0x74757265
-	.4byte 0
-	.4byte 0x50616E69
-	.4byte 0x416E696D
-	.4byte 0x4B65794C
-	.4byte 0x69737465
-	.4byte 0x6E657200
-	.4byte 0x4576656E
-	.4byte 0x7454616C
-	.4byte 0x6B657200
-	.4byte 0x52656643
-	.4byte 0x6F756E74
-	.4byte 0x61626C65
-	.4byte 0
-	.4byte 0x43726561
-	.4byte 0x74757265
-	.4byte 0
-	.4byte 0x803E1DD0
-	.4byte 0x8
-	.4byte 0x803E1DD8
-	.4byte 0
-	.4byte 0
-	.4byte 0x41494372
-	.4byte 0x65617475
-	.4byte 0x72650000
-	.4byte 0x803E1DC8
-	.4byte 0x2B8
-	.4byte 0x803E1DD0
-	.4byte 0x8
-	.4byte 0x803E1DD8
-	.4byte 0
-	.4byte 0x803E1DE0
-	.4byte 0
-	.4byte 0
-	.4byte 0x803E1DC8
-	.4byte 0x2B8
-	.4byte 0x803E1DD0
-	.4byte 0x8
-	.4byte 0x803E1DD8
-	.4byte 0
-	.4byte 0x803E1DE0
-	.4byte 0
-	.4byte 0x803E1DE8
-	.4byte 0
-	.4byte 0
-.global __vt__12ItemCreature
-__vt__12ItemCreature:
-	.4byte 0x803E1DF0
-	.4byte 0
-	.4byte addCntCallback__12RefCountableFv
-	.4byte subCntCallback__12RefCountableFv
-	.4byte insideSafeArea__8CreatureFR8Vector3f
-	.4byte platAttachable__8CreatureFv
-	.4byte alwaysUpdatePlatform__8CreatureFv
-	.4byte doDoAI__8CreatureFv
-	.4byte setRouteTracer__8CreatureFP11RouteTracer
-	.4byte init__8CreatureFv
-	.4byte init__12ItemCreatureFR8Vector3f
-	.4byte resetPosition__8CreatureFR8Vector3f
-	.4byte initParam__8CreatureFi
-	.4byte startAI__8CreatureFi
-	.4byte getiMass__8CreatureFv
-	.4byte getSize__8CreatureFv
-	.4byte getHeight__12ItemCreatureFv
-	.4byte getCylinderHeight__8CreatureFv
-	.4byte doStore__8CreatureFP11CreatureInf
-	.4byte doRestore__8CreatureFP11CreatureInf
-	.4byte doSave__8CreatureFR18RandomAccessStream
-	.4byte doLoad__8CreatureFR18RandomAccessStream
-	.4byte getCentre__8CreatureFv
-	.4byte getCentreSize__8CreatureFv
-	.4byte getBoundingSphereCentre__8CreatureFv
-	.4byte getBoundingSphereRadius__8CreatureFv
-	.4byte getShadowPos__8CreatureFv
-	.4byte setCentre__8CreatureFR8Vector3f
-	.4byte getShadowSize__8CreatureFv
-	.4byte isVisible__8CreatureFv
-	.4byte isOrganic__8CreatureFv
-	.4byte isTerrible__8CreatureFv
-	.4byte isBuried__8CreatureFv
-	.4byte isAtari__8CreatureFv
-	.4byte isAlive__8CreatureFv
-	.4byte isFixed__8CreatureFv
-	.4byte needShadow__8CreatureFv
-	.4byte needFlick__8CreatureFP8Creature
-	.4byte ignoreAtari__8CreatureFP8Creature
-	.4byte isFree__8CreatureFv
-	.4byte stimulate__12ItemCreatureFR11Interaction
-	.4byte sendMsg__8CreatureFP3Msg
-	.4byte collisionCallback__10AICreatureFR9CollEvent
-	.4byte bounceCallback__10AICreatureFv
-	.4byte jumpCallback__8CreatureFv
-	.4byte wallCallback__8CreatureFR5PlaneP13DynCollObject
-	.4byte offwallCallback__8CreatureFP13DynCollObject
-	.4byte stickCallback__8CreatureFP8Creature
-	.4byte offstickCallback__8CreatureFP8Creature
-	.4byte stickToCallback__8CreatureFP8Creature
-	.4byte dump__8CreatureFv
-	.4byte startWaterEffect__8CreatureFv
-	.4byte finishWaterEffect__8CreatureFv
-	.4byte isRopable__8CreatureFv
-	.4byte mayIstick__8CreatureFv
-	.4byte getFormationPri__8CreatureFv
-	.4byte update__12ItemCreatureFv
-	.4byte postUpdate__8CreatureFif
-	.4byte stickUpdate__8CreatureFv
-	.4byte refresh__12ItemCreatureFR8Graphics
-	.4byte refresh2d__8CreatureFR8Graphics
-	.4byte renderAtari__8CreatureFR8Graphics
-	.4byte drawShadow__8CreatureFR8Graphics
-	.4byte demoDraw__8CreatureFR8GraphicsP8Matrix4f
-	.4byte getCatchPos__8CreatureFP8Creature
-	.4byte doAI__12ItemCreatureFv
-	.4byte doAnimation__12ItemCreatureFv
-	.4byte doKill__12ItemCreatureFv
-	.4byte exitCourse__8CreatureFv
-	.4byte 0x803E1DF0
-	.4byte 0xFFFFFD48
-	.4byte lbl_8007DF54
-	.4byte getCurrState__10AICreatureFv
-	.4byte "setCurrState__10AICreatureFP20AState<10AICreature>"
-	.4byte playSound__10AICreatureFi
-	.4byte playEffect__10AICreatureFi
-	.4byte startMotion__12ItemCreatureFi
-	.4byte finishMotion__12ItemCreatureFv
-	.4byte finishMotion__12ItemCreatureFf
-	.4byte startMotion__12ItemCreatureFif
-	.4byte getCurrentMotionName__12ItemCreatureFv
-	.4byte getCurrentMotionCounter__12ItemCreatureFv
-	.4byte getMotionSpeed__12ItemCreatureFv
-	.4byte setMotionSpeed__12ItemCreatureFf
-	.4byte stopMotion__12ItemCreatureFv
-	.4byte animationKeyUpdated__10AICreatureFR16PaniAnimKeyEvent
-	.4byte finalSetup__12ItemCreatureFv
-	.4byte 0x446F6F72
-	.4byte 0x50726F70
-	.4byte 0
-	.4byte 0x803E1D90
-	.4byte 0
-	.4byte 0
-.global __vt__8DoorProp
-__vt__8DoorProp:
-	.4byte __RTTI__8DoorProp
-	.4byte 0
-	.4byte read__12CreaturePropFR18RandomAccessStream
-	.4byte 0x803E1D90
-	.4byte 0
-	.4byte 0
-.global __vt__7KeyProp
-__vt__7KeyProp:
-	.4byte __RTTI__7KeyProp
-	.4byte 0
-	.4byte read__12CreaturePropFR18RandomAccessStream
-	.4byte 0x53656564
-	.4byte 0x50726F70
-	.4byte 0
-	.4byte 0x803E1D90
-	.4byte 0
-	.4byte 0
-.global __vt__8SeedProp
-__vt__8SeedProp:
-	.4byte __RTTI__8SeedProp
-	.4byte 0
-	.4byte read__12CreaturePropFR18RandomAccessStream
-	.4byte 0x526F7065
-	.4byte 0x50726F70
-	.4byte 0
-	.4byte 0x803E1D90
-	.4byte 0
-	.4byte 0
-.global __vt__8RopeProp
-__vt__8RopeProp:
-	.4byte __RTTI__8RopeProp
-	.4byte 0
-	.4byte read__12CreaturePropFR18RandomAccessStream
-	.4byte 0x4D697A75
-	.4byte 0x4974656D
-	.4byte 0x50726F70
-	.4byte 0
-	.4byte 0x803E1D90
-	.4byte 0
-	.4byte 0
-.global __vt__12MizuItemProp
-__vt__12MizuItemProp:
-	.4byte __RTTI__12MizuItemProp
-	.4byte 0
-	.4byte read__12CreaturePropFR18RandomAccessStream
-	.4byte 0x426F6D62
-	.4byte 0x4974656D
-	.4byte 0x50726F70
-	.4byte 0
-	.4byte 0x803E1D90
-	.4byte 0
-	.4byte 0
-.global __vt__12BombItemProp
-__vt__12BombItemProp:
-	.4byte __RTTI__12BombItemProp
-	.4byte 0
-	.4byte read__12CreaturePropFR18RandomAccessStream
-	.4byte 0x4974656D
-	.4byte 0x4D67723A
-	.4byte 0x3A557365
-	.4byte 0x4E6F6465
-	.4byte 0
-	.4byte 0x803E1D50
-	.4byte 0
-	.4byte 0x803E1D58
-	.4byte 0
-	.4byte 0
-.global __vt__Q27ItemMgr7UseNode
-__vt__Q27ItemMgr7UseNode:
-	.4byte __RTTI__Q27ItemMgr7UseNode
-	.4byte 0
-	.4byte getAgeNodeType__5ANodeFv
-	.4byte read__8CoreNodeFR18RandomAccessStream
-	.4byte 0x4B757361
-	.4byte 0x4974656D
-	.4byte 0x50726F70
-	.4byte 0
-	.4byte 0x803E1D90
-	.4byte 0
-	.4byte 0
-.global __vt__12KusaItemProp
-__vt__12KusaItemProp:
-	.4byte __RTTI__12KusaItemProp
-	.4byte 0
-	.4byte read__12CreaturePropFR18RandomAccessStream
-	.4byte 0x4275696C
-	.4byte 0x64696E67
-	.4byte 0x4974656D
-	.4byte 0x50726F70
-	.4byte 0
-	.4byte 0x803E1D90
-	.4byte 0
-	.4byte 0
-.global __vt__16BuildingItemProp
-__vt__16BuildingItemProp:
-	.4byte __RTTI__16BuildingItemProp
-	.4byte 0
-	.4byte read__12CreaturePropFR18RandomAccessStream
-	.4byte 0x5061726D
-	.4byte 0x3C666C6F
-	.4byte 0x61743E00
-	.4byte 0x42617365
-	.4byte 0x5061726D
-	.4byte 0
-	.4byte 0x803E1E48
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0x55666F49
-	.4byte 0x74656D50
-	.4byte 0x726F7000
-	.4byte 0x803E1D90
-	.4byte 0
-	.4byte 0
-.global __vt__11UfoItemProp
-__vt__11UfoItemProp:
-	.4byte __RTTI__11UfoItemProp
-	.4byte 0
-	.4byte read__12CreaturePropFR18RandomAccessStream
-	.4byte 0x476F616C
-	.4byte 0x4974656D
-	.4byte 0x50726F70
-	.4byte 0
-	.4byte 0x803E1D90
-	.4byte 0
-	.4byte 0
-.global __vt__12GoalItemProp
-__vt__12GoalItemProp:
-	.4byte __RTTI__12GoalItemProp
-	.4byte 0
-	.4byte read__12CreaturePropFR18RandomAccessStream
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0x4D656C74
-	.4byte 0x696E6750
-	.4byte 0x6F744D67
-	.4byte 0x72000000
-	.4byte 0x43726561
-	.4byte 0x74757265
-	.4byte 0x4E6F6465
-	.4byte 0x4D677200
-	.4byte 0x803E1D50
-	.4byte 0x8
-	.4byte 0x803E1D58
-	.4byte 0x8
-	.4byte 0x803E1D68
-	.4byte 0x8
-	.4byte 0x803E1D70
-	.4byte 0
-	.4byte 0x803E1D78
-	.4byte 0
-	.4byte 0
-	.4byte 0x803E1D50
-	.4byte 0x8
-	.4byte 0x803E1D58
-	.4byte 0x8
-	.4byte 0x803E1D68
-	.4byte 0x8
-	.4byte 0x803E1D70
-	.4byte 0
-	.4byte 0x803E1D78
-	.4byte 0
-	.4byte __RTTI__15CreatureNodeMgr_1
-	.4byte 0
-	.4byte 0
-.global __vt__13MeltingPotMgr
-__vt__13MeltingPotMgr:
-	.4byte __RTTI__13MeltingPotMgr
-	.4byte 0
-	.4byte getCreature__15CreatureNodeMgrFi
-	.4byte getFirst__15CreatureNodeMgrFv
-	.4byte getNext__15CreatureNodeMgrFi
-	.4byte isDone__15CreatureNodeMgrFi
-	.4byte __RTTI__13MeltingPotMgr
-	.4byte 0xFFFFFFF8
-	.4byte getAgeNodeType__5ANodeFv
-	.4byte read__8CoreNodeFR18RandomAccessStream
-	.4byte lbl_8009F5DC
-	.4byte draw__4NodeFR8Graphics
-	.4byte render__4NodeFR8Graphics
-	.4byte concat__4NodeFv
-	.4byte concat__4NodeFR3VQS
-	.4byte concat__4NodeFR3SRT
-	.4byte concat__4NodeFR8Matrix4f
-	.4byte getModelMatrix__4NodeFv
-	.4byte __dt__13MeltingPotMgrFv
-	.4byte update__9ObjectMgrFv
-	.4byte postUpdate__9ObjectMgrFif
-	.4byte stickUpdate__9ObjectMgrFv
-	.4byte refresh__9ObjectMgrFR8Graphics
-	.4byte drawShadow__9ObjectMgrFR8GraphicsP7Texture
-	.4byte getSize__15CreatureNodeMgrFv
-	.4byte getMax__15CreatureNodeMgrFv
-	.4byte findClosest__9ObjectMgrFR8Vector3ffP9Condition
-	.4byte findClosest__9ObjectMgrFR8Vector3fP9Condition
-	.4byte search__9ObjectMgrFP9ObjectMgr
-	.4byte killAll__9ObjectMgrFv
-	.4byte 0x43726561
-	.4byte 0x74757265
-	.4byte 0x4E6F6465
-	.4byte 0
-	.4byte 0x803E1D50
-	.4byte 0
-	.4byte 0x803E1D58
-	.4byte 0
-	.4byte 0
-.global __vt__12CreatureNode
-__vt__12CreatureNode:
-	.4byte __RTTI__12CreatureNode
-	.4byte 0
-	.4byte getAgeNodeType__5ANodeFv
-	.4byte read__8CoreNodeFR18RandomAccessStream
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0x4275696C
-	.4byte 0x64696E67
-	.4byte 0x4974656D
-	.4byte 0
-	.4byte 0x803E1DC8
-	.4byte 0x2B8
-	.4byte 0x803E1DD0
-	.4byte 0x8
-	.4byte 0x803E1DD8
-	.4byte 0
-	.4byte 0x803E1DE0
-	.4byte 0
-	.4byte 0x803E1DE8
-	.4byte 0
-	.4byte 0x803E1DF0
-	.4byte 0
-	.4byte 0
-.global __vt__12BuildingItem
-__vt__12BuildingItem:
-	.4byte __RTTI__12BuildingItem
-	.4byte 0
-	.4byte addCntCallback__12RefCountableFv
-	.4byte subCntCallback__12RefCountableFv
-	.4byte insideSafeArea__12BuildingItemFR8Vector3f
-	.4byte platAttachable__8CreatureFv
-	.4byte alwaysUpdatePlatform__8CreatureFv
-	.4byte doDoAI__8CreatureFv
-	.4byte setRouteTracer__8CreatureFP11RouteTracer
-	.4byte init__8CreatureFv
-	.4byte init__12ItemCreatureFR8Vector3f
-	.4byte resetPosition__8CreatureFR8Vector3f
-	.4byte initParam__8CreatureFi
-	.4byte startAI__12BuildingItemFi
-	.4byte getiMass__12BuildingItemFv
-	.4byte getSize__8CreatureFv
-	.4byte getHeight__12ItemCreatureFv
-	.4byte getCylinderHeight__8CreatureFv
-	.4byte doStore__12BuildingItemFP11CreatureInf
-	.4byte doRestore__12BuildingItemFP11CreatureInf
-	.4byte doSave__12BuildingItemFR18RandomAccessStream
-	.4byte doLoad__12BuildingItemFR18RandomAccessStream
-	.4byte getCentre__8CreatureFv
-	.4byte getCentreSize__8CreatureFv
-	.4byte getBoundingSphereCentre__8CreatureFv
-	.4byte getBoundingSphereRadius__12BuildingItemFv
-	.4byte getShadowPos__8CreatureFv
-	.4byte setCentre__8CreatureFR8Vector3f
-	.4byte getShadowSize__8CreatureFv
-	.4byte isVisible__8CreatureFv
-	.4byte isOrganic__8CreatureFv
-	.4byte isTerrible__8CreatureFv
-	.4byte isBuried__8CreatureFv
-	.4byte isAtari__8CreatureFv
-	.4byte isAlive__12BuildingItemFv
-	.4byte isFixed__8CreatureFv
-	.4byte needShadow__12BuildingItemFv
-	.4byte needFlick__8CreatureFP8Creature
-	.4byte ignoreAtari__8CreatureFP8Creature
-	.4byte isFree__8CreatureFv
-	.4byte stimulate__12ItemCreatureFR11Interaction
-	.4byte sendMsg__8CreatureFP3Msg
-	.4byte collisionCallback__10AICreatureFR9CollEvent
-	.4byte bounceCallback__10AICreatureFv
-	.4byte jumpCallback__8CreatureFv
-	.4byte wallCallback__8CreatureFR5PlaneP13DynCollObject
-	.4byte offwallCallback__8CreatureFP13DynCollObject
-	.4byte stickCallback__8CreatureFP8Creature
-	.4byte offstickCallback__8CreatureFP8Creature
-	.4byte stickToCallback__8CreatureFP8Creature
-	.4byte dump__8CreatureFv
-	.4byte startWaterEffect__8CreatureFv
-	.4byte finishWaterEffect__8CreatureFv
-	.4byte isRopable__8CreatureFv
-	.4byte mayIstick__8CreatureFv
-	.4byte getFormationPri__8CreatureFv
-	.4byte update__12BuildingItemFv
-	.4byte postUpdate__8CreatureFif
-	.4byte stickUpdate__8CreatureFv
-	.4byte refresh__12BuildingItemFR8Graphics
-	.4byte refresh2d__12BuildingItemFR8Graphics
-	.4byte renderAtari__8CreatureFR8Graphics
-	.4byte drawShadow__8CreatureFR8Graphics
-	.4byte demoDraw__8CreatureFR8GraphicsP8Matrix4f
-	.4byte getCatchPos__8CreatureFP8Creature
-	.4byte doAI__12ItemCreatureFv
-	.4byte doAnimation__12ItemCreatureFv
-	.4byte doKill__12BuildingItemFv
-	.4byte exitCourse__8CreatureFv
-	.4byte __RTTI__12BuildingItem
-	.4byte 0xFFFFFD48
-	.4byte lbl_8007DF54
-	.4byte getCurrState__10AICreatureFv
-	.4byte "setCurrState__10AICreatureFP20AState<10AICreature>"
-	.4byte playSound__10AICreatureFi
-	.4byte playEffect__12BuildingItemFi
-	.4byte startMotion__12ItemCreatureFi
-	.4byte finishMotion__12ItemCreatureFv
-	.4byte finishMotion__12ItemCreatureFf
-	.4byte startMotion__12ItemCreatureFif
-	.4byte getCurrentMotionName__12ItemCreatureFv
-	.4byte getCurrentMotionCounter__12ItemCreatureFv
-	.4byte getMotionSpeed__12ItemCreatureFv
-	.4byte setMotionSpeed__12ItemCreatureFf
-	.4byte stopMotion__12ItemCreatureFv
-	.4byte animationKeyUpdated__10AICreatureFR16PaniAnimKeyEvent
-	.4byte finalSetup__12ItemCreatureFv
-	.4byte isCompleted__12BuildingItemFv

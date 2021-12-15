@@ -336,7 +336,7 @@ lbl_803E99E0:
 	.4byte 0x00000000
 .global lbl_803E99E8
 lbl_803E99E8:
-	.4byte 0x00000000
+	.float 0.0
 .global lbl_803E99EC
 lbl_803E99EC:
 	.float 30.0
@@ -420,7 +420,7 @@ lbl_803E9A5C:
 	.float 50.0
 .global lbl_803E9A60
 lbl_803E9A60:
-	.4byte 0x40000000
+	.float 2.0
 .global lbl_803E9A64
 lbl_803E9A64:
 	.4byte 0x46480000
@@ -432,7 +432,7 @@ lbl_803E9A6C:
 	.float 1200.0
 .global lbl_803E9A70
 lbl_803E9A70:
-	.4byte 0x00000000
+	.float 0.0
 .global lbl_803E9A74
 lbl_803E9A74:
 	.float 50.0
@@ -460,7 +460,7 @@ lbl_803E9A94:
 	.float 3.0
 .global lbl_803E9A98
 lbl_803E9A98:
-	.4byte 0x40000000
+	.float 2.0
 .global lbl_803E9A9C
 lbl_803E9A9C:
 	.float 100.0
@@ -594,7 +594,7 @@ lbl_803E9B70:
 	.4byte 0x00000000
 .global lbl_803E9B78
 lbl_803E9B78:
-	.4byte 0x00000000
+	.float 0.0
 .global lbl_803E9B7C
 lbl_803E9B7C:
 	.float 50.0
@@ -786,7 +786,7 @@ lbl_803E9C90:
 	.4byte 0x00000000
 .global lbl_803E9C98
 lbl_803E9C98:
-	.4byte 0x00000000
+	.float 0.0
 .global lbl_803E9C9C
 lbl_803E9C9C:
 	.float 1.0
@@ -888,7 +888,7 @@ lbl_803E9D34:
 	.float 10.0
 .global lbl_803E9D38
 lbl_803E9D38:
-	.4byte 0x00000000
+	.float 0.0
 .global lbl_803E9D3C
 lbl_803E9D3C:
 	.float 0.2
@@ -1024,53 +1024,3 @@ lbl_803E9E00:
 .global lbl_803E9E04
 lbl_803E9E04:
 	.4byte 0x41E80000
-.global lbl_803E9E08
-lbl_803E9E08:
-	.float 10000.0
-.global lbl_803E9E0C
-lbl_803E9E0C:
-	.4byte 0x00000000
-.global lbl_803E9E10
-lbl_803E9E10:
-	.float 30.0
-.global lbl_803E9E14
-lbl_803E9E14:
-	.float 0.5
-.global lbl_803E9E18
-lbl_803E9E18:
-	.float 1.0
-.global lbl_803E9E1C
-lbl_803E9E1C:
-	.float 0.25
-.global lbl_803E9E20
-lbl_803E9E20:
-	.float 0.1
-.global lbl_803E9E24
-lbl_803E9E24:
-	.4byte 0x3C23D70A
-.global lbl_803E9E28
-lbl_803E9E28:
-	.4byte 0x40000000
-.global lbl_803E9E2C
-lbl_803E9E2C:
-	.float 0.3
-.global lbl_803E9E30
-lbl_803E9E30:
-	.float 0.8
-	.4byte 0x00000000
-.global "@2700"
-"@2700":
-	.4byte 0x43300000
-	.4byte 0x80000000
-.global lbl_803E9E40
-lbl_803E9E40:
-	.float 100.0
-.global lbl_803E9E44
-lbl_803E9E44:
-	.float 110.0
-.global lbl_803E9E48
-lbl_803E9E48:
-	.float 5.0
-.global lbl_803E9E4C
-lbl_803E9E4C:
-	.float 3.0

@@ -1013,10 +1013,4 @@ generatorCache:
 	.skip 0x8
 .global demoHideFlag__8GoalItem
 demoHideFlag__8GoalItem:
-	.skip 0x8
-.global buryMode__11PikiHeadMgr
-buryMode__11PikiHeadMgr:
-	.skip 0x4
-.global itemMgr
-itemMgr:
-	.skip 0x4
+	.skip 0x1
