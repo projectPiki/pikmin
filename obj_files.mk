@@ -258,7 +258,7 @@ TEXT_O_FILES :=\
 	$(BUILD_DIR)/asm/plugPikiYamashita/drawSaveFailure.o\
 	$(BUILD_DIR)/asm/plugPikiYamashita/drawFinalResult.o\
 	$(BUILD_DIR)/asm/plugPikiYamashita/drawOptionSave.o\
-	$(BUILD_DIR)/asm/base/PPCArch.o\
+	$(BUILD_DIR)/src/base/PPCArch.o\
 	$(BUILD_DIR)/asm/os/OS.o\
 	$(BUILD_DIR)/asm/os/OSAlarm.o\
 	$(BUILD_DIR)/asm/os/OSAlloc.o\
