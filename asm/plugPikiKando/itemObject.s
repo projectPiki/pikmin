@@ -1,317 +1,373 @@
 .include "macros.inc"
-
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-/* 8013658C 001334EC  41 82 00 38 */	beq lbl_801365C4
-/* 80136590 001334F0  80 B6 00 84 */	lwz r5, 0x84(r22)
-/* 80136594 001334F4  3C 80 80 2C */	lis r4, __vt__9TaiAction@ha
-/* 80136598 001334F8  3C 60 80 2D */	lis r3, __vt__21TaiNapkidFlyingAction@ha
-/* 8013659C 001334FC  80 A5 00 04 */	lwz r5, 4(r5)
-/* 801365A0 00133500  38 84 66 20 */	addi r4, r4, __vt__9TaiAction@l
-/* 801365A4 00133504  38 00 FF FF */	li r0, -1
-/* 801365A8 00133508  80 A5 00 00 */	lwz r5, 0(r5)
-/* 801365AC 0013350C  38 63 A5 94 */	addi r3, r3, __vt__21TaiNapkidFlyingAction@l
-/* 801365B0 00133510  C0 05 00 74 */	lfs f0, 0x74(r5)
-/* 801365B4 00133514  90 97 00 04 */	stw r4, 4(r23)
-/* 801365B8 00133518  90 17 00 00 */	stw r0, 0(r23)
-/* 801365BC 0013351C  90 77 00 04 */	stw r3, 4(r23)
-/* 801365C0 00133520  D0 17 00 08 */	stfs f0, 8(r23)
-lbl_801365C4:
-/* 801365C4 00133524  38 60 00 0C */	li r3, 0xc
-/* 801365C8 00133528  4B F1 0A 3D */	bl alloc__6SystemFUl
-/* 801365CC 0013352C  39 E3 00 00 */	addi r15, r3, 0
-/* 801365D0 00133530  7D E0 7B 79 */	or. r0, r15, r15
-/* 801365D4 00133534  41 82 00 38 */	beq lbl_8013660C
-/* 801365D8 00133538  80 B6 00 84 */	lwz r5, 0x84(r22)
-/* 801365DC 0013353C  3C 80 80 2C */	lis r4, __vt__9TaiAction@ha
-/* 801365E0 00133540  3C 60 80 2D */	lis r3, __vt__21TaiNapkidFlyingAction@ha
-/* 801365E4 00133544  80 A5 00 04 */	lwz r5, 4(r5)
-/* 801365E8 00133548  38 84 66 20 */	addi r4, r4, __vt__9TaiAction@l
-/* 801365EC 0013354C  38 00 FF FF */	li r0, -1
-/* 801365F0 00133550  80 A5 00 00 */	lwz r5, 0(r5)
-/* 801365F4 00133554  38 63 A5 94 */	addi r3, r3, __vt__21TaiNapkidFlyingAction@l
-/* 801365F8 00133558  C0 05 00 CC */	lfs f0, 0xcc(r5)
-/* 801365FC 0013355C  90 8F 00 04 */	stw r4, 4(r15)
-/* 80136600 00133560  90 0F 00 00 */	stw r0, 0(r15)
-/* 80136604 00133564  90 6F 00 04 */	stw r3, 4(r15)
-/* 80136608 00133568  D0 0F 00 08 */	stfs f0, 8(r15)
-lbl_8013660C:
-/* 8013660C 0013356C  38 60 00 0C */	li r3, 0xc
-/* 80136610 00133570  4B F1 09 F5 */	bl alloc__6SystemFUl
-/* 80136614 00133574  3B A3 00 00 */	addi r29, r3, 0
-/* 80136618 00133578  7F A0 EB 79 */	or. r0, r29, r29
-/* 8013661C 0013357C  41 82 00 38 */	beq lbl_80136654
-/* 80136620 00133580  3C 60 80 2C */	lis r3, __vt__9TaiAction@ha
-/* 80136624 00133584  38 03 66 20 */	addi r0, r3, __vt__9TaiAction@l
-/* 80136628 00133588  90 1D 00 04 */	stw r0, 4(r29)
-/* 8013662C 0013358C  38 00 FF FF */	li r0, -1
-/* 80136630 00133590  3C 60 80 2D */	lis r3, __vt__15TaiMotionAction@ha
-/* 80136634 00133594  90 1D 00 00 */	stw r0, 0(r29)
-/* 80136638 00133598  38 03 95 94 */	addi r0, r3, __vt__15TaiMotionAction@l
-/* 8013663C 0013359C  3C 60 80 2D */	lis r3, __vt__14TaiDyingAction@ha
-/* 80136640 001335A0  90 1D 00 04 */	stw r0, 4(r29)
-/* 80136644 001335A4  38 00 00 00 */	li r0, 0
-/* 80136648 001335A8  38 63 BB 84 */	addi r3, r3, __vt__14TaiDyingAction@l
-/* 8013664C 001335AC  90 1D 00 08 */	stw r0, 8(r29)
-/* 80136650 001335B0  90 7D 00 04 */	stw r3, 4(r29)
-lbl_80136654:
-/* 80136654 001335B4  38 60 00 08 */	li r3, 8
-/* 80136658 001335B8  4B F1 09 AD */	bl alloc__6SystemFUl
-/* 8013665C 001335BC  3B C3 00 00 */	addi r30, r3, 0
-/* 80136660 001335C0  7F C0 F3 79 */	or. r0, r30, r30
-/* 80136664 001335C4  41 82 00 24 */	beq lbl_80136688
-/* 80136668 001335C8  3C 60 80 2C */	lis r3, __vt__9TaiAction@ha
-/* 8013666C 001335CC  38 03 66 20 */	addi r0, r3, __vt__9TaiAction@l
-/* 80136670 001335D0  90 1E 00 04 */	stw r0, 4(r30)
-/* 80136674 001335D4  38 00 FF FF */	li r0, -1
-/* 80136678 001335D8  3C 60 80 2D */	lis r3, __vt__19TaiStartDyingAction@ha
-/* 8013667C 001335DC  90 1E 00 00 */	stw r0, 0(r30)
-/* 80136680 001335E0  38 03 BC 40 */	addi r0, r3, __vt__19TaiStartDyingAction@l
-/* 80136684 001335E4  90 1E 00 04 */	stw r0, 4(r30)
-lbl_80136688:
-/* 80136688 001335E8  38 60 00 0C */	li r3, 0xc
-/* 8013668C 001335EC  4B F1 09 79 */	bl alloc__6SystemFUl
-/* 80136690 001335F0  3B 83 00 00 */	addi r28, r3, 0
-/* 80136694 001335F4  7F 83 E3 79 */	or. r3, r28, r28
-/* 80136698 001335F8  41 82 00 0C */	beq lbl_801366A4
-/* 8013669C 001335FC  38 80 00 03 */	li r4, 3
-/* 801366A0 00133600  4B FF 09 F9 */	bl __ct__8TaiStateFi
-lbl_801366A4:
-/* 801366A4 00133604  38 00 00 00 */	li r0, 0
-/* 801366A8 00133608  80 7C 00 08 */	lwz r3, 8(r28)
-/* 801366AC 0013360C  54 00 10 3A */	slwi r0, r0, 2
-/* 801366B0 00133610  7D C3 01 2E */	stwx r14, r3, r0
-/* 801366B4 00133614  38 80 00 01 */	li r4, 1
-/* 801366B8 00133618  38 00 00 02 */	li r0, 2
-/* 801366BC 0013361C  80 7C 00 08 */	lwz r3, 8(r28)
-/* 801366C0 00133620  54 84 10 3A */	slwi r4, r4, 2
-/* 801366C4 00133624  54 00 10 3A */	slwi r0, r0, 2
-/* 801366C8 00133628  7F C3 21 2E */	stwx r30, r3, r4
-/* 801366CC 0013362C  38 60 00 10 */	li r3, 0x10
-/* 801366D0 00133630  80 9C 00 08 */	lwz r4, 8(r28)
-/* 801366D4 00133634  7F A4 01 2E */	stwx r29, r4, r0
-/* 801366D8 00133638  80 99 00 08 */	lwz r4, 8(r25)
-/* 801366DC 0013363C  93 84 00 00 */	stw r28, 0(r4)
-/* 801366E0 00133640  4B F1 09 25 */	bl alloc__6SystemFUl
-/* 801366E4 00133644  3B A3 00 00 */	addi r29, r3, 0
-/* 801366E8 00133648  7F A0 EB 79 */	or. r0, r29, r29
-/* 801366EC 0013364C  41 82 00 58 */	beq lbl_80136744
-/* 801366F0 00133650  80 76 00 84 */	lwz r3, 0x84(r22)
-/* 801366F4 00133654  3C E0 80 2C */	lis r7, __vt__9TaiAction@ha
-/* 801366F8 00133658  3C C0 80 2D */	lis r6, __vt__15TaiMotionAction@ha
-/* 801366FC 0013365C  80 63 00 04 */	lwz r3, 4(r3)
-/* 80136700 00133660  3C A0 80 2D */	lis r5, __vt__25TaiContinuousMotionAction@ha
-/* 80136704 00133664  3C 80 80 2D */	lis r4, __vt__29TaiNapkidWanderingRouteAction@ha
-/* 80136708 00133668  80 63 00 00 */	lwz r3, 0(r3)
-/* 8013670C 0013366C  38 E7 66 20 */	addi r7, r7, __vt__9TaiAction@l
-/* 80136710 00133670  38 00 FF FF */	li r0, -1
-/* 80136714 00133674  C0 03 00 0C */	lfs f0, 0xc(r3)
-/* 80136718 00133678  38 C6 95 94 */	addi r6, r6, __vt__15TaiMotionAction@l
-/* 8013671C 0013367C  38 60 00 06 */	li r3, 6
-/* 80136720 00133680  90 FD 00 04 */	stw r7, 4(r29)
-/* 80136724 00133684  38 A5 95 74 */	addi r5, r5, __vt__25TaiContinuousMotionAction@l
-/* 80136728 00133688  38 84 A7 88 */	addi r4, r4, __vt__29TaiNapkidWanderingRouteAction@l
-/* 8013672C 0013368C  90 1D 00 00 */	stw r0, 0(r29)
-/* 80136730 00133690  90 DD 00 04 */	stw r6, 4(r29)
-/* 80136734 00133694  90 7D 00 08 */	stw r3, 8(r29)
-/* 80136738 00133698  90 BD 00 04 */	stw r5, 4(r29)
-/* 8013673C 0013369C  90 9D 00 04 */	stw r4, 4(r29)
-/* 80136740 001336A0  D0 1D 00 0C */	stfs f0, 0xc(r29)
-lbl_80136744:
-/* 80136744 001336A4  38 60 00 18 */	li r3, 0x18
-/* 80136748 001336A8  4B F1 08 BD */	bl alloc__6SystemFUl
-/* 8013674C 001336AC  3B C3 00 00 */	addi r30, r3, 0
-/* 80136750 001336B0  7F C0 F3 79 */	or. r0, r30, r30
-/* 80136754 001336B4  41 82 00 5C */	beq lbl_801367B0
-/* 80136758 001336B8  80 96 00 84 */	lwz r4, 0x84(r22)
-/* 8013675C 001336BC  3C 60 80 2C */	lis r3, __vt__9TaiAction@ha
-/* 80136760 001336C0  3C C0 80 2D */	lis r6, __vt__14TaiTimerAction@ha
-/* 80136764 001336C4  80 84 00 04 */	lwz r4, 4(r4)
-/* 80136768 001336C8  3C A0 80 2D */	lis r5, __vt__22TaiStartingTimerAction@ha
-/* 8013676C 001336CC  38 63 66 20 */	addi r3, r3, __vt__9TaiAction@l
-/* 80136770 001336D0  80 84 00 00 */	lwz r4, 0(r4)
-/* 80136774 001336D4  38 00 00 02 */	li r0, 2
-/* 80136778 001336D8  38 E6 CA 28 */	addi r7, r6, __vt__14TaiTimerAction@l
-/* 8013677C 001336DC  C0 24 00 D8 */	lfs f1, 0xd8(r4)
-/* 80136780 001336E0  38 C0 00 00 */	li r6, 0
-/* 80136784 001336E4  C0 04 00 D4 */	lfs f0, 0xd4(r4)
-/* 80136788 001336E8  38 85 C9 90 */	addi r4, r5, __vt__22TaiStartingTimerAction@l
-/* 8013678C 001336EC  90 7E 00 04 */	stw r3, 4(r30)
-/* 80136790 001336F0  90 1E 00 00 */	stw r0, 0(r30)
-/* 80136794 001336F4  90 FE 00 04 */	stw r7, 4(r30)
-/* 80136798 001336F8  90 DE 00 08 */	stw r6, 8(r30)
-/* 8013679C 001336FC  D0 1E 00 0C */	stfs f0, 0xc(r30)
-/* 801367A0 00133700  C0 02 A4 CC */	lfs f0, lbl_803EA6CC@sda21(r2)
-/* 801367A4 00133704  D0 1E 00 10 */	stfs f0, 0x10(r30)
-/* 801367A8 00133708  90 9E 00 04 */	stw r4, 4(r30)
-/* 801367AC 0013370C  D0 3E 00 14 */	stfs f1, 0x14(r30)
-lbl_801367B0:
-/* 801367B0 00133710  38 60 00 0C */	li r3, 0xc
-/* 801367B4 00133714  4B F1 08 51 */	bl alloc__6SystemFUl
-/* 801367B8 00133718  3B 83 00 00 */	addi r28, r3, 0
-/* 801367BC 0013371C  7F 80 E3 79 */	or. r0, r28, r28
-/* 801367C0 00133720  41 82 00 2C */	beq lbl_801367EC
-/* 801367C4 00133724  3C 60 80 2C */	lis r3, __vt__9TaiAction@ha
-/* 801367C8 00133728  38 03 66 20 */	addi r0, r3, __vt__9TaiAction@l
-/* 801367CC 0013372C  90 1C 00 04 */	stw r0, 4(r28)
-/* 801367D0 00133730  38 00 FF FF */	li r0, -1
-/* 801367D4 00133734  3C 60 80 2D */	lis r3, __vt__33TaiHeadOnCollisionAvoidanceAction@ha
-/* 801367D8 00133738  90 1C 00 00 */	stw r0, 0(r28)
-/* 801367DC 0013373C  38 03 96 10 */	addi r0, r3, __vt__33TaiHeadOnCollisionAvoidanceAction@l
-/* 801367E0 00133740  90 1C 00 04 */	stw r0, 4(r28)
-/* 801367E4 00133744  C0 02 A4 A8 */	lfs f0, lbl_803EA6A8@sda21(r2)
-/* 801367E8 00133748  D0 1C 00 08 */	stfs f0, 8(r28)
-lbl_801367EC:
-/* 801367EC 0013374C  38 60 00 0C */	li r3, 0xc
-/* 801367F0 00133750  4B F1 08 15 */	bl alloc__6SystemFUl
-/* 801367F4 00133754  3B E3 00 00 */	addi r31, r3, 0
-/* 801367F8 00133758  7F E3 FB 79 */	or. r3, r31, r31
-/* 801367FC 0013375C  41 82 00 0C */	beq lbl_80136808
-/* 80136800 00133760  38 80 00 09 */	li r4, 9
-/* 80136804 00133764  4B FF 08 95 */	bl __ct__8TaiStateFi
-lbl_80136808:
-/* 80136808 00133768  38 00 00 00 */	li r0, 0
-/* 8013680C 0013376C  80 7F 00 08 */	lwz r3, 8(r31)
-/* 80136810 00133770  54 04 10 3A */	slwi r4, r0, 2
-/* 80136814 00133774  80 01 03 78 */	lwz r0, 0x378(r1)
-/* 80136818 00133778  38 E0 00 04 */	li r7, 4
-/* 8013681C 0013377C  7C 03 21 2E */	stwx r0, r3, r4
-/* 80136820 00133780  38 80 00 01 */	li r4, 1
-/* 80136824 00133784  54 85 10 3A */	slwi r5, r4, 2
-/* 80136828 00133788  80 7F 00 08 */	lwz r3, 8(r31)
-/* 8013682C 0013378C  38 00 00 02 */	li r0, 2
-/* 80136830 00133790  38 80 00 03 */	li r4, 3
-/* 80136834 00133794  7F 03 29 2E */	stwx r24, r3, r5
-/* 80136838 00133798  38 A0 00 05 */	li r5, 5
-/* 8013683C 0013379C  54 00 10 3A */	slwi r0, r0, 2
-/* 80136840 001337A0  80 7F 00 08 */	lwz r3, 8(r31)
-/* 80136844 001337A4  54 84 10 3A */	slwi r4, r4, 2
-/* 80136848 001337A8  54 E8 10 3A */	slwi r8, r7, 2
-/* 8013684C 001337AC  7E A3 01 2E */	stwx r21, r3, r0
-/* 80136850 001337B0  38 C0 00 06 */	li r6, 6
-/* 80136854 001337B4  38 00 00 07 */	li r0, 7
-/* 80136858 001337B8  80 7F 00 08 */	lwz r3, 8(r31)
-/* 8013685C 001337BC  54 A5 10 3A */	slwi r5, r5, 2
-/* 80136860 001337C0  54 C7 10 3A */	slwi r7, r6, 2
-/* 80136864 001337C4  7E 83 21 2E */	stwx r20, r3, r4
-/* 80136868 001337C8  39 20 00 08 */	li r9, 8
-/* 8013686C 001337CC  54 00 10 3A */	slwi r0, r0, 2
-/* 80136870 001337D0  80 7F 00 08 */	lwz r3, 8(r31)
-/* 80136874 001337D4  55 26 10 3A */	slwi r6, r9, 2
-/* 80136878 001337D8  7F 43 41 2E */	stwx r26, r3, r8
-/* 8013687C 001337DC  38 60 00 0C */	li r3, 0xc
-/* 80136880 001337E0  80 9F 00 08 */	lwz r4, 8(r31)
-/* 80136884 001337E4  7E E4 29 2E */	stwx r23, r4, r5
-/* 80136888 001337E8  80 9F 00 08 */	lwz r4, 8(r31)
-/* 8013688C 001337EC  7F C4 39 2E */	stwx r30, r4, r7
-/* 80136890 001337F0  80 9F 00 08 */	lwz r4, 8(r31)
-/* 80136894 001337F4  7F A4 01 2E */	stwx r29, r4, r0
-/* 80136898 001337F8  80 9F 00 08 */	lwz r4, 8(r31)
-/* 8013689C 001337FC  7F 84 31 2E */	stwx r28, r4, r6
-/* 801368A0 00133800  80 99 00 08 */	lwz r4, 8(r25)
-/* 801368A4 00133804  93 E4 00 04 */	stw r31, 4(r4)
-/* 801368A8 00133808  4B F1 07 5D */	bl alloc__6SystemFUl
-/* 801368AC 0013380C  3B 83 00 00 */	addi r28, r3, 0
-/* 801368B0 00133810  7F 80 E3 79 */	or. r0, r28, r28
-/* 801368B4 00133814  41 82 00 38 */	beq lbl_801368EC
-/* 801368B8 00133818  3C 60 80 2C */	lis r3, __vt__9TaiAction@ha
-/* 801368BC 0013381C  38 03 66 20 */	addi r0, r3, __vt__9TaiAction@l
-/* 801368C0 00133820  90 1C 00 04 */	stw r0, 4(r28)
-/* 801368C4 00133824  38 00 FF FF */	li r0, -1
-/* 801368C8 00133828  3C 60 80 2D */	lis r3, __vt__15TaiMotionAction@ha
-/* 801368CC 0013382C  90 1C 00 00 */	stw r0, 0(r28)
-/* 801368D0 00133830  38 03 95 94 */	addi r0, r3, __vt__15TaiMotionAction@l
-/* 801368D4 00133834  3C 60 80 2D */	lis r3, __vt__25TaiContinuousMotionAction@ha
-/* 801368D8 00133838  90 1C 00 04 */	stw r0, 4(r28)
-/* 801368DC 0013383C  38 00 00 06 */	li r0, 6
-/* 801368E0 00133840  38 63 95 74 */	addi r3, r3, __vt__25TaiContinuousMotionAction@l
+.global startAI__8ItemBallFi
+startAI__8ItemBallFi:
+/* 800F7958 000F48B8  7C 08 02 A6 */	mflr r0
+/* 800F795C 000F48BC  38 83 00 00 */	addi r4, r3, 0
+/* 800F7960 000F48C0  90 01 00 04 */	stw r0, 4(r1)
+/* 800F7964 000F48C4  38 04 03 C8 */	addi r0, r4, 0x3c8
+/* 800F7968 000F48C8  38 A4 03 DC */	addi r5, r4, 0x3dc
+/* 800F796C 000F48CC  94 21 FF F8 */	stwu r1, -8(r1)
+/* 800F7970 000F48D0  38 C4 07 EC */	addi r6, r4, 0x7ec
+/* 800F7974 000F48D4  90 03 02 20 */	stw r0, 0x220(r3)
+/* 800F7978 000F48D8  80 63 02 20 */	lwz r3, 0x220(r3)
+/* 800F797C 000F48DC  80 84 03 08 */	lwz r4, 0x308(r4)
+/* 800F7980 000F48E0  4B F9 21 E5 */	bl initInfo__8CollInfoFP5ShapeP8CollPartPUl
+/* 800F7984 000F48E4  80 01 00 0C */	lwz r0, 0xc(r1)
+/* 800F7988 000F48E8  38 21 00 08 */	addi r1, r1, 8
+/* 800F798C 000F48EC  7C 08 03 A6 */	mtlr r0
+/* 800F7990 000F48F0  4E 80 00 20 */	blr 
+
+.global isAlive__8ItemBallFv
+isAlive__8ItemBallFv:
+/* 800F7994 000F48F4  38 60 00 01 */	li r3, 1
+/* 800F7998 000F48F8  4E 80 00 20 */	blr 
+
+.global isVisible__8ItemBallFv
+isVisible__8ItemBallFv:
+/* 800F799C 000F48FC  38 60 00 01 */	li r3, 1
+/* 800F79A0 000F4900  4E 80 00 20 */	blr 
+
+.global update__10ItemObjectFv
+update__10ItemObjectFv:
+/* 800F79A4 000F4904  4E 80 00 20 */	blr 
+
+.global __ct__11BombGenItemFP5Shape
+__ct__11BombGenItemFP5Shape:
+/* 800F79A8 000F4908  7C 08 02 A6 */	mflr r0
+/* 800F79AC 000F490C  38 C4 00 00 */	addi r6, r4, 0
+/* 800F79B0 000F4910  90 01 00 04 */	stw r0, 4(r1)
+/* 800F79B4 000F4914  38 80 00 0D */	li r4, 0xd
+/* 800F79B8 000F4918  38 A0 00 00 */	li r5, 0
+/* 800F79BC 000F491C  94 21 FF E8 */	stwu r1, -0x18(r1)
+/* 800F79C0 000F4920  93 E1 00 14 */	stw r31, 0x14(r1)
+/* 800F79C4 000F4924  3B E3 00 00 */	addi r31, r3, 0
+/* 800F79C8 000F4928  4B FF DE E5 */	bl __ct__12ItemCreatureFiP12CreaturePropP5Shape
+/* 800F79CC 000F492C  3C 60 80 2C */	lis r3, __vt__10ItemObject@ha
+/* 800F79D0 000F4930  38 63 F9 6C */	addi r3, r3, __vt__10ItemObject@l
+/* 800F79D4 000F4934  90 7F 00 00 */	stw r3, 0(r31)
+/* 800F79D8 000F4938  38 03 01 14 */	addi r0, r3, 0x114
+/* 800F79DC 000F493C  3C 60 80 2C */	lis r3, __vt__11BombGenItem@ha
+/* 800F79E0 000F4940  90 1F 02 B8 */	stw r0, 0x2b8(r31)
+/* 800F79E4 000F4944  38 00 00 0D */	li r0, 0xd
+/* 800F79E8 000F4948  38 63 F8 10 */	addi r3, r3, __vt__11BombGenItem@l
+/* 800F79EC 000F494C  90 1F 00 6C */	stw r0, 0x6c(r31)
+/* 800F79F0 000F4950  38 A3 01 14 */	addi r5, r3, 0x114
+/* 800F79F4 000F4954  38 80 FF FF */	li r4, -1
+/* 800F79F8 000F4958  90 7F 00 00 */	stw r3, 0(r31)
+/* 800F79FC 000F495C  38 00 00 01 */	li r0, 1
+/* 800F7A00 000F4960  38 7F 00 00 */	addi r3, r31, 0
+/* 800F7A04 000F4964  90 BF 02 B8 */	stw r5, 0x2b8(r31)
+/* 800F7A08 000F4968  B0 9F 03 C8 */	sth r4, 0x3c8(r31)
+/* 800F7A0C 000F496C  B0 1F 03 CA */	sth r0, 0x3ca(r31)
+/* 800F7A10 000F4970  80 01 00 1C */	lwz r0, 0x1c(r1)
+/* 800F7A14 000F4974  83 E1 00 14 */	lwz r31, 0x14(r1)
+/* 800F7A18 000F4978  38 21 00 18 */	addi r1, r1, 0x18
+/* 800F7A1C 000F497C  7C 08 03 A6 */	mtlr r0
+/* 800F7A20 000F4980  4E 80 00 20 */	blr 
+
+.global pickable__11BombGenItemFv
+pickable__11BombGenItemFv:
+/* 800F7A24 000F4984  A8 03 03 C8 */	lha r0, 0x3c8(r3)
+/* 800F7A28 000F4988  2C 00 FF FF */	cmpwi r0, -1
+/* 800F7A2C 000F498C  40 82 00 0C */	bne lbl_800F7A38
+/* 800F7A30 000F4990  38 60 00 01 */	li r3, 1
+/* 800F7A34 000F4994  4E 80 00 20 */	blr 
+lbl_800F7A38:
+/* 800F7A38 000F4998  A8 03 03 CA */	lha r0, 0x3ca(r3)
+/* 800F7A3C 000F499C  2C 00 00 00 */	cmpwi r0, 0
+/* 800F7A40 000F49A0  40 81 00 0C */	ble lbl_800F7A4C
+/* 800F7A44 000F49A4  38 60 00 01 */	li r3, 1
+/* 800F7A48 000F49A8  4E 80 00 20 */	blr 
+lbl_800F7A4C:
+/* 800F7A4C 000F49AC  38 60 00 00 */	li r3, 0
+/* 800F7A50 000F49B0  4E 80 00 20 */	blr 
+
+.global pick__11BombGenItemFv
+pick__11BombGenItemFv:
+/* 800F7A54 000F49B4  A8 83 03 C8 */	lha r4, 0x3c8(r3)
+/* 800F7A58 000F49B8  2C 04 FF FF */	cmpwi r4, -1
+/* 800F7A5C 000F49BC  40 82 00 0C */	bne lbl_800F7A68
+/* 800F7A60 000F49C0  38 00 00 01 */	li r0, 1
+/* 800F7A64 000F49C4  48 00 00 1C */	b lbl_800F7A80
+lbl_800F7A68:
+/* 800F7A68 000F49C8  A8 03 03 CA */	lha r0, 0x3ca(r3)
+/* 800F7A6C 000F49CC  2C 00 00 00 */	cmpwi r0, 0
+/* 800F7A70 000F49D0  40 81 00 0C */	ble lbl_800F7A7C
+/* 800F7A74 000F49D4  38 00 00 01 */	li r0, 1
+/* 800F7A78 000F49D8  48 00 00 08 */	b lbl_800F7A80
+lbl_800F7A7C:
+/* 800F7A7C 000F49DC  38 00 00 00 */	li r0, 0
+lbl_800F7A80:
+/* 800F7A80 000F49E0  54 00 06 3F */	clrlwi. r0, r0, 0x18
+/* 800F7A84 000F49E4  40 82 00 0C */	bne lbl_800F7A90
+/* 800F7A88 000F49E8  38 60 00 00 */	li r3, 0
+/* 800F7A8C 000F49EC  4E 80 00 20 */	blr 
+lbl_800F7A90:
+/* 800F7A90 000F49F0  7C 80 07 35 */	extsh. r0, r4
+/* 800F7A94 000F49F4  40 81 00 24 */	ble lbl_800F7AB8
+/* 800F7A98 000F49F8  A8 83 03 CA */	lha r4, 0x3ca(r3)
+/* 800F7A9C 000F49FC  2C 04 00 00 */	cmpwi r4, 0
+/* 800F7AA0 000F4A00  40 81 00 10 */	ble lbl_800F7AB0
+/* 800F7AA4 000F4A04  38 04 FF FF */	addi r0, r4, -1
+/* 800F7AA8 000F4A08  B0 03 03 CA */	sth r0, 0x3ca(r3)
+/* 800F7AAC 000F4A0C  48 00 00 0C */	b lbl_800F7AB8
+lbl_800F7AB0:
+/* 800F7AB0 000F4A10  38 60 00 00 */	li r3, 0
+/* 800F7AB4 000F4A14  4E 80 00 20 */	blr 
+lbl_800F7AB8:
+/* 800F7AB8 000F4A18  38 60 00 01 */	li r3, 1
+/* 800F7ABC 000F4A1C  4E 80 00 20 */	blr 
+
+.global __ct__7FulcrumFv
+__ct__7FulcrumFv:
+/* 800F7AC0 000F4A20  7C 08 02 A6 */	mflr r0
+/* 800F7AC4 000F4A24  38 80 00 11 */	li r4, 0x11
+/* 800F7AC8 000F4A28  90 01 00 04 */	stw r0, 4(r1)
+/* 800F7ACC 000F4A2C  38 A0 00 00 */	li r5, 0
+/* 800F7AD0 000F4A30  38 C0 00 00 */	li r6, 0
+/* 800F7AD4 000F4A34  94 21 FF E8 */	stwu r1, -0x18(r1)
+/* 800F7AD8 000F4A38  93 E1 00 14 */	stw r31, 0x14(r1)
+/* 800F7ADC 000F4A3C  3B E3 00 00 */	addi r31, r3, 0
+/* 800F7AE0 000F4A40  4B FF DD CD */	bl __ct__12ItemCreatureFiP12CreaturePropP5Shape
+/* 800F7AE4 000F4A44  3C 60 80 2C */	lis r3, __vt__10ItemObject@ha
+/* 800F7AE8 000F4A48  38 63 F9 6C */	addi r3, r3, __vt__10ItemObject@l
+/* 800F7AEC 000F4A4C  90 7F 00 00 */	stw r3, 0(r31)
+/* 800F7AF0 000F4A50  38 03 01 14 */	addi r0, r3, 0x114
+/* 800F7AF4 000F4A54  3C 60 80 2C */	lis r3, __vt__7Fulcrum@ha
+/* 800F7AF8 000F4A58  90 1F 02 B8 */	stw r0, 0x2b8(r31)
+/* 800F7AFC 000F4A5C  38 00 00 11 */	li r0, 0x11
+/* 800F7B00 000F4A60  38 83 F6 6C */	addi r4, r3, __vt__7Fulcrum@l
+/* 800F7B04 000F4A64  90 1F 00 6C */	stw r0, 0x6c(r31)
+/* 800F7B08 000F4A68  38 04 01 14 */	addi r0, r4, 0x114
+/* 800F7B0C 000F4A6C  38 7F 00 00 */	addi r3, r31, 0
+/* 800F7B10 000F4A70  90 9F 00 00 */	stw r4, 0(r31)
+/* 800F7B14 000F4A74  90 1F 02 B8 */	stw r0, 0x2b8(r31)
+/* 800F7B18 000F4A78  80 01 00 1C */	lwz r0, 0x1c(r1)
+/* 800F7B1C 000F4A7C  83 E1 00 14 */	lwz r31, 0x14(r1)
+/* 800F7B20 000F4A80  38 21 00 18 */	addi r1, r1, 0x18
+/* 800F7B24 000F4A84  7C 08 03 A6 */	mtlr r0
+/* 800F7B28 000F4A88  4E 80 00 20 */	blr 
+
+.global __ct__19NaviDemoSunsetStartFv
+__ct__19NaviDemoSunsetStartFv:
+/* 800F7B2C 000F4A8C  7C 08 02 A6 */	mflr r0
+/* 800F7B30 000F4A90  38 80 00 1B */	li r4, 0x1b
+/* 800F7B34 000F4A94  90 01 00 04 */	stw r0, 4(r1)
+/* 800F7B38 000F4A98  38 A0 00 00 */	li r5, 0
+/* 800F7B3C 000F4A9C  38 C0 00 00 */	li r6, 0
+/* 800F7B40 000F4AA0  94 21 FF E8 */	stwu r1, -0x18(r1)
+/* 800F7B44 000F4AA4  93 E1 00 14 */	stw r31, 0x14(r1)
+/* 800F7B48 000F4AA8  3B E3 00 00 */	addi r31, r3, 0
+/* 800F7B4C 000F4AAC  4B FF DD 61 */	bl __ct__12ItemCreatureFiP12CreaturePropP5Shape
+/* 800F7B50 000F4AB0  3C 60 80 2C */	lis r3, __vt__10ItemObject@ha
+/* 800F7B54 000F4AB4  38 63 F9 6C */	addi r3, r3, __vt__10ItemObject@l
+/* 800F7B58 000F4AB8  90 7F 00 00 */	stw r3, 0(r31)
+/* 800F7B5C 000F4ABC  38 03 01 14 */	addi r0, r3, 0x114
+/* 800F7B60 000F4AC0  3C 60 80 2C */	lis r3, __vt__19NaviDemoSunsetStart@ha
+/* 800F7B64 000F4AC4  90 1F 02 B8 */	stw r0, 0x2b8(r31)
+/* 800F7B68 000F4AC8  38 00 00 1B */	li r0, 0x1b
+/* 800F7B6C 000F4ACC  38 83 F4 D4 */	addi r4, r3, __vt__19NaviDemoSunsetStart@l
+/* 800F7B70 000F4AD0  90 1F 00 6C */	stw r0, 0x6c(r31)
+/* 800F7B74 000F4AD4  38 04 01 14 */	addi r0, r4, 0x114
+/* 800F7B78 000F4AD8  38 7F 00 00 */	addi r3, r31, 0
+/* 800F7B7C 000F4ADC  90 9F 00 00 */	stw r4, 0(r31)
+/* 800F7B80 000F4AE0  90 1F 02 B8 */	stw r0, 0x2b8(r31)
+/* 800F7B84 000F4AE4  80 01 00 1C */	lwz r0, 0x1c(r1)
+/* 800F7B88 000F4AE8  83 E1 00 14 */	lwz r31, 0x14(r1)
+/* 800F7B8C 000F4AEC  38 21 00 18 */	addi r1, r1, 0x18
+/* 800F7B90 000F4AF0  7C 08 03 A6 */	mtlr r0
+/* 800F7B94 000F4AF4  4E 80 00 20 */	blr 
+
+.global __ct__18NaviDemoSunsetGoalFv
+__ct__18NaviDemoSunsetGoalFv:
+/* 800F7B98 000F4AF8  7C 08 02 A6 */	mflr r0
+/* 800F7B9C 000F4AFC  38 80 00 1C */	li r4, 0x1c
+/* 800F7BA0 000F4B00  90 01 00 04 */	stw r0, 4(r1)
+/* 800F7BA4 000F4B04  38 A0 00 00 */	li r5, 0
+/* 800F7BA8 000F4B08  38 C0 00 00 */	li r6, 0
+/* 800F7BAC 000F4B0C  94 21 FF E8 */	stwu r1, -0x18(r1)
+/* 800F7BB0 000F4B10  93 E1 00 14 */	stw r31, 0x14(r1)
+/* 800F7BB4 000F4B14  3B E3 00 00 */	addi r31, r3, 0
+/* 800F7BB8 000F4B18  4B FF DC F5 */	bl __ct__12ItemCreatureFiP12CreaturePropP5Shape
+/* 800F7BBC 000F4B1C  3C 60 80 2C */	lis r3, __vt__10ItemObject@ha
+/* 800F7BC0 000F4B20  38 63 F9 6C */	addi r3, r3, __vt__10ItemObject@l
+/* 800F7BC4 000F4B24  90 7F 00 00 */	stw r3, 0(r31)
+/* 800F7BC8 000F4B28  38 03 01 14 */	addi r0, r3, 0x114
+/* 800F7BCC 000F4B2C  3C 60 80 2C */	lis r3, __vt__18NaviDemoSunsetGoal@ha
+/* 800F7BD0 000F4B30  90 1F 02 B8 */	stw r0, 0x2b8(r31)
+/* 800F7BD4 000F4B34  38 00 00 1C */	li r0, 0x1c
+/* 800F7BD8 000F4B38  38 83 F3 28 */	addi r4, r3, __vt__18NaviDemoSunsetGoal@l
+/* 800F7BDC 000F4B3C  90 1F 00 6C */	stw r0, 0x6c(r31)
+/* 800F7BE0 000F4B40  38 04 01 14 */	addi r0, r4, 0x114
+/* 800F7BE4 000F4B44  38 7F 00 00 */	addi r3, r31, 0
+/* 800F7BE8 000F4B48  90 9F 00 00 */	stw r4, 0(r31)
+/* 800F7BEC 000F4B4C  90 1F 02 B8 */	stw r0, 0x2b8(r31)
+/* 800F7BF0 000F4B50  80 01 00 1C */	lwz r0, 0x1c(r1)
+/* 800F7BF4 000F4B54  83 E1 00 14 */	lwz r31, 0x14(r1)
+/* 800F7BF8 000F4B58  38 21 00 18 */	addi r1, r1, 0x18
+/* 800F7BFC 000F4B5C  7C 08 03 A6 */	mtlr r0
+/* 800F7C00 000F4B60  4E 80 00 20 */	blr 
+
+.global needShadow__10ItemObjectFv
+needShadow__10ItemObjectFv:
+/* 800F7C04 000F4B64  38 60 00 00 */	li r3, 0
+/* 800F7C08 000F4B68  4E 80 00 20 */	blr 
+
+.global postUpdate__10ItemObjectFif
+postUpdate__10ItemObjectFif:
+/* 800F7C0C 000F4B6C  4E 80 00 20 */	blr 
+
+.global isAtari__10ItemObjectFv
+isAtari__10ItemObjectFv:
+/* 800F7C10 000F4B70  38 60 00 00 */	li r3, 0
+/* 800F7C14 000F4B74  4E 80 00 20 */	blr 
+
+.global isAtari__11BombGenItemFv
+isAtari__11BombGenItemFv:
+/* 800F7C18 000F4B78  A8 03 03 C8 */	lha r0, 0x3c8(r3)
+/* 800F7C1C 000F4B7C  2C 00 FF FF */	cmpwi r0, -1
+/* 800F7C20 000F4B80  40 82 00 0C */	bne lbl_800F7C2C
+/* 800F7C24 000F4B84  38 60 00 01 */	li r3, 1
+/* 800F7C28 000F4B88  4E 80 00 20 */	blr 
+lbl_800F7C2C:
+/* 800F7C2C 000F4B8C  A8 03 03 CA */	lha r0, 0x3ca(r3)
+/* 800F7C30 000F4B90  2C 00 00 00 */	cmpwi r0, 0
+/* 800F7C34 000F4B94  40 81 00 0C */	ble lbl_800F7C40
+/* 800F7C38 000F4B98  38 60 00 01 */	li r3, 1
+/* 800F7C3C 000F4B9C  4E 80 00 20 */	blr 
+lbl_800F7C40:
+/* 800F7C40 000F4BA0  38 60 00 00 */	li r3, 0
+/* 800F7C44 000F4BA4  4E 80 00 20 */	blr 
+
+.global needFlick__11BombGenItemFP8Creature
+needFlick__11BombGenItemFP8Creature:
+/* 800F7C48 000F4BA8  38 60 00 00 */	li r3, 0
+/* 800F7C4C 000F4BAC  4E 80 00 20 */	blr 
+
+.global isVisible__11BombGenItemFv
+isVisible__11BombGenItemFv:
+/* 800F7C50 000F4BB0  A8 03 03 C8 */	lha r0, 0x3c8(r3)
+/* 800F7C54 000F4BB4  2C 00 FF FF */	cmpwi r0, -1
+/* 800F7C58 000F4BB8  40 82 00 0C */	bne lbl_800F7C64
+/* 800F7C5C 000F4BBC  38 60 00 01 */	li r3, 1
+/* 800F7C60 000F4BC0  4E 80 00 20 */	blr 
+lbl_800F7C64:
+/* 800F7C64 000F4BC4  A8 03 03 CA */	lha r0, 0x3ca(r3)
+/* 800F7C68 000F4BC8  2C 00 00 00 */	cmpwi r0, 0
+/* 800F7C6C 000F4BCC  40 81 00 0C */	ble lbl_800F7C78
+/* 800F7C70 000F4BD0  38 60 00 01 */	li r3, 1
+/* 800F7C74 000F4BD4  4E 80 00 20 */	blr 
+lbl_800F7C78:
+/* 800F7C78 000F4BD8  38 60 00 00 */	li r3, 0
+/* 800F7C7C 000F4BDC  4E 80 00 20 */	blr 
+
+.global isAlive__11BombGenItemFv
+isAlive__11BombGenItemFv:
+/* 800F7C80 000F4BE0  A8 03 03 C8 */	lha r0, 0x3c8(r3)
+/* 800F7C84 000F4BE4  2C 00 FF FF */	cmpwi r0, -1
+/* 800F7C88 000F4BE8  40 82 00 0C */	bne lbl_800F7C94
+/* 800F7C8C 000F4BEC  38 60 00 01 */	li r3, 1
+/* 800F7C90 000F4BF0  4E 80 00 20 */	blr 
+lbl_800F7C94:
+/* 800F7C94 000F4BF4  A8 03 03 CA */	lha r0, 0x3ca(r3)
+/* 800F7C98 000F4BF8  2C 00 00 00 */	cmpwi r0, 0
+/* 800F7C9C 000F4BFC  40 81 00 0C */	ble lbl_800F7CA8
+/* 800F7CA0 000F4C00  38 60 00 01 */	li r3, 1
+/* 800F7CA4 000F4C04  4E 80 00 20 */	blr 
+lbl_800F7CA8:
+/* 800F7CA8 000F4C08  38 60 00 00 */	li r3, 0
+/* 800F7CAC 000F4C0C  4E 80 00 20 */	blr 
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
-	.4byte 0x6974656d
-	.4byte 0x4f626a65
-	.4byte 0x63742e63
-	.4byte 0x70700000
-	.4byte 0x6974656d
-	.4byte 0x4f626a65
-	.4byte 0x63740000
-	.4byte 0x4e617669
-	.4byte 0x44656d6f
-	.4byte 0x53756e73
-	.4byte 0x6574476f
-	.4byte 0x616c0000
-	.4byte 0x50616e69
-	.4byte 0x416e696d
-	.4byte 0x4b65794c
-	.4byte 0x69737465
-	.4byte 0x6e657200
-	.4byte 0x4576656e
-	.4byte 0x7454616c
-	.4byte 0x6b657200
-	.4byte 0x52656643
-	.4byte 0x6f756e74
-	.4byte 0x61626c65
-	.4byte 0
-	.4byte 0x43726561
-	.4byte 0x74757265
-	.4byte 0
-	.4byte 0x803E1e88
+.balign 8
+lbl_802BF1C0:
+	.asciz "itemObject.cpp"
+.balign 4
+lbl_802BF1D0:
+	.asciz "itemObject"
+.balign 4
+lbl_802BF1DC:
+	.asciz "NaviDemoSunsetGoal"
+.balign 4
+lbl_802BF1F0:
+	.asciz "PaniAnimKeyListener"
+.balign 4
+lbl_802BF204:
+	.asciz "EventTalker"
+.balign 4
+lbl_802BF210:
+	.asciz "RefCountable"
+.balign 4
+lbl_802BF220:
+	.asciz "Creature"
+.balign 4
+lbl_802BF22C:
+	.4byte __RTTI__11EventTalker
 	.4byte 0x8
-	.4byte 0x803E1e90
+	.4byte __RTTI__12RefCountable
 	.4byte 0
 	.4byte 0
-	.4byte 0x41494372
-	.4byte 0x65617475
-	.4byte 0x72650000
-	.4byte 0x803E1e80
-	.4byte 0x2b8
-	.4byte 0x803E1e88
+.balign 4
+lbl_802BF240:
+	.asciz "AICreature"
+.balign 4
+lbl_802BF24C:
+	.4byte __RTTI__19PaniAnimKeyListener
+	.4byte 0x2B8
+	.4byte __RTTI__11EventTalker
 	.4byte 0x8
-	.4byte 0x803E1e90
+	.4byte __RTTI__12RefCountable
 	.4byte 0
-	.4byte 0x803E1e98
+	.4byte __RTTI__8Creature
 	.4byte 0
 	.4byte 0
-	.4byte 0x4974656d
-	.4byte 0x43726561
-	.4byte 0x74757265
-	.4byte 0
-	.4byte 0x803E1e80
-	.4byte 0x2b8
-	.4byte 0x803E1e88
+.balign 4
+lbl_802BF270:
+	.asciz "ItemCreature"
+.balign 4
+lbl_802BF280:
+	.4byte __RTTI__19PaniAnimKeyListener
+	.4byte 0x2B8
+	.4byte __RTTI__11EventTalker
 	.4byte 0x8
-	.4byte 0x803E1e90
+	.4byte __RTTI__12RefCountable
 	.4byte 0
-	.4byte 0x803E1e98
+	.4byte __RTTI__8Creature
 	.4byte 0
-	.4byte 0x803E1ea0
+	.4byte __RTTI__10AICreature
 	.4byte 0
 	.4byte 0
-	.4byte 0x4974656d
-	.4byte 0x4f626a65
-	.4byte 0x63740000
-	.4byte 0x803E1e80
-	.4byte 0x2b8
-	.4byte 0x803E1e88
+.balign 4
+lbl_802BF2AC:
+	.asciz "ItemObject"
+.balign 4
+lbl_802BF2B8:
+	.4byte __RTTI__19PaniAnimKeyListener
+	.4byte 0x2B8
+	.4byte __RTTI__11EventTalker
 	.4byte 0x8
-	.4byte 0x803E1e90
+	.4byte __RTTI__12RefCountable
 	.4byte 0
-	.4byte 0x803E1e98
+	.4byte __RTTI__8Creature
 	.4byte 0
-	.4byte 0x803E1ea0
+	.4byte __RTTI__10AICreature
 	.4byte 0
-	.4byte 0x803E1ea8
+	.4byte __RTTI__12ItemCreature
 	.4byte 0
 	.4byte 0
-	.4byte 0x803E1e80
-	.4byte 0x2b8
-	.4byte 0x803E1e88
+lbl_802BF2EC:
+	.4byte __RTTI__19PaniAnimKeyListener
+	.4byte 0x2B8
+	.4byte __RTTI__11EventTalker
 	.4byte 0x8
-	.4byte 0x803E1e90
+	.4byte __RTTI__12RefCountable
 	.4byte 0
-	.4byte 0x803E1e98
+	.4byte __RTTI__8Creature
 	.4byte 0
-	.4byte 0x803E1ea0
+	.4byte __RTTI__10AICreature
 	.4byte 0
-	.4byte 0x803E1ea8
+	.4byte __RTTI__12ItemCreature
 	.4byte 0
 	.4byte __RTTI__10ItemObject
 	.4byte 0
@@ -388,7 +444,7 @@ __vt__18NaviDemoSunsetGoal:
 	.4byte doKill__12ItemCreatureFv
 	.4byte exitCourse__8CreatureFv
 	.4byte __RTTI__18NaviDemoSunsetGoal
-	.4byte 0xfffffd48
+	.4byte 0xFFFFFD48
 	.4byte lbl_8007DF54
 	.4byte getCurrState__10AICreatureFv
 	.4byte "setCurrState__10AICreatureFP20AState<10AICreature>"
@@ -405,22 +461,22 @@ __vt__18NaviDemoSunsetGoal:
 	.4byte stopMotion__12ItemCreatureFv
 	.4byte animationKeyUpdated__10AICreatureFR16PaniAnimKeyEvent
 	.4byte finalSetup__12ItemCreatureFv
-	.4byte 0x4e617669
-	.4byte 0x44656d6f
-	.4byte 0x53756e73
-	.4byte 0x65745374
-	.4byte 0x61727400
-	.4byte 0x803E1e80
-	.4byte 0x2b8
-	.4byte 0x803E1e88
+.balign 4
+lbl_802BF484:
+	.asciz "NaviDemoSunsetStart"
+.balign 4
+lbl_802BF498:
+	.4byte __RTTI__19PaniAnimKeyListener
+	.4byte 0x2B8
+	.4byte __RTTI__11EventTalker
 	.4byte 0x8
-	.4byte 0x803E1e90
+	.4byte __RTTI__12RefCountable
 	.4byte 0
-	.4byte 0x803E1e98
+	.4byte __RTTI__8Creature
 	.4byte 0
-	.4byte 0x803E1ea0
+	.4byte __RTTI__10AICreature
 	.4byte 0
-	.4byte 0x803E1ea8
+	.4byte __RTTI__12ItemCreature
 	.4byte 0
 	.4byte __RTTI__10ItemObject
 	.4byte 0
@@ -497,7 +553,7 @@ __vt__19NaviDemoSunsetStart:
 	.4byte doKill__12ItemCreatureFv
 	.4byte exitCourse__8CreatureFv
 	.4byte __RTTI__19NaviDemoSunsetStart
-	.4byte 0xfffffd48
+	.4byte 0xFFFFFD48
 	.4byte lbl_8007DF54
 	.4byte getCurrState__10AICreatureFv
 	.4byte "setCurrState__10AICreatureFP20AState<10AICreature>"
@@ -514,17 +570,18 @@ __vt__19NaviDemoSunsetStart:
 	.4byte stopMotion__12ItemCreatureFv
 	.4byte animationKeyUpdated__10AICreatureFR16PaniAnimKeyEvent
 	.4byte finalSetup__12ItemCreatureFv
-	.4byte 0x803E1e80
-	.4byte 0x2b8
-	.4byte 0x803E1e88
+lbl_802BF630:
+	.4byte __RTTI__19PaniAnimKeyListener
+	.4byte 0x2B8
+	.4byte __RTTI__11EventTalker
 	.4byte 0x8
-	.4byte 0x803E1e90
+	.4byte __RTTI__12RefCountable
 	.4byte 0
-	.4byte 0x803E1e98
+	.4byte __RTTI__8Creature
 	.4byte 0
-	.4byte 0x803E1ea0
+	.4byte __RTTI__10AICreature
 	.4byte 0
-	.4byte 0x803E1ea8
+	.4byte __RTTI__12ItemCreature
 	.4byte 0
 	.4byte __RTTI__10ItemObject
 	.4byte 0
@@ -601,7 +658,7 @@ __vt__7Fulcrum:
 	.4byte doKill__12ItemCreatureFv
 	.4byte exitCourse__8CreatureFv
 	.4byte __RTTI__7Fulcrum
-	.4byte 0xfffffd48
+	.4byte 0xFFFFFD48
 	.4byte lbl_8007DF54
 	.4byte getCurrState__10AICreatureFv
 	.4byte "setCurrState__10AICreatureFP20AState<10AICreature>"
@@ -618,20 +675,22 @@ __vt__7Fulcrum:
 	.4byte stopMotion__12ItemCreatureFv
 	.4byte animationKeyUpdated__10AICreatureFR16PaniAnimKeyEvent
 	.4byte finalSetup__12ItemCreatureFv
-	.4byte 0x426f6d62
-	.4byte 0x47656e49
-	.4byte 0x74656d00
-	.4byte 0x803E1e80
-	.4byte 0x2b8
-	.4byte 0x803E1e88
+.balign 4
+lbl_802BF7C8:
+	.asciz "BombGenItem"
+.balign 4
+lbl_802BF7D4:
+	.4byte __RTTI__19PaniAnimKeyListener
+	.4byte 0x2B8
+	.4byte __RTTI__11EventTalker
 	.4byte 0x8
-	.4byte 0x803E1e90
+	.4byte __RTTI__12RefCountable
 	.4byte 0
-	.4byte 0x803E1e98
+	.4byte __RTTI__8Creature
 	.4byte 0
-	.4byte 0x803E1ea0
+	.4byte __RTTI__10AICreature
 	.4byte 0
-	.4byte 0x803E1ea8
+	.4byte __RTTI__12ItemCreature
 	.4byte 0
 	.4byte __RTTI__10ItemObject
 	.4byte 0
@@ -708,7 +767,7 @@ __vt__11BombGenItem:
 	.4byte doKill__12ItemCreatureFv
 	.4byte exitCourse__8CreatureFv
 	.4byte __RTTI__11BombGenItem
-	.4byte 0xfffffd48
+	.4byte 0xFFFFFD48
 	.4byte lbl_8007DF54
 	.4byte getCurrState__10AICreatureFv
 	.4byte "setCurrState__10AICreatureFP20AState<10AICreature>"
@@ -797,7 +856,7 @@ __vt__10ItemObject:
 	.4byte doKill__12ItemCreatureFv
 	.4byte exitCourse__8CreatureFv
 	.4byte __RTTI__10ItemObject
-	.4byte 0xfffffd48
+	.4byte 0xFFFFFD48
 	.4byte lbl_8007DF54
 	.4byte getCurrState__10AICreatureFv
 	.4byte "setCurrState__10AICreatureFP20AState<10AICreature>"
@@ -814,20 +873,22 @@ __vt__10ItemObject:
 	.4byte stopMotion__12ItemCreatureFv
 	.4byte animationKeyUpdated__10AICreatureFR16PaniAnimKeyEvent
 	.4byte finalSetup__12ItemCreatureFv
-	.4byte 0x4974656d
-	.4byte 0x42616c6c
-	.4byte 0
-	.4byte 0x803E1e80
-	.4byte 0x2b8
-	.4byte 0x803E1e88
+.balign 4
+lbl_802BFAC8:
+	.asciz "ItemBall"
+.balign 4
+lbl_802BFAD4:
+	.4byte __RTTI__19PaniAnimKeyListener
+	.4byte 0x2B8
+	.4byte __RTTI__11EventTalker
 	.4byte 0x8
-	.4byte 0x803E1e90
+	.4byte __RTTI__12RefCountable
 	.4byte 0
-	.4byte 0x803E1e98
+	.4byte __RTTI__8Creature
 	.4byte 0
-	.4byte 0x803E1ea0
+	.4byte __RTTI__10AICreature
 	.4byte 0
-	.4byte 0x803E1ea8
+	.4byte __RTTI__12ItemCreature
 	.4byte 0
 	.4byte 0
 .global __vt__8ItemBall
@@ -902,7 +963,7 @@ __vt__8ItemBall:
 	.4byte doKill__12ItemCreatureFv
 	.4byte exitCourse__8CreatureFv
 	.4byte __RTTI__8ItemBall
-	.4byte 0xfffffd48
+	.4byte 0xFFFFFD48
 	.4byte lbl_8007DF54
 	.4byte getCurrState__10AICreatureFv
 	.4byte "setCurrState__10AICreatureFP20AState<10AICreature>"
@@ -919,46 +980,46 @@ __vt__8ItemBall:
 	.4byte stopMotion__12ItemCreatureFv
 	.4byte animationKeyUpdated__10AICreatureFR16PaniAnimKeyEvent
 	.4byte finalSetup__12ItemCreatureFv
-	.4byte 0
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
-.global __RTTI__11UfoItemProp
-__RTTI__11UfoItemProp:
-	.4byte 0x802bee60
-	.4byte 0x802bee6c
-.global __RTTI__12GoalItemProp
-__RTTI__12GoalItemProp:
-	.4byte 0x802bee84
-	.4byte 0x802bee94
-.global __RTTI__15CreatureNodeMgr_1
-__RTTI__15CreatureNodeMgr_1:
-	.4byte 0x802beec8
-	.4byte 0x802beed8
-.global __RTTI__13MeltingPotMgr
-__RTTI__13MeltingPotMgr:
-	.4byte 0x802beeb8
-	.4byte 0x802bef04
-.global __RTTI__12CreatureNode
-__RTTI__12CreatureNode:
-	.4byte 0x802befb0
-	.4byte 0x802befc0
-.global __RTTI__12BuildingItem
-__RTTI__12BuildingItem:
-	.4byte 0x802bf018
-	.4byte 0x802bf028
-	.4byte 0x802bf1f0
+.balign 8
+__RTTI__19PaniAnimKeyListener:
+	.4byte lbl_802BF1F0
 	.4byte 0
-	.4byte 0x802bf204
+__RTTI__11EventTalker:
+	.4byte lbl_802BF204
 	.4byte 0
-	.4byte 0x802bf210
+__RTTI__12RefCountable:
+	.4byte lbl_802BF210
 	.4byte 0
-	.4byte 0x802bf220
-	.4byte 0x802bf22c
-	.4byte 0x802bf240
-	.4byte 0x802bf24c
-	.4byte 0x802bf270
-	.4byte 0x802bf280
-.global __RTTI__10ItemObject
+__RTTI__8Creature:
+	.4byte lbl_802BF220
+	.4byte lbl_802BF22C
+__RTTI__10AICreature:
+	.4byte lbl_802BF240
+	.4byte lbl_802BF24C
+__RTTI__12ItemCreature:
+	.4byte lbl_802BF270
+	.4byte lbl_802BF280
 __RTTI__10ItemObject:
-	.4byte 0x802bf2ac
-	.4byte 0x802bf2b8
+	.4byte lbl_802BF2AC
+	.4byte lbl_802BF2B8
+__RTTI__18NaviDemoSunsetGoal:
+	.4byte lbl_802BF1DC
+	.4byte lbl_802BF2EC
+__RTTI__19NaviDemoSunsetStart:
+	.4byte lbl_802BF484
+	.4byte lbl_802BF498
+.balign 4
+lbl_803E1EC8:
+	.asciz "Fulcrum"
+.balign 4
+__RTTI__7Fulcrum:
+	.4byte lbl_803E1EC8
+	.4byte lbl_802BF630
+__RTTI__11BombGenItem:
+	.4byte lbl_802BF7C8
+	.4byte lbl_802BF7D4
+__RTTI__8ItemBall:
+	.4byte lbl_802BFAC8
+	.4byte lbl_802BFAD4
