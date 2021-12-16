@@ -451,14 +451,3 @@ lbl_80222658:
 	.4byte 0x000000CD
 	.4byte 0x000000CC
 	.4byte 0x000000CB
-	.4byte 0x00000000
-.global lbl_80222668
-lbl_80222668:
-	.4byte 0x000000CF
-	.4byte 0x000000CE
-	.4byte 0x000000D0
-.global lbl_80222674
-lbl_80222674:
-	.4byte 0x0000010B
-	.4byte 0x0000010A
-	.4byte 0x0000010C
