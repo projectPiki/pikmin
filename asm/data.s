@@ -5379,44 +5379,41 @@ convFmts:
 	.4byte 0xFFFFFFFF
 	.4byte 0xFFFFFFFF
 	.4byte 0x00000001
-	.4byte 0x5445585F
-	.4byte 0x464D545F
-	.4byte 0x52474235
-	.4byte 0x36350000
-	.4byte 0x5445585F
-	.4byte 0x464D545F
-	.4byte 0x53335443
-	.4byte 0x00000000
-	.4byte 0x5445585F
-	.4byte 0x464D545F
-	.4byte 0x52474235
-	.4byte 0x41330000
-	.4byte 0x5445585F
-	.4byte 0x464D545F
-	.4byte 0x49340000
-	.4byte 0x5445585F
-	.4byte 0x464D545F
-	.4byte 0x49380000
-	.4byte 0x5445585F
-	.4byte 0x464D545F
-	.4byte 0x49413400
-	.4byte 0x5445585F
-	.4byte 0x464D545F
-	.4byte 0x49413800
-	.4byte 0x5445585F
-	.4byte 0x464D545F
-	.4byte 0x52474241
-	.4byte 0x38000000
+.balign 4
+lbl_80227F18:
+	.asciz "TEX_FMT_RGB565"
+.balign 4
+lbl_80227F28:
+	.asciz "TEX_FMT_S3TC"
+.balign 4
+lbl_80227F38:
+	.asciz "TEX_FMT_RGB5A3"
+.balign 4
+lbl_80227F48:
+	.asciz "TEX_FMT_I4"
+.balign 4
+lbl_80227F54:
+	.asciz "TEX_FMT_I8"
+.balign 4
+lbl_80227F60:
+	.asciz "TEX_FMT_IA4"
+.balign 4
+lbl_80227F6C:
+	.asciz "TEX_FMT_IA8"
+.balign 4
+lbl_80227F78:
+	.asciz "TEX_FMT_RGBA8"
+.balign 4
 .global fmtNames
 fmtNames:
-	.4byte 0x80227F18
-	.4byte 0x80227F28
-	.4byte 0x80227F38
-	.4byte 0x80227F48
-	.4byte 0x80227F54
-	.4byte 0x80227F60
-	.4byte 0x80227F6C
-	.4byte 0x80227F78
+	.4byte lbl_80227F18
+	.4byte lbl_80227F28
+	.4byte lbl_80227F38
+	.4byte lbl_80227F48
+	.4byte lbl_80227F54
+	.4byte lbl_80227F60
+	.4byte lbl_80227F6C
+	.4byte lbl_80227F78
 .global lbl_80227FA8
 lbl_80227FA8:
 	.4byte lbl_800287B0
@@ -5429,49 +5426,48 @@ lbl_80227FA8:
 	.4byte lbl_800287E8
 	.4byte lbl_800287F4
 	.4byte lbl_800287FC
-	.4byte 0x47585F54
-	.4byte 0x465F4934
-	.4byte 0x00000000
-	.4byte 0x47585F54
-	.4byte 0x465F4938
-	.4byte 0x00000000
-	.4byte 0x47585F54
-	.4byte 0x465F4941
-	.4byte 0x34000000
-	.4byte 0x47585F54
-	.4byte 0x465F4941
-	.4byte 0x38000000
-	.4byte 0x47585F54
-	.4byte 0x465F5247
-	.4byte 0x42353635
-	.4byte 0x00000000
-	.4byte 0x47585F54
-	.4byte 0x465F5247
-	.4byte 0x42354133
-	.4byte 0x00000000
-	.4byte 0x47585F54
-	.4byte 0x465F5247
-	.4byte 0x42413800
-	.4byte 0x47585F54
-	.4byte 0x465F434D
-	.4byte 0x50520000
+.balign 4
+lbl_80227FD0:
+	.asciz "GX_TF_I4"
+.balign 4
+lbl_80227FDC:
+	.asciz "GX_TF_I8"
+.balign 4
+lbl_80227FE8:
+	.asciz "GX_TF_IA4"
+.balign 4
+lbl_80227FF4:
+	.asciz "GX_TF_IA8"
+.balign 4
+lbl_80228000:
+	.asciz "GX_TF_RGB565"
+.balign 4
+lbl_80228010:
+	.asciz "GX_TF_RGB5A3"
+.balign 4
+lbl_80228020:
+	.asciz "GX_TF_RGBA8"
+.balign 4
+lbl_8022802C:
+	.asciz "GX_TF_CMPR"
+.balign 4
 .global btitexFmts
 btitexFmts:
-	.4byte 0x80227FD0
-	.4byte 0x80227FDC
-	.4byte 0x80227FE8
-	.4byte 0x80227FF4
-	.4byte 0x80228000
-	.4byte 0x80228010
-	.4byte 0x80228020
-	.4byte 0x803DCF28
-	.4byte 0x803DCF28
-	.4byte 0x803DCF28
-	.4byte 0x803DCF28
-	.4byte 0x803DCF28
-	.4byte 0x803DCF28
-	.4byte 0x803DCF28
-	.4byte 0x8022802C
+	.4byte lbl_80227FD0
+	.4byte lbl_80227FDC
+	.4byte lbl_80227FE8
+	.4byte lbl_80227FF4
+	.4byte lbl_80228000
+	.4byte lbl_80228010
+	.4byte lbl_80228020
+	.4byte lbl_803DCF28
+	.4byte lbl_803DCF28
+	.4byte lbl_803DCF28
+	.4byte lbl_803DCF28
+	.4byte lbl_803DCF28
+	.4byte lbl_803DCF28
+	.4byte lbl_803DCF28
+	.4byte lbl_8022802C
 .balign 4
 lbl_80228074:
 	.asciz "GX_TF_C4"
@@ -8248,120 +8244,75 @@ __vt__9GamePrefs:
 	.4byte getAgeNodeType__5ANodeFv
 	.4byte read__9GamePrefsFR18RandomAccessStream
 	.4byte write__9GamePrefsFR18RandomAccessStream
+.balign 4
 .global lbl_802A69A8
 lbl_802A69A8:
-	.4byte 0x67616D65
-	.4byte 0x53657475
-	.4byte 0x702E6370
-	.4byte 0x70000000
-	.4byte 0x47616D65
-	.4byte 0x53657475
-	.4byte 0x70000000
-	.4byte 0x6F626A65
-	.4byte 0x6374732F
-	.4byte 0x70656C6C
-	.4byte 0x6574732F
-	.4byte 0x77686974
-	.4byte 0x65312E6D
-	.4byte 0x6F640000
-	.4byte 0x6F626A65
-	.4byte 0x6374732F
-	.4byte 0x70656C6C
-	.4byte 0x6574732F
-	.4byte 0x77686974
-	.4byte 0x65312E61
-	.4byte 0x6E6D0000
-	.4byte 0x6F626A65
-	.4byte 0x6374732F
-	.4byte 0x70656C6C
-	.4byte 0x6574732F
-	.4byte 0x77686974
-	.4byte 0x65322E6D
-	.4byte 0x6F640000
-	.4byte 0x6F626A65
-	.4byte 0x6374732F
-	.4byte 0x70656C6C
-	.4byte 0x6574732F
-	.4byte 0x77686974
-	.4byte 0x65322E61
-	.4byte 0x6E6D0000
-	.4byte 0x6F626A65
-	.4byte 0x6374732F
-	.4byte 0x70656C6C
-	.4byte 0x6574732F
-	.4byte 0x77686974
-	.4byte 0x65332E6D
-	.4byte 0x6F640000
-	.4byte 0x6F626A65
-	.4byte 0x6374732F
-	.4byte 0x70656C6C
-	.4byte 0x6574732F
-	.4byte 0x77686974
-	.4byte 0x65332E61
-	.4byte 0x6E6D0000
-	.4byte 0x6F626A65
-	.4byte 0x6374732F
-	.4byte 0x70656C6C
-	.4byte 0x6574732F
-	.4byte 0x77686974
-	.4byte 0x65342E6D
-	.4byte 0x6F640000
-	.4byte 0x6F626A65
-	.4byte 0x6374732F
-	.4byte 0x70656C6C
-	.4byte 0x6574732F
-	.4byte 0x77686974
-	.4byte 0x65342E61
-	.4byte 0x6E6D0000
-	.4byte 0x70696B69
-	.4byte 0x732F626C
-	.4byte 0x754D6F64
-	.4byte 0x656C2E6D
-	.4byte 0x6F640000
-	.4byte 0x70696B69
-	.4byte 0x732F626C
-	.4byte 0x754D6F64
-	.4byte 0x656C2E61
-	.4byte 0x6E6D0000
-	.4byte 0x70696B69
-	.4byte 0x732F7265
-	.4byte 0x644D6F64
-	.4byte 0x656C2E6D
-	.4byte 0x6F640000
-	.4byte 0x70696B69
-	.4byte 0x732F7965
-	.4byte 0x6C4D6F64
-	.4byte 0x656C2E6D
-	.4byte 0x6F640000
-	.4byte 0x70696B69
-	.4byte 0x732F6B69
-	.4byte 0x6E4D6F64
-	.4byte 0x656C2E6D
-	.4byte 0x6F640000
-	.4byte 0x70696B69
-	.4byte 0x732F6E76
-	.4byte 0x334D6F64
-	.4byte 0x656C2E6D
-	.4byte 0x6F640000
+	.asciz "gameSetup.cpp"
+.balign 4
+lbl_802A69B8:
+	.asciz "GameSetup"
+.balign 4
+lbl_802A69C4:
+	.asciz "objects/pellets/white1.mod"
+.balign 4
+lbl_802A69E0:
+	.asciz "objects/pellets/white1.anm"
+.balign 4
+lbl_802A69FC:
+	.asciz "objects/pellets/white2.mod"
+.balign 4
+lbl_802A6A18:
+	.asciz "objects/pellets/white2.anm"
+.balign 4
+lbl_802A6A34:
+	.asciz "objects/pellets/white3.mod"
+.balign 4
+lbl_802A6A50:
+	.asciz "objects/pellets/white3.anm"
+.balign 4
+lbl_802A6A6C:
+	.asciz "objects/pellets/white4.mod"
+.balign 4
+lbl_802A6A88:
+	.asciz "objects/pellets/white4.anm"
+.balign 4
+lbl_802A6AA4:
+	.asciz "pikis/bluModel.mod"
+.balign 4
+lbl_802A6AB8:
+	.asciz "pikis/bluModel.anm"
+.balign 4
+lbl_802A6ACC:
+	.asciz "pikis/redModel.mod"
+.balign 4
+lbl_802A6AE0:
+	.asciz "pikis/yelModel.mod"
+.balign 4
+lbl_802A6AF4:
+	.asciz "pikis/kinModel.mod"
+.balign 4
+lbl_802A6B08:
+	.asciz "pikis/nv3Model.mod"
+.balign 4
 .global shapeList
 shapeList:
-	.4byte 0x802A69C4
-	.4byte 0x802A69E0
-	.4byte 0x802A69FC
-	.4byte 0x802A6A18
-	.4byte 0x802A6A34
-	.4byte 0x802A6A50
-	.4byte 0x802A6A6C
-	.4byte 0x802A6A88
-	.4byte 0x802A6AA4
-	.4byte 0x802A6AB8
-	.4byte 0x802A6ACC
+	.4byte lbl_802A69C4
+	.4byte lbl_802A69E0
+	.4byte lbl_802A69FC
+	.4byte lbl_802A6A18
+	.4byte lbl_802A6A34
+	.4byte lbl_802A6A50
+	.4byte lbl_802A6A6C
+	.4byte lbl_802A6A88
+	.4byte lbl_802A6AA4
+	.4byte lbl_802A6AB8
+	.4byte lbl_802A6ACC
 	.4byte 0x00000000
-	.4byte 0x802A6AE0
+	.4byte lbl_802A6AE0
 	.4byte 0x00000000
-	.4byte 0x802A6AF4
+	.4byte lbl_802A6AF4
 	.4byte 0x00000000
-	.4byte 0x802A6B08
+	.4byte lbl_802A6B08
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x00000000
@@ -11121,13 +11072,14 @@ lbl_802A9504:
 	.4byte 0x00000000
 	.4byte 0xFFFFFFFF
 	.4byte menuIncrease__7FogMenuFR4Menu
-	.4byte 0x50415241
-	.4byte 0x4C4C454C
-	.4byte 0x00000000
+.balign 4
+lbl_802A9600:
+	.asciz "PARALLEL"
+.balign 4
 .global lightTypeNames
 lightTypeNames:
 	.4byte 0x803DE320
-	.4byte 0x802A9600
+	.4byte lbl_802A9600
 	.4byte 0x803DE324
 	.4byte 0x803DE32C
 .global lightConv
@@ -26495,11 +26447,11 @@ __vt__7BaseInf:
 	.4byte 0
 	.4byte 0
 	.4byte 0
+.balign 4
 .global lbl_802B8428
 lbl_802B8428:
-	.4byte 0x70696B69
-	.4byte 0x2E637070
-	.4byte 0x00000000
+	.asciz "piki.cpp"
+.balign 4
 .global lbl_802B8434
 lbl_802B8434:
 	.4byte lbl_800C849C
@@ -26543,9 +26495,9 @@ lbl_802B8470:
 	.4byte lbl_800C84F8
 .global lbl_802B84C8
 lbl_802B84C8:
-	.4byte 0x7369743A
-	.4byte 0x736C7569
-	.4byte 0x63650000
+	.asciz "sit:sluice"
+.balign 4
+lbl_802B84D4:
 	.4byte lbl_800A7908
 	.4byte lbl_800A7930
 	.4byte lbl_800A7944
@@ -26578,152 +26530,149 @@ lbl_802B8500:
 	.4byte lbl_800CD3FC
 	.4byte lbl_800CD3FC
 	.4byte lbl_800CD298
-	.4byte 0x42555455
-	.4byte 0x4B415249
-	.4byte 0x00000000
-	.4byte 0x5452414E
-	.4byte 0x53464F52
-	.4byte 0x4D000000
+.balign 4
+lbl_802B854C:
+	.asciz "BUTUKARI"
+.balign 4
+lbl_802B8558:
+	.asciz "TRANSFORM"
+.balign 4
 .global states_str
 states_str:
-	.4byte 0x803E0AB8
-	.4byte 0x803E0AC0
-	.4byte 0x803E0AC8
-	.4byte 0x803E0AD0
-	.4byte 0x803E0AD8
-	.4byte 0x803E0AE0
-	.4byte 0x802B854C
-	.4byte 0x802B8558
-	.4byte 0x803E0AE8
-	.4byte 0x803E0AF0
-	.4byte 0x803E0AF8
-	.4byte 0x803E0AF8
-	.4byte 0x803E0AF8
-	.4byte 0x803E0AF8
-	.4byte 0x54454B49
-	.4byte 0x504C4154
-	.4byte 0x00000000
+	.4byte lbl_803E0AB8
+	.4byte lbl_803E0AC0
+	.4byte lbl_803E0AC8
+	.4byte lbl_803E0AD0
+	.4byte lbl_803E0AD8
+	.4byte lbl_803E0AE0
+	.4byte lbl_802B854C
+	.4byte lbl_802B8558
+	.4byte lbl_803E0AE8
+	.4byte lbl_803E0AF0
+	.4byte lbl_803E0AF8
+	.4byte lbl_803E0AF8
+	.4byte lbl_803E0AF8
+	.4byte lbl_803E0AF8
+.balign 4
+lbl_802B859C:
+	.asciz "TEKIPLAT"
+.balign 4
 .global _standStr
 _standStr:
-	.4byte 0x803E0B00
-	.4byte 0x802B859C
-	.4byte 0x803E0B08
-	.4byte 0x803E0B10
-	.4byte 0x46524545
-	.4byte 0x5F4D4F44
-	.4byte 0x45000000
-	.4byte 0x464F524D
-	.4byte 0x4154494F
-	.4byte 0x4E5F4D4F
-	.4byte 0x44450000
-	.4byte 0x41545441
-	.4byte 0x434B5F4D
-	.4byte 0x4F444500
-	.4byte 0x4E554B55
-	.4byte 0x5F4D4F44
-	.4byte 0x45000000
-	.4byte 0x47554152
-	.4byte 0x445F4D4F
-	.4byte 0x44450000
-	.4byte 0x5049434B
-	.4byte 0x5F4D4F44
-	.4byte 0x45000000
-	.4byte 0x4445434F
-	.4byte 0x595F4D4F
-	.4byte 0x44450000
-	.4byte 0x4152524F
-	.4byte 0x575F4D4F
-	.4byte 0x44450000
-	.4byte 0x43415252
-	.4byte 0x595F4D4F
-	.4byte 0x44450000
-	.4byte 0x5452414E
-	.4byte 0x53504F52
-	.4byte 0x545F4D4F
-	.4byte 0x44450000
-	.4byte 0x524F5045
-	.4byte 0x5F4D4F44
-	.4byte 0x45000000
-	.4byte 0x454E5445
-	.4byte 0x525F4D4F
-	.4byte 0x44450000
-	.4byte 0x45584954
-	.4byte 0x5F4D4F44
-	.4byte 0x45000000
-	.4byte 0x42524541
-	.4byte 0x4B57414C
-	.4byte 0x4C5F4D4F
-	.4byte 0x44450000
-	.4byte 0x4D494E45
-	.4byte 0x5F4D4F44
-	.4byte 0x45000000
-	.4byte 0x4B494E4F
-	.4byte 0x4B4F5F4D
-	.4byte 0x4F444500
-	.4byte 0x42524944
-	.4byte 0x47455F4D
-	.4byte 0x4F444500
-	.4byte 0x50555348
-	.4byte 0x53544F4E
-	.4byte 0x455F4D4F
-	.4byte 0x44450000
-	.4byte 0x50555442
-	.4byte 0x4F4D425F
-	.4byte 0x4D4F4445
-	.4byte 0x00000000
-	.4byte 0x52455343
-	.4byte 0x55455F4D
-	.4byte 0x4F444500
-	.4byte 0x57454544
-	.4byte 0x5F4D4F44
-	.4byte 0x45000000
-	.4byte 0x50454242
-	.4byte 0x4C455F4D
-	.4byte 0x4F444500
-	.4byte 0x424F4D41
-	.4byte 0x4B455F4D
-	.4byte 0x4F444500
-	.4byte 0x57415252
-	.4byte 0x494F525F
-	.4byte 0x4D4F4445
-	.4byte 0x00000000
+	.4byte lbl_803E0B00
+	.4byte lbl_802B859C
+	.4byte lbl_803E0B08
+	.4byte lbl_803E0B10
+.balign 4
+lbl_802B85B8:
+	.asciz "FREE_MODE"
+.balign 4
+lbl_802B85C4:
+	.asciz "FORMATION_MODE"
+.balign 4
+lbl_802B85D4:
+	.asciz "ATTACK_MODE"
+.balign 4
+lbl_802B85E0:
+	.asciz "NUKU_MODE"
+.balign 4
+lbl_802B85EC:
+	.asciz "GUARD_MODE"
+.balign 4
+lbl_802B85F8:
+	.asciz "PICK_MODE"
+.balign 4
+lbl_802B8604:
+	.asciz "DECOY_MODE"
+.balign 4
+lbl_802B8610:
+	.asciz "ARROW_MODE"
+.balign 4
+lbl_802B861C:
+	.asciz "CARRY_MODE"
+.balign 4
+lbl_802B8628:
+	.asciz "TRANSPORT_MODE"
+.balign 4
+lbl_802B8638:
+	.asciz "ROPE_MODE"
+.balign 4
+lbl_802B8644:
+	.asciz "ENTER_MODE"
+.balign 4
+lbl_802B8650:
+	.asciz "EXIT_MODE"
+.balign 4
+lbl_802B865C:
+	.asciz "BREAKWALL_MODE"
+.balign 4
+lbl_802B866C:
+	.asciz "MINE_MODE"
+.balign 4
+lbl_802B8678:
+	.asciz "KINOKO_MODE"
+.balign 4
+lbl_802B8684:
+	.asciz "BRIDGE_MODE"
+.balign 4
+lbl_802B8690:
+	.asciz "PUSHSTONE_MODE"
+.balign 4
+lbl_802B86A0:
+	.asciz "PUTBOMB_MODE"
+.balign 4
+lbl_802B86B0:
+	.asciz "RESCUE_MODE"
+.balign 4
+lbl_802B86BC:
+	.asciz "WEED_MODE"
+.balign 4
+lbl_802B86C8:
+	.asciz "PEBBLE_MODE"
+.balign 4
+lbl_802B86D4:
+	.asciz "BOMAKE_MODE"
+.balign 4
+lbl_802B86E0:
+	.asciz "WARRIOR_MODE"
+.balign 4
 .global _modeStr
 _modeStr:
-	.4byte 0x802B85B8
-	.4byte 0x802B85C4
-	.4byte 0x802B85D4
-	.4byte 0x802B85E0
-	.4byte 0x802B85EC
-	.4byte 0x802B85F8
-	.4byte 0x802B8604
-	.4byte 0x802B8610
-	.4byte 0x802B861C
-	.4byte 0x802B8628
-	.4byte 0x802B8638
-	.4byte 0x802B8644
-	.4byte 0x802B8650
-	.4byte 0x802B865C
-	.4byte 0x802B866C
-	.4byte 0x802B8678
-	.4byte 0x802B8684
-	.4byte 0x802B8690
-	.4byte 0x802B86A0
-	.4byte 0x802B86B0
-	.4byte 0x802B86BC
-	.4byte 0x802B86C8
-	.4byte 0x802B86D4
-	.4byte 0x803E0B14
-	.4byte 0x802B86E0
+	.4byte lbl_802B85B8
+	.4byte lbl_802B85C4
+	.4byte lbl_802B85D4
+	.4byte lbl_802B85E0
+	.4byte lbl_802B85EC
+	.4byte lbl_802B85F8
+	.4byte lbl_802B8604
+	.4byte lbl_802B8610
+	.4byte lbl_802B861C
+	.4byte lbl_802B8628
+	.4byte lbl_802B8638
+	.4byte lbl_802B8644
+	.4byte lbl_802B8650
+	.4byte lbl_802B865C
+	.4byte lbl_802B866C
+	.4byte lbl_802B8678
+	.4byte lbl_802B8684
+	.4byte lbl_802B8690
+	.4byte lbl_802B86A0
+	.4byte lbl_802B86B0
+	.4byte lbl_802B86BC
+	.4byte lbl_802B86C8
+	.4byte lbl_802B86D4
+	.4byte lbl_803E0B14
+	.4byte lbl_802B86E0
 .global _colorNames
 _colorNames:
-	.4byte 0x803E0B1C
-	.4byte 0x803E0B24
-	.4byte 0x803E0B28
-	.4byte 0x53746174
-	.4byte 0x654D6163
-	.4byte 0x68696E65
-	.4byte 0x3C50696B
-	.4byte 0x693E0000
+	.4byte lbl_803E0B1C
+	.4byte lbl_803E0B24
+	.4byte lbl_803E0B28
+.balign 4
+.global lbl_802B8760
+lbl_802B8760:
+	.asciz "StateMachine<Piki>"
+.balign 4
 .global "__vt__19StateMachine<4Piki>"
 "__vt__19StateMachine<4Piki>":
 	.4byte "__RTTI__19StateMachine<4Piki>"

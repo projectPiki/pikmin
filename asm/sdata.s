@@ -294,8 +294,9 @@ lbl_803DCF1C:
 .balign 4
 .global lbl_803DCF24
 lbl_803DCF24:
-	.4byte 0x00000000
+	.asciz ""
 .balign 4
+.global lbl_803DCF28
 lbl_803DCF28:
 	.asciz "INVALID"
 .balign 4
@@ -8305,46 +8306,81 @@ lbl_803E0AA8:
 	.float 1.0
 .global lbl_803E0AAC
 lbl_803E0AAC:
-	.4byte 0x00000000
+	.float 0.0
 .global lbl_803E0AB0
 lbl_803E0AB0:
-	.4byte 0x00000000
+	.float 0.0
 .global lbl_803E0AB4
 lbl_803E0AB4:
-	.4byte 0x00000000
-	.4byte 0x4E4F524D
-	.4byte 0x414C0000
-	.4byte 0x47524F57
-	.4byte 0x00000000
-	.4byte 0x42555259
-	.4byte 0x00000000
-	.4byte 0x4E554B41
-	.4byte 0x52450000
-	.4byte 0x4459494E
-	.4byte 0x47000000
-	.4byte 0x44454144
-	.4byte 0x00000000
-	.4byte 0x47524F57
-	.4byte 0x55500000
-	.4byte 0x4142534F
-	.4byte 0x52420000
-	.4byte 0x494C4C45
-	.4byte 0x47414C00
-	.4byte 0x47524F55
-	.4byte 0x4E440000
-	.4byte 0x504C4154
-	.4byte 0x00000000
-	.4byte 0x41495200
-	.4byte 0x424F5F4D
-	.4byte 0x4F444500
-	.4byte 0x626C7565
-	.4byte 0x00000000
-	.4byte 0x72656400
-	.4byte 0x79656C6C
-	.4byte 0x6F770000
+	.float 0.0
+.balign 4
+.global lbl_803E0AB8
+lbl_803E0AB8:
+	.asciz "NORMAL"
+.balign 4
+.global lbl_803E0AC0
+lbl_803E0AC0:
+	.asciz "GROW"
+.balign 4
+.global lbl_803E0AC8
+lbl_803E0AC8:
+	.asciz "BURY"
+.balign 4
+.global lbl_803E0AD0
+lbl_803E0AD0:
+	.asciz "NUKARE"
+.balign 4
+.global lbl_803E0AD8
+lbl_803E0AD8:
+	.asciz "DYING"
+.balign 4
+.global lbl_803E0AE0
+lbl_803E0AE0:
+	.asciz "DEAD"
+.balign 4
+.global lbl_803E0AE8
+lbl_803E0AE8:
+	.asciz "GROWUP"
+.balign 4
+.global lbl_803E0AF0
+lbl_803E0AF0:
+	.asciz "ABSORB"
+.balign 4
+.global lbl_803E0AF8
+lbl_803E0AF8:
+	.asciz "ILLEGAL"
+.balign 4
+.global lbl_803E0B00
+lbl_803E0B00:
+	.asciz "GROUND"
+.balign 4
+.global lbl_803E0B08
+lbl_803E0B08:
+	.asciz "PLAT"
+.balign 4
+.global lbl_803E0B10
+lbl_803E0B10:
+	.asciz "AIR"
+.balign 4
+.global lbl_803E0B14
+lbl_803E0B14:
+	.asciz "BO_MODE"
+.balign 4
+.global lbl_803E0B1C
+lbl_803E0B1C:
+	.asciz "blue"
+.balign 4
+.global lbl_803E0B24
+lbl_803E0B24:
+	.asciz "red"
+.balign 4
+.global lbl_803E0B28
+lbl_803E0B28:
+	.asciz "yellow"
+.balign 4
 .global "__RTTI__19StateMachine<4Piki>"
 "__RTTI__19StateMachine<4Piki>":
-	.4byte 0x802B8760
+	.4byte lbl_802B8760
 	.4byte 0
 	.4byte 0x802B878C
 	.4byte 0
