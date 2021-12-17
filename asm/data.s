@@ -8316,300 +8316,145 @@ shapeList:
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x00000000
-	.4byte 0x6F626A65
-	.4byte 0x6374732F
-	.4byte 0x75666F2F
-	.4byte 0x75666F30
-	.4byte 0x3730352E
-	.4byte 0x6D6F6400
-	.4byte 0x6F626A65
-	.4byte 0x6374732F
-	.4byte 0x75666F2F
-	.4byte 0x75666F30
-	.4byte 0x3730352E
-	.4byte 0x616E6D00
-	.4byte 0x6F626A65
-	.4byte 0x6374732F
-	.4byte 0x75666F70
-	.4byte 0x61727473
-	.4byte 0x2F736F74
-	.4byte 0x6F312E6D
-	.4byte 0x6F640000
-	.4byte 0x6F626A65
-	.4byte 0x6374732F
-	.4byte 0x75666F70
-	.4byte 0x61727473
-	.4byte 0x2F736F74
-	.4byte 0x6F312E61
-	.4byte 0x6E6D0000
-	.4byte 0x6F626A65
-	.4byte 0x6374732F
-	.4byte 0x75666F70
-	.4byte 0x61727473
-	.4byte 0x2F736F74
-	.4byte 0x6F322E6D
-	.4byte 0x6F640000
-	.4byte 0x6F626A65
-	.4byte 0x6374732F
-	.4byte 0x75666F70
-	.4byte 0x61727473
-	.4byte 0x2F736F74
-	.4byte 0x6F322E61
-	.4byte 0x6E6D0000
-	.4byte 0x6F626A65
-	.4byte 0x6374732F
-	.4byte 0x75666F70
-	.4byte 0x61727473
-	.4byte 0x2F736F74
-	.4byte 0x6F332E6D
-	.4byte 0x6F640000
-	.4byte 0x6F626A65
-	.4byte 0x6374732F
-	.4byte 0x75666F70
-	.4byte 0x61727473
-	.4byte 0x2F736F74
-	.4byte 0x6F332E61
-	.4byte 0x6E6D0000
-	.4byte 0x6F626A65
-	.4byte 0x6374732F
-	.4byte 0x75666F70
-	.4byte 0x61727473
-	.4byte 0x2F736F74
-	.4byte 0x6F342E6D
-	.4byte 0x6F640000
-	.4byte 0x6F626A65
-	.4byte 0x6374732F
-	.4byte 0x75666F70
-	.4byte 0x61727473
-	.4byte 0x2F736F74
-	.4byte 0x6F342E61
-	.4byte 0x6E6D0000
-	.4byte 0x6F626A65
-	.4byte 0x6374732F
-	.4byte 0x75666F70
-	.4byte 0x61727473
-	.4byte 0x2F736F74
-	.4byte 0x6F352E6D
-	.4byte 0x6F640000
-	.4byte 0x6F626A65
-	.4byte 0x6374732F
-	.4byte 0x75666F70
-	.4byte 0x61727473
-	.4byte 0x2F736F74
-	.4byte 0x6F352E61
-	.4byte 0x6E6D0000
-	.4byte 0x6F626A65
-	.4byte 0x6374732F
-	.4byte 0x75666F70
-	.4byte 0x61727473
-	.4byte 0x2F66757A
-	.4byte 0x6F6B7531
-	.4byte 0x2E6D6F64
-	.4byte 0x00000000
-	.4byte 0x6F626A65
-	.4byte 0x6374732F
-	.4byte 0x75666F70
-	.4byte 0x61727473
-	.4byte 0x2F66757A
-	.4byte 0x6F6B7531
-	.4byte 0x2E616E6D
-	.4byte 0x00000000
-	.4byte 0x6F626A65
-	.4byte 0x6374732F
-	.4byte 0x75666F70
-	.4byte 0x61727473
-	.4byte 0x2F66757A
-	.4byte 0x6F6B7532
-	.4byte 0x2E6D6F64
-	.4byte 0x00000000
-	.4byte 0x6F626A65
-	.4byte 0x6374732F
-	.4byte 0x75666F70
-	.4byte 0x61727473
-	.4byte 0x2F66757A
-	.4byte 0x6F6B7532
-	.4byte 0x2E616E6D
-	.4byte 0x00000000
-	.4byte 0x6F626A65
-	.4byte 0x6374732F
-	.4byte 0x75666F70
-	.4byte 0x61727473
-	.4byte 0x2F66757A
-	.4byte 0x6F6B7533
-	.4byte 0x2E6D6F64
-	.4byte 0x00000000
-	.4byte 0x6F626A65
-	.4byte 0x6374732F
-	.4byte 0x75666F70
-	.4byte 0x61727473
-	.4byte 0x2F66757A
-	.4byte 0x6F6B7533
-	.4byte 0x2E616E6D
-	.4byte 0x00000000
-	.4byte 0x6F626A65
-	.4byte 0x6374732F
-	.4byte 0x75666F70
-	.4byte 0x61727473
-	.4byte 0x2F66757A
-	.4byte 0x6F6B7534
-	.4byte 0x2E6D6F64
-	.4byte 0x00000000
-	.4byte 0x6F626A65
-	.4byte 0x6374732F
-	.4byte 0x75666F70
-	.4byte 0x61727473
-	.4byte 0x2F66757A
-	.4byte 0x6F6B7534
-	.4byte 0x2E616E6D
-	.4byte 0x00000000
-	.4byte 0x6F626A65
-	.4byte 0x6374732F
-	.4byte 0x75666F70
-	.4byte 0x61727473
-	.4byte 0x2F66757A
-	.4byte 0x6F6B7535
-	.4byte 0x2E6D6F64
-	.4byte 0x00000000
-	.4byte 0x6F626A65
-	.4byte 0x6374732F
-	.4byte 0x75666F70
-	.4byte 0x61727473
-	.4byte 0x2F66757A
-	.4byte 0x6F6B7535
-	.4byte 0x2E616E6D
-	.4byte 0x00000000
-	.4byte 0x6F626A65
-	.4byte 0x6374732F
-	.4byte 0x75666F70
-	.4byte 0x61727473
-	.4byte 0x2F66757A
-	.4byte 0x6F6B7536
-	.4byte 0x2E6D6F64
-	.4byte 0x00000000
-	.4byte 0x6F626A65
-	.4byte 0x6374732F
-	.4byte 0x75666F70
-	.4byte 0x61727473
-	.4byte 0x2F66757A
-	.4byte 0x6F6B7536
-	.4byte 0x2E616E6D
-	.4byte 0x00000000
-	.4byte 0x6F626A65
-	.4byte 0x6374732F
-	.4byte 0x75666F70
-	.4byte 0x61727473
-	.4byte 0x2F66757A
-	.4byte 0x6F6B7537
-	.4byte 0x2E6D6F64
-	.4byte 0x00000000
-	.4byte 0x6F626A65
-	.4byte 0x6374732F
-	.4byte 0x75666F70
-	.4byte 0x61727473
-	.4byte 0x2F66757A
-	.4byte 0x6F6B7537
-	.4byte 0x2E616E6D
-	.4byte 0x00000000
-	.4byte 0x6F626A65
-	.4byte 0x6374732F
-	.4byte 0x75666F70
-	.4byte 0x61727473
-	.4byte 0x2F66757A
-	.4byte 0x6F6B7538
-	.4byte 0x2E6D6F64
-	.4byte 0x00000000
-	.4byte 0x6F626A65
-	.4byte 0x6374732F
-	.4byte 0x75666F70
-	.4byte 0x61727473
-	.4byte 0x2F66757A
-	.4byte 0x6F6B7538
-	.4byte 0x2E616E6D
-	.4byte 0x00000000
-	.4byte 0x6F626A65
-	.4byte 0x6374732F
-	.4byte 0x75666F70
-	.4byte 0x61727473
-	.4byte 0x2F66757A
-	.4byte 0x6F6B7539
-	.4byte 0x2E6D6F64
-	.4byte 0x00000000
-	.4byte 0x6F626A65
-	.4byte 0x6374732F
-	.4byte 0x75666F70
-	.4byte 0x61727473
-	.4byte 0x2F66757A
-	.4byte 0x6F6B7539
-	.4byte 0x2E616E6D
-	.4byte 0x00000000
-	.4byte 0x6F626A65
-	.4byte 0x6374732F
-	.4byte 0x75666F70
-	.4byte 0x61727473
-	.4byte 0x2F66757A
-	.4byte 0x6F6B7531
-	.4byte 0x302E6D6F
-	.4byte 0x64000000
-	.4byte 0x6F626A65
-	.4byte 0x6374732F
-	.4byte 0x75666F70
-	.4byte 0x61727473
-	.4byte 0x2F66757A
-	.4byte 0x6F6B7531
-	.4byte 0x302E616E
-	.4byte 0x6D000000
-	.4byte 0x6F626A65
-	.4byte 0x6374732F
-	.4byte 0x75666F70
-	.4byte 0x61727473
-	.4byte 0x2F66757A
-	.4byte 0x6F6B7531
-	.4byte 0x312E6D6F
-	.4byte 0x64000000
-	.4byte 0x6F626A65
-	.4byte 0x6374732F
-	.4byte 0x75666F70
-	.4byte 0x61727473
-	.4byte 0x2F66757A
-	.4byte 0x6F6B7531
-	.4byte 0x312E616E
-	.4byte 0x6D000000
+.balign 4
+lbl_802A6B6C:
+	.asciz "objects/ufo/ufo0705.mod"
+.balign 4
+lbl_802A6B84:
+	.asciz "objects/ufo/ufo0705.anm"
+.balign 4
+lbl_802A6B9C:
+	.asciz "objects/ufoparts/soto1.mod"
+.balign 4
+lbl_802A6BB8:
+	.asciz "objects/ufoparts/soto1.anm"
+.balign 4
+lbl_802A6BD4:
+	.asciz "objects/ufoparts/soto2.mod"
+.balign 4
+lbl_802A6BF0:
+	.asciz "objects/ufoparts/soto2.anm"
+.balign 4
+lbl_802A6C0C:
+	.asciz "objects/ufoparts/soto3.mod"
+.balign 4
+lbl_802A6C28:
+	.asciz "objects/ufoparts/soto3.anm"
+.balign 4
+lbl_802A6C44:
+	.asciz "objects/ufoparts/soto4.mod"
+.balign 4
+lbl_802A6C60:
+	.asciz "objects/ufoparts/soto4.anm"
+.balign 4
+lbl_802A6C7C:
+	.asciz "objects/ufoparts/soto5.mod"
+.balign 4
+lbl_802A6C98:
+	.asciz "objects/ufoparts/soto5.anm"
+.balign 4
+lbl_802A6CB4:
+	.asciz "objects/ufoparts/fuzoku1.mod"
+.balign 4
+lbl_802A6CD4:
+	.asciz "objects/ufoparts/fuzoku1.anm"
+.balign 4
+lbl_802A6CF4:
+	.asciz "objects/ufoparts/fuzoku2.mod"
+.balign 4
+lbl_802A6D14:
+	.asciz "objects/ufoparts/fuzoku2.anm"
+.balign 4
+lbl_802A6D34:
+	.asciz "objects/ufoparts/fuzoku3.mod"
+.balign 4
+lbl_802A6D54:
+	.asciz "objects/ufoparts/fuzoku3.anm"
+.balign 4
+lbl_802A6D74:
+	.asciz "objects/ufoparts/fuzoku4.mod"
+.balign 4
+lbl_802A6D94:
+	.asciz "objects/ufoparts/fuzoku4.anm"
+.balign 4
+lbl_802A6DB4:
+	.asciz "objects/ufoparts/fuzoku5.mod"
+.balign 4
+lbl_802A6DD4:
+	.asciz "objects/ufoparts/fuzoku5.anm"
+.balign 4
+lbl_802A6DF4:
+	.asciz "objects/ufoparts/fuzoku6.mod"
+.balign 4
+lbl_802A6E14:
+	.asciz "objects/ufoparts/fuzoku6.anm"
+.balign 4
+lbl_802A6E34:
+	.asciz "objects/ufoparts/fuzoku7.mod"
+.balign 4
+lbl_802A6E54:
+	.asciz "objects/ufoparts/fuzoku7.anm"
+.balign 4
+lbl_802A6E74:
+	.asciz "objects/ufoparts/fuzoku8.mod"
+.balign 4
+lbl_802A6E94:
+	.asciz "objects/ufoparts/fuzoku8.anm"
+.balign 4
+lbl_802A6EB4:
+	.asciz "objects/ufoparts/fuzoku9.mod"
+.balign 4
+lbl_802A6ED4:
+	.asciz "objects/ufoparts/fuzoku9.anm"
+.balign 4
+lbl_802A6EF4:
+	.asciz "objects/ufoparts/fuzoku10.mod"
+.balign 4
+lbl_802A6F14:
+	.asciz "objects/ufoparts/fuzoku10.anm"
+.balign 4
+lbl_802A6F34:
+	.asciz "objects/ufoparts/fuzoku11.mod"
+.balign 4
+lbl_802A6F54:
+	.asciz "objects/ufoparts/fuzoku11.anm"
+.balign 4
 .global shapeList2
 shapeList2:
-	.4byte 0x802A6B6C
-	.4byte 0x802A6B84
-	.4byte 0x802A6B9C
-	.4byte 0x802A6BB8
-	.4byte 0x802A6BD4
-	.4byte 0x802A6BF0
-	.4byte 0x802A6C0C
-	.4byte 0x802A6C28
-	.4byte 0x802A6C44
-	.4byte 0x802A6C60
-	.4byte 0x802A6C7C
-	.4byte 0x802A6C98
-	.4byte 0x802A6CB4
-	.4byte 0x802A6CD4
-	.4byte 0x802A6CF4
-	.4byte 0x802A6D14
-	.4byte 0x802A6D34
-	.4byte 0x802A6D54
-	.4byte 0x802A6D74
-	.4byte 0x802A6D94
-	.4byte 0x802A6DB4
-	.4byte 0x802A6DD4
-	.4byte 0x802A6DF4
-	.4byte 0x802A6E14
-	.4byte 0x802A6E34
-	.4byte 0x802A6E54
-	.4byte 0x802A6E74
-	.4byte 0x802A6E94
-	.4byte 0x802A6EB4
-	.4byte 0x802A6ED4
-	.4byte 0x802A6EF4
-	.4byte 0x802A6F14
-	.4byte 0x802A6F34
-	.4byte 0x802A6F54
+	.4byte lbl_802A6B6C
+	.4byte lbl_802A6B84
+	.4byte lbl_802A6B9C
+	.4byte lbl_802A6BB8
+	.4byte lbl_802A6BD4
+	.4byte lbl_802A6BF0
+	.4byte lbl_802A6C0C
+	.4byte lbl_802A6C28
+	.4byte lbl_802A6C44
+	.4byte lbl_802A6C60
+	.4byte lbl_802A6C7C
+	.4byte lbl_802A6C98
+	.4byte lbl_802A6CB4
+	.4byte lbl_802A6CD4
+	.4byte lbl_802A6CF4
+	.4byte lbl_802A6D14
+	.4byte lbl_802A6D34
+	.4byte lbl_802A6D54
+	.4byte lbl_802A6D74
+	.4byte lbl_802A6D94
+	.4byte lbl_802A6DB4
+	.4byte lbl_802A6DD4
+	.4byte lbl_802A6DF4
+	.4byte lbl_802A6E14
+	.4byte lbl_802A6E34
+	.4byte lbl_802A6E54
+	.4byte lbl_802A6E74
+	.4byte lbl_802A6E94
+	.4byte lbl_802A6EB4
+	.4byte lbl_802A6ED4
+	.4byte lbl_802A6EF4
+	.4byte lbl_802A6F14
+	.4byte lbl_802A6F34
+	.4byte lbl_802A6F54
 	.4byte 0x00000000
 	.4byte 0x00000000
 .balign 4
@@ -11078,20 +10923,21 @@ lbl_802A9600:
 .balign 4
 .global lightTypeNames
 lightTypeNames:
-	.4byte 0x803DE320
+	.4byte lbl_803DE320
 	.4byte lbl_802A9600
-	.4byte 0x803DE324
-	.4byte 0x803DE32C
+	.4byte lbl_803DE324
+	.4byte lbl_803DE32C
 .global lightConv
 lightConv:
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x00000001
-	.4byte 0x61747461
-	.4byte 0x63682074
-	.4byte 0x6F206E61
-	.4byte 0x76690000
+.balign 4
+.global lbl_802A962C
+lbl_802A962C:
+	.asciz "attach to navi"
+.balign 4
 	.4byte 0x00000000
 	.4byte 0xFFFFFFFF
 	.4byte menuChangeType__9LightMenuFR4Menu
@@ -11155,106 +11001,85 @@ lightConv:
 	.4byte 0x00000000
 	.4byte 0xFFFFFFFF
 	.4byte menuBIncrease__6DayMgrFR4Menu
+.balign 4
 .global lbl_802A9738
 lbl_802A9738:
-	.4byte 0x4C696768
-	.4byte 0x7420436F
-	.4byte 0x756E7420
-	.4byte 0x25640000
+	.asciz "Light Count %d"
+.balign 4
 .global lbl_802A9748
 lbl_802A9748:
-	.4byte 0x54696D65
-	.4byte 0x203A2025
-	.4byte 0x20322E31
-	.4byte 0x66000000
-	.4byte 0x44756D70
-	.4byte 0x20536574
-	.4byte 0x74696E67
-	.4byte 0x73000000
-	.4byte 0x6D6F726E
-	.4byte 0x696E6720
-	.4byte 0x3A202520
-	.4byte 0x322E3166
-	.4byte 0x00000000
-	.4byte 0x616D6269
-	.4byte 0x656E7420
-	.4byte 0x636F6C6F
-	.4byte 0x75720000
-	.4byte 0x6D61696E
-	.4byte 0x206C6967
-	.4byte 0x68740000
-	.4byte 0x73756220
-	.4byte 0x6C696768
-	.4byte 0x74000000
-	.4byte 0x2B31206C
-	.4byte 0x69676874
-	.4byte 0x00000000
-	.4byte 0x2B32206C
-	.4byte 0x69676874
-	.4byte 0x00000000
-	.4byte 0x2B33206C
-	.4byte 0x69676874
-	.4byte 0x00000000
-	.4byte 0x2B34206C
-	.4byte 0x69676874
-	.4byte 0x00000000
-	.4byte 0x2B35206C
-	.4byte 0x69676874
-	.4byte 0x00000000
-	.4byte 0x64617920
-	.4byte 0x20202020
-	.4byte 0x3A202520
-	.4byte 0x322E3166
-	.4byte 0x202D3E20
-	.4byte 0x2520322E
-	.4byte 0x31660000
-	.4byte 0x6576656E
-	.4byte 0x696E6720
-	.4byte 0x3A202520
-	.4byte 0x322E3166
-	.4byte 0x00000000
-	.4byte 0x6E696768
-	.4byte 0x74202020
-	.4byte 0x3A202520
-	.4byte 0x322E3166
-	.4byte 0x202D3E20
-	.4byte 0x2520322E
-	.4byte 0x31660000
-	.4byte 0x6D6F7669
-	.4byte 0x65202020
-	.4byte 0x3A202520
-	.4byte 0x322E3166
-	.4byte 0x202D3E20
-	.4byte 0x2520322E
-	.4byte 0x31660000
-	.4byte 0x426C7572
-	.4byte 0x203D2025
-	.4byte 0x64000000
-	.4byte 0x666F6720
-	.4byte 0x636F6C6F
-	.4byte 0x75720000
-	.4byte 0x4E656172
-	.4byte 0x203D2025
-	.4byte 0x2E326600
-	.4byte 0x46617220
-	.4byte 0x3D20252E
-	.4byte 0x32660000
+	.asciz "Time : % 2.1f"
+.balign 4
+lbl_802A9758:
+	.asciz "Dump Settings"
+.balign 4
+lbl_802A9768:
+	.asciz "morning : % 2.1f"
+.balign 4
+lbl_802A977C:
+	.asciz "ambient colour"
+.balign 4
+lbl_802A978C:
+	.asciz "main light"
+.balign 4
+lbl_802A9798:
+	.asciz "sub light"
+.balign 4
+lbl_802A97A4:
+	.asciz "+1 light"
+.balign 4
+lbl_802A97B0:
+	.asciz "+2 light"
+.balign 4
+lbl_802A97BC:
+	.asciz "+3 light"
+.balign 4
+lbl_802A97C8:
+	.asciz "+4 light"
+.balign 4
+lbl_802A97D4:
+	.asciz "+5 light"
+.balign 4
+lbl_802A97E0:
+	.asciz "day     : % 2.1f -> % 2.1f"
+.balign 4
+lbl_802A97FC:
+	.asciz "evening : % 2.1f"
+.balign 4
+lbl_802A9810:
+	.asciz "night   : % 2.1f -> % 2.1f"
+.balign 4
+lbl_802A982C:
+	.asciz "movie   : % 2.1f -> % 2.1f"
+.balign 4
+lbl_802A9848:
+	.asciz "Blur = %d"
+.balign 4
+lbl_802A9854:
+	.asciz "fog colour"
+.balign 4
+lbl_802A9860:
+	.asciz "Near = %.2f"
+.balign 4
+lbl_802A986C:
+	.asciz "Far = %.2f"
+.balign 4
 .global settingnames$2810
 settingnames$2810:
-	.4byte 0x803DE3D4
-	.4byte 0x803DE3DC
-	.4byte 0x803DE3E4
-	.4byte 0x803DE3E8
-	.4byte 0x803DE3F0
+	.4byte lbl_803DE3D4
+	.4byte lbl_803DE3DC
+	.4byte lbl_803DE3E4
+	.4byte lbl_803DE3E8
+	.4byte lbl_803DE3F0
 .global lightnames$2816
 lightnames$2816:
-	.4byte 0x802A978C
-	.4byte 0x802A9798
-	.4byte 0x803DE3F8
-	.4byte 0x803DE3FC
-	.4byte 0x803DE400
-	.4byte 0x803DE404
-	.4byte 0x803DE408
+	.4byte lbl_802A978C
+	.4byte lbl_802A9798
+	.4byte lbl_803DE3F8
+	.4byte lbl_803DE3FC
+	.4byte lbl_803DE400
+	.4byte lbl_803DE404
+	.4byte lbl_803DE408
 	.4byte 0x6E756D73
 	.4byte 0x65747469
 	.4byte 0x6E677300
@@ -13473,65 +13298,53 @@ p_card_v_data:
 	.4byte 0x07070707
 .global icon_datas
 icon_datas:
-	.4byte 0x802AA260
+	.4byte p_icon_data
 	.4byte 0x00000000
 	.4byte 0x00000000
-	.4byte 0x802AA260
+	.4byte p_icon_data
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x00000000
-	.4byte 0x802AA860
-	.4byte 0x4E6F2045
-	.4byte 0x72726F72
-	.4byte 0x00000000
-	.4byte 0x45525221
-	.4byte 0x204E6F20
-	.4byte 0x43617264
-	.4byte 0x00000000
-	.4byte 0x45525221
-	.4byte 0x204E6F74
-	.4byte 0x20612043
-	.4byte 0x61726400
-	.4byte 0x45525221
-	.4byte 0x20436172
-	.4byte 0x64204675
-	.4byte 0x6C6C7570
-	.4byte 0x00000000
-	.4byte 0x45525221
-	.4byte 0x20436172
-	.4byte 0x64204272
-	.4byte 0x6F6B656E
-	.4byte 0x00000000
-	.4byte 0x45525221
-	.4byte 0x20436172
-	.4byte 0x64205772
-	.4byte 0x6F6E6720
-	.4byte 0x436F756E
-	.4byte 0x74727900
-	.4byte 0x45525221
-	.4byte 0x20556E75
-	.4byte 0x7361626C
-	.4byte 0x65000000
-	.4byte 0x45525221
-	.4byte 0x20556E6B
-	.4byte 0x6E6F776E
-	.4byte 0x00000000
-	.4byte 0x45525221
-	.4byte 0x204E6F20
-	.4byte 0x46696C65
-	.4byte 0x73204C65
-	.4byte 0x66740000
+	.4byte o_icon_data
+.balign 4
+lbl_802ABA80:
+	.asciz "No Error"
+.balign 4
+lbl_802ABA8C:
+	.asciz "ERR! No Card"
+.balign 4
+lbl_802ABA9C:
+	.asciz "ERR! Not a Card"
+.balign 4
+lbl_802ABAAC:
+	.asciz "ERR! Card Fullup"
+.balign 4
+lbl_802ABAC0:
+	.asciz "ERR! Card Broken"
+.balign 4
+lbl_802ABAD4:
+	.asciz "ERR! Card Wrong Country"
+.balign 4
+lbl_802ABAEC:
+	.asciz "ERR! Unusable"
+.balign 4
+lbl_802ABAFC:
+	.asciz "ERR! Unknown"
+.balign 4
+lbl_802ABB0C:
+	.asciz "ERR! No Files Left"
+.balign 4
 .global errCodes
 errCodes:
-	.4byte 0x802ABA80
-	.4byte 0x802ABA8C
-	.4byte 0x802ABA9C
-	.4byte 0x802ABAAC
-	.4byte 0x802ABAC0
-	.4byte 0x802ABAD4
-	.4byte 0x802ABAEC
-	.4byte 0x802ABAFC
-	.4byte 0x802ABB0C
+	.4byte lbl_802ABA80
+	.4byte lbl_802ABA8C
+	.4byte lbl_802ABA9C
+	.4byte lbl_802ABAAC
+	.4byte lbl_802ABAC0
+	.4byte lbl_802ABAD4
+	.4byte lbl_802ABAEC
+	.4byte lbl_802ABAFC
+	.4byte lbl_802ABB0C
 .global lbl_802ABB44
 lbl_802ABB44:
 	.4byte 0x706C6179

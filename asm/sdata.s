@@ -2877,53 +2877,71 @@ lbl_803DE2E8:
 .global lbl_803DE2EC
 lbl_803DE2EC:
 	.4byte 0x00000000
+.balign 4
 .global lbl_803DE2F0
 lbl_803DE2F0:
-	.4byte 0x5A000000
+	.asciz "Z"
+.balign 4
 .global lbl_803DE2F4
 lbl_803DE2F4:
-	.4byte 0x59000000
+	.asciz "Y"
+.balign 4
 .global lbl_803DE2F8
 lbl_803DE2F8:
-	.4byte 0x58000000
+	.asciz "X"
+.balign 4
 .global lbl_803DE2FC
 lbl_803DE2FC:
-	.4byte 0x41000000
+	.asciz "A"
+.balign 4
 .global lbl_803DE300
 lbl_803DE300:
-	.4byte 0x2573203D
-	.4byte 0x20256400
+	.asciz "%s = %d"
+.balign 4
 .global lbl_803DE308
 lbl_803DE308:
-	.4byte 0x42000000
+	.asciz "B"
+.balign 4
 .global lbl_803DE30C
 lbl_803DE30C:
-	.4byte 0x47000000
+	.asciz "G"
+.balign 4
 .global lbl_803DE310
 lbl_803DE310:
-	.4byte 0x52000000
+	.asciz "R"
+.balign 4
 .global lbl_803DE314
 lbl_803DE314:
-	.4byte 0x46617200
+	.asciz "Far"
+.balign 4
 .global lbl_803DE318
 lbl_803DE318:
-	.4byte 0x4E656172
-	.4byte 0x00000000
-	.4byte 0x4F464600
-	.4byte 0x504F494E
-	.4byte 0x54000000
-	.4byte 0x53504F54
-	.4byte 0x00000000
+	.asciz "Near"
+.balign 4
+.global lbl_803DE320
+lbl_803DE320:
+	.asciz "OFF"
+.balign 4
+.global lbl_803DE324
+lbl_803DE324:
+	.asciz "POINT"
+.balign 4
+.global lbl_803DE32C
+lbl_803DE32C:
+	.asciz "SPOT"
+.balign 4
 .global lightTypes
 lightTypes:
 	.4byte 0x00000001
 	.4byte 0x00000003
-	.4byte 0x676C6F62
-	.4byte 0x616C0000
+.balign 4
+lbl_803DE33C:
+	.asciz "global"
+.balign 4
 .global lightMoveNames
 lightMoveNames:
-	.4byte 0x803DE33C
-	.4byte 0x802A962C
+	.4byte lbl_803DE33C
+	.4byte lbl_802A962C
 .global lbl_803DE34C
 lbl_803DE34C:
 	.4byte 0x636F6C6F
@@ -3014,49 +3032,79 @@ lbl_803DE3CC:
 .global lbl_803DE3D0
 lbl_803DE3D0:
 	.4byte 0x00000000
-	.4byte 0x6E696768
-	.4byte 0x74000000
-	.4byte 0x6D6F726E
-	.4byte 0x696E6700
-	.4byte 0x64617900
-	.4byte 0x6576656E
-	.4byte 0x696E6700
-	.4byte 0x6D6F7669
-	.4byte 0x65000000
-	.4byte 0x2B310000
-	.4byte 0x2B320000
-	.4byte 0x2B330000
-	.4byte 0x2B340000
-	.4byte 0x2B350000
+.balign 4
+.global lbl_803DE3D4
+lbl_803DE3D4:
+	.asciz "night"
+.balign 4
+.global lbl_803DE3DC
+lbl_803DE3DC:
+	.asciz "morning"
+.balign 4
+.global lbl_803DE3E4
+lbl_803DE3E4:
+	.asciz "day"
+.balign 4
+.global lbl_803DE3E8
+lbl_803DE3E8:
+	.asciz "evening"
+.balign 4
+.global lbl_803DE3F0
+lbl_803DE3F0:
+	.asciz "movie"
+.balign 4
+.global lbl_803DE3F8
+lbl_803DE3F8:
+	.asciz "+1"
+.balign 4
+.global lbl_803DE3FC
+lbl_803DE3FC:
+	.asciz "+2"
+.balign 4
+.global lbl_803DE400
+lbl_803DE400:
+	.asciz "+3"
+.balign 4
+.global lbl_803DE404
+lbl_803DE404:
+	.asciz "+4"
+.balign 4
+.global lbl_803DE408
+lbl_803DE408:
+	.asciz "+5"
+.balign 4
 .global lbl_803DE40C
 lbl_803DE40C:
-	.4byte 0x25640000
+	.asciz "%d"
+.balign 4
 .global lbl_803DE410
 lbl_803DE410:
-	.4byte 0x6C696768
-	.4byte 0x74000000
+	.asciz "light"
+.balign 4
 .global lbl_803DE418
 lbl_803DE418:
-	.4byte 0x74797065
-	.4byte 0x00000000
+	.asciz "type"
+.balign 4
 .global lbl_803DE420
 lbl_803DE420:
-	.4byte 0x61747461
-	.4byte 0x63680000
+	.asciz "attach"
+.balign 4
 .global lbl_803DE428
 lbl_803DE428:
-	.4byte 0x666F7600
+	.asciz "fov"
+.balign 4
 .global lbl_803DE42C
 lbl_803DE42C:
-	.4byte 0x25660000
+	.asciz "%f"
+.balign 4
 .global lbl_803DE430
 lbl_803DE430:
-	.4byte 0x616D6269
-	.4byte 0x656E7400
+	.asciz "ambient"
+.balign 4
 .global lbl_803DE438
 lbl_803DE438:
-	.4byte 0x64697374
-	.4byte 0x00000000
+	.asciz "dist"
+.balign 4
 .global "__RTTI__18IDelegate1<R4Menu>_3"
 "__RTTI__18IDelegate1<R4Menu>_3":
 	.4byte 0x802A98E8
