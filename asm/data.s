@@ -13345,46 +13345,45 @@ errCodes:
 	.4byte lbl_802ABAEC
 	.4byte lbl_802ABAFC
 	.4byte lbl_802ABB0C
+.balign 4
 .global lbl_802ABB44
 lbl_802ABB44:
-	.4byte 0x706C6179
-	.4byte 0x53746174
-	.4byte 0x65000000
-	.4byte 0x25303264
-	.4byte 0x2F253032
-	.4byte 0x64202530
-	.4byte 0x32643A25
-	.4byte 0x30326400
-	.4byte 0x6F707469
-	.4byte 0x6F6E7320
-	.4byte 0x30000000
-	.4byte 0x6F707469
-	.4byte 0x6F6E7320
-	.4byte 0x31000000
-	.4byte 0x67616D65
-	.4byte 0x66696C65
-	.4byte 0x20300000
-	.4byte 0x67616D65
-	.4byte 0x66696C65
-	.4byte 0x20310000
-	.4byte 0x67616D65
-	.4byte 0x66696C65
-	.4byte 0x20320000
-	.4byte 0x67616D65
-	.4byte 0x66696C65
-	.4byte 0x20330000
+	.asciz "playState"
+.balign 4
+lbl_802ABB50:
+	.asciz "%02d/%02d %02d:%02d"
+.balign 4
+lbl_802ABB64:
+	.asciz "options 0"
+.balign 4
+lbl_802ABB70:
+	.asciz "options 1"
+.balign 4
+lbl_802ABB7C:
+	.asciz "gamefile 0"
+.balign 4
+lbl_802ABB88:
+	.asciz "gamefile 1"
+.balign 4
+lbl_802ABB94:
+	.asciz "gamefile 2"
+.balign 4
+lbl_802ABBA0:
+	.asciz "gamefile 3"
+.balign 4
 .global sectionNames$2018
 sectionNames$2018:
-	.4byte 0x803DE7F0
-	.4byte 0x802ABB64
-	.4byte 0x802ABB70
-	.4byte 0x802ABB7C
-	.4byte 0x802ABB88
-	.4byte 0x802ABB94
-	.4byte 0x802ABBA0
-	.4byte 0x436F7265
-	.4byte 0x4E6F6465
-	.4byte 0x00000000
+	.4byte lbl_803DE7F0
+	.4byte lbl_802ABB64
+	.4byte lbl_802ABB70
+	.4byte lbl_802ABB7C
+	.4byte lbl_802ABB88
+	.4byte lbl_802ABB94
+	.4byte lbl_802ABBA0
+.balign 4
+lbl_802ABBC8:
+	.asciz "CoreNode"
+.balign 4
 	.4byte 0x803DE800
 	.4byte 0x00000000
 	.4byte 0x00000000
@@ -17655,168 +17654,193 @@ __vt__12RopeCreature:
 lbl_802AFBF0:
 	.asciz "fall water"
 .balign 4
+lbl_802AFBFC:
 	.asciz "never use this"
 .balign 4
+lbl_802AFC0C:
 	.asciz "bomb gen"
 .balign 4
+lbl_802AFC18:
 	.asciz "pikihead"
 .balign 4
+lbl_802AFC24:
 	.asciz "cylinder test"
 .balign 4
+lbl_802AFC34:
 	.asciz "sluice soft"
 .balign 4
+lbl_802AFC40:
 	.asciz "sluice hard"
 .balign 4
+lbl_802AFC4C:
 	.asciz "sluice bomb"
 .balign 4
+lbl_802AFC58:
 	.asciz "sluice bombhard"
 .balign 4
+lbl_802AFC68:
 	.asciz "dual test"
 .balign 4
+lbl_802AFC74:
 	.asciz "<demo:sunset> start"
 .balign 4
+lbl_802AFC88:
 	.asciz "<demo:sunset> goal"
 .balign 4
+lbl_802AFC9C:
 	.asciz "grassgen"
 .balign 4
+lbl_802AFCA8:
 	.asciz "<bo base>"
 .balign 4
+lbl_802AFCB4:
 	.asciz "workobject"
 .balign 4
+lbl_802AFCC0:
 	.asciz "boss:Spider"
 .balign 4
+lbl_802AFCCC:
 	.asciz "boss:Giant"
 .balign 4
+lbl_802AFCD8:
 	.asciz "boss:Snake"
 .balign 4
+lbl_802AFCE4:
 	.asciz "boss:TwSnake"
 .balign 4
+lbl_802AFCF4:
 	.asciz "boss:King"
 .balign 4
+lbl_802AFD00:
 	.asciz "boss:Slime"
 .balign 4
+lbl_802AFD0C:
 	.asciz "boss:Kogane"
 .balign 4
+lbl_802AFD18:
 	.asciz "boss:Pom"
 .balign 4
+lbl_802AFD24:
 	.asciz "boss:KingBack"
 .balign 4
+lbl_802AFD34:
 	.asciz "boss:Mizu"
 .balign 4
+lbl_802AFD40:
 	.asciz "boss:XXX3"
 .balign 4
 .global _info
 _info:
 	.4byte 0x00000000
-	.4byte 0x803DF348
+	.4byte lbl_803DF348
 	.4byte 0x00000037
-	.4byte 0x803DF350
+	.4byte lbl_803DF350
 	.4byte 0x00000036
-	.4byte 0x803DF358
+	.4byte lbl_803DF358
 	.4byte 0x00000001
-	.4byte 0x803DF360
+	.4byte lbl_803DF360
 	.4byte 0x00000002
-	.4byte 0x803DF368
+	.4byte lbl_803DF368
 	.4byte 0x00000003
-	.4byte 0x803DF370
+	.4byte lbl_803DF370
 	.4byte 0x00000004
-	.4byte 0x803DF374
+	.4byte lbl_803DF374
 	.4byte 0x00000005
-	.4byte 0x803DF37C
+	.4byte lbl_803DF37C
 	.4byte 0x00000006
 	.4byte lbl_802AFBF0
 	.4byte 0x00000007
-	.4byte 0x803DF384
+	.4byte lbl_803DF384
 	.4byte 0x00000008
-	.4byte 0x803DF38C
+	.4byte lbl_803DF38C
 	.4byte 0x00000009
-	.4byte 0x803DF394
+	.4byte lbl_803DF394
 	.4byte 0x0000000A
-	.4byte 0x803DF39C
+	.4byte lbl_803DF39C
 	.4byte 0x0000000B
-	.4byte 0x803DF3A4
+	.4byte lbl_803DF3A4
 	.4byte 0x0000000C
-	.4byte 0x802AFBFC
+	.4byte lbl_802AFBFC
 	.4byte 0x0000000D
-	.4byte 0x802AFC0C
+	.4byte lbl_802AFC0C
 	.4byte 0x0000000E
-	.4byte 0x803DF3AC
+	.4byte lbl_803DF3AC
 	.4byte 0x0000000F
-	.4byte 0x802AFC18
+	.4byte lbl_802AFC18
 	.4byte 0x00000010
-	.4byte 0x803DF3B4
+	.4byte lbl_803DF3B4
 	.4byte 0x00000011
-	.4byte 0x803DF3BC
+	.4byte lbl_803DF3BC
 	.4byte 0x00000012
-	.4byte 0x803DF3C4
+	.4byte lbl_803DF3C4
 	.4byte 0x00000013
-	.4byte 0x803DF3CC
+	.4byte lbl_803DF3CC
 	.4byte 0x00000014
-	.4byte 0x802AFC24
+	.4byte lbl_802AFC24
 	.4byte 0x00000016
-	.4byte 0x802AFC34
+	.4byte lbl_802AFC34
 	.4byte 0x00000017
-	.4byte 0x802AFC40
+	.4byte lbl_802AFC40
 	.4byte 0x00000018
-	.4byte 0x802AFC4C
+	.4byte lbl_802AFC4C
 	.4byte 0x00000019
-	.4byte 0x802AFC58
+	.4byte lbl_802AFC58
 	.4byte 0x0000001A
-	.4byte 0x803DF3D0
+	.4byte lbl_803DF3D0
 	.4byte 0x00000015
-	.4byte 0x802AFC68
+	.4byte lbl_802AFC68
 	.4byte 0x0000001B
-	.4byte 0x802AFC74
+	.4byte lbl_802AFC74
 	.4byte 0x0000001C
-	.4byte 0x802AFC88
+	.4byte lbl_802AFC88
 	.4byte 0x0000001D
-	.4byte 0x803DF3D8
+	.4byte lbl_803DF3D8
 	.4byte 0x0000001E
-	.4byte 0x803DF3E0
+	.4byte lbl_803DF3E0
 	.4byte 0x0000001F
-	.4byte 0x803DF3E4
+	.4byte lbl_803DF3E4
 	.4byte 0x00000020
-	.4byte 0x803DF3EC
+	.4byte lbl_803DF3EC
 	.4byte 0x00000021
-	.4byte 0x803DF3F4
+	.4byte lbl_803DF3F4
 	.4byte 0x00000022
-	.4byte 0x802AFC9C
+	.4byte lbl_802AFC9C
 	.4byte 0x00000025
-	.4byte 0x803DF3FC
+	.4byte lbl_803DF3FC
 	.4byte 0x00000023
-	.4byte 0x802AFCA8
+	.4byte lbl_802AFCA8
 	.4byte 0x00000024
-	.4byte 0x803DF404
+	.4byte lbl_803DF404
 	.4byte 0x00000026
-	.4byte 0x802AFCB4
+	.4byte lbl_802AFCB4
 	.4byte 0x00000027
-	.4byte 0x802AFCC0
+	.4byte lbl_802AFCC0
 	.4byte 0x00000028
-	.4byte 0x802AFCCC
+	.4byte lbl_802AFCCC
 	.4byte 0x00000029
-	.4byte 0x802AFCD8
+	.4byte lbl_802AFCD8
 	.4byte 0x0000002A
-	.4byte 0x802AFCE4
+	.4byte lbl_802AFCE4
 	.4byte 0x0000002B
-	.4byte 0x802AFCF4
+	.4byte lbl_802AFCF4
 	.4byte 0x0000002C
-	.4byte 0x802AFD00
+	.4byte lbl_802AFD00
 	.4byte 0x0000002D
-	.4byte 0x802AFD0C
+	.4byte lbl_802AFD0C
 	.4byte 0x0000002E
-	.4byte 0x802AFD18
+	.4byte lbl_802AFD18
 	.4byte 0x0000002F
-	.4byte 0x802AFD24
+	.4byte lbl_802AFD24
 	.4byte 0x00000031
-	.4byte 0x802AFD34
+	.4byte lbl_802AFD34
 	.4byte 0x00000032
-	.4byte 0x802AFD40
+	.4byte lbl_802AFD40
 	.4byte 0x00000033
-	.4byte 0x803DF40C
+	.4byte lbl_803DF40C
 	.4byte 0x00000034
-	.4byte 0x803DF414
+	.4byte lbl_803DF414
 	.4byte 0x00000039
-	.4byte 0x803DF41C
+	.4byte lbl_803DF41C
 .balign 4
 	.asciz "invalid objname"
 .balign 8

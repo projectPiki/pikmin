@@ -3669,27 +3669,32 @@ __RTTI__9LightPool:
 	.4byte 0
 .global icon_pals
 icon_pals:
-	.4byte 0x802AA060
+	.4byte p_icon_palette
+.balign 4
 .global lbl_803DE7D4
 lbl_803DE7D4:
-	.4byte 0x50696B6D
-	.4byte 0x696E0000
+	.asciz "Pikmin"
+.balign 4
 .global lbl_803DE7DC
 lbl_803DE7DC:
-	.4byte 0x7E50696B
-	.4byte 0x6D696E00
+	.asciz "~Pikmin"
+.balign 4
 .global lbl_803DE7E4
 lbl_803DE7E4:
-	.4byte 0x426C6F63
-	.4byte 0x6B730000
+	.asciz "Blocks"
+.balign 4
 .global lbl_803DE7EC
 lbl_803DE7EC:
-	.4byte 0x25730000
-	.4byte 0x62616E6E
-	.4byte 0x65720000
-	.4byte 0x414E6F64
-	.4byte 0x65000000
-	.4byte 0x803DE7F8
+	.asciz "%s"
+.balign 4
+.global lbl_803DE7F0
+lbl_803DE7F0:
+	.asciz "banner"
+.balign 4
+lbl_803DE7F8:
+	.asciz "ANode"
+.balign 4
+	.4byte lbl_803DE7F8
 	.4byte 0x00000000
 	.4byte 0x53747265
 	.4byte 0x616D0000
@@ -5296,10 +5301,11 @@ __RTTI__13EventListener:
 .global aiGridShift__8FastGrid
 aiGridShift__8FastGrid:
 	.4byte 0x000C0000
+.balign 4
 .global lbl_803DF31C
 lbl_803DF31C:
-	.4byte 0x61694772
-	.4byte 0x69640000
+	.asciz "aiGrid"
+.balign 4
 	.4byte 0x00000000
 	.4byte 0x802AFA84
 	.4byte 0x00000000
@@ -5309,60 +5315,123 @@ lbl_803DF31C:
 	.4byte 0x802AFAAC
 	.4byte 0x802AFA74
 	.4byte 0x802AFAC0
-	.4byte 0x70696B69
-	.4byte 0x00000000
-	.4byte 0x74656B69
-	.4byte 0x00000000
-	.4byte 0x6E617669
-	.4byte 0x00000000
-	.4byte 0x77617465
-	.4byte 0x72000000
-	.4byte 0x73656564
-	.4byte 0x00000000
-	.4byte 0x6B657900
-	.4byte 0x646F6F72
-	.4byte 0x00000000
-	.4byte 0x67617465
-	.4byte 0x00000000
-	.4byte 0x67656D35
-	.4byte 0x00000000
-	.4byte 0x67656D31
-	.4byte 0x30000000
-	.4byte 0x67656D32
-	.4byte 0x30000000
-	.4byte 0x67656D35
-	.4byte 0x30000000
-	.4byte 0x67656D31
-	.4byte 0x00000000
-	.4byte 0x626F6D62
-	.4byte 0x00000000
-	.4byte 0x676F616C
-	.4byte 0x00000000
-	.4byte 0x66756C63
-	.4byte 0x72756D00
-	.4byte 0x726F7065
-	.4byte 0x00000000
-	.4byte 0x69767900
-	.4byte 0x726F636B
-	.4byte 0x65740000
-	.4byte 0x6B757361
-	.4byte 0x00000000
-	.4byte 0x75666F00
-	.4byte 0x77656564
-	.4byte 0x73000000
-	.4byte 0x3C776565
-	.4byte 0x643E0000
-	.4byte 0x726F636B
-	.4byte 0x67656E00
-	.4byte 0x66697368
-	.4byte 0x00000000
-	.4byte 0x73656372
-	.4byte 0x65743100
-	.4byte 0x504C414E
-	.4byte 0x54000000
-	.4byte 0x50454C4C
-	.4byte 0x45540000
-	.4byte 0x00000000
+.balign 4
+.global lbl_803DF348
+lbl_803DF348:
+	.asciz "piki"
+.balign 4
+.global lbl_803DF350
+lbl_803DF350:
+	.asciz "teki"
+.balign 4
+.global lbl_803DF358
+lbl_803DF358:
+	.asciz "navi"
+.balign 4
+.global lbl_803DF360
+lbl_803DF360:
+	.asciz "water"
+.balign 4
+.global lbl_803DF368
+lbl_803DF368:
+	.asciz "seed"
+.balign 4
+.global lbl_803DF370
+lbl_803DF370:
+	.asciz "key"
+.balign 4
+.global lbl_803DF374
+lbl_803DF374:
+	.asciz "door"
+.balign 4
+.global lbl_803DF37C
+lbl_803DF37C:
+	.asciz "gate"
+.balign 4
+.global lbl_803DF384
+lbl_803DF384:
+	.asciz "gem5"
+.balign 4
+.global lbl_803DF38C
+lbl_803DF38C:
+	.asciz "gem10"
+.balign 4
+.global lbl_803DF394
+lbl_803DF394:
+	.asciz "gem20"
+.balign 4
+.global lbl_803DF39C
+lbl_803DF39C:
+	.asciz "gem50"
+.balign 4
+.global lbl_803DF3A4
+lbl_803DF3A4:
+	.asciz "gem1"
+.balign 4
+.global lbl_803DF3AC
+lbl_803DF3AC:
+	.asciz "bomb"
+.balign 4
+.global lbl_803DF3B4
+lbl_803DF3B4:
+	.asciz "goal"
+.balign 4
+.global lbl_803DF3BC
+lbl_803DF3BC:
+	.asciz "fulcrum"
+.balign 4
+.global lbl_803DF3C4
+lbl_803DF3C4:
+	.asciz "rope"
+.balign 4
+.global lbl_803DF3CC
+lbl_803DF3CC:
+	.asciz "ivy"
+.balign 4
+.global lbl_803DF3D0
+lbl_803DF3D0:
+	.asciz "rocket"
+.balign 4
+.global lbl_803DF3D8
+lbl_803DF3D8:
+	.asciz "kusa"
+.balign 4
+.global lbl_803DF3E0
+lbl_803DF3E0:
+	.asciz "ufo"
+.balign 4
+.global lbl_803DF3E4
+lbl_803DF3E4:
+	.asciz "weeds"
+.balign 4
+.global lbl_803DF3EC
+lbl_803DF3EC:
+	.asciz "<weed>"
+.balign 4
+.global lbl_803DF3F4
+lbl_803DF3F4:
+	.asciz "rockgen"
+.balign 4
+.global lbl_803DF3FC
+lbl_803DF3FC:
+	.asciz "fish"
+.balign 4
+.global lbl_803DF404
+lbl_803DF404:
+	.asciz "secret1"
+.balign 4
+.global lbl_803DF40C
+lbl_803DF40C:
+	.asciz "PLANT"
+.balign 4
+.global lbl_803DF414
+lbl_803DF414:
+	.asciz "PELLET"
+.balign 4
+.global lbl_803DF41C
+lbl_803DF41C:
+	.asciz ""
+.balign 4
 .global lbl_803DF420
 lbl_803DF420:
 	.float 1.0
