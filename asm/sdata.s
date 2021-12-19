@@ -10645,32 +10645,3 @@ lbl_803E1A34:
 __RTTI__8SeedItem:
 	.4byte 0x802BD61C
 	.4byte 0x802BD664
-.global lbl_803E1A58
-lbl_803E1A58:
-	.4byte 0x70303000
-.global lbl_803E1A5C
-lbl_803E1A5C:
-	.4byte 0x70303100
-.global lbl_803E1A60
-lbl_803E1A60:
-	.4byte 0x70303200
-.global lbl_803E1A64
-lbl_803E1A64:
-	.4byte 0x70303300
-.global lbl_803E1A68
-lbl_803E1A68:
-	.4byte 0x20000000
-	.4byte 0x802BD83C
-	.4byte 0x00000000
-	.4byte 0x47656E42
-	.4byte 0x61736500
-	.4byte 0x803E1A74
-	.4byte 0x802BD848
-	.4byte 0x802BD854
-	.4byte 0x802BD860
-.global __RTTI__13GenObjectItem
-__RTTI__13GenObjectItem:
-	.4byte 0x802BD82C
-	.4byte 0x802BD874
-	.4byte 0x802BD8D4
-	.4byte 0

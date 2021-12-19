@@ -1,5 +1,5 @@
 #include "types.h"
-
+// clang-format off
 /*
  * --INFO--
  * Address:	801F5944
@@ -409,3 +409,4 @@ void PPCMfpvr(void)
 {
 	// UNUSED FUNCTION
 }
+// clang-format on

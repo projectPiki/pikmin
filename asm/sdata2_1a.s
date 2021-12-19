@@ -945,18 +945,3 @@ lbl_803E9D84:
 .global lbl_803E9D88
 lbl_803E9D88:
 	.float 8.0
-	.4byte 0x00000000
-.global lbl_803E9D90
-lbl_803E9D90:
-	.4byte 0x00000000
-.global lbl_803E9D94
-lbl_803E9D94:
-	.float 30.0
-.global lbl_803E9D98
-lbl_803E9D98:
-	.4byte 0x46480000
-	.4byte 0x00000000
-.global "@1317"
-"@1317":
-	.4byte 0x43300000
-	.4byte 0x80000000
