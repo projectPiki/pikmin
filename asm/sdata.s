@@ -10629,19 +10629,3 @@ __RTTI__7KeyItem:
 __RTTI__8RopeItem:
 	.4byte 0x802BD454
 	.4byte 0x802BD4C8
-.global lbl_803E1A30
-lbl_803E1A30:
-	.4byte 0x00000000
-.global lbl_803E1A34
-lbl_803E1A34:
-	.4byte 0x00000000
-	.4byte 0x802BD628
-	.4byte 0x00000000
-	.4byte 0x802BD634
-	.4byte 0x00000000
-	.4byte 0x802BD644
-	.4byte 0x802BD650
-.global __RTTI__8SeedItem
-__RTTI__8SeedItem:
-	.4byte 0x802BD61C
-	.4byte 0x802BD664
