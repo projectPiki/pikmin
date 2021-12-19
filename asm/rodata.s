@@ -431,23 +431,9 @@ lbl_80222614:
 	.4byte 0x00000002
 	.4byte 0x00000003
 	.4byte 0x00000003
+lbl_8022262C:
 	.4byte 0x0000000B
 	.4byte 0x0000000B
 	.4byte 0x0000000C
 	.4byte 0x0000000D
 	.4byte 0x0000000D
-.global lbl_80222640
-lbl_80222640:
-	.4byte 0x00000002
-	.4byte 0x00000001
-	.4byte 0x00000000
-.global lbl_8022264C
-lbl_8022264C:
-	.4byte 0x000000D0
-	.4byte 0x000000CF
-	.4byte 0x000000CE
-.global lbl_80222658
-lbl_80222658:
-	.4byte 0x000000CD
-	.4byte 0x000000CC
-	.4byte 0x000000CB

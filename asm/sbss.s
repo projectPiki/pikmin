@@ -1010,7 +1010,4 @@ generatorList:
 	.skip 0x4
 .global generatorCache
 generatorCache:
-	.skip 0x8
-.global demoHideFlag__8GoalItem
-demoHideFlag__8GoalItem:
-	.skip 0x1
+	.skip 0x4
