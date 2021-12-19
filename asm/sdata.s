@@ -10617,15 +10617,3 @@ __RTTI__8DoorItem:
 __RTTI__7KeyItem:
 	.4byte 0x803E19F8
 	.4byte 0x802BD304
-	.4byte 0x802BD460
-	.4byte 0
-	.4byte 0x802BD46C
-	.4byte 0
-	.4byte 0x802BD47C
-	.4byte 0x802BD488
-	.4byte 0x802BD49C
-	.4byte 0x802BD4AC
-.global __RTTI__8RopeItem
-__RTTI__8RopeItem:
-	.4byte 0x802BD454
-	.4byte 0x802BD4C8

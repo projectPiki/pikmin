@@ -1,321 +1,355 @@
 .include "macros.inc"
-
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-/* 8012C610 00129570  D0 1E 00 10 */	stfs f0, 0x10(r30)
-lbl_8012C614:
-/* 8012C614 00129574  38 60 00 10 */	li r3, 0x10
-/* 8012C618 00129578  4B F1 A9 ED */	bl alloc__6SystemFUl
-/* 8012C61C 0012957C  3B A3 00 00 */	addi r29, r3, 0
-/* 8012C620 00129580  7F A0 EB 79 */	or. r0, r29, r29
-/* 8012C624 00129584  41 82 00 2C */	beq lbl_8012C650
-/* 8012C628 00129588  3C 60 80 2C */	lis r3, __vt__9TaiAction@ha
-/* 8012C62C 0012958C  38 03 66 20 */	addi r0, r3, __vt__9TaiAction@l
-/* 8012C630 00129590  90 1D 00 04 */	stw r0, 4(r29)
-/* 8012C634 00129594  38 00 00 08 */	li r0, 8
-/* 8012C638 00129598  3C 60 80 2C */	lis r3, __vt__19TaiDependenceAction@ha
-/* 8012C63C 0012959C  90 1D 00 00 */	stw r0, 0(r29)
-/* 8012C640 001295A0  38 03 7B B0 */	addi r0, r3, __vt__19TaiDependenceAction@l
-/* 8012C644 001295A4  90 1D 00 04 */	stw r0, 4(r29)
-/* 8012C648 001295A8  92 5D 00 08 */	stw r18, 8(r29)
-/* 8012C64C 001295AC  93 DD 00 0C */	stw r30, 0xc(r29)
-lbl_8012C650:
-/* 8012C650 001295B0  38 60 00 08 */	li r3, 8
-/* 8012C654 001295B4  4B F1 A9 B1 */	bl alloc__6SystemFUl
-/* 8012C658 001295B8  3B 63 00 00 */	addi r27, r3, 0
-/* 8012C65C 001295BC  7F 60 DB 79 */	or. r0, r27, r27
-/* 8012C660 001295C0  41 82 00 24 */	beq lbl_8012C684
-/* 8012C664 001295C4  3C 60 80 2C */	lis r3, __vt__9TaiAction@ha
-/* 8012C668 001295C8  38 03 66 20 */	addi r0, r3, __vt__9TaiAction@l
-/* 8012C66C 001295CC  90 1B 00 04 */	stw r0, 4(r27)
-/* 8012C670 001295D0  38 00 FF FF */	li r0, -1
-/* 8012C674 001295D4  3C 60 80 2C */	lis r3, __vt__25TaiCollecRoundCarryAction@ha
-/* 8012C678 001295D8  90 1B 00 00 */	stw r0, 0(r27)
-/* 8012C67C 001295DC  38 03 74 D4 */	addi r0, r3, __vt__25TaiCollecRoundCarryAction@l
-/* 8012C680 001295E0  90 1B 00 04 */	stw r0, 4(r27)
-lbl_8012C684:
-/* 8012C684 001295E4  38 60 00 0C */	li r3, 0xc
-/* 8012C688 001295E8  4B F1 A9 7D */	bl alloc__6SystemFUl
-/* 8012C68C 001295EC  3B E3 00 00 */	addi r31, r3, 0
-/* 8012C690 001295F0  7F E3 FB 79 */	or. r3, r31, r31
-/* 8012C694 001295F4  41 82 00 0C */	beq lbl_8012C6A0
-/* 8012C698 001295F8  38 80 00 0A */	li r4, 0xa
-/* 8012C69C 001295FC  4B FF A9 FD */	bl __ct__8TaiStateFi
-lbl_8012C6A0:
-/* 8012C6A0 00129600  38 00 00 00 */	li r0, 0
-/* 8012C6A4 00129604  80 7F 00 08 */	lwz r3, 8(r31)
-/* 8012C6A8 00129608  80 81 02 24 */	lwz r4, 0x224(r1)
-/* 8012C6AC 0012960C  54 00 10 3A */	slwi r0, r0, 2
-/* 8012C6B0 00129610  39 00 00 04 */	li r8, 4
-/* 8012C6B4 00129614  7C 83 01 2E */	stwx r4, r3, r0
-/* 8012C6B8 00129618  38 80 00 01 */	li r4, 1
-/* 8012C6BC 0012961C  54 85 10 3A */	slwi r5, r4, 2
-/* 8012C6C0 00129620  80 7F 00 08 */	lwz r3, 8(r31)
-/* 8012C6C4 00129624  38 00 00 02 */	li r0, 2
-/* 8012C6C8 00129628  38 80 00 03 */	li r4, 3
-/* 8012C6CC 0012962C  7E 23 29 2E */	stwx r17, r3, r5
-/* 8012C6D0 00129630  54 86 10 3A */	slwi r6, r4, 2
-/* 8012C6D4 00129634  54 00 10 3A */	slwi r0, r0, 2
-/* 8012C6D8 00129638  80 7F 00 08 */	lwz r3, 8(r31)
-/* 8012C6DC 0012963C  38 80 00 09 */	li r4, 9
-/* 8012C6E0 00129640  38 A0 00 05 */	li r5, 5
-/* 8012C6E4 00129644  7D C3 01 2E */	stwx r14, r3, r0
-/* 8012C6E8 00129648  38 00 00 07 */	li r0, 7
-/* 8012C6EC 0012964C  39 20 00 06 */	li r9, 6
-/* 8012C6F0 00129650  80 FF 00 08 */	lwz r7, 8(r31)
-/* 8012C6F4 00129654  54 00 10 3A */	slwi r0, r0, 2
-/* 8012C6F8 00129658  38 60 00 08 */	li r3, 8
-/* 8012C6FC 0012965C  7D E7 31 2E */	stwx r15, r7, r6
-/* 8012C700 00129660  55 07 10 3A */	slwi r7, r8, 2
-/* 8012C704 00129664  54 A6 10 3A */	slwi r6, r5, 2
-/* 8012C708 00129668  81 1F 00 08 */	lwz r8, 8(r31)
-/* 8012C70C 0012966C  55 25 10 3A */	slwi r5, r9, 2
-/* 8012C710 00129670  7E 08 39 2E */	stwx r16, r8, r7
-/* 8012C714 00129674  54 88 10 3A */	slwi r8, r4, 2
-/* 8012C718 00129678  54 67 10 3A */	slwi r7, r3, 2
-/* 8012C71C 0012967C  80 9F 00 08 */	lwz r4, 8(r31)
-/* 8012C720 00129680  7E E3 BB 78 */	mr r3, r23
-/* 8012C724 00129684  7E 84 31 2E */	stwx r20, r4, r6
-/* 8012C728 00129688  80 9F 00 08 */	lwz r4, 8(r31)
-/* 8012C72C 0012968C  7F 04 29 2E */	stwx r24, r4, r5
-/* 8012C730 00129690  80 9F 00 08 */	lwz r4, 8(r31)
-/* 8012C734 00129694  7F 64 01 2E */	stwx r27, r4, r0
-/* 8012C738 00129698  80 9F 00 08 */	lwz r4, 8(r31)
-/* 8012C73C 0012969C  7E C4 39 2E */	stwx r22, r4, r7
-/* 8012C740 001296A0  80 9F 00 08 */	lwz r4, 8(r31)
-/* 8012C744 001296A4  7F A4 41 2E */	stwx r29, r4, r8
-/* 8012C748 001296A8  80 97 00 08 */	lwz r4, 8(r23)
-/* 8012C74C 001296AC  93 E4 00 38 */	stw r31, 0x38(r4)
-/* 8012C750 001296B0  B9 C1 02 38 */	lmw r14, 0x238(r1)
-/* 8012C754 001296B4  80 01 02 84 */	lwz r0, 0x284(r1)
-/* 8012C758 001296B8  38 21 02 80 */	addi r1, r1, 0x280
-/* 8012C75C 001296BC  7C 08 03 A6 */	mtlr r0
-/* 8012C760 001296C0  4E 80 00 20 */	blr 
+.global __ct__8RopeItemFP12CreaturePropP5Shape
+__ct__8RopeItemFP12CreaturePropP5Shape:
+/* 800ED9DC 000EA93C  7C 08 02 A6 */	mflr r0
+/* 800ED9E0 000EA940  90 01 00 04 */	stw r0, 4(r1)
+/* 800ED9E4 000EA944  94 21 FF E0 */	stwu r1, -0x20(r1)
+/* 800ED9E8 000EA948  93 E1 00 1C */	stw r31, 0x1c(r1)
+/* 800ED9EC 000EA94C  3B E5 00 00 */	addi r31, r5, 0
+/* 800ED9F0 000EA950  93 C1 00 18 */	stw r30, 0x18(r1)
+/* 800ED9F4 000EA954  3B C3 00 00 */	addi r30, r3, 0
+/* 800ED9F8 000EA958  4B FA 6C AD */	bl __ct__12RopeCreatureFP12CreatureProp
+/* 800ED9FC 000EA95C  3C 60 80 2C */	lis r3, __vt__8RopeItem@ha
+/* 800EDA00 000EA960  38 03 D4 EC */	addi r0, r3, __vt__8RopeItem@l
+/* 800EDA04 000EA964  3C 60 80 09 */	lis r3, __ct__10SearchDataFv@ha
+/* 800EDA08 000EA968  90 1E 00 00 */	stw r0, 0(r30)
+/* 800EDA0C 000EA96C  38 83 A7 F8 */	addi r4, r3, __ct__10SearchDataFv@l
+/* 800EDA10 000EA970  38 7E 02 D4 */	addi r3, r30, 0x2d4
+/* 800EDA14 000EA974  38 A0 00 00 */	li r5, 0
+/* 800EDA18 000EA978  38 C0 00 0C */	li r6, 0xc
+/* 800EDA1C 000EA97C  38 E0 00 03 */	li r7, 3
+/* 800EDA20 000EA980  48 12 70 51 */	bl __construct_array
+/* 800EDA24 000EA984  93 FE 02 F8 */	stw r31, 0x2f8(r30)
+/* 800EDA28 000EA988  38 00 00 04 */	li r0, 4
+/* 800EDA2C 000EA98C  38 7E 01 B8 */	addi r3, r30, 0x1b8
+/* 800EDA30 000EA990  90 1E 00 68 */	stw r0, 0x68(r30)
+/* 800EDA34 000EA994  38 9E 02 D4 */	addi r4, r30, 0x2d4
+/* 800EDA38 000EA998  38 A0 00 03 */	li r5, 3
+/* 800EDA3C 000EA99C  80 1E 00 C8 */	lwz r0, 0xc8(r30)
+/* 800EDA40 000EA9A0  54 00 05 EA */	rlwinm r0, r0, 0, 0x17, 0x15
+/* 800EDA44 000EA9A4  90 1E 00 C8 */	stw r0, 0xc8(r30)
+/* 800EDA48 000EA9A8  80 1E 00 C8 */	lwz r0, 0xc8(r30)
+/* 800EDA4C 000EA9AC  60 00 00 01 */	ori r0, r0, 1
+/* 800EDA50 000EA9B0  90 1E 00 C8 */	stw r0, 0xc8(r30)
+/* 800EDA54 000EA9B4  4B FF 62 2D */	bl init__12SearchBufferFP10SearchDatai
+/* 800EDA58 000EA9B8  38 00 00 12 */	li r0, 0x12
+/* 800EDA5C 000EA9BC  90 1E 00 6C */	stw r0, 0x6c(r30)
+/* 800EDA60 000EA9C0  38 00 00 00 */	li r0, 0
+/* 800EDA64 000EA9C4  38 7E 00 00 */	addi r3, r30, 0
+/* 800EDA68 000EA9C8  C0 02 9B 28 */	lfs f0, lbl_803E9D28@sda21(r2)
+/* 800EDA6C 000EA9CC  D0 1E 02 70 */	stfs f0, 0x270(r30)
+/* 800EDA70 000EA9D0  90 1E 02 FC */	stw r0, 0x2fc(r30)
+/* 800EDA74 000EA9D4  80 01 00 24 */	lwz r0, 0x24(r1)
+/* 800EDA78 000EA9D8  83 E1 00 1C */	lwz r31, 0x1c(r1)
+/* 800EDA7C 000EA9DC  83 C1 00 18 */	lwz r30, 0x18(r1)
+/* 800EDA80 000EA9E0  38 21 00 20 */	addi r1, r1, 0x20
+/* 800EDA84 000EA9E4  7C 08 03 A6 */	mtlr r0
+/* 800EDA88 000EA9E8  4E 80 00 20 */	blr 
 
-.global start__17TaiCollecStrategyFR4Teki
-start__17TaiCollecStrategyFR4Teki:
-/* 8012C764 001296C4  7C 08 02 A6 */	mflr r0
-/* 8012C768 001296C8  38 C0 00 00 */	li r6, 0
-/* 8012C76C 001296CC  90 01 00 04 */	stw r0, 4(r1)
-/* 8012C770 001296D0  38 E0 00 00 */	li r7, 0
-/* 8012C774 001296D4  94 21 FF B8 */	stwu r1, -0x48(r1)
-/* 8012C778 001296D8  93 E1 00 44 */	stw r31, 0x44(r1)
-/* 8012C77C 001296DC  7C 9F 23 78 */	mr r31, r4
-/* 8012C780 001296E0  38 A1 00 34 */	addi r5, r1, 0x34
-/* 8012C784 001296E4  93 C1 00 40 */	stw r30, 0x40(r1)
-/* 8012C788 001296E8  3B C3 00 00 */	addi r30, r3, 0
-/* 8012C78C 001296EC  38 80 00 61 */	li r4, 0x61
-/* 8012C790 001296F0  C0 0D E8 B4 */	lfs f0, lbl_803E35D4@sda21(r13)
-/* 8012C794 001296F4  C0 2D E8 B8 */	lfs f1, lbl_803E35D8@sda21(r13)
-/* 8012C798 001296F8  D0 01 00 34 */	stfs f0, 0x34(r1)
-/* 8012C79C 001296FC  C0 0D E8 BC */	lfs f0, lbl_803E35DC@sda21(r13)
-/* 8012C7A0 00129700  D0 21 00 38 */	stfs f1, 0x38(r1)
-/* 8012C7A4 00129704  80 6D 31 80 */	lwz r3, effectMgr@sda21(r13)
-/* 8012C7A8 00129708  D0 01 00 3C */	stfs f0, 0x3c(r1)
-/* 8012C7AC 0012970C  48 07 03 8D */	bl "create__9EffectMgrFQ29EffectMgr12effTypeTableR8Vector3fPQ23zen37CallBack1<PQ23zen17particleGenerator>PQ23zen58CallBack2<PQ23zen17particleGenerator,PQ23zen11particleMdl>"
-/* 8012C7B0 00129710  80 BF 03 D8 */	lwz r5, 0x3d8(r31)
-/* 8012C7B4 00129714  38 80 00 00 */	li r4, 0
-/* 8012C7B8 00129718  90 65 00 00 */	stw r3, 0(r5)
-/* 8012C7BC 0012971C  7F E3 FB 78 */	mr r3, r31
-/* 8012C7C0 00129720  48 01 D2 5D */	bl stopParticleGenerator__5BTekiFi
-/* 8012C7C4 00129724  C0 0D E8 C0 */	lfs f0, lbl_803E35E0@sda21(r13)
-/* 8012C7C8 00129728  38 A1 00 28 */	addi r5, r1, 0x28
-/* 8012C7CC 0012972C  C0 2D E8 C4 */	lfs f1, lbl_803E35E4@sda21(r13)
-/* 8012C7D0 00129730  38 80 00 62 */	li r4, 0x62
-/* 8012C7D4 00129734  D0 01 00 28 */	stfs f0, 0x28(r1)
-/* 8012C7D8 00129738  C0 0D E8 C8 */	lfs f0, lbl_803E35E8@sda21(r13)
-/* 8012C7DC 0012973C  38 C0 00 00 */	li r6, 0
-/* 8012C7E0 00129740  D0 21 00 2C */	stfs f1, 0x2c(r1)
-/* 8012C7E4 00129744  38 E0 00 00 */	li r7, 0
-/* 8012C7E8 00129748  80 6D 31 80 */	lwz r3, effectMgr@sda21(r13)
-/* 8012C7EC 0012974C  D0 01 00 30 */	stfs f0, 0x30(r1)
-/* 8012C7F0 00129750  48 07 03 49 */	bl "create__9EffectMgrFQ29EffectMgr12effTypeTableR8Vector3fPQ23zen37CallBack1<PQ23zen17particleGenerator>PQ23zen58CallBack2<PQ23zen17particleGenerator,PQ23zen11particleMdl>"
-/* 8012C7F4 00129754  80 BF 03 D8 */	lwz r5, 0x3d8(r31)
-/* 8012C7F8 00129758  38 80 00 01 */	li r4, 1
-/* 8012C7FC 0012975C  90 65 00 04 */	stw r3, 4(r5)
-/* 8012C800 00129760  7F E3 FB 78 */	mr r3, r31
-/* 8012C804 00129764  48 01 D2 19 */	bl stopParticleGenerator__5BTekiFi
-/* 8012C808 00129768  C0 0D E8 CC */	lfs f0, lbl_803E35EC@sda21(r13)
-/* 8012C80C 0012976C  38 A1 00 1C */	addi r5, r1, 0x1c
-/* 8012C810 00129770  C0 2D E8 D0 */	lfs f1, lbl_803E35F0@sda21(r13)
-/* 8012C814 00129774  38 80 00 5E */	li r4, 0x5e
-/* 8012C818 00129778  D0 01 00 1C */	stfs f0, 0x1c(r1)
-/* 8012C81C 0012977C  C0 0D E8 D4 */	lfs f0, lbl_803E35F4@sda21(r13)
-/* 8012C820 00129780  38 C0 00 00 */	li r6, 0
-/* 8012C824 00129784  D0 21 00 20 */	stfs f1, 0x20(r1)
-/* 8012C828 00129788  38 E0 00 00 */	li r7, 0
-/* 8012C82C 0012978C  80 6D 31 80 */	lwz r3, effectMgr@sda21(r13)
-/* 8012C830 00129790  D0 01 00 24 */	stfs f0, 0x24(r1)
-/* 8012C834 00129794  48 07 03 05 */	bl "create__9EffectMgrFQ29EffectMgr12effTypeTableR8Vector3fPQ23zen37CallBack1<PQ23zen17particleGenerator>PQ23zen58CallBack2<PQ23zen17particleGenerator,PQ23zen11particleMdl>"
-/* 8012C838 00129798  80 BF 03 D8 */	lwz r5, 0x3d8(r31)
-/* 8012C83C 0012979C  38 80 00 02 */	li r4, 2
-/* 8012C840 001297A0  90 65 00 08 */	stw r3, 8(r5)
-/* 8012C844 001297A4  7F E3 FB 78 */	mr r3, r31
-/* 8012C848 001297A8  48 01 D1 D5 */	bl stopParticleGenerator__5BTekiFi
-/* 8012C84C 001297AC  C0 0D E8 D8 */	lfs f0, lbl_803E35F8@sda21(r13)
-/* 8012C850 001297B0  38 A1 00 10 */	addi r5, r1, 0x10
-/* 8012C854 001297B4  C0 2D E8 DC */	lfs f1, lbl_803E35FC@sda21(r13)
-/* 8012C858 001297B8  38 80 00 5D */	li r4, 0x5d
-/* 8012C85C 001297BC  D0 01 00 10 */	stfs f0, 0x10(r1)
-/* 8012C860 001297C0  C0 0D E8 E0 */	lfs f0, lbl_803E3600@sda21(r13)
-/* 8012C864 001297C4  38 C0 00 00 */	li r6, 0
-/* 8012C868 001297C8  D0 21 00 14 */	stfs f1, 0x14(r1)
-/* 8012C86C 001297CC  38 E0 00 00 */	li r7, 0
-/* 8012C870 001297D0  80 6D 31 80 */	lwz r3, effectMgr@sda21(r13)
-/* 8012C874 001297D4  D0 01 00 18 */	stfs f0, 0x18(r1)
-/* 8012C878 001297D8  48 07 02 C1 */	bl "create__9EffectMgrFQ29EffectMgr12effTypeTableR8Vector3fPQ23zen37CallBack1<PQ23zen17particleGenerator>PQ23zen58CallBack2<PQ23zen17particleGenerator,PQ23zen11particleMdl>"
-/* 8012C87C 001297DC  80 BF 03 D8 */	lwz r5, 0x3d8(r31)
-/* 8012C880 001297E0  38 80 00 03 */	li r4, 3
-/* 8012C884 001297E4  90 65 00 0C */	stw r3, 0xc(r5)
-/* 8012C888 001297E8  7F E3 FB 78 */	mr r3, r31
-/* 8012C88C 001297EC  48 01 D1 91 */	bl stopParticleGenerator__5BTekiFi
-/* 8012C890 001297F0  38 7E 00 00 */	addi r3, r30, 0
-/* 8012C894 001297F4  38 9F 00 00 */	addi r4, r31, 0
-/* 8012C898 001297F8  4B FF AB FD */	bl start__11TaiStrategyFR4Teki
-/* 8012C89C 001297FC  7F E3 FB 78 */	mr r3, r31
-/* 8012C8A0 00129800  80 8D F6 40 */	lwz r4, TEKI_OPTION_ORGANIC__5BTeki@sda21(r13)
-/* 8012C8A4 00129804  81 9F 00 00 */	lwz r12, 0(r31)
-/* 8012C8A8 00129808  81 8C 01 D0 */	lwz r12, 0x1d0(r12)
-/* 8012C8AC 0012980C  7D 88 03 A6 */	mtlr r12
-/* 8012C8B0 00129810  4E 80 00 21 */	blrl 
-/* 8012C8B4 00129814  80 01 00 4C */	lwz r0, 0x4c(r1)
-/* 8012C8B8 00129818  83 E1 00 44 */	lwz r31, 0x44(r1)
-/* 8012C8BC 0012981C  83 C1 00 40 */	lwz r30, 0x40(r1)
-/* 8012C8C0 00129820  38 21 00 48 */	addi r1, r1, 0x48
-/* 8012C8C4 00129824  7C 08 03 A6 */	mtlr r0
-/* 8012C8C8 00129828  4E 80 00 20 */	blr 
+.global isAtari__8RopeItemFv
+isAtari__8RopeItemFv:
+/* 800EDA8C 000EA9EC  38 60 00 00 */	li r3, 0
+/* 800EDA90 000EA9F0  4E 80 00 20 */	blr 
 
-.global draw__17TaiCollecStrategyFR4TekiR8Graphics
-draw__17TaiCollecStrategyFR4TekiR8Graphics:
-/* 8012C8CC 0012982C  7C 08 02 A6 */	mflr r0
-/* 8012C8D0 00129830  90 01 00 04 */	stw r0, 4(r1)
-/* 8012C8D4 00129834  94 21 FF D0 */	stwu r1, -0x30(r1)
-/* 8012C8D8 00129838  93 E1 00 2C */	stw r31, 0x2c(r1)
-/* 8012C8DC 0012983C  93 C1 00 28 */	stw r30, 0x28(r1)
-/* 8012C8E0 00129840  7C 9E 23 78 */	mr r30, r4
-/* 8012C8E4 00129844  48 02 08 E1 */	bl draw__12TekiStrategyFR4TekiR8Graphics
-/* 8012C8E8 00129848  80 7E 03 D8 */	lwz r3, 0x3d8(r30)
-/* 8012C8EC 0012984C  80 03 00 00 */	lwz r0, 0(r3)
-/* 8012C8F0 00129850  28 00 00 00 */	cmplwi r0, 0
-/* 8012C8F4 00129854  41 82 00 D0 */	beq lbl_8012C9C4
-/* 8012C8F8 00129858  38 BE 00 94 */	addi r5, r30, 0x94
-/* 8012C8FC 0012985C  38 7E 00 00 */	addi r3, r30, 0
-/* 8012C900 00129860  38 80 00 03 */	li r4, 3
-/* 8012C904 00129864  48 01 D1 3D */	bl setParticleGeneratorPosition__5BTekiFiR8Vector3f
-/* 8012C908 00129868  7F C3 F3 78 */	mr r3, r30
-/* 8012C90C 0012986C  48 01 D0 29 */	bl getPositionMapCode__5BTekiFv
-/* 8012C910 00129870  2C 03 00 05 */	cmpwi r3, 5
-/* 8012C914 00129874  40 82 00 24 */	bne lbl_8012C938
-/* 8012C918 00129878  80 7E 03 D8 */	lwz r3, 0x3d8(r30)
-/* 8012C91C 0012987C  80 63 00 0C */	lwz r3, 0xc(r3)
-/* 8012C920 00129880  28 03 00 00 */	cmplwi r3, 0
-/* 8012C924 00129884  41 82 00 30 */	beq lbl_8012C954
-/* 8012C928 00129888  80 03 00 80 */	lwz r0, 0x80(r3)
-/* 8012C92C 0012988C  54 00 07 34 */	rlwinm r0, r0, 0, 0x1c, 0x1a
-/* 8012C930 00129890  90 03 00 80 */	stw r0, 0x80(r3)
-/* 8012C934 00129894  48 00 00 20 */	b lbl_8012C954
-lbl_8012C938:
-/* 8012C938 00129898  80 7E 03 D8 */	lwz r3, 0x3d8(r30)
-/* 8012C93C 0012989C  80 63 00 0C */	lwz r3, 0xc(r3)
-/* 8012C940 001298A0  28 03 00 00 */	cmplwi r3, 0
-/* 8012C944 001298A4  41 82 00 10 */	beq lbl_8012C954
-/* 8012C948 001298A8  80 03 00 80 */	lwz r0, 0x80(r3)
-/* 8012C94C 001298AC  60 00 00 10 */	ori r0, r0, 0x10
-/* 8012C950 001298B0  90 03 00 80 */	stw r0, 0x80(r3)
-lbl_8012C954:
-/* 8012C954 001298B4  80 7E 04 20 */	lwz r3, 0x420(r30)
-/* 8012C958 001298B8  28 03 00 00 */	cmplwi r3, 0
-/* 8012C95C 001298BC  41 82 00 68 */	beq lbl_8012C9C4
-/* 8012C960 001298C0  3B E3 00 94 */	addi r31, r3, 0x94
-/* 8012C964 001298C4  38 7E 00 00 */	addi r3, r30, 0
-/* 8012C968 001298C8  38 BF 00 00 */	addi r5, r31, 0
-/* 8012C96C 001298CC  38 80 00 02 */	li r4, 2
-/* 8012C970 001298D0  48 01 D0 D1 */	bl setParticleGeneratorPosition__5BTekiFiR8Vector3f
-/* 8012C974 001298D4  38 7E 00 00 */	addi r3, r30, 0
-/* 8012C978 001298D8  38 9F 00 00 */	addi r4, r31, 0
-/* 8012C97C 001298DC  48 01 CF 75 */	bl getPositionMapCode__5BTekiFR8Vector3f
-/* 8012C980 001298E0  2C 03 00 05 */	cmpwi r3, 5
-/* 8012C984 001298E4  40 82 00 24 */	bne lbl_8012C9A8
-/* 8012C988 001298E8  80 7E 03 D8 */	lwz r3, 0x3d8(r30)
-/* 8012C98C 001298EC  80 63 00 08 */	lwz r3, 8(r3)
-/* 8012C990 001298F0  28 03 00 00 */	cmplwi r3, 0
-/* 8012C994 001298F4  41 82 00 30 */	beq lbl_8012C9C4
-/* 8012C998 001298F8  80 03 00 80 */	lwz r0, 0x80(r3)
-/* 8012C99C 001298FC  54 00 07 34 */	rlwinm r0, r0, 0, 0x1c, 0x1a
-/* 8012C9A0 00129900  90 03 00 80 */	stw r0, 0x80(r3)
-/* 8012C9A4 00129904  48 00 00 20 */	b lbl_8012C9C4
-lbl_8012C9A8:
-/* 8012C9A8 00129908  80 7E 03 D8 */	lwz r3, 0x3d8(r30)
-/* 8012C9AC 0012990C  80 63 00 08 */	lwz r3, 8(r3)
-/* 8012C9B0 00129910  28 03 00 00 */	cmplwi r3, 0
-/* 8012C9B4 00129914  41 82 00 10 */	beq lbl_8012C9C4
-/* 8012C9B8 00129918  80 03 00 80 */	lwz r0, 0x80(r3)
-/* 8012C9BC 0012991C  60 00 00 10 */	ori r0, r0, 0x10
-/* 8012C9C0 00129920  90 03 00 80 */	stw r0, 0x80(r3)
-lbl_8012C9C4:
-/* 8012C9C4 00129924  80 01 00 34 */	lwz r0, 0x34(r1)
-/* 8012C9C8 00129928  83 E1 00 2C */	lwz r31, 0x2c(r1)
-/* 8012C9CC 0012992C  83 C1 00 28 */	lwz r30, 0x28(r1)
-/* 8012C9D0 00129930  38 21 00 30 */	addi r1, r1, 0x30
-/* 8012C9D4 00129934  7C 08 03 A6 */	mtlr r0
-/* 8012C9D8 00129938  4E 80 00 20 */	blr 
+.global getSize__8RopeItemFv
+getSize__8RopeItemFv:
+/* 800EDA94 000EA9F4  C0 22 9B 28 */	lfs f1, lbl_803E9D28@sda21(r2)
+/* 800EDA98 000EA9F8  4E 80 00 20 */	blr 
 
-.global satisfy__31TekiCollecTargetPelletConditionFP8Creature
-satisfy__31TekiCollecTargetPelletConditionFP8Creature:
-/* 8012C9DC 0012993C  7C 08 02 A6 */	mflr r0
-/* 8012C9E0 00129940  90 01 00 04 */	stw r0, 4(r1)
-/* 8012C9E4 00129944  94 21 FF 90 */	stwu r1, -0x70(r1)
-/* 8012C9E8 00129948  93 E1 00 6C */	stw r31, 0x6c(r1)
-/* 8012C9EC 0012994C  93 C1 00 68 */	stw r30, 0x68(r1)
-/* 8012C9F0 00129950  3B C3 00 00 */	addi r30, r3, 0
-/* 8012C9F4 00129954  93 A1 00 64 */	stw r29, 0x64(r1)
-/* 8012C9F8 00129958  93 81 00 60 */	stw r28, 0x60(r1)
-/* 8012C9FC 0012995C  80 04 00 6C */	lwz r0, 0x6c(r4)
-/* 8012CA00 00129960  2C 00 00 34 */	cmpwi r0, 0x34
+.global init__8RopeItemFR8Vector3f
+init__8RopeItemFR8Vector3f:
+/* 800EDA9C 000EA9FC  7C 08 02 A6 */	mflr r0
+/* 800EDAA0 000EAA00  90 01 00 04 */	stw r0, 4(r1)
+/* 800EDAA4 000EAA04  94 21 FF E0 */	stwu r1, -0x20(r1)
+/* 800EDAA8 000EAA08  93 E1 00 1C */	stw r31, 0x1c(r1)
+/* 800EDAAC 000EAA0C  7C 7F 1B 78 */	mr r31, r3
+/* 800EDAB0 000EAA10  C0 02 9B 2C */	lfs f0, lbl_803E9D2C@sda21(r2)
+/* 800EDAB4 000EAA14  D0 03 00 7C */	stfs f0, 0x7c(r3)
+/* 800EDAB8 000EAA18  D0 1F 00 80 */	stfs f0, 0x80(r31)
+/* 800EDABC 000EAA1C  D0 1F 00 84 */	stfs f0, 0x84(r31)
+/* 800EDAC0 000EAA20  4B F9 D1 45 */	bl init__8CreatureFR8Vector3f
+/* 800EDAC4 000EAA24  38 7F 01 B8 */	addi r3, r31, 0x1b8
+/* 800EDAC8 000EAA28  38 9F 02 D4 */	addi r4, r31, 0x2d4
+/* 800EDACC 000EAA2C  38 A0 00 03 */	li r5, 3
+/* 800EDAD0 000EAA30  4B FF 61 B1 */	bl init__12SearchBufferFP10SearchDatai
+/* 800EDAD4 000EAA34  80 01 00 24 */	lwz r0, 0x24(r1)
+/* 800EDAD8 000EAA38  83 E1 00 1C */	lwz r31, 0x1c(r1)
+/* 800EDADC 000EAA3C  38 21 00 20 */	addi r1, r1, 0x20
+/* 800EDAE0 000EAA40  7C 08 03 A6 */	mtlr r0
+/* 800EDAE4 000EAA44  4E 80 00 20 */	blr 
+
+.global autoInit__8RopeItemFv
+autoInit__8RopeItemFv:
+/* 800EDAE8 000EAA48  7C 08 02 A6 */	mflr r0
+/* 800EDAEC 000EAA4C  90 01 00 04 */	stw r0, 4(r1)
+/* 800EDAF0 000EAA50  94 21 FF B8 */	stwu r1, -0x48(r1)
+/* 800EDAF4 000EAA54  DB E1 00 40 */	stfd f31, 0x40(r1)
+/* 800EDAF8 000EAA58  BF 61 00 2C */	stmw r27, 0x2c(r1)
+/* 800EDAFC 000EAA5C  7C 7E 1B 78 */	mr r30, r3
+/* 800EDB00 000EAA60  80 03 02 D0 */	lwz r0, 0x2d0(r3)
+/* 800EDB04 000EAA64  83 ED 30 AC */	lwz r31, itemMgr@sda21(r13)
+/* 800EDB08 000EAA68  2C 00 00 00 */	cmpwi r0, 0
+/* 800EDB0C 000EAA6C  40 82 01 24 */	bne lbl_800EDC30
+/* 800EDB10 000EAA70  7F E3 FB 78 */	mr r3, r31
+/* 800EDB14 000EAA74  C3 E2 9B 30 */	lfs f31, lbl_803E9D30@sda21(r2)
+/* 800EDB18 000EAA78  81 9F 00 00 */	lwz r12, 0(r31)
+/* 800EDB1C 000EAA7C  3B 60 00 00 */	li r27, 0
+/* 800EDB20 000EAA80  81 8C 00 0C */	lwz r12, 0xc(r12)
+/* 800EDB24 000EAA84  7D 88 03 A6 */	mtlr r12
+/* 800EDB28 000EAA88  4E 80 00 21 */	blrl 
+/* 800EDB2C 000EAA8C  7C 7C 1B 78 */	mr r28, r3
+/* 800EDB30 000EAA90  48 00 00 8C */	b lbl_800EDBBC
+lbl_800EDB34:
+/* 800EDB34 000EAA94  2C 1C FF FF */	cmpwi r28, -1
+/* 800EDB38 000EAA98  40 82 00 24 */	bne lbl_800EDB5C
+/* 800EDB3C 000EAA9C  7F E3 FB 78 */	mr r3, r31
+/* 800EDB40 000EAAA0  81 9F 00 00 */	lwz r12, 0(r31)
+/* 800EDB44 000EAAA4  38 80 00 00 */	li r4, 0
+/* 800EDB48 000EAAA8  81 8C 00 08 */	lwz r12, 8(r12)
+/* 800EDB4C 000EAAAC  7D 88 03 A6 */	mtlr r12
+/* 800EDB50 000EAAB0  4E 80 00 21 */	blrl 
+/* 800EDB54 000EAAB4  7C 7D 1B 78 */	mr r29, r3
+/* 800EDB58 000EAAB8  48 00 00 20 */	b lbl_800EDB78
+lbl_800EDB5C:
+/* 800EDB5C 000EAABC  7F E3 FB 78 */	mr r3, r31
+/* 800EDB60 000EAAC0  81 9F 00 00 */	lwz r12, 0(r31)
+/* 800EDB64 000EAAC4  7F 84 E3 78 */	mr r4, r28
+/* 800EDB68 000EAAC8  81 8C 00 08 */	lwz r12, 8(r12)
+/* 800EDB6C 000EAACC  7D 88 03 A6 */	mtlr r12
+/* 800EDB70 000EAAD0  4E 80 00 21 */	blrl 
+/* 800EDB74 000EAAD4  7C 7D 1B 78 */	mr r29, r3
+lbl_800EDB78:
+/* 800EDB78 000EAAD8  38 7D 00 00 */	addi r3, r29, 0
+/* 800EDB7C 000EAADC  38 9E 00 00 */	addi r4, r30, 0
+/* 800EDB80 000EAAE0  4B F9 F2 FD */	bl qdist2__FP8CreatureP8Creature
+/* 800EDB84 000EAAE4  80 1D 00 6C */	lwz r0, 0x6c(r29)
+/* 800EDB88 000EAAE8  2C 00 00 11 */	cmpwi r0, 0x11
+/* 800EDB8C 000EAAEC  40 82 00 14 */	bne lbl_800EDBA0
+/* 800EDB90 000EAAF0  FC 01 F8 40 */	fcmpo cr0, f1, f31
+/* 800EDB94 000EAAF4  40 80 00 0C */	bge lbl_800EDBA0
+/* 800EDB98 000EAAF8  7F BB EB 78 */	mr r27, r29
+/* 800EDB9C 000EAAFC  FF E0 08 90 */	fmr f31, f1
+lbl_800EDBA0:
+/* 800EDBA0 000EAB00  7F E3 FB 78 */	mr r3, r31
+/* 800EDBA4 000EAB04  81 9F 00 00 */	lwz r12, 0(r31)
+/* 800EDBA8 000EAB08  7F 84 E3 78 */	mr r4, r28
+/* 800EDBAC 000EAB0C  81 8C 00 10 */	lwz r12, 0x10(r12)
+/* 800EDBB0 000EAB10  7D 88 03 A6 */	mtlr r12
+/* 800EDBB4 000EAB14  4E 80 00 21 */	blrl 
+/* 800EDBB8 000EAB18  7C 7C 1B 78 */	mr r28, r3
+lbl_800EDBBC:
+/* 800EDBBC 000EAB1C  7F E3 FB 78 */	mr r3, r31
+/* 800EDBC0 000EAB20  81 9F 00 00 */	lwz r12, 0(r31)
+/* 800EDBC4 000EAB24  7F 84 E3 78 */	mr r4, r28
+/* 800EDBC8 000EAB28  81 8C 00 14 */	lwz r12, 0x14(r12)
+/* 800EDBCC 000EAB2C  7D 88 03 A6 */	mtlr r12
+/* 800EDBD0 000EAB30  4E 80 00 21 */	blrl 
+/* 800EDBD4 000EAB34  54 60 06 3F */	clrlwi. r0, r3, 0x18
+/* 800EDBD8 000EAB38  41 82 00 0C */	beq lbl_800EDBE4
+/* 800EDBDC 000EAB3C  38 00 00 01 */	li r0, 1
+/* 800EDBE0 000EAB40  48 00 00 30 */	b lbl_800EDC10
+lbl_800EDBE4:
+/* 800EDBE4 000EAB44  7F E3 FB 78 */	mr r3, r31
+/* 800EDBE8 000EAB48  81 9F 00 00 */	lwz r12, 0(r31)
+/* 800EDBEC 000EAB4C  7F 84 E3 78 */	mr r4, r28
+/* 800EDBF0 000EAB50  81 8C 00 08 */	lwz r12, 8(r12)
+/* 800EDBF4 000EAB54  7D 88 03 A6 */	mtlr r12
+/* 800EDBF8 000EAB58  4E 80 00 21 */	blrl 
+/* 800EDBFC 000EAB5C  28 03 00 00 */	cmplwi r3, 0
+/* 800EDC00 000EAB60  40 82 00 0C */	bne lbl_800EDC0C
+/* 800EDC04 000EAB64  38 00 00 01 */	li r0, 1
+/* 800EDC08 000EAB68  48 00 00 08 */	b lbl_800EDC10
+lbl_800EDC0C:
+/* 800EDC0C 000EAB6C  38 00 00 00 */	li r0, 0
+lbl_800EDC10:
+/* 800EDC10 000EAB70  54 00 06 3F */	clrlwi. r0, r0, 0x18
+/* 800EDC14 000EAB74  41 82 FF 20 */	beq lbl_800EDB34
+/* 800EDC18 000EAB78  28 1B 00 00 */	cmplwi r27, 0
+/* 800EDC1C 000EAB7C  41 82 01 44 */	beq lbl_800EDD60
+/* 800EDC20 000EAB80  38 7E 00 00 */	addi r3, r30, 0
+/* 800EDC24 000EAB84  38 9B 00 00 */	addi r4, r27, 0
+/* 800EDC28 000EAB88  4B FA 6A D5 */	bl setRope__12RopeCreatureFP8Creature
+/* 800EDC2C 000EAB8C  48 00 01 34 */	b lbl_800EDD60
+lbl_800EDC30:
+/* 800EDC30 000EAB90  7F E3 FB 78 */	mr r3, r31
+/* 800EDC34 000EAB94  C3 E2 9B 30 */	lfs f31, lbl_803E9D30@sda21(r2)
+/* 800EDC38 000EAB98  81 9F 00 00 */	lwz r12, 0(r31)
+/* 800EDC3C 000EAB9C  3B 60 00 00 */	li r27, 0
+/* 800EDC40 000EABA0  81 8C 00 0C */	lwz r12, 0xc(r12)
+/* 800EDC44 000EABA4  7D 88 03 A6 */	mtlr r12
+/* 800EDC48 000EABA8  4E 80 00 21 */	blrl 
+/* 800EDC4C 000EABAC  7C 7C 1B 78 */	mr r28, r3
+/* 800EDC50 000EABB0  48 00 00 A0 */	b lbl_800EDCF0
+lbl_800EDC54:
+/* 800EDC54 000EABB4  2C 1C FF FF */	cmpwi r28, -1
+/* 800EDC58 000EABB8  40 82 00 24 */	bne lbl_800EDC7C
+/* 800EDC5C 000EABBC  7F E3 FB 78 */	mr r3, r31
+/* 800EDC60 000EABC0  81 9F 00 00 */	lwz r12, 0(r31)
+/* 800EDC64 000EABC4  38 80 00 00 */	li r4, 0
+/* 800EDC68 000EABC8  81 8C 00 08 */	lwz r12, 8(r12)
+/* 800EDC6C 000EABCC  7D 88 03 A6 */	mtlr r12
+/* 800EDC70 000EABD0  4E 80 00 21 */	blrl 
+/* 800EDC74 000EABD4  7C 7D 1B 78 */	mr r29, r3
+/* 800EDC78 000EABD8  48 00 00 20 */	b lbl_800EDC98
+lbl_800EDC7C:
+/* 800EDC7C 000EABDC  7F E3 FB 78 */	mr r3, r31
+/* 800EDC80 000EABE0  81 9F 00 00 */	lwz r12, 0(r31)
+/* 800EDC84 000EABE4  7F 84 E3 78 */	mr r4, r28
+/* 800EDC88 000EABE8  81 8C 00 08 */	lwz r12, 8(r12)
+/* 800EDC8C 000EABEC  7D 88 03 A6 */	mtlr r12
+/* 800EDC90 000EABF0  4E 80 00 21 */	blrl 
+/* 800EDC94 000EABF4  7C 7D 1B 78 */	mr r29, r3
+lbl_800EDC98:
+/* 800EDC98 000EABF8  38 7D 00 00 */	addi r3, r29, 0
+/* 800EDC9C 000EABFC  38 9E 00 00 */	addi r4, r30, 0
+/* 800EDCA0 000EAC00  4B F9 F1 DD */	bl qdist2__FP8CreatureP8Creature
+/* 800EDCA4 000EAC04  80 1D 00 6C */	lwz r0, 0x6c(r29)
+/* 800EDCA8 000EAC08  2C 00 00 12 */	cmpwi r0, 0x12
+/* 800EDCAC 000EAC0C  40 82 00 28 */	bne lbl_800EDCD4
+/* 800EDCB0 000EAC10  80 7E 02 D0 */	lwz r3, 0x2d0(r30)
+/* 800EDCB4 000EAC14  80 1D 02 D0 */	lwz r0, 0x2d0(r29)
+/* 800EDCB8 000EAC18  38 63 FF FF */	addi r3, r3, -1
+/* 800EDCBC 000EAC1C  7C 03 00 00 */	cmpw r3, r0
+/* 800EDCC0 000EAC20  40 82 00 14 */	bne lbl_800EDCD4
+/* 800EDCC4 000EAC24  FC 01 F8 40 */	fcmpo cr0, f1, f31
+/* 800EDCC8 000EAC28  40 80 00 0C */	bge lbl_800EDCD4
+/* 800EDCCC 000EAC2C  7F BB EB 78 */	mr r27, r29
+/* 800EDCD0 000EAC30  FF E0 08 90 */	fmr f31, f1
+lbl_800EDCD4:
+/* 800EDCD4 000EAC34  7F E3 FB 78 */	mr r3, r31
+/* 800EDCD8 000EAC38  81 9F 00 00 */	lwz r12, 0(r31)
+/* 800EDCDC 000EAC3C  7F 84 E3 78 */	mr r4, r28
+/* 800EDCE0 000EAC40  81 8C 00 10 */	lwz r12, 0x10(r12)
+/* 800EDCE4 000EAC44  7D 88 03 A6 */	mtlr r12
+/* 800EDCE8 000EAC48  4E 80 00 21 */	blrl 
+/* 800EDCEC 000EAC4C  7C 7C 1B 78 */	mr r28, r3
+lbl_800EDCF0:
+/* 800EDCF0 000EAC50  7F E3 FB 78 */	mr r3, r31
+/* 800EDCF4 000EAC54  81 9F 00 00 */	lwz r12, 0(r31)
+/* 800EDCF8 000EAC58  7F 84 E3 78 */	mr r4, r28
+/* 800EDCFC 000EAC5C  81 8C 00 14 */	lwz r12, 0x14(r12)
+/* 800EDD00 000EAC60  7D 88 03 A6 */	mtlr r12
+/* 800EDD04 000EAC64  4E 80 00 21 */	blrl 
+/* 800EDD08 000EAC68  54 60 06 3F */	clrlwi. r0, r3, 0x18
+/* 800EDD0C 000EAC6C  41 82 00 0C */	beq lbl_800EDD18
+/* 800EDD10 000EAC70  38 00 00 01 */	li r0, 1
+/* 800EDD14 000EAC74  48 00 00 30 */	b lbl_800EDD44
+lbl_800EDD18:
+/* 800EDD18 000EAC78  7F E3 FB 78 */	mr r3, r31
+/* 800EDD1C 000EAC7C  81 9F 00 00 */	lwz r12, 0(r31)
+/* 800EDD20 000EAC80  7F 84 E3 78 */	mr r4, r28
+/* 800EDD24 000EAC84  81 8C 00 08 */	lwz r12, 8(r12)
+/* 800EDD28 000EAC88  7D 88 03 A6 */	mtlr r12
+/* 800EDD2C 000EAC8C  4E 80 00 21 */	blrl 
+/* 800EDD30 000EAC90  28 03 00 00 */	cmplwi r3, 0
+/* 800EDD34 000EAC94  40 82 00 0C */	bne lbl_800EDD40
+/* 800EDD38 000EAC98  38 00 00 01 */	li r0, 1
+/* 800EDD3C 000EAC9C  48 00 00 08 */	b lbl_800EDD44
+lbl_800EDD40:
+/* 800EDD40 000EACA0  38 00 00 00 */	li r0, 0
+lbl_800EDD44:
+/* 800EDD44 000EACA4  54 00 06 3F */	clrlwi. r0, r0, 0x18
+/* 800EDD48 000EACA8  41 82 FF 0C */	beq lbl_800EDC54
+/* 800EDD4C 000EACAC  28 1B 00 00 */	cmplwi r27, 0
+/* 800EDD50 000EACB0  41 82 00 10 */	beq lbl_800EDD60
+/* 800EDD54 000EACB4  38 7E 00 00 */	addi r3, r30, 0
+/* 800EDD58 000EACB8  38 9B 00 00 */	addi r4, r27, 0
+/* 800EDD5C 000EACBC  4B FA 69 A1 */	bl setRope__12RopeCreatureFP8Creature
+lbl_800EDD60:
+/* 800EDD60 000EACC0  BB 61 00 2C */	lmw r27, 0x2c(r1)
+/* 800EDD64 000EACC4  80 01 00 4C */	lwz r0, 0x4c(r1)
+/* 800EDD68 000EACC8  CB E1 00 40 */	lfd f31, 0x40(r1)
+/* 800EDD6C 000EACCC  38 21 00 48 */	addi r1, r1, 0x48
+/* 800EDD70 000EACD0  7C 08 03 A6 */	mtlr r0
+/* 800EDD74 000EACD4  4E 80 00 20 */	blr 
+
+.global startAI__8RopeItemFi
+startAI__8RopeItemFi:
+/* 800EDD78 000EACD8  4E 80 00 20 */	blr 
+
+.global doKill__8RopeItemFv
+doKill__8RopeItemFv:
+/* 800EDD7C 000EACDC  7C 08 02 A6 */	mflr r0
+/* 800EDD80 000EACE0  7C 64 1B 78 */	mr r4, r3
+/* 800EDD84 000EACE4  90 01 00 04 */	stw r0, 4(r1)
+/* 800EDD88 000EACE8  94 21 FF F8 */	stwu r1, -8(r1)
+/* 800EDD8C 000EACEC  80 6D 30 AC */	lwz r3, itemMgr@sda21(r13)
+/* 800EDD90 000EACF0  81 83 00 00 */	lwz r12, 0(r3)
+/* 800EDD94 000EACF4  81 8C 00 7C */	lwz r12, 0x7c(r12)
+/* 800EDD98 000EACF8  7D 88 03 A6 */	mtlr r12
+/* 800EDD9C 000EACFC  4E 80 00 21 */	blrl 
+/* 800EDDA0 000EAD00  80 01 00 0C */	lwz r0, 0xc(r1)
+/* 800EDDA4 000EAD04  38 21 00 08 */	addi r1, r1, 8
+/* 800EDDA8 000EAD08  7C 08 03 A6 */	mtlr r0
+/* 800EDDAC 000EAD0C  4E 80 00 20 */	blr 
+
+.global getiMass__8RopeItemFv
+getiMass__8RopeItemFv:
+/* 800EDDB0 000EAD10  C0 22 9B 34 */	lfs f1, lbl_803E9D34@sda21(r2)
+/* 800EDDB4 000EAD14  4E 80 00 20 */	blr 
+
+.global needShadow__8RopeItemFv
+needShadow__8RopeItemFv:
+/* 800EDDB8 000EAD18  38 60 00 00 */	li r3, 0
+/* 800EDDBC 000EAD1C  4E 80 00 20 */	blr 
+
+.global isAlive__8RopeItemFv
+isAlive__8RopeItemFv:
+/* 800EDDC0 000EAD20  38 60 00 01 */	li r3, 1
+/* 800EDDC4 000EAD24  4E 80 00 20 */	blr 
+
+.global isVisible__8RopeItemFv
+isVisible__8RopeItemFv:
+/* 800EDDC8 000EAD28  38 60 00 01 */	li r3, 1
+/* 800EDDCC 000EAD2C  4E 80 00 20 */	blr 
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
-	.4byte 0x726f7065
-	.4byte 0x4974656d
-	.4byte 0x2e637070
-	.4byte 0
-	.4byte 0x726f7065
-	.4byte 0x4974656d
-	.4byte 0
-	.4byte 0x526f7065
-	.4byte 0x4974656d
-	.4byte 0
-	.4byte 0x4576656e
-	.4byte 0x7454616c
-	.4byte 0x6b657200
-	.4byte 0x52656643
-	.4byte 0x6f756e74
-	.4byte 0x61626c65
-	.4byte 0
-	.4byte 0x43726561
-	.4byte 0x74757265
-	.4byte 0
-	.4byte 0x803E1a08
+.balign 8
+lbl_802BD438:
+	.asciz "ropeItem.cpp"
+.balign 4
+lbl_802BD448:
+	.asciz "ropeItem"
+.balign 4
+lbl_802BD454:
+	.asciz "RopeItem"
+.balign 4
+lbl_802BD460:
+	.asciz "EventTalker"
+.balign 4
+lbl_802BD46C:
+	.asciz "RefCountable"
+.balign 4
+lbl_802BD47C:
+	.asciz "Creature"
+.balign 4
+lbl_802BD488:
+	.4byte __RTTI__11EventTalker
 	.4byte 0x8
-	.4byte 0x803E1a10
+	.4byte __RTTI__12RefCountable
 	.4byte 0
 	.4byte 0
-	.4byte 0x526f7065
-	.4byte 0x43726561
-	.4byte 0x74757265
-	.4byte 0
-	.4byte 0x803E1a08
+.balign 4
+lbl_802BD49C:
+	.asciz "RopeCreature"
+.balign 4
+lbl_802BD4AC:
+	.4byte __RTTI__11EventTalker
 	.4byte 0x8
-	.4byte 0x803E1a10
+	.4byte __RTTI__12RefCountable
 	.4byte 0
-	.4byte 0x803E1a18
+	.4byte __RTTI__8Creature
 	.4byte 0
 	.4byte 0
-	.4byte 0x803E1a08
+lbl_802BD4C8:
+	.4byte __RTTI__11EventTalker
 	.4byte 0x8
-	.4byte 0x803E1a10
+	.4byte __RTTI__12RefCountable
 	.4byte 0
-	.4byte 0x803E1a18
+	.4byte __RTTI__8Creature
 	.4byte 0
-	.4byte 0x803E1a20
+	.4byte __RTTI__12RopeCreature
 	.4byte 0
 	.4byte 0
 .global __vt__8RopeItem
@@ -391,15 +425,30 @@ __vt__8RopeItem:
 	.4byte exitCourse__8CreatureFv
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
-	.4byte 0x802BD0E8
-	.4byte 0x802BD0F4
-	.4byte 0x802BD108
-	.4byte 0x802BD114
-	.4byte 0x802BD138
-	.4byte 0x802BD148
-.global __RTTI__8DoorItem
-__RTTI__8DoorItem:
-	.4byte 0x802bd0ac
-	.4byte 0x802bd174
-	.4byte 0x4b657949
-	.4byte 0x74656d00
+.balign 8
+__RTTI__11EventTalker:
+	.4byte lbl_802BD460
+	.4byte 0
+__RTTI__12RefCountable:
+	.4byte lbl_802BD46C
+	.4byte 0
+__RTTI__8Creature:
+	.4byte lbl_802BD47C
+	.4byte lbl_802BD488
+__RTTI__12RopeCreature:
+	.4byte lbl_802BD49C
+	.4byte lbl_802BD4AC
+__RTTI__8RopeItem:
+	.4byte lbl_802BD454
+	.4byte lbl_802BD4C8
+
+.section .sdata2, "a"  # 0x803E8200 - 0x803EC840
+.balign 8
+lbl_803E9D28:
+	.float 5.0
+lbl_803E9D2C:
+	.float 1.0
+lbl_803E9D30:
+	.float 12800.0
+lbl_803E9D34:
+	.float 10.0
