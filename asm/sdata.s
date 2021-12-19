@@ -10393,28 +10393,3 @@ __RTTI__7UfoItem:
 __RTTI__15PaniUfoAnimator:
 	.4byte 0x802BC570
 	.4byte 0x802BC5A8
-.global lbl_803E1828
-lbl_803E1828:
-	.4byte 0x00000000
-.global lbl_803E182C
-lbl_803E182C:
-	.4byte 0x41A00000
-.global lbl_803E1830
-lbl_803E1830:
-	.4byte 0x00000000
-	.4byte 0x802BC600
-	.4byte 0x00000000
-	.4byte 0x802BC614
-	.4byte 0x00000000
-	.4byte 0x802BC620
-	.4byte 0x00000000
-	.4byte 0x802BC630
-	.4byte 0x802BC63C
-	.4byte 0x802BC650
-	.4byte 0x802BC65C
-	.4byte 0x802BC680
-	.4byte 0x802BC690
-.global __RTTI__8BombItem
-__RTTI__8BombItem:
-	.4byte 0x802BC5F4
-	.4byte 0x802BC6BC

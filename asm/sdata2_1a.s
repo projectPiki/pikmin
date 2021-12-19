@@ -706,15 +706,3 @@ lbl_803E9C18:
 "@1109":
 	.4byte 0x43300000
 	.4byte 0x80000000
-.global lbl_803E9C28
-lbl_803E9C28:
-	.4byte 0x00000000
-.global lbl_803E9C2C
-lbl_803E9C2C:
-	.float 1.0
-.global lbl_803E9C30
-lbl_803E9C30:
-	.float 5.0
-.global lbl_803E9C34
-lbl_803E9C34:
-	.float 5000.0
