@@ -9671,17 +9671,3 @@ __RTTI__4Piki_1:
 __RTTI__8ViewPiki:
 	.4byte 0x802BA3BC
 	.4byte 0x802BA43C
-	.4byte 0x802BA5B0
-	.4byte 0
-.global __RTTI__13CndStickMouth
-__RTTI__13CndStickMouth:
-	.4byte 0x802BA5A0
-	.4byte 0x802BA5BC
-.global __RTTI__10CndIsAtari
-__RTTI__10CndIsAtari:
-	.4byte 0x802BA5D4
-	.4byte 0x802BA5E0
-.global __RTTI__12CndIsVisible
-__RTTI__12CndIsVisible:
-	.4byte 0x802BA5F8
-	.4byte 0x802BA608
