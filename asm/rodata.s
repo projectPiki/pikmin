@@ -372,11 +372,3 @@ lbl_802224D8:
 	.4byte 0x000000F3
 	.4byte 0x000000F6
 	.4byte 0x000000FE
-.global lbl_80222580
-lbl_80222580:
-	.4byte lbl_803E1220
-	.4byte lbl_803E1224
-	.4byte lbl_803E1228
-	.4byte lbl_803E122C
-	.4byte lbl_803E1230
-	.4byte lbl_803E1234
