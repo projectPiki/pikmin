@@ -38,6 +38,7 @@ TEXT_O_FILES :=\
 	$(BUILD_DIR)/asm/sysCommon/atx.o\
 	$(BUILD_DIR)/asm/sysCommon/id32.o\
 	$(BUILD_DIR)/asm/text_80044194.o\
+	$(BUILD_DIR)/asm/plugPikiKando/fishItem.o\
 	$(BUILD_DIR)/asm/plugPikiKando/ufoItem.o\
 	$(BUILD_DIR)/asm/plugPikiKando/ufoAnim.o\
 	$(BUILD_DIR)/asm/plugPikiKando/bombItem.o\
