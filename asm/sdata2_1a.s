@@ -460,11 +460,3 @@ lbl_803E9A98:
 .global lbl_803E9A9C
 lbl_803E9A9C:
 	.float 100.0
-.global lbl_803E9AA0
-lbl_803E9AA0:
-	.4byte 0x3A800000
-	.4byte 0x00000000
-.global "@1512_1"
-"@1512_1":
-	.4byte 0x43300000
-	.4byte 0x00000000

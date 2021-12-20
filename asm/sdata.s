@@ -9861,22 +9861,3 @@ __RTTI__9Generator:
 	.4byte 0x802BAA60
 	.4byte 0x802BAB0C
 	.4byte 0
-.global lbl_803E1408
-lbl_803E1408:
-	.4byte 0x00000000
-	.4byte 0x53747265
-	.4byte 0x616D0000
-	.4byte 0x803E140C
-	.4byte 0x00000000
-	.4byte 0x802BAC34
-	.4byte 0x802BAC48
-	.4byte 0x414E6F64
-	.4byte 0x65000000
-	.4byte 0x803E1424
-	.4byte 0x00000000
-	.4byte 0x802BAC1C
-	.4byte 0x802BAD4C
-.global __RTTI__Q214GeneratorCache5Cache
-__RTTI__Q214GeneratorCache5Cache:
-	.4byte 0x802BAD34
-	.4byte 0x802BAD58

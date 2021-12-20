@@ -1008,6 +1008,3 @@ limitGeneratorMgr:
 .global generatorList
 generatorList:
 	.skip 0x4
-.global generatorCache
-generatorCache:
-	.skip 0x4
