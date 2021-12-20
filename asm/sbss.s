@@ -914,34 +914,41 @@ aiGridMap__8FastGrid:
 	.skip 0x4
 .global aiGridSize__8FastGrid
 aiGridSize__8FastGrid:
-	.skip 0x4
+	.skip 0x2
+.balign 8
 .global SmartTurnOver
 SmartTurnOver:
-	.skip 0x4
+	.skip 0x1
+.balign 4
 .global count$1859
 count$1859:
 	.skip 0x4
 .global init$1860
 init$1860:
-	.skip 0x4
+	.skip 0x1
+.balign 4
 .global pelletMgr
 pelletMgr:
 	.skip 0x4
 .global workObjectMgr
 workObjectMgr:
-	.skip 0x8
+	.skip 0x4
+.balign 8
 .global mode__10PathFinder
 mode__10PathFinder:
-	.skip 0x4
+	.skip 0x2
+.balign 4
 .global routeMgr
 routeMgr:
 	.skip 0x4
 .global seMgr
 seMgr:
-	.skip 0x8
+	.skip 0x4
+.balign 8
 .global seSystem
 seSystem:
-	.skip 0x8
+	.skip 0x4
+.balign 8
 .global pikiUpdateMgr
 pikiUpdateMgr:
 	.skip 0x4
@@ -956,13 +963,16 @@ pikiOptUpdateMgr:
 	.skip 0x4
 .global tekiOptUpdateMgr
 tekiOptUpdateMgr:
-	.skip 0x8
+	.skip 0x4
+.balign 8
 .global uniqueInstance__7AiTable
 uniqueInstance__7AiTable:
-	.skip 0x8
+	.skip 0x4
+.balign 8
 .global directDumpMode__4Piki
 directDumpMode__4Piki:
-	.skip 0x8
+	.skip 0x1
+.balign 8
 .global pikiMgr
 pikiMgr:
 	.skip 0x4
@@ -978,33 +988,3 @@ meNukiMode__7PikiMgr:
 .global containerExitMode__7PikiMgr
 containerExitMode__7PikiMgr:
 	.skip 0x1
-.global ramMode__9Generator
-ramMode__9Generator:
-	.skip 0x4
-.global factory__16GenObjectFactory
-factory__16GenObjectFactory:
-	.skip 0x4
-.global factory__14GenTypeFactory
-factory__14GenTypeFactory:
-	.skip 0x4
-.global factory__14GenAreaFactory
-factory__14GenAreaFactory:
-	.skip 0x4
-.global generatorMgr
-generatorMgr:
-	.skip 0x4
-.global plantGeneratorMgr
-plantGeneratorMgr:
-	.skip 0x4
-.global dailyGeneratorMgr
-dailyGeneratorMgr:
-	.skip 0x4
-.global onceGeneratorMgr
-onceGeneratorMgr:
-	.skip 0x4
-.global limitGeneratorMgr
-limitGeneratorMgr:
-	.skip 0x4
-.global generatorList
-generatorList:
-	.skip 0x4
