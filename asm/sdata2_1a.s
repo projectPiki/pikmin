@@ -483,13 +483,3 @@ lbl_803E9AB4:
 .global lbl_803E9AC8
 lbl_803E9AC8:
 	.float 300.0
-	.4byte 0x00000000
-.global lbl_803E9AD0
-lbl_803E9AD0:
-	.float 300.0
-.global lbl_803E9AD4
-lbl_803E9AD4:
-	.4byte 0x46480000
-.global lbl_803E9AD8
-lbl_803E9AD8:
-	.4byte 0xC2C80000

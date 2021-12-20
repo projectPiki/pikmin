@@ -9909,9 +9909,3 @@ __RTTI__13PolyObjectMgr:
 	.4byte 0x802BAEE0
 	.4byte 0x802BAF8C
 	.4byte 0x802BAF9C
-	.4byte 0x802BB128
-	.4byte 0
-.global __RTTI__12SearchBuffer
-__RTTI__12SearchBuffer:
-	.4byte 0x802BB118
-	.4byte 0x802BB134

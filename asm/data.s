@@ -29337,35 +29337,3 @@ __vt__9ObjectMgr:
 	.4byte findClosest__9ObjectMgrFR8Vector3fP9Condition
 	.4byte search__9ObjectMgrFP9ObjectMgr
 	.4byte killAll__9ObjectMgrFv
-	.4byte 0x73656172
-	.4byte 0x63685379
-	.4byte 0x7374656D
-	.4byte 0x2E637070
-	.4byte 0
-	.4byte 0x73656172
-	.4byte 0x63685379
-	.4byte 0x73000000
-	.4byte 0x53656172
-	.4byte 0x63684275
-	.4byte 0x66666572
-	.4byte 0
-	.4byte 0x54726176
-	.4byte 0x65727361
-	.4byte 0x626C6500
-	.4byte 0x803E14A0
-	.4byte 0
-	.4byte 0
-.global __vt__12SearchBuffer
-__vt__12SearchBuffer:
-	.4byte __RTTI__12SearchBuffer
-	.4byte 0
-	.4byte getCreature__12SearchBufferFi
-	.4byte getFirst__12SearchBufferFv
-	.4byte getNext__12SearchBufferFi
-	.4byte isDone__12SearchBufferFi
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
