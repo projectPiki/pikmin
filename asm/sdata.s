@@ -9880,32 +9880,3 @@ lbl_803E1408:
 __RTTI__Q214GeneratorCache5Cache:
 	.4byte 0x802BAD34
 	.4byte 0x802BAD58
-	.4byte 0
-.global lbl_803E1448
-lbl_803E1448:
-	.4byte 0x3C4E6F64
-	.4byte 0x653E0000
-	.4byte 0x414E6F64
-	.4byte 0x65000000
-	.4byte 0x803E1450
-	.4byte 0x00000000
-	.4byte 0x802BADC4
-	.4byte 0x802BADD0
-	.4byte 0x4E6F6465
-	.4byte 0x00000000
-	.4byte 0x803E1468
-	.4byte 0x802BADDC
-	.4byte 0x802BADF0
-	.4byte 0x00000000
-	.4byte 0x802BADFC
-	.4byte 0x802BAE08
-.global __RTTI__15CreatureNodeMgr
-__RTTI__15CreatureNodeMgr:
-	.4byte 0x802BADB4
-	.4byte 0x802BAE2C
-.global __RTTI__13PolyObjectMgr
-__RTTI__13PolyObjectMgr:
-	.4byte 0x802BAED0
-	.4byte 0x802BAEE0
-	.4byte 0x802BAF8C
-	.4byte 0x802BAF9C
