@@ -9915,5 +9915,3 @@ __RTTI__13PolyObjectMgr:
 __RTTI__12SearchBuffer:
 	.4byte 0x802BB118
 	.4byte 0x802BB134
-	.4byte 0x802BB18C
-	.4byte 0

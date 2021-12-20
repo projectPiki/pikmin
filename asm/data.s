@@ -29369,20 +29369,3 @@ __vt__12SearchBuffer:
 	.4byte 0
 	.4byte 0
 	.4byte 0
-	.4byte 0x736D6172
-	.4byte 0x74507472
-	.4byte 0x2E637070
-	.4byte 0
-	.4byte 0x736D6172
-	.4byte 0x74507472
-	.4byte 0
-	.4byte 0x52656643
-	.4byte 0x6F756E74
-	.4byte 0x61626C65
-	.4byte 0
-.global __vt__12RefCountable
-__vt__12RefCountable:
-	.4byte 0x803E14B0
-	.4byte 0
-	.4byte addCntCallback__12RefCountableFv
-	.4byte subCntCallback__12RefCountableFv
