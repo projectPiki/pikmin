@@ -692,17 +692,3 @@ lbl_803E9C08:
 .global lbl_803E9C0C
 lbl_803E9C0C:
 	.4byte 0x40C90FDB
-.global lbl_803E9C10
-lbl_803E9C10:
-	.4byte 0x00000000
-.global lbl_803E9C14
-lbl_803E9C14:
-	.float 30.0
-.global lbl_803E9C18
-lbl_803E9C18:
-	.float 1.0
-	.4byte 0x00000000
-.global "@1109"
-"@1109":
-	.4byte 0x43300000
-	.4byte 0x80000000

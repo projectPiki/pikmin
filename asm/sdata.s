@@ -10364,32 +10364,3 @@ lbl_803E1770:
 __RTTI__7UfoItem:
 	.4byte 0x803E17AC
 	.4byte 0x802BC2F4
-	.4byte 0
-	.4byte 0x77616974
-	.4byte 0
-	.4byte 0x74616B65
-	.4byte 0x6F666600
-	.4byte 0x68656E6B
-	.4byte 0x61310000
-	.4byte 0x68656E6B
-	.4byte 0x61316200
-	.4byte 0x68656E6B
-	.4byte 0x61316400
-	.4byte 0x68656E6B
-	.4byte 0x61320000
-	.4byte 0x68656E6B
-	.4byte 0x61326400
-	.4byte 0x68656E6B
-	.4byte 0x61330000
-	.4byte 0x68656E6B
-	.4byte 0x61346100
-	.4byte 0x68656E6B
-	.4byte 0x61346200
-	.4byte 0x802BC580
-	.4byte 0
-	.4byte 0x802BC58C
-	.4byte 0x802BC59C
-.global __RTTI__15PaniUfoAnimator
-__RTTI__15PaniUfoAnimator:
-	.4byte 0x802BC570
-	.4byte 0x802BC5A8
