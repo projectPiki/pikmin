@@ -39,18 +39,3 @@ lbl_803E983C:
 .global lbl_803E9840
 lbl_803E9840:
 	.4byte 0x3FC90FDB
-	.4byte 0x00000000
-.global lbl_803E9848
-lbl_803E9848:
-	.4byte 0x00000000
-.global lbl_803E984C
-lbl_803E984C:
-	.float 100.0
-.global "@440"
-"@440":
-	.4byte 0x3FE00000
-	.4byte 0x00000000
-.global "@441"
-"@441":
-	.4byte 0x40080000
-	.4byte 0x00000000
