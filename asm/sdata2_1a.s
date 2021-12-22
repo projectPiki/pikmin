@@ -54,13 +54,3 @@ lbl_803E984C:
 "@441":
 	.4byte 0x40080000
 	.4byte 0x00000000
-.global lbl_803E9860
-lbl_803E9860:
-	.float 1.0
-.global lbl_803E9864
-lbl_803E9864:
-	.float 32767.0
-.global "@1442"
-"@1442":
-	.4byte 0x43300000
-	.4byte 0x80000000
