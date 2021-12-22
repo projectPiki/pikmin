@@ -968,7 +968,3 @@ tekiOptUpdateMgr:
 .global uniqueInstance__7AiTable
 uniqueInstance__7AiTable:
 	.skip 0x4
-.balign 8
-.global directDumpMode__4Piki
-directDumpMode__4Piki:
-	.skip 0x1

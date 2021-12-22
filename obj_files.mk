@@ -11,7 +11,6 @@ GROUP_0_FILES :=\
 	$(BUILD_DIR)/asm/sdata2_1.o\
 	$(BUILD_DIR)/asm/sdata2_1c.o\
 	$(BUILD_DIR)/asm/sdata2_1b.o\
-	$(BUILD_DIR)/asm/sdata2_1a.o\
 
 SYSBOOTUP :=\
 	$(BUILD_DIR)/src/sysBootup.o\
@@ -38,6 +37,7 @@ TEXT_O_FILES :=\
 	$(BUILD_DIR)/asm/sysCommon/atx.o\
 	$(BUILD_DIR)/asm/sysCommon/id32.o\
 	$(BUILD_DIR)/asm/text_80044194.o\
+	$(BUILD_DIR)/asm/plugPikiKando/piki.o\
 	$(BUILD_DIR)/asm/plugPikiKando/odoMeter.o\
 	$(BUILD_DIR)/asm/plugPikiKando/pikidoKill.o\
 	$(BUILD_DIR)/asm/plugPikiKando/pikiMgr.o\
