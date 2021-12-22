@@ -38,6 +38,7 @@ TEXT_O_FILES :=\
 	$(BUILD_DIR)/asm/sysCommon/atx.o\
 	$(BUILD_DIR)/asm/sysCommon/id32.o\
 	$(BUILD_DIR)/asm/text_80044194.o\
+	$(BUILD_DIR)/asm/plugPikiKando/pikiMgr.o\
 	$(BUILD_DIR)/asm/plugPikiKando/pikiState.o\
 	$(BUILD_DIR)/asm/plugPikiKando/viewPiki.o\
 	$(BUILD_DIR)/asm/plugPikiKando/conditions.o\

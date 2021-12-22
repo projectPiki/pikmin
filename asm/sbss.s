@@ -972,19 +972,3 @@ uniqueInstance__7AiTable:
 .global directDumpMode__4Piki
 directDumpMode__4Piki:
 	.skip 0x1
-.balign 8
-.global pikiMgr
-pikiMgr:
-	.skip 0x4
-.global containerDebug__7PikiMgr
-containerDebug__7PikiMgr:
-	.skip 0x1
-.global meBirthMode__7PikiMgr
-meBirthMode__7PikiMgr:
-	.skip 0x1
-.global meNukiMode__7PikiMgr
-meNukiMode__7PikiMgr:
-	.skip 0x1
-.global containerExitMode__7PikiMgr
-containerExitMode__7PikiMgr:
-	.skip 0x1
