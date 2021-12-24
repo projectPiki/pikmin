@@ -161,10 +161,12 @@ if __name__ == "__main__":
     codeCompletionPcnt = (decomp_code_size / dol_code_size)
     dataCompletionPcnt = (decomp_data_size / dol_data_size)
     bytesPerShipPart = dol_code_size / 30
+    bytesPerPiki = dol_data_size / 100
     
     partCount = math.floor(decomp_code_size / bytesPerShipPart)
+    pikiCount = math.floor(decomp_code_size / bytesPerPiki)
 
     print("Progress:")
-    print(f"\tCode sections: {decomp_code_size} / {dol_code_size} bytes in src ({codeCompletionPcnt:%})")
-    print(f"\tData sections: {decomp_data_size} / {dol_data_size} bytes in src ({dataCompletionPcnt:%})")
-    print("\nYou have {} out of 30 ship part(s).".format(partCount))
+    print(f"\tCode sections: {decomp_code_size} / {dol_code_size}\tbytes in src ({codeCompletionPcnt:%})")
+    print(f"\tData sections: {decomp_data_size} / {dol_data_size}\tbytes in src ({dataCompletionPcnt:%})")
+    print("\nYou have {} out of 30 ship parts and {} out of 100 Pikmin.".format(partCount, pikiCount))

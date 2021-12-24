@@ -1345,27 +1345,3 @@ lbl_803E970C:
 .global lbl_803E9720
 lbl_803E9720:
 	.4byte 0x3ECCCCCD
-	.4byte 0x00000000
-.global lbl_803E9728
-lbl_803E9728:
-	.4byte 0x00000000
-.global lbl_803E972C
-lbl_803E972C:
-	.float 1.0
-.global lbl_803E9730
-lbl_803E9730:
-	.float 32767.0
-.global lbl_803E9734
-lbl_803E9734:
-	.float 20.0
-.global lbl_803E9738
-lbl_803E9738:
-	.4byte 0x3FCCCCCD
-	.4byte 0x00000000
-.global "@1103"
-"@1103":
-	.4byte 0x43300000
-	.4byte 0x80000000
-.global lbl_803E9748
-lbl_803E9748:
-	.4byte 0x3ECCCCCD
