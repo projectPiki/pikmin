@@ -396,10 +396,10 @@ TEXT_O_FILES :=\
 	$(BUILD_DIR)/asm/MSL_C/PPCEABI/bare/H/strtoul.o\
 	$(BUILD_DIR)/asm/MSL_C/PPCEABI/bare/H/uart_console_io.o\
 	$(BUILD_DIR)/src/MSL_C/PPCEABI/bare/H/wchar_io.o\
-	$(BUILD_DIR)/asm/MSL_C/PPCEABI/bare/H/float.o\
+	$(BUILD_DIR)/src/MSL_C/PPCEABI/bare/H/float.o\
 	$(BUILD_DIR)/asm/MSL_C/PPCEABI/bare/H/e_asin.o\
 	$(BUILD_DIR)/asm/MSL_C/PPCEABI/bare/H/e_atan2.o\
-	$(BUILD_DIR)/asm/MSL_C/PPCEABI/bare/H/e_pow.o\
+	$(BUILD_DIR)/src/MSL_C/PPCEABI/bare/H/e_pow.o\
 	$(BUILD_DIR)/asm/MSL_C/PPCEABI/bare/H/fminmaxdim.o\
 	$(BUILD_DIR)/asm/MSL_C/PPCEABI/bare/H/s_atan.o\
 	$(BUILD_DIR)/src/MSL_C/PPCEABI/bare/H/s_copysign.o\

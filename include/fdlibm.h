@@ -118,7 +118,8 @@ extern double pow __P((double, double));
 extern double sqrt __P((double));
 
 extern double ceil __P((double));
-extern double fabs __P((double));
+//extern double fabs __P((double));
+extern double fabs__Fd __P((double));
 extern double floor __P((double));
 extern double fmod __P((double, double));
 
