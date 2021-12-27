@@ -7773,9 +7773,10 @@ lbl_803E0560:
 lbl_803E0564:
 	.4byte 0x00000000
 	.4byte 0x802B6DC8
-	.4byte 0x00000000
+	.4byte 0
 	.4byte 0x802B6DDC
-	.4byte 0x00000000
+	.4byte 0
+.balign 4
 	.4byte 0x41637469
 	.4byte 0x6F6E0000
 	.4byte 0x803E0578
@@ -7792,6 +7793,7 @@ __RTTI__11ActPickItem:
 	.4byte 0x802B6EC0
 	.4byte 0x802B6FA0
 	.4byte 0
+.balign 4
 	.4byte 0x41637469
 	.4byte 0x6F6E0000
 	.4byte 0x803E05A8
@@ -7849,7 +7851,8 @@ lbl_803E0608:
 lbl_803E060C:
 	.4byte 0x00000000
 	.4byte 0x802B71D0
-	.4byte 0x00000000
+	.4byte 0
+.balign 4
 	.4byte 0x41637469
 	.4byte 0x6F6E0000
 	.4byte 0x803E0618
@@ -7864,21 +7867,3 @@ __RTTI__18ActPulloutCreature:
 __RTTI__10ActPullout:
 	.4byte 0x802B7294
 	.4byte 0x802B72C0
-.global lbl_803E0640
-lbl_803E0640:
-	.4byte 0x50757368
-	.4byte 0x00000000
-	.4byte 0x41637450
-	.4byte 0x75736800
-	.4byte 0x802B73E8
-	.4byte 0x00000000
-	.4byte 0x802B73FC
-	.4byte 0x00000000
-	.4byte 0x41637469
-	.4byte 0x6F6E0000
-	.4byte 0x803E0660
-	.4byte 0x802B740C
-.global __RTTI__7ActPush
-__RTTI__7ActPush:
-	.4byte 0x803E0648
-	.4byte 0x802B7418
