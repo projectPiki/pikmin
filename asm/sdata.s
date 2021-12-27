@@ -8107,32 +8107,3 @@ lbl_803E07E0:
 __RTTI__9ActRescue:
 	.4byte 0x802B787C
 	.4byte 0x802B78B8
-	.4byte 0
-.global lbl_803E0810
-lbl_803E0810:
-	.4byte 0x726F7065
-	.4byte 0x00000000
-.global lbl_803E0818
-lbl_803E0818:
-	.4byte 0x00000000
-.global lbl_803E081C
-lbl_803E081C:
-	.float 1.0
-.global lbl_803E0820
-lbl_803E0820:
-	.4byte 0x00000000
-.global lbl_803E0824
-lbl_803E0824:
-	.4byte 0x43160000
-	.4byte 0x41637452
-	.4byte 0x6F706500
-	.4byte 0x802B798C
-	.4byte 0x00000000
-	.4byte 0x41637469
-	.4byte 0x6F6E0000
-	.4byte 0x803E0838
-	.4byte 0x802B799C
-.global __RTTI__7ActRope
-__RTTI__7ActRope:
-	.4byte 0x803E0828
-	.4byte 0x802B79A8
