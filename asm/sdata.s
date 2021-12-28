@@ -7682,34 +7682,3 @@ lbl_803E0480:
 __RTTI__7ActFree:
 	.4byte 0x803E0484
 	.4byte 0x802B6AAC
-	.4byte 0
-.global lbl_803E04B8
-lbl_803E04B8:
-	.4byte 0x00000000
-.global lbl_803E04BC
-lbl_803E04BC:
-	.4byte 0x00000000
-.global lbl_803E04C0
-lbl_803E04C0:
-	.4byte 0x00000000
-.global lbl_803E04C4
-lbl_803E04C4:
-	.4byte 0x00000000
-	.4byte 0x41637447
-	.4byte 0x6F746F00
-	.4byte 0x802B6B84
-	.4byte 0
-	.4byte 0x41637469
-	.4byte 0x6F6E0000
-	.4byte 0x803E04D8
-	.4byte 0x802B6B94
-.global __RTTI__7ActGoto
-__RTTI__7ActGoto:
-	.4byte 0x803E04C8
-	.4byte 0x802B6BA0
-	.4byte 0x802B6C30
-	.4byte 0
-.global __RTTI__Q27ActGoto11Initialiser
-__RTTI__Q27ActGoto11Initialiser:
-	.4byte 0x802B6C18
-	.4byte 0x802B6C44

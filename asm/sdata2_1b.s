@@ -1020,37 +1020,3 @@ lbl_803E951C:
 "@1772":
 	.4byte 0x43300000
 	.4byte 0x80000000
-.global lbl_803E9528
-lbl_803E9528:
-	.float 1.0
-.global lbl_803E952C
-lbl_803E952C:
-	.float 32767.0
-.global lbl_803E9530
-lbl_803E9530:
-	.float 4.0
-.global lbl_803E9534
-lbl_803E9534:
-	.float 2.0
-.global "@1098_1"
-"@1098_1":
-	.4byte 0x43300000
-	.4byte 0x80000000
-.global lbl_803E9540
-lbl_803E9540:
-	.float 20.0
-.global lbl_803E9544
-lbl_803E9544:
-	.4byte 0x00000000
-.global "@1281"
-"@1281":
-	.double 0.5
-.global "@1282"
-"@1282":
-	.double 3.0
-.global lbl_803E9558
-lbl_803E9558:
-	.float 3.1415927
-.global lbl_803E955C
-lbl_803E955C:
-	.4byte 0x41100000
