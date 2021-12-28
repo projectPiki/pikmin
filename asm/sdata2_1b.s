@@ -917,13 +917,3 @@ lbl_803E9470:
 .global lbl_803E9480
 lbl_803E9480:
 	.float 50.0
-	.4byte 0x00000000
-.global lbl_803E9488
-lbl_803E9488:
-	.float 0.0
-.global lbl_803E948C
-lbl_803E948C:
-	.float 15.0
-.global lbl_803E9490
-lbl_803E9490:
-	.float 0.7

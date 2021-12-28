@@ -7455,22 +7455,22 @@ __RTTI__8ActEnter:
 	.4byte 0
 .global lbl_803E02F0
 lbl_803E02F0:
-	.4byte 0x00000000
+	.float 0.0
 .global lbl_803E02F4
 lbl_803E02F4:
-	.4byte 0x00000000
+	.float 0.0
 .global lbl_803E02F8
 lbl_803E02F8:
-	.4byte 0x00000000
+	.float 0.0
 .global lbl_803E02FC
 lbl_803E02FC:
-	.4byte 0x00000000
+	.float 0.0
 .global lbl_803E0300
 lbl_803E0300:
-	.4byte 0x00000000
+	.float 0.0
 .global lbl_803E0304
 lbl_803E0304:
-	.4byte 0x00000000
+	.float 0.0
 .global lbl_803E0308
 lbl_803E0308:
 	.4byte 0x4E4F524D
@@ -7480,7 +7480,7 @@ lbl_803E0310:
 	.4byte 0x41564F49
 	.4byte 0x44000000
 	.4byte 0x802B6624
-	.4byte 0x00000000
+	.4byte 0
 	.4byte 0x41637469
 	.4byte 0x6F6E0000
 	.4byte 0x803E0320
@@ -7501,13 +7501,13 @@ lbl_803E0348:
 	.4byte 0x00000000
 .global lbl_803E0350
 lbl_803E0350:
-	.4byte 0x00000000
+	.float 0.0
 .global lbl_803E0354
 lbl_803E0354:
-	.4byte 0x00000000
+	.float 0.0
 .global lbl_803E0358
 lbl_803E0358:
-	.4byte 0x00000000
+	.float 0.0
 .global lbl_803E035C
 lbl_803E035C:
 	.float 1.0
@@ -7537,7 +7537,7 @@ lbl_803E037C:
 	.float 1.0
 .global lbl_803E0380
 lbl_803E0380:
-	.4byte 0x00000000
+	.float 0.0
 .global lbl_803E0384
 lbl_803E0384:
 	.float 1.0
@@ -7562,38 +7562,3 @@ lbl_803E0390:
 __RTTI__7ActExit:
 	.4byte 0x803E0394
 	.4byte 0x802B6750
-	.4byte 0
-.global lbl_803E03C0
-lbl_803E03C0:
-	.4byte 0x00000000
-.global lbl_803E03C4
-lbl_803E03C4:
-	.4byte 0x00000000
-.global lbl_803E03C8
-lbl_803E03C8:
-	.4byte 0x00000000
-.global lbl_803E03CC
-lbl_803E03CC:
-	.4byte 0x00000000
-.global lbl_803E03D0
-lbl_803E03D0:
-	.4byte 0x00000000
-.global lbl_803E03D4
-lbl_803E03D4:
-	.4byte 0x00000000
-.balign 4
-	.asciz "ActMine"
-.balign 4
-	.4byte 0x802B6804
-	.4byte 0
-	.4byte 0x802B6818
-	.4byte 0
-.balign 4
-	.asciz "Action"
-.balign 4
-	.4byte 0x803E03F0
-	.4byte 0x802B6828
-.global __RTTI__7ActMine
-__RTTI__7ActMine:
-	.4byte 0x803E03D8
-	.4byte 0x802B6834
