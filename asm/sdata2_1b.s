@@ -991,32 +991,3 @@ lbl_803E94F4:
 .global lbl_803E94F8
 lbl_803E94F8:
 	.float 10.0
-.balign 8
-.global lbl_803E9500
-lbl_803E9500:
-	.float 0.0
-.global lbl_803E9504
-lbl_803E9504:
-	.float 3.0
-.global lbl_803E9508
-lbl_803E9508:
-	.4byte 0x3F666666
-.global lbl_803E950C
-lbl_803E950C:
-	.4byte 0x41900000
-.global lbl_803E9510
-lbl_803E9510:
-	.float 0.5
-.global lbl_803E9514
-lbl_803E9514:
-	.float 1.0
-.global lbl_803E9518
-lbl_803E9518:
-	.float 32767.0
-.global lbl_803E951C
-lbl_803E951C:
-	.float 0.8
-.global "@1772"
-"@1772":
-	.4byte 0x43300000
-	.4byte 0x80000000
