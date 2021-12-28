@@ -7290,7 +7290,8 @@ __RTTI__Q28ActChase11Initialiser:
 	.4byte 0x802B6270
 .global newVer
 newVer:
-	.4byte 0x01000000
+	.byte 1
+.balign 4
 .global lbl_803E01CC
 lbl_803E01CC:
 	.asciz "crowd"
@@ -7596,49 +7597,3 @@ lbl_803E03D4:
 __RTTI__7ActMine:
 	.4byte 0x803E03D8
 	.4byte 0x802B6834
-.global lbl_803E0408
-lbl_803E0408:
-	.4byte 0x00000000
-.global lbl_803E040C
-lbl_803E040C:
-	.4byte 0x00000000
-.global lbl_803E0410
-lbl_803E0410:
-	.4byte 0x00000000
-.global lbl_803E0414
-lbl_803E0414:
-	.4byte 0x00000000
-.global lbl_803E0418
-lbl_803E0418:
-	.4byte 0x00000000
-.global lbl_803E041C
-lbl_803E041C:
-	.4byte 0x00000000
-.global lbl_803E0420
-lbl_803E0420:
-	.4byte 0x00000000
-.global lbl_803E0424
-lbl_803E0424:
-	.4byte 0x00000000
-.global lbl_803E0428
-lbl_803E0428:
-	.4byte 0x00000000
-.global lbl_803E042C
-lbl_803E042C:
-	.4byte 0x00000000
-.global lbl_803E0430
-lbl_803E0430:
-	.4byte 0x00000000
-	.4byte 0x802B6964
-	.4byte 0
-	.4byte 0x802B6978
-	.4byte 0
-.balign 4
-	.asciz "Action"
-.balign 4
-	.4byte 0x803E0444
-	.4byte 0x802B6988
-.global __RTTI__12ActFormation
-__RTTI__12ActFormation:
-	.4byte 0x802B6954
-	.4byte 0x802B6994
