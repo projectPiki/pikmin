@@ -1740,13 +1740,13 @@ lbl_803DDAB8:
 	.4byte 0x00000000
 .global lbl_803DDABC
 lbl_803DDABC:
-	.4byte 0x3DCCCCCD
+	.float 0.1
 .global lbl_803DDAC0
 lbl_803DDAC0:
-	.4byte 0x3DCCCCCD
+	.float 0.1
 .global lbl_803DDAC4
 lbl_803DDAC4:
-	.4byte 0x3DCCCCCD
+	.float 0.1
 .global lbl_803DDAC8
 lbl_803DDAC8:
 	.4byte 0x00000000
@@ -1767,13 +1767,13 @@ lbl_803DDADC:
 	.4byte 0xC0A00000
 .global lbl_803DDAE0
 lbl_803DDAE0:
-	.4byte 0x3DCCCCCD
+	.float 0.1
 .global lbl_803DDAE4
 lbl_803DDAE4:
-	.4byte 0x3DCCCCCD
+	.float 0.1
 .global lbl_803DDAE8
 lbl_803DDAE8:
-	.4byte 0x3DCCCCCD
+	.float 0.1
 .global lbl_803DDAEC
 lbl_803DDAEC:
 	.4byte 0x00000000
@@ -1917,13 +1917,13 @@ __RTTI__18IntroGameModeState:
 	.4byte 0
 .global lbl_803DDC08
 lbl_803DDC08:
-	.4byte 0x3DCCCCCD
+	.float 0.1
 .global lbl_803DDC0C
 lbl_803DDC0C:
-	.4byte 0x3DCCCCCD
+	.float 0.1
 .global lbl_803DDC10
 lbl_803DDC10:
-	.4byte 0x3DCCCCCD
+	.float 0.1
 .global lbl_803DDC14
 lbl_803DDC14:
 	.4byte 0x00000000
@@ -2624,13 +2624,13 @@ lbl_803DE148:
 	.4byte 0x00000000
 .global lbl_803DE14C
 lbl_803DE14C:
-	.4byte 0x3DCCCCCD
+	.float 0.1
 .global lbl_803DE150
 lbl_803DE150:
-	.4byte 0x3DCCCCCD
+	.float 0.1
 .global lbl_803DE154
 lbl_803DE154:
-	.4byte 0x3DCCCCCD
+	.float 0.1
 .global lbl_803DE158
 lbl_803DE158:
 	.4byte 0x41200000
@@ -4742,7 +4742,7 @@ lbl_803DEF74:
 	.4byte 0x00000000
 .global lbl_803DEF78
 lbl_803DEF78:
-	.4byte 0x3DCCCCCD
+	.float 0.1
 .global lbl_803DEF7C
 lbl_803DEF7C:
 	.4byte 0x00000000
@@ -7246,7 +7246,7 @@ lbl_803E0158:
 	.4byte 0x3F000000
 .global lbl_803E015C
 lbl_803E015C:
-	.4byte 0x3DCCCCCD
+	.float 0.1
 	.4byte 0x802B6090
 	.4byte 0x00000000
 	.4byte 0x802B60A4
@@ -7552,7 +7552,7 @@ lbl_803E0390:
 	.4byte 0x41637445
 	.4byte 0x78697400
 	.4byte 0x802B6734
-	.4byte 0x00000000
+	.4byte 0
 	.4byte 0x41637469
 	.4byte 0x6F6E0000
 	.4byte 0x803E03A4
@@ -7580,14 +7580,16 @@ lbl_803E03D0:
 .global lbl_803E03D4
 lbl_803E03D4:
 	.4byte 0x00000000
-	.4byte 0x4163744D
-	.4byte 0x696E6500
+.balign 4
+	.asciz "ActMine"
+.balign 4
 	.4byte 0x802B6804
-	.4byte 0x00000000
+	.4byte 0
 	.4byte 0x802B6818
-	.4byte 0x00000000
-	.4byte 0x41637469
-	.4byte 0x6F6E0000
+	.4byte 0
+.balign 4
+	.asciz "Action"
+.balign 4
 	.4byte 0x803E03F0
 	.4byte 0x802B6828
 .global __RTTI__7ActMine
@@ -7628,11 +7630,12 @@ lbl_803E042C:
 lbl_803E0430:
 	.4byte 0x00000000
 	.4byte 0x802B6964
-	.4byte 0x00000000
+	.4byte 0
 	.4byte 0x802B6978
-	.4byte 0x00000000
-	.4byte 0x41637469
-	.4byte 0x6F6E0000
+	.4byte 0
+.balign 4
+	.asciz "Action"
+.balign 4
 	.4byte 0x803E0444
 	.4byte 0x802B6988
 .global __RTTI__12ActFormation
@@ -7642,11 +7645,11 @@ __RTTI__12ActFormation:
 	.4byte 0
 .global lbl_803E0460
 lbl_803E0460:
-	.4byte 0x66726565
-	.4byte 0x00000000
+	.asciz "free"
+.balign 4
 .global numMotions
 numMotions:
-	.4byte 0x00000004
+	.4byte 4
 .global lbl_803E046C
 lbl_803E046C:
 	.4byte 0x00000000
@@ -7668,9 +7671,9 @@ lbl_803E0480:
 	.4byte 0x41637446
 	.4byte 0x72656500
 	.4byte 0x802B6A7C
-	.4byte 0x00000000
+	.4byte 0
 	.4byte 0x802B6A90
-	.4byte 0x00000000
+	.4byte 0
 	.4byte 0x41637469
 	.4byte 0x6F6E0000
 	.4byte 0x803E049C
@@ -7695,7 +7698,7 @@ lbl_803E04C4:
 	.4byte 0x41637447
 	.4byte 0x6F746F00
 	.4byte 0x802B6B84
-	.4byte 0x00000000
+	.4byte 0
 	.4byte 0x41637469
 	.4byte 0x6F6E0000
 	.4byte 0x803E04D8
@@ -7721,16 +7724,16 @@ lbl_803E0508:
 	.4byte 0x00000000
 .global lbl_803E050C
 lbl_803E050C:
-	.4byte 0x41500000
+	.float 13.0
 .global lbl_803E0510
 lbl_803E0510:
-	.4byte 0x3DCCCCCD
+	.float 0.1
 .global lbl_803E0514
 lbl_803E0514:
-	.4byte 0x41500000
+	.float 13.0
 .global lbl_803E0518
 lbl_803E0518:
-	.4byte 0x3DCCCCCD
+	.float 0.1
 .global lbl_803E051C
 lbl_803E051C:
 	.4byte 0x00000000
@@ -7744,7 +7747,7 @@ lbl_803E0524:
 lbl_803E0528:
 	.4byte 0x00000000
 	.4byte 0x802B6CA0
-	.4byte 0x00000000
+	.4byte 0
 	.4byte 0x41637469
 	.4byte 0x6F6E0000
 	.4byte 0x803E0534
@@ -7753,41 +7756,3 @@ lbl_803E0528:
 __RTTI__8ActGuard:
 	.4byte 0x802B6C94
 	.4byte 0x802B6CBC
-	.4byte 0
-.global lbl_803E0550
-lbl_803E0550:
-	.4byte 0x00000000
-.global lbl_803E0554
-lbl_803E0554:
-	.4byte 0x00000000
-.global lbl_803E0558
-lbl_803E0558:
-	.4byte 0x00000000
-.global lbl_803E055C
-lbl_803E055C:
-	.4byte 0x00000000
-.global lbl_803E0560
-lbl_803E0560:
-	.4byte 0x00000000
-.global lbl_803E0564
-lbl_803E0564:
-	.4byte 0x00000000
-	.4byte 0x802B6DC8
-	.4byte 0
-	.4byte 0x802B6DDC
-	.4byte 0
-.balign 4
-	.4byte 0x41637469
-	.4byte 0x6F6E0000
-	.4byte 0x803E0578
-	.4byte 0x802B6DEC
-.global __RTTI__9ActFlower
-__RTTI__9ActFlower:
-	.4byte 0x802B6DBC
-	.4byte 0x802B6DF8
-	.4byte 0x802B6EA0
-	.4byte 0x802B6EAC
-.global __RTTI__11ActPickItem
-__RTTI__11ActPickItem:
-	.4byte 0x802B6E94
-	.4byte 0x802B6EC0

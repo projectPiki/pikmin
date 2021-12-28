@@ -1098,15 +1098,3 @@ lbl_803E959C:
 "@2092":
 	.4byte 0x43300000
 	.4byte 0x80000000
-.global lbl_803E95A8
-lbl_803E95A8:
-	.float 200.0
-.global lbl_803E95AC
-lbl_803E95AC:
-	.4byte 0x00000000
-.global lbl_803E95B0
-lbl_803E95B0:
-	.float 1.0
-.global lbl_803E95B4
-lbl_803E95B4:
-	.float 0.3
