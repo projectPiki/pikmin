@@ -7791,26 +7791,3 @@ __RTTI__9ActFlower:
 __RTTI__11ActPickItem:
 	.4byte 0x802B6E94
 	.4byte 0x802B6EC0
-	.4byte 0x802B6FA0
-	.4byte 0
-.balign 4
-	.4byte 0x41637469
-	.4byte 0x6F6E0000
-	.4byte 0x803E05A8
-	.4byte 0x802B6FB0
-	.4byte 0x802B6FBC
-	.4byte 0x802B6FC8
-.global __RTTI__10ActDeliver
-__RTTI__10ActDeliver:
-	.4byte 0x802B6F94
-	.4byte 0x802B6FDC
-	.4byte 0x802B7074
-	.4byte 0
-.global __RTTI__Q210ActDeliver11Initialiser
-__RTTI__Q210ActDeliver11Initialiser:
-	.4byte 0x802B705C
-	.4byte 0x802B7088
-.global __RTTI__15ActPickCreature
-__RTTI__15ActPickCreature:
-	.4byte 0x802B70AC
-	.4byte 0x802B70BC
