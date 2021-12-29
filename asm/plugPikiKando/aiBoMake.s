@@ -1,349 +1,355 @@
 .include "macros.inc"
-
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-/* 800EAF40 000E7EA0  38 63 00 14 */	addi r3, r3, 0x14
-/* 800EAF44 000E7EA4  48 0B 66 81 */	bl killGenerator__Q23zen15particleManagerFPQ23zen17particleGeneratorb
-/* 800EAF48 000E7EA8  38 00 00 00 */	li r0, 0
-/* 800EAF4C 000E7EAC  90 1E 03 E8 */	stw r0, 0x3e8(r30)
-lbl_800EAF50:
-/* 800EAF50 000E7EB0  80 01 00 24 */	lwz r0, 0x24(r1)
-/* 800EAF54 000E7EB4  83 E1 00 1C */	lwz r31, 0x1c(r1)
-/* 800EAF58 000E7EB8  83 C1 00 18 */	lwz r30, 0x18(r1)
-/* 800EAF5C 000E7EBC  38 21 00 20 */	addi r1, r1, 0x20
-/* 800EAF60 000E7EC0  7C 08 03 A6 */	mtlr r0
-/* 800EAF64 000E7EC4  4E 80 00 20 */	blr 
+.global __ct__9ActBoMakeFP4Piki
+__ct__9ActBoMakeFP4Piki:
+/* 800AC30C 000A926C  7C 08 02 A6 */	mflr r0
+/* 800AC310 000A9270  38 A0 00 01 */	li r5, 1
+/* 800AC314 000A9274  90 01 00 04 */	stw r0, 4(r1)
+/* 800AC318 000A9278  94 21 FF E8 */	stwu r1, -0x18(r1)
+/* 800AC31C 000A927C  93 E1 00 14 */	stw r31, 0x14(r1)
+/* 800AC320 000A9280  3B E3 00 00 */	addi r31, r3, 0
+/* 800AC324 000A9284  48 01 7A AD */	bl __ct__6ActionFP4Pikib
+/* 800AC328 000A9288  3C 60 80 2B */	lis r3, __vt__19PaniAnimKeyListener@ha
+/* 800AC32C 000A928C  38 03 DB 94 */	addi r0, r3, __vt__19PaniAnimKeyListener@l
+/* 800AC330 000A9290  3C 60 80 2B */	lis r3, __vt__9ActBoMake@ha
+/* 800AC334 000A9294  90 1F 00 14 */	stw r0, 0x14(r31)
+/* 800AC338 000A9298  38 63 5A 50 */	addi r3, r3, __vt__9ActBoMake@l
+/* 800AC33C 000A929C  90 7F 00 00 */	stw r3, 0(r31)
+/* 800AC340 000A92A0  38 03 00 64 */	addi r0, r3, 0x64
+/* 800AC344 000A92A4  38 7F 00 00 */	addi r3, r31, 0
+/* 800AC348 000A92A8  90 1F 00 14 */	stw r0, 0x14(r31)
+/* 800AC34C 000A92AC  80 01 00 1C */	lwz r0, 0x1c(r1)
+/* 800AC350 000A92B0  83 E1 00 14 */	lwz r31, 0x14(r1)
+/* 800AC354 000A92B4  38 21 00 18 */	addi r1, r1, 0x18
+/* 800AC358 000A92B8  7C 08 03 A6 */	mtlr r0
+/* 800AC35C 000A92BC  4E 80 00 20 */	blr 
 
-.global setSpotActive__8GoalItemFb
-setSpotActive__8GoalItemFb:
-/* 800EAF68 000E7EC8  7C 08 02 A6 */	mflr r0
-/* 800EAF6C 000E7ECC  90 01 00 04 */	stw r0, 4(r1)
-/* 800EAF70 000E7ED0  94 21 FF C8 */	stwu r1, -0x38(r1)
-/* 800EAF74 000E7ED4  93 E1 00 34 */	stw r31, 0x34(r1)
-/* 800EAF78 000E7ED8  7C 7F 1B 78 */	mr r31, r3
-/* 800EAF7C 000E7EDC  98 83 03 D9 */	stb r4, 0x3d9(r3)
-/* 800EAF80 000E7EE0  88 03 03 D9 */	lbz r0, 0x3d9(r3)
-/* 800EAF84 000E7EE4  28 00 00 00 */	cmplwi r0, 0
-/* 800EAF88 000E7EE8  41 82 00 78 */	beq lbl_800EB000
-/* 800EAF8C 000E7EEC  3C 60 80 22 */	lis r3, lbl_8022264C@ha
-/* 800EAF90 000E7EF0  38 83 26 4C */	addi r4, r3, lbl_8022264C@l
-/* 800EAF94 000E7EF4  80 64 00 00 */	lwz r3, 0(r4)
-/* 800EAF98 000E7EF8  80 04 00 04 */	lwz r0, 4(r4)
-/* 800EAF9C 000E7EFC  90 61 00 24 */	stw r3, 0x24(r1)
-/* 800EAFA0 000E7F00  90 01 00 28 */	stw r0, 0x28(r1)
-/* 800EAFA4 000E7F04  80 04 00 08 */	lwz r0, 8(r4)
-/* 800EAFA8 000E7F08  90 01 00 2C */	stw r0, 0x2c(r1)
-/* 800EAFAC 000E7F0C  80 1F 03 DC */	lwz r0, 0x3dc(r31)
-/* 800EAFB0 000E7F10  28 00 00 00 */	cmplwi r0, 0
-/* 800EAFB4 000E7F14  40 82 00 7C */	bne lbl_800EB030
-/* 800EAFB8 000E7F18  A0 1F 04 28 */	lhz r0, 0x428(r31)
-/* 800EAFBC 000E7F1C  38 81 00 24 */	addi r4, r1, 0x24
-/* 800EAFC0 000E7F20  80 6D 31 80 */	lwz r3, effectMgr@sda21(r13)
-/* 800EAFC4 000E7F24  38 BF 00 94 */	addi r5, r31, 0x94
-/* 800EAFC8 000E7F28  54 00 10 3A */	slwi r0, r0, 2
-/* 800EAFCC 000E7F2C  7C 84 00 2E */	lwzx r4, r4, r0
-/* 800EAFD0 000E7F30  38 C0 00 00 */	li r6, 0
-/* 800EAFD4 000E7F34  38 E0 00 00 */	li r7, 0
-/* 800EAFD8 000E7F38  48 0B 1B 61 */	bl "create__9EffectMgrFQ29EffectMgr12effTypeTableR8Vector3fPQ23zen37CallBack1<PQ23zen17particleGenerator>PQ23zen58CallBack2<PQ23zen17particleGenerator,PQ23zen11particleMdl>"
-/* 800EAFDC 000E7F3C  90 7F 03 DC */	stw r3, 0x3dc(r31)
-/* 800EAFE0 000E7F40  80 7F 03 DC */	lwz r3, 0x3dc(r31)
-/* 800EAFE4 000E7F44  28 03 00 00 */	cmplwi r3, 0
-/* 800EAFE8 000E7F48  41 82 00 0C */	beq lbl_800EAFF4
-/* 800EAFEC 000E7F4C  38 1F 00 94 */	addi r0, r31, 0x94
-/* 800EAFF0 000E7F50  90 03 00 18 */	stw r0, 0x18(r3)
-lbl_800EAFF4:
-/* 800EAFF4 000E7F54  38 60 01 20 */	li r3, 0x120
-/* 800EAFF8 000E7F58  4B FB A3 7D */	bl playSysSe__8SeSystemFi
-/* 800EAFFC 000E7F5C  48 00 00 34 */	b lbl_800EB030
-lbl_800EB000:
-/* 800EB000 000E7F60  80 1F 03 DC */	lwz r0, 0x3dc(r31)
-/* 800EB004 000E7F64  28 00 00 00 */	cmplwi r0, 0
-/* 800EB008 000E7F68  41 82 00 28 */	beq lbl_800EB030
-/* 800EB00C 000E7F6C  38 60 01 20 */	li r3, 0x120
-/* 800EB010 000E7F70  4B FB A3 99 */	bl stopSysSe__8SeSystemFi
-/* 800EB014 000E7F74  80 6D 31 80 */	lwz r3, effectMgr@sda21(r13)
-/* 800EB018 000E7F78  38 A0 00 00 */	li r5, 0
-/* 800EB01C 000E7F7C  80 9F 03 DC */	lwz r4, 0x3dc(r31)
-/* 800EB020 000E7F80  38 63 00 14 */	addi r3, r3, 0x14
-/* 800EB024 000E7F84  48 0B 65 A1 */	bl killGenerator__Q23zen15particleManagerFPQ23zen17particleGeneratorb
-/* 800EB028 000E7F88  38 00 00 00 */	li r0, 0
-/* 800EB02C 000E7F8C  90 1F 03 DC */	stw r0, 0x3dc(r31)
-lbl_800EB030:
-/* 800EB030 000E7F90  88 1F 03 D9 */	lbz r0, 0x3d9(r31)
-/* 800EB034 000E7F94  28 00 00 00 */	cmplwi r0, 0
-/* 800EB038 000E7F98  41 82 00 70 */	beq lbl_800EB0A8
-/* 800EB03C 000E7F9C  3C 60 80 22 */	lis r3, lbl_80222658@ha
-/* 800EB040 000E7FA0  38 83 26 58 */	addi r4, r3, lbl_80222658@l
-/* 800EB044 000E7FA4  80 64 00 00 */	lwz r3, 0(r4)
-/* 800EB048 000E7FA8  80 04 00 04 */	lwz r0, 4(r4)
-/* 800EB04C 000E7FAC  90 61 00 18 */	stw r3, 0x18(r1)
-/* 800EB050 000E7FB0  90 01 00 1C */	stw r0, 0x1c(r1)
-/* 800EB054 000E7FB4  80 04 00 08 */	lwz r0, 8(r4)
-/* 800EB058 000E7FB8  90 01 00 20 */	stw r0, 0x20(r1)
-/* 800EB05C 000E7FBC  80 1F 03 E0 */	lwz r0, 0x3e0(r31)
-/* 800EB060 000E7FC0  28 00 00 00 */	cmplwi r0, 0
-/* 800EB064 000E7FC4  40 82 00 68 */	bne lbl_800EB0CC
-/* 800EB068 000E7FC8  A0 1F 04 28 */	lhz r0, 0x428(r31)
-/* 800EB06C 000E7FCC  38 81 00 18 */	addi r4, r1, 0x18
-/* 800EB070 000E7FD0  80 6D 31 80 */	lwz r3, effectMgr@sda21(r13)
-/* 800EB074 000E7FD4  38 BF 00 94 */	addi r5, r31, 0x94
-/* 800EB078 000E7FD8  54 00 10 3A */	slwi r0, r0, 2
-/* 800EB07C 000E7FDC  7C 84 00 2E */	lwzx r4, r4, r0
-/* 800EB080 000E7FE0  38 C0 00 00 */	li r6, 0
-/* 800EB084 000E7FE4  38 E0 00 00 */	li r7, 0
-/* 800EB088 000E7FE8  48 0B 1A B1 */	bl "create__9EffectMgrFQ29EffectMgr12effTypeTableR8Vector3fPQ23zen37CallBack1<PQ23zen17particleGenerator>PQ23zen58CallBack2<PQ23zen17particleGenerator,PQ23zen11particleMdl>"
-/* 800EB08C 000E7FEC  90 7F 03 E0 */	stw r3, 0x3e0(r31)
-/* 800EB090 000E7FF0  80 7F 03 E0 */	lwz r3, 0x3e0(r31)
-/* 800EB094 000E7FF4  28 03 00 00 */	cmplwi r3, 0
-/* 800EB098 000E7FF8  41 82 00 34 */	beq lbl_800EB0CC
-/* 800EB09C 000E7FFC  38 1F 00 94 */	addi r0, r31, 0x94
-/* 800EB0A0 000E8000  90 03 00 18 */	stw r0, 0x18(r3)
-/* 800EB0A4 000E8004  48 00 00 28 */	b lbl_800EB0CC
-lbl_800EB0A8:
-/* 800EB0A8 000E8008  80 9F 03 E0 */	lwz r4, 0x3e0(r31)
-/* 800EB0AC 000E800C  28 04 00 00 */	cmplwi r4, 0
-/* 800EB0B0 000E8010  41 82 00 1C */	beq lbl_800EB0CC
-/* 800EB0B4 000E8014  80 6D 31 80 */	lwz r3, effectMgr@sda21(r13)
-/* 800EB0B8 000E8018  38 A0 00 00 */	li r5, 0
-/* 800EB0BC 000E801C  38 63 00 14 */	addi r3, r3, 0x14
-/* 800EB0C0 000E8020  48 0B 65 05 */	bl killGenerator__Q23zen15particleManagerFPQ23zen17particleGeneratorb
-/* 800EB0C4 000E8024  38 00 00 00 */	li r0, 0
-/* 800EB0C8 000E8028  90 1F 03 E0 */	stw r0, 0x3e0(r31)
-lbl_800EB0CC:
-/* 800EB0CC 000E802C  80 01 00 3C */	lwz r0, 0x3c(r1)
-/* 800EB0D0 000E8030  83 E1 00 34 */	lwz r31, 0x34(r1)
-/* 800EB0D4 000E8034  38 21 00 38 */	addi r1, r1, 0x38
-/* 800EB0D8 000E8038  7C 08 03 A6 */	mtlr r0
-/* 800EB0DC 000E803C  4E 80 00 20 */	blr 
+.global init__9ActBoMakeFP8Creature
+init__9ActBoMakeFP8Creature:
+/* 800AC360 000A92C0  7C 08 02 A6 */	mflr r0
+/* 800AC364 000A92C4  28 04 00 00 */	cmplwi r4, 0
+/* 800AC368 000A92C8  90 01 00 04 */	stw r0, 4(r1)
+/* 800AC36C 000A92CC  38 00 00 00 */	li r0, 0
+/* 800AC370 000A92D0  94 21 FF F8 */	stwu r1, -8(r1)
+/* 800AC374 000A92D4  90 03 00 1C */	stw r0, 0x1c(r3)
+/* 800AC378 000A92D8  41 82 00 14 */	beq lbl_800AC38C
+/* 800AC37C 000A92DC  80 04 00 6C */	lwz r0, 0x6c(r4)
+/* 800AC380 000A92E0  2C 00 00 23 */	cmpwi r0, 0x23
+/* 800AC384 000A92E4  40 82 00 08 */	bne lbl_800AC38C
+/* 800AC388 000A92E8  90 83 00 1C */	stw r4, 0x1c(r3)
+lbl_800AC38C:
+/* 800AC38C 000A92EC  48 00 00 B5 */	bl initApproach__9ActBoMakeFv
+/* 800AC390 000A92F0  80 01 00 0C */	lwz r0, 0xc(r1)
+/* 800AC394 000A92F4  38 21 00 08 */	addi r1, r1, 8
+/* 800AC398 000A92F8  7C 08 03 A6 */	mtlr r0
+/* 800AC39C 000A92FC  4E 80 00 20 */	blr 
 
-.global invoke__8GoalItemFPQ23zen17particleGeneratorPQ23zen11particleMdl
-invoke__8GoalItemFPQ23zen17particleGeneratorPQ23zen11particleMdl:
-/* 800EB0E0 000E8040  7C 08 02 A6 */	mflr r0
-/* 800EB0E4 000E8044  90 01 00 04 */	stw r0, 4(r1)
-/* 800EB0E8 000E8048  94 21 FF E0 */	stwu r1, -0x20(r1)
-/* 800EB0EC 000E804C  93 E1 00 1C */	stw r31, 0x1c(r1)
-/* 800EB0F0 000E8050  7C BF 2B 79 */	or. r31, r5, r5
-/* 800EB0F4 000E8054  41 82 00 2C */	beq lbl_800EB120
-/* 800EB0F8 000E8058  3C 80 6C 6C */	lis r4, 0x6C6C6974@ha
-/* 800EB0FC 000E805C  80 63 02 20 */	lwz r3, 0x220(r3)
-/* 800EB100 000E8060  38 84 69 74 */	addi r4, r4, 0x6C6C6974@l
-/* 800EB104 000E8064  4B F9 E6 0D */	bl getSphere__8CollInfoFUl
-/* 800EB108 000E8068  80 83 00 04 */	lwz r4, 4(r3)
-/* 800EB10C 000E806C  80 03 00 08 */	lwz r0, 8(r3)
-/* 800EB110 000E8070  90 9F 00 18 */	stw r4, 0x18(r31)
-/* 800EB114 000E8074  90 1F 00 1C */	stw r0, 0x1c(r31)
-/* 800EB118 000E8078  80 03 00 0C */	lwz r0, 0xc(r3)
-/* 800EB11C 000E807C  90 1F 00 20 */	stw r0, 0x20(r31)
-lbl_800EB120:
-/* 800EB120 000E8080  80 01 00 24 */	lwz r0, 0x24(r1)
-/* 800EB124 000E8084  38 60 00 01 */	li r3, 1
-/* 800EB128 000E8088  83 E1 00 1C */	lwz r31, 0x1c(r1)
-/* 800EB12C 000E808C  38 21 00 20 */	addi r1, r1, 0x20
-/* 800EB130 000E8090  7C 08 03 A6 */	mtlr r0
-/* 800EB134 000E8094  4E 80 00 20 */	blr 
+.global exec__9ActBoMakeFv
+exec__9ActBoMakeFv:
+/* 800AC3A0 000A9300  7C 08 02 A6 */	mflr r0
+/* 800AC3A4 000A9304  90 01 00 04 */	stw r0, 4(r1)
+/* 800AC3A8 000A9308  94 21 FF E8 */	stwu r1, -0x18(r1)
+/* 800AC3AC 000A930C  93 E1 00 14 */	stw r31, 0x14(r1)
+/* 800AC3B0 000A9310  7C 7F 1B 78 */	mr r31, r3
+/* 800AC3B4 000A9314  80 63 00 1C */	lwz r3, 0x1c(r3)
+/* 800AC3B8 000A9318  28 03 00 00 */	cmplwi r3, 0
+/* 800AC3BC 000A931C  40 82 00 0C */	bne lbl_800AC3C8
+/* 800AC3C0 000A9320  38 60 00 01 */	li r3, 1
+/* 800AC3C4 000A9324  48 00 00 68 */	b lbl_800AC42C
+lbl_800AC3C8:
+/* 800AC3C8 000A9328  81 83 00 00 */	lwz r12, 0(r3)
+/* 800AC3CC 000A932C  81 8C 00 88 */	lwz r12, 0x88(r12)
+/* 800AC3D0 000A9330  7D 88 03 A6 */	mtlr r12
+/* 800AC3D4 000A9334  4E 80 00 21 */	blrl 
+/* 800AC3D8 000A9338  54 60 06 3F */	clrlwi. r0, r3, 0x18
+/* 800AC3DC 000A933C  40 82 00 18 */	bne lbl_800AC3F4
+/* 800AC3E0 000A9340  80 9F 00 0C */	lwz r4, 0xc(r31)
+/* 800AC3E4 000A9344  38 00 00 00 */	li r0, 0
+/* 800AC3E8 000A9348  38 60 00 02 */	li r3, 2
+/* 800AC3EC 000A934C  98 04 04 00 */	stb r0, 0x400(r4)
+/* 800AC3F0 000A9350  48 00 00 3C */	b lbl_800AC42C
+lbl_800AC3F4:
+/* 800AC3F4 000A9354  A0 1F 00 18 */	lhz r0, 0x18(r31)
+/* 800AC3F8 000A9358  2C 00 00 01 */	cmpwi r0, 1
+/* 800AC3FC 000A935C  41 82 00 20 */	beq lbl_800AC41C
+/* 800AC400 000A9360  40 80 00 28 */	bge lbl_800AC428
+/* 800AC404 000A9364  2C 00 00 00 */	cmpwi r0, 0
+/* 800AC408 000A9368  40 80 00 08 */	bge lbl_800AC410
+/* 800AC40C 000A936C  48 00 00 1C */	b lbl_800AC428
+lbl_800AC410:
+/* 800AC410 000A9370  7F E3 FB 78 */	mr r3, r31
+/* 800AC414 000A9374  48 00 00 91 */	bl exeApproach__9ActBoMakeFv
+/* 800AC418 000A9378  48 00 00 14 */	b lbl_800AC42C
+lbl_800AC41C:
+/* 800AC41C 000A937C  7F E3 FB 78 */	mr r3, r31
+/* 800AC420 000A9380  48 00 02 65 */	bl exeWork__9ActBoMakeFv
+/* 800AC424 000A9384  48 00 00 08 */	b lbl_800AC42C
+lbl_800AC428:
+/* 800AC428 000A9388  38 60 00 00 */	li r3, 0
+lbl_800AC42C:
+/* 800AC42C 000A938C  80 01 00 1C */	lwz r0, 0x1c(r1)
+/* 800AC430 000A9390  83 E1 00 14 */	lwz r31, 0x14(r1)
+/* 800AC434 000A9394  38 21 00 18 */	addi r1, r1, 0x18
+/* 800AC438 000A9398  7C 08 03 A6 */	mtlr r0
+/* 800AC43C 000A939C  4E 80 00 20 */	blr 
 
-.global setFlightLight__8GoalItemFb
-setFlightLight__8GoalItemFb:
-/* 800EB138 000E8098  98 83 03 EC */	stb r4, 0x3ec(r3)
-/* 800EB13C 000E809C  4E 80 00 20 */	blr 
+.global initApproach__9ActBoMakeFv
+initApproach__9ActBoMakeFv:
+/* 800AC440 000A93A0  7C 08 02 A6 */	mflr r0
+/* 800AC444 000A93A4  38 80 00 02 */	li r4, 2
+/* 800AC448 000A93A8  90 01 00 04 */	stw r0, 4(r1)
+/* 800AC44C 000A93AC  38 00 00 00 */	li r0, 0
+/* 800AC450 000A93B0  94 21 FF D8 */	stwu r1, -0x28(r1)
+/* 800AC454 000A93B4  93 E1 00 24 */	stw r31, 0x24(r1)
+/* 800AC458 000A93B8  93 C1 00 20 */	stw r30, 0x20(r1)
+/* 800AC45C 000A93BC  3B C3 00 00 */	addi r30, r3, 0
+/* 800AC460 000A93C0  B0 03 00 18 */	sth r0, 0x18(r3)
+/* 800AC464 000A93C4  38 61 00 0C */	addi r3, r1, 0xc
+/* 800AC468 000A93C8  48 07 2A F1 */	bl __ct__14PaniMotionInfoFi
+/* 800AC46C 000A93CC  3B E3 00 00 */	addi r31, r3, 0
+/* 800AC470 000A93D0  38 61 00 14 */	addi r3, r1, 0x14
+/* 800AC474 000A93D4  38 80 00 02 */	li r4, 2
+/* 800AC478 000A93D8  48 07 2A E1 */	bl __ct__14PaniMotionInfoFi
+/* 800AC47C 000A93DC  7C 64 1B 78 */	mr r4, r3
+/* 800AC480 000A93E0  80 7E 00 0C */	lwz r3, 0xc(r30)
+/* 800AC484 000A93E4  7F E5 FB 78 */	mr r5, r31
+/* 800AC488 000A93E8  48 01 E5 51 */	bl startMotion__4PikiFR14PaniMotionInfoR14PaniMotionInfo
+/* 800AC48C 000A93EC  80 01 00 2C */	lwz r0, 0x2c(r1)
+/* 800AC490 000A93F0  83 E1 00 24 */	lwz r31, 0x24(r1)
+/* 800AC494 000A93F4  83 C1 00 20 */	lwz r30, 0x20(r1)
+/* 800AC498 000A93F8  38 21 00 28 */	addi r1, r1, 0x28
+/* 800AC49C 000A93FC  7C 08 03 A6 */	mtlr r0
+/* 800AC4A0 000A9400  4E 80 00 20 */	blr 
 
-.global getSuckPos__8GoalItemFv
-getSuckPos__8GoalItemFv:
-/* 800EB140 000E80A0  C0 44 00 98 */	lfs f2, 0x98(r4)
-/* 800EB144 000E80A4  C0 22 9A 60 */	lfs f1, lbl_803E9C60@sda21(r2)
-/* 800EB148 000E80A8  C0 64 00 9C */	lfs f3, 0x9c(r4)
-/* 800EB14C 000E80AC  C0 04 00 94 */	lfs f0, 0x94(r4)
-/* 800EB150 000E80B0  EC 42 08 2A */	fadds f2, f2, f1
-/* 800EB154 000E80B4  D0 03 00 00 */	stfs f0, 0(r3)
-/* 800EB158 000E80B8  D0 43 00 04 */	stfs f2, 4(r3)
-/* 800EB15C 000E80BC  D0 63 00 08 */	stfs f3, 8(r3)
-/* 800EB160 000E80C0  4E 80 00 20 */	blr 
+.global exeApproach__9ActBoMakeFv
+exeApproach__9ActBoMakeFv:
+/* 800AC4A4 000A9404  7C 08 02 A6 */	mflr r0
+/* 800AC4A8 000A9408  90 01 00 04 */	stw r0, 4(r1)
+/* 800AC4AC 000A940C  94 21 FF A8 */	stwu r1, -0x58(r1)
+/* 800AC4B0 000A9410  DB E1 00 50 */	stfd f31, 0x50(r1)
+/* 800AC4B4 000A9414  DB C1 00 48 */	stfd f30, 0x48(r1)
+/* 800AC4B8 000A9418  93 E1 00 44 */	stw r31, 0x44(r1)
+/* 800AC4BC 000A941C  7C 7F 1B 78 */	mr r31, r3
+/* 800AC4C0 000A9420  80 83 00 0C */	lwz r4, 0xc(r3)
+/* 800AC4C4 000A9424  80 63 00 1C */	lwz r3, 0x1c(r3)
+/* 800AC4C8 000A9428  C4 23 00 94 */	lfsu f1, 0x94(r3)
+/* 800AC4CC 000A942C  C4 04 00 94 */	lfsu f0, 0x94(r4)
+/* 800AC4D0 000A9430  C0 63 00 04 */	lfs f3, 4(r3)
+/* 800AC4D4 000A9434  C0 44 00 04 */	lfs f2, 4(r4)
+/* 800AC4D8 000A9438  EC 01 00 28 */	fsubs f0, f1, f0
+/* 800AC4DC 000A943C  C0 83 00 08 */	lfs f4, 8(r3)
+/* 800AC4E0 000A9440  C0 24 00 08 */	lfs f1, 8(r4)
+/* 800AC4E4 000A9444  EC 43 10 28 */	fsubs f2, f3, f2
+/* 800AC4E8 000A9448  D0 01 00 34 */	stfs f0, 0x34(r1)
+/* 800AC4EC 000A944C  EC 04 08 28 */	fsubs f0, f4, f1
+/* 800AC4F0 000A9450  D0 41 00 38 */	stfs f2, 0x38(r1)
+/* 800AC4F4 000A9454  D0 01 00 3C */	stfs f0, 0x3c(r1)
+/* 800AC4F8 000A9458  C0 21 00 34 */	lfs f1, 0x34(r1)
+/* 800AC4FC 000A945C  C0 01 00 38 */	lfs f0, 0x38(r1)
+/* 800AC500 000A9460  C0 41 00 3C */	lfs f2, 0x3c(r1)
+/* 800AC504 000A9464  EC 21 00 72 */	fmuls f1, f1, f1
+/* 800AC508 000A9468  EC 00 00 32 */	fmuls f0, f0, f0
+/* 800AC50C 000A946C  EC 42 00 B2 */	fmuls f2, f2, f2
+/* 800AC510 000A9470  EC 01 00 2A */	fadds f0, f1, f0
+/* 800AC514 000A9474  EC 22 00 2A */	fadds f1, f2, f0
+/* 800AC518 000A9478  4B F6 17 29 */	bl sqrtf__3stdFf
+/* 800AC51C 000A947C  FF C0 08 90 */	fmr f30, f1
+/* 800AC520 000A9480  C0 02 8F 30 */	lfs f0, lbl_803E9130@sda21(r2)
+/* 800AC524 000A9484  FC 00 F0 00 */	fcmpu cr0, f0, f30
+/* 800AC528 000A9488  41 82 00 28 */	beq lbl_800AC550
+/* 800AC52C 000A948C  C0 01 00 34 */	lfs f0, 0x34(r1)
+/* 800AC530 000A9490  EC 00 F0 24 */	fdivs f0, f0, f30
+/* 800AC534 000A9494  D0 01 00 34 */	stfs f0, 0x34(r1)
+/* 800AC538 000A9498  C0 01 00 38 */	lfs f0, 0x38(r1)
+/* 800AC53C 000A949C  EC 00 F0 24 */	fdivs f0, f0, f30
+/* 800AC540 000A94A0  D0 01 00 38 */	stfs f0, 0x38(r1)
+/* 800AC544 000A94A4  C0 01 00 3C */	lfs f0, 0x3c(r1)
+/* 800AC548 000A94A8  EC 00 F0 24 */	fdivs f0, f0, f30
+/* 800AC54C 000A94AC  D0 01 00 3C */	stfs f0, 0x3c(r1)
+lbl_800AC550:
+/* 800AC550 000A94B0  80 7F 00 0C */	lwz r3, 0xc(r31)
+/* 800AC554 000A94B4  81 83 00 00 */	lwz r12, 0(r3)
+/* 800AC558 000A94B8  81 8C 00 5C */	lwz r12, 0x5c(r12)
+/* 800AC55C 000A94BC  7D 88 03 A6 */	mtlr r12
+/* 800AC560 000A94C0  4E 80 00 21 */	blrl 
+/* 800AC564 000A94C4  80 7F 00 1C */	lwz r3, 0x1c(r31)
+/* 800AC568 000A94C8  FF E0 08 90 */	fmr f31, f1
+/* 800AC56C 000A94CC  81 83 00 00 */	lwz r12, 0(r3)
+/* 800AC570 000A94D0  81 8C 00 5C */	lwz r12, 0x5c(r12)
+/* 800AC574 000A94D4  7D 88 03 A6 */	mtlr r12
+/* 800AC578 000A94D8  4E 80 00 21 */	blrl 
+/* 800AC57C 000A94DC  EC 3E 08 28 */	fsubs f1, f30, f1
+/* 800AC580 000A94E0  C0 02 8F 34 */	lfs f0, lbl_803E9134@sda21(r2)
+/* 800AC584 000A94E4  EC 21 F8 28 */	fsubs f1, f1, f31
+/* 800AC588 000A94E8  FC 01 00 40 */	fcmpo cr0, f1, f0
+/* 800AC58C 000A94EC  40 80 00 14 */	bge lbl_800AC5A0
+/* 800AC590 000A94F0  7F E3 FB 78 */	mr r3, r31
+/* 800AC594 000A94F4  48 00 00 3D */	bl initWork__9ActBoMakeFv
+/* 800AC598 000A94F8  38 60 00 00 */	li r3, 0
+/* 800AC59C 000A94FC  48 00 00 18 */	b lbl_800AC5B4
+lbl_800AC5A0:
+/* 800AC5A0 000A9500  80 7F 00 0C */	lwz r3, 0xc(r31)
+/* 800AC5A4 000A9504  38 81 00 34 */	addi r4, r1, 0x34
+/* 800AC5A8 000A9508  C0 22 8F 38 */	lfs f1, lbl_803E9138@sda21(r2)
+/* 800AC5AC 000A950C  48 01 F8 2D */	bl setSpeed__4PikiFfR8Vector3f
+/* 800AC5B0 000A9510  38 60 00 00 */	li r3, 0
+lbl_800AC5B4:
+/* 800AC5B4 000A9514  80 01 00 5C */	lwz r0, 0x5c(r1)
+/* 800AC5B8 000A9518  CB E1 00 50 */	lfd f31, 0x50(r1)
+/* 800AC5BC 000A951C  CB C1 00 48 */	lfd f30, 0x48(r1)
+/* 800AC5C0 000A9520  83 E1 00 44 */	lwz r31, 0x44(r1)
+/* 800AC5C4 000A9524  38 21 00 58 */	addi r1, r1, 0x58
+/* 800AC5C8 000A9528  7C 08 03 A6 */	mtlr r0
+/* 800AC5CC 000A952C  4E 80 00 20 */	blr 
 
-.global suckMe__8GoalItemFP6Pellet
-suckMe__8GoalItemFP6Pellet:
-/* 800EB164 000E80C4  7C 08 02 A6 */	mflr r0
-/* 800EB168 000E80C8  90 01 00 04 */	stw r0, 4(r1)
-/* 800EB16C 000E80CC  94 21 FF C8 */	stwu r1, -0x38(r1)
-/* 800EB170 000E80D0  93 E1 00 34 */	stw r31, 0x34(r1)
-/* 800EB174 000E80D4  7C 7F 1B 78 */	mr r31, r3
-/* 800EB178 000E80D8  80 84 05 5C */	lwz r4, 0x55c(r4)
-/* 800EB17C 000E80DC  A0 63 04 28 */	lhz r3, 0x428(r3)
-/* 800EB180 000E80E0  80 04 00 5C */	lwz r0, 0x5c(r4)
-/* 800EB184 000E80E4  7C 03 00 00 */	cmpw r3, r0
-/* 800EB188 000E80E8  40 82 00 0C */	bne lbl_800EB194
-/* 800EB18C 000E80EC  80 A4 00 DC */	lwz r5, 0xdc(r4)
-/* 800EB190 000E80F0  48 00 00 08 */	b lbl_800EB198
-lbl_800EB194:
-/* 800EB194 000E80F4  80 A4 00 EC */	lwz r5, 0xec(r4)
-lbl_800EB198:
-/* 800EB198 000E80F8  2C 05 00 00 */	cmpwi r5, 0
-/* 800EB19C 000E80FC  40 80 00 60 */	bge lbl_800EB1FC
-/* 800EB1A0 000E8100  80 9F 02 D4 */	lwz r4, 0x2d4(r31)
-/* 800EB1A4 000E8104  38 60 00 0A */	li r3, 0xa
-/* 800EB1A8 000E8108  38 00 00 00 */	li r0, 0
-/* 800EB1AC 000E810C  38 84 00 02 */	addi r4, r4, 2
-/* 800EB1B0 000E8110  90 9F 02 D4 */	stw r4, 0x2d4(r31)
-/* 800EB1B4 000E8114  38 9F 00 00 */	addi r4, r31, 0
-/* 800EB1B8 000E8118  38 A1 00 24 */	addi r5, r1, 0x24
-/* 800EB1BC 000E811C  90 61 00 24 */	stw r3, 0x24(r1)
-/* 800EB1C0 000E8120  90 01 00 28 */	stw r0, 0x28(r1)
-/* 800EB1C4 000E8124  80 7F 02 E8 */	lwz r3, 0x2e8(r31)
-/* 800EB1C8 000E8128  81 83 00 00 */	lwz r12, 0(r3)
-/* 800EB1CC 000E812C  81 8C 00 10 */	lwz r12, 0x10(r12)
-/* 800EB1D0 000E8130  7D 88 03 A6 */	mtlr r12
-/* 800EB1D4 000E8134  4E 80 00 21 */	blrl 
-/* 800EB1D8 000E8138  38 7F 00 00 */	addi r3, r31, 0
-/* 800EB1DC 000E813C  38 9F 00 00 */	addi r4, r31, 0
-/* 800EB1E0 000E8140  38 A0 00 D8 */	li r5, 0xd8
-/* 800EB1E4 000E8144  4B F9 F3 D1 */	bl playEventSound__8CreatureFP8Creaturei
-/* 800EB1E8 000E8148  38 7F 00 00 */	addi r3, r31, 0
-/* 800EB1EC 000E814C  38 9F 00 00 */	addi r4, r31, 0
-/* 800EB1F0 000E8150  38 A0 00 D6 */	li r5, 0xd6
-/* 800EB1F4 000E8154  4B F9 F3 C1 */	bl playEventSound__8CreatureFP8Creaturei
-/* 800EB1F8 000E8158  48 00 00 4C */	b lbl_800EB244
-lbl_800EB1FC:
-/* 800EB1FC 000E815C  80 9F 02 D0 */	lwz r4, 0x2d0(r31)
-/* 800EB200 000E8160  38 60 00 0A */	li r3, 0xa
-/* 800EB204 000E8164  38 00 00 00 */	li r0, 0
-/* 800EB208 000E8168  7C 84 2A 14 */	add r4, r4, r5
-/* 800EB20C 000E816C  90 9F 02 D0 */	stw r4, 0x2d0(r31)
-/* 800EB210 000E8170  38 9F 00 00 */	addi r4, r31, 0
-/* 800EB214 000E8174  38 A1 00 1C */	addi r5, r1, 0x1c
-/* 800EB218 000E8178  90 61 00 1C */	stw r3, 0x1c(r1)
-/* 800EB21C 000E817C  90 01 00 20 */	stw r0, 0x20(r1)
-/* 800EB220 000E8180  80 7F 02 E8 */	lwz r3, 0x2e8(r31)
-/* 800EB224 000E8184  81 83 00 00 */	lwz r12, 0(r3)
-/* 800EB228 000E8188  81 8C 00 10 */	lwz r12, 0x10(r12)
-/* 800EB22C 000E818C  7D 88 03 A6 */	mtlr r12
-/* 800EB230 000E8190  4E 80 00 21 */	blrl 
-/* 800EB234 000E8194  38 7F 00 00 */	addi r3, r31, 0
-/* 800EB238 000E8198  38 9F 00 00 */	addi r4, r31, 0
-/* 800EB23C 000E819C  38 A0 00 D6 */	li r5, 0xd6
-/* 800EB240 000E81A0  4B F9 F3 75 */	bl playEventSound__8CreatureFP8Creaturei
-lbl_800EB244:
-/* 800EB244 000E81A4  80 01 00 3C */	lwz r0, 0x3c(r1)
-/* 800EB248 000E81A8  83 E1 00 34 */	lwz r31, 0x34(r1)
-/* 800EB24C 000E81AC  38 21 00 38 */	addi r1, r1, 0x38
-/* 800EB250 000E81B0  7C 08 03 A6 */	mtlr r0
-/* 800EB254 000E81B4  4E 80 00 20 */	blr 
+.global initWork__9ActBoMakeFv
+initWork__9ActBoMakeFv:
+/* 800AC5D0 000A9530  7C 08 02 A6 */	mflr r0
+/* 800AC5D4 000A9534  90 01 00 04 */	stw r0, 4(r1)
+/* 800AC5D8 000A9538  94 21 FF D0 */	stwu r1, -0x30(r1)
+/* 800AC5DC 000A953C  93 E1 00 2C */	stw r31, 0x2c(r1)
+/* 800AC5E0 000A9540  93 C1 00 28 */	stw r30, 0x28(r1)
+/* 800AC5E4 000A9544  93 A1 00 24 */	stw r29, 0x24(r1)
+/* 800AC5E8 000A9548  7C 7D 1B 78 */	mr r29, r3
+/* 800AC5EC 000A954C  80 63 00 0C */	lwz r3, 0xc(r3)
+/* 800AC5F0 000A9550  80 03 01 84 */	lwz r0, 0x184(r3)
+/* 800AC5F4 000A9554  28 00 00 00 */	cmplwi r0, 0
+/* 800AC5F8 000A9558  40 82 00 70 */	bne lbl_800AC668
+/* 800AC5FC 000A955C  80 BD 00 1C */	lwz r5, 0x1c(r29)
+/* 800AC600 000A9560  3C 60 63 65 */	lis r3, 0x63656E74@ha
+/* 800AC604 000A9564  38 83 6E 74 */	addi r4, r3, 0x63656E74@l
+/* 800AC608 000A9568  80 65 02 20 */	lwz r3, 0x220(r5)
+/* 800AC60C 000A956C  4B FD D1 05 */	bl getSphere__8CollInfoFUl
+/* 800AC610 000A9570  7C 65 1B 78 */	mr r5, r3
+/* 800AC614 000A9574  80 7D 00 0C */	lwz r3, 0xc(r29)
+/* 800AC618 000A9578  80 9D 00 1C */	lwz r4, 0x1c(r29)
+/* 800AC61C 000A957C  38 C0 FF FF */	li r6, -1
+/* 800AC620 000A9580  C0 22 8F 30 */	lfs f1, lbl_803E9130@sda21(r2)
+/* 800AC624 000A9584  4B FE 40 95 */	bl startStickObject__8CreatureFP8CreatureP8CollPartif
+/* 800AC628 000A9588  28 1D 00 00 */	cmplwi r29, 0
+/* 800AC62C 000A958C  3B DD 00 00 */	addi r30, r29, 0
+/* 800AC630 000A9590  41 82 00 08 */	beq lbl_800AC638
+/* 800AC634 000A9594  3B DE 00 14 */	addi r30, r30, 0x14
+lbl_800AC638:
+/* 800AC638 000A9598  38 61 00 10 */	addi r3, r1, 0x10
+/* 800AC63C 000A959C  38 80 00 30 */	li r4, 0x30
+/* 800AC640 000A95A0  48 07 29 19 */	bl __ct__14PaniMotionInfoFi
+/* 800AC644 000A95A4  3B E3 00 00 */	addi r31, r3, 0
+/* 800AC648 000A95A8  38 BE 00 00 */	addi r5, r30, 0
+/* 800AC64C 000A95AC  38 61 00 18 */	addi r3, r1, 0x18
+/* 800AC650 000A95B0  38 80 00 30 */	li r4, 0x30
+/* 800AC654 000A95B4  48 07 29 39 */	bl __ct__14PaniMotionInfoFiP19PaniAnimKeyListener
+/* 800AC658 000A95B8  7C 64 1B 78 */	mr r4, r3
+/* 800AC65C 000A95BC  80 7D 00 0C */	lwz r3, 0xc(r29)
+/* 800AC660 000A95C0  7F E5 FB 78 */	mr r5, r31
+/* 800AC664 000A95C4  48 01 E3 75 */	bl startMotion__4PikiFR14PaniMotionInfoR14PaniMotionInfo
+lbl_800AC668:
+/* 800AC668 000A95C8  80 01 00 34 */	lwz r0, 0x34(r1)
+/* 800AC66C 000A95CC  83 E1 00 2C */	lwz r31, 0x2c(r1)
+/* 800AC670 000A95D0  83 C1 00 28 */	lwz r30, 0x28(r1)
+/* 800AC674 000A95D4  83 A1 00 24 */	lwz r29, 0x24(r1)
+/* 800AC678 000A95D8  38 21 00 30 */	addi r1, r1, 0x30
+/* 800AC67C 000A95DC  7C 08 03 A6 */	mtlr r0
+/* 800AC680 000A95E0  4E 80 00 20 */	blr 
 
-.global enterGoal__8GoalItemFP4Piki
-enterGoal__8GoalItemFP4Piki:
-/* 800EB258 000E81B8  7C 08 02 A6 */	mflr r0
-/* 800EB25C 000E81BC  38 A0 00 D2 */	li r5, 0xd2
-/* 800EB260 000E81C0  90 01 00 04 */	stw r0, 4(r1)
-/* 800EB264 000E81C4  94 21 FF D8 */	stwu r1, -0x28(r1)
-/* 800EB268 000E81C8  93 E1 00 24 */	stw r31, 0x24(r1)
-/* 800EB26C 000E81CC  93 C1 00 20 */	stw r30, 0x20(r1)
-/* 800EB270 000E81D0  3B C4 00 00 */	addi r30, r4, 0
-/* 800EB274 000E81D4  93 A1 00 1C */	stw r29, 0x1c(r1)
-/* 800EB278 000E81D8  7C 7D 1B 78 */	mr r29, r3
-/* 800EB27C 000E81DC  38 9D 00 00 */	addi r4, r29, 0
-/* 800EB280 000E81E0  83 E3 03 B0 */	lwz r31, 0x3b0(r3)
-/* 800EB284 000E81E4  4B F9 F3 31 */	bl playEventSound__8CreatureFP8Creaturei
-/* 800EB288 000E81E8  3C 60 80 3D */	lis r3, pikiInfMgr@ha
-/* 800EB28C 000E81EC  38 63 1D F0 */	addi r3, r3, pikiInfMgr@l
-/* 800EB290 000E81F0  38 9E 00 00 */	addi r4, r30, 0
-/* 800EB294 000E81F4  4B FD A5 51 */	bl incPiki__10PikiInfMgrFP4Piki
-/* 800EB298 000E81F8  80 9E 05 20 */	lwz r4, 0x520(r30)
-/* 800EB29C 000E81FC  38 00 00 01 */	li r0, 1
-/* 800EB2A0 000E8200  38 7E 00 00 */	addi r3, r30, 0
-/* 800EB2A4 000E8204  54 84 10 3A */	slwi r4, r4, 2
-/* 800EB2A8 000E8208  7C DD 22 14 */	add r6, r29, r4
-/* 800EB2AC 000E820C  80 A6 04 2C */	lwz r5, 0x42c(r6)
-/* 800EB2B0 000E8210  38 80 00 00 */	li r4, 0
-/* 800EB2B4 000E8214  38 A5 00 01 */	addi r5, r5, 1
-/* 800EB2B8 000E8218  90 A6 04 2C */	stw r5, 0x42c(r6)
-/* 800EB2BC 000E821C  98 1E 05 84 */	stb r0, 0x584(r30)
-/* 800EB2C0 000E8220  4B F9 FA 21 */	bl kill__8CreatureFb
-/* 800EB2C4 000E8224  A0 9E 05 10 */	lhz r4, 0x510(r30)
-/* 800EB2C8 000E8228  3C 60 80 3D */	lis r3, containerPikis__8GameStat@ha
-/* 800EB2CC 000E822C  38 03 1E A0 */	addi r0, r3, containerPikis__8GameStat@l
-/* 800EB2D0 000E8230  54 83 10 3A */	slwi r3, r4, 2
-/* 800EB2D4 000E8234  7C 80 1A 14 */	add r4, r0, r3
-/* 800EB2D8 000E8238  80 64 00 00 */	lwz r3, 0(r4)
-/* 800EB2DC 000E823C  38 03 00 01 */	addi r0, r3, 1
-/* 800EB2E0 000E8240  90 04 00 00 */	stw r0, 0(r4)
-/* 800EB2E4 000E8244  48 02 72 7D */	bl update__8GameStatFv
-/* 800EB2E8 000E8248  2C 1F 00 01 */	cmpwi r31, 1
-/* 800EB2EC 000E824C  40 82 00 14 */	bne lbl_800EB300
-/* 800EB2F0 000E8250  80 7D 02 E8 */	lwz r3, 0x2e8(r29)
-/* 800EB2F4 000E8254  38 9D 00 00 */	addi r4, r29, 0
-/* 800EB2F8 000E8258  38 A0 00 00 */	li r5, 0
-/* 800EB2FC 000E825C  4B F9 24 5D */	bl start__8SimpleAIFP10AICreaturei
-lbl_800EB300:
-/* 800EB300 000E8260  80 01 00 2C */	lwz r0, 0x2c(r1)
-/* 800EB304 000E8264  83 E1 00 24 */	lwz r31, 0x24(r1)
-/* 800EB308 000E8268  83 C1 00 20 */	lwz r30, 0x20(r1)
-/* 800EB30C 000E826C  83 A1 00 1C */	lwz r29, 0x1c(r1)
-/* 800EB310 000E8270  38 21 00 28 */	addi r1, r1, 0x28
-/* 800EB314 000E8274  7C 08 03 A6 */	mtlr r0
-/* 800EB318 000E8278  4E 80 00 20 */	blr 
+.global exeWork__9ActBoMakeFv
+exeWork__9ActBoMakeFv:
+/* 800AC684 000A95E4  38 60 00 00 */	li r3, 0
+/* 800AC688 000A95E8  4E 80 00 20 */	blr 
 
-.global exitPikis__8GoalItemFi
-exitPikis__8GoalItemFi:
-/* 800EB31C 000E827C  38 00 00 01 */	li r0, 1
-/* 800EB320 000E8280  98 03 04 10 */	stb r0, 0x410(r3)
-/* 800EB324 000E8284  80 03 04 14 */	lwz r0, 0x414(r3)
-/* 800EB328 000E8288  7C 00 22 14 */	add r0, r0, r4
-/* 800EB32C 000E828C  90 03 04 14 */	stw r0, 0x414(r3)
-/* 800EB330 000E8290  C0 02 9A 3C */	lfs f0, lbl_803E9C3C@sda21(r2)
-/* 800EB334 000E8294  D0 03 04 18 */	stfs f0, 0x418(r3)
-/* 800EB338 000E8298  4E 80 00 20 */	blr 
+.global cleanup__9ActBoMakeFv
+cleanup__9ActBoMakeFv:
+/* 800AC68C 000A95EC  7C 08 02 A6 */	mflr r0
+/* 800AC690 000A95F0  90 01 00 04 */	stw r0, 4(r1)
+/* 800AC694 000A95F4  94 21 FF F8 */	stwu r1, -8(r1)
+/* 800AC698 000A95F8  80 63 00 0C */	lwz r3, 0xc(r3)
+/* 800AC69C 000A95FC  4B FE 41 DD */	bl endStickObject__8CreatureFv
+/* 800AC6A0 000A9600  80 01 00 0C */	lwz r0, 0xc(r1)
+/* 800AC6A4 000A9604  38 21 00 08 */	addi r1, r1, 8
+/* 800AC6A8 000A9608  7C 08 03 A6 */	mtlr r0
+/* 800AC6AC 000A960C  4E 80 00 20 */	blr 
 
-.global exitPiki__8GoalItemFv
-exitPiki__8GoalItemFv:
-/* 800EB33C 000E829C  7C 08 02 A6 */	mflr r0
-/* 800EB340 000E82A0  90 01 00 04 */	stw r0, 4(r1)
-/* 800EB344 000E82A4  94 21 FF C0 */	stwu r1, -0x40(r1)
-/* 800EB348 000E82A8  93 E1 00 3C */	stw r31, 0x3c(r1)
-/* 800EB34C 000E82AC  93 C1 00 38 */	stw r30, 0x38(r1)
-/* 800EB350 000E82B0  93 A1 00 34 */	stw r29, 0x34(r1)
-/* 800EB354 000E82B4  7C 7D 1B 78 */	mr r29, r3
-/* 800EB358 000E82B8  93 81 00 30 */	stw r28, 0x30(r1)
-/* 800EB35C 000E82BC  48 12 CD 15 */	bl rand
-/* 800EB360 000E82C0  6C 60 80 00 */	xoris r0, r3, 0x8000
-/* 800EB364 000E82C4  C8 82 9A 58 */	lfd f4, "@1668"@sda21(r2)
-/* 800EB368 000E82C8  90 01 00 2C */	stw r0, 0x2c(r1)
-/* 800EB36C 000E82CC  3C 00 43 30 */	lis r0, 0x4330
-/* 800EB370 000E82D0  C0 42 9A 44 */	lfs f2, lbl_803E9C44@sda21(r2)
-/* 800EB374 000E82D4  90 01 00 28 */	stw r0, 0x28(r1)
-/* 800EB378 000E82D8  C0 22 9A 40 */	lfs f1, lbl_803E9C40@sda21(r2)
-/* 800EB37C 000E82DC  C8 61 00 28 */	lfd f3, 0x28(r1)
-/* 800EB380 000E82E0  C0 02 9A 4C */	lfs f0, lbl_803E9C4C@sda21(r2)
-/* 800EB384 000E82E4  EC 63 20 28 */	fsubs f3, f3, f4
-/* 800EB388 000E82E8  EC 43 10 24 */	fdivs f2, f3, f2
-/* 800EB38C 000E82EC  EC 21 00 B2 */	fmuls f1, f1, f2
-/* 800EB390 000E82F0  EC 00 00 72 */	fmuls f0, f0, f1
-/* 800EB394 000E82F4  FC 00 00 1E */	fctiwz f0, f0
-/* 800EB398 000E82F8  D8 01 00 18 */	stfd f0, 0x18(r1)
-/* 800EB39C 000E82FC  80 01 00 1C */	lwz r0, 0x1c(r1)
-/* 800EB3A0 000E8300  D8 01 00 20 */	stfd f0, 0x20(r1)
-/* 800EB3A4 000E8304  2C 00 00 03 */	cmpwi r0, 3
-/* 800EB3A8 000E8308  83 E1 00 24 */	lwz r31, 0x24(r1)
-/* 800EB3AC 000E830C  41 80 00 08 */	blt lbl_800EB3B4
-/* 800EB3B0 000E8310  3B E0 00 02 */	li r31, 2
-lbl_800EB3B4:
-/* 800EB3B4 000E8314  3C 80 80 2C */	lis r4, leg_ids_1@ha
-/* 800EB3B8 000E8318  80 7D 02 20 */	lwz r3, 0x220(r29)
-/* 800EB3BC 000E831C  57 E5 10 3A */	slwi r5, r31, 2
-/* 800EB3C0 000E8320  38 04 C8 74 */	addi r0, r4, leg_ids_1@l
-/* 800EB3C4 000E8324  7C 80 2A 14 */	add r4, r0, r5
-/* 800EB3C8 000E8328  80 84 00 00 */	lwz r4, 0(r4)
-/* 800EB3CC 000E832C  4B F9 E3 45 */	bl getSphere__8CollInfoFUl
+.global animationKeyUpdated__9ActBoMakeFR16PaniAnimKeyEvent
+animationKeyUpdated__9ActBoMakeFR16PaniAnimKeyEvent:
+/* 800AC6B0 000A9610  7C 08 02 A6 */	mflr r0
+/* 800AC6B4 000A9614  90 01 00 04 */	stw r0, 4(r1)
+/* 800AC6B8 000A9618  94 21 FF E0 */	stwu r1, -0x20(r1)
+/* 800AC6BC 000A961C  80 04 00 00 */	lwz r0, 0(r4)
+/* 800AC6C0 000A9620  2C 00 00 01 */	cmpwi r0, 1
+/* 800AC6C4 000A9624  41 82 00 0C */	beq lbl_800AC6D0
+/* 800AC6C8 000A9628  40 80 00 50 */	bge lbl_800AC718
+/* 800AC6CC 000A962C  48 00 00 4C */	b lbl_800AC718
+lbl_800AC6D0:
+/* 800AC6D0 000A9630  3C 80 80 2B */	lis r4, __vt__11Interaction@ha
+/* 800AC6D4 000A9634  80 C3 00 0C */	lwz r6, 0xc(r3)
+/* 800AC6D8 000A9638  38 04 CF 9C */	addi r0, r4, __vt__11Interaction@l
+/* 800AC6DC 000A963C  C0 02 8F 38 */	lfs f0, lbl_803E9138@sda21(r2)
+/* 800AC6E0 000A9640  90 01 00 10 */	stw r0, 0x10(r1)
+/* 800AC6E4 000A9644  3C 80 80 2B */	lis r4, __vt__13InteractBuild@ha
+/* 800AC6E8 000A9648  38 A4 10 D8 */	addi r5, r4, __vt__13InteractBuild@l
+/* 800AC6EC 000A964C  90 C1 00 14 */	stw r6, 0x14(r1)
+/* 800AC6F0 000A9650  38 00 00 00 */	li r0, 0
+/* 800AC6F4 000A9654  38 81 00 10 */	addi r4, r1, 0x10
+/* 800AC6F8 000A9658  90 A1 00 10 */	stw r5, 0x10(r1)
+/* 800AC6FC 000A965C  90 01 00 18 */	stw r0, 0x18(r1)
+/* 800AC700 000A9660  D0 01 00 1C */	stfs f0, 0x1c(r1)
+/* 800AC704 000A9664  80 63 00 1C */	lwz r3, 0x1c(r3)
+/* 800AC708 000A9668  81 83 00 00 */	lwz r12, 0(r3)
+/* 800AC70C 000A966C  81 8C 00 A0 */	lwz r12, 0xa0(r12)
+/* 800AC710 000A9670  7D 88 03 A6 */	mtlr r12
+/* 800AC714 000A9674  4E 80 00 21 */	blrl 
+lbl_800AC718:
+/* 800AC718 000A9678  80 01 00 24 */	lwz r0, 0x24(r1)
+/* 800AC71C 000A967C  38 21 00 20 */	addi r1, r1, 0x20
+/* 800AC720 000A9680  7C 08 03 A6 */	mtlr r0
+/* 800AC724 000A9684  4E 80 00 20 */	blr 
+
+.global __dt__9ActBoMakeFv
+__dt__9ActBoMakeFv:
+/* 800AC728 000A9688  7C 08 02 A6 */	mflr r0
+/* 800AC72C 000A968C  90 01 00 04 */	stw r0, 4(r1)
+/* 800AC730 000A9690  94 21 FF E8 */	stwu r1, -0x18(r1)
+/* 800AC734 000A9694  93 E1 00 14 */	stw r31, 0x14(r1)
+/* 800AC738 000A9698  3B E4 00 00 */	addi r31, r4, 0
+/* 800AC73C 000A969C  93 C1 00 10 */	stw r30, 0x10(r1)
+/* 800AC740 000A96A0  7C 7E 1B 79 */	or. r30, r3, r3
+/* 800AC744 000A96A4  41 82 00 34 */	beq lbl_800AC778
+/* 800AC748 000A96A8  3C 60 80 2B */	lis r3, __vt__9ActBoMake@ha
+/* 800AC74C 000A96AC  38 63 5A 50 */	addi r3, r3, __vt__9ActBoMake@l
+/* 800AC750 000A96B0  90 7E 00 00 */	stw r3, 0(r30)
+/* 800AC754 000A96B4  38 03 00 64 */	addi r0, r3, 0x64
+/* 800AC758 000A96B8  38 7E 00 00 */	addi r3, r30, 0
+/* 800AC75C 000A96BC  90 1E 00 14 */	stw r0, 0x14(r30)
+/* 800AC760 000A96C0  38 80 00 00 */	li r4, 0
+/* 800AC764 000A96C4  48 01 76 A5 */	bl __dt__6ActionFv
+/* 800AC768 000A96C8  7F E0 07 35 */	extsh. r0, r31
+/* 800AC76C 000A96CC  40 81 00 0C */	ble lbl_800AC778
+/* 800AC770 000A96D0  7F C3 F3 78 */	mr r3, r30
+/* 800AC774 000A96D4  4B F9 AA 39 */	bl __dl__FPv
+lbl_800AC778:
+/* 800AC778 000A96D8  7F C3 F3 78 */	mr r3, r30
+/* 800AC77C 000A96DC  80 01 00 1C */	lwz r0, 0x1c(r1)
+/* 800AC780 000A96E0  83 E1 00 14 */	lwz r31, 0x14(r1)
+/* 800AC784 000A96E4  83 C1 00 10 */	lwz r30, 0x10(r1)
+/* 800AC788 000A96E8  38 21 00 18 */	addi r1, r1, 0x18
+/* 800AC78C 000A96EC  7C 08 03 A6 */	mtlr r0
+/* 800AC790 000A96F0  4E 80 00 20 */	blr 
+
+"@20@animationKeyUpdated__9ActBoMakeFR16PaniAnimKeyEvent":
+/* 800AC794 000A96F4  38 63 FF EC */	addi r3, r3, -20
+/* 800AC798 000A96F8  4B FF FF 18 */	b animationKeyUpdated__9ActBoMakeFR16PaniAnimKeyEvent
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
-	.4byte 0x6169426f
-	.4byte 0x4d616b65
-	.4byte 0x2e637070
-	.4byte 0
-	.4byte 0x6169426f
-	.4byte 0x4d616b65
-	.4byte 0
-	.4byte 0x496e7465
-	.4byte 0x72616374
-	.4byte 0x696f6e00
-	.4byte 0
-	.4byte 0
+.balign 8
+lbl_802B59C0:
+	.asciz "aiBoMake.cpp"
+.balign 4
+lbl_802B59D0:
+	.asciz "aiBoMake"
+.balign 4
+lbl_802B59DC:
+	.asciz "Interaction"
+.balign 4
 	.4byte 0
 	.4byte 0
 	.4byte 0
@@ -353,19 +359,23 @@ lbl_800EB3B4:
 	.4byte 0
 	.4byte 0
 	.4byte 0
-	.4byte 0x41637442
-	.4byte 0x6f4d616b
-	.4byte 0x65000000
-	.4byte 0x52656365
-	.4byte 0x69766572
-	.4byte 0x3c50696b
-	.4byte 0x693e0000
-	.4byte 0x803dfe40
 	.4byte 0
 	.4byte 0
-	.4byte 0x803dfe40
+.balign 4
+lbl_802B5A14:
+	.asciz "ActBoMake"
+.balign 4
+lbl_802B5A20:
+	.asciz "Receiver<Piki>"
+.balign 4
+lbl_802B5A30:
+	.4byte "__RTTI__15Receiver<4Piki>"
 	.4byte 0
-	.4byte 0x803dfe50
+	.4byte 0
+lbl_802B5A3C:
+	.4byte "__RTTI__15Receiver<4Piki>"
+	.4byte 0
+	.4byte __RTTI__6Action
 	.4byte 0
 	.4byte 0
 .global __vt__9ActBoMake
@@ -396,17 +406,17 @@ __vt__9ActBoMake:
 	.4byte resumable__6ActionFv
 	.4byte getInfo__6ActionFPc
 	.4byte __RTTI__9ActBoMake
-	.4byte 0xffffffec
-	.4byte lbl_800AC794
+	.4byte 0xFFFFFFEC
+	.4byte "@20@animationKeyUpdated__9ActBoMakeFR16PaniAnimKeyEvent"
 	.4byte animationKeyUpdated__9ActBoMakeFR16PaniAnimKeyEvent
-	.4byte 0x50616e69
-	.4byte 0x416e696d
-	.4byte 0x4b65794c
-	.4byte 0x69737465
-	.4byte 0x6e657200
+.balign 4
+lbl_802B5AC4:
+	.asciz "PaniAnimKeyListener"
+.balign 4
 	.4byte 0
 	.4byte 0
 	.4byte 0
+lbl_802B5AE4:
 	.4byte lbl_800A7908
 	.4byte lbl_800A7930
 	.4byte lbl_800A7944
@@ -420,47 +430,26 @@ __vt__9ActBoMake:
 	.4byte lbl_800A79BC
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
-.global __RTTI__11ActBoreRest
-__RTTI__11ActBoreRest:
-	.4byte 0x802b55b0
-	.4byte 0x802b55ec
-.global __RTTI__14ActBoreOneshot
-__RTTI__14ActBoreOneshot:
-	.4byte 0x802b567c
-	.4byte 0x802b568c
-.global __RTTI__13ActBoreListen
-__RTTI__13ActBoreListen:
-	.4byte 0x802b571c
-	.4byte 0x802b572c
-.global __RTTI__11ActBoreTalk
-__RTTI__11ActBoreTalk:
-	.4byte 0x802b57dc
-	.4byte 0x802b57e8
+.balign 8
+"__RTTI__15Receiver<4Piki>":
+	.4byte lbl_802B5A20
+	.4byte 0
+.balign 4
+lbl_803DFE48:
+	.asciz "Action"
+.balign 4
+__RTTI__6Action:
+	.4byte lbl_803DFE48
+	.4byte lbl_802B5A30
+__RTTI__9ActBoMake:
+	.4byte lbl_802B5A14
+	.4byte lbl_802B5A3C
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
-.global lbl_803EA73C
-lbl_803EA73C:
-	.4byte 0x3F000000
-.global lbl_803EA740
-lbl_803EA740:
-	.4byte 0x43960000
-.global lbl_803EA744
-lbl_803EA744:
-	.4byte 0x43870000
-.global lbl_803EA748
-lbl_803EA748:
-	.4byte 0x43700000
-
-.section .sdata2, "a"  # 0x803E8200 - 0x803EC840
-.global lbl_803EBE14
-lbl_803EBE14:
-	.4byte 0x3E4CCCCD
-.global lbl_803EBE18
-lbl_803EBE18:
-	.4byte 0x43960000
-.global lbl_803EBE1C
-lbl_803EBE1C:
-	.4byte 0x41200000
-.global lbl_803EBE20
-lbl_803EBE20:
-	.4byte 0x3D4CCCCD
+.balign 8
+lbl_803E9130:
+	.float 0.0
+lbl_803E9134:
+	.float 3.0
+lbl_803E9138:
+	.float 1.0

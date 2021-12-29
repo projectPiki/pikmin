@@ -37,6 +37,7 @@ TEXT_O_FILES :=\
 	$(BUILD_DIR)/asm/sysCommon/atx.o\
 	$(BUILD_DIR)/asm/sysCommon/id32.o\
 	$(BUILD_DIR)/asm/text_80044194.o\
+	$(BUILD_DIR)/asm/plugPikiKando/aiBoMake.o\
 	$(BUILD_DIR)/asm/plugPikiKando/aiBou.o\
 	$(BUILD_DIR)/asm/plugPikiKando/aiBridge.o\
 	$(BUILD_DIR)/asm/plugPikiKando/aiBreakWall.o\

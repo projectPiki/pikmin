@@ -371,13 +371,3 @@ lbl_803E9124:
 .global lbl_803E9128
 lbl_803E9128:
 	.float 30.0
-	.4byte 0x00000000
-.global lbl_803E9130
-lbl_803E9130:
-	.float 0.0
-.global lbl_803E9134
-lbl_803E9134:
-	.float 3.0
-.global lbl_803E9138
-lbl_803E9138:
-	.float 1.0

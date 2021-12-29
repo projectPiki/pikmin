@@ -6754,13 +6754,3 @@ __RTTI__13ActBoreSelect:
 __RTTI__13ActFreeSelect:
 	.4byte 0x802B590C
 	.4byte 0x802B591C
-	.4byte 0x802B5A20
-	.4byte 0
-	.4byte 0x41637469
-	.4byte 0x6F6E0000
-	.4byte 0x803DFE48
-	.4byte 0x802B5A30
-.global __RTTI__9ActBoMake
-__RTTI__9ActBoMake:
-	.4byte 0x802B5A14
-	.4byte 0x802B5A3C
