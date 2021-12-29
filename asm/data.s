@@ -23689,6 +23689,7 @@ lbl_802B5D70:
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x00000000
+.balign 4
 .global lbl_802B5DA8
 lbl_802B5DA8:
 	.asciz "ActBreakWall"
@@ -24225,92 +24226,6 @@ __vt__8ActEnter:
 	.4byte restart__6ActionFv
 	.4byte resumable__6ActionFv
 	.4byte getInfo__6ActionFPc
-	.4byte lbl_800A7908
-	.4byte lbl_800A7930
-	.4byte lbl_800A7944
-	.4byte lbl_800A7958
-	.4byte lbl_800A796C
-	.4byte lbl_800A7980
-	.4byte lbl_800A7994
-	.4byte lbl_800A79A8
-	.4byte lbl_800A791C
-	.4byte lbl_800A79D0
-	.4byte lbl_800A79BC
-	.4byte 0x61694573
-	.4byte 0x63617065
-	.4byte 0x2E637070
-	.4byte 0
-	.4byte 0x61694573
-	.4byte 0x63617065
-	.4byte 0
-.global lbl_802B6604
-lbl_802B6604:
-	.4byte 0x65736328
-	.4byte 0x25732920
-	.4byte 0x28252E31
-	.4byte 0x662C252E
-	.4byte 0x31662900
-	.4byte 0x41637445
-	.4byte 0x73636170
-	.4byte 0x65000000
-	.4byte 0x52656365
-	.4byte 0x69766572
-	.4byte 0x3C50696B
-	.4byte 0x693E0000
-	.4byte 0x803E0318
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x803E0318
-	.4byte 0x00000000
-	.4byte 0x803E0328
-	.4byte 0x00000000
-	.4byte 0x00000000
-.global __vt__9ActEscape
-__vt__9ActEscape:
-	.4byte __RTTI__9ActEscape
-	.4byte 0
-	.4byte "procMsg__15Receiver<4Piki>FP4PikiP3Msg"
-	.4byte "procBounceMsg__15Receiver<4Piki>FP4PikiP9MsgBounce"
-	.4byte "procStickMsg__15Receiver<4Piki>FP4PikiP8MsgStick"
-	.4byte "procHangMsg__15Receiver<4Piki>FP4PikiP7MsgHang"
-	.4byte "procTargetMsg__15Receiver<4Piki>FP4PikiP9MsgTarget"
-	.4byte "procCollideMsg__15Receiver<4Piki>FP4PikiP10MsgCollide"
-	.4byte "procAnimMsg__15Receiver<4Piki>FP4PikiP7MsgAnim"
-	.4byte "procDamageMsg__15Receiver<4Piki>FP4PikiP9MsgDamage"
-	.4byte "procWallMsg__15Receiver<4Piki>FP4PikiP7MsgWall"
-	.4byte "procOffWallMsg__15Receiver<4Piki>FP4PikiP10MsgOffWall"
-	.4byte "procUserMsg__15Receiver<4Piki>FP4PikiP7MsgUser"
-	.4byte "procGroundMsg__15Receiver<4Piki>FP4PikiP9MsgGround"
-	.4byte defaultInitialiser__6ActionFv
-	.4byte dump__6ActionFv
-	.4byte draw__6ActionFR8Graphics
-	.4byte __dt__9ActEscapeFv
-	.4byte init__9ActEscapeFP8Creature
-	.4byte exec__9ActEscapeFv
-	.4byte cleanup__9ActEscapeFv
-	.4byte resume__6ActionFv
-	.4byte restart__6ActionFv
-	.4byte resumable__6ActionFv
-	.4byte getInfo__9ActEscapeFPc
-	.4byte 0x41637445
-	.4byte 0x73636170
-	.4byte 0x653A3A49
-	.4byte 0x6E697469
-	.4byte 0x616C6973
-	.4byte 0x65720000
-	.4byte 0x41637469
-	.4byte 0x6F6E3A3A
-	.4byte 0x496E6974
-	.4byte 0x69616C69
-	.4byte 0x73657200
-	.4byte 0x803E0338
-	.4byte 0
-	.4byte 0
-.global __vt__Q29ActEscape11Initialiser
-__vt__Q29ActEscape11Initialiser:
-	.4byte __RTTI__Q29ActEscape11Initialiser
-	.4byte 0
-	.4byte initialise__Q29ActEscape11InitialiserFP6Action
 	.4byte lbl_800A7908
 	.4byte lbl_800A7930
 	.4byte lbl_800A7944
