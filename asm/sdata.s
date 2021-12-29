@@ -7382,37 +7382,3 @@ __RTTI__17SlotChangeListner:
 __RTTI__8ActCrowd:
 	.4byte 0x802B62C4
 	.4byte 0x802B6300
-	.4byte 0
-.global lbl_803E0260
-lbl_803E0260:
-	.4byte 0x00000000
-.global lbl_803E0264
-lbl_803E0264:
-	.4byte 0x00000000
-.global lbl_803E0268
-lbl_803E0268:
-	.4byte 0x00000000
-.global lbl_803E026C
-lbl_803E026C:
-	.4byte 0x00000000
-.global lbl_803E0270
-lbl_803E0270:
-	.4byte 0x00000000
-.global lbl_803E0274
-lbl_803E0274:
-	.4byte 0x00000000
-.global lbl_803E0278
-lbl_803E0278:
-	.4byte 0x3FA66666
-	.4byte 0x802B63E0
-	.4byte 0x00000000
-	.4byte 0x802B63F4
-	.4byte 0x00000000
-	.4byte 0x41637469
-	.4byte 0x6F6E0000
-	.4byte 0x803E028C
-	.4byte 0x802B6404
-.global __RTTI__8ActDecoy
-__RTTI__8ActDecoy:
-	.4byte 0x802B63D4
-	.4byte 0x802B6410
