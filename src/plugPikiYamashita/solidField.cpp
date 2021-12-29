@@ -403,6 +403,6 @@ static unsigned char yura[2048] = {
 	};
 
 namespace zen{	
-		unsigned char *UseSolidTex[6] = {ami,marble,noise,cloud,check,yura};
+		unsigned char* UseSolidTex[6] = {ami,marble,noise,cloud,check,yura};
 } // namespace zen
 // clang-format on
