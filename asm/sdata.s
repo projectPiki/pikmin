@@ -7416,39 +7416,3 @@ lbl_803E0278:
 __RTTI__8ActDecoy:
 	.4byte 0x802B63D4
 	.4byte 0x802B6410
-	.4byte 0
-.global lbl_803E02A8
-lbl_803E02A8:
-	.4byte 0x456E7465
-	.4byte 0x72000000
-.global lbl_803E02B0
-lbl_803E02B0:
-	.4byte 0x00000000
-.global lbl_803E02B4
-lbl_803E02B4:
-	.4byte 0x00000000
-.global lbl_803E02B8
-lbl_803E02B8:
-	.4byte 0x00000000
-.global lbl_803E02BC
-lbl_803E02BC:
-	.4byte 0x00000000
-.global lbl_803E02C0
-lbl_803E02C0:
-	.4byte 0x00000000
-.global lbl_803E02C4
-lbl_803E02C4:
-	.4byte 0x00000000
-.global lbl_803E02C8
-lbl_803E02C8:
-	.4byte 0x00000000
-	.4byte 0x802B6528
-	.4byte 0x00000000
-	.4byte 0x41637469
-	.4byte 0x6F6E0000
-	.4byte 0x803E02D4
-	.4byte 0x802B6538
-.global __RTTI__8ActEnter
-__RTTI__8ActEnter:
-	.4byte 0x802B651C
-	.4byte 0x802B6544
