@@ -277,34 +277,3 @@ lbl_80222418:
 	.4byte lbl_803DFB30
 	.4byte lbl_803DFB38
 	.4byte lbl_803DFB40
-.balign 8
-.global lbl_80222440
-lbl_80222440:
-	.4byte 0
-	.float 0.2
-	.4byte 1
-	.float 0.1
-	.4byte 2
-	.float 0.3
-	.4byte 3
-	.float 0.3
-.global lbl_80222460
-lbl_80222460:
-	.4byte 0
-	.float 0.1
-	.4byte 1
-	.float 0.5
-	.4byte 2
-	.float 0.3
-	.4byte 3
-	.float 0.1
-.global lbl_80222480
-lbl_80222480:
-	.4byte 0x27
-	.float 0.35
-	.4byte 0x28
-	.float 0.35
-	.4byte 0x41
-	.float 0.2
-	.4byte 0x29
-	.float 0.1
