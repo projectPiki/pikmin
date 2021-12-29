@@ -6800,6 +6800,7 @@ lbl_803DFE7C:
 __RTTI__6ActBou:
 	.4byte 0x803DFE80
 	.4byte 0x802B5B38
+.balign 4
 .global lbl_803DFEA8
 lbl_803DFEA8:
 	.asciz "Bridge"
@@ -6829,6 +6830,7 @@ lbl_803DFECC:
 	.4byte 0x00000000
 	.4byte 0x802B5C60
 	.4byte 0x00000000
+.balign 4
 	.asciz "Action"
 .balign 4
 	.4byte 0x803DFEE0
@@ -6837,33 +6839,3 @@ lbl_803DFECC:
 __RTTI__9ActBridge:
 	.4byte 0x802B5C40
 	.4byte lbl_802B5C7C
-.global lbl_803DFEF8
-lbl_803DFEF8:
-	.4byte 0x00000000
-.global lbl_803DFEFC
-lbl_803DFEFC:
-	.4byte 0x00000000
-.global lbl_803DFF00
-lbl_803DFF00:
-	.4byte 0x00000000
-.global lbl_803DFF04
-lbl_803DFF04:
-	.4byte 0x00000000
-.global lbl_803DFF08
-lbl_803DFF08:
-	.4byte 0x00000000
-.global lbl_803DFF0C
-lbl_803DFF0C:
-	.4byte 0x00000000
-	.4byte 0x802B5DB8
-	.4byte 0x00000000
-	.4byte 0x802B5DCC
-	.4byte 0x00000000
-	.4byte 0x41637469
-	.4byte 0x6F6E0000
-	.4byte 0x803DFF20
-	.4byte 0x802B5DDC
-.global __RTTI__12ActBreakWall
-__RTTI__12ActBreakWall:
-	.4byte 0x802B5DA8
-	.4byte 0x802B5DE8
