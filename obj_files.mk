@@ -234,7 +234,7 @@ TEXT_O_FILES :=\
 	$(BUILD_DIR)/asm/plugPikiYamashita/effectMgr.o\
 	$(BUILD_DIR)/asm/plugPikiYamashita/particleGenerator.o\
 	$(BUILD_DIR)/asm/plugPikiYamashita/particleLoader.o\
-	$(BUILD_DIR)/asm/plugPikiYamashita/solidField.o\
+	$(BUILD_DIR)/src/plugPikiYamashita/solidField.o\
 	$(BUILD_DIR)/asm/plugPikiYamashita/particleManager.o\
 	$(BUILD_DIR)/asm/plugPikiYamashita/particleMdlManager.o\
 	$(BUILD_DIR)/asm/plugPikiYamashita/bBoardColourAnim.o\
