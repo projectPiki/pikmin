@@ -314,17 +314,3 @@ lbl_802224A0:
 	.4byte lbl_803DFEB0
 	.4byte lbl_803DFEB8
 	.4byte lbl_803DFEBC
-.global lbl_802224B0
-lbl_802224B0:
-	.4byte lbl_803E003C
-	.4byte lbl_803E0040
-	.4byte lbl_803E0048
-	.4byte lbl_803E0050
-	.4byte lbl_803E0058
-	.4byte lbl_803E0060
-	.4byte lbl_803E0068
-.global lbl_802224CC
-lbl_802224CC:
-	.4byte lbl_803E006C
-	.4byte lbl_803E0074
-	.4byte lbl_803E007C
