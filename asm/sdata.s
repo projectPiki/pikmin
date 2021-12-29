@@ -7259,32 +7259,3 @@ lbl_803E015C:
 __RTTI__9ActKinoko:
 	.4byte 0x802B6084
 	.4byte 0x802B60C0
-.global lbl_803E0188
-lbl_803E0188:
-	.4byte 0x00000000
-.global lbl_803E018C
-lbl_803E018C:
-	.4byte 0x00000000
-.global lbl_803E0190
-lbl_803E0190:
-	.4byte 0x00000000
-.global lbl_803E0194
-lbl_803E0194:
-	.4byte 0x00000000
-	.4byte 0x802B61B0
-	.4byte 0x00000000
-lbl_803E01A0:
-	.asciz "Action"
-.balign 4
-	.4byte 0x803E01A0
-	.4byte 0x802B61C0
-.global __RTTI__8ActChase
-__RTTI__8ActChase:
-	.4byte 0x802B61A4
-	.4byte 0x802B61CC
-	.4byte 0x802B625C
-	.4byte 0
-.global __RTTI__Q28ActChase11Initialiser
-__RTTI__Q28ActChase11Initialiser:
-	.4byte 0x802B6244
-	.4byte 0x802B6270
