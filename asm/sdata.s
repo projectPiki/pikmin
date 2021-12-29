@@ -6764,39 +6764,3 @@ __RTTI__13ActFreeSelect:
 __RTTI__9ActBoMake:
 	.4byte 0x802B5A14
 	.4byte 0x802B5A3C
-.global lbl_803DFE60
-lbl_803DFE60:
-	.4byte 0x426F7500
-.global lbl_803DFE64
-lbl_803DFE64:
-	.4byte 0x00000000
-.global lbl_803DFE68
-lbl_803DFE68:
-	.4byte 0x00000000
-.global lbl_803DFE6C
-lbl_803DFE6C:
-	.4byte 0x00000000
-.global lbl_803DFE70
-lbl_803DFE70:
-	.4byte 0x00000000
-.global lbl_803DFE74
-lbl_803DFE74:
-	.4byte 0x00000000
-.global lbl_803DFE78
-lbl_803DFE78:
-	.4byte 0x00000000
-.global lbl_803DFE7C
-lbl_803DFE7C:
-	.4byte 0x43160000
-	.4byte 0x41637442
-	.4byte 0x6F750000
-	.4byte 0x802B5B1C
-	.4byte 0x00000000
-	.4byte 0x41637469
-	.4byte 0x6F6E0000
-	.4byte 0x803DFE90
-	.4byte 0x802B5B2C
-.global __RTTI__6ActBou
-__RTTI__6ActBou:
-	.4byte 0x803DFE80
-	.4byte 0x802B5B38
