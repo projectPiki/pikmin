@@ -37,6 +37,7 @@ TEXT_O_FILES :=\
 	$(BUILD_DIR)/asm/sysCommon/atx.o\
 	$(BUILD_DIR)/asm/sysCommon/id32.o\
 	$(BUILD_DIR)/asm/text_80044194.o\
+	$(BUILD_DIR)/asm/plugPikiKando/updateMgr.o\
 	$(BUILD_DIR)/asm/plugPikiKando/cPlate.o\
 	$(BUILD_DIR)/asm/plugPikiKando/aiStone.o\
 	$(BUILD_DIR)/asm/plugPikiKando/aiActions.o\
@@ -70,6 +71,7 @@ TEXT_O_FILES :=\
 	$(BUILD_DIR)/asm/plugPikiKando/aiShoot.o\
 	$(BUILD_DIR)/asm/plugPikiKando/aiWatch.o\
 	$(BUILD_DIR)/asm/plugPikiKando/aiWeed.o\
+	$(BUILD_DIR)/asm/plugPikiKando/aiTable.o\
 	$(BUILD_DIR)/asm/plugPikiKando/aiAction.o\
 	$(BUILD_DIR)/asm/plugPikiKando/pikiInf.o\
 	$(BUILD_DIR)/asm/plugPikiKando/piki.o\

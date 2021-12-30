@@ -948,23 +948,3 @@ seMgr:
 .global seSystem
 seSystem:
 	.skip 0x4
-.balign 8
-.global pikiUpdateMgr
-pikiUpdateMgr:
-	.skip 0x4
-.global searchUpdateMgr
-searchUpdateMgr:
-	.skip 0x4
-.global pikiLookUpdateMgr
-pikiLookUpdateMgr:
-	.skip 0x4
-.global pikiOptUpdateMgr
-pikiOptUpdateMgr:
-	.skip 0x4
-.global tekiOptUpdateMgr
-tekiOptUpdateMgr:
-	.skip 0x4
-.balign 8
-.global uniqueInstance__7AiTable
-uniqueInstance__7AiTable:
-	.skip 0x4
