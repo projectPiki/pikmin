@@ -1,4 +1,5 @@
-#pragma once
+#ifndef _TYPES_H
+#define _TYPES_H
 
 typedef signed char         s8;
 typedef signed short        s16;
@@ -47,3 +48,5 @@ typedef unsigned long size_t;
 #define nullptr 0
 
 #define BUMP_REGISTER(reg) { asm { mr reg, reg } }
+
+#endif
