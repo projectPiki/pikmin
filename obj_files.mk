@@ -37,6 +37,7 @@ TEXT_O_FILES :=\
 	$(BUILD_DIR)/asm/sysCommon/atx.o\
 	$(BUILD_DIR)/asm/sysCommon/id32.o\
 	$(BUILD_DIR)/asm/text_80044194.o\
+	$(BUILD_DIR)/asm/plugPikiKando/cPlate.o\
 	$(BUILD_DIR)/asm/plugPikiKando/aiStone.o\
 	$(BUILD_DIR)/asm/plugPikiKando/aiActions.o\
 	$(BUILD_DIR)/asm/plugPikiKando/aiAttack.o\
