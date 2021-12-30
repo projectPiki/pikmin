@@ -1592,7 +1592,7 @@ __vt__8PlantMgr:
 	.4byte 0xFFFFFFF8
 	.4byte getAgeNodeType__5ANodeFv
 	.4byte read__8CoreNodeFR18RandomAccessStream
-	.4byte lbl_8009F5DC
+	.4byte "@8@update__9ObjectMgrFv"
 	.4byte draw__4NodeFR8Graphics
 	.4byte render__4NodeFR8Graphics
 	.4byte concat__4NodeFv

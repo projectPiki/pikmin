@@ -930,6 +930,3 @@ init$1860:
 .global pelletMgr
 pelletMgr:
 	.skip 0x4
-.global workObjectMgr
-workObjectMgr:
-	.skip 0x4
