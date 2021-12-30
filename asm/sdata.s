@@ -215,7 +215,7 @@ lbl_803DCE80:
 	.asciz "ANode"
 .balign 4
 	.4byte lbl_803DCE80
-	.4byte 0x00000000
+	.4byte 0
 	.4byte 0x802272E8
 	.4byte 0x802272F4
 .balign 4
@@ -561,7 +561,7 @@ lbl_803DD10C:
 	.asciz "root"
 .balign 4
 	.4byte 0x8022867C
-	.4byte 0x00000000
+	.4byte 0
 .global __RTTI__10MatobjInfo
 __RTTI__10MatobjInfo:
 	.4byte 0x80228670
@@ -779,7 +779,7 @@ lbl_803DD2B4:
 	.4byte 0x414E6F64
 	.4byte 0x65000000
 	.4byte 0x803DD2BC
-	.4byte 0x00000000
+	.4byte 0
 	.4byte 0x80228AF0
 	.4byte 0x80228AFC
 .global __RTTI__8EditNode
@@ -836,7 +836,7 @@ lbl_803DD328:
 	.4byte 0x74657849
 	.4byte 0x6D670000
 	.4byte 0x80228C40
-	.4byte 0x00000000
+	.4byte 0
 .global __RTTI__10BinobjInfo
 __RTTI__10BinobjInfo:
 	.4byte 0x80228C34
@@ -878,7 +878,7 @@ lbl_803DD388:
 	.4byte 0x414E6F64
 	.4byte 0x65000000
 	.4byte 0x803DD398
-	.4byte 0x00000000
+	.4byte 0
 	.4byte 0x80228D8C
 	.4byte 0x80228D98
 	.4byte 0x803DD380
@@ -890,7 +890,7 @@ __RTTI__7SRTNode:
 	.4byte 0x414E6F64
 	.4byte 0x65000000
 	.4byte 0x803DD3C0
-	.4byte 0x00000000
+	.4byte 0
 	.4byte 0x80228E6C
 	.4byte 0x80228E78
 	.4byte 0x4E6F6465
@@ -1000,7 +1000,7 @@ lbl_803DD46C:
 	.4byte 0x53747265
 	.4byte 0x616D0000
 	.4byte 0x803DD470
-	.4byte 0x00000000
+	.4byte 0
 	.4byte 0x80228F10
 	.4byte 0x80228F24
 .global __RTTI__13AtxFileStream
@@ -1032,7 +1032,7 @@ __RTTI__7Texture_1:
 	.4byte 0x414E6F64
 	.4byte 0x65000000
 	.4byte 0x803DD4C0
-	.4byte 0x00000000
+	.4byte 0
 	.4byte 0x53797374
 	.4byte 0x656D0000
 .global glnWidth
@@ -1103,7 +1103,7 @@ lbl_803DD550:
 	.4byte 0x414E6F64
 	.4byte 0x65000000
 	.4byte 0x803DD554
-	.4byte 0x00000000
+	.4byte 0
 	.4byte 0x802A5448
 	.4byte 0x802A5454
 .global __RTTI__11AddressNode
@@ -1311,7 +1311,7 @@ lbl_803DD6B8:
 	.4byte 0x414E6F64
 	.4byte 0x65000000
 	.4byte 0x803DD6BC
-	.4byte 0x00000000
+	.4byte 0
 	.4byte 0x802A5F08
 	.4byte 0x802A5F14
 	.4byte 0x4E6F6465
@@ -1354,7 +1354,7 @@ lbl_803DD714:
 lbl_803DD71C:
 	.4byte 0x616E6D00
 	.4byte 0x802A5FF0
-	.4byte 0x00000000
+	.4byte 0
 	.4byte 0x414E6F64
 	.4byte 0x65000000
 	.4byte 0x803DD728
@@ -5697,7 +5697,7 @@ lbl_803DF580:
 	.4byte 0x414E6F64
 	.4byte 0x65000000
 	.4byte 0x803DF588
-	.4byte 0x00000000
+	.4byte 0
 	.4byte 0x802AFFA4
 	.4byte 0x802B00BC
 	.4byte 0x4E6F6465
@@ -5705,7 +5705,7 @@ lbl_803DF580:
 	.4byte 0x803DF5A0
 	.4byte 0x802B00C8
 	.4byte 0x802B00DC
-	.4byte 0x00000000
+	.4byte 0
 	.4byte 0x802B00E8
 	.4byte 0x802B00F4
 	.4byte 0x802B0118
@@ -5796,7 +5796,7 @@ lbl_803DF688:
 	.4byte 0x36000000
 	.4byte 0x37000000
 	.4byte 0x802B07D4
-	.4byte 0x00000000
+	.4byte 0
 	.4byte 0x802B07E0
 	.4byte 0x802B07F0
 .global __RTTI__18PaniPelletAnimator
@@ -5830,76 +5830,3 @@ __RTTI__14PelletAnimInfo:
 __RTTI__15GenObjectPellet:
 	.4byte 0x802B0920
 	.4byte 0x802B0968
-.global lbl_803DF728
-lbl_803DF728:
-	.4byte 0x55464F4C
-	.4byte 0x4F414400
-.global lbl_803DF730
-lbl_803DF730:
-	.4byte 0x44454144
-	.4byte 0x00000000
-.global lbl_803DF738
-lbl_803DF738:
-	.4byte 0x4E4F524D
-	.4byte 0x414C0000
-.global lbl_803DF740
-lbl_803DF740:
-	.4byte 0x41505045
-	.4byte 0x41520000
-.global lbl_803DF748
-lbl_803DF748:
-	.4byte 0x474F414C
-	.4byte 0x00000000
-.global lbl_803DF750
-lbl_803DF750:
-	.4byte 0x42C80000
-.global lbl_803DF754
-lbl_803DF754:
-	.4byte 0x43480000
-.global lbl_803DF758
-lbl_803DF758:
-	.4byte 0x41200000
-.global "__RTTI__17Receiver<6Pellet>"
-"__RTTI__17Receiver<6Pellet>":
-	.4byte 0x802B09F8
-	.4byte 0
-.global "__RTTI__15AState<6Pellet>"
-"__RTTI__15AState<6Pellet>":
-	.4byte 0x802B0A0C
-	.4byte 0x802B0A1C
-.global __RTTI__11PelletState
-__RTTI__11PelletState:
-	.4byte 0x802B0A28
-	.4byte 0x802B0A34
-.global __RTTI__15PelletGoalState
-__RTTI__15PelletGoalState:
-	.4byte 0x802B09E8
-	.4byte 0x802B0A48
-.global __RTTI__17PelletAppearState
-__RTTI__17PelletAppearState:
-	.4byte 0x802B0AB4
-	.4byte 0x802B0AC8
-.global __RTTI__20PelletSwallowedState
-__RTTI__20PelletSwallowedState:
-	.4byte 0x802B0B34
-	.4byte 0x802B0B4C
-.global __RTTI__17PelletNormalState
-__RTTI__17PelletNormalState:
-	.4byte 0x802B0BB8
-	.4byte 0x802B0BCC
-.global __RTTI__15PelletDeadState
-__RTTI__15PelletDeadState:
-	.4byte 0x802B0C38
-	.4byte 0x802B0C48
-.global __RTTI__18PelletUfoLoadState
-__RTTI__18PelletUfoLoadState:
-	.4byte 0x802B0CB4
-	.4byte 0x802B0CC8
-.global "__RTTI__21StateMachine<6Pellet>_1"
-"__RTTI__21StateMachine<6Pellet>_1":
-	.4byte 0x802B0E20
-	.4byte 0
-.global __RTTI__18PelletStateMachine
-__RTTI__18PelletStateMachine:
-	.4byte 0x802B0E0C
-	.4byte 0x802B0E38
