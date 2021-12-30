@@ -266,14 +266,3 @@ lbl_80222408:
 	.4byte 0xD5
 	.4byte 0xD4
 	.4byte 0xD3
-.global lbl_80222418
-lbl_80222418:
-	.4byte lbl_803DFB00
-	.4byte lbl_803DFB08
-	.4byte lbl_803DFB10
-	.4byte lbl_803DFB18
-	.4byte lbl_803DFB20
-	.4byte lbl_803DFB28
-	.4byte lbl_803DFB30
-	.4byte lbl_803DFB38
-	.4byte lbl_803DFB40

@@ -944,7 +944,3 @@ routeMgr:
 .global seMgr
 seMgr:
 	.skip 0x4
-.balign 8
-.global seSystem
-seSystem:
-	.skip 0x4
