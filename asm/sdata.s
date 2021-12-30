@@ -6099,32 +6099,3 @@ __RTTI__13WorkObjectMgr:
 __RTTI__14WorkObjectNode:
 	.4byte 0x802B18DC
 	.4byte 0x802B18EC
-	.4byte 0
-.global avoidWayPointIndex__10PathFinder
-avoidWayPointIndex__10PathFinder:
-	.4byte 0xFFFFFFFF
-.global lbl_803DF95C
-lbl_803DF95C:
-	.4byte 0x3C4E6F64
-	.4byte 0x653E0000
-.global lbl_803DF964
-lbl_803DF964:
-	.4byte 0x25640000
-.global lbl_803DF968
-lbl_803DF968:
-	.4byte 0x25643A25
-	.4byte 0x64000000
-	.4byte 0x414E6F64
-	.4byte 0x65000000
-	.4byte 0x803DF970
-	.4byte 0x00000000
-	.4byte 0x802B1ACC
-	.4byte 0x802B1AD8
-	.4byte 0x4E6F6465
-	.4byte 0x00000000
-	.4byte 0x803DF988
-	.4byte 0x802B1B0C
-.global __RTTI__8RouteMgr
-__RTTI__8RouteMgr:
-	.4byte 0x802B1B00
-	.4byte 0x802B1B20

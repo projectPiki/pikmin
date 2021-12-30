@@ -37,6 +37,7 @@ TEXT_O_FILES :=\
 	$(BUILD_DIR)/asm/sysCommon/atx.o\
 	$(BUILD_DIR)/asm/sysCommon/id32.o\
 	$(BUILD_DIR)/asm/text_80044194.o\
+	$(BUILD_DIR)/asm/plugPikiKando/routeMgr.o\
 	$(BUILD_DIR)/asm/plugPikiKando/seMgr.o\
 	$(BUILD_DIR)/asm/plugPikiKando/seConstants.o\
 	$(BUILD_DIR)/asm/plugPikiKando/soundMgr.o\

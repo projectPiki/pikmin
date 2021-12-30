@@ -933,11 +933,3 @@ pelletMgr:
 .global workObjectMgr
 workObjectMgr:
 	.skip 0x4
-.balign 8
-.global mode__10PathFinder
-mode__10PathFinder:
-	.skip 0x2
-.balign 4
-.global routeMgr
-routeMgr:
-	.skip 0x4
