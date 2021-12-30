@@ -941,6 +941,3 @@ mode__10PathFinder:
 .global routeMgr
 routeMgr:
 	.skip 0x4
-.global seMgr
-seMgr:
-	.skip 0x4
