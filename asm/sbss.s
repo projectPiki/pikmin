@@ -915,18 +915,3 @@ aiGridMap__8FastGrid:
 .global aiGridSize__8FastGrid
 aiGridSize__8FastGrid:
 	.skip 0x2
-.balign 8
-.global SmartTurnOver
-SmartTurnOver:
-	.skip 0x1
-.balign 4
-.global count$1859
-count$1859:
-	.skip 0x4
-.global init$1860
-init$1860:
-	.skip 0x1
-.balign 4
-.global pelletMgr
-pelletMgr:
-	.skip 0x4

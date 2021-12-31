@@ -254,15 +254,3 @@ lbl_802223EC:
 	.4byte lbl_803DEE20
 	.4byte lbl_803DEE28
 	.4byte lbl_803DEE30
-.global lbl_802223F8
-lbl_802223F8:
-	.float 3.3
-	.float 7.0
-	.float 13.0
-	.float 18.0
-.global lbl_80222408
-lbl_80222408:
-	.4byte 0xD6
-	.4byte 0xD5
-	.4byte 0xD4
-	.4byte 0xD3

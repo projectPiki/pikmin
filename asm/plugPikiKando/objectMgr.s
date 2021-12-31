@@ -3517,7 +3517,7 @@ __vt__13MonoObjectMgr:
 	.4byte 0xFFFFFFF8
 	.4byte getAgeNodeType__5ANodeFv
 	.4byte read__8CoreNodeFR18RandomAccessStream
-	.4byte lbl_80099540
+	.4byte "@8@update__13MonoObjectMgrFv"
 	.4byte draw__4NodeFR8Graphics
 	.4byte render__4NodeFR8Graphics
 	.4byte concat__4NodeFv

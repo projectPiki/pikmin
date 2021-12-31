@@ -3023,10 +3023,10 @@ __vt__10BurnEffect:
 	.4byte invoke__10BurnEffectFPQ23zen17particleGenerator
 	.4byte __RTTI__10BurnEffect
 	.4byte 0xFFFFFFFC
-	.4byte lbl_80099520
+	.4byte "@4@invoke__7KEffectFPQ23zen17particleGeneratorPQ23zen11particleMdl"
 	.4byte __RTTI__10BurnEffect
 	.4byte 0xFFFFFFF8
-	.4byte lbl_80099528
+	.4byte "@8@invoke__7KEffectFPQ23zen11particleMdl"
 	.4byte invoke__7KEffectFPQ23zen17particleGeneratorPQ23zen11particleMdl
 	.4byte invoke__7KEffectFPQ23zen11particleMdl
 	.4byte emit__10BurnEffectFR10EffectParm
@@ -3054,10 +3054,10 @@ __vt__12RippleEffect:
 	.4byte invoke__7KEffectFPQ23zen17particleGenerator
 	.4byte __RTTI__12RippleEffect
 	.4byte 0xFFFFFFFC
-	.4byte lbl_80099520
+	.4byte "@4@invoke__7KEffectFPQ23zen17particleGeneratorPQ23zen11particleMdl"
 	.4byte __RTTI__12RippleEffect
 	.4byte 0xFFFFFFF8
-	.4byte lbl_80099528
+	.4byte "@8@invoke__7KEffectFPQ23zen11particleMdl"
 	.4byte invoke__7KEffectFPQ23zen17particleGeneratorPQ23zen11particleMdl
 	.4byte invoke__7KEffectFPQ23zen11particleMdl
 	.4byte emit__12RippleEffectFR10EffectParm
@@ -3085,10 +3085,10 @@ __vt__15FreeLightEffect:
 	.4byte invoke__7KEffectFPQ23zen17particleGenerator
 	.4byte __RTTI__15FreeLightEffect
 	.4byte 0xFFFFFFFC
-	.4byte lbl_80099520
+	.4byte "@4@invoke__7KEffectFPQ23zen17particleGeneratorPQ23zen11particleMdl"
 	.4byte __RTTI__15FreeLightEffect
 	.4byte 0xFFFFFFF8
-	.4byte lbl_80099528
+	.4byte "@8@invoke__7KEffectFPQ23zen11particleMdl"
 	.4byte invoke__7KEffectFPQ23zen17particleGeneratorPQ23zen11particleMdl
 	.4byte invoke__7KEffectFPQ23zen11particleMdl
 	.4byte emit__15FreeLightEffectFR10EffectParm
@@ -3116,10 +3116,10 @@ __vt__16UfoSuikomiEffect:
 	.4byte invoke__7KEffectFPQ23zen17particleGenerator
 	.4byte __RTTI__16UfoSuikomiEffect
 	.4byte 0xFFFFFFFC
-	.4byte lbl_80099520
+	.4byte "@4@invoke__7KEffectFPQ23zen17particleGeneratorPQ23zen11particleMdl"
 	.4byte __RTTI__16UfoSuikomiEffect
 	.4byte 0xFFFFFFF8
-	.4byte lbl_80099528
+	.4byte "@8@invoke__7KEffectFPQ23zen11particleMdl"
 	.4byte invoke__7KEffectFPQ23zen17particleGeneratorPQ23zen11particleMdl
 	.4byte invoke__7KEffectFPQ23zen11particleMdl
 	.4byte emit__16UfoSuikomiEffectFR10EffectParm
@@ -3165,7 +3165,7 @@ __vt__13UfoSuckEffect:
 	.4byte "@4@invoke__15WhistleTemplateFPQ23zen17particleGeneratorPQ23zen11particleMdl"
 	.4byte __RTTI__13UfoSuckEffect
 	.4byte 0xFFFFFFF8
-	.4byte lbl_80099528
+	.4byte "@8@invoke__7KEffectFPQ23zen11particleMdl"
 	.4byte invoke__15WhistleTemplateFPQ23zen17particleGeneratorPQ23zen11particleMdl
 	.4byte invoke__7KEffectFPQ23zen11particleMdl
 	.4byte emit__15WhistleTemplateFR10EffectParm
@@ -3182,7 +3182,7 @@ __vt__15WhistleTemplate:
 	.4byte "@4@invoke__15WhistleTemplateFPQ23zen17particleGeneratorPQ23zen11particleMdl"
 	.4byte __RTTI__15WhistleTemplate
 	.4byte 0xFFFFFFF8
-	.4byte lbl_80099528
+	.4byte "@8@invoke__7KEffectFPQ23zen11particleMdl"
 	.4byte invoke__15WhistleTemplateFPQ23zen17particleGeneratorPQ23zen11particleMdl
 	.4byte invoke__7KEffectFPQ23zen11particleMdl
 	.4byte emit__15WhistleTemplateFR10EffectParm
@@ -3210,10 +3210,10 @@ __vt__15BombEffectLight:
 	.4byte invoke__7KEffectFPQ23zen17particleGenerator
 	.4byte __RTTI__15BombEffectLight
 	.4byte 0xFFFFFFFC
-	.4byte lbl_80099520
+	.4byte "@4@invoke__7KEffectFPQ23zen17particleGeneratorPQ23zen11particleMdl"
 	.4byte __RTTI__15BombEffectLight
 	.4byte 0xFFFFFFF8
-	.4byte lbl_80099528
+	.4byte "@8@invoke__7KEffectFPQ23zen11particleMdl"
 	.4byte invoke__7KEffectFPQ23zen17particleGeneratorPQ23zen11particleMdl
 	.4byte invoke__7KEffectFPQ23zen11particleMdl
 	.4byte emit__15BombEffectLightFR10EffectParm
@@ -3241,10 +3241,10 @@ __vt__10BombEffect:
 	.4byte invoke__7KEffectFPQ23zen17particleGenerator
 	.4byte __RTTI__10BombEffect
 	.4byte 0xFFFFFFFC
-	.4byte lbl_80099520
+	.4byte "@4@invoke__7KEffectFPQ23zen17particleGeneratorPQ23zen11particleMdl"
 	.4byte __RTTI__10BombEffect
 	.4byte 0xFFFFFFF8
-	.4byte lbl_80099528
+	.4byte "@8@invoke__7KEffectFPQ23zen11particleMdl"
 	.4byte invoke__7KEffectFPQ23zen17particleGeneratorPQ23zen11particleMdl
 	.4byte invoke__7KEffectFPQ23zen11particleMdl
 	.4byte emit__10BombEffectFR10EffectParm
@@ -3272,10 +3272,10 @@ __vt__12SimpleEffect:
 	.4byte invoke__7KEffectFPQ23zen17particleGenerator
 	.4byte __RTTI__12SimpleEffect
 	.4byte 0xFFFFFFFC
-	.4byte lbl_80099520
+	.4byte "@4@invoke__7KEffectFPQ23zen17particleGeneratorPQ23zen11particleMdl"
 	.4byte __RTTI__12SimpleEffect
 	.4byte 0xFFFFFFF8
-	.4byte lbl_80099528
+	.4byte "@8@invoke__7KEffectFPQ23zen11particleMdl"
 	.4byte invoke__7KEffectFPQ23zen17particleGeneratorPQ23zen11particleMdl
 	.4byte invoke__7KEffectFPQ23zen11particleMdl
 	.4byte emit__12SimpleEffectFR10EffectParm
@@ -3299,10 +3299,10 @@ __vt__7NaviFue:
 	.4byte invoke__7NaviFueFPQ23zen17particleGenerator
 	.4byte __RTTI__7NaviFue
 	.4byte 0xFFFFFFFC
-	.4byte lbl_80099520
+	.4byte "@4@invoke__7KEffectFPQ23zen17particleGeneratorPQ23zen11particleMdl"
 	.4byte __RTTI__7NaviFue
 	.4byte 0xFFFFFFF8
-	.4byte lbl_80099528
+	.4byte "@8@invoke__7KEffectFPQ23zen11particleMdl"
 	.4byte invoke__7KEffectFPQ23zen17particleGeneratorPQ23zen11particleMdl
 	.4byte invoke__7KEffectFPQ23zen11particleMdl
 	.4byte emit__7NaviFueFR10EffectParm
@@ -3330,10 +3330,10 @@ __vt__15SmokeTreeEffect:
 	.4byte invoke__7KEffectFPQ23zen17particleGenerator
 	.4byte __RTTI__15SmokeTreeEffect
 	.4byte 0xFFFFFFFC
-	.4byte lbl_80099520
+	.4byte "@4@invoke__7KEffectFPQ23zen17particleGeneratorPQ23zen11particleMdl"
 	.4byte __RTTI__15SmokeTreeEffect
 	.4byte 0xFFFFFFF8
-	.4byte lbl_80099528
+	.4byte "@8@invoke__7KEffectFPQ23zen11particleMdl"
 	.4byte invoke__7KEffectFPQ23zen17particleGeneratorPQ23zen11particleMdl
 	.4byte invoke__7KEffectFPQ23zen11particleMdl
 	.4byte emit__15SmokeTreeEffectFR10EffectParm
@@ -3361,10 +3361,10 @@ __vt__15SmokeRockEffect:
 	.4byte invoke__7KEffectFPQ23zen17particleGenerator
 	.4byte __RTTI__15SmokeRockEffect
 	.4byte 0xFFFFFFFC
-	.4byte lbl_80099520
+	.4byte "@4@invoke__7KEffectFPQ23zen17particleGeneratorPQ23zen11particleMdl"
 	.4byte __RTTI__15SmokeRockEffect
 	.4byte 0xFFFFFFF8
-	.4byte lbl_80099528
+	.4byte "@8@invoke__7KEffectFPQ23zen11particleMdl"
 	.4byte invoke__7KEffectFPQ23zen17particleGeneratorPQ23zen11particleMdl
 	.4byte invoke__7KEffectFPQ23zen11particleMdl
 	.4byte emit__15SmokeRockEffectFR10EffectParm
@@ -3392,10 +3392,10 @@ __vt__16SmokeGrassEffect:
 	.4byte invoke__7KEffectFPQ23zen17particleGenerator
 	.4byte __RTTI__16SmokeGrassEffect
 	.4byte 0xFFFFFFFC
-	.4byte lbl_80099520
+	.4byte "@4@invoke__7KEffectFPQ23zen17particleGeneratorPQ23zen11particleMdl"
 	.4byte __RTTI__16SmokeGrassEffect
 	.4byte 0xFFFFFFF8
-	.4byte lbl_80099528
+	.4byte "@8@invoke__7KEffectFPQ23zen11particleMdl"
 	.4byte invoke__7KEffectFPQ23zen17particleGeneratorPQ23zen11particleMdl
 	.4byte invoke__7KEffectFPQ23zen11particleMdl
 	.4byte emit__16SmokeGrassEffectFR10EffectParm
@@ -3423,10 +3423,10 @@ __vt__15SmokeSoilEffect:
 	.4byte invoke__7KEffectFPQ23zen17particleGenerator
 	.4byte __RTTI__15SmokeSoilEffect
 	.4byte 0xFFFFFFFC
-	.4byte lbl_80099520
+	.4byte "@4@invoke__7KEffectFPQ23zen17particleGeneratorPQ23zen11particleMdl"
 	.4byte __RTTI__15SmokeSoilEffect
 	.4byte 0xFFFFFFF8
-	.4byte lbl_80099528
+	.4byte "@8@invoke__7KEffectFPQ23zen11particleMdl"
 	.4byte invoke__7KEffectFPQ23zen17particleGeneratorPQ23zen11particleMdl
 	.4byte invoke__7KEffectFPQ23zen11particleMdl
 	.4byte emit__15SmokeSoilEffectFR10EffectParm
@@ -3457,7 +3457,7 @@ __vt__11NaviWhistle:
 	.4byte "@4@invoke__11NaviWhistleFPQ23zen17particleGeneratorPQ23zen11particleMdl"
 	.4byte __RTTI__11NaviWhistle
 	.4byte 0xFFFFFFF8
-	.4byte lbl_80099528
+	.4byte "@8@invoke__7KEffectFPQ23zen11particleMdl"
 	.4byte invoke__11NaviWhistleFPQ23zen17particleGeneratorPQ23zen11particleMdl
 	.4byte invoke__7KEffectFPQ23zen11particleMdl
 	.4byte emit__11NaviWhistleFR10EffectParm
@@ -3485,10 +3485,10 @@ __vt__10GoalEffect:
 	.4byte invoke__10GoalEffectFPQ23zen17particleGenerator
 	.4byte __RTTI__10GoalEffect
 	.4byte 0xFFFFFFFC
-	.4byte lbl_80099520
+	.4byte "@4@invoke__7KEffectFPQ23zen17particleGeneratorPQ23zen11particleMdl"
 	.4byte __RTTI__10GoalEffect
 	.4byte 0xFFFFFFF8
-	.4byte lbl_80099528
+	.4byte "@8@invoke__7KEffectFPQ23zen11particleMdl"
 	.4byte invoke__7KEffectFPQ23zen17particleGeneratorPQ23zen11particleMdl
 	.4byte invoke__7KEffectFPQ23zen11particleMdl
 	.4byte emit__10GoalEffectFR10EffectParm
@@ -3519,7 +3519,7 @@ __vt__11SlimeEffect:
 	.4byte "@4@invoke__11SlimeEffectFPQ23zen17particleGeneratorPQ23zen11particleMdl"
 	.4byte __RTTI__11SlimeEffect
 	.4byte 0xFFFFFFF8
-	.4byte lbl_80099528
+	.4byte "@8@invoke__7KEffectFPQ23zen11particleMdl"
 	.4byte invoke__11SlimeEffectFPQ23zen17particleGeneratorPQ23zen11particleMdl
 	.4byte invoke__7KEffectFPQ23zen11particleMdl
 	.4byte emit__11SlimeEffectFR10EffectParm
