@@ -5817,16 +5817,3 @@ __RTTI__14PelletAnimInfo:
 	.4byte 0x802B0854
 	.4byte 0x802B089C
 	.4byte 0
-	.4byte 0
-	.4byte 0x802B0930
-	.4byte 0
-	.4byte 0x47656E42
-	.4byte 0x61736500
-	.4byte 0x803DF708
-	.4byte 0x802B093C
-	.4byte 0x802B0948
-	.4byte 0x802B0954
-.global __RTTI__15GenObjectPellet
-__RTTI__15GenObjectPellet:
-	.4byte 0x802B0920
-	.4byte 0x802B0968
