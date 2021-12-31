@@ -650,9 +650,3 @@ lbl_803E8E88:
 .global lbl_803E8E8C
 lbl_803E8E8C:
 	.4byte 0x3E99999A
-.global lbl_803E8E90
-lbl_803E8E90:
-	.4byte 0x00000000
-.global lbl_803E8E94
-lbl_803E8E94:
-	.4byte 0x41F00000

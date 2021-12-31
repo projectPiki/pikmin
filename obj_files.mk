@@ -36,6 +36,7 @@ TEXT_O_FILES :=\
 	$(BUILD_DIR)/asm/sysCommon/atx.o\
 	$(BUILD_DIR)/asm/sysCommon/id32.o\
 	$(BUILD_DIR)/asm/text_80044194.o\
+	$(BUILD_DIR)/asm/plugPikiKando/animPellet.o\
 	$(BUILD_DIR)/asm/plugPikiKando/genPellet.o\
 	$(BUILD_DIR)/asm/plugPikiKando/pelletState.o\
 	$(BUILD_DIR)/asm/plugPikiKando/workObject.o\
