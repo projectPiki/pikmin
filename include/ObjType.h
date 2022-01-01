@@ -11,6 +11,7 @@ struct ObjType {
 };
 
 ObjType _info [55] = {
+// index, name
     {0,  "piki"},
     {55, "teki"},
     {54, "navi"},
