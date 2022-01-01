@@ -1,41 +1,26 @@
 #include "types.h"
-
-
+#include "ObjType.h"
 
 /*
  * --INFO--
  * Address:	80094A38
  * Size:	000048
  */
-void ObjType::getName(int)
+char* getName(int index)
 {
-/*
-.loc_0x0:
-  lis       r4, 0x802B
-  subi      r4, r4, 0x410
-  addi      r5, r4, 0x15C
-  li        r6, 0
-  b         .loc_0x34
-
-.loc_0x14:
-  cmpw      r3, r0
-  bne-      .loc_0x2C
-  rlwinm    r0,r6,3,0,28
-  add       r3, r4, r0
-  lwz       r3, 0x160(r3)
-  blr       
-
-.loc_0x2C:
-  addi      r5, r5, 0x8
-  addi      r6, r6, 0x1
-
-.loc_0x34:
-  lwz       r0, 0x0(r5)
-  cmpwi     r0, 0x39
-  bne+      .loc_0x14
-  addi      r3, r4, 0x314
-  blr
-*/
+	char* result = nullptr;
+	int slot     = 0;
+	goto isValid;
+	while (true) {
+		if (index == _info[slot].obj_index) {
+			result = _info[slot].obj_name;
+			break;
+		}
+        slot++;
+		isValid:
+        if (_info[slot].obj_index == 57) { return "invalid objname"; }
+	}
+	return result;
 }
 
 /*
