@@ -49,7 +49,7 @@ lbl_801FE11C:
 /* 801FE128 001FB088  4E 80 00 20 */	blr 
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
-.balign 0x8
+.balign 8
 lbl_803EC508:
 	.float 0.0
 .balign 8
