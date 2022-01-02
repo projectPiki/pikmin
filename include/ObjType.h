@@ -6,8 +6,8 @@ struct ObjType {
     char* obj_name; // _04
 
 // functions
-    char* getName(int);
-    int getIndex(char*);
+    static char* getName(int);
+    static int getIndex(char*);
 };
 
 #endif
