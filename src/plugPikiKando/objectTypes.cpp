@@ -1,26 +1,80 @@
 #include "types.h"
+#include "string.h"
 #include "ObjType.h"
+
+ObjType _info [55] = {
+// index, name
+    {0,  "piki"},
+    {55, "teki"},
+    {54, "navi"},
+    {1,  "water"},
+    {2,  "seed"},
+    {3,  "key"},
+    {4,  "door"},
+    {5,  "gate"},
+    {6,  "fall water"},
+    {7,  "gem5"},
+    {8,  "gem10"},
+    {9,  "gem20"},
+    {10, "gem50"},
+    {11, "gem1"},
+    {12, "never use this"},
+    {13, "bomb gen"},
+    {14, "bomb"},
+    {15, "pikihead"},
+    {16, "goal"},
+    {17, "fulcrum"},
+    {18, "rope"},
+    {19, "ivy"},
+    {20, "cylinder test"},
+    {22, "sluice soft"},
+    {23, "sluice hard"},
+    {24, "sluice bomb"},
+    {25, "sluice bombhard"},
+    {26, "rocket"},
+    {21, "dual test"},
+    {27, "<demo:sunset> start"},
+    {28, "<demo:sunset> goal"},
+    {29, "kusa"},
+    {30, "ufo"},
+    {31, "weeds"},
+    {32, "<weed>"},
+    {33, "rockgen"},
+    {34, "grassgen"},
+    {37, "fish"},
+    {35, "<bo base>"},
+    {36, "secret1"},
+    {38, "workobject"},
+    {39, "boss:Spider"},
+    {40, "boss:Giant"},
+    {41, "boss:Snake"},
+    {42, "boss:TwSnake"},
+    {43, "boss:King"},
+    {44, "boss:Slime"},
+    {45, "boss:Kogane"},
+    {46, "boss:Pom"},
+    {47, "boss:KingBack"},
+    {49, "boss:Mizu"},
+    {50, "boss:XXX3"},
+    {51, "PLANT"},
+    {52, "PELLET"},
+    {57, ""}
+};
 
 /*
  * --INFO--
  * Address:	80094A38
  * Size:	000048
  */
-char* getName(int index)
+char* ObjType::getName(int index)
 {
-	char* result = nullptr;
-	int slot     = 0;
-	goto isValid;
-	while (true) {
+	for (int slot = 0; _info[slot].obj_index != 57; slot++) {
+		
 		if (index == _info[slot].obj_index) {
-			result = _info[slot].obj_name;
-			break;
+			return _info[slot].obj_name;
 		}
-        slot++;
-		isValid:
-        if (_info[slot].obj_index == 57) { return "invalid objname"; }
 	}
-	return result;
+	return "invalid objname";
 }
 
 /*
@@ -28,54 +82,13 @@ char* getName(int index)
  * Address:	80094A80
  * Size:	000094
  */
-void ObjType::getIndex(char *)
+int ObjType::getIndex(char* name)
 {
-/*
-.loc_0x0:
-  mflr      r0
-  lis       r4, 0x802B
-  stw       r0, 0x4(r1)
-  subi      r0, r4, 0x2B4
-  stwu      r1, -0x20(r1)
-  stw       r31, 0x1C(r1)
-  stw       r30, 0x18(r1)
-  li        r30, 0
-  rlwinm    r5,r30,3,0,28
-  stw       r29, 0x14(r1)
-  add       r31, r0, r5
-  addi      r29, r3, 0
-  b         .loc_0x68
-
-.loc_0x34:
-  mr        r3, r29
-  lwz       r4, 0x4(r31)
-  bl        0x184708
-  cmpwi     r3, 0
-  bne-      .loc_0x60
-  lis       r3, 0x802B
-  rlwinm    r4,r30,3,0,28
-  subi      r0, r3, 0x2B4
-  add       r3, r0, r4
-  lwz       r3, 0x0(r3)
-  b         .loc_0x78
-
-.loc_0x60:
-  addi      r31, r31, 0x8
-  addi      r30, r30, 0x1
-
-.loc_0x68:
-  lwz       r0, 0x0(r31)
-  cmpwi     r0, 0x39
-  bne+      .loc_0x34
-  li        r3, -0x1
-
-.loc_0x78:
-  lwz       r0, 0x24(r1)
-  lwz       r31, 0x1C(r1)
-  lwz       r30, 0x18(r1)
-  lwz       r29, 0x14(r1)
-  addi      r1, r1, 0x20
-  mtlr      r0
-  blr
-*/
+	for (int slot = 0; _info[slot].obj_index != 57; slot++) {
+		
+		if (strcmp(name,_info[slot].obj_name) == 0) {
+			return _info[slot].obj_index;
+		}
+	}
+	return -1;
 }
