@@ -86,7 +86,7 @@ ASM_INCLUDES := -I include/
 
 ASFLAGS := -mgekko $(ASM_INCLUDES)
 LDFLAGS := -map $(MAP) -fp hard -nodefaults
-CFLAGS  = -Cpp_exceptions off -O4,p -fp hard -proc gekko -nodefaults -RTTI on -msgstyle gcc $(INCLUDES)
+CFLAGS   = -Cpp_exceptions off -O4,p -fp hard -proc gekko -nodefaults -RTTI on -msgstyle gcc $(INCLUDES)
 
 $(JAUDIO): CFLAGS += -func_align 32
 $(BUILD_DIR)/src/MSL_C/PPCEABI/bare/H/e_pow.o: CFLAGS += -fp_contract on
