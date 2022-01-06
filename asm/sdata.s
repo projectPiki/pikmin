@@ -5298,10 +5298,3 @@ __RTTI__11DynParticle:
 __RTTI__13EventListener:
 	.4byte 0x802AF9F0
 	.4byte 0x802AFA0C
-.global aiGridShift__8FastGrid
-aiGridShift__8FastGrid:
-	.4byte 0x000C0000
-.balign 4
-.global lbl_803DF31C
-lbl_803DF31C:
-	.asciz "aiGrid"

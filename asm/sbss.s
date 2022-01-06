@@ -905,13 +905,8 @@ baseTri:
 	.skip 0x4
 .global checkRadius
 checkRadius:
-	.skip 0x8
+	.skip 0x4
+.balign 8
 .global particleHeap
 particleHeap:
-	.skip 0x8
-.global aiGridMap__8FastGrid
-aiGridMap__8FastGrid:
 	.skip 0x4
-.global aiGridSize__8FastGrid
-aiGridSize__8FastGrid:
-	.skip 0x2
