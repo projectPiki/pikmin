@@ -5305,13 +5305,3 @@ aiGridShift__8FastGrid:
 .global lbl_803DF31C
 lbl_803DF31C:
 	.asciz "aiGrid"
-.balign 4
-	.4byte 0x00000000
-	.4byte 0x802AFA84
-	.4byte 0x00000000
-	.4byte 0x802AFA90
-	.4byte 0x00000000
-	.4byte 0x802AFAA0
-	.4byte 0x802AFAAC
-	.4byte 0x802AFA74
-	.4byte 0x802AFAC0
