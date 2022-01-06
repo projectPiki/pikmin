@@ -5287,14 +5287,3 @@ lbl_803DF2A0:
 __RTTI__11DynParticle:
 	.4byte 0x802AF944
 	.4byte 0x802AF95C
-	.4byte 0
-	.4byte 0x414E6F64
-	.4byte 0x65000000
-	.4byte 0x803DF2F8
-	.4byte 0
-	.4byte lbl_802AF9D4
-	.4byte 0x802AFA00
-.global __RTTI__13EventListener
-__RTTI__13EventListener:
-	.4byte 0x802AF9F0
-	.4byte 0x802AFA0C
