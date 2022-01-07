@@ -422,27 +422,3 @@ lbl_803E8D2C:
 "@2204":
 	.4byte 0x43300000
 	.4byte 0x80000000
-.global lbl_803E8D38
-lbl_803E8D38:
-	.4byte 0x00000000
-	.4byte 0x00000000
-.global "@1255"
-"@1255":
-	.4byte 0x3FE00000
-	.4byte 0x00000000
-.global "@1256"
-"@1256":
-	.4byte 0x40080000
-	.4byte 0x00000000
-.global lbl_803E8D50
-lbl_803E8D50:
-	.float 1.0
-.global lbl_803E8D54
-lbl_803E8D54:
-	.4byte 0x40000000
-.global lbl_803E8D58
-lbl_803E8D58:
-	.4byte 0x3F000000
-.global lbl_803E8D5C
-lbl_803E8D5C:
-	.4byte 0x42C80000
