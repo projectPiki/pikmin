@@ -4566,30 +4566,3 @@ lbl_803DEE38:
 "__RTTI__25Delegate1<6AIPerf,R4Menu>":
 	.4byte 0x802AEDB0
 	.4byte 0x802AEDE0
-.balign 8
-.global lbl_803DEE50
-lbl_803DEE50:
-	.4byte 0x70303000
-.global lbl_803DEE54
-lbl_803DEE54:
-	.4byte 0x70303100
-.global lbl_803DEE58
-lbl_803DEE58:
-	.4byte 0x70303200
-.global lbl_803DEE5C
-lbl_803DEE5C:
-	.4byte 0x70303300
-	.4byte 0x802AEE80
-	.4byte 0
-	.4byte 0x47656E42
-	.4byte 0x61736500
-	.4byte 0x803DEE68
-	.4byte 0x802AEE8C
-	.4byte 0x802AEE98
-	.4byte 0x802AEEA4
-.global __RTTI__14GenObjectDebug
-__RTTI__14GenObjectDebug:
-	.4byte 0x802AEE70
-	.4byte 0x802AEEB8
-	.4byte 0x802AEF18
-	.4byte 0

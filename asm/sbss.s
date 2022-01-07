@@ -882,15 +882,3 @@ outsideViewCnt__6AIPerf:
 .global drawshapeCullCnt__6AIPerf
 drawshapeCullCnt__6AIPerf:
 	.skip 4
-.global collision__11CourseDebug
-collision__11CourseDebug:
-	.skip 4
-.global pikiNoAttack__11CourseDebug
-pikiNoAttack__11CourseDebug:
-	.skip 4
-.global noCarryover__11CourseDebug
-noCarryover__11CourseDebug:
-	.skip 4
-.global pelletDebug__11CourseDebug
-pelletDebug__11CourseDebug:
-	.skip 4
