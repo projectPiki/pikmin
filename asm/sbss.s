@@ -894,6 +894,3 @@ noCarryover__11CourseDebug:
 .global pelletDebug__11CourseDebug
 pelletDebug__11CourseDebug:
 	.skip 4
-.global memStat
-memStat:
-	.skip 4

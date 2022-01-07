@@ -4593,23 +4593,3 @@ __RTTI__14GenObjectDebug:
 	.4byte 0x802AEEB8
 	.4byte 0x802AEF18
 	.4byte 0
-.global lbl_803DEE90
-lbl_803DEE90:
-	.4byte 0x6D656D69
-	.4byte 0x6E666F00
-	.4byte 0x4D656D49
-	.4byte 0x6E666F00
-	.4byte 0x414E6F64
-	.4byte 0x65000000
-	.4byte 0x803DEEA0
-	.4byte 0
-	.4byte 0x802AEF60
-	.4byte 0x802AEF6C
-.global __RTTI__11MemInfoNode
-__RTTI__11MemInfoNode:
-	.4byte 0x802AEF78
-	.4byte 0x802AEF84
-.global __RTTI__7MemInfo
-__RTTI__7MemInfo:
-	.4byte 0x803DEE98
-	.4byte 0x802AEF98
