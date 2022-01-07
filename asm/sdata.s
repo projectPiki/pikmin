@@ -4348,7 +4348,7 @@ lbl_803DECC4:
 __RTTI__9DemoParms:
 	.4byte 0x802AE0FC
 	.4byte 0x802AE134
-	.4byte 0
+.balign 8
 .global lbl_803DECD8
 lbl_803DECD8:
 	.asciz "OFF"
@@ -4454,7 +4454,7 @@ lbl_803DED4C:
 __RTTI__10AIConstant:
 	.4byte 0x802AE740
 	.4byte 0x802AE778
-	.4byte 0
+.balign 8
 .global lbl_803DED90
 lbl_803DED90:
 	.4byte 0x6B696F2E
@@ -4507,37 +4507,38 @@ __RTTI__9KeyConfig:
 	.4byte 0x802AE8B8
 .global useLOD__6AIPerf
 useLOD__6AIPerf:
-	.byte 0x1
+	.byte 1
 .global showColls__6AIPerf
 showColls__6AIPerf:
-	.byte 0x1
+	.byte 1
 .global useCollSort__6AIPerf
 useCollSort__6AIPerf:
-	.byte 0x1
+	.byte 1
 .global bridgeFast__6AIPerf
 bridgeFast__6AIPerf:
-	.byte 0x1
+	.byte 1
 .global useASync__6AIPerf
 useASync__6AIPerf:
-	.4byte 0x01000000
+	.byte 1
+.balign 4
 .global useGrid__6AIPerf
 useGrid__6AIPerf:
-	.4byte 0x00000002
+	.4byte 2
 .global gridShift__6AIPerf
 gridShift__6AIPerf:
-	.4byte 0x00000004
+	.4byte 4
 .global aiGrid__6AIPerf
 aiGrid__6AIPerf:
-	.byte 0x1
+	.byte 1
 .global insQuick__6AIPerf
 insQuick__6AIPerf:
-	.byte 0x1
+	.byte 1
 .global iteratorCull__6AIPerf
 iteratorCull__6AIPerf:
-	.byte 0x1
+	.byte 1
 .global pikiMabiki__6AIPerf
 pikiMabiki__6AIPerf:
-	.byte 0x1
+	.byte 1
 .global optLevel__6AIPerf
 optLevel__6AIPerf:
 	.4byte 2
@@ -4888,27 +4889,7 @@ lbl_803DF02C:
 	.4byte 0x802AF0C0
 .global lbl_803DF050
 lbl_803DF050:
-	.4byte 0x00000000
+	.float 0.0
 .global lbl_803DF054
 lbl_803DF054:
-	.4byte 0xBF800000
-	.4byte 0x414E6F64
-	.4byte 0x65000000
-	.4byte 0x803DF058
-	.4byte 0x00000000
-	.4byte 0x802AF228
-	.4byte 0x802AF234
-	.4byte 0x4E6F6465
-	.4byte 0x00000000
-	.4byte 0x803DF070
-	.4byte 0x802AF240
-	.4byte 0x802AF254
-	.4byte 0x802AF264
-.global __RTTI__12DynCollShape_1
-__RTTI__12DynCollShape_1:
-	.4byte 0x802AF280
-	.4byte 0x802AF290
-.global __RTTI__16CreatureCollPart
-__RTTI__16CreatureCollPart:
-	.4byte 0x802AF214
-	.4byte 0x802AF2B4
+	.float -1.0
