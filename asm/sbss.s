@@ -896,13 +896,4 @@ pelletDebug__11CourseDebug:
 	.skip 4
 .global memStat
 memStat:
-	.skip 8
-.global numTris
-numTris:
-	.skip 4
-.global baseTri
-baseTri:
-	.skip 4
-.global checkRadius
-checkRadius:
 	.skip 4
