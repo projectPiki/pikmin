@@ -255,38 +255,3 @@ lbl_803E8C34:
 .global lbl_803E8C38
 lbl_803E8C38:
 	.4byte 0x46480000
-	.4byte 0x00000000
-.global lbl_803E8C40
-lbl_803E8C40:
-	.4byte 0x00000000
-	.4byte 0x00000000
-.global "@1013"
-"@1013":
-	.4byte 0x3FE00000
-	.4byte 0x00000000
-.global "@1014"
-"@1014":
-	.4byte 0x40080000
-	.4byte 0x00000000
-.global lbl_803E8C58
-lbl_803E8C58:
-	.float 1.0
-.global lbl_803E8C5C
-lbl_803E8C5C:
-	.4byte 0x3F000000
-.global lbl_803E8C60
-lbl_803E8C60:
-	.4byte 0xBF800000
-.global lbl_803E8C64
-lbl_803E8C64:
-	.4byte 0x499C4000
-.global lbl_803E8C68
-lbl_803E8C68:
-	.4byte 0x46FFFE00
-.global lbl_803E8C6C
-lbl_803E8C6C:
-	.4byte 0x3F7FBE77
-.global "@2294"
-"@2294":
-	.4byte 0x43300000
-	.4byte 0x80000000

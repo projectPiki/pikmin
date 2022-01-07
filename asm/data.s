@@ -16841,37 +16841,3 @@ __vt__11MemInfoNode:
 	.4byte 0
 	.4byte 0
 	.4byte 0
-	.4byte 0x636F6C6C
-	.4byte 0x496E666F
-	.4byte 0x2E637070
-	.4byte 0
-	.4byte 0x636F6C6C
-	.4byte 0x496E666F
-	.4byte 0
-	.4byte 0x434F4C4C
-	.4byte 0x4953494F
-	.4byte 0x4E000000
-	.4byte 0x424F554E
-	.4byte 0x44535048
-	.4byte 0x45524500
-	.4byte 0x52454645
-	.4byte 0x52454E43
-	.4byte 0x45000000
-	.4byte 0x504C4154
-	.4byte 0x464F524D
-	.4byte 0
-	.4byte 0x43594C49
-	.4byte 0x4E444552
-	.4byte 0
-	.4byte 0x54554245
-	.4byte 0x5F434849
-	.4byte 0x4C440000
-.global _typeStr
-_typeStr:
-	.4byte 0x802AF00C
-	.4byte 0x802AF018
-	.4byte 0x802AF024
-	.4byte 0x802AF030
-	.4byte 0x802AF03C
-	.4byte 0x803DEEC8
-	.4byte 0x802AF048

@@ -2017,7 +2017,7 @@ lbl_803DDCC8:
 	.4byte 0x414E6F64
 	.4byte 0x65000000
 	.4byte 0x803DDCCC
-	.4byte 0x00000000
+	.4byte 0
 	.4byte 0x802A81EC
 	.4byte 0x802A81F8
 	.4byte 0x4E6F6465
@@ -2112,7 +2112,7 @@ lbl_803DDD74:
 	.4byte 0x414E6F64
 	.4byte 0x65000000
 	.4byte 0x803DDD78
-	.4byte 0x00000000
+	.4byte 0
 	.4byte 0x802A8348
 	.4byte 0x802A8354
 	.4byte 0x4E6F6465
@@ -2193,7 +2193,7 @@ lbl_803DDE50:
 	.4byte 0x53747265
 	.4byte 0x616D0000
 	.4byte 0x803DDE54
-	.4byte 0x00000000
+	.4byte 0
 	.4byte 0x802A8760
 	.4byte 0x802A876C
 .global __RTTI__16AtxCommandStream
@@ -2226,7 +2226,7 @@ __RTTI__7GameApp:
 __RTTI__11PlugPikiApp:
 	.4byte 0x802A889C
 	.4byte 0x802A88A8
-	.4byte 0
+.balign 8
 .global lbl_803DDEC8
 lbl_803DDEC8:
 	.4byte 0x00000000
@@ -4602,7 +4602,7 @@ lbl_803DEE90:
 	.4byte 0x414E6F64
 	.4byte 0x65000000
 	.4byte 0x803DEEA0
-	.4byte 0x00000000
+	.4byte 0
 	.4byte 0x802AEF60
 	.4byte 0x802AEF6C
 .global __RTTI__11MemInfoNode
@@ -4613,11 +4613,3 @@ __RTTI__11MemInfoNode:
 __RTTI__7MemInfo:
 	.4byte 0x803DEE98
 	.4byte 0x802AEF98
-	.4byte 0x54554245
-	.4byte 0
-.global lbl_803DEED0
-lbl_803DEED0:
-	.4byte 0xBF800000
-.global lbl_803DEED4
-lbl_803DEED4:
-	.4byte 0xBF800000
