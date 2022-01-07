@@ -4887,9 +4887,3 @@ lbl_803DF02C:
 	.4byte 0x00000000
 	.4byte 0x802AF080
 	.4byte 0x802AF0C0
-.global lbl_803DF050
-lbl_803DF050:
-	.float 0.0
-.global lbl_803DF054
-lbl_803DF054:
-	.float -1.0
