@@ -36,6 +36,7 @@ TEXT_O_FILES :=\
 	$(BUILD_DIR)/asm/sysCommon/atx.o\
 	$(BUILD_DIR)/asm/sysCommon/id32.o\
 	$(BUILD_DIR)/asm/text_80044194.o\
+	$(BUILD_DIR)/asm/plugPikiKando/creatureMove.o\
 	$(BUILD_DIR)/asm/plugPikiKando/creatureStick.o\
 	$(BUILD_DIR)/asm/plugPikiKando/dualCreature.o\
 	$(BUILD_DIR)/asm/plugPikiKando/dynCreature.o\
