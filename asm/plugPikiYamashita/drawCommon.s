@@ -980,7 +980,7 @@ setGoalRotate__Q23zen11BalloonPaneFv:
 /* 801C030C 001BD26C  4E 80 00 20 */	blr 
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
-.balign 0x8
+.balign 8
 lbl_802E1488:
 	.asciz "drawCommon.cpp"
 .balign 4
@@ -1043,17 +1043,17 @@ __vt__Q23zen10DrawScreen:
 	.4byte draw__Q23zen10DrawScreenFv
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
-.balign 0x8
+.balign 8
 lbl_803E6800:
-	.4byte 0x00000000
+	.float 0.0
 lbl_803E6804:
-	.4byte 0x00000000
+	.float 0.0
 lbl_803E6808:
-	.4byte 0x00000000
+	.float 0.0
 lbl_803E680C:
-	.4byte 0x00000000
+	.float 0.0
 lbl_803E6810:
-	.4byte 0x00000000
+	.float 0.0
 __RTTI__19P2DPaneCallBackBase:
 	.4byte lbl_802E14D4
 	.4byte 0
@@ -1069,44 +1069,44 @@ __RTTI__Q23zen11BalloonPane:
 __RTTI__Q23zen10DrawScreen:
 	.4byte lbl_802E1570
 	.4byte 0
-	.4byte 0
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
-.balign 0x8
+.balign 8
 lbl_803EBAA0:
-	.4byte 0x41F00000
+	.float 30.0
 lbl_803EBAA4:
-	.4byte 0x3F800000
+	.float 1.0
 lbl_803EBAA8:
-	.4byte 0x459C4000
+	.float 5000.0
 lbl_803EBAAC:
-	.4byte 0x00000000
+	.float 0.0
+.balign 8
 lbl_803EBAB0:
 	.4byte 0x43300000
 	.4byte 0x80000000
+.balign 8
 lbl_803EBAB8:
-	.4byte 0x3FE00000
-	.4byte 0x00000000
+	.double 0.5
+.balign 8
 lbl_803EBAC0:
-	.4byte 0x40080000
-	.4byte 0x00000000
+	.double 3.0
 lbl_803EBAC8:
-	.4byte 0x3DCCCCCD
+	.float 0.1
 lbl_803EBACC:
-	.4byte 0x46FFFE00
+	.float 32767.0
 lbl_803EBAD0:
-	.4byte 0x3F7D70A4
+	.float 0.99
 lbl_803EBAD4:
-	.4byte 0x40A00000
+	.float 5.0
 lbl_803EBAD8:
-	.4byte 0x3F000000
+	.float 0.5
 lbl_803EBADC:
-	.4byte 0x40490FDB
+	.float 3.1415927
 lbl_803EBAE0:
-	.4byte 0x40C90FDB
+	.float 6.2831855
 lbl_803EBAE4:
-	.4byte 0xC0490FDB
+	.float -3.1415927
 lbl_803EBAE8:
-	.4byte 0x40000000
+	.float 2.0
 lbl_803EBAEC:
-	.4byte 0x3E860A92
+	.float 0.2617994

@@ -2,12 +2,12 @@
 .section .text, "ax"  # 0x80005560 - 0x80221F60
 .global sqrt
 sqrt:
-/* 8021BEBC 00218E1C  C8 02 C6 28 */	lfd f0, "@106"@sda21(r2)
+/* 8021BEBC 00218E1C  C8 02 C6 28 */	lfd f0, lbl_803EC828@sda21(r2)
 /* 8021BEC0 00218E20  FC 01 00 40 */	fcmpo cr0, f1, f0
 /* 8021BEC4 00218E24  40 81 00 58 */	ble lbl_8021BF1C
 /* 8021BEC8 00218E28  FC 40 08 34 */	frsqrte f2, f1
-/* 8021BECC 00218E2C  C8 82 C6 30 */	lfd f4, "@107"@sda21(r2)
-/* 8021BED0 00218E30  C8 62 C6 38 */	lfd f3, "@108"@sda21(r2)
+/* 8021BECC 00218E2C  C8 82 C6 30 */	lfd f4, lbl_803EC830@sda21(r2)
+/* 8021BED0 00218E30  C8 62 C6 38 */	lfd f3, lbl_803EC838@sda21(r2)
 /* 8021BED4 00218E34  FC 02 00 B2 */	fmul f0, f2, f2
 /* 8021BED8 00218E38  FC 44 00 B2 */	fmul f2, f4, f2
 /* 8021BEDC 00218E3C  FC 01 18 3C */	fnmsub f0, f1, f0, f3
@@ -43,13 +43,12 @@ lbl_8021BF40:
 /* 8021BF48 00218EA8  4E 80 00 20 */	blr 
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
-.balign 0x8
-.global "@106"
-"@106":
+.balign 8
+lbl_803EC828:
 	.double 0.0
-.global "@107"
-"@107":
+.balign 8
+lbl_803EC830:
 	.double 0.5
-.global "@108"
-"@108":
+.balign 8
+lbl_803EC838:
 	.double 3.0

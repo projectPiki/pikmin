@@ -72,7 +72,7 @@ lbl_8021BBA4:
 /* 8021BBB4 00218B14  80 81 00 14 */	lwz r4, 0x14(r1)
 lbl_8021BBB8:
 /* 8021BBB8 00218B18  54 80 08 3C */	slwi r0, r4, 1
-/* 8021BBBC 00218B1C  C8 22 C6 20 */	lfd f1, "@110_1"@sda21(r2)
+/* 8021BBBC 00218B1C  C8 22 C6 20 */	lfd f1, lbl_803EC820@sda21(r2)
 /* 8021BBC0 00218B20  6C 00 80 00 */	xoris r0, r0, 0x8000
 /* 8021BBC4 00218B24  C0 43 00 00 */	lfs f2, 0(r3)
 /* 8021BBC8 00218B28  90 01 00 14 */	stw r0, 0x14(r1)
@@ -181,7 +181,7 @@ lbl_8021BD38:
 /* 8021BD48 00218CA8  80 81 00 14 */	lwz r4, 0x14(r1)
 lbl_8021BD4C:
 /* 8021BD4C 00218CAC  54 80 08 3C */	slwi r0, r4, 1
-/* 8021BD50 00218CB0  C8 22 C6 20 */	lfd f1, "@110_1"@sda21(r2)
+/* 8021BD50 00218CB0  C8 22 C6 20 */	lfd f1, lbl_803EC820@sda21(r2)
 /* 8021BD54 00218CB4  6C 00 80 00 */	xoris r0, r0, 0x8000
 /* 8021BD58 00218CB8  C0 43 00 00 */	lfs f2, 0(r3)
 /* 8021BD5C 00218CBC  90 01 00 14 */	stw r0, 0x14(r1)
@@ -280,17 +280,15 @@ __sinit_trigf_c:
 /* 8021BEB8 00218E18  4E 80 00 20 */	blr 
 
 .section .rodata, "a"  # 0x80221FE0 - 0x80222DC0
-.balign 0x8
-.global tmp_float
+.balign 8
 tmp_float:
 	.float 0.25
-	.4byte 0x3CBE6080
-	.4byte 0x34372200
-	.4byte 0x2DA44152
+	.float 0.023239374
+	.float 1.7055572E-7
+	.float 1.867365E-11
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
-.balign 0x8
-.global __four_over_pi_m1
+.balign 8
 __four_over_pi_m1:
 	.4byte 0x00000000
 	.4byte 0x00000000
@@ -298,18 +296,14 @@ __four_over_pi_m1:
 	.4byte 0x00000000
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
-.balign 0x8
-.global lbl_803EC810
+.balign 8
 lbl_803EC810:
-	.4byte 0x3F22F983
-.global lbl_803EC814
+	.float 0.63661975
 lbl_803EC814:
 	.float 0.5
-.global lbl_803EC818
 lbl_803EC818:
-	.4byte 0x39B504F3
-	.4byte 0x00000000
-.global "@110_1"
-"@110_1":
+	.float 0.00034526698
+.balign 8
+lbl_803EC820:
 	.4byte 0x43300000
 	.4byte 0x80000000

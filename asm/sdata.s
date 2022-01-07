@@ -4193,7 +4193,7 @@ __RTTI__14CircleArranger:
 __RTTI__12FormationMgr:
 	.4byte 0x802ADCA4
 	.4byte 0x802ADCB4
-	.4byte 0
+.balign 8
 .global totalUfoParts__11PlayerState
 totalUfoParts__11PlayerState:
 	.4byte 30
@@ -4276,7 +4276,7 @@ lbl_803DEC48:
 lbl_803DEC4C:
 	.4byte 0x00000000
 	.4byte 0x802ADDE8
-	.4byte 0x00000000
+	.4byte 0
 .global __RTTI__Q211PlayerState8UfoParts
 __RTTI__Q211PlayerState8UfoParts:
 	.4byte 0x802ADDD0
@@ -4323,7 +4323,7 @@ lbl_803DEC98:
 .global lbl_803DEC9C
 lbl_803DEC9C:
 	.4byte 0x802AE0D0
-	.4byte 0x00000000
+	.4byte 0
 .global lbl_803DECA4
 lbl_803DECA4:
 	.asciz "ANode"
@@ -4439,11 +4439,11 @@ lbl_803DED4C:
 	.4byte 0x7061726D
 	.4byte 0x732F0000
 	.4byte 0x802AE6E8
-	.4byte 0x00000000
+	.4byte 0
 	.4byte 0x414E6F64
 	.4byte 0x65000000
 	.4byte 0x803DED5C
-	.4byte 0x00000000
+	.4byte 0
 	.4byte 0x802AE74C
 	.4byte 0x802AE758
 	.4byte 0x4E6F6465
@@ -4490,7 +4490,7 @@ lbl_803DEDC8:
 	.4byte 0x414E6F64
 	.4byte 0x65000000
 	.4byte 0x803DEDD0
-	.4byte 0x00000000
+	.4byte 0
 	.4byte 0x802AE834
 	.4byte 0x802AE840
 	.4byte 0x4E6F6465
@@ -4566,7 +4566,7 @@ lbl_803DEE38:
 "__RTTI__25Delegate1<6AIPerf,R4Menu>":
 	.4byte 0x802AEDB0
 	.4byte 0x802AEDE0
-	.4byte 0
+.balign 8
 .global lbl_803DEE50
 lbl_803DEE50:
 	.4byte 0x70303000
@@ -4580,7 +4580,7 @@ lbl_803DEE58:
 lbl_803DEE5C:
 	.4byte 0x70303300
 	.4byte 0x802AEE80
-	.4byte 0x00000000
+	.4byte 0
 	.4byte 0x47656E42
 	.4byte 0x61736500
 	.4byte 0x803DEE68
@@ -4880,10 +4880,10 @@ lbl_803DF028:
 lbl_803DF02C:
 	.4byte 0x00000000
 	.4byte 0x802AF08C
-	.4byte 0x00000000
+	.4byte 0
 	.4byte 0x802AF0A4
-	.4byte 0x00000000
+	.4byte 0
 	.4byte 0x802AF0B0
-	.4byte 0x00000000
+	.4byte 0
 	.4byte 0x802AF080
 	.4byte 0x802AF0C0
