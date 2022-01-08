@@ -820,14 +820,3 @@ demoEventMgr:
 .global _instance__10AIConstant
 _instance__10AIConstant:
 	.skip 4
-.balign 8
-.global kio
-kio:
-	.skip 4
-.global fbCopy__3KIO
-fbCopy__3KIO:
-	.skip 1
-.balign 4
-.global haltMessage__3KIO
-haltMessage__3KIO:
-	.skip 4

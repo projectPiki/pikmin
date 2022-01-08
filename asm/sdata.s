@@ -4454,11 +4454,3 @@ lbl_803DED4C:
 __RTTI__10AIConstant:
 	.4byte 0x802AE740
 	.4byte 0x802AE778
-.balign 8
-.global lbl_803DED90
-lbl_803DED90:
-	.4byte 0x6B696F2E
-	.4byte 0x63707000
-.global kontMode__3KIO
-kontMode__3KIO:
-	.4byte 0x00000002
