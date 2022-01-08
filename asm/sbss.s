@@ -782,7 +782,8 @@ saiGroundEvent:
 	.skip 4
 .global saiMotionAction0Event
 saiMotionAction0Event:
-	.skip 8
+	.skip 4
+.balign 8
 .global arrowShape__11GlobalShape
 arrowShape__11GlobalShape:
 	.skip 4
@@ -803,28 +804,30 @@ cursorShape__11GlobalShape:
 	.skip 4
 .global preloadUFO
 preloadUFO:
-	.skip 4
+	.skip 1
+.balign 4
 .global playerState
 playerState:
 	.skip 4
 .global demoParms
 demoParms:
-	.skip 8
+	.skip 4
+.balign 8
 .global demoEventMgr
 demoEventMgr:
-	.skip 8
+	.skip 4
+.balign 8
 .global _instance__10AIConstant
 _instance__10AIConstant:
-	.skip 8
+	.skip 4
+.balign 8
 .global kio
 kio:
 	.skip 4
 .global fbCopy__3KIO
 fbCopy__3KIO:
-	.skip 4
+	.skip 1
+.balign 4
 .global haltMessage__3KIO
 haltMessage__3KIO:
-	.skip 8
-.global _instance__9KeyConfig
-_instance__9KeyConfig:
-	.skip 8
+	.skip 4
