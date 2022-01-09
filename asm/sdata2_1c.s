@@ -54,12 +54,10 @@ lbl_803E8B08:
 	.4byte 0x00000000
 .global "@1524"
 "@1524":
-	.4byte 0x3FE00000
-	.4byte 0x00000000
+	.double 0.5
 .global "@1525"
 "@1525":
-	.4byte 0x40080000
-	.4byte 0x00000000
+	.double 3.0
 .global lbl_803E8B20
 lbl_803E8B20:
 	.4byte 0x44160000
@@ -172,12 +170,10 @@ lbl_803E8BB8:
 	.4byte 0x00000000
 .global "@1600"
 "@1600":
-	.4byte 0x3FE00000
-	.4byte 0x00000000
+	.double 0.5
 .global "@1601"
 "@1601":
-	.4byte 0x40080000
-	.4byte 0x00000000
+	.double 3.0
 .global lbl_803E8BD0
 lbl_803E8BD0:
 	.4byte 0x42480000
@@ -190,9 +186,3 @@ lbl_803E8BD8:
 .global lbl_803E8BDC
 lbl_803E8BDC:
 	.4byte 0xC2A00000
-.global lbl_803E8BE0
-lbl_803E8BE0:
-	.float 0.0
-.global lbl_803E8BE4
-lbl_803E8BE4:
-	.4byte 0x41F00000

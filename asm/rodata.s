@@ -221,19 +221,3 @@ lbl_80222390:
 	.4byte 1
 	.4byte 2
 	.4byte 0
-.balign 8
-.global lbl_802223A0
-lbl_802223A0:
-	.4byte 0x11
-	.4byte 0x12
-	.4byte 0x13
-	.4byte 0x19
-	.4byte 0x1A
-.global lbl_802223B4
-lbl_802223B4:
-	.4byte lbl_803DEBE8
-	.4byte lbl_803DEBF0
-	.4byte lbl_803DEBF8
-	.4byte lbl_803DEC00
-	.4byte lbl_803DEC08
-	.4byte lbl_803DEC10

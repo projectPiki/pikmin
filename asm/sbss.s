@@ -802,10 +802,3 @@ markerShape2__11GlobalShape:
 .global cursorShape__11GlobalShape
 cursorShape__11GlobalShape:
 	.skip 4
-.global preloadUFO
-preloadUFO:
-	.skip 1
-.balign 4
-.global playerState
-playerState:
-	.skip 4
