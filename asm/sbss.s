@@ -812,7 +812,3 @@ playerState:
 .global demoParms
 demoParms:
 	.skip 4
-.balign 8
-.global demoEventMgr
-demoEventMgr:
-	.skip 4

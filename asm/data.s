@@ -15952,22 +15952,3 @@ __vt__9DemoParms:
 	.4byte 0
 	.4byte 0
 	.4byte 0
-.global lbl_802AE1A0
-lbl_802AE1A0:
-	.4byte lbl_800833F8
-	.4byte lbl_80083444
-	.4byte lbl_80083410
-	.4byte lbl_80083468
-	.4byte lbl_8008341C
-	.4byte lbl_8008348C
-	.4byte lbl_80083518
-.global lbl_802AE1BC
-lbl_802AE1BC:
-	.4byte lbl_80083318
-	.4byte lbl_80083380
-	.4byte lbl_80083394
-	.4byte lbl_800833A8
-	.4byte lbl_80083328
-	.4byte lbl_80083338
-	.4byte lbl_80083348
-	.4byte lbl_800833B4
