@@ -816,7 +816,3 @@ demoParms:
 .global demoEventMgr
 demoEventMgr:
 	.skip 4
-.balign 8
-.global _instance__10AIConstant
-_instance__10AIConstant:
-	.skip 4

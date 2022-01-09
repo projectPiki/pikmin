@@ -234,15 +234,3 @@ lbl_803E8C0C:
 "@1761":
 	.4byte 0x40080000
 	.4byte 0x00000000
-.global lbl_803E8C20
-lbl_803E8C20:
-	.4byte 0x44098000
-.global lbl_803E8C24
-lbl_803E8C24:
-	.4byte 0x42B40000
-.global lbl_803E8C28
-lbl_803E8C28:
-	.float 1.0
-.global lbl_803E8C2C
-lbl_803E8C2C:
-	.4byte 0x40200000

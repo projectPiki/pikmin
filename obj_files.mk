@@ -36,6 +36,7 @@ TEXT_O_FILES :=\
 	$(BUILD_DIR)/asm/sysCommon/atx.o\
 	$(BUILD_DIR)/asm/sysCommon/id32.o\
 	$(BUILD_DIR)/asm/text_80044194.o\
+	$(BUILD_DIR)/asm/plugPikiKando/aiConstants.o\
 	$(BUILD_DIR)/asm/plugPikiKando/kio.o\
 	$(BUILD_DIR)/asm/plugPikiKando/keyConfig.o\
 	$(BUILD_DIR)/asm/plugPikiKando/aiPerf.o\
