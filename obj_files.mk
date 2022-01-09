@@ -149,7 +149,6 @@ TEXT_O_FILES :=\
 	$(BUILD_DIR)/asm/plugPikiKando/actor.o\
 	$(BUILD_DIR)/asm/plugPikiKando/actorMgr.o\
 	$(BUILD_DIR)/asm/plugPikiKando/genActor.o\
-	$(BUILD_DIR)/asm/plugPikiKando/pikiInfo.o\
 	$(BUILD_DIR)/src/plugPikiKando/pikiInfo.o\
 	$(BUILD_DIR)/asm/plugPikiKando/plantMgr.o\
 	$(BUILD_DIR)/asm/plugPikiKando/paniPlantAnimator.o\
