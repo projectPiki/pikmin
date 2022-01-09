@@ -220,17 +220,3 @@ lbl_803E8C00:
 .global lbl_803E8C04
 lbl_803E8C04:
 	.4byte 0x41200000
-.global lbl_803E8C08
-lbl_803E8C08:
-	.4byte 0x41F00000
-.global lbl_803E8C0C
-lbl_803E8C0C:
-	.float 0.0
-.global "@1760"
-"@1760":
-	.4byte 0x3FE00000
-	.4byte 0x00000000
-.global "@1761"
-"@1761":
-	.4byte 0x40080000
-	.4byte 0x00000000
