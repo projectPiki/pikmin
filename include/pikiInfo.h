@@ -3,7 +3,7 @@
 
 #include "types.h"
 
-class PikiInfo {
+struct PikiInfo {
     s32 pikiCountA; // _00
     s32 pikiCountB; // _04
     u32 _08;
