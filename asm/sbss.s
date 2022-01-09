@@ -809,6 +809,3 @@ preloadUFO:
 .global playerState
 playerState:
 	.skip 4
-.global demoParms
-demoParms:
-	.skip 4
