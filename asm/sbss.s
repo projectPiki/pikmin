@@ -783,22 +783,3 @@ saiGroundEvent:
 .global saiMotionAction0Event
 saiMotionAction0Event:
 	.skip 4
-.balign 8
-.global arrowShape__11GlobalShape
-arrowShape__11GlobalShape:
-	.skip 4
-.global markerShape__11GlobalShape
-markerShape__11GlobalShape:
-	.skip 4
-.global axisShape__11GlobalShape
-axisShape__11GlobalShape:
-	.skip 4
-.global enShape__11GlobalShape
-enShape__11GlobalShape:
-	.skip 4
-.global markerShape2__11GlobalShape
-markerShape2__11GlobalShape:
-	.skip 4
-.global cursorShape__11GlobalShape
-cursorShape__11GlobalShape:
-	.skip 4
