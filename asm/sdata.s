@@ -4348,15 +4348,3 @@ lbl_803DECC4:
 __RTTI__9DemoParms:
 	.4byte 0x802AE0FC
 	.4byte 0x802AE134
-.balign 8
-.global lbl_803DECD8
-lbl_803DECD8:
-	.asciz "OFF"
-.balign 4
-.global lbl_803DECDC
-lbl_803DECDC:
-	.asciz "ON"
-.balign 4
-.global lbl_803DECE0
-lbl_803DECE0:
-	.asciz "SEEN"

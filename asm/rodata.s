@@ -237,9 +237,3 @@ lbl_802223B4:
 	.4byte lbl_803DEC00
 	.4byte lbl_803DEC08
 	.4byte lbl_803DEC10
-.balign 8
-.global lbl_802223D0
-lbl_802223D0:
-	.4byte lbl_803DECD8
-	.4byte lbl_803DECDC
-	.4byte lbl_803DECE0
