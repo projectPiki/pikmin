@@ -1,5 +1,20 @@
 # Pikmin 1
-Pikmin 1 (USA Revision 1) disassembly/decompilation
+Pikmin 1 (USA Revision 1) disassembly/decompilation to C++/C
+
+```diff
+- INFORMATION! -
+
+The ROM this repository builds can be shifted! Meaning you are able to now
+add and remove code as you see fit, for modding or research purposes.
+
+- DISCLAIMER -
+
+Shiftability is tentative and not fully verified. Use at your own discretion.
+At the very least, unlabeled RTTI pointers remain.
+```
+
+It builds the following DOL:
+pikmin.usa.1.dol: `sha1: 02204260B7EFE8742D34572E58BA3DFECD92E4E9`
 
 ## Building
 This edited compiler modifies the epilogue in such a way as to approximate older scheduling models.
