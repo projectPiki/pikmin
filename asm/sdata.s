@@ -3733,30 +3733,3 @@ lbl_803DE838:
 __RTTI__9MovieInfo:
 	.4byte 0x802AC874
 	.4byte 0x802AC898
-	.4byte 0
-.global lbl_803DE860
-lbl_803DE860:
-	.4byte 0x3C4E6F64
-	.4byte 0x653E0000
-	.4byte 0x414E6F64
-	.4byte 0x65000000
-	.4byte 0x803DE868
-	.4byte 0x00000000
-	.4byte 0x802AC9D4
-	.4byte 0x802AC9E0
-	.4byte 0x4E6F6465
-	.4byte 0x00000000
-	.4byte 0x803DE880
-	.4byte 0x802ACA20
-.global __RTTI__21MovSampleSetupSection
-__RTTI__21MovSampleSetupSection:
-	.4byte 0x802ACA08
-	.4byte 0x802ACA34
-	.4byte 0x53656374
-	.4byte 0x696F6E00
-	.4byte 0x803DE898
-	.4byte 0x802ACA94
-.global __RTTI__16MovSampleSection
-__RTTI__16MovSampleSection:
-	.4byte 0x802ACA80
-	.4byte 0x802ACAB0

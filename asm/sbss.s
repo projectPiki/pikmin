@@ -746,13 +746,4 @@ numUpdated:
 	.skip 4
 .global vlink
 vlink:
-	.skip 8
-.global ImgH
-ImgH:
-	.skip 2
-.global ImgW
-ImgW:
-	.skip 2
-.global finishPlayback
-finishPlayback:
-	.skip 1
+	.skip 4
