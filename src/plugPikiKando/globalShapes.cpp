@@ -1,8 +1,8 @@
 #include "types.h"
 #include "gameflow.h"
 
-char file[] = __FILE__;
-char name[] = "globalShape";
+static char file[] = __FILE__;
+static char name[] = "globalShape";
 
 namespace GlobalShape {
 
