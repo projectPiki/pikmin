@@ -3944,21 +3944,3 @@ __RTTI__12InteractWarn:
 __RTTI__12InteractTalk:
 	.4byte 0x802AD270
 	.4byte 0x802AD280
-.global lbl_803DEA10
-lbl_803DEA10:
-	.4byte 0x00000000
-.global lbl_803DEA14
-lbl_803DEA14:
-	.4byte 0x00000000
-.global lbl_803DEA18
-lbl_803DEA18:
-	.4byte 0x00000000
-.global lbl_803DEA1C
-lbl_803DEA1C:
-	.4byte 0x00000000
-	.4byte 0x802AD2EC
-	.4byte 0x00000000
-.global __RTTI__15InteractPullout
-__RTTI__15InteractPullout:
-	.4byte 0x802AD2DC
-	.4byte 0x802AD2F8

@@ -14947,35 +14947,3 @@ __vt__12InteractTalk:
 	.4byte actHinderRock__11InteractionFP10HinderRock
 	.4byte actBridge__11InteractionFP6Bridge
 	.4byte actItem__11InteractionFP12ItemCreature
-	.4byte 0x696E7465
-	.4byte 0x72616374
-	.4byte 0x50756C6C
-	.4byte 0x6F75742E
-	.4byte 0x63707000
-	.4byte 0x696E7465
-	.4byte 0x72616374
-	.4byte 0x50756C6C
-	.4byte 0x6F757400
-	.4byte 0x496E7465
-	.4byte 0x72616374
-	.4byte 0x50756C6C
-	.4byte 0x6F757400
-	.4byte 0x496E7465
-	.4byte 0x72616374
-	.4byte 0x696F6E00
-	.4byte 0x803DEA20
-	.4byte 0
-	.4byte 0
-.global __vt__15InteractPullout
-__vt__15InteractPullout:
-	.4byte __RTTI__15InteractPullout
-	.4byte 0
-	.4byte actCommon__15InteractPulloutFP8Creature
-	.4byte actPiki__15InteractPulloutFP4Piki
-	.4byte actTeki__11InteractionFP4Teki
-	.4byte actNavi__11InteractionFP4Navi
-	.4byte actBoss__11InteractionFP4Boss
-	.4byte actPellet__11InteractionFP6Pellet
-	.4byte actHinderRock__11InteractionFP10HinderRock
-	.4byte actBridge__11InteractionFP6Bridge
-	.4byte actItem__15InteractPulloutFP12ItemCreature

@@ -103,13 +103,3 @@ lbl_803E8B54:
 .global lbl_803E8B58
 lbl_803E8B58:
 	.4byte 0x42C80000
-	.4byte 0x00000000
-.global lbl_803E8B60
-lbl_803E8B60:
-	.4byte 0x422F5A86
-.global lbl_803E8B64
-lbl_803E8B64:
-	.4byte 0x41700000
-.global lbl_803E8B68
-lbl_803E8B68:
-	.float 1.0
