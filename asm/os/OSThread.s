@@ -1941,7 +1941,7 @@ lbl_801FD378:
 /* 801FD39C 001FA2FC  4E 80 00 20 */	blr 
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
-.balign 0x8
+.balign 8
 lbl_802E7BD8:
 	.asciz "OSCheckActiveThreads: Failed RunQueue[prio].head != NULL && RunQueue[prio].tail != NULL in %d\n"
 .balign 4
@@ -2016,22 +2016,17 @@ lbl_802E8360:
 .balign 4
 lbl_802E83A8:
 	.asciz "OSCheckActiveThreads: Failed __OSCheckMutexes(thread) in %d\n"
-.balign 4
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
-.balign 0x8
+.balign 8
 lbl_803E7718:
 	.byte 0
-.balign 0x8
 
 .section .sbss, "wa"
-.balign 0x8
-.global RunQueueBits
+.balign 8
 RunQueueBits:
-	.skip 0x4
-.global RunQueueHint
+	.skip 4
 RunQueueHint:
-	.skip 0x4
-.global Reschedule
+	.skip 4
 Reschedule:
-	.skip 0x4
+	.skip 4

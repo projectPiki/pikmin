@@ -231,8 +231,8 @@ OSLoadContext:
 /* 801F7364 001F42C4  38 A4 8F 7C */	addi r5, r4, OSDisableInterrupts@l
 /* 801F7368 001F42C8  7C 06 28 40 */	cmplw r6, r5
 /* 801F736C 001F42CC  41 80 00 18 */	blt lbl_801F7384
-/* 801F7370 001F42D0  3C 80 80 20 */	lis r4, lbl_801F8F8C@ha
-/* 801F7374 001F42D4  38 04 8F 8C */	addi r0, r4, lbl_801F8F8C@l
+/* 801F7370 001F42D0  3C 80 80 20 */	lis r4, __RAS_OSDisableInterrupts_end@ha
+/* 801F7374 001F42D4  38 04 8F 8C */	addi r0, r4, __RAS_OSDisableInterrupts_end@l
 /* 801F7378 001F42D8  7C 06 00 40 */	cmplw r6, r0
 /* 801F737C 001F42DC  41 81 00 08 */	bgt lbl_801F7384
 /* 801F7380 001F42E0  90 A3 01 98 */	stw r5, 0x198(r3)
@@ -605,7 +605,7 @@ __OSContextInit:
 /* 801F788C 001F47EC  4E 80 00 20 */	blr 
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
-.balign 0x8
+.balign 8
 lbl_802E7718:
 	.asciz "------------------------- Context 0x%08x -------------------------\n"
 .balign 4
@@ -644,4 +644,3 @@ lbl_802E78B0:
 .balign 4
 lbl_802E78CC:
 	.asciz "FPU-unavailable handler installed\n"
-.balign 4

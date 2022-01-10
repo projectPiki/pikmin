@@ -1758,15 +1758,15 @@ ignoreAtari__7UfoItemFP8Creature:
 .global startTakeoff__7UfoItemFv
 startTakeoff__7UfoItemFv:
 /* 800E8914 000E5874  7C 08 02 A6 */	mflr r0
-/* 800E8918 000E5878  3C 80 80 22 */	lis r4, lbl_80220004@ha
+/* 800E8918 000E5878  3C 80 80 22 */	lis r4, lbl_8022262C@ha
 /* 800E891C 000E587C  90 01 00 04 */	stw r0, 4(r1)
 /* 800E8920 000E5880  94 21 FF D0 */	stwu r1, -0x30(r1)
 /* 800E8924 000E5884  93 E1 00 2C */	stw r31, 0x2c(r1)
 /* 800E8928 000E5888  7C 7F 1B 78 */	mr r31, r3
 /* 800E892C 000E588C  80 AD 2F 6C */	lwz r5, playerState@sda21(r13)
-/* 800E8930 000E5890  84 64 26 2C */	lwzu r3, 0x262c(r4)
+/* 800E8930 000E5890  84 64 26 2C */	lwzu r3, lbl_8022262C@l(r4)
 /* 800E8934 000E5894  88 A5 00 10 */	lbz r5, 0x10(r5)
-/* 800E8938 000E5898  80 04 00 04 */	lwz r0, lbl_80220004@l(r4)
+/* 800E8938 000E5898  80 04 00 04 */	lwz r0, 4(r4)
 /* 800E893C 000E589C  34 A5 FF FF */	addic. r5, r5, -1
 /* 800E8940 000E58A0  90 61 00 14 */	stw r3, 0x14(r1)
 /* 800E8944 000E58A4  90 01 00 18 */	stw r0, 0x18(r1)

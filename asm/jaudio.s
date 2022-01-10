@@ -15094,8 +15094,8 @@ Cmd_UpdateSync__Fv:
 
 .global Cmd_BusConnect__Fv
 Cmd_BusConnect__Fv:
-/* 800120E0 0000F040  3C 60 80 32 */	lis r3, 0x8032
-/* 800120E4 0000F044  84 03 FA 80 */	lwzu r0, -0x580(r3)
+/* 800120E0 0000F040  3C 60 80 32 */	lis r3, SEQ_ARG@ha
+/* 800120E4 0000F044  84 03 FA 80 */	lwzu r0, SEQ_ARG@l(r3)
 /* 800120E8 0000F048  28 00 00 06 */	cmplwi r0, 6
 /* 800120EC 0000F04C  40 80 00 18 */	bge lbl_80012104
 /* 800120F0 0000F050  80 83 00 04 */	lwz r4, 4(r3)

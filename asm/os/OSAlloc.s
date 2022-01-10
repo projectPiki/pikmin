@@ -112,22 +112,18 @@ lbl_801F68E4:
 /* 801F6914 001F3874  4E 80 00 20 */	blr 
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
-.balign 0x8
+.balign 8
 .global __OSCurrHeap
 __OSCurrHeap:
 	.4byte 0xFFFFFFFF
 
 .section .sbss, "wa"
-.balign 0x8
-.global HeapArray
+.balign 8
 HeapArray:
-	.skip 0x4
-.global NumHeaps
+	.skip 4
 NumHeaps:
-	.skip 0x4
-.global ArenaStart
+	.skip 4
 ArenaStart:
-	.skip 0x4
-.global ArenaEnd
+	.skip 4
 ArenaEnd:
-	.skip 0x4
+	.skip 4

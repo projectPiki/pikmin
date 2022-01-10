@@ -2,12 +2,14 @@
 .section .text, "ax"  # 0x80005560 - 0x80221F60
 .global OSDisableInterrupts
 OSDisableInterrupts:
+.global __RAS_OSDisableInterrupts_begin
+__RAS_OSDisableInterrupts_begin:
 /* 801F8F7C 001F5EDC  7C 60 00 A6 */	mfmsr r3
 /* 801F8F80 001F5EE0  54 64 04 5E */	rlwinm r4, r3, 0, 0x11, 0xf
 /* 801F8F84 001F5EE4  7C 80 01 24 */	mtmsr r4
 /* 801F8F88 001F5EE8  54 63 8F FE */	rlwinm r3, r3, 0x11, 0x1f, 0x1f
-.global lbl_801F8F8C
-lbl_801F8F8C:
+.global __RAS_OSDisableInterrupts_end
+__RAS_OSDisableInterrupts_end:
 /* 801F8F8C 001F5EEC  4E 80 00 20 */	blr 
 
 .global OSEnableInterrupts
@@ -93,7 +95,6 @@ SetInterruptMask:
 /* 801F9084 001F5FE4  7C 05 00 2E */	lwzx r0, r5, r0
 /* 801F9088 001F5FE8  7C 09 03 A6 */	mtctr r0
 /* 801F908C 001F5FEC  4E 80 04 20 */	bctr 
-.global lbl_801F9090
 lbl_801F9090:
 /* 801F9090 001F5FF0  54 80 00 00 */	rlwinm r0, r4, 0, 0, 0
 /* 801F9094 001F5FF4  28 00 00 00 */	cmplwi r0, 0
@@ -127,7 +128,6 @@ lbl_801F90E4:
 /* 801F90F0 001F6050  B0 04 00 1C */	sth r0, 0x1c(r4)
 /* 801F90F4 001F6054  54 63 01 7E */	clrlwi r3, r3, 5
 /* 801F90F8 001F6058  48 00 02 20 */	b lbl_801F9318
-.global lbl_801F90FC
 lbl_801F90FC:
 /* 801F90FC 001F605C  3C A0 CC 00 */	lis r5, 0xCC005000@ha
 /* 801F9100 001F6060  38 A5 50 00 */	addi r5, r5, 0xCC005000@l
@@ -153,7 +153,6 @@ lbl_801F9140:
 /* 801F9144 001F60A4  B0 05 00 00 */	sth r0, 0(r5)
 /* 801F9148 001F60A8  54 63 02 08 */	rlwinm r3, r3, 0, 8, 4
 /* 801F914C 001F60AC  48 00 01 CC */	b lbl_801F9318
-.global lbl_801F9150
 lbl_801F9150:
 /* 801F9150 001F60B0  54 80 02 10 */	rlwinm r0, r4, 0, 8, 8
 /* 801F9154 001F60B4  3C 80 CC 00 */	lis r4, 0xCC006C00@ha
@@ -168,7 +167,6 @@ lbl_801F9170:
 /* 801F9174 001F60D4  90 A4 6C 00 */	stw r5, 0xCC006C00@l(r4)
 /* 801F9178 001F60D8  54 63 02 4E */	rlwinm r3, r3, 0, 9, 7
 /* 801F917C 001F60DC  48 00 01 9C */	b lbl_801F9318
-.global lbl_801F9180
 lbl_801F9180:
 /* 801F9180 001F60E0  54 80 02 52 */	rlwinm r0, r4, 0, 9, 9
 /* 801F9184 001F60E4  3C A0 CC 00 */	lis r5, 0xCC006800@ha
@@ -193,7 +191,6 @@ lbl_801F91C0:
 /* 801F91C4 001F6124  90 A4 68 00 */	stw r5, 0xCC006800@l(r4)
 /* 801F91C8 001F6128  54 63 03 10 */	rlwinm r3, r3, 0, 0xc, 8
 /* 801F91CC 001F612C  48 00 01 4C */	b lbl_801F9318
-.global lbl_801F91D0
 lbl_801F91D0:
 /* 801F91D0 001F6130  3C A0 CC 00 */	lis r5, 0xCC006800@ha
 /* 801F91D4 001F6134  38 C5 68 00 */	addi r6, r5, 0xCC006800@l
@@ -219,7 +216,6 @@ lbl_801F9218:
 /* 801F9218 001F6178  90 E6 00 00 */	stw r7, 0(r6)
 /* 801F921C 001F617C  54 63 03 D6 */	rlwinm r3, r3, 0, 0xf, 0xb
 /* 801F9220 001F6180  48 00 00 F8 */	b lbl_801F9318
-.global lbl_801F9224
 lbl_801F9224:
 /* 801F9224 001F6184  3C A0 CC 00 */	lis r5, 0xCC006800@ha
 /* 801F9228 001F6188  38 A5 68 00 */	addi r5, r5, 0xCC006800@l
@@ -239,7 +235,6 @@ lbl_801F9258:
 /* 801F9258 001F61B8  90 C5 00 00 */	stw r6, 0(r5)
 /* 801F925C 001F61BC  54 63 04 5C */	rlwinm r3, r3, 0, 0x11, 0xe
 /* 801F9260 001F61C0  48 00 00 B8 */	b lbl_801F9318
-.global lbl_801F9264
 lbl_801F9264:
 /* 801F9264 001F61C4  54 80 04 62 */	rlwinm r0, r4, 0, 0x11, 0x11
 /* 801F9268 001F61C8  28 00 00 00 */	cmplwi r0, 0
@@ -296,7 +291,6 @@ lbl_801F9308:
 /* 801F930C 001F626C  38 84 30 00 */	addi r4, r4, 0xCC003000@l
 /* 801F9310 001F6270  90 A4 00 04 */	stw r5, 4(r4)
 /* 801F9314 001F6274  54 63 06 E0 */	rlwinm r3, r3, 0, 0x1b, 0x10
-.global lbl_801F9318
 lbl_801F9318:
 /* 801F9318 001F6278  4E 80 00 20 */	blr 
 
@@ -620,7 +614,6 @@ lbl_801F972C:
 /* 801F9748 001F66A8  38 21 00 28 */	addi r1, r1, 0x28
 /* 801F974C 001F66AC  4E 80 00 20 */	blr 
 
-.global ExternalInterruptHandler
 ExternalInterruptHandler:
 /* 801F9750 001F66B0  90 04 00 00 */	stw r0, 0(r4)
 /* 801F9754 001F66B4  90 24 00 04 */	stw r1, 4(r4)
@@ -643,8 +636,7 @@ ExternalInterruptHandler:
 /* 801F9798 001F66F8  4B FF FC 94 */	b __OSDispatchInterrupt
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
-.balign 0x8
-.global InterruptPrioTable
+.balign 8
 InterruptPrioTable:
 	.4byte 0x00000100
 	.4byte 0x00000040
@@ -657,7 +649,6 @@ InterruptPrioTable:
 	.4byte 0x04000000
 	.4byte 0x00004000
 	.4byte 0xFFFFFFFF
-.global lbl_802E7B54
 lbl_802E7B54:
 	.4byte lbl_801F9090
 	.4byte lbl_801F9090
@@ -688,7 +679,6 @@ lbl_802E7B54:
 	.4byte lbl_801F9264
 
 .section .sbss, "wa"
-.balign 0x8
-.global InterruptHandlerTable
+.balign 8
 InterruptHandlerTable:
-	.skip 0x4
+	.skip 4

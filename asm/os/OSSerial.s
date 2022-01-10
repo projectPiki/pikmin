@@ -12,18 +12,17 @@ lbl_801FAFC0:
 /* 801FAFC0 001F7F20  38 60 00 00 */	li r3, 0
 /* 801FAFC4 001F7F24  4E 80 00 20 */	blr 
 
-.global CompleteTransfer
 CompleteTransfer:
 /* 801FAFC8 001F7F28  94 21 FF E8 */	stwu r1, -0x18(r1)
 /* 801FAFCC 001F7F2C  3C 60 CC 00 */	lis r3, 0xCC006400@ha
 /* 801FAFD0 001F7F30  38 C3 64 00 */	addi r6, r3, 0xCC006400@l
 /* 801FAFD4 001F7F34  93 E1 00 14 */	stw r31, 0x14(r1)
 /* 801FAFD8 001F7F38  3C 00 80 00 */	lis r0, 0x8000
-/* 801FAFDC 001F7F3C  3C 80 80 2E */	lis r4, 0x802e
+/* 801FAFDC 001F7F3C  3C 80 80 2E */	lis r4, Si@ha
 /* 801FAFE0 001F7F40  93 C1 00 10 */	stw r30, 0x10(r1)
 /* 801FAFE4 001F7F44  80 63 64 38 */	lwz r3, 0x6438(r3)
 /* 801FAFE8 001F7F48  90 06 00 34 */	stw r0, 0x34(r6)
-/* 801FAFEC 001F7F4C  84 04 7B C0 */	lwzu r0, 0x7bc0(r4)
+/* 801FAFEC 001F7F4C  84 04 7B C0 */	lwzu r0, Si@l(r4)
 /* 801FAFF0 001F7F50  2C 00 FF FF */	cmpwi r0, -1
 /* 801FAFF4 001F7F54  41 82 02 08 */	beq lbl_801FB1FC
 /* 801FAFF8 001F7F58  39 04 00 08 */	addi r8, r4, 8
@@ -170,7 +169,6 @@ lbl_801FB1FC:
 /* 801FB204 001F8164  38 21 00 18 */	addi r1, r1, 0x18
 /* 801FB208 001F8168  4E 80 00 20 */	blr 
 
-.global SIIntrruptHandler
 SIIntrruptHandler:
 /* 801FB20C 001F816C  7C 08 02 A6 */	mflr r0
 /* 801FB210 001F8170  3C 60 80 2E */	lis r3, Si@ha
@@ -689,11 +687,10 @@ lbl_801FB914:
 /* 801FB924 001F8884  4E 80 00 20 */	blr 
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
-.balign 0x8
+.balign 8
 .global Si
 Si:
 	.4byte 0xFFFFFFFF
-	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x00000000
