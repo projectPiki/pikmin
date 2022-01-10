@@ -3666,39 +3666,3 @@ lbl_803DE794:
 __RTTI__9LightPool:
 	.4byte 0x802A9F70
 	.4byte 0x802A9FA8
-	.4byte 0
-.global icon_pals
-icon_pals:
-	.4byte p_icon_palette
-.balign 4
-.global lbl_803DE7D4
-lbl_803DE7D4:
-	.asciz "Pikmin"
-.balign 4
-.global lbl_803DE7DC
-lbl_803DE7DC:
-	.asciz "~Pikmin"
-.balign 4
-.global lbl_803DE7E4
-lbl_803DE7E4:
-	.asciz "Blocks"
-.balign 4
-.global lbl_803DE7EC
-lbl_803DE7EC:
-	.asciz "%s"
-.balign 4
-.global lbl_803DE7F0
-lbl_803DE7F0:
-	.asciz "banner"
-.balign 4
-lbl_803DE7F8:
-	.asciz "ANode"
-.balign 4
-	.4byte lbl_803DE7F8
-	.4byte 0x00000000
-	.4byte 0x53747265
-	.4byte 0x616D0000
-	.4byte 0x803DE808
-	.4byte 0x00000000
-	.4byte 0x802ABC08
-	.4byte 0x802ABC1C
