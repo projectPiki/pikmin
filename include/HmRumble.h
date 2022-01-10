@@ -1,6 +1,8 @@
-#include "types.h"
 #ifndef _HMRUMBLE_H
 #define _HMRUMBLE_H
+
+#include "types.h"
+
 typedef class RumbleSample;
 
 extern "C" void PADControlMotor(int, int);

@@ -164,7 +164,7 @@ if __name__ == "__main__":
     bytesPerPiki = dol_data_size / 100
     
     partCount = math.floor(decomp_code_size / bytesPerShipPart)
-    pikiCount = math.floor(decomp_code_size / bytesPerPiki)
+    pikiCount = math.floor(decomp_data_size / bytesPerPiki)
 
     print("Progress:")
     print(f"\tCode sections: {decomp_code_size} / {dol_code_size}\tbytes in src ({codeCompletionPcnt:%})")

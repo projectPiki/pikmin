@@ -266,7 +266,7 @@ TEXT_O_FILES :=\
 	$(BUILD_DIR)/asm/plugPikiOgawa/ogTitle.o\
 	$(BUILD_DIR)/asm/plugPikiOgawa/ogPause.o\
 	$(BUILD_DIR)/asm/plugPikiOgawa/ogTutorial.o\
-	$(BUILD_DIR)/asm/plugPikiOgawa/ogTutorialData.o\
+	$(BUILD_DIR)/src/plugPikiOgawa/ogTutorialData.o\
 	$(BUILD_DIR)/asm/plugPikiOgawa/ogMap.o\
 	$(BUILD_DIR)/asm/plugPikiOgawa/ogResult.o\
 	$(BUILD_DIR)/asm/plugPikiOgawa/ogRader.o\
