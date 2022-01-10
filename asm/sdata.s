@@ -3702,34 +3702,3 @@ lbl_803DE7F8:
 	.4byte 0x00000000
 	.4byte 0x802ABC08
 	.4byte 0x802ABC1C
-.global lbl_803DE820
-lbl_803DE820:
-	.4byte 0x00000000
-.global lbl_803DE824
-lbl_803DE824:
-	.float 1.0
-.global lbl_803DE828
-lbl_803DE828:
-	.float 1.0
-.global lbl_803DE82C
-lbl_803DE82C:
-	.float 1.0
-.global lbl_803DE830
-lbl_803DE830:
-	.4byte 0x00000000
-.global lbl_803DE834
-lbl_803DE834:
-	.4byte 0x00000000
-.global lbl_803DE838
-lbl_803DE838:
-	.4byte 0x00000000
-	.4byte 0x414E6F64
-	.4byte 0x65000000
-	.4byte 0x803DE83C
-	.4byte 0x00000000
-	.4byte 0x802AC880
-	.4byte 0x802AC88C
-.global __RTTI__9MovieInfo
-__RTTI__9MovieInfo:
-	.4byte 0x802AC874
-	.4byte 0x802AC898

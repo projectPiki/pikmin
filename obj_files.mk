@@ -9,7 +9,6 @@ GROUP_0_FILES :=\
 	$(BUILD_DIR)/asm/sbss.o\
 	$(BUILD_DIR)/asm/sdata2.o\
 	$(BUILD_DIR)/asm/sdata2_1.o\
-	$(BUILD_DIR)/asm/sdata2_1c.o\
 
 SYSBOOTUP :=\
 	$(BUILD_DIR)/src/sysBootup.o\
@@ -36,6 +35,7 @@ TEXT_O_FILES :=\
 	$(BUILD_DIR)/asm/sysCommon/atx.o\
 	$(BUILD_DIR)/asm/sysCommon/id32.o\
 	$(BUILD_DIR)/asm/text_80044194.o\
+	$(BUILD_DIR)/asm/plugPikiColin/moviePlayer.o\
 	$(BUILD_DIR)/asm/plugPikiColin/movSample.o\
 	$(BUILD_DIR)/asm/plugPikiKando/omake.o\
 	$(BUILD_DIR)/asm/plugPikiKando/radarInfo.o\
