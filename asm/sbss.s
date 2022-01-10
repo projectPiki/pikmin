@@ -758,28 +758,8 @@ finishPlayback:
 	.skip 4
 .global attentionCamera
 attentionCamera:
-	.skip 8
+	.skip 4
+.balign 8
 .global radarInfo
 radarInfo:
-	.skip 8
-.global saiMotionDoneEvent
-saiMotionDoneEvent:
-	.skip 4
-.global saiBounceEvent
-saiBounceEvent:
-	.skip 4
-.global saiMotionLoopStartEvent
-saiMotionLoopStartEvent:
-	.skip 4
-.global saiMotionLoopEndEvent
-saiMotionLoopEndEvent:
-	.skip 4
-.global saiCollideEvent
-saiCollideEvent:
-	.skip 4
-.global saiGroundEvent
-saiGroundEvent:
-	.skip 4
-.global saiMotionAction0Event
-saiMotionAction0Event:
 	.skip 4
