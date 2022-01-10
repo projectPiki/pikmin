@@ -113,19 +113,3 @@ lbl_803E8B64:
 .global lbl_803E8B68
 lbl_803E8B68:
 	.float 1.0
-.balign 8
-.global lbl_803E8B70
-lbl_803E8B70:
-	.float 0.0
-.global lbl_803E8B74
-lbl_803E8B74:
-	.4byte 0xC2F6CCCD
-.global lbl_803E8B78
-lbl_803E8B78:
-	.4byte 0x42C80000
-.global lbl_803E8B7C
-lbl_803E8B7C:
-	.4byte 0x41700000
-.global lbl_803E8B80
-lbl_803E8B80:
-	.4byte 0x41200000

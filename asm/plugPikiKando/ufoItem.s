@@ -3009,7 +3009,7 @@ __vt__8Suckable:
 	.4byte exitCourse__8CreatureFv
 	.4byte __RTTI__8Suckable
 	.4byte 0xFFFFFD48
-	.4byte lbl_8007DF54
+	.4byte "@696@animationKeyUpdated__10AICreatureFR16PaniAnimKeyEvent"
 	.4byte getCurrState__10AICreatureFv
 	.4byte "setCurrState__10AICreatureFP20AState<10AICreature>"
 	.4byte playSound__10AICreatureFi
