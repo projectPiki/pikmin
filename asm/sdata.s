@@ -3800,30 +3800,3 @@ __RTTI__11SimpleFader:
 __RTTI__12DefaultFader:
 	.4byte 0x802ACBAC
 	.4byte 0x802ACBBC
-.global lbl_803DE8F0
-lbl_803DE8F0:
-	.4byte 0x616C6976
-	.4byte 0x65000000
-.global lbl_803DE8F8
-lbl_803DE8F8:
-	.4byte 0x64656164
-	.4byte 0x20000000
-.global lbl_803DE900
-lbl_803DE900:
-	.4byte 0x00000000
-.global lbl_803DE904
-lbl_803DE904:
-	.4byte 0x00000000
-.global lbl_803DE908
-lbl_803DE908:
-	.4byte 0x00000000
-	.4byte 0x414E6F64
-	.4byte 0x65000000
-	.4byte 0x803DE90C
-	.4byte 0x00000000
-	.4byte 0x802ACC24
-	.4byte 0x802ACC48
-.global __RTTI__Q29RadarInfo9PartsInfo
-__RTTI__Q29RadarInfo9PartsInfo:
-	.4byte 0x802ACC30
-	.4byte 0x802ACC54

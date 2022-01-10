@@ -759,7 +759,3 @@ finishPlayback:
 .global attentionCamera
 attentionCamera:
 	.skip 4
-.balign 8
-.global radarInfo
-radarInfo:
-	.skip 4
