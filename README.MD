@@ -21,7 +21,7 @@ This edited compiler modifies the epilogue in such a way as to approximate older
 
 In this case, the epilogue should remain unscheduled.
 
-tool/frank.py cleans up the output.
+tools/frank.py cleans up the output.
 
 ### Required Tools
 * [devkitPro](https://devkitpro.org/wiki/Getting_Started)
