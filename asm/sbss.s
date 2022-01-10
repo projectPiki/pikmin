@@ -755,7 +755,4 @@ ImgW:
 	.skip 2
 .global finishPlayback
 finishPlayback:
-	.skip 4
-.global attentionCamera
-attentionCamera:
-	.skip 4
+	.skip 1
