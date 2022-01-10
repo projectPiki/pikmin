@@ -962,8 +962,7 @@ lbl_80200658:
 /* 80200664 001FD5C4  7C 08 03 A6 */	mtlr r0
 /* 80200668 001FD5C8  4E 80 00 20 */	blr 
 
-.global AlarmHandler_2
-AlarmHandler_2:
+AlarmHandler:
 /* 8020066C 001FD5CC  7C 08 02 A6 */	mflr r0
 /* 80200670 001FD5D0  90 01 00 04 */	stw r0, 4(r1)
 /* 80200674 001FD5D4  94 21 FF F8 */	stwu r1, -8(r1)
@@ -1024,13 +1023,13 @@ lbl_80200728:
 /* 80200734 001FD694  3C 60 80 00 */	lis r3, 0x800000F8@ha
 /* 80200738 001FD698  80 03 00 F8 */	lwz r0, 0x800000F8@l(r3)
 /* 8020073C 001FD69C  3C 80 10 62 */	lis r4, 0x10624DD3@ha
-/* 80200740 001FD6A0  3C 60 80 20 */	lis r3, AlarmHandler_2@ha
+/* 80200740 001FD6A0  3C 60 80 20 */	lis r3, AlarmHandler@ha
 /* 80200744 001FD6A4  54 00 F0 BE */	srwi r0, r0, 2
 /* 80200748 001FD6A8  38 84 4D D3 */	addi r4, r4, 0x10624DD3@l
 /* 8020074C 001FD6AC  7C 04 00 16 */	mulhwu r0, r4, r0
 /* 80200750 001FD6B0  54 00 D1 BE */	srwi r0, r0, 6
 /* 80200754 001FD6B4  1C C0 04 7E */	mulli r6, r0, 0x47e
-/* 80200758 001FD6B8  38 E3 06 6C */	addi r7, r3, AlarmHandler_2@l
+/* 80200758 001FD6B8  38 E3 06 6C */	addi r7, r3, AlarmHandler@l
 /* 8020075C 001FD6BC  38 7F 00 B0 */	addi r3, r31, 0xb0
 /* 80200760 001FD6C0  38 A0 00 00 */	li r5, 0
 /* 80200764 001FD6C4  4B FF 5C 05 */	bl OSSetAlarm
@@ -1151,13 +1150,13 @@ lbl_802008D4:
 /* 802008E0 001FD840  3C 60 80 00 */	lis r3, 0x800000F8@ha
 /* 802008E4 001FD844  80 03 00 F8 */	lwz r0, 0x800000F8@l(r3)
 /* 802008E8 001FD848  3C 80 10 62 */	lis r4, 0x10624DD3@ha
-/* 802008EC 001FD84C  3C 60 80 20 */	lis r3, AlarmHandler_2@ha
+/* 802008EC 001FD84C  3C 60 80 20 */	lis r3, AlarmHandler@ha
 /* 802008F0 001FD850  54 00 F0 BE */	srwi r0, r0, 2
 /* 802008F4 001FD854  38 84 4D D3 */	addi r4, r4, 0x10624DD3@l
 /* 802008F8 001FD858  7C 04 00 16 */	mulhwu r0, r4, r0
 /* 802008FC 001FD85C  54 00 D1 BE */	srwi r0, r0, 6
 /* 80200900 001FD860  1C C0 04 7E */	mulli r6, r0, 0x47e
-/* 80200904 001FD864  38 E3 06 6C */	addi r7, r3, AlarmHandler_2@l
+/* 80200904 001FD864  38 E3 06 6C */	addi r7, r3, AlarmHandler@l
 /* 80200908 001FD868  38 7F 00 B0 */	addi r3, r31, 0xb0
 /* 8020090C 001FD86C  38 A0 00 00 */	li r5, 0
 /* 80200910 001FD870  4B FF 5A 59 */	bl OSSetAlarm
@@ -1300,13 +1299,13 @@ lbl_80200AE0:
 /* 80200AEC 001FDA4C  3C 60 80 00 */	lis r3, 0x800000F8@ha
 /* 80200AF0 001FDA50  80 03 00 F8 */	lwz r0, 0x800000F8@l(r3)
 /* 80200AF4 001FDA54  3C 80 10 62 */	lis r4, 0x10624DD3@ha
-/* 80200AF8 001FDA58  3C 60 80 20 */	lis r3, AlarmHandler_2@ha
+/* 80200AF8 001FDA58  3C 60 80 20 */	lis r3, AlarmHandler@ha
 /* 80200AFC 001FDA5C  54 00 F0 BE */	srwi r0, r0, 2
 /* 80200B00 001FDA60  38 84 4D D3 */	addi r4, r4, 0x10624DD3@l
 /* 80200B04 001FDA64  7C 04 00 16 */	mulhwu r0, r4, r0
 /* 80200B08 001FDA68  54 00 D1 BE */	srwi r0, r0, 6
 /* 80200B0C 001FDA6C  1C C0 04 7E */	mulli r6, r0, 0x47e
-/* 80200B10 001FDA70  38 E3 06 6C */	addi r7, r3, AlarmHandler_2@l
+/* 80200B10 001FDA70  38 E3 06 6C */	addi r7, r3, AlarmHandler@l
 /* 80200B14 001FDA74  38 7F 00 B0 */	addi r3, r31, 0xb0
 /* 80200B18 001FDA78  38 A0 00 00 */	li r5, 0
 /* 80200B1C 001FDA7C  4B FF 58 4D */	bl OSSetAlarm

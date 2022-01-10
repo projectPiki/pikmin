@@ -4583,7 +4583,7 @@ lbl_802E1064:
 .balign 4
 lbl_802E1088:
 	.4byte __RTTI__19P2DPaneCallBackBase
-	.4byte 0x4
+	.4byte 4
 	.4byte "__RTTI__Q23zen20CallBack1<P7P2DPane>"
 	.4byte 0
 	.4byte __RTTI__15P2DPaneCallBack
@@ -4600,7 +4600,7 @@ lbl_802E10B4:
 .balign 4
 lbl_802E10D0:
 	.4byte __RTTI__19P2DPaneCallBackBase
-	.4byte 0x4
+	.4byte 4
 	.4byte "__RTTI__Q23zen20CallBack1<P7P2DPane>"
 	.4byte 0
 	.4byte __RTTI__15P2DPaneCallBack
@@ -4621,20 +4621,20 @@ lbl_802E10D0:
 	.4byte 0
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
-.balign 0x8
+.balign 8
 "frameMax__Q29@unnamed@16PikiIconCallBack":
 	.float 0.5
 lbl_803E66A4:
 	.float 0.0
 __RTTI__Q23zen9NumberTex:
 	.4byte lbl_802E0C60
-	.4byte 0x00000000
+	.4byte 0
 __RTTI__19P2DPaneCallBackBase:
 	.4byte lbl_802E0C70
-	.4byte 0x00000000
+	.4byte 0
 "__RTTI__Q23zen20CallBack1<P7P2DPane>":
 	.4byte lbl_802E0C84
-	.4byte 0x00000000
+	.4byte 0
 __RTTI__15P2DPaneCallBack:
 	.4byte lbl_802E0CA0
 	.4byte lbl_802E0CB0
@@ -4688,98 +4688,97 @@ __RTTI__15P2DPaneCallBack:
 	.4byte lbl_802E10D0
 
 .section .sbss, "wa"
-.balign 0x8
+.balign 8
 .global pGameInfo__3zen
 pGameInfo__3zen:
-	.skip 0x4
+	.skip 4
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
-.balign 0x8
+.balign 8
 lbl_803EB938:
-	.4byte 0x00000000
+	.float 0.0
 lbl_803EB93C:
-	.4byte 0x3F000000
+	.float 0.5
 lbl_803EB940:
-	.4byte 0x40490FDB
+	.float 3.1415927
 lbl_803EB944:
-	.4byte 0x3C8EFA35
+	.float 0.017453292
 lbl_803EB948:
-	.4byte 0xBC8EFA35
-.balign 0x8
+	.float -0.017453292
+.balign 8
 lbl_803EB950:
 	.4byte 0x43300000
 	.4byte 0x80000000
 lbl_803EB958:
-	.4byte 0x40C90FDB
+	.float 6.2831855
 lbl_803EB95C:
-	.4byte 0x42B40000
+	.float 90.0
 lbl_803EB960:
-	.4byte 0x43340000
+	.float 180.0
 lbl_803EB964:
-	.4byte 0x40000000
+	.float 2.0
 lbl_803EB968:
-	.4byte 0x3F800000
+	.float 1.0
 lbl_803EB96C:
-	.4byte 0x41F00000
+	.float 30.0
 lbl_803EB970:
-	.4byte 0x459C4000
+	.float 5000.0
 lbl_803EB974:
-	.4byte 0x437A0000
+	.float 250.0
 lbl_803EB978:
-	.4byte 0x40A00000
+	.float 5.0
 lbl_803EB97C:
-	.4byte 0x437F0000
+	.float 255.0
 lbl_803EB980:
-	.4byte 0x41700000
-.balign 0x8
+	.float 15.0
+.balign 8
 lbl_803EB988:
-	.4byte 0x40140000
-	.4byte 0x00000000
+	.double 5.0
 lbl_803EB990:
-	.4byte 0x3E860A92
+	.float 0.2617994
 lbl_803EB994:
-	.4byte 0x3E19999A
+	.float 0.15
 lbl_803EB998:
-	.4byte 0x3F860A92
+	.float 1.0471976
 lbl_803EB99C:
-	.4byte 0x4196CBE4
+	.float 18.849556
 lbl_803EB9A0:
-	.4byte 0x3E4CCCCD
+	.float 0.2
 lbl_803EB9A4:
-	.4byte 0x40E00000
+	.float 7.0
 lbl_803EB9A8:
-	.4byte 0x41980000
+	.float 19.0
 lbl_803EB9AC:
-	.4byte 0x41400000
+	.float 12.0
 lbl_803EB9B0:
-	.4byte 0x3D0EFA35
+	.float 0.034906585
 lbl_803EB9B4:
-	.4byte 0x3EB2B8C3
+	.float 0.34906587
 lbl_803EB9B8:
-	.4byte 0x3DB2B8C3
+	.float 0.08726647
 lbl_803EB9BC:
-	.4byte 0x40D00000
+	.float 6.5
 lbl_803EB9C0:
-	.4byte 0x419C0000
+	.float 19.5
 lbl_803EB9C4:
-	.4byte 0x3F666666
+	.float 0.9
 lbl_803EB9C8:
-	.4byte 0x3DCCCCCD
+	.float 0.1
 lbl_803EB9CC:
-	.4byte 0x433F0000
+	.float 191.0
 lbl_803EB9D0:
-	.4byte 0x42800000
+	.float 64.0
 lbl_803EB9D4:
-	.4byte 0x40F00000
+	.float 7.5
 lbl_803EB9D8:
-	.4byte 0x41940000
+	.float 18.5
 lbl_803EB9DC:
-	.4byte 0x43638000
+	.float 227.5
 lbl_803EB9E0:
-	.4byte 0x41DC0000
+	.float 27.5
 lbl_803EB9E4:
-	.4byte 0x42480000
+	.float 50.0
 lbl_803EB9E8:
-	.4byte 0x41490FDB
+	.float 12.566371
 lbl_803EB9EC:
-	.4byte 0x3E99999A
+	.float 0.3

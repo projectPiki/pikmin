@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global WriteCallback_2
-WriteCallback_2:
+WriteCallback:
 /* 8020C6EC 0020964C  7C 08 02 A6 */	mflr r0
 /* 8020C6F0 00209650  90 01 00 04 */	stw r0, 4(r1)
 /* 8020C6F4 00209654  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -71,8 +70,8 @@ lbl_8020C7E4:
 /* 8020C7E8 00209748  48 00 00 28 */	b lbl_8020C810
 lbl_8020C7EC:
 /* 8020C7EC 0020974C  80 1F 00 0C */	lwz r0, 0xc(r31)
-/* 8020C7F0 00209750  3C 60 80 21 */	lis r3, EraseCallback_2@ha
-/* 8020C7F4 00209754  38 A3 C8 5C */	addi r5, r3, EraseCallback_2@l
+/* 8020C7F0 00209750  3C 60 80 21 */	lis r3, EraseCallback@ha
+/* 8020C7F4 00209754  38 A3 C8 5C */	addi r5, r3, EraseCallback@l
 /* 8020C7F8 00209758  7C 80 21 D6 */	mullw r4, r0, r4
 /* 8020C7FC 0020975C  38 7E 00 00 */	addi r3, r30, 0
 /* 8020C800 00209760  4B FF C4 E9 */	bl __CARDEraseSector
@@ -102,8 +101,7 @@ lbl_8020C83C:
 /* 8020C854 002097B4  38 21 00 20 */	addi r1, r1, 0x20
 /* 8020C858 002097B8  4E 80 00 20 */	blr 
 
-.global EraseCallback_2
-EraseCallback_2:
+EraseCallback:
 /* 8020C85C 002097BC  7C 08 02 A6 */	mflr r0
 /* 8020C860 002097C0  90 01 00 04 */	stw r0, 4(r1)
 /* 8020C864 002097C4  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -119,8 +117,8 @@ EraseCallback_2:
 /* 8020C88C 002097EC  7F E0 2A 14 */	add r31, r0, r5
 /* 8020C890 002097F0  41 80 00 30 */	blt lbl_8020C8C0
 /* 8020C894 002097F4  80 9F 00 C0 */	lwz r4, 0xc0(r31)
-/* 8020C898 002097F8  3C 60 80 21 */	lis r3, WriteCallback_2@ha
-/* 8020C89C 002097FC  38 E3 C6 EC */	addi r7, r3, WriteCallback_2@l
+/* 8020C898 002097F8  3C 60 80 21 */	lis r3, WriteCallback@ha
+/* 8020C89C 002097FC  38 E3 C6 EC */	addi r7, r3, WriteCallback@l
 /* 8020C8A0 00209800  80 BF 00 0C */	lwz r5, 0xc(r31)
 /* 8020C8A4 00209804  A0 04 00 10 */	lhz r0, 0x10(r4)
 /* 8020C8A8 00209808  80 DF 00 B4 */	lwz r6, 0xb4(r31)
@@ -205,8 +203,8 @@ lbl_8020C9B8:
 /* 8020C9BC 0020991C  38 03 7E 60 */	addi r0, r3, __CARDDefaultApiCallback@l
 lbl_8020C9C0:
 /* 8020C9C0 00209920  80 81 00 1C */	lwz r4, 0x1c(r1)
-/* 8020C9C4 00209924  3C 60 80 21 */	lis r3, EraseCallback_2@ha
-/* 8020C9C8 00209928  38 A3 C8 5C */	addi r5, r3, EraseCallback_2@l
+/* 8020C9C4 00209924  3C 60 80 21 */	lis r3, EraseCallback@ha
+/* 8020C9C8 00209928  38 A3 C8 5C */	addi r5, r3, EraseCallback@l
 /* 8020C9CC 0020992C  90 04 00 D0 */	stw r0, 0xd0(r4)
 /* 8020C9D0 00209930  80 61 00 1C */	lwz r3, 0x1c(r1)
 /* 8020C9D4 00209934  93 E3 00 B4 */	stw r31, 0xb4(r3)

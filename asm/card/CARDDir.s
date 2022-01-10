@@ -5,8 +5,7 @@ __CARDGetDirBlock:
 /* 802098B0 00206810  80 63 00 84 */	lwz r3, 0x84(r3)
 /* 802098B4 00206814  4E 80 00 20 */	blr 
 
-.global WriteCallback_1
-WriteCallback_1:
+WriteCallback:
 /* 802098B8 00206818  7C 08 02 A6 */	mflr r0
 /* 802098BC 0020681C  90 01 00 04 */	stw r0, 4(r1)
 /* 802098C0 00206820  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -64,8 +63,7 @@ lbl_8020996C:
 /* 80209980 002068E0  38 21 00 20 */	addi r1, r1, 0x20
 /* 80209984 002068E4  4E 80 00 20 */	blr 
 
-.global EraseCallback_1
-EraseCallback_1:
+EraseCallback:
 /* 80209988 002068E8  7C 08 02 A6 */	mflr r0
 /* 8020998C 002068EC  90 01 00 04 */	stw r0, 4(r1)
 /* 80209990 002068F0  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -80,9 +78,9 @@ EraseCallback_1:
 /* 802099B4 00206914  7F C0 2A 14 */	add r30, r0, r5
 /* 802099B8 00206918  41 80 00 3C */	blt lbl_802099F4
 /* 802099BC 0020691C  80 BE 00 84 */	lwz r5, 0x84(r30)
-/* 802099C0 00206920  3C 60 80 21 */	lis r3, WriteCallback_1@ha
+/* 802099C0 00206920  3C 60 80 21 */	lis r3, WriteCallback@ha
 /* 802099C4 00206924  80 1E 00 80 */	lwz r0, 0x80(r30)
-/* 802099C8 00206928  38 E3 98 B8 */	addi r7, r3, WriteCallback_1@l
+/* 802099C8 00206928  38 E3 98 B8 */	addi r7, r3, WriteCallback@l
 /* 802099CC 0020692C  80 7E 00 0C */	lwz r3, 0xc(r30)
 /* 802099D0 00206930  7C 00 28 50 */	subf r0, r0, r5
 /* 802099D4 00206934  54 00 9B 7E */	srwi r0, r0, 0xd
@@ -155,8 +153,8 @@ lbl_80209A98:
 /* 80209AC4 00206A24  38 80 20 00 */	li r4, 0x2000
 /* 80209AC8 00206A28  4B FE D1 55 */	bl DCStoreRange
 /* 80209ACC 00206A2C  93 BE 00 D8 */	stw r29, 0xd8(r30)
-/* 80209AD0 00206A30  3C 60 80 21 */	lis r3, EraseCallback_1@ha
-/* 80209AD4 00206A34  38 A3 99 88 */	addi r5, r3, EraseCallback_1@l
+/* 80209AD0 00206A30  3C 60 80 21 */	lis r3, EraseCallback@ha
+/* 80209AD4 00206A34  38 A3 99 88 */	addi r5, r3, EraseCallback@l
 /* 80209AD8 00206A38  80 1E 00 80 */	lwz r0, 0x80(r30)
 /* 80209ADC 00206A3C  7F 83 E3 78 */	mr r3, r28
 /* 80209AE0 00206A40  80 9E 00 0C */	lwz r4, 0xc(r30)

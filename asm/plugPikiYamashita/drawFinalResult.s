@@ -151,7 +151,7 @@ lbl_801F3C54:
 /* 801F3C54 001F0BB4  93 7F 00 0C */	stw r27, 0xc(r31)
 /* 801F3C58 001F0BB8  3C 00 43 30 */	lis r0, 0x4330
 /* 801F3C5C 001F0BBC  80 7F 00 0C */	lwz r3, 0xc(r31)
-/* 801F3C60 001F0BC0  C8 42 C2 B8 */	lfd f2, "@983_1"@sda21(r2)
+/* 801F3C60 001F0BC0  C8 42 C2 B8 */	lfd f2, lbl_803EC4B8@sda21(r2)
 /* 801F3C64 001F0BC4  38 A3 00 04 */	addi r5, r3, 4
 /* 801F3C68 001F0BC8  C0 62 C2 A8 */	lfs f3, lbl_803EC4A8@sda21(r2)
 /* 801F3C6C 001F0BCC  A8 83 00 1E */	lha r4, 0x1e(r3)
@@ -979,7 +979,7 @@ setRankInEffect__Q23zen14DrawTotalScoreFv:
 /* 801F48BC 001F181C  80 61 01 6C */	lwz r3, 0x16c(r1)
 /* 801F48C0 001F1820  80 01 01 70 */	lwz r0, 0x170(r1)
 /* 801F48C4 001F1824  6C 63 80 00 */	xoris r3, r3, 0x8000
-/* 801F48C8 001F1828  C8 42 C2 B8 */	lfd f2, "@983_1"@sda21(r2)
+/* 801F48C8 001F1828  C8 42 C2 B8 */	lfd f2, lbl_803EC4B8@sda21(r2)
 /* 801F48CC 001F182C  90 61 01 CC */	stw r3, 0x1cc(r1)
 /* 801F48D0 001F1830  6C 00 80 00 */	xoris r0, r0, 0x8000
 /* 801F48D4 001F1834  93 E1 01 C8 */	stw r31, 0x1c8(r1)
@@ -1030,7 +1030,7 @@ setRankInEffect__Q23zen14DrawTotalScoreFv:
 /* 801F4988 001F18E8  80 61 01 4C */	lwz r3, 0x14c(r1)
 /* 801F498C 001F18EC  80 01 01 50 */	lwz r0, 0x150(r1)
 /* 801F4990 001F18F0  6C 63 80 00 */	xoris r3, r3, 0x8000
-/* 801F4994 001F18F4  C8 42 C2 B8 */	lfd f2, "@983_1"@sda21(r2)
+/* 801F4994 001F18F4  C8 42 C2 B8 */	lfd f2, lbl_803EC4B8@sda21(r2)
 /* 801F4998 001F18F8  90 61 01 BC */	stw r3, 0x1bc(r1)
 /* 801F499C 001F18FC  6C 00 80 00 */	xoris r0, r0, 0x8000
 /* 801F49A0 001F1900  93 E1 01 B8 */	stw r31, 0x1b8(r1)
@@ -1081,7 +1081,7 @@ setRankInEffect__Q23zen14DrawTotalScoreFv:
 /* 801F4A54 001F19B4  80 61 01 2C */	lwz r3, 0x12c(r1)
 /* 801F4A58 001F19B8  80 01 01 30 */	lwz r0, 0x130(r1)
 /* 801F4A5C 001F19BC  6C 63 80 00 */	xoris r3, r3, 0x8000
-/* 801F4A60 001F19C0  C8 42 C2 B8 */	lfd f2, "@983_1"@sda21(r2)
+/* 801F4A60 001F19C0  C8 42 C2 B8 */	lfd f2, lbl_803EC4B8@sda21(r2)
 /* 801F4A64 001F19C4  90 61 01 AC */	stw r3, 0x1ac(r1)
 /* 801F4A68 001F19C8  6C 00 80 00 */	xoris r0, r0, 0x8000
 /* 801F4A6C 001F19CC  93 E1 01 A8 */	stw r31, 0x1a8(r1)
@@ -1132,7 +1132,7 @@ setRankInEffect__Q23zen14DrawTotalScoreFv:
 /* 801F4B20 001F1A80  80 61 01 0C */	lwz r3, 0x10c(r1)
 /* 801F4B24 001F1A84  80 01 01 10 */	lwz r0, 0x110(r1)
 /* 801F4B28 001F1A88  6C 63 80 00 */	xoris r3, r3, 0x8000
-/* 801F4B2C 001F1A8C  C8 42 C2 B8 */	lfd f2, "@983_1"@sda21(r2)
+/* 801F4B2C 001F1A8C  C8 42 C2 B8 */	lfd f2, lbl_803EC4B8@sda21(r2)
 /* 801F4B30 001F1A90  90 61 01 9C */	stw r3, 0x19c(r1)
 /* 801F4B34 001F1A94  6C 00 80 00 */	xoris r0, r0, 0x8000
 /* 801F4B38 001F1A98  93 E1 01 98 */	stw r31, 0x198(r1)
@@ -1191,7 +1191,7 @@ lbl_801F4B70:
 /* 801F4C08 001F1B68  80 61 00 EC */	lwz r3, 0xec(r1)
 /* 801F4C0C 001F1B6C  80 01 00 F0 */	lwz r0, 0xf0(r1)
 /* 801F4C10 001F1B70  6C 63 80 00 */	xoris r3, r3, 0x8000
-/* 801F4C14 001F1B74  C8 42 C2 B8 */	lfd f2, "@983_1"@sda21(r2)
+/* 801F4C14 001F1B74  C8 42 C2 B8 */	lfd f2, lbl_803EC4B8@sda21(r2)
 /* 801F4C18 001F1B78  90 61 01 94 */	stw r3, 0x194(r1)
 /* 801F4C1C 001F1B7C  6C 00 80 00 */	xoris r0, r0, 0x8000
 /* 801F4C20 001F1B80  93 E1 01 90 */	stw r31, 0x190(r1)
@@ -1242,7 +1242,7 @@ lbl_801F4B70:
 /* 801F4CD4 001F1C34  80 61 00 CC */	lwz r3, 0xcc(r1)
 /* 801F4CD8 001F1C38  80 01 00 D0 */	lwz r0, 0xd0(r1)
 /* 801F4CDC 001F1C3C  6C 63 80 00 */	xoris r3, r3, 0x8000
-/* 801F4CE0 001F1C40  C8 42 C2 B8 */	lfd f2, "@983_1"@sda21(r2)
+/* 801F4CE0 001F1C40  C8 42 C2 B8 */	lfd f2, lbl_803EC4B8@sda21(r2)
 /* 801F4CE4 001F1C44  90 61 01 A4 */	stw r3, 0x1a4(r1)
 /* 801F4CE8 001F1C48  6C 00 80 00 */	xoris r0, r0, 0x8000
 /* 801F4CEC 001F1C4C  93 E1 01 A0 */	stw r31, 0x1a0(r1)
@@ -1301,7 +1301,7 @@ lbl_801F4D24:
 /* 801F4DBC 001F1D1C  80 61 00 AC */	lwz r3, 0xac(r1)
 /* 801F4DC0 001F1D20  80 01 00 B0 */	lwz r0, 0xb0(r1)
 /* 801F4DC4 001F1D24  6C 63 80 00 */	xoris r3, r3, 0x8000
-/* 801F4DC8 001F1D28  C8 42 C2 B8 */	lfd f2, "@983_1"@sda21(r2)
+/* 801F4DC8 001F1D28  C8 42 C2 B8 */	lfd f2, lbl_803EC4B8@sda21(r2)
 /* 801F4DCC 001F1D2C  90 61 01 94 */	stw r3, 0x194(r1)
 /* 801F4DD0 001F1D30  6C 00 80 00 */	xoris r0, r0, 0x8000
 /* 801F4DD4 001F1D34  93 E1 01 90 */	stw r31, 0x190(r1)
@@ -1352,7 +1352,7 @@ lbl_801F4D24:
 /* 801F4E88 001F1DE8  80 61 00 8C */	lwz r3, 0x8c(r1)
 /* 801F4E8C 001F1DEC  80 01 00 90 */	lwz r0, 0x90(r1)
 /* 801F4E90 001F1DF0  6C 63 80 00 */	xoris r3, r3, 0x8000
-/* 801F4E94 001F1DF4  C8 42 C2 B8 */	lfd f2, "@983_1"@sda21(r2)
+/* 801F4E94 001F1DF4  C8 42 C2 B8 */	lfd f2, lbl_803EC4B8@sda21(r2)
 /* 801F4E98 001F1DF8  90 61 01 A4 */	stw r3, 0x1a4(r1)
 /* 801F4E9C 001F1DFC  6C 00 80 00 */	xoris r0, r0, 0x8000
 /* 801F4EA0 001F1E00  93 E1 01 A0 */	stw r31, 0x1a0(r1)
@@ -1808,7 +1808,6 @@ lbl_801F54D8:
 /* 801F54DC 001F243C  4B FF CC F1 */	bl operation__Q23zen12DrawUfoPartsFv
 /* 801F54E0 001F2440  38 00 00 03 */	li r0, 3
 /* 801F54E4 001F2444  90 1E 00 00 */	stw r0, 0(r30)
-.global lbl_801F54E8
 lbl_801F54E8:
 /* 801F54E8 001F2448  80 01 00 1C */	lwz r0, 0x1c(r1)
 /* 801F54EC 001F244C  83 E1 00 14 */	lwz r31, 0x14(r1)
@@ -1818,14 +1817,10 @@ lbl_801F54E8:
 /* 801F54FC 001F245C  4E 80 00 20 */	blr 
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
-.balign 0x8
-.global lbl_802E71F0
+.balign 8
 lbl_802E71F0:
-	.4byte 0x665F7265
-	.4byte 0x73756C74
-	.4byte 0x2E626C6F
-	.4byte 0x00000000
-.global lbl_802E7200
+	.asciz "f_result.blo"
+.balign 4
 lbl_802E7200:
 	.4byte lbl_801F5178
 	.4byte lbl_801F5198
@@ -1834,7 +1829,6 @@ lbl_802E7200:
 	.4byte lbl_801F523C
 	.4byte lbl_801F52C0
 	.4byte lbl_801F52BC
-.global lbl_802E721C
 lbl_802E721C:
 	.4byte lbl_801F53F8
 	.4byte lbl_801F5320
@@ -1843,7 +1837,6 @@ lbl_802E721C:
 	.4byte lbl_801F53C4
 	.4byte lbl_801F53F8
 	.4byte lbl_801F53E0
-.global lbl_802E7238
 lbl_802E7238:
 	.4byte lbl_801F5478
 	.4byte lbl_801F54A0
@@ -1854,55 +1847,41 @@ lbl_802E7238:
 	.4byte lbl_801F54E8
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
-.balign 0x8
-.global lbl_803E76D0
+.balign 8
 lbl_803E76D0:
-	.4byte 0x77696E25
-	.4byte 0x64000000
-.global lbl_803E76D8
+	.asciz "win%d"
+.balign 4
 lbl_803E76D8:
-	.4byte 0x70642530
-	.4byte 0x32640000
-.global lbl_803E76E0
+	.asciz "pd%02d"
+.balign 4
 lbl_803E76E0:
-	.4byte 0x6C702530
-	.4byte 0x32640000
-.global lbl_803E76E8
+	.asciz "lp%02d"
+.balign 4
 lbl_803E76E8:
-	.4byte 0x64702530
-	.4byte 0x32640000
-.global lbl_803E76F0
+	.asciz "dp%02d"
+.balign 4
 lbl_803E76F0:
-	.4byte 0x00000000
+	.float 0.0
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
-.balign 0x8
-.global lbl_803EC4A8
+.balign 8
 lbl_803EC4A8:
-	.4byte 0x3F4CCCCD
-.global lbl_803EC4AC
+	.float 0.8
 lbl_803EC4AC:
-	.4byte 0x00000000
-.global lbl_803EC4B0
+	.float 0.0
 lbl_803EC4B0:
-	.4byte 0x3F000000
-	.4byte 0x00000000
-.global "@983_1"
-"@983_1":
+	.float 0.5
+.balign 8
+lbl_803EC4B8:
 	.4byte 0x43300000
 	.4byte 0x80000000
-.global lbl_803EC4C0
 lbl_803EC4C0:
-	.4byte 0x3FC90FDB
-.global lbl_803EC4C4
+	.float 1.5707964
 lbl_803EC4C4:
-	.4byte 0x3F800000
-.global lbl_803EC4C8
+	.float 1.0
 lbl_803EC4C8:
-	.4byte 0xC4700000
-.global lbl_803EC4CC
+	.float -960.0
 lbl_803EC4CC:
-	.4byte 0x40490FDB
-.global lbl_803EC4D0
+	.float 3.1415927
 lbl_803EC4D0:
-	.4byte 0x40000000
+	.float 2.0

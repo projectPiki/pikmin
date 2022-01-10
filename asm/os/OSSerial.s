@@ -563,7 +563,6 @@ SIGetResponse:
 /* 801FB758 001F86B8  90 04 00 04 */	stw r0, 4(r4)
 /* 801FB75C 001F86BC  4E 80 00 20 */	blr 
 
-.global AlarmHandler
 AlarmHandler:
 /* 801FB760 001F86C0  7C 08 02 A6 */	mflr r0
 /* 801FB764 001F86C4  3C 80 80 3D */	lis r4, Alarm@ha

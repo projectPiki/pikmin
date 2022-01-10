@@ -231,8 +231,7 @@ lbl_801FE440:
 /* 801FE458 001FB3B8  38 21 02 E8 */	addi r1, r1, 0x2e8
 /* 801FE45C 001FB3BC  4E 80 00 20 */	blr 
 
-.global AlarmHandler_1
-AlarmHandler_1:
+AlarmHandler:
 /* 801FE460 001FB3C0  7C 08 02 A6 */	mflr r0
 /* 801FE464 001FB3C4  3C 60 80 3D */	lis r3, CommandList@ha
 /* 801FE468 001FB3C8  90 01 00 04 */	stw r0, 4(r1)
@@ -573,8 +572,8 @@ lbl_801FE8E0:
 /* 801FE928 001FB888  7E C4 31 14 */	adde r22, r4, r6
 /* 801FE92C 001FB88C  38 7F 00 40 */	addi r3, r31, 0x40
 /* 801FE930 001FB890  4B FF 77 DD */	bl OSCreateAlarm
-/* 801FE934 001FB894  3C 60 80 20 */	lis r3, AlarmHandler_1@ha
-/* 801FE938 001FB898  38 E3 E4 60 */	addi r7, r3, AlarmHandler_1@l
+/* 801FE934 001FB894  3C 60 80 20 */	lis r3, AlarmHandler@ha
+/* 801FE938 001FB898  38 E3 E4 60 */	addi r7, r3, AlarmHandler@l
 /* 801FE93C 001FB89C  38 D7 00 00 */	addi r6, r23, 0
 /* 801FE940 001FB8A0  38 B6 00 00 */	addi r5, r22, 0
 /* 801FE944 001FB8A4  38 7F 00 40 */	addi r3, r31, 0x40
