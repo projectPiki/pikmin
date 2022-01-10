@@ -4753,9 +4753,9 @@ lbl_8022755C:
 .balign 4
 .global mappingTypes$1231
 mappingTypes$1231:
-	.4byte 0x803DCF14
+	.4byte lbl_803DCF14
 	.4byte lbl_8022755C
-	.4byte 0x803DCF1C
+	.4byte lbl_803DCF1C
 .global sjis_convert_table
 sjis_convert_table:
 	.4byte 0x00000118
@@ -5675,11 +5675,11 @@ lbl_80228320:
 	.4byte 0x65000000
 .global modes
 modes:
-	.4byte 0x803DD05C
-	.4byte 0x803DD064
-	.4byte 0x803DD068
-	.4byte 0x803DD05C
-	.4byte 0x803DD06C
+	.4byte lbl_803DD05C
+	.4byte lbl_803DD064
+	.4byte lbl_803DD068
+	.4byte lbl_803DD05C
+	.4byte lbl_803DD06C
 .global lbl_80228350
 lbl_80228350:
 	.asciz "CoreNode"
@@ -7668,9 +7668,9 @@ lbl_802A6138:
 	.4byte 0x00000000
 .global timopts
 timopts:
-	.4byte 0x803DD770
-	.4byte 0x803DD778
-	.4byte 0x803DD780
+	.4byte lbl_803DD770
+	.4byte lbl_803DD778
+	.4byte lbl_803DD780
 .global lbl_802A6150
 lbl_802A6150:
 	.4byte 0x546F6767

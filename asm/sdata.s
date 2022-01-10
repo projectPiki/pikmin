@@ -286,9 +286,11 @@ lbl_803DCF0C:
 lbl_803DCF10:
 	.float 0.0
 .balign 4
+.global lbl_803DCF14
 lbl_803DCF14:
 	.asciz "Normal"
 .balign 4
+.global lbl_803DCF1C
 lbl_803DCF1C:
 	.asciz "Environ"
 .balign 4
@@ -464,12 +466,20 @@ lbl_803DD054:
 lbl_803DD058:
 	.float 0.0
 .balign 4
+.global lbl_803DD05C
+lbl_803DD05C:
 	.asciz "NONE"
 .balign 4
+.global lbl_803DD064
+lbl_803DD064:
 	.asciz "OPA"
 .balign 4
+.global lbl_803DD068
+lbl_803DD068:
 	.asciz "TEX"
 .balign 4
+.global lbl_803DD06C
+lbl_803DD06C:
 	.asciz "XLU"
 .balign 4
 .global lbl_803DD070
@@ -1139,8 +1149,8 @@ __RTTI__13ControllerMgr:
 	.4byte 0
 .global sScreenMode
 sScreenMode:
-	.4byte 0x802A5740
-	.4byte 0x802A5704
+	.4byte localNtsc480IntDf
+	.4byte progressiveRenderMode
 .global sFirstFrame
 sFirstFrame:
 	.4byte 0x00000004
@@ -1383,28 +1393,37 @@ __RTTI__7AnimMgr:
 __RTTI__8AnimInfo:
 	.4byte 0x802A60D8
 	.4byte 0x802A60E4
-	.4byte 0x205B6F66
-	.4byte 0x665D0000
-	.4byte 0x20205B6F
-	.4byte 0x6E5D0000
-	.4byte 0x5B66756C
-	.4byte 0x6C5D0000
+.balign 4
+.global lbl_803DD770
+lbl_803DD770:
+	.asciz " [off]"
+.balign 4
+.global lbl_803DD778
+lbl_803DD778:
+	.asciz "  [on]"
+.balign 4
+.global lbl_803DD780
+lbl_803DD780:
+	.asciz "[full]"
+.balign 4
 .global lbl_803DD788
 lbl_803DD788:
-	.4byte 0x205B6F6E
-	.4byte 0x5D000000
+	.asciz " [on]"
+.balign 4
 .global lbl_803DD790
 lbl_803DD790:
-	.4byte 0x5B6F6666
-	.4byte 0x5D000000
-	.4byte 0x63757374
-	.4byte 0x6F6D0000
-	.4byte 0x4446206F
-	.4byte 0x66660000
+	.asciz "[off]"
+.balign 4
+lbl_803DD798:
+	.asciz "custom"
+.balign 4
+lbl_803DD7A0:
+	.asciz "DF off"
+.balign 4
 .global filterNames
 filterNames:
-	.4byte 0x803DD798
-	.4byte 0x803DD7A0
+	.4byte lbl_803DD798
+	.4byte lbl_803DD7A0
 .global lbl_803DD7B0
 lbl_803DD7B0:
 	.4byte 0x00000000
