@@ -100,6 +100,3 @@ lbl_803E8B50:
 .global lbl_803E8B54
 lbl_803E8B54:
 	.4byte 0xC1200000
-.global lbl_803E8B58
-lbl_803E8B58:
-	.4byte 0x42C80000

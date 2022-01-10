@@ -3908,28 +3908,3 @@ __RTTI__17InteractThrowAway:
 __RTTI__12InteractBury:
 	.4byte 0x802AD0F4
 	.4byte 0x802AD104
-.global lbl_803DE9C8
-lbl_803DE9C8:
-	.4byte 0x00000000
-.global lbl_803DE9CC
-lbl_803DE9CC:
-	.4byte 0x00000000
-.global lbl_803DE9D0
-lbl_803DE9D0:
-	.4byte 0x00000000
-.global lbl_803DE9D4
-lbl_803DE9D4:
-	.4byte 0x41000000
-.global lbl_803DE9D8
-lbl_803DE9D8:
-	.4byte 0x00000000
-	.4byte 0x802AD174
-	.4byte 0x00000000
-.global __RTTI__15InteractRelease
-__RTTI__15InteractRelease:
-	.4byte 0x802AD164
-	.4byte 0x802AD180
-.global __RTTI__12InteractGrab
-__RTTI__12InteractGrab:
-	.4byte 0x802AD1B8
-	.4byte 0x802AD1C8
