@@ -3933,14 +3933,3 @@ __RTTI__15InteractRelease:
 __RTTI__12InteractGrab:
 	.4byte 0x802AD1B8
 	.4byte 0x802AD1C8
-	.4byte 0
-	.4byte 0x802AD22C
-	.4byte 0
-.global __RTTI__12InteractWarn
-__RTTI__12InteractWarn:
-	.4byte 0x802AD21C
-	.4byte 0x802AD238
-.global __RTTI__12InteractTalk
-__RTTI__12InteractTalk:
-	.4byte 0x802AD270
-	.4byte 0x802AD280
