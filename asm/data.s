@@ -5065,6 +5065,7 @@ sjis_convert_table:
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x00000000
+.balign 32
 .global kanji_convert_table
 kanji_convert_table:
 	.4byte 0x93FA96DA
@@ -6624,6 +6625,7 @@ __vt__9GfxObject:
 	.4byte 0
 	.4byte attach__9GfxObjectFv
 	.4byte detach__9GfxObjectFv
+.balign 32
 .global bigFont_data
 bigFont_data:
 	.incbin "bigFont.bti", 0x20, 508032
