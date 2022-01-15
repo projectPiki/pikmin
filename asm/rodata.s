@@ -47,15 +47,8 @@ lbl_802220DC:
 .balign 8
 .global lbl_80222108
 lbl_80222108:
-	.4byte 0x20202020
-.global lbl_8022210C
-lbl_8022210C:
-	.4byte 0x20202020
-.global lbl_80222110
-lbl_80222110:
-	.4byte 0x00000000
-	.4byte 0x00000000
-.balign 4
+	.asciz "        "
+.balign 8
 .global lbl_80222118
 lbl_80222118:
 	.asciz "/Seqs/pikiseq.hed"
