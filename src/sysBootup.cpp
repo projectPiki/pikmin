@@ -38,5 +38,5 @@ void main() {
     nodeMgr = new NodeMgr();
     gsys->run(new PlugPikiApp());
 
-    OSPanic("sysBootup.cpp", 29, "End of demo");
+    OSPanic(__FILE__, 29, "End of demo");
 }
