@@ -761,7 +761,7 @@ lbl_801FF954:
 /* 801FF960 001FC8C0  4E 80 00 20 */	blr 
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
-.balign 0x8
+.balign 8
 lbl_802E8460:
 	.asciz "DVDConvertEntrynumToPath(possibly DVDOpen or DVDChangeDir or DVDOpenDir): specified directory or file (%s) doesn't match standard 8.3 format. This is a temporary restriction and will be removed soon\n"
 .balign 4
@@ -796,12 +796,12 @@ lbl_802E87BC:
 	.asciz "DVDPrepareStream(): The area specified (offset(0x%x), length(0x%x)) is out of the file"
 	
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
-.balign 0x8
+.balign 8
 lbl_803E7730:
 	.asciz "dvdfs.c"
 
 .section .sbss, "wa"
-.balign 0x8
+.balign 8
 BootInfo:
 	.skip 0x4
 FstStart:

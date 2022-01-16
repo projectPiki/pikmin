@@ -758,14 +758,14 @@ DBClose:
 /* 80221F54 0021EEB4  4E 80 00 20 */	blr 
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
-.balign 0x8
+.balign 8
 
 .global SendCount
 SendCount:
 	.byte 0x80
 
 .section .sbss, "wa"
-.balign 0x8
+.balign 8
 
 .global MTRCallback
 MTRCallback:

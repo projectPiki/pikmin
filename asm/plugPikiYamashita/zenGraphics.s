@@ -336,13 +336,13 @@ lbl_801BA5EC:
 /* 801BA5FC 001B755C  4E 80 00 20 */	blr 
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
-.balign 0x8
+.balign 8
 .global TRI_NUM__Q23zen14DrawLifeCircle
 TRI_NUM__Q23zen14DrawLifeCircle:
 	.float 128.0
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
-.balign 0x8
+.balign 8
 lbl_803EB9F0:
 	.4byte 0x00000000
 lbl_803EB9F4:

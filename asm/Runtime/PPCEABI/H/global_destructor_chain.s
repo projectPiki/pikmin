@@ -33,7 +33,7 @@ __register_global_object:
 /* 802149C0 00211920  4E 80 00 20 */	blr 
 
 .section .sbss, "wa"
-.balign 0x8
+.balign 8
 .global __global_destructor_chain
 __global_destructor_chain:
 	.skip 0x4

@@ -477,7 +477,7 @@ lbl_801F23F8:
 /* 801F2420 001EF380  4E 80 00 20 */	blr 
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
-.balign 0x8
+.balign 8
 .global lbl_802E7148
 lbl_802E7148:
 	.4byte 0x73637265
@@ -488,7 +488,7 @@ lbl_802E7148:
 	.4byte 0x00000000
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
-.balign 0x8
+.balign 8
 .global lbl_803E76B8
 lbl_803E76B8:
 	.4byte 0x75692530
@@ -499,7 +499,7 @@ lbl_803E76C0:
 	.4byte 0x32640000
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
-.balign 0x8
+.balign 8
 .global lbl_803EC448
 lbl_803EC448:
 	.4byte 0x3F000000

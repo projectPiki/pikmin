@@ -1512,7 +1512,7 @@ GXSetNumTexGens:
 /* 8021076C 0020D6CC  4E 80 00 20 */	blr 
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
-.balign 0x8
+.balign 8
 .global lbl_802E8C00
 lbl_802E8C00:
 	.4byte lbl_8020F420
@@ -1641,7 +1641,7 @@ lbl_802E8D74:
 	.4byte lbl_802104C8
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
-.balign 0x8
+.balign 8
 .global tbl1$208
 tbl1$208:
 	.4byte 0x00040102

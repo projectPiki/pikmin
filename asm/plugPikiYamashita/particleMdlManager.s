@@ -437,7 +437,7 @@ remove__Q23zen16particleChildMdlFv:
 /* 801A1E0C 0019ED6C  4E 80 00 20 */	blr 
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
-.balign 0x8
+.balign 8
 lbl_802DD7A0:
 	.asciz "particleMdlManager.cpp"
 .balign 4
@@ -497,7 +497,7 @@ __vt__Q23zen16particleChildMdl:
 	.4byte 0
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
-.balign 0x8
+.balign 8
 lbl_803E5E38:
 	.4byte 0x00000000
 lbl_803E5E3C:
@@ -536,7 +536,7 @@ __RTTI__Q23zen16particleChildMdl:
 	.4byte lbl_802DD870
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
-.balign 0x8
+.balign 8
 lbl_803EB5E8:
 	.4byte 0x00000000
 lbl_803EB5EC:

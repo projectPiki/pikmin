@@ -176,7 +176,7 @@ draw__11YaiStrategyFR4TekiR8Graphics:
 /* 801E98BC 001E681C  4E 80 00 20 */	blr 
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
-.balign 0x8
+.balign 8
 lbl_802E5A80:
 	.asciz "YaiStrategy"
 .balign 4
@@ -201,7 +201,7 @@ __vt__11YaiStrategy:
 	.4byte spawnCorpseParts__12TekiStrategyFR4Teki
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
-.balign 0x8
+.balign 8
 __RTTI__12TekiStrategy:
 	.4byte lbl_802E5A8C
 	.4byte 0x00000000

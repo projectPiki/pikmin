@@ -723,7 +723,7 @@ setScore__Q23zen14DrawCMscoreMgrFii:
 /* 801EE2E4 001EB244  4E 80 00 20 */	blr 
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
-.balign 0x8
+.balign 8
 .global lbl_802E6DC0
 lbl_802E6DC0:
 	.4byte 0x00000000
@@ -761,7 +761,7 @@ lbl_802E6E08:
 	.4byte modeWait__Q23zen14DrawCMscoreMgrFv
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
-.balign 0x8
+.balign 8
 .global lbl_803E75C0
 lbl_803E75C0:
 	.4byte 0x00000000
@@ -786,7 +786,7 @@ MEMORY_BEST_SCORE__Q23zen14DrawCMscoreMgr:
 	.4byte 0x00000005
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
-.balign 0x8
+.balign 8
 .global lbl_803EC378
 lbl_803EC378:
 	.4byte 0x3F800000

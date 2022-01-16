@@ -464,7 +464,7 @@ lbl_801B6088:
 /* 801B6334 001B3294  4E 80 00 20 */	blr 
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
-.balign 0x8
+.balign 8
 lbl_802E0950:
 	.asciz "P2DFont.cpp"
 .balign 4
@@ -491,7 +491,7 @@ __vt__10FntobjInfo:
 .balign 0x10
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
-.balign 0x8
+.balign 8
 lbl_803E6688:
 	.asciz ""
 .balign 4
@@ -506,16 +506,16 @@ __RTTI__10FntobjInfo:
 	.4byte lbl_802E0980
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
-.balign 0x8
+.balign 8
 lbl_803EB910:
 	.4byte 0x00000000
-.balign 0x8
+.balign 8
 lbl_803EB918:
 	.4byte 0x43300000
 	.4byte 0x80000000
 lbl_803EB920:
 	.4byte 0x3F800000
-.balign 0x8
+.balign 8
 lbl_803EB928:
 	.4byte 0x43300000
 	.4byte 0x00000000

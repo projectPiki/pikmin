@@ -322,7 +322,7 @@ getFrameMax__14TAIAmotionLoopFR4Teki:
 /* 801AD090 001A9FF0  4E 80 00 20 */	blr 
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
-.balign 0x8
+.balign 8
 lbl_802DFC30:
 	.asciz "TAIAmotion.cpp"
 .balign 4
@@ -390,7 +390,7 @@ __vt__10TAIAmotion:
 	.4byte 0
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
-.balign 0x8
+.balign 8
 __RTTI__9TaiAction:
 	.4byte lbl_802DFC5C
 	.4byte 0
@@ -405,7 +405,7 @@ __RTTI__10TAIAmotion:
 	.4byte lbl_802DFCD8
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
-.balign 0x8
+.balign 8
 lbl_803EB810:
 	.4byte 0x43300000
 	.4byte 0x80000000

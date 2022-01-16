@@ -203,7 +203,7 @@ lbl_8021A99C:
 /* 8021A9AC 0021790C  4E 80 00 20 */	blr 
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
-.balign 0x8
+.balign 8
 .global "@182"
 "@182":
 	.4byte 0x400921FB

@@ -1751,7 +1751,7 @@ lbl_801EC45C:
 /* 801EC474 001E93D4  4E 80 00 20 */	blr 
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
-.balign 0x8
+.balign 8
 lbl_802E6760:
 	.asciz "TAIotama.cpp"
 .balign 4
@@ -2026,7 +2026,7 @@ __vt__18TAIotamaParameters:
 	.4byte getModelMatrix__4NodeFv
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
-.balign 0x8
+.balign 8
 __RTTI__12TAIanimation:
 	.4byte lbl_802E691C
 	.4byte 0
@@ -2091,7 +2091,7 @@ __RTTI__18TAIotamaParameters:
 	.4byte lbl_802E6C24
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
-.balign 0x8
+.balign 8
 lbl_803EC2A8:
 	.4byte 0x00000000
 lbl_803EC2AC:

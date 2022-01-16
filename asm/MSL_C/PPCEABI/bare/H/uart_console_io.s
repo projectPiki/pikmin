@@ -118,7 +118,7 @@ lbl_8021A674:
 /* 8021A68C 002175EC  4E 80 00 20 */	blr 
 
 .section .sbss, "wa"
-.balign 0x8
+.balign 8
 .global initialized$16
 initialized$16:
 	.skip 0x4

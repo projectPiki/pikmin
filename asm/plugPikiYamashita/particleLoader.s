@@ -134,7 +134,7 @@ lbl_801A10DC:
 /* 801A10FC 0019E05C  4E 80 00 20 */	blr 
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
-.balign 0x8
+.balign 8
 lbl_802DA718:
 	.asciz "particleLoader.cpp"
 .balign 4
@@ -163,7 +163,7 @@ __vt__Q23zen7PCRData:
 	.4byte 0
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
-.balign 0x8
+.balign 8
 __RTTI__Q23zen7zenList:
 	.4byte lbl_802DA74C
 	.4byte 0

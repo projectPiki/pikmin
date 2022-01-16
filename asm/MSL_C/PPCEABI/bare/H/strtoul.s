@@ -703,7 +703,7 @@ lbl_8021A4DC:
 /* 8021A50C 0021746C  4E 80 00 20 */	blr 
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
-.balign 0x8
+.balign 8
 .global lbl_802E93F0
 lbl_802E93F0:
 	.4byte lbl_8021A15C

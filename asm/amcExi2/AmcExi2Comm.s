@@ -495,17 +495,17 @@ EXI2_Unreserve:
 /* 802214CC 0021E42C  4E 80 00 20 */	blr 
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
-.balign 0x8
+.balign 8
 lbl_802E9610:
 	.asciz "Can't select EXI2 port!\n"
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
-.balign 0x8
+.balign 8
 pucEXI2InputPending:
 	.4byte ucEXI2InputPending
 
 .section .sbss, "wa"
-.balign 0x8
+.balign 8
 ucEXI2InputPending:
 	.skip 0x4
 fExi2Selected:

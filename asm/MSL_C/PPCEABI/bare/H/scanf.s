@@ -1221,7 +1221,7 @@ lbl_802190E0:
 /* 802190E4 00216044  4E 80 00 20 */	blr 
 
 .section .rodata, "a"  # 0x80221FE0 - 0x80222DC0
-.balign 0x8
+.balign 8
 lbl_80222B20:
 	.4byte 0x00000000
 	.4byte 0x7FFFFFFF
@@ -1235,7 +1235,7 @@ lbl_80222B20:
 	.4byte 0x00000000
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
-.balign 0x8
+.balign 8
 lbl_802E9320:
 	.4byte lbl_80218E04
 	.4byte lbl_80219084

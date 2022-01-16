@@ -484,7 +484,7 @@ lbl_80215C80:
 /* 80215C9C 00212BFC  4E 80 00 20 */	blr 
 
 .section .rodata, "a"  # 0x80221FE0 - 0x80222DC0
-.balign 0x8
+.balign 8
 .global bit_values
 bit_values:
 	.4byte 0x40240000
@@ -525,14 +525,14 @@ digit_values:
 	.4byte 0x00000000
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
-.balign 0x8
+.balign 8
 .global "@159"
 "@159":
 	.4byte 0x40240000
 	.4byte 0x00000000
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
-.balign 0x8
+.balign 8
 .global "@268"
 "@268":
 	.4byte 0x00000000

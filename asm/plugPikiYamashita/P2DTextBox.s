@@ -349,7 +349,7 @@ lbl_801B4988:
 /* 801B49A0 001B1900  4E 80 00 20 */	blr 
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
-.balign 0x8
+.balign 8
 lbl_802E0888:
 	.asciz "P2DTextBox.cpp"
 .balign 4
@@ -380,7 +380,7 @@ __vt__10P2DTextBox:
 	.4byte 0
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
-.balign 0x8
+.balign 8
 lbl_803E6670:
 	.asciz "P2DPane"
 .balign 4
@@ -392,7 +392,7 @@ __RTTI__10P2DTextBox:
 	.4byte lbl_802E08A4
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
-.balign 0x8
+.balign 8
 lbl_803EB8E0:
 	.4byte 0x00000000
 lbl_803EB8E4:

@@ -648,12 +648,12 @@ makeTag__Q23zen17SpectrumCursorMgrFUli:
 /* 801DB148 001D80A8  4E 80 00 20 */	blr 
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
-.balign 0x8
+.balign 8
 lbl_803E7188:
 	.asciz "*%02d*"
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
-.balign 0x8
+.balign 8
 lbl_803EC048:
 	.4byte 0x3FC90FDB
 lbl_803EC04C:

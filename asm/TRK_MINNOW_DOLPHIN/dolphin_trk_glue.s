@@ -259,7 +259,7 @@ TRK_board_display:
 /* 802207B4 0021D714  4E 80 00 20 */	blr 
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
-.balign 0x8
+.balign 8
 .global gDBCommTable
 gDBCommTable:
 	.4byte 0x00000000

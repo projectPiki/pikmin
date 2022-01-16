@@ -1530,7 +1530,7 @@ lbl_801D5E2C:
 /* 801D5E4C 001D2DAC  4E 80 00 20 */	blr 
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
-.balign 0x8
+.balign 8
 lbl_802E4630:
 	.asciz "TAIhibaA.cpp"
 .balign 4
@@ -1809,7 +1809,7 @@ lbl_802E4B00:
 	.4byte 0
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
-.balign 0x8
+.balign 8
 lbl_803E6F68:
 	.float 330.0
 __RTTI__12TAIanimation:
@@ -1875,12 +1875,12 @@ __RTTI__33TAIeffectAttackEventCallBackHibaA:
 	.4byte 0
 
 .section .sbss, "wa"
-.balign 0x8
+.balign 8
 eventCallBack__19TAIAfireAttackHibaA:
 	.skip 0x4
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
-.balign 0x8
+.balign 8
 lbl_803EBF20:
 	.4byte 0x00000000
 lbl_803EBF24:

@@ -250,13 +250,13 @@ MTXLightPerspective:
 /* 801FDF1C 001FAE7C  4E 80 00 20 */	blr 
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
-.balign 0x8
+.balign 8
 Unit01:
 	.4byte 0x00000000
 	.4byte 0x3F800000
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
-.balign 0x8
+.balign 8
 lbl_803EC4D8:
 	.float 1.0
 lbl_803EC4DC:

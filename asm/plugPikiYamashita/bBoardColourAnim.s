@@ -295,7 +295,7 @@ lbl_801A2264:
 /* 801A2268 0019F1C8  4E 80 00 20 */	blr 
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
-.balign 0x8
+.balign 8
 lbl_803EB5F0:
 	.4byte 0x3F800000
 lbl_803EB5F4:

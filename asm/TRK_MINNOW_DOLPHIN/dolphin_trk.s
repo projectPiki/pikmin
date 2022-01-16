@@ -40,8 +40,8 @@ InitMetroTRK:
 /* 8021FEBC 0021CE1C  38 00 00 00 */	li r0, 0
 /* 8021FEC0 0021CE20  7C 12 FB A6 */	mtspr 0x3f2, r0
 /* 8021FEC4 0021CE24  7C 15 FB A6 */	mtspr 0x3f5, r0
-/* 8021FEC8 0021CE28  3C 20 80 3F */	lis r1, 0x803FE840@h
-/* 8021FECC 0021CE2C  60 21 E8 40 */	ori r1, r1, 0x803FE840@l
+/* 8021FEC8 0021CE28  3C 20 80 3F */	lis r1, _db_stack_addr@h
+/* 8021FECC 0021CE2C  60 21 E8 40 */	ori r1, r1, _db_stack_addr@l
 /* 8021FED0 0021CE30  7C A3 2B 78 */	mr r3, r5
 /* 8021FED4 0021CE34  48 00 06 4D */	bl InitMetroTRKCommTable
 /* 8021FED8 0021CE38  2C 03 00 01 */	cmpwi r3, 1
@@ -182,7 +182,7 @@ TRKInitializeTarget:
 /* 8022009C 0021CFFC  4E 80 00 20 */	blr 
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
-.balign 0x8
+.balign 8
 .global TRK_ISR_OFFSETS
 TRK_ISR_OFFSETS:
 	.4byte 0x00000100

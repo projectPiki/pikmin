@@ -566,12 +566,12 @@ lbl_8020DB44:
 /* 8020DB5C 0020AABC  4E 80 00 20 */	blr 
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
-.balign 0x8
+.balign 8
 Chan:
 	.4byte 0xFFFFFFFF
 
 .section .sbss, "wa"
-.balign 0x8
+.balign 8
 ExiCallback:
 	.skip 0x4
 TxCallback:

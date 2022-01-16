@@ -571,7 +571,7 @@ lbl_8020B280:
 /* 8020B298 002081F8  4E 80 00 20 */	blr 
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
-.balign 0x8
+.balign 8
 .global SectorSizeTable
 SectorSizeTable:
 	.4byte 0x00002000

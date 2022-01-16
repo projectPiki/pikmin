@@ -206,7 +206,7 @@ lbl_801FA670:
 /* 801FA698 001F75F8  4E 80 00 20 */	blr 
 
 .section .sbss, "wa"
-.balign 0x8
+.balign 8
 .global ResetCallback
 ResetCallback:
 	.skip 0x4

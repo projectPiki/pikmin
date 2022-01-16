@@ -506,12 +506,12 @@ lbl_801A17B8:
 /* 801A17D0 0019E730  4E 80 00 20 */	blr 
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
-.balign 0x8
+.balign 8
 .global DEFAULT_FRAME_RATE__Q23zen15particleManager
 DEFAULT_FRAME_RATE__Q23zen15particleManager:
 	.4byte 0x41F00000
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
-.balign 0x8
+.balign 8
 lbl_803EB5E0:
 	.4byte 0x42C80000

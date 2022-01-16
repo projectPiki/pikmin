@@ -4023,7 +4023,7 @@ act__14TAIAinitBeatleFR4Teki:
 /* 801C94C8 001C6428  4E 80 00 20 */	blr 
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
-.balign 0x8
+.balign 8
 lbl_802E1850:
 	.asciz "TAIbeatle.cpp"
 .balign 4
@@ -4515,7 +4515,7 @@ __vt__19TAIbeatleParameters:
 	.4byte getModelMatrix__4NodeFv
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
-.balign 0x8
+.balign 8
 lbl_803E6930:
 	.4byte 0x00000000
 lbl_803E6934:
@@ -4638,7 +4638,7 @@ __RTTI__19TAIbeatleParameters:
 	.4byte lbl_802E1FA0
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
-.balign 0x8
+.balign 8
 lbl_803EBBE0:
 	.4byte 0x00000000
 lbl_803EBBE4:

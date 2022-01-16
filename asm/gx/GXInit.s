@@ -1065,13 +1065,13 @@ lbl_8020EA3C:
 /* 8020EB3C 0020BA9C  4E 80 00 20 */	blr 
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
-.balign 0x8
+.balign 8
 .global gx
 gx:
 	.4byte gxData
 
 .section .sbss, "wa"
-.balign 0x8
+.balign 8
 .global __piReg
 __piReg:
 	.skip 0x4
@@ -1086,7 +1086,7 @@ __memReg:
 	.skip 0x4
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
-.balign 0x8
+.balign 8
 .global lbl_803EC530
 lbl_803EC530:
 	.4byte 0x404040FF

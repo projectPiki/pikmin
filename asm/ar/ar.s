@@ -1173,7 +1173,7 @@ lbl_80207A60:
 /* 80207A7C 002049DC  4E 80 00 20 */	blr 
 
 .section .sbss, "wa"
-.balign 0x8
+.balign 8
 __AR_Callback:
 	.skip 0x4
 __AR_Size:
@@ -1188,7 +1188,7 @@ __AR_init_flag:
 	.skip 0x4
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
-.balign 0x8
+.balign 8
 lbl_803EC520:
 	.4byte 0x43440000
 lbl_803EC524:

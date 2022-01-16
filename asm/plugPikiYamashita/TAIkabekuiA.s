@@ -1690,7 +1690,7 @@ start__18TAIAsetMotionSpeedFR4Teki:
 /* 801CBB64 001C8AC4  4E 80 00 20 */	blr 
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
-.balign 0x8
+.balign 8
 lbl_802E20C8:
 	.asciz "TAIkabekuiA.cpp"
 .balign 4
@@ -2043,7 +2043,7 @@ __vt__21TAIkabekuiAParameters:
 	.4byte getModelMatrix__4NodeFv
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
-.balign 0x8
+.balign 8
 lbl_803E6AA8:
 	.4byte 0x3F800000
 lbl_803E6AAC:
@@ -2130,7 +2130,7 @@ __RTTI__21TAIkabekuiAParameters:
 	.4byte lbl_802E26BC
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
-.balign 0x8
+.balign 8
 lbl_803EBCF8:
 	.4byte 0x00000000
 lbl_803EBCFC:

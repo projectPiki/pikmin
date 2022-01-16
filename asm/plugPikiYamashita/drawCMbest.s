@@ -621,7 +621,7 @@ lbl_801EEB3C:
 /* 801EEB64 001EBAC4  4E 80 00 20 */	blr 
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
-.balign 0x8
+.balign 8
 .global lbl_802E6E18
 lbl_802E6E18:
 	.4byte 0x64726177
@@ -656,13 +656,13 @@ lbl_802E6E58:
 	.4byte modeAppear__Q23zen10DrawCMbestFv
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
-.balign 0x8
+.balign 8
 lbl_803E75E8:
 	.4byte 0x625F2530
 	.4byte 0x32640000
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
-.balign 0x8
+.balign 8
 .global lbl_803EC398
 lbl_803EC398:
 	.4byte 0x3D4CCCCD

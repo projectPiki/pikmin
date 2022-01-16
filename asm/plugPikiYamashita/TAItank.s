@@ -2320,7 +2320,7 @@ lbl_801A574C:
 /* 801A5770 001A26D0  4E 80 00 20 */	blr 
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
-.balign 0x8
+.balign 8
 lbl_802DDC70:
 	.asciz "TAItank.cpp"
 .balign 4
@@ -2817,7 +2817,7 @@ lbl_802DE480:
 	.4byte 0
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
-.balign 0x8
+.balign 8
 lbl_803E5F20:
 	.4byte 0x00000000
 lbl_803E5F24:
@@ -2956,13 +2956,13 @@ __RTTI__32TAIeffectAttackEventCallBackTank:
 	.4byte lbl_802DE450
 
 .section .sbss, "wa"
-.balign 0x8
+.balign 8
 .global eventCallBackFire__10FireEffect
 eventCallBackFire__10FireEffect:
 	.skip 0x4
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
-.balign 0x8
+.balign 8
 lbl_803EB658:
 	.4byte 0x00000000
 lbl_803EB65C:

@@ -1049,7 +1049,7 @@ lbl_801F3548:
 /* 801F355C 001F04BC  4E 80 00 20 */	blr 
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
-.balign 0x8
+.balign 8
 .global lbl_802E7160
 lbl_802E7160:
 	.4byte 0x73637265
@@ -1092,7 +1092,7 @@ lbl_802E71B8:
 	.4byte lbl_801F3548
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
-.balign 0x8
+.balign 8
 lbl_803EC458:
 	.4byte 0x00000000
 lbl_803EC45C:

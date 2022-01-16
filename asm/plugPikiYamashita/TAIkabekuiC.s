@@ -2654,7 +2654,7 @@ getNaviAttackSize__19TAIAbiteForKabekuiCFR4Teki:
 /* 801CFE08 001CCD68  4E 80 00 20 */	blr 
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
-.balign 0x8
+.balign 8
 lbl_802E2E00:
 	.asciz "TAIkabekuiC.cpp"
 .balign 4
@@ -3279,7 +3279,7 @@ __vt__21TAIkabekuiCParameters:
 	.4byte getModelMatrix__4NodeFv
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
-.balign 0x8
+.balign 8
 lbl_803E6C48:
 	.4byte 0x3F800000
 lbl_803E6C4C:
@@ -3408,7 +3408,7 @@ __RTTI__21TAIkabekuiCParameters:
 	.4byte lbl_802E385C
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
-.balign 0x8
+.balign 8
 lbl_803EBDB8:
 	.4byte 0x00000000
 lbl_803EBDBC:

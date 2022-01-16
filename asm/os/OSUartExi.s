@@ -180,7 +180,7 @@ lbl_801FDA00:
 /* 801FDA10 001FA970  4E 80 00 20 */	blr 
 
 .section .sbss, "wa"
-.balign 0x8
+.balign 8
 .global serEnabled
 serEnabled:
 	.skip 0x8

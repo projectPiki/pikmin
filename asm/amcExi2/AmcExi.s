@@ -457,6 +457,6 @@ AmcEXIInit:
 /* 80220E28 0021DD88  4E 80 00 20 */	blr 
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
-.balign 0x8
+.balign 8
 exi:
 	.4byte Ecb_1

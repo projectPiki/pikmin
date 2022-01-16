@@ -1488,7 +1488,7 @@ start__Q23zen11DrawAccountFRQ23zen11AccountData:
 /* 801C2778 001BF6D8  4E 80 00 20 */	blr 
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
-.balign 0x8
+.balign 8
 lbl_802E15A8:
 	.asciz "drawAccount.cpp"
 .balign 4
@@ -1568,7 +1568,7 @@ lbl_802E16C4:
 	.4byte 0
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
-.balign 0x8
+.balign 8
 __RTTI__Q23zen10DrawScreen:
 	.4byte lbl_802E15F0
 	.4byte 0
@@ -1592,7 +1592,7 @@ __RTTI__15P2DPaneCallBack:
 	.4byte lbl_802E16B0
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
-.balign 0x8
+.balign 8
 lbl_803EBB50:
 	.4byte 0x00000000
 lbl_803EBB54:

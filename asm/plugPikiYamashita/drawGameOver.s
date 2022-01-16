@@ -931,19 +931,19 @@ lbl_801E9644:
 /* 801E9650 001E65B0  4E 80 00 20 */	blr 
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
-.balign 0x8
+.balign 8
 lbl_802E5A50:
 	.asciz "screen/blo/gameover.blo"
 lbl_802E5A68:
 	.asciz "screen/blo/gameove2.blo"
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
-.balign 0x8
+.balign 8
 lbl_803E73A8:
 	.asciz "go%02d"
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
-.balign 0x8
+.balign 8
 lbl_803EC1A8:
 	.4byte 0x00000000
 lbl_803EC1AC:

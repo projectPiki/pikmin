@@ -1173,7 +1173,7 @@ __vt__Q23zen12DrawCMCSmenu:
 	.4byte setModeFunc__Q23zen12DrawCMCSmenuFi
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
-.balign 0x8
+.balign 8
 lbl_803E7508:
 	.4byte 0x00000000
 lbl_803E750C:
@@ -1261,7 +1261,7 @@ __RTTI__Q23zen12DrawCMCSmenu:
 	.4byte lbl_802E6C54
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
-.balign 0x8
+.balign 8
 lbl_803EC320:
 	.4byte 0x3F800000
 lbl_803EC324:

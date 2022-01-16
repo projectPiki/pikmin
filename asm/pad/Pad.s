@@ -2372,7 +2372,7 @@ lbl_80205FE8:
 /* 80206000 00202F60  4E 80 00 20 */	blr 
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
-.balign 0x8
+.balign 8
 .global ResetFunctionInfo
 ResetFunctionInfo:
 	.4byte OnReset
@@ -2408,7 +2408,7 @@ lbl_802E8B88:
 	.4byte 0x74000000
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
-.balign 0x8
+.balign 8
 .global ResettingChan
 ResettingChan:
 	.4byte 0x00000020
@@ -2436,7 +2436,7 @@ lbl_803E7774:
 	.4byte 0x63000000
 
 .section .sbss, "wa"
-.balign 0x8
+.balign 8
 .global Initialized
 Initialized:
 	.skip 0x4

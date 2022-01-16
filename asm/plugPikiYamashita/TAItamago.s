@@ -1209,7 +1209,7 @@ lbl_801D0FA0:
 /* 801D0FB8 001CDF18  4E 80 00 20 */	blr 
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
-.balign 0x8
+.balign 8
 lbl_802E38B0:
 	.asciz "TAItamago.cpp"
 .balign 4
@@ -1465,7 +1465,7 @@ __vt__19TAItamagoParameters:
 	.4byte getModelMatrix__4NodeFv
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
-.balign 0x8
+.balign 8
 __RTTI__12TAIanimation:
 	.4byte lbl_802E3A78
 	.4byte 0
@@ -1525,7 +1525,7 @@ __RTTI__19TAItamagoParameters:
 	.4byte lbl_802E3D0C
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
-.balign 0x8
+.balign 8
 lbl_803EBE38:
 	.4byte 0x00000000
 lbl_803EBE3C:

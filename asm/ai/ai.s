@@ -666,7 +666,7 @@ lbl_802068D4:
 /* 80206908 00203868  4E 80 00 20 */	blr 
 
 .section .sbss, "wa"
-.balign 0x8
+.balign 8
 __AIS_Callback:
 	.skip 0x4
 __AID_Callback:

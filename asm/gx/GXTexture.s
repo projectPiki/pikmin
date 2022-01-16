@@ -787,7 +787,7 @@ lbl_80212BB4:
 /* 80212BC4 0020FB24  4E 80 00 20 */	blr 
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
-.balign 0x8
+.balign 8
 .global lbl_802E8E80
 lbl_802E8E80:
 	.4byte lbl_80212124
@@ -871,7 +871,7 @@ lbl_802E8F74:
 	.4byte lbl_802123A4
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
-.balign 0x8
+.balign 8
 .global GXTexMode0Ids
 GXTexMode0Ids:
 	.4byte 0x80818283
@@ -906,7 +906,7 @@ GX2HWFiltConv:
 	.4byte 0x02060000
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
-.balign 0x8
+.balign 8
 .global lbl_803EC580
 lbl_803EC580:
 	.4byte 0x41800000

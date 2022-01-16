@@ -241,7 +241,7 @@ lbl_801FA394:
 /* 801FA3B0 001F7310  4E 80 00 20 */	blr 
 
 .section .sbss, "wa"
-.balign 0x8
+.balign 8
 .global ResetFunctionQueue
 ResetFunctionQueue:
 	.skip 0x8

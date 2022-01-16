@@ -269,7 +269,7 @@ lbl_8021BAC0:
 /* 8021BACC 00218A2C  4E 80 00 20 */	blr 
 
 .section .rodata, "a"  # 0x80221FE0 - 0x80222DC0
-.balign 0x8
+.balign 8
 .global atan_coeff$96
 atan_coeff$96:
 	.4byte 0x3F800000
@@ -332,7 +332,7 @@ one_over_xi_lo$102:
 	.4byte 0x00000000
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
-.balign 0x8
+.balign 8
 .global lbl_803EC7F0
 lbl_803EC7F0:
 	.4byte 0x401A827A

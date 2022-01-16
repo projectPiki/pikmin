@@ -298,7 +298,7 @@ lbl_801ED860:
 /* 801ED8A8 001EA808  4E 80 00 20 */	blr 
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
-.balign 0x8
+.balign 8
 .global lbl_802E6D98
 lbl_802E6D98:
 	.4byte 0x00000000
@@ -316,13 +316,13 @@ lbl_802E6DB0:
 	.4byte modeAppear__Q23zen14DrawCMtitleObjFv
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
-.balign 0x8
+.balign 8
 .global lbl_803E75B8
 lbl_803E75B8:
 	.4byte 0x00000000
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
-.balign 0x8
+.balign 8
 .global lbl_803EC348
 lbl_803EC348:
 	.4byte 0x40400000

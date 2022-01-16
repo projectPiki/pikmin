@@ -49,8 +49,8 @@ lbl_801F5A3C:
 /* 801F5A40 001F29A0  80 63 00 30 */	lwz r3, 0x80000030@l(r3)
 /* 801F5A44 001F29A4  28 03 00 00 */	cmplwi r3, 0
 /* 801F5A48 001F29A8  40 82 00 10 */	bne lbl_801F5A58
-/* 801F5A4C 001F29AC  3C 60 80 40 */	lis r3, 0x803FE840@ha
-/* 801F5A50 001F29B0  38 63 E8 40 */	addi r3, r3, 0x803FE840@l
+/* 801F5A4C 001F29AC  3C 60 80 40 */	lis r3, _db_stack_addr@ha
+/* 801F5A50 001F29B0  38 63 E8 40 */	addi r3, r3, _db_stack_addr@l
 /* 801F5A54 001F29B4  48 00 00 04 */	b lbl_801F5A58
 lbl_801F5A58:
 /* 801F5A58 001F29B8  48 00 0E D9 */	bl OSSetArenaLo
@@ -64,8 +64,8 @@ lbl_801F5A58:
 /* 801F5A78 001F29D8  80 03 00 00 */	lwz r0, 0(r3)
 /* 801F5A7C 001F29DC  28 00 00 02 */	cmplwi r0, 2
 /* 801F5A80 001F29E0  40 80 00 18 */	bge lbl_801F5A98
-/* 801F5A84 001F29E4  3C 60 80 40 */	lis r3, 0x803FC840@ha
-/* 801F5A88 001F29E8  38 63 C8 40 */	addi r3, r3, 0x803FC840@l
+/* 801F5A84 001F29E4  3C 60 80 40 */	lis r3, _db_stack_end@ha
+/* 801F5A88 001F29E8  38 63 C8 40 */	addi r3, r3, _db_stack_end@l
 /* 801F5A8C 001F29EC  38 03 00 1F */	addi r0, r3, 0x1f
 /* 801F5A90 001F29F0  54 03 00 34 */	rlwinm r3, r0, 0, 0, 0x1a
 /* 801F5A94 001F29F4  48 00 0E 9D */	bl OSSetArenaLo
@@ -74,8 +74,8 @@ lbl_801F5A98:
 /* 801F5A9C 001F29FC  80 63 00 34 */	lwz r3, 0x34(r3)
 /* 801F5AA0 001F2A00  28 03 00 00 */	cmplwi r3, 0
 /* 801F5AA4 001F2A04  40 82 00 10 */	bne lbl_801F5AB4
-/* 801F5AA8 001F2A08  3C 60 81 70 */	lis r3, 0x81700000@ha
-/* 801F5AAC 001F2A0C  38 63 00 00 */	addi r3, r3, 0x81700000@l
+/* 801F5AA8 001F2A08  3C 60 81 70 */	lis r3, __ArenaHi@ha
+/* 801F5AAC 001F2A0C  38 63 00 00 */	addi r3, r3, __ArenaHi@l
 /* 801F5AB0 001F2A10  48 00 00 04 */	b lbl_801F5AB4
 lbl_801F5AB4:
 /* 801F5AB4 001F2A14  48 00 0E 75 */	bl OSSetArenaHi
@@ -529,7 +529,7 @@ __OSGetDIConfig:
 /* 801F60BC 001F301C  4E 80 00 20 */	blr 
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
-.balign 0x8
+.balign 8
 lbl_802E72A8:
 	.asciz "\nDolphin OS $Revision: 37 $.\n"
 .balign 4
@@ -599,16 +599,16 @@ lbl_802E7448:
 .balign 4
 
 .section .sbss, "wa"
-.balign 0x8
+.balign 8
 .global BootInfo
 BootInfo:
-	.skip 0x4
+	.skip 4
 .global BI2DebugFlag
 BI2DebugFlag:
-	.skip 0x4
+	.skip 4
 .global AreWeInitialized
 AreWeInitialized:
-	.skip 0x4
+	.skip 4
 .global OSExceptionTable
 OSExceptionTable:
-	.skip 0x4
+	.skip 4

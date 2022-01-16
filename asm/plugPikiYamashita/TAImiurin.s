@@ -4274,7 +4274,7 @@ act__14TAIAinitMiurinFR4Teki:
 /* 801DA084 001D6FE4  4E 80 00 20 */	blr 
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
-.balign 0x8
+.balign 8
 lbl_802E4BC8:
 	.asciz "TAImiurin.cpp"
 	.skip 2
@@ -4958,7 +4958,7 @@ __vt__19TAImiurinParameters:
 	.4byte 0
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
-.balign 0x8
+.balign 8
 __RTTI__12TAIanimation:
 	.4byte lbl_802E4E00
 	.4byte 0x00000000
@@ -5093,7 +5093,7 @@ __RTTI__19TAImiurinParameters:
 	.4byte lbl_802E5730
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
-.balign 0x8
+.balign 8
 lbl_803EBFA0:
 	.4byte 0x00000000
 lbl_803EBFA4:

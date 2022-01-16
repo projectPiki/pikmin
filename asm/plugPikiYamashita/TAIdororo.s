@@ -3883,7 +3883,7 @@ act__14TAIAinitDororoFR4Teki:
 /* 801D47FC 001D175C  4E 80 00 20 */	blr 
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
-.balign 0x8
+.balign 8
 lbl_802E3D60:
 	.asciz "TAIdororo.cpp"
 .balign 4
@@ -4415,7 +4415,7 @@ __vt__19TAIdororoParameters:
 	.4byte getModelMatrix__4NodeFv
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
-.balign 0x8
+.balign 8
 lbl_803E6E28:
 	.4byte 0x00000000
 lbl_803E6E2C:
@@ -4544,7 +4544,7 @@ __RTTI__19TAIdororoParameters:
 	.4byte lbl_802E45DC
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
-.balign 0x8
+.balign 8
 lbl_803EBEA0:
 	.4byte 0x00000000
 lbl_803EBEA4:

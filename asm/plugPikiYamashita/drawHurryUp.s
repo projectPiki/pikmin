@@ -815,13 +815,13 @@ lbl_801C108C:
 /* 801C109C 001BDFFC  4E 80 00 20 */	blr 
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
-.balign 0x8
+.balign 8
 lbl_802E1590:
 	.asciz "screen/blo/sund.blo"
 .balign 4
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
-.balign 0x8
+.balign 8
 lbl_803E6840:
 	.4byte 0x00000000
 lbl_803E6844:
@@ -830,7 +830,7 @@ lbl_803E6848:
 	.4byte 0x00000000
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
-.balign 0x8
+.balign 8
 lbl_803EBB00:
 	.4byte 0x00000000
 lbl_803EBB04:
@@ -841,7 +841,7 @@ lbl_803EBB0C:
 	.4byte 0x459C4000
 lbl_803EBB10:
 	.4byte 0x3F400000
-.balign 0x8
+.balign 8
 lbl_803EBB18:
 	.4byte 0x43300000
 	.4byte 0x80000000

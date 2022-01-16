@@ -235,7 +235,7 @@ lbl_801F7BB4:
 /* 801F7BC8 001F4B28  4E 80 00 20 */	blr 
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
-.balign 0x8
+.balign 8
 lbl_802E78F0:
 	.asciz " in \"%s\" on line %d.\n"
 .balign 4
@@ -267,6 +267,6 @@ lbl_802E7AC4:
 	.asciz "\nProgram exception : Possible illegal instruction/operation at or around 0x%x (read from SRR0)\n"
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
-.balign 0x8
+.balign 8
 lbl_803E7708:
 	.asciz "\n"

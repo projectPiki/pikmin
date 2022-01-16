@@ -152,7 +152,7 @@ lbl_8020243C:
 /* 80202478 001FF3D8  4E 80 00 20 */	blr 
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
-.balign 0x8
+.balign 8
 lbl_802E8970:
 	.asciz "  Game Name ... %c%c%c%c\n"
 .balign 4
@@ -169,7 +169,7 @@ lbl_802E89CC:
 	.asciz "  Streaming ... %s\n"
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
-.balign 0x8
+.balign 8
 lbl_803E7740:
 	.asciz "\n"
 .balign 4
@@ -181,7 +181,7 @@ lbl_803E7748:
 .balign 4
 
 .section .sbss, "wa"
-.balign 0x8
+.balign 8
 status:
 	.skip 0x4
 bb2:

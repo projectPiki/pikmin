@@ -124,6 +124,6 @@ lbl_8021C49C:
 /* 8021C4A0 00219400  4E 80 00 20 */	blr 
 
 .section .rodata, "a"  # 0x80221FE0 - 0x80222DC0
-.balign 0x8
+.balign 8
 lbl_80222D50:
 	.asciz "MetroTRK for Dolphin v0.8"

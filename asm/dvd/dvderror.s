@@ -104,7 +104,7 @@ lbl_80202230:
 /* 80202250 001FF1B0  4E 80 00 20 */	blr 
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
-.balign 0x8
+.balign 8
 .global ErrorTable
 ErrorTable:
 	.4byte 0x00000000

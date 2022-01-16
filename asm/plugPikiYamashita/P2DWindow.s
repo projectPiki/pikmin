@@ -886,7 +886,7 @@ lbl_801B4490:
 /* 801B44A8 001B1408  4E 80 00 20 */	blr 
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
-.balign 0x8
+.balign 8
 lbl_802E0820:
 	.asciz "P2DWindow.cpp"
 .balign 4
@@ -917,7 +917,7 @@ __vt__9P2DWindow:
 	.4byte 0
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
-.balign 0x8
+.balign 8
 lbl_803E6658:
 	.asciz "P2DPane"
 .balign 4

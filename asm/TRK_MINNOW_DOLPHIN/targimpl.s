@@ -1614,7 +1614,7 @@ TRKTargetSetInputPendingPtr:
 /* 8021FE5C 0021CDBC  4E 80 00 20 */	blr 
 
 .section .rodata, "a"  # 0x80221FE0 - 0x80222DC0
-.balign 0x8
+.balign 8
 .global gTRKMemMap
 gTRKMemMap:
 	.4byte 0x00000000
@@ -1644,7 +1644,7 @@ lbl_80222DA8:
 	.4byte 0x60000000
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
-.balign 0x8
+.balign 8
 .global gTRKRestoreFlags
 gTRKRestoreFlags:
 	.4byte 0x00000000

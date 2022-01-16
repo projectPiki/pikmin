@@ -199,12 +199,12 @@ draw__Q23zen11DrawWMPauseFR8Graphics:
 /* 801E9F9C 001E6EFC  4E 80 00 20 */	blr 
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
-.balign 0x8
+.balign 8
 lbl_802E63D8:
 	.asciz "screen/blo/pause_w.blo"
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
-.balign 0x8
+.balign 8
 lbl_803EC238:
 	.4byte 0x42FE0000
 lbl_803EC23C:

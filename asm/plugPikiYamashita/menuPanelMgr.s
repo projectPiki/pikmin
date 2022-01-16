@@ -951,7 +951,7 @@ lbl_801CA264:
 /* 801CA2A4 001C7204  4E 80 00 20 */	blr 
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
-.balign 0x8
+.balign 8
 lbl_802E1FF8:
 	.asciz "menuPanelMgr.cpp"
 .balign 4
@@ -999,7 +999,7 @@ __vt__Q23zen9MenuPanel:
 	.4byte 0
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
-.balign 0x8
+.balign 8
 lbl_803E6A68:
 	.4byte 0x00000000
 lbl_803E6A6C:
@@ -1027,7 +1027,7 @@ __RTTI__Q23zen9MenuPanel:
 	.4byte lbl_802E2080
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
-.balign 0x8
+.balign 8
 lbl_803EBC98:
 	.4byte 0x00000000
 lbl_803EBC9C:
@@ -1054,7 +1054,7 @@ lbl_803EBCC4:
 	.4byte 0x3E800000
 lbl_803EBCC8:
 	.4byte 0x3F000000
-.balign 0x8
+.balign 8
 lbl_803EBCD0:
 	.4byte 0x43300000
 	.4byte 0x80000000

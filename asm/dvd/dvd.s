@@ -2774,7 +2774,7 @@ lbl_80201EE0:
 /* 80201F00 001FEE60  4E 80 00 20 */	blr 
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
-.balign 0x8
+.balign 8
 lbl_802E8818:
 	.asciz "app booted via JTAG\n"
 .balign 4
@@ -2843,12 +2843,12 @@ lbl_802E88F8:
 	.4byte lbl_80201D9C
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
-.balign 0x8
+.balign 8
 autoInvalidation:
 	.4byte 0x00000001
 
 .section .sbss, "wa"
-.balign 0x8
+.balign 8
 executing:
 	.skip 0x4
 currID:

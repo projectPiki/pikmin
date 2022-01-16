@@ -152,7 +152,7 @@ lbl_801FA090:
 /* 801FA0BC 001F701C  4E 80 00 20 */	blr 
 
 .section .sbss, "wa"
-.balign 0x8
+.balign 8
 .global Prepared
 Prepared:
 	.skip 0x4

@@ -981,18 +981,18 @@ draw__Q23zen13DrawCountDownFR8Graphics:
 /* 801E88FC 001E585C  4E 80 00 20 */	blr 
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
-.balign 0x8
+.balign 8
 .global lbl_802E5A38
 lbl_802E5A38:
 	.asciz "screen/blo/count.blo"
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
-.balign 0x8
+.balign 8
 lbl_803E73A0: # this string is used in __ct__Q23zen13DrawCountDownFv
 	.asciz "cd%02d"
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
-.balign 0x8
+.balign 8
 .global lbl_803EC160
 lbl_803EC160:
 	.4byte 0x41900000

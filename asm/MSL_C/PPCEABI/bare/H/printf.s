@@ -2007,7 +2007,7 @@ lbl_8021804C:
 /* 80218064 00214FC4  4E 80 00 20 */	blr 
 
 .section .rodata, "a"  # 0x80221FE0 - 0x80222DC0
-.balign 0x8
+.balign 8
 .global "@stringBase0_1"
 "@stringBase0_1":
 	.4byte 0x002D496E
@@ -2016,7 +2016,7 @@ lbl_8021804C:
 	.4byte 0x4E000000
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
-.balign 0x8
+.balign 8
 .global lbl_802E9100
 lbl_802E9100:
 	.4byte lbl_80217784
@@ -2163,14 +2163,14 @@ lbl_802E92D8:
 	.4byte 0x00000000
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
-.balign 0x8
+.balign 8
 .global "@wstringBase0"
 "@wstringBase0":
 	.4byte 0x00000000
 	.4byte 0x00000000
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
-.balign 0x8
+.balign 8
 .global "@919"
 "@919":
 	.4byte 0x00000000

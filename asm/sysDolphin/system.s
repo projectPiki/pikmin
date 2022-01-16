@@ -5707,7 +5707,7 @@ draw__12SmokeEmitterFR8Graphics:
 /* 8019BD64 00198CC4  3B 41 00 30 */	addi r26, r1, 0x30
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
-.balign 0x8
+.balign 8
 .global bigFont_data
 bigFont_data:
 	.incbin "bigFont.bti", 0x20, 508032

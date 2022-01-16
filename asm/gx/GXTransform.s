@@ -406,7 +406,7 @@ lbl_80214860:
 /* 8021486C 002117CC  4E 80 00 20 */	blr 
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
-.balign 0x8
+.balign 8
 .global lbl_803EC5D8
 lbl_803EC5D8:
 	.4byte 0x3F000000

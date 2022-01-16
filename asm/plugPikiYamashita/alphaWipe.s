@@ -259,7 +259,7 @@ lbl_801F1D3C:
 /* 801F1D5C 001EECBC  4E 80 00 20 */	blr 
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
-.balign 0x8
+.balign 8
 .global lbl_803EC438
 lbl_803EC438:
 	.float 0.0

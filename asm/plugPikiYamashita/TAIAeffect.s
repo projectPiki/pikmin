@@ -290,7 +290,7 @@ lbl_801D6234:
 /* 801D6248 001D31A8  4E 80 00 20 */	blr 
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
-.balign 0x8
+.balign 8
 lbl_802E4B60:
 	.asciz "TAIAeffect.cpp"
 	.skip 1
@@ -319,7 +319,7 @@ __vt__18TAIAeffCloudOfDust:
 	.4byte setType__18TAIAeffCloudOfDustFR8Vector3fii
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
-.balign 0x8
+.balign 8
 .global RUMBLE_NONE__18TAIAeffCloudOfDust
 RUMBLE_NONE__18TAIAeffCloudOfDust:
 	.4byte 0xFFFFFFFF
@@ -331,6 +331,6 @@ __RTTI__18TAIAeffCloudOfDust:
 	.4byte lbl_802E4B9C
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
-.balign 0x8
+.balign 8
 lbl_803EBF98:
 	.4byte 0x00000000

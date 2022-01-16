@@ -1449,7 +1449,7 @@ lbl_80209204:
 /* 80209210 00206170  4E 80 00 20 */	blr 
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
-.balign 0x8
+.balign 8
 ResetFunctionInfo:
 	.4byte OnReset
 	.4byte 0x0000007F
@@ -1457,7 +1457,7 @@ ResetFunctionInfo:
 	.4byte 0x00000000
 
 .section .sbss, "wa"
-.balign 0x8
+.balign 8
 .global __CARDDiskID
 __CARDDiskID:
 	.skip 0x4

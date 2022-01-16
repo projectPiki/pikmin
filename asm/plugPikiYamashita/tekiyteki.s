@@ -716,7 +716,7 @@ hitCheckCulling__28TAIeffectAttackEventCallBackFPQ23zen17particleGeneratorP20TAI
 /* 801A30F4 001A0054  4E 80 00 20 */	blr 
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
-.balign 0x8
+.balign 8
 lbl_802DD898:
 	.asciz "tekiyteki.cpp"
 .balign 4
@@ -956,7 +956,7 @@ __vt__28TAIeffectAttackEventCallBack:
 	.4byte 0
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
-.balign 0x8
+.balign 8
 lbl_803E5E88:
 	.4byte 0x00000000
 lbl_803E5E8C:
@@ -1023,7 +1023,7 @@ __RTTI__28TAIeffectAttackEventCallBack:
 	.4byte 0
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
-.balign 0x8
+.balign 8
 lbl_803EB630:
 	.4byte 0x00000000
 lbl_803EB634:

@@ -42,7 +42,7 @@ lbl_80222E8C:
 	.4byte lbl_80006A74
 	.4byte lbl_80006B1C
 	.4byte lbl_80006B3C
-.balign 0x8
+.balign 8
 .global audio_root_path
 audio_root_path:
 	.4byte 0x00000000
@@ -4342,7 +4342,7 @@ lbl_80226F40:
 	.4byte lbl_8001AFD8
 	.4byte lbl_8001AFE8
 	.4byte lbl_8001AFF8
-.balign 0x8
+.balign 8
 .global filter_table
 filter_table:
 	.4byte 0x00000000

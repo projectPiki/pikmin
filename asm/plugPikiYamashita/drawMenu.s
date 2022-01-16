@@ -2318,7 +2318,7 @@ lbl_801C494C:
 /* 801C495C 001C18BC  4E 80 00 20 */	blr 
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
-.balign 0x8
+.balign 8
 lbl_802E1720:
 	.asciz "drawMenu.cpp"
 .balign 4
@@ -2343,7 +2343,7 @@ __vt__Q23zen8DrawMenu:
 	.4byte draw__Q23zen10DrawScreenFv
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
-.balign 0x8
+.balign 8
 lbl_803E6888:
 	.float 1.0
 lbl_803E688C:
@@ -2374,7 +2374,7 @@ __RTTI__Q23zen8DrawMenu:
 	.4byte lbl_802E175C
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
-.balign 0x8
+.balign 8
 lbl_803EBB70:
 	.float 0.5
 lbl_803EBB74:

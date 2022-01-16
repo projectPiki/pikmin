@@ -46,7 +46,7 @@ lbl_8021CF5C:
 /* 8021CF74 00219ED4  4E 80 00 20 */	blr 
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
-.balign 0x8
+.balign 8
 .global gTRKDispatchTable
 gTRKDispatchTable:
 	.4byte TRKDoUnsupported

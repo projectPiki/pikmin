@@ -1415,7 +1415,7 @@ lbl_8021E1FC:
 /* 8021E218 0021B178  4E 80 00 20 */	blr 
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
-.balign 0x8
+.balign 8
 lbl_802E9548:
 	.4byte lbl_8021D79C
 	.4byte lbl_8021D7BC

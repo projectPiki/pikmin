@@ -1597,7 +1597,7 @@ getFrameMax__27TAIAflickingAfterMotionLoopFR4Teki:
 /* 801AF7A8 001AC708  4E 80 00 20 */	blr 
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
-.balign 0x8
+.balign 8
 lbl_802E01E8:
 	.asciz "TAIAattack.cpp"
 .balign 4
@@ -1853,7 +1853,7 @@ __vt__20TAIAattackWorkObject:
 	.4byte attackEffect__20TAIAattackWorkObjectFR4Teki
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
-.balign 0x8
+.balign 8
 lbl_803E64D8:
 	.4byte 0x00000000
 lbl_803E64DC:
@@ -1925,7 +1925,7 @@ __RTTI__20TAIAattackWorkObject:
 	.4byte lbl_802E0574
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
-.balign 0x8
+.balign 8
 lbl_803EB830:
 	.4byte 0x00000000
 lbl_803EB834:
@@ -1940,7 +1940,7 @@ lbl_803EB844:
 	.4byte 0x3F4CCCCD
 lbl_803EB848:
 	.4byte 0x3F000000
-.balign 0x8
+.balign 8
 lbl_803EB850:
 	.4byte 0x43300000
 	.4byte 0x80000000

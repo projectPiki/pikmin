@@ -357,7 +357,7 @@ lbl_801F3A2C:
 /* 801F3A34 001F0994  4E 80 00 20 */	blr 
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
-.balign 0x8
+.balign 8
 .global lbl_802E71E0
 lbl_802E71E0:
 	.4byte 0x73617665
@@ -365,7 +365,7 @@ lbl_802E71E0:
 	.4byte 0x6C6F0000
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
-.balign 0x8
+.balign 8
 .global lbl_803EC490
 lbl_803EC490:
 	.4byte 0x3F800000

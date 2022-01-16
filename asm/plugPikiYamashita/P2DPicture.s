@@ -1311,7 +1311,7 @@ swap__10P2DPictureFRfRf:
 /* 801B2B4C 001AFAAC  4E 80 00 20 */	blr 
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
-.balign 0x8
+.balign 8
 lbl_802E0700:
 	.asciz "P2DPicture.cpp"
 .balign 4
@@ -1342,7 +1342,7 @@ __vt__10P2DPicture:
 	.4byte 0
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
-.balign 0x8
+.balign 8
 lbl_803E6628:
 	.asciz "P2DPane"
 .balign 4
@@ -1354,14 +1354,14 @@ __RTTI__10P2DPicture:
 	.4byte lbl_802E071C
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
-.balign 0x8
+.balign 8
 lbl_803EB8B8:
 	.4byte 0x3F800000
 lbl_803EB8BC:
 	.4byte 0x00000000
 lbl_803EB8C0:
 	.4byte 0x3F000000
-.balign 0x8
+.balign 8
 lbl_803EB8C8:
 	.4byte 0x43300000
 	.4byte 0x00000000

@@ -296,7 +296,7 @@ __GXPEInit:
 /* 80210B44 0020DAA4  4E 80 00 20 */	blr 
 
 .section .sbss, "wa"
-.balign 0x8
+.balign 8
 .global TokenCB
 TokenCB:
 	.skip 0x4

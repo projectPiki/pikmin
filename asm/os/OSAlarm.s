@@ -499,7 +499,7 @@ DecrementerExceptionHandler:
 /* 801F67A8 001F3708  4B FF FD A8 */	b DecrementerExceptionCallback
 
 .section .sbss, "wa"
-.balign 0x8
+.balign 8
 .global AlarmQueue
 AlarmQueue:
 	.skip 0x8

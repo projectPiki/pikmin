@@ -43,7 +43,7 @@ lbl_8021552C:
 /* 80215538 00212498  4E 80 00 20 */	blr 
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
-.balign 0x8
+.balign 8
 .global fragmentID
 fragmentID:
 	.4byte 0xFFFFFFFE

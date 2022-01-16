@@ -725,7 +725,7 @@ lbl_801EAA54:
 /* 801EAA6C 001E79CC  4E 80 00 20 */	blr 
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
-.balign 0x8
+.balign 8
 lbl_802E63F0:
 	.asciz "TAIusuba.cpp"
 	.skip 3
@@ -883,7 +883,7 @@ __vt__18TAIusubaParameters:
 	.4byte getModelMatrix__4NodeFv
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
-.balign 0x8
+.balign 8
 lbl_803E73D8:
 	.4byte 0x00000000
 lbl_803E73DC:
@@ -943,7 +943,7 @@ __RTTI__18TAIusubaParameters:
 	.4byte lbl_802E6708
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
-.balign 0x8
+.balign 8
 lbl_803EC248:
 	.4byte 0x42C80000
 lbl_803EC24C:

@@ -1655,7 +1655,7 @@ VIGetDTVStatus:
 /* 80203BC8 00200B28  4E 80 00 20 */	blr 
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
-.balign 0x8
+.balign 8
 .global timing
 timing:
 	.4byte 0x060000F0
@@ -1754,7 +1754,7 @@ lbl_802E8B20:
 	.4byte lbl_80202720
 
 .section .sbss, "wa"
-.balign 0x8
+.balign 8
 .global retraceCount
 retraceCount:
 	.skip 0x4

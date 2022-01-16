@@ -4245,7 +4245,7 @@ lbl_801BA0CC:
 /* 801BA138 001B7098  4B FF F9 D0 */	b "invoke__Q29@unnamed@15SunBaseCallBackFP7P2DPane"
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
-.balign 0x8
+.balign 8
 lbl_802E09B0:
 	.asciz "drawGameInfo.cpp"
 .balign 4

@@ -549,7 +549,7 @@ lbl_802120EC:
 /* 80212100 0020F060  4E 80 00 20 */	blr 
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
-.balign 0x8
+.balign 8
 lbl_803EC560:
 	.float 0.0
 lbl_803EC564:

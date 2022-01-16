@@ -637,7 +637,7 @@ lbl_801F0A64:
 /* 801F0A7C 001ED9DC  4E 80 00 20 */	blr 
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
-.balign 0x8
+.balign 8
 .global lbl_802E7088
 lbl_802E7088:
 	.4byte 0x64726177
@@ -684,7 +684,7 @@ __vt__Q23zen12DrawMenuBase:
 	.4byte setModeFunc__Q23zen12DrawMenuBaseFi
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
-.balign 0x8
+.balign 8
 lbl_803E7650:
 	.asciz "he%02d"
 .balign 4

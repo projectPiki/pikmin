@@ -731,7 +731,7 @@ GXClearBoundingBox:
 /* 80211978 0020E8D8  4E 80 00 20 */	blr 
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
-.balign 0x8
+.balign 8
 .global GXNtsc480IntDf
 GXNtsc480IntDf:
 	.4byte 0x00000000
@@ -786,7 +786,7 @@ GXPal528IntDf:
 	.4byte 0x00000000
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
-.balign 0x8
+.balign 8
 .global lbl_803EC550
 lbl_803EC550:
 	.4byte 0x43800000

@@ -13784,7 +13784,7 @@ lbl_801E7A98:
 /* 801E7AAC 001E4A0C  4E 80 00 20 */	blr 
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
-.balign 0x8
+.balign 8
 lbl_802E57B0:
 	.asciz "drawWorldMap.cpp"
 	.skip 3
@@ -13898,7 +13898,7 @@ lbl_802E59E4:
 	.4byte 0
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
-.balign 0x8
+.balign 8
 "mapNoScr2Game__9@unnamed@":
 	.4byte 0x03010002
 	.4byte 0x04000000
@@ -14149,12 +14149,12 @@ __RTTI__15P2DPaneCallBack:
 	.4byte lbl_802E59E4
 
 .section .sbss, "wa"
-.balign 0x8
+.balign 8
 "WMeffMgr__9@unnamed@":
 	.skip 0x4
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
-.balign 0x8
+.balign 8
 lbl_803EC078:
 	.4byte 0x00000000
 lbl_803EC07C:

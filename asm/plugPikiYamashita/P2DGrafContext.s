@@ -373,7 +373,7 @@ setLookat__14P2DGrafContextFv:
 /* 801AFCEC 001ACC4C  4E 80 00 20 */	blr 
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
-.balign 0x8
+.balign 8
 lbl_802E05B0:
 	.asciz "P2DGrafContext.cpp"
 .balign 4
@@ -393,13 +393,13 @@ __vt__14P2DGrafContext:
 	.4byte setLookat__14P2DGrafContextFv
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
-.balign 0x8
+.balign 8
 __RTTI__14P2DGrafContext:
 	.4byte lbl_802E05C4
 	.4byte 0
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
-.balign 0x8
+.balign 8
 lbl_803EB860:
 	.4byte 0x00000000
 lbl_803EB864:

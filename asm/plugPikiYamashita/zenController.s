@@ -114,13 +114,13 @@ lbl_801C048C:
 /* 801C0498 001BD3F8  4E 80 00 20 */	blr 
 
 .section .sbss, "wa"
-.balign 0x8
+.balign 8
 .global repeatTime__Q23zen9KeyRepeat
 repeatTime__Q23zen9KeyRepeat:
 	.skip 0x4
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
-.balign 0x8
+.balign 8
 lbl_803EBAF0:
 	.4byte 0x00000000
 lbl_803EBAF4:

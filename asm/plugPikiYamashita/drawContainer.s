@@ -5385,7 +5385,7 @@ lbl_801BF518:
 /* 801BF570 001BC4D0  4E 80 00 20 */	blr 
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
-.balign 0x8
+.balign 8
 lbl_802E1118:
 	.asciz "drawContainer.cpp"
 .balign 4
@@ -5560,7 +5560,7 @@ lbl_802E145C:
 	.4byte 0
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
-.balign 0x8
+.balign 8
 lbl_803E6750:
 	.4byte 0x00000000
 lbl_803E6754:
@@ -5632,14 +5632,14 @@ __RTTI__5ANode:
 	.4byte 0
 
 .section .sbss, "wa"
-.balign 0x8
+.balign 8
 pUpTex__Q23zen19ArrowCenterCallBack:
 	.skip 0x4
 pDownTex__Q23zen19ArrowCenterCallBack:
 	.skip 0x4
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
-.balign 0x8
+.balign 8
 lbl_803EBA28:
 	.4byte 0x00000000
 lbl_803EBA2C:

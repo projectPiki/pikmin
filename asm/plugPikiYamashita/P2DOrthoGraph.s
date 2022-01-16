@@ -314,7 +314,7 @@ lbl_801B0178:
 /* 801B018C 001AD0EC  4E 80 00 20 */	blr 
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
-.balign 0x8
+.balign 8
 lbl_802E05F8:
 	.asciz "P2DOrthoGraph"
 .balign 4
@@ -338,7 +338,7 @@ __vt__13P2DOrthoGraph:
 	.4byte setLookat__13P2DOrthoGraphFv
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
-.balign 0x8
+.balign 8
 __RTTI__14P2DGrafContext:
 	.4byte lbl_802E0608
 	.4byte 0
@@ -347,7 +347,7 @@ __RTTI__13P2DOrthoGraph:
 	.4byte lbl_802E0618
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
-.balign 0x8
+.balign 8
 lbl_803EB870:
 	.4byte 0x43300000
 	.4byte 0x80000000

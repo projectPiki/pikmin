@@ -343,7 +343,7 @@ makeLookat__13P2DPerspGraphFv:
 /* 801B0698 001AD5F8  4E 80 00 20 */	blr 
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
-.balign 0x8
+.balign 8
 lbl_802E0648:
 	.asciz "P2DPerspGraph.cpp"
 .balign 4
@@ -374,7 +374,7 @@ __vt__13P2DPerspGraph:
 	.4byte 0
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
-.balign 0x8
+.balign 8
 lbl_803E6598:
 	.4byte 0x00000000
 lbl_803E659C:
@@ -419,7 +419,7 @@ __RTTI__13P2DPerspGraph:
 	.4byte lbl_802E068C
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
-.balign 0x8
+.balign 8
 lbl_803EB880:
 	.4byte 0x3F800000
 lbl_803EB884:

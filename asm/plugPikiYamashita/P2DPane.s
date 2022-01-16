@@ -1285,7 +1285,7 @@ drawSelf__7P2DPaneFii:
 /* 801B18C0 001AE820  4E 80 00 20 */	blr 
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
-.balign 0x8
+.balign 8
 .global __vt__7P2DPane
 __vt__7P2DPane:
 	.4byte __RTTI__7P2DPane
@@ -1306,7 +1306,7 @@ __vt__7P2DPane:
 	.4byte 0
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
-.balign 0x8
+.balign 8
 lbl_803E65F0:
 	.asciz "P2DPane"
 .balign 4
@@ -1334,10 +1334,10 @@ __RTTI__7P2DPane:
 	.4byte 0x00000000
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
-.balign 0x8
+.balign 8
 lbl_803EB8A8:
 	.4byte 0x00000000
-.balign 0x8
+.balign 8
 lbl_803EB8B0:
 	.4byte 0x43300000
 	.4byte 0x80000000

@@ -289,7 +289,7 @@ killAll__Q23zen11EffectMgr2DFb:
 /* 801E9CF4 001E6C54  4E 80 00 20 */	blr 
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
-.balign 0x8
+.balign 8
 lbl_802E5AD0:
 	.asciz "effectMgr2D.cpp"
 lbl_802E5AE0:
@@ -630,7 +630,7 @@ lbl_802E63B4:
 	.4byte 0x00000000
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
-.balign 0x8
+.balign 8
 lbl_803E73C0:
 	.4byte 0x43A00000
 lbl_803E73C4:
@@ -643,7 +643,7 @@ lbl_803E73D0:
 	.4byte 0x00000000
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
-.balign 0x8
+.balign 8
 lbl_803EC218:
 	.4byte 0x42700000
 lbl_803EC21C:

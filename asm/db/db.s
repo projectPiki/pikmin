@@ -76,13 +76,13 @@ lbl_801FDB6C:
 /* 801FDB90 001FAAF0  4E 80 00 20 */	blr 
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
-.balign 0x8
+.balign 8
 lbl_802E8448:
 	.asciz "DBExceptionDestination\n"
 .balign 4
 
 .section .sbss, "wa"
-.balign 0x8
+.balign 8
 .global __DBInterface
 __DBInterface:
 	.skip 0x4

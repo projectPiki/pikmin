@@ -1020,12 +1020,12 @@ __DVDLowSetWAType:
 /* 801FEF7C 001FBEDC  4E 80 00 20 */	blr 
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
-.balign 0x8
+.balign 8
 FirstRead:
 	.4byte 0x00000001
 
 .section .sbss, "wa"
-.balign 0x8
+.balign 8
 StopAtNextInt:
 	.skip 0x4
 LastLength:

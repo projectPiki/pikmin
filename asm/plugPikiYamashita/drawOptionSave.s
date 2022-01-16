@@ -322,7 +322,7 @@ lbl_801F592C:
 /* 801F5940 001F28A0  4E 80 00 20 */	blr 
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
-.balign 0x8
+.balign 8
 .global lbl_802E7258
 lbl_802E7258:
 	.4byte lbl_801F56B4

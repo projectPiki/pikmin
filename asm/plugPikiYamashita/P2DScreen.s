@@ -517,7 +517,7 @@ makeResName__9P2DScreenFPCcPc:
 /* 801B3270 001B01D0  4E 80 00 20 */	blr 
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
-.balign 0x8
+.balign 8
 lbl_802E0768:
 	.asciz "P2DScreen.cpp"
 .balign 4
@@ -569,7 +569,7 @@ __vt__9P2DScreen:
 	.4byte makeUserPane__9P2DScreenFUsP7P2DPaneP18RandomAccessStream
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
-.balign 0x8
+.balign 8
 lbl_803E6640:
 	.asciz "P2DPane"
 .balign 4

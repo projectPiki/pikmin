@@ -1130,7 +1130,7 @@ lbl_801C5980:
 /* 801C59D0 001C2930  4E 80 00 20 */	blr 
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
-.balign 0x8
+.balign 8
 lbl_802E1778:
 	.asciz "TAIeffectAttack.cpp"
 .balign 4
@@ -1178,7 +1178,7 @@ __vt__17EventTypeCallBack:
 	.4byte invoke__17EventTypeCallBackFPQ23zen17particleGenerator
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
-.balign 0x8
+.balign 8
 lbl_803E68D0:
 	.4byte 0x00000000
 lbl_803E68D4:
@@ -1225,7 +1225,7 @@ __RTTI__17EventTypeCallBack:
 	.4byte lbl_802E1838
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
-.balign 0x8
+.balign 8
 lbl_803EBBB8:
 	.4byte 0x00000000
 lbl_803EBBBC:

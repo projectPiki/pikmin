@@ -1233,7 +1233,7 @@ lbl_801AE194:
 /* 801AE198 001AB0F8  4E 80 00 20 */	blr 
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
-.balign 0x8
+.balign 8
 lbl_802DFD20:
 	.asciz "TAIAjudge.cpp"
 .balign 4
@@ -1547,7 +1547,7 @@ __vt__20TAIAsearchWorkObject:
 	.4byte hasNextState__9TaiActionFv
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
-.balign 0x8
+.balign 8
 __RTTI__9TaiAction:
 	.4byte lbl_802DFD50
 	.4byte 0
@@ -1607,7 +1607,7 @@ __RTTI__20TAIAsearchWorkObject:
 	.4byte lbl_802E01C0
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
-.balign 0x8
+.balign 8
 lbl_803EB820:
 	.4byte 0x00000000
 lbl_803EB824:

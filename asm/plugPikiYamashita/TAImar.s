@@ -3139,7 +3139,7 @@ lbl_801A8450:
 /* 801A848C 001A53EC  4B FF EB F4 */	b getOffset__32TAIAflyingDistanceInTerritoryMarFR4Teki
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
-.balign 0x8
+.balign 8
 lbl_802DE4E0:
 	.asciz "TAImar.cpp"
 .balign 4
@@ -3903,7 +3903,7 @@ __vt__31TAIeffectAttackEventCallBackMar:
 	.4byte 0
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
-.balign 0x8
+.balign 8
 lbl_803E6078:
 	.4byte 0x00000000
 lbl_803E607C:
@@ -4070,7 +4070,7 @@ __RTTI__31TAIeffectAttackEventCallBackMar:
 	.4byte lbl_802DF0D8
 
 .section .sbss, "wa"
-.balign 0x8
+.balign 8
 .global effectScale0__12TAIAdyingMar
 effectScale0__12TAIAdyingMar:
 	.skip 0x4
@@ -4085,7 +4085,7 @@ eventCallBack__12BreathEffect:
 	.skip 0x4
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
-.balign 0x8
+.balign 8
 lbl_803EB6E0:
 	.4byte 0x00000000
 lbl_803EB6E4:
