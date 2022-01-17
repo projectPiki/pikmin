@@ -934,13 +934,3 @@ lbl_803E88AC:
 "@943":
 	.4byte 0x43300000
 	.4byte 0x00000000
-.global lbl_803E88C0
-lbl_803E88C0:
-	.4byte 0x00000000
-.global lbl_803E88C4
-lbl_803E88C4:
-	.4byte 0x3DCCCCCD
-.global "@811"
-"@811":
-	.4byte 0x43300000
-	.4byte 0x80000000
