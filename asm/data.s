@@ -9499,7 +9499,7 @@ __vt__21IntroGameSetupSection:
 	.4byte 0x6F47616D
 	.4byte 0x65536563
 	.4byte 0x74696F6E
-	.4byte 0
+	.4byte 00
 	.4byte 0x803DDC5C
 	.4byte 0
 	.4byte 0x803DDC64
@@ -9548,17 +9548,17 @@ __vt__16IntroGameSection:
 	.4byte 0x67616D65
 	.4byte 0x45786974
 	.4byte 0x2E637070
-	.4byte 0
+	.4byte 00
 	.4byte 0x47616D65
 	.4byte 0x45786974
-	.4byte 0
+	.4byte 00
 	.4byte 0x47616D65
 	.4byte 0x45786974
 	.4byte 0x53656374
 	.4byte 0x696F6E00
 	.4byte 0x436F7265
 	.4byte 0x4E6F6465
-	.4byte 0
+	.4byte 00
 	.4byte 0x803DDCD4
 	.4byte 0
 	.4byte 0
@@ -9671,43 +9671,43 @@ lbl_802A833C:
 	.4byte 0x69646765
 	.4byte 0x00000000
 	.4byte 0x803DDD80
-	.4byte 0x00000000
+	.4byte 0
 	.4byte 0x803DDD88
-	.4byte 0x00000000
-	.4byte 0x00000000
+	.4byte 0
+	.4byte 0
 	.4byte 0x52696769
 	.4byte 0x64426F64
 	.4byte 0x79000000
 	.4byte 0x803DDD80
-	.4byte 0x00000000
+	.4byte 0
 	.4byte 0x803DDD88
-	.4byte 0x00000000
+	.4byte 0
 	.4byte 0x803DDD98
-	.4byte 0x00000000
-	.4byte 0x00000000
+	.4byte 0
+	.4byte 0
 	.4byte 0x44796E4F
 	.4byte 0x626A426F
 	.4byte 0x64790000
 	.4byte 0x803DDD80
-	.4byte 0x00000000
+	.4byte 0
 	.4byte 0x803DDD88
-	.4byte 0x00000000
+	.4byte 0
 	.4byte 0x803DDD98
-	.4byte 0x00000000
+	.4byte 0
 	.4byte 0x803DDDA0
-	.4byte 0x00000000
-	.4byte 0x00000000
+	.4byte 0
+	.4byte 0
 	.4byte 0x803DDD80
-	.4byte 0x00000000
+	.4byte 0
 	.4byte 0x803DDD88
-	.4byte 0x00000000
+	.4byte 0
 	.4byte 0x803DDD98
-	.4byte 0x00000000
+	.4byte 0
 	.4byte 0x803DDDA0
-	.4byte 0x00000000
+	.4byte 0
 	.4byte 0x803DDDA8
-	.4byte 0x00000000
-	.4byte 0x00000000
+	.4byte 0
+	.4byte 0
 .global __vt__12DynObjBridge
 __vt__12DynObjBridge:
 	.4byte __RTTI__12DynObjBridge
@@ -9782,81 +9782,3 @@ __vt__18GenObjectMapObject:
 	.4byte update__9GenObjectFP9Generator
 	.4byte render__18GenObjectMapObjectFR8GraphicsP9Generator
 	.4byte birth__18GenObjectMapObjectFR9BirthInfo
-	.4byte 0
-.global lbl_802A8540
-lbl_802A8540:
-	.4byte lbl_8005E3E8
-	.4byte lbl_8005E268
-	.4byte lbl_8005E284
-	.4byte lbl_8005E3E8
-	.4byte lbl_8005E2A0
-	.4byte lbl_8005E3E8
-	.4byte lbl_8005E3E8
-	.4byte lbl_8005E3E8
-	.4byte lbl_8005E2D0
-	.4byte lbl_8005E3E8
-	.4byte lbl_8005E3E8
-	.4byte lbl_8005E3E8
-	.4byte lbl_8005E3E8
-	.4byte lbl_8005E3E8
-	.4byte lbl_8005E3E8
-	.4byte lbl_8005E3E8
-	.4byte lbl_8005E304
-	.4byte lbl_8005E3E8
-	.4byte lbl_8005E3E8
-	.4byte lbl_8005E3E8
-	.4byte lbl_8005E3E8
-	.4byte lbl_8005E3E8
-	.4byte lbl_8005E3E8
-	.4byte lbl_8005E3E8
-	.4byte lbl_8005E3E8
-	.4byte lbl_8005E3E8
-	.4byte lbl_8005E3E8
-	.4byte lbl_8005E3E8
-	.4byte lbl_8005E3E8
-	.4byte lbl_8005E3E8
-	.4byte lbl_8005E3E8
-	.4byte lbl_8005E3E8
-	.4byte lbl_8005E2D0
-	.4byte 0x436F7265
-	.4byte 0x4E6F6465
-	.4byte 0x00000000
-	.4byte 0x803DDE04
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x803DDE04
-	.4byte 0x00000000
-	.4byte 0x803DDE0C
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x803DDE04
-	.4byte 0x00000000
-	.4byte 0x803DDE0C
-	.4byte 0x00000000
-	.4byte 0x803DDE1C
-	.4byte 0x00000000
-	.4byte 0x00000000
-.global __vt__4Menu
-__vt__4Menu:
-	.4byte __RTTI__4Menu
-	.4byte 0
-	.4byte getAgeNodeType__5ANodeFv
-	.4byte read__8CoreNodeFR18RandomAccessStream
-	.4byte update__4NodeFv
-	.4byte draw__4NodeFR8Graphics
-	.4byte render__4NodeFR8Graphics
-	.4byte concat__4NodeFv
-	.4byte concat__4NodeFR3VQS
-	.4byte concat__4NodeFR3SRT
-	.4byte concat__4NodeFR8Matrix4f
-	.4byte getModelMatrix__4NodeFv
-	.4byte checkSelectKey__4MenuFv
-	.4byte checkCancelKey__4MenuFv
-	.4byte checkNewOption__4MenuFv
-	.4byte enterOption__4MenuFv
-	.4byte enterMenu__4MenuFP4Menu
-	.4byte exitMenu__4MenuFP4Menu
-	.4byte open__4MenuFb
-	.4byte close__4MenuFv
-	.4byte doUpdate__4MenuFb
-.skip 32 #padding

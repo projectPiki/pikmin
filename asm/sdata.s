@@ -2162,30 +2162,3 @@ __RTTI__12DynObjBridge:
 __RTTI__18GenObjectMapObject:
 	.4byte 0x802A849C
 	.4byte 0x802A84E8
-.global lbl_803DDDE0
-lbl_803DDDE0:
-	.4byte 0x3C4E6F64
-	.4byte 0x653E0000
-.global lbl_803DDDE8
-lbl_803DDDE8:
-	.4byte 0x6D656E75
-	.4byte 0x00000000
-.global lbl_803DDDF0
-lbl_803DDDF0:
-	.4byte 0x25730000
-	.4byte 0x4D656E75
-	.4byte 0x00000000
-	.4byte 0x414E6F64
-	.4byte 0x65000000
-	.4byte 0x803DDDFC
-	.4byte 0x00000000
-	.4byte 0x802A85C4
-	.4byte 0x802A85D0
-	.4byte 0x4E6F6465
-	.4byte 0x00000000
-	.4byte 0x803DDE14
-	.4byte 0x802A85DC
-.global __RTTI__4Menu
-__RTTI__4Menu:
-	.4byte 0x803DDDF4
-	.4byte 0x802A85F0

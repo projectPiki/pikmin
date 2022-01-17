@@ -902,35 +902,3 @@ lbl_803E8888:
 .global lbl_803E888C
 lbl_803E888C:
 	.4byte 0x3F000000
-.global lbl_803E8890
-lbl_803E8890:
-	.4byte 0x40490FDB
-.global lbl_803E8894
-lbl_803E8894:
-	.4byte 0x00000000
-.global lbl_803E8898
-lbl_803E8898:
-	.4byte 0x3F800000
-.global lbl_803E889C
-lbl_803E889C:
-	.4byte 0x40E00000
-.global lbl_803E88A0
-lbl_803E88A0:
-	.4byte 0x41000000
-.global lbl_803E88A4
-lbl_803E88A4:
-	.4byte 0x3F000000
-.global lbl_803E88A8
-lbl_803E88A8:
-	.4byte 0x437F0000
-.global lbl_803E88AC
-lbl_803E88AC:
-	.4byte 0x42800000
-.global "@939"
-"@939":
-	.4byte 0x43300000
-	.4byte 0x80000000
-.global "@943"
-"@943":
-	.4byte 0x43300000
-	.4byte 0x00000000
