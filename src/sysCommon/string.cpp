@@ -24,23 +24,6 @@ int String::getLength()
 	while (*(str++))
 		len++;
 	return len;
-
-	/*
-.loc_0x0:
-  lwz       r4, 0x4(r3)
-  li        r3, 0
-  b         .loc_0x10
-
-.loc_0xC:
-  addi      r3, r3, 0x1
-
-.loc_0x10:
-  lbz       r0, 0x0(r4)
-  addi      r4, r4, 0x1
-  cmplwi    r0, 0
-  bne+      .loc_0xC
-  blr
-*/
 }
 
 /*

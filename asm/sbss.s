@@ -731,19 +731,4 @@ init$localstatic9$draw__17TitleSetupSectionFR8Graphics:
 	.skip 4
 .global progresWindow
 progresWindow:
-	.skip 8
-.global mapMgr
-mapMgr:
-	.skip 4
-.global Kda
-Kda:
-	.skip 4
-.global numRepeats
-numRepeats:
-	.skip 4
-.global numUpdated
-numUpdated:
-	.skip 4
-.global vlink
-vlink:
 	.skip 4
