@@ -2189,6 +2189,3 @@ lbl_803DDDF0:
 __RTTI__4Menu:
 	.4byte 0x803DDDF4
 	.4byte 0x802A85F0
-	.4byte 0
-	.4byte 0x802A8690
-	.4byte 0

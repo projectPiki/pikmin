@@ -9859,25 +9859,4 @@ __vt__4Menu:
 	.4byte open__4MenuFb
 	.4byte close__4MenuFv
 	.4byte doUpdate__4MenuFb
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0x70617261
-	.4byte 0x6D657465
-	.4byte 0x72732E63
-	.4byte 0x70700000
-	.4byte 0x42617365
-	.4byte 0x5061726D
-	.4byte 0
-.global __vt__8BaseParm
-__vt__8BaseParm:
-	.4byte 0x803DDE30
-	.4byte 0
-	.4byte 0
-	.4byte write__8BaseParmFR18RandomAccessStream
-	.4byte read__8BaseParmFR18RandomAccessStream
+.skip 32 #padding
