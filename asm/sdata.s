@@ -2380,29 +2380,3 @@ __RTTI__13TitlesSection:
 __RTTI__20TitlesMovieInterface:
 	.4byte 0x802A8BBC
 	.4byte 0x802A8BD4
-.global lbl_803DDFB8
-lbl_803DDFB8:
-	.4byte 0x3C4E6F64
-	.4byte 0x653E0000
-	.4byte 0x414E6F64
-	.4byte 0x65000000
-	.4byte 0x803DDFC0
-	.4byte 0x00000000
-	.4byte 0x802A8C38
-	.4byte 0x802A8C44
-	.4byte 0x4E6F6465
-	.4byte 0x00000000
-	.4byte 0x803DDFD8
-	.4byte 0x802A8C80
-.global __RTTI__19NinLogoSetupSection
-__RTTI__19NinLogoSetupSection:
-	.4byte 0x802A8C6C
-	.4byte 0x802A8C94
-	.4byte 0x53656374
-	.4byte 0x696F6E00
-	.4byte 0x803DDFF0
-	.4byte 0x802A8CF0
-.global __RTTI__14NinLogoSection
-__RTTI__14NinLogoSection:
-	.4byte 0x802A8CE0
-	.4byte 0x802A8D0C

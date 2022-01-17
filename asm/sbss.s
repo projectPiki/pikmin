@@ -704,31 +704,32 @@ spin$localstatic0$draw__17TitleSetupSectionFR8Graphics:
 	.skip 4
 .global init$localstatic1$draw__17TitleSetupSectionFR8Graphics
 init$localstatic1$draw__17TitleSetupSectionFR8Graphics:
-	.skip 4
+	.skip 1
+.balign 4
 .global chas$localstatic2$draw__17TitleSetupSectionFR8Graphics
 chas$localstatic2$draw__17TitleSetupSectionFR8Graphics:
 	.skip 4
 .global init$localstatic3$draw__17TitleSetupSectionFR8Graphics
 init$localstatic3$draw__17TitleSetupSectionFR8Graphics:
-	.skip 4
+	.skip 1
+.balign 4
 .global cmax$localstatic4$draw__17TitleSetupSectionFR8Graphics
 cmax$localstatic4$draw__17TitleSetupSectionFR8Graphics:
 	.skip 4
 .global init$localstatic5$draw__17TitleSetupSectionFR8Graphics
 init$localstatic5$draw__17TitleSetupSectionFR8Graphics:
-	.skip 4
+	.skip 1
+.balign 4
 .global rspin$localstatic6$draw__17TitleSetupSectionFR8Graphics
 rspin$localstatic6$draw__17TitleSetupSectionFR8Graphics:
 	.skip 4
 .global init$localstatic7$draw__17TitleSetupSectionFR8Graphics
 init$localstatic7$draw__17TitleSetupSectionFR8Graphics:
-	.skip 4
+	.skip 1
+.balign 4
 .global mfade$localstatic8$draw__17TitleSetupSectionFR8Graphics
 mfade$localstatic8$draw__17TitleSetupSectionFR8Graphics:
 	.skip 4
 .global init$localstatic9$draw__17TitleSetupSectionFR8Graphics
 init$localstatic9$draw__17TitleSetupSectionFR8Graphics:
-	.skip 4
-.global progresWindow
-progresWindow:
-	.skip 4
+	.skip 1

@@ -1020,18 +1020,3 @@ lbl_803E8930:
 .global lbl_803E8934
 lbl_803E8934:
 	.4byte 0x3E800000
-.global lbl_803E8938
-lbl_803E8938:
-	.4byte 0x3F800000
-.global lbl_803E893C
-lbl_803E893C:
-	.4byte 0x40400000
-.global lbl_803E8940
-lbl_803E8940:
-	.4byte 0x3E000000
-.global lbl_803E8944
-lbl_803E8944:
-	.4byte 0x3E800000
-.global lbl_803E8948
-lbl_803E8948:
-	.4byte 0x3F000000
