@@ -35,6 +35,7 @@ TEXT_O_FILES :=\
 	$(BUILD_DIR)/asm/sysCommon/atx.o\
 	$(BUILD_DIR)/asm/sysCommon/id32.o\
 	$(BUILD_DIR)/asm/text_80044194.o\
+	$(BUILD_DIR)/asm/plugPikiColin/genMapObject.o\
 	$(BUILD_DIR)/asm/plugPikiColin/gui.o\
 	$(BUILD_DIR)/asm/plugPikiColin/parameters.o\
 	$(BUILD_DIR)/asm/plugPikiColin/plugPiki.o\

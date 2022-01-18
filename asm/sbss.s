@@ -678,6 +678,3 @@ lglev3:
 .global lgMgr
 lgMgr:
 	.skip 4
-.global mapMgr__18GenObjectMapObject
-mapMgr__18GenObjectMapObject:
-	.skip 4

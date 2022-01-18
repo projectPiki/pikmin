@@ -890,15 +890,3 @@ lbl_803E8874:
 "@1171":
 	.4byte 0x43300000
 	.4byte 0x00000000
-.global lbl_803E8880
-lbl_803E8880:
-	.4byte 0x00000000
-.global lbl_803E8884
-lbl_803E8884:
-	.4byte 0x3F800000
-.global lbl_803E8888
-lbl_803E8888:
-	.4byte 0x389D4952
-.global lbl_803E888C
-lbl_803E888C:
-	.4byte 0x3F000000
