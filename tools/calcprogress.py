@@ -60,7 +60,7 @@ TEXT_SECTIONS = ["init", "text"]
 DATA_SECTIONS = [
 "rodata", "data", "bss", "sdata", "sbss", "sdata2", "sbss2", "file",
 "ctors", "_ctors", "dtors", "ctors$99", "_ctors$99", "ctors$00", "dtors$99",
-"extab_", "extabindex_"
+"extab_", "extabindex_", "_extab", "_exidx"
 ]
 
 # DOL info
