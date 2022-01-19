@@ -2025,29 +2025,3 @@ __RTTI__21IntroGameSetupSection:
 __RTTI__16IntroGameSection:
 	.4byte 0x802A8100
 	.4byte 0x802A8130
-	.4byte 0
-.global lbl_803DDCC0
-lbl_803DDCC0:
-	.4byte 0x3C4E6F64
-	.4byte 0x653E0000
-.global lbl_803DDCC8
-lbl_803DDCC8:
-	.4byte 0x00000000
-	.4byte 0x414E6F64
-	.4byte 0x65000000
-	.4byte 0x803DDCCC
-	.4byte 0
-	.4byte 0x802A81EC
-	.4byte 0x802A81F8
-	.4byte 0x4E6F6465
-	.4byte 0x00000000
-	.4byte 0x803DDCE4
-	.4byte 0x802A8204
-	.4byte 0x53656374
-	.4byte 0x696F6E00
-	.4byte 0x803DDCF4
-	.4byte 0x802A8218
-.global __RTTI__15GameExitSection
-__RTTI__15GameExitSection:
-	.4byte 0x802A81DC
-	.4byte 0x802A8234
