@@ -199,18 +199,3 @@ lbl_80222318:
 	.4byte 7
 	.4byte 4
 	.4byte 6
-.global lbl_80222378
-lbl_80222378:
-	.4byte 1
-	.4byte 2
-	.4byte 0
-.global lbl_80222384
-lbl_80222384:
-	.4byte 1
-	.4byte 2
-	.4byte 0
-.global lbl_80222390
-lbl_80222390:
-	.4byte 1
-	.4byte 2
-	.4byte 0
