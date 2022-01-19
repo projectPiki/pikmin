@@ -9619,10 +9619,3 @@ __vt__15GameExitSection:
 	.4byte 0
 	.4byte 0
 	.4byte 0
-.global lbl_802A82E0
-lbl_802A82E0:
-	.4byte 0x696E7472
-	.4byte 0x6F2F6974
-	.4byte 0x656D5F30
-	.4byte 0x5F392E62
-	.4byte 0x74690000

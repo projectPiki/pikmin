@@ -659,22 +659,4 @@ dontShowFrame:
 	.skip 3
 .global igss
 igss:
-	.skip 8
-.global lgborder
-lgborder:
-	.skip 4
-.global lglev0
-lglev0:
-	.skip 4
-.global lglev1
-lglev1:
-	.skip 4
-.global lglev2
-lglev2:
-	.skip 4
-.global lglev3
-lglev3:
-	.skip 4
-.global lgMgr
-lgMgr:
 	.skip 4
