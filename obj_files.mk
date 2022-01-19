@@ -25,7 +25,7 @@ TEXT_O_FILES :=\
 	$(BUILD_DIR)/src/sysCommon/shpRoutes.o\
 	$(BUILD_DIR)/asm/text_1.o\
 	$(BUILD_DIR)/src/sysCommon/matMath.o\
-	$(BUILD_DIR)/asm/sysCommon/matMath.o\
+	$(BUILD_DIR)/asm/sysCommon/matMath_asm.o\
 	$(BUILD_DIR)/asm/sysCommon/stdSystem.o\
 	$(BUILD_DIR)/asm/sysCommon/node.o\
 	$(BUILD_DIR)/src/sysCommon/timers.o\
@@ -502,7 +502,7 @@ TEXT_O_FILES :=\
 	$(BUILD_DIR)/asm/TRK_MINNOW_DOLPHIN/nubinit.o\
 	$(BUILD_DIR)/asm/TRK_MINNOW_DOLPHIN/msg.o\
 	$(BUILD_DIR)/asm/TRK_MINNOW_DOLPHIN/msgbuf.o\
-	$(BUILD_DIR)/asm/TRK_MINNOW_DOLPHIN/serpoll.o\
+	$(BUILD_DIR)/asm/TRK_MINNOW_DOLPHIN/serpoll_asm.o\
 	$(BUILD_DIR)/src/TRK_MINNOW_DOLPHIN/serpoll.o\
 	$(BUILD_DIR)/src/TRK_MINNOW_DOLPHIN/usr_put.o\
 	$(BUILD_DIR)/asm/TRK_MINNOW_DOLPHIN/dispatch.o\
