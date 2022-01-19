@@ -780,23 +780,3 @@ lbl_803E87D0:
 "@3350":
 	.4byte 0x43300000
 	.4byte 0x80000000
-.global lbl_803E87E0
-lbl_803E87E0:
-	.4byte 0x42700000
-.global lbl_803E87E4
-lbl_803E87E4:
-	.4byte 0x3F800000
-.global lbl_803E87E8
-lbl_803E87E8:
-	.4byte 0x40400000
-.global lbl_803E87EC
-lbl_803E87EC:
-	.4byte 0x42C80000
-.global lbl_803E87F0
-lbl_803E87F0:
-	.4byte 0x41C80000
-	.4byte 0x00000000
-.global "@1408"
-"@1408":
-	.4byte 0x43300000
-	.4byte 0x80000000

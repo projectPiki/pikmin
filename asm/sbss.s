@@ -656,7 +656,4 @@ hasDemoSound:
 	.skip 1
 .global dontShowFrame
 dontShowFrame:
-	.skip 3
-.global igss
-igss:
-	.skip 4
+	.skip 1
