@@ -1604,17 +1604,3 @@ __RTTI__11GenFileInfo:
 __RTTI__9StageInfo:
 	.4byte 0x802A68E8
 	.4byte 0x802A68F4
-	.4byte 0x414E6F64
-	.4byte 0x65000000
-	.4byte 0x803DD930
-	.4byte 0
-	.4byte 0x802A6940
-	.4byte 0x802A694C
-.global __RTTI__9PlayState
-__RTTI__9PlayState:
-	.4byte 0x802A6934
-	.4byte 0x802A6958
-.global __RTTI__9GamePrefs
-__RTTI__9GamePrefs:
-	.4byte 0x802A6928
-	.4byte 0x802A6980
