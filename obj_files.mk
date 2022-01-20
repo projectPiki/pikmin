@@ -35,6 +35,7 @@ TEXT_O_FILES :=\
 	$(BUILD_DIR)/asm/sysCommon/atx.o\
 	$(BUILD_DIR)/asm/sysCommon/id32.o\
 	$(BUILD_DIR)/asm/text_80044194.o\
+	$(BUILD_DIR)/asm/plugPikiColin/mapSelect.o\
 	$(BUILD_DIR)/asm/plugPikiColin/newPikiGame.o\
 	$(BUILD_DIR)/asm/plugPikiColin/introGame.o\
 	$(BUILD_DIR)/asm/plugPikiColin/gameExit.o\

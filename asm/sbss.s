@@ -599,10 +599,4 @@ llspin:
 	.skip 4
 .global memcardWindow
 memcardWindow:
-	.skip 8
-.global selectWindow
-selectWindow:
-	.skip 4
-.global mapWindow
-mapWindow:
 	.skip 4
