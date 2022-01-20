@@ -604,16 +604,3 @@ lbl_803E86D8:
 .global lbl_803E86DC
 lbl_803E86DC:
 	.4byte 0x3E000000
-.global lbl_803E86E0
-lbl_803E86E0:
-	.4byte 0x41F00000
-.global lbl_803E86E4
-lbl_803E86E4:
-	.4byte 0x00000000
-.global "@1157"
-"@1157":
-	.4byte 0x43300000
-	.4byte 0x80000000
-.global lbl_803E86F0
-lbl_803E86F0:
-	.4byte 0x3F800000
