@@ -585,22 +585,3 @@ lbl_803E86B4:
 .global lbl_803E86C0
 lbl_803E86C0:
 	.4byte 0x00000000
-	.4byte 0x00000000
-.global lbl_803E86C8
-lbl_803E86C8:
-	.4byte 0x3F000000
-.global lbl_803E86CC
-lbl_803E86CC:
-	.4byte 0x3F800000
-.global lbl_803E86D0
-lbl_803E86D0:
-	.4byte 0x00000000
-.global lbl_803E86D4
-lbl_803E86D4:
-	.4byte 0x40400000
-.global lbl_803E86D8
-lbl_803E86D8:
-	.4byte 0x3ECCCCCD
-.global lbl_803E86DC
-lbl_803E86DC:
-	.4byte 0x3E000000
