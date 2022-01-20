@@ -578,7 +578,8 @@ videoModeAsIs$643:
 	.skip 4
 .global init$644
 init$644:
-	.skip 4
+	.skip 1
+.balign 4
 .global gfx__11DGXGraphics
 gfx__11DGXGraphics:
 	.skip 4
@@ -590,10 +591,4 @@ sendColIndx:
 	.skip 1
 .global sendNbtIndx
 sendNbtIndx:
-	.skip 6
-.global app
-app:
-	.skip 4
-.global llspin
-llspin:
-	.skip 4
+	.skip 1
