@@ -7488,15 +7488,3 @@ __vt__11DGXGraphics:
 	.4byte perspPrintf__8GraphicsFP4FontR8Vector3fiiPce
 	.4byte useMatrixQuick__11DGXGraphicsFR8Matrix4fi
 	.4byte drawOutline__11DGXGraphicsFR6CameraP5Shape
-.global lbl_802A5EB0
-lbl_802A5EB0:
-	.4byte lbl_8004DB3C
-	.4byte lbl_8004D9B0
-	.4byte lbl_8004D9C4
-	.4byte lbl_8004D9EC
-	.4byte lbl_8004DA30
-	.4byte lbl_8004DA44
-	.4byte lbl_8004DA58
-	.4byte lbl_8004DAC0
-	.4byte lbl_8004DB3C
-	.4byte lbl_8004DAD8
