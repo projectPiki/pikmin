@@ -597,6 +597,3 @@ app:
 .global llspin
 llspin:
 	.skip 4
-.global memcardWindow
-memcardWindow:
-	.skip 4

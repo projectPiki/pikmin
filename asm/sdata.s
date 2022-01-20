@@ -430,7 +430,7 @@ lbl_803DD004:
 	.4byte 0x414E6F64
 	.4byte 0x65000000
 	.4byte 0x803DD014
-	.4byte 0x00000000
+	.4byte 0
 	.4byte 0x802282C8
 	.4byte 0x802282D4
 .global __RTTI__5Light
@@ -1199,7 +1199,7 @@ lbl_803DD5F0:
 	.4byte 0x414E6F64
 	.4byte 0x65000000
 	.4byte 0x803DD5FC
-	.4byte 0x00000000
+	.4byte 0
 	.4byte 0x802A5D24
 	.4byte 0x802A5D30
 .global __RTTI__9BaseShape_1
@@ -1368,7 +1368,7 @@ lbl_803DD71C:
 	.4byte 0x414E6F64
 	.4byte 0x65000000
 	.4byte 0x803DD728
-	.4byte 0x00000000
+	.4byte 0
 	.4byte 0x802A5FCC
 	.4byte 0x802A6014
 .global __RTTI__7AnimMgr
@@ -1492,7 +1492,7 @@ lbl_803DD80C:
 	.4byte 0x414E6F64
 	.4byte 0x65000000
 	.4byte 0x803DD814
-	.4byte 0x00000000
+	.4byte 0
 	.4byte 0x802A6368
 	.4byte 0x802A6374
 	.4byte 0x4E6F6465
@@ -1581,7 +1581,7 @@ lbl_803DD8D8:
 	.4byte 0x414E6F64
 	.4byte 0x65000000
 	.4byte 0x803DD8E0
-	.4byte 0x00000000
+	.4byte 0
 	.4byte 0x802A67FC
 	.4byte 0x802A6808
 	.4byte 0x4E6F6465
@@ -1632,7 +1632,7 @@ lbl_803DD964:
 	.4byte 0x414E6F64
 	.4byte 0x65000000
 	.4byte 0x803DD96C
-	.4byte 0x00000000
+	.4byte 0
 	.4byte 0x802A7460
 	.4byte 0x802A746C
 	.4byte 0x4E6F6465
@@ -1657,33 +1657,3 @@ __RTTI__16GameSetupSection:
 __RTTI__9RamStream:
 	.4byte 0x802A751C
 	.4byte 0x802A7548
-	.4byte 0
-.global lbl_803DD9D0
-lbl_803DD9D0:
-	.4byte 0x3C4E6F64
-	.4byte 0x653E0000
-	.4byte 0x414E6F64
-	.4byte 0x65000000
-	.4byte 0x803DD9D8
-	.4byte 0x00000000
-	.4byte 0x802A76B4
-	.4byte 0x802A76C0
-	.4byte 0x4E6F6465
-	.4byte 0x00000000
-	.4byte 0x803DD9F0
-	.4byte 0x802A7700
-.global __RTTI__22CardSelectSetupSection
-__RTTI__22CardSelectSetupSection:
-	.4byte 0x802A76E8
-	.4byte 0x802A7714
-.global lbl_803DDA08
-lbl_803DDA08:
-	.4byte 0x25730000
-	.4byte 0x53656374
-	.4byte 0x696F6E00
-	.4byte 0x803DDA0C
-	.4byte 0x802A7774
-.global __RTTI__17CardSelectSection
-__RTTI__17CardSelectSection:
-	.4byte 0x802A7760
-	.4byte 0x802A7790
