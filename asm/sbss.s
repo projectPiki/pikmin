@@ -518,7 +518,4 @@ _dlindx:
 	.skip 8
 .global nodeMgr
 nodeMgr:
-	.skip 8
-.global statbuff__9CmdStream
-statbuff__9CmdStream:
 	.skip 4

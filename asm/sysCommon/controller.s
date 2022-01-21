@@ -1,5 +1,5 @@
 .include "macros.inc"
-
+.section .text, "ax"  # 0x80005560 - 0x80221F60
 .global reset__10ControllerFUl
 reset__10ControllerFUl:
 /* 800409B0 0003D910  38 00 FF FF */	li r0, -1

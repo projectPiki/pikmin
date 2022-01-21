@@ -1,5 +1,5 @@
 .include "macros.inc"
-
+.section .text, "ax"  # 0x80005560 - 0x80221F60
 .global detach__10AnmobjInfoFv
 detach__10AnmobjInfoFv:
 /* 8003EE34 0003BD94  7C 08 02 A6 */	mflr r0

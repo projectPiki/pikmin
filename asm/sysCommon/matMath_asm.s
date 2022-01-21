@@ -1,5 +1,5 @@
 .include "macros.inc"
-
+.section .text, "ax"  # 0x80005560 - 0x80221F60
 .global makeRotate__8Matrix4fFR8Vector3fff
 makeRotate__8Matrix4fFR8Vector3fff:
 /* 8003DE08 0003AD68  94 21 FF E0 */	stwu r1, -0x20(r1)

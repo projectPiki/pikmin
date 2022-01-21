@@ -1,5 +1,5 @@
 .include "macros.inc"
-
+.section .text, "ax"  # 0x80005560 - 0x80221F60
 .global __ct__9CmdStreamFP6Stream
 __ct__9CmdStreamFP6Stream:
 /* 80040B7C 0003DADC  7C 08 02 A6 */	mflr r0
@@ -751,3 +751,9 @@ lbl_8004156C:
 /* 80041578 0003E4D8  38 21 00 18 */	addi r1, r1, 0x18
 /* 8004157C 0003E4DC  7C 08 03 A6 */	mtlr r0
 /* 80041580 0003E4E0  4E 80 00 20 */	blr 
+
+.section .sbss, "wa"
+.balign 8
+.global statbuff__9CmdStream
+statbuff__9CmdStream:
+	.skip 4
