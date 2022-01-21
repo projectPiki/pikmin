@@ -397,3 +397,97 @@ setLength__13AtxFileStreamFi:
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
+lbl_80228F00:
+	.asciz "AtxFileStream"
+.balign 4
+lbl_80228F10:
+	.asciz "RandomAccessStream"
+.balign 4
+lbl_80228F24:
+	.4byte __RTTI__6Stream
+	.4byte 0
+	.4byte 0
+lbl_80228F30:
+	.4byte __RTTI__6Stream
+	.4byte 0
+	.4byte __RTTI__18RandomAccessStream
+	.4byte 0
+	.4byte 0
+.global __vt__13AtxFileStream
+__vt__13AtxFileStream:
+	.4byte __RTTI__13AtxFileStream
+	.4byte 0
+	.4byte readInt__6StreamFv
+	.4byte readByte__6StreamFv
+	.4byte readShort__6StreamFv
+	.4byte readFloat__6StreamFv
+	.4byte readString__6StreamFPci
+	.4byte readString__6StreamFR6String
+	.4byte readString__6StreamFv
+	.4byte writeInt__6StreamFi
+	.4byte writeByte__6StreamFUc
+	.4byte writeShort__6StreamFs
+	.4byte writeFloat__6StreamFf
+	.4byte writeString__6StreamFPc
+	.4byte writeString__6StreamFR6String
+	.4byte read__13AtxFileStreamFPvi
+	.4byte write__13AtxFileStreamFPvi
+	.4byte getPending__13AtxFileStreamFv
+	.4byte getAvailable__6StreamFv
+	.4byte close__13AtxFileStreamFv
+	.4byte getClosing__6StreamFv
+	.4byte flush__6StreamFv
+	.4byte getPosition__13AtxFileStreamFv
+	.4byte setPosition__13AtxFileStreamFi
+	.4byte getLength__13AtxFileStreamFv
+	.4byte setLength__13AtxFileStreamFi
+.balign 4
+lbl_80228FAC:
+	.asciz "AtxStream"
+.balign 4
+lbl_80228FB8:
+	.4byte __RTTI__6Stream
+	.4byte 0
+	.4byte 0
+.global __vt__9AtxStream
+__vt__9AtxStream:
+	.4byte __RTTI__9AtxStream
+	.4byte 0
+	.4byte readInt__6StreamFv
+	.4byte readByte__6StreamFv
+	.4byte readShort__6StreamFv
+	.4byte readFloat__6StreamFv
+	.4byte readString__6StreamFPci
+	.4byte readString__6StreamFR6String
+	.4byte readString__6StreamFv
+	.4byte writeInt__6StreamFi
+	.4byte writeByte__6StreamFUc
+	.4byte writeShort__6StreamFs
+	.4byte writeFloat__6StreamFf
+	.4byte writeString__6StreamFPc
+	.4byte writeString__6StreamFR6String
+	.4byte read__9AtxStreamFPvi
+	.4byte write__9AtxStreamFPvi
+	.4byte getPending__9AtxStreamFv
+	.4byte getAvailable__6StreamFv
+	.4byte close__9AtxStreamFv
+	.4byte getClosing__6StreamFv
+	.4byte flush__9AtxStreamFv
+
+.section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
+.balign 8
+lbl_803DD470:
+	.asciz "Stream"
+.balign 4
+__RTTI__6Stream:
+	.4byte lbl_803DD470
+	.4byte 0
+__RTTI__18RandomAccessStream:
+	.4byte lbl_80228F10
+	.4byte lbl_80228F24
+__RTTI__13AtxFileStream:
+	.4byte lbl_80228F00
+	.4byte lbl_80228F30
+__RTTI__9AtxStream:
+	.4byte lbl_80228FAC
+	.4byte lbl_80228FB8

@@ -1007,15 +1007,3 @@ lbl_803DD468:
 .global lbl_803DD46C
 lbl_803DD46C:
 	.float 1.0
-	.4byte 0x53747265
-	.4byte 0x616D0000
-	.4byte 0x803DD470
-	.4byte 0
-	.4byte 0x80228F10
-	.4byte 0x80228F24
-.global __RTTI__13AtxFileStream
-__RTTI__13AtxFileStream:
-	.4byte 0x80228F00
-	.4byte 0x80228F30
-	.4byte 0x80228FAC
-	.4byte 0x80228FB8
