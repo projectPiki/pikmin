@@ -448,12 +448,3 @@ lbl_803E85D8: #tau
 .global lbl_803E85DC
 lbl_803E85DC: #pi
 	.float 3.1415927
-.global lbl_803E85E0
-lbl_803E85E0:
-	.float 1.0
-.global lbl_803E85E4
-lbl_803E85E4:
-	.float 0.0
-.global lbl_803E85E8
-lbl_803E85E8:
-	.float 2.0

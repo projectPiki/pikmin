@@ -1084,3 +1084,23 @@ makeVQS__8Matrix4fFR8Vector3fR4QuatR8Vector3f:
 .global __sinit_matMath_cpp
 __sinit_matMath_cpp:
 /* 8003EE30 0003BD90  4E 80 00 20 */	blr 
+
+.section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
+.balign 8
+# should be local
+.global lbl_803DD310
+lbl_803DD310:
+	.float 0.0
+
+.section .sdata2, "a"  # 0x803E8200 - 0x803EC840
+.balign 8
+# should be local
+.global lbl_803E85E0
+lbl_803E85E0:
+	.float 1.0
+.global lbl_803E85E4
+lbl_803E85E4:
+	.float 0.0
+.global lbl_803E85E8
+lbl_803E85E8:
+	.float 2.0

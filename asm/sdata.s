@@ -827,6 +827,3 @@ lbl_803DD308:
 .global gs_fTolerance
 gs_fTolerance:
 	.4byte 0x3727C5AC
-.global lbl_803DD310
-lbl_803DD310:
-	.4byte 0x00000000

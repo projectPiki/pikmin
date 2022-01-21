@@ -1,5 +1,5 @@
 #include "types.h"
-
+#include "Vector3f.h"
 #include "Matrix4f.h"
 extern const float lbl_803E85E0;
 extern const float lbl_803E85E4;
