@@ -1746,3 +1746,178 @@ detach__10TexobjInfoFv:
 .global detach__9GfxObjectFv
 detach__9GfxObjectFv:
 /* 800405D4 0003D534  4E 80 00 20 */	blr 
+
+.section .data, "wa"  # 0x80222DC0 - 0x802E9640
+.balign 8
+lbl_80228BF0:
+	.asciz "stdSystem.cpp"
+.balign 4
+lbl_80228C00:
+	.asciz "StdSystem"
+.balign 4
+lbl_80228C0C:
+	.asciz "CoreNode"
+.balign 4
+lbl_80228C18:
+	.asciz "dataDir/"
+.balign 4
+lbl_80228C24:
+	.asciz "FreeMem %.2fk"
+.balign 4
+lbl_80228C34:
+	.asciz "BinobjInfo"
+.balign 4
+lbl_80228C40:
+	.asciz "GfxobjInfo"
+.balign 4
+lbl_80228C4C:
+	.4byte __RTTI__10GfxobjInfo
+	.4byte 0
+	.4byte 0
+.global __vt__10BinobjInfo
+__vt__10BinobjInfo:
+	.4byte __RTTI__10BinobjInfo
+	.4byte 0
+	.4byte attach__10GfxobjInfoFv
+	.4byte detach__10GfxobjInfoFv
+.balign 4
+lbl_80228C68:
+	.asciz "LFlareGroup"
+.balign 4
+lbl_80228C74:
+	.4byte __RTTI__5ANode
+	.4byte 0
+	.4byte 0
+lbl_80228C80:
+	.4byte __RTTI__5ANode
+	.4byte 0
+	.4byte __RTTI__8CoreNode
+	.4byte 0
+	.4byte 0
+.global __vt__11LFlareGroup
+__vt__11LFlareGroup:
+	.4byte __RTTI__11LFlareGroup
+	.4byte 0
+	.4byte getAgeNodeType__5ANodeFv
+	.4byte read__8CoreNodeFR18RandomAccessStream
+.global __vt__9StdSystem
+__vt__9StdSystem:
+	.4byte __RTTI__9StdSystem
+	.4byte 0
+	.4byte initSoftReset__9StdSystemFv
+	.4byte openFile__9StdSystemFPcbb
+	.4byte copyRamToCache__9StdSystemFUlUlUl
+	.4byte copyCacheToRam__9StdSystemFUlUlUl
+	.4byte copyWaitUntilDone__9StdSystemFv
+	.4byte copyCacheToTexture__9StdSystemFP12CacheTexture
+	.4byte Activate__9StdSystemFb
+	.4byte parseArchiveDirectory__9StdSystemFPcPc
+	.4byte 0
+	.4byte startLoading__9StdSystemFP9LoadIdlerbUl
+	.4byte endLoading__9StdSystemFv
+.balign 4
+lbl_80228CD8:
+	.asciz "TexobjInfo"
+.balign 4
+lbl_80228CE4:
+	.4byte __RTTI__10GfxobjInfo
+	.4byte 0
+	.4byte 0
+.global __vt__10TexobjInfo
+__vt__10TexobjInfo:
+	.4byte __RTTI__10TexobjInfo
+	.4byte 0
+	.4byte attach__10TexobjInfoFv
+	.4byte detach__10TexobjInfoFv
+.balign 4
+lbl_80228D00:
+	.asciz "ShpobjInfo"
+.balign 4
+lbl_80228D0C:
+	.4byte __RTTI__10GfxobjInfo
+	.4byte 0
+	.4byte 0
+.global __vt__10ShpobjInfo
+__vt__10ShpobjInfo:
+	.4byte __RTTI__10ShpobjInfo
+	.4byte 0
+	.4byte attach__10GfxobjInfoFv
+	.4byte detach__10GfxobjInfoFv
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+.balign 4
+lbl_80228D54:
+	.asciz "AnmobjInfo"
+.balign 4
+lbl_80228D60:
+	.4byte __RTTI__10GfxobjInfo
+	.4byte 0
+	.4byte 0
+.global __vt__10AnmobjInfo
+__vt__10AnmobjInfo:
+	.4byte __RTTI__10AnmobjInfo
+	.4byte 0
+	.4byte attach__10GfxobjInfoFv
+	.4byte detach__10AnmobjInfoFv
+
+.section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
+.balign 8
+lbl_803DD318:
+	.asciz ""
+.balign 4
+lbl_803DD31C:
+	.asciz "%s"
+.balign 4
+lbl_803DD320:
+	.asciz "lfgroup"
+.balign 4
+lbl_803DD328:
+	.asciz "texImg"
+.balign 4
+__RTTI__10GfxobjInfo:
+	.4byte lbl_80228C40
+	.4byte 0
+__RTTI__10BinobjInfo:
+	.4byte lbl_80228C34
+	.4byte lbl_80228C4C
+.balign 4
+lbl_803DD340:
+	.asciz "ANode"
+.balign 4
+__RTTI__5ANode:
+	.4byte lbl_803DD340
+	.4byte 0
+__RTTI__8CoreNode:
+	.4byte lbl_80228C0C
+	.4byte lbl_80228C74
+__RTTI__11LFlareGroup:
+	.4byte lbl_80228C68
+	.4byte lbl_80228C80
+__RTTI__9StdSystem:
+	.4byte lbl_80228C00
+	.4byte 0
+__RTTI__10TexobjInfo:
+	.4byte lbl_80228CD8
+	.4byte lbl_80228CE4
+__RTTI__10ShpobjInfo:
+	.4byte lbl_80228D00
+	.4byte lbl_80228D0C
+__RTTI__10AnmobjInfo:
+	.4byte lbl_80228D54
+	.4byte lbl_80228D60
+
+.section .sdata2, "a"  # 0x803E8200 - 0x803EC840
+.balign 8
+lbl_803E85F0:
+	.float 0.0
+lbl_803E85F4:
+	.float 1.0

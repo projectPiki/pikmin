@@ -457,10 +457,3 @@ lbl_803E85E4:
 .global lbl_803E85E8
 lbl_803E85E8:
 	.float 2.0
-	.4byte 0x00000000
-.global lbl_803E85F0
-lbl_803E85F0:
-	.float 0.0
-.global lbl_803E85F4
-lbl_803E85F4:
-	.float 1.0
