@@ -1,5 +1,5 @@
-#ifndef _WCHAR_IO_H_
-#define _WCHAR_IO_H_
+#ifndef _WCHAR_IO_H
+#define _WCHAR_IO_H
 
 #include "types.h"
 

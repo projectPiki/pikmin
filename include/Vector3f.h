@@ -1,3 +1,6 @@
+#ifndef _VECTOR3F_H
+#define _VECTOR3F_H
+
 #include "types.h"
 
 class Vector3f
@@ -6,3 +9,5 @@ class Vector3f
 
 	Vector3f(float const &x, float const &y, float const &z);
 };
+
+#endif
