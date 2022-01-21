@@ -377,10 +377,3 @@ lbl_803E8550:
 .global lbl_803E8568
 lbl_803E8568:
 	.4byte 0x3F800000
-	.4byte 0x00000000
-.global lbl_803E8570
-lbl_803E8570:
-	.4byte 0x00000000
-.global lbl_803E8574
-lbl_803E8574:
-	.4byte 0x41200000

@@ -690,37 +690,3 @@ lbl_803DD210:
 .global lbl_803DD218
 lbl_803DD218:
 	.4byte 0x00000000
-	.4byte 0x00000000
-.global lbl_803DD220
-lbl_803DD220:
-	.4byte 0x00000000
-.global lbl_803DD224
-lbl_803DD224:
-	.4byte 0x00000000
-.global lbl_803DD228
-lbl_803DD228:
-	.4byte 0x00000000
-.global lbl_803DD22C
-lbl_803DD22C:
-	.4byte 0x69640000
-.global lbl_803DD230
-lbl_803DD230:
-	.4byte 0x636F6465
-	.4byte 0x00000000
-.global lbl_803DD238
-lbl_803DD238:
-	.4byte 0x74797065
-	.4byte 0x00000000
-.global lbl_803DD240
-lbl_803DD240:
-	.4byte 0x25640000
-.global lbl_803DD244
-lbl_803DD244:
-	.4byte 0x25660000
-.global lbl_803DD248
-lbl_803DD248:
-	.4byte 0x6765746D
-	.4byte 0x696E7900
-.global lbl_803DD250
-lbl_803DD250:
-	.asciz ""

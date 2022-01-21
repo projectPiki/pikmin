@@ -6141,8 +6141,3 @@ lbl_802289E4:
 	.4byte 0x6C696768
 	.4byte 0x74666C61
 	.4byte 0x72650000
-.global lbl_802289F0
-lbl_802289F0:
-	.4byte 0x636F6C6C
-	.4byte 0x696E666F
-	.4byte 0x00000000
