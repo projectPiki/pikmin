@@ -403,7 +403,7 @@ TEXT_O_FILES :=\
 	$(BUILD_DIR)/asm/os/OSAudioSystem.o\
 	$(BUILD_DIR)/asm/os/OSCache.o\
 	$(BUILD_DIR)/asm/os/OSContext.o\
-	$(BUILD_DIR)/asm/os/OSError.o\
+	$(BUILD_DIR)/src/os/OSError.o\
 	$(BUILD_DIR)/asm/os/OSExi.o\
 	$(BUILD_DIR)/asm/os/OSFont.o\
 	$(BUILD_DIR)/asm/os/OSInterrupt.o\
