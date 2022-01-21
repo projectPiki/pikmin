@@ -521,34 +521,4 @@ nodeMgr:
 	.skip 8
 .global statbuff__9CmdStream
 statbuff__9CmdStream:
-	.skip 8
-.global useSymbols
-useSymbols:
-	.skip 4
-.global gsys
-gsys:
-	.skip 4
-.global sysCon
-sysCon:
-	.skip 4
-.global errCon
-errCon:
-	.skip 4
-.global dvdMesgBuffer
-dvdMesgBuffer:
-	.skip 4
-.global loadMesgBuffer
-loadMesgBuffer:
-	.skip 4
-.global sysMesgBuffer
-sysMesgBuffer:
-	.skip 4
-.global readBuffer__9DVDStream
-readBuffer__9DVDStream:
-	.skip 4
-.global numOpen__9DVDStream
-numOpen__9DVDStream:
-	.skip 4
-.global bigFont
-bigFont:
 	.skip 4

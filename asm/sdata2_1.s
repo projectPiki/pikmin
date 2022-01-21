@@ -537,21 +537,3 @@ lbl_803E8660:
 .global lbl_803E8670
 lbl_803E8670:
 	.4byte 0x3F800000
-	.4byte 0x00000000
-.global lbl_803E8678
-lbl_803E8678:
-	.4byte 0x00000000
-.global lbl_803E867C
-lbl_803E867C:
-	.4byte 0x3F800000
-.global "@697"
-"@697":
-	.4byte 0x43300000
-	.4byte 0x80000000
-.global "@715"
-"@715":
-	.4byte 0x43300000
-	.4byte 0x00000000
-.global lbl_803E8690
-lbl_803E8690:
-	.4byte 0x3D088889
