@@ -1,6 +1,7 @@
 #include "types.h"
+#include "bigFont.h"
 
-
+#ifdef AFTER_BIG_FONT
 
 /*
  * --INFO--
@@ -3381,3 +3382,4 @@ void AramStream::read(void *, int)
   blr
 */
 }
+#endif

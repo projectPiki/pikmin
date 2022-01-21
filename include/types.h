@@ -49,4 +49,6 @@ typedef unsigned long size_t;
 
 #define BUMP_REGISTER(reg) { asm { mr reg, reg } }
 
+#define ATTRIBUTE_ALIGN(num) __attribute__ ((aligned (num)))
+
 #endif

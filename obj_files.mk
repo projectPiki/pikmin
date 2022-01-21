@@ -35,7 +35,8 @@ TEXT_O_FILES :=\
 	$(BUILD_DIR)/asm/sysCommon/atx.o\
 	$(BUILD_DIR)/asm/sysCommon/id32.o\
 	$(BUILD_DIR)/asm/sysDolphin/texture.o\
-	$(BUILD_DIR)/asm/sysDolphin/system.o\
+	$(BUILD_DIR)/src/sysDolphin/system.o\
+	$(BUILD_DIR)/asm/sysDolphin/system_asm.o\
 	$(BUILD_DIR)/asm/sysDolphin/sysNew.o\
 	$(BUILD_DIR)/asm/sysDolphin/controllerMgr.o\
 	$(BUILD_DIR)/asm/sysDolphin/dgxGraphics.o\

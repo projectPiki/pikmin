@@ -2824,9 +2824,7 @@ read__10AramStreamFPvi:
 /* 80047000 00043F60  4E 80 00 20 */	blr 
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
-.balign 32
-bigFont_data:
-	.incbin "bigFont.bti", 0x20, 508032
+# after bigFont_data
 .balign 4
 lbl_802A5140:
 	.asciz "system.cpp"
