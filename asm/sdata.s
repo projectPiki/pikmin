@@ -808,22 +808,3 @@ __RTTI__9RouteLink:
 __RTTI__10RoutePoint:
 	.4byte 0x80228BA4
 	.4byte 0x80228BB0
-	.4byte 0
-.global lbl_803DD2F8
-lbl_803DD2F8:
-	.4byte 0x00000000
-.global lbl_803DD2FC
-lbl_803DD2FC:
-	.4byte 0x00000000
-.global lbl_803DD300
-lbl_803DD300:
-	.4byte 0x00000000
-.global lbl_803DD304
-lbl_803DD304:
-	.4byte 0x00000000
-.global lbl_803DD308
-lbl_803DD308:
-	.4byte 0x00000000
-.global gs_fTolerance
-gs_fTolerance:
-	.4byte 0x3727C5AC

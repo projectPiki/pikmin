@@ -939,6 +939,7 @@ void RouteGroup::refresh(Graphics &, EditNode *)
  * --INFO--
  * Address:	8003711C
  * Size:	00001C
+ * Weak Function
  */
 Vector3f::Vector3f(float const &_x, float const &_y, float const &_z) : x(_x), y(_y), z(_z)
 {

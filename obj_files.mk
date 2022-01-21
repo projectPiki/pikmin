@@ -24,6 +24,7 @@ TEXT_O_FILES :=\
 	$(BUILD_DIR)/asm/text_80025914.o\
 	$(BUILD_DIR)/src/sysCommon/shpRoutes.o\
 	$(BUILD_DIR)/asm/text_1.o\
+	$(BUILD_DIR)/asm/sysCommon/sysMath.o\
 	$(BUILD_DIR)/src/sysCommon/matMath.o\
 	$(BUILD_DIR)/asm/sysCommon/matMath_asm.o\
 	$(BUILD_DIR)/asm/sysCommon/stdSystem.o\
