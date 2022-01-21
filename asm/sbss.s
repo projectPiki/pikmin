@@ -507,12 +507,3 @@ readTree_signed:
 .global readTree_scale
 readTree_scale:
 	.skip 4
-.global matIndex
-matIndex:
-	.skip 4
-.global usedIndex
-usedIndex:
-	.skip 4
-.global _dlindx
-_dlindx:
-	.skip 4

@@ -147,29 +147,3 @@ mcbtypetrans$1481:
 	.4byte 2
 	.4byte 0
 	.4byte 1
-.global lbl_802222B8
-lbl_802222B8:
-	.4byte 0
-	.4byte 1
-	.4byte 2
-	.4byte 0
-	.4byte 1
-	.4byte 5
-	.4byte 0
-	.4byte 4
-	.4byte 2
-	.4byte 0
-	.4byte 4
-	.4byte 5
-	.4byte 3
-	.4byte 1
-	.4byte 2
-	.4byte 3
-	.4byte 1
-	.4byte 5
-	.4byte 3
-	.4byte 4
-	.4byte 2
-	.4byte 3
-	.4byte 4
-	.4byte 5
