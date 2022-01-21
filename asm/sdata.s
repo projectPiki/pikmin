@@ -1019,27 +1019,3 @@ __RTTI__13AtxFileStream:
 	.4byte 0x80228F30
 	.4byte 0x80228FAC
 	.4byte 0x80228FB8
-	.4byte 0x54657874
-	.4byte 0x75726500
-.global lbl_803DD4A0
-lbl_803DD4A0:
-	.4byte 0x74786500
-.global lbl_803DD4A4
-lbl_803DD4A4:
-	.4byte 0x74657849
-	.4byte 0x6D670000
-.global lbl_803DD4AC
-lbl_803DD4AC:
-	.4byte 0x62746900
-.global __RTTI__9GfxObject_1
-__RTTI__9GfxObject_1:
-	.4byte 0x80229050
-	.4byte 0
-.global __RTTI__7Texture_1
-__RTTI__7Texture_1:
-	.4byte 0x803DD498
-	.4byte 0x8022905C
-	.4byte 0x414E6F64
-	.4byte 0x65000000
-	.4byte 0x803DD4C0
-	.4byte 0

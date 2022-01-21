@@ -526,14 +526,3 @@ lbl_803E8650:
 "@1330":
 	.4byte 0x43300000
 	.4byte 0x00000000
-.global lbl_803E8660
-lbl_803E8660:
-	.4byte 0x00000000
-	.4byte 0x00000000
-.global "@689"
-"@689":
-	.4byte 0x43300000
-	.4byte 0x00000000
-.global lbl_803E8670
-lbl_803E8670:
-	.4byte 0x3F800000

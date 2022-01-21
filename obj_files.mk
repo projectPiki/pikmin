@@ -34,7 +34,7 @@ TEXT_O_FILES :=\
 	$(BUILD_DIR)/asm/sysCommon/camera.o\
 	$(BUILD_DIR)/asm/sysCommon/atx.o\
 	$(BUILD_DIR)/asm/sysCommon/id32.o\
-	$(BUILD_DIR)/asm/text_80044194.o\
+	$(BUILD_DIR)/asm/sysDolphin/texture.o\
 	$(BUILD_DIR)/asm/sysDolphin/system.o\
 	$(BUILD_DIR)/asm/sysDolphin/sysNew.o\
 	$(BUILD_DIR)/asm/sysDolphin/controllerMgr.o\
