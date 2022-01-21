@@ -362,18 +362,3 @@ lbl_803E853C:
 "@4499":
 	.4byte 0x40080000
 	.4byte 0x00000000
-.global lbl_803E8550
-lbl_803E8550:
-	.4byte 0x00000000
-	.4byte 0x00000000
-.global "@735"
-"@735":
-	.4byte 0x3FE00000
-	.4byte 0x00000000
-.global "@736"
-"@736":
-	.4byte 0x40080000
-	.4byte 0x00000000
-.global lbl_803E8568
-lbl_803E8568:
-	.4byte 0x3F800000

@@ -6130,14 +6130,3 @@ __vt__8DispList:
 	.4byte 0
 	.4byte getAgeNodeType__5ANodeFv
 	.4byte read__8DispListFR18RandomAccessStream
-	.4byte 0
-.global lbl_802289D8
-lbl_802289D8:
-	.4byte 0x6D617465
-	.4byte 0x7269616C
-	.4byte 0x00000000
-.global lbl_802289E4
-lbl_802289E4:
-	.4byte 0x6C696768
-	.4byte 0x74666C61
-	.4byte 0x72650000

@@ -22,6 +22,7 @@ TEXT_O_FILES :=\
 	$(BUILD_DIR)/asm/text_0.o\
 	$(BUILD_DIR)/src/sysCommon/string.o\
 	$(BUILD_DIR)/asm/text_80025914.o\
+	$(BUILD_DIR)/asm/sysCommon/shpLightFlares.o\
 	$(BUILD_DIR)/asm/sysCommon/shpObjColl.o\
 	$(BUILD_DIR)/asm/sysCommon/shpRoutes.o\
 	$(BUILD_DIR)/asm/sysCommon/sysMath.o\
