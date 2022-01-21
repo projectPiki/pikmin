@@ -1,5 +1,5 @@
 .include "macros.inc"
-
+.section .text, "ax"  # 0x80005560 - 0x80221F60
 .global close__9AtxStreamFv
 close__9AtxStreamFv:
 /* 800438EC 0004084C  7C 08 02 A6 */	mflr r0
@@ -394,3 +394,6 @@ getLength__13AtxFileStreamFv:
 setLength__13AtxFileStreamFi:
 /* 80043E54 00040DB4  90 83 00 0C */	stw r4, 0xc(r3)
 /* 80043E58 00040DB8  4E 80 00 20 */	blr 
+
+.section .data, "wa"  # 0x80222DC0 - 0x802E9640
+.balign 8

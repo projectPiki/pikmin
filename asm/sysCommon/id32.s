@@ -1,5 +1,5 @@
 .include "macros.inc"
-
+.section .text, "ax"  # 0x80005560 - 0x80221F60
 .global __ct__4ID32Fv
 __ct__4ID32Fv:
 /* 80043E5C 00040DBC  7C 08 02 A6 */	mflr r0

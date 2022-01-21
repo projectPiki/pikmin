@@ -1,3 +1,6 @@
+#ifndef _START_H
+#define _START_H
+
 #include "types.h"
 
 #define OS_RESET_RESTART        0
@@ -44,3 +47,5 @@ typedef struct __bss_init_info {
 } __bss_init_info;
 
 __declspec(section ".init") extern __bss_init_info _bss_init_info[];
+
+#endif

@@ -1,3 +1,6 @@
+#ifndef _TIMERS_H
+#define _TIMERS_H
+
 #include "types.h"
 
 struct Graphics;
@@ -17,3 +20,5 @@ struct Timers
   void showTimes();
   void draw(Graphics &, Font *);
 };
+
+#endif
