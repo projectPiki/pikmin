@@ -2944,7 +2944,7 @@ lbl_802A5390:
 	.asciz "IDelegate1<Graphics &>"
 .balign 4
 lbl_802A53A8:
-	.4byte 0x803DD528
+	.4byte "__RTTI__22IDelegate1<R8Graphics>"
 	.4byte 0
 	.4byte 0
 .global "__vt__29Delegate1<6System,R8Graphics>"
@@ -2962,7 +2962,7 @@ lbl_802A53CC:
 	.asciz "LogStream"
 .balign 4
 lbl_802A53D8:
-	.4byte 0x803DD540
+	.4byte __RTTI__6Stream
 	.4byte 0
 	.4byte 0
 .global __vt__9LogStream
@@ -2997,13 +2997,13 @@ lbl_802A5448:
 	.asciz "CoreNode"
 .balign 4
 lbl_802A5454:
-	.4byte 0x803DD55C
+	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte 0
 lbl_802A5460:
-	.4byte 0x803DD55C
+	.4byte __RTTI__5ANode
 	.4byte 0
-	.4byte 0x803DD564
+	.4byte __RTTI__8CoreNode
 	.4byte 0
 	.4byte 0
 .global __vt__11AddressNode
@@ -3017,9 +3017,9 @@ lbl_802A5484:
 	.asciz "DirEntry"
 .balign 4
 lbl_802A5490:
-	.4byte 0x803DD55C
+	.4byte __RTTI__5ANode
 	.4byte 0
-	.4byte 0x803DD564
+	.4byte __RTTI__8CoreNode
 	.4byte 0
 	.4byte 0
 .global __vt__8DirEntry
@@ -3043,13 +3043,13 @@ lbl_802A54DC:
 	.asciz "RandomAccessStream"
 .balign 4
 lbl_802A54F0:
-	.4byte 0x803DD540
+	.4byte __RTTI__6Stream
 	.4byte 0
 	.4byte 0
 lbl_802A54FC:
-	.4byte 0x803DD540
+	.4byte __RTTI__6Stream
 	.4byte 0
-	.4byte 0x803DD57C
+	.4byte __RTTI__18RandomAccessStream
 	.4byte 0
 	.4byte 0
 .global __vt__9DVDStream
@@ -3132,9 +3132,9 @@ lbl_802A5624:
 	.asciz "AramStream"
 .balign 4
 lbl_802A5630:
-	.4byte 0x803DD540
+	.4byte __RTTI__6Stream
 	.4byte 0
-	.4byte 0x803DD57C
+	.4byte __RTTI__18RandomAccessStream
 	.4byte 0
 	.4byte 0
 .global __vt__10AramStream
