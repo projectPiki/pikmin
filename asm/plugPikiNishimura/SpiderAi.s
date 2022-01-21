@@ -2342,8 +2342,8 @@ lbl_802CF4EC:
 .balign 4
 lbl_802CF500:
 	.4byte __RTTI__19PaniAnimKeyListener
-	.4byte 0x00000000
-	.4byte 0x00000000
+	.4byte 0
+	.4byte 0
 .global __vt__8SpiderAi
 __vt__8SpiderAi:
 	.4byte __RTTI__8SpiderAi
@@ -2372,26 +2372,27 @@ lbl_803EAB24:
 lbl_803EAB28:
 	.float 200.0
 lbl_803EAB2C:
-	.4byte 0x3EB33333
+	.float 0.35
 lbl_803EAB30:
 	.float 5.0
 lbl_803EAB34:
 	.float 1.0
 lbl_803EAB38:
-	.4byte 0x46FFFE00
+	.float 32767.0
 lbl_803EAB3C:
-	.4byte 0x3F7FFFEF
+	.float 0.999999
+.balign 8
 lbl_803EAB40:
 	.4byte 0x43300000
 	.4byte 0x80000000
 lbl_803EAB48:
-	.4byte 0x3FFFFFEF
+	.float 1.999998
 lbl_803EAB4C:
 	.float 30.0
-lbl_803EAB50:
-	.4byte 0x40490FCE
-lbl_803EAB54:
-	.4byte 0x3FC90FDB
+lbl_803EAB50: # pi
+	.float 3.1415896
+lbl_803EAB54: # half-pi
+	.float 1.5707964
 lbl_803EAB58:
 	.float 2.0
 lbl_803EAB5C:

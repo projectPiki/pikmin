@@ -5228,7 +5228,7 @@ lbl_803E4B44:
 	.float 1.0
 "__RTTI__Q23zen37CallBack1<PQ23zen17particleGenerator>":
 	.4byte lbl_802CF5F0
-	.4byte 0x00000000
+	.4byte 0
 __RTTI__30SpiderGenHalfDeadCallBackJoint:
 	.4byte lbl_802CF5D0
 	.4byte lbl_802CF61C
@@ -5249,66 +5249,66 @@ init$2821:
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
 lbl_803EAB70:
-	.4byte 0x3F000000
+	.float 0.5
 lbl_803EAB74:
-	.4byte 0x00000000
+	.float 0.0
+.balign 8
 lbl_803EAB78:
-	.4byte 0x3FE00000
-	.4byte 0x00000000
+	.double 0.5
+.balign 8
 lbl_803EAB80:
-	.4byte 0x40080000
-	.4byte 0x00000000
+	.double 3.0
 lbl_803EAB88:
-	.4byte 0x3F800000
+	.float 1.0
 lbl_803EAB8C:
-	.4byte 0x46FFFE00
+	.float 32767.0
 lbl_803EAB90:
-	.4byte 0x413FFFF3
+	.float 11.999988
 .balign 8
 lbl_803EAB98:
 	.4byte 0x43300000
 	.4byte 0x80000000
 lbl_803EABA0:
-	.4byte 0x40A00000
+	.float 5.0
 lbl_803EABA4:
-	.4byte 0x40400000
-lbl_803EABA8:
-	.4byte 0x40490FDB
-lbl_803EABAC:
-	.4byte 0x3FC90FDB
-lbl_803EABB0:
-	.4byte 0x40C90FDB
+	.float 3.0
+lbl_803EABA8: # pi
+	.float 3.1415927
+lbl_803EABAC: # half-pi
+	.float 1.5707964
+lbl_803EABB0: # tau
+	.float 6.2831855
 lbl_803EABB4:
-	.4byte 0x3FC00000
+	.float 1.5
 lbl_803EABB8:
-	.4byte 0x41F00000
+	.float 30.0
 lbl_803EABBC:
-	.4byte 0x3D4CCCCD
+	.float 0.05
 lbl_803EABC0:
-	.4byte 0x3F7851EC
+	.float 0.97
 lbl_803EABC4:
-	.4byte 0x3F7FFFEF
+	.float 0.999999
 lbl_803EABC8:
-	.4byte 0x3F490FDB
+	.float 0.7853982
 lbl_803EABCC:
-	.4byte 0x41200000
+	.float 10.0
 lbl_803EABD0:
-	.4byte 0x40800000
+	.float 4.0
 lbl_803EABD4:
-	.4byte 0x3F8CCCCD
+	.float 1.1
 lbl_803EABD8:
-	.4byte 0x42480000
+	.float 50.0
 lbl_803EABDC:
-	.4byte 0x3C23D70A
+	.float 0.01
 lbl_803EABE0:
-	.4byte 0x3E800000
+	.float 0.25
 lbl_803EABE4:
-	.4byte 0x41700000
+	.float 15.0
 lbl_803EABE8:
-	.4byte 0x40C00000
+	.float 6.0
 lbl_803EABEC:
-	.4byte 0xC0A00000
+	.float -5.0
 lbl_803EABF0:
-	.4byte 0x40000000
+	.float 2.0
 lbl_803EABF4:
-	.4byte 0xC47A0000
+	.float -1000.0
