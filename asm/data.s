@@ -6494,11 +6494,3 @@ __vt__10Controller:
 	.4byte concat__4NodeFR3SRT
 	.4byte concat__4NodeFR8Matrix4f
 	.4byte getModelMatrix__4NodeFv
-	.4byte 0
-.global lbl_80228EE8
-lbl_80228EE8:
-	.4byte 0x696E7465
-	.4byte 0x726E616C
-	.4byte 0x4C696768
-	.4byte 0x746D6170
-	.4byte 0x00000000

@@ -1,5 +1,5 @@
 .include "macros.inc"
-
+.section .text, "ax"  # 0x80005560 - 0x80221F60
 .global isPointVisible__11CullFrustumFR8Vector3ff
 isPointVisible__11CullFrustumFR8Vector3ff:
 /* 80041584 0003E4E4  80 03 00 04 */	lwz r0, 4(r3)
@@ -1797,7 +1797,7 @@ lbl_800430BC:
 /* 800430F0 00040050  EC 00 00 72 */	fmuls f0, f0, f1
 /* 800430F4 00040054  D0 1F 00 08 */	stfs f0, 8(r31)
 /* 800430F8 00040058  80 1E 03 0C */	lwz r0, 0x30c(r30)
-/* 800430FC 0004005C  C8 62 84 38 */	lfd f3, "@1188"@sda21(r2)
+/* 800430FC 0004005C  C8 62 84 38 */	lfd f3, lbl_803E8638@sda21(r2)
 /* 80043100 00040060  6C 00 80 00 */	xoris r0, r0, 0x8000
 /* 80043104 00040064  C0 42 84 10 */	lfs f2, lbl_803E8610@sda21(r2)
 /* 80043108 00040068  90 01 00 34 */	stw r0, 0x34(r1)
@@ -1960,7 +1960,7 @@ lbl_80043354:
 /* 8004335C 000402BC  3C 60 43 30 */	lis r3, 0x4330
 /* 80043360 000402C0  90 01 00 1C */	stw r0, 0x1c(r1)
 /* 80043364 000402C4  38 00 01 05 */	li r0, 0x105
-/* 80043368 000402C8  C8 22 84 38 */	lfd f1, "@1188"@sda21(r2)
+/* 80043368 000402C8  C8 22 84 38 */	lfd f1, lbl_803E8638@sda21(r2)
 /* 8004336C 000402CC  7F A4 EB 78 */	mr r4, r29
 /* 80043370 000402D0  90 61 00 18 */	stw r3, 0x18(r1)
 /* 80043374 000402D4  C0 42 84 2C */	lfs f2, lbl_803E862C@sda21(r2)
@@ -2076,8 +2076,8 @@ calcProjection__11LightCameraFR8GraphicsbP4Node:
 /* 80043520 00040480  FC 01 10 40 */	fcmpo cr0, f1, f2
 /* 80043524 00040484  40 81 00 60 */	ble lbl_80043584
 /* 80043528 00040488  FC 60 08 34 */	frsqrte f3, f1
-/* 8004352C 0004048C  C8 A2 84 18 */	lfd f5, "@959"@sda21(r2)
-/* 80043530 00040490  C8 82 84 20 */	lfd f4, "@960"@sda21(r2)
+/* 8004352C 0004048C  C8 A2 84 18 */	lfd f5, lbl_803E8618@sda21(r2)
+/* 80043530 00040490  C8 82 84 20 */	lfd f4, lbl_803E8620@sda21(r2)
 /* 80043534 00040494  FC 43 00 F2 */	fmul f2, f3, f3
 /* 80043538 00040498  FC 65 00 F2 */	fmul f3, f5, f3
 /* 8004353C 0004049C  FC 41 00 B2 */	fmul f2, f1, f2
@@ -2107,8 +2107,8 @@ lbl_80043588:
 /* 80043594 000404F4  FC 01 10 40 */	fcmpo cr0, f1, f2
 /* 80043598 000404F8  40 81 00 5C */	ble lbl_800435F4
 /* 8004359C 000404FC  FC 60 08 34 */	frsqrte f3, f1
-/* 800435A0 00040500  C8 A2 84 18 */	lfd f5, "@959"@sda21(r2)
-/* 800435A4 00040504  C8 82 84 20 */	lfd f4, "@960"@sda21(r2)
+/* 800435A0 00040500  C8 A2 84 18 */	lfd f5, lbl_803E8618@sda21(r2)
+/* 800435A4 00040504  C8 82 84 20 */	lfd f4, lbl_803E8620@sda21(r2)
 /* 800435A8 00040508  FC 43 00 F2 */	fmul f2, f3, f3
 /* 800435AC 0004050C  FC 65 00 F2 */	fmul f3, f5, f3
 /* 800435B0 00040510  FC 41 00 B2 */	fmul f2, f1, f2
@@ -2164,7 +2164,7 @@ lbl_800435F4:
 /* 80043674 000405D4  90 A1 01 2C */	stw r5, 0x12c(r1)
 /* 80043678 000405D8  81 8C 00 3C */	lwz r12, 0x3c(r12)
 /* 8004367C 000405DC  90 01 01 24 */	stw r0, 0x124(r1)
-/* 80043680 000405E0  C8 42 84 58 */	lfd f2, "@1330"@sda21(r2)
+/* 80043680 000405E0  C8 42 84 58 */	lfd f2, lbl_803E8658@sda21(r2)
 /* 80043684 000405E4  7D 88 03 A6 */	mtlr r12
 /* 80043688 000405E8  93 81 01 28 */	stw r28, 0x128(r1)
 /* 8004368C 000405EC  C0 C2 84 4C */	lfs f6, lbl_803E864C@sda21(r2)
@@ -2186,7 +2186,7 @@ lbl_800435F4:
 /* 800436CC 0004062C  7F C3 F3 78 */	mr r3, r30
 /* 800436D0 00040630  EC 3F 00 72 */	fmuls f1, f31, f1
 /* 800436D4 00040634  EC 7E 00 32 */	fmuls f3, f30, f0
-/* 800436D8 00040638  C8 82 84 38 */	lfd f4, "@1188"@sda21(r2)
+/* 800436D8 00040638  C8 82 84 38 */	lfd f4, lbl_803E8638@sda21(r2)
 /* 800436DC 0004063C  FC 00 08 1E */	fctiwz f0, f1
 /* 800436E0 00040640  FC 40 18 1E */	fctiwz f2, f3
 /* 800436E4 00040644  FC 20 08 50 */	fneg f1, f1
@@ -2320,3 +2320,116 @@ lbl_800438C4:
 /* 800438E0 00040840  38 21 01 50 */	addi r1, r1, 0x150
 /* 800438E4 00040844  7C 08 03 A6 */	mtlr r0
 /* 800438E8 00040848  4E 80 00 20 */	blr 
+
+.section .data, "wa"  # 0x80222DC0 - 0x802E9640
+.balign 8
+lbl_80228EE8:
+	.asciz "internalLightmap"
+
+.section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
+.balign 8
+lbl_803DD3F0:
+	.float 0.0
+lbl_803DD3F4:
+	.float 0.0
+lbl_803DD3F8:
+	.float 0.0
+lbl_803DD3FC:
+	.float 0.0
+lbl_803DD400:
+	.float 0.0
+lbl_803DD404:
+	.float 0.0
+lbl_803DD408:
+	.float 0.0
+lbl_803DD40C:
+	.float 0.0
+lbl_803DD410:
+	.float 0.0
+lbl_803DD414:
+	.float 0.0
+lbl_803DD418:
+	.float 0.0
+lbl_803DD41C:
+	.float 0.0
+lbl_803DD420:
+	.float 0.0
+lbl_803DD424:
+	.float 0.0
+lbl_803DD428:
+	.float 0.0
+lbl_803DD42C:
+	.float 0.0
+lbl_803DD430:
+	.float 0.0
+lbl_803DD434:
+	.float 1.0
+lbl_803DD438:
+	.float 0.0
+lbl_803DD43C:
+	.float 0.0
+lbl_803DD440:
+	.float -1.0
+lbl_803DD444:
+	.float 0.0
+lbl_803DD448:
+	.float 0.0
+lbl_803DD44C:
+	.float 0.0
+lbl_803DD450:
+	.float 0.0
+lbl_803DD454:
+	.float 0.0
+lbl_803DD458:
+	.float 4.363323
+lbl_803DD45C:
+	.float 0.0
+lbl_803DD460:
+	.float 0.0
+lbl_803DD464:
+	.float 0.0
+lbl_803DD468:
+	.float 0.0
+lbl_803DD46C:
+	.float 1.0
+
+.section .sdata2, "a"  # 0x803E8200 - 0x803EC840
+.balign 8
+lbl_803E8608:
+	.float 0.0
+lbl_803E860C: #pi
+	.float 3.1415927
+lbl_803E8610:
+	.float 0.5
+lbl_803E8614:
+	.float 180.0
+.balign 8
+lbl_803E8618:
+	.double 0.5
+.balign 8
+lbl_803E8620:
+	.double 3.0
+lbl_803E8628:
+	.float 2600.0
+lbl_803E862C:
+	.float 1.0
+lbl_803E8630:
+	.float 0.0001
+.balign 8
+lbl_803E8638:
+	.4byte 0x43300000
+	.4byte 0x80000000
+lbl_803E8640:
+	.float 60.0
+lbl_803E8644:
+	.float 1000.0
+lbl_803E8648:
+	.float 110.0
+lbl_803E864C:
+	.float 2.0
+lbl_803E8650:
+	.float 30.0
+.balign 8
+lbl_803E8658:
+	.4byte 0x43300000
+	.4byte 0x00000000

@@ -1,5 +1,5 @@
 .include "macros.inc"
-
+.section .text, "ax"  # 0x80005560 - 0x80221F60
 .global add__8CoreNodeFP8CoreNode
 add__8CoreNodeFP8CoreNode:
 /* 800405D8 0003D538  80 03 00 10 */	lwz r0, 0x10(r3)
