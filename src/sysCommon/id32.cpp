@@ -1,6 +1,5 @@
 #include "types.h"
-
-
+#include "ID32.h"
 
 /*
  * --INFO--
@@ -27,25 +26,8 @@ void _Print(char *, ...)
  * Address:	80043E5C
  * Size:	000038
  */
-ID32::ID32()
-{
-/*
-.loc_0x0:
-  mflr      r0
-  lis       r4, 0x6E6F
-  stw       r0, 0x4(r1)
-  addi      r4, r4, 0x6E65
-  stwu      r1, -0x18(r1)
-  stw       r31, 0x14(r1)
-  addi      r31, r3, 0
-  bl        0x4C
-  mr        r3, r31
-  lwz       r0, 0x1C(r1)
-  lwz       r31, 0x14(r1)
-  addi      r1, r1, 0x18
-  mtlr      r0
-  blr
-*/
+ID32::ID32(void) {
+    setID('none');
 }
 
 /*
@@ -53,25 +35,8 @@ ID32::ID32()
  * Address:	80043E94
  * Size:	000030
  */
-ID32::ID32(unsigned long)
-{
-/*
-.loc_0x0:
-  mflr      r0
-  stw       r0, 0x4(r1)
-  stwu      r1, -0x18(r1)
-  stw       r31, 0x14(r1)
-  mr        r31, r3
-  bl        .loc_0x30
-  mr        r3, r31
-  lwz       r0, 0x1C(r1)
-  lwz       r31, 0x14(r1)
-  addi      r1, r1, 0x18
-  mtlr      r0
-  blr       
-
-.loc_0x30:
-*/
+ID32::ID32(u32 id) {
+    setID(id);
 }
 
 /*
