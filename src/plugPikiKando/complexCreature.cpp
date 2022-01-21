@@ -1,13 +1,11 @@
 #include "types.h"
 
-
-
 /*
  * --INFO--
  * Address:	........
  * Size:	00009C
  */
-void _Error(char *, ...)
+void _Error(char*, ...)
 {
 	// UNUSED FUNCTION
 }
@@ -17,7 +15,7 @@ void _Error(char *, ...)
  * Address:	........
  * Size:	0000F4
  */
-void _Print(char *, ...)
+void _Print(char*, ...)
 {
 	// UNUSED FUNCTION
 }
@@ -27,7 +25,7 @@ void _Print(char *, ...)
  * Address:	........
  * Size:	0000B4
  */
-ComplexCreature::ComplexCreature(int, CreatureProp *)
+ComplexCreature::ComplexCreature(int, CreatureProp*)
 {
 	// UNUSED FUNCTION
 }
@@ -39,8 +37,8 @@ ComplexCreature::ComplexCreature(int, CreatureProp *)
  */
 void SmartPtr<Creature>::SmartPtr()
 {
-// Generated from stw r0, 0x0(r3)
-_00 = 0;
+	// Generated from stw r0, 0x0(r3)
+	_00 = 0;
 }
 
 /*
@@ -48,7 +46,7 @@ _00 = 0;
  * Address:	........
  * Size:	0000A0
  */
-void ComplexCreature::join(Creature *)
+void ComplexCreature::join(Creature*)
 {
 	// UNUSED FUNCTION
 }
@@ -58,7 +56,7 @@ void ComplexCreature::join(Creature *)
  * Address:	........
  * Size:	000114
  */
-void ComplexCreature::leave(Creature *)
+void ComplexCreature::leave(Creature*)
 {
 	// UNUSED FUNCTION
 }
@@ -108,15 +106,11 @@ void ComplexCreature::postUpdate(int, float)
  * Address:	8008A038
  * Size:	000004
  */
-void Creature::collisionCallback(CollEvent &)
-{
-}
+void Creature::collisionCallback(CollEvent&) { }
 
 /*
  * --INFO--
  * Address:	8008A03C
  * Size:	000004
  */
-void Creature::bounceCallback()
-{
-}
+void Creature::bounceCallback() { }

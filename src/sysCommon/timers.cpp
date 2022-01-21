@@ -29,8 +29,8 @@
  */
 void Timers::reset()
 {
-  m_word0 = 0;
-  m_word8 = 0;
+	m_word0 = 0;
+	m_word8 = 0;
 }
 
 /*
@@ -38,30 +38,21 @@ void Timers::reset()
  * Address:	80040994
  * Size:	000010
  */
-void Timers::newFrame()
-{
-  m_frameCount++;
-}
+void Timers::newFrame() { m_frameCount++; }
 
 /*
  * --INFO--
  * Address:	800409A4
  * Size:	000004
  */
-void Timers::_start(char *, bool)
-{
-  return;
-}
+void Timers::_start(char*, bool) { return; }
 
 /*
  * --INFO--
  * Address:	800409A8
  * Size:	000004
  */
-void Timers::_stop(char *)
-{
-  return;
-}
+void Timers::_stop(char*) { return; }
 
 /*
  * --INFO--
@@ -70,7 +61,7 @@ void Timers::_stop(char *)
  */
 void Timers::showTimes()
 {
-  // UNUSED FUNCTION
+	// UNUSED FUNCTION
 }
 
 /*
@@ -78,7 +69,4 @@ void Timers::showTimes()
  * Address:	800409AC
  * Size:	000004
  */
-void Timers::draw(Graphics &, Font *)
-{
-  return;
-}
+void Timers::draw(Graphics&, Font*) { return; }

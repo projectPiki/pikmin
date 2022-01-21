@@ -4,15 +4,15 @@
 #include "types.h"
 
 struct RefCountable {
-    // vtable _00
+	// vtable _00
 	RefCountable();
-    void clearCnt();
-    void addCnt();
-    void subCnt();
+	void clearCnt();
+	void addCnt();
+	void subCnt();
 	virtual void addCntCallback();
 	virtual void subCntCallback();
-	
-    s32 m_count; // _04
+
+	s32 m_count; // _04
 };
 
 #endif

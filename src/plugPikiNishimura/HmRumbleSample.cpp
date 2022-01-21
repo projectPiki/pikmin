@@ -19,7 +19,7 @@ RumbleSample::RumbleSample(int param_1)
  */
 // void RumbleSample::init()
 // {
-	// UNUSED FUNCTION
+// UNUSED FUNCTION
 // }
 
 /*
@@ -27,10 +27,7 @@ RumbleSample::RumbleSample(int param_1)
  * Address:	8017D694
  * Size:	000028
  */
-void RumbleSample::simpleStop()
-{
-	PADControlMotor(_08, 2);
-}
+void RumbleSample::simpleStop() { PADControlMotor(_08, 2); }
 
 /*
  * --INFO--
@@ -39,16 +36,14 @@ void RumbleSample::simpleStop()
  */
 void RumbleSample::simpleStart(float param_1)
 {
-    _00 = param_1;
-    _04 += _00;
-    if (_00 <= 0.0f) {
-        PADControlMotor(_08, 2);
-    }
-    else if (_04 < 1.0f) {
-        PADControlMotor(_08, 0);
-    }
-    else {
-        _04 -= 1.0f;
-        PADControlMotor(_08, 1);
-    }
+	_00 = param_1;
+	_04 += _00;
+	if (_00 <= 0.0f) {
+		PADControlMotor(_08, 2);
+	} else if (_04 < 1.0f) {
+		PADControlMotor(_08, 0);
+	} else {
+		_04 -= 1.0f;
+		PADControlMotor(_08, 1);
+	}
 }

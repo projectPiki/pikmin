@@ -19,8 +19,7 @@ extern "C" {
 /* Sometimes it's necessary to define __LITTLE_ENDIAN explicitly
    but these catch some common cases. */
 
-#if defined(i386) || defined(i486) || defined(intel) || defined(x86) \
-    || defined(i86pc) || defined(__alpha) || defined(__osf__)
+#if defined(i386) || defined(i486) || defined(intel) || defined(x86) || defined(i86pc) || defined(__alpha) || defined(__osf__)
 #define __LITTLE_ENDIAN
 #endif
 
@@ -120,7 +119,7 @@ extern double pow __P((double, double));
 extern double sqrt __P((double));
 
 extern double ceil __P((double));
-//extern double fabs __P((double));
+// extern double fabs __P((double));
 extern double fabs__Fd __P((double));
 extern double floor __P((double));
 extern double fmod __P((double, double));

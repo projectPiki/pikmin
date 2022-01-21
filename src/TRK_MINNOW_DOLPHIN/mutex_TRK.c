@@ -1,7 +1,5 @@
 #include "types.h"
 
-
-
 /*
  * --INFO--
  * Address:	8021E698

@@ -5,11 +5,7 @@
  * Size:	000010
  */
 
-
-u32 DSPCheckMailToDSP(void)
-{
-	return (HW_REG(0xCC005000, u16) >> 15) & 1;
-}
+u32 DSPCheckMailToDSP(void) { return (HW_REG(0xCC005000, u16) >> 15) & 1; }
 
 /*
  * --INFO--
@@ -18,7 +14,8 @@ u32 DSPCheckMailToDSP(void)
  */
 u32 DSPCheckMailFromDSP(void)
 {
-	return (HW_REG(0xCC005004, u16) >> 15) & 1;;
+	return (HW_REG(0xCC005004, u16) >> 15) & 1;
+	;
 }
 
 /*
@@ -36,10 +33,7 @@ void DSPReadCPUToDSPMbox(void)
  * Address:	80207E34
  * Size:	000018
  */
-u32 DSPReadMailFromDSP(void)
-{
-	return (__DSPRegs[2] << 16) | __DSPRegs[3];
-}
+u32 DSPReadMailFromDSP(void) { return (__DSPRegs[2] << 16) | __DSPRegs[3]; }
 
 /*
  * --INFO--

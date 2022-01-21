@@ -1,7 +1,7 @@
 #include "types.h"
 
 struct Matrix4f {
-    void makeIdentity();
+	void makeIdentity();
 
-    float m_matrix[4][4];
+	float m_matrix[4][4];
 };

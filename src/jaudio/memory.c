@@ -65,7 +65,7 @@ void Nas_ForceStopSeq(long)
  * Address:	........
  * Size:	000030
  */
-void Nas_CacheOff(unsigned char *, long)
+void Nas_CacheOff(unsigned char*, long)
 {
 	// UNUSED FUNCTION
 }
@@ -75,7 +75,7 @@ void Nas_CacheOff(unsigned char *, long)
  * Address:	........
  * Size:	00006C
  */
-void Nas_2ndHeapAlloc_CL(ALHeap *, long)
+void Nas_2ndHeapAlloc_CL(ALHeap*, long)
 {
 	// UNUSED FUNCTION
 }
@@ -85,7 +85,7 @@ void Nas_2ndHeapAlloc_CL(ALHeap *, long)
  * Address:	........
  * Size:	00006C
  */
-void Nas_2ndHeapAlloc(ALHeap *, long)
+void Nas_2ndHeapAlloc(ALHeap*, long)
 {
 	// UNUSED FUNCTION
 }
@@ -95,7 +95,7 @@ void Nas_2ndHeapAlloc(ALHeap *, long)
  * Address:	........
  * Size:	00003C
  */
-void Nas_NcHeapAlloc(ALHeap *, long)
+void Nas_NcHeapAlloc(ALHeap*, long)
 {
 	// UNUSED FUNCTION
 }
@@ -105,7 +105,7 @@ void Nas_NcHeapAlloc(ALHeap *, long)
  * Address:	........
  * Size:	00003C
  */
-void Nas_NcHeapAlloc_CL(ALHeap *, long)
+void Nas_NcHeapAlloc_CL(ALHeap*, long)
 {
 	// UNUSED FUNCTION
 }
@@ -115,7 +115,7 @@ void Nas_NcHeapAlloc_CL(ALHeap *, long)
  * Address:	........
  * Size:	000054
  */
-void Nas_HeapAlloc_CL(ALHeap *, long)
+void Nas_HeapAlloc_CL(ALHeap*, long)
 {
 	// UNUSED FUNCTION
 }
@@ -125,7 +125,7 @@ void Nas_HeapAlloc_CL(ALHeap *, long)
  * Address:	........
  * Size:	000048
  */
-void Nas_TmpAlloc(ALHeap *, long)
+void Nas_TmpAlloc(ALHeap*, long)
 {
 	// UNUSED FUNCTION
 }
@@ -135,7 +135,7 @@ void Nas_TmpAlloc(ALHeap *, long)
  * Address:	........
  * Size:	000034
  */
-void Nas_HeapFree(ALHeap *)
+void Nas_HeapFree(ALHeap*)
 {
 	// UNUSED FUNCTION
 }
@@ -145,46 +145,46 @@ void Nas_HeapFree(ALHeap *)
  * Address:	80005640
  * Size:	00006C
  */
-void Nas_HeapAlloc(ALHeap *, long)
+void Nas_HeapAlloc(ALHeap*, long)
 {
-/*
-.loc_0x0:
-  stwu      r1, -0x28(r1)
-  stw       r4, 0xC(r1)
-  lwz       r5, 0x0(r3)
-  lwz       r4, 0xC(r1)
-  cmplwi    r5, 0
-  addi      r0, r4, 0x1F
-  rlwinm    r4,r0,0,0,26
-  bne-      .loc_0x28
-  li        r3, 0
-  b         .loc_0x64
+	/*
+	.loc_0x0:
+	  stwu      r1, -0x28(r1)
+	  stw       r4, 0xC(r1)
+	  lwz       r5, 0x0(r3)
+	  lwz       r4, 0xC(r1)
+	  cmplwi    r5, 0
+	  addi      r0, r4, 0x1F
+	  rlwinm    r4,r0,0,0,26
+	  bne-      .loc_0x28
+	  li        r3, 0
+	  b         .loc_0x64
 
-.loc_0x28:
-  lwz       r6, 0x4(r3)
-  lwz       r0, 0x8(r3)
-  add       r4, r6, r4
-  add       r0, r5, r0
-  cmplw     r4, r0
-  bgt-      .loc_0x48
-  stw       r4, 0x4(r3)
-  b         .loc_0x50
+	.loc_0x28:
+	  lwz       r6, 0x4(r3)
+	  lwz       r0, 0x8(r3)
+	  add       r4, r6, r4
+	  add       r0, r5, r0
+	  cmplw     r4, r0
+	  bgt-      .loc_0x48
+	  stw       r4, 0x4(r3)
+	  b         .loc_0x50
 
-.loc_0x48:
-  li        r3, 0
-  b         .loc_0x64
+	.loc_0x48:
+	  li        r3, 0
+	  b         .loc_0x64
 
-.loc_0x50:
-  lwz       r4, 0xC(r3)
-  addi      r0, r4, 0x1
-  stw       r0, 0xC(r3)
-  stw       r6, 0x10(r3)
-  mr        r3, r6
+	.loc_0x50:
+	  lwz       r4, 0xC(r3)
+	  addi      r0, r4, 0x1
+	  stw       r0, 0xC(r3)
+	  stw       r6, 0x10(r3)
+	  mr        r3, r6
 
-.loc_0x64:
-  addi      r1, r1, 0x28
-  blr
-*/
+	.loc_0x64:
+	  addi      r1, r1, 0x28
+	  blr
+	*/
 }
 
 /*
@@ -192,37 +192,37 @@ void Nas_HeapAlloc(ALHeap *, long)
  * Address:	800056C0
  * Size:	000058
  */
-void Nas_HeapInit(ALHeap *, unsigned char *, long)
+void Nas_HeapInit(ALHeap*, unsigned char*, long)
 {
-/*
-.loc_0x0:
-  stwu      r1, -0x28(r1)
-  cmplwi    r4, 0
-  li        r6, 0
-  stw       r3, 0x8(r1)
-  lwz       r7, 0x8(r1)
-  stw       r6, 0xC(r7)
-  bne-      .loc_0x2C
-  stw       r6, 0x8(r7)
-  stw       r6, 0x4(r7)
-  stw       r6, 0x10(r7)
-  b         .loc_0x50
+	/*
+	.loc_0x0:
+	  stwu      r1, -0x28(r1)
+	  cmplwi    r4, 0
+	  li        r6, 0
+	  stw       r3, 0x8(r1)
+	  lwz       r7, 0x8(r1)
+	  stw       r6, 0xC(r7)
+	  bne-      .loc_0x2C
+	  stw       r6, 0x8(r7)
+	  stw       r6, 0x4(r7)
+	  stw       r6, 0x10(r7)
+	  b         .loc_0x50
 
-.loc_0x2C:
-  addi      r3, r4, 0x1F
-  rlwinm    r0,r4,0,27,31
-  rlwinm    r3,r3,0,0,26
-  sub       r0, r5, r0
-  stw       r3, 0x0(r7)
-  lwz       r3, 0x0(r7)
-  stw       r3, 0x4(r7)
-  stw       r0, 0x8(r7)
-  stw       r6, 0x10(r7)
+	.loc_0x2C:
+	  addi      r3, r4, 0x1F
+	  rlwinm    r0,r4,0,27,31
+	  rlwinm    r3,r3,0,0,26
+	  sub       r0, r5, r0
+	  stw       r3, 0x0(r7)
+	  lwz       r3, 0x0(r7)
+	  stw       r3, 0x4(r7)
+	  stw       r0, 0x8(r7)
+	  stw       r6, 0x10(r7)
 
-.loc_0x50:
-  addi      r1, r1, 0x28
-  blr
-*/
+	.loc_0x50:
+	  addi      r1, r1, 0x28
+	  blr
+	*/
 }
 
 /*
@@ -230,7 +230,7 @@ void Nas_HeapInit(ALHeap *, unsigned char *, long)
  * Address:	........
  * Size:	000018
  */
-void Nas_SzStayClear(SZStay_ *)
+void Nas_SzStayClear(SZStay_*)
 {
 	// UNUSED FUNCTION
 }
@@ -240,7 +240,7 @@ void Nas_SzStayClear(SZStay_ *)
  * Address:	........
  * Size:	00003C
  */
-void Nas_SzAutoClear(SZAuto_ *)
+void Nas_SzAutoClear(SZAuto_*)
 {
 	// UNUSED FUNCTION
 }
@@ -250,7 +250,7 @@ void Nas_SzAutoClear(SZAuto_ *)
  * Address:	........
  * Size:	000014
  */
-void Nas_SzCustomClear(SZCustom_ *)
+void Nas_SzCustomClear(SZCustom_*)
 {
 	// UNUSED FUNCTION
 }
@@ -280,7 +280,7 @@ void Nas_SzHeapReset(unsigned long)
  * Address:	........
  * Size:	000058
  */
-void Nas_SzHeapDivide(AudioHeapstrc_ *)
+void Nas_SzHeapDivide(AudioHeapstrc_*)
 {
 	// UNUSED FUNCTION
 }
@@ -290,7 +290,7 @@ void Nas_SzHeapDivide(AudioHeapstrc_ *)
  * Address:	........
  * Size:	000014
  */
-void Nas_SzDataDivide(DataHeapstrc_ *)
+void Nas_SzDataDivide(DataHeapstrc_*)
 {
 	// UNUSED FUNCTION
 }
@@ -300,7 +300,7 @@ void Nas_SzDataDivide(DataHeapstrc_ *)
  * Address:	........
  * Size:	0000B4
  */
-void Nas_SzStayDivide(StayHeapstrc_ *)
+void Nas_SzStayDivide(StayHeapstrc_*)
 {
 	// UNUSED FUNCTION
 }
@@ -310,7 +310,7 @@ void Nas_SzStayDivide(StayHeapstrc_ *)
  * Address:	........
  * Size:	0000B4
  */
-void Nas_SzAutoDivide(AutoHeapstrc_ *)
+void Nas_SzAutoDivide(AutoHeapstrc_*)
 {
 	// UNUSED FUNCTION
 }
@@ -350,7 +350,7 @@ void __Nas_SzCacheCheck_Inner(long, long, long)
  * Address:	........
  * Size:	0000D4
  */
-void Nas_InitFilterCoef(float, float, unsigned short *)
+void Nas_InitFilterCoef(float, float, unsigned short*)
 {
 	// UNUSED FUNCTION
 }
@@ -360,7 +360,7 @@ void Nas_InitFilterCoef(float, float, unsigned short *)
  * Address:	........
  * Size:	000020
  */
-void Nas_ClearFilter(short *)
+void Nas_ClearFilter(short*)
 {
 	// UNUSED FUNCTION
 }
@@ -370,7 +370,7 @@ void Nas_ClearFilter(short *)
  * Address:	........
  * Size:	000040
  */
-void Nas_SetLPFilter(short *, long)
+void Nas_SetLPFilter(short*, long)
 {
 	// UNUSED FUNCTION
 }
@@ -380,7 +380,7 @@ void Nas_SetLPFilter(short *, long)
  * Address:	........
  * Size:	000044
  */
-void Nas_SetHPFilter(short *, long)
+void Nas_SetHPFilter(short*, long)
 {
 	// UNUSED FUNCTION
 }
@@ -390,7 +390,7 @@ void Nas_SetHPFilter(short *, long)
  * Address:	........
  * Size:	000134
  */
-void Nas_SetBPFilter(short *, long, long)
+void Nas_SetBPFilter(short*, long, long)
 {
 	// UNUSED FUNCTION
 }
@@ -400,7 +400,7 @@ void Nas_SetBPFilter(short *, long, long)
  * Address:	........
  * Size:	000004
  */
-void __DownDelay(delay_ *)
+void __DownDelay(delay_*)
 {
 	// UNUSED FUNCTION
 }
@@ -470,7 +470,7 @@ void EmemAlloc(long, long, long)
  * Address:	........
  * Size:	000064
  */
-void Nas_Alloc_Single(long, long, unsigned char *, char, long)
+void Nas_Alloc_Single(long, long, unsigned char*, char, long)
 {
 	// UNUSED FUNCTION
 }
@@ -500,7 +500,7 @@ void __Nas_Alloc_Single_Auto_Inner(long)
  * Address:	........
  * Size:	00012C
  */
-void __SearchBank(SwMember_ *, long)
+void __SearchBank(SwMember_*, long)
 {
 	// UNUSED FUNCTION
 }
@@ -510,7 +510,7 @@ void __SearchBank(SwMember_ *, long)
  * Address:	........
  * Size:	0000EC
  */
-void __KillSwMember(SwMember_ *)
+void __KillSwMember(SwMember_*)
 {
 	// UNUSED FUNCTION
 }
@@ -520,7 +520,7 @@ void __KillSwMember(SwMember_ *)
  * Address:	........
  * Size:	000034
  */
-void __RomAddrSet(SwMember_ *, smzwavetable_ *)
+void __RomAddrSet(SwMember_*, smzwavetable_*)
 {
 	// UNUSED FUNCTION
 }
@@ -540,7 +540,7 @@ void __Nas_Alloc_Single_Stay_Inner(long)
  * Address:	........
  * Size:	000040
  */
-void __Do_EmemKill(SwMember_ *, long, long, long)
+void __Do_EmemKill(SwMember_*, long, long, long)
 {
 	// UNUSED FUNCTION
 }
@@ -560,7 +560,7 @@ void Emem_KillSwMember()
  * Address:	........
  * Size:	0000A0
  */
-void __RestoreAddr(Wavelookuptable_ *, smzwavetable_ *)
+void __RestoreAddr(Wavelookuptable_*, smzwavetable_*)
 {
 	// UNUSED FUNCTION
 }
@@ -610,7 +610,7 @@ void Dirty_AllWave()
  * Address:	........
  * Size:	0000AC
  */
-void __Nas_GetCompressBuffer(delay_ *)
+void __Nas_GetCompressBuffer(delay_*)
 {
 	// UNUSED FUNCTION
 }
@@ -630,7 +630,7 @@ void Nas_SetDelayLineParam(long, long, long, long)
  * Address:	........
  * Size:	0001E0
  */
-void Nas_SetDelayLine(long, fxconfig_ *, long)
+void Nas_SetDelayLine(long, fxconfig_*, long)
 {
 	// UNUSED FUNCTION
 }

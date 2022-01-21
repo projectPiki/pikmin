@@ -7,7 +7,7 @@
  * Address:	........
  * Size:	000070
  */
-//void String::isSame(char *)
+// void String::isSame(char *)
 //{
 // UNUSED FUNCTION
 //}
@@ -19,7 +19,7 @@
  */
 int String::getLength()
 {
-	u8 *str = this->m_str;
+	u8* str = this->m_str;
 	int len = 0;
 	while (*(str++))
 		len++;

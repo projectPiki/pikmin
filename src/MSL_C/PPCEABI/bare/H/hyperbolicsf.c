@@ -17,11 +17,11 @@ void tanhf(void)
  */
 void fabsf(float)
 {
-/*
-.loc_0x0:
-  fabs      f1, f1
-  blr
-*/
+	/*
+	.loc_0x0:
+	  fabs      f1, f1
+	  blr
+	*/
 }
 
 /*

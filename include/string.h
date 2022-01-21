@@ -21,12 +21,11 @@ char* strncpy(char* dst, const char* src, size_t n);
 };
 #endif // ifdef __cplusplus
 
-struct String
-{
-  u32 m_length; // _00
-  u8 *m_str;    // _04
+struct String {
+	u32 m_length; // _00
+	u8* m_str;    // _04
 
-  int getLength();
+	int getLength();
 };
 
 #endif

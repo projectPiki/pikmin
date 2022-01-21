@@ -58,7 +58,7 @@ void __ptmf_call4(void)
  * Address:	80214D30
  * Size:	000028
  */
- // clang-format off
+// clang-format off
 asm void __ptmf_scall(...)
 {
 	nofralloc

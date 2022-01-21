@@ -1,13 +1,11 @@
 #include "types.h"
 
-
-
 /*
  * --INFO--
  * Address:	........
  * Size:	00009C
  */
-void _Error(char *, ...)
+void _Error(char*, ...)
 {
 	// UNUSED FUNCTION
 }
@@ -17,7 +15,7 @@ void _Error(char *, ...)
  * Address:	........
  * Size:	0000F4
  */
-void _Print(char *, ...)
+void _Print(char*, ...)
 {
 	// UNUSED FUNCTION
 }
@@ -27,7 +25,7 @@ void _Print(char *, ...)
  * Address:	........
  * Size:	0000E8
  */
-SplineInterpolator::SplineInterpolator(int, NPool<SplineSegment> *)
+SplineInterpolator::SplineInterpolator(int, NPool<SplineSegment>*)
 {
 	// UNUSED FUNCTION
 }
@@ -39,8 +37,8 @@ SplineInterpolator::SplineInterpolator(int, NPool<SplineSegment> *)
  */
 void SplineInterpolator::reset()
 {
-// Generated from stb r0, 0x10(r3)
-_10 = 0;
+	// Generated from stb r0, 0x10(r3)
+	_10 = 0;
 }
 
 /*
@@ -68,7 +66,7 @@ void NArray<SplineKeyFrame>::get(int)
  * Address:	........
  * Size:	000030
  */
-void SplineInterpolator::interpolate(float, NPosture3D &, bool)
+void SplineInterpolator::interpolate(float, NPosture3D&, bool)
 {
 	// UNUSED FUNCTION
 }
@@ -78,77 +76,77 @@ void SplineInterpolator::interpolate(float, NPosture3D &, bool)
  * Address:	8011DE6C
  * Size:	0000E0
  */
-void SplineInterpolator::interpolateNext(float, NPosture3D &)
+void SplineInterpolator::interpolateNext(float, NPosture3D&)
 {
-/*
-.loc_0x0:
-  mflr      r0
-  stw       r0, 0x4(r1)
-  stwu      r1, -0x48(r1)
-  stfd      f31, 0x40(r1)
-  fmr       f31, f1
-  stw       r31, 0x3C(r1)
-  mr        r31, r3
-  stw       r30, 0x38(r1)
-  mr        r30, r4
-  lwz       r3, 0x0(r3)
-  lwz       r0, 0x8(r3)
-  cmpwi     r0, 0
-  bne-      .loc_0x3C
-  li        r3, 0
-  b         .loc_0xC4
+	/*
+	.loc_0x0:
+	  mflr      r0
+	  stw       r0, 0x4(r1)
+	  stwu      r1, -0x48(r1)
+	  stfd      f31, 0x40(r1)
+	  fmr       f31, f1
+	  stw       r31, 0x3C(r1)
+	  mr        r31, r3
+	  stw       r30, 0x38(r1)
+	  mr        r30, r4
+	  lwz       r3, 0x0(r3)
+	  lwz       r0, 0x8(r3)
+	  cmpwi     r0, 0
+	  bne-      .loc_0x3C
+	  li        r3, 0
+	  b         .loc_0xC4
 
-.loc_0x3C:
-  cmpwi     r0, 0x1
-  bne-      .loc_0x8C
-  lwz       r12, 0x0(r3)
-  li        r4, 0
-  lwz       r12, 0x34(r12)
-  mtlr      r12
-  blrl      
-  addi      r31, r3, 0x4
-  addi      r4, r31, 0x4
-  addi      r3, r30, 0x4
-  addi      r5, r4, 0x4
-  addi      r6, r4, 0x8
-  bl        -0xC084C
-  addi      r4, r31, 0x10
-  addi      r3, r30, 0x10
-  addi      r5, r4, 0x4
-  addi      r6, r4, 0x8
-  bl        -0xC0860
-  li        r3, 0x1
-  b         .loc_0xC4
+	.loc_0x3C:
+	  cmpwi     r0, 0x1
+	  bne-      .loc_0x8C
+	  lwz       r12, 0x0(r3)
+	  li        r4, 0
+	  lwz       r12, 0x34(r12)
+	  mtlr      r12
+	  blrl
+	  addi      r31, r3, 0x4
+	  addi      r4, r31, 0x4
+	  addi      r3, r30, 0x4
+	  addi      r5, r4, 0x4
+	  addi      r6, r4, 0x8
+	  bl        -0xC084C
+	  addi      r4, r31, 0x10
+	  addi      r3, r30, 0x10
+	  addi      r5, r4, 0x4
+	  addi      r6, r4, 0x8
+	  bl        -0xC0860
+	  li        r3, 0x1
+	  b         .loc_0xC4
 
-.loc_0x8C:
-  fmr       f1, f31
-  lbz       r4, 0x10(r31)
-  mr        r3, r31
-  bl        0x138
-  cmpwi     r3, 0
-  bge-      .loc_0xAC
-  li        r3, 0
-  b         .loc_0xC4
+	.loc_0x8C:
+	  fmr       f1, f31
+	  lbz       r4, 0x10(r31)
+	  mr        r3, r31
+	  bl        0x138
+	  cmpwi     r3, 0
+	  bge-      .loc_0xAC
+	  li        r3, 0
+	  b         .loc_0xC4
 
-.loc_0xAC:
-  fmr       f1, f31
-  stb       r3, 0x10(r31)
-  addi      r3, r31, 0
-  addi      r4, r30, 0
-  bl        .loc_0xE0
-  li        r3, 0x1
+	.loc_0xAC:
+	  fmr       f1, f31
+	  stb       r3, 0x10(r31)
+	  addi      r3, r31, 0
+	  addi      r4, r30, 0
+	  bl        .loc_0xE0
+	  li        r3, 0x1
 
-.loc_0xC4:
-  lwz       r0, 0x4C(r1)
-  lfd       f31, 0x40(r1)
-  lwz       r31, 0x3C(r1)
-  lwz       r30, 0x38(r1)
-  addi      r1, r1, 0x48
-  mtlr      r0
-  blr       
+	.loc_0xC4:
+	  lwz       r0, 0x4C(r1)
+	  lfd       f31, 0x40(r1)
+	  lwz       r31, 0x3C(r1)
+	  lwz       r30, 0x38(r1)
+	  addi      r1, r1, 0x48
+	  mtlr      r0
+	  blr
 
-.loc_0xE0:
-*/
+	.loc_0xE0:
+	*/
 }
 
 /*
@@ -156,7 +154,7 @@ void SplineInterpolator::interpolateNext(float, NPosture3D &)
  * Address:	........
  * Size:	0000FC
  */
-void SplineInterpolator::interpolateDirect(float, NPosture3D &)
+void SplineInterpolator::interpolateDirect(float, NPosture3D&)
 {
 	// UNUSED FUNCTION
 }
@@ -166,71 +164,71 @@ void SplineInterpolator::interpolateDirect(float, NPosture3D &)
  * Address:	8011DF4C
  * Size:	0000F0
  */
-void SplineInterpolator::outputPosture(float, NPosture3D &)
+void SplineInterpolator::outputPosture(float, NPosture3D&)
 {
-/*
-.loc_0x0:
-  mflr      r0
-  stw       r0, 0x4(r1)
-  stwu      r1, -0x58(r1)
-  stfd      f31, 0x50(r1)
-  stfd      f30, 0x48(r1)
-  fmr       f30, f1
-  stw       r31, 0x44(r1)
-  stw       r30, 0x40(r1)
-  mr        r30, r4
-  stw       r29, 0x3C(r1)
-  mr        r29, r3
-  lwz       r3, 0x0(r3)
-  lbz       r4, 0x10(r29)
-  lwz       r12, 0x0(r3)
-  lwz       r12, 0x34(r12)
-  mtlr      r12
-  blrl      
-  lfs       f31, 0x20(r3)
-  lwz       r3, 0x0(r29)
-  lbz       r4, 0x10(r29)
-  lwz       r12, 0x0(r3)
-  addi      r4, r4, 0x1
-  lwz       r12, 0x34(r12)
-  mtlr      r12
-  blrl      
-  lfs       f0, 0x20(r3)
-  fsubs     f1, f30, f31
-  lwz       r3, 0x8(r29)
-  addi      r31, r30, 0x4
-  fsubs     f0, f0, f31
-  lwz       r3, 0x0(r3)
-  lbz       r4, 0x10(r29)
-  fdivs     f31, f1, f0
-  lwz       r12, 0x0(r3)
-  lwz       r12, 0x34(r12)
-  mtlr      r12
-  blrl      
-  fmr       f1, f31
-  mr        r4, r31
-  bl        -0x2410
-  lwz       r3, 0xC(r29)
-  addi      r31, r30, 0x10
-  lbz       r4, 0x10(r29)
-  lwz       r3, 0x0(r3)
-  lwz       r12, 0x0(r3)
-  lwz       r12, 0x34(r12)
-  mtlr      r12
-  blrl      
-  fmr       f1, f31
-  mr        r4, r31
-  bl        -0x243C
-  lwz       r0, 0x5C(r1)
-  lfd       f31, 0x50(r1)
-  lfd       f30, 0x48(r1)
-  lwz       r31, 0x44(r1)
-  lwz       r30, 0x40(r1)
-  lwz       r29, 0x3C(r1)
-  addi      r1, r1, 0x58
-  mtlr      r0
-  blr
-*/
+	/*
+	.loc_0x0:
+	  mflr      r0
+	  stw       r0, 0x4(r1)
+	  stwu      r1, -0x58(r1)
+	  stfd      f31, 0x50(r1)
+	  stfd      f30, 0x48(r1)
+	  fmr       f30, f1
+	  stw       r31, 0x44(r1)
+	  stw       r30, 0x40(r1)
+	  mr        r30, r4
+	  stw       r29, 0x3C(r1)
+	  mr        r29, r3
+	  lwz       r3, 0x0(r3)
+	  lbz       r4, 0x10(r29)
+	  lwz       r12, 0x0(r3)
+	  lwz       r12, 0x34(r12)
+	  mtlr      r12
+	  blrl
+	  lfs       f31, 0x20(r3)
+	  lwz       r3, 0x0(r29)
+	  lbz       r4, 0x10(r29)
+	  lwz       r12, 0x0(r3)
+	  addi      r4, r4, 0x1
+	  lwz       r12, 0x34(r12)
+	  mtlr      r12
+	  blrl
+	  lfs       f0, 0x20(r3)
+	  fsubs     f1, f30, f31
+	  lwz       r3, 0x8(r29)
+	  addi      r31, r30, 0x4
+	  fsubs     f0, f0, f31
+	  lwz       r3, 0x0(r3)
+	  lbz       r4, 0x10(r29)
+	  fdivs     f31, f1, f0
+	  lwz       r12, 0x0(r3)
+	  lwz       r12, 0x34(r12)
+	  mtlr      r12
+	  blrl
+	  fmr       f1, f31
+	  mr        r4, r31
+	  bl        -0x2410
+	  lwz       r3, 0xC(r29)
+	  addi      r31, r30, 0x10
+	  lbz       r4, 0x10(r29)
+	  lwz       r3, 0x0(r3)
+	  lwz       r12, 0x0(r3)
+	  lwz       r12, 0x34(r12)
+	  mtlr      r12
+	  blrl
+	  fmr       f1, f31
+	  mr        r4, r31
+	  bl        -0x243C
+	  lwz       r0, 0x5C(r1)
+	  lfd       f31, 0x50(r1)
+	  lfd       f30, 0x48(r1)
+	  lwz       r31, 0x44(r1)
+	  lwz       r30, 0x40(r1)
+	  lwz       r29, 0x3C(r1)
+	  addi      r1, r1, 0x58
+	  mtlr      r0
+	  blr
+	*/
 }
 
 /*
@@ -250,66 +248,66 @@ void NArray<SplineSegment>::get(int)
  */
 void SplineInterpolator::searchSegmentIndex(float, int)
 {
-/*
-.loc_0x0:
-  mflr      r0
-  stw       r0, 0x4(r1)
-  stwu      r1, -0x58(r1)
-  stfd      f31, 0x50(r1)
-  fmr       f31, f1
-  stw       r31, 0x4C(r1)
-  stw       r30, 0x48(r1)
-  mr        r30, r3
-  lwz       r3, 0x0(r3)
-  lwz       r0, 0x8(r3)
-  cmpwi     r0, 0x2
-  bge-      .loc_0x38
-  li        r3, 0
-  b         .loc_0xA0
+	/*
+	.loc_0x0:
+	  mflr      r0
+	  stw       r0, 0x4(r1)
+	  stwu      r1, -0x58(r1)
+	  stfd      f31, 0x50(r1)
+	  fmr       f31, f1
+	  stw       r31, 0x4C(r1)
+	  stw       r30, 0x48(r1)
+	  mr        r30, r3
+	  lwz       r3, 0x0(r3)
+	  lwz       r0, 0x8(r3)
+	  cmpwi     r0, 0x2
+	  bge-      .loc_0x38
+	  li        r3, 0
+	  b         .loc_0xA0
 
-.loc_0x38:
-  mr        r31, r4
-  b         .loc_0x70
+	.loc_0x38:
+	  mr        r31, r4
+	  b         .loc_0x70
 
-.loc_0x40:
-  lwz       r12, 0x0(r3)
-  addi      r4, r31, 0x1
-  lwz       r12, 0x34(r12)
-  mtlr      r12
-  blrl      
-  lfs       f0, 0x20(r3)
-  fcmpo     cr0, f31, f0
-  cror      2, 0, 0x2
-  bne-      .loc_0x6C
-  mr        r3, r31
-  b         .loc_0xA0
+	.loc_0x40:
+	  lwz       r12, 0x0(r3)
+	  addi      r4, r31, 0x1
+	  lwz       r12, 0x34(r12)
+	  mtlr      r12
+	  blrl
+	  lfs       f0, 0x20(r3)
+	  fcmpo     cr0, f31, f0
+	  cror      2, 0, 0x2
+	  bne-      .loc_0x6C
+	  mr        r3, r31
+	  b         .loc_0xA0
 
-.loc_0x6C:
-  addi      r31, r31, 0x1
+	.loc_0x6C:
+	  addi      r31, r31, 0x1
 
-.loc_0x70:
-  lwz       r3, 0x0(r30)
-  lwz       r4, 0x8(r3)
-  subi      r4, r4, 0x1
-  cmpw      r31, r4
-  blt+      .loc_0x40
-  lwz       r12, 0x0(r3)
-  lwz       r12, 0x34(r12)
-  mtlr      r12
-  blrl      
-  lwz       r3, 0x0(r30)
-  lwz       r3, 0x8(r3)
-  subi      r3, r3, 0x2
+	.loc_0x70:
+	  lwz       r3, 0x0(r30)
+	  lwz       r4, 0x8(r3)
+	  subi      r4, r4, 0x1
+	  cmpw      r31, r4
+	  blt+      .loc_0x40
+	  lwz       r12, 0x0(r3)
+	  lwz       r12, 0x34(r12)
+	  mtlr      r12
+	  blrl
+	  lwz       r3, 0x0(r30)
+	  lwz       r3, 0x8(r3)
+	  subi      r3, r3, 0x2
 
-.loc_0xA0:
-  lwz       r0, 0x5C(r1)
-  lfd       f31, 0x50(r1)
-  lwz       r31, 0x4C(r1)
-  lwz       r30, 0x48(r1)
-  addi      r1, r1, 0x58
-  mtlr      r0
-  blr
-*/
+	.loc_0xA0:
+	  lwz       r0, 0x5C(r1)
+	  lfd       f31, 0x50(r1)
+	  lwz       r31, 0x4C(r1)
+	  lwz       r30, 0x48(r1)
+	  addi      r1, r1, 0x58
+	  mtlr      r0
+	  blr
+	*/
 }
 
 /*
@@ -317,7 +315,7 @@ void SplineInterpolator::searchSegmentIndex(float, int)
  * Address:	........
  * Size:	000054
  */
-void SplineInterpolator::addFrame(SplineKeyFrame *)
+void SplineInterpolator::addFrame(SplineKeyFrame*)
 {
 	// UNUSED FUNCTION
 }
@@ -327,7 +325,7 @@ void SplineInterpolator::addFrame(SplineKeyFrame *)
  * Address:	........
  * Size:	000038
  */
-void NArray<SplineKeyFrame>::add(SplineKeyFrame *)
+void NArray<SplineKeyFrame>::add(SplineKeyFrame*)
 {
 	// UNUSED FUNCTION
 }
@@ -347,7 +345,7 @@ void SplineInterpolator::addSegment()
  * Address:	........
  * Size:	000038
  */
-void NArray<SplineSegment>::add(SplineSegment *)
+void NArray<SplineSegment>::add(SplineSegment*)
 {
 	// UNUSED FUNCTION
 }
@@ -397,7 +395,7 @@ void NArray<SplineSegment>::remove(int, int)
  * Address:	........
  * Size:	000054
  */
-void NPool<SplineSegment>::deleteObject(SplineSegment *)
+void NPool<SplineSegment>::deleteObject(SplineSegment*)
 {
 	// UNUSED FUNCTION
 }
@@ -417,7 +415,7 @@ void NPool<SplineSegment>::deleteObject(int)
  * Address:	........
  * Size:	000030
  */
-void NPool<SplineSegment>::indexOf(SplineSegment *)
+void NPool<SplineSegment>::indexOf(SplineSegment*)
 {
 	// UNUSED FUNCTION
 }
@@ -427,7 +425,7 @@ void NPool<SplineSegment>::indexOf(SplineSegment *)
  * Address:	........
  * Size:	000044
  */
-void NPool<SplineSegment>::indexOf(SplineSegment *, int)
+void NPool<SplineSegment>::indexOf(SplineSegment*, int)
 {
 	// UNUSED FUNCTION
 }
@@ -467,7 +465,7 @@ SplineKeyFrame::SplineKeyFrame()
  * Address:	........
  * Size:	000024
  */
-void SplineKeyFrame::transform(NTransform3D &)
+void SplineKeyFrame::transform(NTransform3D&)
 {
 	// UNUSED FUNCTION
 }
@@ -477,7 +475,7 @@ void SplineKeyFrame::transform(NTransform3D &)
  * Address:	........
  * Size:	00005C
  */
-void SplineKeyFrame::inputPosture(NPosture3D &)
+void SplineKeyFrame::inputPosture(NPosture3D&)
 {
 	// UNUSED FUNCTION
 }
@@ -487,7 +485,7 @@ void SplineKeyFrame::inputPosture(NPosture3D &)
  * Address:	........
  * Size:	000060
  */
-void SplineKeyFrame::outputPosture(NPosture3D &)
+void SplineKeyFrame::outputPosture(NPosture3D&)
 {
 	// UNUSED FUNCTION
 }
@@ -497,7 +495,7 @@ void SplineKeyFrame::outputPosture(NPosture3D &)
  * Address:	........
  * Size:	000070
  */
-void SplineKeyFrame::interpolate(SplineKeyFrame &, float, NPosture3D &)
+void SplineKeyFrame::interpolate(SplineKeyFrame&, float, NPosture3D&)
 {
 	// UNUSED FUNCTION
 }
@@ -507,7 +505,7 @@ void SplineKeyFrame::interpolate(SplineKeyFrame &, float, NPosture3D &)
  * Address:	........
  * Size:	000060
  */
-void SplineKeyFrame::readData(Stream &, int)
+void SplineKeyFrame::readData(Stream&, int)
 {
 	// UNUSED FUNCTION
 }
@@ -527,7 +525,7 @@ SplineSegment::SplineSegment()
  * Address:	........
  * Size:	0001EC
  */
-void SplineSegment::calcDistance(NVector3f &, float *)
+void SplineSegment::calcDistance(NVector3f&, float*)
 {
 	// UNUSED FUNCTION
 }
@@ -547,7 +545,7 @@ SplineCurve::SplineCurve(int)
  * Address:	........
  * Size:	0003E8
  */
-void SplineCurve::makeCurve(float *, NVector3f **, int)
+void SplineCurve::makeCurve(float*, NVector3f**, int)
 {
 	// UNUSED FUNCTION
 }
@@ -557,7 +555,7 @@ void SplineCurve::makeCurve(float *, NVector3f **, int)
  * Address:	........
  * Size:	000334
  */
-void SplineCurve::makeFunctions(int, float *, float *, NPolynomialFunction **)
+void SplineCurve::makeFunctions(int, float*, float*, NPolynomialFunction**)
 {
 	// UNUSED FUNCTION
 }
@@ -567,7 +565,7 @@ void SplineCurve::makeFunctions(int, float *, float *, NPolynomialFunction **)
  * Address:	........
  * Size:	000054
  */
-void NArray<SplineKeyFrame>::indexOf(SplineKeyFrame *, int)
+void NArray<SplineKeyFrame>::indexOf(SplineKeyFrame*, int)
 {
 	// UNUSED FUNCTION
 }
@@ -577,7 +575,7 @@ void NArray<SplineKeyFrame>::indexOf(SplineKeyFrame *, int)
  * Address:	........
  * Size:	00003C
  */
-void NArray<SplineKeyFrame>::set(int, SplineKeyFrame *)
+void NArray<SplineKeyFrame>::set(int, SplineKeyFrame*)
 {
 	// UNUSED FUNCTION
 }
@@ -597,7 +595,7 @@ void NArray<SplineKeyFrame>::remove(int)
  * Address:	........
  * Size:	000114
  */
-void NArray<SplineKeyFrame>::insert(int, SplineKeyFrame *)
+void NArray<SplineKeyFrame>::insert(int, SplineKeyFrame*)
 {
 	// UNUSED FUNCTION
 }
@@ -627,7 +625,7 @@ void NArray<SplineKeyFrame>::lastElement()
  * Address:	........
  * Size:	000054
  */
-void NArray<SplineSegment>::indexOf(SplineSegment *, int)
+void NArray<SplineSegment>::indexOf(SplineSegment*, int)
 {
 	// UNUSED FUNCTION
 }
@@ -637,7 +635,7 @@ void NArray<SplineSegment>::indexOf(SplineSegment *, int)
  * Address:	........
  * Size:	00003C
  */
-void NArray<SplineSegment>::set(int, SplineSegment *)
+void NArray<SplineSegment>::set(int, SplineSegment*)
 {
 	// UNUSED FUNCTION
 }
@@ -657,7 +655,7 @@ void NArray<SplineSegment>::remove(int)
  * Address:	........
  * Size:	000114
  */
-void NArray<SplineSegment>::insert(int, SplineSegment *)
+void NArray<SplineSegment>::insert(int, SplineSegment*)
 {
 	// UNUSED FUNCTION
 }
@@ -687,7 +685,7 @@ void NArray<SplineSegment>::lastElement()
  * Address:	........
  * Size:	000050
  */
-void NArray<SplineSegment>::remove(SplineSegment *)
+void NArray<SplineSegment>::remove(SplineSegment*)
 {
 	// UNUSED FUNCTION
 }
@@ -697,7 +695,7 @@ void NArray<SplineSegment>::remove(SplineSegment *)
  * Address:	........
  * Size:	000050
  */
-void NArray<SplineSegment>::add(int, SplineSegment *)
+void NArray<SplineSegment>::add(int, SplineSegment*)
 {
 	// UNUSED FUNCTION
 }
@@ -707,7 +705,7 @@ void NArray<SplineSegment>::add(int, SplineSegment *)
  * Address:	........
  * Size:	000030
  */
-void NArray<SplineSegment>::indexOf(SplineSegment *)
+void NArray<SplineSegment>::indexOf(SplineSegment*)
 {
 	// UNUSED FUNCTION
 }
@@ -717,7 +715,7 @@ void NArray<SplineSegment>::indexOf(SplineSegment *)
  * Address:	........
  * Size:	000044
  */
-void NArray<SplineSegment>::contains(SplineSegment *)
+void NArray<SplineSegment>::contains(SplineSegment*)
 {
 	// UNUSED FUNCTION
 }
@@ -727,7 +725,7 @@ void NArray<SplineSegment>::contains(SplineSegment *)
  * Address:	........
  * Size:	000050
  */
-void NArray<SplineKeyFrame>::remove(SplineKeyFrame *)
+void NArray<SplineKeyFrame>::remove(SplineKeyFrame*)
 {
 	// UNUSED FUNCTION
 }
@@ -737,7 +735,7 @@ void NArray<SplineKeyFrame>::remove(SplineKeyFrame *)
  * Address:	........
  * Size:	000050
  */
-void NArray<SplineKeyFrame>::add(int, SplineKeyFrame *)
+void NArray<SplineKeyFrame>::add(int, SplineKeyFrame*)
 {
 	// UNUSED FUNCTION
 }
@@ -747,7 +745,7 @@ void NArray<SplineKeyFrame>::add(int, SplineKeyFrame *)
  * Address:	........
  * Size:	000030
  */
-void NArray<SplineKeyFrame>::indexOf(SplineKeyFrame *)
+void NArray<SplineKeyFrame>::indexOf(SplineKeyFrame*)
 {
 	// UNUSED FUNCTION
 }
@@ -757,7 +755,7 @@ void NArray<SplineKeyFrame>::indexOf(SplineKeyFrame *)
  * Address:	........
  * Size:	000044
  */
-void NArray<SplineKeyFrame>::contains(SplineKeyFrame *)
+void NArray<SplineKeyFrame>::contains(SplineKeyFrame*)
 {
 	// UNUSED FUNCTION
 }

@@ -177,8 +177,8 @@ void labs(void)
  */
 s32 abs(s32 __x)
 {
-  if (0 <= __x) {
-    return __x;
-  }
-  return -__x;
+	if (0 <= __x) {
+		return __x;
+	}
+	return -__x;
 }

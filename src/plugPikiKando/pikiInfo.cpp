@@ -9,13 +9,13 @@
 
 PikiInfo::PikiInfo()
 {
-    pikiCountB = 0;
-    pikiCountA = 0;
-    _08 = 0;
-    _18 = 0;
-    _14 = 0;
-    _10 = 0;
-    _0C = 0;
+	pikiCountB = 0;
+	pikiCountA = 0;
+	_08        = 0;
+	_18        = 0;
+	_14        = 0;
+	_10        = 0;
+	_0C        = 0;
 }
 
 /*
@@ -23,13 +23,14 @@ PikiInfo::PikiInfo()
  * Address:	80119D08
  * Size:	000024
  */
-void PikiInfo::addFormationPiki(void) {
-    pikiCountA += 1;
-    if (pikiCountB >= pikiCountA) {
-        return;
-    }
-    pikiCountB = pikiCountA;
-    return;
+void PikiInfo::addFormationPiki(void)
+{
+	pikiCountA += 1;
+	if (pikiCountB >= pikiCountA) {
+		return;
+	}
+	pikiCountB = pikiCountA;
+	return;
 }
 
 /*
@@ -38,7 +39,8 @@ void PikiInfo::addFormationPiki(void) {
  * Size:	000010
  */
 
-void PikiInfo::subFormationPiki(void) {
+void PikiInfo::subFormationPiki(void)
+{
 	BUMP_REGISTER(r4);
 	pikiCountA--;
 }

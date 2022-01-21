@@ -1,15 +1,11 @@
 #include "types.h"
 
-
-
 /*
  * --INFO--
  * Address:	80216594
  * Size:	000004
  */
-void __stdio_atexit(void)
-{
-}
+void __stdio_atexit(void) { }
 
 /*
  * --INFO--

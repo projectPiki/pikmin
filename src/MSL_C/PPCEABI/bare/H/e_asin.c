@@ -17,9 +17,9 @@ void __ieee754_asin(void)
  */
 void fabs(double)
 {
-/*
-.loc_0x0:
-  fabs      f1, f1
-  blr
-*/
+	/*
+	.loc_0x0:
+	  fabs      f1, f1
+	  blr
+	*/
 }

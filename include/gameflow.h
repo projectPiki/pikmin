@@ -6,7 +6,7 @@
 typedef struct GameFlow;
 
 struct GameFlow {
-	char filler [0x355]; // _00
+	char filler[0x355]; // _00
 	void* loadShape(char*, bool);
 };
 

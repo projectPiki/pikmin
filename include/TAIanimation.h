@@ -9,13 +9,14 @@ class AnimInfo {
 };
 class AnimMgr {
 	AnimMgr();
+
 public:
 	AnimInfo* addAnimation(char*, bool);
 };
 
 class TAIanimation {
-	unsigned int _00; // _00
-	AnimMgr* m_animmgr; // _04
+	unsigned int _00;     // _00
+	AnimMgr* m_animmgr;   // _04
 	AnimInfo* m_animinfo; // _08
 
 	AnimInfo* addAnimation(char*);

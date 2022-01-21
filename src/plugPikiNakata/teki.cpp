@@ -1,13 +1,11 @@
 #include "types.h"
 
-
-
 /*
  * --INFO--
  * Address:	........
  * Size:	00009C
  */
-void _Error(char *, ...)
+void _Error(char*, ...)
 {
 	// UNUSED FUNCTION
 }
@@ -17,7 +15,7 @@ void _Error(char *, ...)
  * Address:	........
  * Size:	0000F0
  */
-void _Print(char *, ...)
+void _Print(char*, ...)
 {
 	// UNUSED FUNCTION
 }
@@ -29,44 +27,44 @@ void _Print(char *, ...)
  */
 Teki::Teki()
 {
-/*
-.loc_0x0:
-  mflr      r0
-  stw       r0, 0x4(r1)
-  extsh.    r0, r4
-  stwu      r1, -0x18(r1)
-  stw       r31, 0x14(r1)
-  addi      r31, r3, 0
-  beq-      .loc_0x30
-  addi      r0, r31, 0x538
-  lis       r3, 0x802B
-  stw       r0, 0x2C0(r31)
-  subi      r0, r3, 0x246C
-  stw       r0, 0x538(r31)
+	/*
+	.loc_0x0:
+	  mflr      r0
+	  stw       r0, 0x4(r1)
+	  extsh.    r0, r4
+	  stwu      r1, -0x18(r1)
+	  stw       r31, 0x14(r1)
+	  addi      r31, r3, 0
+	  beq-      .loc_0x30
+	  addi      r0, r31, 0x538
+	  lis       r3, 0x802B
+	  stw       r0, 0x2C0(r31)
+	  subi      r0, r3, 0x246C
+	  stw       r0, 0x538(r31)
 
-.loc_0x30:
-  addi      r3, r31, 0
-  li        r4, 0
-  bl        0x5EB2C
-  lis       r3, 0x802D
-  subi      r3, r3, 0x33D8
-  stw       r3, 0x0(r31)
-  addi      r6, r3, 0x1F4
-  addi      r4, r3, 0x114
-  lwz       r5, 0x2C0(r31)
-  addi      r0, r31, 0x538
-  addi      r3, r31, 0
-  stw       r6, 0x0(r5)
-  stw       r4, 0x2B8(r31)
-  lwz       r4, 0x2C0(r31)
-  sub       r0, r0, r4
-  stw       r0, 0x4(r4)
-  lwz       r0, 0x1C(r1)
-  lwz       r31, 0x14(r1)
-  addi      r1, r1, 0x18
-  mtlr      r0
-  blr
-*/
+	.loc_0x30:
+	  addi      r3, r31, 0
+	  li        r4, 0
+	  bl        0x5EB2C
+	  lis       r3, 0x802D
+	  subi      r3, r3, 0x33D8
+	  stw       r3, 0x0(r31)
+	  addi      r6, r3, 0x1F4
+	  addi      r4, r3, 0x114
+	  lwz       r5, 0x2C0(r31)
+	  addi      r0, r31, 0x538
+	  addi      r3, r31, 0
+	  stw       r6, 0x0(r5)
+	  stw       r4, 0x2B8(r31)
+	  lwz       r4, 0x2C0(r31)
+	  sub       r0, r0, r4
+	  stw       r0, 0x4(r4)
+	  lwz       r0, 0x1C(r1)
+	  lwz       r31, 0x14(r1)
+	  addi      r1, r1, 0x18
+	  mtlr      r0
+	  blr
+	*/
 }
 
 /*
@@ -76,52 +74,52 @@ Teki::Teki()
  */
 void YTeki::init(int)
 {
-/*
-.loc_0x0:
-  mflr      r0
-  stw       r0, 0x4(r1)
-  stwu      r1, -0x20(r1)
-  stw       r31, 0x1C(r1)
-  mr        r31, r3
-  bl        0xCA8
-  lfs       f0, -0x58B8(r2)
-  li        r3, 0
-  li        r5, 0x8
-  stfs      f0, 0x478(r31)
-  stw       r3, 0x498(r31)
-  stw       r3, 0x49C(r31)
-  stw       r3, 0x4A0(r31)
-  stw       r3, 0x4A4(r31)
-  stw       r3, 0x4A8(r31)
-  stw       r3, 0x4AC(r31)
-  stw       r3, 0x4B0(r31)
-  stw       r3, 0x4B4(r31)
-  b         .loc_0x6C
+	/*
+	.loc_0x0:
+	  mflr      r0
+	  stw       r0, 0x4(r1)
+	  stwu      r1, -0x20(r1)
+	  stw       r31, 0x1C(r1)
+	  mr        r31, r3
+	  bl        0xCA8
+	  lfs       f0, -0x58B8(r2)
+	  li        r3, 0
+	  li        r5, 0x8
+	  stfs      f0, 0x478(r31)
+	  stw       r3, 0x498(r31)
+	  stw       r3, 0x49C(r31)
+	  stw       r3, 0x4A0(r31)
+	  stw       r3, 0x4A4(r31)
+	  stw       r3, 0x4A8(r31)
+	  stw       r3, 0x4AC(r31)
+	  stw       r3, 0x4B0(r31)
+	  stw       r3, 0x4B4(r31)
+	  b         .loc_0x6C
 
-.loc_0x4C:
-  subfic    r0, r5, 0x9
-  cmpwi     r5, 0x9
-  mtctr     r0
-  bge-      .loc_0x78
+	.loc_0x4C:
+	  subfic    r0, r5, 0x9
+	  cmpwi     r5, 0x9
+	  mtctr     r0
+	  bge-      .loc_0x78
 
-.loc_0x5C:
-  stw       r3, 0x498(r4)
-  addi      r4, r4, 0x4
-  bdnz+     .loc_0x5C
-  b         .loc_0x78
+	.loc_0x5C:
+	  stw       r3, 0x498(r4)
+	  addi      r4, r4, 0x4
+	  bdnz+     .loc_0x5C
+	  b         .loc_0x78
 
-.loc_0x6C:
-  rlwinm    r0,r5,2,0,29
-  add       r4, r31, r0
-  b         .loc_0x4C
+	.loc_0x6C:
+	  rlwinm    r0,r5,2,0,29
+	  add       r4, r31, r0
+	  b         .loc_0x4C
 
-.loc_0x78:
-  lwz       r0, 0x24(r1)
-  lwz       r31, 0x1C(r1)
-  addi      r1, r1, 0x20
-  mtlr      r0
-  blr
-*/
+	.loc_0x78:
+	  lwz       r0, 0x24(r1)
+	  lwz       r31, 0x1C(r1)
+	  addi      r1, r1, 0x20
+	  mtlr      r0
+	  blr
+	*/
 }
 
 /*
@@ -131,8 +129,8 @@ void YTeki::init(int)
  */
 void BTeki::setTekiOptions(int a1)
 {
-// Generated from stw r4, 0x410(r3)
-_410 = a1;
+	// Generated from stw r4, 0x410(r3)
+	_410 = a1;
 }
 
 /*
@@ -142,8 +140,8 @@ _410 = a1;
  */
 void BTeki::clearTekiOptions()
 {
-// Generated from stw r0, 0x410(r3)
-_410 = 0;
+	// Generated from stw r0, 0x410(r3)
+	_410 = 0;
 }
 
 /*
@@ -153,13 +151,13 @@ _410 = 0;
  */
 void BTeki::setAnimationKeyOption(int)
 {
-/*
-.loc_0x0:
-  lwz       r0, 0x414(r3)
-  or        r0, r0, r4
-  stw       r0, 0x414(r3)
-  blr
-*/
+	/*
+	.loc_0x0:
+	  lwz       r0, 0x414(r3)
+	  or        r0, r0, r4
+	  stw       r0, 0x414(r3)
+	  blr
+	*/
 }
 
 /*
@@ -169,13 +167,13 @@ void BTeki::setAnimationKeyOption(int)
  */
 void BTeki::clearAnimationKeyOption(int)
 {
-/*
-.loc_0x0:
-  lwz       r0, 0x414(r3)
-  andc      r0, r0, r4
-  stw       r0, 0x414(r3)
-  blr
-*/
+	/*
+	.loc_0x0:
+	  lwz       r0, 0x414(r3)
+	  andc      r0, r0, r4
+	  stw       r0, 0x414(r3)
+	  blr
+	*/
 }
 
 /*
@@ -185,8 +183,8 @@ void BTeki::clearAnimationKeyOption(int)
  */
 void BTeki::setAnimationKeyOptions(int a1)
 {
-// Generated from stw r4, 0x414(r3)
-_414 = a1;
+	// Generated from stw r4, 0x414(r3)
+	_414 = a1;
 }
 
 /*
@@ -196,8 +194,8 @@ _414 = a1;
  */
 void BTeki::clearAnimationKeyOptions()
 {
-// Generated from stw r0, 0x414(r3)
-_414 = 0;
+	// Generated from stw r0, 0x414(r3)
+	_414 = 0;
 }
 
 /*
@@ -207,15 +205,15 @@ _414 = 0;
  */
 void BTeki::getShadowSize()
 {
-/*
-.loc_0x0:
-  lwz       r3, 0x2C4(r3)
-  lwz       r3, 0x84(r3)
-  lwz       r3, 0x4(r3)
-  lwz       r3, 0x0(r3)
-  lfs       f1, 0x48(r3)
-  blr
-*/
+	/*
+	.loc_0x0:
+	  lwz       r3, 0x2C4(r3)
+	  lwz       r3, 0x84(r3)
+	  lwz       r3, 0x4(r3)
+	  lwz       r3, 0x0(r3)
+	  lfs       f1, 0x48(r3)
+	  blr
+	*/
 }
 
 /*
@@ -225,16 +223,16 @@ void BTeki::getShadowSize()
  */
 void BTeki::isVisible()
 {
-/*
-.loc_0x0:
-  lwz       r3, 0x410(r3)
-  lwz       r0, -0x9D4(r13)
-  and       r0, r3, r0
-  neg       r3, r0
-  subic     r0, r3, 0x1
-  subfe     r3, r0, r3
-  blr
-*/
+	/*
+	.loc_0x0:
+	  lwz       r3, 0x410(r3)
+	  lwz       r0, -0x9D4(r13)
+	  and       r0, r3, r0
+	  neg       r3, r0
+	  subic     r0, r3, 0x1
+	  subfe     r3, r0, r3
+	  blr
+	*/
 }
 
 /*
@@ -244,16 +242,16 @@ void BTeki::isVisible()
  */
 void BTeki::isOrganic()
 {
-/*
-.loc_0x0:
-  lwz       r3, 0x410(r3)
-  lwz       r0, -0x9C0(r13)
-  and       r0, r3, r0
-  neg       r3, r0
-  subic     r0, r3, 0x1
-  subfe     r3, r0, r3
-  blr
-*/
+	/*
+	.loc_0x0:
+	  lwz       r3, 0x410(r3)
+	  lwz       r0, -0x9C0(r13)
+	  and       r0, r3, r0
+	  neg       r3, r0
+	  subic     r0, r3, 0x1
+	  subfe     r3, r0, r3
+	  blr
+	*/
 }
 
 /*
@@ -263,16 +261,16 @@ void BTeki::isOrganic()
  */
 void BTeki::isAtari()
 {
-/*
-.loc_0x0:
-  lwz       r3, 0x410(r3)
-  lwz       r0, -0x9C8(r13)
-  and       r0, r3, r0
-  neg       r3, r0
-  subic     r0, r3, 0x1
-  subfe     r3, r0, r3
-  blr
-*/
+	/*
+	.loc_0x0:
+	  lwz       r3, 0x410(r3)
+	  lwz       r0, -0x9C8(r13)
+	  and       r0, r3, r0
+	  neg       r3, r0
+	  subic     r0, r3, 0x1
+	  subfe     r3, r0, r3
+	  blr
+	*/
 }
 
 /*
@@ -282,16 +280,16 @@ void BTeki::isAtari()
  */
 void BTeki::isAlive()
 {
-/*
-.loc_0x0:
-  lwz       r3, 0x410(r3)
-  lwz       r0, -0x9C4(r13)
-  and       r0, r3, r0
-  neg       r3, r0
-  subic     r0, r3, 0x1
-  subfe     r3, r0, r3
-  blr
-*/
+	/*
+	.loc_0x0:
+	  lwz       r3, 0x410(r3)
+	  lwz       r0, -0x9C4(r13)
+	  and       r0, r3, r0
+	  neg       r3, r0
+	  subic     r0, r3, 0x1
+	  subfe     r3, r0, r3
+	  blr
+	*/
 }
 
 /*
@@ -301,16 +299,16 @@ void BTeki::isAlive()
  */
 void BTeki::needShadow()
 {
-/*
-.loc_0x0:
-  lwz       r3, 0x410(r3)
-  lwz       r0, -0x9D0(r13)
-  and       r0, r3, r0
-  neg       r3, r0
-  subic     r0, r3, 0x1
-  subfe     r3, r0, r3
-  blr
-*/
+	/*
+	.loc_0x0:
+	  lwz       r3, 0x410(r3)
+	  lwz       r0, -0x9D0(r13)
+	  and       r0, r3, r0
+	  neg       r3, r0
+	  subic     r0, r3, 0x1
+	  subfe     r3, r0, r3
+	  blr
+	*/
 }
 
 /*
@@ -318,16 +316,16 @@ void BTeki::needShadow()
  * Address:	80143DEC
  * Size:	000014
  */
-void BTeki::@1336@4@animationKeyUpdated(PaniAnimKeyEvent &)
+void BTeki::@1336 @4 @animationKeyUpdated(PaniAnimKeyEvent&)
 {
-/*
-.loc_0x0:
-  li        r11, 0x4
-  lwzx      r11, r3, r11
-  add       r3, r3, r11
-  subi      r3, r3, 0x538
-  b         0x13E4
-*/
+	/*
+	.loc_0x0:
+	  li        r11, 0x4
+	  lwzx      r11, r3, r11
+	  add       r3, r3, r11
+	  subi      r3, r3, 0x538
+	  b         0x13E4
+	*/
 }
 
 /*
@@ -335,13 +333,13 @@ void BTeki::@1336@4@animationKeyUpdated(PaniAnimKeyEvent &)
  * Address:	80143E00
  * Size:	000008
  */
-void BTeki::@696@viewGetScale()
+void BTeki::@696 @viewGetScale()
 {
-/*
-.loc_0x0:
-  subi      r4, r4, 0x2B8
-  b         0x23C
-*/
+	/*
+	.loc_0x0:
+	  subi      r4, r4, 0x2B8
+	  b         0x23C
+	*/
 }
 
 /*
@@ -349,13 +347,13 @@ void BTeki::@696@viewGetScale()
  * Address:	80143E08
  * Size:	000008
  */
-void BTeki::@696@viewGetHeight()
+void BTeki::@696 @viewGetHeight()
 {
-/*
-.loc_0x0:
-  subi      r3, r3, 0x2B8
-  b         0x268
-*/
+	/*
+	.loc_0x0:
+	  subi      r3, r3, 0x2B8
+	  b         0x268
+	*/
 }
 
 /*
@@ -363,13 +361,13 @@ void BTeki::@696@viewGetHeight()
  * Address:	80143E10
  * Size:	000008
  */
-void BTeki::@696@viewGetBottomRadius()
+void BTeki::@696 @viewGetBottomRadius()
 {
-/*
-.loc_0x0:
-  subi      r3, r3, 0x2B8
-  b         0x248
-*/
+	/*
+	.loc_0x0:
+	  subi      r3, r3, 0x2B8
+	  b         0x248
+	*/
 }
 
 /*
@@ -377,13 +375,13 @@ void BTeki::@696@viewGetBottomRadius()
  * Address:	80143E18
  * Size:	000008
  */
-void BTeki::@696@viewDoAnimation()
+void BTeki::@696 @viewDoAnimation()
 {
-/*
-.loc_0x0:
-  subi      r3, r3, 0x2B8
-  b         0x1AC
-*/
+	/*
+	.loc_0x0:
+	  subi      r3, r3, 0x2B8
+	  b         0x1AC
+	*/
 }
 
 /*
@@ -391,13 +389,13 @@ void BTeki::@696@viewDoAnimation()
  * Address:	80143E20
  * Size:	000008
  */
-void BTeki::@696@viewFinishMotion()
+void BTeki::@696 @viewFinishMotion()
 {
-/*
-.loc_0x0:
-  subi      r3, r3, 0x2B8
-  b         0x1D0
-*/
+	/*
+	.loc_0x0:
+	  subi      r3, r3, 0x2B8
+	  b         0x1D0
+	*/
 }
 
 /*
@@ -405,13 +403,13 @@ void BTeki::@696@viewFinishMotion()
  * Address:	80143E28
  * Size:	000008
  */
-void BTeki::@696@viewSetMotionSpeed(float)
+void BTeki::@696 @viewSetMotionSpeed(float)
 {
-/*
-.loc_0x0:
-  subi      r3, r3, 0x2B8
-  b         0x194
-*/
+	/*
+	.loc_0x0:
+	  subi      r3, r3, 0x2B8
+	  b         0x194
+	*/
 }
 
 /*
@@ -419,13 +417,13 @@ void BTeki::@696@viewSetMotionSpeed(float)
  * Address:	80143E30
  * Size:	000008
  */
-void BTeki::@696@viewStartTrembleMotion(float)
+void BTeki::@696 @viewStartTrembleMotion(float)
 {
-/*
-.loc_0x0:
-  subi      r3, r3, 0x2B8
-  b         0x128
-*/
+	/*
+	.loc_0x0:
+	  subi      r3, r3, 0x2B8
+	  b         0x128
+	*/
 }
 
 /*
@@ -433,13 +431,13 @@ void BTeki::@696@viewStartTrembleMotion(float)
  * Address:	80143E38
  * Size:	000008
  */
-void BTeki::@696@viewDraw(Graphics &, Matrix4f &)
+void BTeki::@696 @viewDraw(Graphics&, Matrix4f&)
 {
-/*
-.loc_0x0:
-  subi      r3, r3, 0x2B8
-  b         0x250
-*/
+	/*
+	.loc_0x0:
+	  subi      r3, r3, 0x2B8
+	  b         0x250
+	*/
 }
 
 /*
@@ -447,11 +445,11 @@ void BTeki::@696@viewDraw(Graphics &, Matrix4f &)
  * Address:	80143E40
  * Size:	000008
  */
-void BTeki::@696@viewKill()
+void BTeki::@696 @viewKill()
 {
-/*
-.loc_0x0:
-  subi      r3, r3, 0x2B8
-  b         0x2EC
-*/
+	/*
+	.loc_0x0:
+	  subi      r3, r3, 0x2B8
+	  b         0x2EC
+	*/
 }

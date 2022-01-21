@@ -10,7 +10,7 @@
 /*
 void _Error(char *, ...)
 {
-	// UNUSED FUNCTION
+    // UNUSED FUNCTION
 }
 */
 /*
@@ -21,7 +21,7 @@ void _Error(char *, ...)
 /*
 void _Print(char *, ...)
 {
-	// UNUSED FUNCTION
+    // UNUSED FUNCTION
 }
 */
 /*
@@ -32,7 +32,7 @@ void _Print(char *, ...)
 /*
 RoutePoint::RoutePoint()
 {
-	// UNUSED FUNCTION
+    // UNUSED FUNCTION
 }
 */
 /*
@@ -43,7 +43,7 @@ RoutePoint::RoutePoint()
 /*
 void RoutePoint::refresh(Graphics &)
 {
-	// UNUSED FUNCTION
+    // UNUSED FUNCTION
 }
 */
 /*
@@ -320,7 +320,7 @@ void RouteGroup::refresh(Graphics &, EditNode *)
   lwz       r12, 0x3B4(r31)
   lwz       r12, 0x30(r12)
   mtlr      r12
-  blrl      
+  blrl
   lwz       r12, 0x3B4(r31)
   mr        r0, r3
   lbz       r26, 0x17(r28)
@@ -329,7 +329,7 @@ void RouteGroup::refresh(Graphics &, EditNode *)
   stb       r0, 0x4A0(r1)
   li        r4, 0
   mtlr      r12
-  blrl      
+  blrl
   addi      r0, r1, 0x3E8
   lwz       r29, 0x78(r28)
   stw       r0, 0x4AC(r1)
@@ -379,7 +379,7 @@ void RouteGroup::refresh(Graphics &, EditNode *)
   lfs       f18, -0x7A9C(r13)
   lfs       f29, -0x7A98(r13)
   lfs       f28, -0x7A94(r13)
-  blrl      
+  blrl
   li        r0, 0xFF
   lwz       r4, 0x4AC(r1)
   stb       r0, 0x3E8(r1)
@@ -391,7 +391,7 @@ void RouteGroup::refresh(Graphics &, EditNode *)
   lwz       r12, 0x3B4(r31)
   lwz       r12, 0xA8(r12)
   mtlr      r12
-  blrl      
+  blrl
   fadds     f1, f23, f18
   lwz       r4, 0x4A4(r1)
   fadds     f0, f21, f18
@@ -414,7 +414,7 @@ void RouteGroup::refresh(Graphics &, EditNode *)
   lwz       r12, 0x3B4(r31)
   lwz       r12, 0x98(r12)
   mtlr      r12
-  blrl      
+  blrl
   lwz       r3, 0x34(r29)
   li        r0, 0x1
   cmpwi     r3, 0
@@ -471,7 +471,7 @@ void RouteGroup::refresh(Graphics &, EditNode *)
   lwz       r12, 0x3B4(r31)
   lwz       r12, 0xA8(r12)
   mtlr      r12
-  blrl      
+  blrl
   fadds     f2, f22, f24
   mr        r4, r17
   fadds     f1, f19, f20
@@ -627,7 +627,7 @@ void RouteGroup::refresh(Graphics &, EditNode *)
   lwz       r12, 0x3B4(r31)
   lwz       r12, 0xA0(r12)
   mtlr      r12
-  blrl      
+  blrl
   li        r0, 0xFF
   fmuls     f28, f28, f14
   stb       r0, 0x36C(r1)
@@ -642,7 +642,7 @@ void RouteGroup::refresh(Graphics &, EditNode *)
   lwz       r12, 0x3B4(r31)
   lwz       r12, 0xA8(r12)
   mtlr      r12
-  blrl      
+  blrl
   fsubs     f19, f18, f25
   lfs       f0, 0x4B0(r1)
   mr        r3, r31
@@ -678,7 +678,7 @@ void RouteGroup::refresh(Graphics &, EditNode *)
   lwz       r12, 0x3B4(r31)
   lwz       r12, 0x98(r12)
   mtlr      r12
-  blrl      
+  blrl
   stfs      f24, 0x318(r1)
   addi      r3, r31, 0
   addi      r4, r25, 0
@@ -702,7 +702,7 @@ void RouteGroup::refresh(Graphics &, EditNode *)
   lwz       r12, 0x3B4(r31)
   lwz       r12, 0x98(r12)
   mtlr      r12
-  blrl      
+  blrl
   lwz       r30, 0xC(r30)
 
 .loc_0x640:
@@ -726,7 +726,7 @@ void RouteGroup::refresh(Graphics &, EditNode *)
   lwz       r12, 0x3B4(r31)
   lwz       r12, 0xA8(r12)
   mtlr      r12
-  blrl      
+  blrl
   lis       r3, 0x803A
   lwz       r29, 0x78(r28)
   lfs       f14, -0x7C7C(r2)
@@ -746,7 +746,7 @@ void RouteGroup::refresh(Graphics &, EditNode *)
   li        r5, 0
   lwz       r12, 0xCC(r12)
   mtlr      r12
-  blrl      
+  blrl
   li        r27, 0xFF
   stb       r27, 0x304(r1)
   li        r5, 0
@@ -760,7 +760,7 @@ void RouteGroup::refresh(Graphics &, EditNode *)
   lwz       r12, 0x3B4(r31)
   lwz       r12, 0xA8(r12)
   mtlr      r12
-  blrl      
+  blrl
   lfs       f1, 0x2C(r29)
   mr        r3, r31
   lfs       f0, 0x28(r29)
@@ -774,7 +774,7 @@ void RouteGroup::refresh(Graphics &, EditNode *)
   lwz       r12, 0x3B4(r31)
   lwz       r12, 0x98(r12)
   mtlr      r12
-  blrl      
+  blrl
   stb       r27, 0x2F4(r1)
   addi      r3, r31, 0
   addi      r4, r16, 0
@@ -785,14 +785,14 @@ void RouteGroup::refresh(Graphics &, EditNode *)
   lwz       r12, 0x3B4(r31)
   lwz       r12, 0xA8(r12)
   mtlr      r12
-  blrl      
+  blrl
   mr        r3, r31
   lwz       r4, 0xBC(r28)
   lwz       r12, 0x3B4(r31)
   li        r5, 0
   lwz       r12, 0xCC(r12)
   mtlr      r12
-  blrl      
+  blrl
   mr        r3, r31
   lwz       r4, 0x2E4(r31)
   lwz       r12, 0x3B4(r31)
@@ -800,13 +800,13 @@ void RouteGroup::refresh(Graphics &, EditNode *)
   addi      r4, r4, 0x1E0
   lwz       r12, 0x74(r12)
   mtlr      r12
-  blrl      
+  blrl
   mr        r3, r31
   lwz       r12, 0x3B4(r31)
   li        r4, 0x1
   lwz       r12, 0x88(r12)
   mtlr      r12
-  blrl      
+  blrl
   rlwinm.   r0,r3,0,24,31
   beq-      .loc_0x808
   lfs       f1, 0x2C(r29)
@@ -823,7 +823,7 @@ void RouteGroup::refresh(Graphics &, EditNode *)
   lwz       r12, 0x8C(r12)
   lfs       f1, 0x20(r29)
   mtlr      r12
-  blrl      
+  blrl
 
 .loc_0x808:
   lfs       f1, 0x2C(r29)
@@ -848,7 +848,7 @@ void RouteGroup::refresh(Graphics &, EditNode *)
   lwz       r12, 0x3B4(r31)
   lwz       r12, 0x74(r12)
   mtlr      r12
-  blrl      
+  blrl
   li        r0, 0xFF
   stb       r0, 0x230(r1)
   addi      r3, r31, 0
@@ -860,7 +860,7 @@ void RouteGroup::refresh(Graphics &, EditNode *)
   lwz       r12, 0x3B4(r31)
   lwz       r12, 0xA8(r12)
   mtlr      r12
-  blrl      
+  blrl
   lfs       f1, 0x2C(r29)
   addi      r3, r1, 0x118
   lfs       f0, 0x28(r29)
@@ -894,7 +894,7 @@ void RouteGroup::refresh(Graphics &, EditNode *)
   crclr     6, 0x6
   addi      r8, r1, 0x124
   li        r7, 0
-  blrl      
+  blrl
   lwz       r29, 0xC(r29)
 
 .loc_0x920:
@@ -906,7 +906,7 @@ void RouteGroup::refresh(Graphics &, EditNode *)
   li        r5, 0
   lwz       r12, 0x30(r12)
   mtlr      r12
-  blrl      
+  blrl
   lmw       r14, 0x4E8(r1)
   lwz       r0, 0x5C4(r1)
   lfd       f31, 0x5B8(r1)
@@ -929,7 +929,7 @@ void RouteGroup::refresh(Graphics &, EditNode *)
   lfd       f14, 0x530(r1)
   addi      r1, r1, 0x5C0
   mtlr      r0
-  blr       
+  blr
 
 .loc_0x9A0:
 
@@ -941,18 +941,21 @@ void RouteGroup::refresh(Graphics &, EditNode *)
  * Size:	00001C
  * Weak Function
  */
-Vector3f::Vector3f(float const &_x, float const &_y, float const &_z) : x(_x), y(_y), z(_z)
+Vector3f::Vector3f(float const& _x, float const& _y, float const& _z)
+    : x(_x)
+    , y(_y)
+    , z(_z)
 {
-  /*
-.loc_0x0:
-  lfs       f0, 0x0(r4)
-  stfs      f0, 0x0(r3)
-  lfs       f0, 0x0(r5)
-  stfs      f0, 0x4(r3)
-  lfs       f0, 0x0(r6)
-  stfs      f0, 0x8(r3)
-  blr
-*/
+	/*
+  .loc_0x0:
+	lfs       f0, 0x0(r4)
+	stfs      f0, 0x0(r3)
+	lfs       f0, 0x0(r5)
+	stfs      f0, 0x4(r3)
+	lfs       f0, 0x0(r6)
+	stfs      f0, 0x8(r3)
+	blr
+  */
 }
 
 /*
@@ -984,7 +987,7 @@ void RouteGroup::render2d(Graphics &, int &)
   li        r5, 0
   lwz       r12, 0xEC(r12)
   mtlr      r12
-  blrl      
+  blrl
   lwz       r0, 0xC(r1)
   addi      r1, r1, 0x8
   mtlr      r0
@@ -1286,7 +1289,7 @@ void RouteGroup::loadini(CmdStream *)
 /*
 void RouteGroup::saveini(char *, RandomAccessStream &)
 {
-	// UNUSED FUNCTION
+    // UNUSED FUNCTION
 }
 */
 /*

@@ -11,7 +11,7 @@ extern const float lbl_803E85E4;
 /*
 void _Error(char *, ...)
 {
-	// UNUSED FUNCTION
+    // UNUSED FUNCTION
 }
 */
 /*
@@ -19,10 +19,10 @@ void _Error(char *, ...)
  * Address:	........
  * Size:	0000F0
  */
- /*
+/*
 void _Print(char *, ...)
 {
-	// UNUSED FUNCTION
+   // UNUSED FUNCTION
 }
 */
 /*
@@ -33,7 +33,7 @@ void _Print(char *, ...)
 /*
 Matrix4f::Matrix4f(float (*) [4])
 {
-	// UNUSED FUNCTION
+    // UNUSED FUNCTION
 }
 */
 /*
@@ -41,7 +41,8 @@ Matrix4f::Matrix4f(float (*) [4])
  * Address:	8003DDBC
  * Size:	00004C
  */
-void Matrix4f::makeIdentity() {
+void Matrix4f::makeIdentity()
+{
 	m_matrix[0][0] = lbl_803E85E0;
 	m_matrix[0][1] = lbl_803E85E4;
 	m_matrix[0][2] = lbl_803E85E4;
@@ -60,28 +61,28 @@ void Matrix4f::makeIdentity() {
 	m_matrix[3][3] = lbl_803E85E0;
 	return;
 
-/*
-.loc_0x0:
-  lfs       f1, -0x7C20(r2)
-  stfs      f1, 0x0(r3)
-  lfs       f0, -0x7C1C(r2)
-  stfs      f0, 0x4(r3)
-  stfs      f0, 0x8(r3)
-  stfs      f0, 0xC(r3)
-  stfs      f0, 0x10(r3)
-  stfs      f1, 0x14(r3)
-  stfs      f0, 0x18(r3)
-  stfs      f0, 0x1C(r3)
-  stfs      f0, 0x20(r3)
-  stfs      f0, 0x24(r3)
-  stfs      f1, 0x28(r3)
-  stfs      f0, 0x2C(r3)
-  stfs      f0, 0x30(r3)
-  stfs      f0, 0x34(r3)
-  stfs      f0, 0x38(r3)
-  stfs      f1, 0x3C(r3)
-  blr
-*/
+	/*
+	.loc_0x0:
+	  lfs       f1, -0x7C20(r2)
+	  stfs      f1, 0x0(r3)
+	  lfs       f0, -0x7C1C(r2)
+	  stfs      f0, 0x4(r3)
+	  stfs      f0, 0x8(r3)
+	  stfs      f0, 0xC(r3)
+	  stfs      f0, 0x10(r3)
+	  stfs      f1, 0x14(r3)
+	  stfs      f0, 0x18(r3)
+	  stfs      f0, 0x1C(r3)
+	  stfs      f0, 0x20(r3)
+	  stfs      f0, 0x24(r3)
+	  stfs      f1, 0x28(r3)
+	  stfs      f0, 0x2C(r3)
+	  stfs      f0, 0x30(r3)
+	  stfs      f0, 0x34(r3)
+	  stfs      f0, 0x38(r3)
+	  stfs      f1, 0x3C(r3)
+	  blr
+	*/
 };
 
 /*
@@ -92,7 +93,7 @@ void Matrix4f::makeIdentity() {
 /*
 void Matrix4f::blend(Matrix4f &, float)
 {
-	// UNUSED FUNCTION
+    // UNUSED FUNCTION
 }
 */
 /*
@@ -103,7 +104,7 @@ void Matrix4f::blend(Matrix4f &, float)
 /*
 void Matrix4f::makeOrtho(float, float, float, float, float, float, float)
 {
-	// UNUSED FUNCTION
+    // UNUSED FUNCTION
 }
 */
 /*
@@ -114,7 +115,7 @@ void Matrix4f::makeOrtho(float, float, float, float, float, float, float)
 /*
 void Matrix4f::makePerspective(float, float, float, float)
 {
-	// UNUSED FUNCTION
+    // UNUSED FUNCTION
 }
 */
 /*
@@ -122,7 +123,7 @@ void Matrix4f::makePerspective(float, float, float, float)
  * Address:	8003DE08
  * Size:	0000C0
  */
-//void Matrix4f::makeRotate(Vector3f &, float, float)
+// void Matrix4f::makeRotate(Vector3f &, float, float)
 //{
 /*
 .loc_0x0:
@@ -182,7 +183,7 @@ void Matrix4f::makePerspective(float, float, float, float)
  * Address:	8003DEC8
  * Size:	00006C
  */
-//void Matrix4f::makeRotate(Vector3f &, float)
+// void Matrix4f::makeRotate(Vector3f &, float)
 //{
 /*
 .loc_0x0:
@@ -224,7 +225,7 @@ void Matrix4f::makePerspective(float, float, float, float)
 /*
 void Matrix4f::makeBallRotate(Vector3f &)
 {
-	// UNUSED FUNCTION
+    // UNUSED FUNCTION
 }
 */
 /*
@@ -235,7 +236,7 @@ void Matrix4f::makeBallRotate(Vector3f &)
 /*
 void Matrix4f::rotate(Vector3f &, float)
 {
-	// UNUSED FUNCTION
+    // UNUSED FUNCTION
 }
 */
 /*
@@ -246,7 +247,7 @@ void Matrix4f::rotate(Vector3f &, float)
 /*
 void Matrix4f::rotate(float, float, float)
 {
-	// UNUSED FUNCTION
+    // UNUSED FUNCTION
 }
 */
 /*
@@ -254,7 +255,7 @@ void Matrix4f::rotate(float, float, float)
  * Address:	8003DF34
  * Size:	0001A0
  */
-//void Matrix4f::multiply(Matrix4f &)
+// void Matrix4f::multiply(Matrix4f &)
 //{
 /*
 .loc_0x0:
@@ -374,7 +375,7 @@ void Matrix4f::rotate(float, float, float)
  * Address:	8003E0D4
  * Size:	000020
  */
-//void Matrix4f::multiplyTo(Matrix4f &, Matrix4f &)
+// void Matrix4f::multiplyTo(Matrix4f &, Matrix4f &)
 //{
 /*
 .loc_0x0:
@@ -394,7 +395,7 @@ void Matrix4f::rotate(float, float, float)
  * Address:	8003E0F4
  * Size:	00019C
  */
-//void Matrix4f::makeSRT(Vector3f &, Vector3f &, Vector3f &)
+// void Matrix4f::makeSRT(Vector3f &, Vector3f &, Vector3f &)
 //{
 /*
 .loc_0x0:
@@ -509,7 +510,7 @@ void Matrix4f::rotate(float, float, float)
  * Address:	8003E290
  * Size:	0001AC
  */
-//void Matrix4f::makeConcatSRT(Matrix4f *, Matrix4f &, SRT &)
+// void Matrix4f::makeConcatSRT(Matrix4f *, Matrix4f &, SRT &)
 //{
 /*
 .loc_0x0:
@@ -628,7 +629,7 @@ void Matrix4f::rotate(float, float, float)
  * Address:	8003E43C
  * Size:	000380
  */
-//void Matrix4f::inverse(Matrix4f *)
+// void Matrix4f::inverse(Matrix4f *)
 //{
 /*
 .loc_0x0:
@@ -877,7 +878,7 @@ void Matrix4f::rotate(float, float, float)
 /*
 void Matrix4f::makeAligned(Vector3f &, float)
 {
-	// UNUSED FUNCTION
+    // UNUSED FUNCTION
 }
 */
 /*
@@ -888,7 +889,7 @@ void Matrix4f::makeAligned(Vector3f &, float)
 /*
 void Matrix4f::rotateX(float)
 {
-	// UNUSED FUNCTION
+    // UNUSED FUNCTION
 }
 */
 /*
@@ -899,7 +900,7 @@ void Matrix4f::rotateX(float)
 /*
 void Matrix4f::rotateY(float)
 {
-	// UNUSED FUNCTION
+    // UNUSED FUNCTION
 }
 */
 /*
@@ -910,7 +911,7 @@ void Matrix4f::rotateY(float)
 /*
 void Matrix4f::rotateZ(float)
 {
-	// UNUSED FUNCTION
+    // UNUSED FUNCTION
 }
 */
 /*
@@ -921,7 +922,7 @@ void Matrix4f::rotateZ(float)
 /*
 void Matrix4f::translate(float, float, float)
 {
-	// UNUSED FUNCTION
+    // UNUSED FUNCTION
 }
 */
 /*
@@ -929,7 +930,7 @@ void Matrix4f::translate(float, float, float)
  * Address:	8003E7BC
  * Size:	0000C4
  */
-//void Matrix4f::scale(Vector3f &)
+// void Matrix4f::scale(Vector3f &)
 //{
 /*
 .loc_0x0:
@@ -993,7 +994,7 @@ void Matrix4f::translate(float, float, float)
 /*
 void Matrix4f::makeLookfrom(Vector3f &, Vector3f &)
 {
-	// UNUSED FUNCTION
+    // UNUSED FUNCTION
 }
 */
 /*
@@ -1001,7 +1002,7 @@ void Matrix4f::makeLookfrom(Vector3f &, Vector3f &)
  * Address:	8003E880
  * Size:	000300
  */
-//void Matrix4f::makeLookat(Vector3f &, Vector3f &, Vector3f *)
+// void Matrix4f::makeLookat(Vector3f &, Vector3f &, Vector3f *)
 //{
 /*
 .loc_0x0:
@@ -1204,7 +1205,7 @@ void Matrix4f::makeLookfrom(Vector3f &, Vector3f &)
   lwz       r29, 0x84(r1)
   addi      r1, r1, 0x90
   mtlr      r0
-  blr       
+  blr
 
 .loc_0x300:
 */
@@ -1215,7 +1216,7 @@ void Matrix4f::makeLookfrom(Vector3f &, Vector3f &)
  * Address:	8003EB80
  * Size:	000100
  */
-//void Matrix4f::makeLookat(Vector3f &, Vector3f &, Vector3f &, Vector3f &)
+// void Matrix4f::makeLookat(Vector3f &, Vector3f &, Vector3f &, Vector3f &)
 //{
 /*
 .loc_0x0:
@@ -1294,7 +1295,7 @@ void Matrix4f::makeLookfrom(Vector3f &, Vector3f &)
 /*
 void Matrix4f::makeProjection(Vector3f &, Plane &)
 {
-	// UNUSED FUNCTION
+    // UNUSED FUNCTION
 }
 */
 /*
@@ -1305,7 +1306,7 @@ void Matrix4f::makeProjection(Vector3f &, Plane &)
 /*
 void Matrix4f::makeReflection(Plane &)
 {
-	// UNUSED FUNCTION
+    // UNUSED FUNCTION
 }
 */
 /*
@@ -1313,7 +1314,7 @@ void Matrix4f::makeReflection(Plane &)
  * Address:	8003EC80
  * Size:	000084
  */
-//void Matrix4f::transposeTo(Matrix4f &)
+// void Matrix4f::transposeTo(Matrix4f &)
 //{
 /*
 .loc_0x0:
@@ -1358,7 +1359,7 @@ void Matrix4f::makeReflection(Plane &)
  * Address:	8003ED04
  * Size:	00012C
  */
-//void Matrix4f::makeVQS(Vector3f &, Quat &, Vector3f &)
+// void Matrix4f::makeVQS(Vector3f &, Quat &, Vector3f &)
 //{
 /*
 .loc_0x0:
@@ -1445,7 +1446,7 @@ void Matrix4f::makeReflection(Plane &)
  * Address:	8003EE30
  * Size:	000004
  */
-//void __sinit_matMath_cpp(void)
+// void __sinit_matMath_cpp(void)
 //{
 //	return;
 //}

@@ -15,18 +15,18 @@ void* cursorShape;
 
 void exitCourse()
 {
-	arrowShape = nullptr;
-	markerShape = nullptr;
-	axisShape = nullptr;
-	enShape = nullptr;
+	arrowShape   = nullptr;
+	markerShape  = nullptr;
+	axisShape    = nullptr;
+	enShape      = nullptr;
 	markerShape2 = nullptr;
-	cursorShape = nullptr;
+	cursorShape  = nullptr;
 }
 
 void init()
 {
 	markerShape2 = gameflow.loadShape("shapes/cursor/marker.mod", true);
-	cursorShape = gameflow.loadShape("shapes/cursor/cursor.mod", true);
+	cursorShape  = gameflow.loadShape("shapes/cursor/cursor.mod", true);
 	gameflow.loadShape("pikis/happas/leaf.mod", true);
 	gameflow.loadShape("pikis/happas/leaf.mod", true);
 	gameflow.loadShape("pikis/happas/leaf.mod", true);
