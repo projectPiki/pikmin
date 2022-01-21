@@ -35,6 +35,7 @@ TEXT_O_FILES :=\
 	$(BUILD_DIR)/asm/sysCommon/atx.o\
 	$(BUILD_DIR)/asm/sysCommon/id32.o\
 	$(BUILD_DIR)/asm/text_80044194.o\
+	$(BUILD_DIR)/asm/sysDolphin/controllerMgr.o\
 	$(BUILD_DIR)/asm/sysDolphin/dgxGraphics.o\
 	$(BUILD_DIR)/asm/sysDolphin/gameApp.o\
 	$(BUILD_DIR)/asm/plugPikiColin/cardutil.o\

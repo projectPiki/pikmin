@@ -6963,23 +6963,3 @@ __vt__10AramStream:
 	.4byte getPosition__18RandomAccessStreamFv
 	.4byte setPosition__18RandomAccessStreamFi
 	.4byte getLength__18RandomAccessStreamFv
-	.4byte 0x636F6E74
-	.4byte 0x726F6C6C
-	.4byte 0x65724D67
-	.4byte 0x722E6370
-	.4byte 0x70000000
-	.4byte 0x436F6E74
-	.4byte 0x726F6C6C
-	.4byte 0x65724D67
-	.4byte 0x72000000
-.global padChannels
-padChannels:
-	.4byte 0x80000000
-	.4byte 0x40000000
-	.4byte 0x20000000
-	.4byte 0x10000000
-.global __vt__13ControllerMgr
-__vt__13ControllerMgr:
-	.4byte __RTTI__13ControllerMgr
-	.4byte 0
-	.4byte keyDown__13ControllerMgrFi

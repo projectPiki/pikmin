@@ -1142,8 +1142,3 @@ __RTTI__6System:
 __RTTI__10AramStream:
 	.4byte 0x802A5624
 	.4byte 0x802A5630
-	.4byte 0
-.global __RTTI__13ControllerMgr
-__RTTI__13ControllerMgr:
-	.4byte 0x802A56BC
-	.4byte 0
