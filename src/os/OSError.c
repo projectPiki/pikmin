@@ -2,7 +2,7 @@
 #include "stdio.h"
 #include "Dolphin/OSError.h"
 
-extern OSErrorHandler OSErrorTable[16];
+extern OSErrorHandler OSErrorTable[16]; // should be static
 /*
  * --INFO--
  * Address:	801F7890
