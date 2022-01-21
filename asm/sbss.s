@@ -515,7 +515,4 @@ usedIndex:
 	.skip 4
 .global _dlindx
 _dlindx:
-	.skip 8
-.global nodeMgr
-nodeMgr:
 	.skip 4

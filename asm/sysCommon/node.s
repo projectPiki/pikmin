@@ -299,3 +299,98 @@ concat__7SRTNodeFR8Matrix4f:
 getModelMatrix__7SRTNodeFv:
 /* 8004097C 0003D8DC  38 63 00 20 */	addi r3, r3, 0x20
 /* 80040980 0003D8E0  4E 80 00 20 */	blr 
+
+.section .data, "wa"  # 0x80222DC0 - 0x802E9640
+.balign 8
+lbl_80228D80:
+	.asciz "node.cpp"
+.balign 4
+lbl_80228D8C:
+	.asciz "CoreNode"
+.balign 4
+lbl_80228D98:
+	.4byte __RTTI__5ANode
+	.4byte 0
+	.4byte 0
+lbl_80228DA4:
+	.4byte __RTTI__5ANode
+	.4byte 0
+	.4byte __RTTI__8CoreNode
+	.4byte 0
+	.4byte 0
+lbl_80228DB8:
+	.4byte __RTTI__5ANode
+	.4byte 0
+	.4byte __RTTI__8CoreNode
+	.4byte 0
+	.4byte __RTTI__4Node
+	.4byte 0
+	.4byte 0
+.global __vt__7SRTNode
+__vt__7SRTNode:
+	.4byte __RTTI__7SRTNode
+	.4byte 0
+	.4byte getAgeNodeType__5ANodeFv
+	.4byte read__8CoreNodeFR18RandomAccessStream
+	.4byte update__7SRTNodeFv
+	.4byte draw__4NodeFR8Graphics
+	.4byte render__4NodeFR8Graphics
+	.4byte concat__7SRTNodeFv
+	.4byte concat__4NodeFR3VQS
+	.4byte concat__4NodeFR3SRT
+	.4byte concat__7SRTNodeFR8Matrix4f
+	.4byte getModelMatrix__7SRTNodeFv
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+.global __vt__4Node
+__vt__4Node:
+	.4byte __RTTI__4Node
+	.4byte 0
+	.4byte getAgeNodeType__5ANodeFv
+	.4byte read__8CoreNodeFR18RandomAccessStream
+	.4byte update__4NodeFv
+	.4byte draw__4NodeFR8Graphics
+	.4byte render__4NodeFR8Graphics
+	.4byte concat__4NodeFv
+	.4byte concat__4NodeFR3VQS
+	.4byte concat__4NodeFR3SRT
+	.4byte concat__4NodeFR8Matrix4f
+	.4byte getModelMatrix__4NodeFv
+
+.section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
+.balign 8
+lbl_803DD380:
+	.asciz "Node"
+.balign 4
+lbl_803DD388:
+	.asciz "%s%s"
+.balign 4
+lbl_803DD390:
+	.asciz "SRTNode"
+.balign 4
+lbl_803DD398:
+	.asciz "ANode"
+.balign 4
+__RTTI__5ANode:
+	.4byte lbl_803DD398
+	.4byte 0
+__RTTI__8CoreNode:
+	.4byte lbl_80228D8C
+	.4byte lbl_80228D98
+__RTTI__4Node:
+	.4byte lbl_803DD380
+	.4byte lbl_80228DA4
+__RTTI__7SRTNode:
+	.4byte lbl_803DD390
+	.4byte lbl_80228DB8
+
+.section .sbss, "wa"
+.balign 8
+.global nodeMgr
+nodeMgr:
+	.skip 4

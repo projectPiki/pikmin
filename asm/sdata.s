@@ -877,23 +877,3 @@ __RTTI__10ShpobjInfo:
 __RTTI__10AnmobjInfo:
 	.4byte 0x80228D54
 	.4byte 0x80228D60
-	.4byte 0x4E6F6465
-	.4byte 0
-.global lbl_803DD388
-lbl_803DD388:
-	.4byte 0x25732573
-	.4byte 0x00000000
-	.4byte 0x5352544E
-	.4byte 0x6F646500
-	.4byte 0x414E6F64
-	.4byte 0x65000000
-	.4byte 0x803DD398
-	.4byte 0
-	.4byte 0x80228D8C
-	.4byte 0x80228D98
-	.4byte 0x803DD380
-	.4byte 0x80228DA4
-.global __RTTI__7SRTNode
-__RTTI__7SRTNode:
-	.4byte 0x803DD390
-	.4byte 0x80228DB8
