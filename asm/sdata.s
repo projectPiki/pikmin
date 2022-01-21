@@ -897,17 +897,3 @@ lbl_803DD388:
 __RTTI__7SRTNode:
 	.4byte 0x803DD390
 	.4byte 0x80228DB8
-	.4byte 0x414E6F64
-	.4byte 0x65000000
-	.4byte 0x803DD3C0
-	.4byte 0
-	.4byte 0x80228E6C
-	.4byte 0x80228E78
-	.4byte 0x4E6F6465
-	.4byte 0x00000000
-	.4byte 0x803DD3D8
-	.4byte 0x80228E84
-.global __RTTI__10Controller
-__RTTI__10Controller:
-	.4byte 0x80228E60
-	.4byte 0x80228E98

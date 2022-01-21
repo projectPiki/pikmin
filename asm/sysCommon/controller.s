@@ -75,7 +75,7 @@ getMainStickX__10ControllerFv:
 /* 80040A9C 0003D9FC  94 21 FF E8 */	stwu r1, -0x18(r1)
 /* 80040AA0 0003DA00  3C 00 43 30 */	lis r0, 0x4330
 /* 80040AA4 0003DA04  88 63 00 45 */	lbz r3, 0x45(r3)
-/* 80040AA8 0003DA08  C8 42 84 00 */	lfd f2, "@416"@sda21(r2)
+/* 80040AA8 0003DA08  C8 42 84 00 */	lfd f2, lbl_803E8600@sda21(r2)
 /* 80040AAC 0003DA0C  7C 63 07 74 */	extsb r3, r3
 /* 80040AB0 0003DA10  C0 02 83 F8 */	lfs f0, lbl_803E85F8@sda21(r2)
 /* 80040AB4 0003DA14  6C 63 80 00 */	xoris r3, r3, 0x8000
@@ -92,7 +92,7 @@ getMainStickY__10ControllerFv:
 /* 80040AD4 0003DA34  94 21 FF E8 */	stwu r1, -0x18(r1)
 /* 80040AD8 0003DA38  3C 00 43 30 */	lis r0, 0x4330
 /* 80040ADC 0003DA3C  88 63 00 46 */	lbz r3, 0x46(r3)
-/* 80040AE0 0003DA40  C8 42 84 00 */	lfd f2, "@416"@sda21(r2)
+/* 80040AE0 0003DA40  C8 42 84 00 */	lfd f2, lbl_803E8600@sda21(r2)
 /* 80040AE4 0003DA44  7C 63 07 74 */	extsb r3, r3
 /* 80040AE8 0003DA48  C0 02 83 F8 */	lfs f0, lbl_803E85F8@sda21(r2)
 /* 80040AEC 0003DA4C  6C 63 80 00 */	xoris r3, r3, 0x8000
@@ -109,7 +109,7 @@ getSubStickX__10ControllerFv:
 /* 80040B0C 0003DA6C  94 21 FF E8 */	stwu r1, -0x18(r1)
 /* 80040B10 0003DA70  3C 00 43 30 */	lis r0, 0x4330
 /* 80040B14 0003DA74  88 63 00 47 */	lbz r3, 0x47(r3)
-/* 80040B18 0003DA78  C8 42 84 00 */	lfd f2, "@416"@sda21(r2)
+/* 80040B18 0003DA78  C8 42 84 00 */	lfd f2, lbl_803E8600@sda21(r2)
 /* 80040B1C 0003DA7C  7C 63 07 74 */	extsb r3, r3
 /* 80040B20 0003DA80  C0 02 83 F8 */	lfs f0, lbl_803E85F8@sda21(r2)
 /* 80040B24 0003DA84  6C 63 80 00 */	xoris r3, r3, 0x8000
@@ -126,7 +126,7 @@ getSubStickY__10ControllerFv:
 /* 80040B44 0003DAA4  94 21 FF E8 */	stwu r1, -0x18(r1)
 /* 80040B48 0003DAA8  3C 00 43 30 */	lis r0, 0x4330
 /* 80040B4C 0003DAAC  88 63 00 48 */	lbz r3, 0x48(r3)
-/* 80040B50 0003DAB0  C8 42 84 00 */	lfd f2, "@416"@sda21(r2)
+/* 80040B50 0003DAB0  C8 42 84 00 */	lfd f2, lbl_803E8600@sda21(r2)
 /* 80040B54 0003DAB4  7C 63 07 74 */	extsb r3, r3
 /* 80040B58 0003DAB8  C0 02 83 F8 */	lfs f0, lbl_803E85F8@sda21(r2)
 /* 80040B5C 0003DABC  6C 63 80 00 */	xoris r3, r3, 0x8000
@@ -137,3 +137,78 @@ getSubStickY__10ControllerFv:
 /* 80040B70 0003DAD0  EC 21 00 24 */	fdivs f1, f1, f0
 /* 80040B74 0003DAD4  38 21 00 18 */	addi r1, r1, 0x18
 /* 80040B78 0003DAD8  4E 80 00 20 */	blr 
+
+.section .data, "wa"  # 0x80222DC0 - 0x802E9640
+.balign 8
+lbl_80228E50:
+	.asciz "controller.cpp"
+.balign 4
+lbl_80228E60:
+	.asciz "Controller"
+.balign 4
+lbl_80228E6C:
+	.asciz "CoreNode"
+.balign 4
+lbl_80228E78:
+	.4byte __RTTI__5ANode
+	.4byte 0
+	.4byte 0
+lbl_80228E84:
+	.4byte __RTTI__5ANode
+	.4byte 0
+	.4byte __RTTI__8CoreNode
+	.4byte 0
+	.4byte 0
+lbl_80228E98:
+	.4byte __RTTI__5ANode
+	.4byte 0
+	.4byte __RTTI__8CoreNode
+	.4byte 0
+	.4byte __RTTI__4Node
+	.4byte 0
+	.4byte 0
+.global __vt__10Controller
+__vt__10Controller:
+	.4byte __RTTI__10Controller
+	.4byte 0
+	.4byte getAgeNodeType__5ANodeFv
+	.4byte read__8CoreNodeFR18RandomAccessStream
+	.4byte update__10ControllerFv
+	.4byte draw__4NodeFR8Graphics
+	.4byte render__4NodeFR8Graphics
+	.4byte concat__4NodeFv
+	.4byte concat__4NodeFR3VQS
+	.4byte concat__4NodeFR3SRT
+	.4byte concat__4NodeFR8Matrix4f
+	.4byte getModelMatrix__4NodeFv
+
+.section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
+.balign 8
+lbl_803DD3C0:
+	.asciz "ANode"
+.balign 4
+__RTTI__5ANode:
+	.4byte lbl_803DD3C0
+	.4byte 0
+__RTTI__8CoreNode:
+	.4byte lbl_80228E6C
+	.4byte lbl_80228E78
+.balign 4
+lbl_803DD3D8:
+	.asciz "Node"
+.balign 4
+__RTTI__4Node:
+	.4byte lbl_803DD3D8
+	.4byte lbl_80228E84
+__RTTI__10Controller:
+	.4byte lbl_80228E60
+	.4byte lbl_80228E98
+
+.section .sdata2, "a"  # 0x803E8200 - 0x803EC840
+.balign 8
+lbl_803E85F8:
+	.float 74.0
+.balign 8
+lbl_803E8600:
+	.4byte 0x43300000
+	.4byte 0x80000000
