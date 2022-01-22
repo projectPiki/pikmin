@@ -199,32 +199,7 @@ gop_subframe:
 	.4byte 0xFFFFFFFF
 .global playback_first_wait
 playback_first_wait:
-	.4byte 0x00000001
+	.4byte 1
 .global hvqm_first
 hvqm_first:
-	.4byte 0x00000001
-	.4byte 0x00000000
-.global lbl_803DCE70
-lbl_803DCE70:
-	.asciz "<Node>"
-.balign 4
-lbl_803DCE78:
-	.asciz "BaseApp"
-.balign 4
-lbl_803DCE80:
-	.asciz "ANode"
-.balign 4
-	.4byte lbl_803DCE80
-	.4byte 0
-	.4byte 0x802272E8
-	.4byte 0x802272F4
-.balign 4
-lbl_803DCE98:
-	.asciz "Node"
-.balign 4
-	.4byte lbl_803DCE98
-	.4byte 0x80227300
-.global __RTTI__7BaseApp
-__RTTI__7BaseApp:
-	.4byte lbl_803DCE78
-	.4byte 0x80227314
+	.4byte 1
