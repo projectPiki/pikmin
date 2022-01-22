@@ -228,9 +228,3 @@ lbl_803DCE98:
 __RTTI__7BaseApp:
 	.4byte lbl_803DCE78
 	.4byte 0x80227314
-.balign 4
-lbl_803DCEB0:
-	.asciz "Stream"
-.balign 4
-	.4byte lbl_803DCEB0
-	.4byte 0

@@ -4628,27 +4628,3 @@ __vt__5ANode:
 	.4byte 0x803DCE88
 	.4byte 0
 	.4byte getAgeNodeType__5ANodeFv
-.global __vt__6Stream
-__vt__6Stream:
-	.4byte 0x803DCEB8
-	.4byte 0
-	.4byte readInt__6StreamFv
-	.4byte readByte__6StreamFv
-	.4byte readShort__6StreamFv
-	.4byte readFloat__6StreamFv
-	.4byte readString__6StreamFPci
-	.4byte readString__6StreamFR6String
-	.4byte readString__6StreamFv
-	.4byte writeInt__6StreamFi
-	.4byte writeByte__6StreamFUc
-	.4byte writeShort__6StreamFs
-	.4byte writeFloat__6StreamFf
-	.4byte writeString__6StreamFPc
-	.4byte writeString__6StreamFR6String
-	.4byte read__6StreamFPvi
-	.4byte write__6StreamFPvi
-	.4byte getPending__6StreamFv
-	.4byte getAvailable__6StreamFv
-	.4byte close__6StreamFv
-	.4byte getClosing__6StreamFv
-	.4byte flush__6StreamFv
