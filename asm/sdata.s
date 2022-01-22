@@ -234,15 +234,3 @@ lbl_803DCEB0:
 .balign 4
 	.4byte lbl_803DCEB0
 	.4byte 0
-.balign 4
-lbl_803DCEC0:
-	.asciz "Stream"
-.balign 4
-	.4byte lbl_803DCEC0
-	.4byte 0
-	.4byte 0x80227430
-	.4byte 0x80227444
-.global __RTTI__19BufferedInputStream
-__RTTI__19BufferedInputStream:
-	.4byte 0x8022741C
-	.4byte 0x80227450
