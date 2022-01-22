@@ -10,7 +10,6 @@ add and remove code as you see fit, for modding or research purposes.
 - DISCLAIMER -
 
 Shiftability is tentative and not fully verified. Use at your own discretion.
-At the very least, unlabeled RTTI pointers remain.
 ```
 
 It builds the following DOL:
