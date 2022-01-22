@@ -4582,20 +4582,20 @@ lbl_802272DC:
 	.asciz "CoreNode"
 .balign 4
 	.4byte 0x803DCE88
-	.4byte 0x00000000
-	.4byte 0x00000000
+	.4byte 0
+	.4byte 0
 	.4byte 0x803DCE88
-	.4byte 0x00000000
+	.4byte 0
 	.4byte 0x803DCE90
-	.4byte 0x00000000
-	.4byte 0x00000000
+	.4byte 0
+	.4byte 0
 	.4byte 0x803DCE88
-	.4byte 0x00000000
+	.4byte 0
 	.4byte 0x803DCE90
-	.4byte 0x00000000
+	.4byte 0
 	.4byte 0x803DCEA0
-	.4byte 0x00000000
-	.4byte 0x00000000
+	.4byte 0
+	.4byte 0
 .global __vt__7BaseApp
 __vt__7BaseApp:
 	.4byte __RTTI__7BaseApp
@@ -5496,15 +5496,15 @@ lbl_802280B4:
 .global lbl_802280C0
 lbl_802280C0:
 	.4byte 0x803DCF70
-	.4byte 0x00000000
-	.4byte 0x00000000
+	.4byte 0
+	.4byte 0
 .global lbl_802280CC
 lbl_802280CC:
 	.4byte 0x803DCF70
-	.4byte 0x00000000
+	.4byte 0
 	.4byte 0x803DCF80
-	.4byte 0x00000000
-	.4byte 0x00000000
+	.4byte 0
+	.4byte 0
 .global __vt__12CacheTexture
 __vt__12CacheTexture:
 	.4byte __RTTI__12CacheTexture
@@ -5514,7 +5514,7 @@ __vt__12CacheTexture:
 	.4byte makeResident__12CacheTextureFv
 	.4byte 0x436F7265
 	.4byte 0x4E6F6465
-	.4byte 0
+	.4byte 00
 	.4byte 0x803DCFA0
 	.4byte 0
 	.4byte 0
@@ -5615,7 +5615,7 @@ __vt__15MaterialHandler:
 	.4byte setTexMatrix__15MaterialHandlerFb
 	.4byte 0x4D617465
 	.4byte 0x7269616C
-	.4byte 0
+	.4byte 00
 	.4byte 0x803DCFA0
 	.4byte 0
 	.4byte 0x803DCFA8
@@ -5628,40 +5628,3 @@ __vt__8Material:
 	.4byte getAgeNodeType__5ANodeFv
 	.4byte read__8MaterialFR18RandomAccessStream
 	.4byte attach__8MaterialFv
-	.4byte 0
-	.4byte 0x67724C69
-	.4byte 0x6768742E
-	.4byte 0x63707000
-.global lbl_802282AC
-lbl_802282AC:
-	.4byte lbl_80029E90
-	.4byte lbl_80029DB0
-	.4byte lbl_80029DC4
-	.4byte lbl_80029DE0
-	.4byte lbl_80029DFC
-	.4byte lbl_80029E28
-	.4byte lbl_80029E58
-	.4byte 0x436F7265
-	.4byte 0x4E6F6465
-	.4byte 0x00000000
-	.4byte 0x803DD01C
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x803DD01C
-	.4byte 0x00000000
-	.4byte 0x803DD024
-	.4byte 0x00000000
-	.4byte 0x00000000
-.global __vt__5Light
-__vt__5Light:
-	.4byte __RTTI__5Light
-	.4byte 0
-	.4byte getAgeNodeType__5ANodeFv
-	.4byte read__8CoreNodeFR18RandomAccessStream
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0

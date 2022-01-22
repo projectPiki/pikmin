@@ -2318,9 +2318,9 @@ lbl_802C51D0:
 	.asciz "PcamCamera"
 .balign 4
 lbl_802C51DC:
-	.4byte 0x803E3240
-	.4byte 0x00000000
-	.4byte 0x00000000
+	.4byte __RTTI__7NCamera
+	.4byte 0
+	.4byte 0
 .global __vt__10PcamCamera
 __vt__10PcamCamera:
 	.4byte __RTTI__10PcamCamera
@@ -2394,7 +2394,8 @@ lbl_803EA2EC:
 lbl_803EA2F0:
 	.float 0.5
 lbl_803EA2F4:
-	.4byte 0x4F000000
+	.float 2.14748365E9
+.balign 8
 lbl_803EA2F8:
 	.4byte 0x43300000
 	.4byte 0x80000000
