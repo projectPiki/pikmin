@@ -500,10 +500,4 @@ ref1:
 	.skip 4
 .global ref2
 ref2:
-	.skip 8
-.global readTree_signed
-readTree_signed:
-	.skip 4
-.global readTree_scale
-readTree_scale:
 	.skip 4

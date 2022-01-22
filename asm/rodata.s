@@ -139,11 +139,3 @@ lbl_8022228C:
 	.4byte 0xFFFFFFFF
 	.4byte 2
 	.4byte 0xFFFFFFFF
-.global mcbtypetrans$1481
-mcbtypetrans$1481:
-	.4byte 1
-	.4byte 2
-	.4byte 0
-	.4byte 2
-	.4byte 0
-	.4byte 1

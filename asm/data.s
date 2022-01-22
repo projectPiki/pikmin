@@ -4565,9 +4565,3 @@ HEAD_pikiseq:
 	.4byte 0x00000000
 	.4byte 0x00034880
 	.4byte 0x00001080
-.global func$793
-func$793:
-	.4byte _MotionComp_00
-	.4byte _MotionComp_01
-	.4byte _MotionComp_10
-	.4byte _MotionComp_11

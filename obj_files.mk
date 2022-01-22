@@ -20,6 +20,7 @@ JAUDIO :=\
 
 TEXT_O_FILES :=\
 	$(BUILD_DIR)/asm/text_0.o\
+	$(BUILD_DIR)/asm/hvqm4dec/hvqm4dec.o\
 	$(BUILD_DIR)/asm/sysCommon/ayuStack.o\
 	$(BUILD_DIR)/asm/sysCommon/baseApp.o\
 	$(BUILD_DIR)/asm/sysCommon/stream.o\
