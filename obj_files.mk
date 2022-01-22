@@ -21,7 +21,7 @@ JAUDIO :=\
 TEXT_O_FILES :=\
 	$(BUILD_DIR)/asm/text_0.o\
 	$(BUILD_DIR)/src/sysCommon/string.o\
-	$(BUILD_DIR)/asm/text_80025914.o\
+	$(BUILD_DIR)/asm/sysCommon/graphics.o\
 	$(BUILD_DIR)/asm/sysCommon/grLight.o\
 	$(BUILD_DIR)/asm/sysCommon/shapeBase.o\
 	$(BUILD_DIR)/asm/sysCommon/shpLightFlares.o\
