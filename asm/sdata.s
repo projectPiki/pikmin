@@ -189,7 +189,3 @@ first_1:
 .global copy
 copy:
 	.4byte copyinfo
-	.4byte 0x00000000
-.global buf
-buf:
-	.4byte interleavebuf
