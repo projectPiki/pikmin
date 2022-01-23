@@ -193,13 +193,3 @@ copy:
 .global buf
 buf:
 	.4byte interleavebuf
-	.4byte 0x00000000
-.global gop_subframe
-gop_subframe:
-	.4byte 0xFFFFFFFF
-.global playback_first_wait
-playback_first_wait:
-	.4byte 1
-.global hvqm_first
-hvqm_first:
-	.4byte 1

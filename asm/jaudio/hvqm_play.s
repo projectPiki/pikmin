@@ -1095,3 +1095,60 @@ lbl_8001EC28:
 /* 8001EC30 0001BB90  38 21 00 30 */	addi r1, r1, 0x30
 /* 8001EC34 0001BB94  7C 08 03 A6 */	mtlr r0
 /* 8001EC38 0001BB98  4E 80 00 20 */	blr 
+
+.section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
+.balign 8
+gop_subframe:
+	.4byte 0xFFFFFFFF
+playback_first_wait:
+	.4byte 1
+hvqm_first:
+	.4byte 1
+
+.section .sbss, "wa"
+.balign 8
+dvd_loadfinish:
+	.skip 4
+dvdcount:
+	.skip 4
+arcoffset:
+	.skip 4
+AUDIO_FRAME:
+	.skip 4
+PIC_FRAME:
+	.skip 4
+drop_picture_flag:
+	.skip 4
+PIC_BUFFERS:
+	.skip 4
+dvdload_size:
+	.skip 4
+dvdfile_size:
+	.skip 4
+rec_header:
+	.skip 8
+v_header:
+	.skip 4
+gop_baseframe:
+	.skip 4
+gop_frame:
+	.skip 4
+vh_state:
+	.skip 4
+hvqm_obj:
+	.skip 4
+dvd_active:
+	.skip 4
+virtualfile_buf:
+	.skip 4
+record_ok:
+	.skip 4
+ref1:
+	.skip 4
+ref2:
+	.skip 4
+
+.section .sdata2, "a"  # 0x803E8200 - 0x803EC840
+.balign 8
+lbl_803E8420:
+	.float 1.0
