@@ -17,6 +17,7 @@ SYSBOOTUP :=\
 JAUDIO :=\
 	$(BUILD_DIR)/src/jaudio/dummyprobe.o\
 	$(BUILD_DIR)/asm/jaudio.o\
+	$(BUILD_DIR)/asm/jaudio/filter3d.o\
 	$(BUILD_DIR)/asm/jaudio/syncstream.o\
 	$(BUILD_DIR)/asm/jaudio/bankloader.o\
 	$(BUILD_DIR)/asm/jaudio/interleave.o\
