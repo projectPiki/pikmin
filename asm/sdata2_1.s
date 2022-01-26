@@ -142,16 +142,3 @@ lbl_803E83F8:
 "@79":
 	.4byte 0x400921FA
 	.4byte 0xFC8B007A
-.global lbl_803E8408
-lbl_803E8408:
-	.4byte 0x3F800000
-.global lbl_803E840C
-lbl_803E840C:
-	.4byte 0x45800000
-.global "@317"
-"@317":
-	.4byte 0x43300000
-	.4byte 0x00000000
-.global lbl_803E8418
-lbl_803E8418:
-	.4byte 0x3EFF7CEE

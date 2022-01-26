@@ -17,8 +17,10 @@ SYSBOOTUP :=\
 JAUDIO :=\
 	$(BUILD_DIR)/src/jaudio/dummyprobe.o\
 	$(BUILD_DIR)/asm/jaudio.o\
+	$(BUILD_DIR)/asm/jaudio/syncstream.o\
 	$(BUILD_DIR)/asm/jaudio/bankloader.o\
 	$(BUILD_DIR)/asm/jaudio/interleave.o\
+	$(BUILD_DIR)/asm/jaudio/pikiseq.o\
 	$(BUILD_DIR)/asm/jaudio/hvqm_play.o\
 
 TEXT_O_FILES :=\

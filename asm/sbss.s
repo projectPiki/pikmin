@@ -437,7 +437,4 @@ demo_end_delay:
 	.skip 8
 .global seq_archandle
 seq_archandle:
-	.skip 8
-.global default_streamsync_call
-default_streamsync_call:
 	.skip 4

@@ -185,7 +185,3 @@ demo102:
 .global first_1
 first_1:
 	.4byte 0x00000001
-	.4byte 0x00000000
-.global copy
-copy:
-	.4byte copyinfo
