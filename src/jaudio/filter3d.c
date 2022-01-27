@@ -6,26 +6,30 @@
  * Address:	8001BB60
  * Size:	000034
  */
-void V3D_GetAngle(Vector3D_*)
+// nonmatch by reason of epilogue lr restore scheduling
+#ifdef NON_MATCHING
+float V3D_GetAngle__FP9Vector3D_(struct Vector3D_* input_vec) { return (atanf2__Fff(input_vec->x, input_vec->y) + 3.141592); }
+#else
+asm float V3D_GetAngle__FP9Vector3D_(struct Vector3D_*)
 {
-	/*
-	.loc_0x0:
+	// clang-format off
+	nofralloc
 	  mflr      r0
 	  stw       r0, 0x4(r1)
 	  stwu      r1, -0x8(r1)
 	  lfs       f1, 0x0(r3)
 	  lfs       f2, 0x4(r3)
-	  bl        -0xDEB4
-	  lfd       f0, -0x7E00(r2)
+	  bl        atanf2__Fff
+	  lfd       f0, 3.141592
 	  lwz       r0, 0xC(r1)
 	  fadd      f1, f0, f1
 	  frsp      f1, f1
 	  addi      r1, r1, 0x8
 	  mtlr      r0
 	  blr
-	*/
 }
-
+#endif
+// clang-format on
 /*
  * --INFO--
  * Address:	........
@@ -51,27 +55,9 @@ void V3D_Minus(Vector3D_*, Vector3D_*, Vector3D_*)
  * Address:	8001BBA0
  * Size:	000040
  */
-void V3D_Abs(Vector3D_*)
+double V3D_Abs__FP9Vector3D_(struct Vector3D_* input_vec)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  lfs       f1, 0x0(r3)
-	  lfs       f0, 0x4(r3)
-	  fmuls     f1, f1, f1
-	  lfs       f2, 0x8(r3)
-	  fmuls     f0, f0, f0
-	  fmuls     f2, f2, f2
-	  fadds     f0, f1, f0
-	  fadds     f1, f2, f0
-	  bl        -0xDFAC
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+	return (sqrtf2__Ff((input_vec->x * input_vec->x) + (input_vec->y * input_vec->y) + (input_vec->z * input_vec->z)));
 }
 
 /*
