@@ -2,8 +2,9 @@
 * text=auto
 
 # Explicitly declare text files
-*.py  text
+*.py   text
 
 # Enforce platform-specific encodings
-*.bat text eol=crlf
-*.sh  text eol=lf
+*.bat  text eol=crlf
+*.sh   text eol=lf
+*.sha1 text eol=lf
