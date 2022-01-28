@@ -1,4 +1,9 @@
+#include "types.h"
+#include "jaudio/interleave.h"
 
+// static struct il_buf interleavebuf; // should be static; only extern for the sake of BSS order
+extern struct il_buf interleavebuf;
+static struct il_buf* buf = &interleavebuf;
 
 /*
  * --INFO--
@@ -61,44 +66,14 @@ void Jac_SendStreamData(unsigned char*, unsigned long)
  * Address:	8001DB20
  * Size:	000020
  */
-void Jac_CheckStreamFree(unsigned long)
-{
-	/*
-	.loc_0x0:
-	  lwz       r4, -0x7EC8(r13)
-	  lwz       r0, 0x18(r4)
-	  cmplw     r0, r3
-	  blt-      .loc_0x18
-	  li        r3, 0x1
-	  blr
-
-	.loc_0x18:
-	  li        r3, 0
-	  blr
-	*/
-}
+BOOL Jac_CheckStreamFree__FUl(u32 p1) { return (buf->_18 >= p1) ? TRUE : FALSE; }
 
 /*
  * --INFO--
  * Address:	8001DB40
  * Size:	000020
  */
-void Jac_CheckStreamRemain(unsigned long)
-{
-	/*
-	.loc_0x0:
-	  lwz       r4, -0x7EC8(r13)
-	  lwz       r0, 0x14(r4)
-	  cmplw     r0, r3
-	  bge-      .loc_0x18
-	  li        r3, 0
-	  blr
-
-	.loc_0x18:
-	  li        r3, 0x1
-	  blr
-	*/
-}
+BOOL Jac_CheckStreamRemain__FUl(u32 p1) { return (buf->_14 < p1) ? FALSE : TRUE; }
 
 /*
  * --INFO--
@@ -187,26 +162,13 @@ void Jac_GetStreamData(unsigned char*, unsigned long)
  * Address:	8001DC20
  * Size:	000044
  */
-void Jac_InitStreamData(unsigned char*, unsigned long)
+void Jac_InitStreamData__FPUcUl(u8* param_1, u32 param_2)
 {
-	/*
-	.loc_0x0:
-	  lwz       r6, -0x7EC8(r13)
-	  li        r5, 0
-	  li        r0, 0x1
-	  stw       r3, 0x4(r6)
-	  lwz       r3, -0x7EC8(r13)
-	  stw       r4, 0x8(r3)
-	  lwz       r3, -0x7EC8(r13)
-	  stw       r5, 0xC(r3)
-	  lwz       r3, -0x7EC8(r13)
-	  stw       r5, 0x10(r3)
-	  lwz       r3, -0x7EC8(r13)
-	  stw       r5, 0x14(r3)
-	  lwz       r3, -0x7EC8(r13)
-	  stw       r4, 0x18(r3)
-	  lwz       r3, -0x7EC8(r13)
-	  stw       r0, 0x0(r3)
-	  blr
-	*/
+	buf->_04 = param_1;
+	buf->_08 = param_2;
+	buf->_0C = 0;
+	buf->_10 = 0;
+	buf->_14 = 0;
+	buf->_18 = param_2;
+	buf->_00 = TRUE;
 }
