@@ -242,6 +242,5 @@ lbl_801FA394:
 
 .section .sbss, "wa"
 .balign 8
-.global ResetFunctionQueue
 ResetFunctionQueue:
-	.skip 0x8
+	.skip 8

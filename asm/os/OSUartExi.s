@@ -181,6 +181,5 @@ lbl_801FDA00:
 
 .section .sbss, "wa"
 .balign 8
-.global serEnabled
 serEnabled:
-	.skip 0x8
+	.skip 4

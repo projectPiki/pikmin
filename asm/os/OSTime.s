@@ -42,7 +42,6 @@ __OSGetSystemTime:
 /* 801FD41C 001FA37C  38 21 00 20 */	addi r1, r1, 0x20
 /* 801FD420 001FA380  4E 80 00 20 */	blr 
 
-.global GetDates
 GetDates:
 /* 801FD424 001FA384  3C A0 92 49 */	lis r5, 0x92492493@ha
 /* 801FD428 001FA388  38 05 24 93 */	addi r0, r5, 0x92492493@l
@@ -296,7 +295,6 @@ lbl_801FD740:
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-.global YearDays
 YearDays:
 	.4byte 0x00000000
 	.4byte 0x0000001F
@@ -310,7 +308,6 @@ YearDays:
 	.4byte 0x00000111
 	.4byte 0x00000130
 	.4byte 0x0000014E
-.global LeapYearDays
 LeapYearDays:
 	.4byte 0x00000000
 	.4byte 0x0000001F
