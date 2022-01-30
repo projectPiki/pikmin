@@ -399,39 +399,3 @@ stop_flag:
 .global stop_ready
 stop_ready:
 	.skip 8
-.global demo_seqp
-demo_seqp:
-	.skip 4
-.global demo_bgm_seqp
-demo_bgm_seqp:
-	.skip 4
-.global current_seq_bgm
-current_seq_bgm:
-	.skip 4
-.global demo_inited
-demo_inited:
-	.skip 4
-.global now_loading_1
-now_loading_1:
-	.skip 4
-.global parts_find_demo_state
-parts_find_demo_state:
-	.skip 4
-.global text_demo_state
-text_demo_state:
-	.skip 4
-.global demo_parts_id
-demo_parts_id:
-	.skip 1
-.global demo_onyon_num
-demo_onyon_num:
-	.skip 1
-.global demo_parts_num
-demo_parts_num:
-	.skip 1
-.global event_pause_counter
-event_pause_counter:
-	.skip 1
-.global demo_end_delay
-demo_end_delay:
-	.skip 4

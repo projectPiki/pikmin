@@ -150,35 +150,3 @@ stream_level:
 stream_se_level:
 	.byte 0x1F
 	.byte 0x40
-.global current_demo_no
-current_demo_no:
-	.4byte 0xFFFFFFFF
-.global demo_seq_active
-demo_seq_active:
-	.4byte 0xFFFFFFFF
-.global demo_mml_active
-demo_mml_active:
-	.4byte 0xFFFFFFFF
-.global demo1
-demo1:
-	.4byte 0x0004FFFA
-	.4byte 0x07D0FFFF
-.global demo2
-demo2:
-	.4byte 0x07D0FFFF
-.global demo3
-demo3:
-	.4byte 0x017C0001
-	.4byte 0x01BCFFFF
-.global demo12
-demo12:
-	.4byte 0x00040000
-	.4byte 0x0258FFFF
-.global demo27
-demo27:
-	.4byte 0x00040000
-	.4byte 0x0258FFFF
-.global demo102
-demo102:
-	.4byte 0x00A00001
-	.4byte 0x0258FFFF
