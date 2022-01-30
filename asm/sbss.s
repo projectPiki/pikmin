@@ -434,7 +434,4 @@ event_pause_counter:
 	.skip 1
 .global demo_end_delay
 demo_end_delay:
-	.skip 8
-.global seq_archandle
-seq_archandle:
 	.skip 4

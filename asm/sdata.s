@@ -182,6 +182,3 @@ demo27:
 demo102:
 	.4byte 0x00A00001
 	.4byte 0x0258FFFF
-.global first_1
-first_1:
-	.4byte 0x00000001
