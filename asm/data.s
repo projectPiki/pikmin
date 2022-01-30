@@ -3412,7 +3412,8 @@ GAMEDEMO_VOL_TABLE:
 	.4byte 0x0FA01388
 	.4byte 0x17701B58
 	.4byte 0x1F402710
-	.4byte 0x2EE00000
+	.2byte 0x2EE0
+.balign 4
 .global GAMESE_VOL_TABLE
 GAMESE_VOL_TABLE:
 	.4byte 0x000003E8
@@ -3420,7 +3421,8 @@ GAMESE_VOL_TABLE:
 	.4byte 0x1B582710
 	.4byte 0x32C83E80
 	.4byte 0x4E2061A8
-	.4byte 0x7FFF0000
+	.2byte 0x7FFF
+.balign 4
 .global GAMESTREAM_VOL_TABLE
 GAMESTREAM_VOL_TABLE:
 	.4byte 0x00000258
@@ -3428,165 +3430,4 @@ GAMESTREAM_VOL_TABLE:
 	.4byte 0x0BB80FA0
 	.4byte 0x13881770
 	.4byte 0x1F402710
-	.4byte 0x2EE00000
-	.4byte 0x00000000
-.global tbl_scene_to_bgm
-tbl_scene_to_bgm:
-	.4byte 0x00000000
-	.4byte 0x00000007
-	.4byte 0x00000012
-	.4byte 0x0000000C
-	.4byte 0x00000000
-	.4byte 0x00000001
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000008
-	.4byte 0x00000013
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-.global tbl_scene_to_fadetime
-tbl_scene_to_fadetime:
-	.4byte 0x00000000
-	.4byte 0x0000003C
-	.4byte 0x0000000F
-	.4byte 0x00000078
-	.4byte 0x0000000A
-	.4byte 0x00000019
-	.4byte 0x0000000A
-	.4byte 0x0000000A
-	.4byte 0x0000000A
-	.4byte 0x0000000A
-	.4byte 0x00000019
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-.global tbl_stage_to_bgm
-tbl_stage_to_bgm:
-	.4byte 0x00000004
-	.4byte 0x00000005
-	.4byte 0x0000000A
-	.4byte 0x00000009
-	.4byte 0x00000011
-.balign 4
-.global filelist
-filelist:
-	.asciz "piki.stx"
-.balign 4
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-.balign 4
-	.asciz "o_dead.stx"
-.balign 4
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-.balign 4
-	.asciz "d_end1.stx"
-.balign 4
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-.balign 4
-	.asciz "gyoku.stx"
-.balign 4
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-.balign 4
-	.asciz "d_end3.stx"
-.balign 4
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-.balign 4
-	.asciz "fanf5.stx"
-.balign 4
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-.balign 4
-	.asciz "badend0.stx"
-.balign 4
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-.balign 4
-	.asciz "badend1.stx"
-.balign 4
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-.balign 4
-	.asciz "opening.stx"
-.balign 4
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-.balign 4
-	.asciz "happyend1.stx"
-.balign 4
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-.balign 4
-	.asciz "compend1.stx"
-.balign 4
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-.balign 4
-	.asciz "compend0.stx"
-.balign 4
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-.balign 4
-	.asciz "badend2.stx"
-.balign 4
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-.balign 4
-	.asciz "onion.stx"
-.balign 4
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-.global header
-header:
-	.4byte 0x00640C62
-	.4byte 0x0058EE80
-	.4byte 0xBB800004
-	.4byte 0x0010001E
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
+	.2byte 0x2EE0

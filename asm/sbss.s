@@ -372,30 +372,3 @@ call_counter:
 .global bgm_semaphore
 bgm_semaphore:
 	.skip 4
-.global current_bgm
-current_bgm:
-	.skip 4
-.global current_ready
-current_ready:
-	.skip 4
-.global now_loading
-now_loading:
-	.skip 4
-.global first_load
-first_load:
-	.skip 4
-.global chgmode
-chgmode:
-	.skip 4
-.global first$89
-first$89:
-	.skip 4
-.global init$90
-init$90:
-	.skip 4
-.global stop_flag
-stop_flag:
-	.skip 4
-.global stop_ready
-stop_ready:
-	.skip 8

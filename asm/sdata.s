@@ -132,21 +132,3 @@ cresult_volset:
 .global last_bgm_level
 last_bgm_level:
 	.byte 0xFF
-	.balign 8
-.global current_scene
-current_scene:
-	.4byte 0xFFFFFFFF
-.global current_stage
-current_stage:
-	.4byte 0xFFFFFFFF
-.global current_prepare
-current_prepare:
-	.4byte 0xFFFFFFFF
-.global stream_level
-stream_level:
-	.byte 0x1F
-	.byte 0x40
-.global stream_se_level
-stream_se_level:
-	.byte 0x1F
-	.byte 0x40

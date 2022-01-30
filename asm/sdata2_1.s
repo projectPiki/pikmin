@@ -118,6 +118,3 @@ lbl_803E83D4:
 "@213":
 	.4byte 0x43300000
 	.4byte 0x00000000
-.global lbl_803E83E0
-lbl_803E83E0:
-	.float 1.0
