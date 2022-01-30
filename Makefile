@@ -44,9 +44,13 @@ ifeq ($(EPILOGUE_PROCESS),1)
 include e_files.mk
 endif
 
-O_FILES := $(GROUP_0_FILES) $(SYSBOOTUP) $(JAUDIO) $(TEXT_O_FILES)
+O_FILES :=	$(GROUP_0_FILES) $(SYSBOOTUP) $(JAUDIO) $(HVQM4DEC) $(SYSCOMMON) $(SYSDOLPHIN)\
+			$(COLIN) $(KANDO) $(NAKATA) $(NISHIMURA) $(OGAWA) $(YAMASHITA)\
+			$(BASE) $(OS) $(DB) $(MTX) $(DVD) $(VI) $(PAD) $(AI) $(AR) $(DSP)\
+			$(CARD) $(HIO) $(GX) $(RUNTIME) $(MSL_C) $(TRK_MINNOW_DOLPHIN)\
+			$(AMCEXI2) $(AMCNOTSTUB) $(ODEMUEXI2) $(ODENOTSTUB)
 ifeq ($(EPILOGUE_PROCESS),1)
-E_FILES := $(EPILOGUE_UNSCHEDULED)
+E_FILES :=	$(EPILOGUE_UNSCHEDULED)
 endif
 #-------------------------------------------------------------------------------
 # Tools
@@ -89,7 +93,7 @@ LDFLAGS := -map $(MAP) -fp hard -nodefaults
 CFLAGS   = -Cpp_exceptions off -O4,p -fp hard -proc gekko -nodefaults -RTTI on $(INCLUDES)
 
 $(JAUDIO): CFLAGS += -func_align 32
-$(BUILD_DIR)/src/MSL_C/PPCEABI/bare/H/e_pow.o: CFLAGS += -fp_contract on
+$(MSL_C): CFLAGS += -fp_contract on
 
 #-------------------------------------------------------------------------------
 # Recipes

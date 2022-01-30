@@ -28,8 +28,10 @@ JAUDIO :=\
 	$(BUILD_DIR)/asm/jaudio/pikiseq.o\
 	$(BUILD_DIR)/asm/jaudio/hvqm_play.o\
 
-TEXT_O_FILES :=\
+HVQM4DEC :=\
 	$(BUILD_DIR)/asm/hvqm4dec/hvqm4dec.o\
+
+SYSCOMMON :=\
 	$(BUILD_DIR)/asm/sysCommon/ayuStack.o\
 	$(BUILD_DIR)/asm/sysCommon/baseApp.o\
 	$(BUILD_DIR)/asm/sysCommon/stream.o\
@@ -52,6 +54,8 @@ TEXT_O_FILES :=\
 	$(BUILD_DIR)/asm/sysCommon/camera.o\
 	$(BUILD_DIR)/asm/sysCommon/atx.o\
 	$(BUILD_DIR)/asm/sysCommon/id32.o\
+
+SYSDOLPHIN :=\
 	$(BUILD_DIR)/asm/sysDolphin/texture.o\
 	$(BUILD_DIR)/src/sysDolphin/system.o\
 	$(BUILD_DIR)/asm/sysDolphin/system_asm.o\
@@ -59,6 +63,8 @@ TEXT_O_FILES :=\
 	$(BUILD_DIR)/asm/sysDolphin/controllerMgr.o\
 	$(BUILD_DIR)/asm/sysDolphin/dgxGraphics.o\
 	$(BUILD_DIR)/asm/sysDolphin/gameApp.o\
+
+COLIN :=\
 	$(BUILD_DIR)/asm/plugPikiColin/cardutil.o\
 	$(BUILD_DIR)/asm/plugPikiColin/dynsimulator.o\
 	$(BUILD_DIR)/asm/plugPikiColin/animMgr.o\
@@ -85,6 +91,8 @@ TEXT_O_FILES :=\
 	$(BUILD_DIR)/asm/plugPikiColin/memoryCard.o\
 	$(BUILD_DIR)/asm/plugPikiColin/moviePlayer.o\
 	$(BUILD_DIR)/asm/plugPikiColin/movSample.o\
+
+KANDO :=\
 	$(BUILD_DIR)/asm/plugPikiKando/omake.o\
 	$(BUILD_DIR)/asm/plugPikiKando/radarInfo.o\
 	$(BUILD_DIR)/asm/plugPikiKando/interactBattle.o\
@@ -217,6 +225,8 @@ TEXT_O_FILES :=\
 	$(BUILD_DIR)/src/plugPikiKando/pikiInfo.o\
 	$(BUILD_DIR)/asm/plugPikiKando/plantMgr.o\
 	$(BUILD_DIR)/asm/plugPikiKando/paniPlantAnimator.o\
+
+NAKATA :=\
 	$(BUILD_DIR)/asm/plugPikiNakata/genteki.o\
 	$(BUILD_DIR)/asm/plugPikiNakata/nakatacode.o\
 	$(BUILD_DIR)/asm/plugPikiNakata/nlibfunction.o\
@@ -272,6 +282,8 @@ TEXT_O_FILES :=\
 	$(BUILD_DIR)/asm/plugPikiNakata/tekiparameters.o\
 	$(BUILD_DIR)/asm/plugPikiNakata/tekipersonality.o\
 	$(BUILD_DIR)/asm/plugPikiNakata/tekistrategy.o\
+
+NISHIMURA :=\
 	$(BUILD_DIR)/asm/plugPikiNishimura/genBoss.o\
 	$(BUILD_DIR)/asm/plugPikiNishimura/Boss.o\
 	$(BUILD_DIR)/asm/plugPikiNishimura/BossAnimMgr.o\
@@ -306,6 +318,8 @@ TEXT_O_FILES :=\
 	$(BUILD_DIR)/asm/plugPikiNishimura/RumbleData.o\
 	$(BUILD_DIR)/asm/plugPikiNishimura/HmRumbleMgr.o\
 	$(BUILD_DIR)/src/plugPikiNishimura/HmRumbleSample.o\
+
+OGAWA :=\
 	$(BUILD_DIR)/asm/plugPikiOgawa/ogTest.o\
 	$(BUILD_DIR)/asm/plugPikiOgawa/ogSub.o\
 	$(BUILD_DIR)/asm/plugPikiOgawa/ogTitle.o\
@@ -330,6 +344,8 @@ TEXT_O_FILES :=\
 	$(BUILD_DIR)/asm/plugPikiOgawa/ogGraph.o\
 	$(BUILD_DIR)/asm/plugPikiOgawa/ogStart.o\
 	$(BUILD_DIR)/asm/plugPikiOgawa/ogCallBack.o\
+
+YAMASHITA :=\
 	$(BUILD_DIR)/asm/plugPikiYamashita/gameCourseClear.o\
 	$(BUILD_DIR)/asm/plugPikiYamashita/gameStageClear.o\
 	$(BUILD_DIR)/asm/plugPikiYamashita/gameCredits.o\
@@ -411,7 +427,11 @@ TEXT_O_FILES :=\
 	$(BUILD_DIR)/asm/plugPikiYamashita/drawSaveFailure.o\
 	$(BUILD_DIR)/asm/plugPikiYamashita/drawFinalResult.o\
 	$(BUILD_DIR)/asm/plugPikiYamashita/drawOptionSave.o\
+
+BASE :=\
 	$(BUILD_DIR)/src/base/PPCArch.o\
+
+OS :=\
 	$(BUILD_DIR)/asm/os/OS.o\
 	$(BUILD_DIR)/asm/os/OSAlarm.o\
 	$(BUILD_DIR)/asm/os/OSAlloc.o\
@@ -437,23 +457,41 @@ TEXT_O_FILES :=\
 	$(BUILD_DIR)/asm/os/OSUartExi.o\
 	$(BUILD_DIR)/src/os/__start.o\
 	$(BUILD_DIR)/asm/os/__ppc_eabi_init.o\
+
+DB :=\
 	$(BUILD_DIR)/asm/db/db.o\
+
+MTX :=\
 	$(BUILD_DIR)/asm/mtx/mtx.o\
 	$(BUILD_DIR)/asm/mtx/mtx44.o\
 	$(BUILD_DIR)/asm/mtx/vec.o\
+
+DVD :=\
 	$(BUILD_DIR)/asm/dvd/dvdlow.o\
 	$(BUILD_DIR)/asm/dvd/dvdfs.o\
 	$(BUILD_DIR)/asm/dvd/dvd.o\
 	$(BUILD_DIR)/asm/dvd/dvdqueue.o\
 	$(BUILD_DIR)/asm/dvd/dvderror.o\
 	$(BUILD_DIR)/asm/dvd/fstload.o\
+
+VI :=\
 	$(BUILD_DIR)/asm/vi/vi.o\
+
+PAD :=\
 	$(BUILD_DIR)/asm/pad/Padclamp.o\
 	$(BUILD_DIR)/asm/pad/Pad.o\
+
+AI :=\
 	$(BUILD_DIR)/asm/ai/ai.o\
+
+AR :=\
 	$(BUILD_DIR)/asm/ar/ar.o\
 	$(BUILD_DIR)/asm/ar/arq.o\
+
+DSP :=\
 	$(BUILD_DIR)/src/dsp/dsp.o\
+
+CARD :=\
 	$(BUILD_DIR)/asm/card/CARDBios.o\
 	$(BUILD_DIR)/asm/card/CARDRdwr.o\
 	$(BUILD_DIR)/asm/card/CARDBlock.o\
@@ -468,7 +506,11 @@ TEXT_O_FILES :=\
 	$(BUILD_DIR)/asm/card/CARDDelete.o\
 	$(BUILD_DIR)/asm/card/CARDStat.o\
 	$(BUILD_DIR)/asm/card/CARDRename.o\
+
+HIO :=\
 	$(BUILD_DIR)/asm/hio/hio.o\
+
+GX :=\
 	$(BUILD_DIR)/asm/gx/GXInit.o\
 	$(BUILD_DIR)/asm/gx/GXFifo.o\
 	$(BUILD_DIR)/asm/gx/GXAttr.o\
@@ -483,6 +525,8 @@ TEXT_O_FILES :=\
 	$(BUILD_DIR)/src/gx/GXStubs.o\
 	$(BUILD_DIR)/asm/gx/GXDisplayList.o\
 	$(BUILD_DIR)/asm/gx/GXTransform.o\
+
+RUNTIME :=\
 	$(BUILD_DIR)/asm/Runtime/PPCEABI/H/__mem.o\
 	$(BUILD_DIR)/asm/Runtime/PPCEABI/H/__va_arg.o\
 	$(BUILD_DIR)/asm/Runtime/PPCEABI/H/global_destructor_chain.o\
@@ -492,6 +536,8 @@ TEXT_O_FILES :=\
 	$(BUILD_DIR)/asm/Runtime/PPCEABI/H/ExceptionPPC.o\
 	$(BUILD_DIR)/asm/Runtime/PPCEABI/H/runtime.o\
 	$(BUILD_DIR)/asm/Runtime/PPCEABI/H/__init_cpp_exceptions.o\
+
+MSL_C :=\
 	$(BUILD_DIR)/asm/MSL_C/PPCEABI/bare/H/abort_exit.o\
 	$(BUILD_DIR)/src/MSL_C/PPCEABI/bare/H/errno.o\
 	$(BUILD_DIR)/asm/MSL_C/PPCEABI/bare/H/ansi_fp.o\
@@ -530,6 +576,8 @@ TEXT_O_FILES :=\
 	$(BUILD_DIR)/asm/MSL_C/PPCEABI/bare/H/trigf.o\
 	$(BUILD_DIR)/asm/MSL_C/PPCEABI/bare/H/math_inlines.o\
 	$(BUILD_DIR)/asm/MSL_C/PPCEABI/bare/H/common_float_tables.o\
+
+TRK_MINNOW_DOLPHIN :=\
 	$(BUILD_DIR)/asm/TRK_MINNOW_DOLPHIN/mainloop.o\
 	$(BUILD_DIR)/asm/TRK_MINNOW_DOLPHIN/nubevent.o\
 	$(BUILD_DIR)/asm/TRK_MINNOW_DOLPHIN/nubinit.o\
@@ -552,8 +600,16 @@ TEXT_O_FILES :=\
 	$(BUILD_DIR)/asm/TRK_MINNOW_DOLPHIN/main_TRK.o\
 	$(BUILD_DIR)/asm/TRK_MINNOW_DOLPHIN/dolphin_trk_glue.o\
 	$(BUILD_DIR)/asm/TRK_MINNOW_DOLPHIN/targcont.o\
+
+AMCEXI2 :=\
 	$(BUILD_DIR)/asm/amcExi2/AmcExi.o\
 	$(BUILD_DIR)/asm/amcExi2/AmcExi2Comm.o\
+
+AMCNOTSTUB :=\
 	$(BUILD_DIR)/src/amcnotstub/amcnotstub.o\
+
+ODEMUEXI2 :=\
 	$(BUILD_DIR)/asm/OdemuExi2/DebuggerDriver.o\
+
+ODENOTSTUB :=\
 	$(BUILD_DIR)/src/odenotstub/odenotstub.o\
