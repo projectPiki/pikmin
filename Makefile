@@ -133,6 +133,9 @@ $(DOL): $(ELF) | tools
 clean:
 	rm -f -d -r build
 	rm -f -d -r epilogue
+	find . -name '*.o' -exec rm {} +
+	find . -name 'ctx.c' -exec rm {} +
+	find ./include -name "*.s" -type f -delete
 	$(MAKE) -C tools clean
 tools:
 	$(MAKE) -C tools
