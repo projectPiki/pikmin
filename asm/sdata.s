@@ -5,7 +5,7 @@ JAC_DAC_RATE:
 	.float 32028.5
 .global JAC_SUBFRAMES
 JAC_SUBFRAMES:
-	.4byte 0x00000007
+	.4byte 7
 .global JAC_FRAMESAMPLES
 JAC_FRAMESAMPLES:
 	.4byte 0x00000230
@@ -15,15 +15,14 @@ DAC_SIZE:
 .global DSP_MIXERLEVEL
 DSP_MIXERLEVEL:
 	.2byte 0x4000
-	.2byte 0x0000
-	.4byte 0x00000000
+.balign 8
 .global MAX_MIXERLEVEL
 MAX_MIXERLEVEL:
 	.2byte 0x2EE0
-	.2byte 0x0000
+.balign 4
 .global JAC_SYSTEM_OUTPUT_MODE
 JAC_SYSTEM_OUTPUT_MODE:
-	.4byte 0x00000001
+	.4byte 1
 .global COMP_BLOCKSAMPLES$81
 COMP_BLOCKSAMPLES$81:
 	.4byte 0x10100101
@@ -43,7 +42,7 @@ ARCALL:
 	.4byte LoadAram_Default__FPcUlUlPUlP7jaheap_
 .global first
 first:
-	.4byte 0x00000001
+	.4byte 1
 .global osc_table
 osc_table:
 	.4byte 0x01020804

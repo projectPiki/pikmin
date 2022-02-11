@@ -266,4 +266,4 @@ jac_debug_multi_entry:
 	.skip 4
 .global jac_debug_multi_cancel
 jac_debug_multi_cancel:
-	.skip 8
+	.skip 4
