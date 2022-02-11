@@ -3341,93 +3341,9 @@ ACTION_STATUS:
 EVENT_DIST_SCALE:
 	.float 1.0
 	.float 1.0
-	.4byte 0x40000000
-	.4byte 0x3F4CCCCD
-	.4byte 0x3F99999A
+	.float 2.0
+	.float 0.8
+	.float 1.2
 	.float 1.0
-	.4byte 0x3F99999A
-	.4byte 0x40000000
-	.4byte 0x00000000
-.global bgm_mute_set
-bgm_mute_set:
-	.4byte bgm0_set
-	.4byte bgm0_set
-	.4byte bgm1_set
-	.4byte bgm2_set
-	.4byte bgm0_set
-	.4byte bgm0_set
-	.4byte bgm0_set
-	.4byte bgm3_set
-	.4byte bgm4_set
-	.4byte bgm0_set
-	.4byte bgm0_set
-	.4byte bgm0_set
-	.4byte bgm0_set
-	.4byte bgm0_set
-	.4byte bgm0_set
-	.4byte bgm5_set
-	.4byte bgm0_set
-	.4byte bgm0_set
-	.4byte bgm0_set
-	.4byte bgm0_set
-.global bgm_volume_set
-bgm_volume_set:
-	.4byte bgm0_volset
-	.4byte bgm0_volset
-	.4byte bgm1_volset
-	.4byte bgm2_volset
-	.4byte bgm0_volset
-	.4byte bgm0_volset
-	.4byte bgm0_volset
-	.4byte bgm3_volset
-	.4byte bgm4_volset
-	.4byte bgm0_volset
-	.4byte bgm0_volset
-	.4byte bgm0_volset
-	.4byte bgm0_volset
-	.4byte bgm0_volset
-	.4byte bgm0_volset
-	.4byte bgm5_volset
-	.4byte bgm0_volset
-	.4byte bgm0_volset
-	.4byte cresult_volset
-	.4byte bgm0_volset
-.global GAMEBGM_VOL_TABLE
-GAMEBGM_VOL_TABLE:
-	.float 0.0
-	.4byte 0x3DCCCCCD
-	.4byte 0x3E4CCCCD
-	.4byte 0x3E99999A
-	.4byte 0x3ECCCCCD
-	.4byte 0x3F000000
-	.4byte 0x3F19999A
-	.4byte 0x3F333333
-	.4byte 0x3F4CCCCD
-	.4byte 0x3F666666
-	.float 1.0
-.global GAMEDEMO_VOL_TABLE
-GAMEDEMO_VOL_TABLE:
-	.4byte 0x000003E8
-	.4byte 0x07D00BB8
-	.4byte 0x0FA01388
-	.4byte 0x17701B58
-	.4byte 0x1F402710
-	.2byte 0x2EE0
-.balign 4
-.global GAMESE_VOL_TABLE
-GAMESE_VOL_TABLE:
-	.4byte 0x000003E8
-	.4byte 0x07D00FA0
-	.4byte 0x1B582710
-	.4byte 0x32C83E80
-	.4byte 0x4E2061A8
-	.2byte 0x7FFF
-.balign 4
-.global GAMESTREAM_VOL_TABLE
-GAMESTREAM_VOL_TABLE:
-	.4byte 0x00000258
-	.4byte 0x03E807D0
-	.4byte 0x0BB80FA0
-	.4byte 0x13881770
-	.4byte 0x1F402710
-	.2byte 0x2EE0
+	.float 1.2
+	.float 2.0

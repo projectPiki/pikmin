@@ -124,18 +124,3 @@ lbl_80222254:
 .global lbl_80222264
 lbl_80222264:
 	.asciz "/badend1.stx"
-.balign 8
-.global lbl_80222278
-lbl_80222278:
-	.4byte 0x00
-	.4byte 0x01
-	.4byte 0x0B
-	.4byte 0x0D
-	.4byte 0x10
-.global lbl_8022228C
-lbl_8022228C:
-	.4byte 0
-	.4byte 1
-	.4byte 0xFFFFFFFF
-	.4byte 2
-	.4byte 0xFFFFFFFF

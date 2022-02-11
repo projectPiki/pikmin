@@ -359,16 +359,4 @@ volume$220:
 	.skip 4
 .global init$221
 init$221:
-	.skip 8
-.global lastside
-lastside:
-	.skip 4
-.global last_crossmode
-last_crossmode:
-	.skip 4
-.global call_counter
-call_counter:
-	.skip 4
-.global bgm_semaphore
-bgm_semaphore:
-	.skip 4
+	.skip 1

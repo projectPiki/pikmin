@@ -100,21 +100,10 @@ lbl_803E83B0:
 	.4byte 0x80000000
 .global lbl_803E83C0
 lbl_803E83C0:
-	.4byte 0x00000000
+	.float 0.0
 .global lbl_803E83C4
 lbl_803E83C4:
 	.4byte 0x3D4CCCCD
 .global lbl_803E83C8
 lbl_803E83C8:
-	.4byte 0x3F800000
-	.4byte 0x00000000
-.global lbl_803E83D0
-lbl_803E83D0:
-	.4byte 0x00000000
-.global lbl_803E83D4
-lbl_803E83D4:
-	.4byte 0x3F99999A
-.global "@213"
-"@213":
-	.4byte 0x43300000
-	.4byte 0x00000000
+	.float 1.0

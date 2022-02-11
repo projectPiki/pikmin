@@ -17,6 +17,7 @@ SYSBOOTUP :=\
 JAUDIO :=\
 	$(BUILD_DIR)/src/jaudio/dummyprobe.o\
 	$(BUILD_DIR)/asm/jaudio.o\
+	$(BUILD_DIR)/asm/jaudio/piki_bgm.o\
 	$(BUILD_DIR)/asm/jaudio/piki_scene.o\
 	$(BUILD_DIR)/asm/jaudio/pikidemo.o\
 	$(BUILD_DIR)/asm/jaudio/file_seq.o\
