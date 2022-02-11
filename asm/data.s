@@ -2075,134 +2075,134 @@ SEND_TABLE:
 	.4byte 0x09A00000
 .global C5BASE_PITCHTABLE
 C5BASE_PITCHTABLE:
-	.4byte 0x3D000000
-	.4byte 0x3D079C41
-	.4byte 0x3D0FACE6
-	.4byte 0x3D18372E
-	.4byte 0x3D214489
-	.4byte 0x3D2ADB40
-	.4byte 0x3D3504C5
-	.4byte 0x3D3FC86D
-	.4byte 0x3D4B2FA9
-	.4byte 0x3D5744F6
-	.4byte 0x3D6411C3
-	.4byte 0x3D71A198
-	.4byte 0x3D800000
-	.4byte 0x3D879C41
-	.4byte 0x3D8FACE6
-	.4byte 0x3D9837B5
-	.4byte 0x3DA1450F
-	.4byte 0x3DAADBC6
-	.4byte 0x3DB504C5
-	.4byte 0x3DBFC86D
-	.4byte 0x3DCB302F
-	.4byte 0x3DD744F6
-	.4byte 0x3DE411C3
-	.4byte 0x3DF1A198
-	.4byte 0x3E000000
-	.4byte 0x3E079C84
-	.4byte 0x3E0FACE6
-	.4byte 0x3E1837F8
-	.4byte 0x3E21450F
-	.4byte 0x3E2ADC0A
-	.4byte 0x3E350508
-	.4byte 0x3E3FC86D
-	.4byte 0x3E4B2FEC
-	.4byte 0x3E5744F6
-	.4byte 0x3E641206
-	.4byte 0x3E71A1DC
-	.4byte 0x3E800000
-	.4byte 0x3E879C84
-	.4byte 0x3E8FACE6
-	.4byte 0x3E9837F8
-	.4byte 0x3EA1450F
-	.4byte 0x3EAADC0A
-	.4byte 0x3EB504E6
-	.4byte 0x3EBFC88E
-	.4byte 0x3ECB2FEC
-	.4byte 0x3ED744F6
-	.4byte 0x3EE411E4
-	.4byte 0x3EF1A1BA
-	.4byte 0x3F000000
-	.4byte 0x3F079C84
-	.4byte 0x3F0FACD6
-	.4byte 0x3F1837F8
-	.4byte 0x3F214520
-	.4byte 0x3F2ADC0A
-	.4byte 0x3F3504F7
-	.4byte 0x3F3FC88E
-	.4byte 0x3F4B2FFD
-	.4byte 0x3F574507
-	.4byte 0x3F6411F5
-	.4byte 0x3F71A1CB
+	.float 0.03125
+	.float 0.033108
+	.float 0.035077
+	.float 0.037162
+	.float 0.039372
+	.float 0.041713
+	.float 0.044194
+	.float 0.046822
+	.float 0.049606
+	.float 0.052556
+	.float 0.055681
+	.float 0.058992
+	.float 0.0625
+	.float 0.066216
+	.float 0.070154
+	.float 0.074325
+	.float 0.078745
+	.float 0.083427
+	.float 0.088388
+	.float 0.093644
+	.float 0.099213
+	.float 0.105112
+	.float 0.111362
+	.float 0.117984
+	.float 0.125
+	.float 0.132433
+	.float 0.140308
+	.float 0.148651
+	.float 0.15749
+	.float 0.166855
+	.float 0.176777
+	.float 0.187288
+	.float 0.198425
+	.float 0.210224
+	.float 0.222725
+	.float 0.235969
+	.float 0.25
+	.float 0.264866
+	.float 0.280616
+	.float 0.297302
+	.float 0.31498
+	.float 0.33371
+	.float 0.353553
+	.float 0.374577
+	.float 0.39685
+	.float 0.420448
+	.float 0.445449
+	.float 0.471937
+	.float 0.5
+	.float 0.529732
+	.float 0.561231
+	.float 0.594604
+	.float 0.629961
+	.float 0.66742
+	.float 0.707107
+	.float 0.749154
+	.float 0.793701
+	.float 0.840897
+	.float 0.890899
+	.float 0.943875
 	.float 1.0
-	.4byte 0x3F879C7C
-	.4byte 0x3F8FACD6
-	.4byte 0x3F9837EF
-	.4byte 0x3FA14517
-	.4byte 0x3FAADC0A
-	.4byte 0x3FB504F7
-	.4byte 0x3FBFC886
-	.4byte 0x3FCB2FF5
-	.4byte 0x3FD744FE
-	.4byte 0x3FE411F5
-	.4byte 0x3FF1A1C2
-	.4byte 0x40000000
-	.4byte 0x40079C7C
-	.4byte 0x400FACD6
-	.4byte 0x401837EF
-	.4byte 0x40214517
-	.4byte 0x402ADC0A
-	.4byte 0x403504F7
-	.4byte 0x403FC88A
-	.4byte 0x404B2FF9
-	.4byte 0x405744FE
-	.4byte 0x406411F5
-	.4byte 0x4071A1C2
-	.4byte 0x40800000
-	.4byte 0x40879C7E
-	.4byte 0x408FACD8
-	.4byte 0x409837F1
-	.4byte 0x40A14519
-	.4byte 0x40AADC0A
-	.4byte 0x40B504F5
-	.4byte 0x40BFC888
-	.4byte 0x40CB2FF9
-	.4byte 0x40D74500
-	.4byte 0x40E411F5
-	.4byte 0x40F1A1C2
-	.4byte 0x41000000
-	.4byte 0x41079C7D
-	.4byte 0x410FACD7
-	.4byte 0x411837F1
-	.4byte 0x41214519
-	.4byte 0x412ADC0A
-	.4byte 0x413504F5
-	.4byte 0x413FC889
-	.4byte 0x414B2FF8
-	.4byte 0x41574500
-	.4byte 0x416411F4
-	.4byte 0x4171A1C3
-	.4byte 0x41800000
-	.4byte 0x41879C7D
-	.4byte 0x418FACD7
-	.4byte 0x419837F1
-	.4byte 0x41A14519
-	.4byte 0x41AADC0A
-	.4byte 0x41B504F5
-	.4byte 0x41BFC889
-	.4byte 0x41CB2FF8
-	.4byte 0x41D74500
-	.4byte 0x41E411F4
-	.4byte 0x41F1A1C3
-	.4byte 0x42000000
-	.4byte 0x42079C7D
-	.4byte 0x420FACD7
-	.4byte 0x421837F1
-	.4byte 0x42214519
-	.4byte 0x422ADC0A
-	.4byte 0x423504F5
-	.4byte 0x423FC889
+	.float 1.059463
+	.float 1.122462
+	.float 1.189207
+	.float 1.259921
+	.float 1.33484
+	.float 1.414214
+	.float 1.498307
+	.float 1.587401
+	.float 1.681793
+	.float 1.781798
+	.float 1.887749
+	.float 2.0
+	.float 2.118926
+	.float 2.244924
+	.float 2.378414
+	.float 2.519842
+	.float 2.66968
+	.float 2.828428
+	.float 2.996615
+	.float 3.174803
+	.float 3.363586
+	.float 3.563596
+	.float 3.775498
+	.float 4.0
+	.float 4.237853
+	.float 4.489849
+	.float 4.756829
+	.float 5.039685
+	.float 5.33936
+	.float 5.656855
+	.float 5.993229
+	.float 6.349606
+	.float 6.727173
+	.float 7.127192
+	.float 7.550996
+	.float 8.0
+	.float 8.475705
+	.float 8.979697
+	.float 9.513658
+	.float 10.07937
+	.float 10.67872
+	.float 11.31371
+	.float 11.986459
+	.float 12.699211
+	.float 13.454346
+	.float 14.254383
+	.float 15.101993
+	.float 16.0
+	.float 16.95141
+	.float 17.959394
+	.float 19.027315
+	.float 20.15874
+	.float 21.35744
+	.float 22.62742
+	.float 23.972918
+	.float 25.398422
+	.float 26.908691
+	.float 28.508766
+	.float 30.203985
+	.float 32.0
+	.float 33.90282
+	.float 35.91879
+	.float 38.05463
+	.float 40.31748
+	.float 42.71488
+	.float 45.25484
+	.float 47.945835
 .global FORCE_RELEASE_TABLE
 FORCE_RELEASE_TABLE:
 	.4byte 0x00000005
@@ -2673,69 +2673,69 @@ CUTOFF_TO_IIR_TABLE:
 .global KEY_TABLE
 KEY_TABLE:
 	.float 1.0
-	.4byte 0x3F801DD2
-	.4byte 0x3F803BAC
-	.4byte 0x3F80598E
-	.4byte 0x3F807770
-	.4byte 0x3F809564
-	.4byte 0x3F80B357
-	.4byte 0x3F80D152
-	.4byte 0x3F80EF56
-	.4byte 0x3F810D5A
-	.4byte 0x3F812B6F
-	.4byte 0x3F814984
-	.4byte 0x3F8167A1
-	.4byte 0x3F8185CF
-	.4byte 0x3F81A3F4
-	.4byte 0x3F81C22B
-	.4byte 0x3F81E069
-	.4byte 0x3F81FEA8
-	.4byte 0x3F821CEF
-	.4byte 0x3F823B3F
-	.4byte 0x3F825996
-	.4byte 0x3F8277F7
-	.4byte 0x3F82965F
-	.4byte 0x3F82B4C8
-	.4byte 0x3F82D339
-	.4byte 0x3F82F1BB
-	.4byte 0x3F83103D
-	.4byte 0x3F832EBE
-	.4byte 0x3F834D51
-	.4byte 0x3F836BEC
-	.4byte 0x3F838A87
-	.4byte 0x3F83A92A
-	.4byte 0x3F83C7D6
-	.4byte 0x3F83E68A
-	.4byte 0x3F840547
-	.4byte 0x3F84240B
-	.4byte 0x3F8442D0
-	.4byte 0x3F8461A6
-	.4byte 0x3F84807C
-	.4byte 0x3F849F5A
-	.4byte 0x3F84BE40
-	.4byte 0x3F84DD2F
-	.4byte 0x3F84FC1E
-	.4byte 0x3F851B1E
-	.4byte 0x3F853A1D
-	.4byte 0x3F855925
-	.4byte 0x3F857836
-	.4byte 0x3F85974E
-	.4byte 0x3F85B670
-	.4byte 0x3F85D599
-	.4byte 0x3F85F4C3
-	.4byte 0x3F8613FD
-	.4byte 0x3F863337
-	.4byte 0x3F86527A
-	.4byte 0x3F8671C5
-	.4byte 0x3F869119
-	.4byte 0x3F86B075
-	.4byte 0x3F86CFD1
-	.4byte 0x3F86EF3D
-	.4byte 0x3F870EAA
-	.4byte 0x3F872E1F
-	.4byte 0x3F874D9C
-	.4byte 0x3F876D22
-	.4byte 0x3F878CB0
+	.float 1.00091
+	.float 1.001821
+	.float 1.002733
+	.float 1.003645
+	.float 1.004559
+	.float 1.005473
+	.float 1.006388
+	.float 1.007304
+	.float 1.00822
+	.float 1.009138
+	.float 1.010056
+	.float 1.010975
+	.float 1.011896
+	.float 1.012816
+	.float 1.013738
+	.float 1.014661
+	.float 1.015584
+	.float 1.016508
+	.float 1.017433
+	.float 1.018359
+	.float 1.019286
+	.float 1.020214
+	.float 1.021142
+	.float 1.022071
+	.float 1.023002
+	.float 1.023933
+	.float 1.024864
+	.float 1.025797
+	.float 1.026731
+	.float 1.027665
+	.float 1.0286
+	.float 1.029536
+	.float 1.030473
+	.float 1.031411
+	.float 1.03235
+	.float 1.033289
+	.float 1.03423
+	.float 1.035171
+	.float 1.036113
+	.float 1.037056
+	.float 1.038
+	.float 1.038944
+	.float 1.03989
+	.float 1.040836
+	.float 1.041783
+	.float 1.042731
+	.float 1.04368
+	.float 1.04463
+	.float 1.045581
+	.float 1.046532
+	.float 1.047485
+	.float 1.048438
+	.float 1.049392
+	.float 1.050347
+	.float 1.051303
+	.float 1.05226
+	.float 1.053217
+	.float 1.054176
+	.float 1.055135
+	.float 1.056095
+	.float 1.057056
+	.float 1.058018
+	.float 1.058981
 .global VIB_TABLE
 VIB_TABLE:
 	.4byte 0x00000000
@@ -2766,27 +2766,27 @@ REL_TABLE:
 .global VIBRATO_DEF
 VIBRATO_DEF:
 	.4byte 0x01000000
-	.4byte 0x3F4CCCCD
+	.float 0.8
 	.4byte VIB_TABLE
 	.4byte VIB_TABLE
-	.4byte 0x00000000
+	.float 0.0
 	.float 1.0
 .global TREMOLO_DEF
 TREMOLO_DEF:
-	.4byte 0x00000000
+	.float 0.0
 	.float 1.0
 	.4byte TRE_TABLE
 	.4byte TRE_TABLE
-	.4byte 0x00000000
+	.float 0.0
 	.float 1.0
 .global ENVELOPE_DEF
 ENVELOPE_DEF:
-	.4byte 0x00000000
+	.float 0.0
 	.float 1.0
-	.4byte 0x00000000
+	.float 0.0
 	.4byte REL_TABLE
 	.float 1.0
-	.4byte 0x00000000
+	.float 0.0
 .global ADS_TABLE
 ADS_TABLE:
 	.4byte 0x00000000
@@ -2797,37 +2797,37 @@ ADS_TABLE:
 	.4byte 0x00000000
 .global ADSR_DEF
 ADSR_DEF:
-	.4byte 0x00000000
+	.float 0.0
 	.float 1.0
-	.4byte 0x00000000
-	.4byte 0x00000000
+	.float 0.0
+	.4byte 0
 	.float 1.0
-	.4byte 0x00000000
+	.float 0.0
 .global OSC_DEF
 OSC_DEF:
-	.4byte 0x00000000
+	.float 0.0
 	.float 1.0
-	.4byte 0x00000000
+	.float 0.0
 	.4byte REL_TABLE
 	.float 1.0
-	.4byte 0x00000000
-	.4byte 0x00000000
+	.float 0.0
+.balign 8
 .global PERC_ENV
 PERC_ENV:
-	.4byte 0x00000000
+	.float 0.0
 	.float 1.0
-	.4byte 0x00000000
-	.4byte 0x00000000
+	.float 0.0
+	.4byte 0
 	.float 1.0
-	.4byte 0x00000000
+	.float 0.0
 .global OSC_ENV
 OSC_ENV:
-	.4byte 0x00000000
+	.float 0.0
 	.float 1.0
-	.4byte 0x00000000
+	.float 0.0
 	.4byte OSC_REL
 	.float 1.0
-	.4byte 0x00000000
+	.float 0.0
 .global polys_table
 polys_table:
 	.4byte 0x00010203
