@@ -1,4 +1,7 @@
 #include "types.h"
+#include "Vector3f.h"
+#include "Matrix3f.h"
+#include "Matrix4f.h"
 
 /*
  * --INFO--
@@ -20,64 +23,21 @@ void _Print(char*, ...)
 	// UNUSED FUNCTION
 }
 
+namespace NsCalculation {
 /*
  * --INFO--
  * Address:	8017C2C8
  * Size:	0000C0
+ * Aside from arg order and defines, identical to Pikmin 2's NsMathExp::calcLagrange
  */
-void NsCalculation::calcLagrange(float, const Vector3f*, Vector3f&)
-{
-	/*
-	.loc_0x0:
-	  lfs       f3, -0x5148(r2)
-	  lfs       f2, -0x5144(r2)
-	  lfs       f0, 0x0(r3)
-	  fsubs     f3, f1, f3
-	  lfs       f6, 0x18(r3)
-	  fmuls     f5, f2, f0
-	  lfs       f0, -0x5140(r2)
-	  lfs       f4, 0xC(r3)
-	  fmuls     f6, f2, f6
-	  fsubs     f0, f1, f0
-	  fmuls     f5, f5, f3
-	  fmuls     f4, f4, f1
-	  fmuls     f6, f6, f1
-	  fmuls     f5, f0, f5
-	  fmuls     f4, f0, f4
-	  fmuls     f6, f3, f6
-	  fsubs     f4, f5, f4
-	  fadds     f4, f6, f4
-	  stfs      f4, 0x0(r4)
-	  lfs       f4, 0x4(r3)
-	  lfs       f6, 0x1C(r3)
-	  fmuls     f5, f2, f4
-	  lfs       f4, 0x10(r3)
-	  fmuls     f6, f2, f6
-	  fmuls     f4, f4, f1
-	  fmuls     f5, f5, f3
-	  fmuls     f6, f6, f1
-	  fmuls     f4, f0, f4
-	  fmuls     f5, f0, f5
-	  fmuls     f6, f3, f6
-	  fsubs     f4, f5, f4
-	  fadds     f4, f6, f4
-	  stfs      f4, 0x4(r4)
-	  lfs       f4, 0x8(r3)
-	  lfs       f6, 0x20(r3)
-	  fmuls     f5, f2, f4
-	  lfs       f4, 0x14(r3)
-	  fmuls     f6, f2, f6
-	  fmuls     f2, f4, f1
-	  fmuls     f4, f5, f3
-	  fmuls     f5, f6, f1
-	  fmuls     f1, f0, f2
-	  fmuls     f0, f0, f4
-	  fmuls     f2, f3, f5
-	  fsubs     f0, f0, f1
-	  fadds     f0, f2, f0
-	  stfs      f0, 0x8(r4)
-	  blr
-	*/
+void calcLagrange(float p2, const Vector3f* p_vec, Vector3f& new_vec)
+// calculates Lagrange, stores in new_vec
+{ 
+  #define p2_sub1 (p2 - 1.0f)
+  #define p2_sub2 (p2 - 2.0f)
+  new_vec.x = p2_sub1 * (p_vec[2].x * 0.5f * p2) + (p2_sub2 * (p_vec[0].x * 0.5f * p2_sub1) - (p2_sub2 * (p_vec[1].x * p2)));
+  new_vec.y = p2_sub1 * (p_vec[2].y * 0.5f * p2) + (p2_sub2 * (p_vec[0].y * 0.5f * p2_sub1) - (p2_sub2 * (p_vec[1].y * p2)));
+  new_vec.z = p2_sub1 * (p_vec[2].z * 0.5f * p2) + (p2_sub2 * (p_vec[0].z * 0.5f * p2_sub1) - (p2_sub2 * (p_vec[1].z * p2)));
 }
 
 /*
@@ -85,7 +45,7 @@ void NsCalculation::calcLagrange(float, const Vector3f*, Vector3f&)
  * Address:	8017C388
  * Size:	00019C
  */
-void NsCalculation::calcMatrix(const Vector3f&, const Vector3f&, const Vector3f&, const Vector3f&, Matrix4f&)
+void calcMatrix(const Vector3f&, const Vector3f&, const Vector3f&, const Vector3f&, Matrix4f&)
 {
 	/*
 	.loc_0x0:
@@ -202,7 +162,7 @@ void NsCalculation::calcMatrix(const Vector3f&, const Vector3f&, const Vector3f&
  * Address:	........
  * Size:	00004C
  */
-void NsCalculation::calcMatrix3f(const Vector3f&, const Vector3f&, const Vector3f&, Matrix3f&)
+void calcMatrix3f(const Vector3f&, const Vector3f&, const Vector3f&, Matrix3f&)
 {
 	// UNUSED FUNCTION
 }
@@ -212,7 +172,7 @@ void NsCalculation::calcMatrix3f(const Vector3f&, const Vector3f&, const Vector3
  * Address:	8017C524
  * Size:	0002F8
  */
-void NsCalculation::calcJointPos(const Vector3f&, const Vector3f&, float, float, Vector3f&, Vector3f&)
+void calcJointPos(const Vector3f&, const Vector3f&, float, float, Vector3f&, Vector3f&)
 {
 	/*
 	.loc_0x0:
@@ -426,7 +386,7 @@ void NsCalculation::calcJointPos(const Vector3f&, const Vector3f&, float, float,
  * Address:	........
  * Size:	0001E8
  */
-void NsCalculation::calcMtxDirect(const Matrix4f&, const Matrix4f&)
+void calcMtxDirect(const Matrix4f&, const Matrix4f&)
 {
 	// UNUSED FUNCTION
 }
@@ -436,7 +396,7 @@ void NsCalculation::calcMtxDirect(const Matrix4f&, const Matrix4f&)
  * Address:	8017C81C
  * Size:	00004C
  */
-void NsCalculation::calcMat4toMat3(const Matrix4f&, Matrix3f&)
+void calcMat4toMat3(const Matrix4f&, Matrix3f&)
 {
 	/*
 	.loc_0x0:
@@ -467,7 +427,8 @@ void NsCalculation::calcMat4toMat3(const Matrix4f&, Matrix3f&)
  * Address:	........
  * Size:	00004C
  */
-void NsCalculation::calcMat3toMat4(const Matrix3f&, Matrix4f&)
+void calcMat3toMat4(const Matrix3f&, Matrix4f&)
 {
 	// UNUSED FUNCTION
 }
+} // namespace NsCalculation
