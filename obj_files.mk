@@ -573,7 +573,7 @@ MSL_C :=\
 	$(BUILD_DIR)/asm/MSL_C/PPCEABI/bare/H/s_ldexp.o\
 	$(BUILD_DIR)/asm/MSL_C/PPCEABI/bare/H/w_atan2.o\
 	$(BUILD_DIR)/asm/MSL_C/PPCEABI/bare/H/w_pow.o\
-	$(BUILD_DIR)/asm/MSL_C/PPCEABI/bare/H/hyperbolicsf.o\
+	$(BUILD_DIR)/src/MSL_C/PPCEABI/bare/H/hyperbolicsf.o\
 	$(BUILD_DIR)/asm/MSL_C/PPCEABI/bare/H/inverse_trig.o\
 	$(BUILD_DIR)/asm/MSL_C/PPCEABI/bare/H/trigf.o\
 	$(BUILD_DIR)/asm/MSL_C/PPCEABI/bare/H/math_inlines.o\

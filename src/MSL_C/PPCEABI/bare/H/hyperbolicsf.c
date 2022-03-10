@@ -15,14 +15,7 @@ void tanhf(void)
  * Address:	8021B728
  * Size:	000008
  */
-void fabsf(float)
-{
-	/*
-	.loc_0x0:
-	  fabs      f1, f1
-	  blr
-	*/
-}
+double fabsf__Ff(float f1) {return __fabs(f1);}
 
 /*
  * --INFO--
