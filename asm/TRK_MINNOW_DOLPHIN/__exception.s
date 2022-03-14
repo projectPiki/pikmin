@@ -1996,4 +1996,5 @@ lbl_800046E8:
 /* 800053E0 000023E0  7C 7A 03 A6 */	mtspr 0x1a, r3
 /* 800053E4 000023E4  38 60 1F 00 */	li r3, 0x1f00
 /* 800053E8 000023E8  4C 00 00 64 */	rfi 
+.global gTRKInterruptVectorTableEnd
 gTRKInterruptVectorTableEnd:
