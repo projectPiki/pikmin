@@ -97,8 +97,8 @@ TRK_copy_vector:
 /* 8021FF70 0021CED0  7C 7E 1B 78 */	mr r30, r3
 /* 8021FF74 0021CED4  7F C3 F3 78 */	mr r3, r30
 /* 8021FF78 0021CED8  4B FF FF 9D */	bl TRKTargetTranslate
-/* 8021FF7C 0021CEDC  3C 80 80 00 */	lis r4, metro@ha
-/* 8021FF80 0021CEE0  38 04 34 B8 */	addi r0, r4, metro@l
+/* 8021FF7C 0021CEDC  3C 80 80 00 */	lis r4, gTRKInterruptVectorTable@ha
+/* 8021FF80 0021CEE0  38 04 34 B8 */	addi r0, r4, gTRKInterruptVectorTable@l
 /* 8021FF84 0021CEE4  7C 7F 1B 78 */	mr r31, r3
 /* 8021FF88 0021CEE8  7C 80 F2 14 */	add r4, r0, r30
 /* 8021FF8C 0021CEEC  7F E3 FB 78 */	mr r3, r31
