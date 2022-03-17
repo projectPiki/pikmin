@@ -1,4 +1,6 @@
 #include "types.h"
+#include "system.h"
+#include "odoMeter.h"
 
 /*
  * --INFO--
@@ -27,13 +29,8 @@ void _Print(char*, ...)
  */
 OdoMeter::OdoMeter()
 {
-	/*
-	.loc_0x0:
-	  lfs       f0, -0x69B8(r2)
-	  stfs      f0, 0x0(r3)
-	  stfs      f0, 0x4(r3)
-	  blr
-	*/
+	A = 0.0;
+	B = 0.0;
 }
 
 /*
@@ -41,17 +38,12 @@ OdoMeter::OdoMeter()
  * Address:	800CD814
  * Size:	000018
  */
-void OdoMeter::start(float, float)
+void OdoMeter::start(float argA, float argB)
 {
-	/*
-	.loc_0x0:
-	  stfs      f1, 0xC(r3)
-	  stfs      f1, 0x4(r3)
-	  stfs      f2, 0x8(r3)
-	  lfs       f0, -0x69B8(r2)
-	  stfs      f0, 0x0(r3)
-	  blr
-	*/
+	D = argA;
+	B = argA;
+	C = argB;
+	A = 0.0;
 }
 
 /*
@@ -59,7 +51,7 @@ void OdoMeter::start(float, float)
  * Address:	800CD82C
  * Size:	000124
  */
-void OdoMeter::moving(Vector3f&, Vector3f&)
+bool OdoMeter::moving(Vector3f& argA, Vector3f& argB)
 {
 	/*
 	.loc_0x0:
