@@ -74,24 +74,3 @@ lbl_803E8390:
 .global lbl_803E8394
 lbl_803E8394:
 	.float 2.0
-.global lbl_803E8398
-lbl_803E8398:
-	.float 1.0
-.global lbl_803E839C
-lbl_803E839C: #pi but rounded
-	.float 3.1416
-.global lbl_803E83A0
-lbl_803E83A0: #mediocre negative tau
-	.float -6.2832
-.global lbl_803E83A4
-lbl_803E83A4:
-	.float 0.5
-.global lbl_803E83A8
-lbl_803E83A8:
-	.float 2.0
-.global lbl_803E83AC
-lbl_803E83AC:
-	.float 0.0
-.global lbl_803E83B0
-lbl_803E83B0:
-	.float 0.8

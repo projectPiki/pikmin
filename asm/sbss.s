@@ -254,16 +254,4 @@ count:
 	.skip 4
 .global lend_buffer
 lend_buffer:
-	.skip 8
-.global demo_fade_flag
-demo_fade_flag:
-	.skip 8
-.global CURRENT_TIME
-CURRENT_TIME:
-	.skip 4
-.global jac_debug_multi_entry
-jac_debug_multi_entry:
-	.skip 4
-.global jac_debug_multi_cancel
-jac_debug_multi_cancel:
 	.skip 4
