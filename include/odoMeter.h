@@ -5,10 +5,10 @@
 #include "math.h"
 
 struct OdoMeter { // TODO: figure out what these actually are
-	float A; // _00
-	float B; // _04
-	float C; // _08
-	float D; // _0C
+	float A;      // _00
+	float B;      // _04
+	float C;      // _08
+	float D;      // _0C
 
 	OdoMeter();
 	void start(float argA, float argB);

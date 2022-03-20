@@ -7,18 +7,15 @@ struct Vector3f {
 	f32 x, y, z;
 	Vector3f() {};
 	Vector3f(float const& x, float const& y, float const& z);
+	f32 getX() { return this->x; } // inline function call
+	f32 getY() { return this->y; } // inline function call
+	f32 getZ() { return this->z; } // inline function call
 };
 
-inline float getX(Vector3f& vec) { return vec.x; }
+inline float vecdiffX(Vector3f& argA, Vector3f& argB) { return argA.getX() - argB.getX(); }
 
-inline float getY(Vector3f& vec) { return vec.y; }
+inline float vecdiffY(Vector3f& argA, Vector3f& argB) { return argA.getY() - argB.getY(); }
 
-inline float getZ(Vector3f& vec) { return vec.z; }
-
-inline float vecdiffX(Vector3f& argA, Vector3f& argB) { return (getX(argA) - getX(argB)); }
-
-inline float vecdiffY(Vector3f& argA, Vector3f& argB) { return (getY(argA) - getY(argB)); }
-
-inline float vecdiffZ(Vector3f& argA, Vector3f& argB) { return (getZ(argA) - getZ(argB)); }
+inline float vecdiffZ(Vector3f& argA, Vector3f& argB) { return argA.getZ() - argB.getZ(); }
 
 #endif

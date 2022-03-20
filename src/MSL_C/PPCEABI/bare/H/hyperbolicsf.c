@@ -15,7 +15,7 @@ void tanhf(void)
  * Address:	8021B728
  * Size:	000008
  */
-double fabsf__Ff(float f1) {return __fabs(f1);}
+double fabsf__Ff(float f1) { return __fabs(f1); }
 
 /*
  * --INFO--
