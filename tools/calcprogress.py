@@ -70,6 +70,12 @@ DATA_SECTION_COUNT = 11
 SECTION_TEXT = 0
 SECTION_DATA = 1
 
+# Progress flavor
+codeFrac = 30           # total code "item" amount
+dataFrac = 100          # total data "item" amount
+codeItem = "ship parts" # code flavor item
+dataItem = "Pikmin"     # data flavor item
+
 ###############################################
 #                                             #
 #                Entrypoint                   #
@@ -179,15 +185,15 @@ if __name__ == "__main__":
                 decomp_data_size += cur_size
 
     # Calculate percentages
-    codeCompletionPcnt = (decomp_code_size / dol_code_size)
-    dataCompletionPcnt = (decomp_data_size / dol_data_size)
-    bytesPerShipPart = dol_code_size / 30
-    bytesPerPiki = dol_data_size / 100
+    codeCompletionPcnt = (decomp_code_size / dol_code_size) # code completion percent
+    dataCompletionPcnt = (decomp_data_size / dol_data_size) # data completion percent
+    bytesPerCodeItem = dol_code_size / codeFrac # bytes per code item
+    bytesPerDataItem = dol_data_size / dataFrac # bytes per data item
     
-    partCount = math.floor(decomp_code_size / bytesPerShipPart)
-    pikiCount = math.floor(decomp_data_size / bytesPerPiki)
+    codeCount = math.floor(decomp_code_size / bytesPerCodeItem)
+    dataCount = math.floor(decomp_data_size / bytesPerDataItem)
 
     print("Progress:")
     print(f"\tCode sections: {decomp_code_size} / {dol_code_size}\tbytes in src ({codeCompletionPcnt:%})")
     print(f"\tData sections: {decomp_data_size} / {dol_data_size}\tbytes in src ({dataCompletionPcnt:%})")
-    print("\nYou have {} out of 30 ship parts and {} out of 100 Pikmin.".format(partCount, pikiCount))
+    print("\nYou have {} out of {} {} and collected {} out of {} {}.".format(codeCount, codeFrac, codeItem, dataCount, dataFrac, dataItem))
