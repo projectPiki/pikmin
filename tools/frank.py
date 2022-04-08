@@ -12,6 +12,7 @@ import argparse
 CODESIZE_MAGIC = b"\x00\x00\x00\x06\x00\x00\x00\x00\x00\x00\x00\x34"
 BLR_BYTE_SEQ = b"\x4E\x80\x00\x20"
 MTLR_BYTE_SEQ = b"\x7C\x08\x03\xA6"
+PROFILE_EXTRA_BYTES = b"\x48\x00\x00\x01\x60\x00\x00\x00"
 
 # Byte sequence array for branches to link register
 BLR_BYTE_SEQ_ARRAY = [BLR_BYTE_SEQ,
@@ -36,8 +37,65 @@ args.vanilla.close()
 profile_bytes = args.profile.read()
 args.profile.close()
 
+# Peephole rescheduling:
+# The profile epilogue disables all scheduling,
+# but we need to reenable it for certain instruction patterns.
+
+# This is the pattern we will detect:
+#  (A)  lwz rX, addr1
+#  (B)  lfs fW, rX
+#  (C)  lwz rY, addr2
+#
+# Instruction (B) depends on the result of (A),
+# so it will cause a pipeline stall.
+# Since instruction (C) does not depend on either,
+# it can be swapped with the second instruction.
+#
+# The vanilla MWCC 1.2.5 behavior is to fully schedule
+# the lfs, possibly deep into the epilogue.
+# Patched MWCC seems to only move it 1 instruction later.
+# However, more examples are needed to fully understand MWCC's behavior.
+#
+idx = 8
+while idx < len(profile_bytes):
+    # Find next epilogue
+    epi_pos = profile_bytes.find(PROFILE_EXTRA_BYTES, idx)
+    if epi_pos == -1:
+        break # break while loop when no targets remain
+    if epi_pos % 4 != 0: # check 4-byte alignment
+        idx += 4
+        continue
+
+    as_int = lambda x: int.from_bytes(x, "big")
+    RT = lambda x: (as_int(x) >> 21) & 0x1F
+    RA = lambda x: (as_int(x) >> 16) & 0x1F
+
+    inst_a = profile_bytes[epi_pos-8:epi_pos-4]
+    inst_b = profile_bytes[epi_pos-4:epi_pos]
+    inst_c = profile_bytes[epi_pos+8:epi_pos+12]
+    opcode_a = inst_a[0] >> 2
+    opcode_b = inst_b[0] >> 2
+    opcode_c = inst_c[0] >> 2
+    idx = epi_pos + 8
+
+    # Check peephole condition
+    LFS = 0x30
+    LWZ = 0x20
+    opcode_seq = opcode_a == LWZ and opcode_b == LFS and opcode_c == LWZ
+    will_stall = RT(inst_a) == RA(inst_b)
+    can_reorder = RT(inst_c) != RT(inst_b)
+
+    if opcode_seq and will_stall and can_reorder:
+
+        # Swap instructions (B) and (C)
+        profile_bytes = profile_bytes[:epi_pos-4] \
+                + profile_bytes[epi_pos+8:epi_pos+12] \
+                + profile_bytes[epi_pos:epi_pos+8] \
+                + profile_bytes[epi_pos-4:epi_pos] \
+                + profile_bytes[epi_pos+12:]
+
 # Remove byte sequence
-stripped_bytes = profile_bytes.replace(b"\x48\x00\x00\x01\x60\x00\x00\x00", b"")
+stripped_bytes = profile_bytes.replace(PROFILE_EXTRA_BYTES, b"")
 
 # Find end of code sections in vanilla and stripped bytes
 code_size_offset = (vanilla_bytes.find(CODESIZE_MAGIC) + 12)
