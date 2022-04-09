@@ -88,6 +88,7 @@ while idx < len(profile_bytes) - 16:
     LFS = 0xC0 >> 2
     ADDI = 0x38 >> 2
     LI = ADDI # an LI instruction is just an ADDI with RA=0
+    LMW = 0xB8 >> 2
 
     if opcode_a == LWZ and \
        opcode_b in [LI, LFS] and \
@@ -102,6 +103,17 @@ while idx < len(profile_bytes) - 16:
                 + PROFILE_EXTRA_BYTES \
                 + vanilla_inst_b \
                 + profile_bytes[epi_pos+12:]
+
+    # Similar reordering for lwz/lmw, except both insns follow the bl/nop
+    elif opcode_b == LWZ and \
+         opcode_c == LMW and \
+         vanilla_inst_b == profile_inst_c and \
+         vanilla_inst_c == profile_inst_b:
+
+        profile_bytes = profile_bytes[:epi_pos+8] \
+                + vanilla_inst_b \
+                + vanilla_inst_c \
+                + profile_bytes[epi_pos+16:]
 
     idx = epi_pos + 8
 
