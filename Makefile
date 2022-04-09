@@ -128,7 +128,7 @@ $(DOL): $(ELF) | tools
 	@echo Converting $< to $@
 	$(QUIET) $(ELF2DOL) $< $@
 	$(QUIET) $(SHA1SUM) -c sha1/$(NAME).$(VERSION).sha1
-	$(QUIET) $(PYTHON) tools/calcprogress.py $@
+	$(QUIET) $(PYTHON) tools/calcprogress.py $(DOL) $(MAP)
 
 clean:
 	rm -f -d -r build
