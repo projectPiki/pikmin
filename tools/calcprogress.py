@@ -31,8 +31,8 @@ import math
 #                                             #
 ###############################################
 
-DOL_PATH = "baserom.dol"
-MAP_PATH = "build/pikmin.usa.1/build.map"
+DOL_PATH = sys.argv[1]
+MAP_PATH = sys.argv[2]
 
 MEM1_HI = 0x81200000
 MEM1_LO = 0x80004000
