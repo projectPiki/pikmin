@@ -1,13 +1,43 @@
+#include "types.h"
+#include "Dolphin/os.h"
 
+typedef struct HeapCell {
+	struct HeapCell* prev;
+	struct HeapCell* next;
+	u32 size;
+} HeapCell;
+
+typedef struct Heap {
+	s32 size;
+	struct HeapCell* free;      // linked list of free cells
+	struct HeapCell* allocated; // linked list of allocated cells
+} Heap;
+
+void* ArenaEnd;
+void* ArenaStart;
+int NumHeaps;
+struct Heap* HeapArray;
+volatile OSHeapHandle __OSCurrHeap = -1;
+
+#define InRange(addr, start, end) ((u8*)(start) <= (u8*)(addr) && (u8*)(addr) < (u8*)(end))
+#define OFFSET(addr, align)       (((uintptr_t)(addr) & ((align)-1)))
+
+#define ALIGNMENT  32
+#define MINOBJSIZE 64
 
 /*
  * --INFO--
  * Address:	........
  * Size:	000020
+ * inserts 'cell' before 'neighbor' and returns 'cell'
  */
-void DLAddFront(void)
+static inline void* DLAddFront(struct HeapCell* neighbor, struct HeapCell* cell)
 {
-	// UNUSED FUNCTION
+	cell->next = neighbor;
+	cell->prev = NULL;
+	if (neighbor != NULL)
+		neighbor->prev = cell;
+	return cell;
 }
 
 /*
@@ -24,10 +54,17 @@ void DLLookup(void)
  * --INFO--
  * Address:	........
  * Size:	000034
+ * removes 'cell' from 'list' and returns 'list'
  */
-void DLExtract(void)
+static inline HeapCell* DLExtract(struct HeapCell* list, struct HeapCell* cell)
 {
-	// UNUSED FUNCTION
+	if (cell->next != NULL)
+		cell->next->prev = cell->prev;
+	if (cell->prev == NULL)
+		list = cell->next;
+	else
+		cell->prev->next = cell->next;
+	return list;
 }
 
 /*
@@ -35,9 +72,40 @@ void DLExtract(void)
  * Address:	........
  * Size:	0000AC
  */
-void DLInsert(void)
+static HeapCell* DLInsert(HeapCell* list, HeapCell* cell, void* unused /* needed to match OSFreeToHeap */)
 {
-	// UNUSED FUNCTION
+	HeapCell* before = NULL;
+	HeapCell* after  = list;
+
+	while (after != NULL) {
+		if (cell <= after)
+			break;
+		before = after;
+		after  = after->next;
+	}
+	cell->next = after;
+	cell->prev = before;
+	if (after != NULL) {
+		after->prev = cell;
+		if ((u8*)cell + cell->size == (u8*)after) {
+			cell->size += after->size;
+			after      = after->next;
+			cell->next = after;
+			if (after != NULL)
+				after->prev = cell;
+		}
+	}
+	if (before != NULL) {
+		before->next = cell;
+		if ((u8*)before + before->size == (u8*)cell) {
+			before->size += cell->size;
+			before->next = after;
+			if (after != NULL)
+				after->prev = before;
+		}
+		return list;
+	}
+	return cell;
 }
 
 /*
@@ -65,98 +133,46 @@ void DLSize(void)
  * Address:	801F67AC
  * Size:	0000FC
  */
-void OSAllocFromHeap(void)
+void* OSAllocFromHeap(OSHeapHandle heap, u32 size)
 {
-	/*
-	.loc_0x0:
-	  mulli     r0, r3, 0xC
-	  lwz       r3, 0x31E0(r13)
-	  add       r5, r3, r0
-	  addi      r0, r4, 0x3F
-	  lwz       r6, 0x4(r5)
-	  rlwinm    r3,r0,0,0,26
-	  b         .loc_0x2C
+	struct Heap* hd = &HeapArray[heap];
+	s32 sizeAligned = OSRoundUp32B(ALIGNMENT + size);
+	struct HeapCell* cell;
+	struct HeapCell* oldTail;
+	u32 leftoverSpace;
 
-	.loc_0x1C:
-	  lwz       r0, 0x8(r6)
-	  cmpw      r3, r0
-	  ble-      .loc_0x34
-	  lwz       r6, 0x4(r6)
+	// find first cell with enough capacity
+	for (cell = hd->free; cell != NULL; cell = cell->next) {
+		if (sizeAligned <= (s32)cell->size)
+			break;
+	}
+	if (cell == NULL)
+		return NULL;
 
-	.loc_0x2C:
-	  cmplwi    r6, 0
-	  bne+      .loc_0x1C
+	leftoverSpace = cell->size - sizeAligned;
+	if (leftoverSpace < MINOBJSIZE) {
+		// remove this cell from the free list
+		hd->free = DLExtract(hd->free, cell);
+	} else {
+		// remove this cell from the free list and make a new cell out of the
+		// remaining space
+		struct HeapCell* newcell = (void*)((u8*)cell + sizeAligned);
+		cell->size               = sizeAligned;
+		newcell->size            = leftoverSpace;
+		newcell->prev            = cell->prev;
+		newcell->next            = cell->next;
+		if (newcell->next != NULL)
+			newcell->next->prev = newcell;
+		if (newcell->prev != NULL)
+			newcell->prev->next = newcell;
+		else
+			hd->free = newcell;
+	}
 
-	.loc_0x34:
-	  cmplwi    r6, 0
-	  bne-      .loc_0x44
-	  li        r3, 0
-	  blr
+	// add the cell to the beginning of the allocated list
+	hd->allocated = DLAddFront(hd->allocated, cell);
 
-	.loc_0x44:
-	  lwz       r0, 0x8(r6)
-	  sub       r0, r0, r3
-	  cmplwi    r0, 0x40
-	  bge-      .loc_0x90
-	  lwz       r4, 0x4(r6)
-	  lwz       r3, 0x4(r5)
-	  cmplwi    r4, 0
-	  beq-      .loc_0x6C
-	  lwz       r0, 0x0(r6)
-	  stw       r0, 0x0(r4)
-
-	.loc_0x6C:
-	  lwz       r4, 0x0(r6)
-	  cmplwi    r4, 0
-	  bne-      .loc_0x80
-	  lwz       r3, 0x4(r6)
-	  b         .loc_0x88
-
-	.loc_0x80:
-	  lwz       r0, 0x4(r6)
-	  stw       r0, 0x4(r4)
-
-	.loc_0x88:
-	  stw       r3, 0x4(r5)
-	  b         .loc_0xD4
-
-	.loc_0x90:
-	  stw       r3, 0x8(r6)
-	  add       r4, r6, r3
-	  stw       r0, 0x8(r4)
-	  lwz       r0, 0x0(r6)
-	  stw       r0, 0x0(r4)
-	  lwz       r0, 0x4(r6)
-	  stw       r0, 0x4(r4)
-	  lwz       r3, 0x4(r4)
-	  cmplwi    r3, 0
-	  beq-      .loc_0xBC
-	  stw       r4, 0x0(r3)
-
-	.loc_0xBC:
-	  lwz       r3, 0x0(r4)
-	  cmplwi    r3, 0
-	  beq-      .loc_0xD0
-	  stw       r4, 0x4(r3)
-	  b         .loc_0xD4
-
-	.loc_0xD0:
-	  stw       r4, 0x4(r5)
-
-	.loc_0xD4:
-	  lwz       r3, 0x8(r5)
-	  li        r0, 0
-	  stw       r3, 0x4(r6)
-	  cmplwi    r3, 0
-	  stw       r0, 0x0(r6)
-	  beq-      .loc_0xF0
-	  stw       r6, 0x0(r3)
-
-	.loc_0xF0:
-	  stw       r6, 0x8(r5)
-	  addi      r3, r6, 0x20
-	  blr
-	*/
+	return (u8*)cell + ALIGNMENT;
 }
 
 /*
@@ -174,9 +190,22 @@ void OSAllocFixed(void)
  * Address:	........
  * Size:	00007C
  */
-void OSFreeToHeap(void)
+void OSFreeToHeap(OSHeapHandle heap, void* ptr)
 {
-	// UNUSED FUNCTION
+	HeapCell* cell = (void*)((u8*)ptr - ALIGNMENT);
+	Heap* hd       = &HeapArray[heap];
+	HeapCell* list = hd->allocated;
+
+	// remove cell from the allocated list
+	// hd->allocated = DLExtract(hd->allocated, cell);
+	if (cell->next != NULL)
+		cell->next->prev = cell->prev;
+	if (cell->prev == NULL)
+		list = cell->next;
+	else
+		cell->prev->next = cell->next;
+	hd->allocated = list;
+	hd->free      = DLInsert(hd->free, cell, list);
 }
 
 /*
@@ -184,9 +213,12 @@ void OSFreeToHeap(void)
  * Address:	........
  * Size:	000010
  */
-void OSSetCurrentHeap(void)
+OSHeapHandle OSSetCurrentHeap(OSHeapHandle heap)
 {
-	// UNUSED FUNCTION
+	OSHeapHandle old = __OSCurrHeap;
+
+	__OSCurrHeap = heap;
+	return old;
 }
 
 /*
@@ -194,43 +226,30 @@ void OSSetCurrentHeap(void)
  * Address:	801F68A8
  * Size:	000070
  */
-void OSInitAlloc(void)
+void* OSInitAlloc(void* arenaStart, void* arenaEnd, int maxHeaps)
 {
-	/*
-	.loc_0x0:
-	  mulli     r7, r5, 0xC
-	  stw       r3, 0x31E0(r13)
-	  stw       r5, 0x31E4(r13)
-	  li        r6, 0
-	  addi      r3, r6, 0
-	  li        r8, 0
-	  li        r5, -0x1
-	  b         .loc_0x3C
+	u32 totalSize = maxHeaps * sizeof(struct Heap);
+	int i;
 
-	.loc_0x20:
-	  lwz       r0, 0x31E0(r13)
-	  addi      r8, r8, 0x1
-	  add       r9, r0, r6
-	  stw       r5, 0x0(r9)
-	  addi      r6, r6, 0xC
-	  stw       r3, 0x8(r9)
-	  stw       r3, 0x4(r9)
+	HeapArray = arenaStart;
+	NumHeaps  = maxHeaps;
 
-	.loc_0x3C:
-	  lwz       r0, 0x31E4(r13)
-	  cmpw      r8, r0
-	  blt+      .loc_0x20
-	  lwz       r3, 0x31E0(r13)
-	  rlwinm    r0,r4,0,0,26
-	  li        r4, -0x1
-	  stw       r0, 0x31EC(r13)
-	  add       r3, r3, r7
-	  addi      r0, r3, 0x1F
-	  stw       r4, 0x29D8(r13)
-	  rlwinm    r3,r0,0,0,26
-	  stw       r3, 0x31E8(r13)
-	  blr
-	*/
+	for (i = 0; i < NumHeaps; i++) {
+		Heap* heap = &HeapArray[i];
+
+		heap->size = -1;
+		heap->free = heap->allocated = NULL;
+	}
+
+	__OSCurrHeap = -1;
+
+	arenaStart = (u8*)HeapArray + totalSize;
+	arenaStart = (void*)OSRoundUp32B(arenaStart);
+
+	ArenaStart = arenaStart;
+	ArenaEnd   = (void*)OSRoundDown32B(arenaEnd);
+
+	return arenaStart;
 }
 
 /*
@@ -238,9 +257,26 @@ void OSInitAlloc(void)
  * Address:	........
  * Size:	00006C
  */
-void OSCreateHeap(void)
+OSHeapHandle OSCreateHeap(void* start, void* end)
 {
-	// UNUSED FUNCTION
+	int i;
+	HeapCell* cell = (void*)OSRoundUp32B(start);
+
+	end = (void*)OSRoundDown32B(end);
+	for (i = 0; i < NumHeaps; i++) {
+		Heap* hd = &HeapArray[i];
+
+		if (hd->size < 0) {
+			hd->size      = (u8*)end - (u8*)cell;
+			cell->prev    = NULL;
+			cell->next    = NULL;
+			cell->size    = hd->size;
+			hd->free      = cell;
+			hd->allocated = NULL;
+			return i;
+		}
+	}
+	return -1;
 }
 
 /*
@@ -268,7 +304,7 @@ void OSAddToHeap(void)
  * Address:	........
  * Size:	000360
  */
-void OSCheckHeap(void)
+s32 OSCheckHeap(int)
 {
 	// UNUSED FUNCTION
 }

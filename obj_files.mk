@@ -438,7 +438,7 @@ BASE :=\
 OS :=\
 	$(BUILD_DIR)/asm/os/OS.o\
 	$(BUILD_DIR)/asm/os/OSAlarm.o\
-	$(BUILD_DIR)/asm/os/OSAlloc.o\
+	$(BUILD_DIR)/src/os/OSAlloc.o\
 	$(BUILD_DIR)/src/os/OSArena.o\
 	$(BUILD_DIR)/asm/os/OSAudioSystem.o\
 	$(BUILD_DIR)/asm/os/OSCache.o\
