@@ -68,10 +68,12 @@ ifeq ($(WINDOWS),1)
   WINE :=
   AS      := $(DEVKITPPC)/bin/powerpc-eabi-as.exe
   CPP     := $(DEVKITPPC)/bin/powerpc-eabi-cpp.exe -P
+  PYTHON  := python
 else
   WINE ?= wine
   AS      := $(DEVKITPPC)/bin/powerpc-eabi-as
   CPP     := $(DEVKITPPC)/bin/powerpc-eabi-cpp -P
+  PYTHON  := python3
 endif
 CC      = $(WINE) tools/mwcc_compiler/$(MWCC_VERSION)/mwcceppc.exe
 ifeq ($(EPILOGUE_PROCESS),1)
@@ -80,7 +82,6 @@ endif
 LD      := $(WINE) tools/mwcc_compiler/$(MWLD_VERSION)/mwldeppc.exe
 ELF2DOL := tools/elf2dol
 SHA1SUM := sha1sum
-PYTHON  := python3
 
 FRANK := tools/frank.py
 
