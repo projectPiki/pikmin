@@ -61,16 +61,3 @@ lbl_803E8370:
 .global lbl_803E8380
 lbl_803E8380:
 	.float 16736.016
-.balign 8
-.global lbl_803E8388
-lbl_803E8388:
-	.float 1.0
-.global lbl_803E838C
-lbl_803E838C:
-	.float 0.15
-.global lbl_803E8390
-lbl_803E8390:
-	.float 1.1
-.global lbl_803E8394
-lbl_803E8394:
-	.float 2.0

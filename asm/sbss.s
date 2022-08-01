@@ -221,37 +221,4 @@ GET_P:
 	.skip 4
 .global SEQ_REMAIN
 SEQ_REMAIN:
-	.skip 8
-.global vol_chg
-vol_chg:
-	.skip 4
-.global stacklevel
-stacklevel:
-	.skip 4
-.global queue_list
-queue_list:
-	.skip 4
-.global cmdqueue_reset
-cmdqueue_reset:
-	.skip 4
-.global countdown_count
-countdown_count:
-	.skip 4
-.global pausemode
-pausemode:
-	.skip 4
-.global container
-container:
-	.skip 4
-.global sys_voldown_flag
-sys_voldown_flag:
-	.skip 4
-.global boot_ok
-boot_ok:
-	.skip 4
-.global count
-count:
-	.skip 4
-.global lend_buffer
-lend_buffer:
 	.skip 4

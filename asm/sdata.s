@@ -51,14 +51,3 @@ osc_table:
 OSC_REL:
 	.4byte 0x0001000A
 	.4byte 0x0000000F
-.global game_bgm_vol
-game_bgm_vol:
-	.byte 0x8
-.global game_se_vol
-game_se_vol:
-	.byte 0x8
-	.byte 0x0
-	.byte 0x0
-.global current_process
-current_process:
-	.4byte 0xFFFFFFFF
