@@ -7,8 +7,13 @@
  * Size:	000034
  */
 // nonmatch by reason of epilogue lr restore scheduling
+// see https://decomp.me/scratch/TGRPu
 #ifdef NON_MATCHING
-float V3D_GetAngle__FP9Vector3D_(struct Vector3D_* input_vec) { return (atanf2__Fff(input_vec->x, input_vec->y) + 3.141592); }
+float V3D_GetAngle__FP9Vector3D_(struct Vector3D_* input_vec)
+{
+	float retval = (atanf2__Fff(input_vec->x, input_vec->y) + 3.141592);
+	return retval;
+}
 #else
 asm float V3D_GetAngle__FP9Vector3D_(struct Vector3D_*)
 {

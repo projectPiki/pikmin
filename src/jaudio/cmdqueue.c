@@ -209,20 +209,4 @@ void Jal_FrameWork(void*)
  * Address:	8001BB20
  * Size:	00002C
  */
-void Jal_CmdQueue_Init(void)
-{
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  lis       r3, 0x8002
-	  stw       r0, 0x4(r1)
-	  li        r4, 0
-	  subi      r3, r3, 0x4560
-	  stwu      r1, -0x8(r1)
-	  bl        -0x14918
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
-}
+void Jal_CmdQueue_Init(void) { Jac_RegisterPlayerCallback(Jal_FrameWork__FPv, 0); }
