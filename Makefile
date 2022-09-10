@@ -32,7 +32,7 @@ S_FILES := $(wildcard asm/*.s)
 C_FILES := $(wildcard src/*.c)
 CPP_FILES := $(wildcard src/*.cpp)
 CPP_FILES += $(wildcard src/*.cp)
-LDSCRIPT := $(BUILD_DIR)/ldscript.lcf
+LDSCRIPT := ldscript.lcf
 
 # Outputs
 DOL     := $(BUILD_DIR)/main.dol
@@ -67,12 +67,10 @@ MWLD_VERSION := 1.1
 ifeq ($(WINDOWS),1)
   WINE :=
   AS      := $(DEVKITPPC)/bin/powerpc-eabi-as.exe
-  CPP     := $(DEVKITPPC)/bin/powerpc-eabi-cpp.exe -P
   PYTHON  := python
 else
   WINE ?= wine
   AS      := $(DEVKITPPC)/bin/powerpc-eabi-as
-  CPP     := $(DEVKITPPC)/bin/powerpc-eabi-cpp -P
   PYTHON  := python3
 endif
 CC      = $(WINE) tools/mwcc_compiler/$(MWCC_VERSION)/mwcceppc.exe
@@ -120,9 +118,6 @@ DUMMY != mkdir -p $(EPI_DIRS)
 endif
 
 .PHONY: tools
-
-$(LDSCRIPT): ldscript.lcf
-	$(QUIET) $(CPP) -MMD -MP -MT $@ -MF $@.d -I include/ -I . -DBUILD_DIR=$(BUILD_DIR) -o $@ $<
 
 # DOL creation makefile instructions
 $(DOL): $(ELF) | tools
