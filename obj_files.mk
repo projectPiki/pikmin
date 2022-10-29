@@ -8,7 +8,6 @@ GROUP_0_FILES :=\
 	$(BUILD_DIR)/asm/sdata.o\
 	$(BUILD_DIR)/asm/sbss.o\
 	$(BUILD_DIR)/asm/sdata2.o\
-	$(BUILD_DIR)/asm/sdata2_1.o\
 
 SYSBOOTUP :=\
 	$(BUILD_DIR)/src/sysBootup.o\
@@ -17,6 +16,11 @@ SYSBOOTUP :=\
 JAUDIO :=\
 	$(BUILD_DIR)/src/jaudio/dummyprobe.o\
 	$(BUILD_DIR)/asm/jaudio.o\
+	$(BUILD_DIR)/asm/jaudio/noteon.o\
+	$(BUILD_DIR)/asm/jaudio/seqsetup.o\
+	$(BUILD_DIR)/asm/jaudio/centcalc.o\
+	$(BUILD_DIR)/asm/jaudio/jamosc.o\
+	$(BUILD_DIR)/asm/jaudio/oneshot.o\
 	$(BUILD_DIR)/asm/jaudio/interface.o\
 	$(BUILD_DIR)/asm/jaudio/verysimple.o\
 	$(BUILD_DIR)/asm/jaudio/app_inter.o\

@@ -47,7 +47,3 @@ first:
 osc_table:
 	.4byte 0x01020804
 	.4byte 0x10000000
-.global OSC_REL
-OSC_REL:
-	.4byte 0x0001000A
-	.4byte 0x0000000F

@@ -13900,8 +13900,8 @@ lbl_803E835C:
 lbl_803E8360:
 	.4byte 0x3F000000
 	.4byte 0x00000000
-.global "@310"
-"@310":
+.global lbl_803E8368
+lbl_803E8368:
 	.4byte 0x43300000
 	.4byte 0x00000000
 .global lbl_803E8370

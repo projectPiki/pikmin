@@ -213,12 +213,3 @@ SEQ_P:
 .global SEQ_CMD
 SEQ_CMD:
 	.skip 4
-.global BACK_P
-BACK_P:
-	.skip 4
-.global GET_P
-GET_P:
-	.skip 4
-.global SEQ_REMAIN
-SEQ_REMAIN:
-	.skip 4

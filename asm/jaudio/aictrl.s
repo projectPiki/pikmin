@@ -4593,8 +4593,8 @@ lbl_803E8208:
 	.4byte 0x4E470000
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
-.global "@146"
-"@146":
+.global lbl_803E8320
+lbl_803E8320:
 	.4byte 0x43300000
 	.4byte 0x00000000
 .global lbl_803E8328
