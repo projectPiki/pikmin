@@ -67,12 +67,12 @@ emit__11SlimeEffectFR10EffectParm:
 /* 80113238 00110198  D0 01 00 20 */	stfs f0, 0x20(r1)
 /* 8011323C 0011019C  80 1F 00 0C */	lwz r0, 0xc(r31)
 /* 80113240 001101A0  28 00 00 00 */	cmplwi r0, 0
-/* 80113244 001101A4  40 82 00 3C */	bne lbl_80113280
+/* 80113244 001101A4  40 82 00 3C */	bne .L_80113280
 /* 80113248 001101A8  28 1F 00 00 */	cmplwi r31, 0
 /* 8011324C 001101AC  38 FF 00 00 */	addi r7, r31, 0
-/* 80113250 001101B0  41 82 00 08 */	beq lbl_80113258
+/* 80113250 001101B0  41 82 00 08 */	beq .L_80113258
 /* 80113254 001101B4  38 E7 00 04 */	addi r7, r7, 4
-lbl_80113258:
+.L_80113258:
 /* 80113258 001101B8  80 6D 31 80 */	lwz r3, effectMgr@sda21(r13)
 /* 8011325C 001101BC  38 DF 00 00 */	addi r6, r31, 0
 /* 80113260 001101C0  38 A1 00 18 */	addi r5, r1, 0x18
@@ -83,7 +83,7 @@ lbl_80113258:
 /* 80113274 001101D4  80 7F 00 0C */	lwz r3, 0xc(r31)
 /* 80113278 001101D8  38 04 00 94 */	addi r0, r4, 0x94
 /* 8011327C 001101DC  90 03 00 18 */	stw r0, 0x18(r3)
-lbl_80113280:
+.L_80113280:
 /* 80113280 001101E0  80 01 00 34 */	lwz r0, 0x34(r1)
 /* 80113284 001101E4  83 E1 00 2C */	lwz r31, 0x2c(r1)
 /* 80113288 001101E8  38 21 00 30 */	addi r1, r1, 0x30
@@ -95,9 +95,9 @@ invoke__11SlimeEffectFPQ23zen17particleGeneratorPQ23zen11particleMdl:
 /* 80113294 001101F4  94 21 FF A8 */	stwu r1, -0x58(r1)
 /* 80113298 001101F8  80 03 00 0C */	lwz r0, 0xc(r3)
 /* 8011329C 001101FC  28 00 00 00 */	cmplwi r0, 0
-/* 801132A0 00110200  41 82 00 84 */	beq lbl_80113324
+/* 801132A0 00110200  41 82 00 84 */	beq .L_80113324
 /* 801132A4 00110204  28 05 00 00 */	cmplwi r5, 0
-/* 801132A8 00110208  41 82 00 7C */	beq lbl_80113324
+/* 801132A8 00110208  41 82 00 7C */	beq .L_80113324
 /* 801132AC 0011020C  80 63 00 10 */	lwz r3, 0x10(r3)
 /* 801132B0 00110210  C4 03 00 70 */	lfsu f0, 0x70(r3)
 /* 801132B4 00110214  D0 01 00 48 */	stfs f0, 0x48(r1)
@@ -128,7 +128,7 @@ invoke__11SlimeEffectFPQ23zen17particleGeneratorPQ23zen11particleMdl:
 /* 80113318 00110278  90 05 00 38 */	stw r0, 0x38(r5)
 /* 8011331C 0011027C  80 01 00 50 */	lwz r0, 0x50(r1)
 /* 80113320 00110280  90 05 00 3C */	stw r0, 0x3c(r5)
-lbl_80113324:
+.L_80113324:
 /* 80113324 00110284  38 60 00 01 */	li r3, 1
 /* 80113328 00110288  38 21 00 58 */	addi r1, r1, 0x58
 /* 8011332C 0011028C  4E 80 00 20 */	blr 
@@ -142,14 +142,14 @@ kill__11SlimeEffectFv:
 /* 80113340 001102A0  7C 7F 1B 78 */	mr r31, r3
 /* 80113344 001102A4  80 83 00 0C */	lwz r4, 0xc(r3)
 /* 80113348 001102A8  28 04 00 00 */	cmplwi r4, 0
-/* 8011334C 001102AC  41 82 00 1C */	beq lbl_80113368
+/* 8011334C 001102AC  41 82 00 1C */	beq .L_80113368
 /* 80113350 001102B0  80 6D 31 80 */	lwz r3, effectMgr@sda21(r13)
 /* 80113354 001102B4  38 A0 00 00 */	li r5, 0
 /* 80113358 001102B8  38 63 00 14 */	addi r3, r3, 0x14
 /* 8011335C 001102BC  48 08 E2 69 */	bl killGenerator__Q23zen15particleManagerFPQ23zen17particleGeneratorb
 /* 80113360 001102C0  38 00 00 00 */	li r0, 0
 /* 80113364 001102C4  90 1F 00 0C */	stw r0, 0xc(r31)
-lbl_80113368:
+.L_80113368:
 /* 80113368 001102C8  80 01 00 1C */	lwz r0, 0x1c(r1)
 /* 8011336C 001102CC  83 E1 00 14 */	lwz r31, 0x14(r1)
 /* 80113370 001102D0  38 21 00 18 */	addi r1, r1, 0x18
@@ -171,7 +171,7 @@ __ct__11UtEffectMgrFv:
 /* 801133A4 00110304  38 60 00 0C */	li r3, 0xc
 /* 801133A8 00110308  4B F3 3C 5D */	bl alloc__6SystemFUl
 /* 801133AC 0011030C  7C 65 1B 79 */	or. r5, r3, r3
-/* 801133B0 00110310  41 82 00 60 */	beq lbl_80113410
+/* 801133B0 00110310  41 82 00 60 */	beq .L_80113410
 /* 801133B4 00110314  3C 80 80 2B */	lis r4, "__vt__Q23zen37CallBack1<PQ23zen17particleGenerator>"@ha
 /* 801133B8 00110318  38 04 06 00 */	addi r0, r4, "__vt__Q23zen37CallBack1<PQ23zen17particleGenerator>"@l
 /* 801133BC 0011031C  3C 80 80 2B */	lis r4, "__vt__Q23zen58CallBack2<PQ23zen17particleGenerator,PQ23zen11particleMdl>"@ha
@@ -195,14 +195,14 @@ __ct__11UtEffectMgrFv:
 /* 80113404 00110364  90 C3 00 00 */	stw r6, 0(r3)
 /* 80113408 00110368  90 83 00 04 */	stw r4, 4(r3)
 /* 8011340C 0011036C  90 03 00 08 */	stw r0, 8(r3)
-lbl_80113410:
+.L_80113410:
 /* 80113410 00110370  38 7F 00 00 */	addi r3, r31, 0
 /* 80113414 00110374  38 80 00 00 */	li r4, 0
 /* 80113418 00110378  48 00 0E B9 */	bl registerEffect__11UtEffectMgrFiP7KEffect
 /* 8011341C 0011037C  38 60 00 1C */	li r3, 0x1c
 /* 80113420 00110380  4B F3 3B E5 */	bl alloc__6SystemFUl
 /* 80113424 00110384  7C 7D 1B 79 */	or. r29, r3, r3
-/* 80113428 00110388  41 82 00 80 */	beq lbl_801134A8
+/* 80113428 00110388  41 82 00 80 */	beq .L_801134A8
 /* 8011342C 0011038C  80 6D 31 20 */	lwz r3, naviMgr@sda21(r13)
 /* 80113430 00110390  38 80 00 00 */	li r4, 0
 /* 80113434 00110394  48 00 40 05 */	bl getNavi__7NaviMgrFi
@@ -234,7 +234,7 @@ lbl_80113410:
 /* 8011349C 001103FC  90 1D 00 18 */	stw r0, 0x18(r29)
 /* 801134A0 00110400  90 1D 00 14 */	stw r0, 0x14(r29)
 /* 801134A4 00110404  90 1D 00 10 */	stw r0, 0x10(r29)
-lbl_801134A8:
+.L_801134A8:
 /* 801134A8 00110408  38 7F 00 00 */	addi r3, r31, 0
 /* 801134AC 0011040C  38 BD 00 00 */	addi r5, r29, 0
 /* 801134B0 00110410  38 80 00 01 */	li r4, 1
@@ -242,7 +242,7 @@ lbl_801134A8:
 /* 801134B8 00110418  38 60 00 1C */	li r3, 0x1c
 /* 801134BC 0011041C  4B F3 3B 49 */	bl alloc__6SystemFUl
 /* 801134C0 00110420  7C 7D 1B 79 */	or. r29, r3, r3
-/* 801134C4 00110424  41 82 00 80 */	beq lbl_80113544
+/* 801134C4 00110424  41 82 00 80 */	beq .L_80113544
 /* 801134C8 00110428  80 6D 31 20 */	lwz r3, naviMgr@sda21(r13)
 /* 801134CC 0011042C  38 80 00 01 */	li r4, 1
 /* 801134D0 00110430  48 00 3F 69 */	bl getNavi__7NaviMgrFi
@@ -274,7 +274,7 @@ lbl_801134A8:
 /* 80113538 00110498  90 1D 00 18 */	stw r0, 0x18(r29)
 /* 8011353C 0011049C  90 1D 00 14 */	stw r0, 0x14(r29)
 /* 80113540 001104A0  90 1D 00 10 */	stw r0, 0x10(r29)
-lbl_80113544:
+.L_80113544:
 /* 80113544 001104A4  38 7F 00 00 */	addi r3, r31, 0
 /* 80113548 001104A8  38 BD 00 00 */	addi r5, r29, 0
 /* 8011354C 001104AC  38 80 00 02 */	li r4, 2
@@ -282,7 +282,7 @@ lbl_80113544:
 /* 80113554 001104B4  38 60 00 0C */	li r3, 0xc
 /* 80113558 001104B8  4B F3 3A AD */	bl alloc__6SystemFUl
 /* 8011355C 001104BC  7C 65 1B 79 */	or. r5, r3, r3
-/* 80113560 001104C0  41 82 00 60 */	beq lbl_801135C0
+/* 80113560 001104C0  41 82 00 60 */	beq .L_801135C0
 /* 80113564 001104C4  3C 80 80 2B */	lis r4, "__vt__Q23zen37CallBack1<PQ23zen17particleGenerator>"@ha
 /* 80113568 001104C8  38 04 06 00 */	addi r0, r4, "__vt__Q23zen37CallBack1<PQ23zen17particleGenerator>"@l
 /* 8011356C 001104CC  3C 80 80 2B */	lis r4, "__vt__Q23zen58CallBack2<PQ23zen17particleGenerator,PQ23zen11particleMdl>"@ha
@@ -306,14 +306,14 @@ lbl_80113544:
 /* 801135B4 00110514  90 C3 00 00 */	stw r6, 0(r3)
 /* 801135B8 00110518  90 83 00 04 */	stw r4, 4(r3)
 /* 801135BC 0011051C  90 03 00 08 */	stw r0, 8(r3)
-lbl_801135C0:
+.L_801135C0:
 /* 801135C0 00110520  38 7F 00 00 */	addi r3, r31, 0
 /* 801135C4 00110524  38 80 00 03 */	li r4, 3
 /* 801135C8 00110528  48 00 0D 09 */	bl registerEffect__11UtEffectMgrFiP7KEffect
 /* 801135CC 0011052C  38 60 00 0C */	li r3, 0xc
 /* 801135D0 00110530  4B F3 3A 35 */	bl alloc__6SystemFUl
 /* 801135D4 00110534  7C 65 1B 79 */	or. r5, r3, r3
-/* 801135D8 00110538  41 82 00 60 */	beq lbl_80113638
+/* 801135D8 00110538  41 82 00 60 */	beq .L_80113638
 /* 801135DC 0011053C  3C 80 80 2B */	lis r4, "__vt__Q23zen37CallBack1<PQ23zen17particleGenerator>"@ha
 /* 801135E0 00110540  38 04 06 00 */	addi r0, r4, "__vt__Q23zen37CallBack1<PQ23zen17particleGenerator>"@l
 /* 801135E4 00110544  3C 80 80 2B */	lis r4, "__vt__Q23zen58CallBack2<PQ23zen17particleGenerator,PQ23zen11particleMdl>"@ha
@@ -337,14 +337,14 @@ lbl_801135C0:
 /* 8011362C 0011058C  90 C3 00 00 */	stw r6, 0(r3)
 /* 80113630 00110590  90 83 00 04 */	stw r4, 4(r3)
 /* 80113634 00110594  90 03 00 08 */	stw r0, 8(r3)
-lbl_80113638:
+.L_80113638:
 /* 80113638 00110598  38 7F 00 00 */	addi r3, r31, 0
 /* 8011363C 0011059C  38 80 00 05 */	li r4, 5
 /* 80113640 001105A0  48 00 0C 91 */	bl registerEffect__11UtEffectMgrFiP7KEffect
 /* 80113644 001105A4  38 60 00 0C */	li r3, 0xc
 /* 80113648 001105A8  4B F3 39 BD */	bl alloc__6SystemFUl
 /* 8011364C 001105AC  7C 65 1B 79 */	or. r5, r3, r3
-/* 80113650 001105B0  41 82 00 60 */	beq lbl_801136B0
+/* 80113650 001105B0  41 82 00 60 */	beq .L_801136B0
 /* 80113654 001105B4  3C 80 80 2B */	lis r4, "__vt__Q23zen37CallBack1<PQ23zen17particleGenerator>"@ha
 /* 80113658 001105B8  38 04 06 00 */	addi r0, r4, "__vt__Q23zen37CallBack1<PQ23zen17particleGenerator>"@l
 /* 8011365C 001105BC  3C 80 80 2B */	lis r4, "__vt__Q23zen58CallBack2<PQ23zen17particleGenerator,PQ23zen11particleMdl>"@ha
@@ -368,14 +368,14 @@ lbl_80113638:
 /* 801136A4 00110604  90 C3 00 00 */	stw r6, 0(r3)
 /* 801136A8 00110608  90 83 00 04 */	stw r4, 4(r3)
 /* 801136AC 0011060C  90 03 00 08 */	stw r0, 8(r3)
-lbl_801136B0:
+.L_801136B0:
 /* 801136B0 00110610  38 7F 00 00 */	addi r3, r31, 0
 /* 801136B4 00110614  38 80 00 04 */	li r4, 4
 /* 801136B8 00110618  48 00 0C 19 */	bl registerEffect__11UtEffectMgrFiP7KEffect
 /* 801136BC 0011061C  38 60 00 0C */	li r3, 0xc
 /* 801136C0 00110620  4B F3 39 45 */	bl alloc__6SystemFUl
 /* 801136C4 00110624  7C 65 1B 79 */	or. r5, r3, r3
-/* 801136C8 00110628  41 82 00 60 */	beq lbl_80113728
+/* 801136C8 00110628  41 82 00 60 */	beq .L_80113728
 /* 801136CC 0011062C  3C 80 80 2B */	lis r4, "__vt__Q23zen37CallBack1<PQ23zen17particleGenerator>"@ha
 /* 801136D0 00110630  38 04 06 00 */	addi r0, r4, "__vt__Q23zen37CallBack1<PQ23zen17particleGenerator>"@l
 /* 801136D4 00110634  3C 80 80 2B */	lis r4, "__vt__Q23zen58CallBack2<PQ23zen17particleGenerator,PQ23zen11particleMdl>"@ha
@@ -399,14 +399,14 @@ lbl_801136B0:
 /* 8011371C 0011067C  90 C3 00 00 */	stw r6, 0(r3)
 /* 80113720 00110680  90 83 00 04 */	stw r4, 4(r3)
 /* 80113724 00110684  90 03 00 08 */	stw r0, 8(r3)
-lbl_80113728:
+.L_80113728:
 /* 80113728 00110688  38 7F 00 00 */	addi r3, r31, 0
 /* 8011372C 0011068C  38 80 00 06 */	li r4, 6
 /* 80113730 00110690  48 00 0B A1 */	bl registerEffect__11UtEffectMgrFiP7KEffect
 /* 80113734 00110694  38 60 00 18 */	li r3, 0x18
 /* 80113738 00110698  4B F3 38 CD */	bl alloc__6SystemFUl
 /* 8011373C 0011069C  7C 7E 1B 79 */	or. r30, r3, r3
-/* 80113740 001106A0  41 82 00 C0 */	beq lbl_80113800
+/* 80113740 001106A0  41 82 00 C0 */	beq .L_80113800
 /* 80113744 001106A4  80 6D 31 20 */	lwz r3, naviMgr@sda21(r13)
 /* 80113748 001106A8  38 80 00 00 */	li r4, 0
 /* 8011374C 001106AC  48 00 3C ED */	bl getNavi__7NaviMgrFi
@@ -442,21 +442,21 @@ lbl_80113728:
 /* 801137C4 00110724  4B F3 38 41 */	bl alloc__6SystemFUl
 /* 801137C8 00110728  28 1D 00 00 */	cmplwi r29, 0
 /* 801137CC 0011072C  90 7E 00 14 */	stw r3, 0x14(r30)
-/* 801137D0 00110730  41 82 00 30 */	beq lbl_80113800
+/* 801137D0 00110730  41 82 00 30 */	beq .L_80113800
 /* 801137D4 00110734  38 A0 00 00 */	li r5, 0
 /* 801137D8 00110738  38 C5 00 00 */	addi r6, r5, 0
 /* 801137DC 0011073C  38 85 00 00 */	addi r4, r5, 0
-/* 801137E0 00110740  48 00 00 14 */	b lbl_801137F4
-lbl_801137E4:
+/* 801137E0 00110740  48 00 00 14 */	b .L_801137F4
+.L_801137E4:
 /* 801137E4 00110744  80 7E 00 14 */	lwz r3, 0x14(r30)
 /* 801137E8 00110748  38 A5 00 01 */	addi r5, r5, 1
 /* 801137EC 0011074C  7C 83 31 2E */	stwx r4, r3, r6
 /* 801137F0 00110750  38 C6 00 04 */	addi r6, r6, 4
-lbl_801137F4:
+.L_801137F4:
 /* 801137F4 00110754  80 1E 00 10 */	lwz r0, 0x10(r30)
 /* 801137F8 00110758  7C 05 00 00 */	cmpw r5, r0
-/* 801137FC 0011075C  41 80 FF E8 */	blt lbl_801137E4
-lbl_80113800:
+/* 801137FC 0011075C  41 80 FF E8 */	blt .L_801137E4
+.L_80113800:
 /* 80113800 00110760  38 7F 00 00 */	addi r3, r31, 0
 /* 80113804 00110764  38 BE 00 00 */	addi r5, r30, 0
 /* 80113808 00110768  38 80 00 07 */	li r4, 7
@@ -464,7 +464,7 @@ lbl_80113800:
 /* 80113810 00110770  38 60 00 14 */	li r3, 0x14
 /* 80113814 00110774  4B F3 37 F1 */	bl alloc__6SystemFUl
 /* 80113818 00110778  7C 65 1B 79 */	or. r5, r3, r3
-/* 8011381C 0011077C  41 82 00 70 */	beq lbl_8011388C
+/* 8011381C 0011077C  41 82 00 70 */	beq .L_8011388C
 /* 80113820 00110780  3C 80 80 2B */	lis r4, "__vt__Q23zen37CallBack1<PQ23zen17particleGenerator>"@ha
 /* 80113824 00110784  38 04 06 00 */	addi r0, r4, "__vt__Q23zen37CallBack1<PQ23zen17particleGenerator>"@l
 /* 80113828 00110788  3C 80 80 2B */	lis r4, "__vt__Q23zen58CallBack2<PQ23zen17particleGenerator,PQ23zen11particleMdl>"@ha
@@ -492,14 +492,14 @@ lbl_80113800:
 /* 80113880 001107E0  90 C3 00 08 */	stw r6, 8(r3)
 /* 80113884 001107E4  90 83 00 0C */	stw r4, 0xc(r3)
 /* 80113888 001107E8  90 03 00 10 */	stw r0, 0x10(r3)
-lbl_8011388C:
+.L_8011388C:
 /* 8011388C 001107EC  38 7F 00 00 */	addi r3, r31, 0
 /* 80113890 001107F0  38 80 00 09 */	li r4, 9
 /* 80113894 001107F4  48 00 0A 3D */	bl registerEffect__11UtEffectMgrFiP7KEffect
 /* 80113898 001107F8  38 60 00 14 */	li r3, 0x14
 /* 8011389C 001107FC  4B F3 37 69 */	bl alloc__6SystemFUl
 /* 801138A0 00110800  7C 65 1B 79 */	or. r5, r3, r3
-/* 801138A4 00110804  41 82 00 70 */	beq lbl_80113914
+/* 801138A4 00110804  41 82 00 70 */	beq .L_80113914
 /* 801138A8 00110808  3C 80 80 2B */	lis r4, "__vt__Q23zen37CallBack1<PQ23zen17particleGenerator>"@ha
 /* 801138AC 0011080C  38 04 06 00 */	addi r0, r4, "__vt__Q23zen37CallBack1<PQ23zen17particleGenerator>"@l
 /* 801138B0 00110810  3C 80 80 2B */	lis r4, "__vt__Q23zen58CallBack2<PQ23zen17particleGenerator,PQ23zen11particleMdl>"@ha
@@ -527,14 +527,14 @@ lbl_8011388C:
 /* 80113908 00110868  90 C3 00 08 */	stw r6, 8(r3)
 /* 8011390C 0011086C  90 83 00 0C */	stw r4, 0xc(r3)
 /* 80113910 00110870  90 03 00 10 */	stw r0, 0x10(r3)
-lbl_80113914:
+.L_80113914:
 /* 80113914 00110874  38 7F 00 00 */	addi r3, r31, 0
 /* 80113918 00110878  38 80 00 0A */	li r4, 0xa
 /* 8011391C 0011087C  48 00 09 B5 */	bl registerEffect__11UtEffectMgrFiP7KEffect
 /* 80113920 00110880  38 60 00 14 */	li r3, 0x14
 /* 80113924 00110884  4B F3 36 E1 */	bl alloc__6SystemFUl
 /* 80113928 00110888  7C 65 1B 79 */	or. r5, r3, r3
-/* 8011392C 0011088C  41 82 00 70 */	beq lbl_8011399C
+/* 8011392C 0011088C  41 82 00 70 */	beq .L_8011399C
 /* 80113930 00110890  3C 80 80 2B */	lis r4, "__vt__Q23zen37CallBack1<PQ23zen17particleGenerator>"@ha
 /* 80113934 00110894  38 04 06 00 */	addi r0, r4, "__vt__Q23zen37CallBack1<PQ23zen17particleGenerator>"@l
 /* 80113938 00110898  3C 80 80 2B */	lis r4, "__vt__Q23zen58CallBack2<PQ23zen17particleGenerator,PQ23zen11particleMdl>"@ha
@@ -562,14 +562,14 @@ lbl_80113914:
 /* 80113990 001108F0  90 C3 00 08 */	stw r6, 8(r3)
 /* 80113994 001108F4  90 83 00 0C */	stw r4, 0xc(r3)
 /* 80113998 001108F8  90 03 00 10 */	stw r0, 0x10(r3)
-lbl_8011399C:
+.L_8011399C:
 /* 8011399C 001108FC  38 7F 00 00 */	addi r3, r31, 0
 /* 801139A0 00110900  38 80 00 0B */	li r4, 0xb
 /* 801139A4 00110904  48 00 09 2D */	bl registerEffect__11UtEffectMgrFiP7KEffect
 /* 801139A8 00110908  38 60 00 14 */	li r3, 0x14
 /* 801139AC 0011090C  4B F3 36 59 */	bl alloc__6SystemFUl
 /* 801139B0 00110910  7C 65 1B 79 */	or. r5, r3, r3
-/* 801139B4 00110914  41 82 00 70 */	beq lbl_80113A24
+/* 801139B4 00110914  41 82 00 70 */	beq .L_80113A24
 /* 801139B8 00110918  3C 80 80 2B */	lis r4, "__vt__Q23zen37CallBack1<PQ23zen17particleGenerator>"@ha
 /* 801139BC 0011091C  38 04 06 00 */	addi r0, r4, "__vt__Q23zen37CallBack1<PQ23zen17particleGenerator>"@l
 /* 801139C0 00110920  3C 80 80 2B */	lis r4, "__vt__Q23zen58CallBack2<PQ23zen17particleGenerator,PQ23zen11particleMdl>"@ha
@@ -597,14 +597,14 @@ lbl_8011399C:
 /* 80113A18 00110978  90 C3 00 08 */	stw r6, 8(r3)
 /* 80113A1C 0011097C  90 83 00 0C */	stw r4, 0xc(r3)
 /* 80113A20 00110980  90 03 00 10 */	stw r0, 0x10(r3)
-lbl_80113A24:
+.L_80113A24:
 /* 80113A24 00110984  38 7F 00 00 */	addi r3, r31, 0
 /* 80113A28 00110988  38 80 00 0C */	li r4, 0xc
 /* 80113A2C 0011098C  48 00 08 A5 */	bl registerEffect__11UtEffectMgrFiP7KEffect
 /* 80113A30 00110990  38 60 00 14 */	li r3, 0x14
 /* 80113A34 00110994  4B F3 35 D1 */	bl alloc__6SystemFUl
 /* 80113A38 00110998  7C 65 1B 79 */	or. r5, r3, r3
-/* 80113A3C 0011099C  41 82 00 70 */	beq lbl_80113AAC
+/* 80113A3C 0011099C  41 82 00 70 */	beq .L_80113AAC
 /* 80113A40 001109A0  3C 80 80 2B */	lis r4, "__vt__Q23zen37CallBack1<PQ23zen17particleGenerator>"@ha
 /* 80113A44 001109A4  38 04 06 00 */	addi r0, r4, "__vt__Q23zen37CallBack1<PQ23zen17particleGenerator>"@l
 /* 80113A48 001109A8  3C 80 80 2B */	lis r4, "__vt__Q23zen58CallBack2<PQ23zen17particleGenerator,PQ23zen11particleMdl>"@ha
@@ -632,14 +632,14 @@ lbl_80113A24:
 /* 80113AA0 00110A00  90 C3 00 08 */	stw r6, 8(r3)
 /* 80113AA4 00110A04  90 83 00 0C */	stw r4, 0xc(r3)
 /* 80113AA8 00110A08  90 03 00 10 */	stw r0, 0x10(r3)
-lbl_80113AAC:
+.L_80113AAC:
 /* 80113AAC 00110A0C  38 7F 00 00 */	addi r3, r31, 0
 /* 80113AB0 00110A10  38 80 00 0D */	li r4, 0xd
 /* 80113AB4 00110A14  48 00 08 1D */	bl registerEffect__11UtEffectMgrFiP7KEffect
 /* 80113AB8 00110A18  38 60 00 14 */	li r3, 0x14
 /* 80113ABC 00110A1C  4B F3 35 49 */	bl alloc__6SystemFUl
 /* 80113AC0 00110A20  7C 65 1B 79 */	or. r5, r3, r3
-/* 80113AC4 00110A24  41 82 00 70 */	beq lbl_80113B34
+/* 80113AC4 00110A24  41 82 00 70 */	beq .L_80113B34
 /* 80113AC8 00110A28  3C 80 80 2B */	lis r4, "__vt__Q23zen37CallBack1<PQ23zen17particleGenerator>"@ha
 /* 80113ACC 00110A2C  38 04 06 00 */	addi r0, r4, "__vt__Q23zen37CallBack1<PQ23zen17particleGenerator>"@l
 /* 80113AD0 00110A30  3C 80 80 2B */	lis r4, "__vt__Q23zen58CallBack2<PQ23zen17particleGenerator,PQ23zen11particleMdl>"@ha
@@ -667,14 +667,14 @@ lbl_80113AAC:
 /* 80113B28 00110A88  90 C3 00 08 */	stw r6, 8(r3)
 /* 80113B2C 00110A8C  90 83 00 0C */	stw r4, 0xc(r3)
 /* 80113B30 00110A90  90 03 00 10 */	stw r0, 0x10(r3)
-lbl_80113B34:
+.L_80113B34:
 /* 80113B34 00110A94  38 7F 00 00 */	addi r3, r31, 0
 /* 80113B38 00110A98  38 80 00 0E */	li r4, 0xe
 /* 80113B3C 00110A9C  48 00 07 95 */	bl registerEffect__11UtEffectMgrFiP7KEffect
 /* 80113B40 00110AA0  38 60 00 14 */	li r3, 0x14
 /* 80113B44 00110AA4  4B F3 34 C1 */	bl alloc__6SystemFUl
 /* 80113B48 00110AA8  7C 65 1B 79 */	or. r5, r3, r3
-/* 80113B4C 00110AAC  41 82 00 70 */	beq lbl_80113BBC
+/* 80113B4C 00110AAC  41 82 00 70 */	beq .L_80113BBC
 /* 80113B50 00110AB0  3C 80 80 2B */	lis r4, "__vt__Q23zen37CallBack1<PQ23zen17particleGenerator>"@ha
 /* 80113B54 00110AB4  38 04 06 00 */	addi r0, r4, "__vt__Q23zen37CallBack1<PQ23zen17particleGenerator>"@l
 /* 80113B58 00110AB8  3C 80 80 2B */	lis r4, "__vt__Q23zen58CallBack2<PQ23zen17particleGenerator,PQ23zen11particleMdl>"@ha
@@ -702,14 +702,14 @@ lbl_80113B34:
 /* 80113BB0 00110B10  90 C3 00 08 */	stw r6, 8(r3)
 /* 80113BB4 00110B14  90 83 00 0C */	stw r4, 0xc(r3)
 /* 80113BB8 00110B18  90 03 00 10 */	stw r0, 0x10(r3)
-lbl_80113BBC:
+.L_80113BBC:
 /* 80113BBC 00110B1C  38 7F 00 00 */	addi r3, r31, 0
 /* 80113BC0 00110B20  38 80 00 0F */	li r4, 0xf
 /* 80113BC4 00110B24  48 00 07 0D */	bl registerEffect__11UtEffectMgrFiP7KEffect
 /* 80113BC8 00110B28  38 60 00 14 */	li r3, 0x14
 /* 80113BCC 00110B2C  4B F3 34 39 */	bl alloc__6SystemFUl
 /* 80113BD0 00110B30  7C 65 1B 79 */	or. r5, r3, r3
-/* 80113BD4 00110B34  41 82 00 70 */	beq lbl_80113C44
+/* 80113BD4 00110B34  41 82 00 70 */	beq .L_80113C44
 /* 80113BD8 00110B38  3C 80 80 2B */	lis r4, "__vt__Q23zen37CallBack1<PQ23zen17particleGenerator>"@ha
 /* 80113BDC 00110B3C  38 04 06 00 */	addi r0, r4, "__vt__Q23zen37CallBack1<PQ23zen17particleGenerator>"@l
 /* 80113BE0 00110B40  3C 80 80 2B */	lis r4, "__vt__Q23zen58CallBack2<PQ23zen17particleGenerator,PQ23zen11particleMdl>"@ha
@@ -737,14 +737,14 @@ lbl_80113BBC:
 /* 80113C38 00110B98  90 C3 00 08 */	stw r6, 8(r3)
 /* 80113C3C 00110B9C  90 83 00 0C */	stw r4, 0xc(r3)
 /* 80113C40 00110BA0  90 03 00 10 */	stw r0, 0x10(r3)
-lbl_80113C44:
+.L_80113C44:
 /* 80113C44 00110BA4  38 7F 00 00 */	addi r3, r31, 0
 /* 80113C48 00110BA8  38 80 00 10 */	li r4, 0x10
 /* 80113C4C 00110BAC  48 00 06 85 */	bl registerEffect__11UtEffectMgrFiP7KEffect
 /* 80113C50 00110BB0  38 60 00 14 */	li r3, 0x14
 /* 80113C54 00110BB4  4B F3 33 B1 */	bl alloc__6SystemFUl
 /* 80113C58 00110BB8  7C 65 1B 79 */	or. r5, r3, r3
-/* 80113C5C 00110BBC  41 82 00 70 */	beq lbl_80113CCC
+/* 80113C5C 00110BBC  41 82 00 70 */	beq .L_80113CCC
 /* 80113C60 00110BC0  3C 80 80 2B */	lis r4, "__vt__Q23zen37CallBack1<PQ23zen17particleGenerator>"@ha
 /* 80113C64 00110BC4  38 04 06 00 */	addi r0, r4, "__vt__Q23zen37CallBack1<PQ23zen17particleGenerator>"@l
 /* 80113C68 00110BC8  3C 80 80 2B */	lis r4, "__vt__Q23zen58CallBack2<PQ23zen17particleGenerator,PQ23zen11particleMdl>"@ha
@@ -772,14 +772,14 @@ lbl_80113C44:
 /* 80113CC0 00110C20  90 C3 00 08 */	stw r6, 8(r3)
 /* 80113CC4 00110C24  90 83 00 0C */	stw r4, 0xc(r3)
 /* 80113CC8 00110C28  90 03 00 10 */	stw r0, 0x10(r3)
-lbl_80113CCC:
+.L_80113CCC:
 /* 80113CCC 00110C2C  38 7F 00 00 */	addi r3, r31, 0
 /* 80113CD0 00110C30  38 80 00 11 */	li r4, 0x11
 /* 80113CD4 00110C34  48 00 05 FD */	bl registerEffect__11UtEffectMgrFiP7KEffect
 /* 80113CD8 00110C38  38 60 00 14 */	li r3, 0x14
 /* 80113CDC 00110C3C  4B F3 33 29 */	bl alloc__6SystemFUl
 /* 80113CE0 00110C40  7C 65 1B 79 */	or. r5, r3, r3
-/* 80113CE4 00110C44  41 82 00 70 */	beq lbl_80113D54
+/* 80113CE4 00110C44  41 82 00 70 */	beq .L_80113D54
 /* 80113CE8 00110C48  3C 80 80 2B */	lis r4, "__vt__Q23zen37CallBack1<PQ23zen17particleGenerator>"@ha
 /* 80113CEC 00110C4C  38 04 06 00 */	addi r0, r4, "__vt__Q23zen37CallBack1<PQ23zen17particleGenerator>"@l
 /* 80113CF0 00110C50  3C 80 80 2B */	lis r4, "__vt__Q23zen58CallBack2<PQ23zen17particleGenerator,PQ23zen11particleMdl>"@ha
@@ -807,14 +807,14 @@ lbl_80113CCC:
 /* 80113D48 00110CA8  90 C3 00 08 */	stw r6, 8(r3)
 /* 80113D4C 00110CAC  90 83 00 0C */	stw r4, 0xc(r3)
 /* 80113D50 00110CB0  90 03 00 10 */	stw r0, 0x10(r3)
-lbl_80113D54:
+.L_80113D54:
 /* 80113D54 00110CB4  38 7F 00 00 */	addi r3, r31, 0
 /* 80113D58 00110CB8  38 80 00 12 */	li r4, 0x12
 /* 80113D5C 00110CBC  48 00 05 75 */	bl registerEffect__11UtEffectMgrFiP7KEffect
 /* 80113D60 00110CC0  38 60 00 0C */	li r3, 0xc
 /* 80113D64 00110CC4  4B F3 32 A1 */	bl alloc__6SystemFUl
 /* 80113D68 00110CC8  7C 65 1B 79 */	or. r5, r3, r3
-/* 80113D6C 00110CCC  41 82 00 60 */	beq lbl_80113DCC
+/* 80113D6C 00110CCC  41 82 00 60 */	beq .L_80113DCC
 /* 80113D70 00110CD0  3C 80 80 2B */	lis r4, "__vt__Q23zen37CallBack1<PQ23zen17particleGenerator>"@ha
 /* 80113D74 00110CD4  38 04 06 00 */	addi r0, r4, "__vt__Q23zen37CallBack1<PQ23zen17particleGenerator>"@l
 /* 80113D78 00110CD8  3C 80 80 2B */	lis r4, "__vt__Q23zen58CallBack2<PQ23zen17particleGenerator,PQ23zen11particleMdl>"@ha
@@ -838,14 +838,14 @@ lbl_80113D54:
 /* 80113DC0 00110D20  90 C3 00 00 */	stw r6, 0(r3)
 /* 80113DC4 00110D24  90 83 00 04 */	stw r4, 4(r3)
 /* 80113DC8 00110D28  90 03 00 08 */	stw r0, 8(r3)
-lbl_80113DCC:
+.L_80113DCC:
 /* 80113DCC 00110D2C  38 7F 00 00 */	addi r3, r31, 0
 /* 80113DD0 00110D30  38 80 00 13 */	li r4, 0x13
 /* 80113DD4 00110D34  48 00 04 FD */	bl registerEffect__11UtEffectMgrFiP7KEffect
 /* 80113DD8 00110D38  38 60 00 0C */	li r3, 0xc
 /* 80113DDC 00110D3C  4B F3 32 29 */	bl alloc__6SystemFUl
 /* 80113DE0 00110D40  7C 65 1B 79 */	or. r5, r3, r3
-/* 80113DE4 00110D44  41 82 00 60 */	beq lbl_80113E44
+/* 80113DE4 00110D44  41 82 00 60 */	beq .L_80113E44
 /* 80113DE8 00110D48  3C 80 80 2B */	lis r4, "__vt__Q23zen37CallBack1<PQ23zen17particleGenerator>"@ha
 /* 80113DEC 00110D4C  38 04 06 00 */	addi r0, r4, "__vt__Q23zen37CallBack1<PQ23zen17particleGenerator>"@l
 /* 80113DF0 00110D50  3C 80 80 2B */	lis r4, "__vt__Q23zen58CallBack2<PQ23zen17particleGenerator,PQ23zen11particleMdl>"@ha
@@ -869,14 +869,14 @@ lbl_80113DCC:
 /* 80113E38 00110D98  90 C3 00 00 */	stw r6, 0(r3)
 /* 80113E3C 00110D9C  90 83 00 04 */	stw r4, 4(r3)
 /* 80113E40 00110DA0  90 03 00 08 */	stw r0, 8(r3)
-lbl_80113E44:
+.L_80113E44:
 /* 80113E44 00110DA4  38 7F 00 00 */	addi r3, r31, 0
 /* 80113E48 00110DA8  38 80 00 14 */	li r4, 0x14
 /* 80113E4C 00110DAC  48 00 04 85 */	bl registerEffect__11UtEffectMgrFiP7KEffect
 /* 80113E50 00110DB0  38 60 00 34 */	li r3, 0x34
 /* 80113E54 00110DB4  4B F3 31 B1 */	bl alloc__6SystemFUl
 /* 80113E58 00110DB8  7C 65 1B 79 */	or. r5, r3, r3
-/* 80113E5C 00110DBC  41 82 00 B4 */	beq lbl_80113F10
+/* 80113E5C 00110DBC  41 82 00 B4 */	beq .L_80113F10
 /* 80113E60 00110DC0  3C 80 80 2B */	lis r4, "__vt__Q23zen37CallBack1<PQ23zen17particleGenerator>"@ha
 /* 80113E64 00110DC4  38 04 06 00 */	addi r0, r4, "__vt__Q23zen37CallBack1<PQ23zen17particleGenerator>"@l
 /* 80113E68 00110DC8  3C 80 80 2B */	lis r4, "__vt__Q23zen58CallBack2<PQ23zen17particleGenerator,PQ23zen11particleMdl>"@ha
@@ -921,14 +921,14 @@ lbl_80113E44:
 /* 80113F04 00110E64  90 C3 00 00 */	stw r6, 0(r3)
 /* 80113F08 00110E68  90 83 00 04 */	stw r4, 4(r3)
 /* 80113F0C 00110E6C  90 03 00 08 */	stw r0, 8(r3)
-lbl_80113F10:
+.L_80113F10:
 /* 80113F10 00110E70  38 7F 00 00 */	addi r3, r31, 0
 /* 80113F14 00110E74  38 80 00 15 */	li r4, 0x15
 /* 80113F18 00110E78  48 00 03 B9 */	bl registerEffect__11UtEffectMgrFiP7KEffect
 /* 80113F1C 00110E7C  38 60 00 28 */	li r3, 0x28
 /* 80113F20 00110E80  4B F3 30 E5 */	bl alloc__6SystemFUl
 /* 80113F24 00110E84  7C 65 1B 79 */	or. r5, r3, r3
-/* 80113F28 00110E88  41 82 00 84 */	beq lbl_80113FAC
+/* 80113F28 00110E88  41 82 00 84 */	beq .L_80113FAC
 /* 80113F2C 00110E8C  3C 80 80 2B */	lis r4, "__vt__Q23zen37CallBack1<PQ23zen17particleGenerator>"@ha
 /* 80113F30 00110E90  38 04 06 00 */	addi r0, r4, "__vt__Q23zen37CallBack1<PQ23zen17particleGenerator>"@l
 /* 80113F34 00110E94  3C 80 80 2B */	lis r4, "__vt__Q23zen58CallBack2<PQ23zen17particleGenerator,PQ23zen11particleMdl>"@ha
@@ -961,14 +961,14 @@ lbl_80113F10:
 /* 80113FA0 00110F00  D0 03 00 1C */	stfs f0, 0x1c(r3)
 /* 80113FA4 00110F04  D0 03 00 18 */	stfs f0, 0x18(r3)
 /* 80113FA8 00110F08  90 03 00 24 */	stw r0, 0x24(r3)
-lbl_80113FAC:
+.L_80113FAC:
 /* 80113FAC 00110F0C  38 7F 00 00 */	addi r3, r31, 0
 /* 80113FB0 00110F10  38 80 00 16 */	li r4, 0x16
 /* 80113FB4 00110F14  48 00 03 1D */	bl registerEffect__11UtEffectMgrFiP7KEffect
 /* 80113FB8 00110F18  38 60 00 34 */	li r3, 0x34
 /* 80113FBC 00110F1C  4B F3 30 49 */	bl alloc__6SystemFUl
 /* 80113FC0 00110F20  7C 65 1B 79 */	or. r5, r3, r3
-/* 80113FC4 00110F24  41 82 00 98 */	beq lbl_8011405C
+/* 80113FC4 00110F24  41 82 00 98 */	beq .L_8011405C
 /* 80113FC8 00110F28  3C 80 80 2B */	lis r4, "__vt__Q23zen37CallBack1<PQ23zen17particleGenerator>"@ha
 /* 80113FCC 00110F2C  38 04 06 00 */	addi r0, r4, "__vt__Q23zen37CallBack1<PQ23zen17particleGenerator>"@l
 /* 80113FD0 00110F30  3C 80 80 2B */	lis r4, "__vt__Q23zen58CallBack2<PQ23zen17particleGenerator,PQ23zen11particleMdl>"@ha
@@ -1006,14 +1006,14 @@ lbl_80113FAC:
 /* 80114050 00110FB0  90 C3 00 24 */	stw r6, 0x24(r3)
 /* 80114054 00110FB4  90 83 00 2C */	stw r4, 0x2c(r3)
 /* 80114058 00110FB8  90 03 00 30 */	stw r0, 0x30(r3)
-lbl_8011405C:
+.L_8011405C:
 /* 8011405C 00110FBC  38 7F 00 00 */	addi r3, r31, 0
 /* 80114060 00110FC0  38 80 00 17 */	li r4, 0x17
 /* 80114064 00110FC4  48 00 02 6D */	bl registerEffect__11UtEffectMgrFiP7KEffect
 /* 80114068 00110FC8  38 60 00 34 */	li r3, 0x34
 /* 8011406C 00110FCC  4B F3 2F 99 */	bl alloc__6SystemFUl
 /* 80114070 00110FD0  7C 65 1B 79 */	or. r5, r3, r3
-/* 80114074 00110FD4  41 82 00 98 */	beq lbl_8011410C
+/* 80114074 00110FD4  41 82 00 98 */	beq .L_8011410C
 /* 80114078 00110FD8  3C 80 80 2B */	lis r4, "__vt__Q23zen37CallBack1<PQ23zen17particleGenerator>"@ha
 /* 8011407C 00110FDC  38 04 06 00 */	addi r0, r4, "__vt__Q23zen37CallBack1<PQ23zen17particleGenerator>"@l
 /* 80114080 00110FE0  3C 80 80 2B */	lis r4, "__vt__Q23zen58CallBack2<PQ23zen17particleGenerator,PQ23zen11particleMdl>"@ha
@@ -1051,14 +1051,14 @@ lbl_8011405C:
 /* 80114100 00111060  90 C3 00 24 */	stw r6, 0x24(r3)
 /* 80114104 00111064  90 83 00 2C */	stw r4, 0x2c(r3)
 /* 80114108 00111068  90 03 00 30 */	stw r0, 0x30(r3)
-lbl_8011410C:
+.L_8011410C:
 /* 8011410C 0011106C  38 7F 00 00 */	addi r3, r31, 0
 /* 80114110 00111070  38 80 00 18 */	li r4, 0x18
 /* 80114114 00111074  48 00 01 BD */	bl registerEffect__11UtEffectMgrFiP7KEffect
 /* 80114118 00111078  38 60 00 14 */	li r3, 0x14
 /* 8011411C 0011107C  4B F3 2E E9 */	bl alloc__6SystemFUl
 /* 80114120 00111080  7C 65 1B 79 */	or. r5, r3, r3
-/* 80114124 00111084  41 82 00 70 */	beq lbl_80114194
+/* 80114124 00111084  41 82 00 70 */	beq .L_80114194
 /* 80114128 00111088  3C 80 80 2B */	lis r4, "__vt__Q23zen37CallBack1<PQ23zen17particleGenerator>"@ha
 /* 8011412C 0011108C  38 04 06 00 */	addi r0, r4, "__vt__Q23zen37CallBack1<PQ23zen17particleGenerator>"@l
 /* 80114130 00111090  3C 80 80 2B */	lis r4, "__vt__Q23zen58CallBack2<PQ23zen17particleGenerator,PQ23zen11particleMdl>"@ha
@@ -1086,14 +1086,14 @@ lbl_8011410C:
 /* 80114188 001110E8  90 C3 00 08 */	stw r6, 8(r3)
 /* 8011418C 001110EC  90 83 00 0C */	stw r4, 0xc(r3)
 /* 80114190 001110F0  90 03 00 10 */	stw r0, 0x10(r3)
-lbl_80114194:
+.L_80114194:
 /* 80114194 001110F4  38 7F 00 00 */	addi r3, r31, 0
 /* 80114198 001110F8  38 80 00 19 */	li r4, 0x19
 /* 8011419C 001110FC  48 00 01 35 */	bl registerEffect__11UtEffectMgrFiP7KEffect
 /* 801141A0 00111100  38 60 00 14 */	li r3, 0x14
 /* 801141A4 00111104  4B F3 2E 61 */	bl alloc__6SystemFUl
 /* 801141A8 00111108  7C 65 1B 79 */	or. r5, r3, r3
-/* 801141AC 0011110C  41 82 00 70 */	beq lbl_8011421C
+/* 801141AC 0011110C  41 82 00 70 */	beq .L_8011421C
 /* 801141B0 00111110  3C 80 80 2B */	lis r4, "__vt__Q23zen37CallBack1<PQ23zen17particleGenerator>"@ha
 /* 801141B4 00111114  38 04 06 00 */	addi r0, r4, "__vt__Q23zen37CallBack1<PQ23zen17particleGenerator>"@l
 /* 801141B8 00111118  3C 80 80 2B */	lis r4, "__vt__Q23zen58CallBack2<PQ23zen17particleGenerator,PQ23zen11particleMdl>"@ha
@@ -1121,14 +1121,14 @@ lbl_80114194:
 /* 80114210 00111170  90 C3 00 08 */	stw r6, 8(r3)
 /* 80114214 00111174  90 83 00 0C */	stw r4, 0xc(r3)
 /* 80114218 00111178  90 03 00 10 */	stw r0, 0x10(r3)
-lbl_8011421C:
+.L_8011421C:
 /* 8011421C 0011117C  38 7F 00 00 */	addi r3, r31, 0
 /* 80114220 00111180  38 80 00 1A */	li r4, 0x1a
 /* 80114224 00111184  48 00 00 AD */	bl registerEffect__11UtEffectMgrFiP7KEffect
 /* 80114228 00111188  38 60 00 14 */	li r3, 0x14
 /* 8011422C 0011118C  4B F3 2D D9 */	bl alloc__6SystemFUl
 /* 80114230 00111190  7C 65 1B 79 */	or. r5, r3, r3
-/* 80114234 00111194  41 82 00 70 */	beq lbl_801142A4
+/* 80114234 00111194  41 82 00 70 */	beq .L_801142A4
 /* 80114238 00111198  3C 80 80 2B */	lis r4, "__vt__Q23zen37CallBack1<PQ23zen17particleGenerator>"@ha
 /* 8011423C 0011119C  38 04 06 00 */	addi r0, r4, "__vt__Q23zen37CallBack1<PQ23zen17particleGenerator>"@l
 /* 80114240 001111A0  3C 80 80 2B */	lis r4, "__vt__Q23zen58CallBack2<PQ23zen17particleGenerator,PQ23zen11particleMdl>"@ha
@@ -1156,7 +1156,7 @@ lbl_8011421C:
 /* 80114298 001111F8  90 C3 00 08 */	stw r6, 8(r3)
 /* 8011429C 001111FC  90 83 00 0C */	stw r4, 0xc(r3)
 /* 801142A0 00111200  90 03 00 10 */	stw r0, 0x10(r3)
-lbl_801142A4:
+.L_801142A4:
 /* 801142A4 00111204  38 7F 00 00 */	addi r3, r31, 0
 /* 801142A8 00111208  38 80 00 1B */	li r4, 0x1b
 /* 801142AC 0011120C  48 00 00 25 */	bl registerEffect__11UtEffectMgrFiP7KEffect
@@ -1186,12 +1186,12 @@ cast__11UtEffectMgrFiR10EffectParm:
 /* 801142F4 00111254  7C 05 00 2E */	lwzx r0, r5, r0
 /* 801142F8 00111258  28 00 00 00 */	cmplwi r0, 0
 /* 801142FC 0011125C  7C 03 03 78 */	mr r3, r0
-/* 80114300 00111260  41 82 00 14 */	beq lbl_80114314
+/* 80114300 00111260  41 82 00 14 */	beq .L_80114314
 /* 80114304 00111264  81 83 00 00 */	lwz r12, 0(r3)
 /* 80114308 00111268  81 8C 00 2C */	lwz r12, 0x2c(r12)
 /* 8011430C 0011126C  7D 88 03 A6 */	mtlr r12
 /* 80114310 00111270  4E 80 00 21 */	blrl 
-lbl_80114314:
+.L_80114314:
 /* 80114314 00111274  80 01 00 0C */	lwz r0, 0xc(r1)
 /* 80114318 00111278  38 21 00 08 */	addi r1, r1, 8
 /* 8011431C 0011127C  7C 08 03 A6 */	mtlr r0
@@ -1207,12 +1207,12 @@ kill__11UtEffectMgrFi:
 /* 80114338 00111298  7C 04 00 2E */	lwzx r0, r4, r0
 /* 8011433C 0011129C  28 00 00 00 */	cmplwi r0, 0
 /* 80114340 001112A0  7C 03 03 78 */	mr r3, r0
-/* 80114344 001112A4  41 82 00 14 */	beq lbl_80114358
+/* 80114344 001112A4  41 82 00 14 */	beq .L_80114358
 /* 80114348 001112A8  81 83 00 00 */	lwz r12, 0(r3)
 /* 8011434C 001112AC  81 8C 00 30 */	lwz r12, 0x30(r12)
 /* 80114350 001112B0  7D 88 03 A6 */	mtlr r12
 /* 80114354 001112B4  4E 80 00 21 */	blrl 
-lbl_80114358:
+.L_80114358:
 /* 80114358 001112B8  80 01 00 0C */	lwz r0, 0xc(r1)
 /* 8011435C 001112BC  38 21 00 08 */	addi r1, r1, 8
 /* 80114360 001112C0  7C 08 03 A6 */	mtlr r0
@@ -1244,7 +1244,7 @@ init__15PermanentEffectFR8Vector3fi:
 /* 801143B0 00111310  7C 7F 1B 78 */	mr r31, r3
 /* 801143B4 00111314  80 03 00 0C */	lwz r0, 0xc(r3)
 /* 801143B8 00111318  28 00 00 00 */	cmplwi r0, 0
-/* 801143BC 0011131C  40 82 00 58 */	bne lbl_80114414
+/* 801143BC 0011131C  40 82 00 58 */	bne .L_80114414
 /* 801143C0 00111320  80 64 00 00 */	lwz r3, 0(r4)
 /* 801143C4 00111324  7F E5 FB 78 */	mr r5, r31
 /* 801143C8 00111328  80 04 00 04 */	lwz r0, 4(r4)
@@ -1260,13 +1260,13 @@ init__15PermanentEffectFR8Vector3fi:
 /* 801143F0 00111350  90 7F 00 0C */	stw r3, 0xc(r31)
 /* 801143F4 00111354  80 7F 00 0C */	lwz r3, 0xc(r31)
 /* 801143F8 00111358  28 03 00 00 */	cmplwi r3, 0
-/* 801143FC 0011135C  41 82 00 18 */	beq lbl_80114414
+/* 801143FC 0011135C  41 82 00 18 */	beq .L_80114414
 /* 80114400 00111360  93 E3 00 18 */	stw r31, 0x18(r3)
 /* 80114404 00111364  80 7F 00 0C */	lwz r3, 0xc(r31)
 /* 80114408 00111368  80 03 00 80 */	lwz r0, 0x80(r3)
 /* 8011440C 0011136C  60 00 00 01 */	ori r0, r0, 1
 /* 80114410 00111370  90 03 00 80 */	stw r0, 0x80(r3)
-lbl_80114414:
+.L_80114414:
 /* 80114414 00111374  80 01 00 2C */	lwz r0, 0x2c(r1)
 /* 80114418 00111378  83 E1 00 24 */	lwz r31, 0x24(r1)
 /* 8011441C 0011137C  38 21 00 28 */	addi r1, r1, 0x28
@@ -1300,13 +1300,13 @@ changeEffect__15PermanentEffectFi:
 /* 80114474 001113D4  7C 7E 1B 78 */	mr r30, r3
 /* 80114478 001113D8  80 03 00 0C */	lwz r0, 0xc(r3)
 /* 8011447C 001113DC  28 00 00 00 */	cmplwi r0, 0
-/* 80114480 001113E0  41 82 00 18 */	beq lbl_80114498
+/* 80114480 001113E0  41 82 00 18 */	beq .L_80114498
 /* 80114484 001113E4  80 6D 31 80 */	lwz r3, effectMgr@sda21(r13)
 /* 80114488 001113E8  7C 04 03 78 */	mr r4, r0
 /* 8011448C 001113EC  38 A0 00 00 */	li r5, 0
 /* 80114490 001113F0  38 63 00 14 */	addi r3, r3, 0x14
 /* 80114494 001113F4  48 08 D1 31 */	bl killGenerator__Q23zen15particleManagerFPQ23zen17particleGeneratorb
-lbl_80114498:
+.L_80114498:
 /* 80114498 001113F8  80 6D 31 80 */	lwz r3, effectMgr@sda21(r13)
 /* 8011449C 001113FC  38 9F 00 00 */	addi r4, r31, 0
 /* 801144A0 00111400  38 BE 00 00 */	addi r5, r30, 0
@@ -1316,9 +1316,9 @@ lbl_80114498:
 /* 801144B0 00111410  90 7E 00 0C */	stw r3, 0xc(r30)
 /* 801144B4 00111414  80 7E 00 0C */	lwz r3, 0xc(r30)
 /* 801144B8 00111418  28 03 00 00 */	cmplwi r3, 0
-/* 801144BC 0011141C  41 82 00 08 */	beq lbl_801144C4
+/* 801144BC 0011141C  41 82 00 08 */	beq .L_801144C4
 /* 801144C0 00111420  93 C3 00 18 */	stw r30, 0x18(r3)
-lbl_801144C4:
+.L_801144C4:
 /* 801144C4 00111424  80 01 00 24 */	lwz r0, 0x24(r1)
 /* 801144C8 00111428  83 E1 00 1C */	lwz r31, 0x1c(r1)
 /* 801144CC 0011142C  83 C1 00 18 */	lwz r30, 0x18(r1)
@@ -1355,14 +1355,14 @@ kill__15PermanentEffectFv:
 /* 80114524 00111484  7C 7F 1B 78 */	mr r31, r3
 /* 80114528 00111488  80 83 00 0C */	lwz r4, 0xc(r3)
 /* 8011452C 0011148C  28 04 00 00 */	cmplwi r4, 0
-/* 80114530 00111490  41 82 00 1C */	beq lbl_8011454C
+/* 80114530 00111490  41 82 00 1C */	beq .L_8011454C
 /* 80114534 00111494  80 6D 31 80 */	lwz r3, effectMgr@sda21(r13)
 /* 80114538 00111498  38 A0 00 00 */	li r5, 0
 /* 8011453C 0011149C  38 63 00 14 */	addi r3, r3, 0x14
 /* 80114540 001114A0  48 08 D0 85 */	bl killGenerator__Q23zen15particleManagerFPQ23zen17particleGeneratorb
 /* 80114544 001114A4  38 00 00 00 */	li r0, 0
 /* 80114548 001114A8  90 1F 00 0C */	stw r0, 0xc(r31)
-lbl_8011454C:
+.L_8011454C:
 /* 8011454C 001114AC  80 01 00 1C */	lwz r0, 0x1c(r1)
 /* 80114550 001114B0  83 E1 00 14 */	lwz r31, 0x14(r1)
 /* 80114554 001114B4  38 21 00 18 */	addi r1, r1, 0x18
@@ -1380,7 +1380,7 @@ emit__15FreeLightEffectFR10EffectParm:
 /* 80114578 001114D8  7C 7E 1B 78 */	mr r30, r3
 /* 8011457C 001114DC  80 03 00 10 */	lwz r0, 0x10(r3)
 /* 80114580 001114E0  28 00 00 00 */	cmplwi r0, 0
-/* 80114584 001114E4  40 82 00 44 */	bne lbl_801145C8
+/* 80114584 001114E4  40 82 00 44 */	bne .L_801145C8
 /* 80114588 001114E8  A0 1E 00 0C */	lhz r0, 0xc(r30)
 /* 8011458C 001114EC  38 C0 00 00 */	li r6, 0
 /* 80114590 001114F0  80 6D 31 80 */	lwz r3, effectMgr@sda21(r13)
@@ -1391,13 +1391,13 @@ emit__15FreeLightEffectFR10EffectParm:
 /* 801145A4 00111504  90 7E 00 10 */	stw r3, 0x10(r30)
 /* 801145A8 00111508  80 7E 00 10 */	lwz r3, 0x10(r30)
 /* 801145AC 0011150C  28 03 00 00 */	cmplwi r3, 0
-/* 801145B0 00111510  41 82 00 18 */	beq lbl_801145C8
+/* 801145B0 00111510  41 82 00 18 */	beq .L_801145C8
 /* 801145B4 00111514  C0 03 00 F0 */	lfs f0, 0xf0(r3)
 /* 801145B8 00111518  D0 1E 00 14 */	stfs f0, 0x14(r30)
 /* 801145BC 0011151C  80 1F 00 20 */	lwz r0, 0x20(r31)
 /* 801145C0 00111520  80 7E 00 10 */	lwz r3, 0x10(r30)
 /* 801145C4 00111524  90 03 00 18 */	stw r0, 0x18(r3)
-lbl_801145C8:
+.L_801145C8:
 /* 801145C8 00111528  80 01 00 34 */	lwz r0, 0x34(r1)
 /* 801145CC 0011152C  83 E1 00 2C */	lwz r31, 0x2c(r1)
 /* 801145D0 00111530  83 C1 00 28 */	lwz r30, 0x28(r1)
@@ -1444,14 +1444,14 @@ kill__15FreeLightEffectFv:
 /* 80114644 001115A4  7C 7F 1B 78 */	mr r31, r3
 /* 80114648 001115A8  80 83 00 10 */	lwz r4, 0x10(r3)
 /* 8011464C 001115AC  28 04 00 00 */	cmplwi r4, 0
-/* 80114650 001115B0  41 82 00 1C */	beq lbl_8011466C
+/* 80114650 001115B0  41 82 00 1C */	beq .L_8011466C
 /* 80114654 001115B4  80 6D 31 80 */	lwz r3, effectMgr@sda21(r13)
 /* 80114658 001115B8  38 A0 00 00 */	li r5, 0
 /* 8011465C 001115BC  38 63 00 14 */	addi r3, r3, 0x14
 /* 80114660 001115C0  48 08 CF 65 */	bl killGenerator__Q23zen15particleManagerFPQ23zen17particleGeneratorb
 /* 80114664 001115C4  38 00 00 00 */	li r0, 0
 /* 80114668 001115C8  90 1F 00 10 */	stw r0, 0x10(r31)
-lbl_8011466C:
+.L_8011466C:
 /* 8011466C 001115CC  80 01 00 1C */	lwz r0, 0x1c(r1)
 /* 80114670 001115D0  83 E1 00 14 */	lwz r31, 0x14(r1)
 /* 80114674 001115D4  38 21 00 18 */	addi r1, r1, 0x18
@@ -1470,7 +1470,7 @@ emit__12RippleEffectFR10EffectParm:
 /* 8011469C 001115FC  7C 7E 1B 78 */	mr r30, r3
 /* 801146A0 00111600  80 03 00 0C */	lwz r0, 0xc(r3)
 /* 801146A4 00111604  28 00 00 00 */	cmplwi r0, 0
-/* 801146A8 00111608  40 82 00 F0 */	bne lbl_80114798
+/* 801146A8 00111608  40 82 00 F0 */	bne .L_80114798
 /* 801146AC 0011160C  C3 FF 00 24 */	lfs f31, 0x24(r31)
 /* 801146B0 00111610  38 80 00 0D */	li r4, 0xd
 /* 801146B4 00111614  80 6D 31 80 */	lwz r3, effectMgr@sda21(r13)
@@ -1481,7 +1481,7 @@ emit__12RippleEffectFR10EffectParm:
 /* 801146C8 00111628  90 7E 00 10 */	stw r3, 0x10(r30)
 /* 801146CC 0011162C  80 7E 00 10 */	lwz r3, 0x10(r30)
 /* 801146D0 00111630  28 03 00 00 */	cmplwi r3, 0
-/* 801146D4 00111634  41 82 00 50 */	beq lbl_80114724
+/* 801146D4 00111634  41 82 00 50 */	beq .L_80114724
 /* 801146D8 00111638  C0 03 00 F0 */	lfs f0, 0xf0(r3)
 /* 801146DC 0011163C  80 1F 00 20 */	lwz r0, 0x20(r31)
 /* 801146E0 00111640  EC 1F 00 32 */	fmuls f0, f31, f0
@@ -1501,7 +1501,7 @@ emit__12RippleEffectFR10EffectParm:
 /* 80114718 00111678  90 04 01 E4 */	stw r0, 0x1e4(r4)
 /* 8011471C 0011167C  80 7E 00 10 */	lwz r3, 0x10(r30)
 /* 80114720 00111680  D0 03 00 F0 */	stfs f0, 0xf0(r3)
-lbl_80114724:
+.L_80114724:
 /* 80114724 00111684  80 6D 31 80 */	lwz r3, effectMgr@sda21(r13)
 /* 80114728 00111688  38 80 00 0E */	li r4, 0xe
 /* 8011472C 0011168C  80 BF 00 20 */	lwz r5, 0x20(r31)
@@ -1511,7 +1511,7 @@ lbl_80114724:
 /* 8011473C 0011169C  90 7E 00 0C */	stw r3, 0xc(r30)
 /* 80114740 001116A0  80 7E 00 0C */	lwz r3, 0xc(r30)
 /* 80114744 001116A4  28 03 00 00 */	cmplwi r3, 0
-/* 80114748 001116A8  41 82 00 50 */	beq lbl_80114798
+/* 80114748 001116A8  41 82 00 50 */	beq .L_80114798
 /* 8011474C 001116AC  C0 03 00 F0 */	lfs f0, 0xf0(r3)
 /* 80114750 001116B0  80 1F 00 20 */	lwz r0, 0x20(r31)
 /* 80114754 001116B4  EC 1F 00 32 */	fmuls f0, f31, f0
@@ -1531,7 +1531,7 @@ lbl_80114724:
 /* 8011478C 001116EC  90 04 01 E4 */	stw r0, 0x1e4(r4)
 /* 80114790 001116F0  80 7E 00 0C */	lwz r3, 0xc(r30)
 /* 80114794 001116F4  D0 03 00 F0 */	stfs f0, 0xf0(r3)
-lbl_80114798:
+.L_80114798:
 /* 80114798 001116F8  80 01 00 74 */	lwz r0, 0x74(r1)
 /* 8011479C 001116FC  CB E1 00 68 */	lfd f31, 0x68(r1)
 /* 801147A0 00111700  83 E1 00 64 */	lwz r31, 0x64(r1)
@@ -1549,34 +1549,34 @@ kill__12RippleEffectFv:
 /* 801147C4 00111724  7C 7F 1B 78 */	mr r31, r3
 /* 801147C8 00111728  80 83 00 10 */	lwz r4, 0x10(r3)
 /* 801147CC 0011172C  28 04 00 00 */	cmplwi r4, 0
-/* 801147D0 00111730  41 82 00 1C */	beq lbl_801147EC
+/* 801147D0 00111730  41 82 00 1C */	beq .L_801147EC
 /* 801147D4 00111734  80 6D 31 80 */	lwz r3, effectMgr@sda21(r13)
 /* 801147D8 00111738  38 A0 00 00 */	li r5, 0
 /* 801147DC 0011173C  38 63 00 14 */	addi r3, r3, 0x14
 /* 801147E0 00111740  48 08 CD E5 */	bl killGenerator__Q23zen15particleManagerFPQ23zen17particleGeneratorb
 /* 801147E4 00111744  38 00 00 00 */	li r0, 0
 /* 801147E8 00111748  90 1F 00 10 */	stw r0, 0x10(r31)
-lbl_801147EC:
+.L_801147EC:
 /* 801147EC 0011174C  80 9F 00 14 */	lwz r4, 0x14(r31)
 /* 801147F0 00111750  28 04 00 00 */	cmplwi r4, 0
-/* 801147F4 00111754  41 82 00 1C */	beq lbl_80114810
+/* 801147F4 00111754  41 82 00 1C */	beq .L_80114810
 /* 801147F8 00111758  80 6D 31 80 */	lwz r3, effectMgr@sda21(r13)
 /* 801147FC 0011175C  38 A0 00 00 */	li r5, 0
 /* 80114800 00111760  38 63 00 14 */	addi r3, r3, 0x14
 /* 80114804 00111764  48 08 CD C1 */	bl killGenerator__Q23zen15particleManagerFPQ23zen17particleGeneratorb
 /* 80114808 00111768  38 00 00 00 */	li r0, 0
 /* 8011480C 0011176C  90 1F 00 14 */	stw r0, 0x14(r31)
-lbl_80114810:
+.L_80114810:
 /* 80114810 00111770  80 9F 00 0C */	lwz r4, 0xc(r31)
 /* 80114814 00111774  28 04 00 00 */	cmplwi r4, 0
-/* 80114818 00111778  41 82 00 1C */	beq lbl_80114834
+/* 80114818 00111778  41 82 00 1C */	beq .L_80114834
 /* 8011481C 0011177C  80 6D 31 80 */	lwz r3, effectMgr@sda21(r13)
 /* 80114820 00111780  38 A0 00 00 */	li r5, 0
 /* 80114824 00111784  38 63 00 14 */	addi r3, r3, 0x14
 /* 80114828 00111788  48 08 CD 9D */	bl killGenerator__Q23zen15particleManagerFPQ23zen17particleGeneratorb
 /* 8011482C 0011178C  38 00 00 00 */	li r0, 0
 /* 80114830 00111790  90 1F 00 0C */	stw r0, 0xc(r31)
-lbl_80114834:
+.L_80114834:
 /* 80114834 00111794  80 01 00 1C */	lwz r0, 0x1c(r1)
 /* 80114838 00111798  83 E1 00 14 */	lwz r31, 0x14(r1)
 /* 8011483C 0011179C  38 21 00 18 */	addi r1, r1, 0x18
@@ -1587,11 +1587,11 @@ lbl_80114834:
 stop__12RippleEffectFv:
 /* 80114848 001117A8  80 83 00 10 */	lwz r4, 0x10(r3)
 /* 8011484C 001117AC  28 04 00 00 */	cmplwi r4, 0
-/* 80114850 001117B0  41 82 00 10 */	beq lbl_80114860
+/* 80114850 001117B0  41 82 00 10 */	beq .L_80114860
 /* 80114854 001117B4  80 04 00 80 */	lwz r0, 0x80(r4)
 /* 80114858 001117B8  54 00 07 34 */	rlwinm r0, r0, 0, 0x1c, 0x1a
 /* 8011485C 001117BC  90 04 00 80 */	stw r0, 0x80(r4)
-lbl_80114860:
+.L_80114860:
 /* 80114860 001117C0  80 63 00 0C */	lwz r3, 0xc(r3)
 /* 80114864 001117C4  28 03 00 00 */	cmplwi r3, 0
 /* 80114868 001117C8  4D 82 00 20 */	beqlr 
@@ -1604,11 +1604,11 @@ lbl_80114860:
 restart__12RippleEffectFv:
 /* 8011487C 001117DC  80 83 00 10 */	lwz r4, 0x10(r3)
 /* 80114880 001117E0  28 04 00 00 */	cmplwi r4, 0
-/* 80114884 001117E4  41 82 00 10 */	beq lbl_80114894
+/* 80114884 001117E4  41 82 00 10 */	beq .L_80114894
 /* 80114888 001117E8  80 04 00 80 */	lwz r0, 0x80(r4)
 /* 8011488C 001117EC  60 00 00 10 */	ori r0, r0, 0x10
 /* 80114890 001117F0  90 04 00 80 */	stw r0, 0x80(r4)
-lbl_80114894:
+.L_80114894:
 /* 80114894 001117F4  80 63 00 0C */	lwz r3, 0xc(r3)
 /* 80114898 001117F8  28 03 00 00 */	cmplwi r3, 0
 /* 8011489C 001117FC  4D 82 00 20 */	beqlr 
@@ -1648,7 +1648,7 @@ emit__10BurnEffectFR10EffectParm:
 /* 80114900 00111860  7C 7E 1B 78 */	mr r30, r3
 /* 80114904 00111864  80 03 00 10 */	lwz r0, 0x10(r3)
 /* 80114908 00111868  28 00 00 00 */	cmplwi r0, 0
-/* 8011490C 0011186C  40 82 01 10 */	bne lbl_80114A1C
+/* 8011490C 0011186C  40 82 01 10 */	bne .L_80114A1C
 /* 80114910 00111870  80 6D 31 80 */	lwz r3, effectMgr@sda21(r13)
 /* 80114914 00111874  7F C6 F3 78 */	mr r6, r30
 /* 80114918 00111878  80 BF 00 20 */	lwz r5, 0x20(r31)
@@ -1658,7 +1658,7 @@ emit__10BurnEffectFR10EffectParm:
 /* 80114928 00111888  90 7E 00 10 */	stw r3, 0x10(r30)
 /* 8011492C 0011188C  80 7E 00 10 */	lwz r3, 0x10(r30)
 /* 80114930 00111890  28 03 00 00 */	cmplwi r3, 0
-/* 80114934 00111894  41 82 00 7C */	beq lbl_801149B0
+/* 80114934 00111894  41 82 00 7C */	beq .L_801149B0
 /* 80114938 00111898  80 1F 00 20 */	lwz r0, 0x20(r31)
 /* 8011493C 0011189C  90 03 00 18 */	stw r0, 0x18(r3)
 /* 80114940 001118A0  C0 0D DB 94 */	lfs f0, lbl_803E28B4@sda21(r13)
@@ -1689,7 +1689,7 @@ emit__10BurnEffectFR10EffectParm:
 /* 801149A4 00111904  80 03 00 84 */	lwz r0, 0x84(r3)
 /* 801149A8 00111908  64 00 00 02 */	oris r0, r0, 2
 /* 801149AC 0011190C  90 03 00 84 */	stw r0, 0x84(r3)
-lbl_801149B0:
+.L_801149B0:
 /* 801149B0 00111910  80 6D 31 80 */	lwz r3, effectMgr@sda21(r13)
 /* 801149B4 00111914  7F C6 F3 78 */	mr r6, r30
 /* 801149B8 00111918  80 BF 00 20 */	lwz r5, 0x20(r31)
@@ -1699,7 +1699,7 @@ lbl_801149B0:
 /* 801149C8 00111928  90 7E 00 14 */	stw r3, 0x14(r30)
 /* 801149CC 0011192C  80 7E 00 14 */	lwz r3, 0x14(r30)
 /* 801149D0 00111930  28 03 00 00 */	cmplwi r3, 0
-/* 801149D4 00111934  41 82 00 48 */	beq lbl_80114A1C
+/* 801149D4 00111934  41 82 00 48 */	beq .L_80114A1C
 /* 801149D8 00111938  80 1F 00 20 */	lwz r0, 0x20(r31)
 /* 801149DC 0011193C  90 03 00 18 */	stw r0, 0x18(r3)
 /* 801149E0 00111940  80 7E 00 0C */	lwz r3, 0xc(r30)
@@ -1717,7 +1717,7 @@ lbl_801149B0:
 /* 80114A10 00111970  80 03 00 84 */	lwz r0, 0x84(r3)
 /* 80114A14 00111974  64 00 00 02 */	oris r0, r0, 2
 /* 80114A18 00111978  90 03 00 84 */	stw r0, 0x84(r3)
-lbl_80114A1C:
+.L_80114A1C:
 /* 80114A1C 0011197C  80 01 00 84 */	lwz r0, 0x84(r1)
 /* 80114A20 00111980  83 E1 00 7C */	lwz r31, 0x7c(r1)
 /* 80114A24 00111984  83 C1 00 78 */	lwz r30, 0x78(r1)
@@ -1734,24 +1734,24 @@ kill__10BurnEffectFv:
 /* 80114A44 001119A4  7C 7F 1B 78 */	mr r31, r3
 /* 80114A48 001119A8  80 83 00 10 */	lwz r4, 0x10(r3)
 /* 80114A4C 001119AC  28 04 00 00 */	cmplwi r4, 0
-/* 80114A50 001119B0  41 82 00 1C */	beq lbl_80114A6C
+/* 80114A50 001119B0  41 82 00 1C */	beq .L_80114A6C
 /* 80114A54 001119B4  80 6D 31 80 */	lwz r3, effectMgr@sda21(r13)
 /* 80114A58 001119B8  38 A0 00 00 */	li r5, 0
 /* 80114A5C 001119BC  38 63 00 14 */	addi r3, r3, 0x14
 /* 80114A60 001119C0  48 08 CB 65 */	bl killGenerator__Q23zen15particleManagerFPQ23zen17particleGeneratorb
 /* 80114A64 001119C4  38 00 00 00 */	li r0, 0
 /* 80114A68 001119C8  90 1F 00 10 */	stw r0, 0x10(r31)
-lbl_80114A6C:
+.L_80114A6C:
 /* 80114A6C 001119CC  80 9F 00 14 */	lwz r4, 0x14(r31)
 /* 80114A70 001119D0  28 04 00 00 */	cmplwi r4, 0
-/* 80114A74 001119D4  41 82 00 1C */	beq lbl_80114A90
+/* 80114A74 001119D4  41 82 00 1C */	beq .L_80114A90
 /* 80114A78 001119D8  80 6D 31 80 */	lwz r3, effectMgr@sda21(r13)
 /* 80114A7C 001119DC  38 A0 00 00 */	li r5, 0
 /* 80114A80 001119E0  38 63 00 14 */	addi r3, r3, 0x14
 /* 80114A84 001119E4  48 08 CB 41 */	bl killGenerator__Q23zen15particleManagerFPQ23zen17particleGeneratorb
 /* 80114A88 001119E8  38 00 00 00 */	li r0, 0
 /* 80114A8C 001119EC  90 1F 00 14 */	stw r0, 0x14(r31)
-lbl_80114A90:
+.L_80114A90:
 /* 80114A90 001119F0  80 01 00 1C */	lwz r0, 0x1c(r1)
 /* 80114A94 001119F4  83 E1 00 14 */	lwz r31, 0x14(r1)
 /* 80114A98 001119F8  38 21 00 18 */	addi r1, r1, 0x18
@@ -1791,12 +1791,12 @@ emit__16UfoSuikomiEffectFR10EffectParm:
 /* 80114B08 00111A68  90 1E 00 20 */	stw r0, 0x20(r30)
 /* 80114B0C 00111A6C  80 1E 00 24 */	lwz r0, 0x24(r30)
 /* 80114B10 00111A70  28 00 00 00 */	cmplwi r0, 0
-/* 80114B14 00111A74  40 82 01 2C */	bne lbl_80114C40
+/* 80114B14 00111A74  40 82 01 2C */	bne .L_80114C40
 /* 80114B18 00111A78  28 1E 00 00 */	cmplwi r30, 0
 /* 80114B1C 00111A7C  38 FE 00 00 */	addi r7, r30, 0
-/* 80114B20 00111A80  41 82 00 08 */	beq lbl_80114B28
+/* 80114B20 00111A80  41 82 00 08 */	beq .L_80114B28
 /* 80114B24 00111A84  38 E7 00 04 */	addi r7, r7, 4
-lbl_80114B28:
+.L_80114B28:
 /* 80114B28 00111A88  80 6D 31 80 */	lwz r3, effectMgr@sda21(r13)
 /* 80114B2C 00111A8C  38 DE 00 00 */	addi r6, r30, 0
 /* 80114B30 00111A90  38 BE 00 0C */	addi r5, r30, 0xc
@@ -1848,11 +1848,11 @@ lbl_80114B28:
 /* 80114BE8 00111B48  4B EF 90 59 */	bl sqrtf__3stdFf
 /* 80114BEC 00111B4C  C0 02 9F 50 */	lfs f0, lbl_803EA150@sda21(r2)
 /* 80114BF0 00111B50  FC 00 08 00 */	fcmpu cr0, f0, f1
-/* 80114BF4 00111B54  41 82 00 10 */	beq lbl_80114C04
+/* 80114BF4 00111B54  41 82 00 10 */	beq .L_80114C04
 /* 80114BF8 00111B58  EF FF 08 24 */	fdivs f31, f31, f1
 /* 80114BFC 00111B5C  EF DE 08 24 */	fdivs f30, f30, f1
 /* 80114C00 00111B60  EF BD 08 24 */	fdivs f29, f29, f1
-lbl_80114C04:
+.L_80114C04:
 /* 80114C04 00111B64  80 7E 00 24 */	lwz r3, 0x24(r30)
 /* 80114C08 00111B68  D3 E3 01 44 */	stfs f31, 0x144(r3)
 /* 80114C0C 00111B6C  D3 C3 01 48 */	stfs f30, 0x148(r3)
@@ -1868,7 +1868,7 @@ lbl_80114C04:
 /* 80114C34 00111B94  80 03 00 84 */	lwz r0, 0x84(r3)
 /* 80114C38 00111B98  64 00 00 04 */	oris r0, r0, 4
 /* 80114C3C 00111B9C  90 03 00 84 */	stw r0, 0x84(r3)
-lbl_80114C40:
+.L_80114C40:
 /* 80114C40 00111BA0  80 01 00 C4 */	lwz r0, 0xc4(r1)
 /* 80114C44 00111BA4  CB E1 00 B8 */	lfd f31, 0xb8(r1)
 /* 80114C48 00111BA8  CB C1 00 B0 */	lfd f30, 0xb0(r1)
@@ -1886,10 +1886,10 @@ lbl_80114C40:
 getGPos__Q23zen17particleGeneratorFv:
 /* 80114C70 00111BD0  80 03 00 18 */	lwz r0, 0x18(r3)
 /* 80114C74 00111BD4  28 00 00 00 */	cmplwi r0, 0
-/* 80114C78 00111BD8  41 82 00 0C */	beq lbl_80114C84
+/* 80114C78 00111BD8  41 82 00 0C */	beq .L_80114C84
 /* 80114C7C 00111BDC  7C 03 03 78 */	mr r3, r0
 /* 80114C80 00111BE0  4E 80 00 20 */	blr 
-lbl_80114C84:
+.L_80114C84:
 /* 80114C84 00111BE4  38 63 00 0C */	addi r3, r3, 0xc
 /* 80114C88 00111BE8  4E 80 00 20 */	blr 
 
@@ -1902,14 +1902,14 @@ kill__16UfoSuikomiEffectFv:
 /* 80114C9C 00111BFC  7C 7F 1B 78 */	mr r31, r3
 /* 80114CA0 00111C00  80 83 00 24 */	lwz r4, 0x24(r3)
 /* 80114CA4 00111C04  28 04 00 00 */	cmplwi r4, 0
-/* 80114CA8 00111C08  41 82 00 1C */	beq lbl_80114CC4
+/* 80114CA8 00111C08  41 82 00 1C */	beq .L_80114CC4
 /* 80114CAC 00111C0C  80 6D 31 80 */	lwz r3, effectMgr@sda21(r13)
 /* 80114CB0 00111C10  38 A0 00 00 */	li r5, 0
 /* 80114CB4 00111C14  38 63 00 14 */	addi r3, r3, 0x14
 /* 80114CB8 00111C18  48 08 C9 0D */	bl killGenerator__Q23zen15particleManagerFPQ23zen17particleGeneratorb
 /* 80114CBC 00111C1C  38 00 00 00 */	li r0, 0
 /* 80114CC0 00111C20  90 1F 00 24 */	stw r0, 0x24(r31)
-lbl_80114CC4:
+.L_80114CC4:
 /* 80114CC4 00111C24  80 01 00 1C */	lwz r0, 0x1c(r1)
 /* 80114CC8 00111C28  83 E1 00 14 */	lwz r31, 0x14(r1)
 /* 80114CCC 00111C2C  38 21 00 18 */	addi r1, r1, 0x18
@@ -1937,17 +1937,17 @@ emit__15WhistleTemplateFR10EffectParm:
 /* 80114D18 00111C78  90 1F 00 20 */	stw r0, 0x20(r31)
 /* 80114D1C 00111C7C  80 1F 00 24 */	lwz r0, 0x24(r31)
 /* 80114D20 00111C80  28 00 00 00 */	cmplwi r0, 0
-/* 80114D24 00111C84  40 82 00 80 */	bne lbl_80114DA4
+/* 80114D24 00111C84  40 82 00 80 */	bne .L_80114DA4
 /* 80114D28 00111C88  80 1F 00 28 */	lwz r0, 0x28(r31)
 /* 80114D2C 00111C8C  28 00 00 00 */	cmplwi r0, 0
-/* 80114D30 00111C90  41 82 00 08 */	beq lbl_80114D38
-/* 80114D34 00111C94  48 00 00 70 */	b lbl_80114DA4
-lbl_80114D38:
+/* 80114D30 00111C90  41 82 00 08 */	beq .L_80114D38
+/* 80114D34 00111C94  48 00 00 70 */	b .L_80114DA4
+.L_80114D38:
 /* 80114D38 00111C98  28 1F 00 00 */	cmplwi r31, 0
 /* 80114D3C 00111C9C  38 FF 00 00 */	addi r7, r31, 0
-/* 80114D40 00111CA0  41 82 00 08 */	beq lbl_80114D48
+/* 80114D40 00111CA0  41 82 00 08 */	beq .L_80114D48
 /* 80114D44 00111CA4  38 E7 00 04 */	addi r7, r7, 4
-lbl_80114D48:
+.L_80114D48:
 /* 80114D48 00111CA8  80 6D 31 80 */	lwz r3, effectMgr@sda21(r13)
 /* 80114D4C 00111CAC  7F E6 FB 78 */	mr r6, r31
 /* 80114D50 00111CB0  80 9F 00 2C */	lwz r4, 0x2c(r31)
@@ -1956,9 +1956,9 @@ lbl_80114D48:
 /* 80114D5C 00111CBC  28 1F 00 00 */	cmplwi r31, 0
 /* 80114D60 00111CC0  90 7F 00 24 */	stw r3, 0x24(r31)
 /* 80114D64 00111CC4  7F E7 FB 78 */	mr r7, r31
-/* 80114D68 00111CC8  41 82 00 08 */	beq lbl_80114D70
+/* 80114D68 00111CC8  41 82 00 08 */	beq .L_80114D70
 /* 80114D6C 00111CCC  38 E7 00 04 */	addi r7, r7, 4
-lbl_80114D70:
+.L_80114D70:
 /* 80114D70 00111CD0  80 6D 31 80 */	lwz r3, effectMgr@sda21(r13)
 /* 80114D74 00111CD4  7F E6 FB 78 */	mr r6, r31
 /* 80114D78 00111CD8  80 9F 00 30 */	lwz r4, 0x30(r31)
@@ -1967,12 +1967,12 @@ lbl_80114D70:
 /* 80114D84 00111CE4  90 7F 00 28 */	stw r3, 0x28(r31)
 /* 80114D88 00111CE8  80 9F 00 24 */	lwz r4, 0x24(r31)
 /* 80114D8C 00111CEC  28 04 00 00 */	cmplwi r4, 0
-/* 80114D90 00111CF0  41 82 00 14 */	beq lbl_80114DA4
+/* 80114D90 00111CF0  41 82 00 14 */	beq .L_80114DA4
 /* 80114D94 00111CF4  88 04 00 68 */	lbz r0, 0x68(r4)
 /* 80114D98 00111CF8  38 60 00 01 */	li r3, 1
 /* 80114D9C 00111CFC  50 60 2E B4 */	rlwimi r0, r3, 5, 0x1a, 0x1a
 /* 80114DA0 00111D00  98 04 00 68 */	stb r0, 0x68(r4)
-lbl_80114DA4:
+.L_80114DA4:
 /* 80114DA4 00111D04  80 01 00 24 */	lwz r0, 0x24(r1)
 /* 80114DA8 00111D08  83 E1 00 1C */	lwz r31, 0x1c(r1)
 /* 80114DAC 00111D0C  38 21 00 20 */	addi r1, r1, 0x20
@@ -1988,24 +1988,24 @@ kill__15WhistleTemplateFv:
 /* 80114DC8 00111D28  7C 7F 1B 78 */	mr r31, r3
 /* 80114DCC 00111D2C  80 83 00 24 */	lwz r4, 0x24(r3)
 /* 80114DD0 00111D30  28 04 00 00 */	cmplwi r4, 0
-/* 80114DD4 00111D34  41 82 00 1C */	beq lbl_80114DF0
+/* 80114DD4 00111D34  41 82 00 1C */	beq .L_80114DF0
 /* 80114DD8 00111D38  80 6D 31 80 */	lwz r3, effectMgr@sda21(r13)
 /* 80114DDC 00111D3C  38 A0 00 00 */	li r5, 0
 /* 80114DE0 00111D40  38 63 00 14 */	addi r3, r3, 0x14
 /* 80114DE4 00111D44  48 08 C7 E1 */	bl killGenerator__Q23zen15particleManagerFPQ23zen17particleGeneratorb
 /* 80114DE8 00111D48  38 00 00 00 */	li r0, 0
 /* 80114DEC 00111D4C  90 1F 00 24 */	stw r0, 0x24(r31)
-lbl_80114DF0:
+.L_80114DF0:
 /* 80114DF0 00111D50  80 9F 00 28 */	lwz r4, 0x28(r31)
 /* 80114DF4 00111D54  28 04 00 00 */	cmplwi r4, 0
-/* 80114DF8 00111D58  41 82 00 1C */	beq lbl_80114E14
+/* 80114DF8 00111D58  41 82 00 1C */	beq .L_80114E14
 /* 80114DFC 00111D5C  80 6D 31 80 */	lwz r3, effectMgr@sda21(r13)
 /* 80114E00 00111D60  38 A0 00 00 */	li r5, 0
 /* 80114E04 00111D64  38 63 00 14 */	addi r3, r3, 0x14
 /* 80114E08 00111D68  48 08 C7 BD */	bl killGenerator__Q23zen15particleManagerFPQ23zen17particleGeneratorb
 /* 80114E0C 00111D6C  38 00 00 00 */	li r0, 0
 /* 80114E10 00111D70  90 1F 00 28 */	stw r0, 0x28(r31)
-lbl_80114E14:
+.L_80114E14:
 /* 80114E14 00111D74  80 01 00 1C */	lwz r0, 0x1c(r1)
 /* 80114E18 00111D78  83 E1 00 14 */	lwz r31, 0x14(r1)
 /* 80114E1C 00111D7C  38 21 00 18 */	addi r1, r1, 0x18
@@ -2077,7 +2077,7 @@ invoke__15WhistleTemplateFPQ23zen17particleGeneratorPQ23zen11particleMdl:
 /* 80114F18 00111E78  C0 46 00 10 */	lfs f2, 0x10(r6)
 /* 80114F1C 00111E7C  EC 01 00 2A */	fadds f0, f1, f0
 /* 80114F20 00111E80  FC 02 00 40 */	fcmpo cr0, f2, f0
-/* 80114F24 00111E84  40 80 01 F4 */	bge lbl_80115118
+/* 80114F24 00111E84  40 80 01 F4 */	bge .L_80115118
 /* 80114F28 00111E88  80 6D 2F 00 */	lwz r3, mapMgr@sda21(r13)
 /* 80114F2C 00111E8C  38 80 00 01 */	li r4, 1
 /* 80114F30 00111E90  C0 26 00 0C */	lfs f1, 0xc(r6)
@@ -2094,17 +2094,17 @@ invoke__15WhistleTemplateFPQ23zen17particleGeneratorPQ23zen11particleMdl:
 /* 80114F5C 00111EBC  D0 01 00 EC */	stfs f0, 0xec(r1)
 /* 80114F60 00111EC0  D0 01 00 F0 */	stfs f0, 0xf0(r1)
 /* 80114F64 00111EC4  D0 01 00 F4 */	stfs f0, 0xf4(r1)
-/* 80114F68 00111EC8  48 00 01 D0 */	b lbl_80115138
-lbl_80114F6C:
+/* 80114F68 00111EC8  48 00 01 D0 */	b .L_80115138
+.L_80114F6C:
 /* 80114F6C 00111ECC  20 03 00 09 */	subfic r0, r3, 9
 /* 80114F70 00111ED0  2C 03 00 09 */	cmpwi r3, 9
 /* 80114F74 00111ED4  7C 09 03 A6 */	mtctr r0
-/* 80114F78 00111ED8  40 80 00 10 */	bge lbl_80114F88
-lbl_80114F7C:
+/* 80114F78 00111ED8  40 80 00 10 */	bge .L_80114F88
+.L_80114F7C:
 /* 80114F7C 00111EDC  D0 04 00 00 */	stfs f0, 0(r4)
 /* 80114F80 00111EE0  38 84 00 04 */	addi r4, r4, 4
-/* 80114F84 00111EE4  42 00 FF F8 */	bdnz lbl_80114F7C
-lbl_80114F88:
+/* 80114F84 00111EE4  42 00 FF F8 */	bdnz .L_80114F7C
+.L_80114F88:
 /* 80114F88 00111EE8  C0 22 9F 70 */	lfs f1, lbl_803EA170@sda21(r2)
 /* 80114F8C 00111EEC  38 60 00 08 */	li r3, 8
 /* 80114F90 00111EF0  C0 02 9F 50 */	lfs f0, lbl_803EA150@sda21(r2)
@@ -2119,17 +2119,17 @@ lbl_80114F88:
 /* 80114FB4 00111F14  D0 01 00 C8 */	stfs f0, 0xc8(r1)
 /* 80114FB8 00111F18  D0 01 00 CC */	stfs f0, 0xcc(r1)
 /* 80114FBC 00111F1C  D0 01 00 D0 */	stfs f0, 0xd0(r1)
-/* 80114FC0 00111F20  48 00 01 88 */	b lbl_80115148
-lbl_80114FC4:
+/* 80114FC0 00111F20  48 00 01 88 */	b .L_80115148
+.L_80114FC4:
 /* 80114FC4 00111F24  20 03 00 09 */	subfic r0, r3, 9
 /* 80114FC8 00111F28  2C 03 00 09 */	cmpwi r3, 9
 /* 80114FCC 00111F2C  7C 09 03 A6 */	mtctr r0
-/* 80114FD0 00111F30  40 80 00 10 */	bge lbl_80114FE0
-lbl_80114FD4:
+/* 80114FD0 00111F30  40 80 00 10 */	bge .L_80114FE0
+.L_80114FD4:
 /* 80114FD4 00111F34  D0 04 00 00 */	stfs f0, 0(r4)
 /* 80114FD8 00111F38  38 84 00 04 */	addi r4, r4, 4
-/* 80114FDC 00111F3C  42 00 FF F8 */	bdnz lbl_80114FD4
-lbl_80114FE0:
+/* 80114FDC 00111F3C  42 00 FF F8 */	bdnz .L_80114FD4
+.L_80114FE0:
 /* 80114FE0 00111F40  C0 02 9F 50 */	lfs f0, lbl_803EA150@sda21(r2)
 /* 80114FE4 00111F44  C0 42 9F 70 */	lfs f2, lbl_803EA170@sda21(r2)
 /* 80114FE8 00111F48  D0 01 00 AC */	stfs f0, 0xac(r1)
@@ -2152,7 +2152,7 @@ lbl_80114FE0:
 /* 8011502C 00111F8C  4B EF 8C 15 */	bl sqrtf__3stdFf
 /* 80115030 00111F90  C0 02 9F 50 */	lfs f0, lbl_803EA150@sda21(r2)
 /* 80115034 00111F94  FC 00 08 00 */	fcmpu cr0, f0, f1
-/* 80115038 00111F98  41 82 00 28 */	beq lbl_80115060
+/* 80115038 00111F98  41 82 00 28 */	beq .L_80115060
 /* 8011503C 00111F9C  C0 01 01 00 */	lfs f0, 0x100(r1)
 /* 80115040 00111FA0  EC 00 08 24 */	fdivs f0, f0, f1
 /* 80115044 00111FA4  D0 01 01 00 */	stfs f0, 0x100(r1)
@@ -2162,7 +2162,7 @@ lbl_80114FE0:
 /* 80115054 00111FB4  C0 01 01 08 */	lfs f0, 0x108(r1)
 /* 80115058 00111FB8  EC 00 08 24 */	fdivs f0, f0, f1
 /* 8011505C 00111FBC  D0 01 01 08 */	stfs f0, 0x108(r1)
-lbl_80115060:
+.L_80115060:
 /* 80115060 00111FC0  38 61 01 00 */	addi r3, r1, 0x100
 /* 80115064 00111FC4  38 81 00 D8 */	addi r4, r1, 0xd8
 /* 80115068 00111FC8  48 08 6A 79 */	bl makeRotMatrix__3zenFR8Vector3fR8Matrix3f
@@ -2208,28 +2208,28 @@ lbl_80115060:
 /* 80115108 00112068  C0 1F 00 3C */	lfs f0, 0x3c(r31)
 /* 8011510C 0011206C  EC 00 00 72 */	fmuls f0, f0, f1
 /* 80115110 00112070  D0 1F 00 3C */	stfs f0, 0x3c(r31)
-/* 80115114 00112074  48 00 00 1C */	b lbl_80115130
-lbl_80115118:
+/* 80115114 00112074  48 00 00 1C */	b .L_80115130
+.L_80115118:
 /* 80115118 00112078  C0 01 01 00 */	lfs f0, 0x100(r1)
 /* 8011511C 0011207C  D0 1F 00 5C */	stfs f0, 0x5c(r31)
 /* 80115120 00112080  C0 01 01 04 */	lfs f0, 0x104(r1)
 /* 80115124 00112084  D0 1F 00 60 */	stfs f0, 0x60(r31)
 /* 80115128 00112088  C0 01 01 08 */	lfs f0, 0x108(r1)
 /* 8011512C 0011208C  D0 1F 00 64 */	stfs f0, 0x64(r31)
-lbl_80115130:
+.L_80115130:
 /* 80115130 00112090  38 60 00 00 */	li r3, 0
-/* 80115134 00112094  48 00 00 24 */	b lbl_80115158
-lbl_80115138:
+/* 80115134 00112094  48 00 00 24 */	b .L_80115158
+.L_80115138:
 /* 80115138 00112098  54 60 10 3A */	slwi r0, r3, 2
 /* 8011513C 0011209C  38 81 00 D8 */	addi r4, r1, 0xd8
 /* 80115140 001120A0  7C 84 02 14 */	add r4, r4, r0
-/* 80115144 001120A4  4B FF FE 28 */	b lbl_80114F6C
-lbl_80115148:
+/* 80115144 001120A4  4B FF FE 28 */	b .L_80114F6C
+.L_80115148:
 /* 80115148 001120A8  54 60 10 3A */	slwi r0, r3, 2
 /* 8011514C 001120AC  38 81 00 B4 */	addi r4, r1, 0xb4
 /* 80115150 001120B0  7C 84 02 14 */	add r4, r4, r0
-/* 80115154 001120B4  4B FF FE 70 */	b lbl_80114FC4
-lbl_80115158:
+/* 80115154 001120B4  4B FF FE 70 */	b .L_80114FC4
+.L_80115158:
 /* 80115158 001120B8  80 01 01 34 */	lwz r0, 0x134(r1)
 /* 8011515C 001120BC  CB E1 01 28 */	lfd f31, 0x128(r1)
 /* 80115160 001120C0  83 E1 01 24 */	lwz r31, 0x124(r1)
@@ -2252,7 +2252,7 @@ emit__15BombEffectLightFR10EffectParm:
 /* 80115198 001120F8  38 80 00 20 */	li r4, 0x20
 /* 8011519C 001120FC  48 08 79 9D */	bl "create__9EffectMgrFQ29EffectMgr12effTypeTableR8Vector3fPQ23zen37CallBack1<PQ23zen17particleGenerator>PQ23zen58CallBack2<PQ23zen17particleGenerator,PQ23zen11particleMdl>"
 /* 801151A0 00112100  28 03 00 00 */	cmplwi r3, 0
-/* 801151A4 00112104  41 82 00 34 */	beq lbl_801151D8
+/* 801151A4 00112104  41 82 00 34 */	beq .L_801151D8
 /* 801151A8 00112108  C0 0D DB 5C */	lfs f0, lbl_803E287C@sda21(r13)
 /* 801151AC 0011210C  C0 2D DB 60 */	lfs f1, lbl_803E2880@sda21(r13)
 /* 801151B0 00112110  D0 01 00 10 */	stfs f0, 0x10(r1)
@@ -2265,7 +2265,7 @@ emit__15BombEffectLightFR10EffectParm:
 /* 801151CC 0011212C  90 03 01 E0 */	stw r0, 0x1e0(r3)
 /* 801151D0 00112130  80 01 00 18 */	lwz r0, 0x18(r1)
 /* 801151D4 00112134  90 03 01 E4 */	stw r0, 0x1e4(r3)
-lbl_801151D8:
+.L_801151D8:
 /* 801151D8 00112138  80 6D 31 80 */	lwz r3, effectMgr@sda21(r13)
 /* 801151DC 0011213C  38 BF 00 00 */	addi r5, r31, 0
 /* 801151E0 00112140  38 80 00 17 */	li r4, 0x17
@@ -2314,7 +2314,7 @@ emit__10BombEffectFR10EffectParm:
 /* 80115274 001121D4  38 80 00 20 */	li r4, 0x20
 /* 80115278 001121D8  48 08 78 C1 */	bl "create__9EffectMgrFQ29EffectMgr12effTypeTableR8Vector3fPQ23zen37CallBack1<PQ23zen17particleGenerator>PQ23zen58CallBack2<PQ23zen17particleGenerator,PQ23zen11particleMdl>"
 /* 8011527C 001121DC  28 03 00 00 */	cmplwi r3, 0
-/* 80115280 001121E0  41 82 00 34 */	beq lbl_801152B4
+/* 80115280 001121E0  41 82 00 34 */	beq .L_801152B4
 /* 80115284 001121E4  C0 0D DB 50 */	lfs f0, lbl_803E2870@sda21(r13)
 /* 80115288 001121E8  C0 2D DB 54 */	lfs f1, lbl_803E2874@sda21(r13)
 /* 8011528C 001121EC  D0 01 00 10 */	stfs f0, 0x10(r1)
@@ -2327,7 +2327,7 @@ emit__10BombEffectFR10EffectParm:
 /* 801152A8 00112208  90 03 01 E0 */	stw r0, 0x1e0(r3)
 /* 801152AC 0011220C  80 01 00 18 */	lwz r0, 0x18(r1)
 /* 801152B0 00112210  90 03 01 E4 */	stw r0, 0x1e4(r3)
-lbl_801152B4:
+.L_801152B4:
 /* 801152B4 00112214  80 6D 31 80 */	lwz r3, effectMgr@sda21(r13)
 /* 801152B8 00112218  38 BF 00 00 */	addi r5, r31, 0
 /* 801152BC 0011221C  38 80 00 1F */	li r4, 0x1f
@@ -2395,12 +2395,12 @@ kill__12SimpleEffectFv:
 /* 80115390 001122F0  94 21 FF F8 */	stwu r1, -8(r1)
 /* 80115394 001122F4  80 83 00 10 */	lwz r4, 0x10(r3)
 /* 80115398 001122F8  28 04 00 00 */	cmplwi r4, 0
-/* 8011539C 001122FC  41 82 00 14 */	beq lbl_801153B0
+/* 8011539C 001122FC  41 82 00 14 */	beq .L_801153B0
 /* 801153A0 00112300  80 6D 31 80 */	lwz r3, effectMgr@sda21(r13)
 /* 801153A4 00112304  38 A0 00 00 */	li r5, 0
 /* 801153A8 00112308  38 63 00 14 */	addi r3, r3, 0x14
 /* 801153AC 0011230C  48 08 C2 19 */	bl killGenerator__Q23zen15particleManagerFPQ23zen17particleGeneratorb
-lbl_801153B0:
+.L_801153B0:
 /* 801153B0 00112310  80 01 00 0C */	lwz r0, 0xc(r1)
 /* 801153B4 00112314  38 21 00 08 */	addi r1, r1, 8
 /* 801153B8 00112318  7C 08 03 A6 */	mtlr r0
@@ -2424,12 +2424,12 @@ emit__7NaviFueFR10EffectParm:
 /* 801153E8 00112348  80 63 00 14 */	lwz r3, 0x14(r3)
 /* 801153EC 0011234C  80 03 00 00 */	lwz r0, 0(r3)
 /* 801153F0 00112350  28 00 00 00 */	cmplwi r0, 0
-/* 801153F4 00112354  40 82 00 74 */	bne lbl_80115468
+/* 801153F4 00112354  40 82 00 74 */	bne .L_80115468
 /* 801153F8 00112358  3B A0 00 00 */	li r29, 0
 /* 801153FC 0011235C  1F FD 00 0C */	mulli r31, r29, 0xc
 /* 80115400 00112360  3B C0 00 00 */	li r30, 0
-/* 80115404 00112364  48 00 00 58 */	b lbl_8011545C
-lbl_80115408:
+/* 80115404 00112364  48 00 00 58 */	b .L_8011545C
+.L_80115408:
 /* 80115408 00112368  80 1C 00 0C */	lwz r0, 0xc(r28)
 /* 8011540C 0011236C  38 BF 09 38 */	addi r5, r31, 0x938
 /* 80115410 00112370  80 6D 31 80 */	lwz r3, effectMgr@sda21(r13)
@@ -2443,20 +2443,20 @@ lbl_80115408:
 /* 80115430 00112390  80 7C 00 14 */	lwz r3, 0x14(r28)
 /* 80115434 00112394  7C 83 F0 2E */	lwzx r4, r3, r30
 /* 80115438 00112398  28 04 00 00 */	cmplwi r4, 0
-/* 8011543C 0011239C  41 82 00 14 */	beq lbl_80115450
+/* 8011543C 0011239C  41 82 00 14 */	beq .L_80115450
 /* 80115440 001123A0  80 7C 00 0C */	lwz r3, 0xc(r28)
 /* 80115444 001123A4  38 1F 09 38 */	addi r0, r31, 0x938
 /* 80115448 001123A8  7C 03 02 14 */	add r0, r3, r0
 /* 8011544C 001123AC  90 04 00 18 */	stw r0, 0x18(r4)
-lbl_80115450:
+.L_80115450:
 /* 80115450 001123B0  3B FF 00 0C */	addi r31, r31, 0xc
 /* 80115454 001123B4  3B DE 00 04 */	addi r30, r30, 4
 /* 80115458 001123B8  3B BD 00 01 */	addi r29, r29, 1
-lbl_8011545C:
+.L_8011545C:
 /* 8011545C 001123BC  80 1C 00 10 */	lwz r0, 0x10(r28)
 /* 80115460 001123C0  7C 1D 00 00 */	cmpw r29, r0
-/* 80115464 001123C4  41 80 FF A4 */	blt lbl_80115408
-lbl_80115468:
+/* 80115464 001123C4  41 80 FF A4 */	blt .L_80115408
+.L_80115468:
 /* 80115468 001123C8  80 01 00 2C */	lwz r0, 0x2c(r1)
 /* 8011546C 001123CC  83 E1 00 24 */	lwz r31, 0x24(r1)
 /* 80115470 001123D0  83 C1 00 20 */	lwz r30, 0x20(r1)
@@ -2480,17 +2480,17 @@ kill__7NaviFueFv:
 /* 801154AC 0011240C  80 63 00 14 */	lwz r3, 0x14(r3)
 /* 801154B0 00112410  80 03 00 00 */	lwz r0, 0(r3)
 /* 801154B4 00112414  28 00 00 00 */	cmplwi r0, 0
-/* 801154B8 00112418  41 82 00 60 */	beq lbl_80115518
+/* 801154B8 00112418  41 82 00 60 */	beq .L_80115518
 /* 801154BC 0011241C  3B C0 00 00 */	li r30, 0
 /* 801154C0 00112420  C3 E2 9F 50 */	lfs f31, lbl_803EA150@sda21(r2)
 /* 801154C4 00112424  3B FE 00 00 */	addi r31, r30, 0
 /* 801154C8 00112428  3B A0 00 00 */	li r29, 0
-/* 801154CC 0011242C  48 00 00 40 */	b lbl_8011550C
-lbl_801154D0:
+/* 801154CC 0011242C  48 00 00 40 */	b .L_8011550C
+.L_801154D0:
 /* 801154D0 00112430  80 7C 00 14 */	lwz r3, 0x14(r28)
 /* 801154D4 00112434  7C 63 F0 2E */	lwzx r3, r3, r30
 /* 801154D8 00112438  28 03 00 00 */	cmplwi r3, 0
-/* 801154DC 0011243C  41 82 00 20 */	beq lbl_801154FC
+/* 801154DC 0011243C  41 82 00 20 */	beq .L_801154FC
 /* 801154E0 00112440  D3 E3 00 B8 */	stfs f31, 0xb8(r3)
 /* 801154E4 00112444  38 A0 00 00 */	li r5, 0
 /* 801154E8 00112448  80 7C 00 14 */	lwz r3, 0x14(r28)
@@ -2498,16 +2498,16 @@ lbl_801154D0:
 /* 801154F0 00112450  7C 83 F0 2E */	lwzx r4, r3, r30
 /* 801154F4 00112454  38 66 00 14 */	addi r3, r6, 0x14
 /* 801154F8 00112458  48 08 C0 CD */	bl killGenerator__Q23zen15particleManagerFPQ23zen17particleGeneratorb
-lbl_801154FC:
+.L_801154FC:
 /* 801154FC 0011245C  80 7C 00 14 */	lwz r3, 0x14(r28)
 /* 80115500 00112460  3B BD 00 01 */	addi r29, r29, 1
 /* 80115504 00112464  7F E3 F1 2E */	stwx r31, r3, r30
 /* 80115508 00112468  3B DE 00 04 */	addi r30, r30, 4
-lbl_8011550C:
+.L_8011550C:
 /* 8011550C 0011246C  80 1C 00 10 */	lwz r0, 0x10(r28)
 /* 80115510 00112470  7C 1D 00 00 */	cmpw r29, r0
-/* 80115514 00112474  41 80 FF BC */	blt lbl_801154D0
-lbl_80115518:
+/* 80115514 00112474  41 80 FF BC */	blt .L_801154D0
+.L_80115518:
 /* 80115518 00112478  80 01 00 2C */	lwz r0, 0x2c(r1)
 /* 8011551C 0011247C  CB E1 00 20 */	lfd f31, 0x20(r1)
 /* 80115520 00112480  83 E1 00 1C */	lwz r31, 0x1c(r1)
@@ -2591,15 +2591,15 @@ emit__11NaviWhistleFR10EffectParm:
 /* 8011561C 0011257C  7C 7F 1B 78 */	mr r31, r3
 /* 80115620 00112580  80 03 00 10 */	lwz r0, 0x10(r3)
 /* 80115624 00112584  28 00 00 00 */	cmplwi r0, 0
-/* 80115628 00112588  40 82 00 CC */	bne lbl_801156F4
+/* 80115628 00112588  40 82 00 CC */	bne .L_801156F4
 /* 8011562C 0011258C  80 1F 00 14 */	lwz r0, 0x14(r31)
 /* 80115630 00112590  28 00 00 00 */	cmplwi r0, 0
-/* 80115634 00112594  40 82 00 C0 */	bne lbl_801156F4
+/* 80115634 00112594  40 82 00 C0 */	bne .L_801156F4
 /* 80115638 00112598  80 1F 00 18 */	lwz r0, 0x18(r31)
 /* 8011563C 0011259C  28 00 00 00 */	cmplwi r0, 0
-/* 80115640 001125A0  41 82 00 08 */	beq lbl_80115648
-/* 80115644 001125A4  48 00 00 B0 */	b lbl_801156F4
-lbl_80115648:
+/* 80115640 001125A0  41 82 00 08 */	beq .L_80115648
+/* 80115644 001125A4  48 00 00 B0 */	b .L_801156F4
+.L_80115648:
 /* 80115648 001125A8  80 BF 00 0C */	lwz r5, 0xc(r31)
 /* 8011564C 001125AC  7F E6 FB 78 */	mr r6, r31
 /* 80115650 001125B0  80 6D 31 80 */	lwz r3, effectMgr@sda21(r13)
@@ -2610,9 +2610,9 @@ lbl_80115648:
 /* 80115664 001125C4  28 1F 00 00 */	cmplwi r31, 0
 /* 80115668 001125C8  90 7F 00 10 */	stw r3, 0x10(r31)
 /* 8011566C 001125CC  7F E7 FB 78 */	mr r7, r31
-/* 80115670 001125D0  41 82 00 08 */	beq lbl_80115678
+/* 80115670 001125D0  41 82 00 08 */	beq .L_80115678
 /* 80115674 001125D4  38 E7 00 04 */	addi r7, r7, 4
-lbl_80115678:
+.L_80115678:
 /* 80115678 001125D8  80 9F 00 0C */	lwz r4, 0xc(r31)
 /* 8011567C 001125DC  7F E6 FB 78 */	mr r6, r31
 /* 80115680 001125E0  80 6D 31 80 */	lwz r3, effectMgr@sda21(r13)
@@ -2622,9 +2622,9 @@ lbl_80115678:
 /* 80115690 001125F0  28 1F 00 00 */	cmplwi r31, 0
 /* 80115694 001125F4  90 7F 00 14 */	stw r3, 0x14(r31)
 /* 80115698 001125F8  7F E7 FB 78 */	mr r7, r31
-/* 8011569C 001125FC  41 82 00 08 */	beq lbl_801156A4
+/* 8011569C 001125FC  41 82 00 08 */	beq .L_801156A4
 /* 801156A0 00112600  38 E7 00 04 */	addi r7, r7, 4
-lbl_801156A4:
+.L_801156A4:
 /* 801156A4 00112604  80 9F 00 0C */	lwz r4, 0xc(r31)
 /* 801156A8 00112608  7F E6 FB 78 */	mr r6, r31
 /* 801156AC 0011260C  80 6D 31 80 */	lwz r3, effectMgr@sda21(r13)
@@ -2634,19 +2634,19 @@ lbl_801156A4:
 /* 801156BC 0011261C  90 7F 00 18 */	stw r3, 0x18(r31)
 /* 801156C0 00112620  80 9F 00 10 */	lwz r4, 0x10(r31)
 /* 801156C4 00112624  28 04 00 00 */	cmplwi r4, 0
-/* 801156C8 00112628  41 82 00 10 */	beq lbl_801156D8
+/* 801156C8 00112628  41 82 00 10 */	beq .L_801156D8
 /* 801156CC 0011262C  80 7F 00 0C */	lwz r3, 0xc(r31)
 /* 801156D0 00112630  38 03 07 84 */	addi r0, r3, 0x784
 /* 801156D4 00112634  90 04 00 18 */	stw r0, 0x18(r4)
-lbl_801156D8:
+.L_801156D8:
 /* 801156D8 00112638  80 9F 00 14 */	lwz r4, 0x14(r31)
 /* 801156DC 0011263C  28 04 00 00 */	cmplwi r4, 0
-/* 801156E0 00112640  41 82 00 14 */	beq lbl_801156F4
+/* 801156E0 00112640  41 82 00 14 */	beq .L_801156F4
 /* 801156E4 00112644  88 04 00 68 */	lbz r0, 0x68(r4)
 /* 801156E8 00112648  38 60 00 01 */	li r3, 1
 /* 801156EC 0011264C  50 60 2E B4 */	rlwimi r0, r3, 5, 0x1a, 0x1a
 /* 801156F0 00112650  98 04 00 68 */	stb r0, 0x68(r4)
-lbl_801156F4:
+.L_801156F4:
 /* 801156F4 00112654  80 01 00 2C */	lwz r0, 0x2c(r1)
 /* 801156F8 00112658  83 E1 00 24 */	lwz r31, 0x24(r1)
 /* 801156FC 0011265C  38 21 00 28 */	addi r1, r1, 0x28
@@ -2662,34 +2662,34 @@ kill__11NaviWhistleFv:
 /* 80115718 00112678  7C 7F 1B 78 */	mr r31, r3
 /* 8011571C 0011267C  80 83 00 10 */	lwz r4, 0x10(r3)
 /* 80115720 00112680  28 04 00 00 */	cmplwi r4, 0
-/* 80115724 00112684  41 82 00 1C */	beq lbl_80115740
+/* 80115724 00112684  41 82 00 1C */	beq .L_80115740
 /* 80115728 00112688  80 6D 31 80 */	lwz r3, effectMgr@sda21(r13)
 /* 8011572C 0011268C  38 A0 00 00 */	li r5, 0
 /* 80115730 00112690  38 63 00 14 */	addi r3, r3, 0x14
 /* 80115734 00112694  48 08 BE 91 */	bl killGenerator__Q23zen15particleManagerFPQ23zen17particleGeneratorb
 /* 80115738 00112698  38 00 00 00 */	li r0, 0
 /* 8011573C 0011269C  90 1F 00 10 */	stw r0, 0x10(r31)
-lbl_80115740:
+.L_80115740:
 /* 80115740 001126A0  80 9F 00 14 */	lwz r4, 0x14(r31)
 /* 80115744 001126A4  28 04 00 00 */	cmplwi r4, 0
-/* 80115748 001126A8  41 82 00 1C */	beq lbl_80115764
+/* 80115748 001126A8  41 82 00 1C */	beq .L_80115764
 /* 8011574C 001126AC  80 6D 31 80 */	lwz r3, effectMgr@sda21(r13)
 /* 80115750 001126B0  38 A0 00 00 */	li r5, 0
 /* 80115754 001126B4  38 63 00 14 */	addi r3, r3, 0x14
 /* 80115758 001126B8  48 08 BE 6D */	bl killGenerator__Q23zen15particleManagerFPQ23zen17particleGeneratorb
 /* 8011575C 001126BC  38 00 00 00 */	li r0, 0
 /* 80115760 001126C0  90 1F 00 14 */	stw r0, 0x14(r31)
-lbl_80115764:
+.L_80115764:
 /* 80115764 001126C4  80 9F 00 18 */	lwz r4, 0x18(r31)
 /* 80115768 001126C8  28 04 00 00 */	cmplwi r4, 0
-/* 8011576C 001126CC  41 82 00 1C */	beq lbl_80115788
+/* 8011576C 001126CC  41 82 00 1C */	beq .L_80115788
 /* 80115770 001126D0  80 6D 31 80 */	lwz r3, effectMgr@sda21(r13)
 /* 80115774 001126D4  38 A0 00 00 */	li r5, 0
 /* 80115778 001126D8  38 63 00 14 */	addi r3, r3, 0x14
 /* 8011577C 001126DC  48 08 BE 49 */	bl killGenerator__Q23zen15particleManagerFPQ23zen17particleGeneratorb
 /* 80115780 001126E0  38 00 00 00 */	li r0, 0
 /* 80115784 001126E4  90 1F 00 18 */	stw r0, 0x18(r31)
-lbl_80115788:
+.L_80115788:
 /* 80115788 001126E8  80 01 00 1C */	lwz r0, 0x1c(r1)
 /* 8011578C 001126EC  83 E1 00 14 */	lwz r31, 0x14(r1)
 /* 80115790 001126F0  38 21 00 18 */	addi r1, r1, 0x18
@@ -2764,17 +2764,17 @@ invoke__11NaviWhistleFPQ23zen17particleGeneratorPQ23zen11particleMdl:
 /* 80115898 001127F8  C0 45 06 F4 */	lfs f2, 0x6f4(r5)
 /* 8011589C 001127FC  EC 01 00 2A */	fadds f0, f1, f0
 /* 801158A0 00112800  FC 02 00 40 */	fcmpo cr0, f2, f0
-/* 801158A4 00112804  40 80 02 00 */	bge lbl_80115AA4
+/* 801158A4 00112804  40 80 02 00 */	bge .L_80115AA4
 /* 801158A8 00112808  80 6D 2F 00 */	lwz r3, mapMgr@sda21(r13)
 /* 801158AC 0011280C  38 80 00 01 */	li r4, 1
 /* 801158B0 00112810  C0 25 06 F0 */	lfs f1, 0x6f0(r5)
 /* 801158B4 00112814  C0 45 06 F8 */	lfs f2, 0x6f8(r5)
 /* 801158B8 00112818  4B F5 29 21 */	bl getCurrTri__6MapMgrFffb
 /* 801158BC 0011281C  7C 7E 1B 79 */	or. r30, r3, r3
-/* 801158C0 00112820  40 82 00 0C */	bne lbl_801158CC
+/* 801158C0 00112820  40 82 00 0C */	bne .L_801158CC
 /* 801158C4 00112824  38 60 00 00 */	li r3, 0
-/* 801158C8 00112828  48 00 02 1C */	b lbl_80115AE4
-lbl_801158CC:
+/* 801158C8 00112828  48 00 02 1C */	b .L_80115AE4
+.L_801158CC:
 /* 801158CC 0011282C  C0 02 9F 50 */	lfs f0, lbl_803EA150@sda21(r2)
 /* 801158D0 00112830  38 60 00 08 */	li r3, 8
 /* 801158D4 00112834  D0 01 00 E0 */	stfs f0, 0xe0(r1)
@@ -2785,17 +2785,17 @@ lbl_801158CC:
 /* 801158E8 00112848  D0 01 00 F4 */	stfs f0, 0xf4(r1)
 /* 801158EC 0011284C  D0 01 00 F8 */	stfs f0, 0xf8(r1)
 /* 801158F0 00112850  D0 01 00 FC */	stfs f0, 0xfc(r1)
-/* 801158F4 00112854  48 00 01 D0 */	b lbl_80115AC4
-lbl_801158F8:
+/* 801158F4 00112854  48 00 01 D0 */	b .L_80115AC4
+.L_801158F8:
 /* 801158F8 00112858  20 03 00 09 */	subfic r0, r3, 9
 /* 801158FC 0011285C  2C 03 00 09 */	cmpwi r3, 9
 /* 80115900 00112860  7C 09 03 A6 */	mtctr r0
-/* 80115904 00112864  40 80 00 10 */	bge lbl_80115914
-lbl_80115908:
+/* 80115904 00112864  40 80 00 10 */	bge .L_80115914
+.L_80115908:
 /* 80115908 00112868  D0 04 00 00 */	stfs f0, 0(r4)
 /* 8011590C 0011286C  38 84 00 04 */	addi r4, r4, 4
-/* 80115910 00112870  42 00 FF F8 */	bdnz lbl_80115908
-lbl_80115914:
+/* 80115910 00112870  42 00 FF F8 */	bdnz .L_80115908
+.L_80115914:
 /* 80115914 00112874  C0 22 9F 70 */	lfs f1, lbl_803EA170@sda21(r2)
 /* 80115918 00112878  38 60 00 08 */	li r3, 8
 /* 8011591C 0011287C  C0 02 9F 50 */	lfs f0, lbl_803EA150@sda21(r2)
@@ -2810,17 +2810,17 @@ lbl_80115914:
 /* 80115940 001128A0  D0 01 00 D0 */	stfs f0, 0xd0(r1)
 /* 80115944 001128A4  D0 01 00 D4 */	stfs f0, 0xd4(r1)
 /* 80115948 001128A8  D0 01 00 D8 */	stfs f0, 0xd8(r1)
-/* 8011594C 001128AC  48 00 01 88 */	b lbl_80115AD4
-lbl_80115950:
+/* 8011594C 001128AC  48 00 01 88 */	b .L_80115AD4
+.L_80115950:
 /* 80115950 001128B0  20 03 00 09 */	subfic r0, r3, 9
 /* 80115954 001128B4  2C 03 00 09 */	cmpwi r3, 9
 /* 80115958 001128B8  7C 09 03 A6 */	mtctr r0
-/* 8011595C 001128BC  40 80 00 10 */	bge lbl_8011596C
-lbl_80115960:
+/* 8011595C 001128BC  40 80 00 10 */	bge .L_8011596C
+.L_80115960:
 /* 80115960 001128C0  D0 04 00 00 */	stfs f0, 0(r4)
 /* 80115964 001128C4  38 84 00 04 */	addi r4, r4, 4
-/* 80115968 001128C8  42 00 FF F8 */	bdnz lbl_80115960
-lbl_8011596C:
+/* 80115968 001128C8  42 00 FF F8 */	bdnz .L_80115960
+.L_8011596C:
 /* 8011596C 001128CC  C0 02 9F 50 */	lfs f0, lbl_803EA150@sda21(r2)
 /* 80115970 001128D0  C0 42 9F 70 */	lfs f2, lbl_803EA170@sda21(r2)
 /* 80115974 001128D4  D0 01 00 B4 */	stfs f0, 0xb4(r1)
@@ -2843,7 +2843,7 @@ lbl_8011596C:
 /* 801159B8 00112918  4B EF 82 89 */	bl sqrtf__3stdFf
 /* 801159BC 0011291C  C0 02 9F 50 */	lfs f0, lbl_803EA150@sda21(r2)
 /* 801159C0 00112920  FC 00 08 00 */	fcmpu cr0, f0, f1
-/* 801159C4 00112924  41 82 00 28 */	beq lbl_801159EC
+/* 801159C4 00112924  41 82 00 28 */	beq .L_801159EC
 /* 801159C8 00112928  C0 01 01 08 */	lfs f0, 0x108(r1)
 /* 801159CC 0011292C  EC 00 08 24 */	fdivs f0, f0, f1
 /* 801159D0 00112930  D0 01 01 08 */	stfs f0, 0x108(r1)
@@ -2853,7 +2853,7 @@ lbl_8011596C:
 /* 801159E0 00112940  C0 01 01 10 */	lfs f0, 0x110(r1)
 /* 801159E4 00112944  EC 00 08 24 */	fdivs f0, f0, f1
 /* 801159E8 00112948  D0 01 01 10 */	stfs f0, 0x110(r1)
-lbl_801159EC:
+.L_801159EC:
 /* 801159EC 0011294C  38 61 01 08 */	addi r3, r1, 0x108
 /* 801159F0 00112950  38 81 00 E0 */	addi r4, r1, 0xe0
 /* 801159F4 00112954  48 08 60 ED */	bl makeRotMatrix__3zenFR8Vector3fR8Matrix3f
@@ -2899,28 +2899,28 @@ lbl_801159EC:
 /* 80115A94 001129F4  C0 1F 00 3C */	lfs f0, 0x3c(r31)
 /* 80115A98 001129F8  EC 00 00 72 */	fmuls f0, f0, f1
 /* 80115A9C 001129FC  D0 1F 00 3C */	stfs f0, 0x3c(r31)
-/* 80115AA0 00112A00  48 00 00 1C */	b lbl_80115ABC
-lbl_80115AA4:
+/* 80115AA0 00112A00  48 00 00 1C */	b .L_80115ABC
+.L_80115AA4:
 /* 80115AA4 00112A04  C0 01 01 08 */	lfs f0, 0x108(r1)
 /* 80115AA8 00112A08  D0 1F 00 5C */	stfs f0, 0x5c(r31)
 /* 80115AAC 00112A0C  C0 01 01 0C */	lfs f0, 0x10c(r1)
 /* 80115AB0 00112A10  D0 1F 00 60 */	stfs f0, 0x60(r31)
 /* 80115AB4 00112A14  C0 01 01 10 */	lfs f0, 0x110(r1)
 /* 80115AB8 00112A18  D0 1F 00 64 */	stfs f0, 0x64(r31)
-lbl_80115ABC:
+.L_80115ABC:
 /* 80115ABC 00112A1C  38 60 00 00 */	li r3, 0
-/* 80115AC0 00112A20  48 00 00 24 */	b lbl_80115AE4
-lbl_80115AC4:
+/* 80115AC0 00112A20  48 00 00 24 */	b .L_80115AE4
+.L_80115AC4:
 /* 80115AC4 00112A24  54 60 10 3A */	slwi r0, r3, 2
 /* 80115AC8 00112A28  38 81 00 E0 */	addi r4, r1, 0xe0
 /* 80115ACC 00112A2C  7C 84 02 14 */	add r4, r4, r0
-/* 80115AD0 00112A30  4B FF FE 28 */	b lbl_801158F8
-lbl_80115AD4:
+/* 80115AD0 00112A30  4B FF FE 28 */	b .L_801158F8
+.L_80115AD4:
 /* 80115AD4 00112A34  54 60 10 3A */	slwi r0, r3, 2
 /* 80115AD8 00112A38  38 81 00 BC */	addi r4, r1, 0xbc
 /* 80115ADC 00112A3C  7C 84 02 14 */	add r4, r4, r0
-/* 80115AE0 00112A40  4B FF FE 70 */	b lbl_80115950
-lbl_80115AE4:
+/* 80115AE0 00112A40  4B FF FE 70 */	b .L_80115950
+.L_80115AE4:
 /* 80115AE4 00112A44  80 01 01 3C */	lwz r0, 0x13c(r1)
 /* 80115AE8 00112A48  CB E1 01 30 */	lfd f31, 0x130(r1)
 /* 80115AEC 00112A4C  83 E1 01 2C */	lwz r31, 0x12c(r1)
@@ -2933,7 +2933,7 @@ lbl_80115AE4:
 invoke__10GoalEffectFPQ23zen17particleGenerator:
 /* 80115B00 00112A60  A8 04 00 90 */	lha r0, 0x90(r4)
 /* 80115B04 00112A64  2C 00 00 32 */	cmpwi r0, 0x32
-/* 80115B08 00112A68  41 80 00 28 */	blt lbl_80115B30
+/* 80115B08 00112A68  41 80 00 28 */	blt .L_80115B30
 /* 80115B0C 00112A6C  C0 2D DB 48 */	lfs f1, lbl_803E2868@sda21(r13)
 /* 80115B10 00112A70  C0 4D DB 4C */	lfs f2, lbl_803E286C@sda21(r13)
 /* 80115B14 00112A74  C0 0D DB 44 */	lfs f0, lbl_803E2864@sda21(r13)
@@ -2943,7 +2943,7 @@ invoke__10GoalEffectFPQ23zen17particleGenerator:
 /* 80115B24 00112A84  80 04 00 84 */	lwz r0, 0x84(r4)
 /* 80115B28 00112A88  54 00 04 1C */	rlwinm r0, r0, 0, 0x10, 0xe
 /* 80115B2C 00112A8C  90 04 00 84 */	stw r0, 0x84(r4)
-lbl_80115B30:
+.L_80115B30:
 /* 80115B30 00112A90  38 60 00 01 */	li r3, 1
 /* 80115B34 00112A94  4E 80 00 20 */	blr 
 
@@ -2954,9 +2954,9 @@ emit__10GoalEffectFR10EffectParm:
 /* 80115B40 00112AA0  90 01 00 04 */	stw r0, 4(r1)
 /* 80115B44 00112AA4  94 21 FF F8 */	stwu r1, -8(r1)
 /* 80115B48 00112AA8  38 E6 00 00 */	addi r7, r6, 0
-/* 80115B4C 00112AAC  41 82 00 08 */	beq lbl_80115B54
+/* 80115B4C 00112AAC  41 82 00 08 */	beq .L_80115B54
 /* 80115B50 00112AB0  38 E7 00 04 */	addi r7, r7, 4
-lbl_80115B54:
+.L_80115B54:
 /* 80115B54 00112AB4  80 6D 31 80 */	lwz r3, effectMgr@sda21(r13)
 /* 80115B58 00112AB8  38 A4 00 00 */	addi r5, r4, 0
 /* 80115B5C 00112ABC  38 80 00 E1 */	li r4, 0xe1

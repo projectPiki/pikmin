@@ -26,7 +26,7 @@ TRKDispatchMessage:
 /* 8021CF28 00219E88  88 81 00 08 */	lbz r4, 8(r1)
 /* 8021CF2C 00219E8C  80 03 5C E8 */	lwz r0, gTRKDispatchTableSize@l(r3)
 /* 8021CF30 00219E90  7C 04 00 40 */	cmplw r4, r0
-/* 8021CF34 00219E94  40 80 00 28 */	bge lbl_8021CF5C
+/* 8021CF34 00219E94  40 80 00 28 */	bge .L_8021CF5C
 /* 8021CF38 00219E98  3C 60 80 2F */	lis r3, gTRKDispatchTable@ha
 /* 8021CF3C 00219E9C  54 84 10 3A */	slwi r4, r4, 2
 /* 8021CF40 00219EA0  38 03 94 C0 */	addi r0, r3, gTRKDispatchTable@l
@@ -36,7 +36,7 @@ TRKDispatchMessage:
 /* 8021CF50 00219EB0  7D 88 03 A6 */	mtlr r12
 /* 8021CF54 00219EB4  4E 80 00 21 */	blrl 
 /* 8021CF58 00219EB8  7C 7F 1B 78 */	mr r31, r3
-lbl_8021CF5C:
+.L_8021CF5C:
 /* 8021CF5C 00219EBC  7F E3 FB 78 */	mr r3, r31
 /* 8021CF60 00219EC0  83 E1 00 14 */	lwz r31, 0x14(r1)
 /* 8021CF64 00219EC4  83 C1 00 10 */	lwz r30, 0x10(r1)

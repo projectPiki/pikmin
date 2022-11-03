@@ -34,14 +34,14 @@ J_STREAM:
 	.4byte 0x00000000
 .global lbl_80222E8C
 lbl_80222E8C:
-	.4byte lbl_80006B68
-	.4byte lbl_80006824
-	.4byte lbl_8000690C
-	.4byte lbl_80006930
-	.4byte lbl_80006A74
-	.4byte lbl_80006A74
-	.4byte lbl_80006B1C
-	.4byte lbl_80006B3C
+	.4byte .L_80006B68
+	.4byte .L_80006824
+	.4byte .L_8000690C
+	.4byte .L_80006930
+	.4byte .L_80006A74
+	.4byte .L_80006A74
+	.4byte .L_80006B1C
+	.4byte .L_80006B3C
 .balign 8
 .global audio_root_path
 audio_root_path:
@@ -1748,24 +1748,24 @@ calc_sw_table:
 	.4byte 0x02000000
 .global lbl_80224934
 lbl_80224934:
-	.4byte lbl_8000A12C
-	.4byte lbl_8000A100
-	.4byte lbl_8000A108
-	.4byte lbl_8000A110
-	.4byte lbl_8000A12C
-	.4byte lbl_8000A118
-	.4byte lbl_8000A120
-	.4byte lbl_8000A128
+	.4byte .L_8000A12C
+	.4byte .L_8000A100
+	.4byte .L_8000A108
+	.4byte .L_8000A110
+	.4byte .L_8000A12C
+	.4byte .L_8000A118
+	.4byte .L_8000A120
+	.4byte .L_8000A128
 .global lbl_80224954
 lbl_80224954:
-	.4byte lbl_8000A0D0
-	.4byte lbl_8000A0A4
-	.4byte lbl_8000A0AC
-	.4byte lbl_8000A0B4
-	.4byte lbl_8000A0D0
-	.4byte lbl_8000A0BC
-	.4byte lbl_8000A0C4
-	.4byte lbl_8000A0CC
+	.4byte .L_8000A0D0
+	.4byte .L_8000A0A4
+	.4byte .L_8000A0AC
+	.4byte .L_8000A0B4
+	.4byte .L_8000A0D0
+	.4byte .L_8000A0BC
+	.4byte .L_8000A0C4
+	.4byte .L_8000A0CC
 	.4byte 0x00000000
 .global history
 history:

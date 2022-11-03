@@ -9,7 +9,7 @@ SystemCallVector:
 /* 801FB938 001F8898  7C 00 04 AC */	sync 0
 /* 801FB93C 001F889C  7D 30 FB A6 */	mtspr 0x3f0, r9
 /* 801FB940 001F88A0  4C 00 00 64 */	rfi 
-lbl_801FB944:
+.L_801FB944:
 /* 801FB944 001F88A4  60 00 00 00 */	nop 
 
 .global __OSInitSystemCall
@@ -20,9 +20,9 @@ __OSInitSystemCall:
 /* 801FB954 001F88B4  93 E1 00 0C */	stw r31, 0xc(r1)
 /* 801FB958 001F88B8  3C A0 80 00 */	lis r5, 0x80000C00@ha
 /* 801FB95C 001F88BC  3C 80 80 20 */	lis r4, SystemCallVector@ha
-/* 801FB960 001F88C0  3C 60 80 20 */	lis r3, lbl_801FB944@ha
+/* 801FB960 001F88C0  3C 60 80 20 */	lis r3, .L_801FB944@ha
 /* 801FB964 001F88C4  3B E5 0C 00 */	addi r31, r5, 0x80000C00@l
-/* 801FB968 001F88C8  38 03 B9 44 */	addi r0, r3, lbl_801FB944@l
+/* 801FB968 001F88C8  38 03 B9 44 */	addi r0, r3, .L_801FB944@l
 /* 801FB96C 001F88CC  38 84 B9 28 */	addi r4, r4, SystemCallVector@l
 /* 801FB970 001F88D0  7F E3 FB 78 */	mr r3, r31
 /* 801FB974 001F88D4  7C A4 00 50 */	subf r5, r4, r0

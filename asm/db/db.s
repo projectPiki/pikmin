@@ -54,7 +54,7 @@ __DBIsExceptionMarked:
 .global DBPrintf
 DBPrintf:
 /* 801FDB44 001FAAA4  94 21 FF 90 */	stwu r1, -0x70(r1)
-/* 801FDB48 001FAAA8  40 86 00 24 */	bne cr1, lbl_801FDB6C
+/* 801FDB48 001FAAA8  40 86 00 24 */	bne cr1, .L_801FDB6C
 /* 801FDB4C 001FAAAC  D8 21 00 28 */	stfd f1, 0x28(r1)
 /* 801FDB50 001FAAB0  D8 41 00 30 */	stfd f2, 0x30(r1)
 /* 801FDB54 001FAAB4  D8 61 00 38 */	stfd f3, 0x38(r1)
@@ -63,7 +63,7 @@ DBPrintf:
 /* 801FDB60 001FAAC0  D8 C1 00 50 */	stfd f6, 0x50(r1)
 /* 801FDB64 001FAAC4  D8 E1 00 58 */	stfd f7, 0x58(r1)
 /* 801FDB68 001FAAC8  D9 01 00 60 */	stfd f8, 0x60(r1)
-lbl_801FDB6C:
+.L_801FDB6C:
 /* 801FDB6C 001FAACC  90 61 00 08 */	stw r3, 8(r1)
 /* 801FDB70 001FAAD0  90 81 00 0C */	stw r4, 0xc(r1)
 /* 801FDB74 001FAAD4  90 A1 00 10 */	stw r5, 0x10(r1)
