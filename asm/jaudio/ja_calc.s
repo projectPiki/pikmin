@@ -30,7 +30,7 @@ Jac_InitSinTable__Fv:
 /* 8000DD14 0000AC74  BF 81 00 10 */	stmw r28, 0x10(r1)
 /* 8000DD18 0000AC78  3C 60 80 31 */	lis r3, SINTABLE@ha
 /* 8000DD1C 0000AC7C  C3 A2 80 B8 */	lfs f29, lbl_803E82B8@sda21(r2)
-/* 8000DD20 0000AC80  CB C2 80 C0 */	lfd f30, "@124"@sda21(r2)
+/* 8000DD20 0000AC80  CB C2 80 C0 */	lfd f30, lbl_803E82C0@sda21(r2)
 /* 8000DD24 0000AC84  3B C3 DA E0 */	addi r30, r3, SINTABLE@l
 /* 8000DD28 0000AC88  C3 E2 80 BC */	lfs f31, lbl_803E82BC@sda21(r2)
 /* 8000DD2C 0000AC8C  3B 80 00 00 */	li r28, 0
@@ -666,12 +666,12 @@ returnJoint__9SnakeBodyFP15BossShapeObjectR8GraphicsP8Matrix4f:
 lbl_803E82A0:
 	.4byte 0x00000000
 	.4byte 0x00000000
-.global "@110"
-"@110":
+.global lbl_803E82A8
+lbl_803E82A8:
 	.4byte 0x3FE00000
 	.4byte 0x00000000
-.global "@111"
-"@111":
+.global lbl_803E82B0
+lbl_803E82B0:
 	.4byte 0x40080000
 	.4byte 0x00000000
 .global lbl_803E82B8
@@ -680,8 +680,8 @@ lbl_803E82B8:
 .global lbl_803E82BC
 lbl_803E82BC:
 	.4byte 0x3B800000
-.global "@124"
-"@124":
+.global lbl_803E82C0
+lbl_803E82C0:
 	.4byte 0x43300000
 	.4byte 0x00000000
 .global lbl_803E82C8

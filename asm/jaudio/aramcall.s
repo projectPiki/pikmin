@@ -231,8 +231,8 @@ sqrtf__3stdFf:
 /* 8000DC48 0000ABA8  FC 01 00 40 */	fcmpo cr0, f1, f0
 /* 8000DC4C 0000ABAC  40 81 00 50 */	ble lbl_8000DC9C
 /* 8000DC50 0000ABB0  FC 40 08 34 */	frsqrte f2, f1
-/* 8000DC54 0000ABB4  C8 82 80 A8 */	lfd f4, "@110"@sda21(r2)
-/* 8000DC58 0000ABB8  C8 62 80 B0 */	lfd f3, "@111"@sda21(r2)
+/* 8000DC54 0000ABB4  C8 82 80 A8 */	lfd f4, lbl_803E82A8@sda21(r2)
+/* 8000DC58 0000ABB8  C8 62 80 B0 */	lfd f3, lbl_803E82B0@sda21(r2)
 /* 8000DC5C 0000ABBC  FC 02 00 B2 */	fmul f0, f2, f2
 /* 8000DC60 0000ABC0  FC 44 00 B2 */	fmul f2, f4, f2
 /* 8000DC64 0000ABC4  FC 01 18 3C */	fnmsub f0, f1, f0, f3

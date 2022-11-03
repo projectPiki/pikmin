@@ -2879,7 +2879,7 @@ start__14TAIAwaitDororoFR4Teki:
 /* 801D39B0 001D0910  80 63 00 84 */	lwz r3, 0x84(r3)
 /* 801D39B4 001D0914  38 80 00 36 */	li r4, 0x36
 /* 801D39B8 001D0918  90 01 00 50 */	stw r0, 0x50(r1)
-/* 801D39BC 001D091C  C8 42 BD 10 */	lfd f2, "@3164"@sda21(r2)
+/* 801D39BC 001D091C  C8 42 BD 10 */	lfd f2, lbl_803EBF10@sda21(r2)
 /* 801D39C0 001D0920  C8 21 00 50 */	lfd f1, 0x50(r1)
 /* 801D39C4 001D0924  C0 02 BD 0C */	lfs f0, lbl_803EBF0C@sda21(r2)
 /* 801D39C8 001D0928  EC 21 10 28 */	fsubs f1, f1, f2
@@ -2978,7 +2978,7 @@ getWalkVelocity__20TAIAgoGoalPathDororoFR4Teki:
 /* 801D3B04 001D0A64  80 63 00 84 */	lwz r3, 0x84(r3)
 /* 801D3B08 001D0A68  90 01 00 98 */	stw r0, 0x98(r1)
 /* 801D3B0C 001D0A6C  80 63 00 04 */	lwz r3, 4(r3)
-/* 801D3B10 001D0A70  C8 22 BD 10 */	lfd f1, "@3164"@sda21(r2)
+/* 801D3B10 001D0A70  C8 22 BD 10 */	lfd f1, lbl_803EBF10@sda21(r2)
 /* 801D3B14 001D0A74  C8 01 00 98 */	lfd f0, 0x98(r1)
 /* 801D3B18 001D0A78  80 63 00 00 */	lwz r3, 0(r3)
 /* 801D3B1C 001D0A7C  EC 20 08 28 */	fsubs f1, f0, f1
@@ -4521,6 +4521,7 @@ __RTTI__15TAIAdyingDororo:
 __RTTI__14TAIAinitDororo:
 	.4byte lbl_802E451C
 	.4byte lbl_802E452C
+.balign 4
 lbl_803E6F30:
 	.asciz "ANode"
 .balign 4
@@ -4530,6 +4531,7 @@ __RTTI__5ANode:
 __RTTI__8CoreNode:
 	.4byte lbl_802E4584
 	.4byte lbl_802E4590
+.balign 4
 lbl_803E6F48:
 	.asciz "Node"
 .balign 4
@@ -4601,7 +4603,8 @@ lbl_803EBF08:
 	.4byte 0x40800000
 lbl_803EBF0C:
 	.4byte 0x46FFFE00
-"@3164":
+.balign 8
+lbl_803EBF10:
 	.4byte 0x43300000
 	.4byte 0x80000000
 lbl_803EBF18:

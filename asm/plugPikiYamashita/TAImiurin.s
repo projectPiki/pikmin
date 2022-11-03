@@ -2797,7 +2797,7 @@ act__19TAIAcheckNaviMiurinFR4Teki:
 /* 801D8BC8 001D5B28  C3 E3 00 D0 */	lfs f31, 0xd0(r3)
 /* 801D8BCC 001D5B2C  48 03 F4 A5 */	bl rand
 /* 801D8BD0 001D5B30  6C 60 80 00 */	xoris r0, r3, 0x8000
-/* 801D8BD4 001D5B34  C8 62 BE 20 */	lfd f3, "@3120"@sda21(r2)
+/* 801D8BD4 001D5B34  C8 62 BE 20 */	lfd f3, lbl_803EC020@sda21(r2)
 /* 801D8BD8 001D5B38  90 01 00 44 */	stw r0, 0x44(r1)
 /* 801D8BDC 001D5B3C  3C 00 43 30 */	lis r0, 0x4330
 /* 801D8BE0 001D5B40  C0 22 BE 18 */	lfs f1, lbl_803EC018@sda21(r2)
@@ -4277,10 +4277,10 @@ act__14TAIAinitMiurinFR4Teki:
 .balign 8
 lbl_802E4BC8:
 	.asciz "TAImiurin.cpp"
-	.skip 2
+.balign 4
 lbl_802E4BD8:
 	.asciz "TAImiurin"
-	.skip 2
+.balign 4
 lbl_802E4BE4:
 	.4byte 0x8DC591E5
 	.4byte 0x88F882C1
@@ -4328,45 +4328,46 @@ lbl_802E4C70:
 	.4byte 0x89F1935D
 	.4byte 0x91AC9378
 	.4byte 0x00000000
+.balign 4
 lbl_802E4C84:
 	.asciz "tekis/miurin/motion/dead.dca"
-	.skip 3
+.balign 4
 lbl_802E4CA4:
 	.asciz "tekis/miurin/motion/damage.dca"
-	.skip 1
+.balign 4
 lbl_802E4CC4:
 	.asciz "tekis/miurin/motion/wait1.dca"
-	.skip 2
+.balign 4
 lbl_802E4CE4:
 	.asciz "tekis/miurin/motion/wait2.dca"
-	.skip 2
+.balign 4
 lbl_802E4D04:
 	.asciz "tekis/miurin/motion/waitact1.dck"
-	.skip 3
+.balign 4
 lbl_802E4D28:
 	.asciz "tekis/miurin/motion/waitact2.dca"
-	.skip 3
+.balign 4
 lbl_802E4D4C:
 	.asciz "tekis/miurin/motion/move1.dck"
-	.skip 2
+.balign 4
 lbl_802E4D6C:
 	.asciz "tekis/miurin/motion/move2.dck"
-	.skip 2
+.balign 4
 lbl_802E4D8C:
 	.asciz "tekis/miurin/motion/attack.dca"
-	.skip 1
+.balign 4
 lbl_802E4DAC:
 	.asciz "tekis/miurin/motion/type1.dck"
-	.skip 2
+.balign 4
 lbl_802E4DCC:
 	.asciz "tekis/miurin/motion/type2.dca"
-	.skip 2
+.balign 4
 lbl_802E4DEC:
 	.asciz "TAImiurinAnimation"
-	.skip 1
+.balign 4
 lbl_802E4E00:
 	.asciz "TAIanimation"
-	.skip 3
+.balign 4
 lbl_802E4E10:
 	.4byte __RTTI__12TAIanimation
 	.4byte 0x00000000
@@ -4376,14 +4377,16 @@ __vt__18TAImiurinAnimation:
 	.4byte __RTTI__18TAImiurinAnimation
 	.4byte 0
 	.4byte makeDefaultAnimations__18TAImiurinAnimationFv
+.balign 4
 lbl_802E4E28:
 	.asciz "TAImiurinStrategy"
-	.skip 2
+.balign 4
 lbl_802E4E3C:
 	.asciz "TekiStrategy"
-	.skip 3
+.balign 4
 lbl_802E4E4C:
 	.asciz "YaiStrategy"
+.balign 4
 lbl_802E4E58:
 	.4byte __RTTI__12TekiStrategy
 	.4byte 0
@@ -4406,15 +4409,16 @@ __vt__17TAImiurinStrategy:
 	.4byte drawDebugInfo__12TekiStrategyFR4TekiR8Graphics
 	.4byte interact__17TAImiurinStrategyFR4TekiR18TekiInteractionKey
 	.4byte spawnCorpseParts__12TekiStrategyFR4Teki
+.balign 4
 lbl_802E4EA0:
 	.asciz "TAIAgroggyMiurin"
-	.skip 3
+.balign 4
 lbl_802E4EB4:
 	.asciz "TaiAction"
-	.skip 2
+.balign 4
 lbl_802E4EC0:
 	.asciz "TAIAreserveMotion"
-	.skip 2
+.balign 4
 lbl_802E4ED4:
 	.4byte __RTTI__9TaiAction
 	.4byte 0
@@ -4434,9 +4438,10 @@ __vt__16TAIAgroggyMiurin:
 	.4byte act__16TAIAgroggyMiurinFR4Teki
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
+.balign 4
 lbl_802E4F10:
 	.asciz "TAIAresetAnimSpeedMiurin"
-	.skip 3
+.balign 4
 lbl_802E4F2C:
 	.4byte __RTTI__9TaiAction
 	.4byte 0
@@ -4450,11 +4455,13 @@ __vt__24TAIAresetAnimSpeedMiurin:
 	.4byte act__9TaiActionFR4Teki
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
+.balign 4
 lbl_802E4F54:
 	.asciz "TAIAangryMiurin"
+.balign 4
 lbl_802E4F64:
 	.asciz "TAIAmotion"
-	.skip 1
+.balign 4
 lbl_802E4F70:
 	.4byte __RTTI__9TaiAction
 	.4byte 0
@@ -4475,8 +4482,10 @@ __vt__15TAIAangryMiurin:
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
 	.4byte getFlickDirection__15TAIAangryMiurinFR4Teki
+.balign 4
 lbl_802E4FB0:
 	.asciz "Interaction"
+.balign 4
 	.4byte 0
 	.4byte 0
 	.4byte 0
@@ -4488,11 +4497,13 @@ lbl_802E4FB0:
 	.4byte 0
 	.4byte 0
 	.4byte 0
+.balign 4
 lbl_802E4FE8:
 	.asciz "TAIAcheckNaviMiurin"
+.balign 4
 lbl_802E4FFC:
 	.asciz "TAIAinsideTerritoryRangeNavi"
-	.skip 3
+.balign 4
 lbl_802E501C:
 	.4byte __RTTI__9TaiAction
 	.4byte 0
@@ -4512,9 +4523,10 @@ __vt__19TAIAcheckNaviMiurin:
 	.4byte act__19TAIAcheckNaviMiurinFR4Teki
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
+.balign 4
 lbl_802E5058:
 	.asciz "TAIAcheckFlowerPikmin"
-	.skip 2
+.balign 4
 lbl_802E5070:
 	.4byte __RTTI__9TaiAction
 	.4byte 0
@@ -4528,9 +4540,10 @@ __vt__21TAIAcheckFlowerPikmin:
 	.4byte act__21TAIAcheckFlowerPikminFR4Teki
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
+.balign 4
 lbl_802E5098:
 	.asciz "TAIAsatisfyMiurin"
-	.skip 2
+.balign 4
 lbl_802E50AC:
 	.4byte __RTTI__9TaiAction
 	.4byte 0
@@ -4546,8 +4559,10 @@ __vt__17TAIAsatisfyMiurin:
 	.4byte act__17TAIAsatisfyMiurinFR4Teki
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
+.balign 4
 lbl_802E50DC:
 	.asciz "TAIAwatchNaviMiurin"
+.balign 4
 lbl_802E50F0:
 	.4byte __RTTI__9TaiAction
 	.4byte 0
@@ -4561,9 +4576,10 @@ __vt__19TAIAwatchNaviMiurin:
 	.4byte act__19TAIAwatchNaviMiurinFR4Teki
 	.4byte actByEvent__19TAIAwatchNaviMiurinFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
+.balign 4
 lbl_802E5118:
 	.asciz "TAIAtimerReaction"
-	.skip 2
+.balign 4
 lbl_802E512C:
 	.4byte __RTTI__9TaiAction
 	.4byte 0
@@ -4576,12 +4592,13 @@ lbl_802E512C:
 	.4byte 0
 	.4byte 0
 	.4byte 0
+.balign 4
 lbl_802E5158:
 	.asciz "TAIAoutsideTerritoryMiurin"
-	.skip 1
+.balign 4
 lbl_802E5174:
 	.asciz "TAIAoutsideTerritory"
-	.skip 3
+.balign 4
 lbl_802E518C:
 	.4byte __RTTI__9TaiAction
 	.4byte 0
@@ -4608,12 +4625,13 @@ __vt__26TAIAoutsideTerritoryMiurin:
 	.4byte 0
 	.4byte 0
 	.4byte 0
+.balign 4
 lbl_802E51E4:
 	.asciz "TAIAflickingMiurin"
-	.skip 1
+.balign 4
 lbl_802E51F8:
 	.asciz "TAIAflickingReserveMotion"
-	.skip 2
+.balign 4
 lbl_802E5214:
 	.4byte __RTTI__9TaiAction
 	.4byte 0
@@ -4639,12 +4657,13 @@ __vt__18TAIAflickingMiurin:
 	.4byte hasNextState__9TaiActionFv
 	.4byte flick__25TAIAflickingReserveMotionFR4Teki
 	.4byte getFlickDirection__18TAIAflickingMiurinFR4Teki
+.balign 4
 lbl_802E5268:
 	.asciz "TAIAflickCheckMiurin"
-	.skip 3
+.balign 4
 lbl_802E5280:
 	.asciz "TAIAflickCheck"
-	.skip 1
+.balign 4
 lbl_802E5290:
 	.4byte __RTTI__9TaiAction
 	.4byte 0
@@ -4665,12 +4684,13 @@ __vt__20TAIAflickCheckMiurin:
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
 	.4byte getDamageCountLimit__20TAIAflickCheckMiurinFR4Teki
+.balign 4
 lbl_802E52D0:
 	.asciz "TAIAstickingPikiMiurin"
-	.skip 1
+.balign 4
 lbl_802E52E8:
 	.asciz "TAIAstickingPiki"
-	.skip 3
+.balign 4
 lbl_802E52FC:
 	.4byte __RTTI__9TaiAction
 	.4byte 0
@@ -4691,9 +4711,10 @@ __vt__22TAIAstickingPikiMiurin:
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
 	.4byte getPikiNum__22TAIAstickingPikiMiurinFR4Teki
+.balign 4
 lbl_802E533C:
 	.asciz "TAIAnoReaction"
-	.skip 1
+.balign 4
 lbl_802E534C:
 	.4byte __RTTI__9TaiAction
 	.4byte 0
@@ -4705,9 +4726,10 @@ lbl_802E534C:
 	.4byte 0
 	.4byte 0
 	.4byte 0
+.balign 4
 lbl_802E5374:
 	.asciz "TAIAcheckSatisfyMiurin"
-	.skip 1
+.balign 4
 lbl_802E538C:
 	.4byte __RTTI__9TaiAction
 	.4byte 0
@@ -4721,9 +4743,10 @@ __vt__22TAIAcheckSatisfyMiurin:
 	.4byte act__22TAIAcheckSatisfyMiurinFR4Teki
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
+.balign 4
 lbl_802E53B4:
 	.asciz "TAIAattackMiurin"
-	.skip 3
+.balign 4
 lbl_802E53C8:
 	.4byte __RTTI__9TaiAction
 	.4byte 0
@@ -4739,9 +4762,10 @@ __vt__16TAIAattackMiurin:
 	.4byte act__16TAIAattackMiurinFR4Teki
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
+.balign 4
 lbl_802E53F8:
 	.asciz "TAIAattackPosture"
-	.skip 2
+.balign 4
 lbl_802E540C:
 	.4byte __RTTI__9TaiAction
 	.4byte 0
@@ -4757,12 +4781,13 @@ __vt__17TAIAattackPosture:
 	.4byte act__17TAIAattackPostureFR4Teki
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
+.balign 4
 lbl_802E543C:
 	.asciz "TAIAattackableTargetMiurin"
-	.skip 1
+.balign 4
 lbl_802E5458:
 	.asciz "TAIAattackableTarget"
-	.skip 3
+.balign 4
 lbl_802E5470:
 	.4byte __RTTI__9TaiAction
 	.4byte 0
@@ -4783,11 +4808,13 @@ __vt__26TAIAattackableTargetMiurin:
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
 	.4byte judge__20TAIAattackableTargetFR4Teki
+.balign 4
 lbl_802E54B0:
 	.asciz "TAIAapproachTargetPriorityFaceDirMiurin"
+.balign 4
 lbl_802E54D8:
 	.asciz "TAIAapproachTargetPriorityFaceDir"
-	.skip 2
+.balign 4
 lbl_802E54FC:
 	.4byte __RTTI__9TaiAction
 	.4byte 0
@@ -4812,20 +4839,23 @@ __vt__39TAIAapproachTargetPriorityFaceDirMiurin:
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
 	.4byte getVelocity__39TAIAapproachTargetPriorityFaceDirMiurinFR4Teki
+.balign 4
 lbl_802E554C:
 	.asciz "TAIAturnFocusCreatureMiurin"
+.balign 4
 lbl_802E5568:
 	.asciz "TAIAturnToTarget"
-	.skip 3
+.balign 4
 lbl_802E557C:
 	.4byte __RTTI__9TaiAction
 	.4byte 0
 	.4byte __RTTI__17TAIAreserveMotion
 	.4byte 0
 	.4byte 0
+.balign 4
 lbl_802E5590:
 	.asciz "TAIAturnFocusCreature"
-	.skip 2
+.balign 4
 lbl_802E55A8:
 	.4byte __RTTI__9TaiAction
 	.4byte 0
@@ -4854,11 +4884,13 @@ __vt__27TAIAturnFocusCreatureMiurin:
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
 	.4byte getTurnVelocity__27TAIAturnFocusCreatureMiurinFR4Teki
+.balign 4
 lbl_802E5608:
 	.asciz "TAIAdyingMiurin"
+.balign 4
 lbl_802E5618:
 	.asciz "TAIAdying"
-	.skip 2
+.balign 4
 lbl_802E5624:
 	.4byte __RTTI__9TaiAction
 	.4byte 0
@@ -4882,9 +4914,10 @@ __vt__15TAIAdyingMiurin:
 	.4byte act__15TAIAdyingMiurinFR4Teki
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
+.balign 4
 lbl_802E5670:
 	.asciz "TAIAinitMiurin"
-	.skip 1
+.balign 4
 lbl_802E5680:
 	.4byte __RTTI__9TaiAction
 	.4byte 0
@@ -4905,11 +4938,13 @@ __vt__14TAIAinitMiurin:
 	.4byte 0
 	.4byte 0
 	.4byte 0
+.balign 4
 lbl_802E56C4:
 	.asciz "TAImiurinParameters"
+.balign 4
 lbl_802E56D8:
 	.asciz "CoreNode"
-	.skip 3
+.balign 4
 lbl_802E56E4:
 	.4byte __RTTI__5ANode
 	.4byte 0
@@ -4920,9 +4955,10 @@ lbl_802E56F0:
 	.4byte __RTTI__8CoreNode
 	.4byte 0
 	.4byte 0
+.balign 4
 lbl_802E5704:
 	.asciz "TekiParameters"
-	.skip 1
+.balign 4
 lbl_802E5714:
 	.4byte __RTTI__5ANode
 	.4byte 0
@@ -4955,13 +4991,12 @@ __vt__19TAImiurinParameters:
 	.4byte concat__4NodeFR3SRT
 	.4byte concat__4NodeFR8Matrix4f
 	.4byte getModelMatrix__4NodeFv
-	.4byte 0
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
 __RTTI__12TAIanimation:
 	.4byte lbl_802E4E00
-	.4byte 0x00000000
+	.4byte 0
 __RTTI__18TAImiurinAnimation:
 	.4byte lbl_802E4DEC
 	.4byte lbl_802E4E10
@@ -5070,18 +5105,20 @@ __RTTI__15TAIAdyingMiurin:
 __RTTI__14TAIAinitMiurin:
 	.4byte lbl_802E5670
 	.4byte lbl_802E5680
+.balign 4
 lbl_803E7150:
 	.asciz "ANode"
-	.skip 2
+.balign 4
 __RTTI__5ANode:
 	.4byte lbl_803E7150
 	.4byte 0
 __RTTI__8CoreNode:
 	.4byte lbl_802E56D8
 	.4byte lbl_802E56E4
+.balign 4
 lbl_803E7168:
 	.asciz "Node"
-	.skip 3
+.balign 4
 __RTTI__4Node:
 	.4byte lbl_803E7168
 	.4byte lbl_802E56F0
@@ -5157,7 +5194,8 @@ lbl_803EC014:
 lbl_803EC018:
 	.4byte 0x46FFFE00
 	.4byte 0x00000000
-"@3120":
+.balign 8
+lbl_803EC020:
 	.4byte 0x43300000
 	.4byte 0x80000000
 lbl_803EC028:

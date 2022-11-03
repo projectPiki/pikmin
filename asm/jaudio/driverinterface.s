@@ -849,7 +849,7 @@ lbl_80009FF8:
 /* 8000A040 00006FA0  C3 02 80 40 */	lfs f24, lbl_803E8240@sda21(r2)
 /* 8000A044 00006FA4  C3 22 80 3C */	lfs f25, lbl_803E823C@sda21(r2)
 /* 8000A048 00006FA8  EE F8 F8 28 */	fsubs f23, f24, f31
-/* 8000A04C 00006FAC  CB 42 80 50 */	lfd f26, "@346"@sda21(r2)
+/* 8000A04C 00006FAC  CB 42 80 50 */	lfd f26, lbl_803E8250@sda21(r2)
 /* 8000A050 00006FB0  EE D8 E8 28 */	fsubs f22, f24, f29
 /* 8000A054 00006FB4  EE B8 E0 28 */	fsubs f21, f24, f28
 lbl_8000A058:
@@ -13884,8 +13884,8 @@ lbl_803E8244:
 lbl_803E8248:
 	.4byte 0x45800000
 	.4byte 0x00000000
-.global "@346"
-"@346":
+.global lbl_803E8250
+lbl_803E8250:
 	.4byte 0x43300000
 	.4byte 0x00000000
 

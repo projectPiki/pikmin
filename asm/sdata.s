@@ -43,7 +43,3 @@ ARCALL:
 .global first
 first:
 	.4byte 1
-.global osc_table
-osc_table:
-	.4byte 0x01020804
-	.4byte 0x10000000

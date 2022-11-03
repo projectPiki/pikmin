@@ -200,16 +200,4 @@ init$165:
 	.skip 8
 .global global_id
 global_id:
-	.skip 8
-.global JAM_CALLBACK_FUNC
-JAM_CALLBACK_FUNC:
-	.skip 4
-.global T_LISTS
-T_LISTS:
-	.skip 4
-.global SEQ_P
-SEQ_P:
-	.skip 4
-.global SEQ_CMD
-SEQ_CMD:
 	.skip 4
