@@ -1,4 +1,5 @@
 .include "macros.inc"
+.section .text, "ax"  # 0x80005560 - 0x80221F60
 .balign 32, 0
 .global NoteON__FP5seqp_llll
 NoteON__FP5seqp_llll:

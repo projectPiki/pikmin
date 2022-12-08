@@ -117,7 +117,3 @@ lbl_803E82C0:
 .global lbl_803E82C8
 lbl_803E82C8:
 	.float 256.0
-.balign 8
-.global lbl_803E82D0
-lbl_803E82D0:
-	.asciz "/"

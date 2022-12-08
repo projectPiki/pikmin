@@ -182,22 +182,4 @@ USEFAT_TAIL:
 	.skip 4
 .global fatheapptr
 fatheapptr:
-	.skip 8
-.global cmd_once
-cmd_once:
-	.skip 8
-.global cmd_stay
-cmd_stay:
-	.skip 8
-.global JV_CURRENT_ARCS
-JV_CURRENT_ARCS:
-	.skip 4
-.global first$164
-first$164:
-	.skip 4
-.global init$165
-init$165:
-	.skip 8
-.global global_id
-global_id:
 	.skip 4

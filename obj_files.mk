@@ -16,6 +16,9 @@ SYSBOOTUP :=\
 JAUDIO :=\
 	$(BUILD_DIR)/src/jaudio/dummyprobe.o\
 	$(BUILD_DIR)/asm/jaudio.o\
+	$(BUILD_DIR)/asm/jaudio/cmdstack.o\
+	$(BUILD_DIR)/asm/jaudio/virload.o\
+	$(BUILD_DIR)/asm/jaudio/heapctrl.o\
 	$(BUILD_DIR)/asm/jaudio/jammain_2.o\
 	$(BUILD_DIR)/asm/jaudio/midplay.o\
 	$(BUILD_DIR)/asm/jaudio/noteon.o\

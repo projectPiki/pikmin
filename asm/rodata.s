@@ -44,7 +44,3 @@ lbl_802220C8:
 .global lbl_802220DC
 lbl_802220DC:
 	.asciz "Failed assertion 0 <= chan && chan < 2"
-.balign 8
-.global lbl_80222108
-lbl_80222108:
-	.asciz "        "
