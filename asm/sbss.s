@@ -173,13 +173,4 @@ inited$64:
 	.skip 4
 .global init$65
 init$65:
-	.skip 4
-.global ACTIVE_FATS
-ACTIVE_FATS:
-	.skip 4
-.global USEFAT_TAIL
-USEFAT_TAIL:
-	.skip 4
-.global fatheapptr
-fatheapptr:
-	.skip 4
+	.skip 1

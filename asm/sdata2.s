@@ -92,28 +92,3 @@ lbl_803E8290:
 lbl_803E8298:
 	.4byte 0x43300000
 	.4byte 0x80000000
-.global lbl_803E82A0
-lbl_803E82A0:
-	.float 0.0
-.balign 8
-.global lbl_803E82A8
-lbl_803E82A8:
-	.double 0.5
-.balign 8
-.global lbl_803E82B0
-lbl_803E82B0:
-	.double 3.0
-.global lbl_803E82B8
-lbl_803E82B8: #half pi
-	.float 1.5707964
-.global lbl_803E82BC
-lbl_803E82BC:
-	.float 0.00390625
-.balign 8
-.global lbl_803E82C0
-lbl_803E82C0:
-	.4byte 0x43300000
-	.4byte 0x00000000
-.global lbl_803E82C8
-lbl_803E82C8:
-	.float 256.0
