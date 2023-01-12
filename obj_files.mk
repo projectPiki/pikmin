@@ -79,7 +79,7 @@ SYSDOLPHIN :=\
 	$(BUILD_DIR)/asm/sysDolphin/sysNew.o\
 	$(BUILD_DIR)/asm/sysDolphin/controllerMgr.o\
 	$(BUILD_DIR)/asm/sysDolphin/dgxGraphics.o\
-	$(BUILD_DIR)/asm/sysDolphin/gameApp.o\
+	$(BUILD_DIR)/src/sysDolphin/gameApp.o\
 
 COLIN :=\
 	$(BUILD_DIR)/asm/plugPikiColin/cardutil.o\
