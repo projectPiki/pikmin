@@ -67,17 +67,10 @@ MWLD_VERSION := 1.1
 ifeq ($(WINDOWS),1)
   WINE :=
   AS      := $(DEVKITPPC)/bin/powerpc-eabi-as.exe
-  SHA1SUM := sha1sum
   PYTHON  := python
 else
   WINE ?= wine
   AS      := $(DEVKITPPC)/bin/powerpc-eabi-as
-  # Mac has shasum instead of sha1sum
-  ifeq ($(UNAME_S),Darwin)
-  	SHA1SUM := shasum
-  else
-    SHA1SUM := sha1sum
-  endif
   PYTHON  := python3
 endif
 CC      = $(WINE) tools/mwcc_compiler/$(MWCC_VERSION)/mwcceppc.exe
@@ -85,7 +78,9 @@ ifeq ($(EPILOGUE_PROCESS),1)
 CC_EPI  = $(WINE) tools/mwcc_compiler/$(MWCC_EPI_VERSION)/$(MWCC_EPI_EXE)
 endif
 LD      := $(WINE) tools/mwcc_compiler/$(MWLD_VERSION)/mwldeppc.exe
-ELF2DOL := tools/elf2dol
+DTK     := tools/dtk
+ELF2DOL := $(DTK) elf2dol
+SHASUM  := $(DTK) shasum
 
 FRANK := tools/frank.py
 
@@ -126,21 +121,19 @@ endif
 .PHONY: tools
 
 # DOL creation makefile instructions
-$(DOL): $(ELF) | tools
+$(DOL): $(ELF) | $(DTK)
 	@echo Converting $< to $@
 	$(QUIET) $(ELF2DOL) $< $@
-	$(QUIET) $(SHA1SUM) -c sha1/$(NAME).$(VERSION).sha1
+	$(QUIET) $(SHASUM) -c sha1/$(NAME).$(VERSION).sha1
 	$(QUIET) $(PYTHON) tools/calcprogress.py $(DOL) $(MAP)
 
 clean:
 	rm -f -d -r build
 	rm -f -d -r epilogue
-	find . -name '*.o' -exec rm {} +
-	find . -name 'ctx.c' -exec rm {} +
-	find ./include -name "*.s" -type f -delete
-	$(MAKE) -C tools clean
-tools:
-	$(MAKE) -C tools
+
+$(DTK): tools/dtk_version
+	@echo "Downloading $@"
+	$(QUIET) $(PYTHON) tools/download_dtk.py $< $@
 
 # ELF creation makefile instructions
 ifeq ($(EPILOGUE_PROCESS),1)

@@ -29,3 +29,4 @@ tools/mwcc_compiler/
 Debug
 .vs
 ctx.c
+tools/dtk

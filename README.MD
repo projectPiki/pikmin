@@ -24,12 +24,17 @@ tools/frank.py cleans up the output.
 
 ### Required Tools
 * [devkitPro](https://devkitpro.org/wiki/Getting_Started)
-* gcc
+* python
 
 ### Instructions
 
 * WINDOWS ONLY STEP:
-	- Launch msys2(Provided by devkitPro) and run the command `pacman -S gcc`.
+	- Launch msys2 (provided by devkitPro) and run the following commands: 
+	
+	```
+	pacman -S msys2-keyring
+	pacman -S git python
+	```
 
 * OPTIONAL:
 	- Obtain a clean DOL of Pikmin 1 USA 1.01 and place it in the base working directory and rename it to `baserom.dol`.
