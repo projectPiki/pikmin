@@ -91,9 +91,11 @@ while idx < len(profile_bytes) - 16:
     ADDI = 0x38 >> 2
     LI = ADDI # an LI instruction is just an ADDI with RA=0
     LMW = 0xB8 >> 2
+    FDIVS = 0xEC >> 2
 
-    if opcode_a == LWZ and \
-       opcode_b in [LI, LFS] and \
+    # Adjust LWZ and LMW loading from r1.
+    if opcode_a in [LWZ, LMW] and vanilla_inst_a[2] == 0x00 and \
+       opcode_b in [LI, LFS, FDIVS] and \
        vanilla_inst_a == profile_inst_b and \
        vanilla_inst_b == profile_inst_a and \
        vanilla_inst_c == profile_inst_c and \
@@ -170,7 +172,7 @@ while idx < len(final_bytes):
     if mtlr_found_pos + 4 == blr_found_pos:
         idx += 4
         continue # continue if mtlr is followed directly by blr
-    
+
     final_bytes = final_bytes[:mtlr_found_pos] + final_bytes[mtlr_found_pos+4:blr_found_pos] + final_bytes[mtlr_found_pos:mtlr_found_pos+4] + final_bytes[blr_found_pos:]
     idx = mtlr_found_pos + len(MTLR_BYTE_SEQ)
 
