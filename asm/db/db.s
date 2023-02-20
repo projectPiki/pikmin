@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global DBInit
-DBInit:
+.fn DBInit, global
 /* 801FDAA8 001FAA08  3C 80 80 00 */	lis r4, 0x80000040@ha
 /* 801FDAAC 001FAA0C  38 04 00 40 */	addi r0, r4, 0x80000040@l
 /* 801FDAB0 001FAA10  3C 60 80 20 */	lis r3, __DBExceptionDestination@ha
@@ -12,9 +11,9 @@ DBInit:
 /* 801FDAC4 001FAA24  38 00 00 01 */	li r0, 1
 /* 801FDAC8 001FAA28  90 0D 32 4C */	stw r0, DBVerbose@sda21(r13)
 /* 801FDACC 001FAA2C  4E 80 00 20 */	blr 
+.endfn DBInit
 
-.global __DBExceptionDestinationAux
-__DBExceptionDestinationAux:
+.fn __DBExceptionDestinationAux, global
 /* 801FDAD0 001FAA30  7C 08 02 A6 */	mflr r0
 /* 801FDAD4 001FAA34  3C 60 80 2F */	lis r3, lbl_802E8448@ha
 /* 801FDAD8 001FAA38  90 01 00 04 */	stw r0, 4(r1)
@@ -33,16 +32,16 @@ __DBExceptionDestinationAux:
 /* 801FDB0C 001FAA6C  38 21 00 18 */	addi r1, r1, 0x18
 /* 801FDB10 001FAA70  7C 08 03 A6 */	mtlr r0
 /* 801FDB14 001FAA74  4E 80 00 20 */	blr 
+.endfn __DBExceptionDestinationAux
 
-.global __DBExceptionDestination
-__DBExceptionDestination:
+.fn __DBExceptionDestination, global
 /* 801FDB18 001FAA78  7C 60 00 A6 */	mfmsr r3
 /* 801FDB1C 001FAA7C  60 63 00 30 */	ori r3, r3, 0x30
 /* 801FDB20 001FAA80  7C 60 01 24 */	mtmsr r3
 /* 801FDB24 001FAA84  4B FF FF AC */	b __DBExceptionDestinationAux
+.endfn __DBExceptionDestination
 
-.global __DBIsExceptionMarked
-__DBIsExceptionMarked:
+.fn __DBIsExceptionMarked, global
 /* 801FDB28 001FAA88  80 8D 32 48 */	lwz r4, __DBInterface@sda21(r13)
 /* 801FDB2C 001FAA8C  54 60 06 3E */	clrlwi r0, r3, 0x18
 /* 801FDB30 001FAA90  38 60 00 01 */	li r3, 1
@@ -50,9 +49,9 @@ __DBIsExceptionMarked:
 /* 801FDB38 001FAA98  7C 60 00 30 */	slw r0, r3, r0
 /* 801FDB3C 001FAA9C  7C 83 00 38 */	and r3, r4, r0
 /* 801FDB40 001FAAA0  4E 80 00 20 */	blr 
+.endfn __DBIsExceptionMarked
 
-.global DBPrintf
-DBPrintf:
+.fn DBPrintf, global
 /* 801FDB44 001FAAA4  94 21 FF 90 */	stwu r1, -0x70(r1)
 /* 801FDB48 001FAAA8  40 86 00 24 */	bne cr1, .L_801FDB6C
 /* 801FDB4C 001FAAAC  D8 21 00 28 */	stfd f1, 0x28(r1)
@@ -74,18 +73,19 @@ DBPrintf:
 /* 801FDB88 001FAAE8  91 41 00 24 */	stw r10, 0x24(r1)
 /* 801FDB8C 001FAAEC  38 21 00 70 */	addi r1, r1, 0x70
 /* 801FDB90 001FAAF0  4E 80 00 20 */	blr 
+.endfn DBPrintf
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802E8448:
+.obj lbl_802E8448, local
 	.asciz "DBExceptionDestination\n"
-.balign 4
+.endobj lbl_802E8448
 
 .section .sbss, "wa"
 .balign 8
-.global __DBInterface
-__DBInterface:
+.obj __DBInterface, global
 	.skip 0x4
-.global DBVerbose
-DBVerbose:
+.endobj __DBInterface
+.obj DBVerbose, global
 	.skip 0x4
+.endobj DBVerbose

@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global atan__Fff
-atan__Fff:
+.fn atan__Fff, global
 /* 8011DB48 0011AAA8  94 21 FF D8 */	stwu r1, -0x28(r1)
 /* 8011DB4C 0011AAAC  3C 60 80 2C */	lis r3, lbl_802C4378@ha
 /* 8011DB50 0011AAB0  38 63 43 78 */	addi r3, r3, lbl_802C4378@l
@@ -202,9 +201,9 @@ atan__Fff:
 /* 8011DDFC 0011AD5C  54 63 04 3E */	clrlwi r3, r3, 0x10
 /* 8011DE00 0011AD60  38 21 00 28 */	addi r1, r1, 0x28
 /* 8011DE04 0011AD64  4E 80 00 20 */	blr 
+.endfn atan__Fff
 
-.global atan2__6NMathFFff
-atan2__6NMathFFff:
+.fn atan2__6NMathFFff, global
 /* 8011DE08 0011AD68  FC 00 10 90 */	fmr f0, f2
 /* 8011DE0C 0011AD6C  7C 08 02 A6 */	mflr r0
 /* 8011DE10 0011AD70  90 01 00 04 */	stw r0, 4(r1)
@@ -227,17 +226,19 @@ atan2__6NMathFFff:
 /* 8011DE54 0011ADB4  38 21 00 18 */	addi r1, r1, 0x18
 /* 8011DE58 0011ADB8  7C 08 03 A6 */	mtlr r0
 /* 8011DE5C 0011ADBC  4E 80 00 20 */	blr 
+.endfn atan2__6NMathFFff
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802C4378:
+.obj lbl_802C4378, local
 	.asciz "nlibmath.cpp"
+.endobj lbl_802C4378
 .balign 4
-lbl_802C4388:
+.obj lbl_802C4388, local
 	.asciz "nlibmath"
+.endobj lbl_802C4388
 .balign 4
-.global AtanTable
-AtanTable:
+.obj AtanTable, global # many short entries
 	.4byte 0x0000000A
 	.4byte 0x0014001F
 	.4byte 0x00290033
@@ -750,36 +751,42 @@ AtanTable:
 	.4byte 0x1FE11FE6
 	.4byte 0x1FEC1FF1
 	.4byte 0x1FF61FFB
-	.4byte 0x20000000
+	.2byte 0x2000
+.endobj AtanTable
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-.global error__6NMathF
-error__6NMathF:
+.obj error__6NMathF, global
 	.float 0.0001
-.global degreePerRadian__6NMathF
-degreePerRadian__6NMathF:
-	.4byte 0x42652EE0
-.global radianPerDegree__6NMathF
-radianPerDegree__6NMathF:
-	.4byte 0x3C8EFA35
-.global pi__6NMathF
-pi__6NMathF:
-	.4byte 0x40490FDB
+.endobj error__6NMathF
+.obj degreePerRadian__6NMathF, global
+	.float 57.295776
+.endobj degreePerRadian__6NMathF
+.obj radianPerDegree__6NMathF, global
+	.float 0.017453292
+.endobj radianPerDegree__6NMathF
+.obj pi__6NMathF, global
+	.float 3.1415927
+.endobj pi__6NMathF
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803EA240:
+.obj lbl_803EA240, local
 	.float 0.0
-lbl_803EA244:
+.endobj lbl_803EA240
+.obj lbl_803EA244, local
 	.float 0.5
-lbl_803EA248:
+.endobj lbl_803EA244
+.obj lbl_803EA248, local
 	.float 1024.0
-lbl_803EA24C:
-	.4byte 0x40490FDB
-lbl_803EA250:
+.endobj lbl_803EA248
+.obj lbl_803EA24C, local
+	.float 3.1415927
+.endobj lbl_803EA24C
+.obj lbl_803EA250, local
 	.float 32768.0
+.endobj lbl_803EA250
 .balign 8
-lbl_803EA258:
-	.4byte 0x43300000
-	.4byte 0x00000000
+.obj lbl_803EA258, local
+	.8byte 0x4330000000000000
+.endobj lbl_803EA258
