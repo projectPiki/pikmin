@@ -102,7 +102,6 @@ lbl_803EC4F0:
 	.float 1.0
 lbl_803EC4F4:
 	.float 2.0
-.global lbl_803EC4F8
 lbl_803EC4F8:
 	.float 0.0
 lbl_803EC4FC:

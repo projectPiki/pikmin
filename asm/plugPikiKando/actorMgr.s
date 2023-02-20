@@ -1,6 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-fn global newActor__8ActorMgrFi
+.fn newActor__8ActorMgrFi, global
 /* 80119AB4 00116A14  7C 08 02 A6 */	mflr r0
 /* 80119AB8 00116A18  90 01 00 04 */	stw r0, 4(r1)
 /* 80119ABC 00116A1C  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -33,10 +33,10 @@ fn global newActor__8ActorMgrFi
 /* 80119B24 00116A84  38 21 00 20 */	addi r1, r1, 0x20
 /* 80119B28 00116A88  7C 08 03 A6 */	mtlr r0
 /* 80119B2C 00116A8C  4E 80 00 20 */	blr 
-end newActor__8ActorMgrFi
+.endfn newActor__8ActorMgrFi
 
 .section .sbss, "wa"
 .balign 8
-.global actorMgr
-actorMgr:
+.obj actorMgr, global
 	.skip 0x4
+.endobj actorMgr

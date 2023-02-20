@@ -55,5 +55,6 @@ lbl_803EC508:
 .balign 8
 lbl_803EC510:
 	.double 0.5
+.balign 8
 lbl_803EC518:
 	.double 3.0
