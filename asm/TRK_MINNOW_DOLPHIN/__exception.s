@@ -775,8 +775,6 @@ gTRKInterruptVectorTable:
 /* 800040E4 000010E4  38 60 0C 00 */	li r3, 0xc00
 /* 800040E8 000010E8  4C 00 00 64 */	rfi 
 /* 800040EC 000010EC  00 00 00 00 */	.4byte 0x00000000  /* unknown instruction */
-.global .L_800040F0
-.L_800040F0:
 /* 800040F0 000010F0  00 00 00 00 */	.4byte 0x00000000  /* unknown instruction */
 /* 800040F4 000010F4  00 00 00 00 */	.4byte 0x00000000  /* unknown instruction */
 /* 800040F8 000010F8  00 00 00 00 */	.4byte 0x00000000  /* unknown instruction */
