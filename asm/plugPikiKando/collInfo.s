@@ -3621,9 +3621,13 @@ makeTree__8CollInfoFv:
 /* 8008A020 00086F80  41 80 FF 1C */	blt .L_80089F3C
 /* 8008A024 00086F84  4E 80 00 20 */	blr 
 
-.global __sinit_collInfo_cpp
-__sinit_collInfo_cpp:
+.fn __sinit_collInfo_cpp, local
 /* 8008A028 00086F88  4E 80 00 20 */	blr 
+.endfn __sinit_collInfo_cpp
+
+.section .ctors, "wa"  # 0x80221F60 - 0x80221FC0
+lbl_constructor:
+	.4byte __sinit_collInfo_cpp
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8

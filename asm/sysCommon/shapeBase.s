@@ -13103,8 +13103,7 @@ writeType__8AnimDataFR18RandomAccessStream:
 /* 80035A94 000329F4  7C 08 03 A6 */	mtlr r0
 /* 80035A98 000329F8  4E 80 00 20 */	blr 
 
-.global __sinit_shapeBase_cpp
-__sinit_shapeBase_cpp:
+.fn __sinit_shapeBase_cpp, local
 /* 80035A9C 000329FC  7C 08 02 A6 */	mflr r0
 /* 80035AA0 00032A00  3C 60 80 39 */	lis r3, fnVerts@ha
 /* 80035AA4 00032A04  90 01 00 04 */	stw r0, 4(r1)
@@ -13139,6 +13138,7 @@ __sinit_shapeBase_cpp:
 /* 80035B18 00032A78  38 21 00 10 */	addi r1, r1, 0x10
 /* 80035B1C 00032A7C  7C 08 03 A6 */	mtlr r0
 /* 80035B20 00032A80  4E 80 00 20 */	blr 
+.endfn __sinit_shapeBase_cpp
 
 .global __ct__8Vector3fFv
 __ct__8Vector3fFv:
@@ -13147,6 +13147,10 @@ __ct__8Vector3fFv:
 /* 80035B2C 00032A8C  D0 03 00 04 */	stfs f0, 4(r3)
 /* 80035B30 00032A90  D0 03 00 00 */	stfs f0, 0(r3)
 /* 80035B34 00032A94  4E 80 00 20 */	blr 
+
+.section .ctors, "wa"  # 0x80221F60 - 0x80221FC0
+lbl_constructor:
+	.4byte __sinit_shapeBase_cpp
 
 .section .rodata, "a"  # 0x80221FE0 - 0x80222DC0
 .balign 8

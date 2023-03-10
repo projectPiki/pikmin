@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global __ct__15GameExitSectionFv
-__ct__15GameExitSectionFv:
+.fn __ct__15GameExitSectionFv, global
 /* 8005B690 000585F0  7C 08 02 A6 */	mflr r0
 /* 8005B694 000585F4  38 8D 8F A0 */	addi r4, r13, lbl_803DDCC0@sda21
 /* 8005B698 000585F8  90 01 00 04 */	stw r0, 4(r1)
@@ -41,9 +40,9 @@ __ct__15GameExitSectionFv:
 /* 8005B720 00058680  38 21 00 18 */	addi r1, r1, 0x18
 /* 8005B724 00058684  7C 08 03 A6 */	mtlr r0
 /* 8005B728 00058688  4E 80 00 20 */	blr 
+.endfn __ct__15GameExitSectionFv
 
-.global update__15GameExitSectionFv
-update__15GameExitSectionFv:
+.fn update__15GameExitSectionFv, global
 /* 8005B72C 0005868C  3C 60 80 3A */	lis r3, gameflow@ha
 /* 8005B730 00058690  38 83 D7 B8 */	addi r4, r3, gameflow@l
 /* 8005B734 00058694  38 00 00 00 */	li r0, 0
@@ -66,36 +65,43 @@ update__15GameExitSectionFv:
 /* 8005B770 000586D0  38 00 00 01 */	li r0, 1
 /* 8005B774 000586D4  98 03 00 00 */	stb r0, 0(r3)
 /* 8005B778 000586D8  4E 80 00 20 */	blr 
+.endfn update__15GameExitSectionFv
 
-.global init__15GameExitSectionFv
-init__15GameExitSectionFv:
+.fn init__15GameExitSectionFv, weak
 /* 8005B77C 000586DC  4E 80 00 20 */	blr 
+.endfn init__15GameExitSectionFv
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802A81C0:
+.obj lbl_802A81C0, local
 	.asciz "gameExit.cpp"
+.endobj lbl_802A81C0
 .balign 4
-lbl_802A81D0:
+.obj lbl_802A81D0, local
 	.asciz "GameExit"
+.endobj lbl_802A81D0
 .balign 4
-lbl_802A81DC:
+.obj lbl_802A81DC, local
 	.asciz "GameExitSection"
+.endobj lbl_802A81DC
 .balign 4
-lbl_802A81EC:
+.obj lbl_802A81EC, local
 	.asciz "CoreNode"
+.endobj lbl_802A81EC
 .balign 4
-lbl_802A81F8:
+.obj lbl_802A81F8, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte 0
-lbl_802A8204:
+.endobj lbl_802A81F8
+.obj lbl_802A8204, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte __RTTI__8CoreNode
 	.4byte 0
 	.4byte 0
-lbl_802A8218:
+.endobj lbl_802A8204
+.obj lbl_802A8218, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte __RTTI__8CoreNode
@@ -103,7 +109,8 @@ lbl_802A8218:
 	.4byte __RTTI__4Node
 	.4byte 0
 	.4byte 0
-lbl_802A8234:
+.endobj lbl_802A8218
+.obj lbl_802A8234, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte __RTTI__8CoreNode
@@ -113,8 +120,8 @@ lbl_802A8234:
 	.4byte __RTTI__7Section
 	.4byte 0
 	.4byte 0
-.global __vt__15GameExitSection
-__vt__15GameExitSection:
+.endobj lbl_802A8234
+.obj __vt__15GameExitSection, global
 	.4byte __RTTI__15GameExitSection
 	.4byte 0
 	.4byte getAgeNodeType__5ANodeFv
@@ -128,6 +135,7 @@ __vt__15GameExitSection:
 	.4byte concat__4NodeFR8Matrix4f
 	.4byte getModelMatrix__4NodeFv
 	.4byte init__15GameExitSectionFv
+.endobj __vt__15GameExitSection
 	.4byte 0
 	.4byte 0
 	.4byte 0
@@ -152,35 +160,45 @@ __vt__15GameExitSection:
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-lbl_803DDCC0:
+.obj lbl_803DDCC0, local
 	.asciz "<Node>"
+.endobj lbl_803DDCC0
 .balign 4
-lbl_803DDCC8:
+.obj lbl_803DDCC8, local
 	.asciz ""
+.endobj lbl_803DDCC8
 .balign 4
-lbl_803DDCCC:
+.obj lbl_803DDCCC, local
 	.asciz "ANode"
+.endobj lbl_803DDCCC
 .balign 4
-__RTTI__5ANode:
+.obj __RTTI__5ANode, local
 	.4byte lbl_803DDCCC
 	.4byte 0
-__RTTI__8CoreNode:
+.endobj __RTTI__5ANode
+.obj __RTTI__8CoreNode, local
 	.4byte lbl_802A81EC
 	.4byte lbl_802A81F8
+.endobj __RTTI__8CoreNode
 .balign 4
-lbl_803DDCE4:
+.obj lbl_803DDCE4, local
 	.asciz "Node"
+.endobj lbl_803DDCE4
 .balign 4
-__RTTI__4Node:
+.obj __RTTI__4Node, local
 	.4byte lbl_803DDCE4
 	.4byte lbl_802A8204
+.endobj __RTTI__4Node
 .balign 4
-lbl_803DDCF4:
+.obj lbl_803DDCF4, local
 	.asciz "Section"
+.endobj lbl_803DDCF4
 .balign 4
-__RTTI__7Section:
+.obj __RTTI__7Section, local
 	.4byte lbl_803DDCF4
 	.4byte lbl_802A8218
-__RTTI__15GameExitSection:
+.endobj __RTTI__7Section
+.obj __RTTI__15GameExitSection, local
 	.4byte lbl_802A81DC
 	.4byte lbl_802A8234
+.endobj __RTTI__15GameExitSection

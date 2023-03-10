@@ -1081,9 +1081,13 @@ makeVQS__8Matrix4fFR8Vector3fR4QuatR8Vector3f:
 /* 8003EE28 0003BD88  38 21 00 28 */	addi r1, r1, 0x28
 /* 8003EE2C 0003BD8C  4E 80 00 20 */	blr 
 
-.global __sinit_matMath_cpp
-__sinit_matMath_cpp:
+.fn __sinit_matMath_cpp, local
 /* 8003EE30 0003BD90  4E 80 00 20 */	blr 
+.endfn __sinit_matMath_cpp
+
+.section .ctors, "wa"  # 0x80221F60 - 0x80221FC0
+lbl_constructor:
+	.4byte __sinit_matMath_cpp
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8

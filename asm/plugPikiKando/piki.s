@@ -8059,8 +8059,7 @@ setLeaves__4PikiFi:
 "cleanup__13AState<4Piki>FP4Piki":
 /* 800CD740 000CA6A0  4E 80 00 20 */	blr 
 
-.global __sinit_piki_cpp
-__sinit_piki_cpp:
+.fn __sinit_piki_cpp, local
 /* 800CD744 000CA6A4  3C 60 80 3D */	lis r3, pikiColors__4Piki@ha
 /* 800CD748 000CA6A8  39 03 1E 18 */	addi r8, r3, pikiColors__4Piki@l
 /* 800CD74C 000CA6AC  38 E0 00 00 */	li r7, 0
@@ -8107,11 +8106,16 @@ __sinit_piki_cpp:
 /* 800CD7F0 000CA750  98 C8 00 2A */	stb r6, 0x2a(r8)
 /* 800CD7F4 000CA754  98 E8 00 2B */	stb r7, 0x2b(r8)
 /* 800CD7F8 000CA758  4E 80 00 20 */	blr 
+.endfn __sinit_piki_cpp
 
 .global "@696@animationKeyUpdated__4PikiFR16PaniAnimKeyEvent"
 "@696@animationKeyUpdated__4PikiFR16PaniAnimKeyEvent":
 /* 800CD7FC 000CA75C  38 63 FD 48 */	addi r3, r3, -696
 /* 800CD800 000CA760  4B FF C9 10 */	b animationKeyUpdated__4PikiFR16PaniAnimKeyEvent
+
+.section .ctors, "wa"  # 0x80221F60 - 0x80221FC0
+lbl_constructor:
+	.4byte __sinit_piki_cpp
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
@@ -8157,6 +8161,7 @@ lbl_802B8470:
 	.4byte .L_800C8500
 	.4byte .L_800C84F8
 	.4byte .L_800C84F8
+.balign 4
 lbl_802B84C8:
 	.asciz "sit:sluice"
 .balign 4

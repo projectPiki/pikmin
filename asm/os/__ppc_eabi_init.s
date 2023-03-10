@@ -45,8 +45,8 @@
 /* 801FDA38 001FA998  90 01 00 04 */	stw r0, 4(r1)
 /* 801FDA3C 001FA99C  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 801FDA40 001FA9A0  93 E1 00 0C */	stw r31, 0xc(r1)
-/* 801FDA44 001FA9A4  3C 60 80 22 */	lis r3, __init_cpp_exceptions_reference@ha
-/* 801FDA48 001FA9A8  38 03 1F 60 */	addi r0, r3, __init_cpp_exceptions_reference@l
+/* 801FDA44 001FA9A4  3C 60 80 22 */	lis r3, _ctors@ha
+/* 801FDA48 001FA9A8  38 03 1F 60 */	addi r0, r3, _ctors@l
 /* 801FDA4C 001FA9AC  7C 1F 03 78 */	mr r31, r0
 /* 801FDA50 001FA9B0  48 00 00 04 */	b .L_801FDA54
 .L_801FDA54:

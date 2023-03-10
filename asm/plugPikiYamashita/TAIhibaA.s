@@ -1207,12 +1207,12 @@ act__13TAIAinitHibaAFR4Teki:
 /* 801D59C0 001D2920  38 60 00 01 */	li r3, 1
 /* 801D59C4 001D2924  4E 80 00 20 */	blr 
 
-.global __sinit_TAIhibaA_cpp
-__sinit_TAIhibaA_cpp:
+.fn __sinit_TAIhibaA_cpp, local
 /* 801D59C8 001D2928  3C 60 80 2E */	lis r3, __vt__33TAIeffectAttackEventCallBackHibaA@ha
 /* 801D59CC 001D292C  38 03 4A DC */	addi r0, r3, __vt__33TAIeffectAttackEventCallBackHibaA@l
 /* 801D59D0 001D2930  90 0D 31 B8 */	stw r0, eventCallBack__19TAIAfireAttackHibaA@sda21(r13)
 /* 801D59D4 001D2934  4E 80 00 20 */	blr 
+.endfn __sinit_TAIhibaA_cpp
 
 .global hitCreature__33TAIeffectAttackEventCallBackHibaAFP20TAIeffectAttackParamP8Creature
 hitCreature__33TAIeffectAttackEventCallBackHibaAFP20TAIeffectAttackParamP8Creature:
@@ -1528,6 +1528,10 @@ hitCheckCulling__33TAIeffectAttackEventCallBackHibaAFPQ23zen17particleGeneratorP
 /* 801D5E44 001D2DA4  38 21 00 40 */	addi r1, r1, 0x40
 /* 801D5E48 001D2DA8  7C 08 03 A6 */	mtlr r0
 /* 801D5E4C 001D2DAC  4E 80 00 20 */	blr 
+
+.section .ctors, "wa"  # 0x80221F60 - 0x80221FC0
+lbl_constructor:
+	.4byte __sinit_TAIhibaA_cpp
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8

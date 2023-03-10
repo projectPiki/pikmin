@@ -2041,12 +2041,12 @@ getTurnVelocity__16TAIAturnToTargetFR4Teki:
 /* 801A537C 001A22DC  C0 23 00 14 */	lfs f1, 0x14(r3)
 /* 801A5380 001A22E0  4E 80 00 20 */	blr 
 
-.global __sinit_TAItank_cpp
-__sinit_TAItank_cpp:
+.fn __sinit_TAItank_cpp, local
 /* 801A5384 001A22E4  3C 60 80 2E */	lis r3, __vt__32TAIeffectAttackEventCallBackTank@ha
 /* 801A5388 001A22E8  38 03 E4 5C */	addi r0, r3, __vt__32TAIeffectAttackEventCallBackTank@l
 /* 801A538C 001A22EC  90 0D 31 88 */	stw r0, eventCallBackFire__10FireEffect@sda21(r13)
 /* 801A5390 001A22F0  4E 80 00 20 */	blr 
+.endfn __sinit_TAItank_cpp
 
 .global hitCreature__32TAIeffectAttackEventCallBackTankFP20TAIeffectAttackParamP8Creature
 hitCreature__32TAIeffectAttackEventCallBackTankFP20TAIeffectAttackParamP8Creature:
@@ -2318,6 +2318,10 @@ ptclHitMap__32TAIeffectAttackEventCallBackTankFPQ23zen17particleGeneratorP20TAIe
 /* 801A5768 001A26C8  38 21 00 C8 */	addi r1, r1, 0xc8
 /* 801A576C 001A26CC  7C 08 03 A6 */	mtlr r0
 /* 801A5770 001A26D0  4E 80 00 20 */	blr 
+
+.section .ctors, "wa"  # 0x80221F60 - 0x80221FC0
+lbl_constructor:
+	.4byte __sinit_TAItank_cpp
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8

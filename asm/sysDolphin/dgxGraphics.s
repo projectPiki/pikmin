@@ -5810,8 +5810,7 @@ drawOutline__11DGXGraphicsFR6CameraP5Shape:
 drawOneStrip__11DGXGraphicsFP8Vector3fP8Vector3fP8Vector2fi:
 /* 8004C8D8 00049838  4E 80 00 20 */	blr 
 
-.global __sinit_dgxGraphics_cpp
-__sinit_dgxGraphics_cpp:
+.fn __sinit_dgxGraphics_cpp, local
 /* 8004C8DC 0004983C  38 00 00 FF */	li r0, 0xff
 /* 8004C8E0 00049840  3C 60 80 3A */	lis r3, GColors@ha
 /* 8004C8E4 00049844  9C 03 D4 30 */	stbu r0, GColors@l(r3)
@@ -5823,6 +5822,11 @@ __sinit_dgxGraphics_cpp:
 /* 8004C8FC 0004985C  98 03 00 06 */	stb r0, 6(r3)
 /* 8004C900 00049860  98 03 00 07 */	stb r0, 7(r3)
 /* 8004C904 00049864  4E 80 00 20 */	blr 
+.endfn __sinit_dgxGraphics_cpp
+
+.section .ctors, "wa"  # 0x80221F60 - 0x80221FC0
+lbl_constructor:
+	.4byte __sinit_dgxGraphics_cpp
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8

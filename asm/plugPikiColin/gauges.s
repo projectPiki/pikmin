@@ -1722,9 +1722,13 @@ countOff__9LifeGaugeFv:
 /* 8005D0DC 0005A03C  90 03 00 38 */	stw r0, 0x38(r3)
 /* 8005D0E0 0005A040  4E 80 00 20 */	blr 
 
-.global __sinit_gauges_cpp
-__sinit_gauges_cpp:
+.fn __sinit_gauges_cpp, local
 /* 8005D0E4 0005A044  4E 80 00 20 */	blr 
+.endfn __sinit_gauges_cpp
+
+.section .ctors, "wa"  # 0x80221F60 - 0x80221FC0
+lbl_constructor:
+	.4byte __sinit_gauges_cpp
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8

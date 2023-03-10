@@ -8789,8 +8789,7 @@ getShape__13DynCollObjectFv:
 /* 8006979C 000666FC  38 60 00 00 */	li r3, 0
 /* 800697A0 00066700  4E 80 00 20 */	blr 
 
-.global __sinit_mapMgr_cpp
-__sinit_mapMgr_cpp:
+.fn __sinit_mapMgr_cpp, local
 /* 800697A4 00066704  3C 60 80 3A */	lis r3, collExtents@ha
 /* 800697A8 00066708  C0 02 87 50 */	lfs f0, lbl_803E8950@sda21(r2)
 /* 800697AC 0006670C  38 63 DD C0 */	addi r3, r3, collExtents@l
@@ -8813,6 +8812,11 @@ __sinit_mapMgr_cpp:
 /* 800697F0 00066750  C0 0D 92 FC */	lfs f0, lbl_803DE01C@sda21(r13)
 /* 800697F4 00066754  D0 03 00 14 */	stfs f0, 0x14(r3)
 /* 800697F8 00066758  4E 80 00 20 */	blr 
+.endfn __sinit_mapMgr_cpp
+
+.section .ctors, "wa"  # 0x80221F60 - 0x80221FC0
+lbl_constructor:
+	.4byte __sinit_mapMgr_cpp
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8

@@ -2740,8 +2740,7 @@ close__9DVDStreamFv:
 /* 80046ED4 00043E34  7C 08 03 A6 */	mtlr r0
 /* 80046ED8 00043E38  4E 80 00 20 */	blr 
 
-.global __sinit_system_cpp
-__sinit_system_cpp:
+.fn __sinit_system_cpp, local
 /* 80046EDC 00043E3C  7C 08 02 A6 */	mflr r0
 /* 80046EE0 00043E40  3C 60 80 3A */	lis r3, lbl_80398880@ha
 /* 80046EE4 00043E44  90 01 00 04 */	stw r0, 4(r1)
@@ -2783,6 +2782,7 @@ __sinit_system_cpp:
 /* 80046F74 00043ED4  38 21 00 10 */	addi r1, r1, 0x10
 /* 80046F78 00043ED8  7C 08 03 A6 */	mtlr r0
 /* 80046F7C 00043EDC  4E 80 00 20 */	blr 
+.endfn __sinit_system_cpp
 
 .global getPending__10AramStreamFv
 getPending__10AramStreamFv:
@@ -2822,6 +2822,10 @@ read__10AramStreamFPvi:
 /* 80046FF8 00043F58  38 21 00 20 */	addi r1, r1, 0x20
 /* 80046FFC 00043F5C  7C 08 03 A6 */	mtlr r0
 /* 80047000 00043F60  4E 80 00 20 */	blr 
+
+.section .ctors, "wa"  # 0x80221F60 - 0x80221FC0
+lbl_constructor:
+	.4byte __sinit_system_cpp
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 # after bigFont_data

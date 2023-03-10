@@ -26,8 +26,8 @@ exit:
 /* 80215588 002124E8  2C 00 00 00 */	cmpwi r0, 0
 /* 8021558C 002124EC  41 81 FF D8 */	bgt .L_80215564
 /* 80215590 002124F0  4B FF F3 D5 */	bl __destroy_global_chain
-/* 80215594 002124F4  3C 60 80 22 */	lis r3, __destroy_global_chain_reference@ha
-/* 80215598 002124F8  38 03 1F C0 */	addi r0, r3, __destroy_global_chain_reference@l
+/* 80215594 002124F4  3C 60 80 22 */	lis r3, _dtors@ha
+/* 80215598 002124F8  38 03 1F C0 */	addi r0, r3, _dtors@l
 /* 8021559C 002124FC  7C 1F 03 78 */	mr r31, r0
 /* 802155A0 00212500  48 00 00 10 */	b .L_802155B0
 .L_802155A4:

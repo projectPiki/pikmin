@@ -726,8 +726,7 @@ init__16OnePlayerSectionFv:
 /* 80053B64 00050AC4  7C 08 03 A6 */	mtlr r0
 /* 80053B68 00050AC8  4E 80 00 20 */	blr 
 
-.global __sinit_game_cpp
-__sinit_game_cpp:
+.fn __sinit_game_cpp, local
 /* 80053B6C 00050ACC  7C 08 02 A6 */	mflr r0
 /* 80053B70 00050AD0  3C 60 80 3A */	lis r3, flowCont@ha
 /* 80053B74 00050AD4  90 01 00 04 */	stw r0, 4(r1)
@@ -788,6 +787,11 @@ __sinit_game_cpp:
 /* 80053C50 00050BB0  38 21 00 18 */	addi r1, r1, 0x18
 /* 80053C54 00050BB4  7C 08 03 A6 */	mtlr r0
 /* 80053C58 00050BB8  4E 80 00 20 */	blr 
+.endfn __sinit_game_cpp
+
+.section .ctors, "wa"  # 0x80221F60 - 0x80221FC0
+lbl_constructor:
+	.4byte __sinit_game_cpp
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8

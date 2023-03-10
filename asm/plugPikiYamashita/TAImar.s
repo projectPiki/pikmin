@@ -2671,12 +2671,12 @@ act__12TAIAdyingMarFR4Teki:
 /* 801A7DC8 001A4D28  7C 08 03 A6 */	mtlr r0
 /* 801A7DCC 001A4D2C  4E 80 00 20 */	blr 
 
-.global __sinit_TAImar_cpp
-__sinit_TAImar_cpp:
+.fn __sinit_TAImar_cpp, local
 /* 801A7DD0 001A4D30  3C 60 80 2E */	lis r3, __vt__31TAIeffectAttackEventCallBackMar@ha
 /* 801A7DD4 001A4D34  38 03 F0 E4 */	addi r0, r3, __vt__31TAIeffectAttackEventCallBackMar@l
 /* 801A7DD8 001A4D38  90 0D 31 9C */	stw r0, eventCallBack__12BreathEffect@sda21(r13)
 /* 801A7DDC 001A4D3C  4E 80 00 20 */	blr 
+.endfn __sinit_TAImar_cpp
 
 .global hitCreature__31TAIeffectAttackEventCallBackMarFPQ23zen17particleGeneratorP20TAIeffectAttackParamP8Creature8Vector3f
 hitCreature__31TAIeffectAttackEventCallBackMarFPQ23zen17particleGeneratorP20TAIeffectAttackParamP8Creature8Vector3f:
@@ -3137,6 +3137,10 @@ hitMap__31TAIeffectAttackEventCallBackMarFP20TAIeffectAttackParam:
 "@12@getOffset__32TAIAflyingDistanceInTerritoryMarFR4Teki":
 /* 801A8488 001A53E8  38 63 FF F4 */	addi r3, r3, -12
 /* 801A848C 001A53EC  4B FF EB F4 */	b getOffset__32TAIAflyingDistanceInTerritoryMarFR4Teki
+
+.section .ctors, "wa"  # 0x80221F60 - 0x80221FC0
+lbl_constructor:
+	.4byte __sinit_TAImar_cpp
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8

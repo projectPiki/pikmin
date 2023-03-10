@@ -1044,8 +1044,7 @@ loadCard__8StageInfFR18RandomAccessStream:
 init__6InfMgrFi:
 /* 800C6520 000C3480  4E 80 00 20 */	blr 
 
-.global __sinit_pikiInf_cpp
-__sinit_pikiInf_cpp:
+.fn __sinit_pikiInf_cpp, local
 /* 800C6524 000C3484  3C 60 80 3D */	lis r3, pikiInfMgr@ha
 /* 800C6528 000C3488  38 63 1D F0 */	addi r3, r3, pikiInfMgr@l
 /* 800C652C 000C348C  38 00 00 00 */	li r0, 0
@@ -1059,6 +1058,11 @@ __sinit_pikiInf_cpp:
 /* 800C654C 000C34AC  90 03 00 14 */	stw r0, 0x14(r3)
 /* 800C6550 000C34B0  90 03 00 08 */	stw r0, 8(r3)
 /* 800C6554 000C34B4  4E 80 00 20 */	blr 
+.endfn __sinit_pikiInf_cpp
+
+.section .ctors, "wa"  # 0x80221F60 - 0x80221FC0
+lbl_constructor:
+	.4byte __sinit_pikiInf_cpp
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8

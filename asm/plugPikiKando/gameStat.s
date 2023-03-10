@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global init__8GameStatFv
-init__8GameStatFv:
+.fn init__8GameStatFv, global
 /* 801124B8 0010F418  3C 60 80 3D */	lis r3, deadPikis__8GameStat@ha
 /* 801124BC 0010F41C  38 63 1E 58 */	addi r3, r3, deadPikis__8GameStat@l
 /* 801124C0 0010F420  38 00 00 00 */	li r0, 0
@@ -44,9 +43,9 @@ init__8GameStatFv:
 /* 80112554 0010F4B4  90 0D 31 00 */	stw r0, minPikis__8GameStat@sda21(r13)
 /* 80112558 0010F4B8  98 0D 31 08 */	stb r0, orimaDead__8GameStat@sda21(r13)
 /* 8011255C 0010F4BC  4E 80 00 20 */	blr 
+.endfn init__8GameStatFv
 
-.global update__8GameStatFv
-update__8GameStatFv:
+.fn update__8GameStatFv, global
 /* 80112560 0010F4C0  3C 60 80 3D */	lis r3, deadPikis__8GameStat@ha
 /* 80112564 0010F4C4  38 A3 1E 58 */	addi r5, r3, deadPikis__8GameStat@l
 /* 80112568 0010F4C8  80 05 00 24 */	lwz r0, 0x24(r5)
@@ -96,13 +95,13 @@ update__8GameStatFv:
 /* 80112618 0010F578  4C 81 00 20 */	blelr 
 /* 8011261C 0010F57C  90 8D 31 04 */	stw r4, maxPikis__8GameStat@sda21(r13)
 /* 80112620 0010F580  4E 80 00 20 */	blr 
+.endfn update__8GameStatFv
 
-.global dump__8GameStatFv
-dump__8GameStatFv:
+.fn dump__8GameStatFv, global
 /* 80112624 0010F584  4E 80 00 20 */	blr 
+.endfn dump__8GameStatFv
 
-.global __sinit_gameStat_cpp
-__sinit_gameStat_cpp:
+.fn __sinit_gameStat_cpp, local
 /* 80112628 0010F588  3C 60 80 3D */	lis r3, deadPikis__8GameStat@ha
 /* 8011262C 0010F58C  38 63 1E 58 */	addi r3, r3, deadPikis__8GameStat@l
 /* 80112630 0010F590  38 00 00 00 */	li r0, 0
@@ -142,21 +141,26 @@ __sinit_gameStat_cpp:
 /* 801126B8 0010F618  90 03 00 7C */	stw r0, 0x7c(r3)
 /* 801126BC 0010F61C  90 03 00 78 */	stw r0, 0x78(r3)
 /* 801126C0 0010F620  4E 80 00 20 */	blr 
+.endfn __sinit_gameStat_cpp
+
+.section .ctors, "wa"  # 0x80221F60 - 0x80221FC0
+lbl_constructor:
+	.4byte __sinit_gameStat_cpp
 
 .section .sbss, "wa"
 .balign 8
-.global killTekis__8GameStat
-killTekis__8GameStat:
+.obj killTekis__8GameStat, global
 	.skip 0x4
-.global getPellets__8GameStat
-getPellets__8GameStat:
+.endobj killTekis__8GameStat
+.obj getPellets__8GameStat, global
 	.skip 0x4
-.global minPikis__8GameStat
-minPikis__8GameStat:
+.endobj getPellets__8GameStat
+.obj minPikis__8GameStat, global
 	.skip 0x4
-.global maxPikis__8GameStat
-maxPikis__8GameStat:
+.endobj minPikis__8GameStat
+.obj maxPikis__8GameStat, global
 	.skip 0x4
-.global orimaDead__8GameStat
-orimaDead__8GameStat:
+.endobj maxPikis__8GameStat
+.obj orimaDead__8GameStat, global
 	.skip 0x1
+.endobj orimaDead__8GameStat

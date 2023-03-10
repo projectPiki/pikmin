@@ -1824,8 +1824,7 @@ init__13GameLoadIdlerFv:
 /* 80052EBC 0004FE1C  7C 08 03 A6 */	mtlr r0
 /* 80052EC0 0004FE20  4E 80 00 20 */	blr 
 
-.global __sinit_gameflow_cpp
-__sinit_gameflow_cpp:
+.fn __sinit_gameflow_cpp, local
 /* 80052EC4 0004FE24  7C 08 02 A6 */	mflr r0
 /* 80052EC8 0004FE28  3C 60 80 3A */	lis r3, gameflow@ha
 /* 80052ECC 0004FE2C  90 01 00 04 */	stw r0, 4(r1)
@@ -1941,6 +1940,7 @@ __sinit_gameflow_cpp:
 /* 80053084 0004FFE4  38 21 00 20 */	addi r1, r1, 0x20
 /* 80053088 0004FFE8  7C 08 03 A6 */	mtlr r0
 /* 8005308C 0004FFEC  4E 80 00 20 */	blr 
+.endfn __sinit_gameflow_cpp
 
 .global Initialise__9GamePrefsFv
 Initialise__9GamePrefsFv:
@@ -2008,6 +2008,10 @@ __ct__13GameRecMinDayFv:
 /* 80053150 000500B0  38 00 00 1E */	li r0, 0x1e
 /* 80053154 000500B4  90 03 00 04 */	stw r0, 4(r3)
 /* 80053158 000500B8  4E 80 00 20 */	blr 
+
+.section .ctors, "wa"  # 0x80221F60 - 0x80221FC0
+lbl_constructor:
+	.4byte __sinit_gameflow_cpp
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8

@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global tanf
-tanf:
+.fn tanf, global
 /* 8021BAD0 00218A30  7C 08 02 A6 */	mflr r0
 /* 8021BAD4 00218A34  90 01 00 04 */	stw r0, 4(r1)
 /* 8021BAD8 00218A38  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -19,9 +18,9 @@ tanf:
 /* 8021BB08 00218A68  7C 08 03 A6 */	mtlr r0
 /* 8021BB0C 00218A6C  38 21 00 20 */	addi r1, r1, 0x20
 /* 8021BB10 00218A70  4E 80 00 20 */	blr 
+.endfn tanf
 
-.global cos__Ff
-cos__Ff:
+.fn cos__Ff, weak
 /* 8021BB14 00218A74  7C 08 02 A6 */	mflr r0
 /* 8021BB18 00218A78  90 01 00 04 */	stw r0, 4(r1)
 /* 8021BB1C 00218A7C  94 21 FF F8 */	stwu r1, -8(r1)
@@ -30,9 +29,9 @@ cos__Ff:
 /* 8021BB28 00218A88  38 21 00 08 */	addi r1, r1, 8
 /* 8021BB2C 00218A8C  7C 08 03 A6 */	mtlr r0
 /* 8021BB30 00218A90  4E 80 00 20 */	blr 
+.endfn cos__Ff
 
-.global sin__Ff
-sin__Ff:
+.fn sin__Ff, weak
 /* 8021BB34 00218A94  7C 08 02 A6 */	mflr r0
 /* 8021BB38 00218A98  90 01 00 04 */	stw r0, 4(r1)
 /* 8021BB3C 00218A9C  94 21 FF F8 */	stwu r1, -8(r1)
@@ -41,9 +40,9 @@ sin__Ff:
 /* 8021BB48 00218AA8  38 21 00 08 */	addi r1, r1, 8
 /* 8021BB4C 00218AAC  7C 08 03 A6 */	mtlr r0
 /* 8021BB50 00218AB0  4E 80 00 20 */	blr 
+.endfn sin__Ff
 
-.global cosf
-cosf:
+.fn cosf, global
 /* 8021BB54 00218AB4  7C 08 02 A6 */	mflr r0
 /* 8021BB58 00218AB8  3C 60 80 2F */	lis r3, __four_over_pi_m1@ha
 /* 8021BB5C 00218ABC  90 01 00 04 */	stw r0, 4(r1)
@@ -150,9 +149,9 @@ cosf:
 /* 8021BCDC 00218C3C  7C 08 03 A6 */	mtlr r0
 /* 8021BCE0 00218C40  38 21 00 28 */	addi r1, r1, 0x28
 /* 8021BCE4 00218C44  4E 80 00 20 */	blr 
+.endfn cosf
 
-.global sinf
-sinf:
+.fn sinf, global
 /* 8021BCE8 00218C48  7C 08 02 A6 */	mflr r0
 /* 8021BCEC 00218C4C  3C 60 80 2F */	lis r3, __four_over_pi_m1@ha
 /* 8021BCF0 00218C50  90 01 00 04 */	stw r0, 4(r1)
@@ -263,9 +262,9 @@ sinf:
 /* 8021BE80 00218DE0  7C 08 03 A6 */	mtlr r0
 /* 8021BE84 00218DE4  38 21 00 28 */	addi r1, r1, 0x28
 /* 8021BE88 00218DE8  4E 80 00 20 */	blr 
+.endfn sinf
 
-.global __sinit_trigf_c
-__sinit_trigf_c:
+.fn __sinit_trigf_c, local
 /* 8021BE8C 00218DEC  3C 60 80 22 */	lis r3, tmp_float@ha
 /* 8021BE90 00218DF0  38 83 2C F8 */	addi r4, r3, tmp_float@l
 /* 8021BE94 00218DF4  C0 04 00 00 */	lfs f0, 0(r4)
@@ -278,32 +277,42 @@ __sinit_trigf_c:
 /* 8021BEB0 00218E10  C0 04 00 0C */	lfs f0, 0xc(r4)
 /* 8021BEB4 00218E14  D0 03 00 0C */	stfs f0, 0xc(r3)
 /* 8021BEB8 00218E18  4E 80 00 20 */	blr 
+.endfn __sinit_trigf_c
+
+.section .ctors, "wa"  # 0x80221F60 - 0x80221FC0
+lbl_constructor:
+	.4byte __sinit_trigf_c
 
 .section .rodata, "a"  # 0x80221FE0 - 0x80222DC0
 .balign 8
-tmp_float:
+.obj tmp_float, local
 	.float 0.25
 	.float 0.023239374
 	.float 1.7055572E-7
 	.float 1.867365E-11
+.endobj tmp_float
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-__four_over_pi_m1:
+.obj __four_over_pi_m1, local
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x00000000
+.endobj __four_over_pi_m1
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803EC810:
+.obj lbl_803EC810, local
 	.float 0.63661975
-lbl_803EC814:
+.endobj lbl_803EC810
+.obj lbl_803EC814, local
 	.float 0.5
-lbl_803EC818:
+.endobj lbl_803EC814
+.obj lbl_803EC818, local
 	.float 0.00034526698
+.endobj lbl_803EC818
 .balign 8
-lbl_803EC820:
-	.4byte 0x43300000
-	.4byte 0x80000000
+.obj lbl_803EC820, local
+	.8byte 0x4330000080000000
+.endobj lbl_803EC820

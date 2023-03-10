@@ -1,12 +1,11 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global GetR2__Fv
-GetR2__Fv:
+.fn GetR2__Fv, local
 /* 802154C0 00212420  7C 43 13 78 */	mr r3, r2
 /* 802154C4 00212424  4E 80 00 20 */	blr 
+.endfn GetR2__Fv
 
-.global __fini_cpp_exceptions
-__fini_cpp_exceptions:
+.fn __fini_cpp_exceptions, global
 /* 802154C8 00212428  7C 08 02 A6 */	mflr r0
 /* 802154CC 0021242C  90 01 00 04 */	stw r0, 4(r1)
 /* 802154D0 00212430  94 21 FF F8 */	stwu r1, -8(r1)
@@ -21,9 +20,9 @@ __fini_cpp_exceptions:
 /* 802154F0 00212450  38 21 00 08 */	addi r1, r1, 8
 /* 802154F4 00212454  7C 08 03 A6 */	mtlr r0
 /* 802154F8 00212458  4E 80 00 20 */	blr 
+.endfn __fini_cpp_exceptions
 
-.global __init_cpp_exceptions
-__init_cpp_exceptions:
+.fn __init_cpp_exceptions, global
 /* 802154FC 0021245C  7C 08 02 A6 */	mflr r0
 /* 80215500 00212460  90 01 00 04 */	stw r0, 4(r1)
 /* 80215504 00212464  94 21 FF F8 */	stwu r1, -8(r1)
@@ -41,9 +40,23 @@ __init_cpp_exceptions:
 /* 80215530 00212490  38 21 00 08 */	addi r1, r1, 8
 /* 80215534 00212494  7C 08 03 A6 */	mtlr r0
 /* 80215538 00212498  4E 80 00 20 */	blr 
+.endfn __init_cpp_exceptions
+
+.section .ctors, "wa"  # 0x80221F60 - 0x80221FC0
+.obj __init_cpp_exceptions_reference, local
+	.4byte __init_cpp_exceptions
+.endobj __init_cpp_exceptions_reference
+
+.section .dtors, "wa"  # 0x80221FC0 - 0x80221FE0
+.obj __destroy_global_chain_reference, local
+	.4byte __destroy_global_chain
+.endobj __destroy_global_chain_reference
+.obj __fini_cpp_exceptions_reference, local
+	.4byte __fini_cpp_exceptions
+.endobj __fini_cpp_exceptions_reference
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-.global fragmentID
-fragmentID:
+.obj fragmentID, local
 	.4byte 0xFFFFFFFE
+.endobj fragmentID
