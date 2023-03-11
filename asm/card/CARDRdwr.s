@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global BlockReadCallback
-BlockReadCallback:
+.fn BlockReadCallback, local
 /* 80209214 00206174  7C 08 02 A6 */	mflr r0
 /* 80209218 00206178  90 01 00 04 */	stw r0, 4(r1)
 /* 8020921C 0020617C  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -60,9 +59,9 @@ BlockReadCallback:
 /* 802092E4 00206244  83 A1 00 14 */	lwz r29, 0x14(r1)
 /* 802092E8 00206248  38 21 00 20 */	addi r1, r1, 0x20
 /* 802092EC 0020624C  4E 80 00 20 */	blr 
+.endfn BlockReadCallback
 
-.global __CARDRead
-__CARDRead:
+.fn __CARDRead, global
 /* 802092F0 00206250  7C 08 02 A6 */	mflr r0
 /* 802092F4 00206254  1D 23 01 08 */	mulli r9, r3, 0x108
 /* 802092F8 00206258  90 01 00 04 */	stw r0, 4(r1)
@@ -90,9 +89,9 @@ __CARDRead:
 /* 80209348 002062A8  38 21 00 08 */	addi r1, r1, 8
 /* 8020934C 002062AC  7C 08 03 A6 */	mtlr r0
 /* 80209350 002062B0  4E 80 00 20 */	blr 
+.endfn __CARDRead
 
-.global BlockWriteCallback
-BlockWriteCallback:
+.fn BlockWriteCallback, local
 /* 80209354 002062B4  7C 08 02 A6 */	mflr r0
 /* 80209358 002062B8  90 01 00 04 */	stw r0, 4(r1)
 /* 8020935C 002062BC  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -151,9 +150,9 @@ BlockWriteCallback:
 /* 80209424 00206384  83 A1 00 14 */	lwz r29, 0x14(r1)
 /* 80209428 00206388  38 21 00 20 */	addi r1, r1, 0x20
 /* 8020942C 0020638C  4E 80 00 20 */	blr 
+.endfn BlockWriteCallback
 
-.global __CARDWrite
-__CARDWrite:
+.fn __CARDWrite, global
 /* 80209430 00206390  7C 08 02 A6 */	mflr r0
 /* 80209434 00206394  1D 23 01 08 */	mulli r9, r3, 0x108
 /* 80209438 00206398  90 01 00 04 */	stw r0, 4(r1)
@@ -181,12 +180,13 @@ __CARDWrite:
 /* 80209488 002063E8  38 21 00 08 */	addi r1, r1, 8
 /* 8020948C 002063EC  7C 08 03 A6 */	mtlr r0
 /* 80209490 002063F0  4E 80 00 20 */	blr 
+.endfn __CARDWrite
 
-.global CARDGetXferredBytes
-CARDGetXferredBytes:
+.fn CARDGetXferredBytes, global
 /* 80209494 002063F4  1C 03 01 08 */	mulli r0, r3, 0x108
 /* 80209498 002063F8  3C 60 80 3D */	lis r3, __CARDBlock@ha
 /* 8020949C 002063FC  38 63 34 20 */	addi r3, r3, __CARDBlock@l
 /* 802094A0 00206400  7C 63 02 14 */	add r3, r3, r0
 /* 802094A4 00206404  80 63 00 B8 */	lwz r3, 0xb8(r3)
 /* 802094A8 00206408  4E 80 00 20 */	blr 
+.endfn CARDGetXferredBytes

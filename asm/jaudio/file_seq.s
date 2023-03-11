@@ -1,8 +1,7 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
 .balign 32, 0
-.global Jaf_InitSeqArchive2__FPcPUcPUc
-Jaf_InitSeqArchive2__FPcPUcPUc:
+.fn Jaf_InitSeqArchive2__FPcPUcPUc, global
 /* 8001B3E0 00018340  7C 08 02 A6 */	mflr r0
 /* 8001B3E4 00018344  90 01 00 04 */	stw r0, 4(r1)
 /* 8001B3E8 00018348  94 21 FF D0 */	stwu r1, -0x30(r1)
@@ -59,10 +58,10 @@ Jaf_InitSeqArchive2__FPcPUcPUc:
 /* 8001B4A4 00018404  38 21 00 30 */	addi r1, r1, 0x30
 /* 8001B4A8 00018408  7C 08 03 A6 */	mtlr r0
 /* 8001B4AC 0001840C  4E 80 00 20 */	blr 
+.endfn Jaf_InitSeqArchive2__FPcPUcPUc
 
 .balign 32, 0
-.global Jaf_CheckSeqSize__FUl
-Jaf_CheckSeqSize__FUl:
+.fn Jaf_CheckSeqSize__FUl, global
 /* 8001B4C0 00018420  7C 08 02 A6 */	mflr r0
 /* 8001B4C4 00018424  90 01 00 04 */	stw r0, 4(r1)
 /* 8001B4C8 00018428  94 21 FF F8 */	stwu r1, -8(r1)
@@ -80,10 +79,10 @@ Jaf_CheckSeqSize__FUl:
 /* 8001B4F0 00018450  38 21 00 08 */	addi r1, r1, 8
 /* 8001B4F4 00018454  7C 08 03 A6 */	mtlr r0
 /* 8001B4F8 00018458  4E 80 00 20 */	blr 
+.endfn Jaf_CheckSeqSize__FUl
 
 .balign 32, 0
-.global Jaf_LoadSeq__FUlPUc
-Jaf_LoadSeq__FUlPUc:
+.fn Jaf_LoadSeq__FUlPUc, global
 /* 8001B500 00018460  7C 08 02 A6 */	mflr r0
 /* 8001B504 00018464  90 01 00 04 */	stw r0, 4(r1)
 /* 8001B508 00018468  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -121,10 +120,10 @@ Jaf_LoadSeq__FUlPUc:
 /* 8001B57C 000184DC  38 21 00 18 */	addi r1, r1, 0x18
 /* 8001B580 000184E0  7C 08 03 A6 */	mtlr r0
 /* 8001B584 000184E4  4E 80 00 20 */	blr 
+.endfn Jaf_LoadSeq__FUlPUc
 
 .balign 32, 0
-.global Jaf_ClearSeq__FUl
-Jaf_ClearSeq__FUl:
+.fn Jaf_ClearSeq__FUl, global
 /* 8001B5A0 00018500  3C 80 80 36 */	lis r4, seq_loadbuffer@ha
 /* 8001B5A4 00018504  54 63 10 3A */	slwi r3, r3, 2
 /* 8001B5A8 00018508  38 04 46 88 */	addi r0, r4, seq_loadbuffer@l
@@ -132,20 +131,20 @@ Jaf_ClearSeq__FUl:
 /* 8001B5B0 00018510  7C 60 1A 14 */	add r3, r0, r3
 /* 8001B5B4 00018514  90 83 00 00 */	stw r4, 0(r3)
 /* 8001B5B8 00018518  4E 80 00 20 */	blr 
+.endfn Jaf_ClearSeq__FUl
 
 .balign 32, 0
-.global Jaf_CheckSeq__FUl
-Jaf_CheckSeq__FUl:
+.fn Jaf_CheckSeq__FUl, global
 /* 8001B5C0 00018520  3C 80 80 36 */	lis r4, seq_loadbuffer@ha
 /* 8001B5C4 00018524  54 63 10 3A */	slwi r3, r3, 2
 /* 8001B5C8 00018528  38 04 46 88 */	addi r0, r4, seq_loadbuffer@l
 /* 8001B5CC 0001852C  7C 60 1A 14 */	add r3, r0, r3
 /* 8001B5D0 00018530  80 63 00 00 */	lwz r3, 0(r3)
 /* 8001B5D4 00018534  4E 80 00 20 */	blr 
+.endfn Jaf_CheckSeq__FUl
 
 .balign 32, 0
-.global Jaf_ReadySeq__FUlUl
-Jaf_ReadySeq__FUlUl:
+.fn Jaf_ReadySeq__FUlUl, global
 /* 8001B5E0 00018540  7C 08 02 A6 */	mflr r0
 /* 8001B5E4 00018544  28 04 01 00 */	cmplwi r4, 0x100
 /* 8001B5E8 00018548  90 01 00 04 */	stw r0, 4(r1)
@@ -190,10 +189,10 @@ Jaf_ReadySeq__FUlUl:
 /* 8001B674 000185D4  38 21 00 28 */	addi r1, r1, 0x28
 /* 8001B678 000185D8  7C 08 03 A6 */	mtlr r0
 /* 8001B67C 000185DC  4E 80 00 20 */	blr 
+.endfn Jaf_ReadySeq__FUlUl
 
 .balign 32, 0
-.global Jaf_PlaySeq__FUl
-Jaf_PlaySeq__FUl:
+.fn Jaf_PlaySeq__FUl, global
 /* 8001B680 000185E0  7C 08 02 A6 */	mflr r0
 /* 8001B684 000185E4  3C 80 80 37 */	lis r4, rootseqhandle@ha
 /* 8001B688 000185E8  90 01 00 04 */	stw r0, 4(r1)
@@ -208,10 +207,10 @@ Jaf_PlaySeq__FUl:
 /* 8001B6AC 0001860C  38 21 00 08 */	addi r1, r1, 8
 /* 8001B6B0 00018610  7C 08 03 A6 */	mtlr r0
 /* 8001B6B4 00018614  4E 80 00 20 */	blr 
+.endfn Jaf_PlaySeq__FUl
 
 .balign 32, 0
-.global Jaf_StartSeq__FUlUl
-Jaf_StartSeq__FUlUl:
+.fn Jaf_StartSeq__FUlUl, global
 /* 8001B6C0 00018620  7C 08 02 A6 */	mflr r0
 /* 8001B6C4 00018624  90 01 00 04 */	stw r0, 4(r1)
 /* 8001B6C8 00018628  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -226,10 +225,10 @@ Jaf_StartSeq__FUlUl:
 /* 8001B6EC 0001864C  38 21 00 18 */	addi r1, r1, 0x18
 /* 8001B6F0 00018650  7C 08 03 A6 */	mtlr r0
 /* 8001B6F4 00018654  4E 80 00 20 */	blr 
+.endfn Jaf_StartSeq__FUlUl
 
 .balign 32, 0
-.global Jaf_StopSeq__FUl
-Jaf_StopSeq__FUl:
+.fn Jaf_StopSeq__FUl, global
 /* 8001B700 00018660  7C 08 02 A6 */	mflr r0
 /* 8001B704 00018664  3C 80 80 37 */	lis r4, rootseqhandle@ha
 /* 8001B708 00018668  90 01 00 04 */	stw r0, 4(r1)
@@ -261,18 +260,19 @@ Jaf_StopSeq__FUl:
 /* 8001B764 000186C4  38 21 00 20 */	addi r1, r1, 0x20
 /* 8001B768 000186C8  7C 08 03 A6 */	mtlr r0
 /* 8001B76C 000186CC  4E 80 00 20 */	blr 
+.endfn Jaf_StopSeq__FUl
 
 .balign 32, 0
-.global Jaf_HandleToSeq__FUl
-Jaf_HandleToSeq__FUl:
+.fn Jaf_HandleToSeq__FUl, global
 /* 8001B780 000186E0  1C 83 04 34 */	mulli r4, r3, 0x434
 /* 8001B784 000186E4  3C 60 80 36 */	lis r3, rootseq_1@ha
 /* 8001B788 000186E8  38 03 4A 88 */	addi r0, r3, rootseq_1@l
 /* 8001B78C 000186EC  7C 60 22 14 */	add r3, r0, r4
 /* 8001B790 000186F0  4E 80 00 20 */	blr 
+.endfn Jaf_HandleToSeq__FUl
 
 .balign 32, 0
-Jaf_LoadFinish__FUl: # static function
+.fn Jaf_LoadFinish__FUl, local
 /* 8001B7A0 00018700  80 03 00 04 */	lwz r0, 4(r3)
 /* 8001B7A4 00018704  3C 80 80 36 */	lis r4, seq_loadbuffer@ha
 /* 8001B7A8 00018708  38 84 46 88 */	addi r4, r4, seq_loadbuffer@l
@@ -283,10 +283,10 @@ Jaf_LoadFinish__FUl: # static function
 /* 8001B7BC 0001871C  90 C4 00 00 */	stw r6, 0(r4)
 /* 8001B7C0 00018720  98 03 00 00 */	stb r0, 0(r3)
 /* 8001B7C4 00018724  4E 80 00 20 */	blr 
+.endfn Jaf_LoadFinish__FUl
 
 .balign 32, 0
-.global __LoadSeqA__FUlUlPUcPFUl_v
-__LoadSeqA__FUlUlPUcPFUl_v:
+.fn __LoadSeqA__FUlUlPUcPFUl_v, global
 /* 8001B7E0 00018740  7C 08 02 A6 */	mflr r0
 /* 8001B7E4 00018744  3C E0 80 36 */	lis r7, seq_loadbuffer@ha
 /* 8001B7E8 00018748  90 01 00 04 */	stw r0, 4(r1)
@@ -368,10 +368,10 @@ __LoadSeqA__FUlUlPUcPFUl_v:
 /* 8001B8F8 00018858  38 21 00 38 */	addi r1, r1, 0x38
 /* 8001B8FC 0001885C  7C 08 03 A6 */	mtlr r0
 /* 8001B900 00018860  4E 80 00 20 */	blr 
+.endfn __LoadSeqA__FUlUlPUcPFUl_v
 
 .balign 32, 0
-.global Jaf_LoadSeqA__FUlPUc
-Jaf_LoadSeqA__FUlPUc:
+.fn Jaf_LoadSeqA__FUlPUc, global
 /* 8001B920 00018880  7C 08 02 A6 */	mflr r0
 /* 8001B924 00018884  3C C0 80 02 */	lis r6, Jaf_LoadFinish__FUl@ha
 /* 8001B928 00018888  90 01 00 04 */	stw r0, 4(r1)
@@ -385,13 +385,16 @@ Jaf_LoadSeqA__FUlPUc:
 /* 8001B948 000188A8  38 21 00 08 */	addi r1, r1, 8
 /* 8001B94C 000188AC  7C 08 03 A6 */	mtlr r0
 /* 8001B950 000188B0  4E 80 00 20 */	blr 
+.endfn Jaf_LoadSeqA__FUlPUc
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-first:
+.obj first, local
 	.4byte 1
+.endobj first
 
 .section .sbss, "wa"
 .balign 8
-seq_archandle:
+.obj seq_archandle, local
 	.skip 4
+.endobj seq_archandle

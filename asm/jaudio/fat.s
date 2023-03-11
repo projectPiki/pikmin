@@ -1,8 +1,7 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
 .balign 32, 0
-.global Jac_FatMemory_Init__FUl
-Jac_FatMemory_Init__FUl:
+.fn Jac_FatMemory_Init__FUl, global
 /* 8000DDE0 0000AD40  7C 08 02 A6 */	mflr r0
 /* 8000DDE4 0000AD44  90 01 00 04 */	stw r0, 4(r1)
 /* 8000DDE8 0000AD48  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -21,10 +20,10 @@ Jac_FatMemory_Init__FUl:
 /* 8000DE18 0000AD78  38 21 00 18 */	addi r1, r1, 0x18
 /* 8000DE1C 0000AD7C  7C 08 03 A6 */	mtlr r0
 /* 8000DE20 0000AD80  4E 80 00 20 */	blr 
+.endfn Jac_FatMemory_Init__FUl
 
 .balign 32, 0
-.global FAT_InitSystem__FPUcUl
-FAT_InitSystem__FPUcUl:
+.fn FAT_InitSystem__FPUcUl, global
 /* 8000DE40 0000ADA0  3C C0 80 31 */	lis r6, FH_TO_FAT@ha
 /* 8000DE44 0000ADA4  3C A0 00 01 */	lis r5, 0x0000FFFF@ha
 /* 8000DE48 0000ADA8  39 06 DE E8 */	addi r8, r6, FH_TO_FAT@l
@@ -77,10 +76,10 @@ FAT_InitSystem__FPUcUl:
 /* 8000DEF0 0000AE50  B0 C5 00 02 */	sth r6, 2(r5)
 /* 8000DEF4 0000AE54  42 00 FF F0 */	bdnz .L_8000DEE4
 /* 8000DEF8 0000AE58  4E 80 00 20 */	blr 
+.endfn FAT_InitSystem__FPUcUl
 
 .balign 32, 0
-.global FAT_AllocateMemory__FUl
-FAT_AllocateMemory__FUl:
+.fn FAT_AllocateMemory__FUl, global
 /* 8000DF00 0000AE60  3C 80 80 31 */	lis r4, FH_TO_FAT@ha
 /* 8000DF04 0000AE64  38 00 01 00 */	li r0, 0x100
 /* 8000DF08 0000AE68  38 A4 DE E8 */	addi r5, r4, FH_TO_FAT@l
@@ -141,10 +140,10 @@ FAT_AllocateMemory__FUl:
 /* 8000DFC8 0000AF28  7C 00 32 14 */	add r0, r0, r6
 /* 8000DFCC 0000AF2C  90 0D 2B F4 */	stw r0, USEFAT_TAIL@sda21(r13)
 /* 8000DFD0 0000AF30  4E 80 00 20 */	blr 
+.endfn FAT_AllocateMemory__FUl
 
 .balign 32, 0
-.global FAT_FreeMemory__FUs
-FAT_FreeMemory__FUs:
+.fn FAT_FreeMemory__FUs, global
 /* 8000DFE0 0000AF40  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 8000DFE4 0000AF44  3C 80 80 31 */	lis r4, FH_TO_FAT@ha
 /* 8000DFE8 0000AF48  38 84 DE E8 */	addi r4, r4, FH_TO_FAT@l
@@ -256,10 +255,10 @@ FAT_FreeMemory__FUs:
 /* 8000E164 0000B0C4  BB C1 00 18 */	lmw r30, 0x18(r1)
 /* 8000E168 0000B0C8  38 21 00 20 */	addi r1, r1, 0x20
 /* 8000E16C 0000B0CC  4E 80 00 20 */	blr 
+.endfn FAT_FreeMemory__FUs
 
 .balign 32, 0
-.global FAT_GetPointer__FUsUl
-FAT_GetPointer__FUsUl:
+.fn FAT_GetPointer__FUsUl, global
 /* 8000E180 0000B0E0  3C A0 80 31 */	lis r5, FH_TO_FAT@ha
 /* 8000E184 0000B0E4  54 67 13 BA */	rlwinm r7, r3, 2, 0xe, 0x1d
 /* 8000E188 0000B0E8  38 A5 DE E8 */	addi r5, r5, FH_TO_FAT@l
@@ -279,10 +278,10 @@ FAT_GetPointer__FUsUl:
 /* 8000E1BC 0000B11C  80 03 04 04 */	lwz r0, 0x404(r3)
 /* 8000E1C0 0000B120  7C 60 22 14 */	add r3, r0, r4
 /* 8000E1C4 0000B124  4E 80 00 20 */	blr 
+.endfn FAT_GetPointer__FUsUl
 
 .balign 32, 0
-.global FAT_ReadByte__FUsUl
-FAT_ReadByte__FUsUl:
+.fn FAT_ReadByte__FUsUl, global
 /* 8000E1E0 0000B140  7C 08 02 A6 */	mflr r0
 /* 8000E1E4 0000B144  90 01 00 04 */	stw r0, 4(r1)
 /* 8000E1E8 0000B148  94 21 FF F8 */	stwu r1, -8(r1)
@@ -298,10 +297,10 @@ FAT_ReadByte__FUsUl:
 /* 8000E208 0000B168  38 21 00 08 */	addi r1, r1, 8
 /* 8000E20C 0000B16C  7C 08 03 A6 */	mtlr r0
 /* 8000E210 0000B170  4E 80 00 20 */	blr 
+.endfn FAT_ReadByte__FUsUl
 
 .balign 32, 0
-.global FAT_StoreBlock__FPUcUsUlUl
-FAT_StoreBlock__FPUcUsUlUl:
+.fn FAT_StoreBlock__FPUcUsUlUl, global
 /* 8000E220 0000B180  7C 08 02 A6 */	mflr r0
 /* 8000E224 0000B184  90 01 00 04 */	stw r0, 4(r1)
 /* 8000E228 0000B188  94 21 FF C8 */	stwu r1, -0x38(r1)
@@ -363,12 +362,16 @@ FAT_StoreBlock__FPUcUsUlUl:
 /* 8000E2F4 0000B254  38 21 00 38 */	addi r1, r1, 0x38
 /* 8000E2F8 0000B258  7C 08 03 A6 */	mtlr r0
 /* 8000E2FC 0000B25C  4E 80 00 20 */	blr 
+.endfn FAT_StoreBlock__FPUcUsUlUl
 
 .section .sbss, "wa"
 .balign 8
-ACTIVE_FATS:
+.obj ACTIVE_FATS, local
 	.skip 4
-USEFAT_TAIL:
+.endobj ACTIVE_FATS
+.obj USEFAT_TAIL, local
 	.skip 4
-fatheapptr:
+.endobj USEFAT_TAIL
+.obj fatheapptr, local
 	.skip 4
+.endobj fatheapptr

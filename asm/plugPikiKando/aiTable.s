@@ -1,6 +1,6 @@
 .include "macros.inc"
 .section .sbss, "wa"
 .balign 8
-.global uniqueInstance__7AiTable
-uniqueInstance__7AiTable:
+.obj uniqueInstance__7AiTable, global
 	.skip 4
+.endobj uniqueInstance__7AiTable

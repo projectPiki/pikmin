@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global ClampStick
-ClampStick:
+.fn ClampStick, local
 /* 80203BCC 00200B2C  88 03 00 00 */	lbz r0, 0(r3)
 /* 80203BD0 00200B30  89 84 00 00 */	lbz r12, 0(r4)
 /* 80203BD4 00200B34  7C 00 07 75 */	extsb. r0, r0
@@ -89,9 +88,9 @@ ClampStick:
 /* 80203CF0 00200C50  98 A3 00 00 */	stb r5, 0(r3)
 /* 80203CF4 00200C54  98 04 00 00 */	stb r0, 0(r4)
 /* 80203CF8 00200C58  4E 80 00 20 */	blr 
+.endfn ClampStick
 
-.global PADClamp
-PADClamp:
+.fn PADClamp, global
 /* 80203CFC 00200C5C  7C 08 02 A6 */	mflr r0
 /* 80203D00 00200C60  90 01 00 04 */	stw r0, 4(r1)
 /* 80203D04 00200C64  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -165,10 +164,11 @@ PADClamp:
 /* 80203DF8 00200D58  83 A1 00 14 */	lwz r29, 0x14(r1)
 /* 80203DFC 00200D5C  38 21 00 20 */	addi r1, r1, 0x20
 /* 80203E00 00200D60  4E 80 00 20 */	blr 
+.endfn PADClamp
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-.global ClampRegion
-ClampRegion:
+.obj ClampRegion, local
 	.4byte 0x1EB40F48
 	.4byte 0x280F3B1F
+.endobj ClampRegion

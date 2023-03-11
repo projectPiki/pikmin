@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global MTXPerspective
-MTXPerspective:
+.fn MTXPerspective, global
 /* 801FDF20 001FAE80  7C 08 02 A6 */	mflr r0
 /* 801FDF24 001FAE84  90 01 00 04 */	stw r0, 4(r1)
 /* 801FDF28 001FAE88  94 21 FF C0 */	stwu r1, -0x40(r1)
@@ -54,9 +53,9 @@ MTXPerspective:
 /* 801FDFE4 001FAF44  38 21 00 40 */	addi r1, r1, 0x40
 /* 801FDFE8 001FAF48  7C 08 03 A6 */	mtlr r0
 /* 801FDFEC 001FAF4C  4E 80 00 20 */	blr 
+.endfn MTXPerspective
 
-.global MTXOrtho
-MTXOrtho:
+.fn MTXOrtho, global
 /* 801FDFF0 001FAF50  ED 04 18 28 */	fsubs f8, f4, f3
 /* 801FDFF4 001FAF54  C1 22 C2 F0 */	lfs f9, lbl_803EC4F0@sda21(r2)
 /* 801FDFF8 001FAF58  EC 01 10 28 */	fsubs f0, f1, f2
@@ -95,18 +94,25 @@ MTXOrtho:
 /* 801FE07C 001FAFDC  D0 63 00 38 */	stfs f3, 0x38(r3)
 /* 801FE080 001FAFE0  D1 23 00 3C */	stfs f9, 0x3c(r3)
 /* 801FE084 001FAFE4  4E 80 00 20 */	blr 
+.endfn MTXOrtho
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803EC4F0:
+.obj lbl_803EC4F0, local
 	.float 1.0
-lbl_803EC4F4:
+.endobj lbl_803EC4F0
+.obj lbl_803EC4F4, local
 	.float 2.0
-lbl_803EC4F8:
+.endobj lbl_803EC4F4
+.obj lbl_803EC4F8, local
 	.float 0.0
-lbl_803EC4FC:
+.endobj lbl_803EC4F8
+.obj lbl_803EC4FC, local
 	.float -1.0
-lbl_803EC500:
+.endobj lbl_803EC4FC
+.obj lbl_803EC500, local
 	.float 0.5
-lbl_803EC504:
-	.4byte 0x3C8EFA35
+.endobj lbl_803EC500
+.obj lbl_803EC504, local
+	.float 0.017453292
+.endobj lbl_803EC504

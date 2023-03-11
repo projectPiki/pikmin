@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global CARDRenameAsync
-CARDRenameAsync:
+.fn CARDRenameAsync, global
 /* 8020D150 0020A0B0  7C 08 02 A6 */	mflr r0
 /* 8020D154 0020A0B4  90 01 00 04 */	stw r0, 4(r1)
 /* 8020D158 0020A0B8  94 21 FF B8 */	stwu r1, -0x48(r1)
@@ -139,9 +138,9 @@ CARDRenameAsync:
 /* 8020D334 0020A294  38 21 00 48 */	addi r1, r1, 0x48
 /* 8020D338 0020A298  7C 08 03 A6 */	mtlr r0
 /* 8020D33C 0020A29C  4E 80 00 20 */	blr 
+.endfn CARDRenameAsync
 
-.global CARDRename
-CARDRename:
+.fn CARDRename, global
 /* 8020D340 0020A2A0  7C 08 02 A6 */	mflr r0
 /* 8020D344 0020A2A4  3C C0 80 20 */	lis r6, __CARDSyncCallback@ha
 /* 8020D348 0020A2A8  90 01 00 04 */	stw r0, 4(r1)
@@ -162,3 +161,4 @@ CARDRename:
 /* 8020D37C 0020A2DC  38 21 00 20 */	addi r1, r1, 0x20
 /* 8020D380 0020A2E0  7C 08 03 A6 */	mtlr r0
 /* 8020D384 0020A2E4  4E 80 00 20 */	blr 
+.endfn CARDRename

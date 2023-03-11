@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global __CARDCompareFileName
-__CARDCompareFileName:
+.fn __CARDCompareFileName, global
 /* 8020BA80 002089E0  38 A3 00 08 */	addi r5, r3, 8
 /* 8020BA84 002089E4  38 E0 00 20 */	li r7, 0x20
 /* 8020BA88 002089E8  48 00 00 3C */	b .L_8020BAC4
@@ -32,9 +31,9 @@ __CARDCompareFileName:
 .L_8020BAE0:
 /* 8020BAE0 00208A40  38 60 00 00 */	li r3, 0
 /* 8020BAE4 00208A44  4E 80 00 20 */	blr 
+.endfn __CARDCompareFileName
 
-.global __CARDAccess
-__CARDAccess:
+.fn __CARDAccess, global
 /* 8020BAE8 00208A48  7C 08 02 A6 */	mflr r0
 /* 8020BAEC 00208A4C  90 01 00 04 */	stw r0, 4(r1)
 /* 8020BAF0 00208A50  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -74,9 +73,9 @@ __CARDAccess:
 /* 8020BB68 00208AC8  38 21 00 18 */	addi r1, r1, 0x18
 /* 8020BB6C 00208ACC  7C 08 03 A6 */	mtlr r0
 /* 8020BB70 00208AD0  4E 80 00 20 */	blr 
+.endfn __CARDAccess
 
-.global __CARDIsPublic
-__CARDIsPublic:
+.fn __CARDIsPublic, global
 /* 8020BB74 00208AD4  88 03 00 00 */	lbz r0, 0(r3)
 /* 8020BB78 00208AD8  28 00 00 FF */	cmplwi r0, 0xff
 /* 8020BB7C 00208ADC  40 82 00 0C */	bne .L_8020BB88
@@ -91,9 +90,9 @@ __CARDIsPublic:
 .L_8020BB9C:
 /* 8020BB9C 00208AFC  38 60 FF F6 */	li r3, -10
 /* 8020BBA0 00208B00  4E 80 00 20 */	blr 
+.endfn __CARDIsPublic
 
-.global CARDFastOpen
-CARDFastOpen:
+.fn CARDFastOpen, global
 /* 8020BBA4 00208B04  7C 08 02 A6 */	mflr r0
 /* 8020BBA8 00208B08  90 01 00 04 */	stw r0, 4(r1)
 /* 8020BBAC 00208B0C  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -201,9 +200,9 @@ CARDFastOpen:
 /* 8020BD0C 00208C6C  83 81 00 18 */	lwz r28, 0x18(r1)
 /* 8020BD10 00208C70  38 21 00 28 */	addi r1, r1, 0x28
 /* 8020BD14 00208C74  4E 80 00 20 */	blr 
+.endfn CARDFastOpen
 
-.global CARDOpen
-CARDOpen:
+.fn CARDOpen, global
 /* 8020BD18 00208C78  7C 08 02 A6 */	mflr r0
 /* 8020BD1C 00208C7C  90 01 00 04 */	stw r0, 4(r1)
 /* 8020BD20 00208C80  38 00 FF FF */	li r0, -1
@@ -310,9 +309,9 @@ CARDOpen:
 /* 8020BE80 00208DE0  38 21 00 38 */	addi r1, r1, 0x38
 /* 8020BE84 00208DE4  7C 08 03 A6 */	mtlr r0
 /* 8020BE88 00208DE8  4E 80 00 20 */	blr 
+.endfn CARDOpen
 
-.global CARDClose
-CARDClose:
+.fn CARDClose, global
 /* 8020BE8C 00208DEC  7C 08 02 A6 */	mflr r0
 /* 8020BE90 00208DF0  90 01 00 04 */	stw r0, 4(r1)
 /* 8020BE94 00208DF4  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -336,8 +335,9 @@ CARDClose:
 /* 8020BED4 00208E34  38 21 00 18 */	addi r1, r1, 0x18
 /* 8020BED8 00208E38  7C 08 03 A6 */	mtlr r0
 /* 8020BEDC 00208E3C  4E 80 00 20 */	blr 
+.endfn CARDClose
 
-.global __CARDIsOpened
-__CARDIsOpened:
+.fn __CARDIsOpened, global
 /* 8020BEE0 00208E40  38 60 00 00 */	li r3, 0
 /* 8020BEE4 00208E44  4E 80 00 20 */	blr 
+.endfn __CARDIsOpened

@@ -1,8 +1,7 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
 .balign 32, 0
-.global Jac_StreamMovieInit
-Jac_StreamMovieInit:
+.fn Jac_StreamMovieInit, global
 /* 80017460 000143C0  7C 08 02 A6 */	mflr r0
 /* 80017464 000143C4  90 01 00 04 */	stw r0, 4(r1)
 /* 80017468 000143C8  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -32,10 +31,10 @@ Jac_StreamMovieInit:
 /* 800174C4 00014424  38 21 00 28 */	addi r1, r1, 0x28
 /* 800174C8 00014428  7C 08 03 A6 */	mtlr r0
 /* 800174CC 0001442C  4E 80 00 20 */	blr 
+.endfn Jac_StreamMovieInit
 
 .balign 32, 0
-.global Jac_StreamMovieStop
-Jac_StreamMovieStop:
+.fn Jac_StreamMovieStop, global
 /* 800174E0 00014440  7C 08 02 A6 */	mflr r0
 /* 800174E4 00014444  90 01 00 04 */	stw r0, 4(r1)
 /* 800174E8 00014448  94 21 FF F8 */	stwu r1, -8(r1)
@@ -56,10 +55,10 @@ Jac_StreamMovieStop:
 /* 80017520 00014480  38 21 00 08 */	addi r1, r1, 8
 /* 80017524 00014484  7C 08 03 A6 */	mtlr r0
 /* 80017528 00014488  4E 80 00 20 */	blr 
+.endfn Jac_StreamMovieStop
 
 .balign 32, 0
-.global Jac_StreamMovieUpdate
-Jac_StreamMovieUpdate:
+.fn Jac_StreamMovieUpdate, global
 /* 80017540 000144A0  7C 08 02 A6 */	mflr r0
 /* 80017544 000144A4  90 01 00 04 */	stw r0, 4(r1)
 /* 80017548 000144A8  94 21 FF F8 */	stwu r1, -8(r1)
@@ -68,10 +67,10 @@ Jac_StreamMovieUpdate:
 /* 80017554 000144B4  38 21 00 08 */	addi r1, r1, 8
 /* 80017558 000144B8  7C 08 03 A6 */	mtlr r0
 /* 8001755C 000144BC  4E 80 00 20 */	blr 
+.endfn Jac_StreamMovieUpdate
 
 .balign 32, 0
-.global Jac_StreamMovieGetPicture
-Jac_StreamMovieGetPicture:
+.fn Jac_StreamMovieGetPicture, global
 /* 80017560 000144C0  7C 08 02 A6 */	mflr r0
 /* 80017564 000144C4  90 01 00 04 */	stw r0, 4(r1)
 /* 80017568 000144C8  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -98,8 +97,10 @@ Jac_StreamMovieGetPicture:
 /* 800175B8 00014518  38 21 00 20 */	addi r1, r1, 0x20
 /* 800175BC 0001451C  7C 08 03 A6 */	mtlr r0
 /* 800175C0 00014520  4E 80 00 20 */	blr 
+.endfn Jac_StreamMovieGetPicture
 
 .section .sbss, "wa"
 .balign 8
-demo_fade_flag:
+.obj demo_fade_flag, local
 	.skip 4
+.endobj demo_fade_flag

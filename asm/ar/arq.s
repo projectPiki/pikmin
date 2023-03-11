@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global __ARQServiceQueueLo
-__ARQServiceQueueLo:
+.fn __ARQServiceQueueLo, global
 /* 80207A80 002049E0  7C 08 02 A6 */	mflr r0
 /* 80207A84 002049E4  90 01 00 04 */	stw r0, 4(r1)
 /* 80207A88 002049E8  94 21 FF F8 */	stwu r1, -8(r1)
@@ -73,13 +72,13 @@ __ARQServiceQueueLo:
 /* 80207B74 00204AD4  38 21 00 08 */	addi r1, r1, 8
 /* 80207B78 00204AD8  7C 08 03 A6 */	mtlr r0
 /* 80207B7C 00204ADC  4E 80 00 20 */	blr 
+.endfn __ARQServiceQueueLo
 
-.global __ARQCallbackHack
-__ARQCallbackHack:
+.fn __ARQCallbackHack, global
 /* 80207B80 00204AE0  4E 80 00 20 */	blr 
+.endfn __ARQCallbackHack
 
-.global __ARQInterruptServiceRoutine
-__ARQInterruptServiceRoutine:
+.fn __ARQInterruptServiceRoutine, global
 /* 80207B84 00204AE4  7C 08 02 A6 */	mflr r0
 /* 80207B88 00204AE8  90 01 00 04 */	stw r0, 4(r1)
 /* 80207B8C 00204AEC  94 21 FF F8 */	stwu r1, -8(r1)
@@ -137,9 +136,9 @@ __ARQInterruptServiceRoutine:
 /* 80207C44 00204BA4  38 21 00 08 */	addi r1, r1, 8
 /* 80207C48 00204BA8  7C 08 03 A6 */	mtlr r0
 /* 80207C4C 00204BAC  4E 80 00 20 */	blr 
+.endfn __ARQInterruptServiceRoutine
 
-.global ARQInit
-ARQInit:
+.fn ARQInit, global
 /* 80207C50 00204BB0  7C 08 02 A6 */	mflr r0
 /* 80207C54 00204BB4  90 01 00 04 */	stw r0, 4(r1)
 /* 80207C58 00204BB8  94 21 FF F0 */	stwu r1, -0x10(r1)
@@ -167,9 +166,9 @@ ARQInit:
 /* 80207CAC 00204C0C  38 21 00 10 */	addi r1, r1, 0x10
 /* 80207CB0 00204C10  7C 08 03 A6 */	mtlr r0
 /* 80207CB4 00204C14  4E 80 00 20 */	blr 
+.endfn ARQInit
 
-.global ARQPostRequest
-ARQPostRequest:
+.fn ARQPostRequest, global
 /* 80207CB8 00204C18  7C 08 02 A6 */	mflr r0
 /* 80207CBC 00204C1C  28 0A 00 00 */	cmplwi r10, 0
 /* 80207CC0 00204C20  90 01 00 04 */	stw r0, 4(r1)
@@ -270,26 +269,37 @@ ARQPostRequest:
 /* 80207E08 00204D68  83 A1 00 2C */	lwz r29, 0x2c(r1)
 /* 80207E0C 00204D6C  38 21 00 38 */	addi r1, r1, 0x38
 /* 80207E10 00204D70  4E 80 00 20 */	blr 
+.endfn ARQPostRequest
 
 .section .sbss, "wa"
 .balign 8
-__ARQRequestQueueHi:
+.obj __ARQRequestQueueHi, local
 	.skip 0x4
-__ARQRequestTailHi:
+.endobj __ARQRequestQueueHi
+.obj __ARQRequestTailHi, local
 	.skip 0x4
-__ARQRequestQueueLo:
+.endobj __ARQRequestTailHi
+.obj __ARQRequestQueueLo, local
 	.skip 0x4
-__ARQRequestTailLo:
+.endobj __ARQRequestQueueLo
+.obj __ARQRequestTailLo, local
 	.skip 0x4
-__ARQRequestPendingHi:
+.endobj __ARQRequestTailLo
+.obj __ARQRequestPendingHi, local
 	.skip 0x4
-__ARQRequestPendingLo:
+.endobj __ARQRequestPendingHi
+.obj __ARQRequestPendingLo, local
 	.skip 0x4
-__ARQCallbackHi:
+.endobj __ARQRequestPendingLo
+.obj __ARQCallbackHi, local
 	.skip 0x4
-__ARQCallbackLo:
+.endobj __ARQCallbackHi
+.obj __ARQCallbackLo, local
 	.skip 0x4
-__ARQChunkSize:
+.endobj __ARQCallbackLo
+.obj __ARQChunkSize, local
 	.skip 0x4
-__ARQ_init_flag:
+.endobj __ARQChunkSize
+.obj __ARQ_init_flag, local
 	.skip 0x4
+.endobj __ARQ_init_flag

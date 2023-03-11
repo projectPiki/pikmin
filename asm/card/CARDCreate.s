@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global CreateCallbackFat
-CreateCallbackFat:
+.fn CreateCallbackFat, local
 /* 8020BEE8 00208E48  7C 08 02 A6 */	mflr r0
 /* 8020BEEC 00208E4C  90 01 00 04 */	stw r0, 4(r1)
 /* 8020BEF0 00208E50  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -80,9 +79,9 @@ CreateCallbackFat:
 /* 8020C00C 00208F6C  38 21 00 28 */	addi r1, r1, 0x28
 /* 8020C010 00208F70  7C 08 03 A6 */	mtlr r0
 /* 8020C014 00208F74  4E 80 00 20 */	blr 
+.endfn CreateCallbackFat
 
-.global CARDCreateAsync
-CARDCreateAsync:
+.fn CARDCreateAsync, global
 /* 8020C018 00208F78  7C 08 02 A6 */	mflr r0
 /* 8020C01C 00208F7C  90 01 00 04 */	stw r0, 4(r1)
 /* 8020C020 00208F80  94 21 FF B8 */	stwu r1, -0x48(r1)
@@ -231,9 +230,9 @@ CARDCreateAsync:
 /* 8020C224 00209184  38 21 00 48 */	addi r1, r1, 0x48
 /* 8020C228 00209188  7C 08 03 A6 */	mtlr r0
 /* 8020C22C 0020918C  4E 80 00 20 */	blr 
+.endfn CARDCreateAsync
 
-.global CARDCreate
-CARDCreate:
+.fn CARDCreate, global
 /* 8020C230 00209190  7C 08 02 A6 */	mflr r0
 /* 8020C234 00209194  3C E0 80 20 */	lis r7, __CARDSyncCallback@ha
 /* 8020C238 00209198  90 01 00 04 */	stw r0, 4(r1)
@@ -254,3 +253,4 @@ CARDCreate:
 /* 8020C26C 002091CC  38 21 00 20 */	addi r1, r1, 0x20
 /* 8020C270 002091D0  7C 08 03 A6 */	mtlr r0
 /* 8020C274 002091D4  4E 80 00 20 */	blr 
+.endfn CARDCreate

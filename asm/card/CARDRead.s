@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global __CARDSeek
-__CARDSeek:
+.fn __CARDSeek, global
 /* 8020C278 002091D8  7C 08 02 A6 */	mflr r0
 /* 8020C27C 002091DC  90 01 00 04 */	stw r0, 4(r1)
 /* 8020C280 002091E0  94 21 FF D0 */	stwu r1, -0x30(r1)
@@ -123,9 +122,9 @@ __CARDSeek:
 /* 8020C424 00209384  83 81 00 20 */	lwz r28, 0x20(r1)
 /* 8020C428 00209388  38 21 00 30 */	addi r1, r1, 0x30
 /* 8020C42C 0020938C  4E 80 00 20 */	blr 
+.endfn __CARDSeek
 
-.global ReadCallback
-ReadCallback:
+.fn ReadCallback, local
 /* 8020C430 00209390  7C 08 02 A6 */	mflr r0
 /* 8020C434 00209394  90 01 00 04 */	stw r0, 4(r1)
 /* 8020C438 00209398  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -209,9 +208,9 @@ ReadCallback:
 /* 8020C554 002094B4  38 21 00 28 */	addi r1, r1, 0x28
 /* 8020C558 002094B8  7C 08 03 A6 */	mtlr r0
 /* 8020C55C 002094BC  4E 80 00 20 */	blr 
+.endfn ReadCallback
 
-.global CARDReadAsync
-CARDReadAsync:
+.fn CARDReadAsync, global
 /* 8020C560 002094C0  7C 08 02 A6 */	mflr r0
 /* 8020C564 002094C4  90 01 00 04 */	stw r0, 4(r1)
 /* 8020C568 002094C8  54 C0 05 FF */	clrlwi. r0, r6, 0x17
@@ -303,9 +302,9 @@ CARDReadAsync:
 /* 8020C698 002095F8  38 21 00 38 */	addi r1, r1, 0x38
 /* 8020C69C 002095FC  7C 08 03 A6 */	mtlr r0
 /* 8020C6A0 00209600  4E 80 00 20 */	blr 
+.endfn CARDReadAsync
 
-.global CARDRead
-CARDRead:
+.fn CARDRead, global
 /* 8020C6A4 00209604  7C 08 02 A6 */	mflr r0
 /* 8020C6A8 00209608  3C E0 80 20 */	lis r7, __CARDSyncCallback@ha
 /* 8020C6AC 0020960C  90 01 00 04 */	stw r0, 4(r1)
@@ -326,3 +325,4 @@ CARDRead:
 /* 8020C6E0 00209640  38 21 00 20 */	addi r1, r1, 0x20
 /* 8020C6E4 00209644  7C 08 03 A6 */	mtlr r0
 /* 8020C6E8 00209648  4E 80 00 20 */	blr 
+.endfn CARDRead

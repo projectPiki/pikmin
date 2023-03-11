@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global __CARDCheckSum
-__CARDCheckSum:
+.fn __CARDCheckSum, global
 /* 80209B14 00206A74  38 00 00 00 */	li r0, 0
 /* 80209B18 00206A78  7C 84 0E 70 */	srawi r4, r4, 1
 /* 80209B1C 00206A7C  B0 06 00 00 */	sth r0, 0(r6)
@@ -115,9 +114,9 @@ __CARDCheckSum:
 /* 80209CB8 00206C18  38 00 00 00 */	li r0, 0
 /* 80209CBC 00206C1C  B0 06 00 00 */	sth r0, 0(r6)
 /* 80209CC0 00206C20  4E 80 00 20 */	blr 
+.endfn __CARDCheckSum
 
-.global VerifyID
-VerifyID:
+.fn VerifyID, local
 /* 80209CC4 00206C24  7C 08 02 A6 */	mflr r0
 /* 80209CC8 00206C28  90 01 00 04 */	stw r0, 4(r1)
 /* 80209CCC 00206C2C  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -293,9 +292,9 @@ VerifyID:
 /* 80209F3C 00206E9C  38 21 00 28 */	addi r1, r1, 0x28
 /* 80209F40 00206EA0  7C 08 03 A6 */	mtlr r0
 /* 80209F44 00206EA4  4E 80 00 20 */	blr 
+.endfn VerifyID
 
-.global VerifyDir
-VerifyDir:
+.fn VerifyDir, local
 /* 80209F48 00206EA8  7C 08 02 A6 */	mflr r0
 /* 80209F4C 00206EAC  90 01 00 04 */	stw r0, 4(r1)
 /* 80209F50 00206EB0  94 21 FF C8 */	stwu r1, -0x38(r1)
@@ -456,9 +455,9 @@ VerifyDir:
 /* 8020A17C 002070DC  83 A1 00 2C */	lwz r29, 0x2c(r1)
 /* 8020A180 002070E0  38 21 00 38 */	addi r1, r1, 0x38
 /* 8020A184 002070E4  4E 80 00 20 */	blr 
+.endfn VerifyDir
 
-.global VerifyFAT
-VerifyFAT:
+.fn VerifyFAT, local
 /* 8020A188 002070E8  7C 08 02 A6 */	mflr r0
 /* 8020A18C 002070EC  38 A0 00 00 */	li r5, 0
 /* 8020A190 002070F0  90 01 00 04 */	stw r0, 4(r1)
@@ -640,9 +639,9 @@ VerifyFAT:
 /* 8020A400 00207360  83 A1 00 1C */	lwz r29, 0x1c(r1)
 /* 8020A404 00207364  38 21 00 28 */	addi r1, r1, 0x28
 /* 8020A408 00207368  4E 80 00 20 */	blr 
+.endfn VerifyFAT
 
-.global __CARDVerify
-__CARDVerify:
+.fn __CARDVerify, global
 /* 8020A40C 0020736C  7C 08 02 A6 */	mflr r0
 /* 8020A410 00207370  90 01 00 04 */	stw r0, 4(r1)
 /* 8020A414 00207374  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -683,9 +682,9 @@ __CARDVerify:
 /* 8020A48C 002073EC  7C 08 03 A6 */	mtlr r0
 /* 8020A490 002073F0  38 21 00 18 */	addi r1, r1, 0x18
 /* 8020A494 002073F4  4E 80 00 20 */	blr 
+.endfn __CARDVerify
 
-.global CARDCheckExAsync
-CARDCheckExAsync:
+.fn CARDCheckExAsync, global
 /* 8020A498 002073F8  7C 08 02 A6 */	mflr r0
 /* 8020A49C 002073FC  90 01 00 04 */	stw r0, 4(r1)
 /* 8020A4A0 00207400  94 21 FF A8 */	stwu r1, -0x58(r1)
@@ -1076,9 +1075,9 @@ CARDCheckExAsync:
 /* 8020AA1C 0020797C  38 21 00 58 */	addi r1, r1, 0x58
 /* 8020AA20 00207980  7C 08 03 A6 */	mtlr r0
 /* 8020AA24 00207984  4E 80 00 20 */	blr 
+.endfn CARDCheckExAsync
 
-.global CARDCheckAsync
-CARDCheckAsync:
+.fn CARDCheckAsync, global
 /* 8020AA28 00207988  7C 08 02 A6 */	mflr r0
 /* 8020AA2C 0020798C  38 A4 00 00 */	addi r5, r4, 0
 /* 8020AA30 00207990  90 01 00 04 */	stw r0, 4(r1)
@@ -1089,9 +1088,9 @@ CARDCheckAsync:
 /* 8020AA44 002079A4  38 21 00 18 */	addi r1, r1, 0x18
 /* 8020AA48 002079A8  7C 08 03 A6 */	mtlr r0
 /* 8020AA4C 002079AC  4E 80 00 20 */	blr 
+.endfn CARDCheckAsync
 
-.global CARDCheck
-CARDCheck:
+.fn CARDCheck, global
 /* 8020AA50 002079B0  7C 08 02 A6 */	mflr r0
 /* 8020AA54 002079B4  3C 80 80 20 */	lis r4, __CARDSyncCallback@ha
 /* 8020AA58 002079B8  90 01 00 04 */	stw r0, 4(r1)
@@ -1115,3 +1114,4 @@ CARDCheck:
 /* 8020AA98 002079F8  38 21 00 18 */	addi r1, r1, 0x18
 /* 8020AA9C 002079FC  7C 08 03 A6 */	mtlr r0
 /* 8020AAA0 00207A00  4E 80 00 20 */	blr 
+.endfn CARDCheck

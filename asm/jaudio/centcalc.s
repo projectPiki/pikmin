@@ -1,8 +1,7 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
 .balign 32, 0
-.global Jam_PitchToCent
-Jam_PitchToCent:
+.fn Jam_PitchToCent, global
 /* 80014BC0 00011B20  94 21 FF D0 */	stwu r1, -0x30(r1)
 /* 80014BC4 00011B24  3C 00 43 30 */	lis r0, 0x4330
 /* 80014BC8 00011B28  C0 02 81 38 */	lfs f0, lbl_803E8338@sda21(r2)
@@ -56,10 +55,11 @@ Jam_PitchToCent:
 /* 80014C80 00011BE0  EC 21 00 32 */	fmuls f1, f1, f0
 /* 80014C84 00011BE4  38 21 00 30 */	addi r1, r1, 0x30
 /* 80014C88 00011BE8  4E 80 00 20 */	blr 
+.endfn Jam_PitchToCent
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-KEY_TABLE:
+.obj KEY_TABLE, local
 	.float 1.0
 	.float 1.00091
 	.float 1.001821
@@ -124,18 +124,23 @@ KEY_TABLE:
 	.float 1.057056
 	.float 1.058018
 	.float 1.058981
+.endobj KEY_TABLE
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803E8338:
+.obj lbl_803E8338, local
 	.float 4.0
-lbl_803E833C:
+.endobj lbl_803E8338
+.obj lbl_803E833C, local
 	.float 0.0
-lbl_803E8340:
+.endobj lbl_803E833C
+.obj lbl_803E8340, local
 	.float 1.0
-lbl_803E8344:
+.endobj lbl_803E8340
+.obj lbl_803E8344, local
 	.float 64.0
+.endobj lbl_803E8344
 .balign 8
-lbl_803E8348:
-	.4byte 0x43300000
-	.4byte 0x80000000
+.obj lbl_803E8348, local
+	.8byte 0x4330000080000000
+.endobj lbl_803E8348

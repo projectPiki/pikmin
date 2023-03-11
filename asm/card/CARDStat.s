@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global UpdateIconOffsets
-UpdateIconOffsets:
+.fn UpdateIconOffsets, local
 /* 8020CC78 00209BD8  81 03 00 2C */	lwz r8, 0x2c(r3)
 /* 8020CC7C 00209BDC  3C 08 00 01 */	addis r0, r8, 1
 /* 8020CC80 00209BE0  28 00 FF FF */	cmplwi r0, 0xffff
@@ -152,9 +151,9 @@ UpdateIconOffsets:
 .L_8020CE68:
 /* 8020CE68 00209DC8  91 04 00 68 */	stw r8, 0x68(r4)
 /* 8020CE6C 00209DCC  4E 80 00 20 */	blr 
+.endfn UpdateIconOffsets
 
-.global CARDGetStatus
-CARDGetStatus:
+.fn CARDGetStatus, global
 /* 8020CE70 00209DD0  7C 08 02 A6 */	mflr r0
 /* 8020CE74 00209DD4  90 01 00 04 */	stw r0, 4(r1)
 /* 8020CE78 00209DD8  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -235,9 +234,9 @@ CARDGetStatus:
 /* 8020CF8C 00209EEC  83 A1 00 1C */	lwz r29, 0x1c(r1)
 /* 8020CF90 00209EF0  38 21 00 28 */	addi r1, r1, 0x28
 /* 8020CF94 00209EF4  4E 80 00 20 */	blr 
+.endfn CARDGetStatus
 
-.global CARDSetStatusAsync
-CARDSetStatusAsync:
+.fn CARDSetStatusAsync, global
 /* 8020CF98 00209EF8  7C 08 02 A6 */	mflr r0
 /* 8020CF9C 00209EFC  90 01 00 04 */	stw r0, 4(r1)
 /* 8020CFA0 00209F00  94 21 FF D0 */	stwu r1, -0x30(r1)
@@ -338,9 +337,9 @@ CARDSetStatusAsync:
 /* 8020D0FC 0020A05C  83 81 00 20 */	lwz r28, 0x20(r1)
 /* 8020D100 0020A060  38 21 00 30 */	addi r1, r1, 0x30
 /* 8020D104 0020A064  4E 80 00 20 */	blr 
+.endfn CARDSetStatusAsync
 
-.global CARDSetStatus
-CARDSetStatus:
+.fn CARDSetStatus, global
 /* 8020D108 0020A068  7C 08 02 A6 */	mflr r0
 /* 8020D10C 0020A06C  3C C0 80 20 */	lis r6, __CARDSyncCallback@ha
 /* 8020D110 0020A070  90 01 00 04 */	stw r0, 4(r1)
@@ -361,3 +360,4 @@ CARDSetStatus:
 /* 8020D144 0020A0A4  38 21 00 20 */	addi r1, r1, 0x20
 /* 8020D148 0020A0A8  7C 08 03 A6 */	mtlr r0
 /* 8020D14C 0020A0AC  4E 80 00 20 */	blr 
+.endfn CARDSetStatus

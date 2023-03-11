@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global setColorType__7GemItemFi
-setColorType__7GemItemFi:
+.fn setColorType__7GemItemFi, global
 /* 800E4390 000E12F0  7C 08 02 A6 */	mflr r0
 /* 800E4394 000E12F4  2C 04 00 03 */	cmpwi r4, 3
 /* 800E4398 000E12F8  90 01 00 04 */	stw r0, 4(r1)
@@ -63,9 +62,9 @@ setColorType__7GemItemFi:
 /* 800E4468 000E13C8  38 21 00 38 */	addi r1, r1, 0x38
 /* 800E446C 000E13CC  7C 08 03 A6 */	mtlr r0
 /* 800E4470 000E13D0  4E 80 00 20 */	blr 
+.endfn setColorType__7GemItemFi
 
-.global split__7GemItemFv
-split__7GemItemFv:
+.fn split__7GemItemFv, global
 /* 800E4474 000E13D4  7C 08 02 A6 */	mflr r0
 /* 800E4478 000E13D8  90 01 00 04 */	stw r0, 4(r1)
 /* 800E447C 000E13DC  94 21 FF 60 */	stwu r1, -0xa0(r1)
@@ -199,17 +198,17 @@ split__7GemItemFv:
 /* 800E4664 000E15C4  38 21 00 A0 */	addi r1, r1, 0xa0
 /* 800E4668 000E15C8  7C 08 03 A6 */	mtlr r0
 /* 800E466C 000E15CC  4E 80 00 20 */	blr 
+.endfn split__7GemItemFv
 
-.global finalSetup__12ItemCreatureFv
-finalSetup__12ItemCreatureFv:
+.fn finalSetup__12ItemCreatureFv, weak
 /* 800E4670 000E15D0  38 00 00 01 */	li r0, 1
 /* 800E4674 000E15D4  98 03 03 C4 */	stb r0, 0x3c4(r3)
 /* 800E4678 000E15D8  4E 80 00 20 */	blr 
+.endfn finalSetup__12ItemCreatureFv
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-.global table
-table:
+.obj table, global
 	.4byte 0x00000001
 	.4byte 0x00000003
 	.4byte 0x00000001
@@ -245,26 +244,35 @@ table:
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x41800000
+.endobj table
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803E9AE0:
+.obj lbl_803E9AE0, local
 	.float 1.0
-lbl_803E9AE4:
+.endobj lbl_803E9AE0
+.obj lbl_803E9AE4, local
 	.float 32767.0
-lbl_803E9AE8:
+.endobj lbl_803E9AE4
+.obj lbl_803E9AE8, local
 	.float 3.0
+.endobj lbl_803E9AE8
 .balign 8
-lbl_803E9AF0:
-	.4byte 0x43300000
-	.4byte 0x80000000
-lbl_803E9AF8:
+.obj lbl_803E9AF0, local
+	.8byte 0x4330000080000000
+.endobj lbl_803E9AF0
+.obj lbl_803E9AF8, local
 	.float 10.0
-lbl_803E9AFC:
+.endobj lbl_803E9AF8
+.obj lbl_803E9AFC, local
 	.float 2.0
-lbl_803E9B00:
+.endobj lbl_803E9AFC
+.obj lbl_803E9B00, local
 	.float 3.1415927
-lbl_803E9B04:
+.endobj lbl_803E9B00
+.obj lbl_803E9B04, local
 	.float 40.0
-lbl_803E9B08:
+.endobj lbl_803E9B04
+.obj lbl_803E9B08, local
 	.float 240.0
+.endobj lbl_803E9B08

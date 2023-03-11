@@ -1,8 +1,7 @@
 .include "macros.inc"
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-.global __files
-__files:
+.obj __files, global
 	.4byte 0x00000000
 	.4byte 0x08800000
 	.4byte 0x00000000
@@ -60,3 +59,4 @@ lbl_802E9094:
 	.4byte __write_console
 	.4byte __close_console
 	.4byte 0x00000000
+.endobj __files

@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global ARRegisterDMACallback
-ARRegisterDMACallback:
+.fn ARRegisterDMACallback, global
 /* 8020690C 0020386C  7C 08 02 A6 */	mflr r0
 /* 80206910 00203870  90 01 00 04 */	stw r0, 4(r1)
 /* 80206914 00203874  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -19,9 +18,9 @@ ARRegisterDMACallback:
 /* 80206944 002038A4  7C 08 03 A6 */	mtlr r0
 /* 80206948 002038A8  38 21 00 18 */	addi r1, r1, 0x18
 /* 8020694C 002038AC  4E 80 00 20 */	blr 
+.endfn ARRegisterDMACallback
 
-.global ARStartDMA
-ARStartDMA:
+.fn ARStartDMA, global
 /* 80206950 002038B0  7C 08 02 A6 */	mflr r0
 /* 80206954 002038B4  90 01 00 04 */	stw r0, 4(r1)
 /* 80206958 002038B8  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -82,9 +81,9 @@ ARStartDMA:
 /* 80206A34 00203994  83 81 00 18 */	lwz r28, 0x18(r1)
 /* 80206A38 00203998  38 21 00 28 */	addi r1, r1, 0x28
 /* 80206A3C 0020399C  4E 80 00 20 */	blr 
+.endfn ARStartDMA
 
-.global ARInit
-ARInit:
+.fn ARInit, global
 /* 80206A40 002039A0  7C 08 02 A6 */	mflr r0
 /* 80206A44 002039A4  90 01 00 04 */	stw r0, 4(r1)
 /* 80206A48 002039A8  94 21 FF D0 */	stwu r1, -0x30(r1)
@@ -148,14 +147,14 @@ ARInit:
 /* 80206B28 00203A88  83 A1 00 24 */	lwz r29, 0x24(r1)
 /* 80206B2C 00203A8C  38 21 00 30 */	addi r1, r1, 0x30
 /* 80206B30 00203A90  4E 80 00 20 */	blr 
+.endfn ARInit
 
-.global ARGetBaseAddress
-ARGetBaseAddress:
+.fn ARGetBaseAddress, global
 /* 80206B34 00203A94  38 60 40 00 */	li r3, 0x4000
 /* 80206B38 00203A98  4E 80 00 20 */	blr 
+.endfn ARGetBaseAddress
 
-.global __ARHandler
-__ARHandler:
+.fn __ARHandler, local
 /* 80206B3C 00203A9C  7C 08 02 A6 */	mflr r0
 /* 80206B40 00203AA0  3C 60 CC 00 */	lis r3, 0xCC005000@ha
 /* 80206B44 00203AA4  90 01 00 04 */	stw r0, 4(r1)
@@ -187,9 +186,9 @@ __ARHandler:
 /* 80206BA8 00203B08  38 21 02 E0 */	addi r1, r1, 0x2e0
 /* 80206BAC 00203B0C  7C 08 03 A6 */	mtlr r0
 /* 80206BB0 00203B10  4E 80 00 20 */	blr 
+.endfn __ARHandler
 
-.global __ARChecksize
-__ARChecksize:
+.fn __ARChecksize, local
 /* 80206BB4 00203B14  7C 08 02 A6 */	mflr r0
 /* 80206BB8 00203B18  3C 60 DE AE */	lis r3, 0xDEADBEEF@ha
 /* 80206BBC 00203B1C  90 01 00 04 */	stw r0, 4(r1)
@@ -1171,28 +1170,38 @@ __ARChecksize:
 /* 80207A74 002049D4  38 21 01 40 */	addi r1, r1, 0x140
 /* 80207A78 002049D8  7C 08 03 A6 */	mtlr r0
 /* 80207A7C 002049DC  4E 80 00 20 */	blr 
+.endfn __ARChecksize
 
 .section .sbss, "wa"
 .balign 8
-__AR_Callback:
+.obj __AR_Callback, local
 	.skip 0x4
-__AR_Size:
+.endobj __AR_Callback
+.obj __AR_Size, local
 	.skip 0x4
-__AR_StackPointer:
+.endobj __AR_Size
+.obj __AR_StackPointer, local
 	.skip 0x4
-__AR_FreeBlocks:
+.endobj __AR_StackPointer
+.obj __AR_FreeBlocks, local
 	.skip 0x4
-__AR_BlockLength:
+.endobj __AR_FreeBlocks
+.obj __AR_BlockLength, local
 	.skip 0x4
-__AR_init_flag:
+.endobj __AR_BlockLength
+.obj __AR_init_flag, local
 	.skip 0x4
+.endobj __AR_init_flag
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803EC520:
-	.4byte 0x43440000
-lbl_803EC524:
-	.4byte 0x4D411E7A
-lbl_803EC528:
-	.4byte 0x43300000
-	.4byte 0x00000000
+.obj lbl_803EC520, local
+	.float 196.0
+.endobj lbl_803EC520
+.obj lbl_803EC524, local
+	.float 2.025E8
+.endobj lbl_803EC524
+.balign 8
+.obj lbl_803EC528, local
+	.8byte 0x4330000000000000
+.endobj lbl_803EC528

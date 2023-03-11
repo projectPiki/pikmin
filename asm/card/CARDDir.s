@@ -1,11 +1,11 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global __CARDGetDirBlock
-__CARDGetDirBlock:
+.fn __CARDGetDirBlock, global
 /* 802098B0 00206810  80 63 00 84 */	lwz r3, 0x84(r3)
 /* 802098B4 00206814  4E 80 00 20 */	blr 
+.endfn __CARDGetDirBlock
 
-WriteCallback:
+.fn WriteCallback, local
 /* 802098B8 00206818  7C 08 02 A6 */	mflr r0
 /* 802098BC 0020681C  90 01 00 04 */	stw r0, 4(r1)
 /* 802098C0 00206820  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -62,8 +62,9 @@ WriteCallback:
 /* 8020997C 002068DC  83 A1 00 14 */	lwz r29, 0x14(r1)
 /* 80209980 002068E0  38 21 00 20 */	addi r1, r1, 0x20
 /* 80209984 002068E4  4E 80 00 20 */	blr 
+.endfn WriteCallback
 
-EraseCallback:
+.fn EraseCallback, local
 /* 80209988 002068E8  7C 08 02 A6 */	mflr r0
 /* 8020998C 002068EC  90 01 00 04 */	stw r0, 4(r1)
 /* 80209990 002068F0  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -117,9 +118,9 @@ EraseCallback:
 /* 80209A44 002069A4  83 A1 00 1C */	lwz r29, 0x1c(r1)
 /* 80209A48 002069A8  38 21 00 28 */	addi r1, r1, 0x28
 /* 80209A4C 002069AC  4E 80 00 20 */	blr 
+.endfn EraseCallback
 
-.global __CARDUpdateDir
-__CARDUpdateDir:
+.fn __CARDUpdateDir, global
 /* 80209A50 002069B0  7C 08 02 A6 */	mflr r0
 /* 80209A54 002069B4  90 01 00 04 */	stw r0, 4(r1)
 /* 80209A58 002069B8  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -171,3 +172,4 @@ __CARDUpdateDir:
 /* 80209B08 00206A68  83 81 00 18 */	lwz r28, 0x18(r1)
 /* 80209B0C 00206A6C  38 21 00 28 */	addi r1, r1, 0x28
 /* 80209B10 00206A70  4E 80 00 20 */	blr 
+.endfn __CARDUpdateDir

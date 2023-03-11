@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global CARDProbe
-CARDProbe:
+.fn CARDProbe, global
 /* 8020AAA4 00207A04  7C 08 02 A6 */	mflr r0
 /* 8020AAA8 00207A08  90 01 00 04 */	stw r0, 4(r1)
 /* 8020AAAC 00207A0C  94 21 FF F8 */	stwu r1, -8(r1)
@@ -10,9 +9,9 @@ CARDProbe:
 /* 8020AAB8 00207A18  38 21 00 08 */	addi r1, r1, 8
 /* 8020AABC 00207A1C  7C 08 03 A6 */	mtlr r0
 /* 8020AAC0 00207A20  4E 80 00 20 */	blr 
+.endfn CARDProbe
 
-.global DoMount
-DoMount:
+.fn DoMount, local
 /* 8020AAC4 00207A24  7C 08 02 A6 */	mflr r0
 /* 8020AAC8 00207A28  90 01 00 04 */	stw r0, 4(r1)
 /* 8020AACC 00207A2C  94 21 FF D0 */	stwu r1, -0x30(r1)
@@ -268,9 +267,9 @@ DoMount:
 /* 8020AE70 00207DD0  83 81 00 20 */	lwz r28, 0x20(r1)
 /* 8020AE74 00207DD4  38 21 00 30 */	addi r1, r1, 0x30
 /* 8020AE78 00207DD8  4E 80 00 20 */	blr 
+.endfn DoMount
 
-.global __CARDMountCallback
-__CARDMountCallback:
+.fn __CARDMountCallback, global
 /* 8020AE7C 00207DDC  7C 08 02 A6 */	mflr r0
 /* 8020AE80 00207DE0  90 01 00 04 */	stw r0, 4(r1)
 /* 8020AE84 00207DE4  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -344,9 +343,9 @@ __CARDMountCallback:
 /* 8020AF78 00207ED8  83 81 00 10 */	lwz r28, 0x10(r1)
 /* 8020AF7C 00207EDC  38 21 00 20 */	addi r1, r1, 0x20
 /* 8020AF80 00207EE0  4E 80 00 20 */	blr 
+.endfn __CARDMountCallback
 
-.global CARDMountAsync
-CARDMountAsync:
+.fn CARDMountAsync, global
 /* 8020AF84 00207EE4  7C 08 02 A6 */	mflr r0
 /* 8020AF88 00207EE8  90 01 00 04 */	stw r0, 4(r1)
 /* 8020AF8C 00207EEC  94 21 FF D0 */	stwu r1, -0x30(r1)
@@ -454,9 +453,9 @@ CARDMountAsync:
 /* 8020B100 00208060  38 21 00 30 */	addi r1, r1, 0x30
 /* 8020B104 00208064  7C 08 03 A6 */	mtlr r0
 /* 8020B108 00208068  4E 80 00 20 */	blr 
+.endfn CARDMountAsync
 
-.global CARDMount
-CARDMount:
+.fn CARDMount, global
 /* 8020B10C 0020806C  7C 08 02 A6 */	mflr r0
 /* 8020B110 00208070  3C C0 80 20 */	lis r6, __CARDSyncCallback@ha
 /* 8020B114 00208074  90 01 00 04 */	stw r0, 4(r1)
@@ -477,9 +476,9 @@ CARDMount:
 /* 8020B148 002080A8  38 21 00 20 */	addi r1, r1, 0x20
 /* 8020B14C 002080AC  7C 08 03 A6 */	mtlr r0
 /* 8020B150 002080B0  4E 80 00 20 */	blr 
+.endfn CARDMount
 
-.global DoUnmount
-DoUnmount:
+.fn DoUnmount, local
 /* 8020B154 002080B4  7C 08 02 A6 */	mflr r0
 /* 8020B158 002080B8  90 01 00 04 */	stw r0, 4(r1)
 /* 8020B15C 002080BC  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -520,9 +519,9 @@ DoUnmount:
 /* 8020B1E4 00208144  83 81 00 10 */	lwz r28, 0x10(r1)
 /* 8020B1E8 00208148  38 21 00 20 */	addi r1, r1, 0x20
 /* 8020B1EC 0020814C  4E 80 00 20 */	blr 
+.endfn DoUnmount
 
-.global CARDUnmount
-CARDUnmount:
+.fn CARDUnmount, global
 /* 8020B1F0 00208150  7C 08 02 A6 */	mflr r0
 /* 8020B1F4 00208154  90 01 00 04 */	stw r0, 4(r1)
 /* 8020B1F8 00208158  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -569,11 +568,11 @@ CARDUnmount:
 /* 8020B290 002081F0  83 A1 00 14 */	lwz r29, 0x14(r1)
 /* 8020B294 002081F4  38 21 00 20 */	addi r1, r1, 0x20
 /* 8020B298 002081F8  4E 80 00 20 */	blr 
+.endfn CARDUnmount
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-.global SectorSizeTable
-SectorSizeTable:
+.obj SectorSizeTable, local
 	.4byte 0x00002000
 	.4byte 0x00004000
 	.4byte 0x00008000
@@ -582,8 +581,8 @@ SectorSizeTable:
 	.4byte 0x00040000
 	.4byte 0x00000000
 	.4byte 0x00000000
-.global LatencyTable
-LatencyTable:
+.endobj SectorSizeTable
+.obj LatencyTable, local
 	.4byte 0x00000004
 	.4byte 0x00000008
 	.4byte 0x00000010
@@ -592,3 +591,4 @@ LatencyTable:
 	.4byte 0x00000080
 	.4byte 0x00000100
 	.4byte 0x00000200
+.endobj LatencyTable

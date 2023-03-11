@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global FormatCallback
-FormatCallback:
+.fn FormatCallback, local
 /* 8020B29C 002081FC  7C 08 02 A6 */	mflr r0
 /* 8020B2A0 00208200  90 01 00 04 */	stw r0, 4(r1)
 /* 8020B2A4 00208204  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -87,9 +86,9 @@ FormatCallback:
 /* 8020B3D4 00208334  83 81 00 10 */	lwz r28, 0x10(r1)
 /* 8020B3D8 00208338  38 21 00 20 */	addi r1, r1, 0x20
 /* 8020B3DC 0020833C  4E 80 00 20 */	blr 
+.endfn FormatCallback
 
-.global CARDFormatAsync
-CARDFormatAsync:
+.fn CARDFormatAsync, global
 /* 8020B3E0 00208340  7C 08 02 A6 */	mflr r0
 /* 8020B3E4 00208344  90 01 00 04 */	stw r0, 4(r1)
 /* 8020B3E8 00208348  94 21 FF B0 */	stwu r1, -0x50(r1)
@@ -511,9 +510,9 @@ CARDFormatAsync:
 /* 8020BA2C 0020898C  38 21 00 50 */	addi r1, r1, 0x50
 /* 8020BA30 00208990  7C 08 03 A6 */	mtlr r0
 /* 8020BA34 00208994  4E 80 00 20 */	blr 
+.endfn CARDFormatAsync
 
-.global CARDFormat
-CARDFormat:
+.fn CARDFormat, global
 /* 8020BA38 00208998  7C 08 02 A6 */	mflr r0
 /* 8020BA3C 0020899C  3C 80 80 20 */	lis r4, __CARDSyncCallback@ha
 /* 8020BA40 002089A0  90 01 00 04 */	stw r0, 4(r1)
@@ -534,3 +533,4 @@ CARDFormat:
 /* 8020BA74 002089D4  38 21 00 18 */	addi r1, r1, 0x18
 /* 8020BA78 002089D8  7C 08 03 A6 */	mtlr r0
 /* 8020BA7C 002089DC  4E 80 00 20 */	blr 
+.endfn CARDFormat

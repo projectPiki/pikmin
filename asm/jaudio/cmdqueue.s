@@ -1,7 +1,7 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
 .balign 32, 0
-Add_Queue__FP9cmdqueue_:
+.fn Add_Queue__FP9cmdqueue_, local
 /* 8001B960 000188C0  80 8D 2C 50 */	lwz r4, queue_list@sda21(r13)
 /* 8001B964 000188C4  38 00 00 00 */	li r0, 0
 /* 8001B968 000188C8  90 03 00 68 */	stw r0, 0x68(r3)
@@ -19,10 +19,10 @@ Add_Queue__FP9cmdqueue_:
 /* 8001B990 000188F0  40 82 FF F4 */	bne .L_8001B984
 /* 8001B994 000188F4  90 64 00 68 */	stw r3, 0x68(r4)
 /* 8001B998 000188F8  4E 80 00 20 */	blr 
+.endfn Add_Queue__FP9cmdqueue_
 
 .balign 32, 0
-.global Jal_AddCmdQueue
-Jal_AddCmdQueue:
+.fn Jal_AddCmdQueue, global
 /* 8001B9A0 00018900  7C 08 02 A6 */	mflr r0
 /* 8001B9A4 00018904  90 01 00 04 */	stw r0, 4(r1)
 /* 8001B9A8 00018908  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -47,10 +47,10 @@ Jal_AddCmdQueue:
 /* 8001B9F4 00018954  38 21 00 28 */	addi r1, r1, 0x28
 /* 8001B9F8 00018958  7C 08 03 A6 */	mtlr r0
 /* 8001B9FC 0001895C  4E 80 00 20 */	blr 
+.endfn Jal_AddCmdQueue
 
 .balign 32, 0
-.global Jal_SendCmdQueue_Noblock
-Jal_SendCmdQueue_Noblock:
+.fn Jal_SendCmdQueue_Noblock, global
 /* 8001BA00 00018960  7C 08 02 A6 */	mflr r0
 /* 8001BA04 00018964  90 01 00 04 */	stw r0, 4(r1)
 /* 8001BA08 00018968  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -63,10 +63,10 @@ Jal_SendCmdQueue_Noblock:
 /* 8001BA24 00018984  38 21 00 18 */	addi r1, r1, 0x18
 /* 8001BA28 00018988  7C 08 03 A6 */	mtlr r0
 /* 8001BA2C 0001898C  4E 80 00 20 */	blr 
+.endfn Jal_SendCmdQueue_Noblock
 
 .balign 32, 0
-.global Jal_SendCmdQueue_Force
-Jal_SendCmdQueue_Force:
+.fn Jal_SendCmdQueue_Force, global
 /* 8001BA40 000189A0  7C 08 02 A6 */	mflr r0
 /* 8001BA44 000189A4  90 01 00 04 */	stw r0, 4(r1)
 /* 8001BA48 000189A8  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -89,9 +89,10 @@ Jal_SendCmdQueue_Force:
 /* 8001BA88 000189E8  38 21 00 20 */	addi r1, r1, 0x20
 /* 8001BA8C 000189EC  7C 08 03 A6 */	mtlr r0
 /* 8001BA90 000189F0  4E 80 00 20 */	blr 
+.endfn Jal_SendCmdQueue_Force
 
 .balign 32, 0
-Jal_FrameWork__FPv:
+.fn Jal_FrameWork__FPv, local
 /* 8001BAA0 00018A00  7C 08 02 A6 */	mflr r0
 /* 8001BAA4 00018A04  90 01 00 04 */	stw r0, 4(r1)
 /* 8001BAA8 00018A08  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -125,10 +126,10 @@ Jal_FrameWork__FPv:
 /* 8001BB0C 00018A6C  38 21 00 20 */	addi r1, r1, 0x20
 /* 8001BB10 00018A70  7C 08 03 A6 */	mtlr r0
 /* 8001BB14 00018A74  4E 80 00 20 */	blr 
+.endfn Jal_FrameWork__FPv
 
 .balign 32, 0
-.global Jal_CmdQueue_Init
-Jal_CmdQueue_Init:
+.fn Jal_CmdQueue_Init, global
 /* 8001BB20 00018A80  7C 08 02 A6 */	mflr r0
 /* 8001BB24 00018A84  3C 60 80 02 */	lis r3, Jal_FrameWork__FPv@ha
 /* 8001BB28 00018A88  90 01 00 04 */	stw r0, 4(r1)
@@ -140,3 +141,4 @@ Jal_CmdQueue_Init:
 /* 8001BB40 00018AA0  38 21 00 08 */	addi r1, r1, 8
 /* 8001BB44 00018AA4  7C 08 03 A6 */	mtlr r0
 /* 8001BB48 00018AA8  4E 80 00 20 */	blr 
+.endfn Jal_CmdQueue_Init

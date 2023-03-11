@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global PSVECSquareMag
-PSVECSquareMag:
+.fn PSVECSquareMag, global
 /* 801FE088 001FAFE8  E0 43 00 00 */	psq_l f2, 0(r3), 0, qr0
 /* 801FE08C 001FAFEC  10 62 00 B2 */	ps_mul f3, f2, f2
 /* 801FE090 001FAFF0  C0 83 00 08 */	lfs f4, 8(r3)
@@ -9,9 +8,9 @@ PSVECSquareMag:
 /* 801FE098 001FAFF8  10 25 18 D4 */	ps_sum0 f1, f5, f3, f3
 /* 801FE09C 001FAFFC  4E 80 00 20 */	blr 
 /* 801FE0A0 001FB000  4E 80 00 20 */	blr 
+.endfn PSVECSquareMag
 
-.global VECMag
-VECMag:
+.fn VECMag, global
 /* 801FE0A4 001FB004  7C 08 02 A6 */	mflr r0
 /* 801FE0A8 001FB008  90 01 00 04 */	stw r0, 4(r1)
 /* 801FE0AC 001FB00C  94 21 FF F0 */	stwu r1, -0x10(r1)
@@ -47,14 +46,18 @@ VECMag:
 /* 801FE120 001FB080  38 21 00 10 */	addi r1, r1, 0x10
 /* 801FE124 001FB084  7C 08 03 A6 */	mtlr r0
 /* 801FE128 001FB088  4E 80 00 20 */	blr 
+.endfn VECMag
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803EC508:
+.obj lbl_803EC508, local
 	.float 0.0
+.endobj lbl_803EC508
 .balign 8
-lbl_803EC510:
+.obj lbl_803EC510, local
 	.double 0.5
+.endobj lbl_803EC510
 .balign 8
-lbl_803EC518:
+.obj lbl_803EC518, local
 	.double 3.0
+.endobj lbl_803EC518

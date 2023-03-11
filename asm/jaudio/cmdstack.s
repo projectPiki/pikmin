@@ -1,8 +1,7 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
 .balign 32, 0
-.global Add_PortcmdOnce
-Add_PortcmdOnce:
+.fn Add_PortcmdOnce, global
 /* 8000E300 0000B260  7C 08 02 A6 */	mflr r0
 /* 8000E304 0000B264  38 83 00 00 */	addi r4, r3, 0
 /* 8000E308 0000B268  90 01 00 04 */	stw r0, 4(r1)
@@ -13,20 +12,20 @@ Add_PortcmdOnce:
 /* 8000E31C 0000B27C  38 21 00 08 */	addi r1, r1, 8
 /* 8000E320 0000B280  7C 08 03 A6 */	mtlr r0
 /* 8000E324 0000B284  4E 80 00 20 */	blr 
+.endfn Add_PortcmdOnce
 
 .balign 32, 0
-.global Set_Portcmd
-Set_Portcmd:
+.fn Set_Portcmd, global
 /* 8000E340 0000B2A0  90 83 00 14 */	stw r4, 0x14(r3)
 /* 8000E344 0000B2A4  38 00 00 00 */	li r0, 0
 /* 8000E348 0000B2A8  90 A3 00 18 */	stw r5, 0x18(r3)
 /* 8000E34C 0000B2AC  90 03 00 0C */	stw r0, 0xc(r3)
 /* 8000E350 0000B2B0  38 60 00 01 */	li r3, 1
 /* 8000E354 0000B2B4  4E 80 00 20 */	blr 
+.endfn Set_Portcmd
 
 .balign 32, 0
-.global Add_Portcmd
-Add_Portcmd:
+.fn Add_Portcmd, global
 /* 8000E360 0000B2C0  7C 08 02 A6 */	mflr r0
 /* 8000E364 0000B2C4  90 01 00 04 */	stw r0, 4(r1)
 /* 8000E368 0000B2C8  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -61,9 +60,10 @@ Add_Portcmd:
 /* 8000E3CC 0000B32C  38 21 00 18 */	addi r1, r1, 0x18
 /* 8000E3D0 0000B330  7C 08 03 A6 */	mtlr r0
 /* 8000E3D4 0000B334  4E 80 00 20 */	blr 
+.endfn Add_Portcmd
 
 .balign 32, 0
-Get_Portcmd__FP10JPorthead_:
+.fn Get_Portcmd__FP10JPorthead_, local
 /* 8000E3E0 0000B340  80 83 00 00 */	lwz r4, 0(r3)
 /* 8000E3E4 0000B344  28 04 00 00 */	cmplwi r4, 0
 /* 8000E3E8 0000B348  41 82 00 2C */	beq .L_8000E414
@@ -83,10 +83,10 @@ Get_Portcmd__FP10JPorthead_:
 .L_8000E418:
 /* 8000E418 0000B378  7C 83 23 78 */	mr r3, r4
 /* 8000E41C 0000B37C  4E 80 00 20 */	blr 
+.endfn Get_Portcmd__FP10JPorthead_
 
 .balign 32, 0
-.global Jac_Portcmd_Proc_Once
-Jac_Portcmd_Proc_Once:
+.fn Jac_Portcmd_Proc_Once, global
 /* 8000E420 0000B380  7C 08 02 A6 */	mflr r0
 /* 8000E424 0000B384  90 01 00 04 */	stw r0, 4(r1)
 /* 8000E428 0000B388  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -109,10 +109,10 @@ Jac_Portcmd_Proc_Once:
 /* 8000E464 0000B3C4  38 21 00 18 */	addi r1, r1, 0x18
 /* 8000E468 0000B3C8  7C 08 03 A6 */	mtlr r0
 /* 8000E46C 0000B3CC  4E 80 00 20 */	blr 
+.endfn Jac_Portcmd_Proc_Once
 
 .balign 32, 0
-.global Jac_Portcmd_Proc_Stay
-Jac_Portcmd_Proc_Stay:
+.fn Jac_Portcmd_Proc_Stay, global
 /* 8000E480 0000B3E0  7C 08 02 A6 */	mflr r0
 /* 8000E484 0000B3E4  90 01 00 04 */	stw r0, 4(r1)
 /* 8000E488 0000B3E8  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -134,9 +134,10 @@ Jac_Portcmd_Proc_Stay:
 /* 8000E4C0 0000B420  38 21 00 18 */	addi r1, r1, 0x18
 /* 8000E4C4 0000B424  7C 08 03 A6 */	mtlr r0
 /* 8000E4C8 0000B428  4E 80 00 20 */	blr 
+.endfn Jac_Portcmd_Proc_Stay
 
 .balign 32, 0
-Portcmd_Main__FPv:
+.fn Portcmd_Main__FPv, local
 /* 8000E4E0 0000B440  7C 08 02 A6 */	mflr r0
 /* 8000E4E4 0000B444  38 6D 2C 00 */	addi r3, r13, cmd_once@sda21
 /* 8000E4E8 0000B448  90 01 00 04 */	stw r0, 4(r1)
@@ -149,18 +150,18 @@ Portcmd_Main__FPv:
 /* 8000E504 0000B464  38 21 00 08 */	addi r1, r1, 8
 /* 8000E508 0000B468  7C 08 03 A6 */	mtlr r0
 /* 8000E50C 0000B46C  4E 80 00 20 */	blr 
+.endfn Portcmd_Main__FPv
 
 .balign 32, 0
-.global Jac_Porthead_Init
-Jac_Porthead_Init:
+.fn Jac_Porthead_Init, global
 /* 8000E520 0000B480  38 00 00 00 */	li r0, 0
 /* 8000E524 0000B484  90 03 00 00 */	stw r0, 0(r3)
 /* 8000E528 0000B488  90 03 00 04 */	stw r0, 4(r3)
 /* 8000E52C 0000B48C  4E 80 00 20 */	blr 
+.endfn Jac_Porthead_Init
 
 .balign 32, 0
-.global Jac_Portcmd_Init
-Jac_Portcmd_Init:
+.fn Jac_Portcmd_Init, global
 /* 8000E540 0000B4A0  7C 08 02 A6 */	mflr r0
 /* 8000E544 0000B4A4  38 6D 2C 00 */	addi r3, r13, cmd_once@sda21
 /* 8000E548 0000B4A8  90 01 00 04 */	stw r0, 4(r1)
@@ -176,10 +177,13 @@ Jac_Portcmd_Init:
 /* 8000E570 0000B4D0  38 21 00 08 */	addi r1, r1, 8
 /* 8000E574 0000B4D4  7C 08 03 A6 */	mtlr r0
 /* 8000E578 0000B4D8  4E 80 00 20 */	blr 
+.endfn Jac_Portcmd_Init
 
 .section .sbss, "wa"
 .balign 8
-cmd_once:
+.obj cmd_once, local
 	.skip 8
-cmd_stay:
+.endobj cmd_once
+.obj cmd_stay, local
 	.skip 8
+.endobj cmd_stay

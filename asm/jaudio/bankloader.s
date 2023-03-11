@@ -1,8 +1,7 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
 .balign 32, 0
-.global Bank_Setup__FPc
-Bank_Setup__FPc:
+.fn Bank_Setup__FPc, global
 /* 8001D9A0 0001A900  7C 08 02 A6 */	mflr r0
 /* 8001D9A4 0001A904  90 01 00 04 */	stw r0, 4(r1)
 /* 8001D9A8 0001A908  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -65,3 +64,4 @@ Bank_Setup__FPc:
 /* 8001DA74 0001A9D4  38 21 00 28 */	addi r1, r1, 0x28
 /* 8001DA78 0001A9D8  7C 08 03 A6 */	mtlr r0
 /* 8001DA7C 0001A9DC  4E 80 00 20 */	blr 
+.endfn Bank_Setup__FPc

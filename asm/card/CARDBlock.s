@@ -1,11 +1,11 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global __CARDGetFatBlock
-__CARDGetFatBlock:
+.fn __CARDGetFatBlock, global
 /* 802094AC 0020640C  80 63 00 88 */	lwz r3, 0x88(r3)
 /* 802094B0 00206410  4E 80 00 20 */	blr 
+.endfn __CARDGetFatBlock
 
-WriteCallback:
+.fn WriteCallback, local
 /* 802094B4 00206414  7C 08 02 A6 */	mflr r0
 /* 802094B8 00206418  90 01 00 04 */	stw r0, 4(r1)
 /* 802094BC 0020641C  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -63,8 +63,9 @@ WriteCallback:
 /* 8020957C 002064DC  83 A1 00 14 */	lwz r29, 0x14(r1)
 /* 80209580 002064E0  38 21 00 20 */	addi r1, r1, 0x20
 /* 80209584 002064E4  4E 80 00 20 */	blr 
+.endfn WriteCallback
 
-EraseCallback:
+.fn EraseCallback, local
 /* 80209588 002064E8  7C 08 02 A6 */	mflr r0
 /* 8020958C 002064EC  90 01 00 04 */	stw r0, 4(r1)
 /* 80209590 002064F0  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -118,9 +119,9 @@ EraseCallback:
 /* 80209644 002065A4  83 A1 00 1C */	lwz r29, 0x1c(r1)
 /* 80209648 002065A8  38 21 00 28 */	addi r1, r1, 0x28
 /* 8020964C 002065AC  4E 80 00 20 */	blr 
+.endfn EraseCallback
 
-.global __CARDAllocBlock
-__CARDAllocBlock:
+.fn __CARDAllocBlock, global
 /* 80209650 002065B0  7C 08 02 A6 */	mflr r0
 /* 80209654 002065B4  1C E3 01 08 */	mulli r7, r3, 0x108
 /* 80209658 002065B8  90 01 00 04 */	stw r0, 4(r1)
@@ -201,9 +202,9 @@ __CARDAllocBlock:
 /* 8020975C 002066BC  7C 08 03 A6 */	mtlr r0
 /* 80209760 002066C0  38 21 00 20 */	addi r1, r1, 0x20
 /* 80209764 002066C4  4E 80 00 20 */	blr 
+.endfn __CARDAllocBlock
 
-.global __CARDFreeBlock
-__CARDFreeBlock:
+.fn __CARDFreeBlock, global
 /* 80209768 002066C8  7C 08 02 A6 */	mflr r0
 /* 8020976C 002066CC  1C E3 01 08 */	mulli r7, r3, 0x108
 /* 80209770 002066D0  90 01 00 04 */	stw r0, 4(r1)
@@ -249,9 +250,9 @@ __CARDFreeBlock:
 /* 802097F8 00206758  38 21 00 08 */	addi r1, r1, 8
 /* 802097FC 0020675C  7C 08 03 A6 */	mtlr r0
 /* 80209800 00206760  4E 80 00 20 */	blr 
+.endfn __CARDFreeBlock
 
-.global __CARDUpdateFatBlock
-__CARDUpdateFatBlock:
+.fn __CARDUpdateFatBlock, global
 /* 80209804 00206764  7C 08 02 A6 */	mflr r0
 /* 80209808 00206768  90 01 00 04 */	stw r0, 4(r1)
 /* 8020980C 0020676C  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -295,3 +296,4 @@ __CARDUpdateFatBlock:
 /* 802098A4 00206804  83 81 00 18 */	lwz r28, 0x18(r1)
 /* 802098A8 00206808  38 21 00 28 */	addi r1, r1, 0x28
 /* 802098AC 0020680C  4E 80 00 20 */	blr 
+.endfn __CARDUpdateFatBlock

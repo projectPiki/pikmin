@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global DoReset
-DoReset:
+.fn DoReset, local
 /* 80203E04 00200D64  7C 08 02 A6 */	mflr r0
 /* 80203E08 00200D68  3C 60 80 3D */	lis r3, PADType@ha
 /* 80203E0C 00200D6C  90 01 00 04 */	stw r0, 4(r1)
@@ -56,9 +55,9 @@ DoReset:
 /* 80203ECC 00200E2C  7C 08 03 A6 */	mtlr r0
 /* 80203ED0 00200E30  38 21 00 18 */	addi r1, r1, 0x18
 /* 80203ED4 00200E34  4E 80 00 20 */	blr 
+.endfn DoReset
 
-.global PADProbeCallback
-PADProbeCallback:
+.fn PADProbeCallback, local
 /* 80203ED8 00200E38  7C 08 02 A6 */	mflr r0
 /* 80203EDC 00200E3C  90 01 00 04 */	stw r0, 4(r1)
 /* 80203EE0 00200E40  54 80 07 3F */	clrlwi. r0, r4, 0x1c
@@ -184,9 +183,9 @@ PADProbeCallback:
 /* 802040A8 00201008  83 A1 00 34 */	lwz r29, 0x34(r1)
 /* 802040AC 0020100C  38 21 00 40 */	addi r1, r1, 0x40
 /* 802040B0 00201010  4E 80 00 20 */	blr 
+.endfn PADProbeCallback
 
-.global UpdateOrigin
-UpdateOrigin:
+.fn UpdateOrigin, local
 /* 802040B4 00201014  80 0D 2A 40 */	lwz r0, AnalogMode@sda21(r13)
 /* 802040B8 00201018  3C 80 80 3D */	lis r4, Origin@ha
 /* 802040BC 0020101C  3C E0 80 00 */	lis r7, 0x8000
@@ -295,9 +294,9 @@ UpdateOrigin:
 /* 8020423C 0020119C  38 00 00 00 */	li r0, 0
 /* 80204240 002011A0  98 04 00 02 */	stb r0, 2(r4)
 /* 80204244 002011A4  4E 80 00 20 */	blr 
+.endfn UpdateOrigin
 
-.global PADOriginCallback
-PADOriginCallback:
+.fn PADOriginCallback, local
 /* 80204248 002011A8  7C 08 02 A6 */	mflr r0
 /* 8020424C 002011AC  3C 60 80 3D */	lis r3, PADType@ha
 /* 80204250 002011B0  90 01 00 04 */	stw r0, 4(r1)
@@ -371,9 +370,9 @@ PADOriginCallback:
 /* 80204358 002012B8  7C 08 03 A6 */	mtlr r0
 /* 8020435C 002012BC  38 21 00 30 */	addi r1, r1, 0x30
 /* 80204360 002012C0  4E 80 00 20 */	blr 
+.endfn PADOriginCallback
 
-.global PADOriginUpdateCallback
-PADOriginUpdateCallback:
+.fn PADOriginUpdateCallback, local
 /* 80204364 002012C4  7C 08 02 A6 */	mflr r0
 /* 80204368 002012C8  90 01 00 04 */	stw r0, 4(r1)
 /* 8020436C 002012CC  3C 00 80 00 */	lis r0, 0x8000
@@ -390,9 +389,9 @@ PADOriginUpdateCallback:
 /* 80204394 002012F4  38 21 00 08 */	addi r1, r1, 8
 /* 80204398 002012F8  7C 08 03 A6 */	mtlr r0
 /* 8020439C 002012FC  4E 80 00 20 */	blr 
+.endfn PADOriginUpdateCallback
 
-.global PADFixCallback
-PADFixCallback:
+.fn PADFixCallback, local
 /* 802043A0 00201300  7C 08 02 A6 */	mflr r0
 /* 802043A4 00201304  3C 60 80 3D */	lis r3, PADType@ha
 /* 802043A8 00201308  90 01 00 04 */	stw r0, 4(r1)
@@ -547,9 +546,9 @@ PADFixCallback:
 /* 802045E8 00201548  83 A1 00 2C */	lwz r29, 0x2c(r1)
 /* 802045EC 0020154C  38 21 00 38 */	addi r1, r1, 0x38
 /* 802045F0 00201550  4E 80 00 20 */	blr 
+.endfn PADFixCallback
 
-.global PADResetCallback
-PADResetCallback:
+.fn PADResetCallback, local
 /* 802045F4 00201554  7C 08 02 A6 */	mflr r0
 /* 802045F8 00201558  54 85 07 3F */	clrlwi. r5, r4, 0x1c
 /* 802045FC 0020155C  90 01 00 04 */	stw r0, 4(r1)
@@ -1037,9 +1036,9 @@ PADResetCallback:
 /* 80204D18 00201C78  38 21 00 60 */	addi r1, r1, 0x60
 /* 80204D1C 00201C7C  7C 08 03 A6 */	mtlr r0
 /* 80204D20 00201C80  4E 80 00 20 */	blr 
+.endfn PADResetCallback
 
-.global PADReset
-PADReset:
+.fn PADReset, global
 /* 80204D24 00201C84  7C 08 02 A6 */	mflr r0
 /* 80204D28 00201C88  3C 80 80 3D */	lis r4, PADType@ha
 /* 80204D2C 00201C8C  90 01 00 04 */	stw r0, 4(r1)
@@ -1134,9 +1133,9 @@ PADReset:
 /* 80204E84 00201DE4  83 81 00 18 */	lwz r28, 0x18(r1)
 /* 80204E88 00201DE8  38 21 00 28 */	addi r1, r1, 0x28
 /* 80204E8C 00201DEC  4E 80 00 20 */	blr 
+.endfn PADReset
 
-.global PADRecalibrate
-PADRecalibrate:
+.fn PADRecalibrate, global
 /* 80204E90 00201DF0  7C 08 02 A6 */	mflr r0
 /* 80204E94 00201DF4  3C 80 80 3D */	lis r4, PADType@ha
 /* 80204E98 00201DF8  90 01 00 04 */	stw r0, 4(r1)
@@ -1224,9 +1223,9 @@ PADRecalibrate:
 /* 80204FD8 00201F38  83 81 00 18 */	lwz r28, 0x18(r1)
 /* 80204FDC 00201F3C  38 21 00 28 */	addi r1, r1, 0x28
 /* 80204FE0 00201F40  4E 80 00 20 */	blr 
+.endfn PADRecalibrate
 
-.global PADInit
-PADInit:
+.fn PADInit, global
 /* 80204FE4 00201F44  7C 08 02 A6 */	mflr r0
 /* 80204FE8 00201F48  3C 60 80 3D */	lis r3, PADType@ha
 /* 80204FEC 00201F4C  90 01 00 04 */	stw r0, 4(r1)
@@ -1345,9 +1344,9 @@ PADInit:
 /* 8020519C 002020FC  38 21 00 38 */	addi r1, r1, 0x38
 /* 802051A0 00202100  7C 08 03 A6 */	mtlr r0
 /* 802051A4 00202104  4E 80 00 20 */	blr 
+.endfn PADInit
 
-.global PADReceiveCheckCallback
-PADReceiveCheckCallback:
+.fn PADReceiveCheckCallback, local
 /* 802051A8 00202108  7C 08 02 A6 */	mflr r0
 /* 802051AC 0020210C  3C E0 80 3D */	lis r7, Type@ha
 /* 802051B0 00202110  90 01 00 04 */	stw r0, 4(r1)
@@ -1439,9 +1438,9 @@ PADReceiveCheckCallback:
 /* 802052F8 00202258  83 A1 00 1C */	lwz r29, 0x1c(r1)
 /* 802052FC 0020225C  38 21 00 28 */	addi r1, r1, 0x28
 /* 80205300 00202260  4E 80 00 20 */	blr 
+.endfn PADReceiveCheckCallback
 
-.global PADRead
-PADRead:
+.fn PADRead, global
 /* 80205304 00202264  7C 08 02 A6 */	mflr r0
 /* 80205308 00202268  3C 80 80 3D */	lis r4, Origin@ha
 /* 8020530C 0020226C  90 01 00 04 */	stw r0, 4(r1)
@@ -1663,9 +1662,9 @@ PADRead:
 /* 80205630 00202590  38 21 00 48 */	addi r1, r1, 0x48
 /* 80205634 00202594  7C 08 03 A6 */	mtlr r0
 /* 80205638 00202598  4E 80 00 20 */	blr 
+.endfn PADRead
 
-.global PADSetSamplingRate
-PADSetSamplingRate:
+.fn PADSetSamplingRate, global
 /* 8020563C 0020259C  7C 08 02 A6 */	mflr r0
 /* 80205640 002025A0  90 01 00 04 */	stw r0, 4(r1)
 /* 80205644 002025A4  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -1716,9 +1715,9 @@ PADSetSamplingRate:
 /* 802056E0 00202640  83 A1 00 14 */	lwz r29, 0x14(r1)
 /* 802056E4 00202644  38 21 00 20 */	addi r1, r1, 0x20
 /* 802056E8 00202648  4E 80 00 20 */	blr 
+.endfn PADSetSamplingRate
 
-.global PADControlMotor
-PADControlMotor:
+.fn PADControlMotor, global
 /* 802056EC 0020264C  7C 08 02 A6 */	mflr r0
 /* 802056F0 00202650  90 01 00 04 */	stw r0, 4(r1)
 /* 802056F4 00202654  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -1768,9 +1767,9 @@ PADControlMotor:
 /* 8020579C 002026FC  83 A1 00 14 */	lwz r29, 0x14(r1)
 /* 802057A0 00202700  38 21 00 20 */	addi r1, r1, 0x20
 /* 802057A4 00202704  4E 80 00 20 */	blr 
+.endfn PADControlMotor
 
-.global PADSetSpec
-PADSetSpec:
+.fn PADSetSpec, global
 /* 802057A8 00202708  38 00 00 00 */	li r0, 0
 /* 802057AC 0020270C  2C 03 00 01 */	cmpwi r3, 1
 /* 802057B0 00202710  90 0D 33 7C */	stw r0, __PADSpec@sda21(r13)
@@ -1800,9 +1799,9 @@ PADSetSpec:
 .L_80205800:
 /* 80205800 00202760  90 6D 2A 44 */	stw r3, Spec@sda21(r13)
 /* 80205804 00202764  4E 80 00 20 */	blr 
+.endfn PADSetSpec
 
-.global SPEC0_MakeStatus
-SPEC0_MakeStatus:
+.fn SPEC0_MakeStatus, local
 /* 80205808 00202768  38 60 00 00 */	li r3, 0
 /* 8020580C 0020276C  B0 64 00 00 */	sth r3, 0(r4)
 /* 80205810 00202770  80 05 00 00 */	lwz r0, 0(r5)
@@ -1907,9 +1906,9 @@ SPEC0_MakeStatus:
 /* 80205970 002028D0  38 03 FF 80 */	addi r0, r3, -128
 /* 80205974 002028D4  98 04 00 05 */	stb r0, 5(r4)
 /* 80205978 002028D8  4E 80 00 20 */	blr 
+.endfn SPEC0_MakeStatus
 
-.global SPEC1_MakeStatus
-SPEC1_MakeStatus:
+.fn SPEC1_MakeStatus, local
 /* 8020597C 002028DC  38 60 00 00 */	li r3, 0
 /* 80205980 002028E0  B0 64 00 00 */	sth r3, 0(r4)
 /* 80205984 002028E4  80 05 00 00 */	lwz r0, 0(r5)
@@ -2014,9 +2013,9 @@ SPEC1_MakeStatus:
 /* 80205AE4 00202A44  38 03 FF 80 */	addi r0, r3, -128
 /* 80205AE8 00202A48  98 04 00 05 */	stb r0, 5(r4)
 /* 80205AEC 00202A4C  4E 80 00 20 */	blr 
+.endfn SPEC1_MakeStatus
 
-.global SPEC2_MakeStatus
-SPEC2_MakeStatus:
+.fn SPEC2_MakeStatus, local
 /* 80205AF0 00202A50  80 05 00 00 */	lwz r0, 0(r5)
 /* 80205AF4 00202A54  54 00 84 BE */	rlwinm r0, r0, 0x10, 0x12, 0x1f
 /* 80205AF8 00202A58  B0 04 00 00 */	sth r0, 0(r4)
@@ -2290,9 +2289,9 @@ SPEC2_MakeStatus:
 /* 80205EDC 00202E3C  7C 60 18 50 */	subf r3, r0, r3
 /* 80205EE0 00202E40  98 64 00 07 */	stb r3, 7(r4)
 /* 80205EE4 00202E44  4E 80 00 20 */	blr 
+.endfn SPEC2_MakeStatus
 
-.global OnReset
-OnReset:
+.fn OnReset, local
 /* 80205EE8 00202E48  7C 08 02 A6 */	mflr r0
 /* 80205EEC 00202E4C  2C 03 00 00 */	cmpwi r3, 0
 /* 80205EF0 00202E50  90 01 00 04 */	stw r0, 4(r1)
@@ -2370,103 +2369,97 @@ OnReset:
 /* 80205FF8 00202F58  83 A1 00 1C */	lwz r29, 0x1c(r1)
 /* 80205FFC 00202F5C  38 21 00 28 */	addi r1, r1, 0x28
 /* 80206000 00202F60  4E 80 00 20 */	blr 
+.endfn OnReset
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-.global ResetFunctionInfo
-ResetFunctionInfo:
+.obj ResetFunctionInfo, local
 	.4byte OnReset
 	.4byte 0x0000007F
 	.4byte 0x00000000
 	.4byte 0x00000000
-.global XYNTSC
-XYNTSC:
+.endobj ResetFunctionInfo
+.obj XYNTSC, local
 	.4byte 0xF7020E13
 	.4byte 0x1D092507
 	.4byte 0x34054104
 	.4byte 0x57035703
 	.4byte 0x57038302
 	.4byte 0x83028302
-.global XYPAL
-XYPAL:
+.endobj XYNTSC
+.obj XYPAL, local
 	.4byte 0x94030D18
 	.4byte 0x1A0C2708
 	.4byte 0x34063E05
 	.4byte 0x4E046803
 	.4byte 0x68036803
 	.4byte 0x68039C02
-lbl_802E8B88:
-	.4byte 0x50414453
-	.4byte 0x65745361
-	.4byte 0x6D706C69
-	.4byte 0x6E675261
-	.4byte 0x74653A20
-	.4byte 0x756E6B6E
-	.4byte 0x6F776E20
-	.4byte 0x54562066
-	.4byte 0x6F726D61
-	.4byte 0x74000000
+.endobj XYPAL
+.balign 4
+.obj lbl_802E8B88, local
+	.asciz "PADSetSamplingRate: unknown TV format"
+.endobj lbl_802E8B88
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-.global ResettingChan
-ResettingChan:
+.obj ResettingChan, local
 	.4byte 0x00000020
-.global XPatchBits
-XPatchBits:
+.endobj ResettingChan
+.obj XPatchBits, local
 	.4byte 0xF0000000
-.global AnalogMode
-AnalogMode:
+.endobj XPatchBits
+.obj AnalogMode, local
 	.4byte 0x00000300
-.global Spec
-Spec:
+.endobj AnalogMode
+.obj Spec, local
 	.4byte 0x00000005
-.global MakeStatus
-MakeStatus:
+.endobj Spec
+.obj MakeStatus, local
 	.4byte SPEC2_MakeStatus
-.global cmdReadOrigin
-cmdReadOrigin:
+.endobj MakeStatus
+.obj cmdReadOrigin, local
 	.4byte 0x41000000
-.global cmdCalibrate
-cmdCalibrate:
+.endobj cmdReadOrigin
+.obj cmdCalibrate, local
 	.4byte 0x42000000
-.global lbl_803E7774
-lbl_803E7774:
-	.4byte 0x5061642E
-	.4byte 0x63000000
+.endobj cmdCalibrate
+.balign 4
+.obj lbl_803E7774, local
+	.asciz "Pad.c"
+.endobj lbl_803E7774
 
 .section .sbss, "wa"
 .balign 8
-.global Initialized
-Initialized:
+.obj Initialized, local
 	.skip 0x4
-.global EnabledBits
-EnabledBits:
+.endobj Initialized
+.obj EnabledBits, local
 	.skip 0x4
-.global ResettingBits
-ResettingBits:
+.endobj EnabledBits
+.obj ResettingBits, local
 	.skip 0x4
-.global ProbingBits
-ProbingBits:
+.endobj ResettingBits
+.obj ProbingBits, local
 	.skip 0x4
-.global RecalibrateBits
-RecalibrateBits:
+.endobj ProbingBits
+.obj RecalibrateBits, local
 	.skip 0x4
-.global WaitingBits
-WaitingBits:
+.endobj RecalibrateBits
+.obj WaitingBits, local
 	.skip 0x4
-.global CheckingBits
-CheckingBits:
+.endobj WaitingBits
+.obj CheckingBits, local
 	.skip 0x4
-.global cmdTypeAndStatus
-cmdTypeAndStatus:
+.endobj CheckingBits
+.obj cmdTypeAndStatus, local
 	.skip 0x4
-.global recalibrated$595
-recalibrated$595:
+.endobj cmdTypeAndStatus
+.obj recalibrated$595, local
 	.skip 0x4
-.global __PADSpec
-__PADSpec:
+.endobj recalibrated$595
+.obj __PADSpec, global
 	.skip 0x4
-.global __PADFixBits
-__PADFixBits:
+.endobj __PADSpec
+.obj __PADFixBits, global
 	.skip 0x4
+.endobj __PADFixBits

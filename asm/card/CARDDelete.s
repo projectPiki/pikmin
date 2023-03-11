@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global DeleteCallback
-DeleteCallback:
+.fn DeleteCallback, local
 /* 8020CA64 002099C4  7C 08 02 A6 */	mflr r0
 /* 8020CA68 002099C8  90 01 00 04 */	stw r0, 4(r1)
 /* 8020CA6C 002099CC  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -45,9 +44,9 @@ DeleteCallback:
 /* 8020CAFC 00209A5C  83 81 00 10 */	lwz r28, 0x10(r1)
 /* 8020CB00 00209A60  38 21 00 20 */	addi r1, r1, 0x20
 /* 8020CB04 00209A64  4E 80 00 20 */	blr 
+.endfn DeleteCallback
 
-.global CARDFastDeleteAsync
-CARDFastDeleteAsync:
+.fn CARDFastDeleteAsync, global
 /* 8020CB08 00209A68  7C 08 02 A6 */	mflr r0
 /* 8020CB0C 00209A6C  90 01 00 04 */	stw r0, 4(r1)
 /* 8020CB10 00209A70  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -131,9 +130,9 @@ CARDFastDeleteAsync:
 /* 8020CC24 00209B84  83 81 00 18 */	lwz r28, 0x18(r1)
 /* 8020CC28 00209B88  38 21 00 28 */	addi r1, r1, 0x28
 /* 8020CC2C 00209B8C  4E 80 00 20 */	blr 
+.endfn CARDFastDeleteAsync
 
-.global CARDFastDelete
-CARDFastDelete:
+.fn CARDFastDelete, global
 /* 8020CC30 00209B90  7C 08 02 A6 */	mflr r0
 /* 8020CC34 00209B94  3C A0 80 20 */	lis r5, __CARDSyncCallback@ha
 /* 8020CC38 00209B98  90 01 00 04 */	stw r0, 4(r1)
@@ -154,3 +153,4 @@ CARDFastDelete:
 /* 8020CC6C 00209BCC  38 21 00 18 */	addi r1, r1, 0x18
 /* 8020CC70 00209BD0  7C 08 03 A6 */	mtlr r0
 /* 8020CC74 00209BD4  4E 80 00 20 */	blr 
+.endfn CARDFastDelete

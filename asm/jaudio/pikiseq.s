@@ -1,8 +1,7 @@
 .include "macros.inc"
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 32
-.global HEAD_pikiseq
-HEAD_pikiseq:
+.obj HEAD_pikiseq, global
 	.asciz "BARC----"
 .balign 4
 	.4byte 0x00000016
@@ -190,3 +189,4 @@ HEAD_pikiseq:
 	.4byte 0x00000000
 	.4byte 0x00034880
 	.4byte 0x00001080
+.endobj HEAD_pikiseq

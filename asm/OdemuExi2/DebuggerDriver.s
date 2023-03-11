@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global DBGEXIImm
-DBGEXIImm:
+.fn DBGEXIImm, local
 /* 802214D8 0021E438  94 21 FF B8 */	stwu r1, -0x48(r1)
 /* 802214DC 0021E43C  28 05 00 00 */	cmplwi r5, 0
 /* 802214E0 0021E440  BE C1 00 20 */	stmw r22, 0x20(r1)
@@ -180,9 +179,9 @@ DBGEXIImm:
 /* 80221764 0021E6C4  BA C1 00 20 */	lmw r22, 0x20(r1)
 /* 80221768 0021E6C8  38 21 00 48 */	addi r1, r1, 0x48
 /* 8022176C 0021E6CC  4E 80 00 20 */	blr 
+.endfn DBGEXIImm
 
-.global DBGReadMailbox
-DBGReadMailbox:
+.fn DBGReadMailbox, local
 /* 80221770 0021E6D0  7C 08 02 A6 */	mflr r0
 /* 80221774 0021E6D4  38 80 00 02 */	li r4, 2
 /* 80221778 0021E6D8  90 01 00 04 */	stw r0, 4(r1)
@@ -228,9 +227,9 @@ DBGReadMailbox:
 /* 80221810 0021E770  38 21 00 38 */	addi r1, r1, 0x38
 /* 80221814 0021E774  7C 08 03 A6 */	mtlr r0
 /* 80221818 0021E778  4E 80 00 20 */	blr 
+.endfn DBGReadMailbox
 
-.global DBGRead
-DBGRead:
+.fn DBGRead, local
 /* 8022181C 0021E77C  7C 08 02 A6 */	mflr r0
 /* 80221820 0021E780  90 01 00 04 */	stw r0, 4(r1)
 /* 80221824 0021E784  54 60 41 EA */	rlwinm r0, r3, 8, 7, 0x15
@@ -290,9 +289,9 @@ DBGRead:
 /* 802218EC 0021E84C  38 21 00 40 */	addi r1, r1, 0x40
 /* 802218F0 0021E850  7C 08 03 A6 */	mtlr r0
 /* 802218F4 0021E854  4E 80 00 20 */	blr 
+.endfn DBGRead
 
-.global DBGWrite
-DBGWrite:
+.fn DBGWrite, local
 /* 802218F8 0021E858  7C 08 02 A6 */	mflr r0
 /* 802218FC 0021E85C  90 01 00 04 */	stw r0, 4(r1)
 /* 80221900 0021E860  54 60 41 EA */	rlwinm r0, r3, 8, 7, 0x15
@@ -352,9 +351,9 @@ DBGWrite:
 /* 802219C8 0021E928  38 21 00 40 */	addi r1, r1, 0x40
 /* 802219CC 0021E92C  7C 08 03 A6 */	mtlr r0
 /* 802219D0 0021E930  4E 80 00 20 */	blr 
+.endfn DBGWrite
 
-.global DBGReadStatus
-DBGReadStatus:
+.fn DBGReadStatus, local
 /* 802219D4 0021E934  7C 08 02 A6 */	mflr r0
 /* 802219D8 0021E938  38 80 00 02 */	li r4, 2
 /* 802219DC 0021E93C  90 01 00 04 */	stw r0, 4(r1)
@@ -400,9 +399,9 @@ DBGReadStatus:
 /* 80221A74 0021E9D4  38 21 00 38 */	addi r1, r1, 0x38
 /* 80221A78 0021E9D8  7C 08 03 A6 */	mtlr r0
 /* 80221A7C 0021E9DC  4E 80 00 20 */	blr 
+.endfn DBGReadStatus
 
-.global MWCallback
-MWCallback:
+.fn MWCallback, local
 /* 80221A80 0021E9E0  7C 08 02 A6 */	mflr r0
 /* 80221A84 0021E9E4  90 01 00 04 */	stw r0, 4(r1)
 /* 80221A88 0021E9E8  38 00 00 01 */	li r0, 1
@@ -419,9 +418,9 @@ MWCallback:
 /* 80221AB0 0021EA10  38 21 00 08 */	addi r1, r1, 8
 /* 80221AB4 0021EA14  7C 08 03 A6 */	mtlr r0
 /* 80221AB8 0021EA18  4E 80 00 20 */	blr 
+.endfn MWCallback
 
-.global DBGHandler
-DBGHandler:
+.fn DBGHandler, local
 /* 80221ABC 0021EA1C  7C 08 02 A6 */	mflr r0
 /* 80221AC0 0021EA20  3C A0 CC 00 */	lis r5, 0xCC003000@ha
 /* 80221AC4 0021EA24  90 01 00 04 */	stw r0, 4(r1)
@@ -439,9 +438,9 @@ DBGHandler:
 /* 80221AF0 0021EA50  38 21 00 08 */	addi r1, r1, 8
 /* 80221AF4 0021EA54  7C 08 03 A6 */	mtlr r0
 /* 80221AF8 0021EA58  4E 80 00 20 */	blr 
+.endfn DBGHandler
 
-.global DBInitComm
-DBInitComm:
+.fn DBInitComm, global
 /* 80221AFC 0021EA5C  7C 08 02 A6 */	mflr r0
 /* 80221B00 0021EA60  90 01 00 04 */	stw r0, 4(r1)
 /* 80221B04 0021EA64  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -472,9 +471,9 @@ DBInitComm:
 /* 80221B68 0021EAC8  83 A1 00 14 */	lwz r29, 0x14(r1)
 /* 80221B6C 0021EACC  38 21 00 20 */	addi r1, r1, 0x20
 /* 80221B70 0021EAD0  4E 80 00 20 */	blr 
+.endfn DBInitComm
 
-.global DBInitInterrupts
-DBInitInterrupts:
+.fn DBInitInterrupts, global
 /* 80221B74 0021EAD4  7C 08 02 A6 */	mflr r0
 /* 80221B78 0021EAD8  3C 60 00 02 */	lis r3, 0x00018000@ha
 /* 80221B7C 0021EADC  90 01 00 04 */	stw r0, 4(r1)
@@ -496,9 +495,9 @@ DBInitInterrupts:
 /* 80221BBC 0021EB1C  38 21 00 08 */	addi r1, r1, 8
 /* 80221BC0 0021EB20  7C 08 03 A6 */	mtlr r0
 /* 80221BC4 0021EB24  4E 80 00 20 */	blr 
+.endfn DBInitInterrupts
 
-.global DBQueryData
-DBQueryData:
+.fn DBQueryData, global
 /* 80221BC8 0021EB28  7C 08 02 A6 */	mflr r0
 /* 80221BCC 0021EB2C  38 60 00 00 */	li r3, 0
 /* 80221BD0 0021EB30  90 01 00 04 */	stw r0, 4(r1)
@@ -539,9 +538,9 @@ DBQueryData:
 /* 80221C58 0021EBB8  80 6D 34 BC */	lwz r3, RecvDataLeng@sda21(r13)
 /* 80221C5C 0021EBBC  7C 08 03 A6 */	mtlr r0
 /* 80221C60 0021EBC0  4E 80 00 20 */	blr 
+.endfn DBQueryData
 
-.global DBRead
-DBRead:
+.fn DBRead, global
 /* 80221C64 0021EBC4  7C 08 02 A6 */	mflr r0
 /* 80221C68 0021EBC8  90 01 00 04 */	stw r0, 4(r1)
 /* 80221C6C 0021EBCC  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -579,9 +578,9 @@ DBRead:
 /* 80221CE4 0021EC44  83 A1 00 14 */	lwz r29, 0x14(r1)
 /* 80221CE8 0021EC48  38 21 00 20 */	addi r1, r1, 0x20
 /* 80221CEC 0021EC4C  4E 80 00 20 */	blr 
+.endfn DBRead
 
-.global DBWrite
-DBWrite:
+.fn DBWrite, global
 /* 80221CF0 0021EC50  7C 08 02 A6 */	mflr r0
 /* 80221CF4 0021EC54  90 01 00 04 */	stw r0, 4(r1)
 /* 80221CF8 0021EC58  94 21 FF 88 */	stwu r1, -0x78(r1)
@@ -748,40 +747,39 @@ DBWrite:
 /* 80221F44 0021EEA4  38 21 00 78 */	addi r1, r1, 0x78
 /* 80221F48 0021EEA8  7C 08 03 A6 */	mtlr r0
 /* 80221F4C 0021EEAC  4E 80 00 20 */	blr 
+.endfn DBWrite
 
-.global DBOpen
-DBOpen:
+.fn DBOpen, global
 /* 80221F50 0021EEB0  4E 80 00 20 */	blr 
+.endfn DBOpen
 
-.global DBClose
-DBClose:
+.fn DBClose, global
 /* 80221F54 0021EEB4  4E 80 00 20 */	blr 
+.endfn DBClose
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-
-.global SendCount
-SendCount:
+.obj SendCount, local
 	.byte 0x80
+.endobj SendCount
 
 .section .sbss, "wa"
 .balign 8
-
-.global MTRCallback
-MTRCallback:
+.obj MTRCallback, local
 	.skip 0x4
-.global DBGCallback
-DBGCallback:
+.endobj MTRCallback
+.obj DBGCallback, local
 	.skip 0x4
-.global SendMailData
-SendMailData:
+.endobj DBGCallback
+.obj SendMailData, local
 	.skip 0x4
-.global RecvDataLeng
-RecvDataLeng:
+.endobj SendMailData
+.obj RecvDataLeng, local
 	.skip 0x4
-.global pEXIInputFlag
-pEXIInputFlag:
+.endobj RecvDataLeng
+.obj pEXIInputFlag, local
 	.skip 0x4
-.global EXIInputFlag
-EXIInputFlag:
+.endobj pEXIInputFlag
+.obj EXIInputFlag, local
 	.skip 0x1
+.endobj EXIInputFlag

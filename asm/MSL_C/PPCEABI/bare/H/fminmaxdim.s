@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global __fpclassifyd__Fd
-__fpclassifyd__Fd:
+.fn __fpclassifyd__Fd, weak
 /* 8021B1E8 00218148  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8021B1EC 0021814C  3C 00 7F F0 */	lis r0, 0x7ff0
 /* 8021B1F0 00218150  D8 21 00 08 */	stfd f1, 8(r1)
@@ -42,3 +41,4 @@ __fpclassifyd__Fd:
 .L_8021B260:
 /* 8021B260 002181C0  38 21 00 10 */	addi r1, r1, 0x10
 /* 8021B264 002181C4  4E 80 00 20 */	blr 
+.endfn __fpclassifyd__Fd

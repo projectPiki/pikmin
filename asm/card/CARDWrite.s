@@ -1,6 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-WriteCallback:
+.fn WriteCallback, local
 /* 8020C6EC 0020964C  7C 08 02 A6 */	mflr r0
 /* 8020C6F0 00209650  90 01 00 04 */	stw r0, 4(r1)
 /* 8020C6F4 00209654  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -100,8 +100,9 @@ WriteCallback:
 /* 8020C850 002097B0  83 81 00 10 */	lwz r28, 0x10(r1)
 /* 8020C854 002097B4  38 21 00 20 */	addi r1, r1, 0x20
 /* 8020C858 002097B8  4E 80 00 20 */	blr 
+.endfn WriteCallback
 
-EraseCallback:
+.fn EraseCallback, local
 /* 8020C85C 002097BC  7C 08 02 A6 */	mflr r0
 /* 8020C860 002097C0  90 01 00 04 */	stw r0, 4(r1)
 /* 8020C864 002097C4  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -148,9 +149,9 @@ EraseCallback:
 /* 8020C900 00209860  83 81 00 10 */	lwz r28, 0x10(r1)
 /* 8020C904 00209864  38 21 00 20 */	addi r1, r1, 0x20
 /* 8020C908 00209868  4E 80 00 20 */	blr 
+.endfn EraseCallback
 
-.global CARDWriteAsync
-CARDWriteAsync:
+.fn CARDWriteAsync, global
 /* 8020C90C 0020986C  7C 08 02 A6 */	mflr r0
 /* 8020C910 00209870  90 01 00 04 */	stw r0, 4(r1)
 /* 8020C914 00209874  94 21 FF C8 */	stwu r1, -0x38(r1)
@@ -227,9 +228,9 @@ CARDWriteAsync:
 /* 8020CA10 00209970  38 21 00 38 */	addi r1, r1, 0x38
 /* 8020CA14 00209974  7C 08 03 A6 */	mtlr r0
 /* 8020CA18 00209978  4E 80 00 20 */	blr 
+.endfn CARDWriteAsync
 
-.global CARDWrite
-CARDWrite:
+.fn CARDWrite, global
 /* 8020CA1C 0020997C  7C 08 02 A6 */	mflr r0
 /* 8020CA20 00209980  3C E0 80 20 */	lis r7, __CARDSyncCallback@ha
 /* 8020CA24 00209984  90 01 00 04 */	stw r0, 4(r1)
@@ -250,3 +251,4 @@ CARDWrite:
 /* 8020CA58 002099B8  38 21 00 20 */	addi r1, r1, 0x20
 /* 8020CA5C 002099BC  7C 08 03 A6 */	mtlr r0
 /* 8020CA60 002099C0  4E 80 00 20 */	blr 
+.endfn CARDWrite

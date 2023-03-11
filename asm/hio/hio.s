@@ -1,13 +1,12 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global ExtHandler
-ExtHandler:
+.fn ExtHandler, local
 /* 8020D388 0020A2E8  38 00 FF FF */	li r0, -1
 /* 8020D38C 0020A2EC  90 0D 2A 60 */	stw r0, Chan@sda21(r13)
 /* 8020D390 0020A2F0  4E 80 00 20 */	blr 
+.endfn ExtHandler
 
-.global ExiHandler
-ExiHandler:
+.fn ExiHandler, local
 /* 8020D394 0020A2F4  7C 08 02 A6 */	mflr r0
 /* 8020D398 0020A2F8  90 01 00 04 */	stw r0, 4(r1)
 /* 8020D39C 0020A2FC  94 21 FF F8 */	stwu r1, -8(r1)
@@ -21,9 +20,9 @@ ExiHandler:
 /* 8020D3B8 0020A318  38 21 00 08 */	addi r1, r1, 8
 /* 8020D3BC 0020A31C  7C 08 03 A6 */	mtlr r0
 /* 8020D3C0 0020A320  4E 80 00 20 */	blr 
+.endfn ExiHandler
 
-.global DbgHandler
-DbgHandler:
+.fn DbgHandler, local
 /* 8020D3C4 0020A324  7C 08 02 A6 */	mflr r0
 /* 8020D3C8 0020A328  3C 60 CC 00 */	lis r3, 0xCC003000@ha
 /* 8020D3CC 0020A32C  90 01 00 04 */	stw r0, 4(r1)
@@ -40,9 +39,9 @@ DbgHandler:
 /* 8020D3F4 0020A354  38 21 00 08 */	addi r1, r1, 8
 /* 8020D3F8 0020A358  7C 08 03 A6 */	mtlr r0
 /* 8020D3FC 0020A35C  4E 80 00 20 */	blr 
+.endfn DbgHandler
 
-.global HIOEnumDevices
-HIOEnumDevices:
+.fn HIOEnumDevices, global
 /* 8020D400 0020A360  7C 08 02 A6 */	mflr r0
 /* 8020D404 0020A364  90 01 00 04 */	stw r0, 4(r1)
 /* 8020D408 0020A368  94 21 FF D0 */	stwu r1, -0x30(r1)
@@ -166,9 +165,9 @@ HIOEnumDevices:
 /* 8020D5B8 0020A518  38 21 00 30 */	addi r1, r1, 0x30
 /* 8020D5BC 0020A51C  7C 08 03 A6 */	mtlr r0
 /* 8020D5C0 0020A520  4E 80 00 20 */	blr 
+.endfn HIOEnumDevices
 
-.global HIOInit
-HIOInit:
+.fn HIOInit, global
 /* 8020D5C4 0020A524  7C 08 02 A6 */	mflr r0
 /* 8020D5C8 0020A528  90 01 00 04 */	stw r0, 4(r1)
 /* 8020D5CC 0020A52C  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -322,9 +321,9 @@ HIOInit:
 /* 8020D7EC 0020A74C  7C 08 03 A6 */	mtlr r0
 /* 8020D7F0 0020A750  38 21 00 20 */	addi r1, r1, 0x20
 /* 8020D7F4 0020A754  4E 80 00 20 */	blr 
+.endfn HIOInit
 
-.global HIOReadMailbox
-HIOReadMailbox:
+.fn HIOReadMailbox, global
 /* 8020D7F8 0020A758  7C 08 02 A6 */	mflr r0
 /* 8020D7FC 0020A75C  90 01 00 04 */	stw r0, 4(r1)
 /* 8020D800 0020A760  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -406,9 +405,9 @@ HIOReadMailbox:
 /* 8020D91C 0020A87C  7C 08 03 A6 */	mtlr r0
 /* 8020D920 0020A880  38 21 00 18 */	addi r1, r1, 0x18
 /* 8020D924 0020A884  4E 80 00 20 */	blr 
+.endfn HIOReadMailbox
 
-.global HIOWriteMailbox
-HIOWriteMailbox:
+.fn HIOWriteMailbox, global
 /* 8020D928 0020A888  7C 08 02 A6 */	mflr r0
 /* 8020D92C 0020A88C  90 01 00 04 */	stw r0, 4(r1)
 /* 8020D930 0020A890  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -475,9 +474,9 @@ HIOWriteMailbox:
 /* 8020DA10 0020A970  38 21 00 18 */	addi r1, r1, 0x18
 /* 8020DA14 0020A974  7C 08 03 A6 */	mtlr r0
 /* 8020DA18 0020A978  4E 80 00 20 */	blr 
+.endfn HIOWriteMailbox
 
-.global HIOWrite
-HIOWrite:
+.fn HIOWrite, global
 /* 8020DA1C 0020A97C  7C 08 02 A6 */	mflr r0
 /* 8020DA20 0020A980  90 01 00 04 */	stw r0, 4(r1)
 /* 8020DA24 0020A984  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -564,17 +563,22 @@ HIOWrite:
 /* 8020DB54 0020AAB4  83 A1 00 1C */	lwz r29, 0x1c(r1)
 /* 8020DB58 0020AAB8  38 21 00 28 */	addi r1, r1, 0x28
 /* 8020DB5C 0020AABC  4E 80 00 20 */	blr 
+.endfn HIOWrite
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-Chan:
+.obj Chan, local
 	.4byte 0xFFFFFFFF
+.endobj Chan
 
 .section .sbss, "wa"
 .balign 8
-ExiCallback:
+.obj ExiCallback, local
 	.skip 0x4
-TxCallback:
+.endobj ExiCallback
+.obj TxCallback, local
 	.skip 0x4
-RxCallback:
+.endobj TxCallback
+.obj RxCallback, local
 	.skip 0x4
+.endobj RxCallback

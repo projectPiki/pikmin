@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global setType__5ActorFiP15PikiShapeObjectP12CreaturePropP8SimpleAI
-setType__5ActorFiP15PikiShapeObjectP12CreaturePropP8SimpleAI:
+.fn setType__5ActorFiP15PikiShapeObjectP12CreaturePropP8SimpleAI, global
 /* 80119A10 00116970  7C 08 02 A6 */	mflr r0
 /* 80119A14 00116974  90 01 00 04 */	stw r0, 4(r1)
 /* 80119A18 00116978  94 21 FF C0 */	stwu r1, -0x40(r1)
@@ -43,3 +42,4 @@ setType__5ActorFiP15PikiShapeObjectP12CreaturePropP8SimpleAI:
 /* 80119AA8 00116A08  38 21 00 40 */	addi r1, r1, 0x40
 /* 80119AAC 00116A0C  7C 08 03 A6 */	mtlr r0
 /* 80119AB0 00116A10  4E 80 00 20 */	blr 
+.endfn setType__5ActorFiP15PikiShapeObjectP12CreaturePropP8SimpleAI
