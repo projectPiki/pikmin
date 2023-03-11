@@ -1,15 +1,21 @@
 .include "macros.inc"
-
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
-.global JAC_DAC_RATE
-JAC_DAC_RATE:
-	.4byte 0x46FA3900
-.global JAC_SUBFRAMES
-JAC_SUBFRAMES:
-	.4byte 0x00000007
-.global JAC_FRAMESAMPLES
-JAC_FRAMESAMPLES:
+.balign 8
+.obj JAC_DAC_RATE, global
+	.float 32028.5
+.endobj JAC_DAC_RATE
+.obj JAC_SUBFRAMES, global
+	.4byte 7
+.endobj JAC_SUBFRAMES
+.obj JAC_FRAMESAMPLES, global
 	.4byte 0x00000230
-.global DAC_SIZE
-DAC_SIZE:
+.endobj JAC_FRAMESAMPLES
+.obj DAC_SIZE, global
 	.4byte 0x00000460
+.endobj DAC_SIZE
+
+.section .sbss, "wa"
+.balign 8
+.obj JAC_AI_SETTING, global
+	.skip 4
+.endobj JAC_AI_SETTING

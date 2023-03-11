@@ -1,19 +1,39 @@
 # Linker order for every file, passed to the Metrowerks linker.
 
 GROUP_0_FILES :=\
-	$(BUILD_DIR)/asm/rodata.o\
 	$(BUILD_DIR)/asm/bss.o\
-	$(BUILD_DIR)/asm/sdata.o\
-	$(BUILD_DIR)/asm/sbss.o\
-	$(BUILD_DIR)/asm/sdata2.o\
 
 SYSBOOTUP :=\
 	$(BUILD_DIR)/src/sysBootup.o\
-	$(BUILD_DIR)/asm/data.o\
 
 JAUDIO :=\
 	$(BUILD_DIR)/src/jaudio/dummyprobe.o\
-	$(BUILD_DIR)/asm/jaudio.o\
+	$(BUILD_DIR)/asm/jaudio/memory.o\
+	$(BUILD_DIR)/asm/jaudio/aictrl.o\
+	$(BUILD_DIR)/asm/jaudio/sample.o\
+	$(BUILD_DIR)/asm/jaudio/dummyrom.o\
+	$(BUILD_DIR)/asm/jaudio/audiothread.o\
+	$(BUILD_DIR)/asm/jaudio/streamctrl.o\
+	$(BUILD_DIR)/asm/jaudio/dspbuf.o\
+	$(BUILD_DIR)/asm/jaudio/cpubuf.o\
+	$(BUILD_DIR)/asm/jaudio/playercall.o\
+	$(BUILD_DIR)/asm/jaudio/dvdthread.o\
+	$(BUILD_DIR)/asm/jaudio/audiomesg.o\
+	$(BUILD_DIR)/asm/jaudio/rate.o\
+	$(BUILD_DIR)/asm/jaudio/stackchecker.o\
+	$(BUILD_DIR)/asm/jaudio/dspboot.o\
+	$(BUILD_DIR)/asm/jaudio/dspproc.o\
+	$(BUILD_DIR)/asm/jaudio/ipldec.o\
+	$(BUILD_DIR)/asm/jaudio/dsp_cardunlock.o\
+	$(BUILD_DIR)/asm/jaudio/driverinterface.o\
+	$(BUILD_DIR)/asm/jaudio/dspdriver.o\
+	$(BUILD_DIR)/asm/jaudio/dspinterface.o\
+	$(BUILD_DIR)/asm/jaudio/fxinterface.o\
+	$(BUILD_DIR)/asm/jaudio/bankread.o\
+	$(BUILD_DIR)/asm/jaudio/waveread.o\
+	$(BUILD_DIR)/asm/jaudio/connect.o\
+	$(BUILD_DIR)/asm/jaudio/tables.o\
+	$(BUILD_DIR)/asm/jaudio/bankdrv.o\
 	$(BUILD_DIR)/asm/jaudio/random.o\
 	$(BUILD_DIR)/asm/jaudio/aramcall.o\
 	$(BUILD_DIR)/asm/jaudio/ja_calc.o\
