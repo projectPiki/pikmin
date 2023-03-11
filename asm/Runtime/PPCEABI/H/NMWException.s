@@ -277,7 +277,7 @@ _exidx:
 .global .L_80005530
 .L_80005530:
 	.4byte _exidx
-	.4byte .L_80005530
+	.4byte .L_80005530 # _eti_init_info
 	.4byte __destroy_new_array
 	.4byte 0x0000033C
 	.4byte 0x00000000

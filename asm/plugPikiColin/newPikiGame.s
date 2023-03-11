@@ -2724,7 +2724,6 @@ parse__18GameMovieInterfaceFRQ218GameMovieInterface13SimpleMessage:
 /* 80059278 000561D8  7C 04 00 2E */	lwzx r0, r4, r0
 /* 8005927C 000561DC  7C 09 03 A6 */	mtctr r0
 /* 80059280 000561E0  4E 80 04 20 */	bctr 
-.global .L_80059284
 .L_80059284:
 /* 80059284 000561E4  2C 07 00 11 */	cmpwi r7, 0x11
 /* 80059288 000561E8  38 80 FF FF */	li r4, -1
@@ -2790,7 +2789,6 @@ parse__18GameMovieInterfaceFRQ218GameMovieInterface13SimpleMessage:
 /* 80059358 000562B8  38 00 00 01 */	li r0, 1
 /* 8005935C 000562BC  90 03 03 38 */	stw r0, 0x338(r3)
 /* 80059360 000562C0  48 00 03 00 */	b .L_80059660
-.global .L_80059364
 .L_80059364:
 /* 80059364 000562C4  80 6D 2E 5C */	lwz r3, gamecore@sda21(r13)
 /* 80059368 000562C8  48 0B 44 39 */	bl forceDayEnd__15GameCoreSectionFv
@@ -2799,7 +2797,6 @@ parse__18GameMovieInterfaceFRQ218GameMovieInterface13SimpleMessage:
 /* 80059374 000562D4  38 00 00 01 */	li r0, 1
 /* 80059378 000562D8  B0 03 01 E6 */	sth r0, 0x1e6(r3)
 /* 8005937C 000562DC  48 00 02 E4 */	b .L_80059660
-.global .L_80059380
 .L_80059380:
 /* 80059380 000562E0  88 0D 2E 81 */	lbz r0, gameInfoOn@sda21(r13)
 /* 80059384 000562E4  28 00 00 00 */	cmplwi r0, 0
@@ -2825,7 +2822,6 @@ parse__18GameMovieInterfaceFRQ218GameMovieInterface13SimpleMessage:
 /* 800593D0 00056330  38 00 00 00 */	li r0, 0
 /* 800593D4 00056334  98 0D 2E 82 */	stb r0, gameInfoIn@sda21(r13)
 /* 800593D8 00056338  48 00 02 88 */	b .L_80059660
-.global .L_800593DC
 .L_800593DC:
 /* 800593DC 0005633C  88 0D 2E 81 */	lbz r0, gameInfoOn@sda21(r13)
 /* 800593E0 00056340  28 00 00 00 */	cmplwi r0, 0
@@ -2851,7 +2847,6 @@ parse__18GameMovieInterfaceFRQ218GameMovieInterface13SimpleMessage:
 /* 8005942C 0005638C  38 00 00 01 */	li r0, 1
 /* 80059430 00056390  98 0D 2E 82 */	stb r0, gameInfoIn@sda21(r13)
 /* 80059434 00056394  48 00 02 2C */	b .L_80059660
-.global .L_80059438
 .L_80059438:
 /* 80059438 00056398  2C 07 00 00 */	cmpwi r7, 0
 /* 8005943C 0005639C  40 82 01 18 */	bne .L_80059554
@@ -2934,14 +2929,12 @@ parse__18GameMovieInterfaceFRQ218GameMovieInterface13SimpleMessage:
 /* 8005955C 000564BC  38 00 00 02 */	li r0, 2
 /* 80059560 000564C0  90 03 02 34 */	stw r0, 0x234(r3)
 /* 80059564 000564C4  48 00 00 FC */	b .L_80059660
-.global .L_80059568
 .L_80059568:
 /* 80059568 000564C8  3C 60 80 3A */	lis r3, flowCont@ha
 /* 8005956C 000564CC  38 63 DB 20 */	addi r3, r3, flowCont@l
 /* 80059570 000564D0  38 00 00 00 */	li r0, 0
 /* 80059574 000564D4  90 03 02 34 */	stw r0, 0x234(r3)
 /* 80059578 000564D8  48 00 00 E8 */	b .L_80059660
-.global .L_8005957C
 .L_8005957C:
 /* 8005957C 000564DC  54 E0 00 00 */	rlwinm r0, r7, 0, 0, 0
 /* 80059580 000564E0  80 6D 2E 5C */	lwz r3, gamecore@sda21(r13)
@@ -2951,13 +2944,11 @@ parse__18GameMovieInterfaceFRQ218GameMovieInterface13SimpleMessage:
 /* 80059590 000564F0  54 E4 00 7E */	clrlwi r4, r7, 1
 /* 80059594 000564F4  48 0B 3A 05 */	bl startMovie__15GameCoreSectionFUlb
 /* 80059598 000564F8  48 00 00 C8 */	b .L_80059660
-.global .L_8005959C
 .L_8005959C:
 /* 8005959C 000564FC  80 6D 2E 5C */	lwz r3, gamecore@sda21(r13)
 /* 800595A0 00056500  7C E4 3B 78 */	mr r4, r7
 /* 800595A4 00056504  48 0B 3E 59 */	bl endMovie__15GameCoreSectionFi
 /* 800595A8 00056508  48 00 00 B8 */	b .L_80059660
-.global .L_800595AC
 .L_800595AC:
 /* 800595AC 0005650C  C0 02 85 7C */	lfs f0, lbl_803E877C@sda21(r2)
 /* 800595B0 00056510  80 83 00 04 */	lwz r4, 4(r3)
@@ -2966,7 +2957,6 @@ parse__18GameMovieInterfaceFRQ218GameMovieInterface13SimpleMessage:
 /* 800595BC 0005651C  80 63 00 04 */	lwz r3, 4(r3)
 /* 800595C0 00056520  D0 03 00 30 */	stfs f0, 0x30(r3)
 /* 800595C4 00056524  48 00 00 9C */	b .L_80059660
-.global .L_800595C8
 .L_800595C8:
 /* 800595C8 00056528  C0 02 85 7C */	lfs f0, lbl_803E877C@sda21(r2)
 /* 800595CC 0005652C  80 83 00 04 */	lwz r4, 4(r3)
@@ -2978,12 +2968,10 @@ parse__18GameMovieInterfaceFRQ218GameMovieInterface13SimpleMessage:
 /* 800595E4 00056544  80 63 00 04 */	lwz r3, 4(r3)
 /* 800595E8 00056548  D0 03 00 30 */	stfs f0, 0x30(r3)
 /* 800595EC 0005654C  48 00 00 74 */	b .L_80059660
-.global .L_800595F0
 .L_800595F0:
 /* 800595F0 00056550  80 6D 2E 5C */	lwz r3, gamecore@sda21(r13)
 /* 800595F4 00056554  48 0B 47 D1 */	bl cleanupDayEnd__15GameCoreSectionFv
 /* 800595F8 00056558  48 00 00 68 */	b .L_80059660
-.global .L_800595FC
 .L_800595FC:
 /* 800595FC 0005655C  80 6D 2E 78 */	lwz r3, totalWindow@sda21(r13)
 /* 80059600 00056560  48 19 BE 15 */	bl start__Q23zen15DrawFinalResultFv
@@ -2991,7 +2979,6 @@ parse__18GameMovieInterfaceFRQ218GameMovieInterface13SimpleMessage:
 /* 80059608 00056568  38 80 00 01 */	li r4, 1
 /* 8005960C 0005656C  4B FC 02 75 */	bl Jac_SceneSetup
 /* 80059610 00056570  48 00 00 50 */	b .L_80059660
-.global .L_80059614
 .L_80059614:
 /* 80059614 00056574  80 6D 2E 5C */	lwz r3, gamecore@sda21(r13)
 /* 80059618 00056578  48 0B 41 89 */	bl forceDayEnd__15GameCoreSectionFv
@@ -3004,21 +2991,17 @@ parse__18GameMovieInterfaceFRQ218GameMovieInterface13SimpleMessage:
 /* 80059634 00056594  38 00 00 02 */	li r0, 2
 /* 80059638 00056598  90 03 02 44 */	stw r0, 0x244(r3)
 /* 8005963C 0005659C  48 00 00 24 */	b .L_80059660
-.global .L_80059640
 .L_80059640:
 /* 80059640 000565A0  3C 60 80 3A */	lis r3, gameflow@ha
 /* 80059644 000565A4  38 63 D7 B8 */	addi r3, r3, gameflow@l
 /* 80059648 000565A8  90 E3 03 34 */	stw r7, 0x334(r3)
 /* 8005964C 000565AC  48 00 00 14 */	b .L_80059660
-.global .L_80059650
 .L_80059650:
 /* 80059650 000565B0  80 6D 2E 5C */	lwz r3, gamecore@sda21(r13)
 /* 80059654 000565B4  48 0B 41 4D */	bl forceDayEnd__15GameCoreSectionFv
 /* 80059658 000565B8  48 00 00 08 */	b .L_80059660
-.global .L_8005965C
 .L_8005965C:
 /* 8005965C 000565BC  4B FF D4 A5 */	bl createMenuWindow__Fv
-.global .L_80059660
 .L_80059660:
 /* 80059660 000565C0  80 01 00 2C */	lwz r0, 0x2c(r1)
 /* 80059664 000565C4  83 E1 00 24 */	lwz r31, 0x24(r1)

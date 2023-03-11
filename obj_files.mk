@@ -14,6 +14,8 @@ SYSBOOTUP :=\
 JAUDIO :=\
 	$(BUILD_DIR)/src/jaudio/dummyprobe.o\
 	$(BUILD_DIR)/asm/jaudio.o\
+	$(BUILD_DIR)/asm/jaudio/random.o\
+	$(BUILD_DIR)/asm/jaudio/aramcall.o\
 	$(BUILD_DIR)/asm/jaudio/ja_calc.o\
 	$(BUILD_DIR)/asm/jaudio/fat.o\
 	$(BUILD_DIR)/asm/jaudio/cmdstack.o\

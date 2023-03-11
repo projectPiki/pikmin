@@ -31,15 +31,3 @@ COMP_BLOCKSAMPLES$81:
 COMP_BLOCKBYTES$82:
 	.4byte 0x09050810
 	.4byte 0x01010101
-.global v0
-v0:
-	.4byte 0x00001000
-.global v1
-v1:
-	.4byte 0x00005555
-.global ARCALL
-ARCALL:
-	.4byte LoadAram_Default__FPcUlUlPUlP7jaheap_
-.global first
-first:
-	.4byte 1

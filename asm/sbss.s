@@ -167,10 +167,4 @@ cur_tail:
 	.skip 8
 .global old_time
 old_time:
-	.skip 8
-.global inited$64
-inited$64:
 	.skip 4
-.global init$65
-init$65:
-	.skip 1

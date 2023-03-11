@@ -84,11 +84,3 @@ lbl_803E8288:
 .global lbl_803E828C
 lbl_803E828C:
 	.float 32768.0
-.global lbl_803E8290
-lbl_803E8290:
-	.float 1.6777215E7
-.balign 8
-.global lbl_803E8298
-lbl_803E8298:
-	.4byte 0x43300000
-	.4byte 0x80000000

@@ -107,12 +107,10 @@ Jac_PlaySystemSe:
 /* 80016BEC 00013B4C  7C 03 00 2E */	lwzx r0, r3, r0
 /* 80016BF0 00013B50  7C 09 03 A6 */	mtctr r0
 /* 80016BF4 00013B54  4E 80 04 20 */	bctr 
-.global .L_80016BF8
 .L_80016BF8:
 /* 80016BF8 00013B58  38 60 00 0E */	li r3, 0xe
 /* 80016BFC 00013B5C  48 00 17 A5 */	bl Jac_PlayOrimaSe
 /* 80016C00 00013B60  48 00 03 2C */	b .L_80016F2C
-.global .L_80016C04
 .L_80016C04:
 /* 80016C04 00013B64  48 00 35 7D */	bl Jac_DemoCheck__Fv
 /* 80016C08 00013B68  2C 03 00 01 */	cmpwi r3, 1
@@ -124,7 +122,6 @@ Jac_PlaySystemSe:
 /* 80016C20 00013B80  28 03 00 05 */	cmplwi r3, 5
 /* 80016C24 00013B84  41 82 02 EC */	beq .L_80016F10
 /* 80016C28 00013B88  48 00 03 04 */	b .L_80016F2C
-.global .L_80016C2C
 .L_80016C2C:
 /* 80016C2C 00013B8C  80 6D 2C 58 */	lwz r3, countdown_count@sda21(r13)
 /* 80016C30 00013B90  38 03 00 01 */	addi r0, r3, 1
@@ -139,14 +136,12 @@ Jac_PlaySystemSe:
 /* 80016C54 00013BB4  38 80 00 3C */	li r4, 0x3c
 /* 80016C58 00013BB8  48 00 1E E9 */	bl Jac_FadeOutBgm
 /* 80016C5C 00013BBC  48 00 02 B4 */	b .L_80016F10
-.global .L_80016C60
 .L_80016C60:
 /* 80016C60 00013BC0  38 60 00 00 */	li r3, 0
 /* 80016C64 00013BC4  38 80 00 02 */	li r4, 2
 /* 80016C68 00013BC8  38 A0 00 01 */	li r5, 1
 /* 80016C6C 00013BCC  48 00 22 D5 */	bl Jac_SetBgmModeFlag
 /* 80016C70 00013BD0  48 00 02 A0 */	b .L_80016F10
-.global .L_80016C74
 .L_80016C74:
 /* 80016C74 00013BD4  38 60 00 00 */	li r3, 0
 /* 80016C78 00013BD8  38 80 00 04 */	li r4, 4
@@ -167,7 +162,6 @@ Jac_PlaySystemSe:
 /* 80016CB4 00013C14  38 80 00 01 */	li r4, 1
 /* 80016CB8 00013C18  4B FF A8 29 */	bl Jam_PauseTrack
 /* 80016CBC 00013C1C  48 00 02 54 */	b .L_80016F10
-.global .L_80016CC0
 .L_80016CC0:
 /* 80016CC0 00013C20  80 0D 2C 60 */	lwz r0, container@sda21(r13)
 /* 80016CC4 00013C24  2C 00 00 01 */	cmpwi r0, 1
@@ -193,7 +187,6 @@ Jac_PlaySystemSe:
 /* 80016D14 00013C74  48 00 02 2D */	bl Jac_StopSystemSe
 /* 80016D18 00013C78  48 00 01 F8 */	b .L_80016F10
 /* 80016D1C 00013C7C  48 00 02 10 */	b .L_80016F2C
-.global .L_80016D20
 .L_80016D20:
 /* 80016D20 00013C80  80 0D 2C 60 */	lwz r0, container@sda21(r13)
 /* 80016D24 00013C84  2C 00 00 00 */	cmpwi r0, 0
@@ -218,7 +211,6 @@ Jac_PlaySystemSe:
 /* 80016D6C 00013CCC  38 00 00 01 */	li r0, 1
 /* 80016D70 00013CD0  90 0D 2C 5C */	stw r0, pausemode@sda21(r13)
 /* 80016D74 00013CD4  48 00 01 9C */	b .L_80016F10
-.global .L_80016D78
 .L_80016D78:
 /* 80016D78 00013CD8  80 0D 2C 5C */	lwz r0, pausemode@sda21(r13)
 /* 80016D7C 00013CDC  2C 00 00 00 */	cmpwi r0, 0
@@ -248,7 +240,6 @@ Jac_PlaySystemSe:
 /* 80016DD4 00013D34  90 0D 2C 58 */	stw r0, countdown_count@sda21(r13)
 /* 80016DD8 00013D38  90 0D 2C 64 */	stw r0, sys_voldown_flag@sda21(r13)
 /* 80016DDC 00013D3C  48 00 01 50 */	b .L_80016F2C
-.global .L_80016DE0
 .L_80016DE0:
 /* 80016DE0 00013D40  38 60 00 0D */	li r3, 0xd
 /* 80016DE4 00013D44  38 80 00 06 */	li r4, 6
@@ -256,7 +247,6 @@ Jac_PlaySystemSe:
 /* 80016DEC 00013D4C  38 60 00 08 */	li r3, 8
 /* 80016DF0 00013D50  48 00 36 71 */	bl Jac_PlayDemoSequenceDirect__FUl
 /* 80016DF4 00013D54  48 00 01 38 */	b .L_80016F2C
-.global .L_80016DF8
 .L_80016DF8:
 /* 80016DF8 00013D58  80 0D 2C 64 */	lwz r0, sys_voldown_flag@sda21(r13)
 /* 80016DFC 00013D5C  28 00 00 00 */	cmplwi r0, 0
@@ -271,7 +261,6 @@ Jac_PlaySystemSe:
 /* 80016E1C 00013D7C  38 00 00 14 */	li r0, 0x14
 /* 80016E20 00013D80  90 0D 2C 64 */	stw r0, sys_voldown_flag@sda21(r13)
 /* 80016E24 00013D84  48 00 01 08 */	b .L_80016F2C
-.global .L_80016E28
 .L_80016E28:
 /* 80016E28 00013D88  3C 60 00 02 */	lis r3, 2
 /* 80016E2C 00013D8C  4B FF 98 35 */	bl Jam_GetTrackHandle
@@ -299,7 +288,6 @@ Jac_PlaySystemSe:
 /* 80016E84 00013DE4  48 00 6A 9D */	bl StreamSetDVDPause
 /* 80016E88 00013DE8  3B E0 00 1C */	li r31, 0x1c
 /* 80016E8C 00013DEC  48 00 00 84 */	b .L_80016F10
-.global .L_80016E90
 .L_80016E90:
 /* 80016E90 00013DF0  3C 60 00 02 */	lis r3, 2
 /* 80016E94 00013DF4  4B FF 97 CD */	bl Jam_GetTrackHandle
@@ -323,7 +311,6 @@ Jac_PlaySystemSe:
 /* 80016EDC 00013E3C  38 A0 00 00 */	li r5, 0
 /* 80016EE0 00013E40  48 00 20 61 */	bl Jac_SetBgmModeFlag
 /* 80016EE4 00013E44  48 00 00 48 */	b .L_80016F2C
-.global .L_80016EE8
 .L_80016EE8:
 /* 80016EE8 00013E48  3C 60 00 02 */	lis r3, 2
 /* 80016EEC 00013E4C  4B FF 97 75 */	bl Jam_GetTrackHandle
@@ -335,7 +322,6 @@ Jac_PlaySystemSe:
 /* 80016F04 00013E64  38 00 00 01 */	li r0, 1
 /* 80016F08 00013E68  90 0D 2C 5C */	stw r0, pausemode@sda21(r13)
 /* 80016F0C 00013E6C  48 00 00 20 */	b .L_80016F2C
-.global .L_80016F10
 .L_80016F10:
 /* 80016F10 00013E70  80 0D 2C 54 */	lwz r0, cmdqueue_reset@sda21(r13)
 /* 80016F14 00013E74  2C 00 00 01 */	cmpwi r0, 1

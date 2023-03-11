@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global EXI2_CallBack
-EXI2_CallBack:
+.fn EXI2_CallBack, local
 /* 80220E2C 0021DD8C  7C 08 02 A6 */	mflr r0
 /* 80220E30 0021DD90  90 01 00 04 */	stw r0, 4(r1)
 /* 80220E34 0021DD94  38 00 00 01 */	li r0, 1
@@ -19,9 +18,9 @@ EXI2_CallBack:
 /* 80220E60 0021DDC0  38 21 00 08 */	addi r1, r1, 8
 /* 80220E64 0021DDC4  7C 08 03 A6 */	mtlr r0
 /* 80220E68 0021DDC8  4E 80 00 20 */	blr 
+.endfn EXI2_CallBack
 
-.global EXI2_Init
-EXI2_Init:
+.fn EXI2_Init, global
 /* 80220E6C 0021DDCC  7C 08 02 A6 */	mflr r0
 /* 80220E70 0021DDD0  90 01 00 04 */	stw r0, 4(r1)
 /* 80220E74 0021DDD4  94 21 FF D0 */	stwu r1, -0x30(r1)
@@ -71,9 +70,9 @@ EXI2_Init:
 /* 80220F1C 0021DE7C  38 21 00 30 */	addi r1, r1, 0x30
 /* 80220F20 0021DE80  7C 08 03 A6 */	mtlr r0
 /* 80220F24 0021DE84  4E 80 00 20 */	blr 
+.endfn EXI2_Init
 
-.global EXI2_EnableInterrupts
-EXI2_EnableInterrupts:
+.fn EXI2_EnableInterrupts, global
 /* 80220F28 0021DE88  7C 08 02 A6 */	mflr r0
 /* 80220F2C 0021DE8C  3C 60 80 22 */	lis r3, EXI2_CallBack@ha
 /* 80220F30 0021DE90  90 01 00 04 */	stw r0, 4(r1)
@@ -85,9 +84,9 @@ EXI2_EnableInterrupts:
 /* 80220F48 0021DEA8  38 21 00 08 */	addi r1, r1, 8
 /* 80220F4C 0021DEAC  7C 08 03 A6 */	mtlr r0
 /* 80220F50 0021DEB0  4E 80 00 20 */	blr 
+.endfn EXI2_EnableInterrupts
 
-.global EXI2_Poll
-EXI2_Poll:
+.fn EXI2_Poll, global
 /* 80220F54 0021DEB4  7C 08 02 A6 */	mflr r0
 /* 80220F58 0021DEB8  3C 60 CC 00 */	lis r3, 0xCC003000@ha
 /* 80220F5C 0021DEBC  90 01 00 04 */	stw r0, 4(r1)
@@ -160,9 +159,9 @@ EXI2_Poll:
 /* 80221050 0021DFB0  38 21 00 20 */	addi r1, r1, 0x20
 /* 80221054 0021DFB4  7C 08 03 A6 */	mtlr r0
 /* 80221058 0021DFB8  4E 80 00 20 */	blr 
+.endfn EXI2_Poll
 
-.global EXI2_ReadN
-EXI2_ReadN:
+.fn EXI2_ReadN, global
 /* 8022105C 0021DFBC  7C 08 02 A6 */	mflr r0
 /* 80221060 0021DFC0  90 01 00 04 */	stw r0, 4(r1)
 /* 80221064 0021DFC4  94 21 FF B8 */	stwu r1, -0x48(r1)
@@ -359,9 +358,9 @@ EXI2_ReadN:
 /* 8022130C 0021E26C  38 21 00 48 */	addi r1, r1, 0x48
 /* 80221310 0021E270  7C 08 03 A6 */	mtlr r0
 /* 80221314 0021E274  4E 80 00 20 */	blr 
+.endfn EXI2_ReadN
 
-.global EXI2_WriteN
-EXI2_WriteN:
+.fn EXI2_WriteN, global
 /* 80221318 0021E278  7C 08 02 A6 */	mflr r0
 /* 8022131C 0021E27C  90 01 00 04 */	stw r0, 4(r1)
 /* 80221320 0021E280  94 21 FF C0 */	stwu r1, -0x40(r1)
@@ -485,30 +484,37 @@ EXI2_WriteN:
 /* 802214BC 0021E41C  83 81 00 30 */	lwz r28, 0x30(r1)
 /* 802214C0 0021E420  38 21 00 40 */	addi r1, r1, 0x40
 /* 802214C4 0021E424  4E 80 00 20 */	blr 
+.endfn EXI2_WriteN
 
-.global EXI2_Reserve
-EXI2_Reserve:
+.fn EXI2_Reserve, global
 /* 802214C8 0021E428  4E 80 00 20 */	blr 
+.endfn EXI2_Reserve
 
-.global EXI2_Unreserve
-EXI2_Unreserve:
+.fn EXI2_Unreserve, global
 /* 802214CC 0021E42C  4E 80 00 20 */	blr 
+.endfn EXI2_Unreserve
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802E9610:
+.obj lbl_802E9610, local
 	.asciz "Can't select EXI2 port!\n"
+.endobj lbl_802E9610
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-pucEXI2InputPending:
+.obj pucEXI2InputPending, local
 	.4byte ucEXI2InputPending
+.endobj pucEXI2InputPending
 
 .section .sbss, "wa"
 .balign 8
-ucEXI2InputPending:
+.obj ucEXI2InputPending, local
+	.skip 0x1
+.endobj ucEXI2InputPending
+.balign 4
+.obj fExi2Selected, local
 	.skip 0x4
-fExi2Selected:
+.endobj fExi2Selected
+.obj TRK_Callback, local
 	.skip 0x4
-TRK_Callback:
-	.skip 0x4
+.endobj TRK_Callback

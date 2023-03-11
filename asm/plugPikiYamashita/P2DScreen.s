@@ -151,7 +151,6 @@ makeHiearachyPanes__9P2DScreenFP7P2DPaneP18RandomAccessStreambb:
 /* 801B2D4C 001AFCAC  3B BB 00 00 */	addi r29, r27, 0
 /* 801B2D50 001AFCB0  3B C4 07 84 */	addi r30, r4, lbl_802E0784@l
 /* 801B2D54 001AFCB4  54 FF 06 3E */	clrlwi r31, r7, 0x18
-.global .L_801B2D58
 .L_801B2D58:
 /* 801B2D58 001AFCB8  7F 83 E3 78 */	mr r3, r28
 /* 801B2D5C 001AFCBC  81 9C 00 04 */	lwz r12, 4(r28)
@@ -166,10 +165,8 @@ makeHiearachyPanes__9P2DScreenFP7P2DPaneP18RandomAccessStreambb:
 /* 801B2D80 001AFCE0  7C 1E 00 2E */	lwzx r0, r30, r0
 /* 801B2D84 001AFCE4  7C 09 03 A6 */	mtctr r0
 /* 801B2D88 001AFCE8  4E 80 04 20 */	bctr 
-.global .L_801B2D8C
 .L_801B2D8C:
 /* 801B2D8C 001AFCEC  48 00 01 2C */	b .L_801B2EB8
-.global .L_801B2D90
 .L_801B2D90:
 /* 801B2D90 001AFCF0  7F 83 E3 78 */	mr r3, r28
 /* 801B2D94 001AFCF4  81 9C 00 04 */	lwz r12, 4(r28)
@@ -183,7 +180,6 @@ makeHiearachyPanes__9P2DScreenFP7P2DPaneP18RandomAccessStreambb:
 /* 801B2DB4 001AFD14  38 E0 00 00 */	li r7, 0
 /* 801B2DB8 001AFD18  4B FF FF 75 */	bl makeHiearachyPanes__9P2DScreenFP7P2DPaneP18RandomAccessStreambb
 /* 801B2DBC 001AFD1C  4B FF FF 9C */	b .L_801B2D58
-.global .L_801B2DC0
 .L_801B2DC0:
 /* 801B2DC0 001AFD20  7F 83 E3 78 */	mr r3, r28
 /* 801B2DC4 001AFD24  81 9C 00 04 */	lwz r12, 4(r28)
@@ -191,7 +187,6 @@ makeHiearachyPanes__9P2DScreenFP7P2DPaneP18RandomAccessStreambb:
 /* 801B2DCC 001AFD2C  7D 88 03 A6 */	mtlr r12
 /* 801B2DD0 001AFD30  4E 80 00 21 */	blrl 
 /* 801B2DD4 001AFD34  48 00 00 E4 */	b .L_801B2EB8
-.global .L_801B2DD8
 .L_801B2DD8:
 /* 801B2DD8 001AFD38  38 60 00 EC */	li r3, 0xec
 /* 801B2DDC 001AFD3C  4B E9 42 29 */	bl alloc__6SystemFUl
@@ -220,7 +215,6 @@ makeHiearachyPanes__9P2DScreenFP7P2DPaneP18RandomAccessStreambb:
 /* 801B2E34 001AFD94  90 7A 00 18 */	stw r3, 0x18(r26)
 /* 801B2E38 001AFD98  90 1A 00 1C */	stw r0, 0x1c(r26)
 /* 801B2E3C 001AFD9C  4B FF FF 1C */	b .L_801B2D58
-.global .L_801B2E40
 .L_801B2E40:
 /* 801B2E40 001AFDA0  38 60 01 2C */	li r3, 0x12c
 /* 801B2E44 001AFDA4  4B E9 41 C1 */	bl alloc__6SystemFUl
@@ -232,7 +226,6 @@ makeHiearachyPanes__9P2DScreenFP7P2DPaneP18RandomAccessStreambb:
 /* 801B2E5C 001AFDBC  38 C0 00 11 */	li r6, 0x11
 /* 801B2E60 001AFDC0  48 00 0B 79 */	bl __ct__9P2DWindowFP7P2DPaneP18RandomAccessStreamUs
 /* 801B2E64 001AFDC4  4B FF FE F4 */	b .L_801B2D58
-.global .L_801B2E68
 .L_801B2E68:
 /* 801B2E68 001AFDC8  38 60 01 14 */	li r3, 0x114
 /* 801B2E6C 001AFDCC  4B E9 41 99 */	bl alloc__6SystemFUl
@@ -244,7 +237,6 @@ makeHiearachyPanes__9P2DScreenFP7P2DPaneP18RandomAccessStreambb:
 /* 801B2E84 001AFDE4  38 C0 00 12 */	li r6, 0x12
 /* 801B2E88 001AFDE8  4B FF EB BD */	bl __ct__10P2DPictureFP7P2DPaneP18RandomAccessStreamUs
 /* 801B2E8C 001AFDEC  4B FF FE CC */	b .L_801B2D58
-.global .L_801B2E90
 .L_801B2E90:
 /* 801B2E90 001AFDF0  38 60 01 18 */	li r3, 0x118
 /* 801B2E94 001AFDF4  4B E9 41 71 */	bl alloc__6SystemFUl

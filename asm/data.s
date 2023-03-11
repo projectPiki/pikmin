@@ -2208,21 +2208,3 @@ FORCE_RELEASE_TABLE:
 	.4byte 0x00000005
 	.4byte 0x0000000F
 	.4byte 0x00000000
-	.4byte 0x00000000
-.global extdir
-extdir:
-	.asciz "/Banks/"
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000

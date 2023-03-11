@@ -3823,7 +3823,6 @@ update__Q23zen12DrawWorldMapFP10Controller:
 /* 801DEA0C 001DB96C  7C 03 00 2E */	lwzx r0, r3, r0
 /* 801DEA10 001DB970  7C 09 03 A6 */	mtctr r0
 /* 801DEA14 001DB974  4E 80 04 20 */	bctr 
-.global .L_801DEA18
 .L_801DEA18:
 /* 801DEA18 001DB978  80 7E 00 58 */	lwz r3, 0x58(r30)
 /* 801DEA1C 001DB97C  88 03 00 AC */	lbz r0, 0xac(r3)
@@ -3908,7 +3907,6 @@ update__Q23zen12DrawWorldMapFP10Controller:
 /* 801DEB34 001DBA94  7F C3 F3 78 */	mr r3, r30
 /* 801DEB38 001DBA98  48 00 87 E5 */	bl updateScreens__Q23zen12DrawWorldMapFv
 /* 801DEB3C 001DBA9C  48 00 05 08 */	b .L_801DF044
-.global .L_801DEB40
 .L_801DEB40:
 /* 801DEB40 001DBAA0  80 7E 00 58 */	lwz r3, 0x58(r30)
 /* 801DEB44 001DBAA4  88 03 00 AC */	lbz r0, 0xac(r3)
@@ -3991,7 +3989,6 @@ update__Q23zen12DrawWorldMapFP10Controller:
 /* 801DEC54 001DBBB4  7F C3 F3 78 */	mr r3, r30
 /* 801DEC58 001DBBB8  48 00 86 C5 */	bl updateScreens__Q23zen12DrawWorldMapFv
 /* 801DEC5C 001DBBBC  48 00 03 E8 */	b .L_801DF044
-.global .L_801DEC60
 .L_801DEC60:
 /* 801DEC60 001DBBC0  7F C3 F3 78 */	mr r3, r30
 /* 801DEC64 001DBBC4  48 00 41 A9 */	bl modeStart__Q23zen12DrawWorldMapFP10Controller
@@ -4007,7 +4004,6 @@ update__Q23zen12DrawWorldMapFP10Controller:
 /* 801DEC88 001DBBE8  38 00 00 02 */	li r0, 2
 /* 801DEC8C 001DBBEC  90 1E 00 04 */	stw r0, 4(r30)
 /* 801DEC90 001DBBF0  48 00 03 B4 */	b .L_801DF044
-.global .L_801DEC94
 .L_801DEC94:
 /* 801DEC94 001DBBF4  7F C3 F3 78 */	mr r3, r30
 /* 801DEC98 001DBBF8  48 00 45 F1 */	bl modeAppear__Q23zen12DrawWorldMapFP10Controller
@@ -4016,7 +4012,6 @@ update__Q23zen12DrawWorldMapFP10Controller:
 /* 801DECA4 001DBC04  38 00 00 02 */	li r0, 2
 /* 801DECA8 001DBC08  90 1E 00 04 */	stw r0, 4(r30)
 /* 801DECAC 001DBC0C  48 00 03 98 */	b .L_801DF044
-.global .L_801DECB0
 .L_801DECB0:
 /* 801DECB0 001DBC10  7F C3 F3 78 */	mr r3, r30
 /* 801DECB4 001DBC14  48 00 7D 39 */	bl modeConfirm__Q23zen12DrawWorldMapFP10Controller
@@ -4025,7 +4020,6 @@ update__Q23zen12DrawWorldMapFP10Controller:
 /* 801DECC0 001DBC20  38 00 00 02 */	li r0, 2
 /* 801DECC4 001DBC24  90 1E 00 04 */	stw r0, 4(r30)
 /* 801DECC8 001DBC28  48 00 03 7C */	b .L_801DF044
-.global .L_801DECCC
 .L_801DECCC:
 /* 801DECCC 001DBC2C  80 64 00 28 */	lwz r3, 0x28(r4)
 /* 801DECD0 001DBC30  54 60 01 CF */	rlwinm. r0, r3, 0, 7, 7
@@ -4251,7 +4245,6 @@ update__Q23zen12DrawWorldMapFP10Controller:
 /* 801DF01C 001DBF7C  38 00 00 08 */	li r0, 8
 /* 801DF020 001DBF80  90 1E 00 04 */	stw r0, 4(r30)
 /* 801DF024 001DBF84  48 00 00 20 */	b .L_801DF044
-.global .L_801DF028
 .L_801DF028:
 /* 801DF028 001DBF88  7F C3 F3 78 */	mr r3, r30
 /* 801DF02C 001DBF8C  48 00 81 9D */	bl modeEnd__Q23zen12DrawWorldMapFP10Controller
@@ -4260,7 +4253,6 @@ update__Q23zen12DrawWorldMapFP10Controller:
 /* 801DF038 001DBF98  38 00 FF FF */	li r0, -1
 /* 801DF03C 001DBF9C  90 1E 00 04 */	stw r0, 4(r30)
 /* 801DF040 001DBFA0  3B E0 00 01 */	li r31, 1
-.global .L_801DF044
 .L_801DF044:
 /* 801DF044 001DBFA4  80 7E 00 34 */	lwz r3, 0x34(r30)
 /* 801DF048 001DBFA8  80 03 00 04 */	lwz r0, 4(r3)

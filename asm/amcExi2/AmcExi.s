@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global AmcEXIImm
-AmcEXIImm:
+.fn AmcEXIImm, global
 /* 802207EC 0021D74C  7C 08 02 A6 */	mflr r0
 /* 802207F0 0021D750  90 01 00 04 */	stw r0, 4(r1)
 /* 802207F4 0021D754  94 21 FF B0 */	stwu r1, -0x50(r1)
@@ -159,9 +158,9 @@ AmcEXIImm:
 /* 80220A24 0021D984  38 21 00 50 */	addi r1, r1, 0x50
 /* 80220A28 0021D988  7C 08 03 A6 */	mtlr r0
 /* 80220A2C 0021D98C  4E 80 00 20 */	blr 
+.endfn AmcEXIImm
 
-.global AmcEXISync
-AmcEXISync:
+.fn AmcEXISync, global
 /* 80220A30 0021D990  7C 08 02 A6 */	mflr r0
 /* 80220A34 0021D994  90 01 00 04 */	stw r0, 4(r1)
 /* 80220A38 0021D998  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -273,9 +272,9 @@ AmcEXISync:
 /* 80220BBC 0021DB1C  38 21 00 18 */	addi r1, r1, 0x18
 /* 80220BC0 0021DB20  7C 08 03 A6 */	mtlr r0
 /* 80220BC4 0021DB24  4E 80 00 20 */	blr 
+.endfn AmcEXISync
 
-.global AmcEXIClearInterrupts
-AmcEXIClearInterrupts:
+.fn AmcEXIClearInterrupts, global
 /* 80220BC8 0021DB28  2C 03 00 00 */	cmpwi r3, 0
 /* 80220BCC 0021DB2C  41 82 00 18 */	beq .L_80220BE4
 /* 80220BD0 0021DB30  3C 60 CC 00 */	lis r3, 0xCC003000@ha
@@ -293,9 +292,9 @@ AmcEXIClearInterrupts:
 /* 80220BFC 0021DB5C  60 00 00 08 */	ori r0, r0, 8
 /* 80220C00 0021DB60  90 03 00 28 */	stw r0, 0x28(r3)
 /* 80220C04 0021DB64  4E 80 00 20 */	blr 
+.endfn AmcEXIClearInterrupts
 
-.global AmcEXISetExiCallback
-AmcEXISetExiCallback:
+.fn AmcEXISetExiCallback, global
 /* 80220C08 0021DB68  7C 08 02 A6 */	mflr r0
 /* 80220C0C 0021DB6C  90 01 00 04 */	stw r0, 4(r1)
 /* 80220C10 0021DB70  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -325,9 +324,9 @@ AmcEXISetExiCallback:
 /* 80220C68 0021DBC8  7C 08 03 A6 */	mtlr r0
 /* 80220C6C 0021DBCC  38 21 00 18 */	addi r1, r1, 0x18
 /* 80220C70 0021DBD0  4E 80 00 20 */	blr 
+.endfn AmcEXISetExiCallback
 
-.global AmcEXISelect
-AmcEXISelect:
+.fn AmcEXISelect, global
 /* 80220C74 0021DBD4  7C 08 02 A6 */	mflr r0
 /* 80220C78 0021DBD8  90 01 00 04 */	stw r0, 4(r1)
 /* 80220C7C 0021DBDC  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -362,9 +361,9 @@ AmcEXISelect:
 /* 80220CE8 0021DC48  38 21 00 18 */	addi r1, r1, 0x18
 /* 80220CEC 0021DC4C  7C 08 03 A6 */	mtlr r0
 /* 80220CF0 0021DC50  4E 80 00 20 */	blr 
+.endfn AmcEXISelect
 
-.global AmcEXIDeselect
-AmcEXIDeselect:
+.fn AmcEXIDeselect, global
 /* 80220CF4 0021DC54  7C 08 02 A6 */	mflr r0
 /* 80220CF8 0021DC58  90 01 00 04 */	stw r0, 4(r1)
 /* 80220CFC 0021DC5C  94 21 FF F8 */	stwu r1, -8(r1)
@@ -393,9 +392,9 @@ AmcEXIDeselect:
 /* 80220D50 0021DCB0  38 21 00 08 */	addi r1, r1, 8
 /* 80220D54 0021DCB4  7C 08 03 A6 */	mtlr r0
 /* 80220D58 0021DCB8  4E 80 00 20 */	blr 
+.endfn AmcEXIDeselect
 
-.global AmcDebugIntHandler
-AmcDebugIntHandler:
+.fn AmcDebugIntHandler, local
 /* 80220D5C 0021DCBC  7C 08 02 A6 */	mflr r0
 /* 80220D60 0021DCC0  3C A0 CC 00 */	lis r5, 0xCC003000@ha
 /* 80220D64 0021DCC4  90 01 00 04 */	stw r0, 4(r1)
@@ -417,9 +416,9 @@ AmcDebugIntHandler:
 /* 80220DA0 0021DD00  38 21 00 08 */	addi r1, r1, 8
 /* 80220DA4 0021DD04  7C 08 03 A6 */	mtlr r0
 /* 80220DA8 0021DD08  4E 80 00 20 */	blr 
+.endfn AmcDebugIntHandler
 
-.global AmcEXIEnableInterrupts
-AmcEXIEnableInterrupts:
+.fn AmcEXIEnableInterrupts, global
 /* 80220DAC 0021DD0C  7C 08 02 A6 */	mflr r0
 /* 80220DB0 0021DD10  3C 60 00 01 */	lis r3, 0x00008000@ha
 /* 80220DB4 0021DD14  90 01 00 04 */	stw r0, 4(r1)
@@ -436,9 +435,9 @@ AmcEXIEnableInterrupts:
 /* 80220DE0 0021DD40  38 21 00 08 */	addi r1, r1, 8
 /* 80220DE4 0021DD44  7C 08 03 A6 */	mtlr r0
 /* 80220DE8 0021DD48  4E 80 00 20 */	blr 
+.endfn AmcEXIEnableInterrupts
 
-.global AmcEXIInit
-AmcEXIInit:
+.fn AmcEXIInit, global
 /* 80220DEC 0021DD4C  7C 08 02 A6 */	mflr r0
 /* 80220DF0 0021DD50  3C 60 80 3D */	lis r3, Ecb_1@ha
 /* 80220DF4 0021DD54  90 01 00 04 */	stw r0, 4(r1)
@@ -455,8 +454,10 @@ AmcEXIInit:
 /* 80220E20 0021DD80  38 21 00 08 */	addi r1, r1, 8
 /* 80220E24 0021DD84  7C 08 03 A6 */	mtlr r0
 /* 80220E28 0021DD88  4E 80 00 20 */	blr 
+.endfn AmcEXIInit
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-exi:
+.obj exi, local
 	.4byte Ecb_1
+.endobj exi

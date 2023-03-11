@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global AIRegisterDMACallback
-AIRegisterDMACallback:
+.fn AIRegisterDMACallback, global
 /* 80206004 00202F64  7C 08 02 A6 */	mflr r0
 /* 80206008 00202F68  90 01 00 04 */	stw r0, 4(r1)
 /* 8020600C 00202F6C  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -19,9 +18,9 @@ AIRegisterDMACallback:
 /* 8020603C 00202F9C  7C 08 03 A6 */	mtlr r0
 /* 80206040 00202FA0  38 21 00 18 */	addi r1, r1, 0x18
 /* 80206044 00202FA4  4E 80 00 20 */	blr 
+.endfn AIRegisterDMACallback
 
-.global AIInitDMA
-AIInitDMA:
+.fn AIInitDMA, global
 /* 80206048 00202FA8  7C 08 02 A6 */	mflr r0
 /* 8020604C 00202FAC  90 01 00 04 */	stw r0, 4(r1)
 /* 80206050 00202FB0  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -56,41 +55,41 @@ AIInitDMA:
 /* 802060C4 00203024  7C 08 03 A6 */	mtlr r0
 /* 802060C8 00203028  38 21 00 18 */	addi r1, r1, 0x18
 /* 802060CC 0020302C  4E 80 00 20 */	blr 
+.endfn AIInitDMA
 
-.global AIStartDMA
-AIStartDMA:
+.fn AIStartDMA, global
 /* 802060D0 00203030  3C 60 CC 00 */	lis r3, 0xCC005000@ha
 /* 802060D4 00203034  38 63 50 00 */	addi r3, r3, 0xCC005000@l
 /* 802060D8 00203038  A0 03 00 36 */	lhz r0, 0x36(r3)
 /* 802060DC 0020303C  60 00 80 00 */	ori r0, r0, 0x8000
 /* 802060E0 00203040  B0 03 00 36 */	sth r0, 0x36(r3)
 /* 802060E4 00203044  4E 80 00 20 */	blr 
+.endfn AIStartDMA
 
-.global AIGetStreamSampleCount
-AIGetStreamSampleCount:
+.fn AIGetStreamSampleCount, global
 /* 802060E8 00203048  3C 60 CC 00 */	lis r3, 0xCC006C00@ha
 /* 802060EC 0020304C  38 63 6C 00 */	addi r3, r3, 0xCC006C00@l
 /* 802060F0 00203050  80 63 00 08 */	lwz r3, 8(r3)
 /* 802060F4 00203054  4E 80 00 20 */	blr 
+.endfn AIGetStreamSampleCount
 
-.global AIResetStreamSampleCount
-AIResetStreamSampleCount:
+.fn AIResetStreamSampleCount, global
 /* 802060F8 00203058  3C 60 CC 00 */	lis r3, 0xCC006C00@ha
 /* 802060FC 0020305C  80 03 6C 00 */	lwz r0, 0xCC006C00@l(r3)
 /* 80206100 00203060  54 00 06 F2 */	rlwinm r0, r0, 0, 0x1b, 0x19
 /* 80206104 00203064  60 00 00 20 */	ori r0, r0, 0x20
 /* 80206108 00203068  90 03 6C 00 */	stw r0, 0x6c00(r3)
 /* 8020610C 0020306C  4E 80 00 20 */	blr 
+.endfn AIResetStreamSampleCount
 
-.global AIGetStreamTrigger
-AIGetStreamTrigger:
+.fn AIGetStreamTrigger, global
 /* 80206110 00203070  3C 60 CC 00 */	lis r3, 0xCC006C00@ha
 /* 80206114 00203074  38 63 6C 00 */	addi r3, r3, 0xCC006C00@l
 /* 80206118 00203078  80 63 00 0C */	lwz r3, 0xc(r3)
 /* 8020611C 0020307C  4E 80 00 20 */	blr 
+.endfn AIGetStreamTrigger
 
-.global AISetStreamPlayState
-AISetStreamPlayState:
+.fn AISetStreamPlayState, global
 /* 80206120 00203080  7C 08 02 A6 */	mflr r0
 /* 80206124 00203084  90 01 00 04 */	stw r0, 4(r1)
 /* 80206128 00203088  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -147,16 +146,16 @@ AISetStreamPlayState:
 /* 802061EC 0020314C  83 A1 00 14 */	lwz r29, 0x14(r1)
 /* 802061F0 00203150  38 21 00 20 */	addi r1, r1, 0x20
 /* 802061F4 00203154  4E 80 00 20 */	blr 
+.endfn AISetStreamPlayState
 
-.global AIGetStreamPlayState
-AIGetStreamPlayState:
+.fn AIGetStreamPlayState, global
 /* 802061F8 00203158  3C 60 CC 00 */	lis r3, 0xCC006C00@ha
 /* 802061FC 0020315C  80 03 6C 00 */	lwz r0, 0xCC006C00@l(r3)
 /* 80206200 00203160  54 03 07 FE */	clrlwi r3, r0, 0x1f
 /* 80206204 00203164  4E 80 00 20 */	blr 
+.endfn AIGetStreamPlayState
 
-.global AISetDSPSampleRate
-AISetDSPSampleRate:
+.fn AISetDSPSampleRate, global
 /* 80206208 00203168  7C 08 02 A6 */	mflr r0
 /* 8020620C 0020316C  90 01 00 04 */	stw r0, 4(r1)
 /* 80206210 00203170  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -214,17 +213,17 @@ AISetDSPSampleRate:
 /* 802062DC 0020323C  38 21 00 28 */	addi r1, r1, 0x28
 /* 802062E0 00203240  7C 08 03 A6 */	mtlr r0
 /* 802062E4 00203244  4E 80 00 20 */	blr 
+.endfn AISetDSPSampleRate
 
-.global AIGetDSPSampleRate
-AIGetDSPSampleRate:
+.fn AIGetDSPSampleRate, global
 /* 802062E8 00203248  3C 60 CC 00 */	lis r3, 0xCC006C00@ha
 /* 802062EC 0020324C  80 03 6C 00 */	lwz r0, 0xCC006C00@l(r3)
 /* 802062F0 00203250  54 00 D7 FE */	rlwinm r0, r0, 0x1a, 0x1f, 0x1f
 /* 802062F4 00203254  68 03 00 01 */	xori r3, r0, 1
 /* 802062F8 00203258  4E 80 00 20 */	blr 
+.endfn AIGetDSPSampleRate
 
-.global AISetStreamSampleRate
-AISetStreamSampleRate:
+.fn AISetStreamSampleRate, global
 /* 802062FC 0020325C  7C 08 02 A6 */	mflr r0
 /* 80206300 00203260  28 03 00 01 */	cmplwi r3, 1
 /* 80206304 00203264  90 01 00 04 */	stw r0, 4(r1)
@@ -236,9 +235,9 @@ AISetStreamSampleRate:
 /* 80206318 00203278  38 21 00 08 */	addi r1, r1, 8
 /* 8020631C 0020327C  7C 08 03 A6 */	mtlr r0
 /* 80206320 00203280  4E 80 00 20 */	blr 
+.endfn AISetStreamSampleRate
 
-.global __AI_set_stream_sample_rate
-__AI_set_stream_sample_rate:
+.fn __AI_set_stream_sample_rate, local
 /* 80206324 00203284  7C 08 02 A6 */	mflr r0
 /* 80206328 00203288  90 01 00 04 */	stw r0, 4(r1)
 /* 8020632C 0020328C  94 21 FF D0 */	stwu r1, -0x30(r1)
@@ -293,16 +292,16 @@ __AI_set_stream_sample_rate:
 /* 802063EC 0020334C  38 21 00 30 */	addi r1, r1, 0x30
 /* 802063F0 00203350  7C 08 03 A6 */	mtlr r0
 /* 802063F4 00203354  4E 80 00 20 */	blr 
+.endfn __AI_set_stream_sample_rate
 
-.global AIGetStreamSampleRate
-AIGetStreamSampleRate:
+.fn AIGetStreamSampleRate, global
 /* 802063F8 00203358  3C 60 CC 00 */	lis r3, 0xCC006C00@ha
 /* 802063FC 0020335C  80 03 6C 00 */	lwz r0, 0xCC006C00@l(r3)
 /* 80206400 00203360  54 03 FF FE */	rlwinm r3, r0, 0x1f, 0x1f, 0x1f
 /* 80206404 00203364  4E 80 00 20 */	blr 
+.endfn AIGetStreamSampleRate
 
-.global AISetStreamVolLeft
-AISetStreamVolLeft:
+.fn AISetStreamVolLeft, global
 /* 80206408 00203368  3C 80 CC 00 */	lis r4, 0xCC006C00@ha
 /* 8020640C 0020336C  38 84 6C 00 */	addi r4, r4, 0xCC006C00@l
 /* 80206410 00203370  80 04 00 04 */	lwz r0, 4(r4)
@@ -310,16 +309,16 @@ AISetStreamVolLeft:
 /* 80206418 00203378  50 60 06 3E */	rlwimi r0, r3, 0, 0x18, 0x1f
 /* 8020641C 0020337C  90 04 00 04 */	stw r0, 4(r4)
 /* 80206420 00203380  4E 80 00 20 */	blr 
+.endfn AISetStreamVolLeft
 
-.global AIGetStreamVolLeft
-AIGetStreamVolLeft:
+.fn AIGetStreamVolLeft, global
 /* 80206424 00203384  3C 60 CC 00 */	lis r3, 0xCC006C04@ha
 /* 80206428 00203388  80 03 6C 04 */	lwz r0, 0xCC006C04@l(r3)
 /* 8020642C 0020338C  54 03 06 3E */	clrlwi r3, r0, 0x18
 /* 80206430 00203390  4E 80 00 20 */	blr 
+.endfn AIGetStreamVolLeft
 
-.global AISetStreamVolRight
-AISetStreamVolRight:
+.fn AISetStreamVolRight, global
 /* 80206434 00203394  3C 80 CC 00 */	lis r4, 0xCC006C00@ha
 /* 80206438 00203398  38 84 6C 00 */	addi r4, r4, 0xCC006C00@l
 /* 8020643C 0020339C  80 04 00 04 */	lwz r0, 4(r4)
@@ -327,16 +326,16 @@ AISetStreamVolRight:
 /* 80206444 002033A4  50 60 44 2E */	rlwimi r0, r3, 8, 0x10, 0x17
 /* 80206448 002033A8  90 04 00 04 */	stw r0, 4(r4)
 /* 8020644C 002033AC  4E 80 00 20 */	blr 
+.endfn AISetStreamVolRight
 
-.global AIGetStreamVolRight
-AIGetStreamVolRight:
+.fn AIGetStreamVolRight, global
 /* 80206450 002033B0  3C 60 CC 00 */	lis r3, 0xCC006C04@ha
 /* 80206454 002033B4  80 03 6C 04 */	lwz r0, 0xCC006C04@l(r3)
 /* 80206458 002033B8  54 03 C6 3E */	rlwinm r3, r0, 0x18, 0x18, 0x1f
 /* 8020645C 002033BC  4E 80 00 20 */	blr 
+.endfn AIGetStreamVolRight
 
-.global AIInit
-AIInit:
+.fn AIInit, global
 /* 80206460 002033C0  7C 08 02 A6 */	mflr r0
 /* 80206464 002033C4  90 01 00 04 */	stw r0, 4(r1)
 /* 80206468 002033C8  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -427,9 +426,9 @@ AIInit:
 /* 802065B8 00203518  7C 08 03 A6 */	mtlr r0
 /* 802065BC 0020351C  38 21 00 18 */	addi r1, r1, 0x18
 /* 802065C0 00203520  4E 80 00 20 */	blr 
+.endfn AIInit
 
-.global __AISHandler
-__AISHandler:
+.fn __AISHandler, local
 /* 802065C4 00203524  7C 08 02 A6 */	mflr r0
 /* 802065C8 00203528  90 01 00 04 */	stw r0, 4(r1)
 /* 802065CC 0020352C  94 21 FD 20 */	stwu r1, -0x2e0(r1)
@@ -462,9 +461,9 @@ __AISHandler:
 /* 80206634 00203594  7C 08 03 A6 */	mtlr r0
 /* 80206638 00203598  38 21 02 E0 */	addi r1, r1, 0x2e0
 /* 8020663C 0020359C  4E 80 00 20 */	blr 
+.endfn __AISHandler
 
-.global __AIDHandler
-__AIDHandler:
+.fn __AIDHandler, local
 /* 80206640 002035A0  7C 08 02 A6 */	mflr r0
 /* 80206644 002035A4  3C 60 CC 00 */	lis r3, 0xCC005000@ha
 /* 80206648 002035A8  90 01 00 04 */	stw r0, 4(r1)
@@ -503,9 +502,9 @@ __AIDHandler:
 /* 802066C4 00203624  38 21 02 E0 */	addi r1, r1, 0x2e0
 /* 802066C8 00203628  7C 08 03 A6 */	mtlr r0
 /* 802066CC 0020362C  4E 80 00 20 */	blr 
+.endfn __AIDHandler
 
-.global __AICallbackStackSwitch
-__AICallbackStackSwitch:
+.fn __AICallbackStackSwitch, local
 /* 802066D0 00203630  7C 08 02 A6 */	mflr r0
 /* 802066D4 00203634  90 01 00 04 */	stw r0, 4(r1)
 /* 802066D8 00203638  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -528,9 +527,9 @@ __AICallbackStackSwitch:
 /* 8020671C 0020367C  38 21 00 18 */	addi r1, r1, 0x18
 /* 80206720 00203680  7C 08 03 A6 */	mtlr r0
 /* 80206724 00203684  4E 80 00 20 */	blr 
+.endfn __AICallbackStackSwitch
 
-.global __AI_SRC_INIT
-__AI_SRC_INIT:
+.fn __AI_SRC_INIT, local
 /* 80206728 00203688  7C 08 02 A6 */	mflr r0
 /* 8020672C 0020368C  90 01 00 04 */	stw r0, 4(r1)
 /* 80206730 00203690  94 21 FF D0 */	stwu r1, -0x30(r1)
@@ -664,27 +663,42 @@ __AI_SRC_INIT:
 /* 80206900 00203860  38 21 00 30 */	addi r1, r1, 0x30
 /* 80206904 00203864  7C 08 03 A6 */	mtlr r0
 /* 80206908 00203868  4E 80 00 20 */	blr 
+.endfn __AI_SRC_INIT
 
 .section .sbss, "wa"
 .balign 8
-__AIS_Callback:
+.obj __AIS_Callback, local
 	.skip 0x4
-__AID_Callback:
+.endobj __AIS_Callback
+.obj __AID_Callback, local
 	.skip 0x4
-__CallbackStack:
+.endobj __AID_Callback
+.obj __CallbackStack, local
 	.skip 0x4
-__OldStack:
+.endobj __CallbackStack
+.obj __OldStack, local
 	.skip 0x4
-__AI_init_flag:
+.endobj __OldStack
+.obj __AI_init_flag, local
 	.skip 0x4
+.endobj __AI_init_flag
 .balign 8
-bound_32KHz:
+.obj bound_32KHz, local
 	.skip 0x8
-bound_48KHz:
+.endobj bound_32KHz
+.balign 8
+.obj bound_48KHz, local
 	.skip 0x8
-min_wait:
+.endobj bound_48KHz
+.balign 8
+.obj min_wait, local
 	.skip 0x8
-max_wait:
+.endobj min_wait
+.balign 8
+.obj max_wait, local
 	.skip 0x8
-buffer:
+.endobj max_wait
+.balign 8
+.obj buffer, local
 	.skip 0x8
+.endobj buffer
