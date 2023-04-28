@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global atoi
-atoi:
+.fn atoi, global
 /* 80219B9C 00216AFC  7C 08 02 A6 */	mflr r0
 /* 80219BA0 00216B00  90 01 00 04 */	stw r0, 4(r1)
 /* 80219BA4 00216B04  38 00 00 00 */	li r0, 0
@@ -57,9 +56,9 @@ atoi:
 /* 80219C54 00216BB4  38 21 00 30 */	addi r1, r1, 0x30
 /* 80219C58 00216BB8  7C 08 03 A6 */	mtlr r0
 /* 80219C5C 00216BBC  4E 80 00 20 */	blr 
+.endfn atoi
 
-.global strtol
-strtol:
+.fn strtol, global
 /* 80219C60 00216BC0  7C 08 02 A6 */	mflr r0
 /* 80219C64 00216BC4  3C C0 80 00 */	lis r6, 0x7FFFFFFF@ha
 /* 80219C68 00216BC8  90 01 00 04 */	stw r0, 4(r1)
@@ -127,9 +126,9 @@ strtol:
 /* 80219D44 00216CA4  7C 08 03 A6 */	mtlr r0
 /* 80219D48 00216CA8  38 21 00 30 */	addi r1, r1, 0x30
 /* 80219D4C 00216CAC  4E 80 00 20 */	blr 
+.endfn strtol
 
-.global strtoul
-strtoul:
+.fn strtoul, global
 /* 80219D50 00216CB0  7C 08 02 A6 */	mflr r0
 /* 80219D54 00216CB4  3C C0 80 00 */	lis r6, 0x7FFFFFFF@ha
 /* 80219D58 00216CB8  90 01 00 04 */	stw r0, 4(r1)
@@ -176,9 +175,9 @@ strtoul:
 /* 80219DF0 00216D50  7C 08 03 A6 */	mtlr r0
 /* 80219DF4 00216D54  38 21 00 30 */	addi r1, r1, 0x30
 /* 80219DF8 00216D58  4E 80 00 20 */	blr 
+.endfn strtoul
 
-.global __strtoull
-__strtoull:
+.fn __strtoull, global
 /* 80219DFC 00216D5C  7C 08 02 A6 */	mflr r0
 /* 80219E00 00216D60  90 01 00 04 */	stw r0, 4(r1)
 /* 80219E04 00216D64  38 00 00 00 */	li r0, 0
@@ -330,7 +329,6 @@ __strtoull:
 /* 8021A00C 00216F6C  3B C0 00 10 */	li r30, 0x10
 /* 8021A010 00216F70  48 00 01 4C */	b .L_8021A15C
 .L_8021A014:
-.L_8021A014:
 /* 8021A014 00216F74  2C 1F 00 00 */	cmpwi r31, 0
 /* 8021A018 00216F78  40 82 00 08 */	bne .L_8021A020
 /* 8021A01C 00216F7C  3B E0 00 0A */	li r31, 0xa
@@ -455,9 +453,9 @@ __strtoull:
 /* 8021A1BC 0021711C  7C 08 03 A6 */	mtlr r0
 /* 8021A1C0 00217120  38 21 00 78 */	addi r1, r1, 0x78
 /* 8021A1C4 00217124  4E 80 00 20 */	blr 
+.endfn __strtoull
 
-.global __strtoul
-__strtoul:
+.fn __strtoul, global
 /* 8021A1C8 00217128  7C 08 02 A6 */	mflr r0
 /* 8021A1CC 0021712C  90 01 00 04 */	stw r0, 4(r1)
 /* 8021A1D0 00217130  38 00 00 00 */	li r0, 0
@@ -602,7 +600,6 @@ __strtoul:
 /* 8021A3BC 0021731C  3B 00 00 10 */	li r24, 0x10
 /* 8021A3C0 00217320  48 00 00 EC */	b .L_8021A4AC
 .L_8021A3C4:
-.L_8021A3C4:
 /* 8021A3C4 00217324  2C 1C 00 00 */	cmpwi r28, 0
 /* 8021A3C8 00217328  40 82 00 08 */	bne .L_8021A3D0
 /* 8021A3CC 0021732C  3B 80 00 0A */	li r28, 0xa
@@ -701,11 +698,11 @@ __strtoul:
 /* 8021A504 00217464  38 21 00 60 */	addi r1, r1, 0x60
 /* 8021A508 00217468  7C 08 03 A6 */	mtlr r0
 /* 8021A50C 0021746C  4E 80 00 20 */	blr 
+.endfn __strtoul
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-.global lbl_802E93F0
-lbl_802E93F0:
+.obj lbl_802E93F0, local
 	.4byte .L_8021A15C
 	.4byte .L_80219EE0
 	.4byte .L_80219F7C
@@ -723,8 +720,8 @@ lbl_802E93F0:
 	.4byte .L_8021A15C
 	.4byte .L_8021A15C
 	.4byte .L_8021A014
-.global lbl_802E9434
-lbl_802E9434:
+.endobj lbl_802E93F0
+.obj lbl_802E9434, local
 	.4byte .L_8021A4AC
 	.4byte .L_8021A290
 	.4byte .L_8021A32C
@@ -742,3 +739,4 @@ lbl_802E9434:
 	.4byte .L_8021A4AC
 	.4byte .L_8021A4AC
 	.4byte .L_8021A3C4
+.endobj lbl_802E9434

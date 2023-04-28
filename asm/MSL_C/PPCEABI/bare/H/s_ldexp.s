@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global ldexp
-ldexp:
+.fn ldexp, global
 /* 8021B570 002184D0  7C 08 02 A6 */	mflr r0
 /* 8021B574 002184D4  90 01 00 04 */	stw r0, 4(r1)
 /* 8021B578 002184D8  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -106,18 +105,26 @@ ldexp:
 /* 8021B6DC 0021863C  38 21 00 20 */	addi r1, r1, 0x20
 /* 8021B6E0 00218640  7C 08 03 A6 */	mtlr r0
 /* 8021B6E4 00218644  4E 80 00 20 */	blr 
+.endfn ldexp
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803EC7C8:
+.obj lbl_803EC7C8, local
 	.double 0.0
-lbl_803EC7D0:
-	.4byte 0x43500000
-	.4byte 0x00000000
-lbl_803EC7D8:
+.endobj lbl_803EC7C8
+.balign 8
+.obj lbl_803EC7D0, local
+	.double 1.8014398509481984E16
+.endobj lbl_803EC7D0
+.balign 8
+.obj lbl_803EC7D8, local
 	.double 1.0E-300
-lbl_803EC7E0:
+.endobj lbl_803EC7D8
+.balign 8
+.obj lbl_803EC7E0, local
 	.double 1.0E300
-lbl_803EC7E8:
-	.4byte 0x3C900000
-	.4byte 0x00000000
+.endobj lbl_803EC7E0
+.balign 8
+.obj lbl_803EC7E8, local
+	.double 5.551115123125783E-17
+.endobj lbl_803EC7E8

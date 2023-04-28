@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global __va_arg
-__va_arg:
+.fn __va_arg, global
 /* 80214870 002117D0  54 80 06 3E */	clrlwi r0, r4, 0x18
 /* 80214874 002117D4  88 C3 00 00 */	lbz r6, 0(r3)
 /* 80214878 002117D8  28 00 00 04 */	cmplwi r0, 4
@@ -70,3 +69,4 @@ __va_arg:
 .L_8021495C:
 /* 8021495C 002118BC  7C C3 33 78 */	mr r3, r6
 /* 80214960 002118C0  4E 80 00 20 */	blr 
+.endfn __va_arg

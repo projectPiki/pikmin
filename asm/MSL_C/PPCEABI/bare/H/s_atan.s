@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global atan
-atan:
+.fn atan, global
 /* 8021B268 002181C8  7C 08 02 A6 */	mflr r0
 /* 8021B26C 002181CC  3C 60 80 22 */	lis r3, atanhi@ha
 /* 8021B270 002181D0  90 01 00 04 */	stw r0, 4(r1)
@@ -158,60 +157,56 @@ atan:
 /* 8021B49C 002183FC  83 A1 00 14 */	lwz r29, 0x14(r1)
 /* 8021B4A0 00218400  38 21 00 20 */	addi r1, r1, 0x20
 /* 8021B4A4 00218404  4E 80 00 20 */	blr 
+.endfn atan
 
 .section .rodata, "a"  # 0x80221FE0 - 0x80222DC0
 .balign 8
-atanhi:
-	.4byte 0x3FDDAC67
-	.4byte 0x0561BB4F
-	.4byte 0x3FE921FB
-	.4byte 0x54442D18
-	.4byte 0x3FEF730B
-	.4byte 0xD281F69B
-	.4byte 0x3FF921FB
-	.4byte 0x54442D18
-atanlo:
-	.4byte 0x3C7A2B7F
-	.4byte 0x222F65E2
-	.4byte 0x3C81A626
-	.4byte 0x33145C07
-	.4byte 0x3C700788
-	.4byte 0x7AF0CBBD
-	.4byte 0x3C91A626
-	.4byte 0x33145C07
-aT:
-	.4byte 0x3FD55555
-	.4byte 0x5555550D
-	.4byte 0xBFC99999
-	.4byte 0x9998EBC4
-	.4byte 0x3FC24924
-	.4byte 0x920083FF
-	.4byte 0xBFBC71C6
-	.4byte 0xFE231671
-	.4byte 0x3FB745CD
-	.4byte 0xC54C206E
-	.4byte 0xBFB3B0F2
-	.4byte 0xAF749A6D
-	.4byte 0x3FB10D66
-	.4byte 0xA0D03D51
-	.4byte 0xBFADDE2D
-	.4byte 0x52DEFD9A
-	.4byte 0x3FA97B4B
-	.4byte 0x24760DEB
-	.4byte 0xBFA2B444
-	.4byte 0x2C6A6C2F
-	.4byte 0x3F90AD3A
-	.4byte 0xE322DA11
+.obj atanhi, local
+	.double 0.4636476090008061
+	.double 0.7853981633974483
+	.double 0.982793723247329
+	.double 1.5707963267948966
+.endobj atanhi
+.balign 8
+.obj atanlo, local
+	.double 2.2698777452961687E-17
+	.double 3.061616997868383E-17
+	.double 1.3903311031230998E-17
+	.double 6.123233995736766E-17
+.endobj atanlo
+.balign 8
+.obj aT, local
+	.double 0.3333333333333293
+	.double -0.19999999999876483
+	.double 0.14285714272503466
+	.double -0.11111110405462356
+	.double 0.09090887133436507
+	.double -0.0769187620504483
+	.double 0.06661073137387531
+	.double -0.058335701337905735
+	.double 0.049768779946159324
+	.double -0.036531572744216916
+	.double 0.016285820115365782
+.endobj aT
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803EC798:
+.obj lbl_803EC798, local
 	.double 1.0E300
-lbl_803EC7A0:
+.endobj lbl_803EC798
+.balign 8
+.obj lbl_803EC7A0, local
 	.double 1.0
-lbl_803EC7A8:
+.endobj lbl_803EC7A0
+.balign 8
+.obj lbl_803EC7A8, local
 	.double 2.0
-lbl_803EC7B0:
+.endobj lbl_803EC7A8
+.balign 8
+.obj lbl_803EC7B0, local
 	.double 1.5
-lbl_803EC7B8:
+.endobj lbl_803EC7B0
+.balign 8
+.obj lbl_803EC7B8, local
 	.double -1.0
+.endobj lbl_803EC7B8

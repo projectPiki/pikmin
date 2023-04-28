@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global sscanf
-sscanf:
+.fn sscanf, global
 /* 80218094 00214FF4  7C 08 02 A6 */	mflr r0
 /* 80218098 00214FF8  90 01 00 04 */	stw r0, 4(r1)
 /* 8021809C 00214FFC  94 21 FF 78 */	stwu r1, -0x88(r1)
@@ -53,9 +52,9 @@ sscanf:
 /* 80218144 002150A4  38 21 00 88 */	addi r1, r1, 0x88
 /* 80218148 002150A8  7C 08 03 A6 */	mtlr r0
 /* 8021814C 002150AC  4E 80 00 20 */	blr 
+.endfn sscanf
 
-.global __StringRead
-__StringRead:
+.fn __StringRead, global
 /* 80218150 002150B0  2C 05 00 01 */	cmpwi r5, 1
 /* 80218154 002150B4  41 82 00 50 */	beq .L_802181A4
 /* 80218158 002150B8  40 80 00 10 */	bge .L_80218168
@@ -100,9 +99,9 @@ __StringRead:
 .L_802181D8:
 /* 802181D8 00215138  38 60 00 00 */	li r3, 0
 /* 802181DC 0021513C  4E 80 00 20 */	blr 
+.endfn __StringRead
 
-.global __sformatter
-__sformatter:
+.fn __sformatter, local
 /* 802181E0 00215140  7C 08 02 A6 */	mflr r0
 /* 802181E4 00215144  3C E0 80 22 */	lis r7, __ctype_map@ha
 /* 802181E8 00215148  90 01 00 04 */	stw r0, 4(r1)
@@ -183,7 +182,7 @@ __sformatter:
 .L_802182FC:
 /* 802182FC 0021525C  38 79 00 00 */	addi r3, r25, 0
 /* 80218300 00215260  38 81 00 1C */	addi r4, r1, 0x1c
-/* 80218304 00215264  48 00 08 81 */	bl parse_format_1
+/* 80218304 00215264  48 00 08 81 */	bl parse_format
 /* 80218308 00215268  88 01 00 1C */	lbz r0, 0x1c(r1)
 /* 8021830C 0021526C  3B 23 00 00 */	addi r25, r3, 0
 /* 80218310 00215270  28 00 00 00 */	cmplwi r0, 0
@@ -824,9 +823,9 @@ __sformatter:
 /* 80218B78 00215AD8  38 21 00 98 */	addi r1, r1, 0x98
 /* 80218B7C 00215ADC  7C 08 03 A6 */	mtlr r0
 /* 80218B80 00215AE0  4E 80 00 20 */	blr 
+.endfn __sformatter
 
-.global parse_format_1
-parse_format_1:
+.fn parse_format, local
 /* 80218B84 00215AE4  3C A0 80 22 */	lis r5, lbl_80222B20@ha
 /* 80218B88 00215AE8  94 21 FF C8 */	stwu r1, -0x38(r1)
 /* 80218B8C 00215AEC  38 C5 2B 20 */	addi r6, r5, lbl_80222B20@l
@@ -994,20 +993,12 @@ parse_format_1:
 /* 80218DE4 00215D44  7C 09 03 A6 */	mtctr r0
 /* 80218DE8 00215D48  4E 80 04 20 */	bctr 
 .L_80218DEC:
-.L_80218DEC:
-.L_80218DEC:
-.L_80218DEC:
 /* 80218DEC 00215D4C  88 01 00 12 */	lbz r0, 0x12(r1)
 /* 80218DF0 00215D50  28 00 00 06 */	cmplwi r0, 6
 /* 80218DF4 00215D54  40 82 02 98 */	bne .L_8021908C
 /* 80218DF8 00215D58  38 00 00 FF */	li r0, 0xff
 /* 80218DFC 00215D5C  98 01 00 13 */	stb r0, 0x13(r1)
 /* 80218E00 00215D60  48 00 02 8C */	b .L_8021908C
-.L_80218E04:
-.L_80218E04:
-.L_80218E04:
-.L_80218E04:
-.L_80218E04:
 .L_80218E04:
 /* 80218E04 00215D64  88 01 00 12 */	lbz r0, 0x12(r1)
 /* 80218E08 00215D68  28 00 00 01 */	cmplwi r0, 1
@@ -1219,10 +1210,11 @@ parse_format_1:
 .L_802190E0:
 /* 802190E0 00216040  38 21 00 38 */	addi r1, r1, 0x38
 /* 802190E4 00216044  4E 80 00 20 */	blr 
+.endfn parse_format
 
 .section .rodata, "a"  # 0x80221FE0 - 0x80222DC0
 .balign 8
-lbl_80222B20:
+.obj lbl_80222B20, local
 	.4byte 0x00000000
 	.4byte 0x7FFFFFFF
 	.4byte 0x00000000
@@ -1233,10 +1225,11 @@ lbl_80222B20:
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x00000000
+.endobj lbl_80222B20
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802E9320:
+.obj lbl_802E9320, local
 	.4byte .L_80218E04
 	.4byte .L_80219084
 	.4byte .L_80218E04
@@ -1289,3 +1282,4 @@ lbl_802E9320:
 	.4byte .L_80219084
 	.4byte .L_80219084
 	.4byte .L_80218DEC
+.endobj lbl_802E9320

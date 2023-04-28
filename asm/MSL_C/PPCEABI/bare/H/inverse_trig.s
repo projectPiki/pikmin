@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global atanf
-atanf:
+.fn atanf, global
 /* 8021B730 00218690  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8021B734 00218694  3C 60 80 22 */	lis r3, atan_coeff$96@ha
 /* 8021B738 00218698  38 83 2C 40 */	addi r4, r3, atan_coeff$96@l
@@ -140,9 +139,9 @@ atanf:
 .L_8021B91C:
 /* 8021B91C 0021887C  38 21 00 10 */	addi r1, r1, 0x10
 /* 8021B920 00218880  4E 80 00 20 */	blr 
+.endfn atanf
 
-.global atan__Ff
-atan__Ff:
+.fn atan__Ff, weak
 /* 8021B924 00218884  7C 08 02 A6 */	mflr r0
 /* 8021B928 00218888  90 01 00 04 */	stw r0, 4(r1)
 /* 8021B92C 0021888C  94 21 FF F8 */	stwu r1, -8(r1)
@@ -151,9 +150,9 @@ atan__Ff:
 /* 8021B938 00218898  38 21 00 08 */	addi r1, r1, 8
 /* 8021B93C 0021889C  7C 08 03 A6 */	mtlr r0
 /* 8021B940 002188A0  4E 80 00 20 */	blr 
+.endfn atan__Ff
 
-.global _inv_sqrtf
-_inv_sqrtf:
+.fn _inv_sqrtf, weak
 /* 8021B944 002188A4  C0 02 C6 00 */	lfs f0, lbl_803EC800@sda21(r2)
 /* 8021B948 002188A8  FC 01 00 40 */	fcmpo cr0, f1, f0
 /* 8021B94C 002188AC  40 81 00 48 */	ble .L_8021B994
@@ -184,9 +183,9 @@ _inv_sqrtf:
 /* 8021B9A8 00218908  3C 60 80 2F */	lis r3, __float_huge@ha
 /* 8021B9AC 0021890C  C0 23 94 7C */	lfs f1, __float_huge@l(r3)
 /* 8021B9B0 00218910  4E 80 00 20 */	blr 
+.endfn _inv_sqrtf
 
-.global acosf
-acosf:
+.fn acosf, global
 /* 8021B9B4 00218914  7C 08 02 A6 */	mflr r0
 /* 8021B9B8 00218918  90 01 00 04 */	stw r0, 4(r1)
 /* 8021B9BC 0021891C  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -204,9 +203,9 @@ acosf:
 /* 8021B9EC 0021894C  7C 08 03 A6 */	mtlr r0
 /* 8021B9F0 00218950  38 21 00 18 */	addi r1, r1, 0x18
 /* 8021B9F4 00218954  4E 80 00 20 */	blr 
+.endfn acosf
 
-.global atan2f
-atan2f:
+.fn atan2f, global
 /* 8021B9F8 00218958  7C 08 02 A6 */	mflr r0
 /* 8021B9FC 0021895C  90 01 00 04 */	stw r0, 4(r1)
 /* 8021BA00 00218960  94 21 FF F0 */	stwu r1, -0x10(r1)
@@ -267,93 +266,94 @@ atan2f:
 /* 8021BAC4 00218A24  38 21 00 10 */	addi r1, r1, 0x10
 /* 8021BAC8 00218A28  7C 08 03 A6 */	mtlr r0
 /* 8021BACC 00218A2C  4E 80 00 20 */	blr 
+.endfn atan2f
 
 .section .rodata, "a"  # 0x80221FE0 - 0x80222DC0
 .balign 8
-.global atan_coeff$96
-atan_coeff$96:
-	.4byte 0x3F800000
-	.4byte 0xBEAAAAAA
-	.4byte 0x3E4CCC81
-	.4byte 0xBE123E7D
-	.4byte 0x3DE21F95
-	.4byte 0xBDAD417C
-	.4byte 0x3D41186D
-.global onep_one_over_xisqr_hi$97
-onep_one_over_xisqr_hi$97:
-	.4byte 0x40DA826B
-	.4byte 0x404F5958
-	.4byte 0x40000000
-	.4byte 0x3FB925AB
-	.4byte 0x3F95F61A
-	.4byte 0x3F851081
-.global onep_one_over_xisqr_lo$98
-onep_one_over_xisqr_lo$98:
-	.4byte 0x36EF692F
-	.4byte 0x355C1DF9
-	.4byte 0x00000000
-	.4byte 0x35291D45
-	.4byte 0x00000000
-	.4byte 0x00000000
-.global atan_xi_hi$99
-atan_xi_hi$99:
-	.4byte 0x00000000
-	.4byte 0x3EC90EAA
-	.4byte 0x3F16CBE4
-	.4byte 0x3F490FDA
-	.4byte 0x3F7B53C5
-	.4byte 0x3F96CBE2
-	.4byte 0x3FAFEDD9
-.global atan_xi_lo$100
-atan_xi_lo$100:
-	.4byte 0x00000000
-	.4byte 0x37185D99
-	.4byte 0x32C59189
-	.4byte 0x33874A9E
-	.4byte 0x353CFA83
-	.4byte 0x348637BD
-	.4byte 0x35541063
-.global one_over_xi_hi$101
-one_over_xi_hi$101:
-	.4byte 0x401A8277
-	.4byte 0x3FBF90C7
-	.4byte 0x3F800000
-	.4byte 0x3F2B0DC1
-	.4byte 0x3ED413CD
-	.4byte 0x3E4BAFAF
-.global one_over_xi_lo$102
-one_over_xi_lo$102:
-	.4byte 0x3516DC59
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
+.obj atan_coeff$96, local
+	.float 1.0
+	.float -0.3333333
+	.float 0.19999887
+	.float -0.1428165
+	.float 0.1104118
+	.float -0.08459756
+	.float 0.047142435
+.endobj atan_coeff$96
+.obj onep_one_over_xisqr_hi$97, local
+	.float 6.82842
+	.float 3.239828
+	.float 2.0
+	.float 1.446462
+	.float 1.1715729
+	.float 1.0395662
+.endobj onep_one_over_xisqr_hi$97
+.obj onep_one_over_xisqr_lo$98, local
+	.float 7.135E-6
+	.float 8.2E-7
+	.float 0.0
+	.float 6.3E-7
+	.float 0.0
+	.float 0.0
+.endobj onep_one_over_xisqr_lo$98
+.obj atan_xi_hi$99, local
+	.float 0.0
+	.float 0.39269
+	.float 0.5890486
+	.float 0.7853981
+	.float 0.981747
+	.float 1.178097
+	.float 1.374446
+.endobj atan_xi_hi$99
+.obj atan_xi_lo$100, local
+	.float 0.0
+	.float 9.081698E-6
+	.float 2.3E-8
+	.float 6.3E-8
+	.float 7.04E-7
+	.float 2.5E-7
+	.float 7.9E-7
+.endobj atan_xi_lo$100
+.obj one_over_xi_hi$101, local
+	.float 2.414213
+	.float 1.4966058
+	.float 1.0
+	.float 0.6681786
+	.float 0.41421357
+	.float 0.19891237
+.endobj one_over_xi_hi$101
+.obj one_over_xi_lo$102, local
+	.float 5.62E-7
+	.float 0.0
+	.float 0.0
+	.float 0.0
+	.float 0.0
+	.float 0.0
+	.float 0.0
+.endobj one_over_xi_lo$102
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-.global lbl_803EC7F0
-lbl_803EC7F0:
-	.4byte 0x401A827A
-.global lbl_803EC7F4
-lbl_803EC7F4:
-	.4byte 0x3F800000
-.global lbl_803EC7F8
-lbl_803EC7F8:
-	.4byte 0x3ED413CD
-.global lbl_803EC7FC
-lbl_803EC7FC:
-	.4byte 0x3FC90FDB
-.global lbl_803EC800
-lbl_803EC800:
-	.4byte 0x00000000
-.global lbl_803EC804
-lbl_803EC804:
-	.4byte 0x3F000000
-.global lbl_803EC808
-lbl_803EC808:
-	.4byte 0x40400000
-.global lbl_803EC80C
-lbl_803EC80C:
-	.4byte 0x40490FDB
+.obj lbl_803EC7F0, local
+	.float 2.4142137
+.endobj lbl_803EC7F0
+.obj lbl_803EC7F4, local
+	.float 1.0
+.endobj lbl_803EC7F4
+.obj lbl_803EC7F8, local
+	.float 0.41421357
+.endobj lbl_803EC7F8
+.obj lbl_803EC7FC, local
+	.float 1.5707964
+.endobj lbl_803EC7FC
+.obj lbl_803EC800, local
+	.float 0.0
+.endobj lbl_803EC800
+.obj lbl_803EC804, local
+	.float 0.5
+.endobj lbl_803EC804
+.obj lbl_803EC808, local
+	.float 3.0
+.endobj lbl_803EC808
+.obj lbl_803EC80C, local
+	.float 3.1415927
+.endobj lbl_803EC80C

@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global sprintf
-sprintf:
+.fn sprintf, global
 /* 80216598 002134F8  7C 08 02 A6 */	mflr r0
 /* 8021659C 002134FC  90 01 00 04 */	stw r0, 4(r1)
 /* 802165A0 00213500  94 21 FF 70 */	stwu r1, -0x90(r1)
@@ -58,9 +57,9 @@ sprintf:
 /* 80216660 002135C0  7C 08 03 A6 */	mtlr r0
 /* 80216664 002135C4  38 21 00 90 */	addi r1, r1, 0x90
 /* 80216668 002135C8  4E 80 00 20 */	blr 
+.endfn sprintf
 
-.global vsprintf
-vsprintf:
+.fn vsprintf, global
 /* 8021666C 002135CC  7C 08 02 A6 */	mflr r0
 /* 80216670 002135D0  38 C5 00 00 */	addi r6, r5, 0
 /* 80216674 002135D4  90 01 00 04 */	stw r0, 4(r1)
@@ -93,9 +92,9 @@ vsprintf:
 /* 802166D8 00213638  7C 08 03 A6 */	mtlr r0
 /* 802166DC 0021363C  38 21 00 28 */	addi r1, r1, 0x28
 /* 802166E0 00213640  4E 80 00 20 */	blr 
+.endfn vsprintf
 
-.global vprintf
-vprintf:
+.fn vprintf, global
 /* 802166E4 00213644  7C 08 02 A6 */	mflr r0
 /* 802166E8 00213648  3C A0 80 2F */	lis r5, __files@ha
 /* 802166EC 0021364C  90 01 00 04 */	stw r0, 4(r1)
@@ -129,9 +128,9 @@ vprintf:
 /* 80216754 002136B4  83 A1 00 14 */	lwz r29, 0x14(r1)
 /* 80216758 002136B8  38 21 00 20 */	addi r1, r1, 0x20
 /* 8021675C 002136BC  4E 80 00 20 */	blr 
+.endfn vprintf
 
-.global printf
-printf:
+.fn printf, global
 /* 80216760 002136C0  7C 08 02 A6 */	mflr r0
 /* 80216764 002136C4  90 01 00 04 */	stw r0, 4(r1)
 /* 80216768 002136C8  94 21 FF 80 */	stwu r1, -0x80(r1)
@@ -186,9 +185,9 @@ printf:
 /* 80216820 00213780  7C 08 03 A6 */	mtlr r0
 /* 80216824 00213784  38 21 00 80 */	addi r1, r1, 0x80
 /* 80216828 00213788  4E 80 00 20 */	blr 
+.endfn printf
 
-.global __StringWrite
-__StringWrite:
+.fn __StringWrite, global
 /* 8021682C 0021378C  7C 08 02 A6 */	mflr r0
 /* 80216830 00213790  90 01 00 04 */	stw r0, 4(r1)
 /* 80216834 00213794  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -218,9 +217,9 @@ __StringWrite:
 /* 8021688C 002137EC  7C 08 03 A6 */	mtlr r0
 /* 80216890 002137F0  38 21 00 20 */	addi r1, r1, 0x20
 /* 80216894 002137F4  4E 80 00 20 */	blr 
+.endfn __StringWrite
 
-.global __FileWrite
-__FileWrite:
+.fn __FileWrite, global
 /* 80216898 002137F8  7C 08 02 A6 */	mflr r0
 /* 8021689C 002137FC  90 01 00 04 */	stw r0, 4(r1)
 /* 802168A0 00213800  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -245,11 +244,11 @@ __FileWrite:
 /* 802168E4 00213844  7C 08 03 A6 */	mtlr r0
 /* 802168E8 00213848  38 21 00 20 */	addi r1, r1, 0x20
 /* 802168EC 0021384C  4E 80 00 20 */	blr 
+.endfn __FileWrite
 
-.global __pformatter
-__pformatter:
+.fn __pformatter, local
 /* 802168F0 00213850  7C 08 02 A6 */	mflr r0
-/* 802168F4 00213854  3C E0 80 22 */	lis r7, "@stringBase0_1"@ha
+/* 802168F4 00213854  3C E0 80 22 */	lis r7, "@stringBase0"@ha
 /* 802168F8 00213858  90 01 00 04 */	stw r0, 4(r1)
 /* 802168FC 0021385C  38 00 00 20 */	li r0, 0x20
 /* 80216900 00213860  94 21 FD 98 */	stwu r1, -0x268(r1)
@@ -260,7 +259,7 @@ __pformatter:
 /* 80216914 00213874  3B 25 00 00 */	addi r25, r5, 0
 /* 80216918 00213878  3B 41 02 1C */	addi r26, r1, 0x21c
 /* 8021691C 0021387C  3A E1 02 1B */	addi r23, r1, 0x21b
-/* 80216920 00213880  3A 87 2B 10 */	addi r20, r7, "@stringBase0_1"@l
+/* 80216920 00213880  3A 87 2B 10 */	addi r20, r7, "@stringBase0"@l
 /* 80216924 00213884  3B 60 00 00 */	li r27, 0
 /* 80216928 00213888  98 01 00 19 */	stb r0, 0x19(r1)
 /* 8021692C 0021388C  48 00 05 D0 */	b .L_80216EFC
@@ -704,9 +703,9 @@ __pformatter:
 /* 80216F14 00213E74  38 21 02 68 */	addi r1, r1, 0x268
 /* 80216F18 00213E78  7C 08 03 A6 */	mtlr r0
 /* 80216F1C 00213E7C  4E 80 00 20 */	blr 
+.endfn __pformatter
 
-.global float2str
-float2str:
+.fn float2str, local
 /* 80216F20 00213E80  7C 08 02 A6 */	mflr r0
 /* 80216F24 00213E84  90 01 00 04 */	stw r0, 4(r1)
 /* 80216F28 00213E88  94 21 FF A0 */	stwu r1, -0x60(r1)
@@ -778,20 +777,20 @@ float2str:
 /* 80217010 00213F70  B0 01 00 1E */	sth r0, 0x1e(r1)
 /* 80217014 00213F74  48 00 00 6C */	b .L_80217080
 .L_80217018:
-/* 80217018 00213F78  C8 02 C4 18 */	lfd f0, "@919"@sda21(r2)
+/* 80217018 00213F78  C8 02 C4 18 */	lfd f0, lbl_803EC618@sda21(r2)
 /* 8021701C 00213F7C  FC 1F 00 40 */	fcmpo cr0, f31, f0
 /* 80217020 00213F80  40 80 00 20 */	bge .L_80217040
-/* 80217024 00213F84  3C 60 80 22 */	lis r3, "@stringBase0_1"@ha
+/* 80217024 00213F84  3C 60 80 22 */	lis r3, "@stringBase0"@ha
 /* 80217028 00213F88  3B 9C FF FB */	addi r28, r28, -5
-/* 8021702C 00213F8C  38 83 2B 10 */	addi r4, r3, "@stringBase0_1"@l
+/* 8021702C 00213F8C  38 83 2B 10 */	addi r4, r3, "@stringBase0"@l
 /* 80217030 00213F90  38 7C 00 00 */	addi r3, r28, 0
 /* 80217034 00213F94  38 84 00 01 */	addi r4, r4, 1
 /* 80217038 00213F98  48 00 23 21 */	bl strcpy
 /* 8021703C 00213F9C  48 00 00 1C */	b .L_80217058
 .L_80217040:
-/* 80217040 00213FA0  3C 60 80 22 */	lis r3, "@stringBase0_1"@ha
+/* 80217040 00213FA0  3C 60 80 22 */	lis r3, "@stringBase0"@ha
 /* 80217044 00213FA4  3B 9C FF FC */	addi r28, r28, -4
-/* 80217048 00213FA8  38 83 2B 10 */	addi r4, r3, "@stringBase0_1"@l
+/* 80217048 00213FA8  38 83 2B 10 */	addi r4, r3, "@stringBase0"@l
 /* 8021704C 00213FAC  38 7C 00 00 */	addi r3, r28, 0
 /* 80217050 00213FB0  38 84 00 06 */	addi r4, r4, 6
 /* 80217054 00213FB4  48 00 23 05 */	bl strcpy
@@ -799,9 +798,9 @@ float2str:
 /* 80217058 00213FB8  7F 83 E3 78 */	mr r3, r28
 /* 8021705C 00213FBC  48 00 04 D8 */	b .L_80217534
 .L_80217060:
-/* 80217060 00213FC0  3C 60 80 22 */	lis r3, "@stringBase0_1"@ha
+/* 80217060 00213FC0  3C 60 80 22 */	lis r3, "@stringBase0"@ha
 /* 80217064 00213FC4  3B 9C FF FC */	addi r28, r28, -4
-/* 80217068 00213FC8  38 83 2B 10 */	addi r4, r3, "@stringBase0_1"@l
+/* 80217068 00213FC8  38 83 2B 10 */	addi r4, r3, "@stringBase0"@l
 /* 8021706C 00213FCC  38 7C 00 00 */	addi r3, r28, 0
 /* 80217070 00213FD0  38 84 00 0A */	addi r4, r4, 0xa
 /* 80217074 00213FD4  48 00 22 E5 */	bl strcpy
@@ -1170,9 +1169,9 @@ float2str:
 /* 8021754C 002144AC  83 81 00 48 */	lwz r28, 0x48(r1)
 /* 80217550 002144B0  38 21 00 60 */	addi r1, r1, 0x60
 /* 80217554 002144B4  4E 80 00 20 */	blr 
+.endfn float2str
 
-.global round_decimal
-round_decimal:
+.fn round_decimal, local
 /* 80217558 002144B8  2C 04 00 00 */	cmpwi r4, 0
 /* 8021755C 002144BC  40 80 00 24 */	bge .L_80217580
 .L_80217560:
@@ -1264,9 +1263,9 @@ round_decimal:
 /* 80217680 002145E0  41 82 FE E0 */	beq .L_80217560
 /* 80217684 002145E4  98 83 00 04 */	stb r4, 4(r3)
 /* 80217688 002145E8  4E 80 00 20 */	blr 
+.endfn round_decimal
 
-.global longlong2str
-longlong2str:
+.fn longlong2str, local
 /* 8021768C 002145EC  7C 08 02 A6 */	mflr r0
 /* 80217690 002145F0  90 01 00 04 */	stw r0, 4(r1)
 /* 80217694 002145F4  38 00 00 00 */	li r0, 0
@@ -1308,7 +1307,6 @@ longlong2str:
 /* 8021771C 0021467C  7C 09 03 A6 */	mtctr r0
 /* 80217720 00214680  4E 80 04 20 */	bctr 
 .L_80217724:
-.L_80217724:
 /* 80217724 00214684  38 00 00 00 */	li r0, 0
 /* 80217728 00214688  6C 65 80 00 */	xoris r5, r3, 0x8000
 /* 8021772C 0021468C  6C 03 80 00 */	xoris r3, r0, 0x8000
@@ -1335,7 +1333,6 @@ longlong2str:
 /* 80217778 002146D8  3B 80 00 0A */	li r28, 0xa
 /* 8021777C 002146DC  3B A0 00 00 */	li r29, 0
 /* 80217780 002146E0  48 00 00 14 */	b .L_80217794
-.L_80217784:
 .L_80217784:
 /* 80217784 002146E4  38 00 00 00 */	li r0, 0
 /* 80217788 002146E8  98 18 00 01 */	stb r0, 1(r24)
@@ -1475,9 +1472,9 @@ longlong2str:
 /* 80217960 002148C0  38 21 00 40 */	addi r1, r1, 0x40
 /* 80217964 002148C4  7C 08 03 A6 */	mtlr r0
 /* 80217968 002148C8  4E 80 00 20 */	blr 
+.endfn longlong2str
 
-.global long2str
-long2str:
+.fn long2str, local
 /* 8021796C 002148CC  38 E0 00 00 */	li r7, 0
 /* 80217970 002148D0  98 E4 FF FF */	stb r7, -1(r4)
 /* 80217974 002148D4  2C 03 00 00 */	cmpwi r3, 0
@@ -1509,7 +1506,6 @@ long2str:
 /* 802179D4 00214934  7D 29 03 A6 */	mtctr r9
 /* 802179D8 00214938  4E 80 04 20 */	bctr 
 .L_802179DC:
-.L_802179DC:
 /* 802179DC 0021493C  2C 03 00 00 */	cmpwi r3, 0
 /* 802179E0 00214940  38 00 00 0A */	li r0, 0xa
 /* 802179E4 00214944  40 80 00 3C */	bge .L_80217A20
@@ -1526,7 +1522,6 @@ long2str:
 /* 80217A08 00214968  98 05 00 01 */	stb r0, 1(r5)
 /* 80217A0C 0021496C  38 00 00 0A */	li r0, 0xa
 /* 80217A10 00214970  48 00 00 10 */	b .L_80217A20
-.L_80217A14:
 .L_80217A14:
 /* 80217A14 00214974  38 00 00 00 */	li r0, 0
 /* 80217A18 00214978  98 05 00 01 */	stb r0, 1(r5)
@@ -1638,9 +1633,9 @@ long2str:
 .L_80217B88:
 /* 80217B88 00214AE8  7C C3 33 78 */	mr r3, r6
 /* 80217B8C 00214AEC  4E 80 00 20 */	blr 
+.endfn long2str
 
-.global parse_format
-parse_format:
+.fn parse_format, local
 /* 80217B90 00214AF0  7C 08 02 A6 */	mflr r0
 /* 80217B94 00214AF4  90 01 00 04 */	stw r0, 4(r1)
 /* 80217B98 00214AF8  38 00 00 01 */	li r0, 1
@@ -1869,11 +1864,6 @@ parse_format:
 /* 80217EA4 00214E04  7C 09 03 A6 */	mtctr r0
 /* 80217EA8 00214E08  4E 80 04 20 */	bctr 
 .L_80217EAC:
-.L_80217EAC:
-.L_80217EAC:
-.L_80217EAC:
-.L_80217EAC:
-.L_80217EAC:
 /* 80217EAC 00214E0C  88 01 00 18 */	lbz r0, 0x18(r1)
 /* 80217EB0 00214E10  28 00 00 05 */	cmplwi r0, 5
 /* 80217EB4 00214E14  40 82 00 10 */	bne .L_80217EC4
@@ -1911,7 +1901,6 @@ parse_format:
 /* 80217F20 00214E80  38 00 00 06 */	li r0, 6
 /* 80217F24 00214E84  90 01 00 20 */	stw r0, 0x20(r1)
 /* 80217F28 00214E88  48 00 01 00 */	b .L_80218028
-.L_80217F2C:
 .L_80217F2C:
 /* 80217F2C 00214E8C  80 01 00 20 */	lwz r0, 0x20(r1)
 /* 80217F30 00214E90  2C 00 00 00 */	cmpwi r0, 0
@@ -2005,20 +1994,20 @@ parse_format:
 /* 8021805C 00214FBC  83 A1 00 2C */	lwz r29, 0x2c(r1)
 /* 80218060 00214FC0  38 21 00 38 */	addi r1, r1, 0x38
 /* 80218064 00214FC4  4E 80 00 20 */	blr 
+.endfn parse_format
 
 .section .rodata, "a"  # 0x80221FE0 - 0x80222DC0
 .balign 8
-.global "@stringBase0_1"
-"@stringBase0_1":
-	.4byte 0x002D496E
-	.4byte 0x6600496E
-	.4byte 0x66004E61
-	.4byte 0x4E000000
+.obj "@stringBase0", local
+	.byte 0x00
+	.asciz "-Inf"
+	.asciz "Inf"
+	.asciz "NaN"
+.endobj "@stringBase0"
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-.global lbl_802E9100
-lbl_802E9100:
+.obj lbl_802E9100, local
 	.4byte .L_80217784
 	.4byte .L_80217794
 	.4byte .L_80217794
@@ -2052,8 +2041,8 @@ lbl_802E9100:
 	.4byte .L_80217794
 	.4byte .L_80217794
 	.4byte .L_80217784
-.global lbl_802E9184
-lbl_802E9184:
+.endobj lbl_802E9100
+.obj lbl_802E9184, local
 	.4byte .L_80217A14
 	.4byte .L_80217A20
 	.4byte .L_80217A20
@@ -2087,8 +2076,8 @@ lbl_802E9184:
 	.4byte .L_80217A20
 	.4byte .L_80217A20
 	.4byte .L_80217A14
-.global lbl_802E9208
-lbl_802E9208:
+.endobj lbl_802E9184
+.obj lbl_802E9208, local
 	.4byte .L_80217F40
 	.4byte .L_80218020
 	.4byte .L_80217F2C
@@ -2141,8 +2130,8 @@ lbl_802E9208:
 	.4byte .L_80218020
 	.4byte .L_80218020
 	.4byte .L_80217EAC
-.global lbl_802E92D8
-lbl_802E92D8:
+.endobj lbl_802E9208
+.obj lbl_802E92D8, local
 	.4byte .L_80217C54
 	.4byte .L_80217C90
 	.4byte .L_80217C90
@@ -2160,18 +2149,16 @@ lbl_802E92D8:
 	.4byte .L_80217C90
 	.4byte .L_80217C90
 	.4byte .L_80217C78
-	.4byte 0x00000000
+.endobj lbl_802E92D8
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-.global "@wstringBase0"
-"@wstringBase0":
-	.4byte 0x00000000
-	.4byte 0x00000000
+.obj "@wstringBase0", local
+	.2byte 0x0000
+.endobj "@wstringBase0"
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-.global "@919"
-"@919":
-	.4byte 0x00000000
-	.4byte 0x00000000
+.obj lbl_803EC618, local
+	.double 0.0
+.endobj lbl_803EC618

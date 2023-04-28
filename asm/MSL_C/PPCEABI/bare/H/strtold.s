@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global atof
-atof:
+.fn atof, global
 /* 8021942C 0021638C  7C 08 02 A6 */	mflr r0
 /* 80219430 00216390  90 01 00 04 */	stw r0, 4(r1)
 /* 80219434 00216394  38 00 00 00 */	li r0, 0
@@ -39,9 +38,9 @@ atof:
 /* 802194AC 0021640C  38 21 00 30 */	addi r1, r1, 0x30
 /* 802194B0 00216410  7C 08 03 A6 */	mtlr r0
 /* 802194B4 00216414  4E 80 00 20 */	blr 
+.endfn atof
 
-.global __strtold
-__strtold:
+.fn __strtold, global
 /* 802194B8 00216418  7C 08 02 A6 */	mflr r0
 /* 802194BC 0021641C  3D 00 80 2F */	lis r8, __lconv@ha
 /* 802194C0 00216420  90 01 00 04 */	stw r0, 4(r1)
@@ -540,10 +539,11 @@ __strtold:
 /* 80219B90 00216AF0  38 21 00 88 */	addi r1, r1, 0x88
 /* 80219B94 00216AF4  7C 08 03 A6 */	mtlr r0
 /* 80219B98 00216AF8  4E 80 00 20 */	blr 
+.endfn __strtold
 
 .section .rodata, "a"  # 0x80221FE0 - 0x80222DC0
 .balign 8
-lbl_80222B48:
+.obj lbl_80222B48, local
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x00000000
@@ -555,10 +555,14 @@ lbl_80222B48:
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.2byte 0x0000
+.endobj lbl_80222B48
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803EC620:
+.obj lbl_803EC620, local
 	.double 0.0
-lbl_803EC628:
+.endobj lbl_803EC620
+.balign 8
+.obj lbl_803EC628, local
 	.double 0.0
+.endobj lbl_803EC628

@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global wcstombs
-wcstombs:
+.fn wcstombs, global
 /* 802160E0 00213040  28 05 00 00 */	cmplwi r5, 0
 /* 802160E4 00213044  7C A9 03 A6 */	mtctr r5
 /* 802160E8 00213048  38 C0 00 00 */	li r6, 0
@@ -19,9 +18,9 @@ wcstombs:
 .L_80216114:
 /* 80216114 00213074  7C C3 33 78 */	mr r3, r6
 /* 80216118 00213078  4E 80 00 20 */	blr 
+.endfn wcstombs
 
-.global mbtowc
-mbtowc:
+.fn mbtowc, global
 /* 8021611C 0021307C  28 04 00 00 */	cmplwi r4, 0
 /* 80216120 00213080  40 82 00 0C */	bne .L_8021612C
 /* 80216124 00213084  38 60 00 00 */	li r3, 0
@@ -46,3 +45,4 @@ mbtowc:
 .L_80216164:
 /* 80216164 002130C4  38 60 00 01 */	li r3, 1
 /* 80216168 002130C8  4E 80 00 20 */	blr 
+.endfn mbtowc

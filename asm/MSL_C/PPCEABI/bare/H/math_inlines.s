@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global sqrt
-sqrt:
+.fn sqrt, global
 /* 8021BEBC 00218E1C  C8 02 C6 28 */	lfd f0, lbl_803EC828@sda21(r2)
 /* 8021BEC0 00218E20  FC 01 00 40 */	fcmpo cr0, f1, f0
 /* 8021BEC4 00218E24  40 81 00 58 */	ble .L_8021BF1C
@@ -41,14 +40,18 @@ sqrt:
 /* 8021BF40 00218EA0  3C 60 80 2F */	lis r3, __float_huge@ha
 /* 8021BF44 00218EA4  C0 23 94 7C */	lfs f1, __float_huge@l(r3)
 /* 8021BF48 00218EA8  4E 80 00 20 */	blr 
+.endfn sqrt
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803EC828:
+.obj lbl_803EC828, local
 	.double 0.0
+.endobj lbl_803EC828
 .balign 8
-lbl_803EC830:
+.obj lbl_803EC830, local
 	.double 0.5
+.endobj lbl_803EC830
 .balign 8
-lbl_803EC838:
+.obj lbl_803EC838, local
 	.double 3.0
+.endobj lbl_803EC838

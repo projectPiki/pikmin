@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global __copy_longs_rev_unaligned
-__copy_longs_rev_unaligned:
+.fn __copy_longs_rev_unaligned, global
 /* 802162B8 00213218  7D 83 2A 14 */	add r12, r3, r5
 /* 802162BC 0021321C  55 80 07 BF */	clrlwi. r0, r12, 0x1e
 /* 802162C0 00213220  7D 64 2A 14 */	add r11, r4, r5
@@ -51,9 +50,9 @@ __copy_longs_rev_unaligned:
 /* 8021635C 002132BC  9C 0C FF FF */	stbu r0, -1(r12)
 /* 80216360 002132C0  40 82 FF F4 */	bne .L_80216354
 /* 80216364 002132C4  4E 80 00 20 */	blr 
+.endfn __copy_longs_rev_unaligned
 
-.global __copy_longs_unaligned
-__copy_longs_unaligned:
+.fn __copy_longs_unaligned, global
 /* 80216368 002132C8  7C 03 00 D0 */	neg r0, r3
 /* 8021636C 002132CC  54 06 07 BF */	clrlwi. r6, r0, 0x1e
 /* 80216370 002132D0  38 84 FF FF */	addi r4, r4, -1
@@ -108,9 +107,9 @@ __copy_longs_unaligned:
 /* 80216420 00213380  9C 03 00 01 */	stbu r0, 1(r3)
 /* 80216424 00213384  40 82 FF F4 */	bne .L_80216418
 /* 80216428 00213388  4E 80 00 20 */	blr 
+.endfn __copy_longs_unaligned
 
-.global __copy_longs_rev_aligned
-__copy_longs_rev_aligned:
+.fn __copy_longs_rev_aligned, global
 /* 8021642C 0021338C  7C C3 2A 14 */	add r6, r3, r5
 /* 80216430 00213390  54 C0 07 BF */	clrlwi. r0, r6, 0x1e
 /* 80216434 00213394  7C 84 2A 14 */	add r4, r4, r5
@@ -161,9 +160,9 @@ __copy_longs_rev_aligned:
 /* 802164CC 0021342C  9C 06 FF FF */	stbu r0, -1(r6)
 /* 802164D0 00213430  40 82 FF F4 */	bne .L_802164C4
 /* 802164D4 00213434  4E 80 00 20 */	blr 
+.endfn __copy_longs_rev_aligned
 
-.global __copy_longs_aligned
-__copy_longs_aligned:
+.fn __copy_longs_aligned, global
 /* 802164D8 00213438  7C 03 00 D0 */	neg r0, r3
 /* 802164DC 0021343C  54 06 07 BF */	clrlwi. r6, r0, 0x1e
 /* 802164E0 00213440  38 E4 FF FF */	addi r7, r4, -1
@@ -218,3 +217,4 @@ __copy_longs_aligned:
 /* 80216588 002134E8  9C 03 00 01 */	stbu r0, 1(r3)
 /* 8021658C 002134EC  40 82 FF F4 */	bne .L_80216580
 /* 80216590 002134F0  4E 80 00 20 */	blr 
+.endfn __copy_longs_aligned

@@ -1,12 +1,11 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global __close_console
-__close_console:
+.fn __close_console, global
 /* 8021A510 00217470  38 60 00 00 */	li r3, 0
 /* 8021A514 00217474  4E 80 00 20 */	blr 
+.endfn __close_console
 
-.global __write_console
-__write_console:
+.fn __write_console, global
 /* 8021A518 00217478  7C 08 02 A6 */	mflr r0
 /* 8021A51C 0021747C  38 60 00 00 */	li r3, 0
 /* 8021A520 00217480  90 01 00 04 */	stw r0, 4(r1)
@@ -49,9 +48,9 @@ __write_console:
 /* 8021A5A4 00217504  7C 08 03 A6 */	mtlr r0
 /* 8021A5A8 00217508  38 21 00 28 */	addi r1, r1, 0x28
 /* 8021A5AC 0021750C  4E 80 00 20 */	blr 
+.endfn __write_console
 
-.global __read_console
-__read_console:
+.fn __read_console, global
 /* 8021A5B0 00217510  7C 08 02 A6 */	mflr r0
 /* 8021A5B4 00217514  38 60 00 00 */	li r3, 0
 /* 8021A5B8 00217518  90 01 00 04 */	stw r0, 4(r1)
@@ -116,9 +115,10 @@ __read_console:
 /* 8021A684 002175E4  83 A1 00 24 */	lwz r29, 0x24(r1)
 /* 8021A688 002175E8  38 21 00 30 */	addi r1, r1, 0x30
 /* 8021A68C 002175EC  4E 80 00 20 */	blr 
+.endfn __read_console
 
 .section .sbss, "wa"
 .balign 8
-.global initialized$16
-initialized$16:
+.obj initialized$16, local
 	.skip 0x4
+.endobj initialized$16

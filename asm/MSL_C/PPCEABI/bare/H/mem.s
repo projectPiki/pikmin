@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global memcmp
-memcmp:
+.fn memcmp, global
 /* 8021616C 002130CC  38 C3 FF FF */	addi r6, r3, -1
 /* 80216170 002130D0  38 84 FF FF */	addi r4, r4, -1
 /* 80216174 002130D4  38 A5 00 01 */	addi r5, r5, 1
@@ -22,9 +21,9 @@ memcmp:
 /* 802161A4 00213104  40 82 FF D8 */	bne .L_8021617C
 /* 802161A8 00213108  38 60 00 00 */	li r3, 0
 /* 802161AC 0021310C  4E 80 00 20 */	blr 
+.endfn memcmp
 
-.global memchr
-memchr:
+.fn memchr, global
 /* 802161B0 00213110  54 84 06 3E */	clrlwi r4, r4, 0x18
 /* 802161B4 00213114  38 63 FF FF */	addi r3, r3, -1
 /* 802161B8 00213118  38 A5 00 01 */	addi r5, r5, 1
@@ -38,9 +37,9 @@ memchr:
 /* 802161D0 00213130  40 82 FF F0 */	bne .L_802161C0
 /* 802161D4 00213134  38 60 00 00 */	li r3, 0
 /* 802161D8 00213138  4E 80 00 20 */	blr 
+.endfn memchr
 
-.global memmove
-memmove:
+.fn memmove, global
 /* 802161DC 0021313C  7C 08 02 A6 */	mflr r0
 /* 802161E0 00213140  28 05 00 20 */	cmplwi r5, 0x20
 /* 802161E4 00213144  90 01 00 04 */	stw r0, 4(r1)
@@ -108,3 +107,4 @@ memmove:
 /* 802162AC 0021320C  38 21 00 20 */	addi r1, r1, 0x20
 /* 802162B0 00213210  7C 08 03 A6 */	mtlr r0
 /* 802162B4 00213214  4E 80 00 20 */	blr 
+.endfn memmove
