@@ -1150,5 +1150,6 @@ ref2:
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803E8420:
+.obj lbl_803E8420, local
 	.float 1.0
+.endobj lbl_803E8420

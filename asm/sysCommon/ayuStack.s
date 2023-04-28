@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global reset__8AyuStackFi
-reset__8AyuStackFi:
+.fn reset__8AyuStackFi, global
 /* 800246E4 00021644  7C 08 02 A6 */	mflr r0
 /* 800246E8 00021648  90 01 00 04 */	stw r0, 4(r1)
 /* 800246EC 0002164C  54 80 07 BD */	rlwinm. r0, r4, 0, 0x1e, 0x1e
@@ -55,9 +54,9 @@ reset__8AyuStackFi:
 /* 80024794 000216F4  38 21 00 40 */	addi r1, r1, 0x40
 /* 80024798 000216F8  7C 08 03 A6 */	mtlr r0
 /* 8002479C 000216FC  4E 80 00 20 */	blr 
+.endfn reset__8AyuStackFi
 
-.global push__8AyuStackFi
-push__8AyuStackFi:
+.fn push__8AyuStackFi, global
 /* 800247A0 00021700  2C 04 00 00 */	cmpwi r4, 0
 /* 800247A4 00021704  40 82 00 08 */	bne .L_800247AC
 /* 800247A8 00021708  38 80 00 01 */	li r4, 1
@@ -135,9 +134,9 @@ push__8AyuStackFi:
 /* 800248A8 00021808  80 63 00 18 */	lwz r3, 0x18(r3)
 /* 800248AC 0002180C  38 63 00 08 */	addi r3, r3, 8
 /* 800248B0 00021810  4E 80 00 20 */	blr 
+.endfn push__8AyuStackFi
 
-.global pop__8AyuStackFv
-pop__8AyuStackFv:
+.fn pop__8AyuStackFv, global
 /* 800248B4 00021814  80 03 00 00 */	lwz r0, 0(r3)
 /* 800248B8 00021818  2C 00 00 02 */	cmpwi r0, 2
 /* 800248BC 0002181C  40 82 00 28 */	bne .L_800248E4
@@ -160,9 +159,9 @@ pop__8AyuStackFv:
 /* 800248FC 0002185C  7C 00 22 14 */	add r0, r0, r4
 /* 80024900 00021860  90 03 00 18 */	stw r0, 0x18(r3)
 /* 80024904 00021864  4E 80 00 20 */	blr 
+.endfn pop__8AyuStackFv
 
-.global init__7AyuHeapFPciPvi
-init__7AyuHeapFPciPvi:
+.fn init__7AyuHeapFPciPvi, global
 /* 80024908 00021868  90 A3 00 00 */	stw r5, 0(r3)
 /* 8002490C 0002186C  38 A0 00 01 */	li r5, 1
 /* 80024910 00021870  38 00 00 00 */	li r0, 0
@@ -193,9 +192,9 @@ init__7AyuHeapFPciPvi:
 /* 80024970 000218D0  90 03 00 08 */	stw r0, 8(r3)
 /* 80024974 000218D4  98 03 00 24 */	stb r0, 0x24(r3)
 /* 80024978 000218D8  4E 80 00 20 */	blr 
+.endfn init__7AyuHeapFPciPvi
 
-.global __ct__8AyuCacheFUl
-__ct__8AyuCacheFUl:
+.fn __ct__8AyuCacheFUl, global
 /* 8002497C 000218DC  7C 08 02 A6 */	mflr r0
 /* 80024980 000218E0  3C A0 43 30 */	lis r5, 0x4330
 /* 80024984 000218E4  90 01 00 04 */	stw r0, 4(r1)
@@ -222,9 +221,9 @@ __ct__8AyuCacheFUl:
 /* 800249D8 00021938  38 21 00 20 */	addi r1, r1, 0x20
 /* 800249DC 0002193C  7C 08 03 A6 */	mtlr r0
 /* 800249E0 00021940  4E 80 00 20 */	blr 
+.endfn __ct__8AyuCacheFUl
 
-.global init__8AyuCacheFUlUl
-init__8AyuCacheFUlUl:
+.fn init__8AyuCacheFUlUl, global
 /* 800249E4 00021944  39 00 00 00 */	li r8, 0
 /* 800249E8 00021948  91 03 00 24 */	stw r8, 0x24(r3)
 /* 800249EC 0002194C  7C 04 28 50 */	subf r0, r4, r5
@@ -328,9 +327,9 @@ init__8AyuCacheFUlUl:
 /* 80024B70 00021AD0  38 00 00 00 */	li r0, 0
 /* 80024B74 00021AD4  90 03 01 2C */	stw r0, 0x12c(r3)
 /* 80024B78 00021AD8  4E 80 00 20 */	blr 
+.endfn init__8AyuCacheFUlUl
 
-.global mallocL__8AyuCacheFUl
-mallocL__8AyuCacheFUl:
+.fn mallocL__8AyuCacheFUl, global
 /* 80024B7C 00021ADC  38 04 00 0F */	addi r0, r4, 0xf
 /* 80024B80 00021AE0  80 C3 00 04 */	lwz r6, 4(r3)
 /* 80024B84 00021AE4  3C 80 80 00 */	lis r4, 0x7FFFFFFF@ha
@@ -410,9 +409,9 @@ mallocL__8AyuCacheFUl:
 /* 80024C90 00021BF0  38 64 00 10 */	addi r3, r4, 0x10
 /* 80024C94 00021BF4  90 04 00 0C */	stw r0, 0xc(r4)
 /* 80024C98 00021BF8  4E 80 00 20 */	blr 
+.endfn mallocL__8AyuCacheFUl
 
-.global cacheFree__8AyuCacheFPv
-cacheFree__8AyuCacheFPv:
+.fn cacheFree__8AyuCacheFPv, global
 /* 80024C9C 00021BFC  84 A4 FF F0 */	lwzu r5, -0x10(r4)
 /* 80024CA0 00021C00  38 C3 00 00 */	addi r6, r3, 0
 /* 80024CA4 00021C04  80 03 00 24 */	lwz r0, 0x24(r3)
@@ -487,18 +486,18 @@ cacheFree__8AyuCacheFPv:
 /* 80024DA4 00021D04  80 64 00 08 */	lwz r3, 8(r4)
 /* 80024DA8 00021D08  90 03 00 04 */	stw r0, 4(r3)
 /* 80024DAC 00021D0C  4E 80 00 20 */	blr 
+.endfn cacheFree__8AyuCacheFPv
 
-.global isEmpty__8AyuCacheFv
-isEmpty__8AyuCacheFv:
+.fn isEmpty__8AyuCacheFv, global
 /* 80024DB0 00021D10  80 83 00 14 */	lwz r4, 0x14(r3)
 /* 80024DB4 00021D14  38 03 00 10 */	addi r0, r3, 0x10
 /* 80024DB8 00021D18  7C 04 00 50 */	subf r0, r4, r0
 /* 80024DBC 00021D1C  7C 00 00 34 */	cntlzw r0, r0
 /* 80024DC0 00021D20  54 03 D9 7E */	srwi r3, r0, 5
 /* 80024DC4 00021D24  4E 80 00 20 */	blr 
+.endfn isEmpty__8AyuCacheFv
 
-.global largestBlockFree__8AyuCacheFv
-largestBlockFree__8AyuCacheFv:
+.fn largestBlockFree__8AyuCacheFv, global
 /* 80024DC8 00021D28  80 A3 00 04 */	lwz r5, 4(r3)
 /* 80024DCC 00021D2C  38 80 00 00 */	li r4, 0
 /* 80024DD0 00021D30  48 00 00 1C */	b .L_80024DEC
@@ -515,3 +514,4 @@ largestBlockFree__8AyuCacheFv:
 /* 80024DF0 00021D50  40 82 FF E4 */	bne .L_80024DD4
 /* 80024DF4 00021D54  7C 83 23 78 */	mr r3, r4
 /* 80024DF8 00021D58  4E 80 00 20 */	blr 
+.endfn largestBlockFree__8AyuCacheFv

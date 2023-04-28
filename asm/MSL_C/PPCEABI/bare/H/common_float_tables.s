@@ -2,8 +2,7 @@
 
 .section .rodata, "a"  # 0x80221FE0 - 0x80222DC0
 .balign 8
-.global __sincos_on_quadrant
-__sincos_on_quadrant:
+.obj __sincos_on_quadrant, global
 	.float 0.0
 	.float 1.0
 	.float 1.0
@@ -12,15 +11,17 @@ __sincos_on_quadrant:
 	.float -1.0
 	.float -1.0
 	.float 0.0
-.global __sincos_poly
-__sincos_poly:
-	.4byte 0x366CCFAA
-	.4byte 0x34A5E129
-	.4byte 0xB9AAE275
-	.4byte 0xB8196543
-	.4byte 0x3C81E0ED
-	.4byte 0x3B2335DD
-	.4byte 0xBE9DE9E6
-	.4byte 0xBDA55DE7
+.endobj __sincos_on_quadrant
+.balign 4
+.obj __sincos_poly, global
+	.float 3.5287617E-6
+	.float 3.089747E-7
+	.float -3.259365E-4
+	.float -3.657235E-5
+	.float 0.015854323
+	.float 0.0024903931
+	.float -0.30842513
+	.float -0.08074551
 	.float 1.0
-	.4byte 0x3F490FDB
+	.float 0.7853982
+.endobj __sincos_poly

@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global __ct__7BaseAppFv
-__ct__7BaseAppFv:
+.fn __ct__7BaseAppFv, global
 /* 80024DFC 00021D5C  7C 08 02 A6 */	mflr r0
 /* 80024E00 00021D60  3C 80 80 22 */	lis r4, __vt__5ANode@ha
 /* 80024E04 00021D64  90 01 00 04 */	stw r0, 4(r1)
@@ -56,14 +55,14 @@ __ct__7BaseAppFv:
 /* 80024EC8 00021E28  38 21 00 30 */	addi r1, r1, 0x30
 /* 80024ECC 00021E2C  7C 08 03 A6 */	mtlr r0
 /* 80024ED0 00021E30  4E 80 00 20 */	blr 
+.endfn __ct__7BaseAppFv
 
-.global setName__8CoreNodeFPc
-setName__8CoreNodeFPc:
+.fn setName__8CoreNodeFPc, weak
 /* 80024ED4 00021E34  90 83 00 04 */	stw r4, 4(r3)
 /* 80024ED8 00021E38  4E 80 00 20 */	blr 
+.endfn setName__8CoreNodeFPc
 
-.global softReset__7BaseAppFv
-softReset__7BaseAppFv:
+.fn softReset__7BaseAppFv, global
 /* 80024EDC 00021E3C  7C 08 02 A6 */	mflr r0
 /* 80024EE0 00021E40  3C 80 80 22 */	lis r4, lbl_802272DC@ha
 /* 80024EE4 00021E44  90 01 00 04 */	stw r0, 4(r1)
@@ -82,9 +81,9 @@ softReset__7BaseAppFv:
 /* 80024F18 00021E78  38 21 00 08 */	addi r1, r1, 8
 /* 80024F1C 00021E7C  7C 08 03 A6 */	mtlr r0
 /* 80024F20 00021E80  4E 80 00 20 */	blr 
+.endfn softReset__7BaseAppFv
 
-.global __dt__7BaseAppFv
-__dt__7BaseAppFv:
+.fn __dt__7BaseAppFv, global
 /* 80024F24 00021E84  7C 08 02 A6 */	mflr r0
 /* 80024F28 00021E88  90 01 00 04 */	stw r0, 4(r1)
 /* 80024F2C 00021E8C  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -128,27 +127,27 @@ __dt__7BaseAppFv:
 /* 80024FBC 00021F1C  38 21 00 18 */	addi r1, r1, 0x18
 /* 80024FC0 00021F20  7C 08 03 A6 */	mtlr r0
 /* 80024FC4 00021F24  4E 80 00 20 */	blr 
+.endfn __dt__7BaseAppFv
 
-.global flush__6StreamFv
-flush__6StreamFv:
+.fn flush__6StreamFv, weak
 /* 80024FC8 00021F28  4E 80 00 20 */	blr 
+.endfn flush__6StreamFv
 
-.global InitApp__7BaseAppFPc
-InitApp__7BaseAppFPc:
+.fn InitApp__7BaseAppFPc, weak
 /* 80024FCC 00021F2C  4E 80 00 20 */	blr 
+.endfn InitApp__7BaseAppFPc
 
-.global idle__7BaseAppFv
-idle__7BaseAppFv:
+.fn idle__7BaseAppFv, weak
 /* 80024FD0 00021F30  38 60 00 00 */	li r3, 0
 /* 80024FD4 00021F34  4E 80 00 20 */	blr 
+.endfn idle__7BaseAppFv
 
-.global keyDown__7BaseAppFiii
-keyDown__7BaseAppFiii:
+.fn keyDown__7BaseAppFiii, weak
 /* 80024FD8 00021F38  38 60 00 00 */	li r3, 0
 /* 80024FDC 00021F3C  4E 80 00 20 */	blr 
+.endfn keyDown__7BaseAppFiii
 
-.global useHeap__7BaseAppFi
-useHeap__7BaseAppFi:
+.fn useHeap__7BaseAppFi, weak
 /* 80024FE0 00021F40  7C 08 02 A6 */	mflr r0
 /* 80024FE4 00021F44  7C 65 1B 78 */	mr r5, r3
 /* 80024FE8 00021F48  90 01 00 04 */	stw r0, 4(r1)
@@ -161,13 +160,13 @@ useHeap__7BaseAppFi:
 /* 80025004 00021F64  38 21 00 08 */	addi r1, r1, 8
 /* 80025008 00021F68  7C 08 03 A6 */	mtlr r0
 /* 8002500C 00021F6C  4E 80 00 20 */	blr 
+.endfn useHeap__7BaseAppFi
 
-.global procCmd__7BaseAppFPc
-procCmd__7BaseAppFPc:
+.fn procCmd__7BaseAppFPc, weak
 /* 80025010 00021F70  4E 80 00 20 */	blr 
+.endfn procCmd__7BaseAppFPc
 
-.global concat__4NodeFR8Matrix4f
-concat__4NodeFR8Matrix4f:
+.fn concat__4NodeFR8Matrix4f, weak
 /* 80025014 00021F74  7C 08 02 A6 */	mflr r0
 /* 80025018 00021F78  90 01 00 04 */	stw r0, 4(r1)
 /* 8002501C 00021F7C  94 21 FF F8 */	stwu r1, -8(r1)
@@ -179,9 +178,9 @@ concat__4NodeFR8Matrix4f:
 /* 80025034 00021F94  38 21 00 08 */	addi r1, r1, 8
 /* 80025038 00021F98  7C 08 03 A6 */	mtlr r0
 /* 8002503C 00021F9C  4E 80 00 20 */	blr 
+.endfn concat__4NodeFR8Matrix4f
 
-.global concat__4NodeFR3SRT
-concat__4NodeFR3SRT:
+.fn concat__4NodeFR3SRT, weak
 /* 80025040 00021FA0  7C 08 02 A6 */	mflr r0
 /* 80025044 00021FA4  90 01 00 04 */	stw r0, 4(r1)
 /* 80025048 00021FA8  94 21 FF F8 */	stwu r1, -8(r1)
@@ -193,9 +192,9 @@ concat__4NodeFR3SRT:
 /* 80025060 00021FC0  38 21 00 08 */	addi r1, r1, 8
 /* 80025064 00021FC4  7C 08 03 A6 */	mtlr r0
 /* 80025068 00021FC8  4E 80 00 20 */	blr 
+.endfn concat__4NodeFR3SRT
 
-.global concat__4NodeFR3VQS
-concat__4NodeFR3VQS:
+.fn concat__4NodeFR3VQS, weak
 /* 8002506C 00021FCC  7C 08 02 A6 */	mflr r0
 /* 80025070 00021FD0  90 01 00 04 */	stw r0, 4(r1)
 /* 80025074 00021FD4  94 21 FF F8 */	stwu r1, -8(r1)
@@ -207,47 +206,53 @@ concat__4NodeFR3VQS:
 /* 8002508C 00021FEC  38 21 00 08 */	addi r1, r1, 8
 /* 80025090 00021FF0  7C 08 03 A6 */	mtlr r0
 /* 80025094 00021FF4  4E 80 00 20 */	blr 
+.endfn concat__4NodeFR3VQS
 
-.global concat__4NodeFv
-concat__4NodeFv:
+.fn concat__4NodeFv, weak
 /* 80025098 00021FF8  4E 80 00 20 */	blr 
+.endfn concat__4NodeFv
 
-.global getModelMatrix__4NodeFv
-getModelMatrix__4NodeFv:
+.fn getModelMatrix__4NodeFv, weak
 /* 8002509C 00021FFC  38 60 00 00 */	li r3, 0
 /* 800250A0 00022000  4E 80 00 20 */	blr 
+.endfn getModelMatrix__4NodeFv
 
-.global read__8CoreNodeFR18RandomAccessStream
-read__8CoreNodeFR18RandomAccessStream:
+.fn read__8CoreNodeFR18RandomAccessStream, weak
 /* 800250A4 00022004  4E 80 00 20 */	blr 
+.endfn read__8CoreNodeFR18RandomAccessStream
 
-.global getAgeNodeType__5ANodeFv
-getAgeNodeType__5ANodeFv:
+.fn getAgeNodeType__5ANodeFv, weak
 /* 800250A8 00022008  38 60 00 00 */	li r3, 0
 /* 800250AC 0002200C  4E 80 00 20 */	blr 
+.endfn getAgeNodeType__5ANodeFv
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802272D0:
+.obj lbl_802272D0, local
 	.asciz "baseApp.cpp"
+.endobj lbl_802272D0
 .balign 4
-lbl_802272DC:
+.obj lbl_802272DC, local
 	.asciz "[Windows]"
+.endobj lbl_802272DC
 .balign 4
-lbl_802272E8:
+.obj lbl_802272E8, local
 	.asciz "CoreNode"
+.endobj lbl_802272E8
 .balign 4
-lbl_802272F4:
+.obj lbl_802272F4, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte 0
-lbl_80227300:
+.endobj lbl_802272F4
+.obj lbl_80227300, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte __RTTI__8CoreNode
 	.4byte 0
 	.4byte 0
-lbl_80227314:
+.endobj lbl_80227300
+.obj lbl_80227314, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte __RTTI__8CoreNode
@@ -255,8 +260,8 @@ lbl_80227314:
 	.4byte __RTTI__4Node
 	.4byte 0
 	.4byte 0
-.global __vt__7BaseApp
-__vt__7BaseApp:
+.endobj lbl_80227314
+.obj __vt__7BaseApp, global
 	.4byte __RTTI__7BaseApp
 	.4byte 0
 	.4byte getAgeNodeType__5ANodeFv
@@ -276,42 +281,51 @@ __vt__7BaseApp:
 	.4byte softReset__7BaseAppFv
 	.4byte useHeap__7BaseAppFi
 	.4byte procCmd__7BaseAppFPc
-.global __vt__8CoreNode
-__vt__8CoreNode:
+.endobj __vt__7BaseApp
+.obj __vt__8CoreNode, weak
 	.4byte __RTTI__8CoreNode
 	.4byte 0
 	.4byte getAgeNodeType__5ANodeFv
 	.4byte read__8CoreNodeFR18RandomAccessStream
-.global __vt__5ANode
-__vt__5ANode:
+.endobj __vt__8CoreNode
+.obj __vt__5ANode, weak
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte getAgeNodeType__5ANodeFv
+.endobj __vt__5ANode
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-lbl_803DCE70:
+.obj lbl_803DCE70, local
 	.asciz "<Node>"
+.endobj lbl_803DCE70
 .balign 4
-lbl_803DCE78:
+.obj lbl_803DCE78, local
 	.asciz "BaseApp"
+.endobj lbl_803DCE78
 .balign 4
-lbl_803DCE80:
+.obj lbl_803DCE80, local
 	.asciz "ANode"
+.endobj lbl_803DCE80
 .balign 4
-__RTTI__5ANode:
+.obj __RTTI__5ANode, local
 	.4byte lbl_803DCE80
 	.4byte 0
-__RTTI__8CoreNode:
+.endobj __RTTI__5ANode
+.obj __RTTI__8CoreNode, local
 	.4byte lbl_802272E8
 	.4byte lbl_802272F4
+.endobj __RTTI__8CoreNode
 .balign 4
-lbl_803DCE98:
+.obj lbl_803DCE98, local
 	.asciz "Node"
+.endobj lbl_803DCE98
 .balign 4
-__RTTI__4Node:
+.obj __RTTI__4Node, local
 	.4byte lbl_803DCE98
 	.4byte lbl_80227300
-__RTTI__7BaseApp:
+.endobj __RTTI__4Node
+.obj __RTTI__7BaseApp, local
 	.4byte lbl_803DCE78
 	.4byte lbl_80227314
+.endobj __RTTI__7BaseApp

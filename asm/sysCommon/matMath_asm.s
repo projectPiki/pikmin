@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global makeRotate__8Matrix4fFR8Vector3fff
-makeRotate__8Matrix4fFR8Vector3fff:
+.fn makeRotate__8Matrix4fFR8Vector3fff, global
 /* 8003DE08 0003AD68  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 8003DE0C 0003AD6C  DB E1 00 18 */	stfd f31, 0x18(r1)
 /* 8003DE10 0003AD70  C1 02 83 E0 */	lfs f8, lbl_803E85E0@sda21(r2)
@@ -50,9 +49,9 @@ makeRotate__8Matrix4fFR8Vector3fff:
 /* 8003DEBC 0003AE1C  CB E1 00 18 */	lfd f31, 0x18(r1)
 /* 8003DEC0 0003AE20  38 21 00 20 */	addi r1, r1, 0x20
 /* 8003DEC4 0003AE24  4E 80 00 20 */	blr 
+.endfn makeRotate__8Matrix4fFR8Vector3fff
 
-.global makeRotate__8Matrix4fFR8Vector3ff
-makeRotate__8Matrix4fFR8Vector3ff:
+.fn makeRotate__8Matrix4fFR8Vector3ff, global
 /* 8003DEC8 0003AE28  7C 08 02 A6 */	mflr r0
 /* 8003DECC 0003AE2C  90 01 00 04 */	stw r0, 4(r1)
 /* 8003DED0 0003AE30  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -80,9 +79,9 @@ makeRotate__8Matrix4fFR8Vector3ff:
 /* 8003DF28 0003AE88  38 21 00 28 */	addi r1, r1, 0x28
 /* 8003DF2C 0003AE8C  7C 08 03 A6 */	mtlr r0
 /* 8003DF30 0003AE90  4E 80 00 20 */	blr 
+.endfn makeRotate__8Matrix4fFR8Vector3ff
 
-.global multiply__8Matrix4fFR8Matrix4f
-multiply__8Matrix4fFR8Matrix4f:
+.fn multiply__8Matrix4fFR8Matrix4f, global
 /* 8003DF34 0003AE94  94 21 FF A0 */	stwu r1, -0x60(r1)
 /* 8003DF38 0003AE98  39 03 00 00 */	addi r8, r3, 0
 /* 8003DF3C 0003AE9C  39 40 00 00 */	li r10, 0
@@ -189,9 +188,9 @@ multiply__8Matrix4fFR8Matrix4f:
 /* 8003E0C8 0003B028  90 03 00 3C */	stw r0, 0x3c(r3)
 /* 8003E0CC 0003B02C  38 21 00 60 */	addi r1, r1, 0x60
 /* 8003E0D0 0003B030  4E 80 00 20 */	blr 
+.endfn multiply__8Matrix4fFR8Matrix4f
 
-.global multiplyTo__8Matrix4fFR8Matrix4fR8Matrix4f
-multiplyTo__8Matrix4fFR8Matrix4fR8Matrix4f:
+.fn multiplyTo__8Matrix4fFR8Matrix4fR8Matrix4f, global
 /* 8003E0D4 0003B034  7C 08 02 A6 */	mflr r0
 /* 8003E0D8 0003B038  90 01 00 04 */	stw r0, 4(r1)
 /* 8003E0DC 0003B03C  94 21 FF F8 */	stwu r1, -8(r1)
@@ -200,9 +199,9 @@ multiplyTo__8Matrix4fFR8Matrix4fR8Matrix4f:
 /* 8003E0E8 0003B048  38 21 00 08 */	addi r1, r1, 8
 /* 8003E0EC 0003B04C  7C 08 03 A6 */	mtlr r0
 /* 8003E0F0 0003B050  4E 80 00 20 */	blr 
+.endfn multiplyTo__8Matrix4fFR8Matrix4fR8Matrix4f
 
-.global makeSRT__8Matrix4fFR8Vector3fR8Vector3fR8Vector3f
-makeSRT__8Matrix4fFR8Vector3fR8Vector3fR8Vector3f:
+.fn makeSRT__8Matrix4fFR8Vector3fR8Vector3fR8Vector3f, global
 /* 8003E0F4 0003B054  7C 08 02 A6 */	mflr r0
 /* 8003E0F8 0003B058  90 01 00 04 */	stw r0, 4(r1)
 /* 8003E0FC 0003B05C  94 21 FF 98 */	stwu r1, -0x68(r1)
@@ -306,9 +305,9 @@ makeSRT__8Matrix4fFR8Vector3fR8Vector3fR8Vector3f:
 /* 8003E284 0003B1E4  38 21 00 68 */	addi r1, r1, 0x68
 /* 8003E288 0003B1E8  7C 08 03 A6 */	mtlr r0
 /* 8003E28C 0003B1EC  4E 80 00 20 */	blr 
+.endfn makeSRT__8Matrix4fFR8Vector3fR8Vector3fR8Vector3f
 
-.global makeConcatSRT__8Matrix4fFP8Matrix4fR8Matrix4fR3SRT
-makeConcatSRT__8Matrix4fFP8Matrix4fR8Matrix4fR3SRT:
+.fn makeConcatSRT__8Matrix4fFP8Matrix4fR8Matrix4fR3SRT, global
 /* 8003E290 0003B1F0  7C 08 02 A6 */	mflr r0
 /* 8003E294 0003B1F4  90 01 00 04 */	stw r0, 4(r1)
 /* 8003E298 0003B1F8  94 21 FF 98 */	stwu r1, -0x68(r1)
@@ -416,9 +415,9 @@ makeConcatSRT__8Matrix4fFP8Matrix4fR8Matrix4fR3SRT:
 /* 8003E430 0003B390  38 21 00 68 */	addi r1, r1, 0x68
 /* 8003E434 0003B394  7C 08 03 A6 */	mtlr r0
 /* 8003E438 0003B398  4E 80 00 20 */	blr 
+.endfn makeConcatSRT__8Matrix4fFP8Matrix4fR8Matrix4fR3SRT
 
-.global inverse__8Matrix4fFP8Matrix4f
-inverse__8Matrix4fFP8Matrix4f:
+.fn inverse__8Matrix4fFP8Matrix4f, global
 /* 8003E43C 0003B39C  7C 08 02 A6 */	mflr r0
 /* 8003E440 0003B3A0  90 01 00 04 */	stw r0, 4(r1)
 /* 8003E444 0003B3A4  94 21 FF A0 */	stwu r1, -0x60(r1)
@@ -648,9 +647,9 @@ inverse__8Matrix4fFP8Matrix4f:
 /* 8003E7B0 0003B710  38 21 00 60 */	addi r1, r1, 0x60
 /* 8003E7B4 0003B714  7C 08 03 A6 */	mtlr r0
 /* 8003E7B8 0003B718  4E 80 00 20 */	blr 
+.endfn inverse__8Matrix4fFP8Matrix4f
 
-.global scale__8Matrix4fFR8Vector3f
-scale__8Matrix4fFR8Vector3f:
+.fn scale__8Matrix4fFR8Vector3f, global
 /* 8003E7BC 0003B71C  C0 23 00 00 */	lfs f1, 0(r3)
 /* 8003E7C0 0003B720  C0 04 00 00 */	lfs f0, 0(r4)
 /* 8003E7C4 0003B724  EC 01 00 32 */	fmuls f0, f1, f0
@@ -700,9 +699,9 @@ scale__8Matrix4fFR8Vector3f:
 /* 8003E874 0003B7D4  EC 01 00 32 */	fmuls f0, f1, f0
 /* 8003E878 0003B7D8  D0 03 00 38 */	stfs f0, 0x38(r3)
 /* 8003E87C 0003B7DC  4E 80 00 20 */	blr 
+.endfn scale__8Matrix4fFR8Vector3f
 
-.global makeLookat__8Matrix4fFR8Vector3fR8Vector3fP8Vector3f
-makeLookat__8Matrix4fFR8Vector3fR8Vector3fP8Vector3f:
+.fn makeLookat__8Matrix4fFR8Vector3fR8Vector3fP8Vector3f, global
 /* 8003E880 0003B7E0  7C 08 02 A6 */	mflr r0
 /* 8003E884 0003B7E4  90 01 00 04 */	stw r0, 4(r1)
 /* 8003E888 0003B7E8  94 21 FF 70 */	stwu r1, -0x90(r1)
@@ -899,9 +898,9 @@ makeLookat__8Matrix4fFR8Vector3fR8Vector3fP8Vector3f:
 /* 8003EB74 0003BAD4  38 21 00 90 */	addi r1, r1, 0x90
 /* 8003EB78 0003BAD8  7C 08 03 A6 */	mtlr r0
 /* 8003EB7C 0003BADC  4E 80 00 20 */	blr 
+.endfn makeLookat__8Matrix4fFR8Vector3fR8Vector3fP8Vector3f
 
-.global makeLookat__8Matrix4fFR8Vector3fR8Vector3fR8Vector3fR8Vector3f
-makeLookat__8Matrix4fFR8Vector3fR8Vector3fR8Vector3fR8Vector3f:
+.fn makeLookat__8Matrix4fFR8Vector3fR8Vector3fR8Vector3fR8Vector3f, global
 /* 8003EB80 0003BAE0  C0 05 00 00 */	lfs f0, 0(r5)
 /* 8003EB84 0003BAE4  D0 03 00 00 */	stfs f0, 0(r3)
 /* 8003EB88 0003BAE8  C0 05 00 04 */	lfs f0, 4(r5)
@@ -966,9 +965,9 @@ makeLookat__8Matrix4fFR8Vector3fR8Vector3fR8Vector3fR8Vector3f:
 /* 8003EC74 0003BBD4  C0 02 83 E0 */	lfs f0, lbl_803E85E0@sda21(r2)
 /* 8003EC78 0003BBD8  D0 03 00 3C */	stfs f0, 0x3c(r3)
 /* 8003EC7C 0003BBDC  4E 80 00 20 */	blr 
+.endfn makeLookat__8Matrix4fFR8Vector3fR8Vector3fR8Vector3fR8Vector3f
 
-.global transposeTo__8Matrix4fFR8Matrix4f
-transposeTo__8Matrix4fFR8Matrix4f:
+.fn transposeTo__8Matrix4fFR8Matrix4f, global
 /* 8003EC80 0003BBE0  C0 03 00 00 */	lfs f0, 0(r3)
 /* 8003EC84 0003BBE4  D0 04 00 00 */	stfs f0, 0(r4)
 /* 8003EC88 0003BBE8  C0 03 00 10 */	lfs f0, 0x10(r3)
@@ -1002,9 +1001,9 @@ transposeTo__8Matrix4fFR8Matrix4f:
 /* 8003ECF8 0003BC58  C0 03 00 3C */	lfs f0, 0x3c(r3)
 /* 8003ECFC 0003BC5C  D0 04 00 3C */	stfs f0, 0x3c(r4)
 /* 8003ED00 0003BC60  4E 80 00 20 */	blr 
+.endfn transposeTo__8Matrix4fFR8Matrix4f
 
-.global makeVQS__8Matrix4fFR8Vector3fR4QuatR8Vector3f
-makeVQS__8Matrix4fFR8Vector3fR4QuatR8Vector3f:
+.fn makeVQS__8Matrix4fFR8Vector3fR4QuatR8Vector3f, global
 /* 8003ED04 0003BC64  94 21 FF D8 */	stwu r1, -0x28(r1)
 /* 8003ED08 0003BC68  DB E1 00 20 */	stfd f31, 0x20(r1)
 /* 8003ED0C 0003BC6C  DB C1 00 18 */	stfd f30, 0x18(r1)
@@ -1080,6 +1079,7 @@ makeVQS__8Matrix4fFR8Vector3fR4QuatR8Vector3f:
 /* 8003EE24 0003BD84  CB C1 00 18 */	lfd f30, 0x18(r1)
 /* 8003EE28 0003BD88  38 21 00 28 */	addi r1, r1, 0x28
 /* 8003EE2C 0003BD8C  4E 80 00 20 */	blr 
+.endfn makeVQS__8Matrix4fFR8Vector3fR4QuatR8Vector3f
 
 .fn __sinit_matMath_cpp, local
 /* 8003EE30 0003BD90  4E 80 00 20 */	blr 

@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global __ct__9CmdStreamFP6Stream
-__ct__9CmdStreamFP6Stream:
+.fn __ct__9CmdStreamFP6Stream, global
 /* 80040B7C 0003DADC  7C 08 02 A6 */	mflr r0
 /* 80040B80 0003DAE0  90 01 00 04 */	stw r0, 4(r1)
 /* 80040B84 0003DAE4  38 00 00 00 */	li r0, 0
@@ -47,9 +46,9 @@ __ct__9CmdStreamFP6Stream:
 /* 80040C20 0003DB80  38 21 00 18 */	addi r1, r1, 0x18
 /* 80040C24 0003DB84  7C 08 03 A6 */	mtlr r0
 /* 80040C28 0003DB88  4E 80 00 20 */	blr 
+.endfn __ct__9CmdStreamFP6Stream
 
-.global fillBuffer__9CmdStreamFb
-fillBuffer__9CmdStreamFb:
+.fn fillBuffer__9CmdStreamFb, global
 /* 80040C2C 0003DB8C  7C 08 02 A6 */	mflr r0
 /* 80040C30 0003DB90  90 01 00 04 */	stw r0, 4(r1)
 /* 80040C34 0003DB94  54 80 06 3F */	clrlwi. r0, r4, 0x18
@@ -115,9 +114,9 @@ fillBuffer__9CmdStreamFb:
 /* 80040D0C 0003DC6C  38 21 00 18 */	addi r1, r1, 0x18
 /* 80040D10 0003DC70  7C 08 03 A6 */	mtlr r0
 /* 80040D14 0003DC74  4E 80 00 20 */	blr 
+.endfn fillBuffer__9CmdStreamFb
 
-.global whiteSpace__9CmdStreamFc
-whiteSpace__9CmdStreamFc:
+.fn whiteSpace__9CmdStreamFc, global
 /* 80040D18 0003DC78  54 83 06 3F */	clrlwi. r3, r4, 0x18
 /* 80040D1C 0003DC7C  41 82 00 2C */	beq .L_80040D48
 /* 80040D20 0003DC80  28 03 00 0D */	cmplwi r3, 0xd
@@ -136,9 +135,9 @@ whiteSpace__9CmdStreamFc:
 .L_80040D50:
 /* 80040D50 0003DCB0  38 60 00 00 */	li r3, 0
 /* 80040D54 0003DCB4  4E 80 00 20 */	blr 
+.endfn whiteSpace__9CmdStreamFc
 
-.global endOfCmds__9CmdStreamFv
-endOfCmds__9CmdStreamFv:
+.fn endOfCmds__9CmdStreamFv, global
 /* 80040D58 0003DCB8  7C 08 02 A6 */	mflr r0
 /* 80040D5C 0003DCBC  90 01 00 04 */	stw r0, 4(r1)
 /* 80040D60 0003DCC0  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -245,9 +244,9 @@ endOfCmds__9CmdStreamFv:
 /* 80040EC0 0003DE20  38 21 00 18 */	addi r1, r1, 0x18
 /* 80040EC4 0003DE24  7C 08 03 A6 */	mtlr r0
 /* 80040EC8 0003DE28  4E 80 00 20 */	blr 
+.endfn endOfCmds__9CmdStreamFv
 
-.global copyToToken__9CmdStreamFi
-copyToToken__9CmdStreamFi:
+.fn copyToToken__9CmdStreamFi, global
 /* 80040ECC 0003DE2C  2C 04 00 00 */	cmpwi r4, 0
 /* 80040ED0 0003DE30  7C 89 03 A6 */	mtctr r4
 /* 80040ED4 0003DE34  38 A0 00 00 */	li r5, 0
@@ -271,9 +270,9 @@ copyToToken__9CmdStreamFi:
 /* 80040F10 0003DE70  38 00 00 00 */	li r0, 0
 /* 80040F14 0003DE74  98 03 00 08 */	stb r0, 8(r3)
 /* 80040F18 0003DE78  4E 80 00 20 */	blr 
+.endfn copyToToken__9CmdStreamFi
 
-.global skipLine__9CmdStreamFv
-skipLine__9CmdStreamFv:
+.fn skipLine__9CmdStreamFv, global
 /* 80040F1C 0003DE7C  7C 08 02 A6 */	mflr r0
 /* 80040F20 0003DE80  90 01 00 04 */	stw r0, 4(r1)
 /* 80040F24 0003DE84  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -388,9 +387,9 @@ skipLine__9CmdStreamFv:
 /* 800410A4 0003E004  38 21 00 18 */	addi r1, r1, 0x18
 /* 800410A8 0003E008  7C 08 03 A6 */	mtlr r0
 /* 800410AC 0003E00C  4E 80 00 20 */	blr 
+.endfn skipLine__9CmdStreamFv
 
-.global getToken__9CmdStreamFb
-getToken__9CmdStreamFb:
+.fn getToken__9CmdStreamFb, global
 /* 800410B0 0003E010  7C 08 02 A6 */	mflr r0
 /* 800410B4 0003E014  90 01 00 04 */	stw r0, 4(r1)
 /* 800410B8 0003E018  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -624,9 +623,9 @@ getToken__9CmdStreamFb:
 /* 800413C8 0003E328  38 21 00 20 */	addi r1, r1, 0x20
 /* 800413CC 0003E32C  7C 08 03 A6 */	mtlr r0
 /* 800413D0 0003E330  4E 80 00 20 */	blr 
+.endfn getToken__9CmdStreamFb
 
-.global isToken__9CmdStreamFPc
-isToken__9CmdStreamFPc:
+.fn isToken__9CmdStreamFPc, global
 /* 800413D4 0003E334  7C 08 02 A6 */	mflr r0
 /* 800413D8 0003E338  90 01 00 04 */	stw r0, 4(r1)
 /* 800413DC 0003E33C  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -678,9 +677,9 @@ isToken__9CmdStreamFPc:
 /* 8004147C 0003E3DC  38 21 00 20 */	addi r1, r1, 0x20
 /* 80041480 0003E3E0  7C 08 03 A6 */	mtlr r0
 /* 80041484 0003E3E4  4E 80 00 20 */	blr 
+.endfn isToken__9CmdStreamFPc
 
-.global endOfSection__9CmdStreamFv
-endOfSection__9CmdStreamFv:
+.fn endOfSection__9CmdStreamFv, global
 /* 80041488 0003E3E8  7C 08 02 A6 */	mflr r0
 /* 8004148C 0003E3EC  90 01 00 04 */	stw r0, 4(r1)
 /* 80041490 0003E3F0  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -751,9 +750,10 @@ endOfSection__9CmdStreamFv:
 /* 80041578 0003E4D8  38 21 00 18 */	addi r1, r1, 0x18
 /* 8004157C 0003E4DC  7C 08 03 A6 */	mtlr r0
 /* 80041580 0003E4E0  4E 80 00 20 */	blr 
+.endfn endOfSection__9CmdStreamFv
 
 .section .sbss, "wa"
 .balign 8
-.global statbuff__9CmdStream
-statbuff__9CmdStream:
+.obj statbuff__9CmdStream, global
 	.skip 4
+.endobj statbuff__9CmdStream

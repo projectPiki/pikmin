@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global __destroy_new_array
-__destroy_new_array:
+.fn __destroy_new_array, global
 /* 802149F4 00211954  7C 08 02 A6 */	mflr r0
 /* 802149F8 00211958  90 01 00 04 */	stw r0, 4(r1)
 /* 802149FC 0021195C  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -37,9 +36,9 @@ __destroy_new_array:
 /* 80214A64 002119C4  38 21 00 28 */	addi r1, r1, 0x28
 /* 80214A68 002119C8  7C 08 03 A6 */	mtlr r0
 /* 80214A6C 002119CC  4E 80 00 20 */	blr 
+.endfn __destroy_new_array
 
-.global __construct_array
-__construct_array:
+.fn __construct_array, global
 /* 80214A70 002119D0  7C 08 02 A6 */	mflr r0
 /* 80214A74 002119D4  90 01 00 04 */	stw r0, 4(r1)
 /* 80214A78 002119D8  38 00 00 00 */	li r0, 0
@@ -109,9 +108,9 @@ __construct_array:
 /* 80214B64 00211AC4  83 81 00 30 */	lwz r28, 0x30(r1)
 /* 80214B68 00211AC8  38 21 00 40 */	addi r1, r1, 0x40
 /* 80214B6C 00211ACC  4E 80 00 20 */	blr 
+.endfn __construct_array
 
-.global __dt__26__partial_array_destructorFv
-__dt__26__partial_array_destructorFv:
+.fn __dt__26__partial_array_destructorFv, weak
 /* 80214B70 00211AD0  7C 08 02 A6 */	mflr r0
 /* 80214B74 00211AD4  90 01 00 04 */	stw r0, 4(r1)
 /* 80214B78 00211AD8  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -162,9 +161,9 @@ __dt__26__partial_array_destructorFv:
 /* 80214C1C 00211B7C  83 A1 00 14 */	lwz r29, 0x14(r1)
 /* 80214C20 00211B80  38 21 00 20 */	addi r1, r1, 0x20
 /* 80214C24 00211B84  4E 80 00 20 */	blr 
+.endfn __dt__26__partial_array_destructorFv
 
-.global __construct_new_array
-__construct_new_array:
+.fn __construct_new_array, global
 /* 80214C28 00211B88  7C 08 02 A6 */	mflr r0
 /* 80214C2C 00211B8C  90 01 00 04 */	stw r0, 4(r1)
 /* 80214C30 00211B90  94 21 FF B8 */	stwu r1, -0x48(r1)
@@ -236,6 +235,7 @@ __construct_new_array:
 /* 80214D24 00211C84  38 21 00 48 */	addi r1, r1, 0x48
 /* 80214D28 00211C88  7C 08 03 A6 */	mtlr r0
 /* 80214D2C 00211C8C  4E 80 00 20 */	blr 
+.endfn __construct_new_array
 
 .section ._extab, "wa"  # 0x800054C0 - 0x80005500
 .global extab

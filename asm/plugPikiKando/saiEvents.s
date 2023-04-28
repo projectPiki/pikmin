@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global SAIEventInit__Fv
-SAIEventInit__Fv:
+.fn SAIEventInit__Fv, global
 /* 8007CDFC 00079D5C  7C 08 02 A6 */	mflr r0
 /* 8007CE00 00079D60  38 60 00 08 */	li r3, 8
 /* 8007CE04 00079D64  90 01 00 04 */	stw r0, 4(r1)
@@ -94,9 +93,9 @@ SAIEventInit__Fv:
 /* 8007CF4C 00079EAC  38 21 00 08 */	addi r1, r1, 8
 /* 8007CF50 00079EB0  7C 08 03 A6 */	mtlr r0
 /* 8007CF54 00079EB4  4E 80 00 20 */	blr 
+.endfn SAIEventInit__Fv
 
-.global procAnimMsg__18SAIMotionDoneEventFP10AICreatureP7MsgAnim
-procAnimMsg__18SAIMotionDoneEventFP10AICreatureP7MsgAnim:
+.fn procAnimMsg__18SAIMotionDoneEventFP10AICreatureP7MsgAnim, global
 /* 8007CF58 00079EB8  7C 08 02 A6 */	mflr r0
 /* 8007CF5C 00079EBC  7C 86 23 78 */	mr r6, r4
 /* 8007CF60 00079EC0  90 01 00 04 */	stw r0, 4(r1)
@@ -113,9 +112,9 @@ procAnimMsg__18SAIMotionDoneEventFP10AICreatureP7MsgAnim:
 /* 8007CF8C 00079EEC  38 21 00 08 */	addi r1, r1, 8
 /* 8007CF90 00079EF0  7C 08 03 A6 */	mtlr r0
 /* 8007CF94 00079EF4  4E 80 00 20 */	blr 
+.endfn procAnimMsg__18SAIMotionDoneEventFP10AICreatureP7MsgAnim
 
-.global procAnimMsg__21SAIMotionAction0EventFP10AICreatureP7MsgAnim
-procAnimMsg__21SAIMotionAction0EventFP10AICreatureP7MsgAnim:
+.fn procAnimMsg__21SAIMotionAction0EventFP10AICreatureP7MsgAnim, global
 /* 8007CF98 00079EF8  7C 08 02 A6 */	mflr r0
 /* 8007CF9C 00079EFC  7C 86 23 78 */	mr r6, r4
 /* 8007CFA0 00079F00  90 01 00 04 */	stw r0, 4(r1)
@@ -132,9 +131,9 @@ procAnimMsg__21SAIMotionAction0EventFP10AICreatureP7MsgAnim:
 /* 8007CFCC 00079F2C  38 21 00 08 */	addi r1, r1, 8
 /* 8007CFD0 00079F30  7C 08 03 A6 */	mtlr r0
 /* 8007CFD4 00079F34  4E 80 00 20 */	blr 
+.endfn procAnimMsg__21SAIMotionAction0EventFP10AICreatureP7MsgAnim
 
-.global procAnimMsg__23SAIMotionLoopStartEventFP10AICreatureP7MsgAnim
-procAnimMsg__23SAIMotionLoopStartEventFP10AICreatureP7MsgAnim:
+.fn procAnimMsg__23SAIMotionLoopStartEventFP10AICreatureP7MsgAnim, global
 /* 8007CFD8 00079F38  7C 08 02 A6 */	mflr r0
 /* 8007CFDC 00079F3C  7C 86 23 78 */	mr r6, r4
 /* 8007CFE0 00079F40  90 01 00 04 */	stw r0, 4(r1)
@@ -151,9 +150,9 @@ procAnimMsg__23SAIMotionLoopStartEventFP10AICreatureP7MsgAnim:
 /* 8007D00C 00079F6C  38 21 00 08 */	addi r1, r1, 8
 /* 8007D010 00079F70  7C 08 03 A6 */	mtlr r0
 /* 8007D014 00079F74  4E 80 00 20 */	blr 
+.endfn procAnimMsg__23SAIMotionLoopStartEventFP10AICreatureP7MsgAnim
 
-.global procAnimMsg__21SAIMotionLoopEndEventFP10AICreatureP7MsgAnim
-procAnimMsg__21SAIMotionLoopEndEventFP10AICreatureP7MsgAnim:
+.fn procAnimMsg__21SAIMotionLoopEndEventFP10AICreatureP7MsgAnim, global
 /* 8007D018 00079F78  7C 08 02 A6 */	mflr r0
 /* 8007D01C 00079F7C  7C 86 23 78 */	mr r6, r4
 /* 8007D020 00079F80  90 01 00 04 */	stw r0, 4(r1)
@@ -170,9 +169,9 @@ procAnimMsg__21SAIMotionLoopEndEventFP10AICreatureP7MsgAnim:
 /* 8007D04C 00079FAC  38 21 00 08 */	addi r1, r1, 8
 /* 8007D050 00079FB0  7C 08 03 A6 */	mtlr r0
 /* 8007D054 00079FB4  4E 80 00 20 */	blr 
+.endfn procAnimMsg__21SAIMotionLoopEndEventFP10AICreatureP7MsgAnim
 
-.global procBounceMsg__14SAIBounceEventFP10AICreatureP9MsgBounce
-procBounceMsg__14SAIBounceEventFP10AICreatureP9MsgBounce:
+.fn procBounceMsg__14SAIBounceEventFP10AICreatureP9MsgBounce, global
 /* 8007D058 00079FB8  7C 08 02 A6 */	mflr r0
 /* 8007D05C 00079FBC  38 A0 00 01 */	li r5, 1
 /* 8007D060 00079FC0  90 01 00 04 */	stw r0, 4(r1)
@@ -185,9 +184,9 @@ procBounceMsg__14SAIBounceEventFP10AICreatureP9MsgBounce:
 /* 8007D07C 00079FDC  38 21 00 08 */	addi r1, r1, 8
 /* 8007D080 00079FE0  7C 08 03 A6 */	mtlr r0
 /* 8007D084 00079FE4  4E 80 00 20 */	blr 
+.endfn procBounceMsg__14SAIBounceEventFP10AICreatureP9MsgBounce
 
-.global procCollideMsg__15SAICollideEventFP10AICreatureP10MsgCollide
-procCollideMsg__15SAICollideEventFP10AICreatureP10MsgCollide:
+.fn procCollideMsg__15SAICollideEventFP10AICreatureP10MsgCollide, global
 /* 8007D088 00079FE8  7C 08 02 A6 */	mflr r0
 /* 8007D08C 00079FEC  38 A0 00 01 */	li r5, 1
 /* 8007D090 00079FF0  90 01 00 04 */	stw r0, 4(r1)
@@ -200,9 +199,9 @@ procCollideMsg__15SAICollideEventFP10AICreatureP10MsgCollide:
 /* 8007D0AC 0007A00C  38 21 00 08 */	addi r1, r1, 8
 /* 8007D0B0 0007A010  7C 08 03 A6 */	mtlr r0
 /* 8007D0B4 0007A014  4E 80 00 20 */	blr 
+.endfn procCollideMsg__15SAICollideEventFP10AICreatureP10MsgCollide
 
-.global procGroundMsg__14SAIGroundEventFP10AICreatureP9MsgGround
-procGroundMsg__14SAIGroundEventFP10AICreatureP9MsgGround:
+.fn procGroundMsg__14SAIGroundEventFP10AICreatureP9MsgGround, global
 /* 8007D0B8 0007A018  7C 08 02 A6 */	mflr r0
 /* 8007D0BC 0007A01C  38 A0 00 01 */	li r5, 1
 /* 8007D0C0 0007A020  90 01 00 04 */	stw r0, 4(r1)
@@ -215,9 +214,9 @@ procGroundMsg__14SAIGroundEventFP10AICreatureP9MsgGround:
 /* 8007D0DC 0007A03C  38 21 00 08 */	addi r1, r1, 8
 /* 8007D0E0 0007A040  7C 08 03 A6 */	mtlr r0
 /* 8007D0E4 0007A044  4E 80 00 20 */	blr 
+.endfn procGroundMsg__14SAIGroundEventFP10AICreatureP9MsgGround
 
-.global procUserMsg__12SAIUserEventFP10AICreatureP7MsgUser
-procUserMsg__12SAIUserEventFP10AICreatureP7MsgUser:
+.fn procUserMsg__12SAIUserEventFP10AICreatureP7MsgUser, global
 /* 8007D0E8 0007A048  7C 08 02 A6 */	mflr r0
 /* 8007D0EC 0007A04C  7C 86 23 78 */	mr r6, r4
 /* 8007D0F0 0007A050  90 01 00 04 */	stw r0, 4(r1)
@@ -234,53 +233,53 @@ procUserMsg__12SAIUserEventFP10AICreatureP7MsgUser:
 /* 8007D11C 0007A07C  38 21 00 08 */	addi r1, r1, 8
 /* 8007D120 0007A080  7C 08 03 A6 */	mtlr r0
 /* 8007D124 0007A084  4E 80 00 20 */	blr 
+.endfn procUserMsg__12SAIUserEventFP10AICreatureP7MsgUser
 
-.global "procBounceMsg__22Receiver<10AICreature>FP10AICreatureP9MsgBounce"
-"procBounceMsg__22Receiver<10AICreature>FP10AICreatureP9MsgBounce":
+.fn "procBounceMsg__22Receiver<10AICreature>FP10AICreatureP9MsgBounce", weak
 /* 8007D128 0007A088  4E 80 00 20 */	blr 
+.endfn "procBounceMsg__22Receiver<10AICreature>FP10AICreatureP9MsgBounce"
 
-.global "procStickMsg__22Receiver<10AICreature>FP10AICreatureP8MsgStick"
-"procStickMsg__22Receiver<10AICreature>FP10AICreatureP8MsgStick":
+.fn "procStickMsg__22Receiver<10AICreature>FP10AICreatureP8MsgStick", weak
 /* 8007D12C 0007A08C  4E 80 00 20 */	blr 
+.endfn "procStickMsg__22Receiver<10AICreature>FP10AICreatureP8MsgStick"
 
-.global "procHangMsg__22Receiver<10AICreature>FP10AICreatureP7MsgHang"
-"procHangMsg__22Receiver<10AICreature>FP10AICreatureP7MsgHang":
+.fn "procHangMsg__22Receiver<10AICreature>FP10AICreatureP7MsgHang", weak
 /* 8007D130 0007A090  4E 80 00 20 */	blr 
+.endfn "procHangMsg__22Receiver<10AICreature>FP10AICreatureP7MsgHang"
 
-.global "procTargetMsg__22Receiver<10AICreature>FP10AICreatureP9MsgTarget"
-"procTargetMsg__22Receiver<10AICreature>FP10AICreatureP9MsgTarget":
+.fn "procTargetMsg__22Receiver<10AICreature>FP10AICreatureP9MsgTarget", weak
 /* 8007D134 0007A094  4E 80 00 20 */	blr 
+.endfn "procTargetMsg__22Receiver<10AICreature>FP10AICreatureP9MsgTarget"
 
-.global "procCollideMsg__22Receiver<10AICreature>FP10AICreatureP10MsgCollide"
-"procCollideMsg__22Receiver<10AICreature>FP10AICreatureP10MsgCollide":
+.fn "procCollideMsg__22Receiver<10AICreature>FP10AICreatureP10MsgCollide", weak
 /* 8007D138 0007A098  4E 80 00 20 */	blr 
+.endfn "procCollideMsg__22Receiver<10AICreature>FP10AICreatureP10MsgCollide"
 
-.global "procAnimMsg__22Receiver<10AICreature>FP10AICreatureP7MsgAnim"
-"procAnimMsg__22Receiver<10AICreature>FP10AICreatureP7MsgAnim":
+.fn "procAnimMsg__22Receiver<10AICreature>FP10AICreatureP7MsgAnim", weak
 /* 8007D13C 0007A09C  4E 80 00 20 */	blr 
+.endfn "procAnimMsg__22Receiver<10AICreature>FP10AICreatureP7MsgAnim"
 
-.global "procDamageMsg__22Receiver<10AICreature>FP10AICreatureP9MsgDamage"
-"procDamageMsg__22Receiver<10AICreature>FP10AICreatureP9MsgDamage":
+.fn "procDamageMsg__22Receiver<10AICreature>FP10AICreatureP9MsgDamage", weak
 /* 8007D140 0007A0A0  4E 80 00 20 */	blr 
+.endfn "procDamageMsg__22Receiver<10AICreature>FP10AICreatureP9MsgDamage"
 
-.global "procWallMsg__22Receiver<10AICreature>FP10AICreatureP7MsgWall"
-"procWallMsg__22Receiver<10AICreature>FP10AICreatureP7MsgWall":
+.fn "procWallMsg__22Receiver<10AICreature>FP10AICreatureP7MsgWall", weak
 /* 8007D144 0007A0A4  4E 80 00 20 */	blr 
+.endfn "procWallMsg__22Receiver<10AICreature>FP10AICreatureP7MsgWall"
 
-.global "procOffWallMsg__22Receiver<10AICreature>FP10AICreatureP10MsgOffWall"
-"procOffWallMsg__22Receiver<10AICreature>FP10AICreatureP10MsgOffWall":
+.fn "procOffWallMsg__22Receiver<10AICreature>FP10AICreatureP10MsgOffWall", weak
 /* 8007D148 0007A0A8  4E 80 00 20 */	blr 
+.endfn "procOffWallMsg__22Receiver<10AICreature>FP10AICreatureP10MsgOffWall"
 
-.global "procUserMsg__22Receiver<10AICreature>FP10AICreatureP7MsgUser"
-"procUserMsg__22Receiver<10AICreature>FP10AICreatureP7MsgUser":
+.fn "procUserMsg__22Receiver<10AICreature>FP10AICreatureP7MsgUser", weak
 /* 8007D14C 0007A0AC  4E 80 00 20 */	blr 
+.endfn "procUserMsg__22Receiver<10AICreature>FP10AICreatureP7MsgUser"
 
-.global "procGroundMsg__22Receiver<10AICreature>FP10AICreatureP9MsgGround"
-"procGroundMsg__22Receiver<10AICreature>FP10AICreatureP9MsgGround":
+.fn "procGroundMsg__22Receiver<10AICreature>FP10AICreatureP9MsgGround", weak
 /* 8007D150 0007A0B0  4E 80 00 20 */	blr 
+.endfn "procGroundMsg__22Receiver<10AICreature>FP10AICreatureP9MsgGround"
 
-.global "procMsg__22Receiver<10AICreature>FP10AICreatureP3Msg"
-"procMsg__22Receiver<10AICreature>FP10AICreatureP3Msg":
+.fn "procMsg__22Receiver<10AICreature>FP10AICreatureP3Msg", weak
 /* 8007D154 0007A0B4  7C 08 02 A6 */	mflr r0
 /* 8007D158 0007A0B8  90 01 00 04 */	stw r0, 4(r1)
 /* 8007D15C 0007A0BC  94 21 FF F8 */	stwu r1, -8(r1)
@@ -375,36 +374,43 @@ procUserMsg__12SAIUserEventFP10AICreatureP7MsgUser:
 /* 8007D260 0007A1C0  38 21 00 08 */	addi r1, r1, 8
 /* 8007D264 0007A1C4  7C 08 03 A6 */	mtlr r0
 /* 8007D268 0007A1C8  4E 80 00 20 */	blr 
+.endfn "procMsg__22Receiver<10AICreature>FP10AICreatureP3Msg"
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802AD330:
+.obj lbl_802AD330, local
 	.asciz "saiEvents.cpp"
+.endobj lbl_802AD330
 .balign 4
-lbl_802AD340:
+.obj lbl_802AD340, local
 	.asciz "saiEvent"
+.endobj lbl_802AD340
 .balign 4
-lbl_802AD34C:
+.obj lbl_802AD34C, local
 	.asciz "SAIUserEvent"
+.endobj lbl_802AD34C
 .balign 4
-lbl_802AD35C:
+.obj lbl_802AD35C, local
 	.asciz "Receiver<AICreature>"
+.endobj lbl_802AD35C
 .balign 4
-lbl_802AD374:
+.obj lbl_802AD374, local
 	.asciz "SAIEvent"
+.endobj lbl_802AD374
 .balign 4
-lbl_802AD380:
+.obj lbl_802AD380, local
 	.4byte "__RTTI__22Receiver<10AICreature>"
 	.4byte 0
 	.4byte 0
-lbl_802AD38C:
+.endobj lbl_802AD380
+.obj lbl_802AD38C, local
 	.4byte "__RTTI__22Receiver<10AICreature>"
 	.4byte 0
 	.4byte __RTTI__8SAIEvent
 	.4byte 0
 	.4byte 0
-.global __vt__12SAIUserEvent
-__vt__12SAIUserEvent:
+.endobj lbl_802AD38C
+.obj __vt__12SAIUserEvent, global
 	.4byte __RTTI__12SAIUserEvent
 	.4byte 0
 	.4byte "procMsg__22Receiver<10AICreature>FP10AICreatureP3Msg"
@@ -419,18 +425,20 @@ __vt__12SAIUserEvent:
 	.4byte "procOffWallMsg__22Receiver<10AICreature>FP10AICreatureP10MsgOffWall"
 	.4byte procUserMsg__12SAIUserEventFP10AICreatureP7MsgUser
 	.4byte "procGroundMsg__22Receiver<10AICreature>FP10AICreatureP9MsgGround"
+.endobj __vt__12SAIUserEvent
 .balign 4
-lbl_802AD3D8:
+.obj lbl_802AD3D8, local
 	.asciz "SAIGroundEvent"
+.endobj lbl_802AD3D8
 .balign 4
-lbl_802AD3E8:
+.obj lbl_802AD3E8, local
 	.4byte "__RTTI__22Receiver<10AICreature>"
 	.4byte 0
 	.4byte __RTTI__8SAIEvent
 	.4byte 0
 	.4byte 0
-.global __vt__14SAIGroundEvent
-__vt__14SAIGroundEvent:
+.endobj lbl_802AD3E8
+.obj __vt__14SAIGroundEvent, global
 	.4byte __RTTI__14SAIGroundEvent
 	.4byte 0
 	.4byte "procMsg__22Receiver<10AICreature>FP10AICreatureP3Msg"
@@ -445,18 +453,20 @@ __vt__14SAIGroundEvent:
 	.4byte "procOffWallMsg__22Receiver<10AICreature>FP10AICreatureP10MsgOffWall"
 	.4byte "procUserMsg__22Receiver<10AICreature>FP10AICreatureP7MsgUser"
 	.4byte procGroundMsg__14SAIGroundEventFP10AICreatureP9MsgGround
+.endobj __vt__14SAIGroundEvent
 .balign 4
-lbl_802AD434:
+.obj lbl_802AD434, local
 	.asciz "SAICollideEvent"
+.endobj lbl_802AD434
 .balign 4
-lbl_802AD444:
+.obj lbl_802AD444, local
 	.4byte "__RTTI__22Receiver<10AICreature>"
 	.4byte 0
 	.4byte __RTTI__8SAIEvent
 	.4byte 0
 	.4byte 0
-.global __vt__15SAICollideEvent
-__vt__15SAICollideEvent:
+.endobj lbl_802AD444
+.obj __vt__15SAICollideEvent, global
 	.4byte __RTTI__15SAICollideEvent
 	.4byte 0
 	.4byte "procMsg__22Receiver<10AICreature>FP10AICreatureP3Msg"
@@ -471,18 +481,20 @@ __vt__15SAICollideEvent:
 	.4byte "procOffWallMsg__22Receiver<10AICreature>FP10AICreatureP10MsgOffWall"
 	.4byte "procUserMsg__22Receiver<10AICreature>FP10AICreatureP7MsgUser"
 	.4byte "procGroundMsg__22Receiver<10AICreature>FP10AICreatureP9MsgGround"
+.endobj __vt__15SAICollideEvent
 .balign 4
-lbl_802AD490:
+.obj lbl_802AD490, local
 	.asciz "SAIBounceEvent"
+.endobj lbl_802AD490
 .balign 4
-lbl_802AD4A0:
+.obj lbl_802AD4A0, local
 	.4byte "__RTTI__22Receiver<10AICreature>"
 	.4byte 0
 	.4byte __RTTI__8SAIEvent
 	.4byte 0
 	.4byte 0
-.global __vt__14SAIBounceEvent
-__vt__14SAIBounceEvent:
+.endobj lbl_802AD4A0
+.obj __vt__14SAIBounceEvent, global
 	.4byte __RTTI__14SAIBounceEvent
 	.4byte 0
 	.4byte "procMsg__22Receiver<10AICreature>FP10AICreatureP3Msg"
@@ -497,18 +509,20 @@ __vt__14SAIBounceEvent:
 	.4byte "procOffWallMsg__22Receiver<10AICreature>FP10AICreatureP10MsgOffWall"
 	.4byte "procUserMsg__22Receiver<10AICreature>FP10AICreatureP7MsgUser"
 	.4byte "procGroundMsg__22Receiver<10AICreature>FP10AICreatureP9MsgGround"
+.endobj __vt__14SAIBounceEvent
 .balign 4
-lbl_802AD4EC:
+.obj lbl_802AD4EC, local
 	.asciz "SAIMotionLoopEndEvent"
+.endobj lbl_802AD4EC
 .balign 4
-lbl_802AD504:
+.obj lbl_802AD504, local
 	.4byte "__RTTI__22Receiver<10AICreature>"
 	.4byte 0
 	.4byte __RTTI__8SAIEvent
 	.4byte 0
 	.4byte 0
-.global __vt__21SAIMotionLoopEndEvent
-__vt__21SAIMotionLoopEndEvent:
+.endobj lbl_802AD504
+.obj __vt__21SAIMotionLoopEndEvent, global
 	.4byte __RTTI__21SAIMotionLoopEndEvent
 	.4byte 0
 	.4byte "procMsg__22Receiver<10AICreature>FP10AICreatureP3Msg"
@@ -523,18 +537,20 @@ __vt__21SAIMotionLoopEndEvent:
 	.4byte "procOffWallMsg__22Receiver<10AICreature>FP10AICreatureP10MsgOffWall"
 	.4byte "procUserMsg__22Receiver<10AICreature>FP10AICreatureP7MsgUser"
 	.4byte "procGroundMsg__22Receiver<10AICreature>FP10AICreatureP9MsgGround"
+.endobj __vt__21SAIMotionLoopEndEvent
 .balign 4
-lbl_802AD550:
+.obj lbl_802AD550, local
 	.asciz "SAIMotionLoopStartEvent"
+.endobj lbl_802AD550
 .balign 4
-lbl_802AD568:
+.obj lbl_802AD568, local
 	.4byte "__RTTI__22Receiver<10AICreature>"
 	.4byte 0
 	.4byte __RTTI__8SAIEvent
 	.4byte 0
 	.4byte 0
-.global __vt__23SAIMotionLoopStartEvent
-__vt__23SAIMotionLoopStartEvent:
+.endobj lbl_802AD568
+.obj __vt__23SAIMotionLoopStartEvent, global
 	.4byte __RTTI__23SAIMotionLoopStartEvent
 	.4byte 0
 	.4byte "procMsg__22Receiver<10AICreature>FP10AICreatureP3Msg"
@@ -549,18 +565,20 @@ __vt__23SAIMotionLoopStartEvent:
 	.4byte "procOffWallMsg__22Receiver<10AICreature>FP10AICreatureP10MsgOffWall"
 	.4byte "procUserMsg__22Receiver<10AICreature>FP10AICreatureP7MsgUser"
 	.4byte "procGroundMsg__22Receiver<10AICreature>FP10AICreatureP9MsgGround"
+.endobj __vt__23SAIMotionLoopStartEvent
 .balign 4
-lbl_802AD5B4:
+.obj lbl_802AD5B4, local
 	.asciz "SAIMotionAction0Event"
+.endobj lbl_802AD5B4
 .balign 4
-lbl_802AD5CC:
+.obj lbl_802AD5CC, local
 	.4byte "__RTTI__22Receiver<10AICreature>"
 	.4byte 0
 	.4byte __RTTI__8SAIEvent
 	.4byte 0
 	.4byte 0
-.global __vt__21SAIMotionAction0Event
-__vt__21SAIMotionAction0Event:
+.endobj lbl_802AD5CC
+.obj __vt__21SAIMotionAction0Event, global
 	.4byte __RTTI__21SAIMotionAction0Event
 	.4byte 0
 	.4byte "procMsg__22Receiver<10AICreature>FP10AICreatureP3Msg"
@@ -575,18 +593,20 @@ __vt__21SAIMotionAction0Event:
 	.4byte "procOffWallMsg__22Receiver<10AICreature>FP10AICreatureP10MsgOffWall"
 	.4byte "procUserMsg__22Receiver<10AICreature>FP10AICreatureP7MsgUser"
 	.4byte "procGroundMsg__22Receiver<10AICreature>FP10AICreatureP9MsgGround"
+.endobj __vt__21SAIMotionAction0Event
 .balign 4
-lbl_802AD618:
+.obj lbl_802AD618, local
 	.asciz "SAIMotionDoneEvent"
+.endobj lbl_802AD618
 .balign 4
-lbl_802AD62C:
+.obj lbl_802AD62C, local
 	.4byte "__RTTI__22Receiver<10AICreature>"
 	.4byte 0
 	.4byte __RTTI__8SAIEvent
 	.4byte 0
 	.4byte 0
-.global __vt__18SAIMotionDoneEvent
-__vt__18SAIMotionDoneEvent:
+.endobj lbl_802AD62C
+.obj __vt__18SAIMotionDoneEvent, global
 	.4byte __RTTI__18SAIMotionDoneEvent
 	.4byte 0
 	.4byte "procMsg__22Receiver<10AICreature>FP10AICreatureP3Msg"
@@ -601,8 +621,8 @@ __vt__18SAIMotionDoneEvent:
 	.4byte "procOffWallMsg__22Receiver<10AICreature>FP10AICreatureP10MsgOffWall"
 	.4byte "procUserMsg__22Receiver<10AICreature>FP10AICreatureP7MsgUser"
 	.4byte "procGroundMsg__22Receiver<10AICreature>FP10AICreatureP9MsgGround"
-.global __vt__8SAIEvent
-__vt__8SAIEvent:
+.endobj __vt__18SAIMotionDoneEvent
+.obj __vt__8SAIEvent, weak
 	.4byte __RTTI__8SAIEvent
 	.4byte 0
 	.4byte "procMsg__22Receiver<10AICreature>FP10AICreatureP3Msg"
@@ -617,8 +637,8 @@ __vt__8SAIEvent:
 	.4byte "procOffWallMsg__22Receiver<10AICreature>FP10AICreatureP10MsgOffWall"
 	.4byte "procUserMsg__22Receiver<10AICreature>FP10AICreatureP7MsgUser"
 	.4byte "procGroundMsg__22Receiver<10AICreature>FP10AICreatureP9MsgGround"
-.global "__vt__22Receiver<10AICreature>"
-"__vt__22Receiver<10AICreature>":
+.endobj __vt__8SAIEvent
+.obj "__vt__22Receiver<10AICreature>", weak
 	.4byte "__RTTI__22Receiver<10AICreature>"
 	.4byte 0
 	.4byte "procMsg__22Receiver<10AICreature>FP10AICreatureP3Msg"
@@ -633,7 +653,8 @@ __vt__8SAIEvent:
 	.4byte "procOffWallMsg__22Receiver<10AICreature>FP10AICreatureP10MsgOffWall"
 	.4byte "procUserMsg__22Receiver<10AICreature>FP10AICreatureP7MsgUser"
 	.4byte "procGroundMsg__22Receiver<10AICreature>FP10AICreatureP9MsgGround"
-lbl_802AD6E8:
+.endobj "__vt__22Receiver<10AICreature>"
+.obj lbl_802AD6E8, local
 	.4byte .L_8007D184
 	.4byte .L_8007D1AC
 	.4byte .L_8007D1C0
@@ -645,60 +666,71 @@ lbl_802AD6E8:
 	.4byte .L_8007D198
 	.4byte .L_8007D24C
 	.4byte .L_8007D238
+.endobj lbl_802AD6E8
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-"__RTTI__22Receiver<10AICreature>":
+.obj "__RTTI__22Receiver<10AICreature>", local
 	.4byte lbl_802AD35C
 	.4byte 0
-__RTTI__8SAIEvent:
+.endobj "__RTTI__22Receiver<10AICreature>"
+.obj __RTTI__8SAIEvent, local
 	.4byte lbl_802AD374
 	.4byte lbl_802AD380
-__RTTI__12SAIUserEvent:
+.endobj __RTTI__8SAIEvent
+.obj __RTTI__12SAIUserEvent, local
 	.4byte lbl_802AD34C
 	.4byte lbl_802AD38C
-__RTTI__14SAIGroundEvent:
+.endobj __RTTI__12SAIUserEvent
+.obj __RTTI__14SAIGroundEvent, local
 	.4byte lbl_802AD3D8
 	.4byte lbl_802AD3E8
-__RTTI__15SAICollideEvent:
+.endobj __RTTI__14SAIGroundEvent
+.obj __RTTI__15SAICollideEvent, local
 	.4byte lbl_802AD434
 	.4byte lbl_802AD444
-__RTTI__14SAIBounceEvent:
+.endobj __RTTI__15SAICollideEvent
+.obj __RTTI__14SAIBounceEvent, local
 	.4byte lbl_802AD490
 	.4byte lbl_802AD4A0
-__RTTI__21SAIMotionLoopEndEvent:
+.endobj __RTTI__14SAIBounceEvent
+.obj __RTTI__21SAIMotionLoopEndEvent, local
 	.4byte lbl_802AD4EC
 	.4byte lbl_802AD504
-__RTTI__23SAIMotionLoopStartEvent:
+.endobj __RTTI__21SAIMotionLoopEndEvent
+.obj __RTTI__23SAIMotionLoopStartEvent, local
 	.4byte lbl_802AD550
 	.4byte lbl_802AD568
-__RTTI__21SAIMotionAction0Event:
+.endobj __RTTI__23SAIMotionLoopStartEvent
+.obj __RTTI__21SAIMotionAction0Event, local
 	.4byte lbl_802AD5B4
 	.4byte lbl_802AD5CC
-__RTTI__18SAIMotionDoneEvent:
+.endobj __RTTI__21SAIMotionAction0Event
+.obj __RTTI__18SAIMotionDoneEvent, local
 	.4byte lbl_802AD618
 	.4byte lbl_802AD62C
+.endobj __RTTI__18SAIMotionDoneEvent
 
 .section .sbss, "wa"
 .balign 8
-.global saiMotionDoneEvent
-saiMotionDoneEvent:
+.obj saiMotionDoneEvent, global
 	.skip 4
-.global saiBounceEvent
-saiBounceEvent:
+.endobj saiMotionDoneEvent
+.obj saiBounceEvent, global
 	.skip 4
-.global saiMotionLoopStartEvent
-saiMotionLoopStartEvent:
+.endobj saiBounceEvent
+.obj saiMotionLoopStartEvent, global
 	.skip 4
-.global saiMotionLoopEndEvent
-saiMotionLoopEndEvent:
+.endobj saiMotionLoopStartEvent
+.obj saiMotionLoopEndEvent, global
 	.skip 4
-.global saiCollideEvent
-saiCollideEvent:
+.endobj saiMotionLoopEndEvent
+.obj saiCollideEvent, global
 	.skip 4
-.global saiGroundEvent
-saiGroundEvent:
+.endobj saiCollideEvent
+.obj saiGroundEvent, global
 	.skip 4
-.global saiMotionAction0Event
-saiMotionAction0Event:
+.endobj saiGroundEvent
+.obj saiMotionAction0Event, global
 	.skip 4
+.endobj saiMotionAction0Event

@@ -1,15 +1,14 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global __ct__13UpdateContextFv
-__ct__13UpdateContextFv:
+.fn __ct__13UpdateContextFv, global
 /* 800A5444 000A23A4  38 00 00 00 */	li r0, 0
 /* 800A5448 000A23A8  90 03 00 00 */	stw r0, 0(r3)
 /* 800A544C 000A23AC  38 00 FF FF */	li r0, -1
 /* 800A5450 000A23B0  90 03 00 04 */	stw r0, 4(r3)
 /* 800A5454 000A23B4  4E 80 00 20 */	blr 
+.endfn __ct__13UpdateContextFv
 
-.global updatable__13UpdateContextFv
-updatable__13UpdateContextFv:
+.fn updatable__13UpdateContextFv, global
 /* 800A5458 000A23B8  7C 08 02 A6 */	mflr r0
 /* 800A545C 000A23BC  7C 64 1B 78 */	mr r4, r3
 /* 800A5460 000A23C0  90 01 00 04 */	stw r0, 4(r1)
@@ -32,9 +31,9 @@ updatable__13UpdateContextFv:
 /* 800A5498 000A23F8  38 21 00 08 */	addi r1, r1, 8
 /* 800A549C 000A23FC  7C 08 03 A6 */	mtlr r0
 /* 800A54A0 000A2400  4E 80 00 20 */	blr 
+.endfn updatable__13UpdateContextFv
 
-.global init__13UpdateContextFP9UpdateMgr
-init__13UpdateContextFP9UpdateMgr:
+.fn init__13UpdateContextFP9UpdateMgr, global
 /* 800A54A4 000A2404  7C 08 02 A6 */	mflr r0
 /* 800A54A8 000A2408  7C 65 1B 78 */	mr r5, r3
 /* 800A54AC 000A240C  90 01 00 04 */	stw r0, 4(r1)
@@ -47,9 +46,9 @@ init__13UpdateContextFP9UpdateMgr:
 /* 800A54C8 000A2428  38 21 00 08 */	addi r1, r1, 8
 /* 800A54CC 000A242C  7C 08 03 A6 */	mtlr r0
 /* 800A54D0 000A2430  4E 80 00 20 */	blr 
+.endfn init__13UpdateContextFP9UpdateMgr
 
-.global exit__13UpdateContextFv
-exit__13UpdateContextFv:
+.fn exit__13UpdateContextFv, global
 /* 800A54D4 000A2434  7C 08 02 A6 */	mflr r0
 /* 800A54D8 000A2438  90 01 00 04 */	stw r0, 4(r1)
 /* 800A54DC 000A243C  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -70,9 +69,9 @@ exit__13UpdateContextFv:
 /* 800A5514 000A2474  38 21 00 18 */	addi r1, r1, 0x18
 /* 800A5518 000A2478  7C 08 03 A6 */	mtlr r0
 /* 800A551C 000A247C  4E 80 00 20 */	blr 
+.endfn exit__13UpdateContextFv
 
-.global __ct__9UpdateMgrFv
-__ct__9UpdateMgrFv:
+.fn __ct__9UpdateMgrFv, global
 /* 800A5520 000A2480  38 00 00 00 */	li r0, 0
 /* 800A5524 000A2484  90 03 00 08 */	stw r0, 8(r3)
 /* 800A5528 000A2488  90 03 00 0C */	stw r0, 0xc(r3)
@@ -80,9 +79,9 @@ __ct__9UpdateMgrFv:
 /* 800A5530 000A2490  90 03 00 04 */	stw r0, 4(r3)
 /* 800A5534 000A2494  90 03 00 10 */	stw r0, 0x10(r3)
 /* 800A5538 000A2498  4E 80 00 20 */	blr 
+.endfn __ct__9UpdateMgrFv
 
-.global update__9UpdateMgrFv
-update__9UpdateMgrFv:
+.fn update__9UpdateMgrFv, global
 /* 800A553C 000A249C  80 83 00 10 */	lwz r4, 0x10(r3)
 /* 800A5540 000A24A0  38 84 00 01 */	addi r4, r4, 1
 /* 800A5544 000A24A4  90 83 00 10 */	stw r4, 0x10(r3)
@@ -92,9 +91,9 @@ update__9UpdateMgrFv:
 /* 800A5554 000A24B4  38 00 00 00 */	li r0, 0
 /* 800A5558 000A24B8  90 03 00 10 */	stw r0, 0x10(r3)
 /* 800A555C 000A24BC  4E 80 00 20 */	blr 
+.endfn update__9UpdateMgrFv
 
-.global updatable__9UpdateMgrFP13UpdateContext
-updatable__9UpdateMgrFP13UpdateContext:
+.fn updatable__9UpdateMgrFP13UpdateContext, global
 /* 800A5560 000A24C0  28 04 00 00 */	cmplwi r4, 0
 /* 800A5564 000A24C4  40 82 00 0C */	bne .L_800A5570
 /* 800A5568 000A24C8  38 60 00 00 */	li r3, 0
@@ -109,9 +108,9 @@ updatable__9UpdateMgrFP13UpdateContext:
 .L_800A5588:
 /* 800A5588 000A24E8  38 60 00 00 */	li r3, 0
 /* 800A558C 000A24EC  4E 80 00 20 */	blr 
+.endfn updatable__9UpdateMgrFP13UpdateContext
 
-.global create__9UpdateMgrFi
-create__9UpdateMgrFi:
+.fn create__9UpdateMgrFi, global
 /* 800A5590 000A24F0  7C 08 02 A6 */	mflr r0
 /* 800A5594 000A24F4  90 01 00 04 */	stw r0, 4(r1)
 /* 800A5598 000A24F8  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -151,9 +150,9 @@ create__9UpdateMgrFi:
 /* 800A5618 000A2578  38 21 00 18 */	addi r1, r1, 0x18
 /* 800A561C 000A257C  7C 08 03 A6 */	mtlr r0
 /* 800A5620 000A2580  4E 80 00 20 */	blr 
+.endfn create__9UpdateMgrFi
 
-.global addClient__9UpdateMgrFP13UpdateContext
-addClient__9UpdateMgrFP13UpdateContext:
+.fn addClient__9UpdateMgrFP13UpdateContext, global
 /* 800A5624 000A2584  80 03 00 00 */	lwz r0, 0(r3)
 /* 800A5628 000A2588  38 E0 FF FF */	li r7, -1
 /* 800A562C 000A258C  39 00 27 10 */	li r8, 0x2710
@@ -194,9 +193,9 @@ addClient__9UpdateMgrFP13UpdateContext:
 /* 800A56A8 000A2608  38 04 00 01 */	addi r0, r4, 1
 /* 800A56AC 000A260C  90 03 00 04 */	stw r0, 4(r3)
 /* 800A56B0 000A2610  4E 80 00 20 */	blr 
+.endfn addClient__9UpdateMgrFP13UpdateContext
 
-.global removeClient__9UpdateMgrFP13UpdateContext
-removeClient__9UpdateMgrFP13UpdateContext:
+.fn removeClient__9UpdateMgrFP13UpdateContext, global
 /* 800A56B4 000A2614  80 A4 00 04 */	lwz r5, 4(r4)
 /* 800A56B8 000A2618  2C 05 00 00 */	cmpwi r5, 0
 /* 800A56BC 000A261C  41 80 00 0C */	blt .L_800A56C8
@@ -222,21 +221,22 @@ removeClient__9UpdateMgrFP13UpdateContext:
 /* 800A5704 000A2664  38 04 FF FF */	addi r0, r4, -1
 /* 800A5708 000A2668  90 03 00 04 */	stw r0, 4(r3)
 /* 800A570C 000A266C  4E 80 00 20 */	blr 
+.endfn removeClient__9UpdateMgrFP13UpdateContext
 
 .section .sbss, "wa"
 .balign 8
-.global pikiUpdateMgr
-pikiUpdateMgr:
+.obj pikiUpdateMgr, global
 	.skip 0x4
-.global searchUpdateMgr
-searchUpdateMgr:
+.endobj pikiUpdateMgr
+.obj searchUpdateMgr, global
 	.skip 0x4
-.global pikiLookUpdateMgr
-pikiLookUpdateMgr:
+.endobj searchUpdateMgr
+.obj pikiLookUpdateMgr, global
 	.skip 0x4
-.global pikiOptUpdateMgr
-pikiOptUpdateMgr:
+.endobj pikiLookUpdateMgr
+.obj pikiOptUpdateMgr, global
 	.skip 0x4
-.global tekiOptUpdateMgr
-tekiOptUpdateMgr:
+.endobj pikiOptUpdateMgr
+.obj tekiOptUpdateMgr, global
 	.skip 0x4
+.endobj tekiOptUpdateMgr

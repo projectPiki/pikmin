@@ -1,8 +1,7 @@
 .include "macros.inc"
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-.global CUTOFF_TO_IIR_TABLE
-CUTOFF_TO_IIR_TABLE:
+.obj CUTOFF_TO_IIR_TABLE, global
 	.4byte 0x0F5C0A3D
 	.4byte 0x46653999
 	.4byte 0x103F0A28
@@ -259,3 +258,4 @@ CUTOFF_TO_IIR_TABLE:
 	.4byte 0x008D0074
 	.4byte 0x7FFF0000
 	.4byte 0x00000000
+.endobj CUTOFF_TO_IIR_TABLE

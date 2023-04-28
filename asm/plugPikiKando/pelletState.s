@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global init__18PelletStateMachineFP6Pellet
-init__18PelletStateMachineFP6Pellet:
+.fn init__18PelletStateMachineFP6Pellet, global
 /* 8009A02C 00096F8C  7C 08 02 A6 */	mflr r0
 /* 8009A030 00096F90  90 01 00 04 */	stw r0, 4(r1)
 /* 8009A034 00096F94  38 00 00 06 */	li r0, 6
@@ -288,9 +287,9 @@ init__18PelletStateMachineFP6Pellet:
 /* 8009A420 00097380  38 21 00 70 */	addi r1, r1, 0x70
 /* 8009A424 00097384  7C 08 03 A6 */	mtlr r0
 /* 8009A428 00097388  4E 80 00 20 */	blr 
+.endfn init__18PelletStateMachineFP6Pellet
 
-.global __ct__18PelletUfoLoadStateFv
-__ct__18PelletUfoLoadStateFv:
+.fn __ct__18PelletUfoLoadStateFv, global
 /* 8009A42C 0009738C  3C 80 80 2B */	lis r4, "__vt__17Receiver<6Pellet>"@ha
 /* 8009A430 00097390  38 04 0D D4 */	addi r0, r4, "__vt__17Receiver<6Pellet>"@l
 /* 8009A434 00097394  3C 80 80 2B */	lis r4, "__vt__15AState<6Pellet>"@ha
@@ -310,15 +309,15 @@ __ct__18PelletUfoLoadStateFv:
 /* 8009A46C 000973CC  90 A3 00 0C */	stw r5, 0xc(r3)
 /* 8009A470 000973D0  90 03 00 00 */	stw r0, 0(r3)
 /* 8009A474 000973D4  4E 80 00 20 */	blr 
+.endfn __ct__18PelletUfoLoadStateFv
 
-.global init__18PelletUfoLoadStateFP6Pellet
-init__18PelletUfoLoadStateFP6Pellet:
+.fn init__18PelletUfoLoadStateFP6Pellet, global
 /* 8009A478 000973D8  38 00 00 08 */	li r0, 8
 /* 8009A47C 000973DC  98 03 00 10 */	stb r0, 0x10(r3)
 /* 8009A480 000973E0  4E 80 00 20 */	blr 
+.endfn init__18PelletUfoLoadStateFP6Pellet
 
-.global exec__18PelletUfoLoadStateFP6Pellet
-exec__18PelletUfoLoadStateFP6Pellet:
+.fn exec__18PelletUfoLoadStateFP6Pellet, global
 /* 8009A484 000973E4  7C 08 02 A6 */	mflr r0
 /* 8009A488 000973E8  90 01 00 04 */	stw r0, 4(r1)
 /* 8009A48C 000973EC  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -349,9 +348,9 @@ exec__18PelletUfoLoadStateFP6Pellet:
 /* 8009A4E8 00097448  38 21 00 28 */	addi r1, r1, 0x28
 /* 8009A4EC 0009744C  7C 08 03 A6 */	mtlr r0
 /* 8009A4F0 00097450  4E 80 00 20 */	blr 
+.endfn exec__18PelletUfoLoadStateFP6Pellet
 
-.global "transit__15AState<6Pellet>FP6Pelleti"
-"transit__15AState<6Pellet>FP6Pelleti":
+.fn "transit__15AState<6Pellet>FP6Pelleti", weak
 /* 8009A4F4 00097454  7C 08 02 A6 */	mflr r0
 /* 8009A4F8 00097458  90 01 00 04 */	stw r0, 4(r1)
 /* 8009A4FC 0009745C  94 21 FF F8 */	stwu r1, -8(r1)
@@ -364,9 +363,9 @@ exec__18PelletUfoLoadStateFP6Pellet:
 /* 8009A518 00097478  38 21 00 08 */	addi r1, r1, 8
 /* 8009A51C 0009747C  7C 08 03 A6 */	mtlr r0
 /* 8009A520 00097480  4E 80 00 20 */	blr 
+.endfn "transit__15AState<6Pellet>FP6Pelleti"
 
-.global cleanup__18PelletUfoLoadStateFP6Pellet
-cleanup__18PelletUfoLoadStateFP6Pellet:
+.fn cleanup__18PelletUfoLoadStateFP6Pellet, global
 /* 8009A524 00097484  80 04 00 C8 */	lwz r0, 0xc8(r4)
 /* 8009A528 00097488  54 00 02 90 */	rlwinm r0, r0, 0, 0xa, 8
 /* 8009A52C 0009748C  90 04 00 C8 */	stw r0, 0xc8(r4)
@@ -374,9 +373,9 @@ cleanup__18PelletUfoLoadStateFP6Pellet:
 /* 8009A534 00097494  64 00 00 40 */	oris r0, r0, 0x40
 /* 8009A538 00097498  90 04 00 C8 */	stw r0, 0xc8(r4)
 /* 8009A53C 0009749C  4E 80 00 20 */	blr 
+.endfn cleanup__18PelletUfoLoadStateFP6Pellet
 
-.global __ct__15PelletDeadStateFv
-__ct__15PelletDeadStateFv:
+.fn __ct__15PelletDeadStateFv, global
 /* 8009A540 000974A0  3C 80 80 2B */	lis r4, "__vt__17Receiver<6Pellet>"@ha
 /* 8009A544 000974A4  38 04 0D D4 */	addi r0, r4, "__vt__17Receiver<6Pellet>"@l
 /* 8009A548 000974A8  3C 80 80 2B */	lis r4, "__vt__15AState<6Pellet>"@ha
@@ -396,21 +395,21 @@ __ct__15PelletDeadStateFv:
 /* 8009A580 000974E0  90 A3 00 0C */	stw r5, 0xc(r3)
 /* 8009A584 000974E4  90 03 00 00 */	stw r0, 0(r3)
 /* 8009A588 000974E8  4E 80 00 20 */	blr 
+.endfn __ct__15PelletDeadStateFv
 
-.global init__15PelletDeadStateFP6Pellet
-init__15PelletDeadStateFP6Pellet:
+.fn init__15PelletDeadStateFP6Pellet, global
 /* 8009A58C 000974EC  4E 80 00 20 */	blr 
+.endfn init__15PelletDeadStateFP6Pellet
 
-.global exec__15PelletDeadStateFP6Pellet
-exec__15PelletDeadStateFP6Pellet:
+.fn exec__15PelletDeadStateFP6Pellet, global
 /* 8009A590 000974F0  4E 80 00 20 */	blr 
+.endfn exec__15PelletDeadStateFP6Pellet
 
-.global cleanup__15PelletDeadStateFP6Pellet
-cleanup__15PelletDeadStateFP6Pellet:
+.fn cleanup__15PelletDeadStateFP6Pellet, global
 /* 8009A594 000974F4  4E 80 00 20 */	blr 
+.endfn cleanup__15PelletDeadStateFP6Pellet
 
-.global __ct__17PelletNormalStateFv
-__ct__17PelletNormalStateFv:
+.fn __ct__17PelletNormalStateFv, global
 /* 8009A598 000974F8  3C 80 80 2B */	lis r4, "__vt__17Receiver<6Pellet>"@ha
 /* 8009A59C 000974FC  38 04 0D D4 */	addi r0, r4, "__vt__17Receiver<6Pellet>"@l
 /* 8009A5A0 00097500  3C 80 80 2B */	lis r4, "__vt__15AState<6Pellet>"@ha
@@ -429,21 +428,21 @@ __ct__17PelletNormalStateFv:
 /* 8009A5D4 00097534  90 A3 00 0C */	stw r5, 0xc(r3)
 /* 8009A5D8 00097538  90 03 00 00 */	stw r0, 0(r3)
 /* 8009A5DC 0009753C  4E 80 00 20 */	blr 
+.endfn __ct__17PelletNormalStateFv
 
-.global init__17PelletNormalStateFP6Pellet
-init__17PelletNormalStateFP6Pellet:
+.fn init__17PelletNormalStateFP6Pellet, global
 /* 8009A5E0 00097540  4E 80 00 20 */	blr 
+.endfn init__17PelletNormalStateFP6Pellet
 
-.global exec__17PelletNormalStateFP6Pellet
-exec__17PelletNormalStateFP6Pellet:
+.fn exec__17PelletNormalStateFP6Pellet, global
 /* 8009A5E4 00097544  4E 80 00 20 */	blr 
+.endfn exec__17PelletNormalStateFP6Pellet
 
-.global cleanup__17PelletNormalStateFP6Pellet
-cleanup__17PelletNormalStateFP6Pellet:
+.fn cleanup__17PelletNormalStateFP6Pellet, global
 /* 8009A5E8 00097548  4E 80 00 20 */	blr 
+.endfn cleanup__17PelletNormalStateFP6Pellet
 
-.global __ct__20PelletSwallowedStateFv
-__ct__20PelletSwallowedStateFv:
+.fn __ct__20PelletSwallowedStateFv, global
 /* 8009A5EC 0009754C  3C 80 80 2B */	lis r4, "__vt__17Receiver<6Pellet>"@ha
 /* 8009A5F0 00097550  38 04 0D D4 */	addi r0, r4, "__vt__17Receiver<6Pellet>"@l
 /* 8009A5F4 00097554  3C 80 80 2B */	lis r4, "__vt__15AState<6Pellet>"@ha
@@ -464,13 +463,13 @@ __ct__20PelletSwallowedStateFv:
 /* 8009A630 00097590  90 A3 00 0C */	stw r5, 0xc(r3)
 /* 8009A634 00097594  90 03 00 00 */	stw r0, 0(r3)
 /* 8009A638 00097598  4E 80 00 20 */	blr 
+.endfn __ct__20PelletSwallowedStateFv
 
-.global init__20PelletSwallowedStateFP6Pellet
-init__20PelletSwallowedStateFP6Pellet:
+.fn init__20PelletSwallowedStateFP6Pellet, global
 /* 8009A63C 0009759C  4E 80 00 20 */	blr 
+.endfn init__20PelletSwallowedStateFP6Pellet
 
-.global exec__20PelletSwallowedStateFP6Pellet
-exec__20PelletSwallowedStateFP6Pellet:
+.fn exec__20PelletSwallowedStateFP6Pellet, global
 /* 8009A640 000975A0  7C 08 02 A6 */	mflr r0
 /* 8009A644 000975A4  90 01 00 04 */	stw r0, 4(r1)
 /* 8009A648 000975A8  94 21 FF F8 */	stwu r1, -8(r1)
@@ -487,9 +486,9 @@ exec__20PelletSwallowedStateFP6Pellet:
 /* 8009A670 000975D0  38 21 00 08 */	addi r1, r1, 8
 /* 8009A674 000975D4  7C 08 03 A6 */	mtlr r0
 /* 8009A678 000975D8  4E 80 00 20 */	blr 
+.endfn exec__20PelletSwallowedStateFP6Pellet
 
-.global cleanup__20PelletSwallowedStateFP6Pellet
-cleanup__20PelletSwallowedStateFP6Pellet:
+.fn cleanup__20PelletSwallowedStateFP6Pellet, global
 /* 8009A67C 000975DC  7C 08 02 A6 */	mflr r0
 /* 8009A680 000975E0  7C 83 23 78 */	mr r3, r4
 /* 8009A684 000975E4  90 01 00 04 */	stw r0, 4(r1)
@@ -499,9 +498,9 @@ cleanup__20PelletSwallowedStateFP6Pellet:
 /* 8009A694 000975F4  38 21 00 08 */	addi r1, r1, 8
 /* 8009A698 000975F8  7C 08 03 A6 */	mtlr r0
 /* 8009A69C 000975FC  4E 80 00 20 */	blr 
+.endfn cleanup__20PelletSwallowedStateFP6Pellet
 
-.global __ct__17PelletAppearStateFv
-__ct__17PelletAppearStateFv:
+.fn __ct__17PelletAppearStateFv, global
 /* 8009A6A0 00097600  3C 80 80 2B */	lis r4, "__vt__17Receiver<6Pellet>"@ha
 /* 8009A6A4 00097604  38 04 0D D4 */	addi r0, r4, "__vt__17Receiver<6Pellet>"@l
 /* 8009A6A8 00097608  3C 80 80 2B */	lis r4, "__vt__15AState<6Pellet>"@ha
@@ -521,9 +520,9 @@ __ct__17PelletAppearStateFv:
 /* 8009A6E0 00097640  90 A3 00 0C */	stw r5, 0xc(r3)
 /* 8009A6E4 00097644  90 03 00 00 */	stw r0, 0(r3)
 /* 8009A6E8 00097648  4E 80 00 20 */	blr 
+.endfn __ct__17PelletAppearStateFv
 
-.global init__17PelletAppearStateFP6Pellet
-init__17PelletAppearStateFP6Pellet:
+.fn init__17PelletAppearStateFP6Pellet, global
 /* 8009A6EC 0009764C  80 A4 05 5C */	lwz r5, 0x55c(r4)
 /* 8009A6F0 00097650  C0 02 8C 98 */	lfs f0, lbl_803E8E98@sda21(r2)
 /* 8009A6F4 00097654  C0 25 00 FC */	lfs f1, 0xfc(r5)
@@ -536,9 +535,9 @@ init__17PelletAppearStateFP6Pellet:
 /* 8009A710 00097670  C0 02 8C 9C */	lfs f0, lbl_803E8E9C@sda21(r2)
 /* 8009A714 00097674  D0 03 00 14 */	stfs f0, 0x14(r3)
 /* 8009A718 00097678  4E 80 00 20 */	blr 
+.endfn init__17PelletAppearStateFP6Pellet
 
-.global procBounceMsg__17PelletAppearStateFP6PelletP9MsgBounce
-procBounceMsg__17PelletAppearStateFP6PelletP9MsgBounce:
+.fn procBounceMsg__17PelletAppearStateFP6PelletP9MsgBounce, global
 /* 8009A71C 0009767C  7C 08 02 A6 */	mflr r0
 /* 8009A720 00097680  38 A0 00 00 */	li r5, 0
 /* 8009A724 00097684  90 01 00 04 */	stw r0, 4(r1)
@@ -551,9 +550,9 @@ procBounceMsg__17PelletAppearStateFP6PelletP9MsgBounce:
 /* 8009A740 000976A0  38 21 00 08 */	addi r1, r1, 8
 /* 8009A744 000976A4  7C 08 03 A6 */	mtlr r0
 /* 8009A748 000976A8  4E 80 00 20 */	blr 
+.endfn procBounceMsg__17PelletAppearStateFP6PelletP9MsgBounce
 
-.global exec__17PelletAppearStateFP6Pellet
-exec__17PelletAppearStateFP6Pellet:
+.fn exec__17PelletAppearStateFP6Pellet, global
 /* 8009A74C 000976AC  7C 08 02 A6 */	mflr r0
 /* 8009A750 000976B0  90 01 00 04 */	stw r0, 4(r1)
 /* 8009A754 000976B4  38 00 00 00 */	li r0, 0
@@ -608,13 +607,13 @@ exec__17PelletAppearStateFP6Pellet:
 /* 8009A80C 0009776C  38 21 00 08 */	addi r1, r1, 8
 /* 8009A810 00097770  7C 08 03 A6 */	mtlr r0
 /* 8009A814 00097774  4E 80 00 20 */	blr 
+.endfn exec__17PelletAppearStateFP6Pellet
 
-.global cleanup__17PelletAppearStateFP6Pellet
-cleanup__17PelletAppearStateFP6Pellet:
+.fn cleanup__17PelletAppearStateFP6Pellet, global
 /* 8009A818 00097778  4E 80 00 20 */	blr 
+.endfn cleanup__17PelletAppearStateFP6Pellet
 
-.global __ct__15PelletGoalStateFv
-__ct__15PelletGoalStateFv:
+.fn __ct__15PelletGoalStateFv, global
 /* 8009A81C 0009777C  3C 80 80 2B */	lis r4, "__vt__17Receiver<6Pellet>"@ha
 /* 8009A820 00097780  38 04 0D D4 */	addi r0, r4, "__vt__17Receiver<6Pellet>"@l
 /* 8009A824 00097784  3C 80 80 2B */	lis r4, "__vt__15AState<6Pellet>"@ha
@@ -638,9 +637,9 @@ __ct__15PelletGoalStateFv:
 /* 8009A86C 000977CC  D0 03 00 28 */	stfs f0, 0x28(r3)
 /* 8009A870 000977D0  D0 03 00 24 */	stfs f0, 0x24(r3)
 /* 8009A874 000977D4  4E 80 00 20 */	blr 
+.endfn __ct__15PelletGoalStateFv
 
-.global init__15PelletGoalStateFP6Pellet
-init__15PelletGoalStateFP6Pellet:
+.fn init__15PelletGoalStateFP6Pellet, global
 /* 8009A878 000977D8  7C 08 02 A6 */	mflr r0
 /* 8009A87C 000977DC  90 01 00 04 */	stw r0, 4(r1)
 /* 8009A880 000977E0  38 00 00 00 */	li r0, 0
@@ -1010,9 +1009,9 @@ init__15PelletGoalStateFP6Pellet:
 /* 8009ADE8 00097D48  38 21 01 80 */	addi r1, r1, 0x180
 /* 8009ADEC 00097D4C  7C 08 03 A6 */	mtlr r0
 /* 8009ADF0 00097D50  4E 80 00 20 */	blr 
+.endfn init__15PelletGoalStateFP6Pellet
 
-.global exec__15PelletGoalStateFP6Pellet
-exec__15PelletGoalStateFP6Pellet:
+.fn exec__15PelletGoalStateFP6Pellet, global
 /* 8009ADF4 00097D54  7C 08 02 A6 */	mflr r0
 /* 8009ADF8 00097D58  90 01 00 04 */	stw r0, 4(r1)
 /* 8009ADFC 00097D5C  94 21 FE E8 */	stwu r1, -0x118(r1)
@@ -1200,13 +1199,13 @@ exec__15PelletGoalStateFP6Pellet:
 /* 8009B0BC 0009801C  38 21 01 18 */	addi r1, r1, 0x118
 /* 8009B0C0 00098020  7C 08 03 A6 */	mtlr r0
 /* 8009B0C4 00098024  4E 80 00 20 */	blr 
+.endfn exec__15PelletGoalStateFP6Pellet
 
-.global finishSuck__8SuckableFP6Pellet
-finishSuck__8SuckableFP6Pellet:
+.fn finishSuck__8SuckableFP6Pellet, weak
 /* 8009B0C8 00098028  4E 80 00 20 */	blr 
+.endfn finishSuck__8SuckableFP6Pellet
 
-.global cleanup__15PelletGoalStateFP6Pellet
-cleanup__15PelletGoalStateFP6Pellet:
+.fn cleanup__15PelletGoalStateFP6Pellet, global
 /* 8009B0CC 0009802C  7C 08 02 A6 */	mflr r0
 /* 8009B0D0 00098030  90 01 00 04 */	stw r0, 4(r1)
 /* 8009B0D4 00098034  94 21 FF F8 */	stwu r1, -8(r1)
@@ -1220,50 +1219,60 @@ cleanup__15PelletGoalStateFP6Pellet:
 /* 8009B0F0 00098050  38 21 00 08 */	addi r1, r1, 8
 /* 8009B0F4 00098054  7C 08 03 A6 */	mtlr r0
 /* 8009B0F8 00098058  4E 80 00 20 */	blr 
+.endfn cleanup__15PelletGoalStateFP6Pellet
 
-.global "resume__15AState<6Pellet>FP6Pellet"
-"resume__15AState<6Pellet>FP6Pellet":
+.fn "resume__15AState<6Pellet>FP6Pellet", weak
 /* 8009B0FC 0009805C  4E 80 00 20 */	blr 
+.endfn "resume__15AState<6Pellet>FP6Pellet"
 
-.global "restart__15AState<6Pellet>FP6Pellet"
-"restart__15AState<6Pellet>FP6Pellet":
+.fn "restart__15AState<6Pellet>FP6Pellet", weak
 /* 8009B100 00098060  4E 80 00 20 */	blr 
+.endfn "restart__15AState<6Pellet>FP6Pellet"
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802B09C0:
+.obj lbl_802B09C0, local
 	.asciz "pelletState.cpp"
+.endobj lbl_802B09C0
 .balign 4
-lbl_802B09D0:
+.obj lbl_802B09D0, local
 	.asciz "pelletState"
+.endobj lbl_802B09D0
 .balign 4
-lbl_802B09DC:
+.obj lbl_802B09DC, local
 	.asciz "SWALLOWED"
+.endobj lbl_802B09DC
 .balign 4
-lbl_802B09E8:
+.obj lbl_802B09E8, local
 	.asciz "PelletGoalState"
+.endobj lbl_802B09E8
 .balign 4
-lbl_802B09F8:
+.obj lbl_802B09F8, local
 	.asciz "Receiver<Pellet>"
+.endobj lbl_802B09F8
 .balign 4
-lbl_802B0A0C:
+.obj lbl_802B0A0C, local
 	.asciz "AState<Pellet>"
+.endobj lbl_802B0A0C
 .balign 4
-lbl_802B0A1C:
+.obj lbl_802B0A1C, local
 	.4byte "__RTTI__17Receiver<6Pellet>"
 	.4byte 0
 	.4byte 0
+.endobj lbl_802B0A1C
 .balign 4
-lbl_802B0A28:
+.obj lbl_802B0A28, local
 	.asciz "PelletState"
+.endobj lbl_802B0A28
 .balign 4
-lbl_802B0A34:
+.obj lbl_802B0A34, local
 	.4byte "__RTTI__17Receiver<6Pellet>"
 	.4byte 0
 	.4byte "__RTTI__15AState<6Pellet>"
 	.4byte 0
 	.4byte 0
-lbl_802B0A48:
+.endobj lbl_802B0A34
+.obj lbl_802B0A48, local
 	.4byte "__RTTI__17Receiver<6Pellet>"
 	.4byte 0
 	.4byte "__RTTI__15AState<6Pellet>"
@@ -1271,8 +1280,8 @@ lbl_802B0A48:
 	.4byte __RTTI__11PelletState
 	.4byte 0
 	.4byte 0
-.global __vt__15PelletGoalState
-__vt__15PelletGoalState:
+.endobj lbl_802B0A48
+.obj __vt__15PelletGoalState, global
 	.4byte __RTTI__15PelletGoalState
 	.4byte 0
 	.4byte "procMsg__17Receiver<6Pellet>FP6PelletP3Msg"
@@ -1293,11 +1302,13 @@ __vt__15PelletGoalState:
 	.4byte "resume__15AState<6Pellet>FP6Pellet"
 	.4byte "restart__15AState<6Pellet>FP6Pellet"
 	.4byte "transit__15AState<6Pellet>FP6Pelleti"
+.endobj __vt__15PelletGoalState
 .balign 4
-lbl_802B0AB4:
+.obj lbl_802B0AB4, local
 	.asciz "PelletAppearState"
+.endobj lbl_802B0AB4
 .balign 4
-lbl_802B0AC8:
+.obj lbl_802B0AC8, local
 	.4byte "__RTTI__17Receiver<6Pellet>"
 	.4byte 0
 	.4byte "__RTTI__15AState<6Pellet>"
@@ -1305,8 +1316,8 @@ lbl_802B0AC8:
 	.4byte __RTTI__11PelletState
 	.4byte 0
 	.4byte 0
-.global __vt__17PelletAppearState
-__vt__17PelletAppearState:
+.endobj lbl_802B0AC8
+.obj __vt__17PelletAppearState, global
 	.4byte __RTTI__17PelletAppearState
 	.4byte 0
 	.4byte "procMsg__17Receiver<6Pellet>FP6PelletP3Msg"
@@ -1327,11 +1338,13 @@ __vt__17PelletAppearState:
 	.4byte "resume__15AState<6Pellet>FP6Pellet"
 	.4byte "restart__15AState<6Pellet>FP6Pellet"
 	.4byte "transit__15AState<6Pellet>FP6Pelleti"
+.endobj __vt__17PelletAppearState
 .balign 4
-lbl_802B0B34:
+.obj lbl_802B0B34, local
 	.asciz "PelletSwallowedState"
+.endobj lbl_802B0B34
 .balign 4
-lbl_802B0B4C:
+.obj lbl_802B0B4C, local
 	.4byte "__RTTI__17Receiver<6Pellet>"
 	.4byte 0
 	.4byte "__RTTI__15AState<6Pellet>"
@@ -1339,8 +1352,8 @@ lbl_802B0B4C:
 	.4byte __RTTI__11PelletState
 	.4byte 0
 	.4byte 0
-.global __vt__20PelletSwallowedState
-__vt__20PelletSwallowedState:
+.endobj lbl_802B0B4C
+.obj __vt__20PelletSwallowedState, global
 	.4byte __RTTI__20PelletSwallowedState
 	.4byte 0
 	.4byte "procMsg__17Receiver<6Pellet>FP6PelletP3Msg"
@@ -1361,11 +1374,13 @@ __vt__20PelletSwallowedState:
 	.4byte "resume__15AState<6Pellet>FP6Pellet"
 	.4byte "restart__15AState<6Pellet>FP6Pellet"
 	.4byte "transit__15AState<6Pellet>FP6Pelleti"
+.endobj __vt__20PelletSwallowedState
 .balign 4
-lbl_802B0BB8:
+.obj lbl_802B0BB8, local
 	.asciz "PelletNormalState"
+.endobj lbl_802B0BB8
 .balign 4
-lbl_802B0BCC:
+.obj lbl_802B0BCC, local
 	.4byte "__RTTI__17Receiver<6Pellet>"
 	.4byte 0
 	.4byte "__RTTI__15AState<6Pellet>"
@@ -1373,8 +1388,8 @@ lbl_802B0BCC:
 	.4byte __RTTI__11PelletState
 	.4byte 0
 	.4byte 0
-.global __vt__17PelletNormalState
-__vt__17PelletNormalState:
+.endobj lbl_802B0BCC
+.obj __vt__17PelletNormalState, global
 	.4byte __RTTI__17PelletNormalState
 	.4byte 0
 	.4byte "procMsg__17Receiver<6Pellet>FP6PelletP3Msg"
@@ -1395,11 +1410,13 @@ __vt__17PelletNormalState:
 	.4byte "resume__15AState<6Pellet>FP6Pellet"
 	.4byte "restart__15AState<6Pellet>FP6Pellet"
 	.4byte "transit__15AState<6Pellet>FP6Pelleti"
+.endobj __vt__17PelletNormalState
 .balign 4
-lbl_802B0C38:
+.obj lbl_802B0C38, local
 	.asciz "PelletDeadState"
+.endobj lbl_802B0C38
 .balign 4
-lbl_802B0C48:
+.obj lbl_802B0C48, local
 	.4byte "__RTTI__17Receiver<6Pellet>"
 	.4byte 0
 	.4byte "__RTTI__15AState<6Pellet>"
@@ -1407,8 +1424,8 @@ lbl_802B0C48:
 	.4byte __RTTI__11PelletState
 	.4byte 0
 	.4byte 0
-.global __vt__15PelletDeadState
-__vt__15PelletDeadState:
+.endobj lbl_802B0C48
+.obj __vt__15PelletDeadState, global
 	.4byte __RTTI__15PelletDeadState
 	.4byte 0
 	.4byte "procMsg__17Receiver<6Pellet>FP6PelletP3Msg"
@@ -1429,11 +1446,13 @@ __vt__15PelletDeadState:
 	.4byte "resume__15AState<6Pellet>FP6Pellet"
 	.4byte "restart__15AState<6Pellet>FP6Pellet"
 	.4byte "transit__15AState<6Pellet>FP6Pelleti"
+.endobj __vt__15PelletDeadState
 .balign 4
-lbl_802B0CB4:
+.obj lbl_802B0CB4, local
 	.asciz "PelletUfoLoadState"
+.endobj lbl_802B0CB4
 .balign 4
-lbl_802B0CC8:
+.obj lbl_802B0CC8, local
 	.4byte "__RTTI__17Receiver<6Pellet>"
 	.4byte 0
 	.4byte "__RTTI__15AState<6Pellet>"
@@ -1441,8 +1460,8 @@ lbl_802B0CC8:
 	.4byte __RTTI__11PelletState
 	.4byte 0
 	.4byte 0
-.global __vt__18PelletUfoLoadState
-__vt__18PelletUfoLoadState:
+.endobj lbl_802B0CC8
+.obj __vt__18PelletUfoLoadState, global
 	.4byte __RTTI__18PelletUfoLoadState
 	.4byte 0
 	.4byte "procMsg__17Receiver<6Pellet>FP6PelletP3Msg"
@@ -1463,8 +1482,8 @@ __vt__18PelletUfoLoadState:
 	.4byte "resume__15AState<6Pellet>FP6Pellet"
 	.4byte "restart__15AState<6Pellet>FP6Pellet"
 	.4byte "transit__15AState<6Pellet>FP6Pelleti"
-.global __vt__11PelletState
-__vt__11PelletState:
+.endobj __vt__18PelletUfoLoadState
+.obj __vt__11PelletState, weak
 	.4byte __RTTI__11PelletState
 	.4byte 0
 	.4byte "procMsg__17Receiver<6Pellet>FP6PelletP3Msg"
@@ -1485,8 +1504,8 @@ __vt__11PelletState:
 	.4byte "resume__15AState<6Pellet>FP6Pellet"
 	.4byte "restart__15AState<6Pellet>FP6Pellet"
 	.4byte "transit__15AState<6Pellet>FP6Pelleti"
-.global "__vt__15AState<6Pellet>"
-"__vt__15AState<6Pellet>":
+.endobj __vt__11PelletState
+.obj "__vt__15AState<6Pellet>", weak
 	.4byte "__RTTI__15AState<6Pellet>"
 	.4byte 0
 	.4byte "procMsg__17Receiver<6Pellet>FP6PelletP3Msg"
@@ -1507,8 +1526,8 @@ __vt__11PelletState:
 	.4byte "resume__15AState<6Pellet>FP6Pellet"
 	.4byte "restart__15AState<6Pellet>FP6Pellet"
 	.4byte "transit__15AState<6Pellet>FP6Pelleti"
-.global "__vt__17Receiver<6Pellet>"
-"__vt__17Receiver<6Pellet>":
+.endobj "__vt__15AState<6Pellet>"
+.obj "__vt__17Receiver<6Pellet>", weak
 	.4byte "__RTTI__17Receiver<6Pellet>"
 	.4byte 0
 	.4byte "procMsg__17Receiver<6Pellet>FP6PelletP3Msg"
@@ -1523,26 +1542,30 @@ __vt__11PelletState:
 	.4byte "procOffWallMsg__17Receiver<6Pellet>FP6PelletP10MsgOffWall"
 	.4byte "procUserMsg__17Receiver<6Pellet>FP6PelletP7MsgUser"
 	.4byte "procGroundMsg__17Receiver<6Pellet>FP6PelletP9MsgGround"
+.endobj "__vt__17Receiver<6Pellet>"
 .balign 4
-lbl_802B0E0C:
+.obj lbl_802B0E0C, local
 	.asciz "PelletStateMachine"
+.endobj lbl_802B0E0C
 .balign 4
-lbl_802B0E20:
+.obj lbl_802B0E20, local
 	.asciz "StateMachine<Pellet>"
+.endobj lbl_802B0E20
 .balign 4
-lbl_802B0E38:
+.obj lbl_802B0E38, local
 	.4byte "__RTTI__21StateMachine<6Pellet>"
 	.4byte 0
 	.4byte 0
-.global __vt__18PelletStateMachine
-__vt__18PelletStateMachine:
+.endobj lbl_802B0E38
+.obj __vt__18PelletStateMachine, global
 	.4byte __RTTI__18PelletStateMachine
 	.4byte 0
 	.4byte init__18PelletStateMachineFP6Pellet
 	.4byte "exec__21StateMachine<6Pellet>FP6Pellet"
 	.4byte "procMsg__21StateMachine<6Pellet>FP6PelletP3Msg"
 	.4byte "transit__21StateMachine<6Pellet>FP6Pelleti"
-lbl_802B0E5C:
+.endobj __vt__18PelletStateMachine
+.obj lbl_802B0E5C, local
 	.4byte .L_80099404
 	.4byte .L_8009942C
 	.4byte .L_80099440
@@ -1554,87 +1577,118 @@ lbl_802B0E5C:
 	.4byte .L_80099418
 	.4byte .L_800994CC
 	.4byte .L_800994B8
+.endobj lbl_802B0E5C
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-lbl_803DF728:
+.obj lbl_803DF728, local
 	.asciz "UFOLOAD"
+.endobj lbl_803DF728
 .balign 4
-lbl_803DF730:
+.obj lbl_803DF730, local
 	.asciz "DEAD"
+.endobj lbl_803DF730
 .balign 4
-lbl_803DF738:
+.obj lbl_803DF738, local
 	.asciz "NORMAL"
+.endobj lbl_803DF738
 .balign 4
-lbl_803DF740:
+.obj lbl_803DF740, local
 	.asciz "APPEAR"
+.endobj lbl_803DF740
 .balign 4
-lbl_803DF748:
+.obj lbl_803DF748, local
 	.asciz "GOAL"
+.endobj lbl_803DF748
 .balign 4
-lbl_803DF750:
+.obj lbl_803DF750, local
 	.float 100.0
-lbl_803DF754:
+.endobj lbl_803DF750
+.obj lbl_803DF754, local
 	.float 200.0
-lbl_803DF758:
+.endobj lbl_803DF754
+.obj lbl_803DF758, local
 	.float 10.0
-"__RTTI__17Receiver<6Pellet>":
+.endobj lbl_803DF758
+.obj "__RTTI__17Receiver<6Pellet>", local
 	.4byte lbl_802B09F8
 	.4byte 0
-"__RTTI__15AState<6Pellet>":
+.endobj "__RTTI__17Receiver<6Pellet>"
+.obj "__RTTI__15AState<6Pellet>", local
 	.4byte lbl_802B0A0C
 	.4byte lbl_802B0A1C
-__RTTI__11PelletState:
+.endobj "__RTTI__15AState<6Pellet>"
+.obj __RTTI__11PelletState, local
 	.4byte lbl_802B0A28
 	.4byte lbl_802B0A34
-__RTTI__15PelletGoalState:
+.endobj __RTTI__11PelletState
+.obj __RTTI__15PelletGoalState, local
 	.4byte lbl_802B09E8
 	.4byte lbl_802B0A48
-__RTTI__17PelletAppearState:
+.endobj __RTTI__15PelletGoalState
+.obj __RTTI__17PelletAppearState, local
 	.4byte lbl_802B0AB4
 	.4byte lbl_802B0AC8
-__RTTI__20PelletSwallowedState:
+.endobj __RTTI__17PelletAppearState
+.obj __RTTI__20PelletSwallowedState, local
 	.4byte lbl_802B0B34
 	.4byte lbl_802B0B4C
-__RTTI__17PelletNormalState:
+.endobj __RTTI__20PelletSwallowedState
+.obj __RTTI__17PelletNormalState, local
 	.4byte lbl_802B0BB8
 	.4byte lbl_802B0BCC
-__RTTI__15PelletDeadState:
+.endobj __RTTI__17PelletNormalState
+.obj __RTTI__15PelletDeadState, local
 	.4byte lbl_802B0C38
 	.4byte lbl_802B0C48
-__RTTI__18PelletUfoLoadState:
+.endobj __RTTI__15PelletDeadState
+.obj __RTTI__18PelletUfoLoadState, local
 	.4byte lbl_802B0CB4
 	.4byte lbl_802B0CC8
-"__RTTI__21StateMachine<6Pellet>":
+.endobj __RTTI__18PelletUfoLoadState
+.obj "__RTTI__21StateMachine<6Pellet>", local
 	.4byte lbl_802B0E20
 	.4byte 0
-__RTTI__18PelletStateMachine:
+.endobj "__RTTI__21StateMachine<6Pellet>"
+.obj __RTTI__18PelletStateMachine, local
 	.4byte lbl_802B0E0C
 	.4byte lbl_802B0E38
+.endobj __RTTI__18PelletStateMachine
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803E8E98:
+.obj lbl_803E8E98, local
 	.float 0.1
-lbl_803E8E9C:
+.endobj lbl_803E8E98
+.obj lbl_803E8E9C, local
 	.float 2.0
-lbl_803E8EA0:
+.endobj lbl_803E8E9C
+.obj lbl_803E8EA0, local
 	.float 3.3333333
-lbl_803E8EA4:
+.endobj lbl_803E8EA0
+.obj lbl_803E8EA4, local
 	.float 1.0
-lbl_803E8EA8:
+.endobj lbl_803E8EA4
+.obj lbl_803E8EA8, local
 	.float 0.0
-lbl_803E8EAC:
+.endobj lbl_803E8EA8
+.obj lbl_803E8EAC, local
 	.float 120.0
+.endobj lbl_803E8EAC
 .balign 8
-lbl_803E8EB0:
+.obj lbl_803E8EB0, local
 	.double 0.5
+.endobj lbl_803E8EB0
 .balign 8
-lbl_803E8EB8:
+.obj lbl_803E8EB8, local
 	.double 3.0
-lbl_803E8EC0:
+.endobj lbl_803E8EB8
+.obj lbl_803E8EC0, local
 	.float 1.5
-lbl_803E8EC4:
+.endobj lbl_803E8EC0
+.obj lbl_803E8EC4, local
 	.float 0.75
-lbl_803E8EC8:
+.endobj lbl_803E8EC4
+.obj lbl_803E8EC8, local
 	.float 720.0
+.endobj lbl_803E8EC8

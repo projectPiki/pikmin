@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global __flush_buffer
-__flush_buffer:
+.fn __flush_buffer, global
 /* 80215CB0 00212C10  7C 08 02 A6 */	mflr r0
 /* 80215CB4 00212C14  90 01 00 04 */	stw r0, 4(r1)
 /* 80215CB8 00212C18  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -57,9 +56,9 @@ __flush_buffer:
 /* 80215D70 00212CD0  7C 08 03 A6 */	mtlr r0
 /* 80215D74 00212CD4  38 21 00 18 */	addi r1, r1, 0x18
 /* 80215D78 00212CD8  4E 80 00 20 */	blr 
+.endfn __flush_buffer
 
-.global __prep_buffer
-__prep_buffer:
+.fn __prep_buffer, global
 /* 80215D7C 00212CDC  80 03 00 18 */	lwz r0, 0x18(r3)
 /* 80215D80 00212CE0  90 03 00 20 */	stw r0, 0x20(r3)
 /* 80215D84 00212CE4  80 03 00 1C */	lwz r0, 0x1c(r3)
@@ -73,3 +72,4 @@ __prep_buffer:
 /* 80215DA4 00212D04  80 03 00 14 */	lwz r0, 0x14(r3)
 /* 80215DA8 00212D08  90 03 00 30 */	stw r0, 0x30(r3)
 /* 80215DAC 00212D0C  4E 80 00 20 */	blr 
+.endfn __prep_buffer

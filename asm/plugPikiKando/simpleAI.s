@@ -1499,13 +1499,18 @@ lbl_803DEB10:
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803E8B70:
+.obj lbl_803E8B70, local
 	.float 0.0
-lbl_803E8B74:
+.endobj lbl_803E8B70
+.obj lbl_803E8B74, local
 	.float -123.4
-lbl_803E8B78:
+.endobj lbl_803E8B74
+.obj lbl_803E8B78, local
 	.float 100.0
-lbl_803E8B7C:
+.endobj lbl_803E8B78
+.obj lbl_803E8B7C, local
 	.float 15.0
-lbl_803E8B80:
+.endobj lbl_803E8B7C
+.obj lbl_803E8B80, local
 	.float 10.0
+.endobj lbl_803E8B80

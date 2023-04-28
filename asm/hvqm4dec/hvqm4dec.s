@@ -1,6 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-init_global_constants:
+.fn init_global_constants, local
 /* 8001EC3C 0001BB9C  94 21 FF E8 */	stwu r1, -0x18(r1)
 /* 8001EC40 0001BBA0  3C 60 80 39 */	lis r3, clipTable@ha
 /* 8001EC44 0001BBA4  38 00 00 80 */	li r0, 0x80
@@ -239,8 +239,9 @@ init_global_constants:
 /* 8001EF90 0001BEF0  83 E1 00 14 */	lwz r31, 0x14(r1)
 /* 8001EF94 0001BEF4  38 21 00 18 */	addi r1, r1, 0x18
 /* 8001EF98 0001BEF8  4E 80 00 20 */	blr 
+.endfn init_global_constants
 
-setHVQPlaneDesc:
+.fn setHVQPlaneDesc, local
 /* 8001EF9C 0001BEFC  54 A0 06 3E */	clrlwi r0, r5, 0x18
 /* 8001EFA0 0001BF00  80 E3 00 00 */	lwz r7, 0(r3)
 /* 8001EFA4 0001BF04  1C 84 00 38 */	mulli r4, r4, 0x38
@@ -316,8 +317,9 @@ setHVQPlaneDesc:
 /* 8001F0AC 0001C00C  38 03 00 04 */	addi r0, r3, 4
 /* 8001F0B0 0001C010  90 04 00 20 */	stw r0, 0x20(r4)
 /* 8001F0B4 0001C014  4E 80 00 20 */	blr 
+.endfn setHVQPlaneDesc
 
-_readTree:
+.fn _readTree, local
 /* 8001F0B8 0001C018  7C 08 02 A6 */	mflr r0
 /* 8001F0BC 0001C01C  90 01 00 04 */	stw r0, 4(r1)
 /* 8001F0C0 0001C020  94 21 FF C8 */	stwu r1, -0x38(r1)
@@ -514,8 +516,9 @@ _readTree:
 /* 8001F378 0001C2D8  38 21 00 38 */	addi r1, r1, 0x38
 /* 8001F37C 0001C2DC  7C 08 03 A6 */	mtlr r0
 /* 8001F380 0001C2E0  4E 80 00 20 */	blr 
+.endfn _readTree
 
-getByte:
+.fn getByte, local
 /* 8001F384 0001C2E4  81 03 00 0C */	lwz r8, 0xc(r3)
 /* 8001F388 0001C2E8  2C 08 00 07 */	cmpwi r8, 7
 /* 8001F38C 0001C2EC  41 80 00 18 */	blt .L_8001F3A4
@@ -543,8 +546,9 @@ getByte:
 /* 8001F3DC 0001C33C  54 E7 06 3E */	clrlwi r7, r7, 0x18
 /* 8001F3E0 0001C340  7C E3 07 34 */	extsh r3, r7
 /* 8001F3E4 0001C344  4E 80 00 20 */	blr 
+.endfn getByte
 
-Ipic_BasisNumDec:
+.fn Ipic_BasisNumDec, local
 /* 8001F3E8 0001C348  94 21 FF B8 */	stwu r1, -0x48(r1)
 /* 8001F3EC 0001C34C  38 C3 61 8C */	addi r6, r3, 0x618c
 /* 8001F3F0 0001C350  38 E3 61 B4 */	addi r7, r3, 0x61b4
@@ -752,8 +756,9 @@ Ipic_BasisNumDec:
 /* 8001F6A0 0001C600  83 C1 00 40 */	lwz r30, 0x40(r1)
 /* 8001F6A4 0001C604  38 21 00 48 */	addi r1, r1, 0x48
 /* 8001F6A8 0001C608  4E 80 00 20 */	blr 
+.endfn Ipic_BasisNumDec
 
-IpicDcvDec:
+.fn IpicDcvDec, local
 /* 8001F6AC 0001C60C  7C 08 02 A6 */	mflr r0
 /* 8001F6B0 0001C610  90 01 00 04 */	stw r0, 4(r1)
 /* 8001F6B4 0001C614  94 21 FF 98 */	stwu r1, -0x68(r1)
@@ -843,8 +848,9 @@ IpicDcvDec:
 /* 8001F7DC 0001C73C  38 21 00 68 */	addi r1, r1, 0x68
 /* 8001F7E0 0001C740  7C 08 03 A6 */	mtlr r0
 /* 8001F7E4 0001C744  4E 80 00 20 */	blr 
+.endfn IpicDcvDec
 
-getBit:
+.fn getBit, local
 /* 8001F7E8 0001C748  80 A3 00 0C */	lwz r5, 0xc(r3)
 /* 8001F7EC 0001C74C  2C 05 00 00 */	cmpwi r5, 0
 /* 8001F7F0 0001C750  40 80 00 20 */	bge .L_8001F810
@@ -863,8 +869,9 @@ getBit:
 /* 8001F81C 0001C77C  90 03 00 0C */	stw r0, 0xc(r3)
 /* 8001F820 0001C780  54 83 07 FE */	clrlwi r3, r4, 0x1f
 /* 8001F824 0001C784  4E 80 00 20 */	blr 
+.endfn getBit
 
-decodeHuff:
+.fn decodeHuff, local
 /* 8001F828 0001C788  80 C3 00 10 */	lwz r6, 0x10(r3)
 /* 8001F82C 0001C78C  80 E6 00 04 */	lwz r7, 4(r6)
 /* 8001F830 0001C790  48 00 00 50 */	b .L_8001F880
@@ -897,8 +904,9 @@ decodeHuff:
 /* 8001F88C 0001C7EC  7C 66 02 14 */	add r3, r6, r0
 /* 8001F890 0001C7F0  80 63 00 08 */	lwz r3, 8(r3)
 /* 8001F894 0001C7F4  4E 80 00 20 */	blr 
+.endfn decodeHuff
 
-MakeNest:
+.fn MakeNest, local
 /* 8001F898 0001C7F8  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 8001F89C 0001C7FC  93 E1 00 1C */	stw r31, 0x1c(r1)
 /* 8001F8A0 0001C800  93 C1 00 18 */	stw r30, 0x18(r1)
@@ -1164,8 +1172,9 @@ MakeNest:
 /* 8001FC30 0001CB90  83 C1 00 18 */	lwz r30, 0x18(r1)
 /* 8001FC34 0001CB94  38 21 00 20 */	addi r1, r1, 0x20
 /* 8001FC38 0001CB98  4E 80 00 20 */	blr 
+.endfn MakeNest
 
-WeightImBlock:
+.fn WeightImBlock, local
 /* 8001FC3C 0001CB9C  94 21 FF C0 */	stwu r1, -0x40(r1)
 /* 8001FC40 0001CBA0  54 EA 06 3E */	clrlwi r10, r7, 0x18
 /* 8001FC44 0001CBA4  54 AB 1D 78 */	rlwinm r11, r5, 3, 0x15, 0x1c
@@ -1268,8 +1277,9 @@ WeightImBlock:
 /* 8001FDC8 0001CD28  BA E1 00 1C */	lmw r23, 0x1c(r1)
 /* 8001FDCC 0001CD2C  38 21 00 40 */	addi r1, r1, 0x40
 /* 8001FDD0 0001CD30  4E 80 00 20 */	blr 
+.endfn WeightImBlock
 
-OrgBlock:
+.fn OrgBlock, local
 /* 8001FDD4 0001CD34  54 C6 20 36 */	slwi r6, r6, 4
 /* 8001FDD8 0001CD38  38 C6 61 DC */	addi r6, r6, 0x61dc
 /* 8001FDDC 0001CD3C  7C C3 32 14 */	add r6, r3, r6
@@ -1288,8 +1298,9 @@ OrgBlock:
 /* 8001FE10 0001CD70  91 2A 00 00 */	stw r9, 0(r10)
 /* 8001FE14 0001CD74  90 06 00 00 */	stw r0, 0(r6)
 /* 8001FE18 0001CD78  4E 80 00 20 */	blr 
+.endfn OrgBlock
 
-IntraAotBlock:
+.fn IntraAotBlock, local
 /* 8001FE1C 0001CD7C  7C 08 02 A6 */	mflr r0
 /* 8001FE20 0001CD80  90 01 00 04 */	stw r0, 4(r1)
 /* 8001FE24 0001CD84  54 E0 06 3E */	clrlwi r0, r7, 0x18
@@ -1538,8 +1549,9 @@ IntraAotBlock:
 /* 800201E0 0001D140  38 21 01 00 */	addi r1, r1, 0x100
 /* 800201E4 0001D144  7C 08 03 A6 */	mtlr r0
 /* 800201E8 0001D148  4E 80 00 20 */	blr 
+.endfn IntraAotBlock
 
-GetAotBasis:
+.fn GetAotBasis, local
 /* 800201EC 0001D14C  94 21 FF C8 */	stwu r1, -0x38(r1)
 /* 800201F0 0001D150  55 00 20 36 */	slwi r0, r8, 4
 /* 800201F4 0001D154  7D 63 02 14 */	add r11, r3, r0
@@ -1865,8 +1877,9 @@ GetAotBasis:
 /* 8002065C 0001D5BC  83 C1 00 30 */	lwz r30, 0x30(r1)
 /* 80020660 0001D5C0  38 21 00 38 */	addi r1, r1, 0x38
 /* 80020664 0001D5C4  4E 80 00 20 */	blr 
+.endfn GetAotBasis
 
-IpicBlockDec:
+.fn IpicBlockDec, local
 /* 80020668 0001D5C8  7C 08 02 A6 */	mflr r0
 /* 8002066C 0001D5CC  90 01 00 04 */	stw r0, 4(r1)
 /* 80020670 0001D5D0  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -1957,8 +1970,9 @@ IpicBlockDec:
 /* 800207A0 0001D700  38 21 00 20 */	addi r1, r1, 0x20
 /* 800207A4 0001D704  7C 08 03 A6 */	mtlr r0
 /* 800207A8 0001D708  4E 80 00 20 */	blr 
+.endfn IpicBlockDec
 
-IpicLineDec:
+.fn IpicLineDec, local
 /* 800207AC 0001D70C  7C 08 02 A6 */	mflr r0
 /* 800207B0 0001D710  90 01 00 04 */	stw r0, 4(r1)
 /* 800207B4 0001D714  94 21 FF C8 */	stwu r1, -0x38(r1)
@@ -2014,8 +2028,9 @@ IpicLineDec:
 /* 80020874 0001D7D4  38 21 00 38 */	addi r1, r1, 0x38
 /* 80020878 0001D7D8  7C 08 03 A6 */	mtlr r0
 /* 8002087C 0001D7DC  4E 80 00 20 */	blr 
+.endfn IpicLineDec
 
-IpicPlaneDec:
+.fn IpicPlaneDec, local
 /* 80020880 0001D7E0  7C 08 02 A6 */	mflr r0
 /* 80020884 0001D7E4  90 01 00 04 */	stw r0, 4(r1)
 /* 80020888 0001D7E8  1C 04 00 38 */	mulli r0, r4, 0x38
@@ -2073,8 +2088,9 @@ IpicPlaneDec:
 /* 80020950 0001D8B0  38 21 00 50 */	addi r1, r1, 0x50
 /* 80020954 0001D8B4  7C 08 03 A6 */	mtlr r0
 /* 80020958 0001D8B8  4E 80 00 20 */	blr 
+.endfn IpicPlaneDec
 
-initMCHandler:
+.fn initMCHandler, local
 /* 8002095C 0001D8BC  38 00 00 03 */	li r0, 3
 /* 80020960 0001D8C0  7C 09 03 A6 */	mtctr r0
 .L_80020964:
@@ -2111,8 +2127,9 @@ initMCHandler:
 /* 800209DC 0001D93C  7C E7 02 14 */	add r7, r7, r0
 /* 800209E0 0001D940  42 00 FF 84 */	bdnz .L_80020964
 /* 800209E4 0001D944  4E 80 00 20 */	blr 
+.endfn initMCHandler
 
-_MotionComp_00:
+.fn _MotionComp_00, local
 /* 800209E8 0001D948  88 05 00 00 */	lbz r0, 0(r5)
 /* 800209EC 0001D94C  7C E5 32 14 */	add r7, r5, r6
 /* 800209F0 0001D950  7D 03 22 14 */	add r8, r3, r4
@@ -2152,8 +2169,9 @@ _MotionComp_00:
 /* 80020A78 0001D9D8  88 07 00 03 */	lbz r0, 3(r7)
 /* 80020A7C 0001D9DC  98 08 00 03 */	stb r0, 3(r8)
 /* 80020A80 0001D9E0  4E 80 00 20 */	blr 
+.endfn _MotionComp_00
 
-_MotionComp_01:
+.fn _MotionComp_01, local
 /* 80020A84 0001D9E4  7D 05 32 14 */	add r8, r5, r6
 /* 80020A88 0001D9E8  89 65 00 00 */	lbz r11, 0(r5)
 /* 80020A8C 0001D9EC  89 48 00 00 */	lbz r10, 0(r8)
@@ -2261,8 +2279,9 @@ _MotionComp_01:
 /* 80020C24 0001DB84  7C 00 0E 70 */	srawi r0, r0, 1
 /* 80020C28 0001DB88  98 09 00 03 */	stb r0, 3(r9)
 /* 80020C2C 0001DB8C  4E 80 00 20 */	blr 
+.endfn _MotionComp_01
 
-_MotionComp_10:
+.fn _MotionComp_10, local
 /* 80020C30 0001DB90  89 25 00 01 */	lbz r9, 1(r5)
 /* 80020C34 0001DB94  7C E5 32 14 */	add r7, r5, r6
 /* 80020C38 0001DB98  89 45 00 00 */	lbz r10, 0(r5)
@@ -2366,8 +2385,9 @@ _MotionComp_10:
 /* 80020DC0 0001DD20  7C 00 0E 70 */	srawi r0, r0, 1
 /* 80020DC4 0001DD24  98 08 00 03 */	stb r0, 3(r8)
 /* 80020DC8 0001DD28  4E 80 00 20 */	blr 
+.endfn _MotionComp_10
 
-_MotionComp_11:
+.fn _MotionComp_11, local
 /* 80020DCC 0001DD2C  7D 05 32 14 */	add r8, r5, r6
 /* 80020DD0 0001DD30  88 05 00 01 */	lbz r0, 1(r5)
 /* 80020DD4 0001DD34  89 48 00 00 */	lbz r10, 0(r8)
@@ -2539,8 +2559,9 @@ _MotionComp_11:
 /* 8002106C 0001DFCC  7C 00 16 70 */	srawi r0, r0, 2
 /* 80021070 0001DFD0  98 09 00 03 */	stb r0, 3(r9)
 /* 80021074 0001DFD4  4E 80 00 20 */	blr 
+.endfn _MotionComp_11
 
-MotionComp:
+.fn MotionComp, local
 /* 80021078 0001DFD8  94 21 FF B8 */	stwu r1, -0x48(r1)
 /* 8002107C 0001DFDC  54 A0 07 FF */	clrlwi. r0, r5, 0x1f
 /* 80021080 0001DFE0  BF 61 00 34 */	stmw r27, 0x34(r1)
@@ -3199,8 +3220,9 @@ MotionComp:
 /* 80021A6C 0001E9CC  BB 61 00 34 */	lmw r27, 0x34(r1)
 /* 80021A70 0001E9D0  38 21 00 48 */	addi r1, r1, 0x48
 /* 80021A74 0001E9D4  4E 80 00 20 */	blr 
+.endfn MotionComp
 
-decode_PB_cc:
+.fn decode_PB_cc, local
 /* 80021A78 0001E9D8  94 21 FF A0 */	stwu r1, -0x60(r1)
 /* 80021A7C 0001E9DC  2C 05 00 01 */	cmpwi r5, 1
 /* 80021A80 0001E9E0  54 C6 28 34 */	slwi r6, r6, 5
@@ -3496,8 +3518,9 @@ decode_PB_cc:
 /* 80021E88 0001EDE8  83 A1 00 54 */	lwz r29, 0x54(r1)
 /* 80021E8C 0001EDEC  38 21 00 60 */	addi r1, r1, 0x60
 /* 80021E90 0001EDF0  4E 80 00 20 */	blr 
+.endfn decode_PB_cc
 
-PrediAotBlock:
+.fn PrediAotBlock, local
 /* 80021E94 0001EDF4  7C 08 02 A6 */	mflr r0
 /* 80021E98 0001EDF8  3D 60 80 39 */	lis r11, clipTable@ha
 /* 80021E9C 0001EDFC  90 01 00 04 */	stw r0, 4(r1)
@@ -4077,8 +4100,9 @@ PrediAotBlock:
 /* 800226F4 0001F654  38 21 01 20 */	addi r1, r1, 0x120
 /* 800226F8 0001F658  7C 08 03 A6 */	mtlr r0
 /* 800226FC 0001F65C  4E 80 00 20 */	blr 
+.endfn PrediAotBlock
 
-GetMCAotBasis:
+.fn GetMCAotBasis, local
 /* 80022700 0001F660  94 21 FF C0 */	stwu r1, -0x40(r1)
 /* 80022704 0001F664  55 00 20 36 */	slwi r0, r8, 4
 /* 80022708 0001F668  7D 63 02 14 */	add r11, r3, r0
@@ -4422,8 +4446,9 @@ GetMCAotBasis:
 /* 80022BB8 0001FB18  83 A1 00 34 */	lwz r29, 0x34(r1)
 /* 80022BBC 0001FB1C  38 21 00 40 */	addi r1, r1, 0x40
 /* 80022BC0 0001FB20  4E 80 00 20 */	blr 
+.endfn GetMCAotBasis
 
-MCBlockDecMCNest:
+.fn MCBlockDecMCNest, local
 /* 80022BC4 0001FB24  7C 08 02 A6 */	mflr r0
 /* 80022BC8 0001FB28  90 01 00 04 */	stw r0, 4(r1)
 /* 80022BCC 0001FB2C  94 21 FF A0 */	stwu r1, -0x60(r1)
@@ -4519,8 +4544,9 @@ MCBlockDecMCNest:
 /* 80022D1C 0001FC7C  38 21 00 60 */	addi r1, r1, 0x60
 /* 80022D20 0001FC80  7C 08 03 A6 */	mtlr r0
 /* 80022D24 0001FC84  4E 80 00 20 */	blr 
+.endfn MCBlockDecMCNest
 
-MCBlockDecDCNest:
+.fn MCBlockDecDCNest, local
 /* 80022D28 0001FC88  7C 08 02 A6 */	mflr r0
 /* 80022D2C 0001FC8C  90 01 00 04 */	stw r0, 4(r1)
 /* 80022D30 0001FC90  94 21 FF B8 */	stwu r1, -0x48(r1)
@@ -4620,8 +4646,9 @@ MCBlockDecDCNest:
 /* 80022E74 0001FDD4  38 21 00 48 */	addi r1, r1, 0x48
 /* 80022E78 0001FDD8  7C 08 03 A6 */	mtlr r0
 /* 80022E7C 0001FDDC  4E 80 00 20 */	blr 
+.endfn MCBlockDecDCNest
 
-spread_PB_descMap:
+.fn spread_PB_descMap, local
 /* 80022E80 0001FDE0  7C 08 02 A6 */	mflr r0
 /* 80022E84 0001FDE4  90 01 00 04 */	stw r0, 4(r1)
 /* 80022E88 0001FDE8  94 21 FF 28 */	stwu r1, -0xd8(r1)
@@ -4916,8 +4943,9 @@ spread_PB_descMap:
 /* 800232A4 00020204  38 21 00 D8 */	addi r1, r1, 0xd8
 /* 800232A8 00020208  7C 08 03 A6 */	mtlr r0
 /* 800232AC 0002020C  4E 80 00 20 */	blr 
+.endfn spread_PB_descMap
 
-BpicPlaneDec:
+.fn BpicPlaneDec, local
 /* 800232B0 00020210  7C 08 02 A6 */	mflr r0
 /* 800232B4 00020214  38 E6 00 00 */	addi r7, r6, 0
 /* 800232B8 00020218  90 01 00 04 */	stw r0, 4(r1)
@@ -5215,9 +5243,9 @@ BpicPlaneDec:
 /* 800236E0 00020640  38 21 01 50 */	addi r1, r1, 0x150
 /* 800236E4 00020644  7C 08 03 A6 */	mtlr r0
 /* 800236E8 00020648  4E 80 00 20 */	blr 
+.endfn BpicPlaneDec
 
-.global HVQM4InitDecoder
-HVQM4InitDecoder:
+.fn HVQM4InitDecoder, global
 /* 800236EC 0002064C  7C 08 02 A6 */	mflr r0
 /* 800236F0 00020650  90 01 00 04 */	stw r0, 4(r1)
 /* 800236F4 00020654  94 21 FF F8 */	stwu r1, -8(r1)
@@ -5226,9 +5254,9 @@ HVQM4InitDecoder:
 /* 80023700 00020660  38 21 00 08 */	addi r1, r1, 8
 /* 80023704 00020664  7C 08 03 A6 */	mtlr r0
 /* 80023708 00020668  4E 80 00 20 */	blr 
+.endfn HVQM4InitDecoder
 
-.global HVQM4InitSeqObj
-HVQM4InitSeqObj:
+.fn HVQM4InitSeqObj, global
 /* 8002370C 0002066C  A0 04 00 00 */	lhz r0, 0(r4)
 /* 80023710 00020670  B0 03 00 04 */	sth r0, 4(r3)
 /* 80023714 00020674  A0 04 00 02 */	lhz r0, 2(r4)
@@ -5238,9 +5266,9 @@ HVQM4InitSeqObj:
 /* 80023724 00020684  88 04 00 05 */	lbz r0, 5(r4)
 /* 80023728 00020688  98 03 00 09 */	stb r0, 9(r3)
 /* 8002372C 0002068C  4E 80 00 20 */	blr 
+.endfn HVQM4InitSeqObj
 
-.global HVQM4BuffSize
-HVQM4BuffSize:
+.fn HVQM4BuffSize, global
 /* 80023730 00020690  88 03 00 08 */	lbz r0, 8(r3)
 /* 80023734 00020694  A0 83 00 04 */	lhz r4, 4(r3)
 /* 80023738 00020698  28 00 00 02 */	cmplwi r0, 2
@@ -5274,9 +5302,9 @@ HVQM4BuffSize:
 /* 80023798 000206F8  54 03 08 3C */	slwi r3, r0, 1
 /* 8002379C 000206FC  38 63 6C D8 */	addi r3, r3, 0x6cd8
 /* 800237A0 00020700  4E 80 00 20 */	blr 
+.endfn HVQM4BuffSize
 
-.global HVQM4SetBuffer
-HVQM4SetBuffer:
+.fn HVQM4SetBuffer, global
 /* 800237A4 00020704  7C 08 02 A6 */	mflr r0
 /* 800237A8 00020708  38 A0 00 01 */	li r5, 1
 /* 800237AC 0002070C  90 01 00 04 */	stw r0, 4(r1)
@@ -5577,9 +5605,9 @@ HVQM4SetBuffer:
 /* 80023BFC 00020B5C  7C 08 03 A6 */	mtlr r0
 /* 80023C00 00020B60  38 21 00 18 */	addi r1, r1, 0x18
 /* 80023C04 00020B64  4E 80 00 20 */	blr 
+.endfn HVQM4SetBuffer
 
-.global HVQM4DecodeIpic
-HVQM4DecodeIpic:
+.fn HVQM4DecodeIpic, global
 /* 80023C08 00020B68  7C 08 02 A6 */	mflr r0
 /* 80023C0C 00020B6C  90 01 00 04 */	stw r0, 4(r1)
 /* 80023C10 00020B70  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -5945,9 +5973,9 @@ HVQM4DecodeIpic:
 /* 8002410C 0002106C  83 81 00 18 */	lwz r28, 0x18(r1)
 /* 80024110 00021070  38 21 00 28 */	addi r1, r1, 0x28
 /* 80024114 00021074  4E 80 00 20 */	blr 
+.endfn HVQM4DecodeIpic
 
-.global HVQM4DecodePpic
-HVQM4DecodePpic:
+.fn HVQM4DecodePpic, global
 /* 80024118 00021078  7C 08 02 A6 */	mflr r0
 /* 8002411C 0002107C  7C A7 2B 78 */	mr r7, r5
 /* 80024120 00021080  90 01 00 04 */	stw r0, 4(r1)
@@ -5957,9 +5985,9 @@ HVQM4DecodePpic:
 /* 80024130 00021090  38 21 00 08 */	addi r1, r1, 8
 /* 80024134 00021094  7C 08 03 A6 */	mtlr r0
 /* 80024138 00021098  4E 80 00 20 */	blr 
+.endfn HVQM4DecodePpic
 
-.global HVQM4DecodeBpic
-HVQM4DecodeBpic:
+.fn HVQM4DecodeBpic, global
 /* 8002413C 0002109C  7C 08 02 A6 */	mflr r0
 /* 80024140 000210A0  90 01 00 04 */	stw r0, 4(r1)
 /* 80024144 000210A4  94 21 FF C0 */	stwu r1, -0x40(r1)
@@ -6368,28 +6396,33 @@ HVQM4DecodeBpic:
 /* 800246D8 00021638  38 21 00 40 */	addi r1, r1, 0x40
 /* 800246DC 0002163C  7C 08 03 A6 */	mtlr r0
 /* 800246E0 00021640  4E 80 00 20 */	blr 
+.endfn HVQM4DecodeBpic
 
 .section .rodata, "a"  # 0x80221FE0 - 0x80222DC0
 .balign 8
-mcbtypetrans$1481:
+.obj mcbtypetrans$1481, local
 	.4byte 1
 	.4byte 2
 	.4byte 0
 	.4byte 2
 	.4byte 0
 	.4byte 1
+.endobj mcbtypetrans$1481
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-func$793:
+.obj func$793, local
 	.4byte _MotionComp_00
 	.4byte _MotionComp_01
 	.4byte _MotionComp_10
 	.4byte _MotionComp_11
+.endobj func$793
 
 .section .sbss, "wa"
 .balign 8
-readTree_signed:
+.obj readTree_signed, local
 	.skip 4
-readTree_scale:
+.endobj readTree_signed
+.obj readTree_scale, local
 	.skip 4
+.endobj readTree_scale

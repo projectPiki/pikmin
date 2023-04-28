@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global update__13ControllerMgrFv
-update__13ControllerMgrFv:
+.fn update__13ControllerMgrFv, global
 /* 800471B4 00044114  7C 08 02 A6 */	mflr r0
 /* 800471B8 00044118  3C 60 80 3A */	lis r3, sControllerPad@ha
 /* 800471BC 0004411C  90 01 00 04 */	stw r0, 4(r1)
@@ -56,9 +55,9 @@ update__13ControllerMgrFv:
 /* 8004726C 000441CC  38 21 00 18 */	addi r1, r1, 0x18
 /* 80047270 000441D0  7C 08 03 A6 */	mtlr r0
 /* 80047274 000441D4  4E 80 00 20 */	blr 
+.endfn update__13ControllerMgrFv
 
-.global keyDown__13ControllerMgrFi
-keyDown__13ControllerMgrFi:
+.fn keyDown__13ControllerMgrFi, global
 /* 80047278 000441D8  3C 60 80 3A */	lis r3, sControllerPad@ha
 /* 8004727C 000441DC  A0 03 D4 00 */	lhz r0, sControllerPad@l(r3)
 /* 80047280 000441E0  7C 00 20 38 */	and r0, r0, r4
@@ -67,9 +66,9 @@ keyDown__13ControllerMgrFi:
 /* 8004728C 000441EC  7C 00 19 10 */	subfe r0, r0, r3
 /* 80047290 000441F0  54 03 06 3E */	clrlwi r3, r0, 0x18
 /* 80047294 000441F4  4E 80 00 20 */	blr 
+.endfn keyDown__13ControllerMgrFi
 
-.global init__13ControllerMgrFv
-init__13ControllerMgrFv:
+.fn init__13ControllerMgrFv, global
 /* 80047298 000441F8  7C 08 02 A6 */	mflr r0
 /* 8004729C 000441FC  38 60 00 05 */	li r3, 5
 /* 800472A0 00044200  90 01 00 04 */	stw r0, 4(r1)
@@ -80,9 +79,9 @@ init__13ControllerMgrFv:
 /* 800472B4 00044214  38 21 00 08 */	addi r1, r1, 8
 /* 800472B8 00044218  7C 08 03 A6 */	mtlr r0
 /* 800472BC 0004421C  4E 80 00 20 */	blr 
+.endfn init__13ControllerMgrFv
 
-.global updateController__13ControllerMgrFP10Controller
-updateController__13ControllerMgrFP10Controller:
+.fn updateController__13ControllerMgrFP10Controller, global
 /* 800472C0 00044220  7C 08 02 A6 */	mflr r0
 /* 800472C4 00044224  7C 83 23 78 */	mr r3, r4
 /* 800472C8 00044228  90 01 00 04 */	stw r0, 4(r1)
@@ -229,28 +228,33 @@ updateController__13ControllerMgrFP10Controller:
 /* 800474AC 0004440C  38 21 00 08 */	addi r1, r1, 8
 /* 800474B0 00044410  7C 08 03 A6 */	mtlr r0
 /* 800474B4 00044414  4E 80 00 20 */	blr 
+.endfn updateController__13ControllerMgrFP10Controller
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802A56A8:
+.obj lbl_802A56A8, local
 	.asciz "controllerMgr.cpp"
+.endobj lbl_802A56A8
 .balign 4
-lbl_802A56BC:
+.obj lbl_802A56BC, local
 	.asciz "ControllerMgr"
+.endobj lbl_802A56BC
 .balign 4
-padChannels:
+.obj padChannels, local
 	.4byte 0x80000000
 	.4byte 0x40000000
 	.4byte 0x20000000
 	.4byte 0x10000000
-.global __vt__13ControllerMgr
-__vt__13ControllerMgr:
+.endobj padChannels
+.obj __vt__13ControllerMgr, global
 	.4byte __RTTI__13ControllerMgr
 	.4byte 0
 	.4byte keyDown__13ControllerMgrFi
+.endobj __vt__13ControllerMgr
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-__RTTI__13ControllerMgr:
+.obj __RTTI__13ControllerMgr, local
 	.4byte lbl_802A56BC
 	.4byte 0
+.endobj __RTTI__13ControllerMgr

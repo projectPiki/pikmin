@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global __ct__11ActPickItemFP4Piki
-__ct__11ActPickItemFP4Piki:
+.fn __ct__11ActPickItemFP4Piki, global
 /* 800BCAFC 000B9A5C  7C 08 02 A6 */	mflr r0
 /* 800BCB00 000B9A60  38 A0 00 01 */	li r5, 1
 /* 800BCB04 000B9A64  90 01 00 04 */	stw r0, 4(r1)
@@ -60,9 +59,9 @@ __ct__11ActPickItemFP4Piki:
 /* 800BCBD0 000B9B30  38 21 00 20 */	addi r1, r1, 0x20
 /* 800BCBD4 000B9B34  7C 08 03 A6 */	mtlr r0
 /* 800BCBD8 000B9B38  4E 80 00 20 */	blr 
+.endfn __ct__11ActPickItemFP4Piki
 
-.global findItem__11ActPickItemFv
-findItem__11ActPickItemFv:
+.fn findItem__11ActPickItemFv, global
 /* 800BCBDC 000B9B3C  7C 08 02 A6 */	mflr r0
 /* 800BCBE0 000B9B40  90 01 00 04 */	stw r0, 4(r1)
 /* 800BCBE4 000B9B44  94 21 FF B8 */	stwu r1, -0x48(r1)
@@ -167,9 +166,9 @@ findItem__11ActPickItemFv:
 /* 800BCD50 000B9CB0  38 21 00 48 */	addi r1, r1, 0x48
 /* 800BCD54 000B9CB4  7C 08 03 A6 */	mtlr r0
 /* 800BCD58 000B9CB8  4E 80 00 20 */	blr 
+.endfn findItem__11ActPickItemFv
 
-.global init__11ActPickItemFP8Creature
-init__11ActPickItemFP8Creature:
+.fn init__11ActPickItemFP8Creature, global
 /* 800BCD5C 000B9CBC  7C 08 02 A6 */	mflr r0
 /* 800BCD60 000B9CC0  90 01 00 04 */	stw r0, 4(r1)
 /* 800BCD64 000B9CC4  38 00 00 00 */	li r0, 0
@@ -219,9 +218,9 @@ init__11ActPickItemFP8Creature:
 /* 800BCE00 000B9D60  38 21 00 20 */	addi r1, r1, 0x20
 /* 800BCE04 000B9D64  7C 08 03 A6 */	mtlr r0
 /* 800BCE08 000B9D68  4E 80 00 20 */	blr 
+.endfn init__11ActPickItemFP8Creature
 
-.global exec__11ActPickItemFv
-exec__11ActPickItemFv:
+.fn exec__11ActPickItemFv, global
 /* 800BCE0C 000B9D6C  7C 08 02 A6 */	mflr r0
 /* 800BCE10 000B9D70  90 01 00 04 */	stw r0, 4(r1)
 /* 800BCE14 000B9D74  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -285,9 +284,9 @@ exec__11ActPickItemFv:
 /* 800BCEE8 000B9E48  38 21 00 20 */	addi r1, r1, 0x20
 /* 800BCEEC 000B9E4C  7C 08 03 A6 */	mtlr r0
 /* 800BCEF0 000B9E50  4E 80 00 20 */	blr 
+.endfn exec__11ActPickItemFv
 
-.global cleanup__11ActPickItemFv
-cleanup__11ActPickItemFv:
+.fn cleanup__11ActPickItemFv, global
 /* 800BCEF4 000B9E54  7C 08 02 A6 */	mflr r0
 /* 800BCEF8 000B9E58  90 01 00 04 */	stw r0, 4(r1)
 /* 800BCEFC 000B9E5C  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -305,9 +304,9 @@ cleanup__11ActPickItemFv:
 /* 800BCF28 000B9E88  38 21 00 20 */	addi r1, r1, 0x20
 /* 800BCF2C 000B9E8C  7C 08 03 A6 */	mtlr r0
 /* 800BCF30 000B9E90  4E 80 00 20 */	blr 
+.endfn cleanup__11ActPickItemFv
 
-.global init__9ActFlowerFP8Creature
-init__9ActFlowerFP8Creature:
+.fn init__9ActFlowerFP8Creature, global
 /* 800BCF34 000B9E94  7C 08 02 A6 */	mflr r0
 /* 800BCF38 000B9E98  38 A0 00 20 */	li r5, 0x20
 /* 800BCF3C 000B9E9C  90 01 00 04 */	stw r0, 4(r1)
@@ -401,9 +400,9 @@ init__9ActFlowerFP8Creature:
 /* 800BD084 000B9FE4  38 21 00 50 */	addi r1, r1, 0x50
 /* 800BD088 000B9FE8  7C 08 03 A6 */	mtlr r0
 /* 800BD08C 000B9FEC  4E 80 00 20 */	blr 
+.endfn init__9ActFlowerFP8Creature
 
-.global animationKeyUpdated__9ActFlowerFR16PaniAnimKeyEvent
-animationKeyUpdated__9ActFlowerFR16PaniAnimKeyEvent:
+.fn animationKeyUpdated__9ActFlowerFR16PaniAnimKeyEvent, global
 /* 800BD090 000B9FF0  7C 08 02 A6 */	mflr r0
 /* 800BD094 000B9FF4  90 01 00 04 */	stw r0, 4(r1)
 /* 800BD098 000B9FF8  94 21 FF B0 */	stwu r1, -0x50(r1)
@@ -480,9 +479,9 @@ animationKeyUpdated__9ActFlowerFR16PaniAnimKeyEvent:
 /* 800BD1A4 000BA104  38 21 00 50 */	addi r1, r1, 0x50
 /* 800BD1A8 000BA108  7C 08 03 A6 */	mtlr r0
 /* 800BD1AC 000BA10C  4E 80 00 20 */	blr 
+.endfn animationKeyUpdated__9ActFlowerFR16PaniAnimKeyEvent
 
-.global cleanup__9ActFlowerFv
-cleanup__9ActFlowerFv:
+.fn cleanup__9ActFlowerFv, global
 /* 800BD1B0 000BA110  7C 08 02 A6 */	mflr r0
 /* 800BD1B4 000BA114  38 A0 00 00 */	li r5, 0
 /* 800BD1B8 000BA118  90 01 00 04 */	stw r0, 4(r1)
@@ -497,9 +496,9 @@ cleanup__9ActFlowerFv:
 /* 800BD1DC 000BA13C  38 21 00 08 */	addi r1, r1, 8
 /* 800BD1E0 000BA140  7C 08 03 A6 */	mtlr r0
 /* 800BD1E4 000BA144  4E 80 00 20 */	blr 
+.endfn cleanup__9ActFlowerFv
 
-.global exec__9ActFlowerFv
-exec__9ActFlowerFv:
+.fn exec__9ActFlowerFv, global
 /* 800BD1E8 000BA148  88 03 00 1D */	lbz r0, 0x1d(r3)
 /* 800BD1EC 000BA14C  28 00 00 00 */	cmplwi r0, 0
 /* 800BD1F0 000BA150  41 82 00 0C */	beq .L_800BD1FC
@@ -532,9 +531,9 @@ exec__9ActFlowerFv:
 .L_800BD254:
 /* 800BD254 000BA1B4  38 60 00 00 */	li r3, 0
 /* 800BD258 000BA1B8  4E 80 00 20 */	blr 
+.endfn exec__9ActFlowerFv
 
-.global __dt__9ActFlowerFv
-__dt__9ActFlowerFv:
+.fn __dt__9ActFlowerFv, weak
 /* 800BD25C 000BA1BC  7C 08 02 A6 */	mflr r0
 /* 800BD260 000BA1C0  90 01 00 04 */	stw r0, 4(r1)
 /* 800BD264 000BA1C4  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -568,9 +567,9 @@ __dt__9ActFlowerFv:
 /* 800BD2D0 000BA230  38 21 00 18 */	addi r1, r1, 0x18
 /* 800BD2D4 000BA234  7C 08 03 A6 */	mtlr r0
 /* 800BD2D8 000BA238  4E 80 00 20 */	blr 
+.endfn __dt__9ActFlowerFv
 
-.global __dt__11ActPickItemFv
-__dt__11ActPickItemFv:
+.fn __dt__11ActPickItemFv, weak
 /* 800BD2DC 000BA23C  7C 08 02 A6 */	mflr r0
 /* 800BD2E0 000BA240  90 01 00 04 */	stw r0, 4(r1)
 /* 800BD2E4 000BA244  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -602,27 +601,33 @@ __dt__11ActPickItemFv:
 /* 800BD344 000BA2A4  38 21 00 18 */	addi r1, r1, 0x18
 /* 800BD348 000BA2A8  7C 08 03 A6 */	mtlr r0
 /* 800BD34C 000BA2AC  4E 80 00 20 */	blr 
+.endfn __dt__11ActPickItemFv
 
-"@32@4@animationKeyUpdated__9ActFlowerFR16PaniAnimKeyEvent":
+.fn "@32@4@animationKeyUpdated__9ActFlowerFR16PaniAnimKeyEvent", weak
 /* 800BD350 000BA2B0  39 60 00 04 */	li r11, 4
 /* 800BD354 000BA2B4  7D 63 58 2E */	lwzx r11, r3, r11
 /* 800BD358 000BA2B8  7C 63 5A 14 */	add r3, r3, r11
 /* 800BD35C 000BA2BC  38 63 FF E0 */	addi r3, r3, -32
 /* 800BD360 000BA2C0  4B FF FD 30 */	b animationKeyUpdated__9ActFlowerFR16PaniAnimKeyEvent
+.endfn "@32@4@animationKeyUpdated__9ActFlowerFR16PaniAnimKeyEvent"
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802B6D60:
+.obj lbl_802B6D60, local
 	.asciz "aiPick.cpp"
+.endobj lbl_802B6D60
 .balign 4
-lbl_802B6D6C:
+.obj lbl_802B6D6C, local
 	.asciz "PickItem"
+.endobj lbl_802B6D6C
 .balign 4
-lbl_802B6D78:
+.obj lbl_802B6D78, local
 	.asciz "pick item"
+.endobj lbl_802B6D78
 .balign 4
-lbl_802B6D84:
+.obj lbl_802B6D84, local
 	.asciz "Interaction"
+.endobj lbl_802B6D84
 .balign 4
 	.4byte 0x00000000
 	.4byte 0x00000000
@@ -636,20 +641,24 @@ lbl_802B6D84:
 	.4byte 0x00000000
 	.4byte 0x00000000
 .balign 4
-lbl_802B6DBC:
+.obj lbl_802B6DBC, local
 	.asciz "ActFlower"
+.endobj lbl_802B6DBC
 .balign 4
-lbl_802B6DC8:
+.obj lbl_802B6DC8, local
 	.asciz "PaniAnimKeyListener"
+.endobj lbl_802B6DC8
 .balign 4
-lbl_802B6DDC:
+.obj lbl_802B6DDC, local
 	.asciz "Receiver<Piki>"
+.endobj lbl_802B6DDC
 .balign 4
-lbl_802B6DEC:
+.obj lbl_802B6DEC, local
 	.4byte "__RTTI__15Receiver<4Piki>"
 	.4byte 0x00000000
 	.4byte 0x00000000
-lbl_802B6DF8:
+.endobj lbl_802B6DEC
+.obj lbl_802B6DF8, local
 	.4byte __RTTI__19PaniAnimKeyListener
 	.4byte 0x00000020
 	.4byte "__RTTI__15Receiver<4Piki>"
@@ -657,8 +666,8 @@ lbl_802B6DF8:
 	.4byte __RTTI__6Action
 	.4byte 0x00000000
 	.4byte 0x00000000
-.global __vt__9ActFlower
-__vt__9ActFlower:
+.endobj lbl_802B6DF8
+.obj __vt__9ActFlower, global
 	.4byte __RTTI__9ActFlower
 	.4byte 0
 	.4byte "procMsg__15Receiver<4Piki>FP4PikiP3Msg"
@@ -688,23 +697,27 @@ __vt__9ActFlower:
 	.4byte __RTTI__9ActFlower
 	.4byte 0xFFFFFFE0
 	.4byte "@32@4@animationKeyUpdated__9ActFlowerFR16PaniAnimKeyEvent"
+.endobj __vt__9ActFlower
 	.4byte 0
 	.4byte 0
 	.4byte 0
 .balign 4
-lbl_802B6E94:
+.obj lbl_802B6E94, local
 	.asciz "ActPickItem"
+.endobj lbl_802B6E94
 .balign 4
-lbl_802B6EA0:
+.obj lbl_802B6EA0, local
 	.asciz "AndAction"
+.endobj lbl_802B6EA0
 .balign 4
-lbl_802B6EAC:
+.obj lbl_802B6EAC, local
 	.4byte "__RTTI__15Receiver<4Piki>"
 	.4byte 0
 	.4byte __RTTI__6Action
 	.4byte 0
 	.4byte 0
-lbl_802B6EC0:
+.endobj lbl_802B6EAC
+.obj lbl_802B6EC0, local
 	.4byte "__RTTI__15Receiver<4Piki>"
 	.4byte 0
 	.4byte __RTTI__6Action
@@ -712,8 +725,8 @@ lbl_802B6EC0:
 	.4byte __RTTI__9AndAction
 	.4byte 0
 	.4byte 0
-.global __vt__11ActPickItem
-__vt__11ActPickItem:
+.endobj lbl_802B6EC0
+.obj __vt__11ActPickItem, global
 	.4byte __RTTI__11ActPickItem
 	.4byte 0
 	.4byte "procMsg__15Receiver<4Piki>FP4PikiP3Msg"
@@ -739,7 +752,8 @@ __vt__11ActPickItem:
 	.4byte restart__6ActionFv
 	.4byte resumable__6ActionFv
 	.4byte getInfo__6ActionFPc
-lbl_802B6F40:
+.endobj __vt__11ActPickItem
+.obj lbl_802B6F40, local
 	.4byte .L_800A7908
 	.4byte .L_800A7930
 	.4byte .L_800A7944
@@ -751,51 +765,69 @@ lbl_802B6F40:
 	.4byte .L_800A791C
 	.4byte .L_800A79D0
 	.4byte .L_800A79BC
+.endobj lbl_802B6F40
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-lbl_803E0550:
+.obj lbl_803E0550, local
 	.float 0.0
-lbl_803E0554:
+.endobj lbl_803E0550
+.obj lbl_803E0554, local
 	.float 0.0
-lbl_803E0558:
+.endobj lbl_803E0554
+.obj lbl_803E0558, local
 	.float 0.0
-lbl_803E055C:
+.endobj lbl_803E0558
+.obj lbl_803E055C, local
 	.float 0.0
-lbl_803E0560:
+.endobj lbl_803E055C
+.obj lbl_803E0560, local
 	.float 0.0
-lbl_803E0564:
+.endobj lbl_803E0560
+.obj lbl_803E0564, local
 	.float 0.0
-__RTTI__19PaniAnimKeyListener:
+.endobj lbl_803E0564
+.obj __RTTI__19PaniAnimKeyListener, local
 	.4byte lbl_802B6DC8
 	.4byte 0
-"__RTTI__15Receiver<4Piki>":
+.endobj __RTTI__19PaniAnimKeyListener
+.obj "__RTTI__15Receiver<4Piki>", local
 	.4byte lbl_802B6DDC
 	.4byte 0
+.endobj "__RTTI__15Receiver<4Piki>"
 .balign 4
-lbl_803E0578:
+.obj lbl_803E0578, local
 	.asciz "Action"
+.endobj lbl_803E0578
 .balign 4
-__RTTI__6Action:
+.obj __RTTI__6Action, local
 	.4byte lbl_803E0578
 	.4byte lbl_802B6DEC
-__RTTI__9ActFlower:
+.endobj __RTTI__6Action
+.obj __RTTI__9ActFlower, local
 	.4byte lbl_802B6DBC
 	.4byte lbl_802B6DF8
-__RTTI__9AndAction:
+.endobj __RTTI__9ActFlower
+.obj __RTTI__9AndAction, local
 	.4byte lbl_802B6EA0
 	.4byte lbl_802B6EAC
-__RTTI__11ActPickItem:
+.endobj __RTTI__9AndAction
+.obj __RTTI__11ActPickItem, local
 	.4byte lbl_802B6E94
 	.4byte lbl_802B6EC0
+.endobj __RTTI__11ActPickItem
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803E95A8:
+.obj lbl_803E95A8, local
 	.float 200.0
-lbl_803E95AC:
+.endobj lbl_803E95A8
+.obj lbl_803E95AC, local
 	.float 0.0
-lbl_803E95B0:
+.endobj lbl_803E95AC
+.obj lbl_803E95B0, local
 	.float 1.0
-lbl_803E95B4:
+.endobj lbl_803E95B0
+.obj lbl_803E95B4, local
 	.float 0.3
+.endobj lbl_803E95B4

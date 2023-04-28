@@ -886,7 +886,6 @@ birth__13MeltingPotMgrFi:
 /* 800F361C 000F057C  7C 03 00 2E */	lwzx r0, r3, r0
 /* 800F3620 000F0580  7C 09 03 A6 */	mtctr r0
 /* 800F3624 000F0584  4E 80 04 20 */	bctr 
-.global .L_800F3628
 .L_800F3628:
 /* 800F3628 000F0588  38 60 03 EC */	li r3, 0x3ec
 /* 800F362C 000F058C  4B F5 39 D9 */	bl alloc__6SystemFUl
@@ -897,7 +896,6 @@ birth__13MeltingPotMgrFi:
 .L_800F3640:
 /* 800F3640 000F05A0  7F BE EB 78 */	mr r30, r29
 /* 800F3644 000F05A4  48 00 01 D8 */	b .L_800F381C
-.global .L_800F3648
 .L_800F3648:
 /* 800F3648 000F05A8  38 60 04 94 */	li r3, 0x494
 /* 800F364C 000F05AC  4B F5 39 B9 */	bl alloc__6SystemFUl
@@ -915,7 +913,6 @@ birth__13MeltingPotMgrFi:
 .L_800F367C:
 /* 800F367C 000F05DC  7F BE EB 78 */	mr r30, r29
 /* 800F3680 000F05E0  48 00 01 9C */	b .L_800F381C
-.global .L_800F3684
 .L_800F3684:
 /* 800F3684 000F05E4  38 60 05 D0 */	li r3, 0x5d0
 /* 800F3688 000F05E8  4B F5 39 7D */	bl alloc__6SystemFUl
@@ -929,7 +926,6 @@ birth__13MeltingPotMgrFi:
 .L_800F36A8:
 /* 800F36A8 000F0608  7F BE EB 78 */	mr r30, r29
 /* 800F36AC 000F060C  48 00 01 70 */	b .L_800F381C
-.global .L_800F36B0
 .L_800F36B0:
 /* 800F36B0 000F0610  38 60 08 24 */	li r3, 0x824
 /* 800F36B4 000F0614  4B F5 39 51 */	bl alloc__6SystemFUl
@@ -942,7 +938,6 @@ birth__13MeltingPotMgrFi:
 .L_800F36D0:
 /* 800F36D0 000F0630  7F BE EB 78 */	mr r30, r29
 /* 800F36D4 000F0634  48 00 01 48 */	b .L_800F381C
-.global .L_800F36D8
 .L_800F36D8:
 /* 800F36D8 000F0638  38 60 08 2C */	li r3, 0x82c
 /* 800F36DC 000F063C  4B F5 39 29 */	bl alloc__6SystemFUl
@@ -955,7 +950,6 @@ birth__13MeltingPotMgrFi:
 .L_800F36F8:
 /* 800F36F8 000F0658  7F BE EB 78 */	mr r30, r29
 /* 800F36FC 000F065C  48 00 01 20 */	b .L_800F381C
-.global .L_800F3700
 .L_800F3700:
 /* 800F3700 000F0660  38 60 08 CC */	li r3, 0x8cc
 /* 800F3704 000F0664  4B F5 39 01 */	bl alloc__6SystemFUl
@@ -970,7 +964,6 @@ birth__13MeltingPotMgrFi:
 /* 800F3728 000F0688  80 C6 00 20 */	lwz r6, 0x20(r6)
 /* 800F372C 000F068C  48 00 2E B9 */	bl __ct__12BuildingItemFiP12CreaturePropP15ItemShapeObjectP8SimpleAI
 /* 800F3730 000F0690  48 00 00 EC */	b .L_800F381C
-.global .L_800F3734
 .L_800F3734:
 /* 800F3734 000F0694  38 60 08 CC */	li r3, 0x8cc
 /* 800F3738 000F0698  4B F5 38 CD */	bl alloc__6SystemFUl
@@ -985,7 +978,6 @@ birth__13MeltingPotMgrFi:
 /* 800F375C 000F06BC  80 C6 00 20 */	lwz r6, 0x20(r6)
 /* 800F3760 000F06C0  48 00 2E 85 */	bl __ct__12BuildingItemFiP12CreaturePropP15ItemShapeObjectP8SimpleAI
 /* 800F3764 000F06C4  48 00 00 B8 */	b .L_800F381C
-.global .L_800F3768
 .L_800F3768:
 /* 800F3768 000F06C8  38 60 08 CC */	li r3, 0x8cc
 /* 800F376C 000F06CC  4B F5 38 99 */	bl alloc__6SystemFUl
@@ -1000,7 +992,6 @@ birth__13MeltingPotMgrFi:
 /* 800F3790 000F06F0  80 C6 00 24 */	lwz r6, 0x24(r6)
 /* 800F3794 000F06F4  48 00 2E 51 */	bl __ct__12BuildingItemFiP12CreaturePropP15ItemShapeObjectP8SimpleAI
 /* 800F3798 000F06F8  48 00 00 84 */	b .L_800F381C
-.global .L_800F379C
 .L_800F379C:
 /* 800F379C 000F06FC  38 60 08 CC */	li r3, 0x8cc
 /* 800F37A0 000F0700  4B F5 38 65 */	bl alloc__6SystemFUl
@@ -1015,7 +1006,6 @@ birth__13MeltingPotMgrFi:
 /* 800F37C4 000F0724  80 C6 00 24 */	lwz r6, 0x24(r6)
 /* 800F37C8 000F0728  48 00 2E 1D */	bl __ct__12BuildingItemFiP12CreaturePropP15ItemShapeObjectP8SimpleAI
 /* 800F37CC 000F072C  48 00 00 50 */	b .L_800F381C
-.global .L_800F37D0
 .L_800F37D0:
 /* 800F37D0 000F0730  38 60 03 E8 */	li r3, 0x3e8
 /* 800F37D4 000F0734  4B F5 38 31 */	bl alloc__6SystemFUl
@@ -1028,7 +1018,6 @@ birth__13MeltingPotMgrFi:
 .L_800F37F0:
 /* 800F37F0 000F0750  7F BE EB 78 */	mr r30, r29
 /* 800F37F4 000F0754  48 00 00 28 */	b .L_800F381C
-.global .L_800F37F8
 .L_800F37F8:
 /* 800F37F8 000F0758  38 60 03 E4 */	li r3, 0x3e4
 /* 800F37FC 000F075C  4B F5 38 09 */	bl alloc__6SystemFUl
@@ -1040,7 +1029,6 @@ birth__13MeltingPotMgrFi:
 /* 800F3814 000F0774  4B FF 1A D5 */	bl __ct__8GrassGenFP5ShapeP12CreatureProp
 .L_800F3818:
 /* 800F3818 000F0778  7F BE EB 78 */	mr r30, r29
-.global .L_800F381C
 .L_800F381C:
 /* 800F381C 000F077C  38 60 00 18 */	li r3, 0x18
 /* 800F3820 000F0780  4B F5 37 E5 */	bl alloc__6SystemFUl
@@ -5006,7 +4994,6 @@ birth__7ItemMgrFi:
 /* 800F7018 000F3F78  7C 05 00 2E */	lwzx r0, r5, r0
 /* 800F701C 000F3F7C  7C 09 03 A6 */	mtctr r0
 /* 800F7020 000F3F80  4E 80 04 20 */	bctr 
-.global .L_800F7024
 .L_800F7024:
 /* 800F7024 000F3F84  80 63 00 64 */	lwz r3, 0x64(r3)
 /* 800F7028 000F3F88  81 83 00 00 */	lwz r12, 0(r3)
@@ -5014,12 +5001,10 @@ birth__7ItemMgrFi:
 /* 800F7030 000F3F90  7D 88 03 A6 */	mtlr r12
 /* 800F7034 000F3F94  4E 80 00 21 */	blrl 
 /* 800F7038 000F3F98  48 00 00 14 */	b .L_800F704C
-.global .L_800F703C
 .L_800F703C:
 /* 800F703C 000F3F9C  80 63 00 68 */	lwz r3, 0x68(r3)
 /* 800F7040 000F3FA0  4B FF C5 A1 */	bl birth__13MeltingPotMgrFi
 /* 800F7044 000F3FA4  48 00 00 08 */	b .L_800F704C
-.global .L_800F7048
 .L_800F7048:
 /* 800F7048 000F3FA8  4B FE B3 D9 */	bl birth__13PolyObjectMgrFi
 .L_800F704C:
@@ -6691,13 +6676,13 @@ __RTTI__12BuildingItem:
 
 .section .sbss, "wa"
 .balign 8
-.global buryMode__11PikiHeadMgr
-buryMode__11PikiHeadMgr:
+.obj buryMode__11PikiHeadMgr, global
 	.skip 0x1
+.endobj buryMode__11PikiHeadMgr
 .balign 4
-.global itemMgr
-itemMgr:
+.obj itemMgr, global
 	.skip 0x4
+.endobj itemMgr
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
@@ -6725,8 +6710,7 @@ lbl_803E9E30:
 	.float 0.8
 .balign 8
 lbl_803E9E38:
-	.4byte 0x43300000
-	.4byte 0x80000000
+	.8byte 0x4330000080000000
 lbl_803E9E40:
 	.float 100.0
 lbl_803E9E44:

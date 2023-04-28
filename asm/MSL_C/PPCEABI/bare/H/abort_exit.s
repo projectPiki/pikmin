@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global exit
-exit:
+.fn exit, global
 /* 8021553C 0021249C  7C 08 02 A6 */	mflr r0
 /* 80215540 002124A0  90 01 00 04 */	stw r0, 4(r1)
 /* 80215544 002124A4  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -77,21 +76,22 @@ exit:
 /* 8021563C 0021259C  38 21 00 18 */	addi r1, r1, 0x18
 /* 80215640 002125A0  7C 08 03 A6 */	mtlr r0
 /* 80215644 002125A4  4E 80 00 20 */	blr 
+.endfn exit
 
 .section .sbss, "wa"
 .balign 8
-.global __aborting
-__aborting:
+.obj __aborting, global
 	.skip 0x4
-.global atexit_curr_func
-atexit_curr_func:
+.endobj __aborting
+.obj atexit_curr_func, local
 	.skip 0x4
-.global __atexit_curr_func
-__atexit_curr_func:
+.endobj atexit_curr_func
+.obj __atexit_curr_func, local
 	.skip 0x4
-.global __stdio_exit
-__stdio_exit:
+.endobj __atexit_curr_func
+.obj __stdio_exit, global
 	.skip 0x4
-.global __console_exit
-__console_exit:
+.endobj __stdio_exit
+.obj __console_exit, global
 	.skip 0x4
+.endobj __console_exit

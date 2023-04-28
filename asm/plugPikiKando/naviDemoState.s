@@ -2019,8 +2019,7 @@ procAnimMsg__19NaviDemoSunsetStateFP4NaviP7MsgAnim:
 /* 8010CCD8 00109C38  7C 08 03 A6 */	mtlr r0
 /* 8010CCDC 00109C3C  4E 80 00 20 */	blr 
 
-.global "procMsg__35StateMachine<19NaviDemoSunsetState>FP19NaviDemoSunsetStateP3Msg"
-"procMsg__35StateMachine<19NaviDemoSunsetState>FP19NaviDemoSunsetStateP3Msg":
+.fn "procMsg__35StateMachine<19NaviDemoSunsetState>FP19NaviDemoSunsetStateP3Msg", weak
 /* 8010CCE0 00109C40  7C 08 02 A6 */	mflr r0
 /* 8010CCE4 00109C44  90 01 00 04 */	stw r0, 4(r1)
 /* 8010CCE8 00109C48  94 21 FF F8 */	stwu r1, -8(r1)
@@ -2037,9 +2036,9 @@ procAnimMsg__19NaviDemoSunsetStateFP4NaviP7MsgAnim:
 /* 8010CD10 00109C70  38 21 00 08 */	addi r1, r1, 8
 /* 8010CD14 00109C74  7C 08 03 A6 */	mtlr r0
 /* 8010CD18 00109C78  4E 80 00 20 */	blr 
+.endfn "procMsg__35StateMachine<19NaviDemoSunsetState>FP19NaviDemoSunsetStateP3Msg"
 
-.global "procMsg__31Receiver<19NaviDemoSunsetState>FP19NaviDemoSunsetStateP3Msg"
-"procMsg__31Receiver<19NaviDemoSunsetState>FP19NaviDemoSunsetStateP3Msg":
+.fn "procMsg__31Receiver<19NaviDemoSunsetState>FP19NaviDemoSunsetStateP3Msg", weak
 /* 8010CD1C 00109C7C  7C 08 02 A6 */	mflr r0
 /* 8010CD20 00109C80  90 01 00 04 */	stw r0, 4(r1)
 /* 8010CD24 00109C84  94 21 FF F8 */	stwu r1, -8(r1)
@@ -2122,62 +2121,63 @@ procAnimMsg__19NaviDemoSunsetStateFP4NaviP7MsgAnim:
 /* 8010CE28 00109D88  38 21 00 08 */	addi r1, r1, 8
 /* 8010CE2C 00109D8C  7C 08 03 A6 */	mtlr r0
 /* 8010CE30 00109D90  4E 80 00 20 */	blr 
+.endfn "procMsg__31Receiver<19NaviDemoSunsetState>FP19NaviDemoSunsetStateP3Msg"
 
-.global "procGroundMsg__31Receiver<19NaviDemoSunsetState>FP19NaviDemoSunsetStateP9MsgGround"
-"procGroundMsg__31Receiver<19NaviDemoSunsetState>FP19NaviDemoSunsetStateP9MsgGround":
+.fn "procGroundMsg__31Receiver<19NaviDemoSunsetState>FP19NaviDemoSunsetStateP9MsgGround", weak
 /* 8010CE34 00109D94  4E 80 00 20 */	blr 
+.endfn "procGroundMsg__31Receiver<19NaviDemoSunsetState>FP19NaviDemoSunsetStateP9MsgGround"
 
-.global "procUserMsg__31Receiver<19NaviDemoSunsetState>FP19NaviDemoSunsetStateP7MsgUser"
-"procUserMsg__31Receiver<19NaviDemoSunsetState>FP19NaviDemoSunsetStateP7MsgUser":
+.fn "procUserMsg__31Receiver<19NaviDemoSunsetState>FP19NaviDemoSunsetStateP7MsgUser", weak
 /* 8010CE38 00109D98  4E 80 00 20 */	blr 
+.endfn "procUserMsg__31Receiver<19NaviDemoSunsetState>FP19NaviDemoSunsetStateP7MsgUser"
 
-.global "procOffWallMsg__31Receiver<19NaviDemoSunsetState>FP19NaviDemoSunsetStateP10MsgOffWall"
-"procOffWallMsg__31Receiver<19NaviDemoSunsetState>FP19NaviDemoSunsetStateP10MsgOffWall":
+.fn "procOffWallMsg__31Receiver<19NaviDemoSunsetState>FP19NaviDemoSunsetStateP10MsgOffWall", weak
 /* 8010CE3C 00109D9C  4E 80 00 20 */	blr 
+.endfn "procOffWallMsg__31Receiver<19NaviDemoSunsetState>FP19NaviDemoSunsetStateP10MsgOffWall"
 
-.global "procWallMsg__31Receiver<19NaviDemoSunsetState>FP19NaviDemoSunsetStateP7MsgWall"
-"procWallMsg__31Receiver<19NaviDemoSunsetState>FP19NaviDemoSunsetStateP7MsgWall":
+.fn "procWallMsg__31Receiver<19NaviDemoSunsetState>FP19NaviDemoSunsetStateP7MsgWall", weak
 /* 8010CE40 00109DA0  4E 80 00 20 */	blr 
+.endfn "procWallMsg__31Receiver<19NaviDemoSunsetState>FP19NaviDemoSunsetStateP7MsgWall"
 
-.global "procDamageMsg__31Receiver<19NaviDemoSunsetState>FP19NaviDemoSunsetStateP9MsgDamage"
-"procDamageMsg__31Receiver<19NaviDemoSunsetState>FP19NaviDemoSunsetStateP9MsgDamage":
+.fn "procDamageMsg__31Receiver<19NaviDemoSunsetState>FP19NaviDemoSunsetStateP9MsgDamage", weak
 /* 8010CE44 00109DA4  4E 80 00 20 */	blr 
+.endfn "procDamageMsg__31Receiver<19NaviDemoSunsetState>FP19NaviDemoSunsetStateP9MsgDamage"
 
-.global "procAnimMsg__31Receiver<19NaviDemoSunsetState>FP19NaviDemoSunsetStateP7MsgAnim"
-"procAnimMsg__31Receiver<19NaviDemoSunsetState>FP19NaviDemoSunsetStateP7MsgAnim":
+.fn "procAnimMsg__31Receiver<19NaviDemoSunsetState>FP19NaviDemoSunsetStateP7MsgAnim", weak
 /* 8010CE48 00109DA8  4E 80 00 20 */	blr 
+.endfn "procAnimMsg__31Receiver<19NaviDemoSunsetState>FP19NaviDemoSunsetStateP7MsgAnim"
 
-.global "procCollideMsg__31Receiver<19NaviDemoSunsetState>FP19NaviDemoSunsetStateP10MsgCollide"
-"procCollideMsg__31Receiver<19NaviDemoSunsetState>FP19NaviDemoSunsetStateP10MsgCollide":
+.fn "procCollideMsg__31Receiver<19NaviDemoSunsetState>FP19NaviDemoSunsetStateP10MsgCollide", weak
 /* 8010CE4C 00109DAC  4E 80 00 20 */	blr 
+.endfn "procCollideMsg__31Receiver<19NaviDemoSunsetState>FP19NaviDemoSunsetStateP10MsgCollide"
 
-.global "procTargetMsg__31Receiver<19NaviDemoSunsetState>FP19NaviDemoSunsetStateP9MsgTarget"
-"procTargetMsg__31Receiver<19NaviDemoSunsetState>FP19NaviDemoSunsetStateP9MsgTarget":
+.fn "procTargetMsg__31Receiver<19NaviDemoSunsetState>FP19NaviDemoSunsetStateP9MsgTarget", weak
 /* 8010CE50 00109DB0  4E 80 00 20 */	blr 
+.endfn "procTargetMsg__31Receiver<19NaviDemoSunsetState>FP19NaviDemoSunsetStateP9MsgTarget"
 
-.global "procHangMsg__31Receiver<19NaviDemoSunsetState>FP19NaviDemoSunsetStateP7MsgHang"
-"procHangMsg__31Receiver<19NaviDemoSunsetState>FP19NaviDemoSunsetStateP7MsgHang":
+.fn "procHangMsg__31Receiver<19NaviDemoSunsetState>FP19NaviDemoSunsetStateP7MsgHang", weak
 /* 8010CE54 00109DB4  4E 80 00 20 */	blr 
+.endfn "procHangMsg__31Receiver<19NaviDemoSunsetState>FP19NaviDemoSunsetStateP7MsgHang"
 
-.global "procStickMsg__31Receiver<19NaviDemoSunsetState>FP19NaviDemoSunsetStateP8MsgStick"
-"procStickMsg__31Receiver<19NaviDemoSunsetState>FP19NaviDemoSunsetStateP8MsgStick":
+.fn "procStickMsg__31Receiver<19NaviDemoSunsetState>FP19NaviDemoSunsetStateP8MsgStick", weak
 /* 8010CE58 00109DB8  4E 80 00 20 */	blr 
+.endfn "procStickMsg__31Receiver<19NaviDemoSunsetState>FP19NaviDemoSunsetStateP8MsgStick"
 
-.global "procBounceMsg__31Receiver<19NaviDemoSunsetState>FP19NaviDemoSunsetStateP9MsgBounce"
-"procBounceMsg__31Receiver<19NaviDemoSunsetState>FP19NaviDemoSunsetStateP9MsgBounce":
+.fn "procBounceMsg__31Receiver<19NaviDemoSunsetState>FP19NaviDemoSunsetStateP9MsgBounce", weak
 /* 8010CE5C 00109DBC  4E 80 00 20 */	blr 
+.endfn "procBounceMsg__31Receiver<19NaviDemoSunsetState>FP19NaviDemoSunsetStateP9MsgBounce"
 
-.global "resume__29AState<19NaviDemoSunsetState>FP19NaviDemoSunsetState"
-"resume__29AState<19NaviDemoSunsetState>FP19NaviDemoSunsetState":
+.fn "resume__29AState<19NaviDemoSunsetState>FP19NaviDemoSunsetState", weak
 /* 8010CE60 00109DC0  4E 80 00 20 */	blr 
+.endfn "resume__29AState<19NaviDemoSunsetState>FP19NaviDemoSunsetState"
 
-.global "restart__29AState<19NaviDemoSunsetState>FP19NaviDemoSunsetState"
-"restart__29AState<19NaviDemoSunsetState>FP19NaviDemoSunsetState":
+.fn "restart__29AState<19NaviDemoSunsetState>FP19NaviDemoSunsetState", weak
 /* 8010CE64 00109DC4  4E 80 00 20 */	blr 
+.endfn "restart__29AState<19NaviDemoSunsetState>FP19NaviDemoSunsetState"
 
-.global "init__35StateMachine<19NaviDemoSunsetState>FP19NaviDemoSunsetState"
-"init__35StateMachine<19NaviDemoSunsetState>FP19NaviDemoSunsetState":
+.fn "init__35StateMachine<19NaviDemoSunsetState>FP19NaviDemoSunsetState", weak
 /* 8010CE68 00109DC8  4E 80 00 20 */	blr 
+.endfn "init__35StateMachine<19NaviDemoSunsetState>FP19NaviDemoSunsetState"
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
@@ -2684,39 +2684,55 @@ __RTTI__Q219NaviDemoSunsetState16DemoStateMachine:
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803EA078:
+.obj lbl_803EA078, local
 	.float 0.9
-lbl_803EA07C:
+.endobj lbl_803EA078
+.obj lbl_803EA07C, local
 	.float 0.0
-lbl_803EA080:
+.endobj lbl_803EA07C
+.obj lbl_803EA080, local
 	.double 0.5
-lbl_803EA088:
+.endobj lbl_803EA080
+.obj lbl_803EA088, local
 	.double 3.0
-lbl_803EA090:
+.endobj lbl_803EA088
+.obj lbl_803EA090, local
 	.float 0.7
-lbl_803EA094:
+.endobj lbl_803EA090
+.obj lbl_803EA094, local
 	.float 0.71
-lbl_803EA098:
+.endobj lbl_803EA094
+.obj lbl_803EA098, local
 	.float 1.0
-lbl_803EA09C:
+.endobj lbl_803EA098
+.obj lbl_803EA09C, local
 	.float 32767.0
-lbl_803EA0A0:
+.endobj lbl_803EA09C
+.obj lbl_803EA0A0, local
 	.float 0.9999
-lbl_803EA0A4:
+.endobj lbl_803EA0A0
+.obj lbl_803EA0A4, local
 	.float 4.0
-lbl_803EA0A8:
+.endobj lbl_803EA0A4
+.obj lbl_803EA0A8, local
 	.float 5.0
-lbl_803EA0AC:
+.endobj lbl_803EA0A8
+.obj lbl_803EA0AC, local
 	.float 0.4
-lbl_803EA0B0:
+.endobj lbl_803EA0AC
+.obj lbl_803EA0B0, local
 	.float 0.6
+.endobj lbl_803EA0B0
 .balign 8
-lbl_803EA0B8:
-	.4byte 0x43300000
-	.4byte 0x80000000
-lbl_803EA0C0:
+.obj lbl_803EA0B8, local
+	.8byte 0x4330000080000000
+.endobj lbl_803EA0B8
+.obj lbl_803EA0C0, local
 	.float 30.0
-lbl_803EA0C4:
+.endobj lbl_803EA0C0
+.obj lbl_803EA0C4, local
 	.float 15.0
-lbl_803EA0C8:
+.endobj lbl_803EA0C4
+.obj lbl_803EA0C8, local
 	.float 20.0
+.endobj lbl_803EA0C8

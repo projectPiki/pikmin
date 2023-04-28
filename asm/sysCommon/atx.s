@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global close__9AtxStreamFv
-close__9AtxStreamFv:
+.fn close__9AtxStreamFv, global
 /* 800438EC 0004084C  7C 08 02 A6 */	mflr r0
 /* 800438F0 00040850  7C 64 1B 78 */	mr r4, r3
 /* 800438F4 00040854  90 01 00 04 */	stw r0, 4(r1)
@@ -16,9 +15,9 @@ close__9AtxStreamFv:
 /* 80043918 00040878  38 21 00 08 */	addi r1, r1, 8
 /* 8004391C 0004087C  7C 08 03 A6 */	mtlr r0
 /* 80043920 00040880  4E 80 00 20 */	blr 
+.endfn close__9AtxStreamFv
 
-.global open__9AtxStreamFPci
-open__9AtxStreamFPci:
+.fn open__9AtxStreamFPci, global
 /* 80043924 00040884  7C 08 02 A6 */	mflr r0
 /* 80043928 00040888  90 01 00 04 */	stw r0, 4(r1)
 /* 8004392C 0004088C  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -77,9 +76,9 @@ open__9AtxStreamFPci:
 /* 800439F0 00040950  38 21 00 28 */	addi r1, r1, 0x28
 /* 800439F4 00040954  7C 08 03 A6 */	mtlr r0
 /* 800439F8 00040958  4E 80 00 20 */	blr 
+.endfn open__9AtxStreamFPci
 
-.global write__9AtxStreamFPvi
-write__9AtxStreamFPvi:
+.fn write__9AtxStreamFPvi, global
 /* 800439FC 0004095C  7C 08 02 A6 */	mflr r0
 /* 80043A00 00040960  90 01 00 04 */	stw r0, 4(r1)
 /* 80043A04 00040964  94 21 FF D0 */	stwu r1, -0x30(r1)
@@ -117,9 +116,9 @@ write__9AtxStreamFPvi:
 /* 80043A84 000409E4  38 21 00 30 */	addi r1, r1, 0x30
 /* 80043A88 000409E8  7C 08 03 A6 */	mtlr r0
 /* 80043A8C 000409EC  4E 80 00 20 */	blr 
+.endfn write__9AtxStreamFPvi
 
-.global read__9AtxStreamFPvi
-read__9AtxStreamFPvi:
+.fn read__9AtxStreamFPvi, global
 /* 80043A90 000409F0  7C 08 02 A6 */	mflr r0
 /* 80043A94 000409F4  90 01 00 04 */	stw r0, 4(r1)
 /* 80043A98 000409F8  94 21 FF D0 */	stwu r1, -0x30(r1)
@@ -157,9 +156,9 @@ read__9AtxStreamFPvi:
 /* 80043B18 00040A78  38 21 00 30 */	addi r1, r1, 0x30
 /* 80043B1C 00040A7C  7C 08 03 A6 */	mtlr r0
 /* 80043B20 00040A80  4E 80 00 20 */	blr 
+.endfn read__9AtxStreamFPvi
 
-.global getPending__9AtxStreamFv
-getPending__9AtxStreamFv:
+.fn getPending__9AtxStreamFv, global
 /* 80043B24 00040A84  7C 08 02 A6 */	mflr r0
 /* 80043B28 00040A88  90 01 00 04 */	stw r0, 4(r1)
 /* 80043B2C 00040A8C  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -192,9 +191,9 @@ getPending__9AtxStreamFv:
 /* 80043B98 00040AF8  38 21 00 20 */	addi r1, r1, 0x20
 /* 80043B9C 00040AFC  7C 08 03 A6 */	mtlr r0
 /* 80043BA0 00040B00  4E 80 00 20 */	blr 
+.endfn getPending__9AtxStreamFv
 
-.global flush__9AtxStreamFv
-flush__9AtxStreamFv:
+.fn flush__9AtxStreamFv, global
 /* 80043BA4 00040B04  7C 08 02 A6 */	mflr r0
 /* 80043BA8 00040B08  90 01 00 04 */	stw r0, 4(r1)
 /* 80043BAC 00040B0C  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -224,9 +223,9 @@ flush__9AtxStreamFv:
 /* 80043C0C 00040B6C  38 21 00 20 */	addi r1, r1, 0x20
 /* 80043C10 00040B70  7C 08 03 A6 */	mtlr r0
 /* 80043C14 00040B74  4E 80 00 20 */	blr 
+.endfn flush__9AtxStreamFv
 
-.global setPosition__13AtxFileStreamFi
-setPosition__13AtxFileStreamFi:
+.fn setPosition__13AtxFileStreamFi, global
 /* 80043C18 00040B78  7C 08 02 A6 */	mflr r0
 /* 80043C1C 00040B7C  90 01 00 04 */	stw r0, 4(r1)
 /* 80043C20 00040B80  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -250,9 +249,9 @@ setPosition__13AtxFileStreamFi:
 /* 80043C68 00040BC8  38 21 00 18 */	addi r1, r1, 0x18
 /* 80043C6C 00040BCC  7C 08 03 A6 */	mtlr r0
 /* 80043C70 00040BD0  4E 80 00 20 */	blr 
+.endfn setPosition__13AtxFileStreamFi
 
-.global read__13AtxFileStreamFPvi
-read__13AtxFileStreamFPvi:
+.fn read__13AtxFileStreamFPvi, global
 /* 80043C74 00040BD4  7C 08 02 A6 */	mflr r0
 /* 80043C78 00040BD8  90 01 00 04 */	stw r0, 4(r1)
 /* 80043C7C 00040BDC  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -291,9 +290,9 @@ read__13AtxFileStreamFPvi:
 /* 80043D00 00040C60  38 21 00 28 */	addi r1, r1, 0x28
 /* 80043D04 00040C64  7C 08 03 A6 */	mtlr r0
 /* 80043D08 00040C68  4E 80 00 20 */	blr 
+.endfn read__13AtxFileStreamFPvi
 
-.global write__13AtxFileStreamFPvi
-write__13AtxFileStreamFPvi:
+.fn write__13AtxFileStreamFPvi, global
 /* 80043D0C 00040C6C  7C 08 02 A6 */	mflr r0
 /* 80043D10 00040C70  90 01 00 04 */	stw r0, 4(r1)
 /* 80043D14 00040C74  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -338,9 +337,9 @@ write__13AtxFileStreamFPvi:
 /* 80043DAC 00040D0C  38 21 00 28 */	addi r1, r1, 0x28
 /* 80043DB0 00040D10  7C 08 03 A6 */	mtlr r0
 /* 80043DB4 00040D14  4E 80 00 20 */	blr 
+.endfn write__13AtxFileStreamFPvi
 
-.global close__13AtxFileStreamFv
-close__13AtxFileStreamFv:
+.fn close__13AtxFileStreamFv, global
 /* 80043DB8 00040D18  7C 08 02 A6 */	mflr r0
 /* 80043DBC 00040D1C  38 80 00 67 */	li r4, 0x67
 /* 80043DC0 00040D20  90 01 00 04 */	stw r0, 4(r1)
@@ -372,49 +371,53 @@ close__13AtxFileStreamFv:
 /* 80043E28 00040D88  38 21 00 18 */	addi r1, r1, 0x18
 /* 80043E2C 00040D8C  7C 08 03 A6 */	mtlr r0
 /* 80043E30 00040D90  4E 80 00 20 */	blr 
+.endfn close__13AtxFileStreamFv
 
-.global getPending__13AtxFileStreamFv
-getPending__13AtxFileStreamFv:
+.fn getPending__13AtxFileStreamFv, weak
 /* 80043E34 00040D94  80 83 00 08 */	lwz r4, 8(r3)
 /* 80043E38 00040D98  80 03 00 0C */	lwz r0, 0xc(r3)
 /* 80043E3C 00040D9C  7C 64 00 50 */	subf r3, r4, r0
 /* 80043E40 00040DA0  4E 80 00 20 */	blr 
+.endfn getPending__13AtxFileStreamFv
 
-.global getPosition__13AtxFileStreamFv
-getPosition__13AtxFileStreamFv:
+.fn getPosition__13AtxFileStreamFv, weak
 /* 80043E44 00040DA4  80 63 00 08 */	lwz r3, 8(r3)
 /* 80043E48 00040DA8  4E 80 00 20 */	blr 
+.endfn getPosition__13AtxFileStreamFv
 
-.global getLength__13AtxFileStreamFv
-getLength__13AtxFileStreamFv:
+.fn getLength__13AtxFileStreamFv, weak
 /* 80043E4C 00040DAC  80 63 00 0C */	lwz r3, 0xc(r3)
 /* 80043E50 00040DB0  4E 80 00 20 */	blr 
+.endfn getLength__13AtxFileStreamFv
 
-.global setLength__13AtxFileStreamFi
-setLength__13AtxFileStreamFi:
+.fn setLength__13AtxFileStreamFi, weak
 /* 80043E54 00040DB4  90 83 00 0C */	stw r4, 0xc(r3)
 /* 80043E58 00040DB8  4E 80 00 20 */	blr 
+.endfn setLength__13AtxFileStreamFi
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_80228F00:
+.obj lbl_80228F00, local
 	.asciz "AtxFileStream"
+.endobj lbl_80228F00
 .balign 4
-lbl_80228F10:
+.obj lbl_80228F10, local
 	.asciz "RandomAccessStream"
+.endobj lbl_80228F10
 .balign 4
-lbl_80228F24:
+.obj lbl_80228F24, local
 	.4byte __RTTI__6Stream
 	.4byte 0
 	.4byte 0
-lbl_80228F30:
+.endobj lbl_80228F24
+.obj lbl_80228F30, local
 	.4byte __RTTI__6Stream
 	.4byte 0
 	.4byte __RTTI__18RandomAccessStream
 	.4byte 0
 	.4byte 0
-.global __vt__13AtxFileStream
-__vt__13AtxFileStream:
+.endobj lbl_80228F30
+.obj __vt__13AtxFileStream, global
 	.4byte __RTTI__13AtxFileStream
 	.4byte 0
 	.4byte readInt__6StreamFv
@@ -441,16 +444,18 @@ __vt__13AtxFileStream:
 	.4byte setPosition__13AtxFileStreamFi
 	.4byte getLength__13AtxFileStreamFv
 	.4byte setLength__13AtxFileStreamFi
+.endobj __vt__13AtxFileStream
 .balign 4
-lbl_80228FAC:
+.obj lbl_80228FAC, local
 	.asciz "AtxStream"
+.endobj lbl_80228FAC
 .balign 4
-lbl_80228FB8:
+.obj lbl_80228FB8, local
 	.4byte __RTTI__6Stream
 	.4byte 0
 	.4byte 0
-.global __vt__9AtxStream
-__vt__9AtxStream:
+.endobj lbl_80228FB8
+.obj __vt__9AtxStream, global
 	.4byte __RTTI__9AtxStream
 	.4byte 0
 	.4byte readInt__6StreamFv
@@ -473,21 +478,27 @@ __vt__9AtxStream:
 	.4byte close__9AtxStreamFv
 	.4byte getClosing__6StreamFv
 	.4byte flush__9AtxStreamFv
+.endobj __vt__9AtxStream
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-lbl_803DD470:
+.obj lbl_803DD470, local
 	.asciz "Stream"
+.endobj lbl_803DD470
 .balign 4
-__RTTI__6Stream:
+.obj __RTTI__6Stream, local
 	.4byte lbl_803DD470
 	.4byte 0
-__RTTI__18RandomAccessStream:
+.endobj __RTTI__6Stream
+.obj __RTTI__18RandomAccessStream, local
 	.4byte lbl_80228F10
 	.4byte lbl_80228F24
-__RTTI__13AtxFileStream:
+.endobj __RTTI__18RandomAccessStream
+.obj __RTTI__13AtxFileStream, local
 	.4byte lbl_80228F00
 	.4byte lbl_80228F30
-__RTTI__9AtxStream:
+.endobj __RTTI__13AtxFileStream
+.obj __RTTI__9AtxStream, local
 	.4byte lbl_80228FAC
 	.4byte lbl_80228FB8
+.endobj __RTTI__9AtxStream

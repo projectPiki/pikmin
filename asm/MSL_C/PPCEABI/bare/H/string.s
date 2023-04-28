@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global strstr
-strstr:
+.fn strstr, global
 /* 802190E8 00216048  28 04 00 00 */	cmplwi r4, 0
 /* 802190EC 0021604C  38 A3 FF FF */	addi r5, r3, -1
 /* 802190F0 00216050  38 84 FF FF */	addi r4, r4, -1
@@ -33,9 +32,9 @@ strstr:
 /* 80219148 002160A8  40 82 FF C0 */	bne .L_80219108
 /* 8021914C 002160AC  38 60 00 00 */	li r3, 0
 /* 80219150 002160B0  4E 80 00 20 */	blr 
+.endfn strstr
 
-.global strchr
-strchr:
+.fn strchr, global
 /* 80219154 002160B4  38 63 FF FF */	addi r3, r3, -1
 /* 80219158 002160B8  54 80 06 3E */	clrlwi r0, r4, 0x18
 /* 8021915C 002160BC  48 00 00 0C */	b .L_80219168
@@ -50,9 +49,9 @@ strchr:
 /* 80219178 002160D8  4D 82 00 20 */	beqlr 
 /* 8021917C 002160DC  38 60 00 00 */	li r3, 0
 /* 80219180 002160E0  4E 80 00 20 */	blr 
+.endfn strchr
 
-.global strncmp
-strncmp:
+.fn strncmp, global
 /* 80219184 002160E4  38 63 FF FF */	addi r3, r3, -1
 /* 80219188 002160E8  38 84 FF FF */	addi r4, r4, -1
 /* 8021918C 002160EC  38 C5 00 01 */	addi r6, r5, 1
@@ -73,9 +72,9 @@ strncmp:
 .L_802191BC:
 /* 802191BC 0021611C  38 60 00 00 */	li r3, 0
 /* 802191C0 00216120  4E 80 00 20 */	blr 
+.endfn strncmp
 
-.global strcmp
-strcmp:
+.fn strcmp, global
 /* 802191C4 00216124  88 C3 00 00 */	lbz r6, 0(r3)
 /* 802191C8 00216128  88 A4 00 00 */	lbz r5, 0(r4)
 /* 802191CC 0021612C  7C 05 30 51 */	subf. r0, r5, r6
@@ -163,9 +162,9 @@ strcmp:
 /* 802192DC 0021623C  40 82 FF E4 */	bne .L_802192C0
 /* 802192E0 00216240  38 60 00 00 */	li r3, 0
 /* 802192E4 00216244  4E 80 00 20 */	blr 
+.endfn strcmp
 
-.global strcat
-strcat:
+.fn strcat, global
 /* 802192E8 00216248  38 84 FF FF */	addi r4, r4, -1
 /* 802192EC 0021624C  38 A3 FF FF */	addi r5, r3, -1
 .L_802192F0:
@@ -179,9 +178,9 @@ strcat:
 /* 80219308 00216268  9C 05 00 01 */	stbu r0, 1(r5)
 /* 8021930C 0021626C  40 82 FF F4 */	bne .L_80219300
 /* 80219310 00216270  4E 80 00 20 */	blr 
+.endfn strcat
 
-.global strncpy
-strncpy:
+.fn strncpy, global
 /* 80219314 00216274  38 84 FF FF */	addi r4, r4, -1
 /* 80219318 00216278  38 C3 FF FF */	addi r6, r3, -1
 /* 8021931C 0021627C  38 A5 00 01 */	addi r5, r5, 1
@@ -203,9 +202,9 @@ strncpy:
 /* 8021934C 002162AC  34 A5 FF FF */	addic. r5, r5, -1
 /* 80219350 002162B0  40 82 FF D4 */	bne .L_80219324
 /* 80219354 002162B4  4E 80 00 20 */	blr 
+.endfn strncpy
 
-.global strcpy
-strcpy:
+.fn strcpy, global
 /* 80219358 002162B8  54 60 07 BE */	clrlwi r0, r3, 0x1e
 /* 8021935C 002162BC  54 85 07 BE */	clrlwi r5, r4, 0x1e
 /* 80219360 002162C0  7C 00 28 40 */	cmplw r0, r5
@@ -257,9 +256,9 @@ strcpy:
 /* 80219400 00216360  9C 07 00 01 */	stbu r0, 1(r7)
 /* 80219404 00216364  40 82 FF F4 */	bne .L_802193F8
 /* 80219408 00216368  4E 80 00 20 */	blr 
+.endfn strcpy
 
-.global strlen
-strlen:
+.fn strlen, global
 /* 8021940C 0021636C  38 80 FF FF */	li r4, -1
 /* 80219410 00216370  38 63 FF FF */	addi r3, r3, -1
 .L_80219414:
@@ -269,10 +268,13 @@ strlen:
 /* 80219420 00216380  40 82 FF F4 */	bne .L_80219414
 /* 80219424 00216384  7C 83 23 78 */	mr r3, r4
 /* 80219428 00216388  4E 80 00 20 */	blr 
+.endfn strlen
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-K1:
+.obj K1, local
 	.4byte 0x80808080
-K2:
+.endobj K1
+.obj K2, local
 	.4byte 0xFEFEFEFF
+.endobj K2

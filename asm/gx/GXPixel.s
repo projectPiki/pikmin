@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global GXSetFog
-GXSetFog:
+.fn GXSetFog, global
 /* 80213998 002108F8  7C 08 02 A6 */	mflr r0
 /* 8021399C 002108FC  FC 04 18 00 */	fcmpu cr0, f4, f3
 /* 802139A0 00210900  90 01 00 04 */	stw r0, 4(r1)
@@ -31,7 +30,7 @@ GXSetFog:
 .L_802139F8:
 /* 802139F8 00210958  C0 22 C3 AC */	lfs f1, lbl_803EC5AC@sda21(r2)
 /* 802139FC 0021095C  38 60 00 00 */	li r3, 0
-/* 80213A00 00210960  C8 02 C3 B0 */	lfd f0, "@127_1"@sda21(r2)
+/* 80213A00 00210960  C8 02 C3 B0 */	lfd f0, lbl_803EC5B0@sda21(r2)
 /* 80213A04 00210964  48 00 00 0C */	b .L_80213A10
 .L_80213A08:
 /* 80213A08 00210968  EC 84 00 72 */	fmuls f4, f4, f1
@@ -39,7 +38,7 @@ GXSetFog:
 .L_80213A10:
 /* 80213A10 00210970  FC 04 00 40 */	fcmpo cr0, f4, f0
 /* 80213A14 00210974  41 81 FF F4 */	bgt .L_80213A08
-/* 80213A18 00210978  C8 02 C3 C0 */	lfd f0, "@129"@sda21(r2)
+/* 80213A18 00210978  C8 02 C3 C0 */	lfd f0, lbl_803EC5C0@sda21(r2)
 /* 80213A1C 0021097C  C0 42 C3 B8 */	lfs f2, lbl_803EC5B8@sda21(r2)
 /* 80213A20 00210980  C0 22 C3 A8 */	lfs f1, lbl_803EC5A8@sda21(r2)
 /* 80213A24 00210984  48 00 00 0C */	b .L_80213A30
@@ -55,7 +54,7 @@ GXSetFog:
 /* 80213A40 002109A0  3B A3 00 01 */	addi r29, r3, 1
 /* 80213A44 002109A4  C0 02 C3 C8 */	lfs f0, lbl_803EC5C8@sda21(r2)
 /* 80213A48 002109A8  3B E0 00 01 */	li r31, 1
-/* 80213A4C 002109AC  C8 42 C3 D0 */	lfd f2, "@132"@sda21(r2)
+/* 80213A4C 002109AC  C8 42 C3 D0 */	lfd f2, lbl_803EC5D0@sda21(r2)
 /* 80213A50 002109B0  7F E0 E8 30 */	slw r0, r31, r29
 /* 80213A54 002109B4  EC 20 01 32 */	fmuls f1, f0, f4
 /* 80213A58 002109B8  6C 03 80 00 */	xoris r3, r0, 0x8000
@@ -119,9 +118,9 @@ GXSetFog:
 /* 80213B40 00210AA0  83 81 00 38 */	lwz r28, 0x38(r1)
 /* 80213B44 00210AA4  38 21 00 48 */	addi r1, r1, 0x48
 /* 80213B48 00210AA8  4E 80 00 20 */	blr 
+.endfn GXSetFog
 
-.global GXSetFogRangeAdj
-GXSetFogRangeAdj:
+.fn GXSetFogRangeAdj, global
 /* 80213B4C 00210AAC  54 60 06 3F */	clrlwi. r0, r3, 0x18
 /* 80213B50 00210AB0  41 82 00 C0 */	beq .L_80213C10
 /* 80213B54 00210AB4  A1 05 00 02 */	lhz r8, 2(r5)
@@ -187,9 +186,9 @@ GXSetFogRangeAdj:
 /* 80213C40 00210BA0  90 A3 80 00 */	stw r5, 0xCC008000@l(r3)
 /* 80213C44 00210BA4  B0 04 00 02 */	sth r0, 2(r4)
 /* 80213C48 00210BA8  4E 80 00 20 */	blr 
+.endfn GXSetFogRangeAdj
 
-.global GXSetBlendMode
-GXSetBlendMode:
+.fn GXSetBlendMode, global
 /* 80213C4C 00210BAC  2C 03 00 01 */	cmpwi r3, 1
 /* 80213C50 00210BB0  39 20 00 01 */	li r9, 1
 /* 80213C54 00210BB4  41 82 00 10 */	beq .L_80213C64
@@ -256,9 +255,9 @@ GXSetBlendMode:
 /* 80213D44 00210CA4  90 65 80 00 */	stw r3, 0xCC008000@l(r5)
 /* 80213D48 00210CA8  B0 04 00 02 */	sth r0, 2(r4)
 /* 80213D4C 00210CAC  4E 80 00 20 */	blr 
+.endfn GXSetBlendMode
 
-.global GXSetColorUpdate
-GXSetColorUpdate:
+.fn GXSetColorUpdate, global
 /* 80213D50 00210CB0  80 8D 2A 68 */	lwz r4, gx@sda21(r13)
 /* 80213D54 00210CB4  54 60 1D 78 */	rlwinm r0, r3, 3, 0x15, 0x1c
 /* 80213D58 00210CB8  38 60 00 61 */	li r3, 0x61
@@ -275,9 +274,9 @@ GXSetColorUpdate:
 /* 80213D84 00210CE4  90 65 80 00 */	stw r3, 0xCC008000@l(r5)
 /* 80213D88 00210CE8  B0 04 00 02 */	sth r0, 2(r4)
 /* 80213D8C 00210CEC  4E 80 00 20 */	blr 
+.endfn GXSetColorUpdate
 
-.global GXSetAlphaUpdate
-GXSetAlphaUpdate:
+.fn GXSetAlphaUpdate, global
 /* 80213D90 00210CF0  80 8D 2A 68 */	lwz r4, gx@sda21(r13)
 /* 80213D94 00210CF4  54 60 25 36 */	rlwinm r0, r3, 4, 0x14, 0x1b
 /* 80213D98 00210CF8  38 60 00 61 */	li r3, 0x61
@@ -294,9 +293,9 @@ GXSetAlphaUpdate:
 /* 80213DC4 00210D24  90 65 80 00 */	stw r3, 0xCC008000@l(r5)
 /* 80213DC8 00210D28  B0 04 00 02 */	sth r0, 2(r4)
 /* 80213DCC 00210D2C  4E 80 00 20 */	blr 
+.endfn GXSetAlphaUpdate
 
-.global GXSetZMode
-GXSetZMode:
+.fn GXSetZMode, global
 /* 80213DD0 00210D30  80 CD 2A 68 */	lwz r6, gx@sda21(r13)
 /* 80213DD4 00210D34  54 60 06 3E */	clrlwi r0, r3, 0x18
 /* 80213DD8 00210D38  80 66 01 D8 */	lwz r3, 0x1d8(r6)
@@ -327,9 +326,9 @@ GXSetZMode:
 /* 80213E3C 00210D9C  90 65 80 00 */	stw r3, 0xCC008000@l(r5)
 /* 80213E40 00210DA0  B0 04 00 02 */	sth r0, 2(r4)
 /* 80213E44 00210DA4  4E 80 00 20 */	blr 
+.endfn GXSetZMode
 
-.global GXSetZCompLoc
-GXSetZCompLoc:
+.fn GXSetZCompLoc, global
 /* 80213E48 00210DA8  80 8D 2A 68 */	lwz r4, gx@sda21(r13)
 /* 80213E4C 00210DAC  54 60 34 B2 */	rlwinm r0, r3, 6, 0x12, 0x19
 /* 80213E50 00210DB0  38 60 00 61 */	li r3, 0x61
@@ -346,9 +345,9 @@ GXSetZCompLoc:
 /* 80213E7C 00210DDC  90 65 80 00 */	stw r3, 0xCC008000@l(r5)
 /* 80213E80 00210DE0  B0 04 00 02 */	sth r0, 2(r4)
 /* 80213E84 00210DE4  4E 80 00 20 */	blr 
+.endfn GXSetZCompLoc
 
-.global GXSetPixelFmt
-GXSetPixelFmt:
+.fn GXSetPixelFmt, global
 /* 80213E88 00210DE8  80 ED 2A 68 */	lwz r7, gx@sda21(r13)
 /* 80213E8C 00210DEC  3C A0 80 2F */	lis r5, p2f$194@ha
 /* 80213E90 00210DF0  54 66 10 3A */	slwi r6, r3, 2
@@ -421,9 +420,9 @@ GXSetPixelFmt:
 /* 80213F8C 00210EEC  38 00 00 01 */	li r0, 1
 /* 80213F90 00210EF0  B0 03 00 02 */	sth r0, 2(r3)
 /* 80213F94 00210EF4  4E 80 00 20 */	blr 
+.endfn GXSetPixelFmt
 
-.global GXSetDither
-GXSetDither:
+.fn GXSetDither, global
 /* 80213F98 00210EF8  80 8D 2A 68 */	lwz r4, gx@sda21(r13)
 /* 80213F9C 00210EFC  54 60 15 BA */	rlwinm r0, r3, 2, 0x16, 0x1d
 /* 80213FA0 00210F00  38 60 00 61 */	li r3, 0x61
@@ -440,9 +439,9 @@ GXSetDither:
 /* 80213FCC 00210F2C  90 65 80 00 */	stw r3, 0xCC008000@l(r5)
 /* 80213FD0 00210F30  B0 04 00 02 */	sth r0, 2(r4)
 /* 80213FD4 00210F34  4E 80 00 20 */	blr 
+.endfn GXSetDither
 
-.global GXSetDstAlpha
-GXSetDstAlpha:
+.fn GXSetDstAlpha, global
 /* 80213FD8 00210F38  80 AD 2A 68 */	lwz r5, gx@sda21(r13)
 /* 80213FDC 00210F3C  54 66 44 2E */	rlwinm r6, r3, 8, 0x10, 0x17
 /* 80213FE0 00210F40  84 05 01 D4 */	lwzu r0, 0x1d4(r5)
@@ -464,9 +463,9 @@ GXSetDstAlpha:
 /* 80214020 00210F80  90 65 80 00 */	stw r3, 0xCC008000@l(r5)
 /* 80214024 00210F84  B0 04 00 02 */	sth r0, 2(r4)
 /* 80214028 00210F88  4E 80 00 20 */	blr 
+.endfn GXSetDstAlpha
 
-.global GXSetFieldMask
-GXSetFieldMask:
+.fn GXSetFieldMask, global
 /* 8021402C 00210F8C  54 80 06 3E */	clrlwi r0, r4, 0x18
 /* 80214030 00210F90  80 8D 2A 68 */	lwz r4, gx@sda21(r13)
 /* 80214034 00210F94  54 05 07 FA */	rlwinm r5, r0, 0, 0x1f, 0x1d
@@ -481,9 +480,9 @@ GXSetFieldMask:
 /* 80214058 00210FB8  90 A3 80 00 */	stw r5, 0xCC008000@l(r3)
 /* 8021405C 00210FBC  B0 04 00 02 */	sth r0, 2(r4)
 /* 80214060 00210FC0  4E 80 00 20 */	blr 
+.endfn GXSetFieldMask
 
-.global GXSetFieldMode
-GXSetFieldMode:
+.fn GXSetFieldMode, global
 /* 80214064 00210FC4  7C 08 02 A6 */	mflr r0
 /* 80214068 00210FC8  90 01 00 04 */	stw r0, 4(r1)
 /* 8021406C 00210FCC  54 80 B0 92 */	rlwinm r0, r4, 0x16, 2, 9
@@ -516,11 +515,11 @@ GXSetFieldMode:
 /* 802140D8 00211038  83 A1 00 14 */	lwz r29, 0x14(r1)
 /* 802140DC 0021103C  38 21 00 20 */	addi r1, r1, 0x20
 /* 802140E0 00211040  4E 80 00 20 */	blr 
+.endfn GXSetFieldMode
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-.global p2f$194
-p2f$194:
+.obj p2f$194, local
 	.4byte 0x00000000
 	.4byte 0x00000001
 	.4byte 0x00000002
@@ -529,32 +528,31 @@ p2f$194:
 	.4byte 0x00000004
 	.4byte 0x00000004
 	.4byte 0x00000005
+.endobj p2f$194
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-.global lbl_803EC5A8
-lbl_803EC5A8:
-	.4byte 0x00000000
-.global lbl_803EC5AC
-lbl_803EC5AC:
-	.4byte 0x3F000000
-.global "@127_1"
-"@127_1":
-	.4byte 0x3FF00000
-	.4byte 0x00000000
-.global lbl_803EC5B8
-lbl_803EC5B8:
-	.4byte 0x40000000
-	.4byte 0x00000000
-.global "@129"
-"@129":
-	.4byte 0x3FE00000
-	.4byte 0x00000000
-.global lbl_803EC5C8
-lbl_803EC5C8:
-	.4byte 0x4B00001E
-	.4byte 0x00000000
-.global "@132"
-"@132":
-	.4byte 0x43300000
-	.4byte 0x80000000
+.obj lbl_803EC5A8, local
+	.float 0.0
+.endobj lbl_803EC5A8
+.obj lbl_803EC5AC, local
+	.float 0.5
+.endobj lbl_803EC5AC
+.balign 8
+.obj lbl_803EC5B0, local
+	.double 1.0
+.endobj lbl_803EC5B0
+.obj lbl_803EC5B8, local
+	.float 2.0
+.endobj lbl_803EC5B8
+.balign 8
+.obj lbl_803EC5C0, local
+	.double 0.5
+.endobj lbl_803EC5C0
+.obj lbl_803EC5C8, local
+	.float 8388638.0
+.endobj lbl_803EC5C8
+.balign 8
+.obj lbl_803EC5D0, local
+	.8byte 0x4330000080000000
+.endobj lbl_803EC5D0

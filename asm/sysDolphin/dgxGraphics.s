@@ -6158,7 +6158,7 @@ sAsciiTable:
 	.4byte 0x1D1E1F20
 	.4byte 0x212223FF
 	.4byte 0xFFFFFFFF
-sFontData:
+.obj sFontData, local
 	.4byte 0x70871C30
 	.4byte 0x8988A250
 	.4byte 0x88808290
@@ -6223,6 +6223,7 @@ sFontData:
 	.4byte 0x00022200
 	.4byte 0x20800020
 	.4byte 0x00000000
+.endobj sFontData
 .balign 4
 lbl_802A5D24:
 	.asciz "CoreNode"
@@ -6427,25 +6428,32 @@ sendNbtIndx:
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803E8698:
-	.4byte 0x43300000
-	.4byte 0x00000000
-lbl_803E86A0:
+.obj lbl_803E8698, local
+	.8byte 0x4330000000000000
+.endobj lbl_803E8698
+.obj lbl_803E86A0, local
 	.float 1.0
-lbl_803E86A4:
+.endobj lbl_803E86A0
+.obj lbl_803E86A4, local
 	.float 6.0
-lbl_803E86A8:
+.endobj lbl_803E86A4
+.obj lbl_803E86A8, local
 	.float 0.0
-lbl_803E86AC:
+.endobj lbl_803E86A8
+.obj lbl_803E86AC, local
 	.float 0.5
-lbl_803E86B0:
+.endobj lbl_803E86AC
+.obj lbl_803E86B0, local
 	.float 2.0
-lbl_803E86B4:
+.endobj lbl_803E86B0
+.obj lbl_803E86B4, local
 	.float -1.0
+.endobj lbl_803E86B4
 .balign 8
-lbl_803E86B8:
-	.4byte 0x43300000
-	.4byte 0x80000000
+.obj lbl_803E86B8, local
+	.8byte 0x4330000080000000
+.endobj lbl_803E86B8
 .balign 4
-lbl_803E86C0:
+.obj lbl_803E86C0, local
 	.asciz ""
+.endobj lbl_803E86C0

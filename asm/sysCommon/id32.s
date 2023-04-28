@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global __ct__4ID32Fv
-__ct__4ID32Fv:
+.fn __ct__4ID32Fv, global
 /* 80043E5C 00040DBC  7C 08 02 A6 */	mflr r0
 /* 80043E60 00040DC0  3C 80 6E 6F */	lis r4, 0x6E6F6E65@ha
 /* 80043E64 00040DC4  90 01 00 04 */	stw r0, 4(r1)
@@ -16,9 +15,9 @@ __ct__4ID32Fv:
 /* 80043E88 00040DE8  38 21 00 18 */	addi r1, r1, 0x18
 /* 80043E8C 00040DEC  7C 08 03 A6 */	mtlr r0
 /* 80043E90 00040DF0  4E 80 00 20 */	blr 
+.endfn __ct__4ID32Fv
 
-.global __ct__4ID32FUl
-__ct__4ID32FUl:
+.fn __ct__4ID32FUl, global
 /* 80043E94 00040DF4  7C 08 02 A6 */	mflr r0
 /* 80043E98 00040DF8  90 01 00 04 */	stw r0, 4(r1)
 /* 80043E9C 00040DFC  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -31,9 +30,9 @@ __ct__4ID32FUl:
 /* 80043EB8 00040E18  38 21 00 18 */	addi r1, r1, 0x18
 /* 80043EBC 00040E1C  7C 08 03 A6 */	mtlr r0
 /* 80043EC0 00040E20  4E 80 00 20 */	blr 
+.endfn __ct__4ID32FUl
 
-.global setID__4ID32FUl
-setID__4ID32FUl:
+.fn setID__4ID32FUl, global
 /* 80043EC4 00040E24  7C 08 02 A6 */	mflr r0
 /* 80043EC8 00040E28  90 01 00 04 */	stw r0, 4(r1)
 /* 80043ECC 00040E2C  94 21 FF F8 */	stwu r1, -8(r1)
@@ -43,9 +42,9 @@ setID__4ID32FUl:
 /* 80043EDC 00040E3C  38 21 00 08 */	addi r1, r1, 8
 /* 80043EE0 00040E40  7C 08 03 A6 */	mtlr r0
 /* 80043EE4 00040E44  4E 80 00 20 */	blr 
+.endfn setID__4ID32FUl
 
-.global match__4ID32FUlc
-match__4ID32FUlc:
+.fn match__4ID32FUlc, global
 /* 80043EE8 00040E48  94 21 FF E8 */	stwu r1, -0x18(r1)
 /* 80043EEC 00040E4C  54 A5 06 3E */	clrlwi r5, r5, 0x18
 /* 80043EF0 00040E50  90 81 00 0C */	stw r4, 0xc(r1)
@@ -93,9 +92,9 @@ match__4ID32FUlc:
 .L_80043F88:
 /* 80043F88 00040EE8  38 21 00 18 */	addi r1, r1, 0x18
 /* 80043F8C 00040EEC  4E 80 00 20 */	blr 
+.endfn match__4ID32FUlc
 
-.global updateID__4ID32Fv
-updateID__4ID32Fv:
+.fn updateID__4ID32Fv, global
 /* 80043F90 00040EF0  88 03 00 04 */	lbz r0, 4(r3)
 /* 80043F94 00040EF4  98 03 00 00 */	stb r0, 0(r3)
 /* 80043F98 00040EF8  88 03 00 05 */	lbz r0, 5(r3)
@@ -105,9 +104,9 @@ updateID__4ID32Fv:
 /* 80043FA8 00040F08  88 03 00 07 */	lbz r0, 7(r3)
 /* 80043FAC 00040F0C  98 03 00 03 */	stb r0, 3(r3)
 /* 80043FB0 00040F10  4E 80 00 20 */	blr 
+.endfn updateID__4ID32Fv
 
-.global updateString__4ID32Fv
-updateString__4ID32Fv:
+.fn updateString__4ID32Fv, global
 /* 80043FB4 00040F14  88 83 00 00 */	lbz r4, 0(r3)
 /* 80043FB8 00040F18  38 00 00 00 */	li r0, 0
 /* 80043FBC 00040F1C  98 83 00 04 */	stb r4, 4(r3)
@@ -119,25 +118,25 @@ updateString__4ID32Fv:
 /* 80043FD4 00040F34  98 83 00 07 */	stb r4, 7(r3)
 /* 80043FD8 00040F38  98 03 00 08 */	stb r0, 8(r3)
 /* 80043FDC 00040F3C  4E 80 00 20 */	blr 
+.endfn updateString__4ID32Fv
 
-.global __eq__4ID32FUl
-__eq__4ID32FUl:
+.fn __eq__4ID32FUl, global
 /* 80043FE0 00040F40  80 03 00 00 */	lwz r0, 0(r3)
 /* 80043FE4 00040F44  7C 00 20 50 */	subf r0, r0, r4
 /* 80043FE8 00040F48  7C 00 00 34 */	cntlzw r0, r0
 /* 80043FEC 00040F4C  54 03 D9 7E */	srwi r3, r0, 5
 /* 80043FF0 00040F50  4E 80 00 20 */	blr 
+.endfn __eq__4ID32FUl
 
-.global __ne__4ID32FUl
-__ne__4ID32FUl:
+.fn __ne__4ID32FUl, global
 /* 80043FF4 00040F54  80 03 00 00 */	lwz r0, 0(r3)
 /* 80043FF8 00040F58  7C 60 20 50 */	subf r3, r0, r4
 /* 80043FFC 00040F5C  30 03 FF FF */	addic r0, r3, -1
 /* 80044000 00040F60  7C 60 19 10 */	subfe r3, r0, r3
 /* 80044004 00040F64  4E 80 00 20 */	blr 
+.endfn __ne__4ID32FUl
 
-.global write__4ID32FR18RandomAccessStream
-write__4ID32FR18RandomAccessStream:
+.fn write__4ID32FR18RandomAccessStream, global
 /* 80044008 00040F68  7C 08 02 A6 */	mflr r0
 /* 8004400C 00040F6C  90 01 00 04 */	stw r0, 4(r1)
 /* 80044010 00040F70  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -175,9 +174,9 @@ write__4ID32FR18RandomAccessStream:
 /* 80044090 00040FF0  38 21 00 18 */	addi r1, r1, 0x18
 /* 80044094 00040FF4  7C 08 03 A6 */	mtlr r0
 /* 80044098 00040FF8  4E 80 00 20 */	blr 
+.endfn write__4ID32FR18RandomAccessStream
 
-.global read__4ID32FR18RandomAccessStream
-read__4ID32FR18RandomAccessStream:
+.fn read__4ID32FR18RandomAccessStream, global
 /* 8004409C 00040FFC  7C 08 02 A6 */	mflr r0
 /* 800440A0 00041000  90 01 00 04 */	stw r0, 4(r1)
 /* 800440A4 00041004  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -225,13 +224,13 @@ read__4ID32FR18RandomAccessStream:
 /* 8004414C 000410AC  38 21 00 28 */	addi r1, r1, 0x28
 /* 80044150 000410B0  7C 08 03 A6 */	mtlr r0
 /* 80044154 000410B4  4E 80 00 20 */	blr 
+.endfn read__4ID32FR18RandomAccessStream
 
-.global print__4ID32Fv
-print__4ID32Fv:
+.fn print__4ID32Fv, global
 /* 80044158 000410B8  4E 80 00 20 */	blr 
+.endfn print__4ID32Fv
 
-.global sprint__4ID32FPc
-sprint__4ID32FPc:
+.fn sprint__4ID32FPc, global
 /* 8004415C 000410BC  80 A3 00 00 */	lwz r5, 0(r3)
 /* 80044160 000410C0  38 00 00 00 */	li r0, 0
 /* 80044164 000410C4  54 A5 46 3E */	srwi r5, r5, 0x18
@@ -246,3 +245,4 @@ sprint__4ID32FPc:
 /* 80044188 000410E8  98 64 00 03 */	stb r3, 3(r4)
 /* 8004418C 000410EC  98 04 00 04 */	stb r0, 4(r4)
 /* 80044190 000410F0  4E 80 00 20 */	blr 
+.endfn sprint__4ID32FPc

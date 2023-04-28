@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global alloc__6SystemFUl
-alloc__6SystemFUl:
+.fn alloc__6SystemFUl, global
 /* 80047004 00043F64  7C 08 02 A6 */	mflr r0
 /* 80047008 00043F68  90 01 00 04 */	stw r0, 4(r1)
 /* 8004700C 00043F6C  54 60 07 BF */	clrlwi. r0, r3, 0x1e
@@ -101,9 +100,9 @@ alloc__6SystemFUl:
 /* 8004715C 000440BC  38 21 00 18 */	addi r1, r1, 0x18
 /* 80047160 000440C0  7C 08 03 A6 */	mtlr r0
 /* 80047164 000440C4  4E 80 00 20 */	blr 
+.endfn alloc__6SystemFUl
 
-.global __nwa__FUli
-__nwa__FUli:
+.fn __nwa__FUli, global
 /* 80047168 000440C8  7C 08 02 A6 */	mflr r0
 /* 8004716C 000440CC  90 01 00 04 */	stw r0, 4(r1)
 /* 80047170 000440D0  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -121,11 +120,12 @@ __nwa__FUli:
 /* 800471A0 00044100  38 21 00 20 */	addi r1, r1, 0x20
 /* 800471A4 00044104  7C 08 03 A6 */	mtlr r0
 /* 800471A8 00044108  4E 80 00 20 */	blr 
+.endfn __nwa__FUli
 
-.global __dl__FPv
-__dl__FPv:
+.fn __dl__FPv, global
 /* 800471AC 0004410C  4E 80 00 20 */	blr 
+.endfn __dl__FPv
 
-.global __dla__FPv
-__dla__FPv:
+.fn __dla__FPv, global
 /* 800471B0 00044110  4E 80 00 20 */	blr 
+.endfn __dla__FPv

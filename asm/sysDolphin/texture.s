@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global __ct__7TextureFv
-__ct__7TextureFv:
+.fn __ct__7TextureFv, global
 /* 80044194 000410F4  7C 08 02 A6 */	mflr r0
 /* 80044198 000410F8  3C 80 80 23 */	lis r4, __vt__9GfxObject@ha
 /* 8004419C 000410FC  90 01 00 04 */	stw r0, 4(r1)
@@ -30,9 +29,9 @@ __ct__7TextureFv:
 /* 800441F8 00041158  38 21 00 18 */	addi r1, r1, 0x18
 /* 800441FC 0004115C  7C 08 03 A6 */	mtlr r0
 /* 80044200 00041160  4E 80 00 20 */	blr 
+.endfn __ct__7TextureFv
 
-.global getAlpha__7TextureFii
-getAlpha__7TextureFii:
+.fn getAlpha__7TextureFii, global
 /* 80044204 00041164  A0 03 00 04 */	lhz r0, 4(r3)
 /* 80044208 00041168  2C 00 00 05 */	cmpwi r0, 5
 /* 8004420C 0004116C  41 82 00 08 */	beq .L_80044214
@@ -89,9 +88,9 @@ getAlpha__7TextureFii:
 .L_800442D0:
 /* 800442D0 00041230  54 63 CE 34 */	rlwinm r3, r3, 0x19, 0x18, 0x1a
 /* 800442D4 00041234  4E 80 00 20 */	blr 
+.endfn getAlpha__7TextureFii
 
-.global read__7TextureFR18RandomAccessStream
-read__7TextureFR18RandomAccessStream:
+.fn read__7TextureFR18RandomAccessStream, global
 /* 800442D8 00041238  7C 08 02 A6 */	mflr r0
 /* 800442DC 0004123C  90 01 00 04 */	stw r0, 4(r1)
 /* 800442E0 00041240  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -187,15 +186,15 @@ read__7TextureFR18RandomAccessStream:
 /* 80044434 00041394  38 21 00 18 */	addi r1, r1, 0x18
 /* 80044438 00041398  7C 08 03 A6 */	mtlr r0
 /* 8004443C 0004139C  4E 80 00 20 */	blr 
+.endfn read__7TextureFR18RandomAccessStream
 
-.global detach__7TextureFv
-detach__7TextureFv:
+.fn detach__7TextureFv, global
 /* 80044440 000413A0  38 80 FF FF */	li r4, -1
 /* 80044444 000413A4  90 83 00 20 */	stw r4, 0x20(r3)
 /* 80044448 000413A8  4E 80 00 20 */	blr 
+.endfn detach__7TextureFv
 
-.global attach__7TextureFv
-attach__7TextureFv:
+.fn attach__7TextureFv, global
 /* 8004444C 000413AC  7C 08 02 A6 */	mflr r0
 /* 80044450 000413B0  90 01 00 04 */	stw r0, 4(r1)
 /* 80044454 000413B4  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -275,9 +274,9 @@ attach__7TextureFv:
 /* 80044558 000414B8  38 21 00 20 */	addi r1, r1, 0x20
 /* 8004455C 000414BC  7C 08 03 A6 */	mtlr r0
 /* 80044560 000414C0  4E 80 00 20 */	blr 
+.endfn attach__7TextureFv
 
-.global createBuffer__7TextureFiiiPv
-createBuffer__7TextureFiiiPv:
+.fn createBuffer__7TextureFiiiPv, global
 /* 80044564 000414C4  7C 08 02 A6 */	mflr r0
 /* 80044568 000414C8  90 01 00 04 */	stw r0, 4(r1)
 /* 8004456C 000414CC  94 21 FF C0 */	stwu r1, -0x40(r1)
@@ -337,9 +336,9 @@ createBuffer__7TextureFiiiPv:
 /* 8004463C 0004159C  38 21 00 40 */	addi r1, r1, 0x40
 /* 80044640 000415A0  7C 08 03 A6 */	mtlr r0
 /* 80044644 000415A4  4E 80 00 20 */	blr 
+.endfn createBuffer__7TextureFiiiPv
 
-.global grabBuffer__7TextureFiibb
-grabBuffer__7TextureFiibb:
+.fn grabBuffer__7TextureFiibb, global
 /* 80044648 000415A8  7C 08 02 A6 */	mflr r0
 /* 8004464C 000415AC  90 01 00 04 */	stw r0, 4(r1)
 /* 80044650 000415B0  54 C0 06 3F */	clrlwi. r0, r6, 0x18
@@ -412,9 +411,9 @@ grabBuffer__7TextureFiibb:
 /* 8004474C 000416AC  38 21 00 30 */	addi r1, r1, 0x30
 /* 80044750 000416B0  7C 08 03 A6 */	mtlr r0
 /* 80044754 000416B4  4E 80 00 20 */	blr 
+.endfn grabBuffer__7TextureFiibb
 
-.global decodeData__7TextureFP6TexImg
-decodeData__7TextureFP6TexImg:
+.fn decodeData__7TextureFP6TexImg, global
 /* 80044758 000416B8  7C 08 02 A6 */	mflr r0
 /* 8004475C 000416BC  90 01 00 04 */	stw r0, 4(r1)
 /* 80044760 000416C0  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -448,17 +447,19 @@ decodeData__7TextureFP6TexImg:
 /* 800447CC 0004172C  38 21 00 18 */	addi r1, r1, 0x18
 /* 800447D0 00041730  7C 08 03 A6 */	mtlr r0
 /* 800447D4 00041734  4E 80 00 20 */	blr 
+.endfn decodeData__7TextureFP6TexImg
 
-.global makeResident__7TextureFv
-makeResident__7TextureFv:
+.fn makeResident__7TextureFv, weak
 /* 800447D8 00041738  4E 80 00 20 */	blr 
+.endfn makeResident__7TextureFv
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_80229020:
+.obj lbl_80229020, local
 	.asciz "texture.cpp"
+.endobj lbl_80229020
 .balign 4
-gxTexFmts:
+.obj gxTexFmts, local
 	.4byte 0x00000004
 	.4byte 0x0000000E
 	.4byte 0x00000005
@@ -468,78 +469,87 @@ gxTexFmts:
 	.4byte 0x00000003
 	.4byte 0x00000006
 	.4byte 0x00000011
+.endobj gxTexFmts
 .balign 4
-lbl_80229050:
+.obj lbl_80229050, local
 	.asciz "GfxObject"
+.endobj lbl_80229050
 .balign 4
-lbl_8022905C:
+.obj lbl_8022905C, local
 	.4byte __RTTI__9GfxObject
 	.4byte 0
 	.4byte 0
-.global __vt__7Texture
-__vt__7Texture:
+.endobj lbl_8022905C
+.obj __vt__7Texture, global
 	.4byte __RTTI__7Texture
 	.4byte 0
 	.4byte attach__7TextureFv
 	.4byte detach__7TextureFv
 	.4byte makeResident__7TextureFv
+.endobj __vt__7Texture
 .balign 4
-lbl_8022907C:
+.obj lbl_8022907C, local
 	.asciz "CoreNode"
+.endobj lbl_8022907C
 .balign 4
-lbl_80229088:
+.obj lbl_80229088, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-.global __vt__9GfxObject
-__vt__9GfxObject:
+.endobj lbl_80229088
+.skip 0x1C
+.obj __vt__9GfxObject, weak
 	.4byte __RTTI__9GfxObject
 	.4byte 0
 	.4byte attach__9GfxObjectFv
 	.4byte detach__9GfxObjectFv
+.endobj __vt__9GfxObject
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-lbl_803DD498:
+.obj lbl_803DD498, local
 	.asciz "Texture"
+.endobj lbl_803DD498
 .balign 4
-lbl_803DD4A0:
+.obj lbl_803DD4A0, local
 	.asciz "txe"
+.endobj lbl_803DD4A0
 .balign 4
-lbl_803DD4A4:
+.obj lbl_803DD4A4, local
 	.asciz "texImg"
+.endobj lbl_803DD4A4
 .balign 4
-lbl_803DD4AC:
+.obj lbl_803DD4AC, local
 	.asciz "bti"
+.endobj lbl_803DD4AC
 .balign 4
-__RTTI__9GfxObject:
+.obj __RTTI__9GfxObject, local
 	.4byte lbl_80229050
 	.4byte 0
-__RTTI__7Texture:
+.endobj __RTTI__9GfxObject
+.obj __RTTI__7Texture, local
 	.4byte lbl_803DD498
 	.4byte lbl_8022905C
+.endobj __RTTI__7Texture
 .balign 4
-lbl_803DD4C0:
+.obj lbl_803DD4C0, local
 	.asciz "ANode"
+.endobj lbl_803DD4C0
 .balign 4
-__RTTI__5ANode:
+.obj __RTTI__5ANode, local
 	.4byte lbl_803DD4C0
 	.4byte 0
+.endobj __RTTI__5ANode
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803E8660:
+.obj lbl_803E8660, local
 	.float 0.0
+.endobj lbl_803E8660
 .balign 8
-lbl_803E8668:
-	.4byte 0x43300000
-	.4byte 0x00000000
-lbl_803E8670:
+.obj lbl_803E8668, local
+	.8byte 0x4330000000000000
+.endobj lbl_803E8668
+.obj lbl_803E8670, local
 	.float 1.0
+.endobj lbl_803E8670

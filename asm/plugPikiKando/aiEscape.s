@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global __ct__9ActEscapeFP4Piki
-__ct__9ActEscapeFP4Piki:
+.fn __ct__9ActEscapeFP4Piki, global
 /* 800B8828 000B5788  7C 08 02 A6 */	mflr r0
 /* 800B882C 000B578C  38 A0 00 00 */	li r5, 0
 /* 800B8830 000B5790  90 01 00 04 */	stw r0, 4(r1)
@@ -34,13 +33,13 @@ __ct__9ActEscapeFP4Piki:
 /* 800B8898 000B57F8  38 21 00 18 */	addi r1, r1, 0x18
 /* 800B889C 000B57FC  7C 08 03 A6 */	mtlr r0
 /* 800B88A0 000B5800  4E 80 00 20 */	blr 
+.endfn __ct__9ActEscapeFP4Piki
 
-.global initialise__Q29ActEscape11InitialiserFP6Action
-initialise__Q29ActEscape11InitialiserFP6Action:
+.fn initialise__Q29ActEscape11InitialiserFP6Action, global
 /* 800B88A4 000B5804  4E 80 00 20 */	blr 
+.endfn initialise__Q29ActEscape11InitialiserFP6Action
 
-.global init__9ActEscapeFP8Creature
-init__9ActEscapeFP8Creature:
+.fn init__9ActEscapeFP8Creature, global
 /* 800B88A8 000B5808  7C 08 02 A6 */	mflr r0
 /* 800B88AC 000B580C  90 01 00 04 */	stw r0, 4(r1)
 /* 800B88B0 000B5810  94 21 FF C8 */	stwu r1, -0x38(r1)
@@ -105,9 +104,9 @@ init__9ActEscapeFP8Creature:
 /* 800B8994 000B58F4  38 21 00 38 */	addi r1, r1, 0x38
 /* 800B8998 000B58F8  7C 08 03 A6 */	mtlr r0
 /* 800B899C 000B58FC  4E 80 00 20 */	blr 
+.endfn init__9ActEscapeFP8Creature
 
-.global cleanup__9ActEscapeFv
-cleanup__9ActEscapeFv:
+.fn cleanup__9ActEscapeFv, global
 /* 800B89A0 000B5900  7C 08 02 A6 */	mflr r0
 /* 800B89A4 000B5904  90 01 00 04 */	stw r0, 4(r1)
 /* 800B89A8 000B5908  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -125,9 +124,9 @@ cleanup__9ActEscapeFv:
 /* 800B89D4 000B5934  38 21 00 18 */	addi r1, r1, 0x18
 /* 800B89D8 000B5938  7C 08 03 A6 */	mtlr r0
 /* 800B89DC 000B593C  4E 80 00 20 */	blr 
+.endfn cleanup__9ActEscapeFv
 
-.global exec__9ActEscapeFv
-exec__9ActEscapeFv:
+.fn exec__9ActEscapeFv, global
 /* 800B89E0 000B5940  7C 08 02 A6 */	mflr r0
 /* 800B89E4 000B5944  90 01 00 04 */	stw r0, 4(r1)
 /* 800B89E8 000B5948  94 21 FF 50 */	stwu r1, -0xb0(r1)
@@ -318,9 +317,9 @@ exec__9ActEscapeFv:
 /* 800B8CA0 000B5C00  38 21 00 B0 */	addi r1, r1, 0xb0
 /* 800B8CA4 000B5C04  7C 08 03 A6 */	mtlr r0
 /* 800B8CA8 000B5C08  4E 80 00 20 */	blr 
+.endfn exec__9ActEscapeFv
 
-.global getInfo__9ActEscapeFPc
-getInfo__9ActEscapeFPc:
+.fn getInfo__9ActEscapeFPc, global
 /* 800B8CAC 000B5C0C  7C 08 02 A6 */	mflr r0
 /* 800B8CB0 000B5C10  90 01 00 04 */	stw r0, 4(r1)
 /* 800B8CB4 000B5C14  94 21 FF F8 */	stwu r1, -8(r1)
@@ -345,9 +344,9 @@ getInfo__9ActEscapeFPc:
 /* 800B8CF8 000B5C58  38 21 00 08 */	addi r1, r1, 8
 /* 800B8CFC 000B5C5C  7C 08 03 A6 */	mtlr r0
 /* 800B8D00 000B5C60  4E 80 00 20 */	blr 
+.endfn getInfo__9ActEscapeFPc
 
-.global __dt__9ActEscapeFv
-__dt__9ActEscapeFv:
+.fn __dt__9ActEscapeFv, weak
 /* 800B8D04 000B5C64  7C 08 02 A6 */	mflr r0
 /* 800B8D08 000B5C68  90 01 00 04 */	stw r0, 4(r1)
 /* 800B8D0C 000B5C6C  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -374,36 +373,43 @@ __dt__9ActEscapeFv:
 /* 800B8D5C 000B5CBC  38 21 00 18 */	addi r1, r1, 0x18
 /* 800B8D60 000B5CC0  7C 08 03 A6 */	mtlr r0
 /* 800B8D64 000B5CC4  4E 80 00 20 */	blr 
+.endfn __dt__9ActEscapeFv
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802B65E8:
+.obj lbl_802B65E8, local
 	.asciz "aiEscape.cpp"
+.endobj lbl_802B65E8
 .balign 4
-lbl_802B65F8:
+.obj lbl_802B65F8, local
 	.asciz "aiEscape"
+.endobj lbl_802B65F8
 .balign 4
-lbl_802B6604:
+.obj lbl_802B6604, local
 	.asciz "esc(%s) (%.1f,%.1f)"
+.endobj lbl_802B6604
 .balign 4
-lbl_802B6618:
+.obj lbl_802B6618, local
 	.asciz "ActEscape"
+.endobj lbl_802B6618
 .balign 4
-lbl_802B6624:
+.obj lbl_802B6624, local
 	.asciz "Receiver<Piki>"
+.endobj lbl_802B6624
 .balign 4
-lbl_802B6634:
+.obj lbl_802B6634, local
 	.4byte "__RTTI__15Receiver<4Piki>"
 	.4byte 0x00000000
 	.4byte 0x00000000
-lbl_802B6640:
+.endobj lbl_802B6634
+.obj lbl_802B6640, local
 	.4byte "__RTTI__15Receiver<4Piki>"
 	.4byte 0x00000000
 	.4byte __RTTI__6Action
 	.4byte 0x00000000
 	.4byte 0x00000000
-.global __vt__9ActEscape
-__vt__9ActEscape:
+.endobj lbl_802B6640
+.obj __vt__9ActEscape, global
 	.4byte __RTTI__9ActEscape
 	.4byte 0
 	.4byte "procMsg__15Receiver<4Piki>FP4PikiP3Msg"
@@ -429,23 +435,27 @@ __vt__9ActEscape:
 	.4byte restart__6ActionFv
 	.4byte resumable__6ActionFv
 	.4byte getInfo__9ActEscapeFPc
+.endobj __vt__9ActEscape
 .balign 4
-lbl_802B66B8:
+.obj lbl_802B66B8, local
 	.asciz "ActEscape::Initialiser"
+.endobj lbl_802B66B8
 .balign 4
-lbl_802B66D0:
+.obj lbl_802B66D0, local
 	.asciz "Action::Initialiser"
+.endobj lbl_802B66D0
 .balign 4
-lbl_802B66E4:
+.obj lbl_802B66E4, local
 	.4byte __RTTI__Q26Action11Initialiser
 	.4byte 0
 	.4byte 0
-.global __vt__Q29ActEscape11Initialiser
-__vt__Q29ActEscape11Initialiser:
+.endobj lbl_802B66E4
+.obj __vt__Q29ActEscape11Initialiser, global
 	.4byte __RTTI__Q29ActEscape11Initialiser
 	.4byte 0
 	.4byte initialise__Q29ActEscape11InitialiserFP6Action
-lbl_802B66FC:
+.endobj __vt__Q29ActEscape11Initialiser
+.obj lbl_802B66FC, local
 	.4byte .L_800A7908
 	.4byte .L_800A7930
 	.4byte .L_800A7944
@@ -457,70 +467,94 @@ lbl_802B66FC:
 	.4byte .L_800A791C
 	.4byte .L_800A79D0
 	.4byte .L_800A79BC
+.endobj lbl_802B66FC
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-lbl_803E02F0:
+.obj lbl_803E02F0, local
 	.float 0.0
-lbl_803E02F4:
+.endobj lbl_803E02F0
+.obj lbl_803E02F4, local
 	.float 0.0
-lbl_803E02F8:
+.endobj lbl_803E02F4
+.obj lbl_803E02F8, local
 	.float 0.0
-lbl_803E02FC:
+.endobj lbl_803E02F8
+.obj lbl_803E02FC, local
 	.float 0.0
-lbl_803E0300:
+.endobj lbl_803E02FC
+.obj lbl_803E0300, local
 	.float 0.0
-lbl_803E0304:
+.endobj lbl_803E0300
+.obj lbl_803E0304, local
 	.float 0.0
+.endobj lbl_803E0304
 .balign 4
-lbl_803E0308:
+.obj lbl_803E0308, local
 	.asciz "NORMAL"
+.endobj lbl_803E0308
 .balign 4
-lbl_803E0310:
+.obj lbl_803E0310, local
 	.asciz "AVOID"
+.endobj lbl_803E0310
 .balign 4
-"__RTTI__15Receiver<4Piki>":
+.obj "__RTTI__15Receiver<4Piki>", local
 	.4byte lbl_802B6624
 	.4byte 0
+.endobj "__RTTI__15Receiver<4Piki>"
 .balign 4
-lbl_803E0320:
+.obj lbl_803E0320, local
 	.asciz "Action"
+.endobj lbl_803E0320
 .balign 4
-__RTTI__6Action:
+.obj __RTTI__6Action, local
 	.4byte lbl_803E0320
 	.4byte lbl_802B6634
-__RTTI__9ActEscape:
+.endobj __RTTI__6Action
+.obj __RTTI__9ActEscape, local
 	.4byte lbl_802B6618
 	.4byte lbl_802B6640
-__RTTI__Q26Action11Initialiser:
+.endobj __RTTI__9ActEscape
+.obj __RTTI__Q26Action11Initialiser, local
 	.4byte lbl_802B66D0
 	.4byte 0
-__RTTI__Q29ActEscape11Initialiser:
+.endobj __RTTI__Q26Action11Initialiser
+.obj __RTTI__Q29ActEscape11Initialiser, local
 	.4byte lbl_802B66B8
 	.4byte lbl_802B66E4
+.endobj __RTTI__Q29ActEscape11Initialiser
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803E9410:
+.obj lbl_803E9410, local
 	.float 0.0
-lbl_803E9414:
+.endobj lbl_803E9410
+.obj lbl_803E9414, local
 	.float 1.0
-lbl_803E9418:
+.endobj lbl_803E9414
+.obj lbl_803E9418, local
 	.float 32767.0
-lbl_803E941C:
+.endobj lbl_803E9418
+.obj lbl_803E941C, local
 	.float 4.0
-lbl_803E9420:
+.endobj lbl_803E941C
+.obj lbl_803E9420, local
 	.float 2.0
+.endobj lbl_803E9420
 .balign 8
-lbl_803E9428:
-	.4byte 0x43300000
-	.4byte 0x80000000
-lbl_803E9430:
+.obj lbl_803E9428, local
+	.8byte 0x4330000080000000
+.endobj lbl_803E9428
+.obj lbl_803E9430, local
 	.float 10.0
+.endobj lbl_803E9430
 .balign 8
-lbl_803E9438:
+.obj lbl_803E9438, local
 	.double 0.5
-lbl_803E9440:
+.endobj lbl_803E9438
+.obj lbl_803E9440, local
 	.double 3.0
-lbl_803E9448:
+.endobj lbl_803E9440
+.obj lbl_803E9448, local
 	.float 3.1415927
+.endobj lbl_803E9448

@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global openFile__6SystemFPcbb
-openFile__6SystemFPcbb:
+.fn openFile__6SystemFPcbb, global
 /* 800447DC 0004173C  7C 08 02 A6 */	mflr r0
 /* 800447E0 00041740  90 01 00 04 */	stw r0, 4(r1)
 /* 800447E4 00041744  54 A0 06 3F */	clrlwi. r0, r5, 0x18
@@ -168,9 +167,9 @@ openFile__6SystemFPcbb:
 /* 80044A24 00041984  38 21 01 38 */	addi r1, r1, 0x138
 /* 80044A28 00041988  7C 08 03 A6 */	mtlr r0
 /* 80044A2C 0004198C  4E 80 00 20 */	blr 
+.endfn openFile__6SystemFPcbb
 
-.global initSoftReset__6SystemFv
-initSoftReset__6SystemFv:
+.fn initSoftReset__6SystemFv, global
 /* 80044A30 00041990  7C 08 02 A6 */	mflr r0
 /* 80044A34 00041994  90 01 00 04 */	stw r0, 4(r1)
 /* 80044A38 00041998  38 00 00 00 */	li r0, 0
@@ -190,9 +189,9 @@ initSoftReset__6SystemFv:
 /* 80044A6C 000419CC  38 21 00 18 */	addi r1, r1, 0x18
 /* 80044A70 000419D0  7C 08 03 A6 */	mtlr r0
 /* 80044A74 000419D4  4E 80 00 20 */	blr 
+.endfn initSoftReset__6SystemFv
 
-.global beginRender__6SystemFv
-beginRender__6SystemFv:
+.fn beginRender__6SystemFv, global
 /* 80044A78 000419D8  7C 08 02 A6 */	mflr r0
 /* 80044A7C 000419DC  90 01 00 04 */	stw r0, 4(r1)
 /* 80044A80 000419E0  38 00 00 00 */	li r0, 0
@@ -254,9 +253,9 @@ beginRender__6SystemFv:
 /* 80044B60 00041AC0  38 21 00 28 */	addi r1, r1, 0x28
 /* 80044B64 00041AC4  7C 08 03 A6 */	mtlr r0
 /* 80044B68 00041AC8  4E 80 00 20 */	blr 
+.endfn beginRender__6SystemFv
 
-.global doneRender__6SystemFv
-doneRender__6SystemFv:
+.fn doneRender__6SystemFv, global
 /* 80044B6C 00041ACC  7C 08 02 A6 */	mflr r0
 /* 80044B70 00041AD0  90 01 00 04 */	stw r0, 4(r1)
 /* 80044B74 00041AD4  94 21 FF F8 */	stwu r1, -8(r1)
@@ -266,9 +265,9 @@ doneRender__6SystemFv:
 /* 80044B84 00041AE4  38 21 00 08 */	addi r1, r1, 8
 /* 80044B88 00041AE8  7C 08 03 A6 */	mtlr r0
 /* 80044B8C 00041AEC  4E 80 00 20 */	blr 
+.endfn doneRender__6SystemFv
 
-.global waitRetrace__6SystemFv
-waitRetrace__6SystemFv:
+.fn waitRetrace__6SystemFv, global
 /* 80044B90 00041AF0  7C 08 02 A6 */	mflr r0
 /* 80044B94 00041AF4  90 01 00 04 */	stw r0, 4(r1)
 /* 80044B98 00041AF8  94 21 FF F8 */	stwu r1, -8(r1)
@@ -278,9 +277,9 @@ waitRetrace__6SystemFv:
 /* 80044BA8 00041B08  38 21 00 08 */	addi r1, r1, 8
 /* 80044BAC 00041B0C  7C 08 03 A6 */	mtlr r0
 /* 80044BB0 00041B10  4E 80 00 20 */	blr 
+.endfn waitRetrace__6SystemFv
 
-.global run__6SystemFP7BaseApp
-run__6SystemFP7BaseApp:
+.fn run__6SystemFP7BaseApp, global
 /* 80044BB4 00041B14  7C 08 02 A6 */	mflr r0
 /* 80044BB8 00041B18  90 01 00 04 */	stw r0, 4(r1)
 /* 80044BBC 00041B1C  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -306,9 +305,9 @@ run__6SystemFP7BaseApp:
 /* 80044C08 00041B68  7D 88 03 A6 */	mtlr r12
 /* 80044C0C 00041B6C  4E 80 00 21 */	blrl 
 /* 80044C10 00041B70  4B FF FF C4 */	b .L_80044BD4
+.endfn run__6SystemFP7BaseApp
 
-.global getTime__6SystemFv
-getTime__6SystemFv:
+.fn getTime__6SystemFv, global
 /* 80044C14 00041B74  7C 08 02 A6 */	mflr r0
 /* 80044C18 00041B78  90 01 00 04 */	stw r0, 4(r1)
 /* 80044C1C 00041B7C  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -331,9 +330,9 @@ getTime__6SystemFv:
 /* 80044C60 00041BC0  38 21 00 18 */	addi r1, r1, 0x18
 /* 80044C64 00041BC4  7C 08 03 A6 */	mtlr r0
 /* 80044C68 00041BC8  4E 80 00 20 */	blr 
+.endfn getTime__6SystemFv
 
-.global updateSysClock__6SystemFv
-updateSysClock__6SystemFv:
+.fn updateSysClock__6SystemFv, global
 /* 80044C6C 00041BCC  7C 08 02 A6 */	mflr r0
 /* 80044C70 00041BD0  90 01 00 04 */	stw r0, 4(r1)
 /* 80044C74 00041BD4  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -416,9 +415,9 @@ updateSysClock__6SystemFv:
 /* 80044D9C 00041CFC  38 21 00 28 */	addi r1, r1, 0x28
 /* 80044DA0 00041D00  7C 08 03 A6 */	mtlr r0
 /* 80044DA4 00041D04  4E 80 00 20 */	blr 
+.endfn updateSysClock__6SystemFv
 
-.global parseArchiveDirectory__6SystemFPcPc
-parseArchiveDirectory__6SystemFPcPc:
+.fn parseArchiveDirectory__6SystemFPcPc, global
 /* 80044DA8 00041D08  7C 08 02 A6 */	mflr r0
 /* 80044DAC 00041D0C  90 01 00 04 */	stw r0, 4(r1)
 /* 80044DB0 00041D10  94 21 FF 18 */	stwu r1, -0xe8(r1)
@@ -660,9 +659,9 @@ parseArchiveDirectory__6SystemFPcPc:
 /* 80045138 00042098  38 21 00 E8 */	addi r1, r1, 0xe8
 /* 8004513C 0004209C  7C 08 03 A6 */	mtlr r0
 /* 80045140 000420A0  4E 80 00 20 */	blr 
+.endfn parseArchiveDirectory__6SystemFPcPc
 
-.global read__9DVDStreamFPvi
-read__9DVDStreamFPvi:
+.fn read__9DVDStreamFPvi, weak
 /* 80045144 000420A4  7C 08 02 A6 */	mflr r0
 /* 80045148 000420A8  90 01 00 04 */	stw r0, 4(r1)
 /* 8004514C 000420AC  38 05 00 1F */	addi r0, r5, 0x1f
@@ -700,14 +699,14 @@ read__9DVDStreamFPvi:
 /* 800451C4 00042124  38 21 00 28 */	addi r1, r1, 0x28
 /* 800451C8 00042128  7C 08 03 A6 */	mtlr r0
 /* 800451CC 0004212C  4E 80 00 20 */	blr 
+.endfn read__9DVDStreamFPvi
 
-.global getPending__9DVDStreamFv
-getPending__9DVDStreamFv:
+.fn getPending__9DVDStreamFv, weak
 /* 800451D0 00042130  80 63 00 48 */	lwz r3, 0x48(r3)
 /* 800451D4 00042134  4E 80 00 20 */	blr 
+.endfn getPending__9DVDStreamFv
 
-.global ParseMapFile__Fv
-ParseMapFile__Fv:
+.fn ParseMapFile__Fv, local
 /* 800451D8 00042138  7C 08 02 A6 */	mflr r0
 /* 800451DC 0004213C  3C 80 80 2A */	lis r4, lbl_802A514C@ha
 /* 800451E0 00042140  90 01 00 04 */	stw r0, 4(r1)
@@ -1151,9 +1150,9 @@ ParseMapFile__Fv:
 /* 80045814 00042774  38 21 00 60 */	addi r1, r1, 0x60
 /* 80045818 00042778  7C 08 03 A6 */	mtlr r0
 /* 8004581C 0004277C  4E 80 00 20 */	blr 
+.endfn ParseMapFile__Fv
 
-.global hardReset__6SystemFv
-hardReset__6SystemFv:
+.fn hardReset__6SystemFv, global
 /* 80045820 00042780  7C 08 02 A6 */	mflr r0
 /* 80045824 00042784  90 01 00 04 */	stw r0, 4(r1)
 /* 80045828 00042788  38 00 00 00 */	li r0, 0
@@ -1226,9 +1225,9 @@ hardReset__6SystemFv:
 /* 80045928 00042888  38 21 00 60 */	addi r1, r1, 0x60
 /* 8004592C 0004288C  7C 08 03 A6 */	mtlr r0
 /* 80045930 00042890  4E 80 00 20 */	blr 
+.endfn hardReset__6SystemFv
 
-.global __ct__6SystemFv
-__ct__6SystemFv:
+.fn __ct__6SystemFv, global
 /* 80045934 00042894  7C 08 02 A6 */	mflr r0
 /* 80045938 00042898  90 01 00 04 */	stw r0, 4(r1)
 /* 8004593C 0004289C  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -1291,9 +1290,9 @@ __ct__6SystemFv:
 /* 80045A20 00042980  38 21 00 20 */	addi r1, r1, 0x20
 /* 80045A24 00042984  7C 08 03 A6 */	mtlr r0
 /* 80045A28 00042988  4E 80 00 20 */	blr 
+.endfn __ct__6SystemFv
 
-.global initBigFont__Fv
-initBigFont__Fv:
+.fn initBigFont__Fv, global
 /* 80045A2C 0004298C  7C 08 02 A6 */	mflr r0
 /* 80045A30 00042990  38 60 00 3C */	li r3, 0x3c
 /* 80045A34 00042994  90 01 00 04 */	stw r0, 4(r1)
@@ -1388,9 +1387,9 @@ initBigFont__Fv:
 /* 80045B90 00042AF0  38 21 00 20 */	addi r1, r1, 0x20
 /* 80045B94 00042AF4  7C 08 03 A6 */	mtlr r0
 /* 80045B98 00042AF8  4E 80 00 20 */	blr 
+.endfn initBigFont__Fv
 
-.global showDvdError__6SystemFR8Graphics
-showDvdError__6SystemFR8Graphics:
+.fn showDvdError__6SystemFR8Graphics, global
 /* 80045B9C 00042AFC  7C 08 02 A6 */	mflr r0
 /* 80045BA0 00042B00  90 01 00 04 */	stw r0, 4(r1)
 /* 80045BA4 00042B04  94 21 FF C0 */	stwu r1, -0x40(r1)
@@ -1490,9 +1489,9 @@ showDvdError__6SystemFR8Graphics:
 /* 80045D10 00042C70  38 21 00 40 */	addi r1, r1, 0x40
 /* 80045D14 00042C74  7C 08 03 A6 */	mtlr r0
 /* 80045D18 00042C78  4E 80 00 20 */	blr 
+.endfn showDvdError__6SystemFR8Graphics
 
-.global Initialise__6SystemFv
-Initialise__6SystemFv:
+.fn Initialise__6SystemFv, global
 /* 80045D1C 00042C7C  7C 08 02 A6 */	mflr r0
 /* 80045D20 00042C80  3C A0 80 23 */	lis r5, bigFont_data@ha
 /* 80045D24 00042C84  90 01 00 04 */	stw r0, 4(r1)
@@ -1794,13 +1793,13 @@ Initialise__6SystemFv:
 /* 800461A8 00043108  38 21 00 50 */	addi r1, r1, 0x50
 /* 800461AC 0004310C  7C 08 03 A6 */	mtlr r0
 /* 800461B0 00043110  4E 80 00 20 */	blr 
+.endfn Initialise__6SystemFv
 
-.global sndPlaySe__6SystemFUl
-sndPlaySe__6SystemFUl:
+.fn sndPlaySe__6SystemFUl, global
 /* 800461B4 00043114  4E 80 00 20 */	blr 
+.endfn sndPlaySe__6SystemFUl
 
-.global __dt__6SystemFv
-__dt__6SystemFv:
+.fn __dt__6SystemFv, global
 /* 800461B8 00043118  7C 08 02 A6 */	mflr r0
 /* 800461BC 0004311C  90 01 00 04 */	stw r0, 4(r1)
 /* 800461C0 00043120  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -1821,9 +1820,9 @@ __dt__6SystemFv:
 /* 800461F8 00043158  38 21 00 18 */	addi r1, r1, 0x18
 /* 800461FC 0004315C  7C 08 03 A6 */	mtlr r0
 /* 80046200 00043160  4E 80 00 20 */	blr 
+.endfn __dt__6SystemFv
 
-.global loadFunc__FPv
-loadFunc__FPv:
+.fn loadFunc__FPv, local
 /* 80046204 00043164  7C 08 02 A6 */	mflr r0
 /* 80046208 00043168  28 03 00 00 */	cmplwi r3, 0
 /* 8004620C 0004316C  90 01 00 04 */	stw r0, 4(r1)
@@ -2045,17 +2044,17 @@ loadFunc__FPv:
 /* 80046540 000434A0  38 21 00 D8 */	addi r1, r1, 0xd8
 /* 80046544 000434A4  7C 08 03 A6 */	mtlr r0
 /* 80046548 000434A8  4E 80 00 20 */	blr 
+.endfn loadFunc__FPv
 
-.global draw__9LoadIdlerFR8Graphics
-draw__9LoadIdlerFR8Graphics:
+.fn draw__9LoadIdlerFR8Graphics, weak
 /* 8004654C 000434AC  4E 80 00 20 */	blr 
+.endfn draw__9LoadIdlerFR8Graphics
 
-.global init__9LoadIdlerFv
-init__9LoadIdlerFv:
+.fn init__9LoadIdlerFv, weak
 /* 80046550 000434B0  4E 80 00 20 */	blr 
+.endfn init__9LoadIdlerFv
 
-.global startLoading__6SystemFP9LoadIdlerbUl
-startLoading__6SystemFP9LoadIdlerbUl:
+.fn startLoading__6SystemFP9LoadIdlerbUl, global
 /* 80046554 000434B4  7C 08 02 A6 */	mflr r0
 /* 80046558 000434B8  3D 00 80 3A */	lis r8, lbl_80398880@ha
 /* 8004655C 000434BC  90 01 00 04 */	stw r0, 4(r1)
@@ -2094,9 +2093,9 @@ startLoading__6SystemFP9LoadIdlerbUl:
 /* 800465DC 0004353C  38 21 00 20 */	addi r1, r1, 0x20
 /* 800465E0 00043540  7C 08 03 A6 */	mtlr r0
 /* 800465E4 00043544  4E 80 00 20 */	blr 
+.endfn startLoading__6SystemFP9LoadIdlerbUl
 
-.global nudgeLoading__6SystemFv
-nudgeLoading__6SystemFv:
+.fn nudgeLoading__6SystemFv, global
 /* 800465E8 00043548  7C 08 02 A6 */	mflr r0
 /* 800465EC 0004354C  3C 60 80 3A */	lis r3, loadMesgQueue@ha
 /* 800465F0 00043550  90 01 00 04 */	stw r0, 4(r1)
@@ -2110,9 +2109,9 @@ nudgeLoading__6SystemFv:
 /* 80046610 00043570  38 21 00 08 */	addi r1, r1, 8
 /* 80046614 00043574  7C 08 03 A6 */	mtlr r0
 /* 80046618 00043578  4E 80 00 20 */	blr 
+.endfn nudgeLoading__6SystemFv
 
-.global endLoading__6SystemFv
-endLoading__6SystemFv:
+.fn endLoading__6SystemFv, global
 /* 8004661C 0004357C  7C 08 02 A6 */	mflr r0
 /* 80046620 00043580  90 01 00 04 */	stw r0, 4(r1)
 /* 80046624 00043584  38 00 00 01 */	li r0, 1
@@ -2144,9 +2143,9 @@ endLoading__6SystemFv:
 /* 80046688 000435E8  38 21 00 18 */	addi r1, r1, 0x18
 /* 8004668C 000435EC  7C 08 03 A6 */	mtlr r0
 /* 80046690 000435F0  4E 80 00 20 */	blr 
+.endfn endLoading__6SystemFv
 
-.global doneDMA__FUl
-doneDMA__FUl:
+.fn doneDMA__FUl, local
 /* 80046694 000435F4  80 A3 00 04 */	lwz r5, 4(r3)
 /* 80046698 000435F8  38 00 00 01 */	li r0, 1
 /* 8004669C 000435FC  80 85 00 24 */	lwz r4, 0x24(r5)
@@ -2166,16 +2165,16 @@ doneDMA__FUl:
 /* 800466D4 00043634  80 6D 2D EC */	lwz r3, gsys@sda21(r13)
 /* 800466D8 00043638  90 03 03 2C */	stw r0, 0x32c(r3)
 /* 800466DC 0004363C  4E 80 00 20 */	blr 
+.endfn doneDMA__FUl
 
-.global copyWaitUntilDone__6SystemFv
-copyWaitUntilDone__6SystemFv:
+.fn copyWaitUntilDone__6SystemFv, global
 /* 800466E0 00043640  80 03 03 2C */	lwz r0, 0x32c(r3)
 /* 800466E4 00043644  28 00 00 00 */	cmplwi r0, 0
 /* 800466E8 00043648  41 82 FF F8 */	beq copyWaitUntilDone__6SystemFv
 /* 800466EC 0004364C  4E 80 00 20 */	blr 
+.endfn copyWaitUntilDone__6SystemFv
 
-.global copyRamToCache__6SystemFUlUlUl
-copyRamToCache__6SystemFUlUlUl:
+.fn copyRamToCache__6SystemFUlUlUl, global
 /* 800466F0 00043650  7C 08 02 A6 */	mflr r0
 /* 800466F4 00043654  90 01 00 04 */	stw r0, 4(r1)
 /* 800466F8 00043658  94 21 FF C8 */	stwu r1, -0x38(r1)
@@ -2243,9 +2242,9 @@ copyRamToCache__6SystemFUlUlUl:
 /* 800467E8 00043748  38 21 00 38 */	addi r1, r1, 0x38
 /* 800467EC 0004374C  7C 08 03 A6 */	mtlr r0
 /* 800467F0 00043750  4E 80 00 20 */	blr 
+.endfn copyRamToCache__6SystemFUlUlUl
 
-.global copyCacheToRam__6SystemFUlUlUl
-copyCacheToRam__6SystemFUlUlUl:
+.fn copyCacheToRam__6SystemFUlUlUl, global
 /* 800467F4 00043754  7C 08 02 A6 */	mflr r0
 /* 800467F8 00043758  90 01 00 04 */	stw r0, 4(r1)
 /* 800467FC 0004375C  94 21 FF D0 */	stwu r1, -0x30(r1)
@@ -2295,9 +2294,9 @@ copyCacheToRam__6SystemFUlUlUl:
 /* 800468AC 0004380C  38 21 00 30 */	addi r1, r1, 0x30
 /* 800468B0 00043810  7C 08 03 A6 */	mtlr r0
 /* 800468B4 00043814  4E 80 00 20 */	blr 
+.endfn copyCacheToRam__6SystemFUlUlUl
 
-.global freeBuffer__FUl
-freeBuffer__FUl:
+.fn freeBuffer__FUl, local
 /* 800468B8 00043818  7C 08 02 A6 */	mflr r0
 /* 800468BC 0004381C  90 01 00 04 */	stw r0, 4(r1)
 /* 800468C0 00043820  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -2346,9 +2345,9 @@ freeBuffer__FUl:
 /* 8004696C 000438CC  38 21 00 20 */	addi r1, r1, 0x20
 /* 80046970 000438D0  7C 08 03 A6 */	mtlr r0
 /* 80046974 000438D4  4E 80 00 20 */	blr 
+.endfn freeBuffer__FUl
 
-.global copyCacheToTexture__6SystemFP12CacheTexture
-copyCacheToTexture__6SystemFP12CacheTexture:
+.fn copyCacheToTexture__6SystemFP12CacheTexture, global
 /* 80046978 000438D8  7C 08 02 A6 */	mflr r0
 /* 8004697C 000438DC  90 01 00 04 */	stw r0, 4(r1)
 /* 80046980 000438E0  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -2401,9 +2400,9 @@ copyCacheToTexture__6SystemFP12CacheTexture:
 /* 80046A38 00043998  38 21 00 28 */	addi r1, r1, 0x28
 /* 80046A3C 0004399C  7C 08 03 A6 */	mtlr r0
 /* 80046A40 000439A0  4E 80 00 20 */	blr 
+.endfn copyCacheToTexture__6SystemFP12CacheTexture
 
-.global dvdFunc__FPv
-dvdFunc__FPv:
+.fn dvdFunc__FPv, local
 /* 80046A44 000439A4  7C 08 02 A6 */	mflr r0
 /* 80046A48 000439A8  3C 60 80 3A */	lis r3, dvdMesgQueue@ha
 /* 80046A4C 000439AC  90 01 00 04 */	stw r0, 4(r1)
@@ -2554,9 +2553,9 @@ dvdFunc__FPv:
 /* 80046C5C 00043BBC  4B FC FF 45 */	bl Jac_PlaySystemSe
 /* 80046C60 00043BC0  3B A0 00 00 */	li r29, 0
 /* 80046C64 00043BC4  4B FF FE 10 */	b .L_80046A74
+.endfn dvdFunc__FPv
 
-.global nudgeDvdThread__6SystemFv
-nudgeDvdThread__6SystemFv:
+.fn nudgeDvdThread__6SystemFv, global
 /* 80046C68 00043BC8  7C 08 02 A6 */	mflr r0
 /* 80046C6C 00043BCC  3C 60 80 3A */	lis r3, dvdMesgQueue@ha
 /* 80046C70 00043BD0  90 01 00 04 */	stw r0, 4(r1)
@@ -2570,9 +2569,9 @@ nudgeDvdThread__6SystemFv:
 /* 80046C90 00043BF0  38 21 00 08 */	addi r1, r1, 8
 /* 80046C94 00043BF4  7C 08 03 A6 */	mtlr r0
 /* 80046C98 00043BF8  4E 80 00 20 */	blr 
+.endfn nudgeDvdThread__6SystemFv
 
-.global startDvdThread__6SystemFv
-startDvdThread__6SystemFv:
+.fn startDvdThread__6SystemFv, global
 /* 80046C9C 00043BFC  7C 08 02 A6 */	mflr r0
 /* 80046CA0 00043C00  3C 60 80 3A */	lis r3, lbl_80398880@ha
 /* 80046CA4 00043C04  90 01 00 04 */	stw r0, 4(r1)
@@ -2595,9 +2594,9 @@ startDvdThread__6SystemFv:
 /* 80046CE8 00043C48  38 21 00 18 */	addi r1, r1, 0x18
 /* 80046CEC 00043C4C  7C 08 03 A6 */	mtlr r0
 /* 80046CF0 00043C50  4E 80 00 20 */	blr 
+.endfn startDvdThread__6SystemFv
 
-.global flush__9LogStreamFv
-flush__9LogStreamFv:
+.fn flush__9LogStreamFv, weak
 /* 80046CF4 00043C54  7C 08 02 A6 */	mflr r0
 /* 80046CF8 00043C58  38 80 00 00 */	li r4, 0
 /* 80046CFC 00043C5C  90 01 00 04 */	stw r0, 4(r1)
@@ -2623,9 +2622,9 @@ flush__9LogStreamFv:
 /* 80046D48 00043CA8  38 21 00 18 */	addi r1, r1, 0x18
 /* 80046D4C 00043CAC  7C 08 03 A6 */	mtlr r0
 /* 80046D50 00043CB0  4E 80 00 20 */	blr 
+.endfn flush__9LogStreamFv
 
-.global write__9LogStreamFPvi
-write__9LogStreamFPvi:
+.fn write__9LogStreamFPvi, weak
 /* 80046D54 00043CB4  7C 08 02 A6 */	mflr r0
 /* 80046D58 00043CB8  90 01 00 04 */	stw r0, 4(r1)
 /* 80046D5C 00043CBC  94 21 FF D0 */	stwu r1, -0x30(r1)
@@ -2705,9 +2704,9 @@ write__9LogStreamFPvi:
 /* 80046E64 00043DC4  38 21 00 30 */	addi r1, r1, 0x30
 /* 80046E68 00043DC8  7C 08 03 A6 */	mtlr r0
 /* 80046E6C 00043DCC  4E 80 00 20 */	blr 
+.endfn write__9LogStreamFPvi
 
-.global close__9DVDStreamFv
-close__9DVDStreamFv:
+.fn close__9DVDStreamFv, weak
 /* 80046E70 00043DD0  7C 08 02 A6 */	mflr r0
 /* 80046E74 00043DD4  90 01 00 04 */	stw r0, 4(r1)
 /* 80046E78 00043DD8  94 21 FF F8 */	stwu r1, -8(r1)
@@ -2724,9 +2723,9 @@ close__9DVDStreamFv:
 /* 80046EA0 00043E00  38 21 00 08 */	addi r1, r1, 8
 /* 80046EA4 00043E04  7C 08 03 A6 */	mtlr r0
 /* 80046EA8 00043E08  4E 80 00 20 */	blr 
+.endfn close__9DVDStreamFv
 
-.global "invoke__29Delegate1<6System,R8Graphics>FR8Graphics"
-"invoke__29Delegate1<6System,R8Graphics>FR8Graphics":
+.fn "invoke__29Delegate1<6System,R8Graphics>FR8Graphics", weak
 /* 80046EAC 00043E0C  7C 08 02 A6 */	mflr r0
 /* 80046EB0 00043E10  7C 65 1B 78 */	mr r5, r3
 /* 80046EB4 00043E14  90 01 00 04 */	stw r0, 4(r1)
@@ -2739,6 +2738,7 @@ close__9DVDStreamFv:
 /* 80046ED0 00043E30  38 21 00 08 */	addi r1, r1, 8
 /* 80046ED4 00043E34  7C 08 03 A6 */	mtlr r0
 /* 80046ED8 00043E38  4E 80 00 20 */	blr 
+.endfn "invoke__29Delegate1<6System,R8Graphics>FR8Graphics"
 
 .fn __sinit_system_cpp, local
 /* 80046EDC 00043E3C  7C 08 02 A6 */	mflr r0
@@ -2784,13 +2784,12 @@ close__9DVDStreamFv:
 /* 80046F7C 00043EDC  4E 80 00 20 */	blr 
 .endfn __sinit_system_cpp
 
-.global getPending__10AramStreamFv
-getPending__10AramStreamFv:
+.fn getPending__10AramStreamFv, weak
 /* 80046F80 00043EE0  80 63 00 10 */	lwz r3, 0x10(r3)
 /* 80046F84 00043EE4  4E 80 00 20 */	blr 
+.endfn getPending__10AramStreamFv
 
-.global read__10AramStreamFPvi
-read__10AramStreamFPvi:
+.fn read__10AramStreamFPvi, weak
 /* 80046F88 00043EE8  7C 08 02 A6 */	mflr r0
 /* 80046F8C 00043EEC  38 C5 00 1F */	addi r6, r5, 0x1f
 /* 80046F90 00043EF0  90 01 00 04 */	stw r0, 4(r1)
@@ -2822,6 +2821,7 @@ read__10AramStreamFPvi:
 /* 80046FF8 00043F58  38 21 00 20 */	addi r1, r1, 0x20
 /* 80046FFC 00043F5C  7C 08 03 A6 */	mtlr r0
 /* 80047000 00043F60  4E 80 00 20 */	blr 
+.endfn read__10AramStreamFPvi
 
 .section .ctors, "wa"  # 0x80221F60 - 0x80221FC0
 lbl_constructor:
@@ -2830,67 +2830,87 @@ lbl_constructor:
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 # after bigFont_data
 .balign 4
-lbl_802A5140:
+.obj lbl_802A5140, local
 	.asciz "system.cpp"
+.endobj lbl_802A5140
 .balign 4
-lbl_802A514C:
+.obj lbl_802A514C, local
 	.asciz "build.map"
+.endobj lbl_802A514C
 .balign 4
-lbl_802A5158:
+.obj lbl_802A5158, local
 	.asciz "language"
+.endobj lbl_802A5158
 .balign 4
-lbl_802A5164:
+.obj lbl_802A5164, local
 	.asciz "bigFont.bti"
+.endobj lbl_802A5164
 .balign 4
-lbl_802A5170:
+.obj lbl_802A5170, local
 	.asciz "Reading Game Disc..."
+.endobj lbl_802A5170
 .balign 4
-lbl_802A5188:
+.obj lbl_802A5188, local
 	.asciz "An error has occurred."
+.endobj lbl_802A5188
 .balign 4
-lbl_802A51A0:
+.obj lbl_802A51A0, local
 	.asciz "Turn the power OFF and"
+.endobj lbl_802A51A0
 .balign 4
-lbl_802A51B8:
+.obj lbl_802A51B8, local
 	.asciz "check the NINTENDO GAMECUBE"
+.endobj lbl_802A51B8
 .balign 4
-lbl_802A51D4:
+.obj lbl_802A51D4, local
 	.asciz "Instruction Booklet for"
+.endobj lbl_802A51D4
 .balign 4
-lbl_802A51EC:
+.obj lbl_802A51EC, local
 	.asciz "instructions."
+.endobj lbl_802A51EC
 .balign 4
-lbl_802A51FC:
+.obj lbl_802A51FC, local
 	.asciz "The Game Disc could not be read."
+.endobj lbl_802A51FC
 .balign 4
-lbl_802A5220:
+.obj lbl_802A5220, local
 	.asciz "Please read the"
+.endobj lbl_802A5220
 .balign 4
-lbl_802A5230:
+.obj lbl_802A5230, local
 	.asciz "NINTENDO GAMECUBE"
+.endobj lbl_802A5230
 .balign 4
-lbl_802A5244:
+.obj lbl_802A5244, local
 	.asciz "Instruction Booklet"
+.endobj lbl_802A5244
 .balign 4
-lbl_802A5258:
+.obj lbl_802A5258, local
 	.asciz "for more information."
+.endobj lbl_802A5258
 .balign 4
-lbl_802A5270:
+.obj lbl_802A5270, local
 	.asciz "Please insert a"
+.endobj lbl_802A5270
 .balign 4
-lbl_802A5280:
+.obj lbl_802A5280, local
 	.asciz "Pikmin Game Disc."
+.endobj lbl_802A5280
 .balign 4
-lbl_802A5294:
+.obj lbl_802A5294, local
 	.asciz "Please close the"
+.endobj lbl_802A5294
 .balign 4
-lbl_802A52A8:
+.obj lbl_802A52A8, local
 	.asciz "Disc Cover."
+.endobj lbl_802A52A8
 .balign 4
-lbl_802A52B4:
+.obj lbl_802A52B4, local
 	.asciz "This is not a"
+.endobj lbl_802A52B4
 .balign 4
-errorMessages:
+.obj errorMessages, local
 	.4byte lbl_802A5170
 	.4byte 0
 lbl_802A52CC:
@@ -2921,56 +2941,63 @@ lbl_802A5314:
 	.4byte lbl_802A5270
 	.4byte lbl_802A5280
 	.4byte 0
-errorList:
+.endobj errorMessages
+.obj errorList, local
 	.4byte errorMessages
 	.4byte lbl_802A52CC
 	.4byte lbl_802A52E4
 	.4byte lbl_802A52FC
 	.4byte lbl_802A5308
 	.4byte lbl_802A5314
-lbl_802A5340:
+.endobj errorList
+.obj lbl_802A5340, local
 	.4byte 0x00000000
-lbl_802A5344:
 	.4byte 0xFFFFFFFF
-lbl_802A5348:
 	.4byte showDvdError__6SystemFR8Graphics
+.endobj lbl_802A5340
 .balign 4
-lbl_802A534C:
+.obj lbl_802A534C, local
 	.asciz "/dataDir/SndData/"
+.endobj lbl_802A534C
 .balign 4
-lbl_802A5360:
+.obj lbl_802A5360, local
 	.asciz "consFont.bti"
+.endobj lbl_802A5360
 .balign 4
-lbl_802A5370:
+.obj lbl_802A5370, local
 	.asciz "Delegate1<System, Graphics &>"
+.endobj lbl_802A5370
 .balign 4
-lbl_802A5390:
+.obj lbl_802A5390, local
 	.asciz "IDelegate1<Graphics &>"
+.endobj lbl_802A5390
 .balign 4
-lbl_802A53A8:
+.obj lbl_802A53A8, local
 	.4byte "__RTTI__22IDelegate1<R8Graphics>"
 	.4byte 0
 	.4byte 0
-.global "__vt__29Delegate1<6System,R8Graphics>"
-"__vt__29Delegate1<6System,R8Graphics>":
+.endobj lbl_802A53A8
+.obj "__vt__29Delegate1<6System,R8Graphics>", weak
 	.4byte "__RTTI__29Delegate1<6System,R8Graphics>"
 	.4byte 0
 	.4byte "invoke__29Delegate1<6System,R8Graphics>FR8Graphics"
-.global "__vt__22IDelegate1<R8Graphics>"
-"__vt__22IDelegate1<R8Graphics>":
+.endobj "__vt__29Delegate1<6System,R8Graphics>"
+.obj "__vt__22IDelegate1<R8Graphics>", weak
 	.4byte "__RTTI__22IDelegate1<R8Graphics>"
 	.4byte 0
 	.4byte 0
+.endobj "__vt__22IDelegate1<R8Graphics>"
 .balign 4
-lbl_802A53CC:
+.obj lbl_802A53CC, local
 	.asciz "LogStream"
+.endobj lbl_802A53CC
 .balign 4
-lbl_802A53D8:
+.obj lbl_802A53D8, local
 	.4byte __RTTI__6Stream
 	.4byte 0
 	.4byte 0
-.global __vt__9LogStream
-__vt__9LogStream:
+.endobj lbl_802A53D8
+.obj __vt__9LogStream, weak
 	.4byte __RTTI__9LogStream
 	.4byte 0
 	.4byte readInt__6StreamFv
@@ -2993,45 +3020,52 @@ __vt__9LogStream:
 	.4byte close__6StreamFv
 	.4byte getClosing__6StreamFv
 	.4byte flush__9LogStreamFv
+.endobj __vt__9LogStream
 .balign 4
-lbl_802A543C:
+.obj lbl_802A543C, local
 	.asciz "AddressNode"
+.endobj lbl_802A543C
 .balign 4
-lbl_802A5448:
+.obj lbl_802A5448, local
 	.asciz "CoreNode"
+.endobj lbl_802A5448
 .balign 4
-lbl_802A5454:
+.obj lbl_802A5454, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte 0
-lbl_802A5460:
+.endobj lbl_802A5454
+.obj lbl_802A5460, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte __RTTI__8CoreNode
 	.4byte 0
 	.4byte 0
-.global __vt__11AddressNode
-__vt__11AddressNode:
+.endobj lbl_802A5460
+.obj __vt__11AddressNode, weak
 	.4byte __RTTI__11AddressNode
 	.4byte 0
 	.4byte getAgeNodeType__5ANodeFv
 	.4byte read__8CoreNodeFR18RandomAccessStream
+.endobj __vt__11AddressNode
 .balign 4
-lbl_802A5484:
+.obj lbl_802A5484, local
 	.asciz "DirEntry"
+.endobj lbl_802A5484
 .balign 4
-lbl_802A5490:
+.obj lbl_802A5490, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte __RTTI__8CoreNode
 	.4byte 0
 	.4byte 0
-.global __vt__8DirEntry
-__vt__8DirEntry:
+.endobj lbl_802A5490
+.obj __vt__8DirEntry, weak
 	.4byte __RTTI__8DirEntry
 	.4byte 0
 	.4byte getAgeNodeType__5ANodeFv
 	.4byte read__8CoreNodeFR18RandomAccessStream
+.endobj __vt__8DirEntry
 	.4byte 0
 	.4byte 0
 	.4byte 0
@@ -3040,24 +3074,27 @@ __vt__8DirEntry:
 	.4byte 0
 	.4byte 0
 .balign 4
-lbl_802A54D0:
+.obj lbl_802A54D0, local
 	.asciz "DVDStream"
+.endobj lbl_802A54D0
 .balign 4
-lbl_802A54DC:
+.obj lbl_802A54DC, local
 	.asciz "RandomAccessStream"
+.endobj lbl_802A54DC
 .balign 4
-lbl_802A54F0:
+.obj lbl_802A54F0, local
 	.4byte __RTTI__6Stream
 	.4byte 0
 	.4byte 0
-lbl_802A54FC:
+.endobj lbl_802A54F0
+.obj lbl_802A54FC, local
 	.4byte __RTTI__6Stream
 	.4byte 0
 	.4byte __RTTI__18RandomAccessStream
 	.4byte 0
 	.4byte 0
-.global __vt__9DVDStream
-__vt__9DVDStream:
+.endobj lbl_802A54FC
+.obj __vt__9DVDStream, weak
 	.4byte __RTTI__9DVDStream
 	.4byte 0
 	.4byte readInt__6StreamFv
@@ -3083,6 +3120,7 @@ __vt__9DVDStream:
 	.4byte getPosition__18RandomAccessStreamFv
 	.4byte setPosition__18RandomAccessStreamFi
 	.4byte getLength__18RandomAccessStreamFv
+.endobj __vt__9DVDStream
 	.4byte 0
 	.4byte 0
 	.4byte 0
@@ -3109,15 +3147,16 @@ __vt__9DVDStream:
 	.4byte 0
 	.4byte 0
 .balign 4
-lbl_802A55D8:
+.obj lbl_802A55D8, local
 	.asciz "StdSystem"
+.endobj lbl_802A55D8
 .balign 4
-lbl_802A55E4:
+.obj lbl_802A55E4, local
 	.4byte __RTTI__9StdSystem
 	.4byte 0
 	.4byte 0
-.global __vt__6System
-__vt__6System:
+.endobj lbl_802A55E4
+.obj __vt__6System, global
 	.4byte __RTTI__6System
 	.4byte 0
 	.4byte initSoftReset__6SystemFv
@@ -3131,18 +3170,20 @@ __vt__6System:
 	.4byte sndPlaySe__6SystemFUl
 	.4byte startLoading__6SystemFP9LoadIdlerbUl
 	.4byte endLoading__6SystemFv
+.endobj __vt__6System
 .balign 4
-lbl_802A5624:
+.obj lbl_802A5624, local
 	.asciz "AramStream"
+.endobj lbl_802A5624
 .balign 4
-lbl_802A5630:
+.obj lbl_802A5630, local
 	.4byte __RTTI__6Stream
 	.4byte 0
 	.4byte __RTTI__18RandomAccessStream
 	.4byte 0
 	.4byte 0
-.global __vt__10AramStream
-__vt__10AramStream:
+.endobj lbl_802A5630
+.obj __vt__10AramStream, weak
 	.4byte __RTTI__10AramStream
 	.4byte 0
 	.4byte readInt__6StreamFv
@@ -3168,145 +3209,182 @@ __vt__10AramStream:
 	.4byte getPosition__18RandomAccessStreamFv
 	.4byte setPosition__18RandomAccessStreamFi
 	.4byte getLength__18RandomAccessStreamFv
+.endobj __vt__10AramStream
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-lbl_803DD4D0:
+.obj lbl_803DD4D0, local
 	.asciz "System"
+.endobj lbl_803DD4D0
 .balign 4
-.global glnWidth
-glnWidth:
+.obj glnWidth, global
 	.4byte 0x00000280
-.global glnHeight
-glnHeight:
+.endobj glnWidth
+.obj glnHeight, global
 	.4byte 0x000001E0
+.endobj glnHeight
 .balign 4
-lbl_803DD4E0:
+.obj lbl_803DD4E0, local
 	.asciz ""
+.endobj lbl_803DD4E0
 .balign 4
-lbl_803DD4E4:
+.obj lbl_803DD4E4, local
 	.asciz "%s"
+.endobj lbl_803DD4E4
 .balign 4
-lbl_803DD4E8:
+.obj lbl_803DD4E8, local
 	.asciz "%s%s%s"
+.endobj lbl_803DD4E8
 .balign 4
-lbl_803DD4F0:
+.obj lbl_803DD4F0, local
 	.asciz ".text"
+.endobj lbl_803DD4F0
 .balign 4
-lbl_803DD4F8:
+.obj lbl_803DD4F8, local
 	.asciz "UNUSED"
+.endobj lbl_803DD4F8
 .balign 4
-lbl_803DD500:
+.obj lbl_803DD500, local
 	.asciz "%08x"
+.endobj lbl_803DD500
 .balign 4
-lbl_803DD508:
+.obj lbl_803DD508, local
 	.asciz "%d"
+.endobj lbl_803DD508
 .balign 4
-lbl_803DD50C:
+.obj lbl_803DD50C, local
 	.asciz ".ctors"
+.endobj lbl_803DD50C
 .balign 4
-lbl_803DD514:
+.obj lbl_803DD514, local
 	.asciz "root"
+.endobj lbl_803DD514
 .balign 4
-lbl_803DD51C:
+.obj lbl_803DD51C, local
 	.asciz "texImg"
+.endobj lbl_803DD51C
 .balign 4
-lbl_803DD524:
+.obj lbl_803DD524, local
 	.asciz "sys"
+.endobj lbl_803DD524
 .balign 4
-"__RTTI__22IDelegate1<R8Graphics>":
+.obj "__RTTI__22IDelegate1<R8Graphics>", local
 	.4byte lbl_802A5390
 	.4byte 0
-"__RTTI__29Delegate1<6System,R8Graphics>":
+.endobj "__RTTI__22IDelegate1<R8Graphics>"
+.obj "__RTTI__29Delegate1<6System,R8Graphics>", local
 	.4byte lbl_802A5370
 	.4byte lbl_802A53A8
+.endobj "__RTTI__29Delegate1<6System,R8Graphics>"
 .balign 4
-lbl_803DD538:
+.obj lbl_803DD538, local
 	.asciz "Stream"
+.endobj lbl_803DD538
 .balign 4
-__RTTI__6Stream:
+.obj __RTTI__6Stream, local
 	.4byte lbl_803DD538
 	.4byte 0
-__RTTI__9LogStream:
+.endobj __RTTI__6Stream
+.obj __RTTI__9LogStream, local
 	.4byte lbl_802A53CC
 	.4byte lbl_802A53D8
+.endobj __RTTI__9LogStream
 .balign 4
-lbl_803DD550:
+.obj lbl_803DD550, local
 	.asciz "%s\n"
+.endobj lbl_803DD550
 .balign 4
-lbl_803DD554:
+.obj lbl_803DD554, local
 	.asciz "ANode"
+.endobj lbl_803DD554
 .balign 4
-__RTTI__5ANode:
+.obj __RTTI__5ANode, local
 	.4byte lbl_803DD554
 	.4byte 0
-__RTTI__8CoreNode:
+.endobj __RTTI__5ANode
+.obj __RTTI__8CoreNode, local
 	.4byte lbl_802A5448
 	.4byte lbl_802A5454
-__RTTI__11AddressNode:
+.endobj __RTTI__8CoreNode
+.obj __RTTI__11AddressNode, local
 	.4byte lbl_802A543C
 	.4byte lbl_802A5460
-__RTTI__8DirEntry:
+.endobj __RTTI__11AddressNode
+.obj __RTTI__8DirEntry, local
 	.4byte lbl_802A5484
 	.4byte lbl_802A5490
-__RTTI__18RandomAccessStream:
+.endobj __RTTI__8DirEntry
+.obj __RTTI__18RandomAccessStream, local
 	.4byte lbl_802A54DC
 	.4byte lbl_802A54F0
-__RTTI__9DVDStream:
+.endobj __RTTI__18RandomAccessStream
+.obj __RTTI__9DVDStream, local
 	.4byte lbl_802A54D0
 	.4byte lbl_802A54FC
-__RTTI__9StdSystem:
+.endobj __RTTI__9DVDStream
+.obj __RTTI__9StdSystem, local
 	.4byte lbl_802A55D8
 	.4byte 0
-__RTTI__6System:
+.endobj __RTTI__9StdSystem
+.obj __RTTI__6System, local
 	.4byte lbl_803DD4D0
 	.4byte lbl_802A55E4
-__RTTI__10AramStream:
+.endobj __RTTI__6System
+.obj __RTTI__10AramStream, local
 	.4byte lbl_802A5624
 	.4byte lbl_802A5630
+.endobj __RTTI__10AramStream
 
 .section .sbss, "wa"
 .balign 8
-useSymbols:
+.obj useSymbols, local
 	.skip 1
+.endobj useSymbols
 .balign 4
-.global gsys
-gsys:
+.obj gsys, global
 	.skip 4
-.global sysCon
-sysCon:
+.endobj gsys
+.obj sysCon, global
 	.skip 4
-.global errCon
-errCon:
+.endobj sysCon
+.obj errCon, global
 	.skip 4
-dvdMesgBuffer:
+.endobj errCon
+.obj dvdMesgBuffer, local
 	.skip 4
-loadMesgBuffer:
+.endobj dvdMesgBuffer
+.obj loadMesgBuffer, local
 	.skip 4
-sysMesgBuffer:
+.endobj loadMesgBuffer
+.obj sysMesgBuffer, local
 	.skip 4
-.global readBuffer__9DVDStream
-readBuffer__9DVDStream:
+.endobj sysMesgBuffer
+.obj readBuffer__9DVDStream, global
 	.skip 4
-.global numOpen__9DVDStream
-numOpen__9DVDStream:
+.endobj readBuffer__9DVDStream
+.obj numOpen__9DVDStream, global
 	.skip 4
-bigFont:
+.endobj numOpen__9DVDStream
+.obj bigFont, local
 	.skip 4
+.endobj bigFont
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803E8678:
+.obj lbl_803E8678, local
 	.float 0.0
-lbl_803E867C:
+.endobj lbl_803E8678
+.obj lbl_803E867C, local
 	.float 1.0
+.endobj lbl_803E867C
 .balign 8
-lbl_803E8680:
-	.4byte 0x43300000
-	.4byte 0x80000000
+.obj lbl_803E8680, local
+	.8byte 0x4330000080000000
+.endobj lbl_803E8680
 .balign 8
-lbl_803E8688:
-	.4byte 0x43300000
-	.4byte 0x00000000
-lbl_803E8690:
+.obj lbl_803E8688, local
+	.8byte 0x4330000000000000
+.endobj lbl_803E8688
+.obj lbl_803E8690, local
 	.float 0.033333335
+.endobj lbl_803E8690

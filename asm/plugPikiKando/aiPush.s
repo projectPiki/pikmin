@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global __ct__7ActPushFP4Piki
-__ct__7ActPushFP4Piki:
+.fn __ct__7ActPushFP4Piki, global
 /* 800BDFF0 000BAF50  7C 08 02 A6 */	mflr r0
 /* 800BDFF4 000BAF54  90 01 00 04 */	stw r0, 4(r1)
 /* 800BDFF8 000BAF58  7C 80 07 35 */	extsh. r0, r4
@@ -43,9 +42,9 @@ __ct__7ActPushFP4Piki:
 /* 800BE084 000BAFE4  38 21 00 20 */	addi r1, r1, 0x20
 /* 800BE088 000BAFE8  7C 08 03 A6 */	mtlr r0
 /* 800BE08C 000BAFEC  4E 80 00 20 */	blr 
+.endfn __ct__7ActPushFP4Piki
 
-.global init__7ActPushFP8Creature
-init__7ActPushFP8Creature:
+.fn init__7ActPushFP8Creature, global
 /* 800BE090 000BAFF0  7C 08 02 A6 */	mflr r0
 /* 800BE094 000BAFF4  38 A0 00 02 */	li r5, 2
 /* 800BE098 000BAFF8  90 01 00 04 */	stw r0, 4(r1)
@@ -85,9 +84,9 @@ init__7ActPushFP8Creature:
 /* 800BE11C 000BB07C  38 21 00 18 */	addi r1, r1, 0x18
 /* 800BE120 000BB080  7C 08 03 A6 */	mtlr r0
 /* 800BE124 000BB084  4E 80 00 20 */	blr 
+.endfn init__7ActPushFP8Creature
 
-.global exec__7ActPushFv
-exec__7ActPushFv:
+.fn exec__7ActPushFv, global
 /* 800BE128 000BB088  7C 08 02 A6 */	mflr r0
 /* 800BE12C 000BB08C  90 01 00 04 */	stw r0, 4(r1)
 /* 800BE130 000BB090  94 21 FF F8 */	stwu r1, -8(r1)
@@ -147,9 +146,9 @@ exec__7ActPushFv:
 /* 800BE1E8 000BB148  38 21 00 08 */	addi r1, r1, 8
 /* 800BE1EC 000BB14C  7C 08 03 A6 */	mtlr r0
 /* 800BE1F0 000BB150  4E 80 00 20 */	blr 
+.endfn exec__7ActPushFv
 
-.global exeApproach__7ActPushFv
-exeApproach__7ActPushFv:
+.fn exeApproach__7ActPushFv, global
 /* 800BE1F4 000BB154  7C 08 02 A6 */	mflr r0
 /* 800BE1F8 000BB158  90 01 00 04 */	stw r0, 4(r1)
 /* 800BE1FC 000BB15C  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -184,17 +183,14 @@ exeApproach__7ActPushFv:
 /* 800BE268 000BB1C8  7C 03 00 2E */	lwzx r0, r3, r0
 /* 800BE26C 000BB1CC  7C 09 03 A6 */	mtctr r0
 /* 800BE270 000BB1D0  4E 80 04 20 */	bctr 
-.global .L_800BE274
 .L_800BE274:
 /* 800BE274 000BB1D4  38 60 00 01 */	li r3, 1
 /* 800BE278 000BB1D8  48 00 00 78 */	b .L_800BE2F0
-.global .L_800BE27C
 .L_800BE27C:
 /* 800BE27C 000BB1DC  38 61 00 0C */	addi r3, r1, 0xc
 /* 800BE280 000BB1E0  80 9F 00 18 */	lwz r4, 0x18(r31)
 /* 800BE284 000BB1E4  4B FD E0 45 */	bl getZVector__10HinderRockFv
 /* 800BE288 000BB1E8  48 00 00 54 */	b .L_800BE2DC
-.global .L_800BE28C
 .L_800BE28C:
 /* 800BE28C 000BB1EC  38 61 00 0C */	addi r3, r1, 0xc
 /* 800BE290 000BB1F0  80 9F 00 18 */	lwz r4, 0x18(r31)
@@ -210,17 +206,14 @@ exeApproach__7ActPushFv:
 /* 800BE2B8 000BB218  EC 00 00 72 */	fmuls f0, f0, f1
 /* 800BE2BC 000BB21C  D0 01 00 14 */	stfs f0, 0x14(r1)
 /* 800BE2C0 000BB220  48 00 00 1C */	b .L_800BE2DC
-.global .L_800BE2C4
 .L_800BE2C4:
 /* 800BE2C4 000BB224  38 61 00 0C */	addi r3, r1, 0xc
 /* 800BE2C8 000BB228  80 9F 00 18 */	lwz r4, 0x18(r31)
 /* 800BE2CC 000BB22C  4B FD E0 C5 */	bl getXVector__10HinderRockFv
 /* 800BE2D0 000BB230  48 00 00 0C */	b .L_800BE2DC
-.global .L_800BE2D4
 .L_800BE2D4:
 /* 800BE2D4 000BB234  38 60 00 01 */	li r3, 1
 /* 800BE2D8 000BB238  48 00 00 18 */	b .L_800BE2F0
-.global .L_800BE2DC
 .L_800BE2DC:
 /* 800BE2DC 000BB23C  80 7F 00 0C */	lwz r3, 0xc(r31)
 /* 800BE2E0 000BB240  38 81 00 0C */	addi r4, r1, 0xc
@@ -233,9 +226,9 @@ exeApproach__7ActPushFv:
 /* 800BE2F8 000BB258  38 21 00 20 */	addi r1, r1, 0x20
 /* 800BE2FC 000BB25C  7C 08 03 A6 */	mtlr r0
 /* 800BE300 000BB260  4E 80 00 20 */	blr 
+.endfn exeApproach__7ActPushFv
 
-.global initGo__7ActPushFv
-initGo__7ActPushFv:
+.fn initGo__7ActPushFv, global
 /* 800BE304 000BB264  7C 08 02 A6 */	mflr r0
 /* 800BE308 000BB268  38 80 00 02 */	li r4, 2
 /* 800BE30C 000BB26C  90 01 00 04 */	stw r0, 4(r1)
@@ -318,9 +311,9 @@ initGo__7ActPushFv:
 /* 800BE434 000BB394  38 21 00 48 */	addi r1, r1, 0x48
 /* 800BE438 000BB398  7C 08 03 A6 */	mtlr r0
 /* 800BE43C 000BB39C  4E 80 00 20 */	blr 
+.endfn initGo__7ActPushFv
 
-.global exeGo__7ActPushFv
-exeGo__7ActPushFv:
+.fn exeGo__7ActPushFv, global
 /* 800BE440 000BB3A0  7C 08 02 A6 */	mflr r0
 /* 800BE444 000BB3A4  90 01 00 04 */	stw r0, 4(r1)
 /* 800BE448 000BB3A8  94 21 FF A0 */	stwu r1, -0x60(r1)
@@ -463,9 +456,9 @@ exeGo__7ActPushFv:
 /* 800BE648 000BB5A8  38 21 00 60 */	addi r1, r1, 0x60
 /* 800BE64C 000BB5AC  7C 08 03 A6 */	mtlr r0
 /* 800BE650 000BB5B0  4E 80 00 20 */	blr 
+.endfn exeGo__7ActPushFv
 
-.global animationKeyUpdated__7ActPushFR16PaniAnimKeyEvent
-animationKeyUpdated__7ActPushFR16PaniAnimKeyEvent:
+.fn animationKeyUpdated__7ActPushFR16PaniAnimKeyEvent, global
 /* 800BE654 000BB5B4  7C 08 02 A6 */	mflr r0
 /* 800BE658 000BB5B8  90 01 00 04 */	stw r0, 4(r1)
 /* 800BE65C 000BB5BC  94 21 FF 60 */	stwu r1, -0xa0(r1)
@@ -660,9 +653,9 @@ animationKeyUpdated__7ActPushFR16PaniAnimKeyEvent:
 /* 800BE91C 000BB87C  38 21 00 A0 */	addi r1, r1, 0xa0
 /* 800BE920 000BB880  7C 08 03 A6 */	mtlr r0
 /* 800BE924 000BB884  4E 80 00 20 */	blr 
+.endfn animationKeyUpdated__7ActPushFR16PaniAnimKeyEvent
 
-.global cleanup__7ActPushFv
-cleanup__7ActPushFv:
+.fn cleanup__7ActPushFv, global
 /* 800BE928 000BB888  7C 08 02 A6 */	mflr r0
 /* 800BE92C 000BB88C  90 01 00 04 */	stw r0, 4(r1)
 /* 800BE930 000BB890  94 21 FF F8 */	stwu r1, -8(r1)
@@ -678,9 +671,9 @@ cleanup__7ActPushFv:
 /* 800BE954 000BB8B4  38 21 00 08 */	addi r1, r1, 8
 /* 800BE958 000BB8B8  7C 08 03 A6 */	mtlr r0
 /* 800BE95C 000BB8BC  4E 80 00 20 */	blr 
+.endfn cleanup__7ActPushFv
 
-.global __dt__7ActPushFv
-__dt__7ActPushFv:
+.fn __dt__7ActPushFv, weak
 /* 800BE960 000BB8C0  7C 08 02 A6 */	mflr r0
 /* 800BE964 000BB8C4  90 01 00 04 */	stw r0, 4(r1)
 /* 800BE968 000BB8C8  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -714,20 +707,23 @@ __dt__7ActPushFv:
 /* 800BE9D4 000BB934  38 21 00 18 */	addi r1, r1, 0x18
 /* 800BE9D8 000BB938  7C 08 03 A6 */	mtlr r0
 /* 800BE9DC 000BB93C  4E 80 00 20 */	blr 
+.endfn __dt__7ActPushFv
 
-"@72@4@animationKeyUpdated__7ActPushFR16PaniAnimKeyEvent":
+.fn "@72@4@animationKeyUpdated__7ActPushFR16PaniAnimKeyEvent", weak
 /* 800BE9E0 000BB940  39 60 00 04 */	li r11, 4
 /* 800BE9E4 000BB944  7D 63 58 2E */	lwzx r11, r3, r11
 /* 800BE9E8 000BB948  7C 63 5A 14 */	add r3, r3, r11
 /* 800BE9EC 000BB94C  38 63 FF B8 */	addi r3, r3, -72
 /* 800BE9F0 000BB950  4B FF FC 64 */	b animationKeyUpdated__7ActPushFR16PaniAnimKeyEvent
+.endfn "@72@4@animationKeyUpdated__7ActPushFR16PaniAnimKeyEvent"
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802B7370:
+.obj lbl_802B7370, local
 	.asciz "aiPush.cpp"
+.endobj lbl_802B7370
 .balign 4
-lbl_802B737C:
+.obj lbl_802B737C, local
 	.4byte .L_800BE27C
 	.4byte .L_800BE2D4
 	.4byte .L_800BE274
@@ -741,9 +737,11 @@ lbl_802B737C:
 	.4byte .L_800BE2DC
 	.4byte .L_800BE2DC
 	.4byte .L_800BE2C4
+.endobj lbl_802B737C
 .balign 4
-lbl_802B73B0:
+.obj lbl_802B73B0, local
 	.asciz "Interaction"
+.endobj lbl_802B73B0
 .balign 4
 	.4byte 0x00000000
 	.4byte 0x00000000
@@ -757,17 +755,20 @@ lbl_802B73B0:
 	.4byte 0x00000000
 	.4byte 0x00000000
 .balign 4
-lbl_802B73E8:
+.obj lbl_802B73E8, local
 	.asciz "PaniAnimKeyListener"
+.endobj lbl_802B73E8
 .balign 4
-lbl_802B73FC:
+.obj lbl_802B73FC, local
 	.asciz "Receiver<Piki>"
+.endobj lbl_802B73FC
 .balign 4
-lbl_802B740C:
+.obj lbl_802B740C, local
 	.4byte "__RTTI__15Receiver<4Piki>"
 	.4byte 0
 	.4byte 0
-lbl_802B7418:
+.endobj lbl_802B740C
+.obj lbl_802B7418, local
 	.4byte __RTTI__19PaniAnimKeyListener
 	.4byte 0x48
 	.4byte "__RTTI__15Receiver<4Piki>"
@@ -775,8 +776,8 @@ lbl_802B7418:
 	.4byte __RTTI__6Action
 	.4byte 0
 	.4byte 0
-.global __vt__7ActPush
-__vt__7ActPush:
+.endobj lbl_802B7418
+.obj __vt__7ActPush, global
 	.4byte __RTTI__7ActPush
 	.4byte 0
 	.4byte "procMsg__15Receiver<4Piki>FP4PikiP3Msg"
@@ -806,10 +807,11 @@ __vt__7ActPush:
 	.4byte __RTTI__7ActPush
 	.4byte 0xFFFFFFB8
 	.4byte "@72@4@animationKeyUpdated__7ActPushFR16PaniAnimKeyEvent"
+.endobj __vt__7ActPush
 	.4byte 0
 	.4byte 0
 	.4byte 0
-lbl_802B74B4:
+.obj lbl_802B74B4, local
 	.4byte .L_800A7908
 	.4byte .L_800A7930
 	.4byte .L_800A7944
@@ -821,52 +823,70 @@ lbl_802B74B4:
 	.4byte .L_800A791C
 	.4byte .L_800A79D0
 	.4byte .L_800A79BC
+.endobj lbl_802B74B4
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-lbl_803E0640:
+.obj lbl_803E0640, local
 	.asciz "Push"
+.endobj lbl_803E0640
 .balign 4
-lbl_803E0648:
+.obj lbl_803E0648, local
 	.asciz "ActPush"
+.endobj lbl_803E0648
 .balign 4
-__RTTI__19PaniAnimKeyListener:
+.obj __RTTI__19PaniAnimKeyListener, local
 	.4byte lbl_802B73E8
 	.4byte 0
-"__RTTI__15Receiver<4Piki>":
+.endobj __RTTI__19PaniAnimKeyListener
+.obj "__RTTI__15Receiver<4Piki>", local
 	.4byte lbl_802B73FC
 	.4byte 0
+.endobj "__RTTI__15Receiver<4Piki>"
 .balign 4
-lbl_803E0660:
+.obj lbl_803E0660, local
 	.asciz "Action"
+.endobj lbl_803E0660
 .balign 4
-__RTTI__6Action:
+.obj __RTTI__6Action, local
 	.4byte lbl_803E0660
 	.4byte lbl_802B740C
-__RTTI__7ActPush:
+.endobj __RTTI__6Action
+.obj __RTTI__7ActPush, local
 	.4byte lbl_803E0648
 	.4byte lbl_802B7418
+.endobj __RTTI__7ActPush
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803E95E0:
+.obj lbl_803E95E0, local
 	.float 0.0
-lbl_803E95E4:
+.endobj lbl_803E95E0
+.obj lbl_803E95E4, local
 	.float -1.0
-lbl_803E95E8:
+.endobj lbl_803E95E4
+.obj lbl_803E95E8, local
 	.float 0.8
-lbl_803E95EC:
+.endobj lbl_803E95E8
+.obj lbl_803E95EC, local
 	.float 1.0
-lbl_803E95F0:
+.endobj lbl_803E95EC
+.obj lbl_803E95F0, local
 	.float 32767.0
-lbl_803E95F4:
+.endobj lbl_803E95F0
+.obj lbl_803E95F4, local
 	.float 5.0
-lbl_803E95F8:
-	.4byte 0x43300000
-	.4byte 0x80000000
-lbl_803E9600:
+.endobj lbl_803E95F4
+.balign 8
+.obj lbl_803E95F8, local
+	.8byte 0x4330000080000000
+.endobj lbl_803E95F8
+.obj lbl_803E9600, local
 	.float 11.0
-lbl_803E9604:
+.endobj lbl_803E9600
+.obj lbl_803E9604, local
 	.float 10.0
-lbl_803E9608:
+.endobj lbl_803E9604
+.obj lbl_803E9608, local
 	.float 30.0
+.endobj lbl_803E9608

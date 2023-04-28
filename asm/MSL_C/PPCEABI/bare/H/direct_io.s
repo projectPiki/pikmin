@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global fwrite
-fwrite:
+.fn fwrite, global
 /* 80215E04 00212D64  7C 08 02 A6 */	mflr r0
 /* 80215E08 00212D68  90 01 00 04 */	stw r0, 4(r1)
 /* 80215E0C 00212D6C  94 21 FF B8 */	stwu r1, -0x48(r1)
@@ -206,3 +205,4 @@ fwrite:
 /* 802160D4 00213034  38 21 00 48 */	addi r1, r1, 0x48
 /* 802160D8 00213038  7C 08 03 A6 */	mtlr r0
 /* 802160DC 0021303C  4E 80 00 20 */	blr 
+.endfn fwrite
