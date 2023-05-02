@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global TRKInitializeEventQueue
-TRKInitializeEventQueue:
+.fn TRKInitializeEventQueue, global
 /* 8021C0B4 00219014  7C 08 02 A6 */	mflr r0
 /* 8021C0B8 00219018  3C 60 80 3D */	lis r3, gTRKEventQueue@ha
 /* 8021C0BC 0021901C  90 01 00 04 */	stw r0, 4(r1)
@@ -25,9 +24,9 @@ TRKInitializeEventQueue:
 /* 8021C104 00219064  80 01 00 04 */	lwz r0, 4(r1)
 /* 8021C108 00219068  7C 08 03 A6 */	mtlr r0
 /* 8021C10C 0021906C  4E 80 00 20 */	blr 
+.endfn TRKInitializeEventQueue
 
-.global TRKCopyEvent
-TRKCopyEvent:
+.fn TRKCopyEvent, global
 /* 8021C110 00219070  7C 08 02 A6 */	mflr r0
 /* 8021C114 00219074  38 A0 00 0C */	li r5, 0xc
 /* 8021C118 00219078  90 01 00 04 */	stw r0, 4(r1)
@@ -37,9 +36,9 @@ TRKCopyEvent:
 /* 8021C128 00219088  80 01 00 04 */	lwz r0, 4(r1)
 /* 8021C12C 0021908C  7C 08 03 A6 */	mtlr r0
 /* 8021C130 00219090  4E 80 00 20 */	blr 
+.endfn TRKCopyEvent
 
-.global TRKGetNextEvent
-TRKGetNextEvent:
+.fn TRKGetNextEvent, global
 /* 8021C134 00219094  7C 08 02 A6 */	mflr r0
 /* 8021C138 00219098  3C 80 80 3D */	lis r4, gTRKEventQueue@ha
 /* 8021C13C 0021909C  90 01 00 04 */	stw r0, 4(r1)
@@ -90,9 +89,9 @@ TRKGetNextEvent:
 /* 8021C1E8 00219148  80 01 00 04 */	lwz r0, 4(r1)
 /* 8021C1EC 0021914C  7C 08 03 A6 */	mtlr r0
 /* 8021C1F0 00219150  4E 80 00 20 */	blr 
+.endfn TRKGetNextEvent
 
-.global TRKPostEvent
-TRKPostEvent:
+.fn TRKPostEvent, global
 /* 8021C1F4 00219154  7C 08 02 A6 */	mflr r0
 /* 8021C1F8 00219158  3C 80 80 3D */	lis r4, gTRKEventQueue@ha
 /* 8021C1FC 0021915C  90 01 00 04 */	stw r0, 4(r1)
@@ -152,18 +151,18 @@ TRKPostEvent:
 /* 8021C2C8 00219228  80 01 00 04 */	lwz r0, 4(r1)
 /* 8021C2CC 0021922C  7C 08 03 A6 */	mtlr r0
 /* 8021C2D0 00219230  4E 80 00 20 */	blr 
+.endfn TRKPostEvent
 
-.global TRKConstructEvent
-TRKConstructEvent:
+.fn TRKConstructEvent, global
 /* 8021C2D4 00219234  98 83 00 00 */	stb r4, 0(r3)
 /* 8021C2D8 00219238  38 80 00 00 */	li r4, 0
 /* 8021C2DC 0021923C  38 00 FF FF */	li r0, -1
 /* 8021C2E0 00219240  90 83 00 04 */	stw r4, 4(r3)
 /* 8021C2E4 00219244  90 03 00 08 */	stw r0, 8(r3)
 /* 8021C2E8 00219248  4E 80 00 20 */	blr 
+.endfn TRKConstructEvent
 
-.global TRKDestructEvent
-TRKDestructEvent:
+.fn TRKDestructEvent, global
 /* 8021C2EC 0021924C  7C 08 02 A6 */	mflr r0
 /* 8021C2F0 00219250  90 01 00 04 */	stw r0, 4(r1)
 /* 8021C2F4 00219254  94 21 FF F8 */	stwu r1, -8(r1)
@@ -173,3 +172,4 @@ TRKDestructEvent:
 /* 8021C304 00219264  80 01 00 04 */	lwz r0, 4(r1)
 /* 8021C308 00219268  7C 08 03 A6 */	mtlr r0
 /* 8021C30C 0021926C  4E 80 00 20 */	blr 
+.endfn TRKDestructEvent

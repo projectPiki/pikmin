@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global TRKSuppAccessFile
-TRKSuppAccessFile:
+.fn TRKSuppAccessFile, global
 /* 8021E21C 0021B17C  7C 08 02 A6 */	mflr r0
 /* 8021E220 0021B180  90 01 00 04 */	stw r0, 4(r1)
 /* 8021E224 0021B184  94 21 FF B8 */	stwu r1, -0x48(r1)
@@ -213,9 +212,9 @@ TRKSuppAccessFile:
 /* 8021E4E8 0021B448  80 01 00 04 */	lwz r0, 4(r1)
 /* 8021E4EC 0021B44C  7C 08 03 A6 */	mtlr r0
 /* 8021E4F0 0021B450  4E 80 00 20 */	blr 
+.endfn TRKSuppAccessFile
 
-.global TRKRequestSend
-TRKRequestSend:
+.fn TRKRequestSend, global
 /* 8021E4F4 0021B454  7C 08 02 A6 */	mflr r0
 /* 8021E4F8 0021B458  90 01 00 04 */	stw r0, 4(r1)
 /* 8021E4FC 0021B45C  38 00 FF FF */	li r0, -1
@@ -334,3 +333,4 @@ TRKRequestSend:
 /* 8021E68C 0021B5EC  80 01 00 04 */	lwz r0, 4(r1)
 /* 8021E690 0021B5F0  7C 08 03 A6 */	mtlr r0
 /* 8021E694 0021B5F4  4E 80 00 20 */	blr 
+.endfn TRKRequestSend

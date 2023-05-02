@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global actPiki__12InteractTalkFP4Piki
-actPiki__12InteractTalkFP4Piki:
+.fn actPiki__12InteractTalkFP4Piki, global
 /* 8007C9F8 00079958  7C 08 02 A6 */	mflr r0
 /* 8007C9FC 0007995C  90 01 00 04 */	stw r0, 4(r1)
 /* 8007CA00 00079960  38 00 00 02 */	li r0, 2
@@ -17,9 +16,9 @@ actPiki__12InteractTalkFP4Piki:
 /* 8007CA28 00079988  38 21 00 18 */	addi r1, r1, 0x18
 /* 8007CA2C 0007998C  7C 08 03 A6 */	mtlr r0
 /* 8007CA30 00079990  4E 80 00 20 */	blr 
+.endfn actPiki__12InteractTalkFP4Piki
 
-.global actPiki__12InteractWarnFP4Piki
-actPiki__12InteractWarnFP4Piki:
+.fn actPiki__12InteractWarnFP4Piki, global
 /* 8007CA34 00079994  7C 08 02 A6 */	mflr r0
 /* 8007CA38 00079998  90 01 00 04 */	stw r0, 4(r1)
 /* 8007CA3C 0007999C  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -93,27 +92,32 @@ actPiki__12InteractWarnFP4Piki:
 /* 8007CB2C 00079A8C  38 21 00 18 */	addi r1, r1, 0x18
 /* 8007CB30 00079A90  7C 08 03 A6 */	mtlr r0
 /* 8007CB34 00079A94  4E 80 00 20 */	blr 
+.endfn actPiki__12InteractWarnFP4Piki
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802AD200:
+.obj lbl_802AD200, local
 	.asciz "interactEtc.cpp"
+.endobj lbl_802AD200
 .balign 4
-lbl_802AD210:
+.obj lbl_802AD210, local
 	.asciz "interactEtc"
+.endobj lbl_802AD210
 .balign 4
-lbl_802AD21C:
+.obj lbl_802AD21C, local
 	.asciz "InteractWarn"
+.endobj lbl_802AD21C
 .balign 4
-lbl_802AD22C:
+.obj lbl_802AD22C, local
 	.asciz "Interaction"
+.endobj lbl_802AD22C
 .balign 4
-lbl_802AD238:
+.obj lbl_802AD238, local
 	.4byte __RTTI__11Interaction
 	.4byte 0
 	.4byte 0
-.global __vt__12InteractWarn
-__vt__12InteractWarn:
+.endobj lbl_802AD238
+.obj __vt__12InteractWarn, global
 	.4byte __RTTI__12InteractWarn
 	.4byte 0
 	.4byte actCommon__11InteractionFP8Creature
@@ -125,16 +129,18 @@ __vt__12InteractWarn:
 	.4byte actHinderRock__11InteractionFP10HinderRock
 	.4byte actBridge__11InteractionFP6Bridge
 	.4byte actItem__11InteractionFP12ItemCreature
+.endobj __vt__12InteractWarn
 .balign 4
-lbl_802AD270:
+.obj lbl_802AD270, local
 	.asciz "InteractTalk"
+.endobj lbl_802AD270
 .balign 4
-lbl_802AD280:
+.obj lbl_802AD280, local
 	.4byte __RTTI__11Interaction
 	.4byte 0
 	.4byte 0
-.global __vt__12InteractTalk
-__vt__12InteractTalk:
+.endobj lbl_802AD280
+.obj __vt__12InteractTalk, global
 	.4byte __RTTI__12InteractTalk
 	.4byte 0
 	.4byte actCommon__11InteractionFP8Creature
@@ -146,15 +152,19 @@ __vt__12InteractTalk:
 	.4byte actHinderRock__11InteractionFP10HinderRock
 	.4byte actBridge__11InteractionFP6Bridge
 	.4byte actItem__11InteractionFP12ItemCreature
+.endobj __vt__12InteractTalk
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-__RTTI__11Interaction:
+.obj __RTTI__11Interaction, local
 	.4byte lbl_802AD22C
 	.4byte 0
-__RTTI__12InteractWarn:
+.endobj __RTTI__11Interaction
+.obj __RTTI__12InteractWarn, local
 	.4byte lbl_802AD21C
 	.4byte lbl_802AD238
-__RTTI__12InteractTalk:
+.endobj __RTTI__12InteractWarn
+.obj __RTTI__12InteractTalk, local
 	.4byte lbl_802AD270
 	.4byte lbl_802AD280
+.endobj __RTTI__12InteractTalk

@@ -1,7 +1,7 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
 .balign 32, 0
-__ReLoad__Fv:
+.fn __ReLoad__Fv, local
 /* 8001DC80 0001ABE0  7C 08 02 A6 */	mflr r0
 /* 8001DC84 0001ABE4  90 01 00 04 */	stw r0, 4(r1)
 /* 8001DC88 0001ABE8  94 21 FF F0 */	stwu r1, -0x10(r1)
@@ -71,9 +71,10 @@ __ReLoad__Fv:
 /* 8001DD78 0001ACD8  38 21 00 10 */	addi r1, r1, 0x10
 /* 8001DD7C 0001ACDC  7C 08 03 A6 */	mtlr r0
 /* 8001DD80 0001ACE0  4E 80 00 20 */	blr 
+.endfn __ReLoad__Fv
 
 .balign 32, 0
-__LoadFin__FUl:
+.fn __LoadFin__FUl, local
 /* 8001DDA0 0001AD00  7C 08 02 A6 */	mflr r0
 /* 8001DDA4 0001AD04  3C A0 80 3E */	lis r5, dvd_ctrl@ha
 /* 8001DDA8 0001AD08  90 01 00 04 */	stw r0, 4(r1)
@@ -103,9 +104,10 @@ __LoadFin__FUl:
 /* 8001DE08 0001AD68  38 21 00 08 */	addi r1, r1, 8
 /* 8001DE0C 0001AD6C  7C 08 03 A6 */	mtlr r0
 /* 8001DE10 0001AD70  4E 80 00 20 */	blr 
+.endfn __LoadFin__FUl
 
 .balign 32, 0
-__VirtualLoad__FUlUlPUc:
+.fn __VirtualLoad__FUlUlPUc, local
 /* 8001DE20 0001AD80  7C 08 02 A6 */	mflr r0
 /* 8001DE24 0001AD84  3C C0 80 3E */	lis r6, dvd_ctrl@ha
 /* 8001DE28 0001AD88  90 01 00 04 */	stw r0, 4(r1)
@@ -217,9 +219,10 @@ __VirtualLoad__FUlUlPUc:
 /* 8001DFAC 0001AF0C  38 21 00 40 */	addi r1, r1, 0x40
 /* 8001DFB0 0001AF10  7C 08 03 A6 */	mtlr r0
 /* 8001DFB4 0001AF14  4E 80 00 20 */	blr 
+.endfn __VirtualLoad__FUlUlPUc
 
 .balign 32, 0
-InitAudio1__FP13StreamHeader_PUcUl:
+.fn InitAudio1__FP13StreamHeader_PUcUl, local
 /* 8001DFC0 0001AF20  7C 08 02 A6 */	mflr r0
 /* 8001DFC4 0001AF24  90 01 00 04 */	stw r0, 4(r1)
 /* 8001DFC8 0001AF28  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -240,10 +243,10 @@ InitAudio1__FP13StreamHeader_PUcUl:
 /* 8001E004 0001AF64  38 21 00 20 */	addi r1, r1, 0x20
 /* 8001E008 0001AF68  7C 08 03 A6 */	mtlr r0
 /* 8001E00C 0001AF6C  4E 80 00 20 */	blr 
+.endfn InitAudio1__FP13StreamHeader_PUcUl
 
 .balign 32, 0
-.global Jac_HVQM_Init
-Jac_HVQM_Init:
+.fn Jac_HVQM_Init, global
 /* 8001E020 0001AF80  7C 08 02 A6 */	mflr r0
 /* 8001E024 0001AF84  38 C0 00 00 */	li r6, 0
 /* 8001E028 0001AF88  90 01 00 04 */	stw r0, 4(r1)
@@ -500,9 +503,10 @@ Jac_HVQM_Init:
 /* 8001E3D0 0001B330  38 21 00 90 */	addi r1, r1, 0x90
 /* 8001E3D4 0001B334  7C 08 03 A6 */	mtlr r0
 /* 8001E3D8 0001B338  4E 80 00 20 */	blr 
+.endfn Jac_HVQM_Init
 
 .balign 32, 0
-hvqm_forcestop__Fv:
+.fn hvqm_forcestop__Fv, local
 /* 8001E3E0 0001B340  7C 08 02 A6 */	mflr r0
 /* 8001E3E4 0001B344  90 01 00 04 */	stw r0, 4(r1)
 /* 8001E3E8 0001B348  94 21 FF F0 */	stwu r1, -0x10(r1)
@@ -524,10 +528,10 @@ hvqm_forcestop__Fv:
 /* 8001E424 0001B384  38 21 00 10 */	addi r1, r1, 0x10
 /* 8001E428 0001B388  7C 08 03 A6 */	mtlr r0
 /* 8001E42C 0001B38C  4E 80 00 20 */	blr 
+.endfn hvqm_forcestop__Fv
 
 .balign 32, 0
-.global Jac_HVQM_Update
-Jac_HVQM_Update:
+.fn Jac_HVQM_Update, global
 /* 8001E440 0001B3A0  7C 08 02 A6 */	mflr r0
 /* 8001E444 0001B3A4  3C 80 80 39 */	lis r4, filename@ha
 /* 8001E448 0001B3A8  90 01 00 04 */	stw r0, 4(r1)
@@ -786,10 +790,10 @@ Jac_HVQM_Update:
 /* 8001E7C8 0001B728  38 21 00 30 */	addi r1, r1, 0x30
 /* 8001E7CC 0001B72C  7C 08 03 A6 */	mtlr r0
 /* 8001E7D0 0001B730  4E 80 00 20 */	blr 
+.endfn Jac_HVQM_Update
 
 .balign 32, 0
-.global Jac_HVQM_ForceStop
-Jac_HVQM_ForceStop:
+.fn Jac_HVQM_ForceStop, global
 /* 8001E7E0 0001B740  7C 08 02 A6 */	mflr r0
 /* 8001E7E4 0001B744  3C 80 80 39 */	lis r4, file_header@ha
 /* 8001E7E8 0001B748  90 01 00 04 */	stw r0, 4(r1)
@@ -822,10 +826,10 @@ Jac_HVQM_ForceStop:
 /* 8001E848 0001B7A8  38 21 00 08 */	addi r1, r1, 8
 /* 8001E84C 0001B7AC  7C 08 03 A6 */	mtlr r0
 /* 8001E850 0001B7B0  4E 80 00 20 */	blr 
+.endfn Jac_HVQM_ForceStop
 
 .balign 32, 0
-.global Jac_GetPicture
-Jac_GetPicture:
+.fn Jac_GetPicture, global
 /* 8001E860 0001B7C0  7C 08 02 A6 */	mflr r0
 /* 8001E864 0001B7C4  3C C0 80 39 */	lis r6, filename@ha
 /* 8001E868 0001B7C8  90 01 00 04 */	stw r0, 4(r1)
@@ -981,9 +985,10 @@ Jac_GetPicture:
 /* 8001EA7C 0001B9DC  38 21 00 28 */	addi r1, r1, 0x28
 /* 8001EA80 0001B9E0  7C 08 03 A6 */	mtlr r0
 /* 8001EA84 0001B9E4  4E 80 00 20 */	blr 
+.endfn Jac_GetPicture
 
 .balign 32, 0
-InitPic__Fv:
+.fn InitPic__Fv, local
 /* 8001EAA0 0001BA00  80 CD 2D 80 */	lwz r6, PIC_BUFFERS@sda21(r13)
 /* 8001EAA4 0001BA04  38 A0 00 00 */	li r5, 0
 /* 8001EAA8 0001BA08  3C 80 80 3E */	lis r4, pic_ctrl@ha
@@ -1001,9 +1006,10 @@ InitPic__Fv:
 /* 8001EAD4 0001BA34  90 A4 00 08 */	stw r5, 8(r4)
 /* 8001EAD8 0001BA38  42 00 FF F0 */	bdnz .L_8001EAC8
 /* 8001EADC 0001BA3C  4E 80 00 20 */	blr 
+.endfn InitPic__Fv
 
 .balign 32, 0
-CheckDraw__FUl:
+.fn CheckDraw__FUl, local
 /* 8001EAE0 0001BA40  3C A0 80 3E */	lis r5, pic_ctrl@ha
 /* 8001EAE4 0001BA44  80 8D 2D 80 */	lwz r4, PIC_BUFFERS@sda21(r13)
 /* 8001EAE8 0001BA48  38 A5 CB 30 */	addi r5, r5, pic_ctrl@l
@@ -1022,9 +1028,10 @@ CheckDraw__FUl:
 .L_8001EB1C:
 /* 8001EB1C 0001BA7C  38 60 00 01 */	li r3, 1
 /* 8001EB20 0001BA80  4E 80 00 20 */	blr 
+.endfn CheckDraw__FUl
 
 .balign 32, 0
-Decode1__FPUcUlUc:
+.fn Decode1__FPUcUlUc, local
 /* 8001EB40 0001BAA0  7C 08 02 A6 */	mflr r0
 /* 8001EB44 0001BAA4  3C C0 80 3E */	lis r6, pic_ctrl@ha
 /* 8001EB48 0001BAA8  90 01 00 04 */	stw r0, 4(r1)
@@ -1095,58 +1102,82 @@ Decode1__FPUcUlUc:
 /* 8001EC30 0001BB90  38 21 00 30 */	addi r1, r1, 0x30
 /* 8001EC34 0001BB94  7C 08 03 A6 */	mtlr r0
 /* 8001EC38 0001BB98  4E 80 00 20 */	blr 
+.endfn Decode1__FPUcUlUc
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-gop_subframe:
+.obj gop_subframe, local
 	.4byte 0xFFFFFFFF
-playback_first_wait:
+.endobj gop_subframe
+.obj playback_first_wait, local
 	.4byte 1
-hvqm_first:
+.endobj playback_first_wait
+.obj hvqm_first, local
 	.4byte 1
+.endobj hvqm_first
 
 .section .sbss, "wa"
 .balign 8
-dvd_loadfinish:
+.obj dvd_loadfinish, local
 	.skip 4
-dvdcount:
+.endobj dvd_loadfinish
+.obj dvdcount, local
 	.skip 4
-arcoffset:
+.endobj dvdcount
+.obj arcoffset, local
 	.skip 4
-AUDIO_FRAME:
+.endobj arcoffset
+.obj AUDIO_FRAME, local
 	.skip 4
-PIC_FRAME:
+.endobj AUDIO_FRAME
+.obj PIC_FRAME, local
 	.skip 4
-drop_picture_flag:
+.endobj PIC_FRAME
+.obj drop_picture_flag, local
 	.skip 4
-PIC_BUFFERS:
+.endobj drop_picture_flag
+.obj PIC_BUFFERS, local
 	.skip 4
-dvdload_size:
+.endobj PIC_BUFFERS
+.obj dvdload_size, local
 	.skip 4
-dvdfile_size:
+.endobj dvdload_size
+.obj dvdfile_size, local
 	.skip 4
-rec_header:
+.endobj dvdfile_size
+.obj rec_header, local
 	.skip 8
-v_header:
+.endobj rec_header
+.obj v_header, local
 	.skip 4
-gop_baseframe:
+.endobj v_header
+.obj gop_baseframe, local
 	.skip 4
-gop_frame:
+.endobj gop_baseframe
+.obj gop_frame, local
 	.skip 4
-vh_state:
+.endobj gop_frame
+.obj vh_state, local
 	.skip 4
-hvqm_obj:
+.endobj vh_state
+.obj hvqm_obj, local
 	.skip 4
-dvd_active:
+.endobj hvqm_obj
+.obj dvd_active, local
 	.skip 4
-virtualfile_buf:
+.endobj dvd_active
+.obj virtualfile_buf, local
 	.skip 4
-record_ok:
+.endobj virtualfile_buf
+.obj record_ok, local
 	.skip 4
-ref1:
+.endobj record_ok
+.obj ref1, local
 	.skip 4
-ref2:
+.endobj ref1
+.obj ref2, local
 	.skip 4
+.endobj ref2
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8

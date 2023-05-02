@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global actCommon__12InteractGrabFP8Creature
-actCommon__12InteractGrabFP8Creature:
+.fn actCommon__12InteractGrabFP8Creature, global
 /* 8007C89C 000797FC  7C 08 02 A6 */	mflr r0
 /* 8007C8A0 00079800  90 01 00 04 */	stw r0, 4(r1)
 /* 8007C8A4 00079804  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -17,9 +16,9 @@ actCommon__12InteractGrabFP8Creature:
 /* 8007C8CC 0007982C  38 21 00 18 */	addi r1, r1, 0x18
 /* 8007C8D0 00079830  7C 08 03 A6 */	mtlr r0
 /* 8007C8D4 00079834  4E 80 00 20 */	blr 
+.endfn actCommon__12InteractGrabFP8Creature
 
-.global actCommon__15InteractReleaseFP8Creature
-actCommon__15InteractReleaseFP8Creature:
+.fn actCommon__15InteractReleaseFP8Creature, global
 /* 8007C8D8 00079838  7C 08 02 A6 */	mflr r0
 /* 8007C8DC 0007983C  90 01 00 04 */	stw r0, 4(r1)
 /* 8007C8E0 00079840  94 21 FF 48 */	stwu r1, -0xb8(r1)
@@ -92,27 +91,32 @@ actCommon__15InteractReleaseFP8Creature:
 /* 8007C9EC 0007994C  38 21 00 B8 */	addi r1, r1, 0xb8
 /* 8007C9F0 00079950  7C 08 03 A6 */	mtlr r0
 /* 8007C9F4 00079954  4E 80 00 20 */	blr 
+.endfn actCommon__15InteractReleaseFP8Creature
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802AD140:
+.obj lbl_802AD140, local
 	.asciz "interactGrab.cpp"
+.endobj lbl_802AD140
 .balign 4
-lbl_802AD154:
+.obj lbl_802AD154, local
 	.asciz "interactGrab"
+.endobj lbl_802AD154
 .balign 4
-lbl_802AD164:
+.obj lbl_802AD164, local
 	.asciz "InteractRelease"
+.endobj lbl_802AD164
 .balign 4
-lbl_802AD174:
+.obj lbl_802AD174, local
 	.asciz "Interaction"
+.endobj lbl_802AD174
 .balign 4
-lbl_802AD180:
+.obj lbl_802AD180, local
 	.4byte __RTTI__11Interaction
 	.4byte 0
 	.4byte 0
-.global __vt__15InteractRelease
-__vt__15InteractRelease:
+.endobj lbl_802AD180
+.obj __vt__15InteractRelease, global
 	.4byte __RTTI__15InteractRelease
 	.4byte 0
 	.4byte actCommon__15InteractReleaseFP8Creature
@@ -124,16 +128,18 @@ __vt__15InteractRelease:
 	.4byte actHinderRock__11InteractionFP10HinderRock
 	.4byte actBridge__11InteractionFP6Bridge
 	.4byte actItem__11InteractionFP12ItemCreature
+.endobj __vt__15InteractRelease
 .balign 4
-lbl_802AD1B8:
+.obj lbl_802AD1B8, local
 	.asciz "InteractGrab"
+.endobj lbl_802AD1B8
 .balign 4
-lbl_802AD1C8:
+.obj lbl_802AD1C8, local
 	.4byte __RTTI__11Interaction
 	.4byte 0
 	.4byte 0
-.global __vt__12InteractGrab
-__vt__12InteractGrab:
+.endobj lbl_802AD1C8
+.obj __vt__12InteractGrab, global
 	.4byte __RTTI__12InteractGrab
 	.4byte 0
 	.4byte actCommon__12InteractGrabFP8Creature
@@ -145,30 +151,40 @@ __vt__12InteractGrab:
 	.4byte actHinderRock__11InteractionFP10HinderRock
 	.4byte actBridge__11InteractionFP6Bridge
 	.4byte actItem__11InteractionFP12ItemCreature
+.endobj __vt__12InteractGrab
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-lbl_803DE9C8:
+.obj lbl_803DE9C8, local
 	.float 0.0
-lbl_803DE9CC:
+.endobj lbl_803DE9C8
+.obj lbl_803DE9CC, local
 	.float 0.0
-lbl_803DE9D0:
+.endobj lbl_803DE9CC
+.obj lbl_803DE9D0, local
 	.float 0.0
-lbl_803DE9D4:
+.endobj lbl_803DE9D0
+.obj lbl_803DE9D4, local
 	.float 8.0
-lbl_803DE9D8:
+.endobj lbl_803DE9D4
+.obj lbl_803DE9D8, local
 	.float 0.0
-__RTTI__11Interaction:
+.endobj lbl_803DE9D8
+.obj __RTTI__11Interaction, local
 	.4byte lbl_802AD174
 	.4byte 0
-__RTTI__15InteractRelease:
+.endobj __RTTI__11Interaction
+.obj __RTTI__15InteractRelease, local
 	.4byte lbl_802AD164
 	.4byte lbl_802AD180
-__RTTI__12InteractGrab:
+.endobj __RTTI__15InteractRelease
+.obj __RTTI__12InteractGrab, local
 	.4byte lbl_802AD1B8
 	.4byte lbl_802AD1C8
+.endobj __RTTI__12InteractGrab
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803E8B58:
+.obj lbl_803E8B58, local
 	.float 100.0
+.endobj lbl_803E8B58

@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global TRK_main
-TRK_main:
+.fn TRK_main, global
 /* 80220418 0021D378  7C 08 02 A6 */	mflr r0
 /* 8022041C 0021D37C  90 01 00 04 */	stw r0, 4(r1)
 /* 80220420 0021D380  94 21 FF F8 */	stwu r1, -8(r1)
@@ -21,3 +20,4 @@ TRK_main:
 /* 80220454 0021D3B4  80 01 00 04 */	lwz r0, 4(r1)
 /* 80220458 0021D3B8  7C 08 03 A6 */	mtlr r0
 /* 8022045C 0021D3BC  4E 80 00 20 */	blr 
+.endfn TRK_main

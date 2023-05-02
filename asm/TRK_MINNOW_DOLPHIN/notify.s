@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global TRKDoNotifyStopped
-TRKDoNotifyStopped:
+.fn TRKDoNotifyStopped, global
 /* 8021E6B0 0021B610  7C 08 02 A6 */	mflr r0
 /* 8021E6B4 0021B614  90 01 00 04 */	stw r0, 4(r1)
 /* 8021E6B8 0021B618  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -62,3 +61,4 @@ TRKDoNotifyStopped:
 /* 8021E77C 0021B6DC  80 01 00 04 */	lwz r0, 4(r1)
 /* 8021E780 0021B6E0  7C 08 03 A6 */	mtlr r0
 /* 8021E784 0021B6E4  4E 80 00 20 */	blr 
+.endfn TRKDoNotifyStopped

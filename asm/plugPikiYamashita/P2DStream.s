@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global getResource__9P2DStreamFi
-getResource__9P2DStreamFi:
+.fn getResource__9P2DStreamFi, global
 /* 801B3274 001B01D4  7C 08 02 A6 */	mflr r0
 /* 801B3278 001B01D8  90 01 00 04 */	stw r0, 4(r1)
 /* 801B327C 001B01DC  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -54,9 +53,9 @@ getResource__9P2DStreamFi:
 /* 801B332C 001B028C  38 21 00 28 */	addi r1, r1, 0x28
 /* 801B3330 001B0290  7C 08 03 A6 */	mtlr r0
 /* 801B3334 001B0294  4E 80 00 20 */	blr 
+.endfn getResource__9P2DStreamFi
 
-.global align__9P2DStreamFi
-align__9P2DStreamFi:
+.fn align__9P2DStreamFi, global
 /* 801B3338 001B0298  7C 08 02 A6 */	mflr r0
 /* 801B333C 001B029C  90 01 00 04 */	stw r0, 4(r1)
 /* 801B3340 001B02A0  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -95,3 +94,4 @@ align__9P2DStreamFi:
 /* 801B33BC 001B031C  38 21 00 28 */	addi r1, r1, 0x28
 /* 801B33C0 001B0320  7C 08 03 A6 */	mtlr r0
 /* 801B33C4 001B0324  4E 80 00 20 */	blr 
+.endfn align__9P2DStreamFi

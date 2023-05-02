@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global TRKMessageSend
-TRKMessageSend:
+.fn TRKMessageSend, global
 /* 8021C4A4 00219404  7C 08 02 A6 */	mflr r0
 /* 8021C4A8 00219408  90 01 00 04 */	stw r0, 4(r1)
 /* 8021C4AC 0021940C  94 21 FF F8 */	stwu r1, -8(r1)
@@ -12,3 +11,4 @@ TRKMessageSend:
 /* 8021C4C0 00219420  80 01 00 04 */	lwz r0, 4(r1)
 /* 8021C4C4 00219424  7C 08 03 A6 */	mtlr r0
 /* 8021C4C8 00219428  4E 80 00 20 */	blr 
+.endfn TRKMessageSend

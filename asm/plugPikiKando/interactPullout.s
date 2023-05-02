@@ -1,12 +1,11 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global actCommon__15InteractPulloutFP8Creature
-actCommon__15InteractPulloutFP8Creature:
+.fn actCommon__15InteractPulloutFP8Creature, global
 /* 8007CB38 00079A98  38 60 00 01 */	li r3, 1
 /* 8007CB3C 00079A9C  4E 80 00 20 */	blr 
+.endfn actCommon__15InteractPulloutFP8Creature
 
-.global actPiki__15InteractPulloutFP4Piki
-actPiki__15InteractPulloutFP4Piki:
+.fn actPiki__15InteractPulloutFP4Piki, global
 /* 8007CB40 00079AA0  7C 08 02 A6 */	mflr r0
 /* 8007CB44 00079AA4  90 01 00 04 */	stw r0, 4(r1)
 /* 8007CB48 00079AA8  94 21 FE A0 */	stwu r1, -0x160(r1)
@@ -191,27 +190,32 @@ actPiki__15InteractPulloutFP4Piki:
 /* 8007CDF0 00079D50  38 21 01 60 */	addi r1, r1, 0x160
 /* 8007CDF4 00079D54  7C 08 03 A6 */	mtlr r0
 /* 8007CDF8 00079D58  4E 80 00 20 */	blr 
+.endfn actPiki__15InteractPulloutFP4Piki
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802AD2B8:
+.obj lbl_802AD2B8, local
 	.asciz "interactPullout.cpp"
+.endobj lbl_802AD2B8
 .balign 4
-lbl_802AD2CC:
+.obj lbl_802AD2CC, local
 	.asciz "interactPullout"
+.endobj lbl_802AD2CC
 .balign 4
-lbl_802AD2DC:
+.obj lbl_802AD2DC, local
 	.asciz "InteractPullout"
+.endobj lbl_802AD2DC
 .balign 4
-lbl_802AD2EC:
+.obj lbl_802AD2EC, local
 	.asciz "Interaction"
+.endobj lbl_802AD2EC
 .balign 4
-lbl_802AD2F8:
+.obj lbl_802AD2F8, local
 	.4byte __RTTI__11Interaction
 	.4byte 0
 	.4byte 0
-.global __vt__15InteractPullout
-__vt__15InteractPullout:
+.endobj lbl_802AD2F8
+.obj __vt__15InteractPullout, global
 	.4byte __RTTI__15InteractPullout
 	.4byte 0
 	.4byte actCommon__15InteractPulloutFP8Creature
@@ -223,29 +227,39 @@ __vt__15InteractPullout:
 	.4byte actHinderRock__11InteractionFP10HinderRock
 	.4byte actBridge__11InteractionFP6Bridge
 	.4byte actItem__15InteractPulloutFP12ItemCreature
+.endobj __vt__15InteractPullout
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-lbl_803DEA10:
+.obj lbl_803DEA10, local
 	.float 0.0
-lbl_803DEA14:
+.endobj lbl_803DEA10
+.obj lbl_803DEA14, local
 	.float 0.0
-lbl_803DEA18:
+.endobj lbl_803DEA14
+.obj lbl_803DEA18, local
 	.float 0.0
-lbl_803DEA1C:
+.endobj lbl_803DEA18
+.obj lbl_803DEA1C, local
 	.float 0.0
-__RTTI__11Interaction:
+.endobj lbl_803DEA1C
+.obj __RTTI__11Interaction, local
 	.4byte lbl_802AD2EC
 	.4byte 0
-__RTTI__15InteractPullout:
+.endobj __RTTI__11Interaction
+.obj __RTTI__15InteractPullout, local
 	.4byte lbl_802AD2DC
 	.4byte lbl_802AD2F8
+.endobj __RTTI__15InteractPullout
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803E8B60:
+.obj lbl_803E8B60, local
 	.float 43.8384
-lbl_803E8B64:
+.endobj lbl_803E8B60
+.obj lbl_803E8B64, local
 	.float 15.0
-lbl_803E8B68:
+.endobj lbl_803E8B64
+.obj lbl_803E8B68, local
 	.float 1.0
+.endobj lbl_803E8B68

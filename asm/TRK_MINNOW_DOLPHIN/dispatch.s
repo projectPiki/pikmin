@@ -1,15 +1,14 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global TRKInitializeDispatcher
-TRKInitializeDispatcher:
+.fn TRKInitializeDispatcher, global
 /* 8021CEE0 00219E40  3C 60 80 3D */	lis r3, gTRKDispatchTableSize@ha
 /* 8021CEE4 00219E44  38 00 00 20 */	li r0, 0x20
 /* 8021CEE8 00219E48  90 03 5C E8 */	stw r0, gTRKDispatchTableSize@l(r3)
 /* 8021CEEC 00219E4C  38 60 00 00 */	li r3, 0
 /* 8021CEF0 00219E50  4E 80 00 20 */	blr 
+.endfn TRKInitializeDispatcher
 
-.global TRKDispatchMessage
-TRKDispatchMessage:
+.fn TRKDispatchMessage, global
 /* 8021CEF4 00219E54  7C 08 02 A6 */	mflr r0
 /* 8021CEF8 00219E58  38 80 00 00 */	li r4, 0
 /* 8021CEFC 00219E5C  90 01 00 04 */	stw r0, 4(r1)
@@ -44,11 +43,11 @@ TRKDispatchMessage:
 /* 8021CF6C 00219ECC  80 01 00 04 */	lwz r0, 4(r1)
 /* 8021CF70 00219ED0  7C 08 03 A6 */	mtlr r0
 /* 8021CF74 00219ED4  4E 80 00 20 */	blr 
+.endfn TRKDispatchMessage
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-.global gTRKDispatchTable
-gTRKDispatchTable:
+.obj gTRKDispatchTable, global
 	.4byte TRKDoUnsupported
 	.4byte TRKDoConnect
 	.4byte TRKDoDisconnect
@@ -82,3 +81,4 @@ gTRKDispatchTable:
 	.4byte TRKDoUnsupported
 	.4byte TRKDoUnsupported
 	.4byte 0x00000000
+.endobj gTRKDispatchTable

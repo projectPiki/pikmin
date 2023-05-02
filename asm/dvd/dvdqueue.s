@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global __DVDClearWaitingQueue
-__DVDClearWaitingQueue:
+.fn __DVDClearWaitingQueue, global
 /* 80201F04 001FEE64  3C 60 80 3D */	lis r3, WaitingQueue@ha
 /* 80201F08 001FEE68  38 63 31 D8 */	addi r3, r3, WaitingQueue@l
 /* 80201F0C 001FEE6C  90 63 00 00 */	stw r3, 0(r3)
@@ -16,9 +15,9 @@ __DVDClearWaitingQueue:
 /* 80201F30 001FEE90  90 63 00 00 */	stw r3, 0(r3)
 /* 80201F34 001FEE94  90 63 00 04 */	stw r3, 4(r3)
 /* 80201F38 001FEE98  4E 80 00 20 */	blr 
+.endfn __DVDClearWaitingQueue
 
-.global __DVDPushWaitingQueue
-__DVDPushWaitingQueue:
+.fn __DVDPushWaitingQueue, global
 /* 80201F3C 001FEE9C  7C 08 02 A6 */	mflr r0
 /* 80201F40 001FEEA0  90 01 00 04 */	stw r0, 4(r1)
 /* 80201F44 001FEEA4  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -45,9 +44,9 @@ __DVDPushWaitingQueue:
 /* 80201F98 001FEEF8  7C 08 03 A6 */	mtlr r0
 /* 80201F9C 001FEEFC  38 21 00 18 */	addi r1, r1, 0x18
 /* 80201FA0 001FEF00  4E 80 00 20 */	blr 
+.endfn __DVDPushWaitingQueue
 
-.global __DVDPopWaitingQueue
-__DVDPopWaitingQueue:
+.fn __DVDPopWaitingQueue, global
 /* 80201FA4 001FEF04  7C 08 02 A6 */	mflr r0
 /* 80201FA8 001FEF08  90 01 00 04 */	stw r0, 4(r1)
 /* 80201FAC 001FEF0C  94 21 FF F0 */	stwu r1, -0x10(r1)
@@ -91,9 +90,9 @@ __DVDPopWaitingQueue:
 /* 80202038 001FEF98  38 21 00 10 */	addi r1, r1, 0x10
 /* 8020203C 001FEF9C  7C 08 03 A6 */	mtlr r0
 /* 80202040 001FEFA0  4E 80 00 20 */	blr 
+.endfn __DVDPopWaitingQueue
 
-.global __DVDCheckWaitingQueue
-__DVDCheckWaitingQueue:
+.fn __DVDCheckWaitingQueue, global
 /* 80202044 001FEFA4  7C 08 02 A6 */	mflr r0
 /* 80202048 001FEFA8  90 01 00 04 */	stw r0, 4(r1)
 /* 8020204C 001FEFAC  94 21 FF F8 */	stwu r1, -8(r1)
@@ -119,9 +118,9 @@ __DVDCheckWaitingQueue:
 /* 80202090 001FEFF0  38 21 00 08 */	addi r1, r1, 8
 /* 80202094 001FEFF4  7C 08 03 A6 */	mtlr r0
 /* 80202098 001FEFF8  4E 80 00 20 */	blr 
+.endfn __DVDCheckWaitingQueue
 
-.global __DVDDequeueWaitingQueue
-__DVDDequeueWaitingQueue:
+.fn __DVDDequeueWaitingQueue, global
 /* 8020209C 001FEFFC  7C 08 02 A6 */	mflr r0
 /* 802020A0 001FF000  90 01 00 04 */	stw r0, 4(r1)
 /* 802020A4 001FF004  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -149,3 +148,4 @@ __DVDDequeueWaitingQueue:
 /* 802020F0 001FF050  38 21 00 18 */	addi r1, r1, 0x18
 /* 802020F4 001FF054  7C 08 03 A6 */	mtlr r0
 /* 802020F8 001FF058  4E 80 00 20 */	blr 
+.endfn __DVDDequeueWaitingQueue

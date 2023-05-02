@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global isPointVisible__11CullFrustumFR8Vector3ff
-isPointVisible__11CullFrustumFR8Vector3ff:
+.fn isPointVisible__11CullFrustumFR8Vector3ff, global
 /* 80041584 0003E4E4  80 03 00 04 */	lwz r0, 4(r3)
 /* 80041588 0003E4E8  FC A0 08 50 */	fneg f5, f1
 /* 8004158C 0003E4EC  2C 00 00 00 */	cmpwi r0, 0
@@ -32,9 +31,9 @@ isPointVisible__11CullFrustumFR8Vector3ff:
 .L_800415E8:
 /* 800415E8 0003E548  38 60 00 01 */	li r3, 1
 /* 800415EC 0003E54C  4E 80 00 20 */	blr 
+.endfn isPointVisible__11CullFrustumFR8Vector3ff
 
-.global draw__11CullFrustumFR8Graphics
-draw__11CullFrustumFR8Graphics:
+.fn draw__11CullFrustumFR8Graphics, global
 /* 800415F0 0003E550  7C 08 02 A6 */	mflr r0
 /* 800415F4 0003E554  38 A0 00 00 */	li r5, 0
 /* 800415F8 0003E558  90 01 00 04 */	stw r0, 4(r1)
@@ -1044,9 +1043,9 @@ draw__11CullFrustumFR8Graphics:
 /* 800425A0 0003F500  38 21 04 30 */	addi r1, r1, 0x430
 /* 800425A4 0003F504  7C 08 03 A6 */	mtlr r0
 /* 800425A8 0003F508  4E 80 00 20 */	blr 
+.endfn draw__11CullFrustumFR8Graphics
 
-.global updateViewPlanes__11CullFrustumFffff
-updateViewPlanes__11CullFrustumFffff:
+.fn updateViewPlanes__11CullFrustumFffff, global
 /* 800425AC 0003F50C  7C 08 02 A6 */	mflr r0
 /* 800425B0 0003F510  FC 20 0A 10 */	fabs f1, f1
 /* 800425B4 0003F514  90 01 00 04 */	stw r0, 4(r1)
@@ -1334,9 +1333,9 @@ updateViewPlanes__11CullFrustumFffff:
 /* 80042A0C 0003F96C  38 21 00 C0 */	addi r1, r1, 0xc0
 /* 80042A10 0003F970  7C 08 03 A6 */	mtlr r0
 /* 80042A14 0003F974  4E 80 00 20 */	blr 
+.endfn updateViewPlanes__11CullFrustumFffff
 
-.global createViewPlanes__11CullFrustumFv
-createViewPlanes__11CullFrustumFv:
+.fn createViewPlanes__11CullFrustumFv, global
 /* 80042A18 0003F978  7C 08 02 A6 */	mflr r0
 /* 80042A1C 0003F97C  90 01 00 04 */	stw r0, 4(r1)
 /* 80042A20 0003F980  38 00 00 00 */	li r0, 0
@@ -1480,9 +1479,9 @@ createViewPlanes__11CullFrustumFv:
 /* 80042C48 0003FBA8  38 21 00 70 */	addi r1, r1, 0x70
 /* 80042C4C 0003FBAC  7C 08 03 A6 */	mtlr r0
 /* 80042C50 0003FBB0  4E 80 00 20 */	blr 
+.endfn createViewPlanes__11CullFrustumFv
 
-.global update__11CullFrustumFffff
-update__11CullFrustumFffff:
+.fn update__11CullFrustumFffff, global
 /* 80042C54 0003FBB4  7C 08 02 A6 */	mflr r0
 /* 80042C58 0003FBB8  90 01 00 04 */	stw r0, 4(r1)
 /* 80042C5C 0003FBBC  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -1569,9 +1568,9 @@ update__11CullFrustumFffff:
 /* 80042D98 0003FCF8  38 21 00 28 */	addi r1, r1, 0x28
 /* 80042D9C 0003FCFC  7C 08 03 A6 */	mtlr r0
 /* 80042DA0 0003FD00  4E 80 00 20 */	blr 
+.endfn update__11CullFrustumFffff
 
-.global calcVectors__11CullFrustumFR8Vector3fR8Vector3f
-calcVectors__11CullFrustumFR8Vector3fR8Vector3f:
+.fn calcVectors__11CullFrustumFR8Vector3fR8Vector3f, global
 /* 80042DA4 0003FD04  7C 08 02 A6 */	mflr r0
 /* 80042DA8 0003FD08  90 01 00 04 */	stw r0, 4(r1)
 /* 80042DAC 0003FD0C  94 21 FF B8 */	stwu r1, -0x48(r1)
@@ -1730,9 +1729,9 @@ calcVectors__11CullFrustumFR8Vector3fR8Vector3f:
 /* 80043000 0003FF60  38 21 00 48 */	addi r1, r1, 0x48
 /* 80043004 0003FF64  7C 08 03 A6 */	mtlr r0
 /* 80043008 0003FF68  4E 80 00 20 */	blr 
+.endfn calcVectors__11CullFrustumFR8Vector3fR8Vector3f
 
-.global calcLookAt__11CullFrustumFR8Vector3fR8Vector3fP8Vector3f
-calcLookAt__11CullFrustumFR8Vector3fR8Vector3fP8Vector3f:
+.fn calcLookAt__11CullFrustumFR8Vector3fR8Vector3fP8Vector3f, global
 /* 8004300C 0003FF6C  7C 08 02 A6 */	mflr r0
 /* 80043010 0003FF70  90 01 00 04 */	stw r0, 4(r1)
 /* 80043014 0003FF74  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -1748,9 +1747,9 @@ calcLookAt__11CullFrustumFR8Vector3fR8Vector3fP8Vector3f:
 /* 8004303C 0003FF9C  38 21 00 20 */	addi r1, r1, 0x20
 /* 80043040 0003FFA0  7C 08 03 A6 */	mtlr r0
 /* 80043044 0003FFA4  4E 80 00 20 */	blr 
+.endfn calcLookAt__11CullFrustumFR8Vector3fR8Vector3fP8Vector3f
 
-.global projectWorldPoint__6CameraFR8GraphicsR8Vector3f
-projectWorldPoint__6CameraFR8GraphicsR8Vector3f:
+.fn projectWorldPoint__6CameraFR8GraphicsR8Vector3f, global
 /* 80043048 0003FFA8  7C 08 02 A6 */	mflr r0
 /* 8004304C 0003FFAC  7C 66 1B 78 */	mr r6, r3
 /* 80043050 0003FFB0  90 01 00 04 */	stw r0, 4(r1)
@@ -1848,9 +1847,9 @@ projectWorldPoint__6CameraFR8GraphicsR8Vector3f:
 /* 800431B8 00040118  38 21 00 48 */	addi r1, r1, 0x48
 /* 800431BC 0004011C  7C 08 03 A6 */	mtlr r0
 /* 800431C0 00040120  4E 80 00 20 */	blr 
+.endfn projectWorldPoint__6CameraFR8GraphicsR8Vector3f
 
-.global __ct__6CameraFv
-__ct__6CameraFv:
+.fn __ct__6CameraFv, global
 /* 800431C4 00040124  7C 08 02 A6 */	mflr r0
 /* 800431C8 00040128  3C 80 80 03 */	lis r4, __ct__12CullingPlaneFv@ha
 /* 800431CC 0004012C  90 01 00 04 */	stw r0, 4(r1)
@@ -1935,9 +1934,9 @@ __ct__6CameraFv:
 /* 80043308 00040268  38 21 00 18 */	addi r1, r1, 0x18
 /* 8004330C 0004026C  7C 08 03 A6 */	mtlr r0
 /* 80043310 00040270  4E 80 00 20 */	blr 
+.endfn __ct__6CameraFv
 
-.global initLightmap__11LightCameraFii
-initLightmap__11LightCameraFii:
+.fn initLightmap__11LightCameraFii, global
 /* 80043314 00040274  7C 08 02 A6 */	mflr r0
 /* 80043318 00040278  90 01 00 04 */	stw r0, 4(r1)
 /* 8004331C 0004027C  94 21 FF D0 */	stwu r1, -0x30(r1)
@@ -1991,9 +1990,9 @@ initLightmap__11LightCameraFii:
 /* 800433D8 00040338  38 21 00 30 */	addi r1, r1, 0x30
 /* 800433DC 0004033C  7C 08 03 A6 */	mtlr r0
 /* 800433E0 00040340  4E 80 00 20 */	blr 
+.endfn initLightmap__11LightCameraFii
 
-.global calcProjection__11LightCameraFR8GraphicsbP4Node
-calcProjection__11LightCameraFR8GraphicsbP4Node:
+.fn calcProjection__11LightCameraFR8GraphicsbP4Node, global
 /* 800433E4 00040344  7C 08 02 A6 */	mflr r0
 /* 800433E8 00040348  90 01 00 04 */	stw r0, 4(r1)
 /* 800433EC 0004034C  94 21 FE B0 */	stwu r1, -0x150(r1)
@@ -2320,114 +2319,164 @@ calcProjection__11LightCameraFR8GraphicsbP4Node:
 /* 800438E0 00040840  38 21 01 50 */	addi r1, r1, 0x150
 /* 800438E4 00040844  7C 08 03 A6 */	mtlr r0
 /* 800438E8 00040848  4E 80 00 20 */	blr 
+.endfn calcProjection__11LightCameraFR8GraphicsbP4Node
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_80228EE8:
+.obj lbl_80228EE8, local
 	.asciz "internalLightmap"
+.endobj lbl_80228EE8
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-lbl_803DD3F0:
+.obj lbl_803DD3F0, local
 	.float 0.0
-lbl_803DD3F4:
+.endobj lbl_803DD3F0
+.obj lbl_803DD3F4, local
 	.float 0.0
-lbl_803DD3F8:
+.endobj lbl_803DD3F4
+.obj lbl_803DD3F8, local
 	.float 0.0
-lbl_803DD3FC:
+.endobj lbl_803DD3F8
+.obj lbl_803DD3FC, local
 	.float 0.0
-lbl_803DD400:
+.endobj lbl_803DD3FC
+.obj lbl_803DD400, local
 	.float 0.0
-lbl_803DD404:
+.endobj lbl_803DD400
+.obj lbl_803DD404, local
 	.float 0.0
-lbl_803DD408:
+.endobj lbl_803DD404
+.obj lbl_803DD408, local
 	.float 0.0
-lbl_803DD40C:
+.endobj lbl_803DD408
+.obj lbl_803DD40C, local
 	.float 0.0
-lbl_803DD410:
+.endobj lbl_803DD40C
+.obj lbl_803DD410, local
 	.float 0.0
-lbl_803DD414:
+.endobj lbl_803DD410
+.obj lbl_803DD414, local
 	.float 0.0
-lbl_803DD418:
+.endobj lbl_803DD414
+.obj lbl_803DD418, local
 	.float 0.0
-lbl_803DD41C:
+.endobj lbl_803DD418
+.obj lbl_803DD41C, local
 	.float 0.0
-lbl_803DD420:
+.endobj lbl_803DD41C
+.obj lbl_803DD420, local
 	.float 0.0
-lbl_803DD424:
+.endobj lbl_803DD420
+.obj lbl_803DD424, local
 	.float 0.0
-lbl_803DD428:
+.endobj lbl_803DD424
+.obj lbl_803DD428, local
 	.float 0.0
-lbl_803DD42C:
+.endobj lbl_803DD428
+.obj lbl_803DD42C, local
 	.float 0.0
-lbl_803DD430:
+.endobj lbl_803DD42C
+.obj lbl_803DD430, local
 	.float 0.0
-lbl_803DD434:
+.endobj lbl_803DD430
+.obj lbl_803DD434, local
 	.float 1.0
-lbl_803DD438:
+.endobj lbl_803DD434
+.obj lbl_803DD438, local
 	.float 0.0
-lbl_803DD43C:
+.endobj lbl_803DD438
+.obj lbl_803DD43C, local
 	.float 0.0
-lbl_803DD440:
+.endobj lbl_803DD43C
+.obj lbl_803DD440, local
 	.float -1.0
-lbl_803DD444:
+.endobj lbl_803DD440
+.obj lbl_803DD444, local
 	.float 0.0
-lbl_803DD448:
+.endobj lbl_803DD444
+.obj lbl_803DD448, local
 	.float 0.0
-lbl_803DD44C:
+.endobj lbl_803DD448
+.obj lbl_803DD44C, local
 	.float 0.0
-lbl_803DD450:
+.endobj lbl_803DD44C
+.obj lbl_803DD450, local
 	.float 0.0
-lbl_803DD454:
+.endobj lbl_803DD450
+.obj lbl_803DD454, local
 	.float 0.0
-lbl_803DD458:
+.endobj lbl_803DD454
+.obj lbl_803DD458, local
 	.float 4.363323
-lbl_803DD45C:
+.endobj lbl_803DD458
+.obj lbl_803DD45C, local
 	.float 0.0
-lbl_803DD460:
+.endobj lbl_803DD45C
+.obj lbl_803DD460, local
 	.float 0.0
-lbl_803DD464:
+.endobj lbl_803DD460
+.obj lbl_803DD464, local
 	.float 0.0
-lbl_803DD468:
+.endobj lbl_803DD464
+.obj lbl_803DD468, local
 	.float 0.0
-lbl_803DD46C:
+.endobj lbl_803DD468
+.obj lbl_803DD46C, local
 	.float 1.0
+.endobj lbl_803DD46C
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803E8608:
+.obj lbl_803E8608, local
 	.float 0.0
-lbl_803E860C: #pi
+.endobj lbl_803E8608
+.obj lbl_803E860C, local #pi
 	.float 3.1415927
-lbl_803E8610:
+.endobj lbl_803E860C
+.obj lbl_803E8610, local
 	.float 0.5
-lbl_803E8614:
+.endobj lbl_803E8610
+.obj lbl_803E8614, local
 	.float 180.0
+.endobj lbl_803E8614
 .balign 8
-lbl_803E8618:
+.obj lbl_803E8618, local
 	.double 0.5
+.endobj lbl_803E8618
 .balign 8
-lbl_803E8620:
+.obj lbl_803E8620, local
 	.double 3.0
-lbl_803E8628:
+.endobj lbl_803E8620
+.obj lbl_803E8628, local
 	.float 2600.0
-lbl_803E862C:
+.endobj lbl_803E8628
+.obj lbl_803E862C, local
 	.float 1.0
-lbl_803E8630:
+.endobj lbl_803E862C
+.obj lbl_803E8630, local
 	.float 0.0001
+.endobj lbl_803E8630
 .balign 8
-lbl_803E8638:
+.obj lbl_803E8638, local
 	.8byte 0x4330000080000000
-lbl_803E8640:
+.endobj lbl_803E8638
+.obj lbl_803E8640, local
 	.float 60.0
-lbl_803E8644:
+.endobj lbl_803E8640
+.obj lbl_803E8644, local
 	.float 1000.0
-lbl_803E8648:
+.endobj lbl_803E8644
+.obj lbl_803E8648, local
 	.float 110.0
-lbl_803E864C:
+.endobj lbl_803E8648
+.obj lbl_803E864C, local
 	.float 2.0
-lbl_803E8650:
+.endobj lbl_803E864C
+.obj lbl_803E8650, local
 	.float 30.0
+.endobj lbl_803E8650
 .balign 8
-lbl_803E8658:
+.obj lbl_803E8658, local
 	.8byte 0x4330000000000000
+.endobj lbl_803E8658

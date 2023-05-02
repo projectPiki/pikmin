@@ -624,16 +624,21 @@ __RTTI__17CardSelectSection:
 
 .section .sbss, "wa"
 .balign 8
-memcardWindow:
+.obj memcardWindow, local
 	.skip 4
+.endobj memcardWindow
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803E8758:
+.obj lbl_803E8758, local
 	.float 1.0
-lbl_803E875C:
+.endobj lbl_803E8758
+.obj lbl_803E875C, local
 	.float 3.0
-lbl_803E8760:
+.endobj lbl_803E875C
+.obj lbl_803E8760, local
 	.float 0.0
-lbl_803E8764:
+.endobj lbl_803E8760
+.obj lbl_803E8764, local
 	.float 14.8
+.endobj lbl_803E8764

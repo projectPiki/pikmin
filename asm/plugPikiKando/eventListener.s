@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global __ct__11EventTalkerFv
-__ct__11EventTalkerFv:
+.fn __ct__11EventTalkerFv, global
 /* 80093FA8 00090F08  7C 08 02 A6 */	mflr r0
 /* 80093FAC 00090F0C  3C 80 80 22 */	lis r4, __vt__5ANode@ha
 /* 80093FB0 00090F10  90 01 00 04 */	stw r0, 4(r1)
@@ -38,9 +37,9 @@ __ct__11EventTalkerFv:
 /* 8009402C 00090F8C  38 21 00 18 */	addi r1, r1, 0x18
 /* 80094030 00090F90  7C 08 03 A6 */	mtlr r0
 /* 80094034 00090F94  4E 80 00 20 */	blr 
+.endfn __ct__11EventTalkerFv
 
-.global informEvent__11EventTalkerFR5Event
-informEvent__11EventTalkerFR5Event:
+.fn informEvent__11EventTalkerFR5Event, global
 /* 80094038 00090F98  7C 08 02 A6 */	mflr r0
 /* 8009403C 00090F9C  90 01 00 04 */	stw r0, 4(r1)
 /* 80094040 00090FA0  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -66,64 +65,70 @@ informEvent__11EventTalkerFR5Event:
 /* 80094088 00090FE8  38 21 00 18 */	addi r1, r1, 0x18
 /* 8009408C 00090FEC  7C 08 03 A6 */	mtlr r0
 /* 80094090 00090FF0  4E 80 00 20 */	blr 
+.endfn informEvent__11EventTalkerFR5Event
 
-.global gotEvent__13EventListenerFR5Event
-gotEvent__13EventListenerFR5Event:
+.fn gotEvent__13EventListenerFR5Event, weak
 /* 80094094 00090FF4  4E 80 00 20 */	blr 
+.endfn gotEvent__13EventListenerFR5Event
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802AF9B0:
+.obj lbl_802AF9B0, local
 	.asciz "eventListener.cpp"
+.endobj lbl_802AF9B0
 .balign 4
-lbl_802AF9C4:
+.obj lbl_802AF9C4, local
 	.asciz "eventListener"
+.endobj lbl_802AF9C4
 .balign 4
-lbl_802AF9D4:
+.obj lbl_802AF9D4, local
 	.asciz "CoreNode"
+.endobj lbl_802AF9D4
 .balign 4
-lbl_802AF9E0:
+.obj lbl_802AF9E0, local
 	.asciz "eventListeners"
+.endobj lbl_802AF9E0
 .balign 4
-lbl_802AF9F0:
+.obj lbl_802AF9F0, local
 	.asciz "EventListener"
+.endobj lbl_802AF9F0
 .balign 4
-lbl_802AFA00:
+.obj lbl_802AFA00, local
 	.4byte __RTTI__5ANode
 	.4byte 0x00000000
 	.4byte 0x00000000
-lbl_802AFA0C:
+.endobj lbl_802AFA00
+.obj lbl_802AFA0C, local
 	.4byte __RTTI__5ANode
 	.4byte 0x00000000
 	.4byte __RTTI__8CoreNode
 	.4byte 0x00000000
 	.4byte 0x00000000
-.global __vt__13EventListener
-__vt__13EventListener:
+.endobj lbl_802AFA0C
+.obj __vt__13EventListener, weak
 	.4byte __RTTI__13EventListener
 	.4byte 0
 	.4byte getAgeNodeType__5ANodeFv
 	.4byte read__8CoreNodeFR18RandomAccessStream
 	.4byte gotEvent__13EventListenerFR5Event
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
+.endobj __vt__13EventListener
+.skip 0x1C
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-lbl_803DF2F8:
+.obj lbl_803DF2F8, local
 	.asciz "ANode"
+.endobj lbl_803DF2F8
 .balign 4
-__RTTI__5ANode:
+.obj __RTTI__5ANode, local
 	.4byte lbl_803DF2F8
 	.4byte 0
-__RTTI__8CoreNode:
+.endobj __RTTI__5ANode
+.obj __RTTI__8CoreNode, local
 	.4byte lbl_802AF9D4
 	.4byte lbl_802AFA00
-__RTTI__13EventListener:
+.endobj __RTTI__8CoreNode
+.obj __RTTI__13EventListener, local
 	.4byte lbl_802AF9F0
 	.4byte lbl_802AFA0C
+.endobj __RTTI__13EventListener

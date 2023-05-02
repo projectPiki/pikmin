@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global InitializeUART
-InitializeUART:
+.fn InitializeUART, global
 /* 801FD7C4 001FA724  7C 08 02 A6 */	mflr r0
 /* 801FD7C8 001FA728  90 01 00 04 */	stw r0, 4(r1)
 /* 801FD7CC 001FA72C  94 21 FF F8 */	stwu r1, -8(r1)
@@ -22,14 +21,14 @@ InitializeUART:
 /* 801FD800 001FA760  38 21 00 08 */	addi r1, r1, 8
 /* 801FD804 001FA764  7C 08 03 A6 */	mtlr r0
 /* 801FD808 001FA768  4E 80 00 20 */	blr 
+.endfn InitializeUART
 
-.global ReadUARTN
-ReadUARTN:
+.fn ReadUARTN, global
 /* 801FD80C 001FA76C  38 60 00 04 */	li r3, 4
 /* 801FD810 001FA770  4E 80 00 20 */	blr 
+.endfn ReadUARTN
 
-.global WriteUARTN
-WriteUARTN:
+.fn WriteUARTN, global
 /* 801FD814 001FA774  7C 08 02 A6 */	mflr r0
 /* 801FD818 001FA778  90 01 00 04 */	stw r0, 4(r1)
 /* 801FD81C 001FA77C  94 21 FF D0 */	stwu r1, -0x30(r1)
@@ -178,8 +177,10 @@ WriteUARTN:
 /* 801FDA08 001FA968  38 21 00 30 */	addi r1, r1, 0x30
 /* 801FDA0C 001FA96C  7C 08 03 A6 */	mtlr r0
 /* 801FDA10 001FA970  4E 80 00 20 */	blr 
+.endfn WriteUARTN
 
 .section .sbss, "wa"
 .balign 8
-serEnabled:
+.obj serEnabled, local
 	.skip 4
+.endobj serEnabled

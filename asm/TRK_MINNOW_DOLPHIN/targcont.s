@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global TRKTargetContinue
-TRKTargetContinue:
+.fn TRKTargetContinue, global
 /* 802207B8 0021D718  7C 08 02 A6 */	mflr r0
 /* 802207BC 0021D71C  38 60 00 00 */	li r3, 0
 /* 802207C0 0021D720  90 01 00 04 */	stw r0, 4(r1)
@@ -15,3 +14,4 @@ TRKTargetContinue:
 /* 802207E0 0021D740  80 01 00 04 */	lwz r0, 4(r1)
 /* 802207E4 0021D744  7C 08 03 A6 */	mtlr r0
 /* 802207E8 0021D748  4E 80 00 20 */	blr 
+.endfn TRKTargetContinue

@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global TRK_flush_cache
-TRK_flush_cache:
+.fn TRK_flush_cache, global
 /* 8021E788 0021B6E8  3C A0 FF FF */	lis r5, 0xFFFFFFF1@h
 /* 8021E78C 0021B6EC  60 A5 FF F1 */	ori r5, r5, 0xFFFFFFF1@l
 /* 8021E790 0021B6F0  7C A5 18 38 */	and r5, r5, r3
@@ -17,3 +16,4 @@ TRK_flush_cache:
 /* 8021E7B4 0021B714  40 80 FF E8 */	bge .L_8021E79C
 /* 8021E7B8 0021B718  4C 00 01 2C */	isync 
 /* 8021E7BC 0021B71C  4E 80 00 20 */	blr 
+.endfn TRK_flush_cache

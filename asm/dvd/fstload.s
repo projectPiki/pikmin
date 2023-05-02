@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global cb
-cb:
+.fn cb, local
 /* 80202254 001FF1B4  7C 08 02 A6 */	mflr r0
 /* 80202258 001FF1B8  2C 03 00 00 */	cmpwi r3, 0
 /* 8020225C 001FF1BC  90 01 00 04 */	stw r0, 4(r1)
@@ -60,9 +59,9 @@ cb:
 /* 80202320 001FF280  38 21 00 18 */	addi r1, r1, 0x18
 /* 80202324 001FF284  7C 08 03 A6 */	mtlr r0
 /* 80202328 001FF288  4E 80 00 20 */	blr 
+.endfn cb
 
-.global __fstLoad
-__fstLoad:
+.fn __fstLoad, global
 /* 8020232C 001FF28C  7C 08 02 A6 */	mflr r0
 /* 80202330 001FF290  3C 60 80 2F */	lis r3, lbl_802E8970@ha
 /* 80202334 001FF294  90 01 00 04 */	stw r0, 4(r1)
@@ -150,41 +149,52 @@ __fstLoad:
 /* 80202470 001FF3D0  83 A1 00 54 */	lwz r29, 0x54(r1)
 /* 80202474 001FF3D4  38 21 00 60 */	addi r1, r1, 0x60
 /* 80202478 001FF3D8  4E 80 00 20 */	blr 
+.endfn __fstLoad
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802E8970:
+.obj lbl_802E8970, local
 	.asciz "  Game Name ... %c%c%c%c\n"
+.endobj lbl_802E8970
 .balign 4
-lbl_802E898C:
+.obj lbl_802E898C, local
 	.asciz "  Company ..... %c%c\n"
+.endobj lbl_802E898C
 .balign 4
-lbl_802E89A4:
+.obj lbl_802E89A4, local
 	.asciz "  Disk # ...... %d\n"
+.endobj lbl_802E89A4
 .balign 4
-lbl_802E89B8:
+.obj lbl_802E89B8, local
 	.asciz "  Game ver .... %d\n"
+.endobj lbl_802E89B8
 .balign 4
-lbl_802E89CC:
+.obj lbl_802E89CC, local
 	.asciz "  Streaming ... %s\n"
+.endobj lbl_802E89CC
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-lbl_803E7740:
+.obj lbl_803E7740, local
 	.asciz "\n"
+.endobj lbl_803E7740
 .balign 4
-lbl_803E7744:
+.obj lbl_803E7744, local
 	.asciz "OFF"
+.endobj lbl_803E7744
 .balign 4
-lbl_803E7748:
+.obj lbl_803E7748, local
 	.asciz "ON"
-.balign 4
+.endobj lbl_803E7748
 
 .section .sbss, "wa"
 .balign 8
-status:
+.obj status, local
 	.skip 0x4
-bb2:
+.endobj status
+.obj bb2, local
 	.skip 0x4
-idTmp:
+.endobj bb2
+.obj idTmp, local
 	.skip 0x4
+.endobj idTmp

@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global TRKHandleRequestEvent
-TRKHandleRequestEvent:
+.fn TRKHandleRequestEvent, global
 /* 8021BF4C 00218EAC  7C 08 02 A6 */	mflr r0
 /* 8021BF50 00218EB0  90 01 00 04 */	stw r0, 4(r1)
 /* 8021BF54 00218EB4  94 21 FF F8 */	stwu r1, -8(r1)
@@ -12,9 +11,9 @@ TRKHandleRequestEvent:
 /* 8021BF68 00218EC8  80 01 00 04 */	lwz r0, 4(r1)
 /* 8021BF6C 00218ECC  7C 08 03 A6 */	mtlr r0
 /* 8021BF70 00218ED0  4E 80 00 20 */	blr 
+.endfn TRKHandleRequestEvent
 
-.global TRKHandleSupportEvent
-TRKHandleSupportEvent:
+.fn TRKHandleSupportEvent, global
 /* 8021BF74 00218ED4  7C 08 02 A6 */	mflr r0
 /* 8021BF78 00218ED8  90 01 00 04 */	stw r0, 4(r1)
 /* 8021BF7C 00218EDC  94 21 FF F8 */	stwu r1, -8(r1)
@@ -23,9 +22,9 @@ TRKHandleSupportEvent:
 /* 8021BF88 00218EE8  80 01 00 04 */	lwz r0, 4(r1)
 /* 8021BF8C 00218EEC  7C 08 03 A6 */	mtlr r0
 /* 8021BF90 00218EF0  4E 80 00 20 */	blr 
+.endfn TRKHandleSupportEvent
 
-.global TRKIdle
-TRKIdle:
+.fn TRKIdle, global
 /* 8021BF94 00218EF4  7C 08 02 A6 */	mflr r0
 /* 8021BF98 00218EF8  90 01 00 04 */	stw r0, 4(r1)
 /* 8021BF9C 00218EFC  94 21 FF F8 */	stwu r1, -8(r1)
@@ -38,9 +37,9 @@ TRKIdle:
 /* 8021BFB4 00218F14  80 01 00 04 */	lwz r0, 4(r1)
 /* 8021BFB8 00218F18  7C 08 03 A6 */	mtlr r0
 /* 8021BFBC 00218F1C  4E 80 00 20 */	blr 
+.endfn TRKIdle
 
-.global TRKNubMainLoop
-TRKNubMainLoop:
+.fn TRKNubMainLoop, global
 /* 8021BFC0 00218F20  7C 08 02 A6 */	mflr r0
 /* 8021BFC4 00218F24  3C 60 80 3D */	lis r3, gTRKInputPendingPtr@ha
 /* 8021BFC8 00218F28  90 01 00 04 */	stw r0, 4(r1)
@@ -113,3 +112,4 @@ TRKNubMainLoop:
 /* 8021C0A8 00219008  80 01 00 04 */	lwz r0, 4(r1)
 /* 8021C0AC 0021900C  7C 08 03 A6 */	mtlr r0
 /* 8021C0B0 00219010  4E 80 00 20 */	blr 
+.endfn TRKNubMainLoop
