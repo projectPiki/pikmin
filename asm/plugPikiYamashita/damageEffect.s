@@ -1,13 +1,12 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global __ct__Q23zen12DamageEffectFv
-__ct__Q23zen12DamageEffectFv:
+.fn __ct__Q23zen12DamageEffectFv, global
 /* 801F14F4 001EE454  C0 02 C2 18 */	lfs f0, lbl_803EC418@sda21(r2)
 /* 801F14F8 001EE458  D0 03 00 00 */	stfs f0, 0(r3)
 /* 801F14FC 001EE45C  4E 80 00 20 */	blr 
+.endfn __ct__Q23zen12DamageEffectFv
 
-.global update__Q23zen12DamageEffectFv
-update__Q23zen12DamageEffectFv:
+.fn update__Q23zen12DamageEffectFv, global
 /* 801F1500 001EE460  7C 08 02 A6 */	mflr r0
 /* 801F1504 001EE464  3C 80 80 3A */	lis r4, gameflow@ha
 /* 801F1508 001EE468  90 01 00 04 */	stw r0, 4(r1)
@@ -53,9 +52,9 @@ update__Q23zen12DamageEffectFv:
 /* 801F159C 001EE4FC  38 21 00 20 */	addi r1, r1, 0x20
 /* 801F15A0 001EE500  7C 08 03 A6 */	mtlr r0
 /* 801F15A4 001EE504  4E 80 00 20 */	blr 
+.endfn update__Q23zen12DamageEffectFv
 
-.global draw__Q23zen12DamageEffectFR8Graphics
-draw__Q23zen12DamageEffectFR8Graphics:
+.fn draw__Q23zen12DamageEffectFR8Graphics, global
 /* 801F15A8 001EE508  7C 08 02 A6 */	mflr r0
 /* 801F15AC 001EE50C  90 01 00 04 */	stw r0, 4(r1)
 /* 801F15B0 001EE510  94 21 FF 68 */	stwu r1, -0x98(r1)
@@ -254,7 +253,7 @@ draw__Q23zen12DamageEffectFR8Graphics:
 /* 801F18AC 001EE80C  6C 00 80 00 */	xoris r0, r0, 0x8000
 /* 801F18B0 001EE810  90 01 00 74 */	stw r0, 0x74(r1)
 /* 801F18B4 001EE814  6C 60 80 00 */	xoris r0, r3, 0x8000
-/* 801F18B8 001EE818  C8 62 C2 30 */	lfd f3, "@1228"@sda21(r2)
+/* 801F18B8 001EE818  C8 62 C2 30 */	lfd f3, lbl_803EC430@sda21(r2)
 /* 801F18BC 001EE81C  38 A1 00 18 */	addi r5, r1, 0x18
 /* 801F18C0 001EE820  90 01 00 84 */	stw r0, 0x84(r1)
 /* 801F18C4 001EE824  C0 82 C2 24 */	lfs f4, lbl_803EC424@sda21(r2)
@@ -327,26 +326,26 @@ draw__Q23zen12DamageEffectFR8Graphics:
 /* 801F19CC 001EE92C  38 21 00 98 */	addi r1, r1, 0x98
 /* 801F19D0 001EE930  7C 08 03 A6 */	mtlr r0
 /* 801F19D4 001EE934  4E 80 00 20 */	blr 
+.endfn draw__Q23zen12DamageEffectFR8Graphics
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-.global lbl_803EC418
-lbl_803EC418:
-	.4byte 0x00000000
-.global lbl_803EC41C
-lbl_803EC41C:
-	.4byte 0x40000000
-.global lbl_803EC420
-lbl_803EC420:
-	.4byte 0x42800000
-.global lbl_803EC424
-lbl_803EC424:
-	.4byte 0x3F000000
-.global lbl_803EC428
-lbl_803EC428:
-	.4byte 0x3F800000
-	.4byte 0x00000000
-.global "@1228"
-"@1228":
-	.4byte 0x43300000
-	.4byte 0x80000000
+.obj lbl_803EC418, local
+	.float 0.0
+.endobj lbl_803EC418
+.obj lbl_803EC41C, local
+	.float 2.0
+.endobj lbl_803EC41C
+.obj lbl_803EC420, local
+	.float 64.0
+.endobj lbl_803EC420
+.obj lbl_803EC424, local
+	.float 0.5
+.endobj lbl_803EC424
+.obj lbl_803EC428, local
+	.float 1.0
+.endobj lbl_803EC428
+.balign 8
+.obj lbl_803EC430, local
+	.8byte 0x4330000080000000
+.endobj lbl_803EC430

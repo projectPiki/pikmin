@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global setData__Q23zen7TexAnimFUlP7Texturef
-setData__Q23zen7TexAnimFUlP7Texturef:
+.fn setData__Q23zen7TexAnimFUlP7Texturef, global
 /* 801C10A0 001BE000  80 03 00 04 */	lwz r0, 4(r3)
 /* 801C10A4 001BE004  7C 04 00 40 */	cmplw r4, r0
 /* 801C10A8 001BE008  4C 80 00 20 */	bgelr 
@@ -11,9 +10,9 @@ setData__Q23zen7TexAnimFUlP7Texturef:
 /* 801C10B8 001BE018  90 A3 00 00 */	stw r5, 0(r3)
 /* 801C10BC 001BE01C  D0 23 00 04 */	stfs f1, 4(r3)
 /* 801C10C0 001BE020  4E 80 00 20 */	blr 
+.endfn setData__Q23zen7TexAnimFUlP7Texturef
 
-.global update__Q23zen7TexAnimFv
-update__Q23zen7TexAnimFv:
+.fn update__Q23zen7TexAnimFv, global
 /* 801C10C4 001BE024  80 8D 2D EC */	lwz r4, gsys@sda21(r13)
 /* 801C10C8 001BE028  38 A0 00 00 */	li r5, 0
 /* 801C10CC 001BE02C  C0 23 00 0C */	lfs f1, 0xc(r3)
@@ -48,3 +47,4 @@ update__Q23zen7TexAnimFv:
 /* 801C1134 001BE094  41 81 FF BC */	bgt .L_801C10F0
 /* 801C1138 001BE098  80 64 00 00 */	lwz r3, 0(r4)
 /* 801C113C 001BE09C  4E 80 00 20 */	blr 
+.endfn update__Q23zen7TexAnimFv

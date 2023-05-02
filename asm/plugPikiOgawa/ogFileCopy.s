@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global setOperateMode_Copy__Q23zen18ogScrFileSelectMgrFv
-setOperateMode_Copy__Q23zen18ogScrFileSelectMgrFv:
+.fn setOperateMode_Copy__Q23zen18ogScrFileSelectMgrFv, global
 /* 8019719C 001940FC  7C 08 02 A6 */	mflr r0
 /* 801971A0 00194100  38 80 00 05 */	li r4, 5
 /* 801971A4 00194104  90 01 00 04 */	stw r0, 4(r1)
@@ -72,9 +71,9 @@ setOperateMode_Copy__Q23zen18ogScrFileSelectMgrFv:
 /* 8019729C 001941FC  38 21 00 28 */	addi r1, r1, 0x28
 /* 801972A0 00194200  7C 08 03 A6 */	mtlr r0
 /* 801972A4 00194204  4E 80 00 20 */	blr 
+.endfn setOperateMode_Copy__Q23zen18ogScrFileSelectMgrFv
 
-.global CopyEffectStart__Q23zen18ogScrFileSelectMgrFv
-CopyEffectStart__Q23zen18ogScrFileSelectMgrFv:
+.fn CopyEffectStart__Q23zen18ogScrFileSelectMgrFv, global
 /* 801972A8 00194208  7C 08 02 A6 */	mflr r0
 /* 801972AC 0019420C  38 80 00 2A */	li r4, 0x2a
 /* 801972B0 00194210  90 01 00 04 */	stw r0, 4(r1)
@@ -309,9 +308,9 @@ CopyEffectStart__Q23zen18ogScrFileSelectMgrFv:
 /* 80197644 001945A4  38 21 01 20 */	addi r1, r1, 0x120
 /* 80197648 001945A8  7C 08 03 A6 */	mtlr r0
 /* 8019764C 001945AC  4E 80 00 20 */	blr 
+.endfn CopyEffectStart__Q23zen18ogScrFileSelectMgrFv
 
-.global OperateCopy__Q23zen18ogScrFileSelectMgrFP10Controller
-OperateCopy__Q23zen18ogScrFileSelectMgrFP10Controller:
+.fn OperateCopy__Q23zen18ogScrFileSelectMgrFP10Controller, global
 /* 80197650 001945B0  7C 08 02 A6 */	mflr r0
 /* 80197654 001945B4  90 01 00 04 */	stw r0, 4(r1)
 /* 80197658 001945B8  94 21 FF 48 */	stwu r1, -0xb8(r1)
@@ -621,44 +620,62 @@ OperateCopy__Q23zen18ogScrFileSelectMgrFP10Controller:
 /* 80197ACC 00194A2C  38 21 00 B8 */	addi r1, r1, 0xb8
 /* 80197AD0 00194A30  7C 08 03 A6 */	mtlr r0
 /* 80197AD4 00194A34  4E 80 00 20 */	blr 
+.endfn OperateCopy__Q23zen18ogScrFileSelectMgrFP10Controller
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-lbl_803E5B38:
-	.4byte 0x00000000
-lbl_803E5B3C:
-	.4byte 0x00000000
-lbl_803E5B40:
-	.4byte 0x00000000
-lbl_803E5B44:
-	.4byte 0x00000000
-lbl_803E5B48:
-	.4byte 0x00000000
-lbl_803E5B4C:
-	.4byte 0x00000000
+.obj lbl_803E5B38, local
+	.float 0.0
+.endobj lbl_803E5B38
+.obj lbl_803E5B3C, local
+	.float 0.0
+.endobj lbl_803E5B3C
+.obj lbl_803E5B40, local
+	.float 0.0
+.endobj lbl_803E5B40
+.obj lbl_803E5B44, local
+	.float 0.0
+.endobj lbl_803E5B44
+.obj lbl_803E5B48, local
+	.float 0.0
+.endobj lbl_803E5B48
+.obj lbl_803E5B4C, local
+	.float 0.0
+.endobj lbl_803E5B4C
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803EB478:
-	.4byte 0x3F800000
-lbl_803EB47C:
-	.4byte 0x3E800000
-lbl_803EB480:
-	.4byte 0x00000000
-lbl_803EB484:
-	.4byte 0x3F000000
-lbl_803EB488:
-	.4byte 0x43F00000
-lbl_803EB48C:
-	.4byte 0x3B96BB99
-lbl_803EB490:
-	.4byte 0x43300000
-	.4byte 0x80000000
-lbl_803EB498:
-	.4byte 0x402CCCCD
-lbl_803EB49C:
-	.4byte 0x44200000
-lbl_803EB4A0:
-	.4byte 0x3E99999A
-lbl_803EB4A4:
-	.4byte 0x40400000
+.obj lbl_803EB478, local
+	.float 1.0
+.endobj lbl_803EB478
+.obj lbl_803EB47C, local
+	.float 0.25
+.endobj lbl_803EB47C
+.obj lbl_803EB480, local
+	.float 0.0
+.endobj lbl_803EB480
+.obj lbl_803EB484, local
+	.float 0.5
+.endobj lbl_803EB484
+.obj lbl_803EB488, local
+	.float 480.0
+.endobj lbl_803EB488
+.obj lbl_803EB48C, local
+	.float 0.0046
+.endobj lbl_803EB48C
+.balign 8
+.obj lbl_803EB490, local
+	.8byte 0x4330000080000000
+.endobj lbl_803EB490
+.obj lbl_803EB498, local
+	.float 2.7
+.endobj lbl_803EB498
+.obj lbl_803EB49C, local
+	.float 640.0
+.endobj lbl_803EB49C
+.obj lbl_803EB4A0, local
+	.float 0.3
+.endobj lbl_803EB4A0
+.obj lbl_803EB4A4, local
+	.float 3.0
+.endobj lbl_803EB4A4

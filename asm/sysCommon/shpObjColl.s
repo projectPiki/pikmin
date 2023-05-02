@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global loadini__11ObjCollInfoFP9CmdStream
-loadini__11ObjCollInfoFP9CmdStream:
+.fn loadini__11ObjCollInfoFP9CmdStream, global
 /* 80036124 00033084  7C 08 02 A6 */	mflr r0
 /* 80036128 00033088  3C E0 80 22 */	lis r7, __vt__5ANode@ha
 /* 8003612C 0003308C  90 01 00 04 */	stw r0, 4(r1)
@@ -225,45 +224,59 @@ loadini__11ObjCollInfoFP9CmdStream:
 /* 80036468 000333C8  38 21 00 50 */	addi r1, r1, 0x50
 /* 8003646C 000333CC  7C 08 03 A6 */	mtlr r0
 /* 80036470 000333D0  4E 80 00 20 */	blr 
+.endfn loadini__11ObjCollInfoFP9CmdStream
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802289F0:
+.obj lbl_802289F0, local
 	.asciz "collinfo"
+.endobj lbl_802289F0
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-lbl_803DD220:
+.obj lbl_803DD220, local
 	.float 0.0
-lbl_803DD224:
+.endobj lbl_803DD220
+.obj lbl_803DD224, local
 	.float 0.0
-lbl_803DD228:
+.endobj lbl_803DD224
+.obj lbl_803DD228, local
 	.float 0.0
+.endobj lbl_803DD228
 .balign 4
-lbl_803DD22C:
+.obj lbl_803DD22C, local
 	.asciz "id"
+.endobj lbl_803DD22C
 .balign 4
-lbl_803DD230:
+.obj lbl_803DD230, local
 	.asciz "code"
+.endobj lbl_803DD230
 .balign 4
-lbl_803DD238:
+.obj lbl_803DD238, local
 	.asciz "type"
+.endobj lbl_803DD238
 .balign 4
-lbl_803DD240:
+.obj lbl_803DD240, local
 	.asciz "%d"
+.endobj lbl_803DD240
 .balign 4
-lbl_803DD244:
+.obj lbl_803DD244, local
 	.asciz "%f"
+.endobj lbl_803DD244
 .balign 4
-lbl_803DD248:
+.obj lbl_803DD248, local
 	.asciz "getminy"
+.endobj lbl_803DD248
 .balign 4
-lbl_803DD250:
+.obj lbl_803DD250, local
 	.asciz ""
+.endobj lbl_803DD250
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803E8570:
+.obj lbl_803E8570, local
 	.float 0.0
-lbl_803E8574:
+.endobj lbl_803E8570
+.obj lbl_803E8574, local
 	.float 10.0
+.endobj lbl_803E8574

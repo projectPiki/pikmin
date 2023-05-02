@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global satisfy__10CndIsAliveFP8Creature
-satisfy__10CndIsAliveFP8Creature:
+.fn satisfy__10CndIsAliveFP8Creature, global
 /* 8014FAFC 0014CA5C  7C 08 02 A6 */	mflr r0
 /* 8014FB00 0014CA60  28 04 00 00 */	cmplwi r4, 0
 /* 8014FB04 0014CA64  90 01 00 04 */	stw r0, 4(r1)
@@ -20,9 +19,9 @@ satisfy__10CndIsAliveFP8Creature:
 /* 8014FB30 0014CA90  38 21 00 08 */	addi r1, r1, 8
 /* 8014FB34 0014CA94  7C 08 03 A6 */	mtlr r0
 /* 8014FB38 0014CA98  4E 80 00 20 */	blr 
+.endfn satisfy__10CndIsAliveFP8Creature
 
-.global satisfy__12CndBossFlickFP8Creature
-satisfy__12CndBossFlickFP8Creature:
+.fn satisfy__12CndBossFlickFP8Creature, global
 /* 8014FB3C 0014CA9C  7C 08 02 A6 */	mflr r0
 /* 8014FB40 0014CAA0  90 01 00 04 */	stw r0, 4(r1)
 /* 8014FB44 0014CAA4  94 21 FF C8 */	stwu r1, -0x38(r1)
@@ -75,9 +74,9 @@ satisfy__12CndBossFlickFP8Creature:
 /* 8014FBF8 0014CB58  38 21 00 38 */	addi r1, r1, 0x38
 /* 8014FBFC 0014CB5C  7C 08 03 A6 */	mtlr r0
 /* 8014FC00 0014CB60  4E 80 00 20 */	blr 
+.endfn satisfy__12CndBossFlickFP8Creature
 
-.global satisfy__16CndStickBossKillFP8Creature
-satisfy__16CndStickBossKillFP8Creature:
+.fn satisfy__16CndStickBossKillFP8Creature, global
 /* 8014FC04 0014CB64  7C 08 02 A6 */	mflr r0
 /* 8014FC08 0014CB68  90 01 00 04 */	stw r0, 4(r1)
 /* 8014FC0C 0014CB6C  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -108,9 +107,9 @@ satisfy__16CndStickBossKillFP8Creature:
 /* 8014FC68 0014CBC8  38 21 00 20 */	addi r1, r1, 0x20
 /* 8014FC6C 0014CBCC  7C 08 03 A6 */	mtlr r0
 /* 8014FC70 0014CBD0  4E 80 00 20 */	blr 
+.endfn satisfy__16CndStickBossKillFP8Creature
 
-.global satisfy__17CndStickMouthKillFP8Creature
-satisfy__17CndStickMouthKillFP8Creature:
+.fn satisfy__17CndStickMouthKillFP8Creature, global
 /* 8014FC74 0014CBD4  7C 08 02 A6 */	mflr r0
 /* 8014FC78 0014CBD8  90 01 00 04 */	stw r0, 4(r1)
 /* 8014FC7C 0014CBDC  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -144,9 +143,9 @@ satisfy__17CndStickMouthKillFP8Creature:
 /* 8014FCE4 0014CC44  38 21 00 20 */	addi r1, r1, 0x20
 /* 8014FCE8 0014CC48  7C 08 03 A6 */	mtlr r0
 /* 8014FCEC 0014CC4C  4E 80 00 20 */	blr 
+.endfn satisfy__17CndStickMouthKillFP8Creature
 
-.global satisfy__15CndBossCollKillFP8Creature
-satisfy__15CndBossCollKillFP8Creature:
+.fn satisfy__15CndBossCollKillFP8Creature, global
 /* 8014FCF0 0014CC50  7C 08 02 A6 */	mflr r0
 /* 8014FCF4 0014CC54  90 01 00 04 */	stw r0, 4(r1)
 /* 8014FCF8 0014CC58  94 21 FF D0 */	stwu r1, -0x30(r1)
@@ -187,110 +186,132 @@ satisfy__15CndBossCollKillFP8Creature:
 /* 8014FD7C 0014CCDC  38 21 00 30 */	addi r1, r1, 0x30
 /* 8014FD80 0014CCE0  7C 08 03 A6 */	mtlr r0
 /* 8014FD84 0014CCE4  4E 80 00 20 */	blr 
+.endfn satisfy__15CndBossCollKillFP8Creature
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802CEB48:
+.obj lbl_802CEB48, local
 	.asciz "BossCnd.cpp"
+.endobj lbl_802CEB48
 .balign 4
-lbl_802CEB54:
+.obj lbl_802CEB54, local
 	.asciz "CndBossCollKill"
+.endobj lbl_802CEB54
 .balign 4
-lbl_802CEB64:
+.obj lbl_802CEB64, local
 	.asciz "Condition"
+.endobj lbl_802CEB64
 .balign 4
-lbl_802CEB70:
+.obj lbl_802CEB70, local
 	.4byte __RTTI__9Condition
 	.4byte 0
 	.4byte 0
-.global __vt__15CndBossCollKill
-__vt__15CndBossCollKill:
+.endobj lbl_802CEB70
+.obj __vt__15CndBossCollKill, global
 	.4byte __RTTI__15CndBossCollKill
 	.4byte 0
 	.4byte satisfy__15CndBossCollKillFP8Creature
+.endobj __vt__15CndBossCollKill
 .balign 4
-lbl_802CEB88:
+.obj lbl_802CEB88, local
 	.asciz "CndStickMouthKill"
+.endobj lbl_802CEB88
 .balign 4
-lbl_802CEB9C:
+.obj lbl_802CEB9C, local
 	.4byte __RTTI__9Condition
 	.4byte 0
 	.4byte 0
-.global __vt__17CndStickMouthKill
-__vt__17CndStickMouthKill:
+.endobj lbl_802CEB9C
+.obj __vt__17CndStickMouthKill, global
 	.4byte __RTTI__17CndStickMouthKill
 	.4byte 0
 	.4byte satisfy__17CndStickMouthKillFP8Creature
+.endobj __vt__17CndStickMouthKill
 .balign 4
-lbl_802CEBB4:
+.obj lbl_802CEBB4, local
 	.asciz "CndStickBossKill"
+.endobj lbl_802CEBB4
 .balign 4
-lbl_802CEBC8:
+.obj lbl_802CEBC8, local
 	.4byte __RTTI__9Condition
 	.4byte 0
 	.4byte 0
-.global __vt__16CndStickBossKill
-__vt__16CndStickBossKill:
+.endobj lbl_802CEBC8
+.obj __vt__16CndStickBossKill, global
 	.4byte __RTTI__16CndStickBossKill
 	.4byte 0
 	.4byte satisfy__16CndStickBossKillFP8Creature
+.endobj __vt__16CndStickBossKill
 .balign 4
-lbl_802CEBE0:
+.obj lbl_802CEBE0, local
 	.asciz "CndBossFlick"
+.endobj lbl_802CEBE0
 .balign 4
-lbl_802CEBF0:
+.obj lbl_802CEBF0, local
 	.4byte __RTTI__9Condition
 	.4byte 0
 	.4byte 0
-.global __vt__12CndBossFlick
-__vt__12CndBossFlick:
+.endobj lbl_802CEBF0
+.obj __vt__12CndBossFlick, global
 	.4byte __RTTI__12CndBossFlick
 	.4byte 0
 	.4byte satisfy__12CndBossFlickFP8Creature
+.endobj __vt__12CndBossFlick
 .balign 4
-lbl_802CEC08:
+.obj lbl_802CEC08, local
 	.asciz "CndIsAlive"
+.endobj lbl_802CEC08
 .balign 4
-lbl_802CEC14:
+.obj lbl_802CEC14, local
 	.4byte __RTTI__9Condition
 	.4byte 0
 	.4byte 0
-.global __vt__10CndIsAlive
-__vt__10CndIsAlive:
+.endobj lbl_802CEC14
+.obj __vt__10CndIsAlive, global
 	.4byte __RTTI__10CndIsAlive
 	.4byte 0
 	.4byte satisfy__10CndIsAliveFP8Creature
+.endobj __vt__10CndIsAlive
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-__RTTI__9Condition:
+.obj __RTTI__9Condition, local
 	.4byte lbl_802CEB64
 	.4byte 0
-__RTTI__15CndBossCollKill:
+.endobj __RTTI__9Condition
+.obj __RTTI__15CndBossCollKill, local
 	.4byte lbl_802CEB54
 	.4byte lbl_802CEB70
-__RTTI__17CndStickMouthKill:
+.endobj __RTTI__15CndBossCollKill
+.obj __RTTI__17CndStickMouthKill, local
 	.4byte lbl_802CEB88
 	.4byte lbl_802CEB9C
-__RTTI__16CndStickBossKill:
+.endobj __RTTI__17CndStickMouthKill
+.obj __RTTI__16CndStickBossKill, local
 	.4byte lbl_802CEBB4
 	.4byte lbl_802CEBC8
-__RTTI__12CndBossFlick:
+.endobj __RTTI__16CndStickBossKill
+.obj __RTTI__12CndBossFlick, local
 	.4byte lbl_802CEBE0
 	.4byte lbl_802CEBF0
-__RTTI__10CndIsAlive:
+.endobj __RTTI__12CndBossFlick
+.obj __RTTI__10CndIsAlive, local
 	.4byte lbl_802CEC08
 	.4byte lbl_802CEC14
+.endobj __RTTI__10CndIsAlive
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803EAA60:
+.obj lbl_803EAA60, local
 	.float 1.0
-lbl_803EAA64:
-	.4byte 0x46FFFE00
-lbl_803EAA68:
-	.4byte 0x3F7FFFEF
+.endobj lbl_803EAA60
+.obj lbl_803EAA64, local
+	.float 32767.0
+.endobj lbl_803EAA64
+.obj lbl_803EAA68, local
+	.float 0.999999
+.endobj lbl_803EAA68
 .balign 8
-lbl_803EAA70:
-	.4byte 0x43300000
-	.4byte 0x80000000
+.obj lbl_803EAA70, local
+	.8byte 0x4330000080000000
+.endobj lbl_803EAA70

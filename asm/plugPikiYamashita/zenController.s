@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global __ct__Q23zen13ZenControllerFP10Controller
-__ct__Q23zen13ZenControllerFP10Controller:
+.fn __ct__Q23zen13ZenControllerFP10Controller, global
 /* 801C0310 001BD270  7C 08 02 A6 */	mflr r0
 /* 801C0314 001BD274  90 01 00 04 */	stw r0, 4(r1)
 /* 801C0318 001BD278  94 21 FF D0 */	stwu r1, -0x30(r1)
@@ -41,9 +40,9 @@ __ct__Q23zen13ZenControllerFP10Controller:
 /* 801C0398 001BD2F8  38 21 00 30 */	addi r1, r1, 0x30
 /* 801C039C 001BD2FC  7C 08 03 A6 */	mtlr r0
 /* 801C03A0 001BD300  4E 80 00 20 */	blr 
+.endfn __ct__Q23zen13ZenControllerFP10Controller
 
-.global update__Q23zen13ZenControllerFv
-update__Q23zen13ZenControllerFv:
+.fn update__Q23zen13ZenControllerFv, global
 /* 801C03A4 001BD304  38 00 00 00 */	li r0, 0
 /* 801C03A8 001BD308  90 03 00 04 */	stw r0, 4(r3)
 /* 801C03AC 001BD30C  80 03 00 00 */	lwz r0, 0(r3)
@@ -112,18 +111,22 @@ update__Q23zen13ZenControllerFv:
 /* 801C0490 001BD3F0  39 29 00 01 */	addi r9, r9, 1
 /* 801C0494 001BD3F4  42 00 FF 3C */	bdnz .L_801C03D0
 /* 801C0498 001BD3F8  4E 80 00 20 */	blr 
+.endfn update__Q23zen13ZenControllerFv
 
 .section .sbss, "wa"
 .balign 8
-.global repeatTime__Q23zen9KeyRepeat
-repeatTime__Q23zen9KeyRepeat:
+.obj repeatTime__Q23zen9KeyRepeat, global
 	.skip 0x4
+.endobj repeatTime__Q23zen9KeyRepeat
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803EBAF0:
-	.4byte 0x00000000
-lbl_803EBAF4:
-	.4byte 0x3F266666
-lbl_803EBAF8:
-	.4byte 0x3F000000
+.obj lbl_803EBAF0, local
+	.float 0.0
+.endobj lbl_803EBAF0
+.obj lbl_803EBAF4, local
+	.float 0.65
+.endobj lbl_803EBAF4
+.obj lbl_803EBAF8, local
+	.float 0.5
+.endobj lbl_803EBAF8

@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global __ct__20BossAnimationManagerFP7BossMgr
-__ct__20BossAnimationManagerFP7BossMgr:
+.fn __ct__20BossAnimationManagerFP7BossMgr, global
 /* 8014FA68 0014C9C8  7C 08 02 A6 */	mflr r0
 /* 8014FA6C 0014C9CC  3C A0 80 22 */	lis r5, __vt__5ANode@ha
 /* 8014FA70 0014C9D0  90 01 00 04 */	stw r0, 4(r1)
@@ -39,38 +38,46 @@ __ct__20BossAnimationManagerFP7BossMgr:
 /* 8014FAF0 0014CA50  38 21 00 18 */	addi r1, r1, 0x18
 /* 8014FAF4 0014CA54  7C 08 03 A6 */	mtlr r0
 /* 8014FAF8 0014CA58  4E 80 00 20 */	blr 
+.endfn __ct__20BossAnimationManagerFP7BossMgr
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802CEA80:
+.obj lbl_802CEA80, local
 	.asciz "BossAnimMgr.cpp"
+.endobj lbl_802CEA80
 .balign 4
-lbl_802CEA8C:
+.obj lbl_802CEA8C, local
 	.asciz "BossAnimMgr"
+.endobj lbl_802CEA8C
 .balign 4
-lbl_802CEA9C:
+.obj lbl_802CEA9C, local
 	.asciz "BossAnimationManager"
+.endobj lbl_802CEA9C
 .balign 4
-lbl_802CEAB4:
+.obj lbl_802CEAB4, local
 	.asciz "CoreNode"
+.endobj lbl_802CEAB4
 .balign 4
-lbl_802CEAC0:
+.obj lbl_802CEAC0, local
 	.4byte __RTTI__5ANode
-	.skip 0x8
-lbl_802CEACC:
+	.4byte 0
+	.4byte 0
+.endobj lbl_802CEAC0
+.obj lbl_802CEACC, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte __RTTI__8CoreNode
 	.skip 0x8
-lbl_802CEAE0:
+.endobj lbl_802CEACC
+.obj lbl_802CEAE0, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte __RTTI__8CoreNode
 	.skip 0x4
 	.4byte __RTTI__4Node
 	.skip 0x8
-.global __vt__20BossAnimationManager
-__vt__20BossAnimationManager:
+.endobj lbl_802CEAE0
+.obj __vt__20BossAnimationManager, weak
 	.4byte __RTTI__20BossAnimationManager
 	.4byte 0
 	.4byte getAgeNodeType__5ANodeFv
@@ -83,32 +90,33 @@ __vt__20BossAnimationManager:
 	.4byte concat__4NodeFR3SRT
 	.4byte concat__4NodeFR8Matrix4f
 	.4byte getModelMatrix__4NodeFv
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
+.endobj __vt__20BossAnimationManager
+.skip 0x1C
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-lbl_803E4880:
+.obj lbl_803E4880, local
 	.asciz "ANode"
+.endobj lbl_803E4880
 .balign 4
-__RTTI__5ANode:
+.obj __RTTI__5ANode, local
 	.4byte lbl_803E4880
 	.4byte 0
-__RTTI__8CoreNode:
+.endobj __RTTI__5ANode
+.obj __RTTI__8CoreNode, local
 	.4byte lbl_802CEAB4
 	.4byte lbl_802CEAC0
+.endobj __RTTI__8CoreNode
 .balign 4
-lbl_803E4898:
+.obj lbl_803E4898, local
 	.asciz "Node"
+.endobj lbl_803E4898
 .balign 4
-__RTTI__4Node:
+.obj __RTTI__4Node, local
 	.4byte lbl_803E4898
 	.4byte lbl_802CEACC
-__RTTI__20BossAnimationManager:
+.endobj __RTTI__4Node
+.obj __RTTI__20BossAnimationManager, local
 	.4byte lbl_802CEA9C
 	.4byte lbl_802CEAE0
+.endobj __RTTI__20BossAnimationManager

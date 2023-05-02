@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global loadini__10LightGroupFP9CmdStream
-loadini__10LightGroupFP9CmdStream:
+.fn loadini__10LightGroupFP9CmdStream, global
 /* 80035B38 00032A98  7C 08 02 A6 */	mflr r0
 /* 80035B3C 00032A9C  3C E0 80 22 */	lis r7, __vt__5ANode@ha
 /* 80035B40 00032AA0  90 01 00 04 */	stw r0, 4(r1)
@@ -284,9 +283,9 @@ loadini__10LightGroupFP9CmdStream:
 /* 80035F4C 00032EAC  38 21 00 50 */	addi r1, r1, 0x50
 /* 80035F50 00032EB0  7C 08 03 A6 */	mtlr r0
 /* 80035F54 00032EB4  4E 80 00 20 */	blr 
+.endfn loadini__10LightGroupFP9CmdStream
 
-.global refresh__10LightGroupFR8GraphicsP8Matrix4f
-refresh__10LightGroupFR8GraphicsP8Matrix4f:
+.fn refresh__10LightGroupFR8GraphicsP8Matrix4f, global
 /* 80035F58 00032EB8  7C 08 02 A6 */	mflr r0
 /* 80035F5C 00032EBC  90 01 00 04 */	stw r0, 4(r1)
 /* 80035F60 00032EC0  94 21 FF 98 */	stwu r1, -0x68(r1)
@@ -409,59 +408,77 @@ refresh__10LightGroupFR8GraphicsP8Matrix4f:
 /* 80036118 00033078  38 21 00 68 */	addi r1, r1, 0x68
 /* 8003611C 0003307C  7C 08 03 A6 */	mtlr r0
 /* 80036120 00033080  4E 80 00 20 */	blr 
+.endfn refresh__10LightGroupFR8GraphicsP8Matrix4f
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802289D8:
+.obj lbl_802289D8, local
 	.asciz "material"
+.endobj lbl_802289D8
 .balign 4
-lbl_802289E4:
+.obj lbl_802289E4, local
 	.asciz "lightflare"
+.endobj lbl_802289E4
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-lbl_803DD1D8:
+.obj lbl_803DD1D8, local
 	.asciz "size"
+.endobj lbl_803DD1D8
 .balign 4
-lbl_803DD1E0:
+.obj lbl_803DD1E0, local
 	.asciz "%f"
+.endobj lbl_803DD1E0
 .balign 4
-lbl_803DD1E4:
+.obj lbl_803DD1E4, local
 	.asciz "pos"
+.endobj lbl_803DD1E4
 .balign 4
-lbl_803DD1E8:
+.obj lbl_803DD1E8, local
 	.asciz "NULL"
+.endobj lbl_803DD1E8
 .balign 4
-lbl_803DD1F0:
+.obj lbl_803DD1F0, local
 	.asciz "type"
+.endobj lbl_803DD1F0
 .balign 4
-lbl_803DD1F8:
+.obj lbl_803DD1F8, local
 	.asciz "%d"
+.endobj lbl_803DD1F8
 .balign 4
-lbl_803DD1FC:
+.obj lbl_803DD1FC, local
 	.asciz "flags"
+.endobj lbl_803DD1FC
 .balign 4
-lbl_803DD204:
+.obj lbl_803DD204, local
 	.asciz "dir"
+.endobj lbl_803DD204
 .balign 4
-lbl_803DD208:
+.obj lbl_803DD208, local
 	.asciz "colour"
+.endobj lbl_803DD208
 .balign 4
-lbl_803DD210:
+.obj lbl_803DD210, local
 	.asciz "texture"
+.endobj lbl_803DD210
 .balign 4
-lbl_803DD218:
+.obj lbl_803DD218, local
 	.asciz ""
+.endobj lbl_803DD218
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803E8550:
+.obj lbl_803E8550, local
 	.float 0.0
+.endobj lbl_803E8550
 .balign 8
-lbl_803E8558:
+.obj lbl_803E8558, local
 	.double 0.5
+.endobj lbl_803E8558
 .balign 8
-lbl_803E8560:
+.obj lbl_803E8560, local
 	.double 3.0
-lbl_803E8568:
+.endobj lbl_803E8560
+.obj lbl_803E8568, local
 	.float 1.0
+.endobj lbl_803E8568

@@ -2310,7 +2310,9 @@ __RTTI__9AndAction:
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803E97A0:
+.obj lbl_803E97A0, local
 	.float 1.0
-lbl_803E97A4:
+.endobj lbl_803E97A0
+.obj lbl_803E97A4, local
 	.float 200.0
+.endobj lbl_803E97A4

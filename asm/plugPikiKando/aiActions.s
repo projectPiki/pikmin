@@ -938,7 +938,6 @@ lbl_803E9080:
 	.double 3.0
 .balign 8
 lbl_803E9088:
-	.4byte 0x43300000
-	.4byte 0x80000000
+	.8byte 0x4330000080000000
 lbl_803E9090:
 	.float 10.0

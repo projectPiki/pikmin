@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global GXBeginDisplayList
-GXBeginDisplayList:
+.fn GXBeginDisplayList, global
 /* 802140E8 00211048  7C 08 02 A6 */	mflr r0
 /* 802140EC 0021104C  3C A0 80 3D */	lis r5, DisplayListFifo@ha
 /* 802140F0 00211050  90 01 00 04 */	stw r0, 4(r1)
@@ -54,9 +53,9 @@ GXBeginDisplayList:
 /* 802141A4 00211104  83 81 00 10 */	lwz r28, 0x10(r1)
 /* 802141A8 00211108  38 21 00 20 */	addi r1, r1, 0x20
 /* 802141AC 0021110C  4E 80 00 20 */	blr 
+.endfn GXBeginDisplayList
 
-.global GXEndDisplayList
-GXEndDisplayList:
+.fn GXEndDisplayList, global
 /* 802141B0 00211110  7C 08 02 A6 */	mflr r0
 /* 802141B4 00211114  3C 80 80 3D */	lis r4, DisplayListFifo@ha
 /* 802141B8 00211118  90 01 00 04 */	stw r0, 4(r1)
@@ -114,9 +113,9 @@ GXEndDisplayList:
 /* 80214278 002111D8  83 81 00 10 */	lwz r28, 0x10(r1)
 /* 8021427C 002111DC  38 21 00 20 */	addi r1, r1, 0x20
 /* 80214280 002111E0  4E 80 00 20 */	blr 
+.endfn GXEndDisplayList
 
-.global GXCallDisplayList
-GXCallDisplayList:
+.fn GXCallDisplayList, global
 /* 80214284 002111E4  7C 08 02 A6 */	mflr r0
 /* 80214288 002111E8  90 01 00 04 */	stw r0, 4(r1)
 /* 8021428C 002111EC  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -147,9 +146,10 @@ GXCallDisplayList:
 /* 802142E8 00211248  38 21 00 18 */	addi r1, r1, 0x18
 /* 802142EC 0021124C  7C 08 03 A6 */	mtlr r0
 /* 802142F0 00211250  4E 80 00 20 */	blr 
+.endfn GXCallDisplayList
 
 .section .sbss, "wa"
 .balign 8
-.global OldCPUFifo
-OldCPUFifo:
+.obj OldCPUFifo, local
 	.skip 0x4
+.endobj OldCPUFifo

@@ -1,7 +1,7 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
 .balign 32, 0
-ARAMFinish__FUl:
+.fn ARAMFinish__FUl, local
 /* 8000E9C0 0000B920  7C 08 02 A6 */	mflr r0
 /* 8000E9C4 0000B924  38 80 00 01 */	li r4, 1
 /* 8000E9C8 0000B928  90 01 00 04 */	stw r0, 4(r1)
@@ -15,9 +15,10 @@ ARAMFinish__FUl:
 /* 8000E9E8 0000B948  38 21 00 18 */	addi r1, r1, 0x18
 /* 8000E9EC 0000B94C  7C 08 03 A6 */	mtlr r0
 /* 8000E9F0 0000B950  4E 80 00 20 */	blr 
+.endfn ARAMFinish__FUl
 
 .balign 32, 0
-ARAM_TO_ARAM_DMA__FUlUlUl:
+.fn ARAM_TO_ARAM_DMA__FUlUlUl, local
 /* 8000EA00 0000B960  7C 08 02 A6 */	mflr r0
 /* 8000EA04 0000B964  90 01 00 04 */	stw r0, 4(r1)
 /* 8000EA08 0000B968  94 21 FF 88 */	stwu r1, -0x78(r1)
@@ -80,10 +81,10 @@ ARAM_TO_ARAM_DMA__FUlUlUl:
 /* 8000EADC 0000BA3C  38 21 00 78 */	addi r1, r1, 0x78
 /* 8000EAE0 0000BA40  7C 08 03 A6 */	mtlr r0
 /* 8000EAE4 0000BA44  4E 80 00 20 */	blr 
+.endfn ARAM_TO_ARAM_DMA__FUlUlUl
 
 .balign 32, 0
-.global DRAM_TO_DRAM_DMA__FUlUlUl
-DRAM_TO_DRAM_DMA__FUlUlUl:
+.fn DRAM_TO_DRAM_DMA__FUlUlUl, local
 /* 8000EB00 0000BA60  7C 08 02 A6 */	mflr r0
 /* 8000EB04 0000BA64  90 01 00 04 */	stw r0, 4(r1)
 /* 8000EB08 0000BA68  94 21 FF 88 */	stwu r1, -0x78(r1)
@@ -151,10 +152,10 @@ DRAM_TO_DRAM_DMA__FUlUlUl:
 /* 8000EBF0 0000BB50  38 21 00 78 */	addi r1, r1, 0x78
 /* 8000EBF4 0000BB54  7C 08 03 A6 */	mtlr r0
 /* 8000EBF8 0000BB58  4E 80 00 20 */	blr 
+.endfn DRAM_TO_DRAM_DMA__FUlUlUl
 
 .balign 32, 0
-.global Jac_InitHeap__FP7jaheap_
-Jac_InitHeap__FP7jaheap_:
+.fn Jac_InitHeap__FP7jaheap_, global
 /* 8000EC00 0000BB60  38 A0 00 00 */	li r5, 0
 /* 8000EC04 0000BB64  90 A3 00 08 */	stw r5, 8(r3)
 /* 8000EC08 0000BB68  90 A3 00 0C */	stw r5, 0xc(r3)
@@ -172,10 +173,10 @@ Jac_InitHeap__FP7jaheap_:
 /* 8000EC38 0000BB98  90 A3 00 24 */	stw r5, 0x24(r3)
 /* 8000EC3C 0000BB9C  90 A3 00 28 */	stw r5, 0x28(r3)
 /* 8000EC40 0000BBA0  4E 80 00 20 */	blr 
+.endfn Jac_InitHeap__FP7jaheap_
 
 .balign 32, 0
-.global Jac_SelfInitHeap__FP7jaheap_UlUlUl
-Jac_SelfInitHeap__FP7jaheap_UlUlUl:
+.fn Jac_SelfInitHeap__FP7jaheap_UlUlUl, global
 /* 8000EC60 0000BBC0  90 83 00 08 */	stw r4, 8(r3)
 /* 8000EC64 0000BBC4  38 00 00 00 */	li r0, 0
 /* 8000EC68 0000BBC8  90 A3 00 10 */	stw r5, 0x10(r3)
@@ -190,10 +191,10 @@ Jac_SelfInitHeap__FP7jaheap_UlUlUl:
 /* 8000EC8C 0000BBEC  90 03 00 24 */	stw r0, 0x24(r3)
 /* 8000EC90 0000BBF0  90 03 00 28 */	stw r0, 0x28(r3)
 /* 8000EC94 0000BBF4  4E 80 00 20 */	blr 
+.endfn Jac_SelfInitHeap__FP7jaheap_UlUlUl
 
 .balign 32, 0
-.global Jac_SelfAllocHeap__FP7jaheap_P7jaheap_UlUl
-Jac_SelfAllocHeap__FP7jaheap_P7jaheap_UlUl:
+.fn Jac_SelfAllocHeap__FP7jaheap_P7jaheap_UlUl, global
 /* 8000ECA0 0000BC00  80 E3 00 08 */	lwz r7, 8(r3)
 /* 8000ECA4 0000BC04  28 07 00 00 */	cmplwi r7, 0
 /* 8000ECA8 0000BC08  41 82 00 18 */	beq .L_8000ECC0
@@ -264,10 +265,10 @@ Jac_SelfAllocHeap__FP7jaheap_P7jaheap_UlUl:
 /* 8000ED94 0000BCF4  38 05 00 01 */	addi r0, r5, 1
 /* 8000ED98 0000BCF8  B0 04 00 02 */	sth r0, 2(r4)
 /* 8000ED9C 0000BCFC  4E 80 00 20 */	blr 
+.endfn Jac_SelfAllocHeap__FP7jaheap_P7jaheap_UlUl
 
 .balign 32, 0
-.global Jac_SetGroupHeap__FP7jaheap_P7jaheap_
-Jac_SetGroupHeap__FP7jaheap_P7jaheap_:
+.fn Jac_SetGroupHeap__FP7jaheap_P7jaheap_, global
 /* 8000EDA0 0000BD00  80 03 00 20 */	lwz r0, 0x20(r3)
 /* 8000EDA4 0000BD04  28 00 00 00 */	cmplwi r0, 0
 /* 8000EDA8 0000BD08  40 82 00 10 */	bne .L_8000EDB8
@@ -284,10 +285,10 @@ Jac_SetGroupHeap__FP7jaheap_P7jaheap_:
 /* 8000EDCC 0000BD2C  90 64 00 24 */	stw r3, 0x24(r4)
 /* 8000EDD0 0000BD30  38 60 00 01 */	li r3, 1
 /* 8000EDD4 0000BD34  4E 80 00 20 */	blr 
+.endfn Jac_SetGroupHeap__FP7jaheap_P7jaheap_
 
 .balign 32, 0
-.global Jac_InitMotherHeap__FP7jaheap_UlUlUc
-Jac_InitMotherHeap__FP7jaheap_UlUlUc:
+.fn Jac_InitMotherHeap__FP7jaheap_UlUlUc, global
 /* 8000EDE0 0000BD40  38 E4 00 1F */	addi r7, r4, 0x1f
 /* 8000EDE4 0000BD44  54 80 06 FE */	clrlwi r0, r4, 0x1b
 /* 8000EDE8 0000BD48  54 E4 00 34 */	rlwinm r4, r7, 0, 0, 0x1a
@@ -311,10 +312,10 @@ Jac_InitMotherHeap__FP7jaheap_UlUlUc:
 /* 8000EE30 0000BD90  90 E3 00 24 */	stw r7, 0x24(r3)
 /* 8000EE34 0000BD94  90 E3 00 28 */	stw r7, 0x28(r3)
 /* 8000EE38 0000BD98  4E 80 00 20 */	blr 
+.endfn Jac_InitMotherHeap__FP7jaheap_UlUlUc
 
 .balign 32, 0
-.global Jac_AllocHeap__FP7jaheap_P7jaheap_Ul
-Jac_AllocHeap__FP7jaheap_P7jaheap_Ul:
+.fn Jac_AllocHeap__FP7jaheap_P7jaheap_Ul, global
 /* 8000EE40 0000BDA0  80 C4 00 08 */	lwz r6, 8(r4)
 /* 8000EE44 0000BDA4  38 05 00 1F */	addi r0, r5, 0x1f
 /* 8000EE48 0000BDA8  54 00 00 34 */	rlwinm r0, r0, 0, 0, 0x1a
@@ -438,10 +439,10 @@ Jac_AllocHeap__FP7jaheap_P7jaheap_Ul:
 /* 8000EFE8 0000BF48  38 05 00 01 */	addi r0, r5, 1
 /* 8000EFEC 0000BF4C  B0 04 00 02 */	sth r0, 2(r4)
 /* 8000EFF0 0000BF50  4E 80 00 20 */	blr 
+.endfn Jac_AllocHeap__FP7jaheap_P7jaheap_Ul
 
 .balign 32, 0
-.global Jac_DeleteHeap__FP7jaheap_
-Jac_DeleteHeap__FP7jaheap_:
+.fn Jac_DeleteHeap__FP7jaheap_, global
 /* 8000F000 0000BF60  7C 08 02 A6 */	mflr r0
 /* 8000F004 0000BF64  90 01 00 04 */	stw r0, 4(r1)
 /* 8000F008 0000BF68  94 21 FF D0 */	stwu r1, -0x30(r1)
@@ -566,9 +567,10 @@ Jac_DeleteHeap__FP7jaheap_:
 /* 8000F1A4 0000C104  38 21 00 30 */	addi r1, r1, 0x30
 /* 8000F1A8 0000C108  7C 08 03 A6 */	mtlr r0
 /* 8000F1AC 0000C10C  4E 80 00 20 */	blr 
+.endfn Jac_DeleteHeap__FP7jaheap_
 
 .balign 32, 0
-Jac_Move_Children__FP7jaheap_l:
+.fn Jac_Move_Children__FP7jaheap_l, local
 /* 8000F1C0 0000C120  7C 08 02 A6 */	mflr r0
 /* 8000F1C4 0000C124  90 01 00 04 */	stw r0, 4(r1)
 /* 8000F1C8 0000C128  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -597,10 +599,10 @@ Jac_Move_Children__FP7jaheap_l:
 /* 8000F218 0000C178  38 21 00 18 */	addi r1, r1, 0x18
 /* 8000F21C 0000C17C  7C 08 03 A6 */	mtlr r0
 /* 8000F220 0000C180  4E 80 00 20 */	blr 
+.endfn Jac_Move_Children__FP7jaheap_l
 
 .balign 32, 0
-.global Jac_GarbageCollection_St__FP7jaheap_
-Jac_GarbageCollection_St__FP7jaheap_:
+.fn Jac_GarbageCollection_St__FP7jaheap_, global
 /* 8000F240 0000C1A0  7C 08 02 A6 */	mflr r0
 /* 8000F244 0000C1A4  90 01 00 04 */	stw r0, 4(r1)
 /* 8000F248 0000C1A8  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -657,10 +659,10 @@ Jac_GarbageCollection_St__FP7jaheap_:
 /* 8000F2FC 0000C25C  38 21 00 20 */	addi r1, r1, 0x20
 /* 8000F300 0000C260  7C 08 03 A6 */	mtlr r0
 /* 8000F304 0000C264  4E 80 00 20 */	blr 
+.endfn Jac_GarbageCollection_St__FP7jaheap_
 
 .balign 32, 0
-.global Jac_ShowHeap__FP7jaheap_Ul
-Jac_ShowHeap__FP7jaheap_Ul:
+.fn Jac_ShowHeap__FP7jaheap_Ul, global
 /* 8000F320 0000C280  7C 08 02 A6 */	mflr r0
 /* 8000F324 0000C284  90 01 00 04 */	stw r0, 4(r1)
 /* 8000F328 0000C288  94 21 FF 80 */	stwu r1, -0x80(r1)
@@ -716,13 +718,16 @@ Jac_ShowHeap__FP7jaheap_Ul:
 /* 8000F3D8 0000C338  38 21 00 80 */	addi r1, r1, 0x80
 /* 8000F3DC 0000C33C  7C 08 03 A6 */	mtlr r0
 /* 8000F3E0 0000C340  4E 80 00 20 */	blr 
+.endfn Jac_ShowHeap__FP7jaheap_Ul
 
 .section .rodata, "a"  # 0x80221FE0 - 0x80222DC0
 .balign 8
-lbl_80222108:
+.obj lbl_80222108, local
 	.asciz "        "
+.endobj lbl_80222108
 
 .section .sbss, "wa"
 .balign 8
-global_id:
+.obj global_id, local
 	.skip 4
+.endobj global_id

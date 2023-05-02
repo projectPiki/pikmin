@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global CheckMinMaxDir__12CullingPlaneFv
-CheckMinMaxDir__12CullingPlaneFv:
+.fn CheckMinMaxDir__12CullingPlaneFv, global
 /* 8003756C 000344CC  C0 23 00 00 */	lfs f1, 0(r3)
 /* 80037570 000344D0  C0 02 83 A0 */	lfs f0, lbl_803E85A0@sda21(r2)
 /* 80037574 000344D4  FC 01 00 40 */	fcmpo cr0, f1, f0
@@ -47,9 +46,9 @@ CheckMinMaxDir__12CullingPlaneFv:
 /* 80037600 00034560  38 00 00 05 */	li r0, 5
 /* 80037604 00034564  90 03 00 24 */	stw r0, 0x24(r3)
 /* 80037608 00034568  4E 80 00 20 */	blr 
+.endfn CheckMinMaxDir__12CullingPlaneFv
 
-.global rotate__8Vector3fFR8Matrix4f
-rotate__8Vector3fFR8Matrix4f:
+.fn rotate__8Vector3fFR8Matrix4f, global
 /* 8003760C 0003456C  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 80037610 00034570  C0 02 83 A0 */	lfs f0, lbl_803E85A0@sda21(r2)
 /* 80037614 00034574  D0 01 00 18 */	stfs f0, 0x18(r1)
@@ -93,9 +92,9 @@ rotate__8Vector3fFR8Matrix4f:
 /* 800376AC 0003460C  90 03 00 08 */	stw r0, 8(r3)
 /* 800376B0 00034610  38 21 00 20 */	addi r1, r1, 0x20
 /* 800376B4 00034614  4E 80 00 20 */	blr 
+.endfn rotate__8Vector3fFR8Matrix4f
 
-.global rotateTo__8Vector3fFR8Matrix4fR8Vector3f
-rotateTo__8Vector3fFR8Matrix4fR8Vector3f:
+.fn rotateTo__8Vector3fFR8Matrix4fR8Vector3f, global
 /* 800376B8 00034618  C0 64 00 00 */	lfs f3, 0(r4)
 /* 800376BC 0003461C  C0 43 00 00 */	lfs f2, 0(r3)
 /* 800376C0 00034620  C0 24 00 04 */	lfs f1, 4(r4)
@@ -133,9 +132,9 @@ rotateTo__8Vector3fFR8Matrix4fR8Vector3f:
 /* 80037740 000346A0  EC 01 00 2A */	fadds f0, f1, f0
 /* 80037744 000346A4  D0 05 00 08 */	stfs f0, 8(r5)
 /* 80037748 000346A8  4E 80 00 20 */	blr 
+.endfn rotateTo__8Vector3fFR8Matrix4fR8Vector3f
 
-.global multMatrix__8Vector3fFR8Matrix4f
-multMatrix__8Vector3fFR8Matrix4f:
+.fn multMatrix__8Vector3fFR8Matrix4f, global
 /* 8003774C 000346AC  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 80037750 000346B0  C0 02 83 A0 */	lfs f0, lbl_803E85A0@sda21(r2)
 /* 80037754 000346B4  D0 01 00 18 */	stfs f0, 0x18(r1)
@@ -185,9 +184,9 @@ multMatrix__8Vector3fFR8Matrix4f:
 /* 80037804 00034764  90 03 00 08 */	stw r0, 8(r3)
 /* 80037808 00034768  38 21 00 20 */	addi r1, r1, 0x20
 /* 8003780C 0003476C  4E 80 00 20 */	blr 
+.endfn multMatrix__8Vector3fFR8Matrix4f
 
-.global multMatrixTo__8Vector3fFR8Matrix4fR8Vector3f
-multMatrixTo__8Vector3fFR8Matrix4fR8Vector3f:
+.fn multMatrixTo__8Vector3fFR8Matrix4fR8Vector3f, global
 /* 80037810 00034770  C0 64 00 00 */	lfs f3, 0(r4)
 /* 80037814 00034774  C0 43 00 00 */	lfs f2, 0(r3)
 /* 80037818 00034778  C0 24 00 04 */	lfs f1, 4(r4)
@@ -231,9 +230,9 @@ multMatrixTo__8Vector3fFR8Matrix4fR8Vector3f:
 /* 800378B0 00034810  EC 04 00 2A */	fadds f0, f4, f0
 /* 800378B4 00034814  D0 05 00 08 */	stfs f0, 8(r5)
 /* 800378B8 00034818  4E 80 00 20 */	blr 
+.endfn multMatrixTo__8Vector3fFR8Matrix4fR8Vector3f
 
-.global fromMat3f__4QuatFR8Matrix3f
-fromMat3f__4QuatFR8Matrix3f:
+.fn fromMat3f__4QuatFR8Matrix3f, global
 /* 800378BC 0003481C  94 21 FF D8 */	stwu r1, -0x28(r1)
 /* 800378C0 00034820  C0 84 00 00 */	lfs f4, 0(r4)
 /* 800378C4 00034824  C0 04 00 10 */	lfs f0, 0x10(r4)
@@ -571,9 +570,9 @@ fromMat3f__4QuatFR8Matrix3f:
 /* 80037D94 00034CF4  D0 03 00 08 */	stfs f0, 8(r3)
 /* 80037D98 00034CF8  38 21 00 28 */	addi r1, r1, 0x28
 /* 80037D9C 00034CFC  4E 80 00 20 */	blr 
+.endfn fromMat3f__4QuatFR8Matrix3f
 
-.global rotate__4QuatFR8Vector3ff
-rotate__4QuatFR8Vector3ff:
+.fn rotate__4QuatFR8Vector3ff, global
 /* 80037DA0 00034D00  7C 08 02 A6 */	mflr r0
 /* 80037DA4 00034D04  90 01 00 04 */	stw r0, 4(r1)
 /* 80037DA8 00034D08  94 21 FF C0 */	stwu r1, -0x40(r1)
@@ -615,9 +614,9 @@ rotate__4QuatFR8Vector3ff:
 /* 80037E38 00034D98  38 21 00 40 */	addi r1, r1, 0x40
 /* 80037E3C 00034D9C  7C 08 03 A6 */	mtlr r0
 /* 80037E40 00034DA0  4E 80 00 20 */	blr 
+.endfn rotate__4QuatFR8Vector3ff
 
-.global multiply__4QuatFR4Quat
-multiply__4QuatFR4Quat:
+.fn multiply__4QuatFR4Quat, global
 /* 80037E44 00034DA4  94 21 FF D0 */	stwu r1, -0x30(r1)
 /* 80037E48 00034DA8  DB E1 00 28 */	stfd f31, 0x28(r1)
 /* 80037E4C 00034DAC  DB C1 00 20 */	stfd f30, 0x20(r1)
@@ -677,9 +676,9 @@ multiply__4QuatFR4Quat:
 /* 80037F24 00034E84  CB C1 00 20 */	lfd f30, 0x20(r1)
 /* 80037F28 00034E88  38 21 00 30 */	addi r1, r1, 0x30
 /* 80037F2C 00034E8C  4E 80 00 20 */	blr 
+.endfn multiply__4QuatFR4Quat
 
-.global normalise__4QuatFv
-normalise__4QuatFv:
+.fn normalise__4QuatFv, global
 /* 80037F30 00034E90  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 80037F34 00034E94  C0 23 00 00 */	lfs f1, 0(r3)
 /* 80037F38 00034E98  C0 03 00 04 */	lfs f0, 4(r3)
@@ -734,9 +733,9 @@ normalise__4QuatFv:
 /* 80037FF8 00034F58  D0 03 00 0C */	stfs f0, 0xc(r3)
 /* 80037FFC 00034F5C  38 21 00 10 */	addi r1, r1, 0x10
 /* 80038000 00034F60  4E 80 00 20 */	blr 
+.endfn normalise__4QuatFv
 
-.global genVectorX__4QuatFR8Vector3f
-genVectorX__4QuatFR8Vector3f:
+.fn genVectorX__4QuatFR8Vector3f, global
 /* 80038004 00034F64  C0 23 00 04 */	lfs f1, 4(r3)
 /* 80038008 00034F68  C0 03 00 08 */	lfs f0, 8(r3)
 /* 8003800C 00034F6C  EC 21 00 72 */	fmuls f1, f1, f1
@@ -769,9 +768,9 @@ genVectorX__4QuatFR8Vector3f:
 /* 80038078 00034FD8  EC 01 00 28 */	fsubs f0, f1, f0
 /* 8003807C 00034FDC  D0 04 00 08 */	stfs f0, 8(r4)
 /* 80038080 00034FE0  4E 80 00 20 */	blr 
+.endfn genVectorX__4QuatFR8Vector3f
 
-.global genVectorY__4QuatFR8Vector3f
-genVectorY__4QuatFR8Vector3f:
+.fn genVectorY__4QuatFR8Vector3f, global
 /* 80038084 00034FE4  C0 63 00 00 */	lfs f3, 0(r3)
 /* 80038088 00034FE8  C0 43 00 04 */	lfs f2, 4(r3)
 /* 8003808C 00034FEC  C0 23 00 0C */	lfs f1, 0xc(r3)
@@ -804,9 +803,9 @@ genVectorY__4QuatFR8Vector3f:
 /* 800380F8 00035058  EC 01 00 2A */	fadds f0, f1, f0
 /* 800380FC 0003505C  D0 04 00 08 */	stfs f0, 8(r4)
 /* 80038100 00035060  4E 80 00 20 */	blr 
+.endfn genVectorY__4QuatFR8Vector3f
 
-.global genVectorZ__4QuatFR8Vector3f
-genVectorZ__4QuatFR8Vector3f:
+.fn genVectorZ__4QuatFR8Vector3f, global
 /* 80038104 00035064  C0 63 00 00 */	lfs f3, 0(r3)
 /* 80038108 00035068  C0 43 00 08 */	lfs f2, 8(r3)
 /* 8003810C 0003506C  C0 23 00 0C */	lfs f1, 0xc(r3)
@@ -839,9 +838,9 @@ genVectorZ__4QuatFR8Vector3f:
 /* 80038178 000350D8  EC 01 00 28 */	fsubs f0, f1, f0
 /* 8003817C 000350DC  D0 04 00 08 */	stfs f0, 8(r4)
 /* 80038180 000350E0  4E 80 00 20 */	blr 
+.endfn genVectorZ__4QuatFR8Vector3f
 
-.global slerp__4QuatFR4Quatfi
-slerp__4QuatFR4Quatfi:
+.fn slerp__4QuatFR4Quatfi, global
 /* 80038184 000350E4  7C 08 02 A6 */	mflr r0
 /* 80038188 000350E8  90 01 00 04 */	stw r0, 4(r1)
 /* 8003818C 000350EC  94 21 FF C0 */	stwu r1, -0x40(r1)
@@ -936,9 +935,9 @@ slerp__4QuatFR4Quatfi:
 /* 800382DC 0003523C  38 21 00 40 */	addi r1, r1, 0x40
 /* 800382E0 00035240  7C 08 03 A6 */	mtlr r0
 /* 800382E4 00035244  4E 80 00 20 */	blr 
+.endfn slerp__4QuatFR4Quatfi
 
-.global fromEuler__4QuatFR8Vector3f
-fromEuler__4QuatFR8Vector3f:
+.fn fromEuler__4QuatFR8Vector3f, global
 /* 800382E8 00035248  7C 08 02 A6 */	mflr r0
 /* 800382EC 0003524C  90 01 00 04 */	stw r0, 4(r1)
 /* 800382F0 00035250  94 21 FF 60 */	stwu r1, -0xa0(r1)
@@ -1108,9 +1107,9 @@ fromEuler__4QuatFR8Vector3f:
 /* 8003857C 000354DC  38 21 00 A0 */	addi r1, r1, 0xa0
 /* 80038580 000354E0  7C 08 03 A6 */	mtlr r0
 /* 80038584 000354E4  4E 80 00 20 */	blr 
+.endfn fromEuler__4QuatFR8Vector3f
 
-.global roundAng__Ff
-roundAng__Ff:
+.fn roundAng__Ff, global
 /* 80038588 000354E8  C0 02 83 A0 */	lfs f0, lbl_803E85A0@sda21(r2)
 /* 8003858C 000354EC  FC 01 00 40 */	fcmpo cr0, f1, f0
 /* 80038590 000354F0  40 80 00 0C */	bge .L_8003859C
@@ -1123,9 +1122,9 @@ roundAng__Ff:
 /* 800385A8 00035508  4C 82 00 20 */	bnelr 
 /* 800385AC 0003550C  EC 21 00 28 */	fsubs f1, f1, f0
 /* 800385B0 00035510  4E 80 00 20 */	blr 
+.endfn roundAng__Ff
 
-.global angDist__Fff
-angDist__Fff:
+.fn angDist__Fff, global
 /* 800385B4 00035514  EC 41 10 28 */	fsubs f2, f1, f2
 /* 800385B8 00035518  C0 02 83 A0 */	lfs f0, lbl_803E85A0@sda21(r2)
 /* 800385BC 0003551C  FC 02 00 40 */	fcmpo cr0, f2, f0
@@ -1159,9 +1158,9 @@ angDist__Fff:
 .L_80038620:
 /* 80038620 00035580  FC 20 10 50 */	fneg f1, f2
 /* 80038624 00035584  4E 80 00 20 */	blr 
+.endfn angDist__Fff
 
-.global qdist2__Fffff
-qdist2__Fffff:
+.fn qdist2__Fffff, global
 /* 80038628 00035588  EC 63 08 28 */	fsubs f3, f3, f1
 /* 8003862C 0003558C  C0 02 83 A0 */	lfs f0, lbl_803E85A0@sda21(r2)
 /* 80038630 00035590  FC 03 00 40 */	fcmpo cr0, f3, f0
@@ -1186,9 +1185,9 @@ qdist2__Fffff:
 /* 8003866C 000355CC  EC 00 00 B2 */	fmuls f0, f0, f2
 /* 80038670 000355D0  EC 21 00 28 */	fsubs f1, f1, f0
 /* 80038674 000355D4  4E 80 00 20 */	blr 
+.endfn qdist2__Fffff
 
-.global init__11CollTriInfoFP8RoomInfoP8Vector3f
-init__11CollTriInfoFP8RoomInfoP8Vector3f:
+.fn init__11CollTriInfoFP8RoomInfoP8Vector3f, global
 /* 80038678 000355D8  7C 08 02 A6 */	mflr r0
 /* 8003867C 000355DC  90 01 00 04 */	stw r0, 4(r1)
 /* 80038680 000355E0  94 21 FF 88 */	stwu r1, -0x78(r1)
@@ -1302,9 +1301,9 @@ init__11CollTriInfoFP8RoomInfoP8Vector3f:
 /* 80038828 00035788  38 21 00 78 */	addi r1, r1, 0x78
 /* 8003882C 0003578C  7C 08 03 A6 */	mtlr r0
 /* 80038830 00035790  4E 80 00 20 */	blr 
+.endfn init__11CollTriInfoFP8RoomInfoP8Vector3f
 
-.global behindEdge__11CollTriInfoFR8Vector3f
-behindEdge__11CollTriInfoFR8Vector3f:
+.fn behindEdge__11CollTriInfoFR8Vector3f, global
 /* 80038834 00035794  C0 43 00 28 */	lfs f2, 0x28(r3)
 /* 80038838 00035798  C0 A4 00 00 */	lfs f5, 0(r4)
 /* 8003883C 0003579C  C0 23 00 2C */	lfs f1, 0x2c(r3)
@@ -1357,9 +1356,9 @@ behindEdge__11CollTriInfoFR8Vector3f:
 .L_800388F0:
 /* 800388F0 00035850  38 60 FF FF */	li r3, -1
 /* 800388F4 00035854  4E 80 00 20 */	blr 
+.endfn behindEdge__11CollTriInfoFR8Vector3f
 
-.global draw__8BoundBoxFR8Graphics
-draw__8BoundBoxFR8Graphics:
+.fn draw__8BoundBoxFR8Graphics, global
 /* 800388F8 00035858  7C 08 02 A6 */	mflr r0
 /* 800388FC 0003585C  90 01 00 04 */	stw r0, 4(r1)
 /* 80038900 00035860  94 21 FE 70 */	stwu r1, -0x190(r1)
@@ -1761,9 +1760,9 @@ draw__8BoundBoxFR8Graphics:
 /* 80038F30 00035E90  38 21 01 90 */	addi r1, r1, 0x190
 /* 80038F34 00035E94  7C 08 03 A6 */	mtlr r0
 /* 80038F38 00035E98  4E 80 00 20 */	blr 
+.endfn draw__8BoundBoxFR8Graphics
 
-.global pointInsideTri__FR4KTriR8Vector3f
-pointInsideTri__FR4KTriR8Vector3f:
+.fn pointInsideTri__FR4KTriR8Vector3f, local
 /* 80038F3C 00035E9C  94 21 FE 00 */	stwu r1, -0x200(r1)
 /* 80038F40 00035EA0  C0 82 83 A0 */	lfs f4, lbl_803E85A0@sda21(r2)
 /* 80038F44 00035EA4  D0 81 01 FC */	stfs f4, 0x1fc(r1)
@@ -1826,9 +1825,9 @@ pointInsideTri__FR4KTriR8Vector3f:
 .L_8003901C:
 /* 8003901C 00035F7C  38 21 02 00 */	addi r1, r1, 0x200
 /* 80039020 00035F80  4E 80 00 20 */	blr 
+.endfn pointInsideTri__FR4KTriR8Vector3f
 
-.global triRectDistance__FP8Vector3fP8Vector3fP8Vector3fR8BoundBoxb
-triRectDistance__FP8Vector3fP8Vector3fP8Vector3fR8BoundBoxb:
+.fn triRectDistance__FP8Vector3fP8Vector3fP8Vector3fR8BoundBoxb, global
 /* 80039024 00035F84  7C 08 02 A6 */	mflr r0
 /* 80039028 00035F88  90 01 00 04 */	stw r0, 4(r1)
 /* 8003902C 00035F8C  94 21 FE A0 */	stwu r1, -0x160(r1)
@@ -1989,9 +1988,9 @@ triRectDistance__FP8Vector3fP8Vector3fP8Vector3fR8BoundBoxb:
 /* 80039278 000361D8  38 21 01 60 */	addi r1, r1, 0x160
 /* 8003927C 000361DC  7C 08 03 A6 */	mtlr r0
 /* 80039280 000361E0  4E 80 00 20 */	blr 
+.endfn triRectDistance__FP8Vector3fP8Vector3fP8Vector3fR8BoundBoxb
 
-.global distanceTriRect__FR4KTriR5KRectPfPfPfPf
-distanceTriRect__FR4KTriR5KRectPfPfPfPf:
+.fn distanceTriRect__FR4KTriR5KRectPfPfPfPf, global
 /* 80039284 000361E4  7C 08 02 A6 */	mflr r0
 /* 80039288 000361E8  90 01 00 04 */	stw r0, 4(r1)
 /* 8003928C 000361EC  94 21 FF 38 */	stwu r1, -0xc8(r1)
@@ -2101,9 +2100,9 @@ distanceTriRect__FR4KTriR5KRectPfPfPfPf:
 /* 80039420 00036380  38 21 00 C8 */	addi r1, r1, 0xc8
 /* 80039424 00036384  7C 08 03 A6 */	mtlr r0
 /* 80039428 00036388  4E 80 00 20 */	blr 
+.endfn distanceTriRect__FR4KTriR5KRectPfPfPfPf
 
-.global inside__5KRectFR8Vector3f
-inside__5KRectFR8Vector3f:
+.fn inside__5KRectFR8Vector3f, global
 /* 8003942C 0003638C  C0 83 00 08 */	lfs f4, 8(r3)
 /* 80039430 00036390  C0 03 00 14 */	lfs f0, 0x14(r3)
 /* 80039434 00036394  C0 A3 00 00 */	lfs f5, 0(r3)
@@ -2133,9 +2132,9 @@ inside__5KRectFR8Vector3f:
 .L_80039494:
 /* 80039494 000363F4  38 60 00 00 */	li r3, 0
 /* 80039498 000363F8  4E 80 00 20 */	blr 
+.endfn inside__5KRectFR8Vector3f
 
-.global __ct__4KTriFv
-__ct__4KTriFv:
+.fn __ct__4KTriFv, global
 /* 8003949C 000363FC  C0 02 83 A0 */	lfs f0, lbl_803E85A0@sda21(r2)
 /* 800394A0 00036400  D0 03 00 08 */	stfs f0, 8(r3)
 /* 800394A4 00036404  D0 03 00 04 */	stfs f0, 4(r3)
@@ -2147,9 +2146,9 @@ __ct__4KTriFv:
 /* 800394BC 0003641C  D0 03 00 1C */	stfs f0, 0x1c(r3)
 /* 800394C0 00036420  D0 03 00 18 */	stfs f0, 0x18(r3)
 /* 800394C4 00036424  4E 80 00 20 */	blr 
+.endfn __ct__4KTriFv
 
-.global set__4KTriFR8Vector3fR8Vector3fR8Vector3f
-set__4KTriFR8Vector3fR8Vector3fR8Vector3f:
+.fn set__4KTriFR8Vector3fR8Vector3fR8Vector3f, global
 /* 800394C8 00036428  94 21 FF A0 */	stwu r1, -0x60(r1)
 /* 800394CC 0003642C  80 E4 00 00 */	lwz r7, 0(r4)
 /* 800394D0 00036430  80 04 00 04 */	lwz r0, 4(r4)
@@ -2199,9 +2198,9 @@ set__4KTriFR8Vector3fR8Vector3fR8Vector3f:
 /* 80039580 000364E0  90 03 00 20 */	stw r0, 0x20(r3)
 /* 80039584 000364E4  38 21 00 60 */	addi r1, r1, 0x60
 /* 80039588 000364E8  4E 80 00 20 */	blr 
+.endfn set__4KTriFR8Vector3fR8Vector3fR8Vector3f
 
-.global sqrDistance__FR8KSegmentR4KTriPfPfPf
-sqrDistance__FR8KSegmentR4KTriPfPfPf:
+.fn sqrDistance__FR8KSegmentR4KTriPfPfPf, global
 /* 8003958C 000364EC  7C 08 02 A6 */	mflr r0
 /* 80039590 000364F0  90 01 00 04 */	stw r0, 4(r1)
 /* 80039594 000364F4  94 21 F9 58 */	stwu r1, -0x6a8(r1)
@@ -3821,9 +3820,9 @@ sqrDistance__FR8KSegmentR4KTriPfPfPf:
 /* 8003AE44 00037DA4  38 21 06 A8 */	addi r1, r1, 0x6a8
 /* 8003AE48 00037DA8  7C 08 03 A6 */	mtlr r0
 /* 8003AE4C 00037DAC  4E 80 00 20 */	blr 
+.endfn sqrDistance__FR8KSegmentR4KTriPfPfPf
 
-.global sqrDistance__FR8KSegmentR8KSegmentPfPf
-sqrDistance__FR8KSegmentR8KSegmentPfPf:
+.fn sqrDistance__FR8KSegmentR8KSegmentPfPf, global
 /* 8003AE50 00037DB0  94 21 FF 18 */	stwu r1, -0xe8(r1)
 /* 8003AE54 00037DB4  DB E1 00 E0 */	stfd f31, 0xe0(r1)
 /* 8003AE58 00037DB8  DB C1 00 D8 */	stfd f30, 0xd8(r1)
@@ -4389,9 +4388,9 @@ sqrDistance__FR8KSegmentR8KSegmentPfPf:
 /* 8003B66C 000385CC  CB 21 00 B0 */	lfd f25, 0xb0(r1)
 /* 8003B670 000385D0  38 21 00 E8 */	addi r1, r1, 0xe8
 /* 8003B674 000385D4  4E 80 00 20 */	blr 
+.endfn sqrDistance__FR8KSegmentR8KSegmentPfPf
 
-.global sqrDistance__FR8KSegmentR5KRectPfPfPf
-sqrDistance__FR8KSegmentR5KRectPfPfPf:
+.fn sqrDistance__FR8KSegmentR5KRectPfPfPf, global
 /* 8003B678 000385D8  7C 08 02 A6 */	mflr r0
 /* 8003B67C 000385DC  90 01 00 04 */	stw r0, 4(r1)
 /* 8003B680 000385E0  94 21 F8 E0 */	stwu r1, -0x720(r1)
@@ -6330,9 +6329,9 @@ sqrDistance__FR8KSegmentR5KRectPfPfPf:
 /* 8003D408 0003A368  38 21 07 20 */	addi r1, r1, 0x720
 /* 8003D40C 0003A36C  7C 08 03 A6 */	mtlr r0
 /* 8003D410 0003A370  4E 80 00 20 */	blr 
+.endfn sqrDistance__FR8KSegmentR5KRectPfPfPf
 
-.global sqrDistance__FR4KTriR5KRectPfPfPfPf
-sqrDistance__FR4KTriR5KRectPfPfPfPf:
+.fn sqrDistance__FR4KTriR5KRectPfPfPfPf, global
 /* 8003D414 0003A374  7C 08 02 A6 */	mflr r0
 /* 8003D418 0003A378  90 01 00 04 */	stw r0, 4(r1)
 /* 8003D41C 0003A37C  94 21 FE A0 */	stwu r1, -0x160(r1)
@@ -6625,9 +6624,9 @@ sqrDistance__FR4KTriR5KRectPfPfPfPf:
 /* 8003D870 0003A7D0  38 21 01 60 */	addi r1, r1, 0x160
 /* 8003D874 0003A7D4  7C 08 03 A6 */	mtlr r0
 /* 8003D878 0003A7D8  4E 80 00 20 */	blr 
+.endfn sqrDistance__FR4KTriR5KRectPfPfPfPf
 
-.global sqrDistance__FR8Vector3fR4KTriPfPf
-sqrDistance__FR8Vector3fR4KTriPfPf:
+.fn sqrDistance__FR8Vector3fR4KTriPfPf, global
 /* 8003D87C 0003A7DC  94 21 FF 58 */	stwu r1, -0xa8(r1)
 /* 8003D880 0003A7E0  DB E1 00 A0 */	stfd f31, 0xa0(r1)
 /* 8003D884 0003A7E4  DB C1 00 98 */	stfd f30, 0x98(r1)
@@ -6991,48 +6990,65 @@ sqrDistance__FR8Vector3fR4KTriPfPf:
 /* 8003DDB0 0003AD10  CB A1 00 90 */	lfd f29, 0x90(r1)
 /* 8003DDB4 0003AD14  38 21 00 A8 */	addi r1, r1, 0xa8
 /* 8003DDB8 0003AD18  4E 80 00 20 */	blr 
+.endfn sqrDistance__FR8Vector3fR4KTriPfPf
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-lbl_803DD2F8:
+.obj lbl_803DD2F8, local
 	.float 0.0
-lbl_803DD2FC:
+.endobj lbl_803DD2F8
+.obj lbl_803DD2FC, local
 	.float 0.0
-lbl_803DD300:
+.endobj lbl_803DD2FC
+.obj lbl_803DD300, local
 	.float 0.0
-lbl_803DD304:
+.endobj lbl_803DD300
+.obj lbl_803DD304, local
 	.float 0.0
-lbl_803DD308:
+.endobj lbl_803DD304
+.obj lbl_803DD308, local
 	.float 0.0
-.global gs_fTolerance
-gs_fTolerance:
+.endobj lbl_803DD308
+.obj gs_fTolerance, global
 	.float 1.0E-5
+.endobj gs_fTolerance
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803E85A0:
+.obj lbl_803E85A0, local
 	.float 0.0
-lbl_803E85A4:
+.endobj lbl_803E85A0
+.obj lbl_803E85A4, local
 	.float 1.0
-lbl_803E85A8:
+.endobj lbl_803E85A4
+.obj lbl_803E85A8, local
 	.float 2.0
-lbl_803E85AC:
+.endobj lbl_803E85A8
+.obj lbl_803E85AC, local
 	.float 0.25
-lbl_803E85B0:
+.endobj lbl_803E85AC
+.obj lbl_803E85B0, local
 	.float 0.5
+.endobj lbl_803E85B0
 .balign 8
-lbl_803E85B8:
+.obj lbl_803E85B8, local
 	.double 0.5
+.endobj lbl_803E85B8
 .balign 8
-lbl_803E85C0:
+.obj lbl_803E85C0, local
 	.double 3.0
+.endobj lbl_803E85C0
 .balign 8
-lbl_803E85C8:
+.obj lbl_803E85C8, local
 	.double 0.0
+.endobj lbl_803E85C8
 .balign 8
-lbl_803E85D0:
+.obj lbl_803E85D0, local
 	.double 1.0E-6
-lbl_803E85D8: #tau
+.endobj lbl_803E85D0
+.obj lbl_803E85D8, local #tau
 	.float 6.2831855
-lbl_803E85DC: #pi
+.endobj lbl_803E85D8
+.obj lbl_803E85DC, local #pi
 	.float 3.1415927
+.endobj lbl_803E85DC

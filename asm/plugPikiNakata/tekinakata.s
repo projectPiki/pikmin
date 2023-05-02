@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global makeTekiParameters__10TekiNakataFP7TekiMgr
-makeTekiParameters__10TekiNakataFP7TekiMgr:
+.fn makeTekiParameters__10TekiNakataFP7TekiMgr, global
 /* 8014B124 00148084  7C 08 02 A6 */	mflr r0
 /* 8014B128 00148088  90 01 00 04 */	stw r0, 4(r1)
 /* 8014B12C 0014808C  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -166,9 +165,9 @@ makeTekiParameters__10TekiNakataFP7TekiMgr:
 /* 8014B35C 001482BC  38 21 00 18 */	addi r1, r1, 0x18
 /* 8014B360 001482C0  7C 08 03 A6 */	mtlr r0
 /* 8014B364 001482C4  4E 80 00 20 */	blr 
+.endfn makeTekiParameters__10TekiNakataFP7TekiMgr
 
-.global makeTekis__10TekiNakataFP7TekiMgr
-makeTekis__10TekiNakataFP7TekiMgr:
+.fn makeTekis__10TekiNakataFP7TekiMgr, global
 /* 8014B368 001482C8  7C 08 02 A6 */	mflr r0
 /* 8014B36C 001482CC  90 01 00 04 */	stw r0, 4(r1)
 /* 8014B370 001482D0  94 21 FF 90 */	stwu r1, -0x70(r1)
@@ -645,3 +644,4 @@ makeTekis__10TekiNakataFP7TekiMgr:
 /* 8014B9EC 0014894C  38 21 00 70 */	addi r1, r1, 0x70
 /* 8014B9F0 00148950  7C 08 03 A6 */	mtlr r0
 /* 8014B9F4 00148954  4E 80 00 20 */	blr 
+.endfn makeTekis__10TekiNakataFP7TekiMgr

@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global __ct__10AICreatureFP12CreatureProp
-__ct__10AICreatureFP12CreatureProp:
+.fn __ct__10AICreatureFP12CreatureProp, global
 /* 8007D26C 0007A1CC  7C 08 02 A6 */	mflr r0
 /* 8007D270 0007A1D0  90 01 00 04 */	stw r0, 4(r1)
 /* 8007D274 0007A1D4  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -43,9 +42,9 @@ __ct__10AICreatureFP12CreatureProp:
 /* 8007D304 0007A264  38 21 00 18 */	addi r1, r1, 0x18
 /* 8007D308 0007A268  7C 08 03 A6 */	mtlr r0
 /* 8007D30C 0007A26C  4E 80 00 20 */	blr 
+.endfn __ct__10AICreatureFP12CreatureProp
 
-.global collisionCallback__10AICreatureFR9CollEvent
-collisionCallback__10AICreatureFR9CollEvent:
+.fn collisionCallback__10AICreatureFR9CollEvent, global
 /* 8007D310 0007A270  7C 08 02 A6 */	mflr r0
 /* 8007D314 0007A274  38 C3 00 00 */	addi r6, r3, 0
 /* 8007D318 0007A278  90 01 00 04 */	stw r0, 4(r1)
@@ -74,9 +73,9 @@ collisionCallback__10AICreatureFR9CollEvent:
 /* 8007D370 0007A2D0  38 21 00 20 */	addi r1, r1, 0x20
 /* 8007D374 0007A2D4  7C 08 03 A6 */	mtlr r0
 /* 8007D378 0007A2D8  4E 80 00 20 */	blr 
+.endfn collisionCallback__10AICreatureFR9CollEvent
 
-.global bounceCallback__10AICreatureFv
-bounceCallback__10AICreatureFv:
+.fn bounceCallback__10AICreatureFv, global
 /* 8007D37C 0007A2DC  7C 08 02 A6 */	mflr r0
 /* 8007D380 0007A2E0  7C 64 1B 78 */	mr r4, r3
 /* 8007D384 0007A2E4  90 01 00 04 */	stw r0, 4(r1)
@@ -102,9 +101,9 @@ bounceCallback__10AICreatureFv:
 /* 8007D3D0 0007A330  38 21 00 38 */	addi r1, r1, 0x38
 /* 8007D3D4 0007A334  7C 08 03 A6 */	mtlr r0
 /* 8007D3D8 0007A338  4E 80 00 20 */	blr 
+.endfn bounceCallback__10AICreatureFv
 
-.global animationKeyUpdated__10AICreatureFR16PaniAnimKeyEvent
-animationKeyUpdated__10AICreatureFR16PaniAnimKeyEvent:
+.fn animationKeyUpdated__10AICreatureFR16PaniAnimKeyEvent, global
 /* 8007D3DC 0007A33C  7C 08 02 A6 */	mflr r0
 /* 8007D3E0 0007A340  90 01 00 04 */	stw r0, 4(r1)
 /* 8007D3E4 0007A344  38 00 00 04 */	li r0, 4
@@ -153,17 +152,17 @@ animationKeyUpdated__10AICreatureFR16PaniAnimKeyEvent:
 /* 8007D484 0007A3E4  38 21 00 20 */	addi r1, r1, 0x20
 /* 8007D488 0007A3E8  7C 08 03 A6 */	mtlr r0
 /* 8007D48C 0007A3EC  4E 80 00 20 */	blr 
+.endfn animationKeyUpdated__10AICreatureFR16PaniAnimKeyEvent
 
-.global playEffect__10AICreatureFi
-playEffect__10AICreatureFi:
+.fn playEffect__10AICreatureFi, weak
 /* 8007D490 0007A3F0  4E 80 00 20 */	blr 
+.endfn playEffect__10AICreatureFi
 
-.global playSound__10AICreatureFi
-playSound__10AICreatureFi:
+.fn playSound__10AICreatureFi, weak
 /* 8007D494 0007A3F4  4E 80 00 20 */	blr 
+.endfn playSound__10AICreatureFi
 
-.global clearEventFlags__10AICreatureFv
-clearEventFlags__10AICreatureFv:
+.fn clearEventFlags__10AICreatureFv, global
 /* 8007D498 0007A3F8  38 A0 00 00 */	li r5, 0
 /* 8007D49C 0007A3FC  38 80 00 00 */	li r4, 0
 /* 8007D4A0 0007A400  48 00 00 10 */	b .L_8007D4B0
@@ -178,9 +177,9 @@ clearEventFlags__10AICreatureFv:
 /* 8007D4BC 0007A41C  38 00 00 00 */	li r0, 0
 /* 8007D4C0 0007A420  90 03 02 EC */	stw r0, 0x2ec(r3)
 /* 8007D4C4 0007A424  4E 80 00 20 */	blr 
+.endfn clearEventFlags__10AICreatureFv
 
-.global setEventFlag__10AICreatureFib
-setEventFlag__10AICreatureFib:
+.fn setEventFlag__10AICreatureFib, global
 /* 8007D4C8 0007A428  80 03 02 EC */	lwz r0, 0x2ec(r3)
 /* 8007D4CC 0007A42C  80 C3 02 F0 */	lwz r6, 0x2f0(r3)
 /* 8007D4D0 0007A430  7C 00 30 00 */	cmpw r0, r6
@@ -188,9 +187,9 @@ setEventFlag__10AICreatureFib:
 /* 8007D4D8 0007A438  7C 63 22 14 */	add r3, r3, r4
 /* 8007D4DC 0007A43C  98 A3 02 F4 */	stb r5, 0x2f4(r3)
 /* 8007D4E0 0007A440  4E 80 00 20 */	blr 
+.endfn setEventFlag__10AICreatureFib
 
-.global __ct__8SimpleAIFv
-__ct__8SimpleAIFv:
+.fn __ct__8SimpleAIFv, global
 /* 8007D4E4 0007A444  3C 80 80 2B */	lis r4, "__vt__26StateMachine<10AICreature>"@ha
 /* 8007D4E8 0007A448  38 04 D9 A4 */	addi r0, r4, "__vt__26StateMachine<10AICreature>"@l
 /* 8007D4EC 0007A44C  90 03 00 00 */	stw r0, 0(r3)
@@ -200,9 +199,9 @@ __ct__8SimpleAIFv:
 /* 8007D4FC 0007A45C  38 04 D9 8C */	addi r0, r4, __vt__8SimpleAI@l
 /* 8007D500 0007A460  90 03 00 00 */	stw r0, 0(r3)
 /* 8007D504 0007A464  4E 80 00 20 */	blr 
+.endfn __ct__8SimpleAIFv
 
-.global procMsg__8SimpleAIFP10AICreatureP3Msg
-procMsg__8SimpleAIFP10AICreatureP3Msg:
+.fn procMsg__8SimpleAIFP10AICreatureP3Msg, global
 /* 8007D508 0007A468  7C 08 02 A6 */	mflr r0
 /* 8007D50C 0007A46C  90 01 00 04 */	stw r0, 4(r1)
 /* 8007D510 0007A470  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -230,14 +229,14 @@ procMsg__8SimpleAIFP10AICreatureP3Msg:
 /* 8007D564 0007A4C4  38 21 00 20 */	addi r1, r1, 0x20
 /* 8007D568 0007A4C8  7C 08 03 A6 */	mtlr r0
 /* 8007D56C 0007A4CC  4E 80 00 20 */	blr 
+.endfn procMsg__8SimpleAIFP10AICreatureP3Msg
 
-.global getCurrState__10AICreatureFv
-getCurrState__10AICreatureFv:
+.fn getCurrState__10AICreatureFv, weak
 /* 8007D570 0007A4D0  80 63 02 E4 */	lwz r3, 0x2e4(r3)
 /* 8007D574 0007A4D4  4E 80 00 20 */	blr 
+.endfn getCurrState__10AICreatureFv
 
-.global addState__8SimpleAIFiiP9SAIActionP9SAIActionP9SAIAction
-addState__8SimpleAIFiiP9SAIActionP9SAIActionP9SAIAction:
+.fn addState__8SimpleAIFiiP9SAIActionP9SAIActionP9SAIAction, global
 /* 8007D578 0007A4D8  7C 08 02 A6 */	mflr r0
 /* 8007D57C 0007A4DC  90 01 00 04 */	stw r0, 4(r1)
 /* 8007D580 0007A4E0  94 21 FF B0 */	stwu r1, -0x50(r1)
@@ -301,9 +300,9 @@ addState__8SimpleAIFiiP9SAIActionP9SAIActionP9SAIAction:
 /* 8007D654 0007A5B4  38 21 00 50 */	addi r1, r1, 0x50
 /* 8007D658 0007A5B8  7C 08 03 A6 */	mtlr r0
 /* 8007D65C 0007A5BC  4E 80 00 20 */	blr 
+.endfn addState__8SimpleAIFiiP9SAIActionP9SAIActionP9SAIAction
 
-.global addArrow__8SimpleAIFiP8SAIEventi
-addArrow__8SimpleAIFiP8SAIEventi:
+.fn addArrow__8SimpleAIFiP8SAIEventi, global
 /* 8007D660 0007A5C0  7C 08 02 A6 */	mflr r0
 /* 8007D664 0007A5C4  90 01 00 04 */	stw r0, 4(r1)
 /* 8007D668 0007A5C8  94 21 FF C8 */	stwu r1, -0x38(r1)
@@ -369,9 +368,9 @@ addArrow__8SimpleAIFiP8SAIEventi:
 /* 8007D74C 0007A6AC  38 21 00 38 */	addi r1, r1, 0x38
 /* 8007D750 0007A6B0  7C 08 03 A6 */	mtlr r0
 /* 8007D754 0007A6B4  4E 80 00 20 */	blr 
+.endfn addArrow__8SimpleAIFiP8SAIEventi
 
-.global start__8SimpleAIFP10AICreaturei
-start__8SimpleAIFP10AICreaturei:
+.fn start__8SimpleAIFP10AICreaturei, global
 /* 8007D758 0007A6B8  7C 08 02 A6 */	mflr r0
 /* 8007D75C 0007A6BC  90 01 00 04 */	stw r0, 4(r1)
 /* 8007D760 0007A6C0  94 21 FF F8 */	stwu r1, -8(r1)
@@ -383,9 +382,9 @@ start__8SimpleAIFP10AICreaturei:
 /* 8007D778 0007A6D8  38 21 00 08 */	addi r1, r1, 8
 /* 8007D77C 0007A6DC  7C 08 03 A6 */	mtlr r0
 /* 8007D780 0007A6E0  4E 80 00 20 */	blr 
+.endfn start__8SimpleAIFP10AICreaturei
 
-.global "transit__26StateMachine<10AICreature>FP10AICreaturei"
-"transit__26StateMachine<10AICreature>FP10AICreaturei":
+.fn "transit__26StateMachine<10AICreature>FP10AICreaturei", weak
 /* 8007D784 0007A6E4  7C 08 02 A6 */	mflr r0
 /* 8007D788 0007A6E8  90 01 00 04 */	stw r0, 4(r1)
 /* 8007D78C 0007A6EC  54 A0 10 3A */	slwi r0, r5, 2
@@ -443,22 +442,22 @@ start__8SimpleAIFP10AICreaturei:
 /* 8007D850 0007A7B0  38 21 00 28 */	addi r1, r1, 0x28
 /* 8007D854 0007A7B4  7C 08 03 A6 */	mtlr r0
 /* 8007D858 0007A7B8  4E 80 00 20 */	blr 
+.endfn "transit__26StateMachine<10AICreature>FP10AICreaturei"
 
-.global "init__20AState<10AICreature>FP10AICreature"
-"init__20AState<10AICreature>FP10AICreature":
+.fn "init__20AState<10AICreature>FP10AICreature", weak
 /* 8007D85C 0007A7BC  4E 80 00 20 */	blr 
+.endfn "init__20AState<10AICreature>FP10AICreature"
 
-.global "setCurrState__10AICreatureFP20AState<10AICreature>"
-"setCurrState__10AICreatureFP20AState<10AICreature>":
+.fn "setCurrState__10AICreatureFP20AState<10AICreature>", weak
 /* 8007D860 0007A7C0  90 83 02 E4 */	stw r4, 0x2e4(r3)
 /* 8007D864 0007A7C4  4E 80 00 20 */	blr 
+.endfn "setCurrState__10AICreatureFP20AState<10AICreature>"
 
-.global "cleanup__20AState<10AICreature>FP10AICreature"
-"cleanup__20AState<10AICreature>FP10AICreature":
+.fn "cleanup__20AState<10AICreature>FP10AICreature", weak
 /* 8007D868 0007A7C8  4E 80 00 20 */	blr 
+.endfn "cleanup__20AState<10AICreature>FP10AICreature"
 
-.global exec__8SimpleAIFP10AICreature
-exec__8SimpleAIFP10AICreature:
+.fn exec__8SimpleAIFP10AICreature, global
 /* 8007D86C 0007A7CC  7C 08 02 A6 */	mflr r0
 /* 8007D870 0007A7D0  90 01 00 04 */	stw r0, 4(r1)
 /* 8007D874 0007A7D4  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -491,9 +490,9 @@ exec__8SimpleAIFP10AICreature:
 /* 8007D8DC 0007A83C  38 21 00 20 */	addi r1, r1, 0x20
 /* 8007D8E0 0007A840  7C 08 03 A6 */	mtlr r0
 /* 8007D8E4 0007A844  4E 80 00 20 */	blr 
+.endfn exec__8SimpleAIFP10AICreature
 
-.global checkEvent__8SimpleAIFP10AICreature
-checkEvent__8SimpleAIFP10AICreature:
+.fn checkEvent__8SimpleAIFP10AICreature, global
 /* 8007D8E8 0007A848  7C 08 02 A6 */	mflr r0
 /* 8007D8EC 0007A84C  90 01 00 04 */	stw r0, 4(r1)
 /* 8007D8F0 0007A850  94 21 FF C8 */	stwu r1, -0x38(r1)
@@ -566,14 +565,14 @@ checkEvent__8SimpleAIFP10AICreature:
 /* 8007D9D4 0007A934  38 21 00 38 */	addi r1, r1, 0x38
 /* 8007D9D8 0007A938  7C 08 03 A6 */	mtlr r0
 /* 8007D9DC 0007A93C  4E 80 00 20 */	blr 
+.endfn checkEvent__8SimpleAIFP10AICreature
 
-.global satisfy__12SAIConditionFP10AICreature
-satisfy__12SAIConditionFP10AICreature:
+.fn satisfy__12SAIConditionFP10AICreature, weak
 /* 8007D9E0 0007A940  38 60 00 01 */	li r3, 1
 /* 8007D9E4 0007A944  4E 80 00 20 */	blr 
+.endfn satisfy__12SAIConditionFP10AICreature
 
-.global __ct__8SAIStateFi
-__ct__8SAIStateFi:
+.fn __ct__8SAIStateFi, global
 /* 8007D9E8 0007A948  7C 08 02 A6 */	mflr r0
 /* 8007D9EC 0007A94C  3C A0 80 2B */	lis r5, "__vt__22Receiver<10AICreature>"@ha
 /* 8007D9F0 0007A950  90 01 00 04 */	stw r0, 4(r1)
@@ -641,9 +640,9 @@ __ct__8SAIStateFi:
 /* 8007DAE8 0007AA48  38 21 00 20 */	addi r1, r1, 0x20
 /* 8007DAEC 0007AA4C  7C 08 03 A6 */	mtlr r0
 /* 8007DAF0 0007AA50  4E 80 00 20 */	blr 
+.endfn __ct__8SAIStateFi
 
-.global init__8SAIStateFP10AICreature
-init__8SAIStateFP10AICreature:
+.fn init__8SAIStateFP10AICreature, global
 /* 8007DAF4 0007AA54  7C 08 02 A6 */	mflr r0
 /* 8007DAF8 0007AA58  90 01 00 04 */	stw r0, 4(r1)
 /* 8007DAFC 0007AA5C  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -689,13 +688,13 @@ init__8SAIStateFP10AICreature:
 /* 8007DB8C 0007AAEC  38 21 00 18 */	addi r1, r1, 0x18
 /* 8007DB90 0007AAF0  7C 08 03 A6 */	mtlr r0
 /* 8007DB94 0007AAF4  4E 80 00 20 */	blr 
+.endfn init__8SAIStateFP10AICreature
 
-.global startMotion__10AICreatureFi
-startMotion__10AICreatureFi:
+.fn startMotion__10AICreatureFi, weak
 /* 8007DB98 0007AAF8  4E 80 00 20 */	blr 
+.endfn startMotion__10AICreatureFi
 
-.global exec__8SAIStateFP10AICreature
-exec__8SAIStateFP10AICreature:
+.fn exec__8SAIStateFP10AICreature, global
 /* 8007DB9C 0007AAFC  7C 08 02 A6 */	mflr r0
 /* 8007DBA0 0007AB00  90 01 00 04 */	stw r0, 4(r1)
 /* 8007DBA4 0007AB04  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -728,9 +727,9 @@ exec__8SAIStateFP10AICreature:
 /* 8007DC04 0007AB64  38 21 00 18 */	addi r1, r1, 0x18
 /* 8007DC08 0007AB68  7C 08 03 A6 */	mtlr r0
 /* 8007DC0C 0007AB6C  4E 80 00 20 */	blr 
+.endfn exec__8SAIStateFP10AICreature
 
-.global procMsg__8SAIStateFP10AICreatureP3Msg
-procMsg__8SAIStateFP10AICreatureP3Msg:
+.fn procMsg__8SAIStateFP10AICreatureP3Msg, global
 /* 8007DC10 0007AB70  7C 08 02 A6 */	mflr r0
 /* 8007DC14 0007AB74  90 01 00 04 */	stw r0, 4(r1)
 /* 8007DC18 0007AB78  94 21 FF D0 */	stwu r1, -0x30(r1)
@@ -775,9 +774,9 @@ procMsg__8SAIStateFP10AICreatureP3Msg:
 /* 8007DCA4 0007AC04  38 21 00 30 */	addi r1, r1, 0x30
 /* 8007DCA8 0007AC08  7C 08 03 A6 */	mtlr r0
 /* 8007DCAC 0007AC0C  4E 80 00 20 */	blr 
+.endfn procMsg__8SAIStateFP10AICreatureP3Msg
 
-.global cleanup__8SAIStateFP10AICreature
-cleanup__8SAIStateFP10AICreature:
+.fn cleanup__8SAIStateFP10AICreature, global
 /* 8007DCB0 0007AC10  7C 08 02 A6 */	mflr r0
 /* 8007DCB4 0007AC14  90 01 00 04 */	stw r0, 4(r1)
 /* 8007DCB8 0007AC18  94 21 FF F8 */	stwu r1, -8(r1)
@@ -793,107 +792,107 @@ cleanup__8SAIStateFP10AICreature:
 /* 8007DCDC 0007AC3C  38 21 00 08 */	addi r1, r1, 8
 /* 8007DCE0 0007AC40  7C 08 03 A6 */	mtlr r0
 /* 8007DCE4 0007AC44  4E 80 00 20 */	blr 
+.endfn cleanup__8SAIStateFP10AICreature
 
-.global startMotion__10AICreatureFif
-startMotion__10AICreatureFif:
+.fn startMotion__10AICreatureFif, weak
 /* 8007DCE8 0007AC48  4E 80 00 20 */	blr 
+.endfn startMotion__10AICreatureFif
 
-.global finishMotion__10AICreatureFf
-finishMotion__10AICreatureFf:
+.fn finishMotion__10AICreatureFf, weak
 /* 8007DCEC 0007AC4C  4E 80 00 20 */	blr 
+.endfn finishMotion__10AICreatureFf
 
-.global finishMotion__10AICreatureFv
-finishMotion__10AICreatureFv:
+.fn finishMotion__10AICreatureFv, weak
 /* 8007DCF0 0007AC50  4E 80 00 20 */	blr 
+.endfn finishMotion__10AICreatureFv
 
-.global getCurrentMotionName__10AICreatureFv
-getCurrentMotionName__10AICreatureFv:
+.fn getCurrentMotionName__10AICreatureFv, weak
 /* 8007DCF4 0007AC54  38 6D 9D F0 */	addi r3, r13, lbl_803DEB10@sda21
 /* 8007DCF8 0007AC58  4E 80 00 20 */	blr 
+.endfn getCurrentMotionName__10AICreatureFv
 
-.global getCurrentMotionCounter__10AICreatureFv
-getCurrentMotionCounter__10AICreatureFv:
+.fn getCurrentMotionCounter__10AICreatureFv, weak
 /* 8007DCFC 0007AC5C  C0 22 89 74 */	lfs f1, lbl_803E8B74@sda21(r2)
 /* 8007DD00 0007AC60  4E 80 00 20 */	blr 
+.endfn getCurrentMotionCounter__10AICreatureFv
 
-.global getMotionSpeed__10AICreatureFv
-getMotionSpeed__10AICreatureFv:
+.fn getMotionSpeed__10AICreatureFv, weak
 /* 8007DD04 0007AC64  C0 22 89 74 */	lfs f1, lbl_803E8B74@sda21(r2)
 /* 8007DD08 0007AC68  4E 80 00 20 */	blr 
+.endfn getMotionSpeed__10AICreatureFv
 
-.global setMotionSpeed__10AICreatureFf
-setMotionSpeed__10AICreatureFf:
+.fn setMotionSpeed__10AICreatureFf, weak
 /* 8007DD0C 0007AC6C  4E 80 00 20 */	blr 
+.endfn setMotionSpeed__10AICreatureFf
 
-.global stopMotion__10AICreatureFv
-stopMotion__10AICreatureFv:
+.fn stopMotion__10AICreatureFv, weak
 /* 8007DD10 0007AC70  4E 80 00 20 */	blr 
+.endfn stopMotion__10AICreatureFv
 
-.global insideSafeArea__8CreatureFR8Vector3f
-insideSafeArea__8CreatureFR8Vector3f:
+.fn insideSafeArea__8CreatureFR8Vector3f, weak
 /* 8007DD14 0007AC74  38 60 00 01 */	li r3, 1
 /* 8007DD18 0007AC78  4E 80 00 20 */	blr 
+.endfn insideSafeArea__8CreatureFR8Vector3f
 
-.global platAttachable__8CreatureFv
-platAttachable__8CreatureFv:
+.fn platAttachable__8CreatureFv, weak
 /* 8007DD1C 0007AC7C  38 60 00 00 */	li r3, 0
 /* 8007DD20 0007AC80  4E 80 00 20 */	blr 
+.endfn platAttachable__8CreatureFv
 
-.global doDoAI__8CreatureFv
-doDoAI__8CreatureFv:
+.fn doDoAI__8CreatureFv, weak
 /* 8007DD24 0007AC84  38 60 00 01 */	li r3, 1
 /* 8007DD28 0007AC88  4E 80 00 20 */	blr 
+.endfn doDoAI__8CreatureFv
 
-.global setRouteTracer__8CreatureFP11RouteTracer
-setRouteTracer__8CreatureFP11RouteTracer:
+.fn setRouteTracer__8CreatureFP11RouteTracer, weak
 /* 8007DD2C 0007AC8C  4E 80 00 20 */	blr 
+.endfn setRouteTracer__8CreatureFP11RouteTracer
 
-.global initParam__8CreatureFi
-initParam__8CreatureFi:
+.fn initParam__8CreatureFi, weak
 /* 8007DD30 0007AC90  4E 80 00 20 */	blr 
+.endfn initParam__8CreatureFi
 
-.global startAI__8CreatureFi
-startAI__8CreatureFi:
+.fn startAI__8CreatureFi, weak
 /* 8007DD34 0007AC94  4E 80 00 20 */	blr 
+.endfn startAI__8CreatureFi
 
-.global getiMass__8CreatureFv
-getiMass__8CreatureFv:
+.fn getiMass__8CreatureFv, weak
 /* 8007DD38 0007AC98  C0 22 89 78 */	lfs f1, lbl_803E8B78@sda21(r2)
 /* 8007DD3C 0007AC9C  4E 80 00 20 */	blr 
+.endfn getiMass__8CreatureFv
 
-.global getSize__8CreatureFv
-getSize__8CreatureFv:
+.fn getSize__8CreatureFv, weak
 /* 8007DD40 0007ACA0  C0 22 89 7C */	lfs f1, lbl_803E8B7C@sda21(r2)
 /* 8007DD44 0007ACA4  4E 80 00 20 */	blr 
+.endfn getSize__8CreatureFv
 
-.global getHeight__8CreatureFv
-getHeight__8CreatureFv:
+.fn getHeight__8CreatureFv, weak
 /* 8007DD48 0007ACA8  C0 22 89 70 */	lfs f1, lbl_803E8B70@sda21(r2)
 /* 8007DD4C 0007ACAC  4E 80 00 20 */	blr 
+.endfn getHeight__8CreatureFv
 
-.global getCylinderHeight__8CreatureFv
-getCylinderHeight__8CreatureFv:
+.fn getCylinderHeight__8CreatureFv, weak
 /* 8007DD50 0007ACB0  C0 22 89 80 */	lfs f1, lbl_803E8B80@sda21(r2)
 /* 8007DD54 0007ACB4  4E 80 00 20 */	blr 
+.endfn getCylinderHeight__8CreatureFv
 
-.global doStore__8CreatureFP11CreatureInf
-doStore__8CreatureFP11CreatureInf:
+.fn doStore__8CreatureFP11CreatureInf, weak
 /* 8007DD58 0007ACB8  4E 80 00 20 */	blr 
+.endfn doStore__8CreatureFP11CreatureInf
 
-.global doRestore__8CreatureFP11CreatureInf
-doRestore__8CreatureFP11CreatureInf:
+.fn doRestore__8CreatureFP11CreatureInf, weak
 /* 8007DD5C 0007ACBC  4E 80 00 20 */	blr 
+.endfn doRestore__8CreatureFP11CreatureInf
 
-.global doSave__8CreatureFR18RandomAccessStream
-doSave__8CreatureFR18RandomAccessStream:
+.fn doSave__8CreatureFR18RandomAccessStream, weak
 /* 8007DD60 0007ACC0  4E 80 00 20 */	blr 
+.endfn doSave__8CreatureFR18RandomAccessStream
 
-.global doLoad__8CreatureFR18RandomAccessStream
-doLoad__8CreatureFR18RandomAccessStream:
+.fn doLoad__8CreatureFR18RandomAccessStream, weak
 /* 8007DD64 0007ACC4  4E 80 00 20 */	blr 
+.endfn doLoad__8CreatureFR18RandomAccessStream
 
-.global getShadowPos__8CreatureFv
-getShadowPos__8CreatureFv:
+.fn getShadowPos__8CreatureFv, weak
 /* 8007DD68 0007ACC8  C0 04 00 94 */	lfs f0, 0x94(r4)
 /* 8007DD6C 0007ACCC  D0 03 00 00 */	stfs f0, 0(r3)
 /* 8007DD70 0007ACD0  C0 04 00 98 */	lfs f0, 0x98(r4)
@@ -901,9 +900,9 @@ getShadowPos__8CreatureFv:
 /* 8007DD78 0007ACD8  C0 04 00 9C */	lfs f0, 0x9c(r4)
 /* 8007DD7C 0007ACDC  D0 03 00 08 */	stfs f0, 8(r3)
 /* 8007DD80 0007ACE0  4E 80 00 20 */	blr 
+.endfn getShadowPos__8CreatureFv
 
-.global setCentre__8CreatureFR8Vector3f
-setCentre__8CreatureFR8Vector3f:
+.fn setCentre__8CreatureFR8Vector3f, weak
 /* 8007DD84 0007ACE4  80 A4 00 00 */	lwz r5, 0(r4)
 /* 8007DD88 0007ACE8  80 04 00 04 */	lwz r0, 4(r4)
 /* 8007DD8C 0007ACEC  90 A3 00 94 */	stw r5, 0x94(r3)
@@ -911,144 +910,144 @@ setCentre__8CreatureFR8Vector3f:
 /* 8007DD94 0007ACF4  80 04 00 08 */	lwz r0, 8(r4)
 /* 8007DD98 0007ACF8  90 03 00 9C */	stw r0, 0x9c(r3)
 /* 8007DD9C 0007ACFC  4E 80 00 20 */	blr 
+.endfn setCentre__8CreatureFR8Vector3f
 
-.global isOrganic__8CreatureFv
-isOrganic__8CreatureFv:
+.fn isOrganic__8CreatureFv, weak
 /* 8007DDA0 0007AD00  38 60 00 01 */	li r3, 1
 /* 8007DDA4 0007AD04  4E 80 00 20 */	blr 
+.endfn isOrganic__8CreatureFv
 
-.global isBuried__8CreatureFv
-isBuried__8CreatureFv:
+.fn isBuried__8CreatureFv, weak
 /* 8007DDA8 0007AD08  38 60 00 00 */	li r3, 0
 /* 8007DDAC 0007AD0C  4E 80 00 20 */	blr 
+.endfn isBuried__8CreatureFv
 
-.global isAtari__8CreatureFv
-isAtari__8CreatureFv:
+.fn isAtari__8CreatureFv, weak
 /* 8007DDB0 0007AD10  38 60 00 01 */	li r3, 1
 /* 8007DDB4 0007AD14  4E 80 00 20 */	blr 
+.endfn isAtari__8CreatureFv
 
-.global isAlive__8CreatureFv
-isAlive__8CreatureFv:
+.fn isAlive__8CreatureFv, weak
 /* 8007DDB8 0007AD18  C0 23 00 58 */	lfs f1, 0x58(r3)
 /* 8007DDBC 0007AD1C  C0 02 89 70 */	lfs f0, lbl_803E8B70@sda21(r2)
 /* 8007DDC0 0007AD20  FC 01 00 40 */	fcmpo cr0, f1, f0
 /* 8007DDC4 0007AD24  7C 00 00 26 */	mfcr r0
 /* 8007DDC8 0007AD28  54 03 17 FE */	rlwinm r3, r0, 2, 0x1f, 0x1f
 /* 8007DDCC 0007AD2C  4E 80 00 20 */	blr 
+.endfn isAlive__8CreatureFv
 
-.global isFixed__8CreatureFv
-isFixed__8CreatureFv:
+.fn isFixed__8CreatureFv, weak
 /* 8007DDD0 0007AD30  38 60 00 00 */	li r3, 0
 /* 8007DDD4 0007AD34  4E 80 00 20 */	blr 
+.endfn isFixed__8CreatureFv
 
-.global needFlick__8CreatureFP8Creature
-needFlick__8CreatureFP8Creature:
+.fn needFlick__8CreatureFP8Creature, weak
 /* 8007DDD8 0007AD38  38 60 00 01 */	li r3, 1
 /* 8007DDDC 0007AD3C  4E 80 00 20 */	blr 
+.endfn needFlick__8CreatureFP8Creature
 
-.global ignoreAtari__8CreatureFP8Creature
-ignoreAtari__8CreatureFP8Creature:
+.fn ignoreAtari__8CreatureFP8Creature, weak
 /* 8007DDE0 0007AD40  38 60 00 00 */	li r3, 0
 /* 8007DDE4 0007AD44  4E 80 00 20 */	blr 
+.endfn ignoreAtari__8CreatureFP8Creature
 
-.global isFree__8CreatureFv
-isFree__8CreatureFv:
+.fn isFree__8CreatureFv, weak
 /* 8007DDE8 0007AD48  80 03 00 C8 */	lwz r0, 0xc8(r3)
 /* 8007DDEC 0007AD4C  54 00 04 E6 */	rlwinm r0, r0, 0, 0x13, 0x13
 /* 8007DDF0 0007AD50  7C 60 00 D0 */	neg r3, r0
 /* 8007DDF4 0007AD54  30 03 FF FF */	addic r0, r3, -1
 /* 8007DDF8 0007AD58  7C 60 19 10 */	subfe r3, r0, r3
 /* 8007DDFC 0007AD5C  4E 80 00 20 */	blr 
+.endfn isFree__8CreatureFv
 
-.global sendMsg__8CreatureFP3Msg
-sendMsg__8CreatureFP3Msg:
+.fn sendMsg__8CreatureFP3Msg, weak
 /* 8007DE00 0007AD60  4E 80 00 20 */	blr 
+.endfn sendMsg__8CreatureFP3Msg
 
-.global jumpCallback__8CreatureFv
-jumpCallback__8CreatureFv:
+.fn jumpCallback__8CreatureFv, weak
 /* 8007DE04 0007AD64  4E 80 00 20 */	blr 
+.endfn jumpCallback__8CreatureFv
 
-.global offwallCallback__8CreatureFP13DynCollObject
-offwallCallback__8CreatureFP13DynCollObject:
+.fn offwallCallback__8CreatureFP13DynCollObject, weak
 /* 8007DE08 0007AD68  4E 80 00 20 */	blr 
+.endfn offwallCallback__8CreatureFP13DynCollObject
 
-.global stickCallback__8CreatureFP8Creature
-stickCallback__8CreatureFP8Creature:
+.fn stickCallback__8CreatureFP8Creature, weak
 /* 8007DE0C 0007AD6C  4E 80 00 20 */	blr 
+.endfn stickCallback__8CreatureFP8Creature
 
-.global offstickCallback__8CreatureFP8Creature
-offstickCallback__8CreatureFP8Creature:
+.fn offstickCallback__8CreatureFP8Creature, weak
 /* 8007DE10 0007AD70  4E 80 00 20 */	blr 
+.endfn offstickCallback__8CreatureFP8Creature
 
-.global stickToCallback__8CreatureFP8Creature
-stickToCallback__8CreatureFP8Creature:
+.fn stickToCallback__8CreatureFP8Creature, weak
 /* 8007DE14 0007AD74  4E 80 00 20 */	blr 
+.endfn stickToCallback__8CreatureFP8Creature
 
-.global dump__8CreatureFv
-dump__8CreatureFv:
+.fn dump__8CreatureFv, weak
 /* 8007DE18 0007AD78  4E 80 00 20 */	blr 
+.endfn dump__8CreatureFv
 
-.global startWaterEffect__8CreatureFv
-startWaterEffect__8CreatureFv:
+.fn startWaterEffect__8CreatureFv, weak
 /* 8007DE1C 0007AD7C  4E 80 00 20 */	blr 
+.endfn startWaterEffect__8CreatureFv
 
-.global finishWaterEffect__8CreatureFv
-finishWaterEffect__8CreatureFv:
+.fn finishWaterEffect__8CreatureFv, weak
 /* 8007DE20 0007AD80  4E 80 00 20 */	blr 
+.endfn finishWaterEffect__8CreatureFv
 
-.global isRopable__8CreatureFv
-isRopable__8CreatureFv:
+.fn isRopable__8CreatureFv, weak
 /* 8007DE24 0007AD84  38 60 00 00 */	li r3, 0
 /* 8007DE28 0007AD88  4E 80 00 20 */	blr 
+.endfn isRopable__8CreatureFv
 
-.global mayIstick__8CreatureFv
-mayIstick__8CreatureFv:
+.fn mayIstick__8CreatureFv, weak
 /* 8007DE2C 0007AD8C  38 60 00 00 */	li r3, 0
 /* 8007DE30 0007AD90  4E 80 00 20 */	blr 
+.endfn mayIstick__8CreatureFv
 
-.global getFormationPri__8CreatureFv
-getFormationPri__8CreatureFv:
+.fn getFormationPri__8CreatureFv, weak
 /* 8007DE34 0007AD94  38 60 00 80 */	li r3, 0x80
 /* 8007DE38 0007AD98  4E 80 00 20 */	blr 
+.endfn getFormationPri__8CreatureFv
 
-.global refresh2d__8CreatureFR8Graphics
-refresh2d__8CreatureFR8Graphics:
+.fn refresh2d__8CreatureFR8Graphics, weak
 /* 8007DE3C 0007AD9C  4E 80 00 20 */	blr 
+.endfn refresh2d__8CreatureFR8Graphics
 
-.global doAI__8CreatureFv
-doAI__8CreatureFv:
+.fn doAI__8CreatureFv, weak
 /* 8007DE40 0007ADA0  4E 80 00 20 */	blr 
+.endfn doAI__8CreatureFv
 
-.global doAnimation__8CreatureFv
-doAnimation__8CreatureFv:
+.fn doAnimation__8CreatureFv, weak
 /* 8007DE44 0007ADA4  4E 80 00 20 */	blr 
+.endfn doAnimation__8CreatureFv
 
-.global exitCourse__8CreatureFv
-exitCourse__8CreatureFv:
+.fn exitCourse__8CreatureFv, weak
 /* 8007DE48 0007ADA8  4E 80 00 20 */	blr 
+.endfn exitCourse__8CreatureFv
 
-.global addCntCallback__12RefCountableFv
-addCntCallback__12RefCountableFv:
+.fn addCntCallback__12RefCountableFv, weak
 /* 8007DE4C 0007ADAC  4E 80 00 20 */	blr 
+.endfn addCntCallback__12RefCountableFv
 
-.global subCntCallback__12RefCountableFv
-subCntCallback__12RefCountableFv:
+.fn subCntCallback__12RefCountableFv, weak
 /* 8007DE50 0007ADB0  4E 80 00 20 */	blr 
+.endfn subCntCallback__12RefCountableFv
 
-.global "exec__20AState<10AICreature>FP10AICreature"
-"exec__20AState<10AICreature>FP10AICreature":
+.fn "exec__20AState<10AICreature>FP10AICreature", weak
 /* 8007DE54 0007ADB4  4E 80 00 20 */	blr 
+.endfn "exec__20AState<10AICreature>FP10AICreature"
 
-.global "resume__20AState<10AICreature>FP10AICreature"
-"resume__20AState<10AICreature>FP10AICreature":
+.fn "resume__20AState<10AICreature>FP10AICreature", weak
 /* 8007DE58 0007ADB8  4E 80 00 20 */	blr 
+.endfn "resume__20AState<10AICreature>FP10AICreature"
 
-.global "restart__20AState<10AICreature>FP10AICreature"
-"restart__20AState<10AICreature>FP10AICreature":
+.fn "restart__20AState<10AICreature>FP10AICreature", weak
 /* 8007DE5C 0007ADBC  4E 80 00 20 */	blr 
+.endfn "restart__20AState<10AICreature>FP10AICreature"
 
-.global "transit__20AState<10AICreature>FP10AICreaturei"
-"transit__20AState<10AICreature>FP10AICreaturei":
+.fn "transit__20AState<10AICreature>FP10AICreaturei", weak
 /* 8007DE60 0007ADC0  7C 08 02 A6 */	mflr r0
 /* 8007DE64 0007ADC4  90 01 00 04 */	stw r0, 4(r1)
 /* 8007DE68 0007ADC8  94 21 FF F8 */	stwu r1, -8(r1)
@@ -1061,13 +1060,13 @@ subCntCallback__12RefCountableFv:
 /* 8007DE84 0007ADE4  38 21 00 08 */	addi r1, r1, 8
 /* 8007DE88 0007ADE8  7C 08 03 A6 */	mtlr r0
 /* 8007DE8C 0007ADEC  4E 80 00 20 */	blr 
+.endfn "transit__20AState<10AICreature>FP10AICreaturei"
 
-.global "init__26StateMachine<10AICreature>FP10AICreature"
-"init__26StateMachine<10AICreature>FP10AICreature":
+.fn "init__26StateMachine<10AICreature>FP10AICreature", weak
 /* 8007DE90 0007ADF0  4E 80 00 20 */	blr 
+.endfn "init__26StateMachine<10AICreature>FP10AICreature"
 
-.global "exec__26StateMachine<10AICreature>FP10AICreature"
-"exec__26StateMachine<10AICreature>FP10AICreature":
+.fn "exec__26StateMachine<10AICreature>FP10AICreature", weak
 /* 8007DE94 0007ADF4  7C 08 02 A6 */	mflr r0
 /* 8007DE98 0007ADF8  90 01 00 04 */	stw r0, 4(r1)
 /* 8007DE9C 0007ADFC  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -1091,9 +1090,9 @@ subCntCallback__12RefCountableFv:
 /* 8007DEE0 0007AE40  38 21 00 18 */	addi r1, r1, 0x18
 /* 8007DEE4 0007AE44  7C 08 03 A6 */	mtlr r0
 /* 8007DEE8 0007AE48  4E 80 00 20 */	blr 
+.endfn "exec__26StateMachine<10AICreature>FP10AICreature"
 
-.global "procMsg__26StateMachine<10AICreature>FP10AICreatureP3Msg"
-"procMsg__26StateMachine<10AICreature>FP10AICreatureP3Msg":
+.fn "procMsg__26StateMachine<10AICreature>FP10AICreatureP3Msg", weak
 /* 8007DEEC 0007AE4C  7C 08 02 A6 */	mflr r0
 /* 8007DEF0 0007AE50  90 01 00 04 */	stw r0, 4(r1)
 /* 8007DEF4 0007AE54  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -1121,36 +1120,44 @@ subCntCallback__12RefCountableFv:
 /* 8007DF48 0007AEA8  38 21 00 20 */	addi r1, r1, 0x20
 /* 8007DF4C 0007AEAC  7C 08 03 A6 */	mtlr r0
 /* 8007DF50 0007AEB0  4E 80 00 20 */	blr 
+.endfn "procMsg__26StateMachine<10AICreature>FP10AICreatureP3Msg"
 
-.global "@696@animationKeyUpdated__10AICreatureFR16PaniAnimKeyEvent"
-"@696@animationKeyUpdated__10AICreatureFR16PaniAnimKeyEvent":
+.fn "@696@animationKeyUpdated__10AICreatureFR16PaniAnimKeyEvent", weak
 /* 8007DF54 0007AEB4  38 63 FD 48 */	addi r3, r3, -696
 /* 8007DF58 0007AEB8  4B FF F4 84 */	b animationKeyUpdated__10AICreatureFR16PaniAnimKeyEvent
+.endfn "@696@animationKeyUpdated__10AICreatureFR16PaniAnimKeyEvent"
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802AD718:
+.obj lbl_802AD718, local
 	.asciz "simpleAI.cpp"
+.endobj lbl_802AD718
 .balign 4
-lbl_802AD728:
+.obj lbl_802AD728, local
 	.asciz "simpleAI"
+.endobj lbl_802AD728
 .balign 4
-lbl_802AD734:
+.obj lbl_802AD734, local
 	.asciz "SAIArrow"
+.endobj lbl_802AD734
 .balign 4
-lbl_802AD740:
+.obj lbl_802AD740, local
 	.asciz "CoreNode"
+.endobj lbl_802AD740
 .balign 4
-lbl_802AD74C:
+.obj lbl_802AD74C, local
 	.asciz "SAIArrowRoot"
+.endobj lbl_802AD74C
 .balign 4
-lbl_802AD75C:
+.obj lbl_802AD75C, local
 	.asciz "saiCondition"
+.endobj lbl_802AD75C
 .balign 4
-lbl_802AD76C:
+.obj lbl_802AD76C, local
 	.asciz "rootArrow"
+.endobj lbl_802AD76C
 .balign 4
-lbl_802AD778:
+.obj lbl_802AD778, local
 	.4byte .L_8007D184
 	.4byte .L_8007D1AC
 	.4byte .L_8007D1C0
@@ -1162,28 +1169,33 @@ lbl_802AD778:
 	.4byte .L_8007D198
 	.4byte .L_8007D24C
 	.4byte .L_8007D238
+.endobj lbl_802AD778
 .balign 4
-lbl_802AD7A4:
+.obj lbl_802AD7A4, local
 	.asciz "SAIState"
+.endobj lbl_802AD7A4
 .balign 4
-lbl_802AD7B0:
+.obj lbl_802AD7B0, local
 	.asciz "Receiver<AICreature>"
+.endobj lbl_802AD7B0
 .balign 4
-lbl_802AD7C8:
+.obj lbl_802AD7C8, local
 	.asciz "AState<AICreature>"
+.endobj lbl_802AD7C8
 .balign 4
-lbl_802AD7DC:
+.obj lbl_802AD7DC, local
 	.4byte "__RTTI__22Receiver<10AICreature>"
 	.4byte 0
 	.4byte 0
-lbl_802AD7E8:
+.endobj lbl_802AD7DC
+.obj lbl_802AD7E8, local
 	.4byte "__RTTI__22Receiver<10AICreature>"
 	.4byte 0
 	.4byte "__RTTI__20AState<10AICreature>"
 	.4byte 0
 	.4byte 0
-.global __vt__8SAIState
-__vt__8SAIState:
+.endobj lbl_802AD7E8
+.obj __vt__8SAIState, global
 	.4byte __RTTI__8SAIState
 	.4byte 0
 	.4byte procMsg__8SAIStateFP10AICreatureP3Msg
@@ -1204,8 +1216,8 @@ __vt__8SAIState:
 	.4byte "resume__20AState<10AICreature>FP10AICreature"
 	.4byte "restart__20AState<10AICreature>FP10AICreature"
 	.4byte "transit__20AState<10AICreature>FP10AICreaturei"
-.global "__vt__20AState<10AICreature>"
-"__vt__20AState<10AICreature>":
+.endobj __vt__8SAIState
+.obj "__vt__20AState<10AICreature>", weak
 	.4byte "__RTTI__20AState<10AICreature>"
 	.4byte 0
 	.4byte "procMsg__22Receiver<10AICreature>FP10AICreatureP3Msg"
@@ -1226,110 +1238,105 @@ __vt__8SAIState:
 	.4byte "resume__20AState<10AICreature>FP10AICreature"
 	.4byte "restart__20AState<10AICreature>FP10AICreature"
 	.4byte "transit__20AState<10AICreature>FP10AICreaturei"
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
+.endobj "__vt__20AState<10AICreature>"
+.skip 0x38
 .balign 4
-lbl_802AD8D4:
+.obj lbl_802AD8D4, local
 	.asciz "SAICondition"
+.endobj lbl_802AD8D4
 .balign 4
-lbl_802AD8E4:
+.obj lbl_802AD8E4, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte 0
-lbl_802AD8F0:
+.endobj lbl_802AD8E4
+.obj lbl_802AD8F0, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte __RTTI__8CoreNode
 	.4byte 0
 	.4byte 0
-.global __vt__12SAICondition
-__vt__12SAICondition:
+.endobj lbl_802AD8F0
+.obj __vt__12SAICondition, weak
 	.4byte __RTTI__12SAICondition
 	.4byte 0
 	.4byte getAgeNodeType__5ANodeFv
 	.4byte read__8CoreNodeFR18RandomAccessStream
 	.4byte satisfy__12SAIConditionFP10AICreature
-lbl_802AD918:
+.endobj __vt__12SAICondition
+.obj lbl_802AD918, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte __RTTI__8CoreNode
 	.4byte 0
 	.4byte 0
-.global __vt__8SAIArrow
-__vt__8SAIArrow:
+.endobj lbl_802AD918
+.obj __vt__8SAIArrow, weak
 	.4byte __RTTI__8SAIArrow
 	.4byte 0
 	.4byte getAgeNodeType__5ANodeFv
 	.4byte read__8CoreNodeFR18RandomAccessStream
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
+.endobj __vt__8SAIArrow
+.skip 0x1C
 .balign 4
-lbl_802AD958:
+.obj lbl_802AD958, local
 	.asciz "SimpleAI"
+.endobj lbl_802AD958
 .balign 4
-lbl_802AD964:
+.obj lbl_802AD964, local
 	.asciz "StateMachine<AICreature>"
+.endobj lbl_802AD964
 .balign 4
-lbl_802AD980:
+.obj lbl_802AD980, local
 	.4byte "__RTTI__26StateMachine<10AICreature>"
 	.4byte 0
 	.4byte 0
-.global __vt__8SimpleAI
-__vt__8SimpleAI:
+.endobj lbl_802AD980
+.obj __vt__8SimpleAI, global
 	.4byte __RTTI__8SimpleAI
 	.4byte 0
 	.4byte "init__26StateMachine<10AICreature>FP10AICreature"
 	.4byte exec__8SimpleAIFP10AICreature
 	.4byte procMsg__8SimpleAIFP10AICreatureP3Msg
 	.4byte "transit__26StateMachine<10AICreature>FP10AICreaturei"
-.global "__vt__26StateMachine<10AICreature>"
-"__vt__26StateMachine<10AICreature>":
+.endobj __vt__8SimpleAI
+.obj "__vt__26StateMachine<10AICreature>", weak
 	.4byte "__RTTI__26StateMachine<10AICreature>"
 	.4byte 0
 	.4byte "init__26StateMachine<10AICreature>FP10AICreature"
 	.4byte "exec__26StateMachine<10AICreature>FP10AICreature"
 	.4byte "procMsg__26StateMachine<10AICreature>FP10AICreatureP3Msg"
 	.4byte "transit__26StateMachine<10AICreature>FP10AICreaturei"
+.endobj "__vt__26StateMachine<10AICreature>"
 .balign 4
-lbl_802AD9BC:
+.obj lbl_802AD9BC, local
 	.asciz "AICreature"
+.endobj lbl_802AD9BC
 .balign 4
-lbl_802AD9C8:
+.obj lbl_802AD9C8, local
 	.asciz "PaniAnimKeyListener"
+.endobj lbl_802AD9C8
 .balign 4
-lbl_802AD9DC:
+.obj lbl_802AD9DC, local
 	.asciz "EventTalker"
+.endobj lbl_802AD9DC
 .balign 4
-lbl_802AD9E8:
+.obj lbl_802AD9E8, local
 	.asciz "RefCountable"
+.endobj lbl_802AD9E8
 .balign 4
-lbl_802AD9F8:
+.obj lbl_802AD9F8, local
 	.asciz "Creature"
+.endobj lbl_802AD9F8
 .balign 4
-lbl_802ADA04:
+.obj lbl_802ADA04, local
 	.4byte __RTTI__11EventTalker
 	.4byte 0x8
 	.4byte __RTTI__12RefCountable
 	.4byte 0
 	.4byte 0
-lbl_802ADA18:
+.endobj lbl_802ADA04
+.obj lbl_802ADA18, local
 	.4byte __RTTI__19PaniAnimKeyListener
 	.4byte 0x2B8
 	.4byte __RTTI__11EventTalker
@@ -1339,8 +1346,8 @@ lbl_802ADA18:
 	.4byte __RTTI__8Creature
 	.4byte 0
 	.4byte 0
-.global __vt__10AICreature
-__vt__10AICreature:
+.endobj lbl_802ADA18
+.obj __vt__10AICreature, global
 	.4byte __RTTI__10AICreature
 	.4byte 0
 	.4byte addCntCallback__12RefCountableFv
@@ -1427,75 +1434,98 @@ __vt__10AICreature:
 	.4byte setMotionSpeed__10AICreatureFf
 	.4byte stopMotion__10AICreatureFv
 	.4byte animationKeyUpdated__10AICreatureFR16PaniAnimKeyEvent
-.global __vt__19PaniAnimKeyListener
-__vt__19PaniAnimKeyListener:
+.endobj __vt__10AICreature
+.obj __vt__19PaniAnimKeyListener, weak
 	.4byte __RTTI__19PaniAnimKeyListener
 	.4byte 0
 	.4byte 0
+.endobj __vt__19PaniAnimKeyListener
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-lbl_803DEA80:
+.obj lbl_803DEA80, local
 	.float 0.0
-lbl_803DEA84:
+.endobj lbl_803DEA80
+.obj lbl_803DEA84, local
 	.float 0.0
-lbl_803DEA88:
+.endobj lbl_803DEA84
+.obj lbl_803DEA88, local
 	.float 0.0
-lbl_803DEA8C:
+.endobj lbl_803DEA88
+.obj lbl_803DEA8C, local
 	.float 0.0
-lbl_803DEA90:
+.endobj lbl_803DEA8C
+.obj lbl_803DEA90, local
 	.float 1.0
-lbl_803DEA94:
+.endobj lbl_803DEA90
+.obj lbl_803DEA94, local
 	.float 0.0
-"__RTTI__22Receiver<10AICreature>":
+.endobj lbl_803DEA94
+.obj "__RTTI__22Receiver<10AICreature>", local
 	.4byte lbl_802AD7B0
 	.4byte 0
-"__RTTI__20AState<10AICreature>":
+.endobj "__RTTI__22Receiver<10AICreature>"
+.obj "__RTTI__20AState<10AICreature>", local
 	.4byte lbl_802AD7C8
 	.4byte lbl_802AD7DC
-__RTTI__8SAIState:
+.endobj "__RTTI__20AState<10AICreature>"
+.obj __RTTI__8SAIState, local
 	.4byte lbl_802AD7A4
 	.4byte lbl_802AD7E8
+.endobj __RTTI__8SAIState
 .balign 4
-lbl_803DEAB0:
+.obj lbl_803DEAB0, local
 	.asciz "ANode"
+.endobj lbl_803DEAB0
 .balign 4
-__RTTI__5ANode:
+.obj __RTTI__5ANode, local
 	.4byte lbl_803DEAB0
 	.4byte 0
-__RTTI__8CoreNode:
+.endobj __RTTI__5ANode
+.obj __RTTI__8CoreNode, local
 	.4byte lbl_802AD740
 	.4byte lbl_802AD8E4
-__RTTI__12SAICondition:
+.endobj __RTTI__8CoreNode
+.obj __RTTI__12SAICondition, local
 	.4byte lbl_802AD8D4
 	.4byte lbl_802AD8F0
-__RTTI__8SAIArrow:
+.endobj __RTTI__12SAICondition
+.obj __RTTI__8SAIArrow, local
 	.4byte lbl_802AD734
 	.4byte lbl_802AD918
-"__RTTI__26StateMachine<10AICreature>":
+.endobj __RTTI__8SAIArrow
+.obj "__RTTI__26StateMachine<10AICreature>", local
 	.4byte lbl_802AD964
 	.4byte 0
-__RTTI__8SimpleAI:
+.endobj "__RTTI__26StateMachine<10AICreature>"
+.obj __RTTI__8SimpleAI, local
 	.4byte lbl_802AD958
 	.4byte lbl_802AD980
-__RTTI__19PaniAnimKeyListener:
+.endobj __RTTI__8SimpleAI
+.obj __RTTI__19PaniAnimKeyListener, local
 	.4byte lbl_802AD9C8
 	.4byte 0
-__RTTI__11EventTalker:
+.endobj __RTTI__19PaniAnimKeyListener
+.obj __RTTI__11EventTalker, local
 	.4byte lbl_802AD9DC
 	.4byte 0
-__RTTI__12RefCountable:
+.endobj __RTTI__11EventTalker
+.obj __RTTI__12RefCountable, local
 	.4byte lbl_802AD9E8
 	.4byte 0
-__RTTI__8Creature:
+.endobj __RTTI__12RefCountable
+.obj __RTTI__8Creature, local
 	.4byte lbl_802AD9F8
 	.4byte lbl_802ADA04
-__RTTI__10AICreature:
+.endobj __RTTI__8Creature
+.obj __RTTI__10AICreature, local
 	.4byte lbl_802AD9BC
 	.4byte lbl_802ADA18
+.endobj __RTTI__10AICreature
 .balign 4
-lbl_803DEB10:
+.obj lbl_803DEB10, local
 	.asciz "noname"
+.endobj lbl_803DEB10
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8

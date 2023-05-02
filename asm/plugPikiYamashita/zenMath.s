@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global getDistPointAndLine__3zenF8Vector3f8Vector3f8Vector3fRf
-getDistPointAndLine__3zenF8Vector3f8Vector3f8Vector3fRf:
+.fn getDistPointAndLine__3zenF8Vector3f8Vector3f8Vector3fRf, global
 /* 8019B920 00198880  94 21 FF 20 */	stwu r1, -0xe0(r1)
 /* 8019B924 00198884  C0 24 00 00 */	lfs f1, 0(r4)
 /* 8019B928 00198888  C0 43 00 00 */	lfs f2, 0(r3)
@@ -119,9 +118,9 @@ getDistPointAndLine__3zenF8Vector3f8Vector3f8Vector3fRf:
 .L_8019BAD8:
 /* 8019BAD8 00198A38  38 21 00 E0 */	addi r1, r1, 0xe0
 /* 8019BADC 00198A3C  4E 80 00 20 */	blr 
+.endfn getDistPointAndLine__3zenF8Vector3f8Vector3f8Vector3fRf
 
-.global makeRotMatrix__3zenFR8Vector3fR8Matrix3f
-makeRotMatrix__3zenFR8Vector3fR8Matrix3f:
+.fn makeRotMatrix__3zenFR8Vector3fR8Matrix3f, global
 /* 8019BAE0 00198A40  7C 08 02 A6 */	mflr r0
 /* 8019BAE4 00198A44  90 01 00 04 */	stw r0, 4(r1)
 /* 8019BAE8 00198A48  94 21 FF 78 */	stwu r1, -0x88(r1)
@@ -221,35 +220,43 @@ makeRotMatrix__3zenFR8Vector3fR8Matrix3f:
 /* 8019BC54 00198BB4  38 21 00 88 */	addi r1, r1, 0x88
 /* 8019BC58 00198BB8  7C 08 03 A6 */	mtlr r0
 /* 8019BC5C 00198BBC  4E 80 00 20 */	blr 
+.endfn makeRotMatrix__3zenFR8Vector3fR8Matrix3f
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-lbl_803E5D40:
-	.4byte 0x3F800000
-lbl_803E5D44:
-	.4byte 0x00000000
-lbl_803E5D48:
-	.4byte 0x00000000
-lbl_803E5D4C:
-	.4byte 0x00000000
-lbl_803E5D50:
-	.4byte 0x00000000
-lbl_803E5D54:
-	.4byte 0x3F800000
+.obj lbl_803E5D40, local
+	.float 1.0
+.endobj lbl_803E5D40
+.obj lbl_803E5D44, local
+	.float 0.0
+.endobj lbl_803E5D44
+.obj lbl_803E5D48, local
+	.float 0.0
+.endobj lbl_803E5D48
+.obj lbl_803E5D4C, local
+	.float 0.0
+.endobj lbl_803E5D4C
+.obj lbl_803E5D50, local
+	.float 0.0
+.endobj lbl_803E5D50
+.obj lbl_803E5D54, local
+	.float 1.0
+.endobj lbl_803E5D54
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
+.obj lbl_803EB558, local
+	.float 1.0
+.endobj lbl_803EB558
 .balign 4
-lbl_803EB558:
-	.4byte 0x3F800000
-.balign 4
-lbl_803EB55C:
-	.4byte 0x00000000
+.obj lbl_803EB55C, local
+	.float 0.0
+.endobj lbl_803EB55C
 .balign 8
-lbl_803EB560:
-	.4byte 0x3FE00000
-	.4byte 0x00000000
+.obj lbl_803EB560, local
+	.double 0.5
+.endobj lbl_803EB560
 .balign 8
-lbl_803EB568:
-	.4byte 0x40080000
-	.4byte 0x00000000
+.obj lbl_803EB568, local
+	.double 3.0
+.endobj lbl_803EB568

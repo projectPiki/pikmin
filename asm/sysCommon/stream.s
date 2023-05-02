@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global readInt__6StreamFv
-readInt__6StreamFv:
+.fn readInt__6StreamFv, global
 /* 800250B0 00022010  7C 08 02 A6 */	mflr r0
 /* 800250B4 00022014  38 A0 00 04 */	li r5, 4
 /* 800250B8 00022018  90 01 00 04 */	stw r0, 4(r1)
@@ -16,9 +15,9 @@ readInt__6StreamFv:
 /* 800250DC 0002203C  38 21 00 10 */	addi r1, r1, 0x10
 /* 800250E0 00022040  7C 08 03 A6 */	mtlr r0
 /* 800250E4 00022044  4E 80 00 20 */	blr 
+.endfn readInt__6StreamFv
 
-.global readByte__6StreamFv
-readByte__6StreamFv:
+.fn readByte__6StreamFv, global
 /* 800250E8 00022048  7C 08 02 A6 */	mflr r0
 /* 800250EC 0002204C  38 A0 00 01 */	li r5, 1
 /* 800250F0 00022050  90 01 00 04 */	stw r0, 4(r1)
@@ -33,9 +32,9 @@ readByte__6StreamFv:
 /* 80025114 00022074  38 21 00 10 */	addi r1, r1, 0x10
 /* 80025118 00022078  7C 08 03 A6 */	mtlr r0
 /* 8002511C 0002207C  4E 80 00 20 */	blr 
+.endfn readByte__6StreamFv
 
-.global readShort__6StreamFv
-readShort__6StreamFv:
+.fn readShort__6StreamFv, global
 /* 80025120 00022080  7C 08 02 A6 */	mflr r0
 /* 80025124 00022084  38 A0 00 02 */	li r5, 2
 /* 80025128 00022088  90 01 00 04 */	stw r0, 4(r1)
@@ -50,9 +49,9 @@ readShort__6StreamFv:
 /* 8002514C 000220AC  38 21 00 10 */	addi r1, r1, 0x10
 /* 80025150 000220B0  7C 08 03 A6 */	mtlr r0
 /* 80025154 000220B4  4E 80 00 20 */	blr 
+.endfn readShort__6StreamFv
 
-.global readFloat__6StreamFv
-readFloat__6StreamFv:
+.fn readFloat__6StreamFv, global
 /* 80025158 000220B8  7C 08 02 A6 */	mflr r0
 /* 8002515C 000220BC  38 A0 00 04 */	li r5, 4
 /* 80025160 000220C0  90 01 00 04 */	stw r0, 4(r1)
@@ -67,9 +66,9 @@ readFloat__6StreamFv:
 /* 80025184 000220E4  38 21 00 10 */	addi r1, r1, 0x10
 /* 80025188 000220E8  7C 08 03 A6 */	mtlr r0
 /* 8002518C 000220EC  4E 80 00 20 */	blr 
+.endfn readFloat__6StreamFv
 
-.global readString__6StreamFv
-readString__6StreamFv:
+.fn readString__6StreamFv, global
 /* 80025190 000220F0  7C 08 02 A6 */	mflr r0
 /* 80025194 000220F4  90 01 00 04 */	stw r0, 4(r1)
 /* 80025198 000220F8  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -101,9 +100,9 @@ readString__6StreamFv:
 /* 80025200 00022160  38 21 00 18 */	addi r1, r1, 0x18
 /* 80025204 00022164  7C 08 03 A6 */	mtlr r0
 /* 80025208 00022168  4E 80 00 20 */	blr 
+.endfn readString__6StreamFv
 
-.global readString__6StreamFPci
-readString__6StreamFPci:
+.fn readString__6StreamFPci, global
 /* 8002520C 0002216C  7C 08 02 A6 */	mflr r0
 /* 80025210 00022170  90 01 00 04 */	stw r0, 4(r1)
 /* 80025214 00022174  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -118,9 +117,9 @@ readString__6StreamFPci:
 /* 80025238 00022198  38 21 00 20 */	addi r1, r1, 0x20
 /* 8002523C 0002219C  7C 08 03 A6 */	mtlr r0
 /* 80025240 000221A0  4E 80 00 20 */	blr 
+.endfn readString__6StreamFPci
 
-.global readString__6StreamFR6String
-readString__6StreamFR6String:
+.fn readString__6StreamFR6String, global
 /* 80025244 000221A4  7C 08 02 A6 */	mflr r0
 /* 80025248 000221A8  90 01 00 04 */	stw r0, 4(r1)
 /* 8002524C 000221AC  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -165,9 +164,9 @@ readString__6StreamFR6String:
 /* 800252DC 0002223C  38 21 00 20 */	addi r1, r1, 0x20
 /* 800252E0 00022240  7C 08 03 A6 */	mtlr r0
 /* 800252E4 00022244  4E 80 00 20 */	blr 
+.endfn readString__6StreamFR6String
 
-.global writeInt__6StreamFi
-writeInt__6StreamFi:
+.fn writeInt__6StreamFi, global
 /* 800252E8 00022248  7C 08 02 A6 */	mflr r0
 /* 800252EC 0002224C  38 A0 00 04 */	li r5, 4
 /* 800252F0 00022250  90 01 00 04 */	stw r0, 4(r1)
@@ -182,9 +181,9 @@ writeInt__6StreamFi:
 /* 80025314 00022274  38 21 00 18 */	addi r1, r1, 0x18
 /* 80025318 00022278  7C 08 03 A6 */	mtlr r0
 /* 8002531C 0002227C  4E 80 00 20 */	blr 
+.endfn writeInt__6StreamFi
 
-.global writeByte__6StreamFUc
-writeByte__6StreamFUc:
+.fn writeByte__6StreamFUc, global
 /* 80025320 00022280  7C 08 02 A6 */	mflr r0
 /* 80025324 00022284  38 A0 00 01 */	li r5, 1
 /* 80025328 00022288  90 01 00 04 */	stw r0, 4(r1)
@@ -199,9 +198,9 @@ writeByte__6StreamFUc:
 /* 8002534C 000222AC  38 21 00 10 */	addi r1, r1, 0x10
 /* 80025350 000222B0  7C 08 03 A6 */	mtlr r0
 /* 80025354 000222B4  4E 80 00 20 */	blr 
+.endfn writeByte__6StreamFUc
 
-.global writeShort__6StreamFs
-writeShort__6StreamFs:
+.fn writeShort__6StreamFs, global
 /* 80025358 000222B8  7C 08 02 A6 */	mflr r0
 /* 8002535C 000222BC  38 A0 00 02 */	li r5, 2
 /* 80025360 000222C0  90 01 00 04 */	stw r0, 4(r1)
@@ -216,9 +215,9 @@ writeShort__6StreamFs:
 /* 80025384 000222E4  38 21 00 10 */	addi r1, r1, 0x10
 /* 80025388 000222E8  7C 08 03 A6 */	mtlr r0
 /* 8002538C 000222EC  4E 80 00 20 */	blr 
+.endfn writeShort__6StreamFs
 
-.global writeFloat__6StreamFf
-writeFloat__6StreamFf:
+.fn writeFloat__6StreamFf, global
 /* 80025390 000222F0  7C 08 02 A6 */	mflr r0
 /* 80025394 000222F4  38 A0 00 04 */	li r5, 4
 /* 80025398 000222F8  90 01 00 04 */	stw r0, 4(r1)
@@ -233,9 +232,9 @@ writeFloat__6StreamFf:
 /* 800253BC 0002231C  38 21 00 18 */	addi r1, r1, 0x18
 /* 800253C0 00022320  7C 08 03 A6 */	mtlr r0
 /* 800253C4 00022324  4E 80 00 20 */	blr 
+.endfn writeFloat__6StreamFf
 
-.global writeString__6StreamFPc
-writeString__6StreamFPc:
+.fn writeString__6StreamFPc, global
 /* 800253C8 00022328  7C 08 02 A6 */	mflr r0
 /* 800253CC 0002232C  90 01 00 04 */	stw r0, 4(r1)
 /* 800253D0 00022330  38 00 00 00 */	li r0, 0
@@ -251,9 +250,9 @@ writeString__6StreamFPc:
 /* 800253F8 00022358  38 21 00 18 */	addi r1, r1, 0x18
 /* 800253FC 0002235C  7C 08 03 A6 */	mtlr r0
 /* 80025400 00022360  4E 80 00 20 */	blr 
+.endfn writeString__6StreamFPc
 
-.global writeString__6StreamFR6String
-writeString__6StreamFR6String:
+.fn writeString__6StreamFR6String, global
 /* 80025404 00022364  7C 08 02 A6 */	mflr r0
 /* 80025408 00022368  90 01 00 04 */	stw r0, 4(r1)
 /* 8002540C 0002236C  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -309,42 +308,42 @@ writeString__6StreamFR6String:
 /* 800254CC 0002242C  38 21 00 28 */	addi r1, r1, 0x28
 /* 800254D0 00022430  7C 08 03 A6 */	mtlr r0
 /* 800254D4 00022434  4E 80 00 20 */	blr 
+.endfn writeString__6StreamFR6String
 
-.global read__6StreamFPvi
-read__6StreamFPvi:
+.fn read__6StreamFPvi, global
 /* 800254D8 00022438  4E 80 00 20 */	blr 
+.endfn read__6StreamFPvi
 
-.global write__6StreamFPvi
-write__6StreamFPvi:
+.fn write__6StreamFPvi, global
 /* 800254DC 0002243C  4E 80 00 20 */	blr 
+.endfn write__6StreamFPvi
 
-.global getPending__6StreamFv
-getPending__6StreamFv:
+.fn getPending__6StreamFv, global
 /* 800254E0 00022440  38 60 00 00 */	li r3, 0
 /* 800254E4 00022444  4E 80 00 20 */	blr 
+.endfn getPending__6StreamFv
 
-.global getAvailable__6StreamFv
-getAvailable__6StreamFv:
+.fn getAvailable__6StreamFv, global
 /* 800254E8 00022448  38 60 00 00 */	li r3, 0
 /* 800254EC 0002244C  4E 80 00 20 */	blr 
+.endfn getAvailable__6StreamFv
 
-.global close__6StreamFv
-close__6StreamFv:
+.fn close__6StreamFv, global
 /* 800254F0 00022450  4E 80 00 20 */	blr 
+.endfn close__6StreamFv
 
-.global setPosition__18RandomAccessStreamFi
-setPosition__18RandomAccessStreamFi:
+.fn setPosition__18RandomAccessStreamFi, weak
 /* 800254F4 00022454  4E 80 00 20 */	blr 
+.endfn setPosition__18RandomAccessStreamFi
 
-.global getClosing__6StreamFv
-getClosing__6StreamFv:
+.fn getClosing__6StreamFv, weak
 /* 800254F8 00022458  38 60 00 00 */	li r3, 0
 /* 800254FC 0002245C  4E 80 00 20 */	blr 
+.endfn getClosing__6StreamFv
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-.global __vt__6Stream
-__vt__6Stream:
+.obj __vt__6Stream, global
 	.4byte __RTTI__6Stream
 	.4byte 0
 	.4byte readInt__6StreamFv
@@ -367,12 +366,15 @@ __vt__6Stream:
 	.4byte close__6StreamFv
 	.4byte getClosing__6StreamFv
 	.4byte flush__6StreamFv
+.endobj __vt__6Stream
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-lbl_803DCEB0:
+.obj lbl_803DCEB0, local
 	.asciz "Stream"
+.endobj lbl_803DCEB0
 .balign 4
-__RTTI__6Stream:
+.obj __RTTI__6Stream, local
 	.4byte lbl_803DCEB0
 	.4byte 0
+.endobj __RTTI__6Stream

@@ -532,13 +532,16 @@ __RTTI__Q23zen17TextColorCallBack:
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803EB510:
+.obj lbl_803EB510, local
 	.float 1.0
-lbl_803EB514:
+.endobj lbl_803EB510
+.obj lbl_803EB514, local
 	.float 0.0
-lbl_803EB518:
+.endobj lbl_803EB514
+.obj lbl_803EB518, local
 	.float 0.5
+.endobj lbl_803EB518
 .balign 8
-lbl_803EB520:
-	.4byte 0x43300000
-	.4byte 0x00000000
+.obj lbl_803EB520, local
+	.8byte 0x4330000000000000
+.endobj lbl_803EB520

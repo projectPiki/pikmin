@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global __ct__18GameCreditsSectionFv
-__ct__18GameCreditsSectionFv:
+.fn __ct__18GameCreditsSectionFv, global
 /* 8019B888 001987E8  7C 08 02 A6 */	mflr r0
 /* 8019B88C 001987EC  38 8D 0F D8 */	addi r4, r13, lbl_803E5CF8@sda21
 /* 8019B890 001987F0  90 01 00 04 */	stw r0, 4(r1)
@@ -39,29 +38,35 @@ __ct__18GameCreditsSectionFv:
 /* 8019B910 00198870  38 21 00 18 */	addi r1, r1, 0x18
 /* 8019B914 00198874  7C 08 03 A6 */	mtlr r0
 /* 8019B918 00198878  4E 80 00 20 */	blr 
+.endfn __ct__18GameCreditsSectionFv
 
-.global init__18GameCreditsSectionFv
-init__18GameCreditsSectionFv:
+.fn init__18GameCreditsSectionFv, weak
 /* 8019B91C 0019887C  4E 80 00 20 */	blr 
+.endfn init__18GameCreditsSectionFv
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802D6B90:
+.obj lbl_802D6B90, local
 	.asciz "gameCredits.cpp"
+.endobj lbl_802D6B90
 .balign 4
-lbl_802D6BA0:
+.obj lbl_802D6BA0, local
 	.asciz "GameCreditsSection"
+.endobj lbl_802D6BA0
 .balign 4
-lbl_802D6BB4:
+.obj lbl_802D6BB4, local
 	.asciz "<GameCreditsSection>"
+.endobj lbl_802D6BB4
 .balign 4
-lbl_802D6BCC:
+.obj lbl_802D6BCC, local
 	.asciz "CoreNode"
+.endobj lbl_802D6BCC
 .balign 4
-lbl_802D6BD8:
+.obj lbl_802D6BD8, local
 	.4byte __RTTI__5ANode
 	.4byte 0x00000000
 	.4byte 0x00000000
+.endobj lbl_802D6BD8
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x00000000
@@ -69,13 +74,14 @@ lbl_802D6BD8:
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x00000000
-lbl_802D6C00:
+.obj lbl_802D6C00, local
 	.4byte __RTTI__5ANode
 	.4byte 0x00000000
 	.4byte __RTTI__8CoreNode
 	.4byte 0x00000000
 	.4byte 0x00000000
-lbl_802D6C14:
+.endobj lbl_802D6C00
+.obj lbl_802D6C14, local
 	.4byte __RTTI__5ANode
 	.4byte 0x00000000
 	.4byte __RTTI__8CoreNode
@@ -83,7 +89,8 @@ lbl_802D6C14:
 	.4byte __RTTI__4Node
 	.4byte 0x00000000
 	.4byte 0x00000000
-lbl_802D6C30:
+.endobj lbl_802D6C14
+.obj lbl_802D6C30, local
 	.4byte __RTTI__5ANode
 	.4byte 0x00000000
 	.4byte __RTTI__8CoreNode
@@ -93,8 +100,8 @@ lbl_802D6C30:
 	.4byte __RTTI__7Section
 	.4byte 0x00000000
 	.4byte 0x00000000
-.global __vt__18GameCreditsSection
-__vt__18GameCreditsSection:
+.endobj lbl_802D6C30
+.obj __vt__18GameCreditsSection, weak
 	.4byte __RTTI__18GameCreditsSection
 	.4byte 0
 	.4byte getAgeNodeType__5ANodeFv
@@ -108,49 +115,46 @@ __vt__18GameCreditsSection:
 	.4byte concat__4NodeFR8Matrix4f
 	.4byte getModelMatrix__4NodeFv
 	.4byte init__18GameCreditsSectionFv
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
+.endobj __vt__18GameCreditsSection
+.skip 0x38
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-lbl_803E5CF8:
+.obj lbl_803E5CF8, local
 	.asciz "<Node>"
+.endobj lbl_803E5CF8
 .balign 4
-lbl_803E5D00:
+.obj lbl_803E5D00, local
 	.asciz "ANode"
+.endobj lbl_803E5D00
 .balign 4
-__RTTI__5ANode:
+.obj __RTTI__5ANode, local
 	.4byte lbl_803E5D00
 	.4byte 0x00000000
-__RTTI__8CoreNode:
+.endobj __RTTI__5ANode
+.obj __RTTI__8CoreNode, local
 	.4byte lbl_802D6BCC
 	.4byte lbl_802D6BD8
+.endobj __RTTI__8CoreNode
 .balign 4
-lbl_803E5D18:
+.obj lbl_803E5D18, local
 	.asciz "Node"
+.endobj lbl_803E5D18
 .balign 4
-__RTTI__4Node:
+.obj __RTTI__4Node, local
 	.4byte lbl_803E5D18
 	.4byte lbl_802D6C00
+.endobj __RTTI__4Node
 .balign 4
-lbl_803E5D28:
+.obj lbl_803E5D28, local
 	.asciz "Section"
+.endobj lbl_803E5D28
 .balign 4
-__RTTI__7Section:
+.obj __RTTI__7Section, local
 	.4byte lbl_803E5D28
 	.4byte lbl_802D6C14
-__RTTI__18GameCreditsSection:
+.endobj __RTTI__7Section
+.obj __RTTI__18GameCreditsSection, local
 	.4byte lbl_802D6BA0
 	.4byte lbl_802D6C30
+.endobj __RTTI__18GameCreditsSection

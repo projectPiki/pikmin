@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global __ct__11YaiStrategyFii
-__ct__11YaiStrategyFii:
+.fn __ct__11YaiStrategyFii, global
 /* 801E9654 001E65B4  7C 08 02 A6 */	mflr r0
 /* 801E9658 001E65B8  90 01 00 04 */	stw r0, 4(r1)
 /* 801E965C 001E65BC  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -27,9 +26,9 @@ __ct__11YaiStrategyFii:
 /* 801E96AC 001E660C  38 21 00 28 */	addi r1, r1, 0x28
 /* 801E96B0 001E6610  7C 08 03 A6 */	mtlr r0
 /* 801E96B4 001E6614  4E 80 00 20 */	blr 
+.endfn __ct__11YaiStrategyFii
 
-.global init__11YaiStrategyFii
-init__11YaiStrategyFii:
+.fn init__11YaiStrategyFii, global
 /* 801E96B8 001E6618  7C 08 02 A6 */	mflr r0
 /* 801E96BC 001E661C  90 01 00 04 */	stw r0, 4(r1)
 /* 801E96C0 001E6620  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -49,9 +48,9 @@ init__11YaiStrategyFii:
 /* 801E96F8 001E6658  38 21 00 20 */	addi r1, r1, 0x20
 /* 801E96FC 001E665C  7C 08 03 A6 */	mtlr r0
 /* 801E9700 001E6660  4E 80 00 20 */	blr 
+.endfn init__11YaiStrategyFii
 
-.global start__11YaiStrategyFR4Teki
-start__11YaiStrategyFR4Teki:
+.fn start__11YaiStrategyFR4Teki, global
 /* 801E9704 001E6664  7C 08 02 A6 */	mflr r0
 /* 801E9708 001E6668  90 01 00 04 */	stw r0, 4(r1)
 /* 801E970C 001E666C  94 21 FF F8 */	stwu r1, -8(r1)
@@ -69,9 +68,9 @@ start__11YaiStrategyFR4Teki:
 /* 801E973C 001E669C  38 21 00 08 */	addi r1, r1, 8
 /* 801E9740 001E66A0  7C 08 03 A6 */	mtlr r0
 /* 801E9744 001E66A4  4E 80 00 20 */	blr 
+.endfn start__11YaiStrategyFR4Teki
 
-.global act__11YaiStrategyFR4Teki
-act__11YaiStrategyFR4Teki:
+.fn act__11YaiStrategyFR4Teki, global
 /* 801E9748 001E66A8  7C 08 02 A6 */	mflr r0
 /* 801E974C 001E66AC  90 01 00 04 */	stw r0, 4(r1)
 /* 801E9750 001E66B0  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -116,9 +115,9 @@ act__11YaiStrategyFR4Teki:
 /* 801E97E8 001E6748  38 21 00 20 */	addi r1, r1, 0x20
 /* 801E97EC 001E674C  7C 08 03 A6 */	mtlr r0
 /* 801E97F0 001E6750  4E 80 00 20 */	blr 
+.endfn act__11YaiStrategyFR4Teki
 
-.global eventPerformed__11YaiStrategyFR9TekiEvent
-eventPerformed__11YaiStrategyFR9TekiEvent:
+.fn eventPerformed__11YaiStrategyFR9TekiEvent, global
 /* 801E97F4 001E6754  7C 08 02 A6 */	mflr r0
 /* 801E97F8 001E6758  90 01 00 04 */	stw r0, 4(r1)
 /* 801E97FC 001E675C  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -163,9 +162,9 @@ eventPerformed__11YaiStrategyFR9TekiEvent:
 /* 801E9894 001E67F4  38 21 00 20 */	addi r1, r1, 0x20
 /* 801E9898 001E67F8  7C 08 03 A6 */	mtlr r0
 /* 801E989C 001E67FC  4E 80 00 20 */	blr 
+.endfn eventPerformed__11YaiStrategyFR9TekiEvent
 
-.global draw__11YaiStrategyFR4TekiR8Graphics
-draw__11YaiStrategyFR4TekiR8Graphics:
+.fn draw__11YaiStrategyFR4TekiR8Graphics, global
 /* 801E98A0 001E6800  7C 08 02 A6 */	mflr r0
 /* 801E98A4 001E6804  90 01 00 04 */	stw r0, 4(r1)
 /* 801E98A8 001E6808  94 21 FF F8 */	stwu r1, -8(r1)
@@ -174,21 +173,24 @@ draw__11YaiStrategyFR4TekiR8Graphics:
 /* 801E98B4 001E6814  38 21 00 08 */	addi r1, r1, 8
 /* 801E98B8 001E6818  7C 08 03 A6 */	mtlr r0
 /* 801E98BC 001E681C  4E 80 00 20 */	blr 
+.endfn draw__11YaiStrategyFR4TekiR8Graphics
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802E5A80:
+.obj lbl_802E5A80, local
 	.asciz "YaiStrategy"
+.endobj lbl_802E5A80
 .balign 4
-lbl_802E5A8C:
+.obj lbl_802E5A8C, local
 	.asciz "TekiStrategy"
+.endobj lbl_802E5A8C
 .balign 4
-lbl_802E5A9C:
+.obj lbl_802E5A9C, local
 	.4byte __RTTI__12TekiStrategy
 	.4byte 0x00000000
 	.4byte 0x00000000
-.global __vt__11YaiStrategy
-__vt__11YaiStrategy:
+.endobj lbl_802E5A9C
+.obj __vt__11YaiStrategy, global
 	.4byte __RTTI__11YaiStrategy
 	.4byte 0
 	.4byte start__11YaiStrategyFR4Teki
@@ -199,12 +201,15 @@ __vt__11YaiStrategy:
 	.4byte drawDebugInfo__12TekiStrategyFR4TekiR8Graphics
 	.4byte interact__12TekiStrategyFR4TekiR18TekiInteractionKey
 	.4byte spawnCorpseParts__12TekiStrategyFR4Teki
+.endobj __vt__11YaiStrategy
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-__RTTI__12TekiStrategy:
+.obj __RTTI__12TekiStrategy, local
 	.4byte lbl_802E5A8C
 	.4byte 0x00000000
-__RTTI__11YaiStrategy:
+.endobj __RTTI__12TekiStrategy
+.obj __RTTI__11YaiStrategy, local
 	.4byte lbl_802E5A80
 	.4byte lbl_802E5A9C
+.endobj __RTTI__11YaiStrategy

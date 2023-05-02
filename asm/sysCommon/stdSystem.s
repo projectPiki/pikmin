@@ -1871,53 +1871,69 @@ __vt__10AnmobjInfo:
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-lbl_803DD318:
+.obj lbl_803DD318, local
 	.asciz ""
+.endobj lbl_803DD318
 .balign 4
-lbl_803DD31C:
+.obj lbl_803DD31C, local
 	.asciz "%s"
+.endobj lbl_803DD31C
 .balign 4
-lbl_803DD320:
+.obj lbl_803DD320, local
 	.asciz "lfgroup"
+.endobj lbl_803DD320
 .balign 4
-lbl_803DD328:
+.obj lbl_803DD328, local
 	.asciz "texImg"
+.endobj lbl_803DD328
 .balign 4
-__RTTI__10GfxobjInfo:
+.obj __RTTI__10GfxobjInfo, local
 	.4byte lbl_80228C40
 	.4byte 0
-__RTTI__10BinobjInfo:
+.endobj __RTTI__10GfxobjInfo
+.obj __RTTI__10BinobjInfo, local
 	.4byte lbl_80228C34
 	.4byte lbl_80228C4C
+.endobj __RTTI__10BinobjInfo
 .balign 4
-lbl_803DD340:
+.obj lbl_803DD340, local
 	.asciz "ANode"
+.endobj lbl_803DD340
 .balign 4
-__RTTI__5ANode:
+.obj __RTTI__5ANode, local
 	.4byte lbl_803DD340
 	.4byte 0
-__RTTI__8CoreNode:
+.endobj __RTTI__5ANode
+.obj __RTTI__8CoreNode, local
 	.4byte lbl_80228C0C
 	.4byte lbl_80228C74
-__RTTI__11LFlareGroup:
+.endobj __RTTI__8CoreNode
+.obj __RTTI__11LFlareGroup, local
 	.4byte lbl_80228C68
 	.4byte lbl_80228C80
-__RTTI__9StdSystem:
+.endobj __RTTI__11LFlareGroup
+.obj __RTTI__9StdSystem, local
 	.4byte lbl_80228C00
 	.4byte 0
-__RTTI__10TexobjInfo:
+.endobj __RTTI__9StdSystem
+.obj __RTTI__10TexobjInfo, local
 	.4byte lbl_80228CD8
 	.4byte lbl_80228CE4
-__RTTI__10ShpobjInfo:
+.endobj __RTTI__10TexobjInfo
+.obj __RTTI__10ShpobjInfo, local
 	.4byte lbl_80228D00
 	.4byte lbl_80228D0C
-__RTTI__10AnmobjInfo:
+.endobj __RTTI__10ShpobjInfo
+.obj __RTTI__10AnmobjInfo, local
 	.4byte lbl_80228D54
 	.4byte lbl_80228D60
+.endobj __RTTI__10AnmobjInfo
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803E85F0:
+.obj lbl_803E85F0, local
 	.float 0.0
-lbl_803E85F4:
+.endobj lbl_803E85F0
+.obj lbl_803E85F4, local
 	.float 1.0
+.endobj lbl_803E85F4

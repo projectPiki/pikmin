@@ -2235,7 +2235,7 @@ lbl_802D5DE8:
 lbl_802D5DF4:
 	.asciz "screen/blo/tu_base.blo"
 .balign 4
-lbl_802D5E0C:
+lbl_802D5E0C: # Shift-JIS
 	.4byte 0x74783F3F
 	.4byte 0x82CC9094
 	.4byte 0x2825648C
@@ -2280,43 +2280,41 @@ lbl_803E5AD8:
 .balign 4
 lbl_803E5AE0:
 	.asciz "pk%02d"
-.balign 4
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
 lbl_803EB328:
-	.4byte 0x3F000000
+	.float 0.5
 .balign 8
 lbl_803EB330:
-	.4byte 0x43300000
-	.4byte 0x80000000
+	.8byte 0x4330000080000000
 lbl_803EB338:
-	.4byte 0x00000000
+	.float 0.0
 lbl_803EB33C:
-	.4byte 0x43A00000
+	.float 320.0
 lbl_803EB340:
-	.4byte 0x43700000
+	.float 240.0
 lbl_803EB344:
-	.4byte 0x3C23D70A
+	.float 0.01
 lbl_803EB348:
-	.4byte 0x3FC00000
+	.float 1.5
 lbl_803EB34C:
-	.4byte 0x3F800000
+	.float 1.0
 lbl_803EB350:
-	.4byte 0x3F2AAAAB
+	.float 0.6666667
 lbl_803EB354:
-	.4byte 0x3E4CCCCD
+	.float 0.2
 lbl_803EB358:
-	.4byte 0x3E800000
+	.float 0.25
 lbl_803EB35C:
-	.4byte 0x437F0000
+	.float 255.0
 lbl_803EB360:
-	.4byte 0x3DCCCCCD
+	.float 0.1
 lbl_803EB364:
-	.4byte 0x3D4CCCCD
+	.float 0.05
 lbl_803EB368:
-	.4byte 0x40C90FDB
+	.float 6.2831855
 lbl_803EB36C:
-	.4byte 0x41F00000
+	.float 30.0
 lbl_803EB370:
-	.4byte 0x459C4000
+	.float 5000.0

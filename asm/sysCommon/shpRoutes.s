@@ -1348,21 +1348,28 @@ __RTTI__10RoutePoint:
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803E8578:
+.obj lbl_803E8578, local
 	.float 0.0
-lbl_803E857C:
+.endobj lbl_803E8578
+.obj lbl_803E857C, local
 	.float 8.0
-lbl_803E8580:
+.endobj lbl_803E857C
+.obj lbl_803E8580, local
 	.float 10.0
-lbl_803E8584:
+.endobj lbl_803E8580
+.obj lbl_803E8584, local
 	.float 12.0
-lbl_803E8588:
+.endobj lbl_803E8584
+.obj lbl_803E8588, local
 	.float 0.2
-lbl_803E858C:
+.endobj lbl_803E8588
+.obj lbl_803E858C, local
 	.float 1.0
-lbl_803E8590:
+.endobj lbl_803E858C
+.obj lbl_803E8590, local
 	.float 4.0
+.endobj lbl_803E8590
 .balign 8
-lbl_803E8598:
-	.4byte 0x43300000
-	.4byte 0x00000000
+.obj lbl_803E8598, local
+	.8byte 0x4330000000000000
+.endobj lbl_803E8598

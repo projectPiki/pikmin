@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global __ct__Q23zen16ogScrTutorialMgrFv
-__ct__Q23zen16ogScrTutorialMgrFv:
+.fn __ct__Q23zen16ogScrTutorialMgrFv, global
 /* 80182B94 0017FAF4  7C 08 02 A6 */	mflr r0
 /* 80182B98 0017FAF8  3C 80 00 01 */	lis r4, 0x0000A5F0@ha
 /* 80182B9C 0017FAFC  90 01 00 04 */	stw r0, 4(r1)
@@ -35,9 +34,9 @@ __ct__Q23zen16ogScrTutorialMgrFv:
 /* 80182C08 0017FB68  38 21 00 18 */	addi r1, r1, 0x18
 /* 80182C0C 0017FB6C  7C 08 03 A6 */	mtlr r0
 /* 80182C10 0017FB70  4E 80 00 20 */	blr 
+.endfn __ct__Q23zen16ogScrTutorialMgrFv
 
-.global update__Q23zen16ogScrTutorialMgrFP10Controller
-update__Q23zen16ogScrTutorialMgrFP10Controller:
+.fn update__Q23zen16ogScrTutorialMgrFP10Controller, global
 /* 80182C14 0017FB74  7C 08 02 A6 */	mflr r0
 /* 80182C18 0017FB78  90 01 00 04 */	stw r0, 4(r1)
 /* 80182C1C 0017FB7C  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -95,9 +94,9 @@ update__Q23zen16ogScrTutorialMgrFP10Controller:
 /* 80182CC4 0017FC24  38 21 00 18 */	addi r1, r1, 0x18
 /* 80182CC8 0017FC28  7C 08 03 A6 */	mtlr r0
 /* 80182CCC 0017FC2C  4E 80 00 20 */	blr 
+.endfn update__Q23zen16ogScrTutorialMgrFP10Controller
 
-.global draw__Q23zen16ogScrTutorialMgrFR8Graphics
-draw__Q23zen16ogScrTutorialMgrFR8Graphics:
+.fn draw__Q23zen16ogScrTutorialMgrFR8Graphics, global
 /* 80182CD0 0017FC30  7C 08 02 A6 */	mflr r0
 /* 80182CD4 0017FC34  90 01 00 04 */	stw r0, 4(r1)
 /* 80182CD8 0017FC38  94 21 FF F8 */	stwu r1, -8(r1)
@@ -111,9 +110,9 @@ draw__Q23zen16ogScrTutorialMgrFR8Graphics:
 /* 80182CF4 0017FC54  38 21 00 08 */	addi r1, r1, 8
 /* 80182CF8 0017FC58  7C 08 03 A6 */	mtlr r0
 /* 80182CFC 0017FC5C  4E 80 00 20 */	blr 
+.endfn draw__Q23zen16ogScrTutorialMgrFR8Graphics
 
-.global start__Q23zen16ogScrTutorialMgrFQ33zen16ogScrTutorialMgr12EnumTutorial
-start__Q23zen16ogScrTutorialMgrFQ33zen16ogScrTutorialMgr12EnumTutorial:
+.fn start__Q23zen16ogScrTutorialMgrFQ33zen16ogScrTutorialMgr12EnumTutorial, global
 /* 80182D00 0017FC60  7C 08 02 A6 */	mflr r0
 /* 80182D04 0017FC64  90 01 00 04 */	stw r0, 4(r1)
 /* 80182D08 0017FC68  94 21 FF D0 */	stwu r1, -0x30(r1)
@@ -171,8 +170,10 @@ start__Q23zen16ogScrTutorialMgrFQ33zen16ogScrTutorialMgr12EnumTutorial:
 /* 80182DD4 0017FD34  38 21 00 30 */	addi r1, r1, 0x30
 /* 80182DD8 0017FD38  7C 08 03 A6 */	mtlr r0
 /* 80182DDC 0017FD3C  4E 80 00 20 */	blr 
+.endfn start__Q23zen16ogScrTutorialMgrFQ33zen16ogScrTutorialMgr12EnumTutorial
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802D3128:
+.obj lbl_802D3128, local
 	.asciz "screen/blo/tu_base.blo"
+.endobj lbl_802D3128

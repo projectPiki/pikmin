@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global TRKTestForPacket
-TRKTestForPacket:
+.fn TRKTestForPacket, global
 /* 8021CD14 00219C74  7C 08 02 A6 */	mflr r0
 /* 8021CD18 00219C78  90 01 00 04 */	stw r0, 4(r1)
 /* 8021CD1C 00219C7C  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -62,9 +61,9 @@ TRKTestForPacket:
 /* 8021CDD8 00219D38  80 01 00 04 */	lwz r0, 4(r1)
 /* 8021CDDC 00219D3C  7C 08 03 A6 */	mtlr r0
 /* 8021CDE0 00219D40  4E 80 00 20 */	blr 
+.endfn TRKTestForPacket
 
-.global TRKGetInput
-TRKGetInput:
+.fn TRKGetInput, global
 /* 8021CDE4 00219D44  7C 08 02 A6 */	mflr r0
 /* 8021CDE8 00219D48  90 01 00 04 */	stw r0, 4(r1)
 /* 8021CDEC 00219D4C  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -98,9 +97,9 @@ TRKGetInput:
 /* 8021CE54 00219DB4  80 01 00 04 */	lwz r0, 4(r1)
 /* 8021CE58 00219DB8  7C 08 03 A6 */	mtlr r0
 /* 8021CE5C 00219DBC  4E 80 00 20 */	blr 
+.endfn TRKGetInput
 
-.global TRKProcessInput
-TRKProcessInput:
+.fn TRKProcessInput, global
 /* 8021CE60 00219DC0  7C 08 02 A6 */	mflr r0
 /* 8021CE64 00219DC4  38 80 00 02 */	li r4, 2
 /* 8021CE68 00219DC8  90 01 00 04 */	stw r0, 4(r1)
@@ -121,3 +120,4 @@ TRKProcessInput:
 /* 8021CEA4 00219E04  80 01 00 04 */	lwz r0, 4(r1)
 /* 8021CEA8 00219E08  7C 08 03 A6 */	mtlr r0
 /* 8021CEAC 00219E0C  4E 80 00 20 */	blr 
+.endfn TRKProcessInput

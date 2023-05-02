@@ -1,17 +1,16 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global __TRK_get_MSR
-__TRK_get_MSR:
+.fn __TRK_get_MSR, global
 /* 8021E884 0021B7E4  7C 60 00 A6 */	mfmsr r3
 /* 8021E888 0021B7E8  4E 80 00 20 */	blr 
+.endfn __TRK_get_MSR
 
-.global __TRK_set_MSR
-__TRK_set_MSR:
+.fn __TRK_set_MSR, global
 /* 8021E88C 0021B7EC  7C 60 01 24 */	mtmsr r3
 /* 8021E890 0021B7F0  4E 80 00 20 */	blr 
+.endfn __TRK_set_MSR
 
-.global TRKValidMemory32
-TRKValidMemory32:
+.fn TRKValidMemory32, global
 /* 8021E894 0021B7F4  7C 08 02 A6 */	mflr r0
 /* 8021E898 0021B7F8  90 01 00 04 */	stw r0, 4(r1)
 /* 8021E89C 0021B7FC  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -99,9 +98,9 @@ TRKValidMemory32:
 /* 8021E9C0 0021B920  80 01 00 04 */	lwz r0, 4(r1)
 /* 8021E9C4 0021B924  7C 08 03 A6 */	mtlr r0
 /* 8021E9C8 0021B928  4E 80 00 20 */	blr 
+.endfn TRKValidMemory32
 
-.global TRK_ppc_memcpy
-TRK_ppc_memcpy:
+.fn TRK_ppc_memcpy, local
 /* 8021E9CC 0021B92C  7D 00 00 A6 */	mfmsr r8
 /* 8021E9D0 0021B930  39 40 00 00 */	li r10, 0
 .L_8021E9D4:
@@ -119,9 +118,9 @@ TRK_ppc_memcpy:
 /* 8021E9FC 0021B95C  7D 00 01 24 */	mtmsr r8
 /* 8021EA00 0021B960  7C 00 04 AC */	sync 0
 /* 8021EA04 0021B964  4E 80 00 20 */	blr 
+.endfn TRK_ppc_memcpy
 
-.global TRKTargetAccessMemory
-TRKTargetAccessMemory:
+.fn TRKTargetAccessMemory, global
 /* 8021EA08 0021B968  7C 08 02 A6 */	mflr r0
 /* 8021EA0C 0021B96C  90 01 00 04 */	stw r0, 4(r1)
 /* 8021EA10 0021B970  94 21 FF C8 */	stwu r1, -0x38(r1)
@@ -217,9 +216,9 @@ TRKTargetAccessMemory:
 /* 8021EB60 0021BAC0  80 01 00 04 */	lwz r0, 4(r1)
 /* 8021EB64 0021BAC4  7C 08 03 A6 */	mtlr r0
 /* 8021EB68 0021BAC8  4E 80 00 20 */	blr 
+.endfn TRKTargetAccessMemory
 
-.global TRKTargetReadInstruction
-TRKTargetReadInstruction:
+.fn TRKTargetReadInstruction, global
 /* 8021EB6C 0021BACC  7C 08 02 A6 */	mflr r0
 /* 8021EB70 0021BAD0  90 01 00 04 */	stw r0, 4(r1)
 /* 8021EB74 0021BAD4  94 21 FF F0 */	stwu r1, -0x10(r1)
@@ -240,9 +239,9 @@ TRKTargetReadInstruction:
 /* 8021EBAC 0021BB0C  80 01 00 04 */	lwz r0, 4(r1)
 /* 8021EBB0 0021BB10  7C 08 03 A6 */	mtlr r0
 /* 8021EBB4 0021BB14  4E 80 00 20 */	blr 
+.endfn TRKTargetReadInstruction
 
-.global TRKTargetAccessDefault
-TRKTargetAccessDefault:
+.fn TRKTargetAccessDefault, global
 /* 8021EBB8 0021BB18  7C 08 02 A6 */	mflr r0
 /* 8021EBBC 0021BB1C  90 01 00 04 */	stw r0, 4(r1)
 /* 8021EBC0 0021BB20  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -311,9 +310,9 @@ TRKTargetAccessDefault:
 /* 8021ECA8 0021BC08  80 01 00 04 */	lwz r0, 4(r1)
 /* 8021ECAC 0021BC0C  7C 08 03 A6 */	mtlr r0
 /* 8021ECB0 0021BC10  4E 80 00 20 */	blr 
+.endfn TRKTargetAccessDefault
 
-.global TRKTargetAccessFP
-TRKTargetAccessFP:
+.fn TRKTargetAccessFP, global
 /* 8021ECB4 0021BC14  7C 08 02 A6 */	mflr r0
 /* 8021ECB8 0021BC18  90 01 00 04 */	stw r0, 4(r1)
 /* 8021ECBC 0021BC1C  94 21 FF C0 */	stwu r1, -0x40(r1)
@@ -406,9 +405,9 @@ TRKTargetAccessFP:
 /* 8021EDF0 0021BD50  80 01 00 04 */	lwz r0, 4(r1)
 /* 8021EDF4 0021BD54  7C 08 03 A6 */	mtlr r0
 /* 8021EDF8 0021BD58  4E 80 00 20 */	blr 
+.endfn TRKTargetAccessFP
 
-.global TRKTargetAccessExtended1
-TRKTargetAccessExtended1:
+.fn TRKTargetAccessExtended1, global
 /* 8021EDFC 0021BD5C  7C 08 02 A6 */	mflr r0
 /* 8021EE00 0021BD60  90 01 00 04 */	stw r0, 4(r1)
 /* 8021EE04 0021BD64  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -510,9 +509,9 @@ TRKTargetAccessExtended1:
 /* 8021EF68 0021BEC8  80 01 00 04 */	lwz r0, 4(r1)
 /* 8021EF6C 0021BECC  7C 08 03 A6 */	mtlr r0
 /* 8021EF70 0021BED0  4E 80 00 20 */	blr 
+.endfn TRKTargetAccessExtended1
 
-.global TRKTargetAccessExtended2
-TRKTargetAccessExtended2:
+.fn TRKTargetAccessExtended2, global
 /* 8021EF74 0021BED4  7C 08 02 A6 */	mflr r0
 /* 8021EF78 0021BED8  90 01 00 04 */	stw r0, 4(r1)
 /* 8021EF7C 0021BEDC  94 21 FF C0 */	stwu r1, -0x40(r1)
@@ -618,9 +617,9 @@ TRKTargetAccessExtended2:
 /* 8021F0E4 0021C044  80 01 00 04 */	lwz r0, 4(r1)
 /* 8021F0E8 0021C048  7C 08 03 A6 */	mtlr r0
 /* 8021F0EC 0021C04C  4E 80 00 20 */	blr 
+.endfn TRKTargetAccessExtended2
 
-.global TRKTargetVersions
-TRKTargetVersions:
+.fn TRKTargetVersions, global
 /* 8021F0F0 0021C050  38 00 00 00 */	li r0, 0
 /* 8021F0F4 0021C054  98 03 00 00 */	stb r0, 0(r3)
 /* 8021F0F8 0021C058  38 00 00 08 */	li r0, 8
@@ -631,9 +630,9 @@ TRKTargetVersions:
 /* 8021F10C 0021C06C  98 03 00 03 */	stb r0, 3(r3)
 /* 8021F110 0021C070  38 60 00 00 */	li r3, 0
 /* 8021F114 0021C074  4E 80 00 20 */	blr 
+.endfn TRKTargetVersions
 
-.global TRKTargetSupportMask
-TRKTargetSupportMask:
+.fn TRKTargetSupportMask, global
 /* 8021F118 0021C078  38 00 00 7A */	li r0, 0x7a
 /* 8021F11C 0021C07C  98 03 00 00 */	stb r0, 0(r3)
 /* 8021F120 0021C080  38 E0 00 00 */	li r7, 0
@@ -675,9 +674,9 @@ TRKTargetSupportMask:
 /* 8021F1B0 0021C110  98 03 00 1F */	stb r0, 0x1f(r3)
 /* 8021F1B4 0021C114  38 60 00 00 */	li r3, 0
 /* 8021F1B8 0021C118  4E 80 00 20 */	blr 
+.endfn TRKTargetSupportMask
 
-.global TRKTargetCPUType
-TRKTargetCPUType:
+.fn TRKTargetCPUType, global
 /* 8021F1BC 0021C11C  7C 08 02 A6 */	mflr r0
 /* 8021F1C0 0021C120  90 01 00 04 */	stw r0, 4(r1)
 /* 8021F1C4 0021C124  94 21 FF F0 */	stwu r1, -0x10(r1)
@@ -704,9 +703,9 @@ TRKTargetCPUType:
 /* 8021F218 0021C178  80 01 00 04 */	lwz r0, 4(r1)
 /* 8021F21C 0021C17C  7C 08 03 A6 */	mtlr r0
 /* 8021F220 0021C180  4E 80 00 20 */	blr 
+.endfn TRKTargetCPUType
 
-.global TRKInterruptHandler
-TRKInterruptHandler:
+.fn TRKInterruptHandler, global
 /* 8021F224 0021C184  7C 5A 03 A6 */	mtspr 0x1a, r2
 /* 8021F228 0021C188  7C 9B 03 A6 */	mtspr 0x1b, r4
 /* 8021F22C 0021C18C  7C 93 42 A6 */	mfspr r4, 0x113
@@ -810,9 +809,9 @@ TRKInterruptHandler:
 /* 8021F3AC 0021C30C  80 22 00 04 */	lwz r1, 4(r2)
 /* 8021F3B0 0021C310  80 42 00 08 */	lwz r2, 8(r2)
 /* 8021F3B4 0021C314  48 00 00 A0 */	b TRKPostInterruptEvent
+.endfn TRKInterruptHandler
 
-.global TRKExceptionHandler
-TRKExceptionHandler:
+.fn TRKExceptionHandler, global
 /* 8021F3B8 0021C318  3C 40 80 2E */	lis r2, gTRKExceptionStatus@h
 /* 8021F3BC 0021C31C  60 42 95 8C */	ori r2, r2, gTRKExceptionStatus@l
 /* 8021F3C0 0021C320  B0 62 00 08 */	sth r3, 8(r2)
@@ -854,9 +853,9 @@ TRKExceptionHandler:
 /* 8021F448 0021C3A8  7C 51 42 A6 */	mfspr r2, 0x111
 /* 8021F44C 0021C3AC  7C 72 42 A6 */	mfspr r3, 0x112
 /* 8021F450 0021C3B0  4C 00 00 64 */	rfi 
+.endfn TRKExceptionHandler
 
-.global TRKPostInterruptEvent
-TRKPostInterruptEvent:
+.fn TRKPostInterruptEvent, global
 /* 8021F454 0021C3B4  7C 08 02 A6 */	mflr r0
 /* 8021F458 0021C3B8  90 01 00 04 */	stw r0, 4(r1)
 /* 8021F45C 0021C3BC  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -907,9 +906,9 @@ TRKPostInterruptEvent:
 /* 8021F4F8 0021C458  80 01 00 04 */	lwz r0, 4(r1)
 /* 8021F4FC 0021C45C  7C 08 03 A6 */	mtlr r0
 /* 8021F500 0021C460  4E 80 00 20 */	blr 
+.endfn TRKPostInterruptEvent
 
-.global TRKSwapAndGo
-TRKSwapAndGo:
+.fn TRKSwapAndGo, global
 /* 8021F504 0021C464  3C 60 80 3D */	lis r3, gTRKState@h
 /* 8021F508 0021C468  60 63 5D 98 */	ori r3, r3, gTRKState@l
 /* 8021F50C 0021C46C  BC 03 00 00 */	stmw r0, 0(r3)
@@ -960,9 +959,9 @@ TRKSwapAndGo:
 /* 8021F5BC 0021C51C  80 22 00 04 */	lwz r1, 4(r2)
 /* 8021F5C0 0021C520  80 42 00 08 */	lwz r2, 8(r2)
 /* 8021F5C4 0021C524  4C 00 00 64 */	rfi 
+.endfn TRKSwapAndGo
 
-.global TRKInterruptHandlerEnableInterrupts
-TRKInterruptHandlerEnableInterrupts:
+.fn TRKInterruptHandlerEnableInterrupts, global
 /* 8021F5C8 0021C528  3C 40 80 3D */	lis r2, gTRKState@h
 /* 8021F5CC 0021C52C  60 42 5D 98 */	ori r2, r2, gTRKState@l
 /* 8021F5D0 0021C530  80 02 00 8C */	lwz r0, 0x8c(r2)
@@ -984,9 +983,9 @@ TRKInterruptHandlerEnableInterrupts:
 /* 8021F610 0021C570  80 22 00 04 */	lwz r1, 4(r2)
 /* 8021F614 0021C574  80 42 00 08 */	lwz r2, 8(r2)
 /* 8021F618 0021C578  4B FF FE 3C */	b TRKPostInterruptEvent
+.endfn TRKInterruptHandlerEnableInterrupts
 
-.global TRKTargetInterrupt
-TRKTargetInterrupt:
+.fn TRKTargetInterrupt, global
 /* 8021F61C 0021C57C  7C 08 02 A6 */	mflr r0
 /* 8021F620 0021C580  90 01 00 04 */	stw r0, 4(r1)
 /* 8021F624 0021C584  94 21 FF F0 */	stwu r1, -0x10(r1)
@@ -1014,9 +1013,9 @@ TRKTargetInterrupt:
 /* 8021F674 0021C5D4  80 01 00 04 */	lwz r0, 4(r1)
 /* 8021F678 0021C5D8  7C 08 03 A6 */	mtlr r0
 /* 8021F67C 0021C5DC  4E 80 00 20 */	blr 
+.endfn TRKTargetInterrupt
 
-.global TRKTargetAddStopInfo
-TRKTargetAddStopInfo:
+.fn TRKTargetAddStopInfo, global
 /* 8021F680 0021C5E0  7C 08 02 A6 */	mflr r0
 /* 8021F684 0021C5E4  90 01 00 04 */	stw r0, 4(r1)
 /* 8021F688 0021C5E8  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -1056,9 +1055,9 @@ TRKTargetAddStopInfo:
 /* 8021F704 0021C664  80 01 00 04 */	lwz r0, 4(r1)
 /* 8021F708 0021C668  7C 08 03 A6 */	mtlr r0
 /* 8021F70C 0021C66C  4E 80 00 20 */	blr 
+.endfn TRKTargetAddStopInfo
 
-.global TRKTargetAddExceptionInfo
-TRKTargetAddExceptionInfo:
+.fn TRKTargetAddExceptionInfo, global
 /* 8021F710 0021C670  7C 08 02 A6 */	mflr r0
 /* 8021F714 0021C674  90 01 00 04 */	stw r0, 4(r1)
 /* 8021F718 0021C678  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -1096,9 +1095,9 @@ TRKTargetAddExceptionInfo:
 /* 8021F78C 0021C6EC  80 01 00 04 */	lwz r0, 4(r1)
 /* 8021F790 0021C6F0  7C 08 03 A6 */	mtlr r0
 /* 8021F794 0021C6F4  4E 80 00 20 */	blr 
+.endfn TRKTargetAddExceptionInfo
 
-.global TRKTargetEnableTrace
-TRKTargetEnableTrace:
+.fn TRKTargetEnableTrace, local
 /* 8021F798 0021C6F8  2C 03 00 00 */	cmpwi r3, 0
 /* 8021F79C 0021C6FC  41 82 00 1C */	beq .L_8021F7B8
 /* 8021F7A0 0021C700  3C 60 80 3D */	lis r3, gTRKCPUState@ha
@@ -1116,9 +1115,9 @@ TRKTargetEnableTrace:
 .L_8021F7CC:
 /* 8021F7CC 0021C72C  38 60 00 00 */	li r3, 0
 /* 8021F7D0 0021C730  4E 80 00 20 */	blr 
+.endfn TRKTargetEnableTrace
 
-.global TRKTargetStepDone
-TRKTargetStepDone:
+.fn TRKTargetStepDone, local
 /* 8021F7D4 0021C734  3C 60 80 2F */	lis r3, gTRKStepStatus@ha
 /* 8021F7D8 0021C738  38 A3 95 9C */	addi r5, r3, gTRKStepStatus@l
 /* 8021F7DC 0021C73C  80 05 00 00 */	lwz r0, 0(r5)
@@ -1155,9 +1154,9 @@ TRKTargetStepDone:
 /* 8021F850 0021C7B0  38 60 00 00 */	li r3, 0
 .L_8021F854:
 /* 8021F854 0021C7B4  4E 80 00 20 */	blr 
+.endfn TRKTargetStepDone
 
-.global TRKTargetDoStep
-TRKTargetDoStep:
+.fn TRKTargetDoStep, local
 /* 8021F858 0021C7B8  7C 08 02 A6 */	mflr r0
 /* 8021F85C 0021C7BC  90 01 00 04 */	stw r0, 4(r1)
 /* 8021F860 0021C7C0  94 21 FF F0 */	stwu r1, -0x10(r1)
@@ -1188,9 +1187,9 @@ TRKTargetDoStep:
 /* 8021F8BC 0021C81C  80 01 00 04 */	lwz r0, 4(r1)
 /* 8021F8C0 0021C820  7C 08 03 A6 */	mtlr r0
 /* 8021F8C4 0021C824  4E 80 00 20 */	blr 
+.endfn TRKTargetDoStep
 
-.global TRKTargetCheckStep
-TRKTargetCheckStep:
+.fn TRKTargetCheckStep, local
 /* 8021F8C8 0021C828  7C 08 02 A6 */	mflr r0
 /* 8021F8CC 0021C82C  90 01 00 04 */	stw r0, 4(r1)
 /* 8021F8D0 0021C830  94 21 FF F0 */	stwu r1, -0x10(r1)
@@ -1219,9 +1218,9 @@ TRKTargetCheckStep:
 /* 8021F924 0021C884  80 01 00 04 */	lwz r0, 4(r1)
 /* 8021F928 0021C888  7C 08 03 A6 */	mtlr r0
 /* 8021F92C 0021C88C  4E 80 00 20 */	blr 
+.endfn TRKTargetCheckStep
 
-.global TRKTargetSingleStep
-TRKTargetSingleStep:
+.fn TRKTargetSingleStep, global
 /* 8021F930 0021C890  7C 08 02 A6 */	mflr r0
 /* 8021F934 0021C894  90 01 00 04 */	stw r0, 4(r1)
 /* 8021F938 0021C898  94 21 FF F8 */	stwu r1, -8(r1)
@@ -1241,9 +1240,9 @@ TRKTargetSingleStep:
 /* 8021F968 0021C8C8  80 01 00 04 */	lwz r0, 4(r1)
 /* 8021F96C 0021C8CC  7C 08 03 A6 */	mtlr r0
 /* 8021F970 0021C8D0  4E 80 00 20 */	blr 
+.endfn TRKTargetSingleStep
 
-.global TRKTargetStepOutOfRange
-TRKTargetStepOutOfRange:
+.fn TRKTargetStepOutOfRange, global
 /* 8021F974 0021C8D4  7C 08 02 A6 */	mflr r0
 /* 8021F978 0021C8D8  90 01 00 04 */	stw r0, 4(r1)
 /* 8021F97C 0021C8DC  94 21 FF F8 */	stwu r1, -8(r1)
@@ -1264,16 +1263,16 @@ TRKTargetStepOutOfRange:
 /* 8021F9B0 0021C910  80 01 00 04 */	lwz r0, 4(r1)
 /* 8021F9B4 0021C914  7C 08 03 A6 */	mtlr r0
 /* 8021F9B8 0021C918  4E 80 00 20 */	blr 
+.endfn TRKTargetStepOutOfRange
 
-.global TRKTargetGetPC
-TRKTargetGetPC:
+.fn TRKTargetGetPC, global
 /* 8021F9BC 0021C91C  3C 60 80 3D */	lis r3, gTRKCPUState@ha
 /* 8021F9C0 0021C920  38 63 5E 40 */	addi r3, r3, gTRKCPUState@l
 /* 8021F9C4 0021C924  80 63 00 80 */	lwz r3, 0x80(r3)
 /* 8021F9C8 0021C928  4E 80 00 20 */	blr 
+.endfn TRKTargetGetPC
 
-.global TRKTargetSupportRequest
-TRKTargetSupportRequest:
+.fn TRKTargetSupportRequest, global
 /* 8021F9CC 0021C92C  7C 08 02 A6 */	mflr r0
 /* 8021F9D0 0021C930  90 01 00 04 */	stw r0, 4(r1)
 /* 8021F9D4 0021C934  94 21 FF D0 */	stwu r1, -0x30(r1)
@@ -1338,9 +1337,9 @@ TRKTargetSupportRequest:
 /* 8021FAB0 0021CA10  80 01 00 04 */	lwz r0, 4(r1)
 /* 8021FAB4 0021CA14  7C 08 03 A6 */	mtlr r0
 /* 8021FAB8 0021CA18  4E 80 00 20 */	blr 
+.endfn TRKTargetSupportRequest
 
-.global TRKTargetFlushCache
-TRKTargetFlushCache:
+.fn TRKTargetFlushCache, global
 /* 8021FABC 0021CA1C  7C 08 02 A6 */	mflr r0
 /* 8021FAC0 0021CA20  90 01 00 04 */	stw r0, 4(r1)
 /* 8021FAC4 0021CA24  94 21 FF F8 */	stwu r1, -8(r1)
@@ -1358,23 +1357,23 @@ TRKTargetFlushCache:
 /* 8021FAEC 0021CA4C  80 01 00 04 */	lwz r0, 4(r1)
 /* 8021FAF0 0021CA50  7C 08 03 A6 */	mtlr r0
 /* 8021FAF4 0021CA54  4E 80 00 20 */	blr 
+.endfn TRKTargetFlushCache
 
-.global TRKTargetStopped
-TRKTargetStopped:
+.fn TRKTargetStopped, global
 /* 8021FAF8 0021CA58  3C 60 80 3D */	lis r3, gTRKState@ha
 /* 8021FAFC 0021CA5C  38 63 5D 98 */	addi r3, r3, gTRKState@l
 /* 8021FB00 0021CA60  80 63 00 98 */	lwz r3, 0x98(r3)
 /* 8021FB04 0021CA64  4E 80 00 20 */	blr 
+.endfn TRKTargetStopped
 
-.global TRKTargetSetStopped
-TRKTargetSetStopped:
+.fn TRKTargetSetStopped, global
 /* 8021FB08 0021CA68  3C 80 80 3D */	lis r4, gTRKState@ha
 /* 8021FB0C 0021CA6C  38 84 5D 98 */	addi r4, r4, gTRKState@l
 /* 8021FB10 0021CA70  90 64 00 98 */	stw r3, 0x98(r4)
 /* 8021FB14 0021CA74  4E 80 00 20 */	blr 
+.endfn TRKTargetSetStopped
 
-.global TRKTargetStop
-TRKTargetStop:
+.fn TRKTargetStop, global
 /* 8021FB18 0021CA78  7C 08 02 A6 */	mflr r0
 /* 8021FB1C 0021CA7C  90 01 00 04 */	stw r0, 4(r1)
 /* 8021FB20 0021CA80  94 21 FF F8 */	stwu r1, -8(r1)
@@ -1385,9 +1384,9 @@ TRKTargetStop:
 /* 8021FB34 0021CA94  80 01 00 04 */	lwz r0, 4(r1)
 /* 8021FB38 0021CA98  7C 08 03 A6 */	mtlr r0
 /* 8021FB3C 0021CA9C  4E 80 00 20 */	blr 
+.endfn TRKTargetStop
 
-.global TRKPPCAccessSPR
-TRKPPCAccessSPR:
+.fn TRKPPCAccessSPR, global
 /* 8021FB40 0021CAA0  7C 08 02 A6 */	mflr r0
 /* 8021FB44 0021CAA4  90 01 00 04 */	stw r0, 4(r1)
 /* 8021FB48 0021CAA8  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -1434,9 +1433,9 @@ TRKPPCAccessSPR:
 /* 8021FBE4 0021CB44  80 01 00 04 */	lwz r0, 4(r1)
 /* 8021FBE8 0021CB48  7C 08 03 A6 */	mtlr r0
 /* 8021FBEC 0021CB4C  4E 80 00 20 */	blr 
+.endfn TRKPPCAccessSPR
 
-.global TRKPPCAccessPairedSingleRegister
-TRKPPCAccessPairedSingleRegister:
+.fn TRKPPCAccessPairedSingleRegister, global
 /* 8021FBF0 0021CB50  7C 08 02 A6 */	mflr r0
 /* 8021FBF4 0021CB54  90 01 00 04 */	stw r0, 4(r1)
 /* 8021FBF8 0021CB58  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -1469,9 +1468,9 @@ TRKPPCAccessPairedSingleRegister:
 /* 8021FC5C 0021CBBC  80 01 00 04 */	lwz r0, 4(r1)
 /* 8021FC60 0021CBC0  7C 08 03 A6 */	mtlr r0
 /* 8021FC64 0021CBC4  4E 80 00 20 */	blr 
+.endfn TRKPPCAccessPairedSingleRegister
 
-.global TRKPPCAccessFPRegister
-TRKPPCAccessFPRegister:
+.fn TRKPPCAccessFPRegister, global
 /* 8021FC68 0021CBC8  7C 08 02 A6 */	mflr r0
 /* 8021FC6C 0021CBCC  90 01 00 04 */	stw r0, 4(r1)
 /* 8021FC70 0021CBD0  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -1576,9 +1575,9 @@ TRKPPCAccessFPRegister:
 /* 8021FDDC 0021CD3C  80 01 00 04 */	lwz r0, 4(r1)
 /* 8021FDE0 0021CD40  7C 08 03 A6 */	mtlr r0
 /* 8021FDE4 0021CD44  4E 80 00 20 */	blr 
+.endfn TRKPPCAccessFPRegister
 
-.global TRKPPCAccessSpecialReg
-TRKPPCAccessSpecialReg:
+.fn TRKPPCAccessSpecialReg, global
 /* 8021FDE8 0021CD48  7C 08 02 A6 */	mflr r0
 /* 8021FDEC 0021CD4C  90 01 00 04 */	stw r0, 4(r1)
 /* 8021FDF0 0021CD50  94 21 FF F0 */	stwu r1, -0x10(r1)
@@ -1605,61 +1604,63 @@ TRKPPCAccessSpecialReg:
 /* 8021FE44 0021CDA4  80 01 00 04 */	lwz r0, 4(r1)
 /* 8021FE48 0021CDA8  7C 08 03 A6 */	mtlr r0
 /* 8021FE4C 0021CDAC  4E 80 00 20 */	blr 
+.endfn TRKPPCAccessSpecialReg
 
-.global TRKTargetSetInputPendingPtr
-TRKTargetSetInputPendingPtr:
+.fn TRKTargetSetInputPendingPtr, global
 /* 8021FE50 0021CDB0  3C 80 80 3D */	lis r4, gTRKState@ha
 /* 8021FE54 0021CDB4  38 84 5D 98 */	addi r4, r4, gTRKState@l
 /* 8021FE58 0021CDB8  90 64 00 A0 */	stw r3, 0xa0(r4)
 /* 8021FE5C 0021CDBC  4E 80 00 20 */	blr 
+.endfn TRKTargetSetInputPendingPtr
 
 .section .rodata, "a"  # 0x80221FE0 - 0x80222DC0
 .balign 8
-.global gTRKMemMap
-gTRKMemMap:
+.obj gTRKMemMap, global
 	.4byte 0x00000000
 	.4byte 0xFFFFFFFF
 	.4byte 0x00000001
 	.4byte 0x00000001
-.global lbl_80222D80
-lbl_80222D80:
+.endobj gTRKMemMap
+.obj lbl_80222D80, local
 	.4byte 0x60000000
 	.4byte 0x60000000
 	.4byte 0x60000000
 	.4byte 0x60000000
 	.4byte 0x60000000
-.global lbl_80222D94
-lbl_80222D94:
+.endobj lbl_80222D80
+.obj lbl_80222D94, local
 	.4byte 0x60000000
 	.4byte 0x60000000
 	.4byte 0x60000000
 	.4byte 0x60000000
 	.4byte 0x60000000
-.global lbl_80222DA8
-lbl_80222DA8:
+.endobj lbl_80222D94
+.obj lbl_80222DA8, local
 	.4byte 0x60000000
 	.4byte 0x60000000
 	.4byte 0x60000000
 	.4byte 0x60000000
 	.4byte 0x60000000
+.endobj lbl_80222DA8
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-.global gTRKRestoreFlags
-gTRKRestoreFlags:
+.obj gTRKRestoreFlags, global
 	.4byte 0x00000000
 	.4byte 0x00000000
-	.4byte 0x00000000
-.global gTRKExceptionStatus
-gTRKExceptionStatus:
+	.byte 0
+.endobj gTRKRestoreFlags
+.balign 4
+.obj gTRKExceptionStatus, local
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x01000000
-.global gTRKStepStatus
-gTRKStepStatus:
+.endobj gTRKExceptionStatus
+.obj gTRKStepStatus, local
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x00000000
+.endobj gTRKStepStatus

@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global set__Q23zen20bBoardColourAnimDataFPUc
-set__Q23zen20bBoardColourAnimDataFPUc:
+.fn set__Q23zen20bBoardColourAnimDataFPUc, global
 /* 801A1E10 0019ED70  28 04 00 00 */	cmplwi r4, 0
 /* 801A1E14 0019ED74  4D 82 00 20 */	beqlr 
 /* 801A1E18 0019ED78  88 04 00 00 */	lbz r0, 0(r4)
@@ -45,9 +44,9 @@ set__Q23zen20bBoardColourAnimDataFPUc:
 /* 801A1EA0 0019EE00  7C E7 02 14 */	add r7, r7, r0
 /* 801A1EA4 0019EE04  90 E3 00 0C */	stw r7, 0xc(r3)
 /* 801A1EA8 0019EE08  4E 80 00 20 */	blr 
+.endfn set__Q23zen20bBoardColourAnimDataFPUc
 
-.global update__Q23zen16bBoardColourAnimFfP6ColourP6Colour
-update__Q23zen16bBoardColourAnimFfP6ColourP6Colour:
+.fn update__Q23zen16bBoardColourAnimFfP6ColourP6Colour, global
 /* 801A1EAC 0019EE0C  94 21 FF 08 */	stwu r1, -0xf8(r1)
 /* 801A1EB0 0019EE10  3C 00 43 30 */	lis r0, 0x4330
 /* 801A1EB4 0019EE14  A8 C3 00 06 */	lha r6, 6(r3)
@@ -293,16 +292,21 @@ update__Q23zen16bBoardColourAnimFfP6ColourP6Colour:
 .L_801A2264:
 /* 801A2264 0019F1C4  38 21 00 F8 */	addi r1, r1, 0xf8
 /* 801A2268 0019F1C8  4E 80 00 20 */	blr 
+.endfn update__Q23zen16bBoardColourAnimFfP6ColourP6Colour
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803EB5F0:
-	.4byte 0x3F800000
-lbl_803EB5F4:
-	.4byte 0x00000000
-lbl_803EB5F8:
-	.4byte 0x43300000
-	.4byte 0x80000000
-lbl_803EB600:
-	.4byte 0x43300000
-	.4byte 0x00000000
+.obj lbl_803EB5F0, local
+	.float 1.0
+.endobj lbl_803EB5F0
+.obj lbl_803EB5F4, local
+	.float 0.0
+.endobj lbl_803EB5F4
+.balign 8
+.obj lbl_803EB5F8, local
+	.8byte 0x4330000080000000
+.endobj lbl_803EB5F8
+.balign 8
+.obj lbl_803EB600, local
+	.8byte 0x4330000000000000
+.endobj lbl_803EB600

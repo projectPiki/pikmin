@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global __ct__20TekiAnimationManagerFP7TekiMgr
-__ct__20TekiAnimationManagerFP7TekiMgr:
+.fn __ct__20TekiAnimationManagerFP7TekiMgr, global
 /* 80143E48 00140DA8  7C 08 02 A6 */	mflr r0
 /* 80143E4C 00140DAC  3C A0 80 22 */	lis r5, __vt__5ANode@ha
 /* 80143E50 00140DB0  90 01 00 04 */	stw r0, 4(r1)
@@ -39,9 +38,9 @@ __ct__20TekiAnimationManagerFP7TekiMgr:
 /* 80143ED0 00140E30  38 21 00 18 */	addi r1, r1, 0x18
 /* 80143ED4 00140E34  7C 08 03 A6 */	mtlr r0
 /* 80143ED8 00140E38  4E 80 00 20 */	blr 
+.endfn __ct__20TekiAnimationManagerFP7TekiMgr
 
-.global read__20TekiAnimationManagerFR18RandomAccessStream
-read__20TekiAnimationManagerFR18RandomAccessStream:
+.fn read__20TekiAnimationManagerFR18RandomAccessStream, global
 /* 80143EDC 00140E3C  7C 08 02 A6 */	mflr r0
 /* 80143EE0 00140E40  90 01 00 04 */	stw r0, 4(r1)
 /* 80143EE4 00140E44  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -75,32 +74,39 @@ read__20TekiAnimationManagerFR18RandomAccessStream:
 /* 80143F50 00140EB0  38 21 00 20 */	addi r1, r1, 0x20
 /* 80143F54 00140EB4  7C 08 03 A6 */	mtlr r0
 /* 80143F58 00140EB8  4E 80 00 20 */	blr 
+.endfn read__20TekiAnimationManagerFR18RandomAccessStream
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802CCE38:
+.obj lbl_802CCE38, local
 	.asciz "tekianimationmanager.cpp"
+.endobj lbl_802CCE38
 .balign 4
-lbl_802CCE54:
+.obj lbl_802CCE54, local
 	.asciz "tekianimationmanager"
+.endobj lbl_802CCE54
 .balign 4
-lbl_802CCE6C:
+.obj lbl_802CCE6C, local
 	.asciz "TekiAnimationManager"
+.endobj lbl_802CCE6C
 .balign 4
-lbl_802CCE84:
+.obj lbl_802CCE84, local
 	.asciz "CoreNode"
+.endobj lbl_802CCE84
 .balign 4
-lbl_802CCE90:
+.obj lbl_802CCE90, local
 	.4byte __RTTI__5ANode
 	.4byte 0x00000000
 	.4byte 0x00000000
-lbl_802CCE9C:
+.endobj lbl_802CCE90
+.obj lbl_802CCE9C, local
 	.4byte __RTTI__5ANode
 	.4byte 0x00000000
 	.4byte __RTTI__8CoreNode
 	.4byte 0x00000000
 	.4byte 0x00000000
-lbl_802CCEB0:
+.endobj lbl_802CCE9C
+.obj lbl_802CCEB0, local
 	.4byte __RTTI__5ANode
 	.4byte 0x00000000
 	.4byte __RTTI__8CoreNode
@@ -108,8 +114,8 @@ lbl_802CCEB0:
 	.4byte __RTTI__4Node
 	.4byte 0x00000000
 	.4byte 0x00000000
-.global __vt__20TekiAnimationManager
-__vt__20TekiAnimationManager:
+.endobj lbl_802CCEB0
+.obj __vt__20TekiAnimationManager, global
 	.4byte __RTTI__20TekiAnimationManager
 	.4byte 0
 	.4byte getAgeNodeType__5ANodeFv
@@ -122,32 +128,33 @@ __vt__20TekiAnimationManager:
 	.4byte concat__4NodeFR3SRT
 	.4byte concat__4NodeFR8Matrix4f
 	.4byte getModelMatrix__4NodeFv
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
+.endobj __vt__20TekiAnimationManager
+.skip 0x1C
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-lbl_803E4300:
+.obj lbl_803E4300, local
 	.asciz "ANode"
+.endobj lbl_803E4300
 .balign 4
-__RTTI__5ANode:
+.obj __RTTI__5ANode, local
 	.4byte lbl_803E4300
 	.4byte 0
-__RTTI__8CoreNode:
+.endobj __RTTI__5ANode
+.obj __RTTI__8CoreNode, local
 	.4byte lbl_802CCE84
 	.4byte lbl_802CCE90
+.endobj __RTTI__8CoreNode
 .balign 4
-lbl_803E4318:
+.obj lbl_803E4318, local
 	.asciz "Node"
+.endobj lbl_803E4318
 .balign 4
-__RTTI__4Node:
+.obj __RTTI__4Node, local
 	.4byte lbl_803E4318
 	.4byte lbl_802CCE9C
-__RTTI__20TekiAnimationManager:
+.endobj __RTTI__4Node
+.obj __RTTI__20TekiAnimationManager, local
 	.4byte lbl_802CCE6C
 	.4byte lbl_802CCEB0
+.endobj __RTTI__20TekiAnimationManager

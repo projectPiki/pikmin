@@ -407,24 +407,33 @@ __RTTI__Q28ActChase11Initialiser:
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803E92D8:
+.obj lbl_803E92D8, local
 	.float 1.0
-lbl_803E92DC:
+.endobj lbl_803E92D8
+.obj lbl_803E92DC, local
 	.float 32767.0
-lbl_803E92E0:
+.endobj lbl_803E92DC
+.obj lbl_803E92E0, local
 	.float 4.0
-lbl_803E92E4:
+.endobj lbl_803E92E0
+.obj lbl_803E92E4, local
 	.float 2.0
+.endobj lbl_803E92E4
 .balign 8
-lbl_803E92E8:
-	.4byte 0x43300000
-	.4byte 0x80000000
-lbl_803E92F0:
+.obj lbl_803E92E8, local
+	.8byte 0x4330000080000000
+.endobj lbl_803E92E8
+.obj lbl_803E92F0, local
 	.float 0.0
+.endobj lbl_803E92F0
 .balign 8
-lbl_803E92F8:
+.obj lbl_803E92F8, local
 	.double 0.5
-lbl_803E9300:
+.endobj lbl_803E92F8
+.balign 8
+.obj lbl_803E9300, local
 	.double 3.0
-lbl_803E9308:
+.endobj lbl_803E9300
+.obj lbl_803E9308, local
 	.float 3.1415927
+.endobj lbl_803E9308

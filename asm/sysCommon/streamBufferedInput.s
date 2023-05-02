@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global init__19BufferedInputStreamFP6StreamPUci
-init__19BufferedInputStreamFP6StreamPUci:
+.fn init__19BufferedInputStreamFP6StreamPUci, global
 /* 80025500 00022460  7C 08 02 A6 */	mflr r0
 /* 80025504 00022464  90 01 00 04 */	stw r0, 4(r1)
 /* 80025508 00022468  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -42,9 +41,9 @@ init__19BufferedInputStreamFP6StreamPUci:
 /* 8002558C 000224EC  38 21 00 28 */	addi r1, r1, 0x28
 /* 80025590 000224F0  7C 08 03 A6 */	mtlr r0
 /* 80025594 000224F4  4E 80 00 20 */	blr 
+.endfn init__19BufferedInputStreamFP6StreamPUci
 
-.global __ct__19BufferedInputStreamFP6StreamPUci
-__ct__19BufferedInputStreamFP6StreamPUci:
+.fn __ct__19BufferedInputStreamFP6StreamPUci, global
 /* 80025598 000224F8  7C 08 02 A6 */	mflr r0
 /* 8002559C 000224FC  3C E0 80 22 */	lis r7, __vt__6Stream@ha
 /* 800255A0 00022500  90 01 00 04 */	stw r0, 4(r1)
@@ -95,9 +94,9 @@ __ct__19BufferedInputStreamFP6StreamPUci:
 /* 8002564C 000225AC  38 21 00 28 */	addi r1, r1, 0x28
 /* 80025650 000225B0  7C 08 03 A6 */	mtlr r0
 /* 80025654 000225B4  4E 80 00 20 */	blr 
+.endfn __ct__19BufferedInputStreamFP6StreamPUci
 
-.global fillBuffer__19BufferedInputStreamFv
-fillBuffer__19BufferedInputStreamFv:
+.fn fillBuffer__19BufferedInputStreamFv, global
 /* 80025658 000225B8  7C 08 02 A6 */	mflr r0
 /* 8002565C 000225BC  90 01 00 04 */	stw r0, 4(r1)
 /* 80025660 000225C0  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -134,9 +133,9 @@ fillBuffer__19BufferedInputStreamFv:
 /* 800256D4 00022634  38 21 00 18 */	addi r1, r1, 0x18
 /* 800256D8 00022638  7C 08 03 A6 */	mtlr r0
 /* 800256DC 0002263C  4E 80 00 20 */	blr 
+.endfn fillBuffer__19BufferedInputStreamFv
 
-.global getPending__19BufferedInputStreamFv
-getPending__19BufferedInputStreamFv:
+.fn getPending__19BufferedInputStreamFv, weak
 /* 800256E0 00022640  7C 08 02 A6 */	mflr r0
 /* 800256E4 00022644  90 01 00 04 */	stw r0, 4(r1)
 /* 800256E8 00022648  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -154,9 +153,9 @@ getPending__19BufferedInputStreamFv:
 /* 80025718 00022678  38 21 00 18 */	addi r1, r1, 0x18
 /* 8002571C 0002267C  7C 08 03 A6 */	mtlr r0
 /* 80025720 00022680  4E 80 00 20 */	blr 
+.endfn getPending__19BufferedInputStreamFv
 
-.global read__19BufferedInputStreamFPvi
-read__19BufferedInputStreamFPvi:
+.fn read__19BufferedInputStreamFPvi, global
 /* 80025724 00022684  7C 08 02 A6 */	mflr r0
 /* 80025728 00022688  90 01 00 04 */	stw r0, 4(r1)
 /* 8002572C 0002268C  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -227,9 +226,9 @@ read__19BufferedInputStreamFPvi:
 /* 8002581C 0002277C  38 21 00 28 */	addi r1, r1, 0x28
 /* 80025820 00022780  7C 08 03 A6 */	mtlr r0
 /* 80025824 00022784  4E 80 00 20 */	blr 
+.endfn read__19BufferedInputStreamFPvi
 
-.global close__19BufferedInputStreamFv
-close__19BufferedInputStreamFv:
+.fn close__19BufferedInputStreamFv, weak
 /* 80025828 00022788  7C 08 02 A6 */	mflr r0
 /* 8002582C 0002278C  90 01 00 04 */	stw r0, 4(r1)
 /* 80025830 00022790  94 21 FF F8 */	stwu r1, -8(r1)
@@ -242,14 +241,14 @@ close__19BufferedInputStreamFv:
 /* 8002584C 000227AC  38 21 00 08 */	addi r1, r1, 8
 /* 80025850 000227B0  7C 08 03 A6 */	mtlr r0
 /* 80025854 000227B4  4E 80 00 20 */	blr 
+.endfn close__19BufferedInputStreamFv
 
-.global getPosition__19BufferedInputStreamFv
-getPosition__19BufferedInputStreamFv:
+.fn getPosition__19BufferedInputStreamFv, weak
 /* 80025858 000227B8  80 63 00 18 */	lwz r3, 0x18(r3)
 /* 8002585C 000227BC  4E 80 00 20 */	blr 
+.endfn getPosition__19BufferedInputStreamFv
 
-.global getLength__18RandomAccessStreamFv
-getLength__18RandomAccessStreamFv:
+.fn getLength__18RandomAccessStreamFv, weak
 /* 80025860 000227C0  7C 08 02 A6 */	mflr r0
 /* 80025864 000227C4  90 01 00 04 */	stw r0, 4(r1)
 /* 80025868 000227C8  94 21 FF F8 */	stwu r1, -8(r1)
@@ -261,14 +260,14 @@ getLength__18RandomAccessStreamFv:
 /* 80025880 000227E0  38 21 00 08 */	addi r1, r1, 8
 /* 80025884 000227E4  7C 08 03 A6 */	mtlr r0
 /* 80025888 000227E8  4E 80 00 20 */	blr 
+.endfn getLength__18RandomAccessStreamFv
 
-.global getPosition__18RandomAccessStreamFv
-getPosition__18RandomAccessStreamFv:
+.fn getPosition__18RandomAccessStreamFv, weak
 /* 8002588C 000227EC  38 60 00 00 */	li r3, 0
 /* 80025890 000227F0  4E 80 00 20 */	blr 
+.endfn getPosition__18RandomAccessStreamFv
 
-.global getPending__18RandomAccessStreamFv
-getPending__18RandomAccessStreamFv:
+.fn getPending__18RandomAccessStreamFv, weak
 /* 80025894 000227F4  7C 08 02 A6 */	mflr r0
 /* 80025898 000227F8  90 01 00 04 */	stw r0, 4(r1)
 /* 8002589C 000227FC  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -292,33 +291,39 @@ getPending__18RandomAccessStreamFv:
 /* 800258E4 00022844  38 21 00 18 */	addi r1, r1, 0x18
 /* 800258E8 00022848  7C 08 03 A6 */	mtlr r0
 /* 800258EC 0002284C  4E 80 00 20 */	blr 
+.endfn getPending__18RandomAccessStreamFv
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802273F0:
+.obj lbl_802273F0, local
 	.asciz "streamBufferedInput.cpp"
+.endobj lbl_802273F0
 .balign 4
-lbl_80227408:
+.obj lbl_80227408, local
 	.asciz "streamBufferedInput"
+.endobj lbl_80227408
 .balign 4
-lbl_8022741C:
+.obj lbl_8022741C, local
 	.asciz "BufferedInputStream"
+.endobj lbl_8022741C
 .balign 4
-lbl_80227430:
+.obj lbl_80227430, local
 	.asciz "RandomAccessStream"
+.endobj lbl_80227430
 .balign 4
-lbl_80227444:
+.obj lbl_80227444, local
 	.4byte __RTTI__6Stream
 	.4byte 0
 	.4byte 0
-lbl_80227450:
+.endobj lbl_80227444
+.obj lbl_80227450, local
 	.4byte __RTTI__6Stream
 	.4byte 0
 	.4byte __RTTI__18RandomAccessStream
 	.4byte 0
 	.4byte 0
-.global __vt__19BufferedInputStream
-__vt__19BufferedInputStream:
+.endobj lbl_80227450
+.obj __vt__19BufferedInputStream, global
 	.4byte __RTTI__19BufferedInputStream
 	.4byte 0
 	.4byte readInt__6StreamFv
@@ -344,8 +349,8 @@ __vt__19BufferedInputStream:
 	.4byte getPosition__19BufferedInputStreamFv
 	.4byte setPosition__18RandomAccessStreamFi
 	.4byte getLength__18RandomAccessStreamFv
-.global __vt__18RandomAccessStream
-__vt__18RandomAccessStream:
+.endobj __vt__19BufferedInputStream
+.obj __vt__18RandomAccessStream, weak
 	.4byte __RTTI__18RandomAccessStream
 	.4byte 0
 	.4byte readInt__6StreamFv
@@ -371,19 +376,24 @@ __vt__18RandomAccessStream:
 	.4byte getPosition__18RandomAccessStreamFv
 	.4byte setPosition__18RandomAccessStreamFi
 	.4byte getLength__18RandomAccessStreamFv
+.endobj __vt__18RandomAccessStream
 	.skip 20 # padding
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-lbl_803DCEC0:
+.obj lbl_803DCEC0, local
 	.asciz "Stream"
+.endobj lbl_803DCEC0
 .balign 4
-__RTTI__6Stream:
+.obj __RTTI__6Stream, local
 	.4byte lbl_803DCEC0
 	.4byte 0
-__RTTI__18RandomAccessStream:
+.endobj __RTTI__6Stream
+.obj __RTTI__18RandomAccessStream, local
 	.4byte lbl_80227430
 	.4byte lbl_80227444
-__RTTI__19BufferedInputStream:
+.endobj __RTTI__18RandomAccessStream
+.obj __RTTI__19BufferedInputStream, local
 	.4byte lbl_8022741C
 	.4byte lbl_80227450
+.endobj __RTTI__19BufferedInputStream

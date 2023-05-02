@@ -509,17 +509,21 @@ __RTTI__10AIConstant:
 
 .section .sbss, "wa"
 .balign 8
-.global _instance__10AIConstant
-_instance__10AIConstant:
+.obj _instance__10AIConstant, global
 	.skip 4
+.endobj _instance__10AIConstant
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803E8C20:
+.obj lbl_803E8C20, local
 	.float 550.0
-lbl_803E8C24:
+.endobj lbl_803E8C20
+.obj lbl_803E8C24, local
 	.float 90.0
-lbl_803E8C28:
+.endobj lbl_803E8C24
+.obj lbl_803E8C28, local
 	.float 1.0
-lbl_803E8C2C:
+.endobj lbl_803E8C28
+.obj lbl_803E8C2C, local
 	.float 2.5
+.endobj lbl_803E8C2C

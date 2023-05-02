@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global __ct__8MizuItemFiP12CreaturePropP15ItemShapeObjectP8SimpleAI
-__ct__8MizuItemFiP12CreaturePropP15ItemShapeObjectP8SimpleAI:
+.fn __ct__8MizuItemFiP12CreaturePropP15ItemShapeObjectP8SimpleAI, global
 /* 800F7CB0 000F4C10  7C 08 02 A6 */	mflr r0
 /* 800F7CB4 000F4C14  90 01 00 04 */	stw r0, 4(r1)
 /* 800F7CB8 000F4C18  94 21 FF D0 */	stwu r1, -0x30(r1)
@@ -28,9 +27,9 @@ __ct__8MizuItemFiP12CreaturePropP15ItemShapeObjectP8SimpleAI:
 /* 800F7D0C 000F4C6C  38 21 00 30 */	addi r1, r1, 0x30
 /* 800F7D10 000F4C70  7C 08 03 A6 */	mtlr r0
 /* 800F7D14 000F4C74  4E 80 00 20 */	blr 
+.endfn __ct__8MizuItemFiP12CreaturePropP15ItemShapeObjectP8SimpleAI
 
-.global update__8MizuItemFv
-update__8MizuItemFv:
+.fn update__8MizuItemFv, global
 /* 800F7D18 000F4C78  7C 08 02 A6 */	mflr r0
 /* 800F7D1C 000F4C7C  90 01 00 04 */	stw r0, 4(r1)
 /* 800F7D20 000F4C80  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -60,14 +59,14 @@ update__8MizuItemFv:
 /* 800F7D7C 000F4CDC  38 21 00 18 */	addi r1, r1, 0x18
 /* 800F7D80 000F4CE0  7C 08 03 A6 */	mtlr r0
 /* 800F7D84 000F4CE4  4E 80 00 20 */	blr 
+.endfn update__8MizuItemFv
 
-.global needFlick__8MizuItemFP8Creature
-needFlick__8MizuItemFP8Creature:
+.fn needFlick__8MizuItemFP8Creature, global
 /* 800F7D88 000F4CE8  38 60 00 00 */	li r3, 0
 /* 800F7D8C 000F4CEC  4E 80 00 20 */	blr 
+.endfn needFlick__8MizuItemFP8Creature
 
-.global startAI__8MizuItemFi
-startAI__8MizuItemFi:
+.fn startAI__8MizuItemFi, global
 /* 800F7D90 000F4CF0  7C 08 02 A6 */	mflr r0
 /* 800F7D94 000F4CF4  38 80 00 00 */	li r4, 0
 /* 800F7D98 000F4CF8  90 01 00 04 */	stw r0, 4(r1)
@@ -107,9 +106,9 @@ startAI__8MizuItemFi:
 /* 800F7E14 000F4D74  38 21 00 28 */	addi r1, r1, 0x28
 /* 800F7E18 000F4D78  7C 08 03 A6 */	mtlr r0
 /* 800F7E1C 000F4D7C  4E 80 00 20 */	blr 
+.endfn startAI__8MizuItemFi
 
-.global isAlive__8MizuItemFv
-isAlive__8MizuItemFv:
+.fn isAlive__8MizuItemFv, global
 /* 800F7E20 000F4D80  7C 08 02 A6 */	mflr r0
 /* 800F7E24 000F4D84  90 01 00 04 */	stw r0, 4(r1)
 /* 800F7E28 000F4D88  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -141,41 +140,51 @@ isAlive__8MizuItemFv:
 /* 800F7E80 000F4DE0  38 21 00 20 */	addi r1, r1, 0x20
 /* 800F7E84 000F4DE4  7C 08 03 A6 */	mtlr r0
 /* 800F7E88 000F4DE8  4E 80 00 20 */	blr 
+.endfn isAlive__8MizuItemFv
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802BFC68:
+.obj lbl_802BFC68, local
 	.asciz "mizuItem.cpp"
+.endobj lbl_802BFC68
 .balign 4
-lbl_802BFC78:
+.obj lbl_802BFC78, local
 	.asciz "matoItem"
+.endobj lbl_802BFC78
 .balign 4
-lbl_802BFC84:
+.obj lbl_802BFC84, local
 	.asciz "MizuItem"
+.endobj lbl_802BFC84
 .balign 4
-lbl_802BFC90:
+.obj lbl_802BFC90, local
 	.asciz "PaniAnimKeyListener"
+.endobj lbl_802BFC90
 .balign 4
-lbl_802BFCA4:
+.obj lbl_802BFCA4, local
 	.asciz "EventTalker"
+.endobj lbl_802BFCA4
 .balign 4
-lbl_802BFCB0:
+.obj lbl_802BFCB0, local
 	.asciz "RefCountable"
+.endobj lbl_802BFCB0
 .balign 4
-lbl_802BFCC0:
+.obj lbl_802BFCC0, local
 	.asciz "Creature"
+.endobj lbl_802BFCC0
 .balign 4
-lbl_802BFCCC:
+.obj lbl_802BFCCC, local
 	.4byte __RTTI__11EventTalker
 	.4byte 0x8
 	.4byte __RTTI__12RefCountable
 	.4byte 0
 	.4byte 0
+.endobj lbl_802BFCCC
 .balign 4
-lbl_802BFCE0:
+.obj lbl_802BFCE0, local
 	.asciz "AICreature"
+.endobj lbl_802BFCE0
 .balign 4
-lbl_802BFCEC:
+.obj lbl_802BFCEC, local
 	.4byte __RTTI__19PaniAnimKeyListener
 	.4byte 0x2B8
 	.4byte __RTTI__11EventTalker
@@ -185,11 +194,13 @@ lbl_802BFCEC:
 	.4byte __RTTI__8Creature
 	.4byte 0
 	.4byte 0
+.endobj lbl_802BFCEC
 .balign 4
-lbl_802BFD10:
+.obj lbl_802BFD10, local
 	.asciz "ItemCreature"
+.endobj lbl_802BFD10
 .balign 4
-lbl_802BFD20:
+.obj lbl_802BFD20, local
 	.4byte __RTTI__19PaniAnimKeyListener
 	.4byte 0x2B8
 	.4byte __RTTI__11EventTalker
@@ -201,7 +212,8 @@ lbl_802BFD20:
 	.4byte __RTTI__10AICreature
 	.4byte 0
 	.4byte 0
-lbl_802BFD4C:
+.endobj lbl_802BFD20
+.obj lbl_802BFD4C, local
 	.4byte __RTTI__19PaniAnimKeyListener
 	.4byte 0x2B8
 	.4byte __RTTI__11EventTalker
@@ -215,8 +227,8 @@ lbl_802BFD4C:
 	.4byte __RTTI__12ItemCreature
 	.4byte 0
 	.4byte 0
-.global __vt__8MizuItem
-__vt__8MizuItem:
+.endobj lbl_802BFD4C
+.obj __vt__8MizuItem, global
 	.4byte __RTTI__8MizuItem
 	.4byte 0
 	.4byte addCntCallback__12RefCountableFv
@@ -304,32 +316,41 @@ __vt__8MizuItem:
 	.4byte stopMotion__12ItemCreatureFv
 	.4byte animationKeyUpdated__10AICreatureFR16PaniAnimKeyEvent
 	.4byte finalSetup__12ItemCreatureFv
+.endobj __vt__8MizuItem
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-__RTTI__19PaniAnimKeyListener:
+.obj __RTTI__19PaniAnimKeyListener, local
 	.4byte lbl_802BFC90
 	.4byte 0
-__RTTI__11EventTalker:
+.endobj __RTTI__19PaniAnimKeyListener
+.obj __RTTI__11EventTalker, local
 	.4byte lbl_802BFCA4
 	.4byte 0
-__RTTI__12RefCountable:
+.endobj __RTTI__11EventTalker
+.obj __RTTI__12RefCountable, local
 	.4byte lbl_802BFCB0
 	.4byte 0
-__RTTI__8Creature:
+.endobj __RTTI__12RefCountable
+.obj __RTTI__8Creature, local
 	.4byte lbl_802BFCC0
 	.4byte lbl_802BFCCC
-__RTTI__10AICreature:
+.endobj __RTTI__8Creature
+.obj __RTTI__10AICreature, local
 	.4byte lbl_802BFCE0
 	.4byte lbl_802BFCEC
-__RTTI__12ItemCreature:
+.endobj __RTTI__10AICreature
+.obj __RTTI__12ItemCreature, local
 	.4byte lbl_802BFD10
 	.4byte lbl_802BFD20
-__RTTI__8MizuItem:
+.endobj __RTTI__12ItemCreature
+.obj __RTTI__8MizuItem, local
 	.4byte lbl_802BFC84
 	.4byte lbl_802BFD4C
+.endobj __RTTI__8MizuItem
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803E9E50:
+.obj lbl_803E9E50, local
 	.float 1.0
+.endobj lbl_803E9E50
