@@ -1,16 +1,15 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global __ct__10PSUPtrLinkFPv
-__ct__10PSUPtrLinkFPv:
+.fn __ct__10PSUPtrLinkFPv, global
 /* 801B33C8 001B0328  38 00 00 00 */	li r0, 0
 /* 801B33CC 001B032C  90 03 00 04 */	stw r0, 4(r3)
 /* 801B33D0 001B0330  90 83 00 00 */	stw r4, 0(r3)
 /* 801B33D4 001B0334  90 03 00 08 */	stw r0, 8(r3)
 /* 801B33D8 001B0338  90 03 00 0C */	stw r0, 0xc(r3)
 /* 801B33DC 001B033C  4E 80 00 20 */	blr 
+.endfn __ct__10PSUPtrLinkFPv
 
-.global __dt__10PSUPtrLinkFv
-__dt__10PSUPtrLinkFv:
+.fn __dt__10PSUPtrLinkFv, global
 /* 801B33E0 001B0340  7C 08 02 A6 */	mflr r0
 /* 801B33E4 001B0344  90 01 00 04 */	stw r0, 4(r1)
 /* 801B33E8 001B0348  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -37,9 +36,9 @@ __dt__10PSUPtrLinkFv:
 /* 801B3434 001B0394  38 21 00 18 */	addi r1, r1, 0x18
 /* 801B3438 001B0398  7C 08 03 A6 */	mtlr r0
 /* 801B343C 001B039C  4E 80 00 20 */	blr 
+.endfn __dt__10PSUPtrLinkFv
 
-.global __dt__10PSUPtrListFv
-__dt__10PSUPtrListFv:
+.fn __dt__10PSUPtrListFv, global
 /* 801B3440 001B03A0  7C 08 02 A6 */	mflr r0
 /* 801B3444 001B03A4  90 01 00 04 */	stw r0, 4(r1)
 /* 801B3448 001B03A8  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -69,17 +68,17 @@ __dt__10PSUPtrListFv:
 /* 801B349C 001B03FC  38 21 00 18 */	addi r1, r1, 0x18
 /* 801B34A0 001B0400  7C 08 03 A6 */	mtlr r0
 /* 801B34A4 001B0404  4E 80 00 20 */	blr 
+.endfn __dt__10PSUPtrListFv
 
-.global initiate__10PSUPtrListFv
-initiate__10PSUPtrListFv:
+.fn initiate__10PSUPtrListFv, global
 /* 801B34A8 001B0408  38 00 00 00 */	li r0, 0
 /* 801B34AC 001B040C  90 03 00 00 */	stw r0, 0(r3)
 /* 801B34B0 001B0410  90 03 00 04 */	stw r0, 4(r3)
 /* 801B34B4 001B0414  90 03 00 08 */	stw r0, 8(r3)
 /* 801B34B8 001B0418  4E 80 00 20 */	blr 
+.endfn initiate__10PSUPtrListFv
 
-.global append__10PSUPtrListFP10PSUPtrLink
-append__10PSUPtrListFP10PSUPtrLink:
+.fn append__10PSUPtrListFP10PSUPtrLink, global
 /* 801B34BC 001B041C  7C 08 02 A6 */	mflr r0
 /* 801B34C0 001B0420  90 01 00 04 */	stw r0, 4(r1)
 /* 801B34C4 001B0424  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -130,9 +129,9 @@ append__10PSUPtrListFP10PSUPtrLink:
 /* 801B356C 001B04CC  38 21 00 18 */	addi r1, r1, 0x18
 /* 801B3570 001B04D0  7C 08 03 A6 */	mtlr r0
 /* 801B3574 001B04D4  4E 80 00 20 */	blr 
+.endfn append__10PSUPtrListFP10PSUPtrLink
 
-.global remove__10PSUPtrListFP10PSUPtrLink
-remove__10PSUPtrListFP10PSUPtrLink:
+.fn remove__10PSUPtrListFP10PSUPtrLink, global
 /* 801B3578 001B04D8  80 A4 00 04 */	lwz r5, 4(r4)
 /* 801B357C 001B04DC  7C 05 18 50 */	subf r0, r5, r3
 /* 801B3580 001B04E0  7C 00 00 34 */	cntlzw r0, r0
@@ -182,3 +181,4 @@ remove__10PSUPtrListFP10PSUPtrLink:
 .L_801B3620:
 /* 801B3620 001B0580  7C C3 33 78 */	mr r3, r6
 /* 801B3624 001B0584  4E 80 00 20 */	blr 
+.endfn remove__10PSUPtrListFP10PSUPtrLink

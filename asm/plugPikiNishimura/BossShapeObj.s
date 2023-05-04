@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global __ct__15BossShapeObjectFP5ShapePc
-__ct__15BossShapeObjectFP5ShapePc:
+.fn __ct__15BossShapeObjectFP5ShapePc, global
 /* 80152684 0014F5E4  7C 08 02 A6 */	mflr r0
 /* 80152688 0014F5E8  3C C0 80 23 */	lis r6, __vt__11AnimContext@ha
 /* 8015268C 0014F5EC  90 01 00 04 */	stw r0, 4(r1)
@@ -74,15 +73,19 @@ __ct__15BossShapeObjectFP5ShapePc:
 /* 80152788 0014F6E8  38 21 00 A8 */	addi r1, r1, 0xa8
 /* 8015278C 0014F6EC  7C 08 03 A6 */	mtlr r0
 /* 80152790 0014F6F0  4E 80 00 20 */	blr 
+.endfn __ct__15BossShapeObjectFP5ShapePc
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802CF158:
+.obj lbl_802CF158, local
 	.asciz "bosses/%s/anims.bin"
+.endobj lbl_802CF158
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803EAA78:
+.obj lbl_803EAA78, local
 	.float 0.0
-lbl_803EAA7C:
+.endobj lbl_803EAA78
+.obj lbl_803EAA7C, local
 	.float 30.0
+.endobj lbl_803EAA7C

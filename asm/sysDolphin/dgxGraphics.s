@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global __ct__11DGXGraphicsFb
-__ct__11DGXGraphicsFb:
+.fn __ct__11DGXGraphicsFb, global
 /* 800474B8 00044418  7C 08 02 A6 */	mflr r0
 /* 800474BC 0004441C  90 01 00 04 */	stw r0, 4(r1)
 /* 800474C0 00044420  94 21 FF C8 */	stwu r1, -0x38(r1)
@@ -200,9 +199,9 @@ __ct__11DGXGraphicsFb:
 /* 800477A4 00044704  38 21 00 38 */	addi r1, r1, 0x38
 /* 800477A8 00044708  7C 08 03 A6 */	mtlr r0
 /* 800477AC 0004470C  4E 80 00 20 */	blr 
+.endfn __ct__11DGXGraphicsFb
 
-.global setVerticalFilter__11DGXGraphicsFPUc
-setVerticalFilter__11DGXGraphicsFPUc:
+.fn setVerticalFilter__11DGXGraphicsFPUc, global
 /* 800477B0 00044710  80 03 00 00 */	lwz r0, 0(r3)
 /* 800477B4 00044714  38 ED 88 90 */	addi r7, r13, sScreenMode@sda21
 /* 800477B8 00044718  88 C4 00 00 */	lbz r6, 0(r4)
@@ -240,9 +239,9 @@ setVerticalFilter__11DGXGraphicsFPUc:
 /* 80047838 00044798  7C 67 00 2E */	lwzx r3, r7, r0
 /* 8004783C 0004479C  98 83 00 38 */	stb r4, 0x38(r3)
 /* 80047840 000447A0  4E 80 00 20 */	blr 
+.endfn setVerticalFilter__11DGXGraphicsFPUc
 
-.global getVerticalFilter__11DGXGraphicsFPUc
-getVerticalFilter__11DGXGraphicsFPUc:
+.fn getVerticalFilter__11DGXGraphicsFPUc, global
 /* 80047844 000447A4  80 03 00 00 */	lwz r0, 0(r3)
 /* 80047848 000447A8  38 CD 88 90 */	addi r6, r13, sScreenMode@sda21
 /* 8004784C 000447AC  54 00 10 3A */	slwi r0, r0, 2
@@ -280,9 +279,9 @@ getVerticalFilter__11DGXGraphicsFPUc:
 /* 800478CC 0004482C  88 03 00 38 */	lbz r0, 0x38(r3)
 /* 800478D0 00044830  98 04 00 06 */	stb r0, 6(r4)
 /* 800478D4 00044834  4E 80 00 20 */	blr 
+.endfn getVerticalFilter__11DGXGraphicsFPUc
 
-.global videoReset__11DGXGraphicsFv
-videoReset__11DGXGraphicsFv:
+.fn videoReset__11DGXGraphicsFv, global
 /* 800478D8 00044838  7C 08 02 A6 */	mflr r0
 /* 800478DC 0004483C  90 01 00 04 */	stw r0, 4(r1)
 /* 800478E0 00044840  94 21 FF F8 */	stwu r1, -8(r1)
@@ -314,9 +313,9 @@ videoReset__11DGXGraphicsFv:
 /* 80047940 000448A0  38 21 00 08 */	addi r1, r1, 8
 /* 80047944 000448A4  7C 08 03 A6 */	mtlr r0
 /* 80047948 000448A8  4E 80 00 20 */	blr 
+.endfn videoReset__11DGXGraphicsFv
 
-.global resetCopyFilter__11DGXGraphicsFv
-resetCopyFilter__11DGXGraphicsFv:
+.fn resetCopyFilter__11DGXGraphicsFv, global
 /* 8004794C 000448AC  7C 08 02 A6 */	mflr r0
 /* 80047950 000448B0  38 A0 00 01 */	li r5, 1
 /* 80047954 000448B4  90 01 00 04 */	stw r0, 4(r1)
@@ -333,9 +332,9 @@ resetCopyFilter__11DGXGraphicsFv:
 /* 80047980 000448E0  38 21 00 08 */	addi r1, r1, 8
 /* 80047984 000448E4  7C 08 03 A6 */	mtlr r0
 /* 80047988 000448E8  4E 80 00 20 */	blr 
+.endfn resetCopyFilter__11DGXGraphicsFv
 
-.global setupRender__11DGXGraphicsFv
-setupRender__11DGXGraphicsFv:
+.fn setupRender__11DGXGraphicsFv, global
 /* 8004798C 000448EC  7C 08 02 A6 */	mflr r0
 /* 80047990 000448F0  90 01 00 04 */	stw r0, 4(r1)
 /* 80047994 000448F4  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -352,19 +351,19 @@ setupRender__11DGXGraphicsFv:
 /* 800479C0 00044920  38 21 00 18 */	addi r1, r1, 0x18
 /* 800479C4 00044924  7C 08 03 A6 */	mtlr r0
 /* 800479C8 00044928  4E 80 00 20 */	blr 
+.endfn setupRender__11DGXGraphicsFv
 
-.global getDListPtr__11DGXGraphicsFv
-getDListPtr__11DGXGraphicsFv:
+.fn getDListPtr__11DGXGraphicsFv, global
 /* 800479CC 0004492C  80 63 03 C8 */	lwz r3, 0x3c8(r3)
 /* 800479D0 00044930  4E 80 00 20 */	blr 
+.endfn getDListPtr__11DGXGraphicsFv
 
-.global getDListRemainSize__11DGXGraphicsFv
-getDListRemainSize__11DGXGraphicsFv:
+.fn getDListRemainSize__11DGXGraphicsFv, global
 /* 800479D4 00044934  80 63 03 CC */	lwz r3, 0x3cc(r3)
 /* 800479D8 00044938  4E 80 00 20 */	blr 
+.endfn getDListRemainSize__11DGXGraphicsFv
 
-.global useDList__11DGXGraphicsFUl
-useDList__11DGXGraphicsFUl:
+.fn useDList__11DGXGraphicsFUl, global
 /* 800479DC 0004493C  80 03 03 CC */	lwz r0, 0x3cc(r3)
 /* 800479E0 00044940  7C 04 00 50 */	subf r0, r4, r0
 /* 800479E4 00044944  90 03 03 CC */	stw r0, 0x3cc(r3)
@@ -372,9 +371,9 @@ useDList__11DGXGraphicsFUl:
 /* 800479EC 0004494C  7C 00 22 14 */	add r0, r0, r4
 /* 800479F0 00044950  90 03 03 C8 */	stw r0, 0x3c8(r3)
 /* 800479F4 00044954  4E 80 00 20 */	blr 
+.endfn useDList__11DGXGraphicsFUl
 
-.global compileMaterial__11DGXGraphicsFP8Material
-compileMaterial__11DGXGraphicsFP8Material:
+.fn compileMaterial__11DGXGraphicsFP8Material, global
 /* 800479F8 00044958  7C 08 02 A6 */	mflr r0
 /* 800479FC 0004495C  90 01 00 04 */	stw r0, 4(r1)
 /* 80047A00 00044960  94 21 FF C8 */	stwu r1, -0x38(r1)
@@ -700,9 +699,9 @@ compileMaterial__11DGXGraphicsFP8Material:
 /* 80047EB4 00044E14  38 21 00 38 */	addi r1, r1, 0x38
 /* 80047EB8 00044E18  7C 08 03 A6 */	mtlr r0
 /* 80047EBC 00044E1C  4E 80 00 20 */	blr 
+.endfn compileMaterial__11DGXGraphicsFP8Material
 
-.global initRender__11DGXGraphicsFii
-initRender__11DGXGraphicsFii:
+.fn initRender__11DGXGraphicsFii, global
 /* 80047EC0 00044E20  7C 08 02 A6 */	mflr r0
 /* 80047EC4 00044E24  90 01 00 04 */	stw r0, 4(r1)
 /* 80047EC8 00044E28  94 21 FF D0 */	stwu r1, -0x30(r1)
@@ -810,9 +809,9 @@ initRender__11DGXGraphicsFii:
 /* 80048060 00044FC0  38 21 00 30 */	addi r1, r1, 0x30
 /* 80048064 00044FC4  7C 08 03 A6 */	mtlr r0
 /* 80048068 00044FC8  4E 80 00 20 */	blr 
+.endfn initRender__11DGXGraphicsFii
 
-.global beginRender__11DGXGraphicsFv
-beginRender__11DGXGraphicsFv:
+.fn beginRender__11DGXGraphicsFv, global
 /* 8004806C 00044FCC  7C 08 02 A6 */	mflr r0
 /* 80048070 00044FD0  90 01 00 04 */	stw r0, 4(r1)
 /* 80048074 00044FD4  38 00 00 01 */	li r0, 1
@@ -827,9 +826,9 @@ beginRender__11DGXGraphicsFv:
 /* 80048098 00044FF8  38 21 00 08 */	addi r1, r1, 8
 /* 8004809C 00044FFC  7C 08 03 A6 */	mtlr r0
 /* 800480A0 00045000  4E 80 00 20 */	blr 
+.endfn beginRender__11DGXGraphicsFv
 
-.global doneRender__11DGXGraphicsFv
-doneRender__11DGXGraphicsFv:
+.fn doneRender__11DGXGraphicsFv, global
 /* 800480A4 00045004  7C 08 02 A6 */	mflr r0
 /* 800480A8 00045008  90 01 00 04 */	stw r0, 4(r1)
 /* 800480AC 0004500C  94 21 FF F8 */	stwu r1, -8(r1)
@@ -842,9 +841,9 @@ doneRender__11DGXGraphicsFv:
 /* 800480C8 00045028  38 21 00 08 */	addi r1, r1, 8
 /* 800480CC 0004502C  7C 08 03 A6 */	mtlr r0
 /* 800480D0 00045030  4E 80 00 20 */	blr 
+.endfn doneRender__11DGXGraphicsFv
 
-.global waitRetrace__11DGXGraphicsFv
-waitRetrace__11DGXGraphicsFv:
+.fn waitRetrace__11DGXGraphicsFv, global
 /* 800480D4 00045034  7C 08 02 A6 */	mflr r0
 /* 800480D8 00045038  90 01 00 04 */	stw r0, 4(r1)
 /* 800480DC 0004503C  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -898,9 +897,9 @@ waitRetrace__11DGXGraphicsFv:
 /* 8004818C 000450EC  38 21 00 18 */	addi r1, r1, 0x18
 /* 80048190 000450F0  7C 08 03 A6 */	mtlr r0
 /* 80048194 000450F4  4E 80 00 20 */	blr 
+.endfn waitRetrace__11DGXGraphicsFv
 
-.global waitPostRetrace__11DGXGraphicsFv
-waitPostRetrace__11DGXGraphicsFv:
+.fn waitPostRetrace__11DGXGraphicsFv, global
 /* 80048198 000450F8  7C 08 02 A6 */	mflr r0
 /* 8004819C 000450FC  90 01 00 04 */	stw r0, 4(r1)
 /* 800481A0 00045100  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -930,9 +929,9 @@ waitPostRetrace__11DGXGraphicsFv:
 /* 800481FC 0004515C  38 21 00 18 */	addi r1, r1, 0x18
 /* 80048200 00045160  7C 08 03 A6 */	mtlr r0
 /* 80048204 00045164  4E 80 00 20 */	blr 
+.endfn waitPostRetrace__11DGXGraphicsFv
 
-.global retraceProc__11DGXGraphicsFUl
-retraceProc__11DGXGraphicsFUl:
+.fn retraceProc__11DGXGraphicsFUl, global
 /* 80048208 00045168  7C 08 02 A6 */	mflr r0
 /* 8004820C 0004516C  90 01 00 04 */	stw r0, 4(r1)
 /* 80048210 00045170  94 21 FF F8 */	stwu r1, -8(r1)
@@ -968,14 +967,14 @@ retraceProc__11DGXGraphicsFUl:
 /* 80048280 000451E0  38 21 00 08 */	addi r1, r1, 8
 /* 80048284 000451E4  7C 08 03 A6 */	mtlr r0
 /* 80048288 000451E8  4E 80 00 20 */	blr 
+.endfn retraceProc__11DGXGraphicsFUl
 
-.global setCamera__11DGXGraphicsFP6Camera
-setCamera__11DGXGraphicsFP6Camera:
+.fn setCamera__11DGXGraphicsFP6Camera, global
 /* 8004828C 000451EC  90 83 02 E4 */	stw r4, 0x2e4(r3)
 /* 80048290 000451F0  4E 80 00 20 */	blr 
+.endfn setCamera__11DGXGraphicsFP6Camera
 
-.global calcViewMatrix__11DGXGraphicsFR8Matrix4fR8Matrix4f
-calcViewMatrix__11DGXGraphicsFR8Matrix4fR8Matrix4f:
+.fn calcViewMatrix__11DGXGraphicsFR8Matrix4fR8Matrix4f, global
 /* 80048294 000451F4  7C 08 02 A6 */	mflr r0
 /* 80048298 000451F8  90 01 00 04 */	stw r0, 4(r1)
 /* 8004829C 000451FC  94 21 FF F8 */	stwu r1, -8(r1)
@@ -987,9 +986,9 @@ calcViewMatrix__11DGXGraphicsFR8Matrix4fR8Matrix4f:
 /* 800482B4 00045214  38 21 00 08 */	addi r1, r1, 8
 /* 800482B8 00045218  7C 08 03 A6 */	mtlr r0
 /* 800482BC 0004521C  4E 80 00 20 */	blr 
+.endfn calcViewMatrix__11DGXGraphicsFR8Matrix4fR8Matrix4f
 
-.global setLineWidth__11DGXGraphicsFf
-setLineWidth__11DGXGraphicsFf:
+.fn setLineWidth__11DGXGraphicsFf, global
 /* 800482C0 00045220  7C 08 02 A6 */	mflr r0
 /* 800482C4 00045224  38 80 00 00 */	li r4, 0
 /* 800482C8 00045228  90 01 00 04 */	stw r0, 4(r1)
@@ -1010,9 +1009,9 @@ setLineWidth__11DGXGraphicsFf:
 /* 80048304 00045264  38 21 00 20 */	addi r1, r1, 0x20
 /* 80048308 00045268  7C 08 03 A6 */	mtlr r0
 /* 8004830C 0004526C  4E 80 00 20 */	blr 
+.endfn setLineWidth__11DGXGraphicsFf
 
-.global setDepth__11DGXGraphicsFb
-setDepth__11DGXGraphicsFb:
+.fn setDepth__11DGXGraphicsFb, global
 /* 80048310 00045270  7C 08 02 A6 */	mflr r0
 /* 80048314 00045274  90 01 00 04 */	stw r0, 4(r1)
 /* 80048318 00045278  54 80 06 3F */	clrlwi. r0, r4, 0x18
@@ -1038,9 +1037,9 @@ setDepth__11DGXGraphicsFb:
 /* 80048360 000452C0  38 21 00 18 */	addi r1, r1, 0x18
 /* 80048364 000452C4  7C 08 03 A6 */	mtlr r0
 /* 80048368 000452C8  4E 80 00 20 */	blr 
+.endfn setDepth__11DGXGraphicsFb
 
-.global setCullFront__11DGXGraphicsFi
-setCullFront__11DGXGraphicsFi:
+.fn setCullFront__11DGXGraphicsFi, global
 /* 8004836C 000452CC  7C 08 02 A6 */	mflr r0
 /* 80048370 000452D0  90 01 00 04 */	stw r0, 4(r1)
 /* 80048374 000452D4  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -1074,9 +1073,9 @@ setCullFront__11DGXGraphicsFi:
 /* 800483D8 00045338  38 21 00 18 */	addi r1, r1, 0x18
 /* 800483DC 0004533C  7C 08 03 A6 */	mtlr r0
 /* 800483E0 00045340  4E 80 00 20 */	blr 
+.endfn setCullFront__11DGXGraphicsFi
 
-.global setAmbient__11DGXGraphicsFv
-setAmbient__11DGXGraphicsFv:
+.fn setAmbient__11DGXGraphicsFv, global
 /* 800483E4 00045344  7C 08 02 A6 */	mflr r0
 /* 800483E8 00045348  3C 80 80 3A */	lis r4, GColors@ha
 /* 800483EC 0004534C  90 01 00 04 */	stw r0, 4(r1)
@@ -1117,9 +1116,9 @@ setAmbient__11DGXGraphicsFv:
 /* 80048478 000453D8  38 21 00 30 */	addi r1, r1, 0x30
 /* 8004847C 000453DC  7C 08 03 A6 */	mtlr r0
 /* 80048480 000453E0  4E 80 00 20 */	blr 
+.endfn setAmbient__11DGXGraphicsFv
 
-.global setLighting__11DGXGraphicsFbP15PVWLightingInfo
-setLighting__11DGXGraphicsFbP15PVWLightingInfo:
+.fn setLighting__11DGXGraphicsFbP15PVWLightingInfo, global
 /* 80048484 000453E4  7C 08 02 A6 */	mflr r0
 /* 80048488 000453E8  90 01 00 04 */	stw r0, 4(r1)
 /* 8004848C 000453EC  94 21 FF C8 */	stwu r1, -0x38(r1)
@@ -1246,9 +1245,9 @@ setLighting__11DGXGraphicsFbP15PVWLightingInfo:
 /* 80048648 000455A8  38 21 00 38 */	addi r1, r1, 0x38
 /* 8004864C 000455AC  7C 08 03 A6 */	mtlr r0
 /* 80048650 000455B0  4E 80 00 20 */	blr 
+.endfn setLighting__11DGXGraphicsFbP15PVWLightingInfo
 
-.global setLight__11DGXGraphicsFP5Lighti
-setLight__11DGXGraphicsFP5Lighti:
+.fn setLight__11DGXGraphicsFP5Lighti, global
 /* 80048654 000455B4  7C 08 02 A6 */	mflr r0
 /* 80048658 000455B8  90 01 00 04 */	stw r0, 4(r1)
 /* 8004865C 000455BC  94 21 FF 90 */	stwu r1, -0x70(r1)
@@ -1464,9 +1463,9 @@ setLight__11DGXGraphicsFP5Lighti:
 /* 8004898C 000458EC  38 21 00 70 */	addi r1, r1, 0x70
 /* 80048990 000458F0  7C 08 03 A6 */	mtlr r0
 /* 80048994 000458F4  4E 80 00 20 */	blr 
+.endfn setLight__11DGXGraphicsFP5Lighti
 
-.global setPerspective__11DGXGraphicsFPA4_ffffff
-setPerspective__11DGXGraphicsFPA4_ffffff:
+.fn setPerspective__11DGXGraphicsFPA4_ffffff, global
 /* 80048998 000458F8  7C 08 02 A6 */	mflr r0
 /* 8004899C 000458FC  90 01 00 04 */	stw r0, 4(r1)
 /* 800489A0 00045900  94 21 FF C0 */	stwu r1, -0x40(r1)
@@ -1505,9 +1504,9 @@ setPerspective__11DGXGraphicsFPA4_ffffff:
 /* 80048A24 00045984  38 21 00 40 */	addi r1, r1, 0x40
 /* 80048A28 00045988  7C 08 03 A6 */	mtlr r0
 /* 80048A2C 0004598C  4E 80 00 20 */	blr 
+.endfn setPerspective__11DGXGraphicsFPA4_ffffff
 
-.global setOrthogonal__11DGXGraphicsFPA4_fR8RectArea
-setOrthogonal__11DGXGraphicsFPA4_fR8RectArea:
+.fn setOrthogonal__11DGXGraphicsFPA4_fR8RectArea, global
 /* 80048A30 00045990  7C 08 02 A6 */	mflr r0
 /* 80048A34 00045994  3C C0 43 30 */	lis r6, 0x4330
 /* 80048A38 00045998  90 01 00 04 */	stw r0, 4(r1)
@@ -1611,9 +1610,9 @@ setOrthogonal__11DGXGraphicsFPA4_fR8RectArea:
 /* 80048BC0 00045B20  38 21 00 48 */	addi r1, r1, 0x48
 /* 80048BC4 00045B24  7C 08 03 A6 */	mtlr r0
 /* 80048BC8 00045B28  4E 80 00 20 */	blr 
+.endfn setOrthogonal__11DGXGraphicsFPA4_fR8RectArea
 
-.global setScissor__11DGXGraphicsFR8RectArea
-setScissor__11DGXGraphicsFR8RectArea:
+.fn setScissor__11DGXGraphicsFR8RectArea, global
 /* 80048BCC 00045B2C  7C 08 02 A6 */	mflr r0
 /* 80048BD0 00045B30  90 01 00 04 */	stw r0, 4(r1)
 /* 80048BD4 00045B34  94 21 FF F8 */	stwu r1, -8(r1)
@@ -1629,9 +1628,9 @@ setScissor__11DGXGraphicsFR8RectArea:
 /* 80048BFC 00045B5C  38 21 00 08 */	addi r1, r1, 8
 /* 80048C00 00045B60  7C 08 03 A6 */	mtlr r0
 /* 80048C04 00045B64  4E 80 00 20 */	blr 
+.endfn setScissor__11DGXGraphicsFR8RectArea
 
-.global setViewport__11DGXGraphicsFR8RectArea
-setViewport__11DGXGraphicsFR8RectArea:
+.fn setViewport__11DGXGraphicsFR8RectArea, global
 /* 80048C08 00045B68  7C 08 02 A6 */	mflr r0
 /* 80048C0C 00045B6C  3C C0 43 30 */	lis r6, 0x4330
 /* 80048C10 00045B70  90 01 00 04 */	stw r0, 4(r1)
@@ -1670,9 +1669,9 @@ setViewport__11DGXGraphicsFR8RectArea:
 /* 80048C94 00045BF4  38 21 00 30 */	addi r1, r1, 0x30
 /* 80048C98 00045BF8  7C 08 03 A6 */	mtlr r0
 /* 80048C9C 00045BFC  4E 80 00 20 */	blr 
+.endfn setViewport__11DGXGraphicsFR8RectArea
 
-.global setViewportOffset__11DGXGraphicsFR8RectArea
-setViewportOffset__11DGXGraphicsFR8RectArea:
+.fn setViewportOffset__11DGXGraphicsFR8RectArea, global
 /* 80048CA0 00045C00  7C 08 02 A6 */	mflr r0
 /* 80048CA4 00045C04  90 01 00 04 */	stw r0, 4(r1)
 /* 80048CA8 00045C08  94 21 FF F8 */	stwu r1, -8(r1)
@@ -1685,13 +1684,13 @@ setViewportOffset__11DGXGraphicsFR8RectArea:
 /* 80048CC4 00045C24  38 21 00 08 */	addi r1, r1, 8
 /* 80048CC8 00045C28  7C 08 03 A6 */	mtlr r0
 /* 80048CCC 00045C2C  4E 80 00 20 */	blr 
+.endfn setViewportOffset__11DGXGraphicsFR8RectArea
 
-.global initReflectTex__11DGXGraphicsFb
-initReflectTex__11DGXGraphicsFb:
+.fn initReflectTex__11DGXGraphicsFb, global
 /* 80048CD0 00045C30  4E 80 00 20 */	blr 
+.endfn initReflectTex__11DGXGraphicsFb
 
-.global initProjTex__11DGXGraphicsFbP11LightCamera
-initProjTex__11DGXGraphicsFbP11LightCamera:
+.fn initProjTex__11DGXGraphicsFbP11LightCamera, global
 /* 80048CD4 00045C34  7C 08 02 A6 */	mflr r0
 /* 80048CD8 00045C38  90 01 00 04 */	stw r0, 4(r1)
 /* 80048CDC 00045C3C  54 80 06 3F */	clrlwi. r0, r4, 0x18
@@ -1746,9 +1745,9 @@ initProjTex__11DGXGraphicsFbP11LightCamera:
 /* 80048D98 00045CF8  38 21 01 50 */	addi r1, r1, 0x150
 /* 80048D9C 00045CFC  7C 08 03 A6 */	mtlr r0
 /* 80048DA0 00045D00  4E 80 00 20 */	blr 
+.endfn initProjTex__11DGXGraphicsFbP11LightCamera
 
-.global useMatrixQuick__11DGXGraphicsFR8Matrix4fi
-useMatrixQuick__11DGXGraphicsFR8Matrix4fi:
+.fn useMatrixQuick__11DGXGraphicsFR8Matrix4fi, global
 /* 80048DA4 00045D04  7C 08 02 A6 */	mflr r0
 /* 80048DA8 00045D08  90 01 00 04 */	stw r0, 4(r1)
 /* 80048DAC 00045D0C  94 21 FE B0 */	stwu r1, -0x150(r1)
@@ -1843,9 +1842,9 @@ useMatrixQuick__11DGXGraphicsFR8Matrix4fi:
 /* 80048F00 00045E60  38 21 01 50 */	addi r1, r1, 0x150
 /* 80048F04 00045E64  7C 08 03 A6 */	mtlr r0
 /* 80048F08 00045E68  4E 80 00 20 */	blr 
+.endfn useMatrixQuick__11DGXGraphicsFR8Matrix4fi
 
-.global useMatrix__11DGXGraphicsFR8Matrix4fi
-useMatrix__11DGXGraphicsFR8Matrix4fi:
+.fn useMatrix__11DGXGraphicsFR8Matrix4fi, global
 /* 80048F0C 00045E6C  7C 08 02 A6 */	mflr r0
 /* 80048F10 00045E70  90 01 00 04 */	stw r0, 4(r1)
 /* 80048F14 00045E74  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -1867,9 +1866,9 @@ useMatrix__11DGXGraphicsFR8Matrix4fi:
 /* 80048F54 00045EB4  38 21 00 20 */	addi r1, r1, 0x20
 /* 80048F58 00045EB8  7C 08 03 A6 */	mtlr r0
 /* 80048F5C 00045EBC  4E 80 00 20 */	blr 
+.endfn useMatrix__11DGXGraphicsFR8Matrix4fi
 
-.global useTexture__11DGXGraphicsFP7Texturei
-useTexture__11DGXGraphicsFP7Texturei:
+.fn useTexture__11DGXGraphicsFP7Texturei, global
 /* 80048F60 00045EC0  7C 08 02 A6 */	mflr r0
 /* 80048F64 00045EC4  90 01 00 04 */	stw r0, 4(r1)
 /* 80048F68 00045EC8  38 00 00 00 */	li r0, 0
@@ -1936,9 +1935,9 @@ useTexture__11DGXGraphicsFP7Texturei:
 /* 8004904C 00045FAC  38 21 00 28 */	addi r1, r1, 0x28
 /* 80049050 00045FB0  7C 08 03 A6 */	mtlr r0
 /* 80049054 00045FB4  4E 80 00 20 */	blr 
+.endfn useTexture__11DGXGraphicsFP7Texturei
 
-.global setMatMatrices__11DGXGraphicsFP8Materiali
-setMatMatrices__11DGXGraphicsFP8Materiali:
+.fn setMatMatrices__11DGXGraphicsFP8Materiali, global
 /* 80049058 00045FB8  7C 08 02 A6 */	mflr r0
 /* 8004905C 00045FBC  90 01 00 04 */	stw r0, 4(r1)
 /* 80049060 00045FC0  94 21 FF C8 */	stwu r1, -0x38(r1)
@@ -2032,9 +2031,9 @@ setMatMatrices__11DGXGraphicsFP8Materiali:
 /* 80049194 000460F4  38 21 00 38 */	addi r1, r1, 0x38
 /* 80049198 000460F8  7C 08 03 A6 */	mtlr r0
 /* 8004919C 000460FC  4E 80 00 20 */	blr 
+.endfn setMatMatrices__11DGXGraphicsFP8Materiali
 
-.global setMaterial__11DGXGraphicsFP8Materialb
-setMaterial__11DGXGraphicsFP8Materialb:
+.fn setMaterial__11DGXGraphicsFP8Materialb, global
 /* 800491A0 00046100  7C 08 02 A6 */	mflr r0
 /* 800491A4 00046104  90 01 00 04 */	stw r0, 4(r1)
 /* 800491A8 00046108  94 21 FF 68 */	stwu r1, -0x98(r1)
@@ -2600,9 +2599,9 @@ setMaterial__11DGXGraphicsFP8Materialb:
 /* 800499F8 00046958  38 21 00 98 */	addi r1, r1, 0x98
 /* 800499FC 0004695C  7C 08 03 A6 */	mtlr r0
 /* 80049A00 00046960  4E 80 00 20 */	blr 
+.endfn setMaterial__11DGXGraphicsFP8Materialb
 
-.global initMesh__11DGXGraphicsFP5Shape
-initMesh__11DGXGraphicsFP5Shape:
+.fn initMesh__11DGXGraphicsFP5Shape, global
 /* 80049A04 00046964  7C 08 02 A6 */	mflr r0
 /* 80049A08 00046968  3C A0 80 2A */	lis r5, meshVAT@ha
 /* 80049A0C 0004696C  90 01 00 04 */	stw r0, 4(r1)
@@ -2731,9 +2730,9 @@ initMesh__11DGXGraphicsFP5Shape:
 /* 80049BCC 00046B2C  38 21 00 30 */	addi r1, r1, 0x30
 /* 80049BD0 00046B30  7C 08 03 A6 */	mtlr r0
 /* 80049BD4 00046B34  4E 80 00 20 */	blr 
+.endfn initMesh__11DGXGraphicsFP5Shape
 
-.global setupVtxDesc__11DGXGraphicsFP5ShapeP8MaterialP4Mesh
-setupVtxDesc__11DGXGraphicsFP5ShapeP8MaterialP4Mesh:
+.fn setupVtxDesc__11DGXGraphicsFP5ShapeP8MaterialP4Mesh, global
 /* 80049BD8 00046B38  7C 08 02 A6 */	mflr r0
 /* 80049BDC 00046B3C  90 01 00 04 */	stw r0, 4(r1)
 /* 80049BE0 00046B40  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -2897,9 +2896,9 @@ setupVtxDesc__11DGXGraphicsFP5ShapeP8MaterialP4Mesh:
 /* 80049E2C 00046D8C  38 21 00 28 */	addi r1, r1, 0x28
 /* 80049E30 00046D90  7C 08 03 A6 */	mtlr r0
 /* 80049E34 00046D94  4E 80 00 20 */	blr 
+.endfn setupVtxDesc__11DGXGraphicsFP5ShapeP8MaterialP4Mesh
 
-.global drawSingleMatpoly__11DGXGraphicsFP5ShapePQ25Joint7MatPoly
-drawSingleMatpoly__11DGXGraphicsFP5ShapePQ25Joint7MatPoly:
+.fn drawSingleMatpoly__11DGXGraphicsFP5ShapePQ25Joint7MatPoly, global
 /* 80049E38 00046D98  7C 08 02 A6 */	mflr r0
 /* 80049E3C 00046D9C  90 01 00 04 */	stw r0, 4(r1)
 /* 80049E40 00046DA0  94 21 FF C0 */	stwu r1, -0x40(r1)
@@ -3056,9 +3055,9 @@ drawSingleMatpoly__11DGXGraphicsFP5ShapePQ25Joint7MatPoly:
 /* 8004A070 00046FD0  38 21 00 40 */	addi r1, r1, 0x40
 /* 8004A074 00046FD4  7C 08 03 A6 */	mtlr r0
 /* 8004A078 00046FD8  4E 80 00 20 */	blr 
+.endfn drawSingleMatpoly__11DGXGraphicsFP5ShapePQ25Joint7MatPoly
 
-.global drawMeshes__11DGXGraphicsFR6CameraP5Shape
-drawMeshes__11DGXGraphicsFR6CameraP5Shape:
+.fn drawMeshes__11DGXGraphicsFR6CameraP5Shape, global
 /* 8004A07C 00046FDC  7C 08 02 A6 */	mflr r0
 /* 8004A080 00046FE0  90 01 00 04 */	stw r0, 4(r1)
 /* 8004A084 00046FE4  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -3105,9 +3104,9 @@ drawMeshes__11DGXGraphicsFR6CameraP5Shape:
 /* 8004A120 00047080  38 21 00 28 */	addi r1, r1, 0x28
 /* 8004A124 00047084  7C 08 03 A6 */	mtlr r0
 /* 8004A128 00047088  4E 80 00 20 */	blr 
+.endfn drawMeshes__11DGXGraphicsFR6CameraP5Shape
 
-.global setColour__11DGXGraphicsFR6Colourb
-setColour__11DGXGraphicsFR6Colourb:
+.fn setColour__11DGXGraphicsFR6Colourb, global
 /* 8004A12C 0004708C  7C 08 02 A6 */	mflr r0
 /* 8004A130 00047090  90 01 00 04 */	stw r0, 4(r1)
 /* 8004A134 00047094  54 A0 06 3F */	clrlwi. r0, r5, 0x18
@@ -3148,15 +3147,15 @@ setColour__11DGXGraphicsFR6Colourb:
 /* 8004A1BC 0004711C  38 21 00 30 */	addi r1, r1, 0x30
 /* 8004A1C0 00047120  7C 08 03 A6 */	mtlr r0
 /* 8004A1C4 00047124  4E 80 00 20 */	blr 
+.endfn setColour__11DGXGraphicsFR6Colourb
 
-.global setAuxColour__11DGXGraphicsFR6Colour
-setAuxColour__11DGXGraphicsFR6Colour:
+.fn setAuxColour__11DGXGraphicsFR6Colour, global
 /* 8004A1C8 00047128  80 04 00 00 */	lwz r0, 0(r4)
 /* 8004A1CC 0004712C  90 03 03 1C */	stw r0, 0x31c(r3)
 /* 8004A1D0 00047130  4E 80 00 20 */	blr 
+.endfn setAuxColour__11DGXGraphicsFR6Colour
 
-.global setPrimEnv__11DGXGraphicsFP6ColourP6Colour
-setPrimEnv__11DGXGraphicsFP6ColourP6Colour:
+.fn setPrimEnv__11DGXGraphicsFP6ColourP6Colour, global
 /* 8004A1D4 00047134  7C 08 02 A6 */	mflr r0
 /* 8004A1D8 00047138  28 04 00 00 */	cmplwi r4, 0
 /* 8004A1DC 0004713C  90 01 00 04 */	stw r0, 4(r1)
@@ -3183,15 +3182,15 @@ setPrimEnv__11DGXGraphicsFP6ColourP6Colour:
 /* 8004A228 00047188  38 21 00 28 */	addi r1, r1, 0x28
 /* 8004A22C 0004718C  7C 08 03 A6 */	mtlr r0
 /* 8004A230 00047190  4E 80 00 20 */	blr 
+.endfn setPrimEnv__11DGXGraphicsFP6ColourP6Colour
 
-.global setClearColour__11DGXGraphicsFR6Colour
-setClearColour__11DGXGraphicsFR6Colour:
+.fn setClearColour__11DGXGraphicsFR6Colour, global
 /* 8004A234 00047194  80 04 00 00 */	lwz r0, 0(r4)
 /* 8004A238 00047198  90 03 03 14 */	stw r0, 0x314(r3)
 /* 8004A23C 0004719C  4E 80 00 20 */	blr 
+.endfn setClearColour__11DGXGraphicsFR6Colour
 
-.global clearBuffer__11DGXGraphicsFib
-clearBuffer__11DGXGraphicsFib:
+.fn clearBuffer__11DGXGraphicsFib, global
 /* 8004A240 000471A0  7C 08 02 A6 */	mflr r0
 /* 8004A244 000471A4  3C 80 01 00 */	lis r4, 0x00FFFFFF@ha
 /* 8004A248 000471A8  90 01 00 04 */	stw r0, 4(r1)
@@ -3205,9 +3204,9 @@ clearBuffer__11DGXGraphicsFib:
 /* 8004A268 000471C8  38 21 00 18 */	addi r1, r1, 0x18
 /* 8004A26C 000471CC  7C 08 03 A6 */	mtlr r0
 /* 8004A270 000471D0  4E 80 00 20 */	blr 
+.endfn clearBuffer__11DGXGraphicsFib
 
-.global setFog__11DGXGraphicsFb
-setFog__11DGXGraphicsFb:
+.fn setFog__11DGXGraphicsFb, global
 /* 8004A274 000471D4  7C 08 02 A6 */	mflr r0
 /* 8004A278 000471D8  38 C3 00 00 */	addi r6, r3, 0
 /* 8004A27C 000471DC  90 01 00 04 */	stw r0, 4(r1)
@@ -3256,9 +3255,9 @@ setFog__11DGXGraphicsFb:
 /* 8004A31C 0004727C  38 21 00 20 */	addi r1, r1, 0x20
 /* 8004A320 00047280  7C 08 03 A6 */	mtlr r0
 /* 8004A324 00047284  4E 80 00 20 */	blr 
+.endfn setFog__11DGXGraphicsFb
 
-.global setFog__11DGXGraphicsFbR6Colourfff
-setFog__11DGXGraphicsFbR6Colourfff:
+.fn setFog__11DGXGraphicsFbR6Colourfff, global
 /* 8004A328 00047288  7C 08 02 A6 */	mflr r0
 /* 8004A32C 0004728C  90 01 00 04 */	stw r0, 4(r1)
 /* 8004A330 00047290  94 21 FF F8 */	stwu r1, -8(r1)
@@ -3275,9 +3274,9 @@ setFog__11DGXGraphicsFbR6Colourfff:
 /* 8004A35C 000472BC  38 21 00 08 */	addi r1, r1, 8
 /* 8004A360 000472C0  7C 08 03 A6 */	mtlr r0
 /* 8004A364 000472C4  4E 80 00 20 */	blr 
+.endfn setFog__11DGXGraphicsFbR6Colourfff
 
-.global setBlendMode__11DGXGraphicsFUcUcUc
-setBlendMode__11DGXGraphicsFUcUcUc:
+.fn setBlendMode__11DGXGraphicsFUcUcUc, global
 /* 8004A368 000472C8  7C 08 02 A6 */	mflr r0
 /* 8004A36C 000472CC  38 60 00 01 */	li r3, 1
 /* 8004A370 000472D0  90 01 00 04 */	stw r0, 4(r1)
@@ -3374,9 +3373,9 @@ setBlendMode__11DGXGraphicsFUcUcUc:
 /* 8004A4C0 00047420  38 21 00 18 */	addi r1, r1, 0x18
 /* 8004A4C4 00047424  7C 08 03 A6 */	mtlr r0
 /* 8004A4C8 00047428  4E 80 00 20 */	blr 
+.endfn setBlendMode__11DGXGraphicsFUcUcUc
 
-.global setCBlending__11DGXGraphicsFi
-setCBlending__11DGXGraphicsFi:
+.fn setCBlending__11DGXGraphicsFi, global
 /* 8004A4CC 0004742C  7C 08 02 A6 */	mflr r0
 /* 8004A4D0 00047430  90 01 00 04 */	stw r0, 4(r1)
 /* 8004A4D4 00047434  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -3655,9 +3654,9 @@ setCBlending__11DGXGraphicsFi:
 /* 8004A8F8 00047858  38 21 00 18 */	addi r1, r1, 0x18
 /* 8004A8FC 0004785C  7C 08 03 A6 */	mtlr r0
 /* 8004A900 00047860  4E 80 00 20 */	blr 
+.endfn setCBlending__11DGXGraphicsFi
 
-.global initParticle__11DGXGraphicsFb
-initParticle__11DGXGraphicsFb:
+.fn initParticle__11DGXGraphicsFb, global
 /* 8004A904 00047864  7C 08 02 A6 */	mflr r0
 /* 8004A908 00047868  90 01 00 04 */	stw r0, 4(r1)
 /* 8004A90C 0004786C  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -3707,9 +3706,9 @@ initParticle__11DGXGraphicsFb:
 /* 8004A9B0 00047910  38 21 00 18 */	addi r1, r1, 0x18
 /* 8004A9B4 00047914  7C 08 03 A6 */	mtlr r0
 /* 8004A9B8 00047918  4E 80 00 20 */	blr 
+.endfn initParticle__11DGXGraphicsFb
 
-.global drawRotParticle__11DGXGraphicsFR6CameraR8Vector3fUsf
-drawRotParticle__11DGXGraphicsFR6CameraR8Vector3fUsf:
+.fn drawRotParticle__11DGXGraphicsFR6CameraR8Vector3fUsf, global
 /* 8004A9BC 0004791C  7C 08 02 A6 */	mflr r0
 /* 8004A9C0 00047920  54 C3 04 3E */	clrlwi r3, r6, 0x10
 /* 8004A9C4 00047924  90 01 00 04 */	stw r0, 4(r1)
@@ -3912,9 +3911,9 @@ drawRotParticle__11DGXGraphicsFR6CameraR8Vector3fUsf:
 /* 8004ACD8 00047C38  38 21 01 58 */	addi r1, r1, 0x158
 /* 8004ACDC 00047C3C  7C 08 03 A6 */	mtlr r0
 /* 8004ACE0 00047C40  4E 80 00 20 */	blr 
+.endfn drawRotParticle__11DGXGraphicsFR6CameraR8Vector3fUsf
 
-.global drawParticle__11DGXGraphicsFR6CameraR8Vector3ff
-drawParticle__11DGXGraphicsFR6CameraR8Vector3ff:
+.fn drawParticle__11DGXGraphicsFR6CameraR8Vector3ff, global
 /* 8004ACE4 00047C44  7C 08 02 A6 */	mflr r0
 /* 8004ACE8 00047C48  90 01 00 04 */	stw r0, 4(r1)
 /* 8004ACEC 00047C4C  94 21 FE C0 */	stwu r1, -0x140(r1)
@@ -4074,9 +4073,9 @@ drawParticle__11DGXGraphicsFR6CameraR8Vector3ff:
 /* 8004AF54 00047EB4  38 21 01 40 */	addi r1, r1, 0x140
 /* 8004AF58 00047EB8  7C 08 03 A6 */	mtlr r0
 /* 8004AF5C 00047EBC  4E 80 00 20 */	blr 
+.endfn drawParticle__11DGXGraphicsFR6CameraR8Vector3ff
 
-.global drawCamParticle__11DGXGraphicsFR6CameraR8Vector3fR8Vector2fR8Vector2fR8Vector2f
-drawCamParticle__11DGXGraphicsFR6CameraR8Vector3fR8Vector2fR8Vector2fR8Vector2f:
+.fn drawCamParticle__11DGXGraphicsFR6CameraR8Vector3fR8Vector2fR8Vector2fR8Vector2f, global
 /* 8004AF60 00047EC0  7C 08 02 A6 */	mflr r0
 /* 8004AF64 00047EC4  38 80 00 00 */	li r4, 0
 /* 8004AF68 00047EC8  90 01 00 04 */	stw r0, 4(r1)
@@ -4151,9 +4150,9 @@ drawCamParticle__11DGXGraphicsFR6CameraR8Vector3fR8Vector2fR8Vector2fR8Vector2f:
 /* 8004B07C 00047FDC  38 21 01 08 */	addi r1, r1, 0x108
 /* 8004B080 00047FE0  7C 08 03 A6 */	mtlr r0
 /* 8004B084 00047FE4  4E 80 00 20 */	blr 
+.endfn drawCamParticle__11DGXGraphicsFR6CameraR8Vector3fR8Vector2fR8Vector2fR8Vector2f
 
-.global drawLine__11DGXGraphicsFR8Vector3fR8Vector3f
-drawLine__11DGXGraphicsFR8Vector3fR8Vector3f:
+.fn drawLine__11DGXGraphicsFR8Vector3fR8Vector3f, global
 /* 8004B088 00047FE8  7C 08 02 A6 */	mflr r0
 /* 8004B08C 00047FEC  90 01 00 04 */	stw r0, 4(r1)
 /* 8004B090 00047FF0  94 21 FF D0 */	stwu r1, -0x30(r1)
@@ -4215,9 +4214,9 @@ drawLine__11DGXGraphicsFR8Vector3fR8Vector3f:
 /* 8004B170 000480D0  38 21 00 30 */	addi r1, r1, 0x30
 /* 8004B174 000480D4  7C 08 03 A6 */	mtlr r0
 /* 8004B178 000480D8  4E 80 00 20 */	blr 
+.endfn drawLine__11DGXGraphicsFR8Vector3fR8Vector3f
 
-.global drawPoints__11DGXGraphicsFP8Vector3fi
-drawPoints__11DGXGraphicsFP8Vector3fi:
+.fn drawPoints__11DGXGraphicsFP8Vector3fi, global
 /* 8004B17C 000480DC  7C 08 02 A6 */	mflr r0
 /* 8004B180 000480E0  90 01 00 04 */	stw r0, 4(r1)
 /* 8004B184 000480E4  94 21 FF D0 */	stwu r1, -0x30(r1)
@@ -4360,9 +4359,9 @@ drawPoints__11DGXGraphicsFP8Vector3fi:
 /* 8004B394 000482F4  38 21 00 30 */	addi r1, r1, 0x30
 /* 8004B398 000482F8  7C 08 03 A6 */	mtlr r0
 /* 8004B39C 000482FC  4E 80 00 20 */	blr 
+.endfn drawPoints__11DGXGraphicsFP8Vector3fi
 
-.global drawOneTri__11DGXGraphicsFP8Vector3fP8Vector3fP8Vector2fi
-drawOneTri__11DGXGraphicsFP8Vector3fP8Vector3fP8Vector2fi:
+.fn drawOneTri__11DGXGraphicsFP8Vector3fP8Vector3fP8Vector2fi, global
 /* 8004B3A0 00048300  7C 08 02 A6 */	mflr r0
 /* 8004B3A4 00048304  90 01 00 04 */	stw r0, 4(r1)
 /* 8004B3A8 00048308  94 21 FF C0 */	stwu r1, -0x40(r1)
@@ -4621,9 +4620,9 @@ drawOneTri__11DGXGraphicsFP8Vector3fP8Vector3fP8Vector2fi:
 /* 8004B76C 000486CC  38 21 00 40 */	addi r1, r1, 0x40
 /* 8004B770 000486D0  7C 08 03 A6 */	mtlr r0
 /* 8004B774 000486D4  4E 80 00 20 */	blr 
+.endfn drawOneTri__11DGXGraphicsFP8Vector3fP8Vector3fP8Vector2fi
 
-.global blatRectangle__11DGXGraphicsFR8RectArea
-blatRectangle__11DGXGraphicsFR8RectArea:
+.fn blatRectangle__11DGXGraphicsFR8RectArea, global
 /* 8004B778 000486D8  7C 08 02 A6 */	mflr r0
 /* 8004B77C 000486DC  90 01 00 04 */	stw r0, 4(r1)
 /* 8004B780 000486E0  94 21 FF 80 */	stwu r1, -0x80(r1)
@@ -4759,9 +4758,9 @@ blatRectangle__11DGXGraphicsFR8RectArea:
 /* 8004B988 000488E8  38 21 00 80 */	addi r1, r1, 0x80
 /* 8004B98C 000488EC  7C 08 03 A6 */	mtlr r0
 /* 8004B990 000488F0  4E 80 00 20 */	blr 
+.endfn blatRectangle__11DGXGraphicsFR8RectArea
 
-.global testRectangle__11DGXGraphicsFR8RectArea
-testRectangle__11DGXGraphicsFR8RectArea:
+.fn testRectangle__11DGXGraphicsFR8RectArea, global
 /* 8004B994 000488F4  7C 08 02 A6 */	mflr r0
 /* 8004B998 000488F8  90 01 00 04 */	stw r0, 4(r1)
 /* 8004B99C 000488FC  94 21 FF 90 */	stwu r1, -0x70(r1)
@@ -4876,9 +4875,9 @@ testRectangle__11DGXGraphicsFR8RectArea:
 /* 8004BB50 00048AB0  38 21 00 70 */	addi r1, r1, 0x70
 /* 8004BB54 00048AB4  7C 08 03 A6 */	mtlr r0
 /* 8004BB58 00048AB8  4E 80 00 20 */	blr 
+.endfn testRectangle__11DGXGraphicsFR8RectArea
 
-.global drawRectangle__11DGXGraphicsFR8RectAreaR8RectAreaP8Vector3f
-drawRectangle__11DGXGraphicsFR8RectAreaR8RectAreaP8Vector3f:
+.fn drawRectangle__11DGXGraphicsFR8RectAreaR8RectAreaP8Vector3f, global
 /* 8004BB5C 00048ABC  7C 08 02 A6 */	mflr r0
 /* 8004BB60 00048AC0  90 01 00 04 */	stw r0, 4(r1)
 /* 8004BB64 00048AC4  94 21 FF 88 */	stwu r1, -0x78(r1)
@@ -5186,9 +5185,9 @@ drawRectangle__11DGXGraphicsFR8RectAreaR8RectAreaP8Vector3f:
 /* 8004BFBC 00048F1C  38 21 00 78 */	addi r1, r1, 0x78
 /* 8004BFC0 00048F20  7C 08 03 A6 */	mtlr r0
 /* 8004BFC4 00048F24  4E 80 00 20 */	blr 
+.endfn drawRectangle__11DGXGraphicsFR8RectAreaR8RectAreaP8Vector3f
 
-.global lineRectangle__11DGXGraphicsFR8RectArea
-lineRectangle__11DGXGraphicsFR8RectArea:
+.fn lineRectangle__11DGXGraphicsFR8RectArea, global
 /* 8004BFC8 00048F28  7C 08 02 A6 */	mflr r0
 /* 8004BFCC 00048F2C  90 01 00 04 */	stw r0, 4(r1)
 /* 8004BFD0 00048F30  94 21 FF 78 */	stwu r1, -0x88(r1)
@@ -5308,9 +5307,9 @@ lineRectangle__11DGXGraphicsFR8RectArea:
 /* 8004C198 000490F8  38 21 00 88 */	addi r1, r1, 0x88
 /* 8004C19C 000490FC  7C 08 03 A6 */	mtlr r0
 /* 8004C1A0 00049100  4E 80 00 20 */	blr 
+.endfn lineRectangle__11DGXGraphicsFR8RectArea
 
-.global fillRectangle__11DGXGraphicsFR8RectArea
-fillRectangle__11DGXGraphicsFR8RectArea:
+.fn fillRectangle__11DGXGraphicsFR8RectArea, global
 /* 8004C1A4 00049104  7C 08 02 A6 */	mflr r0
 /* 8004C1A8 00049108  90 01 00 04 */	stw r0, 4(r1)
 /* 8004C1AC 0004910C  94 21 FF 90 */	stwu r1, -0x70(r1)
@@ -5418,9 +5417,9 @@ fillRectangle__11DGXGraphicsFR8RectArea:
 /* 8004C344 000492A4  38 21 00 70 */	addi r1, r1, 0x70
 /* 8004C348 000492A8  7C 08 03 A6 */	mtlr r0
 /* 8004C34C 000492AC  4E 80 00 20 */	blr 
+.endfn fillRectangle__11DGXGraphicsFR8RectArea
 
-.global texturePrintf__11DGXGraphicsFP4FontiiPce
-texturePrintf__11DGXGraphicsFP4FontiiPce:
+.fn texturePrintf__11DGXGraphicsFP4FontiiPce, global
 /* 8004C350 000492B0  7C 08 02 A6 */	mflr r0
 /* 8004C354 000492B4  90 01 00 04 */	stw r0, 4(r1)
 /* 8004C358 000492B8  94 21 FD 48 */	stwu r1, -0x2b8(r1)
@@ -5683,9 +5682,9 @@ texturePrintf__11DGXGraphicsFP4FontiiPce:
 /* 8004C748 000496A8  38 21 02 B8 */	addi r1, r1, 0x2b8
 /* 8004C74C 000496AC  7C 08 03 A6 */	mtlr r0
 /* 8004C750 000496B0  4E 80 00 20 */	blr 
+.endfn texturePrintf__11DGXGraphicsFP4FontiiPce
 
-.global __ct__5ShapeFv
-__ct__5ShapeFv:
+.fn __ct__5ShapeFv, global
 /* 8004C754 000496B4  7C 08 02 A6 */	mflr r0
 /* 8004C758 000496B8  90 01 00 04 */	stw r0, 4(r1)
 /* 8004C75C 000496BC  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -5701,9 +5700,9 @@ __ct__5ShapeFv:
 /* 8004C784 000496E4  38 21 00 18 */	addi r1, r1, 0x18
 /* 8004C788 000496E8  7C 08 03 A6 */	mtlr r0
 /* 8004C78C 000496EC  4E 80 00 20 */	blr 
+.endfn __ct__5ShapeFv
 
-.global optimize__5ShapeFv
-optimize__5ShapeFv:
+.fn optimize__5ShapeFv, global
 /* 8004C790 000496F0  7C 08 02 A6 */	mflr r0
 /* 8004C794 000496F4  90 01 00 04 */	stw r0, 4(r1)
 /* 8004C798 000496F8  94 21 FF D0 */	stwu r1, -0x30(r1)
@@ -5793,22 +5792,23 @@ optimize__5ShapeFv:
 /* 8004C8C0 00049820  38 21 00 30 */	addi r1, r1, 0x30
 /* 8004C8C4 00049824  7C 08 03 A6 */	mtlr r0
 /* 8004C8C8 00049828  4E 80 00 20 */	blr 
+.endfn optimize__5ShapeFv
 
-.global setPointSize__11DGXGraphicsFf
-setPointSize__11DGXGraphicsFf:
+.fn setPointSize__11DGXGraphicsFf, weak
 /* 8004C8CC 0004982C  4E 80 00 20 */	blr 
+.endfn setPointSize__11DGXGraphicsFf
 
-.global setClippingPlane__11DGXGraphicsFbP5Plane
-setClippingPlane__11DGXGraphicsFbP5Plane:
+.fn setClippingPlane__11DGXGraphicsFbP5Plane, weak
 /* 8004C8D0 00049830  4E 80 00 20 */	blr 
+.endfn setClippingPlane__11DGXGraphicsFbP5Plane
 
-.global drawOutline__11DGXGraphicsFR6CameraP5Shape
-drawOutline__11DGXGraphicsFR6CameraP5Shape:
+.fn drawOutline__11DGXGraphicsFR6CameraP5Shape, weak
 /* 8004C8D4 00049834  4E 80 00 20 */	blr 
+.endfn drawOutline__11DGXGraphicsFR6CameraP5Shape
 
-.global drawOneStrip__11DGXGraphicsFP8Vector3fP8Vector3fP8Vector2fi
-drawOneStrip__11DGXGraphicsFP8Vector3fP8Vector3fP8Vector2fi:
+.fn drawOneStrip__11DGXGraphicsFP8Vector3fP8Vector3fP8Vector2fi, weak
 /* 8004C8D8 00049838  4E 80 00 20 */	blr 
+.endfn drawOneStrip__11DGXGraphicsFP8Vector3fP8Vector3fP8Vector2fi
 
 .fn __sinit_dgxGraphics_cpp, local
 /* 8004C8DC 0004983C  38 00 00 FF */	li r0, 0xff
@@ -5830,14 +5830,15 @@ lbl_constructor:
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802A56E8:
+.obj lbl_802A56E8, local
 	.asciz "dgxGraphics.cpp"
+.endobj lbl_802A56E8
 .balign 4
-lbl_802A56F8:
+.obj lbl_802A56F8, local
 	.asciz "DGXGraphics"
+.endobj lbl_802A56F8
 .balign 4
-.global progressiveRenderMode
-progressiveRenderMode:
+.obj progressiveRenderMode, global
 	.4byte 0x00000002
 	.4byte 0x028001E0
 	.4byte 0x01E00028
@@ -5853,8 +5854,8 @@ progressiveRenderMode:
 	.4byte 0x06060000
 	.4byte 0x15161500
 	.4byte 0x00000000
-.global localNtsc480IntDf
-localNtsc480IntDf:
+.endobj progressiveRenderMode
+.obj localNtsc480IntDf, global
 	.4byte 0x00000000
 	.4byte 0x028001E0
 	.4byte 0x01E00028
@@ -5870,7 +5871,8 @@ localNtsc480IntDf:
 	.4byte 0x06060506
 	.4byte 0x0E0E0E06
 	.4byte 0x05000000
-oldTexs:
+.endobj localNtsc480IntDf
+.obj oldTexs, local
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x00000000
@@ -5879,41 +5881,53 @@ oldTexs:
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x00000000
+.endobj oldTexs
 .balign 4
-lbl_802A579C:
+.obj lbl_802A579C, local
 	.asciz "GX_TEXMTX0"
+.endobj lbl_802A579C
 .balign 4
-lbl_802A57A8:
+.obj lbl_802A57A8, local
 	.asciz "GX_TEXMTX1"
+.endobj lbl_802A57A8
 .balign 4
-lbl_802A57B4:
+.obj lbl_802A57B4, local
 	.asciz "GX_TEXMTX2"
+.endobj lbl_802A57B4
 .balign 4
-lbl_802A57C0:
+.obj lbl_802A57C0, local
 	.asciz "GX_TEXMTX3"
+.endobj lbl_802A57C0
 .balign 4
-lbl_802A57CC:
+.obj lbl_802A57CC, local
 	.asciz "GX_TEXMTX4"
+.endobj lbl_802A57CC
 .balign 4
-lbl_802A57D8:
+.obj lbl_802A57D8, local
 	.asciz "GX_TEXMTX5"
+.endobj lbl_802A57D8
 .balign 4
-lbl_802A57E4:
+.obj lbl_802A57E4, local
 	.asciz "GX_TEXMTX6"
+.endobj lbl_802A57E4
 .balign 4
-lbl_802A57F0:
+.obj lbl_802A57F0, local
 	.asciz "GX_TEXMTX7"
+.endobj lbl_802A57F0
 .balign 4
-lbl_802A57FC:
+.obj lbl_802A57FC, local
 	.asciz "GX_TEXMTX8"
+.endobj lbl_802A57FC
 .balign 4
-lbl_802A5808:
+.obj lbl_802A5808, local
 	.asciz "GX_TEXMTX9"
+.endobj lbl_802A5808
 .balign 4
-lbl_802A5814:
+.obj lbl_802A5814, local
 	.asciz "GX_IDENTITY"
+.endobj lbl_802A5814
 .balign 4
-mtxTypes:
+.obj mtxTypes, local
 	.4byte lbl_802A579C
 	.4byte lbl_802A57A8
 	.4byte lbl_802A57B4
@@ -5925,71 +5939,93 @@ mtxTypes:
 	.4byte lbl_802A57FC
 	.4byte lbl_802A5808
 	.4byte lbl_802A5814
+.endobj mtxTypes
 .balign 4
-lbl_802A584C:
+.obj lbl_802A584C, local
 	.asciz "GX_TG_POS"
+.endobj lbl_802A584C
 .balign 4
-lbl_802A5858:
+.obj lbl_802A5858, local
 	.asciz "GX_TG_NRM"
+.endobj lbl_802A5858
 .balign 4
-lbl_802A5864:
+.obj lbl_802A5864, local
 	.asciz "GX_TG_BINRM"
+.endobj lbl_802A5864
 .balign 4
-lbl_802A5870:
+.obj lbl_802A5870, local
 	.asciz "GX_TG_TANGENT"
+.endobj lbl_802A5870
 .balign 4
-lbl_802A5880:
+.obj lbl_802A5880, local
 	.asciz "GX_TG_TEX0"
+.endobj lbl_802A5880
 .balign 4
-lbl_802A588C:
+.obj lbl_802A588C, local
 	.asciz "GX_TG_TEX1"
+.endobj lbl_802A588C
 .balign 4
-lbl_802A5898:
+.obj lbl_802A5898, local
 	.asciz "GX_TG_TEX2"
+.endobj lbl_802A5898
 .balign 4
-lbl_802A58A4:
+.obj lbl_802A58A4, local
 	.asciz "GX_TG_TEX3"
+.endobj lbl_802A58A4
 .balign 4
-lbl_802A58B0:
+.obj lbl_802A58B0, local
 	.asciz "GX_TG_TEX4"
+.endobj lbl_802A58B0
 .balign 4
-lbl_802A58BC:
+.obj lbl_802A58BC, local
 	.asciz "GX_TG_TEX5"
+.endobj lbl_802A58BC
 .balign 4
-lbl_802A58C8:
+.obj lbl_802A58C8, local
 	.asciz "GX_TG_TEX6"
+.endobj lbl_802A58C8
 .balign 4
-lbl_802A58D4:
+.obj lbl_802A58D4, local
 	.asciz "GX_TG_TEX7"
+.endobj lbl_802A58D4
 .balign 4
-lbl_802A58E0:
+.obj lbl_802A58E0, local
 	.asciz "GX_TG_TEXCOORD0"
+.endobj lbl_802A58E0
 .balign 4
-lbl_802A58F0:
+.obj lbl_802A58F0, local
 	.asciz "GX_TG_TEXCOORD1"
+.endobj lbl_802A58F0
 .balign 4
-lbl_802A5900:
+.obj lbl_802A5900, local
 	.asciz "GX_TG_TEXCOORD2"
+.endobj lbl_802A5900
 .balign 4
-lbl_802A5910:
+.obj lbl_802A5910, local
 	.asciz "GX_TG_TEXCOORD3"
+.endobj lbl_802A5910
 .balign 4
-lbl_802A5920:
+.obj lbl_802A5920, local
 	.asciz "GX_TG_TEXCOORD4"
+.endobj lbl_802A5920
 .balign 4
-lbl_802A5930:
+.obj lbl_802A5930, local
 	.asciz "GX_TG_TEXCOORD5"
+.endobj lbl_802A5930
 .balign 4
-lbl_802A5940:
+.obj lbl_802A5940, local
 	.asciz "GX_TG_TEXCOORD6"
+.endobj lbl_802A5940
 .balign 4
-lbl_802A5950:
+.obj lbl_802A5950, local
 	.asciz "GX_TG_COLOR0"
+.endobj lbl_802A5950
 .balign 4
-lbl_802A5960:
+.obj lbl_802A5960, local
 	.asciz "GX_TG_COLOR1"
+.endobj lbl_802A5960
 .balign 4
-genSrcs:
+.obj genSrcs, local
 	.4byte lbl_802A584C
 	.4byte lbl_802A5858
 	.4byte lbl_802A5864
@@ -6011,7 +6047,8 @@ genSrcs:
 	.4byte lbl_802A5940
 	.4byte lbl_802A5950
 	.4byte lbl_802A5960
-meshVCD:
+.endobj genSrcs
+.obj meshVCD, local
 	.4byte 0x00000000
 	.4byte 0x00000001
 	.4byte 0x00000001
@@ -6058,7 +6095,8 @@ meshVCD:
 	.4byte 0x00000000
 	.4byte 0x000000FF
 	.4byte 0x00000000
-meshVAT:
+.endobj meshVCD
+.obj meshVAT, local
 	.4byte 0x00000009
 	.4byte 0x00000001
 	.4byte 0x00000004
@@ -6103,11 +6141,13 @@ meshVAT:
 	.4byte 0x00000001
 	.4byte 0x00000003
 	.4byte 0x00000000
+.endobj meshVAT
 .balign 4
-lbl_802A5B2C:
+.obj lbl_802A5B2C, local
 	.asciz "%s:%d Warning: cam->vNear >= cam->vFar\n"
+.endobj lbl_802A5B2C
 .balign 4
-lbl_802A5B54:
+.obj lbl_802A5B54, local
 	.4byte .L_8004A534
 	.4byte .L_8004A568
 	.4byte .L_8004A59C
@@ -6115,17 +6155,21 @@ lbl_802A5B54:
 	.4byte .L_8004A604
 	.4byte .L_8004A638
 	.4byte .L_8004A684
+.endobj lbl_802A5B54
 .balign 4
-lbl_802A5B70:
+.obj lbl_802A5B70, local
 	.asciz "Unknown addr !!"
+.endobj lbl_802A5B70
 .balign 4
-lbl_802A5B80:
+.obj lbl_802A5B80, local
 	.asciz "ERROR: %s"
+.endobj lbl_802A5B80
 .balign 4
-lbl_802A5B8C:
+.obj lbl_802A5B8C, local
 	.asciz "ERROR: in %s at line %d"
+.endobj lbl_802A5B8C
 .balign 4
-sAsciiTable:
+.obj sAsciiTable, local
 	.4byte 0xFFFFFFFF
 	.4byte 0xFFFFFFFF
 	.4byte 0xFFFFFFFF
@@ -6158,6 +6202,7 @@ sAsciiTable:
 	.4byte 0x1D1E1F20
 	.4byte 0x212223FF
 	.4byte 0xFFFFFFFF
+.endobj sAsciiTable
 .obj sFontData, local
 	.4byte 0x70871C30
 	.4byte 0x8988A250
@@ -6225,24 +6270,28 @@ sAsciiTable:
 	.4byte 0x00000000
 .endobj sFontData
 .balign 4
-lbl_802A5D24:
+.obj lbl_802A5D24, local
 	.asciz "CoreNode"
+.endobj lbl_802A5D24
 .balign 4
-lbl_802A5D30:
+.obj lbl_802A5D30, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte 0
+.endobj lbl_802A5D30
 .balign 4
-lbl_802A5D3C:
+.obj lbl_802A5D3C, local
 	.asciz "BaseShape"
+.endobj lbl_802A5D3C
 .balign 4
-lbl_802A5D48:
+.obj lbl_802A5D48, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte __RTTI__8CoreNode
 	.4byte 0
 	.4byte 0
-lbl_802A5D5C:
+.endobj lbl_802A5D48
+.obj lbl_802A5D5C, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte __RTTI__8CoreNode
@@ -6250,8 +6299,8 @@ lbl_802A5D5C:
 	.4byte __RTTI__9BaseShape
 	.4byte 0
 	.4byte 0
-.global __vt__5Shape
-__vt__5Shape:
+.endobj lbl_802A5D5C
+.obj __vt__5Shape, global
 	.4byte __RTTI__5Shape
 	.4byte 0
 	.4byte getAgeNodeType__5ANodeFv
@@ -6261,16 +6310,18 @@ __vt__5Shape:
 	.4byte render__9BaseShapeFR8Graphics
 	.4byte render2d__9BaseShapeFR8Graphics
 	.4byte makeRouteGroup__9BaseShapeFv
+.endobj __vt__5Shape
 .balign 4
-lbl_802A5D9C:
+.obj lbl_802A5D9C, local
 	.asciz "Graphics"
+.endobj lbl_802A5D9C
 .balign 4
-lbl_802A5DA8:
+.obj lbl_802A5DA8, local
 	.4byte __RTTI__8Graphics
 	.4byte 0
 	.4byte 0
-.global __vt__11DGXGraphics
-__vt__11DGXGraphics:
+.endobj lbl_802A5DA8
+.obj __vt__11DGXGraphics, global
 	.4byte __RTTI__11DGXGraphics
 	.4byte 0
 	.4byte videoReset__11DGXGraphicsFv
@@ -6334,97 +6385,134 @@ __vt__11DGXGraphics:
 	.4byte perspPrintf__8GraphicsFP4FontR8Vector3fiiPce
 	.4byte useMatrixQuick__11DGXGraphicsFR8Matrix4fi
 	.4byte drawOutline__11DGXGraphicsFR6CameraP5Shape
+.endobj __vt__11DGXGraphics
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-sScreenMode:
+.obj sScreenMode, local
 	.4byte localNtsc480IntDf
 	.4byte progressiveRenderMode
-sFirstFrame:
+.endobj sScreenMode
+.obj sFirstFrame, local
 	.4byte 0x00000004
-kDefaultFifoSize:
+.endobj sFirstFrame
+.obj kDefaultFifoSize, local
 	.4byte 0x00060000
-kTempFifoSize:
+.endobj kDefaultFifoSize
+.obj kTempFifoSize, local
 	.4byte 0x00010000
-kDefaultDLSize:
+.endobj kTempFifoSize
+.obj kDefaultDLSize, local
 	.4byte 0x00020000
-sendMtxIndx:
+.endobj kDefaultDLSize
+.obj sendMtxIndx, local
 	.byte 1
+.endobj sendMtxIndx
 .balign 4
-sendTxUVIndx:
+.obj sendTxUVIndx, local
 	.4byte 0x01000000
 	.4byte 0x00000000
-lbl_803DD5D4:
+.endobj sendTxUVIndx
+.obj lbl_803DD5D4, local
 	.float 0.0
-lbl_803DD5D8:
+.endobj lbl_803DD5D4
+.obj lbl_803DD5D8, local
 	.float 0.0
-lbl_803DD5DC:
+.endobj lbl_803DD5D8
+.obj lbl_803DD5DC, local
 	.float 0.0
-lbl_803DD5E0:
+.endobj lbl_803DD5DC
+.obj lbl_803DD5E0, local
 	.float 0.0
-lbl_803DD5E4:
+.endobj lbl_803DD5E0
+.obj lbl_803DD5E4, local
 	.float 0.0
-lbl_803DD5E8:
+.endobj lbl_803DD5E4
+.obj lbl_803DD5E8, local
 	.float 0.0
-lbl_803DD5EC:
+.endobj lbl_803DD5E8
+.obj lbl_803DD5EC, local
 	.float 0.0
-lbl_803DD5F0:
+.endobj lbl_803DD5EC
+.obj lbl_803DD5F0, local
 	.float 0.0
+.endobj lbl_803DD5F0
 .balign 4
-lbl_803DD5F4:
+.obj lbl_803DD5F4, local
 	.asciz "Shape"
+.endobj lbl_803DD5F4
 .balign 4
-lbl_803DD5FC:
+.obj lbl_803DD5FC, local
 	.asciz "ANode"
+.endobj lbl_803DD5FC
 .balign 4
-__RTTI__5ANode:
+.obj __RTTI__5ANode, local
 	.4byte lbl_803DD5FC
 	.4byte 0
-__RTTI__8CoreNode:
+.endobj __RTTI__5ANode
+.obj __RTTI__8CoreNode, local
 	.4byte lbl_802A5D24
 	.4byte lbl_802A5D30
-__RTTI__9BaseShape:
+.endobj __RTTI__8CoreNode
+.obj __RTTI__9BaseShape, local
 	.4byte lbl_802A5D3C
 	.4byte lbl_802A5D48
-__RTTI__5Shape:
+.endobj __RTTI__9BaseShape
+.obj __RTTI__5Shape, local
 	.4byte lbl_803DD5F4
 	.4byte lbl_802A5D5C
-__RTTI__8Graphics:
+.endobj __RTTI__5Shape
+.obj __RTTI__8Graphics, local
 	.4byte lbl_802A5D9C
 	.4byte 0
-__RTTI__11DGXGraphics:
+.endobj __RTTI__8Graphics
+.obj __RTTI__11DGXGraphics, local
 	.4byte lbl_802A56F8
 	.4byte lbl_802A5DA8
+.endobj __RTTI__11DGXGraphics
 
 .section .sbss, "wa"
 .balign 8
-sFrameSize:
+.obj sFrameSize, local
 	.skip 4
-oldVerts:
+.endobj sFrameSize
+.obj oldVerts, local
 	.skip 4
-oldNorms:
+.endobj oldVerts
+.obj oldNorms, local
 	.skip 4
-oldCols:
+.endobj oldNorms
+.obj oldCols, local
 	.skip 4
-oldCull:
+.endobj oldCols
+.obj oldCull, local
 	.skip 4
-oldTevGroup:
+.endobj oldCull
+.obj oldTevGroup, local
 	.skip 4
-frameNum:
+.endobj oldTevGroup
+.obj frameNum, local
 	.skip 4
-videoModeAsIs$643:
+.endobj frameNum
+.obj videoModeAsIs$643, local
 	.skip 4
-init$644:
+.endobj videoModeAsIs$643
+.obj init$644, local
 	.skip 1
+.endobj init$644
 .balign 4
-gfx__11DGXGraphics:
+.obj gfx__11DGXGraphics, global
 	.skip 4
-sendTxIndx:
+.endobj gfx__11DGXGraphics
+.obj sendTxIndx, local
 	.skip 1
-sendColIndx:
+.endobj sendTxIndx
+.obj sendColIndx, local
 	.skip 1
-sendNbtIndx:
+.endobj sendColIndx
+.obj sendNbtIndx, local
 	.skip 1
+.endobj sendNbtIndx
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8

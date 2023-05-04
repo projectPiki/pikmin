@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global __copy
-__copy:
+.fn __copy, global
 /* 802149C4 00211924  28 03 00 00 */	cmplwi r3, 0
 /* 802149C8 00211928  4D 82 00 20 */	beqlr 
 /* 802149CC 0021192C  28 05 00 00 */	cmplwi r5, 0
@@ -15,3 +14,4 @@ __copy:
 /* 802149E8 00211948  38 C6 00 01 */	addi r6, r6, 1
 /* 802149EC 0021194C  40 82 FF EC */	bne .L_802149D8
 /* 802149F0 00211950  4E 80 00 20 */	blr 
+.endfn __copy

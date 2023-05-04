@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global GXInitLightAttn
-GXInitLightAttn:
+.fn GXInitLightAttn, global
 /* 8021197C 0020E8DC  D0 23 00 10 */	stfs f1, 0x10(r3)
 /* 80211980 0020E8E0  D0 43 00 14 */	stfs f2, 0x14(r3)
 /* 80211984 0020E8E4  D0 63 00 18 */	stfs f3, 0x18(r3)
@@ -9,16 +8,16 @@ GXInitLightAttn:
 /* 8021198C 0020E8EC  D0 A3 00 20 */	stfs f5, 0x20(r3)
 /* 80211990 0020E8F0  D0 C3 00 24 */	stfs f6, 0x24(r3)
 /* 80211994 0020E8F4  4E 80 00 20 */	blr 
+.endfn GXInitLightAttn
 
-.global GXInitLightPos
-GXInitLightPos:
+.fn GXInitLightPos, global
 /* 80211998 0020E8F8  D0 23 00 28 */	stfs f1, 0x28(r3)
 /* 8021199C 0020E8FC  D0 43 00 2C */	stfs f2, 0x2c(r3)
 /* 802119A0 0020E900  D0 63 00 30 */	stfs f3, 0x30(r3)
 /* 802119A4 0020E904  4E 80 00 20 */	blr 
+.endfn GXInitLightPos
 
-.global GXInitLightDir
-GXInitLightDir:
+.fn GXInitLightDir, global
 /* 802119A8 0020E908  FC 80 08 50 */	fneg f4, f1
 /* 802119AC 0020E90C  FC 20 10 50 */	fneg f1, f2
 /* 802119B0 0020E910  FC 00 18 50 */	fneg f0, f3
@@ -26,9 +25,9 @@ GXInitLightDir:
 /* 802119B8 0020E918  D0 23 00 38 */	stfs f1, 0x38(r3)
 /* 802119BC 0020E91C  D0 03 00 3C */	stfs f0, 0x3c(r3)
 /* 802119C0 0020E920  4E 80 00 20 */	blr 
+.endfn GXInitLightDir
 
-.global GXInitSpecularDir
-GXInitSpecularDir:
+.fn GXInitSpecularDir, global
 /* 802119C4 0020E924  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 802119C8 0020E928  FC 00 08 50 */	fneg f0, f1
 /* 802119CC 0020E92C  FC 20 10 50 */	fneg f1, f2
@@ -83,9 +82,9 @@ GXInitSpecularDir:
 /* 80211A8C 0020E9EC  D0 03 00 30 */	stfs f0, 0x30(r3)
 /* 80211A90 0020E9F0  38 21 00 20 */	addi r1, r1, 0x20
 /* 80211A94 0020E9F4  4E 80 00 20 */	blr 
+.endfn GXInitSpecularDir
 
-.global GXInitLightColor
-GXInitLightColor:
+.fn GXInitLightColor, global
 /* 80211A98 0020E9F8  88 04 00 01 */	lbz r0, 1(r4)
 /* 80211A9C 0020E9FC  88 A4 00 00 */	lbz r5, 0(r4)
 /* 80211AA0 0020EA00  88 C4 00 02 */	lbz r6, 2(r4)
@@ -96,9 +95,9 @@ GXInitLightColor:
 /* 80211AB4 0020EA14  7C 80 03 78 */	or r0, r4, r0
 /* 80211AB8 0020EA18  90 03 00 0C */	stw r0, 0xc(r3)
 /* 80211ABC 0020EA1C  4E 80 00 20 */	blr 
+.endfn GXInitLightColor
 
-.global GXLoadLightObjImm
-GXLoadLightObjImm:
+.fn GXLoadLightObjImm, global
 /* 80211AC0 0020EA20  2C 04 00 10 */	cmpwi r4, 0x10
 /* 80211AC4 0020EA24  41 82 00 7C */	beq .L_80211B40
 /* 80211AC8 0020EA28  40 80 00 34 */	bge .L_80211AFC
@@ -193,9 +192,9 @@ GXLoadLightObjImm:
 /* 80211BF8 0020EB58  D0 06 80 00 */	stfs f0, 0xCC008000@l(r6)
 /* 80211BFC 0020EB5C  B0 A4 00 02 */	sth r5, 2(r4)
 /* 80211C00 0020EB60  4E 80 00 20 */	blr 
+.endfn GXLoadLightObjImm
 
-.global GXSetChanAmbColor
-GXSetChanAmbColor:
+.fn GXSetChanAmbColor, global
 /* 80211C04 0020EB64  2C 03 00 03 */	cmpwi r3, 3
 /* 80211C08 0020EB68  41 82 00 B0 */	beq .L_80211CB8
 /* 80211C0C 0020EB6C  40 80 00 1C */	bge .L_80211C28
@@ -294,9 +293,9 @@ GXSetChanAmbColor:
 /* 80211D60 0020ECC0  7C 63 02 14 */	add r3, r3, r0
 /* 80211D64 0020ECC4  90 E3 00 A8 */	stw r7, 0xa8(r3)
 /* 80211D68 0020ECC8  4E 80 00 20 */	blr 
+.endfn GXSetChanAmbColor
 
-.global GXSetChanMatColor
-GXSetChanMatColor:
+.fn GXSetChanMatColor, global
 /* 80211D6C 0020ECCC  2C 03 00 03 */	cmpwi r3, 3
 /* 80211D70 0020ECD0  41 82 00 B0 */	beq .L_80211E20
 /* 80211D74 0020ECD4  40 80 00 1C */	bge .L_80211D90
@@ -395,9 +394,9 @@ GXSetChanMatColor:
 /* 80211EC8 0020EE28  7C 63 02 14 */	add r3, r3, r0
 /* 80211ECC 0020EE2C  90 E3 00 B0 */	stw r7, 0xb0(r3)
 /* 80211ED0 0020EE30  4E 80 00 20 */	blr 
+.endfn GXSetChanMatColor
 
-.global GXSetNumChans
-GXSetNumChans:
+.fn GXSetNumChans, global
 /* 80211ED4 0020EE34  80 8D 2A 68 */	lwz r4, gx@sda21(r13)
 /* 80211ED8 0020EE38  54 67 06 3E */	clrlwi r7, r3, 0x18
 /* 80211EDC 0020EE3C  54 60 25 36 */	rlwinm r0, r3, 4, 0x14, 0x1b
@@ -417,9 +416,9 @@ GXSetNumChans:
 /* 80211F14 0020EE74  60 00 00 04 */	ori r0, r0, 4
 /* 80211F18 0020EE78  90 03 04 F0 */	stw r0, 0x4f0(r3)
 /* 80211F1C 0020EE7C  4E 80 00 20 */	blr 
+.endfn GXSetNumChans
 
-.global GXSetChanCtrl
-GXSetChanCtrl:
+.fn GXSetChanCtrl, global
 /* 80211F20 0020EE80  94 21 FF C8 */	stwu r1, -0x38(r1)
 /* 80211F24 0020EE84  2C 03 00 04 */	cmpwi r3, 4
 /* 80211F28 0020EE88  93 E1 00 34 */	stw r31, 0x34(r1)
@@ -547,16 +546,24 @@ GXSetChanCtrl:
 /* 802120F8 0020F058  83 81 00 28 */	lwz r28, 0x28(r1)
 /* 802120FC 0020F05C  38 21 00 38 */	addi r1, r1, 0x38
 /* 80212100 0020F060  4E 80 00 20 */	blr 
+.endfn GXSetChanCtrl
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803EC560:
+.obj lbl_803EC560, local
 	.float 0.0
-lbl_803EC564:
+.endobj lbl_803EC560
+.obj lbl_803EC564, local
 	.float 1.0
-lbl_803EC568:
+.endobj lbl_803EC564
+.balign 8
+.obj lbl_803EC568, local
 	.double 0.5
-lbl_803EC570:
+.endobj lbl_803EC568
+.balign 8
+.obj lbl_803EC570, local
 	.double 3.0
-lbl_803EC578:
+.endobj lbl_803EC570
+.obj lbl_803EC578, local
 	.float 1048576.0
+.endobj lbl_803EC578

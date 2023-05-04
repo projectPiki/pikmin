@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global __ct__14TekiParametersFii
-__ct__14TekiParametersFii:
+.fn __ct__14TekiParametersFii, global
 /* 8014BD48 00148CA8  7C 08 02 A6 */	mflr r0
 /* 8014BD4C 00148CAC  3C C0 80 22 */	lis r6, __vt__5ANode@ha
 /* 8014BD50 00148CB0  90 01 00 04 */	stw r0, 4(r1)
@@ -601,9 +600,9 @@ __ct__14TekiParametersFii:
 /* 8014C690 001495F0  38 21 00 A8 */	addi r1, r1, 0xa8
 /* 8014C694 001495F4  7C 08 03 A6 */	mtlr r0
 /* 8014C698 001495F8  4E 80 00 20 */	blr 
+.endfn __ct__14TekiParametersFii
 
-.global read__14TekiParametersFR18RandomAccessStream
-read__14TekiParametersFR18RandomAccessStream:
+.fn read__14TekiParametersFR18RandomAccessStream, global
 /* 8014C69C 001495FC  7C 08 02 A6 */	mflr r0
 /* 8014C6A0 00149600  90 01 00 04 */	stw r0, 4(r1)
 /* 8014C6A4 00149604  94 21 FF A0 */	stwu r1, -0x60(r1)
@@ -864,234 +863,308 @@ read__14TekiParametersFR18RandomAccessStream:
 /* 8014CA54 001499B4  38 21 00 60 */	addi r1, r1, 0x60
 /* 8014CA58 001499B8  7C 08 03 A6 */	mtlr r0
 /* 8014CA5C 001499BC  4E 80 00 20 */	blr 
+.endfn read__14TekiParametersFR18RandomAccessStream
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802CE008:
+.obj lbl_802CE008, local
 	.asciz "tekiparameters.cpp"
+.endobj lbl_802CE008
 .balign 4
-lbl_802CE01C:
+.obj lbl_802CE01C, local
 	.asciz "tekiparameters"
+.endobj lbl_802CE01C
 .balign 4
-lbl_802CE02C:
+.obj lbl_802CE02C, local
 	.asciz "CORPSE_TYPE"
+.endobj lbl_802CE02C
 .balign 4
-lbl_802CE038:
+.obj lbl_802CE038, local
 	.asciz "SHADOW_TYPE"
+.endobj lbl_802CE038
 .balign 4
-lbl_802CE044:
+.obj lbl_802CE044, local
 	.asciz "CULLING_TYPE"
+.endobj lbl_802CE044
 .balign 4
-lbl_802CE054:
+.obj lbl_802CE054, local
 	.asciz "SPAWN_TYPE"
+.endobj lbl_802CE054
 .balign 4
-lbl_802CE060:
+.obj lbl_802CE060, local
 	.asciz "SPAWN_COUNT"
+.endobj lbl_802CE060
 .balign 4
-lbl_802CE06C:
+.obj lbl_802CE06C, local
 	.asciz "ANIMATION_TYPE"
+.endobj lbl_802CE06C
 .balign 4
-lbl_802CE07C:
+.obj lbl_802CE07C, local
 	.4byte 0x8E8091CC # Shift-JIS
 	.asciz ":CARCASS_SIZE"
+.endobj lbl_802CE07C
 .balign 4
-lbl_802CE090:
+.obj lbl_802CE090, local
 	.asciz "MODEL_TYPE"
+.endobj lbl_802CE090
 .balign 4
-lbl_802CE09C:
+.obj lbl_802CE09C, local
 	.asciz "LIGHT_TYPE"
+.endobj lbl_802CE09C
 .balign 4
-lbl_802CE0A8:
+.obj lbl_802CE0A8, local
 	.asciz "SWALLOW_COUNT"
+.endobj lbl_802CE0A8
 .balign 4
-lbl_802CE0B8:
+.obj lbl_802CE0B8, local
 	.asciz "FLICK_PIKI_COUNT_1"
+.endobj lbl_802CE0B8
 .balign 4
-lbl_802CE0CC:
+.obj lbl_802CE0CC, local
 	.asciz "FLICK_PIKI_COUNT_2"
+.endobj lbl_802CE0CC
 .balign 4
-lbl_802CE0E0:
+.obj lbl_802CE0E0, local
 	.asciz "FLICK_PIKI_COUNT_3"
+.endobj lbl_802CE0E0
 .balign 4
-lbl_802CE0F4:
+.obj lbl_802CE0F4, local
 	.asciz "FLICK_DAMAGE_COUNT_1"
+.endobj lbl_802CE0F4
 .balign 4
-lbl_802CE10C:
+.obj lbl_802CE10C, local
 	.asciz "FLICK_DAMAGE_COUNT_2"
+.endobj lbl_802CE10C
 .balign 4
-lbl_802CE124:
+.obj lbl_802CE124, local
 	.asciz "FLICK_DAMAGE_COUNT_3"
+.endobj lbl_802CE124
 .balign 4
-lbl_802CE13C:
+.obj lbl_802CE13C, local
 	.asciz "FLICK_DAMAGE_COUNT_4"
+.endobj lbl_802CE13C
 .balign 4
-lbl_802CE154:
+.obj lbl_802CE154, local
 	.asciz "SPAWN_PELLET_SCALE_OFF"
+.endobj lbl_802CE154
 .balign 4
-lbl_802CE16C:
+.obj lbl_802CE16C, local
 	.asciz "SPAWN_PELLET_FORWARD"
+.endobj lbl_802CE16C
 .balign 4
-lbl_802CE184:
+.obj lbl_802CE184, local
 	.asciz "IPARA_RESERVED_1"
+.endobj lbl_802CE184
 .balign 4
-lbl_802CE198:
+.obj lbl_802CE198, local
 	.asciz "WALK_VELOCITY"
+.endobj lbl_802CE198
 .balign 4
-lbl_802CE1A8:
+.obj lbl_802CE1A8, local
 	.asciz "RUN_VELOCITY"
+.endobj lbl_802CE1A8
 .balign 4
-lbl_802CE1B8:
+.obj lbl_802CE1B8, local
 	.asciz "TURN_VELOCITY"
+.endobj lbl_802CE1B8
 .balign 4
-lbl_802CE1C8:
+.obj lbl_802CE1C8, local
 	.asciz "VISIBLE_RANGE"
+.endobj lbl_802CE1C8
 .balign 4
-lbl_802CE1D8:
+.obj lbl_802CE1D8, local
 	.asciz "VISIBLE_ANGLE"
+.endobj lbl_802CE1D8
 .balign 4
-lbl_802CE1E8:
+.obj lbl_802CE1E8, local
 	.asciz "ATTACKABLE_RANGE"
+.endobj lbl_802CE1E8
 .balign 4
-lbl_802CE1FC:
+.obj lbl_802CE1FC, local
 	.asciz "ATTACKABLE_ANGLE"
+.endobj lbl_802CE1FC
 .balign 4
-lbl_802CE210:
+.obj lbl_802CE210, local
 	.asciz "ATTACK_RANGE"
+.endobj lbl_802CE210
 .balign 4
-lbl_802CE220:
+.obj lbl_802CE220, local
 	.asciz "ATTACK_HIT_RANGE"
+.endobj lbl_802CE220
 .balign 4
-lbl_802CE234:
+.obj lbl_802CE234, local
 	.asciz "ATTACK_POWER"
+.endobj lbl_802CE234
 .balign 4
-lbl_802CE244:
+.obj lbl_802CE244, local
 	.asciz "ATTACK_WAIT_PERIOD"
+.endobj lbl_802CE244
 .balign 4
-lbl_802CE258:
+.obj lbl_802CE258, local
 	.asciz "UNGUARDED_PERIOD"
+.endobj lbl_802CE258
 .balign 4
-lbl_802CE26C:
+.obj lbl_802CE26C, local
 	.asciz "DANGER_TERRITORY_RANGE"
+.endobj lbl_802CE26C
 .balign 4
-lbl_802CE284:
+.obj lbl_802CE284, local
 	.asciz "SAFETY_TERRITORY_RANGE"
+.endobj lbl_802CE284
 .balign 4
-lbl_802CE29C:
+.obj lbl_802CE29C, local
 	.asciz "LIFE_GAUGE_OFFSET"
+.endobj lbl_802CE29C
 .balign 4
-lbl_802CE2B0:
+.obj lbl_802CE2B0, local
 	.asciz "SHADOW_SIZE"
+.endobj lbl_802CE2B0
 .balign 4
-lbl_802CE2BC:
+.obj lbl_802CE2BC, local
 	.asciz "RIPPLE_SCALE"
+.endobj lbl_802CE2BC
 .balign 4
-lbl_802CE2CC:
+.obj lbl_802CE2CC, local
 	.asciz "CORPSE_SIZE"
+.endobj lbl_802CE2CC
 .balign 4
-lbl_802CE2D8:
+.obj lbl_802CE2D8, local
 	.asciz "CORPSE_HEIGHT"
+.endobj lbl_802CE2D8
 .balign 4
-lbl_802CE2E8:
+.obj lbl_802CE2E8, local
 	.asciz "SPAWN_DISTANCE"
+.endobj lbl_802CE2E8
 .balign 4
-lbl_802CE2F8:
+.obj lbl_802CE2F8, local
 	.asciz "SPAWN_HEIGHT"
+.endobj lbl_802CE2F8
 .balign 4
-lbl_802CE308:
+.obj lbl_802CE308, local
 	.asciz "SPAWN_VELOCITY"
+.endobj lbl_802CE308
 .balign 4
-lbl_802CE318:
+.obj lbl_802CE318, local
 	.asciz "LIFE_PERIOD"
+.endobj lbl_802CE318
 .balign 4
-lbl_802CE324:
+.obj lbl_802CE324, local
 	.asciz "MESSAGE_RANGE"
+.endobj lbl_802CE324
 .balign 4
-lbl_802CE334:
+.obj lbl_802CE334, local
 	.asciz "WARN_PERIOD"
+.endobj lbl_802CE334
 .balign 4
-lbl_802CE340:
+.obj lbl_802CE340, local
 	.asciz "VISIBLE_HEIGHT"
+.endobj lbl_802CE340
 .balign 4
-lbl_802CE350:
+.obj lbl_802CE350, local
 	.asciz "FLIGHT_HEIGHT"
+.endobj lbl_802CE350
 .balign 4
-lbl_802CE360:
+.obj lbl_802CE360, local
 	.asciz "DAMAGE_MOTION_PERIOD"
+.endobj lbl_802CE360
 .balign 4
-lbl_802CE378:
+.obj lbl_802CE378, local
 	.asciz "DAMAGE_MOTION_AMPLITUDE"
+.endobj lbl_802CE378
 .balign 4
-lbl_802CE390:
+.obj lbl_802CE390, local
 	.asciz "FLICK_PROBABILITY"
+.endobj lbl_802CE390
 .balign 4
-lbl_802CE3A4:
+.obj lbl_802CE3A4, local
 	.asciz "UPPER_FLICK_POWER"
+.endobj lbl_802CE3A4
 .balign 4
-lbl_802CE3B8:
+.obj lbl_802CE3B8, local
 	.asciz "LOWER_FLICK_POWER"
+.endobj lbl_802CE3B8
 .balign 4
-lbl_802CE3CC:
+.obj lbl_802CE3CC, local
 	.asciz "UPPER_ATTACK_POWER"
+.endobj lbl_802CE3CC
 .balign 4
-lbl_802CE3E0:
+.obj lbl_802CE3E0, local
 	.asciz "LOWER_ATTACK_POWER"
+.endobj lbl_802CE3E0
 .balign 4
-lbl_802CE3F4:
+.obj lbl_802CE3F4, local
 	.asciz "LIFE_RECOVER_RATE"
+.endobj lbl_802CE3F4
 .balign 4
-lbl_802CE408:
+.obj lbl_802CE408, local
 	.asciz "TRACE_ANGLE"
+.endobj lbl_802CE408
 .balign 4
-lbl_802CE414:
+.obj lbl_802CE414, local
 	.asciz "SPAWN_PELLET_VELOCITY_HORIZONTAL"
+.endobj lbl_802CE414
 .balign 4
-lbl_802CE438:
+.obj lbl_802CE438, local
 	.asciz "SPAWN_PELLET_VELOCITY_VERTICAL"
+.endobj lbl_802CE438
 .balign 4
-lbl_802CE458:
+.obj lbl_802CE458, local
 	.asciz "CORPSE_VELOCITY_HORIZONTAL"
+.endobj lbl_802CE458
 .balign 4
-lbl_802CE474:
+.obj lbl_802CE474, local
 	.asciz "CORPSE_VELOCITY_VERTICAL"
+.endobj lbl_802CE474
 .balign 4
-lbl_802CE490:
+.obj lbl_802CE490, local
 	.asciz "BOMB_DAMAGE_RATE"
+.endobj lbl_802CE490
 .balign 4
-lbl_802CE4A4:
+.obj lbl_802CE4A4, local
 	.asciz "COLLISION_RADIUS"
+.endobj lbl_802CE4A4
 .balign 4
-lbl_802CE4B8:
+.obj lbl_802CE4B8, local
 	.asciz "LOWER_RANGE"
+.endobj lbl_802CE4B8
 .balign 4
-lbl_802CE4C4:
+.obj lbl_802CE4C4, local
 	.asciz "FPARA_RESERVED_4"
+.endobj lbl_802CE4C4
 .balign 4
-lbl_802CE4D8:
+.obj lbl_802CE4D8, local
 	.asciz "FPARA_RESERVED_3"
+.endobj lbl_802CE4D8
 .balign 4
-lbl_802CE4EC:
+.obj lbl_802CE4EC, local
 	.asciz "FPARA_RESERVED_2"
+.endobj lbl_802CE4EC
 .balign 4
-lbl_802CE500:
+.obj lbl_802CE500, local
 	.asciz "FPARA_RESERVED_1"
+.endobj lbl_802CE500
 .balign 4
-lbl_802CE514:
+.obj lbl_802CE514, local
 	.asciz "TekiParameters"
+.endobj lbl_802CE514
 .balign 4
-lbl_802CE524:
+.obj lbl_802CE524, local
 	.asciz "CoreNode"
+.endobj lbl_802CE524
 .balign 4
-lbl_802CE530:
+.obj lbl_802CE530, local
 	.4byte __RTTI__5ANode
 	.4byte 0x00000000
 	.4byte 0x00000000
-lbl_802CE53C:
+.endobj lbl_802CE530
+.obj lbl_802CE53C, local
 	.4byte __RTTI__5ANode
 	.4byte 0x00000000
 	.4byte __RTTI__8CoreNode
 	.4byte 0x00000000
 	.4byte 0x00000000
-lbl_802CE550:
+.endobj lbl_802CE53C
+.obj lbl_802CE550, local
 	.4byte __RTTI__5ANode
 	.4byte 0x00000000
 	.4byte __RTTI__8CoreNode
@@ -1099,8 +1172,8 @@ lbl_802CE550:
 	.4byte __RTTI__4Node
 	.4byte 0x00000000
 	.4byte 0x00000000
-.global __vt__14TekiParameters
-__vt__14TekiParameters:
+.endobj lbl_802CE550
+.obj __vt__14TekiParameters, global
 	.4byte __RTTI__14TekiParameters
 	.4byte 0
 	.4byte getAgeNodeType__5ANodeFv
@@ -1113,6 +1186,7 @@ __vt__14TekiParameters:
 	.4byte concat__4NodeFR3SRT
 	.4byte concat__4NodeFR8Matrix4f
 	.4byte getModelMatrix__4NodeFv
+.endobj __vt__14TekiParameters
 	.4byte 0
 	.4byte 0
 	.4byte 0
@@ -1123,69 +1197,95 @@ __vt__14TekiParameters:
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-lbl_803E46F8:
+.obj lbl_803E46F8, local
 	.asciz "<Node>"
+.endobj lbl_803E46F8
 .balign 4
-lbl_803E4700:
+.obj lbl_803E4700, local
 	.asciz "LIFE"
+.endobj lbl_803E4700
 .balign 4
-lbl_803E4708:
+.obj lbl_803E4708, local
 	.asciz "SCALE"
+.endobj lbl_803E4708
 .balign 4
-lbl_803E4710:
+.obj lbl_803E4710, local
 	.asciz "WEIGHT"
+.endobj lbl_803E4710
 .balign 4
-lbl_803E4718:
+.obj lbl_803E4718, local
 	.asciz "ANode"
+.endobj lbl_803E4718
 .balign 4
-__RTTI__5ANode:
+.obj __RTTI__5ANode, local
 	.4byte lbl_803E4718
 	.4byte 0x00000000
-__RTTI__8CoreNode:
+.endobj __RTTI__5ANode
+.obj __RTTI__8CoreNode, local
 	.4byte lbl_802CE524
 	.4byte lbl_802CE530
+.endobj __RTTI__8CoreNode
 .balign 4
-lbl_803E4730:
+.obj lbl_803E4730, local
 	.asciz "Node"
+.endobj lbl_803E4730
 .balign 4
-__RTTI__4Node:
+.obj __RTTI__4Node, local
 	.4byte lbl_803E4730
 	.4byte lbl_802CE53C
-__RTTI__14TekiParameters:
+.endobj __RTTI__4Node
+.obj __RTTI__14TekiParameters, local
 	.4byte lbl_802CE514
 	.4byte lbl_802CE550
+.endobj __RTTI__14TekiParameters
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803EA9A8:
+.obj lbl_803EA9A8, local
 	.float 1.0
-lbl_803EA9AC:
-	.4byte 0x47C35000
-lbl_803EA9B0:
-	.4byte 0x00000000
-lbl_803EA9B4:
-	.4byte 0x42C80000
-lbl_803EA9B8:
-	.4byte 0x461C4000
-lbl_803EA9BC:
-	.4byte 0x447A0000
-lbl_803EA9C0:
-	.4byte 0x40490FDB
-lbl_803EA9C4:
-	.4byte 0xC2C80000
-lbl_803EA9C8:
-	.4byte 0x43FA0000
-lbl_803EA9CC:
-	.4byte 0x41200000
-lbl_803EA9D0:
-	.4byte 0x3F000000
-lbl_803EA9D4:
-	.4byte 0x43B40000
-lbl_803EA9D8:
-	.4byte 0x42800000
-lbl_803EA9DC:
-	.4byte 0x41800000
-lbl_803EA9E0:
-	.4byte 0x42480000
-lbl_803EA9E4:
-	.4byte 0x43C80000
+.endobj lbl_803EA9A8
+.obj lbl_803EA9AC, local
+	.float 100000.0
+.endobj lbl_803EA9AC
+.obj lbl_803EA9B0, local
+	.float 0.0
+.endobj lbl_803EA9B0
+.obj lbl_803EA9B4, local
+	.float 100.0
+.endobj lbl_803EA9B4
+.obj lbl_803EA9B8, local
+	.float 10000.0
+.endobj lbl_803EA9B8
+.obj lbl_803EA9BC, local
+	.float 1000.0
+.endobj lbl_803EA9BC
+.obj lbl_803EA9C0, local
+	.float 3.1415927
+.endobj lbl_803EA9C0
+.obj lbl_803EA9C4, local
+	.float -100.0
+.endobj lbl_803EA9C4
+.obj lbl_803EA9C8, local
+	.float 500.0
+.endobj lbl_803EA9C8
+.obj lbl_803EA9CC, local
+	.float 10.0
+.endobj lbl_803EA9CC
+.obj lbl_803EA9D0, local
+	.float 0.5
+.endobj lbl_803EA9D0
+.obj lbl_803EA9D4, local
+	.float 360.0
+.endobj lbl_803EA9D4
+.obj lbl_803EA9D8, local
+	.float 64.0
+.endobj lbl_803EA9D8
+.obj lbl_803EA9DC, local
+	.float 16.0
+.endobj lbl_803EA9DC
+.obj lbl_803EA9E0, local
+	.float 50.0
+.endobj lbl_803EA9E0
+.obj lbl_803EA9E4, local
+	.float 400.0
+.endobj lbl_803EA9E4

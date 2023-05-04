@@ -4223,14 +4223,16 @@ satisfy__11CndBombableFP8CollPart:
 
 .section .rodata, "a"  # 0x80221FE0 - 0x80222DC0
 .balign 8
-lbl_80222668:
+.obj lbl_80222668, local
 	.4byte 0xCF
 	.4byte 0xCE
 	.4byte 0xD0
-lbl_80222674:
+.endobj lbl_80222668
+.obj lbl_80222674, local
 	.4byte 0x10B
 	.4byte 0x10A
 	.4byte 0x10C
+.endobj lbl_80222674
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
@@ -5340,45 +5342,66 @@ __RTTI__8SluiceAI:
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803E9DA8:
+.obj lbl_803E9DA8, local
 	.float 30.0
-lbl_803E9DAC:
+.endobj lbl_803E9DA8
+.obj lbl_803E9DAC, local
 	.float 1.0
-lbl_803E9DB0:
+.endobj lbl_803E9DAC
+.obj lbl_803E9DB0, local
 	.float 32767.0
-lbl_803E9DB4:
+.endobj lbl_803E9DB0
+.obj lbl_803E9DB4, local
 	.float 2.0
+.endobj lbl_803E9DB4
 .balign 8
-lbl_803E9DB8:
+.obj lbl_803E9DB8, local
 	.8byte 0x4330000080000000
-lbl_803E9DC0:
+.endobj lbl_803E9DB8
+.obj lbl_803E9DC0, local
 	.float 0.0
-lbl_803E9DC4:
+.endobj lbl_803E9DC0
+.obj lbl_803E9DC4, local
 	.float 13.0
-lbl_803E9DC8:
+.endobj lbl_803E9DC4
+.obj lbl_803E9DC8, local
 	.float 0.05
-lbl_803E9DCC:
+.endobj lbl_803E9DC8
+.obj lbl_803E9DCC, local
 	.float 1.5
-lbl_803E9DD0:
+.endobj lbl_803E9DCC
+.obj lbl_803E9DD0, local
 	.float 128000.0
+.endobj lbl_803E9DD0
 .balign 8
-lbl_803E9DD8:
+.obj lbl_803E9DD8, local
 	.double 0.5
-lbl_803E9DE0:
+.endobj lbl_803E9DD8
+.balign 8
+.obj lbl_803E9DE0, local
 	.double 3.0
-lbl_803E9DE8:
+.endobj lbl_803E9DE0
+.obj lbl_803E9DE8, local
 	.float 5.0
-lbl_803E9DEC:
+.endobj lbl_803E9DE8
+.obj lbl_803E9DEC, local
 	.float 110.0
-lbl_803E9DF0:
+.endobj lbl_803E9DEC
+.obj lbl_803E9DF0, local
 	.float 290.0
-lbl_803E9DF4:
+.endobj lbl_803E9DF0
+.obj lbl_803E9DF4, local
 	.float 3.1415927
-lbl_803E9DF8:
+.endobj lbl_803E9DF4
+.obj lbl_803E9DF8, local
 	.float 90.0
-lbl_803E9DFC:
+.endobj lbl_803E9DF8
+.obj lbl_803E9DFC, local
 	.float 720.0
-lbl_803E9E00:
+.endobj lbl_803E9DFC
+.obj lbl_803E9E00, local
 	.float 74.0
-lbl_803E9E04:
+.endobj lbl_803E9E00
+.obj lbl_803E9E04, local
 	.float 29.0
+.endobj lbl_803E9E04

@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global GXSetTevIndirect
-GXSetTevIndirect:
+.fn GXSetTevIndirect, global
 /* 80212BC8 0020FB28  94 21 FF D8 */	stwu r1, -0x28(r1)
 /* 80212BCC 0020FB2C  54 84 07 B6 */	rlwinm r4, r4, 0, 0x1e, 0x1b
 /* 80212BD0 0020FB30  54 A0 10 3A */	slwi r0, r5, 2
@@ -41,9 +40,9 @@ GXSetTevIndirect:
 /* 80212C58 0020FBB8  38 21 00 28 */	addi r1, r1, 0x28
 /* 80212C5C 0020FBBC  B0 04 00 02 */	sth r0, 2(r4)
 /* 80212C60 0020FBC0  4E 80 00 20 */	blr 
+.endfn GXSetTevIndirect
 
-.global GXSetIndTexCoordScale
-GXSetIndTexCoordScale:
+.fn GXSetIndTexCoordScale, global
 /* 80212C64 0020FBC4  2C 03 00 02 */	cmpwi r3, 2
 /* 80212C68 0020FBC8  41 82 00 F4 */	beq .L_80212D5C
 /* 80212C6C 0020FBCC  40 80 00 14 */	bge .L_80212C80
@@ -167,9 +166,9 @@ GXSetIndTexCoordScale:
 /* 80212E2C 0020FD8C  38 00 00 01 */	li r0, 1
 /* 80212E30 0020FD90  B0 03 00 02 */	sth r0, 2(r3)
 /* 80212E34 0020FD94  4E 80 00 20 */	blr 
+.endfn GXSetIndTexCoordScale
 
-.global GXSetNumIndStages
-GXSetNumIndStages:
+.fn GXSetNumIndStages, global
 /* 80212E38 0020FD98  80 8D 2A 68 */	lwz r4, gx@sda21(r13)
 /* 80212E3C 0020FD9C  54 60 82 1E */	rlwinm r0, r3, 0x10, 8, 0xf
 /* 80212E40 0020FDA0  84 64 02 04 */	lwzu r3, 0x204(r4)
@@ -181,9 +180,9 @@ GXSetNumIndStages:
 /* 80212E58 0020FDB8  60 00 00 06 */	ori r0, r0, 6
 /* 80212E5C 0020FDBC  90 03 04 F0 */	stw r0, 0x4f0(r3)
 /* 80212E60 0020FDC0  4E 80 00 20 */	blr 
+.endfn GXSetNumIndStages
 
-.global GXSetTevDirect
-GXSetTevDirect:
+.fn GXSetTevDirect, global
 /* 80212E64 0020FDC4  7C 08 02 A6 */	mflr r0
 /* 80212E68 0020FDC8  38 80 00 00 */	li r4, 0
 /* 80212E6C 0020FDCC  90 01 00 04 */	stw r0, 4(r1)
@@ -202,9 +201,9 @@ GXSetTevDirect:
 /* 80212EA0 0020FE00  38 21 00 18 */	addi r1, r1, 0x18
 /* 80212EA4 0020FE04  7C 08 03 A6 */	mtlr r0
 /* 80212EA8 0020FE08  4E 80 00 20 */	blr 
+.endfn GXSetTevDirect
 
-.global __GXUpdateBPMask
-__GXUpdateBPMask:
+.fn __GXUpdateBPMask, global
 /* 80212EAC 0020FE0C  80 6D 2A 68 */	lwz r3, gx@sda21(r13)
 /* 80212EB0 0020FE10  38 C0 00 00 */	li r6, 0
 /* 80212EB4 0020FE14  38 80 00 00 */	li r4, 0
@@ -264,9 +263,9 @@ __GXUpdateBPMask:
 /* 80212F6C 0020FECC  90 65 80 00 */	stw r3, 0xCC008000@l(r5)
 /* 80212F70 0020FED0  B0 04 00 02 */	sth r0, 2(r4)
 /* 80212F74 0020FED4  4E 80 00 20 */	blr 
+.endfn __GXUpdateBPMask
 
-.global __GXFlushTextureState
-__GXFlushTextureState:
+.fn __GXFlushTextureState, global
 /* 80212F78 0020FED8  38 00 00 61 */	li r0, 0x61
 /* 80212F7C 0020FEDC  80 8D 2A 68 */	lwz r4, gx@sda21(r13)
 /* 80212F80 0020FEE0  3C A0 CC 01 */	lis r5, 0xCC008000@ha
@@ -276,3 +275,4 @@ __GXFlushTextureState:
 /* 80212F90 0020FEF0  90 65 80 00 */	stw r3, 0xCC008000@l(r5)
 /* 80212F94 0020FEF4  B0 04 00 02 */	sth r0, 2(r4)
 /* 80212F98 0020FEF8  4E 80 00 20 */	blr 
+.endfn __GXFlushTextureState

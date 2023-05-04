@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global actTeki__14InteractAttackFP4Teki
-actTeki__14InteractAttackFP4Teki:
+.fn actTeki__14InteractAttackFP4Teki, global
 /* 8014A40C 0014736C  7C 08 02 A6 */	mflr r0
 /* 8014A410 00147370  90 01 00 04 */	stw r0, 4(r1)
 /* 8014A414 00147374  38 00 00 00 */	li r0, 0
@@ -19,9 +18,9 @@ actTeki__14InteractAttackFP4Teki:
 /* 8014A444 001473A4  38 21 00 18 */	addi r1, r1, 0x18
 /* 8014A448 001473A8  7C 08 03 A6 */	mtlr r0
 /* 8014A44C 001473AC  4E 80 00 20 */	blr 
+.endfn actTeki__14InteractAttackFP4Teki
 
-.global actTeki__12InteractBombFP4Teki
-actTeki__12InteractBombFP4Teki:
+.fn actTeki__12InteractBombFP4Teki, global
 /* 8014A450 001473B0  7C 08 02 A6 */	mflr r0
 /* 8014A454 001473B4  3C A0 80 2B */	lis r5, __vt__11Interaction@ha
 /* 8014A458 001473B8  90 01 00 04 */	stw r0, 4(r1)
@@ -58,9 +57,9 @@ actTeki__12InteractBombFP4Teki:
 /* 8014A4D4 00147434  38 21 00 68 */	addi r1, r1, 0x68
 /* 8014A4D8 00147438  7C 08 03 A6 */	mtlr r0
 /* 8014A4DC 0014743C  4E 80 00 20 */	blr 
+.endfn actTeki__12InteractBombFP4Teki
 
-.global actTeki__17InteractHitEffectFP4Teki
-actTeki__17InteractHitEffectFP4Teki:
+.fn actTeki__17InteractHitEffectFP4Teki, global
 /* 8014A4E0 00147440  7C 08 02 A6 */	mflr r0
 /* 8014A4E4 00147444  90 01 00 04 */	stw r0, 4(r1)
 /* 8014A4E8 00147448  38 00 00 01 */	li r0, 1
@@ -78,14 +77,14 @@ actTeki__17InteractHitEffectFP4Teki:
 /* 8014A518 00147478  38 21 00 18 */	addi r1, r1, 0x18
 /* 8014A51C 0014747C  7C 08 03 A6 */	mtlr r0
 /* 8014A520 00147480  4E 80 00 20 */	blr 
+.endfn actTeki__17InteractHitEffectFP4Teki
 
-.global actTeki__15InteractSwallowFP4Teki
-actTeki__15InteractSwallowFP4Teki:
+.fn actTeki__15InteractSwallowFP4Teki, global
 /* 8014A524 00147484  38 60 00 01 */	li r3, 1
 /* 8014A528 00147488  4E 80 00 20 */	blr 
+.endfn actTeki__15InteractSwallowFP4Teki
 
-.global actTeki__13InteractPressFP4Teki
-actTeki__13InteractPressFP4Teki:
+.fn actTeki__13InteractPressFP4Teki, global
 /* 8014A52C 0014748C  7C 08 02 A6 */	mflr r0
 /* 8014A530 00147490  90 01 00 04 */	stw r0, 4(r1)
 /* 8014A534 00147494  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -108,32 +107,37 @@ actTeki__13InteractPressFP4Teki:
 /* 8014A578 001474D8  38 21 00 28 */	addi r1, r1, 0x28
 /* 8014A57C 001474DC  7C 08 03 A6 */	mtlr r0
 /* 8014A580 001474E0  4E 80 00 20 */	blr 
+.endfn actTeki__13InteractPressFP4Teki
 
-.global actTeki__13InteractFlickFP4Teki
-actTeki__13InteractFlickFP4Teki:
+.fn actTeki__13InteractFlickFP4Teki, global
 /* 8014A584 001474E4  38 60 00 01 */	li r3, 1
 /* 8014A588 001474E8  4E 80 00 20 */	blr 
+.endfn actTeki__13InteractFlickFP4Teki
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802CD928:
+.obj lbl_802CD928, local
 	.asciz "tekiinteraction.cpp"
+.endobj lbl_802CD928
 .balign 4
-lbl_802CD93C:
+.obj lbl_802CD93C, local
 	.asciz "tekiinteraction"
+.endobj lbl_802CD93C
 .balign 4
-lbl_802CD94C:
+.obj lbl_802CD94C, local
 	.asciz "InteractHitEffect"
+.endobj lbl_802CD94C
 .balign 4
-lbl_802CD960:
+.obj lbl_802CD960, local
 	.asciz "Interaction"
+.endobj lbl_802CD960
 .balign 4
-lbl_802CD96C:
+.obj lbl_802CD96C, local
 	.4byte __RTTI__11Interaction
 	.4byte 0
 	.4byte 0
-.global __vt__17InteractHitEffect
-__vt__17InteractHitEffect:
+.endobj lbl_802CD96C
+.obj __vt__17InteractHitEffect, global
 	.4byte __RTTI__17InteractHitEffect
 	.4byte 0
 	.4byte actCommon__11InteractionFP8Creature
@@ -145,6 +149,7 @@ __vt__17InteractHitEffect:
 	.4byte actHinderRock__11InteractionFP10HinderRock
 	.4byte actBridge__11InteractionFP6Bridge
 	.4byte actItem__11InteractionFP12ItemCreature
+.endobj __vt__17InteractHitEffect
 	.4byte 0
 	.4byte 0
 	.4byte 0
@@ -156,15 +161,16 @@ __vt__17InteractHitEffect:
 	.4byte 0
 	.4byte 0
 	.4byte 0
-lbl_802CD9D0:
+.obj lbl_802CD9D0, local
 	.asciz "InteractBomb"
+.endobj lbl_802CD9D0
 .balign 4
-lbl_802CD9E0:
+.obj lbl_802CD9E0, local
 	.4byte __RTTI__11Interaction
 	.4byte 0
 	.4byte 0
-.global __vt__12InteractBomb
-__vt__12InteractBomb:
+.endobj lbl_802CD9E0
+.obj __vt__12InteractBomb, global
 	.4byte __RTTI__12InteractBomb
 	.4byte 0
 	.4byte actCommon__11InteractionFP8Creature
@@ -176,15 +182,19 @@ __vt__12InteractBomb:
 	.4byte actHinderRock__11InteractionFP10HinderRock
 	.4byte actBridge__11InteractionFP6Bridge
 	.4byte actItem__12InteractBombFP12ItemCreature
+.endobj __vt__12InteractBomb
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-__RTTI__11Interaction:
+.obj __RTTI__11Interaction, local
 	.4byte lbl_802CD960
 	.4byte 0
-__RTTI__17InteractHitEffect:
+.endobj __RTTI__11Interaction
+.obj __RTTI__17InteractHitEffect, local
 	.4byte lbl_802CD94C
 	.4byte lbl_802CD96C
-__RTTI__12InteractBomb:
+.endobj __RTTI__17InteractHitEffect
+.obj __RTTI__12InteractBomb, local
 	.4byte lbl_802CD9D0
 	.4byte lbl_802CD9E0
+.endobj __RTTI__12InteractBomb

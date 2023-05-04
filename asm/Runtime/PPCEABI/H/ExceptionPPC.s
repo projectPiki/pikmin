@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global __unregister_fragment
-__unregister_fragment:
+.fn __unregister_fragment, global
 /* 80214D58 00211CB8  2C 03 00 00 */	cmpwi r3, 0
 /* 80214D5C 00211CBC  41 80 00 2C */	blt .L_80214D88
 /* 80214D60 00211CC0  2C 03 00 01 */	cmpwi r3, 1
@@ -16,9 +15,9 @@ __unregister_fragment:
 /* 80214D84 00211CE4  90 03 00 08 */	stw r0, 8(r3)
 .L_80214D88:
 /* 80214D88 00211CE8  4E 80 00 20 */	blr 
+.endfn __unregister_fragment
 
-.global __register_fragment
-__register_fragment:
+.fn __register_fragment, global
 /* 80214D8C 00211CEC  3C A0 80 3D */	lis r5, fragmentinfo@ha
 /* 80214D90 00211CF0  38 A5 40 E0 */	addi r5, r5, fragmentinfo@l
 /* 80214D94 00211CF4  48 00 00 04 */	b .L_80214D98
@@ -38,3 +37,4 @@ __register_fragment:
 /* 80214DC0 00211D20  38 60 FF FF */	li r3, -1
 .L_80214DC4:
 /* 80214DC4 00211D24  4E 80 00 20 */	blr 
+.endfn __register_fragment

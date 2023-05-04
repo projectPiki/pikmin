@@ -2524,28 +2524,38 @@ lbl_802D509C:
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-lbl_803E59F0:
+.obj lbl_803E59F0, local
 	.asciz "END"
+.endobj lbl_803E59F0
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803EB1A0:
-	.4byte 0x00000000
-lbl_803EB1A4:
-	.4byte 0x3F800000
-lbl_803EB1A8:
-	.4byte 0x407E0000
-	.4byte 0x00000000
-lbl_803EB1B0:
-	.4byte 0xBFF00000
-	.4byte 0x00000000
-lbl_803EB1B8:
-	.4byte 0x437F0000
-lbl_803EB1BC:
-	.4byte 0x3F000000
-lbl_803EB1C0:
-	.4byte 0x40C90FDB
-lbl_803EB1C4:
-	.4byte 0x41F00000
-lbl_803EB1C8:
-	.4byte 0x459C4000
+.obj lbl_803EB1A0, local
+	.float 0.0
+.endobj lbl_803EB1A0
+.obj lbl_803EB1A4, local
+	.float 1.0
+.endobj lbl_803EB1A4
+.balign 8
+.obj lbl_803EB1A8, local
+	.double 480.0
+.endobj lbl_803EB1A8
+.balign 8
+.obj lbl_803EB1B0, local
+	.double -1.0
+.endobj lbl_803EB1B0
+.obj lbl_803EB1B8, local
+	.float 255.0
+.endobj lbl_803EB1B8
+.obj lbl_803EB1BC, local
+	.float 0.5
+.endobj lbl_803EB1BC
+.obj lbl_803EB1C0, local
+	.float 6.2831855
+.endobj lbl_803EB1C0
+.obj lbl_803EB1C4, local
+	.float 30.0
+.endobj lbl_803EB1C4
+.obj lbl_803EB1C8, local
+	.float 5000.0
+.endobj lbl_803EB1C8

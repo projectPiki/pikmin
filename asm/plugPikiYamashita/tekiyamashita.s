@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global makeTekiParameters__13TekiYamashitaFP7TekiMgr
-makeTekiParameters__13TekiYamashitaFP7TekiMgr:
+.fn makeTekiParameters__13TekiYamashitaFP7TekiMgr, global
 /* 801A30F8 001A0058  7C 08 02 A6 */	mflr r0
 /* 801A30FC 001A005C  90 01 00 04 */	stw r0, 4(r1)
 /* 801A3100 001A0060  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -110,9 +109,9 @@ makeTekiParameters__13TekiYamashitaFP7TekiMgr:
 /* 801A326C 001A01CC  38 21 00 18 */	addi r1, r1, 0x18
 /* 801A3270 001A01D0  7C 08 03 A6 */	mtlr r0
 /* 801A3274 001A01D4  4E 80 00 20 */	blr 
+.endfn makeTekiParameters__13TekiYamashitaFP7TekiMgr
 
-.global makeTekis__13TekiYamashitaFP7TekiMgr
-makeTekis__13TekiYamashitaFP7TekiMgr:
+.fn makeTekis__13TekiYamashitaFP7TekiMgr, global
 /* 801A3278 001A01D8  7C 08 02 A6 */	mflr r0
 /* 801A327C 001A01DC  90 01 00 04 */	stw r0, 4(r1)
 /* 801A3280 001A01E0  94 21 FF B8 */	stwu r1, -0x48(r1)
@@ -334,3 +333,4 @@ makeTekis__13TekiYamashitaFP7TekiMgr:
 /* 801A3588 001A04E8  38 21 00 48 */	addi r1, r1, 0x48
 /* 801A358C 001A04EC  7C 08 03 A6 */	mtlr r0
 /* 801A3590 001A04F0  4E 80 00 20 */	blr 
+.endfn makeTekis__13TekiYamashitaFP7TekiMgr

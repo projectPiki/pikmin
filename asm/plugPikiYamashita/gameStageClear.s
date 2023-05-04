@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global __ct__21GameStageClearSectionFv
-__ct__21GameStageClearSectionFv:
+.fn __ct__21GameStageClearSectionFv, global
 /* 8019B804 00198764  7C 08 02 A6 */	mflr r0
 /* 8019B808 00198768  38 8D 0F 90 */	addi r4, r13, lbl_803E5CB0@sda21
 /* 8019B80C 0019876C  90 01 00 04 */	stw r0, 4(r1)
@@ -34,29 +33,35 @@ __ct__21GameStageClearSectionFv:
 /* 8019B878 001987D8  38 21 00 18 */	addi r1, r1, 0x18
 /* 8019B87C 001987DC  7C 08 03 A6 */	mtlr r0
 /* 8019B880 001987E0  4E 80 00 20 */	blr 
+.endfn __ct__21GameStageClearSectionFv
 
-.global init__21GameStageClearSectionFv
-init__21GameStageClearSectionFv:
+.fn init__21GameStageClearSectionFv, weak
 /* 8019B884 001987E4  4E 80 00 20 */	blr 
+.endfn init__21GameStageClearSectionFv
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802D6A58:
+.obj lbl_802D6A58, local
 	.asciz "gameStageClear.cpp"
+.endobj lbl_802D6A58
 .balign 4
-lbl_802D6A6C:
+.obj lbl_802D6A6C, local
 	.asciz "GameStageClearSection"
+.endobj lbl_802D6A6C
 .balign 4
-lbl_802D6A84:
+.obj lbl_802D6A84, local
 	.asciz "<GameStageClearSection>"
+.endobj lbl_802D6A84
 .balign 4
-lbl_802D6A9C:
+.obj lbl_802D6A9C, local
 	.asciz "CoreNode"
+.endobj lbl_802D6A9C
 .balign 4
-lbl_802D6AA8:
+.obj lbl_802D6AA8, local
 	.4byte __RTTI__5ANode
 	.4byte 0x00000000
 	.4byte 0x00000000
+.endobj lbl_802D6AA8
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x00000000
@@ -64,13 +69,14 @@ lbl_802D6AA8:
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x00000000
-lbl_802D6AD0:
+.obj lbl_802D6AD0, local
 	.4byte __RTTI__5ANode
 	.4byte 0x00000000
 	.4byte __RTTI__8CoreNode
 	.4byte 0x00000000
 	.4byte 0x00000000
-lbl_802D6AE4:
+.endobj lbl_802D6AD0
+.obj lbl_802D6AE4, local
 	.4byte __RTTI__5ANode
 	.4byte 0x00000000
 	.4byte __RTTI__8CoreNode
@@ -78,7 +84,8 @@ lbl_802D6AE4:
 	.4byte __RTTI__4Node
 	.4byte 0x00000000
 	.4byte 0x00000000
-lbl_802D6B00:
+.endobj lbl_802D6AE4
+.obj lbl_802D6B00, local
 	.4byte __RTTI__5ANode
 	.4byte 0x00000000
 	.4byte __RTTI__8CoreNode
@@ -88,8 +95,8 @@ lbl_802D6B00:
 	.4byte __RTTI__7Section
 	.4byte 0x00000000
 	.4byte 0x00000000
-.global __vt__21GameStageClearSection
-__vt__21GameStageClearSection:
+.endobj lbl_802D6B00
+.obj __vt__21GameStageClearSection, weak
 	.4byte __RTTI__21GameStageClearSection
 	.4byte 0
 	.4byte getAgeNodeType__5ANodeFv
@@ -103,6 +110,7 @@ __vt__21GameStageClearSection:
 	.4byte concat__4NodeFR8Matrix4f
 	.4byte getModelMatrix__4NodeFv
 	.4byte init__21GameStageClearSectionFv
+.endobj __vt__21GameStageClearSection
 	.4byte 0
 	.4byte 0
 	.4byte 0
@@ -120,32 +128,41 @@ __vt__21GameStageClearSection:
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-lbl_803E5CB0:
+.obj lbl_803E5CB0, local
 	.asciz "<Node>"
+.endobj lbl_803E5CB0
 .balign 4
-lbl_803E5CB8:
+.obj lbl_803E5CB8, local
 	.asciz "ANode"
+.endobj lbl_803E5CB8
 .balign 4
-__RTTI__5ANode:
+.obj __RTTI__5ANode, local
 	.4byte lbl_803E5CB8
 	.4byte 0x00000000
-__RTTI__8CoreNode:
+.endobj __RTTI__5ANode
+.obj __RTTI__8CoreNode, local
 	.4byte lbl_802D6A9C
 	.4byte lbl_802D6AA8
+.endobj __RTTI__8CoreNode
 .balign 4
-lbl_803E5CD0:
+.obj lbl_803E5CD0, local
 	.asciz "Node"
+.endobj lbl_803E5CD0
 .balign 4
-__RTTI__4Node:
+.obj __RTTI__4Node, local
 	.4byte lbl_803E5CD0
 	.4byte lbl_802D6AD0
+.endobj __RTTI__4Node
 .balign 4
-lbl_803E5CE0:
+.obj lbl_803E5CE0, local
 	.asciz "Section"
+.endobj lbl_803E5CE0
 .balign 4
-__RTTI__7Section:
+.obj __RTTI__7Section, local
 	.4byte lbl_803E5CE0
 	.4byte lbl_802D6AE4
-__RTTI__21GameStageClearSection:
+.endobj __RTTI__7Section
+.obj __RTTI__21GameStageClearSection, local
 	.4byte lbl_802D6A6C
 	.4byte lbl_802D6B00
+.endobj __RTTI__21GameStageClearSection

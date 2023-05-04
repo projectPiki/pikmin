@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global __ct__17CardSelectSectionFv
-__ct__17CardSelectSectionFv:
+.fn __ct__17CardSelectSectionFv, global
 /* 8005503C 00051F9C  7C 08 02 A6 */	mflr r0
 /* 80055040 00051FA0  3C 80 80 2A */	lis r4, lbl_802A7660@ha
 /* 80055044 00051FA4  90 01 00 04 */	stw r0, 4(r1)
@@ -151,9 +150,9 @@ __ct__17CardSelectSectionFv:
 /* 8005526C 000521CC  38 21 00 28 */	addi r1, r1, 0x28
 /* 80055270 000521D0  7C 08 03 A6 */	mtlr r0
 /* 80055274 000521D4  4E 80 00 20 */	blr 
+.endfn __ct__17CardSelectSectionFv
 
-.global update__22CardSelectSetupSectionFv
-update__22CardSelectSetupSectionFv:
+.fn update__22CardSelectSetupSectionFv, weak
 /* 80055278 000521D8  7C 08 02 A6 */	mflr r0
 /* 8005527C 000521DC  90 01 00 04 */	stw r0, 4(r1)
 /* 80055280 000521E0  94 21 FF D0 */	stwu r1, -0x30(r1)
@@ -331,9 +330,9 @@ update__22CardSelectSetupSectionFv:
 /* 80055504 00052464  38 21 00 30 */	addi r1, r1, 0x30
 /* 80055508 00052468  7C 08 03 A6 */	mtlr r0
 /* 8005550C 0005246C  4E 80 00 20 */	blr 
+.endfn update__22CardSelectSetupSectionFv
 
-.global draw__22CardSelectSetupSectionFR8Graphics
-draw__22CardSelectSetupSectionFR8Graphics:
+.fn draw__22CardSelectSetupSectionFR8Graphics, weak
 /* 80055510 00052470  7C 08 02 A6 */	mflr r0
 /* 80055514 00052474  90 01 00 04 */	stw r0, 4(r1)
 /* 80055518 00052478  94 21 FF 40 */	stwu r1, -0xc0(r1)
@@ -464,35 +463,43 @@ draw__22CardSelectSetupSectionFR8Graphics:
 /* 800556FC 0005265C  38 21 00 C0 */	addi r1, r1, 0xc0
 /* 80055700 00052660  7C 08 03 A6 */	mtlr r0
 /* 80055704 00052664  4E 80 00 20 */	blr 
+.endfn draw__22CardSelectSetupSectionFR8Graphics
 
-.global init__17CardSelectSectionFv
-init__17CardSelectSectionFv:
+.fn init__17CardSelectSectionFv, weak
 /* 80055708 00052668  4E 80 00 20 */	blr 
+.endfn init__17CardSelectSectionFv
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802A7660:
+.obj lbl_802A7660, local
 	.asciz "cardSelect.cpp"
+.endobj lbl_802A7660
 .balign 4
-lbl_802A7670:
+.obj lbl_802A7670, local
 	.asciz "CardSelect"
+.endobj lbl_802A7670
 .balign 4
-lbl_802A767C:
+.obj lbl_802A767C, local
 	.asciz "<CardSelectSection>"
+.endobj lbl_802A767C
 .balign 4
-lbl_802A7690:
+.obj lbl_802A7690, local
 	.asciz "CardSelect section"
+.endobj lbl_802A7690
 .balign 4
-lbl_802A76A4:
+.obj lbl_802A76A4, local
 	.asciz "<Controller>"
+.endobj lbl_802A76A4
 .balign 4
-lbl_802A76B4:
+.obj lbl_802A76B4, local
 	.asciz "CoreNode"
+.endobj lbl_802A76B4
 .balign 4
-lbl_802A76C0:
+.obj lbl_802A76C0, local
 	.4byte __RTTI__5ANode
 	.4byte 0x00000000
 	.4byte 0x00000000
+.endobj lbl_802A76C0
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x00000000
@@ -501,16 +508,18 @@ lbl_802A76C0:
 	.4byte 0x00000000
 	.4byte 0x00000000
 .balign 4
-lbl_802A76E8:
+.obj lbl_802A76E8, local
 	.asciz "CardSelectSetupSection"
+.endobj lbl_802A76E8
 .balign 4
-lbl_802A7700:
+.obj lbl_802A7700, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte __RTTI__8CoreNode
 	.4byte 0
 	.4byte 0
-lbl_802A7714:
+.endobj lbl_802A7700
+.obj lbl_802A7714, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte __RTTI__8CoreNode
@@ -518,8 +527,8 @@ lbl_802A7714:
 	.4byte __RTTI__4Node
 	.4byte 0
 	.4byte 0
-.global __vt__22CardSelectSetupSection
-__vt__22CardSelectSetupSection:
+.endobj lbl_802A7714
+.obj __vt__22CardSelectSetupSection, weak
 	.4byte __RTTI__22CardSelectSetupSection
 	.4byte 0
 	.4byte getAgeNodeType__5ANodeFv
@@ -532,11 +541,13 @@ __vt__22CardSelectSetupSection:
 	.4byte concat__4NodeFR3SRT
 	.4byte concat__4NodeFR8Matrix4f
 	.4byte getModelMatrix__4NodeFv
+.endobj __vt__22CardSelectSetupSection
 .balign 4
-lbl_802A7760:
+.obj lbl_802A7760, local
 	.asciz "CardSelectSection"
+.endobj lbl_802A7760
 .balign 4
-lbl_802A7774:
+.obj lbl_802A7774, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte __RTTI__8CoreNode
@@ -544,7 +555,8 @@ lbl_802A7774:
 	.4byte __RTTI__4Node
 	.4byte 0
 	.4byte 0
-lbl_802A7790:
+.endobj lbl_802A7774
+.obj lbl_802A7790, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte __RTTI__8CoreNode
@@ -554,8 +566,8 @@ lbl_802A7790:
 	.4byte __RTTI__7Section
 	.4byte 0
 	.4byte 0
-.global __vt__17CardSelectSection
-__vt__17CardSelectSection:
+.endobj lbl_802A7790
+.obj __vt__17CardSelectSection, weak
 	.4byte __RTTI__17CardSelectSection
 	.4byte 0
 	.4byte getAgeNodeType__5ANodeFv
@@ -569,6 +581,7 @@ __vt__17CardSelectSection:
 	.4byte concat__4NodeFR8Matrix4f
 	.4byte getModelMatrix__4NodeFv
 	.4byte init__17CardSelectSectionFv
+.endobj __vt__17CardSelectSection
 	.4byte 0
 	.4byte 0
 	.4byte 0
@@ -586,41 +599,52 @@ __vt__17CardSelectSection:
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-lbl_803DD9D0:
+.obj lbl_803DD9D0, local
 	.asciz "<Node>"
+.endobj lbl_803DD9D0
 .balign 4
-lbl_803DD9D8:
+.obj lbl_803DD9D8, local
 	.asciz "ANode"
+.endobj lbl_803DD9D8
 .balign 4
-__RTTI__5ANode:
+.obj __RTTI__5ANode, local
 	.4byte lbl_803DD9D8
 	.4byte 0
-__RTTI__8CoreNode:
+.endobj __RTTI__5ANode
+.obj __RTTI__8CoreNode, local
 	.4byte lbl_802A76B4
 	.4byte lbl_802A76C0
+.endobj __RTTI__8CoreNode
 .balign 4
-lbl_803DD9F0:
+.obj lbl_803DD9F0, local
 	.asciz "Node"
+.endobj lbl_803DD9F0
 .balign 4
-__RTTI__4Node:
+.obj __RTTI__4Node, local
 	.4byte lbl_803DD9F0
 	.4byte lbl_802A7700
-__RTTI__22CardSelectSetupSection:
+.endobj __RTTI__4Node
+.obj __RTTI__22CardSelectSetupSection, local
 	.4byte lbl_802A76E8
 	.4byte lbl_802A7714
+.endobj __RTTI__22CardSelectSetupSection
 .balign 4
-lbl_803DDA08:
+.obj lbl_803DDA08, local
 	.asciz "%s"
+.endobj lbl_803DDA08
 .balign 4
-lbl_803DDA0C:
+.obj lbl_803DDA0C, local
 	.asciz "Section"
+.endobj lbl_803DDA0C
 .balign 4
-__RTTI__7Section:
+.obj __RTTI__7Section, local
 	.4byte lbl_803DDA0C
 	.4byte lbl_802A7774
-__RTTI__17CardSelectSection:
+.endobj __RTTI__7Section
+.obj __RTTI__17CardSelectSection, local
 	.4byte lbl_802A7760
 	.4byte lbl_802A7790
+.endobj __RTTI__17CardSelectSection
 
 .section .sbss, "wa"
 .balign 8

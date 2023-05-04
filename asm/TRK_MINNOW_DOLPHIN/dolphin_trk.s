@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .init, "ax"  # 0x80003100 - 0x800054C0
-.global __TRK_reset
-__TRK_reset:
+.fn __TRK_reset, global
 /* 800053EC 000023EC  7C 08 02 A6 */	mflr r0
 /* 800053F0 000023F0  90 01 00 04 */	stw r0, 4(r1)
 /* 800053F4 000023F4  94 21 FF F8 */	stwu r1, -8(r1)
@@ -10,10 +9,10 @@ __TRK_reset:
 /* 80005400 00002400  80 01 00 04 */	lwz r0, 4(r1)
 /* 80005404 00002404  7C 08 03 A6 */	mtlr r0
 /* 80005408 00002408  4E 80 00 20 */	blr 
+.endfn __TRK_reset
 
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global InitMetroTRK
-InitMetroTRK:
+.fn InitMetroTRK, global
 /* 8021FE60 0021CDC0  38 21 FF FC */	addi r1, r1, -4
 /* 8021FE64 0021CDC4  90 61 00 00 */	stw r3, 0(r1)
 /* 8021FE68 0021CDC8  3C 60 80 3D */	lis r3, gTRKCPUState@h
@@ -52,9 +51,9 @@ InitMetroTRK:
 /* 8021FEEC 0021CE4C  4E 80 00 20 */	blr 
 .L_8021FEF0:
 /* 8021FEF0 0021CE50  48 00 05 28 */	b TRK_main
+.endfn InitMetroTRK
 
-.global EnableMetroTRKInterrupts
-EnableMetroTRKInterrupts:
+.fn EnableMetroTRKInterrupts, global
 /* 8021FEF4 0021CE54  7C 08 02 A6 */	mflr r0
 /* 8021FEF8 0021CE58  90 01 00 04 */	stw r0, 4(r1)
 /* 8021FEFC 0021CE5C  94 21 FF F8 */	stwu r1, -8(r1)
@@ -63,9 +62,9 @@ EnableMetroTRKInterrupts:
 /* 8021FF08 0021CE68  80 01 00 04 */	lwz r0, 4(r1)
 /* 8021FF0C 0021CE6C  7C 08 03 A6 */	mtlr r0
 /* 8021FF10 0021CE70  4E 80 00 20 */	blr 
+.endfn EnableMetroTRKInterrupts
 
-.global TRKTargetTranslate
-TRKTargetTranslate:
+.fn TRKTargetTranslate, global
 /* 8021FF14 0021CE74  3C 80 80 3D */	lis r4, lc_base@ha
 /* 8021FF18 0021CE78  38 84 62 70 */	addi r4, r4, lc_base@l
 /* 8021FF1C 0021CE7C  80 84 00 00 */	lwz r4, 0(r4)
@@ -86,9 +85,9 @@ TRKTargetTranslate:
 /* 8021FF54 0021CEB4  64 03 80 00 */	oris r3, r0, 0x8000
 .L_8021FF58:
 /* 8021FF58 0021CEB8  4E 80 00 20 */	blr 
+.endfn TRKTargetTranslate
 
-.global TRK_copy_vector
-TRK_copy_vector:
+.fn TRK_copy_vector, global
 /* 8021FF5C 0021CEBC  7C 08 02 A6 */	mflr r0
 /* 8021FF60 0021CEC0  90 01 00 04 */	stw r0, 4(r1)
 /* 8021FF64 0021CEC4  94 21 FF F0 */	stwu r1, -0x10(r1)
@@ -113,9 +112,9 @@ TRK_copy_vector:
 /* 8021FFB0 0021CF10  80 01 00 04 */	lwz r0, 4(r1)
 /* 8021FFB4 0021CF14  7C 08 03 A6 */	mtlr r0
 /* 8021FFB8 0021CF18  4E 80 00 20 */	blr 
+.endfn TRK_copy_vector
 
-.global __TRK_copy_vectors
-__TRK_copy_vectors:
+.fn __TRK_copy_vectors, global
 /* 8021FFBC 0021CF1C  7C 08 02 A6 */	mflr r0
 /* 8021FFC0 0021CF20  90 01 00 04 */	stw r0, 4(r1)
 /* 8021FFC4 0021CF24  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -157,9 +156,9 @@ __TRK_copy_vectors:
 /* 80220044 0021CFA4  80 01 00 04 */	lwz r0, 4(r1)
 /* 80220048 0021CFA8  7C 08 03 A6 */	mtlr r0
 /* 8022004C 0021CFAC  4E 80 00 20 */	blr 
+.endfn __TRK_copy_vectors
 
-.global TRKInitializeTarget
-TRKInitializeTarget:
+.fn TRKInitializeTarget, global
 /* 80220050 0021CFB0  7C 08 02 A6 */	mflr r0
 /* 80220054 0021CFB4  90 01 00 04 */	stw r0, 4(r1)
 /* 80220058 0021CFB8  94 21 FF F0 */	stwu r1, -0x10(r1)
@@ -180,11 +179,11 @@ TRKInitializeTarget:
 /* 80220094 0021CFF4  80 01 00 04 */	lwz r0, 4(r1)
 /* 80220098 0021CFF8  7C 08 03 A6 */	mtlr r0
 /* 8022009C 0021CFFC  4E 80 00 20 */	blr 
+.endfn TRKInitializeTarget
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-.global TRK_ISR_OFFSETS
-TRK_ISR_OFFSETS:
+.obj TRK_ISR_OFFSETS, local
 	.4byte 0x00000100
 	.4byte 0x00000200
 	.4byte 0x00000300
@@ -200,3 +199,4 @@ TRK_ISR_OFFSETS:
 	.4byte 0x00001300
 	.4byte 0x00001400
 	.4byte 0x00001700
+.endobj TRK_ISR_OFFSETS

@@ -1,7 +1,7 @@
 .include "macros.inc"
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-patternTable:
+.obj patternTable, global
 	.4byte 0x00000010
 	.4byte 0x00000000
 	.4byte 0x00000008
@@ -34,672 +34,712 @@ patternTable:
 	.4byte 0x00007FFF
 	.4byte 0x00000001
 	.4byte 0x00000003
-rumbleFrame_00:
-	.4byte 0x00000000
-	.4byte 0x3D4CCCCD
+.endobj patternTable
+.obj rumbleFrame_00, local
+	.float 0.0
+	.float 0.05
 	.float 0.1
-	.4byte 0x3E19999A
-	.4byte 0x3E4CCCCD
-	.4byte 0x3E6B851F
-	.4byte 0x3E8F5C29
-	.4byte 0x3EA8F5C3
-	.4byte 0x3EC28F5C
-	.4byte 0x3EDC28F6
-	.4byte 0x3EEB851F
-rumblePower_00:
-	.4byte 0x3E4CCCCD
-	.4byte 0x3F666666
+	.float 0.15
+	.float 0.2
+	.float 0.23
+	.float 0.28
+	.float 0.33
+	.float 0.38
+	.float 0.43
+	.float 0.46
+.endobj rumbleFrame_00
+.obj rumblePower_00, local
+	.float 0.2
+	.float 0.9
 	.float 1.0
-	.4byte 0x3F666666
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x3ECCCCCD
-	.4byte 0x00000000
-	.4byte 0x3E4CCCCD
-	.4byte 0x3CA3D70A
-	.4byte 0x00000000
-rumbleFrame_01:
-	.4byte 0x00000000
-	.4byte 0x3E23D70A
-	.4byte 0x3E428F5C
-	.4byte 0x3E75C28F
-	.4byte 0x3E851EB8
-	.4byte 0x3EBD70A4
-	.4byte 0x3ECCCCCD
-	.4byte 0x3EE66666
-	.4byte 0x3EEB851F
-	.4byte 0x3F0A3D71
-	.4byte 0x3F0F5C29
-	.4byte 0x3F1C28F6
-	.4byte 0x3F1EB852
-	.4byte 0x3F333333
-	.4byte 0x3F3AE148
-	.4byte 0x3F47AE14
-	.4byte 0x3F4A3D71
-	.4byte 0x3F5C28F6
-	.4byte 0x3F6B851F
-	.4byte 0x3F75C28F
-	.4byte 0x3F83D70A
-	.4byte 0x3F90A3D7
-	.4byte 0x3F95C28F
-	.4byte 0x3FB33333
-rumblePower_01:
+	.float 0.9
+	.float 0.0
+	.float 0.0
+	.float 0.4
+	.float 0.0
+	.float 0.2
+	.float 0.02
+	.float 0.0
+.endobj rumblePower_00
+.obj rumbleFrame_01, local
+	.float 0.0
+	.float 0.16
+	.float 0.19
+	.float 0.24
+	.float 0.26
+	.float 0.37
+	.float 0.4
+	.float 0.45
+	.float 0.46
+	.float 0.54
+	.float 0.56
+	.float 0.61
+	.float 0.62
+	.float 0.7
+	.float 0.73
+	.float 0.78
+	.float 0.79
+	.float 0.86
+	.float 0.92
+	.float 0.96
+	.float 1.03
+	.float 1.13
+	.float 1.17
+	.float 1.4
+.endobj rumbleFrame_01
+.obj rumblePower_01, local
 	.float 1.0
-	.4byte 0x3F733333
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x3F666666
-	.4byte 0x3F59999A
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x3F4CCCCD
-	.4byte 0x3F3AE148
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x3F23D70A
-	.4byte 0x3F07AE14
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x3EE147AE
-	.4byte 0x3EB33333
-	.4byte 0x00000000
-	.4byte 0x3E8A3D71
-	.4byte 0x3CA3D70A
-	.4byte 0x3E23D70A
-	.4byte 0x3C23D70A
-	.4byte 0x00000000
-rumbleFrame_02:
-	.4byte 0x00000000
-	.4byte 0x3DA3D70A
+	.float 0.95
+	.float 0.0
+	.float 0.0
+	.float 0.9
+	.float 0.85
+	.float 0.0
+	.float 0.0
+	.float 0.8
+	.float 0.73
+	.float 0.0
+	.float 0.0
+	.float 0.64
+	.float 0.53
+	.float 0.0
+	.float 0.0
+	.float 0.44
+	.float 0.35
+	.float 0.0
+	.float 0.27
+	.float 0.02
+	.float 0.16
+	.float 0.01
+	.float 0.0
+.endobj rumblePower_01
+.obj rumbleFrame_02, local
+	.float 0.0
+	.float 0.08
 	.float 0.1
-	.4byte 0x3E23D70A
-	.4byte 0x3E99999A
-rumblePower_02:
-	.4byte 0x3F4CCCCD
-	.4byte 0x3F333333
-	.4byte 0x3E99999A
-	.4byte 0x3D23D70A
-	.4byte 0x3C23D70A
-rumbleFrame_03:
-	.4byte 0x00000000
-	.4byte 0x3D23D70A
-	.4byte 0x3DB851EC
-	.4byte 0x3DE147AE
-	.4byte 0x3E051EB8
-	.4byte 0x3E19999A
-	.4byte 0x3E3851EC
-	.4byte 0x3E570A3D
-	.4byte 0x3E75C28F
-	.4byte 0x3E8A3D71
-	.4byte 0x3E99999A
-	.4byte 0x3EA8F5C3
-	.4byte 0x3EB851EC
-	.4byte 0x3ECCCCCD
-	.4byte 0x3EE147AE
-	.4byte 0x3EF5C28F
-	.4byte 0x3F051EB8
-	.4byte 0x3F0F5C29
-	.4byte 0x3F19999A
-	.4byte 0x3F266666
-	.4byte 0x3F333333
-	.4byte 0x3F400000
-	.4byte 0x3F4CCCCD
-	.4byte 0x3F59999A
-	.4byte 0x3F6E147B
-	.4byte 0x3F8147AE
-	.4byte 0x3F8CCCCD
-	.4byte 0x3F99999A
-rumblePower_03:
-	.4byte 0x3F666666
-	.4byte 0x3F5EB852
-	.4byte 0x3E99999A
-	.4byte 0x3E19999A
-	.4byte 0x3E8A3D71
-	.4byte 0x3E0F5C29
-	.4byte 0x3E800000
-	.4byte 0x3E051EB8
-	.4byte 0x3E6B851F
-	.4byte 0x3DF5C28F
-	.4byte 0x3E570A3D
-	.4byte 0x3DF5C28F
-	.4byte 0x3E428F5C
-	.4byte 0x3DF5C28F
-	.4byte 0x3E2E147B
-	.4byte 0x3DE147AE
-	.4byte 0x3E19999A
-	.4byte 0x3DE147AE
-	.4byte 0x3E051EB8
+	.float 0.16
+	.float 0.3
+.endobj rumbleFrame_02
+.obj rumblePower_02, local
+	.float 0.8
+	.float 0.7
+	.float 0.3
+	.float 0.04
+	.float 0.01
+.endobj rumblePower_02
+.obj rumbleFrame_03, local
+	.float 0.0
+	.float 0.04
+	.float 0.09
+	.float 0.11
+	.float 0.13
+	.float 0.15
+	.float 0.18
+	.float 0.21
+	.float 0.24
+	.float 0.27
+	.float 0.3
+	.float 0.33
+	.float 0.36
+	.float 0.4
+	.float 0.44
+	.float 0.48
+	.float 0.52
+	.float 0.56
+	.float 0.6
+	.float 0.65
+	.float 0.7
+	.float 0.75
+	.float 0.8
+	.float 0.85
+	.float 0.93
+	.float 1.01
+	.float 1.1
+	.float 1.2
+.endobj rumbleFrame_03
+.obj rumblePower_03, local
+	.float 0.9
+	.float 0.87
+	.float 0.3
+	.float 0.15
+	.float 0.27
+	.float 0.14
+	.float 0.25
+	.float 0.13
+	.float 0.23
+	.float 0.12
+	.float 0.21
+	.float 0.12
+	.float 0.19
+	.float 0.12
+	.float 0.17
+	.float 0.11
+	.float 0.15
+	.float 0.11
+	.float 0.13
 	.float 0.1
-	.4byte 0x3DF5C28F
-	.4byte 0x3DB851EC
-	.4byte 0x3DE147AE
-	.4byte 0x3DB851EC
+	.float 0.12
+	.float 0.09
+	.float 0.11
+	.float 0.09
 	.float 0.1
-	.4byte 0x3DA3D70A
-	.4byte 0x3D4CCCCD
-	.4byte 0x00000000
-rumbleFrame_04:
-	.4byte 0x00000000
+	.float 0.08
+	.float 0.05
+	.float 0.0
+.endobj rumblePower_03
+.obj rumbleFrame_04, local
+	.float 0.0
 	.float 0.1
-	.4byte 0x3E19999A
-	.4byte 0x3E4CCCCD
-	.4byte 0x3E800000
-	.4byte 0x3E99999A
-rumblePower_04:
-	.4byte 0x3F666666
-	.4byte 0x3F666666
+	.float 0.15
+	.float 0.2
+	.float 0.25
+	.float 0.3
+.endobj rumbleFrame_04
+.obj rumblePower_04, local
+	.float 0.9
+	.float 0.9
 	.float 0.1
-	.4byte 0x3E99999A
-	.4byte 0x3E99999A
-	.4byte 0x00000000
-rumbleFrame_05:
-	.4byte 0x00000000
-	.4byte 0x3E3851EC
-	.4byte 0x3E570A3D
-	.4byte 0x3E8F5C29
-	.4byte 0x3E8F5C29
-	.4byte 0x3ECCCCCD
-	.4byte 0x3EE66666
-	.4byte 0x3F028F5C
-	.4byte 0x3F051EB8
-	.4byte 0x3F23D70A
-	.4byte 0x3F30A3D7
-	.4byte 0x3F400000
-	.4byte 0x3F547AE1
-	.4byte 0x3F63D70A
-	.4byte 0x3F7D70A4
-	.4byte 0x3F83D70A
-	.4byte 0x3F8F5C29
-	.4byte 0x3F9851EC
-	.4byte 0x3FA00000
-	.4byte 0x3FA66666
-	.4byte 0x3FB33333
-rumblePower_05:
+	.float 0.3
+	.float 0.3
+	.float 0.0
+.endobj rumblePower_04
+.obj rumbleFrame_05, local
+	.float 0.0
+	.float 0.18
+	.float 0.21
+	.float 0.28
+	.float 0.28
+	.float 0.4
+	.float 0.45
+	.float 0.51
+	.float 0.52
+	.float 0.64
+	.float 0.69
+	.float 0.75
+	.float 0.83
+	.float 0.89
+	.float 0.99
+	.float 1.03
+	.float 1.12
+	.float 1.19
+	.float 1.25
+	.float 1.3
+	.float 1.4
+.endobj rumbleFrame_05
+.obj rumblePower_05, local
 	.float 1.0
-	.4byte 0x3F6B851F
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x3F4A3D71
-	.4byte 0x3F2147AE
-	.4byte 0x00000000
-	.4byte 0x3CA3D70A
-	.4byte 0x3EE66666
-	.4byte 0x3E9EB852
-	.4byte 0x3CA3D70A
-	.4byte 0x3E75C28F
-	.4byte 0x3CF5C28F
-	.4byte 0x3E3851EC
-	.4byte 0x3D23D70A
-	.4byte 0x3E051EB8
-	.4byte 0x3D23D70A
+	.float 0.92
+	.float 0.0
+	.float 0.0
+	.float 0.79
+	.float 0.63
+	.float 0.0
+	.float 0.02
+	.float 0.45
+	.float 0.31
+	.float 0.02
+	.float 0.24
+	.float 0.03
+	.float 0.18
+	.float 0.04
+	.float 0.13
+	.float 0.04
 	.float 0.1
-	.4byte 0x3D23D70A
-	.4byte 0x3D75C28F
-	.4byte 0x00000000
-rumbleFrame_06:
-	.4byte 0x00000000
-	.4byte 0x3D4CCCCD
+	.float 0.04
+	.float 0.06
+	.float 0.0
+.endobj rumblePower_05
+.obj rumbleFrame_06, local
+	.float 0.0
+	.float 0.05
 	.float 0.1
-	.4byte 0x3E19999A
-	.4byte 0x3E4CCCCD
-	.4byte 0x3E800000
-	.4byte 0x3E99999A
-	.4byte 0x3EB33333
-	.4byte 0x3ECCCCCD
-	.4byte 0x3EE66666
+	.float 0.15
+	.float 0.2
+	.float 0.25
+	.float 0.3
+	.float 0.35
+	.float 0.4
+	.float 0.45
 	.float 0.5
-	.4byte 0x3F0CCCCD
-	.4byte 0x3F19999A
-	.4byte 0x3F266666
-	.4byte 0x3F333333
-	.4byte 0x3F428F5C
-	.4byte 0x3F4CCCCD
-	.4byte 0x3F59999A
-	.4byte 0x3F666666
+	.float 0.55
+	.float 0.6
+	.float 0.65
+	.float 0.7
+	.float 0.76
+	.float 0.8
+	.float 0.85
+	.float 0.9
 	.float 1.0
-rumblePower_06:
-	.4byte 0x3F59999A
-	.4byte 0x3F4CCCCD
-	.4byte 0x3E19999A
-	.4byte 0x3ECCCCCD
-	.4byte 0x3DF5C28F
-	.4byte 0x3E800000
-	.4byte 0x3DE147AE
-	.4byte 0x3E4CCCCD
+.endobj rumbleFrame_06
+.obj rumblePower_06, local
+	.float 0.85
+	.float 0.8
+	.float 0.15
+	.float 0.4
+	.float 0.12
+	.float 0.25
+	.float 0.11
+	.float 0.2
 	.float 0.1
-	.4byte 0x3E428F5C
+	.float 0.19
 	.float 0.1
-	.4byte 0x3E2E147B
+	.float 0.17
 	.float 0.1
-	.4byte 0x3E23D70A
+	.float 0.16
 	.float 0.1
-	.4byte 0x3E19999A
+	.float 0.15
 	.float 0.1
-	.4byte 0x3E0F5C29
+	.float 0.14
 	.float 0.1
-	.4byte 0x00000000
-rumbleFrame_07:
-	.4byte 0x00000000
-	.4byte 0x3DE147AE
-	.4byte 0x3DF5C28F
-	.4byte 0x3E051EB8
-	.4byte 0x3E4CCCCD
-	.4byte 0x3E570A3D
-	.4byte 0x3E947AE1
-	.4byte 0x3E9EB852
-	.4byte 0x3EA8F5C3
-	.4byte 0x3ED1EB85
-	.4byte 0x3ED70A3D
-	.4byte 0x3F051EB8
-	.4byte 0x3F07AE14
-	.4byte 0x3F0A3D71
-	.4byte 0x3F1EB852
-	.4byte 0x3F23D70A
-	.4byte 0x3F3851EC
-	.4byte 0x3F3D70A4
-	.4byte 0x3F400000
+	.float 0.0
+.endobj rumblePower_06
+.obj rumbleFrame_07, local
+	.float 0.0
+	.float 0.11
+	.float 0.12
+	.float 0.13
+	.float 0.2
+	.float 0.21
+	.float 0.29
+	.float 0.31
+	.float 0.33
+	.float 0.41
+	.float 0.42
+	.float 0.52
+	.float 0.53
+	.float 0.54
+	.float 0.62
+	.float 0.64
+	.float 0.72
+	.float 0.74
+	.float 0.75
 	.float 1.0
-rumblePower_07:
-	.4byte 0x3F733333
-	.4byte 0x3F7851EC
-	.4byte 0x3F59999A
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x3F400000
-	.4byte 0x3F3AE148
-	.4byte 0x3F0CCCCD
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x3F19999A
-	.4byte 0x3F2147AE
-	.4byte 0x3EA3D70A
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x3F028F5C
-	.4byte 0x3EF5C28F
-	.4byte 0x3E428F5C
-	.4byte 0x3CA3D70A
-	.4byte 0x00000000
-rumbleFrame_08:
-	.4byte 0x00000000
-	.4byte 0x3DB851EC
-	.4byte 0x3DB851EC
+.endobj rumbleFrame_07
+.obj rumblePower_07, local
+	.float 0.95
+	.float 0.97
+	.float 0.85
+	.float 0.0
+	.float 0.0
+	.float 0.75
+	.float 0.73
+	.float 0.55
+	.float 0.0
+	.float 0.0
+	.float 0.6
+	.float 0.63
+	.float 0.32
+	.float 0.0
+	.float 0.0
+	.float 0.51
+	.float 0.48
+	.float 0.19
+	.float 0.02
+	.float 0.0
+.endobj rumblePower_07
+.obj rumbleFrame_08, local
+	.float 0.0
+	.float 0.09
+	.float 0.09
 	.float 0.1
-	.4byte 0x3E2E147B
-	.4byte 0x3E2E147B
-	.4byte 0x3E3851EC
-	.4byte 0x3E851EB8
-	.4byte 0x3E851EB8
+	.float 0.17
+	.float 0.17
+	.float 0.18
+	.float 0.26
+	.float 0.26
 	.float 0.5
-rumblePower_08:
-	.4byte 0x3F59999A
-	.4byte 0x3F59999A
+.endobj rumbleFrame_08
+.obj rumblePower_08, local
+	.float 0.85
+	.float 0.85
 	.float 0.1
-	.4byte 0x3EE66666
-	.4byte 0x3EE66666
-	.4byte 0x3D4CCCCD
-	.4byte 0x3E800000
-	.4byte 0x3E800000
-	.4byte 0x3C23D70A
-	.4byte 0x00000000
-rumbleFrame_09:
-	.4byte 0x00000000
-	.4byte 0x3C23D70A
-	.4byte 0x3D4CCCCD
-	.4byte 0x3DF5C28F
-	.4byte 0x3DF5C28F
-	.4byte 0x3E23D70A
-	.4byte 0x3E75C28F
-	.4byte 0x3E851EB8
-	.4byte 0x3EAE147B
-	.4byte 0x3EAE147B
-	.4byte 0x3EC7AE14
-rumblePower_09:
-	.4byte 0x3E428F5C
-	.4byte 0x3F266666
-	.4byte 0x3F07AE14
-	.4byte 0x3F266666
-	.4byte 0x3E800000
-	.4byte 0x3ECCCCCD
-	.4byte 0x3E800000
-	.4byte 0x3F028F5C
-	.4byte 0x3EB851EC
-	.4byte 0x3F028F5C
+	.float 0.45
+	.float 0.45
+	.float 0.05
+	.float 0.25
+	.float 0.25
+	.float 0.01
+	.float 0.0
+.endobj rumblePower_08
+.obj rumbleFrame_09, local
+	.float 0.0
+	.float 0.01
+	.float 0.05
+	.float 0.12
+	.float 0.12
+	.float 0.16
+	.float 0.24
+	.float 0.26
+	.float 0.34
+	.float 0.34
+	.float 0.39
+.endobj rumbleFrame_09
+.obj rumblePower_09, local
+	.float 0.19
+	.float 0.65
+	.float 0.53
+	.float 0.65
+	.float 0.25
+	.float 0.4
+	.float 0.25
+	.float 0.51
+	.float 0.36
+	.float 0.51
 	.float 0.1
-rumbleFrame_10:
-	.4byte 0x00000000
+.endobj rumblePower_09
+.obj rumbleFrame_10, local
+	.float 0.0
 	.float 0.1
-	.4byte 0x3E19999A
-	.4byte 0x3E4CCCCD
-	.4byte 0x3E800000
-	.4byte 0x3E99999A
-rumblePower_10:
-	.4byte 0x3F400000
-	.4byte 0x3F400000
+	.float 0.15
+	.float 0.2
+	.float 0.25
+	.float 0.3
+.endobj rumbleFrame_10
+.obj rumblePower_10, local
+	.float 0.75
+	.float 0.75
 	.float 0.1
-	.4byte 0x3E8A3D71
-	.4byte 0x3E8A3D71
-	.4byte 0x00000000
-rumbleFrame_11:
-	.4byte 0x00000000
-	.4byte 0x3DF5C28F
-	.4byte 0x3E428F5C
-	.4byte 0x3E8F5C29
-	.4byte 0x3EAE147B
-	.4byte 0x3EDC28F6
-	.4byte 0x3EFAE148
-	.4byte 0x3F19999A
-	.4byte 0x3F28F5C3
-	.4byte 0x3F428F5C
-	.4byte 0x3F547AE1
-	.4byte 0x3F6B851F
-	.4byte 0x3F7AE148
-	.4byte 0x3F933333
-rumblePower_11:
-	.4byte 0x3F666666
-	.4byte 0x3F47AE14
-	.4byte 0x3E6147AE
-	.4byte 0x3F266666
-	.4byte 0x3E3851EC
-	.4byte 0x3F0A3D71
-	.4byte 0x3E0F5C29
-	.4byte 0x3ED70A3D
+	.float 0.27
+	.float 0.27
+	.float 0.0
+.endobj rumblePower_10
+.obj rumbleFrame_11, local
+	.float 0.0
+	.float 0.12
+	.float 0.19
+	.float 0.28
+	.float 0.34
+	.float 0.43
+	.float 0.49
+	.float 0.6
+	.float 0.66
+	.float 0.76
+	.float 0.83
+	.float 0.92
+	.float 0.98
+	.float 1.15
+.endobj rumbleFrame_11
+.obj rumblePower_11, local
+	.float 0.9
+	.float 0.78
+	.float 0.22
+	.float 0.65
+	.float 0.18
+	.float 0.54
+	.float 0.14
+	.float 0.42
 	.float 0.1
-	.4byte 0x3EA3D70A
-	.4byte 0x3D75C28F
-	.4byte 0x3E851EB8
-	.4byte 0x3CA3D70A
-	.4byte 0x00000000
-rumbleFrame_12:
-	.4byte 0x00000000
+	.float 0.32
+	.float 0.06
+	.float 0.26
+	.float 0.02
+	.float 0.0
+.endobj rumblePower_11
+.obj rumbleFrame_12, local
+	.float 0.0
 	.float 0.1
-	.4byte 0x3E2E147B
-	.4byte 0x3E4CCCCD
-	.4byte 0x3E6147AE
-	.4byte 0x3E99999A
-	.4byte 0x3ECCCCCD
+	.float 0.17
+	.float 0.2
+	.float 0.22
+	.float 0.3
+	.float 0.4
 	.float 0.5
-	.4byte 0x3F147AE1
-	.4byte 0x3F19999A
-	.4byte 0x3F2147AE
-	.4byte 0x3F333333
-	.4byte 0x3F428F5C
-	.4byte 0x3F4CCCCD
-	.4byte 0x3F51EB85
-	.4byte 0x3F59999A
-	.4byte 0x3F8CCCCD
-	.4byte 0x3F8F5C29
-	.4byte 0x3F99999A
-	.4byte 0x3FA00000
-	.4byte 0x3FACCCCD
-	.4byte 0x3FAF5C29
-	.4byte 0x3FBC28F6
-	.4byte 0x3FBEB852
-	.4byte 0x3FD9999A
-rumblePower_12:
-	.4byte 0x3F4CCCCD
-	.4byte 0x3F400000
-	.4byte 0x3F19999A
+	.float 0.58
+	.float 0.6
+	.float 0.63
+	.float 0.7
+	.float 0.76
+	.float 0.8
+	.float 0.82
+	.float 0.85
+	.float 1.1
+	.float 1.12
+	.float 1.2
+	.float 1.25
+	.float 1.35
+	.float 1.37
+	.float 1.47
+	.float 1.49
+	.float 1.7
+.endobj rumbleFrame_12
+.obj rumblePower_12, local
+	.float 0.8
+	.float 0.75
+	.float 0.6
 	.float 0.5
-	.4byte 0x3ECCCCCD
-	.4byte 0x3E800000
-	.4byte 0x3E4CCCCD
-	.4byte 0x3E800000
-	.4byte 0x3ECCCCCD
+	.float 0.4
+	.float 0.25
+	.float 0.2
+	.float 0.25
+	.float 0.4
 	.float 0.5
-	.4byte 0x3F1C28F6
-	.4byte 0x3F266666
-	.4byte 0x3F1C28F6
+	.float 0.61
+	.float 0.65
+	.float 0.61
 	.float 0.5
-	.4byte 0x3EC28F5C
-	.4byte 0x3CA3D70A
-	.4byte 0x3CA3D70A
-	.4byte 0x3F0CCCCD
-	.4byte 0x3F0CCCCD
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x3F07AE14
-	.4byte 0x3F07AE14
-	.4byte 0x3C23D70A
-	.4byte 0x00000000
-rumbleFrame_13:
-	.4byte 0x00000000
+	.float 0.38
+	.float 0.02
+	.float 0.02
+	.float 0.55
+	.float 0.55
+	.float 0.0
+	.float 0.0
+	.float 0.53
+	.float 0.53
+	.float 0.01
+	.float 0.0
+.endobj rumblePower_12
+.obj rumbleFrame_13, local
+	.float 0.0
 	.float 0.1
-	.4byte 0x3E4CCCCD
-	.4byte 0x3E800000
-	.4byte 0x3E99999A
-	.4byte 0x3EB33333
-	.4byte 0x3ECCCCCD
-	.4byte 0x3EE66666
+	.float 0.2
+	.float 0.25
+	.float 0.3
+	.float 0.35
+	.float 0.4
+	.float 0.45
 	.float 0.5
-	.4byte 0x3F0CCCCD
-	.4byte 0x3F19999A
-	.4byte 0x3F266666
-	.4byte 0x3F333333
-	.4byte 0x3F400000
-rumblePower_13:
-	.4byte 0x3F4CCCCD
-	.4byte 0x3F333333
+	.float 0.55
+	.float 0.6
+	.float 0.65
+	.float 0.7
+	.float 0.75
+.endobj rumbleFrame_13
+.obj rumblePower_13, local
+	.float 0.8
+	.float 0.7
 	.float 0.1
-	.4byte 0x3D4CCCCD
+	.float 0.05
 	.float 0.1
-	.4byte 0x3EB33333
-	.4byte 0x3ECCCCCD
-	.4byte 0x3EB33333
+	.float 0.35
+	.float 0.4
+	.float 0.35
 	.float 0.1
-	.4byte 0x3D4CCCCD
+	.float 0.05
 	.float 0.1
-	.4byte 0x3E2E147B
-	.4byte 0x3E4CCCCD
-	.4byte 0x3E2E147B
-rumbleFrame_14:
-	.4byte 0x00000000
-	.4byte 0x3DF5C28F
-	.4byte 0x3E051EB8
-	.4byte 0x3E23D70A
-	.4byte 0x3E6147AE
-	.4byte 0x3E947AE1
-	.4byte 0x3E99999A
+	.float 0.17
+	.float 0.2
+	.float 0.17
+.endobj rumblePower_13
+.obj rumbleFrame_14, local
+	.float 0.0
+	.float 0.12
+	.float 0.13
+	.float 0.16
+	.float 0.22
+	.float 0.29
+	.float 0.3
 	.float 0.5
-rumblePower_14:
-	.4byte 0x3F6B851F
-	.4byte 0x3F63D70A
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x3F2E147B
-	.4byte 0x3F266666
-	.4byte 0x3CA3D70A
-	.4byte 0x00000000
-rumbleFrame_15:
-	.4byte 0x00000000
-	.4byte 0x3DA3D70A
-	.4byte 0x3DB851EC
+.endobj rumbleFrame_14
+.obj rumblePower_14, local
+	.float 0.92
+	.float 0.89
+	.float 0.0
+	.float 0.0
+	.float 0.68
+	.float 0.65
+	.float 0.02
+	.float 0.0
+.endobj rumblePower_14
+.obj rumbleFrame_15, local
+	.float 0.0
+	.float 0.08
+	.float 0.09
 	.float 0.1
-	.4byte 0x3E428F5C
-	.4byte 0x3E4CCCCD
-rumblePower_15:
-	.4byte 0x3EE66666
-	.4byte 0x3ECCCCCD
-	.4byte 0x00000000
-	.4byte 0x3E800000
-	.4byte 0x3E4CCCCD
-	.4byte 0x00000000
-rumbleFrame_16:
-	.4byte 0x00000000
+	.float 0.19
+	.float 0.2
+.endobj rumbleFrame_15
+.obj rumblePower_15, local
+	.float 0.45
+	.float 0.4
+	.float 0.0
+	.float 0.25
+	.float 0.2
+	.float 0.0
+.endobj rumblePower_15
+.obj rumbleFrame_16, local
+	.float 0.0
 	.float 0.1
-	.4byte 0x3E23D70A
-	.4byte 0x3E6147AE
-	.4byte 0x3E99999A
-	.4byte 0x3EC7AE14
-	.4byte 0x3ED70A3D
-	.4byte 0x3EE66666
-	.4byte 0x3F07AE14
-	.4byte 0x3F19999A
-	.4byte 0x3F1C28F6
-	.4byte 0x3F23D70A
-	.4byte 0x3F2E147B
-	.4byte 0x3F333333
-	.4byte 0x3F428F5C
-	.4byte 0x3F428F5C
-	.4byte 0x3F4CCCCD
-	.4byte 0x3F547AE1
-	.4byte 0x3F570A3D
-	.4byte 0x3F63D70A
-	.4byte 0x3F68F5C3
-	.4byte 0x3F7851EC
-	.4byte 0x3F7D70A4
-	.4byte 0x3F83D70A
-	.4byte 0x3F8B851F
-	.4byte 0x3F90A3D7
-	.4byte 0x3F99999A
-rumblePower_16:
-	.4byte 0x3F400000
-	.4byte 0x3F2B851F
-	.4byte 0x3ECCCCCD
-	.4byte 0x3E19999A
+	.float 0.16
+	.float 0.22
+	.float 0.3
+	.float 0.39
+	.float 0.42
+	.float 0.45
+	.float 0.53
+	.float 0.6
+	.float 0.61
+	.float 0.64
+	.float 0.68
+	.float 0.7
+	.float 0.76
+	.float 0.76
+	.float 0.8
+	.float 0.83
+	.float 0.84
+	.float 0.89
+	.float 0.91
+	.float 0.97
+	.float 0.99
+	.float 1.03
+	.float 1.09
+	.float 1.13
+	.float 1.2
+.endobj rumbleFrame_16
+.obj rumblePower_16, local
+	.float 0.75
+	.float 0.67
+	.float 0.4
+	.float 0.15
 	.float 0.1
-	.4byte 0x3E19999A
-	.4byte 0x3ECCCCCD
-	.4byte 0x3F1EB852
-	.4byte 0x3F28F5C3
-	.4byte 0x3F2147AE
-	.4byte 0x3E6B851F
-	.4byte 0x3F051EB8
-	.4byte 0x3E570A3D
-	.4byte 0x3EF0A3D7
-	.4byte 0x3ED1EB85
-	.4byte 0x3E2E147B
-	.4byte 0x3EC7AE14
-	.4byte 0x3DF5C28F
-	.4byte 0x3EC28F5C
-	.4byte 0x3DA3D70A
-	.4byte 0x3EB33333
-	.4byte 0x3D75C28F
-	.4byte 0x3E9EB852
-	.4byte 0x3CF5C28F
-	.4byte 0x3E947AE1
-	.4byte 0x3CA3D70A
-	.4byte 0x00000000
-rumbleFrame_17:
-	.4byte 0x00000000
-	.4byte 0x3D75C28F
+	.float 0.15
+	.float 0.4
+	.float 0.62
+	.float 0.66
+	.float 0.63
+	.float 0.23
+	.float 0.52
+	.float 0.21
+	.float 0.47
+	.float 0.41
+	.float 0.17
+	.float 0.39
+	.float 0.12
+	.float 0.38
+	.float 0.08
+	.float 0.35
+	.float 0.06
+	.float 0.31
+	.float 0.03
+	.float 0.29
+	.float 0.02
+	.float 0.0
+.endobj rumblePower_16
+.obj rumbleFrame_17, local
+	.float 0.0
+	.float 0.06
 	.float 0.1
 	.float 0.1
-	.4byte 0x3E19999A
-	.4byte 0x3E2E147B
-	.4byte 0x3E6147AE
-	.4byte 0x3E851EB8
-	.4byte 0x3E9EB852
-	.4byte 0x3E9EB852
-	.4byte 0x3ECCCCCD
-	.4byte 0x3ECCCCCD
-	.4byte 0x3EEB851F
-	.4byte 0x3EF0A3D7
-	.4byte 0x3F07AE14
-	.4byte 0x3F0CCCCD
-	.4byte 0x3F1EB852
-	.4byte 0x3F266666
-	.4byte 0x3F30A3D7
-	.4byte 0x3F3D70A4
-	.4byte 0x3F4A3D71
-	.4byte 0x3F4F5C29
-	.4byte 0x3F6147AE
-	.4byte 0x3F63D70A
-	.4byte 0x3F70A3D7
-	.4byte 0x3F7AE148
-	.4byte 0x3F828F5C
-	.4byte 0x3F87AE14
-	.4byte 0x3F88F5C3
-	.4byte 0x3F8F5C29
-	.4byte 0x3F933333
-	.4byte 0x3F99999A
-	.4byte 0x3FA147AE
-	.4byte 0x3FA7AE14
-	.4byte 0x3FAF5C29
-	.4byte 0x3FB0A3D7
-	.4byte 0x3FBAE148
-	.4byte 0x3FCCCCCD
-rumblePower_17:
-	.4byte 0x3F4CCCCD
-	.4byte 0x3F3AE148
-	.4byte 0x3E8F5C29
-	.4byte 0x3F266666
-	.4byte 0x3F170A3D
-	.4byte 0x3E75C28F
-	.4byte 0x3F0A3D71
-	.4byte 0x3E428F5C
+	.float 0.15
+	.float 0.17
+	.float 0.22
+	.float 0.26
+	.float 0.31
+	.float 0.31
+	.float 0.4
+	.float 0.4
+	.float 0.46
+	.float 0.47
+	.float 0.53
+	.float 0.55
+	.float 0.62
+	.float 0.65
+	.float 0.69
+	.float 0.74
+	.float 0.79
+	.float 0.81
+	.float 0.88
+	.float 0.89
+	.float 0.94
+	.float 0.98
+	.float 1.02
+	.float 1.06
+	.float 1.07
+	.float 1.12
+	.float 1.15
+	.float 1.2
+	.float 1.26
+	.float 1.31
+	.float 1.37
+	.float 1.38
+	.float 1.46
+	.float 1.6
+.endobj rumbleFrame_17
+.obj rumblePower_17, local
+	.float 0.8
+	.float 0.73
+	.float 0.28
+	.float 0.65
+	.float 0.59
+	.float 0.24
+	.float 0.54
+	.float 0.19
 	.float 0.5
-	.4byte 0x3E3851EC
-	.4byte 0x3EF5C28F
-	.4byte 0x3E19999A
-	.4byte 0x3EE66666
-	.4byte 0x3E0F5C29
-	.4byte 0x3ED1EB85
-	.4byte 0x3E051EB8
-	.4byte 0x3EC7AE14
-	.4byte 0x3E051EB8
-	.4byte 0x3EC28F5C
-	.4byte 0x3DE147AE
-	.4byte 0x3EB851EC
+	.float 0.18
+	.float 0.48
+	.float 0.15
+	.float 0.45
+	.float 0.14
+	.float 0.41
+	.float 0.13
+	.float 0.39
+	.float 0.13
+	.float 0.38
+	.float 0.11
+	.float 0.36
 	.float 0.1
-	.4byte 0x3DB851EC
-	.4byte 0x3EAE147B
+	.float 0.09
+	.float 0.34
 	.float 0.1
-	.4byte 0x3EAE147B
-	.4byte 0x3DB851EC
-	.4byte 0x3DA3D70A
-	.4byte 0x3EA8F5C3
-	.4byte 0x3E9EB852
-	.4byte 0x3DA3D70A
-	.4byte 0x3E99999A
-	.4byte 0x3D75C28F
-	.4byte 0x3E947AE1
-	.4byte 0x3D75C28F
-	.4byte 0x3E8F5C29
-	.4byte 0x3CF5C28F
-	.4byte 0x00000000
-rumbleFrame_18:
-	.4byte 0x00000000
-	.4byte 0x3DA3D70A
+	.float 0.34
+	.float 0.09
+	.float 0.08
+	.float 0.33
+	.float 0.31
+	.float 0.08
+	.float 0.3
+	.float 0.06
+	.float 0.29
+	.float 0.06
+	.float 0.28
+	.float 0.03
+	.float 0.0
+.endobj rumblePower_17
+.obj rumbleFrame_18, local
+	.float 0.0
+	.float 0.08
 	.float 0.1
-	.4byte 0x3E051EB8
-	.4byte 0x3E3851EC
-	.4byte 0x3E75C28F
-	.4byte 0x3E947AE1
-	.4byte 0x3EA8F5C3
-	.4byte 0x3EA8F5C3
-	.4byte 0x3EB851EC
-	.4byte 0x3ED1EB85
-	.4byte 0x3EDC28F6
-	.4byte 0x3EE66666
+	.float 0.13
+	.float 0.18
+	.float 0.24
+	.float 0.29
+	.float 0.33
+	.float 0.33
+	.float 0.36
+	.float 0.41
+	.float 0.43
+	.float 0.45
 	.float 0.5
-	.4byte 0x3F4CCCCD
-rumblePower_18:
+	.float 0.8
+.endobj rumbleFrame_18
+.obj rumblePower_18, local
 	.float 1.0
-	.4byte 0x3F7851EC
-	.4byte 0x3F4CCCCD
-	.4byte 0x3ECCCCCD
-	.4byte 0x3E6B851F
-	.4byte 0x3E4CCCCD
-	.4byte 0x3E851EB8
-	.4byte 0x3F028F5C
-	.4byte 0x3F451EB8
-	.4byte 0x3F4CCCCD
-	.4byte 0x3F451EB8
-	.4byte 0x3F19999A
-	.4byte 0x3D4CCCCD
-	.4byte 0x3C23D70A
-	.4byte 0x3C23D70A
-rumbleFrame_19:
-	.4byte 0x00000000
-	.4byte 0x3DA3D70A
+	.float 0.97
+	.float 0.8
+	.float 0.4
+	.float 0.23
+	.float 0.2
+	.float 0.26
+	.float 0.51
+	.float 0.77
+	.float 0.8
+	.float 0.77
+	.float 0.6
+	.float 0.05
+	.float 0.01
+	.float 0.01
+.endobj rumblePower_18
+.obj rumbleFrame_19, local
+	.float 0.0
+	.float 0.08
 	.float 0.1
-rumblePower_19:
+.endobj rumbleFrame_19
+.obj rumblePower_19, local
 	.float 1.0
-	.4byte 0x3F666666
-	.4byte 0x00000000
-.global channelDataTbl
-channelDataTbl:
+	.float 0.9
+	.float 0.0
+.endobj rumblePower_19
+.obj channelDataTbl, global
 	.4byte rumblePoint_00
 	.4byte rumbleFrame_00
 	.4byte rumblePower_00
@@ -760,46 +800,67 @@ channelDataTbl:
 	.4byte rumblePoint_19
 	.4byte rumbleFrame_19
 	.4byte rumblePower_19
+.endobj channelDataTbl
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-rumblePoint_00:
+.obj rumblePoint_00, local
 	.4byte 0x0000000B
-rumblePoint_01:
+.endobj rumblePoint_00
+.obj rumblePoint_01, local
 	.4byte 0x00000018
-rumblePoint_02:
+.endobj rumblePoint_01
+.obj rumblePoint_02, local
 	.4byte 0x00000005
-rumblePoint_03:
+.endobj rumblePoint_02
+.obj rumblePoint_03, local
 	.4byte 0x0000001C
-rumblePoint_04:
+.endobj rumblePoint_03
+.obj rumblePoint_04, local
 	.4byte 0x00000006
-rumblePoint_05:
+.endobj rumblePoint_04
+.obj rumblePoint_05, local
 	.4byte 0x00000015
-rumblePoint_06:
+.endobj rumblePoint_05
+.obj rumblePoint_06, local
 	.4byte 0x00000014
-rumblePoint_07:
+.endobj rumblePoint_06
+.obj rumblePoint_07, local
 	.4byte 0x00000014
-rumblePoint_08:
+.endobj rumblePoint_07
+.obj rumblePoint_08, local
 	.4byte 0x0000000A
-rumblePoint_09:
+.endobj rumblePoint_08
+.obj rumblePoint_09, local
 	.4byte 0x0000000B
-rumblePoint_10:
+.endobj rumblePoint_09
+.obj rumblePoint_10, local
 	.4byte 0x00000006
-rumblePoint_11:
+.endobj rumblePoint_10
+.obj rumblePoint_11, local
 	.4byte 0x0000000E
-rumblePoint_12:
+.endobj rumblePoint_11
+.obj rumblePoint_12, local
 	.4byte 0x00000019
-rumblePoint_13:
+.endobj rumblePoint_12
+.obj rumblePoint_13, local
 	.4byte 0x0000000E
-rumblePoint_14:
+.endobj rumblePoint_13
+.obj rumblePoint_14, local
 	.4byte 0x00000008
-rumblePoint_15:
+.endobj rumblePoint_14
+.obj rumblePoint_15, local
 	.4byte 0x00000006
-rumblePoint_16:
+.endobj rumblePoint_15
+.obj rumblePoint_16, local
 	.4byte 0x0000001B
-rumblePoint_17:
+.endobj rumblePoint_16
+.obj rumblePoint_17, local
 	.4byte 0x00000026
-rumblePoint_18:
+.endobj rumblePoint_17
+.obj rumblePoint_18, local
 	.4byte 0x0000000F
-rumblePoint_19:
+.endobj rumblePoint_18
+.obj rumblePoint_19, local
 	.4byte 0x00000003
+.endobj rumblePoint_19

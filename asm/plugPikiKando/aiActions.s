@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global __ct__7ActPickFP4Piki
-__ct__7ActPickFP4Piki:
+.fn __ct__7ActPickFP4Piki, global
 /* 800A79F8 000A4958  7C 08 02 A6 */	mflr r0
 /* 800A79FC 000A495C  38 A0 00 01 */	li r5, 1
 /* 800A7A00 000A4960  90 01 00 04 */	stw r0, 4(r1)
@@ -35,13 +34,13 @@ __ct__7ActPickFP4Piki:
 /* 800A7A6C 000A49CC  38 21 00 18 */	addi r1, r1, 0x18
 /* 800A7A70 000A49D0  7C 08 03 A6 */	mtlr r0
 /* 800A7A74 000A49D4  4E 80 00 20 */	blr 
+.endfn __ct__7ActPickFP4Piki
 
-.global initialise__Q27ActPick11InitialiserFP6Action
-initialise__Q27ActPick11InitialiserFP6Action:
+.fn initialise__Q27ActPick11InitialiserFP6Action, global
 /* 800A7A78 000A49D8  4E 80 00 20 */	blr 
+.endfn initialise__Q27ActPick11InitialiserFP6Action
 
-.global animationKeyUpdated__7ActPickFR16PaniAnimKeyEvent
-animationKeyUpdated__7ActPickFR16PaniAnimKeyEvent:
+.fn animationKeyUpdated__7ActPickFR16PaniAnimKeyEvent, global
 /* 800A7A7C 000A49DC  7C 08 02 A6 */	mflr r0
 /* 800A7A80 000A49E0  90 01 00 04 */	stw r0, 4(r1)
 /* 800A7A84 000A49E4  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -98,9 +97,9 @@ animationKeyUpdated__7ActPickFR16PaniAnimKeyEvent:
 /* 800A7B44 000A4AA4  38 21 00 28 */	addi r1, r1, 0x28
 /* 800A7B48 000A4AA8  7C 08 03 A6 */	mtlr r0
 /* 800A7B4C 000A4AAC  4E 80 00 20 */	blr 
+.endfn animationKeyUpdated__7ActPickFR16PaniAnimKeyEvent
 
-.global init__7ActPickFP8Creature
-init__7ActPickFP8Creature:
+.fn init__7ActPickFP8Creature, global
 /* 800A7B50 000A4AB0  7C 08 02 A6 */	mflr r0
 /* 800A7B54 000A4AB4  90 01 00 04 */	stw r0, 4(r1)
 /* 800A7B58 000A4AB8  94 21 FF D0 */	stwu r1, -0x30(r1)
@@ -150,9 +149,9 @@ init__7ActPickFP8Creature:
 /* 800A7BFC 000A4B5C  38 21 00 30 */	addi r1, r1, 0x30
 /* 800A7C00 000A4B60  7C 08 03 A6 */	mtlr r0
 /* 800A7C04 000A4B64  4E 80 00 20 */	blr 
+.endfn init__7ActPickFP8Creature
 
-.global cleanup__7ActPickFv
-cleanup__7ActPickFv:
+.fn cleanup__7ActPickFv, global
 /* 800A7C08 000A4B68  7C 08 02 A6 */	mflr r0
 /* 800A7C0C 000A4B6C  90 01 00 04 */	stw r0, 4(r1)
 /* 800A7C10 000A4B70  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -170,9 +169,9 @@ cleanup__7ActPickFv:
 /* 800A7C3C 000A4B9C  38 21 00 20 */	addi r1, r1, 0x20
 /* 800A7C40 000A4BA0  7C 08 03 A6 */	mtlr r0
 /* 800A7C44 000A4BA4  4E 80 00 20 */	blr 
+.endfn cleanup__7ActPickFv
 
-.global exec__7ActPickFv
-exec__7ActPickFv:
+.fn exec__7ActPickFv, global
 /* 800A7C48 000A4BA8  7C 08 02 A6 */	mflr r0
 /* 800A7C4C 000A4BAC  90 01 00 04 */	stw r0, 4(r1)
 /* 800A7C50 000A4BB0  94 21 FF D0 */	stwu r1, -0x30(r1)
@@ -221,23 +220,23 @@ exec__7ActPickFv:
 /* 800A7CF0 000A4C50  38 21 00 30 */	addi r1, r1, 0x30
 /* 800A7CF4 000A4C54  7C 08 03 A6 */	mtlr r0
 /* 800A7CF8 000A4C58  4E 80 00 20 */	blr 
+.endfn exec__7ActPickFv
 
-.global initialise__Q26ActPut11InitialiserFP6Action
-initialise__Q26ActPut11InitialiserFP6Action:
+.fn initialise__Q26ActPut11InitialiserFP6Action, global
 /* 800A7CFC 000A4C5C  4E 80 00 20 */	blr 
+.endfn initialise__Q26ActPut11InitialiserFP6Action
 
-.global init__6ActPutFP8Creature
-init__6ActPutFP8Creature:
+.fn init__6ActPutFP8Creature, global
 /* 800A7D00 000A4C60  C0 02 8E 64 */	lfs f0, lbl_803E9064@sda21(r2)
 /* 800A7D04 000A4C64  D0 03 00 14 */	stfs f0, 0x14(r3)
 /* 800A7D08 000A4C68  4E 80 00 20 */	blr 
+.endfn init__6ActPutFP8Creature
 
-.global cleanup__6ActPutFv
-cleanup__6ActPutFv:
+.fn cleanup__6ActPutFv, global
 /* 800A7D0C 000A4C6C  4E 80 00 20 */	blr 
+.endfn cleanup__6ActPutFv
 
-.global exec__6ActPutFv
-exec__6ActPutFv:
+.fn exec__6ActPutFv, global
 /* 800A7D10 000A4C70  7C 08 02 A6 */	mflr r0
 /* 800A7D14 000A4C74  90 01 00 04 */	stw r0, 4(r1)
 /* 800A7D18 000A4C78  94 21 FF C0 */	stwu r1, -0x40(r1)
@@ -296,9 +295,9 @@ exec__6ActPutFv:
 /* 800A7DDC 000A4D3C  38 21 00 40 */	addi r1, r1, 0x40
 /* 800A7DE0 000A4D40  7C 08 03 A6 */	mtlr r0
 /* 800A7DE4 000A4D44  4E 80 00 20 */	blr 
+.endfn exec__6ActPutFv
 
-.global __ct__9ActAdjustFP4Piki
-__ct__9ActAdjustFP4Piki:
+.fn __ct__9ActAdjustFP4Piki, global
 /* 800A7DE8 000A4D48  7C 08 02 A6 */	mflr r0
 /* 800A7DEC 000A4D4C  38 A0 00 01 */	li r5, 1
 /* 800A7DF0 000A4D50  90 01 00 04 */	stw r0, 4(r1)
@@ -326,17 +325,17 @@ __ct__9ActAdjustFP4Piki:
 /* 800A7E48 000A4DA8  38 21 00 18 */	addi r1, r1, 0x18
 /* 800A7E4C 000A4DAC  7C 08 03 A6 */	mtlr r0
 /* 800A7E50 000A4DB0  4E 80 00 20 */	blr 
+.endfn __ct__9ActAdjustFP4Piki
 
-.global initialise__Q29ActAdjust11InitialiserFP6Action
-initialise__Q29ActAdjust11InitialiserFP6Action:
+.fn initialise__Q29ActAdjust11InitialiserFP6Action, global
 /* 800A7E54 000A4DB4  C0 03 00 04 */	lfs f0, 4(r3)
 /* 800A7E58 000A4DB8  D0 04 00 14 */	stfs f0, 0x14(r4)
 /* 800A7E5C 000A4DBC  80 03 00 08 */	lwz r0, 8(r3)
 /* 800A7E60 000A4DC0  90 04 00 18 */	stw r0, 0x18(r4)
 /* 800A7E64 000A4DC4  4E 80 00 20 */	blr 
+.endfn initialise__Q29ActAdjust11InitialiserFP6Action
 
-.global init__9ActAdjustFP8Creature
-init__9ActAdjustFP8Creature:
+.fn init__9ActAdjustFP8Creature, global
 /* 800A7E68 000A4DC8  7C 08 02 A6 */	mflr r0
 /* 800A7E6C 000A4DCC  28 04 00 00 */	cmplwi r4, 0
 /* 800A7E70 000A4DD0  90 01 00 04 */	stw r0, 4(r1)
@@ -468,17 +467,17 @@ init__9ActAdjustFP8Creature:
 /* 800A805C 000A4FBC  38 21 00 B8 */	addi r1, r1, 0xb8
 /* 800A8060 000A4FC0  7C 08 03 A6 */	mtlr r0
 /* 800A8064 000A4FC4  4E 80 00 20 */	blr 
+.endfn init__9ActAdjustFP8Creature
 
-.global cleanup__9ActAdjustFv
-cleanup__9ActAdjustFv:
+.fn cleanup__9ActAdjustFv, global
 /* 800A8068 000A4FC8  80 63 00 0C */	lwz r3, 0xc(r3)
 /* 800A806C 000A4FCC  80 03 00 C8 */	lwz r0, 0xc8(r3)
 /* 800A8070 000A4FD0  54 00 05 A8 */	rlwinm r0, r0, 0, 0x16, 0x14
 /* 800A8074 000A4FD4  90 03 00 C8 */	stw r0, 0xc8(r3)
 /* 800A8078 000A4FD8  4E 80 00 20 */	blr 
+.endfn cleanup__9ActAdjustFv
 
-.global exec__9ActAdjustFv
-exec__9ActAdjustFv:
+.fn exec__9ActAdjustFv, global
 /* 800A807C 000A4FDC  7C 08 02 A6 */	mflr r0
 /* 800A8080 000A4FE0  90 01 00 04 */	stw r0, 4(r1)
 /* 800A8084 000A4FE4  94 21 FF C8 */	stwu r1, -0x38(r1)
@@ -553,9 +552,9 @@ exec__9ActAdjustFv:
 /* 800A818C 000A50EC  38 21 00 38 */	addi r1, r1, 0x38
 /* 800A8190 000A50F0  7C 08 03 A6 */	mtlr r0
 /* 800A8194 000A50F4  4E 80 00 20 */	blr 
+.endfn exec__9ActAdjustFv
 
-.global __dt__9ActAdjustFv
-__dt__9ActAdjustFv:
+.fn __dt__9ActAdjustFv, weak
 /* 800A8198 000A50F8  7C 08 02 A6 */	mflr r0
 /* 800A819C 000A50FC  90 01 00 04 */	stw r0, 4(r1)
 /* 800A81A0 000A5100  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -582,17 +581,17 @@ __dt__9ActAdjustFv:
 /* 800A81F0 000A5150  38 21 00 18 */	addi r1, r1, 0x18
 /* 800A81F4 000A5154  7C 08 03 A6 */	mtlr r0
 /* 800A81F8 000A5158  4E 80 00 20 */	blr 
+.endfn __dt__9ActAdjustFv
 
-.global defaultInitialiser__9ActAdjustFv
-defaultInitialiser__9ActAdjustFv:
+.fn defaultInitialiser__9ActAdjustFv, weak
 /* 800A81FC 000A515C  C0 02 8E 90 */	lfs f0, lbl_803E9090@sda21(r2)
 /* 800A8200 000A5160  38 00 00 08 */	li r0, 8
 /* 800A8204 000A5164  D0 03 00 14 */	stfs f0, 0x14(r3)
 /* 800A8208 000A5168  90 03 00 18 */	stw r0, 0x18(r3)
 /* 800A820C 000A516C  4E 80 00 20 */	blr 
+.endfn defaultInitialiser__9ActAdjustFv
 
-.global __dt__6ActPutFv
-__dt__6ActPutFv:
+.fn __dt__6ActPutFv, weak
 /* 800A8210 000A5170  7C 08 02 A6 */	mflr r0
 /* 800A8214 000A5174  90 01 00 04 */	stw r0, 4(r1)
 /* 800A8218 000A5178  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -619,9 +618,9 @@ __dt__6ActPutFv:
 /* 800A8268 000A51C8  38 21 00 18 */	addi r1, r1, 0x18
 /* 800A826C 000A51CC  7C 08 03 A6 */	mtlr r0
 /* 800A8270 000A51D0  4E 80 00 20 */	blr 
+.endfn __dt__6ActPutFv
 
-.global __dt__7ActPickFv
-__dt__7ActPickFv:
+.fn __dt__7ActPickFv, weak
 /* 800A8274 000A51D4  7C 08 02 A6 */	mflr r0
 /* 800A8278 000A51D8  90 01 00 04 */	stw r0, 4(r1)
 /* 800A827C 000A51DC  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -650,37 +649,44 @@ __dt__7ActPickFv:
 /* 800A82D4 000A5234  38 21 00 18 */	addi r1, r1, 0x18
 /* 800A82D8 000A5238  7C 08 03 A6 */	mtlr r0
 /* 800A82DC 000A523C  4E 80 00 20 */	blr 
+.endfn __dt__7ActPickFv
 
-"@20@animationKeyUpdated__7ActPickFR16PaniAnimKeyEvent":
+.fn "@20@animationKeyUpdated__7ActPickFR16PaniAnimKeyEvent", weak
 /* 800A82E0 000A5240  38 63 FF EC */	addi r3, r3, -20
 /* 800A82E4 000A5244  4B FF F7 98 */	b animationKeyUpdated__7ActPickFR16PaniAnimKeyEvent
+.endfn "@20@animationKeyUpdated__7ActPickFR16PaniAnimKeyEvent"
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802B5070:
+.obj lbl_802B5070, local
 	.asciz "aiActions.cpp"
+.endobj lbl_802B5070
 .balign 4
-lbl_802B5080:
+.obj lbl_802B5080, local
 	.asciz "aiActions"
+.endobj lbl_802B5080
 .balign 4
-lbl_802B508C:
+.obj lbl_802B508C, local
 	.asciz "ActAdjust"
+.endobj lbl_802B508C
 .balign 4
-lbl_802B5098:
+.obj lbl_802B5098, local
 	.asciz "Receiver<Piki>"
+.endobj lbl_802B5098
 .balign 4
-lbl_802B50A8:
+.obj lbl_802B50A8, local
 	.4byte "__RTTI__15Receiver<4Piki>"
 	.4byte 0
 	.4byte 0
-lbl_802B50B4:
+.endobj lbl_802B50A8
+.obj lbl_802B50B4, local
 	.4byte "__RTTI__15Receiver<4Piki>"
 	.4byte 0
 	.4byte __RTTI__6Action
 	.4byte 0
 	.4byte 0
-.global __vt__9ActAdjust
-__vt__9ActAdjust:
+.endobj lbl_802B50B4
+.obj __vt__9ActAdjust, global
 	.4byte __RTTI__9ActAdjust
 	.4byte 0
 	.4byte "procMsg__15Receiver<4Piki>FP4PikiP3Msg"
@@ -706,30 +712,35 @@ __vt__9ActAdjust:
 	.4byte restart__6ActionFv
 	.4byte resumable__6ActionFv
 	.4byte getInfo__6ActionFPc
+.endobj __vt__9ActAdjust
 .balign 4
-lbl_802B512C:
+.obj lbl_802B512C, local
 	.asciz "ActAdjust::Initialiser"
+.endobj lbl_802B512C
 .balign 4
-lbl_802B5144:
+.obj lbl_802B5144, local
 	.asciz "Action::Initialiser"
+.endobj lbl_802B5144
 .balign 4
-lbl_802B5158:
+.obj lbl_802B5158, local
 	.4byte __RTTI__Q26Action11Initialiser
 	.4byte 0
 	.4byte 0
-.global __vt__Q29ActAdjust11Initialiser
-__vt__Q29ActAdjust11Initialiser:
+.endobj lbl_802B5158
+.obj __vt__Q29ActAdjust11Initialiser, global
 	.4byte __RTTI__Q29ActAdjust11Initialiser
 	.4byte 0
 	.4byte initialise__Q29ActAdjust11InitialiserFP6Action
-lbl_802B5170:
+.endobj __vt__Q29ActAdjust11Initialiser
+.obj lbl_802B5170, local
 	.4byte "__RTTI__15Receiver<4Piki>"
 	.4byte 0
 	.4byte __RTTI__6Action
 	.4byte 0
 	.4byte 0
-.global __vt__6ActPut
-__vt__6ActPut:
+.endobj lbl_802B5170
+.balign 4
+.obj __vt__6ActPut, global
 	.4byte __RTTI__6ActPut
 	.4byte 0
 	.4byte "procMsg__15Receiver<4Piki>FP4PikiP3Msg"
@@ -755,22 +766,26 @@ __vt__6ActPut:
 	.4byte restart__6ActionFv
 	.4byte resumable__6ActionFv
 	.4byte getInfo__6ActionFPc
+.endobj __vt__6ActPut
 .balign 4
-lbl_802B51E8:
+.obj lbl_802B51E8, local
 	.asciz "ActPut::Initialiser"
+.endobj lbl_802B51E8
 .balign 4
-lbl_802B51FC:
+.obj lbl_802B51FC, local
 	.4byte __RTTI__Q26Action11Initialiser
 	.4byte 0
 	.4byte 0
-.global __vt__Q26ActPut11Initialiser
-__vt__Q26ActPut11Initialiser:
+.endobj lbl_802B51FC
+.obj __vt__Q26ActPut11Initialiser, global
 	.4byte __RTTI__Q26ActPut11Initialiser
 	.4byte 0
 	.4byte initialise__Q26ActPut11InitialiserFP6Action
+.endobj __vt__Q26ActPut11Initialiser
 .balign 4
-lbl_802B5214:
+.obj lbl_802B5214, local
 	.asciz "Interaction"
+.endobj lbl_802B5214
 .balign 4
 	.4byte 0
 	.4byte 0
@@ -784,10 +799,11 @@ lbl_802B5214:
 	.4byte 0
 	.4byte 0
 .balign 4
-lbl_802B524C:
+.obj lbl_802B524C, local
 	.asciz "PaniAnimKeyListener"
+.endobj lbl_802B524C
 .balign 4
-lbl_802B5260:
+.obj lbl_802B5260, local
 	.4byte __RTTI__19PaniAnimKeyListener
 	.4byte 0x14
 	.4byte "__RTTI__15Receiver<4Piki>"
@@ -795,8 +811,8 @@ lbl_802B5260:
 	.4byte __RTTI__6Action
 	.4byte 0
 	.4byte 0
-.global __vt__7ActPick
-__vt__7ActPick:
+.endobj lbl_802B5260
+.obj __vt__7ActPick, global
 	.4byte __RTTI__7ActPick
 	.4byte 0
 	.4byte "procMsg__15Receiver<4Piki>FP4PikiP3Msg"
@@ -826,23 +842,26 @@ __vt__7ActPick:
 	.4byte 0xFFFFFFEC
 	.4byte "@20@animationKeyUpdated__7ActPickFR16PaniAnimKeyEvent"
 	.4byte animationKeyUpdated__7ActPickFR16PaniAnimKeyEvent
+.endobj __vt__7ActPick
 .balign 4
-lbl_802B52F0:
+.obj lbl_802B52F0, local
 	.asciz "ActPick::Initialiser"
+.endobj lbl_802B52F0
 .balign 4
-lbl_802B5308:
+.obj lbl_802B5308, local
 	.4byte __RTTI__Q26Action11Initialiser
 	.4byte 0
 	.4byte 0
-.global __vt__Q27ActPick11Initialiser
-__vt__Q27ActPick11Initialiser:
+.endobj lbl_802B5308
+.obj __vt__Q27ActPick11Initialiser, global
 	.4byte __RTTI__Q27ActPick11Initialiser
 	.4byte 0
 	.4byte initialise__Q27ActPick11InitialiserFP6Action
+.endobj __vt__Q27ActPick11Initialiser
 	.4byte 0
 	.4byte 0
 	.4byte 0
-lbl_802B532C:
+.obj lbl_802B532C, local
 	.4byte .L_800A7908
 	.4byte .L_800A7930
 	.4byte .L_800A7944
@@ -854,90 +873,122 @@ lbl_802B532C:
 	.4byte .L_800A791C
 	.4byte .L_800A79D0
 	.4byte .L_800A79BC
+.endobj lbl_802B532C
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-lbl_803DFC90:
+.obj lbl_803DFC90, local
 	.float 0.0
-lbl_803DFC94:
+.endobj lbl_803DFC90
+.obj lbl_803DFC94, local
 	.float 0.0
-lbl_803DFC98:
+.endobj lbl_803DFC94
+.obj lbl_803DFC98, local
 	.float 0.0
-lbl_803DFC9C:
+.endobj lbl_803DFC98
+.obj lbl_803DFC9C, local
 	.float 0.0
-lbl_803DFCA0:
+.endobj lbl_803DFC9C
+.obj lbl_803DFCA0, local
 	.float 0.0
-lbl_803DFCA4:
+.endobj lbl_803DFCA0
+.obj lbl_803DFCA4, local
 	.float 0.0
-lbl_803DFCA8:
+.endobj lbl_803DFCA4
+.obj lbl_803DFCA8, local
 	.float 0.0
-lbl_803DFCAC:
+.endobj lbl_803DFCA8
+.obj lbl_803DFCAC, local
 	.float 0.0
-"__RTTI__15Receiver<4Piki>":
+.endobj lbl_803DFCAC
+.obj "__RTTI__15Receiver<4Piki>", local
 	.4byte lbl_802B5098
 	.4byte 0
+.endobj "__RTTI__15Receiver<4Piki>"
 .balign 4
-lbl_803DFCB8:
+.obj lbl_803DFCB8, local
 	.asciz "Action"
+.endobj lbl_803DFCB8
 .balign 4
-__RTTI__6Action:
+.obj __RTTI__6Action, local
 	.4byte lbl_803DFCB8
 	.4byte lbl_802B50A8
-__RTTI__9ActAdjust:
+.endobj __RTTI__6Action
+.obj __RTTI__9ActAdjust, local
 	.4byte lbl_802B508C
 	.4byte lbl_802B50B4
-__RTTI__Q26Action11Initialiser:
+.endobj __RTTI__9ActAdjust
+.obj __RTTI__Q26Action11Initialiser, local
 	.4byte lbl_802B5144
 	.4byte 0
-__RTTI__Q29ActAdjust11Initialiser:
+.endobj __RTTI__Q26Action11Initialiser
+.obj __RTTI__Q29ActAdjust11Initialiser, local
 	.4byte lbl_802B512C
 	.4byte lbl_802B5158
+.endobj __RTTI__Q29ActAdjust11Initialiser
 .balign 4
-lbl_803DFCE0:
+.obj lbl_803DFCE0, local
 	.asciz "ActPut"
+.endobj lbl_803DFCE0
 .balign 4
-__RTTI__6ActPut:
+.obj __RTTI__6ActPut, local
 	.4byte lbl_803DFCE0
 	.4byte lbl_802B5170
-__RTTI__Q26ActPut11Initialiser:
+.endobj __RTTI__6ActPut
+.obj __RTTI__Q26ActPut11Initialiser, local
 	.4byte lbl_802B51E8
 	.4byte lbl_802B51FC
+.endobj __RTTI__Q26ActPut11Initialiser
 .balign 4
-lbl_803DFCF8:
+.obj lbl_803DFCF8, local
 	.asciz "ActPick"
+.endobj lbl_803DFCF8
 .balign 4
-__RTTI__19PaniAnimKeyListener:
+.obj __RTTI__19PaniAnimKeyListener, local
 	.4byte lbl_802B524C
 	.4byte 0
-__RTTI__7ActPick:
+.endobj __RTTI__19PaniAnimKeyListener
+.obj __RTTI__7ActPick, local
 	.4byte lbl_803DFCF8
 	.4byte lbl_802B5260
-__RTTI__Q27ActPick11Initialiser:
+.endobj __RTTI__7ActPick
+.obj __RTTI__Q27ActPick11Initialiser, local
 	.4byte lbl_802B52F0
 	.4byte lbl_802B5308
+.endobj __RTTI__Q27ActPick11Initialiser
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803E9060:
+.obj lbl_803E9060, local
 	.float 20.0
-lbl_803E9064:
+.endobj lbl_803E9060
+.obj lbl_803E9064, local
 	.float 0.5
-lbl_803E9068:
+.endobj lbl_803E9064
+.obj lbl_803E9068, local
 	.float 1.0
-lbl_803E906C:
+.endobj lbl_803E9068
+.obj lbl_803E906C, local
 	.float 0.0
-lbl_803E9070:
+.endobj lbl_803E906C
+.obj lbl_803E9070, local
 	.float 5.0
-lbl_803E9074:
+.endobj lbl_803E9070
+.obj lbl_803E9074, local
 	.float 0.033333335
+.endobj lbl_803E9074
 .balign 8
-lbl_803E9078:
+.obj lbl_803E9078, local
 	.double 0.5
+.endobj lbl_803E9078
 .balign 8
-lbl_803E9080:
+.obj lbl_803E9080, local
 	.double 3.0
+.endobj lbl_803E9080
 .balign 8
-lbl_803E9088:
+.obj lbl_803E9088, local
 	.8byte 0x4330000080000000
-lbl_803E9090:
+.endobj lbl_803E9088
+.obj lbl_803E9090, local
 	.float 10.0
+.endobj lbl_803E9090

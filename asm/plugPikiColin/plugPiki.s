@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global hardReset__11PlugPikiAppFv
-hardReset__11PlugPikiAppFv:
+.fn hardReset__11PlugPikiAppFv, global
 /* 8005EDF0 0005BD50  7C 08 02 A6 */	mflr r0
 /* 8005EDF4 0005BD54  38 80 00 00 */	li r4, 0
 /* 8005EDF8 0005BD58  90 01 00 04 */	stw r0, 4(r1)
@@ -95,9 +94,9 @@ hardReset__11PlugPikiAppFv:
 /* 8005EF44 0005BEA4  38 21 00 40 */	addi r1, r1, 0x40
 /* 8005EF48 0005BEA8  7C 08 03 A6 */	mtlr r0
 /* 8005EF4C 0005BEAC  4E 80 00 20 */	blr 
+.endfn hardReset__11PlugPikiAppFv
 
-.global softReset__11PlugPikiAppFv
-softReset__11PlugPikiAppFv:
+.fn softReset__11PlugPikiAppFv, global
 /* 8005EF50 0005BEB0  7C 08 02 A6 */	mflr r0
 /* 8005EF54 0005BEB4  90 01 00 04 */	stw r0, 4(r1)
 /* 8005EF58 0005BEB8  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -114,9 +113,9 @@ softReset__11PlugPikiAppFv:
 /* 8005EF84 0005BEE4  38 21 00 18 */	addi r1, r1, 0x18
 /* 8005EF88 0005BEE8  7C 08 03 A6 */	mtlr r0
 /* 8005EF8C 0005BEEC  4E 80 00 20 */	blr 
+.endfn softReset__11PlugPikiAppFv
 
-.global update__11PlugPikiAppFv
-update__11PlugPikiAppFv:
+.fn update__11PlugPikiAppFv, global
 /* 8005EF90 0005BEF0  7C 08 02 A6 */	mflr r0
 /* 8005EF94 0005BEF4  3C 80 80 3A */	lis r4, gameflow@ha
 /* 8005EF98 0005BEF8  90 01 00 04 */	stw r0, 4(r1)
@@ -136,9 +135,9 @@ update__11PlugPikiAppFv:
 /* 8005EFD0 0005BF30  38 21 00 18 */	addi r1, r1, 0x18
 /* 8005EFD4 0005BF34  7C 08 03 A6 */	mtlr r0
 /* 8005EFD8 0005BF38  4E 80 00 20 */	blr 
+.endfn update__11PlugPikiAppFv
 
-.global draw__11PlugPikiAppFR8Graphics
-draw__11PlugPikiAppFR8Graphics:
+.fn draw__11PlugPikiAppFR8Graphics, global
 /* 8005EFDC 0005BF3C  7C 08 02 A6 */	mflr r0
 /* 8005EFE0 0005BF40  3C A0 80 2B */	lis r5, lbl_802A86B0@ha
 /* 8005EFE4 0005BF44  90 01 00 04 */	stw r0, 4(r1)
@@ -450,9 +449,9 @@ draw__11PlugPikiAppFR8Graphics:
 /* 8005F48C 0005C3EC  38 21 01 D8 */	addi r1, r1, 0x1d8
 /* 8005F490 0005C3F0  7C 08 03 A6 */	mtlr r0
 /* 8005F494 0005C3F4  4E 80 00 20 */	blr 
+.endfn draw__11PlugPikiAppFR8Graphics
 
-.global idle__11PlugPikiAppFv
-idle__11PlugPikiAppFv:
+.fn idle__11PlugPikiAppFv, global
 /* 8005F498 0005C3F8  7C 08 02 A6 */	mflr r0
 /* 8005F49C 0005C3FC  90 01 00 04 */	stw r0, 4(r1)
 /* 8005F4A0 0005C400  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -538,9 +537,9 @@ idle__11PlugPikiAppFv:
 /* 8005F5D0 0005C530  38 21 00 18 */	addi r1, r1, 0x18
 /* 8005F5D4 0005C534  7C 08 03 A6 */	mtlr r0
 /* 8005F5D8 0005C538  4E 80 00 20 */	blr 
+.endfn idle__11PlugPikiAppFv
 
-.global __ct__11PlugPikiAppFv
-__ct__11PlugPikiAppFv:
+.fn __ct__11PlugPikiAppFv, global
 /* 8005F5DC 0005C53C  7C 08 02 A6 */	mflr r0
 /* 8005F5E0 0005C540  90 01 00 04 */	stw r0, 4(r1)
 /* 8005F5E4 0005C544  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -626,9 +625,9 @@ __ct__11PlugPikiAppFv:
 /* 8005F718 0005C678  38 21 00 28 */	addi r1, r1, 0x28
 /* 8005F71C 0005C67C  7C 08 03 A6 */	mtlr r0
 /* 8005F720 0005C680  4E 80 00 20 */	blr 
+.endfn __ct__11PlugPikiAppFv
 
-.global __dt__7GameAppFv
-__dt__7GameAppFv:
+.fn __dt__7GameAppFv, weak
 /* 8005F724 0005C684  7C 08 02 A6 */	mflr r0
 /* 8005F728 0005C688  90 01 00 04 */	stw r0, 4(r1)
 /* 8005F72C 0005C68C  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -655,14 +654,14 @@ __dt__7GameAppFv:
 /* 8005F77C 0005C6DC  38 21 00 18 */	addi r1, r1, 0x18
 /* 8005F780 0005C6E0  7C 08 03 A6 */	mtlr r0
 /* 8005F784 0005C6E4  4E 80 00 20 */	blr 
+.endfn __dt__7GameAppFv
 
-.global idle__7GameAppFv
-idle__7GameAppFv:
+.fn idle__7GameAppFv, weak
 /* 8005F788 0005C6E8  38 60 00 01 */	li r3, 1
 /* 8005F78C 0005C6EC  4E 80 00 20 */	blr 
+.endfn idle__7GameAppFv
 
-.global __dt__11PlugPikiAppFv
-__dt__11PlugPikiAppFv:
+.fn __dt__11PlugPikiAppFv, weak
 /* 8005F790 0005C6F0  7C 08 02 A6 */	mflr r0
 /* 8005F794 0005C6F4  90 01 00 04 */	stw r0, 4(r1)
 /* 8005F798 0005C6F8  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -694,54 +693,67 @@ __dt__11PlugPikiAppFv:
 /* 8005F7F8 0005C758  38 21 00 18 */	addi r1, r1, 0x18
 /* 8005F7FC 0005C75C  7C 08 03 A6 */	mtlr r0
 /* 8005F800 0005C760  4E 80 00 20 */	blr 
+.endfn __dt__11PlugPikiAppFv
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802A86B0:
+.obj lbl_802A86B0, local
 	.asciz "plugPiki.cpp"
+.endobj lbl_802A86B0
 .balign 4
-lbl_802A86C0:
+.obj lbl_802A86C0, local
 	.asciz "plugPiki"
+.endobj lbl_802A86C0
 .balign 4
-lbl_802A86CC:
+.obj lbl_802A86CC, local
 	.asciz "%d polys = %d pps"
+.endobj lbl_802A86CC
 .balign 4
-lbl_802A86E0:
+.obj lbl_802A86E0, local
 	.asciz "%d anims"
+.endobj lbl_802A86E0
 .balign 4
-lbl_802A86EC:
+.obj lbl_802A86EC, local
 	.asciz "%d disps"
+.endobj lbl_802A86EC
 .balign 4
-lbl_802A86F8:
+.obj lbl_802A86F8, local
 	.asciz "%d / %d lighting skips / sets"
+.endobj lbl_802A86F8
 .balign 4
-lbl_802A8718:
+.obj lbl_802A8718, local
 	.asciz "%d light sets"
+.endobj lbl_802A8718
 .balign 4
-lbl_802A8728:
+.obj lbl_802A8728, local
 	.asciz "load took %.1f secs"
+.endobj lbl_802A8728
 .balign 4
-lbl_802A873C:
+.obj lbl_802A873C, local
 	.asciz "Piki the Game"
+.endobj lbl_802A873C
 .balign 4
-lbl_802A874C:
+.obj lbl_802A874C, local
 	.asciz "AtxCommandStream"
+.endobj lbl_802A874C
 .balign 4
-lbl_802A8760:
+.obj lbl_802A8760, local
 	.asciz "AtxStream"
+.endobj lbl_802A8760
 .balign 4
-lbl_802A876C:
+.obj lbl_802A876C, local
 	.4byte __RTTI__6Stream
 	.4byte 0
 	.4byte 0
-lbl_802A8778:
+.endobj lbl_802A876C
+.obj lbl_802A8778, local
 	.4byte __RTTI__6Stream
 	.4byte 0
 	.4byte __RTTI__9AtxStream
 	.4byte 0
 	.4byte 0
-.global __vt__16AtxCommandStream
-__vt__16AtxCommandStream:
+.endobj lbl_802A8778
+.obj __vt__16AtxCommandStream, weak
 	.4byte __RTTI__16AtxCommandStream
 	.4byte 0
 	.4byte readInt__6StreamFv
@@ -764,21 +776,25 @@ __vt__16AtxCommandStream:
 	.4byte close__9AtxStreamFv
 	.4byte getClosing__6StreamFv
 	.4byte flush__9AtxStreamFv
+.endobj __vt__16AtxCommandStream
 .balign 4
-lbl_802A87E4:
+.obj lbl_802A87E4, local
 	.asciz "CoreNode"
+.endobj lbl_802A87E4
 .balign 4
-lbl_802A87F0:
+.obj lbl_802A87F0, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte 0
-lbl_802A87FC:
+.endobj lbl_802A87F0
+.obj lbl_802A87FC, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte __RTTI__8CoreNode
 	.4byte 0
 	.4byte 0
-lbl_802A8810:
+.endobj lbl_802A87FC
+.obj lbl_802A8810, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte __RTTI__8CoreNode
@@ -786,7 +802,8 @@ lbl_802A8810:
 	.4byte __RTTI__4Node
 	.4byte 0
 	.4byte 0
-lbl_802A882C:
+.endobj lbl_802A8810
+.obj lbl_802A882C, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte __RTTI__8CoreNode
@@ -796,8 +813,8 @@ lbl_802A882C:
 	.4byte __RTTI__7BaseApp
 	.4byte 0
 	.4byte 0
-.global __vt__7GameApp
-__vt__7GameApp:
+.endobj lbl_802A882C
+.obj __vt__7GameApp, weak
 	.4byte __RTTI__7GameApp
 	.4byte 0
 	.4byte getAgeNodeType__5ANodeFv
@@ -817,11 +834,13 @@ __vt__7GameApp:
 	.4byte softReset__7BaseAppFv
 	.4byte useHeap__7BaseAppFi
 	.4byte procCmd__7BaseAppFPc
+.endobj __vt__7GameApp
 .balign 4
-lbl_802A889C:
+.obj lbl_802A889C, local
 	.asciz "PlugPikiApp"
+.endobj lbl_802A889C
 .balign 4
-lbl_802A88A8:
+.obj lbl_802A88A8, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte __RTTI__8CoreNode
@@ -833,8 +852,8 @@ lbl_802A88A8:
 	.4byte __RTTI__7GameApp
 	.4byte 0
 	.4byte 0
-.global __vt__11PlugPikiApp
-__vt__11PlugPikiApp:
+.endobj lbl_802A88A8
+.obj __vt__11PlugPikiApp, global
 	.4byte __RTTI__11PlugPikiApp
 	.4byte 0
 	.4byte getAgeNodeType__5ANodeFv
@@ -854,77 +873,99 @@ __vt__11PlugPikiApp:
 	.4byte softReset__11PlugPikiAppFv
 	.4byte useHeap__7BaseAppFi
 	.4byte procCmd__7BaseAppFPc
+.endobj __vt__11PlugPikiApp
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-lbl_803DDE38:
+.obj lbl_803DDE38, local
 	.asciz "ovl"
+.endobj lbl_803DDE38
 .balign 4
-lbl_803DDE3C:
+.obj lbl_803DDE3C, local
 	.asciz "%d mats"
+.endobj lbl_803DDE3C
 .balign 4
-lbl_803DDE44:
+.obj lbl_803DDE44, local
 	.asciz "%d mtxs"
+.endobj lbl_803DDE44
 .balign 4
-lbl_803DDE4C:
+.obj lbl_803DDE4C, local
 	.asciz "all"
+.endobj lbl_803DDE4C
 .balign 4
-lbl_803DDE50:
+.obj lbl_803DDE50, local
 	.asciz "app"
+.endobj lbl_803DDE50
 .balign 4
-lbl_803DDE54:
+.obj lbl_803DDE54, local
 	.asciz "Stream"
+.endobj lbl_803DDE54
 .balign 4
-__RTTI__6Stream:
+.obj __RTTI__6Stream, local
 	.4byte lbl_803DDE54
 	.4byte 0
-__RTTI__9AtxStream:
+.endobj __RTTI__6Stream
+.obj __RTTI__9AtxStream, local
 	.4byte lbl_802A8760
 	.4byte lbl_802A876C
-__RTTI__16AtxCommandStream:
+.endobj __RTTI__9AtxStream
+.obj __RTTI__16AtxCommandStream, local
 	.4byte lbl_802A874C
 	.4byte lbl_802A8778
+.endobj __RTTI__16AtxCommandStream
 .balign 4
-lbl_803DDE74:
+.obj lbl_803DDE74, local
 	.asciz "GameApp"
+.endobj lbl_803DDE74
 .balign 4
-lbl_803DDE7C:
+.obj lbl_803DDE7C, local
 	.asciz "ANode"
+.endobj lbl_803DDE7C
 .balign 4
-__RTTI__5ANode:
+.obj __RTTI__5ANode, local
 	.4byte lbl_803DDE7C
 	.4byte 0
-__RTTI__8CoreNode:
+.endobj __RTTI__5ANode
+.obj __RTTI__8CoreNode, local
 	.4byte lbl_802A87E4
 	.4byte lbl_802A87F0
+.endobj __RTTI__8CoreNode
 .balign 4
-lbl_803DDE94:
+.obj lbl_803DDE94, local
 	.asciz "Node"
+.endobj lbl_803DDE94
 .balign 4
-__RTTI__4Node:
+.obj __RTTI__4Node, local
 	.4byte lbl_803DDE94
 	.4byte lbl_802A87FC
+.endobj __RTTI__4Node
 .balign 4
-lbl_803DDEA4:
+.obj lbl_803DDEA4, local
 	.asciz "BaseApp"
+.endobj lbl_803DDEA4
 .balign 4
-__RTTI__7BaseApp:
+.obj __RTTI__7BaseApp, local
 	.4byte lbl_803DDEA4
 	.4byte lbl_802A8810
-__RTTI__7GameApp:
+.endobj __RTTI__7BaseApp
+.obj __RTTI__7GameApp, local
 	.4byte lbl_803DDE74
 	.4byte lbl_802A882C
-__RTTI__11PlugPikiApp:
+.endobj __RTTI__7GameApp
+.obj __RTTI__11PlugPikiApp, local
 	.4byte lbl_802A889C
 	.4byte lbl_802A88A8
+.endobj __RTTI__11PlugPikiApp
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803E88C0:
+.obj lbl_803E88C0, local
 	.float 0.0
-lbl_803E88C4:
+.endobj lbl_803E88C0
+.obj lbl_803E88C4, local
 	.float 0.1
+.endobj lbl_803E88C4
 .balign 8
-lbl_803E88C8:
-	.4byte 0x43300000
-	.4byte 0x80000000
+.obj lbl_803E88C8, local
+	.8byte 0x4330000080000000
+.endobj lbl_803E88C8

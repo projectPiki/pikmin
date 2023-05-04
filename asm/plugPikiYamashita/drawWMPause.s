@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global __ct__Q23zen11DrawWMPauseFv
-__ct__Q23zen11DrawWMPauseFv:
+.fn __ct__Q23zen11DrawWMPauseFv, global
 /* 801E9CF8 001E6C58  7C 08 02 A6 */	mflr r0
 /* 801E9CFC 001E6C5C  90 01 00 04 */	stw r0, 4(r1)
 /* 801E9D00 001E6C60  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -45,9 +44,9 @@ __ct__Q23zen11DrawWMPauseFv:
 /* 801E9D94 001E6CF4  38 21 00 28 */	addi r1, r1, 0x28
 /* 801E9D98 001E6CF8  7C 08 03 A6 */	mtlr r0
 /* 801E9D9C 001E6CFC  4E 80 00 20 */	blr 
+.endfn __ct__Q23zen11DrawWMPauseFv
 
-.global start__Q23zen11DrawWMPauseFv
-start__Q23zen11DrawWMPauseFv:
+.fn start__Q23zen11DrawWMPauseFv, global
 /* 801E9DA0 001E6D00  7C 08 02 A6 */	mflr r0
 /* 801E9DA4 001E6D04  38 80 00 00 */	li r4, 0
 /* 801E9DA8 001E6D08  90 01 00 04 */	stw r0, 4(r1)
@@ -72,9 +71,9 @@ start__Q23zen11DrawWMPauseFv:
 /* 801E9DF4 001E6D54  38 21 00 20 */	addi r1, r1, 0x20
 /* 801E9DF8 001E6D58  7C 08 03 A6 */	mtlr r0
 /* 801E9DFC 001E6D5C  4E 80 00 20 */	blr 
+.endfn start__Q23zen11DrawWMPauseFv
 
-.global update__Q23zen11DrawWMPauseFP10Controller
-update__Q23zen11DrawWMPauseFP10Controller:
+.fn update__Q23zen11DrawWMPauseFP10Controller, global
 /* 801E9E00 001E6D60  7C 08 02 A6 */	mflr r0
 /* 801E9E04 001E6D64  90 01 00 04 */	stw r0, 4(r1)
 /* 801E9E08 001E6D68  94 21 FF 90 */	stwu r1, -0x70(r1)
@@ -185,9 +184,9 @@ update__Q23zen11DrawWMPauseFP10Controller:
 /* 801E9F70 001E6ED0  38 21 00 70 */	addi r1, r1, 0x70
 /* 801E9F74 001E6ED4  7C 08 03 A6 */	mtlr r0
 /* 801E9F78 001E6ED8  4E 80 00 20 */	blr 
+.endfn update__Q23zen11DrawWMPauseFP10Controller
 
-.global draw__Q23zen11DrawWMPauseFR8Graphics
-draw__Q23zen11DrawWMPauseFR8Graphics:
+.fn draw__Q23zen11DrawWMPauseFR8Graphics, global
 /* 801E9F7C 001E6EDC  7C 08 02 A6 */	mflr r0
 /* 801E9F80 001E6EE0  90 01 00 04 */	stw r0, 4(r1)
 /* 801E9F84 001E6EE4  94 21 FF F8 */	stwu r1, -8(r1)
@@ -197,19 +196,25 @@ draw__Q23zen11DrawWMPauseFR8Graphics:
 /* 801E9F94 001E6EF4  38 21 00 08 */	addi r1, r1, 8
 /* 801E9F98 001E6EF8  7C 08 03 A6 */	mtlr r0
 /* 801E9F9C 001E6EFC  4E 80 00 20 */	blr 
+.endfn draw__Q23zen11DrawWMPauseFR8Graphics
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802E63D8:
+.obj lbl_802E63D8, local
 	.asciz "screen/blo/pause_w.blo"
+.endobj lbl_802E63D8
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803EC238:
-	.4byte 0x42FE0000
-lbl_803EC23C:
-	.4byte 0x00000000
-lbl_803EC240:
-	.4byte 0x3F000000
-lbl_803EC244:
-	.4byte 0x3F800000
+.obj lbl_803EC238, local
+	.float 127.0
+.endobj lbl_803EC238
+.obj lbl_803EC23C, local
+	.float 0.0
+.endobj lbl_803EC23C
+.obj lbl_803EC240, local
+	.float 0.5
+.endobj lbl_803EC240
+.obj lbl_803EC244, local
+	.float 1.0
+.endobj lbl_803EC244

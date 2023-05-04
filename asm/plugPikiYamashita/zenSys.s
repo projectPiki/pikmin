@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global makePathName__3zenFPCcPCcPc
-makePathName__3zenFPCcPCcPc:
+.fn makePathName__3zenFPCcPCcPc, global
 /* 801F2424 001EF384  7C 08 02 A6 */	mflr r0
 /* 801F2428 001EF388  90 01 00 04 */	stw r0, 4(r1)
 /* 801F242C 001EF38C  94 21 FE D0 */	stwu r1, -0x130(r1)
@@ -122,9 +121,9 @@ makePathName__3zenFPCcPCcPc:
 /* 801F25D4 001EF534  38 21 01 30 */	addi r1, r1, 0x130
 /* 801F25D8 001EF538  7C 08 03 A6 */	mtlr r0
 /* 801F25DC 001EF53C  4E 80 00 20 */	blr 
+.endfn makePathName__3zenFPCcPCcPc
 
-.global loadTexExp__3zenFPCcbb
-loadTexExp__3zenFPCcbb:
+.fn loadTexExp__3zenFPCcbb, global
 /* 801F25E0 001EF540  7C 08 02 A6 */	mflr r0
 /* 801F25E4 001EF544  90 01 00 04 */	stw r0, 4(r1)
 /* 801F25E8 001EF548  54 80 06 3F */	clrlwi. r0, r4, 0x18
@@ -160,10 +159,10 @@ loadTexExp__3zenFPCcbb:
 /* 801F2650 001EF5B0  38 21 01 10 */	addi r1, r1, 0x110
 /* 801F2654 001EF5B4  7C 08 03 A6 */	mtlr r0
 /* 801F2658 001EF5B8  4E 80 00 20 */	blr 
+.endfn loadTexExp__3zenFPCcbb
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-.global lbl_803E76C8
-lbl_803E76C8:
-	.4byte 0x25732573
-	.4byte 0x00000000
+.obj lbl_803E76C8, local
+	.asciz "%s%s"
+.endobj lbl_803E76C8

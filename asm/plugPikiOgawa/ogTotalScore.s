@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global __ct__Q23zen18ogScrTotalScoreMgrFPQ23zen14TotalScoreType
-__ct__Q23zen18ogScrTotalScoreMgrFPQ23zen14TotalScoreType:
+.fn __ct__Q23zen18ogScrTotalScoreMgrFPQ23zen14TotalScoreType, global
 /* 80194204 00191164  7C 08 02 A6 */	mflr r0
 /* 80194208 00191168  90 01 00 04 */	stw r0, 4(r1)
 /* 8019420C 0019116C  94 21 FF 78 */	stwu r1, -0x88(r1)
@@ -652,9 +651,9 @@ __ct__Q23zen18ogScrTotalScoreMgrFPQ23zen14TotalScoreType:
 /* 80194C04 00191B64  38 21 00 88 */	addi r1, r1, 0x88
 /* 80194C08 00191B68  7C 08 03 A6 */	mtlr r0
 /* 80194C0C 00191B6C  4E 80 00 20 */	blr 
+.endfn __ct__Q23zen18ogScrTotalScoreMgrFPQ23zen14TotalScoreType
 
-.global start__Q23zen18ogScrTotalScoreMgrFv
-start__Q23zen18ogScrTotalScoreMgrFv:
+.fn start__Q23zen18ogScrTotalScoreMgrFv, global
 /* 80194C10 00191B70  7C 08 02 A6 */	mflr r0
 /* 80194C14 00191B74  90 01 00 04 */	stw r0, 4(r1)
 /* 80194C18 00191B78  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -670,9 +669,9 @@ start__Q23zen18ogScrTotalScoreMgrFv:
 /* 80194C40 00191BA0  38 21 00 18 */	addi r1, r1, 0x18
 /* 80194C44 00191BA4  7C 08 03 A6 */	mtlr r0
 /* 80194C48 00191BA8  4E 80 00 20 */	blr 
+.endfn start__Q23zen18ogScrTotalScoreMgrFv
 
-.global update__Q23zen18ogScrTotalScoreMgrFP10Controller
-update__Q23zen18ogScrTotalScoreMgrFP10Controller:
+.fn update__Q23zen18ogScrTotalScoreMgrFP10Controller, global
 /* 80194C4C 00191BAC  7C 08 02 A6 */	mflr r0
 /* 80194C50 00191BB0  90 01 00 04 */	stw r0, 4(r1)
 /* 80194C54 00191BB4  94 21 FF D0 */	stwu r1, -0x30(r1)
@@ -783,9 +782,9 @@ update__Q23zen18ogScrTotalScoreMgrFP10Controller:
 /* 80194DD0 00191D30  38 21 00 30 */	addi r1, r1, 0x30
 /* 80194DD4 00191D34  7C 08 03 A6 */	mtlr r0
 /* 80194DD8 00191D38  4E 80 00 20 */	blr 
+.endfn update__Q23zen18ogScrTotalScoreMgrFP10Controller
 
-.global draw__Q23zen18ogScrTotalScoreMgrFR8Graphics
-draw__Q23zen18ogScrTotalScoreMgrFR8Graphics:
+.fn draw__Q23zen18ogScrTotalScoreMgrFR8Graphics, global
 /* 80194DDC 00191D3C  7C 08 02 A6 */	mflr r0
 /* 80194DE0 00191D40  90 01 00 04 */	stw r0, 4(r1)
 /* 80194DE4 00191D44  94 21 FF 00 */	stwu r1, -0x100(r1)
@@ -828,9 +827,9 @@ draw__Q23zen18ogScrTotalScoreMgrFR8Graphics:
 /* 80194E74 00191DD4  38 21 01 00 */	addi r1, r1, 0x100
 /* 80194E78 00191DD8  7C 08 03 A6 */	mtlr r0
 /* 80194E7C 00191DDC  4E 80 00 20 */	blr 
+.endfn draw__Q23zen18ogScrTotalScoreMgrFR8Graphics
 
-.global setRankInEffect__Q23zen18ogScrTotalScoreMgrFv
-setRankInEffect__Q23zen18ogScrTotalScoreMgrFv:
+.fn setRankInEffect__Q23zen18ogScrTotalScoreMgrFv, global
 /* 80194E80 00191DE0  7C 08 02 A6 */	mflr r0
 /* 80194E84 00191DE4  90 01 00 04 */	stw r0, 4(r1)
 /* 80194E88 00191DE8  94 21 FE 20 */	stwu r1, -0x1e0(r1)
@@ -1277,9 +1276,9 @@ setRankInEffect__Q23zen18ogScrTotalScoreMgrFv:
 /* 80195560 001924C0  38 21 01 E0 */	addi r1, r1, 0x1e0
 /* 80195564 001924C4  7C 08 03 A6 */	mtlr r0
 /* 80195568 001924C8  4E 80 00 20 */	blr 
+.endfn setRankInEffect__Q23zen18ogScrTotalScoreMgrFv
 
-.global setRankInColor__Q23zen18ogScrTotalScoreMgrFv
-setRankInColor__Q23zen18ogScrTotalScoreMgrFv:
+.fn setRankInColor__Q23zen18ogScrTotalScoreMgrFv, global
 /* 8019556C 001924CC  94 21 FF 18 */	stwu r1, -0xe8(r1)
 /* 80195570 001924D0  80 83 00 48 */	lwz r4, 0x48(r3)
 /* 80195574 001924D4  88 04 01 08 */	lbz r0, 0x108(r4)
@@ -1400,39 +1399,50 @@ setRankInColor__Q23zen18ogScrTotalScoreMgrFv:
 .L_80195738:
 /* 80195738 00192698  38 21 00 E8 */	addi r1, r1, 0xe8
 /* 8019573C 0019269C  4E 80 00 20 */	blr 
+.endfn setRankInColor__Q23zen18ogScrTotalScoreMgrFv
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802D6058:
+.obj lbl_802D6058, local
 	.asciz "screen/blo/f_result.blo"
+.endobj lbl_802D6058
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-lbl_803E5B18:
+.obj lbl_803E5B18, local
 	.asciz "pd%02d"
+.endobj lbl_803E5B18
 .balign 4
-lbl_803E5B20:
+.obj lbl_803E5B20, local
 	.asciz "lp%02d"
+.endobj lbl_803E5B20
 .balign 4
-lbl_803E5B28:
+.obj lbl_803E5B28, local
 	.asciz "dp%02d"
+.endobj lbl_803E5B28
 .balign 4
-lbl_803E5B30:
+.obj lbl_803E5B30, local
 	.float 0.0
+.endobj lbl_803E5B30
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803EB418:
-	.4byte 0x00000000
-lbl_803EB41C:
-	.4byte 0x3F800000
-lbl_803EB420:
-	.4byte 0x437F0000
-lbl_803EB424:
-	.4byte 0x41F00000
-lbl_803EB428:
-	.4byte 0x459C4000
+.obj lbl_803EB418, local
+	.float 0.0
+.endobj lbl_803EB418
+.obj lbl_803EB41C, local
+	.float 1.0
+.endobj lbl_803EB41C
+.obj lbl_803EB420, local
+	.float 255.0
+.endobj lbl_803EB420
+.obj lbl_803EB424, local
+	.float 30.0
+.endobj lbl_803EB424
+.obj lbl_803EB428, local
+	.float 5000.0
+.endobj lbl_803EB428
 .balign 8
-lbl_803EB430:
-	.4byte 0x43300000
-	.4byte 0x80000000
+.obj lbl_803EB430, local
+	.8byte 0x4330000080000000
+.endobj lbl_803EB430

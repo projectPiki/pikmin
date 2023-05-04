@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global __ct__Q23zen17TextColorCallBackFP7P2DPane
-__ct__Q23zen17TextColorCallBackFP7P2DPane:
+.fn __ct__Q23zen17TextColorCallBackFP7P2DPane, global
 /* 80198D2C 00195C8C  7C 08 02 A6 */	mflr r0
 /* 80198D30 00195C90  3C A0 80 2D */	lis r5, "__vt__Q23zen20CallBack1<P7P2DPane>"@ha
 /* 80198D34 00195C94  90 01 00 04 */	stw r0, 4(r1)
@@ -61,9 +60,9 @@ __ct__Q23zen17TextColorCallBackFP7P2DPane:
 /* 80198E0C 00195D6C  38 21 00 38 */	addi r1, r1, 0x38
 /* 80198E10 00195D70  7C 08 03 A6 */	mtlr r0
 /* 80198E14 00195D74  4E 80 00 20 */	blr 
+.endfn __ct__Q23zen17TextColorCallBackFP7P2DPane
 
-.global setTargetColor__Q23zen17TextColorCallBackFR6ColourR6Colourf
-setTargetColor__Q23zen17TextColorCallBackFR6ColourR6Colourf:
+.fn setTargetColor__Q23zen17TextColorCallBackFR6ColourR6Colourf, global
 /* 80198E18 00195D78  94 21 FF B8 */	stwu r1, -0x48(r1)
 /* 80198E1C 00195D7C  80 04 00 00 */	lwz r0, 0(r4)
 /* 80198E20 00195D80  90 03 00 1C */	stw r0, 0x1c(r3)
@@ -115,9 +114,9 @@ setTargetColor__Q23zen17TextColorCallBackFR6ColourR6Colourf:
 .L_80198ED4:
 /* 80198ED4 00195E34  38 21 00 48 */	addi r1, r1, 0x48
 /* 80198ED8 00195E38  4E 80 00 20 */	blr 
+.endfn setTargetColor__Q23zen17TextColorCallBackFR6ColourR6Colourf
 
-.global invoke__Q23zen17TextColorCallBackFP7P2DPane
-invoke__Q23zen17TextColorCallBackFP7P2DPane:
+.fn invoke__Q23zen17TextColorCallBackFP7P2DPane, global
 /* 80198EDC 00195E3C  94 21 FF 78 */	stwu r1, -0x88(r1)
 /* 80198EE0 00195E40  88 03 00 08 */	lbz r0, 8(r3)
 /* 80198EE4 00195E44  28 00 00 00 */	cmplwi r0, 0
@@ -466,34 +465,42 @@ invoke__Q23zen17TextColorCallBackFP7P2DPane:
 /* 80199408 00196368  38 60 00 01 */	li r3, 1
 /* 8019940C 0019636C  38 21 00 88 */	addi r1, r1, 0x88
 /* 80199410 00196370  4E 80 00 20 */	blr 
+.endfn invoke__Q23zen17TextColorCallBackFP7P2DPane
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802D6248:
+.obj lbl_802D6248, local
 	.asciz "ogCallBack.cpp"
+.endobj lbl_802D6248
 .balign 4
-lbl_802D6258:
+.obj lbl_802D6258, local
 	.asciz "OgCallBackSection"
+.endobj lbl_802D6258
 .balign 4
-lbl_802D626C:
+.obj lbl_802D626C, local
 	.asciz "zen::TextColorCallBack"
+.endobj lbl_802D626C
 .balign 4
-lbl_802D6284:
+.obj lbl_802D6284, local
 	.asciz "P2DPaneCallBackBase"
+.endobj lbl_802D6284
 .balign 4
-lbl_802D6298:
+.obj lbl_802D6298, local
 	.asciz "zen::CallBack1<P2DPane *>"
+.endobj lbl_802D6298
 .balign 4
-lbl_802D62B4:
+.obj lbl_802D62B4, local
 	.asciz "P2DPaneCallBack"
+.endobj lbl_802D62B4
 .balign 4
-lbl_802D62C4:
+.obj lbl_802D62C4, local
 	.4byte __RTTI__19P2DPaneCallBackBase
 	.4byte 0x00000004
 	.4byte "__RTTI__Q23zen20CallBack1<P7P2DPane>"
 	.4byte 0x00000000
 	.4byte 0x00000000
-lbl_802D62D8:
+.endobj lbl_802D62C4
+.obj lbl_802D62D8, local
 	.4byte __RTTI__19P2DPaneCallBackBase
 	.4byte 0x00000004
 	.4byte "__RTTI__Q23zen20CallBack1<P7P2DPane>"
@@ -501,12 +508,13 @@ lbl_802D62D8:
 	.4byte __RTTI__15P2DPaneCallBack
 	.4byte 0x00000000
 	.4byte 0x00000000
-.global __vt__Q23zen17TextColorCallBack
-__vt__Q23zen17TextColorCallBack:
+.endobj lbl_802D62D8
+.obj __vt__Q23zen17TextColorCallBack, global
 	.4byte __RTTI__Q23zen17TextColorCallBack
 	.4byte 0
 	.4byte invoke__Q23zen17TextColorCallBackFP7P2DPane
 	.4byte draw__15P2DPaneCallBackFP7P2DPane
+.endobj __vt__Q23zen17TextColorCallBack
 	.4byte 0
 	.4byte 0
 	.4byte 0
@@ -517,18 +525,22 @@ __vt__Q23zen17TextColorCallBack:
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-__RTTI__19P2DPaneCallBackBase:
+.obj __RTTI__19P2DPaneCallBackBase, local
 	.4byte lbl_802D6284
 	.4byte 0x00000000
-"__RTTI__Q23zen20CallBack1<P7P2DPane>":
+.endobj __RTTI__19P2DPaneCallBackBase
+.obj "__RTTI__Q23zen20CallBack1<P7P2DPane>", local
 	.4byte lbl_802D6298
 	.4byte 0x00000000
-__RTTI__15P2DPaneCallBack:
+.endobj "__RTTI__Q23zen20CallBack1<P7P2DPane>"
+.obj __RTTI__15P2DPaneCallBack, local
 	.4byte lbl_802D62B4
 	.4byte lbl_802D62C4
-__RTTI__Q23zen17TextColorCallBack:
+.endobj __RTTI__15P2DPaneCallBack
+.obj __RTTI__Q23zen17TextColorCallBack, local
 	.4byte lbl_802D626C
 	.4byte lbl_802D62D8
+.endobj __RTTI__Q23zen17TextColorCallBack
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8

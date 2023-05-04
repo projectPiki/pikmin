@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global __ct__Q23zen9ogSaveMgrFv
-__ct__Q23zen9ogSaveMgrFv:
+.fn __ct__Q23zen9ogSaveMgrFv, global
 /* 80195740 001926A0  7C 08 02 A6 */	mflr r0
 /* 80195744 001926A4  90 01 00 04 */	stw r0, 4(r1)
 /* 80195748 001926A8  94 21 FF 20 */	stwu r1, -0xe0(r1)
@@ -477,9 +476,9 @@ __ct__Q23zen9ogSaveMgrFv:
 /* 80195E70 00192DD0  38 21 00 E0 */	addi r1, r1, 0xe0
 /* 80195E74 00192DD4  7C 08 03 A6 */	mtlr r0
 /* 80195E78 00192DD8  4E 80 00 20 */	blr 
+.endfn __ct__Q23zen9ogSaveMgrFv
 
-.global start__Q23zen9ogSaveMgrFv
-start__Q23zen9ogSaveMgrFv:
+.fn start__Q23zen9ogSaveMgrFv, global
 /* 80195E7C 00192DDC  38 C0 00 01 */	li r6, 1
 /* 80195E80 00192DE0  90 C3 00 00 */	stw r6, 0(r3)
 /* 80195E84 00192DE4  38 A0 00 00 */	li r5, 0
@@ -528,9 +527,9 @@ start__Q23zen9ogSaveMgrFv:
 /* 80195F30 00192E90  80 63 00 70 */	lwz r3, 0x70(r3)
 /* 80195F34 00192E94  98 A3 00 F0 */	stb r5, 0xf0(r3)
 /* 80195F38 00192E98  4E 80 00 20 */	blr 
+.endfn start__Q23zen9ogSaveMgrFv
 
-.global update__Q23zen9ogSaveMgrFP10Controller
-update__Q23zen9ogSaveMgrFP10Controller:
+.fn update__Q23zen9ogSaveMgrFP10Controller, global
 /* 80195F3C 00192E9C  7C 08 02 A6 */	mflr r0
 /* 80195F40 00192EA0  90 01 00 04 */	stw r0, 4(r1)
 /* 80195F44 00192EA4  94 21 FF 30 */	stwu r1, -0xd0(r1)
@@ -1094,9 +1093,9 @@ update__Q23zen9ogSaveMgrFP10Controller:
 /* 80196764 001936C4  38 21 00 D0 */	addi r1, r1, 0xd0
 /* 80196768 001936C8  7C 08 03 A6 */	mtlr r0
 /* 8019676C 001936CC  4E 80 00 20 */	blr 
+.endfn update__Q23zen9ogSaveMgrFP10Controller
 
-.global draw__Q23zen9ogSaveMgrFR8Graphics
-draw__Q23zen9ogSaveMgrFR8Graphics:
+.fn draw__Q23zen9ogSaveMgrFR8Graphics, global
 /* 80196770 001936D0  7C 08 02 A6 */	mflr r0
 /* 80196774 001936D4  90 01 00 04 */	stw r0, 4(r1)
 /* 80196778 001936D8  94 21 FF 00 */	stwu r1, -0x100(r1)
@@ -1161,25 +1160,31 @@ draw__Q23zen9ogSaveMgrFR8Graphics:
 /* 80196858 001937B8  38 21 01 00 */	addi r1, r1, 0x100
 /* 8019685C 001937BC  7C 08 03 A6 */	mtlr r0
 /* 80196860 001937C0  4E 80 00 20 */	blr 
+.endfn draw__Q23zen9ogSaveMgrFR8Graphics
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802D6070:
+.obj lbl_802D6070, local
 	.asciz "ogSave.cpp"
+.endobj lbl_802D6070
 .balign 4
-lbl_802D607C:
+.obj lbl_802D607C, local
 	.asciz "OgSaveSection"
+.endobj lbl_802D607C
 .balign 4
-lbl_802D608C:
+.obj lbl_802D608C, local
 	.asciz "screen/blo/ac_save.blo"
+.endobj lbl_802D608C
 .balign 4
-lbl_802D60A4:
+.obj lbl_802D60A4, local
 	.asciz "screen/blo/black.blo"
+.endobj lbl_802D60A4
 .balign 4
-lbl_802D60BC:
+.obj lbl_802D60BC, local
 	.asciz "screen/blo/ac_save2.blo"
+.endobj lbl_802D60BC
 .balign 4
-lbl_802D60D4:
+.obj lbl_802D60D4, local
 	.4byte .L_8019632C
 	.4byte .L_80196150
 	.4byte .L_801962A4
@@ -1192,22 +1197,30 @@ lbl_802D60D4:
 	.4byte .L_80196670
 	.4byte .L_801966E4
 	.4byte .L_80196738
+.endobj lbl_802D60D4
 	.skip 0x1C
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803EB438:
-	.4byte 0x00000000
-lbl_803EB43C:
-	.4byte 0x3E800000
-lbl_803EB440:
-	.4byte 0x3F800000
-lbl_803EB444:
-	.4byte 0x40400000
-lbl_803EB448:
-	.4byte 0x43300000
-	.4byte 0x00000000
-lbl_803EB450:
-	.4byte 0x41F00000
-lbl_803EB454:
-	.4byte 0x459C4000
+.obj lbl_803EB438, local
+	.float 0.0
+.endobj lbl_803EB438
+.obj lbl_803EB43C, local
+	.float 0.25
+.endobj lbl_803EB43C
+.obj lbl_803EB440, local
+	.float 1.0
+.endobj lbl_803EB440
+.obj lbl_803EB444, local
+	.float 3.0
+.endobj lbl_803EB444
+.balign 8
+.obj lbl_803EB448, local
+	.8byte 0x4330000000000000
+.endobj lbl_803EB448
+.obj lbl_803EB450, local
+	.float 30.0
+.endobj lbl_803EB450
+.obj lbl_803EB454, local
+	.float 5000.0
+.endobj lbl_803EB454

@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global init__21NakataCodeInitializerFv
-init__21NakataCodeInitializerFv:
+.fn init__21NakataCodeInitializerFv, global
 /* 8011B6AC 0011860C  7C 08 02 A6 */	mflr r0
 /* 8011B6B0 00118610  90 01 00 04 */	stw r0, 4(r1)
 /* 8011B6B4 00118614  38 00 00 01 */	li r0, 1
@@ -16,9 +15,10 @@ init__21NakataCodeInitializerFv:
 /* 8011B6D8 00118638  38 21 00 08 */	addi r1, r1, 8
 /* 8011B6DC 0011863C  7C 08 03 A6 */	mtlr r0
 /* 8011B6E0 00118640  4E 80 00 20 */	blr 
+.endfn init__21NakataCodeInitializerFv
 
 .section .sbss, "wa"
 .balign 8
-.global nakataDebugMode
-nakataDebugMode:
+.obj nakataDebugMode, global
 	.skip 0x4
+.endobj nakataDebugMode

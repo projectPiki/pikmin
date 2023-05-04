@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global calcLagrange__13NsCalculationFfPC8Vector3fR8Vector3f
-calcLagrange__13NsCalculationFfPC8Vector3fR8Vector3f:
+.fn calcLagrange__13NsCalculationFfPC8Vector3fR8Vector3f, global
 /* 8017C2C8 00179228  C0 62 AE B8 */	lfs f3, lbl_803EB0B8@sda21(r2)
 /* 8017C2CC 0017922C  C0 42 AE BC */	lfs f2, lbl_803EB0BC@sda21(r2)
 /* 8017C2D0 00179230  C0 03 00 00 */	lfs f0, 0(r3)
@@ -50,9 +49,9 @@ calcLagrange__13NsCalculationFfPC8Vector3fR8Vector3f:
 /* 8017C37C 001792DC  EC 02 00 2A */	fadds f0, f2, f0
 /* 8017C380 001792E0  D0 04 00 08 */	stfs f0, 8(r4)
 /* 8017C384 001792E4  4E 80 00 20 */	blr 
+.endfn calcLagrange__13NsCalculationFfPC8Vector3fR8Vector3f
 
-.global calcMatrix__13NsCalculationFRC8Vector3fRC8Vector3fRC8Vector3fRC8Vector3fR8Matrix4f
-calcMatrix__13NsCalculationFRC8Vector3fRC8Vector3fRC8Vector3fRC8Vector3fR8Matrix4f:
+.fn calcMatrix__13NsCalculationFRC8Vector3fRC8Vector3fRC8Vector3fRC8Vector3fR8Matrix4f, global
 /* 8017C388 001792E8  7C 08 02 A6 */	mflr r0
 /* 8017C38C 001792EC  90 01 00 04 */	stw r0, 4(r1)
 /* 8017C390 001792F0  94 21 FF 70 */	stwu r1, -0x90(r1)
@@ -157,9 +156,9 @@ calcMatrix__13NsCalculationFRC8Vector3fRC8Vector3fRC8Vector3fRC8Vector3fR8Matrix
 /* 8017C518 00179478  38 21 00 90 */	addi r1, r1, 0x90
 /* 8017C51C 0017947C  7C 08 03 A6 */	mtlr r0
 /* 8017C520 00179480  4E 80 00 20 */	blr 
+.endfn calcMatrix__13NsCalculationFRC8Vector3fRC8Vector3fRC8Vector3fRC8Vector3fR8Matrix4f
 
-.global calcJointPos__13NsCalculationFRC8Vector3fRC8Vector3fffR8Vector3fR8Vector3f
-calcJointPos__13NsCalculationFRC8Vector3fRC8Vector3fffR8Vector3fR8Vector3f:
+.fn calcJointPos__13NsCalculationFRC8Vector3fRC8Vector3fffR8Vector3fR8Vector3f, global
 /* 8017C524 00179484  94 21 FF 98 */	stwu r1, -0x68(r1)
 /* 8017C528 00179488  ED 01 00 72 */	fmuls f8, f1, f1
 /* 8017C52C 0017948C  EC E2 00 B2 */	fmuls f7, f2, f2
@@ -356,9 +355,9 @@ calcJointPos__13NsCalculationFRC8Vector3fRC8Vector3fffR8Vector3fR8Vector3f:
 /* 8017C810 00179770  CB A1 00 50 */	lfd f29, 0x50(r1)
 /* 8017C814 00179774  38 21 00 68 */	addi r1, r1, 0x68
 /* 8017C818 00179778  4E 80 00 20 */	blr 
+.endfn calcJointPos__13NsCalculationFRC8Vector3fRC8Vector3fffR8Vector3fR8Vector3f
 
-.global calcMat4toMat3__13NsCalculationFRC8Matrix4fR8Matrix3f
-calcMat4toMat3__13NsCalculationFRC8Matrix4fR8Matrix3f:
+.fn calcMat4toMat3__13NsCalculationFRC8Matrix4fR8Matrix3f, global
 /* 8017C81C 0017977C  C0 03 00 00 */	lfs f0, 0(r3)
 /* 8017C820 00179780  D0 04 00 00 */	stfs f0, 0(r4)
 /* 8017C824 00179784  C0 03 00 10 */	lfs f0, 0x10(r3)
@@ -378,22 +377,30 @@ calcMat4toMat3__13NsCalculationFRC8Matrix4fR8Matrix3f:
 /* 8017C85C 001797BC  C0 03 00 28 */	lfs f0, 0x28(r3)
 /* 8017C860 001797C0  D0 04 00 20 */	stfs f0, 0x20(r4)
 /* 8017C864 001797C4  4E 80 00 20 */	blr 
+.endfn calcMat4toMat3__13NsCalculationFRC8Matrix4fR8Matrix3f
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803EB0B8:
+.obj lbl_803EB0B8, local
 	.float 1.0
-lbl_803EB0BC:
+.endobj lbl_803EB0B8
+.obj lbl_803EB0BC, local
 	.float 0.5
-lbl_803EB0C0:
+.endobj lbl_803EB0BC
+.obj lbl_803EB0C0, local
 	.float 2.0
-lbl_803EB0C4:
+.endobj lbl_803EB0C0
+.obj lbl_803EB0C4, local
 	.float 0.0
-lbl_803EB0C8:
-	.4byte 0x3FE00000
-	.4byte 0x00000000
-lbl_803EB0D0:
-	.4byte 0x40080000
-	.4byte 0x00000000
-lbl_803EB0D8:
-	.4byte 0x358637BD
+.endobj lbl_803EB0C4
+.balign 8
+.obj lbl_803EB0C8, local
+	.double 0.5
+.endobj lbl_803EB0C8
+.balign 8
+.obj lbl_803EB0D0, local
+	.double 3.0
+.endobj lbl_803EB0D0
+.obj lbl_803EB0D8, local
+	.float 1.0E-6
+.endobj lbl_803EB0D8

@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global __GXXfVtxSpecs
-__GXXfVtxSpecs:
+.fn __GXXfVtxSpecs, local
 /* 8020F2A8 0020C208  80 AD 2A 68 */	lwz r5, gx@sda21(r13)
 /* 8020F2AC 0020C20C  80 85 00 14 */	lwz r4, 0x14(r5)
 /* 8020F2B0 0020C210  54 80 9F BF */	rlwinm. r0, r4, 0x13, 0x1e, 0x1f
@@ -111,9 +110,9 @@ __GXXfVtxSpecs:
 /* 8020F3F4 0020C354  38 00 00 00 */	li r0, 0
 /* 8020F3F8 0020C358  B0 03 00 02 */	sth r0, 2(r3)
 /* 8020F3FC 0020C35C  4E 80 00 20 */	blr 
+.endfn __GXXfVtxSpecs
 
-.global GXSetVtxDesc
-GXSetVtxDesc:
+.fn GXSetVtxDesc, global
 /* 8020F400 0020C360  28 03 00 19 */	cmplwi r3, 0x19
 /* 8020F404 0020C364  41 81 02 D8 */	bgt .L_8020F6DC
 /* 8020F408 0020C368  3C A0 80 2F */	lis r5, lbl_802E8C00@ha
@@ -346,9 +345,9 @@ GXSetVtxDesc:
 /* 8020F72C 0020C68C  60 00 00 08 */	ori r0, r0, 8
 /* 8020F730 0020C690  90 03 04 F0 */	stw r0, 0x4f0(r3)
 /* 8020F734 0020C694  4E 80 00 20 */	blr 
+.endfn GXSetVtxDesc
 
-.global GXSetVtxDescv
-GXSetVtxDescv:
+.fn GXSetVtxDescv, global
 /* 8020F738 0020C698  3C 80 80 2F */	lis r4, lbl_802E8C68@ha
 /* 8020F73C 0020C69C  38 84 8C 68 */	addi r4, r4, lbl_802E8C68@l
 /* 8020F740 0020C6A0  48 00 02 EC */	b .L_8020FA2C
@@ -592,9 +591,9 @@ GXSetVtxDescv:
 /* 8020FA88 0020C9E8  60 00 00 08 */	ori r0, r0, 8
 /* 8020FA8C 0020C9EC  90 03 04 F0 */	stw r0, 0x4f0(r3)
 /* 8020FA90 0020C9F0  4E 80 00 20 */	blr 
+.endfn GXSetVtxDescv
 
-.global __GXSetVCD
-__GXSetVCD:
+.fn __GXSetVCD, global
 /* 8020FA94 0020C9F4  7C 08 02 A6 */	mflr r0
 /* 8020FA98 0020C9F8  38 C0 00 08 */	li r6, 8
 /* 8020FA9C 0020C9FC  90 01 00 04 */	stw r0, 4(r1)
@@ -686,9 +685,9 @@ __GXSetVCD:
 /* 8020FBF0 0020CB50  38 21 00 20 */	addi r1, r1, 0x20
 /* 8020FBF4 0020CB54  7C 08 03 A6 */	mtlr r0
 /* 8020FBF8 0020CB58  4E 80 00 20 */	blr 
+.endfn __GXSetVCD
 
-.global GXClearVtxDesc
-GXClearVtxDesc:
+.fn GXClearVtxDesc, global
 /* 8020FBFC 0020CB5C  80 6D 2A 68 */	lwz r3, gx@sda21(r13)
 /* 8020FC00 0020CB60  38 80 00 00 */	li r4, 0
 /* 8020FC04 0020CB64  90 83 00 14 */	stw r4, 0x14(r3)
@@ -708,9 +707,9 @@ GXClearVtxDesc:
 /* 8020FC3C 0020CB9C  60 00 00 08 */	ori r0, r0, 8
 /* 8020FC40 0020CBA0  90 03 04 F0 */	stw r0, 0x4f0(r3)
 /* 8020FC44 0020CBA4  4E 80 00 20 */	blr 
+.endfn GXClearVtxDesc
 
-.global GXSetVtxAttrFmt
-GXSetVtxAttrFmt:
+.fn GXSetVtxAttrFmt, global
 /* 8020FC48 0020CBA8  38 04 FF F7 */	addi r0, r4, -9
 /* 8020FC4C 0020CBAC  81 0D 2A 68 */	lwz r8, gx@sda21(r13)
 /* 8020FC50 0020CBB0  54 64 10 3A */	slwi r4, r3, 2
@@ -940,9 +939,9 @@ GXSetVtxAttrFmt:
 /* 8020FF98 0020CEF8  7C 60 03 78 */	or r0, r3, r0
 /* 8020FF9C 0020CEFC  98 04 04 EE */	stb r0, 0x4ee(r4)
 /* 8020FFA0 0020CF00  4E 80 00 20 */	blr 
+.endfn GXSetVtxAttrFmt
 
-.global GXSetVtxAttrFmtv
-GXSetVtxAttrFmtv:
+.fn GXSetVtxAttrFmtv, global
 /* 8020FFA4 0020CF04  80 CD 2A 68 */	lwz r6, gx@sda21(r13)
 /* 8020FFA8 0020CF08  54 60 10 3A */	slwi r0, r3, 2
 /* 8020FFAC 0020CF0C  3C A0 80 2F */	lis r5, lbl_802E8D14@ha
@@ -1182,9 +1181,9 @@ GXSetVtxAttrFmtv:
 /* 80210314 0020D274  7C 60 03 78 */	or r0, r3, r0
 /* 80210318 0020D278  98 04 04 EE */	stb r0, 0x4ee(r4)
 /* 8021031C 0020D27C  4E 80 00 20 */	blr 
+.endfn GXSetVtxAttrFmtv
 
-.global __GXSetVAT
-__GXSetVAT:
+.fn __GXSetVAT, global
 /* 80210320 0020D280  81 4D 2A 68 */	lwz r10, gx@sda21(r13)
 /* 80210324 0020D284  39 80 00 00 */	li r12, 0
 /* 80210328 0020D288  39 60 00 00 */	li r11, 0
@@ -1227,9 +1226,9 @@ __GXSetVAT:
 /* 802103B0 0020D310  38 00 00 00 */	li r0, 0
 /* 802103B4 0020D314  98 03 04 EE */	stb r0, 0x4ee(r3)
 /* 802103B8 0020D318  4E 80 00 20 */	blr 
+.endfn __GXSetVAT
 
-.global GXSetArray
-GXSetArray:
+.fn GXSetArray, global
 /* 802103BC 0020D31C  2C 03 00 19 */	cmpwi r3, 0x19
 /* 802103C0 0020D320  40 82 00 08 */	bne .L_802103C8
 /* 802103C4 0020D324  38 60 00 0A */	li r3, 0xa
@@ -1267,16 +1266,16 @@ GXSetArray:
 /* 8021043C 0020D39C  7C 63 02 14 */	add r3, r3, r0
 /* 80210440 0020D3A0  90 83 00 98 */	stw r4, 0x98(r3)
 /* 80210444 0020D3A4  4E 80 00 20 */	blr 
+.endfn GXSetArray
 
-.global GXInvalidateVtxCache
-GXInvalidateVtxCache:
+.fn GXInvalidateVtxCache, global
 /* 80210448 0020D3A8  38 00 00 48 */	li r0, 0x48
 /* 8021044C 0020D3AC  3C 60 CC 01 */	lis r3, 0xCC008000@ha
 /* 80210450 0020D3B0  98 03 80 00 */	stb r0, 0xCC008000@l(r3)
 /* 80210454 0020D3B4  4E 80 00 20 */	blr 
+.endfn GXInvalidateVtxCache
 
-.global GXSetTexCoordGen2
-GXSetTexCoordGen2:
+.fn GXSetTexCoordGen2, global
 /* 80210458 0020D3B8  7C 08 02 A6 */	mflr r0
 /* 8021045C 0020D3BC  28 05 00 14 */	cmplwi r5, 0x14
 /* 80210460 0020D3C0  90 01 00 04 */	stw r0, 4(r1)
@@ -1489,9 +1488,9 @@ GXSetTexCoordGen2:
 /* 8021071C 0020D67C  38 21 00 08 */	addi r1, r1, 8
 /* 80210720 0020D680  7C 08 03 A6 */	mtlr r0
 /* 80210724 0020D684  4E 80 00 20 */	blr 
+.endfn GXSetTexCoordGen2
 
-.global GXSetNumTexGens
-GXSetNumTexGens:
+.fn GXSetNumTexGens, global
 /* 80210728 0020D688  80 8D 2A 68 */	lwz r4, gx@sda21(r13)
 /* 8021072C 0020D68C  54 67 06 3E */	clrlwi r7, r3, 0x18
 /* 80210730 0020D690  38 60 00 10 */	li r3, 0x10
@@ -1510,11 +1509,11 @@ GXSetNumTexGens:
 /* 80210764 0020D6C4  60 00 00 04 */	ori r0, r0, 4
 /* 80210768 0020D6C8  90 03 04 F0 */	stw r0, 0x4f0(r3)
 /* 8021076C 0020D6CC  4E 80 00 20 */	blr 
+.endfn GXSetNumTexGens
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-.global lbl_802E8C00
-lbl_802E8C00:
+.obj lbl_802E8C00, local
 	.4byte .L_8020F420
 	.4byte .L_8020F438
 	.4byte .L_8020F458
@@ -1541,8 +1540,8 @@ lbl_802E8C00:
 	.4byte .L_8020F6DC
 	.4byte .L_8020F6DC
 	.4byte .L_8020F580
-.global lbl_802E8C68
-lbl_802E8C68:
+.endobj lbl_802E8C00
+.obj lbl_802E8C68, local
 	.4byte .L_8020F764
 	.4byte .L_8020F780
 	.4byte .L_8020F7A0
@@ -1569,8 +1568,8 @@ lbl_802E8C68:
 	.4byte .L_8020FA28
 	.4byte .L_8020FA28
 	.4byte .L_8020F8C8
-.global lbl_802E8CD0
-lbl_802E8CD0:
+.endobj lbl_802E8C68
+.obj lbl_802E8CD0, local
 	.4byte .L_8020FC84
 	.4byte .L_8020FCC0
 	.4byte .L_8020FD24
@@ -1588,8 +1587,8 @@ lbl_802E8CD0:
 	.4byte .L_8020FF70
 	.4byte .L_8020FF70
 	.4byte .L_8020FCC0
-.global lbl_802E8D14
-lbl_802E8D14:
+.endobj lbl_802E8CD0
+.obj lbl_802E8D14, local
 	.4byte .L_8020FFF4
 	.4byte .L_80210030
 	.4byte .L_80210094
@@ -1607,8 +1606,8 @@ lbl_802E8D14:
 	.4byte .L_802102DC
 	.4byte .L_802102DC
 	.4byte .L_80210030
-.global lbl_802E8D58
-lbl_802E8D58:
+.endobj lbl_802E8D14
+.obj lbl_802E8D58, local
 	.4byte .L_8021061C
 	.4byte .L_8021063C
 	.4byte .L_8021065C
@@ -1616,8 +1615,8 @@ lbl_802E8D58:
 	.4byte .L_8021069C
 	.4byte .L_802106B4
 	.4byte .L_802106D4
-.global lbl_802E8D74
-lbl_802E8D74:
+.endobj lbl_802E8D58
+.obj lbl_802E8D74, local
 	.4byte .L_80210490
 	.4byte .L_8021049C
 	.4byte .L_802104A8
@@ -1639,15 +1638,16 @@ lbl_802E8D74:
 	.4byte .L_8021050C
 	.4byte .L_802104C0
 	.4byte .L_802104C8
+.endobj lbl_802E8D74
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-.global tbl1$208
-tbl1$208:
+.obj tbl1$208, local
 	.4byte 0x00040102
-.global tbl2$209
-tbl2$209:
+.endobj tbl1$208
+.obj tbl2$209, local
 	.4byte 0x00080102
-.global tbl3$210
-tbl3$210:
+.endobj tbl2$209
+.obj tbl3$210, local
 	.4byte 0x000C0102
+.endobj tbl3$210

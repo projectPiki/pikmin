@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global __ct__7NCameraFP6Camera
-__ct__7NCameraFP6Camera:
+.fn __ct__7NCameraFP6Camera, global
 /* 8011D95C 0011A8BC  7C 08 02 A6 */	mflr r0
 /* 8011D960 0011A8C0  90 01 00 04 */	stw r0, 4(r1)
 /* 8011D964 0011A8C4  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -35,9 +34,9 @@ __ct__7NCameraFP6Camera:
 /* 8011D9D4 0011A934  38 21 00 18 */	addi r1, r1, 0x18
 /* 8011D9D8 0011A938  7C 08 03 A6 */	mtlr r0
 /* 8011D9DC 0011A93C  4E 80 00 20 */	blr 
+.endfn __ct__7NCameraFP6Camera
 
-.global makeMatrix__7NCameraFv
-makeMatrix__7NCameraFv:
+.fn makeMatrix__7NCameraFv, global
 /* 8011D9E0 0011A940  7C 08 02 A6 */	mflr r0
 /* 8011D9E4 0011A944  90 01 00 04 */	stw r0, 4(r1)
 /* 8011D9E8 0011A948  94 21 FF 60 */	stwu r1, -0xa0(r1)
@@ -90,9 +89,9 @@ makeMatrix__7NCameraFv:
 /* 8011DAA4 0011AA04  38 21 00 A0 */	addi r1, r1, 0xa0
 /* 8011DAA8 0011AA08  7C 08 03 A6 */	mtlr r0
 /* 8011DAAC 0011AA0C  4E 80 00 20 */	blr 
+.endfn makeMatrix__7NCameraFv
 
-.global makeCamera__7NCameraFv
-makeCamera__7NCameraFv:
+.fn makeCamera__7NCameraFv, global
 /* 8011DAB0 0011AA10  7C 08 02 A6 */	mflr r0
 /* 8011DAB4 0011AA14  90 01 00 04 */	stw r0, 4(r1)
 /* 8011DAB8 0011AA18  94 21 FF D0 */	stwu r1, -0x30(r1)
@@ -131,25 +130,34 @@ makeCamera__7NCameraFv:
 /* 8011DB3C 0011AA9C  38 21 00 30 */	addi r1, r1, 0x30
 /* 8011DB40 0011AAA0  7C 08 03 A6 */	mtlr r0
 /* 8011DB44 0011AAA4  4E 80 00 20 */	blr 
+.endfn makeCamera__7NCameraFv
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-lbl_803E3058:
+.obj lbl_803E3058, local
 	.float 0.0
-lbl_803E305C:
+.endobj lbl_803E3058
+.obj lbl_803E305C, local
 	.float 0.0
-lbl_803E3060:
+.endobj lbl_803E305C
+.obj lbl_803E3060, local
 	.float 0.0
-lbl_803E3064:
+.endobj lbl_803E3060
+.obj lbl_803E3064, local
 	.float 0.0
-lbl_803E3068:
+.endobj lbl_803E3064
+.obj lbl_803E3068, local
 	.float 0.0
-lbl_803E306C:
+.endobj lbl_803E3068
+.obj lbl_803E306C, local
 	.float 1.0
+.endobj lbl_803E306C
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803EA238:
+.obj lbl_803EA238, local
 	.float 0.0
-lbl_803EA23C:
+.endobj lbl_803EA238
+.obj lbl_803EA23C, local
 	.float 0.5
+.endobj lbl_803EA23C

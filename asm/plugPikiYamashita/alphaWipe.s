@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global __ct__Q23zen9AlphaWipeFv
-__ct__Q23zen9AlphaWipeFv:
+.fn __ct__Q23zen9AlphaWipeFv, global
 /* 801F19D8 001EE938  38 80 00 00 */	li r4, 0
 /* 801F19DC 001EE93C  90 83 00 00 */	stw r4, 0(r3)
 /* 801F19E0 001EE940  38 00 00 FF */	li r0, 0xff
@@ -20,9 +19,9 @@ __ct__Q23zen9AlphaWipeFv:
 /* 801F1A14 001EE974  98 03 00 26 */	stb r0, 0x26(r3)
 /* 801F1A18 001EE978  98 03 00 27 */	stb r0, 0x27(r3)
 /* 801F1A1C 001EE97C  4E 80 00 20 */	blr 
+.endfn __ct__Q23zen9AlphaWipeFv
 
-.global update__Q23zen9AlphaWipeFv
-update__Q23zen9AlphaWipeFv:
+.fn update__Q23zen9AlphaWipeFv, global
 /* 801F1A20 001EE980  94 21 FF C0 */	stwu r1, -0x40(r1)
 /* 801F1A24 001EE984  80 03 00 00 */	lwz r0, 0(r3)
 /* 801F1A28 001EE988  2C 00 00 01 */	cmpwi r0, 1
@@ -172,9 +171,9 @@ update__Q23zen9AlphaWipeFv:
 .L_801F1C24:
 /* 801F1C24 001EEB84  38 21 00 40 */	addi r1, r1, 0x40
 /* 801F1C28 001EEB88  4E 80 00 20 */	blr 
+.endfn update__Q23zen9AlphaWipeFv
 
-.global draw__Q23zen9AlphaWipeFR8Graphics
-draw__Q23zen9AlphaWipeFR8Graphics:
+.fn draw__Q23zen9AlphaWipeFR8Graphics, global
 /* 801F1C2C 001EEB8C  7C 08 02 A6 */	mflr r0
 /* 801F1C30 001EEB90  90 01 00 04 */	stw r0, 4(r1)
 /* 801F1C34 001EEB94  94 21 FF 80 */	stwu r1, -0x80(r1)
@@ -233,9 +232,9 @@ draw__Q23zen9AlphaWipeFR8Graphics:
 /* 801F1D04 001EEC64  38 21 00 80 */	addi r1, r1, 0x80
 /* 801F1D08 001EEC68  7C 08 03 A6 */	mtlr r0
 /* 801F1D0C 001EEC6C  4E 80 00 20 */	blr 
+.endfn draw__Q23zen9AlphaWipeFR8Graphics
 
-.global start__Q23zen9AlphaWipeFffQ33zen9AlphaWipe8typeFlag
-start__Q23zen9AlphaWipeFffQ33zen9AlphaWipe8typeFlag:
+.fn start__Q23zen9AlphaWipeFffQ33zen9AlphaWipe8typeFlag, global
 /* 801F1D10 001EEC70  C0 02 C2 44 */	lfs f0, lbl_803EC444@sda21(r2)
 /* 801F1D14 001EEC74  38 00 00 01 */	li r0, 1
 /* 801F1D18 001EEC78  90 03 00 00 */	stw r0, 0(r3)
@@ -257,18 +256,19 @@ start__Q23zen9AlphaWipeFffQ33zen9AlphaWipe8typeFlag:
 /* 801F1D54 001EECB4  98 03 00 23 */	stb r0, 0x23(r3)
 /* 801F1D58 001EECB8  98 03 00 27 */	stb r0, 0x27(r3)
 /* 801F1D5C 001EECBC  4E 80 00 20 */	blr 
+.endfn start__Q23zen9AlphaWipeFffQ33zen9AlphaWipe8typeFlag
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-.global lbl_803EC438
-lbl_803EC438:
+.obj lbl_803EC438, local
 	.float 0.0
-.global lbl_803EC43C
-lbl_803EC43C:
+.endobj lbl_803EC438
+.obj lbl_803EC43C, local
 	.float 1.0
-.global lbl_803EC440
-lbl_803EC440:
+.endobj lbl_803EC43C
+.obj lbl_803EC440, local
 	.float 255.0
-.global lbl_803EC444
-lbl_803EC444:
+.endobj lbl_803EC440
+.obj lbl_803EC444, local
 	.float 0.5
+.endobj lbl_803EC444

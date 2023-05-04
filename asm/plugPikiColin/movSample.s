@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global convHVQM4TexY8UV8__FiiPUcPUc
-convHVQM4TexY8UV8__FiiPUcPUc:
+.fn convHVQM4TexY8UV8__FiiPUcPUc, global
 /* 80077EF0 00074E50  7C 08 02 A6 */	mflr r0
 /* 80077EF4 00074E54  39 65 00 00 */	addi r11, r5, 0
 /* 80077EF8 00074E58  90 01 00 04 */	stw r0, 4(r1)
@@ -264,9 +263,9 @@ convHVQM4TexY8UV8__FiiPUcPUc:
 /* 800782D4 00075234  38 21 00 38 */	addi r1, r1, 0x38
 /* 800782D8 00075238  7C 08 03 A6 */	mtlr r0
 /* 800782DC 0007523C  4E 80 00 20 */	blr 
+.endfn convHVQM4TexY8UV8__FiiPUcPUc
 
-.global playbackFunc__FPv
-playbackFunc__FPv:
+.fn playbackFunc__FPv, local
 /* 800782E0 00075240  7C 08 02 A6 */	mflr r0
 /* 800782E4 00075244  90 01 00 04 */	stw r0, 4(r1)
 /* 800782E8 00075248  94 21 FF F8 */	stwu r1, -8(r1)
@@ -282,9 +281,9 @@ playbackFunc__FPv:
 /* 80078308 00075268  38 21 00 08 */	addi r1, r1, 8
 /* 8007830C 0007526C  7C 08 03 A6 */	mtlr r0
 /* 80078310 00075270  4E 80 00 20 */	blr 
+.endfn playbackFunc__FPv
 
-.global init__16MovSampleSectionFv
-init__16MovSampleSectionFv:
+.fn init__16MovSampleSectionFv, global
 /* 80078314 00075274  7C 08 02 A6 */	mflr r0
 /* 80078318 00075278  3C 80 80 2B */	lis r4, lbl_802AC8D8@ha
 /* 8007831C 0007527C  90 01 00 04 */	stw r0, 4(r1)
@@ -438,9 +437,9 @@ init__16MovSampleSectionFv:
 /* 80078560 000754C0  38 21 00 30 */	addi r1, r1, 0x30
 /* 80078564 000754C4  7C 08 03 A6 */	mtlr r0
 /* 80078568 000754C8  4E 80 00 20 */	blr 
+.endfn init__16MovSampleSectionFv
 
-.global update__21MovSampleSetupSectionFv
-update__21MovSampleSetupSectionFv:
+.fn update__21MovSampleSetupSectionFv, weak
 /* 8007856C 000754CC  7C 08 02 A6 */	mflr r0
 /* 80078570 000754D0  90 01 00 04 */	stw r0, 4(r1)
 /* 80078574 000754D4  94 21 FF C8 */	stwu r1, -0x38(r1)
@@ -530,9 +529,9 @@ update__21MovSampleSetupSectionFv:
 /* 800786AC 0007560C  38 21 00 38 */	addi r1, r1, 0x38
 /* 800786B0 00075610  7C 08 03 A6 */	mtlr r0
 /* 800786B4 00075614  4E 80 00 20 */	blr 
+.endfn update__21MovSampleSetupSectionFv
 
-.global draw__21MovSampleSetupSectionFR8Graphics
-draw__21MovSampleSetupSectionFR8Graphics:
+.fn draw__21MovSampleSetupSectionFR8Graphics, weak
 /* 800786B8 00075618  7C 08 02 A6 */	mflr r0
 /* 800786BC 0007561C  90 01 00 04 */	stw r0, 4(r1)
 /* 800786C0 00075620  94 21 FE 08 */	stwu r1, -0x1f8(r1)
@@ -786,7 +785,7 @@ draw__21MovSampleSetupSectionFR8Graphics:
 /* 80078AA0 00075A00  48 19 AA 81 */	bl GXSetTevKColorSel
 /* 80078AA4 00075A04  80 62 88 C8 */	lwz r3, lbl_803E8AC8@sda21(r2)
 /* 80078AA8 00075A08  38 81 00 24 */	addi r4, r1, 0x24
-/* 80078AAC 00075A0C  80 02 88 CC */	lwz r0, lbl_803E8ACC@sda21(r2)
+/* 80078AAC 00075A0C  80 02 88 CC */	lwz r0, (lbl_803E8AC8+4)@sda21(r2)
 /* 80078AB0 00075A10  90 61 00 2C */	stw r3, 0x2c(r1)
 /* 80078AB4 00075A14  38 60 00 01 */	li r3, 1
 /* 80078AB8 00075A18  90 01 00 30 */	stw r0, 0x30(r1)
@@ -979,57 +978,72 @@ draw__21MovSampleSetupSectionFR8Graphics:
 /* 80078DA4 00075D04  38 21 01 F8 */	addi r1, r1, 0x1f8
 /* 80078DA8 00075D08  7C 08 03 A6 */	mtlr r0
 /* 80078DAC 00075D0C  4E 80 00 20 */	blr 
+.endfn draw__21MovSampleSetupSectionFR8Graphics
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802AC8D8:
+.obj lbl_802AC8D8, local
 	.asciz "movSample.cpp"
+.endobj lbl_802AC8D8
 .balign 4
-lbl_802AC8E8:
+.obj lbl_802AC8E8, local
 	.asciz "MovSample"
+.endobj lbl_802AC8E8
 .balign 4
-lbl_802AC8F4:
+.obj lbl_802AC8F4, local
 	.asciz "../MovieData/cntA_S.h4m"
+.endobj lbl_802AC8F4
 .balign 4
-lbl_802AC90C:
+.obj lbl_802AC90C, local
 	.asciz "../MovieData/cntB_S.h4m"
+.endobj lbl_802AC90C
 .balign 4
-lbl_802AC924:
+.obj lbl_802AC924, local
 	.asciz "../MovieData/cntC_S.h4m"
+.endobj lbl_802AC924
 .balign 4
-lbl_802AC93C:
+.obj lbl_802AC93C, local
 	.asciz "../MovieData/cntD_S.h4m"
+.endobj lbl_802AC93C
 .balign 4
-lbl_802AC954:
+.obj lbl_802AC954, local
 	.asciz "../MovieData/sr_S.h4m"
+.endobj lbl_802AC954
 .balign 4
-lbl_802AC96C:
+.obj lbl_802AC96C, local
 	.asciz "../MovieData/srhp_S.h4m"
+.endobj lbl_802AC96C
 .balign 4
-movieNames$localstatic0$__ct__21MovSampleSetupSectionFv:
+.obj movieNames$localstatic0$__ct__21MovSampleSetupSectionFv, weak
 	.4byte lbl_802AC8F4
 	.4byte lbl_802AC90C
 	.4byte lbl_802AC924
 	.4byte lbl_802AC93C
 	.4byte lbl_802AC954
 	.4byte lbl_802AC96C
+.endobj movieNames$localstatic0$__ct__21MovSampleSetupSectionFv
 .balign 4
-lbl_802AC99C:
+.obj lbl_802AC99C, local
 	.asciz "<MovSampleSection>"
+.endobj lbl_802AC99C
 .balign 4
-lbl_802AC9B0:
+.obj lbl_802AC9B0, local
 	.asciz "MovSample section"
+.endobj lbl_802AC9B0
 .balign 4
-lbl_802AC9C4:
+.obj lbl_802AC9C4, local
 	.asciz "<Controller>"
+.endobj lbl_802AC9C4
 .balign 4
-lbl_802AC9D4:
+.obj lbl_802AC9D4, local
 	.asciz "CoreNode"
+.endobj lbl_802AC9D4
 .balign 4
-lbl_802AC9E0:
+.obj lbl_802AC9E0, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte 0
+.endobj lbl_802AC9E0
 	.4byte 0
 	.4byte 0
 	.4byte 0
@@ -1038,16 +1052,18 @@ lbl_802AC9E0:
 	.4byte 0
 	.4byte 0
 .balign 4
-lbl_802ACA08:
+.obj lbl_802ACA08, local
 	.asciz "MovSampleSetupSection"
+.endobj lbl_802ACA08
 .balign 4
-lbl_802ACA20:
+.obj lbl_802ACA20, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte __RTTI__8CoreNode
 	.4byte 0
 	.4byte 0
-lbl_802ACA34:
+.endobj lbl_802ACA20
+.obj lbl_802ACA34, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte __RTTI__8CoreNode
@@ -1055,8 +1071,8 @@ lbl_802ACA34:
 	.4byte __RTTI__4Node
 	.4byte 0
 	.4byte 0
-.global __vt__21MovSampleSetupSection
-__vt__21MovSampleSetupSection:
+.endobj lbl_802ACA34
+.obj __vt__21MovSampleSetupSection, weak
 	.4byte __RTTI__21MovSampleSetupSection
 	.4byte 0
 	.4byte getAgeNodeType__5ANodeFv
@@ -1069,11 +1085,13 @@ __vt__21MovSampleSetupSection:
 	.4byte concat__4NodeFR3SRT
 	.4byte concat__4NodeFR8Matrix4f
 	.4byte getModelMatrix__4NodeFv
+.endobj __vt__21MovSampleSetupSection
 .balign 4
-lbl_802ACA80:
+.obj lbl_802ACA80, local
 	.asciz "MovSampleSection"
+.endobj lbl_802ACA80
 .balign 4
-lbl_802ACA94:
+.obj lbl_802ACA94, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte __RTTI__8CoreNode
@@ -1081,7 +1099,8 @@ lbl_802ACA94:
 	.4byte __RTTI__4Node
 	.4byte 0
 	.4byte 0
-lbl_802ACAB0:
+.endobj lbl_802ACA94
+.obj lbl_802ACAB0, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte __RTTI__8CoreNode
@@ -1091,8 +1110,8 @@ lbl_802ACAB0:
 	.4byte __RTTI__7Section
 	.4byte 0
 	.4byte 0
-.global __vt__16MovSampleSection
-__vt__16MovSampleSection:
+.endobj lbl_802ACAB0
+.obj __vt__16MovSampleSection, global
 	.4byte __RTTI__16MovSampleSection
 	.4byte 0
 	.4byte getAgeNodeType__5ANodeFv
@@ -1106,68 +1125,89 @@ __vt__16MovSampleSection:
 	.4byte concat__4NodeFR8Matrix4f
 	.4byte getModelMatrix__4NodeFv
 	.4byte init__16MovSampleSectionFv
+.endobj __vt__16MovSampleSection
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-lbl_803DE860:
+.obj lbl_803DE860, local
 	.asciz "<Node>"
+.endobj lbl_803DE860
 .balign 4
-lbl_803DE868:
+.obj lbl_803DE868, local
 	.asciz "ANode"
+.endobj lbl_803DE868
 .balign 4
-__RTTI__5ANode:
+.obj __RTTI__5ANode, local
 	.4byte lbl_803DE868
 	.4byte 0
-__RTTI__8CoreNode:
+.endobj __RTTI__5ANode
+.obj __RTTI__8CoreNode, local
 	.4byte lbl_802AC9D4
 	.4byte lbl_802AC9E0
+.endobj __RTTI__8CoreNode
 .balign 4
-lbl_803DE880:
+.obj lbl_803DE880, local
 	.asciz "Node"
+.endobj lbl_803DE880
 .balign 4
-__RTTI__4Node:
+.obj __RTTI__4Node, local
 	.4byte lbl_803DE880
 	.4byte lbl_802ACA20
-__RTTI__21MovSampleSetupSection:
+.endobj __RTTI__4Node
+.obj __RTTI__21MovSampleSetupSection, local
 	.4byte lbl_802ACA08
 	.4byte lbl_802ACA34
+.endobj __RTTI__21MovSampleSetupSection
 .balign 4
-lbl_803DE898:
+.obj lbl_803DE898, local
 	.asciz "Section"
+.endobj lbl_803DE898
 .balign 4
-__RTTI__7Section:
+.obj __RTTI__7Section, local
 	.4byte lbl_803DE898
 	.4byte lbl_802ACA94
-__RTTI__16MovSampleSection:
+.endobj __RTTI__7Section
+.obj __RTTI__16MovSampleSection, local
 	.4byte lbl_802ACA80
 	.4byte lbl_802ACAB0
+.endobj __RTTI__16MovSampleSection
 
 .section .sbss, "wa"
 .balign 8
-ImgH:
+.obj ImgH, local
 	.skip 2
-ImgW:
+.endobj ImgH
+.obj ImgW, local
 	.skip 2
-finishPlayback:
+.endobj ImgW
+.obj finishPlayback, local
 	.skip 1
+.endobj finishPlayback
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803E8AC8:
+.obj lbl_803E8AC8, local
 	.4byte 0xFF910000
-lbl_803E8ACC:
 	.4byte 0xFF760044
-lbl_803E8AD0:
+.endobj lbl_803E8AC8
+.obj lbl_803E8AD0, local
 	.4byte 0x6600FF32
-lbl_803E8AD4:
+.endobj lbl_803E8AD0
+.obj lbl_803E8AD4, local
 	.4byte 0x94009494
-lbl_803E8AD8:
+.endobj lbl_803E8AD4
+.obj lbl_803E8AD8, local
 	.4byte 0xCB0005CF
-lbl_803E8ADC:
+.endobj lbl_803E8AD8
+.obj lbl_803E8ADC, local
 	.4byte 0x00FF0000
-lbl_803E8AE0:
+.endobj lbl_803E8ADC
+.obj lbl_803E8AE0, local
 	.float 1.0
-lbl_803E8AE4:
+.endobj lbl_803E8AE0
+.obj lbl_803E8AE4, local
 	.float 3.0
-lbl_803E8AE8:
+.endobj lbl_803E8AE4
+.obj lbl_803E8AE8, local
 	.float 0.0
+.endobj lbl_803E8AE8

@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global add__8CoreNodeFP8CoreNode
-add__8CoreNodeFP8CoreNode:
+.fn add__8CoreNodeFP8CoreNode, global
 /* 800405D8 0003D538  80 03 00 10 */	lwz r0, 0x10(r3)
 /* 800405DC 0003D53C  28 00 00 00 */	cmplwi r0, 0
 /* 800405E0 0003D540  7C 05 03 78 */	mr r5, r0
@@ -20,9 +19,9 @@ add__8CoreNodeFP8CoreNode:
 .L_80040608:
 /* 80040608 0003D568  90 64 00 08 */	stw r3, 8(r4)
 /* 8004060C 0003D56C  4E 80 00 20 */	blr 
+.endfn add__8CoreNodeFP8CoreNode
 
-.global del__8CoreNodeFv
-del__8CoreNodeFv:
+.fn del__8CoreNodeFv, global
 /* 80040610 0003D570  80 83 00 08 */	lwz r4, 8(r3)
 /* 80040614 0003D574  28 04 00 00 */	cmplwi r4, 0
 /* 80040618 0003D578  4D 82 00 20 */	beqlr 
@@ -55,9 +54,9 @@ del__8CoreNodeFv:
 /* 80040674 0003D5D4  28 04 00 00 */	cmplwi r4, 0
 /* 80040678 0003D5D8  40 82 FF B4 */	bne .L_8004062C
 /* 8004067C 0003D5DC  4E 80 00 20 */	blr 
+.endfn del__8CoreNodeFv
 
-.global getChildCount__8CoreNodeFv
-getChildCount__8CoreNodeFv:
+.fn getChildCount__8CoreNodeFv, global
 /* 80040680 0003D5E0  80 83 00 10 */	lwz r4, 0x10(r3)
 /* 80040684 0003D5E4  38 60 00 00 */	li r3, 0
 /* 80040688 0003D5E8  48 00 00 0C */	b .L_80040694
@@ -68,9 +67,9 @@ getChildCount__8CoreNodeFv:
 /* 80040694 0003D5F4  28 04 00 00 */	cmplwi r4, 0
 /* 80040698 0003D5F8  40 82 FF F4 */	bne .L_8004068C
 /* 8004069C 0003D5FC  4E 80 00 20 */	blr 
+.endfn getChildCount__8CoreNodeFv
 
-.global load__8CoreNodeFPcPcUl
-load__8CoreNodeFPcPcUl:
+.fn load__8CoreNodeFPcPcUl, global
 /* 800406A0 0003D600  7C 08 02 A6 */	mflr r0
 /* 800406A4 0003D604  38 C5 00 00 */	addi r6, r5, 0
 /* 800406A8 0003D608  90 01 00 04 */	stw r0, 4(r1)
@@ -111,9 +110,9 @@ load__8CoreNodeFPcPcUl:
 /* 80040730 0003D690  38 21 01 20 */	addi r1, r1, 0x120
 /* 80040734 0003D694  7C 08 03 A6 */	mtlr r0
 /* 80040738 0003D698  4E 80 00 20 */	blr 
+.endfn load__8CoreNodeFPcPcUl
 
-.global init__4NodeFPc
-init__4NodeFPc:
+.fn init__4NodeFPc, global
 /* 8004073C 0003D69C  38 C0 00 00 */	li r6, 0
 /* 80040740 0003D6A0  90 C3 00 10 */	stw r6, 0x10(r3)
 /* 80040744 0003D6A4  38 A0 00 03 */	li r5, 3
@@ -124,9 +123,9 @@ init__4NodeFPc:
 /* 80040758 0003D6B8  90 A3 00 18 */	stw r5, 0x18(r3)
 /* 8004075C 0003D6BC  90 03 00 1C */	stw r0, 0x1c(r3)
 /* 80040760 0003D6C0  4E 80 00 20 */	blr 
+.endfn init__4NodeFPc
 
-.global update__4NodeFv
-update__4NodeFv:
+.fn update__4NodeFv, global
 /* 80040764 0003D6C4  7C 08 02 A6 */	mflr r0
 /* 80040768 0003D6C8  90 01 00 04 */	stw r0, 4(r1)
 /* 8004076C 0003D6CC  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -157,9 +156,9 @@ update__4NodeFv:
 /* 800407C4 0003D724  38 21 00 18 */	addi r1, r1, 0x18
 /* 800407C8 0003D728  7C 08 03 A6 */	mtlr r0
 /* 800407CC 0003D72C  4E 80 00 20 */	blr 
+.endfn update__4NodeFv
 
-.global draw__4NodeFR8Graphics
-draw__4NodeFR8Graphics:
+.fn draw__4NodeFR8Graphics, global
 /* 800407D0 0003D730  7C 08 02 A6 */	mflr r0
 /* 800407D4 0003D734  90 01 00 04 */	stw r0, 4(r1)
 /* 800407D8 0003D738  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -185,9 +184,9 @@ draw__4NodeFR8Graphics:
 /* 80040820 0003D780  38 21 00 18 */	addi r1, r1, 0x18
 /* 80040824 0003D784  7C 08 03 A6 */	mtlr r0
 /* 80040828 0003D788  4E 80 00 20 */	blr 
+.endfn draw__4NodeFR8Graphics
 
-.global render__4NodeFR8Graphics
-render__4NodeFR8Graphics:
+.fn render__4NodeFR8Graphics, global
 /* 8004082C 0003D78C  7C 08 02 A6 */	mflr r0
 /* 80040830 0003D790  90 01 00 04 */	stw r0, 4(r1)
 /* 80040834 0003D794  94 21 FF F8 */	stwu r1, -8(r1)
@@ -199,9 +198,9 @@ render__4NodeFR8Graphics:
 /* 8004084C 0003D7AC  38 21 00 08 */	addi r1, r1, 8
 /* 80040850 0003D7B0  7C 08 03 A6 */	mtlr r0
 /* 80040854 0003D7B4  4E 80 00 20 */	blr 
+.endfn render__4NodeFR8Graphics
 
-.global update__7SRTNodeFv
-update__7SRTNodeFv:
+.fn update__7SRTNodeFv, global
 /* 80040858 0003D7B8  7C 08 02 A6 */	mflr r0
 /* 8004085C 0003D7BC  90 01 00 04 */	stw r0, 4(r1)
 /* 80040860 0003D7C0  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -236,9 +235,9 @@ update__7SRTNodeFv:
 /* 800408C8 0003D828  38 21 00 18 */	addi r1, r1, 0x18
 /* 800408CC 0003D82C  7C 08 03 A6 */	mtlr r0
 /* 800408D0 0003D830  4E 80 00 20 */	blr 
+.endfn update__7SRTNodeFv
 
-.global Del__7NodeMgrFP4Node
-Del__7NodeMgrFP4Node:
+.fn Del__7NodeMgrFP4Node, global
 /* 800408D4 0003D834  38 00 00 01 */	li r0, 1
 /* 800408D8 0003D838  28 04 00 00 */	cmplwi r4, 0
 /* 800408DC 0003D83C  98 03 00 00 */	stb r0, 0(r3)
@@ -268,9 +267,9 @@ Del__7NodeMgrFP4Node:
 /* 8004092C 0003D88C  28 05 00 00 */	cmplwi r5, 0
 /* 80040930 0003D890  40 82 FF CC */	bne .L_800408FC
 /* 80040934 0003D894  4E 80 00 20 */	blr 
+.endfn Del__7NodeMgrFP4Node
 
-.global __ct__7NodeMgrFv
-__ct__7NodeMgrFv:
+.fn __ct__7NodeMgrFv, global
 /* 80040938 0003D898  3C 80 80 22 */	lis r4, __vt__5ANode@ha
 /* 8004093C 0003D89C  38 04 73 8C */	addi r0, r4, __vt__5ANode@l
 /* 80040940 0003D8A0  3C 80 80 22 */	lis r4, __vt__8CoreNode@ha
@@ -286,39 +285,44 @@ __ct__7NodeMgrFv:
 /* 80040968 0003D8C8  90 03 00 08 */	stw r0, 8(r3)
 /* 8004096C 0003D8CC  98 A3 00 00 */	stb r5, 0(r3)
 /* 80040970 0003D8D0  4E 80 00 20 */	blr 
+.endfn __ct__7NodeMgrFv
 
-.global concat__7SRTNodeFv
-concat__7SRTNodeFv:
+.fn concat__7SRTNodeFv, weak
 /* 80040974 0003D8D4  4E 80 00 20 */	blr 
+.endfn concat__7SRTNodeFv
 
-.global concat__7SRTNodeFR8Matrix4f
-concat__7SRTNodeFR8Matrix4f:
+.fn concat__7SRTNodeFR8Matrix4f, weak
 /* 80040978 0003D8D8  4E 80 00 20 */	blr 
+.endfn concat__7SRTNodeFR8Matrix4f
 
-.global getModelMatrix__7SRTNodeFv
-getModelMatrix__7SRTNodeFv:
+.fn getModelMatrix__7SRTNodeFv, weak
 /* 8004097C 0003D8DC  38 63 00 20 */	addi r3, r3, 0x20
 /* 80040980 0003D8E0  4E 80 00 20 */	blr 
+.endfn getModelMatrix__7SRTNodeFv
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_80228D80:
+.obj lbl_80228D80, local
 	.asciz "node.cpp"
+.endobj lbl_80228D80
 .balign 4
-lbl_80228D8C:
+.obj lbl_80228D8C, local
 	.asciz "CoreNode"
+.endobj lbl_80228D8C
 .balign 4
-lbl_80228D98:
+.obj lbl_80228D98, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte 0
-lbl_80228DA4:
+.endobj lbl_80228D98
+.obj lbl_80228DA4, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte __RTTI__8CoreNode
 	.4byte 0
 	.4byte 0
-lbl_80228DB8:
+.endobj lbl_80228DA4
+.obj lbl_80228DB8, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte __RTTI__8CoreNode
@@ -326,8 +330,8 @@ lbl_80228DB8:
 	.4byte __RTTI__4Node
 	.4byte 0
 	.4byte 0
-.global __vt__7SRTNode
-__vt__7SRTNode:
+.endobj lbl_80228DB8
+.obj __vt__7SRTNode, global
 	.4byte __RTTI__7SRTNode
 	.4byte 0
 	.4byte getAgeNodeType__5ANodeFv
@@ -340,6 +344,7 @@ __vt__7SRTNode:
 	.4byte concat__4NodeFR3SRT
 	.4byte concat__7SRTNodeFR8Matrix4f
 	.4byte getModelMatrix__7SRTNodeFv
+.endobj __vt__7SRTNode
 	.4byte 0
 	.4byte 0
 	.4byte 0
@@ -347,8 +352,7 @@ __vt__7SRTNode:
 	.4byte 0
 	.4byte 0
 	.4byte 0
-.global __vt__4Node
-__vt__4Node:
+.obj __vt__4Node, global
 	.4byte __RTTI__4Node
 	.4byte 0
 	.4byte getAgeNodeType__5ANodeFv
@@ -361,36 +365,45 @@ __vt__4Node:
 	.4byte concat__4NodeFR3SRT
 	.4byte concat__4NodeFR8Matrix4f
 	.4byte getModelMatrix__4NodeFv
+.endobj __vt__4Node
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-lbl_803DD380:
+.obj lbl_803DD380, local
 	.asciz "Node"
+.endobj lbl_803DD380
 .balign 4
-lbl_803DD388:
+.obj lbl_803DD388, local
 	.asciz "%s%s"
+.endobj lbl_803DD388
 .balign 4
-lbl_803DD390:
+.obj lbl_803DD390, local
 	.asciz "SRTNode"
+.endobj lbl_803DD390
 .balign 4
-lbl_803DD398:
+.obj lbl_803DD398, local
 	.asciz "ANode"
+.endobj lbl_803DD398
 .balign 4
-__RTTI__5ANode:
+.obj __RTTI__5ANode, local
 	.4byte lbl_803DD398
 	.4byte 0
-__RTTI__8CoreNode:
+.endobj __RTTI__5ANode
+.obj __RTTI__8CoreNode, local
 	.4byte lbl_80228D8C
 	.4byte lbl_80228D98
-__RTTI__4Node:
+.endobj __RTTI__8CoreNode
+.obj __RTTI__4Node, local
 	.4byte lbl_803DD380
 	.4byte lbl_80228DA4
-__RTTI__7SRTNode:
+.endobj __RTTI__4Node
+.obj __RTTI__7SRTNode, local
 	.4byte lbl_803DD390
 	.4byte lbl_80228DB8
+.endobj __RTTI__7SRTNode
 
 .section .sbss, "wa"
 .balign 8
-.global nodeMgr
-nodeMgr:
+.obj nodeMgr, global
 	.skip 4
+.endobj nodeMgr

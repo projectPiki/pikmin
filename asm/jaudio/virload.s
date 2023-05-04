@@ -1,8 +1,7 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
 .balign 32, 0
-.global JV_InitHeader_M__FPcPUcPUc
-JV_InitHeader_M__FPcPUcPUc:
+.fn JV_InitHeader_M__FPcPUcPUc, global
 /* 8000E580 0000B4E0  7C 08 02 A6 */	mflr r0
 /* 8000E584 0000B4E4  90 01 00 04 */	stw r0, 4(r1)
 /* 8000E588 0000B4E8  94 21 FF C8 */	stwu r1, -0x38(r1)
@@ -89,10 +88,10 @@ JV_InitHeader_M__FPcPUcPUc:
 /* 8000E6AC 0000B60C  38 21 00 38 */	addi r1, r1, 0x38
 /* 8000E6B0 0000B610  7C 08 03 A6 */	mtlr r0
 /* 8000E6B4 0000B614  4E 80 00 20 */	blr 
+.endfn JV_InitHeader_M__FPcPUcPUc
 
 .balign 32, 0
-.global JV_GetArchiveHandle__FPc
-JV_GetArchiveHandle__FPc:
+.fn JV_GetArchiveHandle__FPc, global
 /* 8000E6C0 0000B620  7C 08 02 A6 */	mflr r0
 /* 8000E6C4 0000B624  3C 80 80 31 */	lis r4, JV_ARC_NAME@ha
 /* 8000E6C8 0000B628  90 01 00 04 */	stw r0, 4(r1)
@@ -129,10 +128,10 @@ JV_GetArchiveHandle__FPc:
 /* 8000E730 0000B690  38 21 00 20 */	addi r1, r1, 0x20
 /* 8000E734 0000B694  7C 08 03 A6 */	mtlr r0
 /* 8000E738 0000B698  4E 80 00 20 */	blr 
+.endfn JV_GetArchiveHandle__FPc
 
 .balign 32, 0
-.global JV_GetRealHandle__FUl
-JV_GetRealHandle__FUl:
+.fn JV_GetRealHandle__FUl, global
 /* 8000E740 0000B6A0  80 0D 2C 10 */	lwz r0, JV_CURRENT_ARCS@sda21(r13)
 /* 8000E744 0000B6A4  54 64 84 3E */	srwi r4, r3, 0x10
 /* 8000E748 0000B6A8  54 65 04 3E */	clrlwi r5, r3, 0x10
@@ -170,10 +169,10 @@ JV_GetRealHandle__FUl:
 /* 8000E7B4 0000B714  28 00 FF FF */	cmplwi r0, 0xffff
 /* 8000E7B8 0000B718  40 82 FF EC */	bne .L_8000E7A4
 /* 8000E7BC 0000B71C  4E 80 00 20 */	blr 
+.endfn JV_GetRealHandle__FUl
 
 .balign 32, 0
-.global JV_CheckSize__FUl
-JV_CheckSize__FUl:
+.fn JV_CheckSize__FUl, global
 /* 8000E7C0 0000B720  7C 08 02 A6 */	mflr r0
 /* 8000E7C4 0000B724  90 01 00 04 */	stw r0, 4(r1)
 /* 8000E7C8 0000B728  94 21 FF F8 */	stwu r1, -8(r1)
@@ -189,10 +188,10 @@ JV_CheckSize__FUl:
 /* 8000E7E8 0000B748  38 21 00 08 */	addi r1, r1, 8
 /* 8000E7EC 0000B74C  7C 08 03 A6 */	mtlr r0
 /* 8000E7F0 0000B750  4E 80 00 20 */	blr 
+.endfn JV_CheckSize__FUl
 
 .balign 32, 0
-.global JV_LoadFile__FUlPUcUlUl
-JV_LoadFile__FUlPUcUlUl:
+.fn JV_LoadFile__FUlPUcUlUl, global
 /* 8000E800 0000B760  7C 08 02 A6 */	mflr r0
 /* 8000E804 0000B764  90 01 00 04 */	stw r0, 4(r1)
 /* 8000E808 0000B768  38 00 00 00 */	li r0, 0
@@ -246,10 +245,10 @@ JV_LoadFile__FUlPUcUlUl:
 /* 8000E8C4 0000B824  38 21 00 C8 */	addi r1, r1, 0xc8
 /* 8000E8C8 0000B828  7C 08 03 A6 */	mtlr r0
 /* 8000E8CC 0000B82C  4E 80 00 20 */	blr 
+.endfn JV_LoadFile__FUlPUcUlUl
 
 .balign 32, 0
-.global JV_LoadFile_Async2__FUlPUcUlUlPFUl_vUl
-JV_LoadFile_Async2__FUlPUcUlUlPFUl_vUl:
+.fn JV_LoadFile_Async2__FUlPUcUlUlPFUl_vUl, global
 /* 8000E8E0 0000B840  7C 08 02 A6 */	mflr r0
 /* 8000E8E4 0000B844  90 01 00 04 */	stw r0, 4(r1)
 /* 8000E8E8 0000B848  94 21 FF 28 */	stwu r1, -0xd8(r1)
@@ -307,17 +306,22 @@ JV_LoadFile_Async2__FUlPUcUlUlPFUl_vUl:
 /* 8000E9B4 0000B914  38 21 00 D8 */	addi r1, r1, 0xd8
 /* 8000E9B8 0000B918  7C 08 03 A6 */	mtlr r0
 /* 8000E9BC 0000B91C  4E 80 00 20 */	blr 
+.endfn JV_LoadFile_Async2__FUlPUcUlUlPFUl_vUl
 
 .section .sbss, "wa"
 .balign 8
-JV_CURRENT_ARCS:
+.obj JV_CURRENT_ARCS, local
 	.skip 4
-first$164:
+.endobj JV_CURRENT_ARCS
+.obj first$164, local
 	.skip 4
-init$165:
+.endobj first$164
+.obj init$165, local
 	.skip 1
+.endobj init$165
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803E82D0:
+.obj lbl_803E82D0, local
 	.asciz "/"
+.endobj lbl_803E82D0

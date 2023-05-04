@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global __OSInitAudioSystem
-__OSInitAudioSystem:
+.fn __OSInitAudioSystem, global
 /* 801F6938 001F3898  7C 08 02 A6 */	mflr r0
 /* 801F693C 001F389C  3C 60 80 2E */	lis r3, DSPInitCode@ha
 /* 801F6940 001F38A0  90 01 00 04 */	stw r0, 4(r1)
@@ -114,9 +113,9 @@ __OSInitAudioSystem:
 /* 801F6AC0 001F3A20  38 21 00 30 */	addi r1, r1, 0x30
 /* 801F6AC4 001F3A24  7C 08 03 A6 */	mtlr r0
 /* 801F6AC8 001F3A28  4E 80 00 20 */	blr 
+.endfn __OSInitAudioSystem
 
-.global __OSStopAudioSystem
-__OSStopAudioSystem:
+.fn __OSStopAudioSystem, global
 /* 801F6ACC 001F3A2C  7C 08 02 A6 */	mflr r0
 /* 801F6AD0 001F3A30  3C 60 CC 00 */	lis r3, 0xCC005000@ha
 /* 801F6AD4 001F3A34  90 01 00 04 */	stw r0, 4(r1)
@@ -179,11 +178,11 @@ __OSStopAudioSystem:
 /* 801F6B98 001F3AF8  7C 08 03 A6 */	mtlr r0
 /* 801F6B9C 001F3AFC  38 21 00 10 */	addi r1, r1, 0x10
 /* 801F6BA0 001F3B00  4E 80 00 20 */	blr 
+.endfn __OSStopAudioSystem
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-.global DSPInitCode
-DSPInitCode:
+.obj DSPInitCode, local
 	.4byte 0x029F0010
 	.4byte 0x029F0035
 	.4byte 0x029F0036
@@ -216,3 +215,4 @@ DSPInitCode:
 	.4byte 0x02FF02FF
 	.4byte 0x00000000
 	.4byte 0x00000000
+.endobj DSPInitCode

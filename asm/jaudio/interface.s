@@ -2,8 +2,7 @@
 
 .section .text, "ax"  # 0x80005560 - 0x80221F60
 .balign 32, 0
-.global Jac_OutputMode
-Jac_OutputMode:
+.fn Jac_OutputMode, global
 /* 80016900 00013860  7C 08 02 A6 */	mflr r0
 /* 80016904 00013864  90 01 00 04 */	stw r0, 4(r1)
 /* 80016908 00013868  94 21 FF F8 */	stwu r1, -8(r1)
@@ -12,26 +11,26 @@ Jac_OutputMode:
 /* 80016914 00013874  38 21 00 08 */	addi r1, r1, 8
 /* 80016918 00013878  7C 08 03 A6 */	mtlr r0
 /* 8001691C 0001387C  4E 80 00 20 */	blr 
+.endfn Jac_OutputMode
 
 .balign 32, 0
-.global Jac_SetBGMVolume
-Jac_SetBGMVolume:
+.fn Jac_SetBGMVolume, global
 /* 80016920 00013880  38 00 00 01 */	li r0, 1
 /* 80016924 00013884  98 6D 80 50 */	stb r3, game_bgm_vol@sda21(r13)
 /* 80016928 00013888  90 0D 2C 48 */	stw r0, vol_chg@sda21(r13)
 /* 8001692C 0001388C  4E 80 00 20 */	blr 
+.endfn Jac_SetBGMVolume
 
 .balign 32, 0
-.global Jac_SetSEVolume
-Jac_SetSEVolume:
+.fn Jac_SetSEVolume, global
 /* 80016940 000138A0  38 00 00 01 */	li r0, 1
 /* 80016944 000138A4  98 6D 80 51 */	stb r3, game_se_vol@sda21(r13)
 /* 80016948 000138A8  90 0D 2C 48 */	stw r0, vol_chg@sda21(r13)
 /* 8001694C 000138AC  4E 80 00 20 */	blr 
+.endfn Jac_SetSEVolume
 
 .balign 32, 0
-.global Jac_Gsync
-Jac_Gsync:
+.fn Jac_Gsync, global
 /* 80016960 000138C0  7C 08 02 A6 */	mflr r0
 /* 80016964 000138C4  90 01 00 04 */	stw r0, 4(r1)
 /* 80016968 000138C8  94 21 FF F8 */	stwu r1, -8(r1)
@@ -51,10 +50,10 @@ Jac_Gsync:
 /* 8001699C 000138FC  38 21 00 08 */	addi r1, r1, 8
 /* 800169A0 00013900  7C 08 03 A6 */	mtlr r0
 /* 800169A4 00013904  4E 80 00 20 */	blr 
+.endfn Jac_Gsync
 
 .balign 32, 0
-.global Jac_SetProcessStatus
-Jac_SetProcessStatus:
+.fn Jac_SetProcessStatus, global
 /* 800169C0 00013920  80 CD 80 54 */	lwz r6, current_process@sda21(r13)
 /* 800169C4 00013924  2C 06 FF FF */	cmpwi r6, -1
 /* 800169C8 00013928  41 82 00 7C */	beq .L_80016A44
@@ -92,20 +91,26 @@ Jac_SetProcessStatus:
 .L_80016A44:
 /* 80016A44 000139A4  90 6D 80 54 */	stw r3, current_process@sda21(r13)
 /* 80016A48 000139A8  4E 80 00 20 */	blr 
+.endfn Jac_SetProcessStatus
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-game_bgm_vol:
+.obj game_bgm_vol, local
 	.byte 0x8
-game_se_vol:
+.endobj game_bgm_vol
+.obj game_se_vol, local
 	.byte 0x8
+.endobj game_se_vol
 .balign 4
-current_process:
+.obj current_process, local
 	.4byte 0xFFFFFFFF
+.endobj current_process
 
 .section .sbss, "wa"
 .balign 8
-vol_chg:
+.obj vol_chg, local
 	.skip 4
-stacklevel:
+.endobj vol_chg
+.obj stacklevel, local
 	.skip 4
+.endobj stacklevel

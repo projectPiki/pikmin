@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global loadini__10RoutePointFP9CmdStream
-loadini__10RoutePointFP9CmdStream:
+.fn loadini__10RoutePointFP9CmdStream, global
 /* 80036474 000333D4  7C 08 02 A6 */	mflr r0
 /* 80036478 000333D8  90 01 00 04 */	stw r0, 4(r1)
 /* 8003647C 000333DC  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -106,9 +105,9 @@ loadini__10RoutePointFP9CmdStream:
 /* 800365EC 0003354C  38 21 00 18 */	addi r1, r1, 0x18
 /* 800365F0 00033550  7C 08 03 A6 */	mtlr r0
 /* 800365F4 00033554  4E 80 00 20 */	blr 
+.endfn loadini__10RoutePointFP9CmdStream
 
-.global __ct__10RouteGroupFv
-__ct__10RouteGroupFv:
+.fn __ct__10RouteGroupFv, global
 /* 800365F8 00033558  7C 08 02 A6 */	mflr r0
 /* 800365FC 0003355C  3C 80 80 22 */	lis r4, __vt__5ANode@ha
 /* 80036600 00033560  90 01 00 04 */	stw r0, 4(r1)
@@ -206,9 +205,9 @@ __ct__10RouteGroupFv:
 /* 80036770 000336D0  38 21 00 28 */	addi r1, r1, 0x28
 /* 80036774 000336D4  7C 08 03 A6 */	mtlr r0
 /* 80036778 000336D8  4E 80 00 20 */	blr 
+.endfn __ct__10RouteGroupFv
 
-.global refresh__10RouteGroupFR8GraphicsP8EditNode
-refresh__10RouteGroupFR8GraphicsP8EditNode:
+.fn refresh__10RouteGroupFR8GraphicsP8EditNode, global
 /* 8003677C 000336DC  7C 08 02 A6 */	mflr r0
 /* 80036780 000336E0  38 A0 00 00 */	li r5, 0
 /* 80036784 000336E4  90 01 00 04 */	stw r0, 4(r1)
@@ -837,19 +836,19 @@ refresh__10RouteGroupFR8GraphicsP8EditNode:
 /* 80037110 00034070  38 21 05 C0 */	addi r1, r1, 0x5c0
 /* 80037114 00034074  7C 08 03 A6 */	mtlr r0
 /* 80037118 00034078  4E 80 00 20 */	blr 
+.endfn refresh__10RouteGroupFR8GraphicsP8EditNode
 
-.global __ct__8Vector3fFRCfRCfRCf
-__ct__8Vector3fFRCfRCfRCf: # weak function
+.fn __ct__8Vector3fFRCfRCfRCf, weak
 /* 8003711C 0003407C  C0 04 00 00 */	lfs  f0, 0(r4)
 /* 80037120 00034080  D0 03 00 00 */	stfs f0, 0(r3)
 /* 80037124 00034084  C0 05 00 00 */	lfs  f0, 0(r5)
 /* 80037128 00034088  D0 03 00 04 */	stfs f0, 4(r3)
 /* 8003712C 0003408C  C0 06 00 00 */	lfs  f0, 0(r6)
 /* 80037130 00034090  D0 03 00 08 */	stfs f0, 8(r3)
-/* 80037134 00034094  4E 80 00 20 */	blr
+/* 80037134 00034094  4E 80 00 20 */	blr 
+.endfn __ct__8Vector3fFRCfRCfRCf
 
-.global render2d__10RouteGroupFR8GraphicsRi
-render2d__10RouteGroupFR8GraphicsRi:
+.fn render2d__10RouteGroupFR8GraphicsRi, global
 /* 80037138 00034098  7C 08 02 A6 */	mflr r0
 /* 8003713C 0003409C  39 03 00 00 */	addi r8, r3, 0
 /* 80037140 000340A0  90 01 00 04 */	stw r0, 4(r1)
@@ -874,9 +873,9 @@ render2d__10RouteGroupFR8GraphicsRi:
 /* 8003718C 000340EC  38 21 00 08 */	addi r1, r1, 8
 /* 80037190 000340F0  7C 08 03 A6 */	mtlr r0
 /* 80037194 000340F4  4E 80 00 20 */	blr 
+.endfn render2d__10RouteGroupFR8GraphicsRi
 
-.global loadini__10RouteGroupFP9CmdStream
-loadini__10RouteGroupFP9CmdStream:
+.fn loadini__10RouteGroupFP9CmdStream, global
 /* 80037198 000340F8  7C 08 02 A6 */	mflr r0
 /* 8003719C 000340FC  3C C0 80 22 */	lis r6, __vt__5ANode@ha
 /* 800371A0 00034100  90 01 00 04 */	stw r0, 4(r1)
@@ -1135,80 +1134,100 @@ loadini__10RouteGroupFP9CmdStream:
 /* 80037558 000344B8  38 21 00 78 */	addi r1, r1, 0x78
 /* 8003755C 000344BC  7C 08 03 A6 */	mtlr r0
 /* 80037560 000344C0  4E 80 00 20 */	blr 
+.endfn loadini__10RouteGroupFP9CmdStream
 
-.global msgCommand__8EditNodeFR7DataMsg
-msgCommand__8EditNodeFR7DataMsg:
+.fn msgCommand__8EditNodeFR7DataMsg, weak
 /* 80037564 000344C4  4E 80 00 20 */	blr 
+.endfn msgCommand__8EditNodeFR7DataMsg
 
-.global render2d__8EditNodeFR8GraphicsRi
-render2d__8EditNodeFR8GraphicsRi:
+.fn render2d__8EditNodeFR8GraphicsRi, weak
 /* 80037568 000344C8  4E 80 00 20 */	blr 
+.endfn render2d__8EditNodeFR8GraphicsRi
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_80228A00:
+.obj lbl_80228A00, local
 	.asciz "shpRoutes.cpp"
+.endobj lbl_80228A00
 .balign 4
-lbl_80228A10:
+.obj lbl_80228A10, local
 	.asciz "shpRoutes"
+.endobj lbl_80228A10
 .balign 4
-lbl_80228A1C:
+.obj lbl_80228A1C, local
 	.asciz "sample route"
+.endobj lbl_80228A1C
 .balign 4
-lbl_80228A2C:
+.obj lbl_80228A2C, local
 	.asciz "route [ %s ]"
+.endobj lbl_80228A2C
 .balign 4
-lbl_80228A3C:
+.obj lbl_80228A3C, local
 	.asciz "\n%sroute {\n"
+.endobj lbl_80228A3C
 .balign 4
-lbl_80228A48:
+.obj lbl_80228A48, local
 	.asciz "%s\tid\t\t%s\n"
+.endobj lbl_80228A48
 .balign 4
-lbl_80228A54:
+.obj lbl_80228A54, local
 	.asciz "%s\tname\t'%s'\n"
+.endobj lbl_80228A54
 .balign 4
-lbl_80228A64:
+.obj lbl_80228A64, local
 	.asciz "%s\tcolour\t%d %d %d %d\n"
+.endobj lbl_80228A64
 .balign 4
-lbl_80228A7C:
+.obj lbl_80228A7C, local
 	.asciz "\n%s\tpoint {\n"
+.endobj lbl_80228A7C
 .balign 4
-lbl_80228A8C:
+.obj lbl_80228A8C, local
 	.asciz "%s\t\tindex\t%d\n"
+.endobj lbl_80228A8C
 .balign 4
-lbl_80228A9C:
+.obj lbl_80228A9C, local
 	.asciz "%s\t\tstate\t%d\n"
+.endobj lbl_80228A9C
 .balign 4
-lbl_80228AAC:
+.obj lbl_80228AAC, local
 	.asciz "%s\t\tpos\t%f %f %f\n"
+.endobj lbl_80228AAC
 .balign 4
-lbl_80228AC0:
+.obj lbl_80228AC0, local
 	.asciz "%s\t\twidth\t%f\n"
+.endobj lbl_80228AC0
 .balign 4
-lbl_80228AD0:
+.obj lbl_80228AD0, local
 	.asciz "%s\tlink { %d %d }\n"
+.endobj lbl_80228AD0
 .balign 4
-lbl_80228AE4:
+.obj lbl_80228AE4, local
 	.asciz "RouteGroup"
+.endobj lbl_80228AE4
 .balign 4
-lbl_80228AF0:
+.obj lbl_80228AF0, local
 	.asciz "CoreNode"
+.endobj lbl_80228AF0
 .balign 4
-lbl_80228AFC:
+.obj lbl_80228AFC, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte 0
+.endobj lbl_80228AFC
 .balign 4
-lbl_80228B08:
+.obj lbl_80228B08, local
 	.asciz "EditNode"
+.endobj lbl_80228B08
 .balign 4
-lbl_80228B14:
+.obj lbl_80228B14, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte __RTTI__8CoreNode
 	.4byte 0
 	.4byte 0
-lbl_80228B28:
+.endobj lbl_80228B14
+.obj lbl_80228B28, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte __RTTI__8CoreNode
@@ -1216,54 +1235,59 @@ lbl_80228B28:
 	.4byte __RTTI__8EditNode
 	.4byte 0
 	.4byte 0
-.global __vt__10RouteGroup
-__vt__10RouteGroup:
+.endobj lbl_80228B28
+.obj __vt__10RouteGroup, global
 	.4byte __RTTI__10RouteGroup
 	.4byte 0
 	.4byte getAgeNodeType__5ANodeFv
 	.4byte read__8CoreNodeFR18RandomAccessStream
 	.4byte msgCommand__8EditNodeFR7DataMsg
 	.4byte render2d__10RouteGroupFR8GraphicsRi
-.global __vt__8EditNode
-__vt__8EditNode:
+.endobj __vt__10RouteGroup
+.obj __vt__8EditNode, weak
 	.4byte __RTTI__8EditNode
 	.4byte 0
 	.4byte getAgeNodeType__5ANodeFv
 	.4byte read__8CoreNodeFR18RandomAccessStream
 	.4byte msgCommand__8EditNodeFR7DataMsg
 	.4byte render2d__8EditNodeFR8GraphicsRi
+.endobj __vt__8EditNode
 .balign 4
-lbl_80228B74:
+.obj lbl_80228B74, local
 	.asciz "RouteLink"
+.endobj lbl_80228B74
 .balign 4
-lbl_80228B80:
+.obj lbl_80228B80, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte __RTTI__8CoreNode
 	.4byte 0
 	.4byte 0
-.global __vt__9RouteLink
-__vt__9RouteLink:
+.endobj lbl_80228B80
+.obj __vt__9RouteLink, weak
 	.4byte __RTTI__9RouteLink
 	.4byte 0
 	.4byte getAgeNodeType__5ANodeFv
 	.4byte read__8CoreNodeFR18RandomAccessStream
+.endobj __vt__9RouteLink
 .balign 4
-lbl_80228BA4:
+.obj lbl_80228BA4, local
 	.asciz "RoutePoint"
+.endobj lbl_80228BA4
 .balign 4
-lbl_80228BB0:
+.obj lbl_80228BB0, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte __RTTI__8CoreNode
 	.4byte 0
 	.4byte 0
-.global __vt__10RoutePoint
-__vt__10RoutePoint:
+.endobj lbl_80228BB0
+.obj __vt__10RoutePoint, weak
 	.4byte __RTTI__10RoutePoint
 	.4byte 0
 	.4byte getAgeNodeType__5ANodeFv
 	.4byte read__8CoreNodeFR18RandomAccessStream
+.endobj __vt__10RoutePoint
 	.4byte 0
 	.4byte 0
 	.4byte 0
@@ -1274,77 +1298,102 @@ __vt__10RoutePoint:
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-lbl_803DD258:
+.obj lbl_803DD258, local
 	.asciz "rp"
+.endobj lbl_803DD258
 .balign 4
-lbl_803DD25C:
+.obj lbl_803DD25C, local
 	.asciz ""
+.endobj lbl_803DD25C
 .balign 4
-lbl_803DD260:
+.obj lbl_803DD260, local
 	.asciz "%d"
+.endobj lbl_803DD260
 .balign 4
-lbl_803DD264:
+.obj lbl_803DD264, local
 	.asciz "index"
+.endobj lbl_803DD264
 .balign 4
-lbl_803DD26C:
+.obj lbl_803DD26C, local
 	.asciz "pos"
+.endobj lbl_803DD26C
 .balign 4
-lbl_803DD270:
+.obj lbl_803DD270, local
 	.asciz "%f"
+.endobj lbl_803DD270
 .balign 4
-lbl_803DD274:
+.obj lbl_803DD274, local
 	.asciz "state"
+.endobj lbl_803DD274
 .balign 4
-lbl_803DD27C:
+.obj lbl_803DD27C, local
 	.asciz "width"
+.endobj lbl_803DD27C
 .balign 4
-lbl_803DD284:
+.obj lbl_803DD284, local
 	.float 0.0
-lbl_803DD288:
+.endobj lbl_803DD284
+.obj lbl_803DD288, local
 	.float 4.0
-lbl_803DD28C:
+.endobj lbl_803DD288
+.obj lbl_803DD28C, local
 	.float 0.0
-lbl_803DD290:
+.endobj lbl_803DD28C
+.obj lbl_803DD290, local
 	.float 0.5
-lbl_803DD294:
+.endobj lbl_803DD290
+.obj lbl_803DD294, local
 	.float 0.0
+.endobj lbl_803DD294
 .balign 4
-lbl_803DD298:
+.obj lbl_803DD298, local
 	.asciz "id"
+.endobj lbl_803DD298
 .balign 4
-lbl_803DD29C:
+.obj lbl_803DD29C, local
 	.asciz "name"
+.endobj lbl_803DD29C
 .balign 4
-lbl_803DD2A4:
+.obj lbl_803DD2A4, local
 	.asciz "colour"
+.endobj lbl_803DD2A4
 .balign 4
-lbl_803DD2AC:
+.obj lbl_803DD2AC, local
 	.asciz "point"
+.endobj lbl_803DD2AC
 .balign 4
-lbl_803DD2B4:
+.obj lbl_803DD2B4, local
 	.asciz "link"
+.endobj lbl_803DD2B4
 .balign 4
-lbl_803DD2BC:
+.obj lbl_803DD2BC, local
 	.asciz "ANode"
+.endobj lbl_803DD2BC
 .balign 4
-__RTTI__5ANode:
+.obj __RTTI__5ANode, local
 	.4byte lbl_803DD2BC
 	.4byte 0
-__RTTI__8CoreNode:
+.endobj __RTTI__5ANode
+.obj __RTTI__8CoreNode, local
 	.4byte lbl_80228AF0
 	.4byte lbl_80228AFC
-__RTTI__8EditNode:
+.endobj __RTTI__8CoreNode
+.obj __RTTI__8EditNode, local
 	.4byte lbl_80228B08
 	.4byte lbl_80228B14
-__RTTI__10RouteGroup:
+.endobj __RTTI__8EditNode
+.obj __RTTI__10RouteGroup, local
 	.4byte lbl_80228AE4
 	.4byte lbl_80228B28
-__RTTI__9RouteLink:
+.endobj __RTTI__10RouteGroup
+.obj __RTTI__9RouteLink, local
 	.4byte lbl_80228B74
 	.4byte lbl_80228B80
-__RTTI__10RoutePoint:
+.endobj __RTTI__9RouteLink
+.obj __RTTI__10RoutePoint, local
 	.4byte lbl_80228BA4
 	.4byte lbl_80228BB0
+.endobj __RTTI__10RoutePoint
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8

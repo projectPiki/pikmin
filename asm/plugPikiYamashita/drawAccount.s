@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global __ct__Q23zen11DrawAccountFv
-__ct__Q23zen11DrawAccountFv:
+.fn __ct__Q23zen11DrawAccountFv, global
 /* 801C1140 001BE0A0  7C 08 02 A6 */	mflr r0
 /* 801C1144 001BE0A4  38 A0 00 00 */	li r5, 0
 /* 801C1148 001BE0A8  90 01 00 04 */	stw r0, 4(r1)
@@ -1356,9 +1355,9 @@ __ct__Q23zen11DrawAccountFv:
 /* 801C25A8 001BF508  38 21 02 38 */	addi r1, r1, 0x238
 /* 801C25AC 001BF50C  7C 08 03 A6 */	mtlr r0
 /* 801C25B0 001BF510  4E 80 00 20 */	blr 
+.endfn __ct__Q23zen11DrawAccountFv
 
-.global update__Q23zen11DrawAccountFv
-update__Q23zen11DrawAccountFv:
+.fn update__Q23zen11DrawAccountFv, global
 /* 801C25B4 001BF514  7C 08 02 A6 */	mflr r0
 /* 801C25B8 001BF518  90 01 00 04 */	stw r0, 4(r1)
 /* 801C25BC 001BF51C  94 21 FF C8 */	stwu r1, -0x38(r1)
@@ -1438,9 +1437,9 @@ update__Q23zen11DrawAccountFv:
 /* 801C26CC 001BF62C  38 21 00 38 */	addi r1, r1, 0x38
 /* 801C26D0 001BF630  7C 08 03 A6 */	mtlr r0
 /* 801C26D4 001BF634  4E 80 00 20 */	blr 
+.endfn update__Q23zen11DrawAccountFv
 
-.global draw__Q23zen11DrawAccountFR8Graphics
-draw__Q23zen11DrawAccountFR8Graphics:
+.fn draw__Q23zen11DrawAccountFR8Graphics, global
 /* 801C26D8 001BF638  7C 08 02 A6 */	mflr r0
 /* 801C26DC 001BF63C  90 01 00 04 */	stw r0, 4(r1)
 /* 801C26E0 001BF640  94 21 FF F8 */	stwu r1, -8(r1)
@@ -1453,9 +1452,9 @@ draw__Q23zen11DrawAccountFR8Graphics:
 /* 801C26F8 001BF658  38 21 00 08 */	addi r1, r1, 8
 /* 801C26FC 001BF65C  7C 08 03 A6 */	mtlr r0
 /* 801C2700 001BF660  4E 80 00 20 */	blr 
+.endfn draw__Q23zen11DrawAccountFR8Graphics
 
-.global start__Q23zen11DrawAccountFRQ23zen11AccountData
-start__Q23zen11DrawAccountFRQ23zen11AccountData:
+.fn start__Q23zen11DrawAccountFRQ23zen11AccountData, global
 /* 801C2704 001BF664  7C 08 02 A6 */	mflr r0
 /* 801C2708 001BF668  38 A0 FC 18 */	li r5, -1000
 /* 801C270C 001BF66C  90 01 00 04 */	stw r0, 4(r1)
@@ -1486,67 +1485,84 @@ start__Q23zen11DrawAccountFRQ23zen11AccountData:
 /* 801C2770 001BF6D0  38 21 00 18 */	addi r1, r1, 0x18
 /* 801C2774 001BF6D4  7C 08 03 A6 */	mtlr r0
 /* 801C2778 001BF6D8  4E 80 00 20 */	blr 
+.endfn start__Q23zen11DrawAccountFRQ23zen11AccountData
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802E15A8:
+.obj lbl_802E15A8, local
 	.asciz "drawAccount.cpp"
+.endobj lbl_802E15A8
 .balign 4
-lbl_802E15B8:
+.obj lbl_802E15B8, local
 	.asciz "DrawAccount"
+.endobj lbl_802E15B8
 .balign 4
-lbl_802E15C4:
+.obj lbl_802E15C4, local
 	.asciz "screen/blo/account.blo"
+.endobj lbl_802E15C4
 .balign 4
-lbl_802E15DC:
+.obj lbl_802E15DC, local
 	.asciz "zen::DrawAccount"
+.endobj lbl_802E15DC
 .balign 4
-lbl_802E15F0:
+.obj lbl_802E15F0, local
 	.asciz "zen::DrawScreen"
+.endobj lbl_802E15F0
 .balign 4
-lbl_802E1600:
+.obj lbl_802E1600, local
 	.4byte __RTTI__Q23zen10DrawScreen
 	.4byte 0x00000000
 	.4byte 0x00000000
-.global __vt__Q23zen11DrawAccount
-__vt__Q23zen11DrawAccount:
+.endobj lbl_802E1600
+.obj __vt__Q23zen11DrawAccount, global
 	.4byte __RTTI__Q23zen11DrawAccount
 	.4byte 0
 	.4byte update__Q23zen11DrawAccountFv
 	.4byte draw__Q23zen10DrawScreenFv
-lbl_802E161C:
+.endobj __vt__Q23zen11DrawAccount
+.balign 4
+.obj lbl_802E161C, local
 	.asciz "zen::NumberPicCallBack<short>"
+.endobj lbl_802E161C
 .balign 4
-lbl_802E163C:
+.obj lbl_802E163C, local
 	.asciz "zen::NumberTex"
+.endobj lbl_802E163C
 .balign 4
-lbl_802E164C:
+.obj lbl_802E164C, local
 	.asciz "zen::FigureTex<short>"
+.endobj lbl_802E164C
 .balign 4
-lbl_802E1664:
+.obj lbl_802E1664, local
 	.4byte __RTTI__Q23zen9NumberTex
 	.4byte 0
 	.4byte 0
-lbl_802E1670:
+.endobj lbl_802E1664
+.balign 4
+.obj lbl_802E1670, local
 	.asciz "P2DPaneCallBackBase"
+.endobj lbl_802E1670
 .balign 4
-lbl_802E1684:
+.obj lbl_802E1684, local
 	.asciz "zen::CallBack1<P2DPane *>"
+.endobj lbl_802E1684
 .balign 4
-lbl_802E16A0:
+.obj lbl_802E16A0, local
 	.asciz "P2DPaneCallBack"
+.endobj lbl_802E16A0
 .balign 4
-lbl_802E16B0:
+.obj lbl_802E16B0, local
 	.4byte __RTTI__19P2DPaneCallBackBase
 	.4byte 0x4
 	.4byte "__RTTI__Q23zen20CallBack1<P7P2DPane>"
 	.4byte 0
 	.4byte 0
+.endobj lbl_802E16B0
+.obj lbl_802E16C4, local
 	.4byte __RTTI__Q23zen9NumberTex
 	.4byte 0x4
 	.4byte "__RTTI__Q23zen12FigureTex<s>"
 	.4byte 0x4
-lbl_802E16C4:
 	.4byte __RTTI__19P2DPaneCallBackBase
 	.4byte 0x4
 	.4byte "__RTTI__Q23zen20CallBack1<P7P2DPane>"
@@ -1554,6 +1570,7 @@ lbl_802E16C4:
 	.4byte __RTTI__15P2DPaneCallBack
 	.4byte 0
 	.4byte 0
+.endobj lbl_802E16C4
 	.4byte 0
 	.4byte 0
 	.4byte 0
@@ -1569,41 +1586,55 @@ lbl_802E16C4:
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-__RTTI__Q23zen10DrawScreen:
+.obj __RTTI__Q23zen10DrawScreen, local
 	.4byte lbl_802E15F0
 	.4byte 0
-__RTTI__Q23zen11DrawAccount:
+.endobj __RTTI__Q23zen10DrawScreen
+.obj __RTTI__Q23zen11DrawAccount, local
 	.4byte lbl_802E15DC
 	.4byte lbl_802E1600
-__RTTI__Q23zen9NumberTex:
+.endobj __RTTI__Q23zen11DrawAccount
+.obj __RTTI__Q23zen9NumberTex, local
 	.4byte lbl_802E163C
 	.4byte 0
-"__RTTI__Q23zen12FigureTex<s>":
+.endobj __RTTI__Q23zen9NumberTex
+.obj "__RTTI__Q23zen12FigureTex<s>", local
 	.4byte lbl_802E164C
 	.4byte lbl_802E1664
-__RTTI__19P2DPaneCallBackBase:
+.endobj "__RTTI__Q23zen12FigureTex<s>"
+.obj __RTTI__19P2DPaneCallBackBase, local
 	.4byte lbl_802E1670
 	.4byte 0
-"__RTTI__Q23zen20CallBack1<P7P2DPane>":
+.endobj __RTTI__19P2DPaneCallBackBase
+.obj "__RTTI__Q23zen20CallBack1<P7P2DPane>", local
 	.4byte lbl_802E1684
 	.4byte 0
-__RTTI__15P2DPaneCallBack:
+.endobj "__RTTI__Q23zen20CallBack1<P7P2DPane>"
+.obj __RTTI__15P2DPaneCallBack, local
 	.4byte lbl_802E16A0
 	.4byte lbl_802E16B0
+.endobj __RTTI__15P2DPaneCallBack
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803EBB50:
-	.4byte 0x00000000
-lbl_803EBB54:
-	.4byte 0x40400000
-lbl_803EBB58:
-	.4byte 0x40490FDB
-lbl_803EBB5C:
-	.4byte 0x3F000000
-lbl_803EBB60:
-	.4byte 0x3F800000
-lbl_803EBB64:
-	.4byte 0xC47A0000
-lbl_803EBB68:
-	.4byte 0x42800000
+.obj lbl_803EBB50, local
+	.float 0.0
+.endobj lbl_803EBB50
+.obj lbl_803EBB54, local
+	.float 3.0
+.endobj lbl_803EBB54
+.obj lbl_803EBB58, local
+	.float 3.1415927
+.endobj lbl_803EBB58
+.obj lbl_803EBB5C, local
+	.float 0.5
+.endobj lbl_803EBB5C
+.obj lbl_803EBB60, local
+	.float 1.0
+.endobj lbl_803EBB60
+.obj lbl_803EBB64, local
+	.float -1000.0
+.endobj lbl_803EBB64
+.obj lbl_803EBB68, local
+	.float 64.0
+.endobj lbl_803EBB68

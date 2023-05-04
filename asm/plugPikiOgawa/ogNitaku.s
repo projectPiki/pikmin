@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global __ct__Q23zen11ogNitakuMgrFP9P2DScreenP10P2DTextBoxP10P2DTextBoxP10P2DTextBoxbb
-__ct__Q23zen11ogNitakuMgrFP9P2DScreenP10P2DTextBoxP10P2DTextBoxP10P2DTextBoxbb:
+.fn __ct__Q23zen11ogNitakuMgrFP9P2DScreenP10P2DTextBoxP10P2DTextBoxP10P2DTextBoxbb, global
 /* 80196864 001937C4  7C 08 02 A6 */	mflr r0
 /* 80196868 001937C8  90 01 00 04 */	stw r0, 4(r1)
 /* 8019686C 001937CC  94 21 FF 20 */	stwu r1, -0xe0(r1)
@@ -255,9 +254,9 @@ __ct__Q23zen11ogNitakuMgrFP9P2DScreenP10P2DTextBoxP10P2DTextBoxP10P2DTextBoxbb:
 /* 80196C3C 00193B9C  38 21 00 E0 */	addi r1, r1, 0xe0
 /* 80196C40 00193BA0  7C 08 03 A6 */	mtlr r0
 /* 80196C44 00193BA4  4E 80 00 20 */	blr 
+.endfn __ct__Q23zen11ogNitakuMgrFP9P2DScreenP10P2DTextBoxP10P2DTextBoxP10P2DTextBoxbb
 
-.global start__Q23zen11ogNitakuMgrFv
-start__Q23zen11ogNitakuMgrFv:
+.fn start__Q23zen11ogNitakuMgrFv, global
 /* 80196C48 00193BA8  7C 08 02 A6 */	mflr r0
 /* 80196C4C 00193BAC  90 01 00 04 */	stw r0, 4(r1)
 /* 80196C50 00193BB0  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -350,9 +349,9 @@ start__Q23zen11ogNitakuMgrFv:
 /* 80196DA4 00193D04  38 21 00 18 */	addi r1, r1, 0x18
 /* 80196DA8 00193D08  7C 08 03 A6 */	mtlr r0
 /* 80196DAC 00193D0C  4E 80 00 20 */	blr 
+.endfn start__Q23zen11ogNitakuMgrFv
 
-.global cursorEnable__Q23zen11ogNitakuMgrFf
-cursorEnable__Q23zen11ogNitakuMgrFf:
+.fn cursorEnable__Q23zen11ogNitakuMgrFf, global
 /* 80196DB0 00193D10  7C 08 02 A6 */	mflr r0
 /* 80196DB4 00193D14  90 01 00 04 */	stw r0, 4(r1)
 /* 80196DB8 00193D18  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -374,9 +373,9 @@ cursorEnable__Q23zen11ogNitakuMgrFf:
 /* 80196DF8 00193D58  38 21 00 20 */	addi r1, r1, 0x20
 /* 80196DFC 00193D5C  7C 08 03 A6 */	mtlr r0
 /* 80196E00 00193D60  4E 80 00 20 */	blr 
+.endfn cursorEnable__Q23zen11ogNitakuMgrFf
 
-.global cursorDisable__Q23zen11ogNitakuMgrFf
-cursorDisable__Q23zen11ogNitakuMgrFf:
+.fn cursorDisable__Q23zen11ogNitakuMgrFf, global
 /* 80196E04 00193D64  7C 08 02 A6 */	mflr r0
 /* 80196E08 00193D68  90 01 00 04 */	stw r0, 4(r1)
 /* 80196E0C 00193D6C  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -398,9 +397,9 @@ cursorDisable__Q23zen11ogNitakuMgrFf:
 /* 80196E4C 00193DAC  38 21 00 20 */	addi r1, r1, 0x20
 /* 80196E50 00193DB0  7C 08 03 A6 */	mtlr r0
 /* 80196E54 00193DB4  4E 80 00 20 */	blr 
+.endfn cursorDisable__Q23zen11ogNitakuMgrFf
 
-.global update__Q23zen11ogNitakuMgrFP10Controller
-update__Q23zen11ogNitakuMgrFP10Controller:
+.fn update__Q23zen11ogNitakuMgrFP10Controller, global
 /* 80196E58 00193DB8  7C 08 02 A6 */	mflr r0
 /* 80196E5C 00193DBC  90 01 00 04 */	stw r0, 4(r1)
 /* 80196E60 00193DC0  94 21 FF D0 */	stwu r1, -0x30(r1)
@@ -627,20 +626,26 @@ update__Q23zen11ogNitakuMgrFP10Controller:
 /* 80197190 001940F0  38 21 00 30 */	addi r1, r1, 0x30
 /* 80197194 001940F4  7C 08 03 A6 */	mtlr r0
 /* 80197198 001940F8  4E 80 00 20 */	blr 
+.endfn update__Q23zen11ogNitakuMgrFP10Controller
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803EB458:
-	.4byte 0x3F800000
-lbl_803EB45C:
-	.4byte 0x00000000
-lbl_803EB460:
-	.4byte 0x3A83126F
+.obj lbl_803EB458, local
+	.float 1.0
+.endobj lbl_803EB458
+.obj lbl_803EB45C, local
+	.float 0.0
+.endobj lbl_803EB45C
+.obj lbl_803EB460, local
+	.float 0.001
+.endobj lbl_803EB460
 .balign 8
-lbl_803EB468:
-	.4byte 0x43300000
-	.4byte 0x80000000
-lbl_803EB470:
-	.4byte 0x3E4CCCCD
-lbl_803EB474:
-	.4byte 0x3E800000
+.obj lbl_803EB468, local
+	.8byte 0x4330000080000000
+.endobj lbl_803EB468
+.obj lbl_803EB470, local
+	.float 0.2
+.endobj lbl_803EB470
+.obj lbl_803EB474, local
+	.float 0.25
+.endobj lbl_803EB474

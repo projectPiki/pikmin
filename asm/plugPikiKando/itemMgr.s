@@ -6686,36 +6686,52 @@ __RTTI__12BuildingItem:
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803E9E08:
+.obj lbl_803E9E08, local
 	.float 10000.0
-lbl_803E9E0C:
+.endobj lbl_803E9E08
+.obj lbl_803E9E0C, local
 	.float 0.0
-lbl_803E9E10:
+.endobj lbl_803E9E0C
+.obj lbl_803E9E10, local
 	.float 30.0
-lbl_803E9E14:
+.endobj lbl_803E9E10
+.obj lbl_803E9E14, local
 	.float 0.5
-lbl_803E9E18:
+.endobj lbl_803E9E14
+.obj lbl_803E9E18, local
 	.float 1.0
-lbl_803E9E1C:
+.endobj lbl_803E9E18
+.obj lbl_803E9E1C, local
 	.float 0.25
-lbl_803E9E20:
+.endobj lbl_803E9E1C
+.obj lbl_803E9E20, local
 	.float 0.1
-lbl_803E9E24:
+.endobj lbl_803E9E20
+.obj lbl_803E9E24, local
 	.float 0.01
-lbl_803E9E28:
+.endobj lbl_803E9E24
+.obj lbl_803E9E28, local
 	.float 2.0
-lbl_803E9E2C:
+.endobj lbl_803E9E28
+.obj lbl_803E9E2C, local
 	.float 0.3
-lbl_803E9E30:
+.endobj lbl_803E9E2C
+.obj lbl_803E9E30, local
 	.float 0.8
+.endobj lbl_803E9E30
 .balign 8
-lbl_803E9E38:
+.obj lbl_803E9E38, local
 	.8byte 0x4330000080000000
-lbl_803E9E40:
+.endobj lbl_803E9E38
+.obj lbl_803E9E40, local
 	.float 100.0
-lbl_803E9E44:
+.endobj lbl_803E9E40
+.obj lbl_803E9E44, local
 	.float 110.0
-lbl_803E9E48:
+.endobj lbl_803E9E44
+.obj lbl_803E9E48, local
 	.float 5.0
-lbl_803E9E4C:
+.endobj lbl_803E9E48
+.obj lbl_803E9E4C, local
 	.float 3.0
+.endobj lbl_803E9E4C

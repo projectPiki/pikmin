@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global setOperateMode_Delete__Q23zen18ogScrFileSelectMgrFv
-setOperateMode_Delete__Q23zen18ogScrFileSelectMgrFv:
+.fn setOperateMode_Delete__Q23zen18ogScrFileSelectMgrFv, global
 /* 80197AD8 00194A38  7C 08 02 A6 */	mflr r0
 /* 80197ADC 00194A3C  38 80 00 02 */	li r4, 2
 /* 80197AE0 00194A40  90 01 00 04 */	stw r0, 4(r1)
@@ -27,9 +26,9 @@ setOperateMode_Delete__Q23zen18ogScrFileSelectMgrFv:
 /* 80197B30 00194A90  38 21 00 18 */	addi r1, r1, 0x18
 /* 80197B34 00194A94  7C 08 03 A6 */	mtlr r0
 /* 80197B38 00194A98  4E 80 00 20 */	blr 
+.endfn setOperateMode_Delete__Q23zen18ogScrFileSelectMgrFv
 
-.global OperateDelete__Q23zen18ogScrFileSelectMgrFP10Controller
-OperateDelete__Q23zen18ogScrFileSelectMgrFP10Controller:
+.fn OperateDelete__Q23zen18ogScrFileSelectMgrFP10Controller, global
 /* 80197B3C 00194A9C  7C 08 02 A6 */	mflr r0
 /* 80197B40 00194AA0  90 01 00 04 */	stw r0, 4(r1)
 /* 80197B44 00194AA4  94 21 FF 20 */	stwu r1, -0xe0(r1)
@@ -291,41 +290,56 @@ OperateDelete__Q23zen18ogScrFileSelectMgrFP10Controller:
 /* 80197F1C 00194E7C  38 21 00 E0 */	addi r1, r1, 0xe0
 /* 80197F20 00194E80  7C 08 03 A6 */	mtlr r0
 /* 80197F24 00194E84  4E 80 00 20 */	blr 
+.endfn OperateDelete__Q23zen18ogScrFileSelectMgrFP10Controller
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-lbl_803E5B50:
-	.4byte 0x00000000
-lbl_803E5B54:
-	.4byte 0x00000000
-lbl_803E5B58:
-	.4byte 0x00000000
-lbl_803E5B5C:
-	.4byte 0x00000000
+.obj lbl_803E5B50, local
+	.float 0.0
+.endobj lbl_803E5B50
+.obj lbl_803E5B54, local
+	.float 0.0
+.endobj lbl_803E5B54
+.obj lbl_803E5B58, local
+	.float 0.0
+.endobj lbl_803E5B58
+.obj lbl_803E5B5C, local
+	.float 0.0
+.endobj lbl_803E5B5C
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803EB4A8:
-	.4byte 0x00000000
-lbl_803EB4AC:
-	.4byte 0x3A83126F
-lbl_803EB4B0:
-	.4byte 0x3F000000
-lbl_803EB4B4:
-	.4byte 0x43F00000
-lbl_803EB4B8:
-	.4byte 0x42A00000
+.obj lbl_803EB4A8, local
+	.float 0.0
+.endobj lbl_803EB4A8
+.obj lbl_803EB4AC, local
+	.float 0.001
+.endobj lbl_803EB4AC
+.obj lbl_803EB4B0, local
+	.float 0.5
+.endobj lbl_803EB4B0
+.obj lbl_803EB4B4, local
+	.float 480.0
+.endobj lbl_803EB4B4
+.obj lbl_803EB4B8, local
+	.float 80.0
+.endobj lbl_803EB4B8
 .balign 8
-lbl_803EB4C0:
-	.4byte 0x43300000
-	.4byte 0x80000000
-lbl_803EB4C8:
-	.4byte 0x3FD9999A
-lbl_803EB4CC:
-	.4byte 0x44200000
-lbl_803EB4D0:
-	.4byte 0x3E99999A
-lbl_803EB4D4:
-	.4byte 0x3F800000
-lbl_803EB4D8:
-	.4byte 0x40000000
+.obj lbl_803EB4C0, local
+	.8byte 0x4330000080000000
+.endobj lbl_803EB4C0
+.obj lbl_803EB4C8, local
+	.float 1.7
+.endobj lbl_803EB4C8
+.obj lbl_803EB4CC, local
+	.float 640.0
+.endobj lbl_803EB4CC
+.obj lbl_803EB4D0, local
+	.float 0.3
+.endobj lbl_803EB4D0
+.obj lbl_803EB4D4, local
+	.float 1.0
+.endobj lbl_803EB4D4
+.obj lbl_803EB4D8, local
+	.float 2.0
+.endobj lbl_803EB4D8

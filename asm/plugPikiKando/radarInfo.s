@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global __ct__9RadarInfoFv
-__ct__9RadarInfoFv:
+.fn __ct__9RadarInfoFv, global
 /* 8007B564 000784C4  7C 08 02 A6 */	mflr r0
 /* 8007B568 000784C8  3C 80 80 22 */	lis r4, __vt__5ANode@ha
 /* 8007B56C 000784CC  90 01 00 04 */	stw r0, 4(r1)
@@ -52,9 +51,9 @@ __ct__9RadarInfoFv:
 /* 8007B620 00078580  38 21 00 28 */	addi r1, r1, 0x28
 /* 8007B624 00078584  7C 08 03 A6 */	mtlr r0
 /* 8007B628 00078588  4E 80 00 20 */	blr 
+.endfn __ct__9RadarInfoFv
 
-.global attachParts__9RadarInfoFP8Creature
-attachParts__9RadarInfoFP8Creature:
+.fn attachParts__9RadarInfoFP8Creature, global
 /* 8007B62C 0007858C  7C 08 02 A6 */	mflr r0
 /* 8007B630 00078590  90 01 00 04 */	stw r0, 4(r1)
 /* 8007B634 00078594  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -118,9 +117,9 @@ attachParts__9RadarInfoFP8Creature:
 /* 8007B708 00078668  38 21 00 20 */	addi r1, r1, 0x20
 /* 8007B70C 0007866C  7C 08 03 A6 */	mtlr r0
 /* 8007B710 00078670  4E 80 00 20 */	blr 
+.endfn attachParts__9RadarInfoFP8Creature
 
-.global detachParts__9RadarInfoFP8Creature
-detachParts__9RadarInfoFP8Creature:
+.fn detachParts__9RadarInfoFP8Creature, global
 /* 8007B714 00078674  7C 08 02 A6 */	mflr r0
 /* 8007B718 00078678  90 01 00 04 */	stw r0, 4(r1)
 /* 8007B71C 0007867C  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -153,9 +152,9 @@ detachParts__9RadarInfoFP8Creature:
 /* 8007B778 000786D8  38 21 00 18 */	addi r1, r1, 0x18
 /* 8007B77C 000786DC  7C 08 03 A6 */	mtlr r0
 /* 8007B780 000786E0  4E 80 00 20 */	blr 
+.endfn detachParts__9RadarInfoFP8Creature
 
-.global getPos__Q29RadarInfo9PartsInfoFv
-getPos__Q29RadarInfo9PartsInfoFv:
+.fn getPos__Q29RadarInfo9PartsInfoFv, global
 /* 8007B784 000786E4  80 84 00 14 */	lwz r4, 0x14(r4)
 /* 8007B788 000786E8  28 04 00 00 */	cmplwi r4, 0
 /* 8007B78C 000786EC  41 82 00 20 */	beq .L_8007B7AC
@@ -174,69 +173,85 @@ getPos__Q29RadarInfo9PartsInfoFv:
 /* 8007B7BC 0007871C  D0 23 00 04 */	stfs f1, 4(r3)
 /* 8007B7C0 00078720  D0 43 00 08 */	stfs f2, 8(r3)
 /* 8007B7C4 00078724  4E 80 00 20 */	blr 
+.endfn getPos__Q29RadarInfo9PartsInfoFv
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802ACC08:
+.obj lbl_802ACC08, local
 	.asciz "radarInfo.cpp"
+.endobj lbl_802ACC08
 .balign 4
-lbl_802ACC18:
+.obj lbl_802ACC18, local
 	.asciz "radarInfo"
+.endobj lbl_802ACC18
 .balign 4
-lbl_802ACC24:
+.obj lbl_802ACC24, local
 	.asciz "CoreNode"
+.endobj lbl_802ACC24
 .balign 4
-lbl_802ACC30:
+.obj lbl_802ACC30, local
 	.asciz "RadarInfo::PartsInfo"
+.endobj lbl_802ACC30
 .balign 4
-lbl_802ACC48:
+.obj lbl_802ACC48, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte 0
-lbl_802ACC54:
+.endobj lbl_802ACC48
+.obj lbl_802ACC54, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte __RTTI__8CoreNode
 	.4byte 0
 	.4byte 0
-.global __vt__Q29RadarInfo9PartsInfo
-__vt__Q29RadarInfo9PartsInfo:
+.endobj lbl_802ACC54
+.obj __vt__Q29RadarInfo9PartsInfo, weak
 	.4byte __RTTI__Q29RadarInfo9PartsInfo
 	.4byte 0
 	.4byte getAgeNodeType__5ANodeFv
 	.4byte read__8CoreNodeFR18RandomAccessStream
+.endobj __vt__Q29RadarInfo9PartsInfo
 	.skip 0x20
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-lbl_803DE8F0:
+.obj lbl_803DE8F0, local
 	.asciz "alive"
+.endobj lbl_803DE8F0
 .balign 4
-lbl_803DE8F8:
+.obj lbl_803DE8F8, local
 	.asciz "dead "
+.endobj lbl_803DE8F8
 .balign 4
-lbl_803DE900:
+.obj lbl_803DE900, local
 	.float 0.0
-lbl_803DE904:
+.endobj lbl_803DE900
+.obj lbl_803DE904, local
 	.float 0.0
-lbl_803DE908:
+.endobj lbl_803DE904
+.obj lbl_803DE908, local
 	.float 0.0
+.endobj lbl_803DE908
 .balign 4
-lbl_803DE90C:
+.obj lbl_803DE90C, local
 	.asciz "ANode"
+.endobj lbl_803DE90C
 .balign 4
-__RTTI__5ANode:
+.obj __RTTI__5ANode, local
 	.4byte lbl_803DE90C
 	.4byte 0
-__RTTI__8CoreNode:
+.endobj __RTTI__5ANode
+.obj __RTTI__8CoreNode, local
 	.4byte lbl_802ACC24
 	.4byte lbl_802ACC48
-__RTTI__Q29RadarInfo9PartsInfo:
+.endobj __RTTI__8CoreNode
+.obj __RTTI__Q29RadarInfo9PartsInfo, local
 	.4byte lbl_802ACC30
 	.4byte lbl_802ACC54
+.endobj __RTTI__Q29RadarInfo9PartsInfo
 
 .section .sbss, "wa"
 .balign 8
-.global radarInfo
-radarInfo:
+.obj radarInfo, global
 	.skip 4
+.endobj radarInfo

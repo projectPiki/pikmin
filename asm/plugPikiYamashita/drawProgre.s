@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global __ct__Q23zen10DrawProgreFv
-__ct__Q23zen10DrawProgreFv:
+.fn __ct__Q23zen10DrawProgreFv, global
 /* 801DA250 001D71B0  7C 08 02 A6 */	mflr r0
 /* 801DA254 001D71B4  90 01 00 04 */	stw r0, 4(r1)
 /* 801DA258 001D71B8  94 21 FF C8 */	stwu r1, -0x38(r1)
@@ -114,9 +113,9 @@ __ct__Q23zen10DrawProgreFv:
 /* 801DA3F8 001D7358  38 21 00 38 */	addi r1, r1, 0x38
 /* 801DA3FC 001D735C  7C 08 03 A6 */	mtlr r0
 /* 801DA400 001D7360  4E 80 00 20 */	blr 
+.endfn __ct__Q23zen10DrawProgreFv
 
-.global setMode__Q23zen13DrawProgreMesFQ33zen13DrawProgreMes8modeFlag
-setMode__Q23zen13DrawProgreMesFQ33zen13DrawProgreMes8modeFlag:
+.fn setMode__Q23zen13DrawProgreMesFQ33zen13DrawProgreMes8modeFlag, weak
 /* 801DA404 001D7364  7C 08 02 A6 */	mflr r0
 /* 801DA408 001D7368  7C 65 1B 78 */	mr r5, r3
 /* 801DA40C 001D736C  90 01 00 04 */	stw r0, 4(r1)
@@ -177,9 +176,9 @@ setMode__Q23zen13DrawProgreMesFQ33zen13DrawProgreMes8modeFlag:
 /* 801DA4D0 001D7430  38 21 00 08 */	addi r1, r1, 8
 /* 801DA4D4 001D7434  7C 08 03 A6 */	mtlr r0
 /* 801DA4D8 001D7438  4E 80 00 20 */	blr 
+.endfn setMode__Q23zen13DrawProgreMesFQ33zen13DrawProgreMes8modeFlag
 
-.global start__Q23zen10DrawProgreFv
-start__Q23zen10DrawProgreFv:
+.fn start__Q23zen10DrawProgreFv, global
 /* 801DA4DC 001D743C  7C 08 02 A6 */	mflr r0
 /* 801DA4E0 001D7440  38 80 00 00 */	li r4, 0
 /* 801DA4E4 001D7444  90 01 00 04 */	stw r0, 4(r1)
@@ -200,9 +199,9 @@ start__Q23zen10DrawProgreFv:
 /* 801DA520 001D7480  38 21 00 18 */	addi r1, r1, 0x18
 /* 801DA524 001D7484  7C 08 03 A6 */	mtlr r0
 /* 801DA528 001D7488  4E 80 00 20 */	blr 
+.endfn start__Q23zen10DrawProgreFv
 
-.global update__Q23zen10DrawProgreFP10Controller
-update__Q23zen10DrawProgreFP10Controller:
+.fn update__Q23zen10DrawProgreFP10Controller, global
 /* 801DA52C 001D748C  7C 08 02 A6 */	mflr r0
 /* 801DA530 001D7490  90 01 00 04 */	stw r0, 4(r1)
 /* 801DA534 001D7494  94 21 FF 88 */	stwu r1, -0x78(r1)
@@ -390,9 +389,9 @@ update__Q23zen10DrawProgreFP10Controller:
 /* 801DA7C0 001D7720  38 21 00 78 */	addi r1, r1, 0x78
 /* 801DA7C4 001D7724  7C 08 03 A6 */	mtlr r0
 /* 801DA7C8 001D7728  4E 80 00 20 */	blr 
+.endfn update__Q23zen10DrawProgreFP10Controller
 
-.global draw__Q23zen10DrawProgreFR8Graphics
-draw__Q23zen10DrawProgreFR8Graphics:
+.fn draw__Q23zen10DrawProgreFR8Graphics, global
 /* 801DA7CC 001D772C  7C 08 02 A6 */	mflr r0
 /* 801DA7D0 001D7730  90 01 00 04 */	stw r0, 4(r1)
 /* 801DA7D4 001D7734  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -411,20 +410,26 @@ draw__Q23zen10DrawProgreFR8Graphics:
 /* 801DA808 001D7768  38 21 00 18 */	addi r1, r1, 0x18
 /* 801DA80C 001D776C  7C 08 03 A6 */	mtlr r0
 /* 801DA810 001D7770  4E 80 00 20 */	blr 
+.endfn draw__Q23zen10DrawProgreFR8Graphics
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802E5788:
+.obj lbl_802E5788, local
 	.asciz "screen/blo/progre.blo"
+.endobj lbl_802E5788
 .balign 4
-lbl_802E57A0:
+.obj lbl_802E57A0, local
 	.asciz "progre2.blo"
+.endobj lbl_802E57A0
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803EC038:
+.obj lbl_803EC038, local
 	.float 0.0
-lbl_803EC03C:
+.endobj lbl_803EC038
+.obj lbl_803EC03C, local
 	.float 1.0
-lbl_803EC040:
+.endobj lbl_803EC03C
+.obj lbl_803EC040, local
 	.float 0.5
+.endobj lbl_803EC040

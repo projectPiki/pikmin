@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global __ct__10SeConstantFv
-__ct__10SeConstantFv:
+.fn __ct__10SeConstantFv, global
 /* 800A3B04 000A0A64  7C 08 02 A6 */	mflr r0
 /* 800A3B08 000A0A68  3C 80 80 22 */	lis r4, __vt__5ANode@ha
 /* 800A3B0C 000A0A6C  90 01 00 04 */	stw r0, 4(r1)
@@ -79,9 +78,9 @@ __ct__10SeConstantFv:
 /* 800A3C2C 000A0B8C  38 21 00 48 */	addi r1, r1, 0x48
 /* 800A3C30 000A0B90  7C 08 03 A6 */	mtlr r0
 /* 800A3C34 000A0B94  4E 80 00 20 */	blr 
+.endfn __ct__10SeConstantFv
 
-.global read__10SeConstantFR18RandomAccessStream
-read__10SeConstantFR18RandomAccessStream:
+.fn read__10SeConstantFR18RandomAccessStream, weak
 /* 800A3C38 000A0B98  7C 08 02 A6 */	mflr r0
 /* 800A3C3C 000A0B9C  38 63 00 20 */	addi r3, r3, 0x20
 /* 800A3C40 000A0BA0  90 01 00 04 */	stw r0, 4(r1)
@@ -91,51 +90,62 @@ read__10SeConstantFR18RandomAccessStream:
 /* 800A3C50 000A0BB0  38 21 00 08 */	addi r1, r1, 8
 /* 800A3C54 000A0BB4  7C 08 03 A6 */	mtlr r0
 /* 800A3C58 000A0BB8  4E 80 00 20 */	blr 
+.endfn read__10SeConstantFR18RandomAccessStream
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802B1D10:
+.obj lbl_802B1D10, local
 	.asciz "seConstants.cpp"
+.endobj lbl_802B1D10
 .balign 4
-lbl_802B1D20:
+.obj lbl_802B1D20, local
 	.asciz "seConstant"
+.endobj lbl_802B1D20
 .balign 4
-lbl_802B1D2C:
+.obj lbl_802B1D2C, local
 	.asciz "sound.bin"
+.endobj lbl_802B1D2C
 .balign 4
-lbl_802B1D38:
+.obj lbl_802B1D38, local
 	.asciz "Parm<float>"
+.endobj lbl_802B1D38
 .balign 4
-lbl_802B1D44:
+.obj lbl_802B1D44, local
 	.asciz "BaseParm"
+.endobj lbl_802B1D44
 .balign 4
-lbl_802B1D50:
+.obj lbl_802B1D50, local
 	.4byte __RTTI__8BaseParm
 	.4byte 0x00000000
 	.4byte 0x00000000
+.endobj lbl_802B1D50
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x00000000
 .balign 4
-lbl_802B1D70:
+.obj lbl_802B1D70, local
 	.asciz "SeConstant"
+.endobj lbl_802B1D70
 .balign 4
-lbl_802B1D7C:
+.obj lbl_802B1D7C, local
 	.asciz "CoreNode"
+.endobj lbl_802B1D7C
 .balign 4
-lbl_802B1D88:
+.obj lbl_802B1D88, local
 	.4byte __RTTI__5ANode
 	.4byte 0x00000000
 	.4byte 0x00000000
-lbl_802B1D94:
+.endobj lbl_802B1D88
+.obj lbl_802B1D94, local
 	.4byte __RTTI__5ANode
 	.4byte 0x00000000
 	.4byte __RTTI__8CoreNode
 	.4byte 0x00000000
 	.4byte 0x00000000
-lbl_802B1DA8:
+.endobj lbl_802B1D94
+.obj lbl_802B1DA8, local
 	.4byte __RTTI__5ANode
 	.4byte 0x00000000
 	.4byte __RTTI__8CoreNode
@@ -143,8 +153,8 @@ lbl_802B1DA8:
 	.4byte __RTTI__4Node
 	.4byte 0x00000000
 	.4byte 0x00000000
-.global __vt__10SeConstant
-__vt__10SeConstant:
+.endobj lbl_802B1DA8
+.obj __vt__10SeConstant, weak
 	.4byte __RTTI__10SeConstant
 	.4byte 0
 	.4byte getAgeNodeType__5ANodeFv
@@ -157,6 +167,7 @@ __vt__10SeConstant:
 	.4byte concat__4NodeFR3SRT
 	.4byte concat__4NodeFR8Matrix4f
 	.4byte getModelMatrix__4NodeFv
+.endobj __vt__10SeConstant
 	.4byte 0
 	.4byte 0
 	.4byte 0
@@ -167,50 +178,65 @@ __vt__10SeConstant:
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-lbl_803DFA28:
+.obj lbl_803DFA28, local
 	.asciz "<Node>"
+.endobj lbl_803DFA28
 .balign 4
-lbl_803DFA30:
+.obj lbl_803DFA30, local
 	.asciz "p00"
+.endobj lbl_803DFA30
 .balign 4
-lbl_803DFA34:
+.obj lbl_803DFA34, local
 	.asciz "p01"
+.endobj lbl_803DFA34
 .balign 4
-lbl_803DFA38:
+.obj lbl_803DFA38, local
 	.asciz "p02"
+.endobj lbl_803DFA38
 .balign 4
-lbl_803DFA3C:
+.obj lbl_803DFA3C, local
 	.asciz "parms/"
+.endobj lbl_803DFA3C
 .balign 4
-__RTTI__8BaseParm:
+.obj __RTTI__8BaseParm, local
 	.4byte lbl_802B1D44
 	.4byte 0
+.endobj __RTTI__8BaseParm
 .balign 4
-lbl_803DFA4C:
+.obj lbl_803DFA4C, local
 	.asciz "ANode"
+.endobj lbl_803DFA4C
 .balign 4
-__RTTI__5ANode:
+.obj __RTTI__5ANode, local
 	.4byte lbl_803DFA4C
 	.4byte 0
-__RTTI__8CoreNode:
+.endobj __RTTI__5ANode
+.obj __RTTI__8CoreNode, local
 	.4byte lbl_802B1D7C
 	.4byte lbl_802B1D88
+.endobj __RTTI__8CoreNode
 .balign 4
-lbl_803DFA64:
+.obj lbl_803DFA64, local
 	.asciz "Node"
+.endobj lbl_803DFA64
 .balign 4
-__RTTI__4Node:
+.obj __RTTI__4Node, local
 	.4byte lbl_803DFA64
 	.4byte lbl_802B1D94
-__RTTI__10SeConstant:
+.endobj __RTTI__4Node
+.obj __RTTI__10SeConstant, local
 	.4byte lbl_802B1D70
 	.4byte lbl_802B1DA8
+.endobj __RTTI__10SeConstant
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803E8F88:
+.obj lbl_803E8F88, local
 	.float 700.0
-lbl_803E8F8C:
+.endobj lbl_803E8F88
+.obj lbl_803E8F8C, local
 	.float 400.0
-lbl_803E8F90:
+.endobj lbl_803E8F8C
+.obj lbl_803E8F90, local
 	.float 800.0
+.endobj lbl_803E8F90

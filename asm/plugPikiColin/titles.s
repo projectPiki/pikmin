@@ -2130,55 +2130,79 @@ init$localstatic9$draw__17TitleSetupSectionFR8Graphics:
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803E88D0:
+.obj lbl_803E88D0, local
 	.float 0.0
-lbl_803E88D4:
+.endobj lbl_803E88D0
+.obj lbl_803E88D4, local
 	.float 3.0
-lbl_803E88D8:
+.endobj lbl_803E88D4
+.obj lbl_803E88D8, local
 	.float 1.0
-lbl_803E88DC:
+.endobj lbl_803E88D8
+.obj lbl_803E88DC, local
 	.float 20.0
-lbl_803E88E0:
+.endobj lbl_803E88DC
+.obj lbl_803E88E0, local
 	.float 0.45
-lbl_803E88E4:
+.endobj lbl_803E88E0
+.obj lbl_803E88E4, local
 	.float 0.7853982
-lbl_803E88E8:
+.endobj lbl_803E88E4
+.obj lbl_803E88E8, local
 	.float 10.0
-lbl_803E88EC:
+.endobj lbl_803E88E8
+.obj lbl_803E88EC, local
 	.float 1.0E-5
-lbl_803E88F0:
+.endobj lbl_803E88EC
+.obj lbl_803E88F0, local
 	.float 40.0
-lbl_803E88F4:
+.endobj lbl_803E88F0
+.obj lbl_803E88F4, local
 	.float 0.5
+.endobj lbl_803E88F4
 .balign 8
-lbl_803E88F8:
-	.4byte 0x43300000
-	.4byte 0x80000000
-lbl_803E8900:
+.obj lbl_803E88F8, local
+	.8byte 0x4330000080000000
+.endobj lbl_803E88F8
+.obj lbl_803E8900, local
 	.float 1.25
-lbl_803E8904:
+.endobj lbl_803E8900
+.obj lbl_803E8904, local
 	.float 1500.0
-lbl_803E8908:
+.endobj lbl_803E8904
+.obj lbl_803E8908, local
 	.float 450.0
-lbl_803E890C:
+.endobj lbl_803E8908
+.obj lbl_803E890C, local
 	.float 2.0
-lbl_803E8910:
+.endobj lbl_803E890C
+.obj lbl_803E8910, local
 	.float 30.0
-lbl_803E8914:
+.endobj lbl_803E8910
+.obj lbl_803E8914, local
 	.float 100.0
-lbl_803E8918:
+.endobj lbl_803E8914
+.obj lbl_803E8918, local
 	.float 15000.0
-lbl_803E891C:
+.endobj lbl_803E8918
+.obj lbl_803E891C, local
 	.float 0.0175
-lbl_803E8920:
+.endobj lbl_803E891C
+.obj lbl_803E8920, local
 	.float 25.0
-lbl_803E8924:
+.endobj lbl_803E8920
+.obj lbl_803E8924, local
 	.float 5.0
-lbl_803E8928:
+.endobj lbl_803E8924
+.obj lbl_803E8928, local
 	.float 400.0
-lbl_803E892C:
+.endobj lbl_803E8928
+.obj lbl_803E892C, local
 	.float 255.0
-lbl_803E8930:
+.endobj lbl_803E892C
+.obj lbl_803E8930, local
 	.float 0.125
-lbl_803E8934:
+.endobj lbl_803E8930
+.obj lbl_803E8934, local
 	.float 0.25
+.endobj lbl_803E8934

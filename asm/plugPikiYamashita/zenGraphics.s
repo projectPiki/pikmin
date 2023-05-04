@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global drawLifeCircle__Q23zen14DrawLifeCircleFf
-drawLifeCircle__Q23zen14DrawLifeCircleFf:
+.fn drawLifeCircle__Q23zen14DrawLifeCircleFf, global
 /* 801BA13C 001B709C  7C 08 02 A6 */	mflr r0
 /* 801BA140 001B70A0  90 01 00 04 */	stw r0, 4(r1)
 /* 801BA144 001B70A4  94 21 FF 38 */	stwu r1, -0xc8(r1)
@@ -302,9 +301,9 @@ drawLifeCircle__Q23zen14DrawLifeCircleFf:
 /* 801BA588 001B74E8  38 21 00 C8 */	addi r1, r1, 0xc8
 /* 801BA58C 001B74EC  7C 08 03 A6 */	mtlr r0
 /* 801BA590 001B74F0  4E 80 00 20 */	blr 
+.endfn drawLifeCircle__Q23zen14DrawLifeCircleFf
 
-.global drawLifeCircle__Q23zen18DrawNaviLifeCircleFv
-drawLifeCircle__Q23zen18DrawNaviLifeCircleFv:
+.fn drawLifeCircle__Q23zen18DrawNaviLifeCircleFv, global
 /* 801BA594 001B74F4  7C 08 02 A6 */	mflr r0
 /* 801BA598 001B74F8  90 01 00 04 */	stw r0, 4(r1)
 /* 801BA59C 001B74FC  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -334,37 +333,50 @@ drawLifeCircle__Q23zen18DrawNaviLifeCircleFv:
 /* 801BA5F4 001B7554  38 21 00 20 */	addi r1, r1, 0x20
 /* 801BA5F8 001B7558  7C 08 03 A6 */	mtlr r0
 /* 801BA5FC 001B755C  4E 80 00 20 */	blr 
+.endfn drawLifeCircle__Q23zen18DrawNaviLifeCircleFv
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-.global TRI_NUM__Q23zen14DrawLifeCircle
-TRI_NUM__Q23zen14DrawLifeCircle:
+.obj TRI_NUM__Q23zen14DrawLifeCircle, global
 	.float 128.0
+.endobj TRI_NUM__Q23zen14DrawLifeCircle
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803EB9F0:
-	.4byte 0x00000000
-lbl_803EB9F4:
-	.4byte 0x43000000
-lbl_803EB9F8:
-	.4byte 0x3F000000
-lbl_803EB9FC:
-	.4byte 0x3CA3D70A
-lbl_803EBA00:
-	.4byte 0x3D4CCCCD
-lbl_803EBA04:
-	.4byte 0x41F00000
-lbl_803EBA08:
-	.4byte 0x3E4CCCCD
-lbl_803EBA0C:
-	.4byte 0xBFC90FDB
-lbl_803EBA10:
-	.4byte 0x40C90FDB
-lbl_803EBA14:
-	.4byte 0x3C000000
-lbl_803EBA18:
-	.4byte 0x43300000
-	.4byte 0x80000000
-lbl_803EBA20:
-	.4byte 0x3F800000
+.obj lbl_803EB9F0, local
+	.float 0.0
+.endobj lbl_803EB9F0
+.obj lbl_803EB9F4, local
+	.float 128.0
+.endobj lbl_803EB9F4
+.obj lbl_803EB9F8, local
+	.float 0.5
+.endobj lbl_803EB9F8
+.obj lbl_803EB9FC, local
+	.float 0.02
+.endobj lbl_803EB9FC
+.obj lbl_803EBA00, local
+	.float 0.05
+.endobj lbl_803EBA00
+.obj lbl_803EBA04, local
+	.float 30.0
+.endobj lbl_803EBA04
+.obj lbl_803EBA08, local
+	.float 0.2
+.endobj lbl_803EBA08
+.obj lbl_803EBA0C, local
+	.float -1.5707964
+.endobj lbl_803EBA0C
+.obj lbl_803EBA10, local
+	.float 6.2831855
+.endobj lbl_803EBA10
+.obj lbl_803EBA14, local
+	.float 0.0078125
+.endobj lbl_803EBA14
+.balign 8
+.obj lbl_803EBA18, local
+	.8byte 0x4330000080000000
+.endobj lbl_803EBA18
+.obj lbl_803EBA20, local
+	.float 1.0
+.endobj lbl_803EBA20

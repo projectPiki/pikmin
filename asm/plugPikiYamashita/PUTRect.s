@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global set__7PUTRectFiiii
-set__7PUTRectFiiii:
+.fn set__7PUTRectFiiii, global
 /* 801B3628 001B0588  7C 80 07 34 */	extsh r0, r4
 /* 801B362C 001B058C  B0 03 00 00 */	sth r0, 0(r3)
 /* 801B3630 001B0590  7C A0 07 34 */	extsh r0, r5
@@ -11,9 +10,9 @@ set__7PUTRectFiiii:
 /* 801B3640 001B05A0  B0 83 00 04 */	sth r4, 4(r3)
 /* 801B3644 001B05A4  B0 03 00 06 */	sth r0, 6(r3)
 /* 801B3648 001B05A8  4E 80 00 20 */	blr 
+.endfn set__7PUTRectFiiii
 
-.global copy__7PUTRectFRC7PUTRect
-copy__7PUTRectFRC7PUTRect:
+.fn copy__7PUTRectFRC7PUTRect, global
 /* 801B364C 001B05AC  A8 04 00 00 */	lha r0, 0(r4)
 /* 801B3650 001B05B0  B0 03 00 00 */	sth r0, 0(r3)
 /* 801B3654 001B05B4  A8 04 00 02 */	lha r0, 2(r4)
@@ -23,9 +22,9 @@ copy__7PUTRectFRC7PUTRect:
 /* 801B3664 001B05C4  A8 04 00 06 */	lha r0, 6(r4)
 /* 801B3668 001B05C8  B0 03 00 06 */	sth r0, 6(r3)
 /* 801B366C 001B05CC  4E 80 00 20 */	blr 
+.endfn copy__7PUTRectFRC7PUTRect
 
-.global add__7PUTRectFii
-add__7PUTRectFii:
+.fn add__7PUTRectFii, global
 /* 801B3670 001B05D0  A8 03 00 00 */	lha r0, 0(r3)
 /* 801B3674 001B05D4  7C 00 22 14 */	add r0, r0, r4
 /* 801B3678 001B05D8  B0 03 00 00 */	sth r0, 0(r3)
@@ -39,9 +38,9 @@ add__7PUTRectFii:
 /* 801B3698 001B05F8  7C 00 2A 14 */	add r0, r0, r5
 /* 801B369C 001B05FC  B0 03 00 06 */	sth r0, 6(r3)
 /* 801B36A0 001B0600  4E 80 00 20 */	blr 
+.endfn add__7PUTRectFii
 
-.global intersect__7PUTRectFRC7PUTRect
-intersect__7PUTRectFRC7PUTRect:
+.fn intersect__7PUTRectFRC7PUTRect, global
 /* 801B36A4 001B0604  7C 08 02 A6 */	mflr r0
 /* 801B36A8 001B0608  90 01 00 04 */	stw r0, 4(r1)
 /* 801B36AC 001B060C  94 21 FF F8 */	stwu r1, -8(r1)
@@ -78,9 +77,9 @@ intersect__7PUTRectFRC7PUTRect:
 /* 801B3718 001B0678  38 21 00 08 */	addi r1, r1, 8
 /* 801B371C 001B067C  7C 08 03 A6 */	mtlr r0
 /* 801B3720 001B0680  4E 80 00 20 */	blr 
+.endfn intersect__7PUTRectFRC7PUTRect
 
-.global move__7PUTRectFii
-move__7PUTRectFii:
+.fn move__7PUTRectFii, global
 /* 801B3724 001B0684  A9 03 00 00 */	lha r8, 0(r3)
 /* 801B3728 001B0688  7C 84 07 34 */	extsh r4, r4
 /* 801B372C 001B068C  A8 E3 00 04 */	lha r7, 4(r3)
@@ -98,9 +97,9 @@ move__7PUTRectFii:
 /* 801B375C 001B06BC  7C 00 22 14 */	add r0, r0, r4
 /* 801B3760 001B06C0  B0 03 00 06 */	sth r0, 6(r3)
 /* 801B3764 001B06C4  4E 80 00 20 */	blr 
+.endfn move__7PUTRectFii
 
-.global resize__7PUTRectFii
-resize__7PUTRectFii:
+.fn resize__7PUTRectFii, global
 /* 801B3768 001B06C8  A8 03 00 00 */	lha r0, 0(r3)
 /* 801B376C 001B06CC  7C 00 22 14 */	add r0, r0, r4
 /* 801B3770 001B06D0  B0 03 00 04 */	sth r0, 4(r3)
@@ -108,9 +107,9 @@ resize__7PUTRectFii:
 /* 801B3778 001B06D8  7C 00 2A 14 */	add r0, r0, r5
 /* 801B377C 001B06DC  B0 03 00 06 */	sth r0, 6(r3)
 /* 801B3780 001B06E0  4E 80 00 20 */	blr 
+.endfn resize__7PUTRectFii
 
-.global normalize__7PUTRectFv
-normalize__7PUTRectFv:
+.fn normalize__7PUTRectFv, global
 /* 801B3784 001B06E4  A8 83 00 00 */	lha r4, 0(r3)
 /* 801B3788 001B06E8  A8 03 00 04 */	lha r0, 4(r3)
 /* 801B378C 001B06EC  7C 04 00 00 */	cmpw r4, r0
@@ -127,9 +126,9 @@ normalize__7PUTRectFv:
 /* 801B37B4 001B0714  7C 00 07 34 */	extsh r0, r0
 /* 801B37B8 001B0718  B0 03 00 02 */	sth r0, 2(r3)
 /* 801B37BC 001B071C  4E 80 00 20 */	blr 
+.endfn normalize__7PUTRectFv
 
-.global isEmpty__7PUTRectCFv
-isEmpty__7PUTRectCFv:
+.fn isEmpty__7PUTRectCFv, global
 /* 801B37C0 001B0720  A8 83 00 00 */	lha r4, 0(r3)
 /* 801B37C4 001B0724  38 A0 00 01 */	li r5, 1
 /* 801B37C8 001B0728  A8 03 00 04 */	lha r0, 4(r3)
@@ -143,3 +142,4 @@ isEmpty__7PUTRectCFv:
 .L_801B37E8:
 /* 801B37E8 001B0748  7C A3 2B 78 */	mr r3, r5
 /* 801B37EC 001B074C  4E 80 00 20 */	blr 
+.endfn isEmpty__7PUTRectCFv

@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global __ct__Q23zen13ogScrDiaryMgrFv
-__ct__Q23zen13ogScrDiaryMgrFv:
+.fn __ct__Q23zen13ogScrDiaryMgrFv, global
 /* 8018F1F4 0018C154  7C 08 02 A6 */	mflr r0
 /* 8018F1F8 0018C158  3C 80 80 2D */	lis r4, lbl_802D5DE8@ha
 /* 8018F1FC 0018C15C  90 01 00 04 */	stw r0, 4(r1)
@@ -88,9 +87,9 @@ __ct__Q23zen13ogScrDiaryMgrFv:
 /* 8018F338 0018C298  38 21 00 30 */	addi r1, r1, 0x30
 /* 8018F33C 0018C29C  7C 08 03 A6 */	mtlr r0
 /* 8018F340 0018C2A0  4E 80 00 20 */	blr 
+.endfn __ct__Q23zen13ogScrDiaryMgrFv
 
-.global update__Q23zen13ogScrDiaryMgrFP10Controller
-update__Q23zen13ogScrDiaryMgrFP10Controller:
+.fn update__Q23zen13ogScrDiaryMgrFP10Controller, global
 /* 8018F344 0018C2A4  7C 08 02 A6 */	mflr r0
 /* 8018F348 0018C2A8  90 01 00 04 */	stw r0, 4(r1)
 /* 8018F34C 0018C2AC  94 21 FF D0 */	stwu r1, -0x30(r1)
@@ -160,9 +159,9 @@ update__Q23zen13ogScrDiaryMgrFP10Controller:
 /* 8018F434 0018C394  38 21 00 30 */	addi r1, r1, 0x30
 /* 8018F438 0018C398  7C 08 03 A6 */	mtlr r0
 /* 8018F43C 0018C39C  4E 80 00 20 */	blr 
+.endfn update__Q23zen13ogScrDiaryMgrFP10Controller
 
-.global draw__Q23zen13ogScrDiaryMgrFR8Graphics
-draw__Q23zen13ogScrDiaryMgrFR8Graphics:
+.fn draw__Q23zen13ogScrDiaryMgrFR8Graphics, global
 /* 8018F440 0018C3A0  7C 08 02 A6 */	mflr r0
 /* 8018F444 0018C3A4  90 01 00 04 */	stw r0, 4(r1)
 /* 8018F448 0018C3A8  94 21 FE 78 */	stwu r1, -0x188(r1)
@@ -258,9 +257,9 @@ draw__Q23zen13ogScrDiaryMgrFR8Graphics:
 /* 8018F5AC 0018C50C  38 21 01 88 */	addi r1, r1, 0x188
 /* 8018F5B0 0018C510  7C 08 03 A6 */	mtlr r0
 /* 8018F5B4 0018C514  4E 80 00 20 */	blr 
+.endfn draw__Q23zen13ogScrDiaryMgrFR8Graphics
 
-.global start__Q23zen13ogScrDiaryMgrFss
-start__Q23zen13ogScrDiaryMgrFss:
+.fn start__Q23zen13ogScrDiaryMgrFss, global
 /* 8018F5B8 0018C518  7C 08 02 A6 */	mflr r0
 /* 8018F5BC 0018C51C  3C 80 80 3D */	lis r4, bloFile_Diary_Table__3zen@ha
 /* 8018F5C0 0018C520  90 01 00 04 */	stw r0, 4(r1)
@@ -436,9 +435,9 @@ start__Q23zen13ogScrDiaryMgrFss:
 /* 8018F840 0018C7A0  38 21 00 38 */	addi r1, r1, 0x38
 /* 8018F844 0018C7A4  7C 08 03 A6 */	mtlr r0
 /* 8018F848 0018C7A8  4E 80 00 20 */	blr 
+.endfn start__Q23zen13ogScrDiaryMgrFss
 
-.global typePage__Q23zen13ogScrDiaryMgrFv
-typePage__Q23zen13ogScrDiaryMgrFv:
+.fn typePage__Q23zen13ogScrDiaryMgrFv, global
 /* 8018F84C 0018C7AC  7C 08 02 A6 */	mflr r0
 /* 8018F850 0018C7B0  38 80 FF FF */	li r4, -1
 /* 8018F854 0018C7B4  90 01 00 04 */	stw r0, 4(r1)
@@ -478,9 +477,9 @@ typePage__Q23zen13ogScrDiaryMgrFv:
 /* 8018F8DC 0018C83C  38 21 00 20 */	addi r1, r1, 0x20
 /* 8018F8E0 0018C840  7C 08 03 A6 */	mtlr r0
 /* 8018F8E4 0018C844  4E 80 00 20 */	blr 
+.endfn typePage__Q23zen13ogScrDiaryMgrFv
 
-.global nextPage__Q23zen13ogScrDiaryMgrFv
-nextPage__Q23zen13ogScrDiaryMgrFv:
+.fn nextPage__Q23zen13ogScrDiaryMgrFv, global
 /* 8018F8E8 0018C848  7C 08 02 A6 */	mflr r0
 /* 8018F8EC 0018C84C  90 01 00 04 */	stw r0, 4(r1)
 /* 8018F8F0 0018C850  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -533,9 +532,9 @@ nextPage__Q23zen13ogScrDiaryMgrFv:
 /* 8018F9A4 0018C904  38 21 00 28 */	addi r1, r1, 0x28
 /* 8018F9A8 0018C908  7C 08 03 A6 */	mtlr r0
 /* 8018F9AC 0018C90C  4E 80 00 20 */	blr 
+.endfn nextPage__Q23zen13ogScrDiaryMgrFv
 
-.global backPage__Q23zen13ogScrDiaryMgrFv
-backPage__Q23zen13ogScrDiaryMgrFv:
+.fn backPage__Q23zen13ogScrDiaryMgrFv, global
 /* 8018F9B0 0018C910  7C 08 02 A6 */	mflr r0
 /* 8018F9B4 0018C914  90 01 00 04 */	stw r0, 4(r1)
 /* 8018F9B8 0018C918  38 00 00 01 */	li r0, 1
@@ -576,9 +575,9 @@ backPage__Q23zen13ogScrDiaryMgrFv:
 /* 8018FA44 0018C9A4  38 21 00 20 */	addi r1, r1, 0x20
 /* 8018FA48 0018C9A8  7C 08 03 A6 */	mtlr r0
 /* 8018FA4C 0018C9AC  4E 80 00 20 */	blr 
+.endfn backPage__Q23zen13ogScrDiaryMgrFv
 
-.global exit__Q23zen13ogScrDiaryMgrFv
-exit__Q23zen13ogScrDiaryMgrFv:
+.fn exit__Q23zen13ogScrDiaryMgrFv, global
 /* 8018FA50 0018C9B0  7C 08 02 A6 */	mflr r0
 /* 8018FA54 0018C9B4  90 01 00 04 */	stw r0, 4(r1)
 /* 8018FA58 0018C9B8  94 21 FF F8 */	stwu r1, -8(r1)
@@ -588,9 +587,9 @@ exit__Q23zen13ogScrDiaryMgrFv:
 /* 8018FA68 0018C9C8  38 21 00 08 */	addi r1, r1, 8
 /* 8018FA6C 0018C9CC  7C 08 03 A6 */	mtlr r0
 /* 8018FA70 0018C9D0  4E 80 00 20 */	blr 
+.endfn exit__Q23zen13ogScrDiaryMgrFv
 
-.global __ct__Q23zen11ogDrawDiaryFv
-__ct__Q23zen11ogDrawDiaryFv:
+.fn __ct__Q23zen11ogDrawDiaryFv, global
 /* 8018FA74 0018C9D4  7C 08 02 A6 */	mflr r0
 /* 8018FA78 0018C9D8  90 01 00 04 */	stw r0, 4(r1)
 /* 8018FA7C 0018C9DC  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -680,9 +679,9 @@ __ct__Q23zen11ogDrawDiaryFv:
 /* 8018FBC0 0018CB20  38 21 00 20 */	addi r1, r1, 0x20
 /* 8018FBC4 0018CB24  7C 08 03 A6 */	mtlr r0
 /* 8018FBC8 0018CB28  4E 80 00 20 */	blr 
+.endfn __ct__Q23zen11ogDrawDiaryFv
 
-.global open__Q23zen11ogDrawDiaryFffs
-open__Q23zen11ogDrawDiaryFffs:
+.fn open__Q23zen11ogDrawDiaryFffs, global
 /* 8018FBCC 0018CB2C  7C 08 02 A6 */	mflr r0
 /* 8018FBD0 0018CB30  90 01 00 04 */	stw r0, 4(r1)
 /* 8018FBD4 0018CB34  94 21 FF 28 */	stwu r1, -0xd8(r1)
@@ -851,9 +850,9 @@ open__Q23zen11ogDrawDiaryFffs:
 /* 8018FE58 0018CDB8  38 21 00 D8 */	addi r1, r1, 0xd8
 /* 8018FE5C 0018CDBC  7C 08 03 A6 */	mtlr r0
 /* 8018FE60 0018CDC0  4E 80 00 20 */	blr 
+.endfn open__Q23zen11ogDrawDiaryFffs
 
-.global update__Q23zen11ogDrawDiaryFP10Controller
-update__Q23zen11ogDrawDiaryFP10Controller:
+.fn update__Q23zen11ogDrawDiaryFP10Controller, global
 /* 8018FE64 0018CDC4  7C 08 02 A6 */	mflr r0
 /* 8018FE68 0018CDC8  90 01 00 04 */	stw r0, 4(r1)
 /* 8018FE6C 0018CDCC  94 21 FF 40 */	stwu r1, -0xc0(r1)
@@ -1036,9 +1035,9 @@ update__Q23zen11ogDrawDiaryFP10Controller:
 /* 80190110 0018D070  38 21 00 C0 */	addi r1, r1, 0xc0
 /* 80190114 0018D074  7C 08 03 A6 */	mtlr r0
 /* 80190118 0018D078  4E 80 00 20 */	blr 
+.endfn update__Q23zen11ogDrawDiaryFP10Controller
 
-.global __ct__Q23zen17ogDrawSelectDiaryFv
-__ct__Q23zen17ogDrawSelectDiaryFv:
+.fn __ct__Q23zen17ogDrawSelectDiaryFv, global
 /* 8019011C 0018D07C  7C 08 02 A6 */	mflr r0
 /* 80190120 0018D080  90 01 00 04 */	stw r0, 4(r1)
 /* 80190124 0018D084  94 21 FF C0 */	stwu r1, -0x40(r1)
@@ -1313,9 +1312,9 @@ __ct__Q23zen17ogDrawSelectDiaryFv:
 /* 80190540 0018D4A0  38 21 00 40 */	addi r1, r1, 0x40
 /* 80190544 0018D4A4  7C 08 03 A6 */	mtlr r0
 /* 80190548 0018D4A8  4E 80 00 20 */	blr 
+.endfn __ct__Q23zen17ogDrawSelectDiaryFv
 
-.global start__Q23zen17ogDrawSelectDiaryFv
-start__Q23zen17ogDrawSelectDiaryFv:
+.fn start__Q23zen17ogDrawSelectDiaryFv, global
 /* 8019054C 0018D4AC  7C 08 02 A6 */	mflr r0
 /* 80190550 0018D4B0  90 01 00 04 */	stw r0, 4(r1)
 /* 80190554 0018D4B4  94 21 FF B8 */	stwu r1, -0x48(r1)
@@ -1440,9 +1439,9 @@ start__Q23zen17ogDrawSelectDiaryFv:
 /* 80190708 0018D668  38 21 00 48 */	addi r1, r1, 0x48
 /* 8019070C 0018D66C  7C 08 03 A6 */	mtlr r0
 /* 80190710 0018D670  4E 80 00 20 */	blr 
+.endfn start__Q23zen17ogDrawSelectDiaryFv
 
-.global setCursorAlpha__Q23zen17ogDrawSelectDiaryFv
-setCursorAlpha__Q23zen17ogDrawSelectDiaryFv:
+.fn setCursorAlpha__Q23zen17ogDrawSelectDiaryFv, global
 /* 80190714 0018D674  7C 08 02 A6 */	mflr r0
 /* 80190718 0018D678  3C 80 72 6F */	lis r4, 0x726F6F74@ha
 /* 8019071C 0018D67C  90 01 00 04 */	stw r0, 4(r1)
@@ -1510,9 +1509,9 @@ setCursorAlpha__Q23zen17ogDrawSelectDiaryFv:
 /* 80190814 0018D774  38 21 00 68 */	addi r1, r1, 0x68
 /* 80190818 0018D778  7C 08 03 A6 */	mtlr r0
 /* 8019081C 0018D77C  4E 80 00 20 */	blr 
+.endfn setCursorAlpha__Q23zen17ogDrawSelectDiaryFv
 
-.global MoveCursor__Q23zen17ogDrawSelectDiaryFv
-MoveCursor__Q23zen17ogDrawSelectDiaryFv:
+.fn MoveCursor__Q23zen17ogDrawSelectDiaryFv, global
 /* 80190820 0018D780  7C 08 02 A6 */	mflr r0
 /* 80190824 0018D784  90 01 00 04 */	stw r0, 4(r1)
 /* 80190828 0018D788  94 21 FF A0 */	stwu r1, -0x60(r1)
@@ -1580,9 +1579,9 @@ MoveCursor__Q23zen17ogDrawSelectDiaryFv:
 /* 80190918 0018D878  38 21 00 60 */	addi r1, r1, 0x60
 /* 8019091C 0018D87C  7C 08 03 A6 */	mtlr r0
 /* 80190920 0018D880  4E 80 00 20 */	blr 
+.endfn MoveCursor__Q23zen17ogDrawSelectDiaryFv
 
-.global update__Q23zen17ogDrawSelectDiaryFP10Controller
-update__Q23zen17ogDrawSelectDiaryFP10Controller:
+.fn update__Q23zen17ogDrawSelectDiaryFP10Controller, global
 /* 80190924 0018D884  7C 08 02 A6 */	mflr r0
 /* 80190928 0018D888  90 01 00 04 */	stw r0, 4(r1)
 /* 8019092C 0018D88C  94 21 FE 60 */	stwu r1, -0x1a0(r1)
@@ -2161,9 +2160,9 @@ update__Q23zen17ogDrawSelectDiaryFP10Controller:
 /* 80191198 0018E0F8  38 21 01 A0 */	addi r1, r1, 0x1a0
 /* 8019119C 0018E0FC  7C 08 03 A6 */	mtlr r0
 /* 801911A0 0018E100  4E 80 00 20 */	blr 
+.endfn update__Q23zen17ogDrawSelectDiaryFP10Controller
 
-.global draw__Q23zen17ogDrawSelectDiaryFR8Graphics
-draw__Q23zen17ogDrawSelectDiaryFR8Graphics:
+.fn draw__Q23zen17ogDrawSelectDiaryFR8Graphics, global
 /* 801911A4 0018E104  7C 08 02 A6 */	mflr r0
 /* 801911A8 0018E108  90 01 00 04 */	stw r0, 4(r1)
 /* 801911AC 0018E10C  94 21 FE F8 */	stwu r1, -0x108(r1)
@@ -2226,95 +2225,129 @@ draw__Q23zen17ogDrawSelectDiaryFR8Graphics:
 /* 80191288 0018E1E8  38 21 01 08 */	addi r1, r1, 0x108
 /* 8019128C 0018E1EC  7C 08 03 A6 */	mtlr r0
 /* 80191290 0018E1F0  4E 80 00 20 */	blr 
+.endfn draw__Q23zen17ogDrawSelectDiaryFR8Graphics
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802D5DE8:
+.obj lbl_802D5DE8, local
 	.asciz "bigFont.bti"
+.endobj lbl_802D5DE8
 .balign 4
-lbl_802D5DF4:
+.obj lbl_802D5DF4, local
 	.asciz "screen/blo/tu_base.blo"
+.endobj lbl_802D5DF4
 .balign 4
-lbl_802D5E0C: # Shift-JIS
+.obj lbl_802D5E0C, local # Shift-JIS
 	.4byte 0x74783F3F
 	.4byte 0x82CC9094
 	.4byte 0x2825648C
 	.4byte 0xC2290000
+.endobj lbl_802D5E0C
 .balign 4
-lbl_802D5E1C:
+.obj lbl_802D5E1C, local
 	.asciz "screen/blo/m_menu_b.blo"
+.endobj lbl_802D5E1C
 .balign 4
-lbl_802D5E34:
+.obj lbl_802D5E34, local
 	.asciz "screen/blo/m_menu_r.blo"
+.endobj lbl_802D5E34
 .balign 4
-lbl_802D5E4C:
+.obj lbl_802D5E4C, local
 	.asciz "screen/blo/black.blo"
+.endobj lbl_802D5E4C
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-bloFiles_default_Diary__3zen:
+.obj bloFiles_default_Diary__3zen, local
 	.4byte bloFile_Res_Table__3zen+4
 	.4byte 0x00000000
-bloFiles_Diary__3zen:
+.endobj bloFiles_default_Diary__3zen
+.obj bloFiles_Diary__3zen, local
 	.4byte bloFile_Diary_Table__3zen
 	.4byte 0x00000000
+.endobj bloFiles_Diary__3zen
 .balign 4
-lbl_803E5AB8:
+.obj lbl_803E5AB8, local
 	.asciz "END"
+.endobj lbl_803E5AB8
 .balign 4
-lbl_803E5ABC:
+.obj lbl_803E5ABC, local
 	.float 320.0
-lbl_803E5AC0:
+.endobj lbl_803E5ABC
+.obj lbl_803E5AC0, local
 	.float 240.0
-lbl_803E5AC4:
+.endobj lbl_803E5AC0
+.obj lbl_803E5AC4, local
 	.float 0.0
+.endobj lbl_803E5AC4
 .balign 4
-lbl_803E5AC8:
+.obj lbl_803E5AC8, local
 	.asciz "i%02du"
+.endobj lbl_803E5AC8
 .balign 4
-lbl_803E5AD0:
+.obj lbl_803E5AD0, local
 	.asciz "i%02dd"
+.endobj lbl_803E5AD0
 .balign 4
-lbl_803E5AD8:
+.obj lbl_803E5AD8, local
 	.asciz "pi%02d"
+.endobj lbl_803E5AD8
 .balign 4
-lbl_803E5AE0:
+.obj lbl_803E5AE0, local
 	.asciz "pk%02d"
+.endobj lbl_803E5AE0
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803EB328:
+.obj lbl_803EB328, local
 	.float 0.5
+.endobj lbl_803EB328
 .balign 8
-lbl_803EB330:
+.obj lbl_803EB330, local
 	.8byte 0x4330000080000000
-lbl_803EB338:
+.endobj lbl_803EB330
+.obj lbl_803EB338, local
 	.float 0.0
-lbl_803EB33C:
+.endobj lbl_803EB338
+.obj lbl_803EB33C, local
 	.float 320.0
-lbl_803EB340:
+.endobj lbl_803EB33C
+.obj lbl_803EB340, local
 	.float 240.0
-lbl_803EB344:
+.endobj lbl_803EB340
+.obj lbl_803EB344, local
 	.float 0.01
-lbl_803EB348:
+.endobj lbl_803EB344
+.obj lbl_803EB348, local
 	.float 1.5
-lbl_803EB34C:
+.endobj lbl_803EB348
+.obj lbl_803EB34C, local
 	.float 1.0
-lbl_803EB350:
+.endobj lbl_803EB34C
+.obj lbl_803EB350, local
 	.float 0.6666667
-lbl_803EB354:
+.endobj lbl_803EB350
+.obj lbl_803EB354, local
 	.float 0.2
-lbl_803EB358:
+.endobj lbl_803EB354
+.obj lbl_803EB358, local
 	.float 0.25
-lbl_803EB35C:
+.endobj lbl_803EB358
+.obj lbl_803EB35C, local
 	.float 255.0
-lbl_803EB360:
+.endobj lbl_803EB35C
+.obj lbl_803EB360, local
 	.float 0.1
-lbl_803EB364:
+.endobj lbl_803EB360
+.obj lbl_803EB364, local
 	.float 0.05
-lbl_803EB368:
+.endobj lbl_803EB364
+.obj lbl_803EB368, local
 	.float 6.2831855
-lbl_803EB36C:
+.endobj lbl_803EB368
+.obj lbl_803EB36C, local
 	.float 30.0
-lbl_803EB370:
+.endobj lbl_803EB36C
+.obj lbl_803EB370, local
 	.float 5000.0
+.endobj lbl_803EB370

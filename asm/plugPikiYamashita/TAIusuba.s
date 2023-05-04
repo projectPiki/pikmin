@@ -709,7 +709,7 @@ act__12TAIAflyUsubaFR4Teki:
 .L_801EAA34:
 /* 801EAA34 001E7994  7F C3 F3 78 */	mr r3, r30
 /* 801EAA38 001E7998  4B F5 DF 5D */	bl getYFromSeaLevel__5BTekiFv
-/* 801EAA3C 001E799C  C8 02 C0 A0 */	lfd f0, "@2206"@sda21(r2)
+/* 801EAA3C 001E799C  C8 02 C0 A0 */	lfd f0, lbl_803EC2A0@sda21(r2)
 /* 801EAA40 001E79A0  FC 01 00 40 */	fcmpo cr0, f1, f0
 /* 801EAA44 001E79A4  40 81 00 10 */	ble .L_801EAA54
 /* 801EAA48 001E79A8  C0 02 C0 98 */	lfs f0, lbl_803EC298@sda21(r2)
@@ -728,34 +728,49 @@ act__12TAIAflyUsubaFR4Teki:
 .balign 8
 lbl_802E63F0:
 	.asciz "TAIusuba.cpp"
-	.skip 3
+.balign 4
+lbl_802E6400:
 	.asciz "TAIusuba"
-	.skip 3
+.balign 4
+lbl_802E640C:
 	.asciz "tekis/usuba/motion/dead.dca"
+.balign 4
+lbl_802E6428:
 	.asciz "tekis/usuba/motion/damage.dca"
-	.skip 2
+.balign 4
+lbl_802E6448:
 	.asciz "tekis/usuba/motion/wait1.dca"
-	.skip 3
+.balign 4
+lbl_802E6468:
 	.asciz "tekis/usuba/motion/wait2.dca"
-	.skip 3
+.balign 4
+lbl_802E6488:
 	.asciz "tekis/usuba/motion/waitact1.dck"
+.balign 4
+lbl_802E64A8:
 	.asciz "tekis/usuba/motion/waitact2.dca"
+.balign 4
+lbl_802E64C8:
 	.asciz "tekis/usuba/motion/move1.dck"
-	.skip 3
+.balign 4
+lbl_802E64E8:
 	.asciz "tekis/usuba/motion/move2.dck"
-	.skip 3
+.balign 4
+lbl_802E6508:
 	.asciz "tekis/usuba/motion/attack.dca"
-	.skip 2
+.balign 4
+lbl_802E6528:
 	.asciz "tekis/usuba/motion/type1.dck"
-	.skip 3
+.balign 4
+lbl_802E6548:
 	.asciz "tekis/usuba/motion/type2.dca"
-	.skip 3
+.balign 4
 lbl_802E6568:
 	.asciz "TAIusubaAnimation"
-	.skip 2
+.balign 4
 lbl_802E657C:
 	.asciz "TAIanimation"
-	.skip 3
+.balign 4
 lbl_802E658C:
 	.4byte __RTTI__12TAIanimation
 	.4byte 0x00000000
@@ -765,15 +780,16 @@ __vt__17TAIusubaAnimation:
 	.4byte __RTTI__17TAIusubaAnimation
 	.4byte 0
 	.4byte makeDefaultAnimations__17TAIusubaAnimationFv
+.balign 4
 lbl_802E65A4:
 	.asciz "TAIAflyUsuba"
-	.skip 3
+.balign 4
 lbl_802E65B4:
 	.asciz "TaiAction"
-	.skip 2
+.balign 4
 lbl_802E65C0:
 	.asciz "TAIAmotion"
-	.skip 1
+.balign 4
 lbl_802E65CC:
 	.4byte __RTTI__9TaiAction
 	.4byte 0
@@ -800,14 +816,16 @@ __vt__12TAIAflyUsuba:
 	.4byte 0
 	.4byte 0
 	.4byte 0
+.balign 4
 lbl_802E6624:
 	.asciz "TAIusubaStrategy"
-	.skip 3
+.balign 4
 lbl_802E6638:
 	.asciz "TekiStrategy"
-	.skip 3
+.balign 4
 lbl_802E6648:
 	.asciz "YaiStrategy"
+.balign 4
 lbl_802E6654:
 	.4byte __RTTI__12TekiStrategy
 	.4byte 0
@@ -830,12 +848,13 @@ __vt__16TAIusubaStrategy:
 	.4byte drawDebugInfo__12TekiStrategyFR4TekiR8Graphics
 	.4byte interact__12TekiStrategyFR4TekiR18TekiInteractionKey
 	.4byte spawnCorpseParts__12TekiStrategyFR4Teki
+.balign 4
 lbl_802E669C:
 	.asciz "TAIusubaParameters"
-	.skip 1
+.balign 4
 lbl_802E66B0:
 	.asciz "CoreNode"
-	.skip 3
+.balign 4
 lbl_802E66BC:
 	.4byte __RTTI__5ANode
 	.4byte 0
@@ -846,9 +865,10 @@ lbl_802E66C8:
 	.4byte __RTTI__8CoreNode
 	.4byte 0
 	.4byte 0
+.balign 4
 lbl_802E66DC:
 	.asciz "TekiParameters"
-	.skip 1
+.balign 4
 lbl_802E66EC:
 	.4byte __RTTI__5ANode
 	.4byte 0
@@ -920,18 +940,20 @@ __RTTI__11YaiStrategy:
 __RTTI__16TAIusubaStrategy:
 	.4byte lbl_802E6624
 	.4byte lbl_802E6660
+.balign 4
 lbl_803E7430:
 	.asciz "ANode"
-	.skip 2
+.balign 4
 __RTTI__5ANode:
 	.4byte lbl_803E7430
 	.4byte 0
 __RTTI__8CoreNode:
 	.4byte lbl_802E66B0
 	.4byte lbl_802E66BC
+.balign 4
 lbl_803E7448:
 	.asciz "Node"
-	.skip 3
+.balign 4
 __RTTI__4Node:
 	.4byte lbl_803E7448
 	.4byte lbl_802E66C8
@@ -988,6 +1010,7 @@ lbl_803EC298:
 	.4byte 0x00000000
 lbl_803EC29C:
 	.4byte 0x43FA0000
-"@2206":
+.balign 8
+lbl_803EC2A0:
 	.4byte 0x40A77000
 	.4byte 0x00000000

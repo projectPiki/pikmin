@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global __ct__8ActChaseFP4Piki
-__ct__8ActChaseFP4Piki:
+.fn __ct__8ActChaseFP4Piki, global
 /* 800B5688 000B25E8  7C 08 02 A6 */	mflr r0
 /* 800B568C 000B25EC  38 A0 00 01 */	li r5, 1
 /* 800B5690 000B25F0  90 01 00 04 */	stw r0, 4(r1)
@@ -30,13 +29,13 @@ __ct__8ActChaseFP4Piki:
 /* 800B56E8 000B2648  38 21 00 18 */	addi r1, r1, 0x18
 /* 800B56EC 000B264C  7C 08 03 A6 */	mtlr r0
 /* 800B56F0 000B2650  4E 80 00 20 */	blr 
+.endfn __ct__8ActChaseFP4Piki
 
-.global initialise__Q28ActChase11InitialiserFP6Action
-initialise__Q28ActChase11InitialiserFP6Action:
+.fn initialise__Q28ActChase11InitialiserFP6Action, global
 /* 800B56F4 000B2654  4E 80 00 20 */	blr 
+.endfn initialise__Q28ActChase11InitialiserFP6Action
 
-.global init__8ActChaseFP8Creature
-init__8ActChaseFP8Creature:
+.fn init__8ActChaseFP8Creature, global
 /* 800B56F8 000B2658  7C 08 02 A6 */	mflr r0
 /* 800B56FC 000B265C  90 01 00 04 */	stw r0, 4(r1)
 /* 800B5700 000B2660  94 21 FF C8 */	stwu r1, -0x38(r1)
@@ -92,9 +91,9 @@ init__8ActChaseFP8Creature:
 /* 800B57C0 000B2720  38 21 00 38 */	addi r1, r1, 0x38
 /* 800B57C4 000B2724  7C 08 03 A6 */	mtlr r0
 /* 800B57C8 000B2728  4E 80 00 20 */	blr 
+.endfn init__8ActChaseFP8Creature
 
-.global cleanup__8ActChaseFv
-cleanup__8ActChaseFv:
+.fn cleanup__8ActChaseFv, global
 /* 800B57CC 000B272C  7C 08 02 A6 */	mflr r0
 /* 800B57D0 000B2730  90 01 00 04 */	stw r0, 4(r1)
 /* 800B57D4 000B2734  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -112,9 +111,9 @@ cleanup__8ActChaseFv:
 /* 800B5800 000B2760  38 21 00 20 */	addi r1, r1, 0x20
 /* 800B5804 000B2764  7C 08 03 A6 */	mtlr r0
 /* 800B5808 000B2768  4E 80 00 20 */	blr 
+.endfn cleanup__8ActChaseFv
 
-.global exec__8ActChaseFv
-exec__8ActChaseFv:
+.fn exec__8ActChaseFv, global
 /* 800B580C 000B276C  7C 08 02 A6 */	mflr r0
 /* 800B5810 000B2770  90 01 00 04 */	stw r0, 4(r1)
 /* 800B5814 000B2774  94 21 FF 70 */	stwu r1, -0x90(r1)
@@ -265,9 +264,9 @@ exec__8ActChaseFv:
 /* 800B5A3C 000B299C  38 21 00 90 */	addi r1, r1, 0x90
 /* 800B5A40 000B29A0  7C 08 03 A6 */	mtlr r0
 /* 800B5A44 000B29A4  4E 80 00 20 */	blr 
+.endfn exec__8ActChaseFv
 
-.global __dt__8ActChaseFv
-__dt__8ActChaseFv:
+.fn __dt__8ActChaseFv, weak
 /* 800B5A48 000B29A8  7C 08 02 A6 */	mflr r0
 /* 800B5A4C 000B29AC  90 01 00 04 */	stw r0, 4(r1)
 /* 800B5A50 000B29B0  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -294,33 +293,39 @@ __dt__8ActChaseFv:
 /* 800B5AA0 000B2A00  38 21 00 18 */	addi r1, r1, 0x18
 /* 800B5AA4 000B2A04  7C 08 03 A6 */	mtlr r0
 /* 800B5AA8 000B2A08  4E 80 00 20 */	blr 
+.endfn __dt__8ActChaseFv
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802B6188:
+.obj lbl_802B6188, local
 	.asciz "aiChase.cpp"
+.endobj lbl_802B6188
 .balign 4
-lbl_802B6194:
+.obj lbl_802B6194, local
 	.asciz "aiRandomBoid"
+.endobj lbl_802B6194
 .balign 4
-lbl_802B61A4:
+.obj lbl_802B61A4, local
 	.asciz "ActChase"
+.endobj lbl_802B61A4
 .balign 4
-lbl_802B61B0:
+.obj lbl_802B61B0, local
 	.asciz "Receiver<Piki>"
+.endobj lbl_802B61B0
 .balign 4
-lbl_802B61C0:
+.obj lbl_802B61C0, local
 	.4byte "__RTTI__15Receiver<4Piki>"
 	.4byte 0
 	.4byte 0
-lbl_802B61CC:
+.endobj lbl_802B61C0
+.obj lbl_802B61CC, local
 	.4byte "__RTTI__15Receiver<4Piki>"
 	.4byte 0
 	.4byte __RTTI__6Action
 	.4byte 0
 	.4byte 0
-.global __vt__8ActChase
-__vt__8ActChase:
+.endobj lbl_802B61CC
+.obj __vt__8ActChase, global
 	.4byte __RTTI__8ActChase
 	.4byte 0
 	.4byte "procMsg__15Receiver<4Piki>FP4PikiP3Msg"
@@ -346,23 +351,27 @@ __vt__8ActChase:
 	.4byte restart__6ActionFv
 	.4byte resumable__6ActionFv
 	.4byte getInfo__6ActionFPc
+.endobj __vt__8ActChase
 .balign 4
-lbl_802B6244:
+.obj lbl_802B6244, local
 	.asciz "ActChase::Initialiser"
+.endobj lbl_802B6244
 .balign 4
-lbl_802B625C:
+.obj lbl_802B625C, local
 	.asciz "Action::Initialiser"
+.endobj lbl_802B625C
 .balign 4
-lbl_802B6270:
+.obj lbl_802B6270, local
 	.4byte __RTTI__Q26Action11Initialiser
 	.4byte 0
 	.4byte 0
-.global __vt__Q28ActChase11Initialiser
-__vt__Q28ActChase11Initialiser:
+.endobj lbl_802B6270
+.obj __vt__Q28ActChase11Initialiser, global
 	.4byte __RTTI__Q28ActChase11Initialiser
 	.4byte 0
 	.4byte initialise__Q28ActChase11InitialiserFP6Action
-lbl_802B6288:
+.endobj __vt__Q28ActChase11Initialiser
+.obj lbl_802B6288, local
 	.4byte .L_800A7908
 	.4byte .L_800A7930
 	.4byte .L_800A7944
@@ -374,36 +383,47 @@ lbl_802B6288:
 	.4byte .L_800A791C
 	.4byte .L_800A79D0
 	.4byte .L_800A79BC
+.endobj lbl_802B6288
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-lbl_803E0188:
+.obj lbl_803E0188, local
 	.float 0.0
-lbl_803E018C:
+.endobj lbl_803E0188
+.obj lbl_803E018C, local
 	.float 0.0
-lbl_803E0190:
+.endobj lbl_803E018C
+.obj lbl_803E0190, local
 	.float 0.0
-lbl_803E0194:
+.endobj lbl_803E0190
+.obj lbl_803E0194, local
 	.float 0.0
-"__RTTI__15Receiver<4Piki>":
+.endobj lbl_803E0194
+.obj "__RTTI__15Receiver<4Piki>", local
 	.4byte lbl_802B61B0
 	.4byte 0
+.endobj "__RTTI__15Receiver<4Piki>"
 .balign 4
-lbl_803E01A0:
+.obj lbl_803E01A0, local
 	.asciz "Action"
+.endobj lbl_803E01A0
 .balign 4
-__RTTI__6Action:
+.obj __RTTI__6Action, local
 	.4byte lbl_803E01A0
 	.4byte lbl_802B61C0
-__RTTI__8ActChase:
+.endobj __RTTI__6Action
+.obj __RTTI__8ActChase, local
 	.4byte lbl_802B61A4
 	.4byte lbl_802B61CC
-__RTTI__Q26Action11Initialiser:
+.endobj __RTTI__8ActChase
+.obj __RTTI__Q26Action11Initialiser, local
 	.4byte lbl_802B625C
 	.4byte 0
-__RTTI__Q28ActChase11Initialiser:
+.endobj __RTTI__Q26Action11Initialiser
+.obj __RTTI__Q28ActChase11Initialiser, local
 	.4byte lbl_802B6244
 	.4byte lbl_802B6270
+.endobj __RTTI__Q28ActChase11Initialiser
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8

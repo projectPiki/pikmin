@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global __ct__15TekiPersonalityFv
-__ct__15TekiPersonalityFv:
+.fn __ct__15TekiPersonalityFv, global
 /* 8014CA60 001499C0  7C 08 02 A6 */	mflr r0
 /* 8014CA64 001499C4  3C 80 80 2D */	lis r4, __vt__15TekiPersonality@ha
 /* 8014CA68 001499C8  90 01 00 04 */	stw r0, 4(r1)
@@ -129,9 +128,9 @@ __ct__15TekiPersonalityFv:
 /* 8014CC4C 00149BAC  38 21 00 48 */	addi r1, r1, 0x48
 /* 8014CC50 00149BB0  7C 08 03 A6 */	mtlr r0
 /* 8014CC54 00149BB4  4E 80 00 20 */	blr 
+.endfn __ct__15TekiPersonalityFv
 
-.global reset__15TekiPersonalityFv
-reset__15TekiPersonalityFv:
+.fn reset__15TekiPersonalityFv, global
 /* 8014CC58 00149BB8  7C 08 02 A6 */	mflr r0
 /* 8014CC5C 00149BBC  3C 80 6E 6F */	lis r4, 0x6E6F6E65@ha
 /* 8014CC60 00149BC0  90 01 00 04 */	stw r0, 4(r1)
@@ -207,9 +206,9 @@ reset__15TekiPersonalityFv:
 /* 8014CD78 00149CD8  38 21 00 68 */	addi r1, r1, 0x68
 /* 8014CD7C 00149CDC  7C 08 03 A6 */	mtlr r0
 /* 8014CD80 00149CE0  4E 80 00 20 */	blr 
+.endfn reset__15TekiPersonalityFv
 
-.global input__15TekiPersonalityFR15TekiPersonality
-input__15TekiPersonalityFR15TekiPersonality:
+.fn input__15TekiPersonalityFR15TekiPersonality, global
 /* 8014CD84 00149CE4  7C 08 02 A6 */	mflr r0
 /* 8014CD88 00149CE8  38 A0 00 05 */	li r5, 5
 /* 8014CD8C 00149CEC  90 01 00 04 */	stw r0, 4(r1)
@@ -250,9 +249,9 @@ input__15TekiPersonalityFR15TekiPersonality:
 /* 8014CE18 00149D78  38 21 00 18 */	addi r1, r1, 0x18
 /* 8014CE1C 00149D7C  7C 08 03 A6 */	mtlr r0
 /* 8014CE20 00149D80  4E 80 00 20 */	blr 
+.endfn input__15TekiPersonalityFR15TekiPersonality
 
-.global read__15TekiPersonalityFR18RandomAccessStreami
-read__15TekiPersonalityFR18RandomAccessStreami:
+.fn read__15TekiPersonalityFR18RandomAccessStreami, global
 /* 8014CE24 00149D84  7C 08 02 A6 */	mflr r0
 /* 8014CE28 00149D88  2C 05 00 07 */	cmpwi r5, 7
 /* 8014CE2C 00149D8C  90 01 00 04 */	stw r0, 4(r1)
@@ -449,9 +448,9 @@ read__15TekiPersonalityFR18RandomAccessStreami:
 /* 8014D108 0014A068  38 21 00 68 */	addi r1, r1, 0x68
 /* 8014D10C 0014A06C  7C 08 03 A6 */	mtlr r0
 /* 8014D110 0014A070  4E 80 00 20 */	blr 
+.endfn read__15TekiPersonalityFR18RandomAccessStreami
 
-.global write__15TekiPersonalityFR18RandomAccessStream
-write__15TekiPersonalityFR18RandomAccessStream:
+.fn write__15TekiPersonalityFR18RandomAccessStream, global
 /* 8014D114 0014A074  7C 08 02 A6 */	mflr r0
 /* 8014D118 0014A078  90 01 00 04 */	stw r0, 4(r1)
 /* 8014D11C 0014A07C  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -488,84 +487,111 @@ write__15TekiPersonalityFR18RandomAccessStream:
 /* 8014D198 0014A0F8  38 21 00 18 */	addi r1, r1, 0x18
 /* 8014D19C 0014A0FC  7C 08 03 A6 */	mtlr r0
 /* 8014D1A0 0014A100  4E 80 00 20 */	blr 
+.endfn write__15TekiPersonalityFR18RandomAccessStream
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802CE5B8:
+.obj lbl_802CE5B8, local
 	.asciz "tekipersonality.cpp"
+.endobj lbl_802CE5B8
 .balign 4
-lbl_802CE5CC:
+.obj lbl_802CE5CC, local
 	.asciz "tekipersonality"
+.endobj lbl_802CE5CC
 .balign 4
-lbl_802CE5DC:
+.obj lbl_802CE5DC, local
 	.asciz "PELLET_MIN_COUNT"
+.endobj lbl_802CE5DC
 .balign 4
-lbl_802CE5F0:
+.obj lbl_802CE5F0, local
 	.asciz "PELLET_MAX_COUNT"
+.endobj lbl_802CE5F0
 .balign 4
-lbl_802CE604:
+.obj lbl_802CE604, local
 	.asciz "WATER_MIN_COUNT"
+.endobj lbl_802CE604
 .balign 4
-lbl_802CE614:
+.obj lbl_802CE614, local
 	.asciz "WATER_MAX_COUNT"
+.endobj lbl_802CE614
 .balign 4
-lbl_802CE624:
+.obj lbl_802CE624, local
 	.asciz "PARAMETER_0"
+.endobj lbl_802CE624
 .balign 4
-lbl_802CE630:
+.obj lbl_802CE630, local
 	.asciz "STRENGTH"
+.endobj lbl_802CE630
 .balign 4
-lbl_802CE63C:
+.obj lbl_802CE63C, local
 	.asciz "TERRITORY_RANGE"
+.endobj lbl_802CE63C
 .balign 4
-lbl_802CE64C:
+.obj lbl_802CE64C, local
 	.asciz "PELLET_APPEARANCE_PROBABILITY"
+.endobj lbl_802CE64C
 .balign 4
-lbl_802CE66C:
+.obj lbl_802CE66C, local
 	.asciz "WATER_APPEARANCE_PROBABILITY"
+.endobj lbl_802CE66C
 .balign 4
-lbl_802CE68C:
+.obj lbl_802CE68C, local
 	.asciz "TekiPersonality"
+.endobj lbl_802CE68C
 .balign 4
-.global __vt__15TekiPersonality
-__vt__15TekiPersonality:
+.obj __vt__15TekiPersonality, global
 	.4byte __RTTI__15TekiPersonality
 	.4byte 0
 	.4byte read__15TekiPersonalityFR18RandomAccessStreami
 	.4byte write__15TekiPersonalityFR18RandomAccessStream
+.endobj __vt__15TekiPersonality
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-lbl_803E4748:
+.obj lbl_803E4748, local
 	.asciz "SIZE"
+.endobj lbl_803E4748
 .balign 4
-lbl_803E4750:
+.obj lbl_803E4750, local
 	.float 0.0
-lbl_803E4754:
+.endobj lbl_803E4750
+.obj lbl_803E4754, local
 	.float 0.0
-lbl_803E4758:
+.endobj lbl_803E4754
+.obj lbl_803E4758, local
 	.float 0.0
-lbl_803E475C:
+.endobj lbl_803E4758
+.obj lbl_803E475C, local
 	.float 0.0
-lbl_803E4760:
+.endobj lbl_803E475C
+.obj lbl_803E4760, local
 	.float 0.0
-lbl_803E4764:
+.endobj lbl_803E4760
+.obj lbl_803E4764, local
 	.float 0.0
-__RTTI__15TekiPersonality:
+.endobj lbl_803E4764
+.obj __RTTI__15TekiPersonality, local
 	.4byte lbl_802CE68C
 	.4byte 0
+.endobj __RTTI__15TekiPersonality
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803EA9E8:
+.obj lbl_803EA9E8, local
 	.float 0.0
-lbl_803EA9EC:
+.endobj lbl_803EA9E8
+.obj lbl_803EA9EC, local
 	.float 0.1
-lbl_803EA9F0:
+.endobj lbl_803EA9EC
+.obj lbl_803EA9F0, local
 	.float 10.0
-lbl_803EA9F4:
+.endobj lbl_803EA9F0
+.obj lbl_803EA9F4, local
 	.float 100.0
-lbl_803EA9F8:
+.endobj lbl_803EA9F4
+.obj lbl_803EA9F8, local
 	.float 10000.0
-lbl_803EA9FC:
+.endobj lbl_803EA9F8
+.obj lbl_803EA9FC, local
 	.float 1.0
+.endobj lbl_803EA9FC

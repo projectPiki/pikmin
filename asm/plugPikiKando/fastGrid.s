@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global __ct__8FastGridFv
-__ct__8FastGridFv:
+.fn __ct__8FastGridFv, global
 /* 80094098 00090FF8  38 80 00 00 */	li r4, 0
 /* 8009409C 00090FFC  B0 83 00 10 */	sth r4, 0x10(r3)
 /* 800940A0 00091000  38 00 00 01 */	li r0, 1
@@ -11,9 +10,9 @@ __ct__8FastGridFv:
 /* 800940B0 00091010  B0 83 00 00 */	sth r4, 0(r3)
 /* 800940B4 00091014  B0 03 00 14 */	sth r0, 0x14(r3)
 /* 800940B8 00091018  4E 80 00 20 */	blr 
+.endfn __ct__8FastGridFv
 
-.global initAIGrid__8FastGridFUc
-initAIGrid__8FastGridFUc:
+.fn initAIGrid__8FastGridFUc, global
 /* 800940BC 0009101C  7C 08 02 A6 */	mflr r0
 /* 800940C0 00091020  38 A0 00 01 */	li r5, 1
 /* 800940C4 00091024  90 01 00 04 */	stw r0, 4(r1)
@@ -44,9 +43,9 @@ initAIGrid__8FastGridFUc:
 /* 80094128 00091088  38 21 00 18 */	addi r1, r1, 0x18
 /* 8009412C 0009108C  7C 08 03 A6 */	mtlr r0
 /* 80094130 00091090  4E 80 00 20 */	blr 
+.endfn initAIGrid__8FastGridFUc
 
-.global clearAIGrid__8FastGridFv
-clearAIGrid__8FastGridFv:
+.fn clearAIGrid__8FastGridFv, global
 /* 80094134 00091094  38 A0 00 00 */	li r5, 0
 /* 80094138 00091098  38 80 00 00 */	li r4, 0
 /* 8009413C 0009109C  48 00 00 10 */	b .L_8009414C
@@ -60,9 +59,9 @@ clearAIGrid__8FastGridFv:
 /* 80094154 000910B4  7C 05 00 00 */	cmpw r5, r0
 /* 80094158 000910B8  41 80 FF E8 */	blt .L_80094140
 /* 8009415C 000910BC  4E 80 00 20 */	blr 
+.endfn clearAIGrid__8FastGridFv
 
-.global delAIGrid__8FastGridFv
-delAIGrid__8FastGridFv:
+.fn delAIGrid__8FastGridFv, global
 /* 80094160 000910C0  A8 83 00 0C */	lha r4, 0xc(r3)
 /* 80094164 000910C4  A0 0D 30 0C */	lhz r0, aiGridSize__8FastGrid@sda21(r13)
 /* 80094168 000910C8  A8 63 00 10 */	lha r3, 0x10(r3)
@@ -75,9 +74,9 @@ delAIGrid__8FastGridFv:
 /* 80094184 000910E4  38 03 FF FF */	addi r0, r3, -1
 /* 80094188 000910E8  7C 05 21 AE */	stbx r0, r5, r4
 /* 8009418C 000910EC  4E 80 00 20 */	blr 
+.endfn delAIGrid__8FastGridFv
 
-.global aiCulling__8FastGridFv
-aiCulling__8FastGridFv:
+.fn aiCulling__8FastGridFv, global
 /* 80094190 000910F0  7C 08 02 A6 */	mflr r0
 /* 80094194 000910F4  90 01 00 04 */	stw r0, 4(r1)
 /* 80094198 000910F8  94 21 FF F8 */	stwu r1, -8(r1)
@@ -196,9 +195,9 @@ aiCulling__8FastGridFv:
 /* 8009432C 0009128C  38 21 00 08 */	addi r1, r1, 8
 /* 80094330 00091290  7C 08 03 A6 */	mtlr r0
 /* 80094334 00091294  4E 80 00 20 */	blr 
+.endfn aiCulling__8FastGridFv
 
-.global aiCullingLarge__8FastGridFi
-aiCullingLarge__8FastGridFi:
+.fn aiCullingLarge__8FastGridFi, global
 /* 80094338 00091298  88 0D A0 F8 */	lbz r0, aiGrid__6AIPerf@sda21(r13)
 /* 8009433C 0009129C  28 00 00 00 */	cmplwi r0, 0
 /* 80094340 000912A0  40 82 00 0C */	bne .L_8009434C
@@ -251,9 +250,9 @@ aiCullingLarge__8FastGridFi:
 /* 800943E4 00091344  40 81 FF 94 */	ble .L_80094378
 /* 800943E8 00091348  38 60 00 01 */	li r3, 1
 /* 800943EC 0009134C  4E 80 00 20 */	blr 
+.endfn aiCullingLarge__8FastGridFi
 
-.global doCulling__8FastGridFRC8FastGridf
-doCulling__8FastGridFRC8FastGridf:
+.fn doCulling__8FastGridFRC8FastGridf, global
 /* 800943F0 00091350  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 800943F4 00091354  FC 00 08 1E */	fctiwz f0, f1
 /* 800943F8 00091358  A8 A4 00 00 */	lha r5, 0(r4)
@@ -347,9 +346,9 @@ doCulling__8FastGridFRC8FastGridf:
 .L_80094518:
 /* 80094518 00091478  38 21 00 20 */	addi r1, r1, 0x20
 /* 8009451C 0009147C  4E 80 00 20 */	blr 
+.endfn doCulling__8FastGridFRC8FastGridf
 
-.global updateGrid__8FastGridFRC8Vector3f
-updateGrid__8FastGridFRC8Vector3f:
+.fn updateGrid__8FastGridFRC8Vector3f, global
 /* 80094520 00091480  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 80094524 00091484  80 0D A0 F0 */	lwz r0, useGrid__6AIPerf@sda21(r13)
 /* 80094528 00091488  2C 00 00 00 */	cmpwi r0, 0
@@ -390,9 +389,9 @@ updateGrid__8FastGridFRC8Vector3f:
 .L_800945B4:
 /* 800945B4 00091514  38 21 00 20 */	addi r1, r1, 0x20
 /* 800945B8 00091518  4E 80 00 20 */	blr 
+.endfn updateGrid__8FastGridFRC8Vector3f
 
-.global updateAIGrid__8FastGridFRC8Vector3fb
-updateAIGrid__8FastGridFRC8Vector3fb:
+.fn updateAIGrid__8FastGridFRC8Vector3fb, global
 /* 800945BC 0009151C  94 21 FF D8 */	stwu r1, -0x28(r1)
 /* 800945C0 00091520  88 0D A0 F8 */	lbz r0, aiGrid__6AIPerf@sda21(r13)
 /* 800945C4 00091524  C0 04 00 00 */	lfs f0, 0(r4)
@@ -454,21 +453,23 @@ updateAIGrid__8FastGridFRC8Vector3fb:
 .L_8009469C:
 /* 8009469C 000915FC  38 21 00 28 */	addi r1, r1, 0x28
 /* 800946A0 00091600  4E 80 00 20 */	blr 
+.endfn updateAIGrid__8FastGridFRC8Vector3fb
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-.global aiGridShift__8FastGrid
-aiGridShift__8FastGrid:
+.obj aiGridShift__8FastGrid, global
 	.2byte 0xC
+.endobj aiGridShift__8FastGrid
 .balign 4
-lbl_803DF31C:
+.obj lbl_803DF31C, local
 	.asciz "aiGrid"
+.endobj lbl_803DF31C
 
 .section .sbss, "wa"
 .balign 8
-.global aiGridMap__8FastGrid
-aiGridMap__8FastGrid:
+.obj aiGridMap__8FastGrid, global
 	.skip 0x4
-.global aiGridSize__8FastGrid
-aiGridSize__8FastGrid:
+.endobj aiGridMap__8FastGrid
+.obj aiGridSize__8FastGrid, global
 	.skip 0x2
+.endobj aiGridSize__8FastGrid

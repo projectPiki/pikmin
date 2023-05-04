@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global makeResident__10P2DTextBoxFv
-makeResident__10P2DTextBoxFv:
+.fn makeResident__10P2DTextBoxFv, global
 /* 801B44AC 001B140C  7C 08 02 A6 */	mflr r0
 /* 801B44B0 001B1410  90 01 00 04 */	stw r0, 4(r1)
 /* 801B44B4 001B1414  94 21 FF F8 */	stwu r1, -8(r1)
@@ -16,9 +15,9 @@ makeResident__10P2DTextBoxFv:
 /* 801B44D8 001B1438  38 21 00 08 */	addi r1, r1, 8
 /* 801B44DC 001B143C  7C 08 03 A6 */	mtlr r0
 /* 801B44E0 001B1440  4E 80 00 20 */	blr 
+.endfn makeResident__10P2DTextBoxFv
 
-.global loadResource__10P2DTextBoxFv
-loadResource__10P2DTextBoxFv:
+.fn loadResource__10P2DTextBoxFv, global
 /* 801B44E4 001B1444  7C 08 02 A6 */	mflr r0
 /* 801B44E8 001B1448  90 01 00 04 */	stw r0, 4(r1)
 /* 801B44EC 001B144C  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -40,9 +39,9 @@ loadResource__10P2DTextBoxFv:
 /* 801B4528 001B1488  38 21 00 18 */	addi r1, r1, 0x18
 /* 801B452C 001B148C  7C 08 03 A6 */	mtlr r0
 /* 801B4530 001B1490  4E 80 00 20 */	blr 
+.endfn loadResource__10P2DTextBoxFv
 
-.global __ct__10P2DTextBoxFP7P2DPaneP18RandomAccessStreamUs
-__ct__10P2DTextBoxFP7P2DPaneP18RandomAccessStreamUs:
+.fn __ct__10P2DTextBoxFP7P2DPaneP18RandomAccessStreamUs, global
 /* 801B4534 001B1494  7C 08 02 A6 */	mflr r0
 /* 801B4538 001B1498  90 01 00 04 */	stw r0, 4(r1)
 /* 801B453C 001B149C  94 21 FF C8 */	stwu r1, -0x38(r1)
@@ -175,9 +174,9 @@ __ct__10P2DTextBoxFP7P2DPaneP18RandomAccessStreamUs:
 /* 801B4734 001B1694  38 21 00 38 */	addi r1, r1, 0x38
 /* 801B4738 001B1698  7C 08 03 A6 */	mtlr r0
 /* 801B473C 001B169C  4E 80 00 20 */	blr 
+.endfn __ct__10P2DTextBoxFP7P2DPaneP18RandomAccessStreamUs
 
-.global drawSelf__10P2DTextBoxFii
-drawSelf__10P2DTextBoxFii:
+.fn drawSelf__10P2DTextBoxFii, global
 /* 801B4740 001B16A0  7C 08 02 A6 */	mflr r0
 /* 801B4744 001B16A4  90 01 00 04 */	stw r0, 4(r1)
 /* 801B4748 001B16A8  94 21 FF 98 */	stwu r1, -0x68(r1)
@@ -204,9 +203,9 @@ drawSelf__10P2DTextBoxFii:
 /* 801B479C 001B16FC  38 21 00 68 */	addi r1, r1, 0x68
 /* 801B47A0 001B1700  7C 08 03 A6 */	mtlr r0
 /* 801B47A4 001B1704  4E 80 00 20 */	blr 
+.endfn drawSelf__10P2DTextBoxFii
 
-.global drawSelf__10P2DTextBoxFiiP8Matrix4f
-drawSelf__10P2DTextBoxFiiP8Matrix4f:
+.fn drawSelf__10P2DTextBoxFiiP8Matrix4f, global
 /* 801B47A8 001B1708  7C 08 02 A6 */	mflr r0
 /* 801B47AC 001B170C  90 01 00 04 */	stw r0, 4(r1)
 /* 801B47B0 001B1710  94 21 FF 18 */	stwu r1, -0xe8(r1)
@@ -318,9 +317,9 @@ drawSelf__10P2DTextBoxFiiP8Matrix4f:
 /* 801B4934 001B1894  38 21 00 E8 */	addi r1, r1, 0xe8
 /* 801B4938 001B1898  7C 08 03 A6 */	mtlr r0
 /* 801B493C 001B189C  4E 80 00 20 */	blr 
+.endfn drawSelf__10P2DTextBoxFiiP8Matrix4f
 
-.global __dt__10P2DTextBoxFv
-__dt__10P2DTextBoxFv:
+.fn __dt__10P2DTextBoxFv, weak
 /* 801B4940 001B18A0  7C 08 02 A6 */	mflr r0
 /* 801B4944 001B18A4  90 01 00 04 */	stw r0, 4(r1)
 /* 801B4948 001B18A8  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -347,21 +346,24 @@ __dt__10P2DTextBoxFv:
 /* 801B4998 001B18F8  38 21 00 18 */	addi r1, r1, 0x18
 /* 801B499C 001B18FC  7C 08 03 A6 */	mtlr r0
 /* 801B49A0 001B1900  4E 80 00 20 */	blr 
+.endfn __dt__10P2DTextBoxFv
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802E0888:
+.obj lbl_802E0888, local
 	.asciz "P2DTextBox.cpp"
+.endobj lbl_802E0888
 .balign 4
-lbl_802E0898:
+.obj lbl_802E0898, local
 	.asciz "P2DTextBox"
+.endobj lbl_802E0898
 .balign 4
-lbl_802E08A4:
+.obj lbl_802E08A4, local
 	.4byte __RTTI__7P2DPane
 	.4byte 0
 	.4byte 0
-.global __vt__10P2DTextBox
-__vt__10P2DTextBox:
+.endobj lbl_802E08A4
+.obj __vt__10P2DTextBox, global
 	.4byte __RTTI__10P2DTextBox
 	.4byte 0
 	.4byte loadResource__10P2DTextBoxFv
@@ -377,23 +379,28 @@ __vt__10P2DTextBox:
 	.4byte drawSelf__10P2DTextBoxFiiP8Matrix4f
 	.4byte search__7P2DPaneFUlb
 	.4byte makeMatrix__7P2DPaneFii
-	.4byte 0
+.endobj __vt__10P2DTextBox
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-lbl_803E6670:
+.obj lbl_803E6670, local
 	.asciz "P2DPane"
+.endobj lbl_803E6670
 .balign 4
-__RTTI__7P2DPane:
+.obj __RTTI__7P2DPane, local
 	.4byte lbl_803E6670
 	.4byte 0
-__RTTI__10P2DTextBox:
+.endobj __RTTI__7P2DPane
+.obj __RTTI__10P2DTextBox, local
 	.4byte lbl_802E0898
 	.4byte lbl_802E08A4
+.endobj __RTTI__10P2DTextBox
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803EB8E0:
-	.4byte 0x00000000
-lbl_803EB8E4:
-	.4byte 0x3F000000
+.obj lbl_803EB8E0, local
+	.float 0.0
+.endobj lbl_803EB8E0
+.obj lbl_803EB8E4, local
+	.float 0.5
+.endobj lbl_803EB8E4

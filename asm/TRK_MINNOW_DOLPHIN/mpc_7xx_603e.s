@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global TRKSaveExtended1Block
-TRKSaveExtended1Block:
+.fn TRKSaveExtended1Block, global
 /* 802200A0 0021D000  3C 40 80 3D */	lis r2, gTRKCPUState@h
 /* 802200A4 0021D004  60 42 5E 40 */	ori r2, r2, gTRKCPUState@l
 /* 802200A8 0021D008  7E 00 04 A6 */	mfsr r16, 0
@@ -114,9 +113,9 @@ TRKSaveExtended1Block:
 /* 80220250 0021D1B0  93 E2 02 78 */	stw r31, 0x278(r2)
 .L_80220254:
 /* 80220254 0021D1B4  4E 80 00 20 */	blr 
+.endfn TRKSaveExtended1Block
 
-.global TRKRestoreExtended1Block
-TRKRestoreExtended1Block:
+.fn TRKRestoreExtended1Block, global
 /* 80220258 0021D1B8  3C 40 80 3D */	lis r2, gTRKCPUState@h
 /* 8022025C 0021D1BC  60 42 5E 40 */	ori r2, r2, gTRKCPUState@l
 /* 80220260 0021D1C0  3C A0 80 2E */	lis r5, gTRKRestoreFlags@h
@@ -231,8 +230,9 @@ TRKRestoreExtended1Block:
 /* 80220404 0021D364  7F D2 FB A6 */	mtspr 0x3f2, r30
 /* 80220408 0021D368  7F FA 43 A6 */	mtspr 0x11a, r31
 /* 8022040C 0021D36C  4E 80 00 20 */	blr 
+.endfn TRKRestoreExtended1Block
 
-.global TRKTargetCPUMinorType
-TRKTargetCPUMinorType:
+.fn TRKTargetCPUMinorType, global
 /* 80220410 0021D370  38 60 00 54 */	li r3, 0x54
 /* 80220414 0021D374  4E 80 00 20 */	blr 
+.endfn TRKTargetCPUMinorType

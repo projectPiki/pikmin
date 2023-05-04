@@ -117,7 +117,7 @@ GXInitTexObj:
 /* 80212288 0020F1E8  3C 00 43 30 */	lis r0, 0x4330
 /* 8021228C 0020F1EC  80 7F 00 04 */	lwz r3, 4(r31)
 /* 80212290 0020F1F0  90 01 00 38 */	stw r0, 0x38(r1)
-/* 80212294 0020F1F4  C8 22 C3 88 */	lfd f1, "@161"@sda21(r2)
+/* 80212294 0020F1F4  C8 22 C3 88 */	lfd f1, lbl_803EC588@sda21(r2)
 /* 80212298 0020F1F8  54 63 06 1E */	rlwinm r3, r3, 0, 0x18, 0xf
 /* 8021229C 0020F1FC  C8 01 00 38 */	lfd f0, 0x38(r1)
 /* 802122A0 0020F200  C0 42 C3 80 */	lfs f2, lbl_803EC580@sda21(r2)
@@ -907,29 +907,20 @@ GX2HWFiltConv:
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-.global lbl_803EC580
 lbl_803EC580:
 	.4byte 0x41800000
-	.4byte 0x00000000
-.global "@161"
-"@161":
-	.4byte 0x43300000
-	.4byte 0x00000000
-.global lbl_803EC590
+.balign 8
+lbl_803EC588:
+	.8byte 0x4330000000000000
 lbl_803EC590:
 	.4byte 0xC0800000
-.global lbl_803EC594
 lbl_803EC594:
 	.4byte 0x40800000
-.global lbl_803EC598
 lbl_803EC598:
 	.4byte 0x407F5C29
-.global lbl_803EC59C
 lbl_803EC59C:
 	.4byte 0x42000000
-.global lbl_803EC5A0
 lbl_803EC5A0:
 	.4byte 0x00000000
-.global lbl_803EC5A4
 lbl_803EC5A4:
 	.4byte 0x41200000

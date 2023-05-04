@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global __ct__Q23zen12DrawUfoPartsFv
-__ct__Q23zen12DrawUfoPartsFv:
+.fn __ct__Q23zen12DrawUfoPartsFv, global
 /* 801F1D60 001EECC0  7C 08 02 A6 */	mflr r0
 /* 801F1D64 001EECC4  90 01 00 04 */	stw r0, 4(r1)
 /* 801F1D68 001EECC8  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -62,9 +61,9 @@ __ct__Q23zen12DrawUfoPartsFv:
 /* 801F1E40 001EEDA0  38 21 00 28 */	addi r1, r1, 0x28
 /* 801F1E44 001EEDA4  7C 08 03 A6 */	mtlr r0
 /* 801F1E48 001EEDA8  4E 80 00 20 */	blr 
+.endfn __ct__Q23zen12DrawUfoPartsFv
 
-.global update__Q23zen12DrawUfoPartsFP10Controller
-update__Q23zen12DrawUfoPartsFP10Controller:
+.fn update__Q23zen12DrawUfoPartsFP10Controller, global
 /* 801F1E4C 001EEDAC  7C 08 02 A6 */	mflr r0
 /* 801F1E50 001EEDB0  90 01 00 04 */	stw r0, 4(r1)
 /* 801F1E54 001EEDB4  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -148,9 +147,9 @@ update__Q23zen12DrawUfoPartsFP10Controller:
 /* 801F1F70 001EEED0  38 21 00 20 */	addi r1, r1, 0x20
 /* 801F1F74 001EEED4  7C 08 03 A6 */	mtlr r0
 /* 801F1F78 001EEED8  4E 80 00 20 */	blr 
+.endfn update__Q23zen12DrawUfoPartsFP10Controller
 
-.global draw__Q23zen12DrawUfoPartsFR8Graphics
-draw__Q23zen12DrawUfoPartsFR8Graphics:
+.fn draw__Q23zen12DrawUfoPartsFR8Graphics, global
 /* 801F1F7C 001EEEDC  7C 08 02 A6 */	mflr r0
 /* 801F1F80 001EEEE0  90 01 00 04 */	stw r0, 4(r1)
 /* 801F1F84 001EEEE4  94 21 FF 78 */	stwu r1, -0x88(r1)
@@ -271,9 +270,9 @@ draw__Q23zen12DrawUfoPartsFR8Graphics:
 /* 801F2124 001EF084  38 21 00 88 */	addi r1, r1, 0x88
 /* 801F2128 001EF088  7C 08 03 A6 */	mtlr r0
 /* 801F212C 001EF08C  4E 80 00 20 */	blr 
+.endfn draw__Q23zen12DrawUfoPartsFR8Graphics
 
-.global sleep__Q23zen12DrawUfoPartsFv
-sleep__Q23zen12DrawUfoPartsFv:
+.fn sleep__Q23zen12DrawUfoPartsFv, global
 /* 801F2130 001EF090  7C 08 02 A6 */	mflr r0
 /* 801F2134 001EF094  38 83 00 00 */	addi r4, r3, 0
 /* 801F2138 001EF098  90 01 00 04 */	stw r0, 4(r1)
@@ -287,9 +286,9 @@ sleep__Q23zen12DrawUfoPartsFv:
 /* 801F2158 001EF0B8  38 21 00 08 */	addi r1, r1, 8
 /* 801F215C 001EF0BC  7C 08 03 A6 */	mtlr r0
 /* 801F2160 001EF0C0  4E 80 00 20 */	blr 
+.endfn sleep__Q23zen12DrawUfoPartsFv
 
-.global start__Q23zen12DrawUfoPartsFv
-start__Q23zen12DrawUfoPartsFv:
+.fn start__Q23zen12DrawUfoPartsFv, global
 /* 801F2164 001EF0C4  7C 08 02 A6 */	mflr r0
 /* 801F2168 001EF0C8  90 01 00 04 */	stw r0, 4(r1)
 /* 801F216C 001EF0CC  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -316,9 +315,9 @@ start__Q23zen12DrawUfoPartsFv:
 /* 801F21C0 001EF120  38 21 00 18 */	addi r1, r1, 0x18
 /* 801F21C4 001EF124  7C 08 03 A6 */	mtlr r0
 /* 801F21C8 001EF128  4E 80 00 20 */	blr 
+.endfn start__Q23zen12DrawUfoPartsFv
 
-.global operation__Q23zen12DrawUfoPartsFv
-operation__Q23zen12DrawUfoPartsFv:
+.fn operation__Q23zen12DrawUfoPartsFv, global
 /* 801F21CC 001EF12C  7C 08 02 A6 */	mflr r0
 /* 801F21D0 001EF130  90 01 00 04 */	stw r0, 4(r1)
 /* 801F21D4 001EF134  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -338,9 +337,9 @@ operation__Q23zen12DrawUfoPartsFv:
 /* 801F220C 001EF16C  38 21 00 18 */	addi r1, r1, 0x18
 /* 801F2210 001EF170  7C 08 03 A6 */	mtlr r0
 /* 801F2214 001EF174  4E 80 00 20 */	blr 
+.endfn operation__Q23zen12DrawUfoPartsFv
 
-.global dataSet__Q23zen12DrawUfoPartsFv
-dataSet__Q23zen12DrawUfoPartsFv:
+.fn dataSet__Q23zen12DrawUfoPartsFv, global
 /* 801F2218 001EF178  7C 08 02 A6 */	mflr r0
 /* 801F221C 001EF17C  90 01 00 04 */	stw r0, 4(r1)
 /* 801F2220 001EF180  94 21 FF 70 */	stwu r1, -0x90(r1)
@@ -475,37 +474,32 @@ dataSet__Q23zen12DrawUfoPartsFv:
 /* 801F2418 001EF378  38 21 00 90 */	addi r1, r1, 0x90
 /* 801F241C 001EF37C  7C 08 03 A6 */	mtlr r0
 /* 801F2420 001EF380  4E 80 00 20 */	blr 
+.endfn dataSet__Q23zen12DrawUfoPartsFv
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-.global lbl_802E7148
-lbl_802E7148:
-	.4byte 0x73637265
-	.4byte 0x656E2F62
-	.4byte 0x6C6F2F75
-	.4byte 0x666F5F70
-	.4byte 0x2E626C6F
-	.4byte 0x00000000
+.obj lbl_802E7148, local
+	.asciz "screen/blo/ufo_p.blo"
+.endobj lbl_802E7148
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-.global lbl_803E76B8
-lbl_803E76B8:
-	.4byte 0x75692530
-	.4byte 0x32640000
-.global lbl_803E76C0
-lbl_803E76C0:
-	.4byte 0x756E2530
-	.4byte 0x32640000
+.obj lbl_803E76B8, local
+	.asciz "ui%02d"
+.endobj lbl_803E76B8
+.balign 4
+.obj lbl_803E76C0, local
+	.asciz "un%02d"
+.endobj lbl_803E76C0
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-.global lbl_803EC448
-lbl_803EC448:
-	.4byte 0x3F000000
-.global lbl_803EC44C
-lbl_803EC44C:
-	.4byte 0x3E800000
-.global lbl_803EC450
-lbl_803EC450:
-	.4byte 0x3F400000
+.obj lbl_803EC448, local
+	.float 0.5
+.endobj lbl_803EC448
+.obj lbl_803EC44C, local
+	.float 0.25
+.endobj lbl_803EC44C
+.obj lbl_803EC450, local
+	.float 0.75
+.endobj lbl_803EC450

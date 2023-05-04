@@ -212,7 +212,7 @@ draw__Q23zen11EffectMgr2DFR8Graphics:
 /* 801E9BCC 001E6B2C  80 04 03 10 */	lwz r0, 0x310(r4)
 /* 801E9BD0 001E6B30  3C 80 43 30 */	lis r4, 0x4330
 /* 801E9BD4 001E6B34  6C A3 80 00 */	xoris r3, r5, 0x8000
-/* 801E9BD8 001E6B38  C8 A2 C0 30 */	lfd f5, "@880"@sda21(r2)
+/* 801E9BD8 001E6B38  C8 A2 C0 30 */	lfd f5, lbl_803EC230@sda21(r2)
 /* 801E9BDC 001E6B3C  90 61 00 2C */	stw r3, 0x2c(r1)
 /* 801E9BE0 001E6B40  6C 00 80 00 */	xoris r0, r0, 0x8000
 /* 801E9BE4 001E6B44  C0 42 C0 24 */	lfs f2, lbl_803EC224@sda21(r2)
@@ -292,178 +292,196 @@ killAll__Q23zen11EffectMgr2DFb:
 .balign 8
 lbl_802E5AD0:
 	.asciz "effectMgr2D.cpp"
+.balign 4
 lbl_802E5AE0:
 	.asciz "effectMgr2D"
+.balign 4
 lbl_802E5AEC:
 	.asciz "effects/pcr/frt_l.pcr"
-	.skip 2
+.balign 4
 lbl_802E5B04:
 	.asciz "effects/tex/waku02.bti"
-	.skip 1
+.balign 4
 lbl_802E5B1C:
 	.asciz "effects/pcr/frt_h_l.pcr"
+.balign 4
 lbl_802E5B34:
 	.asciz "effects/pcr/frt_s.pcr"
-	.skip 2
+.balign 4
 lbl_802E5B4C:
 	.asciz "effects/tex/waku03.bti"
-	.skip 1
+.balign 4
 lbl_802E5B64:
 	.asciz "effects/pcr/frt_h_s.pcr"
+.balign 4
 lbl_802E5B7C:
 	.asciz "effects/pcr/bg_od01.pcr"
+.balign 4
 lbl_802E5B94:
 	.asciz "effects/tex/star4_i.bti"
+.balign 4
 lbl_802E5BAC:
 	.asciz "effects/pcr/bg_od01r.pcr"
-	.skip 3
+.balign 4
 lbl_802E5BC8:
 	.asciz "effects/pcr/bg_od01g.pcr"
-	.skip 3
+.balign 4
 lbl_802E5BE4:
 	.asciz "effects/pcr/bg_od01b.pcr"
-	.skip 3
+.balign 4
 lbl_802E5C00:
 	.asciz "effects/pcr/bg_od02.pcr"
+.balign 4
 lbl_802E5C18:
 	.asciz "effects/pcr/bg_od02r.pcr"
-	.skip 3
+.balign 4
 lbl_802E5C34:
 	.asciz "effects/pcr/bg_od02g.pcr"
-	.skip 3
+.balign 4
 lbl_802E5C50:
 	.asciz "effects/pcr/bg_od02b.pcr"
-	.skip 3
+.balign 4
 lbl_802E5C6C:
 	.asciz "effects/pcr/record_l.pcr"
-	.skip 3
+.balign 4
 lbl_802E5C88:
 	.asciz "effects/tex/waku.bti"
-	.skip 3
+.balign 4
 lbl_802E5CA0:
 	.asciz "effects/pcr/rec_h_l.pcr"
+.balign 4
 lbl_802E5CB8:
 	.asciz "effects/pcr/star.pcr"
-	.skip 3
+.balign 4
 lbl_802E5CD0:
 	.asciz "effects/pcr/record_s.pcr"
-	.skip 3
+.balign 4
 lbl_802E5CEC:
 	.asciz "effects/pcr/rec_h_s.pcr"
+.balign 4
 lbl_802E5D04:
 	.asciz "effects/pcr/bg_ds01.pcr"
+.balign 4
 lbl_802E5D1C:
 	.asciz "effects/pcr/bg_ds01r.pcr"
-	.skip 3
+.balign 4
 lbl_802E5D38:
 	.asciz "effects/pcr/bg_ds01g.pcr"
-	.skip 3
+.balign 4
 lbl_802E5D54:
 	.asciz "effects/pcr/bg_ds01b.pcr"
-	.skip 3
+.balign 4
 lbl_802E5D70:
 	.asciz "effects/pcr/bg_ds02.pcr"
+.balign 4
 lbl_802E5D88:
 	.asciz "effects/pcr/bg_ds02r.pcr"
-	.skip 3
+.balign 4
 lbl_802E5DA4:
 	.asciz "effects/pcr/bg_ds02g.pcr"
-	.skip 3
+.balign 4
 lbl_802E5DC0:
 	.asciz "effects/pcr/bg_ds02b.pcr"
-	.skip 3
+.balign 4
 lbl_802E5DDC:
 	.asciz "effects/pcr/bg_cms01.pcr"
-	.skip 3
+.balign 4
 lbl_802E5DF8:
 	.asciz "effects/pcr/bg_cms01r.pcr"
-	.skip 2
+.balign 4
 lbl_802E5E14:
 	.asciz "effects/pcr/bg_cms01g.pcr"
-	.skip 2
+.balign 4
 lbl_802E5E30:
 	.asciz "effects/pcr/bg_cms01b.pcr"
-	.skip 2
+.balign 4
 lbl_802E5E4C:
 	.asciz "effects/pcr/bg_cms02.pcr"
-	.skip 3
+.balign 4
 lbl_802E5E68:
 	.asciz "effects/pcr/bg_cms02r.pcr"
-	.skip 2
+.balign 4
 lbl_802E5E84:
 	.asciz "effects/pcr/bg_cms02g.pcr"
-	.skip 2
+.balign 4
 lbl_802E5EA0:
 	.asciz "effects/pcr/bg_cms02b.pcr"
-	.skip 2
+.balign 4
 lbl_802E5EBC:
 	.asciz "effects/pcr/selec_tm.pcr"
-	.skip 3
+.balign 4
 lbl_802E5ED8:
 	.asciz "effects/tex/ps_glow.bti"
+.balign 4
 lbl_802E5EF0:
 	.asciz "effects/pcr/selec_km.pcr"
-	.skip 3
+.balign 4
 lbl_802E5F0C:
 	.asciz "effects/pcr/file_slm.pcr"
-	.skip 3
+.balign 4
 lbl_802E5F28:
 	.asciz "effects/tex/fuchibal.bti"
-	.skip 3
+.balign 4
 lbl_802E5F44:
 	.asciz "effects/pcr/file_sel.pcr"
-	.skip 3
+.balign 4
 lbl_802E5F60:
 	.asciz "effects/pcr/select_k.pcr"
-	.skip 3
+.balign 4
 lbl_802E5F7C:
 	.asciz "effects/pcr/select_t.pcr"
-	.skip 3
+.balign 4
 lbl_802E5F98:
 	.asciz "effects/pcr/syokika2.pcr"
-	.skip 3
+.balign 4
 lbl_802E5FB4:
 	.asciz "effects/pcr/syokika.pcr"
+.balign 4
 lbl_802E5FCC:
 	.asciz "effects/pcr/file_cpm.pcr"
-	.skip 3
+.balign 4
 lbl_802E5FE8:
 	.asciz "effects/pcr/file_cp.pcr"
+.balign 4
 lbl_802E6000:
 	.asciz "effects/pcr/file_dlm.pcr"
-	.skip 3
+.balign 4
 lbl_802E601C:
 	.asciz "effects/pcr/file_del.pcr"
-	.skip 3
+.balign 4
 lbl_802E6038:
 	.asciz "effects/pcr/rktin1.pcr"
-	.skip 1
+.balign 4
 lbl_802E6050:
 	.asciz "effects/pcr/mapap1.pcr"
-	.skip 1
+.balign 4
 lbl_802E6068:
 	.asciz "effects/tex/p_hsbs3.bti"
+.balign 4
 lbl_802E6080:
 	.asciz "effects/pcr/mapap2.pcr"
-	.skip 1
+.balign 4
 lbl_802E6098:
 	.asciz "effects/pcr/z_ufoF.pcr"
-	.skip 1
+.balign 4
 lbl_802E60B0:
 	.asciz "effects/tex/kaen_ok.bti"
+.balign 4
 lbl_802E60C8:
 	.asciz "effects/pcr/z_ufoS.pcr"
-	.skip 1
+.balign 4
 lbl_802E60E0:
 	.asciz "effects/tex/ice_smok.bti"
-	.skip 3
+.balign 4
 lbl_802E60FC:
 	.asciz "effects/pcr/z_ony.pcr"
-	.skip 2
+.balign 4
 lbl_802E6114:
 	.asciz "effects/pcr/z_sstar.pcr"
+.balign 4
 lbl_802E612C:
 	.asciz "effects/tex/ps_ball.bti"
+.balign 4
 "ptclInfo__9@unnamed@":
 	.4byte lbl_802E5AEC
 	.4byte lbl_802E5B04
@@ -621,9 +639,10 @@ lbl_802E612C:
 	.4byte lbl_802E6114
 	.4byte lbl_802E5B94
 	.4byte lbl_802E612C
+.balign 4
 lbl_802E63B4:
 	.asciz "zen::zenList"
-	.skip 3
+.balign 4
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x00000000
@@ -656,6 +675,6 @@ lbl_803EC228:
 	.4byte 0x3F800000
 lbl_803EC22C:
 	.4byte 0x459C4000
-"@880":
-	.4byte 0x43300000
-	.4byte 0x80000000
+.balign 8
+lbl_803EC230:
+	.8byte 0x4330000080000000

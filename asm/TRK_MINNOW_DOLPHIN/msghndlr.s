@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global TRKMessageIntoReply
-TRKMessageIntoReply:
+.fn TRKMessageIntoReply, global
 /* 8021CF78 00219ED8  7C 08 02 A6 */	mflr r0
 /* 8021CF7C 00219EDC  90 01 00 04 */	stw r0, 4(r1)
 /* 8021CF80 00219EE0  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -42,9 +41,9 @@ TRKMessageIntoReply:
 /* 8021D004 00219F64  80 01 00 04 */	lwz r0, 4(r1)
 /* 8021D008 00219F68  7C 08 03 A6 */	mtlr r0
 /* 8021D00C 00219F6C  4E 80 00 20 */	blr 
+.endfn TRKMessageIntoReply
 
-.global TRKSendACK
-TRKSendACK:
+.fn TRKSendACK, global
 /* 8021D010 00219F70  7C 08 02 A6 */	mflr r0
 /* 8021D014 00219F74  90 01 00 04 */	stw r0, 4(r1)
 /* 8021D018 00219F78  94 21 FF F0 */	stwu r1, -0x10(r1)
@@ -67,9 +66,9 @@ TRKSendACK:
 /* 8021D054 00219FB4  80 01 00 04 */	lwz r0, 4(r1)
 /* 8021D058 00219FB8  7C 08 03 A6 */	mtlr r0
 /* 8021D05C 00219FBC  4E 80 00 20 */	blr 
+.endfn TRKSendACK
 
-.global TRKStandardACK
-TRKStandardACK:
+.fn TRKStandardACK, global
 /* 8021D060 00219FC0  7C 08 02 A6 */	mflr r0
 /* 8021D064 00219FC4  90 01 00 04 */	stw r0, 4(r1)
 /* 8021D068 00219FC8  94 21 FF F0 */	stwu r1, -0x10(r1)
@@ -83,9 +82,9 @@ TRKStandardACK:
 /* 8021D088 00219FE8  80 01 00 04 */	lwz r0, 4(r1)
 /* 8021D08C 00219FEC  7C 08 03 A6 */	mtlr r0
 /* 8021D090 00219FF0  4E 80 00 20 */	blr 
+.endfn TRKStandardACK
 
-.global TRKDoUnsupported
-TRKDoUnsupported:
+.fn TRKDoUnsupported, global
 /* 8021D094 00219FF4  7C 08 02 A6 */	mflr r0
 /* 8021D098 00219FF8  38 80 00 80 */	li r4, 0x80
 /* 8021D09C 00219FFC  90 01 00 04 */	stw r0, 4(r1)
@@ -96,9 +95,9 @@ TRKDoUnsupported:
 /* 8021D0B0 0021A010  80 01 00 04 */	lwz r0, 4(r1)
 /* 8021D0B4 0021A014  7C 08 03 A6 */	mtlr r0
 /* 8021D0B8 0021A018  4E 80 00 20 */	blr 
+.endfn TRKDoUnsupported
 
-.global TRKDoConnect
-TRKDoConnect:
+.fn TRKDoConnect, global
 /* 8021D0BC 0021A01C  7C 08 02 A6 */	mflr r0
 /* 8021D0C0 0021A020  38 80 00 80 */	li r4, 0x80
 /* 8021D0C4 0021A024  90 01 00 04 */	stw r0, 4(r1)
@@ -109,9 +108,9 @@ TRKDoConnect:
 /* 8021D0D8 0021A038  80 01 00 04 */	lwz r0, 4(r1)
 /* 8021D0DC 0021A03C  7C 08 03 A6 */	mtlr r0
 /* 8021D0E0 0021A040  4E 80 00 20 */	blr 
+.endfn TRKDoConnect
 
-.global TRKDoDisconnect
-TRKDoDisconnect:
+.fn TRKDoDisconnect, global
 /* 8021D0E4 0021A044  7C 08 02 A6 */	mflr r0
 /* 8021D0E8 0021A048  38 80 00 80 */	li r4, 0x80
 /* 8021D0EC 0021A04C  90 01 00 04 */	stw r0, 4(r1)
@@ -133,9 +132,9 @@ TRKDoDisconnect:
 /* 8021D128 0021A088  80 01 00 04 */	lwz r0, 4(r1)
 /* 8021D12C 0021A08C  7C 08 03 A6 */	mtlr r0
 /* 8021D130 0021A090  4E 80 00 20 */	blr 
+.endfn TRKDoDisconnect
 
-.global TRKDoReset
-TRKDoReset:
+.fn TRKDoReset, global
 /* 8021D134 0021A094  7C 08 02 A6 */	mflr r0
 /* 8021D138 0021A098  38 80 00 80 */	li r4, 0x80
 /* 8021D13C 0021A09C  90 01 00 04 */	stw r0, 4(r1)
@@ -148,9 +147,9 @@ TRKDoReset:
 /* 8021D158 0021A0B8  80 01 00 04 */	lwz r0, 4(r1)
 /* 8021D15C 0021A0BC  7C 08 03 A6 */	mtlr r0
 /* 8021D160 0021A0C0  4E 80 00 20 */	blr 
+.endfn TRKDoReset
 
-.global TRKDoVersions
-TRKDoVersions:
+.fn TRKDoVersions, global
 /* 8021D164 0021A0C4  7C 08 02 A6 */	mflr r0
 /* 8021D168 0021A0C8  90 01 00 04 */	stw r0, 4(r1)
 /* 8021D16C 0021A0CC  94 21 FF F0 */	stwu r1, -0x10(r1)
@@ -259,9 +258,9 @@ TRKDoVersions:
 /* 8021D2DC 0021A23C  80 01 00 04 */	lwz r0, 4(r1)
 /* 8021D2E0 0021A240  7C 08 03 A6 */	mtlr r0
 /* 8021D2E4 0021A244  4E 80 00 20 */	blr 
+.endfn TRKDoVersions
 
-.global TRKDoSupportMask
-TRKDoSupportMask:
+.fn TRKDoSupportMask, global
 /* 8021D2E8 0021A248  7C 08 02 A6 */	mflr r0
 /* 8021D2EC 0021A24C  90 01 00 04 */	stw r0, 4(r1)
 /* 8021D2F0 0021A250  94 21 FF D0 */	stwu r1, -0x30(r1)
@@ -323,9 +322,9 @@ TRKDoSupportMask:
 /* 8021D3B8 0021A318  80 01 00 04 */	lwz r0, 4(r1)
 /* 8021D3BC 0021A31C  7C 08 03 A6 */	mtlr r0
 /* 8021D3C0 0021A320  4E 80 00 20 */	blr 
+.endfn TRKDoSupportMask
 
-.global TRKDoCPUType
-TRKDoCPUType:
+.fn TRKDoCPUType, global
 /* 8021D3C4 0021A324  7C 08 02 A6 */	mflr r0
 /* 8021D3C8 0021A328  90 01 00 04 */	stw r0, 4(r1)
 /* 8021D3CC 0021A32C  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -488,9 +487,9 @@ TRKDoCPUType:
 /* 8021D5FC 0021A55C  80 01 00 04 */	lwz r0, 4(r1)
 /* 8021D600 0021A560  7C 08 03 A6 */	mtlr r0
 /* 8021D604 0021A564  4E 80 00 20 */	blr 
+.endfn TRKDoCPUType
 
-.global TRKDoReadMemory
-TRKDoReadMemory:
+.fn TRKDoReadMemory, global
 /* 8021D608 0021A568  7C 08 02 A6 */	mflr r0
 /* 8021D60C 0021A56C  90 01 00 04 */	stw r0, 4(r1)
 /* 8021D610 0021A570  94 21 F7 E0 */	stwu r1, -0x820(r1)
@@ -632,9 +631,9 @@ TRKDoReadMemory:
 /* 8021D7E4 0021A744  80 01 00 04 */	lwz r0, 4(r1)
 /* 8021D7E8 0021A748  7C 08 03 A6 */	mtlr r0
 /* 8021D7EC 0021A74C  4E 80 00 20 */	blr 
+.endfn TRKDoReadMemory
 
-.global TRKDoWriteMemory
-TRKDoWriteMemory:
+.fn TRKDoWriteMemory, global
 /* 8021D7F0 0021A750  7C 08 02 A6 */	mflr r0
 /* 8021D7F4 0021A754  90 01 00 04 */	stw r0, 4(r1)
 /* 8021D7F8 0021A758  94 21 F7 E0 */	stwu r1, -0x820(r1)
@@ -784,9 +783,9 @@ TRKDoWriteMemory:
 /* 8021D9E0 0021A940  80 01 00 04 */	lwz r0, 4(r1)
 /* 8021D9E4 0021A944  7C 08 03 A6 */	mtlr r0
 /* 8021D9E8 0021A948  4E 80 00 20 */	blr 
+.endfn TRKDoWriteMemory
 
-.global TRKDoReadRegisters
-TRKDoReadRegisters:
+.fn TRKDoReadRegisters, global
 /* 8021D9EC 0021A94C  7C 08 02 A6 */	mflr r0
 /* 8021D9F0 0021A950  90 01 00 04 */	stw r0, 4(r1)
 /* 8021D9F4 0021A954  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -940,9 +939,9 @@ TRKDoReadRegisters:
 /* 8021DBE4 0021AB44  80 01 00 04 */	lwz r0, 4(r1)
 /* 8021DBE8 0021AB48  7C 08 03 A6 */	mtlr r0
 /* 8021DBEC 0021AB4C  4E 80 00 20 */	blr 
+.endfn TRKDoReadRegisters
 
-.global TRKDoWriteRegisters
-TRKDoWriteRegisters:
+.fn TRKDoWriteRegisters, global
 /* 8021DBF0 0021AB50  7C 08 02 A6 */	mflr r0
 /* 8021DBF4 0021AB54  90 01 00 04 */	stw r0, 4(r1)
 /* 8021DBF8 0021AB58  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -1098,9 +1097,9 @@ TRKDoWriteRegisters:
 /* 8021DDEC 0021AD4C  80 01 00 04 */	lwz r0, 4(r1)
 /* 8021DDF0 0021AD50  7C 08 03 A6 */	mtlr r0
 /* 8021DDF4 0021AD54  4E 80 00 20 */	blr 
+.endfn TRKDoWriteRegisters
 
-.global TRKDoFlushCache
-TRKDoFlushCache:
+.fn TRKDoFlushCache, global
 /* 8021DDF8 0021AD58  7C 08 02 A6 */	mflr r0
 /* 8021DDFC 0021AD5C  90 01 00 04 */	stw r0, 4(r1)
 /* 8021DE00 0021AD60  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -1191,9 +1190,9 @@ TRKDoFlushCache:
 /* 8021DF24 0021AE84  80 01 00 04 */	lwz r0, 4(r1)
 /* 8021DF28 0021AE88  7C 08 03 A6 */	mtlr r0
 /* 8021DF2C 0021AE8C  4E 80 00 20 */	blr 
+.endfn TRKDoFlushCache
 
-.global TRKDoContinue
-TRKDoContinue:
+.fn TRKDoContinue, global
 /* 8021DF30 0021AE90  7C 08 02 A6 */	mflr r0
 /* 8021DF34 0021AE94  90 01 00 04 */	stw r0, 4(r1)
 /* 8021DF38 0021AE98  94 21 FF F0 */	stwu r1, -0x10(r1)
@@ -1221,9 +1220,9 @@ TRKDoContinue:
 /* 8021DF88 0021AEE8  80 01 00 04 */	lwz r0, 4(r1)
 /* 8021DF8C 0021AEEC  7C 08 03 A6 */	mtlr r0
 /* 8021DF90 0021AEF0  4E 80 00 20 */	blr 
+.endfn TRKDoContinue
 
-.global TRKDoStep
-TRKDoStep:
+.fn TRKDoStep, global
 /* 8021DF94 0021AEF4  7C 08 02 A6 */	mflr r0
 /* 8021DF98 0021AEF8  90 01 00 04 */	stw r0, 4(r1)
 /* 8021DF9C 0021AEFC  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -1370,9 +1369,9 @@ TRKDoStep:
 /* 8021E18C 0021B0EC  80 01 00 04 */	lwz r0, 4(r1)
 /* 8021E190 0021B0F0  7C 08 03 A6 */	mtlr r0
 /* 8021E194 0021B0F4  4E 80 00 20 */	blr 
+.endfn TRKDoStep
 
-.global TRKDoStop
-TRKDoStop:
+.fn TRKDoStop, global
 /* 8021E198 0021B0F8  7C 08 02 A6 */	mflr r0
 /* 8021E19C 0021B0FC  90 01 00 04 */	stw r0, 4(r1)
 /* 8021E1A0 0021B100  94 21 FF F0 */	stwu r1, -0x10(r1)
@@ -1413,10 +1412,11 @@ TRKDoStop:
 /* 8021E210 0021B170  80 01 00 04 */	lwz r0, 4(r1)
 /* 8021E214 0021B174  7C 08 03 A6 */	mtlr r0
 /* 8021E218 0021B178  4E 80 00 20 */	blr 
+.endfn TRKDoStop
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802E9548:
+.obj lbl_802E9548, local
 	.4byte .L_8021D79C
 	.4byte .L_8021D7BC
 	.4byte .L_8021D794
@@ -1424,7 +1424,8 @@ lbl_802E9548:
 	.4byte .L_8021D7A4
 	.4byte .L_8021D7AC
 	.4byte .L_8021D7B4
-lbl_802E9564:
+.endobj lbl_802E9548
+.obj lbl_802E9564, local
 	.4byte .L_8021D998
 	.4byte .L_8021D9B8
 	.4byte .L_8021D990
@@ -1432,3 +1433,4 @@ lbl_802E9564:
 	.4byte .L_8021D9A0
 	.4byte .L_8021D9A8
 	.4byte .L_8021D9B0
+.endobj lbl_802E9564

@@ -11419,7 +11419,7 @@ invincible__15NaviPelletStateFP4Navi:
 
 .section .rodata, "a"  # 0x80221FE0 - 0x80222DC0
 .balign 8
-lbl_80222680:
+.obj lbl_80222680, local
 	.4byte 40
 	.float 0.1
 	.4byte 65
@@ -11428,39 +11428,48 @@ lbl_80222680:
 	.float 0.5
 	.4byte 42
 	.float 0.3
+.endobj lbl_80222680
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802C0680:
+.obj lbl_802C0680, local
 	.asciz "naviState.cpp"
+.endobj lbl_802C0680
 .balign 4
-lbl_802C0690:
+.obj lbl_802C0690, local
 	.asciz "naviState"
+.endobj lbl_802C0690
 .balign 4
-lbl_802C069C:
+.obj lbl_802C069C, local
 	.asciz "NaviUfoAccessState"
+.endobj lbl_802C069C
 .balign 4
-lbl_802C06B0:
+.obj lbl_802C06B0, local
 	.asciz "Receiver<Navi>"
+.endobj lbl_802C06B0
 .balign 4
-lbl_802C06C0:
+.obj lbl_802C06C0, local
 	.asciz "AState<Navi>"
+.endobj lbl_802C06C0
 .balign 4
-lbl_802C06D0:
+.obj lbl_802C06D0, local
 	.4byte "__RTTI__15Receiver<4Navi>"
 	.4byte 0
 	.4byte 0
+.endobj lbl_802C06D0
 .balign 4
-lbl_802C06DC:
+.obj lbl_802C06DC, local
 	.asciz "NaviState"
+.endobj lbl_802C06DC
 .balign 4
-lbl_802C06E8:
+.obj lbl_802C06E8, local
 	.4byte "__RTTI__15Receiver<4Navi>"
 	.4byte 0
 	.4byte "__RTTI__13AState<4Navi>"
 	.4byte 0
 	.4byte 0
-lbl_802C06FC:
+.endobj lbl_802C06E8
+.obj lbl_802C06FC, local
 	.4byte "__RTTI__15Receiver<4Navi>"
 	.4byte 0
 	.4byte "__RTTI__13AState<4Navi>"
@@ -11468,8 +11477,8 @@ lbl_802C06FC:
 	.4byte __RTTI__9NaviState
 	.4byte 0
 	.4byte 0
-.global __vt__18NaviUfoAccessState
-__vt__18NaviUfoAccessState:
+.endobj lbl_802C06FC
+.obj __vt__18NaviUfoAccessState, global
 	.4byte __RTTI__18NaviUfoAccessState
 	.4byte 0
 	.4byte "procMsg__15Receiver<4Navi>FP4NaviP3Msg"
@@ -11491,11 +11500,13 @@ __vt__18NaviUfoAccessState:
 	.4byte "restart__13AState<4Navi>FP4Navi"
 	.4byte "transit__13AState<4Navi>FP4Navii"
 	.4byte invincible__18NaviUfoAccessStateFP4Navi
+.endobj __vt__18NaviUfoAccessState
 .balign 4
-lbl_802C076C:
+.obj lbl_802C076C, local
 	.asciz "NaviPartsAccessState"
+.endobj lbl_802C076C
 .balign 4
-lbl_802C0784:
+.obj lbl_802C0784, local
 	.4byte "__RTTI__15Receiver<4Navi>"
 	.4byte 0
 	.4byte "__RTTI__13AState<4Navi>"
@@ -11503,8 +11514,8 @@ lbl_802C0784:
 	.4byte __RTTI__9NaviState
 	.4byte 0
 	.4byte 0
-.global __vt__20NaviPartsAccessState
-__vt__20NaviPartsAccessState:
+.endobj lbl_802C0784
+.obj __vt__20NaviPartsAccessState, global
 	.4byte __RTTI__20NaviPartsAccessState
 	.4byte 0
 	.4byte "procMsg__15Receiver<4Navi>FP4NaviP3Msg"
@@ -11526,11 +11537,13 @@ __vt__20NaviPartsAccessState:
 	.4byte "restart__13AState<4Navi>FP4Navi"
 	.4byte "transit__13AState<4Navi>FP4Navii"
 	.4byte invincible__20NaviPartsAccessStateFP4Navi
+.endobj __vt__20NaviPartsAccessState
 .balign 4
-lbl_802C07F4:
+.obj lbl_802C07F4, local
 	.asciz "NaviStartingState"
+.endobj lbl_802C07F4
 .balign 4
-lbl_802C0808:
+.obj lbl_802C0808, local
 	.4byte "__RTTI__15Receiver<4Navi>"
 	.4byte 0
 	.4byte "__RTTI__13AState<4Navi>"
@@ -11538,8 +11551,8 @@ lbl_802C0808:
 	.4byte __RTTI__9NaviState
 	.4byte 0
 	.4byte 0
-.global __vt__17NaviStartingState
-__vt__17NaviStartingState:
+.endobj lbl_802C0808
+.obj __vt__17NaviStartingState, global
 	.4byte __RTTI__17NaviStartingState
 	.4byte 0
 	.4byte "procMsg__15Receiver<4Navi>FP4NaviP3Msg"
@@ -11561,11 +11574,13 @@ __vt__17NaviStartingState:
 	.4byte "restart__13AState<4Navi>FP4Navi"
 	.4byte "transit__13AState<4Navi>FP4Navii"
 	.4byte invincible__9NaviStateFP4Navi
+.endobj __vt__17NaviStartingState
 .balign 4
-lbl_802C0878:
+.obj lbl_802C0878, local
 	.asciz "NaviPikiZeroState"
+.endobj lbl_802C0878
 .balign 4
-lbl_802C088C:
+.obj lbl_802C088C, local
 	.4byte "__RTTI__15Receiver<4Navi>"
 	.4byte 0
 	.4byte "__RTTI__13AState<4Navi>"
@@ -11573,6 +11588,7 @@ lbl_802C088C:
 	.4byte __RTTI__9NaviState
 	.4byte 0
 	.4byte 0
+.endobj lbl_802C088C
 .global __vt__17NaviPikiZeroState
 __vt__17NaviPikiZeroState:
 	.4byte __RTTI__17NaviPikiZeroState
@@ -12819,573 +12835,837 @@ lbl_802C1A7C:
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-lbl_803E22A0:
+.obj lbl_803E22A0, local
 	.float 0.0
-lbl_803E22A4:
+.endobj lbl_803E22A0
+.obj lbl_803E22A4, local
 	.float 0.0
-lbl_803E22A8:
+.endobj lbl_803E22A4
+.obj lbl_803E22A8, local
 	.float 0.0
-lbl_803E22AC:
+.endobj lbl_803E22A8
+.obj lbl_803E22AC, local
 	.float 0.0
-lbl_803E22B0:
+.endobj lbl_803E22AC
+.obj lbl_803E22B0, local
 	.float 0.0
-lbl_803E22B4:
+.endobj lbl_803E22B0
+.obj lbl_803E22B4, local
 	.float 0.0
-lbl_803E22B8:
+.endobj lbl_803E22B4
+.obj lbl_803E22B8, local
 	.float 0.0
-lbl_803E22BC:
+.endobj lbl_803E22B8
+.obj lbl_803E22BC, local
 	.float 0.0
-lbl_803E22C0:
+.endobj lbl_803E22BC
+.obj lbl_803E22C0, local
 	.float 0.0
-lbl_803E22C4:
+.endobj lbl_803E22C0
+.obj lbl_803E22C4, local
 	.float 0.0
-lbl_803E22C8:
+.endobj lbl_803E22C4
+.obj lbl_803E22C8, local
 	.float 0.0
-lbl_803E22CC:
+.endobj lbl_803E22C8
+.obj lbl_803E22CC, local
 	.float 0.0
-lbl_803E22D0:
+.endobj lbl_803E22CC
+.obj lbl_803E22D0, local
 	.float 0.0
-lbl_803E22D4:
+.endobj lbl_803E22D0
+.obj lbl_803E22D4, local
 	.float 0.0
-lbl_803E22D8:
+.endobj lbl_803E22D4
+.obj lbl_803E22D8, local
 	.float 0.0
-lbl_803E22DC:
+.endobj lbl_803E22D8
+.obj lbl_803E22DC, local
 	.float 0.0
-lbl_803E22E0:
+.endobj lbl_803E22DC
+.obj lbl_803E22E0, local
 	.float 0.0
-lbl_803E22E4:
+.endobj lbl_803E22E0
+.obj lbl_803E22E4, local
 	.float 0.0
-lbl_803E22E8:
+.endobj lbl_803E22E4
+.obj lbl_803E22E8, local
 	.float 0.0
-lbl_803E22EC:
+.endobj lbl_803E22E8
+.obj lbl_803E22EC, local
 	.float 0.0
-lbl_803E22F0:
+.endobj lbl_803E22EC
+.obj lbl_803E22F0, local
 	.float 0.0
-lbl_803E22F4:
+.endobj lbl_803E22F0
+.obj lbl_803E22F4, local
 	.float 0.0
-lbl_803E22F8:
+.endobj lbl_803E22F4
+.obj lbl_803E22F8, local
 	.float 0.0
-lbl_803E22FC:
+.endobj lbl_803E22F8
+.obj lbl_803E22FC, local
 	.float 0.0
-lbl_803E2300:
+.endobj lbl_803E22FC
+.obj lbl_803E2300, local
 	.float 0.0
-lbl_803E2304:
+.endobj lbl_803E2300
+.obj lbl_803E2304, local
 	.float 0.0
-lbl_803E2308:
+.endobj lbl_803E2304
+.obj lbl_803E2308, local
 	.float 0.0
-lbl_803E230C:
+.endobj lbl_803E2308
+.obj lbl_803E230C, local
 	.float 0.0
-lbl_803E2310:
+.endobj lbl_803E230C
+.obj lbl_803E2310, local
 	.float 0.0
-lbl_803E2314:
+.endobj lbl_803E2310
+.obj lbl_803E2314, local
 	.float 0.0
-lbl_803E2318:
+.endobj lbl_803E2314
+.obj lbl_803E2318, local
 	.float 0.0
-lbl_803E231C:
+.endobj lbl_803E2318
+.obj lbl_803E231C, local
 	.float 0.0
-lbl_803E2320:
+.endobj lbl_803E231C
+.obj lbl_803E2320, local
 	.float 0.0
-lbl_803E2324:
+.endobj lbl_803E2320
+.obj lbl_803E2324, local
 	.float 100.0
-lbl_803E2328:
+.endobj lbl_803E2324
+.obj lbl_803E2328, local
 	.float 0.0
-lbl_803E232C:
+.endobj lbl_803E2328
+.obj lbl_803E232C, local
 	.float 0.0
-lbl_803E2330:
+.endobj lbl_803E232C
+.obj lbl_803E2330, local
 	.float 0.0
-lbl_803E2334:
+.endobj lbl_803E2330
+.obj lbl_803E2334, local
 	.float 0.0
-lbl_803E2338:
+.endobj lbl_803E2334
+.obj lbl_803E2338, local
 	.float 0.0
-lbl_803E233C:
+.endobj lbl_803E2338
+.obj lbl_803E233C, local
 	.float 0.0
-lbl_803E2340:
+.endobj lbl_803E233C
+.obj lbl_803E2340, local
 	.float 0.0
-lbl_803E2344:
+.endobj lbl_803E2340
+.obj lbl_803E2344, local
 	.float 0.0
-lbl_803E2348:
+.endobj lbl_803E2344
+.obj lbl_803E2348, local
 	.float 0.0
-lbl_803E234C:
+.endobj lbl_803E2348
+.obj lbl_803E234C, local
 	.float 0.0
-lbl_803E2350:
+.endobj lbl_803E234C
+.obj lbl_803E2350, local
 	.float 0.0
-lbl_803E2354:
+.endobj lbl_803E2350
+.obj lbl_803E2354, local
 	.float 0.0
-lbl_803E2358:
+.endobj lbl_803E2354
+.obj lbl_803E2358, local
 	.float 0.0
-lbl_803E235C:
+.endobj lbl_803E2358
+.obj lbl_803E235C, local
 	.float 60.0
-lbl_803E2360:
+.endobj lbl_803E235C
+.obj lbl_803E2360, local
 	.float 60.0
-lbl_803E2364:
+.endobj lbl_803E2360
+.obj lbl_803E2364, local
 	.float 0.0
-lbl_803E2368:
+.endobj lbl_803E2364
+.obj lbl_803E2368, local
 	.float 0.0
-lbl_803E236C:
+.endobj lbl_803E2368
+.obj lbl_803E236C, local
 	.float 0.0
-lbl_803E2370:
+.endobj lbl_803E236C
+.obj lbl_803E2370, local
 	.float 0.0
-lbl_803E2374:
+.endobj lbl_803E2370
+.obj lbl_803E2374, local
 	.float 0.0
-lbl_803E2378:
+.endobj lbl_803E2374
+.obj lbl_803E2378, local
 	.float 0.0
-lbl_803E237C:
+.endobj lbl_803E2378
+.obj lbl_803E237C, local
 	.float 0.0
-lbl_803E2380:
+.endobj lbl_803E237C
+.obj lbl_803E2380, local
 	.float 0.0
-lbl_803E2384:
+.endobj lbl_803E2380
+.obj lbl_803E2384, local
 	.float 0.0
-lbl_803E2388:
+.endobj lbl_803E2384
+.obj lbl_803E2388, local
 	.float 0.0
-lbl_803E238C:
+.endobj lbl_803E2388
+.obj lbl_803E238C, local
 	.float 0.0
-lbl_803E2390:
+.endobj lbl_803E238C
+.obj lbl_803E2390, local
 	.float 0.0
-lbl_803E2394:
+.endobj lbl_803E2390
+.obj lbl_803E2394, local
 	.float 0.0
-lbl_803E2398:
+.endobj lbl_803E2394
+.obj lbl_803E2398, local
 	.float 0.0
-lbl_803E239C:
+.endobj lbl_803E2398
+.obj lbl_803E239C, local
 	.float 0.0
-lbl_803E23A0:
+.endobj lbl_803E239C
+.obj lbl_803E23A0, local
 	.float 0.0
-lbl_803E23A4:
+.endobj lbl_803E23A0
+.obj lbl_803E23A4, local
 	.float 200.0
-lbl_803E23A8:
+.endobj lbl_803E23A4
+.obj lbl_803E23A8, local
 	.float 0.0
-lbl_803E23AC:
+.endobj lbl_803E23A8
+.obj lbl_803E23AC, local
 	.float 0.0
-lbl_803E23B0:
+.endobj lbl_803E23AC
+.obj lbl_803E23B0, local
 	.float 0.0
-lbl_803E23B4:
+.endobj lbl_803E23B0
+.obj lbl_803E23B4, local
 	.float 0.0
-lbl_803E23B8:
+.endobj lbl_803E23B4
+.obj lbl_803E23B8, local
 	.float 0.0
-lbl_803E23BC:
+.endobj lbl_803E23B8
+.obj lbl_803E23BC, local
 	.float 0.0
-lbl_803E23C0:
+.endobj lbl_803E23BC
+.obj lbl_803E23C0, local
 	.float 0.0
-lbl_803E23C4:
+.endobj lbl_803E23C0
+.obj lbl_803E23C4, local
 	.float 0.0
-lbl_803E23C8:
+.endobj lbl_803E23C4
+.obj lbl_803E23C8, local
 	.float 0.0
-lbl_803E23CC:
+.endobj lbl_803E23C8
+.obj lbl_803E23CC, local
 	.float 0.0
-lbl_803E23D0:
+.endobj lbl_803E23CC
+.obj lbl_803E23D0, local
 	.float 200.0
-lbl_803E23D4:
+.endobj lbl_803E23D0
+.obj lbl_803E23D4, local
 	.float 0.0
-lbl_803E23D8:
+.endobj lbl_803E23D4
+.obj lbl_803E23D8, local
 	.float 0.0
-lbl_803E23DC:
+.endobj lbl_803E23D8
+.obj lbl_803E23DC, local
 	.float 0.0
-lbl_803E23E0:
+.endobj lbl_803E23DC
+.obj lbl_803E23E0, local
 	.float 0.0
-lbl_803E23E4:
+.endobj lbl_803E23E0
+.obj lbl_803E23E4, local
 	.float 0.0
-lbl_803E23E8:
+.endobj lbl_803E23E4
+.obj lbl_803E23E8, local
 	.float 0.0
-lbl_803E23EC:
+.endobj lbl_803E23E8
+.obj lbl_803E23EC, local
 	.float 0.0
-lbl_803E23F0:
+.endobj lbl_803E23EC
+.obj lbl_803E23F0, local
 	.float 0.0
-lbl_803E23F4:
+.endobj lbl_803E23F0
+.obj lbl_803E23F4, local
 	.float 0.0
-lbl_803E23F8:
+.endobj lbl_803E23F4
+.obj lbl_803E23F8, local
 	.float -10.0
-lbl_803E23FC:
+.endobj lbl_803E23F8
+.obj lbl_803E23FC, local
 	.float 0.0
-lbl_803E2400:
+.endobj lbl_803E23FC
+.obj lbl_803E2400, local
 	.float 0.0
-lbl_803E2404:
+.endobj lbl_803E2400
+.obj lbl_803E2404, local
 	.float -1.0
-lbl_803E2408:
+.endobj lbl_803E2404
+.obj lbl_803E2408, local
 	.float 0.0
-lbl_803E240C:
+.endobj lbl_803E2408
+.obj lbl_803E240C, local
 	.float 0.0
-lbl_803E2410:
+.endobj lbl_803E240C
+.obj lbl_803E2410, local
 	.float 0.0
-lbl_803E2414:
+.endobj lbl_803E2410
+.obj lbl_803E2414, local
 	.float 4.0
-lbl_803E2418:
+.endobj lbl_803E2414
+.obj lbl_803E2418, local
 	.float 0.0
-lbl_803E241C:
+.endobj lbl_803E2418
+.obj lbl_803E241C, local
 	.float 0.0
-lbl_803E2420:
+.endobj lbl_803E241C
+.obj lbl_803E2420, local
 	.float 4.0
-lbl_803E2424:
+.endobj lbl_803E2420
+.obj lbl_803E2424, local
 	.float 0.0
-lbl_803E2428:
+.endobj lbl_803E2424
+.obj lbl_803E2428, local
 	.float 0.0
-lbl_803E242C:
+.endobj lbl_803E2428
+.obj lbl_803E242C, local
 	.float 0.0
-lbl_803E2430:
+.endobj lbl_803E242C
+.obj lbl_803E2430, local
 	.float 0.0
-lbl_803E2434:
+.endobj lbl_803E2430
+.obj lbl_803E2434, local
 	.float 0.0
-lbl_803E2438:
+.endobj lbl_803E2434
+.obj lbl_803E2438, local
 	.float 0.0
-lbl_803E243C:
+.endobj lbl_803E2438
+.obj lbl_803E243C, local
 	.float 0.0
-lbl_803E2440:
+.endobj lbl_803E243C
+.obj lbl_803E2440, local
 	.float 0.0
-lbl_803E2444:
+.endobj lbl_803E2440
+.obj lbl_803E2444, local
 	.float 0.0
-lbl_803E2448:
+.endobj lbl_803E2444
+.obj lbl_803E2448, local
 	.float 6.0
-lbl_803E244C:
+.endobj lbl_803E2448
+.obj lbl_803E244C, local
 	.float 6.0
-lbl_803E2450:
+.endobj lbl_803E244C
+.obj lbl_803E2450, local
 	.float 0.0
-lbl_803E2454:
+.endobj lbl_803E2450
+.obj lbl_803E2454, local
 	.float 0.0
-lbl_803E2458:
+.endobj lbl_803E2454
+.obj lbl_803E2458, local
 	.float 0.0
-lbl_803E245C:
+.endobj lbl_803E2458
+.obj lbl_803E245C, local
 	.float 0.0
-lbl_803E2460:
+.endobj lbl_803E245C
+.obj lbl_803E2460, local
 	.float 0.0
-lbl_803E2464:
+.endobj lbl_803E2460
+.obj lbl_803E2464, local
 	.float 0.0
-lbl_803E2468:
+.endobj lbl_803E2464
+.obj lbl_803E2468, local
 	.float 0.0
-lbl_803E246C:
+.endobj lbl_803E2468
+.obj lbl_803E246C, local
 	.float 0.0
-lbl_803E2470:
+.endobj lbl_803E246C
+.obj lbl_803E2470, local
 	.float 0.0
-lbl_803E2474:
+.endobj lbl_803E2470
+.obj lbl_803E2474, local
 	.float 11.0
-lbl_803E2478:
+.endobj lbl_803E2474
+.obj lbl_803E2478, local
 	.float 0.0
-lbl_803E247C:
+.endobj lbl_803E2478
+.obj lbl_803E247C, local
 	.float 0.0
-lbl_803E2480:
+.endobj lbl_803E247C
+.obj lbl_803E2480, local
 	.float 0.0
-lbl_803E2484:
+.endobj lbl_803E2480
+.obj lbl_803E2484, local
 	.float 0.0
-lbl_803E2488:
+.endobj lbl_803E2484
+.obj lbl_803E2488, local
 	.float 0.0
-lbl_803E248C:
+.endobj lbl_803E2488
+.obj lbl_803E248C, local
 	.float 0.0
-lbl_803E2490:
+.endobj lbl_803E248C
+.obj lbl_803E2490, local
 	.float 0.0
-lbl_803E2494:
+.endobj lbl_803E2490
+.obj lbl_803E2494, local
 	.float 0.0
-lbl_803E2498:
+.endobj lbl_803E2494
+.obj lbl_803E2498, local
 	.float 0.0
-lbl_803E249C:
+.endobj lbl_803E2498
+.obj lbl_803E249C, local
 	.float 0.0
-lbl_803E24A0:
+.endobj lbl_803E249C
+.obj lbl_803E24A0, local
 	.float 0.0
-lbl_803E24A4:
+.endobj lbl_803E24A0
+.obj lbl_803E24A4, local
 	.float 0.0
-lbl_803E24A8:
+.endobj lbl_803E24A4
+.obj lbl_803E24A8, local
 	.float 0.0
-lbl_803E24AC:
+.endobj lbl_803E24A8
+.obj lbl_803E24AC, local
 	.float 0.0
-lbl_803E24B0:
+.endobj lbl_803E24AC
+.obj lbl_803E24B0, local
 	.float 0.0
-lbl_803E24B4:
+.endobj lbl_803E24B0
+.obj lbl_803E24B4, local
 	.float 0.0
-lbl_803E24B8:
+.endobj lbl_803E24B4
+.obj lbl_803E24B8, local
 	.float 0.0
-lbl_803E24BC:
+.endobj lbl_803E24B8
+.obj lbl_803E24BC, local
 	.float 0.0
-lbl_803E24C0:
+.endobj lbl_803E24BC
+.obj lbl_803E24C0, local
 	.float 0.0
-lbl_803E24C4:
+.endobj lbl_803E24C0
+.obj lbl_803E24C4, local
 	.float 50.0
-lbl_803E24C8:
+.endobj lbl_803E24C4
+.obj lbl_803E24C8, local
 	.float 0.0
-lbl_803E24CC:
+.endobj lbl_803E24C8
+.obj lbl_803E24CC, local
 	.float 0.0
-lbl_803E24D0:
+.endobj lbl_803E24CC
+.obj lbl_803E24D0, local
 	.float 0.0
-lbl_803E24D4:
+.endobj lbl_803E24D0
+.obj lbl_803E24D4, local
 	.float 0.0
-lbl_803E24D8:
+.endobj lbl_803E24D4
+.obj lbl_803E24D8, local
 	.float 0.0
-lbl_803E24DC:
+.endobj lbl_803E24D8
+.obj lbl_803E24DC, local
 	.float 0.0
-lbl_803E24E0:
+.endobj lbl_803E24DC
+.obj lbl_803E24E0, local
 	.float 25.0
-lbl_803E24E4:
+.endobj lbl_803E24E0
+.obj lbl_803E24E4, local
 	.float 0.0
-lbl_803E24E8:
+.endobj lbl_803E24E4
+.obj lbl_803E24E8, local
 	.float 0.0
-lbl_803E24EC:
+.endobj lbl_803E24E8
+.obj lbl_803E24EC, local
 	.float 0.0
-lbl_803E24F0:
+.endobj lbl_803E24EC
+.obj lbl_803E24F0, local
 	.float 0.0
-lbl_803E24F4:
+.endobj lbl_803E24F0
+.obj lbl_803E24F4, local
 	.float 0.0
-lbl_803E24F8:
+.endobj lbl_803E24F4
+.obj lbl_803E24F8, local
 	.float 0.0
-lbl_803E24FC:
+.endobj lbl_803E24F8
+.obj lbl_803E24FC, local
 	.float 0.0
-lbl_803E2500:
+.endobj lbl_803E24FC
+.obj lbl_803E2500, local
 	.float 0.0
-lbl_803E2504:
+.endobj lbl_803E2500
+.obj lbl_803E2504, local
 	.float 0.0
-lbl_803E2508:
+.endobj lbl_803E2504
+.obj lbl_803E2508, local
 	.float 0.0
-lbl_803E250C:
+.endobj lbl_803E2508
+.obj lbl_803E250C, local
 	.float 0.0
-lbl_803E2510:
+.endobj lbl_803E250C
+.obj lbl_803E2510, local
 	.float 0.0
-lbl_803E2514:
+.endobj lbl_803E2510
+.obj lbl_803E2514, local
 	.float 0.0
-lbl_803E2518:
+.endobj lbl_803E2514
+.obj lbl_803E2518, local
 	.float 0.0
-lbl_803E251C:
+.endobj lbl_803E2518
+.obj lbl_803E251C, local
 	.float 0.0
-lbl_803E2520:
+.endobj lbl_803E251C
+.obj lbl_803E2520, local
 	.float 0.0
-lbl_803E2524:
+.endobj lbl_803E2520
+.obj lbl_803E2524, local
 	.float 0.0
-lbl_803E2528:
+.endobj lbl_803E2524
+.obj lbl_803E2528, local
 	.float 0.0
-lbl_803E252C:
+.endobj lbl_803E2528
+.obj lbl_803E252C, local
 	.float 0.0
-lbl_803E2530:
+.endobj lbl_803E252C
+.obj lbl_803E2530, local
 	.float 0.0
-lbl_803E2534:
+.endobj lbl_803E2530
+.obj lbl_803E2534, local
 	.float 0.0
-lbl_803E2538:
+.endobj lbl_803E2534
+.obj lbl_803E2538, local
 	.float 0.0
-lbl_803E253C:
+.endobj lbl_803E2538
+.obj lbl_803E253C, local
 	.float 0.0
-lbl_803E2540:
+.endobj lbl_803E253C
+.obj lbl_803E2540, local
 	.float 0.0
-"__RTTI__15Receiver<4Navi>":
+.endobj lbl_803E2540
+.obj "__RTTI__15Receiver<4Navi>", local
 	.4byte lbl_802C06B0
 	.4byte 0
-"__RTTI__13AState<4Navi>":
+.endobj "__RTTI__15Receiver<4Navi>"
+.obj "__RTTI__13AState<4Navi>", local
 	.4byte lbl_802C06C0
 	.4byte lbl_802C06D0
-__RTTI__9NaviState:
+.endobj "__RTTI__13AState<4Navi>"
+.obj __RTTI__9NaviState, local
 	.4byte lbl_802C06DC
 	.4byte lbl_802C06E8
-__RTTI__18NaviUfoAccessState:
+.endobj __RTTI__9NaviState
+.obj __RTTI__18NaviUfoAccessState, local
 	.4byte lbl_802C069C
 	.4byte lbl_802C06FC
-__RTTI__20NaviPartsAccessState:
+.endobj __RTTI__18NaviUfoAccessState
+.obj __RTTI__20NaviPartsAccessState, local
 	.4byte lbl_802C076C
 	.4byte lbl_802C0784
-__RTTI__17NaviStartingState:
+.endobj __RTTI__20NaviPartsAccessState
+.obj __RTTI__17NaviStartingState, local
 	.4byte lbl_802C07F4
 	.4byte lbl_802C0808
-__RTTI__17NaviPikiZeroState:
+.endobj __RTTI__17NaviStartingState
+.obj __RTTI__17NaviPikiZeroState, local
 	.4byte lbl_802C0878
 	.4byte lbl_802C088C
-__RTTI__13NaviDeadState:
+.endobj __RTTI__17NaviPikiZeroState
+.obj __RTTI__13NaviDeadState, local
 	.4byte lbl_802C08FC
 	.4byte lbl_802C090C
-__RTTI__15NaviIroIroState:
+.endobj __RTTI__13NaviDeadState
+.obj __RTTI__15NaviIroIroState, local
 	.4byte lbl_802C097C
 	.4byte lbl_802C098C
-__RTTI__14NaviClearState:
+.endobj __RTTI__15NaviIroIroState
+.obj __RTTI__14NaviClearState, local
 	.4byte lbl_802C09FC
 	.4byte lbl_802C0A0C
-__RTTI__13NaviLockState:
+.endobj __RTTI__14NaviClearState
+.obj __RTTI__13NaviLockState, local
 	.4byte lbl_802C0A7C
 	.4byte lbl_802C0A8C
-__RTTI__15NaviAttackState:
+.endobj __RTTI__13NaviLockState
+.obj __RTTI__15NaviAttackState, local
 	.4byte lbl_802C0AFC
 	.4byte lbl_802C0B0C
-__RTTI__14NaviWaterState:
+.endobj __RTTI__15NaviAttackState
+.obj __RTTI__14NaviWaterState, local
 	.4byte lbl_802C0B7C
 	.4byte lbl_802C0B8C
-__RTTI__12NaviSowState:
+.endobj __RTTI__14NaviWaterState
+.obj __RTTI__12NaviSowState, local
 	.4byte lbl_802C0BFC
 	.4byte lbl_802C0C0C
-__RTTI__16NaviPressedState:
+.endobj __RTTI__12NaviSowState
+.obj __RTTI__16NaviPressedState, local
 	.4byte lbl_802C0C7C
 	.4byte lbl_802C0C90
-__RTTI__19NaviNukuAdjustState:
+.endobj __RTTI__16NaviPressedState
+.obj __RTTI__19NaviNukuAdjustState, local
 	.4byte lbl_802C0D00
 	.4byte lbl_802C0D14
-__RTTI__13NaviNukuState:
+.endobj __RTTI__19NaviNukuAdjustState
+.obj __RTTI__13NaviNukuState, local
 	.4byte lbl_802C0D84
 	.4byte lbl_802C0D94
-__RTTI__17NaviPushPikiState:
+.endobj __RTTI__13NaviNukuState
+.obj __RTTI__17NaviPushPikiState, local
 	.4byte lbl_802C0E04
 	.4byte lbl_802C0E18
-__RTTI__13NaviPushState:
+.endobj __RTTI__17NaviPushPikiState
+.obj __RTTI__13NaviPushState, local
 	.4byte lbl_802C0E88
 	.4byte lbl_802C0E98
-__RTTI__14NaviThrowState:
+.endobj __RTTI__13NaviPushState
+.obj __RTTI__14NaviThrowState, local
 	.4byte lbl_802C0F08
 	.4byte lbl_802C0F18
-__RTTI__18NaviThrowWaitState:
+.endobj __RTTI__14NaviThrowState
+.obj __RTTI__18NaviThrowWaitState, local
 	.4byte lbl_802C0F88
 	.4byte lbl_802C0F9C
-__RTTI__16NaviReleaseState:
+.endobj __RTTI__18NaviThrowWaitState
+.obj __RTTI__16NaviReleaseState, local
 	.4byte lbl_802C100C
 	.4byte lbl_802C1020
-__RTTI__15NaviGatherState:
+.endobj __RTTI__16NaviReleaseState
+.obj __RTTI__15NaviGatherState, local
 	.4byte lbl_802C1090
 	.4byte lbl_802C10A0
-__RTTI__15NaviGeyzerState:
+.endobj __RTTI__15NaviGatherState
+.obj __RTTI__15NaviGeyzerState, local
 	.4byte lbl_802C1110
 	.4byte lbl_802C1120
-__RTTI__14NaviFlickState:
+.endobj __RTTI__15NaviGeyzerState
+.obj __RTTI__14NaviFlickState, local
 	.4byte lbl_802C1190
 	.4byte lbl_802C11A0
-__RTTI__13NaviIdleState:
+.endobj __RTTI__14NaviFlickState
+.obj __RTTI__13NaviIdleState, local
 	.4byte lbl_802C1210
 	.4byte lbl_802C1220
-__RTTI__16NaviFunbariState:
+.endobj __RTTI__13NaviIdleState
+.obj __RTTI__16NaviFunbariState, local
 	.4byte lbl_802C1290
 	.4byte lbl_802C12A4
-__RTTI__17NaviRopeExitState:
+.endobj __RTTI__16NaviFunbariState
+.obj __RTTI__17NaviRopeExitState, local
 	.4byte lbl_802C1314
 	.4byte lbl_802C1328
-__RTTI__13NaviRopeState:
+.endobj __RTTI__17NaviRopeExitState
+.obj __RTTI__13NaviRopeState, local
 	.4byte lbl_802C1398
 	.4byte lbl_802C13A8
-__RTTI__13NaviPickState:
+.endobj __RTTI__13NaviRopeState
+.obj __RTTI__13NaviPickState, local
 	.4byte lbl_802C1418
 	.4byte lbl_802C1428
-__RTTI__Q25GmWin13CloseListener:
+.endobj __RTTI__13NaviPickState
+.obj __RTTI__Q25GmWin13CloseListener, local
 	.4byte lbl_802C14AC
 	.4byte 0
-__RTTI__Q212ContainerWin8Listener:
+.endobj __RTTI__Q25GmWin13CloseListener
+.obj __RTTI__Q212ContainerWin8Listener, local
 	.4byte lbl_802C14C4
 	.4byte 0
-__RTTI__18NaviContainerState:
+.endobj __RTTI__Q212ContainerWin8Listener
+.obj __RTTI__18NaviContainerState, local
 	.4byte lbl_802C1498
 	.4byte lbl_802C14DC
-__RTTI__12NaviUfoState:
+.endobj __RTTI__18NaviContainerState
+.obj __RTTI__12NaviUfoState, local
 	.4byte lbl_802C1594
 	.4byte lbl_802C15A4
-__RTTI__13NaviWalkState:
+.endobj __RTTI__12NaviUfoState
+.obj __RTTI__13NaviWalkState, local
 	.4byte lbl_802C1614
 	.4byte lbl_802C1624
-__RTTI__13NaviBuryState:
+.endobj __RTTI__13NaviWalkState
+.obj __RTTI__13NaviBuryState, local
 	.4byte lbl_802C1694
 	.4byte lbl_802C16A4
-__RTTI__14NaviStuckState:
+.endobj __RTTI__13NaviBuryState
+.obj __RTTI__14NaviStuckState, local
 	.4byte lbl_802C174C
 	.4byte lbl_802C175C
-__RTTI__16NaviDemoInfState:
+.endobj __RTTI__14NaviStuckState
+.obj __RTTI__16NaviDemoInfState, local
 	.4byte lbl_802C17CC
 	.4byte lbl_802C17E0
-__RTTI__17NaviDemoWaitState:
+.endobj __RTTI__16NaviDemoInfState
+.obj __RTTI__17NaviDemoWaitState, local
 	.4byte lbl_802C1850
 	.4byte lbl_802C1864
-__RTTI__15NaviPelletState:
+.endobj __RTTI__17NaviDemoWaitState
+.obj __RTTI__15NaviPelletState, local
 	.4byte lbl_802C18D4
 	.4byte lbl_802C18E4
-"__RTTI__19StateMachine<4Navi>":
+.endobj __RTTI__15NaviPelletState
+.obj "__RTTI__19StateMachine<4Navi>", local
 	.4byte lbl_802C1A44
 	.4byte 0
-__RTTI__16NaviStateMachine:
+.endobj "__RTTI__19StateMachine<4Navi>"
+.obj __RTTI__16NaviStateMachine, local
 	.4byte lbl_802C1A30
 	.4byte lbl_802C1A58
+.endobj __RTTI__16NaviStateMachine
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803E9F98:
+.obj lbl_803E9F98, local
 	.float 0.0
-lbl_803E9F9C:
+.endobj lbl_803E9F98
+.obj lbl_803E9F9C, local
 	.float 0.45
-lbl_803E9FA0:
+.endobj lbl_803E9F9C
+.obj lbl_803E9FA0, local
 	.float -0.3
-lbl_803E9FA4:
+.endobj lbl_803E9FA0
+.obj lbl_803E9FA4, local
 	.float 1.0
-lbl_803E9FA8:
+.endobj lbl_803E9FA4
+.obj lbl_803E9FA8, local
 	.float 32767.0
-lbl_803E9FAC:
+.endobj lbl_803E9FA8
+.obj lbl_803E9FAC, local
 	.float 0.5
-lbl_803E9FB0:
+.endobj lbl_803E9FAC
+.obj lbl_803E9FB0, local
 	.float 220.0
-lbl_803E9FB4:
+.endobj lbl_803E9FB0
+.obj lbl_803E9FB4, local
 	.float 5.0
-lbl_803E9FB8:
+.endobj lbl_803E9FB4
+.obj lbl_803E9FB8, local
 	.float -1000.0
+.endobj lbl_803E9FB8
 .balign 8
-lbl_803E9FC0:
+.obj lbl_803E9FC0, local
 	.8byte 0x4330000080000000
-lbl_803E9FC8:
+.endobj lbl_803E9FC0
+.balign 8
+.obj lbl_803E9FC8, local
 	.double 0.5
-lbl_803E9FD0:
+.endobj lbl_803E9FC8
+.balign 8
+.obj lbl_803E9FD0, local
 	.double 3.0
-lbl_803E9FD8:
+.endobj lbl_803E9FD0
+.obj lbl_803E9FD8, local
 	.float 0.8
-lbl_803E9FDC:
+.endobj lbl_803E9FD8
+.obj lbl_803E9FDC, local
 	.float -0.6
-lbl_803E9FE0:
+.endobj lbl_803E9FDC
+.obj lbl_803E9FE0, local
 	.float 0.66
-lbl_803E9FE4:
+.endobj lbl_803E9FE0
+.obj lbl_803E9FE4, local
 	.float 2.0
-lbl_803E9FE8:
+.endobj lbl_803E9FE4
+.obj lbl_803E9FE8, local
 	.float 3.1415927
-lbl_803E9FEC:
+.endobj lbl_803E9FE8
+.obj lbl_803E9FEC, local
 	.float 40.0
-lbl_803E9FF0:
+.endobj lbl_803E9FEC
+.obj lbl_803E9FF0, local
 	.float 80.0
-lbl_803E9FF4:
+.endobj lbl_803E9FF0
+.obj lbl_803E9FF4, local
 	.float 1.5
-lbl_803E9FF8:
+.endobj lbl_803E9FF4
+.obj lbl_803E9FF8, local
 	.float -1.0
-lbl_803E9FFC:
+.endobj lbl_803E9FF8
+.obj lbl_803E9FFC, local
 	.float 0.01
-lbl_803EA000:
+.endobj lbl_803E9FFC
+.obj lbl_803EA000, local
 	.float 1.0471976
-lbl_803EA004:
+.endobj lbl_803EA000
+.obj lbl_803EA004, local
 	.float 0.7853982
-lbl_803EA008:
+.endobj lbl_803EA004
+.obj lbl_803EA008, local
 	.float 200.0
-lbl_803EA00C:
+.endobj lbl_803EA008
+.obj lbl_803EA00C, local
 	.float 10.0
-lbl_803EA010:
+.endobj lbl_803EA00C
+.obj lbl_803EA010, local
 	.float 8.0
-lbl_803EA014:
+.endobj lbl_803EA010
+.obj lbl_803EA014, local
 	.float 0.15707964
-lbl_803EA018:
+.endobj lbl_803EA014
+.obj lbl_803EA018, local
 	.float 0.1
-lbl_803EA01C:
+.endobj lbl_803EA018
+.obj lbl_803EA01C, local
 	.float 11.0
-lbl_803EA020:
+.endobj lbl_803EA01C
+.obj lbl_803EA020, local
 	.float 3.0
-lbl_803EA024:
+.endobj lbl_803EA020
+.obj lbl_803EA024, local
 	.float 45.0
-lbl_803EA028:
+.endobj lbl_803EA024
+.obj lbl_803EA028, local
 	.float -40.0
-lbl_803EA02C:
+.endobj lbl_803EA028
+.obj lbl_803EA02C, local
 	.float 50.0
-lbl_803EA030:
+.endobj lbl_803EA02C
+.obj lbl_803EA030, local
 	.float 140.0
-lbl_803EA034:
+.endobj lbl_803EA030
+.obj lbl_803EA034, local
 	.float 0.9
-lbl_803EA038:
+.endobj lbl_803EA034
+.obj lbl_803EA038, local
 	.float 69.0
-lbl_803EA03C:
+.endobj lbl_803EA038
+.obj lbl_803EA03C, local
 	.float 100.0
-lbl_803EA040:
+.endobj lbl_803EA03C
+.obj lbl_803EA040, local
 	.float 0.3
-lbl_803EA044:
+.endobj lbl_803EA040
+.obj lbl_803EA044, local
 	.float 0.2
-lbl_803EA048:
+.endobj lbl_803EA044
+.obj lbl_803EA048, local
 	.float 30.0
-lbl_803EA04C:
+.endobj lbl_803EA048
+.obj lbl_803EA04C, local
 	.float -0.1
-lbl_803EA050:
+.endobj lbl_803EA04C
+.obj lbl_803EA050, local
 	.float 0.4
-lbl_803EA054:
+.endobj lbl_803EA050
+.obj lbl_803EA054, local
 	.float 4.0
-lbl_803EA058:
+.endobj lbl_803EA054
+.obj lbl_803EA058, local
 	.float 0.31415927
-lbl_803EA05C:
+.endobj lbl_803EA058
+.obj lbl_803EA05C, local
 	.float -0.15707964
-lbl_803EA060:
+.endobj lbl_803EA05C
+.obj lbl_803EA060, local
 	.float 0.99
-lbl_803EA064:
+.endobj lbl_803EA060
+.obj lbl_803EA064, local
 	.float 2.3561945
-lbl_803EA068:
+.endobj lbl_803EA064
+.obj lbl_803EA068, local
 	.float 120.0
-lbl_803EA06C:
+.endobj lbl_803EA068
+.obj lbl_803EA06C, local
 	.float 1.7
-lbl_803EA070:
+.endobj lbl_803EA06C
+.obj lbl_803EA070, local
 	.float 6.0
+.endobj lbl_803EA070

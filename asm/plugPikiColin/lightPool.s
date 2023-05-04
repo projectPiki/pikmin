@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global __ct__9LightPoolFv
-__ct__9LightPoolFv:
+.fn __ct__9LightPoolFv, global
 /* 80073164 000700C4  7C 08 02 A6 */	mflr r0
 /* 80073168 000700C8  3C 80 80 22 */	lis r4, __vt__5ANode@ha
 /* 8007316C 000700CC  90 01 00 04 */	stw r0, 4(r1)
@@ -93,9 +92,9 @@ __ct__9LightPoolFv:
 /* 800732C4 00070224  38 21 00 20 */	addi r1, r1, 0x20
 /* 800732C8 00070228  7C 08 03 A6 */	mtlr r0
 /* 800732CC 0007022C  4E 80 00 20 */	blr 
+.endfn __ct__9LightPoolFv
 
-.global draw__9LightPoolFR8Graphics
-draw__9LightPoolFR8Graphics:
+.fn draw__9LightPoolFR8Graphics, global
 /* 800732D0 00070230  7C 08 02 A6 */	mflr r0
 /* 800732D4 00070234  38 A0 00 00 */	li r5, 0
 /* 800732D8 00070238  90 01 00 04 */	stw r0, 4(r1)
@@ -482,29 +481,35 @@ draw__9LightPoolFR8Graphics:
 /* 800738BC 0007081C  38 21 03 00 */	addi r1, r1, 0x300
 /* 800738C0 00070820  7C 08 03 A6 */	mtlr r0
 /* 800738C4 00070824  4E 80 00 20 */	blr 
+.endfn draw__9LightPoolFR8Graphics
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802A9F60:
+.obj lbl_802A9F60, local
 	.asciz "lightPool.cpp"
+.endobj lbl_802A9F60
 .balign 4
-lbl_802A9F70:
+.obj lbl_802A9F70, local
 	.asciz "LightPool"
+.endobj lbl_802A9F70
 .balign 4
-lbl_802A9F7C:
+.obj lbl_802A9F7C, local
 	.asciz "CoreNode"
+.endobj lbl_802A9F7C
 .balign 4
-lbl_802A9F88:
+.obj lbl_802A9F88, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte 0
-lbl_802A9F94:
+.endobj lbl_802A9F88
+.obj lbl_802A9F94, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte __RTTI__8CoreNode
 	.4byte 0
 	.4byte 0
-lbl_802A9FA8:
+.endobj lbl_802A9F94
+.obj lbl_802A9FA8, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte __RTTI__8CoreNode
@@ -512,8 +517,8 @@ lbl_802A9FA8:
 	.4byte __RTTI__4Node
 	.4byte 0
 	.4byte 0
-.global __vt__9LightPool
-__vt__9LightPool:
+.endobj lbl_802A9FA8
+.obj __vt__9LightPool, global
 	.4byte __RTTI__9LightPool
 	.4byte 0
 	.4byte getAgeNodeType__5ANodeFv
@@ -526,6 +531,7 @@ __vt__9LightPool:
 	.4byte concat__4NodeFR3SRT
 	.4byte concat__4NodeFR8Matrix4f
 	.4byte getModelMatrix__4NodeFv
+.endobj __vt__9LightPool
 	.4byte 0
 	.4byte 0
 	.4byte 0
@@ -540,69 +546,94 @@ __vt__9LightPool:
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-lbl_803DE770:
+.obj lbl_803DE770, local
 	.float 0.0
-lbl_803DE774:
+.endobj lbl_803DE770
+.obj lbl_803DE774, local
 	.float 50.0
-lbl_803DE778:
+.endobj lbl_803DE774
+.obj lbl_803DE778, local
 	.float 0.0
-lbl_803DE77C:
+.endobj lbl_803DE778
+.obj lbl_803DE77C, local
 	.float 0.0
-lbl_803DE780:
+.endobj lbl_803DE77C
+.obj lbl_803DE780, local
 	.float 10.0
-lbl_803DE784:
+.endobj lbl_803DE780
+.obj lbl_803DE784, local
 	.float 1.0E-5
-lbl_803DE788:
+.endobj lbl_803DE784
+.obj lbl_803DE788, local
 	.float 0.0
-lbl_803DE78C:
+.endobj lbl_803DE788
+.obj lbl_803DE78C, local
 	.float 0.0
-lbl_803DE790:
+.endobj lbl_803DE78C
+.obj lbl_803DE790, local
 	.float 0.0
+.endobj lbl_803DE790
 .balign 4
-lbl_803DE794:
+.obj lbl_803DE794, local
 	.asciz "<Node>"
+.endobj lbl_803DE794
 .balign 4
-lbl_803DE79C:
+.obj lbl_803DE79C, local
 	.asciz "ANode"
+.endobj lbl_803DE79C
 .balign 4
-__RTTI__5ANode:
+.obj __RTTI__5ANode, local
 	.4byte lbl_803DE79C
 	.4byte 0
-__RTTI__8CoreNode:
+.endobj __RTTI__5ANode
+.obj __RTTI__8CoreNode, local
 	.4byte lbl_802A9F7C
 	.4byte lbl_802A9F88
+.endobj __RTTI__8CoreNode
 .balign 4
-lbl_803DE7B4:
+.obj lbl_803DE7B4, local
 	.asciz "Node"
+.endobj lbl_803DE7B4
 .balign 4
-__RTTI__4Node:
+.obj __RTTI__4Node, local
 	.4byte lbl_803DE7B4
 	.4byte lbl_802A9F94
-__RTTI__9LightPool:
+.endobj __RTTI__4Node
+.obj __RTTI__9LightPool, local
 	.4byte lbl_802A9F70
 	.4byte lbl_802A9FA8
+.endobj __RTTI__9LightPool
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803E8A78:
+.obj lbl_803E8A78, local
 	.float 0.0
-lbl_803E8A7C:
+.endobj lbl_803E8A78
+.obj lbl_803E8A7C, local
 	.float 1.0
-lbl_803E8A80:
+.endobj lbl_803E8A7C
+.obj lbl_803E8A80, local
 	.float 32767.0
-lbl_803E8A84:
+.endobj lbl_803E8A80
+.obj lbl_803E8A84, local
 	.float 6.2831855
-lbl_803E8A88:
+.endobj lbl_803E8A84
+.obj lbl_803E8A88, local
 	.float 5.0
-lbl_803E8A8C:
+.endobj lbl_803E8A88
+.obj lbl_803E8A8C, local
 	.float 200.0
+.endobj lbl_803E8A8C
 .balign 8
-lbl_803E8A90:
-	.4byte 0x43300000
-	.4byte 0x80000000
-lbl_803E8A98:
+.obj lbl_803E8A90, local
+	.8byte 0x4330000080000000
+.endobj lbl_803E8A90
+.obj lbl_803E8A98, local
 	.float 8.0
-lbl_803E8A9C:
+.endobj lbl_803E8A98
+.obj lbl_803E8A9C, local
 	.float 2.5
-lbl_803E8AA0:
+.endobj lbl_803E8A9C
+.obj lbl_803E8AA0, local
 	.float 80.0
+.endobj lbl_803E8AA0

@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global __ct__5NTekiFv
-__ct__5NTekiFv:
+.fn __ct__5NTekiFv, global
 /* 8014B9F8 00148958  7C 08 02 A6 */	mflr r0
 /* 8014B9FC 0014895C  90 01 00 04 */	stw r0, 4(r1)
 /* 8014BA00 00148960  7C 80 07 35 */	extsh. r0, r4
@@ -76,9 +75,9 @@ __ct__5NTekiFv:
 /* 8014BB00 00148A60  38 21 00 18 */	addi r1, r1, 0x18
 /* 8014BB04 00148A64  7C 08 03 A6 */	mtlr r0
 /* 8014BB08 00148A68  4E 80 00 20 */	blr 
+.endfn __ct__5NTekiFv
 
-.global sendMessage__5NTekiFi
-sendMessage__5NTekiFi:
+.fn sendMessage__5NTekiFi, global
 /* 8014BB0C 00148A6C  7C 08 02 A6 */	mflr r0
 /* 8014BB10 00148A70  90 01 00 04 */	stw r0, 4(r1)
 /* 8014BB14 00148A74  94 21 FF 38 */	stwu r1, -0xc8(r1)
@@ -204,9 +203,9 @@ sendMessage__5NTekiFi:
 /* 8014BCD4 00148C34  38 21 00 C8 */	addi r1, r1, 0xc8
 /* 8014BCD8 00148C38  7C 08 03 A6 */	mtlr r0
 /* 8014BCDC 00148C3C  4E 80 00 20 */	blr 
+.endfn sendMessage__5NTekiFi
 
-.global receiveMessage__5NTekiFR11TekiMessage
-receiveMessage__5NTekiFR11TekiMessage:
+.fn receiveMessage__5NTekiFR11TekiMessage, global
 /* 8014BCE0 00148C40  7C 08 02 A6 */	mflr r0
 /* 8014BCE4 00148C44  90 01 00 04 */	stw r0, 4(r1)
 /* 8014BCE8 00148C48  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -228,44 +227,54 @@ receiveMessage__5NTekiFR11TekiMessage:
 /* 8014BD28 00148C88  38 21 00 28 */	addi r1, r1, 0x28
 /* 8014BD2C 00148C8C  7C 08 03 A6 */	mtlr r0
 /* 8014BD30 00148C90  4E 80 00 20 */	blr 
+.endfn receiveMessage__5NTekiFR11TekiMessage
 
-"@1132@4@animationKeyUpdated__5BTekiFR16PaniAnimKeyEvent":
+.fn "@1132@4@animationKeyUpdated__5BTekiFR16PaniAnimKeyEvent", weak
 /* 8014BD34 00148C94  39 60 00 04 */	li r11, 4
 /* 8014BD38 00148C98  7D 63 58 2E */	lwzx r11, r3, r11
 /* 8014BD3C 00148C9C  7C 63 5A 14 */	add r3, r3, r11
 /* 8014BD40 00148CA0  38 63 FB 94 */	addi r3, r3, -1132
 /* 8014BD44 00148CA4  4B FF 94 9C */	b animationKeyUpdated__5BTekiFR16PaniAnimKeyEvent
+.endfn "@1132@4@animationKeyUpdated__5BTekiFR16PaniAnimKeyEvent"
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802CDD20:
+.obj lbl_802CDD20, local
 	.asciz "tekinteki.cpp"
+.endobj lbl_802CDD20
 .balign 4
-lbl_802CDD30:
+.obj lbl_802CDD30, local
 	.asciz "tekinakata"
+.endobj lbl_802CDD30
 .balign 4
-lbl_802CDD3C:
+.obj lbl_802CDD3C, local
 	.asciz "PelletView"
+.endobj lbl_802CDD3C
 .balign 4
-lbl_802CDD48:
+.obj lbl_802CDD48, local
 	.asciz "PaniAnimKeyListener"
+.endobj lbl_802CDD48
 .balign 4
-lbl_802CDD5C:
+.obj lbl_802CDD5C, local
 	.asciz "EventTalker"
+.endobj lbl_802CDD5C
 .balign 4
-lbl_802CDD68:
+.obj lbl_802CDD68, local
 	.asciz "RefCountable"
+.endobj lbl_802CDD68
 .balign 4
-lbl_802CDD78:
+.obj lbl_802CDD78, local
 	.asciz "Creature"
+.endobj lbl_802CDD78
 .balign 4
-lbl_802CDD84:
+.obj lbl_802CDD84, local
 	.4byte __RTTI__11EventTalker
 	.4byte 0x8
 	.4byte __RTTI__12RefCountable
 	.4byte 0
 	.4byte 0
-lbl_802CDD98:
+.endobj lbl_802CDD84
+.obj lbl_802CDD98, local
 	.4byte __RTTI__10PelletView
 	.4byte 0x2b8
 	.4byte __RTTI__19PaniAnimKeyListener
@@ -277,7 +286,8 @@ lbl_802CDD98:
 	.4byte __RTTI__8Creature
 	.4byte 0
 	.4byte 0
-lbl_802CDDC4:
+.endobj lbl_802CDD98
+.obj lbl_802CDDC4, local
 	.4byte __RTTI__10PelletView
 	.4byte 0x2b8
 	.4byte __RTTI__19PaniAnimKeyListener
@@ -291,8 +301,8 @@ lbl_802CDDC4:
 	.4byte __RTTI__5BTeki
 	.4byte 0
 	.4byte 0
-.global __vt__5NTeki
-__vt__5NTeki:
+.endobj lbl_802CDDC4
+.obj __vt__5NTeki, weak
 	.4byte __RTTI__5NTeki
 	.4byte 0
 	.4byte addCntCallback__12RefCountableFv
@@ -421,6 +431,7 @@ __vt__5NTeki:
 	.4byte __RTTI__5NTeki
 	.4byte 0xfffffb94
 	.4byte "@1132@4@animationKeyUpdated__5BTekiFR16PaniAnimKeyEvent"
+.endobj __vt__5NTeki
 	.4byte 0
 	.4byte 0
 	.4byte 0
@@ -428,36 +439,46 @@ __vt__5NTeki:
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-lbl_803E46B0:
+.obj lbl_803E46B0, local
 	.asciz "NTeki"
+.endobj lbl_803E46B0
 .balign 4
-__RTTI__10PelletView:
+.obj __RTTI__10PelletView, local
 	.4byte lbl_802CDD3C
 	.4byte 0
-__RTTI__19PaniAnimKeyListener:
+.endobj __RTTI__10PelletView
+.obj __RTTI__19PaniAnimKeyListener, local
 	.4byte lbl_802CDD48
 	.4byte 0
-__RTTI__11EventTalker:
+.endobj __RTTI__19PaniAnimKeyListener
+.obj __RTTI__11EventTalker, local
 	.4byte lbl_802CDD5C
 	.4byte 0
-__RTTI__12RefCountable:
+.endobj __RTTI__11EventTalker
+.obj __RTTI__12RefCountable, local
 	.4byte lbl_802CDD68
 	.4byte 0
-__RTTI__8Creature:
+.endobj __RTTI__12RefCountable
+.obj __RTTI__8Creature, local
 	.4byte lbl_802CDD78
 	.4byte lbl_802CDD84
+.endobj __RTTI__8Creature
 .balign 4
-lbl_803E46E0:
+.obj lbl_803E46E0, local
 	.asciz "BTeki"
+.endobj lbl_803E46E0
 .balign 4
-__RTTI__5BTeki:
+.obj __RTTI__5BTeki, local
 	.4byte lbl_803E46E0
 	.4byte lbl_802CDD98
-__RTTI__5NTeki:
+.endobj __RTTI__5BTeki
+.obj __RTTI__5NTeki, local
 	.4byte lbl_803E46B0
 	.4byte lbl_802CDDC4
+.endobj __RTTI__5NTeki
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803EA9A0:
+.obj lbl_803EA9A0, local
 	.float 0.0
+.endobj lbl_803EA9A0

@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global __ct__Q23zen18ogScrFileChkSelMgrFv
-__ct__Q23zen18ogScrFileChkSelMgrFv:
+.fn __ct__Q23zen18ogScrFileChkSelMgrFv, global
 /* 80193594 001904F4  7C 08 02 A6 */	mflr r0
 /* 80193598 001904F8  90 01 00 04 */	stw r0, 4(r1)
 /* 8019359C 001904FC  38 00 FF FF */	li r0, -1
@@ -73,9 +72,9 @@ __ct__Q23zen18ogScrFileChkSelMgrFv:
 /* 80193698 001905F8  38 21 00 28 */	addi r1, r1, 0x28
 /* 8019369C 001905FC  7C 08 03 A6 */	mtlr r0
 /* 801936A0 00190600  4E 80 00 20 */	blr 
+.endfn __ct__Q23zen18ogScrFileChkSelMgrFv
 
-.global start__Q23zen18ogScrFileChkSelMgrFb
-start__Q23zen18ogScrFileChkSelMgrFb:
+.fn start__Q23zen18ogScrFileChkSelMgrFb, global
 /* 801936A4 00190604  7C 08 02 A6 */	mflr r0
 /* 801936A8 00190608  90 01 00 04 */	stw r0, 4(r1)
 /* 801936AC 0019060C  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -96,9 +95,9 @@ start__Q23zen18ogScrFileChkSelMgrFb:
 /* 801936E8 00190648  38 21 00 18 */	addi r1, r1, 0x18
 /* 801936EC 0019064C  7C 08 03 A6 */	mtlr r0
 /* 801936F0 00190650  4E 80 00 20 */	blr 
+.endfn start__Q23zen18ogScrFileChkSelMgrFb
 
-.global startSave__Q23zen18ogScrFileChkSelMgrFv
-startSave__Q23zen18ogScrFileChkSelMgrFv:
+.fn startSave__Q23zen18ogScrFileChkSelMgrFv, global
 /* 801936F4 00190654  7C 08 02 A6 */	mflr r0
 /* 801936F8 00190658  90 01 00 04 */	stw r0, 4(r1)
 /* 801936FC 0019065C  38 00 00 01 */	li r0, 1
@@ -120,9 +119,9 @@ startSave__Q23zen18ogScrFileChkSelMgrFv:
 /* 8019373C 0019069C  38 21 00 18 */	addi r1, r1, 0x18
 /* 80193740 001906A0  7C 08 03 A6 */	mtlr r0
 /* 80193744 001906A4  4E 80 00 20 */	blr 
+.endfn startSave__Q23zen18ogScrFileChkSelMgrFv
 
-.global update__Q23zen18ogScrFileChkSelMgrFP10ControllerR13CardQuickInfo
-update__Q23zen18ogScrFileChkSelMgrFP10ControllerR13CardQuickInfo:
+.fn update__Q23zen18ogScrFileChkSelMgrFP10ControllerR13CardQuickInfo, global
 /* 80193748 001906A8  7C 08 02 A6 */	mflr r0
 /* 8019374C 001906AC  90 01 00 04 */	stw r0, 4(r1)
 /* 80193750 001906B0  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -240,9 +239,9 @@ update__Q23zen18ogScrFileChkSelMgrFP10ControllerR13CardQuickInfo:
 /* 801938D4 00190834  38 21 00 28 */	addi r1, r1, 0x28
 /* 801938D8 00190838  7C 08 03 A6 */	mtlr r0
 /* 801938DC 0019083C  4E 80 00 20 */	blr 
+.endfn update__Q23zen18ogScrFileChkSelMgrFP10ControllerR13CardQuickInfo
 
-.global draw__Q23zen18ogScrFileChkSelMgrFR8Graphics
-draw__Q23zen18ogScrFileChkSelMgrFR8Graphics:
+.fn draw__Q23zen18ogScrFileChkSelMgrFR8Graphics, global
 /* 801938E0 00190840  7C 08 02 A6 */	mflr r0
 /* 801938E4 00190844  90 01 00 04 */	stw r0, 4(r1)
 /* 801938E8 00190848  94 21 FF 00 */	stwu r1, -0x100(r1)
@@ -292,17 +291,22 @@ draw__Q23zen18ogScrFileChkSelMgrFR8Graphics:
 /* 80193990 001908F0  38 21 01 00 */	addi r1, r1, 0x100
 /* 80193994 001908F4  7C 08 03 A6 */	mtlr r0
 /* 80193998 001908F8  4E 80 00 20 */	blr 
+.endfn draw__Q23zen18ogScrFileChkSelMgrFR8Graphics
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802D6010:
+.obj lbl_802D6010, local
 	.asciz "screen/blo/data_b.blo"
+.endobj lbl_802D6010
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803EB3E8:
-	.4byte 0x41F00000
-lbl_803EB3EC:
-	.4byte 0x3F800000
-lbl_803EB3F0:
-	.4byte 0x459C4000
+.obj lbl_803EB3E8, local
+	.float 30.0
+.endobj lbl_803EB3E8
+.obj lbl_803EB3EC, local
+	.float 1.0
+.endobj lbl_803EB3EC
+.obj lbl_803EB3F0, local
+	.float 5000.0
+.endobj lbl_803EB3F0

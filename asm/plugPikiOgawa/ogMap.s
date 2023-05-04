@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global start__Q23zen11ogScrMapMgrFs
-start__Q23zen11ogScrMapMgrFs:
+.fn start__Q23zen11ogScrMapMgrFs, global
 /* 80182DE0 0017FD40  7C 08 02 A6 */	mflr r0
 /* 80182DE4 0017FD44  90 01 00 04 */	stw r0, 4(r1)
 /* 80182DE8 0017FD48  38 00 00 01 */	li r0, 1
@@ -57,9 +56,9 @@ start__Q23zen11ogScrMapMgrFs:
 /* 80182EA8 0017FE08  38 21 00 40 */	addi r1, r1, 0x40
 /* 80182EAC 0017FE0C  7C 08 03 A6 */	mtlr r0
 /* 80182EB0 0017FE10  4E 80 00 20 */	blr 
+.endfn start__Q23zen11ogScrMapMgrFs
 
-.global __ct__Q23zen11ogScrMapMgrFv
-__ct__Q23zen11ogScrMapMgrFv:
+.fn __ct__Q23zen11ogScrMapMgrFv, global
 /* 80182EB4 0017FE14  7C 08 02 A6 */	mflr r0
 /* 80182EB8 0017FE18  90 01 00 04 */	stw r0, 4(r1)
 /* 80182EBC 0017FE1C  94 21 FF D0 */	stwu r1, -0x30(r1)
@@ -178,9 +177,9 @@ __ct__Q23zen11ogScrMapMgrFv:
 /* 80183074 0017FFD4  38 21 00 30 */	addi r1, r1, 0x30
 /* 80183078 0017FFD8  7C 08 03 A6 */	mtlr r0
 /* 8018307C 0017FFDC  4E 80 00 20 */	blr 
+.endfn __ct__Q23zen11ogScrMapMgrFv
 
-.global update__Q23zen11ogScrMapMgrFP10Controller
-update__Q23zen11ogScrMapMgrFP10Controller:
+.fn update__Q23zen11ogScrMapMgrFP10Controller, global
 /* 80183080 0017FFE0  7C 08 02 A6 */	mflr r0
 /* 80183084 0017FFE4  90 01 00 04 */	stw r0, 4(r1)
 /* 80183088 0017FFE8  94 21 FF 78 */	stwu r1, -0x88(r1)
@@ -362,9 +361,9 @@ update__Q23zen11ogScrMapMgrFP10Controller:
 /* 80183310 00180270  38 21 00 88 */	addi r1, r1, 0x88
 /* 80183314 00180274  7C 08 03 A6 */	mtlr r0
 /* 80183318 00180278  4E 80 00 20 */	blr 
+.endfn update__Q23zen11ogScrMapMgrFP10Controller
 
-.global fmodf__3stdFff
-fmodf__3stdFff:
+.fn fmodf__3stdFff, weak
 /* 8018331C 0018027C  7C 08 02 A6 */	mflr r0
 /* 80183320 00180280  90 01 00 04 */	stw r0, 4(r1)
 /* 80183324 00180284  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -391,9 +390,9 @@ fmodf__3stdFff:
 /* 80183370 001802D0  38 21 00 28 */	addi r1, r1, 0x28
 /* 80183374 001802D4  7C 08 03 A6 */	mtlr r0
 /* 80183378 001802D8  4E 80 00 20 */	blr 
+.endfn fmodf__3stdFff
 
-.global draw__Q23zen11ogScrMapMgrFR8Graphics
-draw__Q23zen11ogScrMapMgrFR8Graphics:
+.fn draw__Q23zen11ogScrMapMgrFR8Graphics, global
 /* 8018337C 001802DC  7C 08 02 A6 */	mflr r0
 /* 80183380 001802E0  90 01 00 04 */	stw r0, 4(r1)
 /* 80183384 001802E4  94 21 FF 00 */	stwu r1, -0x100(r1)
@@ -430,29 +429,38 @@ draw__Q23zen11ogScrMapMgrFR8Graphics:
 /* 801833FC 0018035C  38 21 01 00 */	addi r1, r1, 0x100
 /* 80183400 00180360  7C 08 03 A6 */	mtlr r0
 /* 80183404 00180364  4E 80 00 20 */	blr 
+.endfn draw__Q23zen11ogScrMapMgrFR8Graphics
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802D4058:
+.obj lbl_802D4058, local
 	.asciz "screen/blo/test.blo"
+.endobj lbl_802D4058
 .balign 4
-lbl_802D406C:
+.obj lbl_802D406C, local
 	.asciz "screen/blo/test2.blo"
+.endobj lbl_802D406C
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803EB180:
-	.4byte 0x43300000
-	.4byte 0x80000000
-lbl_803EB188:
-	.4byte 0x00000000
-lbl_803EB18C:
-	.4byte 0x3F800000
-lbl_803EB190:
-	.4byte 0x40C90FDB
-lbl_803EB194:
-	.4byte 0x40800000
-lbl_803EB198:
-	.4byte 0x41F00000
-lbl_803EB19C:
-	.4byte 0x459C4000
+.obj lbl_803EB180, local
+	.8byte 0x4330000080000000
+.endobj lbl_803EB180
+.obj lbl_803EB188, local
+	.float 0.0
+.endobj lbl_803EB188
+.obj lbl_803EB18C, local
+	.float 1.0
+.endobj lbl_803EB18C
+.obj lbl_803EB190, local
+	.float 6.2831855
+.endobj lbl_803EB190
+.obj lbl_803EB194, local
+	.float 4.0
+.endobj lbl_803EB194
+.obj lbl_803EB198, local
+	.float 30.0
+.endobj lbl_803EB198
+.obj lbl_803EB19C, local
+	.float 5000.0
+.endobj lbl_803EB19C

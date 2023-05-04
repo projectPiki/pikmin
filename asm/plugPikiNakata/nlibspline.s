@@ -1,13 +1,12 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global reset__18SplineInterpolatorFv
-reset__18SplineInterpolatorFv:
+.fn reset__18SplineInterpolatorFv, global
 /* 8011DE60 0011ADC0  38 00 00 00 */	li r0, 0
 /* 8011DE64 0011ADC4  98 03 00 10 */	stb r0, 0x10(r3)
 /* 8011DE68 0011ADC8  4E 80 00 20 */	blr 
+.endfn reset__18SplineInterpolatorFv
 
-.global interpolateNext__18SplineInterpolatorFfR10NPosture3D
-interpolateNext__18SplineInterpolatorFfR10NPosture3D:
+.fn interpolateNext__18SplineInterpolatorFfR10NPosture3D, global
 /* 8011DE6C 0011ADCC  7C 08 02 A6 */	mflr r0
 /* 8011DE70 0011ADD0  90 01 00 04 */	stw r0, 4(r1)
 /* 8011DE74 0011ADD4  94 21 FF B8 */	stwu r1, -0x48(r1)
@@ -68,9 +67,9 @@ interpolateNext__18SplineInterpolatorFfR10NPosture3D:
 /* 8011DF40 0011AEA0  38 21 00 48 */	addi r1, r1, 0x48
 /* 8011DF44 0011AEA4  7C 08 03 A6 */	mtlr r0
 /* 8011DF48 0011AEA8  4E 80 00 20 */	blr 
+.endfn interpolateNext__18SplineInterpolatorFfR10NPosture3D
 
-.global outputPosture__18SplineInterpolatorFfR10NPosture3D
-outputPosture__18SplineInterpolatorFfR10NPosture3D:
+.fn outputPosture__18SplineInterpolatorFfR10NPosture3D, global
 /* 8011DF4C 0011AEAC  7C 08 02 A6 */	mflr r0
 /* 8011DF50 0011AEB0  90 01 00 04 */	stw r0, 4(r1)
 /* 8011DF54 0011AEB4  94 21 FF A8 */	stwu r1, -0x58(r1)
@@ -131,9 +130,9 @@ outputPosture__18SplineInterpolatorFfR10NPosture3D:
 /* 8011E030 0011AF90  38 21 00 58 */	addi r1, r1, 0x58
 /* 8011E034 0011AF94  7C 08 03 A6 */	mtlr r0
 /* 8011E038 0011AF98  4E 80 00 20 */	blr 
+.endfn outputPosture__18SplineInterpolatorFfR10NPosture3D
 
-.global searchSegmentIndex__18SplineInterpolatorFfi
-searchSegmentIndex__18SplineInterpolatorFfi:
+.fn searchSegmentIndex__18SplineInterpolatorFfi, global
 /* 8011E03C 0011AF9C  7C 08 02 A6 */	mflr r0
 /* 8011E040 0011AFA0  90 01 00 04 */	stw r0, 4(r1)
 /* 8011E044 0011AFA4  94 21 FF A8 */	stwu r1, -0x58(r1)
@@ -186,3 +185,4 @@ searchSegmentIndex__18SplineInterpolatorFfi:
 /* 8011E0EC 0011B04C  38 21 00 58 */	addi r1, r1, 0x58
 /* 8011E0F0 0011B050  7C 08 03 A6 */	mtlr r0
 /* 8011E0F4 0011B054  4E 80 00 20 */	blr 
+.endfn searchSegmentIndex__18SplineInterpolatorFfi

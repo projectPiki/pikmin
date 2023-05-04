@@ -1,8 +1,7 @@
 .include "macros.inc"
 
 .section .init, "ax"  # 0x80003100 - 0x800054C0
-.global TRK_memcpy
-TRK_memcpy:
+.fn TRK_memcpy, global
 /* 80003464 00000464  38 84 FF FF */	addi r4, r4, -1
 /* 80003468 00000468  38 C3 FF FF */	addi r6, r3, -1
 /* 8000346C 0000046C  38 A5 00 01 */	addi r5, r5, 1
@@ -14,9 +13,9 @@ TRK_memcpy:
 /* 8000347C 0000047C  34 A5 FF FF */	addic. r5, r5, -1
 /* 80003480 00000480  40 82 FF F4 */	bne .L_80003474
 /* 80003484 00000484  4E 80 00 20 */	blr 
+.endfn TRK_memcpy
 
-.global TRK_memset
-TRK_memset:
+.fn TRK_memset, global
 /* 80003488 00000488  7C 08 02 A6 */	mflr r0
 /* 8000348C 0000048C  90 01 00 04 */	stw r0, 4(r1)
 /* 80003490 00000490  94 21 FF F0 */	stwu r1, -0x10(r1)
@@ -29,10 +28,10 @@ TRK_memset:
 /* 800034AC 000004AC  80 01 00 04 */	lwz r0, 4(r1)
 /* 800034B0 000004B0  7C 08 03 A6 */	mtlr r0
 /* 800034B4 000004B4  4E 80 00 20 */	blr 
+.endfn TRK_memset
 
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global TRK_fill_mem
-TRK_fill_mem:
+.fn TRK_fill_mem, local
 /* 8021E7C0 0021B720  28 05 00 20 */	cmplwi r5, 0x20
 /* 8021E7C4 0021B724  38 C3 FF FF */	addi r6, r3, -1
 /* 8021E7C8 0021B728  54 80 06 3E */	clrlwi r0, r4, 0x18
@@ -91,3 +90,4 @@ TRK_fill_mem:
 /* 8021E878 0021B7D8  9C 06 00 01 */	stbu r0, 1(r6)
 /* 8021E87C 0021B7DC  40 82 FF F8 */	bne .L_8021E874
 /* 8021E880 0021B7E0  4E 80 00 20 */	blr 
+.endfn TRK_fill_mem

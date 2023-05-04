@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global TRKInitializeNub
-TRKInitializeNub:
+.fn TRKInitializeNub, global
 /* 8021C310 00219270  7C 08 02 A6 */	mflr r0
 /* 8021C314 00219274  90 01 00 04 */	stw r0, 4(r1)
 /* 8021C318 00219278  94 21 FF F0 */	stwu r1, -0x10(r1)
@@ -62,9 +61,9 @@ TRKInitializeNub:
 /* 8021C3D8 00219338  80 01 00 04 */	lwz r0, 4(r1)
 /* 8021C3DC 0021933C  7C 08 03 A6 */	mtlr r0
 /* 8021C3E0 00219340  4E 80 00 20 */	blr 
+.endfn TRKInitializeNub
 
-.global TRKTerminateNub
-TRKTerminateNub:
+.fn TRKTerminateNub, global
 /* 8021C3E4 00219344  7C 08 02 A6 */	mflr r0
 /* 8021C3E8 00219348  90 01 00 04 */	stw r0, 4(r1)
 /* 8021C3EC 0021934C  94 21 FF F8 */	stwu r1, -8(r1)
@@ -74,9 +73,9 @@ TRKTerminateNub:
 /* 8021C3FC 0021935C  80 01 00 04 */	lwz r0, 4(r1)
 /* 8021C400 00219360  7C 08 03 A6 */	mtlr r0
 /* 8021C404 00219364  4E 80 00 20 */	blr 
+.endfn TRKTerminateNub
 
-.global TRKNubWelcome
-TRKNubWelcome:
+.fn TRKNubWelcome, global
 /* 8021C408 00219368  7C 08 02 A6 */	mflr r0
 /* 8021C40C 0021936C  3C 60 80 22 */	lis r3, lbl_80222D50@ha
 /* 8021C410 00219370  90 01 00 04 */	stw r0, 4(r1)
@@ -87,9 +86,9 @@ TRKNubWelcome:
 /* 8021C424 00219384  80 01 00 04 */	lwz r0, 4(r1)
 /* 8021C428 00219388  7C 08 03 A6 */	mtlr r0
 /* 8021C42C 0021938C  4E 80 00 20 */	blr 
+.endfn TRKNubWelcome
 
-.global TRKInitializeEndian
-TRKInitializeEndian:
+.fn TRKInitializeEndian, global
 /* 8021C430 00219390  3C 60 80 3D */	lis r3, gTRKBigEndian@ha
 /* 8021C434 00219394  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8021C438 00219398  38 A3 43 18 */	addi r5, r3, gTRKBigEndian@l
@@ -122,8 +121,10 @@ TRKInitializeEndian:
 .L_8021C49C:
 /* 8021C49C 002193FC  38 21 00 10 */	addi r1, r1, 0x10
 /* 8021C4A0 00219400  4E 80 00 20 */	blr 
+.endfn TRKInitializeEndian
 
 .section .rodata, "a"  # 0x80221FE0 - 0x80222DC0
 .balign 8
-lbl_80222D50:
+.obj lbl_80222D50, local
 	.asciz "MetroTRK for Dolphin v0.8"
+.endobj lbl_80222D50

@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global init__14NinLogoSectionFv
-init__14NinLogoSectionFv:
+.fn init__14NinLogoSectionFv, global
 /* 80061250 0005E1B0  7C 08 02 A6 */	mflr r0
 /* 80061254 0005E1B4  3C 80 80 2B */	lis r4, lbl_802A8BF8@ha
 /* 80061258 0005E1B8  90 01 00 04 */	stw r0, 4(r1)
@@ -104,9 +103,9 @@ init__14NinLogoSectionFv:
 /* 800613C4 0005E324  38 21 00 28 */	addi r1, r1, 0x28
 /* 800613C8 0005E328  7C 08 03 A6 */	mtlr r0
 /* 800613CC 0005E32C  4E 80 00 20 */	blr 
+.endfn init__14NinLogoSectionFv
 
-.global update__19NinLogoSetupSectionFv
-update__19NinLogoSetupSectionFv:
+.fn update__19NinLogoSetupSectionFv, weak
 /* 800613D0 0005E330  7C 08 02 A6 */	mflr r0
 /* 800613D4 0005E334  90 01 00 04 */	stw r0, 4(r1)
 /* 800613D8 0005E338  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -171,9 +170,9 @@ update__19NinLogoSetupSectionFv:
 /* 800614B4 0005E414  38 21 00 18 */	addi r1, r1, 0x18
 /* 800614B8 0005E418  7C 08 03 A6 */	mtlr r0
 /* 800614BC 0005E41C  4E 80 00 20 */	blr 
+.endfn update__19NinLogoSetupSectionFv
 
-.global draw__19NinLogoSetupSectionFR8Graphics
-draw__19NinLogoSetupSectionFR8Graphics:
+.fn draw__19NinLogoSetupSectionFR8Graphics, weak
 /* 800614C0 0005E420  7C 08 02 A6 */	mflr r0
 /* 800614C4 0005E424  90 01 00 04 */	stw r0, 4(r1)
 /* 800614C8 0005E428  94 21 FE 58 */	stwu r1, -0x1a8(r1)
@@ -312,9 +311,9 @@ draw__19NinLogoSetupSectionFR8Graphics:
 /* 800616C8 0005E628  38 21 01 A8 */	addi r1, r1, 0x1a8
 /* 800616CC 0005E62C  7C 08 03 A6 */	mtlr r0
 /* 800616D0 0005E630  4E 80 00 20 */	blr 
+.endfn draw__19NinLogoSetupSectionFR8Graphics
 
-.global drawMenu__19NinLogoSetupSectionFR8GraphicsP4Menuf
-drawMenu__19NinLogoSetupSectionFR8GraphicsP4Menuf:
+.fn drawMenu__19NinLogoSetupSectionFR8GraphicsP4Menuf, weak
 /* 800616D4 0005E634  7C 08 02 A6 */	mflr r0
 /* 800616D8 0005E638  90 01 00 04 */	stw r0, 4(r1)
 /* 800616DC 0005E63C  94 21 FF C8 */	stwu r1, -0x38(r1)
@@ -378,28 +377,35 @@ drawMenu__19NinLogoSetupSectionFR8GraphicsP4Menuf:
 /* 800617B4 0005E714  38 21 00 38 */	addi r1, r1, 0x38
 /* 800617B8 0005E718  7C 08 03 A6 */	mtlr r0
 /* 800617BC 0005E71C  4E 80 00 20 */	blr 
+.endfn drawMenu__19NinLogoSetupSectionFR8GraphicsP4Menuf
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802A8BF8:
+.obj lbl_802A8BF8, local
 	.asciz "ninLogo.cpp"
+.endobj lbl_802A8BF8
 .balign 4
-lbl_802A8C04:
+.obj lbl_802A8C04, local
 	.asciz "<NinLogoSection>"
+.endobj lbl_802A8C04
 .balign 4
-lbl_802A8C18:
+.obj lbl_802A8C18, local
 	.asciz "NinLogo section"
+.endobj lbl_802A8C18
 .balign 4
-lbl_802A8C28:
+.obj lbl_802A8C28, local
 	.asciz "<Controller>"
+.endobj lbl_802A8C28
 .balign 4
-lbl_802A8C38:
+.obj lbl_802A8C38, local
 	.asciz "CoreNode"
+.endobj lbl_802A8C38
 .balign 4
-lbl_802A8C44:
+.obj lbl_802A8C44, local
 	.4byte __RTTI__5ANode
 	.4byte 0x00000000
 	.4byte 0x00000000
+.endobj lbl_802A8C44
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x00000000
@@ -408,16 +414,18 @@ lbl_802A8C44:
 	.4byte 0x00000000
 	.4byte 0x00000000
 .balign 4
-lbl_802A8C6C:
+.obj lbl_802A8C6C, local
 	.asciz "NinLogoSetupSection"
+.endobj lbl_802A8C6C
 .balign 4
-lbl_802A8C80:
+.obj lbl_802A8C80, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte __RTTI__8CoreNode
 	.4byte 0
 	.4byte 0
-lbl_802A8C94:
+.endobj lbl_802A8C80
+.obj lbl_802A8C94, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte __RTTI__8CoreNode
@@ -425,8 +433,8 @@ lbl_802A8C94:
 	.4byte __RTTI__4Node
 	.4byte 0
 	.4byte 0
-.global __vt__19NinLogoSetupSection
-__vt__19NinLogoSetupSection:
+.endobj lbl_802A8C94
+.obj __vt__19NinLogoSetupSection, weak
 	.4byte __RTTI__19NinLogoSetupSection
 	.4byte 0
 	.4byte getAgeNodeType__5ANodeFv
@@ -439,11 +447,13 @@ __vt__19NinLogoSetupSection:
 	.4byte concat__4NodeFR3SRT
 	.4byte concat__4NodeFR8Matrix4f
 	.4byte getModelMatrix__4NodeFv
+.endobj __vt__19NinLogoSetupSection
 .balign 4
-lbl_802A8CE0:
+.obj lbl_802A8CE0, local
 	.asciz "NinLogoSection"
+.endobj lbl_802A8CE0
 .balign 4
-lbl_802A8CF0:
+.obj lbl_802A8CF0, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte __RTTI__8CoreNode
@@ -451,7 +461,8 @@ lbl_802A8CF0:
 	.4byte __RTTI__4Node
 	.4byte 0
 	.4byte 0
-lbl_802A8D0C:
+.endobj lbl_802A8CF0
+.obj lbl_802A8D0C, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte __RTTI__8CoreNode
@@ -461,8 +472,8 @@ lbl_802A8D0C:
 	.4byte __RTTI__7Section
 	.4byte 0
 	.4byte 0
-.global __vt__14NinLogoSection
-__vt__14NinLogoSection:
+.endobj lbl_802A8D0C
+.obj __vt__14NinLogoSection, global
 	.4byte __RTTI__14NinLogoSection
 	.4byte 0
 	.4byte getAgeNodeType__5ANodeFv
@@ -476,56 +487,73 @@ __vt__14NinLogoSection:
 	.4byte concat__4NodeFR8Matrix4f
 	.4byte getModelMatrix__4NodeFv
 	.4byte init__14NinLogoSectionFv
+.endobj __vt__14NinLogoSection
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-lbl_803DDFB8:
+.obj lbl_803DDFB8, local
 	.asciz "<Node>"
+.endobj lbl_803DDFB8
 .balign 4
-lbl_803DDFC0:
+.obj lbl_803DDFC0, local
 	.asciz "ANode"
+.endobj lbl_803DDFC0
 .balign 4
-__RTTI__5ANode:
+.obj __RTTI__5ANode, local
 	.4byte lbl_803DDFC0
 	.4byte 0
-__RTTI__8CoreNode:
+.endobj __RTTI__5ANode
+.obj __RTTI__8CoreNode, local
 	.4byte lbl_802A8C38
 	.4byte lbl_802A8C44
+.endobj __RTTI__8CoreNode
 .balign 4
-lbl_803DDFD8:
+.obj lbl_803DDFD8, local
 	.asciz "Node"
+.endobj lbl_803DDFD8
 .balign 4
-__RTTI__4Node:
+.obj __RTTI__4Node, local
 	.4byte lbl_803DDFD8
 	.4byte lbl_802A8C80
-__RTTI__19NinLogoSetupSection:
+.endobj __RTTI__4Node
+.obj __RTTI__19NinLogoSetupSection, local
 	.4byte lbl_802A8C6C
 	.4byte lbl_802A8C94
+.endobj __RTTI__19NinLogoSetupSection
 .balign 4
-lbl_803DDFF0:
+.obj lbl_803DDFF0, local
 	.asciz "Section"
+.endobj lbl_803DDFF0
 .balign 4
-__RTTI__7Section:
+.obj __RTTI__7Section, local
 	.4byte lbl_803DDFF0
 	.4byte lbl_802A8CF0
-__RTTI__14NinLogoSection:
+.endobj __RTTI__7Section
+.obj __RTTI__14NinLogoSection, local
 	.4byte lbl_802A8CE0
 	.4byte lbl_802A8D0C
+.endobj __RTTI__14NinLogoSection
 
 .section .sbss, "wa"
 .balign 8
-progresWindow:
+.obj progresWindow, local
 	.skip 4
+.endobj progresWindow
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803E8938:
+.obj lbl_803E8938, local
 	.float 1.0
-lbl_803E893C:
+.endobj lbl_803E8938
+.obj lbl_803E893C, local
 	.float 3.0
-lbl_803E8940:
+.endobj lbl_803E893C
+.obj lbl_803E8940, local
 	.float 0.125
-lbl_803E8944:
+.endobj lbl_803E8940
+.obj lbl_803E8944, local
 	.float 0.25
-lbl_803E8948:
+.endobj lbl_803E8944
+.obj lbl_803E8948, local
 	.float 0.5
+.endobj lbl_803E8948

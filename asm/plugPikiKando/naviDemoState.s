@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global init__Q219NaviDemoSunsetState16DemoStateMachineFP19NaviDemoSunsetState
-init__Q219NaviDemoSunsetState16DemoStateMachineFP19NaviDemoSunsetState:
+.fn init__Q219NaviDemoSunsetState16DemoStateMachineFP19NaviDemoSunsetState, global
 /* 8010B0E0 00108040  7C 08 02 A6 */	mflr r0
 /* 8010B0E4 00108044  90 01 00 04 */	stw r0, 4(r1)
 /* 8010B0E8 00108048  38 00 00 24 */	li r0, 0x24
@@ -313,9 +312,9 @@ init__Q219NaviDemoSunsetState16DemoStateMachineFP19NaviDemoSunsetState:
 /* 8010B54C 001084AC  38 21 00 60 */	addi r1, r1, 0x60
 /* 8010B550 001084B0  7C 08 03 A6 */	mtlr r0
 /* 8010B554 001084B4  4E 80 00 20 */	blr 
+.endfn init__Q219NaviDemoSunsetState16DemoStateMachineFP19NaviDemoSunsetState
 
-.global init__Q219NaviDemoSunsetState7GoStateFP19NaviDemoSunsetState
-init__Q219NaviDemoSunsetState7GoStateFP19NaviDemoSunsetState:
+.fn init__Q219NaviDemoSunsetState7GoStateFP19NaviDemoSunsetState, global
 /* 8010B558 001084B8  7C 08 02 A6 */	mflr r0
 /* 8010B55C 001084BC  90 01 00 04 */	stw r0, 4(r1)
 /* 8010B560 001084C0  94 21 FF D0 */	stwu r1, -0x30(r1)
@@ -353,9 +352,9 @@ init__Q219NaviDemoSunsetState7GoStateFP19NaviDemoSunsetState:
 /* 8010B5DC 0010853C  38 21 00 30 */	addi r1, r1, 0x30
 /* 8010B5E0 00108540  7C 08 03 A6 */	mtlr r0
 /* 8010B5E4 00108544  4E 80 00 20 */	blr 
+.endfn init__Q219NaviDemoSunsetState7GoStateFP19NaviDemoSunsetState
 
-.global exec__Q219NaviDemoSunsetState7GoStateFP19NaviDemoSunsetState
-exec__Q219NaviDemoSunsetState7GoStateFP19NaviDemoSunsetState:
+.fn exec__Q219NaviDemoSunsetState7GoStateFP19NaviDemoSunsetState, global
 /* 8010B5E8 00108548  7C 08 02 A6 */	mflr r0
 /* 8010B5EC 0010854C  90 01 00 04 */	stw r0, 4(r1)
 /* 8010B5F0 00108550  94 21 FF 30 */	stwu r1, -0xd0(r1)
@@ -574,9 +573,9 @@ exec__Q219NaviDemoSunsetState7GoStateFP19NaviDemoSunsetState:
 /* 8010B928 00108888  38 21 00 D0 */	addi r1, r1, 0xd0
 /* 8010B92C 0010888C  7C 08 03 A6 */	mtlr r0
 /* 8010B930 00108890  4E 80 00 20 */	blr 
+.endfn exec__Q219NaviDemoSunsetState7GoStateFP19NaviDemoSunsetState
 
-.global "transit__29AState<19NaviDemoSunsetState>FP19NaviDemoSunsetStatei"
-"transit__29AState<19NaviDemoSunsetState>FP19NaviDemoSunsetStatei":
+.fn "transit__29AState<19NaviDemoSunsetState>FP19NaviDemoSunsetStatei", weak
 /* 8010B934 00108894  7C 08 02 A6 */	mflr r0
 /* 8010B938 00108898  90 01 00 04 */	stw r0, 4(r1)
 /* 8010B93C 0010889C  94 21 FF F8 */	stwu r1, -8(r1)
@@ -589,9 +588,9 @@ exec__Q219NaviDemoSunsetState7GoStateFP19NaviDemoSunsetState:
 /* 8010B958 001088B8  38 21 00 08 */	addi r1, r1, 8
 /* 8010B95C 001088BC  7C 08 03 A6 */	mtlr r0
 /* 8010B960 001088C0  4E 80 00 20 */	blr 
+.endfn "transit__29AState<19NaviDemoSunsetState>FP19NaviDemoSunsetStatei"
 
-.global "transit__35StateMachine<19NaviDemoSunsetState>FP19NaviDemoSunsetStatei"
-"transit__35StateMachine<19NaviDemoSunsetState>FP19NaviDemoSunsetStatei":
+.fn "transit__35StateMachine<19NaviDemoSunsetState>FP19NaviDemoSunsetStatei", weak
 /* 8010B964 001088C4  7C 08 02 A6 */	mflr r0
 /* 8010B968 001088C8  90 01 00 04 */	stw r0, 4(r1)
 /* 8010B96C 001088CC  54 A0 10 3A */	slwi r0, r5, 2
@@ -639,17 +638,17 @@ exec__Q219NaviDemoSunsetState7GoStateFP19NaviDemoSunsetState:
 /* 8010BA08 00108968  38 21 00 28 */	addi r1, r1, 0x28
 /* 8010BA0C 0010896C  7C 08 03 A6 */	mtlr r0
 /* 8010BA10 00108970  4E 80 00 20 */	blr 
+.endfn "transit__35StateMachine<19NaviDemoSunsetState>FP19NaviDemoSunsetStatei"
 
-.global "init__29AState<19NaviDemoSunsetState>FP19NaviDemoSunsetState"
-"init__29AState<19NaviDemoSunsetState>FP19NaviDemoSunsetState":
+.fn "init__29AState<19NaviDemoSunsetState>FP19NaviDemoSunsetState", weak
 /* 8010BA14 00108974  4E 80 00 20 */	blr 
+.endfn "init__29AState<19NaviDemoSunsetState>FP19NaviDemoSunsetState"
 
-.global "cleanup__29AState<19NaviDemoSunsetState>FP19NaviDemoSunsetState"
-"cleanup__29AState<19NaviDemoSunsetState>FP19NaviDemoSunsetState":
+.fn "cleanup__29AState<19NaviDemoSunsetState>FP19NaviDemoSunsetState", weak
 /* 8010BA18 00108978  4E 80 00 20 */	blr 
+.endfn "cleanup__29AState<19NaviDemoSunsetState>FP19NaviDemoSunsetState"
 
-.global procAnimMsg__Q219NaviDemoSunsetState7GoStateFP19NaviDemoSunsetStateP7MsgAnim
-procAnimMsg__Q219NaviDemoSunsetState7GoStateFP19NaviDemoSunsetStateP7MsgAnim:
+.fn procAnimMsg__Q219NaviDemoSunsetState7GoStateFP19NaviDemoSunsetStateP7MsgAnim, global
 /* 8010BA1C 0010897C  7C 08 02 A6 */	mflr r0
 /* 8010BA20 00108980  90 01 00 04 */	stw r0, 4(r1)
 /* 8010BA24 00108984  94 21 FF C8 */	stwu r1, -0x38(r1)
@@ -730,13 +729,13 @@ procAnimMsg__Q219NaviDemoSunsetState7GoStateFP19NaviDemoSunsetStateP7MsgAnim:
 /* 8010BB3C 00108A9C  38 21 00 38 */	addi r1, r1, 0x38
 /* 8010BB40 00108AA0  7C 08 03 A6 */	mtlr r0
 /* 8010BB44 00108AA4  4E 80 00 20 */	blr 
+.endfn procAnimMsg__Q219NaviDemoSunsetState7GoStateFP19NaviDemoSunsetStateP7MsgAnim
 
-.global cleanup__Q219NaviDemoSunsetState7GoStateFP19NaviDemoSunsetState
-cleanup__Q219NaviDemoSunsetState7GoStateFP19NaviDemoSunsetState:
+.fn cleanup__Q219NaviDemoSunsetState7GoStateFP19NaviDemoSunsetState, global
 /* 8010BB48 00108AA8  4E 80 00 20 */	blr 
+.endfn cleanup__Q219NaviDemoSunsetState7GoStateFP19NaviDemoSunsetState
 
-.global init__Q219NaviDemoSunsetState9LookStateFP19NaviDemoSunsetState
-init__Q219NaviDemoSunsetState9LookStateFP19NaviDemoSunsetState:
+.fn init__Q219NaviDemoSunsetState9LookStateFP19NaviDemoSunsetState, global
 /* 8010BB4C 00108AAC  7C 08 02 A6 */	mflr r0
 /* 8010BB50 00108AB0  90 01 00 04 */	stw r0, 4(r1)
 /* 8010BB54 00108AB4  94 21 FF D0 */	stwu r1, -0x30(r1)
@@ -771,17 +770,17 @@ init__Q219NaviDemoSunsetState9LookStateFP19NaviDemoSunsetState:
 /* 8010BBC4 00108B24  38 21 00 30 */	addi r1, r1, 0x30
 /* 8010BBC8 00108B28  7C 08 03 A6 */	mtlr r0
 /* 8010BBCC 00108B2C  4E 80 00 20 */	blr 
+.endfn init__Q219NaviDemoSunsetState9LookStateFP19NaviDemoSunsetState
 
-.global exec__Q219NaviDemoSunsetState9LookStateFP19NaviDemoSunsetState
-exec__Q219NaviDemoSunsetState9LookStateFP19NaviDemoSunsetState:
+.fn exec__Q219NaviDemoSunsetState9LookStateFP19NaviDemoSunsetState, global
 /* 8010BBD0 00108B30  4E 80 00 20 */	blr 
+.endfn exec__Q219NaviDemoSunsetState9LookStateFP19NaviDemoSunsetState
 
-.global cleanup__Q219NaviDemoSunsetState9LookStateFP19NaviDemoSunsetState
-cleanup__Q219NaviDemoSunsetState9LookStateFP19NaviDemoSunsetState:
+.fn cleanup__Q219NaviDemoSunsetState9LookStateFP19NaviDemoSunsetState, global
 /* 8010BBD4 00108B34  4E 80 00 20 */	blr 
+.endfn cleanup__Q219NaviDemoSunsetState9LookStateFP19NaviDemoSunsetState
 
-.global procAnimMsg__Q219NaviDemoSunsetState9LookStateFP19NaviDemoSunsetStateP7MsgAnim
-procAnimMsg__Q219NaviDemoSunsetState9LookStateFP19NaviDemoSunsetStateP7MsgAnim:
+.fn procAnimMsg__Q219NaviDemoSunsetState9LookStateFP19NaviDemoSunsetStateP7MsgAnim, global
 /* 8010BBD8 00108B38  7C 08 02 A6 */	mflr r0
 /* 8010BBDC 00108B3C  90 01 00 04 */	stw r0, 4(r1)
 /* 8010BBE0 00108B40  94 21 FF F8 */	stwu r1, -8(r1)
@@ -816,9 +815,9 @@ procAnimMsg__Q219NaviDemoSunsetState9LookStateFP19NaviDemoSunsetStateP7MsgAnim:
 /* 8010BC48 00108BA8  38 21 00 08 */	addi r1, r1, 8
 /* 8010BC4C 00108BAC  7C 08 03 A6 */	mtlr r0
 /* 8010BC50 00108BB0  4E 80 00 20 */	blr 
+.endfn procAnimMsg__Q219NaviDemoSunsetState9LookStateFP19NaviDemoSunsetStateP7MsgAnim
 
-.global init__Q219NaviDemoSunsetState12WhistleStateFP19NaviDemoSunsetState
-init__Q219NaviDemoSunsetState12WhistleStateFP19NaviDemoSunsetState:
+.fn init__Q219NaviDemoSunsetState12WhistleStateFP19NaviDemoSunsetState, global
 /* 8010BC54 00108BB4  7C 08 02 A6 */	mflr r0
 /* 8010BC58 00108BB8  90 01 00 04 */	stw r0, 4(r1)
 /* 8010BC5C 00108BBC  94 21 FF D0 */	stwu r1, -0x30(r1)
@@ -859,13 +858,13 @@ init__Q219NaviDemoSunsetState12WhistleStateFP19NaviDemoSunsetState:
 /* 8010BCE4 00108C44  38 21 00 30 */	addi r1, r1, 0x30
 /* 8010BCE8 00108C48  7C 08 03 A6 */	mtlr r0
 /* 8010BCEC 00108C4C  4E 80 00 20 */	blr 
+.endfn init__Q219NaviDemoSunsetState12WhistleStateFP19NaviDemoSunsetState
 
-.global exec__Q219NaviDemoSunsetState12WhistleStateFP19NaviDemoSunsetState
-exec__Q219NaviDemoSunsetState12WhistleStateFP19NaviDemoSunsetState:
+.fn exec__Q219NaviDemoSunsetState12WhistleStateFP19NaviDemoSunsetState, global
 /* 8010BCF0 00108C50  4E 80 00 20 */	blr 
+.endfn exec__Q219NaviDemoSunsetState12WhistleStateFP19NaviDemoSunsetState
 
-.global procAnimMsg__Q219NaviDemoSunsetState12WhistleStateFP19NaviDemoSunsetStateP7MsgAnim
-procAnimMsg__Q219NaviDemoSunsetState12WhistleStateFP19NaviDemoSunsetStateP7MsgAnim:
+.fn procAnimMsg__Q219NaviDemoSunsetState12WhistleStateFP19NaviDemoSunsetStateP7MsgAnim, global
 /* 8010BCF4 00108C54  7C 08 02 A6 */	mflr r0
 /* 8010BCF8 00108C58  90 01 00 04 */	stw r0, 4(r1)
 /* 8010BCFC 00108C5C  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -919,9 +918,9 @@ procAnimMsg__Q219NaviDemoSunsetState12WhistleStateFP19NaviDemoSunsetStateP7MsgAn
 /* 8010BDA8 00108D08  38 21 00 20 */	addi r1, r1, 0x20
 /* 8010BDAC 00108D0C  7C 08 03 A6 */	mtlr r0
 /* 8010BDB0 00108D10  4E 80 00 20 */	blr 
+.endfn procAnimMsg__Q219NaviDemoSunsetState12WhistleStateFP19NaviDemoSunsetStateP7MsgAnim
 
-.global enterAllPikis__Q219NaviDemoSunsetState12WhistleStateFP19NaviDemoSunsetState
-enterAllPikis__Q219NaviDemoSunsetState12WhistleStateFP19NaviDemoSunsetState:
+.fn enterAllPikis__Q219NaviDemoSunsetState12WhistleStateFP19NaviDemoSunsetState, global
 /* 8010BDB4 00108D14  7C 08 02 A6 */	mflr r0
 /* 8010BDB8 00108D18  90 01 00 04 */	stw r0, 4(r1)
 /* 8010BDBC 00108D1C  94 21 FA 70 */	stwu r1, -0x590(r1)
@@ -1121,13 +1120,13 @@ enterAllPikis__Q219NaviDemoSunsetState12WhistleStateFP19NaviDemoSunsetState:
 /* 8010C070 00108FD0  38 21 05 90 */	addi r1, r1, 0x590
 /* 8010C074 00108FD4  7C 08 03 A6 */	mtlr r0
 /* 8010C078 00108FD8  4E 80 00 20 */	blr 
+.endfn enterAllPikis__Q219NaviDemoSunsetState12WhistleStateFP19NaviDemoSunsetState
 
-.global cleanup__Q219NaviDemoSunsetState12WhistleStateFP19NaviDemoSunsetState
-cleanup__Q219NaviDemoSunsetState12WhistleStateFP19NaviDemoSunsetState:
+.fn cleanup__Q219NaviDemoSunsetState12WhistleStateFP19NaviDemoSunsetState, global
 /* 8010C07C 00108FDC  4E 80 00 20 */	blr 
+.endfn cleanup__Q219NaviDemoSunsetState12WhistleStateFP19NaviDemoSunsetState
 
-.global init__Q219NaviDemoSunsetState9WaitStateFP19NaviDemoSunsetState
-init__Q219NaviDemoSunsetState9WaitStateFP19NaviDemoSunsetState:
+.fn init__Q219NaviDemoSunsetState9WaitStateFP19NaviDemoSunsetState, global
 /* 8010C080 00108FE0  7C 08 02 A6 */	mflr r0
 /* 8010C084 00108FE4  90 01 00 04 */	stw r0, 4(r1)
 /* 8010C088 00108FE8  94 21 FF D0 */	stwu r1, -0x30(r1)
@@ -1159,17 +1158,17 @@ init__Q219NaviDemoSunsetState9WaitStateFP19NaviDemoSunsetState:
 /* 8010C0EC 0010904C  38 21 00 30 */	addi r1, r1, 0x30
 /* 8010C0F0 00109050  7C 08 03 A6 */	mtlr r0
 /* 8010C0F4 00109054  4E 80 00 20 */	blr 
+.endfn init__Q219NaviDemoSunsetState9WaitStateFP19NaviDemoSunsetState
 
-.global exec__Q219NaviDemoSunsetState9WaitStateFP19NaviDemoSunsetState
-exec__Q219NaviDemoSunsetState9WaitStateFP19NaviDemoSunsetState:
+.fn exec__Q219NaviDemoSunsetState9WaitStateFP19NaviDemoSunsetState, global
 /* 8010C0F8 00109058  4E 80 00 20 */	blr 
+.endfn exec__Q219NaviDemoSunsetState9WaitStateFP19NaviDemoSunsetState
 
-.global cleanup__Q219NaviDemoSunsetState9WaitStateFP19NaviDemoSunsetState
-cleanup__Q219NaviDemoSunsetState9WaitStateFP19NaviDemoSunsetState:
+.fn cleanup__Q219NaviDemoSunsetState9WaitStateFP19NaviDemoSunsetState, global
 /* 8010C0FC 0010905C  4E 80 00 20 */	blr 
+.endfn cleanup__Q219NaviDemoSunsetState9WaitStateFP19NaviDemoSunsetState
 
-.global init__Q219NaviDemoSunsetState8SitStateFP19NaviDemoSunsetState
-init__Q219NaviDemoSunsetState8SitStateFP19NaviDemoSunsetState:
+.fn init__Q219NaviDemoSunsetState8SitStateFP19NaviDemoSunsetState, global
 /* 8010C100 00109060  7C 08 02 A6 */	mflr r0
 /* 8010C104 00109064  90 01 00 04 */	stw r0, 4(r1)
 /* 8010C108 00109068  94 21 FF D0 */	stwu r1, -0x30(r1)
@@ -1201,17 +1200,17 @@ init__Q219NaviDemoSunsetState8SitStateFP19NaviDemoSunsetState:
 /* 8010C16C 001090CC  38 21 00 30 */	addi r1, r1, 0x30
 /* 8010C170 001090D0  7C 08 03 A6 */	mtlr r0
 /* 8010C174 001090D4  4E 80 00 20 */	blr 
+.endfn init__Q219NaviDemoSunsetState8SitStateFP19NaviDemoSunsetState
 
-.global exec__Q219NaviDemoSunsetState8SitStateFP19NaviDemoSunsetState
-exec__Q219NaviDemoSunsetState8SitStateFP19NaviDemoSunsetState:
+.fn exec__Q219NaviDemoSunsetState8SitStateFP19NaviDemoSunsetState, global
 /* 8010C178 001090D8  4E 80 00 20 */	blr 
+.endfn exec__Q219NaviDemoSunsetState8SitStateFP19NaviDemoSunsetState
 
-.global cleanup__Q219NaviDemoSunsetState8SitStateFP19NaviDemoSunsetState
-cleanup__Q219NaviDemoSunsetState8SitStateFP19NaviDemoSunsetState:
+.fn cleanup__Q219NaviDemoSunsetState8SitStateFP19NaviDemoSunsetState, global
 /* 8010C17C 001090DC  4E 80 00 20 */	blr 
+.endfn cleanup__Q219NaviDemoSunsetState8SitStateFP19NaviDemoSunsetState
 
-.global __ct__19NaviDemoSunsetStateFv
-__ct__19NaviDemoSunsetStateFv:
+.fn __ct__19NaviDemoSunsetStateFv, global
 /* 8010C180 001090E0  7C 08 02 A6 */	mflr r0
 /* 8010C184 001090E4  3C 80 80 2C */	lis r4, "__vt__15Receiver<4Navi>"@ha
 /* 8010C188 001090E8  90 01 00 04 */	stw r0, 4(r1)
@@ -1266,9 +1265,9 @@ __ct__19NaviDemoSunsetStateFv:
 /* 8010C248 001091A8  38 21 00 18 */	addi r1, r1, 0x18
 /* 8010C24C 001091AC  7C 08 03 A6 */	mtlr r0
 /* 8010C250 001091B0  4E 80 00 20 */	blr 
+.endfn __ct__19NaviDemoSunsetStateFv
 
-.global init__19NaviDemoSunsetStateFP4Navi
-init__19NaviDemoSunsetStateFP4Navi:
+.fn init__19NaviDemoSunsetStateFP4Navi, global
 /* 8010C254 001091B4  7C 08 02 A6 */	mflr r0
 /* 8010C258 001091B8  90 01 00 04 */	stw r0, 4(r1)
 /* 8010C25C 001091BC  94 21 FF C0 */	stwu r1, -0x40(r1)
@@ -1406,9 +1405,9 @@ init__19NaviDemoSunsetStateFP4Navi:
 /* 8010C448 001093A8  38 21 00 40 */	addi r1, r1, 0x40
 /* 8010C44C 001093AC  7C 08 03 A6 */	mtlr r0
 /* 8010C450 001093B0  4E 80 00 20 */	blr 
+.endfn init__19NaviDemoSunsetStateFP4Navi
 
-.global setActors__19NaviDemoSunsetStateFP4Navi
-setActors__19NaviDemoSunsetStateFP4Navi:
+.fn setActors__19NaviDemoSunsetStateFP4Navi, global
 /* 8010C454 001093B4  7C 08 02 A6 */	mflr r0
 /* 8010C458 001093B8  90 01 00 04 */	stw r0, 4(r1)
 /* 8010C45C 001093BC  94 21 FF 10 */	stwu r1, -0xf0(r1)
@@ -1732,9 +1731,9 @@ setActors__19NaviDemoSunsetStateFP4Navi:
 /* 8010C8E8 00109848  38 21 00 F0 */	addi r1, r1, 0xf0
 /* 8010C8EC 0010984C  7C 08 03 A6 */	mtlr r0
 /* 8010C8F0 00109850  4E 80 00 20 */	blr 
+.endfn setActors__19NaviDemoSunsetStateFP4Navi
 
-.global exec__19NaviDemoSunsetStateFP4Navi
-exec__19NaviDemoSunsetStateFP4Navi:
+.fn exec__19NaviDemoSunsetStateFP4Navi, global
 /* 8010C8F4 00109854  7C 08 02 A6 */	mflr r0
 /* 8010C8F8 00109858  90 01 00 04 */	stw r0, 4(r1)
 /* 8010C8FC 0010985C  94 21 FF B0 */	stwu r1, -0x50(r1)
@@ -1826,9 +1825,9 @@ exec__19NaviDemoSunsetStateFP4Navi:
 /* 8010CA48 001099A8  38 21 00 50 */	addi r1, r1, 0x50
 /* 8010CA4C 001099AC  7C 08 03 A6 */	mtlr r0
 /* 8010CA50 001099B0  4E 80 00 20 */	blr 
+.endfn exec__19NaviDemoSunsetStateFP4Navi
 
-.global "exec__35StateMachine<19NaviDemoSunsetState>FP19NaviDemoSunsetState"
-"exec__35StateMachine<19NaviDemoSunsetState>FP19NaviDemoSunsetState":
+.fn "exec__35StateMachine<19NaviDemoSunsetState>FP19NaviDemoSunsetState", weak
 /* 8010CA54 001099B4  7C 08 02 A6 */	mflr r0
 /* 8010CA58 001099B8  90 01 00 04 */	stw r0, 4(r1)
 /* 8010CA5C 001099BC  94 21 FF F8 */	stwu r1, -8(r1)
@@ -1845,13 +1844,13 @@ exec__19NaviDemoSunsetStateFP4Navi:
 /* 8010CA84 001099E4  38 21 00 08 */	addi r1, r1, 8
 /* 8010CA88 001099E8  7C 08 03 A6 */	mtlr r0
 /* 8010CA8C 001099EC  4E 80 00 20 */	blr 
+.endfn "exec__35StateMachine<19NaviDemoSunsetState>FP19NaviDemoSunsetState"
 
-.global "exec__29AState<19NaviDemoSunsetState>FP19NaviDemoSunsetState"
-"exec__29AState<19NaviDemoSunsetState>FP19NaviDemoSunsetState":
+.fn "exec__29AState<19NaviDemoSunsetState>FP19NaviDemoSunsetState", weak
 /* 8010CA90 001099F0  4E 80 00 20 */	blr 
+.endfn "exec__29AState<19NaviDemoSunsetState>FP19NaviDemoSunsetState"
 
-.global cleanup__19NaviDemoSunsetStateFP4Navi
-cleanup__19NaviDemoSunsetStateFP4Navi:
+.fn cleanup__19NaviDemoSunsetStateFP4Navi, global
 /* 8010CA94 001099F4  7C 08 02 A6 */	mflr r0
 /* 8010CA98 001099F8  90 01 00 04 */	stw r0, 4(r1)
 /* 8010CA9C 001099FC  94 21 FF A8 */	stwu r1, -0x58(r1)
@@ -2002,9 +2001,9 @@ cleanup__19NaviDemoSunsetStateFP4Navi:
 /* 8010CCA0 00109C00  38 21 00 58 */	addi r1, r1, 0x58
 /* 8010CCA4 00109C04  7C 08 03 A6 */	mtlr r0
 /* 8010CCA8 00109C08  4E 80 00 20 */	blr 
+.endfn cleanup__19NaviDemoSunsetStateFP4Navi
 
-.global procAnimMsg__19NaviDemoSunsetStateFP4NaviP7MsgAnim
-procAnimMsg__19NaviDemoSunsetStateFP4NaviP7MsgAnim:
+.fn procAnimMsg__19NaviDemoSunsetStateFP4NaviP7MsgAnim, global
 /* 8010CCAC 00109C0C  7C 08 02 A6 */	mflr r0
 /* 8010CCB0 00109C10  7C 64 1B 78 */	mr r4, r3
 /* 8010CCB4 00109C14  90 01 00 04 */	stw r0, 4(r1)
@@ -2018,6 +2017,7 @@ procAnimMsg__19NaviDemoSunsetStateFP4NaviP7MsgAnim:
 /* 8010CCD4 00109C34  38 21 00 08 */	addi r1, r1, 8
 /* 8010CCD8 00109C38  7C 08 03 A6 */	mtlr r0
 /* 8010CCDC 00109C3C  4E 80 00 20 */	blr 
+.endfn procAnimMsg__19NaviDemoSunsetStateFP4NaviP7MsgAnim
 
 .fn "procMsg__35StateMachine<19NaviDemoSunsetState>FP19NaviDemoSunsetStateP3Msg", weak
 /* 8010CCE0 00109C40  7C 08 02 A6 */	mflr r0
@@ -2181,19 +2181,23 @@ procAnimMsg__19NaviDemoSunsetStateFP4NaviP7MsgAnim:
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802C1AA8:
+.obj lbl_802C1AA8, local
 	.asciz "naviDemoState.cpp"
+.endobj lbl_802C1AA8
 .balign 4
-lbl_802C1ABC:
+.obj lbl_802C1ABC, local
 	.asciz "naviDemo"
+.endobj lbl_802C1ABC
 .balign 4
-lbl_802C1AC8:
+.obj lbl_802C1AC8, local
 	.asciz "no goal (%d)"
+.endobj lbl_802C1AC8
 .balign 4
-lbl_802C1AD8:
+.obj lbl_802C1AD8, local
 	.asciz "COLOR %d !!"
+.endobj lbl_802C1AD8
 .balign 4
-lbl_802C1AE4:
+.obj lbl_802C1AE4, local
 	.4byte .L_8010CD4C
 	.4byte .L_8010CD74
 	.4byte .L_8010CD88
@@ -2205,31 +2209,38 @@ lbl_802C1AE4:
 	.4byte .L_8010CD60
 	.4byte .L_8010CE14
 	.4byte .L_8010CE00
+.endobj lbl_802C1AE4
 .balign 4
-lbl_802C1B10:
+.obj lbl_802C1B10, local
 	.asciz "NaviDemoSunsetState"
+.endobj lbl_802C1B10
 .balign 4
-lbl_802C1B24:
+.obj lbl_802C1B24, local
 	.asciz "Receiver<Navi>"
+.endobj lbl_802C1B24
 .balign 4
-lbl_802C1B34:
+.obj lbl_802C1B34, local
 	.asciz "AState<Navi>"
+.endobj lbl_802C1B34
 .balign 4
-lbl_802C1B44:
+.obj lbl_802C1B44, local
 	.4byte "__RTTI__15Receiver<4Navi>"
 	.4byte 0x00000000
 	.4byte 0x00000000
+.endobj lbl_802C1B44
 .balign 4
-lbl_802C1B50:
+.obj lbl_802C1B50, local
 	.asciz "NaviState"
+.endobj lbl_802C1B50
 .balign 4
-lbl_802C1B5C:
+.obj lbl_802C1B5C, local
 	.4byte "__RTTI__15Receiver<4Navi>"
 	.4byte 0x00000000
 	.4byte "__RTTI__13AState<4Navi>"
 	.4byte 0x00000000
 	.4byte 0x00000000
-lbl_802C1B70:
+.endobj lbl_802C1B5C
+.obj lbl_802C1B70, local
 	.4byte "__RTTI__15Receiver<4Navi>"
 	.4byte 0x00000000
 	.4byte "__RTTI__13AState<4Navi>"
@@ -2237,8 +2248,8 @@ lbl_802C1B70:
 	.4byte __RTTI__9NaviState
 	.4byte 0x00000000
 	.4byte 0x00000000
-.global __vt__19NaviDemoSunsetState
-__vt__19NaviDemoSunsetState:
+.endobj lbl_802C1B70
+.obj __vt__19NaviDemoSunsetState, global
 	.4byte __RTTI__19NaviDemoSunsetState
 	.4byte 0
 	.4byte "procMsg__15Receiver<4Navi>FP4NaviP3Msg"
@@ -2260,18 +2271,20 @@ __vt__19NaviDemoSunsetState:
 	.4byte "restart__13AState<4Navi>FP4Navi"
 	.4byte "transit__13AState<4Navi>FP4Navii"
 	.4byte invincible__9NaviStateFP4Navi
+.endobj __vt__19NaviDemoSunsetState
 .balign 4
-lbl_802C1BE0:
+.obj lbl_802C1BE0, local
 	.asciz "StateMachine<NaviDemoSunsetState>"
+.endobj lbl_802C1BE0
 .balign 4
-.global "__vt__35StateMachine<19NaviDemoSunsetState>"
-"__vt__35StateMachine<19NaviDemoSunsetState>":
+.obj "__vt__35StateMachine<19NaviDemoSunsetState>", weak
 	.4byte "__RTTI__35StateMachine<19NaviDemoSunsetState>"
 	.4byte 0
 	.4byte "init__35StateMachine<19NaviDemoSunsetState>FP19NaviDemoSunsetState"
 	.4byte "exec__35StateMachine<19NaviDemoSunsetState>FP19NaviDemoSunsetState"
 	.4byte "procMsg__35StateMachine<19NaviDemoSunsetState>FP19NaviDemoSunsetStateP3Msg"
 	.4byte "transit__35StateMachine<19NaviDemoSunsetState>FP19NaviDemoSunsetStatei"
+.endobj "__vt__35StateMachine<19NaviDemoSunsetState>"
 	.4byte 0
 	.4byte 0
 	.4byte 0
@@ -2328,30 +2341,36 @@ lbl_802C1BE0:
 	.4byte 0
 	.4byte 0
 .balign 4
-lbl_802C1CF8:
+.obj lbl_802C1CF8, local
 	.asciz "NaviDemoSunsetState::SitState"
+.endobj lbl_802C1CF8
 .balign 4
-lbl_802C1D18:
+.obj lbl_802C1D18, local
 	.asciz "Receiver<NaviDemoSunsetState>"
+.endobj lbl_802C1D18
 .balign 4
-lbl_802C1D38:
+.obj lbl_802C1D38, local
 	.asciz "AState<NaviDemoSunsetState>"
+.endobj lbl_802C1D38
 .balign 4
-lbl_802C1D54:
+.obj lbl_802C1D54, local
 	.4byte "__RTTI__31Receiver<19NaviDemoSunsetState>"
 	.4byte 0
 	.4byte 0
+.endobj lbl_802C1D54
 .balign 4
-lbl_802C1D60:
+.obj lbl_802C1D60, local
 	.asciz "NaviDemoSunsetState::DemoState"
+.endobj lbl_802C1D60
 .balign 4
-lbl_802C1D80:
+.obj lbl_802C1D80, local
 	.4byte "__RTTI__31Receiver<19NaviDemoSunsetState>"
 	.4byte 0
 	.4byte "__RTTI__29AState<19NaviDemoSunsetState>"
 	.4byte 0
 	.4byte 0
-lbl_802C1D94:
+.endobj lbl_802C1D80
+.obj lbl_802C1D94, local
 	.4byte "__RTTI__31Receiver<19NaviDemoSunsetState>"
 	.4byte 0
 	.4byte "__RTTI__29AState<19NaviDemoSunsetState>"
@@ -2359,8 +2378,8 @@ lbl_802C1D94:
 	.4byte __RTTI__Q219NaviDemoSunsetState9DemoState
 	.4byte 0
 	.4byte 0
-.global __vt__Q219NaviDemoSunsetState8SitState
-__vt__Q219NaviDemoSunsetState8SitState:
+.endobj lbl_802C1D94
+.obj __vt__Q219NaviDemoSunsetState8SitState, global
 	.4byte __RTTI__Q219NaviDemoSunsetState8SitState
 	.4byte 0
 	.4byte "procMsg__31Receiver<19NaviDemoSunsetState>FP19NaviDemoSunsetStateP3Msg"
@@ -2381,11 +2400,13 @@ __vt__Q219NaviDemoSunsetState8SitState:
 	.4byte "resume__29AState<19NaviDemoSunsetState>FP19NaviDemoSunsetState"
 	.4byte "restart__29AState<19NaviDemoSunsetState>FP19NaviDemoSunsetState"
 	.4byte "transit__29AState<19NaviDemoSunsetState>FP19NaviDemoSunsetStatei"
+.endobj __vt__Q219NaviDemoSunsetState8SitState
 .balign 4
-lbl_802C1E00:
+.obj lbl_802C1E00, local
 	.asciz "NaviDemoSunsetState::WaitState"
+.endobj lbl_802C1E00
 .balign 4
-lbl_802C1E20:
+.obj lbl_802C1E20, local
 	.4byte "__RTTI__31Receiver<19NaviDemoSunsetState>"
 	.4byte 0
 	.4byte "__RTTI__29AState<19NaviDemoSunsetState>"
@@ -2393,8 +2414,8 @@ lbl_802C1E20:
 	.4byte __RTTI__Q219NaviDemoSunsetState9DemoState
 	.4byte 0
 	.4byte 0
-.global __vt__Q219NaviDemoSunsetState9WaitState
-__vt__Q219NaviDemoSunsetState9WaitState:
+.endobj lbl_802C1E20
+.obj __vt__Q219NaviDemoSunsetState9WaitState, global
 	.4byte __RTTI__Q219NaviDemoSunsetState9WaitState
 	.4byte 0
 	.4byte "procMsg__31Receiver<19NaviDemoSunsetState>FP19NaviDemoSunsetStateP3Msg"
@@ -2415,11 +2436,13 @@ __vt__Q219NaviDemoSunsetState9WaitState:
 	.4byte "resume__29AState<19NaviDemoSunsetState>FP19NaviDemoSunsetState"
 	.4byte "restart__29AState<19NaviDemoSunsetState>FP19NaviDemoSunsetState"
 	.4byte "transit__29AState<19NaviDemoSunsetState>FP19NaviDemoSunsetStatei"
+.endobj __vt__Q219NaviDemoSunsetState9WaitState
 .balign 4
-lbl_802C1E8C:
+.obj lbl_802C1E8C, local
 	.asciz "NaviDemoSunsetState::WhistleState"
+.endobj lbl_802C1E8C
 .balign 4
-lbl_802C1EB0:
+.obj lbl_802C1EB0, local
 	.4byte "__RTTI__31Receiver<19NaviDemoSunsetState>"
 	.4byte 0
 	.4byte "__RTTI__29AState<19NaviDemoSunsetState>"
@@ -2427,8 +2450,8 @@ lbl_802C1EB0:
 	.4byte __RTTI__Q219NaviDemoSunsetState9DemoState
 	.4byte 0
 	.4byte 0
-.global __vt__Q219NaviDemoSunsetState12WhistleState
-__vt__Q219NaviDemoSunsetState12WhistleState:
+.endobj lbl_802C1EB0
+.obj __vt__Q219NaviDemoSunsetState12WhistleState, global
 	.4byte __RTTI__Q219NaviDemoSunsetState12WhistleState
 	.4byte 0
 	.4byte "procMsg__31Receiver<19NaviDemoSunsetState>FP19NaviDemoSunsetStateP3Msg"
@@ -2449,11 +2472,13 @@ __vt__Q219NaviDemoSunsetState12WhistleState:
 	.4byte "resume__29AState<19NaviDemoSunsetState>FP19NaviDemoSunsetState"
 	.4byte "restart__29AState<19NaviDemoSunsetState>FP19NaviDemoSunsetState"
 	.4byte "transit__29AState<19NaviDemoSunsetState>FP19NaviDemoSunsetStatei"
+.endobj __vt__Q219NaviDemoSunsetState12WhistleState
 .balign 4
-lbl_802C1F1C:
+.obj lbl_802C1F1C, local
 	.asciz "NaviDemoSunsetState::LookState"
+.endobj lbl_802C1F1C
 .balign 4
-lbl_802C1F3C:
+.obj lbl_802C1F3C, local
 	.4byte "__RTTI__31Receiver<19NaviDemoSunsetState>"
 	.4byte 0
 	.4byte "__RTTI__29AState<19NaviDemoSunsetState>"
@@ -2461,8 +2486,8 @@ lbl_802C1F3C:
 	.4byte __RTTI__Q219NaviDemoSunsetState9DemoState
 	.4byte 0
 	.4byte 0
-.global __vt__Q219NaviDemoSunsetState9LookState
-__vt__Q219NaviDemoSunsetState9LookState:
+.endobj lbl_802C1F3C
+.obj __vt__Q219NaviDemoSunsetState9LookState, global
 	.4byte __RTTI__Q219NaviDemoSunsetState9LookState
 	.4byte 0
 	.4byte "procMsg__31Receiver<19NaviDemoSunsetState>FP19NaviDemoSunsetStateP3Msg"
@@ -2483,11 +2508,13 @@ __vt__Q219NaviDemoSunsetState9LookState:
 	.4byte "resume__29AState<19NaviDemoSunsetState>FP19NaviDemoSunsetState"
 	.4byte "restart__29AState<19NaviDemoSunsetState>FP19NaviDemoSunsetState"
 	.4byte "transit__29AState<19NaviDemoSunsetState>FP19NaviDemoSunsetStatei"
+.endobj __vt__Q219NaviDemoSunsetState9LookState
 .balign 4
-lbl_802C1FA8:
+.obj lbl_802C1FA8, local
 	.asciz "NaviDemoSunsetState::GoState"
+.endobj lbl_802C1FA8
 .balign 4
-lbl_802C1FC8:
+.obj lbl_802C1FC8, local
 	.4byte "__RTTI__31Receiver<19NaviDemoSunsetState>"
 	.4byte 0
 	.4byte "__RTTI__29AState<19NaviDemoSunsetState>"
@@ -2495,8 +2522,8 @@ lbl_802C1FC8:
 	.4byte __RTTI__Q219NaviDemoSunsetState9DemoState
 	.4byte 0
 	.4byte 0
-.global __vt__Q219NaviDemoSunsetState7GoState
-__vt__Q219NaviDemoSunsetState7GoState:
+.endobj lbl_802C1FC8
+.obj __vt__Q219NaviDemoSunsetState7GoState, global
 	.4byte __RTTI__Q219NaviDemoSunsetState7GoState
 	.4byte 0
 	.4byte "procMsg__31Receiver<19NaviDemoSunsetState>FP19NaviDemoSunsetStateP3Msg"
@@ -2517,8 +2544,8 @@ __vt__Q219NaviDemoSunsetState7GoState:
 	.4byte "resume__29AState<19NaviDemoSunsetState>FP19NaviDemoSunsetState"
 	.4byte "restart__29AState<19NaviDemoSunsetState>FP19NaviDemoSunsetState"
 	.4byte "transit__29AState<19NaviDemoSunsetState>FP19NaviDemoSunsetStatei"
-.global __vt__Q219NaviDemoSunsetState9DemoState
-__vt__Q219NaviDemoSunsetState9DemoState:
+.endobj __vt__Q219NaviDemoSunsetState7GoState
+.obj __vt__Q219NaviDemoSunsetState9DemoState, weak
 	.4byte __RTTI__Q219NaviDemoSunsetState9DemoState
 	.4byte 0
 	.4byte "procMsg__31Receiver<19NaviDemoSunsetState>FP19NaviDemoSunsetStateP3Msg"
@@ -2539,8 +2566,8 @@ __vt__Q219NaviDemoSunsetState9DemoState:
 	.4byte "resume__29AState<19NaviDemoSunsetState>FP19NaviDemoSunsetState"
 	.4byte "restart__29AState<19NaviDemoSunsetState>FP19NaviDemoSunsetState"
 	.4byte "transit__29AState<19NaviDemoSunsetState>FP19NaviDemoSunsetStatei"
-.global "__vt__29AState<19NaviDemoSunsetState>"
-"__vt__29AState<19NaviDemoSunsetState>":
+.endobj __vt__Q219NaviDemoSunsetState9DemoState
+.obj "__vt__29AState<19NaviDemoSunsetState>", weak
 	.4byte "__RTTI__29AState<19NaviDemoSunsetState>"
 	.4byte 0
 	.4byte "procMsg__31Receiver<19NaviDemoSunsetState>FP19NaviDemoSunsetStateP3Msg"
@@ -2561,8 +2588,8 @@ __vt__Q219NaviDemoSunsetState9DemoState:
 	.4byte "resume__29AState<19NaviDemoSunsetState>FP19NaviDemoSunsetState"
 	.4byte "restart__29AState<19NaviDemoSunsetState>FP19NaviDemoSunsetState"
 	.4byte "transit__29AState<19NaviDemoSunsetState>FP19NaviDemoSunsetStatei"
-.global "__vt__31Receiver<19NaviDemoSunsetState>"
-"__vt__31Receiver<19NaviDemoSunsetState>":
+.endobj "__vt__29AState<19NaviDemoSunsetState>"
+.obj "__vt__31Receiver<19NaviDemoSunsetState>", weak
 	.4byte "__RTTI__31Receiver<19NaviDemoSunsetState>"
 	.4byte 0
 	.4byte "procMsg__31Receiver<19NaviDemoSunsetState>FP19NaviDemoSunsetStateP3Msg"
@@ -2577,24 +2604,27 @@ __vt__Q219NaviDemoSunsetState9DemoState:
 	.4byte "procOffWallMsg__31Receiver<19NaviDemoSunsetState>FP19NaviDemoSunsetStateP10MsgOffWall"
 	.4byte "procUserMsg__31Receiver<19NaviDemoSunsetState>FP19NaviDemoSunsetStateP7MsgUser"
 	.4byte "procGroundMsg__31Receiver<19NaviDemoSunsetState>FP19NaviDemoSunsetStateP9MsgGround"
+.endobj "__vt__31Receiver<19NaviDemoSunsetState>"
 .balign 4
-lbl_802C210C:
+.obj lbl_802C210C, local
 	.asciz "NaviDemoSunsetState::DemoStateMachine"
+.endobj lbl_802C210C
 .balign 4
-lbl_802C2134:
+.obj lbl_802C2134, local
 	.4byte "__RTTI__35StateMachine<19NaviDemoSunsetState>"
 	.4byte 0
 	.4byte 0
-.global __vt__Q219NaviDemoSunsetState16DemoStateMachine
-__vt__Q219NaviDemoSunsetState16DemoStateMachine:
+.endobj lbl_802C2134
+.obj __vt__Q219NaviDemoSunsetState16DemoStateMachine, global
 	.4byte __RTTI__Q219NaviDemoSunsetState16DemoStateMachine
 	.4byte 0
 	.4byte init__Q219NaviDemoSunsetState16DemoStateMachineFP19NaviDemoSunsetState
 	.4byte "exec__35StateMachine<19NaviDemoSunsetState>FP19NaviDemoSunsetState"
 	.4byte "procMsg__35StateMachine<19NaviDemoSunsetState>FP19NaviDemoSunsetStateP3Msg"
 	.4byte "transit__35StateMachine<19NaviDemoSunsetState>FP19NaviDemoSunsetStatei"
+.endobj __vt__Q219NaviDemoSunsetState16DemoStateMachine
 .balign 4
-lbl_802C2158:
+.obj lbl_802C2158, local
 	.4byte .L_800FF854
 	.4byte .L_800FF87C
 	.4byte .L_800FF890
@@ -2606,81 +2636,111 @@ lbl_802C2158:
 	.4byte .L_800FF868
 	.4byte .L_800FF91C
 	.4byte .L_800FF908
+.endobj lbl_802C2158
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-lbl_803E2698:
+.obj lbl_803E2698, local
 	.float 0.0
-lbl_803E269C:
+.endobj lbl_803E2698
+.obj lbl_803E269C, local
 	.float 0.0
-lbl_803E26A0:
+.endobj lbl_803E269C
+.obj lbl_803E26A0, local
 	.float 0.0
-lbl_803E26A4:
+.endobj lbl_803E26A0
+.obj lbl_803E26A4, local
 	.float 0.0
-lbl_803E26A8:
+.endobj lbl_803E26A4
+.obj lbl_803E26A8, local
 	.float 0.0
-lbl_803E26AC:
+.endobj lbl_803E26A8
+.obj lbl_803E26AC, local
 	.float 0.0
-lbl_803E26B0:
+.endobj lbl_803E26AC
+.obj lbl_803E26B0, local
 	.float 0.0
-lbl_803E26B4:
+.endobj lbl_803E26B0
+.obj lbl_803E26B4, local
 	.float 0.0
-lbl_803E26B8:
+.endobj lbl_803E26B4
+.obj lbl_803E26B8, local
 	.float 0.0
-lbl_803E26BC:
+.endobj lbl_803E26B8
+.obj lbl_803E26BC, local
 	.float 0.0
-lbl_803E26C0:
+.endobj lbl_803E26BC
+.obj lbl_803E26C0, local
 	.float 0.0
-lbl_803E26C4:
+.endobj lbl_803E26C0
+.obj lbl_803E26C4, local
 	.float 0.0
-lbl_803E26C8:
+.endobj lbl_803E26C4
+.obj lbl_803E26C8, local
 	.float 0.0
-lbl_803E26CC:
+.endobj lbl_803E26C8
+.obj lbl_803E26CC, local
 	.float 0.0
-lbl_803E26D0:
+.endobj lbl_803E26CC
+.obj lbl_803E26D0, local
 	.float 400.0
-"__RTTI__15Receiver<4Navi>":
+.endobj lbl_803E26D0
+.obj "__RTTI__15Receiver<4Navi>", local
 	.4byte lbl_802C1B24
 	.4byte 0
-"__RTTI__13AState<4Navi>":
+.endobj "__RTTI__15Receiver<4Navi>"
+.obj "__RTTI__13AState<4Navi>", local
 	.4byte lbl_802C1B34
 	.4byte lbl_802C1B44
-__RTTI__9NaviState:
+.endobj "__RTTI__13AState<4Navi>"
+.obj __RTTI__9NaviState, local
 	.4byte lbl_802C1B50
 	.4byte lbl_802C1B5C
-__RTTI__19NaviDemoSunsetState:
+.endobj __RTTI__9NaviState
+.obj __RTTI__19NaviDemoSunsetState, local
 	.4byte lbl_802C1B10
 	.4byte lbl_802C1B70
-"__RTTI__35StateMachine<19NaviDemoSunsetState>":
+.endobj __RTTI__19NaviDemoSunsetState
+.obj "__RTTI__35StateMachine<19NaviDemoSunsetState>", local
 	.4byte lbl_802C1BE0
 	.4byte 0
-"__RTTI__31Receiver<19NaviDemoSunsetState>":
+.endobj "__RTTI__35StateMachine<19NaviDemoSunsetState>"
+.obj "__RTTI__31Receiver<19NaviDemoSunsetState>", local
 	.4byte lbl_802C1D18
 	.4byte 0
-"__RTTI__29AState<19NaviDemoSunsetState>":
+.endobj "__RTTI__31Receiver<19NaviDemoSunsetState>"
+.obj "__RTTI__29AState<19NaviDemoSunsetState>", local
 	.4byte lbl_802C1D38
 	.4byte lbl_802C1D54
-__RTTI__Q219NaviDemoSunsetState9DemoState:
+.endobj "__RTTI__29AState<19NaviDemoSunsetState>"
+.obj __RTTI__Q219NaviDemoSunsetState9DemoState, local
 	.4byte lbl_802C1D60
 	.4byte lbl_802C1D80
-__RTTI__Q219NaviDemoSunsetState8SitState:
+.endobj __RTTI__Q219NaviDemoSunsetState9DemoState
+.obj __RTTI__Q219NaviDemoSunsetState8SitState, local
 	.4byte lbl_802C1CF8
 	.4byte lbl_802C1D94
-__RTTI__Q219NaviDemoSunsetState9WaitState:
+.endobj __RTTI__Q219NaviDemoSunsetState8SitState
+.obj __RTTI__Q219NaviDemoSunsetState9WaitState, local
 	.4byte lbl_802C1E00
 	.4byte lbl_802C1E20
-__RTTI__Q219NaviDemoSunsetState12WhistleState:
+.endobj __RTTI__Q219NaviDemoSunsetState9WaitState
+.obj __RTTI__Q219NaviDemoSunsetState12WhistleState, local
 	.4byte lbl_802C1E8C
 	.4byte lbl_802C1EB0
-__RTTI__Q219NaviDemoSunsetState9LookState:
+.endobj __RTTI__Q219NaviDemoSunsetState12WhistleState
+.obj __RTTI__Q219NaviDemoSunsetState9LookState, local
 	.4byte lbl_802C1F1C
 	.4byte lbl_802C1F3C
-__RTTI__Q219NaviDemoSunsetState7GoState:
+.endobj __RTTI__Q219NaviDemoSunsetState9LookState
+.obj __RTTI__Q219NaviDemoSunsetState7GoState, local
 	.4byte lbl_802C1FA8
 	.4byte lbl_802C1FC8
-__RTTI__Q219NaviDemoSunsetState16DemoStateMachine:
+.endobj __RTTI__Q219NaviDemoSunsetState7GoState
+.obj __RTTI__Q219NaviDemoSunsetState16DemoStateMachine, local
 	.4byte lbl_802C210C
 	.4byte lbl_802C2134
+.endobj __RTTI__Q219NaviDemoSunsetState16DemoStateMachine
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8

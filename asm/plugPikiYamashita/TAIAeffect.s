@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global init__18TAIAeffCloudOfDustFQ29EffectMgr12effTypeTablebiifiiiii
-init__18TAIAeffCloudOfDustFQ29EffectMgr12effTypeTablebiifiiiii:
+.fn init__18TAIAeffCloudOfDustFQ29EffectMgr12effTypeTablebiifiiiii, global
 /* 801D5E50 001D2DB0  7C 08 02 A6 */	mflr r0
 /* 801D5E54 001D2DB4  2C 08 00 04 */	cmpwi r8, 4
 /* 801D5E58 001D2DB8  90 01 00 04 */	stw r0, 4(r1)
@@ -52,9 +51,9 @@ init__18TAIAeffCloudOfDustFQ29EffectMgr12effTypeTablebiifiiiii:
 /* 801D5EFC 001D2E5C  38 21 00 48 */	addi r1, r1, 0x48
 /* 801D5F00 001D2E60  7C 08 03 A6 */	mtlr r0
 /* 801D5F04 001D2E64  4E 80 00 20 */	blr 
+.endfn init__18TAIAeffCloudOfDustFQ29EffectMgr12effTypeTablebiifiiiii
 
-.global start__18TAIAeffCloudOfDustFR4Teki
-start__18TAIAeffCloudOfDustFR4Teki:
+.fn start__18TAIAeffCloudOfDustFR4Teki, global
 /* 801D5F08 001D2E68  7C 08 02 A6 */	mflr r0
 /* 801D5F0C 001D2E6C  90 01 00 04 */	stw r0, 4(r1)
 /* 801D5F10 001D2E70  94 21 FF D0 */	stwu r1, -0x30(r1)
@@ -98,9 +97,9 @@ start__18TAIAeffCloudOfDustFR4Teki:
 /* 801D5F9C 001D2EFC  38 21 00 30 */	addi r1, r1, 0x30
 /* 801D5FA0 001D2F00  7C 08 03 A6 */	mtlr r0
 /* 801D5FA4 001D2F04  4E 80 00 20 */	blr 
+.endfn start__18TAIAeffCloudOfDustFR4Teki
 
-.global act__18TAIAeffCloudOfDustFR4Teki
-act__18TAIAeffCloudOfDustFR4Teki:
+.fn act__18TAIAeffCloudOfDustFR4Teki, global
 /* 801D5FA8 001D2F08  7C 08 02 A6 */	mflr r0
 /* 801D5FAC 001D2F0C  90 01 00 04 */	stw r0, 4(r1)
 /* 801D5FB0 001D2F10  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -129,9 +128,9 @@ act__18TAIAeffCloudOfDustFR4Teki:
 /* 801D6004 001D2F64  38 21 00 20 */	addi r1, r1, 0x20
 /* 801D6008 001D2F68  7C 08 03 A6 */	mtlr r0
 /* 801D600C 001D2F6C  4E 80 00 20 */	blr 
+.endfn act__18TAIAeffCloudOfDustFR4Teki
 
-.global setType__18TAIAeffCloudOfDustFR8Vector3fii
-setType__18TAIAeffCloudOfDustFR8Vector3fii:
+.fn setType__18TAIAeffCloudOfDustFR8Vector3fii, global
 /* 801D6010 001D2F70  7C 08 02 A6 */	mflr r0
 /* 801D6014 001D2F74  90 01 00 04 */	stw r0, 4(r1)
 /* 801D6018 001D2F78  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -148,9 +147,9 @@ setType__18TAIAeffCloudOfDustFR8Vector3fii:
 /* 801D6044 001D2FA4  38 21 00 20 */	addi r1, r1, 0x20
 /* 801D6048 001D2FA8  7C 08 03 A6 */	mtlr r0
 /* 801D604C 001D2FAC  4E 80 00 20 */	blr 
+.endfn setType__18TAIAeffCloudOfDustFR8Vector3fii
 
-.global createCloudOfDust__18TAIAeffCloudOfDustFR4Tekii
-createCloudOfDust__18TAIAeffCloudOfDustFR4Tekii:
+.fn createCloudOfDust__18TAIAeffCloudOfDustFR4Tekii, global
 /* 801D6050 001D2FB0  7C 08 02 A6 */	mflr r0
 /* 801D6054 001D2FB4  90 01 00 04 */	stw r0, 4(r1)
 /* 801D6058 001D2FB8  94 21 FF A8 */	stwu r1, -0x58(r1)
@@ -264,9 +263,9 @@ createCloudOfDust__18TAIAeffCloudOfDustFR4Tekii:
 /* 801D61F0 001D3150  38 21 00 58 */	addi r1, r1, 0x58
 /* 801D61F4 001D3154  7C 08 03 A6 */	mtlr r0
 /* 801D61F8 001D3158  4E 80 00 20 */	blr 
+.endfn createCloudOfDust__18TAIAeffCloudOfDustFR4Tekii
 
-.global getCollPart__18TAIAeffCloudOfDustFR4Tekii
-getCollPart__18TAIAeffCloudOfDustFR4Tekii:
+.fn getCollPart__18TAIAeffCloudOfDustFR4Tekii, global
 /* 801D61FC 001D315C  7C 08 02 A6 */	mflr r0
 /* 801D6200 001D3160  90 01 00 04 */	stw r0, 4(r1)
 /* 801D6204 001D3164  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -288,27 +287,32 @@ getCollPart__18TAIAeffCloudOfDustFR4Tekii:
 /* 801D6240 001D31A0  38 21 00 20 */	addi r1, r1, 0x20
 /* 801D6244 001D31A4  7C 08 03 A6 */	mtlr r0
 /* 801D6248 001D31A8  4E 80 00 20 */	blr 
+.endfn getCollPart__18TAIAeffCloudOfDustFR4Tekii
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802E4B60:
+.obj lbl_802E4B60, local
 	.asciz "TAIAeffect.cpp"
-	.skip 1
-lbl_802E4B70:
+.endobj lbl_802E4B60
+.balign 4
+.obj lbl_802E4B70, local
 	.asciz "TAIAeffect"
-	.skip 1
-lbl_802E4B7C:
+.endobj lbl_802E4B70
+.balign 4
+.obj lbl_802E4B7C, local
 	.asciz "TAIAeffCloudOfDust"
-	.skip 1
-lbl_802E4B90:
+.endobj lbl_802E4B7C
+.balign 4
+.obj lbl_802E4B90, local
 	.asciz "TaiAction"
-	.skip 2
-lbl_802E4B9C:
+.endobj lbl_802E4B90
+.balign 4
+.obj lbl_802E4B9C, local
 	.4byte __RTTI__9TaiAction
 	.4byte 0
 	.4byte 0
-.global __vt__18TAIAeffCloudOfDust
-__vt__18TAIAeffCloudOfDust:
+.endobj lbl_802E4B9C
+.obj __vt__18TAIAeffCloudOfDust, global
 	.4byte __RTTI__18TAIAeffCloudOfDust
 	.4byte 0
 	.4byte start__18TAIAeffCloudOfDustFR4Teki
@@ -317,20 +321,24 @@ __vt__18TAIAeffCloudOfDust:
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
 	.4byte setType__18TAIAeffCloudOfDustFR8Vector3fii
+.endobj __vt__18TAIAeffCloudOfDust
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-.global RUMBLE_NONE__18TAIAeffCloudOfDust
-RUMBLE_NONE__18TAIAeffCloudOfDust:
+.obj RUMBLE_NONE__18TAIAeffCloudOfDust, global
 	.4byte 0xFFFFFFFF
-__RTTI__9TaiAction:
+.endobj RUMBLE_NONE__18TAIAeffCloudOfDust
+.obj __RTTI__9TaiAction, local
 	.4byte lbl_802E4B90
 	.4byte 0x00000000
-__RTTI__18TAIAeffCloudOfDust:
+.endobj __RTTI__9TaiAction
+.obj __RTTI__18TAIAeffCloudOfDust, local
 	.4byte lbl_802E4B7C
 	.4byte lbl_802E4B9C
+.endobj __RTTI__18TAIAeffCloudOfDust
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803EBF98:
-	.4byte 0x00000000
+.obj lbl_803EBF98, local
+	.float 0.0
+.endobj lbl_803EBF98

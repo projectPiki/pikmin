@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global __ct__Q23zen13ogScrPauseMgrFv
-__ct__Q23zen13ogScrPauseMgrFv:
+.fn __ct__Q23zen13ogScrPauseMgrFv, global
 /* 80182318 0017F278  7C 08 02 A6 */	mflr r0
 /* 8018231C 0017F27C  90 01 00 04 */	stw r0, 4(r1)
 /* 80182320 0017F280  94 21 FF 88 */	stwu r1, -0x78(r1)
@@ -206,9 +205,9 @@ __ct__Q23zen13ogScrPauseMgrFv:
 /* 80182630 0017F590  38 21 00 78 */	addi r1, r1, 0x78
 /* 80182634 0017F594  7C 08 03 A6 */	mtlr r0
 /* 80182638 0017F598  4E 80 00 20 */	blr 
+.endfn __ct__Q23zen13ogScrPauseMgrFv
 
-.global start__Q23zen13ogScrPauseMgrFb
-start__Q23zen13ogScrPauseMgrFb:
+.fn start__Q23zen13ogScrPauseMgrFb, global
 /* 8018263C 0017F59C  7C 08 02 A6 */	mflr r0
 /* 80182640 0017F5A0  90 01 00 04 */	stw r0, 4(r1)
 /* 80182644 0017F5A4  94 21 FF C8 */	stwu r1, -0x38(r1)
@@ -246,9 +245,9 @@ start__Q23zen13ogScrPauseMgrFb:
 /* 801826BC 0017F61C  38 21 00 38 */	addi r1, r1, 0x38
 /* 801826C0 0017F620  7C 08 03 A6 */	mtlr r0
 /* 801826C4 0017F624  4E 80 00 20 */	blr 
+.endfn start__Q23zen13ogScrPauseMgrFb
 
-.global update__Q23zen13ogScrPauseMgrFP10Controller
-update__Q23zen13ogScrPauseMgrFP10Controller:
+.fn update__Q23zen13ogScrPauseMgrFP10Controller, global
 /* 801826C8 0017F628  7C 08 02 A6 */	mflr r0
 /* 801826CC 0017F62C  90 01 00 04 */	stw r0, 4(r1)
 /* 801826D0 0017F630  94 21 FF 68 */	stwu r1, -0x98(r1)
@@ -517,9 +516,9 @@ update__Q23zen13ogScrPauseMgrFP10Controller:
 /* 80182A7C 0017F9DC  38 21 00 98 */	addi r1, r1, 0x98
 /* 80182A80 0017F9E0  7C 08 03 A6 */	mtlr r0
 /* 80182A84 0017F9E4  4E 80 00 20 */	blr 
+.endfn update__Q23zen13ogScrPauseMgrFP10Controller
 
-.global draw__Q23zen13ogScrPauseMgrFR8Graphics
-draw__Q23zen13ogScrPauseMgrFR8Graphics:
+.fn draw__Q23zen13ogScrPauseMgrFR8Graphics, global
 /* 80182A88 0017F9E8  7C 08 02 A6 */	mflr r0
 /* 80182A8C 0017F9EC  90 01 00 04 */	stw r0, 4(r1)
 /* 80182A90 0017F9F0  94 21 FF 00 */	stwu r1, -0x100(r1)
@@ -565,9 +564,9 @@ draw__Q23zen13ogScrPauseMgrFR8Graphics:
 /* 80182B2C 0017FA8C  38 21 01 00 */	addi r1, r1, 0x100
 /* 80182B30 0017FA90  7C 08 03 A6 */	mtlr r0
 /* 80182B34 0017FA94  4E 80 00 20 */	blr 
+.endfn draw__Q23zen13ogScrPauseMgrFR8Graphics
 
-.global __dt__13P2DPerspGraphFv
-__dt__13P2DPerspGraphFv:
+.fn __dt__13P2DPerspGraphFv, weak
 /* 80182B38 0017FA98  7C 08 02 A6 */	mflr r0
 /* 80182B3C 0017FA9C  90 01 00 04 */	stw r0, 4(r1)
 /* 80182B40 0017FAA0  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -593,35 +592,47 @@ __dt__13P2DPerspGraphFv:
 /* 80182B88 0017FAE8  38 21 00 18 */	addi r1, r1, 0x18
 /* 80182B8C 0017FAEC  7C 08 03 A6 */	mtlr r0
 /* 80182B90 0017FAF0  4E 80 00 20 */	blr 
+.endfn __dt__13P2DPerspGraphFv
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802D30C0:
+.obj lbl_802D30C0, local
 	.asciz "ogPause.cpp"
+.endobj lbl_802D30C0
 .balign 4
-lbl_802D30CC:
+.obj lbl_802D30CC, local
 	.asciz "OgPauseSection"
+.endobj lbl_802D30CC
 .balign 4
-lbl_802D30DC:
+.obj lbl_802D30DC, local
 	.asciz "screen/blo/black.blo"
+.endobj lbl_802D30DC
 .balign 4
-lbl_802D30F4:
+.obj lbl_802D30F4, local
 	.asciz "screen/blo/pause.blo"
+.endobj lbl_802D30F4
 .balign 4
-lbl_802D310C:
+.obj lbl_802D310C, local
 	.asciz "screen/blo/pause_ok.blo"
+.endobj lbl_802D310C
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803EB168:
+.obj lbl_803EB168, local
 	.float 0.0
-lbl_803EB16C:
+.endobj lbl_803EB168
+.obj lbl_803EB16C, local
 	.float 0.5
-lbl_803EB170:
+.endobj lbl_803EB16C
+.obj lbl_803EB170, local
 	.float 128.0
-lbl_803EB174:
+.endobj lbl_803EB170
+.obj lbl_803EB174, local
 	.float 30.0
-lbl_803EB178:
+.endobj lbl_803EB174
+.obj lbl_803EB178, local
 	.float 1.0
-lbl_803EB17C:
+.endobj lbl_803EB178
+.obj lbl_803EB17C, local
 	.float 5000.0
+.endobj lbl_803EB17C

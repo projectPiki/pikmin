@@ -13779,39 +13779,40 @@ openMapInfo__Q23zen12DrawWorldMapFv:
 .balign 8
 lbl_802E57B0:
 	.asciz "drawWorldMap.cpp"
-	.skip 3
+.balign 4
 lbl_802E57C4:
 	.asciz "drawWorldMap"
-	.skip 3
+.balign 4
 lbl_802E57D4:
 	.asciz "screen/blo/w_wipe.blo"
-	.skip 2
+.balign 4
 lbl_802E57EC:
 	.asciz "screen/blo/w_icon.blo"
-	.skip 2
+.balign 4
 lbl_802E5804:
 	.asciz "screen/blo/w_title.blo"
-	.skip 1
+.balign 4
 lbl_802E581C:
 	.asciz "screen/blo/w_moni.blo"
-	.skip 2
+.balign 4
 lbl_802E5834:
 	.asciz "screen/blo/w_data1.blo"
-	.skip 1
+.balign 4
 lbl_802E584C:
 	.asciz "screen/blo/w_data2.blo"
-	.skip 1
+.balign 4
 lbl_802E5864:
 	.asciz "screen/blo/w_point.blo"
-	.skip 1
+.balign 4
 lbl_802E587C:
 	.asciz "screen/blo/w_line.blo"
-	.skip 2
+.balign 4
 lbl_802E5894:
 	.asciz "screen/blo/w_back.blo"
-	.skip 2
+.balign 4
 lbl_802E58AC:
 	.asciz "screen/blo/w_ok.blo"
+.balign 4
 lbl_802E58C0:
 	.4byte .L_801DEC60
 	.4byte .L_801DEC94
@@ -13824,22 +13825,26 @@ lbl_802E58C0:
 	.4byte .L_801DF028
 lbl_802E58E4:
 	.asciz "zen::NumberPicCallBack<int>"
+.balign 4
 lbl_802E5900:
 	.asciz "zen::NumberTex"
-	.skip 1
+.balign 4
 lbl_802E5910:
 	.asciz "zen::FigureTex<int>"
 lbl_802E5924:
 	.4byte __RTTI__Q23zen9NumberTex
 	.4byte 0x00000000
 	.4byte 0x00000000
+.balign 4
 lbl_802E5930:
 	.asciz "P2DPaneCallBackBase"
+.balign 4
 lbl_802E5944:
 	.asciz "zen::CallBack1<P2DPane *>"
-	.skip 2
+.balign 4
 lbl_802E5960:
 	.asciz "P2DPaneCallBack"
+.balign 4
 lbl_802E5970:
 	.4byte __RTTI__19P2DPaneCallBackBase
 	.4byte 0x00000004
@@ -13862,8 +13867,10 @@ lbl_802E5984:
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x00000000
+.balign 4
 lbl_802E59C0:
 	.asciz "@unnamed@::DrawWorldMapDateCallBack"
+.balign 4
 lbl_802E59E4:
 	.4byte __RTTI__Q23zen9NumberTex
 	.4byte 0x00000004
@@ -14097,30 +14104,31 @@ lbl_803E7324:
 	.4byte 0
 "EVENT_APPEAR_FINISH__Q29@unnamed@19WorldMapCoursePoint":
 	.4byte 1
+.balign 4
 lbl_803E7330:
 	.asciz "ony%d"
-	.skip 2
+.balign 4
 lbl_803E7338:
 	.asciz "cha%d"
-	.skip 2
+.balign 4
 lbl_803E7340:
 	.asciz "map%d"
-	.skip 2
+.balign 4
 lbl_803E7348:
 	.asciz "pa%02d"
-	.skip 1
+.balign 4
 lbl_803E7350:
 	.asciz "pn%02d"
-	.skip 1
+.balign 4
 lbl_803E7358:
 	.asciz "he%02d"
-	.skip 1
+.balign 4
 lbl_803E7360:
 	.asciz "i%02dl"
-	.skip 1
+.balign 4
 lbl_803E7368:
 	.asciz "i%02dr"
-	.skip 1
+.balign 4
 __RTTI__Q23zen9NumberTex:
 	.4byte lbl_802E5900
 	.4byte 0x00000000
