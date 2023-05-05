@@ -498,27 +498,35 @@ __vt__9NFunction:
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-__RTTI__9NFunction:
+.obj __RTTI__9NFunction, local
 	.4byte lbl_802C4190
 	.4byte 0
-__RTTI__18NVibrationFunction:
+.endobj __RTTI__9NFunction
+.obj __RTTI__18NVibrationFunction, local
 	.4byte lbl_802C417C
 	.4byte lbl_802C419C
-__RTTI__19NPolynomialFunction:
+.endobj __RTTI__18NVibrationFunction
+.obj __RTTI__19NPolynomialFunction, local
 	.4byte lbl_802C41CC
 	.4byte lbl_802C41E0
-__RTTI__15NLinearFunction:
+.endobj __RTTI__19NPolynomialFunction
+.obj __RTTI__15NLinearFunction, local
 	.4byte lbl_802C41EC
 	.4byte lbl_802C41FC
-__RTTI__20NClampLinearFunction:
+.endobj __RTTI__15NLinearFunction
+.obj __RTTI__20NClampLinearFunction, local
 	.4byte lbl_802C41B4
 	.4byte lbl_802C4210
+.endobj __RTTI__20NClampLinearFunction
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803EA200:
+.obj lbl_803EA200, local
 	.float 0.0
-lbl_803EA204:
+.endobj lbl_803EA200
+.obj lbl_803EA204, local
 	.float 1.0
-lbl_803EA208:
+.endobj lbl_803EA204
+.obj lbl_803EA208, local
 	.float 2.0
+.endobj lbl_803EA208

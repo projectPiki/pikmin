@@ -1051,21 +1051,27 @@ __RTTI__8BaseParm:
 
 .section .sbss, "wa"
 .balign 8
-.global mapMgr__17GenObjectMapParts
-mapMgr__17GenObjectMapParts:
+.obj mapMgr__17GenObjectMapParts, global
 	.skip 0x4
-first$817:
+.endobj mapMgr__17GenObjectMapParts
+.obj first$817, local
 	.skip 0x1
-init$818:
+.endobj first$817
+.obj init$818, local
 	.skip 0x1
+.endobj init$818
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803EA1A8:
+.obj lbl_803EA1A8, local
 	.float 0.0
-lbl_803EA1AC:
+.endobj lbl_803EA1A8
+.obj lbl_803EA1AC, local
 	.float 2.0
-lbl_803EA1B0:
+.endobj lbl_803EA1AC
+.obj lbl_803EA1B0, local
 	.float 60.0
-lbl_803EA1B4:
+.endobj lbl_803EA1B0
+.obj lbl_803EA1B4, local
 	.float 0.2
+.endobj lbl_803EA1B4

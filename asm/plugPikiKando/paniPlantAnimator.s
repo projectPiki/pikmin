@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global createMotionTable__17PaniPlantAnimatorFv
-createMotionTable__17PaniPlantAnimatorFv:
+.fn createMotionTable__17PaniPlantAnimatorFv, global
 /* 8011B148 001180A8  7C 08 02 A6 */	mflr r0
 /* 8011B14C 001180AC  38 60 00 08 */	li r3, 8
 /* 8011B150 001180B0  90 01 00 04 */	stw r0, 4(r1)
@@ -92,9 +91,9 @@ createMotionTable__17PaniPlantAnimatorFv:
 /* 8011B284 001181E4  38 21 00 18 */	addi r1, r1, 0x18
 /* 8011B288 001181E8  7C 08 03 A6 */	mtlr r0
 /* 8011B28C 001181EC  4E 80 00 20 */	blr 
+.endfn createMotionTable__17PaniPlantAnimatorFv
 
-.global __ct__17PaniPlantAnimatorFv
-__ct__17PaniPlantAnimatorFv:
+.fn __ct__17PaniPlantAnimatorFv, global
 /* 8011B290 001181F0  7C 08 02 A6 */	mflr r0
 /* 8011B294 001181F4  90 01 00 04 */	stw r0, 4(r1)
 /* 8011B298 001181F8  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -110,17 +109,19 @@ __ct__17PaniPlantAnimatorFv:
 /* 8011B2C0 00118220  38 21 00 18 */	addi r1, r1, 0x18
 /* 8011B2C4 00118224  7C 08 03 A6 */	mtlr r0
 /* 8011B2C8 00118228  4E 80 00 20 */	blr 
+.endfn __ct__17PaniPlantAnimatorFv
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802C3FD0:
+.obj lbl_802C3FD0, local
 	.asciz "paniPlantAnimator.cpp"
+.endobj lbl_802C3FD0
 .balign 4
-lbl_802C3FE8:
+.obj lbl_802C3FE8, local
 	.asciz "paniPlantAnimator"
+.endobj lbl_802C3FE8
 .balign 4
-.global motionLabels__17PaniPlantAnimator
-motionLabels__17PaniPlantAnimator:
+.obj motionLabels__17PaniPlantAnimator, global
 	.4byte lbl_803E2F60
 	.4byte lbl_803E2F64
 	.4byte lbl_803E2F68
@@ -128,28 +129,33 @@ motionLabels__17PaniPlantAnimator:
 	.4byte lbl_803E2F70
 	.4byte lbl_803E2F74
 	.4byte lbl_803E2F78
+.endobj motionLabels__17PaniPlantAnimator
 .balign 4
-lbl_802C4018:
+.obj lbl_802C4018, local
 	.asciz "PaniPlantAnimator"
+.endobj lbl_802C4018
 .balign 4
-lbl_802C402C:
+.obj lbl_802C402C, local
 	.asciz "Animator"
+.endobj lbl_802C402C
 .balign 4
-lbl_802C4038:
+.obj lbl_802C4038, local
 	.asciz "PaniAnimator"
+.endobj lbl_802C4038
 .balign 4
-lbl_802C4048:
+.obj lbl_802C4048, local
 	.4byte __RTTI__8Animator
 	.4byte 0x00000000
 	.4byte 0x00000000
-lbl_802C4054:
+.endobj lbl_802C4048
+.obj lbl_802C4054, local
 	.4byte __RTTI__8Animator
 	.4byte 0x00000000
 	.4byte __RTTI__12PaniAnimator
 	.4byte 0x00000000
 	.4byte 0x00000000
-.global __vt__17PaniPlantAnimator
-__vt__17PaniPlantAnimator:
+.endobj lbl_802C4054
+.obj __vt__17PaniPlantAnimator, weak
 	.4byte __RTTI__17PaniPlantAnimator
 	.4byte 0
 	.4byte changeContext__12PaniAnimatorFP11AnimContext
@@ -157,36 +163,47 @@ __vt__17PaniPlantAnimator:
 	.4byte finishOneShot__8AnimatorFv
 	.4byte finishLoop__8AnimatorFv
 	.4byte updateContext__12PaniAnimatorFv
+.endobj __vt__17PaniPlantAnimator
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-lbl_803E2F60:
+.obj lbl_803E2F60, local
 	.asciz "1"
+.endobj lbl_803E2F60
 .balign 4
-lbl_803E2F64:
+.obj lbl_803E2F64, local
 	.asciz "2"
+.endobj lbl_803E2F64
 .balign 4
-lbl_803E2F68:
+.obj lbl_803E2F68, local
 	.asciz "3"
+.endobj lbl_803E2F68
 .balign 4
-lbl_803E2F6C:
+.obj lbl_803E2F6C, local
 	.asciz "4"
+.endobj lbl_803E2F6C
 .balign 4
-lbl_803E2F70:
+.obj lbl_803E2F70, local
 	.asciz "5"
+.endobj lbl_803E2F70
 .balign 4
-lbl_803E2F74:
+.obj lbl_803E2F74, local
 	.asciz "6"
+.endobj lbl_803E2F74
 .balign 4
-lbl_803E2F78:
+.obj lbl_803E2F78, local
 	.asciz "7"
+.endobj lbl_803E2F78
 .balign 4
-__RTTI__8Animator:
+.obj __RTTI__8Animator, local
 	.4byte lbl_802C402C
 	.4byte 0
-__RTTI__12PaniAnimator:
+.endobj __RTTI__8Animator
+.obj __RTTI__12PaniAnimator, local
 	.4byte lbl_802C4038
 	.4byte lbl_802C4048
-__RTTI__17PaniPlantAnimator:
+.endobj __RTTI__12PaniAnimator
+.obj __RTTI__17PaniPlantAnimator, local
 	.4byte lbl_802C4018
 	.4byte lbl_802C4054
+.endobj __RTTI__17PaniPlantAnimator

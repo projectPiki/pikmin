@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global makeObjectTeki__Fv
-makeObjectTeki__Fv:
+.fn makeObjectTeki__Fv, local
 /* 8011B2CC 0011822C  7C 08 02 A6 */	mflr r0
 /* 8011B2D0 00118230  38 60 00 20 */	li r3, 0x20
 /* 8011B2D4 00118234  90 01 00 04 */	stw r0, 4(r1)
@@ -19,9 +18,9 @@ makeObjectTeki__Fv:
 /* 8011B300 00118260  38 21 00 10 */	addi r1, r1, 0x10
 /* 8011B304 00118264  7C 08 03 A6 */	mtlr r0
 /* 8011B308 00118268  4E 80 00 20 */	blr 
+.endfn makeObjectTeki__Fv
 
-.global initialise__13GenObjectTekiFv
-initialise__13GenObjectTekiFv:
+.fn initialise__13GenObjectTekiFv, global
 /* 8011B30C 0011826C  80 ED 30 74 */	lwz r7, factory__16GenObjectFactory@sda21(r13)
 /* 8011B310 00118270  80 A7 00 00 */	lwz r5, 0(r7)
 /* 8011B314 00118274  80 07 00 04 */	lwz r0, 4(r7)
@@ -56,9 +55,9 @@ initialise__13GenObjectTekiFv:
 /* 8011B388 001182E8  38 03 00 01 */	addi r0, r3, 1
 /* 8011B38C 001182EC  90 07 00 00 */	stw r0, 0(r7)
 /* 8011B390 001182F0  4E 80 00 20 */	blr 
+.endfn initialise__13GenObjectTekiFv
 
-.global __ct__13GenObjectTekiFv
-__ct__13GenObjectTekiFv:
+.fn __ct__13GenObjectTekiFv, global
 /* 8011B394 001182F4  7C 08 02 A6 */	mflr r0
 /* 8011B398 001182F8  3C 80 80 2C */	lis r4, lbl_802C40AC@ha
 /* 8011B39C 001182FC  90 01 00 04 */	stw r0, 4(r1)
@@ -95,9 +94,9 @@ __ct__13GenObjectTekiFv:
 /* 8011B414 00118374  38 21 00 18 */	addi r1, r1, 0x18
 /* 8011B418 00118378  7C 08 03 A6 */	mtlr r0
 /* 8011B41C 0011837C  4E 80 00 20 */	blr 
+.endfn __ct__13GenObjectTekiFv
 
-.global doRead__13GenObjectTekiFR18RandomAccessStream
-doRead__13GenObjectTekiFR18RandomAccessStream:
+.fn doRead__13GenObjectTekiFR18RandomAccessStream, global
 /* 8011B420 00118380  7C 08 02 A6 */	mflr r0
 /* 8011B424 00118384  90 01 00 04 */	stw r0, 4(r1)
 /* 8011B428 00118388  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -137,9 +136,9 @@ doRead__13GenObjectTekiFR18RandomAccessStream:
 /* 8011B4A8 00118408  38 21 00 18 */	addi r1, r1, 0x18
 /* 8011B4AC 0011840C  7C 08 03 A6 */	mtlr r0
 /* 8011B4B0 00118410  4E 80 00 20 */	blr 
+.endfn doRead__13GenObjectTekiFR18RandomAccessStream
 
-.global doWrite__13GenObjectTekiFR18RandomAccessStream
-doWrite__13GenObjectTekiFR18RandomAccessStream:
+.fn doWrite__13GenObjectTekiFR18RandomAccessStream, global
 /* 8011B4B4 00118414  7C 08 02 A6 */	mflr r0
 /* 8011B4B8 00118418  90 01 00 04 */	stw r0, 4(r1)
 /* 8011B4BC 0011841C  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -166,9 +165,9 @@ doWrite__13GenObjectTekiFR18RandomAccessStream:
 /* 8011B510 00118470  38 21 00 18 */	addi r1, r1, 0x18
 /* 8011B514 00118474  7C 08 03 A6 */	mtlr r0
 /* 8011B518 00118478  4E 80 00 20 */	blr 
+.endfn doWrite__13GenObjectTekiFR18RandomAccessStream
 
-.global updateUseList__13GenObjectTekiFP9Generatori
-updateUseList__13GenObjectTekiFP9Generatori:
+.fn updateUseList__13GenObjectTekiFP9Generatori, global
 /* 8011B51C 0011847C  80 83 00 1C */	lwz r4, 0x1c(r3)
 /* 8011B520 00118480  2C 04 00 00 */	cmpwi r4, 0
 /* 8011B524 00118484  4D 80 00 20 */	bltlr 
@@ -198,9 +197,9 @@ updateUseList__13GenObjectTekiFP9Generatori:
 /* 8011B580 001184E0  7C 64 02 14 */	add r3, r4, r0
 /* 8011B584 001184E4  98 A3 01 64 */	stb r5, 0x164(r3)
 /* 8011B588 001184E8  4E 80 00 20 */	blr 
+.endfn updateUseList__13GenObjectTekiFP9Generatori
 
-.global birth__13GenObjectTekiFR9BirthInfo
-birth__13GenObjectTekiFR9BirthInfo:
+.fn birth__13GenObjectTekiFR9BirthInfo, global
 /* 8011B58C 001184EC  7C 08 02 A6 */	mflr r0
 /* 8011B590 001184F0  90 01 00 04 */	stw r0, 4(r1)
 /* 8011B594 001184F4  94 21 FF B8 */	stwu r1, -0x48(r1)
@@ -276,46 +275,56 @@ birth__13GenObjectTekiFR9BirthInfo:
 /* 8011B6A0 00118600  38 21 00 48 */	addi r1, r1, 0x48
 /* 8011B6A4 00118604  7C 08 03 A6 */	mtlr r0
 /* 8011B6A8 00118608  4E 80 00 20 */	blr 
+.endfn birth__13GenObjectTekiFR9BirthInfo
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802C4088:
+.obj lbl_802C4088, local
 	.asciz "genteki.cpp"
+.endobj lbl_802C4088
 .balign 4
-lbl_802C4094:
+.obj lbl_802C4094, local # Shift-JIS
 	.4byte 0x934782F0
 	.4byte 0x94AD90B6
-	.4byte 0x00000000
+	.byte 0
+.endobj lbl_802C4094
 .balign 4
-lbl_802C40A0:
+.obj lbl_802C40A0, local
 	.asciz "object type"
+.endobj lbl_802C40A0
 .balign 4
-lbl_802C40AC:
+.obj lbl_802C40AC, local # Shift-JIS
 	.4byte 0x934782F0
 	.4byte 0x90B682DE
-	.4byte 0x00000000
+	.byte 0
+.endobj lbl_802C40AC
 .balign 4
-lbl_802C40B8:
+.obj lbl_802C40B8, local
 	.asciz "GenObjectTeki"
+.endobj lbl_802C40B8
 .balign 4
-lbl_802C40C8:
+.obj lbl_802C40C8, local
 	.asciz "Parameters"
+.endobj lbl_802C40C8
 .balign 4
-lbl_802C40D4:
+.obj lbl_802C40D4, local
 	.4byte __RTTI__10Parameters
 	.4byte 0x00000000
 	.4byte 0x00000000
+.endobj lbl_802C40D4
 .balign 4
-lbl_802C40E0:
+.obj lbl_802C40E0, local
 	.asciz "GenObject"
+.endobj lbl_802C40E0
 .balign 4
-lbl_802C40EC:
+.obj lbl_802C40EC, local
 	.4byte __RTTI__10Parameters
 	.4byte 0x00000000
 	.4byte __RTTI__7GenBase
 	.4byte 0x00000000
 	.4byte 0x00000000
-lbl_802C4100:
+.endobj lbl_802C40EC
+.obj lbl_802C4100, local
 	.4byte __RTTI__10Parameters
 	.4byte 0x00000000
 	.4byte __RTTI__7GenBase
@@ -323,8 +332,8 @@ lbl_802C4100:
 	.4byte __RTTI__9GenObject
 	.4byte 0x00000000
 	.4byte 0x00000000
-.global __vt__13GenObjectTeki
-__vt__13GenObjectTeki:
+.endobj lbl_802C4100
+.obj __vt__13GenObjectTeki, global
 	.4byte __RTTI__13GenObjectTeki
 	.4byte 0
 	.4byte doWrite__13GenObjectTekiFR18RandomAccessStream
@@ -339,22 +348,28 @@ __vt__13GenObjectTeki:
 	.4byte update__9GenObjectFP9Generator
 	.4byte render__9GenObjectFR8GraphicsP9Generator
 	.4byte birth__13GenObjectTekiFR9BirthInfo
+.endobj __vt__13GenObjectTeki
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-__RTTI__10Parameters:
+.obj __RTTI__10Parameters, local
 	.4byte lbl_802C40C8
 	.4byte 0
+.endobj __RTTI__10Parameters
 .balign 4
-lbl_803E2FA0:
+.obj lbl_803E2FA0, local
 	.asciz "GenBase"
+.endobj lbl_803E2FA0
 .balign 4
-__RTTI__7GenBase:
+.obj __RTTI__7GenBase, local
 	.4byte lbl_803E2FA0
 	.4byte lbl_802C40D4
-__RTTI__9GenObject:
+.endobj __RTTI__7GenBase
+.obj __RTTI__9GenObject, local
 	.4byte lbl_802C40E0
 	.4byte lbl_802C40EC
-__RTTI__13GenObjectTeki:
+.endobj __RTTI__9GenObject
+.obj __RTTI__13GenObjectTeki, local
 	.4byte lbl_802C40B8
 	.4byte lbl_802C4100
+.endobj __RTTI__13GenObjectTeki

@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global doKill__4PikiFv
-doKill__4PikiFv:
+.fn doKill__4PikiFv, global
 /* 800CD950 000CA8B0  7C 08 02 A6 */	mflr r0
 /* 800CD954 000CA8B4  90 01 00 04 */	stw r0, 4(r1)
 /* 800CD958 000CA8B8  94 21 FF 90 */	stwu r1, -0x70(r1)
@@ -235,13 +234,17 @@ doKill__4PikiFv:
 /* 800CDCC4 000CAC24  38 21 00 70 */	addi r1, r1, 0x70
 /* 800CDCC8 000CAC28  7C 08 03 A6 */	mtlr r0
 /* 800CDCCC 000CAC2C  4E 80 00 20 */	blr 
+.endfn doKill__4PikiFv
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803E9860:
+.obj lbl_803E9860, local
 	.float 1.0
-lbl_803E9864:
+.endobj lbl_803E9860
+.obj lbl_803E9864, local
 	.float 32767.0
-lbl_803E9868:
-	.4byte 0x43300000
-	.4byte 0x80000000
+.endobj lbl_803E9864
+.balign 8
+.obj lbl_803E9868, local
+	.8byte 0x4330000080000000
+.endobj lbl_803E9868

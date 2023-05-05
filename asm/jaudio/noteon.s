@@ -1,8 +1,7 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
 .balign 32, 0
-.global NoteON__FP5seqp_llll
-NoteON__FP5seqp_llll:
+.fn NoteON__FP5seqp_llll, global
 /* 80013840 000107A0  7C 08 02 A6 */	mflr r0
 /* 80013844 000107A4  90 01 00 04 */	stw r0, 4(r1)
 /* 80013848 000107A8  94 21 FF 70 */	stwu r1, -0x90(r1)
@@ -254,10 +253,10 @@ NoteON__FP5seqp_llll:
 /* 80013BC8 00010B28  38 21 00 90 */	addi r1, r1, 0x90
 /* 80013BCC 00010B2C  7C 08 03 A6 */	mtlr r0
 /* 80013BD0 00010B30  4E 80 00 20 */	blr 
+.endfn NoteON__FP5seqp_llll
 
 .balign 32, 0
-.global NoteOFF_R__FP5seqp_UcUs
-NoteOFF_R__FP5seqp_UcUs:
+.fn NoteOFF_R__FP5seqp_UcUs, global
 /* 80013BE0 00010B40  7C 08 02 A6 */	mflr r0
 /* 80013BE4 00010B44  90 01 00 04 */	stw r0, 4(r1)
 /* 80013BE8 00010B48  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -298,10 +297,10 @@ NoteOFF_R__FP5seqp_UcUs:
 /* 80013C64 00010BC4  38 21 00 20 */	addi r1, r1, 0x20
 /* 80013C68 00010BC8  7C 08 03 A6 */	mtlr r0
 /* 80013C6C 00010BCC  4E 80 00 20 */	blr 
+.endfn NoteOFF_R__FP5seqp_UcUs
 
 .balign 32, 0
-.global NoteOFF__FP5seqp_Uc
-NoteOFF__FP5seqp_Uc:
+.fn NoteOFF__FP5seqp_Uc, global
 /* 80013C80 00010BE0  7C 08 02 A6 */	mflr r0
 /* 80013C84 00010BE4  38 A0 00 00 */	li r5, 0
 /* 80013C88 00010BE8  90 01 00 04 */	stw r0, 4(r1)
@@ -311,10 +310,10 @@ NoteOFF__FP5seqp_Uc:
 /* 80013C98 00010BF8  38 21 00 08 */	addi r1, r1, 8
 /* 80013C9C 00010BFC  7C 08 03 A6 */	mtlr r0
 /* 80013CA0 00010C00  4E 80 00 20 */	blr 
+.endfn NoteOFF__FP5seqp_Uc
 
 .balign 32, 0
-.global GateON__FP5seqp_llll
-GateON__FP5seqp_llll:
+.fn GateON__FP5seqp_llll, global
 /* 80013CC0 00010C20  7C 08 02 A6 */	mflr r0
 /* 80013CC4 00010C24  90 01 00 04 */	stw r0, 4(r1)
 /* 80013CC8 00010C28  54 80 10 3A */	slwi r0, r4, 2
@@ -340,10 +339,10 @@ GateON__FP5seqp_llll:
 /* 80013D0C 00010C6C  38 21 00 20 */	addi r1, r1, 0x20
 /* 80013D10 00010C70  7C 08 03 A6 */	mtlr r0
 /* 80013D14 00010C74  4E 80 00 20 */	blr 
+.endfn GateON__FP5seqp_llll
 
 .balign 32, 0
-.global CheckNoteStop__FP5seqp_l
-CheckNoteStop__FP5seqp_l:
+.fn CheckNoteStop__FP5seqp_l, global
 /* 80013D20 00010C80  54 80 10 3A */	slwi r0, r4, 2
 /* 80013D24 00010C84  7C A3 02 14 */	add r5, r3, r0
 /* 80013D28 00010C88  84 E5 00 9C */	lwzu r7, 0x9c(r5)
@@ -372,9 +371,10 @@ CheckNoteStop__FP5seqp_l:
 .L_80013D7C:
 /* 80013D7C 00010CDC  38 60 00 01 */	li r3, 1
 /* 80013D80 00010CE0  4E 80 00 20 */	blr 
+.endfn CheckNoteStop__FP5seqp_l
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803E8320:
-	.4byte 0x43300000
-	.4byte 0x00000000
+.obj lbl_803E8320, local
+	.8byte 0x4330000000000000
+.endobj lbl_803E8320

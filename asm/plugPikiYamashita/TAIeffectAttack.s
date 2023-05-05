@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global invoke__17EventTypeCallBackFPQ23zen17particleGenerator
-invoke__17EventTypeCallBackFPQ23zen17particleGenerator:
+.fn invoke__17EventTypeCallBackFPQ23zen17particleGenerator, global
 /* 801C4960 001C18C0  7C 08 02 A6 */	mflr r0
 /* 801C4964 001C18C4  90 01 00 04 */	stw r0, 4(r1)
 /* 801C4968 001C18C8  94 21 FF F8 */	stwu r1, -8(r1)
@@ -16,9 +15,9 @@ invoke__17EventTypeCallBackFPQ23zen17particleGenerator:
 /* 801C498C 001C18EC  38 21 00 08 */	addi r1, r1, 8
 /* 801C4990 001C18F0  7C 08 03 A6 */	mtlr r0
 /* 801C4994 001C18F4  4E 80 00 20 */	blr 
+.endfn invoke__17EventTypeCallBackFPQ23zen17particleGenerator
 
-.global init__20CylinderTypeCallBackFP20TAIeffectAttackParamP4TekiR8Vector3f8Vector3fffffP28TAIeffectAttackEventCallBack
-init__20CylinderTypeCallBackFP20TAIeffectAttackParamP4TekiR8Vector3f8Vector3fffffP28TAIeffectAttackEventCallBack:
+.fn init__20CylinderTypeCallBackFP20TAIeffectAttackParamP4TekiR8Vector3f8Vector3fffffP28TAIeffectAttackEventCallBack, global
 /* 801C4998 001C18F8  7C 08 02 A6 */	mflr r0
 /* 801C499C 001C18FC  90 01 00 04 */	stw r0, 4(r1)
 /* 801C49A0 001C1900  94 21 FF A8 */	stwu r1, -0x58(r1)
@@ -141,9 +140,9 @@ init__20CylinderTypeCallBackFP20TAIeffectAttackParamP4TekiR8Vector3f8Vector3ffff
 /* 801C4B6C 001C1ACC  38 21 00 58 */	addi r1, r1, 0x58
 /* 801C4B70 001C1AD0  7C 08 03 A6 */	mtlr r0
 /* 801C4B74 001C1AD4  4E 80 00 20 */	blr 
+.endfn init__20CylinderTypeCallBackFP20TAIeffectAttackParamP4TekiR8Vector3f8Vector3fffffP28TAIeffectAttackEventCallBack
 
-.global hitCheckCommon__20CylinderTypeCallBackFPQ23zen17particleGeneratorP8Creature
-hitCheckCommon__20CylinderTypeCallBackFPQ23zen17particleGeneratorP8Creature:
+.fn hitCheckCommon__20CylinderTypeCallBackFPQ23zen17particleGeneratorP8Creature, global
 /* 801C4B78 001C1AD8  7C 08 02 A6 */	mflr r0
 /* 801C4B7C 001C1ADC  90 01 00 04 */	stw r0, 4(r1)
 /* 801C4B80 001C1AE0  94 21 FF 48 */	stwu r1, -0xb8(r1)
@@ -250,9 +249,9 @@ hitCheckCommon__20CylinderTypeCallBackFPQ23zen17particleGeneratorP8Creature:
 /* 801C4D08 001C1C68  38 21 00 B8 */	addi r1, r1, 0xb8
 /* 801C4D0C 001C1C6C  7C 08 03 A6 */	mtlr r0
 /* 801C4D10 001C1C70  4E 80 00 20 */	blr 
+.endfn hitCheckCommon__20CylinderTypeCallBackFPQ23zen17particleGeneratorP8Creature
 
-.global invoke__20CylinderTypeCallBackFPQ23zen17particleGenerator
-invoke__20CylinderTypeCallBackFPQ23zen17particleGenerator:
+.fn invoke__20CylinderTypeCallBackFPQ23zen17particleGenerator, global
 /* 801C4D14 001C1C74  7C 08 02 A6 */	mflr r0
 /* 801C4D18 001C1C78  90 01 00 04 */	stw r0, 4(r1)
 /* 801C4D1C 001C1C7C  94 21 FF 60 */	stwu r1, -0xa0(r1)
@@ -491,9 +490,9 @@ invoke__20CylinderTypeCallBackFPQ23zen17particleGenerator:
 /* 801C508C 001C1FEC  38 21 00 A0 */	addi r1, r1, 0xa0
 /* 801C5090 001C1FF0  7C 08 03 A6 */	mtlr r0
 /* 801C5094 001C1FF4  4E 80 00 20 */	blr 
+.endfn invoke__20CylinderTypeCallBackFPQ23zen17particleGenerator
 
-.global init__16ConeTypeCallBackFP20TAIeffectAttackParamP4TekiR8Vector3f8Vector3fffffP28TAIeffectAttackEventCallBack
-init__16ConeTypeCallBackFP20TAIeffectAttackParamP4TekiR8Vector3f8Vector3fffffP28TAIeffectAttackEventCallBack:
+.fn init__16ConeTypeCallBackFP20TAIeffectAttackParamP4TekiR8Vector3f8Vector3fffffP28TAIeffectAttackEventCallBack, global
 /* 801C5098 001C1FF8  7C 08 02 A6 */	mflr r0
 /* 801C509C 001C1FFC  90 01 00 04 */	stw r0, 4(r1)
 /* 801C50A0 001C2000  94 21 FF A0 */	stwu r1, -0x60(r1)
@@ -618,9 +617,9 @@ init__16ConeTypeCallBackFP20TAIeffectAttackParamP4TekiR8Vector3f8Vector3fffffP28
 /* 801C5274 001C21D4  38 21 00 60 */	addi r1, r1, 0x60
 /* 801C5278 001C21D8  7C 08 03 A6 */	mtlr r0
 /* 801C527C 001C21DC  4E 80 00 20 */	blr 
+.endfn init__16ConeTypeCallBackFP20TAIeffectAttackParamP4TekiR8Vector3f8Vector3fffffP28TAIeffectAttackEventCallBack
 
-.global hitCheckCommon__16ConeTypeCallBackFPQ23zen17particleGeneratorP8Creature
-hitCheckCommon__16ConeTypeCallBackFPQ23zen17particleGeneratorP8Creature:
+.fn hitCheckCommon__16ConeTypeCallBackFPQ23zen17particleGeneratorP8Creature, global
 /* 801C5280 001C21E0  7C 08 02 A6 */	mflr r0
 /* 801C5284 001C21E4  90 01 00 04 */	stw r0, 4(r1)
 /* 801C5288 001C21E8  94 21 FF 08 */	stwu r1, -0xf8(r1)
@@ -834,9 +833,9 @@ hitCheckCommon__16ConeTypeCallBackFPQ23zen17particleGeneratorP8Creature:
 /* 801C5594 001C24F4  38 21 00 F8 */	addi r1, r1, 0xf8
 /* 801C5598 001C24F8  7C 08 03 A6 */	mtlr r0
 /* 801C559C 001C24FC  4E 80 00 20 */	blr 
+.endfn hitCheckCommon__16ConeTypeCallBackFPQ23zen17particleGeneratorP8Creature
 
-.global invoke__16ConeTypeCallBackFPQ23zen17particleGenerator
-invoke__16ConeTypeCallBackFPQ23zen17particleGenerator:
+.fn invoke__16ConeTypeCallBackFPQ23zen17particleGenerator, global
 /* 801C55A0 001C2500  7C 08 02 A6 */	mflr r0
 /* 801C55A4 001C2504  90 01 00 04 */	stw r0, 4(r1)
 /* 801C55A8 001C2508  94 21 FF 58 */	stwu r1, -0xa8(r1)
@@ -1128,117 +1127,156 @@ invoke__16ConeTypeCallBackFPQ23zen17particleGenerator:
 /* 801C59C8 001C2928  38 21 00 A8 */	addi r1, r1, 0xa8
 /* 801C59CC 001C292C  7C 08 03 A6 */	mtlr r0
 /* 801C59D0 001C2930  4E 80 00 20 */	blr 
+.endfn invoke__16ConeTypeCallBackFPQ23zen17particleGenerator
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802E1778:
+.obj lbl_802E1778, local
 	.asciz "TAIeffectAttack.cpp"
+.endobj lbl_802E1778
 .balign 4
-lbl_802E178C:
+.obj lbl_802E178C, local
 	.asciz "TAIeffectAttack"
+.endobj lbl_802E178C
 .balign 4
-lbl_802E179C:
+.obj lbl_802E179C, local
 	.asciz "ConeTypeCallBack"
+.endobj lbl_802E179C
 .balign 4
-lbl_802E17B0:
+.obj lbl_802E17B0, local
 	.asciz "zen::CallBack1<zen::particleGenerator *>"
+.endobj lbl_802E17B0
 .balign 4
-lbl_802E17DC:
+.obj lbl_802E17DC, local
 	.4byte "__RTTI__Q23zen37CallBack1<PQ23zen17particleGenerator>"
 	.4byte 0
 	.4byte 0
-.global __vt__16ConeTypeCallBack
-__vt__16ConeTypeCallBack:
+.endobj lbl_802E17DC
+.obj __vt__16ConeTypeCallBack, global
 	.4byte __RTTI__16ConeTypeCallBack
 	.4byte 0
 	.4byte invoke__16ConeTypeCallBackFPQ23zen17particleGenerator
-lbl_802E17F4:
-	.asciz "CylinderTypeCallBack"
+.endobj __vt__16ConeTypeCallBack
 .balign 4
-lbl_802E180C:
+.obj lbl_802E17F4, local
+	.asciz "CylinderTypeCallBack"
+.endobj lbl_802E17F4
+.balign 4
+.obj lbl_802E180C, local
 	.4byte "__RTTI__Q23zen37CallBack1<PQ23zen17particleGenerator>"
 	.4byte 0
 	.4byte 0
-.global __vt__20CylinderTypeCallBack
-__vt__20CylinderTypeCallBack:
+.endobj lbl_802E180C
+.obj __vt__20CylinderTypeCallBack, global
 	.4byte __RTTI__20CylinderTypeCallBack
 	.4byte 0
 	.4byte invoke__20CylinderTypeCallBackFPQ23zen17particleGenerator
-lbl_802E1824:
-	.asciz "EventTypeCallBack"
+.endobj __vt__20CylinderTypeCallBack
 .balign 4
-lbl_802E1838:
+.obj lbl_802E1824, local
+	.asciz "EventTypeCallBack"
+.endobj lbl_802E1824
+.balign 4
+.obj lbl_802E1838, local
 	.4byte "__RTTI__Q23zen37CallBack1<PQ23zen17particleGenerator>"
 	.4byte 0
 	.4byte 0
-.global __vt__17EventTypeCallBack
-__vt__17EventTypeCallBack:
+.endobj lbl_802E1838
+.obj __vt__17EventTypeCallBack, global
 	.4byte __RTTI__17EventTypeCallBack
 	.4byte 0
 	.4byte invoke__17EventTypeCallBackFPQ23zen17particleGenerator
+.endobj __vt__17EventTypeCallBack
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-lbl_803E68D0:
-	.4byte 0x00000000
-lbl_803E68D4:
-	.4byte 0x00000000
-lbl_803E68D8:
-	.4byte 0x00000000
-lbl_803E68DC:
-	.4byte 0x00000000
-lbl_803E68E0:
-	.4byte 0x00000000
-lbl_803E68E4:
-	.4byte 0x00000000
-lbl_803E68E8:
-	.4byte 0x00000000
-lbl_803E68EC:
-	.4byte 0x00000000
-lbl_803E68F0:
-	.4byte 0x00000000
-lbl_803E68F4:
-	.4byte 0x3F000000
-lbl_803E68F8:
-	.4byte 0x00000000
-lbl_803E68FC:
-	.4byte 0x00000000
-lbl_803E6900:
-	.4byte 0x00000000
-lbl_803E6904:
-	.4byte 0x00000000
-lbl_803E6908:
-	.4byte 0x00000000
-lbl_803E690C:
-	.4byte 0x00000000
-"__RTTI__Q23zen37CallBack1<PQ23zen17particleGenerator>":
+.obj lbl_803E68D0, local
+	.float 0.0
+.endobj lbl_803E68D0
+.obj lbl_803E68D4, local
+	.float 0.0
+.endobj lbl_803E68D4
+.obj lbl_803E68D8, local
+	.float 0.0
+.endobj lbl_803E68D8
+.obj lbl_803E68DC, local
+	.float 0.0
+.endobj lbl_803E68DC
+.obj lbl_803E68E0, local
+	.float 0.0
+.endobj lbl_803E68E0
+.obj lbl_803E68E4, local
+	.float 0.0
+.endobj lbl_803E68E4
+.obj lbl_803E68E8, local
+	.float 0.0
+.endobj lbl_803E68E8
+.obj lbl_803E68EC, local
+	.float 0.0
+.endobj lbl_803E68EC
+.obj lbl_803E68F0, local
+	.float 0.0
+.endobj lbl_803E68F0
+.obj lbl_803E68F4, local
+	.float 0.5
+.endobj lbl_803E68F4
+.obj lbl_803E68F8, local
+	.float 0.0
+.endobj lbl_803E68F8
+.obj lbl_803E68FC, local
+	.float 0.0
+.endobj lbl_803E68FC
+.obj lbl_803E6900, local
+	.float 0.0
+.endobj lbl_803E6900
+.obj lbl_803E6904, local
+	.float 0.0
+.endobj lbl_803E6904
+.obj lbl_803E6908, local
+	.float 0.0
+.endobj lbl_803E6908
+.obj lbl_803E690C, local
+	.float 0.0
+.endobj lbl_803E690C
+.obj "__RTTI__Q23zen37CallBack1<PQ23zen17particleGenerator>", local
 	.4byte lbl_802E17B0
 	.4byte 0x00000000
-__RTTI__16ConeTypeCallBack:
+.endobj "__RTTI__Q23zen37CallBack1<PQ23zen17particleGenerator>"
+.obj __RTTI__16ConeTypeCallBack, local
 	.4byte lbl_802E179C
 	.4byte lbl_802E17DC
-__RTTI__20CylinderTypeCallBack:
+.endobj __RTTI__16ConeTypeCallBack
+.obj __RTTI__20CylinderTypeCallBack, local
 	.4byte lbl_802E17F4
 	.4byte lbl_802E180C
-__RTTI__17EventTypeCallBack:
+.endobj __RTTI__20CylinderTypeCallBack
+.obj __RTTI__17EventTypeCallBack, local
 	.4byte lbl_802E1824
 	.4byte lbl_802E1838
+.endobj __RTTI__17EventTypeCallBack
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803EBBB8:
-	.4byte 0x00000000
-lbl_803EBBBC:
-	.4byte 0x42C80000
-lbl_803EBBC0:
-	.4byte 0x3FE00000
-	.4byte 0x00000000
-lbl_803EBBC8:
-	.4byte 0x40080000
-	.4byte 0x00000000
-lbl_803EBBD0:
-	.4byte 0x3F800000
-lbl_803EBBD4:
-	.4byte 0x3F80A3D7
-lbl_803EBBD8:
-	.4byte 0x40400000
+.obj lbl_803EBBB8, local
+	.float 0.0
+.endobj lbl_803EBBB8
+.obj lbl_803EBBBC, local
+	.float 100.0
+.endobj lbl_803EBBBC
+.balign 8
+.obj lbl_803EBBC0, local
+	.double 0.5
+.endobj lbl_803EBBC0
+.balign 8
+.obj lbl_803EBBC8, local
+	.double 3.0
+.endobj lbl_803EBBC8
+.obj lbl_803EBBD0, local
+	.float 1.0
+.endobj lbl_803EBBD0
+.obj lbl_803EBBD4, local
+	.float 1.005
+.endobj lbl_803EBBD4
+.obj lbl_803EBBD8, local
+	.float 3.0
+.endobj lbl_803EBBD8

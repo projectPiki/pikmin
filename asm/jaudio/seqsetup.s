@@ -1,7 +1,6 @@
 .include "macros.inc"
 .balign 32, 0
-.global Jaq_Reset
-Jaq_Reset:
+.fn Jaq_Reset, global
 /* 80013DA0 00010D00  7C 08 02 A6 */	mflr r0
 /* 80013DA4 00010D04  38 80 00 00 */	li r4, 0
 /* 80013DA8 00010D08  90 01 00 04 */	stw r0, 4(r1)
@@ -44,9 +43,10 @@ Jaq_Reset:
 /* 80013E34 00010D94  38 21 00 08 */	addi r1, r1, 8
 /* 80013E38 00010D98  7C 08 03 A6 */	mtlr r0
 /* 80013E3C 00010D9C  4E 80 00 20 */	blr 
+.endfn Jaq_Reset
 
 .balign 32, 0
-BackTrack__FP5seqp_:
+.fn BackTrack__FP5seqp_, local
 /* 80013E40 00010DA0  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 80013E44 00010DA4  38 A0 00 00 */	li r5, 0
 /* 80013E48 00010DA8  90 61 00 08 */	stw r3, 8(r1)
@@ -85,9 +85,10 @@ BackTrack__FP5seqp_:
 .L_80013EC0:
 /* 80013EC0 00010E20  38 21 00 10 */	addi r1, r1, 0x10
 /* 80013EC4 00010E24  4E 80 00 20 */	blr 
+.endfn BackTrack__FP5seqp_
 
 .balign 32, 0
-GetNewTrack__Fv:
+.fn GetNewTrack__Fv, local
 /* 80013EE0 00010E40  80 8D 2C 40 */	lwz r4, SEQ_REMAIN@sda21(r13)
 /* 80013EE4 00010E44  28 04 00 00 */	cmplwi r4, 0
 /* 80013EE8 00010E48  40 82 00 0C */	bne .L_80013EF4
@@ -115,10 +116,10 @@ GetNewTrack__Fv:
 /* 80013F38 00010E98  98 83 00 3C */	stb r4, 0x3c(r3)
 /* 80013F3C 00010E9C  98 03 03 E4 */	stb r0, 0x3e4(r3)
 /* 80013F40 00010EA0  4E 80 00 20 */	blr 
+.endfn GetNewTrack__Fv
 
 .balign 32, 0
-.global AllocNewRoot__FP5seqp_
-AllocNewRoot__FP5seqp_:
+.fn AllocNewRoot__FP5seqp_, global
 /* 80013F60 00010EC0  3C 80 80 36 */	lis r4, rootseq@ha
 /* 80013F64 00010EC4  38 00 00 10 */	li r0, 0x10
 /* 80013F68 00010EC8  38 A4 32 A0 */	addi r5, r4, rootseq@l
@@ -139,10 +140,10 @@ AllocNewRoot__FP5seqp_:
 /* 80013F9C 00010EFC  42 00 FF DC */	bdnz .L_80013F78
 /* 80013FA0 00010F00  38 60 FF FF */	li r3, -1
 /* 80013FA4 00010F04  4E 80 00 20 */	blr 
+.endfn AllocNewRoot__FP5seqp_
 
 .balign 32, 0
-.global DeAllocRoot__FP5seqp_
-DeAllocRoot__FP5seqp_:
+.fn DeAllocRoot__FP5seqp_, global
 /* 80013FC0 00010F20  3C 80 80 36 */	lis r4, rootseq@ha
 /* 80013FC4 00010F24  38 00 00 10 */	li r0, 0x10
 /* 80013FC8 00010F28  38 A4 32 A0 */	addi r5, r4, rootseq@l
@@ -164,19 +165,20 @@ DeAllocRoot__FP5seqp_:
 /* 80014000 00010F60  42 00 FF D8 */	bdnz .L_80013FD8
 /* 80014004 00010F64  38 60 FF FF */	li r3, -1
 /* 80014008 00010F68  4E 80 00 20 */	blr 
+.endfn DeAllocRoot__FP5seqp_
 
 .balign 32, 0
-.global Jaq_HandleToSeq
-Jaq_HandleToSeq:
+.fn Jaq_HandleToSeq, global
 /* 80014020 00010F80  3C 80 80 36 */	lis r4, rootseq@ha
 /* 80014024 00010F84  54 63 10 3A */	slwi r3, r3, 2
 /* 80014028 00010F88  38 04 32 A0 */	addi r0, r4, rootseq@l
 /* 8001402C 00010F8C  7C 60 1A 14 */	add r3, r0, r3
 /* 80014030 00010F90  80 63 00 00 */	lwz r3, 0(r3)
 /* 80014034 00010F94  4E 80 00 20 */	blr 
+.endfn Jaq_HandleToSeq
 
 .balign 32, 0
-Init_Track__FP5seqp_UlP5seqp_:
+.fn Init_Track__FP5seqp_UlP5seqp_, local
 /* 80014040 00010FA0  7C 08 02 A6 */	mflr r0
 /* 80014044 00010FA4  28 05 00 00 */	cmplwi r5, 0
 /* 80014048 00010FA8  90 01 00 04 */	stw r0, 4(r1)
@@ -409,10 +411,10 @@ Init_Track__FP5seqp_UlP5seqp_:
 /* 8001439C 000112FC  38 21 00 20 */	addi r1, r1, 0x20
 /* 800143A0 00011300  7C 08 03 A6 */	mtlr r0
 /* 800143A4 00011304  4E 80 00 20 */	blr 
+.endfn Init_Track__FP5seqp_UlP5seqp_
 
 .balign 32, 0
-.global Jaq_StopSeq
-Jaq_StopSeq:
+.fn Jaq_StopSeq, global
 /* 800143C0 00011320  7C 08 02 A6 */	mflr r0
 /* 800143C4 00011324  2C 03 FF FF */	cmpwi r3, -1
 /* 800143C8 00011328  90 01 00 04 */	stw r0, 4(r1)
@@ -459,9 +461,10 @@ Jaq_StopSeq:
 /* 80014454 000113B4  38 21 00 18 */	addi r1, r1, 0x18
 /* 80014458 000113B8  7C 08 03 A6 */	mtlr r0
 /* 8001445C 000113BC  4E 80 00 20 */	blr 
+.endfn Jaq_StopSeq
 
 .balign 32, 0
-__StopSeq__FP5seqp_:
+.fn __StopSeq__FP5seqp_, local
 /* 80014460 000113C0  7C 08 02 A6 */	mflr r0
 /* 80014464 000113C4  38 80 00 00 */	li r4, 0
 /* 80014468 000113C8  90 01 00 04 */	stw r0, 4(r1)
@@ -484,10 +487,10 @@ __StopSeq__FP5seqp_:
 /* 800144A8 00011408  38 21 00 18 */	addi r1, r1, 0x18
 /* 800144AC 0001140C  7C 08 03 A6 */	mtlr r0
 /* 800144B0 00011410  4E 80 00 20 */	blr 
+.endfn __StopSeq__FP5seqp_
 
 .balign 32, 0
-.global Jaq_SetSeqData
-Jaq_SetSeqData:
+.fn Jaq_SetSeqData, global
 /* 800144C0 00011420  7C 08 02 A6 */	mflr r0
 /* 800144C4 00011424  38 E0 00 00 */	li r7, 0
 /* 800144C8 00011428  90 01 00 04 */	stw r0, 4(r1)
@@ -497,10 +500,10 @@ Jaq_SetSeqData:
 /* 800144D8 00011438  38 21 00 08 */	addi r1, r1, 8
 /* 800144DC 0001143C  7C 08 03 A6 */	mtlr r0
 /* 800144E0 00011440  4E 80 00 20 */	blr 
+.endfn Jaq_SetSeqData
 
 .balign 32, 0
-.global Jaq_SetSeqData_Limit
-Jaq_SetSeqData_Limit:
+.fn Jaq_SetSeqData_Limit, global
 /* 80014500 00011460  7C 08 02 A6 */	mflr r0
 /* 80014504 00011464  90 01 00 04 */	stw r0, 4(r1)
 /* 80014508 00011468  94 21 FF C0 */	stwu r1, -0x40(r1)
@@ -603,10 +606,10 @@ Jaq_SetSeqData_Limit:
 /* 80014664 000115C4  38 21 00 40 */	addi r1, r1, 0x40
 /* 80014668 000115C8  7C 08 03 A6 */	mtlr r0
 /* 8001466C 000115CC  4E 80 00 20 */	blr 
+.endfn Jaq_SetSeqData_Limit
 
 .balign 32, 0
-.global Jaq_SetBankNumber
-Jaq_SetBankNumber:
+.fn Jaq_SetBankNumber, global
 /* 80014680 000115E0  A0 03 02 78 */	lhz r0, 0x278(r3)
 /* 80014684 000115E4  28 03 00 00 */	cmplwi r3, 0
 /* 80014688 000115E8  54 05 06 3E */	clrlwi r5, r0, 0x18
@@ -619,10 +622,10 @@ Jaq_SetBankNumber:
 /* 800146A0 00011600  B0 03 02 78 */	sth r0, 0x278(r3)
 /* 800146A4 00011604  38 60 00 01 */	li r3, 1
 /* 800146A8 00011608  4E 80 00 20 */	blr 
+.endfn Jaq_SetBankNumber
 
 .balign 32, 0
-.global Jaq_StartSeq
-Jaq_StartSeq:
+.fn Jaq_StartSeq, global
 /* 800146C0 00011620  7C 08 02 A6 */	mflr r0
 /* 800146C4 00011624  90 01 00 04 */	stw r0, 4(r1)
 /* 800146C8 00011628  3C 03 00 01 */	addis r0, r3, 1
@@ -677,10 +680,10 @@ Jaq_StartSeq:
 /* 80014768 000116C8  38 21 00 08 */	addi r1, r1, 8
 /* 8001476C 000116CC  7C 08 03 A6 */	mtlr r0
 /* 80014770 000116D0  4E 80 00 20 */	blr 
+.endfn Jaq_StartSeq
 
 .balign 32, 0
-.global Jaq_OpenTrack
-Jaq_OpenTrack:
+.fn Jaq_OpenTrack, global
 /* 80014780 000116E0  7C 08 02 A6 */	mflr r0
 /* 80014784 000116E4  54 86 06 B5 */	rlwinm. r6, r4, 0, 0x1a, 0x1a
 /* 80014788 000116E8  90 01 00 04 */	stw r0, 4(r1)
@@ -771,10 +774,10 @@ Jaq_OpenTrack:
 /* 800148C0 00011820  38 21 00 40 */	addi r1, r1, 0x40
 /* 800148C4 00011824  7C 08 03 A6 */	mtlr r0
 /* 800148C8 00011828  4E 80 00 20 */	blr 
+.endfn Jaq_OpenTrack
 
 .balign 32, 0
-.global __AllNoteOff__FP5seqp_
-__AllNoteOff__FP5seqp_:
+.fn __AllNoteOff__FP5seqp_, global
 /* 800148E0 00011840  7C 08 02 A6 */	mflr r0
 /* 800148E4 00011844  90 01 00 04 */	stw r0, 4(r1)
 /* 800148E8 00011848  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -824,10 +827,10 @@ __AllNoteOff__FP5seqp_:
 /* 80014988 000118E8  38 21 00 28 */	addi r1, r1, 0x28
 /* 8001498C 000118EC  7C 08 03 A6 */	mtlr r0
 /* 80014990 000118F0  4E 80 00 20 */	blr 
+.endfn __AllNoteOff__FP5seqp_
 
 .balign 32, 0
-.global Jaq_CloseTrack
-Jaq_CloseTrack:
+.fn Jaq_CloseTrack, global
 /* 800149A0 00011900  7C 08 02 A6 */	mflr r0
 /* 800149A4 00011904  90 01 00 04 */	stw r0, 4(r1)
 /* 800149A8 00011908  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -910,9 +913,10 @@ Jaq_CloseTrack:
 /* 80014AB4 00011A14  38 21 00 28 */	addi r1, r1, 0x28
 /* 80014AB8 00011A18  7C 08 03 A6 */	mtlr r0
 /* 80014ABC 00011A1C  4E 80 00 20 */	blr 
+.endfn Jaq_CloseTrack
 
 .balign 32, 0
-Jaq_RootCallback__FPv:
+.fn Jaq_RootCallback__FPv, local
 /* 80014AC0 00011A20  7C 08 02 A6 */	mflr r0
 /* 80014AC4 00011A24  28 03 00 00 */	cmplwi r3, 0
 /* 80014AC8 00011A28  90 01 00 04 */	stw r0, 4(r1)
@@ -977,21 +981,28 @@ Jaq_RootCallback__FPv:
 /* 80014B9C 00011AFC  38 21 00 20 */	addi r1, r1, 0x20
 /* 80014BA0 00011B00  7C 08 03 A6 */	mtlr r0
 /* 80014BA4 00011B04  4E 80 00 20 */	blr 
+.endfn Jaq_RootCallback__FPv
 
 .section .sbss, "wa"
 .balign 8
-BACK_P:
+.obj BACK_P, local
 	.skip 4
-GET_P:
+.endobj BACK_P
+.obj GET_P, local
 	.skip 4
-SEQ_REMAIN:
+.endobj GET_P
+.obj SEQ_REMAIN, local
 	.skip 4
+.endobj SEQ_REMAIN
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803E8328:
+.obj lbl_803E8328, local
 	.float 0.0
-lbl_803E832C:
+.endobj lbl_803E8328
+.obj lbl_803E832C, local
 	.float 1.0
-lbl_803E8330:
+.endobj lbl_803E832C
+.obj lbl_803E8330, local
 	.float 0.5
+.endobj lbl_803E8330

@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global makeObjectActor__Fv
-makeObjectActor__Fv:
+.fn makeObjectActor__Fv, local
 /* 80119B30 00116A90  7C 08 02 A6 */	mflr r0
 /* 80119B34 00116A94  38 60 00 1C */	li r3, 0x1c
 /* 80119B38 00116A98  90 01 00 04 */	stw r0, 4(r1)
@@ -33,9 +32,9 @@ makeObjectActor__Fv:
 /* 80119B9C 00116AFC  38 21 00 10 */	addi r1, r1, 0x10
 /* 80119BA0 00116B00  7C 08 03 A6 */	mtlr r0
 /* 80119BA4 00116B04  4E 80 00 20 */	blr 
+.endfn makeObjectActor__Fv
 
-.global initialise__14GenObjectActorFv
-initialise__14GenObjectActorFv:
+.fn initialise__14GenObjectActorFv, global
 /* 80119BA8 00116B08  80 ED 30 74 */	lwz r7, factory__16GenObjectFactory@sda21(r13)
 /* 80119BAC 00116B0C  80 A7 00 00 */	lwz r5, 0(r7)
 /* 80119BB0 00116B10  80 07 00 04 */	lwz r0, 4(r7)
@@ -71,9 +70,9 @@ initialise__14GenObjectActorFv:
 /* 80119C28 00116B88  38 03 00 01 */	addi r0, r3, 1
 /* 80119C2C 00116B8C  90 07 00 00 */	stw r0, 0(r7)
 /* 80119C30 00116B90  4E 80 00 20 */	blr 
+.endfn initialise__14GenObjectActorFv
 
-.global doRead__14GenObjectActorFR18RandomAccessStream
-doRead__14GenObjectActorFR18RandomAccessStream:
+.fn doRead__14GenObjectActorFR18RandomAccessStream, global
 /* 80119C34 00116B94  7C 08 02 A6 */	mflr r0
 /* 80119C38 00116B98  90 01 00 04 */	stw r0, 4(r1)
 /* 80119C3C 00116B9C  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -90,9 +89,9 @@ doRead__14GenObjectActorFR18RandomAccessStream:
 /* 80119C68 00116BC8  38 21 00 18 */	addi r1, r1, 0x18
 /* 80119C6C 00116BCC  7C 08 03 A6 */	mtlr r0
 /* 80119C70 00116BD0  4E 80 00 20 */	blr 
+.endfn doRead__14GenObjectActorFR18RandomAccessStream
 
-.global birth__14GenObjectActorFR9BirthInfo
-birth__14GenObjectActorFR9BirthInfo:
+.fn birth__14GenObjectActorFR9BirthInfo, global
 /* 80119C74 00116BD4  7C 08 02 A6 */	mflr r0
 /* 80119C78 00116BD8  90 01 00 04 */	stw r0, 4(r1)
 /* 80119C7C 00116BDC  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -121,45 +120,56 @@ birth__14GenObjectActorFR9BirthInfo:
 /* 80119CD8 00116C38  38 21 00 18 */	addi r1, r1, 0x18
 /* 80119CDC 00116C3C  7C 08 03 A6 */	mtlr r0
 /* 80119CE0 00116C40  4E 80 00 20 */	blr 
+.endfn birth__14GenObjectActorFR9BirthInfo
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802C37C0:
+.obj lbl_802C37C0, local
 	.asciz "genActor.cpp"
+.endobj lbl_802C37C0
 .balign 4
-lbl_802C37D0:
+.obj lbl_802C37D0, local
 	.asciz "genActor"
+.endobj lbl_802C37D0
 .balign 4
-lbl_802C37DC:
+.obj lbl_802C37DC, local
 	.asciz "object type"
+.endobj lbl_802C37DC
 .balign 4
-lbl_802C37E8:
+.obj lbl_802C37E8, local
 	.asciz "create actor"
+.endobj lbl_802C37E8
 .balign 4
-lbl_802C37F8:
+.obj lbl_802C37F8, local
 	.asciz "create Actor"
+.endobj lbl_802C37F8
 .balign 4
-lbl_802C3808:
+.obj lbl_802C3808, local
 	.asciz "GenObjectActor"
+.endobj lbl_802C3808
 .balign 4
-lbl_802C3818:
+.obj lbl_802C3818, local
 	.asciz "Parameters"
+.endobj lbl_802C3818
 .balign 4
-lbl_802C3824:
+.obj lbl_802C3824, local
 	.4byte __RTTI__10Parameters
 	.4byte 0
 	.4byte 0
+.endobj lbl_802C3824
 .balign 4
-lbl_802C3830:
+.obj lbl_802C3830, local
 	.asciz "GenObject"
+.endobj lbl_802C3830
 .balign 4
-lbl_802C383C:
+.obj lbl_802C383C, local
 	.4byte __RTTI__10Parameters
 	.4byte 0
 	.4byte __RTTI__7GenBase
 	.4byte 0
 	.4byte 0
-lbl_802C3850:
+.endobj lbl_802C383C
+.obj lbl_802C3850, local
 	.4byte __RTTI__10Parameters
 	.4byte 0
 	.4byte __RTTI__7GenBase
@@ -167,8 +177,8 @@ lbl_802C3850:
 	.4byte __RTTI__9GenObject
 	.4byte 0
 	.4byte 0
-.global __vt__14GenObjectActor
-__vt__14GenObjectActor:
+.endobj lbl_802C3850
+.obj __vt__14GenObjectActor, global
 	.4byte __RTTI__14GenObjectActor
 	.4byte 0
 	.4byte doWrite__7GenBaseFR18RandomAccessStream
@@ -183,22 +193,28 @@ __vt__14GenObjectActor:
 	.4byte update__9GenObjectFP9Generator
 	.4byte render__9GenObjectFR8GraphicsP9Generator
 	.4byte birth__14GenObjectActorFR9BirthInfo
+.endobj __vt__14GenObjectActor
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-__RTTI__10Parameters:
+.obj __RTTI__10Parameters, local
 	.4byte lbl_802C3818
 	.4byte 0
+.endobj __RTTI__10Parameters
 .balign 4
-lbl_803E2DD8:
+.obj lbl_803E2DD8, local
 	.asciz "GenBase"
+.endobj lbl_803E2DD8
 .balign 4
-__RTTI__7GenBase:
+.obj __RTTI__7GenBase, local
 	.4byte lbl_803E2DD8
 	.4byte lbl_802C3824
-__RTTI__9GenObject:
+.endobj __RTTI__7GenBase
+.obj __RTTI__9GenObject, local
 	.4byte lbl_802C3830
 	.4byte lbl_802C383C
-__RTTI__14GenObjectActor:
+.endobj __RTTI__9GenObject
+.obj __RTTI__14GenObjectActor, local
 	.4byte lbl_802C3808
 	.4byte lbl_802C3850
+.endobj __RTTI__14GenObjectActor

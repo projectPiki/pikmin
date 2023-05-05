@@ -924,30 +924,44 @@ __RTTI__9ActRescue:
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803E9698:
+.obj lbl_803E9698, local
 	.float 0.0
-lbl_803E969C:
+.endobj lbl_803E9698
+.obj lbl_803E969C, local
 	.float 5.0
-lbl_803E96A0:
+.endobj lbl_803E969C
+.obj lbl_803E96A0, local
 	.float 0.7
+.endobj lbl_803E96A0
 .balign 8
-lbl_803E96A8:
+.obj lbl_803E96A8, local
 	.double 0.5
-lbl_803E96B0:
+.endobj lbl_803E96A8
+.balign 8
+.obj lbl_803E96B0, local
 	.double 3.0
-lbl_803E96B8:
+.endobj lbl_803E96B0
+.obj lbl_803E96B8, local
 	.float 30.0
-lbl_803E96BC:
+.endobj lbl_803E96B8
+.obj lbl_803E96BC, local
 	.float -5.0
-lbl_803E96C0:
+.endobj lbl_803E96BC
+.obj lbl_803E96C0, local
 	.float 10.0
-lbl_803E96C4:
+.endobj lbl_803E96C0
+.obj lbl_803E96C4, local
 	.float 200.0
-lbl_803E96C8:
+.endobj lbl_803E96C4
+.obj lbl_803E96C8, local
 	.float 0.5
-lbl_803E96CC:
+.endobj lbl_803E96C8
+.obj lbl_803E96CC, local
 	.float 0.25132743
-lbl_803E96D0:
+.endobj lbl_803E96CC
+.obj lbl_803E96D0, local
 	.float 0.3
-lbl_803E96D4:
+.endobj lbl_803E96D0
+.obj lbl_803E96D4, local
 	.float 15.0
+.endobj lbl_803E96D4

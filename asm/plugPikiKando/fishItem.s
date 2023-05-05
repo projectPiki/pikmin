@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global __ct__13FishGeneratorFv
-__ct__13FishGeneratorFv:
+.fn __ct__13FishGeneratorFv, global
 /* 800E6668 000E35C8  7C 08 02 A6 */	mflr r0
 /* 800E666C 000E35CC  38 80 00 25 */	li r4, 0x25
 /* 800E6670 000E35D0  90 01 00 04 */	stw r0, 4(r1)
@@ -46,9 +45,9 @@ __ct__13FishGeneratorFv:
 /* 800E670C 000E366C  38 21 00 20 */	addi r1, r1, 0x20
 /* 800E6710 000E3670  7C 08 03 A6 */	mtlr r0
 /* 800E6714 000E3674  4E 80 00 20 */	blr 
+.endfn __ct__13FishGeneratorFv
 
-.global __ct__4FishFv
-__ct__4FishFv:
+.fn __ct__4FishFv, weak
 /* 800E6718 000E3678  C0 02 99 90 */	lfs f0, lbl_803E9B90@sda21(r2)
 /* 800E671C 000E367C  D0 03 00 08 */	stfs f0, 8(r3)
 /* 800E6720 000E3680  D0 03 00 04 */	stfs f0, 4(r3)
@@ -57,9 +56,9 @@ __ct__4FishFv:
 /* 800E672C 000E368C  D0 03 00 10 */	stfs f0, 0x10(r3)
 /* 800E6730 000E3690  D0 03 00 0C */	stfs f0, 0xc(r3)
 /* 800E6734 000E3694  4E 80 00 20 */	blr 
+.endfn __ct__4FishFv
 
-.global startAI__13FishGeneratorFi
-startAI__13FishGeneratorFi:
+.fn startAI__13FishGeneratorFi, global
 /* 800E6738 000E3698  7C 08 02 A6 */	mflr r0
 /* 800E673C 000E369C  90 01 00 04 */	stw r0, 4(r1)
 /* 800E6740 000E36A0  38 00 00 20 */	li r0, 0x20
@@ -171,9 +170,9 @@ startAI__13FishGeneratorFi:
 /* 800E68E0 000E3840  38 21 00 E0 */	addi r1, r1, 0xe0
 /* 800E68E4 000E3844  7C 08 03 A6 */	mtlr r0
 /* 800E68E8 000E3848  4E 80 00 20 */	blr 
+.endfn startAI__13FishGeneratorFi
 
-.global update__13FishGeneratorFv
-update__13FishGeneratorFv:
+.fn update__13FishGeneratorFv, global
 /* 800E68EC 000E384C  7C 08 02 A6 */	mflr r0
 /* 800E68F0 000E3850  38 A0 00 00 */	li r5, 0
 /* 800E68F4 000E3854  90 01 00 04 */	stw r0, 4(r1)
@@ -258,9 +257,9 @@ update__13FishGeneratorFv:
 /* 800E6A20 000E3980  38 21 00 50 */	addi r1, r1, 0x50
 /* 800E6A24 000E3984  7C 08 03 A6 */	mtlr r0
 /* 800E6A28 000E3988  4E 80 00 20 */	blr 
+.endfn update__13FishGeneratorFv
 
-.global moveFish__13FishGeneratorFP4Fish
-moveFish__13FishGeneratorFP4Fish:
+.fn moveFish__13FishGeneratorFP4Fish, global
 /* 800E6A2C 000E398C  7C 08 02 A6 */	mflr r0
 /* 800E6A30 000E3990  90 01 00 04 */	stw r0, 4(r1)
 /* 800E6A34 000E3994  94 21 FC F8 */	stwu r1, -0x308(r1)
@@ -612,9 +611,9 @@ moveFish__13FishGeneratorFP4Fish:
 /* 800E6F74 000E3ED4  38 21 03 08 */	addi r1, r1, 0x308
 /* 800E6F78 000E3ED8  7C 08 03 A6 */	mtlr r0
 /* 800E6F7C 000E3EDC  4E 80 00 20 */	blr 
+.endfn moveFish__13FishGeneratorFP4Fish
 
-.global refresh__13FishGeneratorFR8Graphics
-refresh__13FishGeneratorFR8Graphics:
+.fn refresh__13FishGeneratorFR8Graphics, global
 /* 800E6F80 000E3EE0  7C 08 02 A6 */	mflr r0
 /* 800E6F84 000E3EE4  38 A0 00 00 */	li r5, 0
 /* 800E6F88 000E3EE8  90 01 00 04 */	stw r0, 4(r1)
@@ -655,38 +654,47 @@ refresh__13FishGeneratorFR8Graphics:
 /* 800E700C 000E3F6C  38 21 00 20 */	addi r1, r1, 0x20
 /* 800E7010 000E3F70  7C 08 03 A6 */	mtlr r0
 /* 800E7014 000E3F74  4E 80 00 20 */	blr 
+.endfn refresh__13FishGeneratorFR8Graphics
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802BBD70:
+.obj lbl_802BBD70, local
 	.asciz "fishItem.cpp"
+.endobj lbl_802BBD70
 .balign 4
-lbl_802BBD80:
+.obj lbl_802BBD80, local
 	.asciz "FishGenerator"
+.endobj lbl_802BBD80
 .balign 4
-lbl_802BBD90:
+.obj lbl_802BBD90, local
 	.asciz "PaniAnimKeyListener"
+.endobj lbl_802BBD90
 .balign 4
-lbl_802BBDA4:
+.obj lbl_802BBDA4, local
 	.asciz "EventTalker"
+.endobj lbl_802BBDA4
 .balign 4
-lbl_802BBDB0:
+.obj lbl_802BBDB0, local
 	.asciz "RefCountable"
+.endobj lbl_802BBDB0
 .balign 4
-lbl_802BBDC0:
+.obj lbl_802BBDC0, local
 	.asciz "Creature"
+.endobj lbl_802BBDC0
 .balign 4
-lbl_802BBDCC:
+.obj lbl_802BBDCC, local
 	.4byte __RTTI__11EventTalker
 	.4byte 0x8
 	.4byte __RTTI__12RefCountable
 	.4byte 0
 	.4byte 0
+.endobj lbl_802BBDCC
 .balign 4
-lbl_802BBDE0:
+.obj lbl_802BBDE0, local
 	.asciz "AICreature"
+.endobj lbl_802BBDE0
 .balign 4
-lbl_802BBDEC:
+.obj lbl_802BBDEC, local
 	.4byte __RTTI__19PaniAnimKeyListener
 	.4byte 0x2B8
 	.4byte __RTTI__11EventTalker
@@ -696,11 +704,13 @@ lbl_802BBDEC:
 	.4byte __RTTI__8Creature
 	.4byte 0
 	.4byte 0
+.endobj lbl_802BBDEC
 .balign 4
-lbl_802BBE10:
+.obj lbl_802BBE10, local
 	.asciz "ItemCreature"
+.endobj lbl_802BBE10
 .balign 4
-lbl_802BBE20:
+.obj lbl_802BBE20, local
 	.4byte __RTTI__19PaniAnimKeyListener
 	.4byte 0x2B8
 	.4byte __RTTI__11EventTalker
@@ -712,7 +722,8 @@ lbl_802BBE20:
 	.4byte __RTTI__10AICreature
 	.4byte 0
 	.4byte 0
-lbl_802BBE4C:
+.endobj lbl_802BBE20
+.obj lbl_802BBE4C, local
 	.4byte __RTTI__19PaniAnimKeyListener
 	.4byte 0x2B8
 	.4byte __RTTI__11EventTalker
@@ -726,8 +737,8 @@ lbl_802BBE4C:
 	.4byte __RTTI__12ItemCreature
 	.4byte 0
 	.4byte 0
-.global __vt__13FishGenerator
-__vt__13FishGenerator:
+.endobj lbl_802BBE4C
+.obj __vt__13FishGenerator, global
 	.4byte __RTTI__13FishGenerator
 	.4byte 0
 	.4byte addCntCallback__12RefCountableFv
@@ -815,99 +826,141 @@ __vt__13FishGenerator:
 	.4byte stopMotion__12ItemCreatureFv
 	.4byte animationKeyUpdated__10AICreatureFR16PaniAnimKeyEvent
 	.4byte finalSetup__12ItemCreatureFv
+.endobj __vt__13FishGenerator
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-lbl_803E15E0:
+.obj lbl_803E15E0, local
 	.float 4.0
-lbl_803E15E4:
+.endobj lbl_803E15E0
+.obj lbl_803E15E4, local
 	.float 0.0
-lbl_803E15E8:
+.endobj lbl_803E15E4
+.obj lbl_803E15E8, local
 	.float 0.0
-lbl_803E15EC:
+.endobj lbl_803E15E8
+.obj lbl_803E15EC, local
 	.float 0.0
-lbl_803E15F0:
+.endobj lbl_803E15EC
+.obj lbl_803E15F0, local
 	.float 0.0
-lbl_803E15F4:
+.endobj lbl_803E15F0
+.obj lbl_803E15F4, local
 	.float 0.0
-lbl_803E15F8:
+.endobj lbl_803E15F4
+.obj lbl_803E15F8, local
 	.float 0.0
-lbl_803E15FC:
+.endobj lbl_803E15F8
+.obj lbl_803E15FC, local
 	.float 0.0
-lbl_803E1600:
+.endobj lbl_803E15FC
+.obj lbl_803E1600, local
 	.float 0.0
-lbl_803E1604:
+.endobj lbl_803E1600
+.obj lbl_803E1604, local
 	.float 0.0
-lbl_803E1608:
+.endobj lbl_803E1604
+.obj lbl_803E1608, local
 	.float 0.0
-lbl_803E160C:
+.endobj lbl_803E1608
+.obj lbl_803E160C, local
 	.float 0.0
-lbl_803E1610:
+.endobj lbl_803E160C
+.obj lbl_803E1610, local
 	.float 0.0
-lbl_803E1614:
+.endobj lbl_803E1610
+.obj lbl_803E1614, local
 	.float 100.0
-lbl_803E1618:
+.endobj lbl_803E1614
+.obj lbl_803E1618, local
 	.float 100.0
-lbl_803E161C:
+.endobj lbl_803E1618
+.obj lbl_803E161C, local
 	.float 0.4
-lbl_803E1620:
+.endobj lbl_803E161C
+.obj lbl_803E1620, local
 	.float 0.2
-lbl_803E1624:
+.endobj lbl_803E1620
+.obj lbl_803E1624, local
 	.float 0.4
-lbl_803E1628:
+.endobj lbl_803E1624
+.obj lbl_803E1628, local
 	.float 100.0
-lbl_803E162C:
+.endobj lbl_803E1628
+.obj lbl_803E162C, local
 	.float 0.0
-lbl_803E1630:
+.endobj lbl_803E162C
+.obj lbl_803E1630, local
 	.float 100.0
-lbl_803E1634:
+.endobj lbl_803E1630
+.obj lbl_803E1634, local
 	.float 0.9
-lbl_803E1638:
+.endobj lbl_803E1634
+.obj lbl_803E1638, local
 	.float 0.1
-__RTTI__19PaniAnimKeyListener:
+.endobj lbl_803E1638
+.obj __RTTI__19PaniAnimKeyListener, local
 	.4byte lbl_802BBD90
 	.4byte 0
-__RTTI__11EventTalker:
+.endobj __RTTI__19PaniAnimKeyListener
+.obj __RTTI__11EventTalker, local
 	.4byte lbl_802BBDA4
 	.4byte 0
-__RTTI__12RefCountable:
+.endobj __RTTI__11EventTalker
+.obj __RTTI__12RefCountable, local
 	.4byte lbl_802BBDB0
 	.4byte 0
-__RTTI__8Creature:
+.endobj __RTTI__12RefCountable
+.obj __RTTI__8Creature, local
 	.4byte lbl_802BBDC0
 	.4byte lbl_802BBDCC
-__RTTI__10AICreature:
+.endobj __RTTI__8Creature
+.obj __RTTI__10AICreature, local
 	.4byte lbl_802BBDE0
 	.4byte lbl_802BBDEC
-__RTTI__12ItemCreature:
+.endobj __RTTI__10AICreature
+.obj __RTTI__12ItemCreature, local
 	.4byte lbl_802BBE10
 	.4byte lbl_802BBE20
-__RTTI__13FishGenerator:
+.endobj __RTTI__12ItemCreature
+.obj __RTTI__13FishGenerator, local
 	.4byte lbl_802BBD80
 	.4byte lbl_802BBE4C
+.endobj __RTTI__13FishGenerator
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803E9B90:
+.obj lbl_803E9B90, local
 	.float 0.0
-lbl_803E9B94:
+.endobj lbl_803E9B90
+.obj lbl_803E9B94, local
 	.float 1.0
-lbl_803E9B98:
+.endobj lbl_803E9B94
+.obj lbl_803E9B98, local
 	.float 32767.0
-lbl_803E9B9C:
+.endobj lbl_803E9B98
+.obj lbl_803E9B9C, local
 	.float 40.0
-lbl_803E9BA0:
+.endobj lbl_803E9B9C
+.obj lbl_803E9BA0, local
 	.float 2.0
-lbl_803E9BA4:
+.endobj lbl_803E9BA0
+.obj lbl_803E9BA4, local
 	.float 3.1415927
-lbl_803E9BA8:
-	.4byte 0x43300000
-	.4byte 0x80000000
-lbl_803E9BB0:
+.endobj lbl_803E9BA4
+.balign 8
+.obj lbl_803E9BA8, local
+	.8byte 0x4330000080000000
+.endobj lbl_803E9BA8
+.obj lbl_803E9BB0, local
 	.float 20.0
-lbl_803E9BB4:
+.endobj lbl_803E9BB0
+.obj lbl_803E9BB4, local
 	.float 4.0
-lbl_803E9BB8:
+.endobj lbl_803E9BB4
+.obj lbl_803E9BB8, local
 	.float 0.1
-lbl_803E9BBC:
+.endobj lbl_803E9BB8
+.obj lbl_803E9BBC, local
 	.float 0.5
+.endobj lbl_803E9BBC

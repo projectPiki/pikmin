@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global demoCheck__4NaviFv
-demoCheck__4NaviFv:
+.fn demoCheck__4NaviFv, global
 /* 80082818 0007F778  7C 08 02 A6 */	mflr r0
 /* 8008281C 0007F77C  3C 80 80 3A */	lis r4, flowCont@ha
 /* 80082820 0007F780  90 01 00 04 */	stw r0, 4(r1)
@@ -465,9 +464,9 @@ demoCheck__4NaviFv:
 /* 80082EE4 0007FE44  38 21 01 70 */	addi r1, r1, 0x170
 /* 80082EE8 0007FE48  7C 08 03 A6 */	mtlr r0
 /* 80082EEC 0007FE4C  4E 80 00 20 */	blr 
+.endfn demoCheck__4NaviFv
 
-.global demoCheck__4PikiFv
-demoCheck__4PikiFv:
+.fn demoCheck__4PikiFv, global
 /* 80082EF0 0007FE50  7C 08 02 A6 */	mflr r0
 /* 80082EF4 0007FE54  90 01 00 04 */	stw r0, 4(r1)
 /* 80082EF8 0007FE58  94 21 FF 50 */	stwu r1, -0xb0(r1)
@@ -625,16 +624,21 @@ demoCheck__4PikiFv:
 /* 80083130 00080090  38 21 00 B0 */	addi r1, r1, 0xb0
 /* 80083134 00080094  7C 08 03 A6 */	mtlr r0
 /* 80083138 00080098  4E 80 00 20 */	blr 
+.endfn demoCheck__4PikiFv
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803E8C08:
+.obj lbl_803E8C08, local
 	.float 30.0
-lbl_803E8C0C:
+.endobj lbl_803E8C08
+.obj lbl_803E8C0C, local
 	.float 0.0
+.endobj lbl_803E8C0C
 .balign 8
-lbl_803E8C10:
+.obj lbl_803E8C10, local
 	.double 0.5
+.endobj lbl_803E8C10
 .balign 8
-lbl_803E8C18:
+.obj lbl_803E8C18, local
 	.double 3.0
+.endobj lbl_803E8C18

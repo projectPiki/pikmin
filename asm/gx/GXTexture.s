@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global __GetImageTileCount
-__GetImageTileCount:
+.fn __GetImageTileCount, global
 /* 80212104 0020F064  28 03 00 3C */	cmplwi r3, 0x3c
 /* 80212108 0020F068  41 81 00 40 */	bgt .L_80212148
 /* 8021210C 0020F06C  3D 20 80 2F */	lis r9, lbl_802E8E80@ha
@@ -62,9 +61,9 @@ __GetImageTileCount:
 .L_802121C4:
 /* 802121C4 0020F124  90 08 00 00 */	stw r0, 0(r8)
 /* 802121C8 0020F128  4E 80 00 20 */	blr 
+.endfn __GetImageTileCount
 
-.global GXInitTexObj
-GXInitTexObj:
+.fn GXInitTexObj, global
 /* 802121CC 0020F12C  7C 08 02 A6 */	mflr r0
 /* 802121D0 0020F130  90 01 00 04 */	stw r0, 4(r1)
 /* 802121D4 0020F134  94 21 FF A0 */	stwu r1, -0x60(r1)
@@ -225,9 +224,9 @@ GXInitTexObj:
 /* 80212414 0020F374  38 21 00 60 */	addi r1, r1, 0x60
 /* 80212418 0020F378  7C 08 03 A6 */	mtlr r0
 /* 8021241C 0020F37C  4E 80 00 20 */	blr 
+.endfn GXInitTexObj
 
-.global GXInitTexObjLOD
-GXInitTexObjLOD:
+.fn GXInitTexObjLOD, global
 /* 80212420 0020F380  94 21 FF C8 */	stwu r1, -0x38(r1)
 /* 80212424 0020F384  C0 02 C3 90 */	lfs f0, lbl_803EC590@sda21(r2)
 /* 80212428 0020F388  FC 03 00 40 */	fcmpo cr0, f3, f0
@@ -339,14 +338,14 @@ GXInitTexObjLOD:
 /* 802125A8 0020F508  50 04 44 2E */	rlwimi r4, r0, 8, 0x10, 0x17
 /* 802125AC 0020F50C  90 83 00 04 */	stw r4, 4(r3)
 /* 802125B0 0020F510  4E 80 00 20 */	blr 
+.endfn GXInitTexObjLOD
 
-.global GXGetTexObjFmt
-GXGetTexObjFmt:
+.fn GXGetTexObjFmt, global
 /* 802125B4 0020F514  80 63 00 14 */	lwz r3, 0x14(r3)
 /* 802125B8 0020F518  4E 80 00 20 */	blr 
+.endfn GXGetTexObjFmt
 
-.global GXLoadTexObjPreLoaded
-GXLoadTexObjPreLoaded:
+.fn GXLoadTexObjPreLoaded, global
 /* 802125BC 0020F51C  7C 08 02 A6 */	mflr r0
 /* 802125C0 0020F520  38 ED 2A 90 */	addi r7, r13, GXTexImage0Ids@sda21
 /* 802125C4 0020F524  90 01 00 04 */	stw r0, 4(r1)
@@ -454,9 +453,9 @@ GXLoadTexObjPreLoaded:
 /* 80212758 0020F6B8  38 21 00 28 */	addi r1, r1, 0x28
 /* 8021275C 0020F6BC  7C 08 03 A6 */	mtlr r0
 /* 80212760 0020F6C0  4E 80 00 20 */	blr 
+.endfn GXLoadTexObjPreLoaded
 
-.global GXLoadTexObj
-GXLoadTexObj:
+.fn GXLoadTexObj, global
 /* 80212764 0020F6C4  7C 08 02 A6 */	mflr r0
 /* 80212768 0020F6C8  90 01 00 04 */	stw r0, 4(r1)
 /* 8021276C 0020F6CC  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -478,9 +477,9 @@ GXLoadTexObj:
 /* 802127AC 0020F70C  7C 08 03 A6 */	mtlr r0
 /* 802127B0 0020F710  38 21 00 18 */	addi r1, r1, 0x18
 /* 802127B4 0020F714  4E 80 00 20 */	blr 
+.endfn GXLoadTexObj
 
-.global GXInitTexCacheRegion
-GXInitTexCacheRegion:
+.fn GXInitTexCacheRegion, global
 /* 802127B8 0020F718  2C 06 00 01 */	cmpwi r6, 1
 /* 802127BC 0020F71C  41 82 00 28 */	beq .L_802127E4
 /* 802127C0 0020F720  40 80 00 10 */	bge .L_802127D0
@@ -564,9 +563,9 @@ GXInitTexCacheRegion:
 /* 802128CC 0020F82C  98 83 00 0C */	stb r4, 0xc(r3)
 /* 802128D0 0020F830  98 03 00 0D */	stb r0, 0xd(r3)
 /* 802128D4 0020F834  4E 80 00 20 */	blr 
+.endfn GXInitTexCacheRegion
 
-.global GXInitTlutRegion
-GXInitTlutRegion:
+.fn GXInitTlutRegion, global
 /* 802128D8 0020F838  38 00 00 00 */	li r0, 0
 /* 802128DC 0020F83C  90 03 00 00 */	stw r0, 0(r3)
 /* 802128E0 0020F840  3C 04 FF F8 */	addis r0, r4, 0xfff8
@@ -585,9 +584,9 @@ GXInitTlutRegion:
 /* 80212914 0020F874  64 00 65 00 */	oris r0, r0, 0x6500
 /* 80212918 0020F878  90 03 00 00 */	stw r0, 0(r3)
 /* 8021291C 0020F87C  4E 80 00 20 */	blr 
+.endfn GXInitTlutRegion
 
-.global GXInvalidateTexAll
-GXInvalidateTexAll:
+.fn GXInvalidateTexAll, global
 /* 80212920 0020F880  7C 08 02 A6 */	mflr r0
 /* 80212924 0020F884  90 01 00 04 */	stw r0, 4(r1)
 /* 80212928 0020F888  94 21 FF F8 */	stwu r1, -8(r1)
@@ -606,25 +605,25 @@ GXInvalidateTexAll:
 /* 8021295C 0020F8BC  38 21 00 08 */	addi r1, r1, 8
 /* 80212960 0020F8C0  7C 08 03 A6 */	mtlr r0
 /* 80212964 0020F8C4  4E 80 00 20 */	blr 
+.endfn GXInvalidateTexAll
 
-.global GXSetTexRegionCallback
-GXSetTexRegionCallback:
+.fn GXSetTexRegionCallback, global
 /* 80212968 0020F8C8  80 8D 2A 68 */	lwz r4, gx@sda21(r13)
 /* 8021296C 0020F8CC  84 04 04 10 */	lwzu r0, 0x410(r4)
 /* 80212970 0020F8D0  90 64 00 00 */	stw r3, 0(r4)
 /* 80212974 0020F8D4  7C 03 03 78 */	mr r3, r0
 /* 80212978 0020F8D8  4E 80 00 20 */	blr 
+.endfn GXSetTexRegionCallback
 
-.global GXSetTlutRegionCallback
-GXSetTlutRegionCallback:
+.fn GXSetTlutRegionCallback, global
 /* 8021297C 0020F8DC  80 8D 2A 68 */	lwz r4, gx@sda21(r13)
 /* 80212980 0020F8E0  84 04 04 14 */	lwzu r0, 0x414(r4)
 /* 80212984 0020F8E4  90 64 00 00 */	stw r3, 0(r4)
 /* 80212988 0020F8E8  7C 03 03 78 */	mr r3, r0
 /* 8021298C 0020F8EC  4E 80 00 20 */	blr 
+.endfn GXSetTlutRegionCallback
 
-.global __SetSURegs
-__SetSURegs:
+.fn __SetSURegs, local
 /* 80212990 0020F8F0  80 AD 2A 68 */	lwz r5, gx@sda21(r13)
 /* 80212994 0020F8F4  54 80 10 3A */	slwi r0, r4, 2
 /* 80212998 0020F8F8  54 69 10 3A */	slwi r9, r3, 2
@@ -676,9 +675,9 @@ __SetSURegs:
 /* 80212A50 0020F9B0  90 06 80 00 */	stw r0, 0xCC008000@l(r6)
 /* 80212A54 0020F9B4  B0 65 00 02 */	sth r3, 2(r5)
 /* 80212A58 0020F9B8  4E 80 00 20 */	blr 
+.endfn __SetSURegs
 
-.global __GXSetSUTexRegs
-__GXSetSUTexRegs:
+.fn __GXSetSUTexRegs, global
 /* 80212A5C 0020F9BC  7C 08 02 A6 */	mflr r0
 /* 80212A60 0020F9C0  90 01 00 04 */	stw r0, 4(r1)
 /* 80212A64 0020F9C4  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -785,11 +784,11 @@ __GXSetSUTexRegs:
 /* 80212BBC 0020FB1C  38 21 00 28 */	addi r1, r1, 0x28
 /* 80212BC0 0020FB20  7C 08 03 A6 */	mtlr r0
 /* 80212BC4 0020FB24  4E 80 00 20 */	blr 
+.endfn __GXSetSUTexRegs
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-.global lbl_802E8E80
-lbl_802E8E80:
+.obj lbl_802E8E80, local
 	.4byte .L_80212124
 	.4byte .L_80212130
 	.4byte .L_80212130
@@ -851,9 +850,9 @@ lbl_802E8E80:
 	.4byte .L_80212130
 	.4byte .L_80212148
 	.4byte .L_8021213C
+.endobj lbl_802E8E80
 
-.global lbl_802E8F74
-lbl_802E8F74:
+.obj lbl_802E8F74, local
 	.4byte .L_80212354
 	.4byte .L_80212368
 	.4byte .L_80212368
@@ -869,58 +868,67 @@ lbl_802E8F74:
 	.4byte .L_802123B8
 	.4byte .L_802123B8
 	.4byte .L_802123A4
+.endobj lbl_802E8F74
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-.global GXTexMode0Ids
-GXTexMode0Ids:
+.obj GXTexMode0Ids, global
 	.4byte 0x80818283
 	.4byte 0xA0A1A2A3
-.global GXTexMode1Ids
-GXTexMode1Ids:
+.endobj GXTexMode0Ids
+.obj GXTexMode1Ids, global
 	.4byte 0x84858687
 	.4byte 0xA4A5A6A7
-.global GXTexImage0Ids
-GXTexImage0Ids:
+.endobj GXTexMode1Ids
+.obj GXTexImage0Ids, global
 	.4byte 0x88898A8B
 	.4byte 0xA8A9AAAB
-.global GXTexImage1Ids
-GXTexImage1Ids:
+.endobj GXTexImage0Ids
+.obj GXTexImage1Ids, global
 	.4byte 0x8C8D8E8F
 	.4byte 0xACADAEAF
-.global GXTexImage2Ids
-GXTexImage2Ids:
+.endobj GXTexImage1Ids
+.obj GXTexImage2Ids, global
 	.4byte 0x90919293
 	.4byte 0xB0B1B2B3
-.global GXTexImage3Ids
-GXTexImage3Ids:
+.endobj GXTexImage2Ids
+.obj GXTexImage3Ids, global
 	.4byte 0x94959697
 	.4byte 0xB4B5B6B7
-.global GXTexTlutIds
-GXTexTlutIds:
+.endobj GXTexImage3Ids
+.obj GXTexTlutIds, global
 	.4byte 0x98999A9B
 	.4byte 0xB8B9BABB
-.global GX2HWFiltConv
-GX2HWFiltConv:
+.endobj GXTexTlutIds
+.obj GX2HWFiltConv, local
 	.4byte 0x00040105
-	.4byte 0x02060000
+	.2byte 0x0206
+.endobj GX2HWFiltConv
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803EC580:
-	.4byte 0x41800000
+.obj lbl_803EC580, local
+	.float 16.0
+.endobj lbl_803EC580
 .balign 8
-lbl_803EC588:
+.obj lbl_803EC588, local
 	.8byte 0x4330000000000000
-lbl_803EC590:
-	.4byte 0xC0800000
-lbl_803EC594:
-	.4byte 0x40800000
-lbl_803EC598:
-	.4byte 0x407F5C29
-lbl_803EC59C:
-	.4byte 0x42000000
-lbl_803EC5A0:
-	.4byte 0x00000000
-lbl_803EC5A4:
-	.4byte 0x41200000
+.endobj lbl_803EC588
+.obj lbl_803EC590, local
+	.float -4.0
+.endobj lbl_803EC590
+.obj lbl_803EC594, local
+	.float 4.0
+.endobj lbl_803EC594
+.obj lbl_803EC598, local
+	.float 3.99
+.endobj lbl_803EC598
+.obj lbl_803EC59C, local
+	.float 32.0
+.endobj lbl_803EC59C
+.obj lbl_803EC5A0, local
+	.float 0.0
+.endobj lbl_803EC5A0
+.obj lbl_803EC5A4, local
+	.float 10.0
+.endobj lbl_803EC5A4

@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global __ct__7ActRopeFP4Piki
-__ct__7ActRopeFP4Piki:
+.fn __ct__7ActRopeFP4Piki, global
 /* 800C1E24 000BED84  7C 08 02 A6 */	mflr r0
 /* 800C1E28 000BED88  38 A0 00 01 */	li r5, 1
 /* 800C1E2C 000BED8C  90 01 00 04 */	stw r0, 4(r1)
@@ -26,9 +25,9 @@ __ct__7ActRopeFP4Piki:
 /* 800C1E78 000BEDD8  38 21 00 18 */	addi r1, r1, 0x18
 /* 800C1E7C 000BEDDC  7C 08 03 A6 */	mtlr r0
 /* 800C1E80 000BEDE0  4E 80 00 20 */	blr 
+.endfn __ct__7ActRopeFP4Piki
 
-.global init__7ActRopeFP8Creature
-init__7ActRopeFP8Creature:
+.fn init__7ActRopeFP8Creature, global
 /* 800C1E84 000BEDE4  7C 08 02 A6 */	mflr r0
 /* 800C1E88 000BEDE8  38 80 00 3E */	li r4, 0x3e
 /* 800C1E8C 000BEDEC  90 01 00 04 */	stw r0, 4(r1)
@@ -126,9 +125,9 @@ init__7ActRopeFP8Creature:
 /* 800C1FF0 000BEF50  38 21 00 78 */	addi r1, r1, 0x78
 /* 800C1FF4 000BEF54  7C 08 03 A6 */	mtlr r0
 /* 800C1FF8 000BEF58  4E 80 00 20 */	blr 
+.endfn init__7ActRopeFP8Creature
 
-.global exec__7ActRopeFv
-exec__7ActRopeFv:
+.fn exec__7ActRopeFv, global
 /* 800C1FFC 000BEF5C  94 21 FF D0 */	stwu r1, -0x30(r1)
 /* 800C2000 000BEF60  80 A3 00 0C */	lwz r5, 0xc(r3)
 /* 800C2004 000BEF64  80 05 01 88 */	lwz r0, 0x188(r5)
@@ -159,9 +158,9 @@ exec__7ActRopeFv:
 .L_800C2064:
 /* 800C2064 000BEFC4  38 21 00 30 */	addi r1, r1, 0x30
 /* 800C2068 000BEFC8  4E 80 00 20 */	blr 
+.endfn exec__7ActRopeFv
 
-.global cleanup__7ActRopeFv
-cleanup__7ActRopeFv:
+.fn cleanup__7ActRopeFv, global
 /* 800C206C 000BEFCC  7C 08 02 A6 */	mflr r0
 /* 800C2070 000BEFD0  90 01 00 04 */	stw r0, 4(r1)
 /* 800C2074 000BEFD4  94 21 FF D0 */	stwu r1, -0x30(r1)
@@ -201,9 +200,9 @@ cleanup__7ActRopeFv:
 /* 800C20FC 000BF05C  38 21 00 30 */	addi r1, r1, 0x30
 /* 800C2100 000BF060  7C 08 03 A6 */	mtlr r0
 /* 800C2104 000BF064  4E 80 00 20 */	blr 
+.endfn cleanup__7ActRopeFv
 
-.global __dt__7ActRopeFv
-__dt__7ActRopeFv:
+.fn __dt__7ActRopeFv, weak
 /* 800C2108 000BF068  7C 08 02 A6 */	mflr r0
 /* 800C210C 000BF06C  90 01 00 04 */	stw r0, 4(r1)
 /* 800C2110 000BF070  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -230,27 +229,31 @@ __dt__7ActRopeFv:
 /* 800C2160 000BF0C0  38 21 00 18 */	addi r1, r1, 0x18
 /* 800C2164 000BF0C4  7C 08 03 A6 */	mtlr r0
 /* 800C2168 000BF0C8  4E 80 00 20 */	blr 
+.endfn __dt__7ActRopeFv
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802B7980:
+.obj lbl_802B7980, local
 	.asciz "aiRope.cpp"
+.endobj lbl_802B7980
 .balign 4
-lbl_802B798C:
+.obj lbl_802B798C, local
 	.asciz "Receiver<Piki>"
+.endobj lbl_802B798C
 .balign 4
-lbl_802B799C:
+.obj lbl_802B799C, local
 	.4byte "__RTTI__15Receiver<4Piki>"
 	.4byte 0
 	.4byte 0
-lbl_802B79A8:
+.endobj lbl_802B799C
+.obj lbl_802B79A8, local
 	.4byte "__RTTI__15Receiver<4Piki>"
 	.4byte 0
 	.4byte __RTTI__6Action
 	.4byte 0
 	.4byte 0
-.global __vt__7ActRope
-__vt__7ActRope:
+.endobj lbl_802B79A8
+.obj __vt__7ActRope, global
 	.4byte __RTTI__7ActRope
 	.4byte 0
 	.4byte "procMsg__15Receiver<4Piki>FP4PikiP3Msg"
@@ -276,7 +279,8 @@ __vt__7ActRope:
 	.4byte restart__6ActionFv
 	.4byte resumable__6ActionFv
 	.4byte getInfo__6ActionFPc
-lbl_802B7A20:
+.endobj __vt__7ActRope
+.obj lbl_802B7A20, local
 	.4byte .L_800A7908
 	.4byte .L_800A7930
 	.4byte .L_800A7944
@@ -288,52 +292,70 @@ lbl_802B7A20:
 	.4byte .L_800A791C
 	.4byte .L_800A79D0
 	.4byte .L_800A79BC
+.endobj lbl_802B7A20
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-lbl_803E0810:
+.obj lbl_803E0810, local
 	.asciz "rope"
+.endobj lbl_803E0810
 .balign 4
-lbl_803E0818:
+.obj lbl_803E0818, local
 	.float 0.0
-lbl_803E081C:
+.endobj lbl_803E0818
+.obj lbl_803E081C, local
 	.float 1.0
-lbl_803E0820:
+.endobj lbl_803E081C
+.obj lbl_803E0820, local
 	.float 0.0
-lbl_803E0824:
+.endobj lbl_803E0820
+.obj lbl_803E0824, local
 	.float 150.0
+.endobj lbl_803E0824
 .balign 4
-lbl_803E0828:
+.obj lbl_803E0828, local
 	.asciz "ActRope"
+.endobj lbl_803E0828
 .balign 4
-"__RTTI__15Receiver<4Piki>":
+.obj "__RTTI__15Receiver<4Piki>", local
 	.4byte lbl_802B798C
 	.4byte 0
+.endobj "__RTTI__15Receiver<4Piki>"
 .balign 4
-lbl_803E0838:
+.obj lbl_803E0838, local
 	.asciz "Action"
+.endobj lbl_803E0838
 .balign 4
-__RTTI__6Action:
+.obj __RTTI__6Action, local
 	.4byte lbl_803E0838
 	.4byte lbl_802B799C
-__RTTI__7ActRope:
+.endobj __RTTI__6Action
+.obj __RTTI__7ActRope, local
 	.4byte lbl_803E0828
 	.4byte lbl_802B79A8
+.endobj __RTTI__7ActRope
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803E96D8:
+.obj lbl_803E96D8, local
 	.float 0.0
-lbl_803E96DC:
+.endobj lbl_803E96D8
+.obj lbl_803E96DC, local
 	.float 1.0
-lbl_803E96E0:
+.endobj lbl_803E96DC
+.obj lbl_803E96E0, local
 	.float 32767.0
-lbl_803E96E4:
+.endobj lbl_803E96E0
+.obj lbl_803E96E4, local
 	.float 22.0
-lbl_803E96E8:
+.endobj lbl_803E96E4
+.obj lbl_803E96E8, local
 	.float 4.0
-lbl_803E96EC:
+.endobj lbl_803E96E8
+.obj lbl_803E96EC, local
 	.float 0.5
-lbl_803E96F0:
-	.4byte 0x43300000
-	.4byte 0x80000000
+.endobj lbl_803E96EC
+.balign 8
+.obj lbl_803E96F0, local
+	.8byte 0x4330000080000000
+.endobj lbl_803E96F0

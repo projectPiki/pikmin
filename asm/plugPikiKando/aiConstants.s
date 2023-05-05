@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global createInstance__10AIConstantFv
-createInstance__10AIConstantFv:
+.fn createInstance__10AIConstantFv, global
 /* 80083E60 00080DC0  7C 08 02 A6 */	mflr r0
 /* 80083E64 00080DC4  90 01 00 04 */	stw r0, 4(r1)
 /* 80083E68 00080DC8  94 21 FF F0 */	stwu r1, -0x10(r1)
@@ -23,9 +22,9 @@ createInstance__10AIConstantFv:
 /* 80083EA0 00080E00  38 21 00 10 */	addi r1, r1, 0x10
 /* 80083EA4 00080E04  7C 08 03 A6 */	mtlr r0
 /* 80083EA8 00080E08  4E 80 00 20 */	blr 
+.endfn createInstance__10AIConstantFv
 
-.global __ct__10AIConstantFv
-__ct__10AIConstantFv:
+.fn __ct__10AIConstantFv, global
 /* 80083EAC 00080E0C  7C 08 02 A6 */	mflr r0
 /* 80083EB0 00080E10  3C 80 80 22 */	lis r4, __vt__5ANode@ha
 /* 80083EB4 00080E14  90 01 00 04 */	stw r0, 4(r1)
@@ -310,9 +309,9 @@ __ct__10AIConstantFv:
 /* 80084310 00081270  38 21 01 98 */	addi r1, r1, 0x198
 /* 80084314 00081274  7C 08 03 A6 */	mtlr r0
 /* 80084318 00081278  4E 80 00 20 */	blr 
+.endfn __ct__10AIConstantFv
 
-.global read__10AIConstantFR18RandomAccessStream
-read__10AIConstantFR18RandomAccessStream:
+.fn read__10AIConstantFR18RandomAccessStream, weak
 /* 8008431C 0008127C  7C 08 02 A6 */	mflr r0
 /* 80084320 00081280  38 63 00 20 */	addi r3, r3, 0x20
 /* 80084324 00081284  90 01 00 04 */	stw r0, 4(r1)
@@ -322,61 +321,73 @@ read__10AIConstantFR18RandomAccessStream:
 /* 80084334 00081294  38 21 00 08 */	addi r1, r1, 8
 /* 80084338 00081298  7C 08 03 A6 */	mtlr r0
 /* 8008433C 0008129C  4E 80 00 20 */	blr 
+.endfn read__10AIConstantFR18RandomAccessStream
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802AE6C0:
+.obj lbl_802AE6C0, local
 	.asciz "aiConstants.cpp"
+.endobj lbl_802AE6C0
 .balign 4
-lbl_802AE6D0:
+.obj lbl_802AE6D0, local
 	.asciz "aiconst.bin"
+.endobj lbl_802AE6D0
 .balign 4
-lbl_802AE6DC:
+.obj lbl_802AE6DC, local
 	.asciz "Parm<int>"
+.endobj lbl_802AE6DC
 .balign 4
-lbl_802AE6E8:
+.obj lbl_802AE6E8, local
 	.asciz "BaseParm"
+.endobj lbl_802AE6E8
 .balign 4
-lbl_802AE6F4:
+.obj lbl_802AE6F4, local
 	.4byte __RTTI__8BaseParm
 	.4byte 0x00000000
 	.4byte 0x00000000
+.endobj lbl_802AE6F4
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x00000000
 .balign 4
-lbl_802AE714:
+.obj lbl_802AE714, local
 	.asciz "Parm<float>"
+.endobj lbl_802AE714
 .balign 4
-lbl_802AE720:
+.obj lbl_802AE720, local
 	.4byte __RTTI__8BaseParm
 	.4byte 0x00000000
 	.4byte 0x00000000
+.endobj lbl_802AE720
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x00000000
 .balign 4
-lbl_802AE740:
+.obj lbl_802AE740, local
 	.asciz "AIConstant"
+.endobj lbl_802AE740
 .balign 4
-lbl_802AE74C:
+.obj lbl_802AE74C, local
 	.asciz "CoreNode"
+.endobj lbl_802AE74C
 .balign 4
-lbl_802AE758:
+.obj lbl_802AE758, local
 	.4byte __RTTI__5ANode
 	.4byte 0x00000000
 	.4byte 0x00000000
-lbl_802AE764:
+.endobj lbl_802AE758
+.obj lbl_802AE764, local
 	.4byte __RTTI__5ANode
 	.4byte 0x00000000
 	.4byte __RTTI__8CoreNode
 	.4byte 0x00000000
 	.4byte 0x00000000
-lbl_802AE778:
+.endobj lbl_802AE764
+.obj lbl_802AE778, local
 	.4byte __RTTI__5ANode
 	.4byte 0x00000000
 	.4byte __RTTI__8CoreNode
@@ -384,8 +395,8 @@ lbl_802AE778:
 	.4byte __RTTI__4Node
 	.4byte 0x00000000
 	.4byte 0x00000000
-.global __vt__10AIConstant
-__vt__10AIConstant:
+.endobj lbl_802AE778
+.obj __vt__10AIConstant, weak
 	.4byte __RTTI__10AIConstant
 	.4byte 0
 	.4byte getAgeNodeType__5ANodeFv
@@ -398,6 +409,7 @@ __vt__10AIConstant:
 	.4byte concat__4NodeFR3SRT
 	.4byte concat__4NodeFR8Matrix4f
 	.4byte getModelMatrix__4NodeFv
+.endobj __vt__10AIConstant
 	.4byte 0
 	.4byte 0
 	.4byte 0
@@ -408,104 +420,136 @@ __vt__10AIConstant:
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-lbl_803DECE8:
+.obj lbl_803DECE8, local
 	.asciz "<Node>"
+.endobj lbl_803DECE8
 .balign 4
-lbl_803DECF0:
+.obj lbl_803DECF0, local
 	.asciz "p00"
+.endobj lbl_803DECF0
 .balign 4
-lbl_803DECF4:
+.obj lbl_803DECF4, local
 	.asciz "p01"
+.endobj lbl_803DECF4
 .balign 4
-lbl_803DECF8:
+.obj lbl_803DECF8, local
 	.asciz "p02"
+.endobj lbl_803DECF8
 .balign 4
-lbl_803DECFC:
+.obj lbl_803DECFC, local
 	.asciz "p03"
+.endobj lbl_803DECFC
 .balign 4
-lbl_803DED00:
+.obj lbl_803DED00, local
 	.asciz "p04"
+.endobj lbl_803DED00
 .balign 4
-lbl_803DED04:
+.obj lbl_803DED04, local
 	.asciz "p05"
+.endobj lbl_803DED04
 .balign 4
-lbl_803DED08:
+.obj lbl_803DED08, local
 	.asciz "p07"
+.endobj lbl_803DED08
 .balign 4
-lbl_803DED0C:
+.obj lbl_803DED0C, local
 	.asciz "p06"
+.endobj lbl_803DED0C
 .balign 4
-lbl_803DED10:
+.obj lbl_803DED10, local
 	.asciz "p08"
+.endobj lbl_803DED10
 .balign 4
-lbl_803DED14:
+.obj lbl_803DED14, local
 	.asciz "p09"
+.endobj lbl_803DED14
 .balign 4
-lbl_803DED18:
+.obj lbl_803DED18, local
 	.asciz "p10"
+.endobj lbl_803DED18
 .balign 4
-lbl_803DED1C:
+.obj lbl_803DED1C, local
 	.asciz "p11"
+.endobj lbl_803DED1C
 .balign 4
-lbl_803DED20:
+.obj lbl_803DED20, local
 	.asciz "p12"
+.endobj lbl_803DED20
 .balign 4
-lbl_803DED24:
+.obj lbl_803DED24, local
 	.asciz "p13"
+.endobj lbl_803DED24
 .balign 4
-lbl_803DED28:
+.obj lbl_803DED28, local
 	.asciz "p14"
+.endobj lbl_803DED28
 .balign 4
-lbl_803DED2C:
+.obj lbl_803DED2C, local
 	.asciz "p15"
+.endobj lbl_803DED2C
 .balign 4
-lbl_803DED30:
+.obj lbl_803DED30, local
 	.asciz "p16"
+.endobj lbl_803DED30
 .balign 4
-lbl_803DED34:
+.obj lbl_803DED34, local
 	.asciz "p17"
+.endobj lbl_803DED34
 .balign 4
-lbl_803DED38:
+.obj lbl_803DED38, local
 	.asciz "p18"
+.endobj lbl_803DED38
 .balign 4
-lbl_803DED3C:
+.obj lbl_803DED3C, local
 	.asciz "p19"
+.endobj lbl_803DED3C
 .balign 4
-lbl_803DED40:
+.obj lbl_803DED40, local
 	.asciz "p20"
+.endobj lbl_803DED40
 .balign 4
-lbl_803DED44:
+.obj lbl_803DED44, local
 	.asciz "p21"
+.endobj lbl_803DED44
 .balign 4
-lbl_803DED48:
+.obj lbl_803DED48, local
 	.asciz "p22"
+.endobj lbl_803DED48
 .balign 4
-lbl_803DED4C:
+.obj lbl_803DED4C, local
 	.asciz "parms/"
+.endobj lbl_803DED4C
 .balign 4
-__RTTI__8BaseParm:
+.obj __RTTI__8BaseParm, local
 	.4byte lbl_802AE6E8
 	.4byte 0
+.endobj __RTTI__8BaseParm
 .balign 4
-lbl_803DED5C:
+.obj lbl_803DED5C, local
 	.asciz "ANode"
+.endobj lbl_803DED5C
 .balign 4
-__RTTI__5ANode:
+.obj __RTTI__5ANode, local
 	.4byte lbl_803DED5C
 	.4byte 0
-__RTTI__8CoreNode:
+.endobj __RTTI__5ANode
+.obj __RTTI__8CoreNode, local
 	.4byte lbl_802AE74C
 	.4byte lbl_802AE758
+.endobj __RTTI__8CoreNode
 .balign 4
-lbl_803DED74:
+.obj lbl_803DED74, local
 	.asciz "Node"
+.endobj lbl_803DED74
 .balign 4
-__RTTI__4Node:
+.obj __RTTI__4Node, local
 	.4byte lbl_803DED74
 	.4byte lbl_802AE764
-__RTTI__10AIConstant:
+.endobj __RTTI__4Node
+.obj __RTTI__10AIConstant, local
 	.4byte lbl_802AE740
 	.4byte lbl_802AE778
+.endobj __RTTI__10AIConstant
 
 .section .sbss, "wa"
 .balign 8

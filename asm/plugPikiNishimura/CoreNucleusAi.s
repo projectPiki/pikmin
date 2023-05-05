@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global __ct__13CoreNucleusAiFP11CoreNucleus
-__ct__13CoreNucleusAiFP11CoreNucleus:
+.fn __ct__13CoreNucleusAiFP11CoreNucleus, global
 /* 8017AD44 00177CA4  3C A0 80 2B */	lis r5, __vt__19PaniAnimKeyListener@ha
 /* 8017AD48 00177CA8  38 05 DB 94 */	addi r0, r5, __vt__19PaniAnimKeyListener@l
 /* 8017AD4C 00177CAC  3C A0 80 2D */	lis r5, __vt__13CoreNucleusAi@ha
@@ -10,9 +9,9 @@ __ct__13CoreNucleusAiFP11CoreNucleus:
 /* 8017AD58 00177CB8  90 03 00 00 */	stw r0, 0(r3)
 /* 8017AD5C 00177CBC  90 83 00 08 */	stw r4, 8(r3)
 /* 8017AD60 00177CC0  4E 80 00 20 */	blr 
+.endfn __ct__13CoreNucleusAiFP11CoreNucleus
 
-.global initAI__13CoreNucleusAiFP11CoreNucleus
-initAI__13CoreNucleusAiFP11CoreNucleus:
+.fn initAI__13CoreNucleusAiFP11CoreNucleus, global
 /* 8017AD64 00177CC4  7C 08 02 A6 */	mflr r0
 /* 8017AD68 00177CC8  90 01 00 04 */	stw r0, 4(r1)
 /* 8017AD6C 00177CCC  38 00 00 02 */	li r0, 2
@@ -42,9 +41,9 @@ initAI__13CoreNucleusAiFP11CoreNucleus:
 /* 8017ADCC 00177D2C  38 21 00 30 */	addi r1, r1, 0x30
 /* 8017ADD0 00177D30  7C 08 03 A6 */	mtlr r0
 /* 8017ADD4 00177D34  4E 80 00 20 */	blr 
+.endfn initAI__13CoreNucleusAiFP11CoreNucleus
 
-.global animationKeyUpdated__13CoreNucleusAiFR16PaniAnimKeyEvent
-animationKeyUpdated__13CoreNucleusAiFR16PaniAnimKeyEvent:
+.fn animationKeyUpdated__13CoreNucleusAiFR16PaniAnimKeyEvent, global
 /* 8017ADD8 00177D38  7C 08 02 A6 */	mflr r0
 /* 8017ADDC 00177D3C  90 01 00 04 */	stw r0, 4(r1)
 /* 8017ADE0 00177D40  94 21 FF F8 */	stwu r1, -8(r1)
@@ -83,42 +82,42 @@ animationKeyUpdated__13CoreNucleusAiFR16PaniAnimKeyEvent:
 /* 8017AE48 00177DA8  38 21 00 08 */	addi r1, r1, 8
 /* 8017AE4C 00177DAC  7C 08 03 A6 */	mtlr r0
 /* 8017AE50 00177DB0  4E 80 00 20 */	blr 
+.endfn animationKeyUpdated__13CoreNucleusAiFR16PaniAnimKeyEvent
 
-.global keyAction0__13CoreNucleusAiFv
-keyAction0__13CoreNucleusAiFv:
+.fn keyAction0__13CoreNucleusAiFv, global
 /* 8017AE54 00177DB4  4E 80 00 20 */	blr 
+.endfn keyAction0__13CoreNucleusAiFv
 
-.global keyAction1__13CoreNucleusAiFv
-keyAction1__13CoreNucleusAiFv:
+.fn keyAction1__13CoreNucleusAiFv, global
 /* 8017AE58 00177DB8  4E 80 00 20 */	blr 
+.endfn keyAction1__13CoreNucleusAiFv
 
-.global keyLoopEnd__13CoreNucleusAiFv
-keyLoopEnd__13CoreNucleusAiFv:
+.fn keyLoopEnd__13CoreNucleusAiFv, global
 /* 8017AE5C 00177DBC  80 83 00 08 */	lwz r4, 8(r3)
 /* 8017AE60 00177DC0  80 64 02 EC */	lwz r3, 0x2ec(r4)
 /* 8017AE64 00177DC4  38 03 00 01 */	addi r0, r3, 1
 /* 8017AE68 00177DC8  90 04 02 EC */	stw r0, 0x2ec(r4)
 /* 8017AE6C 00177DCC  4E 80 00 20 */	blr 
+.endfn keyLoopEnd__13CoreNucleusAiFv
 
-.global keyFinished__13CoreNucleusAiFv
-keyFinished__13CoreNucleusAiFv:
+.fn keyFinished__13CoreNucleusAiFv, global
 /* 8017AE70 00177DD0  80 63 00 08 */	lwz r3, 8(r3)
 /* 8017AE74 00177DD4  38 00 00 01 */	li r0, 1
 /* 8017AE78 00177DD8  98 03 02 BD */	stb r0, 0x2bd(r3)
 /* 8017AE7C 00177DDC  4E 80 00 20 */	blr 
+.endfn keyFinished__13CoreNucleusAiFv
 
-.global playSound__13CoreNucleusAiFi
-playSound__13CoreNucleusAiFi:
+.fn playSound__13CoreNucleusAiFi, global
 /* 8017AE80 00177DE0  4E 80 00 20 */	blr 
+.endfn playSound__13CoreNucleusAiFi
 
-.global setHitMotionStart__13CoreNucleusAiFv
-setHitMotionStart__13CoreNucleusAiFv:
+.fn setHitMotionStart__13CoreNucleusAiFv, global
 /* 8017AE84 00177DE4  38 00 00 01 */	li r0, 1
 /* 8017AE88 00177DE8  98 03 00 04 */	stb r0, 4(r3)
 /* 8017AE8C 00177DEC  4E 80 00 20 */	blr 
+.endfn setHitMotionStart__13CoreNucleusAiFv
 
-.global update__13CoreNucleusAiFv
-update__13CoreNucleusAiFv:
+.fn update__13CoreNucleusAiFv, global
 /* 8017AE90 00177DF0  7C 08 02 A6 */	mflr r0
 /* 8017AE94 00177DF4  90 01 00 04 */	stw r0, 4(r1)
 /* 8017AE98 00177DF8  94 21 FE F0 */	stwu r1, -0x110(r1)
@@ -468,27 +467,32 @@ update__13CoreNucleusAiFv:
 /* 8017B3C8 00178328  38 21 01 10 */	addi r1, r1, 0x110
 /* 8017B3CC 0017832C  7C 08 03 A6 */	mtlr r0
 /* 8017B3D0 00178330  4E 80 00 20 */	blr 
+.endfn update__13CoreNucleusAiFv
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802D1598:
+.obj lbl_802D1598, local
 	.asciz "CoreNucleusAi.cpp"
+.endobj lbl_802D1598
 .balign 4
-lbl_802D15AC:
+.obj lbl_802D15AC, local
 	.asciz "CoreNucleusAi"
+.endobj lbl_802D15AC
 .balign 4
-lbl_802D15BC:
+.obj lbl_802D15BC, local
 	.asciz "PaniAnimKeyListener"
+.endobj lbl_802D15BC
 .balign 4
-lbl_802D15D0:
+.obj lbl_802D15D0, local
 	.4byte __RTTI__19PaniAnimKeyListener
 	.4byte 0
 	.4byte 0
-.global __vt__13CoreNucleusAi
-__vt__13CoreNucleusAi:
+.endobj lbl_802D15D0
+.obj __vt__13CoreNucleusAi, global
 	.4byte __RTTI__13CoreNucleusAi
 	.4byte 0
 	.4byte animationKeyUpdated__13CoreNucleusAiFR16PaniAnimKeyEvent
+.endobj __vt__13CoreNucleusAi
 	.4byte 0
 	.4byte 0
 	.4byte 0
@@ -496,18 +500,23 @@ __vt__13CoreNucleusAi:
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-lbl_803E54F8:
+.obj lbl_803E54F8, local
 	.float 0.0
-__RTTI__19PaniAnimKeyListener:
+.endobj lbl_803E54F8
+.obj __RTTI__19PaniAnimKeyListener, local
 	.4byte lbl_802D15BC
 	.4byte 0x00000000
-__RTTI__13CoreNucleusAi:
+.endobj __RTTI__19PaniAnimKeyListener
+.obj __RTTI__13CoreNucleusAi, local
 	.4byte lbl_802D15AC
 	.4byte lbl_802D15D0
+.endobj __RTTI__13CoreNucleusAi
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803EB080:
+.obj lbl_803EB080, local
 	.float 30.0
-lbl_803EB084:
+.endobj lbl_803EB080
+.obj lbl_803EB084, local
 	.float 0.0
+.endobj lbl_803EB084

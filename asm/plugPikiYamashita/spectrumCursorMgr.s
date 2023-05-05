@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global update__Q23zen17SpectrumCursorMgrFv
-update__Q23zen17SpectrumCursorMgrFv:
+.fn update__Q23zen17SpectrumCursorMgrFv, global
 /* 801DA814 001D7774  7C 08 02 A6 */	mflr r0
 /* 801DA818 001D7778  90 01 00 04 */	stw r0, 4(r1)
 /* 801DA81C 001D777C  94 21 FF 40 */	stwu r1, -0xc0(r1)
@@ -251,16 +250,16 @@ update__Q23zen17SpectrumCursorMgrFv:
 /* 801DAB9C 001D7AFC  38 21 00 C0 */	addi r1, r1, 0xc0
 /* 801DABA0 001D7B00  7C 08 03 A6 */	mtlr r0
 /* 801DABA4 001D7B04  4E 80 00 20 */	blr 
+.endfn update__Q23zen17SpectrumCursorMgrFv
 
-.global move__Q23zen17SpectrumCursorMgrFfff
-move__Q23zen17SpectrumCursorMgrFfff:
+.fn move__Q23zen17SpectrumCursorMgrFfff, global
 /* 801DABA8 001D7B08  94 21 FF C0 */	stwu r1, -0x40(r1)
 /* 801DABAC 001D7B0C  3C A0 43 30 */	lis r5, 0x43300000@ha
 /* 801DABB0 001D7B10  C0 02 BE 50 */	lfs f0, lbl_803EC050@sda21(r2)
 /* 801DABB4 001D7B14  D0 03 00 08 */	stfs f0, 8(r3)
 /* 801DABB8 001D7B18  D0 63 00 0C */	stfs f3, 0xc(r3)
 /* 801DABBC 001D7B1C  80 83 00 04 */	lwz r4, 4(r3)
-/* 801DABC0 001D7B20  C8 62 BE 68 */	lfd f3, "@798"@sda21(r2)
+/* 801DABC0 001D7B20  C8 62 BE 68 */	lfd f3, lbl_803EC068@sda21(r2)
 /* 801DABC4 001D7B24  80 84 00 00 */	lwz r4, 0(r4)
 /* 801DABC8 001D7B28  A8 04 00 18 */	lha r0, 0x18(r4)
 /* 801DABCC 001D7B2C  6C 00 80 00 */	xoris r0, r0, 0x8000
@@ -282,9 +281,9 @@ move__Q23zen17SpectrumCursorMgrFfff:
 /* 801DAC0C 001D7B6C  D0 43 00 1C */	stfs f2, 0x1c(r3)
 /* 801DAC10 001D7B70  38 21 00 40 */	addi r1, r1, 0x40
 /* 801DAC14 001D7B74  4E 80 00 20 */	blr 
+.endfn move__Q23zen17SpectrumCursorMgrFfff
 
-.global scale__Q23zen17SpectrumCursorMgrFff
-scale__Q23zen17SpectrumCursorMgrFff:
+.fn scale__Q23zen17SpectrumCursorMgrFff, global
 /* 801DAC18 001D7B78  C0 02 BE 50 */	lfs f0, lbl_803EC050@sda21(r2)
 /* 801DAC1C 001D7B7C  D0 03 00 20 */	stfs f0, 0x20(r3)
 /* 801DAC20 001D7B80  D0 43 00 24 */	stfs f2, 0x24(r3)
@@ -294,9 +293,9 @@ scale__Q23zen17SpectrumCursorMgrFff:
 /* 801DAC30 001D7B90  D0 03 00 28 */	stfs f0, 0x28(r3)
 /* 801DAC34 001D7B94  D0 23 00 2C */	stfs f1, 0x2c(r3)
 /* 801DAC38 001D7B98  4E 80 00 20 */	blr 
+.endfn scale__Q23zen17SpectrumCursorMgrFff
 
-.global init__Q23zen17SpectrumCursorMgrFP9P2DScreenP7P2DPaneUlff
-init__Q23zen17SpectrumCursorMgrFP9P2DScreenP7P2DPaneUlff:
+.fn init__Q23zen17SpectrumCursorMgrFP9P2DScreenP7P2DPaneUlff, global
 /* 801DAC3C 001D7B9C  7C 08 02 A6 */	mflr r0
 /* 801DAC40 001D7BA0  90 01 00 04 */	stw r0, 4(r1)
 /* 801DAC44 001D7BA4  38 00 00 00 */	li r0, 0
@@ -356,7 +355,7 @@ init__Q23zen17SpectrumCursorMgrFP9P2DScreenP7P2DPaneUlff:
 /* 801DAD14 001D7C74  C3 82 BE 70 */	lfs f28, lbl_803EC070@sda21(r2)
 /* 801DAD18 001D7C78  38 03 FF FF */	addi r0, r3, -1
 /* 801DAD1C 001D7C7C  C3 A2 BE 58 */	lfs f29, lbl_803EC058@sda21(r2)
-/* 801DAD20 001D7C80  CB C2 BE 68 */	lfd f30, "@798"@sda21(r2)
+/* 801DAD20 001D7C80  CB C2 BE 68 */	lfd f30, lbl_803EC068@sda21(r2)
 /* 801DAD24 001D7C84  7C 1E 03 78 */	mr r30, r0
 /* 801DAD28 001D7C88  C3 E2 BE 5C */	lfs f31, lbl_803EC05C@sda21(r2)
 /* 801DAD2C 001D7C8C  54 1F 10 3A */	slwi r31, r0, 2
@@ -483,7 +482,7 @@ init__Q23zen17SpectrumCursorMgrFP9P2DScreenP7P2DPaneUlff:
 /* 801DAEF8 001D7E58  A8 63 00 18 */	lha r3, 0x18(r3)
 /* 801DAEFC 001D7E5C  90 01 00 A4 */	stw r0, 0xa4(r1)
 /* 801DAF00 001D7E60  6C 60 80 00 */	xoris r0, r3, 0x8000
-/* 801DAF04 001D7E64  C8 62 BE 68 */	lfd f3, "@798"@sda21(r2)
+/* 801DAF04 001D7E64  C8 62 BE 68 */	lfd f3, lbl_803EC068@sda21(r2)
 /* 801DAF08 001D7E68  90 01 00 B4 */	stw r0, 0xb4(r1)
 /* 801DAF0C 001D7E6C  C8 01 00 A8 */	lfd f0, 0xa8(r1)
 /* 801DAF10 001D7E70  90 81 00 B0 */	stw r4, 0xb0(r1)
@@ -526,9 +525,9 @@ init__Q23zen17SpectrumCursorMgrFP9P2DScreenP7P2DPaneUlff:
 /* 801DAFA4 001D7F04  38 21 01 18 */	addi r1, r1, 0x118
 /* 801DAFA8 001D7F08  7C 08 03 A6 */	mtlr r0
 /* 801DAFAC 001D7F0C  4E 80 00 20 */	blr 
+.endfn init__Q23zen17SpectrumCursorMgrFP9P2DScreenP7P2DPaneUlff
 
-.global initPos__Q23zen17SpectrumCursorMgrFff
-initPos__Q23zen17SpectrumCursorMgrFff:
+.fn initPos__Q23zen17SpectrumCursorMgrFff, global
 /* 801DAFB0 001D7F10  7C 08 02 A6 */	mflr r0
 /* 801DAFB4 001D7F14  90 01 00 04 */	stw r0, 4(r1)
 /* 801DAFB8 001D7F18  94 21 FF A0 */	stwu r1, -0x60(r1)
@@ -601,9 +600,9 @@ initPos__Q23zen17SpectrumCursorMgrFff:
 /* 801DB0AC 001D800C  38 21 00 60 */	addi r1, r1, 0x60
 /* 801DB0B0 001D8010  7C 08 03 A6 */	mtlr r0
 /* 801DB0B4 001D8014  4E 80 00 20 */	blr 
+.endfn initPos__Q23zen17SpectrumCursorMgrFff
 
-.global initScale__Q23zen17SpectrumCursorMgrFf
-initScale__Q23zen17SpectrumCursorMgrFf:
+.fn initScale__Q23zen17SpectrumCursorMgrFf, global
 /* 801DB0B8 001D8018  C0 02 BE 50 */	lfs f0, lbl_803EC050@sda21(r2)
 /* 801DB0BC 001D801C  38 C0 00 00 */	li r6, 0
 /* 801DB0C0 001D8020  38 A0 00 00 */	li r5, 0
@@ -625,9 +624,9 @@ initScale__Q23zen17SpectrumCursorMgrFf:
 /* 801DB0F8 001D8058  D0 23 00 28 */	stfs f1, 0x28(r3)
 /* 801DB0FC 001D805C  D0 23 00 2C */	stfs f1, 0x2c(r3)
 /* 801DB100 001D8060  4E 80 00 20 */	blr 
+.endfn initScale__Q23zen17SpectrumCursorMgrFf
 
-.global makeTag__Q23zen17SpectrumCursorMgrFUli
-makeTag__Q23zen17SpectrumCursorMgrFUli:
+.fn makeTag__Q23zen17SpectrumCursorMgrFUli, global
 /* 801DB104 001D8064  7C 08 02 A6 */	mflr r0
 /* 801DB108 001D8068  90 01 00 04 */	stw r0, 4(r1)
 /* 801DB10C 001D806C  4C C6 31 82 */	crclr 6
@@ -646,31 +645,41 @@ makeTag__Q23zen17SpectrumCursorMgrFUli:
 /* 801DB140 001D80A0  38 21 00 28 */	addi r1, r1, 0x28
 /* 801DB144 001D80A4  7C 08 03 A6 */	mtlr r0
 /* 801DB148 001D80A8  4E 80 00 20 */	blr 
+.endfn makeTag__Q23zen17SpectrumCursorMgrFUli
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-lbl_803E7188:
+.obj lbl_803E7188, local
 	.asciz "*%02d*"
+.endobj lbl_803E7188
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803EC048:
-	.4byte 0x3FC90FDB
-lbl_803EC04C:
-	.4byte 0x4096CBE4
-lbl_803EC050:
-	.4byte 0x00000000
-lbl_803EC054:
-	.4byte 0x40C90FDB
-lbl_803EC058:
-	.4byte 0x3F800000
-lbl_803EC05C:
-	.4byte 0x3F000000
-lbl_803EC060:
-	.4byte 0x41200000
-	.4byte 0x00000000
-"@798":
-	.4byte 0x43300000
-	.4byte 0x80000000
-lbl_803EC070:
-	.4byte 0x42C80000
+.obj lbl_803EC048, local
+	.float 1.5707964
+.endobj lbl_803EC048
+.obj lbl_803EC04C, local
+	.float 4.712389
+.endobj lbl_803EC04C
+.obj lbl_803EC050, local
+	.float 0.0
+.endobj lbl_803EC050
+.obj lbl_803EC054, local
+	.float 6.2831855
+.endobj lbl_803EC054
+.obj lbl_803EC058, local
+	.float 1.0
+.endobj lbl_803EC058
+.obj lbl_803EC05C, local
+	.float 0.5
+.endobj lbl_803EC05C
+.obj lbl_803EC060, local
+	.float 10.0
+.endobj lbl_803EC060
+.balign 8
+.obj lbl_803EC068, local
+	.8byte 0x4330000080000000
+.endobj lbl_803EC068
+.obj lbl_803EC070, local
+	.float 100.0
+.endobj lbl_803EC070

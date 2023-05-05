@@ -4253,8 +4253,8 @@ lbl_802BD944:
 .balign 4
 lbl_802BD950:
 	.4byte __RTTI__9SAIAction
-	.4byte 0x00000000
-	.4byte 0x00000000
+	.4byte 0
+	.4byte 0
 .global __vt__Q211FallWaterAI13DisappearInit
 __vt__Q211FallWaterAI13DisappearInit:
 	.4byte __RTTI__Q211FallWaterAI13DisappearInit

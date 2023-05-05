@@ -1002,5 +1002,6 @@ __RTTI__9StageInfo:
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803E8750:
+.obj lbl_803E8750, local
 	.float 0.0
+.endobj lbl_803E8750

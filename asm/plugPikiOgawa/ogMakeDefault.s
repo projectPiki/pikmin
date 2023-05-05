@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global __ct__Q23zen19ogScrMakeDefaultMgrFv
-__ct__Q23zen19ogScrMakeDefaultMgrFv:
+.fn __ct__Q23zen19ogScrMakeDefaultMgrFv, global
 /* 8019399C 001908FC  7C 08 02 A6 */	mflr r0
 /* 801939A0 00190900  90 01 00 04 */	stw r0, 4(r1)
 /* 801939A4 00190904  94 21 FF D0 */	stwu r1, -0x30(r1)
@@ -225,9 +224,9 @@ __ct__Q23zen19ogScrMakeDefaultMgrFv:
 /* 80193CF0 00190C50  38 21 00 30 */	addi r1, r1, 0x30
 /* 80193CF4 00190C54  7C 08 03 A6 */	mtlr r0
 /* 80193CF8 00190C58  4E 80 00 20 */	blr 
+.endfn __ct__Q23zen19ogScrMakeDefaultMgrFv
 
-.global start__Q23zen19ogScrMakeDefaultMgrFv
-start__Q23zen19ogScrMakeDefaultMgrFv:
+.fn start__Q23zen19ogScrMakeDefaultMgrFv, global
 /* 80193CFC 00190C5C  7C 08 02 A6 */	mflr r0
 /* 80193D00 00190C60  90 01 00 04 */	stw r0, 4(r1)
 /* 80193D04 00190C64  38 00 00 02 */	li r0, 2
@@ -287,9 +286,9 @@ start__Q23zen19ogScrMakeDefaultMgrFv:
 /* 80193DDC 00190D3C  38 21 00 58 */	addi r1, r1, 0x58
 /* 80193DE0 00190D40  7C 08 03 A6 */	mtlr r0
 /* 80193DE4 00190D44  4E 80 00 20 */	blr 
+.endfn start__Q23zen19ogScrMakeDefaultMgrFv
 
-.global update__Q23zen19ogScrMakeDefaultMgrFP10Controller
-update__Q23zen19ogScrMakeDefaultMgrFP10Controller:
+.fn update__Q23zen19ogScrMakeDefaultMgrFP10Controller, global
 /* 80193DE8 00190D48  7C 08 02 A6 */	mflr r0
 /* 80193DEC 00190D4C  90 01 00 04 */	stw r0, 4(r1)
 /* 80193DF0 00190D50  94 21 FF 70 */	stwu r1, -0x90(r1)
@@ -520,9 +519,9 @@ update__Q23zen19ogScrMakeDefaultMgrFP10Controller:
 /* 80194130 00191090  38 21 00 90 */	addi r1, r1, 0x90
 /* 80194134 00191094  7C 08 03 A6 */	mtlr r0
 /* 80194138 00191098  4E 80 00 20 */	blr 
+.endfn update__Q23zen19ogScrMakeDefaultMgrFP10Controller
 
-.global draw__Q23zen19ogScrMakeDefaultMgrFR8Graphics
-draw__Q23zen19ogScrMakeDefaultMgrFR8Graphics:
+.fn draw__Q23zen19ogScrMakeDefaultMgrFR8Graphics, global
 /* 8019413C 0019109C  7C 08 02 A6 */	mflr r0
 /* 80194140 001910A0  90 01 00 04 */	stw r0, 4(r1)
 /* 80194144 001910A4  94 21 FF 00 */	stwu r1, -0x100(r1)
@@ -566,9 +565,9 @@ draw__Q23zen19ogScrMakeDefaultMgrFR8Graphics:
 /* 801941D8 00191138  38 21 01 00 */	addi r1, r1, 0x100
 /* 801941DC 0019113C  7C 08 03 A6 */	mtlr r0
 /* 801941E0 00191140  4E 80 00 20 */	blr 
+.endfn draw__Q23zen19ogScrMakeDefaultMgrFR8Graphics
 
-.global checkTypingAll__Q23zen19ogScrMakeDefaultMgrFv
-checkTypingAll__Q23zen19ogScrMakeDefaultMgrFv:
+.fn checkTypingAll__Q23zen19ogScrMakeDefaultMgrFv, global
 /* 801941E4 00191144  80 63 00 28 */	lwz r3, 0x28(r3)
 /* 801941E8 00191148  80 03 00 00 */	lwz r0, 0(r3)
 /* 801941EC 0019114C  2C 00 00 02 */	cmpwi r0, 2
@@ -578,30 +577,41 @@ checkTypingAll__Q23zen19ogScrMakeDefaultMgrFv:
 .L_801941FC:
 /* 801941FC 0019115C  38 60 00 00 */	li r3, 0
 /* 80194200 00191160  4E 80 00 20 */	blr 
+.endfn checkTypingAll__Q23zen19ogScrMakeDefaultMgrFv
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802D6028:
+.obj lbl_802D6028, local
 	.asciz "screen/blo/data_pf.blo"
+.endobj lbl_802D6028
 .balign 4
-lbl_802D6040:
+.obj lbl_802D6040, local
 	.asciz "screen/blo/black.blo"
+.endobj lbl_802D6040
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803EB3F8:
-	.4byte 0x3F800000
-lbl_803EB3FC:
-	.4byte 0x3F000000
-lbl_803EB400:
-	.4byte 0x00000000
-lbl_803EB404:
-	.4byte 0x40000000
-lbl_803EB408:
-	.4byte 0x40400000
-lbl_803EB40C:
-	.4byte 0x437F0000
-lbl_803EB410:
-	.4byte 0x41F00000
-lbl_803EB414:
-	.4byte 0x459C4000
+.obj lbl_803EB3F8, local
+	.float 1.0
+.endobj lbl_803EB3F8
+.obj lbl_803EB3FC, local
+	.float 0.5
+.endobj lbl_803EB3FC
+.obj lbl_803EB400, local
+	.float 0.0
+.endobj lbl_803EB400
+.obj lbl_803EB404, local
+	.float 2.0
+.endobj lbl_803EB404
+.obj lbl_803EB408, local
+	.float 3.0
+.endobj lbl_803EB408
+.obj lbl_803EB40C, local
+	.float 255.0
+.endobj lbl_803EB40C
+.obj lbl_803EB410, local
+	.float 30.0
+.endobj lbl_803EB410
+.obj lbl_803EB414, local
+	.float 5000.0
+.endobj lbl_803EB414

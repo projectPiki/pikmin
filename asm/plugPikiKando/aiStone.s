@@ -1068,7 +1068,6 @@ __RTTI__8ActStone:
 .balign 4
 lbl_803DFC88:
 	.asciz "-"
-.balign 4
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
@@ -1077,6 +1076,7 @@ lbl_803E9010:
 .balign 8
 lbl_803E9018:
 	.double 0.5
+.balign 8
 lbl_803E9020:
 	.double 3.0
 lbl_803E9028:
@@ -1103,6 +1103,6 @@ lbl_803E9050:
 	.float 30.0
 lbl_803E9054:
 	.float 400.0
+.balign 8
 lbl_803E9058:
-	.4byte 0x43300000
-	.4byte 0x80000000
+	.8byte 0x4330000080000000

@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global __ct__Q23zen13ogScrTitleMgrFv
-__ct__Q23zen13ogScrTitleMgrFv:
+.fn __ct__Q23zen13ogScrTitleMgrFv, global
 /* 80181090 0017DFF0  7C 08 02 A6 */	mflr r0
 /* 80181094 0017DFF4  3C 80 80 2D */	lis r4, lbl_802D3010@ha
 /* 80181098 0017DFF8  90 01 00 04 */	stw r0, 4(r1)
@@ -310,9 +309,9 @@ __ct__Q23zen13ogScrTitleMgrFv:
 /* 8018152C 0017E48C  38 21 00 78 */	addi r1, r1, 0x78
 /* 80181530 0017E490  7C 08 03 A6 */	mtlr r0
 /* 80181534 0017E494  4E 80 00 20 */	blr 
+.endfn __ct__Q23zen13ogScrTitleMgrFv
 
-.global start__Q23zen13ogScrTitleMgrFb
-start__Q23zen13ogScrTitleMgrFb:
+.fn start__Q23zen13ogScrTitleMgrFb, global
 /* 80181538 0017E498  7C 08 02 A6 */	mflr r0
 /* 8018153C 0017E49C  3C A0 80 3A */	lis r5, gameflow@ha
 /* 80181540 0017E4A0  90 01 00 04 */	stw r0, 4(r1)
@@ -372,9 +371,9 @@ start__Q23zen13ogScrTitleMgrFb:
 /* 80181610 0017E570  38 21 00 20 */	addi r1, r1, 0x20
 /* 80181614 0017E574  7C 08 03 A6 */	mtlr r0
 /* 80181618 0017E578  4E 80 00 20 */	blr 
+.endfn start__Q23zen13ogScrTitleMgrFb
 
-.global update__Q23zen13ogScrTitleMgrFP10Controller
-update__Q23zen13ogScrTitleMgrFP10Controller:
+.fn update__Q23zen13ogScrTitleMgrFP10Controller, global
 /* 8018161C 0017E57C  7C 08 02 A6 */	mflr r0
 /* 80181620 0017E580  90 01 00 04 */	stw r0, 4(r1)
 /* 80181624 0017E584  94 21 FF 38 */	stwu r1, -0xc8(r1)
@@ -1071,9 +1070,9 @@ update__Q23zen13ogScrTitleMgrFP10Controller:
 /* 80182008 0017EF68  38 21 00 C8 */	addi r1, r1, 0xc8
 /* 8018200C 0017EF6C  7C 08 03 A6 */	mtlr r0
 /* 80182010 0017EF70  4E 80 00 20 */	blr 
+.endfn update__Q23zen13ogScrTitleMgrFP10Controller
 
-.global draw__Q23zen13ogScrTitleMgrFR8Graphics
-draw__Q23zen13ogScrTitleMgrFR8Graphics:
+.fn draw__Q23zen13ogScrTitleMgrFR8Graphics, global
 /* 80182014 0017EF74  7C 08 02 A6 */	mflr r0
 /* 80182018 0017EF78  90 01 00 04 */	stw r0, 4(r1)
 /* 8018201C 0017EF7C  94 21 FF F8 */	stwu r1, -8(r1)
@@ -1119,9 +1118,9 @@ draw__Q23zen13ogScrTitleMgrFR8Graphics:
 /* 801820A0 0017F000  38 21 00 08 */	addi r1, r1, 8
 /* 801820A4 0017F004  7C 08 03 A6 */	mtlr r0
 /* 801820A8 0017F008  4E 80 00 20 */	blr 
+.endfn draw__Q23zen13ogScrTitleMgrFR8Graphics
 
-.global StereoOnOff__Q23zen13ogScrTitleMgrFb
-StereoOnOff__Q23zen13ogScrTitleMgrFb:
+.fn StereoOnOff__Q23zen13ogScrTitleMgrFb, global
 /* 801820AC 0017F00C  7C 08 02 A6 */	mflr r0
 /* 801820B0 0017F010  90 01 00 04 */	stw r0, 4(r1)
 /* 801820B4 0017F014  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -1175,9 +1174,9 @@ StereoOnOff__Q23zen13ogScrTitleMgrFb:
 /* 80182164 0017F0C4  38 21 00 28 */	addi r1, r1, 0x28
 /* 80182168 0017F0C8  7C 08 03 A6 */	mtlr r0
 /* 8018216C 0017F0CC  4E 80 00 20 */	blr 
+.endfn StereoOnOff__Q23zen13ogScrTitleMgrFb
 
-.global DispBarBGM__Q23zen13ogScrTitleMgrFb
-DispBarBGM__Q23zen13ogScrTitleMgrFb:
+.fn DispBarBGM__Q23zen13ogScrTitleMgrFb, global
 /* 80182170 0017F0D0  7C 08 02 A6 */	mflr r0
 /* 80182174 0017F0D4  90 01 00 04 */	stw r0, 4(r1)
 /* 80182178 0017F0D8  94 21 FF D0 */	stwu r1, -0x30(r1)
@@ -1236,9 +1235,9 @@ DispBarBGM__Q23zen13ogScrTitleMgrFb:
 /* 80182238 0017F198  38 21 00 30 */	addi r1, r1, 0x30
 /* 8018223C 0017F19C  7C 08 03 A6 */	mtlr r0
 /* 80182240 0017F1A0  4E 80 00 20 */	blr 
+.endfn DispBarBGM__Q23zen13ogScrTitleMgrFb
 
-.global DispBarSE__Q23zen13ogScrTitleMgrFb
-DispBarSE__Q23zen13ogScrTitleMgrFb:
+.fn DispBarSE__Q23zen13ogScrTitleMgrFb, global
 /* 80182244 0017F1A4  7C 08 02 A6 */	mflr r0
 /* 80182248 0017F1A8  90 01 00 04 */	stw r0, 4(r1)
 /* 8018224C 0017F1AC  94 21 FF D0 */	stwu r1, -0x30(r1)
@@ -1297,45 +1296,59 @@ DispBarSE__Q23zen13ogScrTitleMgrFb:
 /* 8018230C 0017F26C  38 21 00 30 */	addi r1, r1, 0x30
 /* 80182310 0017F270  7C 08 03 A6 */	mtlr r0
 /* 80182314 0017F274  4E 80 00 20 */	blr 
+.endfn DispBarSE__Q23zen13ogScrTitleMgrFb
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802D3010:
+.obj lbl_802D3010, local
 	.asciz "ogTitle.cpp"
+.endobj lbl_802D3010
 .balign 4
-lbl_802D301C:
+.obj lbl_802D301C, local
 	.asciz "OgTitleSection"
+.endobj lbl_802D301C
 .balign 4
-lbl_802D302C:
+.obj lbl_802D302C, local
 	.asciz "screen/blo/m_select.blo"
+.endobj lbl_802D302C
 .balign 4
-lbl_802D3044:
+.obj lbl_802D3044, local
 	.asciz "screen/blo/m_selec2.blo"
+.endobj lbl_802D3044
 .balign 4
-lbl_802D305C:
+.obj lbl_802D305C, local
 	.asciz "screen/blo/option.blo"
+.endobj lbl_802D305C
 .balign 4
-lbl_802D3074:
+.obj lbl_802D3074, local
 	.asciz "screen/blo/s_select.blo"
+.endobj lbl_802D3074
 .balign 4
-lbl_802D308C:
+.obj lbl_802D308C, local
 	.asciz "screen/blo/v_select.blo"
+.endobj lbl_802D308C
 .balign 4
-lbl_802D30A4:
+.obj lbl_802D30A4, local
 	.asciz "screen/blo/ms_selec.blo"
+.endobj lbl_802D30A4
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-lbl_803E5728:
+.obj lbl_803E5728, local
 	.asciz "on%02d"
+.endobj lbl_803E5728
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803EB158:
+.obj lbl_803EB158, local
 	.float 0.2
-lbl_803EB15C:
+.endobj lbl_803EB158
+.obj lbl_803EB15C, local
 	.float 0.5
-lbl_803EB160:
+.endobj lbl_803EB15C
+.obj lbl_803EB160, local
 	.float 0.0
-lbl_803EB164:
+.endobj lbl_803EB160
+.obj lbl_803EB164, local
 	.float 60.0
+.endobj lbl_803EB164

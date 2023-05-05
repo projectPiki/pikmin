@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global OSGetFontEncode
-OSGetFontEncode:
+.fn OSGetFontEncode, global
 /* 801F8F24 001F5E84  A0 6D 29 F0 */	lhz r3, fontEncode$55@sda21(r13)
 /* 801F8F28 001F5E88  28 03 00 01 */	cmplwi r3, 1
 /* 801F8F2C 001F5E8C  4C 81 00 20 */	blelr 
@@ -29,9 +28,10 @@ OSGetFontEncode:
 .L_801F8F74:
 /* 801F8F74 001F5ED4  A0 6D 29 F0 */	lhz r3, fontEncode$55@sda21(r13)
 /* 801F8F78 001F5ED8  4E 80 00 20 */	blr 
+.endfn OSGetFontEncode
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-.global fontEncode$55
-fontEncode$55:
+.obj fontEncode$55, local
 	.2byte 0xFFFF
+.endobj fontEncode$55

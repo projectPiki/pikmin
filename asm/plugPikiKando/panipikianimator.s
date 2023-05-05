@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global createMotionTable__16PaniPikiAnimatorFv
-createMotionTable__16PaniPikiAnimatorFv:
+.fn createMotionTable__16PaniPikiAnimatorFv, global
 /* 80118D04 00115C64  7C 08 02 A6 */	mflr r0
 /* 80118D08 00115C68  38 60 00 08 */	li r3, 8
 /* 80118D0C 00115C6C  90 01 00 04 */	stw r0, 4(r1)
@@ -912,9 +911,9 @@ createMotionTable__16PaniPikiAnimatorFv:
 /* 801199C8 00116928  38 21 00 18 */	addi r1, r1, 0x18
 /* 801199CC 0011692C  7C 08 03 A6 */	mtlr r0
 /* 801199D0 00116930  4E 80 00 20 */	blr 
+.endfn createMotionTable__16PaniPikiAnimatorFv
 
-.global __ct__16PaniPikiAnimatorFv
-__ct__16PaniPikiAnimatorFv:
+.fn __ct__16PaniPikiAnimatorFv, global
 /* 801199D4 00116934  7C 08 02 A6 */	mflr r0
 /* 801199D8 00116938  90 01 00 04 */	stw r0, 4(r1)
 /* 801199DC 0011693C  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -930,71 +929,91 @@ __ct__16PaniPikiAnimatorFv:
 /* 80119A04 00116964  38 21 00 18 */	addi r1, r1, 0x18
 /* 80119A08 00116968  7C 08 03 A6 */	mtlr r0
 /* 80119A0C 0011696C  4E 80 00 20 */	blr 
+.endfn __ct__16PaniPikiAnimatorFv
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802C34E8:
+.obj lbl_802C34E8, local
 	.asciz "panipikianimator.cpp"
+.endobj lbl_802C34E8
 .balign 4
-lbl_802C3500:
+.obj lbl_802C3500, local
 	.asciz "panipikianimator"
+.endobj lbl_802C3500
 .balign 4
-lbl_802C3514:
+.obj lbl_802C3514, local
 	.asciz "NUKARERU"
+.endobj lbl_802C3514
 .balign 4
-lbl_802C3520:
+.obj lbl_802C3520, local
 	.asciz "TANEMAKI"
+.endobj lbl_802C3520
 .balign 4
-lbl_802C352C:
+.obj lbl_802C352C, local
 	.asciz "STILLJUMP"
+.endobj lbl_802C352C
 .balign 4
-lbl_802C3538:
+.obj lbl_802C3538, local
 	.asciz "BUTUKARU"
+.endobj lbl_802C3538
 .balign 4
-lbl_802C3544:
+.obj lbl_802C3544, local
 	.asciz "THROWWAIT"
+.endobj lbl_802C3544
 .balign 4
-lbl_802C3550:
+.obj lbl_802C3550, local
 	.asciz "FURIMUKU"
+.endobj lbl_802C3550
 .balign 4
-lbl_802C355C:
+.obj lbl_802C355C, local
 	.asciz "JUMPKICK"
+.endobj lbl_802C355C
 .balign 4
-lbl_802C3568:
+.obj lbl_802C3568, local
 	.asciz "PICKLOOP"
+.endobj lbl_802C3568
 .balign 4
-lbl_802C3574:
+.obj lbl_802C3574, local
 	.asciz "MIZUNOMI"
+.endobj lbl_802C3574
 .balign 4
-lbl_802C3580:
+.obj lbl_802C3580, local
 	.asciz "TYAKUSUI"
+.endobj lbl_802C3580
 .balign 4
-lbl_802C358C:
+.obj lbl_802C358C, local
 	.asciz "HIKAKARU"
+.endobj lbl_802C358C
 .balign 4
-lbl_802C3598:
+.obj lbl_802C3598, local
 	.asciz "CHATTING"
+.endobj lbl_802C3598
 .balign 4
-lbl_802C35A4:
+.obj lbl_802C35A4, local
 	.asciz "OTIKAKE2"
+.endobj lbl_802C35A4
 .balign 4
-lbl_802C35B0:
+.obj lbl_802C35B0, local
 	.asciz "KAIFUKU3"
+.endobj lbl_802C35B0
 .balign 4
-lbl_802C35BC:
+.obj lbl_802C35BC, local
 	.asciz "GAMEOVER"
+.endobj lbl_802C35BC
 .balign 4
-lbl_802C35C8:
+.obj lbl_802C35C8, local
 	.asciz "nuku fast"
+.endobj lbl_802C35C8
 .balign 4
-lbl_802C35D4:
+.obj lbl_802C35D4, local
 	.asciz "nukare fast"
+.endobj lbl_802C35D4
 .balign 4
-lbl_802C35E0:
+.obj lbl_802C35E0, local
 	.asciz "osu-walk"
+.endobj lbl_802C35E0
 .balign 4
-.global motionLabels__16PaniPikiAnimator
-motionLabels__16PaniPikiAnimator:
+.obj motionLabels__16PaniPikiAnimator, global
 	.4byte lbl_803E2B88
 	.4byte lbl_803E2B8C
 	.4byte lbl_803E2B94
@@ -1085,28 +1104,33 @@ motionLabels__16PaniPikiAnimator:
 	.4byte lbl_802C35E0
 	.4byte lbl_803E2DA8
 	.4byte lbl_803E2DB0
+.endobj motionLabels__16PaniPikiAnimator
 .balign 4
-lbl_802C3754:
+.obj lbl_802C3754, local
 	.asciz "PaniPikiAnimator"
+.endobj lbl_802C3754
 .balign 4
-lbl_802C3768:
+.obj lbl_802C3768, local
 	.asciz "Animator"
+.endobj lbl_802C3768
 .balign 4
-lbl_802C3774:
+.obj lbl_802C3774, local
 	.asciz "PaniAnimator"
+.endobj lbl_802C3774
 .balign 4
-lbl_802C3784:
+.obj lbl_802C3784, local
 	.4byte __RTTI__8Animator
 	.4byte 0
 	.4byte 0
-lbl_802C3790:
+.endobj lbl_802C3784
+.obj lbl_802C3790, local
 	.4byte __RTTI__8Animator
 	.4byte 0
 	.4byte __RTTI__12PaniAnimator
 	.4byte 0
 	.4byte 0
-.global __vt__16PaniPikiAnimator
-__vt__16PaniPikiAnimator:
+.endobj lbl_802C3790
+.obj __vt__16PaniPikiAnimator, weak
 	.4byte __RTTI__16PaniPikiAnimator
 	.4byte 0
 	.4byte changeContext__12PaniAnimatorFP11AnimContext
@@ -1114,231 +1138,307 @@ __vt__16PaniPikiAnimator:
 	.4byte finishOneShot__8AnimatorFv
 	.4byte finishLoop__8AnimatorFv
 	.4byte updateContext__12PaniAnimatorFv
+.endobj __vt__16PaniPikiAnimator
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-lbl_803E2B88:
+.obj lbl_803E2B88, local
 	.asciz "RUN"
+.endobj lbl_803E2B88
 .balign 4
-lbl_803E2B8C:
+.obj lbl_803E2B8C, local
 	.asciz "NIGERU"
+.endobj lbl_803E2B8C
 .balign 4
-lbl_803E2B94:
+.obj lbl_803E2B94, local
 	.asciz "WALK"
+.endobj lbl_803E2B94
 .balign 4
-lbl_803E2B9C:
+.obj lbl_803E2B9C, local
 	.asciz "WAIT"
+.endobj lbl_803E2B9C
 .balign 4
-lbl_803E2BA4:
+.obj lbl_803E2BA4, local
 	.asciz "PICK"
+.endobj lbl_803E2BA4
 .balign 4
-lbl_803E2BAC:
+.obj lbl_803E2BAC, local
 	.asciz "NUKU"
+.endobj lbl_803E2BAC
 .balign 4
-lbl_803E2BB4:
+.obj lbl_803E2BB4, local
 	.asciz "DEAD"
+.endobj lbl_803E2BB4
 .balign 4
-lbl_803E2BBC:
+.obj lbl_803E2BBC, local
 	.asciz "DEAD2"
+.endobj lbl_803E2BBC
 .balign 4
-lbl_803E2BC4:
+.obj lbl_803E2BC4, local
 	.asciz "DEAD3"
+.endobj lbl_803E2BC4
 .balign 4
-lbl_803E2BCC:
+.obj lbl_803E2BCC, local
 	.asciz "DAMAGE"
+.endobj lbl_803E2BCC
 .balign 4
-lbl_803E2BD4:
+.obj lbl_803E2BD4, local
 	.asciz "ASIBUMI"
+.endobj lbl_803E2BD4
 .balign 4
-lbl_803E2BDC:
+.obj lbl_803E2BDC, local
 	.asciz "OCARRY"
+.endobj lbl_803E2BDC
 .balign 4
-lbl_803E2BE4:
+.obj lbl_803E2BE4, local
 	.asciz "LSUBERU"
+.endobj lbl_803E2BE4
 .balign 4
-lbl_803E2BEC:
+.obj lbl_803E2BEC, local
 	.asciz "RSUBERU"
+.endobj lbl_803E2BEC
 .balign 4
-lbl_803E2BF4:
+.obj lbl_803E2BF4, local
 	.asciz "JOB1"
+.endobj lbl_803E2BF4
 .balign 4
-lbl_803E2BFC:
+.obj lbl_803E2BFC, local
 	.asciz "GROWUP1"
+.endobj lbl_803E2BFC
 .balign 4
-lbl_803E2C04:
+.obj lbl_803E2C04, local
 	.asciz "GROWUP2"
+.endobj lbl_803E2C04
 .balign 4
-lbl_803E2C0C:
+.obj lbl_803E2C0C, local
 	.asciz "JOB2"
+.endobj lbl_803E2C0C
 .balign 4
-lbl_803E2C14:
+.obj lbl_803E2C14, local
 	.asciz "KOROBU"
+.endobj lbl_803E2C14
 .balign 4
-lbl_803E2C1C:
+.obj lbl_803E2C1C, local
 	.asciz "JUMP"
+.endobj lbl_803E2C1C
 .balign 4
-lbl_803E2C24:
+.obj lbl_803E2C24, local
 	.asciz "ATTACK"
+.endobj lbl_803E2C24
 .balign 4
-lbl_803E2C2C:
+.obj lbl_803E2C2C, local
 	.asciz "PUNCH"
+.endobj lbl_803E2C2C
 .balign 4
-lbl_803E2C34:
+.obj lbl_803E2C34, local
 	.asciz "KENKA"
+.endobj lbl_803E2C34
 .balign 4
-lbl_803E2C3C:
+.obj lbl_803E2C3C, local
 	.asciz "THROW"
+.endobj lbl_803E2C3C
 .balign 4
-lbl_803E2C44:
+.obj lbl_803E2C44, local
 	.asciz "HANG"
+.endobj lbl_803E2C44
 .balign 4
-lbl_803E2C4C:
+.obj lbl_803E2C4C, local
 	.asciz "FALL"
+.endobj lbl_803E2C4C
 .balign 4
-lbl_803E2C54:
+.obj lbl_803E2C54, local
 	.asciz "JKOKE"
+.endobj lbl_803E2C54
 .balign 4
-lbl_803E2C5C:
+.obj lbl_803E2C5C, local
 	.asciz "JHIT"
+.endobj lbl_803E2C5C
 .balign 4
-lbl_803E2C64:
+.obj lbl_803E2C64, local
 	.asciz "GETUP"
+.endobj lbl_803E2C64
 .balign 4
-lbl_803E2C6C:
+.obj lbl_803E2C6C, local
 	.asciz "NEWJMP"
+.endobj lbl_803E2C6C
 .balign 4
-lbl_803E2C74:
+.obj lbl_803E2C74, local
 	.asciz "ROLLJMP"
+.endobj lbl_803E2C74
 .balign 4
-lbl_803E2C7C:
+.obj lbl_803E2C7C, local
 	.asciz "WAVEJMP"
+.endobj lbl_803E2C7C
 .balign 4
-lbl_803E2C84:
+.obj lbl_803E2C84, local
 	.asciz "PUSH"
+.endobj lbl_803E2C84
 .balign 4
-lbl_803E2C8C:
+.obj lbl_803E2C8C, local
 	.asciz "UMARU"
+.endobj lbl_803E2C8C
 .balign 4
-lbl_803E2C94:
+.obj lbl_803E2C94, local
 	.asciz "AKUBI"
+.endobj lbl_803E2C94
 .balign 4
-lbl_803E2C9C:
+.obj lbl_803E2C9C, local
 	.asciz "RINBOW"
+.endobj lbl_803E2C9C
 .balign 4
-lbl_803E2CA4:
+.obj lbl_803E2CA4, local
 	.asciz "IRAIRA"
+.endobj lbl_803E2CA4
 .balign 4
-lbl_803E2CAC:
+.obj lbl_803E2CAC, local
 	.asciz "KAIFUKU"
+.endobj lbl_803E2CAC
 .balign 4
-lbl_803E2CB4:
+.obj lbl_803E2CB4, local
 	.asciz "KIZUKU"
+.endobj lbl_803E2CB4
 .balign 4
-lbl_803E2CBC:
+.obj lbl_803E2CBC, local
 	.asciz "KUTTUKU"
+.endobj lbl_803E2CBC
 .balign 4
-lbl_803E2CC4:
+.obj lbl_803E2CC4, local
 	.asciz "FUE"
+.endobj lbl_803E2CC4
 .balign 4
-lbl_803E2CC8:
+.obj lbl_803E2CC8, local
 	.asciz "SUWARU"
+.endobj lbl_803E2CC8
 .balign 4
-lbl_803E2CD0:
+.obj lbl_803E2CD0, local
 	.asciz "AOGU"
+.endobj lbl_803E2CD0
 .balign 4
-lbl_803E2CD8:
+.obj lbl_803E2CD8, local
 	.asciz "NERU"
+.endobj lbl_803E2CD8
 .balign 4
-lbl_803E2CE0:
+.obj lbl_803E2CE0, local
 	.asciz "PRESS1"
+.endobj lbl_803E2CE0
 .balign 4
-lbl_803E2CE8:
+.obj lbl_803E2CE8, local
 	.asciz "PRESS2"
+.endobj lbl_803E2CE8
 .balign 4
-lbl_803E2CF0:
+.obj lbl_803E2CF0, local
 	.asciz "SPRESS"
+.endobj lbl_803E2CF0
 .balign 4
-lbl_803E2CF8:
+.obj lbl_803E2CF8, local
 	.asciz "OBORERU"
+.endobj lbl_803E2CF8
 .balign 4
-lbl_803E2D00:
+.obj lbl_803E2D00, local
 	.asciz "SIZUMU"
+.endobj lbl_803E2D00
 .balign 4
-lbl_803E2D08:
+.obj lbl_803E2D08, local
 	.asciz "OTIKAKE"
+.endobj lbl_803E2D08
 .balign 4
-lbl_803E2D10:
+.obj lbl_803E2D10, local
 	.asciz "OTIRU"
+.endobj lbl_803E2D10
 .balign 4
-lbl_803E2D18:
+.obj lbl_803E2D18, local
 	.asciz "HNOBORU"
+.endobj lbl_803E2D18
 .balign 4
-lbl_803E2D20:
+.obj lbl_803E2D20, local
 	.asciz "NOBORU"
+.endobj lbl_803E2D20
 .balign 4
-lbl_803E2D28:
+.obj lbl_803E2D28, local
 	.asciz "SAGASU2"
+.endobj lbl_803E2D28
 .balign 4
-lbl_803E2D30:
+.obj lbl_803E2D30, local
 	.asciz "Punch!"
+.endobj lbl_803E2D30
 .balign 4
-lbl_803E2D38:
+.obj lbl_803E2D38, local
 	.asciz "MOERU"
+.endobj lbl_803E2D38
 .balign 4
-lbl_803E2D40:
+.obj lbl_803E2D40, local
 	.asciz "ESA"
+.endobj lbl_803E2D40
 .balign 4
-lbl_803E2D44:
+.obj lbl_803E2D44, local
 	.asciz "GATTU"
+.endobj lbl_803E2D44
 .balign 4
-lbl_803E2D4C:
+.obj lbl_803E2D4C, local
 	.asciz "GAKKARI"
+.endobj lbl_803E2D4C
 .balign 4
-lbl_803E2D54:
+.obj lbl_803E2D54, local
 	.asciz "OKORU"
+.endobj lbl_803E2D54
 .balign 4
-lbl_803E2D5C:
+.obj lbl_803E2D5C, local
 	.asciz "ROTJUMP"
+.endobj lbl_803E2D5C
 .balign 4
-lbl_803E2D64:
+.obj lbl_803E2D64, local
 	.asciz "gwait1"
+.endobj lbl_803E2D64
 .balign 4
-lbl_803E2D6C:
+.obj lbl_803E2D6C, local
 	.asciz "gwait2"
+.endobj lbl_803E2D6C
 .balign 4
-lbl_803E2D74:
+.obj lbl_803E2D74, local
 	.asciz "gfuri1"
+.endobj lbl_803E2D74
 .balign 4
-lbl_803E2D7C:
+.obj lbl_803E2D7C, local
 	.asciz "gfuri2"
+.endobj lbl_803E2D7C
 .balign 4
-lbl_803E2D84:
+.obj lbl_803E2D84, local
 	.asciz "gnuke"
+.endobj lbl_803E2D84
 .balign 4
-lbl_803E2D8C:
+.obj lbl_803E2D8C, local
 	.asciz "jump b1"
+.endobj lbl_803E2D8C
 .balign 4
-lbl_803E2D94:
+.obj lbl_803E2D94, local
 	.asciz "mizuage"
+.endobj lbl_803E2D94
 .balign 4
-lbl_803E2D9C:
+.obj lbl_803E2D9C, local
 	.asciz "sagasu"
+.endobj lbl_803E2D9C
 .balign 4
-lbl_803E2DA4:
+.obj lbl_803E2DA4, local
 	.asciz "osu"
+.endobj lbl_803E2DA4
 .balign 4
-lbl_803E2DA8:
+.obj lbl_803E2DA8, local
 	.asciz "noru"
+.endobj lbl_803E2DA8
 .balign 4
-lbl_803E2DB0:
+.obj lbl_803E2DB0, local
 	.asciz "odead"
+.endobj lbl_803E2DB0
 .balign 4
-__RTTI__8Animator:
+.obj __RTTI__8Animator, local
 	.4byte lbl_802C3768
 	.4byte 0
-__RTTI__12PaniAnimator:
+.endobj __RTTI__8Animator
+.obj __RTTI__12PaniAnimator, local
 	.4byte lbl_802C3774
 	.4byte lbl_802C3784
-__RTTI__16PaniPikiAnimator:
+.endobj __RTTI__12PaniAnimator
+.obj __RTTI__16PaniPikiAnimator, local
 	.4byte lbl_802C3754
 	.4byte lbl_802C3790
+.endobj __RTTI__16PaniPikiAnimator

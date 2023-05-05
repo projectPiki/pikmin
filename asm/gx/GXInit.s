@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global __GXDefaultTexRegionCallback
-__GXDefaultTexRegionCallback:
+.fn __GXDefaultTexRegionCallback, local
 /* 8020DB60 0020AAC0  7C 08 02 A6 */	mflr r0
 /* 8020DB64 0020AAC4  90 01 00 04 */	stw r0, 4(r1)
 /* 8020DB68 0020AAC8  94 21 FF F8 */	stwu r1, -8(r1)
@@ -35,9 +34,9 @@ __GXDefaultTexRegionCallback:
 /* 8020DBD0 0020AB30  38 21 00 08 */	addi r1, r1, 8
 /* 8020DBD4 0020AB34  7C 08 03 A6 */	mtlr r0
 /* 8020DBD8 0020AB38  4E 80 00 20 */	blr 
+.endfn __GXDefaultTexRegionCallback
 
-.global __GXDefaultTlutRegionCallback
-__GXDefaultTlutRegionCallback:
+.fn __GXDefaultTlutRegionCallback, local
 /* 8020DBDC 0020AB3C  28 03 00 14 */	cmplwi r3, 0x14
 /* 8020DBE0 0020AB40  41 80 00 0C */	blt .L_8020DBEC
 /* 8020DBE4 0020AB44  38 60 00 00 */	li r3, 0
@@ -49,9 +48,9 @@ __GXDefaultTlutRegionCallback:
 /* 8020DBF8 0020AB58  7C 60 1A 14 */	add r3, r0, r3
 .L_8020DBFC:
 /* 8020DBFC 0020AB5C  4E 80 00 20 */	blr 
+.endfn __GXDefaultTlutRegionCallback
 
-.global GXInit
-GXInit:
+.fn GXInit, global
 /* 8020DC00 0020AB60  7C 08 02 A6 */	mflr r0
 /* 8020DC04 0020AB64  90 01 00 04 */	stw r0, 4(r1)
 /* 8020DC08 0020AB68  94 21 FF 60 */	stwu r1, -0xa0(r1)
@@ -1063,48 +1062,50 @@ GXInit:
 /* 8020EB34 0020BA94  38 21 00 A0 */	addi r1, r1, 0xa0
 /* 8020EB38 0020BA98  7C 08 03 A6 */	mtlr r0
 /* 8020EB3C 0020BA9C  4E 80 00 20 */	blr 
+.endfn GXInit
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-.global gx
-gx:
+.obj gx, global
 	.4byte gxData
+.endobj gx
 
 .section .sbss, "wa"
 .balign 8
-.global __piReg
-__piReg:
+.obj __piReg, global
 	.skip 0x4
-.global __cpReg
-__cpReg:
+.endobj __piReg
+.obj __cpReg, global
 	.skip 0x4
-.global __peReg
-__peReg:
+.endobj __cpReg
+.obj __peReg, global
 	.skip 0x4
-.global __memReg
-__memReg:
+.endobj __peReg
+.obj __memReg, global
 	.skip 0x4
+.endobj __memReg
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-.global lbl_803EC530
-lbl_803EC530:
+.obj lbl_803EC530, local
 	.4byte 0x404040FF
-.global lbl_803EC534
-lbl_803EC534:
+.endobj lbl_803EC530
+.obj lbl_803EC534, local
 	.4byte 0x00000000
-.global lbl_803EC538
-lbl_803EC538:
+.endobj lbl_803EC534
+.obj lbl_803EC538, local
 	.4byte 0xFFFFFFFF
-.global lbl_803EC53C
-lbl_803EC53C:
-	.4byte 0x3F800000
-.global lbl_803EC540
-lbl_803EC540:
-	.4byte 0x00000000
-.global lbl_803EC544
-lbl_803EC544:
-	.4byte 0x3DCCCCCD
+.endobj lbl_803EC538
+.obj lbl_803EC53C, local
+	.float 1.0
+.endobj lbl_803EC53C
+.obj lbl_803EC540, local
+	.float 0.0
+.endobj lbl_803EC540
+.obj lbl_803EC544, local
+	.float 0.1
+.endobj lbl_803EC544
 .balign 8
-lbl_803EC548:
+.obj lbl_803EC548, local
 	.8byte 0x4330000000000000
+.endobj lbl_803EC548

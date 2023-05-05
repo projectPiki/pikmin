@@ -1,21 +1,20 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global OSGetTime
-OSGetTime:
+.fn OSGetTime, global
 /* 801FD3A0 001FA300  7C 6D 42 E6 */	mftbu r3
 /* 801FD3A4 001FA304  7C 8C 42 E6 */	mftb r4, 0x10c
 /* 801FD3A8 001FA308  7C AD 42 E6 */	mftbu r5
 /* 801FD3AC 001FA30C  7C 03 28 00 */	cmpw r3, r5
 /* 801FD3B0 001FA310  40 82 FF F0 */	bne OSGetTime
 /* 801FD3B4 001FA314  4E 80 00 20 */	blr 
+.endfn OSGetTime
 
-.global OSGetTick
-OSGetTick:
+.fn OSGetTick, global
 /* 801FD3B8 001FA318  7C 6C 42 E6 */	mftb r3, 0x10c
 /* 801FD3BC 001FA31C  4E 80 00 20 */	blr 
+.endfn OSGetTick
 
-.global __OSGetSystemTime
-__OSGetSystemTime:
+.fn __OSGetSystemTime, global
 /* 801FD3C0 001FA320  7C 08 02 A6 */	mflr r0
 /* 801FD3C4 001FA324  90 01 00 04 */	stw r0, 4(r1)
 /* 801FD3C8 001FA328  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -41,8 +40,9 @@ __OSGetSystemTime:
 /* 801FD418 001FA378  83 A1 00 14 */	lwz r29, 0x14(r1)
 /* 801FD41C 001FA37C  38 21 00 20 */	addi r1, r1, 0x20
 /* 801FD420 001FA380  4E 80 00 20 */	blr 
+.endfn __OSGetSystemTime
 
-GetDates:
+.fn GetDates, local
 /* 801FD424 001FA384  3C A0 92 49 */	lis r5, 0x92492493@ha
 /* 801FD428 001FA388  38 05 24 93 */	addi r0, r5, 0x92492493@l
 /* 801FD42C 001FA38C  38 E3 00 06 */	addi r7, r3, 6
@@ -158,9 +158,9 @@ GetDates:
 /* 801FD5B4 001FA514  38 03 00 01 */	addi r0, r3, 1
 /* 801FD5B8 001FA518  90 04 00 0C */	stw r0, 0xc(r4)
 /* 801FD5BC 001FA51C  4E 80 00 20 */	blr 
+.endfn GetDates
 
-.global OSTicksToCalendarTime
-OSTicksToCalendarTime:
+.fn OSTicksToCalendarTime, global
 /* 801FD5C0 001FA520  7C 08 02 A6 */	mflr r0
 /* 801FD5C4 001FA524  90 01 00 04 */	stw r0, 4(r1)
 /* 801FD5C8 001FA528  94 21 FF C8 */	stwu r1, -0x38(r1)
@@ -292,10 +292,11 @@ OSTicksToCalendarTime:
 /* 801FD7B8 001FA718  38 21 00 38 */	addi r1, r1, 0x38
 /* 801FD7BC 001FA71C  7C 08 03 A6 */	mtlr r0
 /* 801FD7C0 001FA720  4E 80 00 20 */	blr 
+.endfn OSTicksToCalendarTime
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-YearDays:
+.obj YearDays, local
 	.4byte 0x00000000
 	.4byte 0x0000001F
 	.4byte 0x0000003B
@@ -308,7 +309,8 @@ YearDays:
 	.4byte 0x00000111
 	.4byte 0x00000130
 	.4byte 0x0000014E
-LeapYearDays:
+.endobj YearDays
+.obj LeapYearDays, local
 	.4byte 0x00000000
 	.4byte 0x0000001F
 	.4byte 0x0000003C
@@ -321,3 +323,4 @@ LeapYearDays:
 	.4byte 0x00000112
 	.4byte 0x00000131
 	.4byte 0x0000014F
+.endobj LeapYearDays

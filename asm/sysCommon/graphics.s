@@ -5548,47 +5548,67 @@ __RTTI__8Material:
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803E8428:
+.obj lbl_803E8428, local
 	.float 30.0
-lbl_803E842C:
+.endobj lbl_803E8428
+.obj lbl_803E842C, local
 	.float 0.0
+.endobj lbl_803E842C
 .balign 8
-lbl_803E8430:
+.obj lbl_803E8430, local
 	.8byte 0x4330000000000000
-lbl_803E8438:
+.endobj lbl_803E8430
+.obj lbl_803E8438, local
 	.float 1.0
-lbl_803E843C:
+.endobj lbl_803E8438
+.obj lbl_803E843C, local
 	.float 2.0
-lbl_803E8440:
+.endobj lbl_803E843C
+.obj lbl_803E8440, local
 	.float 3.0
-lbl_803E8444:
+.endobj lbl_803E8440
+.obj lbl_803E8444, local
 	.float -2.0
-lbl_803E8448:
+.endobj lbl_803E8444
+.obj lbl_803E8448, local
 	.float 255.0
-lbl_803E844C:
+.endobj lbl_803E8448
+.obj lbl_803E844C, local
 	.float -1023.0
-lbl_803E8450:
+.endobj lbl_803E844C
+.obj lbl_803E8450, local
 	.float 1023.0
+.endobj lbl_803E8450
 .balign 8
-lbl_803E8458:
+.obj lbl_803E8458, local
 	.8byte 0x4330000080000000
-lbl_803E8460: # pi
+.endobj lbl_803E8458
+.obj lbl_803E8460, local # pi
 	.float 3.1415927
-lbl_803E8464:
+.endobj lbl_803E8460
+.obj lbl_803E8464, local
 	.float 180.0
+.endobj lbl_803E8464
 .balign 8
-lbl_803E8468:
+.obj lbl_803E8468, local
 	.double 0.5
+.endobj lbl_803E8468
 .balign 8
-lbl_803E8470:
+.obj lbl_803E8470, local
 	.double 3.0
-lbl_803E8478: # tau
+.endobj lbl_803E8470
+.obj lbl_803E8478, local # tau
 	.float 6.2831855
-lbl_803E847C:
+.endobj lbl_803E8478
+.obj lbl_803E847C, local
 	.float 4096.0
-lbl_803E8480:
+.endobj lbl_803E847C
+.obj lbl_803E8480, local
 	.float 0.0625
-lbl_803E8484:
+.endobj lbl_803E8480
+.obj lbl_803E8484, local
 	.float 0.3926991
-lbl_803E8488:
+.endobj lbl_803E8484
+.obj lbl_803E8488, local
 	.float 50.0
+.endobj lbl_803E8488

@@ -1,8 +1,7 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
 .balign 32, 0
-.global sqrtf2__Ff
-sqrtf2__Ff:
+.fn sqrtf2__Ff, global
 /* 8000DC20 0000AB80  7C 08 02 A6 */	mflr r0
 /* 8000DC24 0000AB84  90 01 00 04 */	stw r0, 4(r1)
 /* 8000DC28 0000AB88  94 21 FF F8 */	stwu r1, -8(r1)
@@ -11,10 +10,10 @@ sqrtf2__Ff:
 /* 8000DC34 0000AB94  38 21 00 08 */	addi r1, r1, 8
 /* 8000DC38 0000AB98  7C 08 03 A6 */	mtlr r0
 /* 8000DC3C 0000AB9C  4E 80 00 20 */	blr 
+.endfn sqrtf2__Ff
 
 .balign 32, 0
-.global sqrtf__3stdFf
-sqrtf__3stdFf: # weak function, lives in header
+.fn sqrtf__3stdFf, weak
 /* 8000DC40 0000ABA0  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8000DC44 0000ABA4  C0 02 80 A0 */	lfs f0, lbl_803E82A0@sda21(r2)
 /* 8000DC48 0000ABA8  FC 01 00 40 */	fcmpo cr0, f1, f0
@@ -41,10 +40,10 @@ sqrtf__3stdFf: # weak function, lives in header
 .L_8000DC9C:
 /* 8000DC9C 0000ABFC  38 21 00 10 */	addi r1, r1, 0x10
 /* 8000DCA0 0000AC00  4E 80 00 20 */	blr 
+.endfn sqrtf__3stdFf
 
 .balign 32, 0
-.global atanf2__Fff
-atanf2__Fff:
+.fn atanf2__Fff, global
 /* 8000DCC0 0000AC20  7C 08 02 A6 */	mflr r0
 /* 8000DCC4 0000AC24  90 01 00 04 */	stw r0, 4(r1)
 /* 8000DCC8 0000AC28  94 21 FF F8 */	stwu r1, -8(r1)
@@ -54,10 +53,10 @@ atanf2__Fff:
 /* 8000DCD8 0000AC38  38 21 00 08 */	addi r1, r1, 8
 /* 8000DCDC 0000AC3C  7C 08 03 A6 */	mtlr r0
 /* 8000DCE0 0000AC40  4E 80 00 20 */	blr 
+.endfn atanf2__Fff
 
 .balign 32, 0
-.global Jac_InitSinTable__Fv
-Jac_InitSinTable__Fv:
+.fn Jac_InitSinTable__Fv, global
 /* 8000DD00 0000AC60  7C 08 02 A6 */	mflr r0
 /* 8000DD04 0000AC64  90 01 00 04 */	stw r0, 4(r1)
 /* 8000DD08 0000AC68  94 21 FF C8 */	stwu r1, -0x38(r1)
@@ -93,10 +92,10 @@ Jac_InitSinTable__Fv:
 /* 8000DD7C 0000ACDC  38 21 00 38 */	addi r1, r1, 0x38
 /* 8000DD80 0000ACE0  7C 08 03 A6 */	mtlr r0
 /* 8000DD84 0000ACE4  4E 80 00 20 */	blr 
+.endfn Jac_InitSinTable__Fv
 
 .balign 32, 0
-.global sinf3__Ff
-sinf3__Ff:
+.fn sinf3__Ff, global
 /* 8000DDA0 0000AD00  94 21 FF E8 */	stwu r1, -0x18(r1)
 /* 8000DDA4 0000AD04  3C 60 80 31 */	lis r3, SINTABLE@ha
 /* 8000DDA8 0000AD08  38 03 DA E0 */	addi r0, r3, SINTABLE@l
@@ -110,24 +109,31 @@ sinf3__Ff:
 /* 8000DDC8 0000AD28  C0 23 00 00 */	lfs f1, 0(r3)
 /* 8000DDCC 0000AD2C  38 21 00 18 */	addi r1, r1, 0x18
 /* 8000DDD0 0000AD30  4E 80 00 20 */	blr 
+.endfn sinf3__Ff
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803E82A0:
+.obj lbl_803E82A0, local
 	.float 0.0
+.endobj lbl_803E82A0
 .balign 8
-lbl_803E82A8:
+.obj lbl_803E82A8, local
 	.double 0.5
+.endobj lbl_803E82A8
 .balign 8
-lbl_803E82B0:
+.obj lbl_803E82B0, local
 	.double 3.0
-lbl_803E82B8: #half pi
+.endobj lbl_803E82B0
+.obj lbl_803E82B8, local # half pi
 	.float 1.5707964
-lbl_803E82BC:
+.endobj lbl_803E82B8
+.obj lbl_803E82BC, local
 	.float 0.00390625
+.endobj lbl_803E82BC
 .balign 8
-lbl_803E82C0:
-	.4byte 0x43300000
-	.4byte 0x00000000
-lbl_803E82C8:
+.obj lbl_803E82C0, local
+	.8byte 0x4330000000000000
+.endobj lbl_803E82C0
+.obj lbl_803E82C8, local
 	.float 256.0
+.endobj lbl_803E82C8

@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global GXFlush
-GXFlush:
+.fn GXFlush, global
 /* 80210770 0020D6D0  7C 08 02 A6 */	mflr r0
 /* 80210774 0020D6D4  90 01 00 04 */	stw r0, 4(r1)
 /* 80210778 0020D6D8  94 21 FF F8 */	stwu r1, -8(r1)
@@ -30,9 +29,9 @@ GXFlush:
 /* 802107CC 0020D72C  38 21 00 08 */	addi r1, r1, 8
 /* 802107D0 0020D730  7C 08 03 A6 */	mtlr r0
 /* 802107D4 0020D734  4E 80 00 20 */	blr 
+.endfn GXFlush
 
-.global GXDrawDone
-GXDrawDone:
+.fn GXDrawDone, global
 /* 802107D8 0020D738  7C 08 02 A6 */	mflr r0
 /* 802107DC 0020D73C  90 01 00 04 */	stw r0, 4(r1)
 /* 802107E0 0020D740  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -67,9 +66,9 @@ GXDrawDone:
 /* 8021084C 0020D7AC  38 21 00 18 */	addi r1, r1, 0x18
 /* 80210850 0020D7B0  7C 08 03 A6 */	mtlr r0
 /* 80210854 0020D7B4  4E 80 00 20 */	blr 
+.endfn GXDrawDone
 
-.global GXPixModeSync
-GXPixModeSync:
+.fn GXPixModeSync, global
 /* 80210858 0020D7B8  38 00 00 61 */	li r0, 0x61
 /* 8021085C 0020D7BC  80 8D 2A 68 */	lwz r4, gx@sda21(r13)
 /* 80210860 0020D7C0  3C A0 CC 01 */	lis r5, 0xCC008000@ha
@@ -79,25 +78,25 @@ GXPixModeSync:
 /* 80210870 0020D7D0  90 65 80 00 */	stw r3, 0xCC008000@l(r5)
 /* 80210874 0020D7D4  B0 04 00 02 */	sth r0, 2(r4)
 /* 80210878 0020D7D8  4E 80 00 20 */	blr 
+.endfn GXPixModeSync
 
-.global GXPokeAlphaMode
-GXPokeAlphaMode:
+.fn GXPokeAlphaMode, global
 /* 8021087C 0020D7DC  80 AD 34 28 */	lwz r5, __peReg@sda21(r13)
 /* 80210880 0020D7E0  54 80 06 3E */	clrlwi r0, r4, 0x18
 /* 80210884 0020D7E4  50 60 40 2E */	rlwimi r0, r3, 8, 0, 0x17
 /* 80210888 0020D7E8  B0 05 00 06 */	sth r0, 6(r5)
 /* 8021088C 0020D7EC  4E 80 00 20 */	blr 
+.endfn GXPokeAlphaMode
 
-.global GXPokeAlphaRead
-GXPokeAlphaRead:
+.fn GXPokeAlphaRead, global
 /* 80210890 0020D7F0  54 60 07 B8 */	rlwinm r0, r3, 0, 0x1e, 0x1c
 /* 80210894 0020D7F4  80 6D 34 28 */	lwz r3, __peReg@sda21(r13)
 /* 80210898 0020D7F8  60 00 00 04 */	ori r0, r0, 4
 /* 8021089C 0020D7FC  B0 03 00 08 */	sth r0, 8(r3)
 /* 802108A0 0020D800  4E 80 00 20 */	blr 
+.endfn GXPokeAlphaRead
 
-.global GXPokeAlphaUpdate
-GXPokeAlphaUpdate:
+.fn GXPokeAlphaUpdate, global
 /* 802108A4 0020D804  80 8D 34 28 */	lwz r4, __peReg@sda21(r13)
 /* 802108A8 0020D808  54 60 25 36 */	rlwinm r0, r3, 4, 0x14, 0x1b
 /* 802108AC 0020D80C  A4 64 00 02 */	lhzu r3, 2(r4)
@@ -105,9 +104,9 @@ GXPokeAlphaUpdate:
 /* 802108B4 0020D814  7C 60 03 78 */	or r0, r3, r0
 /* 802108B8 0020D818  B0 04 00 00 */	sth r0, 0(r4)
 /* 802108BC 0020D81C  4E 80 00 20 */	blr 
+.endfn GXPokeAlphaUpdate
 
-.global GXPokeBlendMode
-GXPokeBlendMode:
+.fn GXPokeBlendMode, global
 /* 802108C0 0020D820  80 ED 34 28 */	lwz r7, __peReg@sda21(r13)
 /* 802108C4 0020D824  2C 03 00 01 */	cmpwi r3, 1
 /* 802108C8 0020D828  39 20 00 01 */	li r9, 1
@@ -143,9 +142,9 @@ GXPokeBlendMode:
 /* 8021093C 0020D89C  64 00 41 00 */	oris r0, r0, 0x4100
 /* 80210940 0020D8A0  B0 0A 00 00 */	sth r0, 0(r10)
 /* 80210944 0020D8A4  4E 80 00 20 */	blr 
+.endfn GXPokeBlendMode
 
-.global GXPokeColorUpdate
-GXPokeColorUpdate:
+.fn GXPokeColorUpdate, global
 /* 80210948 0020D8A8  80 8D 34 28 */	lwz r4, __peReg@sda21(r13)
 /* 8021094C 0020D8AC  54 60 1D 78 */	rlwinm r0, r3, 3, 0x15, 0x1c
 /* 80210950 0020D8B0  A4 64 00 02 */	lhzu r3, 2(r4)
@@ -153,17 +152,17 @@ GXPokeColorUpdate:
 /* 80210958 0020D8B8  7C 60 03 78 */	or r0, r3, r0
 /* 8021095C 0020D8BC  B0 04 00 00 */	sth r0, 0(r4)
 /* 80210960 0020D8C0  4E 80 00 20 */	blr 
+.endfn GXPokeColorUpdate
 
-.global GXPokeDstAlpha
-GXPokeDstAlpha:
+.fn GXPokeDstAlpha, global
 /* 80210964 0020D8C4  80 AD 34 28 */	lwz r5, __peReg@sda21(r13)
 /* 80210968 0020D8C8  54 60 44 2E */	rlwinm r0, r3, 8, 0x10, 0x17
 /* 8021096C 0020D8CC  50 80 06 3E */	rlwimi r0, r4, 0, 0x18, 0x1f
 /* 80210970 0020D8D0  B0 05 00 04 */	sth r0, 4(r5)
 /* 80210974 0020D8D4  4E 80 00 20 */	blr 
+.endfn GXPokeDstAlpha
 
-.global GXPokeDither
-GXPokeDither:
+.fn GXPokeDither, global
 /* 80210978 0020D8D8  80 8D 34 28 */	lwz r4, __peReg@sda21(r13)
 /* 8021097C 0020D8DC  54 60 15 BA */	rlwinm r0, r3, 2, 0x16, 0x1d
 /* 80210980 0020D8E0  A4 64 00 02 */	lhzu r3, 2(r4)
@@ -171,9 +170,9 @@ GXPokeDither:
 /* 80210988 0020D8E8  7C 60 03 78 */	or r0, r3, r0
 /* 8021098C 0020D8EC  B0 04 00 00 */	sth r0, 0(r4)
 /* 80210990 0020D8F0  4E 80 00 20 */	blr 
+.endfn GXPokeDither
 
-.global GXPokeZMode
-GXPokeZMode:
+.fn GXPokeZMode, global
 /* 80210994 0020D8F4  54 60 06 3E */	clrlwi r0, r3, 0x18
 /* 80210998 0020D8F8  80 6D 34 28 */	lwz r3, __peReg@sda21(r13)
 /* 8021099C 0020D8FC  54 06 07 F6 */	rlwinm r6, r0, 0, 0x1f, 0x1b
@@ -184,9 +183,9 @@ GXPokeZMode:
 /* 802109B0 0020D910  7C 80 03 78 */	or r0, r4, r0
 /* 802109B4 0020D914  B0 03 00 00 */	sth r0, 0(r3)
 /* 802109B8 0020D918  4E 80 00 20 */	blr 
+.endfn GXPokeZMode
 
-.global GXTokenInterruptHandler
-GXTokenInterruptHandler:
+.fn GXTokenInterruptHandler, local
 /* 802109BC 0020D91C  7C 08 02 A6 */	mflr r0
 /* 802109C0 0020D920  90 01 00 04 */	stw r0, 4(r1)
 /* 802109C4 0020D924  94 21 FD 20 */	stwu r1, -0x2e0(r1)
@@ -222,9 +221,9 @@ GXTokenInterruptHandler:
 /* 80210A38 0020D998  7C 08 03 A6 */	mtlr r0
 /* 80210A3C 0020D99C  38 21 02 E0 */	addi r1, r1, 0x2e0
 /* 80210A40 0020D9A0  4E 80 00 20 */	blr 
+.endfn GXTokenInterruptHandler
 
-.global GXFinishInterruptHandler
-GXFinishInterruptHandler:
+.fn GXFinishInterruptHandler, local
 /* 80210A44 0020D9A4  7C 08 02 A6 */	mflr r0
 /* 80210A48 0020D9A8  38 60 00 01 */	li r3, 1
 /* 80210A4C 0020D9AC  90 01 00 04 */	stw r0, 4(r1)
@@ -259,9 +258,9 @@ GXFinishInterruptHandler:
 /* 80210ABC 0020DA1C  38 21 02 E0 */	addi r1, r1, 0x2e0
 /* 80210AC0 0020DA20  7C 08 03 A6 */	mtlr r0
 /* 80210AC4 0020DA24  4E 80 00 20 */	blr 
+.endfn GXFinishInterruptHandler
 
-.global __GXPEInit
-__GXPEInit:
+.fn __GXPEInit, global
 /* 80210AC8 0020DA28  7C 08 02 A6 */	mflr r0
 /* 80210ACC 0020DA2C  3C 60 80 21 */	lis r3, GXTokenInterruptHandler@ha
 /* 80210AD0 0020DA30  90 01 00 04 */	stw r0, 4(r1)
@@ -294,18 +293,20 @@ __GXPEInit:
 /* 80210B3C 0020DA9C  38 21 00 08 */	addi r1, r1, 8
 /* 80210B40 0020DAA0  7C 08 03 A6 */	mtlr r0
 /* 80210B44 0020DAA4  4E 80 00 20 */	blr 
+.endfn __GXPEInit
 
 .section .sbss, "wa"
 .balign 8
-.global TokenCB
-TokenCB:
+.obj TokenCB, local
 	.skip 0x4
-.global DrawDoneCB
-DrawDoneCB:
+.endobj TokenCB
+.obj DrawDoneCB, local
 	.skip 0x4
-.global DrawDone
-DrawDone:
-	.skip 0x4
-.global FinishQueue
-FinishQueue:
-	.skip 0xC
+.endobj DrawDoneCB
+.obj DrawDone, local
+	.skip 0x1
+.endobj DrawDone
+.balign 4
+.obj FinishQueue, local
+	.skip 0x8
+.endobj FinishQueue

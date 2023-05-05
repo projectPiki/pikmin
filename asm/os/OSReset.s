@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global OSRegisterResetFunction
-OSRegisterResetFunction:
+.fn OSRegisterResetFunction, global
 /* 801FA0C0 001F7020  80 AD 32 08 */	lwz r5, ResetFunctionQueue@sda21(r13)
 /* 801FA0C4 001F7024  48 00 00 08 */	b .L_801FA0CC
 .L_801FA0C8:
@@ -42,9 +41,9 @@ OSRegisterResetFunction:
 .L_801FA13C:
 /* 801FA13C 001F709C  90 64 00 08 */	stw r3, 8(r4)
 /* 801FA140 001F70A0  4E 80 00 20 */	blr 
+.endfn OSRegisterResetFunction
 
-.global Reset
-Reset:
+.fn Reset, local
 /* 801FA144 001F70A4  48 00 00 20 */	b .L_801FA164
 .L_801FA148:
 /* 801FA148 001F70A8  7D 10 FA A6 */	mfspr r8, 0x3f0
@@ -82,9 +81,9 @@ Reset:
 /* 801FA1AC 001F710C  4B FF FF FC */	b .L_801FA1A8
 .L_801FA1B0:
 /* 801FA1B0 001F7110  4B FF FF 98 */	b .L_801FA148
+.endfn Reset
 
-.global __OSDoHotReset
-__OSDoHotReset:
+.fn __OSDoHotReset, global
 /* 801FA1B4 001F7114  7C 08 02 A6 */	mflr r0
 /* 801FA1B8 001F7118  90 01 00 04 */	stw r0, 4(r1)
 /* 801FA1BC 001F711C  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -103,9 +102,9 @@ __OSDoHotReset:
 /* 801FA1F0 001F7150  38 21 00 18 */	addi r1, r1, 0x18
 /* 801FA1F4 001F7154  7C 08 03 A6 */	mtlr r0
 /* 801FA1F8 001F7158  4E 80 00 20 */	blr 
+.endfn __OSDoHotReset
 
-.global OSResetSystem
-OSResetSystem:
+.fn OSResetSystem, global
 /* 801FA1FC 001F715C  7C 08 02 A6 */	mflr r0
 /* 801FA200 001F7160  90 01 00 04 */	stw r0, 4(r1)
 /* 801FA204 001F7164  94 21 FF C8 */	stwu r1, -0x38(r1)
@@ -239,8 +238,10 @@ OSResetSystem:
 /* 801FA3A8 001F7308  38 21 00 38 */	addi r1, r1, 0x38
 /* 801FA3AC 001F730C  7C 08 03 A6 */	mtlr r0
 /* 801FA3B0 001F7310  4E 80 00 20 */	blr 
+.endfn OSResetSystem
 
 .section .sbss, "wa"
 .balign 8
-ResetFunctionQueue:
+.obj ResetFunctionQueue, local
 	.skip 8
+.endobj ResetFunctionQueue

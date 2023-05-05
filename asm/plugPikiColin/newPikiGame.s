@@ -5187,52 +5187,76 @@ dontShowFrame:
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803E8778:
+.obj lbl_803E8778, local
 	.float 0.5
-lbl_803E877C:
+.endobj lbl_803E8778
+.obj lbl_803E877C, local
 	.float 0.0
-lbl_803E8780:
+.endobj lbl_803E877C
+.obj lbl_803E8780, local
 	.float 1.0
-lbl_803E8784:
+.endobj lbl_803E8780
+.obj lbl_803E8784, local
 	.float 255.0
-lbl_803E8788:
+.endobj lbl_803E8784
+.obj lbl_803E8788, local
 	.float 2.0
-lbl_803E878C:
+.endobj lbl_803E8788
+.obj lbl_803E878C, local
 	.float -0.1
-lbl_803E8790:
+.endobj lbl_803E878C
+.obj lbl_803E8790, local
 	.float 0.125
-lbl_803E8794:
+.endobj lbl_803E8790
+.obj lbl_803E8794, local
 	.float 5.0
-lbl_803E8798:
+.endobj lbl_803E8794
+.obj lbl_803E8798, local
 	.float 3.0
-lbl_803E879C:
+.endobj lbl_803E8798
+.obj lbl_803E879C, local
 	.float 40.0
-lbl_803E87A0:
+.endobj lbl_803E879C
+.obj lbl_803E87A0, local
 	.float 4.5
-lbl_803E87A4:
+.endobj lbl_803E87A0
+.obj lbl_803E87A4, local
 	.float 2.5
-lbl_803E87A8:
+.endobj lbl_803E87A4
+.obj lbl_803E87A8, local
 	.float 14.8
-lbl_803E87AC:
+.endobj lbl_803E87A8
+.obj lbl_803E87AC, local
 	.float 60.0
-lbl_803E87B0:
+.endobj lbl_803E87AC
+.obj lbl_803E87B0, local
 	.float 150.0
-lbl_803E87B4:
+.endobj lbl_803E87B0
+.obj lbl_803E87B4, local
 	.float 750.0
-lbl_803E87B8:
+.endobj lbl_803E87B4
+.obj lbl_803E87B8, local
 	.float 1000.0
-lbl_803E87BC:
+.endobj lbl_803E87B8
+.obj lbl_803E87BC, local
 	.float 3000.0
-lbl_803E87C0:
+.endobj lbl_803E87BC
+.obj lbl_803E87C0, local
 	.float 0.01
-lbl_803E87C4:
+.endobj lbl_803E87C0
+.obj lbl_803E87C4, local
 	.float 0.6
-lbl_803E87C8:
+.endobj lbl_803E87C4
+.obj lbl_803E87C8, local
 	.float 100.0
-lbl_803E87CC:
+.endobj lbl_803E87C8
+.obj lbl_803E87CC, local
 	.float 10000.0
-lbl_803E87D0:
+.endobj lbl_803E87CC
+.obj lbl_803E87D0, local
 	.float 25.0
+.endobj lbl_803E87D0
 .balign 8
-lbl_803E87D8:
+.obj lbl_803E87D8, local
 	.8byte 0x4330000080000000
+.endobj lbl_803E87D8

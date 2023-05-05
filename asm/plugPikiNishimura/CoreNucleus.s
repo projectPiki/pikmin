@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global __ct__15CoreNucleusPropFv
-__ct__15CoreNucleusPropFv:
+.fn __ct__15CoreNucleusPropFv, global
 /* 8017A954 001778B4  7C 08 02 A6 */	mflr r0
 /* 8017A958 001778B8  90 01 00 04 */	stw r0, 4(r1)
 /* 8017A95C 001778BC  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -38,9 +37,9 @@ __ct__15CoreNucleusPropFv:
 /* 8017A9D8 00177938  38 21 00 18 */	addi r1, r1, 0x18
 /* 8017A9DC 0017793C  7C 08 03 A6 */	mtlr r0
 /* 8017A9E0 00177940  4E 80 00 20 */	blr 
+.endfn __ct__15CoreNucleusPropFv
 
-.global __ct__11CoreNucleusFP12CreatureProp
-__ct__11CoreNucleusFP12CreatureProp:
+.fn __ct__11CoreNucleusFP12CreatureProp, global
 /* 8017A9E4 00177944  7C 08 02 A6 */	mflr r0
 /* 8017A9E8 00177948  90 01 00 04 */	stw r0, 4(r1)
 /* 8017A9EC 0017794C  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -76,14 +75,14 @@ __ct__11CoreNucleusFP12CreatureProp:
 /* 8017AA5C 001779BC  38 21 00 18 */	addi r1, r1, 0x18
 /* 8017AA60 001779C0  7C 08 03 A6 */	mtlr r0
 /* 8017AA64 001779C4  4E 80 00 20 */	blr 
+.endfn __ct__11CoreNucleusFP12CreatureProp
 
-.global getiMass__11CoreNucleusFv
-getiMass__11CoreNucleusFv:
+.fn getiMass__11CoreNucleusFv, global
 /* 8017AA68 001779C8  C0 22 AE 70 */	lfs f1, lbl_803EB070@sda21(r2)
 /* 8017AA6C 001779CC  4E 80 00 20 */	blr 
+.endfn getiMass__11CoreNucleusFv
 
-.global init__11CoreNucleusFR8Vector3f
-init__11CoreNucleusFR8Vector3f:
+.fn init__11CoreNucleusFR8Vector3f, global
 /* 8017AA70 001779D0  7C 08 02 A6 */	mflr r0
 /* 8017AA74 001779D4  38 A0 00 00 */	li r5, 0
 /* 8017AA78 001779D8  90 01 00 04 */	stw r0, 4(r1)
@@ -109,9 +108,9 @@ init__11CoreNucleusFR8Vector3f:
 /* 8017AAC8 00177A28  38 21 00 08 */	addi r1, r1, 8
 /* 8017AACC 00177A2C  7C 08 03 A6 */	mtlr r0
 /* 8017AAD0 00177A30  4E 80 00 20 */	blr 
+.endfn init__11CoreNucleusFR8Vector3f
 
-.global doKill__11CoreNucleusFv
-doKill__11CoreNucleusFv:
+.fn doKill__11CoreNucleusFv, global
 /* 8017AAD4 00177A34  7C 08 02 A6 */	mflr r0
 /* 8017AAD8 00177A38  7C 64 1B 78 */	mr r4, r3
 /* 8017AADC 00177A3C  90 01 00 04 */	stw r0, 4(r1)
@@ -125,13 +124,13 @@ doKill__11CoreNucleusFv:
 /* 8017AAFC 00177A5C  38 21 00 08 */	addi r1, r1, 8
 /* 8017AB00 00177A60  7C 08 03 A6 */	mtlr r0
 /* 8017AB04 00177A64  4E 80 00 20 */	blr 
+.endfn doKill__11CoreNucleusFv
 
-.global exitCourse__11CoreNucleusFv
-exitCourse__11CoreNucleusFv:
+.fn exitCourse__11CoreNucleusFv, global
 /* 8017AB08 00177A68  4E 80 00 20 */	blr 
+.endfn exitCourse__11CoreNucleusFv
 
-.global update__11CoreNucleusFv
-update__11CoreNucleusFv:
+.fn update__11CoreNucleusFv, global
 /* 8017AB0C 00177A6C  7C 08 02 A6 */	mflr r0
 /* 8017AB10 00177A70  90 01 00 04 */	stw r0, 4(r1)
 /* 8017AB14 00177A74  94 21 FF F8 */	stwu r1, -8(r1)
@@ -140,9 +139,9 @@ update__11CoreNucleusFv:
 /* 8017AB20 00177A80  38 21 00 08 */	addi r1, r1, 8
 /* 8017AB24 00177A84  7C 08 03 A6 */	mtlr r0
 /* 8017AB28 00177A88  4E 80 00 20 */	blr 
+.endfn update__11CoreNucleusFv
 
-.global refresh__11CoreNucleusFR8Graphics
-refresh__11CoreNucleusFR8Graphics:
+.fn refresh__11CoreNucleusFR8Graphics, global
 /* 8017AB2C 00177A8C  7C 08 02 A6 */	mflr r0
 /* 8017AB30 00177A90  90 01 00 04 */	stw r0, 4(r1)
 /* 8017AB34 00177A94  94 21 FF A8 */	stwu r1, -0x58(r1)
@@ -181,9 +180,9 @@ refresh__11CoreNucleusFR8Graphics:
 /* 8017ABB8 00177B18  38 21 00 58 */	addi r1, r1, 0x58
 /* 8017ABBC 00177B1C  7C 08 03 A6 */	mtlr r0
 /* 8017ABC0 00177B20  4E 80 00 20 */	blr 
+.endfn refresh__11CoreNucleusFR8Graphics
 
-.global drawShape__11CoreNucleusFR8Graphics
-drawShape__11CoreNucleusFR8Graphics:
+.fn drawShape__11CoreNucleusFR8Graphics, global
 /* 8017ABC4 00177B24  7C 08 02 A6 */	mflr r0
 /* 8017ABC8 00177B28  38 A0 00 00 */	li r5, 0
 /* 8017ABCC 00177B2C  90 01 00 04 */	stw r0, 4(r1)
@@ -211,9 +210,9 @@ drawShape__11CoreNucleusFR8Graphics:
 /* 8017AC24 00177B84  38 21 00 18 */	addi r1, r1, 0x18
 /* 8017AC28 00177B88  7C 08 03 A6 */	mtlr r0
 /* 8017AC2C 00177B8C  4E 80 00 20 */	blr 
+.endfn drawShape__11CoreNucleusFR8Graphics
 
-.global doAI__11CoreNucleusFv
-doAI__11CoreNucleusFv:
+.fn doAI__11CoreNucleusFv, global
 /* 8017AC30 00177B90  7C 08 02 A6 */	mflr r0
 /* 8017AC34 00177B94  90 01 00 04 */	stw r0, 4(r1)
 /* 8017AC38 00177B98  94 21 FF F8 */	stwu r1, -8(r1)
@@ -223,9 +222,9 @@ doAI__11CoreNucleusFv:
 /* 8017AC48 00177BA8  38 21 00 08 */	addi r1, r1, 8
 /* 8017AC4C 00177BAC  7C 08 03 A6 */	mtlr r0
 /* 8017AC50 00177BB0  4E 80 00 20 */	blr 
+.endfn doAI__11CoreNucleusFv
 
-.global doAnimation__11CoreNucleusFv
-doAnimation__11CoreNucleusFv:
+.fn doAnimation__11CoreNucleusFv, global
 /* 8017AC54 00177BB4  7C 08 02 A6 */	mflr r0
 /* 8017AC58 00177BB8  7C 64 1B 78 */	mr r4, r3
 /* 8017AC5C 00177BBC  90 01 00 04 */	stw r0, 4(r1)
@@ -244,9 +243,9 @@ doAnimation__11CoreNucleusFv:
 /* 8017AC8C 00177BEC  38 21 00 08 */	addi r1, r1, 8
 /* 8017AC90 00177BF0  7C 08 03 A6 */	mtlr r0
 /* 8017AC94 00177BF4  4E 80 00 20 */	blr 
+.endfn doAnimation__11CoreNucleusFv
 
-.global collisionCallback__11CoreNucleusFR9CollEvent
-collisionCallback__11CoreNucleusFR9CollEvent:
+.fn collisionCallback__11CoreNucleusFR9CollEvent, global
 /* 8017AC98 00177BF8  7C 08 02 A6 */	mflr r0
 /* 8017AC9C 00177BFC  90 01 00 04 */	stw r0, 4(r1)
 /* 8017ACA0 00177C00  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -269,9 +268,9 @@ collisionCallback__11CoreNucleusFR9CollEvent:
 /* 8017ACE0 00177C40  38 21 00 18 */	addi r1, r1, 0x18
 /* 8017ACE4 00177C44  7C 08 03 A6 */	mtlr r0
 /* 8017ACE8 00177C48  4E 80 00 20 */	blr 
+.endfn collisionCallback__11CoreNucleusFR9CollEvent
 
-.global read__15CoreNucleusPropFR18RandomAccessStream
-read__15CoreNucleusPropFR18RandomAccessStream:
+.fn read__15CoreNucleusPropFR18RandomAccessStream, weak
 /* 8017ACEC 00177C4C  7C 08 02 A6 */	mflr r0
 /* 8017ACF0 00177C50  90 01 00 04 */	stw r0, 4(r1)
 /* 8017ACF4 00177C54  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -292,38 +291,47 @@ read__15CoreNucleusPropFR18RandomAccessStream:
 /* 8017AD30 00177C90  38 21 00 18 */	addi r1, r1, 0x18
 /* 8017AD34 00177C94  7C 08 03 A6 */	mtlr r0
 /* 8017AD38 00177C98  4E 80 00 20 */	blr 
+.endfn read__15CoreNucleusPropFR18RandomAccessStream
 
-"@492@read__15CoreNucleusPropFR18RandomAccessStream":
+.fn "@492@read__15CoreNucleusPropFR18RandomAccessStream", weak
 /* 8017AD3C 00177C9C  38 63 FE 14 */	addi r3, r3, -492
 /* 8017AD40 00177CA0  4B FF FF AC */	b read__15CoreNucleusPropFR18RandomAccessStream
+.endfn "@492@read__15CoreNucleusPropFR18RandomAccessStream"
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802D1330:
+.obj lbl_802D1330, local
 	.asciz "CoreNucleus.cpp"
+.endobj lbl_802D1330
 .balign 4
-lbl_802D1340:
+.obj lbl_802D1340, local
 	.asciz "CoreNucleus"
+.endobj lbl_802D1340
 .balign 4
-lbl_802D134C:
+.obj lbl_802D134C, local
 	.asciz "CoreNode"
+.endobj lbl_802D134C
 .balign 4
-lbl_802D1358:
+.obj lbl_802D1358, local
 	.asciz "EventTalker"
+.endobj lbl_802D1358
 .balign 4
-lbl_802D1364:
+.obj lbl_802D1364, local
 	.asciz "RefCountable"
+.endobj lbl_802D1364
 .balign 4
-lbl_802D1374:
+.obj lbl_802D1374, local
 	.asciz "Creature"
+.endobj lbl_802D1374
 .balign 4
-lbl_802D1380:
+.obj lbl_802D1380, local
 	.4byte __RTTI__11EventTalker
 	.4byte 0x00000008
 	.4byte __RTTI__12RefCountable
 	.4byte 0x00000000
 	.4byte 0x00000000
-lbl_802D1394:
+.endobj lbl_802D1380
+.obj lbl_802D1394, local
 	.4byte __RTTI__11EventTalker
 	.4byte 0x00000008
 	.4byte __RTTI__12RefCountable
@@ -331,7 +339,8 @@ lbl_802D1394:
 	.4byte __RTTI__8Creature
 	.4byte 0x00000000
 	.4byte 0x00000000
-lbl_802D13B0:
+.endobj lbl_802D1394
+.obj lbl_802D13B0, local
 	.4byte __RTTI__11EventTalker
 	.4byte 0x00000008
 	.4byte __RTTI__12RefCountable
@@ -341,8 +350,8 @@ lbl_802D13B0:
 	.4byte __RTTI__4Boss
 	.4byte 0x00000000
 	.4byte 0x00000000
-.global __vt__11CoreNucleus
-__vt__11CoreNucleus:
+.endobj lbl_802D13B0
+.obj __vt__11CoreNucleus, global
 	.4byte __RTTI__11CoreNucleus
 	.4byte 0
 	.4byte addCntCallback__12RefCountableFv
@@ -416,26 +425,32 @@ __vt__11CoreNucleus:
 	.4byte attackDefaultPortion__4BossFv
 	.4byte bombDamageCounter__4BossFP8CollPart
 	.4byte drawShape__11CoreNucleusFR8Graphics
+.endobj __vt__11CoreNucleus
 .balign 4
-lbl_802D14F8:
+.obj lbl_802D14F8, local
 	.asciz "CoreNucleusProp"
+.endobj lbl_802D14F8
 .balign 4
-lbl_802D1508:
+.obj lbl_802D1508, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte 0
+.endobj lbl_802D1508
 .balign 4
-lbl_802D1514:
+.obj lbl_802D1514, local
 	.asciz "CreatureProp"
+.endobj lbl_802D1514
 .balign 4
-lbl_802D1524:
+.obj lbl_802D1524, local
 	.asciz "BossProp"
+.endobj lbl_802D1524
 .balign 4
-lbl_802D1530:
+.obj lbl_802D1530, local
 	.4byte __RTTI__12CreatureProp
 	.4byte 0
 	.4byte 0
-lbl_802D153C:
+.endobj lbl_802D1530
+.obj lbl_802D153C, local
 	.4byte __RTTI__5ANode
 	.4byte 0x1ec
 	.4byte __RTTI__8CoreNode
@@ -445,8 +460,8 @@ lbl_802D153C:
 	.4byte __RTTI__8BossProp
 	.4byte 0
 	.4byte 0
-.global __vt__15CoreNucleusProp
-__vt__15CoreNucleusProp:
+.endobj lbl_802D153C
+.obj __vt__15CoreNucleusProp, weak
 	.4byte __RTTI__15CoreNucleusProp
 	.4byte 0
 	.4byte read__15CoreNucleusPropFR18RandomAccessStream
@@ -454,6 +469,7 @@ __vt__15CoreNucleusProp:
 	.4byte 0xfffffe14
 	.4byte getAgeNodeType__5ANodeFv
 	.4byte "@492@read__15CoreNucleusPropFR18RandomAccessStream"
+.endobj __vt__15CoreNucleusProp
 	.4byte 0
 	.4byte 0
 	.4byte 0
@@ -464,60 +480,80 @@ __vt__15CoreNucleusProp:
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-lbl_803E5488:
+.obj lbl_803E5488, local
 	.float 0.0
-lbl_803E548C:
+.endobj lbl_803E5488
+.obj lbl_803E548C, local
 	.float 0.0
-lbl_803E5490:
+.endobj lbl_803E548C
+.obj lbl_803E5490, local
 	.float 0.0
-__RTTI__11EventTalker:
+.endobj lbl_803E5490
+.obj __RTTI__11EventTalker, local
 	.4byte lbl_802D1358
 	.4byte 0x00000000
-__RTTI__12RefCountable:
+.endobj __RTTI__11EventTalker
+.obj __RTTI__12RefCountable, local
 	.4byte lbl_802D1364
 	.4byte 0x00000000
-__RTTI__8Creature:
+.endobj __RTTI__12RefCountable
+.obj __RTTI__8Creature, local
 	.4byte lbl_802D1374
 	.4byte lbl_802D1380
+.endobj __RTTI__8Creature
 .balign 4
-lbl_803E54AC:
+.obj lbl_803E54AC, local
 	.asciz "Boss"
+.endobj lbl_803E54AC
 .balign 4
-__RTTI__4Boss:
+.obj __RTTI__4Boss, local
 	.4byte lbl_803E54AC
 	.4byte lbl_802D1394
-__RTTI__11CoreNucleus:
+.endobj __RTTI__4Boss
+.obj __RTTI__11CoreNucleus, local
 	.4byte lbl_802D1340
 	.4byte lbl_802D13B0
+.endobj __RTTI__11CoreNucleus
 .balign 4
-lbl_803E54C4:
+.obj lbl_803E54C4, local
 	.asciz "ANode"
+.endobj lbl_803E54C4
 .balign 4
-__RTTI__5ANode:
+.obj __RTTI__5ANode, local
 	.4byte lbl_803E54C4
 	.4byte 0
-__RTTI__8CoreNode:
+.endobj __RTTI__5ANode
+.obj __RTTI__8CoreNode, local
 	.4byte lbl_802D134C
 	.4byte lbl_802D1508
-__RTTI__12CreatureProp:
+.endobj __RTTI__8CoreNode
+.obj __RTTI__12CreatureProp, local
 	.4byte lbl_802D1514
 	.4byte 0
-__RTTI__8BossProp:
+.endobj __RTTI__12CreatureProp
+.obj __RTTI__8BossProp, local
 	.4byte lbl_802D1524
 	.4byte lbl_802D1530
-__RTTI__15CoreNucleusProp:
+.endobj __RTTI__8BossProp
+.obj __RTTI__15CoreNucleusProp, local
 	.4byte lbl_802D14F8
 	.4byte lbl_802D153C
+.endobj __RTTI__15CoreNucleusProp
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803EB068:
+.obj lbl_803EB068, local
 	.float 1.0
-lbl_803EB06C:
+.endobj lbl_803EB068
+.obj lbl_803EB06C, local
 	.float 0.0
-lbl_803EB070:
+.endobj lbl_803EB06C
+.obj lbl_803EB070, local
 	.float 0.01
-lbl_803EB074:
+.endobj lbl_803EB070
+.obj lbl_803EB074, local
 	.float 20.0
-lbl_803EB078:
+.endobj lbl_803EB074
+.obj lbl_803EB078, local
 	.float 40.0
+.endobj lbl_803EB078

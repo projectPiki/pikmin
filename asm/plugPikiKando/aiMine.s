@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global __ct__7ActMineFP4Piki
-__ct__7ActMineFP4Piki:
+.fn __ct__7ActMineFP4Piki, global
 /* 800B92C0 000B6220  7C 08 02 A6 */	mflr r0
 /* 800B92C4 000B6224  90 01 00 04 */	stw r0, 4(r1)
 /* 800B92C8 000B6228  7C 80 07 35 */	extsh. r0, r4
@@ -35,9 +34,9 @@ __ct__7ActMineFP4Piki:
 /* 800B9334 000B6294  38 21 00 20 */	addi r1, r1, 0x20
 /* 800B9338 000B6298  7C 08 03 A6 */	mtlr r0
 /* 800B933C 000B629C  4E 80 00 20 */	blr 
+.endfn __ct__7ActMineFP4Piki
 
-.global init__7ActMineFP8Creature
-init__7ActMineFP8Creature:
+.fn init__7ActMineFP8Creature, global
 /* 800B9340 000B62A0  7C 08 02 A6 */	mflr r0
 /* 800B9344 000B62A4  90 01 00 04 */	stw r0, 4(r1)
 /* 800B9348 000B62A8  38 00 00 00 */	li r0, 0
@@ -64,9 +63,9 @@ init__7ActMineFP8Creature:
 /* 800B9398 000B62F8  38 21 00 18 */	addi r1, r1, 0x18
 /* 800B939C 000B62FC  7C 08 03 A6 */	mtlr r0
 /* 800B93A0 000B6300  4E 80 00 20 */	blr 
+.endfn init__7ActMineFP8Creature
 
-.global initWatch__7ActMineFv
-initWatch__7ActMineFv:
+.fn initWatch__7ActMineFv, global
 /* 800B93A4 000B6304  7C 08 02 A6 */	mflr r0
 /* 800B93A8 000B6308  90 01 00 04 */	stw r0, 4(r1)
 /* 800B93AC 000B630C  94 21 FF D0 */	stwu r1, -0x30(r1)
@@ -104,9 +103,9 @@ initWatch__7ActMineFv:
 /* 800B9428 000B6388  38 21 00 30 */	addi r1, r1, 0x30
 /* 800B942C 000B638C  7C 08 03 A6 */	mtlr r0
 /* 800B9430 000B6390  4E 80 00 20 */	blr 
+.endfn initWatch__7ActMineFv
 
-.global exeMine__7ActMineFv
-exeMine__7ActMineFv:
+.fn exeMine__7ActMineFv, global
 /* 800B9434 000B6394  7C 08 02 A6 */	mflr r0
 /* 800B9438 000B6398  90 01 00 04 */	stw r0, 4(r1)
 /* 800B943C 000B639C  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -195,9 +194,9 @@ exeMine__7ActMineFv:
 /* 800B9574 000B64D4  38 21 00 28 */	addi r1, r1, 0x28
 /* 800B9578 000B64D8  7C 08 03 A6 */	mtlr r0
 /* 800B957C 000B64DC  4E 80 00 20 */	blr 
+.endfn exeMine__7ActMineFv
 
-.global exec__7ActMineFv
-exec__7ActMineFv:
+.fn exec__7ActMineFv, global
 /* 800B9580 000B64E0  7C 08 02 A6 */	mflr r0
 /* 800B9584 000B64E4  90 01 00 04 */	stw r0, 4(r1)
 /* 800B9588 000B64E8  94 21 FF 90 */	stwu r1, -0x70(r1)
@@ -337,13 +336,13 @@ exec__7ActMineFv:
 /* 800B9774 000B66D4  38 21 00 70 */	addi r1, r1, 0x70
 /* 800B9778 000B66D8  7C 08 03 A6 */	mtlr r0
 /* 800B977C 000B66DC  4E 80 00 20 */	blr 
+.endfn exec__7ActMineFv
 
-.global cleanup__7ActMineFv
-cleanup__7ActMineFv:
+.fn cleanup__7ActMineFv, global
 /* 800B9780 000B66E0  4E 80 00 20 */	blr 
+.endfn cleanup__7ActMineFv
 
-.global animationKeyUpdated__7ActMineFR16PaniAnimKeyEvent
-animationKeyUpdated__7ActMineFR16PaniAnimKeyEvent:
+.fn animationKeyUpdated__7ActMineFR16PaniAnimKeyEvent, global
 /* 800B9784 000B66E4  7C 08 02 A6 */	mflr r0
 /* 800B9788 000B66E8  90 01 00 04 */	stw r0, 4(r1)
 /* 800B978C 000B66EC  94 21 FF D0 */	stwu r1, -0x30(r1)
@@ -396,9 +395,9 @@ animationKeyUpdated__7ActMineFR16PaniAnimKeyEvent:
 /* 800B9838 000B6798  38 21 00 30 */	addi r1, r1, 0x30
 /* 800B983C 000B679C  7C 08 03 A6 */	mtlr r0
 /* 800B9840 000B67A0  4E 80 00 20 */	blr 
+.endfn animationKeyUpdated__7ActMineFR16PaniAnimKeyEvent
 
-.global __dt__7ActMineFv
-__dt__7ActMineFv:
+.fn __dt__7ActMineFv, weak
 /* 800B9844 000B67A4  7C 08 02 A6 */	mflr r0
 /* 800B9848 000B67A8  90 01 00 04 */	stw r0, 4(r1)
 /* 800B984C 000B67AC  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -432,30 +431,36 @@ __dt__7ActMineFv:
 /* 800B98B8 000B6818  38 21 00 18 */	addi r1, r1, 0x18
 /* 800B98BC 000B681C  7C 08 03 A6 */	mtlr r0
 /* 800B98C0 000B6820  4E 80 00 20 */	blr 
+.endfn __dt__7ActMineFv
 
-"@40@4@animationKeyUpdated__7ActMineFR16PaniAnimKeyEvent":
+.fn "@40@4@animationKeyUpdated__7ActMineFR16PaniAnimKeyEvent", weak
 /* 800B98C4 000B6824  39 60 00 04 */	li r11, 4
 /* 800B98C8 000B6828  7D 63 58 2E */	lwzx r11, r3, r11
 /* 800B98CC 000B682C  7C 63 5A 14 */	add r3, r3, r11
 /* 800B98D0 000B6830  38 63 FF D8 */	addi r3, r3, -40
 /* 800B98D4 000B6834  4B FF FE B0 */	b animationKeyUpdated__7ActMineFR16PaniAnimKeyEvent
+.endfn "@40@4@animationKeyUpdated__7ActMineFR16PaniAnimKeyEvent"
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802B67F8:
+.obj lbl_802B67F8, local
 	.asciz "aiMine.cpp"
+.endobj lbl_802B67F8
 .balign 4
-lbl_802B6804:
+.obj lbl_802B6804, local
 	.asciz "PaniAnimKeyListener"
+.endobj lbl_802B6804
 .balign 4
-lbl_802B6818:
+.obj lbl_802B6818, local
 	.asciz "Receiver<Piki>"
+.endobj lbl_802B6818
 .balign 4
-lbl_802B6828:
+.obj lbl_802B6828, local
 	.4byte "__RTTI__15Receiver<4Piki>"
 	.4byte 0
 	.4byte 0
-lbl_802B6834:
+.endobj lbl_802B6828
+.obj lbl_802B6834, local
 	.4byte __RTTI__19PaniAnimKeyListener
 	.4byte 0x28
 	.4byte "__RTTI__15Receiver<4Piki>"
@@ -463,8 +468,8 @@ lbl_802B6834:
 	.4byte __RTTI__6Action
 	.4byte 0
 	.4byte 0
-.global __vt__7ActMine
-__vt__7ActMine:
+.endobj lbl_802B6834
+.obj __vt__7ActMine, global
 	.4byte __RTTI__7ActMine
 	.4byte 0
 	.4byte "procMsg__15Receiver<4Piki>FP4PikiP3Msg"
@@ -494,9 +499,11 @@ __vt__7ActMine:
 	.4byte __RTTI__7ActMine
 	.4byte 0xFFFFFFD8
 	.4byte "@40@4@animationKeyUpdated__7ActMineFR16PaniAnimKeyEvent"
+.endobj __vt__7ActMine
 .balign 4
-lbl_802B68C4:
+.obj lbl_802B68C4, local
 	.asciz "Interaction"
+.endobj lbl_802B68C4
 .balign 4
 	.4byte 0
 	.4byte 0
@@ -512,7 +519,7 @@ lbl_802B68C4:
 	.4byte 0
 	.4byte 0
 	.4byte 0
-lbl_802B6908:
+.obj lbl_802B6908, local
 	.4byte .L_800A7908
 	.4byte .L_800A7930
 	.4byte .L_800A7944
@@ -524,47 +531,63 @@ lbl_802B6908:
 	.4byte .L_800A791C
 	.4byte .L_800A79D0
 	.4byte .L_800A79BC
+.endobj lbl_802B6908
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-lbl_803E03C0:
+.obj lbl_803E03C0, local
 	.float 0.0
-lbl_803E03C4:
+.endobj lbl_803E03C0
+.obj lbl_803E03C4, local
 	.float 0.0
-lbl_803E03C8:
+.endobj lbl_803E03C4
+.obj lbl_803E03C8, local
 	.float 0.0
-lbl_803E03CC:
+.endobj lbl_803E03C8
+.obj lbl_803E03CC, local
 	.float 0.0
-lbl_803E03D0:
+.endobj lbl_803E03CC
+.obj lbl_803E03D0, local
 	.float 0.0
-lbl_803E03D4:
+.endobj lbl_803E03D0
+.obj lbl_803E03D4, local
 	.float 0.0
+.endobj lbl_803E03D4
 .balign 4
-lbl_803E03D8:
+.obj lbl_803E03D8, local
 	.asciz "ActMine"
+.endobj lbl_803E03D8
 .balign 4
-__RTTI__19PaniAnimKeyListener:
+.obj __RTTI__19PaniAnimKeyListener, local
 	.4byte lbl_802B6804
 	.4byte 0
-"__RTTI__15Receiver<4Piki>":
+.endobj __RTTI__19PaniAnimKeyListener
+.obj "__RTTI__15Receiver<4Piki>", local
 	.4byte lbl_802B6818
 	.4byte 0
+.endobj "__RTTI__15Receiver<4Piki>"
 .balign 4
-lbl_803E03F0:
+.obj lbl_803E03F0, local
 	.asciz "Action"
+.endobj lbl_803E03F0
 .balign 4
-__RTTI__6Action:
+.obj __RTTI__6Action, local
 	.4byte lbl_803E03F0
 	.4byte lbl_802B6828
-__RTTI__7ActMine:
+.endobj __RTTI__6Action
+.obj __RTTI__7ActMine, local
 	.4byte lbl_803E03D8
 	.4byte lbl_802B6834
+.endobj __RTTI__7ActMine
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803E9488:
+.obj lbl_803E9488, local
 	.float 0.0
-lbl_803E948C:
+.endobj lbl_803E9488
+.obj lbl_803E948C, local
 	.float 15.0
-lbl_803E9490:
+.endobj lbl_803E948C
+.obj lbl_803E9490, local
 	.float 0.7
+.endobj lbl_803E9490

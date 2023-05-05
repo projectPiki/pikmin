@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global __DVDInitWA
-__DVDInitWA:
+.fn __DVDInitWA, global
 /* 801FE12C 001FB08C  7C 08 02 A6 */	mflr r0
 /* 801FE130 001FB090  3C 60 80 3D */	lis r3, CommandList@ha
 /* 801FE134 001FB094  90 01 00 04 */	stw r0, 4(r1)
@@ -18,9 +17,9 @@ __DVDInitWA:
 /* 801FE160 001FB0C0  38 21 00 08 */	addi r1, r1, 8
 /* 801FE164 001FB0C4  7C 08 03 A6 */	mtlr r0
 /* 801FE168 001FB0C8  4E 80 00 20 */	blr 
+.endfn __DVDInitWA
 
-.global __DVDInterruptHandler
-__DVDInterruptHandler:
+.fn __DVDInterruptHandler, global
 /* 801FE16C 001FB0CC  7C 08 02 A6 */	mflr r0
 /* 801FE170 001FB0D0  3C 60 80 3D */	lis r3, CommandList@ha
 /* 801FE174 001FB0D4  90 01 00 04 */	stw r0, 4(r1)
@@ -230,8 +229,9 @@ __DVDInterruptHandler:
 /* 801FE454 001FB3B4  83 81 02 D8 */	lwz r28, 0x2d8(r1)
 /* 801FE458 001FB3B8  38 21 02 E8 */	addi r1, r1, 0x2e8
 /* 801FE45C 001FB3BC  4E 80 00 20 */	blr 
+.endfn __DVDInterruptHandler
 
-AlarmHandler:
+.fn AlarmHandler, local
 /* 801FE460 001FB3C0  7C 08 02 A6 */	mflr r0
 /* 801FE464 001FB3C4  3C 60 80 3D */	lis r3, CommandList@ha
 /* 801FE468 001FB3C8  90 01 00 04 */	stw r0, 4(r1)
@@ -267,9 +267,9 @@ AlarmHandler:
 /* 801FE4D8 001FB438  38 21 00 08 */	addi r1, r1, 8
 /* 801FE4DC 001FB43C  7C 08 03 A6 */	mtlr r0
 /* 801FE4E0 001FB440  4E 80 00 20 */	blr 
+.endfn AlarmHandler
 
-.global AlarmHandlerForTimeout
-AlarmHandlerForTimeout:
+.fn AlarmHandlerForTimeout, local
 /* 801FE4E4 001FB444  7C 08 02 A6 */	mflr r0
 /* 801FE4E8 001FB448  38 60 04 00 */	li r3, 0x400
 /* 801FE4EC 001FB44C  90 01 00 04 */	stw r0, 4(r1)
@@ -299,9 +299,9 @@ AlarmHandlerForTimeout:
 /* 801FE548 001FB4A8  38 21 02 E0 */	addi r1, r1, 0x2e0
 /* 801FE54C 001FB4AC  7C 08 03 A6 */	mtlr r0
 /* 801FE550 001FB4B0  4E 80 00 20 */	blr 
+.endfn AlarmHandlerForTimeout
 
-.global Read
-Read:
+.fn Read, local
 /* 801FE554 001FB4B4  7C 08 02 A6 */	mflr r0
 /* 801FE558 001FB4B8  90 01 00 04 */	stw r0, 4(r1)
 /* 801FE55C 001FB4BC  38 00 00 00 */	li r0, 0
@@ -372,9 +372,9 @@ Read:
 /* 801FE658 001FB5B8  83 81 00 18 */	lwz r28, 0x18(r1)
 /* 801FE65C 001FB5BC  38 21 00 28 */	addi r1, r1, 0x28
 /* 801FE660 001FB5C0  4E 80 00 20 */	blr 
+.endfn Read
 
-.global SeekTwiceBeforeRead
-SeekTwiceBeforeRead:
+.fn SeekTwiceBeforeRead, local
 /* 801FE664 001FB5C4  7C 08 02 A6 */	mflr r0
 /* 801FE668 001FB5C8  3C E0 80 3D */	lis r7, CommandList@ha
 /* 801FE66C 001FB5CC  90 01 00 04 */	stw r0, 4(r1)
@@ -409,9 +409,9 @@ SeekTwiceBeforeRead:
 /* 801FE6D8 001FB638  38 21 00 08 */	addi r1, r1, 8
 /* 801FE6DC 001FB63C  7C 08 03 A6 */	mtlr r0
 /* 801FE6E0 001FB640  4E 80 00 20 */	blr 
+.endfn SeekTwiceBeforeRead
 
-.global DVDLowRead
-DVDLowRead:
+.fn DVDLowRead, global
 /* 801FE6E4 001FB644  7C 08 02 A6 */	mflr r0
 /* 801FE6E8 001FB648  3C E0 CC 00 */	lis r7, 0xCC006000@ha
 /* 801FE6EC 001FB64C  90 01 00 04 */	stw r0, 4(r1)
@@ -592,9 +592,9 @@ DVDLowRead:
 /* 801FE970 001FB8D0  38 21 00 40 */	addi r1, r1, 0x40
 /* 801FE974 001FB8D4  7C 08 03 A6 */	mtlr r0
 /* 801FE978 001FB8D8  4E 80 00 20 */	blr 
+.endfn DVDLowRead
 
-.global DVDLowSeek
-DVDLowSeek:
+.fn DVDLowSeek, global
 /* 801FE97C 001FB8DC  7C 08 02 A6 */	mflr r0
 /* 801FE980 001FB8E0  90 01 00 04 */	stw r0, 4(r1)
 /* 801FE984 001FB8E4  38 00 00 00 */	li r0, 0
@@ -632,9 +632,9 @@ DVDLowSeek:
 /* 801FEA04 001FB964  7C 08 03 A6 */	mtlr r0
 /* 801FEA08 001FB968  38 21 00 18 */	addi r1, r1, 0x18
 /* 801FEA0C 001FB96C  4E 80 00 20 */	blr 
+.endfn DVDLowSeek
 
-.global DVDLowWaitCoverClose
-DVDLowWaitCoverClose:
+.fn DVDLowWaitCoverClose, global
 /* 801FEA10 001FB970  38 00 00 01 */	li r0, 1
 /* 801FEA14 001FB974  90 6D 32 58 */	stw r3, Callback@sda21(r13)
 /* 801FEA18 001FB978  3C 60 CC 00 */	lis r3, 0xCC006000@ha
@@ -646,9 +646,9 @@ DVDLowWaitCoverClose:
 /* 801FEA30 001FB990  38 60 00 01 */	li r3, 1
 /* 801FEA34 001FB994  90 04 00 04 */	stw r0, 4(r4)
 /* 801FEA38 001FB998  4E 80 00 20 */	blr 
+.endfn DVDLowWaitCoverClose
 
-.global DVDLowReadDiskID
-DVDLowReadDiskID:
+.fn DVDLowReadDiskID, global
 /* 801FEA3C 001FB99C  7C 08 02 A6 */	mflr r0
 /* 801FEA40 001FB9A0  39 00 00 00 */	li r8, 0
 /* 801FEA44 001FB9A4  90 01 00 04 */	stw r0, 4(r1)
@@ -690,9 +690,9 @@ DVDLowReadDiskID:
 /* 801FEAD4 001FBA34  7C 08 03 A6 */	mtlr r0
 /* 801FEAD8 001FBA38  38 21 00 18 */	addi r1, r1, 0x18
 /* 801FEADC 001FBA3C  4E 80 00 20 */	blr 
+.endfn DVDLowReadDiskID
 
-.global DVDLowStopMotor
-DVDLowStopMotor:
+.fn DVDLowStopMotor, global
 /* 801FEAE0 001FBA40  7C 08 02 A6 */	mflr r0
 /* 801FEAE4 001FBA44  90 01 00 04 */	stw r0, 4(r1)
 /* 801FEAE8 001FBA48  38 00 00 00 */	li r0, 0
@@ -728,9 +728,9 @@ DVDLowStopMotor:
 /* 801FEB60 001FBAC0  7C 08 03 A6 */	mtlr r0
 /* 801FEB64 001FBAC4  38 21 00 18 */	addi r1, r1, 0x18
 /* 801FEB68 001FBAC8  4E 80 00 20 */	blr 
+.endfn DVDLowStopMotor
 
-.global DVDLowRequestError
-DVDLowRequestError:
+.fn DVDLowRequestError, global
 /* 801FEB6C 001FBACC  7C 08 02 A6 */	mflr r0
 /* 801FEB70 001FBAD0  90 01 00 04 */	stw r0, 4(r1)
 /* 801FEB74 001FBAD4  38 00 00 00 */	li r0, 0
@@ -766,9 +766,9 @@ DVDLowRequestError:
 /* 801FEBEC 001FBB4C  7C 08 03 A6 */	mtlr r0
 /* 801FEBF0 001FBB50  38 21 00 18 */	addi r1, r1, 0x18
 /* 801FEBF4 001FBB54  4E 80 00 20 */	blr 
+.endfn DVDLowRequestError
 
-.global DVDLowInquiry
-DVDLowInquiry:
+.fn DVDLowInquiry, global
 /* 801FEBF8 001FBB58  7C 08 02 A6 */	mflr r0
 /* 801FEBFC 001FBB5C  38 C0 00 20 */	li r6, 0x20
 /* 801FEC00 001FBB60  90 01 00 04 */	stw r0, 4(r1)
@@ -808,9 +808,9 @@ DVDLowInquiry:
 /* 801FEC88 001FBBE8  7C 08 03 A6 */	mtlr r0
 /* 801FEC8C 001FBBEC  38 21 00 18 */	addi r1, r1, 0x18
 /* 801FEC90 001FBBF0  4E 80 00 20 */	blr 
+.endfn DVDLowInquiry
 
-.global DVDLowAudioStream
-DVDLowAudioStream:
+.fn DVDLowAudioStream, global
 /* 801FEC94 001FBBF4  7C 08 02 A6 */	mflr r0
 /* 801FEC98 001FBBF8  90 01 00 04 */	stw r0, 4(r1)
 /* 801FEC9C 001FBBFC  38 00 00 00 */	li r0, 0
@@ -849,9 +849,9 @@ DVDLowAudioStream:
 /* 801FED20 001FBC80  7C 08 03 A6 */	mtlr r0
 /* 801FED24 001FBC84  38 21 00 20 */	addi r1, r1, 0x20
 /* 801FED28 001FBC88  4E 80 00 20 */	blr 
+.endfn DVDLowAudioStream
 
-.global DVDLowRequestAudioStatus
-DVDLowRequestAudioStatus:
+.fn DVDLowRequestAudioStatus, global
 /* 801FED2C 001FBC8C  7C 08 02 A6 */	mflr r0
 /* 801FED30 001FBC90  90 01 00 04 */	stw r0, 4(r1)
 /* 801FED34 001FBC94  38 00 00 00 */	li r0, 0
@@ -887,9 +887,9 @@ DVDLowRequestAudioStatus:
 /* 801FEDAC 001FBD0C  7C 08 03 A6 */	mtlr r0
 /* 801FEDB0 001FBD10  38 21 00 18 */	addi r1, r1, 0x18
 /* 801FEDB4 001FBD14  4E 80 00 20 */	blr 
+.endfn DVDLowRequestAudioStatus
 
-.global DVDLowAudioBufferConfig
-DVDLowAudioBufferConfig:
+.fn DVDLowAudioBufferConfig, global
 /* 801FEDB8 001FBD18  7C 08 02 A6 */	mflr r0
 /* 801FEDBC 001FBD1C  2C 03 00 00 */	cmpwi r3, 0
 /* 801FEDC0 001FBD20  90 01 00 04 */	stw r0, 4(r1)
@@ -930,9 +930,9 @@ DVDLowAudioBufferConfig:
 /* 801FEE48 001FBDA8  7C 08 03 A6 */	mtlr r0
 /* 801FEE4C 001FBDAC  38 21 00 20 */	addi r1, r1, 0x20
 /* 801FEE50 001FBDB0  4E 80 00 20 */	blr 
+.endfn DVDLowAudioBufferConfig
 
-.global DVDLowReset
-DVDLowReset:
+.fn DVDLowReset, global
 /* 801FEE54 001FBDB4  7C 08 02 A6 */	mflr r0
 /* 801FEE58 001FBDB8  3C 80 CC 00 */	lis r4, 0xCC003000@ha
 /* 801FEE5C 001FBDBC  90 01 00 04 */	stw r0, 4(r1)
@@ -981,26 +981,26 @@ DVDLowReset:
 /* 801FEF04 001FBE64  38 21 00 20 */	addi r1, r1, 0x20
 /* 801FEF08 001FBE68  7C 08 03 A6 */	mtlr r0
 /* 801FEF0C 001FBE6C  4E 80 00 20 */	blr 
+.endfn DVDLowReset
 
-.global DVDLowBreak
-DVDLowBreak:
+.fn DVDLowBreak, global
 /* 801FEF10 001FBE70  38 00 00 01 */	li r0, 1
 /* 801FEF14 001FBE74  90 0D 32 50 */	stw r0, StopAtNextInt@sda21(r13)
 /* 801FEF18 001FBE78  38 60 00 01 */	li r3, 1
 /* 801FEF1C 001FBE7C  90 0D 32 70 */	stw r0, Breaking@sda21(r13)
 /* 801FEF20 001FBE80  4E 80 00 20 */	blr 
+.endfn DVDLowBreak
 
-.global DVDLowClearCallback
-DVDLowClearCallback:
+.fn DVDLowClearCallback, global
 /* 801FEF24 001FBE84  3C 60 CC 00 */	lis r3, 0xCC006004@ha
 /* 801FEF28 001FBE88  38 00 00 00 */	li r0, 0
 /* 801FEF2C 001FBE8C  90 03 60 04 */	stw r0, 0xCC006004@l(r3)
 /* 801FEF30 001FBE90  80 6D 32 58 */	lwz r3, Callback@sda21(r13)
 /* 801FEF34 001FBE94  90 0D 32 58 */	stw r0, Callback@sda21(r13)
 /* 801FEF38 001FBE98  4E 80 00 20 */	blr 
+.endfn DVDLowClearCallback
 
-.global __DVDLowSetWAType
-__DVDLowSetWAType:
+.fn __DVDLowSetWAType, global
 /* 801FEF3C 001FBE9C  7C 08 02 A6 */	mflr r0
 /* 801FEF40 001FBEA0  90 01 00 04 */	stw r0, 4(r1)
 /* 801FEF44 001FBEA4  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -1018,39 +1018,58 @@ __DVDLowSetWAType:
 /* 801FEF74 001FBED4  7C 08 03 A6 */	mtlr r0
 /* 801FEF78 001FBED8  38 21 00 18 */	addi r1, r1, 0x18
 /* 801FEF7C 001FBEDC  4E 80 00 20 */	blr 
+.endfn __DVDLowSetWAType
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-FirstRead:
+.obj FirstRead, local
 	.4byte 0x00000001
+.endobj FirstRead
 
 .section .sbss, "wa"
 .balign 8
-StopAtNextInt:
+.obj StopAtNextInt, local
 	.skip 0x4
-LastLength:
+.endobj StopAtNextInt
+.obj LastLength, local
 	.skip 0x4
-Callback:
+.endobj LastLength
+.obj Callback, local
 	.skip 0x4
-ResetCoverCallback:
+.endobj Callback
+.obj ResetCoverCallback, local
 	.skip 0x4
-LastResetEnd:
+.endobj ResetCoverCallback
+.balign 8
+.obj LastResetEnd, local
 	.skip 0x8
-ResetOccurred:
+.endobj LastResetEnd
+.obj ResetOccurred, local
 	.skip 0x4
-WaitingCoverClose:
+.endobj ResetOccurred
+.obj WaitingCoverClose, local
 	.skip 0x4
-Breaking:
+.endobj WaitingCoverClose
+.obj Breaking, local
 	.skip 0x4
-WorkAroundType:
+.endobj Breaking
+.obj WorkAroundType, local
 	.skip 0x4
-WorkAroundSeekLocation:
+.endobj WorkAroundType
+.obj WorkAroundSeekLocation, local
+	.skip 0x4
+.endobj WorkAroundSeekLocation
+.balign 8
+.obj LastReadFinished, local
 	.skip 0x8
-LastReadFinished:
+.endobj LastReadFinished
+.balign 8
+.obj LastReadIssued, local
 	.skip 0x8
-LastReadIssued:
-	.skip 0x8
-LastCommandWasRead:
+.endobj LastReadIssued
+.obj LastCommandWasRead, local
 	.skip 0x4
-NextCommandNumber:
+.endobj LastCommandWasRead
+.obj NextCommandNumber, local
 	.skip 0x4
+.endobj NextCommandNumber

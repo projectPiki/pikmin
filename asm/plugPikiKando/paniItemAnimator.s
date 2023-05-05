@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global createMotionTable__16PaniItemAnimatorFv
-createMotionTable__16PaniItemAnimatorFv:
+.fn createMotionTable__16PaniItemAnimatorFv, global
 /* 800F7E8C 000F4DEC  7C 08 02 A6 */	mflr r0
 /* 800F7E90 000F4DF0  38 60 00 08 */	li r3, 8
 /* 800F7E94 000F4DF4  90 01 00 04 */	stw r0, 4(r1)
@@ -172,9 +171,9 @@ createMotionTable__16PaniItemAnimatorFv:
 /* 800F80E8 000F5048  38 21 00 18 */	addi r1, r1, 0x18
 /* 800F80EC 000F504C  7C 08 03 A6 */	mtlr r0
 /* 800F80F0 000F5050  4E 80 00 20 */	blr 
+.endfn createMotionTable__16PaniItemAnimatorFv
 
-.global __ct__16PaniItemAnimatorFv
-__ct__16PaniItemAnimatorFv:
+.fn __ct__16PaniItemAnimatorFv, global
 /* 800F80F4 000F5054  7C 08 02 A6 */	mflr r0
 /* 800F80F8 000F5058  90 01 00 04 */	stw r0, 4(r1)
 /* 800F80FC 000F505C  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -190,17 +189,19 @@ __ct__16PaniItemAnimatorFv:
 /* 800F8124 000F5084  38 21 00 18 */	addi r1, r1, 0x18
 /* 800F8128 000F5088  7C 08 03 A6 */	mtlr r0
 /* 800F812C 000F508C  4E 80 00 20 */	blr 
+.endfn __ct__16PaniItemAnimatorFv
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802BFEE0:
+.obj lbl_802BFEE0, local
 	.asciz "paniItemAnimator.cpp"
+.endobj lbl_802BFEE0
 .balign 4
-lbl_802BFEF8:
+.obj lbl_802BFEF8, local
 	.asciz "paniItemAnimator"
+.endobj lbl_802BFEF8
 .balign 4
-.global motionLabels__16PaniItemAnimator
-motionLabels__16PaniItemAnimator:
+.obj motionLabels__16PaniItemAnimator, global
 	.4byte lbl_803E1F20
 	.4byte lbl_803E1F24
 	.4byte lbl_803E1F28
@@ -216,28 +217,33 @@ motionLabels__16PaniItemAnimator:
 	.4byte lbl_803E1F50
 	.4byte lbl_803E1F54
 	.4byte lbl_803E1F58
+.endobj motionLabels__16PaniItemAnimator
 .balign 4
-lbl_802BFF48:
+.obj lbl_802BFF48, local
 	.asciz "PaniItemAnimator"
+.endobj lbl_802BFF48
 .balign 4
-lbl_802BFF5C:
+.obj lbl_802BFF5C, local
 	.asciz "Animator"
+.endobj lbl_802BFF5C
 .balign 4
-lbl_802BFF68:
+.obj lbl_802BFF68, local
 	.asciz "PaniAnimator"
+.endobj lbl_802BFF68
 .balign 4
-lbl_802BFF78:
+.obj lbl_802BFF78, local
 	.4byte __RTTI__8Animator
 	.4byte 0
 	.4byte 0
-lbl_802BFF84:
+.endobj lbl_802BFF78
+.obj lbl_802BFF84, local
 	.4byte __RTTI__8Animator
 	.4byte 0
 	.4byte __RTTI__12PaniAnimator
 	.4byte 0
 	.4byte 0
-.global __vt__16PaniItemAnimator
-__vt__16PaniItemAnimator:
+.endobj lbl_802BFF84
+.obj __vt__16PaniItemAnimator, weak
 	.4byte __RTTI__16PaniItemAnimator
 	.4byte 0
 	.4byte changeContext__12PaniAnimatorFP11AnimContext
@@ -245,60 +251,79 @@ __vt__16PaniItemAnimator:
 	.4byte finishOneShot__8AnimatorFv
 	.4byte finishLoop__8AnimatorFv
 	.4byte updateContext__12PaniAnimatorFv
+.endobj __vt__16PaniItemAnimator
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-lbl_803E1F20:
+.obj lbl_803E1F20, local
 	.asciz "1"
+.endobj lbl_803E1F20
 .balign 4
-lbl_803E1F24:
+.obj lbl_803E1F24, local
 	.asciz "2"
+.endobj lbl_803E1F24
 .balign 4
-lbl_803E1F28:
+.obj lbl_803E1F28, local
 	.asciz "3"
+.endobj lbl_803E1F28
 .balign 4
-lbl_803E1F2C:
+.obj lbl_803E1F2C, local
 	.asciz "4"
+.endobj lbl_803E1F2C
 .balign 4
-lbl_803E1F30:
+.obj lbl_803E1F30, local
 	.asciz "5"
+.endobj lbl_803E1F30
 .balign 4
-lbl_803E1F34:
+.obj lbl_803E1F34, local
 	.asciz "6"
+.endobj lbl_803E1F34
 .balign 4
-lbl_803E1F38:
+.obj lbl_803E1F38, local
 	.asciz "7"
+.endobj lbl_803E1F38
 .balign 4
-lbl_803E1F3C:
+.obj lbl_803E1F3C, local
 	.asciz "8"
+.endobj lbl_803E1F3C
 .balign 4
-lbl_803E1F40:
+.obj lbl_803E1F40, local
 	.asciz "9"
+.endobj lbl_803E1F40
 .balign 4
-lbl_803E1F44:
+.obj lbl_803E1F44, local
 	.asciz "10"
+.endobj lbl_803E1F44
 .balign 4
-lbl_803E1F48:
+.obj lbl_803E1F48, local
 	.asciz "11"
+.endobj lbl_803E1F48
 .balign 4
-lbl_803E1F4C:
+.obj lbl_803E1F4C, local
 	.asciz "12"
+.endobj lbl_803E1F4C
 .balign 4
-lbl_803E1F50:
+.obj lbl_803E1F50, local
 	.asciz "13"
+.endobj lbl_803E1F50
 .balign 4
-lbl_803E1F54:
+.obj lbl_803E1F54, local
 	.asciz "14"
+.endobj lbl_803E1F54
 .balign 4
-lbl_803E1F58:
+.obj lbl_803E1F58, local
 	.asciz "15"
+.endobj lbl_803E1F58
 .balign 4
-__RTTI__8Animator:
+.obj __RTTI__8Animator, local
 	.4byte lbl_802BFF5C
 	.4byte 0
-__RTTI__12PaniAnimator:
+.endobj __RTTI__8Animator
+.obj __RTTI__12PaniAnimator, local
 	.4byte lbl_802BFF68
 	.4byte lbl_802BFF78
-__RTTI__16PaniItemAnimator:
+.endobj __RTTI__12PaniAnimator
+.obj __RTTI__16PaniItemAnimator, local
 	.4byte lbl_802BFF48
 	.4byte lbl_802BFF84
+.endobj __RTTI__16PaniItemAnimator

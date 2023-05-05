@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global __ct__7ActGotoFP4Piki
-__ct__7ActGotoFP4Piki:
+.fn __ct__7ActGotoFP4Piki, global
 /* 800BAF68 000B7EC8  7C 08 02 A6 */	mflr r0
 /* 800BAF6C 000B7ECC  38 A0 00 01 */	li r5, 1
 /* 800BAF70 000B7ED0  90 01 00 04 */	stw r0, 4(r1)
@@ -21,9 +20,9 @@ __ct__7ActGotoFP4Piki:
 /* 800BAFA8 000B7F08  38 21 00 18 */	addi r1, r1, 0x18
 /* 800BAFAC 000B7F0C  7C 08 03 A6 */	mtlr r0
 /* 800BAFB0 000B7F10  4E 80 00 20 */	blr 
+.endfn __ct__7ActGotoFP4Piki
 
-.global initialise__Q27ActGoto11InitialiserFP6Action
-initialise__Q27ActGoto11InitialiserFP6Action:
+.fn initialise__Q27ActGoto11InitialiserFP6Action, global
 /* 800BAFB4 000B7F14  7C 08 02 A6 */	mflr r0
 /* 800BAFB8 000B7F18  90 01 00 04 */	stw r0, 4(r1)
 /* 800BAFBC 000B7F1C  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -57,9 +56,9 @@ initialise__Q27ActGoto11InitialiserFP6Action:
 /* 800BB024 000B7F84  38 21 00 20 */	addi r1, r1, 0x20
 /* 800BB028 000B7F88  7C 08 03 A6 */	mtlr r0
 /* 800BB02C 000B7F8C  4E 80 00 20 */	blr 
+.endfn initialise__Q27ActGoto11InitialiserFP6Action
 
-.global init__7ActGotoFP8Creature
-init__7ActGotoFP8Creature:
+.fn init__7ActGotoFP8Creature, global
 /* 800BB030 000B7F90  7C 08 02 A6 */	mflr r0
 /* 800BB034 000B7F94  90 01 00 04 */	stw r0, 4(r1)
 /* 800BB038 000B7F98  94 21 FF C8 */	stwu r1, -0x38(r1)
@@ -115,9 +114,9 @@ init__7ActGotoFP8Creature:
 /* 800BB0F8 000B8058  38 21 00 38 */	addi r1, r1, 0x38
 /* 800BB0FC 000B805C  7C 08 03 A6 */	mtlr r0
 /* 800BB100 000B8060  4E 80 00 20 */	blr 
+.endfn init__7ActGotoFP8Creature
 
-.global cleanup__7ActGotoFv
-cleanup__7ActGotoFv:
+.fn cleanup__7ActGotoFv, global
 /* 800BB104 000B8064  7C 08 02 A6 */	mflr r0
 /* 800BB108 000B8068  90 01 00 04 */	stw r0, 4(r1)
 /* 800BB10C 000B806C  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -135,9 +134,9 @@ cleanup__7ActGotoFv:
 /* 800BB138 000B8098  38 21 00 20 */	addi r1, r1, 0x20
 /* 800BB13C 000B809C  7C 08 03 A6 */	mtlr r0
 /* 800BB140 000B80A0  4E 80 00 20 */	blr 
+.endfn cleanup__7ActGotoFv
 
-.global exec__7ActGotoFv
-exec__7ActGotoFv:
+.fn exec__7ActGotoFv, global
 /* 800BB144 000B80A4  7C 08 02 A6 */	mflr r0
 /* 800BB148 000B80A8  90 01 00 04 */	stw r0, 4(r1)
 /* 800BB14C 000B80AC  94 21 FE 18 */	stwu r1, -0x1e8(r1)
@@ -370,9 +369,9 @@ exec__7ActGotoFv:
 /* 800BB4B0 000B8410  38 21 01 E8 */	addi r1, r1, 0x1e8
 /* 800BB4B4 000B8414  7C 08 03 A6 */	mtlr r0
 /* 800BB4B8 000B8418  4E 80 00 20 */	blr 
+.endfn exec__7ActGotoFv
 
-.global __dt__7ActGotoFv
-__dt__7ActGotoFv:
+.fn __dt__7ActGotoFv, weak
 /* 800BB4BC 000B841C  7C 08 02 A6 */	mflr r0
 /* 800BB4C0 000B8420  90 01 00 04 */	stw r0, 4(r1)
 /* 800BB4C4 000B8424  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -399,35 +398,39 @@ __dt__7ActGotoFv:
 /* 800BB514 000B8474  38 21 00 18 */	addi r1, r1, 0x18
 /* 800BB518 000B8478  7C 08 03 A6 */	mtlr r0
 /* 800BB51C 000B847C  4E 80 00 20 */	blr 
+.endfn __dt__7ActGotoFv
 
-.global defaultInitialiser__7ActGotoFv
-defaultInitialiser__7ActGotoFv:
+.fn defaultInitialiser__7ActGotoFv, weak
 /* 800BB520 000B8480  C0 02 93 44 */	lfs f0, lbl_803E9544@sda21(r2)
 /* 800BB524 000B8484  D0 03 00 18 */	stfs f0, 0x18(r3)
 /* 800BB528 000B8488  C0 02 93 5C */	lfs f0, lbl_803E955C@sda21(r2)
 /* 800BB52C 000B848C  D0 03 00 14 */	stfs f0, 0x14(r3)
 /* 800BB530 000B8490  4E 80 00 20 */	blr 
+.endfn defaultInitialiser__7ActGotoFv
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802B6B78:
+.obj lbl_802B6B78, local
 	.asciz "aiGoto.cpp"
+.endobj lbl_802B6B78
 .balign 4
-lbl_802B6B84:
+.obj lbl_802B6B84, local
 	.asciz "Receiver<Piki>"
+.endobj lbl_802B6B84
 .balign 4
-lbl_802B6B94:
+.obj lbl_802B6B94, local
 	.4byte "__RTTI__15Receiver<4Piki>"
 	.4byte 0
 	.4byte 0
-lbl_802B6BA0:
+.endobj lbl_802B6B94
+.obj lbl_802B6BA0, local
 	.4byte "__RTTI__15Receiver<4Piki>"
 	.4byte 0
 	.4byte __RTTI__6Action
 	.4byte 0
 	.4byte 0
-.global __vt__7ActGoto
-__vt__7ActGoto:
+.endobj lbl_802B6BA0
+.obj __vt__7ActGoto, global
 	.4byte __RTTI__7ActGoto
 	.4byte 0
 	.4byte "procMsg__15Receiver<4Piki>FP4PikiP3Msg"
@@ -453,23 +456,27 @@ __vt__7ActGoto:
 	.4byte restart__6ActionFv
 	.4byte resumable__6ActionFv
 	.4byte getInfo__6ActionFPc
+.endobj __vt__7ActGoto
 .balign 4
-lbl_802B6C18:
+.obj lbl_802B6C18, local
 	.asciz "ActGoto::Initialiser"
+.endobj lbl_802B6C18
 .balign 4
-lbl_802B6C30:
+.obj lbl_802B6C30, local
 	.asciz "Action::Initialiser"
+.endobj lbl_802B6C30
 .balign 4
-lbl_802B6C44:
+.obj lbl_802B6C44, local
 	.4byte __RTTI__Q26Action11Initialiser
 	.4byte 0
 	.4byte 0
-.global __vt__Q27ActGoto11Initialiser
-__vt__Q27ActGoto11Initialiser:
+.endobj lbl_802B6C44
+.obj __vt__Q27ActGoto11Initialiser, global
 	.4byte __RTTI__Q27ActGoto11Initialiser
 	.4byte 0
 	.4byte initialise__Q27ActGoto11InitialiserFP6Action
-lbl_802B6C5C:
+.endobj __vt__Q27ActGoto11Initialiser
+.obj lbl_802B6C5C, local
 	.4byte .L_800A7908
 	.4byte .L_800A7930
 	.4byte .L_800A7944
@@ -481,6 +488,7 @@ lbl_802B6C5C:
 	.4byte .L_800A791C
 	.4byte .L_800A79D0
 	.4byte .L_800A79BC
+.endobj lbl_802B6C5C
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8

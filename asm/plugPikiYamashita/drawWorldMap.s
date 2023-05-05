@@ -2465,7 +2465,7 @@ init__Q23zen18WorldMapConfirmMgrFQ33zen18WorldMapConfirmMgr10statusFlag:
 /* 801DD638 001DA598  80 1E 00 78 */	lwz r0, 0x78(r30)
 /* 801DD63C 001DA59C  80 BE 00 64 */	lwz r5, 0x64(r30)
 /* 801DD640 001DA5A0  1C 80 00 0C */	mulli r4, r0, 0xc
-/* 801DD644 001DA5A4  C8 42 BE 98 */	lfd f2, "@2872"@sda21(r2)
+/* 801DD644 001DA5A4  C8 42 BE 98 */	lfd f2, lbl_803EC098@sda21(r2)
 /* 801DD648 001DA5A8  38 04 00 04 */	addi r0, r4, 4
 /* 801DD64C 001DA5AC  7C 85 00 2E */	lwzx r4, r5, r0
 /* 801DD650 001DA5B0  A8 04 00 1A */	lha r0, 0x1a(r4)
@@ -2485,7 +2485,7 @@ init__Q23zen18WorldMapConfirmMgrFQ33zen18WorldMapConfirmMgr10statusFlag:
 /* 801DD688 001DA5E8  38 7E 00 34 */	addi r3, r30, 0x34
 /* 801DD68C 001DA5EC  80 BE 00 64 */	lwz r5, 0x64(r30)
 /* 801DD690 001DA5F0  1C 80 00 0C */	mulli r4, r0, 0xc
-/* 801DD694 001DA5F4  C8 42 BE 98 */	lfd f2, "@2872"@sda21(r2)
+/* 801DD694 001DA5F4  C8 42 BE 98 */	lfd f2, lbl_803EC098@sda21(r2)
 /* 801DD698 001DA5F8  38 04 00 08 */	addi r0, r4, 8
 /* 801DD69C 001DA5FC  7C 85 00 2E */	lwzx r4, r5, r0
 /* 801DD6A0 001DA600  A8 04 00 1A */	lha r0, 0x1a(r4)
@@ -2564,7 +2564,7 @@ init__Q23zen17WorldMapCursorMgrFv:
 /* 801DD79C 001DA6FC  3C 60 43 30 */	lis r3, 0x4330
 /* 801DD7A0 001DA700  A8 84 00 1A */	lha r4, 0x1a(r4)
 /* 801DD7A4 001DA704  6C 00 80 00 */	xoris r0, r0, 0x8000
-/* 801DD7A8 001DA708  C8 42 BE 98 */	lfd f2, "@2872"@sda21(r2)
+/* 801DD7A8 001DA708  C8 42 BE 98 */	lfd f2, lbl_803EC098@sda21(r2)
 /* 801DD7AC 001DA70C  90 01 01 94 */	stw r0, 0x194(r1)
 /* 801DD7B0 001DA710  6C 80 80 00 */	xoris r0, r4, 0x8000
 /* 801DD7B4 001DA714  90 61 01 90 */	stw r3, 0x190(r1)
@@ -2673,7 +2673,7 @@ init__Q23zen17WorldMapCursorMgrFv:
 /* 801DD940 001DA8A0  C3 ED 25 1C */	lfs f31, scaleFrameMax__Q23zen19WorldMapCursorOnyon@sda21(r13)
 /* 801DD944 001DA8A4  48 03 A7 2D */	bl rand
 /* 801DD948 001DA8A8  6C 60 80 00 */	xoris r0, r3, 0x8000
-/* 801DD94C 001DA8AC  C8 42 BE 98 */	lfd f2, "@2872"@sda21(r2)
+/* 801DD94C 001DA8AC  C8 42 BE 98 */	lfd f2, lbl_803EC098@sda21(r2)
 /* 801DD950 001DA8B0  90 01 01 8C */	stw r0, 0x18c(r1)
 /* 801DD954 001DA8B4  3C 00 43 30 */	lis r0, 0x4330
 /* 801DD958 001DA8B8  C0 02 BE A0 */	lfs f0, lbl_803EC0A0@sda21(r2)
@@ -2733,7 +2733,7 @@ init__Q23zen17WorldMapCursorMgrFv:
 /* 801DDA2C 001DA98C  C3 ED 25 1C */	lfs f31, scaleFrameMax__Q23zen19WorldMapCursorOnyon@sda21(r13)
 /* 801DDA30 001DA990  48 03 A6 41 */	bl rand
 /* 801DDA34 001DA994  6C 60 80 00 */	xoris r0, r3, 0x8000
-/* 801DDA38 001DA998  C8 42 BE 98 */	lfd f2, "@2872"@sda21(r2)
+/* 801DDA38 001DA998  C8 42 BE 98 */	lfd f2, lbl_803EC098@sda21(r2)
 /* 801DDA3C 001DA99C  90 01 01 8C */	stw r0, 0x18c(r1)
 /* 801DDA40 001DA9A0  3C 00 43 30 */	lis r0, 0x4330
 /* 801DDA44 001DA9A4  C0 02 BE A0 */	lfs f0, lbl_803EC0A0@sda21(r2)
@@ -2793,7 +2793,7 @@ init__Q23zen17WorldMapCursorMgrFv:
 /* 801DDB18 001DAA78  C3 ED 25 1C */	lfs f31, scaleFrameMax__Q23zen19WorldMapCursorOnyon@sda21(r13)
 /* 801DDB1C 001DAA7C  48 03 A5 55 */	bl rand
 /* 801DDB20 001DAA80  6C 60 80 00 */	xoris r0, r3, 0x8000
-/* 801DDB24 001DAA84  C8 42 BE 98 */	lfd f2, "@2872"@sda21(r2)
+/* 801DDB24 001DAA84  C8 42 BE 98 */	lfd f2, lbl_803EC098@sda21(r2)
 /* 801DDB28 001DAA88  90 01 01 8C */	stw r0, 0x18c(r1)
 /* 801DDB2C 001DAA8C  3C 00 43 30 */	lis r0, 0x4330
 /* 801DDB30 001DAA90  C0 02 BE A0 */	lfs f0, lbl_803EC0A0@sda21(r2)
@@ -3057,7 +3057,7 @@ init__Q23zen19WorldMapCursorOnyonFv:
 /* 801DDEE8 001DAE48  C3 ED 25 1C */	lfs f31, scaleFrameMax__Q23zen19WorldMapCursorOnyon@sda21(r13)
 /* 801DDEEC 001DAE4C  48 03 A1 85 */	bl rand
 /* 801DDEF0 001DAE50  6C 60 80 00 */	xoris r0, r3, 0x8000
-/* 801DDEF4 001DAE54  C8 42 BE 98 */	lfd f2, "@2872"@sda21(r2)
+/* 801DDEF4 001DAE54  C8 42 BE 98 */	lfd f2, lbl_803EC098@sda21(r2)
 /* 801DDEF8 001DAE58  90 01 00 54 */	stw r0, 0x54(r1)
 /* 801DDEFC 001DAE5C  3C 00 43 30 */	lis r0, 0x4330
 /* 801DDF00 001DAE60  C0 02 BE A0 */	lfs f0, lbl_803EC0A0@sda21(r2)
@@ -3215,7 +3215,7 @@ __ct__Q23zen19WorldMapCursorOnyonFv:
 /* 801DE138 001DB098  C3 ED 25 1C */	lfs f31, scaleFrameMax__Q23zen19WorldMapCursorOnyon@sda21(r13)
 /* 801DE13C 001DB09C  48 03 9F 35 */	bl rand
 /* 801DE140 001DB0A0  6C 60 80 00 */	xoris r0, r3, 0x8000
-/* 801DE144 001DB0A4  C8 42 BE 98 */	lfd f2, "@2872"@sda21(r2)
+/* 801DE144 001DB0A4  C8 42 BE 98 */	lfd f2, lbl_803EC098@sda21(r2)
 /* 801DE148 001DB0A8  90 01 00 1C */	stw r0, 0x1c(r1)
 /* 801DE14C 001DB0AC  3C 00 43 30 */	lis r0, 0x4330
 /* 801DE150 001DB0B0  C0 02 BE A0 */	lfs f0, lbl_803EC0A0@sda21(r2)
@@ -3409,7 +3409,7 @@ init__Q23zen12WorldMapWipeFP9P2DScreenUl:
 /* 801DE3F8 001DB358  90 7F 00 24 */	stw r3, 0x24(r31)
 /* 801DE3FC 001DB35C  3C C0 43 30 */	lis r6, 0x4330
 /* 801DE400 001DB360  80 BF 00 24 */	lwz r5, 0x24(r31)
-/* 801DE404 001DB364  C8 62 BE 98 */	lfd f3, "@2872"@sda21(r2)
+/* 801DE404 001DB364  C8 62 BE 98 */	lfd f3, lbl_803EC098@sda21(r2)
 /* 801DE408 001DB368  A8 E5 00 18 */	lha r7, 0x18(r5)
 /* 801DE40C 001DB36C  A8 05 00 1C */	lha r0, 0x1c(r5)
 /* 801DE410 001DB370  A8 85 00 1A */	lha r4, 0x1a(r5)
@@ -3664,7 +3664,7 @@ update__Q23zen12DrawWorldMapFP10Controller:
 /* 801DE7AC 001DB70C  3B A0 00 00 */	li r29, 0
 /* 801DE7B0 001DB710  3E 80 43 30 */	lis r20, 0x4330
 /* 801DE7B4 001DB714  82 BE 00 58 */	lwz r21, 0x58(r30)
-/* 801DE7B8 001DB718  CB A2 BE 98 */	lfd f29, "@2872"@sda21(r2)
+/* 801DE7B8 001DB718  CB A2 BE 98 */	lfd f29, lbl_803EC098@sda21(r2)
 /* 801DE7BC 001DB71C  7E B6 AB 78 */	mr r22, r21
 .L_801DE7C0:
 /* 801DE7C0 001DB720  80 76 00 30 */	lwz r3, 0x30(r22)
@@ -3728,7 +3728,7 @@ update__Q23zen12DrawWorldMapFP10Controller:
 /* 801DE8A8 001DB808  3E 80 43 30 */	lis r20, 0x4330
 /* 801DE8AC 001DB80C  C3 C2 BE AC */	lfs f30, lbl_803EC0AC@sda21(r2)
 /* 801DE8B0 001DB810  D3 DE 00 08 */	stfs f30, 8(r30)
-/* 801DE8B4 001DB814  CB A2 BE 98 */	lfd f29, "@2872"@sda21(r2)
+/* 801DE8B4 001DB814  CB A2 BE 98 */	lfd f29, lbl_803EC098@sda21(r2)
 .L_801DE8B8:
 /* 801DE8B8 001DB818  C0 15 00 10 */	lfs f0, 0x10(r21)
 /* 801DE8BC 001DB81C  3B 95 00 0C */	addi r28, r21, 0xc
@@ -4049,7 +4049,7 @@ update__Q23zen12DrawWorldMapFP10Controller:
 /* 801DED28 001DBC88  C3 E2 BE 78 */	lfs f31, lbl_803EC078@sda21(r2)
 /* 801DED2C 001DBC8C  3A E1 00 DC */	addi r23, r1, 0xdc
 /* 801DED30 001DBC90  C3 C2 BE AC */	lfs f30, lbl_803EC0AC@sda21(r2)
-/* 801DED34 001DBC94  CB A2 BE 98 */	lfd f29, "@2872"@sda21(r2)
+/* 801DED34 001DBC94  CB A2 BE 98 */	lfd f29, lbl_803EC098@sda21(r2)
 /* 801DED38 001DBC98  3A BA 00 00 */	addi r21, r26, 0
 /* 801DED3C 001DBC9C  3B 01 00 E8 */	addi r24, r1, 0xe8
 /* 801DED40 001DBCA0  3B 21 00 E4 */	addi r25, r1, 0xe4
@@ -4145,7 +4145,7 @@ update__Q23zen12DrawWorldMapFP10Controller:
 /* 801DEE94 001DBDF4  D0 07 00 04 */	stfs f0, 4(r7)
 /* 801DEE98 001DBDF8  C0 02 BE AC */	lfs f0, lbl_803EC0AC@sda21(r2)
 /* 801DEE9C 001DBDFC  D0 07 00 08 */	stfs f0, 8(r7)
-/* 801DEEA0 001DBE00  C8 62 BE 98 */	lfd f3, "@2872"@sda21(r2)
+/* 801DEEA0 001DBE00  C8 62 BE 98 */	lfd f3, lbl_803EC098@sda21(r2)
 .L_801DEEA4:
 /* 801DEEA4 001DBE04  80 A9 00 30 */	lwz r5, 0x30(r9)
 /* 801DEEA8 001DBE08  A8 05 00 18 */	lha r0, 0x18(r5)
@@ -4784,7 +4784,7 @@ effect__Q23zen17WorldMapCursorMgrFv:
 /* 801DF794 001DC6F4  D0 01 01 5C */	stfs f0, 0x15c(r1)
 /* 801DF798 001DC6F8  FC 20 F8 90 */	fmr f1, f31
 /* 801DF79C 001DC6FC  D0 01 01 58 */	stfs f0, 0x158(r1)
-/* 801DF7A0 001DC700  C8 62 BE 98 */	lfd f3, "@2872"@sda21(r2)
+/* 801DF7A0 001DC700  C8 62 BE 98 */	lfd f3, lbl_803EC098@sda21(r2)
 /* 801DF7A4 001DC704  A8 DF 00 18 */	lha r6, 0x18(r31)
 /* 801DF7A8 001DC708  A8 1F 00 1C */	lha r0, 0x1c(r31)
 /* 801DF7AC 001DC70C  A8 BF 00 1A */	lha r5, 0x1a(r31)
@@ -4816,7 +4816,7 @@ effect__Q23zen17WorldMapCursorMgrFv:
 /* 801DF814 001DC774  7F 80 0E 70 */	srawi r0, r28, 1
 /* 801DF818 001DC778  80 9E 00 08 */	lwz r4, 8(r30)
 /* 801DF81C 001DC77C  6C 00 80 00 */	xoris r0, r0, 0x8000
-/* 801DF820 001DC780  C8 62 BE 98 */	lfd f3, "@2872"@sda21(r2)
+/* 801DF820 001DC780  C8 62 BE 98 */	lfd f3, lbl_803EC098@sda21(r2)
 /* 801DF824 001DC784  90 01 01 74 */	stw r0, 0x174(r1)
 /* 801DF828 001DC788  3B 84 00 C0 */	addi r28, r4, 0xc0
 /* 801DF82C 001DC78C  C0 1F 00 C4 */	lfs f0, 0xc4(r31)
@@ -4832,7 +4832,7 @@ effect__Q23zen17WorldMapCursorMgrFv:
 /* 801DF854 001DC7B4  FC 20 F8 90 */	fmr f1, f31
 /* 801DF858 001DC7B8  48 03 C2 FD */	bl cosf
 /* 801DF85C 001DC7BC  7F E0 0E 70 */	srawi r0, r31, 1
-/* 801DF860 001DC7C0  C8 62 BE 98 */	lfd f3, "@2872"@sda21(r2)
+/* 801DF860 001DC7C0  C8 62 BE 98 */	lfd f3, lbl_803EC098@sda21(r2)
 /* 801DF864 001DC7C4  6C 00 80 00 */	xoris r0, r0, 0x8000
 /* 801DF868 001DC7C8  C0 1C 00 00 */	lfs f0, 0(r28)
 /* 801DF86C 001DC7CC  90 01 01 6C */	stw r0, 0x16c(r1)
@@ -5018,8 +5018,8 @@ update__Q23zen19WorldMapCursorOnyonFR8Vector3f:
 /* 801DFB20 001DCA80  FC 07 18 40 */	fcmpo cr0, f7, f3
 /* 801DFB24 001DCA84  40 81 00 5C */	ble .L_801DFB80
 /* 801DFB28 001DCA88  FC 80 38 34 */	frsqrte f4, f7
-/* 801DFB2C 001DCA8C  C8 C2 BE D8 */	lfd f6, "@4096"@sda21(r2)
-/* 801DFB30 001DCA90  C8 A2 BE E0 */	lfd f5, "@4097"@sda21(r2)
+/* 801DFB2C 001DCA8C  C8 C2 BE D8 */	lfd f6, lbl_803EC0D8@sda21(r2)
+/* 801DFB30 001DCA90  C8 A2 BE E0 */	lfd f5, lbl_803EC0E0@sda21(r2)
 /* 801DFB34 001DCA94  FC 64 01 32 */	fmul f3, f4, f4
 /* 801DFB38 001DCA98  FC 86 01 32 */	fmul f4, f6, f4
 /* 801DFB3C 001DCA9C  FC 67 00 F2 */	fmul f3, f7, f3
@@ -5345,7 +5345,7 @@ update__Q23zen19WorldMapCursorOnyonFR8Vector3f:
 /* 801E001C 001DCF7C  D0 01 01 50 */	stfs f0, 0x150(r1)
 /* 801E0020 001DCF80  D0 01 01 4C */	stfs f0, 0x14c(r1)
 /* 801E0024 001DCF84  D0 01 01 48 */	stfs f0, 0x148(r1)
-/* 801E0028 001DCF88  C8 42 BE 98 */	lfd f2, "@2872"@sda21(r2)
+/* 801E0028 001DCF88  C8 42 BE 98 */	lfd f2, lbl_803EC098@sda21(r2)
 /* 801E002C 001DCF8C  80 9F 00 00 */	lwz r4, 0(r31)
 /* 801E0030 001DCF90  A8 C4 00 18 */	lha r6, 0x18(r4)
 /* 801E0034 001DCF94  A8 04 00 1C */	lha r0, 0x1c(r4)
@@ -5703,8 +5703,8 @@ moveUfo__Q23zen17WorldMapCursorMgrFv:
 /* 801E0574 001DD4D4  FC 1E 00 40 */	fcmpo cr0, f30, f0
 /* 801E0578 001DD4D8  40 81 00 5C */	ble .L_801E05D4
 /* 801E057C 001DD4DC  FC 60 F0 34 */	frsqrte f3, f30
-/* 801E0580 001DD4E0  C8 A2 BE D8 */	lfd f5, "@4096"@sda21(r2)
-/* 801E0584 001DD4E4  C8 82 BE E0 */	lfd f4, "@4097"@sda21(r2)
+/* 801E0580 001DD4E0  C8 A2 BE D8 */	lfd f5, lbl_803EC0D8@sda21(r2)
+/* 801E0584 001DD4E4  C8 82 BE E0 */	lfd f4, lbl_803EC0E0@sda21(r2)
 /* 801E0588 001DD4E8  FC 03 00 F2 */	fmul f0, f3, f3
 /* 801E058C 001DD4EC  FC 65 00 F2 */	fmul f3, f5, f3
 /* 801E0590 001DD4F0  FC 1E 00 32 */	fmul f0, f30, f0
@@ -6046,8 +6046,8 @@ stayUfo__Q23zen17WorldMapCursorMgrFv:
 /* 801E0A4C 001DD9AC  FC 04 00 40 */	fcmpo cr0, f4, f0
 /* 801E0A50 001DD9B0  40 81 00 5C */	ble .L_801E0AAC
 /* 801E0A54 001DD9B4  FC 20 20 34 */	frsqrte f1, f4
-/* 801E0A58 001DD9B8  C8 62 BE D8 */	lfd f3, "@4096"@sda21(r2)
-/* 801E0A5C 001DD9BC  C8 42 BE E0 */	lfd f2, "@4097"@sda21(r2)
+/* 801E0A58 001DD9B8  C8 62 BE D8 */	lfd f3, lbl_803EC0D8@sda21(r2)
+/* 801E0A5C 001DD9BC  C8 42 BE E0 */	lfd f2, lbl_803EC0E0@sda21(r2)
 /* 801E0A60 001DD9C0  FC 01 00 72 */	fmul f0, f1, f1
 /* 801E0A64 001DD9C4  FC 23 00 72 */	fmul f1, f3, f1
 /* 801E0A68 001DD9C8  FC 04 00 32 */	fmul f0, f4, f0
@@ -6388,7 +6388,7 @@ start__Q23zen12DrawWorldMapFQ33zen12DrawWorldMap13startModeFlagQ33zen12DrawWorld
 /* 801E0F38 001DDE98  3C 60 43 30 */	lis r3, 0x4330
 /* 801E0F3C 001DDE9C  A8 84 00 1A */	lha r4, 0x1a(r4)
 /* 801E0F40 001DDEA0  6C 00 80 00 */	xoris r0, r0, 0x8000
-/* 801E0F44 001DDEA4  C8 42 BE 98 */	lfd f2, "@2872"@sda21(r2)
+/* 801E0F44 001DDEA4  C8 42 BE 98 */	lfd f2, lbl_803EC098@sda21(r2)
 /* 801E0F48 001DDEA8  90 01 04 24 */	stw r0, 0x424(r1)
 /* 801E0F4C 001DDEAC  6C 80 80 00 */	xoris r0, r4, 0x8000
 /* 801E0F50 001DDEB0  90 61 04 20 */	stw r3, 0x420(r1)
@@ -7189,7 +7189,7 @@ start__Q23zen12DrawWorldMapFQ33zen12DrawWorldMap13startModeFlagQ33zen12DrawWorld
 .L_801E1B00:
 /* 801E1B00 001DEA60  80 9F 00 38 */	lwz r4, 0x38(r31)
 /* 801E1B04 001DEA64  3C 60 43 30 */	lis r3, 0x4330
-/* 801E1B08 001DEA68  C8 62 BE 98 */	lfd f3, "@2872"@sda21(r2)
+/* 801E1B08 001DEA68  C8 62 BE 98 */	lfd f3, lbl_803EC098@sda21(r2)
 /* 801E1B0C 001DEA6C  80 84 00 04 */	lwz r4, 4(r4)
 /* 801E1B10 001DEA70  83 DF 00 34 */	lwz r30, 0x34(r31)
 /* 801E1B14 001DEA74  80 A4 00 28 */	lwz r5, 0x28(r4)
@@ -7441,7 +7441,7 @@ start__Q23zen12DrawWorldMapFQ33zen12DrawWorldMap13startModeFlagQ33zen12DrawWorld
 /* 801E1EE0 001DEE40  D0 17 00 30 */	stfs f0, 0x30(r23)
 .L_801E1EE4:
 /* 801E1EE4 001DEE44  6E A0 80 00 */	xoris r0, r21, 0x8000
-/* 801E1EE8 001DEE48  C8 42 BE 98 */	lfd f2, "@2872"@sda21(r2)
+/* 801E1EE8 001DEE48  C8 42 BE 98 */	lfd f2, lbl_803EC098@sda21(r2)
 /* 801E1EEC 001DEE4C  90 01 03 DC */	stw r0, 0x3dc(r1)
 /* 801E1EF0 001DEE50  6E C0 80 00 */	xoris r0, r22, 0x8000
 /* 801E1EF4 001DEE54  3C 60 43 30 */	lis r3, 0x4330
@@ -8042,7 +8042,7 @@ start__Q23zen12DrawWorldMapFQ33zen12DrawWorldMap13startModeFlagQ33zen12DrawWorld
 /* 801E2780 001DF6E0  D0 03 00 08 */	stfs f0, 8(r3)
 /* 801E2784 001DF6E4  9B 03 00 AC */	stb r24, 0xac(r3)
 /* 801E2788 001DF6E8  82 DF 00 58 */	lwz r22, 0x58(r31)
-/* 801E278C 001DF6EC  CB A2 BE 98 */	lfd f29, "@2872"@sda21(r2)
+/* 801E278C 001DF6EC  CB A2 BE 98 */	lfd f29, lbl_803EC098@sda21(r2)
 /* 801E2790 001DF6F0  7E D7 B3 78 */	mr r23, r22
 .L_801E2794:
 /* 801E2794 001DF6F4  80 77 00 30 */	lwz r3, 0x30(r23)
@@ -8107,7 +8107,7 @@ start__Q23zen12DrawWorldMapFQ33zen12DrawWorldMap13startModeFlagQ33zen12DrawWorld
 /* 801E2880 001DF7E0  C0 02 BE 7C */	lfs f0, lbl_803EC07C@sda21(r2)
 /* 801E2884 001DF7E4  D0 1F 00 08 */	stfs f0, 8(r31)
 /* 801E2888 001DF7E8  C3 C2 BE AC */	lfs f30, lbl_803EC0AC@sda21(r2)
-/* 801E288C 001DF7EC  CB E2 BE 98 */	lfd f31, "@2872"@sda21(r2)
+/* 801E288C 001DF7EC  CB E2 BE 98 */	lfd f31, lbl_803EC098@sda21(r2)
 .L_801E2890:
 /* 801E2890 001DF7F0  C0 16 00 10 */	lfs f0, 0x10(r22)
 /* 801E2894 001DF7F4  3B B6 00 0C */	addi r29, r22, 0xc
@@ -8336,8 +8336,8 @@ updateOnyonPos__Q23zen17WorldMapCursorMgrFP8Vector3fP8Vector3fP8Vector3f:
 /* 801E2BD4 001DFB34  FC 07 18 40 */	fcmpo cr0, f7, f3
 /* 801E2BD8 001DFB38  40 81 00 5C */	ble .L_801E2C34
 /* 801E2BDC 001DFB3C  FC 80 38 34 */	frsqrte f4, f7
-/* 801E2BE0 001DFB40  C8 C2 BE D8 */	lfd f6, "@4096"@sda21(r2)
-/* 801E2BE4 001DFB44  C8 A2 BE E0 */	lfd f5, "@4097"@sda21(r2)
+/* 801E2BE0 001DFB40  C8 C2 BE D8 */	lfd f6, lbl_803EC0D8@sda21(r2)
+/* 801E2BE4 001DFB44  C8 A2 BE E0 */	lfd f5, lbl_803EC0E0@sda21(r2)
 /* 801E2BE8 001DFB48  FC 64 01 32 */	fmul f3, f4, f4
 /* 801E2BEC 001DFB4C  FC 86 01 32 */	fmul f4, f6, f4
 /* 801E2BF0 001DFB50  FC 67 00 F2 */	fmul f3, f7, f3
@@ -8520,7 +8520,7 @@ modeStart__Q23zen12DrawWorldMapFP10Controller:
 /* 801E2E8C 001DFDEC  A8 7D 00 1C */	lha r3, 0x1c(r29)
 /* 801E2E90 001DFDF0  C0 02 BE 7C */	lfs f0, lbl_803EC07C@sda21(r2)
 /* 801E2E94 001DFDF4  7C 64 18 50 */	subf r3, r4, r3
-/* 801E2E98 001DFDF8  C8 62 BE 98 */	lfd f3, "@2872"@sda21(r2)
+/* 801E2E98 001DFDF8  C8 62 BE 98 */	lfd f3, lbl_803EC098@sda21(r2)
 /* 801E2E9C 001DFDFC  6C 63 80 00 */	xoris r3, r3, 0x8000
 /* 801E2EA0 001DFE00  C0 82 BF 44 */	lfs f4, lbl_803EC144@sda21(r2)
 /* 801E2EA4 001DFE04  90 61 00 C4 */	stw r3, 0xc4(r1)
@@ -8560,7 +8560,7 @@ modeStart__Q23zen12DrawWorldMapFP10Controller:
 /* 801E2F24 001DFE84  A8 7D 00 1C */	lha r3, 0x1c(r29)
 /* 801E2F28 001DFE88  C0 02 BE 7C */	lfs f0, lbl_803EC07C@sda21(r2)
 /* 801E2F2C 001DFE8C  7C 64 18 50 */	subf r3, r4, r3
-/* 801E2F30 001DFE90  C8 62 BE 98 */	lfd f3, "@2872"@sda21(r2)
+/* 801E2F30 001DFE90  C8 62 BE 98 */	lfd f3, lbl_803EC098@sda21(r2)
 /* 801E2F34 001DFE94  6C 63 80 00 */	xoris r3, r3, 0x8000
 /* 801E2F38 001DFE98  C0 82 BF 44 */	lfs f4, lbl_803EC144@sda21(r2)
 /* 801E2F3C 001DFE9C  90 61 00 BC */	stw r3, 0xbc(r1)
@@ -8599,7 +8599,7 @@ modeStart__Q23zen12DrawWorldMapFP10Controller:
 /* 801E2FB8 001DFF18  A8 7D 00 1E */	lha r3, 0x1e(r29)
 /* 801E2FBC 001DFF1C  C0 02 BE 7C */	lfs f0, lbl_803EC07C@sda21(r2)
 /* 801E2FC0 001DFF20  7C 64 18 50 */	subf r3, r4, r3
-/* 801E2FC4 001DFF24  C8 62 BE 98 */	lfd f3, "@2872"@sda21(r2)
+/* 801E2FC4 001DFF24  C8 62 BE 98 */	lfd f3, lbl_803EC098@sda21(r2)
 /* 801E2FC8 001DFF28  6C 63 80 00 */	xoris r3, r3, 0x8000
 /* 801E2FCC 001DFF2C  C0 82 BF 44 */	lfs f4, lbl_803EC144@sda21(r2)
 /* 801E2FD0 001DFF30  90 61 00 C4 */	stw r3, 0xc4(r1)
@@ -8630,7 +8630,7 @@ modeStart__Q23zen12DrawWorldMapFP10Controller:
 /* 801E302C 001DFF8C  A8 7D 00 1C */	lha r3, 0x1c(r29)
 /* 801E3030 001DFF90  C0 02 BE 7C */	lfs f0, lbl_803EC07C@sda21(r2)
 /* 801E3034 001DFF94  7C 64 18 50 */	subf r3, r4, r3
-/* 801E3038 001DFF98  C8 62 BE 98 */	lfd f3, "@2872"@sda21(r2)
+/* 801E3038 001DFF98  C8 62 BE 98 */	lfd f3, lbl_803EC098@sda21(r2)
 /* 801E303C 001DFF9C  6C 63 80 00 */	xoris r3, r3, 0x8000
 /* 801E3040 001DFFA0  C0 82 BF 44 */	lfs f4, lbl_803EC144@sda21(r2)
 /* 801E3044 001DFFA4  90 61 00 C4 */	stw r3, 0xc4(r1)
@@ -8670,7 +8670,7 @@ modeStart__Q23zen12DrawWorldMapFP10Controller:
 /* 801E30C4 001E0024  A8 7D 00 1C */	lha r3, 0x1c(r29)
 /* 801E30C8 001E0028  C0 02 BE 7C */	lfs f0, lbl_803EC07C@sda21(r2)
 /* 801E30CC 001E002C  7C 64 18 50 */	subf r3, r4, r3
-/* 801E30D0 001E0030  C8 62 BE 98 */	lfd f3, "@2872"@sda21(r2)
+/* 801E30D0 001E0030  C8 62 BE 98 */	lfd f3, lbl_803EC098@sda21(r2)
 /* 801E30D4 001E0034  6C 63 80 00 */	xoris r3, r3, 0x8000
 /* 801E30D8 001E0038  C0 82 BF 44 */	lfs f4, lbl_803EC144@sda21(r2)
 /* 801E30DC 001E003C  90 61 00 C4 */	stw r3, 0xc4(r1)
@@ -8734,7 +8734,7 @@ modeStart__Q23zen12DrawWorldMapFP10Controller:
 /* 801E31BC 001E011C  A8 7D 00 1C */	lha r3, 0x1c(r29)
 /* 801E31C0 001E0120  C0 02 BE 7C */	lfs f0, lbl_803EC07C@sda21(r2)
 /* 801E31C4 001E0124  7C 64 18 50 */	subf r3, r4, r3
-/* 801E31C8 001E0128  C8 62 BE 98 */	lfd f3, "@2872"@sda21(r2)
+/* 801E31C8 001E0128  C8 62 BE 98 */	lfd f3, lbl_803EC098@sda21(r2)
 /* 801E31CC 001E012C  6C 63 80 00 */	xoris r3, r3, 0x8000
 /* 801E31D0 001E0130  C0 82 BE C8 */	lfs f4, lbl_803EC0C8@sda21(r2)
 /* 801E31D4 001E0134  90 61 00 C4 */	stw r3, 0xc4(r1)
@@ -11377,7 +11377,7 @@ modeAppear__Q23zen12DrawWorldMapFP10Controller:
 /* 801E5868 001E27C8  D0 1F 00 30 */	stfs f0, 0x30(r31)
 .L_801E586C:
 /* 801E586C 001E27CC  6F 80 80 00 */	xoris r0, r28, 0x8000
-/* 801E5870 001E27D0  C8 42 BE 98 */	lfd f2, "@2872"@sda21(r2)
+/* 801E5870 001E27D0  C8 42 BE 98 */	lfd f2, lbl_803EC098@sda21(r2)
 /* 801E5874 001E27D4  90 01 01 A4 */	stw r0, 0x1a4(r1)
 /* 801E5878 001E27D8  6F A0 80 00 */	xoris r0, r29, 0x8000
 /* 801E587C 001E27DC  3C 60 43 30 */	lis r3, 0x4330
@@ -11491,7 +11491,7 @@ modeAppear__Q23zen22WorldMapCoursePointMgrFv:
 /* 801E59F8 001E2958  3B 60 00 00 */	li r27, 0
 /* 801E59FC 001E295C  3F E0 43 30 */	lis r31, 0x4330
 /* 801E5A00 001E2960  C3 A2 BE 78 */	lfs f29, lbl_803EC078@sda21(r2)
-/* 801E5A04 001E2964  CB C2 BE 98 */	lfd f30, "@2872"@sda21(r2)
+/* 801E5A04 001E2964  CB C2 BE 98 */	lfd f30, lbl_803EC098@sda21(r2)
 /* 801E5A08 001E2968  83 CD 26 08 */	lwz r30, "EVENT_NONE__Q29@unnamed@19WorldMapCoursePoint"@sda21(r13)
 /* 801E5A0C 001E296C  C3 82 BE AC */	lfs f28, lbl_803EC0AC@sda21(r2)
 /* 801E5A10 001E2970  C3 E2 BE 7C */	lfs f31, lbl_803EC07C@sda21(r2)
@@ -11635,7 +11635,7 @@ modeOperation__Q23zen22WorldMapCoursePointMgrFP10Controllerb:
 /* 801E5C10 001E2B70  3B 80 00 00 */	li r28, 0
 /* 801E5C14 001E2B74  3F E0 43 30 */	lis r31, 0x4330
 /* 801E5C18 001E2B78  C3 A2 BE 78 */	lfs f29, lbl_803EC078@sda21(r2)
-/* 801E5C1C 001E2B7C  CB C2 BE 98 */	lfd f30, "@2872"@sda21(r2)
+/* 801E5C1C 001E2B7C  CB C2 BE 98 */	lfd f30, lbl_803EC098@sda21(r2)
 /* 801E5C20 001E2B80  83 CD 26 08 */	lwz r30, "EVENT_NONE__Q29@unnamed@19WorldMapCoursePoint"@sda21(r13)
 /* 801E5C24 001E2B84  C3 82 BE AC */	lfs f28, lbl_803EC0AC@sda21(r2)
 /* 801E5C28 001E2B88  C3 E2 BE 7C */	lfs f31, lbl_803EC07C@sda21(r2)
@@ -12017,7 +12017,7 @@ modeOperation__Q23zen12DrawWorldMapFP10Controller:
 /* 801E61AC 001E310C  82 E3 03 64 */	lwz r23, 0x364(r3)
 /* 801E61B0 001E3110  48 03 1E C1 */	bl rand
 /* 801E61B4 001E3114  6C 60 80 00 */	xoris r0, r3, 0x8000
-/* 801E61B8 001E3118  C8 82 BE 98 */	lfd f4, "@2872"@sda21(r2)
+/* 801E61B8 001E3118  C8 82 BE 98 */	lfd f4, lbl_803EC098@sda21(r2)
 /* 801E61BC 001E311C  90 01 01 BC */	stw r0, 0x1bc(r1)
 /* 801E61C0 001E3120  3E C0 43 30 */	lis r22, 0x4330
 /* 801E61C4 001E3124  C0 42 BE A0 */	lfs f2, lbl_803EC0A0@sda21(r2)
@@ -12032,7 +12032,7 @@ modeOperation__Q23zen12DrawWorldMapFP10Controller:
 /* 801E61E8 001E3148  40 80 00 B8 */	bge .L_801E62A0
 /* 801E61EC 001E314C  48 03 1E 85 */	bl rand
 /* 801E61F0 001E3150  6C 60 80 00 */	xoris r0, r3, 0x8000
-/* 801E61F4 001E3154  C8 62 BE 98 */	lfd f3, "@2872"@sda21(r2)
+/* 801E61F4 001E3154  C8 62 BE 98 */	lfd f3, lbl_803EC098@sda21(r2)
 /* 801E61F8 001E3158  90 01 01 BC */	stw r0, 0x1bc(r1)
 /* 801E61FC 001E315C  C0 22 BE A0 */	lfs f1, lbl_803EC0A0@sda21(r2)
 /* 801E6200 001E3160  92 C1 01 B8 */	stw r22, 0x1b8(r1)
@@ -12043,7 +12043,7 @@ modeOperation__Q23zen12DrawWorldMapFP10Controller:
 /* 801E6214 001E3174  EF A0 00 72 */	fmuls f29, f0, f1
 /* 801E6218 001E3178  48 03 1E 59 */	bl rand
 /* 801E621C 001E317C  6C 60 80 00 */	xoris r0, r3, 0x8000
-/* 801E6220 001E3180  C8 62 BE 98 */	lfd f3, "@2872"@sda21(r2)
+/* 801E6220 001E3180  C8 62 BE 98 */	lfd f3, lbl_803EC098@sda21(r2)
 /* 801E6224 001E3184  90 01 01 B4 */	stw r0, 0x1b4(r1)
 /* 801E6228 001E3188  C0 22 BE A0 */	lfs f1, lbl_803EC0A0@sda21(r2)
 /* 801E622C 001E318C  92 C1 01 B0 */	stw r22, 0x1b0(r1)
@@ -12058,7 +12058,7 @@ modeOperation__Q23zen12DrawWorldMapFP10Controller:
 /* 801E6250 001E31B0  90 01 01 AC */	stw r0, 0x1ac(r1)
 /* 801E6254 001E31B4  38 A1 01 70 */	addi r5, r1, 0x170
 /* 801E6258 001E31B8  EC 20 F0 28 */	fsubs f1, f0, f30
-/* 801E625C 001E31BC  C8 A2 BE 98 */	lfd f5, "@2872"@sda21(r2)
+/* 801E625C 001E31BC  C8 A2 BE 98 */	lfd f5, lbl_803EC098@sda21(r2)
 /* 801E6260 001E31C0  92 C1 01 A8 */	stw r22, 0x1a8(r1)
 /* 801E6264 001E31C4  C0 62 BE A0 */	lfs f3, lbl_803EC0A0@sda21(r2)
 /* 801E6268 001E31C8  FC 00 E8 50 */	fneg f0, f29
@@ -12170,7 +12170,7 @@ modeOperation__Q23zen12DrawWorldMapFP10Controller:
 /* 801E63E8 001E3348  D0 1A 00 30 */	stfs f0, 0x30(r26)
 .L_801E63EC:
 /* 801E63EC 001E334C  6E 80 80 00 */	xoris r0, r20, 0x8000
-/* 801E63F0 001E3350  C8 42 BE 98 */	lfd f2, "@2872"@sda21(r2)
+/* 801E63F0 001E3350  C8 42 BE 98 */	lfd f2, lbl_803EC098@sda21(r2)
 /* 801E63F4 001E3354  90 01 01 AC */	stw r0, 0x1ac(r1)
 /* 801E63F8 001E3358  6E A0 80 00 */	xoris r0, r21, 0x8000
 /* 801E63FC 001E335C  3C 60 43 30 */	lis r3, 0x4330
@@ -12231,7 +12231,7 @@ modeOperation__Q23zen12DrawWorldMapFP10Controller:
 /* 801E64C4 001E3424  D0 16 00 30 */	stfs f0, 0x30(r22)
 .L_801E64C8:
 /* 801E64C8 001E3428  6E 80 80 00 */	xoris r0, r20, 0x8000
-/* 801E64CC 001E342C  C8 42 BE 98 */	lfd f2, "@2872"@sda21(r2)
+/* 801E64CC 001E342C  C8 42 BE 98 */	lfd f2, lbl_803EC098@sda21(r2)
 /* 801E64D0 001E3430  90 01 01 AC */	stw r0, 0x1ac(r1)
 /* 801E64D4 001E3434  6E A0 80 00 */	xoris r0, r21, 0x8000
 /* 801E64D8 001E3438  3C 80 43 30 */	lis r4, 0x4330
@@ -12280,7 +12280,7 @@ modeOperation__Q23zen12DrawWorldMapFP10Controller:
 /* 801E657C 001E34DC  A8 95 00 18 */	lha r4, 0x18(r21)
 /* 801E6580 001E34E0  7C 63 0E 70 */	srawi r3, r3, 1
 /* 801E6584 001E34E4  7E C0 0E 70 */	srawi r0, r22, 1
-/* 801E6588 001E34E8  C8 42 BE 98 */	lfd f2, "@2872"@sda21(r2)
+/* 801E6588 001E34E8  C8 42 BE 98 */	lfd f2, lbl_803EC098@sda21(r2)
 /* 801E658C 001E34EC  7C 64 1A 14 */	add r3, r4, r3
 /* 801E6590 001E34F0  6C 63 80 00 */	xoris r3, r3, 0x8000
 /* 801E6594 001E34F4  7C 14 02 14 */	add r0, r20, r0
@@ -12310,7 +12310,7 @@ modeOperation__Q23zen12DrawWorldMapFP10Controller:
 /* 801E65F4 001E3554  C3 A2 BE 78 */	lfs f29, lbl_803EC078@sda21(r2)
 /* 801E65F8 001E3558  3B A1 00 D4 */	addi r29, r1, 0xd4
 /* 801E65FC 001E355C  C3 C2 BE AC */	lfs f30, lbl_803EC0AC@sda21(r2)
-/* 801E6600 001E3560  CB E2 BE 98 */	lfd f31, "@2872"@sda21(r2)
+/* 801E6600 001E3560  CB E2 BE 98 */	lfd f31, lbl_803EC098@sda21(r2)
 /* 801E6604 001E3564  3B 59 00 00 */	addi r26, r25, 0
 /* 801E6608 001E3568  3B 81 00 E0 */	addi r28, r1, 0xe0
 /* 801E660C 001E356C  3B 61 00 DC */	addi r27, r1, 0xdc
@@ -12405,7 +12405,7 @@ modeOperation__Q23zen12DrawWorldMapFP10Controller:
 /* 801E675C 001E36BC  D0 07 00 04 */	stfs f0, 4(r7)
 /* 801E6760 001E36C0  C0 02 BE AC */	lfs f0, lbl_803EC0AC@sda21(r2)
 /* 801E6764 001E36C4  D0 07 00 08 */	stfs f0, 8(r7)
-/* 801E6768 001E36C8  C8 62 BE 98 */	lfd f3, "@2872"@sda21(r2)
+/* 801E6768 001E36C8  C8 62 BE 98 */	lfd f3, lbl_803EC098@sda21(r2)
 .L_801E676C:
 /* 801E676C 001E36CC  80 A9 00 30 */	lwz r5, 0x30(r9)
 /* 801E6770 001E36D0  A8 05 00 18 */	lha r0, 0x18(r5)
@@ -12870,7 +12870,7 @@ modeConfirm__Q23zen12DrawWorldMapFP10Controller:
 /* 801E6E14 001E3D74  3C 60 43 30 */	lis r3, 0x4330
 /* 801E6E18 001E3D78  98 9B 00 35 */	stb r4, 0x35(r27)
 /* 801E6E1C 001E3D7C  90 61 01 00 */	stw r3, 0x100(r1)
-/* 801E6E20 001E3D80  C8 42 BE 98 */	lfd f2, "@2872"@sda21(r2)
+/* 801E6E20 001E3D80  C8 42 BE 98 */	lfd f2, lbl_803EC098@sda21(r2)
 /* 801E6E24 001E3D84  90 01 00 FC */	stw r0, 0xfc(r1)
 /* 801E6E28 001E3D88  C8 01 01 00 */	lfd f0, 0x100(r1)
 /* 801E6E2C 001E3D8C  90 61 00 F8 */	stw r3, 0xf8(r1)
@@ -12907,7 +12907,7 @@ modeConfirm__Q23zen12DrawWorldMapFP10Controller:
 /* 801E6E9C 001E3DFC  D0 1B 00 30 */	stfs f0, 0x30(r27)
 .L_801E6EA0:
 /* 801E6EA0 001E3E00  6F A0 80 00 */	xoris r0, r29, 0x8000
-/* 801E6EA4 001E3E04  C8 42 BE 98 */	lfd f2, "@2872"@sda21(r2)
+/* 801E6EA4 001E3E04  C8 42 BE 98 */	lfd f2, lbl_803EC098@sda21(r2)
 /* 801E6EA8 001E3E08  90 01 00 FC */	stw r0, 0xfc(r1)
 /* 801E6EAC 001E3E0C  6F 80 80 00 */	xoris r0, r28, 0x8000
 /* 801E6EB0 001E3E10  3C 60 43 30 */	lis r3, 0x4330
@@ -13068,7 +13068,7 @@ modeOperation__Q23zen18WorldMapConfirmMgrFP10Controller:
 /* 801E70E0 001E4040  4B EB E2 95 */	bl playSysSe__8SeSystemFi
 /* 801E70E4 001E4044  80 9F 00 04 */	lwz r4, 4(r31)
 /* 801E70E8 001E4048  3F A0 43 30 */	lis r29, 0x4330
-/* 801E70EC 001E404C  C8 42 BE 98 */	lfd f2, "@2872"@sda21(r2)
+/* 801E70EC 001E404C  C8 42 BE 98 */	lfd f2, lbl_803EC098@sda21(r2)
 /* 801E70F0 001E4050  38 7B 00 04 */	addi r3, r27, 4
 /* 801E70F4 001E4054  A8 04 00 1A */	lha r0, 0x1a(r4)
 /* 801E70F8 001E4058  A8 84 00 18 */	lha r4, 0x18(r4)
@@ -13086,7 +13086,7 @@ modeOperation__Q23zen18WorldMapConfirmMgrFP10Controller:
 /* 801E7128 001E4088  4B FF 3A 81 */	bl move__Q23zen17SpectrumCursorMgrFfff
 /* 801E712C 001E408C  80 9F 00 08 */	lwz r4, 8(r31)
 /* 801E7130 001E4090  38 7B 00 34 */	addi r3, r27, 0x34
-/* 801E7134 001E4094  C8 42 BE 98 */	lfd f2, "@2872"@sda21(r2)
+/* 801E7134 001E4094  C8 42 BE 98 */	lfd f2, lbl_803EC098@sda21(r2)
 /* 801E7138 001E4098  A8 04 00 1A */	lha r0, 0x1a(r4)
 /* 801E713C 001E409C  A8 84 00 18 */	lha r4, 0x18(r4)
 /* 801E7140 001E40A0  6C 00 80 00 */	xoris r0, r0, 0x8000
@@ -13315,7 +13315,7 @@ closeMapInfo__Q23zen12DrawWorldMapFv:
 /* 801E7458 001E43B8  41 82 00 A8 */	beq .L_801E7500
 /* 801E745C 001E43BC  1C 00 00 28 */	mulli r0, r0, 0x28
 /* 801E7460 001E43C0  80 8A 00 00 */	lwz r4, 0(r10)
-/* 801E7464 001E43C4  C8 42 BE 98 */	lfd f2, "@2872"@sda21(r2)
+/* 801E7464 001E43C4  C8 42 BE 98 */	lfd f2, lbl_803EC098@sda21(r2)
 /* 801E7468 001E43C8  7D 04 02 14 */	add r8, r4, r0
 /* 801E746C 001E43CC  81 28 00 04 */	lwz r9, 4(r8)
 /* 801E7470 001E43D0  3C E0 43 30 */	lis r7, 0x4330
@@ -14150,8 +14150,9 @@ __RTTI__15P2DPaneCallBack:
 
 .section .sbss, "wa"
 .balign 8
-"WMeffMgr__9@unnamed@":
+.obj "WMeffMgr__9@unnamed@", local
 	.skip 0x4
+.endobj "WMeffMgr__9@unnamed@"
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
@@ -14169,10 +14170,9 @@ lbl_803EC08C:
 	.4byte 0x42480000
 lbl_803EC090:
 	.4byte 0x3E4CCCCD
-	.4byte 0x00000000
-"@2872":
-	.4byte 0x43300000
-	.4byte 0x80000000
+.balign 8
+lbl_803EC098:
+	.8byte 0x4330000080000000
 lbl_803EC0A0:
 	.4byte 0x46FFFE00
 lbl_803EC0A4:
@@ -14199,11 +14199,12 @@ lbl_803EC0CC:
 	.4byte 0x3F333333
 lbl_803EC0D0:
 	.4byte 0x42700000
-	.4byte 0x00000000
-"@4096":
+.balign 8
+lbl_803EC0D8:
 	.4byte 0x3FE00000
 	.4byte 0x00000000
-"@4097":
+.balign 8
+lbl_803EC0E0:
 	.4byte 0x40080000
 	.4byte 0x00000000
 lbl_803EC0E8:

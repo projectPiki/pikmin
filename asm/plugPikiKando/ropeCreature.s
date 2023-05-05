@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global __ct__12RopeCreatureFP12CreatureProp
-__ct__12RopeCreatureFP12CreatureProp:
+.fn __ct__12RopeCreatureFP12CreatureProp, global
 /* 800946A4 00091604  7C 08 02 A6 */	mflr r0
 /* 800946A8 00091608  90 01 00 04 */	stw r0, 4(r1)
 /* 800946AC 0009160C  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -24,9 +23,9 @@ __ct__12RopeCreatureFP12CreatureProp:
 /* 800946F0 00091650  38 21 00 18 */	addi r1, r1, 0x18
 /* 800946F4 00091654  7C 08 03 A6 */	mtlr r0
 /* 800946F8 00091658  4E 80 00 20 */	blr 
+.endfn __ct__12RopeCreatureFP12CreatureProp
 
-.global setRope__12RopeCreatureFP8Creature
-setRope__12RopeCreatureFP8Creature:
+.fn setRope__12RopeCreatureFP8Creature, global
 /* 800946FC 0009165C  7C 08 02 A6 */	mflr r0
 /* 80094700 00091660  90 01 00 04 */	stw r0, 4(r1)
 /* 80094704 00091664  94 21 FF 90 */	stwu r1, -0x70(r1)
@@ -136,9 +135,9 @@ setRope__12RopeCreatureFP8Creature:
 /* 80094898 000917F8  38 21 00 70 */	addi r1, r1, 0x70
 /* 8009489C 000917FC  7C 08 03 A6 */	mtlr r0
 /* 800948A0 00091800  4E 80 00 20 */	blr 
+.endfn setRope__12RopeCreatureFP8Creature
 
-.global update__12RopeCreatureFv
-update__12RopeCreatureFv:
+.fn update__12RopeCreatureFv, global
 /* 800948A4 00091804  7C 08 02 A6 */	mflr r0
 /* 800948A8 00091808  90 01 00 04 */	stw r0, 4(r1)
 /* 800948AC 0009180C  94 21 FF B8 */	stwu r1, -0x48(r1)
@@ -193,9 +192,9 @@ update__12RopeCreatureFv:
 /* 8009496C 000918CC  38 21 00 48 */	addi r1, r1, 0x48
 /* 80094970 000918D0  7C 08 03 A6 */	mtlr r0
 /* 80094974 000918D4  4E 80 00 20 */	blr 
+.endfn update__12RopeCreatureFv
 
-.global getRopePos__12RopeCreatureFf
-getRopePos__12RopeCreatureFf:
+.fn getRopePos__12RopeCreatureFf, global
 /* 80094978 000918D8  7C 08 02 A6 */	mflr r0
 /* 8009497C 000918DC  90 01 00 04 */	stw r0, 4(r1)
 /* 80094980 000918E0  94 21 FF 98 */	stwu r1, -0x68(r1)
@@ -241,43 +240,51 @@ getRopePos__12RopeCreatureFf:
 /* 80094A20 00091980  38 21 00 68 */	addi r1, r1, 0x68
 /* 80094A24 00091984  7C 08 03 A6 */	mtlr r0
 /* 80094A28 00091988  4E 80 00 20 */	blr 
+.endfn getRopePos__12RopeCreatureFf
 
-.global refresh__12RopeCreatureFR8Graphics
-refresh__12RopeCreatureFR8Graphics:
+.fn refresh__12RopeCreatureFR8Graphics, global
 /* 80094A2C 0009198C  4E 80 00 20 */	blr 
+.endfn refresh__12RopeCreatureFR8Graphics
 
-.global needShadow__12RopeCreatureFv
-needShadow__12RopeCreatureFv:
+.fn needShadow__12RopeCreatureFv, weak
 /* 80094A30 00091990  38 60 00 00 */	li r3, 0
 /* 80094A34 00091994  4E 80 00 20 */	blr 
+.endfn needShadow__12RopeCreatureFv
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802AFA50:
+.obj lbl_802AFA50, local
 	.asciz "ropeCreature.cpp"
+.endobj lbl_802AFA50
 .balign 4
-lbl_802AFA64:
+.obj lbl_802AFA64, local
 	.asciz "ropeCreature"
+.endobj lbl_802AFA64
 .balign 4
-lbl_802AFA74:
+.obj lbl_802AFA74, local
 	.asciz "RopeCreature"
+.endobj lbl_802AFA74
 .balign 4
-lbl_802AFA84:
+.obj lbl_802AFA84, local
 	.asciz "EventTalker"
+.endobj lbl_802AFA84
 .balign 4
-lbl_802AFA90:
+.obj lbl_802AFA90, local
 	.asciz "RefCountable"
+.endobj lbl_802AFA90
 .balign 4
-lbl_802AFAA0:
+.obj lbl_802AFAA0, local
 	.asciz "Creature"
+.endobj lbl_802AFAA0
 .balign 4
-lbl_802AFAAC:
+.obj lbl_802AFAAC, local
 	.4byte __RTTI__11EventTalker
 	.4byte 0x8
 	.4byte __RTTI__12RefCountable
 	.4byte 0
 	.4byte 0
-lbl_802AFAC0:
+.endobj lbl_802AFAAC
+.obj lbl_802AFAC0, local
 	.4byte __RTTI__11EventTalker
 	.4byte 0x8
 	.4byte __RTTI__12RefCountable
@@ -285,8 +292,8 @@ lbl_802AFAC0:
 	.4byte __RTTI__8Creature
 	.4byte 0
 	.4byte 0
-.global __vt__12RopeCreature
-__vt__12RopeCreature:
+.endobj lbl_802AFAC0
+.obj __vt__12RopeCreature, global
 	.4byte __RTTI__12RopeCreature
 	.4byte 0
 	.4byte addCntCallback__12RefCountableFv
@@ -356,30 +363,40 @@ __vt__12RopeCreature:
 	.4byte doAnimation__8CreatureFv
 	.4byte 0
 	.4byte exitCourse__8CreatureFv
+.endobj __vt__12RopeCreature
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-__RTTI__11EventTalker:
+.obj __RTTI__11EventTalker, local
 	.4byte lbl_802AFA84
 	.4byte 0
-__RTTI__12RefCountable:
+.endobj __RTTI__11EventTalker
+.obj __RTTI__12RefCountable, local
 	.4byte lbl_802AFA90
 	.4byte 0
-__RTTI__8Creature:
+.endobj __RTTI__12RefCountable
+.obj __RTTI__8Creature, local
 	.4byte lbl_802AFAA0
 	.4byte lbl_802AFAAC
-__RTTI__12RopeCreature:
+.endobj __RTTI__8Creature
+.obj __RTTI__12RopeCreature, local
 	.4byte lbl_802AFA74
 	.4byte lbl_802AFAC0
+.endobj __RTTI__12RopeCreature
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803E8DE8:
+.obj lbl_803E8DE8, local
 	.float 0.0
+.endobj lbl_803E8DE8
 .balign 8
-lbl_803E8DF0:
+.obj lbl_803E8DF0, local
 	.double 0.5
-lbl_803E8DF8:
+.endobj lbl_803E8DF0
+.balign 8
+.obj lbl_803E8DF8, local
 	.double 3.0
-lbl_803E8E00:
+.endobj lbl_803E8DF8
+.obj lbl_803E8E00, local
 	.float 50.0
+.endobj lbl_803E8E00

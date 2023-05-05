@@ -1,8 +1,7 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
 .balign 32, 0
-.global Osc_Update_Param
-Osc_Update_Param:
+.fn Osc_Update_Param, global
 /* 80014CA0 00011C00  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 80014CA4 00011C04  98 81 00 0C */	stb r4, 0xc(r1)
 /* 80014CA8 00011C08  88 01 00 0C */	lbz r0, 0xc(r1)
@@ -47,10 +46,10 @@ Osc_Update_Param:
 .L_80014D28:
 /* 80014D28 00011C88  38 21 00 20 */	addi r1, r1, 0x20
 /* 80014D2C 00011C8C  4E 80 00 20 */	blr 
+.endfn Osc_Update_Param
 
 .balign 32, 0
-.global Osc_Setup_Vibrato__FP5seqp_Uc
-Osc_Setup_Vibrato__FP5seqp_Uc:
+.fn Osc_Setup_Vibrato__FP5seqp_Uc, global
 /* 80014D40 00011CA0  54 80 06 3E */	clrlwi r0, r4, 0x18
 /* 80014D44 00011CA4  3C 80 80 22 */	lis r4, VIBRATO_DEF@ha
 /* 80014D48 00011CA8  1C A0 00 18 */	mulli r5, r0, 0x18
@@ -67,10 +66,10 @@ Osc_Setup_Vibrato__FP5seqp_Uc:
 /* 80014D70 00011CD0  90 05 00 04 */	stw r0, 4(r5)
 /* 80014D74 00011CD4  42 00 FF F0 */	bdnz .L_80014D64
 /* 80014D78 00011CD8  4E 80 00 20 */	blr 
+.endfn Osc_Setup_Vibrato__FP5seqp_Uc
 
 .balign 32, 0
-.global Osc_Setup_Tremolo__FP5seqp_Uc
-Osc_Setup_Tremolo__FP5seqp_Uc:
+.fn Osc_Setup_Tremolo__FP5seqp_Uc, global
 /* 80014D80 00011CE0  54 80 06 3E */	clrlwi r0, r4, 0x18
 /* 80014D84 00011CE4  3C 80 80 22 */	lis r4, TREMOLO_DEF@ha
 /* 80014D88 00011CE8  1C A0 00 18 */	mulli r5, r0, 0x18
@@ -87,10 +86,10 @@ Osc_Setup_Tremolo__FP5seqp_Uc:
 /* 80014DB0 00011D10  90 05 00 04 */	stw r0, 4(r5)
 /* 80014DB4 00011D14  42 00 FF F0 */	bdnz .L_80014DA4
 /* 80014DB8 00011D18  4E 80 00 20 */	blr 
+.endfn Osc_Setup_Tremolo__FP5seqp_Uc
 
 .balign 32, 0
-.global Osc_Setup_Simple
-Osc_Setup_Simple:
+.fn Osc_Setup_Simple, global
 /* 80014DC0 00011D20  7C 08 02 A6 */	mflr r0
 /* 80014DC4 00011D24  90 01 00 04 */	stw r0, 4(r1)
 /* 80014DC8 00011D28  54 80 06 3E */	clrlwi r0, r4, 0x18
@@ -121,18 +120,18 @@ Osc_Setup_Simple:
 /* 80014E18 00011D78  38 21 00 08 */	addi r1, r1, 8
 /* 80014E1C 00011D7C  7C 08 03 A6 */	mtlr r0
 /* 80014E20 00011D80  4E 80 00 20 */	blr 
+.endfn Osc_Setup_Simple
 
 .balign 32, 0
-.global Osc_Clear_Overwrite
-Osc_Clear_Overwrite:
+.fn Osc_Clear_Overwrite, global
 /* 80014E40 00011DA0  38 00 00 0F */	li r0, 0xf
 /* 80014E44 00011DA4  98 03 03 70 */	stb r0, 0x370(r3)
 /* 80014E48 00011DA8  98 03 03 71 */	stb r0, 0x371(r3)
 /* 80014E4C 00011DAC  4E 80 00 20 */	blr 
+.endfn Osc_Clear_Overwrite
 
 .balign 32, 0
-.global Osc_Init_Env
-Osc_Init_Env:
+.fn Osc_Init_Env, global
 /* 80014E60 00011DC0  7C 08 02 A6 */	mflr r0
 /* 80014E64 00011DC4  3C 80 80 22 */	lis r4, ENVELOPE_DEF@ha
 /* 80014E68 00011DC8  90 01 00 04 */	stw r0, 4(r1)
@@ -153,10 +152,10 @@ Osc_Init_Env:
 /* 80014EA0 00011E00  38 21 00 08 */	addi r1, r1, 8
 /* 80014EA4 00011E04  7C 08 03 A6 */	mtlr r0
 /* 80014EA8 00011E08  4E 80 00 20 */	blr 
+.endfn Osc_Init_Env
 
 .balign 32, 0
-.global Osc_Setup_SimpleEnv
-Osc_Setup_SimpleEnv:
+.fn Osc_Setup_SimpleEnv, global
 /* 80014EC0 00011E20  7C 08 02 A6 */	mflr r0
 /* 80014EC4 00011E24  90 01 00 04 */	stw r0, 4(r1)
 /* 80014EC8 00011E28  54 80 06 3E */	clrlwi r0, r4, 0x18
@@ -198,10 +197,10 @@ Osc_Setup_SimpleEnv:
 /* 80014F48 00011EA8  38 21 00 28 */	addi r1, r1, 0x28
 /* 80014F4C 00011EAC  7C 08 03 A6 */	mtlr r0
 /* 80014F50 00011EB0  4E 80 00 20 */	blr 
+.endfn Osc_Setup_SimpleEnv
 
 .balign 32, 0
-.global Osc_Setup_ADSR
-Osc_Setup_ADSR:
+.fn Osc_Setup_ADSR, global
 /* 80014F60 00011EC0  3C A0 80 22 */	lis r5, VIB_TABLE@ha
 /* 80014F64 00011EC4  38 00 00 03 */	li r0, 3
 /* 80014F68 00011EC8  39 05 58 28 */	addi r8, r5, VIB_TABLE@l
@@ -249,10 +248,10 @@ Osc_Setup_ADSR:
 /* 80015004 00011F64  A8 04 00 08 */	lha r0, 8(r4)
 /* 80015008 00011F68  B0 03 03 8C */	sth r0, 0x38c(r3)
 /* 8001500C 00011F6C  4E 80 00 20 */	blr 
+.endfn Osc_Setup_ADSR
 
 .balign 32, 0
-.global Osc_Setup_Full
-Osc_Setup_Full:
+.fn Osc_Setup_Full, global
 /* 80015020 00011F80  7C 08 02 A6 */	mflr r0
 /* 80015024 00011F84  54 89 07 3E */	clrlwi r9, r4, 0x1c
 /* 80015028 00011F88  90 01 00 04 */	stw r0, 4(r1)
@@ -327,10 +326,11 @@ Osc_Setup_Full:
 /* 80015120 00012080  38 21 00 30 */	addi r1, r1, 0x30
 /* 80015124 00012084  7C 08 03 A6 */	mtlr r0
 /* 80015128 00012088  4E 80 00 20 */	blr 
+.endfn Osc_Setup_Full
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-VIB_TABLE:
+.obj VIB_TABLE, local
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x00147FFF
@@ -340,7 +340,8 @@ VIB_TABLE:
 	.4byte 0x00000014
 	.4byte 0x0000000D
 	.4byte 0x00000001
-TRE_TABLE:
+.endobj VIB_TABLE
+.obj TRE_TABLE, local
 	.4byte 0x00000000
 	.4byte 0x7FFF0000
 	.4byte 0x00140000
@@ -350,54 +351,63 @@ TRE_TABLE:
 	.4byte 0x00000014
 	.4byte 0x7FFF000D
 	.4byte 0x00000001
-REL_TABLE:
+.endobj TRE_TABLE
+.obj REL_TABLE, local
 	.4byte 0x0000000A
 	.4byte 0x0000000F
 	.4byte 0x00010000
-VIBRATO_DEF:
+.endobj REL_TABLE
+.obj VIBRATO_DEF, local
 	.4byte 0x01000000
 	.float 0.8
 	.4byte VIB_TABLE
 	.4byte VIB_TABLE
 	.float 0.0
 	.float 1.0
-TREMOLO_DEF:
+.endobj VIBRATO_DEF
+.obj TREMOLO_DEF, local
 	.float 0.0
 	.float 1.0
 	.4byte TRE_TABLE
 	.4byte TRE_TABLE
 	.float 0.0
 	.float 1.0
-ENVELOPE_DEF:
+.endobj TREMOLO_DEF
+.obj ENVELOPE_DEF, local
 	.float 0.0
 	.float 1.0
 	.float 0.0
 	.4byte REL_TABLE
 	.float 1.0
 	.float 0.0
-ADS_TABLE:
+.endobj ENVELOPE_DEF
+.obj ADS_TABLE, local
 	.4byte 0x00000000
 	.4byte 0x7FFF0000
 	.4byte 0x00007FFF
 	.4byte 0x00000000
 	.4byte 0x0000000E
 	.4byte 0x00000000
-ADSR_DEF:
+.endobj ADS_TABLE
+.obj ADSR_DEF, local
 	.float 0.0
 	.float 1.0
 	.float 0.0
 	.4byte 0
 	.float 1.0
 	.float 0.0
-OSC_DEF:
+.endobj ADSR_DEF
+.obj OSC_DEF, local
 	.float 0.0
 	.float 1.0
 	.float 0.0
 	.4byte REL_TABLE
 	.float 1.0
 	.float 0.0
+.endobj OSC_DEF
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803E8350:
+.obj lbl_803E8350, local
 	.float 1.0
+.endobj lbl_803E8350

@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global __ct__8ActGuardFP4Piki
-__ct__8ActGuardFP4Piki:
+.fn __ct__8ActGuardFP4Piki, global
 /* 800BB534 000B8494  7C 08 02 A6 */	mflr r0
 /* 800BB538 000B8498  38 A0 00 01 */	li r5, 1
 /* 800BB53C 000B849C  90 01 00 04 */	stw r0, 4(r1)
@@ -35,9 +34,9 @@ __ct__8ActGuardFP4Piki:
 /* 800BB5AC 000B850C  38 21 00 18 */	addi r1, r1, 0x18
 /* 800BB5B0 000B8510  7C 08 03 A6 */	mtlr r0
 /* 800BB5B4 000B8514  4E 80 00 20 */	blr 
+.endfn __ct__8ActGuardFP4Piki
 
-.global init__8ActGuardFP8Creature
-init__8ActGuardFP8Creature:
+.fn init__8ActGuardFP8Creature, global
 /* 800BB5B8 000B8518  7C 08 02 A6 */	mflr r0
 /* 800BB5BC 000B851C  90 01 00 04 */	stw r0, 4(r1)
 /* 800BB5C0 000B8520  94 21 FF D0 */	stwu r1, -0x30(r1)
@@ -89,9 +88,9 @@ init__8ActGuardFP8Creature:
 /* 800BB670 000B85D0  38 21 00 30 */	addi r1, r1, 0x30
 /* 800BB674 000B85D4  7C 08 03 A6 */	mtlr r0
 /* 800BB678 000B85D8  4E 80 00 20 */	blr 
+.endfn init__8ActGuardFP8Creature
 
-.global cleanup__8ActGuardFv
-cleanup__8ActGuardFv:
+.fn cleanup__8ActGuardFv, global
 /* 800BB67C 000B85DC  7C 08 02 A6 */	mflr r0
 /* 800BB680 000B85E0  90 01 00 04 */	stw r0, 4(r1)
 /* 800BB684 000B85E4  94 21 FF C0 */	stwu r1, -0x40(r1)
@@ -172,15 +171,15 @@ cleanup__8ActGuardFv:
 /* 800BB78C 000B86EC  38 21 00 40 */	addi r1, r1, 0x40
 /* 800BB790 000B86F0  7C 08 03 A6 */	mtlr r0
 /* 800BB794 000B86F4  4E 80 00 20 */	blr 
+.endfn cleanup__8ActGuardFv
 
-.global dump__8ActGuardFv
-dump__8ActGuardFv:
+.fn dump__8ActGuardFv, global
 /* 800BB798 000B86F8  80 03 00 14 */	lwz r0, 0x14(r3)
 /* 800BB79C 000B86FC  28 00 00 00 */	cmplwi r0, 0
 /* 800BB7A0 000B8700  4E 80 00 20 */	blr 
+.endfn dump__8ActGuardFv
 
-.global exec__8ActGuardFv
-exec__8ActGuardFv:
+.fn exec__8ActGuardFv, global
 /* 800BB7A4 000B8704  7C 08 02 A6 */	mflr r0
 /* 800BB7A8 000B8708  90 01 00 04 */	stw r0, 4(r1)
 /* 800BB7AC 000B870C  94 21 FD 48 */	stwu r1, -0x2b8(r1)
@@ -655,9 +654,9 @@ exec__8ActGuardFv:
 /* 800BBEB4 000B8E14  38 21 02 B8 */	addi r1, r1, 0x2b8
 /* 800BBEB8 000B8E18  7C 08 03 A6 */	mtlr r0
 /* 800BBEBC 000B8E1C  4E 80 00 20 */	blr 
+.endfn exec__8ActGuardFv
 
-.global findFriend__8ActGuardFv
-findFriend__8ActGuardFv:
+.fn findFriend__8ActGuardFv, global
 /* 800BBEC0 000B8E20  7C 08 02 A6 */	mflr r0
 /* 800BBEC4 000B8E24  90 01 00 04 */	stw r0, 4(r1)
 /* 800BBEC8 000B8E28  94 21 FF 78 */	stwu r1, -0x88(r1)
@@ -795,9 +794,9 @@ findFriend__8ActGuardFv:
 /* 800BC0A8 000B9008  38 21 00 88 */	addi r1, r1, 0x88
 /* 800BC0AC 000B900C  7C 08 03 A6 */	mtlr r0
 /* 800BC0B0 000B9010  4E 80 00 20 */	blr 
+.endfn findFriend__8ActGuardFv
 
-.global checkLoop__8ActGuardFP4Piki
-checkLoop__8ActGuardFP4Piki:
+.fn checkLoop__8ActGuardFP4Piki, global
 /* 800BC0B4 000B9014  7C 08 02 A6 */	mflr r0
 /* 800BC0B8 000B9018  90 01 00 04 */	stw r0, 4(r1)
 /* 800BC0BC 000B901C  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -870,9 +869,9 @@ checkLoop__8ActGuardFP4Piki:
 /* 800BC1A4 000B9104  38 21 00 20 */	addi r1, r1, 0x20
 /* 800BC1A8 000B9108  7C 08 03 A6 */	mtlr r0
 /* 800BC1AC 000B910C  4E 80 00 20 */	blr 
+.endfn checkLoop__8ActGuardFP4Piki
 
-.global findFriend__8ActGuardFi
-findFriend__8ActGuardFi:
+.fn findFriend__8ActGuardFi, global
 /* 800BC1B0 000B9110  7C 08 02 A6 */	mflr r0
 /* 800BC1B4 000B9114  90 01 00 04 */	stw r0, 4(r1)
 /* 800BC1B8 000B9118  94 21 FF 70 */	stwu r1, -0x90(r1)
@@ -1038,9 +1037,9 @@ findFriend__8ActGuardFi:
 /* 800BC3FC 000B935C  38 21 00 90 */	addi r1, r1, 0x90
 /* 800BC400 000B9360  7C 08 03 A6 */	mtlr r0
 /* 800BC404 000B9364  4E 80 00 20 */	blr 
+.endfn findFriend__8ActGuardFi
 
-.global setGoal__8ActGuardFv
-setGoal__8ActGuardFv:
+.fn setGoal__8ActGuardFv, global
 /* 800BC408 000B9368  7C 08 02 A6 */	mflr r0
 /* 800BC40C 000B936C  90 01 00 04 */	stw r0, 4(r1)
 /* 800BC410 000B9370  94 21 FF 98 */	stwu r1, -0x68(r1)
@@ -1175,9 +1174,9 @@ setGoal__8ActGuardFv:
 /* 800BC5F4 000B9554  38 21 00 68 */	addi r1, r1, 0x68
 /* 800BC5F8 000B9558  7C 08 03 A6 */	mtlr r0
 /* 800BC5FC 000B955C  4E 80 00 20 */	blr 
+.endfn setGoal__8ActGuardFv
 
-.global getLeft__8ActGuardFP4Piki
-getLeft__8ActGuardFP4Piki:
+.fn getLeft__8ActGuardFP4Piki, global
 /* 800BC600 000B9560  7C 08 02 A6 */	mflr r0
 /* 800BC604 000B9564  90 01 00 04 */	stw r0, 4(r1)
 /* 800BC608 000B9568  94 21 FF D0 */	stwu r1, -0x30(r1)
@@ -1215,9 +1214,9 @@ getLeft__8ActGuardFP4Piki:
 /* 800BC67C 000B95DC  38 21 00 30 */	addi r1, r1, 0x30
 /* 800BC680 000B95E0  7C 08 03 A6 */	mtlr r0
 /* 800BC684 000B95E4  4E 80 00 20 */	blr 
+.endfn getLeft__8ActGuardFP4Piki
 
-.global getRight__8ActGuardFP4Piki
-getRight__8ActGuardFP4Piki:
+.fn getRight__8ActGuardFP4Piki, global
 /* 800BC688 000B95E8  7C 08 02 A6 */	mflr r0
 /* 800BC68C 000B95EC  90 01 00 04 */	stw r0, 4(r1)
 /* 800BC690 000B95F0  94 21 FF D0 */	stwu r1, -0x30(r1)
@@ -1255,9 +1254,9 @@ getRight__8ActGuardFP4Piki:
 /* 800BC704 000B9664  38 21 00 30 */	addi r1, r1, 0x30
 /* 800BC708 000B9668  7C 08 03 A6 */	mtlr r0
 /* 800BC70C 000B966C  4E 80 00 20 */	blr 
+.endfn getRight__8ActGuardFP4Piki
 
-.global setLeft__8ActGuardFv
-setLeft__8ActGuardFv:
+.fn setLeft__8ActGuardFv, global
 /* 800BC710 000B9670  7C 08 02 A6 */	mflr r0
 /* 800BC714 000B9674  90 01 00 04 */	stw r0, 4(r1)
 /* 800BC718 000B9678  94 21 FF B0 */	stwu r1, -0x50(r1)
@@ -1386,9 +1385,9 @@ setLeft__8ActGuardFv:
 /* 800BC8C8 000B9828  38 21 00 50 */	addi r1, r1, 0x50
 /* 800BC8CC 000B982C  7C 08 03 A6 */	mtlr r0
 /* 800BC8D0 000B9830  4E 80 00 20 */	blr 
+.endfn setLeft__8ActGuardFv
 
-.global setRight__8ActGuardFv
-setRight__8ActGuardFv:
+.fn setRight__8ActGuardFv, global
 /* 800BC8D4 000B9834  7C 08 02 A6 */	mflr r0
 /* 800BC8D8 000B9838  90 01 00 04 */	stw r0, 4(r1)
 /* 800BC8DC 000B983C  94 21 FF B0 */	stwu r1, -0x50(r1)
@@ -1517,9 +1516,9 @@ setRight__8ActGuardFv:
 /* 800BCA8C 000B99EC  38 21 00 50 */	addi r1, r1, 0x50
 /* 800BCA90 000B99F0  7C 08 03 A6 */	mtlr r0
 /* 800BCA94 000B99F4  4E 80 00 20 */	blr 
+.endfn setRight__8ActGuardFv
 
-.global __dt__8ActGuardFv
-__dt__8ActGuardFv:
+.fn __dt__8ActGuardFv, weak
 /* 800BCA98 000B99F8  7C 08 02 A6 */	mflr r0
 /* 800BCA9C 000B99FC  90 01 00 04 */	stw r0, 4(r1)
 /* 800BCAA0 000B9A00  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -1546,30 +1545,35 @@ __dt__8ActGuardFv:
 /* 800BCAF0 000B9A50  38 21 00 18 */	addi r1, r1, 0x18
 /* 800BCAF4 000B9A54  7C 08 03 A6 */	mtlr r0
 /* 800BCAF8 000B9A58  4E 80 00 20 */	blr 
+.endfn __dt__8ActGuardFv
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802B6C88:
+.obj lbl_802B6C88, local
 	.asciz "aiGuard.cpp"
+.endobj lbl_802B6C88
 .balign 4
-lbl_802B6C94:
+.obj lbl_802B6C94, local
 	.asciz "ActGuard"
+.endobj lbl_802B6C94
 .balign 4
-lbl_802B6CA0:
+.obj lbl_802B6CA0, local
 	.asciz "Receiver<Piki>"
+.endobj lbl_802B6CA0
 .balign 4
-lbl_802B6CB0:
+.obj lbl_802B6CB0, local
 	.4byte "__RTTI__15Receiver<4Piki>"
 	.4byte 0
 	.4byte 0
-lbl_802B6CBC:
+.endobj lbl_802B6CB0
+.obj lbl_802B6CBC, local
 	.4byte "__RTTI__15Receiver<4Piki>"
 	.4byte 0
 	.4byte __RTTI__6Action
 	.4byte 0
 	.4byte 0
-.global __vt__8ActGuard
-__vt__8ActGuard:
+.endobj lbl_802B6CBC
+.obj __vt__8ActGuard, global
 	.4byte __RTTI__8ActGuard
 	.4byte 0
 	.4byte "procMsg__15Receiver<4Piki>FP4PikiP3Msg"
@@ -1595,7 +1599,8 @@ __vt__8ActGuard:
 	.4byte restart__6ActionFv
 	.4byte resumable__6ActionFv
 	.4byte getInfo__6ActionFPc
-lbl_802B6D34:
+.endobj __vt__8ActGuard
+.obj lbl_802B6D34, local
 	.4byte .L_800A7908
 	.4byte .L_800A7930
 	.4byte .L_800A7944
@@ -1607,74 +1612,105 @@ lbl_802B6D34:
 	.4byte .L_800A791C
 	.4byte .L_800A79D0
 	.4byte .L_800A79BC
+.endobj lbl_802B6D34
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-lbl_803E0500:
+.obj lbl_803E0500, local
 	.float 0.0
-lbl_803E0504:
+.endobj lbl_803E0500
+.obj lbl_803E0504, local
 	.float 0.0
-lbl_803E0508:
+.endobj lbl_803E0504
+.obj lbl_803E0508, local
 	.float 0.0
-lbl_803E050C:
+.endobj lbl_803E0508
+.obj lbl_803E050C, local
 	.float 13.0
-lbl_803E0510:
+.endobj lbl_803E050C
+.obj lbl_803E0510, local
 	.float 0.1
-lbl_803E0514:
+.endobj lbl_803E0510
+.obj lbl_803E0514, local
 	.float 13.0
-lbl_803E0518:
+.endobj lbl_803E0514
+.obj lbl_803E0518, local
 	.float 0.1
-lbl_803E051C:
+.endobj lbl_803E0518
+.obj lbl_803E051C, local
 	.float 0.0
-lbl_803E0520:
+.endobj lbl_803E051C
+.obj lbl_803E0520, local
 	.float 0.0
-lbl_803E0524:
+.endobj lbl_803E0520
+.obj lbl_803E0524, local
 	.float 0.0
-lbl_803E0528:
+.endobj lbl_803E0524
+.obj lbl_803E0528, local
 	.float 0.0
-"__RTTI__15Receiver<4Piki>":
+.endobj lbl_803E0528
+.obj "__RTTI__15Receiver<4Piki>", local
 	.4byte lbl_802B6CA0
 	.4byte 0
+.endobj "__RTTI__15Receiver<4Piki>"
 .balign 4
-lbl_803E0534:
+.obj lbl_803E0534, local
 	.asciz "Action"
+.endobj lbl_803E0534
 .balign 4
-__RTTI__6Action:
+.obj __RTTI__6Action, local
 	.4byte lbl_803E0534
 	.4byte lbl_802B6CB0
-__RTTI__8ActGuard:
+.endobj __RTTI__6Action
+.obj __RTTI__8ActGuard, local
 	.4byte lbl_802B6C94
 	.4byte lbl_802B6CBC
+.endobj __RTTI__8ActGuard
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803E9560:
+.obj lbl_803E9560, local
 	.float 0.0
-lbl_803E9564:
+.endobj lbl_803E9560
+.obj lbl_803E9564, local
 	.float 30.0
-lbl_803E9568:
+.endobj lbl_803E9564
+.obj lbl_803E9568, local
 	.float 6.0
+.endobj lbl_803E9568
 .balign 8
-lbl_803E9570:
+.obj lbl_803E9570, local
 	.double 0.5
-lbl_803E9578:
+.endobj lbl_803E9570
+.balign 8
+.obj lbl_803E9578, local
 	.double 3.0
-lbl_803E9580:
+.endobj lbl_803E9578
+.obj lbl_803E9580, local
 	.float 1.0
-lbl_803E9584:
+.endobj lbl_803E9580
+.obj lbl_803E9584, local
 	.float 1.5707964
-lbl_803E9588:
+.endobj lbl_803E9584
+.obj lbl_803E9588, local
 	.float 0.5
-lbl_803E958C:
+.endobj lbl_803E9588
+.obj lbl_803E958C, local
 	.float 70.0
-lbl_803E9590:
+.endobj lbl_803E958C
+.obj lbl_803E9590, local
 	.float 90.0
-lbl_803E9594:
+.endobj lbl_803E9590
+.obj lbl_803E9594, local
 	.float 32767.0
-lbl_803E9598:
+.endobj lbl_803E9594
+.obj lbl_803E9598, local
 	.float 2.5
-lbl_803E959C:
+.endobj lbl_803E9598
+.obj lbl_803E959C, local
 	.float 3.1415927
-lbl_803E95A0:
-	.4byte 0x43300000
-	.4byte 0x80000000
+.endobj lbl_803E959C
+.balign 8
+.obj lbl_803E95A0, local
+	.8byte 0x4330000080000000
+.endobj lbl_803E95A0

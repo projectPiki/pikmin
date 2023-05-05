@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global update__Q23zen17simplePtclManagerFf
-update__Q23zen17simplePtclManagerFf:
+.fn update__Q23zen17simplePtclManagerFf, global
 /* 801A226C 0019F1CC  7C 08 02 A6 */	mflr r0
 /* 801A2270 0019F1D0  90 01 00 04 */	stw r0, 4(r1)
 /* 801A2274 0019F1D4  94 21 FF 90 */	stwu r1, -0x70(r1)
@@ -130,9 +129,9 @@ update__Q23zen17simplePtclManagerFf:
 /* 801A2440 0019F3A0  38 21 00 70 */	addi r1, r1, 0x70
 /* 801A2444 0019F3A4  7C 08 03 A6 */	mtlr r0
 /* 801A2448 0019F3A8  4E 80 00 20 */	blr 
+.endfn update__Q23zen17simplePtclManagerFf
 
-.global draw__Q23zen17simplePtclManagerFR8Graphics
-draw__Q23zen17simplePtclManagerFR8Graphics:
+.fn draw__Q23zen17simplePtclManagerFR8Graphics, global
 /* 801A244C 0019F3AC  7C 08 02 A6 */	mflr r0
 /* 801A2450 0019F3B0  38 A0 00 00 */	li r5, 0
 /* 801A2454 0019F3B4  90 01 00 04 */	stw r0, 4(r1)
@@ -301,9 +300,9 @@ draw__Q23zen17simplePtclManagerFR8Graphics:
 /* 801A26CC 0019F62C  38 21 00 88 */	addi r1, r1, 0x88
 /* 801A26D0 0019F630  7C 08 03 A6 */	mtlr r0
 /* 801A26D4 0019F634  4E 80 00 20 */	blr 
+.endfn draw__Q23zen17simplePtclManagerFR8Graphics
 
-.global forceFinish__Q23zen17simplePtclManagerFv
-forceFinish__Q23zen17simplePtclManagerFv:
+.fn forceFinish__Q23zen17simplePtclManagerFv, global
 /* 801A26D8 0019F638  7C 08 02 A6 */	mflr r0
 /* 801A26DC 0019F63C  90 01 00 04 */	stw r0, 4(r1)
 /* 801A26E0 0019F640  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -337,22 +336,27 @@ forceFinish__Q23zen17simplePtclManagerFv:
 /* 801A2748 0019F6A8  38 21 00 28 */	addi r1, r1, 0x28
 /* 801A274C 0019F6AC  7C 08 03 A6 */	mtlr r0
 /* 801A2750 0019F6B0  4E 80 00 20 */	blr 
+.endfn forceFinish__Q23zen17simplePtclManagerFv
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803EB608:
-	.4byte 0x3F800000
-lbl_803EB60C:
-	.4byte 0x00000000
-lbl_803EB610:
-	.4byte 0x3F000000
+.obj lbl_803EB608, local
+	.float 1.0
+.endobj lbl_803EB608
+.obj lbl_803EB60C, local
+	.float 0.0
+.endobj lbl_803EB60C
+.obj lbl_803EB610, local
+	.float 0.5
+.endobj lbl_803EB610
 .balign 8
-lbl_803EB618:
-	.4byte 0x43300000
-	.4byte 0x80000000
-lbl_803EB620:
-	.4byte 0x41C80000
+.obj lbl_803EB618, local
+	.8byte 0x4330000080000000
+.endobj lbl_803EB618
+.obj lbl_803EB620, local
+	.float 25.0
+.endobj lbl_803EB620
 .balign 8
-lbl_803EB628:
-	.4byte 0x43300000
-	.4byte 0x00000000
+.obj lbl_803EB628, local
+	.8byte 0x4330000000000000
+.endobj lbl_803EB628

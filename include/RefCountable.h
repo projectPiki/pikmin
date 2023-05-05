@@ -12,7 +12,7 @@ struct RefCountable {
 	virtual void addCntCallback();
 	virtual void subCntCallback();
 
-	s32 m_count; // _04
+	int m_count; // _04
 };
 
 #endif

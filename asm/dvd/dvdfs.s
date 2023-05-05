@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global __DVDFSInit
-__DVDFSInit:
+.fn __DVDFSInit, global
 /* 801FEF80 001FBEE0  3C 60 80 00 */	lis r3, 0x80000038@ha
 /* 801FEF84 001FBEE4  90 6D 32 98 */	stw r3, BootInfo@sda21(r13)
 /* 801FEF88 001FBEE8  80 03 00 38 */	lwz r0, 0x80000038@l(r3)
@@ -16,9 +15,9 @@ __DVDFSInit:
 /* 801FEFAC 001FBF0C  7C 03 02 14 */	add r0, r3, r0
 /* 801FEFB0 001FBF10  90 0D 32 A0 */	stw r0, FstStringStart@sda21(r13)
 /* 801FEFB4 001FBF14  4E 80 00 20 */	blr 
+.endfn __DVDFSInit
 
-.global DVDConvertPathToEntrynum
-DVDConvertPathToEntrynum:
+.fn DVDConvertPathToEntrynum, global
 /* 801FEFB8 001FBF18  7C 08 02 A6 */	mflr r0
 /* 801FEFBC 001FBF1C  90 01 00 04 */	stw r0, 4(r1)
 /* 801FEFC0 001FBF20  94 21 FF B8 */	stwu r1, -0x48(r1)
@@ -242,9 +241,9 @@ DVDConvertPathToEntrynum:
 /* 801FF28C 001FC1EC  38 21 00 48 */	addi r1, r1, 0x48
 /* 801FF290 001FC1F0  7C 08 03 A6 */	mtlr r0
 /* 801FF294 001FC1F4  4E 80 00 20 */	blr 
+.endfn DVDConvertPathToEntrynum
 
-.global DVDFastOpen
-DVDFastOpen:
+.fn DVDFastOpen, global
 /* 801FF298 001FC1F8  2C 03 00 00 */	cmpwi r3, 0
 /* 801FF29C 001FC1FC  41 80 00 38 */	blt .L_801FF2D4
 /* 801FF2A0 001FC200  80 0D 32 A4 */	lwz r0, MaxEntryNum@sda21(r13)
@@ -278,9 +277,9 @@ DVDFastOpen:
 /* 801FF300 001FC260  90 04 00 38 */	stw r0, 0x38(r4)
 /* 801FF304 001FC264  90 04 00 0C */	stw r0, 0xc(r4)
 /* 801FF308 001FC268  4E 80 00 20 */	blr 
+.endfn DVDFastOpen
 
-.global DVDOpen
-DVDOpen:
+.fn DVDOpen, global
 /* 801FF30C 001FC26C  7C 08 02 A6 */	mflr r0
 /* 801FF310 001FC270  90 01 00 04 */	stw r0, 4(r1)
 /* 801FF314 001FC274  94 21 FF 68 */	stwu r1, -0x98(r1)
@@ -336,9 +335,9 @@ DVDOpen:
 /* 801FF3C8 001FC328  7C 08 03 A6 */	mtlr r0
 /* 801FF3CC 001FC32C  38 21 00 98 */	addi r1, r1, 0x98
 /* 801FF3D0 001FC330  4E 80 00 20 */	blr 
+.endfn DVDOpen
 
-.global DVDClose
-DVDClose:
+.fn DVDClose, global
 /* 801FF3D4 001FC334  7C 08 02 A6 */	mflr r0
 /* 801FF3D8 001FC338  90 01 00 04 */	stw r0, 4(r1)
 /* 801FF3DC 001FC33C  94 21 FF F8 */	stwu r1, -8(r1)
@@ -348,9 +347,9 @@ DVDClose:
 /* 801FF3EC 001FC34C  38 21 00 08 */	addi r1, r1, 8
 /* 801FF3F0 001FC350  7C 08 03 A6 */	mtlr r0
 /* 801FF3F4 001FC354  4E 80 00 20 */	blr 
+.endfn DVDClose
 
-.global entryToPath
-entryToPath:
+.fn entryToPath, local
 /* 801FF3F8 001FC358  7C 08 02 A6 */	mflr r0
 /* 801FF3FC 001FC35C  28 03 00 00 */	cmplwi r3, 0
 /* 801FF400 001FC360  90 01 00 04 */	stw r0, 4(r1)
@@ -451,9 +450,9 @@ entryToPath:
 /* 801FF54C 001FC4AC  83 81 00 20 */	lwz r28, 0x20(r1)
 /* 801FF550 001FC4B0  38 21 00 30 */	addi r1, r1, 0x30
 /* 801FF554 001FC4B4  4E 80 00 20 */	blr 
+.endfn entryToPath
 
-.global DVDGetCurrentDir
-DVDGetCurrentDir:
+.fn DVDGetCurrentDir, global
 /* 801FF558 001FC4B8  7C 08 02 A6 */	mflr r0
 /* 801FF55C 001FC4BC  90 01 00 04 */	stw r0, 4(r1)
 /* 801FF560 001FC4C0  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -509,9 +508,9 @@ DVDGetCurrentDir:
 /* 801FF610 001FC570  83 A1 00 14 */	lwz r29, 0x14(r1)
 /* 801FF614 001FC574  38 21 00 20 */	addi r1, r1, 0x20
 /* 801FF618 001FC578  4E 80 00 20 */	blr 
+.endfn DVDGetCurrentDir
 
-.global DVDReadAsyncPrio
-DVDReadAsyncPrio:
+.fn DVDReadAsyncPrio, global
 /* 801FF61C 001FC57C  7C 08 02 A6 */	mflr r0
 /* 801FF620 001FC580  90 01 00 04 */	stw r0, 4(r1)
 /* 801FF624 001FC584  94 21 FF C8 */	stwu r1, -0x38(r1)
@@ -564,9 +563,9 @@ DVDReadAsyncPrio:
 /* 801FF6D0 001FC630  38 21 00 38 */	addi r1, r1, 0x38
 /* 801FF6D4 001FC634  7C 08 03 A6 */	mtlr r0
 /* 801FF6D8 001FC638  4E 80 00 20 */	blr 
+.endfn DVDReadAsyncPrio
 
-.global cbForReadAsync
-cbForReadAsync:
+.fn cbForReadAsync, local
 /* 801FF6DC 001FC63C  7C 08 02 A6 */	mflr r0
 /* 801FF6E0 001FC640  90 01 00 04 */	stw r0, 4(r1)
 /* 801FF6E4 001FC644  94 21 FF F8 */	stwu r1, -8(r1)
@@ -580,9 +579,9 @@ cbForReadAsync:
 /* 801FF700 001FC660  38 21 00 08 */	addi r1, r1, 8
 /* 801FF704 001FC664  7C 08 03 A6 */	mtlr r0
 /* 801FF708 001FC668  4E 80 00 20 */	blr 
+.endfn cbForReadAsync
 
-.global DVDReadPrio
-DVDReadPrio:
+.fn DVDReadPrio, global
 /* 801FF70C 001FC66C  7C 08 02 A6 */	mflr r0
 /* 801FF710 001FC670  90 01 00 04 */	stw r0, 4(r1)
 /* 801FF714 001FC674  94 21 FF C8 */	stwu r1, -0x38(r1)
@@ -664,9 +663,9 @@ DVDReadPrio:
 /* 801FF818 001FC778  38 21 00 38 */	addi r1, r1, 0x38
 /* 801FF81C 001FC77C  7C 08 03 A6 */	mtlr r0
 /* 801FF820 001FC780  4E 80 00 20 */	blr 
+.endfn DVDReadPrio
 
-.global cbForReadSync
-cbForReadSync:
+.fn cbForReadSync, local
 /* 801FF824 001FC784  7C 08 02 A6 */	mflr r0
 /* 801FF828 001FC788  38 6D 32 B0 */	addi r3, r13, __DVDThreadQueue@sda21
 /* 801FF82C 001FC78C  90 01 00 04 */	stw r0, 4(r1)
@@ -676,9 +675,9 @@ cbForReadSync:
 /* 801FF83C 001FC79C  38 21 00 08 */	addi r1, r1, 8
 /* 801FF840 001FC7A0  7C 08 03 A6 */	mtlr r0
 /* 801FF844 001FC7A4  4E 80 00 20 */	blr 
+.endfn cbForReadSync
 
-.global DVDPrepareStreamAsync
-DVDPrepareStreamAsync:
+.fn DVDPrepareStreamAsync, global
 /* 801FF848 001FC7A8  7C 08 02 A6 */	mflr r0
 /* 801FF84C 001FC7AC  90 01 00 04 */	stw r0, 4(r1)
 /* 801FF850 001FC7B0  94 21 FF C8 */	stwu r1, -0x38(r1)
@@ -743,9 +742,9 @@ DVDPrepareStreamAsync:
 /* 801FF928 001FC888  38 21 00 38 */	addi r1, r1, 0x38
 /* 801FF92C 001FC88C  7C 08 03 A6 */	mtlr r0
 /* 801FF930 001FC890  4E 80 00 20 */	blr 
+.endfn DVDPrepareStreamAsync
 
-.global cbForPrepareStreamAsync
-cbForPrepareStreamAsync:
+.fn cbForPrepareStreamAsync, local
 /* 801FF934 001FC894  7C 08 02 A6 */	mflr r0
 /* 801FF938 001FC898  90 01 00 04 */	stw r0, 4(r1)
 /* 801FF93C 001FC89C  94 21 FF F8 */	stwu r1, -8(r1)
@@ -759,62 +758,80 @@ cbForPrepareStreamAsync:
 /* 801FF958 001FC8B8  38 21 00 08 */	addi r1, r1, 8
 /* 801FF95C 001FC8BC  7C 08 03 A6 */	mtlr r0
 /* 801FF960 001FC8C0  4E 80 00 20 */	blr 
+.endfn cbForPrepareStreamAsync
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802E8460:
+.obj lbl_802E8460, local
 	.asciz "DVDConvertEntrynumToPath(possibly DVDOpen or DVDChangeDir or DVDOpenDir): specified directory or file (%s) doesn't match standard 8.3 format. This is a temporary restriction and will be removed soon\n"
+.endobj lbl_802E8460
 .balign 4
-lbl_802E8528:
+.obj lbl_802E8528, local
 	.asciz "Warning: DVDOpen(): file '%s' was not found under %s.\n"
+.endobj lbl_802E8528
 .balign 4
-lbl_802E8560:
+.obj lbl_802E8560, local
 	.asciz "DVDReadAsync(): specified area is out of the file  "
+.endobj lbl_802E8560
 .balign 4
-lbl_802E8594:
+.obj lbl_802E8594, local
 	.asciz "DVDRead(): specified area is out of the file  "
+.endobj lbl_802E8594
 .balign 4
-lbl_802E85C4:
+.obj lbl_802E85C4, local
 	.asciz "DVDSeek(): offset is out of the file  "
+.endobj lbl_802E85C4
 .balign 4
-lbl_802E85EC:
+.obj lbl_802E85EC, local
 	.asciz "DVDPrepareStreamAsync(): Specified start address (filestart(0x%x) + offset(0x%x)) is not 32KB aligned"
+.endobj lbl_802E85EC
 .balign 4
-lbl_802E8654:
+.obj lbl_802E8654, local
 	.asciz "DVDPrepareStreamAsync(): Specified length (0x%x) is not a multiple of 32768(32*1024)"
+.endobj lbl_802E8654
 .balign 4
-lbl_802E86AC:
+.obj lbl_802E86AC, local
 	.asciz "DVDPrepareStreamAsync(): The area specified (offset(0x%x), length(0x%x)) is out of the file"
+.endobj lbl_802E86AC
 .balign 4
-lbl_802E8708:
+.obj lbl_802E8708, local
 	.asciz "DVDPrepareStream(): Specified start address (filestart(0x%x) + offset(0x%x)) is not 32KB aligned"
+.endobj lbl_802E8708
 .balign 4
-lbl_802E876B:
+.obj lbl_802E876C, local
 	.asciz "DVDPrepareStream(): Specified length (0x%x) is not a multiple of 32768(32*1024)"
+.endobj lbl_802E876C
 .balign 4
-lbl_802E87BC:
+.obj lbl_802E87BC, local
 	.asciz "DVDPrepareStream(): The area specified (offset(0x%x), length(0x%x)) is out of the file"
+.endobj lbl_802E87BC
 	
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-lbl_803E7730:
+.obj lbl_803E7730, local
 	.asciz "dvdfs.c"
+.endobj lbl_803E7730
 
 .section .sbss, "wa"
 .balign 8
-BootInfo:
+.obj BootInfo, local
 	.skip 0x4
-FstStart:
+.endobj BootInfo
+.obj FstStart, local
 	.skip 0x4
-FstStringStart:
+.endobj FstStart
+.obj FstStringStart, local
 	.skip 0x4
-MaxEntryNum:
+.endobj FstStringStart
+.obj MaxEntryNum, local
 	.skip 0x4
-currentDirectory:
+.endobj MaxEntryNum
+.obj currentDirectory, local
 	.skip 0x4
-.global __DVDLongFileNameFlag
-__DVDLongFileNameFlag:
+.endobj currentDirectory
+.obj __DVDLongFileNameFlag, global
 	.skip 0x4
-.global __DVDThreadQueue
-__DVDThreadQueue:
+.endobj __DVDLongFileNameFlag
+.obj __DVDThreadQueue, global
 	.skip 0x8
+.endobj __DVDThreadQueue

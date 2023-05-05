@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global satisfy__12CndIsVisibleFP8Creature
-satisfy__12CndIsVisibleFP8Creature:
+.fn satisfy__12CndIsVisibleFP8Creature, global
 /* 800DAC28 000D7B88  7C 08 02 A6 */	mflr r0
 /* 800DAC2C 000D7B8C  7C 83 23 78 */	mr r3, r4
 /* 800DAC30 000D7B90  90 01 00 04 */	stw r0, 4(r1)
@@ -14,9 +13,9 @@ satisfy__12CndIsVisibleFP8Creature:
 /* 800DAC4C 000D7BAC  38 21 00 08 */	addi r1, r1, 8
 /* 800DAC50 000D7BB0  7C 08 03 A6 */	mtlr r0
 /* 800DAC54 000D7BB4  4E 80 00 20 */	blr 
+.endfn satisfy__12CndIsVisibleFP8Creature
 
-.global satisfy__10CndIsAtariFP8Creature
-satisfy__10CndIsAtariFP8Creature:
+.fn satisfy__10CndIsAtariFP8Creature, global
 /* 800DAC58 000D7BB8  7C 08 02 A6 */	mflr r0
 /* 800DAC5C 000D7BBC  7C 83 23 78 */	mr r3, r4
 /* 800DAC60 000D7BC0  90 01 00 04 */	stw r0, 4(r1)
@@ -29,9 +28,9 @@ satisfy__10CndIsAtariFP8Creature:
 /* 800DAC7C 000D7BDC  38 21 00 08 */	addi r1, r1, 8
 /* 800DAC80 000D7BE0  7C 08 03 A6 */	mtlr r0
 /* 800DAC84 000D7BE4  4E 80 00 20 */	blr 
+.endfn satisfy__10CndIsAtariFP8Creature
 
-.global satisfy__13CndStickMouthFP8Creature
-satisfy__13CndStickMouthFP8Creature:
+.fn satisfy__13CndStickMouthFP8Creature, global
 /* 800DAC88 000D7BE8  80 04 00 C8 */	lwz r0, 0xc8(r4)
 /* 800DAC8C 000D7BEC  54 00 04 21 */	rlwinm. r0, r0, 0, 0x10, 0x10
 /* 800DAC90 000D7BF0  41 82 00 1C */	beq .L_800DACAC
@@ -44,62 +43,74 @@ satisfy__13CndStickMouthFP8Creature:
 .L_800DACAC:
 /* 800DACAC 000D7C0C  38 60 00 00 */	li r3, 0
 /* 800DACB0 000D7C10  4E 80 00 20 */	blr 
+.endfn satisfy__13CndStickMouthFP8Creature
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802BA5A0:
+.obj lbl_802BA5A0, local
 	.asciz "CndStickMouth"
+.endobj lbl_802BA5A0
 .balign 4
-lbl_802BA5B0:
+.obj lbl_802BA5B0, local
 	.asciz "Condition"
+.endobj lbl_802BA5B0
 .balign 4
-lbl_802BA5BC:
+.obj lbl_802BA5BC, local
 	.4byte __RTTI__9Condition
 	.4byte 0
 	.4byte 0
-.global __vt__13CndStickMouth
-__vt__13CndStickMouth:
+.endobj lbl_802BA5BC
+.obj __vt__13CndStickMouth, global
 	.4byte __RTTI__13CndStickMouth
 	.4byte 0
 	.4byte satisfy__13CndStickMouthFP8Creature
+.endobj __vt__13CndStickMouth
 .balign 4
-lbl_802BA5D4:
+.obj lbl_802BA5D4, local
 	.asciz "CndIsAtari"
+.endobj lbl_802BA5D4
 .balign 4
-lbl_802BA5E0:
+.obj lbl_802BA5E0, local
 	.4byte __RTTI__9Condition
 	.4byte 0
 	.4byte 0
-.global __vt__10CndIsAtari
-__vt__10CndIsAtari:
+.endobj lbl_802BA5E0
+.obj __vt__10CndIsAtari, global
 	.4byte __RTTI__10CndIsAtari
 	.4byte 0
 	.4byte satisfy__10CndIsAtariFP8Creature
+.endobj __vt__10CndIsAtari
 .balign 4
-lbl_802BA5F8:
+.obj lbl_802BA5F8, local
 	.asciz "CndIsVisible"
+.endobj lbl_802BA5F8
 .balign 4
-lbl_802BA608:
+.obj lbl_802BA608, local
 	.4byte __RTTI__9Condition
 	.4byte 0
 	.4byte 0
-.global __vt__12CndIsVisible
-__vt__12CndIsVisible:
+.endobj lbl_802BA608
+.obj __vt__12CndIsVisible, global
 	.4byte __RTTI__12CndIsVisible
 	.4byte 0
 	.4byte satisfy__12CndIsVisibleFP8Creature
+.endobj __vt__12CndIsVisible
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-__RTTI__9Condition:
+.obj __RTTI__9Condition, local
 	.4byte lbl_802BA5B0
 	.4byte 0
-__RTTI__13CndStickMouth:
+.endobj __RTTI__9Condition
+.obj __RTTI__13CndStickMouth, local
 	.4byte lbl_802BA5A0
 	.4byte lbl_802BA5BC
-__RTTI__10CndIsAtari:
+.endobj __RTTI__13CndStickMouth
+.obj __RTTI__10CndIsAtari, local
 	.4byte lbl_802BA5D4
 	.4byte lbl_802BA5E0
-__RTTI__12CndIsVisible:
+.endobj __RTTI__10CndIsAtari
+.obj __RTTI__12CndIsVisible, local
 	.4byte lbl_802BA5F8
 	.4byte lbl_802BA608
+.endobj __RTTI__12CndIsVisible

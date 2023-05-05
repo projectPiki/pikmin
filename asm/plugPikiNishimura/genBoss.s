@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global makeObjectBoss__Fv
-makeObjectBoss__Fv:
+.fn makeObjectBoss__Fv, local
 /* 8014D2D0 0014A230  7C 08 02 A6 */	mflr r0
 /* 8014D2D4 0014A234  38 60 00 2C */	li r3, 0x2c
 /* 8014D2D8 0014A238  90 01 00 04 */	stw r0, 4(r1)
@@ -38,9 +37,9 @@ makeObjectBoss__Fv:
 /* 8014D350 0014A2B0  38 21 00 10 */	addi r1, r1, 0x10
 /* 8014D354 0014A2B4  7C 08 03 A6 */	mtlr r0
 /* 8014D358 0014A2B8  4E 80 00 20 */	blr 
+.endfn makeObjectBoss__Fv
 
-.global initialise__13GenObjectBossFv
-initialise__13GenObjectBossFv:
+.fn initialise__13GenObjectBossFv, global
 /* 8014D35C 0014A2BC  80 ED 30 74 */	lwz r7, factory__16GenObjectFactory@sda21(r13)
 /* 8014D360 0014A2C0  80 A7 00 00 */	lwz r5, 0(r7)
 /* 8014D364 0014A2C4  80 07 00 04 */	lwz r0, 4(r7)
@@ -75,9 +74,9 @@ initialise__13GenObjectBossFv:
 /* 8014D3D8 0014A338  38 03 00 01 */	addi r0, r3, 1
 /* 8014D3DC 0014A33C  90 07 00 00 */	stw r0, 0(r7)
 /* 8014D3E0 0014A340  4E 80 00 20 */	blr 
+.endfn initialise__13GenObjectBossFv
 
-.global doRead__13GenObjectBossFR18RandomAccessStream
-doRead__13GenObjectBossFR18RandomAccessStream:
+.fn doRead__13GenObjectBossFR18RandomAccessStream, global
 /* 8014D3E4 0014A344  7C 08 02 A6 */	mflr r0
 /* 8014D3E8 0014A348  90 01 00 04 */	stw r0, 4(r1)
 /* 8014D3EC 0014A34C  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -140,9 +139,9 @@ doRead__13GenObjectBossFR18RandomAccessStream:
 /* 8014D4C4 0014A424  38 21 00 28 */	addi r1, r1, 0x28
 /* 8014D4C8 0014A428  7C 08 03 A6 */	mtlr r0
 /* 8014D4CC 0014A42C  4E 80 00 20 */	blr 
+.endfn doRead__13GenObjectBossFR18RandomAccessStream
 
-.global doWrite__13GenObjectBossFR18RandomAccessStream
-doWrite__13GenObjectBossFR18RandomAccessStream:
+.fn doWrite__13GenObjectBossFR18RandomAccessStream, global
 /* 8014D4D0 0014A430  7C 08 02 A6 */	mflr r0
 /* 8014D4D4 0014A434  90 01 00 04 */	stw r0, 4(r1)
 /* 8014D4D8 0014A438  94 21 FF F8 */	stwu r1, -8(r1)
@@ -151,9 +150,9 @@ doWrite__13GenObjectBossFR18RandomAccessStream:
 /* 8014D4E4 0014A444  38 21 00 08 */	addi r1, r1, 8
 /* 8014D4E8 0014A448  7C 08 03 A6 */	mtlr r0
 /* 8014D4EC 0014A44C  4E 80 00 20 */	blr 
+.endfn doWrite__13GenObjectBossFR18RandomAccessStream
 
-.global ramLoadParameters__13GenObjectBossFR18RandomAccessStream
-ramLoadParameters__13GenObjectBossFR18RandomAccessStream:
+.fn ramLoadParameters__13GenObjectBossFR18RandomAccessStream, global
 /* 8014D4F0 0014A450  7C 08 02 A6 */	mflr r0
 /* 8014D4F4 0014A454  90 01 00 04 */	stw r0, 4(r1)
 /* 8014D4F8 0014A458  94 21 FF F8 */	stwu r1, -8(r1)
@@ -162,9 +161,9 @@ ramLoadParameters__13GenObjectBossFR18RandomAccessStream:
 /* 8014D504 0014A464  38 21 00 08 */	addi r1, r1, 8
 /* 8014D508 0014A468  7C 08 03 A6 */	mtlr r0
 /* 8014D50C 0014A46C  4E 80 00 20 */	blr 
+.endfn ramLoadParameters__13GenObjectBossFR18RandomAccessStream
 
-.global ramSaveParameters__13GenObjectBossFR18RandomAccessStream
-ramSaveParameters__13GenObjectBossFR18RandomAccessStream:
+.fn ramSaveParameters__13GenObjectBossFR18RandomAccessStream, global
 /* 8014D510 0014A470  7C 08 02 A6 */	mflr r0
 /* 8014D514 0014A474  90 01 00 04 */	stw r0, 4(r1)
 /* 8014D518 0014A478  94 21 FF F8 */	stwu r1, -8(r1)
@@ -173,9 +172,9 @@ ramSaveParameters__13GenObjectBossFR18RandomAccessStream:
 /* 8014D524 0014A484  38 21 00 08 */	addi r1, r1, 8
 /* 8014D528 0014A488  7C 08 03 A6 */	mtlr r0
 /* 8014D52C 0014A48C  4E 80 00 20 */	blr 
+.endfn ramSaveParameters__13GenObjectBossFR18RandomAccessStream
 
-.global readParameters__13GenObjectBossFR18RandomAccessStream
-readParameters__13GenObjectBossFR18RandomAccessStream:
+.fn readParameters__13GenObjectBossFR18RandomAccessStream, global
 /* 8014D530 0014A490  7C 08 02 A6 */	mflr r0
 /* 8014D534 0014A494  90 01 00 04 */	stw r0, 4(r1)
 /* 8014D538 0014A498  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -208,9 +207,9 @@ readParameters__13GenObjectBossFR18RandomAccessStream:
 /* 8014D5A4 0014A504  38 21 00 20 */	addi r1, r1, 0x20
 /* 8014D5A8 0014A508  7C 08 03 A6 */	mtlr r0
 /* 8014D5AC 0014A50C  4E 80 00 20 */	blr 
+.endfn readParameters__13GenObjectBossFR18RandomAccessStream
 
-.global writeParameters__13GenObjectBossFR18RandomAccessStream
-writeParameters__13GenObjectBossFR18RandomAccessStream:
+.fn writeParameters__13GenObjectBossFR18RandomAccessStream, global
 /* 8014D5B0 0014A510  7C 08 02 A6 */	mflr r0
 /* 8014D5B4 0014A514  90 01 00 04 */	stw r0, 4(r1)
 /* 8014D5B8 0014A518  38 00 00 00 */	li r0, 0
@@ -247,9 +246,9 @@ writeParameters__13GenObjectBossFR18RandomAccessStream:
 /* 8014D634 0014A594  38 21 00 18 */	addi r1, r1, 0x18
 /* 8014D638 0014A598  7C 08 03 A6 */	mtlr r0
 /* 8014D63C 0014A59C  4E 80 00 20 */	blr 
+.endfn writeParameters__13GenObjectBossFR18RandomAccessStream
 
-.global updateUseList__13GenObjectBossFP9Generatori
-updateUseList__13GenObjectBossFP9Generatori:
+.fn updateUseList__13GenObjectBossFP9Generatori, global
 /* 8014D640 0014A5A0  7C 08 02 A6 */	mflr r0
 /* 8014D644 0014A5A4  90 01 00 04 */	stw r0, 4(r1)
 /* 8014D648 0014A5A8  94 21 FF F8 */	stwu r1, -8(r1)
@@ -344,9 +343,9 @@ updateUseList__13GenObjectBossFP9Generatori:
 /* 8014D784 0014A6E4  38 21 00 08 */	addi r1, r1, 8
 /* 8014D788 0014A6E8  7C 08 03 A6 */	mtlr r0
 /* 8014D78C 0014A6EC  4E 80 00 20 */	blr 
+.endfn updateUseList__13GenObjectBossFP9Generatori
 
-.global birth__13GenObjectBossFR9BirthInfo
-birth__13GenObjectBossFR9BirthInfo:
+.fn birth__13GenObjectBossFR9BirthInfo, global
 /* 8014D790 0014A6F0  7C 08 02 A6 */	mflr r0
 /* 8014D794 0014A6F4  7C 66 1B 78 */	mr r6, r3
 /* 8014D798 0014A6F8  90 01 00 04 */	stw r0, 4(r1)
@@ -436,45 +435,56 @@ birth__13GenObjectBossFR9BirthInfo:
 /* 8014D8C0 0014A820  38 21 00 08 */	addi r1, r1, 8
 /* 8014D8C4 0014A824  7C 08 03 A6 */	mtlr r0
 /* 8014D8C8 0014A828  4E 80 00 20 */	blr 
+.endfn birth__13GenObjectBossFR9BirthInfo
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802CE710:
+.obj lbl_802CE710, local
 	.asciz "genBoss.cpp"
+.endobj lbl_802CE710
 .balign 4
-lbl_802CE71C:
+.obj lbl_802CE71C, local
 	.asciz "object type"
+.endobj lbl_802CE71C
 .balign 4
-lbl_802CE728:
+.obj lbl_802CE728, local # Shift-JIS
 	.4byte 0x837B8358
 	.4byte 0x82F090B6
 	.4byte 0x82DE0000
-lbl_802CE734:
+.endobj lbl_802CE728
+.balign 4
+.obj lbl_802CE734, local # Shift-JIS
 	.4byte 0x837B8358
 	.4byte 0x82F094AD
 	.4byte 0x90B60000
+.endobj lbl_802CE734
 .balign 4
-lbl_802CE740:
+.obj lbl_802CE740, local
 	.asciz "GenObjectBoss"
+.endobj lbl_802CE740
 .balign 4
-lbl_802CE750:
+.obj lbl_802CE750, local
 	.asciz "Parameters"
+.endobj lbl_802CE750
 .balign 4
-lbl_802CE75C:
+.obj lbl_802CE75C, local
 	.4byte __RTTI__10Parameters
 	.4byte 0x00000000
 	.4byte 0x00000000
+.endobj lbl_802CE75C
 .balign 4
-lbl_802CE768:
+.obj lbl_802CE768, local
 	.asciz "GenObject"
+.endobj lbl_802CE768
 .balign 4
-lbl_802CE774:
+.obj lbl_802CE774, local
 	.4byte __RTTI__10Parameters
 	.4byte 0x00000000
 	.4byte __RTTI__7GenBase
 	.4byte 0x00000000
 	.4byte 0x00000000
-lbl_802CE788:
+.endobj lbl_802CE774
+.obj lbl_802CE788, local
 	.4byte __RTTI__10Parameters
 	.4byte 0x00000000
 	.4byte __RTTI__7GenBase
@@ -482,8 +492,8 @@ lbl_802CE788:
 	.4byte __RTTI__9GenObject
 	.4byte 0x00000000
 	.4byte 0x00000000
-.global __vt__13GenObjectBoss
-__vt__13GenObjectBoss:
+.endobj lbl_802CE788
+.obj __vt__13GenObjectBoss, global
 	.4byte __RTTI__13GenObjectBoss
 	.4byte 0
 	.4byte doWrite__13GenObjectBossFR18RandomAccessStream
@@ -498,22 +508,28 @@ __vt__13GenObjectBoss:
 	.4byte update__9GenObjectFP9Generator
 	.4byte render__9GenObjectFR8GraphicsP9Generator
 	.4byte birth__13GenObjectBossFR9BirthInfo
+.endobj __vt__13GenObjectBoss
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-__RTTI__10Parameters:
+.obj __RTTI__10Parameters, local
 	.4byte lbl_802CE750
 	.4byte 0
+.endobj __RTTI__10Parameters
 .balign 4
-lbl_803E4780:
+.obj lbl_803E4780, local
 	.asciz "GenBase"
+.endobj lbl_803E4780
 .balign 4
-__RTTI__7GenBase:
+.obj __RTTI__7GenBase, local
 	.4byte lbl_803E4780
 	.4byte lbl_802CE75C
-__RTTI__9GenObject:
+.endobj __RTTI__7GenBase
+.obj __RTTI__9GenObject, local
 	.4byte lbl_802CE768
 	.4byte lbl_802CE774
-__RTTI__13GenObjectBoss:
+.endobj __RTTI__9GenObject
+.obj __RTTI__13GenObjectBoss, local
 	.4byte lbl_802CE740
 	.4byte lbl_802CE788
+.endobj __RTTI__13GenObjectBoss

@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global OSInitMessageQueue
-OSInitMessageQueue:
+.fn OSInitMessageQueue, global
 /* 801F97B4 001F6714  7C 08 02 A6 */	mflr r0
 /* 801F97B8 001F6718  90 01 00 04 */	stw r0, 4(r1)
 /* 801F97BC 001F671C  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -26,9 +25,9 @@ OSInitMessageQueue:
 /* 801F9808 001F6768  38 21 00 28 */	addi r1, r1, 0x28
 /* 801F980C 001F676C  7C 08 03 A6 */	mtlr r0
 /* 801F9810 001F6770  4E 80 00 20 */	blr 
+.endfn OSInitMessageQueue
 
-.global OSSendMessage
-OSSendMessage:
+.fn OSSendMessage, global
 /* 801F9814 001F6774  7C 08 02 A6 */	mflr r0
 /* 801F9818 001F6778  90 01 00 04 */	stw r0, 4(r1)
 /* 801F981C 001F677C  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -83,9 +82,9 @@ OSSendMessage:
 /* 801F98D0 001F6830  83 81 00 18 */	lwz r28, 0x18(r1)
 /* 801F98D4 001F6834  38 21 00 28 */	addi r1, r1, 0x28
 /* 801F98D8 001F6838  4E 80 00 20 */	blr 
+.endfn OSSendMessage
 
-.global OSReceiveMessage
-OSReceiveMessage:
+.fn OSReceiveMessage, global
 /* 801F98DC 001F683C  7C 08 02 A6 */	mflr r0
 /* 801F98E0 001F6840  90 01 00 04 */	stw r0, 4(r1)
 /* 801F98E4 001F6844  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -146,3 +145,4 @@ OSReceiveMessage:
 /* 801F99AC 001F690C  83 81 00 18 */	lwz r28, 0x18(r1)
 /* 801F99B0 001F6910  38 21 00 28 */	addi r1, r1, 0x28
 /* 801F99B4 001F6914  4E 80 00 20 */	blr 
+.endfn OSReceiveMessage

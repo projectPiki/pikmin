@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global start__20TaiWaitTurningActionFR4Teki
-start__20TaiWaitTurningActionFR4Teki:
+.fn start__20TaiWaitTurningActionFR4Teki, global
 /* 80143A9C 001409FC  7C 08 02 A6 */	mflr r0
 /* 80143AA0 00140A00  90 01 00 04 */	stw r0, 4(r1)
 /* 80143AA4 00140A04  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -30,9 +29,9 @@ start__20TaiWaitTurningActionFR4Teki:
 /* 80143B00 00140A60  38 21 00 28 */	addi r1, r1, 0x28
 /* 80143B04 00140A64  7C 08 03 A6 */	mtlr r0
 /* 80143B08 00140A68  4E 80 00 20 */	blr 
+.endfn start__20TaiWaitTurningActionFR4Teki
 
-.global act__20TaiWaitTurningActionFR4Teki
-act__20TaiWaitTurningActionFR4Teki:
+.fn act__20TaiWaitTurningActionFR4Teki, global
 /* 80143B0C 00140A6C  7C 08 02 A6 */	mflr r0
 /* 80143B10 00140A70  90 01 00 04 */	stw r0, 4(r1)
 /* 80143B14 00140A74  94 21 FF F8 */	stwu r1, -8(r1)
@@ -98,36 +97,43 @@ act__20TaiWaitTurningActionFR4Teki:
 /* 80143BE4 00140B44  38 21 00 08 */	addi r1, r1, 8
 /* 80143BE8 00140B48  7C 08 03 A6 */	mtlr r0
 /* 80143BEC 00140B4C  4E 80 00 20 */	blr 
+.endfn act__20TaiWaitTurningActionFR4Teki
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802CCA48:
+.obj lbl_802CCA48, local
 	.asciz "taiwaitactions.cpp"
+.endobj lbl_802CCA48
 .balign 4
-lbl_802CCA5C:
+.obj lbl_802CCA5C, local
 	.asciz "taiwaitactions"
+.endobj lbl_802CCA5C
 .balign 4
-lbl_802CCA6C:
+.obj lbl_802CCA6C, local
 	.asciz "TaiWaitTurningAction"
+.endobj lbl_802CCA6C
 .balign 4
-lbl_802CCA84:
+.obj lbl_802CCA84, local
 	.asciz "TaiAction"
+.endobj lbl_802CCA84
 .balign 4
-lbl_802CCA90:
+.obj lbl_802CCA90, local
 	.asciz "TaiMotionAction"
+.endobj lbl_802CCA90
 .balign 4
-lbl_802CCAA0:
+.obj lbl_802CCAA0, local
 	.4byte __RTTI__9TaiAction
 	.4byte 0
 	.4byte 0
-lbl_802CCAAC:
+.endobj lbl_802CCAA0
+.obj lbl_802CCAAC, local
 	.4byte __RTTI__9TaiAction
 	.4byte 0
 	.4byte __RTTI__15TaiMotionAction
 	.4byte 0
 	.4byte 0
-.global __vt__20TaiWaitTurningAction
-__vt__20TaiWaitTurningAction:
+.endobj lbl_802CCAAC
+.obj __vt__20TaiWaitTurningAction, global
 	.4byte __RTTI__20TaiWaitTurningAction
 	.4byte 0
 	.4byte start__20TaiWaitTurningActionFR4Teki
@@ -135,32 +141,41 @@ __vt__20TaiWaitTurningAction:
 	.4byte act__20TaiWaitTurningActionFR4Teki
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
+.endobj __vt__20TaiWaitTurningAction
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-__RTTI__9TaiAction:
+.obj __RTTI__9TaiAction, local
 	.4byte lbl_802CCA84
 	.4byte 0
-__RTTI__15TaiMotionAction:
+.endobj __RTTI__9TaiAction
+.obj __RTTI__15TaiMotionAction, local
 	.4byte lbl_802CCA90
 	.4byte lbl_802CCAA0
-__RTTI__20TaiWaitTurningAction:
+.endobj __RTTI__15TaiMotionAction
+.obj __RTTI__20TaiWaitTurningAction, local
 	.4byte lbl_802CCA6C
 	.4byte lbl_802CCAAC
+.endobj __RTTI__20TaiWaitTurningAction
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803EA928:
+.obj lbl_803EA928, local
 	.float 1.0
-lbl_803EA92C:
+.endobj lbl_803EA928
+.obj lbl_803EA92C, local
 	.float 32767.0
-lbl_803EA930:
+.endobj lbl_803EA92C
+.obj lbl_803EA930, local
 	.float 2.0
+.endobj lbl_803EA930
 .balign 8
-lbl_803EA938:
-	.4byte 0x43300000
-	.4byte 0x80000000
-lbl_803EA940:
+.obj lbl_803EA938, local
+	.8byte 0x4330000080000000
+.endobj lbl_803EA938
+.obj lbl_803EA940, local
 	.float 0.0
-lbl_803EA944:
+.endobj lbl_803EA940
+.obj lbl_803EA944, local
 	.float 0.1
+.endobj lbl_803EA944

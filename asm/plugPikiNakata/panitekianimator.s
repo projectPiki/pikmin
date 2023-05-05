@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global createMotionTable__16PaniTekiAnimatorFv
-createMotionTable__16PaniTekiAnimatorFv:
+.fn createMotionTable__16PaniTekiAnimatorFv, global
 /* 8011FC54 0011CBB4  7C 08 02 A6 */	mflr r0
 /* 8011FC58 0011CBB8  38 60 00 08 */	li r3, 8
 /* 8011FC5C 0011CBBC  90 01 00 04 */	stw r0, 4(r1)
@@ -172,9 +171,9 @@ createMotionTable__16PaniTekiAnimatorFv:
 /* 8011FEB0 0011CE10  38 21 00 18 */	addi r1, r1, 0x18
 /* 8011FEB4 0011CE14  7C 08 03 A6 */	mtlr r0
 /* 8011FEB8 0011CE18  4E 80 00 20 */	blr 
+.endfn createMotionTable__16PaniTekiAnimatorFv
 
-.global __ct__16PaniTekiAnimatorFv
-__ct__16PaniTekiAnimatorFv:
+.fn __ct__16PaniTekiAnimatorFv, global
 /* 8011FEBC 0011CE1C  7C 08 02 A6 */	mflr r0
 /* 8011FEC0 0011CE20  90 01 00 04 */	stw r0, 4(r1)
 /* 8011FEC4 0011CE24  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -190,23 +189,27 @@ __ct__16PaniTekiAnimatorFv:
 /* 8011FEEC 0011CE4C  38 21 00 18 */	addi r1, r1, 0x18
 /* 8011FEF0 0011CE50  7C 08 03 A6 */	mtlr r0
 /* 8011FEF4 0011CE54  4E 80 00 20 */	blr 
+.endfn __ct__16PaniTekiAnimatorFv
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802C4D50:
+.obj lbl_802C4D50, local
 	.asciz "panitekianimator.cpp"
+.endobj lbl_802C4D50
 .balign 4
-lbl_802C4D68:
+.obj lbl_802C4D68, local
 	.asciz "panitekianimator"
+.endobj lbl_802C4D68
 .balign 4
-lbl_802C4D7C:
+.obj lbl_802C4D7C, local
 	.asciz "WAITACTION_1"
+.endobj lbl_802C4D7C
 .balign 4
-lbl_802C4D8C:
+.obj lbl_802C4D8C, local
 	.asciz "WAITACTION_2"
+.endobj lbl_802C4D8C
 .balign 4
-.global motionLabels__16PaniTekiAnimator
-motionLabels__16PaniTekiAnimator:
+.obj motionLabels__16PaniTekiAnimator, global
 	.4byte lbl_803E30C0
 	.4byte lbl_803E30C8
 	.4byte lbl_803E30D0
@@ -222,28 +225,33 @@ motionLabels__16PaniTekiAnimator:
 	.4byte lbl_803E3110
 	.4byte lbl_803E3118
 	.4byte lbl_803E3120
+.endobj motionLabels__16PaniTekiAnimator
 .balign 4
-lbl_802C4DD8:
+.obj lbl_802C4DD8, local
 	.asciz "PaniTekiAnimator"
+.endobj lbl_802C4DD8
 .balign 4
-lbl_802C4DEC:
+.obj lbl_802C4DEC, local
 	.asciz "Animator"
+.endobj lbl_802C4DEC
 .balign 4
-lbl_802C4DF8:
+.obj lbl_802C4DF8, local
 	.asciz "PaniAnimator"
+.endobj lbl_802C4DF8
 .balign 4
-lbl_802C4E08:
+.obj lbl_802C4E08, local
 	.4byte __RTTI__8Animator
 	.4byte 0x00000000
 	.4byte 0x00000000
-lbl_802C4E14:
+.endobj lbl_802C4E08
+.obj lbl_802C4E14, local
 	.4byte __RTTI__8Animator
 	.4byte 0x00000000
 	.4byte __RTTI__12PaniAnimator
 	.4byte 0x00000000
 	.4byte 0x00000000
-.global __vt__16PaniTekiAnimator
-__vt__16PaniTekiAnimator:
+.endobj lbl_802C4E14
+.obj __vt__16PaniTekiAnimator, weak
 	.4byte __RTTI__16PaniTekiAnimator
 	.4byte 0
 	.4byte changeContext__12PaniAnimatorFP11AnimContext
@@ -251,54 +259,71 @@ __vt__16PaniTekiAnimator:
 	.4byte finishOneShot__8AnimatorFv
 	.4byte finishLoop__8AnimatorFv
 	.4byte updateContext__12PaniAnimatorFv
+.endobj __vt__16PaniTekiAnimator
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-lbl_803E30C0:
+.obj lbl_803E30C0, local
 	.asciz "DEAD"
+.endobj lbl_803E30C0
 .balign 4
-lbl_803E30C8:
+.obj lbl_803E30C8, local
 	.asciz "DAMAGE"
+.endobj lbl_803E30C8
 .balign 4
-lbl_803E30D0:
+.obj lbl_803E30D0, local
 	.asciz "WAIT_1"
+.endobj lbl_803E30D0
 .balign 4
-lbl_803E30D8:
+.obj lbl_803E30D8, local
 	.asciz "WAIT_2"
+.endobj lbl_803E30D8
 .balign 4
-lbl_803E30E0:
+.obj lbl_803E30E0, local
 	.asciz "MOVE_1"
+.endobj lbl_803E30E0
 .balign 4
-lbl_803E30E8:
+.obj lbl_803E30E8, local
 	.asciz "MOVE_2"
+.endobj lbl_803E30E8
 .balign 4
-lbl_803E30F0:
+.obj lbl_803E30F0, local
 	.asciz "ATTACK"
+.endobj lbl_803E30F0
 .balign 4
-lbl_803E30F8:
+.obj lbl_803E30F8, local
 	.asciz "FLICK"
+.endobj lbl_803E30F8
 .balign 4
-lbl_803E3100:
+.obj lbl_803E3100, local
 	.asciz "TYPE_1"
+.endobj lbl_803E3100
 .balign 4
-lbl_803E3108:
+.obj lbl_803E3108, local
 	.asciz "TYPE_2"
+.endobj lbl_803E3108
 .balign 4
-lbl_803E3110:
+.obj lbl_803E3110, local
 	.asciz "TYPE_3"
+.endobj lbl_803E3110
 .balign 4
-lbl_803E3118:
+.obj lbl_803E3118, local
 	.asciz "TYPE_4"
+.endobj lbl_803E3118
 .balign 4
-lbl_803E3120:
+.obj lbl_803E3120, local
 	.asciz "TYPE_5"
+.endobj lbl_803E3120
 .balign 4
-__RTTI__8Animator:
+.obj __RTTI__8Animator, local
 	.4byte lbl_802C4DEC
 	.4byte 0
-__RTTI__12PaniAnimator:
+.endobj __RTTI__8Animator
+.obj __RTTI__12PaniAnimator, local
 	.4byte lbl_802C4DF8
 	.4byte lbl_802C4E08
-__RTTI__16PaniTekiAnimator:
+.endobj __RTTI__12PaniAnimator
+.obj __RTTI__16PaniTekiAnimator, local
 	.4byte lbl_802C4DD8
 	.4byte lbl_802C4E14
+.endobj __RTTI__16PaniTekiAnimator

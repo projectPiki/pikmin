@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global __ct__9SlimeBodyFP5Slime
-__ct__9SlimeBodyFP5Slime:
+.fn __ct__9SlimeBodyFP5Slime, global
 /* 8016A630 00167590  7C 08 02 A6 */	mflr r0
 /* 8016A634 00167594  90 01 00 04 */	stw r0, 4(r1)
 /* 8016A638 00167598  94 21 FF B8 */	stwu r1, -0x48(r1)
@@ -81,9 +80,9 @@ __ct__9SlimeBodyFP5Slime:
 /* 8016A760 001676C0  38 21 00 48 */	addi r1, r1, 0x48
 /* 8016A764 001676C4  7C 08 03 A6 */	mtlr r0
 /* 8016A768 001676C8  4E 80 00 20 */	blr 
+.endfn __ct__9SlimeBodyFP5Slime
 
-.global init__9SlimeBodyFP5Slime
-init__9SlimeBodyFP5Slime:
+.fn init__9SlimeBodyFP5Slime, global
 /* 8016A76C 001676CC  7C 08 02 A6 */	mflr r0
 /* 8016A770 001676D0  90 01 00 04 */	stw r0, 4(r1)
 /* 8016A774 001676D4  94 21 FF 70 */	stwu r1, -0x90(r1)
@@ -263,9 +262,9 @@ init__9SlimeBodyFP5Slime:
 /* 8016AA04 00167964  38 21 00 90 */	addi r1, r1, 0x90
 /* 8016AA08 00167968  7C 08 03 A6 */	mtlr r0
 /* 8016AA0C 0016796C  4E 80 00 20 */	blr 
+.endfn init__9SlimeBodyFP5Slime
 
-.global sortPosition__9SlimeBodyFP8Vector3fP8Vector3fP8Vector3f
-sortPosition__9SlimeBodyFP8Vector3fP8Vector3fP8Vector3f:
+.fn sortPosition__9SlimeBodyFP8Vector3fP8Vector3fP8Vector3f, global
 /* 8016AA10 00167970  7C 08 02 A6 */	mflr r0
 /* 8016AA14 00167974  90 01 00 04 */	stw r0, 4(r1)
 /* 8016AA18 00167978  94 21 FF 58 */	stwu r1, -0xa8(r1)
@@ -463,9 +462,9 @@ sortPosition__9SlimeBodyFP8Vector3fP8Vector3fP8Vector3f:
 /* 8016ACF0 00167C50  38 21 00 A8 */	addi r1, r1, 0xa8
 /* 8016ACF4 00167C54  7C 08 03 A6 */	mtlr r0
 /* 8016ACF8 00167C58  4E 80 00 20 */	blr 
+.endfn sortPosition__9SlimeBodyFP8Vector3fP8Vector3fP8Vector3f
 
-.global update__9SlimeBodyFv
-update__9SlimeBodyFv:
+.fn update__9SlimeBodyFv, global
 /* 8016ACFC 00167C5C  7C 08 02 A6 */	mflr r0
 /* 8016AD00 00167C60  90 01 00 04 */	stw r0, 4(r1)
 /* 8016AD04 00167C64  94 21 FF 58 */	stwu r1, -0xa8(r1)
@@ -761,9 +760,9 @@ update__9SlimeBodyFv:
 /* 8016B154 001680B4  38 21 00 A8 */	addi r1, r1, 0xa8
 /* 8016B158 001680B8  7C 08 03 A6 */	mtlr r0
 /* 8016B15C 001680BC  4E 80 00 20 */	blr 
+.endfn update__9SlimeBodyFv
 
-.global refresh__9SlimeBodyFP15BossShapeObjectR8Graphics
-refresh__9SlimeBodyFP15BossShapeObjectR8Graphics:
+.fn refresh__9SlimeBodyFP15BossShapeObjectR8Graphics, global
 /* 8016B160 001680C0  7C 08 02 A6 */	mflr r0
 /* 8016B164 001680C4  90 01 00 04 */	stw r0, 4(r1)
 /* 8016B168 001680C8  94 21 FF 50 */	stwu r1, -0xb0(r1)
@@ -835,37 +834,54 @@ refresh__9SlimeBodyFP15BossShapeObjectR8Graphics:
 /* 8016B26C 001681CC  38 21 00 B0 */	addi r1, r1, 0xb0
 /* 8016B270 001681D0  7C 08 03 A6 */	mtlr r0
 /* 8016B274 001681D4  4E 80 00 20 */	blr 
+.endfn refresh__9SlimeBodyFP15BossShapeObjectR8Graphics
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-lbl_803E4E98:
+.obj lbl_803E4E98, local
 	.float 0.0
-lbl_803E4E9C:
+.endobj lbl_803E4E98
+.obj lbl_803E4E9C, local
 	.float 0.0
-lbl_803E4EA0:
+.endobj lbl_803E4E9C
+.obj lbl_803E4EA0, local
 	.float 0.0
-lbl_803E4EA4:
+.endobj lbl_803E4EA0
+.obj lbl_803E4EA4, local
 	.float 0.0
-lbl_803E4EA8:
+.endobj lbl_803E4EA4
+.obj lbl_803E4EA8, local
 	.float 0.0
-lbl_803E4EAC:
+.endobj lbl_803E4EA8
+.obj lbl_803E4EAC, local
 	.float 0.0
-lbl_803E4EB0:
+.endobj lbl_803E4EAC
+.obj lbl_803E4EB0, local
 	.float 0.0
-lbl_803E4EB4:
+.endobj lbl_803E4EB0
+.obj lbl_803E4EB4, local
 	.float 0.0
+.endobj lbl_803E4EB4
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803EADD8:
+.obj lbl_803EADD8, local
 	.float 0.0
-lbl_803EADDC:
+.endobj lbl_803EADD8
+.obj lbl_803EADDC, local
 	.float 12800.0
-lbl_803EADE0:
+.endobj lbl_803EADDC
+.balign 8
+.obj lbl_803EADE0, local
 	.double 0.5
-lbl_803EADE8:
+.endobj lbl_803EADE0
+.balign 8
+.obj lbl_803EADE8, local
 	.double 3.0
-lbl_803EADF0:
+.endobj lbl_803EADE8
+.obj lbl_803EADF0, local
 	.float 0.25
-lbl_803EADF4:
+.endobj lbl_803EADF0
+.obj lbl_803EADF4, local
 	.float 0.5
+.endobj lbl_803EADF4

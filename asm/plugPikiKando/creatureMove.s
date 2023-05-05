@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global moveRotation__8CreatureFf
-moveRotation__8CreatureFf:
+.fn moveRotation__8CreatureFf, global
 /* 8008E2CC 0008B22C  7C 08 02 A6 */	mflr r0
 /* 8008E2D0 0008B230  90 01 00 04 */	stw r0, 4(r1)
 /* 8008E2D4 0008B234  94 21 FF 70 */	stwu r1, -0x90(r1)
@@ -136,9 +135,9 @@ moveRotation__8CreatureFf:
 /* 8008E4C0 0008B420  38 21 00 90 */	addi r1, r1, 0x90
 /* 8008E4C4 0008B424  7C 08 03 A6 */	mtlr r0
 /* 8008E4C8 0008B428  4E 80 00 20 */	blr 
+.endfn moveRotation__8CreatureFf
 
-.global moveAttach__8CreatureFv
-moveAttach__8CreatureFv:
+.fn moveAttach__8CreatureFv, global
 /* 8008E4CC 0008B42C  7C 08 02 A6 */	mflr r0
 /* 8008E4D0 0008B430  90 01 00 04 */	stw r0, 4(r1)
 /* 8008E4D4 0008B434  94 21 FF C0 */	stwu r1, -0x40(r1)
@@ -211,9 +210,9 @@ moveAttach__8CreatureFv:
 /* 8008E5D0 0008B530  38 21 00 40 */	addi r1, r1, 0x40
 /* 8008E5D4 0008B534  7C 08 03 A6 */	mtlr r0
 /* 8008E5D8 0008B538  4E 80 00 20 */	blr 
+.endfn moveAttach__8CreatureFv
 
-.global moveNew__8CreatureFf
-moveNew__8CreatureFf:
+.fn moveNew__8CreatureFf, global
 /* 8008E5DC 0008B53C  7C 08 02 A6 */	mflr r0
 /* 8008E5E0 0008B540  90 01 00 04 */	stw r0, 4(r1)
 /* 8008E5E4 0008B544  94 21 FB D0 */	stwu r1, -0x430(r1)
@@ -1111,9 +1110,9 @@ moveNew__8CreatureFf:
 /* 8008F330 0008C290  38 21 04 30 */	addi r1, r1, 0x430
 /* 8008F334 0008C294  7C 08 03 A6 */	mtlr r0
 /* 8008F338 0008C298  4E 80 00 20 */	blr 
+.endfn moveNew__8CreatureFf
 
-.global getNearestPlane__8CreatureFP11CollTriInfo
-getNearestPlane__8CreatureFP11CollTriInfo:
+.fn getNearestPlane__8CreatureFP11CollTriInfo, global
 /* 8008F33C 0008C29C  C0 43 00 94 */	lfs f2, 0x94(r3)
 /* 8008F340 0008C2A0  38 00 FF FF */	li r0, -1
 /* 8008F344 0008C2A4  C0 64 00 28 */	lfs f3, 0x28(r4)
@@ -1182,9 +1181,9 @@ getNearestPlane__8CreatureFP11CollTriInfo:
 .L_8008F434:
 /* 8008F434 0008C394  38 60 00 00 */	li r3, 0
 /* 8008F438 0008C398  4E 80 00 20 */	blr 
+.endfn getNearestPlane__8CreatureFP11CollTriInfo
 
-.global traceMove2__FP8CreatureR9MoveTracef
-traceMove2__FP8CreatureR9MoveTracef:
+.fn traceMove2__FP8CreatureR9MoveTracef, global
 /* 8008F43C 0008C39C  7C 08 02 A6 */	mflr r0
 /* 8008F440 0008C3A0  90 01 00 04 */	stw r0, 4(r1)
 /* 8008F444 0008C3A4  94 21 FF 28 */	stwu r1, -0xd8(r1)
@@ -1567,83 +1566,118 @@ traceMove2__FP8CreatureR9MoveTracef:
 /* 8008F9B8 0008C918  38 21 00 D8 */	addi r1, r1, 0xd8
 /* 8008F9BC 0008C91C  7C 08 03 A6 */	mtlr r0
 /* 8008F9C0 0008C920  4E 80 00 20 */	blr 
+.endfn traceMove2__FP8CreatureR9MoveTracef
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-lbl_803DF098:
+.obj lbl_803DF098, local
 	.float 32768.0
-lbl_803DF09C:
+.endobj lbl_803DF098
+.obj lbl_803DF09C, local
 	.float 32768.0
-lbl_803DF0A0:
+.endobj lbl_803DF09C
+.obj lbl_803DF0A0, local
 	.float 32768.0
-lbl_803DF0A4:
+.endobj lbl_803DF0A0
+.obj lbl_803DF0A4, local
 	.float -32768.0
-lbl_803DF0A8:
+.endobj lbl_803DF0A4
+.obj lbl_803DF0A8, local
 	.float -32768.0
-lbl_803DF0AC:
+.endobj lbl_803DF0A8
+.obj lbl_803DF0AC, local
 	.float -32768.0
-lbl_803DF0B0:
+.endobj lbl_803DF0AC
+.obj lbl_803DF0B0, local
 	.float 0.0
-lbl_803DF0B4:
+.endobj lbl_803DF0B0
+.obj lbl_803DF0B4, local
 	.float 0.0
-lbl_803DF0B8:
+.endobj lbl_803DF0B4
+.obj lbl_803DF0B8, local
 	.float 0.0
-lbl_803DF0BC:
+.endobj lbl_803DF0B8
+.obj lbl_803DF0BC, local
 	.float 0.0
-lbl_803DF0C0:
+.endobj lbl_803DF0BC
+.obj lbl_803DF0C0, local
 	.float 0.0
-lbl_803DF0C4:
+.endobj lbl_803DF0C0
+.obj lbl_803DF0C4, local
 	.float 0.0
-lbl_803DF0C8:
+.endobj lbl_803DF0C4
+.obj lbl_803DF0C8, local
 	.float 0.0
-lbl_803DF0CC:
+.endobj lbl_803DF0C8
+.obj lbl_803DF0CC, local
 	.float 0.0
-lbl_803DF0D0:
+.endobj lbl_803DF0CC
+.obj lbl_803DF0D0, local
 	.float 0.0
-lbl_803DF0D4:
+.endobj lbl_803DF0D0
+.obj lbl_803DF0D4, local
 	.float 0.0
-lbl_803DF0D8:
+.endobj lbl_803DF0D4
+.obj lbl_803DF0D8, local
 	.float 0.0
-lbl_803DF0DC:
+.endobj lbl_803DF0D8
+.obj lbl_803DF0DC, local
 	.float 1.0
-lbl_803DF0E0:
+.endobj lbl_803DF0DC
+.obj lbl_803DF0E0, local
 	.float 1.0
-lbl_803DF0E4:
+.endobj lbl_803DF0E0
+.obj lbl_803DF0E4, local
 	.float 1.0
+.endobj lbl_803DF0E4
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803E8CF0:
+.obj lbl_803E8CF0, local
 	.float 0.0
-lbl_803E8CF4:
+.endobj lbl_803E8CF0
+.obj lbl_803E8CF4, local
 	.float 0.5
-lbl_803E8CF8:
+.endobj lbl_803E8CF4
+.obj lbl_803E8CF8, local
 	.float 1.0
-lbl_803E8CFC:
+.endobj lbl_803E8CF8
+.obj lbl_803E8CFC, local
 	.float 10.0
-lbl_803E8D00:
+.endobj lbl_803E8CFC
+.obj lbl_803E8D00, local
 	.float -2000.0
-lbl_803E8D04:
+.endobj lbl_803E8D00
+.obj lbl_803E8D04, local
 	.float 30.0
-lbl_803E8D08:
+.endobj lbl_803E8D04
+.obj lbl_803E8D08, local
 	.float 0.2
-lbl_803E8D0C:
+.endobj lbl_803E8D08
+.obj lbl_803E8D0C, local
 	.float 12800.0
-lbl_803E8D10:
+.endobj lbl_803E8D0C
+.obj lbl_803E8D10, local
 	.float 3.1415927
-lbl_803E8D14:
+.endobj lbl_803E8D10
+.obj lbl_803E8D14, local
 	.float 180.0
+.endobj lbl_803E8D14
 .balign 8
-lbl_803E8D18:
+.obj lbl_803E8D18, local
 	.double 0.5
+.endobj lbl_803E8D18
 .balign 8
-lbl_803E8D20:
+.obj lbl_803E8D20, local
 	.double 3.0
-lbl_803E8D28:
+.endobj lbl_803E8D20
+.obj lbl_803E8D28, local
 	.float 2.0
-lbl_803E8D2C:
+.endobj lbl_803E8D28
+.obj lbl_803E8D2C, local
 	.float 4.0
+.endobj lbl_803E8D2C
 .balign 8
-lbl_803E8D30:
-	.4byte 0x43300000
-	.4byte 0x80000000
+.obj lbl_803E8D30, local
+	.8byte 0x4330000080000000
+.endobj lbl_803E8D30

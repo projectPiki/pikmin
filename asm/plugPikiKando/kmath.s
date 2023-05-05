@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global isNan__Ff
-isNan__Ff:
+.fn isNan__Ff, global
 /* 801126C4 0010F624  7C 08 02 A6 */	mflr r0
 /* 801126C8 0010F628  3C 60 80 2F */	lis r3, __float_nan@ha
 /* 801126CC 0010F62C  90 01 00 04 */	stw r0, 4(r1)
@@ -27,9 +26,9 @@ isNan__Ff:
 /* 80112714 0010F674  38 21 00 20 */	addi r1, r1, 0x20
 /* 80112718 0010F678  7C 08 03 A6 */	mtlr r0
 /* 8011271C 0010F67C  4E 80 00 20 */	blr 
+.endfn isNan__Ff
 
-.global makePostureMatrix__FR8Vector3fR8Vector3fR8Vector3fR8Matrix4f
-makePostureMatrix__FR8Vector3fR8Vector3fR8Vector3fR8Matrix4f:
+.fn makePostureMatrix__FR8Vector3fR8Vector3fR8Vector3fR8Matrix4f, global
 /* 80112720 0010F680  7C 08 02 A6 */	mflr r0
 /* 80112724 0010F684  90 01 00 04 */	stw r0, 4(r1)
 /* 80112728 0010F688  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -69,9 +68,9 @@ makePostureMatrix__FR8Vector3fR8Vector3fR8Vector3fR8Matrix4f:
 /* 801127B0 0010F710  38 21 00 28 */	addi r1, r1, 0x28
 /* 801127B4 0010F714  7C 08 03 A6 */	mtlr r0
 /* 801127B8 0010F718  4E 80 00 20 */	blr 
+.endfn makePostureMatrix__FR8Vector3fR8Vector3fR8Vector3fR8Matrix4f
 
-.global calcImpulse__FR8Vector3ffR8Vector3fR8Matrix4fR8Vector3fR8Vector3f
-calcImpulse__FR8Vector3ffR8Vector3fR8Matrix4fR8Vector3fR8Vector3f:
+.fn calcImpulse__FR8Vector3ffR8Vector3fR8Matrix4fR8Vector3fR8Vector3f, global
 /* 801127BC 0010F71C  7C 08 02 A6 */	mflr r0
 /* 801127C0 0010F720  90 01 00 04 */	stw r0, 4(r1)
 /* 801127C4 0010F724  94 21 FF 68 */	stwu r1, -0x98(r1)
@@ -180,9 +179,9 @@ calcImpulse__FR8Vector3ffR8Vector3fR8Matrix4fR8Vector3fR8Vector3f:
 /* 80112960 0010F8C0  38 21 00 98 */	addi r1, r1, 0x98
 /* 80112964 0010F8C4  7C 08 03 A6 */	mtlr r0
 /* 80112968 0010F8C8  4E 80 00 20 */	blr 
+.endfn calcImpulse__FR8Vector3ffR8Vector3fR8Matrix4fR8Vector3fR8Vector3f
 
-.global CRSpline__FfP8Vector3f
-CRSpline__FfP8Vector3f:
+.fn CRSpline__FfP8Vector3f, global
 /* 8011296C 0010F8CC  7C 08 02 A6 */	mflr r0
 /* 80112970 0010F8D0  ED 21 00 72 */	fmuls f9, f1, f1
 /* 80112974 0010F8D4  90 01 00 04 */	stw r0, 4(r1)
@@ -295,9 +294,9 @@ CRSpline__FfP8Vector3f:
 /* 80112B20 0010FA80  38 21 00 E0 */	addi r1, r1, 0xe0
 /* 80112B24 0010FA84  7C 08 03 A6 */	mtlr r0
 /* 80112B28 0010FA88  4E 80 00 20 */	blr 
+.endfn CRSpline__FfP8Vector3f
 
-.global CRSplineTangent__FfP8Vector3f
-CRSplineTangent__FfP8Vector3f:
+.fn CRSplineTangent__FfP8Vector3f, global
 /* 80112B2C 0010FA8C  7C 08 02 A6 */	mflr r0
 /* 80112B30 0010FA90  EC C1 00 72 */	fmuls f6, f1, f1
 /* 80112B34 0010FA94  90 01 00 04 */	stw r0, 4(r1)
@@ -408,9 +407,9 @@ CRSplineTangent__FfP8Vector3f:
 /* 80112CD8 0010FC38  38 21 00 E8 */	addi r1, r1, 0xe8
 /* 80112CDC 0010FC3C  7C 08 03 A6 */	mtlr r0
 /* 80112CE0 0010FC40  4E 80 00 20 */	blr 
+.endfn CRSplineTangent__FfP8Vector3f
 
-.global getThrowVelocity__FR8Vector3ffR8Vector3fR8Vector3f
-getThrowVelocity__FR8Vector3ffR8Vector3fR8Vector3f:
+.fn getThrowVelocity__FR8Vector3ffR8Vector3fR8Vector3f, global
 /* 80112CE4 0010FC44  7C 08 02 A6 */	mflr r0
 /* 80112CE8 0010FC48  90 01 00 04 */	stw r0, 4(r1)
 /* 80112CEC 0010FC4C  94 21 FE D0 */	stwu r1, -0x130(r1)
@@ -552,9 +551,9 @@ getThrowVelocity__FR8Vector3ffR8Vector3fR8Vector3f:
 /* 80112F04 0010FE64  38 21 01 30 */	addi r1, r1, 0x130
 /* 80112F08 0010FE68  7C 08 03 A6 */	mtlr r0
 /* 80112F0C 0010FE6C  4E 80 00 20 */	blr 
+.endfn getThrowVelocity__FR8Vector3ffR8Vector3fR8Vector3f
 
-.global getCameraSafeAngle__FR8Vector3fff
-getCameraSafeAngle__FR8Vector3fff:
+.fn getCameraSafeAngle__FR8Vector3fff, global
 /* 80112F10 0010FE70  7C 08 02 A6 */	mflr r0
 /* 80112F14 0010FE74  90 01 00 04 */	stw r0, 4(r1)
 /* 80112F18 0010FE78  38 00 00 00 */	li r0, 0
@@ -715,49 +714,70 @@ getCameraSafeAngle__FR8Vector3fff:
 /* 80113158 001100B8  38 21 01 08 */	addi r1, r1, 0x108
 /* 8011315C 001100BC  7C 08 03 A6 */	mtlr r0
 /* 80113160 001100C0  4E 80 00 20 */	blr 
+.endfn getCameraSafeAngle__FR8Vector3fff
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-lbl_803E2858:
+.obj lbl_803E2858, local
 	.float 0.0
+.endobj lbl_803E2858
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803EA0F8:
+.obj lbl_803EA0F8, local
 	.float 0.0
-lbl_803EA0FC:
+.endobj lbl_803EA0F8
+.obj lbl_803EA0FC, local
 	.float -1.0
-lbl_803EA100:
+.endobj lbl_803EA0FC
+.obj lbl_803EA100, local
 	.float 1.0
-lbl_803EA104:
+.endobj lbl_803EA100
+.obj lbl_803EA104, local
 	.float -0.5
-lbl_803EA108:
+.endobj lbl_803EA104
+.obj lbl_803EA108, local
 	.float 0.5
-lbl_803EA10C:
+.endobj lbl_803EA108
+.obj lbl_803EA10C, local
 	.float 1.5
-lbl_803EA110:
+.endobj lbl_803EA10C
+.obj lbl_803EA110, local
 	.float 2.5
-lbl_803EA114:
+.endobj lbl_803EA110
+.obj lbl_803EA114, local
 	.float -1.5
-lbl_803EA118:
+.endobj lbl_803EA114
+.obj lbl_803EA118, local
 	.float 2.0
-lbl_803EA11C:
+.endobj lbl_803EA118
+.obj lbl_803EA11C, local
 	.float 4.5
-lbl_803EA120:
+.endobj lbl_803EA11C
+.obj lbl_803EA120, local
 	.float 5.0
-lbl_803EA124:
+.endobj lbl_803EA120
+.obj lbl_803EA124, local
 	.float -4.5
-lbl_803EA128:
+.endobj lbl_803EA124
+.obj lbl_803EA128, local
 	.float 4.0
+.endobj lbl_803EA128
 .balign 8
-lbl_803EA130:
+.obj lbl_803EA130, local
 	.double 0.5
-lbl_803EA138:
+.endobj lbl_803EA130
+.balign 8
+.obj lbl_803EA138, local
 	.double 3.0
-lbl_803EA140:
-	.4byte 0x3F490FDB # 45 degrees in radians (float)
-lbl_803EA144:
+.endobj lbl_803EA138
+.obj lbl_803EA140, local
+	.float 0.7853982 # 45 degrees in radians
+.endobj lbl_803EA140
+.obj lbl_803EA144, local
 	.float 20.0
-lbl_803EA148:
-	.4byte 0x43300000
-	.4byte 0x80000000
+.endobj lbl_803EA144
+.balign 8
+.obj lbl_803EA148, local
+	.8byte 0x4330000080000000
+.endobj lbl_803EA148

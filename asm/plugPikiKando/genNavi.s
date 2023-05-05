@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global makeObjectNavi__Fv
-makeObjectNavi__Fv:
+.fn makeObjectNavi__Fv, local
 /* 800F8130 000F5090  7C 08 02 A6 */	mflr r0
 /* 800F8134 000F5094  38 60 00 18 */	li r3, 0x18
 /* 800F8138 000F5098  90 01 00 04 */	stw r0, 4(r1)
@@ -31,9 +30,9 @@ makeObjectNavi__Fv:
 /* 800F8194 000F50F4  38 21 00 10 */	addi r1, r1, 0x10
 /* 800F8198 000F50F8  7C 08 03 A6 */	mtlr r0
 /* 800F819C 000F50FC  4E 80 00 20 */	blr 
+.endfn makeObjectNavi__Fv
 
-.global initialise__13GenObjectNaviFv
-initialise__13GenObjectNaviFv:
+.fn initialise__13GenObjectNaviFv, global
 /* 800F81A0 000F5100  80 ED 30 74 */	lwz r7, factory__16GenObjectFactory@sda21(r13)
 /* 800F81A4 000F5104  80 A7 00 00 */	lwz r5, 0(r7)
 /* 800F81A8 000F5108  80 07 00 04 */	lwz r0, 4(r7)
@@ -69,13 +68,13 @@ initialise__13GenObjectNaviFv:
 /* 800F8220 000F5180  38 03 00 01 */	addi r0, r3, 1
 /* 800F8224 000F5184  90 07 00 00 */	stw r0, 0(r7)
 /* 800F8228 000F5188  4E 80 00 20 */	blr 
+.endfn initialise__13GenObjectNaviFv
 
-.global doRead__13GenObjectNaviFR18RandomAccessStream
-doRead__13GenObjectNaviFR18RandomAccessStream:
+.fn doRead__13GenObjectNaviFR18RandomAccessStream, global
 /* 800F822C 000F518C  4E 80 00 20 */	blr 
+.endfn doRead__13GenObjectNaviFR18RandomAccessStream
 
-.global birth__13GenObjectNaviFR9BirthInfo
-birth__13GenObjectNaviFR9BirthInfo:
+.fn birth__13GenObjectNaviFR9BirthInfo, global
 /* 800F8230 000F5190  7C 08 02 A6 */	mflr r0
 /* 800F8234 000F5194  90 01 00 04 */	stw r0, 4(r1)
 /* 800F8238 000F5198  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -123,55 +122,65 @@ birth__13GenObjectNaviFR9BirthInfo:
 /* 800F82DC 000F523C  38 21 00 18 */	addi r1, r1, 0x18
 /* 800F82E0 000F5240  7C 08 03 A6 */	mtlr r0
 /* 800F82E4 000F5244  4E 80 00 20 */	blr 
+.endfn birth__13GenObjectNaviFR9BirthInfo
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802BFFB8:
+.obj lbl_802BFFB8, local
 	.asciz "genNavi.cpp"
+.endobj lbl_802BFFB8
 .balign 4
-lbl_802BFFC4:
+.obj lbl_802BFFC4, local
 	.asciz "object type"
+.endobj lbl_802BFFC4
 .balign 4
-lbl_802BFFD0:
+.obj lbl_802BFFD0, local # Shift-JIS
 	.4byte 0x8376838C
 	.4byte 0x83438384
 	.4byte 0x815B8251
 	.4byte 0x82F090B6
 	.4byte 0x82DE0000
+.endobj lbl_802BFFD0
 .balign 4
-lbl_802BFFE4:
+.obj lbl_802BFFE4, local
 	.asciz "generate NAVI (player2)"
+.endobj lbl_802BFFE4
 .balign 4
-lbl_802BFFFC:
+.obj lbl_802BFFFC, local
 	.asciz "GenObjectNavi"
+.endobj lbl_802BFFFC
 .balign 4
-lbl_802C000C:
+.obj lbl_802C000C, local
 	.asciz "Parameters"
+.endobj lbl_802C000C
 .balign 4
-lbl_802C0018:
+.obj lbl_802C0018, local
 	.4byte __RTTI__10Parameters
-	.4byte 0x00000000
-	.4byte 0x00000000
+	.4byte 0
+	.4byte 0
+.endobj lbl_802C0018
 .balign 4
-lbl_802C0024:
+.obj lbl_802C0024, local
 	.asciz "GenObject"
+.endobj lbl_802C0024
 .balign 4
-lbl_802C0030:
+.obj lbl_802C0030, local
 	.4byte __RTTI__10Parameters
-	.4byte 0x00000000
+	.4byte 0
 	.4byte __RTTI__7GenBase
-	.4byte 0x00000000
-	.4byte 0x00000000
-lbl_802C0044:
+	.4byte 0
+	.4byte 0
+.endobj lbl_802C0030
+.obj lbl_802C0044, local
 	.4byte __RTTI__10Parameters
-	.4byte 0x00000000
+	.4byte 0
 	.4byte __RTTI__7GenBase
-	.4byte 0x00000000
+	.4byte 0
 	.4byte __RTTI__9GenObject
-	.4byte 0x00000000
-	.4byte 0x00000000
-.global __vt__13GenObjectNavi
-__vt__13GenObjectNavi:
+	.4byte 0
+	.4byte 0
+.endobj lbl_802C0044
+.obj __vt__13GenObjectNavi, global
 	.4byte __RTTI__13GenObjectNavi
 	.4byte 0
 	.4byte doWrite__7GenBaseFR18RandomAccessStream
@@ -186,22 +195,28 @@ __vt__13GenObjectNavi:
 	.4byte update__9GenObjectFP9Generator
 	.4byte render__9GenObjectFR8GraphicsP9Generator
 	.4byte birth__13GenObjectNaviFR9BirthInfo
+.endobj __vt__13GenObjectNavi
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-__RTTI__10Parameters:
+.obj __RTTI__10Parameters, local
 	.4byte lbl_802C000C
 	.4byte 0
+.endobj __RTTI__10Parameters
 .balign 4
-lbl_803E1F80:
+.obj lbl_803E1F80, local
 	.asciz "GenBase"
+.endobj lbl_803E1F80
 .balign 4
-__RTTI__7GenBase:
+.obj __RTTI__7GenBase, local
 	.4byte lbl_803E1F80
 	.4byte lbl_802C0018
-__RTTI__9GenObject:
+.endobj __RTTI__7GenBase
+.obj __RTTI__9GenObject, local
 	.4byte lbl_802C0024
 	.4byte lbl_802C0030
-__RTTI__13GenObjectNavi:
+.endobj __RTTI__9GenObject
+.obj __RTTI__13GenObjectNavi, local
 	.4byte lbl_802BFFFC
 	.4byte lbl_802C0044
+.endobj __RTTI__13GenObjectNavi

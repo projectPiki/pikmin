@@ -827,65 +827,89 @@ lbl_802B7340:
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-lbl_803E05E0:
+.obj lbl_803E05E0, local
 	.float 0.0
-lbl_803E05E4:
+.endobj lbl_803E05E0
+.obj lbl_803E05E4, local
 	.float 0.0
-lbl_803E05E8:
+.endobj lbl_803E05E4
+.obj lbl_803E05E8, local
 	.float 0.0
-lbl_803E05EC:
+.endobj lbl_803E05E8
+.obj lbl_803E05EC, local
 	.float 0.0
-lbl_803E05F0:
+.endobj lbl_803E05EC
+.obj lbl_803E05F0, local
 	.float 0.0
-lbl_803E05F4:
+.endobj lbl_803E05F0
+.obj lbl_803E05F4, local
 	.float 0.0
-lbl_803E05F8:
+.endobj lbl_803E05F4
+.obj lbl_803E05F8, local
 	.float 0.0
-lbl_803E05FC:
+.endobj lbl_803E05F8
+.obj lbl_803E05FC, local
 	.float 0.0
-lbl_803E0600:
+.endobj lbl_803E05FC
+.obj lbl_803E0600, local
 	.float 0.0
-lbl_803E0604:
+.endobj lbl_803E0600
+.obj lbl_803E0604, local
 	.float 0.0
-lbl_803E0608:
+.endobj lbl_803E0604
+.obj lbl_803E0608, local
 	.float 0.0
-lbl_803E060C:
+.endobj lbl_803E0608
+.obj lbl_803E060C, local
 	.float 0.0
-"__RTTI__15Receiver<4Piki>":
+.endobj lbl_803E060C
+.obj "__RTTI__15Receiver<4Piki>", local
 	.4byte lbl_802B71D0
 	.4byte 0
+.endobj "__RTTI__15Receiver<4Piki>"
 .balign 4
-lbl_803E0618:
+.obj lbl_803E0618, local
 	.asciz "Action"
+.endobj lbl_803E0618
 .balign 4
-__RTTI__6Action:
+.obj __RTTI__6Action, local
 	.4byte lbl_803E0618
 	.4byte lbl_802B71E0
-__RTTI__18ActPulloutCreature:
+.endobj __RTTI__6Action
+.obj __RTTI__18ActPulloutCreature, local
 	.4byte lbl_802B71BC
 	.4byte lbl_802B71EC
-__RTTI__9AndAction:
+.endobj __RTTI__18ActPulloutCreature
+.obj __RTTI__9AndAction, local
 	.4byte lbl_802B72A0
 	.4byte lbl_802B72AC
-__RTTI__10ActPullout:
+.endobj __RTTI__9AndAction
+.obj __RTTI__10ActPullout, local
 	.4byte lbl_802B7294
 	.4byte lbl_802B72C0
+.endobj __RTTI__10ActPullout
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803E95B8:
+.obj lbl_803E95B8, local
 	.float 300.0
-lbl_803E95BC:
+.endobj lbl_803E95B8
+.obj lbl_803E95BC, local
 	.float 1.0
-lbl_803E95C0:
+.endobj lbl_803E95BC
+.obj lbl_803E95C0, local
 	.float 32767.0
+.endobj lbl_803E95C0
 .balign 8
-lbl_803E95C8:
-	.4byte 0x43300000
-	.4byte 0x80000000
-lbl_803E95D0:
+.obj lbl_803E95C8, local
+	.8byte 0x4330000080000000
+.endobj lbl_803E95C8
+.obj lbl_803E95D0, local
 	.float 0.4
-lbl_803E95D4:
+.endobj lbl_803E95D0
+.obj lbl_803E95D4, local
 	.float 0.1
-lbl_803E95D8:
+.endobj lbl_803E95D4
+.obj lbl_803E95D8, local
 	.float 0.0
+.endobj lbl_803E95D8

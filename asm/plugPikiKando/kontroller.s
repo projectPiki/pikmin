@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global __ct__10KontrollerFi
-__ct__10KontrollerFi:
+.fn __ct__10KontrollerFi, global
 /* 80115B8C 00112AEC  7C 08 02 A6 */	mflr r0
 /* 80115B90 00112AF0  3C A0 80 22 */	lis r5, __vt__5ANode@ha
 /* 80115B94 00112AF4  90 01 00 04 */	stw r0, 4(r1)
@@ -53,9 +52,9 @@ __ct__10KontrollerFi:
 /* 80115C4C 00112BAC  38 21 00 20 */	addi r1, r1, 0x20
 /* 80115C50 00112BB0  7C 08 03 A6 */	mtlr r0
 /* 80115C54 00112BB4  4E 80 00 20 */	blr 
+.endfn __ct__10KontrollerFi
 
-.global save__10KontrollerFP9RamStreami
-save__10KontrollerFP9RamStreami:
+.fn save__10KontrollerFP9RamStreami, global
 /* 80115C58 00112BB8  7C 08 02 A6 */	mflr r0
 /* 80115C5C 00112BBC  90 01 00 04 */	stw r0, 4(r1)
 /* 80115C60 00112BC0  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -76,9 +75,9 @@ save__10KontrollerFP9RamStreami:
 /* 80115C9C 00112BFC  38 21 00 20 */	addi r1, r1, 0x20
 /* 80115CA0 00112C00  7C 08 03 A6 */	mtlr r0
 /* 80115CA4 00112C04  4E 80 00 20 */	blr 
+.endfn save__10KontrollerFP9RamStreami
 
-.global load__10KontrollerFP9RamStreami
-load__10KontrollerFP9RamStreami:
+.fn load__10KontrollerFP9RamStreami, global
 /* 80115CA8 00112C08  7C 08 02 A6 */	mflr r0
 /* 80115CAC 00112C0C  90 01 00 04 */	stw r0, 4(r1)
 /* 80115CB0 00112C10  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -99,9 +98,9 @@ load__10KontrollerFP9RamStreami:
 /* 80115CEC 00112C4C  38 21 00 20 */	addi r1, r1, 0x20
 /* 80115CF0 00112C50  7C 08 03 A6 */	mtlr r0
 /* 80115CF4 00112C54  4E 80 00 20 */	blr 
+.endfn load__10KontrollerFP9RamStreami
 
-.global update__10KontrollerFv
-update__10KontrollerFv:
+.fn update__10KontrollerFv, global
 /* 80115CF8 00112C58  7C 08 02 A6 */	mflr r0
 /* 80115CFC 00112C5C  90 01 00 04 */	stw r0, 4(r1)
 /* 80115D00 00112C60  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -198,14 +197,14 @@ update__10KontrollerFv:
 /* 80115E54 00112DB4  38 21 00 20 */	addi r1, r1, 0x20
 /* 80115E58 00112DB8  7C 08 03 A6 */	mtlr r0
 /* 80115E5C 00112DBC  4E 80 00 20 */	blr 
+.endfn update__10KontrollerFv
 
-.global getSaveSize__10KontrollerFi
-getSaveSize__10KontrollerFi:
+.fn getSaveSize__10KontrollerFi, global
 /* 80115E60 00112DC0  1C 63 00 0C */	mulli r3, r3, 0xc
 /* 80115E64 00112DC4  4E 80 00 20 */	blr 
+.endfn getSaveSize__10KontrollerFi
 
-.global write__10KontrollerFR18RandomAccessStream
-write__10KontrollerFR18RandomAccessStream:
+.fn write__10KontrollerFR18RandomAccessStream, global
 /* 80115E68 00112DC8  7C 08 02 A6 */	mflr r0
 /* 80115E6C 00112DCC  90 01 00 04 */	stw r0, 4(r1)
 /* 80115E70 00112DD0  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -273,9 +272,9 @@ write__10KontrollerFR18RandomAccessStream:
 /* 80115F68 00112EC8  38 21 00 18 */	addi r1, r1, 0x18
 /* 80115F6C 00112ECC  7C 08 03 A6 */	mtlr r0
 /* 80115F70 00112ED0  4E 80 00 20 */	blr 
+.endfn write__10KontrollerFR18RandomAccessStream
 
-.global read__10KontrollerFR18RandomAccessStream
-read__10KontrollerFR18RandomAccessStream:
+.fn read__10KontrollerFR18RandomAccessStream, global
 /* 80115F74 00112ED4  7C 08 02 A6 */	mflr r0
 /* 80115F78 00112ED8  90 01 00 04 */	stw r0, 4(r1)
 /* 80115F7C 00112EDC  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -343,36 +342,44 @@ read__10KontrollerFR18RandomAccessStream:
 /* 80116074 00112FD4  38 21 00 18 */	addi r1, r1, 0x18
 /* 80116078 00112FD8  7C 08 03 A6 */	mtlr r0
 /* 8011607C 00112FDC  4E 80 00 20 */	blr 
+.endfn read__10KontrollerFR18RandomAccessStream
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802C2D80:
+.obj lbl_802C2D80, local
 	.asciz "kontroller.cpp"
+.endobj lbl_802C2D80
 .balign 4
-lbl_802C2D90:
+.obj lbl_802C2D90, local
 	.asciz "Kontroller"
+.endobj lbl_802C2D90
 .balign 4
-lbl_802C2D9C:
+.obj lbl_802C2D9C, local
 	.asciz "<Controller>"
+.endobj lbl_802C2D9C
 .balign 4
-lbl_802C2DAC:
+.obj lbl_802C2DAC, local
 	.asciz "CoreNode"
+.endobj lbl_802C2DAC
 .balign 4
-lbl_802C2DB8:
+.obj lbl_802C2DB8, local
 	.4byte __RTTI__5ANode
 	.4byte 0x00000000
 	.4byte 0x00000000
-lbl_802C2DC4:
+.endobj lbl_802C2DB8
+.obj lbl_802C2DC4, local
 	.4byte __RTTI__5ANode
 	.4byte 0x00000000
 	.4byte __RTTI__8CoreNode
 	.4byte 0x00000000
 	.4byte 0x00000000
+.endobj lbl_802C2DC4
 .balign 4
-lbl_802C2DD8:
+.obj lbl_802C2DD8, local
 	.asciz "Controller"
+.endobj lbl_802C2DD8
 .balign 4
-lbl_802C2DE4:
+.obj lbl_802C2DE4, local
 	.4byte __RTTI__5ANode
 	.4byte 0x00000000
 	.4byte __RTTI__8CoreNode
@@ -380,7 +387,8 @@ lbl_802C2DE4:
 	.4byte __RTTI__4Node
 	.4byte 0x00000000
 	.4byte 0x00000000
-lbl_802C2E00:
+.endobj lbl_802C2DE4
+.obj lbl_802C2E00, local
 	.4byte __RTTI__5ANode
 	.4byte 0x00000000
 	.4byte __RTTI__8CoreNode
@@ -390,8 +398,8 @@ lbl_802C2E00:
 	.4byte __RTTI__10Controller
 	.4byte 0x00000000
 	.4byte 0x00000000
-.global __vt__10Kontroller
-__vt__10Kontroller:
+.endobj lbl_802C2E00
+.obj __vt__10Kontroller, global
 	.4byte __RTTI__10Kontroller
 	.4byte 0
 	.4byte getAgeNodeType__5ANodeFv
@@ -404,6 +412,7 @@ __vt__10Kontroller:
 	.4byte concat__4NodeFR3SRT
 	.4byte concat__4NodeFR8Matrix4f
 	.4byte getModelMatrix__4NodeFv
+.endobj __vt__10Kontroller
 	.4byte 0
 	.4byte 0
 	.4byte 0
@@ -414,31 +423,38 @@ __vt__10Kontroller:
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-lbl_803E2978:
+.obj lbl_803E2978, local
 	.asciz "ANode"
+.endobj lbl_803E2978
 .balign 4
-__RTTI__5ANode:
+.obj __RTTI__5ANode, local
 	.4byte lbl_803E2978
 	.4byte 0
-__RTTI__8CoreNode:
+.endobj __RTTI__5ANode
+.obj __RTTI__8CoreNode, local
 	.4byte lbl_802C2DAC
 	.4byte lbl_802C2DB8
+.endobj __RTTI__8CoreNode
 .balign 4
-lbl_803E2990:
+.obj lbl_803E2990, local
 	.asciz "Node"
+.endobj lbl_803E2990
 .balign 4
-__RTTI__4Node:
+.obj __RTTI__4Node, local
 	.4byte lbl_803E2990
 	.4byte lbl_802C2DC4
-__RTTI__10Controller:
+.endobj __RTTI__4Node
+.obj __RTTI__10Controller, local
 	.4byte lbl_802C2DD8
 	.4byte lbl_802C2DE4
-__RTTI__10Kontroller:
+.endobj __RTTI__10Controller
+.obj __RTTI__10Kontroller, local
 	.4byte lbl_802C2D90
 	.4byte lbl_802C2E00
+.endobj __RTTI__10Kontroller
 
 .section .sbss, "wa"
 .balign 8
-.global controllerBuffer
-controllerBuffer:
+.obj controllerBuffer, global
 	.skip 0x4
+.endobj controllerBuffer

@@ -1,11 +1,10 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global __ct__12DemoEventMgrFv
-__ct__12DemoEventMgrFv:
+.fn __ct__12DemoEventMgrFv, global
 /* 8008313C 0008009C  4E 80 00 20 */	blr 
+.endfn __ct__12DemoEventMgrFv
 
-.global act__12DemoEventMgrFii
-act__12DemoEventMgrFii:
+.fn act__12DemoEventMgrFii, global
 /* 80083140 000800A0  7C 08 02 A6 */	mflr r0
 /* 80083144 000800A4  2C 04 00 01 */	cmpwi r4, 1
 /* 80083148 000800A8  90 01 00 04 */	stw r0, 4(r1)
@@ -313,10 +312,11 @@ act__12DemoEventMgrFii:
 /* 80083580 000804E0  38 21 00 80 */	addi r1, r1, 0x80
 /* 80083584 000804E4  7C 08 03 A6 */	mtlr r0
 /* 80083588 000804E8  4E 80 00 20 */	blr 
+.endfn act__12DemoEventMgrFii
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802AE1A0:
+.obj lbl_802AE1A0, local
 	.4byte .L_800833F8
 	.4byte .L_80083444
 	.4byte .L_80083410
@@ -324,7 +324,9 @@ lbl_802AE1A0:
 	.4byte .L_8008341C
 	.4byte .L_8008348C
 	.4byte .L_80083518
-lbl_802AE1BC:
+.endobj lbl_802AE1A0
+.balign 4
+.obj lbl_802AE1BC, local
 	.4byte .L_80083318
 	.4byte .L_80083380
 	.4byte .L_80083394
@@ -333,9 +335,10 @@ lbl_802AE1BC:
 	.4byte .L_80083338
 	.4byte .L_80083348
 	.4byte .L_800833B4
+.endobj lbl_802AE1BC
 
 .section .sbss, "wa"
 .balign 8
-.global demoEventMgr
-demoEventMgr:
+.obj demoEventMgr, global
 	.skip 4
+.endobj demoEventMgr

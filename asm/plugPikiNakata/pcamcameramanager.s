@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global __ct__17PcamCameraManagerFP6CameraP10Controller
-__ct__17PcamCameraManagerFP6CameraP10Controller:
+.fn __ct__17PcamCameraManagerFP6CameraP10Controller, global
 /* 80123C54 00120BB4  7C 08 02 A6 */	mflr r0
 /* 80123C58 00120BB8  3C C0 80 22 */	lis r6, __vt__5ANode@ha
 /* 80123C5C 00120BBC  90 01 00 04 */	stw r0, 4(r1)
@@ -134,9 +133,9 @@ __ct__17PcamCameraManagerFP6CameraP10Controller:
 /* 80123E40 00120DA0  38 21 00 38 */	addi r1, r1, 0x38
 /* 80123E44 00120DA4  7C 08 03 A6 */	mtlr r0
 /* 80123E48 00120DA8  4E 80 00 20 */	blr 
+.endfn __ct__17PcamCameraManagerFP6CameraP10Controller
 
-.global startCamera__17PcamCameraManagerFP8Creature
-startCamera__17PcamCameraManagerFP8Creature:
+.fn startCamera__17PcamCameraManagerFP8Creature, global
 /* 80123E4C 00120DAC  7C 08 02 A6 */	mflr r0
 /* 80123E50 00120DB0  90 01 00 04 */	stw r0, 4(r1)
 /* 80123E54 00120DB4  94 21 FF F8 */	stwu r1, -8(r1)
@@ -146,9 +145,9 @@ startCamera__17PcamCameraManagerFP8Creature:
 /* 80123E64 00120DC4  38 21 00 08 */	addi r1, r1, 8
 /* 80123E68 00120DC8  7C 08 03 A6 */	mtlr r0
 /* 80123E6C 00120DCC  4E 80 00 20 */	blr 
+.endfn startCamera__17PcamCameraManagerFP8Creature
 
-.global update__17PcamCameraManagerFv
-update__17PcamCameraManagerFv:
+.fn update__17PcamCameraManagerFv, global
 /* 80123E70 00120DD0  7C 08 02 A6 */	mflr r0
 /* 80123E74 00120DD4  90 01 00 04 */	stw r0, 4(r1)
 /* 80123E78 00120DD8  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -169,9 +168,9 @@ update__17PcamCameraManagerFv:
 /* 80123EB4 00120E14  38 21 00 18 */	addi r1, r1, 0x18
 /* 80123EB8 00120E18  7C 08 03 A6 */	mtlr r0
 /* 80123EBC 00120E1C  4E 80 00 20 */	blr 
+.endfn update__17PcamCameraManagerFv
 
-.global updateVibrationEvent__17PcamCameraManagerFv
-updateVibrationEvent__17PcamCameraManagerFv:
+.fn updateVibrationEvent__17PcamCameraManagerFv, global
 /* 80123EC0 00120E20  7C 08 02 A6 */	mflr r0
 /* 80123EC4 00120E24  90 01 00 04 */	stw r0, 4(r1)
 /* 80123EC8 00120E28  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -212,9 +211,9 @@ updateVibrationEvent__17PcamCameraManagerFv:
 /* 80123F4C 00120EAC  38 21 00 18 */	addi r1, r1, 0x18
 /* 80123F50 00120EB0  7C 08 03 A6 */	mtlr r0
 /* 80123F54 00120EB4  4E 80 00 20 */	blr 
+.endfn updateVibrationEvent__17PcamCameraManagerFv
 
-.global update__9PeveEventFv
-update__9PeveEventFv:
+.fn update__9PeveEventFv, weak
 /* 80123F58 00120EB8  7C 08 02 A6 */	mflr r0
 /* 80123F5C 00120EBC  90 01 00 04 */	stw r0, 4(r1)
 /* 80123F60 00120EC0  94 21 FF F8 */	stwu r1, -8(r1)
@@ -230,17 +229,17 @@ update__9PeveEventFv:
 /* 80123F84 00120EE4  38 21 00 08 */	addi r1, r1, 8
 /* 80123F88 00120EE8  7C 08 03 A6 */	mtlr r0
 /* 80123F8C 00120EEC  4E 80 00 20 */	blr 
+.endfn update__9PeveEventFv
 
-.global update__13PeveConditionFv
-update__13PeveConditionFv:
+.fn update__13PeveConditionFv, weak
 /* 80123F90 00120EF0  4E 80 00 20 */	blr 
+.endfn update__13PeveConditionFv
 
-.global finish__9PeveEventFv
-finish__9PeveEventFv:
+.fn finish__9PeveEventFv, weak
 /* 80123F94 00120EF4  4E 80 00 20 */	blr 
+.endfn finish__9PeveEventFv
 
-.global isFinished__9PeveEventFv
-isFinished__9PeveEventFv:
+.fn isFinished__9PeveEventFv, weak
 /* 80123F98 00120EF8  7C 08 02 A6 */	mflr r0
 /* 80123F9C 00120EFC  90 01 00 04 */	stw r0, 4(r1)
 /* 80123FA0 00120F00  94 21 FF F8 */	stwu r1, -8(r1)
@@ -259,9 +258,9 @@ isFinished__9PeveEventFv:
 /* 80123FCC 00120F2C  38 21 00 08 */	addi r1, r1, 8
 /* 80123FD0 00120F30  7C 08 03 A6 */	mtlr r0
 /* 80123FD4 00120F34  4E 80 00 20 */	blr 
+.endfn isFinished__9PeveEventFv
 
-.global startVibrationEvent__17PcamCameraManagerFiR8Vector3f
-startVibrationEvent__17PcamCameraManagerFiR8Vector3f:
+.fn startVibrationEvent__17PcamCameraManagerFiR8Vector3f, global
 /* 80123FD8 00120F38  7C 08 02 A6 */	mflr r0
 /* 80123FDC 00120F3C  90 01 00 04 */	stw r0, 4(r1)
 /* 80123FE0 00120F40  94 21 FF 90 */	stwu r1, -0x70(r1)
@@ -351,9 +350,9 @@ startVibrationEvent__17PcamCameraManagerFiR8Vector3f:
 /* 80124114 00121074  38 21 00 70 */	addi r1, r1, 0x70
 /* 80124118 00121078  7C 08 03 A6 */	mtlr r0
 /* 8012411C 0012107C  4E 80 00 20 */	blr 
+.endfn startVibrationEvent__17PcamCameraManagerFiR8Vector3f
 
-.global reset__9PeveEventFv
-reset__9PeveEventFv:
+.fn reset__9PeveEventFv, weak
 /* 80124120 00121080  7C 08 02 A6 */	mflr r0
 /* 80124124 00121084  90 01 00 04 */	stw r0, 4(r1)
 /* 80124128 00121088  94 21 FF F8 */	stwu r1, -8(r1)
@@ -369,13 +368,13 @@ reset__9PeveEventFv:
 /* 8012414C 001210AC  38 21 00 08 */	addi r1, r1, 8
 /* 80124150 001210B0  7C 08 03 A6 */	mtlr r0
 /* 80124154 001210B4  4E 80 00 20 */	blr 
+.endfn reset__9PeveEventFv
 
-.global reset__13PeveConditionFv
-reset__13PeveConditionFv:
+.fn reset__13PeveConditionFv, weak
 /* 80124158 001210B8  4E 80 00 20 */	blr 
+.endfn reset__13PeveConditionFv
 
-.global outputNaviPosition__17PcamCameraManagerFR8Vector3f
-outputNaviPosition__17PcamCameraManagerFR8Vector3f:
+.fn outputNaviPosition__17PcamCameraManagerFR8Vector3f, global
 /* 8012415C 001210BC  7C 08 02 A6 */	mflr r0
 /* 80124160 001210C0  90 01 00 04 */	stw r0, 4(r1)
 /* 80124164 001210C4  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -395,32 +394,39 @@ outputNaviPosition__17PcamCameraManagerFR8Vector3f:
 /* 8012419C 001210FC  38 21 00 20 */	addi r1, r1, 0x20
 /* 801241A0 00121100  7C 08 03 A6 */	mtlr r0
 /* 801241A4 00121104  4E 80 00 20 */	blr 
+.endfn outputNaviPosition__17PcamCameraManagerFR8Vector3f
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802C5248:
+.obj lbl_802C5248, local
 	.asciz "pcamcameramanager.cpp"
+.endobj lbl_802C5248
 .balign 4
-lbl_802C5260:
+.obj lbl_802C5260, local
 	.asciz "pcamcameramanager"
+.endobj lbl_802C5260
 .balign 4
-lbl_802C5274:
+.obj lbl_802C5274, local
 	.asciz "PcamCameraManager"
+.endobj lbl_802C5274
 .balign 4
-lbl_802C5288:
+.obj lbl_802C5288, local
 	.asciz "CoreNode"
+.endobj lbl_802C5288
 .balign 4
-lbl_802C5294:
+.obj lbl_802C5294, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte 0
-lbl_802C52A0:
+.endobj lbl_802C5294
+.obj lbl_802C52A0, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte __RTTI__8CoreNode
 	.4byte 0
 	.4byte 0
-lbl_802C52B4:
+.endobj lbl_802C52A0
+.obj lbl_802C52B4, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte __RTTI__8CoreNode
@@ -428,8 +434,8 @@ lbl_802C52B4:
 	.4byte __RTTI__4Node
 	.4byte 0
 	.4byte 0
-.global __vt__17PcamCameraManager
-__vt__17PcamCameraManager:
+.endobj lbl_802C52B4
+.obj __vt__17PcamCameraManager, global
 	.4byte __RTTI__17PcamCameraManager
 	.4byte 0
 	.4byte getAgeNodeType__5ANodeFv
@@ -442,6 +448,7 @@ __vt__17PcamCameraManager:
 	.4byte concat__4NodeFR3SRT
 	.4byte concat__4NodeFR8Matrix4f
 	.4byte getModelMatrix__4NodeFv
+.endobj __vt__17PcamCameraManager
 	.4byte 0
 	.4byte 0
 	.4byte 0
@@ -453,41 +460,55 @@ __vt__17PcamCameraManager:
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-lbl_803E3258:
+.obj lbl_803E3258, local
 	.asciz "ANode"
+.endobj lbl_803E3258
 .balign 4
-__RTTI__5ANode:
+.obj __RTTI__5ANode, local
 	.4byte lbl_803E3258
 	.4byte 0
-__RTTI__8CoreNode:
+.endobj __RTTI__5ANode
+.obj __RTTI__8CoreNode, local
 	.4byte lbl_802C5288
 	.4byte lbl_802C5294
+.endobj __RTTI__8CoreNode
 .balign 4
-lbl_803E3270:
+.obj lbl_803E3270, local
 	.asciz "Node"
+.endobj lbl_803E3270
 .balign 4
-__RTTI__4Node:
+.obj __RTTI__4Node, local
 	.4byte lbl_803E3270
 	.4byte lbl_802C52A0
-__RTTI__17PcamCameraManager:
+.endobj __RTTI__4Node
+.obj __RTTI__17PcamCameraManager, local
 	.4byte lbl_802C5274
 	.4byte lbl_802C52B4
+.endobj __RTTI__17PcamCameraManager
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803EA300:
+.obj lbl_803EA300, local
 	.float 0.6
-lbl_803EA304:
+.endobj lbl_803EA300
+.obj lbl_803EA304, local
 	.float 0.2
-lbl_803EA308:
+.endobj lbl_803EA304
+.obj lbl_803EA308, local
 	.float 8.0
-lbl_803EA30C:
+.endobj lbl_803EA308
+.obj lbl_803EA30C, local
 	.float 4.0
-lbl_803EA310:
+.endobj lbl_803EA30C
+.obj lbl_803EA310, local
 	.float 30.0
-lbl_803EA314:
+.endobj lbl_803EA310
+.obj lbl_803EA314, local
 	.float 48.0
-lbl_803EA318:
+.endobj lbl_803EA314
+.obj lbl_803EA318, local
 	.float 0.4
-lbl_803EA31C:
+.endobj lbl_803EA318
+.obj lbl_803EA31C, local
 	.float 3.0
+.endobj lbl_803EA31C

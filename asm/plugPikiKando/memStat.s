@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global __ct__7MemStatFv
-__ct__7MemStatFv:
+.fn __ct__7MemStatFv, global
 /* 80086690 000835F0  7C 08 02 A6 */	mflr r0
 /* 80086694 000835F4  3C 80 80 22 */	lis r4, __vt__5ANode@ha
 /* 80086698 000835F8  90 01 00 04 */	stw r0, 4(r1)
@@ -34,9 +33,9 @@ __ct__7MemStatFv:
 /* 80086704 00083664  38 21 00 18 */	addi r1, r1, 0x18
 /* 80086708 00083668  7C 08 03 A6 */	mtlr r0
 /* 8008670C 0008366C  4E 80 00 20 */	blr 
+.endfn __ct__7MemStatFv
 
-.global reset__7MemStatFv
-reset__7MemStatFv:
+.fn reset__7MemStatFv, global
 /* 80086710 00083670  38 A0 00 00 */	li r5, 0
 /* 80086714 00083674  90 A3 00 10 */	stw r5, 0x10(r3)
 /* 80086718 00083678  3C 80 80 2B */	lis r4, lbl_802AEF54@ha
@@ -47,9 +46,9 @@ reset__7MemStatFv:
 /* 8008672C 0008368C  90 63 00 18 */	stw r3, 0x18(r3)
 /* 80086730 00083690  90 A3 00 9C */	stw r5, 0x9c(r3)
 /* 80086734 00083694  4E 80 00 20 */	blr 
+.endfn reset__7MemStatFv
 
-.global start__7MemStatFPc
-start__7MemStatFPc:
+.fn start__7MemStatFPc, global
 /* 80086738 00083698  7C 08 02 A6 */	mflr r0
 /* 8008673C 0008369C  90 01 00 04 */	stw r0, 4(r1)
 /* 80086740 000836A0  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -121,9 +120,9 @@ start__7MemStatFPc:
 /* 8008683C 0008379C  38 21 00 28 */	addi r1, r1, 0x28
 /* 80086840 000837A0  7C 08 03 A6 */	mtlr r0
 /* 80086844 000837A4  4E 80 00 20 */	blr 
+.endfn start__7MemStatFPc
 
-.global end__7MemStatFPc
-end__7MemStatFPc:
+.fn end__7MemStatFPc, global
 /* 80086848 000837A8  7C 08 02 A6 */	mflr r0
 /* 8008684C 000837AC  90 01 00 04 */	stw r0, 4(r1)
 /* 80086850 000837B0  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -155,9 +154,9 @@ end__7MemStatFPc:
 /* 800868B4 00083814  38 21 00 18 */	addi r1, r1, 0x18
 /* 800868B8 00083818  7C 08 03 A6 */	mtlr r0
 /* 800868BC 0008381C  4E 80 00 20 */	blr 
+.endfn end__7MemStatFPc
 
-.global print__7MemStatFv
-print__7MemStatFv:
+.fn print__7MemStatFv, global
 /* 800868C0 00083820  7C 08 02 A6 */	mflr r0
 /* 800868C4 00083824  90 01 00 04 */	stw r0, 4(r1)
 /* 800868C8 00083828  94 21 FF F8 */	stwu r1, -8(r1)
@@ -172,9 +171,9 @@ print__7MemStatFv:
 /* 800868E8 00083848  38 21 00 08 */	addi r1, r1, 8
 /* 800868EC 0008384C  7C 08 03 A6 */	mtlr r0
 /* 800868F0 00083850  4E 80 00 20 */	blr 
+.endfn print__7MemStatFv
 
-.global getInfo__7MemStatFPc
-getInfo__7MemStatFPc:
+.fn getInfo__7MemStatFPc, global
 /* 800868F4 00083854  7C 08 02 A6 */	mflr r0
 /* 800868F8 00083858  7C 65 1B 78 */	mr r5, r3
 /* 800868FC 0008385C  90 01 00 04 */	stw r0, 4(r1)
@@ -184,9 +183,9 @@ getInfo__7MemStatFPc:
 /* 8008690C 0008386C  38 21 00 08 */	addi r1, r1, 8
 /* 80086910 00083870  7C 08 03 A6 */	mtlr r0
 /* 80086914 00083874  4E 80 00 20 */	blr 
+.endfn getInfo__7MemStatFPc
 
-.global printInfoRec__7MemStatFP7MemInfoi
-printInfoRec__7MemStatFP7MemInfoi:
+.fn printInfoRec__7MemStatFP7MemInfoi, global
 /* 80086918 00083878  7C 08 02 A6 */	mflr r0
 /* 8008691C 0008387C  90 01 00 04 */	stw r0, 4(r1)
 /* 80086920 00083880  94 21 FC C8 */	stwu r1, -0x338(r1)
@@ -351,9 +350,9 @@ printInfoRec__7MemStatFP7MemInfoi:
 /* 80086B44 00083AA4  38 21 03 38 */	addi r1, r1, 0x338
 /* 80086B48 00083AA8  7C 08 03 A6 */	mtlr r0
 /* 80086B4C 00083AAC  4E 80 00 20 */	blr 
+.endfn printInfoRec__7MemStatFP7MemInfoi
 
-.global getInfoRec__7MemStatFPcP7MemInfo
-getInfoRec__7MemStatFPcP7MemInfo:
+.fn getInfoRec__7MemStatFPcP7MemInfo, global
 /* 80086B50 00083AB0  7C 08 02 A6 */	mflr r0
 /* 80086B54 00083AB4  90 01 00 04 */	stw r0, 4(r1)
 /* 80086B58 00083AB8  94 21 FF D0 */	stwu r1, -0x30(r1)
@@ -459,33 +458,40 @@ getInfoRec__7MemStatFPcP7MemInfo:
 /* 80086CB8 00083C18  38 21 00 30 */	addi r1, r1, 0x30
 /* 80086CBC 00083C1C  7C 08 03 A6 */	mtlr r0
 /* 80086CC0 00083C20  4E 80 00 20 */	blr 
+.endfn getInfoRec__7MemStatFPcP7MemInfo
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802AEF48:
+.obj lbl_802AEF48, local
 	.asciz "memStat.cpp"
+.endobj lbl_802AEF48
 .balign 4
-lbl_802AEF54:
+.obj lbl_802AEF54, local
 	.asciz "infoList"
+.endobj lbl_802AEF54
 .balign 4
-lbl_802AEF60:
+.obj lbl_802AEF60, local
 	.asciz "CoreNode"
+.endobj lbl_802AEF60
 .balign 4
-lbl_802AEF6C:
+.obj lbl_802AEF6C, local
 	.4byte __RTTI__5ANode
 	.4byte 0x00000000
 	.4byte 0x00000000
+.endobj lbl_802AEF6C
 .balign 4
-lbl_802AEF78:
+.obj lbl_802AEF78, local
 	.asciz "MemInfoNode"
+.endobj lbl_802AEF78
 .balign 4
-lbl_802AEF84:
+.obj lbl_802AEF84, local
 	.4byte __RTTI__5ANode
 	.4byte 0x00000000
 	.4byte __RTTI__8CoreNode
 	.4byte 0x00000000
 	.4byte 0x00000000
-lbl_802AEF98:
+.endobj lbl_802AEF84
+.obj lbl_802AEF98, local
 	.4byte __RTTI__5ANode
 	.4byte 0x00000000
 	.4byte __RTTI__8CoreNode
@@ -493,18 +499,19 @@ lbl_802AEF98:
 	.4byte __RTTI__11MemInfoNode
 	.4byte 0x00000000
 	.4byte 0x00000000
-.global __vt__7MemInfo
-__vt__7MemInfo:
+.endobj lbl_802AEF98
+.obj __vt__7MemInfo, weak
 	.4byte __RTTI__7MemInfo
 	.4byte 0
 	.4byte getAgeNodeType__5ANodeFv
 	.4byte read__8CoreNodeFR18RandomAccessStream
-.global __vt__11MemInfoNode
-__vt__11MemInfoNode:
+.endobj __vt__7MemInfo
+.obj __vt__11MemInfoNode, weak
 	.4byte __RTTI__11MemInfoNode
 	.4byte 0
 	.4byte getAgeNodeType__5ANodeFv
 	.4byte read__8CoreNodeFR18RandomAccessStream
+.endobj __vt__11MemInfoNode
 	.4byte 0
 	.4byte 0
 	.4byte 0
@@ -515,30 +522,37 @@ __vt__11MemInfoNode:
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-lbl_803DEE90:
+.obj lbl_803DEE90, local
 	.asciz "meminfo"
+.endobj lbl_803DEE90
 .balign 4
-lbl_803DEE98:
+.obj lbl_803DEE98, local
 	.asciz "MemInfo"
+.endobj lbl_803DEE98
 .balign 4
-lbl_803DEEA0:
+.obj lbl_803DEEA0, local
 	.asciz "ANode"
+.endobj lbl_803DEEA0
 .balign 4
-__RTTI__5ANode:
+.obj __RTTI__5ANode, local
 	.4byte lbl_803DEEA0
 	.4byte 0
-__RTTI__8CoreNode:
+.endobj __RTTI__5ANode
+.obj __RTTI__8CoreNode, local
 	.4byte lbl_802AEF60
 	.4byte lbl_802AEF6C
-__RTTI__11MemInfoNode:
+.endobj __RTTI__8CoreNode
+.obj __RTTI__11MemInfoNode, local
 	.4byte lbl_802AEF78
 	.4byte lbl_802AEF84
-__RTTI__7MemInfo:
+.endobj __RTTI__11MemInfoNode
+.obj __RTTI__7MemInfo, local
 	.4byte lbl_803DEE98
 	.4byte lbl_802AEF98
+.endobj __RTTI__7MemInfo
 
 .section .sbss, "wa"
 .balign 8
-.global memStat
-memStat:
+.obj memStat, global
 	.skip 4
+.endobj memStat

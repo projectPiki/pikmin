@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global load__Q23zen14particleLoaderFPcb
-load__Q23zen14particleLoaderFPcb:
+.fn load__Q23zen14particleLoaderFPcb, global
 /* 801A0F24 0019DE84  7C 08 02 A6 */	mflr r0
 /* 801A0F28 0019DE88  3C C0 5F 62 */	lis r6, 0x5F62696E@ha
 /* 801A0F2C 0019DE8C  90 01 00 04 */	stw r0, 4(r1)
@@ -92,9 +91,9 @@ load__Q23zen14particleLoaderFPcb:
 /* 801A1070 0019DFD0  38 21 00 40 */	addi r1, r1, 0x40
 /* 801A1074 0019DFD4  7C 08 03 A6 */	mtlr r0
 /* 801A1078 0019DFD8  4E 80 00 20 */	blr 
+.endfn load__Q23zen14particleLoaderFPcb
 
-.global pmFind__Q23zen14particleLoaderFPc
-pmFind__Q23zen14particleLoaderFPc:
+.fn pmFind__Q23zen14particleLoaderFPc, global
 /* 801A107C 0019DFDC  7C 08 02 A6 */	mflr r0
 /* 801A1080 0019DFE0  90 01 00 04 */	stw r0, 4(r1)
 /* 801A1084 0019DFE4  94 21 FF D0 */	stwu r1, -0x30(r1)
@@ -132,31 +131,37 @@ pmFind__Q23zen14particleLoaderFPc:
 /* 801A10F4 0019E054  38 21 00 30 */	addi r1, r1, 0x30
 /* 801A10F8 0019E058  7C 08 03 A6 */	mtlr r0
 /* 801A10FC 0019E05C  4E 80 00 20 */	blr 
+.endfn pmFind__Q23zen14particleLoaderFPc
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802DA718:
+.obj lbl_802DA718, local
 	.asciz "particleLoader.cpp"
+.endobj lbl_802DA718
 .balign 4
-lbl_802DA72C:
+.obj lbl_802DA72C, local
 	.asciz "particleLoader"
+.endobj lbl_802DA72C
 .balign 4
-lbl_802DA73C:
+.obj lbl_802DA73C, local
 	.asciz "zen::PCRData"
+.endobj lbl_802DA73C
 .balign 4
-lbl_802DA74C:
+.obj lbl_802DA74C, local
 	.asciz "zen::zenList"
+.endobj lbl_802DA74C
 .balign 4
-lbl_802DA75C:
+.obj lbl_802DA75C, local
 	.4byte __RTTI__Q23zen7zenList
 	.4byte 0x00000000
 	.4byte 0x00000000
-.global __vt__Q23zen7PCRData
-__vt__Q23zen7PCRData:
+.endobj lbl_802DA75C
+.obj __vt__Q23zen7PCRData, weak
 	.4byte __RTTI__Q23zen7PCRData
 	.4byte 0
 	.4byte insertAfter__Q23zen7zenListFPQ23zen7zenList
 	.4byte remove__Q23zen7zenListFv
+.endobj __vt__Q23zen7PCRData
 	.4byte 0
 	.4byte 0
 	.4byte 0
@@ -164,9 +169,11 @@ __vt__Q23zen7PCRData:
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-__RTTI__Q23zen7zenList:
+.obj __RTTI__Q23zen7zenList, local
 	.4byte lbl_802DA74C
 	.4byte 0
-__RTTI__Q23zen7PCRData:
+.endobj __RTTI__Q23zen7zenList
+.obj __RTTI__Q23zen7PCRData, local
 	.4byte lbl_802DA73C
 	.4byte lbl_802DA75C
+.endobj __RTTI__Q23zen7PCRData

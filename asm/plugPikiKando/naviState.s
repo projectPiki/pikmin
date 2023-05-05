@@ -11589,8 +11589,7 @@ invincible__15NaviPelletStateFP4Navi:
 	.4byte 0
 	.4byte 0
 .endobj lbl_802C088C
-.global __vt__17NaviPikiZeroState
-__vt__17NaviPikiZeroState:
+.obj __vt__17NaviPikiZeroState, global
 	.4byte __RTTI__17NaviPikiZeroState
 	.4byte 0
 	.4byte "procMsg__15Receiver<4Navi>FP4NaviP3Msg"
@@ -11612,11 +11611,13 @@ __vt__17NaviPikiZeroState:
 	.4byte "restart__13AState<4Navi>FP4Navi"
 	.4byte "transit__13AState<4Navi>FP4Navii"
 	.4byte invincible__17NaviPikiZeroStateFP4Navi
+.endobj __vt__17NaviPikiZeroState
 .balign 4
-lbl_802C08FC:
+.obj lbl_802C08FC, local
 	.asciz "NaviDeadState"
+.endobj lbl_802C08FC
 .balign 4
-lbl_802C090C:
+.obj lbl_802C090C, local
 	.4byte "__RTTI__15Receiver<4Navi>"
 	.4byte 0
 	.4byte "__RTTI__13AState<4Navi>"
@@ -11624,8 +11625,8 @@ lbl_802C090C:
 	.4byte __RTTI__9NaviState
 	.4byte 0
 	.4byte 0
-.global __vt__13NaviDeadState
-__vt__13NaviDeadState:
+.endobj lbl_802C090C
+.obj __vt__13NaviDeadState, global
 	.4byte __RTTI__13NaviDeadState
 	.4byte 0
 	.4byte "procMsg__15Receiver<4Navi>FP4NaviP3Msg"
@@ -11647,11 +11648,13 @@ __vt__13NaviDeadState:
 	.4byte restart__13NaviDeadStateFP4Navi
 	.4byte "transit__13AState<4Navi>FP4Navii"
 	.4byte invincible__13NaviDeadStateFP4Navi
+.endobj __vt__13NaviDeadState
 .balign 4
-lbl_802C097C:
+.obj lbl_802C097C, local
 	.asciz "NaviIroIroState"
+.endobj lbl_802C097C
 .balign 4
-lbl_802C098C:
+.obj lbl_802C098C, local
 	.4byte "__RTTI__15Receiver<4Navi>"
 	.4byte 0
 	.4byte "__RTTI__13AState<4Navi>"
@@ -11659,8 +11662,8 @@ lbl_802C098C:
 	.4byte __RTTI__9NaviState
 	.4byte 0
 	.4byte 0
-.global __vt__15NaviIroIroState
-__vt__15NaviIroIroState:
+.endobj lbl_802C098C
+.obj __vt__15NaviIroIroState, global
 	.4byte __RTTI__15NaviIroIroState
 	.4byte 0
 	.4byte "procMsg__15Receiver<4Navi>FP4NaviP3Msg"
@@ -11682,11 +11685,13 @@ __vt__15NaviIroIroState:
 	.4byte "restart__13AState<4Navi>FP4Navi"
 	.4byte "transit__13AState<4Navi>FP4Navii"
 	.4byte invincible__9NaviStateFP4Navi
+.endobj __vt__15NaviIroIroState
 .balign 4
-lbl_802C09FC:
+.obj lbl_802C09FC, local
 	.asciz "NaviClearState"
+.endobj lbl_802C09FC
 .balign 4
-lbl_802C0A0C:
+.obj lbl_802C0A0C, local
 	.4byte "__RTTI__15Receiver<4Navi>"
 	.4byte 0
 	.4byte "__RTTI__13AState<4Navi>"
@@ -11694,8 +11699,8 @@ lbl_802C0A0C:
 	.4byte __RTTI__9NaviState
 	.4byte 0
 	.4byte 0
-.global __vt__14NaviClearState
-__vt__14NaviClearState:
+.endobj lbl_802C0A0C
+.obj __vt__14NaviClearState, global
 	.4byte __RTTI__14NaviClearState
 	.4byte 0
 	.4byte "procMsg__15Receiver<4Navi>FP4NaviP3Msg"
@@ -11717,11 +11722,13 @@ __vt__14NaviClearState:
 	.4byte "restart__13AState<4Navi>FP4Navi"
 	.4byte "transit__13AState<4Navi>FP4Navii"
 	.4byte invincible__9NaviStateFP4Navi
+.endobj __vt__14NaviClearState
 .balign 4
-lbl_802C0A7C:
+.obj lbl_802C0A7C, local
 	.asciz "NaviLockState"
+.endobj lbl_802C0A7C
 .balign 4
-lbl_802C0A8C:
+.obj lbl_802C0A8C, local
 	.4byte "__RTTI__15Receiver<4Navi>"
 	.4byte 0
 	.4byte "__RTTI__13AState<4Navi>"
@@ -11729,8 +11736,8 @@ lbl_802C0A8C:
 	.4byte __RTTI__9NaviState
 	.4byte 0
 	.4byte 0
-.global __vt__13NaviLockState
-__vt__13NaviLockState:
+.endobj lbl_802C0A8C
+.obj __vt__13NaviLockState, global
 	.4byte __RTTI__13NaviLockState
 	.4byte 0
 	.4byte "procMsg__15Receiver<4Navi>FP4NaviP3Msg"
@@ -11752,11 +11759,13 @@ __vt__13NaviLockState:
 	.4byte "restart__13AState<4Navi>FP4Navi"
 	.4byte "transit__13AState<4Navi>FP4Navii"
 	.4byte invincible__9NaviStateFP4Navi
+.endobj __vt__13NaviLockState
 .balign 4
-lbl_802C0AFC:
+.obj lbl_802C0AFC, local
 	.asciz "NaviAttackState"
+.endobj lbl_802C0AFC
 .balign 4
-lbl_802C0B0C:
+.obj lbl_802C0B0C, local
 	.4byte "__RTTI__15Receiver<4Navi>"
 	.4byte 0
 	.4byte "__RTTI__13AState<4Navi>"
@@ -11764,8 +11773,8 @@ lbl_802C0B0C:
 	.4byte __RTTI__9NaviState
 	.4byte 0
 	.4byte 0
-.global __vt__15NaviAttackState
-__vt__15NaviAttackState:
+.endobj lbl_802C0B0C
+.obj __vt__15NaviAttackState, global
 	.4byte __RTTI__15NaviAttackState
 	.4byte 0
 	.4byte "procMsg__15Receiver<4Navi>FP4NaviP3Msg"
@@ -11787,11 +11796,13 @@ __vt__15NaviAttackState:
 	.4byte restart__15NaviAttackStateFP4Navi
 	.4byte "transit__13AState<4Navi>FP4Navii"
 	.4byte invincible__9NaviStateFP4Navi
+.endobj __vt__15NaviAttackState
 .balign 4
-lbl_802C0B7C:
+.obj lbl_802C0B7C, local
 	.asciz "NaviWaterState"
+.endobj lbl_802C0B7C
 .balign 4
-lbl_802C0B8C:
+.obj lbl_802C0B8C, local
 	.4byte "__RTTI__15Receiver<4Navi>"
 	.4byte 0
 	.4byte "__RTTI__13AState<4Navi>"
@@ -11799,8 +11810,8 @@ lbl_802C0B8C:
 	.4byte __RTTI__9NaviState
 	.4byte 0
 	.4byte 0
-.global __vt__14NaviWaterState
-__vt__14NaviWaterState:
+.endobj lbl_802C0B8C
+.obj __vt__14NaviWaterState, global
 	.4byte __RTTI__14NaviWaterState
 	.4byte 0
 	.4byte "procMsg__15Receiver<4Navi>FP4NaviP3Msg"
@@ -11822,11 +11833,13 @@ __vt__14NaviWaterState:
 	.4byte "restart__13AState<4Navi>FP4Navi"
 	.4byte "transit__13AState<4Navi>FP4Navii"
 	.4byte invincible__9NaviStateFP4Navi
+.endobj __vt__14NaviWaterState
 .balign 4
-lbl_802C0BFC:
+.obj lbl_802C0BFC, local
 	.asciz "NaviSowState"
+.endobj lbl_802C0BFC
 .balign 4
-lbl_802C0C0C:
+.obj lbl_802C0C0C, local
 	.4byte "__RTTI__15Receiver<4Navi>"
 	.4byte 0
 	.4byte "__RTTI__13AState<4Navi>"
@@ -11834,8 +11847,8 @@ lbl_802C0C0C:
 	.4byte __RTTI__9NaviState
 	.4byte 0
 	.4byte 0
-.global __vt__12NaviSowState
-__vt__12NaviSowState:
+.endobj lbl_802C0C0C
+.obj __vt__12NaviSowState, global
 	.4byte __RTTI__12NaviSowState
 	.4byte 0
 	.4byte "procMsg__15Receiver<4Navi>FP4NaviP3Msg"
@@ -11857,11 +11870,13 @@ __vt__12NaviSowState:
 	.4byte "restart__13AState<4Navi>FP4Navi"
 	.4byte "transit__13AState<4Navi>FP4Navii"
 	.4byte invincible__9NaviStateFP4Navi
+.endobj __vt__12NaviSowState
 .balign 4
-lbl_802C0C7C:
+.obj lbl_802C0C7C, local
 	.asciz "NaviPressedState"
+.endobj lbl_802C0C7C
 .balign 4
-lbl_802C0C90:
+.obj lbl_802C0C90, local
 	.4byte "__RTTI__15Receiver<4Navi>"
 	.4byte 0
 	.4byte "__RTTI__13AState<4Navi>"
@@ -11869,6 +11884,7 @@ lbl_802C0C90:
 	.4byte __RTTI__9NaviState
 	.4byte 0
 	.4byte 0
+.endobj lbl_802C0C90
 .global __vt__16NaviPressedState
 __vt__16NaviPressedState:
 	.4byte __RTTI__16NaviPressedState

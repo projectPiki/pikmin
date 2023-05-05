@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global Run
-Run:
+.fn Run, local
 /* 801F9EC4 001F6E24  7C 08 02 A6 */	mflr r0
 /* 801F9EC8 001F6E28  90 01 00 04 */	stw r0, 4(r1)
 /* 801F9ECC 001F6E2C  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -18,15 +17,15 @@ Run:
 /* 801F9EF8 001F6E58  38 21 00 18 */	addi r1, r1, 0x18
 /* 801F9EFC 001F6E5C  7C 08 03 A6 */	mtlr r0
 /* 801F9F00 001F6E60  4E 80 00 20 */	blr 
+.endfn Run
 
-.global Callback
-Callback:
+.fn Callback, local
 /* 801F9F04 001F6E64  38 00 00 01 */	li r0, 1
 /* 801F9F08 001F6E68  90 0D 32 00 */	stw r0, Prepared@sda21(r13)
 /* 801F9F0C 001F6E6C  4E 80 00 20 */	blr 
+.endfn Callback
 
-.global __OSReboot
-__OSReboot:
+.fn __OSReboot, global
 /* 801F9F10 001F6E70  7C 08 02 A6 */	mflr r0
 /* 801F9F14 001F6E74  90 01 00 04 */	stw r0, 4(r1)
 /* 801F9F18 001F6E78  94 21 FC B8 */	stwu r1, -0x348(r1)
@@ -150,9 +149,10 @@ __OSReboot:
 /* 801FA0B4 001F7014  83 A1 03 3C */	lwz r29, 0x33c(r1)
 /* 801FA0B8 001F7018  38 21 03 48 */	addi r1, r1, 0x348
 /* 801FA0BC 001F701C  4E 80 00 20 */	blr 
+.endfn __OSReboot
 
 .section .sbss, "wa"
 .balign 8
-.global Prepared
-Prepared:
+.obj Prepared, global
 	.skip 0x4
+.endobj Prepared

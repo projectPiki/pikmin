@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global __ct__13P2DOrthoGraphFiiii
-__ct__13P2DOrthoGraphFiiii:
+.fn __ct__13P2DOrthoGraphFiiii, global
 /* 801AFCF0 001ACC50  7C 08 02 A6 */	mflr r0
 /* 801AFCF4 001ACC54  90 01 00 04 */	stw r0, 4(r1)
 /* 801AFCF8 001ACC58  94 21 FF C8 */	stwu r1, -0x38(r1)
@@ -51,9 +50,9 @@ __ct__13P2DOrthoGraphFiiii:
 /* 801AFDA8 001ACD08  38 21 00 38 */	addi r1, r1, 0x38
 /* 801AFDAC 001ACD0C  7C 08 03 A6 */	mtlr r0
 /* 801AFDB0 001ACD10  4E 80 00 20 */	blr 
+.endfn __ct__13P2DOrthoGraphFiiii
 
-.global setPort__13P2DOrthoGraphFv
-setPort__13P2DOrthoGraphFv:
+.fn setPort__13P2DOrthoGraphFv, global
 /* 801AFDB4 001ACD14  7C 08 02 A6 */	mflr r0
 /* 801AFDB8 001ACD18  90 01 00 04 */	stw r0, 4(r1)
 /* 801AFDBC 001ACD1C  94 21 FF B8 */	stwu r1, -0x48(r1)
@@ -108,9 +107,9 @@ setPort__13P2DOrthoGraphFv:
 /* 801AFE80 001ACDE0  38 21 00 48 */	addi r1, r1, 0x48
 /* 801AFE84 001ACDE4  7C 08 03 A6 */	mtlr r0
 /* 801AFE88 001ACDE8  4E 80 00 20 */	blr 
+.endfn setPort__13P2DOrthoGraphFv
 
-.global setLookat__13P2DOrthoGraphFv
-setLookat__13P2DOrthoGraphFv:
+.fn setLookat__13P2DOrthoGraphFv, global
 /* 801AFE8C 001ACDEC  7C 08 02 A6 */	mflr r0
 /* 801AFE90 001ACDF0  90 01 00 04 */	stw r0, 4(r1)
 /* 801AFE94 001ACDF4  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -126,9 +125,9 @@ setLookat__13P2DOrthoGraphFv:
 /* 801AFEBC 001ACE1C  38 21 00 18 */	addi r1, r1, 0x18
 /* 801AFEC0 001ACE20  7C 08 03 A6 */	mtlr r0
 /* 801AFEC4 001ACE24  4E 80 00 20 */	blr 
+.endfn setLookat__13P2DOrthoGraphFv
 
-.global scissorBounds__13P2DOrthoGraphFP7PUTRectP7PUTRect
-scissorBounds__13P2DOrthoGraphFP7PUTRectP7PUTRect:
+.fn scissorBounds__13P2DOrthoGraphFP7PUTRectP7PUTRect, global
 /* 801AFEC8 001ACE28  94 21 FF 18 */	stwu r1, -0xe8(r1)
 /* 801AFECC 001ACE2C  A9 43 00 08 */	lha r10, 8(r3)
 /* 801AFED0 001ACE30  3C 00 43 30 */	lis r0, 0x4330
@@ -284,9 +283,9 @@ scissorBounds__13P2DOrthoGraphFP7PUTRectP7PUTRect:
 /* 801B0128 001AD088  B0 04 00 06 */	sth r0, 6(r4)
 /* 801B012C 001AD08C  38 21 00 E8 */	addi r1, r1, 0xe8
 /* 801B0130 001AD090  4E 80 00 20 */	blr 
+.endfn scissorBounds__13P2DOrthoGraphFP7PUTRectP7PUTRect
 
-.global __dt__13P2DOrthoGraphFv
-__dt__13P2DOrthoGraphFv:
+.fn __dt__13P2DOrthoGraphFv, weak
 /* 801B0134 001AD094  7C 08 02 A6 */	mflr r0
 /* 801B0138 001AD098  90 01 00 04 */	stw r0, 4(r1)
 /* 801B013C 001AD09C  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -312,21 +311,24 @@ __dt__13P2DOrthoGraphFv:
 /* 801B0184 001AD0E4  38 21 00 18 */	addi r1, r1, 0x18
 /* 801B0188 001AD0E8  7C 08 03 A6 */	mtlr r0
 /* 801B018C 001AD0EC  4E 80 00 20 */	blr 
+.endfn __dt__13P2DOrthoGraphFv
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802E05F8:
+.obj lbl_802E05F8, local
 	.asciz "P2DOrthoGraph"
+.endobj lbl_802E05F8
 .balign 4
-lbl_802E0608:
+.obj lbl_802E0608, local
 	.asciz "P2DGrafContext"
+.endobj lbl_802E0608
 .balign 4
-lbl_802E0618:
+.obj lbl_802E0618, local
 	.4byte __RTTI__14P2DGrafContext
 	.4byte 0
 	.4byte 0
-.global __vt__13P2DOrthoGraph
-__vt__13P2DOrthoGraph:
+.endobj lbl_802E0618
+.obj __vt__13P2DOrthoGraph, global
 	.4byte __RTTI__13P2DOrthoGraph
 	.4byte 0
 	.4byte __dt__13P2DOrthoGraphFv
@@ -336,22 +338,27 @@ __vt__13P2DOrthoGraph:
 	.4byte setup2D__14P2DGrafContextFv
 	.4byte setScissor__14P2DGrafContextFv
 	.4byte setLookat__13P2DOrthoGraphFv
+.endobj __vt__13P2DOrthoGraph
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-__RTTI__14P2DGrafContext:
+.obj __RTTI__14P2DGrafContext, local
 	.4byte lbl_802E0608
 	.4byte 0
-__RTTI__13P2DOrthoGraph:
+.endobj __RTTI__14P2DGrafContext
+.obj __RTTI__13P2DOrthoGraph, local
 	.4byte lbl_802E05F8
 	.4byte lbl_802E0618
+.endobj __RTTI__13P2DOrthoGraph
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803EB870:
-	.4byte 0x43300000
-	.4byte 0x80000000
-lbl_803EB878:
-	.4byte 0x3DCCCCCD
-lbl_803EB87C:
-	.4byte 0x3F666666
+.obj lbl_803EB870, local
+	.8byte 0x4330000080000000
+.endobj lbl_803EB870
+.obj lbl_803EB878, local
+	.float 0.1
+.endobj lbl_803EB878
+.obj lbl_803EB87C, local
+	.float 0.9
+.endobj lbl_803EB87C

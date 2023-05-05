@@ -695,16 +695,18 @@ lbl_802BD798:
 lbl_802BD7A4:
 	.asciz "object type"
 .balign 4
-lbl_802BD7B0:
+lbl_802BD7B0: # Shift-JIS
 	.4byte 0x83418343
 	.4byte 0x83658380
 	.4byte 0x82F090B6
 	.4byte 0x82DE0000
-lbl_802BD7C0:
+.balign 4
+lbl_802BD7C0: # Shift-JIS
 	.4byte 0x83418343
 	.4byte 0x83658380
 	.4byte 0x82F094AD
 	.4byte 0x90B60000
+.balign 4
 lbl_802BD7D0:
 	.4byte .L_800EE9AC
 	.4byte .L_800EEA84
@@ -738,26 +740,26 @@ lbl_802BD83C:
 .balign 4
 lbl_802BD848:
 	.4byte __RTTI__10Parameters
-	.4byte 0x00000000
-	.4byte 0x00000000
+	.4byte 0
+	.4byte 0
 .balign 4
 lbl_802BD854:
 	.asciz "GenObject"
 .balign 4
 lbl_802BD860:
 	.4byte __RTTI__10Parameters
-	.4byte 0x00000000
+	.4byte 0
 	.4byte __RTTI__7GenBase
-	.4byte 0x00000000
-	.4byte 0x00000000
+	.4byte 0
+	.4byte 0
 lbl_802BD874:
 	.4byte __RTTI__10Parameters
-	.4byte 0x00000000
+	.4byte 0
 	.4byte __RTTI__7GenBase
-	.4byte 0x00000000
+	.4byte 0
 	.4byte __RTTI__9GenObject
-	.4byte 0x00000000
-	.4byte 0x00000000
+	.4byte 0
+	.4byte 0
 .global __vt__13GenObjectItem
 __vt__13GenObjectItem:
 	.4byte __RTTI__13GenObjectItem
@@ -830,13 +832,16 @@ __RTTI__8BaseParm:
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803E9D90:
+.obj lbl_803E9D90, local
 	.float 0.0
-lbl_803E9D94:
+.endobj lbl_803E9D90
+.obj lbl_803E9D94, local
 	.float 30.0
-lbl_803E9D98:
+.endobj lbl_803E9D94
+.obj lbl_803E9D98, local
 	.float 12800.0
+.endobj lbl_803E9D98
 .balign 8
-lbl_803E9DA0:
-	.4byte 0x43300000
-	.4byte 0x80000000
+.obj lbl_803E9DA0, local
+	.8byte 0x4330000080000000
+.endobj lbl_803E9DA0

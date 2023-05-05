@@ -1,14 +1,13 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global hioEnumCallback__Fl
-hioEnumCallback__Fl:
+.fn hioEnumCallback__Fl, local
 /* 80084340 000812A0  80 8D 2F 88 */	lwz r4, kio@sda21(r13)
 /* 80084344 000812A4  90 64 00 00 */	stw r3, 0(r4)
 /* 80084348 000812A8  38 60 00 00 */	li r3, 0
 /* 8008434C 000812AC  4E 80 00 20 */	blr 
+.endfn hioEnumCallback__Fl
 
-.global hioCallback__Fv
-hioCallback__Fv:
+.fn hioCallback__Fv, local
 /* 80084350 000812B0  7C 08 02 A6 */	mflr r0
 /* 80084354 000812B4  90 01 00 04 */	stw r0, 4(r1)
 /* 80084358 000812B8  94 21 FF F8 */	stwu r1, -8(r1)
@@ -18,9 +17,9 @@ hioCallback__Fv:
 /* 80084368 000812C8  38 21 00 08 */	addi r1, r1, 8
 /* 8008436C 000812CC  7C 08 03 A6 */	mtlr r0
 /* 80084370 000812D0  4E 80 00 20 */	blr 
+.endfn hioCallback__Fv
 
-.global __ct__3KIOFv
-__ct__3KIOFv:
+.fn __ct__3KIOFv, global
 /* 80084374 000812D4  7C 08 02 A6 */	mflr r0
 /* 80084378 000812D8  38 80 00 20 */	li r4, 0x20
 /* 8008437C 000812DC  90 01 00 04 */	stw r0, 4(r1)
@@ -44,9 +43,9 @@ __ct__3KIOFv:
 /* 800843C4 00081324  38 21 00 18 */	addi r1, r1, 0x18
 /* 800843C8 00081328  7C 08 03 A6 */	mtlr r0
 /* 800843CC 0008132C  4E 80 00 20 */	blr 
+.endfn __ct__3KIOFv
 
-.global initialise__3KIOFv
-initialise__3KIOFv:
+.fn initialise__3KIOFv, global
 /* 800843D0 00081330  7C 08 02 A6 */	mflr r0
 /* 800843D4 00081334  3C 80 80 08 */	lis r4, hioEnumCallback__Fl@ha
 /* 800843D8 00081338  90 01 00 04 */	stw r0, 4(r1)
@@ -78,9 +77,9 @@ initialise__3KIOFv:
 /* 80084438 00081398  38 21 00 18 */	addi r1, r1, 0x18
 /* 8008443C 0008139C  7C 08 03 A6 */	mtlr r0
 /* 80084440 000813A0  4E 80 00 20 */	blr 
+.endfn initialise__3KIOFv
 
-.global readMailbox__3KIOFv
-readMailbox__3KIOFv:
+.fn readMailbox__3KIOFv, global
 /* 80084444 000813A4  7C 08 02 A6 */	mflr r0
 /* 80084448 000813A8  90 01 00 04 */	stw r0, 4(r1)
 /* 8008444C 000813AC  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -144,9 +143,9 @@ readMailbox__3KIOFv:
 /* 80084514 00081474  38 21 00 18 */	addi r1, r1, 0x18
 /* 80084518 00081478  7C 08 03 A6 */	mtlr r0
 /* 8008451C 0008147C  4E 80 00 20 */	blr 
+.endfn readMailbox__3KIOFv
 
-.global startWrite__3KIOFiPUci
-startWrite__3KIOFiPUci:
+.fn startWrite__3KIOFiPUci, global
 /* 80084520 00081480  7C 08 02 A6 */	mflr r0
 /* 80084524 00081484  90 01 00 04 */	stw r0, 4(r1)
 /* 80084528 00081488  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -161,9 +160,9 @@ startWrite__3KIOFiPUci:
 /* 8008454C 000814AC  38 21 00 20 */	addi r1, r1, 0x20
 /* 80084550 000814B0  7C 08 03 A6 */	mtlr r0
 /* 80084554 000814B4  4E 80 00 20 */	blr 
+.endfn startWrite__3KIOFiPUci
 
-.global writeHeader__3KIOFv
-writeHeader__3KIOFv:
+.fn writeHeader__3KIOFv, global
 /* 80084558 000814B8  7C 08 02 A6 */	mflr r0
 /* 8008455C 000814BC  90 01 00 04 */	stw r0, 4(r1)
 /* 80084560 000814C0  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -190,9 +189,9 @@ writeHeader__3KIOFv:
 /* 800845B0 00081510  38 21 00 18 */	addi r1, r1, 0x18
 /* 800845B4 00081514  7C 08 03 A6 */	mtlr r0
 /* 800845B8 00081518  4E 80 00 20 */	blr 
+.endfn writeHeader__3KIOFv
 
-.global set__10KIOContextFiPUci
-set__10KIOContextFiPUci:
+.fn set__10KIOContextFiPUci, global
 /* 800845BC 0008151C  90 C3 00 00 */	stw r6, 0(r3)
 /* 800845C0 00081520  80 ED 2F 88 */	lwz r7, kio@sda21(r13)
 /* 800845C4 00081524  80 E7 00 0C */	lwz r7, 0xc(r7)
@@ -200,9 +199,9 @@ set__10KIOContextFiPUci:
 /* 800845CC 0008152C  90 87 00 00 */	stw r4, 0(r7)
 /* 800845D0 00081530  90 A3 00 04 */	stw r5, 4(r3)
 /* 800845D4 00081534  4E 80 00 20 */	blr 
+.endfn set__10KIOContextFiPUci
 
-.global write__10KIOContextFv
-write__10KIOContextFv:
+.fn write__10KIOContextFv, global
 /* 800845D8 00081538  7C 08 02 A6 */	mflr r0
 /* 800845DC 0008153C  90 01 00 04 */	stw r0, 4(r1)
 /* 800845E0 00081540  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -265,25 +264,27 @@ write__10KIOContextFv:
 /* 800846B4 00081614  38 21 00 20 */	addi r1, r1, 0x20
 /* 800846B8 00081618  7C 08 03 A6 */	mtlr r0
 /* 800846BC 0008161C  4E 80 00 20 */	blr 
+.endfn write__10KIOContextFv
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-lbl_803DED90:
+.obj lbl_803DED90, local
 	.asciz "kio.cpp"
+.endobj lbl_803DED90
 .balign 4
-.global kontMode__3KIO
-kontMode__3KIO:
+.obj kontMode__3KIO, global
 	.4byte 2
+.endobj kontMode__3KIO
 
 .section .sbss, "wa"
 .balign 8
-.global kio
-kio:
+.obj kio, global
 	.skip 4
-.global fbCopy__3KIO
-fbCopy__3KIO:
+.endobj kio
+.obj fbCopy__3KIO, global
 	.skip 1
+.endobj fbCopy__3KIO
 .balign 4
-.global haltMessage__3KIO
-haltMessage__3KIO:
+.obj haltMessage__3KIO, global
 	.skip 4
+.endobj haltMessage__3KIO

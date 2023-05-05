@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global __ct__Q23zen12OgTestScreenFv
-__ct__Q23zen12OgTestScreenFv:
+.fn __ct__Q23zen12OgTestScreenFv, global
 /* 8017D744 0017A6A4  7C 08 02 A6 */	mflr r0
 /* 8017D748 0017A6A8  3C 80 80 22 */	lis r4, __vt__5ANode@ha
 /* 8017D74C 0017A6AC  90 01 00 04 */	stw r0, 4(r1)
@@ -202,9 +201,9 @@ __ct__Q23zen12OgTestScreenFv:
 /* 8017DA24 0017A984  38 21 00 58 */	addi r1, r1, 0x58
 /* 8017DA28 0017A988  7C 08 03 A6 */	mtlr r0
 /* 8017DA2C 0017A98C  4E 80 00 20 */	blr 
+.endfn __ct__Q23zen12OgTestScreenFv
 
-.global modeSelectSub__Q23zen12OgTestScreenFv
-modeSelectSub__Q23zen12OgTestScreenFv:
+.fn modeSelectSub__Q23zen12OgTestScreenFv, global
 /* 8017DA30 0017A990  7C 08 02 A6 */	mflr r0
 /* 8017DA34 0017A994  90 01 00 04 */	stw r0, 4(r1)
 /* 8017DA38 0017A998  94 21 FF 98 */	stwu r1, -0x68(r1)
@@ -549,9 +548,9 @@ modeSelectSub__Q23zen12OgTestScreenFv:
 /* 8017DF00 0017AE60  38 21 00 68 */	addi r1, r1, 0x68
 /* 8017DF04 0017AE64  7C 08 03 A6 */	mtlr r0
 /* 8017DF08 0017AE68  4E 80 00 20 */	blr 
+.endfn modeSelectSub__Q23zen12OgTestScreenFv
 
-.global update__Q23zen12OgTestScreenFv
-update__Q23zen12OgTestScreenFv:
+.fn update__Q23zen12OgTestScreenFv, global
 /* 8017DF0C 0017AE6C  7C 08 02 A6 */	mflr r0
 /* 8017DF10 0017AE70  90 01 00 04 */	stw r0, 4(r1)
 /* 8017DF14 0017AE74  94 21 FF B8 */	stwu r1, -0x48(r1)
@@ -661,9 +660,9 @@ update__Q23zen12OgTestScreenFv:
 /* 8017E088 0017AFE8  38 21 00 48 */	addi r1, r1, 0x48
 /* 8017E08C 0017AFEC  7C 08 03 A6 */	mtlr r0
 /* 8017E090 0017AFF0  4E 80 00 20 */	blr 
+.endfn update__Q23zen12OgTestScreenFv
 
-.global draw__Q23zen12OgTestScreenFR8Graphics
-draw__Q23zen12OgTestScreenFR8Graphics:
+.fn draw__Q23zen12OgTestScreenFR8Graphics, global
 /* 8017E094 0017AFF4  7C 08 02 A6 */	mflr r0
 /* 8017E098 0017AFF8  3C A0 80 2D */	lis r5, lbl_802D2468@ha
 /* 8017E09C 0017AFFC  90 01 00 04 */	stw r0, 4(r1)
@@ -1093,9 +1092,9 @@ draw__Q23zen12OgTestScreenFR8Graphics:
 /* 8017E730 0017B690  38 21 12 C8 */	addi r1, r1, 0x12c8
 /* 8017E734 0017B694  7C 08 03 A6 */	mtlr r0
 /* 8017E738 0017B698  4E 80 00 20 */	blr 
+.endfn draw__Q23zen12OgTestScreenFR8Graphics
 
-.global __ct__Q23zen13OgTestSectionFv
-__ct__Q23zen13OgTestSectionFv:
+.fn __ct__Q23zen13OgTestSectionFv, global
 /* 8017E73C 0017B69C  7C 08 02 A6 */	mflr r0
 /* 8017E740 0017B6A0  38 8D 08 E0 */	addi r4, r13, lbl_803E5600@sda21
 /* 8017E744 0017B6A4  90 01 00 04 */	stw r0, 4(r1)
@@ -1133,9 +1132,9 @@ __ct__Q23zen13OgTestSectionFv:
 /* 8017E7C4 0017B724  38 21 00 18 */	addi r1, r1, 0x18
 /* 8017E7C8 0017B728  7C 08 03 A6 */	mtlr r0
 /* 8017E7CC 0017B72C  4E 80 00 20 */	blr 
+.endfn __ct__Q23zen13OgTestSectionFv
 
-.global init__Q23zen13OgTestSectionFv
-init__Q23zen13OgTestSectionFv:
+.fn init__Q23zen13OgTestSectionFv, global
 /* 8017E7D0 0017B730  7C 08 02 A6 */	mflr r0
 /* 8017E7D4 0017B734  3C 80 00 02 */	lis r4, 0x00019800@ha
 /* 8017E7D8 0017B738  90 01 00 04 */	stw r0, 4(r1)
@@ -1169,25 +1168,31 @@ init__Q23zen13OgTestSectionFv:
 /* 8017E844 0017B7A4  38 21 00 18 */	addi r1, r1, 0x18
 /* 8017E848 0017B7A8  7C 08 03 A6 */	mtlr r0
 /* 8017E84C 0017B7AC  4E 80 00 20 */	blr 
+.endfn init__Q23zen13OgTestSectionFv
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802D2468:
+.obj lbl_802D2468, local
 	.asciz "ogTest.cpp"
+.endobj lbl_802D2468
 .balign 4
-lbl_802D2474:
+.obj lbl_802D2474, local
 	.asciz "OgTestSection"
+.endobj lbl_802D2474
 .balign 4
-lbl_802D2484:
+.obj lbl_802D2484, local
 	.asciz "OgTestScreen"
+.endobj lbl_802D2484
 .balign 4
-lbl_802D2494:
+.obj lbl_802D2494, local
 	.asciz "<Controller>"
+.endobj lbl_802D2494
 .balign 4
-lbl_802D24A4:
+.obj lbl_802D24A4, local
 	.asciz "bigFont.bti"
+.endobj lbl_802D24A4
 .balign 4
-lbl_802D24B0:
+.obj lbl_802D24B0, local
 	.4byte .L_8017DDFC
 	.4byte .L_8017DE14
 	.4byte .L_8017DEB4
@@ -1200,7 +1205,9 @@ lbl_802D24B0:
 	.4byte .L_8017DEC8
 	.4byte .L_8017DEE8
 	.4byte .L_8017DEDC
-lbl_802D24E0:
+.endobj lbl_802D24B0
+.balign 4
+.obj lbl_802D24E0, local # Shift-JIS
 	.4byte 0x82518263
 	.4byte 0x8358834E
 	.4byte 0x838A815B
@@ -1208,63 +1215,87 @@ lbl_802D24E0:
 	.4byte 0x835A838C
 	.4byte 0x834E835E
 	.4byte 0x815B0000
-lbl_802D24FC:
+.endobj lbl_802D24E0
+.balign 4
+.obj lbl_802D24FC, local # Shift-JIS
 	.4byte 0x835E8343
 	.4byte 0x8367838B
 	.4byte 0x20282564
 	.4byte 0x29000000
-lbl_802D250C:
+.endobj lbl_802D24FC
+.balign 4
+.obj lbl_802D250C, local # Shift-JIS
 	.4byte 0x83608385
 	.4byte 0x815B8367
 	.4byte 0x838A8341
 	.4byte 0x838B2028
 	.4byte 0x25642900
-lbl_802D2520:
+.endobj lbl_802D250C
+.balign 4
+.obj lbl_802D2520, local # Shift-JIS
 	.4byte 0x835A815B
 	.4byte 0x8375835A
 	.4byte 0x838C834E
 	.4byte 0x83672028
 	.4byte 0x25642900
-lbl_802D2534:
+.endobj lbl_802D2520
+.balign 4
+.obj lbl_802D2534, local # Shift-JIS
 	.4byte 0x83658358
 	.4byte 0x83672028
 	.4byte 0x25642900
-lbl_802D2540:
+.endobj lbl_802D2534
+.balign 4
+.obj lbl_802D2540, local # Shift-JIS
 	.4byte 0x83818382
 	.4byte 0x838A815B
 	.4byte 0x83608346
 	.4byte 0x8362834E
 	.4byte 0x28256429
 	.4byte 0x00000000
-lbl_802D2558:
+.endobj lbl_802D2540
+.balign 4
+.obj lbl_802D2558, local # Shift-JIS
 	.4byte 0x83608346
 	.4byte 0x8362834E
 	.4byte 0x8195835A
 	.4byte 0x838C834E
 	.4byte 0x83672825
 	.4byte 0x64290000
-lbl_802D2570:
+.endobj lbl_802D2558
+.balign 4
+.obj lbl_802D2570, local # Shift-JIS
 	.4byte 0x93FA8B4C
 	.4byte 0x20282564
 	.4byte 0x29000000
-lbl_802D257C:
+.endobj lbl_802D2570
+.balign 4
+.obj lbl_802D257C, local # Shift-JIS
 	.4byte 0x838A8355
 	.4byte 0x838B8367
 	.4byte 0x00000000
-lbl_802D2588:
+.endobj lbl_802D257C
+.balign 4
+.obj lbl_802D2588, local # Shift-JIS
 	.4byte 0x837C815B
 	.4byte 0x83592028
 	.4byte 0x25642900
-lbl_802D2594:
+.endobj lbl_802D2588
+.balign 4
+.obj lbl_802D2594, local # Shift-JIS
 	.4byte 0x8367815B
 	.4byte 0x835E838B
 	.4byte 0x90AC90D1
 	.4byte 0x00000000
-lbl_802D25A4:
+.endobj lbl_802D2594
+.balign 4
+.obj lbl_802D25A4, local # Shift-JIS
 	.4byte 0x8358835E
 	.4byte 0x815B8367
 	.4byte 0x00000000
-lbl_802D25B0:
+.endobj lbl_802D25A4
+.balign 4
+.obj lbl_802D25B0, local # Shift-JIS
 	.4byte 0x3C3C3C20
 	.4byte 0x83608385
 	.4byte 0x817C8367
@@ -1274,28 +1305,34 @@ lbl_802D25B0:
 	.4byte 0x783F3F82
 	.4byte 0xCC909428
 	.4byte 0x25648CC2
-	.4byte 0x29000000
+	.2byte 0x2900
+.endobj lbl_802D25B0
 .balign 4
-lbl_802D25D8:
+.obj lbl_802D25D8, local
 	.asciz "<OgTestSection>"
+.endobj lbl_802D25D8
 .balign 4
-lbl_802D25E8:
+.obj lbl_802D25E8, local
 	.asciz "zen::OgTestSection"
+.endobj lbl_802D25E8
 .balign 4
-lbl_802D25FC:
+.obj lbl_802D25FC, local
 	.asciz "CoreNode"
+.endobj lbl_802D25FC
 .balign 4
-lbl_802D2608:
+.obj lbl_802D2608, local
 	.4byte __RTTI__5ANode
 	.4byte 0x00000000
 	.4byte 0x00000000
-lbl_802D2614:
+.endobj lbl_802D2608
+.obj lbl_802D2614, local
 	.4byte __RTTI__5ANode
 	.4byte 0x00000000
 	.4byte __RTTI__8CoreNode
 	.4byte 0x00000000
 	.4byte 0x00000000
-lbl_802D2628:
+.endobj lbl_802D2614
+.obj lbl_802D2628, local
 	.4byte __RTTI__5ANode
 	.4byte 0x00000000
 	.4byte __RTTI__8CoreNode
@@ -1303,7 +1340,8 @@ lbl_802D2628:
 	.4byte __RTTI__4Node
 	.4byte 0x00000000
 	.4byte 0x00000000
-lbl_802D2644:
+.endobj lbl_802D2628
+.obj lbl_802D2644, local
 	.4byte __RTTI__5ANode
 	.4byte 0x00000000
 	.4byte __RTTI__8CoreNode
@@ -1313,8 +1351,8 @@ lbl_802D2644:
 	.4byte __RTTI__7Section
 	.4byte 0x00000000
 	.4byte 0x00000000
-.global __vt__Q23zen13OgTestSection
-__vt__Q23zen13OgTestSection:
+.endobj lbl_802D2644
+.obj __vt__Q23zen13OgTestSection, global
 	.4byte __RTTI__Q23zen13OgTestSection
 	.4byte 0
 	.4byte getAgeNodeType__5ANodeFv
@@ -1328,6 +1366,7 @@ __vt__Q23zen13OgTestSection:
 	.4byte concat__4NodeFR8Matrix4f
 	.4byte getModelMatrix__4NodeFv
 	.4byte init__Q23zen13OgTestSectionFv
+.endobj __vt__Q23zen13OgTestSection
 	.4byte 0
 	.4byte 0
 	.4byte 0
@@ -1342,10 +1381,11 @@ __vt__Q23zen13OgTestSection:
 	.4byte 0
 	.4byte 0
 .balign 4
-lbl_802D26D0:
+.obj lbl_802D26D0, local
 	.asciz "zen::OgTestScreen"
+.endobj lbl_802D26D0
 .balign 4
-lbl_802D26E4:
+.obj lbl_802D26E4, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte __RTTI__8CoreNode
@@ -1353,8 +1393,8 @@ lbl_802D26E4:
 	.4byte __RTTI__4Node
 	.4byte 0
 	.4byte 0
-.global __vt__Q23zen12OgTestScreen
-__vt__Q23zen12OgTestScreen:
+.endobj lbl_802D26E4
+.obj __vt__Q23zen12OgTestScreen, global
 	.4byte __RTTI__Q23zen12OgTestScreen
 	.4byte 0
 	.4byte getAgeNodeType__5ANodeFv
@@ -1367,6 +1407,7 @@ __vt__Q23zen12OgTestScreen:
 	.4byte concat__4NodeFR3SRT
 	.4byte concat__4NodeFR8Matrix4f
 	.4byte getModelMatrix__4NodeFv
+.endobj __vt__Q23zen12OgTestScreen
 	.4byte 0
 	.4byte 0
 	.4byte 0
@@ -1378,69 +1419,94 @@ __vt__Q23zen12OgTestScreen:
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-lbl_803E5600:
+.obj lbl_803E5600, local
 	.asciz "<Node>"
+.endobj lbl_803E5600
 .balign 4
-lbl_803E5608:
+.obj lbl_803E5608, local
 	.float 0.0
-lbl_803E560C:
+.endobj lbl_803E5608
+.obj lbl_803E560C, local
 	.float 0.0
-lbl_803E5610:
+.endobj lbl_803E560C
+.obj lbl_803E5610, local
 	.float 250.0
-lbl_803E5614:
+.endobj lbl_803E5610
+.obj lbl_803E5614, local
 	.float 0.0
-lbl_803E5618:
+.endobj lbl_803E5614
+.obj lbl_803E5618, local
 	.float 0.0
-lbl_803E561C:
+.endobj lbl_803E5618
+.obj lbl_803E561C, local
 	.float 0.0
-lbl_803E5620:
+.endobj lbl_803E561C
+.balign 4
+.obj lbl_803E5620, local # Shift-JIS
 	.4byte 0x81840000
-lbl_803E5624:
+.endobj lbl_803E5620
+.balign 4
+.obj lbl_803E5624, local
 	.asciz "message"
+.endobj lbl_803E5624
 .balign 4
-lbl_803E562C:
+.obj lbl_803E562C, local
 	.asciz "ANode"
+.endobj lbl_803E562C
 .balign 4
-__RTTI__5ANode:
+.obj __RTTI__5ANode, local
 	.4byte lbl_803E562C
-	.4byte 0x00000000
-__RTTI__8CoreNode:
+	.4byte 0
+.endobj __RTTI__5ANode
+.obj __RTTI__8CoreNode, local
 	.4byte lbl_802D25FC
 	.4byte lbl_802D2608
+.endobj __RTTI__8CoreNode
 .balign 4
-lbl_803E5644:
+.obj lbl_803E5644, local
 	.asciz "Node"
+.endobj lbl_803E5644
 .balign 4
-__RTTI__4Node:
+.obj __RTTI__4Node, local
 	.4byte lbl_803E5644
 	.4byte lbl_802D2614
+.endobj __RTTI__4Node
 .balign 4
-lbl_803E5654:
+.obj lbl_803E5654, local
 	.asciz "Section"
+.endobj lbl_803E5654
 .balign 4
-__RTTI__7Section:
+.obj __RTTI__7Section, local
 	.4byte lbl_803E5654
 	.4byte lbl_802D2628
-__RTTI__Q23zen13OgTestSection:
+.endobj __RTTI__7Section
+.obj __RTTI__Q23zen13OgTestSection, local
 	.4byte lbl_802D25E8
 	.4byte lbl_802D2644
-__RTTI__Q23zen12OgTestScreen:
+.endobj __RTTI__Q23zen13OgTestSection
+.obj __RTTI__Q23zen12OgTestScreen, local
 	.4byte lbl_802D26D0
 	.4byte lbl_802D26E4
+.endobj __RTTI__Q23zen12OgTestScreen
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803EB0F8:
-	.4byte 0x3F800000
-lbl_803EB0FC:
-	.4byte 0x40400000
-lbl_803EB100:
-	.4byte 0x3F000000
-lbl_803EB104:
-	.4byte 0x42700000
-lbl_803EB108:
-	.4byte 0x459C4000
+.obj lbl_803EB0F8, local
+	.float 1.0
+.endobj lbl_803EB0F8
+.obj lbl_803EB0FC, local
+	.float 3.0
+.endobj lbl_803EB0FC
+.obj lbl_803EB100, local
+	.float 0.5
+.endobj lbl_803EB100
+.obj lbl_803EB104, local
+	.float 60.0
+.endobj lbl_803EB104
+.obj lbl_803EB108, local
+	.float 5000.0
+.endobj lbl_803EB108
 .balign 8
-lbl_803EB110:
-	.4byte 0x43300000
-	.4byte 0x80000000
+.obj lbl_803EB110, local
+	.8byte 0x4330000080000000
+.endobj lbl_803EB110

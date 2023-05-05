@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global respondColl__8CreatureFP8CreaturefP8CollPartP8CollPartRC8Vector3f
-respondColl__8CreatureFP8CreaturefP8CollPartP8CollPartRC8Vector3f:
+.fn respondColl__8CreatureFP8CreaturefP8CollPartP8CollPartRC8Vector3f, global
 /* 8008D954 0008A8B4  7C 08 02 A6 */	mflr r0
 /* 8008D958 0008A8B8  90 01 00 04 */	stw r0, 4(r1)
 /* 8008D95C 0008A8BC  94 21 FE 80 */	stwu r1, -0x180(r1)
@@ -495,25 +494,34 @@ respondColl__8CreatureFP8CreaturefP8CollPartP8CollPartRC8Vector3f:
 /* 8008E0B0 0008B010  38 21 01 80 */	addi r1, r1, 0x180
 /* 8008E0B4 0008B014  7C 08 03 A6 */	mtlr r0
 /* 8008E0B8 0008B018  4E 80 00 20 */	blr 
+.endfn respondColl__8CreatureFP8CreaturefP8CollPartP8CollPartRC8Vector3f
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-lbl_803DF050:
+.obj lbl_803DF050, local
 	.float 0.0
-lbl_803DF054:
+.endobj lbl_803DF050
+.obj lbl_803DF054, local
 	.float -1.0
+.endobj lbl_803DF054
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803E8CD8:
+.obj lbl_803E8CD8, local
 	.float 0.0
-lbl_803E8CDC:
+.endobj lbl_803E8CD8
+.obj lbl_803E8CDC, local
 	.float 0.0001
-lbl_803E8CE0:
+.endobj lbl_803E8CDC
+.obj lbl_803E8CE0, local
 	.float 0.00001
-lbl_803E8CE4:
+.endobj lbl_803E8CE0
+.obj lbl_803E8CE4, local
 	.float 1.35
-lbl_803E8CE8:
+.endobj lbl_803E8CE4
+.obj lbl_803E8CE8, local
 	.float 1.0
-lbl_803E8CEC:
+.endobj lbl_803E8CE8
+.obj lbl_803E8CEC, local
 	.float 0.5
+.endobj lbl_803E8CEC

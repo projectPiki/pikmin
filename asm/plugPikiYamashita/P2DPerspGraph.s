@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global __ct__13P2DPerspGraphFiiiifff
-__ct__13P2DPerspGraphFiiiifff:
+.fn __ct__13P2DPerspGraphFiiiifff, global
 /* 801B0190 001AD0F0  7C 08 02 A6 */	mflr r0
 /* 801B0194 001AD0F4  90 01 00 04 */	stw r0, 4(r1)
 /* 801B0198 001AD0F8  94 21 FF B8 */	stwu r1, -0x48(r1)
@@ -35,9 +34,9 @@ __ct__13P2DPerspGraphFiiiifff:
 /* 801B0208 001AD168  38 21 00 48 */	addi r1, r1, 0x48
 /* 801B020C 001AD16C  7C 08 03 A6 */	mtlr r0
 /* 801B0210 001AD170  4E 80 00 20 */	blr 
+.endfn __ct__13P2DPerspGraphFiiiifff
 
-.global set__13P2DPerspGraphFfff
-set__13P2DPerspGraphFfff:
+.fn set__13P2DPerspGraphFfff, global
 /* 801B0214 001AD174  7C 08 02 A6 */	mflr r0
 /* 801B0218 001AD178  90 01 00 04 */	stw r0, 4(r1)
 /* 801B021C 001AD17C  94 21 FF D0 */	stwu r1, -0x30(r1)
@@ -62,9 +61,9 @@ set__13P2DPerspGraphFfff:
 /* 801B0268 001AD1C8  38 21 00 30 */	addi r1, r1, 0x30
 /* 801B026C 001AD1CC  7C 08 03 A6 */	mtlr r0
 /* 801B0270 001AD1D0  4E 80 00 20 */	blr 
+.endfn set__13P2DPerspGraphFfff
 
-.global setFovy__13P2DPerspGraphFf
-setFovy__13P2DPerspGraphFf:
+.fn setFovy__13P2DPerspGraphFf, global
 /* 801B0274 001AD1D4  D0 23 00 D4 */	stfs f1, 0xd4(r3)
 /* 801B0278 001AD1D8  C0 02 B6 80 */	lfs f0, lbl_803EB880@sda21(r2)
 /* 801B027C 001AD1DC  FC 01 00 40 */	fcmpo cr0, f1, f0
@@ -77,9 +76,9 @@ setFovy__13P2DPerspGraphFf:
 /* 801B0294 001AD1F4  4C 81 00 20 */	blelr 
 /* 801B0298 001AD1F8  D0 03 00 D4 */	stfs f0, 0xd4(r3)
 /* 801B029C 001AD1FC  4E 80 00 20 */	blr 
+.endfn setFovy__13P2DPerspGraphFf
 
-.global setPort__13P2DPerspGraphFv
-setPort__13P2DPerspGraphFv:
+.fn setPort__13P2DPerspGraphFv, global
 /* 801B02A0 001AD200  7C 08 02 A6 */	mflr r0
 /* 801B02A4 001AD204  90 01 00 04 */	stw r0, 4(r1)
 /* 801B02A8 001AD208  94 21 FF 88 */	stwu r1, -0x78(r1)
@@ -171,9 +170,9 @@ setPort__13P2DPerspGraphFv:
 /* 801B0400 001AD360  38 21 00 78 */	addi r1, r1, 0x78
 /* 801B0404 001AD364  7C 08 03 A6 */	mtlr r0
 /* 801B0408 001AD368  4E 80 00 20 */	blr 
+.endfn setPort__13P2DPerspGraphFv
 
-.global setLookat__13P2DPerspGraphFv
-setLookat__13P2DPerspGraphFv:
+.fn setLookat__13P2DPerspGraphFv, global
 /* 801B040C 001AD36C  7C 08 02 A6 */	mflr r0
 /* 801B0410 001AD370  90 01 00 04 */	stw r0, 4(r1)
 /* 801B0414 001AD374  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -211,9 +210,9 @@ setLookat__13P2DPerspGraphFv:
 /* 801B0494 001AD3F4  38 21 00 28 */	addi r1, r1, 0x28
 /* 801B0498 001AD3F8  7C 08 03 A6 */	mtlr r0
 /* 801B049C 001AD3FC  4E 80 00 20 */	blr 
+.endfn setLookat__13P2DPerspGraphFv
 
-.global makeLookat__13P2DPerspGraphFv
-makeLookat__13P2DPerspGraphFv:
+.fn makeLookat__13P2DPerspGraphFv, global
 /* 801B04A0 001AD400  7C 08 02 A6 */	mflr r0
 /* 801B04A4 001AD404  3C C0 43 30 */	lis r6, 0x4330
 /* 801B04A8 001AD408  90 01 00 04 */	stw r0, 4(r1)
@@ -341,27 +340,32 @@ makeLookat__13P2DPerspGraphFv:
 /* 801B0690 001AD5F0  38 21 00 C0 */	addi r1, r1, 0xc0
 /* 801B0694 001AD5F4  7C 08 03 A6 */	mtlr r0
 /* 801B0698 001AD5F8  4E 80 00 20 */	blr 
+.endfn makeLookat__13P2DPerspGraphFv
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802E0648:
+.obj lbl_802E0648, local
 	.asciz "P2DPerspGraph.cpp"
+.endobj lbl_802E0648
 .balign 4
-lbl_802E065C:
+.obj lbl_802E065C, local
 	.asciz "P2DPersGraph"
+.endobj lbl_802E065C
 .balign 4
-lbl_802E066C:
+.obj lbl_802E066C, local
 	.asciz "P2DPerspGraph"
+.endobj lbl_802E066C
 .balign 4
-lbl_802E067C:
+.obj lbl_802E067C, local
 	.asciz "P2DGrafContext"
+.endobj lbl_802E067C
 .balign 4
-lbl_802E068C:
+.obj lbl_802E068C, local
 	.4byte __RTTI__14P2DGrafContext
 	.4byte 0
 	.4byte 0
-.global __vt__13P2DPerspGraph
-__vt__13P2DPerspGraph:
+.endobj lbl_802E068C
+.obj __vt__13P2DPerspGraph, global
 	.4byte __RTTI__13P2DPerspGraph
 	.4byte 0
 	.4byte __dt__13P2DPerspGraphFv
@@ -371,71 +375,100 @@ __vt__13P2DPerspGraph:
 	.4byte setup2D__14P2DGrafContextFv
 	.4byte setScissor__14P2DGrafContextFv
 	.4byte setLookat__13P2DPerspGraphFv
-	.4byte 0
+.endobj __vt__13P2DPerspGraph
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-lbl_803E6598:
-	.4byte 0x00000000
-lbl_803E659C:
-	.4byte 0x00000000
-lbl_803E65A0:
-	.4byte 0x437A0000
-lbl_803E65A4:
-	.4byte 0x00000000
-lbl_803E65A8:
-	.4byte 0x00000000
-lbl_803E65AC:
-	.4byte 0x00000000
-lbl_803E65B0:
-	.4byte 0x00000000
-lbl_803E65B4:
-	.4byte 0x3F800000
-lbl_803E65B8:
-	.4byte 0x00000000
-lbl_803E65BC:
-	.4byte 0x3F800000
-lbl_803E65C0:
-	.4byte 0x00000000
-lbl_803E65C4:
-	.4byte 0x00000000
-lbl_803E65C8:
-	.4byte 0x00000000
-lbl_803E65CC:
-	.4byte 0xBF800000
-lbl_803E65D0:
-	.4byte 0x00000000
-lbl_803E65D4:
-	.4byte 0x00000000
-lbl_803E65D8:
-	.4byte 0x00000000
-lbl_803E65DC:
-	.4byte 0xBF800000
-__RTTI__14P2DGrafContext:
+.obj lbl_803E6598, local
+	.float 0.0
+.endobj lbl_803E6598
+.obj lbl_803E659C, local
+	.float 0.0
+.endobj lbl_803E659C
+.obj lbl_803E65A0, local
+	.float 250.0
+.endobj lbl_803E65A0
+.obj lbl_803E65A4, local
+	.float 0.0
+.endobj lbl_803E65A4
+.obj lbl_803E65A8, local
+	.float 0.0
+.endobj lbl_803E65A8
+.obj lbl_803E65AC, local
+	.float 0.0
+.endobj lbl_803E65AC
+.obj lbl_803E65B0, local
+	.float 0.0
+.endobj lbl_803E65B0
+.obj lbl_803E65B4, local
+	.float 1.0
+.endobj lbl_803E65B4
+.obj lbl_803E65B8, local
+	.float 0.0
+.endobj lbl_803E65B8
+.obj lbl_803E65BC, local
+	.float 1.0
+.endobj lbl_803E65BC
+.obj lbl_803E65C0, local
+	.float 0.0
+.endobj lbl_803E65C0
+.obj lbl_803E65C4, local
+	.float 0.0
+.endobj lbl_803E65C4
+.obj lbl_803E65C8, local
+	.float 0.0
+.endobj lbl_803E65C8
+.obj lbl_803E65CC, local
+	.float -1.0
+.endobj lbl_803E65CC
+.obj lbl_803E65D0, local
+	.float 0.0
+.endobj lbl_803E65D0
+.obj lbl_803E65D4, local
+	.float 0.0
+.endobj lbl_803E65D4
+.obj lbl_803E65D8, local
+	.float 0.0
+.endobj lbl_803E65D8
+.obj lbl_803E65DC, local
+	.float -1.0
+.endobj lbl_803E65DC
+.obj __RTTI__14P2DGrafContext, local
 	.4byte lbl_802E067C
 	.4byte 0
-__RTTI__13P2DPerspGraph:
+.endobj __RTTI__14P2DGrafContext
+.obj __RTTI__13P2DPerspGraph, local
 	.4byte lbl_802E066C
 	.4byte lbl_802E068C
+.endobj __RTTI__13P2DPerspGraph
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803EB880:
-	.4byte 0x3F800000
-lbl_803EB884:
-	.4byte 0x43330000
-lbl_803EB888:
-	.4byte 0x43300000
-	.4byte 0x80000000
-lbl_803EB890:
-	.4byte 0x40000000
-lbl_803EB894:
-	.4byte 0x3F000000
-lbl_803EB898:
-	.4byte 0x40490FDB
-lbl_803EB89C:
-	.4byte 0x43B40000
-lbl_803EB8A0:
-	.4byte 0x00000000
-lbl_803EB8A4:
-	.4byte 0xBF800000
+.obj lbl_803EB880, local
+	.float 1.0
+.endobj lbl_803EB880
+.obj lbl_803EB884, local
+	.float 179.0
+.endobj lbl_803EB884
+.balign 8
+.obj lbl_803EB888, local
+	.8byte 0x4330000080000000
+.endobj lbl_803EB888
+.obj lbl_803EB890, local
+	.float 2.0
+.endobj lbl_803EB890
+.obj lbl_803EB894, local
+	.float 0.5
+.endobj lbl_803EB894
+.obj lbl_803EB898, local
+	.float 3.1415927
+.endobj lbl_803EB898
+.obj lbl_803EB89C, local
+	.float 360.0
+.endobj lbl_803EB89C
+.obj lbl_803EB8A0, local
+	.float 0.0
+.endobj lbl_803EB8A0
+.obj lbl_803EB8A4, local
+	.float -1.0
+.endobj lbl_803EB8A4

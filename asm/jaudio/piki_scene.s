@@ -1,8 +1,7 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
 .balign 32, 0
-.global Jac_Delete_CurrentBgmWave
-Jac_Delete_CurrentBgmWave:
+.fn Jac_Delete_CurrentBgmWave, global
 /* 80019760 000166C0  7C 08 02 A6 */	mflr r0
 /* 80019764 000166C4  38 60 00 00 */	li r3, 0
 /* 80019768 000166C8  90 01 00 04 */	stw r0, 4(r1)
@@ -17,9 +16,10 @@ Jac_Delete_CurrentBgmWave:
 /* 8001978C 000166EC  38 21 00 08 */	addi r1, r1, 8
 /* 80019790 000166F0  7C 08 03 A6 */	mtlr r0
 /* 80019794 000166F4  4E 80 00 20 */	blr 
+.endfn Jac_Delete_CurrentBgmWave
 
 .balign 32, 0
-__Loaded__FUl: #static
+.fn __Loaded__FUl, local
 /* 800197A0 00016700  7C 08 02 A6 */	mflr r0
 /* 800197A4 00016704  90 01 00 04 */	stw r0, 4(r1)
 /* 800197A8 00016708  3C 00 00 01 */	lis r0, 1
@@ -62,22 +62,22 @@ __Loaded__FUl: #static
 /* 80019828 00016788  38 21 00 18 */	addi r1, r1, 0x18
 /* 8001982C 0001678C  7C 08 03 A6 */	mtlr r0
 /* 80019830 00016790  4E 80 00 20 */	blr 
+.endfn __Loaded__FUl
 
 .balign 32, 0
-.global Jac_GetCurrentScene
-Jac_GetCurrentScene:
+.fn Jac_GetCurrentScene, global
 /* 80019840 000167A0  80 6D 80 E0 */	lwz r3, current_scene@sda21(r13)
 /* 80019844 000167A4  4E 80 00 20 */	blr 
+.endfn Jac_GetCurrentScene
 
 .balign 32, 0
-.global Jac_TellChgMode
-Jac_TellChgMode:
+.fn Jac_TellChgMode, global
 /* 80019860 000167C0  80 6D 2D 18 */	lwz r3, chgmode@sda21(r13)
 /* 80019864 000167C4  4E 80 00 20 */	blr 
+.endfn Jac_TellChgMode
 
 .balign 32, 0
-.global Jac_SceneSetup
-Jac_SceneSetup:
+.fn Jac_SceneSetup, global
 /* 80019880 000167E0  7C 08 02 A6 */	mflr r0
 /* 80019884 000167E4  3C A0 80 22 */	lis r5, tbl_scene_to_bgm@ha
 /* 80019888 000167E8  90 01 00 04 */	stw r0, 4(r1)
@@ -393,10 +393,10 @@ Jac_SceneSetup:
 /* 80019CD0 00016C30  38 21 00 48 */	addi r1, r1, 0x48
 /* 80019CD4 00016C34  7C 08 03 A6 */	mtlr r0
 /* 80019CD8 00016C38  4E 80 00 20 */	blr 
+.endfn Jac_SceneSetup
 
 .balign 32, 0
-.global Jac_SceneExit
-Jac_SceneExit:
+.fn Jac_SceneExit, global
 /* 80019CE0 00016C40  7C 08 02 A6 */	mflr r0
 /* 80019CE4 00016C44  90 01 00 04 */	stw r0, 4(r1)
 /* 80019CE8 00016C48  94 21 FF D0 */	stwu r1, -0x30(r1)
@@ -466,17 +466,17 @@ Jac_SceneExit:
 /* 80019DD0 00016D30  38 21 00 30 */	addi r1, r1, 0x30
 /* 80019DD4 00016D34  7C 08 03 A6 */	mtlr r0
 /* 80019DD8 00016D38  4E 80 00 20 */	blr 
+.endfn Jac_SceneExit
 
 .balign 32, 0
-.global Jac_SetStreamLevel
-Jac_SetStreamLevel:
+.fn Jac_SetStreamLevel, global
 /* 80019DE0 00016D40  B0 6D 80 EC */	sth r3, stream_level@sda21(r13)
 /* 80019DE4 00016D44  B0 8D 80 EE */	sth r4, stream_se_level@sda21(r13)
 /* 80019DE8 00016D48  4E 80 00 20 */	blr 
+.endfn Jac_SetStreamLevel
 
 .balign 32, 0
-.global Jac_UpdateStreamLevel
-Jac_UpdateStreamLevel:
+.fn Jac_UpdateStreamLevel, global
 /* 80019E00 00016D60  7C 08 02 A6 */	mflr r0
 /* 80019E04 00016D64  38 60 00 00 */	li r3, 0
 /* 80019E08 00016D68  90 01 00 04 */	stw r0, 4(r1)
@@ -504,9 +504,10 @@ Jac_UpdateStreamLevel:
 /* 80019E58 00016DB8  38 21 00 08 */	addi r1, r1, 8
 /* 80019E5C 00016DBC  7C 08 03 A6 */	mtlr r0
 /* 80019E60 00016DC0  4E 80 00 20 */	blr 
+.endfn Jac_UpdateStreamLevel
 
 .balign 32, 0
-MovieSync__FUll: #static
+.fn MovieSync__FUll, local
 /* 80019E80 00016DE0  7C 08 02 A6 */	mflr r0
 /* 80019E84 00016DE4  90 01 00 04 */	stw r0, 4(r1)
 /* 80019E88 00016DE8  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -542,10 +543,10 @@ MovieSync__FUll: #static
 /* 80019EF0 00016E50  38 21 00 18 */	addi r1, r1, 0x18
 /* 80019EF4 00016E54  7C 08 03 A6 */	mtlr r0
 /* 80019EF8 00016E58  4E 80 00 20 */	blr 
+.endfn MovieSync__FUll
 
 .balign 32, 0
-.global Jac_InitStreamSystem
-Jac_InitStreamSystem:
+.fn Jac_InitStreamSystem, global
 /* 80019F00 00016E60  7C 08 02 A6 */	mflr r0
 /* 80019F04 00016E64  3C 60 80 02 */	lis r3, MovieSync__FUll@ha
 /* 80019F08 00016E68  90 01 00 04 */	stw r0, 4(r1)
@@ -556,10 +557,10 @@ Jac_InitStreamSystem:
 /* 80019F1C 00016E7C  38 21 00 08 */	addi r1, r1, 8
 /* 80019F20 00016E80  7C 08 03 A6 */	mtlr r0
 /* 80019F24 00016E84  4E 80 00 20 */	blr 
+.endfn Jac_InitStreamSystem
 
 .balign 32, 0
-.global Jac_StopDemoSound__FUl
-Jac_StopDemoSound__FUl:
+.fn Jac_StopDemoSound__FUl, global
 /* 80019F40 00016EA0  7C 08 02 A6 */	mflr r0
 /* 80019F44 00016EA4  38 83 00 00 */	addi r4, r3, 0
 /* 80019F48 00016EA8  90 01 00 04 */	stw r0, 4(r1)
@@ -575,10 +576,10 @@ Jac_StopDemoSound__FUl:
 /* 80019F6C 00016ECC  38 21 00 08 */	addi r1, r1, 8
 /* 80019F70 00016ED0  7C 08 03 A6 */	mtlr r0
 /* 80019F74 00016ED4  4E 80 00 20 */	blr 
+.endfn Jac_StopDemoSound__FUl
 
 .balign 32, 0
-.global Jac_PrepareDemoSound__FUl
-Jac_PrepareDemoSound__FUl:
+.fn Jac_PrepareDemoSound__FUl, global
 /* 80019F80 00016EE0  7C 08 02 A6 */	mflr r0
 /* 80019F84 00016EE4  90 01 00 04 */	stw r0, 4(r1)
 /* 80019F88 00016EE8  94 21 FF 98 */	stwu r1, -0x68(r1)
@@ -619,10 +620,10 @@ Jac_PrepareDemoSound__FUl:
 /* 8001A00C 00016F6C  38 21 00 68 */	addi r1, r1, 0x68
 /* 8001A010 00016F70  7C 08 03 A6 */	mtlr r0
 /* 8001A014 00016F74  4E 80 00 20 */	blr 
+.endfn Jac_PrepareDemoSound__FUl
 
 .balign 32, 0
-.global Jac_StartDemoSound__FUl
-Jac_StartDemoSound__FUl:
+.fn Jac_StartDemoSound__FUl, global
 /* 8001A020 00016F80  7C 08 02 A6 */	mflr r0
 /* 8001A024 00016F84  90 01 00 04 */	stw r0, 4(r1)
 /* 8001A028 00016F88  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -667,10 +668,11 @@ Jac_StartDemoSound__FUl:
 /* 8001A0B8 00017018  38 21 00 18 */	addi r1, r1, 0x18
 /* 8001A0BC 0001701C  7C 08 03 A6 */	mtlr r0
 /* 8001A0C0 00017020  4E 80 00 20 */	blr 
+.endfn Jac_StartDemoSound__FUl
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-tbl_scene_to_bgm:
+.obj tbl_scene_to_bgm, local
 	.4byte 0x00000000
 	.4byte 0x00000007
 	.4byte 0x00000012
@@ -685,7 +687,8 @@ tbl_scene_to_bgm:
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x00000000
-tbl_scene_to_fadetime:
+.endobj tbl_scene_to_bgm
+.obj tbl_scene_to_fadetime, local
 	.4byte 0x00000000
 	.4byte 0x0000003C
 	.4byte 0x0000000F
@@ -700,15 +703,16 @@ tbl_scene_to_fadetime:
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x00000000
-tbl_stage_to_bgm:
+.endobj tbl_scene_to_fadetime
+.obj tbl_stage_to_bgm, local
 	.4byte 0x00000004
 	.4byte 0x00000005
 	.4byte 0x0000000A
 	.4byte 0x00000009
 	.4byte 0x00000011
+.endobj tbl_stage_to_bgm
 .balign 4
-.global filelist
-filelist:
+.obj filelist, global
 	.asciz "piki.stx"
 .balign 4
 	.4byte 0x00000000
@@ -817,7 +821,8 @@ filelist:
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x00000000
-header:
+.endobj filelist
+.obj header, local
 	.4byte 0x00640C62
 	.4byte 0x0058EE80
 	.4byte 0xBB800004
@@ -826,43 +831,59 @@ header:
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x00000000
+.endobj header
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-current_scene:
+.obj current_scene, local
 	.4byte 0xFFFFFFFF
-current_stage:
+.endobj current_scene
+.obj current_stage, local
 	.4byte 0xFFFFFFFF
-current_prepare:
+.endobj current_stage
+.obj current_prepare, local
 	.4byte 0xFFFFFFFF
-stream_level:
+.endobj current_prepare
+.obj stream_level, local
 	.2byte 0x1F40
-stream_se_level:
+.endobj stream_level
+.obj stream_se_level, local
 	.2byte 0x1F40
+.endobj stream_se_level
 
 .section .sbss, "wa"
 .balign 8
-current_bgm:
+.obj current_bgm, local
 	.skip 4
-current_ready:
+.endobj current_bgm
+.obj current_ready, local
 	.skip 4
-now_loading:
+.endobj current_ready
+.obj now_loading, local
 	.skip 4
-first_load:
+.endobj now_loading
+.obj first_load, local
 	.skip 4
-chgmode:
+.endobj first_load
+.obj chgmode, local
 	.skip 4
-first$89:
+.endobj chgmode
+.obj first$89, local
 	.skip 4
-init$90:
+.endobj first$89
+.obj init$90, local
 	.skip 1
+.endobj init$90
 .balign 4
-stop_flag:
+.obj stop_flag, local
 	.skip 4
-stop_ready:
+.endobj stop_flag
+.obj stop_ready, local
 	.skip 4
+.endobj stop_ready
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803E83E0:
+.obj lbl_803E83E0, local
 	.float 1.0
+.endobj lbl_803E83E0

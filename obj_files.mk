@@ -81,8 +81,7 @@ SYSCOMMON :=\
 	$(BUILD_DIR)/asm/sysCommon/shpObjColl.o\
 	$(BUILD_DIR)/asm/sysCommon/shpRoutes.o\
 	$(BUILD_DIR)/asm/sysCommon/sysMath.o\
-	$(BUILD_DIR)/src/sysCommon/matMath.o\
-	$(BUILD_DIR)/asm/sysCommon/matMath_asm.o\
+	$(BUILD_DIR)/asm/sysCommon/matMath.o\
 	$(BUILD_DIR)/asm/sysCommon/stdSystem.o\
 	$(BUILD_DIR)/asm/sysCommon/node.o\
 	$(BUILD_DIR)/src/sysCommon/timers.o\

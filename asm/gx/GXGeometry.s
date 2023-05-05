@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global __GXSetDirtyState
-__GXSetDirtyState:
+.fn __GXSetDirtyState, global
 /* 80210B48 0020DAA8  7C 08 02 A6 */	mflr r0
 /* 80210B4C 0020DAAC  90 01 00 04 */	stw r0, 4(r1)
 /* 80210B50 0020DAB0  94 21 FF F8 */	stwu r1, -8(r1)
@@ -42,9 +41,9 @@ __GXSetDirtyState:
 /* 80210BC8 0020DB28  38 21 00 08 */	addi r1, r1, 8
 /* 80210BCC 0020DB2C  7C 08 03 A6 */	mtlr r0
 /* 80210BD0 0020DB30  4E 80 00 20 */	blr 
+.endfn __GXSetDirtyState
 
-.global GXBegin
-GXBegin:
+.fn GXBegin, global
 /* 80210BD4 0020DB34  7C 08 02 A6 */	mflr r0
 /* 80210BD8 0020DB38  90 01 00 04 */	stw r0, 4(r1)
 /* 80210BDC 0020DB3C  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -107,9 +106,9 @@ GXBegin:
 /* 80210CA4 0020DC04  38 21 00 28 */	addi r1, r1, 0x28
 /* 80210CA8 0020DC08  7C 08 03 A6 */	mtlr r0
 /* 80210CAC 0020DC0C  4E 80 00 20 */	blr 
+.endfn GXBegin
 
-.global __GXSendFlushPrim
-__GXSendFlushPrim:
+.fn __GXSendFlushPrim, global
 /* 80210CB0 0020DC10  80 6D 2A 68 */	lwz r3, gx@sda21(r13)
 /* 80210CB4 0020DC14  38 00 00 98 */	li r0, 0x98
 /* 80210CB8 0020DC18  3C A0 CC 01 */	lis r5, 0xCC008000@ha
@@ -148,9 +147,9 @@ __GXSendFlushPrim:
 /* 80210D2C 0020DC8C  38 00 00 00 */	li r0, 0
 /* 80210D30 0020DC90  B0 03 00 02 */	sth r0, 2(r3)
 /* 80210D34 0020DC94  4E 80 00 20 */	blr 
+.endfn __GXSendFlushPrim
 
-.global GXSetLineWidth
-GXSetLineWidth:
+.fn GXSetLineWidth, global
 /* 80210D38 0020DC98  80 AD 2A 68 */	lwz r5, gx@sda21(r13)
 /* 80210D3C 0020DC9C  54 86 80 1E */	slwi r6, r4, 0x10
 /* 80210D40 0020DCA0  38 80 00 61 */	li r4, 0x61
@@ -173,9 +172,9 @@ GXSetLineWidth:
 /* 80210D84 0020DCE4  90 65 80 00 */	stw r3, 0xCC008000@l(r5)
 /* 80210D88 0020DCE8  B0 04 00 02 */	sth r0, 2(r4)
 /* 80210D8C 0020DCEC  4E 80 00 20 */	blr 
+.endfn GXSetLineWidth
 
-.global GXSetPointSize
-GXSetPointSize:
+.fn GXSetPointSize, global
 /* 80210D90 0020DCF0  80 AD 2A 68 */	lwz r5, gx@sda21(r13)
 /* 80210D94 0020DCF4  54 86 98 18 */	slwi r6, r4, 0x13
 /* 80210D98 0020DCF8  84 05 00 7C */	lwzu r0, 0x7c(r5)
@@ -197,9 +196,9 @@ GXSetPointSize:
 /* 80210DD8 0020DD38  90 65 80 00 */	stw r3, 0xCC008000@l(r5)
 /* 80210DDC 0020DD3C  B0 04 00 02 */	sth r0, 2(r4)
 /* 80210DE0 0020DD40  4E 80 00 20 */	blr 
+.endfn GXSetPointSize
 
-.global GXEnableTexOffsets
-GXEnableTexOffsets:
+.fn GXEnableTexOffsets, global
 /* 80210DE4 0020DD44  80 0D 2A 68 */	lwz r0, gx@sda21(r13)
 /* 80210DE8 0020DD48  54 67 10 3A */	slwi r7, r3, 2
 /* 80210DEC 0020DD4C  7C C0 3A 14 */	add r6, r0, r7
@@ -225,9 +224,9 @@ GXEnableTexOffsets:
 /* 80210E3C 0020DD9C  90 65 80 00 */	stw r3, 0xCC008000@l(r5)
 /* 80210E40 0020DDA0  B0 04 00 02 */	sth r0, 2(r4)
 /* 80210E44 0020DDA4  4E 80 00 20 */	blr 
+.endfn GXEnableTexOffsets
 
-.global GXSetCullMode
-GXSetCullMode:
+.fn GXSetCullMode, global
 /* 80210E48 0020DDA8  2C 03 00 02 */	cmpwi r3, 2
 /* 80210E4C 0020DDAC  41 82 00 1C */	beq .L_80210E68
 /* 80210E50 0020DDB0  40 80 00 1C */	bge .L_80210E6C
@@ -251,9 +250,9 @@ GXSetCullMode:
 /* 80210E8C 0020DDEC  60 00 00 04 */	ori r0, r0, 4
 /* 80210E90 0020DDF0  90 03 04 F0 */	stw r0, 0x4f0(r3)
 /* 80210E94 0020DDF4  4E 80 00 20 */	blr 
+.endfn GXSetCullMode
 
-.global GXSetCoPlanar
-GXSetCoPlanar:
+.fn GXSetCoPlanar, global
 /* 80210E98 0020DDF8  80 8D 2A 68 */	lwz r4, gx@sda21(r13)
 /* 80210E9C 0020DDFC  54 60 99 58 */	rlwinm r0, r3, 0x13, 5, 0xc
 /* 80210EA0 0020DE00  38 A0 00 61 */	li r5, 0x61
@@ -271,9 +270,9 @@ GXSetCoPlanar:
 /* 80210ED0 0020DE30  80 03 02 04 */	lwz r0, 0x204(r3)
 /* 80210ED4 0020DE34  90 04 80 00 */	stw r0, 0xCC008000@l(r4)
 /* 80210ED8 0020DE38  4E 80 00 20 */	blr 
+.endfn GXSetCoPlanar
 
-.global __GXSetGenMode
-__GXSetGenMode:
+.fn __GXSetGenMode, global
 /* 80210EDC 0020DE3C  38 00 00 61 */	li r0, 0x61
 /* 80210EE0 0020DE40  80 8D 2A 68 */	lwz r4, gx@sda21(r13)
 /* 80210EE4 0020DE44  3C A0 CC 01 */	lis r5, 0xCC008000@ha
@@ -283,3 +282,4 @@ __GXSetGenMode:
 /* 80210EF4 0020DE54  90 65 80 00 */	stw r3, 0xCC008000@l(r5)
 /* 80210EF8 0020DE58  B0 04 00 02 */	sth r0, 2(r4)
 /* 80210EFC 0020DE5C  4E 80 00 20 */	blr 
+.endfn __GXSetGenMode

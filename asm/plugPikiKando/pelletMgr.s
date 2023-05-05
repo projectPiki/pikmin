@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global getUfoIndexFromID__9PelletMgrFUl
-getUfoIndexFromID__9PelletMgrFUl:
+.fn getUfoIndexFromID__9PelletMgrFUl, global
 /* 80094B14 00091A74  3C 80 80 2B */	lis r4, _ufoIDTable@ha
 /* 80094B18 00091A78  38 84 FF 28 */	addi r4, r4, _ufoIDTable@l
 /* 80094B1C 00091A7C  38 C0 00 00 */	li r6, 0
@@ -22,18 +21,18 @@ getUfoIndexFromID__9PelletMgrFUl:
 /* 80094B4C 00091AAC  38 C6 00 01 */	addi r6, r6, 1
 /* 80094B50 00091AB0  4B FF FF D0 */	b .L_80094B20
 /* 80094B54 00091AB4  4E 80 00 20 */	blr 
+.endfn getUfoIndexFromID__9PelletMgrFUl
 
-.global getUfoIDFromIndex__9PelletMgrFi
-getUfoIDFromIndex__9PelletMgrFi:
+.fn getUfoIDFromIndex__9PelletMgrFi, global
 /* 80094B58 00091AB8  3C 80 80 2B */	lis r4, _ufoIDTable@ha
 /* 80094B5C 00091ABC  54 63 10 3A */	slwi r3, r3, 2
 /* 80094B60 00091AC0  38 04 FF 28 */	addi r0, r4, _ufoIDTable@l
 /* 80094B64 00091AC4  7C 60 1A 14 */	add r3, r0, r3
 /* 80094B68 00091AC8  80 63 00 00 */	lwz r3, 0(r3)
 /* 80094B6C 00091ACC  4E 80 00 20 */	blr 
+.endfn getUfoIDFromIndex__9PelletMgrFi
 
-.global __ct__12PelletConfigFv
-__ct__12PelletConfigFv:
+.fn __ct__12PelletConfigFv, global
 /* 80094B70 00091AD0  7C 08 02 A6 */	mflr r0
 /* 80094B74 00091AD4  3C 80 80 2B */	lis r4, lbl_802AFFA4@ha
 /* 80094B78 00091AD8  90 01 00 04 */	stw r0, 4(r1)
@@ -262,9 +261,9 @@ __ct__12PelletConfigFv:
 /* 80094EF4 00091E54  38 21 01 50 */	addi r1, r1, 0x150
 /* 80094EF8 00091E58  7C 08 03 A6 */	mtlr r0
 /* 80094EFC 00091E5C  4E 80 00 20 */	blr 
+.endfn __ct__12PelletConfigFv
 
-.global read__12PelletConfigFR18RandomAccessStream
-read__12PelletConfigFR18RandomAccessStream:
+.fn read__12PelletConfigFR18RandomAccessStream, global
 /* 80094F00 00091E60  7C 08 02 A6 */	mflr r0
 /* 80094F04 00091E64  90 01 00 04 */	stw r0, 4(r1)
 /* 80094F08 00091E68  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -294,9 +293,9 @@ read__12PelletConfigFR18RandomAccessStream:
 /* 80094F68 00091EC8  38 21 00 18 */	addi r1, r1, 0x18
 /* 80094F6C 00091ECC  7C 08 03 A6 */	mtlr r0
 /* 80094F70 00091ED0  4E 80 00 20 */	blr 
+.endfn read__12PelletConfigFR18RandomAccessStream
 
-.global becomePellet__10PelletViewFUlR8Vector3ff
-becomePellet__10PelletViewFUlR8Vector3ff:
+.fn becomePellet__10PelletViewFUlR8Vector3ff, global
 /* 80094F74 00091ED4  7C 08 02 A6 */	mflr r0
 /* 80094F78 00091ED8  90 01 00 04 */	stw r0, 4(r1)
 /* 80094F7C 00091EDC  94 21 FF B0 */	stwu r1, -0x50(r1)
@@ -414,9 +413,9 @@ becomePellet__10PelletViewFUlR8Vector3ff:
 /* 80095130 00092090  38 21 00 50 */	addi r1, r1, 0x50
 /* 80095134 00092094  7C 08 03 A6 */	mtlr r0
 /* 80095138 00092098  4E 80 00 20 */	blr 
+.endfn becomePellet__10PelletViewFUlR8Vector3ff
 
-.global __ct__6PelletFv
-__ct__6PelletFv:
+.fn __ct__6PelletFv, global
 /* 8009513C 0009209C  7C 08 02 A6 */	mflr r0
 /* 80095140 000920A0  90 01 00 04 */	stw r0, 4(r1)
 /* 80095144 000920A4  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -577,9 +576,9 @@ __ct__6PelletFv:
 /* 800953A0 00092300  38 21 00 18 */	addi r1, r1, 0x18
 /* 800953A4 00092304  7C 08 03 A6 */	mtlr r0
 /* 800953A8 00092308  4E 80 00 20 */	blr 
+.endfn __ct__6PelletFv
 
-.global isUfoPartsID__6PelletFUl
-isUfoPartsID__6PelletFUl:
+.fn isUfoPartsID__6PelletFUl, global
 /* 800953AC 0009230C  7C 08 02 A6 */	mflr r0
 /* 800953B0 00092310  38 83 00 00 */	addi r4, r3, 0
 /* 800953B4 00092314  90 01 00 04 */	stw r0, 4(r1)
@@ -595,9 +594,9 @@ isUfoPartsID__6PelletFUl:
 /* 800953DC 0009233C  38 21 00 18 */	addi r1, r1, 0x18
 /* 800953E0 00092340  7C 08 03 A6 */	mtlr r0
 /* 800953E4 00092344  4E 80 00 20 */	blr 
+.endfn isUfoPartsID__6PelletFUl
 
-.global startWaterEffect__6PelletFv
-startWaterEffect__6PelletFv:
+.fn startWaterEffect__6PelletFv, global
 /* 800953E8 00092348  7C 08 02 A6 */	mflr r0
 /* 800953EC 0009234C  90 01 00 04 */	stw r0, 4(r1)
 /* 800953F0 00092350  38 03 00 94 */	addi r0, r3, 0x94
@@ -634,9 +633,9 @@ startWaterEffect__6PelletFv:
 /* 8009546C 000923CC  38 21 00 68 */	addi r1, r1, 0x68
 /* 80095470 000923D0  7C 08 03 A6 */	mtlr r0
 /* 80095474 000923D4  4E 80 00 20 */	blr 
+.endfn startWaterEffect__6PelletFv
 
-.global finishWaterEffect__6PelletFv
-finishWaterEffect__6PelletFv:
+.fn finishWaterEffect__6PelletFv, global
 /* 80095478 000923D8  7C 08 02 A6 */	mflr r0
 /* 8009547C 000923DC  90 01 00 04 */	stw r0, 4(r1)
 /* 80095480 000923E0  94 21 FF F8 */	stwu r1, -8(r1)
@@ -649,9 +648,9 @@ finishWaterEffect__6PelletFv:
 /* 8009549C 000923FC  38 21 00 08 */	addi r1, r1, 8
 /* 800954A0 00092400  7C 08 03 A6 */	mtlr r0
 /* 800954A4 00092404  4E 80 00 20 */	blr 
+.endfn finishWaterEffect__6PelletFv
 
-.global doKill__6PelletFv
-doKill__6PelletFv:
+.fn doKill__6PelletFv, global
 /* 800954A8 00092408  7C 08 02 A6 */	mflr r0
 /* 800954AC 0009240C  38 80 00 00 */	li r4, 0
 /* 800954B0 00092410  90 01 00 04 */	stw r0, 4(r1)
@@ -689,9 +688,9 @@ doKill__6PelletFv:
 /* 8009552C 0009248C  38 21 00 18 */	addi r1, r1, 0x18
 /* 80095530 00092490  7C 08 03 A6 */	mtlr r0
 /* 80095534 00092494  4E 80 00 20 */	blr 
+.endfn doKill__6PelletFv
 
-.global getState__6PelletFv
-getState__6PelletFv:
+.fn getState__6PelletFv, global
 /* 80095538 00092498  80 63 04 74 */	lwz r3, 0x474(r3)
 /* 8009553C 0009249C  28 03 00 00 */	cmplwi r3, 0
 /* 80095540 000924A0  41 82 00 0C */	beq .L_8009554C
@@ -700,9 +699,9 @@ getState__6PelletFv:
 .L_8009554C:
 /* 8009554C 000924AC  38 60 00 00 */	li r3, 0
 /* 80095550 000924B0  4E 80 00 20 */	blr 
+.endfn getState__6PelletFv
 
-.global ignoreAtari__6PelletFP8Creature
-ignoreAtari__6PelletFP8Creature:
+.fn ignoreAtari__6PelletFP8Creature, global
 /* 80095554 000924B4  80 04 01 84 */	lwz r0, 0x184(r4)
 /* 80095558 000924B8  7C 00 18 40 */	cmplw r0, r3
 /* 8009555C 000924BC  40 82 00 0C */	bne .L_80095568
@@ -719,14 +718,14 @@ ignoreAtari__6PelletFP8Creature:
 .L_80095584:
 /* 80095584 000924E4  38 60 00 00 */	li r3, 0
 /* 80095588 000924E8  4E 80 00 20 */	blr 
+.endfn ignoreAtari__6PelletFP8Creature
 
-.global isAlive__6PelletFv
-isAlive__6PelletFv:
+.fn isAlive__6PelletFv, global
 /* 8009558C 000924EC  88 63 05 B8 */	lbz r3, 0x5b8(r3)
 /* 80095590 000924F0  4E 80 00 20 */	blr 
+.endfn isAlive__6PelletFv
 
-.global isAtari__6PelletFv
-isAtari__6PelletFv:
+.fn isAtari__6PelletFv, global
 /* 80095594 000924F4  80 63 04 74 */	lwz r3, 0x474(r3)
 /* 80095598 000924F8  28 03 00 00 */	cmplwi r3, 0
 /* 8009559C 000924FC  41 82 00 0C */	beq .L_800955A8
@@ -750,9 +749,9 @@ isAtari__6PelletFv:
 .L_800955D4:
 /* 800955D4 00092534  38 60 00 01 */	li r3, 1
 /* 800955D8 00092538  4E 80 00 20 */	blr 
+.endfn isAtari__6PelletFv
 
-.global isVisible__6PelletFv
-isVisible__6PelletFv:
+.fn isVisible__6PelletFv, global
 /* 800955DC 0009253C  80 83 04 74 */	lwz r4, 0x474(r3)
 /* 800955E0 00092540  28 04 00 00 */	cmplwi r4, 0
 /* 800955E4 00092544  41 82 00 0C */	beq .L_800955F0
@@ -778,9 +777,9 @@ isVisible__6PelletFv:
 .L_80095624:
 /* 80095624 00092584  38 60 00 01 */	li r3, 1
 /* 80095628 00092588  4E 80 00 20 */	blr 
+.endfn isVisible__6PelletFv
 
-.global setTrySound__6PelletFb
-setTrySound__6PelletFb:
+.fn setTrySound__6PelletFb, global
 /* 8009562C 0009258C  7C 08 02 A6 */	mflr r0
 /* 80095630 00092590  90 01 00 04 */	stw r0, 4(r1)
 /* 80095634 00092594  54 80 06 3F */	clrlwi. r0, r4, 0x18
@@ -815,9 +814,9 @@ setTrySound__6PelletFb:
 /* 800956A0 00092600  38 21 00 20 */	addi r1, r1, 0x20
 /* 800956A4 00092604  7C 08 03 A6 */	mtlr r0
 /* 800956A8 00092608  4E 80 00 20 */	blr 
+.endfn setTrySound__6PelletFb
 
-.global startPick__6PelletFv
-startPick__6PelletFv:
+.fn startPick__6PelletFv, global
 /* 800956AC 0009260C  7C 08 02 A6 */	mflr r0
 /* 800956B0 00092610  38 80 00 09 */	li r4, 9
 /* 800956B4 00092614  90 01 00 04 */	stw r0, 4(r1)
@@ -1074,9 +1073,9 @@ startPick__6PelletFv:
 /* 80095A40 000929A0  38 21 00 78 */	addi r1, r1, 0x78
 /* 80095A44 000929A4  7C 08 03 A6 */	mtlr r0
 /* 80095A48 000929A8  4E 80 00 20 */	blr 
+.endfn startPick__6PelletFv
 
-.global finishPick__6PelletFv
-finishPick__6PelletFv:
+.fn finishPick__6PelletFv, global
 /* 80095A4C 000929AC  7C 08 02 A6 */	mflr r0
 /* 80095A50 000929B0  38 A0 00 B9 */	li r5, 0xb9
 /* 80095A54 000929B4  90 01 00 04 */	stw r0, 4(r1)
@@ -1109,9 +1108,9 @@ finishPick__6PelletFv:
 /* 80095AC0 00092A20  38 21 00 18 */	addi r1, r1, 0x18
 /* 80095AC4 00092A24  7C 08 03 A6 */	mtlr r0
 /* 80095AC8 00092A28  4E 80 00 20 */	blr 
+.endfn finishPick__6PelletFv
 
-.global startGoal__6PelletFv
-startGoal__6PelletFv:
+.fn startGoal__6PelletFv, global
 /* 80095ACC 00092A2C  7C 08 02 A6 */	mflr r0
 /* 80095AD0 00092A30  38 A0 00 B9 */	li r5, 0xb9
 /* 80095AD4 00092A34  90 01 00 04 */	stw r0, 4(r1)
@@ -1158,9 +1157,9 @@ startGoal__6PelletFv:
 /* 80095B78 00092AD8  38 21 00 18 */	addi r1, r1, 0x18
 /* 80095B7C 00092ADC  7C 08 03 A6 */	mtlr r0
 /* 80095B80 00092AE0  4E 80 00 20 */	blr 
+.endfn startGoal__6PelletFv
 
-.global "transit__21StateMachine<6Pellet>FP6Pelleti"
-"transit__21StateMachine<6Pellet>FP6Pelleti":
+.fn "transit__21StateMachine<6Pellet>FP6Pelleti", weak
 /* 80095B84 00092AE4  7C 08 02 A6 */	mflr r0
 /* 80095B88 00092AE8  90 01 00 04 */	stw r0, 4(r1)
 /* 80095B8C 00092AEC  54 A0 10 3A */	slwi r0, r5, 2
@@ -1208,17 +1207,17 @@ startGoal__6PelletFv:
 /* 80095C28 00092B88  38 21 00 28 */	addi r1, r1, 0x28
 /* 80095C2C 00092B8C  7C 08 03 A6 */	mtlr r0
 /* 80095C30 00092B90  4E 80 00 20 */	blr 
+.endfn "transit__21StateMachine<6Pellet>FP6Pelleti"
 
-.global "init__15AState<6Pellet>FP6Pellet"
-"init__15AState<6Pellet>FP6Pellet":
+.fn "init__15AState<6Pellet>FP6Pellet", weak
 /* 80095C34 00092B94  4E 80 00 20 */	blr 
+.endfn "init__15AState<6Pellet>FP6Pellet"
 
-.global "cleanup__15AState<6Pellet>FP6Pellet"
-"cleanup__15AState<6Pellet>FP6Pellet":
+.fn "cleanup__15AState<6Pellet>FP6Pellet", weak
 /* 80095C38 00092B98  4E 80 00 20 */	blr 
+.endfn "cleanup__15AState<6Pellet>FP6Pellet"
 
-.global doCarry__6PelletFP8CreatureR8Vector3fUs
-doCarry__6PelletFP8CreatureR8Vector3fUs:
+.fn doCarry__6PelletFP8CreatureR8Vector3fUs, global
 /* 80095C3C 00092B9C  7C 08 02 A6 */	mflr r0
 /* 80095C40 00092BA0  90 01 00 04 */	stw r0, 4(r1)
 /* 80095C44 00092BA4  94 21 FF A8 */	stwu r1, -0x58(r1)
@@ -1316,9 +1315,9 @@ doCarry__6PelletFP8CreatureR8Vector3fUs:
 /* 80095D9C 00092CFC  38 21 00 58 */	addi r1, r1, 0x58
 /* 80095DA0 00092D00  7C 08 03 A6 */	mtlr r0
 /* 80095DA4 00092D04  4E 80 00 20 */	blr 
+.endfn doCarry__6PelletFP8CreatureR8Vector3fUs
 
-.global getBottomRadius__6PelletFv
-getBottomRadius__6PelletFv:
+.fn getBottomRadius__6PelletFv, global
 /* 80095DA8 00092D08  7C 08 02 A6 */	mflr r0
 /* 80095DAC 00092D0C  90 01 00 04 */	stw r0, 4(r1)
 /* 80095DB0 00092D10  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -1392,9 +1391,9 @@ getBottomRadius__6PelletFv:
 /* 80095EA4 00092E04  38 21 00 18 */	addi r1, r1, 0x18
 /* 80095EA8 00092E08  7C 08 03 A6 */	mtlr r0
 /* 80095EAC 00092E0C  4E 80 00 20 */	blr 
+.endfn getBottomRadius__6PelletFv
 
-.global getCentre__6PelletFv
-getCentre__6PelletFv:
+.fn getCentre__6PelletFv, global
 /* 80095EB0 00092E10  C0 04 00 94 */	lfs f0, 0x94(r4)
 /* 80095EB4 00092E14  D0 03 00 00 */	stfs f0, 0(r3)
 /* 80095EB8 00092E18  C0 04 00 98 */	lfs f0, 0x98(r4)
@@ -1402,9 +1401,9 @@ getCentre__6PelletFv:
 /* 80095EC0 00092E20  C0 04 00 9C */	lfs f0, 0x9c(r4)
 /* 80095EC4 00092E24  D0 03 00 08 */	stfs f0, 8(r3)
 /* 80095EC8 00092E28  4E 80 00 20 */	blr 
+.endfn getCentre__6PelletFv
 
-.global getCylinderHeight__6PelletFv
-getCylinderHeight__6PelletFv:
+.fn getCylinderHeight__6PelletFv, global
 /* 80095ECC 00092E2C  7C 08 02 A6 */	mflr r0
 /* 80095ED0 00092E30  90 01 00 04 */	stw r0, 4(r1)
 /* 80095ED4 00092E34  94 21 FF F8 */	stwu r1, -8(r1)
@@ -1425,9 +1424,9 @@ getCylinderHeight__6PelletFv:
 /* 80095F08 00092E68  38 21 00 08 */	addi r1, r1, 8
 /* 80095F0C 00092E6C  7C 08 03 A6 */	mtlr r0
 /* 80095F10 00092E70  4E 80 00 20 */	blr 
+.endfn getCylinderHeight__6PelletFv
 
-.global getSize__6PelletFv
-getSize__6PelletFv:
+.fn getSize__6PelletFv, global
 /* 80095F14 00092E74  7C 08 02 A6 */	mflr r0
 /* 80095F18 00092E78  90 01 00 04 */	stw r0, 4(r1)
 /* 80095F1C 00092E7C  94 21 FF C0 */	stwu r1, -0x40(r1)
@@ -1460,9 +1459,9 @@ getSize__6PelletFv:
 /* 80095F80 00092EE0  38 21 00 40 */	addi r1, r1, 0x40
 /* 80095F84 00092EE4  7C 08 03 A6 */	mtlr r0
 /* 80095F88 00092EE8  4E 80 00 20 */	blr 
+.endfn getSize__6PelletFv
 
-.global viewGetScale__10PelletViewFv
-viewGetScale__10PelletViewFv:
+.fn viewGetScale__10PelletViewFv, weak
 /* 80095F8C 00092EEC  C0 0D A7 00 */	lfs f0, lbl_803DF420@sda21(r13)
 /* 80095F90 00092EF0  D0 03 00 00 */	stfs f0, 0(r3)
 /* 80095F94 00092EF4  C0 0D A7 04 */	lfs f0, lbl_803DF424@sda21(r13)
@@ -1470,14 +1469,14 @@ viewGetScale__10PelletViewFv:
 /* 80095F9C 00092EFC  C0 0D A7 08 */	lfs f0, lbl_803DF428@sda21(r13)
 /* 80095FA0 00092F00  D0 03 00 08 */	stfs f0, 8(r3)
 /* 80095FA4 00092F04  4E 80 00 20 */	blr 
+.endfn viewGetScale__10PelletViewFv
 
-.global getiMass__6PelletFv
-getiMass__6PelletFv:
+.fn getiMass__6PelletFv, global
 /* 80095FA8 00092F08  C0 22 8C 18 */	lfs f1, lbl_803E8E18@sda21(r2)
 /* 80095FAC 00092F0C  4E 80 00 20 */	blr 
+.endfn getiMass__6PelletFv
 
-.global startStickTeki__6PelletFP8Creaturef
-startStickTeki__6PelletFP8Creaturef:
+.fn startStickTeki__6PelletFP8Creaturef, global
 /* 80095FB0 00092F10  7C 08 02 A6 */	mflr r0
 /* 80095FB4 00092F14  90 01 00 04 */	stw r0, 4(r1)
 /* 80095FB8 00092F18  94 21 FF 90 */	stwu r1, -0x70(r1)
@@ -1537,9 +1536,9 @@ startStickTeki__6PelletFP8Creaturef:
 /* 80096088 00092FE8  38 21 00 70 */	addi r1, r1, 0x70
 /* 8009608C 00092FEC  7C 08 03 A6 */	mtlr r0
 /* 80096090 00092FF0  4E 80 00 20 */	blr 
+.endfn startStickTeki__6PelletFP8Creaturef
 
-.global endStickTeki__6PelletFP8Creature
-endStickTeki__6PelletFP8Creature:
+.fn endStickTeki__6PelletFP8Creature, global
 /* 80096094 00092FF4  7C 08 02 A6 */	mflr r0
 /* 80096098 00092FF8  38 A0 00 B9 */	li r5, 0xb9
 /* 8009609C 00092FFC  90 01 00 04 */	stw r0, 4(r1)
@@ -1577,9 +1576,9 @@ endStickTeki__6PelletFP8Creature:
 /* 8009611C 0009307C  38 21 00 20 */	addi r1, r1, 0x20
 /* 80096120 00093080  7C 08 03 A6 */	mtlr r0
 /* 80096124 00093084  4E 80 00 20 */	blr 
+.endfn endStickTeki__6PelletFP8Creature
 
-.global winnable__6PelletFi
-winnable__6PelletFi:
+.fn winnable__6PelletFi, global
 /* 80096128 00093088  7C 08 02 A6 */	mflr r0
 /* 8009612C 0009308C  3C A0 4E 41 */	lis r5, 0x4E415649@ha
 /* 80096130 00093090  90 01 00 04 */	stw r0, 4(r1)
@@ -1684,9 +1683,9 @@ winnable__6PelletFi:
 /* 80096290 000931F0  38 21 00 48 */	addi r1, r1, 0x48
 /* 80096294 000931F4  7C 08 03 A6 */	mtlr r0
 /* 80096298 000931F8  4E 80 00 20 */	blr 
+.endfn winnable__6PelletFi
 
-.global stickSlot__6PelletFi
-stickSlot__6PelletFi:
+.fn stickSlot__6PelletFi, global
 /* 8009629C 000931FC  7C 08 02 A6 */	mflr r0
 /* 800962A0 00093200  90 01 00 04 */	stw r0, 4(r1)
 /* 800962A4 00093204  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -1715,9 +1714,9 @@ stickSlot__6PelletFi:
 /* 800962F8 00093258  38 21 00 18 */	addi r1, r1, 0x18
 /* 800962FC 0009325C  7C 08 03 A6 */	mtlr r0
 /* 80096300 00093260  4E 80 00 20 */	blr 
+.endfn stickSlot__6PelletFi
 
-.global stickOffSlot__6PelletFi
-stickOffSlot__6PelletFi:
+.fn stickOffSlot__6PelletFi, global
 /* 80096304 00093264  7C 08 02 A6 */	mflr r0
 /* 80096308 00093268  90 01 00 04 */	stw r0, 4(r1)
 /* 8009630C 0009326C  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -1742,9 +1741,9 @@ stickOffSlot__6PelletFi:
 /* 80096354 000932B4  38 21 00 18 */	addi r1, r1, 0x18
 /* 80096358 000932B8  7C 08 03 A6 */	mtlr r0
 /* 8009635C 000932BC  4E 80 00 20 */	blr 
+.endfn stickOffSlot__6PelletFi
 
-.global getMinFreeSlotIndex__6PelletFv
-getMinFreeSlotIndex__6PelletFv:
+.fn getMinFreeSlotIndex__6PelletFv, global
 /* 80096360 000932C0  7C 08 02 A6 */	mflr r0
 /* 80096364 000932C4  90 01 00 04 */	stw r0, 4(r1)
 /* 80096368 000932C8  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -1776,9 +1775,9 @@ getMinFreeSlotIndex__6PelletFv:
 /* 800963C0 00093320  38 21 00 20 */	addi r1, r1, 0x20
 /* 800963C4 00093324  7C 08 03 A6 */	mtlr r0
 /* 800963C8 00093328  4E 80 00 20 */	blr 
+.endfn getMinFreeSlotIndex__6PelletFv
 
-.global getNearestFreeSlotIndex__6PelletFR8Vector3f
-getNearestFreeSlotIndex__6PelletFR8Vector3f:
+.fn getNearestFreeSlotIndex__6PelletFR8Vector3f, global
 /* 800963CC 0009332C  7C 08 02 A6 */	mflr r0
 /* 800963D0 00093330  90 01 00 04 */	stw r0, 4(r1)
 /* 800963D4 00093334  94 21 FF 68 */	stwu r1, -0x98(r1)
@@ -1871,9 +1870,9 @@ getNearestFreeSlotIndex__6PelletFR8Vector3f:
 /* 80096520 00093480  38 21 00 98 */	addi r1, r1, 0x98
 /* 80096524 00093484  7C 08 03 A6 */	mtlr r0
 /* 80096528 00093488  4E 80 00 20 */	blr 
+.endfn getNearestFreeSlotIndex__6PelletFR8Vector3f
 
-.global getRandomFreeSlotIndex__6PelletFv
-getRandomFreeSlotIndex__6PelletFv:
+.fn getRandomFreeSlotIndex__6PelletFv, global
 /* 8009652C 0009348C  7C 08 02 A6 */	mflr r0
 /* 80096530 00093490  90 01 00 04 */	stw r0, 4(r1)
 /* 80096534 00093494  94 21 FF B0 */	stwu r1, -0x50(r1)
@@ -1933,9 +1932,9 @@ getRandomFreeSlotIndex__6PelletFv:
 /* 800965F8 00093558  38 21 00 50 */	addi r1, r1, 0x50
 /* 800965FC 0009355C  7C 08 03 A6 */	mtlr r0
 /* 80096600 00093560  4E 80 00 20 */	blr 
+.endfn getRandomFreeSlotIndex__6PelletFv
 
-.global getSlotLocalPos__6PelletFif
-getSlotLocalPos__6PelletFif:
+.fn getSlotLocalPos__6PelletFif, global
 /* 80096604 00093564  7C 08 02 A6 */	mflr r0
 /* 80096608 00093568  2C 05 FF FE */	cmpwi r5, -2
 /* 8009660C 0009356C  90 01 00 04 */	stw r0, 4(r1)
@@ -2048,9 +2047,9 @@ getSlotLocalPos__6PelletFif:
 /* 80096798 000936F8  38 21 00 78 */	addi r1, r1, 0x78
 /* 8009679C 000936FC  7C 08 03 A6 */	mtlr r0
 /* 800967A0 00093700  4E 80 00 20 */	blr 
+.endfn getSlotLocalPos__6PelletFif
 
-.global getSlotGlobalPos__6PelletFif
-getSlotGlobalPos__6PelletFif:
+.fn getSlotGlobalPos__6PelletFif, global
 /* 800967A4 00093704  7C 08 02 A6 */	mflr r0
 /* 800967A8 00093708  90 01 00 04 */	stw r0, 4(r1)
 /* 800967AC 0009370C  94 21 FF C0 */	stwu r1, -0x40(r1)
@@ -2081,9 +2080,9 @@ getSlotGlobalPos__6PelletFif:
 /* 80096810 00093770  38 21 00 40 */	addi r1, r1, 0x40
 /* 80096814 00093774  7C 08 03 A6 */	mtlr r0
 /* 80096818 00093778  4E 80 00 20 */	blr 
+.endfn getSlotGlobalPos__6PelletFif
 
-.global setSlotFlag__6PelletFi
-setSlotFlag__6PelletFi:
+.fn setSlotFlag__6PelletFi, global
 /* 8009681C 0009377C  2C 04 FF FE */	cmpwi r4, -2
 /* 80096820 00093780  4D 82 00 20 */	beqlr 
 /* 80096824 00093784  7C 85 2E 70 */	srawi r5, r4, 5
@@ -2097,9 +2096,9 @@ setSlotFlag__6PelletFi:
 /* 80096844 000937A4  7C A0 03 78 */	or r0, r5, r0
 /* 80096848 000937A8  90 06 05 64 */	stw r0, 0x564(r6)
 /* 8009684C 000937AC  4E 80 00 20 */	blr 
+.endfn setSlotFlag__6PelletFi
 
-.global resetSlotFlag__6PelletFi
-resetSlotFlag__6PelletFi:
+.fn resetSlotFlag__6PelletFi, global
 /* 80096850 000937B0  2C 04 FF FE */	cmpwi r4, -2
 /* 80096854 000937B4  4D 82 00 20 */	beqlr 
 /* 80096858 000937B8  7C 85 2E 70 */	srawi r5, r4, 5
@@ -2113,9 +2112,9 @@ resetSlotFlag__6PelletFi:
 /* 80096878 000937D8  7C A0 00 78 */	andc r0, r5, r0
 /* 8009687C 000937DC  90 06 05 64 */	stw r0, 0x564(r6)
 /* 80096880 000937E0  4E 80 00 20 */	blr 
+.endfn resetSlotFlag__6PelletFi
 
-.global isSlotFlag__6PelletFi
-isSlotFlag__6PelletFi:
+.fn isSlotFlag__6PelletFi, global
 /* 80096884 000937E4  2C 04 FF FE */	cmpwi r4, -2
 /* 80096888 000937E8  40 82 00 0C */	bne .L_80096894
 /* 8009688C 000937EC  38 60 00 00 */	li r3, 0
@@ -2134,9 +2133,9 @@ isSlotFlag__6PelletFi:
 /* 800968BC 0009381C  30 03 FF FF */	addic r0, r3, -1
 /* 800968C0 00093820  7C 60 19 10 */	subfe r3, r0, r3
 /* 800968C4 00093824  4E 80 00 20 */	blr 
+.endfn isSlotFlag__6PelletFi
 
-.global initPellet__6PelletFP17PelletShapeObjectP12PelletConfig
-initPellet__6PelletFP17PelletShapeObjectP12PelletConfig:
+.fn initPellet__6PelletFP17PelletShapeObjectP12PelletConfig, global
 /* 800968C8 00093828  7C 08 02 A6 */	mflr r0
 /* 800968CC 0009382C  90 01 00 04 */	stw r0, 4(r1)
 /* 800968D0 00093830  38 00 00 00 */	li r0, 0
@@ -2198,9 +2197,9 @@ initPellet__6PelletFP17PelletShapeObjectP12PelletConfig:
 /* 8009699C 000938FC  38 21 00 30 */	addi r1, r1, 0x30
 /* 800969A0 00093900  7C 08 03 A6 */	mtlr r0
 /* 800969A4 00093904  4E 80 00 20 */	blr 
+.endfn initPellet__6PelletFP17PelletShapeObjectP12PelletConfig
 
-.global startCarryMotion__6PelletFf
-startCarryMotion__6PelletFf:
+.fn startCarryMotion__6PelletFf, global
 /* 800969A8 00093908  7C 08 02 A6 */	mflr r0
 /* 800969AC 0009390C  7C 64 1B 78 */	mr r4, r3
 /* 800969B0 00093910  90 01 00 04 */	stw r0, 4(r1)
@@ -2219,17 +2218,17 @@ startCarryMotion__6PelletFf:
 /* 800969E0 00093940  38 21 00 08 */	addi r1, r1, 8
 /* 800969E4 00093944  7C 08 03 A6 */	mtlr r0
 /* 800969E8 00093948  4E 80 00 20 */	blr 
+.endfn startCarryMotion__6PelletFf
 
-.global viewStartTrembleMotion__10PelletViewFf
-viewStartTrembleMotion__10PelletViewFf:
+.fn viewStartTrembleMotion__10PelletViewFf, weak
 /* 800969EC 0009394C  4E 80 00 20 */	blr 
+.endfn viewStartTrembleMotion__10PelletViewFf
 
-.global viewSetMotionSpeed__10PelletViewFf
-viewSetMotionSpeed__10PelletViewFf:
+.fn viewSetMotionSpeed__10PelletViewFf, weak
 /* 800969F0 00093950  4E 80 00 20 */	blr 
+.endfn viewSetMotionSpeed__10PelletViewFf
 
-.global finishMotion__6PelletFv
-finishMotion__6PelletFv:
+.fn finishMotion__6PelletFv, global
 /* 800969F4 00093954  7C 08 02 A6 */	mflr r0
 /* 800969F8 00093958  90 01 00 04 */	stw r0, 4(r1)
 /* 800969FC 0009395C  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -2257,13 +2256,13 @@ finishMotion__6PelletFv:
 /* 80096A4C 000939AC  38 21 00 20 */	addi r1, r1, 0x20
 /* 80096A50 000939B0  7C 08 03 A6 */	mtlr r0
 /* 80096A54 000939B4  4E 80 00 20 */	blr 
+.endfn finishMotion__6PelletFv
 
-.global viewFinishMotion__10PelletViewFv
-viewFinishMotion__10PelletViewFv:
+.fn viewFinishMotion__10PelletViewFv, weak
 /* 80096A58 000939B8  4E 80 00 20 */	blr 
+.endfn viewFinishMotion__10PelletViewFv
 
-.global init__6PelletFR8Vector3f
-init__6PelletFR8Vector3f:
+.fn init__6PelletFR8Vector3f, global
 /* 80096A5C 000939BC  7C 08 02 A6 */	mflr r0
 /* 80096A60 000939C0  90 01 00 04 */	stw r0, 4(r1)
 /* 80096A64 000939C4  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -2305,9 +2304,9 @@ init__6PelletFR8Vector3f:
 /* 80096AE8 00093A48  38 21 00 28 */	addi r1, r1, 0x28
 /* 80096AEC 00093A4C  7C 08 03 A6 */	mtlr r0
 /* 80096AF0 00093A50  4E 80 00 20 */	blr 
+.endfn init__6PelletFR8Vector3f
 
-.global isFree__6PelletFv
-isFree__6PelletFv:
+.fn isFree__6PelletFv, global
 /* 80096AF4 00093A54  80 03 05 64 */	lwz r0, 0x564(r3)
 /* 80096AF8 00093A58  28 00 00 00 */	cmplwi r0, 0
 /* 80096AFC 00093A5C  40 82 00 24 */	bne .L_80096B20
@@ -2322,9 +2321,9 @@ isFree__6PelletFv:
 .L_80096B20:
 /* 80096B20 00093A80  38 60 00 00 */	li r3, 0
 /* 80096B24 00093A84  4E 80 00 20 */	blr 
+.endfn isFree__6PelletFv
 
-.global doLoad__6PelletFR18RandomAccessStream
-doLoad__6PelletFR18RandomAccessStream:
+.fn doLoad__6PelletFR18RandomAccessStream, global
 /* 80096B28 00093A88  7C 08 02 A6 */	mflr r0
 /* 80096B2C 00093A8C  90 01 00 04 */	stw r0, 4(r1)
 /* 80096B30 00093A90  94 21 FF A8 */	stwu r1, -0x58(r1)
@@ -2476,9 +2475,9 @@ doLoad__6PelletFR18RandomAccessStream:
 /* 80096D64 00093CC4  38 21 00 58 */	addi r1, r1, 0x58
 /* 80096D68 00093CC8  7C 08 03 A6 */	mtlr r0
 /* 80096D6C 00093CCC  4E 80 00 20 */	blr 
+.endfn doLoad__6PelletFR18RandomAccessStream
 
-.global animationKeyUpdated__6PelletFR16PaniAnimKeyEvent
-animationKeyUpdated__6PelletFR16PaniAnimKeyEvent:
+.fn animationKeyUpdated__6PelletFR16PaniAnimKeyEvent, global
 /* 80096D70 00093CD0  7C 08 02 A6 */	mflr r0
 /* 80096D74 00093CD4  90 01 00 04 */	stw r0, 4(r1)
 /* 80096D78 00093CD8  94 21 FF F8 */	stwu r1, -8(r1)
@@ -2512,9 +2511,9 @@ animationKeyUpdated__6PelletFR16PaniAnimKeyEvent:
 /* 80096DDC 00093D3C  38 21 00 08 */	addi r1, r1, 8
 /* 80096DE0 00093D40  7C 08 03 A6 */	mtlr r0
 /* 80096DE4 00093D44  4E 80 00 20 */	blr 
+.endfn animationKeyUpdated__6PelletFR16PaniAnimKeyEvent
 
-.global doSave__6PelletFR18RandomAccessStream
-doSave__6PelletFR18RandomAccessStream:
+.fn doSave__6PelletFR18RandomAccessStream, global
 /* 80096DE8 00093D48  7C 08 02 A6 */	mflr r0
 /* 80096DEC 00093D4C  90 01 00 04 */	stw r0, 4(r1)
 /* 80096DF0 00093D50  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -2552,9 +2551,9 @@ doSave__6PelletFR18RandomAccessStream:
 /* 80096E70 00093DD0  38 21 00 18 */	addi r1, r1, 0x18
 /* 80096E74 00093DD4  7C 08 03 A6 */	mtlr r0
 /* 80096E78 00093DD8  4E 80 00 20 */	blr 
+.endfn doSave__6PelletFR18RandomAccessStream
 
-.global startAI__6PelletFi
-startAI__6PelletFi:
+.fn startAI__6PelletFi, global
 /* 80096E7C 00093DDC  7C 08 02 A6 */	mflr r0
 /* 80096E80 00093DE0  90 01 00 04 */	stw r0, 4(r1)
 /* 80096E84 00093DE4  94 21 FF 50 */	stwu r1, -0xb0(r1)
@@ -2812,9 +2811,9 @@ startAI__6PelletFi:
 /* 80097228 00094188  38 21 00 B0 */	addi r1, r1, 0xb0
 /* 8009722C 0009418C  7C 08 03 A6 */	mtlr r0
 /* 80097230 00094190  4E 80 00 20 */	blr 
+.endfn startAI__6PelletFi
 
-.global doAnimation__6PelletFv
-doAnimation__6PelletFv:
+.fn doAnimation__6PelletFv, global
 /* 80097234 00094194  7C 08 02 A6 */	mflr r0
 /* 80097238 00094198  90 01 00 04 */	stw r0, 4(r1)
 /* 8009723C 0009419C  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -2841,13 +2840,13 @@ doAnimation__6PelletFv:
 /* 80097288 000941E8  38 21 00 18 */	addi r1, r1, 0x18
 /* 8009728C 000941EC  7C 08 03 A6 */	mtlr r0
 /* 80097290 000941F0  4E 80 00 20 */	blr 
+.endfn doAnimation__6PelletFv
 
-.global viewDoAnimation__10PelletViewFv
-viewDoAnimation__10PelletViewFv:
+.fn viewDoAnimation__10PelletViewFv, weak
 /* 80097294 000941F4  4E 80 00 20 */	blr 
+.endfn viewDoAnimation__10PelletViewFv
 
-.global refresh__6PelletFR8Graphics
-refresh__6PelletFR8Graphics:
+.fn refresh__6PelletFR8Graphics, global
 /* 80097298 000941F8  7C 08 02 A6 */	mflr r0
 /* 8009729C 000941FC  90 01 00 04 */	stw r0, 4(r1)
 /* 800972A0 00094200  94 21 FF F8 */	stwu r1, -8(r1)
@@ -2887,9 +2886,9 @@ refresh__6PelletFR8Graphics:
 /* 80097314 00094274  38 21 00 08 */	addi r1, r1, 8
 /* 80097318 00094278  7C 08 03 A6 */	mtlr r0
 /* 8009731C 0009427C  4E 80 00 20 */	blr 
+.endfn refresh__6PelletFR8Graphics
 
-.global postUpdate__6PelletFif
-postUpdate__6PelletFif:
+.fn postUpdate__6PelletFif, global
 /* 80097320 00094280  7C 08 02 A6 */	mflr r0
 /* 80097324 00094284  90 01 00 04 */	stw r0, 4(r1)
 /* 80097328 00094288  94 21 FF F8 */	stwu r1, -8(r1)
@@ -2929,9 +2928,9 @@ postUpdate__6PelletFif:
 /* 8009739C 000942FC  38 21 00 08 */	addi r1, r1, 8
 /* 800973A0 00094300  7C 08 03 A6 */	mtlr r0
 /* 800973A4 00094304  4E 80 00 20 */	blr 
+.endfn postUpdate__6PelletFif
 
-.global update__6PelletFv
-update__6PelletFv:
+.fn update__6PelletFv, global
 /* 800973A8 00094308  7C 08 02 A6 */	mflr r0
 /* 800973AC 0009430C  90 01 00 04 */	stw r0, 4(r1)
 /* 800973B0 00094310  94 21 FE 08 */	stwu r1, -0x1f8(r1)
@@ -3575,9 +3574,9 @@ update__6PelletFv:
 /* 80097CE8 00094C48  38 21 01 F8 */	addi r1, r1, 0x1f8
 /* 80097CEC 00094C4C  7C 08 03 A6 */	mtlr r0
 /* 80097CF0 00094C50  4E 80 00 20 */	blr 
+.endfn update__6PelletFv
 
-.global "exec__21StateMachine<6Pellet>FP6Pellet"
-"exec__21StateMachine<6Pellet>FP6Pellet":
+.fn "exec__21StateMachine<6Pellet>FP6Pellet", weak
 /* 80097CF4 00094C54  7C 08 02 A6 */	mflr r0
 /* 80097CF8 00094C58  90 01 00 04 */	stw r0, 4(r1)
 /* 80097CFC 00094C5C  94 21 FF F8 */	stwu r1, -8(r1)
@@ -3594,13 +3593,13 @@ update__6PelletFv:
 /* 80097D24 00094C84  38 21 00 08 */	addi r1, r1, 8
 /* 80097D28 00094C88  7C 08 03 A6 */	mtlr r0
 /* 80097D2C 00094C8C  4E 80 00 20 */	blr 
+.endfn "exec__21StateMachine<6Pellet>FP6Pellet"
 
-.global "exec__15AState<6Pellet>FP6Pellet"
-"exec__15AState<6Pellet>FP6Pellet":
+.fn "exec__15AState<6Pellet>FP6Pellet", weak
 /* 80097D30 00094C90  4E 80 00 20 */	blr 
+.endfn "exec__15AState<6Pellet>FP6Pellet"
 
-.global bounceCallback__6PelletFv
-bounceCallback__6PelletFv:
+.fn bounceCallback__6PelletFv, global
 /* 80097D34 00094C94  7C 08 02 A6 */	mflr r0
 /* 80097D38 00094C98  90 01 00 04 */	stw r0, 4(r1)
 /* 80097D3C 00094C9C  38 00 00 00 */	li r0, 0
@@ -3621,9 +3620,9 @@ bounceCallback__6PelletFv:
 /* 80097D78 00094CD8  38 21 00 38 */	addi r1, r1, 0x38
 /* 80097D7C 00094CDC  7C 08 03 A6 */	mtlr r0
 /* 80097D80 00094CE0  4E 80 00 20 */	blr 
+.endfn bounceCallback__6PelletFv
 
-.global collisionCallback__6PelletFR9CollEvent
-collisionCallback__6PelletFR9CollEvent:
+.fn collisionCallback__6PelletFR9CollEvent, global
 /* 80097D84 00094CE4  80 83 00 C8 */	lwz r4, 0xc8(r3)
 /* 80097D88 00094CE8  54 80 02 53 */	rlwinm. r0, r4, 0, 9, 9
 /* 80097D8C 00094CEC  4D 82 00 20 */	beqlr 
@@ -3632,9 +3631,9 @@ collisionCallback__6PelletFR9CollEvent:
 /* 80097D98 00094CF8  54 80 02 D2 */	rlwinm r0, r4, 0, 0xb, 9
 /* 80097D9C 00094CFC  90 03 00 C8 */	stw r0, 0xc8(r3)
 /* 80097DA0 00094D00  4E 80 00 20 */	blr 
+.endfn collisionCallback__6PelletFR9CollEvent
 
-.global stimulate__6PelletFR11Interaction
-stimulate__6PelletFR11Interaction:
+.fn stimulate__6PelletFR11Interaction, global
 /* 80097DA4 00094D04  7C 08 02 A6 */	mflr r0
 /* 80097DA8 00094D08  90 01 00 04 */	stw r0, 4(r1)
 /* 80097DAC 00094D0C  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -3666,9 +3665,9 @@ stimulate__6PelletFR11Interaction:
 /* 80097E0C 00094D6C  38 21 00 18 */	addi r1, r1, 0x18
 /* 80097E10 00094D70  7C 08 03 A6 */	mtlr r0
 /* 80097E14 00094D74  4E 80 00 20 */	blr 
+.endfn stimulate__6PelletFR11Interaction
 
-.global doRender__6PelletFR8GraphicsR8Matrix4f
-doRender__6PelletFR8GraphicsR8Matrix4f:
+.fn doRender__6PelletFR8GraphicsR8Matrix4f, global
 /* 80097E18 00094D78  7C 08 02 A6 */	mflr r0
 /* 80097E1C 00094D7C  90 01 00 04 */	stw r0, 4(r1)
 /* 80097E20 00094D80  94 21 FE B8 */	stwu r1, -0x148(r1)
@@ -3868,9 +3867,9 @@ doRender__6PelletFR8GraphicsR8Matrix4f:
 /* 80098104 00095064  38 21 01 48 */	addi r1, r1, 0x148
 /* 80098108 00095068  7C 08 03 A6 */	mtlr r0
 /* 8009810C 0009506C  4E 80 00 20 */	blr 
+.endfn doRender__6PelletFR8GraphicsR8Matrix4f
 
-.global doCreateColls__6PelletFR8Graphics
-doCreateColls__6PelletFR8Graphics:
+.fn doCreateColls__6PelletFR8Graphics, global
 /* 80098110 00095070  7C 08 02 A6 */	mflr r0
 /* 80098114 00095074  90 01 00 04 */	stw r0, 4(r1)
 /* 80098118 00095078  94 21 FF 58 */	stwu r1, -0xa8(r1)
@@ -3987,9 +3986,9 @@ doCreateColls__6PelletFR8Graphics:
 /* 800982C0 00095220  38 21 00 A8 */	addi r1, r1, 0xa8
 /* 800982C4 00095224  7C 08 03 A6 */	mtlr r0
 /* 800982C8 00095228  4E 80 00 20 */	blr 
+.endfn doCreateColls__6PelletFR8Graphics
 
-.global actPellet__15InteractSwallowFP6Pellet
-actPellet__15InteractSwallowFP6Pellet:
+.fn actPellet__15InteractSwallowFP6Pellet, global
 /* 800982CC 0009522C  7C 08 02 A6 */	mflr r0
 /* 800982D0 00095230  38 C3 00 00 */	addi r6, r3, 0
 /* 800982D4 00095234  90 01 00 04 */	stw r0, 4(r1)
@@ -4019,9 +4018,9 @@ actPellet__15InteractSwallowFP6Pellet:
 /* 80098324 00095284  38 21 00 08 */	addi r1, r1, 8
 /* 80098328 00095288  7C 08 03 A6 */	mtlr r0
 /* 8009832C 0009528C  4E 80 00 20 */	blr 
+.endfn actPellet__15InteractSwallowFP6Pellet
 
-.global actPellet__12InteractKillFP6Pellet
-actPellet__12InteractKillFP6Pellet:
+.fn actPellet__12InteractKillFP6Pellet, global
 /* 80098330 00095290  7C 08 02 A6 */	mflr r0
 /* 80098334 00095294  90 01 00 04 */	stw r0, 4(r1)
 /* 80098338 00095298  94 21 FF B8 */	stwu r1, -0x48(r1)
@@ -4113,9 +4112,9 @@ actPellet__12InteractKillFP6Pellet:
 /* 8009846C 000953CC  38 21 00 48 */	addi r1, r1, 0x48
 /* 80098470 000953D0  7C 08 03 A6 */	mtlr r0
 /* 80098474 000953D4  4E 80 00 20 */	blr 
+.endfn actPellet__12InteractKillFP6Pellet
 
-.global decomposeNumberPellet__9PelletMgrFUlRiRi
-decomposeNumberPellet__9PelletMgrFUlRiRi:
+.fn decomposeNumberPellet__9PelletMgrFUlRiRi, global
 /* 80098478 000953D8  3C 60 80 2B */	lis r3, lbl_802AFF18@ha
 /* 8009847C 000953DC  38 00 00 14 */	li r0, 0x14
 /* 80098480 000953E0  38 63 FF 18 */	addi r3, r3, lbl_802AFF18@l
@@ -4140,9 +4139,9 @@ decomposeNumberPellet__9PelletMgrFUlRiRi:
 /* 800984C4 00095424  42 00 FF CC */	bdnz .L_80098490
 /* 800984C8 00095428  38 60 00 00 */	li r3, 0
 /* 800984CC 0009542C  4E 80 00 20 */	blr 
+.endfn decomposeNumberPellet__9PelletMgrFUlRiRi
 
-.global registerUfoParts__9PelletMgrFv
-registerUfoParts__9PelletMgrFv:
+.fn registerUfoParts__9PelletMgrFv, global
 /* 800984D0 00095430  7C 08 02 A6 */	mflr r0
 /* 800984D4 00095434  90 01 00 04 */	stw r0, 4(r1)
 /* 800984D8 00095438  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -4173,9 +4172,9 @@ registerUfoParts__9PelletMgrFv:
 /* 8009852C 0009548C  38 21 00 18 */	addi r1, r1, 0x18
 /* 80098530 00095490  7C 08 03 A6 */	mtlr r0
 /* 80098534 00095494  4E 80 00 20 */	blr 
+.endfn registerUfoParts__9PelletMgrFv
 
-.global newNumberPellet__9PelletMgrFii
-newNumberPellet__9PelletMgrFii:
+.fn newNumberPellet__9PelletMgrFii, global
 /* 80098538 00095498  7C 08 02 A6 */	mflr r0
 /* 8009853C 0009549C  3C C0 80 2B */	lis r6, numberPellets@ha
 /* 80098540 000954A0  90 01 00 04 */	stw r0, 4(r1)
@@ -4212,9 +4211,9 @@ newNumberPellet__9PelletMgrFii:
 /* 800985A4 00095504  38 21 00 08 */	addi r1, r1, 8
 /* 800985A8 00095508  7C 08 03 A6 */	mtlr r0
 /* 800985AC 0009550C  4E 80 00 20 */	blr 
+.endfn newNumberPellet__9PelletMgrFii
 
-.global newPellet__9PelletMgrFUlP10PelletView
-newPellet__9PelletMgrFUlP10PelletView:
+.fn newPellet__9PelletMgrFUlP10PelletView, global
 /* 800985B0 00095510  7C 08 02 A6 */	mflr r0
 /* 800985B4 00095514  90 01 00 04 */	stw r0, 4(r1)
 /* 800985B8 00095518  94 21 FF B8 */	stwu r1, -0x48(r1)
@@ -4307,9 +4306,9 @@ newPellet__9PelletMgrFUlP10PelletView:
 /* 800986F8 00095658  38 21 00 48 */	addi r1, r1, 0x48
 /* 800986FC 0009565C  7C 08 03 A6 */	mtlr r0
 /* 80098700 00095660  4E 80 00 20 */	blr 
+.endfn newPellet__9PelletMgrFUlP10PelletView
 
-.global getShapeObject__9PelletMgrFUl
-getShapeObject__9PelletMgrFUl:
+.fn getShapeObject__9PelletMgrFUl, global
 /* 80098704 00095664  7C 08 02 A6 */	mflr r0
 /* 80098708 00095668  90 01 00 04 */	stw r0, 4(r1)
 /* 8009870C 0009566C  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -4353,9 +4352,9 @@ getShapeObject__9PelletMgrFUl:
 /* 8009878C 000956EC  38 21 00 28 */	addi r1, r1, 0x28
 /* 80098790 000956F0  7C 08 03 A6 */	mtlr r0
 /* 80098794 000956F4  4E 80 00 20 */	blr 
+.endfn getShapeObject__9PelletMgrFUl
 
-.global createObject__9PelletMgrFv
-createObject__9PelletMgrFv:
+.fn createObject__9PelletMgrFv, global
 /* 80098798 000956F8  7C 08 02 A6 */	mflr r0
 /* 8009879C 000956FC  90 01 00 04 */	stw r0, 4(r1)
 /* 800987A0 00095700  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -4378,9 +4377,9 @@ createObject__9PelletMgrFv:
 /* 800987E0 00095740  38 21 00 18 */	addi r1, r1, 0x18
 /* 800987E4 00095744  7C 08 03 A6 */	mtlr r0
 /* 800987E8 00095748  4E 80 00 20 */	blr 
+.endfn createObject__9PelletMgrFv
 
-.global __ct__9PelletMgrFP6MapMgr
-__ct__9PelletMgrFP6MapMgr:
+.fn __ct__9PelletMgrFP6MapMgr, global
 /* 800987EC 0009574C  7C 08 02 A6 */	mflr r0
 /* 800987F0 00095750  90 01 00 04 */	stw r0, 4(r1)
 /* 800987F4 00095754  94 21 FF A8 */	stwu r1, -0x58(r1)
@@ -4531,9 +4530,9 @@ __ct__9PelletMgrFP6MapMgr:
 /* 80098A34 00095994  38 21 00 58 */	addi r1, r1, 0x58
 /* 80098A38 00095998  7C 08 03 A6 */	mtlr r0
 /* 80098A3C 0009599C  4E 80 00 20 */	blr 
+.endfn __ct__9PelletMgrFP6MapMgr
 
-.global "__ct__7Parm<f>FP10Parametersfff5ayuIDPc"
-"__ct__7Parm<f>FP10Parametersfff5ayuIDPc":
+.fn "__ct__7Parm<f>FP10Parametersfff5ayuIDPc", weak
 /* 80098A40 000959A0  7C 08 02 A6 */	mflr r0
 /* 80098A44 000959A4  90 01 00 04 */	stw r0, 4(r1)
 /* 80098A48 000959A8  94 21 FF C8 */	stwu r1, -0x38(r1)
@@ -4556,9 +4555,9 @@ __ct__9PelletMgrFP6MapMgr:
 /* 80098A8C 000959EC  38 21 00 38 */	addi r1, r1, 0x38
 /* 80098A90 000959F0  7C 08 03 A6 */	mtlr r0
 /* 80098A94 000959F4  4E 80 00 20 */	blr 
+.endfn "__ct__7Parm<f>FP10Parametersfff5ayuIDPc"
 
-.global __dt__13MonoObjectMgrFv
-__dt__13MonoObjectMgrFv:
+.fn __dt__13MonoObjectMgrFv, weak
 /* 80098A98 000959F8  7C 08 02 A6 */	mflr r0
 /* 80098A9C 000959FC  90 01 00 04 */	stw r0, 4(r1)
 /* 80098AA0 00095A00  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -4588,9 +4587,9 @@ __dt__13MonoObjectMgrFv:
 /* 80098AF8 00095A58  38 21 00 18 */	addi r1, r1, 0x18
 /* 80098AFC 00095A5C  7C 08 03 A6 */	mtlr r0
 /* 80098B00 00095A60  4E 80 00 20 */	blr 
+.endfn __dt__13MonoObjectMgrFv
 
-.global addUseList__9PelletMgrFUl
-addUseList__9PelletMgrFUl:
+.fn addUseList__9PelletMgrFUl, global
 /* 80098B04 00095A64  7C 08 02 A6 */	mflr r0
 /* 80098B08 00095A68  90 01 00 04 */	stw r0, 4(r1)
 /* 80098B0C 00095A6C  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -4657,9 +4656,9 @@ addUseList__9PelletMgrFUl:
 /* 80098BE8 00095B48  38 21 00 20 */	addi r1, r1, 0x20
 /* 80098BEC 00095B4C  7C 08 03 A6 */	mtlr r0
 /* 80098BF0 00095B50  4E 80 00 20 */	blr 
+.endfn addUseList__9PelletMgrFUl
 
-.global initShapeInfos__9PelletMgrFv
-initShapeInfos__9PelletMgrFv:
+.fn initShapeInfos__9PelletMgrFv, global
 /* 80098BF4 00095B54  7C 08 02 A6 */	mflr r0
 /* 80098BF8 00095B58  3C 80 80 2B */	lis r4, lbl_802B0098@ha
 /* 80098BFC 00095B5C  90 01 00 04 */	stw r0, 4(r1)
@@ -4681,9 +4680,9 @@ initShapeInfos__9PelletMgrFv:
 /* 80098C3C 00095B9C  38 21 00 18 */	addi r1, r1, 0x18
 /* 80098C40 00095BA0  7C 08 03 A6 */	mtlr r0
 /* 80098C44 00095BA4  4E 80 00 20 */	blr 
+.endfn initShapeInfos__9PelletMgrFv
 
-.global getConfigIndex__9PelletMgrFUl
-getConfigIndex__9PelletMgrFUl:
+.fn getConfigIndex__9PelletMgrFUl, global
 /* 80098C48 00095BA8  80 C3 00 6C */	lwz r6, 0x6c(r3)
 /* 80098C4C 00095BAC  38 60 00 00 */	li r3, 0
 /* 80098C50 00095BB0  48 00 00 28 */	b .L_80098C78
@@ -4703,9 +4702,9 @@ getConfigIndex__9PelletMgrFUl:
 /* 80098C7C 00095BDC  40 82 FF D8 */	bne .L_80098C54
 /* 80098C80 00095BE0  38 60 FF FF */	li r3, -1
 /* 80098C84 00095BE4  4E 80 00 20 */	blr 
+.endfn getConfigIndex__9PelletMgrFUl
 
-.global getConfigFromIdx__9PelletMgrFi
-getConfigFromIdx__9PelletMgrFi:
+.fn getConfigFromIdx__9PelletMgrFi, global
 /* 80098C88 00095BE8  2C 04 00 00 */	cmpwi r4, 0
 /* 80098C8C 00095BEC  41 80 00 10 */	blt .L_80098C9C
 /* 80098C90 00095BF0  80 03 00 54 */	lwz r0, 0x54(r3)
@@ -4751,9 +4750,9 @@ getConfigFromIdx__9PelletMgrFi:
 /* 80098D18 00095C78  4D 82 00 20 */	beqlr 
 /* 80098D1C 00095C7C  38 63 FF FC */	addi r3, r3, -4
 /* 80098D20 00095C80  4E 80 00 20 */	blr 
+.endfn getConfigFromIdx__9PelletMgrFi
 
-.global getConfig__9PelletMgrFUl
-getConfig__9PelletMgrFUl:
+.fn getConfig__9PelletMgrFUl, global
 /* 80098D24 00095C84  80 A3 00 6C */	lwz r5, 0x6c(r3)
 /* 80098D28 00095C88  48 00 00 24 */	b .L_80098D4C
 .L_80098D2C:
@@ -4771,9 +4770,9 @@ getConfig__9PelletMgrFUl:
 /* 80098D50 00095CB0  40 82 FF DC */	bne .L_80098D2C
 /* 80098D54 00095CB4  38 60 00 00 */	li r3, 0
 /* 80098D58 00095CB8  4E 80 00 20 */	blr 
+.endfn getConfig__9PelletMgrFUl
 
-.global read__9PelletMgrFR18RandomAccessStream
-read__9PelletMgrFR18RandomAccessStream:
+.fn read__9PelletMgrFR18RandomAccessStream, global
 /* 80098D5C 00095CBC  7C 08 02 A6 */	mflr r0
 /* 80098D60 00095CC0  90 01 00 04 */	stw r0, 4(r1)
 /* 80098D64 00095CC4  94 21 FF F8 */	stwu r1, -8(r1)
@@ -4794,9 +4793,9 @@ read__9PelletMgrFR18RandomAccessStream:
 /* 80098D94 00095CF4  38 21 00 08 */	addi r1, r1, 8
 /* 80098D98 00095CF8  7C 08 03 A6 */	mtlr r0
 /* 80098D9C 00095CFC  4E 80 00 20 */	blr 
+.endfn read__9PelletMgrFR18RandomAccessStream
 
-.global readConfigs__9PelletMgrFR18RandomAccessStream
-readConfigs__9PelletMgrFR18RandomAccessStream:
+.fn readConfigs__9PelletMgrFR18RandomAccessStream, global
 /* 80098DA0 00095D00  7C 08 02 A6 */	mflr r0
 /* 80098DA4 00095D04  90 01 00 04 */	stw r0, 4(r1)
 /* 80098DA8 00095D08  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -4848,9 +4847,9 @@ readConfigs__9PelletMgrFR18RandomAccessStream:
 /* 80098E50 00095DB0  38 21 00 20 */	addi r1, r1, 0x20
 /* 80098E54 00095DB4  7C 08 03 A6 */	mtlr r0
 /* 80098E58 00095DB8  4E 80 00 20 */	blr 
+.endfn readConfigs__9PelletMgrFR18RandomAccessStream
 
-.global readAnimInfos__9PelletMgrFR18RandomAccessStream
-readAnimInfos__9PelletMgrFR18RandomAccessStream:
+.fn readAnimInfos__9PelletMgrFR18RandomAccessStream, global
 /* 80098E5C 00095DBC  7C 08 02 A6 */	mflr r0
 /* 80098E60 00095DC0  90 01 00 04 */	stw r0, 4(r1)
 /* 80098E64 00095DC4  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -4902,9 +4901,9 @@ readAnimInfos__9PelletMgrFR18RandomAccessStream:
 /* 80098F0C 00095E6C  38 21 00 20 */	addi r1, r1, 0x20
 /* 80098F10 00095E70  7C 08 03 A6 */	mtlr r0
 /* 80098F14 00095E74  4E 80 00 20 */	blr 
+.endfn readAnimInfos__9PelletMgrFR18RandomAccessStream
 
-.global initTekiNakaParts__9PelletMgrFv
-initTekiNakaParts__9PelletMgrFv:
+.fn initTekiNakaParts__9PelletMgrFv, global
 /* 80098F18 00095E78  7C 08 02 A6 */	mflr r0
 /* 80098F1C 00095E7C  90 01 00 04 */	stw r0, 4(r1)
 /* 80098F20 00095E80  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -4966,9 +4965,9 @@ initTekiNakaParts__9PelletMgrFv:
 /* 80098FE0 00095F40  38 21 00 20 */	addi r1, r1, 0x20
 /* 80098FE4 00095F44  7C 08 03 A6 */	mtlr r0
 /* 80098FE8 00095F48  4E 80 00 20 */	blr 
+.endfn initTekiNakaParts__9PelletMgrFv
 
-.global createShapeObjects__9PelletMgrFv
-createShapeObjects__9PelletMgrFv:
+.fn createShapeObjects__9PelletMgrFv, global
 /* 80098FEC 00095F4C  7C 08 02 A6 */	mflr r0
 /* 80098FF0 00095F50  90 01 00 04 */	stw r0, 4(r1)
 /* 80098FF4 00095F54  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -5036,9 +5035,9 @@ createShapeObjects__9PelletMgrFv:
 /* 800990BC 0009601C  38 21 00 18 */	addi r1, r1, 0x18
 /* 800990C0 00096020  7C 08 03 A6 */	mtlr r0
 /* 800990C4 00096024  4E 80 00 20 */	blr 
+.endfn createShapeObjects__9PelletMgrFv
 
-.global refresh__9PelletMgrFR8Graphics
-refresh__9PelletMgrFR8Graphics:
+.fn refresh__9PelletMgrFR8Graphics, global
 /* 800990C8 00096028  7C 08 02 A6 */	mflr r0
 /* 800990CC 0009602C  90 01 00 04 */	stw r0, 4(r1)
 /* 800990D0 00096030  94 21 FF A0 */	stwu r1, -0x60(r1)
@@ -5181,13 +5180,13 @@ refresh__9PelletMgrFR8Graphics:
 /* 800992CC 0009622C  38 21 00 60 */	addi r1, r1, 0x60
 /* 800992D0 00096230  7C 08 03 A6 */	mtlr r0
 /* 800992D4 00096234  4E 80 00 20 */	blr 
+.endfn refresh__9PelletMgrFR8Graphics
 
-.global refresh2d__9PelletMgrFR8Graphics
-refresh2d__9PelletMgrFR8Graphics:
+.fn refresh2d__9PelletMgrFR8Graphics, global
 /* 800992D8 00096238  4E 80 00 20 */	blr 
+.endfn refresh2d__9PelletMgrFR8Graphics
 
-.global __dt__9PelletMgrFv
-__dt__9PelletMgrFv:
+.fn __dt__9PelletMgrFv, weak
 /* 800992DC 0009623C  7C 08 02 A6 */	mflr r0
 /* 800992E0 00096240  90 01 00 04 */	stw r0, 4(r1)
 /* 800992E4 00096244  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -5223,50 +5222,50 @@ __dt__9PelletMgrFv:
 /* 80099354 000962B4  38 21 00 18 */	addi r1, r1, 0x18
 /* 80099358 000962B8  7C 08 03 A6 */	mtlr r0
 /* 8009935C 000962BC  4E 80 00 20 */	blr 
+.endfn __dt__9PelletMgrFv
 
-.global getSize__13MonoObjectMgrFv
-getSize__13MonoObjectMgrFv:
+.fn getSize__13MonoObjectMgrFv, weak
 /* 80099360 000962C0  80 63 00 30 */	lwz r3, 0x30(r3)
 /* 80099364 000962C4  4E 80 00 20 */	blr 
+.endfn getSize__13MonoObjectMgrFv
 
-.global getMax__13MonoObjectMgrFv
-getMax__13MonoObjectMgrFv:
+.fn getMax__13MonoObjectMgrFv, weak
 /* 80099368 000962C8  80 63 00 2C */	lwz r3, 0x2c(r3)
 /* 8009936C 000962CC  4E 80 00 20 */	blr 
+.endfn getMax__13MonoObjectMgrFv
 
-.global invoke__7KEffectFPQ23zen17particleGenerator
-invoke__7KEffectFPQ23zen17particleGenerator:
+.fn invoke__7KEffectFPQ23zen17particleGenerator, weak
 /* 80099370 000962D0  38 60 00 00 */	li r3, 0
 /* 80099374 000962D4  4E 80 00 20 */	blr 
+.endfn invoke__7KEffectFPQ23zen17particleGenerator
 
-.global kill__7KEffectFv
-kill__7KEffectFv:
+.fn kill__7KEffectFv, weak
 /* 80099378 000962D8  4E 80 00 20 */	blr 
+.endfn kill__7KEffectFv
 
-.global stop__7KEffectFv
-stop__7KEffectFv:
+.fn stop__7KEffectFv, weak
 /* 8009937C 000962DC  4E 80 00 20 */	blr 
+.endfn stop__7KEffectFv
 
-.global restart__7KEffectFv
-restart__7KEffectFv:
+.fn restart__7KEffectFv, weak
 /* 80099380 000962E0  4E 80 00 20 */	blr 
+.endfn restart__7KEffectFv
 
-.global invoke__7KEffectFPQ23zen17particleGeneratorPQ23zen11particleMdl
-invoke__7KEffectFPQ23zen17particleGeneratorPQ23zen11particleMdl:
+.fn invoke__7KEffectFPQ23zen17particleGeneratorPQ23zen11particleMdl, weak
 /* 80099384 000962E4  38 60 00 00 */	li r3, 0
 /* 80099388 000962E8  4E 80 00 20 */	blr 
+.endfn invoke__7KEffectFPQ23zen17particleGeneratorPQ23zen11particleMdl
 
-.global invoke__7KEffectFPQ23zen11particleMdl
-invoke__7KEffectFPQ23zen11particleMdl:
+.fn invoke__7KEffectFPQ23zen11particleMdl, weak
 /* 8009938C 000962EC  38 60 00 00 */	li r3, 0
 /* 80099390 000962F0  4E 80 00 20 */	blr 
+.endfn invoke__7KEffectFPQ23zen11particleMdl
 
-.global "init__21StateMachine<6Pellet>FP6Pellet"
-"init__21StateMachine<6Pellet>FP6Pellet":
+.fn "init__21StateMachine<6Pellet>FP6Pellet", weak
 /* 80099394 000962F4  4E 80 00 20 */	blr 
+.endfn "init__21StateMachine<6Pellet>FP6Pellet"
 
-.global "procMsg__21StateMachine<6Pellet>FP6PelletP3Msg"
-"procMsg__21StateMachine<6Pellet>FP6PelletP3Msg":
+.fn "procMsg__21StateMachine<6Pellet>FP6PelletP3Msg", weak
 /* 80099398 000962F8  7C 08 02 A6 */	mflr r0
 /* 8009939C 000962FC  90 01 00 04 */	stw r0, 4(r1)
 /* 800993A0 00096300  94 21 FF F8 */	stwu r1, -8(r1)
@@ -5283,9 +5282,9 @@ invoke__7KEffectFPQ23zen11particleMdl:
 /* 800993C8 00096328  38 21 00 08 */	addi r1, r1, 8
 /* 800993CC 0009632C  7C 08 03 A6 */	mtlr r0
 /* 800993D0 00096330  4E 80 00 20 */	blr 
+.endfn "procMsg__21StateMachine<6Pellet>FP6PelletP3Msg"
 
-.global "procMsg__17Receiver<6Pellet>FP6PelletP3Msg"
-"procMsg__17Receiver<6Pellet>FP6PelletP3Msg":
+.fn "procMsg__17Receiver<6Pellet>FP6PelletP3Msg", weak
 /* 800993D4 00096334  7C 08 02 A6 */	mflr r0
 /* 800993D8 00096338  90 01 00 04 */	stw r0, 4(r1)
 /* 800993DC 0009633C  94 21 FF F8 */	stwu r1, -8(r1)
@@ -5379,97 +5378,104 @@ invoke__7KEffectFPQ23zen11particleMdl:
 /* 800994E0 00096440  38 21 00 08 */	addi r1, r1, 8
 /* 800994E4 00096444  7C 08 03 A6 */	mtlr r0
 /* 800994E8 00096448  4E 80 00 20 */	blr 
+.endfn "procMsg__17Receiver<6Pellet>FP6PelletP3Msg"
 
-.global "procGroundMsg__17Receiver<6Pellet>FP6PelletP9MsgGround"
-"procGroundMsg__17Receiver<6Pellet>FP6PelletP9MsgGround":
+.fn "procGroundMsg__17Receiver<6Pellet>FP6PelletP9MsgGround", weak
 /* 800994EC 0009644C  4E 80 00 20 */	blr 
+.endfn "procGroundMsg__17Receiver<6Pellet>FP6PelletP9MsgGround"
 
-.global "procUserMsg__17Receiver<6Pellet>FP6PelletP7MsgUser"
-"procUserMsg__17Receiver<6Pellet>FP6PelletP7MsgUser":
+.fn "procUserMsg__17Receiver<6Pellet>FP6PelletP7MsgUser", weak
 /* 800994F0 00096450  4E 80 00 20 */	blr 
+.endfn "procUserMsg__17Receiver<6Pellet>FP6PelletP7MsgUser"
 
-.global "procOffWallMsg__17Receiver<6Pellet>FP6PelletP10MsgOffWall"
-"procOffWallMsg__17Receiver<6Pellet>FP6PelletP10MsgOffWall":
+.fn "procOffWallMsg__17Receiver<6Pellet>FP6PelletP10MsgOffWall", weak
 /* 800994F4 00096454  4E 80 00 20 */	blr 
+.endfn "procOffWallMsg__17Receiver<6Pellet>FP6PelletP10MsgOffWall"
 
-.global "procWallMsg__17Receiver<6Pellet>FP6PelletP7MsgWall"
-"procWallMsg__17Receiver<6Pellet>FP6PelletP7MsgWall":
+.fn "procWallMsg__17Receiver<6Pellet>FP6PelletP7MsgWall", weak
 /* 800994F8 00096458  4E 80 00 20 */	blr 
+.endfn "procWallMsg__17Receiver<6Pellet>FP6PelletP7MsgWall"
 
-.global "procDamageMsg__17Receiver<6Pellet>FP6PelletP9MsgDamage"
-"procDamageMsg__17Receiver<6Pellet>FP6PelletP9MsgDamage":
+.fn "procDamageMsg__17Receiver<6Pellet>FP6PelletP9MsgDamage", weak
 /* 800994FC 0009645C  4E 80 00 20 */	blr 
+.endfn "procDamageMsg__17Receiver<6Pellet>FP6PelletP9MsgDamage"
 
-.global "procAnimMsg__17Receiver<6Pellet>FP6PelletP7MsgAnim"
-"procAnimMsg__17Receiver<6Pellet>FP6PelletP7MsgAnim":
+.fn "procAnimMsg__17Receiver<6Pellet>FP6PelletP7MsgAnim", weak
 /* 80099500 00096460  4E 80 00 20 */	blr 
+.endfn "procAnimMsg__17Receiver<6Pellet>FP6PelletP7MsgAnim"
 
-.global "procCollideMsg__17Receiver<6Pellet>FP6PelletP10MsgCollide"
-"procCollideMsg__17Receiver<6Pellet>FP6PelletP10MsgCollide":
+.fn "procCollideMsg__17Receiver<6Pellet>FP6PelletP10MsgCollide", weak
 /* 80099504 00096464  4E 80 00 20 */	blr 
+.endfn "procCollideMsg__17Receiver<6Pellet>FP6PelletP10MsgCollide"
 
-.global "procTargetMsg__17Receiver<6Pellet>FP6PelletP9MsgTarget"
-"procTargetMsg__17Receiver<6Pellet>FP6PelletP9MsgTarget":
+.fn "procTargetMsg__17Receiver<6Pellet>FP6PelletP9MsgTarget", weak
 /* 80099508 00096468  4E 80 00 20 */	blr 
+.endfn "procTargetMsg__17Receiver<6Pellet>FP6PelletP9MsgTarget"
 
-.global "procHangMsg__17Receiver<6Pellet>FP6PelletP7MsgHang"
-"procHangMsg__17Receiver<6Pellet>FP6PelletP7MsgHang":
+.fn "procHangMsg__17Receiver<6Pellet>FP6PelletP7MsgHang", weak
 /* 8009950C 0009646C  4E 80 00 20 */	blr 
+.endfn "procHangMsg__17Receiver<6Pellet>FP6PelletP7MsgHang"
 
-.global "procStickMsg__17Receiver<6Pellet>FP6PelletP8MsgStick"
-"procStickMsg__17Receiver<6Pellet>FP6PelletP8MsgStick":
+.fn "procStickMsg__17Receiver<6Pellet>FP6PelletP8MsgStick", weak
 /* 80099510 00096470  4E 80 00 20 */	blr 
+.endfn "procStickMsg__17Receiver<6Pellet>FP6PelletP8MsgStick"
 
-.global "procBounceMsg__17Receiver<6Pellet>FP6PelletP9MsgBounce"
-"procBounceMsg__17Receiver<6Pellet>FP6PelletP9MsgBounce":
+.fn "procBounceMsg__17Receiver<6Pellet>FP6PelletP9MsgBounce", weak
 /* 80099514 00096474  4E 80 00 20 */	blr 
+.endfn "procBounceMsg__17Receiver<6Pellet>FP6PelletP9MsgBounce"
 
-"@4@read__12PelletConfigFR18RandomAccessStream":
+.fn "@4@read__12PelletConfigFR18RandomAccessStream", weak
 /* 80099518 00096478  38 63 FF FC */	addi r3, r3, -4
 /* 8009951C 0009647C  4B FF B9 E4 */	b read__12PelletConfigFR18RandomAccessStream
+.endfn "@4@read__12PelletConfigFR18RandomAccessStream"
 
-.global "@4@invoke__7KEffectFPQ23zen17particleGeneratorPQ23zen11particleMdl"
-"@4@invoke__7KEffectFPQ23zen17particleGeneratorPQ23zen11particleMdl":
+.fn "@4@invoke__7KEffectFPQ23zen17particleGeneratorPQ23zen11particleMdl", weak
 /* 80099520 00096480  38 63 FF FC */	addi r3, r3, -4
 /* 80099524 00096484  4B FF FE 60 */	b invoke__7KEffectFPQ23zen17particleGeneratorPQ23zen11particleMdl
+.endfn "@4@invoke__7KEffectFPQ23zen17particleGeneratorPQ23zen11particleMdl"
 
-.global "@8@invoke__7KEffectFPQ23zen11particleMdl"
-"@8@invoke__7KEffectFPQ23zen11particleMdl":
+.fn "@8@invoke__7KEffectFPQ23zen11particleMdl", weak
 /* 80099528 00096488  38 63 FF F8 */	addi r3, r3, -8
 /* 8009952C 0009648C  4B FF FE 60 */	b invoke__7KEffectFPQ23zen11particleMdl
+.endfn "@8@invoke__7KEffectFPQ23zen11particleMdl"
 
-"@1088@animationKeyUpdated__6PelletFR16PaniAnimKeyEvent":
+.fn "@1088@animationKeyUpdated__6PelletFR16PaniAnimKeyEvent", weak
 /* 80099530 00096490  38 63 FB C0 */	addi r3, r3, -1088
 /* 80099534 00096494  4B FF D8 3C */	b animationKeyUpdated__6PelletFR16PaniAnimKeyEvent
+.endfn "@1088@animationKeyUpdated__6PelletFR16PaniAnimKeyEvent"
 
-"@8@read__9PelletMgrFR18RandomAccessStream":
+.fn "@8@read__9PelletMgrFR18RandomAccessStream", weak
 /* 80099538 00096498  38 63 FF F8 */	addi r3, r3, -8
 /* 8009953C 0009649C  4B FF F8 20 */	b read__9PelletMgrFR18RandomAccessStream
+.endfn "@8@read__9PelletMgrFR18RandomAccessStream"
 
-.global "@8@update__13MonoObjectMgrFv"
-"@8@update__13MonoObjectMgrFv":
+.fn "@8@update__13MonoObjectMgrFv", weak
 /* 80099540 000964A0  38 63 FF F8 */	addi r3, r3, -8
 /* 80099544 000964A4  48 04 7E 44 */	b update__13MonoObjectMgrFv
+.endfn "@8@update__13MonoObjectMgrFv"
 
 .section .rodata, "a"  # 0x80221FE0 - 0x80222DC0
 .balign 8
-lbl_802223F8:
+.obj lbl_802223F8, local
 	.float 3.3
 	.float 7.0
 	.float 13.0
 	.float 18.0
-lbl_80222408:
+.endobj lbl_802223F8
+.obj lbl_80222408, local
 	.4byte 0xD6
 	.4byte 0xD5
 	.4byte 0xD4
 	.4byte 0xD3
+.endobj lbl_80222408
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802AFF18:
+.obj lbl_802AFF18, local
 	.asciz "pelletMgr.cpp"
+.endobj lbl_802AFF18
 .balign 4
-_ufoIDTable:
+.obj _ufoIDTable, local
 	.ascii "ust1"
 	.ascii "ust2"
 	.ascii "ust3"
@@ -5501,14 +5507,17 @@ _ufoIDTable:
 	.ascii "un13"
 	.ascii "un14"
 	.ascii "udef"
+.endobj _ufoIDTable
 .balign 4
-lbl_802AFFA4:
+.obj lbl_802AFFA4, local
 	.asciz "CoreNode"
+.endobj lbl_802AFFA4
 .balign 4
-lbl_802AFFB0:
+.obj lbl_802AFFB0, local
 	.asciz "pelletConfig"
+.endobj lbl_802AFFB0
 .balign 4
-bounceSounds:
+.obj bounceSounds, local
 	.4byte 0xBC
 	.4byte 0xBD
 	.4byte 0xC2
@@ -5521,8 +5530,8 @@ bounceSounds:
 	.4byte 0xBD
 	.4byte 0xBD
 	.4byte 0xBD
-.global numberPellets
-numberPellets:
+.endobj bounceSounds
+.obj numberPellets, global
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.balign 4
@@ -5587,37 +5596,46 @@ numberPellets:
 	.4byte 0xFFFFFFFF
 	.balign 4
 	.ascii "ujaa"
+.endobj numberPellets
 .balign 4
-lbl_802B008C:
+.obj lbl_802B008C, local
 	.asciz "pelMgr.bin"
+.endobj lbl_802B008C
 .balign 4
-lbl_802B0098:
+.obj lbl_802B0098, local
 	.asciz "objects/"
+.endobj lbl_802B0098
 .balign 4
-lbl_802B00A4:
+.obj lbl_802B00A4, local
 	.asciz "pelAnim.bin"
+.endobj lbl_802B00A4
 .balign 4
-lbl_802B00B0:
+.obj lbl_802B00B0, local
 	.asciz "PelletMgr"
+.endobj lbl_802B00B0
 .balign 4
-lbl_802B00BC:
+.obj lbl_802B00BC, local
 	.4byte __RTTI__5ANode
 	.4byte 0x00000000
 	.4byte 0x00000000
-lbl_802B00C8:
+.endobj lbl_802B00BC
+.obj lbl_802B00C8, local
 	.4byte __RTTI__5ANode
 	.4byte 0x00000000
 	.4byte __RTTI__8CoreNode
 	.4byte 0x00000000
 	.4byte 0x00000000
+.endobj lbl_802B00C8
 .balign 4
-lbl_802B00DC:
+.obj lbl_802B00DC, local
 	.asciz "Traversable"
+.endobj lbl_802B00DC
 .balign 4
-lbl_802B00E8:
+.obj lbl_802B00E8, local
 	.asciz "ObjectMgr"
+.endobj lbl_802B00E8
 .balign 4
-lbl_802B00F4:
+.obj lbl_802B00F4, local
 	.4byte __RTTI__5ANode
 	.4byte 0x00000008
 	.4byte __RTTI__8CoreNode
@@ -5627,11 +5645,13 @@ lbl_802B00F4:
 	.4byte __RTTI__11Traversable
 	.4byte 0x00000000
 	.4byte 0x00000000
+.endobj lbl_802B00F4
 .balign 4
-lbl_802B0118:
+.obj lbl_802B0118, local
 	.asciz "MonoObjectMgr"
+.endobj lbl_802B0118
 .balign 4
-lbl_802B0128:
+.obj lbl_802B0128, local
 	.4byte __RTTI__5ANode
 	.4byte 0x00000008
 	.4byte __RTTI__8CoreNode
@@ -5643,7 +5663,8 @@ lbl_802B0128:
 	.4byte __RTTI__9ObjectMgr
 	.4byte 0x00000000
 	.4byte 0x00000000
-lbl_802B0154:
+.endobj lbl_802B0128
+.obj lbl_802B0154, local
 	.4byte __RTTI__5ANode
 	.4byte 0x00000008
 	.4byte __RTTI__8CoreNode
@@ -5657,8 +5678,8 @@ lbl_802B0154:
 	.4byte __RTTI__13MonoObjectMgr
 	.4byte 0x00000000
 	.4byte 0x00000000
-.global __vt__9PelletMgr
-__vt__9PelletMgr:
+.endobj lbl_802B0154
+.obj __vt__9PelletMgr, global
 	.4byte __RTTI__9PelletMgr
 	.4byte 0
 	.4byte getCreature__13MonoObjectMgrFi
@@ -5693,44 +5714,51 @@ __vt__9PelletMgr:
 	.4byte kill__13MonoObjectMgrFP8Creature
 	.4byte createObject__9PelletMgrFv
 	.4byte read__9PelletMgrFR18RandomAccessStream
+.endobj __vt__9PelletMgr
 .balign 4
-lbl_802B0210:
+.obj lbl_802B0210, local
 	.asciz "PelletProp"
+.endobj lbl_802B0210
 .balign 4
-lbl_802B021C:
+.obj lbl_802B021C, local
 	.asciz "CreatureProp"
+.endobj lbl_802B021C
 .balign 4
-lbl_802B022C:
+.obj lbl_802B022C, local
 	.4byte __RTTI__12CreatureProp
 	.4byte 0
 	.4byte 0
-.global __vt__10PelletProp
-__vt__10PelletProp:
+.endobj lbl_802B022C
+.obj __vt__10PelletProp, weak
 	.4byte __RTTI__10PelletProp
 	.4byte 0
 	.4byte read__12CreaturePropFR18RandomAccessStream
+.endobj __vt__10PelletProp
 	.4byte 0
 	.4byte 0
 	.4byte 0
 .balign 4
-lbl_802B0250:
+.obj lbl_802B0250, local
 	.asciz "PelletMgr::UseNode"
+.endobj lbl_802B0250
 .balign 4
-lbl_802B0264:
+.obj lbl_802B0264, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte __RTTI__8CoreNode
 	.4byte 0
 	.4byte 0
-.global __vt__Q29PelletMgr7UseNode
-__vt__Q29PelletMgr7UseNode:
+.endobj lbl_802B0264
+.obj __vt__Q29PelletMgr7UseNode, weak
 	.4byte __RTTI__Q29PelletMgr7UseNode
 	.4byte 0
 	.4byte getAgeNodeType__5ANodeFv
 	.4byte read__8CoreNodeFR18RandomAccessStream
+.endobj __vt__Q29PelletMgr7UseNode
 .balign 4
-lbl_802B0288:
+.obj lbl_802B0288, local
 	.asciz "Interaction"
+.endobj lbl_802B0288
 .balign 4
 	.4byte 0
 	.4byte 0
@@ -5744,29 +5772,35 @@ lbl_802B0288:
 	.4byte 0
 	.4byte 0
 .balign 4
-lbl_802B02C0:
+.obj lbl_802B02C0, local
 	.asciz "PaniAnimKeyListener"
+.endobj lbl_802B02C0
 .balign 4
-lbl_802B02D4:
+.obj lbl_802B02D4, local
 	.asciz "EventTalker"
+.endobj lbl_802B02D4
 .balign 4
-lbl_802B02E0:
+.obj lbl_802B02E0, local
 	.asciz "RefCountable"
+.endobj lbl_802B02E0
 .balign 4
-lbl_802B02F0:
+.obj lbl_802B02F0, local
 	.asciz "Creature"
+.endobj lbl_802B02F0
 .balign 4
-lbl_802B02FC:
+.obj lbl_802B02FC, local
 	.4byte __RTTI__11EventTalker
 	.4byte 0x8
 	.4byte __RTTI__12RefCountable
 	.4byte 0
 	.4byte 0
+.endobj lbl_802B02FC
 .balign 4
-lbl_802B0310:
+.obj lbl_802B0310, local
 	.asciz "DynCreature"
+.endobj lbl_802B0310
 .balign 4
-lbl_802B031C:
+.obj lbl_802B031C, local
 	.4byte __RTTI__11EventTalker
 	.4byte 0x8
 	.4byte __RTTI__12RefCountable
@@ -5774,11 +5808,13 @@ lbl_802B031C:
 	.4byte __RTTI__8Creature
 	.4byte 0
 	.4byte 0
+.endobj lbl_802B031C
 .balign 4
-lbl_802B0338:
+.obj lbl_802B0338, local
 	.asciz "DualCreature"
+.endobj lbl_802B0338
 .balign 4
-lbl_802B0348:
+.obj lbl_802B0348, local
 	.4byte __RTTI__11EventTalker
 	.4byte 0x8
 	.4byte __RTTI__12RefCountable
@@ -5788,7 +5824,8 @@ lbl_802B0348:
 	.4byte __RTTI__11DynCreature
 	.4byte 0
 	.4byte 0
-lbl_802B036C:
+.endobj lbl_802B0348
+.obj lbl_802B036C, local
 	.4byte __RTTI__19PaniAnimKeyListener
 	.4byte 0x440
 	.4byte __RTTI__11EventTalker
@@ -5802,8 +5839,8 @@ lbl_802B036C:
 	.4byte __RTTI__12DualCreature
 	.4byte 0
 	.4byte 0
-.global __vt__6Pellet
-__vt__6Pellet:
+.endobj lbl_802B036C
+.obj __vt__6Pellet, global
 	.4byte __RTTI__6Pellet
 	.4byte 0
 	.4byte addCntCallback__12RefCountableFv
@@ -5880,29 +5917,34 @@ __vt__6Pellet:
 	.4byte 0xFFFFFBC0
 	.4byte "@1088@animationKeyUpdated__6PelletFR16PaniAnimKeyEvent"
 	.4byte animationKeyUpdated__6PelletFR16PaniAnimKeyEvent
+.endobj __vt__6Pellet
 .balign 4
-lbl_802B04D0:
+.obj lbl_802B04D0, local
 	.asciz "StateMachine<Pellet>"
+.endobj lbl_802B04D0
 .balign 4
-.global "__vt__21StateMachine<6Pellet>"
-"__vt__21StateMachine<6Pellet>":
+.obj "__vt__21StateMachine<6Pellet>", weak
 	.4byte "__RTTI__21StateMachine<6Pellet>"
 	.4byte 0
 	.4byte "init__21StateMachine<6Pellet>FP6Pellet"
 	.4byte "exec__21StateMachine<6Pellet>FP6Pellet"
 	.4byte "procMsg__21StateMachine<6Pellet>FP6PelletP3Msg"
 	.4byte "transit__21StateMachine<6Pellet>FP6Pelleti"
+.endobj "__vt__21StateMachine<6Pellet>"
 .balign 4
-lbl_802B0500:
+.obj lbl_802B0500, local
 	.asciz "zen::CallBack1<zen::particleMdl *>"
+.endobj lbl_802B0500
 .balign 4
-lbl_802B0524:
+.obj lbl_802B0524, local
 	.asciz "zen::CallBack2<zen::particleGenerator *, zen::particleMdl *>"
+.endobj lbl_802B0524
 .balign 4
-lbl_802B0564:
+.obj lbl_802B0564, local
 	.asciz "zen::CallBack1<zen::particleGenerator *>"
+.endobj lbl_802B0564
 .balign 4
-lbl_802B0590:
+.obj lbl_802B0590, local
 	.4byte "__RTTI__Q23zen31CallBack1<PQ23zen11particleMdl>"
 	.4byte 0x8
 	.4byte "__RTTI__Q23zen58CallBack2<PQ23zen17particleGenerator,PQ23zen11particleMdl>"
@@ -5910,8 +5952,8 @@ lbl_802B0590:
 	.4byte "__RTTI__Q23zen37CallBack1<PQ23zen17particleGenerator>"
 	.4byte 0
 	.4byte 0
-.global __vt__7KEffect
-__vt__7KEffect:
+.endobj lbl_802B0590
+.obj __vt__7KEffect, weak
 	.4byte __RTTI__7KEffect
 	.4byte 0
 	.4byte invoke__7KEffectFPQ23zen17particleGenerator
@@ -5927,32 +5969,35 @@ __vt__7KEffect:
 	.4byte kill__7KEffectFv
 	.4byte stop__7KEffectFv
 	.4byte restart__7KEffectFv
-.global "__vt__Q23zen31CallBack1<PQ23zen11particleMdl>"
-"__vt__Q23zen31CallBack1<PQ23zen11particleMdl>":
+.endobj __vt__7KEffect
+.obj "__vt__Q23zen31CallBack1<PQ23zen11particleMdl>", weak
 	.4byte "__RTTI__Q23zen31CallBack1<PQ23zen11particleMdl>"
 	.4byte 0
 	.4byte 0
-.global "__vt__Q23zen58CallBack2<PQ23zen17particleGenerator,PQ23zen11particleMdl>"
-"__vt__Q23zen58CallBack2<PQ23zen17particleGenerator,PQ23zen11particleMdl>":
+.endobj "__vt__Q23zen31CallBack1<PQ23zen11particleMdl>"
+.obj "__vt__Q23zen58CallBack2<PQ23zen17particleGenerator,PQ23zen11particleMdl>", weak
 	.4byte "__RTTI__Q23zen58CallBack2<PQ23zen17particleGenerator,PQ23zen11particleMdl>"
 	.4byte 0
 	.4byte 0
-.global "__vt__Q23zen37CallBack1<PQ23zen17particleGenerator>"
-"__vt__Q23zen37CallBack1<PQ23zen17particleGenerator>":
+.endobj "__vt__Q23zen58CallBack2<PQ23zen17particleGenerator,PQ23zen11particleMdl>"
+.obj "__vt__Q23zen37CallBack1<PQ23zen17particleGenerator>", weak
 	.4byte "__RTTI__Q23zen37CallBack1<PQ23zen17particleGenerator>"
 	.4byte 0
 	.4byte 0
+.endobj "__vt__Q23zen37CallBack1<PQ23zen17particleGenerator>"
 	.4byte 0
 	.4byte 0
 	.4byte 0
 .balign 4
-lbl_802B0618:
+.obj lbl_802B0618, local
 	.asciz "PelletConfig"
+.endobj lbl_802B0618
 .balign 4
-lbl_802B0628:
+.obj lbl_802B0628, local
 	.asciz "Parameters"
+.endobj lbl_802B0628
 .balign 4
-lbl_802B0634:
+.obj lbl_802B0634, local
 	.4byte __RTTI__5ANode
 	.4byte 0x4
 	.4byte __RTTI__8CoreNode
@@ -5960,8 +6005,8 @@ lbl_802B0634:
 	.4byte __RTTI__10Parameters
 	.4byte 0
 	.4byte 0
-.global __vt__12PelletConfig
-__vt__12PelletConfig:
+.endobj lbl_802B0634
+.obj __vt__12PelletConfig, global
 	.4byte __RTTI__12PelletConfig
 	.4byte 0
 	.4byte __RTTI__12PelletConfig
@@ -5969,43 +6014,51 @@ __vt__12PelletConfig:
 	.4byte getAgeNodeType__5ANodeFv
 	.4byte "@4@read__12PelletConfigFR18RandomAccessStream"
 	.4byte read__12PelletConfigFR18RandomAccessStream
+.endobj __vt__12PelletConfig
 .balign 4
-lbl_802B066C:
+.obj lbl_802B066C, local
 	.asciz "Parm<float>"
+.endobj lbl_802B066C
 .balign 4
-lbl_802B0678:
+.obj lbl_802B0678, local
 	.asciz "BaseParm"
+.endobj lbl_802B0678
 .balign 4
-lbl_802B0684:
+.obj lbl_802B0684, local
 	.4byte __RTTI__8BaseParm
 	.4byte 0
 	.4byte 0
+.endobj lbl_802B0684
 	.4byte 0
 	.4byte 0
 	.4byte 0
 	.4byte 0
 	.4byte 0
 .balign 4
-lbl_802B06A4:
+.obj lbl_802B06A4, local
 	.asciz "Parm<int>"
+.endobj lbl_802B06A4
 .balign 4
-lbl_802B06B0:
+.obj lbl_802B06B0, local
 	.4byte __RTTI__8BaseParm
 	.4byte 0
 	.4byte 0
+.endobj lbl_802B06B0
 	.4byte 0
 	.4byte 0
 	.4byte 0
 	.4byte 0
 	.4byte 0
 .balign 4
-lbl_802B06D0:
+.obj lbl_802B06D0, local
 	.asciz "Parm<String>"
+.endobj lbl_802B06D0
 .balign 4
-lbl_802B06E0:
+.obj lbl_802B06E0, local
 	.4byte __RTTI__8BaseParm
 	.4byte 0
 	.4byte 0
+.endobj lbl_802B06E0
 	.4byte 0
 	.4byte 0
 	.4byte 0
@@ -6018,7 +6071,7 @@ lbl_802B06E0:
 	.4byte 0
 	.4byte 0
 	.4byte 0
-lbl_802B071C:
+.obj lbl_802B071C, local
 	.4byte .L_80099404
 	.4byte .L_8009942C
 	.4byte .L_80099440
@@ -6030,375 +6083,525 @@ lbl_802B071C:
 	.4byte .L_80099418
 	.4byte .L_800994CC
 	.4byte .L_800994B8
+.endobj lbl_802B071C
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-lbl_803DF420:
+.obj lbl_803DF420, local
 	.float 1.0
-lbl_803DF424:
+.endobj lbl_803DF420
+.obj lbl_803DF424, local
 	.float 1.0
-lbl_803DF428:
+.endobj lbl_803DF424
+.obj lbl_803DF428, local
 	.float 1.0
+.endobj lbl_803DF428
 .balign 4
-lbl_803DF42C:
+.obj lbl_803DF42C, local
 	.asciz "x99"
+.endobj lbl_803DF42C
 .balign 4
-lbl_803DF430:
+.obj lbl_803DF430, local
 	.asciz "new"
+.endobj lbl_803DF430
 .balign 4
-lbl_803DF434:
+.obj lbl_803DF434, local
 	.asciz "p00"
+.endobj lbl_803DF434
 .balign 4
-lbl_803DF438:
+.obj lbl_803DF438, local
 	.asciz "p09"
+.endobj lbl_803DF438
 .balign 4
-lbl_803DF43C:
+.obj lbl_803DF43C, local
 	.asciz "p01"
+.endobj lbl_803DF43C
 .balign 4
-lbl_803DF440:
+.obj lbl_803DF440, local
 	.asciz "p02"
+.endobj lbl_803DF440
 .balign 4
-lbl_803DF444:
+.obj lbl_803DF444, local
 	.asciz "p03"
+.endobj lbl_803DF444
 .balign 4
-lbl_803DF448:
+.obj lbl_803DF448, local
 	.asciz "p04"
+.endobj lbl_803DF448
 .balign 4
-lbl_803DF44C:
+.obj lbl_803DF44C, local
 	.asciz "p05"
+.endobj lbl_803DF44C
 .balign 4
-lbl_803DF450:
+.obj lbl_803DF450, local
 	.asciz "p08"
+.endobj lbl_803DF450
 .balign 4
-lbl_803DF454:
+.obj lbl_803DF454, local
 	.asciz "p06"
+.endobj lbl_803DF454
 .balign 4
-lbl_803DF458:
+.obj lbl_803DF458, local
 	.asciz "p07"
+.endobj lbl_803DF458
 .balign 4
-lbl_803DF45C:
+.obj lbl_803DF45C, local
 	.asciz "p10"
+.endobj lbl_803DF45C
 .balign 4
-lbl_803DF460:
+.obj lbl_803DF460, local
 	.asciz "p11"
+.endobj lbl_803DF460
 .balign 4
-lbl_803DF464:
+.obj lbl_803DF464, local
 	.asciz "p12"
+.endobj lbl_803DF464
 .balign 4
-lbl_803DF468:
+.obj lbl_803DF468, local
 	.asciz "p13"
+.endobj lbl_803DF468
 .balign 4
-lbl_803DF46C:
+.obj lbl_803DF46C, local
 	.float 0.0
-lbl_803DF470:
+.endobj lbl_803DF46C
+.obj lbl_803DF470, local
 	.float 0.0
-lbl_803DF474:
+.endobj lbl_803DF470
+.obj lbl_803DF474, local
 	.float 0.0
-lbl_803DF478:
+.endobj lbl_803DF474
+.obj lbl_803DF478, local
 	.float 0.0
-lbl_803DF47C:
+.endobj lbl_803DF478
+.obj lbl_803DF47C, local
 	.float 0.0
-lbl_803DF480:
+.endobj lbl_803DF47C
+.obj lbl_803DF480, local
 	.float 0.0
-lbl_803DF484:
+.endobj lbl_803DF480
+.obj lbl_803DF484, local
 	.float 0.0
-lbl_803DF488:
+.endobj lbl_803DF484
+.obj lbl_803DF488, local
 	.float 0.0
-lbl_803DF48C:
+.endobj lbl_803DF488
+.obj lbl_803DF48C, local
 	.float 0.0
-lbl_803DF490:
+.endobj lbl_803DF48C
+.obj lbl_803DF490, local
 	.float 0.0
-lbl_803DF494:
+.endobj lbl_803DF490
+.obj lbl_803DF494, local
 	.float 0.0
-lbl_803DF498:
+.endobj lbl_803DF494
+.obj lbl_803DF498, local
 	.float 0.0
-lbl_803DF49C:
+.endobj lbl_803DF498
+.obj lbl_803DF49C, local
 	.float 0.0
-lbl_803DF4A0:
+.endobj lbl_803DF49C
+.obj lbl_803DF4A0, local
 	.float 0.0
-lbl_803DF4A4:
+.endobj lbl_803DF4A0
+.obj lbl_803DF4A4, local
 	.float 0.0
-lbl_803DF4A8:
+.endobj lbl_803DF4A4
+.obj lbl_803DF4A8, local
 	.float 0.0
-lbl_803DF4AC:
+.endobj lbl_803DF4A8
+.obj lbl_803DF4AC, local
 	.float 0.0
-lbl_803DF4B0:
+.endobj lbl_803DF4AC
+.obj lbl_803DF4B0, local
 	.float 0.0
-lbl_803DF4B4:
+.endobj lbl_803DF4B0
+.obj lbl_803DF4B4, local
 	.float 0.0
-lbl_803DF4B8:
+.endobj lbl_803DF4B4
+.obj lbl_803DF4B8, local
 	.float 0.0
-lbl_803DF4BC:
+.endobj lbl_803DF4B8
+.obj lbl_803DF4BC, local
 	.float 0.0
-lbl_803DF4C0:
+.endobj lbl_803DF4BC
+.obj lbl_803DF4C0, local
 	.float 0.0
-lbl_803DF4C4:
+.endobj lbl_803DF4C0
+.obj lbl_803DF4C4, local
 	.float 0.0
-lbl_803DF4C8:
+.endobj lbl_803DF4C4
+.obj lbl_803DF4C8, local
 	.float 0.0
-lbl_803DF4CC:
+.endobj lbl_803DF4C8
+.obj lbl_803DF4CC, local
 	.float 0.0
-lbl_803DF4D0:
+.endobj lbl_803DF4CC
+.obj lbl_803DF4D0, local
 	.float 0.0
-lbl_803DF4D4:
+.endobj lbl_803DF4D0
+.obj lbl_803DF4D4, local
 	.float 0.0
-lbl_803DF4D8:
+.endobj lbl_803DF4D4
+.obj lbl_803DF4D8, local
 	.float 0.0
-lbl_803DF4DC:
+.endobj lbl_803DF4D8
+.obj lbl_803DF4DC, local
 	.float 0.0
-lbl_803DF4E0:
+.endobj lbl_803DF4DC
+.obj lbl_803DF4E0, local
 	.float 0.0
-lbl_803DF4E4:
+.endobj lbl_803DF4E0
+.obj lbl_803DF4E4, local
 	.float 0.0
-lbl_803DF4E8:
+.endobj lbl_803DF4E4
+.obj lbl_803DF4E8, local
 	.float 0.5
-lbl_803DF4EC:
+.endobj lbl_803DF4E8
+.obj lbl_803DF4EC, local
 	.float 0.0
-lbl_803DF4F0:
+.endobj lbl_803DF4EC
+.obj lbl_803DF4F0, local
 	.float 0.0
-lbl_803DF4F4:
+.endobj lbl_803DF4F0
+.obj lbl_803DF4F4, local
 	.float 0.0
-lbl_803DF4F8:
+.endobj lbl_803DF4F4
+.obj lbl_803DF4F8, local
 	.float 0.0
-lbl_803DF4FC:
+.endobj lbl_803DF4F8
+.obj lbl_803DF4FC, local
 	.float 0.0
-lbl_803DF500:
+.endobj lbl_803DF4FC
+.obj lbl_803DF500, local
 	.float 0.0
-lbl_803DF504:
+.endobj lbl_803DF500
+.obj lbl_803DF504, local
 	.float 0.0
-lbl_803DF508:
+.endobj lbl_803DF504
+.obj lbl_803DF508, local
 	.float 0.0
-lbl_803DF50C:
+.endobj lbl_803DF508
+.obj lbl_803DF50C, local
 	.float 0.0
-lbl_803DF510:
+.endobj lbl_803DF50C
+.obj lbl_803DF510, local
 	.float 0.0
-lbl_803DF514:
+.endobj lbl_803DF510
+.obj lbl_803DF514, local
 	.float 0.0
-lbl_803DF518:
+.endobj lbl_803DF514
+.obj lbl_803DF518, local
 	.float 0.0
-lbl_803DF51C:
+.endobj lbl_803DF518
+.obj lbl_803DF51C, local
 	.float 0.0
-lbl_803DF520:
+.endobj lbl_803DF51C
+.obj lbl_803DF520, local
 	.float 2.0
-lbl_803DF524:
+.endobj lbl_803DF520
+.obj lbl_803DF524, local
 	.float 0.0
-lbl_803DF528:
+.endobj lbl_803DF524
+.obj lbl_803DF528, local
 	.float 1.0
-lbl_803DF52C:
+.endobj lbl_803DF528
+.obj lbl_803DF52C, local
 	.float 0.0
-lbl_803DF530:
+.endobj lbl_803DF52C
+.obj lbl_803DF530, local
 	.float 0.0
-lbl_803DF534:
+.endobj lbl_803DF530
+.obj lbl_803DF534, local
 	.float 0.0
-lbl_803DF538:
+.endobj lbl_803DF534
+.obj lbl_803DF538, local
 	.float 0.0
-lbl_803DF53C:
+.endobj lbl_803DF538
+.obj lbl_803DF53C, local
 	.float 0.0
-lbl_803DF540:
+.endobj lbl_803DF53C
+.obj lbl_803DF540, local
 	.float 0.0
-lbl_803DF544:
+.endobj lbl_803DF540
+.obj lbl_803DF544, local
 	.float 0.0
-lbl_803DF548:
+.endobj lbl_803DF544
+.obj lbl_803DF548, local
 	.float 0.0
-lbl_803DF54C:
+.endobj lbl_803DF548
+.obj lbl_803DF54C, local
 	.float 0.0
+.endobj lbl_803DF54C
 .balign 4
-lbl_803DF550:
+.obj lbl_803DF550, local
 	.asciz "useNode"
+.endobj lbl_803DF550
 .balign 4
-lbl_803DF558:
+.obj lbl_803DF558, local
 	.asciz ""
+.endobj lbl_803DF558
 .balign 4
-lbl_803DF55C:
+.obj lbl_803DF55C, local
 	.asciz "s00"
+.endobj lbl_803DF55C
 .balign 4
-lbl_803DF560:
+.obj lbl_803DF560, local
 	.asciz "s01"
+.endobj lbl_803DF560
 .balign 4
-lbl_803DF564:
+.obj lbl_803DF564, local
 	.asciz "s02"
+.endobj lbl_803DF564
 .balign 4
-lbl_803DF568:
+.obj lbl_803DF568, local
 	.asciz "s03"
+.endobj lbl_803DF568
 .balign 4
-lbl_803DF56C:
+.obj lbl_803DF56C, local
 	.asciz "s04"
+.endobj lbl_803DF56C
 .balign 4
-lbl_803DF570:
+.obj lbl_803DF570, local
 	.asciz "parms/"
+.endobj lbl_803DF570
 .balign 4
-lbl_803DF578:
+.obj lbl_803DF578, local
 	.asciz "front"
+.endobj lbl_803DF578
 .balign 4
-lbl_803DF580:
+.obj lbl_803DF580, local
 	.asciz "back"
+.endobj lbl_803DF580
 .balign 4
-lbl_803DF588:
+.obj lbl_803DF588, local
 	.asciz "ANode"
+.endobj lbl_803DF588
 .balign 4
-__RTTI__5ANode:
+.obj __RTTI__5ANode, local
 	.4byte lbl_803DF588
 	.4byte 0
-__RTTI__8CoreNode:
+.endobj __RTTI__5ANode
+.obj __RTTI__8CoreNode, local
 	.4byte lbl_802AFFA4
 	.4byte lbl_802B00BC
+.endobj __RTTI__8CoreNode
 .balign 4
-lbl_803DF5A0:
+.obj lbl_803DF5A0, local
 	.asciz "Node"
+.endobj lbl_803DF5A0
 .balign 4
-__RTTI__4Node:
+.obj __RTTI__4Node, local
 	.4byte lbl_803DF5A0
 	.4byte lbl_802B00C8
-__RTTI__11Traversable:
+.endobj __RTTI__4Node
+.obj __RTTI__11Traversable, local
 	.4byte lbl_802B00DC
 	.4byte 0
-__RTTI__9ObjectMgr:
+.endobj __RTTI__11Traversable
+.obj __RTTI__9ObjectMgr, local
 	.4byte lbl_802B00E8
 	.4byte lbl_802B00F4
-__RTTI__13MonoObjectMgr:
+.endobj __RTTI__9ObjectMgr
+.obj __RTTI__13MonoObjectMgr, local
 	.4byte lbl_802B0118
 	.4byte lbl_802B0128
-__RTTI__9PelletMgr:
+.endobj __RTTI__13MonoObjectMgr
+.obj __RTTI__9PelletMgr, local
 	.4byte lbl_802B00B0
 	.4byte lbl_802B0154
-__RTTI__12CreatureProp:
+.endobj __RTTI__9PelletMgr
+.obj __RTTI__12CreatureProp, local
 	.4byte lbl_802B021C
 	.4byte 0
-__RTTI__10PelletProp:
+.endobj __RTTI__12CreatureProp
+.obj __RTTI__10PelletProp, local
 	.4byte lbl_802B0210
 	.4byte lbl_802B022C
-__RTTI__Q29PelletMgr7UseNode:
+.endobj __RTTI__10PelletProp
+.obj __RTTI__Q29PelletMgr7UseNode, local
 	.4byte lbl_802B0250
 	.4byte lbl_802B0264
+.endobj __RTTI__Q29PelletMgr7UseNode
 .balign 4
-lbl_803DF5E8:
+.obj lbl_803DF5E8, local
 	.asciz "Pellet"
+.endobj lbl_803DF5E8
 .balign 4
-__RTTI__19PaniAnimKeyListener:
+.obj __RTTI__19PaniAnimKeyListener, local
 	.4byte lbl_802B02C0
 	.4byte 0
-__RTTI__11EventTalker:
+.endobj __RTTI__19PaniAnimKeyListener
+.obj __RTTI__11EventTalker, local
 	.4byte lbl_802B02D4
 	.4byte 0
-__RTTI__12RefCountable:
+.endobj __RTTI__11EventTalker
+.obj __RTTI__12RefCountable, local
 	.4byte lbl_802B02E0
 	.4byte 0
-__RTTI__8Creature:
+.endobj __RTTI__12RefCountable
+.obj __RTTI__8Creature, local
 	.4byte lbl_802B02F0
 	.4byte lbl_802B02FC
-__RTTI__11DynCreature:
+.endobj __RTTI__8Creature
+.obj __RTTI__11DynCreature, local
 	.4byte lbl_802B0310
 	.4byte lbl_802B031C
-__RTTI__12DualCreature:
+.endobj __RTTI__11DynCreature
+.obj __RTTI__12DualCreature, local
 	.4byte lbl_802B0338
 	.4byte lbl_802B0348
-__RTTI__6Pellet:
+.endobj __RTTI__12DualCreature
+.obj __RTTI__6Pellet, local
 	.4byte lbl_803DF5E8
 	.4byte lbl_802B036C
-"__RTTI__21StateMachine<6Pellet>":
+.endobj __RTTI__6Pellet
+.obj "__RTTI__21StateMachine<6Pellet>", local
 	.4byte lbl_802B04D0
 	.4byte 0
+.endobj "__RTTI__21StateMachine<6Pellet>"
 .balign 4
-lbl_803DF630:
+.obj lbl_803DF630, local
 	.asciz "KEffect"
+.endobj lbl_803DF630
 .balign 4
-"__RTTI__Q23zen31CallBack1<PQ23zen11particleMdl>":
+.obj "__RTTI__Q23zen31CallBack1<PQ23zen11particleMdl>", local
 	.4byte lbl_802B0500
 	.4byte 0
-"__RTTI__Q23zen58CallBack2<PQ23zen17particleGenerator,PQ23zen11particleMdl>":
+.endobj "__RTTI__Q23zen31CallBack1<PQ23zen11particleMdl>"
+.obj "__RTTI__Q23zen58CallBack2<PQ23zen17particleGenerator,PQ23zen11particleMdl>", local
 	.4byte lbl_802B0524
 	.4byte 0
-"__RTTI__Q23zen37CallBack1<PQ23zen17particleGenerator>":
+.endobj "__RTTI__Q23zen58CallBack2<PQ23zen17particleGenerator,PQ23zen11particleMdl>"
+.obj "__RTTI__Q23zen37CallBack1<PQ23zen17particleGenerator>", local
 	.4byte lbl_802B0564
 	.4byte 0
-__RTTI__7KEffect:
+.endobj "__RTTI__Q23zen37CallBack1<PQ23zen17particleGenerator>"
+.obj __RTTI__7KEffect, local
 	.4byte lbl_803DF630
 	.4byte lbl_802B0590
-__RTTI__10Parameters:
+.endobj __RTTI__7KEffect
+.obj __RTTI__10Parameters, local
 	.4byte lbl_802B0628
 	.4byte 0
-__RTTI__12PelletConfig:
+.endobj __RTTI__10Parameters
+.obj __RTTI__12PelletConfig, local
 	.4byte lbl_802B0618
 	.4byte lbl_802B0634
-__RTTI__8BaseParm:
+.endobj __RTTI__12PelletConfig
+.obj __RTTI__8BaseParm, local
 	.4byte lbl_802B0678
 	.4byte 0
+.endobj __RTTI__8BaseParm
 
 .section .sbss, "wa"
 .balign 8
-.global SmartTurnOver
-SmartTurnOver:
+.obj SmartTurnOver, global
 	.skip 0x1
+.endobj SmartTurnOver
 .balign 4
-count$1859:
+.obj count$1859, local
 	.skip 0x4
-init$1860:
+.endobj count$1859
+.obj init$1860, local
 	.skip 0x1
+.endobj init$1860
 .balign 4
-.global pelletMgr
-pelletMgr:
+.obj pelletMgr, global
 	.skip 0x4
+.endobj pelletMgr
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803E8E08:
+.obj lbl_803E8E08, local
 	.float 10.0
-lbl_803E8E0C:
+.endobj lbl_803E8E08
+.obj lbl_803E8E0C, local
 	.float 4.0
-lbl_803E8E10:
+.endobj lbl_803E8E0C
+.obj lbl_803E8E10, local
 	.float 1.0
-lbl_803E8E14:
+.endobj lbl_803E8E10
+.obj lbl_803E8E14, local
 	.float 30.0
-lbl_803E8E18:
+.endobj lbl_803E8E14
+.obj lbl_803E8E18, local
 	.float 0.0
-lbl_803E8E1C:
+.endobj lbl_803E8E18
+.obj lbl_803E8E1C, local
 	.float 2.0
-lbl_803E8E20:
+.endobj lbl_803E8E1C
+.obj lbl_803E8E20, local
 	.float 8.0
-lbl_803E8E24:
+.endobj lbl_803E8E20
+.obj lbl_803E8E24, local
 	.float -1.0
-lbl_803E8E28:
+.endobj lbl_803E8E24
+.obj lbl_803E8E28, local
 	.float 3.5
-lbl_803E8E2C:
+.endobj lbl_803E8E28
+.obj lbl_803E8E2C, local
 	.float 12800.0
-lbl_803E8E30:
-	.double 0.5
-lbl_803E8E38:
-	.double 3.0
-lbl_803E8E40:
-	.float 32767.0
+.endobj lbl_803E8E2C
 .balign 8
-lbl_803E8E48:
+.obj lbl_803E8E30, local
+	.double 0.5
+.endobj lbl_803E8E30
+.balign 8
+.obj lbl_803E8E38, local
+	.double 3.0
+.endobj lbl_803E8E38
+.obj lbl_803E8E40, local
+	.float 32767.0
+.endobj lbl_803E8E40
+.balign 8
+.obj lbl_803E8E48, local
 	.8byte 0x4330000080000000
-lbl_803E8E50:
+.endobj lbl_803E8E48
+.obj lbl_803E8E50, local
 	.float 6.2831855
-lbl_803E8E54:
+.endobj lbl_803E8E50
+.obj lbl_803E8E54, local
 	.float 40.0
-lbl_803E8E58:
+.endobj lbl_803E8E54
+.obj lbl_803E8E58, local
 	.float 0.12
-lbl_803E8E5C:
+.endobj lbl_803E8E58
+.obj lbl_803E8E5C, local
 	.float 100.0
-lbl_803E8E60:
+.endobj lbl_803E8E5C
+.obj lbl_803E8E60, local
 	.float -1000.0
-lbl_803E8E64:
+.endobj lbl_803E8E60
+.obj lbl_803E8E64, local
 	.float 5.0
-lbl_803E8E68:
+.endobj lbl_803E8E64
+.obj lbl_803E8E68, local
 	.float 0.5
-lbl_803E8E6C:
+.endobj lbl_803E8E68
+.obj lbl_803E8E6C, local
 	.float 0.15707964
-lbl_803E8E70:
+.endobj lbl_803E8E6C
+.obj lbl_803E8E70, local
 	.float 0.7
-lbl_803E8E74:
+.endobj lbl_803E8E70
+.obj lbl_803E8E74, local
 	.float 6.0
-lbl_803E8E78:
+.endobj lbl_803E8E74
+.obj lbl_803E8E78, local
 	.float 3.0
-lbl_803E8E7C:
+.endobj lbl_803E8E78
+.obj lbl_803E8E7C, local
 	.float 0.75
-lbl_803E8E80:
+.endobj lbl_803E8E7C
+.obj lbl_803E8E80, local
 	.float 0.25
-lbl_803E8E84:
+.endobj lbl_803E8E80
+.obj lbl_803E8E84, local
 	.float 0.1
-lbl_803E8E88:
+.endobj lbl_803E8E84
+.obj lbl_803E8E88, local
 	.float 0.01
-lbl_803E8E8C:
+.endobj lbl_803E8E88
+.obj lbl_803E8E8C, local
 	.float 0.3
+.endobj lbl_803E8E8C

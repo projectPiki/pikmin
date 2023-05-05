@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global GXCPInterruptHandler
-GXCPInterruptHandler:
+.fn GXCPInterruptHandler, local
 /* 8020EB40 0020BAA0  7C 08 02 A6 */	mflr r0
 /* 8020EB44 0020BAA4  90 01 00 04 */	stw r0, 4(r1)
 /* 8020EB48 0020BAA8  94 21 FD 20 */	stwu r1, -0x2e0(r1)
@@ -84,9 +83,9 @@ GXCPInterruptHandler:
 /* 8020EC70 0020BBD0  38 21 02 E0 */	addi r1, r1, 0x2e0
 /* 8020EC74 0020BBD4  7C 08 03 A6 */	mtlr r0
 /* 8020EC78 0020BBD8  4E 80 00 20 */	blr 
+.endfn GXCPInterruptHandler
 
-.global GXInitFifoBase
-GXInitFifoBase:
+.fn GXInitFifoBase, global
 /* 8020EC7C 0020BBDC  7C 08 02 A6 */	mflr r0
 /* 8020EC80 0020BBE0  90 01 00 04 */	stw r0, 4(r1)
 /* 8020EC84 0020BBE4  38 05 FF FC */	addi r0, r5, -4
@@ -114,9 +113,9 @@ GXInitFifoBase:
 /* 8020ECDC 0020BC3C  7C 08 03 A6 */	mtlr r0
 /* 8020ECE0 0020BC40  38 21 00 20 */	addi r1, r1, 0x20
 /* 8020ECE4 0020BC44  4E 80 00 20 */	blr 
+.endfn GXInitFifoBase
 
-.global GXInitFifoPtrs
-GXInitFifoPtrs:
+.fn GXInitFifoPtrs, global
 /* 8020ECE8 0020BC48  7C 08 02 A6 */	mflr r0
 /* 8020ECEC 0020BC4C  90 01 00 04 */	stw r0, 4(r1)
 /* 8020ECF0 0020BC50  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -146,15 +145,15 @@ GXInitFifoPtrs:
 /* 8020ED4C 0020BCAC  83 A1 00 1C */	lwz r29, 0x1c(r1)
 /* 8020ED50 0020BCB0  38 21 00 28 */	addi r1, r1, 0x28
 /* 8020ED54 0020BCB4  4E 80 00 20 */	blr 
+.endfn GXInitFifoPtrs
 
-.global GXInitFifoLimits
-GXInitFifoLimits:
+.fn GXInitFifoLimits, global
 /* 8020ED58 0020BCB8  90 83 00 0C */	stw r4, 0xc(r3)
 /* 8020ED5C 0020BCBC  90 A3 00 10 */	stw r5, 0x10(r3)
 /* 8020ED60 0020BCC0  4E 80 00 20 */	blr 
+.endfn GXInitFifoLimits
 
-.global GXSetCPUFifo
-GXSetCPUFifo:
+.fn GXSetCPUFifo, global
 /* 8020ED64 0020BCC4  7C 08 02 A6 */	mflr r0
 /* 8020ED68 0020BCC8  90 01 00 04 */	stw r0, 4(r1)
 /* 8020ED6C 0020BCCC  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -226,9 +225,9 @@ GXSetCPUFifo:
 /* 8020EE68 0020BDC8  7C 08 03 A6 */	mtlr r0
 /* 8020EE6C 0020BDCC  38 21 00 18 */	addi r1, r1, 0x18
 /* 8020EE70 0020BDD0  4E 80 00 20 */	blr 
+.endfn GXSetCPUFifo
 
-.global GXSetGPFifo
-GXSetGPFifo:
+.fn GXSetGPFifo, global
 /* 8020EE74 0020BDD4  7C 08 02 A6 */	mflr r0
 /* 8020EE78 0020BDD8  90 01 00 04 */	stw r0, 4(r1)
 /* 8020EE7C 0020BDDC  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -325,9 +324,9 @@ GXSetGPFifo:
 /* 8020EFE0 0020BF40  7C 08 03 A6 */	mtlr r0
 /* 8020EFE4 0020BF44  38 21 00 18 */	addi r1, r1, 0x18
 /* 8020EFE8 0020BF48  4E 80 00 20 */	blr 
+.endfn GXSetGPFifo
 
-.global GXSaveCPUFifo
-GXSaveCPUFifo:
+.fn GXSaveCPUFifo, global
 /* 8020EFEC 0020BF4C  7C 08 02 A6 */	mflr r0
 /* 8020EFF0 0020BF50  90 01 00 04 */	stw r0, 4(r1)
 /* 8020EFF4 0020BF54  94 21 FF F8 */	stwu r1, -8(r1)
@@ -336,9 +335,9 @@ GXSaveCPUFifo:
 /* 8020F000 0020BF60  38 21 00 08 */	addi r1, r1, 8
 /* 8020F004 0020BF64  7C 08 03 A6 */	mtlr r0
 /* 8020F008 0020BF68  4E 80 00 20 */	blr 
+.endfn GXSaveCPUFifo
 
-.global __GXSaveCPUFifoAux
-__GXSaveCPUFifoAux:
+.fn __GXSaveCPUFifoAux, global
 /* 8020F00C 0020BF6C  7C 08 02 A6 */	mflr r0
 /* 8020F010 0020BF70  90 01 00 04 */	stw r0, 4(r1)
 /* 8020F014 0020BF74  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -396,9 +395,9 @@ __GXSaveCPUFifoAux:
 /* 8020F0DC 0020C03C  7C 08 03 A6 */	mtlr r0
 /* 8020F0E0 0020C040  38 21 00 18 */	addi r1, r1, 0x18
 /* 8020F0E4 0020C044  4E 80 00 20 */	blr 
+.endfn __GXSaveCPUFifoAux
 
-.global __GXFifoInit
-__GXFifoInit:
+.fn __GXFifoInit, global
 /* 8020F0E8 0020C048  7C 08 02 A6 */	mflr r0
 /* 8020F0EC 0020C04C  3C 60 80 21 */	lis r3, GXCPInterruptHandler@ha
 /* 8020F0F0 0020C050  90 01 00 04 */	stw r0, 4(r1)
@@ -416,9 +415,9 @@ __GXFifoInit:
 /* 8020F120 0020C080  38 21 00 08 */	addi r1, r1, 8
 /* 8020F124 0020C084  7C 08 03 A6 */	mtlr r0
 /* 8020F128 0020C088  4E 80 00 20 */	blr 
+.endfn __GXFifoInit
 
-.global __GXFifoReadEnable
-__GXFifoReadEnable:
+.fn __GXFifoReadEnable, local
 /* 8020F12C 0020C08C  80 6D 2A 68 */	lwz r3, gx@sda21(r13)
 /* 8020F130 0020C090  84 03 00 08 */	lwzu r0, 8(r3)
 /* 8020F134 0020C094  54 00 00 3C */	rlwinm r0, r0, 0, 0, 0x1e
@@ -429,9 +428,9 @@ __GXFifoReadEnable:
 /* 8020F148 0020C0A8  80 04 00 08 */	lwz r0, 8(r4)
 /* 8020F14C 0020C0AC  B0 03 00 02 */	sth r0, 2(r3)
 /* 8020F150 0020C0B0  4E 80 00 20 */	blr 
+.endfn __GXFifoReadEnable
 
-.global __GXFifoReadDisable
-__GXFifoReadDisable:
+.fn __GXFifoReadDisable, local
 /* 8020F154 0020C0B4  80 6D 2A 68 */	lwz r3, gx@sda21(r13)
 /* 8020F158 0020C0B8  84 03 00 08 */	lwzu r0, 8(r3)
 /* 8020F15C 0020C0BC  54 00 00 3C */	rlwinm r0, r0, 0, 0, 0x1e
@@ -441,9 +440,9 @@ __GXFifoReadDisable:
 /* 8020F16C 0020C0CC  80 04 00 08 */	lwz r0, 8(r4)
 /* 8020F170 0020C0D0  B0 03 00 02 */	sth r0, 2(r3)
 /* 8020F174 0020C0D4  4E 80 00 20 */	blr 
+.endfn __GXFifoReadDisable
 
-.global __GXFifoLink
-__GXFifoLink:
+.fn __GXFifoLink, local
 /* 8020F178 0020C0D8  54 60 06 3F */	clrlwi. r0, r3, 0x18
 /* 8020F17C 0020C0DC  41 82 00 0C */	beq .L_8020F188
 /* 8020F180 0020C0E0  38 00 00 01 */	li r0, 1
@@ -463,9 +462,9 @@ __GXFifoLink:
 /* 8020F1B0 0020C110  80 04 00 08 */	lwz r0, 8(r4)
 /* 8020F1B4 0020C114  B0 03 00 02 */	sth r0, 2(r3)
 /* 8020F1B8 0020C118  4E 80 00 20 */	blr 
+.endfn __GXFifoLink
 
-.global __GXWriteFifoIntEnable
-__GXWriteFifoIntEnable:
+.fn __GXWriteFifoIntEnable, local
 /* 8020F1BC 0020C11C  80 AD 2A 68 */	lwz r5, gx@sda21(r13)
 /* 8020F1C0 0020C120  54 63 15 BA */	rlwinm r3, r3, 2, 0x16, 0x1d
 /* 8020F1C4 0020C124  54 80 1D 78 */	rlwinm r0, r4, 3, 0x15, 0x1c
@@ -485,9 +484,9 @@ __GXWriteFifoIntEnable:
 /* 8020F1FC 0020C15C  80 04 00 08 */	lwz r0, 8(r4)
 /* 8020F200 0020C160  B0 03 00 02 */	sth r0, 2(r3)
 /* 8020F204 0020C164  4E 80 00 20 */	blr 
+.endfn __GXWriteFifoIntEnable
 
-.global __GXWriteFifoIntReset
-__GXWriteFifoIntReset:
+.fn __GXWriteFifoIntReset, local
 /* 8020F208 0020C168  80 AD 2A 68 */	lwz r5, gx@sda21(r13)
 /* 8020F20C 0020C16C  54 63 06 3E */	clrlwi r3, r3, 0x18
 /* 8020F210 0020C170  54 80 0D FC */	rlwinm r0, r4, 1, 0x17, 0x1e
@@ -507,9 +506,9 @@ __GXWriteFifoIntReset:
 /* 8020F248 0020C1A8  80 04 00 10 */	lwz r0, 0x10(r4)
 /* 8020F24C 0020C1AC  B0 03 00 04 */	sth r0, 4(r3)
 /* 8020F250 0020C1B0  4E 80 00 20 */	blr 
+.endfn __GXWriteFifoIntReset
 
-.global GXSetCurrentGXThread
-GXSetCurrentGXThread:
+.fn GXSetCurrentGXThread, global
 /* 8020F254 0020C1B4  7C 08 02 A6 */	mflr r0
 /* 8020F258 0020C1B8  90 01 00 04 */	stw r0, 4(r1)
 /* 8020F25C 0020C1BC  94 21 FF F0 */	stwu r1, -0x10(r1)
@@ -529,32 +528,34 @@ GXSetCurrentGXThread:
 /* 8020F294 0020C1F4  7C 08 03 A6 */	mtlr r0
 /* 8020F298 0020C1F8  38 21 00 10 */	addi r1, r1, 0x10
 /* 8020F29C 0020C1FC  4E 80 00 20 */	blr 
+.endfn GXSetCurrentGXThread
 
-.global GXGetCPUFifo
-GXGetCPUFifo:
+.fn GXGetCPUFifo, global
 /* 8020F2A0 0020C200  80 6D 34 48 */	lwz r3, CPUFifo@sda21(r13)
 /* 8020F2A4 0020C204  4E 80 00 20 */	blr 
+.endfn GXGetCPUFifo
 
 .section .sbss, "wa"
 .balign 8
-.global __GXCurrentThread
-__GXCurrentThread:
+.obj __GXCurrentThread, local
 	.skip 0x4
-.global CPGPLinked
-CPGPLinked:
+.endobj __GXCurrentThread
+.obj CPGPLinked, local
+	.skip 0x1
+.endobj CPGPLinked
+.balign 4
+.obj GXOverflowSuspendInProgress, local
 	.skip 0x4
-.global GXOverflowSuspendInProgress
-GXOverflowSuspendInProgress:
+.endobj GXOverflowSuspendInProgress
+.obj BreakPointCB, local
 	.skip 0x4
-.global BreakPointCB
-BreakPointCB:
+.endobj BreakPointCB
+.obj __GXOverflowCount, local
 	.skip 0x4
-.global __GXOverflowCount
-__GXOverflowCount:
+.endobj __GXOverflowCount
+.obj GPFifo, global
 	.skip 0x4
-.global GPFifo
-GPFifo:
+.endobj GPFifo
+.obj CPUFifo, global
 	.skip 0x4
-.global CPUFifo
-CPUFifo:
-	.skip 0x4
+.endobj CPUFifo

@@ -1,5 +1,27 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
+.fn makeIdentity__8Matrix4fFv, global
+/* 8003DDBC 0003AD1C  C0 22 83 E0 */	lfs f1, lbl_803E85E0@sda21(r2)
+/* 8003DDC0 0003AD20  D0 23 00 00 */	stfs f1, 0(r3)
+/* 8003DDC4 0003AD24  C0 02 83 E4 */	lfs f0, lbl_803E85E4@sda21(r2)
+/* 8003DDC8 0003AD28  D0 03 00 04 */	stfs f0, 4(r3)
+/* 8003DDCC 0003AD2C  D0 03 00 08 */	stfs f0, 8(r3)
+/* 8003DDD0 0003AD30  D0 03 00 0C */	stfs f0, 0xc(r3)
+/* 8003DDD4 0003AD34  D0 03 00 10 */	stfs f0, 0x10(r3)
+/* 8003DDD8 0003AD38  D0 23 00 14 */	stfs f1, 0x14(r3)
+/* 8003DDDC 0003AD3C  D0 03 00 18 */	stfs f0, 0x18(r3)
+/* 8003DDE0 0003AD40  D0 03 00 1C */	stfs f0, 0x1c(r3)
+/* 8003DDE4 0003AD44  D0 03 00 20 */	stfs f0, 0x20(r3)
+/* 8003DDE8 0003AD48  D0 03 00 24 */	stfs f0, 0x24(r3)
+/* 8003DDEC 0003AD4C  D0 23 00 28 */	stfs f1, 0x28(r3)
+/* 8003DDF0 0003AD50  D0 03 00 2C */	stfs f0, 0x2c(r3)
+/* 8003DDF4 0003AD54  D0 03 00 30 */	stfs f0, 0x30(r3)
+/* 8003DDF8 0003AD58  D0 03 00 34 */	stfs f0, 0x34(r3)
+/* 8003DDFC 0003AD5C  D0 03 00 38 */	stfs f0, 0x38(r3)
+/* 8003DE00 0003AD60  D0 23 00 3C */	stfs f1, 0x3c(r3)
+/* 8003DE04 0003AD64  4E 80 00 20 */	blr 
+.endfn makeIdentity__8Matrix4fFv
+
 .fn makeRotate__8Matrix4fFR8Vector3fff, global
 /* 8003DE08 0003AD68  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 8003DE0C 0003AD6C  DB E1 00 18 */	stfd f31, 0x18(r1)
@@ -1091,20 +1113,18 @@ lbl_constructor:
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-# should be local
-.global lbl_803DD310
-lbl_803DD310:
+.obj lbl_803DD310, local
 	.float 0.0
+.endobj lbl_803DD310
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-# should be local
-.global lbl_803E85E0
-lbl_803E85E0:
+.obj lbl_803E85E0, local
 	.float 1.0
-.global lbl_803E85E4
-lbl_803E85E4:
+.endobj lbl_803E85E0
+.obj lbl_803E85E4, local
 	.float 0.0
-.global lbl_803E85E8
-lbl_803E85E8:
+.endobj lbl_803E85E4
+.obj lbl_803E85E8, local
 	.float 2.0
+.endobj lbl_803E85E8

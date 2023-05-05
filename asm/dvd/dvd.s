@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global DVDInit
-DVDInit:
+.fn DVDInit, global
 /* 801FF964 001FC8C4  7C 08 02 A6 */	mflr r0
 /* 801FF968 001FC8C8  3C 60 80 2F */	lis r3, lbl_802E8818@ha
 /* 801FF96C 001FC8CC  90 01 00 04 */	stw r0, 4(r1)
@@ -68,9 +67,9 @@ DVDInit:
 /* 801FFA54 001FC9B4  7C 08 03 A6 */	mtlr r0
 /* 801FFA58 001FC9B8  38 21 00 10 */	addi r1, r1, 0x10
 /* 801FFA5C 001FC9BC  4E 80 00 20 */	blr 
+.endfn DVDInit
 
-.global stateReadingFST
-stateReadingFST:
+.fn stateReadingFST, local
 /* 801FFA60 001FC9C0  7C 08 02 A6 */	mflr r0
 /* 801FFA64 001FC9C4  3C 60 80 20 */	lis r3, stateReadingFST@ha
 /* 801FFA68 001FC9C8  90 01 00 04 */	stw r0, 4(r1)
@@ -92,9 +91,9 @@ stateReadingFST:
 /* 801FFAA8 001FCA08  38 21 00 08 */	addi r1, r1, 8
 /* 801FFAAC 001FCA0C  7C 08 03 A6 */	mtlr r0
 /* 801FFAB0 001FCA10  4E 80 00 20 */	blr 
+.endfn stateReadingFST
 
-.global cbForStateReadingFST
-cbForStateReadingFST:
+.fn cbForStateReadingFST, local
 /* 801FFAB4 001FCA14  7C 08 02 A6 */	mflr r0
 /* 801FFAB8 001FCA18  28 03 00 10 */	cmplwi r3, 0x10
 /* 801FFABC 001FCA1C  90 01 00 04 */	stw r0, 4(r1)
@@ -131,9 +130,9 @@ cbForStateReadingFST:
 /* 801FFB28 001FCA88  38 21 00 08 */	addi r1, r1, 8
 /* 801FFB2C 001FCA8C  7C 08 03 A6 */	mtlr r0
 /* 801FFB30 001FCA90  4E 80 00 20 */	blr 
+.endfn cbForStateReadingFST
 
-.global cbForStateError
-cbForStateError:
+.fn cbForStateError, local
 /* 801FFB34 001FCA94  7C 08 02 A6 */	mflr r0
 /* 801FFB38 001FCA98  28 03 00 10 */	cmplwi r3, 0x10
 /* 801FFB3C 001FCA9C  90 01 00 04 */	stw r0, 4(r1)
@@ -180,9 +179,9 @@ cbForStateError:
 /* 801FFBD0 001FCB30  38 21 00 18 */	addi r1, r1, 0x18
 /* 801FFBD4 001FCB34  7C 08 03 A6 */	mtlr r0
 /* 801FFBD8 001FCB38  4E 80 00 20 */	blr 
+.endfn cbForStateError
 
-.global stateTimeout
-stateTimeout:
+.fn stateTimeout, local
 /* 801FFBDC 001FCB3C  7C 08 02 A6 */	mflr r0
 /* 801FFBE0 001FCB40  3C 60 01 23 */	lis r3, 0x01234568@ha
 /* 801FFBE4 001FCB44  90 01 00 04 */	stw r0, 4(r1)
@@ -224,9 +223,9 @@ stateTimeout:
 /* 801FFC6C 001FCBCC  38 21 00 10 */	addi r1, r1, 0x10
 /* 801FFC70 001FCBD0  7C 08 03 A6 */	mtlr r0
 /* 801FFC74 001FCBD4  4E 80 00 20 */	blr 
+.endfn stateTimeout
 
-.global stateGettingError
-stateGettingError:
+.fn stateGettingError, local
 /* 801FFC78 001FCBD8  7C 08 02 A6 */	mflr r0
 /* 801FFC7C 001FCBDC  3C 60 80 20 */	lis r3, cbForStateGettingError@ha
 /* 801FFC80 001FCBE0  90 01 00 04 */	stw r0, 4(r1)
@@ -237,9 +236,9 @@ stateGettingError:
 /* 801FFC94 001FCBF4  38 21 00 08 */	addi r1, r1, 8
 /* 801FFC98 001FCBF8  7C 08 03 A6 */	mtlr r0
 /* 801FFC9C 001FCBFC  4E 80 00 20 */	blr 
+.endfn stateGettingError
 
-.global CategorizeError
-CategorizeError:
+.fn CategorizeError, local
 /* 801FFCA0 001FCC00  3C 03 FF FE */	addis r0, r3, 0xfffe
 /* 801FFCA4 001FCC04  28 00 04 00 */	cmplwi r0, 0x400
 /* 801FFCA8 001FCC08  40 82 00 10 */	bne .L_801FFCB8
@@ -292,9 +291,9 @@ CategorizeError:
 .L_801FFD4C:
 /* 801FFD4C 001FCCAC  38 60 00 03 */	li r3, 3
 /* 801FFD50 001FCCB0  4E 80 00 20 */	blr 
+.endfn CategorizeError
 
-.global cbForStateGettingError
-cbForStateGettingError:
+.fn cbForStateGettingError, local
 /* 801FFD54 001FCCB4  7C 08 02 A6 */	mflr r0
 /* 801FFD58 001FCCB8  28 03 00 10 */	cmplwi r3, 0x10
 /* 801FFD5C 001FCCBC  90 01 00 04 */	stw r0, 4(r1)
@@ -479,9 +478,9 @@ cbForStateGettingError:
 /* 801FFFDC 001FCF3C  83 81 00 10 */	lwz r28, 0x10(r1)
 /* 801FFFE0 001FCF40  38 21 00 20 */	addi r1, r1, 0x20
 /* 801FFFE4 001FCF44  4E 80 00 20 */	blr 
+.endfn cbForStateGettingError
 
-.global cbForUnrecoveredError
-cbForUnrecoveredError:
+.fn cbForUnrecoveredError, local
 /* 801FFFE8 001FCF48  7C 08 02 A6 */	mflr r0
 /* 801FFFEC 001FCF4C  28 03 00 10 */	cmplwi r3, 0x10
 /* 801FFFF0 001FCF50  90 01 00 04 */	stw r0, 4(r1)
@@ -511,9 +510,9 @@ cbForUnrecoveredError:
 /* 80200044 001FCFA4  38 21 00 08 */	addi r1, r1, 8
 /* 80200048 001FCFA8  7C 08 03 A6 */	mtlr r0
 /* 8020004C 001FCFAC  4E 80 00 20 */	blr 
+.endfn cbForUnrecoveredError
 
-.global cbForUnrecoveredErrorRetry
-cbForUnrecoveredErrorRetry:
+.fn cbForUnrecoveredErrorRetry, local
 /* 80200050 001FCFB0  7C 08 02 A6 */	mflr r0
 /* 80200054 001FCFB4  28 03 00 10 */	cmplwi r3, 0x10
 /* 80200058 001FCFB8  90 01 00 04 */	stw r0, 4(r1)
@@ -555,9 +554,9 @@ cbForUnrecoveredErrorRetry:
 /* 802000DC 001FD03C  38 21 00 08 */	addi r1, r1, 8
 /* 802000E0 001FD040  7C 08 03 A6 */	mtlr r0
 /* 802000E4 001FD044  4E 80 00 20 */	blr 
+.endfn cbForUnrecoveredErrorRetry
 
-.global stateGoToRetry
-stateGoToRetry:
+.fn stateGoToRetry, local
 /* 802000E8 001FD048  7C 08 02 A6 */	mflr r0
 /* 802000EC 001FD04C  3C 60 80 20 */	lis r3, cbForStateGoToRetry@ha
 /* 802000F0 001FD050  90 01 00 04 */	stw r0, 4(r1)
@@ -568,9 +567,9 @@ stateGoToRetry:
 /* 80200104 001FD064  38 21 00 08 */	addi r1, r1, 8
 /* 80200108 001FD068  7C 08 03 A6 */	mtlr r0
 /* 8020010C 001FD06C  4E 80 00 20 */	blr 
+.endfn stateGoToRetry
 
-.global cbForStateGoToRetry
-cbForStateGoToRetry:
+.fn cbForStateGoToRetry, local
 /* 80200110 001FD070  7C 08 02 A6 */	mflr r0
 /* 80200114 001FD074  28 03 00 10 */	cmplwi r3, 0x10
 /* 80200118 001FD078  90 01 00 04 */	stw r0, 4(r1)
@@ -666,9 +665,9 @@ cbForStateGoToRetry:
 /* 8020025C 001FD1BC  38 21 00 18 */	addi r1, r1, 0x18
 /* 80200260 001FD1C0  7C 08 03 A6 */	mtlr r0
 /* 80200264 001FD1C4  4E 80 00 20 */	blr 
+.endfn cbForStateGoToRetry
 
-.global stateCheckID
-stateCheckID:
+.fn stateCheckID, local
 /* 80200268 001FD1C8  7C 08 02 A6 */	mflr r0
 /* 8020026C 001FD1CC  3C 60 80 3D */	lis r3, tmpBuffer@ha
 /* 80200270 001FD1D0  90 01 00 04 */	stw r0, 4(r1)
@@ -731,9 +730,9 @@ stateCheckID:
 /* 80200340 001FD2A0  38 21 00 10 */	addi r1, r1, 0x10
 /* 80200344 001FD2A4  7C 08 03 A6 */	mtlr r0
 /* 80200348 001FD2A8  4E 80 00 20 */	blr 
+.endfn stateCheckID
 
-.global stateCheckID3
-stateCheckID3:
+.fn stateCheckID3, local
 /* 8020034C 001FD2AC  7C 08 02 A6 */	mflr r0
 /* 80200350 001FD2B0  3C 60 80 20 */	lis r3, cbForStateCheckID3@ha
 /* 80200354 001FD2B4  90 01 00 04 */	stw r0, 4(r1)
@@ -747,9 +746,9 @@ stateCheckID3:
 /* 80200374 001FD2D4  38 21 00 08 */	addi r1, r1, 8
 /* 80200378 001FD2D8  7C 08 03 A6 */	mtlr r0
 /* 8020037C 001FD2DC  4E 80 00 20 */	blr 
+.endfn stateCheckID3
 
-.global stateCheckID2
-stateCheckID2:
+.fn stateCheckID2, local
 /* 80200380 001FD2E0  7C 08 02 A6 */	mflr r0
 /* 80200384 001FD2E4  3C 60 80 3D */	lis r3, tmpBuffer@ha
 /* 80200388 001FD2E8  90 01 00 04 */	stw r0, 4(r1)
@@ -764,9 +763,9 @@ stateCheckID2:
 /* 802003AC 001FD30C  38 21 00 08 */	addi r1, r1, 8
 /* 802003B0 001FD310  7C 08 03 A6 */	mtlr r0
 /* 802003B4 001FD314  4E 80 00 20 */	blr 
+.endfn stateCheckID2
 
-.global cbForStateCheckID1
-cbForStateCheckID1:
+.fn cbForStateCheckID1, local
 /* 802003B8 001FD318  7C 08 02 A6 */	mflr r0
 /* 802003BC 001FD31C  28 03 00 10 */	cmplwi r3, 0x10
 /* 802003C0 001FD320  90 01 00 04 */	stw r0, 4(r1)
@@ -842,9 +841,9 @@ cbForStateCheckID1:
 /* 802004C0 001FD420  38 21 00 18 */	addi r1, r1, 0x18
 /* 802004C4 001FD424  7C 08 03 A6 */	mtlr r0
 /* 802004C8 001FD428  4E 80 00 20 */	blr 
+.endfn cbForStateCheckID1
 
-.global cbForStateCheckID2
-cbForStateCheckID2:
+.fn cbForStateCheckID2, local
 /* 802004CC 001FD42C  7C 08 02 A6 */	mflr r0
 /* 802004D0 001FD430  28 03 00 10 */	cmplwi r3, 0x10
 /* 802004D4 001FD434  90 01 00 04 */	stw r0, 4(r1)
@@ -889,9 +888,9 @@ cbForStateCheckID2:
 /* 80200564 001FD4C4  38 21 00 08 */	addi r1, r1, 8
 /* 80200568 001FD4C8  7C 08 03 A6 */	mtlr r0
 /* 8020056C 001FD4CC  4E 80 00 20 */	blr 
+.endfn cbForStateCheckID2
 
-.global cbForStateCheckID3
-cbForStateCheckID3:
+.fn cbForStateCheckID3, local
 /* 80200570 001FD4D0  7C 08 02 A6 */	mflr r0
 /* 80200574 001FD4D4  28 03 00 10 */	cmplwi r3, 0x10
 /* 80200578 001FD4D8  90 01 00 04 */	stw r0, 4(r1)
@@ -961,8 +960,9 @@ cbForStateCheckID3:
 /* 80200660 001FD5C0  38 21 00 18 */	addi r1, r1, 0x18
 /* 80200664 001FD5C4  7C 08 03 A6 */	mtlr r0
 /* 80200668 001FD5C8  4E 80 00 20 */	blr 
+.endfn cbForStateCheckID3
 
-AlarmHandler:
+.fn AlarmHandler, local
 /* 8020066C 001FD5CC  7C 08 02 A6 */	mflr r0
 /* 80200670 001FD5D0  90 01 00 04 */	stw r0, 4(r1)
 /* 80200674 001FD5D4  94 21 FF F8 */	stwu r1, -8(r1)
@@ -980,9 +980,9 @@ AlarmHandler:
 /* 802006A4 001FD604  38 21 00 08 */	addi r1, r1, 8
 /* 802006A8 001FD608  7C 08 03 A6 */	mtlr r0
 /* 802006AC 001FD60C  4E 80 00 20 */	blr 
+.endfn AlarmHandler
 
-.global stateCoverClosed
-stateCoverClosed:
+.fn stateCoverClosed, local
 /* 802006B0 001FD610  7C 08 02 A6 */	mflr r0
 /* 802006B4 001FD614  3C 60 80 3D */	lis r3, tmpBuffer@ha
 /* 802006B8 001FD618  90 01 00 04 */	stw r0, 4(r1)
@@ -1039,9 +1039,9 @@ stateCoverClosed:
 /* 80200770 001FD6D0  38 21 00 10 */	addi r1, r1, 0x10
 /* 80200774 001FD6D4  7C 08 03 A6 */	mtlr r0
 /* 80200778 001FD6D8  4E 80 00 20 */	blr 
+.endfn stateCoverClosed
 
-.global stateCoverClosed_CMD
-stateCoverClosed_CMD:
+.fn stateCoverClosed_CMD, local
 /* 8020077C 001FD6DC  7C 08 02 A6 */	mflr r0
 /* 80200780 001FD6E0  3C 60 80 3D */	lis r3, tmpBuffer@ha
 /* 80200784 001FD6E4  90 01 00 04 */	stw r0, 4(r1)
@@ -1054,9 +1054,9 @@ stateCoverClosed_CMD:
 /* 802007A0 001FD700  38 21 00 08 */	addi r1, r1, 8
 /* 802007A4 001FD704  7C 08 03 A6 */	mtlr r0
 /* 802007A8 001FD708  4E 80 00 20 */	blr 
+.endfn stateCoverClosed_CMD
 
-.global cbForStateCoverClosed
-cbForStateCoverClosed:
+.fn cbForStateCoverClosed, local
 /* 802007AC 001FD70C  7C 08 02 A6 */	mflr r0
 /* 802007B0 001FD710  28 03 00 10 */	cmplwi r3, 0x10
 /* 802007B4 001FD714  90 01 00 04 */	stw r0, 4(r1)
@@ -1088,9 +1088,9 @@ cbForStateCoverClosed:
 /* 80200810 001FD770  38 21 00 08 */	addi r1, r1, 8
 /* 80200814 001FD774  7C 08 03 A6 */	mtlr r0
 /* 80200818 001FD778  4E 80 00 20 */	blr 
+.endfn cbForStateCoverClosed
 
-.global stateMotorStopped
-stateMotorStopped:
+.fn stateMotorStopped, local
 /* 8020081C 001FD77C  7C 08 02 A6 */	mflr r0
 /* 80200820 001FD780  3C 60 80 20 */	lis r3, cbForStateMotorStopped@ha
 /* 80200824 001FD784  90 01 00 04 */	stw r0, 4(r1)
@@ -1101,9 +1101,9 @@ stateMotorStopped:
 /* 80200838 001FD798  38 21 00 08 */	addi r1, r1, 8
 /* 8020083C 001FD79C  7C 08 03 A6 */	mtlr r0
 /* 80200840 001FD7A0  4E 80 00 20 */	blr 
+.endfn stateMotorStopped
 
-.global cbForStateMotorStopped
-cbForStateMotorStopped:
+.fn cbForStateMotorStopped, local
 /* 80200844 001FD7A4  7C 08 02 A6 */	mflr r0
 /* 80200848 001FD7A8  3C 60 CC 00 */	lis r3, 0xCC006004@ha
 /* 8020084C 001FD7AC  90 01 00 04 */	stw r0, 4(r1)
@@ -1166,9 +1166,9 @@ cbForStateMotorStopped:
 /* 8020091C 001FD87C  38 21 00 18 */	addi r1, r1, 0x18
 /* 80200920 001FD880  7C 08 03 A6 */	mtlr r0
 /* 80200924 001FD884  4E 80 00 20 */	blr 
+.endfn cbForStateMotorStopped
 
-.global stateReady
-stateReady:
+.fn stateReady, local
 /* 80200928 001FD888  7C 08 02 A6 */	mflr r0
 /* 8020092C 001FD88C  3C 60 80 3D */	lis r3, tmpBuffer@ha
 /* 80200930 001FD890  90 01 00 04 */	stw r0, 4(r1)
@@ -1333,9 +1333,9 @@ stateReady:
 /* 80200B64 001FDAC4  38 21 00 10 */	addi r1, r1, 0x10
 /* 80200B68 001FDAC8  7C 08 03 A6 */	mtlr r0
 /* 80200B6C 001FDACC  4E 80 00 20 */	blr 
+.endfn stateReady
 
-.global stateBusy
-stateBusy:
+.fn stateBusy, local
 /* 80200B70 001FDAD0  7C 08 02 A6 */	mflr r0
 /* 80200B74 001FDAD4  3C 80 80 20 */	lis r4, stateBusy@ha
 /* 80200B78 001FDAD8  90 01 00 04 */	stw r0, 4(r1)
@@ -1530,9 +1530,9 @@ stateBusy:
 /* 80200E24 001FDD84  38 21 00 08 */	addi r1, r1, 8
 /* 80200E28 001FDD88  7C 08 03 A6 */	mtlr r0
 /* 80200E2C 001FDD8C  4E 80 00 20 */	blr 
+.endfn stateBusy
 
-.global cbForStateBusy
-cbForStateBusy:
+.fn cbForStateBusy, local
 /* 80200E30 001FDD90  7C 08 02 A6 */	mflr r0
 /* 80200E34 001FDD94  28 03 00 10 */	cmplwi r3, 0x10
 /* 80200E38 001FDD98  90 01 00 04 */	stw r0, 4(r1)
@@ -1949,9 +1949,9 @@ cbForStateBusy:
 /* 802013F8 001FE358  7C 08 03 A6 */	mtlr r0
 /* 802013FC 001FE35C  38 21 00 18 */	addi r1, r1, 0x18
 /* 80201400 001FE360  4E 80 00 20 */	blr 
+.endfn cbForStateBusy
 
-.global issueCommand
-issueCommand:
+.fn issueCommand, local
 /* 80201404 001FE364  7C 08 02 A6 */	mflr r0
 /* 80201408 001FE368  90 01 00 04 */	stw r0, 4(r1)
 /* 8020140C 001FE36C  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -2002,9 +2002,9 @@ issueCommand:
 /* 802014B4 001FE414  83 A1 00 14 */	lwz r29, 0x14(r1)
 /* 802014B8 001FE418  38 21 00 20 */	addi r1, r1, 0x20
 /* 802014BC 001FE41C  4E 80 00 20 */	blr 
+.endfn issueCommand
 
-.global DVDReadAbsAsyncPrio
-DVDReadAbsAsyncPrio:
+.fn DVDReadAbsAsyncPrio, global
 /* 802014C0 001FE420  7C 08 02 A6 */	mflr r0
 /* 802014C4 001FE424  90 01 00 04 */	stw r0, 4(r1)
 /* 802014C8 001FE428  38 00 00 01 */	li r0, 1
@@ -2063,9 +2063,9 @@ DVDReadAbsAsyncPrio:
 /* 80201590 001FE4F0  83 A1 00 2C */	lwz r29, 0x2c(r1)
 /* 80201594 001FE4F4  38 21 00 38 */	addi r1, r1, 0x38
 /* 80201598 001FE4F8  4E 80 00 20 */	blr 
+.endfn DVDReadAbsAsyncPrio
 
-.global DVDReadAbsAsyncForBS
-DVDReadAbsAsyncForBS:
+.fn DVDReadAbsAsyncForBS, global
 /* 8020159C 001FE4FC  7C 08 02 A6 */	mflr r0
 /* 802015A0 001FE500  90 01 00 04 */	stw r0, 4(r1)
 /* 802015A4 001FE504  38 00 00 04 */	li r0, 4
@@ -2121,9 +2121,9 @@ DVDReadAbsAsyncForBS:
 /* 80201660 001FE5C0  7C 08 03 A6 */	mtlr r0
 /* 80201664 001FE5C4  38 21 00 30 */	addi r1, r1, 0x30
 /* 80201668 001FE5C8  4E 80 00 20 */	blr 
+.endfn DVDReadAbsAsyncForBS
 
-.global DVDReadDiskID
-DVDReadDiskID:
+.fn DVDReadDiskID, global
 /* 8020166C 001FE5CC  7C 08 02 A6 */	mflr r0
 /* 80201670 001FE5D0  90 01 00 04 */	stw r0, 4(r1)
 /* 80201674 001FE5D4  38 00 00 05 */	li r0, 5
@@ -2180,9 +2180,9 @@ DVDReadDiskID:
 /* 80201734 001FE694  7C 08 03 A6 */	mtlr r0
 /* 80201738 001FE698  38 21 00 28 */	addi r1, r1, 0x28
 /* 8020173C 001FE69C  4E 80 00 20 */	blr 
+.endfn DVDReadDiskID
 
-.global DVDPrepareStreamAbsAsync
-DVDPrepareStreamAbsAsync:
+.fn DVDPrepareStreamAbsAsync, global
 /* 80201740 001FE6A0  7C 08 02 A6 */	mflr r0
 /* 80201744 001FE6A4  90 01 00 04 */	stw r0, 4(r1)
 /* 80201748 001FE6A8  38 00 00 06 */	li r0, 6
@@ -2235,9 +2235,9 @@ DVDPrepareStreamAbsAsync:
 /* 802017F8 001FE758  7C 08 03 A6 */	mtlr r0
 /* 802017FC 001FE75C  38 21 00 28 */	addi r1, r1, 0x28
 /* 80201800 001FE760  4E 80 00 20 */	blr 
+.endfn DVDPrepareStreamAbsAsync
 
-.global DVDCancelStream
-DVDCancelStream:
+.fn DVDCancelStream, global
 /* 80201804 001FE764  7C 08 02 A6 */	mflr r0
 /* 80201808 001FE768  90 01 00 04 */	stw r0, 4(r1)
 /* 8020180C 001FE76C  38 00 00 07 */	li r0, 7
@@ -2284,9 +2284,9 @@ DVDCancelStream:
 /* 80201898 001FE7F8  7C 08 03 A6 */	mtlr r0
 /* 8020189C 001FE7FC  38 21 00 20 */	addi r1, r1, 0x20
 /* 802018A0 001FE800  4E 80 00 20 */	blr 
+.endfn DVDCancelStream
 
-.global cbForCancelStreamSync
-cbForCancelStreamSync:
+.fn cbForCancelStreamSync, local
 /* 802018A4 001FE804  7C 08 02 A6 */	mflr r0
 /* 802018A8 001FE808  90 01 00 04 */	stw r0, 4(r1)
 /* 802018AC 001FE80C  94 21 FF F8 */	stwu r1, -8(r1)
@@ -2297,9 +2297,9 @@ cbForCancelStreamSync:
 /* 802018C0 001FE820  38 21 00 08 */	addi r1, r1, 8
 /* 802018C4 001FE824  7C 08 03 A6 */	mtlr r0
 /* 802018C8 001FE828  4E 80 00 20 */	blr 
+.endfn cbForCancelStreamSync
 
-.global DVDReset
-DVDReset:
+.fn DVDReset, global
 /* 802018CC 001FE82C  7C 08 02 A6 */	mflr r0
 /* 802018D0 001FE830  90 01 00 04 */	stw r0, 4(r1)
 /* 802018D4 001FE834  94 21 FF F8 */	stwu r1, -8(r1)
@@ -2317,9 +2317,9 @@ DVDReset:
 /* 80201904 001FE864  38 21 00 08 */	addi r1, r1, 8
 /* 80201908 001FE868  7C 08 03 A6 */	mtlr r0
 /* 8020190C 001FE86C  4E 80 00 20 */	blr 
+.endfn DVDReset
 
-.global DVDGetDriveStatus
-DVDGetDriveStatus:
+.fn DVDGetDriveStatus, global
 /* 80201910 001FE870  7C 08 02 A6 */	mflr r0
 /* 80201914 001FE874  90 01 00 04 */	stw r0, 4(r1)
 /* 80201918 001FE878  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -2369,9 +2369,9 @@ DVDGetDriveStatus:
 /* 802019B0 001FE910  7C 08 03 A6 */	mtlr r0
 /* 802019B4 001FE914  38 21 00 18 */	addi r1, r1, 0x18
 /* 802019B8 001FE918  4E 80 00 20 */	blr 
+.endfn DVDGetDriveStatus
 
-.global DVDCancelAsync
-DVDCancelAsync:
+.fn DVDCancelAsync, global
 /* 802019BC 001FE91C  7C 08 02 A6 */	mflr r0
 /* 802019C0 001FE920  90 01 00 04 */	stw r0, 4(r1)
 /* 802019C4 001FE924  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -2550,9 +2550,9 @@ DVDCancelAsync:
 /* 80201C20 001FEB80  83 A1 00 14 */	lwz r29, 0x14(r1)
 /* 80201C24 001FEB84  38 21 00 20 */	addi r1, r1, 0x20
 /* 80201C28 001FEB88  4E 80 00 20 */	blr 
+.endfn DVDCancelAsync
 
-.global DVDCancel
-DVDCancel:
+.fn DVDCancel, global
 /* 80201C2C 001FEB8C  7C 08 02 A6 */	mflr r0
 /* 80201C30 001FEB90  3C 80 80 20 */	lis r4, cbForCancelSync@ha
 /* 80201C34 001FEB94  90 01 00 04 */	stw r0, 4(r1)
@@ -2601,9 +2601,9 @@ DVDCancel:
 /* 80201CCC 001FEC2C  7C 08 03 A6 */	mtlr r0
 /* 80201CD0 001FEC30  38 21 00 18 */	addi r1, r1, 0x18
 /* 80201CD4 001FEC34  4E 80 00 20 */	blr 
+.endfn DVDCancel
 
-.global cbForCancelSync
-cbForCancelSync:
+.fn cbForCancelSync, local
 /* 80201CD8 001FEC38  7C 08 02 A6 */	mflr r0
 /* 80201CDC 001FEC3C  38 6D 32 B0 */	addi r3, r13, __DVDThreadQueue@sda21
 /* 80201CE0 001FEC40  90 01 00 04 */	stw r0, 4(r1)
@@ -2613,14 +2613,14 @@ cbForCancelSync:
 /* 80201CF0 001FEC50  38 21 00 08 */	addi r1, r1, 8
 /* 80201CF4 001FEC54  7C 08 03 A6 */	mtlr r0
 /* 80201CF8 001FEC58  4E 80 00 20 */	blr 
+.endfn cbForCancelSync
 
-.global DVDGetCurrentDiskID
-DVDGetCurrentDiskID:
+.fn DVDGetCurrentDiskID, global
 /* 80201CFC 001FEC5C  3C 60 80 00 */	lis r3, 0x8000
 /* 80201D00 001FEC60  4E 80 00 20 */	blr 
+.endfn DVDGetCurrentDiskID
 
-.global DVDCheckDisk
-DVDCheckDisk:
+.fn DVDCheckDisk, global
 /* 80201D04 001FEC64  7C 08 02 A6 */	mflr r0
 /* 80201D08 001FEC68  90 01 00 04 */	stw r0, 4(r1)
 /* 80201D0C 001FEC6C  94 21 FF F0 */	stwu r1, -0x10(r1)
@@ -2689,9 +2689,9 @@ DVDCheckDisk:
 /* 80201DDC 001FED3C  38 21 00 10 */	addi r1, r1, 0x10
 /* 80201DE0 001FED40  7C 08 03 A6 */	mtlr r0
 /* 80201DE4 001FED44  4E 80 00 20 */	blr 
+.endfn DVDCheckDisk
 
-.global __DVDPrepareResetAsync
-__DVDPrepareResetAsync:
+.fn __DVDPrepareResetAsync, global
 /* 80201DE8 001FED48  7C 08 02 A6 */	mflr r0
 /* 80201DEC 001FED4C  90 01 00 04 */	stw r0, 4(r1)
 /* 80201DF0 001FED50  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -2772,22 +2772,27 @@ __DVDPrepareResetAsync:
 /* 80201EF8 001FEE58  83 A1 00 14 */	lwz r29, 0x14(r1)
 /* 80201EFC 001FEE5C  38 21 00 20 */	addi r1, r1, 0x20
 /* 80201F00 001FEE60  4E 80 00 20 */	blr 
+.endfn __DVDPrepareResetAsync
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802E8818:
+.obj lbl_802E8818, local
 	.asciz "app booted via JTAG\n"
+.endobj lbl_802E8818
 .balign 4
-lbl_802E8830:
+.obj lbl_802E8830, local
 	.asciz "load fst\n"
+.endobj lbl_802E8830
 .balign 4
-lbl_802E883C:
+.obj lbl_802E883C, local
 	.asciz "app booted from bootrom\n"
+.endobj lbl_802E883C
 .balign 4
-lbl_802E8858:
+.obj lbl_802E8858, local
 	.asciz "bootrom\n"
+.endobj lbl_802E8858
 .balign 4
-lbl_802E8864:
+.obj lbl_802E8864, local
 	.4byte .L_80200B40
 	.4byte .L_80200A00
 	.4byte .L_80200A18
@@ -2796,7 +2801,8 @@ lbl_802E8864:
 	.4byte .L_80200B24
 	.4byte .L_80200A78
 	.4byte .L_80200A48
-lbl_802E8884:
+.endobj lbl_802E8864
+.obj lbl_802E8884, local
 	.4byte .L_80200E20
 	.4byte .L_80200BDC
 	.4byte .L_80200C38
@@ -2813,7 +2819,8 @@ lbl_802E8884:
 	.4byte .L_80200DD0
 	.4byte .L_80200DF8
 	.4byte .L_80200C6C
-lbl_802E88C4:
+.endobj lbl_802E8884
+.obj lbl_802E88C4, local
 	.4byte .L_80201A0C
 	.4byte .L_80201A0C
 	.4byte .L_80201A2C
@@ -2827,7 +2834,8 @@ lbl_802E88C4:
 	.4byte .L_80201C04
 	.4byte .L_80201A0C
 	.4byte .L_80201B38
-lbl_802E88F8:
+.endobj lbl_802E88C4
+.obj lbl_802E88F8, local
 	.4byte .L_80201D9C
 	.4byte .L_80201DA4
 	.4byte .L_80201D94
@@ -2841,47 +2849,67 @@ lbl_802E88F8:
 	.4byte .L_80201D94
 	.4byte .L_80201D94
 	.4byte .L_80201D9C
+.endobj lbl_802E88F8
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-autoInvalidation:
+.obj autoInvalidation, local
 	.4byte 0x00000001
+.endobj autoInvalidation
 
 .section .sbss, "wa"
 .balign 8
-executing:
+.obj executing, local
 	.skip 0x4
-currID:
+.endobj executing
+.obj currID, local
 	.skip 0x4
-bootInfo:
+.endobj currID
+.obj bootInfo, local
 	.skip 0x4
-PauseFlag:
+.endobj bootInfo
+.obj PauseFlag, local
 	.skip 0x4
-PausingFlag:
+.endobj PauseFlag
+.obj PausingFlag, local
 	.skip 0x4
-AutoFinishing:
+.endobj PausingFlag
+.obj AutoFinishing, local
 	.skip 0x4
-FatalErrorFlag:
+.endobj AutoFinishing
+.obj FatalErrorFlag, local
 	.skip 0x4
-CurrCommand:
+.endobj FatalErrorFlag
+.obj CurrCommand, local
 	.skip 0x4
-Canceling:
+.endobj CurrCommand
+.obj Canceling, local
 	.skip 0x4
-CancelCallback:
+.endobj Canceling
+.obj CancelCallback, local
 	.skip 0x4
-ResumeFromHere:
+.endobj CancelCallback
+.obj ResumeFromHere, local
 	.skip 0x4
-CancelLastError:
+.endobj ResumeFromHere
+.obj CancelLastError, local
 	.skip 0x4
-LastError:
+.endobj CancelLastError
+.obj LastError, local
 	.skip 0x4
-NumInternalRetry:
+.endobj LastError
+.obj NumInternalRetry, local
 	.skip 0x4
-ResetRequired:
+.endobj NumInternalRetry
+.obj ResetRequired, local
 	.skip 0x4
-FirstTimeInBootrom:
+.endobj ResetRequired
+.obj FirstTimeInBootrom, local
 	.skip 0x4
-DVDInitialized:
+.endobj FirstTimeInBootrom
+.obj DVDInitialized, local
 	.skip 0x4
-LastState:
+.endobj DVDInitialized
+.obj LastState, local
 	.skip 0x4
+.endobj LastState

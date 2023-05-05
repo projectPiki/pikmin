@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global __OSResetSWInterruptHandler
-__OSResetSWInterruptHandler:
+.fn __OSResetSWInterruptHandler, global
 /* 801FA3B4 001F7314  7C 08 02 A6 */	mflr r0
 /* 801FA3B8 001F7318  90 01 00 04 */	stw r0, 4(r1)
 /* 801FA3BC 001F731C  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -10,7 +9,7 @@ __OSResetSWInterruptHandler:
 /* 801FA3C8 001F7328  93 A1 00 1C */	stw r29, 0x1c(r1)
 /* 801FA3CC 001F732C  48 00 2F F5 */	bl __OSGetSystemTime
 /* 801FA3D0 001F7330  3C A0 80 00 */	lis r5, 0x800000F8@ha
-/* 801FA3D4 001F7334  90 8D 32 2C */	stw r4, lbl_803E7F4C@sda21(r13)
+/* 801FA3D4 001F7334  90 8D 32 2C */	stw r4, (HoldDown+4)@sda21(r13)
 /* 801FA3D8 001F7338  80 05 00 F8 */	lwz r0, 0x800000F8@l(r5)
 /* 801FA3DC 001F733C  3C 80 43 1C */	lis r4, 0x431BDE83@ha
 /* 801FA3E0 001F7340  38 84 DE 83 */	addi r4, r4, 0x431BDE83@l
@@ -24,7 +23,7 @@ __OSResetSWInterruptHandler:
 /* 801FA400 001F7360  3F E0 CC 00 */	lis r31, 0xcc00
 .L_801FA404:
 /* 801FA404 001F7364  48 00 2F BD */	bl __OSGetSystemTime
-/* 801FA408 001F7368  80 CD 32 2C */	lwz r6, lbl_803E7F4C@sda21(r13)
+/* 801FA408 001F7368  80 CD 32 2C */	lwz r6, (HoldDown+4)@sda21(r13)
 /* 801FA40C 001F736C  6F C5 80 00 */	xoris r5, r30, 0x8000
 /* 801FA410 001F7370  80 0D 32 28 */	lwz r0, HoldDown@sda21(r13)
 /* 801FA414 001F7374  7C 86 20 10 */	subfc r4, r6, r4
@@ -66,9 +65,9 @@ __OSResetSWInterruptHandler:
 /* 801FA49C 001F73FC  38 21 00 28 */	addi r1, r1, 0x28
 /* 801FA4A0 001F7400  7C 08 03 A6 */	mtlr r0
 /* 801FA4A4 001F7404  4E 80 00 20 */	blr 
+.endfn __OSResetSWInterruptHandler
 
-.global OSGetResetSwitchState
-OSGetResetSwitchState:
+.fn OSGetResetSwitchState, global
 /* 801FA4A8 001F7408  7C 08 02 A6 */	mflr r0
 /* 801FA4AC 001F740C  90 01 00 04 */	stw r0, 4(r1)
 /* 801FA4B0 001F7410  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -86,7 +85,7 @@ OSGetResetSwitchState:
 /* 801FA4E0 001F7440  40 82 00 44 */	bne .L_801FA524
 /* 801FA4E4 001F7444  80 0D 32 20 */	lwz r0, HoldUp@sda21(r13)
 /* 801FA4E8 001F7448  38 80 00 00 */	li r4, 0
-/* 801FA4EC 001F744C  80 6D 32 24 */	lwz r3, lbl_803E7F44@sda21(r13)
+/* 801FA4EC 001F744C  80 6D 32 24 */	lwz r3, (HoldUp+4)@sda21(r13)
 /* 801FA4F0 001F7450  38 A0 00 01 */	li r5, 1
 /* 801FA4F4 001F7454  7C 00 22 78 */	xor r0, r0, r4
 /* 801FA4F8 001F7458  7C 63 22 78 */	xor r3, r3, r4
@@ -99,13 +98,13 @@ OSGetResetSwitchState:
 .L_801FA510:
 /* 801FA510 001F7470  7C BE 2B 78 */	mr r30, r5
 /* 801FA514 001F7474  48 00 2E AD */	bl __OSGetSystemTime
-/* 801FA518 001F7478  90 8D 32 2C */	stw r4, lbl_803E7F4C@sda21(r13)
+/* 801FA518 001F7478  90 8D 32 2C */	stw r4, (HoldDown+4)@sda21(r13)
 /* 801FA51C 001F747C  90 6D 32 28 */	stw r3, HoldDown@sda21(r13)
 /* 801FA520 001F7480  48 00 01 50 */	b .L_801FA670
 .L_801FA524:
 /* 801FA524 001F7484  80 0D 32 20 */	lwz r0, HoldUp@sda21(r13)
 /* 801FA528 001F7488  3B E0 00 00 */	li r31, 0
-/* 801FA52C 001F748C  80 6D 32 24 */	lwz r3, lbl_803E7F44@sda21(r13)
+/* 801FA52C 001F748C  80 6D 32 24 */	lwz r3, (HoldUp+4)@sda21(r13)
 /* 801FA530 001F7490  3B C0 00 01 */	li r30, 1
 /* 801FA534 001F7494  7C 00 FA 78 */	xor r0, r0, r31
 /* 801FA538 001F7498  7C 63 FA 78 */	xor r3, r3, r31
@@ -113,7 +112,7 @@ OSGetResetSwitchState:
 /* 801FA540 001F74A0  40 82 00 5C */	bne .L_801FA59C
 /* 801FA544 001F74A4  48 00 2E 7D */	bl __OSGetSystemTime
 /* 801FA548 001F74A8  3C A0 80 00 */	lis r5, 0x800000F8@ha
-/* 801FA54C 001F74AC  80 ED 32 2C */	lwz r7, lbl_803E7F4C@sda21(r13)
+/* 801FA54C 001F74AC  80 ED 32 2C */	lwz r7, (HoldDown+4)@sda21(r13)
 /* 801FA550 001F74B0  80 05 00 F8 */	lwz r0, 0x800000F8@l(r5)
 /* 801FA554 001F74B4  3C A0 43 1C */	lis r5, 0x431BDE83@ha
 /* 801FA558 001F74B8  38 A5 DE 83 */	addi r5, r5, 0x431BDE83@l
@@ -154,20 +153,20 @@ OSGetResetSwitchState:
 /* 801FA5D4 001F7534  3B C3 00 00 */	addi r30, r3, 0
 /* 801FA5D8 001F7538  41 82 00 98 */	beq .L_801FA670
 /* 801FA5DC 001F753C  48 00 2D E5 */	bl __OSGetSystemTime
-/* 801FA5E0 001F7540  90 8D 32 24 */	stw r4, lbl_803E7F44@sda21(r13)
+/* 801FA5E0 001F7540  90 8D 32 24 */	stw r4, (HoldUp+4)@sda21(r13)
 /* 801FA5E4 001F7544  90 6D 32 20 */	stw r3, HoldUp@sda21(r13)
 /* 801FA5E8 001F7548  48 00 00 88 */	b .L_801FA670
 .L_801FA5EC:
 /* 801FA5EC 001F754C  80 0D 32 20 */	lwz r0, HoldUp@sda21(r13)
 /* 801FA5F0 001F7550  3B C0 00 00 */	li r30, 0
-/* 801FA5F4 001F7554  80 6D 32 24 */	lwz r3, lbl_803E7F44@sda21(r13)
+/* 801FA5F4 001F7554  80 6D 32 24 */	lwz r3, (HoldUp+4)@sda21(r13)
 /* 801FA5F8 001F7558  7C 00 F2 78 */	xor r0, r0, r30
 /* 801FA5FC 001F755C  7C 63 F2 78 */	xor r3, r3, r30
 /* 801FA600 001F7560  7C 60 03 79 */	or. r0, r3, r0
 /* 801FA604 001F7564  41 82 00 5C */	beq .L_801FA660
 /* 801FA608 001F7568  48 00 2D B9 */	bl __OSGetSystemTime
 /* 801FA60C 001F756C  3C A0 80 00 */	lis r5, 0x800000F8@ha
-/* 801FA610 001F7570  80 ED 32 24 */	lwz r7, lbl_803E7F44@sda21(r13)
+/* 801FA610 001F7570  80 ED 32 24 */	lwz r7, (HoldUp+4)@sda21(r13)
 /* 801FA614 001F7574  80 05 00 F8 */	lwz r0, 0x800000F8@l(r5)
 /* 801FA618 001F7578  3C A0 10 62 */	lis r5, 0x10624DD3@ha
 /* 801FA61C 001F757C  38 A5 4D D3 */	addi r5, r5, 0x10624DD3@l
@@ -189,7 +188,7 @@ OSGetResetSwitchState:
 /* 801FA65C 001F75BC  48 00 00 14 */	b .L_801FA670
 .L_801FA660:
 /* 801FA660 001F75C0  38 00 00 00 */	li r0, 0
-/* 801FA664 001F75C4  90 0D 32 24 */	stw r0, lbl_803E7F44@sda21(r13)
+/* 801FA664 001F75C4  90 0D 32 24 */	stw r0, (HoldUp+4)@sda21(r13)
 /* 801FA668 001F75C8  3B C0 00 00 */	li r30, 0
 /* 801FA66C 001F75CC  90 0D 32 20 */	stw r0, HoldUp@sda21(r13)
 .L_801FA670:
@@ -204,27 +203,24 @@ OSGetResetSwitchState:
 /* 801FA690 001F75F0  83 A1 00 0C */	lwz r29, 0xc(r1)
 /* 801FA694 001F75F4  38 21 00 18 */	addi r1, r1, 0x18
 /* 801FA698 001F75F8  4E 80 00 20 */	blr 
+.endfn OSGetResetSwitchState
 
 .section .sbss, "wa"
 .balign 8
-.global ResetCallback
-ResetCallback:
+.obj ResetCallback, local
 	.skip 0x4
-.global Down
-Down:
+.endobj ResetCallback
+.obj Down, local
 	.skip 0x4
-.global LastState
-LastState:
+.endobj Down
+.obj LastState, local
+	.skip 0x4
+.endobj LastState
+.balign 8
+.obj HoldUp, local
 	.skip 0x8
-.global HoldUp
-HoldUp:
-	.skip 0x4
-.global lbl_803E7F44
-lbl_803E7F44:
-	.skip 0x4
-.global HoldDown
-HoldDown:
-	.skip 0x4
-.global lbl_803E7F4C
-lbl_803E7F4C:
-	.skip 0x4
+.endobj HoldUp
+.balign 8
+.obj HoldDown, local
+	.skip 0x8
+.endobj HoldDown

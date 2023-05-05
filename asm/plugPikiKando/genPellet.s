@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global makeObjectPellet__Fv
-makeObjectPellet__Fv:
+.fn makeObjectPellet__Fv, local
 /* 80099D1C 00096C7C  7C 08 02 A6 */	mflr r0
 /* 80099D20 00096C80  38 60 00 28 */	li r3, 0x28
 /* 80099D24 00096C84  90 01 00 04 */	stw r0, 4(r1)
@@ -35,9 +34,9 @@ makeObjectPellet__Fv:
 /* 80099D90 00096CF0  38 21 00 10 */	addi r1, r1, 0x10
 /* 80099D94 00096CF4  7C 08 03 A6 */	mtlr r0
 /* 80099D98 00096CF8  4E 80 00 20 */	blr 
+.endfn makeObjectPellet__Fv
 
-.global initialise__15GenObjectPelletFv
-initialise__15GenObjectPelletFv:
+.fn initialise__15GenObjectPelletFv, global
 /* 80099D9C 00096CFC  80 ED 30 74 */	lwz r7, factory__16GenObjectFactory@sda21(r13)
 /* 80099DA0 00096D00  80 A7 00 00 */	lwz r5, 0(r7)
 /* 80099DA4 00096D04  80 07 00 04 */	lwz r0, 4(r7)
@@ -73,9 +72,9 @@ initialise__15GenObjectPelletFv:
 /* 80099E1C 00096D7C  38 03 00 01 */	addi r0, r3, 1
 /* 80099E20 00096D80  90 07 00 00 */	stw r0, 0(r7)
 /* 80099E24 00096D84  4E 80 00 20 */	blr 
+.endfn initialise__15GenObjectPelletFv
 
-.global doRead__15GenObjectPelletFR18RandomAccessStream
-doRead__15GenObjectPelletFR18RandomAccessStream:
+.fn doRead__15GenObjectPelletFR18RandomAccessStream, global
 /* 80099E28 00096D88  7C 08 02 A6 */	mflr r0
 /* 80099E2C 00096D8C  90 01 00 04 */	stw r0, 4(r1)
 /* 80099E30 00096D90  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -98,9 +97,9 @@ doRead__15GenObjectPelletFR18RandomAccessStream:
 /* 80099E70 00096DD0  38 21 00 18 */	addi r1, r1, 0x18
 /* 80099E74 00096DD4  7C 08 03 A6 */	mtlr r0
 /* 80099E78 00096DD8  4E 80 00 20 */	blr 
+.endfn doRead__15GenObjectPelletFR18RandomAccessStream
 
-.global doWrite__15GenObjectPelletFR18RandomAccessStream
-doWrite__15GenObjectPelletFR18RandomAccessStream:
+.fn doWrite__15GenObjectPelletFR18RandomAccessStream, global
 /* 80099E7C 00096DDC  7C 08 02 A6 */	mflr r0
 /* 80099E80 00096DE0  90 01 00 04 */	stw r0, 4(r1)
 /* 80099E84 00096DE4  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -129,9 +128,9 @@ doWrite__15GenObjectPelletFR18RandomAccessStream:
 /* 80099EE0 00096E40  38 21 00 18 */	addi r1, r1, 0x18
 /* 80099EE4 00096E44  7C 08 03 A6 */	mtlr r0
 /* 80099EE8 00096E48  4E 80 00 20 */	blr 
+.endfn doWrite__15GenObjectPelletFR18RandomAccessStream
 
-.global updateUseList__15GenObjectPelletFP9Generatori
-updateUseList__15GenObjectPelletFP9Generatori:
+.fn updateUseList__15GenObjectPelletFP9Generatori, global
 /* 80099EEC 00096E4C  7C 08 02 A6 */	mflr r0
 /* 80099EF0 00096E50  7C 64 1B 78 */	mr r4, r3
 /* 80099EF4 00096E54  90 01 00 04 */	stw r0, 4(r1)
@@ -149,9 +148,9 @@ updateUseList__15GenObjectPelletFP9Generatori:
 /* 80099F20 00096E80  38 21 00 08 */	addi r1, r1, 8
 /* 80099F24 00096E84  7C 08 03 A6 */	mtlr r0
 /* 80099F28 00096E88  4E 80 00 20 */	blr 
+.endfn updateUseList__15GenObjectPelletFP9Generatori
 
-.global birth__15GenObjectPelletFR9BirthInfo
-birth__15GenObjectPelletFR9BirthInfo:
+.fn birth__15GenObjectPelletFR9BirthInfo, global
 /* 80099F2C 00096E8C  7C 08 02 A6 */	mflr r0
 /* 80099F30 00096E90  90 01 00 04 */	stw r0, 4(r1)
 /* 80099F34 00096E94  94 21 FF C8 */	stwu r1, -0x38(r1)
@@ -218,45 +217,55 @@ birth__15GenObjectPelletFR9BirthInfo:
 /* 8009A020 00096F80  38 21 00 38 */	addi r1, r1, 0x38
 /* 8009A024 00096F84  7C 08 03 A6 */	mtlr r0
 /* 8009A028 00096F88  4E 80 00 20 */	blr 
+.endfn birth__15GenObjectPelletFR9BirthInfo
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802B08E8:
+.obj lbl_802B08E8, local
 	.asciz "genPellet.cpp"
+.endobj lbl_802B08E8
 .balign 4
-lbl_802B08F8:
+.obj lbl_802B08F8, local
 	.asciz "genPellet"
+.endobj lbl_802B08F8
 .balign 4
-lbl_802B0904:
+.obj lbl_802B0904, local
 	.asciz "object type"
+.endobj lbl_802B0904
 .balign 4
-lbl_802B0910:
+.obj lbl_802B0910, local # Shift-JIS
 	.4byte 0x8379838C
 	.4byte 0x83628367
 	.4byte 0x82F082A4
 	.4byte 0x82DE0000
+.endobj lbl_802B0910
 .balign 4
-lbl_802B0920:
+.obj lbl_802B0920, local
 	.asciz "GenObjectPellet"
+.endobj lbl_802B0920
 .balign 4
-lbl_802B0930:
+.obj lbl_802B0930, local
 	.asciz "Parameters"
+.endobj lbl_802B0930
 .balign 4
-lbl_802B093C:
+.obj lbl_802B093C, local
 	.4byte __RTTI__10Parameters
 	.4byte 0x00000000
 	.4byte 0x00000000
+.endobj lbl_802B093C
 .balign 4
-lbl_802B0948:
+.obj lbl_802B0948, local
 	.asciz "GenObject"
+.endobj lbl_802B0948
 .balign 4
-lbl_802B0954:
+.obj lbl_802B0954, local
 	.4byte __RTTI__10Parameters
 	.4byte 0x00000000
 	.4byte __RTTI__7GenBase
 	.4byte 0x00000000
 	.4byte 0x00000000
-lbl_802B0968:
+.endobj lbl_802B0954
+.obj lbl_802B0968, local
 	.4byte __RTTI__10Parameters
 	.4byte 0x00000000
 	.4byte __RTTI__7GenBase
@@ -264,8 +273,8 @@ lbl_802B0968:
 	.4byte __RTTI__9GenObject
 	.4byte 0x00000000
 	.4byte 0x00000000
-.global __vt__15GenObjectPellet
-__vt__15GenObjectPellet:
+.endobj lbl_802B0968
+.obj __vt__15GenObjectPellet, global
 	.4byte __RTTI__15GenObjectPellet
 	.4byte 0
 	.4byte doWrite__15GenObjectPelletFR18RandomAccessStream
@@ -280,22 +289,28 @@ __vt__15GenObjectPellet:
 	.4byte update__9GenObjectFP9Generator
 	.4byte render__9GenObjectFR8GraphicsP9Generator
 	.4byte birth__15GenObjectPelletFR9BirthInfo
+.endobj __vt__15GenObjectPellet
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-__RTTI__10Parameters:
+.obj __RTTI__10Parameters, local
 	.4byte lbl_802B0930
 	.4byte 0
+.endobj __RTTI__10Parameters
 .balign 4
-lbl_803DF708:
+.obj lbl_803DF708, local
 	.asciz "GenBase"
+.endobj lbl_803DF708
 .balign 4
-__RTTI__7GenBase:
+.obj __RTTI__7GenBase, local
 	.4byte lbl_803DF708
 	.4byte lbl_802B093C
-__RTTI__9GenObject:
+.endobj __RTTI__7GenBase
+.obj __RTTI__9GenObject, local
 	.4byte lbl_802B0948
 	.4byte lbl_802B0954
-__RTTI__15GenObjectPellet:
+.endobj __RTTI__9GenObject
+.obj __RTTI__15GenObjectPellet, local
 	.4byte lbl_802B0920
 	.4byte lbl_802B0968
+.endobj __RTTI__15GenObjectPellet

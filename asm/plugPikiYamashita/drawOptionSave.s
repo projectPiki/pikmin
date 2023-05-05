@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global __ct__Q23zen14DrawOptionSaveFv
-__ct__Q23zen14DrawOptionSaveFv:
+.fn __ct__Q23zen14DrawOptionSaveFv, global
 /* 801F5500 001F2460  7C 08 02 A6 */	mflr r0
 /* 801F5504 001F2464  90 01 00 04 */	stw r0, 4(r1)
 /* 801F5508 001F2468  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -21,9 +20,9 @@ __ct__Q23zen14DrawOptionSaveFv:
 /* 801F5540 001F24A0  38 21 00 18 */	addi r1, r1, 0x18
 /* 801F5544 001F24A4  7C 08 03 A6 */	mtlr r0
 /* 801F5548 001F24A8  4E 80 00 20 */	blr 
+.endfn __ct__Q23zen14DrawOptionSaveFv
 
-.global update__Q23zen14DrawOptionSaveFP10Controller
-update__Q23zen14DrawOptionSaveFP10Controller:
+.fn update__Q23zen14DrawOptionSaveFP10Controller, global
 /* 801F554C 001F24AC  7C 08 02 A6 */	mflr r0
 /* 801F5550 001F24B0  90 01 00 04 */	stw r0, 4(r1)
 /* 801F5554 001F24B4  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -132,9 +131,9 @@ update__Q23zen14DrawOptionSaveFP10Controller:
 /* 801F56C8 001F2628  38 21 00 28 */	addi r1, r1, 0x28
 /* 801F56CC 001F262C  7C 08 03 A6 */	mtlr r0
 /* 801F56D0 001F2630  4E 80 00 20 */	blr 
+.endfn update__Q23zen14DrawOptionSaveFP10Controller
 
-.global draw__Q23zen14DrawOptionSaveFR8Graphics
-draw__Q23zen14DrawOptionSaveFR8Graphics:
+.fn draw__Q23zen14DrawOptionSaveFR8Graphics, global
 /* 801F56D4 001F2634  7C 08 02 A6 */	mflr r0
 /* 801F56D8 001F2638  90 01 00 04 */	stw r0, 4(r1)
 /* 801F56DC 001F263C  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -163,9 +162,9 @@ draw__Q23zen14DrawOptionSaveFR8Graphics:
 /* 801F5734 001F2694  38 21 00 18 */	addi r1, r1, 0x18
 /* 801F5738 001F2698  7C 08 03 A6 */	mtlr r0
 /* 801F573C 001F269C  4E 80 00 20 */	blr 
+.endfn draw__Q23zen14DrawOptionSaveFR8Graphics
 
-.global modeCardCheck__Q23zen14DrawOptionSaveFP10Controller
-modeCardCheck__Q23zen14DrawOptionSaveFP10Controller:
+.fn modeCardCheck__Q23zen14DrawOptionSaveFP10Controller, global
 /* 801F5740 001F26A0  7C 08 02 A6 */	mflr r0
 /* 801F5744 001F26A4  28 04 00 00 */	cmplwi r4, 0
 /* 801F5748 001F26A8  90 01 00 04 */	stw r0, 4(r1)
@@ -208,9 +207,9 @@ modeCardCheck__Q23zen14DrawOptionSaveFP10Controller:
 /* 801F57C8 001F2728  38 21 00 18 */	addi r1, r1, 0x18
 /* 801F57CC 001F272C  7C 08 03 A6 */	mtlr r0
 /* 801F57D0 001F2730  4E 80 00 20 */	blr 
+.endfn modeCardCheck__Q23zen14DrawOptionSaveFP10Controller
 
-.global init__Q23zen14DrawOptionSaveFv
-init__Q23zen14DrawOptionSaveFv:
+.fn init__Q23zen14DrawOptionSaveFv, global
 /* 801F57D4 001F2734  7C 08 02 A6 */	mflr r0
 /* 801F57D8 001F2738  38 80 00 00 */	li r4, 0
 /* 801F57DC 001F273C  90 01 00 04 */	stw r0, 4(r1)
@@ -221,9 +220,9 @@ init__Q23zen14DrawOptionSaveFv:
 /* 801F57F0 001F2750  38 21 00 08 */	addi r1, r1, 8
 /* 801F57F4 001F2754  7C 08 03 A6 */	mtlr r0
 /* 801F57F8 001F2758  4E 80 00 20 */	blr 
+.endfn init__Q23zen14DrawOptionSaveFv
 
-.global start__Q23zen14DrawOptionSaveFv
-start__Q23zen14DrawOptionSaveFv:
+.fn start__Q23zen14DrawOptionSaveFv, global
 /* 801F57FC 001F275C  7C 08 02 A6 */	mflr r0
 /* 801F5800 001F2760  38 80 00 01 */	li r4, 1
 /* 801F5804 001F2764  90 01 00 04 */	stw r0, 4(r1)
@@ -234,9 +233,9 @@ start__Q23zen14DrawOptionSaveFv:
 /* 801F5818 001F2778  38 21 00 08 */	addi r1, r1, 8
 /* 801F581C 001F277C  7C 08 03 A6 */	mtlr r0
 /* 801F5820 001F2780  4E 80 00 20 */	blr 
+.endfn start__Q23zen14DrawOptionSaveFv
 
-.global setMode__Q23zen14DrawOptionSaveFUlP10Controller
-setMode__Q23zen14DrawOptionSaveFUlP10Controller:
+.fn setMode__Q23zen14DrawOptionSaveFUlP10Controller, global
 /* 801F5824 001F2784  7C 08 02 A6 */	mflr r0
 /* 801F5828 001F2788  90 01 00 04 */	stw r0, 4(r1)
 /* 801F582C 001F278C  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -320,11 +319,11 @@ setMode__Q23zen14DrawOptionSaveFUlP10Controller:
 /* 801F5938 001F2898  38 21 00 20 */	addi r1, r1, 0x20
 /* 801F593C 001F289C  7C 08 03 A6 */	mtlr r0
 /* 801F5940 001F28A0  4E 80 00 20 */	blr 
+.endfn setMode__Q23zen14DrawOptionSaveFUlP10Controller
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-.global lbl_802E7258
-lbl_802E7258:
+.obj lbl_802E7258, local
 	.4byte .L_801F56B4
 	.4byte .L_801F5594
 	.4byte .L_801F55EC
@@ -335,8 +334,8 @@ lbl_802E7258:
 	.4byte .L_801F56B0
 	.4byte .L_801F56B0
 	.4byte .L_801F56B0
-.global lbl_802E7280
-lbl_802E7280:
+.endobj lbl_802E7258
+.obj lbl_802E7280, local
 	.4byte .L_801F5868
 	.4byte .L_801F5874
 	.4byte .L_801F5880
@@ -347,3 +346,4 @@ lbl_802E7280:
 	.4byte .L_801F592C
 	.4byte .L_801F592C
 	.4byte .L_801F592C
+.endobj lbl_802E7280

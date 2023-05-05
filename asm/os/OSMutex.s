@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global OSInitMutex
-OSInitMutex:
+.fn OSInitMutex, global
 /* 801F99B8 001F6918  7C 08 02 A6 */	mflr r0
 /* 801F99BC 001F691C  90 01 00 04 */	stw r0, 4(r1)
 /* 801F99C0 001F6920  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -16,9 +15,9 @@ OSInitMutex:
 /* 801F99E4 001F6944  38 21 00 18 */	addi r1, r1, 0x18
 /* 801F99E8 001F6948  7C 08 03 A6 */	mtlr r0
 /* 801F99EC 001F694C  4E 80 00 20 */	blr 
+.endfn OSInitMutex
 
-.global OSLockMutex
-OSLockMutex:
+.fn OSLockMutex, global
 /* 801F99F0 001F6950  7C 08 02 A6 */	mflr r0
 /* 801F99F4 001F6954  90 01 00 04 */	stw r0, 4(r1)
 /* 801F99F8 001F6958  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -80,9 +79,9 @@ OSLockMutex:
 /* 801F9AC0 001F6A20  83 81 00 10 */	lwz r28, 0x10(r1)
 /* 801F9AC4 001F6A24  38 21 00 20 */	addi r1, r1, 0x20
 /* 801F9AC8 001F6A28  4E 80 00 20 */	blr 
+.endfn OSLockMutex
 
-.global OSUnlockMutex
-OSUnlockMutex:
+.fn OSUnlockMutex, global
 /* 801F9ACC 001F6A2C  7C 08 02 A6 */	mflr r0
 /* 801F9AD0 001F6A30  90 01 00 04 */	stw r0, 4(r1)
 /* 801F9AD4 001F6A34  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -139,9 +138,9 @@ OSUnlockMutex:
 /* 801F9B88 001F6AE8  83 A1 00 14 */	lwz r29, 0x14(r1)
 /* 801F9B8C 001F6AEC  38 21 00 20 */	addi r1, r1, 0x20
 /* 801F9B90 001F6AF0  4E 80 00 20 */	blr 
+.endfn OSUnlockMutex
 
-.global __OSUnlockAllMutex
-__OSUnlockAllMutex:
+.fn __OSUnlockAllMutex, global
 /* 801F9B94 001F6AF4  7C 08 02 A6 */	mflr r0
 /* 801F9B98 001F6AF8  90 01 00 04 */	stw r0, 4(r1)
 /* 801F9B9C 001F6AFC  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -174,9 +173,9 @@ __OSUnlockAllMutex:
 /* 801F9BF8 001F6B58  7C 08 03 A6 */	mtlr r0
 /* 801F9BFC 001F6B5C  38 21 00 18 */	addi r1, r1, 0x18
 /* 801F9C00 001F6B60  4E 80 00 20 */	blr 
+.endfn __OSUnlockAllMutex
 
-.global OSInitCond
-OSInitCond:
+.fn OSInitCond, global
 /* 801F9C04 001F6B64  7C 08 02 A6 */	mflr r0
 /* 801F9C08 001F6B68  90 01 00 04 */	stw r0, 4(r1)
 /* 801F9C0C 001F6B6C  94 21 FF F8 */	stwu r1, -8(r1)
@@ -185,9 +184,9 @@ OSInitCond:
 /* 801F9C18 001F6B78  38 21 00 08 */	addi r1, r1, 8
 /* 801F9C1C 001F6B7C  7C 08 03 A6 */	mtlr r0
 /* 801F9C20 001F6B80  4E 80 00 20 */	blr 
+.endfn OSInitCond
 
-.global OSWaitCond
-OSWaitCond:
+.fn OSWaitCond, global
 /* 801F9C24 001F6B84  7C 08 02 A6 */	mflr r0
 /* 801F9C28 001F6B88  90 01 00 04 */	stw r0, 4(r1)
 /* 801F9C2C 001F6B8C  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -247,9 +246,9 @@ OSWaitCond:
 /* 801F9CEC 001F6C4C  38 21 00 28 */	addi r1, r1, 0x28
 /* 801F9CF0 001F6C50  7C 08 03 A6 */	mtlr r0
 /* 801F9CF4 001F6C54  4E 80 00 20 */	blr 
+.endfn OSWaitCond
 
-.global OSSignalCond
-OSSignalCond:
+.fn OSSignalCond, global
 /* 801F9CF8 001F6C58  7C 08 02 A6 */	mflr r0
 /* 801F9CFC 001F6C5C  90 01 00 04 */	stw r0, 4(r1)
 /* 801F9D00 001F6C60  94 21 FF F8 */	stwu r1, -8(r1)
@@ -258,9 +257,9 @@ OSSignalCond:
 /* 801F9D0C 001F6C6C  38 21 00 08 */	addi r1, r1, 8
 /* 801F9D10 001F6C70  7C 08 03 A6 */	mtlr r0
 /* 801F9D14 001F6C74  4E 80 00 20 */	blr 
+.endfn OSSignalCond
 
-.global __OSCheckMutex
-__OSCheckMutex:
+.fn __OSCheckMutex, global
 /* 801F9D18 001F6C78  80 83 00 00 */	lwz r4, 0(r3)
 /* 801F9D1C 001F6C7C  38 E0 00 00 */	li r7, 0
 /* 801F9D20 001F6C80  28 04 00 00 */	cmplwi r4, 0
@@ -335,9 +334,9 @@ __OSCheckMutex:
 .L_801F9E10:
 /* 801F9E10 001F6D70  38 60 00 01 */	li r3, 1
 /* 801F9E14 001F6D74  4E 80 00 20 */	blr 
+.endfn __OSCheckMutex
 
-.global __OSCheckDeadLock
-__OSCheckDeadLock:
+.fn __OSCheckDeadLock, global
 /* 801F9E18 001F6D78  80 83 02 F0 */	lwz r4, 0x2f0(r3)
 /* 801F9E1C 001F6D7C  48 00 00 18 */	b .L_801F9E34
 .L_801F9E20:
@@ -356,9 +355,9 @@ __OSCheckDeadLock:
 .L_801F9E48:
 /* 801F9E48 001F6DA8  38 60 00 00 */	li r3, 0
 /* 801F9E4C 001F6DAC  4E 80 00 20 */	blr 
+.endfn __OSCheckDeadLock
 
-.global __OSCheckMutexes
-__OSCheckMutexes:
+.fn __OSCheckMutexes, global
 /* 801F9E50 001F6DB0  7C 08 02 A6 */	mflr r0
 /* 801F9E54 001F6DB4  90 01 00 04 */	stw r0, 4(r1)
 /* 801F9E58 001F6DB8  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -393,3 +392,4 @@ __OSCheckMutexes:
 /* 801F9EB8 001F6E18  7C 08 03 A6 */	mtlr r0
 /* 801F9EBC 001F6E1C  38 21 00 18 */	addi r1, r1, 0x18
 /* 801F9EC0 001F6E20  4E 80 00 20 */	blr 
+.endfn __OSCheckMutexes

@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global __ct__20PcamCameraParametersFv
-__ct__20PcamCameraParametersFv:
+.fn __ct__20PcamCameraParametersFv, global
 /* 801249C4 00121924  7C 08 02 A6 */	mflr r0
 /* 801249C8 00121928  3C 80 80 22 */	lis r4, __vt__5ANode@ha
 /* 801249CC 0012192C  90 01 00 04 */	stw r0, 4(r1)
@@ -673,26 +672,26 @@ __ct__20PcamCameraParametersFv:
 /* 80125430 00122390  38 21 01 08 */	addi r1, r1, 0x108
 /* 80125434 00122394  7C 08 03 A6 */	mtlr r0
 /* 80125438 00122398  4E 80 00 20 */	blr 
+.endfn __ct__20PcamCameraParametersFv
 
-.global __ct__18ParaParameterInfoFFv
-__ct__18ParaParameterInfoFFv:
+.fn __ct__18ParaParameterInfoFFv, weak
 /* 8012543C 0012239C  38 00 00 00 */	li r0, 0
 /* 80125440 001223A0  90 03 00 00 */	stw r0, 0(r3)
 /* 80125444 001223A4  C0 02 A1 58 */	lfs f0, lbl_803EA358@sda21(r2)
 /* 80125448 001223A8  D0 03 00 04 */	stfs f0, 4(r3)
 /* 8012544C 001223AC  D0 03 00 08 */	stfs f0, 8(r3)
 /* 80125450 001223B0  4E 80 00 20 */	blr 
+.endfn __ct__18ParaParameterInfoFFv
 
-.global __ct__18ParaParameterInfoIFv
-__ct__18ParaParameterInfoIFv:
+.fn __ct__18ParaParameterInfoIFv, weak
 /* 80125454 001223B4  38 00 00 00 */	li r0, 0
 /* 80125458 001223B8  90 03 00 00 */	stw r0, 0(r3)
 /* 8012545C 001223BC  90 03 00 04 */	stw r0, 4(r3)
 /* 80125460 001223C0  90 03 00 08 */	stw r0, 8(r3)
 /* 80125464 001223C4  4E 80 00 20 */	blr 
+.endfn __ct__18ParaParameterInfoIFv
 
-.global read__20PcamCameraParametersFR18RandomAccessStream
-read__20PcamCameraParametersFR18RandomAccessStream:
+.fn read__20PcamCameraParametersFR18RandomAccessStream, global
 /* 80125468 001223C8  7C 08 02 A6 */	mflr r0
 /* 8012546C 001223CC  90 01 00 04 */	stw r0, 4(r1)
 /* 80125470 001223D0  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -750,200 +749,263 @@ read__20PcamCameraParametersFR18RandomAccessStream:
 /* 80125534 00122494  38 21 00 20 */	addi r1, r1, 0x20
 /* 80125538 00122498  7C 08 03 A6 */	mtlr r0
 /* 8012553C 0012249C  4E 80 00 20 */	blr 
+.endfn read__20PcamCameraParametersFR18RandomAccessStream
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802C55D8:
+.obj lbl_802C55D8, local
 	.asciz "pcamcameraparameters.cpp"
+.endobj lbl_802C55D8
 .balign 4
-lbl_802C55F4:
+.obj lbl_802C55F4, local
 	.asciz "pcamcameraparameters"
+.endobj lbl_802C55F4
 .balign 4
-lbl_802C560C:
+.obj lbl_802C560C, local
 	.asciz "CAMERA_SWITCH"
+.endobj lbl_802C560C
 .balign 4
-lbl_802C561C:
+.obj lbl_802C561C, local
 	.asciz "NEAR_LOW_DISTANCE"
+.endobj lbl_802C561C
 .balign 4
-lbl_802C5630:
+.obj lbl_802C5630, local
 	.asciz "NEAR_LOW_ANGLE"
+.endobj lbl_802C5630
 .balign 4
-lbl_802C5640:
+.obj lbl_802C5640, local
 	.asciz "NEAR_LOW_FOV"
+.endobj lbl_802C5640
 .balign 4
-lbl_802C5650:
+.obj lbl_802C5650, local
 	.asciz "NEAR_LOW_WATCH_ADJUSTMENT"
+.endobj lbl_802C5650
 .balign 4
-lbl_802C566C:
+.obj lbl_802C566C, local
 	.asciz "NEAR_LOW_NAVI_WATCH_WEIGHT"
+.endobj lbl_802C566C
 .balign 4
-lbl_802C5688:
+.obj lbl_802C5688, local
 	.asciz "NEAR_LOW_BLUR"
+.endobj lbl_802C5688
 .balign 4
-lbl_802C5698:
+.obj lbl_802C5698, local
 	.asciz "MIDDLE_LOW_DISTANCE"
+.endobj lbl_802C5698
 .balign 4
-lbl_802C56AC:
+.obj lbl_802C56AC, local
 	.asciz "MIDDLE_LOW_ANGLE"
+.endobj lbl_802C56AC
 .balign 4
-lbl_802C56C0:
+.obj lbl_802C56C0, local
 	.asciz "MIDDLE_LOW_FOV"
+.endobj lbl_802C56C0
 .balign 4
-lbl_802C56D0:
+.obj lbl_802C56D0, local
 	.asciz "MIDDLE_LOW_WATCH_ADJUSTMENT"
+.endobj lbl_802C56D0
 .balign 4
-lbl_802C56EC:
+.obj lbl_802C56EC, local
 	.asciz "MIDDLE_LOW_NAVI_WATCH_WEIGHT"
+.endobj lbl_802C56EC
 .balign 4
-lbl_802C570C:
+.obj lbl_802C570C, local
 	.asciz "MIDDLE_LOW_BLUR"
+.endobj lbl_802C570C
 .balign 4
-lbl_802C571C:
+.obj lbl_802C571C, local
 	.asciz "FAR_LOW_DISTANCE"
+.endobj lbl_802C571C
 .balign 4
-lbl_802C5730:
+.obj lbl_802C5730, local
 	.asciz "FAR_LOW_ANGLE"
+.endobj lbl_802C5730
 .balign 4
-lbl_802C5740:
+.obj lbl_802C5740, local
 	.asciz "FAR_LOW_FOV"
+.endobj lbl_802C5740
 .balign 4
-lbl_802C574C:
+.obj lbl_802C574C, local
 	.asciz "FAR_LOW_WATCH_ADJUSTMENT"
+.endobj lbl_802C574C
 .balign 4
-lbl_802C5768:
+.obj lbl_802C5768, local
 	.asciz "FAR_LOW_NAVI_WATCH_WEIGHT"
+.endobj lbl_802C5768
 .balign 4
-lbl_802C5784:
+.obj lbl_802C5784, local
 	.asciz "FAR_LOW_BLUR"
+.endobj lbl_802C5784
 .balign 4
-lbl_802C5794:
+.obj lbl_802C5794, local
 	.asciz "NEAR_HIGH_DISTANCE"
+.endobj lbl_802C5794
 .balign 4
-lbl_802C57A8:
+.obj lbl_802C57A8, local
 	.asciz "NEAR_HIGH_ANGLE"
+.endobj lbl_802C57A8
 .balign 4
-lbl_802C57B8:
+.obj lbl_802C57B8, local
 	.asciz "NEAR_HIGH_FOV"
+.endobj lbl_802C57B8
 .balign 4
-lbl_802C57C8:
+.obj lbl_802C57C8, local
 	.asciz "NEAR_HIGH_WATCH_ADJUSTMENT"
+.endobj lbl_802C57C8
 .balign 4
-lbl_802C57E4:
+.obj lbl_802C57E4, local
 	.asciz "NEAR_HIGH_NAVI_WATCH_WEIGHT"
+.endobj lbl_802C57E4
 .balign 4
-lbl_802C5800:
+.obj lbl_802C5800, local
 	.asciz "NEAR_HIGH_BLUR"
+.endobj lbl_802C5800
 .balign 4
-lbl_802C5810:
+.obj lbl_802C5810, local
 	.asciz "MIDDLE_HIGH_DISTANCE"
+.endobj lbl_802C5810
 .balign 4
-lbl_802C5828:
+.obj lbl_802C5828, local
 	.asciz "MIDDLE_HIGH_ANGLE"
+.endobj lbl_802C5828
 .balign 4
-lbl_802C583C:
+.obj lbl_802C583C, local
 	.asciz "MIDDLE_HIGH_FOV"
+.endobj lbl_802C583C
 .balign 4
-lbl_802C584C:
+.obj lbl_802C584C, local
 	.asciz "MIDDLE_HIGH_WATCH_ADJUSTMENT"
+.endobj lbl_802C584C
 .balign 4
-lbl_802C586C:
+.obj lbl_802C586C, local
 	.asciz "MIDDLE_HIGH_NAVI_WATCH_WEIGHT"
+.endobj lbl_802C586C
 .balign 4
-lbl_802C588C:
+.obj lbl_802C588C, local
 	.asciz "MIDDLE_HIGH_BLUR"
+.endobj lbl_802C588C
 .balign 4
-lbl_802C58A0:
+.obj lbl_802C58A0, local
 	.asciz "FAR_HIGH_DISTANCE"
+.endobj lbl_802C58A0
 .balign 4
-lbl_802C58B4:
+.obj lbl_802C58B4, local
 	.asciz "FAR_HIGH_ANGLE"
+.endobj lbl_802C58B4
 .balign 4
-lbl_802C58C4:
+.obj lbl_802C58C4, local
 	.asciz "FAR_HIGH_FOV"
+.endobj lbl_802C58C4
 .balign 4
-lbl_802C58D4:
+.obj lbl_802C58D4, local
 	.asciz "FAR_HIGH_WATCH_ADJUSTMENT"
+.endobj lbl_802C58D4
 .balign 4
-lbl_802C58F0:
+.obj lbl_802C58F0, local
 	.asciz "FAR_HIGH_NAVI_WATCH_WEIGHT"
+.endobj lbl_802C58F0
 .balign 4
-lbl_802C590C:
+.obj lbl_802C590C, local
 	.asciz "FAR_HIGH_BLUR"
+.endobj lbl_802C590C
 .balign 4
-lbl_802C591C:
+.obj lbl_802C591C, local
 	.asciz "NAVI_ATTENTION_DISTANCE"
+.endobj lbl_802C591C
 .balign 4
-lbl_802C5934:
+.obj lbl_802C5934, local
 	.asciz "NAVI_ATTENTION_ANGLE"
+.endobj lbl_802C5934
 .balign 4
-lbl_802C594C:
+.obj lbl_802C594C, local
 	.asciz "NAVI_ATTENTION_FOV"
+.endobj lbl_802C594C
 .balign 4
-lbl_802C5960:
+.obj lbl_802C5960, local
 	.asciz "NAVI_ATTENTION_WATCH_ADJUSTMENT"
+.endobj lbl_802C5960
 .balign 4
-lbl_802C5980:
+.obj lbl_802C5980, local
 	.asciz "NAVI_ATTENTION_NAVI_WATCH_WEIGHT"
+.endobj lbl_802C5980
 .balign 4
-lbl_802C59A4:
+.obj lbl_802C59A4, local
 	.asciz "NAVI_ATTENTION_BLUR"
+.endobj lbl_802C59A4
 .balign 4
-lbl_802C59B8:
+.obj lbl_802C59B8, local
 	.asciz "HOMING_SPEED"
+.endobj lbl_802C59B8
 .balign 4
-lbl_802C59C8:
+.obj lbl_802C59C8, local
 	.asciz "FOV_HOMING_SPEED"
+.endobj lbl_802C59C8
 .balign 4
-lbl_802C59DC:
+.obj lbl_802C59DC, local
 	.asciz "ROTATION_SPEED"
+.endobj lbl_802C59DC
 .balign 4
-lbl_802C59EC:
+.obj lbl_802C59EC, local
 	.asciz "TRANSLATION_SPEED"
+.endobj lbl_802C59EC
 .balign 4
-lbl_802C5A00:
+.obj lbl_802C5A00, local
 	.asciz "ATTENTION_HOMING_SPEED"
+.endobj lbl_802C5A00
 .balign 4
-lbl_802C5A18:
+.obj lbl_802C5A18, local
 	.asciz "ATTENTION_PERIOD"
+.endobj lbl_802C5A18
 .balign 4
-lbl_802C5A2C:
+.obj lbl_802C5A2C, local
 	.asciz "CHANGING_MOTION_PERIOD"
+.endobj lbl_802C5A2C
 .balign 4
-lbl_802C5A44:
+.obj lbl_802C5A44, local
 	.asciz "ROTATION_BUTTON_THRESHOLD"
+.endobj lbl_802C5A44
 .balign 4
-lbl_802C5A60:
+.obj lbl_802C5A60, local
 	.asciz "CAMERA_RESERVED_0"
+.endobj lbl_802C5A60
 .balign 4
-lbl_802C5A74:
+.obj lbl_802C5A74, local
 	.asciz "CAMERA_RESERVED_1"
+.endobj lbl_802C5A74
 .balign 4
-lbl_802C5A88:
+.obj lbl_802C5A88, local
 	.asciz "IGNORING_PIKI_DISTANCE"
+.endobj lbl_802C5A88
 .balign 4
-lbl_802C5AA0:
+.obj lbl_802C5AA0, local
 	.asciz "VIBRATION_DISTANCE"
+.endobj lbl_802C5AA0
 .balign 4
-lbl_802C5AB4:
+.obj lbl_802C5AB4, local
 	.asciz "ATTENTION_ANGLE_MAX_SPEED"
+.endobj lbl_802C5AB4
 .balign 4
-lbl_802C5AD0:
+.obj lbl_802C5AD0, local
 	.asciz "PcamCameraParameters"
+.endobj lbl_802C5AD0
 .balign 4
-lbl_802C5AE8:
+.obj lbl_802C5AE8, local
 	.asciz "CoreNode"
+.endobj lbl_802C5AE8
 .balign 4
-lbl_802C5AF4:
+.obj lbl_802C5AF4, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte 0
-lbl_802C5B00:
+.endobj lbl_802C5AF4
+.obj lbl_802C5B00, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte __RTTI__8CoreNode
 	.4byte 0
 	.4byte 0
-lbl_802C5B14:
+.endobj lbl_802C5B00
+.obj lbl_802C5B14, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte __RTTI__8CoreNode
@@ -951,8 +1013,8 @@ lbl_802C5B14:
 	.4byte __RTTI__4Node
 	.4byte 0
 	.4byte 0
-.global __vt__20PcamCameraParameters
-__vt__20PcamCameraParameters:
+.endobj lbl_802C5B14
+.obj __vt__20PcamCameraParameters, global
 	.4byte __RTTI__20PcamCameraParameters
 	.4byte 0
 	.4byte getAgeNodeType__5ANodeFv
@@ -965,106 +1027,151 @@ __vt__20PcamCameraParameters:
 	.4byte concat__4NodeFR3SRT
 	.4byte concat__4NodeFR8Matrix4f
 	.4byte getModelMatrix__4NodeFv
+.endobj __vt__20PcamCameraParameters
 	.skip 0x20
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-lbl_803E32D8:
+.obj lbl_803E32D8, local
 	.asciz "<Node>"
+.endobj lbl_803E32D8
 .balign 4
-lbl_803E32E0:
+.obj lbl_803E32E0, local
 	.asciz "ANode"
+.endobj lbl_803E32E0
 .balign 4
-__RTTI__5ANode:
+.obj __RTTI__5ANode, local
 	.4byte lbl_803E32E0
 	.4byte 0
-__RTTI__8CoreNode:
+.endobj __RTTI__5ANode
+.obj __RTTI__8CoreNode, local
 	.4byte lbl_802C5AE8
 	.4byte lbl_802C5AF4
+.endobj __RTTI__8CoreNode
 .balign 4
-lbl_803E32F8:
+.obj lbl_803E32F8, local
 	.asciz "Node"
+.endobj lbl_803E32F8
 .balign 4
-__RTTI__4Node:
+.obj __RTTI__4Node, local
 	.4byte lbl_803E32F8
 	.4byte lbl_802C5B00
-__RTTI__20PcamCameraParameters:
+.endobj __RTTI__4Node
+.obj __RTTI__20PcamCameraParameters, local
 	.4byte lbl_802C5AD0
 	.4byte lbl_802C5B14
+.endobj __RTTI__20PcamCameraParameters
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803EA350:
+.obj lbl_803EA350, local
 	.float 10.0
-lbl_803EA354:
+.endobj lbl_803EA350
+.obj lbl_803EA354, local
 	.float 2000.0
-lbl_803EA358:
+.endobj lbl_803EA354
+.obj lbl_803EA358, local
 	.float 0.0
-lbl_803EA35C:
+.endobj lbl_803EA358
+.obj lbl_803EA35C, local
 	.float 80.0
-lbl_803EA360:
+.endobj lbl_803EA35C
+.obj lbl_803EA360, local
 	.float 170.0
-lbl_803EA364:
+.endobj lbl_803EA360
+.obj lbl_803EA364, local
 	.float -500.0
-lbl_803EA368:
+.endobj lbl_803EA364
+.obj lbl_803EA368, local
 	.float 500.0
-lbl_803EA36C:
+.endobj lbl_803EA368
+.obj lbl_803EA36C, local
 	.float 1000.0
-lbl_803EA370:
+.endobj lbl_803EA36C
+.obj lbl_803EA370, local
 	.float 255.0
-lbl_803EA374:
+.endobj lbl_803EA370
+.obj lbl_803EA374, local
 	.float 0.05
-lbl_803EA378:
+.endobj lbl_803EA374
+.obj lbl_803EA378, local
 	.float 1.0
-lbl_803EA37C:
+.endobj lbl_803EA378
+.obj lbl_803EA37C, local
 	.float 0.2
-lbl_803EA380:
+.endobj lbl_803EA37C
+.obj lbl_803EA380, local
 	.float 2.0
-lbl_803EA384:
+.endobj lbl_803EA380
+.obj lbl_803EA384, local
 	.float 5.0
-lbl_803EA388:
+.endobj lbl_803EA384
+.obj lbl_803EA388, local
 	.float 10000.0
-lbl_803EA38C:
+.endobj lbl_803EA388
+.obj lbl_803EA38C, local
 	.float 0.25
-lbl_803EA390:
+.endobj lbl_803EA38C
+.obj lbl_803EA390, local
 	.float 700.0
-lbl_803EA394:
+.endobj lbl_803EA390
+.obj lbl_803EA394, local
 	.float 20.0
-lbl_803EA398:
+.endobj lbl_803EA394
+.obj lbl_803EA398, local
 	.float 40.0
-lbl_803EA39C:
+.endobj lbl_803EA398
+.obj lbl_803EA39C, local
 	.float 50.0
-lbl_803EA3A0:
+.endobj lbl_803EA39C
+.obj lbl_803EA3A0, local
 	.float 25.0
-lbl_803EA3A4:
+.endobj lbl_803EA3A0
+.obj lbl_803EA3A4, local
 	.float 70.0
-lbl_803EA3A8:
+.endobj lbl_803EA3A4
+.obj lbl_803EA3A8, local
 	.float 95.0
-lbl_803EA3AC:
+.endobj lbl_803EA3A8
+.obj lbl_803EA3AC, local
 	.float 1200.0
-lbl_803EA3B0:
+.endobj lbl_803EA3AC
+.obj lbl_803EA3B0, local
 	.float 100.0
-lbl_803EA3B4:
+.endobj lbl_803EA3B0
+.obj lbl_803EA3B4, local
 	.float 200.0
-lbl_803EA3B8:
+.endobj lbl_803EA3B4
+.obj lbl_803EA3B8, local
 	.float 110.0
-lbl_803EA3BC:
+.endobj lbl_803EA3B8
+.obj lbl_803EA3BC, local
 	.float 30.0
-lbl_803EA3C0:
+.endobj lbl_803EA3BC
+.obj lbl_803EA3C0, local
 	.float 15.0
-lbl_803EA3C4:
+.endobj lbl_803EA3C0
+.obj lbl_803EA3C4, local
 	.float 0.15
-lbl_803EA3C8:
+.endobj lbl_803EA3C4
+.obj lbl_803EA3C8, local
 	.float 2.4
-lbl_803EA3CC:
+.endobj lbl_803EA3C8
+.obj lbl_803EA3CC, local
 	.float 0.3
-lbl_803EA3D0:
+.endobj lbl_803EA3CC
+.obj lbl_803EA3D0, local
 	.float 0.6
-lbl_803EA3D4:
+.endobj lbl_803EA3D0
+.obj lbl_803EA3D4, local
 	.float 0.5
-lbl_803EA3D8:
+.endobj lbl_803EA3D4
+.obj lbl_803EA3D8, local
 	.float 0.1
-lbl_803EA3DC:
+.endobj lbl_803EA3D8
+.obj lbl_803EA3DC, local
 	.float 0.9
-lbl_803EA3E0:
+.endobj lbl_803EA3DC
+.obj lbl_803EA3E0, local
 	.float 0.125
+.endobj lbl_803EA3E0

@@ -1026,46 +1026,66 @@ __RTTI__12ActFormation:
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803E9498:
+.obj lbl_803E9498, local
 	.float 1.0
-lbl_803E949C:
+.endobj lbl_803E9498
+.obj lbl_803E949C, local
 	.float 32767.0
-lbl_803E94A0:
+.endobj lbl_803E949C
+.obj lbl_803E94A0, local
 	.float 15.0
-lbl_803E94A4:
+.endobj lbl_803E94A0
+.obj lbl_803E94A4, local
 	.float 0.8
-lbl_803E94A8:
+.endobj lbl_803E94A4
+.obj lbl_803E94A8, local
 	.float 5.0
+.endobj lbl_803E94A8
 .balign 8
-lbl_803E94B0:
-	.4byte 0x43300000
-	.4byte 0x80000000
-lbl_803E94B8:
+.obj lbl_803E94B0, local
+	.8byte 0x4330000080000000
+.endobj lbl_803E94B0
+.obj lbl_803E94B8, local
 	.float 0.0
+.endobj lbl_803E94B8
 .balign 8
-lbl_803E94C0:
+.obj lbl_803E94C0, local
 	.double 0.5
-lbl_803E94C8:
+.endobj lbl_803E94C0
+.balign 8
+.obj lbl_803E94C8, local
 	.double 3.0
-lbl_803E94D0:
+.endobj lbl_803E94C8
+.obj lbl_803E94D0, local
 	.float 4.0
-lbl_803E94D4:
+.endobj lbl_803E94D0
+.obj lbl_803E94D4, local
 	.float 2.0
-lbl_803E94D8:
+.endobj lbl_803E94D4
+.obj lbl_803E94D8, local
 	.4byte 3
-lbl_803E94DC:
+.endobj lbl_803E94D8
+.obj lbl_803E94DC, local
 	.float 100.0
-lbl_803E94E0:
+.endobj lbl_803E94DC
+.obj lbl_803E94E0, local
 	.float 6.0
-lbl_803E94E4:
+.endobj lbl_803E94E0
+.obj lbl_803E94E4, local
 	.float 2.5
-lbl_803E94E8:
+.endobj lbl_803E94E4
+.obj lbl_803E94E8, local
 	.float 0.99
-lbl_803E94EC:
+.endobj lbl_803E94E8
+.obj lbl_803E94EC, local
 	.float 0.5
-lbl_803E94F0:
+.endobj lbl_803E94EC
+.obj lbl_803E94F0, local
 	.float 3.1415927
-lbl_803E94F4:
+.endobj lbl_803E94F0
+.obj lbl_803E94F4, local
 	.float 30.0
-lbl_803E94F8:
+.endobj lbl_803E94F4
+.obj lbl_803E94F8, local
 	.float 10.0
+.endobj lbl_803E94F8

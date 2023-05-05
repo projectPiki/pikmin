@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global __ct__5NLineFR9NVector3fR9NVector3f
-__ct__5NLineFR9NVector3fR9NVector3f:
+.fn __ct__5NLineFR9NVector3fR9NVector3f, global
 /* 8011D3FC 0011A35C  7C 08 02 A6 */	mflr r0
 /* 8011D400 0011A360  3C C0 80 2C */	lis r6, __vt__5NLine@ha
 /* 8011D404 0011A364  90 01 00 04 */	stw r0, 4(r1)
@@ -30,9 +29,9 @@ __ct__5NLineFR9NVector3fR9NVector3f:
 /* 8011D460 0011A3C0  38 21 00 28 */	addi r1, r1, 0x28
 /* 8011D464 0011A3C4  7C 08 03 A6 */	mtlr r0
 /* 8011D468 0011A3C8  4E 80 00 20 */	blr 
+.endfn __ct__5NLineFR9NVector3fR9NVector3f
 
-.global construct__5NLineFR9NVector3fR9NVector3f
-construct__5NLineFR9NVector3fR9NVector3f:
+.fn construct__5NLineFR9NVector3fR9NVector3f, global
 /* 8011D46C 0011A3CC  C0 04 00 00 */	lfs f0, 0(r4)
 /* 8011D470 0011A3D0  D0 03 00 04 */	stfs f0, 4(r3)
 /* 8011D474 0011A3D4  C0 04 00 04 */	lfs f0, 4(r4)
@@ -46,9 +45,9 @@ construct__5NLineFR9NVector3fR9NVector3f:
 /* 8011D494 0011A3F4  C0 05 00 08 */	lfs f0, 8(r5)
 /* 8011D498 0011A3F8  D0 03 00 18 */	stfs f0, 0x18(r3)
 /* 8011D49C 0011A3FC  4E 80 00 20 */	blr 
+.endfn construct__5NLineFR9NVector3fR9NVector3f
 
-.global calcDistance__5NLineFR9NVector3fPf
-calcDistance__5NLineFR9NVector3fPf:
+.fn calcDistance__5NLineFR9NVector3fPf, global
 /* 8011D4A0 0011A400  7C 08 02 A6 */	mflr r0
 /* 8011D4A4 0011A404  90 01 00 04 */	stw r0, 4(r1)
 /* 8011D4A8 0011A408  94 21 FF B0 */	stwu r1, -0x50(r1)
@@ -98,9 +97,9 @@ calcDistance__5NLineFR9NVector3fPf:
 /* 8011D554 0011A4B4  38 21 00 50 */	addi r1, r1, 0x50
 /* 8011D558 0011A4B8  7C 08 03 A6 */	mtlr r0
 /* 8011D55C 0011A4BC  4E 80 00 20 */	blr 
+.endfn calcDistance__5NLineFR9NVector3fPf
 
-.global calcVerticalProjection__5NLineFR9NVector3f
-calcVerticalProjection__5NLineFR9NVector3f:
+.fn calcVerticalProjection__5NLineFR9NVector3f, global
 /* 8011D560 0011A4C0  7C 08 02 A6 */	mflr r0
 /* 8011D564 0011A4C4  38 A4 00 00 */	addi r5, r4, 0
 /* 8011D568 0011A4C8  90 01 00 04 */	stw r0, 4(r1)
@@ -126,9 +125,9 @@ calcVerticalProjection__5NLineFR9NVector3f:
 /* 8011D5B8 0011A518  38 21 00 28 */	addi r1, r1, 0x28
 /* 8011D5BC 0011A51C  7C 08 03 A6 */	mtlr r0
 /* 8011D5C0 0011A520  4E 80 00 20 */	blr 
+.endfn calcVerticalProjection__5NLineFR9NVector3f
 
-.global outputPosition__5NLineFfR9NVector3f
-outputPosition__5NLineFfR9NVector3f:
+.fn outputPosition__5NLineFfR9NVector3f, global
 /* 8011D5C4 0011A524  7C 08 02 A6 */	mflr r0
 /* 8011D5C8 0011A528  90 01 00 04 */	stw r0, 4(r1)
 /* 8011D5CC 0011A52C  94 21 FF C8 */	stwu r1, -0x38(r1)
@@ -168,9 +167,9 @@ outputPosition__5NLineFfR9NVector3f:
 /* 8011D654 0011A5B4  38 21 00 38 */	addi r1, r1, 0x38
 /* 8011D658 0011A5B8  7C 08 03 A6 */	mtlr r0
 /* 8011D65C 0011A5BC  4E 80 00 20 */	blr 
+.endfn outputPosition__5NLineFfR9NVector3f
 
-.global transform__5NLineFR12NTransform3D
-transform__5NLineFR12NTransform3D:
+.fn transform__5NLineFR12NTransform3D, global
 /* 8011D660 0011A5C0  7C 08 02 A6 */	mflr r0
 /* 8011D664 0011A5C4  90 01 00 04 */	stw r0, 4(r1)
 /* 8011D668 0011A5C8  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -190,9 +189,9 @@ transform__5NLineFR12NTransform3D:
 /* 8011D6A0 0011A600  38 21 00 18 */	addi r1, r1, 0x18
 /* 8011D6A4 0011A604  7C 08 03 A6 */	mtlr r0
 /* 8011D6A8 0011A608  4E 80 00 20 */	blr 
+.endfn transform__5NLineFR12NTransform3D
 
-.global println__5NLineFv
-println__5NLineFv:
+.fn println__5NLineFv, global
 /* 8011D6AC 0011A60C  7C 08 02 A6 */	mflr r0
 /* 8011D6B0 0011A610  90 01 00 04 */	stw r0, 4(r1)
 /* 8011D6B4 0011A614  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -207,9 +206,9 @@ println__5NLineFv:
 /* 8011D6D8 0011A638  38 21 00 18 */	addi r1, r1, 0x18
 /* 8011D6DC 0011A63C  7C 08 03 A6 */	mtlr r0
 /* 8011D6E0 0011A640  4E 80 00 20 */	blr 
+.endfn println__5NLineFv
 
-.global __ct__6NPlaneFR9NVector3fR9NVector3f
-__ct__6NPlaneFR9NVector3fR9NVector3f:
+.fn __ct__6NPlaneFR9NVector3fR9NVector3f, global
 /* 8011D6E4 0011A644  7C 08 02 A6 */	mflr r0
 /* 8011D6E8 0011A648  3C C0 80 2C */	lis r6, __vt__6NPlane@ha
 /* 8011D6EC 0011A64C  90 01 00 04 */	stw r0, 4(r1)
@@ -236,9 +235,9 @@ __ct__6NPlaneFR9NVector3fR9NVector3f:
 /* 8011D740 0011A6A0  38 21 00 28 */	addi r1, r1, 0x28
 /* 8011D744 0011A6A4  7C 08 03 A6 */	mtlr r0
 /* 8011D748 0011A6A8  4E 80 00 20 */	blr 
+.endfn __ct__6NPlaneFR9NVector3fR9NVector3f
 
-.global construct__6NPlaneFR9NVector3fR9NVector3f
-construct__6NPlaneFR9NVector3fR9NVector3f:
+.fn construct__6NPlaneFR9NVector3fR9NVector3f, global
 /* 8011D74C 0011A6AC  C0 04 00 00 */	lfs f0, 0(r4)
 /* 8011D750 0011A6B0  D0 03 00 04 */	stfs f0, 4(r3)
 /* 8011D754 0011A6B4  C0 04 00 04 */	lfs f0, 4(r4)
@@ -259,9 +258,9 @@ construct__6NPlaneFR9NVector3fR9NVector3f:
 /* 8011D790 0011A6F0  FC 00 00 50 */	fneg f0, f0
 /* 8011D794 0011A6F4  D0 03 00 10 */	stfs f0, 0x10(r3)
 /* 8011D798 0011A6F8  4E 80 00 20 */	blr 
+.endfn construct__6NPlaneFR9NVector3fR9NVector3f
 
-.global outputVerticalPosition__6NPlaneFR9NVector3fR9NVector3f
-outputVerticalPosition__6NPlaneFR9NVector3fR9NVector3f:
+.fn outputVerticalPosition__6NPlaneFR9NVector3fR9NVector3f, global
 /* 8011D79C 0011A6FC  7C 08 02 A6 */	mflr r0
 /* 8011D7A0 0011A700  90 01 00 04 */	stw r0, 4(r1)
 /* 8011D7A4 0011A704  94 21 FF B8 */	stwu r1, -0x48(r1)
@@ -317,9 +316,9 @@ outputVerticalPosition__6NPlaneFR9NVector3fR9NVector3f:
 /* 8011D86C 0011A7CC  38 21 00 48 */	addi r1, r1, 0x48
 /* 8011D870 0011A7D0  7C 08 03 A6 */	mtlr r0
 /* 8011D874 0011A7D4  4E 80 00 20 */	blr 
+.endfn outputVerticalPosition__6NPlaneFR9NVector3fR9NVector3f
 
-.global transform__6NPlaneFR12NTransform3D
-transform__6NPlaneFR12NTransform3D:
+.fn transform__6NPlaneFR12NTransform3D, global
 /* 8011D878 0011A7D8  7C 08 02 A6 */	mflr r0
 /* 8011D87C 0011A7DC  90 01 00 04 */	stw r0, 4(r1)
 /* 8011D880 0011A7E0  94 21 FF D0 */	stwu r1, -0x30(r1)
@@ -368,9 +367,9 @@ transform__6NPlaneFR12NTransform3D:
 /* 8011D92C 0011A88C  38 21 00 30 */	addi r1, r1, 0x30
 /* 8011D930 0011A890  7C 08 03 A6 */	mtlr r0
 /* 8011D934 0011A894  4E 80 00 20 */	blr 
+.endfn transform__6NPlaneFR12NTransform3D
 
-.global println__6NPlaneFv
-println__6NPlaneFv:
+.fn println__6NPlaneFv, global
 /* 8011D938 0011A898  7C 08 02 A6 */	mflr r0
 /* 8011D93C 0011A89C  38 63 00 04 */	addi r3, r3, 4
 /* 8011D940 0011A8A0  90 01 00 04 */	stw r0, 4(r1)
@@ -380,34 +379,39 @@ println__6NPlaneFv:
 /* 8011D950 0011A8B0  38 21 00 08 */	addi r1, r1, 8
 /* 8011D954 0011A8B4  7C 08 03 A6 */	mtlr r0
 /* 8011D958 0011A8B8  4E 80 00 20 */	blr 
+.endfn println__6NPlaneFv
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-.global __vt__6NPlane
-__vt__6NPlane:
+.obj __vt__6NPlane, global
 	.4byte __RTTI__6NPlane
 	.4byte 0
 	.4byte transform__6NPlaneFR12NTransform3D
 	.4byte println__6NPlaneFv
-.global __vt__5NLine
-__vt__5NLine:
+.endobj __vt__6NPlane
+.obj __vt__5NLine, global
 	.4byte __RTTI__5NLine
 	.4byte 0
 	.4byte transform__5NLineFR12NTransform3D
 	.4byte println__5NLineFv
+.endobj __vt__5NLine
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-lbl_803E3038:
+.obj lbl_803E3038, local
 	.asciz "NLine"
+.endobj lbl_803E3038
 .balign 4
-__RTTI__5NLine:
+.obj __RTTI__5NLine, local
 	.4byte lbl_803E3038
 	.4byte 0
+.endobj __RTTI__5NLine
 .balign 4
-lbl_803E3048:
+.obj lbl_803E3048, local
 	.asciz "NPlane"
+.endobj lbl_803E3048
 .balign 4
-__RTTI__6NPlane:
+.obj __RTTI__6NPlane, local
 	.4byte lbl_803E3048
 	.4byte 0
+.endobj __RTTI__6NPlane

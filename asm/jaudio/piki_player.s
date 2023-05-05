@@ -1,8 +1,7 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
 .balign 32, 0
-.global Jac_Orima_Walk
-Jac_Orima_Walk:
+.fn Jac_Orima_Walk, global
 /* 80018120 00015080  7C 08 02 A6 */	mflr r0
 /* 80018124 00015084  90 01 00 04 */	stw r0, 4(r1)
 /* 80018128 00015088  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -63,10 +62,10 @@ Jac_Orima_Walk:
 /* 800181F0 00015150  38 21 00 18 */	addi r1, r1, 0x18
 /* 800181F4 00015154  7C 08 03 A6 */	mtlr r0
 /* 800181F8 00015158  4E 80 00 20 */	blr 
+.endfn Jac_Orima_Walk
 
 .balign 32, 0
-.global Jac_Orima_Formation
-Jac_Orima_Formation:
+.fn Jac_Orima_Formation, global
 /* 80018200 00015160  7C 08 02 A6 */	mflr r0
 /* 80018204 00015164  90 01 00 04 */	stw r0, 4(r1)
 /* 80018208 00015168  94 21 FF D0 */	stwu r1, -0x30(r1)
@@ -179,10 +178,10 @@ Jac_Orima_Formation:
 /* 80018384 000152E4  38 21 00 30 */	addi r1, r1, 0x30
 /* 80018388 000152E8  7C 08 03 A6 */	mtlr r0
 /* 8001838C 000152EC  4E 80 00 20 */	blr 
+.endfn Jac_Orima_Formation
 
 .balign 32, 0
-.global Jac_PlayOrimaSe
-Jac_PlayOrimaSe:
+.fn Jac_PlayOrimaSe, global
 /* 800183A0 00015300  7C 08 02 A6 */	mflr r0
 /* 800183A4 00015304  90 01 00 04 */	stw r0, 4(r1)
 /* 800183A8 00015308  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -349,10 +348,10 @@ Jac_PlayOrimaSe:
 /* 800185E4 00015544  38 21 00 20 */	addi r1, r1, 0x20
 /* 800185E8 00015548  7C 08 03 A6 */	mtlr r0
 /* 800185EC 0001554C  4E 80 00 20 */	blr 
+.endfn Jac_PlayOrimaSe
 
 .balign 32, 0
-.global Jac_PauseOrimaSe__Fv
-Jac_PauseOrimaSe__Fv:
+.fn Jac_PauseOrimaSe__Fv, global
 /* 80018600 00015560  7C 08 02 A6 */	mflr r0
 /* 80018604 00015564  90 01 00 04 */	stw r0, 4(r1)
 /* 80018608 00015568  94 21 FF F8 */	stwu r1, -8(r1)
@@ -366,10 +365,10 @@ Jac_PauseOrimaSe__Fv:
 /* 80018624 00015584  38 21 00 08 */	addi r1, r1, 8
 /* 80018628 00015588  7C 08 03 A6 */	mtlr r0
 /* 8001862C 0001558C  4E 80 00 20 */	blr 
+.endfn Jac_PauseOrimaSe__Fv
 
 .balign 32, 0
-.global Jac_UnPauseOrimaSe__Fv
-Jac_UnPauseOrimaSe__Fv:
+.fn Jac_UnPauseOrimaSe__Fv, global
 /* 80018640 000155A0  7C 08 02 A6 */	mflr r0
 /* 80018644 000155A4  90 01 00 04 */	stw r0, 4(r1)
 /* 80018648 000155A8  94 21 FF F8 */	stwu r1, -8(r1)
@@ -383,10 +382,10 @@ Jac_UnPauseOrimaSe__Fv:
 /* 80018664 000155C4  38 21 00 08 */	addi r1, r1, 8
 /* 80018668 000155C8  7C 08 03 A6 */	mtlr r0
 /* 8001866C 000155CC  4E 80 00 20 */	blr 
+.endfn Jac_UnPauseOrimaSe__Fv
 
 .balign 32, 0
-.global Jac_StopOrimaSe
-Jac_StopOrimaSe:
+.fn Jac_StopOrimaSe, global
 /* 80018680 000155E0  7C 08 02 A6 */	mflr r0
 /* 80018684 000155E4  90 01 00 04 */	stw r0, 4(r1)
 /* 80018688 000155E8  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -437,10 +436,10 @@ Jac_StopOrimaSe:
 /* 8001872C 0001568C  38 21 00 18 */	addi r1, r1, 0x18
 /* 80018730 00015690  7C 08 03 A6 */	mtlr r0
 /* 80018734 00015694  4E 80 00 20 */	blr 
+.endfn Jac_StopOrimaSe
 
 .balign 32, 0
-.global Jac_Piki_Number
-Jac_Piki_Number:
+.fn Jac_Piki_Number, global
 /* 80018740 000156A0  28 03 00 64 */	cmplwi r3, 0x64
 /* 80018744 000156A4  41 80 00 10 */	blt .L_80018754
 /* 80018748 000156A8  38 00 00 1D */	li r0, 0x1d
@@ -475,10 +474,10 @@ Jac_Piki_Number:
 .L_800187B0:
 /* 800187B0 00015710  90 6D 2C DC */	stw r3, pikis@sda21(r13)
 /* 800187B4 00015714  4E 80 00 20 */	blr 
+.endfn Jac_Piki_Number
 
 .balign 32, 0
-.global Jac_UpdatePikiGaya__Fv
-Jac_UpdatePikiGaya__Fv:
+.fn Jac_UpdatePikiGaya__Fv, global
 /* 800187C0 00015720  7C 08 02 A6 */	mflr r0
 /* 800187C4 00015724  3C 60 80 36 */	lis r3, player_se$123@ha
 /* 800187C8 00015728  90 01 00 04 */	stw r0, 4(r1)
@@ -599,91 +598,126 @@ Jac_UpdatePikiGaya__Fv:
 /* 80018968 000158C8  38 21 00 18 */	addi r1, r1, 0x18
 /* 8001896C 000158CC  7C 08 03 A6 */	mtlr r0
 /* 80018970 000158D0  4E 80 00 20 */	blr 
+.endfn Jac_UpdatePikiGaya__Fv
 
 .section .sbss, "wa"
 .balign 8
-gaya_timer:
+.obj gaya_timer, local
 	.skip 4
-seqp$71:
+.endobj gaya_timer
+.obj seqp$71, local
 	.skip 4
-init$72:
+.endobj seqp$71
+.obj init$72, local
 	.skip 1
-status$74:
+.endobj init$72
+.obj status$74, local
 	.skip 1
-init$75:
+.endobj status$74
+.obj init$75, local
 	.skip 1
+.endobj init$75
 .balign 4
-stick_seqp:
+.obj stick_seqp, local
 	.skip 4
-flag$87:
+.endobj stick_seqp
+.obj flag$87, local
 	.skip 4
-init$88:
+.endobj flag$87
+.obj init$88, local
 	.skip 1
+.endobj init$88
 .balign 4
-orima_seqp:
+.obj orima_seqp, local
 	.skip 4
-status$120:
+.endobj orima_seqp
+.obj status$120, local
 	.skip 1
-init$121:
+.endobj status$120
+.obj init$121, local
 	.skip 1
+.endobj init$121
 .balign 4
-cmdqueue_reset$124:
+.obj cmdqueue_reset$124, local
 	.skip 4
-init$125:
+.endobj cmdqueue_reset$124
+.obj init$125, local
 	.skip 1
+.endobj init$125
 .balign 4
-flyready$135:
+.obj flyready$135, local
 	.skip 4
-init$136:
+.endobj flyready$135
+.obj init$136, local
 	.skip 1
+.endobj init$136
 .balign 2
-old1$151:
+.obj old1$151, local
 	.skip 2
-init$152:
+.endobj old1$151
+.obj init$152, local
 	.skip 1
+.endobj init$152
 .balign 2
-old2$154:
+.obj old2$154, local
 	.skip 2
-init$155:
+.endobj old2$154
+.obj init$155, local
 	.skip 1
+.endobj init$155
 .balign 2
-old3$157:
+.obj old3$157, local
 	.skip 2
-init$158:
+.endobj old3$157
+.obj init$158, local
 	.skip 1
+.endobj init$158
 .balign 4
-seqp$186:
+.obj seqp$186, local
 	.skip 4
-init$187:
+.endobj seqp$186
+.obj init$187, local
 	.skip 1
+.endobj init$187
 .balign 4
-cmdqueue_reset$190:
+.obj cmdqueue_reset$190, local
 	.skip 4
-init$191:
+.endobj cmdqueue_reset$190
+.obj init$191, local
 	.skip 1
+.endobj init$191
 .balign 4
-pikis:
+.obj pikis, local
 	.skip 4
-seqp$215:
+.endobj pikis
+.obj seqp$215, local
 	.skip 4
-init$216:
+.endobj seqp$215
+.obj init$216, local
 	.skip 4
-init$217:
+.endobj init$216
+.obj init$217, local
 	.skip 1
+.endobj init$217
 .balign 4
-volume$220:
+.obj volume$220, local
 	.skip 4
-init$221:
+.endobj volume$220
+.obj init$221, local
 	.skip 1
+.endobj init$221
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803E83B8:
-	.4byte 0x43300000
-	.4byte 0x80000000
-lbl_803E83C0:
+.obj lbl_803E83B8, local
+	.8byte 0x4330000080000000
+.endobj lbl_803E83B8
+.obj lbl_803E83C0, local
 	.float 0.0
-lbl_803E83C4:
+.endobj lbl_803E83C0
+.obj lbl_803E83C4, local
 	.float 0.05
-lbl_803E83C8:
+.endobj lbl_803E83C4
+.obj lbl_803E83C8, local
 	.float 1.0
+.endobj lbl_803E83C8

@@ -1,8 +1,7 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
 .balign 32, 0
-.global Jac_SendStreamData__FPUcUl
-Jac_SendStreamData__FPUcUl:
+.fn Jac_SendStreamData__FPUcUl, global
 /* 8001DA80 0001A9E0  80 AD 81 38 */	lwz r5, buf@sda21(r13)
 /* 8001DA84 0001A9E4  80 05 00 18 */	lwz r0, 0x18(r5)
 /* 8001DA88 0001A9E8  7C 00 20 40 */	cmplw r0, r4
@@ -43,10 +42,10 @@ Jac_SendStreamData__FPUcUl:
 /* 8001DB04 0001AA64  7C 00 22 14 */	add r0, r0, r4
 /* 8001DB08 0001AA68  90 05 00 14 */	stw r0, 0x14(r5)
 /* 8001DB0C 0001AA6C  4E 80 00 20 */	blr 
+.endfn Jac_SendStreamData__FPUcUl
 
 .balign 32, 0
-.global Jac_CheckStreamFree__FUl
-Jac_CheckStreamFree__FUl:
+.fn Jac_CheckStreamFree__FUl, global
 /* 8001DB20 0001AA80  80 8D 81 38 */	lwz r4, buf@sda21(r13)
 /* 8001DB24 0001AA84  80 04 00 18 */	lwz r0, 0x18(r4)
 /* 8001DB28 0001AA88  7C 00 18 40 */	cmplw r0, r3
@@ -56,10 +55,10 @@ Jac_CheckStreamFree__FUl:
 .L_8001DB38:
 /* 8001DB38 0001AA98  38 60 00 00 */	li r3, 0
 /* 8001DB3C 0001AA9C  4E 80 00 20 */	blr 
+.endfn Jac_CheckStreamFree__FUl
 
 .balign 32, 0
-.global Jac_CheckStreamRemain__FUl
-Jac_CheckStreamRemain__FUl:
+.fn Jac_CheckStreamRemain__FUl, global
 /* 8001DB40 0001AAA0  80 8D 81 38 */	lwz r4, buf@sda21(r13)
 /* 8001DB44 0001AAA4  80 04 00 14 */	lwz r0, 0x14(r4)
 /* 8001DB48 0001AAA8  7C 00 18 40 */	cmplw r0, r3
@@ -69,10 +68,10 @@ Jac_CheckStreamRemain__FUl:
 .L_8001DB58:
 /* 8001DB58 0001AAB8  38 60 00 01 */	li r3, 1
 /* 8001DB5C 0001AABC  4E 80 00 20 */	blr 
+.endfn Jac_CheckStreamRemain__FUl
 
 .balign 32, 0
-.global Jac_GetStreamData__FPUcUl
-Jac_GetStreamData__FPUcUl:
+.fn Jac_GetStreamData__FPUcUl, global
 /* 8001DB60 0001AAC0  80 CD 81 38 */	lwz r6, buf@sda21(r13)
 /* 8001DB64 0001AAC4  80 06 00 00 */	lwz r0, 0(r6)
 /* 8001DB68 0001AAC8  2C 00 00 00 */	cmpwi r0, 0
@@ -127,10 +126,10 @@ Jac_GetStreamData__FPUcUl:
 /* 8001DC14 0001AB74  7C 00 22 14 */	add r0, r0, r4
 /* 8001DC18 0001AB78  90 05 00 18 */	stw r0, 0x18(r5)
 /* 8001DC1C 0001AB7C  4E 80 00 20 */	blr 
+.endfn Jac_GetStreamData__FPUcUl
 
 .balign 32, 0
-.global Jac_InitStreamData__FPUcUl
-Jac_InitStreamData__FPUcUl:
+.fn Jac_InitStreamData__FPUcUl, global
 /* 8001DC20 0001AB80  80 CD 81 38 */	lwz r6, buf@sda21(r13)
 /* 8001DC24 0001AB84  38 A0 00 00 */	li r5, 0
 /* 8001DC28 0001AB88  38 00 00 01 */	li r0, 1
@@ -148,8 +147,10 @@ Jac_InitStreamData__FPUcUl:
 /* 8001DC58 0001ABB8  80 6D 81 38 */	lwz r3, buf@sda21(r13)
 /* 8001DC5C 0001ABBC  90 03 00 00 */	stw r0, 0(r3)
 /* 8001DC60 0001ABC0  4E 80 00 20 */	blr 
+.endfn Jac_InitStreamData__FPUcUl
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-buf:
+.obj buf, local
 	.4byte interleavebuf
+.endobj buf

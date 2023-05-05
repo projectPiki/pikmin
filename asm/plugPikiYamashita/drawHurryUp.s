@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global __ct__Q23zen11DrawHurryUpFv
-__ct__Q23zen11DrawHurryUpFv:
+.fn __ct__Q23zen11DrawHurryUpFv, global
 /* 801C049C 001BD3FC  7C 08 02 A6 */	mflr r0
 /* 801C04A0 001BD400  38 80 00 00 */	li r4, 0
 /* 801C04A4 001BD404  90 01 00 04 */	stw r0, 4(r1)
@@ -197,9 +196,9 @@ __ct__Q23zen11DrawHurryUpFv:
 /* 801C0798 001BD6F8  38 21 00 A8 */	addi r1, r1, 0xa8
 /* 801C079C 001BD6FC  7C 08 03 A6 */	mtlr r0
 /* 801C07A0 001BD700  4E 80 00 20 */	blr 
+.endfn __ct__Q23zen11DrawHurryUpFv
 
-.global initPanes__Q23zen11DrawHurryUpFv
-initPanes__Q23zen11DrawHurryUpFv:
+.fn initPanes__Q23zen11DrawHurryUpFv, global
 /* 801C07A4 001BD704  7C 08 02 A6 */	mflr r0
 /* 801C07A8 001BD708  90 01 00 04 */	stw r0, 4(r1)
 /* 801C07AC 001BD70C  94 21 FF 88 */	stwu r1, -0x78(r1)
@@ -268,9 +267,9 @@ initPanes__Q23zen11DrawHurryUpFv:
 /* 801C08A8 001BD808  38 21 00 78 */	addi r1, r1, 0x78
 /* 801C08AC 001BD80C  7C 08 03 A6 */	mtlr r0
 /* 801C08B0 001BD810  4E 80 00 20 */	blr 
+.endfn initPanes__Q23zen11DrawHurryUpFv
 
-.global start__Q23zen11DrawHurryUpFQ33zen11DrawHurryUp15messageTypeFlag
-start__Q23zen11DrawHurryUpFQ33zen11DrawHurryUp15messageTypeFlag:
+.fn start__Q23zen11DrawHurryUpFQ33zen11DrawHurryUp15messageTypeFlag, global
 /* 801C08B4 001BD814  7C 08 02 A6 */	mflr r0
 /* 801C08B8 001BD818  90 01 00 04 */	stw r0, 4(r1)
 /* 801C08BC 001BD81C  38 00 00 01 */	li r0, 1
@@ -346,9 +345,9 @@ start__Q23zen11DrawHurryUpFQ33zen11DrawHurryUp15messageTypeFlag:
 /* 801C09D4 001BD934  38 21 00 80 */	addi r1, r1, 0x80
 /* 801C09D8 001BD938  7C 08 03 A6 */	mtlr r0
 /* 801C09DC 001BD93C  4E 80 00 20 */	blr 
+.endfn start__Q23zen11DrawHurryUpFQ33zen11DrawHurryUp15messageTypeFlag
 
-.global startStatus__Q23zen11DrawHurryUpFv
-startStatus__Q23zen11DrawHurryUpFv:
+.fn startStatus__Q23zen11DrawHurryUpFv, global
 /* 801C09E0 001BD940  7C 08 02 A6 */	mflr r0
 /* 801C09E4 001BD944  90 01 00 04 */	stw r0, 4(r1)
 /* 801C09E8 001BD948  94 21 FF B0 */	stwu r1, -0x50(r1)
@@ -463,9 +462,9 @@ startStatus__Q23zen11DrawHurryUpFv:
 /* 801C0B80 001BDAE0  38 21 00 50 */	addi r1, r1, 0x50
 /* 801C0B84 001BDAE4  7C 08 03 A6 */	mtlr r0
 /* 801C0B88 001BDAE8  4E 80 00 20 */	blr 
+.endfn startStatus__Q23zen11DrawHurryUpFv
 
-.global endStatus__Q23zen11DrawHurryUpFv
-endStatus__Q23zen11DrawHurryUpFv:
+.fn endStatus__Q23zen11DrawHurryUpFv, global
 /* 801C0B8C 001BDAEC  7C 08 02 A6 */	mflr r0
 /* 801C0B90 001BDAF0  90 01 00 04 */	stw r0, 4(r1)
 /* 801C0B94 001BDAF4  94 21 FF A8 */	stwu r1, -0x58(r1)
@@ -596,9 +595,9 @@ endStatus__Q23zen11DrawHurryUpFv:
 /* 801C0D78 001BDCD8  38 21 00 58 */	addi r1, r1, 0x58
 /* 801C0D7C 001BDCDC  7C 08 03 A6 */	mtlr r0
 /* 801C0D80 001BDCE0  4E 80 00 20 */	blr 
+.endfn endStatus__Q23zen11DrawHurryUpFv
 
-.global update__Q23zen11DrawHurryUpFv
-update__Q23zen11DrawHurryUpFv:
+.fn update__Q23zen11DrawHurryUpFv, global
 /* 801C0D84 001BDCE4  7C 08 02 A6 */	mflr r0
 /* 801C0D88 001BDCE8  90 01 00 04 */	stw r0, 4(r1)
 /* 801C0D8C 001BDCEC  94 21 FF 78 */	stwu r1, -0x88(r1)
@@ -786,9 +785,9 @@ update__Q23zen11DrawHurryUpFv:
 /* 801C1038 001BDF98  38 21 00 88 */	addi r1, r1, 0x88
 /* 801C103C 001BDF9C  7C 08 03 A6 */	mtlr r0
 /* 801C1040 001BDFA0  4E 80 00 20 */	blr 
+.endfn update__Q23zen11DrawHurryUpFv
 
-.global draw__Q23zen11DrawHurryUpFR8Graphics
-draw__Q23zen11DrawHurryUpFR8Graphics:
+.fn draw__Q23zen11DrawHurryUpFR8Graphics, global
 /* 801C1044 001BDFA4  7C 08 02 A6 */	mflr r0
 /* 801C1048 001BDFA8  90 01 00 04 */	stw r0, 4(r1)
 /* 801C104C 001BDFAC  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -813,59 +812,80 @@ draw__Q23zen11DrawHurryUpFR8Graphics:
 /* 801C1094 001BDFF4  38 21 00 18 */	addi r1, r1, 0x18
 /* 801C1098 001BDFF8  7C 08 03 A6 */	mtlr r0
 /* 801C109C 001BDFFC  4E 80 00 20 */	blr 
+.endfn draw__Q23zen11DrawHurryUpFR8Graphics
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802E1590:
+.obj lbl_802E1590, local
 	.asciz "screen/blo/sund.blo"
-.balign 4
+.endobj lbl_802E1590
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-lbl_803E6840:
-	.4byte 0x00000000
-lbl_803E6844:
-	.4byte 0x00000000
-lbl_803E6848:
-	.4byte 0x00000000
+.obj lbl_803E6840, local
+	.float 0.0
+.endobj lbl_803E6840
+.obj lbl_803E6844, local
+	.float 0.0
+.endobj lbl_803E6844
+.obj lbl_803E6848, local
+	.float 0.0
+.endobj lbl_803E6848
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803EBB00:
-	.4byte 0x00000000
-lbl_803EBB04:
-	.4byte 0x41F00000
-lbl_803EBB08:
-	.4byte 0x3F800000
-lbl_803EBB0C:
-	.4byte 0x459C4000
-lbl_803EBB10:
-	.4byte 0x3F400000
+.obj lbl_803EBB00, local
+	.float 0.0
+.endobj lbl_803EBB00
+.obj lbl_803EBB04, local
+	.float 30.0
+.endobj lbl_803EBB04
+.obj lbl_803EBB08, local
+	.float 1.0
+.endobj lbl_803EBB08
+.obj lbl_803EBB0C, local
+	.float 5000.0
+.endobj lbl_803EBB0C
+.obj lbl_803EBB10, local
+	.float 0.75
+.endobj lbl_803EBB10
 .balign 8
-lbl_803EBB18:
-	.4byte 0x43300000
-	.4byte 0x80000000
-lbl_803EBB20:
-	.4byte 0x3F000000
-lbl_803EBB24:
-	.4byte 0x442F0000
-lbl_803EBB28:
-	.4byte 0x43FF0000
-lbl_803EBB2C:
-	.4byte 0x3DCCCCCD
-lbl_803EBB30:
-	.4byte 0x40490FDB
-lbl_803EBB34:
-	.4byte 0x40C90FDB
-lbl_803EBB38:
-	.4byte 0x42480000
-lbl_803EBB3C:
-	.4byte 0xC3480000
-lbl_803EBB40:
-	.4byte 0x40200000
-lbl_803EBB44:
-	.4byte 0x42FF0000
-lbl_803EBB48:
-	.4byte 0x41A00000
-lbl_803EBB4C:
-	.4byte 0xC47A0000
+.obj lbl_803EBB18, local
+	.8byte 0x4330000080000000
+.endobj lbl_803EBB18
+.obj lbl_803EBB20, local
+	.float 0.5
+.endobj lbl_803EBB20
+.obj lbl_803EBB24, local
+	.float 700.0
+.endobj lbl_803EBB24
+.obj lbl_803EBB28, local
+	.float 510.0
+.endobj lbl_803EBB28
+.obj lbl_803EBB2C, local
+	.float 0.1
+.endobj lbl_803EBB2C
+.obj lbl_803EBB30, local
+	.float 3.1415927
+.endobj lbl_803EBB30
+.obj lbl_803EBB34, local
+	.float 6.2831855
+.endobj lbl_803EBB34
+.obj lbl_803EBB38, local
+	.float 50.0
+.endobj lbl_803EBB38
+.obj lbl_803EBB3C, local
+	.float -200.0
+.endobj lbl_803EBB3C
+.obj lbl_803EBB40, local
+	.float 2.5
+.endobj lbl_803EBB40
+.obj lbl_803EBB44, local
+	.float 127.5
+.endobj lbl_803EBB44
+.obj lbl_803EBB48, local
+	.float 20.0
+.endobj lbl_803EBB48
+.obj lbl_803EBB4C, local
+	.float -1000.0
+.endobj lbl_803EBB4C
