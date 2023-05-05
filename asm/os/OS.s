@@ -596,7 +596,6 @@ lbl_802E7418:
 .balign 4
 lbl_802E7448:
 	.asciz "Exceptions initialized...\n"
-.balign 4
 
 .section .sbss, "wa"
 .balign 8

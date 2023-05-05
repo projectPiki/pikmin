@@ -401,4 +401,3 @@ lbl_802E76CC:
 .balign 4
 lbl_802E76E4:
 	.asciz "Locked cache machine check handler installed\n"
-.balign 4

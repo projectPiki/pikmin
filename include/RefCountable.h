@@ -9,8 +9,8 @@ struct RefCountable {
 	void clearCnt();
 	void addCnt();
 	void subCnt();
-	virtual void addCntCallback();
-	virtual void subCntCallback();
+	virtual void addCntCallback() {};
+	virtual void subCntCallback() {};
 
 	int m_count; // _04
 };

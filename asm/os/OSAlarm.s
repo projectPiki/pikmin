@@ -500,6 +500,6 @@ DecrementerExceptionHandler:
 
 .section .sbss, "wa"
 .balign 8
-.global AlarmQueue
-AlarmQueue:
+.obj AlarmQueue, local
 	.skip 0x8
+.endobj AlarmQueue

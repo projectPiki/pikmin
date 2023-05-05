@@ -809,33 +809,45 @@ fx_config$180: # local object
 
 .section .sbss, "wa"
 .balign 8
-.global queue_list
-queue_list:
+.obj queue_list, global
 	.skip 4
-cmdqueue_reset:
+.endobj queue_list
+.obj cmdqueue_reset, local
 	.skip 4
-countdown_count:
+.endobj cmdqueue_reset
+.obj countdown_count, local
 	.skip 4
-pausemode:
+.endobj countdown_count
+.obj pausemode, local
 	.skip 4
-container:
+.endobj pausemode
+.obj container, local
 	.skip 4
-sys_voldown_flag:
+.endobj container
+.obj sys_voldown_flag, local
 	.skip 4
-boot_ok:
+.endobj sys_voldown_flag
+.obj boot_ok, local
 	.skip 4
-count:
+.endobj boot_ok
+.obj count, local
 	.skip 4
-lend_buffer:
+.endobj count
+.obj lend_buffer, local
 	.skip 4
+.endobj lend_buffer
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803E8388:
+.obj lbl_803E8388, local
 	.float 1.0
-lbl_803E838C:
+.endobj lbl_803E8388
+.obj lbl_803E838C, local
 	.float 0.15
-lbl_803E8390:
+.endobj lbl_803E838C
+.obj lbl_803E8390, local
 	.float 1.1
-lbl_803E8394:
+.endobj lbl_803E8390
+.obj lbl_803E8394, local
 	.float 2.0
+.endobj lbl_803E8394

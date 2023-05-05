@@ -2019,14 +2019,18 @@ lbl_802E83A8:
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-lbl_803E7718:
+.obj lbl_803E7718, local
 	.byte 0
+.endobj lbl_803E7718
 
 .section .sbss, "wa"
 .balign 8
-RunQueueBits:
+.obj RunQueueBits, local
 	.skip 4
-RunQueueHint:
+.endobj RunQueueBits
+.obj RunQueueHint, local
 	.skip 4
-Reschedule:
+.endobj RunQueueHint
+.obj Reschedule, local
 	.skip 4
+.endobj Reschedule

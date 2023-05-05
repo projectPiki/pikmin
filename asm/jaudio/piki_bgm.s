@@ -953,18 +953,20 @@ Jac_ExitBossMode:
 
 .section .rodata, "a"  # 0x80221FE0 - 0x80222DC0
 .balign 8
-lbl_80222278:
+.obj lbl_80222278, local
 	.4byte 0x00
 	.4byte 0x01
 	.4byte 0x0B
 	.4byte 0x0D
 	.4byte 0x10
-lbl_8022228C:
+.endobj lbl_80222278
+.obj lbl_8022228C, local
 	.4byte 0
 	.4byte 1
 	.4byte 0xFFFFFFFF
 	.4byte 2
 	.4byte 0xFFFFFFFF
+.endobj lbl_8022228C
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
@@ -1120,23 +1122,29 @@ last_bgm_level:
 
 .section .sbss, "wa"
 .balign 8
-lastside:
+.obj lastside, local
 	.skip 1
+.endobj lastside
 .balign 4
-last_crossmode:
+.obj last_crossmode, local
 	.skip 4
-call_counter:
+.endobj last_crossmode
+.obj call_counter, local
 	.skip 4
-bgm_semaphore:
+.endobj call_counter
+.obj bgm_semaphore, local
 	.skip 4
+.endobj bgm_semaphore
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803E83D0:
+.obj lbl_803E83D0, local
 	.float 0.0
-lbl_803E83D4:
+.endobj lbl_803E83D0
+.obj lbl_803E83D4, local
 	.float 1.2
+.endobj lbl_803E83D4
 .balign 8
-lbl_803E83D8:
-	.4byte 0x43300000
-	.4byte 0x00000000
+.obj lbl_803E83D8, local
+	.8byte 0x4330000000000000
+.endobj lbl_803E83D8

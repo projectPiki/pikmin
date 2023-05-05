@@ -220,7 +220,7 @@ KANDO :=\
 	$(BUILD_DIR)/asm/plugPikiKando/generatorCache.o\
 	$(BUILD_DIR)/asm/plugPikiKando/objectMgr.o\
 	$(BUILD_DIR)/asm/plugPikiKando/searchSystem.o\
-	$(BUILD_DIR)/asm/plugPikiKando/smartPtr.o\
+	$(BUILD_DIR)/src/plugPikiKando/smartPtr.o\
 	$(BUILD_DIR)/asm/plugPikiKando/itemGem.o\
 	$(BUILD_DIR)/asm/plugPikiKando/weedsItem.o\
 	$(BUILD_DIR)/asm/plugPikiKando/kusaItem.o\

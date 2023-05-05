@@ -1814,23 +1814,29 @@ __vt__22PomGenOpenStarCallBack:
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-lbl_803E5370:
+.obj lbl_803E5370, local
 	.asciz "PomAi"
+.endobj lbl_803E5370
 .balign 4
-lbl_803E5378:
+.obj lbl_803E5378, local
 	.float 800.0
-__RTTI__19PaniAnimKeyListener:
+.endobj lbl_803E5378
+.obj __RTTI__19PaniAnimKeyListener, local
 	.4byte lbl_802D0D74
-	.4byte 0x00000000
-__RTTI__5PomAi:
+	.4byte 0
+.endobj __RTTI__19PaniAnimKeyListener
+.obj __RTTI__5PomAi, local
 	.4byte lbl_803E5370
 	.4byte lbl_802D0D88
-"__RTTI__Q23zen37CallBack1<PQ23zen17particleGenerator>":
+.endobj __RTTI__5PomAi
+.obj "__RTTI__Q23zen37CallBack1<PQ23zen17particleGenerator>", local
 	.4byte lbl_802D0DB8
 	.4byte 0
-__RTTI__22PomGenOpenStarCallBack:
+.endobj "__RTTI__Q23zen37CallBack1<PQ23zen17particleGenerator>"
+.obj __RTTI__22PomGenOpenStarCallBack, local
 	.4byte lbl_802D0DA0
 	.4byte lbl_802D0DE4
+.endobj __RTTI__22PomGenOpenStarCallBack
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8

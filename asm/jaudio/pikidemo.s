@@ -2145,13 +2145,18 @@ demo_end_delay:
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803E83E8:
+.obj lbl_803E83E8, local
 	.float 0.01
-lbl_803E83EC:
+.endobj lbl_803E83E8
+.obj lbl_803E83EC, local
 	.float 0.5
-lbl_803E83F0:
+.endobj lbl_803E83EC
+.obj lbl_803E83F0, local
 	.float 0.0
-lbl_803E83F4:
+.endobj lbl_803E83F0
+.obj lbl_803E83F4, local
 	.float 1.0
-lbl_803E83F8:
+.endobj lbl_803E83F4
+.obj lbl_803E83F8, local
 	.float 0.1
+.endobj lbl_803E83F8

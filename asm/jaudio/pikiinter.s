@@ -1249,26 +1249,36 @@ EVENT_DIST_SCALE:
 
 .section .sbss, "wa"
 .balign 8
-CURRENT_TIME:
+.obj CURRENT_TIME, local
 	.skip 4
-jac_debug_multi_entry:
+.endobj CURRENT_TIME
+.obj jac_debug_multi_entry, local
 	.skip 4
-jac_debug_multi_cancel:
+.endobj jac_debug_multi_entry
+.obj jac_debug_multi_cancel, local
 	.skip 4
+.endobj jac_debug_multi_cancel
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803E8398:
+.obj lbl_803E8398, local
 	.float 1.0
-lbl_803E839C: #pi but rounded
+.endobj lbl_803E8398
+.obj lbl_803E839C, local # pi but rounded
 	.float 3.1416
-lbl_803E83A0: #mediocre negative tau
+.endobj lbl_803E839C
+.obj lbl_803E83A0, local # mediocre negative tau
 	.float -6.2832
-lbl_803E83A4:
+.endobj lbl_803E83A0
+.obj lbl_803E83A4, local
 	.float 0.5
-lbl_803E83A8:
+.endobj lbl_803E83A4
+.obj lbl_803E83A8, local
 	.float 2.0
-lbl_803E83AC:
+.endobj lbl_803E83A8
+.obj lbl_803E83AC, local
 	.float 0.0
-lbl_803E83B0:
+.endobj lbl_803E83AC
+.obj lbl_803E83B0, local
 	.float 0.8
+.endobj lbl_803E83B0

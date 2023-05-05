@@ -2042,7 +2042,7 @@ StreamCheckAudioFormat:
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-filter_table:
+.obj filter_table, local
 	.4byte 0x00000000
 	.4byte 0x08000000
 	.4byte 0x00000800
@@ -2059,8 +2059,8 @@ filter_table:
 	.4byte 0xFC000400
 	.4byte 0xFC000000
 	.4byte 0xF8000000
-.global table4
-table4:
+.endobj filter_table
+.obj table4, global
 	.4byte 0x00000001
 	.4byte 0x00020003
 	.4byte 0x00040005
@@ -2069,26 +2069,32 @@ table4:
 	.4byte 0xFFFAFFFB
 	.4byte 0xFFFCFFFD
 	.4byte 0xFFFEFFFF
+.endobj table4
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-copy:
+.obj copy, local
 	.4byte copyinfo
+.endobj copy
 
 .section .sbss, "wa"
 .balign 8
-default_streamsync_call:
+.obj default_streamsync_call, local
 	.skip 4
+.endobj default_streamsync_call
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803E8408:
+.obj lbl_803E8408, local
 	.float 1.0
-lbl_803E840C:
+.endobj lbl_803E8408
+.obj lbl_803E840C, local
 	.float 4096.0
+.endobj lbl_803E840C
 .balign 8
-lbl_803E8410:
-	.4byte 0x43300000
-	.4byte 0x00000000
-lbl_803E8418:
+.obj lbl_803E8410, local
+	.8byte 0x4330000000000000
+.endobj lbl_803E8410
+.obj lbl_803E8418, local
 	.float 0.499
+.endobj lbl_803E8418
