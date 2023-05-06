@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global createInstance__9KeyConfigFv
-createInstance__9KeyConfigFv:
+.fn createInstance__9KeyConfigFv, global
 /* 800846C0 00081620  7C 08 02 A6 */	mflr r0
 /* 800846C4 00081624  90 01 00 04 */	stw r0, 4(r1)
 /* 800846C8 00081628  94 21 FF F0 */	stwu r1, -0x10(r1)
@@ -23,9 +22,9 @@ createInstance__9KeyConfigFv:
 /* 80084700 00081660  38 21 00 10 */	addi r1, r1, 0x10
 /* 80084704 00081664  7C 08 03 A6 */	mtlr r0
 /* 80084708 00081668  4E 80 00 20 */	blr 
+.endfn createInstance__9KeyConfigFv
 
-.global __ct__9KeyConfigFv
-__ct__9KeyConfigFv:
+.fn __ct__9KeyConfigFv, global
 /* 8008470C 0008166C  7C 08 02 A6 */	mflr r0
 /* 80084710 00081670  3C 80 80 22 */	lis r4, __vt__5ANode@ha
 /* 80084714 00081674  90 01 00 04 */	stw r0, 4(r1)
@@ -145,9 +144,9 @@ __ct__9KeyConfigFv:
 /* 800848DC 0008183C  38 21 00 20 */	addi r1, r1, 0x20
 /* 800848E0 00081840  7C 08 03 A6 */	mtlr r0
 /* 800848E4 00081844  4E 80 00 20 */	blr 
+.endfn __ct__9KeyConfigFv
 
-.global read__9KeyConfigFR18RandomAccessStream
-read__9KeyConfigFR18RandomAccessStream:
+.fn read__9KeyConfigFR18RandomAccessStream, global
 /* 800848E8 00081848  7C 08 02 A6 */	mflr r0
 /* 800848EC 0008184C  90 01 00 04 */	stw r0, 4(r1)
 /* 800848F0 00081850  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -196,9 +195,9 @@ read__9KeyConfigFR18RandomAccessStream:
 /* 8008499C 000818FC  38 21 00 18 */	addi r1, r1, 0x18
 /* 800849A0 00081900  7C 08 03 A6 */	mtlr r0
 /* 800849A4 00081904  4E 80 00 20 */	blr 
+.endfn read__9KeyConfigFR18RandomAccessStream
 
-.global read__Q29KeyConfig3KeyFR18RandomAccessStream
-read__Q29KeyConfig3KeyFR18RandomAccessStream:
+.fn read__Q29KeyConfig3KeyFR18RandomAccessStream, global
 /* 800849A8 00081908  7C 08 02 A6 */	mflr r0
 /* 800849AC 0008190C  90 01 00 04 */	stw r0, 4(r1)
 /* 800849B0 00081910  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -215,55 +214,67 @@ read__Q29KeyConfig3KeyFR18RandomAccessStream:
 /* 800849DC 0008193C  38 21 00 18 */	addi r1, r1, 0x18
 /* 800849E0 00081940  7C 08 03 A6 */	mtlr r0
 /* 800849E4 00081944  4E 80 00 20 */	blr 
+.endfn read__Q29KeyConfig3KeyFR18RandomAccessStream
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802AE7E0:
+.obj lbl_802AE7E0, local
 	.asciz "keyConfig.cpp"
+.endobj lbl_802AE7E0
 .balign 4
-lbl_802AE7F0:
+.obj lbl_802AE7F0, local
 	.asciz "keyConfig"
+.endobj lbl_802AE7F0
 .balign 4
-lbl_802AE7FC: # Shift-JIS
+.obj lbl_802AE7FC, local # Shift-JIS
 	.4byte 0x8F578D87
 	.4byte 0x834A815B
 	.4byte 0x835C838B
-	.4byte 0x00000000
-lbl_802AE80C: # Shift-JIS
+	.byte 0
+.endobj lbl_802AE7FC
+.balign 4
+.obj lbl_802AE80C, local # Shift-JIS
 	.4byte 0x8341835E
 	.4byte 0x8362834E
-	.4byte 0x00000000
-lbl_802AE818: # Shift-JIS
+	.byte 0
+.endobj lbl_802AE80C
+.balign 4
+.obj lbl_802AE818, local # Shift-JIS
 	.4byte 0x8381836A
 	.4byte 0x8385815B
-	.4byte 0x00000000
+	.byte 0
+.endobj lbl_802AE818
 .balign 4
-lbl_802AE824:
+.obj lbl_802AE824, local
 	.asciz "KeyConfig::Key"
+.endobj lbl_802AE824
 .balign 4
-lbl_802AE834:
+.obj lbl_802AE834, local
 	.asciz "CoreNode"
+.endobj lbl_802AE834
 .balign 4
-lbl_802AE840:
+.obj lbl_802AE840, local
 	.4byte __RTTI__5ANode
-	.4byte 0x00000000
-	.4byte 0x00000000
-lbl_802AE84C:
+	.4byte 0
+	.4byte 0
+.endobj lbl_802AE840
+.obj lbl_802AE84C, local
 	.4byte __RTTI__5ANode
-	.4byte 0x00000000
+	.4byte 0
 	.4byte __RTTI__8CoreNode
-	.4byte 0x00000000
-	.4byte 0x00000000
-lbl_802AE860:
+	.4byte 0
+	.4byte 0
+.endobj lbl_802AE84C
+.obj lbl_802AE860, local
 	.4byte __RTTI__5ANode
-	.4byte 0x00000000
+	.4byte 0
 	.4byte __RTTI__8CoreNode
-	.4byte 0x00000000
+	.4byte 0
 	.4byte __RTTI__4Node
-	.4byte 0x00000000
-	.4byte 0x00000000
-.global __vt__Q29KeyConfig3Key
-__vt__Q29KeyConfig3Key:
+	.4byte 0
+	.4byte 0
+.endobj lbl_802AE860
+.obj __vt__Q29KeyConfig3Key, global
 	.4byte __RTTI__Q29KeyConfig3Key
 	.4byte 0
 	.4byte getAgeNodeType__5ANodeFv
@@ -276,11 +287,13 @@ __vt__Q29KeyConfig3Key:
 	.4byte concat__4NodeFR3SRT
 	.4byte concat__4NodeFR8Matrix4f
 	.4byte getModelMatrix__4NodeFv
+.endobj __vt__Q29KeyConfig3Key
 .balign 4
-lbl_802AE8AC:
+.obj lbl_802AE8AC, local
 	.asciz "KeyConfig"
+.endobj lbl_802AE8AC
 .balign 4
-lbl_802AE8B8:
+.obj lbl_802AE8B8, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte __RTTI__8CoreNode
@@ -288,8 +301,8 @@ lbl_802AE8B8:
 	.4byte __RTTI__4Node
 	.4byte 0
 	.4byte 0
-.global __vt__9KeyConfig
-__vt__9KeyConfig:
+.endobj lbl_802AE8B8
+.obj __vt__9KeyConfig, global
 	.4byte __RTTI__9KeyConfig
 	.4byte 0
 	.4byte getAgeNodeType__5ANodeFv
@@ -302,6 +315,7 @@ __vt__9KeyConfig:
 	.4byte concat__4NodeFR3SRT
 	.4byte concat__4NodeFR8Matrix4f
 	.4byte getModelMatrix__4NodeFv
+.endobj __vt__9KeyConfig
 	.4byte 0
 	.4byte 0
 	.4byte 0
@@ -312,50 +326,65 @@ __vt__9KeyConfig:
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-lbl_803DEDA0:
+.obj lbl_803DEDA0, local
 	.asciz "<Node>"
+.endobj lbl_803DEDA0
 .balign 4
-lbl_803DEDA8: # Shift-JIS
+.obj lbl_803DEDA8, local # Shift-JIS
 	.4byte 0x938A82B0
-	.4byte 0x00000000
-lbl_803DEDB0: # Shift-JIS
+	.byte 0
+.endobj lbl_803DEDA8
+.balign 4
+.obj lbl_803DEDB0, local # Shift-JIS
 	.4byte 0x94B282AB
-	.4byte 0x00000000
-lbl_803DEDB8: # Shift-JIS
+	.byte 0
+.endobj lbl_803DEDB0
+.balign 4
+.obj lbl_803DEDB8, local # Shift-JIS
 	.4byte 0x89F08E55
-	.4byte 0x00000000
+	.byte 0
+.endobj lbl_803DEDB8
 .balign 4
-lbl_803DEDC0:
+.obj lbl_803DEDC0, local
 	.asciz "parms/"
+.endobj lbl_803DEDC0
 .balign 4
-lbl_803DEDC8:
+.obj lbl_803DEDC8, local
 	.asciz "key.bin"
+.endobj lbl_803DEDC8
 .balign 4
-lbl_803DEDD0:
+.obj lbl_803DEDD0, local
 	.asciz "ANode"
+.endobj lbl_803DEDD0
 .balign 4
-__RTTI__5ANode:
+.obj __RTTI__5ANode, local
 	.4byte lbl_803DEDD0
 	.4byte 0
-__RTTI__8CoreNode:
+.endobj __RTTI__5ANode
+.obj __RTTI__8CoreNode, local
 	.4byte lbl_802AE834
 	.4byte lbl_802AE840
+.endobj __RTTI__8CoreNode
 .balign 4
-lbl_803DEDE8:
+.obj lbl_803DEDE8, local
 	.asciz "Node"
+.endobj lbl_803DEDE8
 .balign 4
-__RTTI__4Node:
+.obj __RTTI__4Node, local
 	.4byte lbl_803DEDE8
 	.4byte lbl_802AE84C
-__RTTI__Q29KeyConfig3Key:
+.endobj __RTTI__4Node
+.obj __RTTI__Q29KeyConfig3Key, local
 	.4byte lbl_802AE824
 	.4byte lbl_802AE860
-__RTTI__9KeyConfig:
+.endobj __RTTI__Q29KeyConfig3Key
+.obj __RTTI__9KeyConfig, local
 	.4byte lbl_802AE8AC
 	.4byte lbl_802AE8B8
+.endobj __RTTI__9KeyConfig
 
 .section .sbss, "wa"
 .balign 8
-.global _instance__9KeyConfig
-_instance__9KeyConfig:
+.obj _instance__9KeyConfig, global
 	.skip 4
+.endobj _instance__9KeyConfig

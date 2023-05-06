@@ -1,8 +1,7 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
 .balign 32, 0
-.global __SetVolandPan__FP9Portargs_
-__SetVolandPan__FP9Portargs_:
+.fn __SetVolandPan__FP9Portargs_, local
 /* 800175E0 00014540  7C 08 02 A6 */	mflr r0
 /* 800175E4 00014544  38 80 00 01 */	li r4, 1
 /* 800175E8 00014548  90 01 00 04 */	stw r0, 4(r1)
@@ -21,10 +20,10 @@ __SetVolandPan__FP9Portargs_:
 /* 8001761C 0001457C  38 21 00 18 */	addi r1, r1, 0x18
 /* 80017620 00014580  7C 08 03 A6 */	mtlr r0
 /* 80017624 00014584  4E 80 00 20 */	blr 
+.endfn __SetVolandPan__FP9Portargs_
 
 .balign 32, 0
-.global SendToStack__FP7SEvent_
-SendToStack__FP7SEvent_:
+.fn SendToStack__FP7SEvent_, local
 /* 80017640 000145A0  7C 08 02 A6 */	mflr r0
 /* 80017644 000145A4  90 01 00 04 */	stw r0, 4(r1)
 /* 80017648 000145A8  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -43,10 +42,10 @@ SendToStack__FP7SEvent_:
 /* 8001767C 000145DC  38 21 00 18 */	addi r1, r1, 0x18
 /* 80017680 000145E0  7C 08 03 A6 */	mtlr r0
 /* 80017684 000145E4  4E 80 00 20 */	blr 
+.endfn SendToStack__FP7SEvent_
 
 .balign 32, 0
-.global Jac_InitEventSystem
-Jac_InitEventSystem:
+.fn Jac_InitEventSystem, global
 /* 800176A0 00014600  7C 08 02 A6 */	mflr r0
 /* 800176A4 00014604  38 60 00 0A */	li r3, 0xa
 /* 800176A8 00014608  90 01 00 04 */	stw r0, 4(r1)
@@ -109,10 +108,10 @@ Jac_InitEventSystem:
 /* 80017780 000146E0  38 21 00 30 */	addi r1, r1, 0x30
 /* 80017784 000146E4  7C 08 03 A6 */	mtlr r0
 /* 80017788 000146E8  4E 80 00 20 */	blr 
+.endfn Jac_InitEventSystem
 
 .balign 32, 0
-.global Jac_EventFrameCheck
-Jac_EventFrameCheck:
+.fn Jac_EventFrameCheck, global
 /* 800177A0 00014700  7C 08 02 A6 */	mflr r0
 /* 800177A4 00014704  90 01 00 04 */	stw r0, 4(r1)
 /* 800177A8 00014708  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -164,15 +163,15 @@ Jac_EventFrameCheck:
 /* 80017850 000147B0  38 21 00 20 */	addi r1, r1, 0x20
 /* 80017854 000147B4  7C 08 03 A6 */	mtlr r0
 /* 80017858 000147B8  4E 80 00 20 */	blr 
+.endfn Jac_EventFrameCheck
 
 .balign 32, 0
-.global Jac_UpdateCamera
-Jac_UpdateCamera:
+.fn Jac_UpdateCamera, global
 /* 80017860 000147C0  7C 08 02 A6 */	mflr r0
 /* 80017864 000147C4  90 01 00 04 */	stw r0, 4(r1)
 /* 80017868 000147C8  94 21 FF 98 */	stwu r1, -0x68(r1)
 /* 8001786C 000147CC  39 61 00 68 */	addi r11, r1, 0x68
-/* 80017870 000147D0  48 1F D5 DD */	bl func_80214E4C
+/* 80017870 000147D0  48 1F D5 DD */	bl _savefpr_24
 /* 80017874 000147D4  BF 41 00 10 */	stmw r26, 0x10(r1)
 /* 80017878 000147D8  80 AD 2C 80 */	lwz r5, CURRENT_TIME@sda21(r13)
 /* 8001787C 000147DC  3C 60 80 22 */	lis r3, EVENT_DIST_SCALE@ha
@@ -249,15 +248,15 @@ Jac_UpdateCamera:
 /* 8001797C 000148DC  48 00 0E 45 */	bl Jac_UpdatePikiGaya__Fv
 /* 80017980 000148E0  80 01 00 6C */	lwz r0, 0x6c(r1)
 /* 80017984 000148E4  39 61 00 68 */	addi r11, r1, 0x68
-/* 80017988 000148E8  48 1F D5 11 */	bl func_80214E98
+/* 80017988 000148E8  48 1F D5 11 */	bl _restfpr_24
 /* 8001798C 000148EC  BB 41 00 10 */	lmw r26, 0x10(r1)
 /* 80017990 000148F0  38 21 00 68 */	addi r1, r1, 0x68
 /* 80017994 000148F4  7C 08 03 A6 */	mtlr r0
 /* 80017998 000148F8  4E 80 00 20 */	blr 
+.endfn Jac_UpdateCamera
 
 .balign 32, 0
-.global Jac_CreateEvent
-Jac_CreateEvent:
+.fn Jac_CreateEvent, global
 /* 800179A0 00014900  7C 08 02 A6 */	mflr r0
 /* 800179A4 00014904  90 01 00 04 */	stw r0, 4(r1)
 /* 800179A8 00014908  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -337,10 +336,10 @@ Jac_CreateEvent:
 /* 80017AAC 00014A0C  38 21 00 28 */	addi r1, r1, 0x28
 /* 80017AB0 00014A10  7C 08 03 A6 */	mtlr r0
 /* 80017AB4 00014A14  4E 80 00 20 */	blr 
+.endfn Jac_CreateEvent
 
 .balign 32, 0
-.global Jac_UpdateEventPosition
-Jac_UpdateEventPosition:
+.fn Jac_UpdateEventPosition, global
 /* 80017AC0 00014A20  2C 03 FF FF */	cmpwi r3, -1
 /* 80017AC4 00014A24  40 82 00 0C */	bne .L_80017AD0
 /* 80017AC8 00014A28  38 60 00 00 */	li r3, 0
@@ -366,10 +365,10 @@ Jac_UpdateEventPosition:
 /* 80017B10 00014A70  90 87 00 08 */	stw r4, 8(r7)
 /* 80017B14 00014A74  90 07 01 70 */	stw r0, 0x170(r7)
 /* 80017B18 00014A78  4E 80 00 20 */	blr 
+.endfn Jac_UpdateEventPosition
 
 .balign 32, 0
-.global Jac_PlayEventAction
-Jac_PlayEventAction:
+.fn Jac_PlayEventAction, global
 /* 80017B20 00014A80  7C 08 02 A6 */	mflr r0
 /* 80017B24 00014A84  3C A0 80 22 */	lis r5, EVENT_OFFSET@ha
 /* 80017B28 00014A88  90 01 00 04 */	stw r0, 4(r1)
@@ -577,10 +576,10 @@ Jac_PlayEventAction:
 /* 80017DF4 00014D54  38 21 00 38 */	addi r1, r1, 0x38
 /* 80017DF8 00014D58  7C 08 03 A6 */	mtlr r0
 /* 80017DFC 00014D5C  4E 80 00 20 */	blr 
+.endfn Jac_PlayEventAction
 
 .balign 32, 0
-.global Jac_StopEventAction
-Jac_StopEventAction:
+.fn Jac_StopEventAction, global
 /* 80017E00 00014D60  7C 08 02 A6 */	mflr r0
 /* 80017E04 00014D64  2C 03 FF FF */	cmpwi r3, -1
 /* 80017E08 00014D68  90 01 00 04 */	stw r0, 4(r1)
@@ -633,10 +632,10 @@ Jac_StopEventAction:
 /* 80017EB0 00014E10  38 21 00 30 */	addi r1, r1, 0x30
 /* 80017EB4 00014E14  7C 08 03 A6 */	mtlr r0
 /* 80017EB8 00014E18  4E 80 00 20 */	blr 
+.endfn Jac_StopEventAction
 
 .balign 32, 0
-.global MML_StopEventAction
-MML_StopEventAction:
+.fn MML_StopEventAction, global
 /* 80017EC0 00014E20  54 60 06 3E */	clrlwi r0, r3, 0x18
 /* 80017EC4 00014E24  3C 60 80 3E */	lis r3, EVENT@ha
 /* 80017EC8 00014E28  1C C0 01 B4 */	mulli r6, r0, 0x1b4
@@ -667,10 +666,10 @@ MML_StopEventAction:
 /* 80017F24 00014E84  38 60 00 01 */	li r3, 1
 /* 80017F28 00014E88  90 05 00 00 */	stw r0, 0(r5)
 /* 80017F2C 00014E8C  4E 80 00 20 */	blr 
+.endfn MML_StopEventAction
 
 .balign 32, 0
-.global MML_StopEventAll
-MML_StopEventAll:
+.fn MML_StopEventAll, global
 /* 80017F40 00014EA0  54 60 06 3E */	clrlwi r0, r3, 0x18
 /* 80017F44 00014EA4  3C 60 80 3E */	lis r3, EVENT@ha
 /* 80017F48 00014EA8  1C A0 01 B4 */	mulli r5, r0, 0x1b4
@@ -696,10 +695,10 @@ MML_StopEventAll:
 /* 80017F90 00014EF0  38 63 00 0C */	addi r3, r3, 0xc
 /* 80017F94 00014EF4  42 00 FF E4 */	bdnz .L_80017F78
 /* 80017F98 00014EF8  4E 80 00 20 */	blr 
+.endfn MML_StopEventAll
 
 .balign 32, 0
-.global Jac_DestroyEvent
-Jac_DestroyEvent:
+.fn Jac_DestroyEvent, global
 /* 80017FA0 00014F00  7C 08 02 A6 */	mflr r0
 /* 80017FA4 00014F04  2C 03 FF FF */	cmpwi r3, -1
 /* 80017FA8 00014F08  90 01 00 04 */	stw r0, 4(r1)
@@ -741,10 +740,10 @@ Jac_DestroyEvent:
 /* 80018028 00014F88  38 21 00 18 */	addi r1, r1, 0x18
 /* 8001802C 00014F8C  7C 08 03 A6 */	mtlr r0
 /* 80018030 00014F90  4E 80 00 20 */	blr 
+.endfn Jac_DestroyEvent
 
 .balign 32, 0
-.global Jac_InitAllEvent
-Jac_InitAllEvent:
+.fn Jac_InitAllEvent, global
 /* 80018040 00014FA0  7C 08 02 A6 */	mflr r0
 /* 80018044 00014FA4  90 01 00 04 */	stw r0, 4(r1)
 /* 80018048 00014FA8  94 21 FF F0 */	stwu r1, -0x10(r1)
@@ -761,10 +760,10 @@ Jac_InitAllEvent:
 /* 80018070 00014FD0  38 21 00 10 */	addi r1, r1, 0x10
 /* 80018074 00014FD4  7C 08 03 A6 */	mtlr r0
 /* 80018078 00014FD8  4E 80 00 20 */	blr 
+.endfn Jac_InitAllEvent
 
 .balign 32, 0
-.global Jac_CheckFreeEvents
-Jac_CheckFreeEvents:
+.fn Jac_CheckFreeEvents, global
 /* 80018080 00014FE0  3C 60 80 3E */	lis r3, EVENT@ha
 /* 80018084 00014FE4  38 00 00 10 */	li r0, 0x10
 /* 80018088 00014FE8  38 C3 AF CC */	addi r6, r3, EVENT@l
@@ -781,10 +780,10 @@ Jac_CheckFreeEvents:
 /* 800180AC 0001500C  38 84 01 B4 */	addi r4, r4, 0x1b4
 /* 800180B0 00015010  42 00 FF E8 */	bdnz .L_80018098
 /* 800180B4 00015014  4E 80 00 20 */	blr 
+.endfn Jac_CheckFreeEvents
 
 .balign 32, 0
-.global Jac_GetActiveEvents
-Jac_GetActiveEvents:
+.fn Jac_GetActiveEvents, global
 /* 800180C0 00015020  3C 80 80 3E */	lis r4, EVENT@ha
 /* 800180C4 00015024  38 00 00 10 */	li r0, 0x10
 /* 800180C8 00015028  38 E4 AF CC */	addi r7, r4, EVENT@l
@@ -807,10 +806,11 @@ Jac_GetActiveEvents:
 /* 80018104 00015064  42 00 FF DC */	bdnz .L_800180E0
 /* 80018108 00015068  7D 03 43 78 */	mr r3, r8
 /* 8001810C 0001506C  4E 80 00 20 */	blr 
+.endfn Jac_GetActiveEvents
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-EVENT_OFFSET:
+.obj EVENT_OFFSET, local
 	.4byte 0x00000000
 	.4byte 0x00000001
 	.4byte 0x000000AD
@@ -819,7 +819,8 @@ EVENT_OFFSET:
 	.4byte 0x000000D7
 	.4byte 0x000000DB
 	.4byte 0x00000105
-ACTION_STATUS:
+.endobj EVENT_OFFSET
+.obj ACTION_STATUS, local
 	.4byte 0x00000000
 	.4byte 0x00000001
 	.4byte 0x00000001
@@ -1237,7 +1238,8 @@ ACTION_STATUS:
 	.4byte 0x00000A00
 	.4byte 0x01100000
 	.4byte 0x0A000111
-EVENT_DIST_SCALE:
+.endobj ACTION_STATUS
+.obj EVENT_DIST_SCALE, local
 	.float 1.0
 	.float 1.0
 	.float 2.0
@@ -1246,6 +1248,7 @@ EVENT_DIST_SCALE:
 	.float 1.0
 	.float 1.2
 	.float 2.0
+.endobj EVENT_DIST_SCALE
 
 .section .sbss, "wa"
 .balign 8

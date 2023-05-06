@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global __ct__11ResultFlagsFv
-__ct__11ResultFlagsFv:
+.fn __ct__11ResultFlagsFv, global
 /* 8008358C 000804EC  7C 08 02 A6 */	mflr r0
 /* 80083590 000804F0  90 01 00 04 */	stw r0, 4(r1)
 /* 80083594 000804F4  38 00 00 26 */	li r0, 0x26
@@ -124,9 +123,9 @@ __ct__11ResultFlagsFv:
 /* 8008373C 0008069C  38 21 00 28 */	addi r1, r1, 0x28
 /* 80083740 000806A0  7C 08 03 A6 */	mtlr r0
 /* 80083744 000806A4  4E 80 00 20 */	blr 
+.endfn __ct__11ResultFlagsFv
 
-.global initGame__11ResultFlagsFv
-initGame__11ResultFlagsFv:
+.fn initGame__11ResultFlagsFv, global
 /* 80083748 000806A8  7C 08 02 A6 */	mflr r0
 /* 8008374C 000806AC  38 A0 00 00 */	li r5, 0
 /* 80083750 000806B0  90 01 00 04 */	stw r0, 4(r1)
@@ -232,9 +231,9 @@ initGame__11ResultFlagsFv:
 /* 800838B4 00080814  38 21 00 20 */	addi r1, r1, 0x20
 /* 800838B8 00080818  7C 08 03 A6 */	mtlr r0
 /* 800838BC 0008081C  4E 80 00 20 */	blr 
+.endfn initGame__11ResultFlagsFv
 
-.global saveCard__11ResultFlagsFR18RandomAccessStream
-saveCard__11ResultFlagsFR18RandomAccessStream:
+.fn saveCard__11ResultFlagsFR18RandomAccessStream, global
 /* 800838C0 00080820  7C 08 02 A6 */	mflr r0
 /* 800838C4 00080824  90 01 00 04 */	stw r0, 4(r1)
 /* 800838C8 00080828  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -279,9 +278,9 @@ saveCard__11ResultFlagsFR18RandomAccessStream:
 /* 80083958 000808B8  38 21 00 20 */	addi r1, r1, 0x20
 /* 8008395C 000808BC  7C 08 03 A6 */	mtlr r0
 /* 80083960 000808C0  4E 80 00 20 */	blr 
+.endfn saveCard__11ResultFlagsFR18RandomAccessStream
 
-.global loadCard__11ResultFlagsFR18RandomAccessStream
-loadCard__11ResultFlagsFR18RandomAccessStream:
+.fn loadCard__11ResultFlagsFR18RandomAccessStream, global
 /* 80083964 000808C4  7C 08 02 A6 */	mflr r0
 /* 80083968 000808C8  90 01 00 04 */	stw r0, 4(r1)
 /* 8008396C 000808CC  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -324,9 +323,9 @@ loadCard__11ResultFlagsFR18RandomAccessStream:
 /* 800839F4 00080954  38 21 00 20 */	addi r1, r1, 0x20
 /* 800839F8 00080958  7C 08 03 A6 */	mtlr r0
 /* 800839FC 0008095C  4E 80 00 20 */	blr 
+.endfn loadCard__11ResultFlagsFR18RandomAccessStream
 
-.global setOn__11ResultFlagsFi
-setOn__11ResultFlagsFi:
+.fn setOn__11ResultFlagsFi, global
 /* 80083A00 00080960  7C 08 02 A6 */	mflr r0
 /* 80083A04 00080964  90 01 00 04 */	stw r0, 4(r1)
 /* 80083A08 00080968  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -348,9 +347,9 @@ setOn__11ResultFlagsFi:
 /* 80083A44 000809A4  38 21 00 18 */	addi r1, r1, 0x18
 /* 80083A48 000809A8  7C 08 03 A6 */	mtlr r0
 /* 80083A4C 000809AC  4E 80 00 20 */	blr 
+.endfn setOn__11ResultFlagsFi
 
-.global setSeen__11ResultFlagsFi
-setSeen__11ResultFlagsFi:
+.fn setSeen__11ResultFlagsFi, global
 /* 80083A50 000809B0  7C 08 02 A6 */	mflr r0
 /* 80083A54 000809B4  38 A0 00 02 */	li r5, 2
 /* 80083A58 000809B8  90 01 00 04 */	stw r0, 4(r1)
@@ -360,9 +359,9 @@ setSeen__11ResultFlagsFi:
 /* 80083A68 000809C8  38 21 00 08 */	addi r1, r1, 8
 /* 80083A6C 000809CC  7C 08 03 A6 */	mtlr r0
 /* 80083A70 000809D0  4E 80 00 20 */	blr 
+.endfn setSeen__11ResultFlagsFi
 
-.global getDayDocument__11ResultFlagsFiRi
-getDayDocument__11ResultFlagsFiRi:
+.fn getDayDocument__11ResultFlagsFiRi, global
 /* 80083A74 000809D4  54 80 08 3C */	slwi r0, r4, 1
 /* 80083A78 000809D8  7C 83 02 14 */	add r4, r3, r0
 /* 80083A7C 000809DC  A8 E4 00 0C */	lha r7, 0xc(r4)
@@ -408,9 +407,9 @@ getDayDocument__11ResultFlagsFiRi:
 /* 80083B08 00080A68  90 05 00 00 */	stw r0, 0(r5)
 /* 80083B0C 00080A6C  38 60 FF FF */	li r3, -1
 /* 80083B10 00080A70  4E 80 00 20 */	blr 
+.endfn getDayDocument__11ResultFlagsFiRi
 
-.global getDocument__11ResultFlagsFRi
-getDocument__11ResultFlagsFRi:
+.fn getDocument__11ResultFlagsFRi, global
 /* 80083B14 00080A74  7C 08 02 A6 */	mflr r0
 /* 80083B18 00080A78  3C A0 80 2B */	lis r5, lbl_802AE1E0@ha
 /* 80083B1C 00080A7C  90 01 00 04 */	stw r0, 4(r1)
@@ -519,9 +518,9 @@ getDocument__11ResultFlagsFRi:
 /* 80083C88 00080BE8  38 21 00 38 */	addi r1, r1, 0x38
 /* 80083C8C 00080BEC  7C 08 03 A6 */	mtlr r0
 /* 80083C90 00080BF0  4E 80 00 20 */	blr 
+.endfn getDocument__11ResultFlagsFRi
 
-.global dump__11ResultFlagsFv
-dump__11ResultFlagsFv:
+.fn dump__11ResultFlagsFv, global
 /* 80083C94 00080BF4  7C 08 02 A6 */	mflr r0
 /* 80083C98 00080BF8  3C 80 80 2B */	lis r4, flagTable__11ResultFlags@ha
 /* 80083C9C 00080BFC  90 01 00 04 */	stw r0, 4(r1)
@@ -601,9 +600,9 @@ dump__11ResultFlagsFv:
 /* 80083D94 00080CF4  38 21 00 40 */	addi r1, r1, 0x40
 /* 80083D98 00080CF8  7C 08 03 A6 */	mtlr r0
 /* 80083D9C 00080CFC  4E 80 00 20 */	blr 
+.endfn dump__11ResultFlagsFv
 
-.global getFlag__11ResultFlagsFi
-getFlag__11ResultFlagsFi:
+.fn getFlag__11ResultFlagsFi, global
 /* 80083DA0 00080D00  80 A3 00 48 */	lwz r5, 0x48(r3)
 /* 80083DA4 00080D04  54 80 10 3A */	slwi r0, r4, 2
 /* 80083DA8 00080D08  80 63 00 08 */	lwz r3, 8(r3)
@@ -616,9 +615,9 @@ getFlag__11ResultFlagsFi:
 /* 80083DC4 00080D24  7C 60 06 30 */	sraw r0, r3, r0
 /* 80083DC8 00080D28  54 03 07 BE */	clrlwi r3, r0, 0x1e
 /* 80083DCC 00080D2C  4E 80 00 20 */	blr 
+.endfn getFlag__11ResultFlagsFi
 
-.global setFlag__11ResultFlagsFiUc
-setFlag__11ResultFlagsFiUc:
+.fn setFlag__11ResultFlagsFiUc, global
 /* 80083DD0 00080D30  80 C3 00 48 */	lwz r6, 0x48(r3)
 /* 80083DD4 00080D34  54 80 10 3A */	slwi r0, r4, 2
 /* 80083DD8 00080D38  80 63 00 08 */	lwz r3, 8(r3)
@@ -659,24 +658,27 @@ setFlag__11ResultFlagsFiUc:
 .L_80083E58:
 /* 80083E58 00080DB8  98 E5 00 00 */	stb r7, 0(r5)
 /* 80083E5C 00080DBC  4E 80 00 20 */	blr 
+.endfn setFlag__11ResultFlagsFiUc
 
 .section .rodata, "a"  # 0x80221FE0 - 0x80222DC0
 .balign 8
-lbl_802223D0:
+.obj lbl_802223D0, local
 	.4byte lbl_803DECD8
 	.4byte lbl_803DECDC
 	.4byte lbl_803DECE0
+.endobj lbl_802223D0
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802AE1E0:
+.obj lbl_802AE1E0, local
 	.asciz "resultFlag.cpp"
+.endobj lbl_802AE1E0
 .balign 4
-lbl_802AE1F0:
+.obj lbl_802AE1F0, local
 	.asciz "resultFlag"
+.endobj lbl_802AE1F0
 .balign 4
-.global flagTable__11ResultFlags
-flagTable__11ResultFlags:
+.obj flagTable__11ResultFlags, global
 	.4byte 0x00000001
 	.4byte 0x00000000
 	.4byte 0x00000001
@@ -981,14 +983,18 @@ flagTable__11ResultFlags:
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x00000000
+.endobj flagTable__11ResultFlags
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-lbl_803DECD8:
+.obj lbl_803DECD8, local
 	.asciz "OFF"
+.endobj lbl_803DECD8
 .balign 4
-lbl_803DECDC:
+.obj lbl_803DECDC, local
 	.asciz "ON"
+.endobj lbl_803DECDC
 .balign 4
-lbl_803DECE0:
+.obj lbl_803DECE0, local
 	.asciz "SEEN"
+.endobj lbl_803DECE0

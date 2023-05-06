@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global __ct__5PomAiFP3Pom
-__ct__5PomAiFP3Pom:
+.fn __ct__5PomAiFP3Pom, global
 /* 80178558 001754B8  7C 08 02 A6 */	mflr r0
 /* 8017855C 001754BC  3C A0 80 2B */	lis r5, __vt__19PaniAnimKeyListener@ha
 /* 80178560 001754C0  90 01 00 04 */	stw r0, 4(r1)
@@ -32,9 +31,9 @@ __ct__5PomAiFP3Pom:
 /* 801785C0 00175520  38 21 00 18 */	addi r1, r1, 0x18
 /* 801785C4 00175524  7C 08 03 A6 */	mtlr r0
 /* 801785C8 00175528  4E 80 00 20 */	blr 
+.endfn __ct__5PomAiFP3Pom
 
-.global initAI__5PomAiFP3Pom
-initAI__5PomAiFP3Pom:
+.fn initAI__5PomAiFP3Pom, global
 /* 801785CC 0017552C  7C 08 02 A6 */	mflr r0
 /* 801785D0 00175530  90 01 00 04 */	stw r0, 4(r1)
 /* 801785D4 00175534  94 21 FF 68 */	stwu r1, -0x98(r1)
@@ -140,9 +139,9 @@ initAI__5PomAiFP3Pom:
 /* 80178754 001756B4  38 21 00 98 */	addi r1, r1, 0x98
 /* 80178758 001756B8  7C 08 03 A6 */	mtlr r0
 /* 8017875C 001756BC  4E 80 00 20 */	blr 
+.endfn initAI__5PomAiFP3Pom
 
-.global animationKeyUpdated__5PomAiFR16PaniAnimKeyEvent
-animationKeyUpdated__5PomAiFR16PaniAnimKeyEvent:
+.fn animationKeyUpdated__5PomAiFR16PaniAnimKeyEvent, global
 /* 80178760 001756C0  7C 08 02 A6 */	mflr r0
 /* 80178764 001756C4  90 01 00 04 */	stw r0, 4(r1)
 /* 80178768 001756C8  94 21 FF F8 */	stwu r1, -8(r1)
@@ -181,9 +180,9 @@ animationKeyUpdated__5PomAiFR16PaniAnimKeyEvent:
 /* 801787D0 00175730  38 21 00 08 */	addi r1, r1, 8
 /* 801787D4 00175734  7C 08 03 A6 */	mtlr r0
 /* 801787D8 00175738  4E 80 00 20 */	blr 
+.endfn animationKeyUpdated__5PomAiFR16PaniAnimKeyEvent
 
-.global keyAction0__5PomAiFv
-keyAction0__5PomAiFv:
+.fn keyAction0__5PomAiFv, global
 /* 801787DC 0017573C  7C 08 02 A6 */	mflr r0
 /* 801787E0 00175740  90 01 00 04 */	stw r0, 4(r1)
 /* 801787E4 00175744  94 21 FF F8 */	stwu r1, -8(r1)
@@ -203,9 +202,9 @@ keyAction0__5PomAiFv:
 /* 80178814 00175774  38 21 00 08 */	addi r1, r1, 8
 /* 80178818 00175778  7C 08 03 A6 */	mtlr r0
 /* 8017881C 0017577C  4E 80 00 20 */	blr 
+.endfn keyAction0__5PomAiFv
 
-.global keyAction1__5PomAiFv
-keyAction1__5PomAiFv:
+.fn keyAction1__5PomAiFv, global
 /* 80178820 00175780  80 83 00 04 */	lwz r4, 4(r3)
 /* 80178824 00175784  80 04 02 E4 */	lwz r0, 0x2e4(r4)
 /* 80178828 00175788  2C 00 00 02 */	cmpwi r0, 2
@@ -213,17 +212,17 @@ keyAction1__5PomAiFv:
 /* 80178830 00175790  38 00 00 00 */	li r0, 0
 /* 80178834 00175794  98 03 00 0A */	stb r0, 0xa(r3)
 /* 80178838 00175798  4E 80 00 20 */	blr 
+.endfn keyAction1__5PomAiFv
 
-.global keyLoopEnd__5PomAiFv
-keyLoopEnd__5PomAiFv:
+.fn keyLoopEnd__5PomAiFv, global
 /* 8017883C 0017579C  80 83 00 04 */	lwz r4, 4(r3)
 /* 80178840 001757A0  80 64 02 EC */	lwz r3, 0x2ec(r4)
 /* 80178844 001757A4  38 03 00 01 */	addi r0, r3, 1
 /* 80178848 001757A8  90 04 02 EC */	stw r0, 0x2ec(r4)
 /* 8017884C 001757AC  4E 80 00 20 */	blr 
+.endfn keyLoopEnd__5PomAiFv
 
-.global keyFinished__5PomAiFv
-keyFinished__5PomAiFv:
+.fn keyFinished__5PomAiFv, global
 /* 80178850 001757B0  7C 08 02 A6 */	mflr r0
 /* 80178854 001757B4  90 01 00 04 */	stw r0, 4(r1)
 /* 80178858 001757B8  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -275,9 +274,9 @@ keyFinished__5PomAiFv:
 /* 8017890C 0017586C  38 21 00 28 */	addi r1, r1, 0x28
 /* 80178910 00175870  7C 08 03 A6 */	mtlr r0
 /* 80178914 00175874  4E 80 00 20 */	blr 
+.endfn keyFinished__5PomAiFv
 
-.global playSound__5PomAiFi
-playSound__5PomAiFi:
+.fn playSound__5PomAiFi, global
 /* 80178918 00175878  7C 08 02 A6 */	mflr r0
 /* 8017891C 0017587C  90 01 00 04 */	stw r0, 4(r1)
 /* 80178920 00175880  94 21 FF F8 */	stwu r1, -8(r1)
@@ -296,9 +295,9 @@ playSound__5PomAiFi:
 /* 80178950 001758B0  38 21 00 08 */	addi r1, r1, 8
 /* 80178954 001758B4  7C 08 03 A6 */	mtlr r0
 /* 80178958 001758B8  4E 80 00 20 */	blr 
+.endfn playSound__5PomAiFi
 
-.global killCallBackEffect__5PomAiFb
-killCallBackEffect__5PomAiFb:
+.fn killCallBackEffect__5PomAiFb, global
 /* 8017895C 001758BC  7C 08 02 A6 */	mflr r0
 /* 80178960 001758C0  38 C4 00 00 */	addi r6, r4, 0
 /* 80178964 001758C4  90 01 00 04 */	stw r0, 4(r1)
@@ -313,9 +312,9 @@ killCallBackEffect__5PomAiFb:
 /* 80178988 001758E8  38 21 00 08 */	addi r1, r1, 8
 /* 8017898C 001758EC  7C 08 03 A6 */	mtlr r0
 /* 80178990 001758F0  4E 80 00 20 */	blr 
+.endfn killCallBackEffect__5PomAiFb
 
-.global collidePetal__5PomAiFP8Creature
-collidePetal__5PomAiFP8Creature:
+.fn collidePetal__5PomAiFP8Creature, global
 /* 80178994 001758F4  7C 08 02 A6 */	mflr r0
 /* 80178998 001758F8  90 01 00 04 */	stw r0, 4(r1)
 /* 8017899C 001758FC  94 21 FF C0 */	stwu r1, -0x40(r1)
@@ -429,9 +428,9 @@ collidePetal__5PomAiFP8Creature:
 /* 80178B3C 00175A9C  38 21 00 40 */	addi r1, r1, 0x40
 /* 80178B40 00175AA0  7C 08 03 A6 */	mtlr r0
 /* 80178B44 00175AA4  4E 80 00 20 */	blr 
+.endfn collidePetal__5PomAiFP8Creature
 
-.global setCollideSound__5PomAiFP8Creature
-setCollideSound__5PomAiFP8Creature:
+.fn setCollideSound__5PomAiFP8Creature, global
 /* 80178B48 00175AA8  7C 08 02 A6 */	mflr r0
 /* 80178B4C 00175AAC  90 01 00 04 */	stw r0, 4(r1)
 /* 80178B50 00175AB0  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -458,9 +457,9 @@ setCollideSound__5PomAiFP8Creature:
 /* 80178B9C 00175AFC  38 21 00 18 */	addi r1, r1, 0x18
 /* 80178BA0 00175B00  7C 08 03 A6 */	mtlr r0
 /* 80178BA4 00175B04  4E 80 00 20 */	blr 
+.endfn setCollideSound__5PomAiFP8Creature
 
-.global killStickPiki__5PomAiFv
-killStickPiki__5PomAiFv:
+.fn killStickPiki__5PomAiFv, global
 /* 80178BA8 00175B08  7C 08 02 A6 */	mflr r0
 /* 80178BAC 00175B0C  90 01 00 04 */	stw r0, 4(r1)
 /* 80178BB0 00175B10  94 21 FF B0 */	stwu r1, -0x50(r1)
@@ -590,9 +589,9 @@ killStickPiki__5PomAiFv:
 /* 80178D70 00175CD0  38 21 00 50 */	addi r1, r1, 0x50
 /* 80178D74 00175CD4  7C 08 03 A6 */	mtlr r0
 /* 80178D78 00175CD8  4E 80 00 20 */	blr 
+.endfn killStickPiki__5PomAiFv
 
-.global createPikiHead__5PomAiFv
-createPikiHead__5PomAiFv:
+.fn createPikiHead__5PomAiFv, global
 /* 80178D7C 00175CDC  7C 08 02 A6 */	mflr r0
 /* 80178D80 00175CE0  90 01 00 04 */	stw r0, 4(r1)
 /* 80178D84 00175CE4  94 21 FF 60 */	stwu r1, -0xa0(r1)
@@ -735,9 +734,9 @@ createPikiHead__5PomAiFv:
 /* 80178F98 00175EF8  38 21 00 A0 */	addi r1, r1, 0xa0
 /* 80178F9C 00175EFC  7C 08 03 A6 */	mtlr r0
 /* 80178FA0 00175F00  4E 80 00 20 */	blr 
+.endfn createPikiHead__5PomAiFv
 
-.global calcPetalStickers__5PomAiFv
-calcPetalStickers__5PomAiFv:
+.fn calcPetalStickers__5PomAiFv, global
 /* 80178FA4 00175F04  7C 08 02 A6 */	mflr r0
 /* 80178FA8 00175F08  90 01 00 04 */	stw r0, 4(r1)
 /* 80178FAC 00175F0C  94 21 FF 80 */	stwu r1, -0x80(r1)
@@ -867,9 +866,9 @@ calcPetalStickers__5PomAiFv:
 /* 80179174 001760D4  38 21 00 80 */	addi r1, r1, 0x80
 /* 80179178 001760D8  7C 08 03 A6 */	mtlr r0
 /* 8017917C 001760DC  4E 80 00 20 */	blr 
+.endfn calcPetalStickers__5PomAiFv
 
-.global initWait__5PomAiFi
-initWait__5PomAiFi:
+.fn initWait__5PomAiFi, global
 /* 80179180 001760E0  7C 08 02 A6 */	mflr r0
 /* 80179184 001760E4  90 01 00 04 */	stw r0, 4(r1)
 /* 80179188 001760E8  38 00 00 00 */	li r0, 0
@@ -1008,9 +1007,9 @@ initWait__5PomAiFi:
 /* 80179374 001762D4  38 21 00 58 */	addi r1, r1, 0x58
 /* 80179378 001762D8  7C 08 03 A6 */	mtlr r0
 /* 8017937C 001762DC  4E 80 00 20 */	blr 
+.endfn initWait__5PomAiFi
 
-.global initDischarge__5PomAiFi
-initDischarge__5PomAiFi:
+.fn initDischarge__5PomAiFi, global
 /* 80179380 001762E0  7C 08 02 A6 */	mflr r0
 /* 80179384 001762E4  90 01 00 04 */	stw r0, 4(r1)
 /* 80179388 001762E8  38 00 00 00 */	li r0, 0
@@ -1134,9 +1133,9 @@ initDischarge__5PomAiFi:
 /* 80179540 001764A0  38 21 00 78 */	addi r1, r1, 0x78
 /* 80179544 001764A4  7C 08 03 A6 */	mtlr r0
 /* 80179548 001764A8  4E 80 00 20 */	blr 
+.endfn initDischarge__5PomAiFi
 
-.global update__5PomAiFv
-update__5PomAiFv:
+.fn update__5PomAiFv, global
 /* 8017954C 001764AC  7C 08 02 A6 */	mflr r0
 /* 80179550 001764B0  3C 80 80 2D */	lis r4, pomSE@ha
 /* 80179554 001764B4  90 01 00 04 */	stw r0, 4(r1)
@@ -1733,9 +1732,9 @@ update__5PomAiFv:
 /* 80179DD8 00176D38  38 21 02 18 */	addi r1, r1, 0x218
 /* 80179DDC 00176D3C  7C 08 03 A6 */	mtlr r0
 /* 80179DE0 00176D40  4E 80 00 20 */	blr 
+.endfn update__5PomAiFv
 
-.global invoke__22PomGenOpenStarCallBackFPQ23zen17particleGenerator
-invoke__22PomGenOpenStarCallBackFPQ23zen17particleGenerator:
+.fn invoke__22PomGenOpenStarCallBackFPQ23zen17particleGenerator, weak
 /* 80179DE4 00176D44  80 63 00 04 */	lwz r3, 4(r3)
 /* 80179DE8 00176D48  88 03 00 00 */	lbz r0, 0(r3)
 /* 80179DEC 00176D4C  28 00 00 00 */	cmplwi r0, 0
@@ -1746,23 +1745,26 @@ invoke__22PomGenOpenStarCallBackFPQ23zen17particleGenerator:
 .L_80179E00:
 /* 80179E00 00176D60  38 60 00 01 */	li r3, 1
 /* 80179E04 00176D64  4E 80 00 20 */	blr 
+.endfn invoke__22PomGenOpenStarCallBackFPQ23zen17particleGenerator
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-.global pomSE
-pomSE:
+.obj pomSE, local
 	.4byte 0x00000054
 	.4byte 0x0000009D
 	.4byte 0x0000009E
 	.4byte 0x0000009F
 	.4byte 0x000000A0
 	.4byte 0x000000A1
+.endobj pomSE
 .balign 4
-lbl_802D0D30:
+.obj lbl_802D0D30, local
 	.asciz "PomAi.cpp"
+.endobj lbl_802D0D30
 .balign 4
-lbl_802D0D3C:
+.obj lbl_802D0D3C, local
 	.asciz "Interaction"
+.endobj lbl_802D0D3C
 .balign 4
 	.4byte 0x00000000
 	.4byte 0x00000000
@@ -1776,34 +1778,39 @@ lbl_802D0D3C:
 	.4byte 0x00000000
 	.4byte 0x00000000
 .balign 4
-lbl_802D0D74:
+.obj lbl_802D0D74, local
 	.asciz "PaniAnimKeyListener"
+.endobj lbl_802D0D74
 .balign 4
-lbl_802D0D88:
+.obj lbl_802D0D88, local
 	.4byte __RTTI__19PaniAnimKeyListener
-	.4byte 0x00000000
-	.4byte 0x00000000
-.global __vt__5PomAi
-__vt__5PomAi:
+	.4byte 0
+	.4byte 0
+.endobj lbl_802D0D88
+.obj __vt__5PomAi, global
 	.4byte __RTTI__5PomAi
 	.4byte 0
 	.4byte animationKeyUpdated__5PomAiFR16PaniAnimKeyEvent
+.endobj __vt__5PomAi
 .balign 4
-lbl_802D0DA0:
+.obj lbl_802D0DA0, local
 	.asciz "PomGenOpenStarCallBack"
+.endobj lbl_802D0DA0
 .balign 4
-lbl_802D0DB8:
+.obj lbl_802D0DB8, local
 	.asciz "zen::CallBack1<zen::particleGenerator *>"
+.endobj lbl_802D0DB8
 .balign 4
-lbl_802D0DE4:
+.obj lbl_802D0DE4, local
 	.4byte "__RTTI__Q23zen37CallBack1<PQ23zen17particleGenerator>"
 	.4byte 0
 	.4byte 0
-.global __vt__22PomGenOpenStarCallBack
-__vt__22PomGenOpenStarCallBack:
+.endobj lbl_802D0DE4
+.obj __vt__22PomGenOpenStarCallBack, weak
 	.4byte __RTTI__22PomGenOpenStarCallBack
 	.4byte 0
 	.4byte invoke__22PomGenOpenStarCallBackFPQ23zen17particleGenerator
+.endobj __vt__22PomGenOpenStarCallBack
 	.4byte 0
 	.4byte 0
 	.4byte 0
@@ -1840,40 +1847,57 @@ __vt__22PomGenOpenStarCallBack:
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803EAFE8:
+.obj lbl_803EAFE8, local
 	.float 28.0
-lbl_803EAFEC:
+.endobj lbl_803EAFE8
+.obj lbl_803EAFEC, local
 	.float 30.0
-lbl_803EAFF0:
+.endobj lbl_803EAFEC
+.obj lbl_803EAFF0, local
 	.float 1.0
-lbl_803EAFF4:
+.endobj lbl_803EAFF0
+.obj lbl_803EAFF4, local
 	.float 32767.0
-lbl_803EAFF8:
-	.4byte 0x3F7FFFEF
-lbl_803EAFFC:
+.endobj lbl_803EAFF4
+.obj lbl_803EAFF8, local
+	.float 0.999999
+.endobj lbl_803EAFF8
+.obj lbl_803EAFFC, local
 	.float 0.0
-lbl_803EB000:
-	.4byte 0x43300000
-	.4byte 0x80000000
-lbl_803EB008:
+.endobj lbl_803EAFFC
+.balign 8
+.obj lbl_803EB000, local
+	.8byte 0x4330000080000000
+.endobj lbl_803EB000
+.obj lbl_803EB008, local
 	.float 150.0
-lbl_803EB00C:
+.endobj lbl_803EB008
+.obj lbl_803EB00C, local
 	.float 27.0
-lbl_803EB010:
-	.4byte 0x3FE00000
-	.4byte 0x00000000
-lbl_803EB018:
-	.4byte 0x40080000
-	.4byte 0x00000000
-lbl_803EB020:
-	.4byte 0x42960000
-lbl_803EB024:
-	.4byte 0x40490FDB
-lbl_803EB028:
-	.4byte 0x43B40000
-lbl_803EB02C:
+.endobj lbl_803EB00C
+.balign 8
+.obj lbl_803EB010, local
+	.double 0.5
+.endobj lbl_803EB010
+.balign 8
+.obj lbl_803EB018, local
+	.double 3.0
+.endobj lbl_803EB018
+.obj lbl_803EB020, local
+	.float 75.0
+.endobj lbl_803EB020
+.obj lbl_803EB024, local
+	.float 3.1415927
+.endobj lbl_803EB024
+.obj lbl_803EB028, local
+	.float 360.0
+.endobj lbl_803EB028
+.obj lbl_803EB02C, local
 	.float 2.0
-lbl_803EB030:
-	.4byte 0x42480000
-lbl_803EB034:
-	.4byte 0x43480000
+.endobj lbl_803EB02C
+.obj lbl_803EB030, local
+	.float 50.0
+.endobj lbl_803EB030
+.obj lbl_803EB034, local
+	.float 200.0
+.endobj lbl_803EB034

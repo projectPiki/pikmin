@@ -1,11 +1,10 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global touchCallback__16CreatureCollPartFR5PlaneR8Vector3fR8Vector3f
-touchCallback__16CreatureCollPartFR5PlaneR8Vector3fR8Vector3f:
+.fn touchCallback__16CreatureCollPartFR5PlaneR8Vector3fR8Vector3f, global
 /* 8008E0BC 0008B01C  4E 80 00 20 */	blr 
+.endfn touchCallback__16CreatureCollPartFR5PlaneR8Vector3fR8Vector3f
 
-.global init__15CreaturePlatMgrFP8CreatureP6MapMgrP5Shape
-init__15CreaturePlatMgrFP8CreatureP6MapMgrP5Shape:
+.fn init__15CreaturePlatMgrFP8CreatureP6MapMgrP5Shape, global
 /* 8008E0C0 0008B020  7C 08 02 A6 */	mflr r0
 /* 8008E0C4 0008B024  90 01 00 04 */	stw r0, 4(r1)
 /* 8008E0C8 0008B028  38 00 00 00 */	li r0, 0
@@ -49,9 +48,9 @@ init__15CreaturePlatMgrFP8CreatureP6MapMgrP5Shape:
 /* 8008E154 0008B0B4  38 21 00 38 */	addi r1, r1, 0x38
 /* 8008E158 0008B0B8  7C 08 03 A6 */	mtlr r0
 /* 8008E15C 0008B0BC  4E 80 00 20 */	blr 
+.endfn init__15CreaturePlatMgrFP8CreatureP6MapMgrP5Shape
 
-.global release__15CreaturePlatMgrFv
-release__15CreaturePlatMgrFv:
+.fn release__15CreaturePlatMgrFv, global
 /* 8008E160 0008B0C0  7C 08 02 A6 */	mflr r0
 /* 8008E164 0008B0C4  90 01 00 04 */	stw r0, 4(r1)
 /* 8008E168 0008B0C8  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -80,9 +79,9 @@ release__15CreaturePlatMgrFv:
 /* 8008E1BC 0008B11C  38 21 00 20 */	addi r1, r1, 0x20
 /* 8008E1C0 0008B120  7C 08 03 A6 */	mtlr r0
 /* 8008E1C4 0008B124  4E 80 00 20 */	blr 
+.endfn release__15CreaturePlatMgrFv
 
-.global update__15CreaturePlatMgrFR8Graphics
-update__15CreaturePlatMgrFR8Graphics:
+.fn update__15CreaturePlatMgrFR8Graphics, global
 /* 8008E1C8 0008B128  7C 08 02 A6 */	mflr r0
 /* 8008E1CC 0008B12C  90 01 00 04 */	stw r0, 4(r1)
 /* 8008E1D0 0008B130  94 21 FF 98 */	stwu r1, -0x68(r1)
@@ -148,44 +147,52 @@ update__15CreaturePlatMgrFR8Graphics:
 /* 8008E2B8 0008B218  38 21 00 68 */	addi r1, r1, 0x68
 /* 8008E2BC 0008B21C  7C 08 03 A6 */	mtlr r0
 /* 8008E2C0 0008B220  4E 80 00 20 */	blr 
+.endfn update__15CreaturePlatMgrFR8Graphics
 
-.global update__16CreatureCollPartFv
-update__16CreatureCollPartFv:
+.fn update__16CreatureCollPartFv, weak
 /* 8008E2C4 0008B224  4E 80 00 20 */	blr 
+.endfn update__16CreatureCollPartFv
 
-.global refresh__16CreatureCollPartFR8Graphics
-refresh__16CreatureCollPartFR8Graphics:
+.fn refresh__16CreatureCollPartFR8Graphics, weak
 /* 8008E2C8 0008B228  4E 80 00 20 */	blr 
+.endfn refresh__16CreatureCollPartFR8Graphics
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802AF1E8:
+.obj lbl_802AF1E8, local
 	.asciz "creatureCollPart.cpp"
+.endobj lbl_802AF1E8
 .balign 4
-lbl_802AF200:
+.obj lbl_802AF200, local
 	.asciz "creatureCollPart"
+.endobj lbl_802AF200
 .balign 4
-lbl_802AF214:
+.obj lbl_802AF214, local
 	.asciz "CreatureCollPart"
+.endobj lbl_802AF214
 .balign 4
-lbl_802AF228:
+.obj lbl_802AF228, local
 	.asciz "CoreNode"
+.endobj lbl_802AF228
 .balign 4
-lbl_802AF234:
+.obj lbl_802AF234, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte 0
-lbl_802AF240:
+.endobj lbl_802AF234
+.obj lbl_802AF240, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte __RTTI__8CoreNode
 	.4byte 0
 	.4byte 0
+.endobj lbl_802AF240
 .balign 4
-lbl_802AF254:
+.obj lbl_802AF254, local
 	.asciz "DynCollObject"
+.endobj lbl_802AF254
 .balign 4
-lbl_802AF264:
+.obj lbl_802AF264, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte __RTTI__8CoreNode
@@ -193,11 +200,13 @@ lbl_802AF264:
 	.4byte __RTTI__4Node
 	.4byte 0
 	.4byte 0
+.endobj lbl_802AF264
 .balign 4
-lbl_802AF280:
+.obj lbl_802AF280, local
 	.asciz "DynCollShape"
+.endobj lbl_802AF280
 .balign 4
-lbl_802AF290:
+.obj lbl_802AF290, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte __RTTI__8CoreNode
@@ -207,7 +216,8 @@ lbl_802AF290:
 	.4byte __RTTI__13DynCollObject
 	.4byte 0
 	.4byte 0
-lbl_802AF2B4:
+.endobj lbl_802AF290
+.obj lbl_802AF2B4, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte __RTTI__8CoreNode
@@ -219,8 +229,8 @@ lbl_802AF2B4:
 	.4byte __RTTI__12DynCollShape
 	.4byte 0
 	.4byte 0
-.global __vt__16CreatureCollPart
-__vt__16CreatureCollPart:
+.endobj lbl_802AF2B4
+.obj __vt__16CreatureCollPart, global
 	.4byte __RTTI__16CreatureCollPart
 	.4byte 0
 	.4byte getAgeNodeType__5ANodeFv
@@ -239,31 +249,40 @@ __vt__16CreatureCollPart:
 	.4byte getShape__12DynCollShapeFv
 	.4byte jointVisible__12DynCollShapeFii
 	.4byte refresh__16CreatureCollPartFR8Graphics
+.endobj __vt__16CreatureCollPart
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-lbl_803DF058:
+.obj lbl_803DF058, local
 	.asciz "ANode"
+.endobj lbl_803DF058
 .balign 4
-__RTTI__5ANode:
+.obj __RTTI__5ANode, local
 	.4byte lbl_803DF058
 	.4byte 0
-__RTTI__8CoreNode:
+.endobj __RTTI__5ANode
+.obj __RTTI__8CoreNode, local
 	.4byte lbl_802AF228
 	.4byte lbl_802AF234
+.endobj __RTTI__8CoreNode
 .balign 4
-lbl_803DF070:
+.obj lbl_803DF070, local
 	.asciz "Node"
+.endobj lbl_803DF070
 .balign 4
-__RTTI__4Node:
+.obj __RTTI__4Node, local
 	.4byte lbl_803DF070
 	.4byte lbl_802AF240
-__RTTI__13DynCollObject:
+.endobj __RTTI__4Node
+.obj __RTTI__13DynCollObject, local
 	.4byte lbl_802AF254
 	.4byte lbl_802AF264
-__RTTI__12DynCollShape:
+.endobj __RTTI__13DynCollObject
+.obj __RTTI__12DynCollShape, local
 	.4byte lbl_802AF280
 	.4byte lbl_802AF290
-__RTTI__16CreatureCollPart:
+.endobj __RTTI__12DynCollShape
+.obj __RTTI__16CreatureCollPart, local
 	.4byte lbl_802AF214
 	.4byte lbl_802AF2B4
+.endobj __RTTI__16CreatureCollPart

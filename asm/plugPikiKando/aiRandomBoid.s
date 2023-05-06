@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global animationKeyUpdated__Q213ActRandomBoid12AnimListenerFR16PaniAnimKeyEvent
-animationKeyUpdated__Q213ActRandomBoid12AnimListenerFR16PaniAnimKeyEvent:
+.fn animationKeyUpdated__Q213ActRandomBoid12AnimListenerFR16PaniAnimKeyEvent, global
 /* 800C0A10 000BD970  7C 08 02 A6 */	mflr r0
 /* 800C0A14 000BD974  90 01 00 04 */	stw r0, 4(r1)
 /* 800C0A18 000BD978  94 21 FF 38 */	stwu r1, -0xc8(r1)
@@ -200,9 +199,9 @@ animationKeyUpdated__Q213ActRandomBoid12AnimListenerFR16PaniAnimKeyEvent:
 /* 800C0CFC 000BDC5C  38 21 00 C8 */	addi r1, r1, 0xc8
 /* 800C0D00 000BDC60  7C 08 03 A6 */	mtlr r0
 /* 800C0D04 000BDC64  4E 80 00 20 */	blr 
+.endfn animationKeyUpdated__Q213ActRandomBoid12AnimListenerFR16PaniAnimKeyEvent
 
-.global __ct__13ActRandomBoidFP4Piki
-__ct__13ActRandomBoidFP4Piki:
+.fn __ct__13ActRandomBoidFP4Piki, global
 /* 800C0D08 000BDC68  7C 08 02 A6 */	mflr r0
 /* 800C0D0C 000BDC6C  38 A0 00 01 */	li r5, 1
 /* 800C0D10 000BDC70  90 01 00 04 */	stw r0, 4(r1)
@@ -239,13 +238,13 @@ __ct__13ActRandomBoidFP4Piki:
 /* 800C0D88 000BDCE8  38 21 00 18 */	addi r1, r1, 0x18
 /* 800C0D8C 000BDCEC  7C 08 03 A6 */	mtlr r0
 /* 800C0D90 000BDCF0  4E 80 00 20 */	blr 
+.endfn __ct__13ActRandomBoidFP4Piki
 
-.global initialise__Q213ActRandomBoid11InitialiserFP6Action
-initialise__Q213ActRandomBoid11InitialiserFP6Action:
+.fn initialise__Q213ActRandomBoid11InitialiserFP6Action, global
 /* 800C0D94 000BDCF4  4E 80 00 20 */	blr 
+.endfn initialise__Q213ActRandomBoid11InitialiserFP6Action
 
-.global init__13ActRandomBoidFP8Creature
-init__13ActRandomBoidFP8Creature:
+.fn init__13ActRandomBoidFP8Creature, global
 /* 800C0D98 000BDCF8  7C 08 02 A6 */	mflr r0
 /* 800C0D9C 000BDCFC  90 01 00 04 */	stw r0, 4(r1)
 /* 800C0DA0 000BDD00  38 00 00 01 */	li r0, 1
@@ -304,13 +303,13 @@ init__13ActRandomBoidFP8Creature:
 /* 800C0E74 000BDDD4  38 21 00 48 */	addi r1, r1, 0x48
 /* 800C0E78 000BDDD8  7C 08 03 A6 */	mtlr r0
 /* 800C0E7C 000BDDDC  4E 80 00 20 */	blr 
+.endfn init__13ActRandomBoidFP8Creature
 
-.global cleanup__13ActRandomBoidFv
-cleanup__13ActRandomBoidFv:
+.fn cleanup__13ActRandomBoidFv, global
 /* 800C0E80 000BDDE0  4E 80 00 20 */	blr 
+.endfn cleanup__13ActRandomBoidFv
 
-.global exec__13ActRandomBoidFv
-exec__13ActRandomBoidFv:
+.fn exec__13ActRandomBoidFv, global
 /* 800C0E84 000BDDE4  7C 08 02 A6 */	mflr r0
 /* 800C0E88 000BDDE8  90 01 00 04 */	stw r0, 4(r1)
 /* 800C0E8C 000BDDEC  94 21 FE 38 */	stwu r1, -0x1c8(r1)
@@ -562,9 +561,9 @@ exec__13ActRandomBoidFv:
 /* 800C1234 000BE194  38 21 01 C8 */	addi r1, r1, 0x1c8
 /* 800C1238 000BE198  7C 08 03 A6 */	mtlr r0
 /* 800C123C 000BE19C  4E 80 00 20 */	blr 
+.endfn exec__13ActRandomBoidFv
 
-.global getInfo__13ActRandomBoidFPc
-getInfo__13ActRandomBoidFPc:
+.fn getInfo__13ActRandomBoidFPc, global
 /* 800C1240 000BE1A0  7C 08 02 A6 */	mflr r0
 /* 800C1244 000BE1A4  90 01 00 04 */	stw r0, 4(r1)
 /* 800C1248 000BE1A8  4C C6 31 82 */	crclr 6
@@ -582,9 +581,9 @@ getInfo__13ActRandomBoidFPc:
 /* 800C1278 000BE1D8  38 21 00 08 */	addi r1, r1, 8
 /* 800C127C 000BE1DC  7C 08 03 A6 */	mtlr r0
 /* 800C1280 000BE1E0  4E 80 00 20 */	blr 
+.endfn getInfo__13ActRandomBoidFPc
 
-.global __dt__13ActRandomBoidFv
-__dt__13ActRandomBoidFv:
+.fn __dt__13ActRandomBoidFv, weak
 /* 800C1284 000BE1E4  7C 08 02 A6 */	mflr r0
 /* 800C1288 000BE1E8  90 01 00 04 */	stw r0, 4(r1)
 /* 800C128C 000BE1EC  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -611,43 +610,51 @@ __dt__13ActRandomBoidFv:
 /* 800C12DC 000BE23C  38 21 00 18 */	addi r1, r1, 0x18
 /* 800C12E0 000BE240  7C 08 03 A6 */	mtlr r0
 /* 800C12E4 000BE244  4E 80 00 20 */	blr 
+.endfn __dt__13ActRandomBoidFv
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802B76B8:
+.obj lbl_802B76B8, local
 	.asciz "aiRandomBoid.cpp"
+.endobj lbl_802B76B8
 .balign 4
-lbl_802B76CC:
+.obj lbl_802B76CC, local
 	.asciz "aiRandomBoid"
+.endobj lbl_802B76CC
 .balign 4
-lbl_802B76DC:
+.obj lbl_802B76DC, local # Shift-JIS
 	.4byte 0x83898393
 	.4byte 0x835F8380
-	.4byte 0
-.global stateName
-stateName:
+	.byte 0
+.endobj lbl_802B76DC
+.balign 4
+.obj stateName, local
 	.4byte lbl_802B76DC
 	.4byte lbl_803E0758
 	.4byte lbl_803E0760
+.endobj stateName
 .balign 4
-lbl_802B76F4:
+.obj lbl_802B76F4, local
 	.asciz "ActRandomBoid"
+.endobj lbl_802B76F4
 .balign 4
-lbl_802B7704:
+.obj lbl_802B7704, local
 	.asciz "Receiver<Piki>"
+.endobj lbl_802B7704
 .balign 4
-lbl_802B7714:
+.obj lbl_802B7714, local
 	.4byte "__RTTI__15Receiver<4Piki>"
 	.4byte 0
 	.4byte 0
-lbl_802B7720:
+.endobj lbl_802B7714
+.obj lbl_802B7720, local
 	.4byte "__RTTI__15Receiver<4Piki>"
 	.4byte 0
 	.4byte __RTTI__6Action
 	.4byte 0
 	.4byte 0
-.global __vt__13ActRandomBoid
-__vt__13ActRandomBoid:
+.endobj lbl_802B7720
+.obj __vt__13ActRandomBoid, global
 	.4byte __RTTI__13ActRandomBoid
 	.4byte 0
 	.4byte "procMsg__15Receiver<4Piki>FP4PikiP3Msg"
@@ -673,43 +680,51 @@ __vt__13ActRandomBoid:
 	.4byte restart__6ActionFv
 	.4byte resumable__6ActionFv
 	.4byte getInfo__13ActRandomBoidFPc
+.endobj __vt__13ActRandomBoid
 .balign 4
-lbl_802B7798:
+.obj lbl_802B7798, local
 	.asciz "ActRandomBoid::Initialiser"
+.endobj lbl_802B7798
 .balign 4
-lbl_802B77B4:
+.obj lbl_802B77B4, local
 	.asciz "Action::Initialiser"
+.endobj lbl_802B77B4
 .balign 4
-lbl_802B77C8:
+.obj lbl_802B77C8, local
 	.4byte __RTTI__Q26Action11Initialiser
 	.4byte 0
 	.4byte 0
-.global __vt__Q213ActRandomBoid11Initialiser
-__vt__Q213ActRandomBoid11Initialiser:
+.endobj lbl_802B77C8
+.obj __vt__Q213ActRandomBoid11Initialiser, global
 	.4byte __RTTI__Q213ActRandomBoid11Initialiser
 	.4byte 0
 	.4byte initialise__Q213ActRandomBoid11InitialiserFP6Action
+.endobj __vt__Q213ActRandomBoid11Initialiser
 .balign 4
-lbl_802B77E0:
+.obj lbl_802B77E0, local
 	.asciz "PaniAnimKeyListener"
+.endobj lbl_802B77E0
 .balign 4
 	.4byte 0
 	.4byte 0
 	.4byte 0
 .balign 4
-lbl_802B7800:
+.obj lbl_802B7800, local
 	.asciz "ActRandomBoid::AnimListener"
+.endobj lbl_802B7800
 .balign 4
-lbl_802B781C:
+.obj lbl_802B781C, local
 	.4byte __RTTI__19PaniAnimKeyListener
 	.4byte 0
 	.4byte 0
-.global __vt__Q213ActRandomBoid12AnimListener
-__vt__Q213ActRandomBoid12AnimListener:
+.endobj lbl_802B781C
+.obj __vt__Q213ActRandomBoid12AnimListener, global
 	.4byte __RTTI__Q213ActRandomBoid12AnimListener
 	.4byte 0
 	.4byte animationKeyUpdated__Q213ActRandomBoid12AnimListenerFR16PaniAnimKeyEvent
-lbl_802B7834:
+.endobj __vt__Q213ActRandomBoid12AnimListener
+.balign 4
+.obj lbl_802B7834, local
 	.4byte .L_800A7908
 	.4byte .L_800A7930
 	.4byte .L_800A7944
@@ -721,115 +736,160 @@ lbl_802B7834:
 	.4byte .L_800A791C
 	.4byte .L_800A79D0
 	.4byte .L_800A79BC
+.endobj lbl_802B7834
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-lbl_803E0708:
+.obj lbl_803E0708, local
 	.float 0.0
-lbl_803E070C:
+.endobj lbl_803E0708
+.obj lbl_803E070C, local
 	.float 0.0
-lbl_803E0710:
+.endobj lbl_803E070C
+.obj lbl_803E0710, local
 	.float 0.0
-lbl_803E0714:
+.endobj lbl_803E0710
+.obj lbl_803E0714, local
 	.float 0.0
-lbl_803E0718:
+.endobj lbl_803E0714
+.obj lbl_803E0718, local
 	.float 0.0
-lbl_803E071C:
+.endobj lbl_803E0718
+.obj lbl_803E071C, local
 	.float 0.0
-lbl_803E0720:
+.endobj lbl_803E071C
+.obj lbl_803E0720, local
 	.float 0.0
-lbl_803E0724:
+.endobj lbl_803E0720
+.obj lbl_803E0724, local
 	.float 0.0
-lbl_803E0728:
+.endobj lbl_803E0724
+.obj lbl_803E0728, local
 	.float 0.0
-lbl_803E072C:
+.endobj lbl_803E0728
+.obj lbl_803E072C, local
 	.float 0.0
-lbl_803E0730:
+.endobj lbl_803E072C
+.obj lbl_803E0730, local
 	.float 0.0
-lbl_803E0734:
+.endobj lbl_803E0730
+.obj lbl_803E0734, local
 	.float 0.0
-lbl_803E0738:
+.endobj lbl_803E0734
+.obj lbl_803E0738, local
 	.float 0.0
-lbl_803E073C:
+.endobj lbl_803E0738
+.obj lbl_803E073C, local
 	.float 0.0
-lbl_803E0740:
+.endobj lbl_803E073C
+.obj lbl_803E0740, local
 	.float 0.0
-lbl_803E0744:
+.endobj lbl_803E0740
+.obj lbl_803E0744, local
 	.float 0.0
-lbl_803E0748:
+.endobj lbl_803E0744
+.obj lbl_803E0748, local
 	.float 0.0
-lbl_803E074C:
+.endobj lbl_803E0748
+.obj lbl_803E074C, local
 	.float 0.0
-lbl_803E0750:
+.endobj lbl_803E074C
+.obj lbl_803E0750, local
 	.float 0.0
-lbl_803E0754:
+.endobj lbl_803E0750
+.obj lbl_803E0754, local
 	.float 0.0
+.endobj lbl_803E0754
 .balign 4
-lbl_803E0758:
+.obj lbl_803E0758, local
 	.asciz "Boid"
+.endobj lbl_803E0758
 .balign 4
-lbl_803E0760:
+.obj lbl_803E0760, local # Shift-JIS
 	.4byte 0x92E28E7E
 	.4byte 0x00000000
+.endobj lbl_803E0760
 .balign 4
-lbl_803E0768:
+.obj lbl_803E0768, local
 	.asciz "%s"
+.endobj lbl_803E0768
 .balign 4
-"__RTTI__15Receiver<4Piki>":
+.obj "__RTTI__15Receiver<4Piki>", local
 	.4byte lbl_802B7704
 	.4byte 0
+.endobj "__RTTI__15Receiver<4Piki>"
 .balign 4
-lbl_803E0774:
+.obj lbl_803E0774, local
 	.asciz "Action"
+.endobj lbl_803E0774
 .balign 4
-__RTTI__6Action:
+.obj __RTTI__6Action, local
 	.4byte lbl_803E0774
 	.4byte lbl_802B7714
-__RTTI__13ActRandomBoid:
+.endobj __RTTI__6Action
+.obj __RTTI__13ActRandomBoid, local
 	.4byte lbl_802B76F4
 	.4byte lbl_802B7720
-__RTTI__Q26Action11Initialiser:
+.endobj __RTTI__13ActRandomBoid
+.obj __RTTI__Q26Action11Initialiser, local
 	.4byte lbl_802B77B4
 	.4byte 0
-__RTTI__Q213ActRandomBoid11Initialiser:
+.endobj __RTTI__Q26Action11Initialiser
+.obj __RTTI__Q213ActRandomBoid11Initialiser, local
 	.4byte lbl_802B7798
 	.4byte lbl_802B77C8
-__RTTI__19PaniAnimKeyListener:
+.endobj __RTTI__Q213ActRandomBoid11Initialiser
+.obj __RTTI__19PaniAnimKeyListener, local
 	.4byte lbl_802B77E0
 	.4byte 0
-__RTTI__Q213ActRandomBoid12AnimListener:
+.endobj __RTTI__19PaniAnimKeyListener
+.obj __RTTI__Q213ActRandomBoid12AnimListener, local
 	.4byte lbl_802B7800
 	.4byte lbl_802B781C
+.endobj __RTTI__Q213ActRandomBoid12AnimListener
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803E9658:
+.obj lbl_803E9658, local
 	.float 1.0
-lbl_803E965C:
+.endobj lbl_803E9658
+.obj lbl_803E965C, local
 	.float 32767.0
-lbl_803E9660:
+.endobj lbl_803E965C
+.obj lbl_803E9660, local
 	.float 2.0
-lbl_803E9664:
+.endobj lbl_803E9660
+.obj lbl_803E9664, local
 	.float 3.1415927
-lbl_803E9668:
+.endobj lbl_803E9664
+.obj lbl_803E9668, local
 	.float 0.8
-lbl_803E966C:
+.endobj lbl_803E9668
+.obj lbl_803E966C, local
 	.float -1.2
-lbl_803E9670:
+.endobj lbl_803E966C
+.obj lbl_803E9670, local
 	.float 0.0
+.endobj lbl_803E9670
 .balign 8
-lbl_803E9678:
-	.4byte 0x43300000
-	.4byte 0x80000000
-lbl_803E9680:
+.obj lbl_803E9678, local
+	.8byte 0x4330000080000000
+.endobj lbl_803E9678
+.obj lbl_803E9680, local
 	.float 10.0
-lbl_803E9684:
+.endobj lbl_803E9680
+.obj lbl_803E9684, local
 	.float 12.0
-lbl_803E9688:
+.endobj lbl_803E9684
+.obj lbl_803E9688, local
 	.float 0.5
-lbl_803E968C:
+.endobj lbl_803E9688
+.obj lbl_803E968C, local
 	.float 50.0
-lbl_803E9690:
+.endobj lbl_803E968C
+.obj lbl_803E9690, local
 	.float 0.65
-lbl_803E9694:
+.endobj lbl_803E9690
+.obj lbl_803E9694, local
 	.float 0.75
+.endobj lbl_803E9694

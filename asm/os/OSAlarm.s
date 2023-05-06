@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global OSInitAlarm
-OSInitAlarm:
+.fn OSInitAlarm, global
 /* 801F60C0 001F3020  7C 08 02 A6 */	mflr r0
 /* 801F60C4 001F3024  38 60 00 08 */	li r3, 8
 /* 801F60C8 001F3028  90 01 00 04 */	stw r0, 4(r1)
@@ -22,15 +21,15 @@ OSInitAlarm:
 /* 801F6100 001F3060  38 21 00 08 */	addi r1, r1, 8
 /* 801F6104 001F3064  7C 08 03 A6 */	mtlr r0
 /* 801F6108 001F3068  4E 80 00 20 */	blr 
+.endfn OSInitAlarm
 
-.global OSCreateAlarm
-OSCreateAlarm:
+.fn OSCreateAlarm, global
 /* 801F610C 001F306C  38 00 00 00 */	li r0, 0
 /* 801F6110 001F3070  90 03 00 00 */	stw r0, 0(r3)
 /* 801F6114 001F3074  4E 80 00 20 */	blr 
+.endfn OSCreateAlarm
 
-.global InsertAlarm
-InsertAlarm:
+.fn InsertAlarm, local
 /* 801F6118 001F3078  7C 08 02 A6 */	mflr r0
 /* 801F611C 001F307C  90 01 00 04 */	stw r0, 4(r1)
 /* 801F6120 001F3080  94 21 FF C0 */	stwu r1, -0x40(r1)
@@ -190,9 +189,9 @@ InsertAlarm:
 /* 801F635C 001F32BC  38 21 00 40 */	addi r1, r1, 0x40
 /* 801F6360 001F32C0  7C 08 03 A6 */	mtlr r0
 /* 801F6364 001F32C4  4E 80 00 20 */	blr 
+.endfn InsertAlarm
 
-.global OSSetAlarm
-OSSetAlarm:
+.fn OSSetAlarm, global
 /* 801F6368 001F32C8  7C 08 02 A6 */	mflr r0
 /* 801F636C 001F32CC  90 01 00 04 */	stw r0, 4(r1)
 /* 801F6370 001F32D0  94 21 FF C8 */	stwu r1, -0x38(r1)
@@ -219,9 +218,9 @@ OSSetAlarm:
 /* 801F63C4 001F3324  38 21 00 38 */	addi r1, r1, 0x38
 /* 801F63C8 001F3328  7C 08 03 A6 */	mtlr r0
 /* 801F63CC 001F332C  4E 80 00 20 */	blr 
+.endfn OSSetAlarm
 
-.global OSSetAbsAlarm
-OSSetAbsAlarm:
+.fn OSSetAbsAlarm, global
 /* 801F63D0 001F3330  7C 08 02 A6 */	mflr r0
 /* 801F63D4 001F3334  90 01 00 04 */	stw r0, 4(r1)
 /* 801F63D8 001F3338  94 21 FF C8 */	stwu r1, -0x38(r1)
@@ -247,9 +246,9 @@ OSSetAbsAlarm:
 /* 801F6428 001F3388  38 21 00 38 */	addi r1, r1, 0x38
 /* 801F642C 001F338C  7C 08 03 A6 */	mtlr r0
 /* 801F6430 001F3390  4E 80 00 20 */	blr 
+.endfn OSSetAbsAlarm
 
-.global OSCancelAlarm
-OSCancelAlarm:
+.fn OSCancelAlarm, global
 /* 801F6434 001F3394  7C 08 02 A6 */	mflr r0
 /* 801F6438 001F3398  90 01 00 04 */	stw r0, 4(r1)
 /* 801F643C 001F339C  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -329,9 +328,9 @@ OSCancelAlarm:
 /* 801F6544 001F34A4  83 A1 00 14 */	lwz r29, 0x14(r1)
 /* 801F6548 001F34A8  38 21 00 20 */	addi r1, r1, 0x20
 /* 801F654C 001F34AC  4E 80 00 20 */	blr 
+.endfn OSCancelAlarm
 
-.global DecrementerExceptionCallback
-DecrementerExceptionCallback:
+.fn DecrementerExceptionCallback, local
 /* 801F6550 001F34B0  7C 08 02 A6 */	mflr r0
 /* 801F6554 001F34B4  90 01 00 04 */	stw r0, 4(r1)
 /* 801F6558 001F34B8  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -475,9 +474,9 @@ DecrementerExceptionCallback:
 /* 801F6754 001F36B4  83 81 00 18 */	lwz r28, 0x18(r1)
 /* 801F6758 001F36B8  38 21 00 28 */	addi r1, r1, 0x28
 /* 801F675C 001F36BC  4E 80 00 20 */	blr 
+.endfn DecrementerExceptionCallback
 
-.global DecrementerExceptionHandler
-DecrementerExceptionHandler:
+.fn DecrementerExceptionHandler, local
 /* 801F6760 001F36C0  90 04 00 00 */	stw r0, 0(r4)
 /* 801F6764 001F36C4  90 24 00 04 */	stw r1, 4(r4)
 /* 801F6768 001F36C8  90 44 00 08 */	stw r2, 8(r4)
@@ -497,6 +496,7 @@ DecrementerExceptionHandler:
 /* 801F67A0 001F3700  7C 17 E2 A6 */	mfspr r0, 0x397
 /* 801F67A4 001F3704  90 04 01 C0 */	stw r0, 0x1c0(r4)
 /* 801F67A8 001F3708  4B FF FD A8 */	b DecrementerExceptionCallback
+.endfn DecrementerExceptionHandler
 
 .section .sbss, "wa"
 .balign 8

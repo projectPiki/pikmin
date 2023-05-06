@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global __cvt_fp2unsigned
-__cvt_fp2unsigned:
+.fn __cvt_fp2unsigned, global
 /* 80214DC8 00211D28  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 80214DCC 00211D2C  3C 80 80 22 */	lis r4, __constants@h
 /* 80214DD0 00211D30  60 84 27 68 */	ori r4, r4, __constants@l
@@ -27,9 +26,9 @@ __cvt_fp2unsigned:
 .L_80214E1C:
 /* 80214E1C 00211D7C  38 21 00 10 */	addi r1, r1, 0x10
 /* 80214E20 00211D80  4E 80 00 20 */	blr 
+.endfn __cvt_fp2unsigned
 
-.global __save_fpr
-__save_fpr:
+.fn __save_fpr, local
 /* 80214E24 00211D84  D9 CB FF 70 */	stfd f14, -0x90(r11)
 /* 80214E28 00211D88  D9 EB FF 78 */	stfd f15, -0x88(r11)
 /* 80214E2C 00211D8C  DA 0B FF 80 */	stfd f16, -0x80(r11)
@@ -37,36 +36,36 @@ __save_fpr:
 /* 80214E34 00211D94  DA 4B FF 90 */	stfd f18, -0x70(r11)
 /* 80214E38 00211D98  DA 6B FF 98 */	stfd f19, -0x68(r11)
 
-.global func_80214E3C
-func_80214E3C:
+.global _savefpr_20
+_savefpr_20:
 /* 80214E3C 00211D9C  DA 8B FF A0 */	stfd f20, -0x60(r11)
 /* 80214E40 00211DA0  DA AB FF A8 */	stfd f21, -0x58(r11)
 /* 80214E44 00211DA4  DA CB FF B0 */	stfd f22, -0x50(r11)
 /* 80214E48 00211DA8  DA EB FF B8 */	stfd f23, -0x48(r11)
 
-.global func_80214E4C
-func_80214E4C:
+.global _savefpr_24
+_savefpr_24:
 /* 80214E4C 00211DAC  DB 0B FF C0 */	stfd f24, -0x40(r11)
 /* 80214E50 00211DB0  DB 2B FF C8 */	stfd f25, -0x38(r11)
 
-.global func_80214E54
-func_80214E54:
+.global _savefpr_26
+_savefpr_26:
 /* 80214E54 00211DB4  DB 4B FF D0 */	stfd f26, -0x30(r11)
 /* 80214E58 00211DB8  DB 6B FF D8 */	stfd f27, -0x28(r11)
 /* 80214E5C 00211DBC  DB 8B FF E0 */	stfd f28, -0x20(r11)
 
-.global func_80214E60
-func_80214E60:
+.global _savefpr_29
+_savefpr_29:
 /* 80214E60 00211DC0  DB AB FF E8 */	stfd f29, -0x18(r11)
 
-.global func_80214E64
-func_80214E64:
+.global _savefpr_30
+_savefpr_30:
 /* 80214E64 00211DC4  DB CB FF F0 */	stfd f30, -0x10(r11)
 /* 80214E68 00211DC8  DB EB FF F8 */	stfd f31, -8(r11)
 /* 80214E6C 00211DCC  4E 80 00 20 */	blr 
+.endfn __save_fpr
 
-.global __restore_fpr
-__restore_fpr:
+.fn __restore_fpr, local
 /* 80214E70 00211DD0  C9 CB FF 70 */	lfd f14, -0x90(r11)
 /* 80214E74 00211DD4  C9 EB FF 78 */	lfd f15, -0x88(r11)
 /* 80214E78 00211DD8  CA 0B FF 80 */	lfd f16, -0x80(r11)
@@ -74,36 +73,36 @@ __restore_fpr:
 /* 80214E80 00211DE0  CA 4B FF 90 */	lfd f18, -0x70(r11)
 /* 80214E84 00211DE4  CA 6B FF 98 */	lfd f19, -0x68(r11)
 
-.global func_80214E88
-func_80214E88:
+.global _restfpr_20
+_restfpr_20:
 /* 80214E88 00211DE8  CA 8B FF A0 */	lfd f20, -0x60(r11)
 /* 80214E8C 00211DEC  CA AB FF A8 */	lfd f21, -0x58(r11)
 /* 80214E90 00211DF0  CA CB FF B0 */	lfd f22, -0x50(r11)
 /* 80214E94 00211DF4  CA EB FF B8 */	lfd f23, -0x48(r11)
 
-.global func_80214E98
-func_80214E98:
+.global _restfpr_24
+_restfpr_24:
 /* 80214E98 00211DF8  CB 0B FF C0 */	lfd f24, -0x40(r11)
 /* 80214E9C 00211DFC  CB 2B FF C8 */	lfd f25, -0x38(r11)
 
-.global func_80214EA0
-func_80214EA0:
+.global _restfpr_26
+_restfpr_26:
 /* 80214EA0 00211E00  CB 4B FF D0 */	lfd f26, -0x30(r11)
 /* 80214EA4 00211E04  CB 6B FF D8 */	lfd f27, -0x28(r11)
 /* 80214EA8 00211E08  CB 8B FF E0 */	lfd f28, -0x20(r11)
 
-.global func_80214EAC
-func_80214EAC:
+.global _restfpr_29
+_restfpr_29:
 /* 80214EAC 00211E0C  CB AB FF E8 */	lfd f29, -0x18(r11)
 
-.global func_80214EB0
-func_80214EB0:
+.global _restfpr_30
+_restfpr_30:
 /* 80214EB0 00211E10  CB CB FF F0 */	lfd f30, -0x10(r11)
 /* 80214EB4 00211E14  CB EB FF F8 */	lfd f31, -8(r11)
 /* 80214EB8 00211E18  4E 80 00 20 */	blr 
+.endfn __restore_fpr
 
-.global __div2u
-__div2u:
+.fn __div2u, global
 /* 80214EBC 00211E1C  2C 03 00 00 */	cmpwi r3, 0
 /* 80214EC0 00211E20  7C 60 00 34 */	cntlzw r0, r3
 /* 80214EC4 00211E24  7C 89 00 34 */	cntlzw r9, r4
@@ -172,9 +171,9 @@ __div2u:
 /* 80214F9C 00211EFC  38 80 00 00 */	li r4, 0
 /* 80214FA0 00211F00  38 60 00 00 */	li r3, 0
 /* 80214FA4 00211F04  4E 80 00 20 */	blr 
+.endfn __div2u
 
-.global __div2i
-__div2i:
+.fn __div2i, global
 /* 80214FA8 00211F08  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 80214FAC 00211F0C  54 69 00 01 */	rlwinm. r9, r3, 0, 0, 0
 /* 80214FB0 00211F10  41 82 00 0C */	beq .L_80214FBC
@@ -266,9 +265,9 @@ __div2i:
 .L_802150D8:
 /* 802150D8 00212038  38 21 00 10 */	addi r1, r1, 0x10
 /* 802150DC 0021203C  4E 80 00 20 */	blr 
+.endfn __div2i
 
-.global __mod2u
-__mod2u:
+.fn __mod2u, global
 /* 802150E0 00212040  2C 03 00 00 */	cmpwi r3, 0
 /* 802150E4 00212044  7C 60 00 34 */	cntlzw r0, r3
 /* 802150E8 00212048  7C 89 00 34 */	cntlzw r9, r4
@@ -335,9 +334,9 @@ __mod2u:
 /* 802151BC 0021211C  4E 80 00 20 */	blr 
 .L_802151C0:
 /* 802151C0 00212120  4E 80 00 20 */	blr 
+.endfn __mod2u
 
-.global __mod2i
-__mod2i:
+.fn __mod2i, global
 /* 802151C4 00212124  2F 83 00 00 */	cmpwi cr7, r3, 0
 /* 802151C8 00212128  40 9C 00 0C */	bge cr7, .L_802151D4
 /* 802151CC 0021212C  20 84 00 00 */	subfic r4, r4, 0
@@ -417,9 +416,9 @@ __mod2i:
 /* 802152C8 00212228  7C 63 01 90 */	subfze r3, r3
 .L_802152CC:
 /* 802152CC 0021222C  4E 80 00 20 */	blr 
+.endfn __mod2i
 
-.global __shl2i
-__shl2i:
+.fn __shl2i, global
 /* 802152D0 00212230  21 05 00 20 */	subfic r8, r5, 0x20
 /* 802152D4 00212234  31 25 FF E0 */	addic r9, r5, -32
 /* 802152D8 00212238  7C 63 28 30 */	slw r3, r3, r5
@@ -429,9 +428,9 @@ __shl2i:
 /* 802152E8 00212248  7C 63 53 78 */	or r3, r3, r10
 /* 802152EC 0021224C  7C 84 28 30 */	slw r4, r4, r5
 /* 802152F0 00212250  4E 80 00 20 */	blr 
+.endfn __shl2i
 
-.global __shr2u
-__shr2u:
+.fn __shr2u, global
 /* 802152F4 00212254  21 05 00 20 */	subfic r8, r5, 0x20
 /* 802152F8 00212258  31 25 FF E0 */	addic r9, r5, -32
 /* 802152FC 0021225C  7C 84 2C 30 */	srw r4, r4, r5
@@ -441,9 +440,9 @@ __shr2u:
 /* 8021530C 0021226C  7C 84 53 78 */	or r4, r4, r10
 /* 80215310 00212270  7C 63 2C 30 */	srw r3, r3, r5
 /* 80215314 00212274  4E 80 00 20 */	blr 
+.endfn __shr2u
 
-.global __shr2i
-__shr2i:
+.fn __shr2i, global
 /* 80215318 00212278  21 05 00 20 */	subfic r8, r5, 0x20
 /* 8021531C 0021227C  35 25 FF E0 */	addic. r9, r5, -32
 /* 80215320 00212280  7C 84 2C 30 */	srw r4, r4, r5
@@ -455,9 +454,9 @@ __shr2i:
 .L_80215338:
 /* 80215338 00212298  7C 63 2E 30 */	sraw r3, r3, r5
 /* 8021533C 0021229C  4E 80 00 20 */	blr 
+.endfn __shr2i
 
-.global __cvt_sll_flt
-__cvt_sll_flt:
+.fn __cvt_sll_flt, global
 /* 80215340 002122A0  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 80215344 002122A4  54 65 00 01 */	rlwinm. r5, r3, 0, 0, 0
 /* 80215348 002122A8  41 82 00 0C */	beq .L_80215354
@@ -507,9 +506,9 @@ __cvt_sll_flt:
 /* 802153E8 00212348  FC 20 08 18 */	frsp f1, f1
 /* 802153EC 0021234C  38 21 00 10 */	addi r1, r1, 0x10
 /* 802153F0 00212350  4E 80 00 20 */	blr 
+.endfn __cvt_sll_flt
 
-.global __cvt_dbl_usll
-__cvt_dbl_usll:
+.fn __cvt_dbl_usll, global
 /* 802153F4 00212354  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 802153F8 00212358  D8 21 00 08 */	stfd f1, 8(r1)
 /* 802153FC 0021235C  80 61 00 08 */	lwz r3, 8(r1)
@@ -567,14 +566,12 @@ __cvt_dbl_usll:
 .L_802154B8:
 /* 802154B8 00212418  38 21 00 10 */	addi r1, r1, 0x10
 /* 802154BC 0021241C  4E 80 00 20 */	blr 
+.endfn __cvt_dbl_usll
 
 .section .rodata, "a"  # 0x80221FE0 - 0x80222DC0
 .balign 8
-.global __constants
-__constants:
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x41F00000
-	.4byte 0x00000000
-	.4byte 0x41E00000
-	.4byte 0x00000000
+.obj __constants, local
+	.8byte 0x0000000000000000
+	.8byte 0x41F0000000000000
+	.8byte 0x41E0000000000000
+.endobj __constants

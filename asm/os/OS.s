@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global OSGetConsoleType
-OSGetConsoleType:
+.fn OSGetConsoleType, global
 /* 801F59A8 001F2908  80 6D 31 C8 */	lwz r3, BootInfo@sda21(r13)
 /* 801F59AC 001F290C  28 03 00 00 */	cmplwi r3, 0
 /* 801F59B0 001F2910  41 82 00 10 */	beq .L_801F59C0
@@ -14,9 +13,9 @@ OSGetConsoleType:
 /* 801F59C8 001F2928  48 00 00 04 */	b .L_801F59CC
 .L_801F59CC:
 /* 801F59CC 001F292C  4E 80 00 20 */	blr 
+.endfn OSGetConsoleType
 
-.global OSInit
-OSInit:
+.fn OSInit, global
 /* 801F59D0 001F2930  7C 08 02 A6 */	mflr r0
 /* 801F59D4 001F2934  90 01 00 04 */	stw r0, 4(r1)
 /* 801F59D8 001F2938  94 21 FF F0 */	stwu r1, -0x10(r1)
@@ -218,22 +217,22 @@ OSInit:
 /* 801F5CA0 001F2C00  7C 08 03 A6 */	mtlr r0
 /* 801F5CA4 001F2C04  38 21 00 10 */	addi r1, r1, 0x10
 /* 801F5CA8 001F2C08  4E 80 00 20 */	blr 
+.endfn OSInit
 
-.global OSExceptionInit
-OSExceptionInit:
+.fn OSExceptionInit, local
 /* 801F5CAC 001F2C0C  7C 08 02 A6 */	mflr r0
 /* 801F5CB0 001F2C10  90 01 00 04 */	stw r0, 4(r1)
 /* 801F5CB4 001F2C14  94 21 FF C8 */	stwu r1, -0x38(r1)
 /* 801F5CB8 001F2C18  BE 81 00 08 */	stmw r20, 8(r1)
 /* 801F5CBC 001F2C1C  3C 60 80 00 */	lis r3, 0x80000060@ha
 /* 801F5CC0 001F2C20  80 03 00 60 */	lwz r0, 0x80000060@l(r3)
-/* 801F5CC4 001F2C24  3C 80 80 1F */	lis r4, .L_801F5FEC@ha
-/* 801F5CC8 001F2C28  3B C4 5F EC */	addi r30, r4, .L_801F5FEC@l
+/* 801F5CC4 001F2C24  3C 80 80 1F */	lis r4, __OSEVSetNumber@ha
+/* 801F5CC8 001F2C28  3B C4 5F EC */	addi r30, r4, __OSEVSetNumber@l
 /* 801F5CCC 001F2C2C  3C A0 80 1F */	lis r5, OSExceptionVector@ha
 /* 801F5CD0 001F2C30  83 3E 00 00 */	lwz r25, 0(r30)
-/* 801F5CD4 001F2C34  3C 80 80 1F */	lis r4, .L_801F601C@ha
+/* 801F5CD4 001F2C34  3C 80 80 1F */	lis r4, __OSEVEnd@ha
 /* 801F5CD8 001F2C38  38 A5 5F 84 */	addi r5, r5, OSExceptionVector@l
-/* 801F5CDC 001F2C3C  38 84 60 1C */	addi r4, r4, .L_801F601C@l
+/* 801F5CDC 001F2C3C  38 84 60 1C */	addi r4, r4, __OSEVEnd@l
 /* 801F5CE0 001F2C40  3C C0 80 2E */	lis r6, lbl_802E72A8@ha
 /* 801F5CE4 001F2C44  28 00 00 00 */	cmplwi r0, 0
 /* 801F5CE8 001F2C48  7C B8 2B 78 */	mr r24, r5
@@ -269,8 +268,8 @@ OSExceptionInit:
 /* 801F5D5C 001F2CBC  3B 40 00 00 */	li r26, 0
 /* 801F5D60 001F2CC0  48 00 00 04 */	b .L_801F5D64
 .L_801F5D64:
-/* 801F5D64 001F2CC4  3C 60 80 1F */	lis r3, .L_801F5FDC@ha
-/* 801F5D68 001F2CC8  3A A3 5F DC */	addi r21, r3, .L_801F5FDC@l
+/* 801F5D64 001F2CC4  3C 60 80 1F */	lis r3, __DBVECTOR@ha
+/* 801F5D68 001F2CC8  3A A3 5F DC */	addi r21, r3, __DBVECTOR@l
 /* 801F5D6C 001F2CCC  3E C0 60 00 */	lis r22, 0x6000
 /* 801F5D70 001F2CD0  48 00 00 04 */	b .L_801F5D74
 .L_801F5D74:
@@ -398,9 +397,11 @@ OSExceptionInit:
 /* 801F5F20 001F2E80  38 21 00 38 */	addi r1, r1, 0x38
 /* 801F5F24 001F2E84  7C 08 03 A6 */	mtlr r0
 /* 801F5F28 001F2E88  4E 80 00 20 */	blr 
+.endfn OSExceptionInit
 
-.global __OSDBIntegrator
-__OSDBIntegrator:
+.fn __OSDBIntegrator, local
+.global __OSDBINTSTART
+__OSDBINTSTART:
 /* 801F5F2C 001F2E8C  38 A0 00 40 */	li r5, 0x40
 /* 801F5F30 001F2E90  7C 68 02 A6 */	mflr r3
 /* 801F5F34 001F2E94  90 65 00 0C */	stw r3, 0xc(r5)
@@ -410,13 +411,19 @@ __OSDBIntegrator:
 /* 801F5F44 001F2EA4  38 60 00 30 */	li r3, 0x30
 /* 801F5F48 001F2EA8  7C 60 01 24 */	mtmsr r3
 /* 801F5F4C 001F2EAC  4E 80 00 20 */	blr 
+.endfn __OSDBIntegrator
 
-.global __OSDBJump
-__OSDBJump:
+.fn __OSDBJump, local
+.global __OSDBINTEND
+__OSDBINTEND:
+.global __OSDBJUMPSTART
+__OSDBJUMPSTART:
 /* 801F5F50 001F2EB0  48 00 00 63 */	bla 0x60
+.global __OSDBJUMPEND
+__OSDBJUMPEND:
+.endfn __OSDBJump
 
-.global __OSSetExceptionHandler
-__OSSetExceptionHandler:
+.fn __OSSetExceptionHandler, global
 /* 801F5F54 001F2EB4  54 60 06 3E */	clrlwi r0, r3, 0x18
 /* 801F5F58 001F2EB8  80 6D 31 D4 */	lwz r3, OSExceptionTable@sda21(r13)
 /* 801F5F5C 001F2EBC  54 00 10 3A */	slwi r0, r0, 2
@@ -424,17 +431,19 @@ __OSSetExceptionHandler:
 /* 801F5F64 001F2EC4  80 65 00 00 */	lwz r3, 0(r5)
 /* 801F5F68 001F2EC8  90 85 00 00 */	stw r4, 0(r5)
 /* 801F5F6C 001F2ECC  4E 80 00 20 */	blr 
+.endfn __OSSetExceptionHandler
 
-.global __OSGetExceptionHandler
-__OSGetExceptionHandler:
+.fn __OSGetExceptionHandler, global
 /* 801F5F70 001F2ED0  54 60 06 3E */	clrlwi r0, r3, 0x18
 /* 801F5F74 001F2ED4  80 6D 31 D4 */	lwz r3, OSExceptionTable@sda21(r13)
 /* 801F5F78 001F2ED8  54 00 10 3A */	slwi r0, r0, 2
 /* 801F5F7C 001F2EDC  7C 63 00 2E */	lwzx r3, r3, r0
 /* 801F5F80 001F2EE0  4E 80 00 20 */	blr 
+.endfn __OSGetExceptionHandler
 
-.global OSExceptionVector
-OSExceptionVector:
+.fn OSExceptionVector, local
+.global __OSEVStart
+__OSEVStart:
 /* 801F5F84 001F2EE4  7C 90 43 A6 */	mtspr 0x110, r4
 /* 801F5F88 001F2EE8  80 80 00 C0 */	lwz r4, 0xc0(0)
 /* 801F5F8C 001F2EEC  90 64 00 0C */	stw r3, 0xc(r4)
@@ -457,12 +466,14 @@ OSExceptionVector:
 /* 801F5FD0 001F2F30  7C 7B 02 A6 */	mfspr r3, 0x1b
 /* 801F5FD4 001F2F34  90 64 01 9C */	stw r3, 0x19c(r4)
 /* 801F5FD8 001F2F38  7C 65 1B 78 */	mr r5, r3
-.L_801F5FDC:
+.global __DBVECTOR
+__DBVECTOR:
 /* 801F5FDC 001F2F3C  60 00 00 00 */	nop 
 /* 801F5FE0 001F2F40  7C 60 00 A6 */	mfmsr r3
 /* 801F5FE4 001F2F44  60 63 00 30 */	ori r3, r3, 0x30
 /* 801F5FE8 001F2F48  7C 7B 03 A6 */	mtspr 0x1b, r3
-.L_801F5FEC:
+.global __OSEVSetNumber
+__OSEVSetNumber:
 /* 801F5FEC 001F2F4C  38 60 00 00 */	li r3, 0
 /* 801F5FF0 001F2F50  80 80 00 D4 */	lwz r4, 0xd4(0)
 /* 801F5FF4 001F2F54  54 A5 07 BD */	rlwinm. r5, r5, 0, 0x1e, 0x1e
@@ -476,11 +487,12 @@ OSExceptionVector:
 /* 801F6010 001F2F70  80 A5 30 00 */	lwz r5, 0x3000(r5)
 /* 801F6014 001F2F74  7C BA 03 A6 */	mtspr 0x1a, r5
 /* 801F6018 001F2F78  4C 00 00 64 */	rfi 
-.L_801F601C:
+.global __OSEVEnd
+__OSEVEnd:
 /* 801F601C 001F2F7C  60 00 00 00 */	nop 
+.endfn OSExceptionVector
 
-.global OSDefaultExceptionHandler
-OSDefaultExceptionHandler:
+.fn OSDefaultExceptionHandler, local
 /* 801F6020 001F2F80  90 04 00 00 */	stw r0, 0(r4)
 /* 801F6024 001F2F84  90 24 00 04 */	stw r1, 4(r4)
 /* 801F6028 001F2F88  90 44 00 08 */	stw r2, 8(r4)
@@ -502,9 +514,9 @@ OSDefaultExceptionHandler:
 /* 801F6068 001F2FC8  7C B2 02 A6 */	mfdsisr r5
 /* 801F606C 001F2FCC  7C D3 02 A6 */	mfdar r6
 /* 801F6070 001F2FD0  48 00 19 E8 */	b __OSUnhandledException
+.endfn OSDefaultExceptionHandler
 
-.global __OSPSInit
-__OSPSInit:
+.fn __OSPSInit, global
 /* 801F6074 001F2FD4  7C 08 02 A6 */	mflr r0
 /* 801F6078 001F2FD8  90 01 00 04 */	stw r0, 4(r1)
 /* 801F607C 001F2FDC  94 21 FF F8 */	stwu r1, -8(r1)
@@ -519,57 +531,71 @@ __OSPSInit:
 /* 801F60A0 001F3000  38 21 00 08 */	addi r1, r1, 8
 /* 801F60A4 001F3004  7C 08 03 A6 */	mtlr r0
 /* 801F60A8 001F3008  4E 80 00 20 */	blr 
+.endfn __OSPSInit
 
-.global __OSGetDIConfig
-__OSGetDIConfig:
+.fn __OSGetDIConfig, global
 /* 801F60AC 001F300C  3C 60 CC 00 */	lis r3, 0xCC006000@ha
 /* 801F60B0 001F3010  38 63 60 00 */	addi r3, r3, 0xCC006000@l
 /* 801F60B4 001F3014  80 03 00 24 */	lwz r0, 0x24(r3)
 /* 801F60B8 001F3018  54 03 06 3E */	clrlwi r3, r0, 0x18
 /* 801F60BC 001F301C  4E 80 00 20 */	blr 
+.endfn __OSGetDIConfig
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802E72A8:
+.obj lbl_802E72A8, local
 	.asciz "\nDolphin OS $Revision: 37 $.\n"
+.endobj lbl_802E72A8
 .balign 4
-lbl_802E72C8:
+.obj lbl_802E72C8, local
 	.asciz "Kernel built : %s %s\n"
+.endobj lbl_802E72C8
 .balign 4
-lbl_802E72E0:
+.obj lbl_802E72E0, local
 	.asciz "Jul 19 2001"
+.endobj lbl_802E72E0
 .balign 4
-lbl_802E72EC:
+.obj lbl_802E72EC, local
 	.asciz "05:43:42"
+.endobj lbl_802E72EC
 .balign 4
-lbl_802E72F8:
+.obj lbl_802E72F8, local
 	.asciz "Console Type : "
+.endobj lbl_802E72F8
 .balign 4
-lbl_802E7308:
+.obj lbl_802E7308, local
 	.asciz "Retail %d\n"
+.endobj lbl_802E7308
 .balign 4
-lbl_802E7314:
+.obj lbl_802E7314, local
 	.asciz "Mac Emulator\n"
+.endobj lbl_802E7314
 .balign 4
-lbl_802E7324:
+.obj lbl_802E7324, local
 	.asciz "PC Emulator\n"
+.endobj lbl_802E7324
 .balign 4
-lbl_802E7334:
+.obj lbl_802E7334, local
 	.asciz "EPPC Arthur\n"
+.endobj lbl_802E7334
 .balign 4
-lbl_802E7344:
+.obj lbl_802E7344, local
 	.asciz "EPPC Minnow\n"
+.endobj lbl_802E7344
 .balign 4
-lbl_802E7354:
+.obj lbl_802E7354, local
 	.asciz "Development HW%d\n"
+.endobj lbl_802E7354
 .balign 4
-lbl_802E7368:
+.obj lbl_802E7368, local
 	.asciz "Memory %d MB\n"
+.endobj lbl_802E7368
 .balign 4
-lbl_802E7378:
+.obj lbl_802E7378, local
 	.asciz "Arena : 0x%x - 0x%x\n"
+.endobj lbl_802E7378
 .balign 4
-__OSExceptionLocations:
+.obj __OSExceptionLocations, local
 	.4byte 0x00000100
 	.4byte 0x00000200
 	.4byte 0x00000300
@@ -585,29 +611,35 @@ __OSExceptionLocations:
 	.4byte 0x00001300
 	.4byte 0x00001400
 	.4byte 0x00001700
-lbl_802E73CC:
+.endobj __OSExceptionLocations
+.balign 4
+.obj lbl_802E73CC, local
 	.asciz "Installing OSDBIntegrator\n"
+.endobj lbl_802E73CC
 .balign 4
-lbl_802E73E8:
+.obj lbl_802E73E8, local
 	.asciz ">>> OSINIT: exception %d commandeered by TRK\n"
+.endobj lbl_802E73E8
 .balign 4
-lbl_802E7418:
+.obj lbl_802E7418, local
 	.asciz ">>> OSINIT: exception %d vectored to debugger\n"
+.endobj lbl_802E7418
 .balign 4
-lbl_802E7448:
+.obj lbl_802E7448, local
 	.asciz "Exceptions initialized...\n"
+.endobj lbl_802E7448
 
 .section .sbss, "wa"
 .balign 8
-.global BootInfo
-BootInfo:
+.obj BootInfo, local
 	.skip 4
-.global BI2DebugFlag
-BI2DebugFlag:
+.endobj BootInfo
+.obj BI2DebugFlag, local
 	.skip 4
-.global AreWeInitialized
-AreWeInitialized:
+.endobj BI2DebugFlag
+.obj AreWeInitialized, local
 	.skip 4
-.global OSExceptionTable
-OSExceptionTable:
+.endobj AreWeInitialized
+.obj OSExceptionTable, local
 	.skip 4
+.endobj OSExceptionTable

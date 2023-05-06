@@ -1,15 +1,14 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global DCEnable
-DCEnable:
+.fn DCEnable, global
 /* 801F6BA4 001F3B04  7C 00 04 AC */	sync 0
 /* 801F6BA8 001F3B08  7C 70 FA A6 */	mfspr r3, 0x3f0
 /* 801F6BAC 001F3B0C  60 63 40 00 */	ori r3, r3, 0x4000
 /* 801F6BB0 001F3B10  7C 70 FB A6 */	mtspr 0x3f0, r3
 /* 801F6BB4 001F3B14  4E 80 00 20 */	blr 
+.endfn DCEnable
 
-.global DCInvalidateRange
-DCInvalidateRange:
+.fn DCInvalidateRange, global
 /* 801F6BB8 001F3B18  28 04 00 00 */	cmplwi r4, 0
 /* 801F6BBC 001F3B1C  4C 81 00 20 */	blelr 
 /* 801F6BC0 001F3B20  54 65 06 FF */	clrlwi. r5, r3, 0x1b
@@ -24,9 +23,9 @@ DCInvalidateRange:
 /* 801F6BDC 001F3B3C  38 63 00 20 */	addi r3, r3, 0x20
 /* 801F6BE0 001F3B40  42 00 FF F8 */	bdnz .L_801F6BD8
 /* 801F6BE4 001F3B44  4E 80 00 20 */	blr 
+.endfn DCInvalidateRange
 
-.global DCFlushRange
-DCFlushRange:
+.fn DCFlushRange, global
 /* 801F6BE8 001F3B48  28 04 00 00 */	cmplwi r4, 0
 /* 801F6BEC 001F3B4C  4C 81 00 20 */	blelr 
 /* 801F6BF0 001F3B50  54 65 06 FF */	clrlwi. r5, r3, 0x1b
@@ -42,9 +41,9 @@ DCFlushRange:
 /* 801F6C10 001F3B70  42 00 FF F8 */	bdnz .L_801F6C08
 /* 801F6C14 001F3B74  44 00 00 02 */	sc 
 /* 801F6C18 001F3B78  4E 80 00 20 */	blr 
+.endfn DCFlushRange
 
-.global DCStoreRange
-DCStoreRange:
+.fn DCStoreRange, global
 /* 801F6C1C 001F3B7C  28 04 00 00 */	cmplwi r4, 0
 /* 801F6C20 001F3B80  4C 81 00 20 */	blelr 
 /* 801F6C24 001F3B84  54 65 06 FF */	clrlwi. r5, r3, 0x1b
@@ -60,9 +59,9 @@ DCStoreRange:
 /* 801F6C44 001F3BA4  42 00 FF F8 */	bdnz .L_801F6C3C
 /* 801F6C48 001F3BA8  44 00 00 02 */	sc 
 /* 801F6C4C 001F3BAC  4E 80 00 20 */	blr 
+.endfn DCStoreRange
 
-.global DCFlushRangeNoSync
-DCFlushRangeNoSync:
+.fn DCFlushRangeNoSync, global
 /* 801F6C50 001F3BB0  28 04 00 00 */	cmplwi r4, 0
 /* 801F6C54 001F3BB4  4C 81 00 20 */	blelr 
 /* 801F6C58 001F3BB8  54 65 06 FF */	clrlwi. r5, r3, 0x1b
@@ -77,9 +76,9 @@ DCFlushRangeNoSync:
 /* 801F6C74 001F3BD4  38 63 00 20 */	addi r3, r3, 0x20
 /* 801F6C78 001F3BD8  42 00 FF F8 */	bdnz .L_801F6C70
 /* 801F6C7C 001F3BDC  4E 80 00 20 */	blr 
+.endfn DCFlushRangeNoSync
 
-.global DCStoreRangeNoSync
-DCStoreRangeNoSync:
+.fn DCStoreRangeNoSync, global
 /* 801F6C80 001F3BE0  28 04 00 00 */	cmplwi r4, 0
 /* 801F6C84 001F3BE4  4C 81 00 20 */	blelr 
 /* 801F6C88 001F3BE8  54 65 06 FF */	clrlwi. r5, r3, 0x1b
@@ -94,9 +93,9 @@ DCStoreRangeNoSync:
 /* 801F6CA4 001F3C04  38 63 00 20 */	addi r3, r3, 0x20
 /* 801F6CA8 001F3C08  42 00 FF F8 */	bdnz .L_801F6CA0
 /* 801F6CAC 001F3C0C  4E 80 00 20 */	blr 
+.endfn DCStoreRangeNoSync
 
-.global DCZeroRange
-DCZeroRange:
+.fn DCZeroRange, global
 /* 801F6CB0 001F3C10  28 04 00 00 */	cmplwi r4, 0
 /* 801F6CB4 001F3C14  4C 81 00 20 */	blelr 
 /* 801F6CB8 001F3C18  54 65 06 FF */	clrlwi. r5, r3, 0x1b
@@ -111,9 +110,9 @@ DCZeroRange:
 /* 801F6CD4 001F3C34  38 63 00 20 */	addi r3, r3, 0x20
 /* 801F6CD8 001F3C38  42 00 FF F8 */	bdnz .L_801F6CD0
 /* 801F6CDC 001F3C3C  4E 80 00 20 */	blr 
+.endfn DCZeroRange
 
-.global ICInvalidateRange
-ICInvalidateRange:
+.fn ICInvalidateRange, global
 /* 801F6CE0 001F3C40  28 04 00 00 */	cmplwi r4, 0
 /* 801F6CE4 001F3C44  4C 81 00 20 */	blelr 
 /* 801F6CE8 001F3C48  54 65 06 FF */	clrlwi. r5, r3, 0x1b
@@ -130,24 +129,24 @@ ICInvalidateRange:
 /* 801F6D0C 001F3C6C  7C 00 04 AC */	sync 0
 /* 801F6D10 001F3C70  4C 00 01 2C */	isync 
 /* 801F6D14 001F3C74  4E 80 00 20 */	blr 
+.endfn ICInvalidateRange
 
-.global ICFlashInvalidate
-ICFlashInvalidate:
+.fn ICFlashInvalidate, global
 /* 801F6D18 001F3C78  7C 70 FA A6 */	mfspr r3, 0x3f0
 /* 801F6D1C 001F3C7C  60 63 08 00 */	ori r3, r3, 0x800
 /* 801F6D20 001F3C80  7C 70 FB A6 */	mtspr 0x3f0, r3
 /* 801F6D24 001F3C84  4E 80 00 20 */	blr 
+.endfn ICFlashInvalidate
 
-.global ICEnable
-ICEnable:
+.fn ICEnable, global
 /* 801F6D28 001F3C88  4C 00 01 2C */	isync 
 /* 801F6D2C 001F3C8C  7C 70 FA A6 */	mfspr r3, 0x3f0
 /* 801F6D30 001F3C90  60 63 80 00 */	ori r3, r3, 0x8000
 /* 801F6D34 001F3C94  7C 70 FB A6 */	mtspr 0x3f0, r3
 /* 801F6D38 001F3C98  4E 80 00 20 */	blr 
+.endfn ICEnable
 
-.global L2GlobalInvalidate
-L2GlobalInvalidate:
+.fn L2GlobalInvalidate, global
 /* 801F6D3C 001F3C9C  7C 08 02 A6 */	mflr r0
 /* 801F6D40 001F3CA0  90 01 00 04 */	stw r0, 4(r1)
 /* 801F6D44 001F3CA4  94 21 FF F0 */	stwu r1, -0x10(r1)
@@ -192,9 +191,9 @@ L2GlobalInvalidate:
 /* 801F6DC8 001F3D28  38 21 00 10 */	addi r1, r1, 0x10
 /* 801F6DCC 001F3D2C  7C 08 03 A6 */	mtlr r0
 /* 801F6DD0 001F3D30  4E 80 00 20 */	blr 
+.endfn L2GlobalInvalidate
 
-.global DMAErrorHandler
-DMAErrorHandler:
+.fn DMAErrorHandler, global
 /* 801F6DD4 001F3D34  7C 08 02 A6 */	mflr r0
 /* 801F6DD8 001F3D38  90 01 00 04 */	stw r0, 4(r1)
 /* 801F6DDC 001F3D3C  94 21 FF 80 */	stwu r1, -0x80(r1)
@@ -290,9 +289,9 @@ DMAErrorHandler:
 /* 801F6F28 001F3E88  83 A1 00 74 */	lwz r29, 0x74(r1)
 /* 801F6F2C 001F3E8C  38 21 00 80 */	addi r1, r1, 0x80
 /* 801F6F30 001F3E90  4E 80 00 20 */	blr 
+.endfn DMAErrorHandler
 
-.global __OSCacheInit
-__OSCacheInit:
+.fn __OSCacheInit, global
 /* 801F6F34 001F3E94  7C 08 02 A6 */	mflr r0
 /* 801F6F38 001F3E98  90 01 00 04 */	stw r0, 4(r1)
 /* 801F6F3C 001F3E9C  94 21 FF F0 */	stwu r1, -0x10(r1)
@@ -357,47 +356,62 @@ __OSCacheInit:
 /* 801F701C 001F3F7C  7C 08 03 A6 */	mtlr r0
 /* 801F7020 001F3F80  38 21 00 10 */	addi r1, r1, 0x10
 /* 801F7024 001F3F84  4E 80 00 20 */	blr 
+.endfn __OSCacheInit
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802E74E8:
+.obj lbl_802E74E8, local
 	.asciz ">>> L2 INVALIDATE : SHOULD NEVER HAPPEN\n"
+.endobj lbl_802E74E8
 .balign 4
-lbl_802E7514:
+.obj lbl_802E7514, local
 	.asciz "Machine check received\n"
+.endobj lbl_802E7514
 .balign 4
-lbl_802E752C:
+.obj lbl_802E752C, local
 	.asciz "HID2 = 0x%x   SRR1 = 0x%x\n"
+.endobj lbl_802E752C
 .balign 4
-lbl_802E7548:
+.obj lbl_802E7548, local
 	.asciz "Machine check was not DMA/locked cache related\n"
+.endobj lbl_802E7548
 .balign 4
-lbl_802E7578:
+.obj lbl_802E7578, local
 	.asciz "DMAErrorHandler(): An error occurred while processing DMA.\n"
+.endobj lbl_802E7578
 .balign 4
-lbl_802E75B4:
+.obj lbl_802E75B4, local
 	.asciz "The following errors have been detected and cleared :\n"
+.endobj lbl_802E75B4
 .balign 4
-lbl_802E75EC:
+.obj lbl_802E75EC, local
 	.asciz "\t- Requested a locked cache tag that was already in the cache\n"
+.endobj lbl_802E75EC
 .balign 4
-lbl_802E762C:
+.obj lbl_802E762C, local
 	.asciz "\t- DMA attempted to access normal cache\n"
+.endobj lbl_802E762C
 .balign 4
-lbl_802E7658:
+.obj lbl_802E7658, local
 	.asciz "\t- DMA missed in data cache\n"
+.endobj lbl_802E7658
 .balign 4
-lbl_802E7678:
+.obj lbl_802E7678, local
 	.asciz "\t- DMA queue overflowed\n"
+.endobj lbl_802E7678
 .balign 4
-lbl_802E7694:
+.obj lbl_802E7694, local
 	.asciz "L1 i-caches initialized\n"
+.endobj lbl_802E7694
 .balign 4
-lbl_802E76B0:
+.obj lbl_802E76B0, local
 	.asciz "L1 d-caches initialized\n"
+.endobj lbl_802E76B0
 .balign 4
-lbl_802E76CC:
+.obj lbl_802E76CC, local
 	.asciz "L2 cache initialized\n"
+.endobj lbl_802E76CC
 .balign 4
-lbl_802E76E4:
+.obj lbl_802E76E4, local
 	.asciz "Locked cache machine check handler installed\n"
+.endobj lbl_802E76E4

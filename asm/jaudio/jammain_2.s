@@ -1,8 +1,7 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
 .balign 32, 0
-.global Jam_OfsToAddr
-Jam_OfsToAddr:
+.fn Jam_OfsToAddr, global
 /* 8000F400 0000C360  7C 08 02 A6 */	mflr r0
 /* 8000F404 0000C364  90 01 00 04 */	stw r0, 4(r1)
 /* 8000F408 0000C368  94 21 FF F8 */	stwu r1, -8(r1)
@@ -28,9 +27,10 @@ Jam_OfsToAddr:
 /* 8000F448 0000C3A8  38 21 00 08 */	addi r1, r1, 8
 /* 8000F44C 0000C3AC  7C 08 03 A6 */	mtlr r0
 /* 8000F450 0000C3B0  4E 80 00 20 */	blr 
+.endfn Jam_OfsToAddr
 
 .balign 32, 0
-__ByteReadOfs__FP5seqp_Ul:
+.fn __ByteReadOfs__FP5seqp_Ul, local
 /* 8000F460 0000C3C0  7C 08 02 A6 */	mflr r0
 /* 8000F464 0000C3C4  90 01 00 04 */	stw r0, 4(r1)
 /* 8000F468 0000C3C8  94 21 FF F8 */	stwu r1, -8(r1)
@@ -56,9 +56,10 @@ __ByteReadOfs__FP5seqp_Ul:
 /* 8000F4A8 0000C408  38 21 00 08 */	addi r1, r1, 8
 /* 8000F4AC 0000C40C  7C 08 03 A6 */	mtlr r0
 /* 8000F4B0 0000C410  4E 80 00 20 */	blr 
+.endfn __ByteReadOfs__FP5seqp_Ul
 
 .balign 32, 0
-__WordReadOfs__FP5seqp_Ul:
+.fn __WordReadOfs__FP5seqp_Ul, local
 /* 8000F4C0 0000C420  7C 08 02 A6 */	mflr r0
 /* 8000F4C4 0000C424  90 01 00 04 */	stw r0, 4(r1)
 /* 8000F4C8 0000C428  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -79,9 +80,10 @@ __WordReadOfs__FP5seqp_Ul:
 /* 8000F504 0000C464  38 21 00 18 */	addi r1, r1, 0x18
 /* 8000F508 0000C468  7C 08 03 A6 */	mtlr r0
 /* 8000F50C 0000C46C  4E 80 00 20 */	blr 
+.endfn __WordReadOfs__FP5seqp_Ul
 
 .balign 32, 0
-__24ReadOfs__FP5seqp_Ul:
+.fn __24ReadOfs__FP5seqp_Ul, local
 /* 8000F520 0000C480  7C 08 02 A6 */	mflr r0
 /* 8000F524 0000C484  90 01 00 04 */	stw r0, 4(r1)
 /* 8000F528 0000C488  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -108,9 +110,10 @@ __24ReadOfs__FP5seqp_Ul:
 /* 8000F57C 0000C4DC  38 21 00 20 */	addi r1, r1, 0x20
 /* 8000F580 0000C4E0  7C 08 03 A6 */	mtlr r0
 /* 8000F584 0000C4E4  4E 80 00 20 */	blr 
+.endfn __24ReadOfs__FP5seqp_Ul
 
 .balign 32, 0
-__LongReadOfs__FP5seqp_Ul:
+.fn __LongReadOfs__FP5seqp_Ul, local
 /* 8000F5A0 0000C500  7C 08 02 A6 */	mflr r0
 /* 8000F5A4 0000C504  90 01 00 04 */	stw r0, 4(r1)
 /* 8000F5A8 0000C508  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -131,9 +134,10 @@ __LongReadOfs__FP5seqp_Ul:
 /* 8000F5E4 0000C544  38 21 00 18 */	addi r1, r1, 0x18
 /* 8000F5E8 0000C548  7C 08 03 A6 */	mtlr r0
 /* 8000F5EC 0000C54C  4E 80 00 20 */	blr 
+.endfn __LongReadOfs__FP5seqp_Ul
 
 .balign 32, 0
-__ByteRead__FP5seqp_:
+.fn __ByteRead__FP5seqp_, local
 /* 8000F600 0000C560  7C 08 02 A6 */	mflr r0
 /* 8000F604 0000C564  7C 65 1B 78 */	mr r5, r3
 /* 8000F608 0000C568  90 01 00 04 */	stw r0, 4(r1)
@@ -166,9 +170,10 @@ __ByteRead__FP5seqp_:
 /* 8000F664 0000C5C4  38 21 00 08 */	addi r1, r1, 8
 /* 8000F668 0000C5C8  7C 08 03 A6 */	mtlr r0
 /* 8000F66C 0000C5CC  4E 80 00 20 */	blr 
+.endfn __ByteRead__FP5seqp_
 
 .balign 32, 0
-__WordRead__FP5seqp_:
+.fn __WordRead__FP5seqp_, local
 /* 8000F680 0000C5E0  7C 08 02 A6 */	mflr r0
 /* 8000F684 0000C5E4  90 01 00 04 */	stw r0, 4(r1)
 /* 8000F688 0000C5E8  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -187,9 +192,10 @@ __WordRead__FP5seqp_:
 /* 8000F6BC 0000C61C  38 21 00 18 */	addi r1, r1, 0x18
 /* 8000F6C0 0000C620  7C 08 03 A6 */	mtlr r0
 /* 8000F6C4 0000C624  4E 80 00 20 */	blr 
+.endfn __WordRead__FP5seqp_
 
 .balign 32, 0
-__24Read__FP5seqp_:
+.fn __24Read__FP5seqp_, local
 /* 8000F6E0 0000C640  7C 08 02 A6 */	mflr r0
 /* 8000F6E4 0000C644  90 01 00 04 */	stw r0, 4(r1)
 /* 8000F6E8 0000C648  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -213,9 +219,10 @@ __24Read__FP5seqp_:
 /* 8000F730 0000C690  38 21 00 18 */	addi r1, r1, 0x18
 /* 8000F734 0000C694  7C 08 03 A6 */	mtlr r0
 /* 8000F738 0000C698  4E 80 00 20 */	blr 
+.endfn __24Read__FP5seqp_
 
 .balign 32, 0
-__ConditionCheck__FP5seqp_Uc:
+.fn __ConditionCheck__FP5seqp_Uc, local
 /* 8000F740 0000C6A0  7C 08 02 A6 */	mflr r0
 /* 8000F744 0000C6A4  90 01 00 04 */	stw r0, 4(r1)
 /* 8000F748 0000C6A8  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -276,10 +283,10 @@ __ConditionCheck__FP5seqp_Uc:
 /* 8000F804 0000C764  38 21 00 18 */	addi r1, r1, 0x18
 /* 8000F808 0000C768  7C 08 03 A6 */	mtlr r0
 /* 8000F80C 0000C76C  4E 80 00 20 */	blr 
+.endfn __ConditionCheck__FP5seqp_Uc
 
 .balign 32, 0
-.global Jam_SEQtimeToDSPtime__FP5seqp_lUc
-Jam_SEQtimeToDSPtime__FP5seqp_lUc:
+.fn Jam_SEQtimeToDSPtime__FP5seqp_lUc, global
 /* 8000F820 0000C780  94 21 FF D8 */	stwu r1, -0x28(r1)
 /* 8000F824 0000C784  6C 80 80 00 */	xoris r0, r4, 0x8000
 /* 8000F828 0000C788  54 A4 06 3E */	clrlwi r4, r5, 0x18
@@ -318,10 +325,10 @@ Jam_SEQtimeToDSPtime__FP5seqp_lUc:
 /* 8000F8A4 0000C804  80 61 00 1C */	lwz r3, 0x1c(r1)
 /* 8000F8A8 0000C808  38 21 00 28 */	addi r1, r1, 0x28
 /* 8000F8AC 0000C80C  4E 80 00 20 */	blr 
+.endfn Jam_SEQtimeToDSPtime__FP5seqp_lUc
 
 .balign 32, 0
-.global Extend8to16__FUc
-Extend8to16__FUc:
+.fn Extend8to16__FUc, global
 /* 8000F8C0 0000C820  54 60 06 31 */	rlwinm. r0, r3, 0, 0x18, 0x18
 /* 8000F8C4 0000C824  54 64 06 3E */	clrlwi r4, r3, 0x18
 /* 8000F8C8 0000C828  41 82 00 10 */	beq .L_8000F8D8
@@ -331,10 +338,10 @@ Extend8to16__FUc:
 .L_8000F8D8:
 /* 8000F8D8 0000C838  7C 83 23 78 */	mr r3, r4
 /* 8000F8DC 0000C83C  4E 80 00 20 */	blr 
+.endfn Extend8to16__FUc
 
 .balign 32, 0
-.global Jam_WriteTimeParam__FP5seqp_Uc
-Jam_WriteTimeParam__FP5seqp_Uc:
+.fn Jam_WriteTimeParam__FP5seqp_Uc, global
 /* 8000F8E0 0000C840  7C 08 02 A6 */	mflr r0
 /* 8000F8E4 0000C844  90 01 00 04 */	stw r0, 4(r1)
 /* 8000F8E8 0000C848  94 21 FF C8 */	stwu r1, -0x38(r1)
@@ -455,10 +462,10 @@ Jam_WriteTimeParam__FP5seqp_Uc:
 /* 8000FA7C 0000C9DC  38 21 00 38 */	addi r1, r1, 0x38
 /* 8000FA80 0000C9E0  7C 08 03 A6 */	mtlr r0
 /* 8000FA84 0000C9E4  4E 80 00 20 */	blr 
+.endfn Jam_WriteTimeParam__FP5seqp_Uc
 
 .balign 32, 0
-.global Jam_WriteRegDirect
-Jam_WriteRegDirect:
+.fn Jam_WriteRegDirect, global
 /* 8000FAA0 0000CA00  7C 08 02 A6 */	mflr r0
 /* 8000FAA4 0000CA04  90 01 00 04 */	stw r0, 4(r1)
 /* 8000FAA8 0000CA08  54 80 06 3E */	clrlwi r0, r4, 0x18
@@ -508,9 +515,10 @@ Jam_WriteRegDirect:
 /* 8000FB40 0000CAA0  38 21 00 28 */	addi r1, r1, 0x28
 /* 8000FB44 0000CAA4  7C 08 03 A6 */	mtlr r0
 /* 8000FB48 0000CAA8  4E 80 00 20 */	blr 
+.endfn Jam_WriteRegDirect
 
 .balign 32, 0
-LoadTbl__FP5seqp_UlUlUl:
+.fn LoadTbl__FP5seqp_UlUlUl, local
 /* 8000FB60 0000CAC0  7C 08 02 A6 */	mflr r0
 /* 8000FB64 0000CAC4  2C 06 00 06 */	cmpwi r6, 6
 /* 8000FB68 0000CAC8  90 01 00 04 */	stw r0, 4(r1)
@@ -556,10 +564,10 @@ LoadTbl__FP5seqp_UlUlUl:
 /* 8000FBEC 0000CB4C  38 21 00 08 */	addi r1, r1, 8
 /* 8000FBF0 0000CB50  7C 08 03 A6 */	mtlr r0
 /* 8000FBF4 0000CB54  4E 80 00 20 */	blr 
+.endfn LoadTbl__FP5seqp_UlUlUl
 
 .balign 32, 0
-.global Jam_WriteRegParam
-Jam_WriteRegParam:
+.fn Jam_WriteRegParam, global
 /* 8000FC00 0000CB60  7C 08 02 A6 */	mflr r0
 /* 8000FC04 0000CB64  90 01 00 04 */	stw r0, 4(r1)
 /* 8000FC08 0000CB68  54 80 07 3E */	clrlwi r0, r4, 0x1c
@@ -895,10 +903,10 @@ Jam_WriteRegParam:
 /* 80010078 0000CFD8  38 21 00 40 */	addi r1, r1, 0x40
 /* 8001007C 0000CFDC  7C 08 03 A6 */	mtlr r0
 /* 80010080 0000CFE0  4E 80 00 20 */	blr 
+.endfn Jam_WriteRegParam
 
 .balign 32, 0
-.global Jam_ReadRegDirect
-Jam_ReadRegDirect:
+.fn Jam_ReadRegDirect, global
 /* 800100A0 0000D000  7C 08 02 A6 */	mflr r0
 /* 800100A4 0000D004  90 01 00 04 */	stw r0, 4(r1)
 /* 800100A8 0000D008  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -1005,10 +1013,10 @@ Jam_ReadRegDirect:
 /* 80010200 0000D160  38 21 00 20 */	addi r1, r1, 0x20
 /* 80010204 0000D164  7C 08 03 A6 */	mtlr r0
 /* 80010208 0000D168  4E 80 00 20 */	blr 
+.endfn Jam_ReadRegDirect
 
 .balign 32, 0
-.global Jam_ReadRegXY__FP5seqp_
-Jam_ReadRegXY__FP5seqp_:
+.fn Jam_ReadRegXY__FP5seqp_, global
 /* 80010220 0000D180  7C 08 02 A6 */	mflr r0
 /* 80010224 0000D184  38 80 00 05 */	li r4, 5
 /* 80010228 0000D188  90 01 00 04 */	stw r0, 4(r1)
@@ -1027,10 +1035,10 @@ Jam_ReadRegXY__FP5seqp_:
 /* 8001025C 0000D1BC  38 21 00 18 */	addi r1, r1, 0x18
 /* 80010260 0000D1C0  7C 08 03 A6 */	mtlr r0
 /* 80010264 0000D1C4  4E 80 00 20 */	blr 
+.endfn Jam_ReadRegXY__FP5seqp_
 
 .balign 32, 0
-.global Jam_ReadReg32
-Jam_ReadReg32:
+.fn Jam_ReadReg32, global
 /* 80010280 0000D1E0  7C 08 02 A6 */	mflr r0
 /* 80010284 0000D1E4  90 01 00 04 */	stw r0, 4(r1)
 /* 80010288 0000D1E8  54 80 06 3E */	clrlwi r0, r4, 0x18
@@ -1058,10 +1066,10 @@ Jam_ReadReg32:
 /* 800102D0 0000D230  38 21 00 08 */	addi r1, r1, 8
 /* 800102D4 0000D234  7C 08 03 A6 */	mtlr r0
 /* 800102D8 0000D238  4E 80 00 20 */	blr 
+.endfn Jam_ReadReg32
 
 .balign 32, 0
-.global Jam_WriteRegXY
-Jam_WriteRegXY:
+.fn Jam_WriteRegXY, global
 /* 800102E0 0000D240  7C 08 02 A6 */	mflr r0
 /* 800102E4 0000D244  54 85 84 3E */	srwi r5, r4, 0x10
 /* 800102E8 0000D248  90 01 00 04 */	stw r0, 4(r1)
@@ -1080,10 +1088,10 @@ Jam_WriteRegXY:
 /* 8001031C 0000D27C  38 21 00 18 */	addi r1, r1, 0x18
 /* 80010320 0000D280  7C 08 03 A6 */	mtlr r0
 /* 80010324 0000D284  4E 80 00 20 */	blr 
+.endfn Jam_WriteRegXY
 
 .balign 32, 0
-.global __ExchangeRegisterValue__FP5seqp_Uc
-__ExchangeRegisterValue__FP5seqp_Uc:
+.fn __ExchangeRegisterValue__FP5seqp_Uc, global
 /* 80010340 0000D2A0  7C 08 02 A6 */	mflr r0
 /* 80010344 0000D2A4  90 01 00 04 */	stw r0, 4(r1)
 /* 80010348 0000D2A8  54 80 06 3E */	clrlwi r0, r4, 0x18
@@ -1101,10 +1109,10 @@ __ExchangeRegisterValue__FP5seqp_Uc:
 /* 80010370 0000D2D0  38 21 00 08 */	addi r1, r1, 8
 /* 80010374 0000D2D4  7C 08 03 A6 */	mtlr r0
 /* 80010378 0000D2D8  4E 80 00 20 */	blr 
+.endfn __ExchangeRegisterValue__FP5seqp_Uc
 
 .balign 32, 0
-.global Jam_WritePortAppDirect
-Jam_WritePortAppDirect:
+.fn Jam_WritePortAppDirect, global
 /* 80010380 0000D2E0  7C 08 02 A6 */	mflr r0
 /* 80010384 0000D2E4  90 01 00 04 */	stw r0, 4(r1)
 /* 80010388 0000D2E8  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -1139,10 +1147,10 @@ Jam_WritePortAppDirect:
 /* 800103EC 0000D34C  38 21 00 20 */	addi r1, r1, 0x20
 /* 800103F0 0000D350  7C 08 03 A6 */	mtlr r0
 /* 800103F4 0000D354  4E 80 00 20 */	blr 
+.endfn Jam_WritePortAppDirect
 
 .balign 32, 0
-.global Jam_ReadPortAppDirect
-Jam_ReadPortAppDirect:
+.fn Jam_ReadPortAppDirect, global
 /* 80010400 0000D360  28 03 00 00 */	cmplwi r3, 0
 /* 80010404 0000D364  40 82 00 0C */	bne .L_80010410
 /* 80010408 0000D368  38 60 00 00 */	li r3, 0
@@ -1156,10 +1164,10 @@ Jam_ReadPortAppDirect:
 /* 80010424 0000D384  B0 85 00 00 */	sth r4, 0(r5)
 /* 80010428 0000D388  98 06 02 F1 */	stb r0, 0x2f1(r6)
 /* 8001042C 0000D38C  4E 80 00 20 */	blr 
+.endfn Jam_ReadPortAppDirect
 
 .balign 32, 0
-.global Jam_CheckPortAppDirect
-Jam_CheckPortAppDirect:
+.fn Jam_CheckPortAppDirect, global
 /* 80010440 0000D3A0  54 A0 06 3E */	clrlwi r0, r5, 0x18
 /* 80010444 0000D3A4  2C 00 00 01 */	cmpwi r0, 1
 /* 80010448 0000D3A8  41 82 00 38 */	beq .L_80010480
@@ -1192,10 +1200,10 @@ Jam_CheckPortAppDirect:
 .L_800104A4:
 /* 800104A4 0000D404  38 60 00 00 */	li r3, 0
 /* 800104A8 0000D408  4E 80 00 20 */	blr 
+.endfn Jam_CheckPortAppDirect
 
 .balign 32, 0
-.global Jam_InitRegistTrack
-Jam_InitRegistTrack:
+.fn Jam_InitRegistTrack, global
 /* 800104C0 0000D420  38 C0 00 00 */	li r6, 0
 /* 800104C4 0000D424  3C 80 80 32 */	lis r4, TRACK_LIST@ha
 /* 800104C8 0000D428  38 00 00 20 */	li r0, 0x20
@@ -1209,10 +1217,10 @@ Jam_InitRegistTrack:
 /* 800104E4 0000D444  90 C4 00 00 */	stw r6, 0(r4)
 /* 800104E8 0000D448  42 00 FF F4 */	bdnz .L_800104DC
 /* 800104EC 0000D44C  4E 80 00 20 */	blr 
+.endfn Jam_InitRegistTrack
 
 .balign 32, 0
-.global Jam_RegistTrack__FP5seqp_Ul
-Jam_RegistTrack__FP5seqp_Ul:
+.fn Jam_RegistTrack__FP5seqp_Ul, global
 /* 80010500 0000D460  94 21 FF E8 */	stwu r1, -0x18(r1)
 /* 80010504 0000D464  90 81 00 0C */	stw r4, 0xc(r1)
 /* 80010508 0000D468  3C 80 80 32 */	lis r4, TRACK_LIST@ha
@@ -1262,10 +1270,10 @@ Jam_RegistTrack__FP5seqp_Ul:
 .L_800105A0:
 /* 800105A0 0000D500  38 21 00 18 */	addi r1, r1, 0x18
 /* 800105A4 0000D504  4E 80 00 20 */	blr 
+.endfn Jam_RegistTrack__FP5seqp_Ul
 
 .balign 32, 0
-.global Jam_UnRegistTrack
-Jam_UnRegistTrack:
+.fn Jam_UnRegistTrack, global
 /* 800105C0 0000D520  88 03 03 E2 */	lbz r0, 0x3e2(r3)
 /* 800105C4 0000D524  28 00 00 00 */	cmplwi r0, 0
 /* 800105C8 0000D528  4D 82 00 20 */	beqlr 
@@ -1306,10 +1314,10 @@ Jam_UnRegistTrack:
 /* 80010640 0000D5A0  28 00 00 00 */	cmplwi r0, 0
 /* 80010644 0000D5A4  40 82 FF D8 */	bne .L_8001061C
 /* 80010648 0000D5A8  4E 80 00 20 */	blr 
+.endfn Jam_UnRegistTrack
 
 .balign 32, 0
-.global Jam_GetTrackHandle
-Jam_GetTrackHandle:
+.fn Jam_GetTrackHandle, global
 /* 80010660 0000D5C0  80 0D 2C 2C */	lwz r0, T_LISTS@sda21(r13)
 /* 80010664 0000D5C4  3C 80 80 32 */	lis r4, TRACK_LIST@ha
 /* 80010668 0000D5C8  38 A4 F9 80 */	addi r5, r4, TRACK_LIST@l
@@ -1333,20 +1341,20 @@ Jam_GetTrackHandle:
 .L_800106A8:
 /* 800106A8 0000D608  38 60 00 00 */	li r3, 0
 /* 800106AC 0000D60C  4E 80 00 20 */	blr 
+.endfn Jam_GetTrackHandle
 
 .balign 32, 0
-.global Jam_InitExtBuffer
-Jam_InitExtBuffer:
+.fn Jam_InitExtBuffer, global
 /* 800106C0 0000D620  38 00 00 00 */	li r0, 0
 /* 800106C4 0000D624  B0 03 00 08 */	sth r0, 8(r3)
 /* 800106C8 0000D628  B0 03 00 0A */	sth r0, 0xa(r3)
 /* 800106CC 0000D62C  90 03 00 00 */	stw r0, 0(r3)
 /* 800106D0 0000D630  90 03 00 04 */	stw r0, 4(r3)
 /* 800106D4 0000D634  4E 80 00 20 */	blr 
+.endfn Jam_InitExtBuffer
 
 .balign 32, 0
-.global Jam_AssignExtBuffer
-Jam_AssignExtBuffer:
+.fn Jam_AssignExtBuffer, global
 /* 800106E0 0000D640  28 03 00 00 */	cmplwi r3, 0
 /* 800106E4 0000D644  40 82 00 0C */	bne .L_800106F0
 /* 800106E8 0000D648  38 60 00 00 */	li r3, 0
@@ -1363,10 +1371,10 @@ Jam_AssignExtBuffer:
 /* 8001070C 0000D66C  38 05 00 01 */	addi r0, r5, 1
 /* 80010710 0000D670  90 04 00 04 */	stw r0, 4(r4)
 /* 80010714 0000D674  4E 80 00 20 */	blr 
+.endfn Jam_AssignExtBuffer
 
 .balign 32, 0
-.global Jam_AssignExtBufferP
-Jam_AssignExtBufferP:
+.fn Jam_AssignExtBufferP, global
 /* 80010720 0000D680  7C 08 02 A6 */	mflr r0
 /* 80010724 0000D684  28 03 00 00 */	cmplwi r3, 0
 /* 80010728 0000D688  90 01 00 04 */	stw r0, 4(r1)
@@ -1394,10 +1402,10 @@ Jam_AssignExtBufferP:
 /* 80010774 0000D6D4  38 21 00 08 */	addi r1, r1, 8
 /* 80010778 0000D6D8  7C 08 03 A6 */	mtlr r0
 /* 8001077C 0000D6DC  4E 80 00 20 */	blr 
+.endfn Jam_AssignExtBufferP
 
 .balign 32, 0
-.global Jam_SetExtFirFilterD
-Jam_SetExtFirFilterD:
+.fn Jam_SetExtFirFilterD, global
 /* 80010780 0000D6E0  28 03 00 00 */	cmplwi r3, 0
 /* 80010784 0000D6E4  4D 82 00 20 */	beqlr 
 /* 80010788 0000D6E8  A0 C3 00 0A */	lhz r6, 0xa(r3)
@@ -1416,10 +1424,10 @@ Jam_SetExtFirFilterD:
 /* 800107B8 0000D718  7C C3 03 2E */	sthx r6, r3, r0
 /* 800107BC 0000D71C  42 00 FF F0 */	bdnz .L_800107AC
 /* 800107C0 0000D720  4E 80 00 20 */	blr 
+.endfn Jam_SetExtFirFilterD
 
 .balign 32, 0
-.global Jam_SetExtParamD
-Jam_SetExtParamD:
+.fn Jam_SetExtParamD, global
 /* 800107E0 0000D740  28 03 00 00 */	cmplwi r3, 0
 /* 800107E4 0000D744  4D 82 00 20 */	beqlr 
 /* 800107E8 0000D748  54 80 06 3E */	clrlwi r0, r4, 0x18
@@ -1470,10 +1478,10 @@ Jam_SetExtParamD:
 /* 80010878 0000D7D8  7C 80 03 78 */	or r0, r4, r0
 /* 8001087C 0000D7DC  B0 03 00 0A */	sth r0, 0xa(r3)
 /* 80010880 0000D7E0  4E 80 00 20 */	blr 
+.endfn Jam_SetExtParamD
 
 .balign 32, 0
-.global Jam_OnExtSwitchD
-Jam_OnExtSwitchD:
+.fn Jam_OnExtSwitchD, global
 /* 800108A0 0000D800  28 03 00 00 */	cmplwi r3, 0
 /* 800108A4 0000D804  4D 82 00 20 */	beqlr 
 /* 800108A8 0000D808  A0 03 00 08 */	lhz r0, 8(r3)
@@ -1483,10 +1491,10 @@ Jam_OnExtSwitchD:
 /* 800108B8 0000D818  7C 00 23 78 */	or r0, r0, r4
 /* 800108BC 0000D81C  B0 03 00 0A */	sth r0, 0xa(r3)
 /* 800108C0 0000D820  4E 80 00 20 */	blr 
+.endfn Jam_OnExtSwitchD
 
 .balign 32, 0
-.global Jam_OffExtSwitchD
-Jam_OffExtSwitchD:
+.fn Jam_OffExtSwitchD, global
 /* 800108E0 0000D840  28 03 00 00 */	cmplwi r3, 0
 /* 800108E4 0000D844  4D 82 00 20 */	beqlr 
 /* 800108E8 0000D848  A0 A3 00 08 */	lhz r5, 8(r3)
@@ -1497,10 +1505,10 @@ Jam_OffExtSwitchD:
 /* 800108FC 0000D85C  7C 00 23 78 */	or r0, r0, r4
 /* 80010900 0000D860  B0 03 00 0A */	sth r0, 0xa(r3)
 /* 80010904 0000D864  4E 80 00 20 */	blr 
+.endfn Jam_OffExtSwitchD
 
 .balign 32, 0
-.global Jam_SetExtParam
-Jam_SetExtParam:
+.fn Jam_SetExtParam, global
 /* 80010920 0000D880  7C 08 02 A6 */	mflr r0
 /* 80010924 0000D884  28 03 00 00 */	cmplwi r3, 0
 /* 80010928 0000D888  90 01 00 04 */	stw r0, 4(r1)
@@ -1513,10 +1521,10 @@ Jam_SetExtParam:
 /* 80010940 0000D8A0  38 21 00 08 */	addi r1, r1, 8
 /* 80010944 0000D8A4  7C 08 03 A6 */	mtlr r0
 /* 80010948 0000D8A8  4E 80 00 20 */	blr 
+.endfn Jam_SetExtParam
 
 .balign 32, 0
-.global Jam_OnExtSwitch
-Jam_OnExtSwitch:
+.fn Jam_OnExtSwitch, global
 /* 80010960 0000D8C0  7C 08 02 A6 */	mflr r0
 /* 80010964 0000D8C4  28 03 00 00 */	cmplwi r3, 0
 /* 80010968 0000D8C8  90 01 00 04 */	stw r0, 4(r1)
@@ -1529,10 +1537,10 @@ Jam_OnExtSwitch:
 /* 80010980 0000D8E0  38 21 00 08 */	addi r1, r1, 8
 /* 80010984 0000D8E4  7C 08 03 A6 */	mtlr r0
 /* 80010988 0000D8E8  4E 80 00 20 */	blr 
+.endfn Jam_OnExtSwitch
 
 .balign 32, 0
-.global Jam_OffExtSwitch
-Jam_OffExtSwitch:
+.fn Jam_OffExtSwitch, global
 /* 800109A0 0000D900  7C 08 02 A6 */	mflr r0
 /* 800109A4 0000D904  28 03 00 00 */	cmplwi r3, 0
 /* 800109A8 0000D908  90 01 00 04 */	stw r0, 4(r1)
@@ -1545,10 +1553,10 @@ Jam_OffExtSwitch:
 /* 800109C0 0000D920  38 21 00 08 */	addi r1, r1, 8
 /* 800109C4 0000D924  7C 08 03 A6 */	mtlr r0
 /* 800109C8 0000D928  4E 80 00 20 */	blr 
+.endfn Jam_OffExtSwitch
 
 .balign 32, 0
-.global Jam_SetExtParamP
-Jam_SetExtParamP:
+.fn Jam_SetExtParamP, global
 /* 800109E0 0000D940  7C 08 02 A6 */	mflr r0
 /* 800109E4 0000D944  28 03 00 00 */	cmplwi r3, 0
 /* 800109E8 0000D948  90 01 00 04 */	stw r0, 4(r1)
@@ -1564,10 +1572,10 @@ Jam_SetExtParamP:
 /* 80010A0C 0000D96C  38 21 00 08 */	addi r1, r1, 8
 /* 80010A10 0000D970  7C 08 03 A6 */	mtlr r0
 /* 80010A14 0000D974  4E 80 00 20 */	blr 
+.endfn Jam_SetExtParamP
 
 .balign 32, 0
-.global Jam_OnExtSwitchP
-Jam_OnExtSwitchP:
+.fn Jam_OnExtSwitchP, global
 /* 80010A20 0000D980  7C 08 02 A6 */	mflr r0
 /* 80010A24 0000D984  28 03 00 00 */	cmplwi r3, 0
 /* 80010A28 0000D988  90 01 00 04 */	stw r0, 4(r1)
@@ -1584,17 +1592,17 @@ Jam_OnExtSwitchP:
 /* 80010A50 0000D9B0  38 21 00 08 */	addi r1, r1, 8
 /* 80010A54 0000D9B4  7C 08 03 A6 */	mtlr r0
 /* 80010A58 0000D9B8  4E 80 00 20 */	blr 
+.endfn Jam_OnExtSwitchP
 
 .balign 32, 0
-.global Jam_RegisterTrackCallback
-Jam_RegisterTrackCallback:
+.fn Jam_RegisterTrackCallback, global
 /* 80010A60 0000D9C0  90 6D 2C 28 */	stw r3, JAM_CALLBACK_FUNC@sda21(r13)
 /* 80010A64 0000D9C4  38 60 00 01 */	li r3, 1
 /* 80010A68 0000D9C8  4E 80 00 20 */	blr 
+.endfn Jam_RegisterTrackCallback
 
 .balign 32, 0
-.global __PanCalc__FfffUc
-__PanCalc__FfffUc:
+.fn __PanCalc__FfffUc, local
 /* 80010A80 0000D9E0  54 60 06 3E */	clrlwi r0, r3, 0x18
 /* 80010A84 0000D9E4  2C 00 00 01 */	cmpwi r0, 1
 /* 80010A88 0000D9E8  41 82 00 24 */	beq .L_80010AAC
@@ -1618,15 +1626,15 @@ __PanCalc__FfffUc:
 .L_80010AC4:
 /* 80010AC4 0000DA24  FC 20 00 90 */	fmr f1, f0
 /* 80010AC8 0000DA28  4E 80 00 20 */	blr 
+.endfn __PanCalc__FfffUc
 
 .balign 32, 0
-.global Jam_UpdateTrackAll
-Jam_UpdateTrackAll:
+.fn Jam_UpdateTrackAll, global
 /* 80010AE0 0000DA40  7C 08 02 A6 */	mflr r0
 /* 80010AE4 0000DA44  90 01 00 04 */	stw r0, 4(r1)
 /* 80010AE8 0000DA48  94 21 FF A0 */	stwu r1, -0x60(r1)
 /* 80010AEC 0000DA4C  39 61 00 60 */	addi r11, r1, 0x60
-/* 80010AF0 0000DA50  48 20 43 65 */	bl func_80214E54
+/* 80010AF0 0000DA50  48 20 43 65 */	bl _savefpr_26
 /* 80010AF4 0000DA54  BF A1 00 24 */	stmw r29, 0x24(r1)
 /* 80010AF8 0000DA58  3B E3 00 00 */	addi r31, r3, 0
 /* 80010AFC 0000DA5C  3C 60 43 30 */	lis r3, 0x4330
@@ -1830,26 +1838,27 @@ Jam_UpdateTrackAll:
 .L_80010DE4:
 /* 80010DE4 0000DD44  80 01 00 64 */	lwz r0, 0x64(r1)
 /* 80010DE8 0000DD48  39 61 00 60 */	addi r11, r1, 0x60
-/* 80010DEC 0000DD4C  48 20 40 B5 */	bl func_80214EA0
+/* 80010DEC 0000DD4C  48 20 40 B5 */	bl _restfpr_26
 /* 80010DF0 0000DD50  BB A1 00 24 */	lmw r29, 0x24(r1)
 /* 80010DF4 0000DD54  38 21 00 60 */	addi r1, r1, 0x60
 /* 80010DF8 0000DD58  7C 08 03 A6 */	mtlr r0
 /* 80010DFC 0000DD5C  4E 80 00 20 */	blr 
+.endfn Jam_UpdateTrackAll
 
 .balign 32, 0
-OSf32tos8: # local function
+.fn OSf32tos8, local
 /* 80010E00 0000DD60  C0 23 00 00 */	lfs f1, 0(r3)
 /* 80010E04 0000DD64  F0 24 C0 00 */	psq_st f1, 0(r4), 1, qr4
 /* 80010E08 0000DD68  4E 80 00 20 */	blr 
+.endfn OSf32tos8
 
 .balign 32, 0
-.global Jam_UpdateTrack
-Jam_UpdateTrack:
+.fn Jam_UpdateTrack, global
 /* 80010E20 0000DD80  7C 08 02 A6 */	mflr r0
 /* 80010E24 0000DD84  90 01 00 04 */	stw r0, 4(r1)
 /* 80010E28 0000DD88  94 21 FF 88 */	stwu r1, -0x78(r1)
 /* 80010E2C 0000DD8C  39 61 00 78 */	addi r11, r1, 0x78
-/* 80010E30 0000DD90  48 20 40 25 */	bl func_80214E54
+/* 80010E30 0000DD90  48 20 40 25 */	bl _savefpr_26
 /* 80010E34 0000DD94  BE E1 00 24 */	stmw r23, 0x24(r1)
 /* 80010E38 0000DD98  3B 23 00 00 */	addi r25, r3, 0
 /* 80010E3C 0000DD9C  3C 60 43 30 */	lis r3, 0x4330
@@ -2172,15 +2181,15 @@ Jam_UpdateTrack:
 .L_800112AC:
 /* 800112AC 0000E20C  80 01 00 7C */	lwz r0, 0x7c(r1)
 /* 800112B0 0000E210  39 61 00 78 */	addi r11, r1, 0x78
-/* 800112B4 0000E214  48 20 3B ED */	bl func_80214EA0
+/* 800112B4 0000E214  48 20 3B ED */	bl _restfpr_26
 /* 800112B8 0000E218  BA E1 00 24 */	lmw r23, 0x24(r1)
 /* 800112BC 0000E21C  38 21 00 78 */	addi r1, r1, 0x78
 /* 800112C0 0000E220  7C 08 03 A6 */	mtlr r0
 /* 800112C4 0000E224  4E 80 00 20 */	blr 
+.endfn Jam_UpdateTrack
 
 .balign 32, 0
-.global Jam_UpdateTempo
-Jam_UpdateTempo:
+.fn Jam_UpdateTempo, global
 /* 800112E0 0000E240  7C 08 02 A6 */	mflr r0
 /* 800112E4 0000E244  90 01 00 04 */	stw r0, 4(r1)
 /* 800112E8 0000E248  94 21 FF D0 */	stwu r1, -0x30(r1)
@@ -2251,10 +2260,10 @@ Jam_UpdateTempo:
 /* 800113D8 0000E338  38 21 00 30 */	addi r1, r1, 0x30
 /* 800113DC 0000E33C  7C 08 03 A6 */	mtlr r0
 /* 800113E0 0000E340  4E 80 00 20 */	blr 
+.endfn Jam_UpdateTempo
 
 .balign 32, 0
-.global Jam_MuteTrack
-Jam_MuteTrack:
+.fn Jam_MuteTrack, global
 /* 80011400 0000E360  7C 08 02 A6 */	mflr r0
 /* 80011404 0000E364  90 01 00 04 */	stw r0, 4(r1)
 /* 80011408 0000E368  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -2311,10 +2320,10 @@ Jam_MuteTrack:
 /* 800114C0 0000E420  38 21 00 18 */	addi r1, r1, 0x18
 /* 800114C4 0000E424  7C 08 03 A6 */	mtlr r0
 /* 800114C8 0000E428  4E 80 00 20 */	blr 
+.endfn Jam_MuteTrack
 
 .balign 32, 0
-.global Jam_PauseTrack
-Jam_PauseTrack:
+.fn Jam_PauseTrack, global
 /* 800114E0 0000E440  7C 08 02 A6 */	mflr r0
 /* 800114E4 0000E444  90 01 00 04 */	stw r0, 4(r1)
 /* 800114E8 0000E448  38 00 00 01 */	li r0, 1
@@ -2404,10 +2413,10 @@ Jam_PauseTrack:
 /* 80011610 0000E570  38 21 00 30 */	addi r1, r1, 0x30
 /* 80011614 0000E574  7C 08 03 A6 */	mtlr r0
 /* 80011618 0000E578  4E 80 00 20 */	blr 
+.endfn Jam_PauseTrack
 
 .balign 32, 0
-.global Jam_UnPauseTrack
-Jam_UnPauseTrack:
+.fn Jam_UnPauseTrack, global
 /* 80011620 0000E580  7C 08 02 A6 */	mflr r0
 /* 80011624 0000E584  90 01 00 04 */	stw r0, 4(r1)
 /* 80011628 0000E588  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -2473,10 +2482,10 @@ Jam_UnPauseTrack:
 /* 80011700 0000E660  38 21 00 28 */	addi r1, r1, 0x28
 /* 80011704 0000E664  7C 08 03 A6 */	mtlr r0
 /* 80011708 0000E668  4E 80 00 20 */	blr 
+.endfn Jam_UnPauseTrack
 
 .balign 32, 0
-.global Jam_SetInterrupt
-Jam_SetInterrupt:
+.fn Jam_SetInterrupt, global
 /* 80011720 0000E680  54 80 04 3E */	clrlwi r0, r4, 0x10
 /* 80011724 0000E684  38 80 00 01 */	li r4, 1
 /* 80011728 0000E688  88 A3 03 A6 */	lbz r5, 0x3a6(r3)
@@ -2487,10 +2496,10 @@ Jam_SetInterrupt:
 /* 8001173C 0000E69C  7C 00 23 78 */	or r0, r0, r4
 /* 80011740 0000E6A0  98 03 03 A5 */	stb r0, 0x3a5(r3)
 /* 80011744 0000E6A4  4E 80 00 20 */	blr 
+.endfn Jam_SetInterrupt
 
 .balign 32, 0
-.global Jam_TryInterrupt
-Jam_TryInterrupt:
+.fn Jam_TryInterrupt, global
 /* 80011760 0000E6C0  88 03 03 A4 */	lbz r0, 0x3a4(r3)
 /* 80011764 0000E6C4  28 00 00 00 */	cmplwi r0, 0
 /* 80011768 0000E6C8  41 82 00 0C */	beq .L_80011774
@@ -2530,9 +2539,10 @@ Jam_TryInterrupt:
 /* 800117E4 0000E744  42 00 FF A0 */	bdnz .L_80011784
 /* 800117E8 0000E748  38 60 00 00 */	li r3, 0
 /* 800117EC 0000E74C  4E 80 00 20 */	blr 
+.endfn Jam_TryInterrupt
 
 .balign 32, 0
-Cmd_OpenTrack__Fv:
+.fn Cmd_OpenTrack__Fv, local
 /* 80011800 0000E760  7C 08 02 A6 */	mflr r0
 /* 80011804 0000E764  3C 80 80 32 */	lis r4, SEQ_ARG@ha
 /* 80011808 0000E768  90 01 00 04 */	stw r0, 4(r1)
@@ -2547,9 +2557,10 @@ Cmd_OpenTrack__Fv:
 /* 8001182C 0000E78C  38 21 00 08 */	addi r1, r1, 8
 /* 80011830 0000E790  7C 08 03 A6 */	mtlr r0
 /* 80011834 0000E794  4E 80 00 20 */	blr 
+.endfn Cmd_OpenTrack__Fv
 
 .balign 32, 0
-Cmd_OpenTrackBros__Fv:
+.fn Cmd_OpenTrackBros__Fv, local
 /* 80011840 0000E7A0  7C 08 02 A6 */	mflr r0
 /* 80011844 0000E7A4  90 01 00 04 */	stw r0, 4(r1)
 /* 80011848 0000E7A8  94 21 FF F8 */	stwu r1, -8(r1)
@@ -2573,9 +2584,10 @@ Cmd_OpenTrackBros__Fv:
 /* 80011884 0000E7E4  38 21 00 08 */	addi r1, r1, 8
 /* 80011888 0000E7E8  7C 08 03 A6 */	mtlr r0
 /* 8001188C 0000E7EC  4E 80 00 20 */	blr 
+.endfn Cmd_OpenTrackBros__Fv
 
 .balign 32, 0
-Cmd_Call__Fv:
+.fn Cmd_Call__Fv, local
 /* 800118A0 0000E800  81 0D 2C 30 */	lwz r8, SEQ_P@sda21(r13)
 /* 800118A4 0000E804  3C 60 80 32 */	lis r3, SEQ_ARG@ha
 /* 800118A8 0000E808  38 83 FA 80 */	addi r4, r3, SEQ_ARG@l
@@ -2591,9 +2603,10 @@ Cmd_Call__Fv:
 /* 800118D0 0000E830  80 8D 2C 30 */	lwz r4, SEQ_P@sda21(r13)
 /* 800118D4 0000E834  90 04 00 04 */	stw r0, 4(r4)
 /* 800118D8 0000E838  4E 80 00 20 */	blr 
+.endfn Cmd_Call__Fv
 
 .balign 32, 0
-Cmd_CallF__Fv:
+.fn Cmd_CallF__Fv, local
 /* 800118E0 0000E840  7C 08 02 A6 */	mflr r0
 /* 800118E4 0000E844  90 01 00 04 */	stw r0, 4(r1)
 /* 800118E8 0000E848  94 21 FF F0 */	stwu r1, -0x10(r1)
@@ -2664,9 +2677,10 @@ Cmd_CallF__Fv:
 /* 800119D4 0000E934  38 21 00 10 */	addi r1, r1, 0x10
 /* 800119D8 0000E938  7C 08 03 A6 */	mtlr r0
 /* 800119DC 0000E93C  4E 80 00 20 */	blr 
+.endfn Cmd_CallF__Fv
 
 .balign 32, 0
-Cmd_Ret__Fv:
+.fn Cmd_Ret__Fv, local
 /* 800119E0 0000E940  80 AD 2C 30 */	lwz r5, SEQ_P@sda21(r13)
 /* 800119E4 0000E944  38 60 00 00 */	li r3, 0
 /* 800119E8 0000E948  80 85 00 08 */	lwz r4, 8(r5)
@@ -2677,9 +2691,10 @@ Cmd_Ret__Fv:
 /* 800119FC 0000E95C  80 04 00 0C */	lwz r0, 0xc(r4)
 /* 80011A00 0000E960  90 05 00 04 */	stw r0, 4(r5)
 /* 80011A04 0000E964  4E 80 00 20 */	blr 
+.endfn Cmd_Ret__Fv
 
 .balign 32, 0
-Cmd_RetF__Fv:
+.fn Cmd_RetF__Fv, local
 /* 80011A20 0000E980  7C 08 02 A6 */	mflr r0
 /* 80011A24 0000E984  3C 80 80 32 */	lis r4, SEQ_ARG@ha
 /* 80011A28 0000E988  90 01 00 04 */	stw r0, 4(r1)
@@ -2705,9 +2720,10 @@ Cmd_RetF__Fv:
 /* 80011A74 0000E9D4  38 21 00 08 */	addi r1, r1, 8
 /* 80011A78 0000E9D8  7C 08 03 A6 */	mtlr r0
 /* 80011A7C 0000E9DC  4E 80 00 20 */	blr 
+.endfn Cmd_RetF__Fv
 
 .balign 32, 0
-Cmd_Jmp__Fv:
+.fn Cmd_Jmp__Fv, local
 /* 80011A80 0000E9E0  3C 60 80 32 */	lis r3, SEQ_ARG@ha
 /* 80011A84 0000E9E4  80 8D 2C 30 */	lwz r4, SEQ_P@sda21(r13)
 /* 80011A88 0000E9E8  38 A3 FA 80 */	addi r5, r3, SEQ_ARG@l
@@ -2715,9 +2731,10 @@ Cmd_Jmp__Fv:
 /* 80011A90 0000E9F0  80 05 00 04 */	lwz r0, 4(r5)
 /* 80011A94 0000E9F4  90 04 00 04 */	stw r0, 4(r4)
 /* 80011A98 0000E9F8  4E 80 00 20 */	blr 
+.endfn Cmd_Jmp__Fv
 
 .balign 32, 0
-Cmd_JmpF__Fv:
+.fn Cmd_JmpF__Fv, local
 /* 80011AA0 0000EA00  7C 08 02 A6 */	mflr r0
 /* 80011AA4 0000EA04  90 01 00 04 */	stw r0, 4(r1)
 /* 80011AA8 0000EA08  94 21 FF F8 */	stwu r1, -8(r1)
@@ -2726,9 +2743,10 @@ Cmd_JmpF__Fv:
 /* 80011AB4 0000EA14  38 21 00 08 */	addi r1, r1, 8
 /* 80011AB8 0000EA18  7C 08 03 A6 */	mtlr r0
 /* 80011ABC 0000EA1C  4E 80 00 20 */	blr 
+.endfn Cmd_JmpF__Fv
 
 .balign 32, 0
-Cmd_LoopS__Fv:
+.fn Cmd_LoopS__Fv, local
 /* 80011AC0 0000EA20  80 AD 2C 30 */	lwz r5, SEQ_P@sda21(r13)
 /* 80011AC4 0000EA24  3C 60 80 32 */	lis r3, SEQ_ARG@ha
 /* 80011AC8 0000EA28  38 83 FA 80 */	addi r4, r3, SEQ_ARG@l
@@ -2747,9 +2765,10 @@ Cmd_LoopS__Fv:
 /* 80011AFC 0000EA5C  7C 86 02 14 */	add r4, r6, r0
 /* 80011B00 0000EA60  B0 E4 00 2C */	sth r7, 0x2c(r4)
 /* 80011B04 0000EA64  4E 80 00 20 */	blr 
+.endfn Cmd_LoopS__Fv
 
 .balign 32, 0
-Cmd_LoopE__Fv:
+.fn Cmd_LoopE__Fv, local
 /* 80011B20 0000EA80  80 6D 2C 30 */	lwz r3, SEQ_P@sda21(r13)
 /* 80011B24 0000EA84  38 A3 00 08 */	addi r5, r3, 8
 /* 80011B28 0000EA88  80 03 00 08 */	lwz r0, 8(r3)
@@ -2783,9 +2802,10 @@ Cmd_LoopE__Fv:
 /* 80011B8C 0000EAEC  80 04 00 08 */	lwz r0, 8(r4)
 /* 80011B90 0000EAF0  90 05 00 04 */	stw r0, 4(r5)
 /* 80011B94 0000EAF4  4E 80 00 20 */	blr 
+.endfn Cmd_LoopE__Fv
 
 .balign 32, 0
-Cmd_ReadPort__Fv:
+.fn Cmd_ReadPort__Fv, local
 /* 80011BA0 0000EB00  7C 08 02 A6 */	mflr r0
 /* 80011BA4 0000EB04  3C 60 80 32 */	lis r3, SEQ_ARG@ha
 /* 80011BA8 0000EB08  90 01 00 04 */	stw r0, 4(r1)
@@ -2807,9 +2827,10 @@ Cmd_ReadPort__Fv:
 /* 80011BE8 0000EB48  38 21 00 08 */	addi r1, r1, 8
 /* 80011BEC 0000EB4C  7C 08 03 A6 */	mtlr r0
 /* 80011BF0 0000EB50  4E 80 00 20 */	blr 
+.endfn Cmd_ReadPort__Fv
 
 .balign 32, 0
-Cmd_WritePort__Fv:
+.fn Cmd_WritePort__Fv, local
 /* 80011C00 0000EB60  3C 60 80 32 */	lis r3, TRACK_LIST@ha
 /* 80011C04 0000EB64  80 8D 2C 30 */	lwz r4, SEQ_P@sda21(r13)
 /* 80011C08 0000EB68  38 E3 F9 80 */	addi r7, r3, TRACK_LIST@l
@@ -2826,9 +2847,10 @@ Cmd_WritePort__Fv:
 /* 80011C34 0000EB94  7C 84 02 14 */	add r4, r4, r0
 /* 80011C38 0000EB98  98 A4 02 F1 */	stb r5, 0x2f1(r4)
 /* 80011C3C 0000EB9C  4E 80 00 20 */	blr 
+.endfn Cmd_WritePort__Fv
 
 .balign 32, 0
-Cmd_CheckPortImport__Fv:
+.fn Cmd_CheckPortImport__Fv, local
 /* 80011C40 0000EBA0  7C 08 02 A6 */	mflr r0
 /* 80011C44 0000EBA4  3C 80 80 32 */	lis r4, SEQ_ARG@ha
 /* 80011C48 0000EBA8  90 01 00 04 */	stw r0, 4(r1)
@@ -2846,9 +2868,10 @@ Cmd_CheckPortImport__Fv:
 /* 80011C78 0000EBD8  38 21 00 08 */	addi r1, r1, 8
 /* 80011C7C 0000EBDC  7C 08 03 A6 */	mtlr r0
 /* 80011C80 0000EBE0  4E 80 00 20 */	blr 
+.endfn Cmd_CheckPortImport__Fv
 
 .balign 32, 0
-Cmd_CheckPortExport__Fv:
+.fn Cmd_CheckPortExport__Fv, local
 /* 80011CA0 0000EC00  7C 08 02 A6 */	mflr r0
 /* 80011CA4 0000EC04  3C 80 80 32 */	lis r4, SEQ_ARG@ha
 /* 80011CA8 0000EC08  90 01 00 04 */	stw r0, 4(r1)
@@ -2866,9 +2889,10 @@ Cmd_CheckPortExport__Fv:
 /* 80011CD8 0000EC38  38 21 00 08 */	addi r1, r1, 8
 /* 80011CDC 0000EC3C  7C 08 03 A6 */	mtlr r0
 /* 80011CE0 0000EC40  4E 80 00 20 */	blr 
+.endfn Cmd_CheckPortExport__Fv
 
 .balign 32, 0
-Cmd_WaitReg__Fv:
+.fn Cmd_WaitReg__Fv, local
 /* 80011D00 0000EC60  3C 80 80 32 */	lis r4, SEQ_ARG@ha
 /* 80011D04 0000EC64  80 6D 2C 30 */	lwz r3, SEQ_P@sda21(r13)
 /* 80011D08 0000EC68  84 04 FA 80 */	lwzu r0, SEQ_ARG@l(r4)
@@ -2881,9 +2905,10 @@ Cmd_WaitReg__Fv:
 .L_80011D24:
 /* 80011D24 0000EC84  38 60 00 00 */	li r3, 0
 /* 80011D28 0000EC88  4E 80 00 20 */	blr 
+.endfn Cmd_WaitReg__Fv
 
 .balign 32, 0
-Cmd_ConnectName__Fv:
+.fn Cmd_ConnectName__Fv, local
 /* 80011D40 0000ECA0  3C 60 80 32 */	lis r3, SEQ_ARG@ha
 /* 80011D44 0000ECA4  80 8D 2C 30 */	lwz r4, SEQ_P@sda21(r13)
 /* 80011D48 0000ECA8  38 C3 FA 80 */	addi r6, r3, SEQ_ARG@l
@@ -2894,9 +2919,10 @@ Cmd_ConnectName__Fv:
 /* 80011D5C 0000ECBC  7C A0 03 78 */	or r0, r5, r0
 /* 80011D60 0000ECC0  90 04 00 84 */	stw r0, 0x84(r4)
 /* 80011D64 0000ECC4  4E 80 00 20 */	blr 
+.endfn Cmd_ConnectName__Fv
 
 .balign 32, 0
-Cmd_ParentWritePort__Fv:
+.fn Cmd_ParentWritePort__Fv, local
 /* 80011D80 0000ECE0  7C 08 02 A6 */	mflr r0
 /* 80011D84 0000ECE4  3C 60 80 32 */	lis r3, SEQ_ARG@ha
 /* 80011D88 0000ECE8  90 01 00 04 */	stw r0, 4(r1)
@@ -2913,9 +2939,10 @@ Cmd_ParentWritePort__Fv:
 /* 80011DB4 0000ED14  38 21 00 08 */	addi r1, r1, 8
 /* 80011DB8 0000ED18  7C 08 03 A6 */	mtlr r0
 /* 80011DBC 0000ED1C  4E 80 00 20 */	blr 
+.endfn Cmd_ParentWritePort__Fv
 
 .balign 32, 0
-Cmd_ChildWritePort__Fv:
+.fn Cmd_ChildWritePort__Fv, local
 /* 80011DC0 0000ED20  7C 08 02 A6 */	mflr r0
 /* 80011DC4 0000ED24  3C 60 80 32 */	lis r3, SEQ_ARG@ha
 /* 80011DC8 0000ED28  90 01 00 04 */	stw r0, 4(r1)
@@ -2934,9 +2961,10 @@ Cmd_ChildWritePort__Fv:
 /* 80011DFC 0000ED5C  38 21 00 08 */	addi r1, r1, 8
 /* 80011E00 0000ED60  7C 08 03 A6 */	mtlr r0
 /* 80011E04 0000ED64  4E 80 00 20 */	blr 
+.endfn Cmd_ChildWritePort__Fv
 
 .balign 32, 0
-Cmd_SetLastNote__Fv:
+.fn Cmd_SetLastNote__Fv, local
 /* 80011E20 0000ED80  3C 60 80 32 */	lis r3, SEQ_ARG@ha
 /* 80011E24 0000ED84  80 8D 2C 30 */	lwz r4, SEQ_P@sda21(r13)
 /* 80011E28 0000ED88  38 A3 FA 80 */	addi r5, r3, SEQ_ARG@l
@@ -2949,9 +2977,10 @@ Cmd_SetLastNote__Fv:
 /* 80011E44 0000EDA4  7C 04 02 14 */	add r0, r4, r0
 /* 80011E48 0000EDA8  98 05 00 D5 */	stb r0, 0xd5(r5)
 /* 80011E4C 0000EDAC  4E 80 00 20 */	blr 
+.endfn Cmd_SetLastNote__Fv
 
 .balign 32, 0
-Cmd_TimeRelate__Fv:
+.fn Cmd_TimeRelate__Fv, local
 /* 80011E60 0000EDC0  3C 60 80 32 */	lis r3, SEQ_ARG@ha
 /* 80011E64 0000EDC4  80 8D 2C 30 */	lwz r4, SEQ_P@sda21(r13)
 /* 80011E68 0000EDC8  38 A3 FA 80 */	addi r5, r3, SEQ_ARG@l
@@ -2959,9 +2988,10 @@ Cmd_TimeRelate__Fv:
 /* 80011E70 0000EDD0  80 05 00 00 */	lwz r0, 0(r5)
 /* 80011E74 0000EDD4  98 04 03 3C */	stb r0, 0x33c(r4)
 /* 80011E78 0000EDD8  4E 80 00 20 */	blr 
+.endfn Cmd_TimeRelate__Fv
 
 .balign 32, 0
-Cmd_SimpleOsc__Fv:
+.fn Cmd_SimpleOsc__Fv, local
 /* 80011E80 0000EDE0  7C 08 02 A6 */	mflr r0
 /* 80011E84 0000EDE4  3C 80 80 32 */	lis r4, SEQ_ARG@ha
 /* 80011E88 0000EDE8  90 01 00 04 */	stw r0, 4(r1)
@@ -2975,9 +3005,10 @@ Cmd_SimpleOsc__Fv:
 /* 80011EA8 0000EE08  38 21 00 08 */	addi r1, r1, 8
 /* 80011EAC 0000EE0C  7C 08 03 A6 */	mtlr r0
 /* 80011EB0 0000EE10  4E 80 00 20 */	blr 
+.endfn Cmd_SimpleOsc__Fv
 
 .balign 32, 0
-Cmd_SimpleEnv__Fv:
+.fn Cmd_SimpleEnv__Fv, local
 /* 80011EC0 0000EE20  7C 08 02 A6 */	mflr r0
 /* 80011EC4 0000EE24  3C 80 80 32 */	lis r4, SEQ_ARG@ha
 /* 80011EC8 0000EE28  90 01 00 04 */	stw r0, 4(r1)
@@ -2992,9 +3023,10 @@ Cmd_SimpleEnv__Fv:
 /* 80011EEC 0000EE4C  38 21 00 08 */	addi r1, r1, 8
 /* 80011EF0 0000EE50  7C 08 03 A6 */	mtlr r0
 /* 80011EF4 0000EE54  4E 80 00 20 */	blr 
+.endfn Cmd_SimpleEnv__Fv
 
 .balign 32, 0
-Cmd_SimpleADSR__Fv:
+.fn Cmd_SimpleADSR__Fv, local
 /* 80011F00 0000EE60  7C 08 02 A6 */	mflr r0
 /* 80011F04 0000EE64  3C 60 80 32 */	lis r3, SEQ_ARG@ha
 /* 80011F08 0000EE68  90 01 00 04 */	stw r0, 4(r1)
@@ -3021,9 +3053,10 @@ Cmd_SimpleADSR__Fv:
 /* 80011F58 0000EEB8  38 21 00 18 */	addi r1, r1, 0x18
 /* 80011F5C 0000EEBC  7C 08 03 A6 */	mtlr r0
 /* 80011F60 0000EEC0  4E 80 00 20 */	blr 
+.endfn Cmd_SimpleADSR__Fv
 
 .balign 32, 0
-Cmd_Transpose__Fv:
+.fn Cmd_Transpose__Fv, local
 /* 80011F80 0000EEE0  3C 80 80 32 */	lis r4, SEQ_ARG@ha
 /* 80011F84 0000EEE4  80 6D 2C 30 */	lwz r3, SEQ_P@sda21(r13)
 /* 80011F88 0000EEE8  80 04 FA 80 */	lwz r0, SEQ_ARG@l(r4)
@@ -3044,9 +3077,10 @@ Cmd_Transpose__Fv:
 .L_80011FC0:
 /* 80011FC0 0000EF20  38 60 00 00 */	li r3, 0
 /* 80011FC4 0000EF24  4E 80 00 20 */	blr 
+.endfn Cmd_Transpose__Fv
 
 .balign 32, 0
-Cmd_CloseTrack__Fv:
+.fn Cmd_CloseTrack__Fv, local
 /* 80011FE0 0000EF40  7C 08 02 A6 */	mflr r0
 /* 80011FE4 0000EF44  3C 60 80 32 */	lis r3, SEQ_ARG@ha
 /* 80011FE8 0000EF48  90 01 00 04 */	stw r0, 4(r1)
@@ -3075,9 +3109,10 @@ Cmd_CloseTrack__Fv:
 /* 8001203C 0000EF9C  38 21 00 10 */	addi r1, r1, 0x10
 /* 80012040 0000EFA0  7C 08 03 A6 */	mtlr r0
 /* 80012044 0000EFA4  4E 80 00 20 */	blr 
+.endfn Cmd_CloseTrack__Fv
 
 .balign 32, 0
-Cmd_OutSwitch__Fv:
+.fn Cmd_OutSwitch__Fv, local
 /* 80012060 0000EFC0  80 6D 2C 30 */	lwz r3, SEQ_P@sda21(r13)
 /* 80012064 0000EFC4  80 A3 02 AC */	lwz r5, 0x2ac(r3)
 /* 80012068 0000EFC8  28 05 00 00 */	cmplwi r5, 0
@@ -3093,9 +3128,10 @@ Cmd_OutSwitch__Fv:
 .L_80012090:
 /* 80012090 0000EFF0  38 60 00 00 */	li r3, 0
 /* 80012094 0000EFF4  4E 80 00 20 */	blr 
+.endfn Cmd_OutSwitch__Fv
 
 .balign 32, 0
-Cmd_UpdateSync__Fv:
+.fn Cmd_UpdateSync__Fv, local
 /* 800120A0 0000F000  7C 08 02 A6 */	mflr r0
 /* 800120A4 0000F004  3C 80 80 32 */	lis r4, SEQ_ARG@ha
 /* 800120A8 0000F008  90 01 00 04 */	stw r0, 4(r1)
@@ -3109,9 +3145,10 @@ Cmd_UpdateSync__Fv:
 /* 800120C8 0000F028  38 21 00 08 */	addi r1, r1, 8
 /* 800120CC 0000F02C  7C 08 03 A6 */	mtlr r0
 /* 800120D0 0000F030  4E 80 00 20 */	blr 
+.endfn Cmd_UpdateSync__Fv
 
 .balign 32, 0
-Cmd_BusConnect__Fv:
+.fn Cmd_BusConnect__Fv, local
 /* 800120E0 0000F040  3C 60 80 32 */	lis r3, SEQ_ARG@ha
 /* 800120E4 0000F044  84 03 FA 80 */	lwzu r0, SEQ_ARG@l(r3)
 /* 800120E8 0000F048  28 00 00 06 */	cmplwi r0, 6
@@ -3124,9 +3161,10 @@ Cmd_BusConnect__Fv:
 .L_80012104:
 /* 80012104 0000F064  38 60 00 00 */	li r3, 0
 /* 80012108 0000F068  4E 80 00 20 */	blr 
+.endfn Cmd_BusConnect__Fv
 
 .balign 32, 0
-Cmd_PauseStatus__Fv:
+.fn Cmd_PauseStatus__Fv, local
 /* 80012120 0000F080  3C 60 80 32 */	lis r3, SEQ_ARG@ha
 /* 80012124 0000F084  80 8D 2C 30 */	lwz r4, SEQ_P@sda21(r13)
 /* 80012128 0000F088  38 A3 FA 80 */	addi r5, r3, SEQ_ARG@l
@@ -3134,9 +3172,10 @@ Cmd_PauseStatus__Fv:
 /* 80012130 0000F090  80 05 00 00 */	lwz r0, 0(r5)
 /* 80012134 0000F094  98 04 03 9D */	stb r0, 0x39d(r4)
 /* 80012138 0000F098  4E 80 00 20 */	blr 
+.endfn Cmd_PauseStatus__Fv
 
 .balign 32, 0
-Cmd_SetInterrupt__Fv:
+.fn Cmd_SetInterrupt__Fv, local
 /* 80012140 0000F0A0  3C 60 80 32 */	lis r3, TRACK_LIST@ha
 /* 80012144 0000F0A4  80 CD 2C 30 */	lwz r6, SEQ_P@sda21(r13)
 /* 80012148 0000F0A8  38 E3 F9 80 */	addi r7, r3, TRACK_LIST@l
@@ -3154,9 +3193,10 @@ Cmd_SetInterrupt__Fv:
 /* 80012178 0000F0D8  7C 84 02 14 */	add r4, r4, r0
 /* 8001217C 0000F0DC  90 A4 03 A8 */	stw r5, 0x3a8(r4)
 /* 80012180 0000F0E0  4E 80 00 20 */	blr 
+.endfn Cmd_SetInterrupt__Fv
 
 .balign 32, 0
-Cmd_DisInterrupt__Fv:
+.fn Cmd_DisInterrupt__Fv, local
 /* 800121A0 0000F100  3C 60 80 32 */	lis r3, SEQ_ARG@ha
 /* 800121A4 0000F104  80 8D 2C 30 */	lwz r4, SEQ_P@sda21(r13)
 /* 800121A8 0000F108  80 C3 FA 80 */	lwz r6, SEQ_ARG@l(r3)
@@ -3169,25 +3209,28 @@ Cmd_DisInterrupt__Fv:
 /* 800121C4 0000F124  7C 00 28 78 */	andc r0, r0, r5
 /* 800121C8 0000F128  98 04 03 A6 */	stb r0, 0x3a6(r4)
 /* 800121CC 0000F12C  4E 80 00 20 */	blr 
+.endfn Cmd_DisInterrupt__Fv
 
 .balign 32, 0
-Cmd_ClrI__Fv:
+.fn Cmd_ClrI__Fv, local
 /* 800121E0 0000F140  80 8D 2C 30 */	lwz r4, SEQ_P@sda21(r13)
 /* 800121E4 0000F144  38 00 00 00 */	li r0, 0
 /* 800121E8 0000F148  38 60 00 00 */	li r3, 0
 /* 800121EC 0000F14C  98 04 03 A4 */	stb r0, 0x3a4(r4)
 /* 800121F0 0000F150  4E 80 00 20 */	blr 
+.endfn Cmd_ClrI__Fv
 
 .balign 32, 0
-Cmd_SetI__Fv:
+.fn Cmd_SetI__Fv, local
 /* 80012200 0000F160  80 8D 2C 30 */	lwz r4, SEQ_P@sda21(r13)
 /* 80012204 0000F164  38 00 00 01 */	li r0, 1
 /* 80012208 0000F168  38 60 00 00 */	li r3, 0
 /* 8001220C 0000F16C  98 04 03 A4 */	stb r0, 0x3a4(r4)
 /* 80012210 0000F170  4E 80 00 20 */	blr 
+.endfn Cmd_SetI__Fv
 
 .balign 32, 0
-Cmd_RetI__Fv:
+.fn Cmd_RetI__Fv, local
 /* 80012220 0000F180  80 AD 2C 30 */	lwz r5, SEQ_P@sda21(r13)
 /* 80012224 0000F184  38 00 00 00 */	li r0, 0
 /* 80012228 0000F188  38 60 00 02 */	li r3, 2
@@ -3199,9 +3242,10 @@ Cmd_RetI__Fv:
 /* 80012240 0000F1A0  80 04 03 C8 */	lwz r0, 0x3c8(r4)
 /* 80012244 0000F1A4  90 04 00 04 */	stw r0, 4(r4)
 /* 80012248 0000F1A8  4E 80 00 20 */	blr 
+.endfn Cmd_RetI__Fv
 
 .balign 32, 0
-Cmd_IntTimer__Fv:
+.fn Cmd_IntTimer__Fv, local
 /* 80012260 0000F1C0  3C 60 80 32 */	lis r3, SEQ_ARG@ha
 /* 80012264 0000F1C4  80 8D 2C 30 */	lwz r4, SEQ_P@sda21(r13)
 /* 80012268 0000F1C8  38 A3 FA 80 */	addi r5, r3, SEQ_ARG@l
@@ -3215,9 +3259,10 @@ Cmd_IntTimer__Fv:
 /* 80012288 0000F1E8  80 8D 2C 30 */	lwz r4, SEQ_P@sda21(r13)
 /* 8001228C 0000F1EC  90 04 03 D4 */	stw r0, 0x3d4(r4)
 /* 80012290 0000F1F0  4E 80 00 20 */	blr 
+.endfn Cmd_IntTimer__Fv
 
 .balign 32, 0
-Cmd_ConnectOpen__Fv:
+.fn Cmd_ConnectOpen__Fv, local
 /* 800122A0 0000F200  7C 08 02 A6 */	mflr r0
 /* 800122A4 0000F204  90 01 00 04 */	stw r0, 4(r1)
 /* 800122A8 0000F208  94 21 FF F8 */	stwu r1, -8(r1)
@@ -3229,9 +3274,10 @@ Cmd_ConnectOpen__Fv:
 /* 800122C0 0000F220  38 21 00 08 */	addi r1, r1, 8
 /* 800122C4 0000F224  7C 08 03 A6 */	mtlr r0
 /* 800122C8 0000F228  4E 80 00 20 */	blr 
+.endfn Cmd_ConnectOpen__Fv
 
 .balign 32, 0
-Cmd_ConnectClose__Fv:
+.fn Cmd_ConnectClose__Fv, local
 /* 800122E0 0000F240  7C 08 02 A6 */	mflr r0
 /* 800122E4 0000F244  90 01 00 04 */	stw r0, 4(r1)
 /* 800122E8 0000F248  94 21 FF F8 */	stwu r1, -8(r1)
@@ -3242,9 +3288,10 @@ Cmd_ConnectClose__Fv:
 /* 800122FC 0000F25C  38 21 00 08 */	addi r1, r1, 8
 /* 80012300 0000F260  7C 08 03 A6 */	mtlr r0
 /* 80012304 0000F264  4E 80 00 20 */	blr 
+.endfn Cmd_ConnectClose__Fv
 
 .balign 32, 0
-Cmd_SyncCPU__Fv:
+.fn Cmd_SyncCPU__Fv, local
 /* 80012320 0000F280  7C 08 02 A6 */	mflr r0
 /* 80012324 0000F284  3C 60 80 32 */	lis r3, SEQ_ARG@ha
 /* 80012328 0000F288  90 01 00 04 */	stw r0, 4(r1)
@@ -3271,9 +3318,10 @@ Cmd_SyncCPU__Fv:
 /* 80012374 0000F2D4  38 21 00 08 */	addi r1, r1, 8
 /* 80012378 0000F2D8  7C 08 03 A6 */	mtlr r0
 /* 8001237C 0000F2DC  4E 80 00 20 */	blr 
+.endfn Cmd_SyncCPU__Fv
 
 .balign 32, 0
-Cmd_FlushAll__Fv:
+.fn Cmd_FlushAll__Fv, local
 /* 80012380 0000F2E0  7C 08 02 A6 */	mflr r0
 /* 80012384 0000F2E4  90 01 00 04 */	stw r0, 4(r1)
 /* 80012388 0000F2E8  94 21 FF F8 */	stwu r1, -8(r1)
@@ -3288,9 +3336,10 @@ Cmd_FlushAll__Fv:
 /* 800123AC 0000F30C  38 21 00 08 */	addi r1, r1, 8
 /* 800123B0 0000F310  7C 08 03 A6 */	mtlr r0
 /* 800123B4 0000F314  4E 80 00 20 */	blr 
+.endfn Cmd_FlushAll__Fv
 
 .balign 32, 0
-Cmd_FlushRelease__Fv:
+.fn Cmd_FlushRelease__Fv, local
 /* 800123C0 0000F320  7C 08 02 A6 */	mflr r0
 /* 800123C4 0000F324  90 01 00 04 */	stw r0, 4(r1)
 /* 800123C8 0000F328  94 21 FF F8 */	stwu r1, -8(r1)
@@ -3302,9 +3351,10 @@ Cmd_FlushRelease__Fv:
 /* 800123E0 0000F340  38 21 00 08 */	addi r1, r1, 8
 /* 800123E4 0000F344  7C 08 03 A6 */	mtlr r0
 /* 800123E8 0000F348  4E 80 00 20 */	blr 
+.endfn Cmd_FlushRelease__Fv
 
 .balign 32, 0
-Cmd_Wait3__Fv:
+.fn Cmd_Wait3__Fv, local
 /* 80012400 0000F360  3C 80 80 32 */	lis r4, SEQ_ARG@ha
 /* 80012404 0000F364  80 6D 2C 30 */	lwz r3, SEQ_P@sda21(r13)
 /* 80012408 0000F368  84 04 FA 80 */	lwzu r0, SEQ_ARG@l(r4)
@@ -3317,9 +3367,10 @@ Cmd_Wait3__Fv:
 .L_80012424:
 /* 80012424 0000F384  38 60 00 00 */	li r3, 0
 /* 80012428 0000F388  4E 80 00 20 */	blr 
+.endfn Cmd_Wait3__Fv
 
 .balign 32, 0
-Cmd_TimeBase__Fv:
+.fn Cmd_TimeBase__Fv, local
 /* 80012440 0000F3A0  7C 08 02 A6 */	mflr r0
 /* 80012444 0000F3A4  3C 80 80 32 */	lis r4, SEQ_ARG@ha
 /* 80012448 0000F3A8  90 01 00 04 */	stw r0, 4(r1)
@@ -3338,9 +3389,10 @@ Cmd_TimeBase__Fv:
 /* 80012478 0000F3D8  38 21 00 08 */	addi r1, r1, 8
 /* 8001247C 0000F3DC  7C 08 03 A6 */	mtlr r0
 /* 80012480 0000F3E0  4E 80 00 20 */	blr 
+.endfn Cmd_TimeBase__Fv
 
 .balign 32, 0
-Cmd_Tempo__Fv:
+.fn Cmd_Tempo__Fv, local
 /* 800124A0 0000F400  7C 08 02 A6 */	mflr r0
 /* 800124A4 0000F404  3C 80 80 32 */	lis r4, SEQ_ARG@ha
 /* 800124A8 0000F408  90 01 00 04 */	stw r0, 4(r1)
@@ -3363,14 +3415,15 @@ Cmd_Tempo__Fv:
 /* 800124E4 0000F444  38 21 00 08 */	addi r1, r1, 8
 /* 800124E8 0000F448  7C 08 03 A6 */	mtlr r0
 /* 800124EC 0000F44C  4E 80 00 20 */	blr 
+.endfn Cmd_Tempo__Fv
 
 .balign 32, 0
-Cmd_Finish__Fv:
+.fn Cmd_Finish__Fv, local
 /* 80012500 0000F460  7C 08 02 A6 */	mflr r0
 /* 80012504 0000F464  90 01 00 04 */	stw r0, 4(r1)
 /* 80012508 0000F468  94 21 FF D8 */	stwu r1, -0x28(r1)
 /* 8001250C 0000F46C  39 61 00 28 */	addi r11, r1, 0x28
-/* 80012510 0000F470  48 20 29 55 */	bl func_80214E64
+/* 80012510 0000F470  48 20 29 55 */	bl _savefpr_30
 /* 80012514 0000F474  BF A1 00 0C */	stmw r29, 0xc(r1)
 /* 80012518 0000F478  C3 E2 80 F8 */	lfs f31, lbl_803E82F8@sda21(r2)
 /* 8001251C 0000F47C  3B A0 00 00 */	li r29, 0
@@ -3416,19 +3469,21 @@ Cmd_Finish__Fv:
 /* 800125AC 0000F50C  38 60 00 03 */	li r3, 3
 /* 800125B0 0000F510  80 01 00 2C */	lwz r0, 0x2c(r1)
 /* 800125B4 0000F514  39 61 00 28 */	addi r11, r1, 0x28
-/* 800125B8 0000F518  48 20 28 F9 */	bl func_80214EB0
+/* 800125B8 0000F518  48 20 28 F9 */	bl _restfpr_30
 /* 800125BC 0000F51C  BB A1 00 0C */	lmw r29, 0xc(r1)
 /* 800125C0 0000F520  38 21 00 28 */	addi r1, r1, 0x28
 /* 800125C4 0000F524  7C 08 03 A6 */	mtlr r0
 /* 800125C8 0000F528  4E 80 00 20 */	blr 
+.endfn Cmd_Finish__Fv
 
 .balign 32, 0
-Cmd_Nop__Fv:
+.fn Cmd_Nop__Fv, local
 /* 800125E0 0000F540  38 60 00 00 */	li r3, 0
 /* 800125E4 0000F544  4E 80 00 20 */	blr 
+.endfn Cmd_Nop__Fv
 
 .balign 32, 0
-Cmd_PanPowSet__Fv:
+.fn Cmd_PanPowSet__Fv, local
 /* 80012600 0000F560  94 21 FF E8 */	stwu r1, -0x18(r1)
 /* 80012604 0000F564  3C 60 80 32 */	lis r3, SEQ_ARG@ha
 /* 80012608 0000F568  38 00 00 03 */	li r0, 3
@@ -3474,9 +3529,10 @@ Cmd_PanPowSet__Fv:
 /* 800126A0 0000F600  38 60 00 00 */	li r3, 0
 /* 800126A4 0000F604  38 21 00 18 */	addi r1, r1, 0x18
 /* 800126A8 0000F608  4E 80 00 20 */	blr 
+.endfn Cmd_PanPowSet__Fv
 
 .balign 32, 0
-Cmd_IIRSet__Fv:
+.fn Cmd_IIRSet__Fv, local
 /* 800126C0 0000F620  94 21 FF E8 */	stwu r1, -0x18(r1)
 /* 800126C4 0000F624  3C 60 80 32 */	lis r3, SEQ_ARG@ha
 /* 800126C8 0000F628  38 00 00 04 */	li r0, 4
@@ -3515,9 +3571,10 @@ Cmd_IIRSet__Fv:
 /* 80012748 0000F6A8  38 60 00 00 */	li r3, 0
 /* 8001274C 0000F6AC  38 21 00 18 */	addi r1, r1, 0x18
 /* 80012750 0000F6B0  4E 80 00 20 */	blr 
+.endfn Cmd_IIRSet__Fv
 
 .balign 32, 0
-Cmd_FIRSet__Fv:
+.fn Cmd_FIRSet__Fv, local
 /* 80012760 0000F6C0  7C 08 02 A6 */	mflr r0
 /* 80012764 0000F6C4  3C 80 80 32 */	lis r4, SEQ_ARG@ha
 /* 80012768 0000F6C8  90 01 00 04 */	stw r0, 4(r1)
@@ -3535,9 +3592,10 @@ Cmd_FIRSet__Fv:
 /* 80012798 0000F6F8  38 21 00 08 */	addi r1, r1, 8
 /* 8001279C 0000F6FC  7C 08 03 A6 */	mtlr r0
 /* 800127A0 0000F700  4E 80 00 20 */	blr 
+.endfn Cmd_FIRSet__Fv
 
 .balign 32, 0
-Cmd_EXTSet__Fv:
+.fn Cmd_EXTSet__Fv, local
 /* 800127C0 0000F720  7C 08 02 A6 */	mflr r0
 /* 800127C4 0000F724  3C 80 80 32 */	lis r4, SEQ_ARG@ha
 /* 800127C8 0000F728  90 01 00 04 */	stw r0, 4(r1)
@@ -3558,9 +3616,10 @@ Cmd_EXTSet__Fv:
 /* 80012804 0000F764  38 21 00 10 */	addi r1, r1, 0x10
 /* 80012808 0000F768  7C 08 03 A6 */	mtlr r0
 /* 8001280C 0000F76C  4E 80 00 20 */	blr 
+.endfn Cmd_EXTSet__Fv
 
 .balign 32, 0
-Cmd_PanSwSet__Fv:
+.fn Cmd_PanSwSet__Fv, local
 /* 80012820 0000F780  94 21 FF E8 */	stwu r1, -0x18(r1)
 /* 80012824 0000F784  3C 60 80 32 */	lis r3, SEQ_ARG@ha
 /* 80012828 0000F788  39 63 FA 80 */	addi r11, r3, SEQ_ARG@l
@@ -3611,9 +3670,10 @@ Cmd_PanSwSet__Fv:
 /* 800128D8 0000F838  38 60 00 00 */	li r3, 0
 /* 800128DC 0000F83C  38 21 00 18 */	addi r1, r1, 0x18
 /* 800128E0 0000F840  4E 80 00 20 */	blr 
+.endfn Cmd_PanSwSet__Fv
 
 .balign 32, 0
-Cmd_OscRoute__Fv:
+.fn Cmd_OscRoute__Fv, local
 /* 80012900 0000F860  3C 80 80 32 */	lis r4, SEQ_ARG@ha
 /* 80012904 0000F864  80 6D 2C 30 */	lwz r3, SEQ_P@sda21(r13)
 /* 80012908 0000F868  80 04 FA 80 */	lwz r0, SEQ_ARG@l(r4)
@@ -3631,9 +3691,10 @@ Cmd_OscRoute__Fv:
 .L_80012938:
 /* 80012938 0000F898  38 60 00 00 */	li r3, 0
 /* 8001293C 0000F89C  4E 80 00 20 */	blr 
+.endfn Cmd_OscRoute__Fv
 
 .balign 32, 0
-Cmd_IIRCutOff__Fv:
+.fn Cmd_IIRCutOff__Fv, local
 /* 80012940 0000F8A0  94 21 FF E8 */	stwu r1, -0x18(r1)
 /* 80012944 0000F8A4  3C 80 80 32 */	lis r4, SEQ_ARG@ha
 /* 80012948 0000F8A8  38 84 FA 80 */	addi r4, r4, SEQ_ARG@l
@@ -3675,9 +3736,10 @@ Cmd_IIRCutOff__Fv:
 /* 800129D4 0000F934  38 60 00 00 */	li r3, 0
 /* 800129D8 0000F938  38 21 00 18 */	addi r1, r1, 0x18
 /* 800129DC 0000F93C  4E 80 00 20 */	blr 
+.endfn Cmd_IIRCutOff__Fv
 
 .balign 32, 0
-Cmd_OscFull__Fv:
+.fn Cmd_OscFull__Fv, local
 /* 800129E0 0000F940  7C 08 02 A6 */	mflr r0
 /* 800129E4 0000F944  3C 80 80 32 */	lis r4, TRACK_LIST@ha
 /* 800129E8 0000F948  90 01 00 04 */	stw r0, 4(r1)
@@ -3694,9 +3756,10 @@ Cmd_OscFull__Fv:
 /* 80012A14 0000F974  38 21 00 08 */	addi r1, r1, 8
 /* 80012A18 0000F978  7C 08 03 A6 */	mtlr r0
 /* 80012A1C 0000F97C  4E 80 00 20 */	blr 
+.endfn Cmd_OscFull__Fv
 
 .balign 32, 0
-Cmd_CheckWave__Fv:
+.fn Cmd_CheckWave__Fv, local
 /* 80012A20 0000F980  7C 08 02 A6 */	mflr r0
 /* 80012A24 0000F984  38 80 00 06 */	li r4, 6
 /* 80012A28 0000F988  90 01 00 04 */	stw r0, 4(r1)
@@ -3723,9 +3786,10 @@ Cmd_CheckWave__Fv:
 /* 80012A7C 0000F9DC  38 21 00 10 */	addi r1, r1, 0x10
 /* 80012A80 0000F9E0  7C 08 03 A6 */	mtlr r0
 /* 80012A84 0000F9E4  4E 80 00 20 */	blr 
+.endfn Cmd_CheckWave__Fv
 
 .balign 32, 0
-Cmd_Printf__Fv:
+.fn Cmd_Printf__Fv, local
 /* 80012AA0 0000FA00  7C 08 02 A6 */	mflr r0
 /* 80012AA4 0000FA04  90 01 00 04 */	stw r0, 4(r1)
 /* 80012AA8 0000FA08  94 21 FF 38 */	stwu r1, -0xc8(r1)
@@ -3874,9 +3938,10 @@ Cmd_Printf__Fv:
 /* 80012C98 0000FBF8  38 21 00 C8 */	addi r1, r1, 0xc8
 /* 80012C9C 0000FBFC  7C 08 03 A6 */	mtlr r0
 /* 80012CA0 0000FC00  4E 80 00 20 */	blr 
+.endfn Cmd_Printf__Fv
 
 .balign 32, 0
-Cmd_Process__FP5seqp_UcUs:
+.fn Cmd_Process__FP5seqp_UcUs, global
 /* 80012CC0 0000FC20  7C 08 02 A6 */	mflr r0
 /* 80012CC4 0000FC24  3C C0 80 22 */	lis r6, Arglist@ha
 /* 80012CC8 0000FC28  90 01 00 04 */	stw r0, 4(r1)
@@ -3963,10 +4028,10 @@ Cmd_Process__FP5seqp_UcUs:
 /* 80012DE4 0000FD44  38 21 00 40 */	addi r1, r1, 0x40
 /* 80012DE8 0000FD48  7C 08 03 A6 */	mtlr r0
 /* 80012DEC 0000FD4C  4E 80 00 20 */	blr 
+.endfn Cmd_Process__FP5seqp_UcUs
 
 .balign 32, 0
-.global RegCmd_Process__FP5seqp_iUl
-RegCmd_Process__FP5seqp_iUl:
+.fn RegCmd_Process__FP5seqp_iUl, global
 /* 80012E00 0000FD60  7C 08 02 A6 */	mflr r0
 /* 80012E04 0000FD64  90 01 00 04 */	stw r0, 4(r1)
 /* 80012E08 0000FD68  94 21 FF D0 */	stwu r1, -0x30(r1)
@@ -4014,15 +4079,15 @@ RegCmd_Process__FP5seqp_iUl:
 /* 80012E9C 0000FDFC  38 21 00 30 */	addi r1, r1, 0x30
 /* 80012EA0 0000FE00  7C 08 03 A6 */	mtlr r0
 /* 80012EA4 0000FE04  4E 80 00 20 */	blr 
+.endfn RegCmd_Process__FP5seqp_iUl
 
 .balign 32, 0
-.global Jam_SeqmainNote
-Jam_SeqmainNote:
+.fn Jam_SeqmainNote, global
 /* 80012EC0 0000FE20  7C 08 02 A6 */	mflr r0
 /* 80012EC4 0000FE24  90 01 00 04 */	stw r0, 4(r1)
 /* 80012EC8 0000FE28  94 21 FF 70 */	stwu r1, -0x90(r1)
 /* 80012ECC 0000FE2C  39 61 00 90 */	addi r11, r1, 0x90
-/* 80012ED0 0000FE30  48 20 1F 95 */	bl func_80214E64
+/* 80012ED0 0000FE30  48 20 1F 95 */	bl _savefpr_30
 /* 80012ED4 0000FE34  BE A1 00 54 */	stmw r21, 0x54(r1)
 /* 80012ED8 0000FE38  3B E3 00 00 */	addi r31, r3, 0
 /* 80012EDC 0000FE3C  3B C0 00 00 */	li r30, 0
@@ -4639,15 +4704,15 @@ Jam_SeqmainNote:
 .L_80013764:
 /* 80013764 000106C4  80 01 00 94 */	lwz r0, 0x94(r1)
 /* 80013768 000106C8  39 61 00 90 */	addi r11, r1, 0x90
-/* 8001376C 000106CC  48 20 17 45 */	bl func_80214EB0
+/* 8001376C 000106CC  48 20 17 45 */	bl _restfpr_30
 /* 80013770 000106D0  BA A1 00 54 */	lmw r21, 0x54(r1)
 /* 80013774 000106D4  38 21 00 90 */	addi r1, r1, 0x90
 /* 80013778 000106D8  7C 08 03 A6 */	mtlr r0
 /* 8001377C 000106DC  4E 80 00 20 */	blr 
+.endfn Jam_SeqmainNote
 
 .balign 32, 0
-.global SeqUpdate
-SeqUpdate:
+.fn SeqUpdate, global
 /* 80013780 000106E0  7C 08 02 A6 */	mflr r0
 /* 80013784 000106E4  90 01 00 04 */	stw r0, 4(r1)
 /* 80013788 000106E8  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -4694,9 +4759,10 @@ SeqUpdate:
 /* 8001381C 0001077C  38 21 00 20 */	addi r1, r1, 0x20
 /* 80013820 00010780  7C 08 03 A6 */	mtlr r0
 /* 80013824 00010784  4E 80 00 20 */	blr 
+.endfn SeqUpdate
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
-lbl_80225068:
+.obj lbl_80225068, local
 	.4byte .L_8000F92C
 	.4byte .L_8000F974
 	.4byte .L_8000F974
@@ -4710,7 +4776,8 @@ lbl_80225068:
 	.4byte .L_8000F974
 	.4byte .L_8000F974
 	.4byte .L_8000F968
-lbl_8022509C:
+.endobj lbl_80225068
+.obj lbl_8022509C, local
 	.4byte .L_8000FCCC
 	.4byte .L_8000FD20
 	.4byte .L_8000FD20
@@ -4728,7 +4795,8 @@ lbl_8022509C:
 	.4byte .L_8000FD20
 	.4byte .L_8000FD20
 	.4byte .L_8000FD1C
-lbl_802250E0:
+.endobj lbl_8022509C
+.obj lbl_802250E0, local
 	.4byte .L_800100DC
 	.4byte .L_800100DC
 	.4byte .L_800100E4
@@ -4746,8 +4814,9 @@ lbl_802250E0:
 	.4byte .L_800101AC
 	.4byte .L_800101AC
 	.4byte .L_80010188
+.endobj lbl_802250E0
 .balign 4
-Arglist: # local object
+.obj Arglist, local
 	.4byte 0x00000000
 	.4byte 0x00020008
 	.4byte 0x00020008
@@ -4812,8 +4881,9 @@ Arglist: # local object
 	.4byte 0x00010001
 	.4byte 0x00010001
 	.4byte 0x00000000
+.endobj Arglist
 .balign 4
-CMDP_LIST: # local object
+.obj CMDP_LIST, local
 	.4byte 0x00000000
 	.4byte Cmd_OpenTrack__Fv
 	.4byte Cmd_OpenTrackBros__Fv
@@ -4878,61 +4948,78 @@ CMDP_LIST: # local object
 	.4byte Cmd_Tempo__Fv
 	.4byte Cmd_TimeBase__Fv
 	.4byte Cmd_Finish__Fv
-	.4byte 0x00000000
+.endobj CMDP_LIST
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-osc_table: # local object
+.obj osc_table, local
 	.4byte 0x01020804
 	.byte 0x10
+.endobj osc_table
 
 .section .sbss, "wa"
 .balign 8
-JAM_CALLBACK_FUNC:
+.obj JAM_CALLBACK_FUNC, local
 	.skip 4
-T_LISTS:
+.endobj JAM_CALLBACK_FUNC
+.obj T_LISTS, local
 	.skip 4
-SEQ_P:
+.endobj T_LISTS
+.obj SEQ_P, local
 	.skip 4
-SEQ_CMD:
+.endobj SEQ_P
+.obj SEQ_CMD, local
 	.skip 1
+.endobj SEQ_CMD
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803E82D8:
+.obj lbl_803E82D8, local
 	.float 100.0
-lbl_803E82DC:
+.endobj lbl_803E82D8
+.obj lbl_803E82DC, local
 	.float 120.0
+.endobj lbl_803E82DC
 .balign 8
-lbl_803E82E0:
-	.4byte 0x43300000
-	.4byte 0x80000000
+.obj lbl_803E82E0, local
+	.8byte 0x4330000080000000
+.endobj lbl_803E82E0
 .balign 8
-lbl_803E82E8:
-	.4byte 0x43300000
-	.4byte 0x00000000
-lbl_803E82F0:
+.obj lbl_803E82E8, local
+	.8byte 0x4330000000000000
+.endobj lbl_803E82E8
+.obj lbl_803E82F0, local
 	.float 32768.0
-lbl_803E82F4:
+.endobj lbl_803E82F0
+.obj lbl_803E82F4, local
 	.float 0.0
-lbl_803E82F8:
+.endobj lbl_803E82F4
+.obj lbl_803E82F8, local
 	.float 1.0
-lbl_803E82FC:
+.endobj lbl_803E82F8
+.obj lbl_803E82FC, local
 	.float 32767.0
-lbl_803E8300:
+.endobj lbl_803E82FC
+.obj lbl_803E8300, local
 	.float 128.0
-lbl_803E8304:
+.endobj lbl_803E8300
+.obj lbl_803E8304, local
 	.float 60.0
-lbl_803E8308:
+.endobj lbl_803E8304
+.obj lbl_803E8308, local
 	.float 80.0
-lbl_803E830C:
+.endobj lbl_803E8308
+.obj lbl_803E830C, local
 	.float 327.67
-lbl_803E8310:
+.endobj lbl_803E830C
+.obj lbl_803E8310, local
 	.4byte 0x00000001
 	.2byte 0x0102
 	.byte 0x02
+.endobj lbl_803E8310
 .balign 4
-lbl_803E8318:
+.obj lbl_803E8318, local
 	.4byte 0x00010200
 	.2byte 0x0200
 	.byte 0x02
+.endobj lbl_803E8318

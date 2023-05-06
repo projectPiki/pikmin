@@ -1,7 +1,7 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
 .balign 32, 0
-__GetTrigger__FP3jc_Uc:
+.fn __GetTrigger__FP3jc_Uc, local
 /* 80015140 000120A0  54 80 06 3E */	clrlwi r0, r4, 0x18
 /* 80015144 000120A4  2C 00 00 02 */	cmpwi r0, 2
 /* 80015148 000120A8  41 82 00 1C */	beq .L_80015164
@@ -18,9 +18,10 @@ __GetTrigger__FP3jc_Uc:
 .L_8001516C:
 /* 8001516C 000120CC  38 60 00 00 */	li r3, 0
 /* 80015170 000120D0  4E 80 00 20 */	blr 
+.endfn __GetTrigger__FP3jc_Uc
 
 .balign 32, 0
-__Clamp01__Ff:
+.fn __Clamp01__Ff, local
 /* 80015180 000120E0  C0 02 81 58 */	lfs f0, lbl_803E8358@sda21(r2)
 /* 80015184 000120E4  FC 01 00 40 */	fcmpo cr0, f1, f0
 /* 80015188 000120E8  40 80 00 0C */	bge .L_80015194
@@ -32,9 +33,10 @@ __Clamp01__Ff:
 /* 8001519C 000120FC  4C 81 00 20 */	blelr 
 /* 800151A0 00012100  FC 20 00 90 */	fmr f1, f0
 /* 800151A4 00012104  4E 80 00 20 */	blr 
+.endfn __Clamp01__Ff
 
 .balign 32, 0
-__Clamp01InitPan__FP3jc_:
+.fn __Clamp01InitPan__FP3jc_, local
 /* 800151C0 00012120  7C 08 02 A6 */	mflr r0
 /* 800151C4 00012124  90 01 00 04 */	stw r0, 4(r1)
 /* 800151C8 00012128  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -57,9 +59,10 @@ __Clamp01InitPan__FP3jc_:
 /* 80015208 00012168  38 21 00 20 */	addi r1, r1, 0x20
 /* 8001520C 0001216C  7C 08 03 A6 */	mtlr r0
 /* 80015210 00012170  4E 80 00 20 */	blr 
+.endfn __Clamp01InitPan__FP3jc_
 
 .balign 32, 0
-__DoEffect__FP3jc_Ucf:
+.fn __DoEffect__FP3jc_Ucf, local
 /* 80015220 00012180  54 80 06 3E */	clrlwi r0, r4, 0x18
 /* 80015224 00012184  2C 00 00 02 */	cmpwi r0, 2
 /* 80015228 00012188  41 82 00 48 */	beq .L_80015270
@@ -92,9 +95,10 @@ __DoEffect__FP3jc_Ucf:
 .L_80015280:
 /* 80015280 000121E0  D0 23 00 E4 */	stfs f1, 0xe4(r3)
 /* 80015284 000121E4  4E 80 00 20 */	blr 
+.endfn __DoEffect__FP3jc_Ucf
 
 .balign 32, 0
-EffecterInit__FP3jc_P5Inst_:
+.fn EffecterInit__FP3jc_P5Inst_, local
 /* 800152A0 00012200  7C 08 02 A6 */	mflr r0
 /* 800152A4 00012204  90 01 00 04 */	stw r0, 4(r1)
 /* 800152A8 00012208  94 21 FF B8 */	stwu r1, -0x48(r1)
@@ -178,9 +182,10 @@ EffecterInit__FP3jc_P5Inst_:
 /* 800153CC 0001232C  38 21 00 48 */	addi r1, r1, 0x48
 /* 800153D0 00012330  7C 08 03 A6 */	mtlr r0
 /* 800153D4 00012334  4E 80 00 20 */	blr 
+.endfn EffecterInit__FP3jc_P5Inst_
 
 .balign 32, 0
-EffecterInit_Perc__FP3jc_P5Pmap_Us:
+.fn EffecterInit_Perc__FP3jc_P5Pmap_Us, local
 /* 800153E0 00012340  7C 08 02 A6 */	mflr r0
 /* 800153E4 00012344  90 01 00 04 */	stw r0, 4(r1)
 /* 800153E8 00012348  94 21 FF C0 */	stwu r1, -0x40(r1)
@@ -235,9 +240,10 @@ EffecterInit_Perc__FP3jc_P5Pmap_Us:
 /* 800154A4 00012404  38 21 00 40 */	addi r1, r1, 0x40
 /* 800154A8 00012408  7C 08 03 A6 */	mtlr r0
 /* 800154AC 0001240C  4E 80 00 20 */	blr 
+.endfn EffecterInit_Perc__FP3jc_P5Pmap_Us
 
 .balign 32, 0
-EffecterInit_Osc__FP3jc_:
+.fn EffecterInit_Osc__FP3jc_, local
 /* 800154C0 00012420  7C 08 02 A6 */	mflr r0
 /* 800154C4 00012424  38 80 00 00 */	li r4, 0
 /* 800154C8 00012428  90 01 00 04 */	stw r0, 4(r1)
@@ -270,10 +276,10 @@ EffecterInit_Osc__FP3jc_:
 /* 80015530 00012490  38 21 00 08 */	addi r1, r1, 8
 /* 80015534 00012494  7C 08 03 A6 */	mtlr r0
 /* 80015538 00012498  4E 80 00 20 */	blr 
+.endfn EffecterInit_Osc__FP3jc_
 
 .balign 32, 0
-.global Effecter_Overwrite_1ShotD__FP3jc_P4Osc_Ul
-Effecter_Overwrite_1ShotD__FP3jc_P4Osc_Ul:
+.fn Effecter_Overwrite_1ShotD__FP3jc_P4Osc_Ul, global
 /* 80015540 000124A0  7C 08 02 A6 */	mflr r0
 /* 80015544 000124A4  28 05 00 04 */	cmplwi r5, 4
 /* 80015548 000124A8  90 01 00 04 */	stw r0, 4(r1)
@@ -302,9 +308,10 @@ Effecter_Overwrite_1ShotD__FP3jc_P4Osc_Ul:
 /* 800155A0 00012500  38 21 00 20 */	addi r1, r1, 0x20
 /* 800155A4 00012504  7C 08 03 A6 */	mtlr r0
 /* 800155A8 00012508  4E 80 00 20 */	blr 
+.endfn Effecter_Overwrite_1ShotD__FP3jc_P4Osc_Ul
 
 .balign 32, 0
-__Oneshot_Play_Start__FP4jcs_P3jc_Ul:
+.fn __Oneshot_Play_Start__FP4jcs_P3jc_Ul, local
 /* 800155C0 00012520  7C 08 02 A6 */	mflr r0
 /* 800155C4 00012524  28 05 00 00 */	cmplwi r5, 0
 /* 800155C8 00012528  90 01 00 04 */	stw r0, 4(r1)
@@ -379,9 +386,10 @@ __Oneshot_Play_Start__FP4jcs_P3jc_Ul:
 /* 800156C0 00012620  38 21 00 20 */	addi r1, r1, 0x20
 /* 800156C4 00012624  7C 08 03 A6 */	mtlr r0
 /* 800156C8 00012628  4E 80 00 20 */	blr 
+.endfn __Oneshot_Play_Start__FP4jcs_P3jc_Ul
 
 .balign 32, 0
-__Oneshot_GetLogicalChannel__FP4jcs_P9CtrlWave_:
+.fn __Oneshot_GetLogicalChannel__FP4jcs_P9CtrlWave_, local
 /* 800156E0 00012640  7C 08 02 A6 */	mflr r0
 /* 800156E4 00012644  90 01 00 04 */	stw r0, 4(r1)
 /* 800156E8 00012648  94 21 FF C0 */	stwu r1, -0x40(r1)
@@ -474,10 +482,10 @@ __Oneshot_GetLogicalChannel__FP4jcs_P9CtrlWave_:
 /* 80015828 00012788  38 21 00 40 */	addi r1, r1, 0x40
 /* 8001582C 0001278C  7C 08 03 A6 */	mtlr r0
 /* 80015830 00012790  4E 80 00 20 */	blr 
+.endfn __Oneshot_GetLogicalChannel__FP4jcs_P9CtrlWave_
 
 .balign 32, 0
-.global PercRead__FUlUl
-PercRead__FUlUl:
+.fn PercRead__FUlUl, global
 /* 80015840 000127A0  7C 08 02 A6 */	mflr r0
 /* 80015844 000127A4  90 01 00 04 */	stw r0, 4(r1)
 /* 80015848 000127A8  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -497,10 +505,10 @@ PercRead__FUlUl:
 /* 80015878 000127D8  38 21 00 18 */	addi r1, r1, 0x18
 /* 8001587C 000127DC  7C 08 03 A6 */	mtlr r0
 /* 80015880 000127E0  4E 80 00 20 */	blr 
+.endfn PercRead__FUlUl
 
 .balign 32, 0
-.global InstRead__FUlUl
-InstRead__FUlUl:
+.fn InstRead__FUlUl, global
 /* 800158A0 00012800  7C 08 02 A6 */	mflr r0
 /* 800158A4 00012804  90 01 00 04 */	stw r0, 4(r1)
 /* 800158A8 00012808  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -520,10 +528,10 @@ InstRead__FUlUl:
 /* 800158D8 00012838  38 21 00 18 */	addi r1, r1, 0x18
 /* 800158DC 0001283C  7C 08 03 A6 */	mtlr r0
 /* 800158E0 00012840  4E 80 00 20 */	blr 
+.endfn InstRead__FUlUl
 
 .balign 32, 0
-.global VmapRead__FP5Inst_UcUc
-VmapRead__FP5Inst_UcUc:
+.fn VmapRead__FP5Inst_UcUc, global
 /* 80015900 00012860  7C 08 02 A6 */	mflr r0
 /* 80015904 00012864  90 01 00 04 */	stw r0, 4(r1)
 /* 80015908 00012868  94 21 FF F8 */	stwu r1, -8(r1)
@@ -536,16 +544,18 @@ VmapRead__FP5Inst_UcUc:
 /* 80015920 00012880  38 21 00 08 */	addi r1, r1, 8
 /* 80015924 00012884  7C 08 03 A6 */	mtlr r0
 /* 80015928 00012888  4E 80 00 20 */	blr 
+.endfn VmapRead__FP5Inst_UcUc
 
 .balign 32, 0
-__Oneshot_WavePause__FP3jc_Uc:
+.fn __Oneshot_WavePause__FP3jc_Uc, local
 /* 80015940 000128A0  98 83 00 02 */	stb r4, 2(r3)
 /* 80015944 000128A4  38 00 00 01 */	li r0, 1
 /* 80015948 000128A8  98 03 00 03 */	stb r0, 3(r3)
 /* 8001594C 000128AC  4E 80 00 20 */	blr 
+.endfn __Oneshot_WavePause__FP3jc_Uc
 
 .balign 32, 0
-__Oneshot_StartMonoPolyCheck__FP3jc_Ul:
+.fn __Oneshot_StartMonoPolyCheck__FP3jc_Ul, local
 /* 80015960 000128C0  7C 08 02 A6 */	mflr r0
 /* 80015964 000128C4  90 01 00 04 */	stw r0, 4(r1)
 /* 80015968 000128C8  94 21 FF D0 */	stwu r1, -0x30(r1)
@@ -642,9 +652,10 @@ __Oneshot_StartMonoPolyCheck__FP3jc_Ul:
 /* 80015AA0 00012A00  38 21 00 30 */	addi r1, r1, 0x30
 /* 80015AA4 00012A04  7C 08 03 A6 */	mtlr r0
 /* 80015AA8 00012A08  4E 80 00 20 */	blr 
+.endfn __Oneshot_StartMonoPolyCheck__FP3jc_Ul
 
 .balign 32, 0
-__Oneshot_StopMonoPolyCheck__FP3jc_Ul:
+.fn __Oneshot_StopMonoPolyCheck__FP3jc_Ul, local
 /* 80015AC0 00012A20  7C 08 02 A6 */	mflr r0
 /* 80015AC4 00012A24  54 86 46 3E */	srwi r6, r4, 0x18
 /* 80015AC8 00012A28  90 01 00 04 */	stw r0, 4(r1)
@@ -707,10 +718,10 @@ __Oneshot_StopMonoPolyCheck__FP3jc_Ul:
 /* 80015B9C 00012AFC  38 21 00 30 */	addi r1, r1, 0x30
 /* 80015BA0 00012B00  7C 08 03 A6 */	mtlr r0
 /* 80015BA4 00012B04  4E 80 00 20 */	blr 
+.endfn __Oneshot_StopMonoPolyCheck__FP3jc_Ul
 
 .balign 32, 0
-.global Init_1shot__FP4jcs_Ul
-Init_1shot__FP4jcs_Ul:
+.fn Init_1shot__FP4jcs_Ul, global
 /* 80015BC0 00012B20  7C 08 02 A6 */	mflr r0
 /* 80015BC4 00012B24  90 01 00 04 */	stw r0, 4(r1)
 /* 80015BC8 00012B28  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -742,10 +753,10 @@ Init_1shot__FP4jcs_Ul:
 /* 80015C24 00012B84  38 21 00 20 */	addi r1, r1, 0x20
 /* 80015C28 00012B88  7C 08 03 A6 */	mtlr r0
 /* 80015C2C 00012B8C  4E 80 00 20 */	blr 
+.endfn Init_1shot__FP4jcs_Ul
 
 .balign 32, 0
-.global Stop_1Shot__FP3jc_
-Stop_1Shot__FP3jc_:
+.fn Stop_1Shot__FP3jc_, global
 /* 80015C40 00012BA0  7C 08 02 A6 */	mflr r0
 /* 80015C44 00012BA4  90 01 00 04 */	stw r0, 4(r1)
 /* 80015C48 00012BA8  94 21 FF F8 */	stwu r1, -8(r1)
@@ -763,10 +774,10 @@ Stop_1Shot__FP3jc_:
 /* 80015C70 00012BD0  38 21 00 08 */	addi r1, r1, 8
 /* 80015C74 00012BD4  7C 08 03 A6 */	mtlr r0
 /* 80015C78 00012BD8  4E 80 00 20 */	blr 
+.endfn Stop_1Shot__FP3jc_
 
 .balign 32, 0
-.global Stop_1Shot_R__FP3jc_Us
-Stop_1Shot_R__FP3jc_Us:
+.fn Stop_1Shot_R__FP3jc_Us, global
 /* 80015C80 00012BE0  7C 08 02 A6 */	mflr r0
 /* 80015C84 00012BE4  90 01 00 04 */	stw r0, 4(r1)
 /* 80015C88 00012BE8  94 21 FF F8 */	stwu r1, -8(r1)
@@ -785,10 +796,10 @@ Stop_1Shot_R__FP3jc_Us:
 /* 80015CB4 00012C14  38 21 00 08 */	addi r1, r1, 8
 /* 80015CB8 00012C18  7C 08 03 A6 */	mtlr r0
 /* 80015CBC 00012C1C  4E 80 00 20 */	blr 
+.endfn Stop_1Shot_R__FP3jc_Us
 
 .balign 32, 0
-.global AllStop_1Shot__FP4jcs_
-AllStop_1Shot__FP4jcs_:
+.fn AllStop_1Shot__FP4jcs_, global
 /* 80015CC0 00012C20  7C 08 02 A6 */	mflr r0
 /* 80015CC4 00012C24  90 01 00 04 */	stw r0, 4(r1)
 /* 80015CC8 00012C28  94 21 FF D0 */	stwu r1, -0x30(r1)
@@ -818,9 +829,10 @@ AllStop_1Shot__FP4jcs_:
 /* 80015D20 00012C80  38 21 00 30 */	addi r1, r1, 0x30
 /* 80015D24 00012C84  7C 08 03 A6 */	mtlr r0
 /* 80015D28 00012C88  4E 80 00 20 */	blr 
+.endfn AllStop_1Shot__FP4jcs_
 
 .balign 32, 0
-Extra_Update__FP3jc_8JCSTATUS:
+.fn Extra_Update__FP3jc_8JCSTATUS, local
 /* 80015D40 00012CA0  94 21 FF E8 */	stwu r1, -0x18(r1)
 /* 80015D44 00012CA4  A0 03 00 FA */	lhz r0, 0xfa(r3)
 /* 80015D48 00012CA8  28 00 00 00 */	cmplwi r0, 0
@@ -849,10 +861,10 @@ Extra_Update__FP3jc_8JCSTATUS:
 /* 80015DA0 00012D00  38 60 00 00 */	li r3, 0
 /* 80015DA4 00012D04  38 21 00 18 */	addi r1, r1, 0x18
 /* 80015DA8 00012D08  4E 80 00 20 */	blr 
+.endfn Extra_Update__FP3jc_8JCSTATUS
 
 .balign 32, 0
-.global SetPitchTarget_1Shot__FP3jc_fUl
-SetPitchTarget_1Shot__FP3jc_fUl:
+.fn SetPitchTarget_1Shot__FP3jc_fUl, global
 /* 80015DC0 00012D20  28 04 00 00 */	cmplwi r4, 0
 /* 80015DC4 00012D24  40 82 00 14 */	bne .L_80015DD8
 /* 80015DC8 00012D28  D0 23 00 B0 */	stfs f1, 0xb0(r3)
@@ -866,10 +878,10 @@ SetPitchTarget_1Shot__FP3jc_fUl:
 /* 80015DE4 00012D44  B0 83 00 FA */	sth r4, 0xfa(r3)
 /* 80015DE8 00012D48  90 03 00 2C */	stw r0, 0x2c(r3)
 /* 80015DEC 00012D4C  4E 80 00 20 */	blr 
+.endfn SetPitchTarget_1Shot__FP3jc_fUl
 
 .balign 32, 0
-.global SetKeyTarget_1Shot__FP3jc_UcUl
-SetKeyTarget_1Shot__FP3jc_UcUl:
+.fn SetKeyTarget_1Shot__FP3jc_UcUl, global
 /* 80015E00 00012D60  7C 08 02 A6 */	mflr r0
 /* 80015E04 00012D64  28 03 00 00 */	cmplwi r3, 0
 /* 80015E08 00012D68  90 01 00 04 */	stw r0, 4(r1)
@@ -912,10 +924,10 @@ SetKeyTarget_1Shot__FP3jc_UcUl:
 /* 80015E84 00012DE4  38 21 00 08 */	addi r1, r1, 8
 /* 80015E88 00012DE8  7C 08 03 A6 */	mtlr r0
 /* 80015E8C 00012DEC  4E 80 00 20 */	blr 
+.endfn SetKeyTarget_1Shot__FP3jc_UcUl
 
 .balign 32, 0
-.global Gate_1Shot__FP3jc_UcUcl
-Gate_1Shot__FP3jc_UcUcl:
+.fn Gate_1Shot__FP3jc_UcUcl, global
 /* 80015EA0 00012E00  94 21 FF D8 */	stwu r1, -0x28(r1)
 /* 80015EA4 00012E04  80 03 00 30 */	lwz r0, 0x30(r3)
 /* 80015EA8 00012E08  2C 00 FF FF */	cmpwi r0, -1
@@ -971,16 +983,16 @@ Gate_1Shot__FP3jc_UcUcl:
 .L_80015F60:
 /* 80015F60 00012EC0  38 21 00 28 */	addi r1, r1, 0x28
 /* 80015F64 00012EC4  4E 80 00 20 */	blr 
+.endfn Gate_1Shot__FP3jc_UcUcl
 
 .balign 32, 0
-.global UpdatePause_1Shot__FP3jc_Uc
-UpdatePause_1Shot__FP3jc_Uc:
+.fn UpdatePause_1Shot__FP3jc_Uc, global
 /* 80015F80 00012EE0  98 83 00 02 */	stb r4, 2(r3)
 /* 80015F84 00012EE4  4E 80 00 20 */	blr 
+.endfn UpdatePause_1Shot__FP3jc_Uc
 
 .balign 32, 0
-.global UpdatePanPower_1Shot__FP3jc_ffff
-UpdatePanPower_1Shot__FP3jc_ffff:
+.fn UpdatePanPower_1Shot__FP3jc_ffff, global
 /* 80015FA0 00012F00  EC 81 10 2A */	fadds f4, f1, f2
 /* 80015FA4 00012F04  C0 02 81 58 */	lfs f0, lbl_803E8358@sda21(r2)
 /* 80015FA8 00012F08  EC 83 20 2A */	fadds f4, f3, f4
@@ -993,10 +1005,10 @@ UpdatePanPower_1Shot__FP3jc_ffff:
 /* 80015FC4 00012F24  D0 23 00 C0 */	stfs f1, 0xc0(r3)
 /* 80015FC8 00012F28  D0 03 00 C4 */	stfs f0, 0xc4(r3)
 /* 80015FCC 00012F2C  4E 80 00 20 */	blr 
+.endfn UpdatePanPower_1Shot__FP3jc_ffff
 
 .balign 32, 0
-.global FlushRelease_1Shot__FP4jcs_
-FlushRelease_1Shot__FP4jcs_:
+.fn FlushRelease_1Shot__FP4jcs_, global
 /* 80015FE0 00012F40  7C 08 02 A6 */	mflr r0
 /* 80015FE4 00012F44  90 01 00 04 */	stw r0, 4(r1)
 /* 80015FE8 00012F48  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -1046,9 +1058,10 @@ FlushRelease_1Shot__FP4jcs_:
 /* 80016084 00012FE4  38 21 00 20 */	addi r1, r1, 0x20
 /* 80016088 00012FE8  7C 08 03 A6 */	mtlr r0
 /* 8001608C 00012FEC  4E 80 00 20 */	blr 
+.endfn FlushRelease_1Shot__FP4jcs_
 
 .balign 32, 0
-Jesus1Shot_Update__FP3jc_8JCSTATUS:
+.fn Jesus1Shot_Update__FP3jc_8JCSTATUS, local
 /* 800160A0 00013000  7C 08 02 A6 */	mflr r0
 /* 800160A4 00013004  38 E0 00 00 */	li r7, 0
 /* 800160A8 00013008  90 01 00 04 */	stw r0, 4(r1)
@@ -1174,10 +1187,10 @@ Jesus1Shot_Update__FP3jc_8JCSTATUS:
 /* 80016258 000131B8  38 21 00 38 */	addi r1, r1, 0x38
 /* 8001625C 000131BC  7C 08 03 A6 */	mtlr r0
 /* 80016260 000131C0  4E 80 00 20 */	blr 
+.endfn Jesus1Shot_Update__FP3jc_8JCSTATUS
 
 .balign 32, 0
-.global One_CheckInstWave__F8SOUNDID_
-One_CheckInstWave__F8SOUNDID_:
+.fn One_CheckInstWave__F8SOUNDID_, global
 /* 80016280 000131E0  7C 08 02 A6 */	mflr r0
 /* 80016284 000131E4  90 01 00 04 */	stw r0, 4(r1)
 /* 80016288 000131E8  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -1221,10 +1234,10 @@ One_CheckInstWave__F8SOUNDID_:
 /* 8001630C 0001326C  38 21 00 18 */	addi r1, r1, 0x18
 /* 80016310 00013270  7C 08 03 A6 */	mtlr r0
 /* 80016314 00013274  4E 80 00 20 */	blr 
+.endfn One_CheckInstWave__F8SOUNDID_
 
 .balign 32, 0
-.global Play_1shot__FP4jcs_8SOUNDID_Ul
-Play_1shot__FP4jcs_8SOUNDID_Ul:
+.fn Play_1shot__FP4jcs_8SOUNDID_Ul, global
 /* 80016320 00013280  7C 08 02 A6 */	mflr r0
 /* 80016324 00013284  90 01 00 04 */	stw r0, 4(r1)
 /* 80016328 00013288  94 21 FF B8 */	stwu r1, -0x48(r1)
@@ -1400,10 +1413,10 @@ Play_1shot__FP4jcs_8SOUNDID_Ul:
 /* 80016590 000134F0  38 21 00 48 */	addi r1, r1, 0x48
 /* 80016594 000134F4  7C 08 03 A6 */	mtlr r0
 /* 80016598 000134F8  4E 80 00 20 */	blr 
+.endfn Play_1shot__FP4jcs_8SOUNDID_Ul
 
 .balign 32, 0
-.global Play_1shot_Perc__FP4jcs_8SOUNDID_Ul
-Play_1shot_Perc__FP4jcs_8SOUNDID_Ul:
+.fn Play_1shot_Perc__FP4jcs_8SOUNDID_Ul, global
 /* 800165A0 00013500  7C 08 02 A6 */	mflr r0
 /* 800165A4 00013504  90 01 00 04 */	stw r0, 4(r1)
 /* 800165A8 00013508  94 21 FF 90 */	stwu r1, -0x70(r1)
@@ -1543,10 +1556,10 @@ Play_1shot_Perc__FP4jcs_8SOUNDID_Ul:
 /* 800167A0 00013700  38 21 00 70 */	addi r1, r1, 0x70
 /* 800167A4 00013704  7C 08 03 A6 */	mtlr r0
 /* 800167A8 00013708  4E 80 00 20 */	blr 
+.endfn Play_1shot_Perc__FP4jcs_8SOUNDID_Ul
 
 .balign 32, 0
-.global Play_1shot_Osc__FP4jcs_8SOUNDID_Ul
-Play_1shot_Osc__FP4jcs_8SOUNDID_Ul:
+.fn Play_1shot_Osc__FP4jcs_8SOUNDID_Ul, global
 /* 800167C0 00013720  7C 08 02 A6 */	mflr r0
 /* 800167C4 00013724  90 01 00 04 */	stw r0, 4(r1)
 /* 800167C8 00013728  94 21 FF B8 */	stwu r1, -0x48(r1)
@@ -1625,52 +1638,62 @@ Play_1shot_Osc__FP4jcs_8SOUNDID_Ul:
 /* 800168DC 0001383C  38 21 00 48 */	addi r1, r1, 0x48
 /* 800168E0 00013840  7C 08 03 A6 */	mtlr r0
 /* 800168E4 00013844  4E 80 00 20 */	blr 
+.endfn Play_1shot_Osc__FP4jcs_8SOUNDID_Ul
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-PERC_ENV:
+.obj PERC_ENV, local
 	.float 0.0
 	.float 1.0
 	.float 0.0
 	.4byte 0
 	.float 1.0
 	.float 0.0
-OSC_ENV:
+.endobj PERC_ENV
+.obj OSC_ENV, local
 	.float 0.0
 	.float 1.0
 	.float 0.0
 	.4byte OSC_REL
 	.float 1.0
 	.float 0.0
-polys_table:
+.endobj OSC_ENV
+.obj polys_table, local
 	.4byte 0x00010203
 	.4byte 0x04050608
 	.4byte 0x0A0C0E10
 	.4byte 0x14181C20
+.endobj polys_table
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-OSC_REL:
+.obj OSC_REL, local
 	.4byte 0x0001000A
 	.4byte 0x0000000F
+.endobj OSC_REL
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803E8358:
+.obj lbl_803E8358, local
 	.float 0.0
-lbl_803E835C:
+.endobj lbl_803E8358
+.obj lbl_803E835C, local
 	.float 1.0
-lbl_803E8360:
+.endobj lbl_803E835C
+.obj lbl_803E8360, local
 	.float 0.5
+.endobj lbl_803E8360
 .balign 8
-lbl_803E8368:
-	.4byte 0x43300000
-	.4byte 0x00000000
-lbl_803E8370:
+.obj lbl_803E8368, local
+	.8byte 0x4330000000000000
+.endobj lbl_803E8368
+.obj lbl_803E8370, local
 	.float 127.0
+.endobj lbl_803E8370
 .balign 8
-lbl_803E8378:
-	.4byte 0x43300000
-	.4byte 0x80000000
-lbl_803E8380:
+.obj lbl_803E8378, local
+	.8byte 0x4330000080000000
+.endobj lbl_803E8378
+.obj lbl_803E8380, local
 	.float 16736.016
+.endobj lbl_803E8380

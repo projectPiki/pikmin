@@ -1,8 +1,7 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
 .balign 32, 0
-.global Jac_BgmFrameCallback__FPv
-Jac_BgmFrameCallback__FPv:
+.fn Jac_BgmFrameCallback__FPv, local
 /* 80018980 000158E0  7C 08 02 A6 */	mflr r0
 /* 80018984 000158E4  90 01 00 04 */	stw r0, 4(r1)
 /* 80018988 000158E8  94 21 FF F8 */	stwu r1, -8(r1)
@@ -19,10 +18,10 @@ Jac_BgmFrameCallback__FPv:
 /* 800189B0 00015910  38 21 00 08 */	addi r1, r1, 8
 /* 800189B4 00015914  7C 08 03 A6 */	mtlr r0
 /* 800189B8 00015918  4E 80 00 20 */	blr 
+.endfn Jac_BgmFrameCallback__FPv
 
 .balign 32, 0
-.global Jac_InitBgm
-Jac_InitBgm:
+.fn Jac_InitBgm, global
 /* 800189C0 00015920  7C 08 02 A6 */	mflr r0
 /* 800189C4 00015924  3C 60 80 36 */	lis r3, bgm@ha
 /* 800189C8 00015928  90 01 00 04 */	stw r0, 4(r1)
@@ -126,10 +125,10 @@ Jac_InitBgm:
 /* 80018B34 00015A94  38 21 00 60 */	addi r1, r1, 0x60
 /* 80018B38 00015A98  7C 08 03 A6 */	mtlr r0
 /* 80018B3C 00015A9C  4E 80 00 20 */	blr 
+.endfn Jac_InitBgm
 
 .balign 32, 0
-.global Jac_FadeOutBgm
-Jac_FadeOutBgm:
+.fn Jac_FadeOutBgm, global
 /* 80018B40 00015AA0  7C 08 02 A6 */	mflr r0
 /* 80018B44 00015AA4  38 A0 00 01 */	li r5, 1
 /* 80018B48 00015AA8  90 01 00 04 */	stw r0, 4(r1)
@@ -141,10 +140,10 @@ Jac_FadeOutBgm:
 /* 80018B60 00015AC0  38 21 00 08 */	addi r1, r1, 8
 /* 80018B64 00015AC4  7C 08 03 A6 */	mtlr r0
 /* 80018B68 00015AC8  4E 80 00 20 */	blr 
+.endfn Jac_FadeOutBgm
 
 .balign 32, 0
-.global Jac_StopBgm
-Jac_StopBgm:
+.fn Jac_StopBgm, global
 /* 80018B80 00015AE0  7C 08 02 A6 */	mflr r0
 /* 80018B84 00015AE4  1C 83 04 68 */	mulli r4, r3, 0x468
 /* 80018B88 00015AE8  90 01 00 04 */	stw r0, 4(r1)
@@ -167,10 +166,10 @@ Jac_StopBgm:
 /* 80018BC8 00015B28  38 21 00 18 */	addi r1, r1, 0x18
 /* 80018BCC 00015B2C  7C 08 03 A6 */	mtlr r0
 /* 80018BD0 00015B30  4E 80 00 20 */	blr 
+.endfn Jac_StopBgm
 
 .balign 32, 0
-.global Jac_ReadyBgm
-Jac_ReadyBgm:
+.fn Jac_ReadyBgm, global
 /* 80018BE0 00015B40  7C 08 02 A6 */	mflr r0
 /* 80018BE4 00015B44  90 01 00 04 */	stw r0, 4(r1)
 /* 80018BE8 00015B48  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -214,10 +213,10 @@ Jac_ReadyBgm:
 /* 80018C74 00015BD4  38 21 00 18 */	addi r1, r1, 0x18
 /* 80018C78 00015BD8  7C 08 03 A6 */	mtlr r0
 /* 80018C7C 00015BDC  4E 80 00 20 */	blr 
+.endfn Jac_ReadyBgm
 
 .balign 32, 0
-.global Jac_PlayBgm
-Jac_PlayBgm:
+.fn Jac_PlayBgm, global
 /* 80018C80 00015BE0  7C 08 02 A6 */	mflr r0
 /* 80018C84 00015BE4  3C A0 80 36 */	lis r5, bgm@ha
 /* 80018C88 00015BE8  90 01 00 04 */	stw r0, 4(r1)
@@ -374,10 +373,10 @@ Jac_PlayBgm:
 /* 80018EB8 00015E18  38 21 00 48 */	addi r1, r1, 0x48
 /* 80018EBC 00015E1C  7C 08 03 A6 */	mtlr r0
 /* 80018EC0 00015E20  4E 80 00 20 */	blr 
+.endfn Jac_PlayBgm
 
 .balign 32, 0
-.global Jac_ChangeBgmMode
-Jac_ChangeBgmMode:
+.fn Jac_ChangeBgmMode, global
 /* 80018EE0 00015E40  1C C3 04 68 */	mulli r6, r3, 0x468
 /* 80018EE4 00015E44  3C 60 80 36 */	lis r3, bgm@ha
 /* 80018EE8 00015E48  38 A3 38 E0 */	addi r5, r3, bgm@l
@@ -403,10 +402,10 @@ Jac_ChangeBgmMode:
 .L_80018F30:
 /* 80018F30 00015E90  38 60 00 01 */	li r3, 1
 /* 80018F34 00015E94  4E 80 00 20 */	blr 
+.endfn Jac_ChangeBgmMode
 
 .balign 32, 0
-.global Jac_SetBgmModeFlag
-Jac_SetBgmModeFlag:
+.fn Jac_SetBgmModeFlag, global
 /* 80018F40 00015EA0  7C 08 02 A6 */	mflr r0
 /* 80018F44 00015EA4  1C C3 04 68 */	mulli r6, r3, 0x468
 /* 80018F48 00015EA8  90 01 00 04 */	stw r0, 4(r1)
@@ -455,10 +454,10 @@ Jac_SetBgmModeFlag:
 /* 80018FDC 00015F3C  38 21 00 08 */	addi r1, r1, 8
 /* 80018FE0 00015F40  7C 08 03 A6 */	mtlr r0
 /* 80018FE4 00015F44  4E 80 00 20 */	blr 
+.endfn Jac_SetBgmModeFlag
 
 .balign 32, 0
-.global Jac_BgmFrameWork
-Jac_BgmFrameWork:
+.fn Jac_BgmFrameWork, global
 /* 80019000 00015F60  7C 08 02 A6 */	mflr r0
 /* 80019004 00015F64  90 01 00 04 */	stw r0, 4(r1)
 /* 80019008 00015F68  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -539,10 +538,10 @@ Jac_BgmFrameWork:
 /* 80019118 00016078  38 21 00 20 */	addi r1, r1, 0x20
 /* 8001911C 0001607C  7C 08 03 A6 */	mtlr r0
 /* 80019120 00016080  4E 80 00 20 */	blr 
+.endfn Jac_BgmFrameWork
 
 .balign 32, 0
-.global Jac_MoveBgmTrackVol
-Jac_MoveBgmTrackVol:
+.fn Jac_MoveBgmTrackVol, global
 /* 80019140 000160A0  7C 08 02 A6 */	mflr r0
 /* 80019144 000160A4  90 01 00 04 */	stw r0, 4(r1)
 /* 80019148 000160A8  3C 00 43 30 */	lis r0, 0x4330
@@ -592,10 +591,10 @@ Jac_MoveBgmTrackVol:
 /* 800191F0 00016150  38 21 00 38 */	addi r1, r1, 0x38
 /* 800191F4 00016154  7C 08 03 A6 */	mtlr r0
 /* 800191F8 00016158  4E 80 00 20 */	blr 
+.endfn Jac_MoveBgmTrackVol
 
 .balign 32, 0
-.global Jac_ChangeBgmTrackVol
-Jac_ChangeBgmTrackVol:
+.fn Jac_ChangeBgmTrackVol, global
 /* 80019200 00016160  7C 08 02 A6 */	mflr r0
 /* 80019204 00016164  90 01 00 04 */	stw r0, 4(r1)
 /* 80019208 00016168  94 21 FF C8 */	stwu r1, -0x38(r1)
@@ -700,10 +699,10 @@ Jac_ChangeBgmTrackVol:
 /* 80019370 000162D0  38 21 00 38 */	addi r1, r1, 0x38
 /* 80019374 000162D4  7C 08 03 A6 */	mtlr r0
 /* 80019378 000162D8  4E 80 00 20 */	blr 
+.endfn Jac_ChangeBgmTrackVol
 
 .balign 32, 0
-.global Jac_UpdateBgmCrossVol__FP11BgmControl_
-Jac_UpdateBgmCrossVol__FP11BgmControl_:
+.fn Jac_UpdateBgmCrossVol__FP11BgmControl_, local
 /* 80019380 000162E0  7C 08 02 A6 */	mflr r0
 /* 80019384 000162E4  90 01 00 04 */	stw r0, 4(r1)
 /* 80019388 000162E8  3C 00 43 30 */	lis r0, 0x4330
@@ -741,10 +740,10 @@ Jac_UpdateBgmCrossVol__FP11BgmControl_:
 /* 80019400 00016360  38 21 00 28 */	addi r1, r1, 0x28
 /* 80019404 00016364  7C 08 03 A6 */	mtlr r0
 /* 80019408 00016368  4E 80 00 20 */	blr 
+.endfn Jac_UpdateBgmCrossVol__FP11BgmControl_
 
 .balign 32, 0
-.global Jac_GameVolume
-Jac_GameVolume:
+.fn Jac_GameVolume, global
 /* 80019420 00016380  7C 08 02 A6 */	mflr r0
 /* 80019424 00016384  90 01 00 04 */	stw r0, 4(r1)
 /* 80019428 00016388  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -795,10 +794,10 @@ Jac_GameVolume:
 /* 800194D8 00016438  38 21 00 20 */	addi r1, r1, 0x20
 /* 800194DC 0001643C  7C 08 03 A6 */	mtlr r0
 /* 800194E0 00016440  4E 80 00 20 */	blr 
+.endfn Jac_GameVolume
 
 .balign 32, 0
-.global Jac_EasyCrossFade
-Jac_EasyCrossFade:
+.fn Jac_EasyCrossFade, global
 /* 80019500 00016460  7C 08 02 A6 */	mflr r0
 /* 80019504 00016464  90 01 00 04 */	stw r0, 4(r1)
 /* 80019508 00016468  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -862,10 +861,10 @@ Jac_EasyCrossFade:
 /* 800195D8 00016538  38 21 00 20 */	addi r1, r1, 0x20
 /* 800195DC 0001653C  7C 08 03 A6 */	mtlr r0
 /* 800195E0 00016540  4E 80 00 20 */	blr 
+.endfn Jac_EasyCrossFade
 
 .balign 32, 0
-.global Jac_DemoFade
-Jac_DemoFade:
+.fn Jac_DemoFade, global
 /* 80019600 00016560  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 80019604 00016564  98 61 00 08 */	stb r3, 8(r1)
 /* 80019608 00016568  3C 60 80 36 */	lis r3, bgm@ha
@@ -922,10 +921,10 @@ Jac_DemoFade:
 /* 800196BC 0001661C  90 03 08 CC */	stw r0, 0x8cc(r3)
 /* 800196C0 00016620  38 21 00 20 */	addi r1, r1, 0x20
 /* 800196C4 00016624  4E 80 00 20 */	blr 
+.endfn Jac_DemoFade
 
 .balign 32, 0
-.global Jac_EnterBossMode
-Jac_EnterBossMode:
+.fn Jac_EnterBossMode, global
 /* 800196E0 00016640  7C 08 02 A6 */	mflr r0
 /* 800196E4 00016644  38 60 00 01 */	li r3, 1
 /* 800196E8 00016648  90 01 00 04 */	stw r0, 4(r1)
@@ -936,10 +935,10 @@ Jac_EnterBossMode:
 /* 800196FC 0001665C  38 21 00 08 */	addi r1, r1, 8
 /* 80019700 00016660  7C 08 03 A6 */	mtlr r0
 /* 80019704 00016664  4E 80 00 20 */	blr 
+.endfn Jac_EnterBossMode
 
 .balign 32, 0
-.global Jac_ExitBossMode
-Jac_ExitBossMode:
+.fn Jac_ExitBossMode, global
 /* 80019720 00016680  7C 08 02 A6 */	mflr r0
 /* 80019724 00016684  38 60 00 00 */	li r3, 0
 /* 80019728 00016688  90 01 00 04 */	stw r0, 4(r1)
@@ -950,6 +949,7 @@ Jac_ExitBossMode:
 /* 8001973C 0001669C  38 21 00 08 */	addi r1, r1, 8
 /* 80019740 000166A0  7C 08 03 A6 */	mtlr r0
 /* 80019744 000166A4  4E 80 00 20 */	blr 
+.endfn Jac_ExitBossMode
 
 .section .rodata, "a"  # 0x80221FE0 - 0x80222DC0
 .balign 8
@@ -970,7 +970,7 @@ Jac_ExitBossMode:
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-bgm_mute_set:
+.obj bgm_mute_set, local
 	.4byte bgm0_set
 	.4byte bgm0_set
 	.4byte bgm1_set
@@ -991,8 +991,9 @@ bgm_mute_set:
 	.4byte bgm0_set
 	.4byte bgm0_set
 	.4byte bgm0_set
+.endobj bgm_mute_set
 .balign 4
-bgm_volume_set:
+.obj bgm_volume_set, local
 	.4byte bgm0_volset
 	.4byte bgm0_volset
 	.4byte bgm1_volset
@@ -1013,8 +1014,9 @@ bgm_volume_set:
 	.4byte bgm0_volset
 	.4byte cresult_volset
 	.4byte bgm0_volset
+.endobj bgm_volume_set
 .balign 4
-GAMEBGM_VOL_TABLE:
+.obj GAMEBGM_VOL_TABLE, local
 	.float 0.0
 	.float 0.1
 	.float 0.2
@@ -1026,8 +1028,9 @@ GAMEBGM_VOL_TABLE:
 	.float 0.8
 	.float 0.9
 	.float 1.0
+.endobj GAMEBGM_VOL_TABLE
 .balign 4
-GAMEDEMO_VOL_TABLE:
+.obj GAMEDEMO_VOL_TABLE, local
 	.2byte 0x0000
 	.2byte 0x03E8
 	.2byte 0x07D0
@@ -1039,8 +1042,9 @@ GAMEDEMO_VOL_TABLE:
 	.2byte 0x1F40
 	.2byte 0x2710
 	.2byte 0x2EE0
+.endobj GAMEDEMO_VOL_TABLE
 .balign 4
-GAMESE_VOL_TABLE:
+.obj GAMESE_VOL_TABLE, local
 	.2byte 0x0000
 	.2byte 0x03E8
 	.2byte 0x07D0
@@ -1052,8 +1056,9 @@ GAMESE_VOL_TABLE:
 	.2byte 0x4E20
 	.2byte 0x61A8
 	.2byte 0x7FFF
+.endobj GAMESE_VOL_TABLE
 .balign 4
-GAMESTREAM_VOL_TABLE:
+.obj GAMESTREAM_VOL_TABLE, local
 	.2byte 0x0000
 	.2byte 0x0258
 	.2byte 0x03E8
@@ -1065,60 +1070,79 @@ GAMESTREAM_VOL_TABLE:
 	.2byte 0x1F40
 	.2byte 0x2710
 	.2byte 0x2EE0
+.endobj GAMESTREAM_VOL_TABLE
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-buffer:
+.obj buffer, local
 	.4byte 0x00000000
 	.4byte 0x00000000
-buffer_mus:
+.endobj buffer
+.obj buffer_mus, local
 	.4byte 0xFFFFFFFF
 	.4byte 0xFFFFFFFF
-fadeouttime:
+.endobj buffer_mus
+.obj fadeouttime, local
 	.4byte 30
-game_bgm_volume:
+.endobj fadeouttime
+.obj game_bgm_volume, local
 	.float 1.0
-bgm0_set:
+.endobj game_bgm_volume
+.obj bgm0_set, local
 	.4byte 0xFFFFFFFF
 	.4byte 0xFFFFFFFF
-bgm1_set:
+.endobj bgm0_set
+.obj bgm1_set, local
 	.4byte 0x103C17D8
 	.4byte 0x800319C3
-bgm2_set:
+.endobj bgm1_set
+.obj bgm2_set, local
 	.4byte 0x003300F3
 	.4byte 0x003C00FC
-bgm3_set:
+.endobj bgm2_set
+.obj bgm3_set, local
 	.4byte 0xC00FF78D
 	.4byte 0xC07CFE2C
-bgm4_set:
+.endobj bgm3_set
+.obj bgm4_set, local
 	.4byte 0x00470297
 	.4byte 0x002D023D
-bgm5_set:
+.endobj bgm4_set
+.obj bgm5_set, local
 	.4byte 0x057D05FB
 	.4byte 0x0A780AFA
-bgm0_volset:
+.endobj bgm5_set
+.obj bgm0_volset, local
 	.float 0.5
 	.float 0.15
-bgm1_volset:
+.endobj bgm0_volset
+.obj bgm1_volset, local
 	.float 0.5
 	.float 0.15
-bgm2_volset:
+.endobj bgm1_volset
+.obj bgm2_volset, local
 	.float 0.5
 	.float 0.15
-bgm3_volset:
+.endobj bgm2_volset
+.obj bgm3_volset, local
 	.float 0.5
 	.float 0.15
-bgm4_volset:
+.endobj bgm3_volset
+.obj bgm4_volset, local
 	.float 0.5
 	.float 0.15
-bgm5_volset:
+.endobj bgm4_volset
+.obj bgm5_volset, local
 	.float 0.55
 	.float 0.15
-cresult_volset:
+.endobj bgm5_volset
+.obj cresult_volset, local
 	.float 0.35
 	.float 0.15
-last_bgm_level:
+.endobj cresult_volset
+.obj last_bgm_level, local
 	.byte 0xFF
+.endobj last_bgm_level
 
 .section .sbss, "wa"
 .balign 8

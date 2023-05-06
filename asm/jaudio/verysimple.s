@@ -2,8 +2,7 @@
 
 .section .text, "ax"  # 0x80005560 - 0x80221F60
 .balign 32, 0
-.global InitQueue__Fv
-InitQueue__Fv:
+.fn InitQueue__Fv, local
 /* 80016A60 000139C0  7C 08 02 A6 */	mflr r0
 /* 80016A64 000139C4  3C 60 00 01 */	lis r3, 0x00010009@ha
 /* 80016A68 000139C8  90 01 00 04 */	stw r0, 4(r1)
@@ -33,25 +32,25 @@ InitQueue__Fv:
 /* 80016AC0 00013A20  38 21 00 20 */	addi r1, r1, 0x20
 /* 80016AC4 00013A24  7C 08 03 A6 */	mtlr r0
 /* 80016AC8 00013A28  4E 80 00 20 */	blr 
+.endfn InitQueue__Fv
 
 .balign 32, 0
-.global Jac_StopSe
-Jac_StopSe:
+.fn Jac_StopSe, global
 /* 80016AE0 00013A40  80 0D 2C 54 */	lwz r0, cmdqueue_reset@sda21(r13)
 /* 80016AE4 00013A44  2C 00 00 00 */	cmpwi r0, 0
 /* 80016AE8 00013A48  4E 80 00 20 */	blr 
+.endfn Jac_StopSe
 
 .balign 32, 0
-.global Jac_PauseCheck
-Jac_PauseCheck:
+.fn Jac_PauseCheck, global
 /* 80016B00 00013A60  80 6D 2C 5C */	lwz r3, pausemode@sda21(r13)
 /* 80016B04 00013A64  80 0D 2C 60 */	lwz r0, container@sda21(r13)
 /* 80016B08 00013A68  7C 63 03 78 */	or r3, r3, r0
 /* 80016B0C 00013A6C  4E 80 00 20 */	blr 
+.endfn Jac_PauseCheck
 
 .balign 32, 0
-.global Jac_SysSEDemoFadeCheck
-Jac_SysSEDemoFadeCheck:
+.fn Jac_SysSEDemoFadeCheck, global
 /* 80016B20 00013A80  7C 08 02 A6 */	mflr r0
 /* 80016B24 00013A84  90 01 00 04 */	stw r0, 4(r1)
 /* 80016B28 00013A88  94 21 FF F8 */	stwu r1, -8(r1)
@@ -80,10 +79,10 @@ Jac_SysSEDemoFadeCheck:
 /* 80016B7C 00013ADC  38 21 00 08 */	addi r1, r1, 8
 /* 80016B80 00013AE0  7C 08 03 A6 */	mtlr r0
 /* 80016B84 00013AE4  4E 80 00 20 */	blr 
+.endfn Jac_SysSEDemoFadeCheck
 
 .balign 32, 0
-.global Jac_PlaySystemSe
-Jac_PlaySystemSe:
+.fn Jac_PlaySystemSe, global
 /* 80016BA0 00013B00  7C 08 02 A6 */	mflr r0
 /* 80016BA4 00013B04  90 01 00 04 */	stw r0, 4(r1)
 /* 80016BA8 00013B08  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -336,10 +335,10 @@ Jac_PlaySystemSe:
 /* 80016F34 00013E94  38 21 00 18 */	addi r1, r1, 0x18
 /* 80016F38 00013E98  7C 08 03 A6 */	mtlr r0
 /* 80016F3C 00013E9C  4E 80 00 20 */	blr 
+.endfn Jac_PlaySystemSe
 
 .balign 32, 0
-.global Jac_StopSystemSe
-Jac_StopSystemSe:
+.fn Jac_StopSystemSe, global
 /* 80016F40 00013EA0  7C 08 02 A6 */	mflr r0
 /* 80016F44 00013EA4  90 01 00 04 */	stw r0, 4(r1)
 /* 80016F48 00013EA8  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -372,10 +371,10 @@ Jac_StopSystemSe:
 /* 80016FA4 00013F04  38 21 00 18 */	addi r1, r1, 0x18
 /* 80016FA8 00013F08  7C 08 03 A6 */	mtlr r0
 /* 80016FAC 00013F0C  4E 80 00 20 */	blr 
+.endfn Jac_StopSystemSe
 
 .balign 32, 0
-.global Jac_PlayInit__Fv
-Jac_PlayInit__Fv:
+.fn Jac_PlayInit__Fv, local
 /* 80016FC0 00013F20  7C 08 02 A6 */	mflr r0
 /* 80016FC4 00013F24  90 01 00 04 */	stw r0, 4(r1)
 /* 80016FC8 00013F28  94 21 FF F8 */	stwu r1, -8(r1)
@@ -396,15 +395,15 @@ Jac_PlayInit__Fv:
 /* 80017004 00013F64  38 21 00 08 */	addi r1, r1, 8
 /* 80017008 00013F68  7C 08 03 A6 */	mtlr r0
 /* 8001700C 00013F6C  4E 80 00 20 */	blr 
+.endfn Jac_PlayInit__Fv
 
 .balign 32, 0
-.global Jac_Archiver_Init__Fv
-Jac_Archiver_Init__Fv:
+.fn Jac_Archiver_Init__Fv, local
 /* 80017020 00013F80  4E 80 00 20 */	blr 
+.endfn Jac_Archiver_Init__Fv
 
 .balign 32, 0
-.global TrackReceive__FP5seqp_Us
-TrackReceive__FP5seqp_Us:
+.fn TrackReceive__FP5seqp_Us, local
 /* 80017040 00013FA0  7C 08 02 A6 */	mflr r0
 /* 80017044 00013FA4  90 01 00 04 */	stw r0, 4(r1)
 /* 80017048 00013FA8  54 80 04 3E */	clrlwi r0, r4, 0x10
@@ -451,10 +450,10 @@ TrackReceive__FP5seqp_Us:
 /* 800170E0 00014040  38 21 00 28 */	addi r1, r1, 0x28
 /* 800170E4 00014044  7C 08 03 A6 */	mtlr r0
 /* 800170E8 00014048  4E 80 00 20 */	blr 
+.endfn TrackReceive__FP5seqp_Us
 
 .balign 32, 0
-.global AuxBusInit__Fv
-AuxBusInit__Fv:
+.fn AuxBusInit__Fv, local
 /* 80017100 00014060  7C 08 02 A6 */	mflr r0
 /* 80017104 00014064  3C 60 80 22 */	lis r3, fx_config$180@ha
 /* 80017108 00014068  90 01 00 04 */	stw r0, 4(r1)
@@ -489,23 +488,23 @@ AuxBusInit__Fv:
 /* 80017170 000140D0  38 21 00 28 */	addi r1, r1, 0x28
 /* 80017174 000140D4  7C 08 03 A6 */	mtlr r0
 /* 80017178 000140D8  4E 80 00 20 */	blr 
+.endfn AuxBusInit__Fv
 
 .balign 32, 0
-.global __BootSoundOK__FUl
-__BootSoundOK__FUl:
+.fn __BootSoundOK__FUl, local
 /* 80017180 000140E0  38 00 00 01 */	li r0, 1
 /* 80017184 000140E4  90 0D 2C 68 */	stw r0, boot_ok@sda21(r13)
 /* 80017188 000140E8  4E 80 00 20 */	blr 
+.endfn __BootSoundOK__FUl
 
 .balign 32, 0
-.global Jac_CheckBootOk
-Jac_CheckBootOk:
+.fn Jac_CheckBootOk, global
 /* 800171A0 00014100  80 6D 2C 68 */	lwz r3, boot_ok@sda21(r13)
 /* 800171A4 00014104  4E 80 00 20 */	blr 
+.endfn Jac_CheckBootOk
 
 .balign 32, 0
-.global Jac_Start
-Jac_Start:
+.fn Jac_Start, global
 /* 800171C0 00014120  7C 08 02 A6 */	mflr r0
 /* 800171C4 00014124  28 06 00 00 */	cmplwi r6, 0
 /* 800171C8 00014128  90 01 00 04 */	stw r0, 4(r1)
@@ -588,10 +587,10 @@ Jac_Start:
 /* 800172F8 00014258  38 21 00 30 */	addi r1, r1, 0x30
 /* 800172FC 0001425C  7C 08 03 A6 */	mtlr r0
 /* 80017300 00014260  4E 80 00 20 */	blr 
+.endfn Jac_Start
 
 .balign 32, 0
-.global Jac_Freeze_Precall
-Jac_Freeze_Precall:
+.fn Jac_Freeze_Precall, global
 /* 80017320 00014280  7C 08 02 A6 */	mflr r0
 /* 80017324 00014284  90 01 00 04 */	stw r0, 4(r1)
 /* 80017328 00014288  94 21 FF F0 */	stwu r1, -0x10(r1)
@@ -611,10 +610,10 @@ Jac_Freeze_Precall:
 /* 80017360 000142C0  38 21 00 10 */	addi r1, r1, 0x10
 /* 80017364 000142C4  7C 08 03 A6 */	mtlr r0
 /* 80017368 000142C8  4E 80 00 20 */	blr 
+.endfn Jac_Freeze_Precall
 
 .balign 32, 0
-.global Jac_Freeze
-Jac_Freeze:
+.fn Jac_Freeze, global
 /* 80017380 000142E0  7C 08 02 A6 */	mflr r0
 /* 80017384 000142E4  90 01 00 04 */	stw r0, 4(r1)
 /* 80017388 000142E8  94 21 FF F0 */	stwu r1, -0x10(r1)
@@ -629,17 +628,17 @@ Jac_Freeze:
 /* 800173AC 0001430C  38 21 00 10 */	addi r1, r1, 0x10
 /* 800173B0 00014310  7C 08 03 A6 */	mtlr r0
 /* 800173B4 00014314  4E 80 00 20 */	blr 
+.endfn Jac_Freeze
 
 .balign 32, 0
-.global __ResetCounter__Fv
-__ResetCounter__Fv:
+.fn __ResetCounter__Fv, local
 /* 800173C0 00014320  38 00 00 00 */	li r0, 0
 /* 800173C4 00014324  90 0D 2C 6C */	stw r0, count@sda21(r13)
 /* 800173C8 00014328  4E 80 00 20 */	blr 
+.endfn __ResetCounter__Fv
 
 .balign 32, 0
-.global Jac_AddDVDBuffer
-Jac_AddDVDBuffer:
+.fn Jac_AddDVDBuffer, global
 /* 800173E0 00014340  7C 08 02 A6 */	mflr r0
 /* 800173E4 00014344  38 A4 00 00 */	addi r5, r4, 0
 /* 800173E8 00014348  90 01 00 04 */	stw r0, 4(r1)
@@ -654,10 +653,10 @@ Jac_AddDVDBuffer:
 /* 8001740C 0001436C  38 21 00 18 */	addi r1, r1, 0x18
 /* 80017410 00014370  7C 08 03 A6 */	mtlr r0
 /* 80017414 00014374  4E 80 00 20 */	blr 
+.endfn Jac_AddDVDBuffer
 
 .balign 32, 0
-.global Jac_BackDVDBuffer
-Jac_BackDVDBuffer:
+.fn Jac_BackDVDBuffer, global
 /* 80017420 00014380  7C 08 02 A6 */	mflr r0
 /* 80017424 00014384  90 01 00 04 */	stw r0, 4(r1)
 /* 80017428 00014388  94 21 FF F8 */	stwu r1, -8(r1)
@@ -672,69 +671,89 @@ Jac_BackDVDBuffer:
 /* 80017448 000143A8  38 21 00 08 */	addi r1, r1, 8
 /* 8001744C 000143AC  7C 08 03 A6 */	mtlr r0
 /* 80017450 000143B0  4E 80 00 20 */	blr 
+.endfn Jac_BackDVDBuffer
 
 .section .rodata, "a"  # 0x80221FE0 - 0x80222DC0
 .balign 8
-lbl_80222118:
+.obj lbl_80222118, local
 	.asciz "/Seqs/pikiseq.hed"
+.endobj lbl_80222118
 .balign 4
-lbl_8022212C:
+.obj lbl_8022212C, local
 	.asciz "Banks/pikibank.bx"
+.endobj lbl_8022212C
 .balign 4
-lbl_80222140:
+.obj lbl_80222140, local
 	.asciz "/Seqs/pikiseq.arc"
+.endobj lbl_80222140
 .balign 4
-lbl_80222154:
+.obj lbl_80222154, local
 	.asciz "/Banks/demose_0.aw"
+.endobj lbl_80222154
 .balign 4
-lbl_80222168:
+.obj lbl_80222168, local
 	.asciz "/Banks/demose_1.aw"
+.endobj lbl_80222168
 .balign 4
-lbl_8022217C:
+.obj lbl_8022217C, local
 	.asciz "/Banks/demo_0.aw"
+.endobj lbl_8022217C
 .balign 4
-lbl_80222190:
+.obj lbl_80222190, local
 	.asciz "/Banks/demo_1.aw"
+.endobj lbl_80222190
 .balign 4
-lbl_802221A4:
+.obj lbl_802221A4, local
 	.asciz "/Banks/demo_2.aw"
+.endobj lbl_802221A4
 .balign 4
-lbl_802221B8:
+.obj lbl_802221B8, local
 	.asciz "/Banks/demo_3.aw"
+.endobj lbl_802221B8
 .balign 4
-lbl_802221CC:
+.obj lbl_802221CC, local
 	.asciz "/Banks/demo_4.aw"
+.endobj lbl_802221CC
 .balign 4
-lbl_802221E0:
+.obj lbl_802221E0, local
 	.asciz "/Banks/demo_5.aw"
+.endobj lbl_802221E0
 .balign 4
-lbl_802221F4:
+.obj lbl_802221F4, local
 	.asciz "/Banks/demo_6.aw"
+.endobj lbl_802221F4
 .balign 4
-lbl_80222208:
+.obj lbl_80222208, local
 	.asciz "/Banks/demo_7.aw"
+.endobj lbl_80222208
 .balign 4
-lbl_8022221C:
+.obj lbl_8022221C, local
 	.asciz "/Banks/demo_8.aw"
+.endobj lbl_8022221C
 .balign 4
-lbl_80222230:
+.obj lbl_80222230, local
 	.asciz "/d_end1.stx"
+.endobj lbl_80222230
 .balign 4
-lbl_8022223C:
+.obj lbl_8022223C, local
 	.asciz "/d_end3.stx"
+.endobj lbl_8022223C
 .balign 4
-lbl_80222248:
+.obj lbl_80222248, local
 	.asciz "/fanf5.stx"
+.endobj lbl_80222248
 .balign 4
-lbl_80222254:
+.obj lbl_80222254, local
 	.asciz "/badend0.stx"
+.endobj lbl_80222254
 .balign 4
-lbl_80222264:
+.obj lbl_80222264, local
 	.asciz "/badend1.stx"
+.endobj lbl_80222264
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_80225950:
+.obj lbl_80225950, local
 	.4byte .L_80016D20
 	.4byte .L_80016C60
 	.4byte .L_80016C2C
@@ -773,7 +792,8 @@ lbl_80225950:
 	.4byte .L_80016E28
 	.4byte .L_80016E90
 	.4byte .L_80016EE8
-fx_config$180: # local object
+.endobj lbl_80225950
+.obj fx_config$180, local
 	.4byte 0x0100000A
 	.4byte 0x6000000B
 	.4byte 0x00000000
@@ -806,6 +826,7 @@ fx_config$180: # local object
 	.4byte 0x000001F4
 	.4byte 0x03E80FA0
 	.4byte 0x1B581F40
+.endobj fx_config$180
 
 .section .sbss, "wa"
 .balign 8

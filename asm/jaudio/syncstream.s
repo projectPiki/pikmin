@@ -1,8 +1,7 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
 .balign 32, 0
-.global Stop_DirectPCM__FP6dspch_
-Stop_DirectPCM__FP6dspch_:
+.fn Stop_DirectPCM__FP6dspch_, global
 /* 8001BBE0 00018B40  7C 08 02 A6 */	mflr r0
 /* 8001BBE4 00018B44  90 01 00 04 */	stw r0, 4(r1)
 /* 8001BBE8 00018B48  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -17,10 +16,10 @@ Stop_DirectPCM__FP6dspch_:
 /* 8001BC0C 00018B6C  38 21 00 18 */	addi r1, r1, 0x18
 /* 8001BC10 00018B70  7C 08 03 A6 */	mtlr r0
 /* 8001BC14 00018B74  4E 80 00 20 */	blr 
+.endfn Stop_DirectPCM__FP6dspch_
 
 .balign 32, 0
-.global Play_DirectPCM__FP6dspch_PsUsUl
-Play_DirectPCM__FP6dspch_PsUsUl:
+.fn Play_DirectPCM__FP6dspch_PsUsUl, global
 /* 8001BC20 00018B80  7C 08 02 A6 */	mflr r0
 /* 8001BC24 00018B84  90 01 00 04 */	stw r0, 4(r1)
 /* 8001BC28 00018B88  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -79,23 +78,23 @@ Play_DirectPCM__FP6dspch_PsUsUl:
 /* 8001BCF0 00018C50  38 21 00 28 */	addi r1, r1, 0x28
 /* 8001BCF4 00018C54  7C 08 03 A6 */	mtlr r0
 /* 8001BCF8 00018C58  4E 80 00 20 */	blr 
+.endfn Play_DirectPCM__FP6dspch_PsUsUl
 
 .balign 32, 0
-.global Get_DirectPCM_Counter__FP11DSPchannel_
-Get_DirectPCM_Counter__FP11DSPchannel_:
+.fn Get_DirectPCM_Counter__FP11DSPchannel_, global
 /* 8001BD00 00018C60  80 03 00 68 */	lwz r0, 0x68(r3)
 /* 8001BD04 00018C64  54 03 84 3E */	srwi r3, r0, 0x10
 /* 8001BD08 00018C68  4E 80 00 20 */	blr 
+.endfn Get_DirectPCM_Counter__FP11DSPchannel_
 
 .balign 32, 0
-.global Get_DirectPCM_Remain__FP11DSPchannel_
-Get_DirectPCM_Remain__FP11DSPchannel_:
+.fn Get_DirectPCM_Remain__FP11DSPchannel_, global
 /* 8001BD20 00018C80  80 63 00 74 */	lwz r3, 0x74(r3)
 /* 8001BD24 00018C84  4E 80 00 20 */	blr 
+.endfn Get_DirectPCM_Remain__FP11DSPchannel_
 
 .balign 32, 0
-.global __DVDReadAsyncRetry__Fv
-__DVDReadAsyncRetry__Fv:
+.fn __DVDReadAsyncRetry__Fv, local
 /* 8001BD40 00018CA0  7C 08 02 A6 */	mflr r0
 /* 8001BD44 00018CA4  39 00 00 01 */	li r8, 1
 /* 8001BD48 00018CA8  90 01 00 04 */	stw r0, 4(r1)
@@ -111,10 +110,10 @@ __DVDReadAsyncRetry__Fv:
 /* 8001BD70 00018CD0  38 21 00 08 */	addi r1, r1, 8
 /* 8001BD74 00018CD4  7C 08 03 A6 */	mtlr r0
 /* 8001BD78 00018CD8  4E 80 00 20 */	blr 
+.endfn __DVDReadAsyncRetry__Fv
 
 .balign 32, 0
-.global DVDReadAsyncPrio2__FP11DVDFileInfoPvllPFlP11DVDFileInfo_vl
-DVDReadAsyncPrio2__FP11DVDFileInfoPvllPFlP11DVDFileInfo_vl:
+.fn DVDReadAsyncPrio2__FP11DVDFileInfoPvllPFlP11DVDFileInfo_vl, local
 /* 8001BD80 00018CE0  7C 08 02 A6 */	mflr r0
 /* 8001BD84 00018CE4  90 01 00 04 */	stw r0, 4(r1)
 /* 8001BD88 00018CE8  94 21 FF F8 */	stwu r1, -8(r1)
@@ -133,10 +132,10 @@ DVDReadAsyncPrio2__FP11DVDFileInfoPvllPFlP11DVDFileInfo_vl:
 /* 8001BDBC 00018D1C  38 21 00 08 */	addi r1, r1, 8
 /* 8001BDC0 00018D20  7C 08 03 A6 */	mtlr r0
 /* 8001BDC4 00018D24  4E 80 00 20 */	blr 
+.endfn DVDReadAsyncPrio2__FP11DVDFileInfoPvllPFlP11DVDFileInfo_vl
 
 .balign 32, 0
-.global __LoadFin__FlP11DVDFileInfo
-__LoadFin__FlP11DVDFileInfo:
+.fn __LoadFin__FlP11DVDFileInfo, local
 /* 8001BDE0 00018D40  7C 08 02 A6 */	mflr r0
 /* 8001BDE4 00018D44  3C A0 00 02 */	lis r5, 0x00021A50@ha
 /* 8001BDE8 00018D48  90 01 00 04 */	stw r0, 4(r1)
@@ -224,10 +223,10 @@ __LoadFin__FlP11DVDFileInfo:
 /* 8001BF20 00018E80  38 21 00 28 */	addi r1, r1, 0x28
 /* 8001BF24 00018E84  7C 08 03 A6 */	mtlr r0
 /* 8001BF28 00018E88  4E 80 00 20 */	blr 
+.endfn __LoadFin__FlP11DVDFileInfo
 
 .balign 32, 0
-.global LoadADPCM__FP11StreamCtrl_i
-LoadADPCM__FP11StreamCtrl_i:
+.fn LoadADPCM__FP11StreamCtrl_i, local
 /* 8001BF40 00018EA0  7C 08 02 A6 */	mflr r0
 /* 8001BF44 00018EA4  90 01 00 04 */	stw r0, 4(r1)
 /* 8001BF48 00018EA8  94 21 FF D0 */	stwu r1, -0x30(r1)
@@ -334,10 +333,10 @@ LoadADPCM__FP11StreamCtrl_i:
 /* 8001C0C4 00019024  38 21 00 30 */	addi r1, r1, 0x30
 /* 8001C0C8 00019028  7C 08 03 A6 */	mtlr r0
 /* 8001C0CC 0001902C  4E 80 00 20 */	blr 
+.endfn LoadADPCM__FP11StreamCtrl_i
 
 .balign 32, 0
-.global BufContInit__FP11BufControl_UcUcUcUcUlUlUl
-BufContInit__FP11BufControl_UcUcUcUcUlUlUl:
+.fn BufContInit__FP11BufControl_UcUcUcUcUlUlUl, local
 /* 8001C0E0 00019040  98 83 00 00 */	stb r4, 0(r3)
 /* 8001C0E4 00019044  98 A3 00 01 */	stb r5, 1(r3)
 /* 8001C0E8 00019048  98 C3 00 02 */	stb r6, 2(r3)
@@ -346,10 +345,10 @@ BufContInit__FP11BufControl_UcUcUcUcUlUlUl:
 /* 8001C0F4 00019054  91 23 00 08 */	stw r9, 8(r3)
 /* 8001C0F8 00019058  91 43 00 0C */	stw r10, 0xc(r3)
 /* 8001C0FC 0001905C  4E 80 00 20 */	blr 
+.endfn BufContInit__FP11BufControl_UcUcUcUcUlUlUl
 
 .balign 32, 0
-.global Init_StreamAudio
-Init_StreamAudio:
+.fn Init_StreamAudio, global
 /* 8001C100 00019060  3C 80 00 02 */	lis r4, 0x00021A50@ha
 /* 8001C104 00019064  3C 60 80 37 */	lis r3, SC@ha
 /* 8001C108 00019068  38 04 1A 50 */	addi r0, r4, 0x00021A50@l
@@ -362,10 +361,10 @@ Init_StreamAudio:
 /* 8001C124 00019084  90 A3 19 84 */	stw r5, 0x1984(r3)
 /* 8001C128 00019088  90 C3 1A 0C */	stw r6, 0x1a0c(r3)
 /* 8001C12C 0001908C  4E 80 00 20 */	blr 
+.endfn Init_StreamAudio
 
 .balign 32, 0
-.global StreamAudio_Start
-StreamAudio_Start:
+.fn StreamAudio_Start, global
 /* 8001C140 000190A0  7C 08 02 A6 */	mflr r0
 /* 8001C144 000190A4  3C E0 80 37 */	lis r7, SC@ha
 /* 8001C148 000190A8  90 01 00 04 */	stw r0, 4(r1)
@@ -581,15 +580,15 @@ StreamAudio_Start:
 /* 8001C44C 000193AC  38 21 00 40 */	addi r1, r1, 0x40
 /* 8001C450 000193B0  7C 08 03 A6 */	mtlr r0
 /* 8001C454 000193B4  4E 80 00 20 */	blr 
+.endfn StreamAudio_Start
 
 .balign 32, 0
-.global StreamAudio_Callback__FPv
-StreamAudio_Callback__FPv:
+.fn StreamAudio_Callback__FPv, local
 /* 8001C460 000193C0  7C 08 02 A6 */	mflr r0
 /* 8001C464 000193C4  90 01 00 04 */	stw r0, 4(r1)
 /* 8001C468 000193C8  94 21 FF 98 */	stwu r1, -0x68(r1)
 /* 8001C46C 000193CC  39 61 00 68 */	addi r11, r1, 0x68
-/* 8001C470 000193D0  48 1F 89 F5 */	bl func_80214E64
+/* 8001C470 000193D0  48 1F 89 F5 */	bl _savefpr_30
 /* 8001C474 000193D4  BE 81 00 28 */	stmw r20, 0x28(r1)
 /* 8001C478 000193D8  3C 83 00 02 */	addis r4, r3, 2
 /* 8001C47C 000193DC  3B 20 00 00 */	li r25, 0
@@ -1175,21 +1174,21 @@ StreamAudio_Callback__FPv:
 .L_8001CCEC:
 /* 8001CCEC 00019C4C  80 01 00 6C */	lwz r0, 0x6c(r1)
 /* 8001CCF0 00019C50  39 61 00 68 */	addi r11, r1, 0x68
-/* 8001CCF4 00019C54  48 1F 81 BD */	bl func_80214EB0
+/* 8001CCF4 00019C54  48 1F 81 BD */	bl _restfpr_30
 /* 8001CCF8 00019C58  BA 81 00 28 */	lmw r20, 0x28(r1)
 /* 8001CCFC 00019C5C  38 21 00 68 */	addi r1, r1, 0x68
 /* 8001CD00 00019C60  7C 08 03 A6 */	mtlr r0
 /* 8001CD04 00019C64  4E 80 00 20 */	blr 
+.endfn StreamAudio_Callback__FPv
 
 .balign 32, 0
-.global RegisterStreamCallback
-RegisterStreamCallback:
+.fn RegisterStreamCallback, global
 /* 8001CD20 00019C80  90 6D 2D 60 */	stw r3, default_streamsync_call@sda21(r13)
 /* 8001CD24 00019C84  4E 80 00 20 */	blr 
+.endfn RegisterStreamCallback
 
 .balign 32, 0
-.global Jac_Decode_ADPCM
-Jac_Decode_ADPCM:
+.fn Jac_Decode_ADPCM, global
 /* 8001CD40 00019CA0  94 21 FF B8 */	stwu r1, -0x48(r1)
 /* 8001CD44 00019CA4  3D 20 80 22 */	lis r9, filter_table@ha
 /* 8001CD48 00019CA8  39 29 6F 70 */	addi r9, r9, filter_table@l
@@ -1296,10 +1295,10 @@ Jac_Decode_ADPCM:
 /* 8001CEC8 00019E28  BB 01 00 28 */	lmw r24, 0x28(r1)
 /* 8001CECC 00019E2C  38 21 00 48 */	addi r1, r1, 0x48
 /* 8001CED0 00019E30  4E 80 00 20 */	blr 
+.endfn Jac_Decode_ADPCM
 
 .balign 32, 0
-.global __DecodeADPCM__FP11StreamCtrl_
-__DecodeADPCM__FP11StreamCtrl_:
+.fn __DecodeADPCM__FP11StreamCtrl_, local
 /* 8001CEE0 00019E40  7C 08 02 A6 */	mflr r0
 /* 8001CEE4 00019E44  3C 83 00 02 */	addis r4, r3, 2
 /* 8001CEE8 00019E48  90 01 00 04 */	stw r0, 4(r1)
@@ -1354,10 +1353,10 @@ __DecodeADPCM__FP11StreamCtrl_:
 /* 8001CFA4 00019F04  38 21 00 28 */	addi r1, r1, 0x28
 /* 8001CFA8 00019F08  7C 08 03 A6 */	mtlr r0
 /* 8001CFAC 00019F0C  4E 80 00 20 */	blr 
+.endfn __DecodeADPCM__FP11StreamCtrl_
 
 .balign 32, 0
-.global Clamp16__Fl
-Clamp16__Fl:
+.fn Clamp16__Fl, local
 /* 8001CFC0 00019F20  2C 03 7F FF */	cmpwi r3, 0x7fff
 /* 8001CFC4 00019F24  41 80 00 0C */	blt .L_8001CFD0
 /* 8001CFC8 00019F28  38 60 7F FF */	li r3, 0x7fff
@@ -1369,10 +1368,10 @@ Clamp16__Fl:
 .L_8001CFDC:
 /* 8001CFDC 00019F3C  7C 63 07 34 */	extsh r3, r3
 /* 8001CFE0 00019F40  4E 80 00 20 */	blr 
+.endfn Clamp16__Fl
 
 .balign 32, 0
-.global __DecodeADPCM4X__FP11StreamCtrl_
-__DecodeADPCM4X__FP11StreamCtrl_:
+.fn __DecodeADPCM4X__FP11StreamCtrl_, local
 /* 8001D000 00019F60  7C 08 02 A6 */	mflr r0
 /* 8001D004 00019F64  90 01 00 04 */	stw r0, 4(r1)
 /* 8001D008 00019F68  94 21 FF 18 */	stwu r1, -0xe8(r1)
@@ -1481,10 +1480,10 @@ __DecodeADPCM4X__FP11StreamCtrl_:
 /* 8001D190 0001A0F0  38 21 00 E8 */	addi r1, r1, 0xe8
 /* 8001D194 0001A0F4  7C 08 03 A6 */	mtlr r0
 /* 8001D198 0001A0F8  4E 80 00 20 */	blr 
+.endfn __DecodeADPCM4X__FP11StreamCtrl_
 
 .balign 32, 0
-.global __Decode__FP11StreamCtrl_
-__Decode__FP11StreamCtrl_:
+.fn __Decode__FP11StreamCtrl_, local
 /* 8001D1A0 0001A100  7C 08 02 A6 */	mflr r0
 /* 8001D1A4 0001A104  3C 83 00 02 */	addis r4, r3, 2
 /* 8001D1A8 0001A108  90 01 00 04 */	stw r0, 4(r1)
@@ -1509,10 +1508,10 @@ __Decode__FP11StreamCtrl_:
 /* 8001D1E8 0001A148  38 21 00 08 */	addi r1, r1, 8
 /* 8001D1EC 0001A14C  7C 08 03 A6 */	mtlr r0
 /* 8001D1F0 0001A150  4E 80 00 20 */	blr 
+.endfn __Decode__FP11StreamCtrl_
 
 .balign 32, 0
-.global __PcmToLoop__FP11StreamCtrl_
-__PcmToLoop__FP11StreamCtrl_:
+.fn __PcmToLoop__FP11StreamCtrl_, local
 /* 8001D200 0001A160  7C 08 02 A6 */	mflr r0
 /* 8001D204 0001A164  3C E3 00 02 */	addis r7, r3, 2
 /* 8001D208 0001A168  90 01 00 04 */	stw r0, 4(r1)
@@ -1598,10 +1597,10 @@ __PcmToLoop__FP11StreamCtrl_:
 /* 8001D330 0001A290  38 21 00 28 */	addi r1, r1, 0x28
 /* 8001D334 0001A294  7C 08 03 A6 */	mtlr r0
 /* 8001D338 0001A298  4E 80 00 20 */	blr 
+.endfn __PcmToLoop__FP11StreamCtrl_
 
 .balign 32, 0
-.global StreamSyncCheckReady
-StreamSyncCheckReady:
+.fn StreamSyncCheckReady, global
 /* 8001D340 0001A2A0  3C A0 00 02 */	lis r5, 0x00021A50@ha
 /* 8001D344 0001A2A4  3C 80 80 37 */	lis r4, SC@ha
 /* 8001D348 0001A2A8  38 A5 1A 50 */	addi r5, r5, 0x00021A50@l
@@ -1617,10 +1616,10 @@ StreamSyncCheckReady:
 .L_8001D370:
 /* 8001D370 0001A2D0  38 60 00 00 */	li r3, 0
 /* 8001D374 0001A2D4  4E 80 00 20 */	blr 
+.endfn StreamSyncCheckReady
 
 .balign 32, 0
-.global StreamSyncCheckReadyID
-StreamSyncCheckReadyID:
+.fn StreamSyncCheckReadyID, global
 /* 8001D380 0001A2E0  3C C0 00 02 */	lis r6, 0x00021A50@ha
 /* 8001D384 0001A2E4  3C A0 80 37 */	lis r5, SC@ha
 /* 8001D388 0001A2E8  38 C6 1A 50 */	addi r6, r6, 0x00021A50@l
@@ -1647,10 +1646,10 @@ StreamSyncCheckReadyID:
 .L_8001D3D4:
 /* 8001D3D4 0001A334  38 60 00 00 */	li r3, 0
 /* 8001D3D8 0001A338  4E 80 00 20 */	blr 
+.endfn StreamSyncCheckReadyID
 
 .balign 32, 0
-.global StreamSyncCheckBusy
-StreamSyncCheckBusy:
+.fn StreamSyncCheckBusy, global
 /* 8001D3E0 0001A340  3C C0 00 02 */	lis r6, 0x00021A50@ha
 /* 8001D3E4 0001A344  3C A0 80 37 */	lis r5, SC@ha
 /* 8001D3E8 0001A348  38 C6 1A 50 */	addi r6, r6, 0x00021A50@l
@@ -1674,10 +1673,10 @@ StreamSyncCheckBusy:
 .L_8001D42C:
 /* 8001D42C 0001A38C  38 60 00 01 */	li r3, 1
 /* 8001D430 0001A390  4E 80 00 20 */	blr 
+.endfn StreamSyncCheckBusy
 
 .balign 32, 0
-.global StreamSyncPlayAudio
-StreamSyncPlayAudio:
+.fn StreamSyncPlayAudio, global
 /* 8001D440 0001A3A0  3C E0 00 02 */	lis r7, 0x00021A50@ha
 /* 8001D444 0001A3A4  3C C0 80 37 */	lis r6, SC@ha
 /* 8001D448 0001A3A8  38 E7 1A 50 */	addi r7, r7, 0x00021A50@l
@@ -1704,10 +1703,10 @@ StreamSyncPlayAudio:
 .L_8001D498:
 /* 8001D498 0001A3F8  38 60 00 00 */	li r3, 0
 /* 8001D49C 0001A3FC  4E 80 00 20 */	blr 
+.endfn StreamSyncPlayAudio
 
 .balign 32, 0
-.global StreamSyncStopAudio
-StreamSyncStopAudio:
+.fn StreamSyncStopAudio, global
 /* 8001D4A0 0001A400  3C A0 00 02 */	lis r5, 0x00021A50@ha
 /* 8001D4A4 0001A404  3C 80 80 37 */	lis r4, SC@ha
 /* 8001D4A8 0001A408  38 A5 1A 50 */	addi r5, r5, 0x00021A50@l
@@ -1730,10 +1729,10 @@ StreamSyncStopAudio:
 /* 8001D4E4 0001A444  38 60 00 01 */	li r3, 1
 /* 8001D4E8 0001A448  90 04 19 AC */	stw r0, 0x19ac(r4)
 /* 8001D4EC 0001A44C  4E 80 00 20 */	blr 
+.endfn StreamSyncStopAudio
 
 .balign 32, 0
-.global __StreamChgPitch__FP11StreamCtrl_
-__StreamChgPitch__FP11StreamCtrl_:
+.fn __StreamChgPitch__FP11StreamCtrl_, local
 /* 8001D500 0001A460  7C 08 02 A6 */	mflr r0
 /* 8001D504 0001A464  90 01 00 04 */	stw r0, 4(r1)
 /* 8001D508 0001A468  94 21 FF D0 */	stwu r1, -0x30(r1)
@@ -1778,10 +1777,10 @@ __StreamChgPitch__FP11StreamCtrl_:
 /* 8001D59C 0001A4FC  38 21 00 30 */	addi r1, r1, 0x30
 /* 8001D5A0 0001A500  7C 08 03 A6 */	mtlr r0
 /* 8001D5A4 0001A504  4E 80 00 20 */	blr 
+.endfn __StreamChgPitch__FP11StreamCtrl_
 
 .balign 32, 0
-.global __StreamChgVolume__FP11StreamCtrl_
-__StreamChgVolume__FP11StreamCtrl_:
+.fn __StreamChgVolume__FP11StreamCtrl_, local
 /* 8001D5C0 0001A520  7C 08 02 A6 */	mflr r0
 /* 8001D5C4 0001A524  90 01 00 04 */	stw r0, 4(r1)
 /* 8001D5C8 0001A528  94 21 FF D0 */	stwu r1, -0x30(r1)
@@ -1860,10 +1859,10 @@ __StreamChgVolume__FP11StreamCtrl_:
 /* 8001D6D8 0001A638  38 21 00 30 */	addi r1, r1, 0x30
 /* 8001D6DC 0001A63C  7C 08 03 A6 */	mtlr r0
 /* 8001D6E0 0001A640  4E 80 00 20 */	blr 
+.endfn __StreamChgVolume__FP11StreamCtrl_
 
 .balign 32, 0
-.global StreamChgVolume
-StreamChgVolume:
+.fn StreamChgVolume, global
 /* 8001D700 0001A660  3C E0 00 02 */	lis r7, 0x00021A50@ha
 /* 8001D704 0001A664  3C C0 80 37 */	lis r6, SC@ha
 /* 8001D708 0001A668  38 E7 1A 50 */	addi r7, r7, 0x00021A50@l
@@ -1877,10 +1876,10 @@ StreamChgVolume:
 /* 8001D728 0001A688  60 00 00 01 */	ori r0, r0, 1
 /* 8001D72C 0001A68C  90 03 1A 38 */	stw r0, 0x1a38(r3)
 /* 8001D730 0001A690  4E 80 00 20 */	blr 
+.endfn StreamChgVolume
 
 .balign 32, 0
-.global StreamChgMixLevel
-StreamChgMixLevel:
+.fn StreamChgMixLevel, global
 /* 8001D740 0001A6A0  3C E0 00 02 */	lis r7, 0x00021A50@ha
 /* 8001D744 0001A6A4  3C C0 80 37 */	lis r6, SC@ha
 /* 8001D748 0001A6A8  38 E7 1A 50 */	addi r7, r7, 0x00021A50@l
@@ -1894,10 +1893,10 @@ StreamChgMixLevel:
 /* 8001D768 0001A6C8  B0 83 1A 2C */	sth r4, 0x1a2c(r3)
 /* 8001D76C 0001A6CC  B0 A3 1A 2E */	sth r5, 0x1a2e(r3)
 /* 8001D770 0001A6D0  4E 80 00 20 */	blr 
+.endfn StreamChgMixLevel
 
 .balign 32, 0
-.global StreamGetCurrentFrame
-StreamGetCurrentFrame:
+.fn StreamGetCurrentFrame, global
 /* 8001D780 0001A6E0  7C 08 02 A6 */	mflr r0
 /* 8001D784 0001A6E4  3C C0 00 02 */	lis r6, 0x00021A50@ha
 /* 8001D788 0001A6E8  3C A0 80 37 */	lis r5, SC@ha
@@ -2005,10 +2004,10 @@ StreamGetCurrentFrame:
 /* 8001D904 0001A864  38 21 00 50 */	addi r1, r1, 0x50
 /* 8001D908 0001A868  7C 08 03 A6 */	mtlr r0
 /* 8001D90C 0001A86C  4E 80 00 20 */	blr 
+.endfn StreamGetCurrentFrame
 
 .balign 32, 0
-.global StreamSetDVDPause
-StreamSetDVDPause:
+.fn StreamSetDVDPause, global
 /* 8001D920 0001A880  3C C0 00 02 */	lis r6, 0x00021A50@ha
 /* 8001D924 0001A884  3C A0 80 37 */	lis r5, SC@ha
 /* 8001D928 0001A888  38 C6 1A 50 */	addi r6, r6, 0x00021A50@l
@@ -2025,10 +2024,10 @@ StreamSetDVDPause:
 /* 8001D950 0001A8B0  80 65 19 B0 */	lwz r3, 0x19b0(r5)
 /* 8001D954 0001A8B4  90 85 19 B0 */	stw r4, 0x19b0(r5)
 /* 8001D958 0001A8B8  4E 80 00 20 */	blr 
+.endfn StreamSetDVDPause
 
 .balign 32, 0
-.global StreamCheckAudioFormat
-StreamCheckAudioFormat:
+.fn StreamCheckAudioFormat, global
 /* 8001D960 0001A8C0  3C A0 00 02 */	lis r5, 0x00021A50@ha
 /* 8001D964 0001A8C4  3C 80 80 37 */	lis r4, SC@ha
 /* 8001D968 0001A8C8  38 A5 1A 50 */	addi r5, r5, 0x00021A50@l
@@ -2039,6 +2038,7 @@ StreamCheckAudioFormat:
 /* 8001D97C 0001A8DC  A0 03 19 92 */	lhz r0, 0x1992(r3)
 /* 8001D980 0001A8E0  54 03 06 3E */	clrlwi r3, r0, 0x18
 /* 8001D984 0001A8E4  4E 80 00 20 */	blr 
+.endfn StreamCheckAudioFormat
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8

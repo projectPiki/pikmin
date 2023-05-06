@@ -1,25 +1,25 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
 .balign 32, 0
-.global Jac_DemoSceneInit
-Jac_DemoSceneInit:
+.fn Jac_DemoSceneInit, global
 /* 8001A0E0 00017040  38 00 00 00 */	li r0, 0
 /* 8001A0E4 00017044  90 0D 2D 40 */	stw r0, now_loading@sda21(r13)
 /* 8001A0E8 00017048  98 0D 2D 4F */	stb r0, event_pause_counter@sda21(r13)
 /* 8001A0EC 0001704C  4E 80 00 20 */	blr 
+.endfn Jac_DemoSceneInit
 
 .balign 32, 0
-Jac_DemoCheckFrameCall__Fv: #static func
+.fn Jac_DemoCheckFrameCall__Fv, local
 /* 8001A100 00017060  80 8D 2D 50 */	lwz r4, demo_end_delay@sda21(r13)
 /* 8001A104 00017064  28 04 00 00 */	cmplwi r4, 0
 /* 8001A108 00017068  4D 82 00 20 */	beqlr 
 /* 8001A10C 0001706C  38 04 FF FF */	addi r0, r4, -1
 /* 8001A110 00017070  90 0D 2D 50 */	stw r0, demo_end_delay@sda21(r13)
 /* 8001A114 00017074  4E 80 00 20 */	blr 
+.endfn Jac_DemoCheckFrameCall__Fv
 
 .balign 32, 0
-.global Jac_DemoEventUnPauseCheck__Fv
-Jac_DemoEventUnPauseCheck__Fv:
+.fn Jac_DemoEventUnPauseCheck__Fv, global
 /* 8001A120 00017080  7C 08 02 A6 */	mflr r0
 /* 8001A124 00017084  90 01 00 04 */	stw r0, 4(r1)
 /* 8001A128 00017088  94 21 FF F8 */	stwu r1, -8(r1)
@@ -41,10 +41,10 @@ Jac_DemoEventUnPauseCheck__Fv:
 /* 8001A164 000170C4  38 21 00 08 */	addi r1, r1, 8
 /* 8001A168 000170C8  7C 08 03 A6 */	mtlr r0
 /* 8001A16C 000170CC  4E 80 00 20 */	blr 
+.endfn Jac_DemoEventUnPauseCheck__Fv
 
 .balign 32, 0
-.global Jac_DemoCheck__Fv
-Jac_DemoCheck__Fv:
+.fn Jac_DemoCheck__Fv, global
 /* 8001A180 000170E0  80 0D 2D 50 */	lwz r0, demo_end_delay@sda21(r13)
 /* 8001A184 000170E4  28 00 00 00 */	cmplwi r0, 0
 /* 8001A188 000170E8  41 82 00 0C */	beq .L_8001A194
@@ -65,10 +65,10 @@ Jac_DemoCheck__Fv:
 .L_8001A1C0:
 /* 8001A1C0 00017120  38 60 00 01 */	li r3, 1
 /* 8001A1C4 00017124  4E 80 00 20 */	blr 
+.endfn Jac_DemoCheck__Fv
 
 .balign 32, 0
-.global Jac_DemoWalkCheck__Fv
-Jac_DemoWalkCheck__Fv:
+.fn Jac_DemoWalkCheck__Fv, global
 /* 8001A1E0 00017140  80 0D 2D 50 */	lwz r0, demo_end_delay@sda21(r13)
 /* 8001A1E4 00017144  28 00 00 00 */	cmplwi r0, 0
 /* 8001A1E8 00017148  41 82 00 0C */	beq .L_8001A1F4
@@ -106,10 +106,10 @@ Jac_DemoWalkCheck__Fv:
 .L_8001A258:
 /* 8001A258 000171B8  38 60 00 00 */	li r3, 0
 /* 8001A25C 000171BC  4E 80 00 20 */	blr 
+.endfn Jac_DemoWalkCheck__Fv
 
 .balign 32, 0
-.global Jac_DemoCheckEvent__FUc
-Jac_DemoCheckEvent__FUc:
+.fn Jac_DemoCheckEvent__FUc, global
 /* 8001A260 000171C0  7C 08 02 A6 */	mflr r0
 /* 8001A264 000171C4  90 01 00 04 */	stw r0, 4(r1)
 /* 8001A268 000171C8  94 21 FF F8 */	stwu r1, -8(r1)
@@ -145,9 +145,10 @@ Jac_DemoCheckEvent__FUc:
 /* 8001A2D0 00017230  38 21 00 08 */	addi r1, r1, 8
 /* 8001A2D4 00017234  7C 08 03 A6 */	mtlr r0
 /* 8001A2D8 00017238  4E 80 00 20 */	blr 
+.endfn Jac_DemoCheckEvent__FUc
 
 .balign 32, 0
-DoSequence__FUlUl: #static
+.fn DoSequence__FUlUl, local
 /* 8001A2E0 00017240  7C 08 02 A6 */	mflr r0
 /* 8001A2E4 00017244  90 01 00 04 */	stw r0, 4(r1)
 /* 8001A2E8 00017248  94 21 FF D0 */	stwu r1, -0x30(r1)
@@ -253,10 +254,10 @@ DoSequence__FUlUl: #static
 /* 8001A440 000173A0  38 21 00 30 */	addi r1, r1, 0x30
 /* 8001A444 000173A4  7C 08 03 A6 */	mtlr r0
 /* 8001A448 000173A8  4E 80 00 20 */	blr 
+.endfn DoSequence__FUlUl
 
 .balign 32, 0
-.global Jac_PlayDemoSequenceDirect__FUl
-Jac_PlayDemoSequenceDirect__FUl:
+.fn Jac_PlayDemoSequenceDirect__FUl, global
 /* 8001A460 000173C0  7C 08 02 A6 */	mflr r0
 /* 8001A464 000173C4  90 01 00 04 */	stw r0, 4(r1)
 /* 8001A468 000173C8  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -274,10 +275,10 @@ Jac_PlayDemoSequenceDirect__FUl:
 /* 8001A498 000173F8  38 21 00 18 */	addi r1, r1, 0x18
 /* 8001A49C 000173FC  7C 08 03 A6 */	mtlr r0
 /* 8001A4A0 00017400  4E 80 00 20 */	blr 
+.endfn Jac_PlayDemoSequenceDirect__FUl
 
 .balign 32, 0
-.global Jac_InitDemoSystem__Fv
-Jac_InitDemoSystem__Fv:
+.fn Jac_InitDemoSystem__Fv, global
 /* 8001A4C0 00017420  7C 08 02 A6 */	mflr r0
 /* 8001A4C4 00017424  3C 60 00 01 */	lis r3, 0x0001000F@ha
 /* 8001A4C8 00017428  90 01 00 04 */	stw r0, 4(r1)
@@ -299,10 +300,10 @@ Jac_InitDemoSystem__Fv:
 /* 8001A504 00017464  38 21 00 08 */	addi r1, r1, 8
 /* 8001A508 00017468  7C 08 03 A6 */	mtlr r0
 /* 8001A50C 0001746C  4E 80 00 20 */	blr 
+.endfn Jac_InitDemoSystem__Fv
 
 .balign 32, 0
-.global Jac_StartDemo
-Jac_StartDemo:
+.fn Jac_StartDemo, global
 /* 8001A520 00017480  7C 08 02 A6 */	mflr r0
 /* 8001A524 00017484  90 01 00 04 */	stw r0, 4(r1)
 /* 8001A528 00017488  94 21 FF A0 */	stwu r1, -0x60(r1)
@@ -669,10 +670,10 @@ Jac_StartDemo:
 /* 8001AA04 00017964  38 21 00 60 */	addi r1, r1, 0x60
 /* 8001AA08 00017968  7C 08 03 A6 */	mtlr r0
 /* 8001AA0C 0001796C  4E 80 00 20 */	blr 
+.endfn Jac_StartDemo
 
 .balign 32, 0
-.global Jac_DemoSound
-Jac_DemoSound:
+.fn Jac_DemoSound, global
 /* 8001AA20 00017980  7C 08 02 A6 */	mflr r0
 /* 8001AA24 00017984  90 01 00 04 */	stw r0, 4(r1)
 /* 8001AA28 00017988  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -690,10 +691,10 @@ Jac_DemoSound:
 /* 8001AA54 000179B4  38 21 00 18 */	addi r1, r1, 0x18
 /* 8001AA58 000179B8  7C 08 03 A6 */	mtlr r0
 /* 8001AA5C 000179BC  4E 80 00 20 */	blr 
+.endfn Jac_DemoSound
 
 .balign 32, 0
-.global Jac_DemoFrame
-Jac_DemoFrame:
+.fn Jac_DemoFrame, global
 /* 8001AA60 000179C0  7C 08 02 A6 */	mflr r0
 /* 8001AA64 000179C4  38 83 00 00 */	addi r4, r3, 0
 /* 8001AA68 000179C8  90 01 00 04 */	stw r0, 4(r1)
@@ -716,9 +717,10 @@ Jac_DemoFrame:
 /* 8001AAA0 00017A00  38 21 00 08 */	addi r1, r1, 8
 /* 8001AAA4 00017A04  7C 08 03 A6 */	mtlr r0
 /* 8001AAA8 00017A08  4E 80 00 20 */	blr 
+.endfn Jac_DemoFrame
 
 .balign 32, 0
-Jac_BgmAnimEndRecover__Fv: #static
+.fn Jac_BgmAnimEndRecover__Fv, local
 /* 8001AAC0 00017A20  7C 08 02 A6 */	mflr r0
 /* 8001AAC4 00017A24  3C 60 80 22 */	lis r3, DEMO_STATUS@ha
 /* 8001AAC8 00017A28  90 01 00 04 */	stw r0, 4(r1)
@@ -754,9 +756,10 @@ Jac_BgmAnimEndRecover__Fv: #static
 /* 8001AB30 00017A90  38 21 00 08 */	addi r1, r1, 8
 /* 8001AB34 00017A94  7C 08 03 A6 */	mtlr r0
 /* 8001AB38 00017A98  4E 80 00 20 */	blr 
+.endfn Jac_BgmAnimEndRecover__Fv
 
 .balign 32, 0
-Jac_BgmAnimEndStop__Fv: #static
+.fn Jac_BgmAnimEndStop__Fv, local
 /* 8001AB40 00017AA0  7C 08 02 A6 */	mflr r0
 /* 8001AB44 00017AA4  3C 60 80 22 */	lis r3, DEMO_STATUS@ha
 /* 8001AB48 00017AA8  90 01 00 04 */	stw r0, 4(r1)
@@ -782,10 +785,10 @@ Jac_BgmAnimEndStop__Fv: #static
 /* 8001AB90 00017AF0  38 21 00 08 */	addi r1, r1, 8
 /* 8001AB94 00017AF4  7C 08 03 A6 */	mtlr r0
 /* 8001AB98 00017AF8  4E 80 00 20 */	blr 
+.endfn Jac_BgmAnimEndStop__Fv
 
 .balign 32, 0
-.global Jac_DemoBGMForceStop__Fv
-Jac_DemoBGMForceStop__Fv:
+.fn Jac_DemoBGMForceStop__Fv, global
 /* 8001ABA0 00017B00  7C 08 02 A6 */	mflr r0
 /* 8001ABA4 00017B04  3C 60 00 03 */	lis r3, 3
 /* 8001ABA8 00017B08  90 01 00 04 */	stw r0, 4(r1)
@@ -846,9 +849,10 @@ Jac_DemoBGMForceStop__Fv:
 /* 8001AC64 00017BC4  38 21 00 08 */	addi r1, r1, 8
 /* 8001AC68 00017BC8  7C 08 03 A6 */	mtlr r0
 /* 8001AC6C 00017BCC  4E 80 00 20 */	blr 
+.endfn Jac_DemoBGMForceStop__Fv
 
 .balign 32, 0
-__Jac_FinishDemo__Fv: #static
+.fn __Jac_FinishDemo__Fv, local
 /* 8001AC80 00017BE0  7C 08 02 A6 */	mflr r0
 /* 8001AC84 00017BE4  90 01 00 04 */	stw r0, 4(r1)
 /* 8001AC88 00017BE8  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -925,10 +929,10 @@ __Jac_FinishDemo__Fv: #static
 /* 8001AD7C 00017CDC  38 21 00 18 */	addi r1, r1, 0x18
 /* 8001AD80 00017CE0  7C 08 03 A6 */	mtlr r0
 /* 8001AD84 00017CE4  4E 80 00 20 */	blr 
+.endfn __Jac_FinishDemo__Fv
 
 .balign 32, 0
-.global Jac_FinishDemo
-Jac_FinishDemo:
+.fn Jac_FinishDemo, global
 /* 8001ADA0 00017D00  7C 08 02 A6 */	mflr r0
 /* 8001ADA4 00017D04  38 60 00 06 */	li r3, 6
 /* 8001ADA8 00017D08  90 01 00 04 */	stw r0, 4(r1)
@@ -976,9 +980,10 @@ Jac_FinishDemo:
 /* 8001AE3C 00017D9C  38 21 00 18 */	addi r1, r1, 0x18
 /* 8001AE40 00017DA0  7C 08 03 A6 */	mtlr r0
 /* 8001AE44 00017DA4  4E 80 00 20 */	blr 
+.endfn Jac_FinishDemo
 
 .balign 32, 0
-Jac_FinishDemo_NoErase__Fv: #static
+.fn Jac_FinishDemo_NoErase__Fv, local
 /* 8001AE60 00017DC0  7C 08 02 A6 */	mflr r0
 /* 8001AE64 00017DC4  90 01 00 04 */	stw r0, 4(r1)
 /* 8001AE68 00017DC8  94 21 FF F8 */	stwu r1, -8(r1)
@@ -987,9 +992,10 @@ Jac_FinishDemo_NoErase__Fv: #static
 /* 8001AE74 00017DD4  38 21 00 08 */	addi r1, r1, 8
 /* 8001AE78 00017DD8  7C 08 03 A6 */	mtlr r0
 /* 8001AE7C 00017DDC  4E 80 00 20 */	blr 
+.endfn Jac_FinishDemo_NoErase__Fv
 
 .balign 32, 0
-__Loaded__FUl: #static
+.fn __Loaded__FUl, local
 /* 8001AE80 00017DE0  3C 80 80 00 */	lis r4, 0x80000001@ha
 /* 8001AE84 00017DE4  54 63 00 1E */	rlwinm r3, r3, 0, 0, 0xf
 /* 8001AE88 00017DE8  38 04 00 01 */	addi r0, r4, 0x80000001@l
@@ -998,9 +1004,10 @@ __Loaded__FUl: #static
 /* 8001AE94 00017DF4  38 00 00 03 */	li r0, 3
 /* 8001AE98 00017DF8  90 0D 2D 40 */	stw r0, now_loading@sda21(r13)
 /* 8001AE9C 00017DFC  4E 80 00 20 */	blr 
+.endfn __Loaded__FUl
 
 .balign 32, 0
-__Prepare_BGM__FUl: #static
+.fn __Prepare_BGM__FUl, local
 /* 8001AEA0 00017E00  7C 08 02 A6 */	mflr r0
 /* 8001AEA4 00017E04  1C A3 00 0C */	mulli r5, r3, 0xc
 /* 8001AEA8 00017E08  90 01 00 04 */	stw r0, 4(r1)
@@ -1127,10 +1134,10 @@ __Prepare_BGM__FUl: #static
 /* 8001B040 00017FA0  38 21 00 08 */	addi r1, r1, 8
 /* 8001B044 00017FA4  7C 08 03 A6 */	mtlr r0
 /* 8001B048 00017FA8  4E 80 00 20 */	blr 
+.endfn __Prepare_BGM__FUl
 
 .balign 32, 0
-.global Jac_PrepareDemo
-Jac_PrepareDemo:
+.fn Jac_PrepareDemo, global
 /* 8001B060 00017FC0  7C 08 02 A6 */	mflr r0
 /* 8001B064 00017FC4  90 01 00 04 */	stw r0, 4(r1)
 /* 8001B068 00017FC8  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -1180,10 +1187,10 @@ Jac_PrepareDemo:
 /* 8001B0FC 0001805C  38 21 00 18 */	addi r1, r1, 0x18
 /* 8001B100 00018060  7C 08 03 A6 */	mtlr r0
 /* 8001B104 00018064  4E 80 00 20 */	blr 
+.endfn Jac_PrepareDemo
 
 .balign 32, 0
-.global Jac_StartPartsFindDemo
-Jac_StartPartsFindDemo:
+.fn Jac_StartPartsFindDemo, global
 /* 8001B120 00018080  7C 08 02 A6 */	mflr r0
 /* 8001B124 00018084  90 01 00 04 */	stw r0, 4(r1)
 /* 8001B128 00018088  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -1241,10 +1248,10 @@ Jac_StartPartsFindDemo:
 /* 8001B1E4 00018144  38 21 00 28 */	addi r1, r1, 0x28
 /* 8001B1E8 00018148  7C 08 03 A6 */	mtlr r0
 /* 8001B1EC 0001814C  4E 80 00 20 */	blr 
+.endfn Jac_StartPartsFindDemo
 
 .balign 32, 0
-.global Jac_FinishPartsFindDemo
-Jac_FinishPartsFindDemo:
+.fn Jac_FinishPartsFindDemo, global
 /* 8001B200 00018160  7C 08 02 A6 */	mflr r0
 /* 8001B204 00018164  90 01 00 04 */	stw r0, 4(r1)
 /* 8001B208 00018168  94 21 FF F8 */	stwu r1, -8(r1)
@@ -1265,10 +1272,10 @@ Jac_FinishPartsFindDemo:
 /* 8001B240 000181A0  38 21 00 08 */	addi r1, r1, 8
 /* 8001B244 000181A4  7C 08 03 A6 */	mtlr r0
 /* 8001B248 000181A8  4E 80 00 20 */	blr 
+.endfn Jac_FinishPartsFindDemo
 
 .balign 32, 0
-.global Jac_StartTextDemo
-Jac_StartTextDemo:
+.fn Jac_StartTextDemo, global
 /* 8001B260 000181C0  7C 08 02 A6 */	mflr r0
 /* 8001B264 000181C4  90 01 00 04 */	stw r0, 4(r1)
 /* 8001B268 000181C8  94 21 FF F8 */	stwu r1, -8(r1)
@@ -1304,10 +1311,10 @@ Jac_StartTextDemo:
 /* 8001B2D8 00018238  38 21 00 08 */	addi r1, r1, 8
 /* 8001B2DC 0001823C  7C 08 03 A6 */	mtlr r0
 /* 8001B2E0 00018240  4E 80 00 20 */	blr 
+.endfn Jac_StartTextDemo
 
 .balign 32, 0
-.global Jac_FinishTextDemo
-Jac_FinishTextDemo:
+.fn Jac_FinishTextDemo, global
 /* 8001B300 00018260  7C 08 02 A6 */	mflr r0
 /* 8001B304 00018264  90 01 00 04 */	stw r0, 4(r1)
 /* 8001B308 00018268  94 21 FF F8 */	stwu r1, -8(r1)
@@ -1336,40 +1343,41 @@ Jac_FinishTextDemo:
 /* 8001B35C 000182BC  38 21 00 08 */	addi r1, r1, 8
 /* 8001B360 000182C0  7C 08 03 A6 */	mtlr r0
 /* 8001B364 000182C4  4E 80 00 20 */	blr 
+.endfn Jac_FinishTextDemo
 
 .balign 32, 0
-.global Jac_SetDemoPartsID
-Jac_SetDemoPartsID:
+.fn Jac_SetDemoPartsID, global
 /* 8001B380 000182E0  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8001B384 000182E4  90 61 00 08 */	stw r3, 8(r1)
 /* 8001B388 000182E8  80 01 00 08 */	lwz r0, 8(r1)
 /* 8001B38C 000182EC  98 0D 2D 4C */	stb r0, demo_parts_id@sda21(r13)
 /* 8001B390 000182F0  38 21 00 10 */	addi r1, r1, 0x10
 /* 8001B394 000182F4  4E 80 00 20 */	blr 
+.endfn Jac_SetDemoPartsID
 
 .balign 32, 0
-.global Jac_SetDemoOnyons
-Jac_SetDemoOnyons:
+.fn Jac_SetDemoOnyons, global
 /* 8001B3A0 00018300  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8001B3A4 00018304  90 61 00 08 */	stw r3, 8(r1)
 /* 8001B3A8 00018308  80 01 00 08 */	lwz r0, 8(r1)
 /* 8001B3AC 0001830C  98 0D 2D 4D */	stb r0, demo_onyon_num@sda21(r13)
 /* 8001B3B0 00018310  38 21 00 10 */	addi r1, r1, 0x10
 /* 8001B3B4 00018314  4E 80 00 20 */	blr 
+.endfn Jac_SetDemoOnyons
 
 .balign 32, 0
-.global Jac_SetDemoPartsCount
-Jac_SetDemoPartsCount:
+.fn Jac_SetDemoPartsCount, global
 /* 8001B3C0 00018320  94 21 FF F0 */	stwu r1, -0x10(r1)
 /* 8001B3C4 00018324  90 61 00 08 */	stw r3, 8(r1)
 /* 8001B3C8 00018328  80 01 00 08 */	lwz r0, 8(r1)
 /* 8001B3CC 0001832C  98 0D 2D 4E */	stb r0, demo_parts_num@sda21(r13)
 /* 8001B3D0 00018330  38 21 00 10 */	addi r1, r1, 0x10
 /* 8001B3D4 00018334  4E 80 00 20 */	blr 
+.endfn Jac_SetDemoPartsCount
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-parts_bright_table:
+.obj parts_bright_table, local
 	.4byte 0x01010101
 	.4byte 0x01010101
 	.4byte 0x01010101
@@ -1378,7 +1386,8 @@ parts_bright_table:
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x00000000
-demo4:
+.endobj parts_bright_table
+.obj demo4, local
 	.4byte 0x00000000
 	.4byte 0x0002FFFA
 	.4byte 0x00050001
@@ -1390,7 +1399,8 @@ demo4:
 	.4byte 0x00B00006
 	.4byte 0x00E10007
 	.4byte 0x0118FFFF
-demo5:
+.endobj demo4
+.obj demo5, local
 	.4byte 0x00000000
 	.4byte 0x0002FFFA
 	.4byte 0x00050001
@@ -1401,11 +1411,13 @@ demo5:
 	.4byte 0x00960006
 	.4byte 0x00C80007
 	.4byte 0x0118FFFF
-demo9:
+.endobj demo5
+.obj demo9, local
 	.4byte 0x0004FFFA
 	.4byte 0x00C8FFFB
 	.4byte 0x00C9FFFD
-demo16:
+.endobj demo9
+.obj demo16, local
 	.4byte 0x0004FFFA
 	.4byte 0x000A0001
 	.4byte 0x00130002
@@ -1415,7 +1427,8 @@ demo16:
 	.4byte 0x00400003
 	.4byte 0x00780006
 	.4byte 0x012CFFFF
-demo17:
+.endobj demo16
+.obj demo17, local
 	.4byte 0x0008FFFA
 	.4byte 0x0038000A
 	.4byte 0x0040000B
@@ -1437,12 +1450,14 @@ demo17:
 	.4byte 0x01260005
 	.4byte 0x01360009
 	.4byte 0x016DFFFE
-demo18:
+.endobj demo17
+.obj demo18, local
 	.4byte 0x0008FFFA
 	.4byte 0x008C0008
 	.4byte 0x00C80000
 	.4byte 0x016DFFFE
-demo19:
+.endobj demo18
+.obj demo19, local
 	.4byte 0x0008FFFA
 	.4byte 0x000A000A
 	.4byte 0x002D000B
@@ -1454,7 +1469,8 @@ demo19:
 	.4byte 0x008C0008
 	.4byte 0x00C80000
 	.4byte 0x016DFFFE
-demo20:
+.endobj demo19
+.obj demo20, local
 	.4byte 0x0004FFFA
 	.4byte 0x000A0000
 	.4byte 0x00300001
@@ -1465,7 +1481,8 @@ demo20:
 	.4byte 0x00780007
 	.4byte 0x00B90006
 	.4byte 0x012CFFFF
-demo21:
+.endobj demo20
+.obj demo21, local
 	.4byte 0x0004FFFA
 	.4byte 0x000A0000
 	.4byte 0x00300001
@@ -1476,7 +1493,8 @@ demo21:
 	.4byte 0x00640007
 	.4byte 0x00940006
 	.4byte 0x012CFFFF
-demo24:
+.endobj demo21
+.obj demo24, local
 	.4byte 0x0004FFFA
 	.4byte 0x000A0000
 	.4byte 0x00300001
@@ -1487,7 +1505,8 @@ demo24:
 	.4byte 0x00640007
 	.4byte 0x00940006
 	.4byte 0x012CFFFF
-demo25:
+.endobj demo24
+.obj demo25, local
 	.4byte 0x0008FFFA
 	.4byte 0x000E000A
 	.4byte 0x0012000B
@@ -1496,7 +1515,8 @@ demo25:
 	.4byte 0x008C0008
 	.4byte 0x00C80000
 	.4byte 0x016DFFFE
-demo26:
+.endobj demo25
+.obj demo26, local
 	.4byte 0x0008FFFA
 	.4byte 0x00F00000
 	.4byte 0x00FA0009
@@ -1510,7 +1530,8 @@ demo26:
 	.4byte 0x01A50005
 	.4byte 0x01B80008
 	.4byte 0x01F4FFFE
-demo28:
+.endobj demo26
+.obj demo28, local
 	.4byte 0x0004FFFA
 	.4byte 0x001E0000
 	.4byte 0x00290001
@@ -1542,7 +1563,8 @@ demo28:
 	.4byte 0x01EA0007
 	.4byte 0x02310008
 	.4byte 0x0258FFFE
-demo29:
+.endobj demo28
+.obj demo29, local
 	.4byte 0x0004FFFA
 	.4byte 0x001E0000
 	.4byte 0x00290001
@@ -1574,17 +1596,20 @@ demo29:
 	.4byte 0x01EA0007
 	.4byte 0x02310008
 	.4byte 0x0258FFFE
-demo32:
+.endobj demo29
+.obj demo32, local
 	.4byte 0x00000000
 	.4byte 0x00A00001
 	.4byte 0x0258FFFF
-demo40:
+.endobj demo32
+.obj demo40, local
 	.4byte 0x00030002
 	.4byte 0x00040003
 	.4byte 0x00960000
 	.4byte 0x00BE0001
 	.4byte 0x010CFFFF
-demo47:
+.endobj demo40
+.obj demo47, local
 	.4byte 0x0004FFFA
 	.4byte 0x00150000
 	.4byte 0x002B0001
@@ -1596,7 +1621,8 @@ demo47:
 	.4byte 0x012C0003
 	.4byte 0x01660004
 	.4byte 0x017CFFFF
-demo52:
+.endobj demo47
+.obj demo52, local
 	.4byte 0x0004FFFA
 	.4byte 0x00680000
 	.4byte 0x007A0001
@@ -1610,7 +1636,8 @@ demo52:
 	.4byte 0x01680003
 	.4byte 0x01A40004
 	.4byte 0x01C2FFFF
-demo56:
+.endobj demo52
+.obj demo56, local
 	.4byte 0x00000000
 	.4byte 0x000A0007
 	.4byte 0x004B0001
@@ -1627,13 +1654,15 @@ demo56:
 	.4byte 0x00D60005
 	.4byte 0x00DE0005
 	.4byte 0x00E4FFFF
-demo69:
+.endobj demo56
+.obj demo69, local
 	.4byte 0x0004FFFA
 	.4byte 0x00910000
 	.4byte 0x00E10001
 	.4byte 0x01180003
 	.4byte 0x044CFFFF
-demo73:
+.endobj demo69
+.obj demo73, local
 	.4byte 0x0002FFFA
 	.4byte 0x00030000
 	.4byte 0x002B0001
@@ -1647,7 +1676,8 @@ demo73:
 	.4byte 0x015E0005
 	.4byte 0x019B0006
 	.4byte 0x044CFFFF
-demo74:
+.endobj demo73
+.obj demo74, local
 	.4byte 0x0002FFFA
 	.4byte 0x00030000
 	.4byte 0x00D70001
@@ -1662,7 +1692,8 @@ demo74:
 	.4byte 0x02E0000A
 	.4byte 0x02EE000B
 	.4byte 0x044CFFFF
-demo75:
+.endobj demo74
+.obj demo75, local
 	.4byte 0x0004FFFA
 	.4byte 0x00960003
 	.4byte 0x00A00004
@@ -1673,20 +1704,23 @@ demo75:
 	.4byte 0x03B10001
 	.4byte 0x03E10002
 	.4byte 0x044CFFFF
-demo76:
+.endobj demo75
+.obj demo76, local
 	.4byte 0x0004FFFA
 	.4byte 0x00030000
 	.4byte 0x00F00001
 	.4byte 0x017E0002
 	.4byte 0x044CFFFF
-demo100:
+.endobj demo76
+.obj demo100, local
 	.4byte 0x00030002
 	.4byte 0x00040003
 	.4byte 0x00960000
 	.4byte 0x00BE0001
 	.4byte 0x00CC0001
 	.4byte 0x010CFFFF
-demo101:
+.endobj demo100
+.obj demo101, local
 	.4byte 0x0004FFFA
 	.4byte 0x000A0000
 	.4byte 0x00300001
@@ -1695,7 +1729,8 @@ demo101:
 	.4byte 0x005C0004
 	.4byte 0x00600005
 	.4byte 0x012CFFFF
-demo113:
+.endobj demo101
+.obj demo113, local
 	.4byte 0x00220001
 	.4byte 0x00290002
 	.4byte 0x00320000
@@ -1714,11 +1749,13 @@ demo113:
 	.4byte 0x0238000A
 	.4byte 0x023A0008
 	.4byte 0x04B0FFFF
-demo114:
+.endobj demo113
+.obj demo114, local
 	.4byte 0x00030000
 	.4byte 0x0004FFFA
 	.4byte 0x044CFFFF
-DEMO_STATUS:
+.endobj demo114
+.obj DEMO_STATUS, local
 	.4byte 0x00020183
 	.4byte 0x00000000
 	.4byte 0x00000000
@@ -2064,7 +2101,8 @@ DEMO_STATUS:
 	.4byte 0x000402A9
 	.4byte 0x00000000
 	.4byte demo114
-lbl_80226F14:
+.endobj DEMO_STATUS
+.obj lbl_80226F14, local
 	.4byte .L_8001AC58
 	.4byte .L_8001ABEC
 	.4byte .L_8001AC58
@@ -2076,7 +2114,8 @@ lbl_80226F14:
 	.4byte .L_8001AC2C
 	.4byte .L_8001AC3C
 	.4byte .L_8001AC4C
-lbl_80226F40:
+.endobj lbl_80226F14
+.obj lbl_80226F40, local
 	.4byte .L_8001B008
 	.4byte .L_8001AF98
 	.4byte .L_8001B014
@@ -2088,60 +2127,82 @@ lbl_80226F40:
 	.4byte .L_8001AFD8
 	.4byte .L_8001AFE8
 	.4byte .L_8001AFF8
+.endobj lbl_80226F40
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-current_demo_no:
+.obj current_demo_no, local
 	.4byte 0xFFFFFFFF
-demo_seq_active:
+.endobj current_demo_no
+.obj demo_seq_active, local
 	.4byte 0xFFFFFFFF
-demo_mml_active:
+.endobj demo_seq_active
+.obj demo_mml_active, local
 	.4byte 0xFFFFFFFF
-demo1:
+.endobj demo_mml_active
+.obj demo1, local
 	.4byte 0x0004FFFA
 	.4byte 0x07D0FFFF
-demo2:
+.endobj demo1
+.obj demo2, local
 	.4byte 0x07D0FFFF
-demo3:
+.endobj demo2
+.obj demo3, local
 	.4byte 0x017C0001
 	.4byte 0x01BCFFFF
-demo12:
+.endobj demo3
+.obj demo12, local
 	.4byte 0x00040000
 	.4byte 0x0258FFFF
-demo27:
+.endobj demo12
+.obj demo27, local
 	.4byte 0x00040000
 	.4byte 0x0258FFFF
-demo102:
+.endobj demo27
+.obj demo102, local
 	.4byte 0x00A00001
 	.4byte 0x0258FFFF
+.endobj demo102
 
 .section .sbss, "wa"
 .balign 8
-demo_seqp:
+.obj demo_seqp, local
 	.skip 4
-demo_bgm_seqp:
+.endobj demo_seqp
+.obj demo_bgm_seqp, local
 	.skip 4
-current_seq_bgm:
+.endobj demo_bgm_seqp
+.obj current_seq_bgm, local
 	.skip 4
-demo_inited:
+.endobj current_seq_bgm
+.obj demo_inited, local
 	.skip 4
-now_loading:
+.endobj demo_inited
+.obj now_loading, local
 	.skip 4
-parts_find_demo_state:
+.endobj now_loading
+.obj parts_find_demo_state, local
 	.skip 4
-text_demo_state:
+.endobj parts_find_demo_state
+.obj text_demo_state, local
 	.skip 4
-demo_parts_id:
+.endobj text_demo_state
+.obj demo_parts_id, local
 	.skip 1
-demo_onyon_num:
+.endobj demo_parts_id
+.obj demo_onyon_num, local
 	.skip 1
-demo_parts_num:
+.endobj demo_onyon_num
+.obj demo_parts_num, local
 	.skip 1
-event_pause_counter:
+.endobj demo_parts_num
+.obj event_pause_counter, local
 	.skip 1
+.endobj event_pause_counter
 .balign 4
-demo_end_delay:
+.obj demo_end_delay, local
 	.skip 4
+.endobj demo_end_delay
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8

@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global __ct__Q23zen12DrawMenuBaseFPcbb
-__ct__Q23zen12DrawMenuBaseFPcbb:
+.fn __ct__Q23zen12DrawMenuBaseFPcbb, global
 /* 801F014C 001ED0AC  7C 08 02 A6 */	mflr r0
 /* 801F0150 001ED0B0  7C C7 33 78 */	mr r7, r6
 /* 801F0154 001ED0B4  90 01 00 04 */	stw r0, 4(r1)
@@ -279,9 +278,9 @@ __ct__Q23zen12DrawMenuBaseFPcbb:
 /* 801F0578 001ED4D8  38 21 00 68 */	addi r1, r1, 0x68
 /* 801F057C 001ED4DC  7C 08 03 A6 */	mtlr r0
 /* 801F0580 001ED4E0  4E 80 00 20 */	blr 
+.endfn __ct__Q23zen12DrawMenuBaseFPcbb
 
-.global update__Q23zen12DrawMenuBaseFP10Controller
-update__Q23zen12DrawMenuBaseFP10Controller:
+.fn update__Q23zen12DrawMenuBaseFP10Controller, global
 /* 801F0584 001ED4E4  7C 08 02 A6 */	mflr r0
 /* 801F0588 001ED4E8  90 01 00 04 */	stw r0, 4(r1)
 /* 801F058C 001ED4EC  38 00 00 00 */	li r0, 0
@@ -311,9 +310,9 @@ update__Q23zen12DrawMenuBaseFP10Controller:
 /* 801F05E8 001ED548  38 21 00 18 */	addi r1, r1, 0x18
 /* 801F05EC 001ED54C  7C 08 03 A6 */	mtlr r0
 /* 801F05F0 001ED550  4E 80 00 20 */	blr 
+.endfn update__Q23zen12DrawMenuBaseFP10Controller
 
-.global draw__Q23zen12DrawMenuBaseFR8Graphics
-draw__Q23zen12DrawMenuBaseFR8Graphics:
+.fn draw__Q23zen12DrawMenuBaseFR8Graphics, global
 /* 801F05F4 001ED554  7C 08 02 A6 */	mflr r0
 /* 801F05F8 001ED558  90 01 00 04 */	stw r0, 4(r1)
 /* 801F05FC 001ED55C  94 21 FF F8 */	stwu r1, -8(r1)
@@ -322,9 +321,9 @@ draw__Q23zen12DrawMenuBaseFR8Graphics:
 /* 801F0608 001ED568  38 21 00 08 */	addi r1, r1, 8
 /* 801F060C 001ED56C  7C 08 03 A6 */	mtlr r0
 /* 801F0610 001ED570  4E 80 00 20 */	blr 
+.endfn draw__Q23zen12DrawMenuBaseFR8Graphics
 
-.global init__Q23zen12DrawMenuBaseFi
-init__Q23zen12DrawMenuBaseFi:
+.fn init__Q23zen12DrawMenuBaseFi, global
 /* 801F0614 001ED574  7C 08 02 A6 */	mflr r0
 /* 801F0618 001ED578  90 01 00 04 */	stw r0, 4(r1)
 /* 801F061C 001ED57C  94 21 FF 70 */	stwu r1, -0x90(r1)
@@ -431,9 +430,9 @@ init__Q23zen12DrawMenuBaseFi:
 /* 801F07A8 001ED708  38 21 00 90 */	addi r1, r1, 0x90
 /* 801F07AC 001ED70C  7C 08 03 A6 */	mtlr r0
 /* 801F07B0 001ED710  4E 80 00 20 */	blr 
+.endfn init__Q23zen12DrawMenuBaseFi
 
-.global start__Q23zen12DrawMenuBaseFv
-start__Q23zen12DrawMenuBaseFv:
+.fn start__Q23zen12DrawMenuBaseFv, global
 /* 801F07B4 001ED714  7C 08 02 A6 */	mflr r0
 /* 801F07B8 001ED718  38 80 00 01 */	li r4, 1
 /* 801F07BC 001ED71C  90 01 00 04 */	stw r0, 4(r1)
@@ -447,14 +446,14 @@ start__Q23zen12DrawMenuBaseFv:
 /* 801F07DC 001ED73C  38 21 00 08 */	addi r1, r1, 8
 /* 801F07E0 001ED740  7C 08 03 A6 */	mtlr r0
 /* 801F07E4 001ED744  4E 80 00 20 */	blr 
+.endfn start__Q23zen12DrawMenuBaseFv
 
-.global modeSleep__Q23zen12DrawMenuBaseFP10Controller
-modeSleep__Q23zen12DrawMenuBaseFP10Controller:
+.fn modeSleep__Q23zen12DrawMenuBaseFP10Controller, global
 /* 801F07E8 001ED748  38 60 00 00 */	li r3, 0
 /* 801F07EC 001ED74C  4E 80 00 20 */	blr 
+.endfn modeSleep__Q23zen12DrawMenuBaseFP10Controller
 
-.global modeOperation__Q23zen12DrawMenuBaseFP10Controller
-modeOperation__Q23zen12DrawMenuBaseFP10Controller:
+.fn modeOperation__Q23zen12DrawMenuBaseFP10Controller, global
 /* 801F07F0 001ED750  7C 08 02 A6 */	mflr r0
 /* 801F07F4 001ED754  90 01 00 04 */	stw r0, 4(r1)
 /* 801F07F8 001ED758  94 21 FF 78 */	stwu r1, -0x88(r1)
@@ -598,9 +597,9 @@ modeOperation__Q23zen12DrawMenuBaseFP10Controller:
 /* 801F09F8 001ED958  38 21 00 88 */	addi r1, r1, 0x88
 /* 801F09FC 001ED95C  7C 08 03 A6 */	mtlr r0
 /* 801F0A00 001ED960  4E 80 00 20 */	blr 
+.endfn modeOperation__Q23zen12DrawMenuBaseFP10Controller
 
-.global setModeFunc__Q23zen12DrawMenuBaseFi
-setModeFunc__Q23zen12DrawMenuBaseFi:
+.fn setModeFunc__Q23zen12DrawMenuBaseFi, global
 /* 801F0A04 001ED964  90 83 01 00 */	stw r4, 0x100(r3)
 /* 801F0A08 001ED968  3C 80 80 2E */	lis r4, lbl_802E7088@ha
 /* 801F0A0C 001ED96C  38 A4 70 88 */	addi r5, r4, lbl_802E7088@l
@@ -635,42 +634,50 @@ setModeFunc__Q23zen12DrawMenuBaseFi:
 /* 801F0A74 001ED9D4  80 05 00 44 */	lwz r0, 0x44(r5)
 /* 801F0A78 001ED9D8  90 03 01 88 */	stw r0, 0x188(r3)
 /* 801F0A7C 001ED9DC  4E 80 00 20 */	blr 
+.endfn setModeFunc__Q23zen12DrawMenuBaseFi
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-.global lbl_802E7088
-lbl_802E7088:
-	.4byte 0x64726177
-	.4byte 0x4D656E75
-	.4byte 0x42617365
-	.4byte 0x2E637070
-	.4byte 0x00000000
-	.4byte 0x64726177
-	.4byte 0x4D656E75
-	.4byte 0x42617365
-	.4byte 0x00000000
+.obj lbl_802E7088, local
+	.asciz "drawMenuBase.cpp"
+.endobj lbl_802E7088
+.balign 4
+.obj lbl_802E709C, local
+	.asciz "drawMenuBase"
+.endobj lbl_802E709C
+.balign 4
+.obj lbl_802E70AC, local
 	.4byte 0x00000000
 	.4byte 0x00000020
 	.4byte 0x00000000
+.endobj lbl_802E70AC
+.balign 4
+.obj lbl_802E70B8, local
 	.4byte 0x00000000
 	.4byte 0x00000024
 	.4byte 0x00000000
+.endobj lbl_802E70B8
+.balign 4
+.obj lbl_802E70C4, local
 	.4byte 0x00000000
 	.4byte 0x0000001C
 	.4byte 0x00000000
+.endobj lbl_802E70C4
 .balign 4
-lbl_802E70D0:
+.obj lbl_802E70D0, local
 	.asciz "zen::DrawMenuBase"
+.endobj lbl_802E70D0
 .balign 4
-lbl_802E70E4:
+.obj lbl_802E70E4, local
 	.asciz "zen::DrawScreen"
+.endobj lbl_802E70E4
 .balign 4
-lbl_802E70F4:
+.obj lbl_802E70F4, local
 	.4byte __RTTI__Q23zen10DrawScreen
-	.4byte 0x00000000
-	.4byte 0x00000000
-.global __vt__Q23zen12DrawMenuBase
-__vt__Q23zen12DrawMenuBase:
+	.4byte 0
+	.4byte 0
+.endobj lbl_802E70F4
+.obj __vt__Q23zen12DrawMenuBase, global
 	.4byte __RTTI__Q23zen12DrawMenuBase
 	.4byte 0
 	.4byte update__Q23zen10DrawScreenFv
@@ -682,47 +689,59 @@ __vt__Q23zen12DrawMenuBase:
 	.4byte modeSleep__Q23zen12DrawMenuBaseFP10Controller
 	.4byte modeOperation__Q23zen12DrawMenuBaseFP10Controller
 	.4byte setModeFunc__Q23zen12DrawMenuBaseFi
+.endobj __vt__Q23zen12DrawMenuBase
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-lbl_803E7650:
+.obj lbl_803E7650, local
 	.asciz "he%02d"
+.endobj lbl_803E7650
 .balign 4
-lbl_803E7658:
+.obj lbl_803E7658, local
 	.asciz "hm%02d"
+.endobj lbl_803E7658
 .balign 4
-lbl_803E7660:
+.obj lbl_803E7660, local
 	.asciz "i%02dl"
+.endobj lbl_803E7660
 .balign 4
-lbl_803E7668:
+.obj lbl_803E7668, local
 	.asciz "i%02dr"
+.endobj lbl_803E7668
 .balign 4
-.global SELECT_CANCEL__Q23zen12DrawMenuBase
-SELECT_CANCEL__Q23zen12DrawMenuBase:
+.obj SELECT_CANCEL__Q23zen12DrawMenuBase, global
 	.4byte 0xFFFFFFFF
-__RTTI__Q23zen10DrawScreen:
+.endobj SELECT_CANCEL__Q23zen12DrawMenuBase
+.obj __RTTI__Q23zen10DrawScreen, local
 	.4byte lbl_802E70E4
 	.4byte 0
-__RTTI__Q23zen12DrawMenuBase:
+.endobj __RTTI__Q23zen10DrawScreen
+.obj __RTTI__Q23zen12DrawMenuBase, local
 	.4byte lbl_802E70D0
 	.4byte lbl_802E70F4
-	.4byte 0
+.endobj __RTTI__Q23zen12DrawMenuBase
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803EC3E8:
-	.4byte 0x3F800000
-lbl_803EC3EC:
-	.4byte 0x00000000
-lbl_803EC3F0:
-	.4byte 0x41200000
-lbl_803EC3F4:
-	.4byte 0x42C80000
-lbl_803EC3F8:
-	.4byte 0x42480000
+.obj lbl_803EC3E8, local
+	.float 1.0
+.endobj lbl_803EC3E8
+.obj lbl_803EC3EC, local
+	.float 0.0
+.endobj lbl_803EC3EC
+.obj lbl_803EC3F0, local
+	.float 10.0
+.endobj lbl_803EC3F0
+.obj lbl_803EC3F4, local
+	.float 100.0
+.endobj lbl_803EC3F4
+.obj lbl_803EC3F8, local
+	.float 50.0
+.endobj lbl_803EC3F8
 .balign 8
-lbl_803EC400:
-	.4byte 0x43300000
-	.4byte 0x80000000
-lbl_803EC408:
-	.4byte 0x3F000000
+.obj lbl_803EC400, local
+	.8byte 0x4330000080000000
+.endobj lbl_803EC400
+.obj lbl_803EC408, local
+	.float 0.5
+.endobj lbl_803EC408

@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global __OSThreadInit
-__OSThreadInit:
+.fn __OSThreadInit, global
 /* 801FB9AC 001F890C  7C 08 02 A6 */	mflr r0
 /* 801FB9B0 001F8910  3C 60 80 3D */	lis r3, RunQueue@ha
 /* 801FB9B4 001F8914  90 01 00 04 */	stw r0, 4(r1)
@@ -79,22 +78,22 @@ __OSThreadInit:
 /* 801FBAC8 001F8A28  38 21 00 20 */	addi r1, r1, 0x20
 /* 801FBACC 001F8A2C  7C 08 03 A6 */	mtlr r0
 /* 801FBAD0 001F8A30  4E 80 00 20 */	blr 
+.endfn __OSThreadInit
 
-.global OSInitThreadQueue
-OSInitThreadQueue:
+.fn OSInitThreadQueue, global
 /* 801FBAD4 001F8A34  38 00 00 00 */	li r0, 0
 /* 801FBAD8 001F8A38  90 03 00 04 */	stw r0, 4(r3)
 /* 801FBADC 001F8A3C  90 03 00 00 */	stw r0, 0(r3)
 /* 801FBAE0 001F8A40  4E 80 00 20 */	blr 
+.endfn OSInitThreadQueue
 
-.global OSGetCurrentThread
-OSGetCurrentThread:
+.fn OSGetCurrentThread, global
 /* 801FBAE4 001F8A44  3C 60 80 00 */	lis r3, 0x800000E4@ha
 /* 801FBAE8 001F8A48  80 63 00 E4 */	lwz r3, 0x800000E4@l(r3)
 /* 801FBAEC 001F8A4C  4E 80 00 20 */	blr 
+.endfn OSGetCurrentThread
 
-.global OSIsThreadTerminated
-OSIsThreadTerminated:
+.fn OSIsThreadTerminated, global
 /* 801FBAF0 001F8A50  A0 63 02 C8 */	lhz r3, 0x2c8(r3)
 /* 801FBAF4 001F8A54  38 00 00 01 */	li r0, 1
 /* 801FBAF8 001F8A58  28 03 00 08 */	cmplwi r3, 8
@@ -110,9 +109,9 @@ OSIsThreadTerminated:
 .L_801FBB1C:
 /* 801FBB1C 001F8A7C  38 60 00 00 */	li r3, 0
 /* 801FBB20 001F8A80  4E 80 00 20 */	blr 
+.endfn OSIsThreadTerminated
 
-.global OSDisableScheduler
-OSDisableScheduler:
+.fn OSDisableScheduler, global
 /* 801FBB24 001F8A84  7C 08 02 A6 */	mflr r0
 /* 801FBB28 001F8A88  90 01 00 04 */	stw r0, 4(r1)
 /* 801FBB2C 001F8A8C  94 21 FF F0 */	stwu r1, -0x10(r1)
@@ -129,9 +128,9 @@ OSDisableScheduler:
 /* 801FBB58 001F8AB8  38 21 00 10 */	addi r1, r1, 0x10
 /* 801FBB5C 001F8ABC  7C 08 03 A6 */	mtlr r0
 /* 801FBB60 001F8AC0  4E 80 00 20 */	blr 
+.endfn OSDisableScheduler
 
-.global OSEnableScheduler
-OSEnableScheduler:
+.fn OSEnableScheduler, global
 /* 801FBB64 001F8AC4  7C 08 02 A6 */	mflr r0
 /* 801FBB68 001F8AC8  90 01 00 04 */	stw r0, 4(r1)
 /* 801FBB6C 001F8ACC  94 21 FF F0 */	stwu r1, -0x10(r1)
@@ -148,9 +147,9 @@ OSEnableScheduler:
 /* 801FBB98 001F8AF8  38 21 00 10 */	addi r1, r1, 0x10
 /* 801FBB9C 001F8AFC  7C 08 03 A6 */	mtlr r0
 /* 801FBBA0 001F8B00  4E 80 00 20 */	blr 
+.endfn OSEnableScheduler
 
-.global UnsetRun
-UnsetRun:
+.fn UnsetRun, local
 /* 801FBBA4 001F8B04  80 83 02 E0 */	lwz r4, 0x2e0(r3)
 /* 801FBBA8 001F8B08  80 A3 02 DC */	lwz r5, 0x2dc(r3)
 /* 801FBBAC 001F8B0C  28 04 00 00 */	cmplwi r4, 0
@@ -182,9 +181,9 @@ UnsetRun:
 /* 801FBC00 001F8B60  38 00 00 00 */	li r0, 0
 /* 801FBC04 001F8B64  90 03 02 DC */	stw r0, 0x2dc(r3)
 /* 801FBC08 001F8B68  4E 80 00 20 */	blr 
+.endfn UnsetRun
 
-.global __OSGetEffectivePriority
-__OSGetEffectivePriority:
+.fn __OSGetEffectivePriority, global
 /* 801FBC0C 001F8B6C  80 83 02 D4 */	lwz r4, 0x2d4(r3)
 /* 801FBC10 001F8B70  80 A3 02 F4 */	lwz r5, 0x2f4(r3)
 /* 801FBC14 001F8B74  48 00 00 24 */	b .L_801FBC38
@@ -203,9 +202,9 @@ __OSGetEffectivePriority:
 /* 801FBC3C 001F8B9C  40 82 FF DC */	bne .L_801FBC18
 /* 801FBC40 001F8BA0  7C 83 23 78 */	mr r3, r4
 /* 801FBC44 001F8BA4  4E 80 00 20 */	blr 
+.endfn __OSGetEffectivePriority
 
-.global SetEffectivePriority
-SetEffectivePriority:
+.fn SetEffectivePriority, local
 /* 801FBC48 001F8BA8  7C 08 02 A6 */	mflr r0
 /* 801FBC4C 001F8BAC  90 01 00 04 */	stw r0, 4(r1)
 /* 801FBC50 001F8BB0  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -338,9 +337,9 @@ SetEffectivePriority:
 /* 801FBDFC 001F8D5C  7C 08 03 A6 */	mtlr r0
 /* 801FBE00 001F8D60  38 21 00 18 */	addi r1, r1, 0x18
 /* 801FBE04 001F8D64  4E 80 00 20 */	blr 
+.endfn SetEffectivePriority
 
-.global __OSPromoteThread
-__OSPromoteThread:
+.fn __OSPromoteThread, global
 /* 801FBE08 001F8D68  7C 08 02 A6 */	mflr r0
 /* 801FBE0C 001F8D6C  90 01 00 04 */	stw r0, 4(r1)
 /* 801FBE10 001F8D70  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -363,9 +362,9 @@ __OSPromoteThread:
 /* 801FBE4C 001F8DAC  38 21 00 18 */	addi r1, r1, 0x18
 /* 801FBE50 001F8DB0  7C 08 03 A6 */	mtlr r0
 /* 801FBE54 001F8DB4  4E 80 00 20 */	blr 
+.endfn __OSPromoteThread
 
-.global SelectThread
-SelectThread:
+.fn SelectThread, local
 /* 801FBE58 001F8DB8  7C 08 02 A6 */	mflr r0
 /* 801FBE5C 001F8DBC  3C 80 80 3D */	lis r4, RunQueue@ha
 /* 801FBE60 001F8DC0  90 01 00 04 */	stw r0, 4(r1)
@@ -508,9 +507,9 @@ SelectThread:
 /* 801FC04C 001F8FAC  7C 08 03 A6 */	mtlr r0
 /* 801FC050 001F8FB0  38 21 00 18 */	addi r1, r1, 0x18
 /* 801FC054 001F8FB4  4E 80 00 20 */	blr 
+.endfn SelectThread
 
-.global __OSReschedule
-__OSReschedule:
+.fn __OSReschedule, global
 /* 801FC058 001F8FB8  7C 08 02 A6 */	mflr r0
 /* 801FC05C 001F8FBC  90 01 00 04 */	stw r0, 4(r1)
 /* 801FC060 001F8FC0  94 21 FF F8 */	stwu r1, -8(r1)
@@ -524,9 +523,9 @@ __OSReschedule:
 /* 801FC07C 001F8FDC  38 21 00 08 */	addi r1, r1, 8
 /* 801FC080 001F8FE0  7C 08 03 A6 */	mtlr r0
 /* 801FC084 001F8FE4  4E 80 00 20 */	blr 
+.endfn __OSReschedule
 
-.global OSYieldThread
-OSYieldThread:
+.fn OSYieldThread, global
 /* 801FC088 001F8FE8  7C 08 02 A6 */	mflr r0
 /* 801FC08C 001F8FEC  90 01 00 04 */	stw r0, 4(r1)
 /* 801FC090 001F8FF0  94 21 FF F0 */	stwu r1, -0x10(r1)
@@ -542,9 +541,9 @@ OSYieldThread:
 /* 801FC0B8 001F9018  38 21 00 10 */	addi r1, r1, 0x10
 /* 801FC0BC 001F901C  7C 08 03 A6 */	mtlr r0
 /* 801FC0C0 001F9020  4E 80 00 20 */	blr 
+.endfn OSYieldThread
 
-.global OSCreateThread
-OSCreateThread:
+.fn OSCreateThread, global
 /* 801FC0C4 001F9024  7C 08 02 A6 */	mflr r0
 /* 801FC0C8 001F9028  2C 08 00 00 */	cmpwi r8, 0
 /* 801FC0CC 001F902C  90 01 00 04 */	stw r0, 4(r1)
@@ -622,9 +621,9 @@ OSCreateThread:
 /* 801FC1D8 001F9138  83 81 00 28 */	lwz r28, 0x28(r1)
 /* 801FC1DC 001F913C  38 21 00 38 */	addi r1, r1, 0x38
 /* 801FC1E0 001F9140  4E 80 00 20 */	blr 
+.endfn OSCreateThread
 
-.global OSExitThread
-OSExitThread:
+.fn OSExitThread, global
 /* 801FC1E4 001F9144  7C 08 02 A6 */	mflr r0
 /* 801FC1E8 001F9148  90 01 00 04 */	stw r0, 4(r1)
 /* 801FC1EC 001F914C  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -689,9 +688,9 @@ OSExitThread:
 /* 801FC2BC 001F921C  83 81 00 10 */	lwz r28, 0x10(r1)
 /* 801FC2C0 001F9220  38 21 00 20 */	addi r1, r1, 0x20
 /* 801FC2C4 001F9224  4E 80 00 20 */	blr 
+.endfn OSExitThread
 
-.global OSCancelThread
-OSCancelThread:
+.fn OSCancelThread, global
 /* 801FC2C8 001F9228  7C 08 02 A6 */	mflr r0
 /* 801FC2CC 001F922C  90 01 00 04 */	stw r0, 4(r1)
 /* 801FC2D0 001F9230  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -822,9 +821,9 @@ OSCancelThread:
 /* 801FC478 001F93D8  83 A1 00 14 */	lwz r29, 0x14(r1)
 /* 801FC47C 001F93DC  38 21 00 20 */	addi r1, r1, 0x20
 /* 801FC480 001F93E0  4E 80 00 20 */	blr 
+.endfn OSCancelThread
 
-.global OSJoinThread
-OSJoinThread:
+.fn OSJoinThread, global
 /* 801FC484 001F93E4  7C 08 02 A6 */	mflr r0
 /* 801FC488 001F93E8  90 01 00 04 */	stw r0, 4(r1)
 /* 801FC48C 001F93EC  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -918,9 +917,9 @@ OSJoinThread:
 /* 801FC5B8 001F9518  83 A1 00 14 */	lwz r29, 0x14(r1)
 /* 801FC5BC 001F951C  38 21 00 20 */	addi r1, r1, 0x20
 /* 801FC5C0 001F9520  4E 80 00 20 */	blr 
+.endfn OSJoinThread
 
-.global OSResumeThread
-OSResumeThread:
+.fn OSResumeThread, global
 /* 801FC5C4 001F9524  7C 08 02 A6 */	mflr r0
 /* 801FC5C8 001F9528  90 01 00 04 */	stw r0, 4(r1)
 /* 801FC5CC 001F952C  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -1109,9 +1108,9 @@ OSResumeThread:
 /* 801FC840 001F97A0  83 A1 00 1C */	lwz r29, 0x1c(r1)
 /* 801FC844 001F97A4  38 21 00 28 */	addi r1, r1, 0x28
 /* 801FC848 001F97A8  4E 80 00 20 */	blr 
+.endfn OSResumeThread
 
-.global OSSuspendThread
-OSSuspendThread:
+.fn OSSuspendThread, global
 /* 801FC84C 001F97AC  7C 08 02 A6 */	mflr r0
 /* 801FC850 001F97B0  90 01 00 04 */	stw r0, 4(r1)
 /* 801FC854 001F97B4  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -1217,9 +1216,9 @@ OSSuspendThread:
 /* 801FC9B0 001F9910  83 A1 00 14 */	lwz r29, 0x14(r1)
 /* 801FC9B4 001F9914  38 21 00 20 */	addi r1, r1, 0x20
 /* 801FC9B8 001F9918  4E 80 00 20 */	blr 
+.endfn OSSuspendThread
 
-.global OSSleepThread
-OSSleepThread:
+.fn OSSleepThread, global
 /* 801FC9BC 001F991C  7C 08 02 A6 */	mflr r0
 /* 801FC9C0 001F9920  90 01 00 04 */	stw r0, 4(r1)
 /* 801FC9C4 001F9924  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -1288,9 +1287,9 @@ OSSleepThread:
 /* 801FCA9C 001F99FC  7C 08 03 A6 */	mtlr r0
 /* 801FCAA0 001F9A00  38 21 00 18 */	addi r1, r1, 0x18
 /* 801FCAA4 001F9A04  4E 80 00 20 */	blr 
+.endfn OSSleepThread
 
-.global OSWakeupThread
-OSWakeupThread:
+.fn OSWakeupThread, global
 /* 801FCAA8 001F9A08  7C 08 02 A6 */	mflr r0
 /* 801FCAAC 001F9A0C  90 01 00 04 */	stw r0, 4(r1)
 /* 801FCAB0 001F9A10  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -1363,14 +1362,14 @@ OSWakeupThread:
 /* 801FCBA0 001F9B00  7C 08 03 A6 */	mtlr r0
 /* 801FCBA4 001F9B04  38 21 00 18 */	addi r1, r1, 0x18
 /* 801FCBA8 001F9B08  4E 80 00 20 */	blr 
+.endfn OSWakeupThread
 
-.global OSGetThreadPriority
-OSGetThreadPriority:
+.fn OSGetThreadPriority, global
 /* 801FCBAC 001F9B0C  80 63 02 D4 */	lwz r3, 0x2d4(r3)
 /* 801FCBB0 001F9B10  4E 80 00 20 */	blr 
+.endfn OSGetThreadPriority
 
-.global CheckThreadQueue
-CheckThreadQueue:
+.fn CheckThreadQueue, local
 /* 801FCBB4 001F9B14  80 83 00 00 */	lwz r4, 0(r3)
 /* 801FCBB8 001F9B18  28 04 00 00 */	cmplwi r4, 0
 /* 801FCBBC 001F9B1C  41 82 00 18 */	beq .L_801FCBD4
@@ -1416,9 +1415,9 @@ CheckThreadQueue:
 /* 801FCC44 001F9BA4  40 82 FF B8 */	bne .L_801FCBFC
 /* 801FCC48 001F9BA8  38 60 00 01 */	li r3, 1
 /* 801FCC4C 001F9BAC  4E 80 00 20 */	blr 
+.endfn CheckThreadQueue
 
-.global OSCheckActiveThreads
-OSCheckActiveThreads:
+.fn OSCheckActiveThreads, global
 /* 801FCC50 001F9BB0  7C 08 02 A6 */	mflr r0
 /* 801FCC54 001F9BB4  3C 80 80 2E */	lis r4, lbl_802E7BD8@ha
 /* 801FCC58 001F9BB8  90 01 00 04 */	stw r0, 4(r1)
@@ -1939,83 +1938,109 @@ OSCheckActiveThreads:
 /* 801FD394 001FA2F4  38 21 00 38 */	addi r1, r1, 0x38
 /* 801FD398 001FA2F8  7C 08 03 A6 */	mtlr r0
 /* 801FD39C 001FA2FC  4E 80 00 20 */	blr 
+.endfn OSCheckActiveThreads
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802E7BD8:
+.obj lbl_802E7BD8, local
 	.asciz "OSCheckActiveThreads: Failed RunQueue[prio].head != NULL && RunQueue[prio].tail != NULL in %d\n"
+.endobj lbl_802E7BD8
 .balign 4
-lbl_802E7C38:
+.obj lbl_802E7C38, local
 	.asciz "OSThread.c"
+.endobj lbl_802E7C38
 .balign 4
-lbl_802E7C44:
+.obj lbl_802E7C44, local
 	.asciz "OSCheckActiveThreads: Failed RunQueue[prio].head == NULL && RunQueue[prio].tail == NULL in %d\n"
+.endobj lbl_802E7C44
 .balign 4
-lbl_802E7CA4:
+.obj lbl_802E7CA4, local
 	.asciz "OSCheckActiveThreads: Failed CheckThreadQueue(&RunQueue[prio]) in %d\n"
+.endobj lbl_802E7CA4
 .balign 4
-lbl_802E7CEC:
+.obj lbl_802E7CEC, local
 	.asciz "OSCheckActiveThreads: Failed __OSActiveThreadQueue.head == NULL || __OSActiveThreadQueue.head->linkActive.prev == NULL in %d\n"
+.endobj lbl_802E7CEC
 .balign 4
-lbl_802E7D6C:
+.obj lbl_802E7D6C, local
 	.asciz "OSCheckActiveThreads: Failed __OSActiveThreadQueue.tail == NULL || __OSActiveThreadQueue.tail->linkActive.next == NULL in %d\n"
+.endobj lbl_802E7D6C
 .balign 4
-lbl_802E7DEC:
+.obj lbl_802E7DEC, local
 	.asciz "OSCheckActiveThreads: Failed thread->linkActive.next == NULL || thread == thread->linkActive.next->linkActive.prev in %d\n"
+.endobj lbl_802E7DEC
 .balign 4
-lbl_802E7E68:
+.obj lbl_802E7E68, local
 	.asciz "OSCheckActiveThreads: Failed thread->linkActive.prev == NULL || thread == thread->linkActive.prev->linkActive.next in %d\n"
+.endobj lbl_802E7E68
 .balign 4
-lbl_802E7EE4:
+.obj lbl_802E7EE4, local
 	.asciz "OSCheckActiveThreads: Failed *(thread->stackEnd) == OS_THREAD_STACK_MAGIC in %d\n"
+.endobj lbl_802E7EE4
 .balign 4
-lbl_802E7F38:
+.obj lbl_802E7F38, local
 	.asciz "OSCheckActiveThreads: Failed OS_PRIORITY_MIN <= thread->priority && thread->priority <= OS_PRIORITY_MAX+1 in %d\n"
+.endobj lbl_802E7F38
 .balign 4
-lbl_802E7FAC:
+.obj lbl_802E7FAC, local
 	.asciz "OSCheckActiveThreads: Failed 0 <= thread->suspend in %d\n"
+.endobj lbl_802E7FAC
 .balign 4
-lbl_802E7FE8:
+.obj lbl_802E7FE8, local
 	.asciz "OSCheckActiveThreads: Failed CheckThreadQueue(&thread->queueJoin) in %d\n"
+.endobj lbl_802E7FE8
 .balign 4
-lbl_802E8034:
+.obj lbl_802E8034, local
 	.asciz "OSCheckActiveThreads: Failed thread->queue == &RunQueue[thread->priority] in %d\n"
+.endobj lbl_802E8034
 .balign 4
-lbl_802E8088:
+.obj lbl_802E8088, local
 	.asciz "OSCheckActiveThreads: Failed IsMember(&RunQueue[thread->priority], thread) in %d\n"
+.endobj lbl_802E8088
 .balign 4
-lbl_802E80DC:
+.obj lbl_802E80DC, local
 	.asciz "OSCheckActiveThreads: Failed thread->priority == __OSGetEffectivePriority(thread) in %d\n"
+.endobj lbl_802E80DC
 .balign 4
-lbl_802E8138:
+.obj lbl_802E8138, local
 	.asciz "OSCheckActiveThreads: Failed !IsSuspended(thread->suspend) in %d\n"
+.endobj lbl_802E8138
 .balign 4
-lbl_802E817C:
+.obj lbl_802E817C, local
 	.asciz "OSCheckActiveThreads: Failed thread->queue == NULL in %d\n"
+.endobj lbl_802E817C
 .balign 4
-lbl_802E81B8:
+.obj lbl_802E81B8, local
 	.asciz "OSCheckActiveThreads: Failed thread->queue != NULL in %d\n"
+.endobj lbl_802E81B8
 .balign 4
-lbl_802E81F4:
+.obj lbl_802E81F4, local
 	.asciz "OSCheckActiveThreads: Failed CheckThreadQueue(thread->queue) in %d\n"
+.endobj lbl_802E81F4
 .balign 4
-lbl_802E8238:
+.obj lbl_802E8238, local
 	.asciz "OSCheckActiveThreads: Failed IsMember(thread->queue, thread) in %d\n"
+.endobj lbl_802E8238
 .balign 4
-lbl_802E827C:
+.obj lbl_802E827C, local
 	.asciz "OSCheckActiveThreads: Failed thread->priority == 32 in %d\n"
+.endobj lbl_802E827C
 .balign 4
-lbl_802E82B8:
+.obj lbl_802E82B8, local
 	.asciz "OSCheckActiveThreads: Failed !__OSCheckDeadLock(thread) in %d\n"
+.endobj lbl_802E82B8
 .balign 4
-lbl_802E82F8:
+.obj lbl_802E82F8, local
 	.asciz "OSCheckActiveThreads: Failed thread->queueMutex.head == NULL && thread->queueMutex.tail == NULL in %d\n"
+.endobj lbl_802E82F8
 .balign 4
-lbl_802E8360:
+.obj lbl_802E8360, local
 	.asciz "OSCheckActiveThreads: Failed. unkown thread state (%d) of thread %p\n"
+.endobj lbl_802E8360
 .balign 4
-lbl_802E83A8:
+.obj lbl_802E83A8, local
 	.asciz "OSCheckActiveThreads: Failed __OSCheckMutexes(thread) in %d\n"
+.endobj lbl_802E83A8
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8

@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global __ct__Q23zen11EffectMgr2DFiii
-__ct__Q23zen11EffectMgr2DFiii:
+.fn __ct__Q23zen11EffectMgr2DFiii, global
 /* 801E98C0 001E6820  7C 08 02 A6 */	mflr r0
 /* 801E98C4 001E6824  90 01 00 04 */	stw r0, 4(r1)
 /* 801E98C8 001E6828  94 21 FF A0 */	stwu r1, -0x60(r1)
@@ -164,9 +163,9 @@ __ct__Q23zen11EffectMgr2DFiii:
 /* 801E9B30 001E6A90  38 21 00 60 */	addi r1, r1, 0x60
 /* 801E9B34 001E6A94  7C 08 03 A6 */	mtlr r0
 /* 801E9B38 001E6A98  4E 80 00 20 */	blr 
+.endfn __ct__Q23zen11EffectMgr2DFiii
 
-.global "create__Q23zen11EffectMgr2DFUlR8Vector3fPQ23zen37CallBack1<PQ23zen17particleGenerator>PQ23zen58CallBack2<PQ23zen17particleGenerator,PQ23zen11particleMdl>"
-"create__Q23zen11EffectMgr2DFUlR8Vector3fPQ23zen37CallBack1<PQ23zen17particleGenerator>PQ23zen58CallBack2<PQ23zen17particleGenerator,PQ23zen11particleMdl>":
+.fn "create__Q23zen11EffectMgr2DFUlR8Vector3fPQ23zen37CallBack1<PQ23zen17particleGenerator>PQ23zen58CallBack2<PQ23zen17particleGenerator,PQ23zen11particleMdl>", global
 /* 801E9B3C 001E6A9C  7C 08 02 A6 */	mflr r0
 /* 801E9B40 001E6AA0  39 06 00 00 */	addi r8, r6, 0
 /* 801E9B44 001E6AA4  90 01 00 04 */	stw r0, 4(r1)
@@ -186,9 +185,9 @@ __ct__Q23zen11EffectMgr2DFiii:
 /* 801E9B7C 001E6ADC  38 21 00 08 */	addi r1, r1, 8
 /* 801E9B80 001E6AE0  7C 08 03 A6 */	mtlr r0
 /* 801E9B84 001E6AE4  4E 80 00 20 */	blr 
+.endfn "create__Q23zen11EffectMgr2DFUlR8Vector3fPQ23zen37CallBack1<PQ23zen17particleGenerator>PQ23zen58CallBack2<PQ23zen17particleGenerator,PQ23zen11particleMdl>"
 
-.global update__Q23zen11EffectMgr2DFv
-update__Q23zen11EffectMgr2DFv:
+.fn update__Q23zen11EffectMgr2DFv, global
 /* 801E9B88 001E6AE8  7C 08 02 A6 */	mflr r0
 /* 801E9B8C 001E6AEC  38 63 00 10 */	addi r3, r3, 0x10
 /* 801E9B90 001E6AF0  90 01 00 04 */	stw r0, 4(r1)
@@ -198,9 +197,9 @@ update__Q23zen11EffectMgr2DFv:
 /* 801E9BA0 001E6B00  38 21 00 08 */	addi r1, r1, 8
 /* 801E9BA4 001E6B04  7C 08 03 A6 */	mtlr r0
 /* 801E9BA8 001E6B08  4E 80 00 20 */	blr 
+.endfn update__Q23zen11EffectMgr2DFv
 
-.global draw__Q23zen11EffectMgr2DFR8Graphics
-draw__Q23zen11EffectMgr2DFR8Graphics:
+.fn draw__Q23zen11EffectMgr2DFR8Graphics, global
 /* 801E9BAC 001E6B0C  7C 08 02 A6 */	mflr r0
 /* 801E9BB0 001E6B10  90 01 00 04 */	stw r0, 4(r1)
 /* 801E9BB4 001E6B14  94 21 FF C8 */	stwu r1, -0x38(r1)
@@ -275,9 +274,9 @@ draw__Q23zen11EffectMgr2DFR8Graphics:
 /* 801E9CC8 001E6C28  38 21 00 38 */	addi r1, r1, 0x38
 /* 801E9CCC 001E6C2C  7C 08 03 A6 */	mtlr r0
 /* 801E9CD0 001E6C30  4E 80 00 20 */	blr 
+.endfn draw__Q23zen11EffectMgr2DFR8Graphics
 
-.global killAll__Q23zen11EffectMgr2DFb
-killAll__Q23zen11EffectMgr2DFb:
+.fn killAll__Q23zen11EffectMgr2DFb, global
 /* 801E9CD4 001E6C34  7C 08 02 A6 */	mflr r0
 /* 801E9CD8 001E6C38  38 63 00 10 */	addi r3, r3, 0x10
 /* 801E9CDC 001E6C3C  90 01 00 04 */	stw r0, 4(r1)
@@ -287,202 +286,267 @@ killAll__Q23zen11EffectMgr2DFb:
 /* 801E9CEC 001E6C4C  38 21 00 08 */	addi r1, r1, 8
 /* 801E9CF0 001E6C50  7C 08 03 A6 */	mtlr r0
 /* 801E9CF4 001E6C54  4E 80 00 20 */	blr 
+.endfn killAll__Q23zen11EffectMgr2DFb
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802E5AD0:
+.obj lbl_802E5AD0, local
 	.asciz "effectMgr2D.cpp"
+.endobj lbl_802E5AD0
 .balign 4
-lbl_802E5AE0:
+.obj lbl_802E5AE0, local
 	.asciz "effectMgr2D"
+.endobj lbl_802E5AE0
 .balign 4
-lbl_802E5AEC:
+.obj lbl_802E5AEC, local
 	.asciz "effects/pcr/frt_l.pcr"
+.endobj lbl_802E5AEC
 .balign 4
-lbl_802E5B04:
+.obj lbl_802E5B04, local
 	.asciz "effects/tex/waku02.bti"
+.endobj lbl_802E5B04
 .balign 4
-lbl_802E5B1C:
+.obj lbl_802E5B1C, local
 	.asciz "effects/pcr/frt_h_l.pcr"
+.endobj lbl_802E5B1C
 .balign 4
-lbl_802E5B34:
+.obj lbl_802E5B34, local
 	.asciz "effects/pcr/frt_s.pcr"
+.endobj lbl_802E5B34
 .balign 4
-lbl_802E5B4C:
+.obj lbl_802E5B4C, local
 	.asciz "effects/tex/waku03.bti"
+.endobj lbl_802E5B4C
 .balign 4
-lbl_802E5B64:
+.obj lbl_802E5B64, local
 	.asciz "effects/pcr/frt_h_s.pcr"
+.endobj lbl_802E5B64
 .balign 4
-lbl_802E5B7C:
+.obj lbl_802E5B7C, local
 	.asciz "effects/pcr/bg_od01.pcr"
+.endobj lbl_802E5B7C
 .balign 4
-lbl_802E5B94:
+.obj lbl_802E5B94, local
 	.asciz "effects/tex/star4_i.bti"
+.endobj lbl_802E5B94
 .balign 4
-lbl_802E5BAC:
+.obj lbl_802E5BAC, local
 	.asciz "effects/pcr/bg_od01r.pcr"
+.endobj lbl_802E5BAC
 .balign 4
-lbl_802E5BC8:
+.obj lbl_802E5BC8, local
 	.asciz "effects/pcr/bg_od01g.pcr"
+.endobj lbl_802E5BC8
 .balign 4
-lbl_802E5BE4:
+.obj lbl_802E5BE4, local
 	.asciz "effects/pcr/bg_od01b.pcr"
+.endobj lbl_802E5BE4
 .balign 4
-lbl_802E5C00:
+.obj lbl_802E5C00, local
 	.asciz "effects/pcr/bg_od02.pcr"
+.endobj lbl_802E5C00
 .balign 4
-lbl_802E5C18:
+.obj lbl_802E5C18, local
 	.asciz "effects/pcr/bg_od02r.pcr"
+.endobj lbl_802E5C18
 .balign 4
-lbl_802E5C34:
+.obj lbl_802E5C34, local
 	.asciz "effects/pcr/bg_od02g.pcr"
+.endobj lbl_802E5C34
 .balign 4
-lbl_802E5C50:
+.obj lbl_802E5C50, local
 	.asciz "effects/pcr/bg_od02b.pcr"
+.endobj lbl_802E5C50
 .balign 4
-lbl_802E5C6C:
+.obj lbl_802E5C6C, local
 	.asciz "effects/pcr/record_l.pcr"
+.endobj lbl_802E5C6C
 .balign 4
-lbl_802E5C88:
+.obj lbl_802E5C88, local
 	.asciz "effects/tex/waku.bti"
+.endobj lbl_802E5C88
 .balign 4
-lbl_802E5CA0:
+.obj lbl_802E5CA0, local
 	.asciz "effects/pcr/rec_h_l.pcr"
+.endobj lbl_802E5CA0
 .balign 4
-lbl_802E5CB8:
+.obj lbl_802E5CB8, local
 	.asciz "effects/pcr/star.pcr"
+.endobj lbl_802E5CB8
 .balign 4
-lbl_802E5CD0:
+.obj lbl_802E5CD0, local
 	.asciz "effects/pcr/record_s.pcr"
+.endobj lbl_802E5CD0
 .balign 4
-lbl_802E5CEC:
+.obj lbl_802E5CEC, local
 	.asciz "effects/pcr/rec_h_s.pcr"
+.endobj lbl_802E5CEC
 .balign 4
-lbl_802E5D04:
+.obj lbl_802E5D04, local
 	.asciz "effects/pcr/bg_ds01.pcr"
+.endobj lbl_802E5D04
 .balign 4
-lbl_802E5D1C:
+.obj lbl_802E5D1C, local
 	.asciz "effects/pcr/bg_ds01r.pcr"
+.endobj lbl_802E5D1C
 .balign 4
-lbl_802E5D38:
+.obj lbl_802E5D38, local
 	.asciz "effects/pcr/bg_ds01g.pcr"
+.endobj lbl_802E5D38
 .balign 4
-lbl_802E5D54:
+.obj lbl_802E5D54, local
 	.asciz "effects/pcr/bg_ds01b.pcr"
+.endobj lbl_802E5D54
 .balign 4
-lbl_802E5D70:
+.obj lbl_802E5D70, local
 	.asciz "effects/pcr/bg_ds02.pcr"
+.endobj lbl_802E5D70
 .balign 4
-lbl_802E5D88:
+.obj lbl_802E5D88, local
 	.asciz "effects/pcr/bg_ds02r.pcr"
+.endobj lbl_802E5D88
 .balign 4
-lbl_802E5DA4:
+.obj lbl_802E5DA4, local
 	.asciz "effects/pcr/bg_ds02g.pcr"
+.endobj lbl_802E5DA4
 .balign 4
-lbl_802E5DC0:
+.obj lbl_802E5DC0, local
 	.asciz "effects/pcr/bg_ds02b.pcr"
+.endobj lbl_802E5DC0
 .balign 4
-lbl_802E5DDC:
+.obj lbl_802E5DDC, local
 	.asciz "effects/pcr/bg_cms01.pcr"
+.endobj lbl_802E5DDC
 .balign 4
-lbl_802E5DF8:
+.obj lbl_802E5DF8, local
 	.asciz "effects/pcr/bg_cms01r.pcr"
+.endobj lbl_802E5DF8
 .balign 4
-lbl_802E5E14:
+.obj lbl_802E5E14, local
 	.asciz "effects/pcr/bg_cms01g.pcr"
+.endobj lbl_802E5E14
 .balign 4
-lbl_802E5E30:
+.obj lbl_802E5E30, local
 	.asciz "effects/pcr/bg_cms01b.pcr"
+.endobj lbl_802E5E30
 .balign 4
-lbl_802E5E4C:
+.obj lbl_802E5E4C, local
 	.asciz "effects/pcr/bg_cms02.pcr"
+.endobj lbl_802E5E4C
 .balign 4
-lbl_802E5E68:
+.obj lbl_802E5E68, local
 	.asciz "effects/pcr/bg_cms02r.pcr"
+.endobj lbl_802E5E68
 .balign 4
-lbl_802E5E84:
+.obj lbl_802E5E84, local
 	.asciz "effects/pcr/bg_cms02g.pcr"
+.endobj lbl_802E5E84
 .balign 4
-lbl_802E5EA0:
+.obj lbl_802E5EA0, local
 	.asciz "effects/pcr/bg_cms02b.pcr"
+.endobj lbl_802E5EA0
 .balign 4
-lbl_802E5EBC:
+.obj lbl_802E5EBC, local
 	.asciz "effects/pcr/selec_tm.pcr"
+.endobj lbl_802E5EBC
 .balign 4
-lbl_802E5ED8:
+.obj lbl_802E5ED8, local
 	.asciz "effects/tex/ps_glow.bti"
+.endobj lbl_802E5ED8
 .balign 4
-lbl_802E5EF0:
+.obj lbl_802E5EF0, local
 	.asciz "effects/pcr/selec_km.pcr"
+.endobj lbl_802E5EF0
 .balign 4
-lbl_802E5F0C:
+.obj lbl_802E5F0C, local
 	.asciz "effects/pcr/file_slm.pcr"
+.endobj lbl_802E5F0C
 .balign 4
-lbl_802E5F28:
+.obj lbl_802E5F28, local
 	.asciz "effects/tex/fuchibal.bti"
+.endobj lbl_802E5F28
 .balign 4
-lbl_802E5F44:
+.obj lbl_802E5F44, local
 	.asciz "effects/pcr/file_sel.pcr"
+.endobj lbl_802E5F44
 .balign 4
-lbl_802E5F60:
+.obj lbl_802E5F60, local
 	.asciz "effects/pcr/select_k.pcr"
+.endobj lbl_802E5F60
 .balign 4
-lbl_802E5F7C:
+.obj lbl_802E5F7C, local
 	.asciz "effects/pcr/select_t.pcr"
+.endobj lbl_802E5F7C
 .balign 4
-lbl_802E5F98:
+.obj lbl_802E5F98, local
 	.asciz "effects/pcr/syokika2.pcr"
+.endobj lbl_802E5F98
 .balign 4
-lbl_802E5FB4:
+.obj lbl_802E5FB4, local
 	.asciz "effects/pcr/syokika.pcr"
+.endobj lbl_802E5FB4
 .balign 4
-lbl_802E5FCC:
+.obj lbl_802E5FCC, local
 	.asciz "effects/pcr/file_cpm.pcr"
+.endobj lbl_802E5FCC
 .balign 4
-lbl_802E5FE8:
+.obj lbl_802E5FE8, local
 	.asciz "effects/pcr/file_cp.pcr"
+.endobj lbl_802E5FE8
 .balign 4
-lbl_802E6000:
+.obj lbl_802E6000, local
 	.asciz "effects/pcr/file_dlm.pcr"
+.endobj lbl_802E6000
 .balign 4
-lbl_802E601C:
+.obj lbl_802E601C, local
 	.asciz "effects/pcr/file_del.pcr"
+.endobj lbl_802E601C
 .balign 4
-lbl_802E6038:
+.obj lbl_802E6038, local
 	.asciz "effects/pcr/rktin1.pcr"
+.endobj lbl_802E6038
 .balign 4
-lbl_802E6050:
+.obj lbl_802E6050, local
 	.asciz "effects/pcr/mapap1.pcr"
+.endobj lbl_802E6050
 .balign 4
-lbl_802E6068:
+.obj lbl_802E6068, local
 	.asciz "effects/tex/p_hsbs3.bti"
+.endobj lbl_802E6068
 .balign 4
-lbl_802E6080:
+.obj lbl_802E6080, local
 	.asciz "effects/pcr/mapap2.pcr"
+.endobj lbl_802E6080
 .balign 4
-lbl_802E6098:
+.obj lbl_802E6098, local
 	.asciz "effects/pcr/z_ufoF.pcr"
+.endobj lbl_802E6098
 .balign 4
-lbl_802E60B0:
+.obj lbl_802E60B0, local
 	.asciz "effects/tex/kaen_ok.bti"
+.endobj lbl_802E60B0
 .balign 4
-lbl_802E60C8:
+.obj lbl_802E60C8, local
 	.asciz "effects/pcr/z_ufoS.pcr"
+.endobj lbl_802E60C8
 .balign 4
-lbl_802E60E0:
+.obj lbl_802E60E0, local
 	.asciz "effects/tex/ice_smok.bti"
+.endobj lbl_802E60E0
 .balign 4
-lbl_802E60FC:
+.obj lbl_802E60FC, local
 	.asciz "effects/pcr/z_ony.pcr"
+.endobj lbl_802E60FC
 .balign 4
-lbl_802E6114:
+.obj lbl_802E6114, local
 	.asciz "effects/pcr/z_sstar.pcr"
+.endobj lbl_802E6114
 .balign 4
-lbl_802E612C:
+.obj lbl_802E612C, local
 	.asciz "effects/tex/ps_ball.bti"
+.endobj lbl_802E612C
 .balign 4
-"ptclInfo__9@unnamed@":
+.obj "ptclInfo__9@unnamed@", local
 	.4byte lbl_802E5AEC
 	.4byte lbl_802E5B04
 	.4byte 0x00000000
@@ -639,9 +703,11 @@ lbl_802E612C:
 	.4byte lbl_802E6114
 	.4byte lbl_802E5B94
 	.4byte lbl_802E612C
+.endobj "ptclInfo__9@unnamed@"
 .balign 4
-lbl_802E63B4:
+.obj lbl_802E63B4, local
 	.asciz "zen::zenList"
+.endobj lbl_802E63B4
 .balign 4
 	.4byte 0x00000000
 	.4byte 0x00000000
@@ -650,31 +716,43 @@ lbl_802E63B4:
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-lbl_803E73C0:
-	.4byte 0x43A00000
-lbl_803E73C4:
-	.4byte 0x43700000
-lbl_803E73C8:
-	.4byte 0x43A00000
-lbl_803E73CC:
-	.4byte 0x43700000
-lbl_803E73D0:
-	.4byte 0x00000000
+.obj lbl_803E73C0, local
+	.float 320.0
+.endobj lbl_803E73C0
+.obj lbl_803E73C4, local
+	.float 240.0
+.endobj lbl_803E73C4
+.obj lbl_803E73C8, local
+	.float 320.0
+.endobj lbl_803E73C8
+.obj lbl_803E73CC, local
+	.float 240.0
+.endobj lbl_803E73CC
+.obj lbl_803E73D0, local
+	.float 0.0
+.endobj lbl_803E73D0
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803EC218:
-	.4byte 0x42700000
-lbl_803EC21C:
-	.4byte 0x3E860A92
-lbl_803EC220:
-	.4byte 0x43700000
-lbl_803EC224:
-	.4byte 0x41F00000
-lbl_803EC228:
-	.4byte 0x3F800000
-lbl_803EC22C:
-	.4byte 0x459C4000
+.obj lbl_803EC218, local
+	.float 60.0
+.endobj lbl_803EC218
+.obj lbl_803EC21C, local
+	.float 0.2617994
+.endobj lbl_803EC21C
+.obj lbl_803EC220, local
+	.float 240.0
+.endobj lbl_803EC220
+.obj lbl_803EC224, local
+	.float 30.0
+.endobj lbl_803EC224
+.obj lbl_803EC228, local
+	.float 1.0
+.endobj lbl_803EC228
+.obj lbl_803EC22C, local
+	.float 5000.0
+.endobj lbl_803EC22C
 .balign 8
-lbl_803EC230:
+.obj lbl_803EC230, local
 	.8byte 0x4330000080000000
+.endobj lbl_803EC230

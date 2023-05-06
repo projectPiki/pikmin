@@ -5430,121 +5430,167 @@ __vt__8Material:
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-lbl_803DCEE0:
+.obj lbl_803DCEE0, local
 	.float 1.0
-lbl_803DCEE4:
+.endobj lbl_803DCEE0
+.obj lbl_803DCEE4, local
 	.float 1.0
-lbl_803DCEE8:
+.endobj lbl_803DCEE4
+.obj lbl_803DCEE8, local
 	.float 0.0
-lbl_803DCEEC:
+.endobj lbl_803DCEE8
+.obj lbl_803DCEEC, local
 	.float 0.0
-lbl_803DCEF0:
+.endobj lbl_803DCEEC
+.obj lbl_803DCEF0, local
 	.float 0.0
-lbl_803DCEF4:
+.endobj lbl_803DCEF0
+.obj lbl_803DCEF4, local
 	.float 0.0
-lbl_803DCEF8:
+.endobj lbl_803DCEF4
+.obj lbl_803DCEF8, local
 	.float 0.0
-lbl_803DCEFC:
+.endobj lbl_803DCEF8
+.obj lbl_803DCEFC, local
 	.float 0.0
-lbl_803DCF00:
+.endobj lbl_803DCEFC
+.obj lbl_803DCF00, local
 	.float 0.0
-lbl_803DCF04:
+.endobj lbl_803DCF00
+.obj lbl_803DCF04, local
 	.float 0.0
-lbl_803DCF08:
+.endobj lbl_803DCF04
+.obj lbl_803DCF08, local
 	.float 0.0
-lbl_803DCF0C:
+.endobj lbl_803DCF08
+.obj lbl_803DCF0C, local
 	.float 0.0
-lbl_803DCF10:
+.endobj lbl_803DCF0C
+.obj lbl_803DCF10, local
 	.float 0.0
+.endobj lbl_803DCF10
 .balign 4
-lbl_803DCF14:
+.obj lbl_803DCF14, local
 	.asciz "Normal"
+.endobj lbl_803DCF14
 .balign 4
-lbl_803DCF1C:
+.obj lbl_803DCF1C, local
 	.asciz "Environ"
+.endobj lbl_803DCF1C
 .balign 4
-lbl_803DCF24:
+.obj lbl_803DCF24, local
 	.asciz ""
+.endobj lbl_803DCF24
 .balign 4
-lbl_803DCF28:
+.obj lbl_803DCF28, local
 	.asciz "INVALID"
+.endobj lbl_803DCF28
 .balign 4
-lbl_803DCF30:
+.obj lbl_803DCF30, local
 	.asciz "%s:%d"
+.endobj lbl_803DCF30
 .balign 4
-lbl_803DCF38:
+.obj lbl_803DCF38, local
 	.float 1.0
-lbl_803DCF3C:
+.endobj lbl_803DCF38
+.obj lbl_803DCF3C, local
 	.float 1.0
-lbl_803DCF40:
+.endobj lbl_803DCF3C
+.obj lbl_803DCF40, local
 	.float 1.0
-lbl_803DCF44:
+.endobj lbl_803DCF40
+.obj lbl_803DCF44, local
 	.float 0.0
-lbl_803DCF48:
+.endobj lbl_803DCF44
+.obj lbl_803DCF48, local
 	.float 0.0
-lbl_803DCF4C:
+.endobj lbl_803DCF48
+.obj lbl_803DCF4C, local
 	.float 0.0
-lbl_803DCF50:
+.endobj lbl_803DCF4C
+.obj lbl_803DCF50, local
 	.float 0.0
-lbl_803DCF54:
+.endobj lbl_803DCF50
+.obj lbl_803DCF54, local
 	.float 1.0
-lbl_803DCF58:
+.endobj lbl_803DCF54
+.obj lbl_803DCF58, local
 	.float 1.0
-lbl_803DCF5C:
+.endobj lbl_803DCF58
+.obj lbl_803DCF5C, local
 	.float 1.0
-lbl_803DCF60:
+.endobj lbl_803DCF5C
+.obj lbl_803DCF60, local
 	.float 0.0
-lbl_803DCF64:
+.endobj lbl_803DCF60
+.obj lbl_803DCF64, local
 	.float 0.0
-lbl_803DCF68:
+.endobj lbl_803DCF64
+.obj lbl_803DCF68, local
 	.float 0.0
-lbl_803DCF6C:
+.endobj lbl_803DCF68
+.obj lbl_803DCF6C, local
 	.float 0.0
-__RTTI__9GfxObject:
+.endobj lbl_803DCF6C
+.obj __RTTI__9GfxObject, local
 	.4byte lbl_802280B4
 	.4byte 0
+.endobj __RTTI__9GfxObject
 .balign 4
-lbl_803DCF78:
+.obj lbl_803DCF78, local
 	.asciz "Texture"
+.endobj lbl_803DCF78
 .balign 4
-__RTTI__7Texture:
+.obj __RTTI__7Texture, local
 	.4byte lbl_803DCF78
 	.4byte lbl_802280C0
-__RTTI__12CacheTexture:
+.endobj __RTTI__7Texture
+.obj __RTTI__12CacheTexture, local
 	.4byte lbl_802280A4
 	.4byte lbl_802280CC
+.endobj __RTTI__12CacheTexture
 .balign 4
-lbl_803DCF90:
+.obj lbl_803DCF90, local
 	.asciz "TexAttr"
+.endobj lbl_803DCF90
 .balign 4
-lbl_803DCF98:
+.obj lbl_803DCF98, local
 	.asciz "ANode"
+.endobj lbl_803DCF98
 .balign 4
-__RTTI__5ANode:
+.obj __RTTI__5ANode, local
 	.4byte lbl_803DCF98
 	.4byte 0
-__RTTI__8CoreNode:
+.endobj __RTTI__5ANode
+.obj __RTTI__8CoreNode, local
 	.4byte lbl_802280F4
 	.4byte lbl_80228100
-__RTTI__7TexAttr:
+.endobj __RTTI__8CoreNode
+.obj __RTTI__7TexAttr, local
 	.4byte lbl_803DCF90
 	.4byte lbl_8022810C
+.endobj __RTTI__7TexAttr
 .balign 4
-lbl_803DCFB8:
+.obj lbl_803DCFB8, local
 	.asciz "TexImg"
+.endobj lbl_803DCFB8
 .balign 4
-__RTTI__6TexImg:
+.obj __RTTI__6TexImg, local
 	.4byte lbl_803DCFB8
 	.4byte lbl_80228130
-__RTTI__8Graphics:
+.endobj __RTTI__6TexImg
+.obj __RTTI__8Graphics, local
 	.4byte lbl_80227550
 	.4byte 0
-__RTTI__15MaterialHandler:
+.endobj __RTTI__8Graphics
+.obj __RTTI__15MaterialHandler, local
 	.4byte lbl_80228248
 	.4byte 0
-__RTTI__8Material:
+.endobj __RTTI__15MaterialHandler
+.obj __RTTI__8Material, local
 	.4byte lbl_80228268
 	.4byte lbl_80228274
+.endobj __RTTI__8Material
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8

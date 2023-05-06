@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global SetExiInterruptMask
-SetExiInterruptMask:
+.fn SetExiInterruptMask, local
 /* 801F7BCC 001F4B2C  7C 08 02 A6 */	mflr r0
 /* 801F7BD0 001F4B30  3C A0 80 3D */	lis r5, Ecb@ha
 /* 801F7BD4 001F4B34  90 01 00 04 */	stw r0, 4(r1)
@@ -75,9 +74,9 @@ SetExiInterruptMask:
 /* 801F7CB4 001F4C14  38 21 00 18 */	addi r1, r1, 0x18
 /* 801F7CB8 001F4C18  7C 08 03 A6 */	mtlr r0
 /* 801F7CBC 001F4C1C  4E 80 00 20 */	blr 
+.endfn SetExiInterruptMask
 
-.global EXIImm
-EXIImm:
+.fn EXIImm, global
 /* 801F7CC0 001F4C20  7C 08 02 A6 */	mflr r0
 /* 801F7CC4 001F4C24  90 01 00 04 */	stw r0, 4(r1)
 /* 801F7CC8 001F4C28  94 21 FF A8 */	stwu r1, -0x58(r1)
@@ -241,9 +240,9 @@ EXIImm:
 /* 801F7F10 001F4E70  38 21 00 58 */	addi r1, r1, 0x58
 /* 801F7F14 001F4E74  7C 08 03 A6 */	mtlr r0
 /* 801F7F18 001F4E78  4E 80 00 20 */	blr 
+.endfn EXIImm
 
-.global EXIImmEx
-EXIImmEx:
+.fn EXIImmEx, global
 /* 801F7F1C 001F4E7C  7C 08 02 A6 */	mflr r0
 /* 801F7F20 001F4E80  90 01 00 04 */	stw r0, 4(r1)
 /* 801F7F24 001F4E84  94 21 FF D0 */	stwu r1, -0x30(r1)
@@ -291,9 +290,9 @@ EXIImmEx:
 /* 801F7FB0 001F4F10  38 21 00 30 */	addi r1, r1, 0x30
 /* 801F7FB4 001F4F14  7C 08 03 A6 */	mtlr r0
 /* 801F7FB8 001F4F18  4E 80 00 20 */	blr 
+.endfn EXIImmEx
 
-.global EXIDma
-EXIDma:
+.fn EXIDma, global
 /* 801F7FBC 001F4F1C  7C 08 02 A6 */	mflr r0
 /* 801F7FC0 001F4F20  90 01 00 04 */	stw r0, 4(r1)
 /* 801F7FC4 001F4F24  94 21 FF C0 */	stwu r1, -0x40(r1)
@@ -357,9 +356,9 @@ EXIDma:
 /* 801F809C 001F4FFC  38 21 00 40 */	addi r1, r1, 0x40
 /* 801F80A0 001F5000  7C 08 03 A6 */	mtlr r0
 /* 801F80A4 001F5004  4E 80 00 20 */	blr 
+.endfn EXIDma
 
-.global EXISync
-EXISync:
+.fn EXISync, global
 /* 801F80A8 001F5008  7C 08 02 A6 */	mflr r0
 /* 801F80AC 001F500C  1C C3 00 38 */	mulli r6, r3, 0x38
 /* 801F80B0 001F5010  90 01 00 04 */	stw r0, 4(r1)
@@ -500,9 +499,9 @@ EXISync:
 /* 801F82A4 001F5204  38 21 00 30 */	addi r1, r1, 0x30
 /* 801F82A8 001F5208  7C 08 03 A6 */	mtlr r0
 /* 801F82AC 001F520C  4E 80 00 20 */	blr 
+.endfn EXISync
 
-.global EXIClearInterrupts
-EXIClearInterrupts:
+.fn EXIClearInterrupts, global
 /* 801F82B0 001F5210  1C 03 00 14 */	mulli r0, r3, 0x14
 /* 801F82B4 001F5214  3C 60 CC 00 */	lis r3, 0xCC006800@ha
 /* 801F82B8 001F5218  38 E3 68 00 */	addi r7, r3, 0xCC006800@l
@@ -524,9 +523,9 @@ EXIClearInterrupts:
 .L_801F82F0:
 /* 801F82F0 001F5250  90 07 00 00 */	stw r0, 0(r7)
 /* 801F82F4 001F5254  4E 80 00 20 */	blr 
+.endfn EXIClearInterrupts
 
-.global EXISetExiCallback
-EXISetExiCallback:
+.fn EXISetExiCallback, global
 /* 801F82F8 001F5258  7C 08 02 A6 */	mflr r0
 /* 801F82FC 001F525C  90 01 00 04 */	stw r0, 4(r1)
 /* 801F8300 001F5260  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -560,9 +559,9 @@ EXISetExiCallback:
 /* 801F8368 001F52C8  38 21 00 28 */	addi r1, r1, 0x28
 /* 801F836C 001F52CC  7C 08 03 A6 */	mtlr r0
 /* 801F8370 001F52D0  4E 80 00 20 */	blr 
+.endfn EXISetExiCallback
 
-.global EXIProbe
-EXIProbe:
+.fn EXIProbe, global
 /* 801F8374 001F52D4  7C 08 02 A6 */	mflr r0
 /* 801F8378 001F52D8  90 01 00 04 */	stw r0, 4(r1)
 /* 801F837C 001F52DC  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -661,9 +660,9 @@ EXIProbe:
 /* 801F84D0 001F5430  38 21 00 28 */	addi r1, r1, 0x28
 /* 801F84D4 001F5434  7C 08 03 A6 */	mtlr r0
 /* 801F84D8 001F5438  4E 80 00 20 */	blr 
+.endfn EXIProbe
 
-.global EXIProbeEx
-EXIProbeEx:
+.fn EXIProbeEx, global
 /* 801F84DC 001F543C  7C 08 02 A6 */	mflr r0
 /* 801F84E0 001F5440  90 01 00 04 */	stw r0, 4(r1)
 /* 801F84E4 001F5444  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -691,9 +690,9 @@ EXIProbeEx:
 /* 801F8530 001F5490  38 21 00 18 */	addi r1, r1, 0x18
 /* 801F8534 001F5494  7C 08 03 A6 */	mtlr r0
 /* 801F8538 001F5498  4E 80 00 20 */	blr 
+.endfn EXIProbeEx
 
-.global EXIAttach
-EXIAttach:
+.fn EXIAttach, global
 /* 801F853C 001F549C  7C 08 02 A6 */	mflr r0
 /* 801F8540 001F54A0  90 01 00 04 */	stw r0, 4(r1)
 /* 801F8544 001F54A4  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -754,9 +753,9 @@ EXIAttach:
 /* 801F8614 001F5574  83 81 00 18 */	lwz r28, 0x18(r1)
 /* 801F8618 001F5578  38 21 00 28 */	addi r1, r1, 0x28
 /* 801F861C 001F557C  4E 80 00 20 */	blr 
+.endfn EXIAttach
 
-.global EXIDetach
-EXIDetach:
+.fn EXIDetach, global
 /* 801F8620 001F5580  7C 08 02 A6 */	mflr r0
 /* 801F8624 001F5584  90 01 00 04 */	stw r0, 4(r1)
 /* 801F8628 001F5588  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -807,9 +806,9 @@ EXIDetach:
 /* 801F86D0 001F5630  83 A1 00 14 */	lwz r29, 0x14(r1)
 /* 801F86D4 001F5634  38 21 00 20 */	addi r1, r1, 0x20
 /* 801F86D8 001F5638  4E 80 00 20 */	blr 
+.endfn EXIDetach
 
-.global EXISelect
-EXISelect:
+.fn EXISelect, global
 /* 801F86DC 001F563C  7C 08 02 A6 */	mflr r0
 /* 801F86E0 001F5640  90 01 00 04 */	stw r0, 4(r1)
 /* 801F86E4 001F5644  94 21 FF D0 */	stwu r1, -0x30(r1)
@@ -892,9 +891,9 @@ EXISelect:
 /* 801F87FC 001F575C  38 21 00 30 */	addi r1, r1, 0x30
 /* 801F8800 001F5760  7C 08 03 A6 */	mtlr r0
 /* 801F8804 001F5764  4E 80 00 20 */	blr 
+.endfn EXISelect
 
-.global EXIDeselect
-EXIDeselect:
+.fn EXIDeselect, global
 /* 801F8808 001F5768  7C 08 02 A6 */	mflr r0
 /* 801F880C 001F576C  90 01 00 04 */	stw r0, 4(r1)
 /* 801F8810 001F5770  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -970,9 +969,9 @@ EXIDeselect:
 /* 801F890C 001F586C  83 81 00 10 */	lwz r28, 0x10(r1)
 /* 801F8910 001F5870  38 21 00 20 */	addi r1, r1, 0x20
 /* 801F8914 001F5874  4E 80 00 20 */	blr 
+.endfn EXIDeselect
 
-.global EXIIntrruptHandler
-EXIIntrruptHandler:
+.fn EXIIntrruptHandler, local
 /* 801F8918 001F5878  7C 08 02 A6 */	mflr r0
 /* 801F891C 001F587C  7C 65 07 34 */	extsh r5, r3
 /* 801F8920 001F5880  90 01 00 04 */	stw r0, 4(r1)
@@ -1006,9 +1005,9 @@ EXIIntrruptHandler:
 /* 801F898C 001F58EC  38 21 00 08 */	addi r1, r1, 8
 /* 801F8990 001F58F0  7C 08 03 A6 */	mtlr r0
 /* 801F8994 001F58F4  4E 80 00 20 */	blr 
+.endfn EXIIntrruptHandler
 
-.global TCIntrruptHandler
-TCIntrruptHandler:
+.fn TCIntrruptHandler, local
 /* 801F8998 001F58F8  7C 08 02 A6 */	mflr r0
 /* 801F899C 001F58FC  7C 66 07 34 */	extsh r6, r3
 /* 801F89A0 001F5900  90 01 00 04 */	stw r0, 4(r1)
@@ -1140,9 +1139,9 @@ TCIntrruptHandler:
 /* 801F8B80 001F5AE0  83 81 00 20 */	lwz r28, 0x20(r1)
 /* 801F8B84 001F5AE4  38 21 00 30 */	addi r1, r1, 0x30
 /* 801F8B88 001F5AE8  4E 80 00 20 */	blr 
+.endfn TCIntrruptHandler
 
-.global EXTIntrruptHandler
-EXTIntrruptHandler:
+.fn EXTIntrruptHandler, local
 /* 801F8B8C 001F5AEC  7C 08 02 A6 */	mflr r0
 /* 801F8B90 001F5AF0  7C 65 07 34 */	extsh r5, r3
 /* 801F8B94 001F5AF4  90 01 00 04 */	stw r0, 4(r1)
@@ -1187,9 +1186,9 @@ EXTIntrruptHandler:
 /* 801F8C2C 001F5B8C  7C 08 03 A6 */	mtlr r0
 /* 801F8C30 001F5B90  38 21 00 18 */	addi r1, r1, 0x18
 /* 801F8C34 001F5B94  4E 80 00 20 */	blr 
+.endfn EXTIntrruptHandler
 
-.global EXIInit
-EXIInit:
+.fn EXIInit, global
 /* 801F8C38 001F5B98  7C 08 02 A6 */	mflr r0
 /* 801F8C3C 001F5B9C  3C 60 00 80 */	lis r3, 0x007F8000@ha
 /* 801F8C40 001F5BA0  90 01 00 04 */	stw r0, 4(r1)
@@ -1256,9 +1255,9 @@ EXIInit:
 /* 801F8D30 001F5C90  83 81 00 08 */	lwz r28, 8(r1)
 /* 801F8D34 001F5C94  38 21 00 18 */	addi r1, r1, 0x18
 /* 801F8D38 001F5C98  4E 80 00 20 */	blr 
+.endfn EXIInit
 
-.global EXILock
-EXILock:
+.fn EXILock, global
 /* 801F8D3C 001F5C9C  7C 08 02 A6 */	mflr r0
 /* 801F8D40 001F5CA0  90 01 00 04 */	stw r0, 4(r1)
 /* 801F8D44 001F5CA4  94 21 FF D0 */	stwu r1, -0x30(r1)
@@ -1326,9 +1325,9 @@ EXILock:
 /* 801F8E24 001F5D84  38 21 00 30 */	addi r1, r1, 0x30
 /* 801F8E28 001F5D88  7C 08 03 A6 */	mtlr r0
 /* 801F8E2C 001F5D8C  4E 80 00 20 */	blr 
+.endfn EXILock
 
-.global EXIUnlock
-EXIUnlock:
+.fn EXIUnlock, global
 /* 801F8E30 001F5D90  7C 08 02 A6 */	mflr r0
 /* 801F8E34 001F5D94  90 01 00 04 */	stw r0, 4(r1)
 /* 801F8E38 001F5D98  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -1388,12 +1387,13 @@ EXIUnlock:
 /* 801F8F00 001F5E60  83 81 00 10 */	lwz r28, 0x10(r1)
 /* 801F8F04 001F5E64  38 21 00 20 */	addi r1, r1, 0x20
 /* 801F8F08 001F5E68  4E 80 00 20 */	blr 
+.endfn EXIUnlock
 
-.global EXIGetState
-EXIGetState:
+.fn EXIGetState, global
 /* 801F8F0C 001F5E6C  1C 83 00 38 */	mulli r4, r3, 0x38
 /* 801F8F10 001F5E70  3C 60 80 3D */	lis r3, Ecb@ha
 /* 801F8F14 001F5E74  38 03 23 F0 */	addi r0, r3, Ecb@l
 /* 801F8F18 001F5E78  7C 60 22 14 */	add r3, r0, r4
 /* 801F8F1C 001F5E7C  80 63 00 0C */	lwz r3, 0xc(r3)
 /* 801F8F20 001F5E80  4E 80 00 20 */	blr 
+.endfn EXIGetState
