@@ -93,8 +93,7 @@ while idx < len(profile_bytes) - 16:
     LMW = 0xB8 >> 2
     FDIVS = 0xEC >> 2
 
-    # Adjust LWZ and LMW loading from r1.
-    if opcode_a in [LWZ, LMW] and vanilla_inst_a[2] == 0x00 and \
+    if opcode_a == LWZ and \
        opcode_b in [LI, LFS, FDIVS] and \
        vanilla_inst_a == profile_inst_b and \
        vanilla_inst_b == profile_inst_a and \
