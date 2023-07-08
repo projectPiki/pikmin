@@ -4985,167 +4985,229 @@ __vt__15BaseGameSection:
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-lbl_803DDAA0:
+.obj lbl_803DDAA0, local
 	.float 0.0
-lbl_803DDAA4:
+.endobj lbl_803DDAA0
+.obj lbl_803DDAA4, local
 	.float 0.0
-lbl_803DDAA8:
+.endobj lbl_803DDAA4
+.obj lbl_803DDAA8, local
 	.float 0.0
-lbl_803DDAAC:
+.endobj lbl_803DDAA8
+.obj lbl_803DDAAC, local
 	.float 0.0
-lbl_803DDAB0:
+.endobj lbl_803DDAAC
+.obj lbl_803DDAB0, local
 	.float 0.0
-lbl_803DDAB4:
+.endobj lbl_803DDAB0
+.obj lbl_803DDAB4, local
 	.float 0.0
+.endobj lbl_803DDAB4
 .balign 4
-lbl_803DDAB8:
+.obj lbl_803DDAB8, local
 	.asciz ""
+.endobj lbl_803DDAB8
 .balign 4
-lbl_803DDABC:
+.obj lbl_803DDABC, local
 	.float 0.1
-lbl_803DDAC0:
+.endobj lbl_803DDABC
+.obj lbl_803DDAC0, local
 	.float 0.1
-lbl_803DDAC4:
+.endobj lbl_803DDAC0
+.obj lbl_803DDAC4, local
 	.float 0.1
-lbl_803DDAC8:
+.endobj lbl_803DDAC4
+.obj lbl_803DDAC8, local
 	.float 0.0
-lbl_803DDACC:
+.endobj lbl_803DDAC8
+.obj lbl_803DDACC, local
 	.float 0.0
-lbl_803DDAD0:
+.endobj lbl_803DDACC
+.obj lbl_803DDAD0, local
 	.float 0.0
-lbl_803DDAD4:
+.endobj lbl_803DDAD0
+.obj lbl_803DDAD4, local
 	.float 0.0
-lbl_803DDAD8:
+.endobj lbl_803DDAD4
+.obj lbl_803DDAD8, local
 	.float 0.0
-lbl_803DDADC:
+.endobj lbl_803DDAD8
+.obj lbl_803DDADC, local
 	.float -5.0
-lbl_803DDAE0:
+.endobj lbl_803DDADC
+.obj lbl_803DDAE0, local
 	.float 0.1
-lbl_803DDAE4:
+.endobj lbl_803DDAE0
+.obj lbl_803DDAE4, local
 	.float 0.1
-lbl_803DDAE8:
+.endobj lbl_803DDAE4
+.obj lbl_803DDAE8, local
 	.float 0.1
-lbl_803DDAEC:
+.endobj lbl_803DDAE8
+.obj lbl_803DDAEC, local
 	.float 0.0
-lbl_803DDAF0:
+.endobj lbl_803DDAEC
+.obj lbl_803DDAF0, local
 	.float 0.0
-lbl_803DDAF4:
+.endobj lbl_803DDAF0
+.obj lbl_803DDAF4, local
 	.float 0.0
-lbl_803DDAF8:
+.endobj lbl_803DDAF4
+.obj lbl_803DDAF8, local
 	.float 0.0
-lbl_803DDAFC:
+.endobj lbl_803DDAF8
+.obj lbl_803DDAFC, local
 	.float 0.0
-lbl_803DDB00:
+.endobj lbl_803DDAFC
+.obj lbl_803DDB00, local
 	.float -5.0
-lbl_803DDB04:
+.endobj lbl_803DDB00
+.obj lbl_803DDB04, local
 	.float 0.0
-lbl_803DDB08:
+.endobj lbl_803DDB04
+.obj lbl_803DDB08, local
 	.float 0.0
-lbl_803DDB0C:
+.endobj lbl_803DDB08
+.obj lbl_803DDB0C, local
 	.float 0.0
-lbl_803DDB10:
+.endobj lbl_803DDB0C
+.obj lbl_803DDB10, local
 	.float 0.0
-lbl_803DDB14:
+.endobj lbl_803DDB10
+.obj lbl_803DDB14, local
 	.float 0.0
-lbl_803DDB18:
+.endobj lbl_803DDB14
+.obj lbl_803DDB18, local
 	.float 0.0
+.endobj lbl_803DDB18
 .balign 4
-lbl_803DDB1C:
+.obj lbl_803DDB1C, local
 	.asciz "<Node>"
+.endobj lbl_803DDB1C
 .balign 4
-lbl_803DDB24:
+.obj lbl_803DDB24, local
 	.asciz "all"
+.endobj lbl_803DDB24
 .balign 4
-lbl_803DDB28:
+.obj lbl_803DDB28, local
 	.asciz "teki"
+.endobj lbl_803DDB28
 .balign 4
-lbl_803DDB30:
+.obj lbl_803DDB30, local
 	.asciz "movie"
+.endobj lbl_803DDB30
 .balign 4
-lbl_803DDB38:
+.obj lbl_803DDB38, local
 	.asciz "mapMgr"
+.endobj lbl_803DDB38
 .balign 4
-lbl_803DDB40:
+.obj lbl_803DDB40, local
 	.asciz "shape"
+.endobj lbl_803DDB40
 .balign 4
-lbl_803DDB48:
+.obj lbl_803DDB48, local
 	.asciz "effects"
+.endobj lbl_803DDB48
 .balign 4
-lbl_803DDB50:
+.obj lbl_803DDB50, local
 	.asciz "gui"
+.endobj lbl_803DDB50
 .balign 4
-lbl_803DDB54:
+.obj lbl_803DDB54, local
 	.asciz "pause"
+.endobj lbl_803DDB54
 .balign 4
-lbl_803DDB5C:
+.obj lbl_803DDB5C, local
 	.asciz "%s"
+.endobj lbl_803DDB5C
 .balign 4
-lbl_803DDB60:
+.obj lbl_803DDB60, local
 	.asciz "%f"
+.endobj lbl_803DDB60
 .balign 4
-lbl_803DDB64:
+.obj lbl_803DDB64, local
 	.asciz "dayMgr"
+.endobj lbl_803DDB64
 .balign 4
-__RTTI__13GameInterface:
+.obj __RTTI__13GameInterface, local
 	.4byte lbl_802A7BD0
 	.4byte 0
+.endobj __RTTI__13GameInterface
 .balign 4
-lbl_803DDB74:
+.obj lbl_803DDB74, local
 	.asciz "ANode"
+.endobj lbl_803DDB74
 .balign 4
-__RTTI__5ANode:
+.obj __RTTI__5ANode, local
 	.4byte lbl_803DDB74
 	.4byte 0
-__RTTI__8CoreNode:
+.endobj __RTTI__5ANode
+.obj __RTTI__8CoreNode, local
 	.4byte lbl_802A7C04
 	.4byte lbl_802A7C10
-__RTTI__9GaugeInfo:
+.endobj __RTTI__8CoreNode
+.obj __RTTI__9GaugeInfo, local
 	.4byte lbl_802A7BF8
 	.4byte lbl_802A7C1C
+.endobj __RTTI__9GaugeInfo
 .balign 4
-lbl_803DDB94:
+.obj lbl_803DDB94, local
 	.asciz "Node"
+.endobj lbl_803DDB94
 .balign 4
-__RTTI__4Node:
+.obj __RTTI__4Node, local
 	.4byte lbl_803DDB94
 	.4byte lbl_802A7C58
-__RTTI__15BaseGameSection:
+.endobj __RTTI__4Node
+.obj __RTTI__15BaseGameSection, local
 	.4byte lbl_802A7C6C
 	.4byte lbl_802A7C7C
-__RTTI__23NewPikiGameSetupSection:
+.endobj __RTTI__15BaseGameSection
+.obj __RTTI__23NewPikiGameSetupSection, local
 	.4byte lbl_802A7C40
 	.4byte lbl_802A7C98
+.endobj __RTTI__23NewPikiGameSetupSection
 .balign 4
-lbl_803DDBB4:
+.obj lbl_803DDBB4, local
 	.asciz "Section"
+.endobj lbl_803DDBB4
 .balign 4
-__RTTI__7Section:
+.obj __RTTI__7Section, local
 	.4byte lbl_803DDBB4
 	.4byte lbl_802A7D04
-__RTTI__18NewPikiGameSection:
+.endobj __RTTI__7Section
+.obj __RTTI__18NewPikiGameSection, local
 	.4byte lbl_802A7CF0
 	.4byte lbl_802A7D20
-__RTTI__18GameMovieInterface:
+.endobj __RTTI__18NewPikiGameSection
+.obj __RTTI__18GameMovieInterface, local
 	.4byte lbl_802A7DAC
 	.4byte lbl_802A7DC0
-__RTTI__9ModeState:
+.endobj __RTTI__18GameMovieInterface
+.obj __RTTI__9ModeState, local
 	.4byte lbl_802A7E00
 	.4byte 0
-__RTTI__16DayOverModeState:
+.endobj __RTTI__9ModeState
+.obj __RTTI__16DayOverModeState, local
 	.4byte lbl_802A7DEC
 	.4byte lbl_802A7E0C
-__RTTI__16MessageModeState:
+.endobj __RTTI__16DayOverModeState
+.obj __RTTI__16MessageModeState, local
 	.4byte lbl_802A7E2C
 	.4byte lbl_802A7E40
-__RTTI__16RunningModeState:
+.endobj __RTTI__16MessageModeState
+.obj __RTTI__16RunningModeState, local
 	.4byte lbl_802A7E60
 	.4byte lbl_802A7E74
-__RTTI__21QuittingGameModeState:
+.endobj __RTTI__16RunningModeState
+.obj __RTTI__21QuittingGameModeState, local
 	.4byte lbl_802A7E94
 	.4byte lbl_802A7EAC
-__RTTI__18IntroGameModeState:
+.endobj __RTTI__21QuittingGameModeState
+.obj __RTTI__18IntroGameModeState, local
 	.4byte lbl_802A7EE0
 	.4byte lbl_802A7EF4
+.endobj __RTTI__18IntroGameModeState
 
 .section .sbss, "wa"
 .balign 8

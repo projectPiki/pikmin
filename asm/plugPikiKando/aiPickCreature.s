@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global __ct__15ActPickCreatureFP4Piki
-__ct__15ActPickCreatureFP4Piki:
+.fn __ct__15ActPickCreatureFP4Piki, global
 /* 800BD364 000BA2C4  7C 08 02 A6 */	mflr r0
 /* 800BD368 000BA2C8  38 A0 00 01 */	li r5, 1
 /* 800BD36C 000BA2CC  90 01 00 04 */	stw r0, 4(r1)
@@ -55,9 +54,9 @@ __ct__15ActPickCreatureFP4Piki:
 /* 800BD424 000BA384  38 21 00 20 */	addi r1, r1, 0x20
 /* 800BD428 000BA388  7C 08 03 A6 */	mtlr r0
 /* 800BD42C 000BA38C  4E 80 00 20 */	blr 
+.endfn __ct__15ActPickCreatureFP4Piki
 
-.global init__15ActPickCreatureFP8Creature
-init__15ActPickCreatureFP8Creature:
+.fn init__15ActPickCreatureFP8Creature, global
 /* 800BD430 000BA390  7C 08 02 A6 */	mflr r0
 /* 800BD434 000BA394  90 01 00 04 */	stw r0, 4(r1)
 /* 800BD438 000BA398  94 21 FF F8 */	stwu r1, -8(r1)
@@ -66,9 +65,9 @@ init__15ActPickCreatureFP8Creature:
 /* 800BD444 000BA3A4  38 21 00 08 */	addi r1, r1, 8
 /* 800BD448 000BA3A8  7C 08 03 A6 */	mtlr r0
 /* 800BD44C 000BA3AC  4E 80 00 20 */	blr 
+.endfn init__15ActPickCreatureFP8Creature
 
-.global initialise__Q210ActDeliver11InitialiserFP6Action
-initialise__Q210ActDeliver11InitialiserFP6Action:
+.fn initialise__Q210ActDeliver11InitialiserFP6Action, global
 /* 800BD450 000BA3B0  7C 08 02 A6 */	mflr r0
 /* 800BD454 000BA3B4  90 01 00 04 */	stw r0, 4(r1)
 /* 800BD458 000BA3B8  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -96,9 +95,9 @@ initialise__Q210ActDeliver11InitialiserFP6Action:
 /* 800BD4A8 000BA408  38 21 00 18 */	addi r1, r1, 0x18
 /* 800BD4AC 000BA40C  7C 08 03 A6 */	mtlr r0
 /* 800BD4B0 000BA410  4E 80 00 20 */	blr 
+.endfn initialise__Q210ActDeliver11InitialiserFP6Action
 
-.global init__10ActDeliverFP8Creature
-init__10ActDeliverFP8Creature:
+.fn init__10ActDeliverFP8Creature, global
 /* 800BD4B4 000BA414  7C 08 02 A6 */	mflr r0
 /* 800BD4B8 000BA418  90 01 00 04 */	stw r0, 4(r1)
 /* 800BD4BC 000BA41C  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -135,9 +134,9 @@ init__10ActDeliverFP8Creature:
 /* 800BD52C 000BA48C  38 21 00 20 */	addi r1, r1, 0x20
 /* 800BD530 000BA490  7C 08 03 A6 */	mtlr r0
 /* 800BD534 000BA494  4E 80 00 20 */	blr 
+.endfn init__10ActDeliverFP8Creature
 
-.global __dt__10ActDeliverFv
-__dt__10ActDeliverFv:
+.fn __dt__10ActDeliverFv, weak
 /* 800BD538 000BA498  7C 08 02 A6 */	mflr r0
 /* 800BD53C 000BA49C  90 01 00 04 */	stw r0, 4(r1)
 /* 800BD540 000BA4A0  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -169,15 +168,15 @@ __dt__10ActDeliverFv:
 /* 800BD5A0 000BA500  38 21 00 18 */	addi r1, r1, 0x18
 /* 800BD5A4 000BA504  7C 08 03 A6 */	mtlr r0
 /* 800BD5A8 000BA508  4E 80 00 20 */	blr 
+.endfn __dt__10ActDeliverFv
 
-.global defaultInitialiser__10ActDeliverFv
-defaultInitialiser__10ActDeliverFv:
+.fn defaultInitialiser__10ActDeliverFv, weak
 /* 800BD5AC 000BA50C  38 00 00 00 */	li r0, 0
 /* 800BD5B0 000BA510  90 03 00 18 */	stw r0, 0x18(r3)
 /* 800BD5B4 000BA514  4E 80 00 20 */	blr 
+.endfn defaultInitialiser__10ActDeliverFv
 
-.global cleanup__10ActDeliverFv
-cleanup__10ActDeliverFv:
+.fn cleanup__10ActDeliverFv, weak
 /* 800BD5B8 000BA518  7C 08 02 A6 */	mflr r0
 /* 800BD5BC 000BA51C  90 01 00 04 */	stw r0, 4(r1)
 /* 800BD5C0 000BA520  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -195,13 +194,13 @@ cleanup__10ActDeliverFv:
 /* 800BD5EC 000BA54C  38 21 00 18 */	addi r1, r1, 0x18
 /* 800BD5F0 000BA550  7C 08 03 A6 */	mtlr r0
 /* 800BD5F4 000BA554  4E 80 00 20 */	blr 
+.endfn cleanup__10ActDeliverFv
 
-.global initialise__Q26Action11InitialiserFP6Action
-initialise__Q26Action11InitialiserFP6Action:
+.fn initialise__Q26Action11InitialiserFP6Action, weak
 /* 800BD5F8 000BA558  4E 80 00 20 */	blr 
+.endfn initialise__Q26Action11InitialiserFP6Action
 
-.global __dt__15ActPickCreatureFv
-__dt__15ActPickCreatureFv:
+.fn __dt__15ActPickCreatureFv, weak
 /* 800BD5FC 000BA55C  7C 08 02 A6 */	mflr r0
 /* 800BD600 000BA560  90 01 00 04 */	stw r0, 4(r1)
 /* 800BD604 000BA564  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -233,36 +232,45 @@ __dt__15ActPickCreatureFv:
 /* 800BD664 000BA5C4  38 21 00 18 */	addi r1, r1, 0x18
 /* 800BD668 000BA5C8  7C 08 03 A6 */	mtlr r0
 /* 800BD66C 000BA5CC  4E 80 00 20 */	blr 
+.endfn __dt__15ActPickCreatureFv
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802B6F70:
+.obj lbl_802B6F70, local
 	.asciz "aiPickCreature.cpp"
+.endobj lbl_802B6F70
 .balign 4
-lbl_802B6F84:
+.obj lbl_802B6F84, local
 	.asciz "pickCreature\n"
+.endobj lbl_802B6F84
 .balign 4
-lbl_802B6F94:
+.obj lbl_802B6F94, local
 	.asciz "ActDeliver"
+.endobj lbl_802B6F94
 .balign 4
-lbl_802B6FA0:
+.obj lbl_802B6FA0, local
 	.asciz "Receiver<Piki>"
+.endobj lbl_802B6FA0
 .balign 4
-lbl_802B6FB0:
+.obj lbl_802B6FB0, local
 	.4byte "__RTTI__15Receiver<4Piki>"
 	.4byte 0
 	.4byte 0
+.endobj lbl_802B6FB0
 .balign 4
-lbl_802B6FBC:
+.obj lbl_802B6FBC, local
 	.asciz "AndAction"
+.endobj lbl_802B6FBC
 .balign 4
-lbl_802B6FC8:
+.obj lbl_802B6FC8, local
 	.4byte "__RTTI__15Receiver<4Piki>"
 	.4byte 0
 	.4byte __RTTI__6Action
 	.4byte 0
 	.4byte 0
-lbl_802B6FDC:
+.endobj lbl_802B6FC8
+.balign 4
+.obj lbl_802B6FDC, local
 	.4byte "__RTTI__15Receiver<4Piki>"
 	.4byte 0
 	.4byte __RTTI__6Action
@@ -270,8 +278,9 @@ lbl_802B6FDC:
 	.4byte __RTTI__9AndAction
 	.4byte 0
 	.4byte 0
-.global __vt__10ActDeliver
-__vt__10ActDeliver:
+.endobj lbl_802B6FDC
+.balign 4
+.obj __vt__10ActDeliver, global
 	.4byte __RTTI__10ActDeliver
 	.4byte 0
 	.4byte "procMsg__15Receiver<4Piki>FP4PikiP3Msg"
@@ -297,32 +306,39 @@ __vt__10ActDeliver:
 	.4byte restart__6ActionFv
 	.4byte resumable__6ActionFv
 	.4byte getInfo__6ActionFPc
+.endobj __vt__10ActDeliver
 .balign 4
-lbl_802B705C:
+.obj lbl_802B705C, local
 	.asciz "ActDeliver::Initialiser"
+.endobj lbl_802B705C
 .balign 4
-lbl_802B7074:
+.obj lbl_802B7074, local
 	.asciz "Action::Initialiser"
+.endobj lbl_802B7074
 .balign 4
-lbl_802B7088:
+.obj lbl_802B7088, local
 	.4byte __RTTI__Q26Action11Initialiser
 	.4byte 0
 	.4byte 0
-.global __vt__Q210ActDeliver11Initialiser
-__vt__Q210ActDeliver11Initialiser:
+.endobj lbl_802B7088
+.balign 4
+.obj __vt__Q210ActDeliver11Initialiser, global
 	.4byte __RTTI__Q210ActDeliver11Initialiser
 	.4byte 0
 	.4byte initialise__Q210ActDeliver11InitialiserFP6Action
-.global __vt__Q26Action11Initialiser
-__vt__Q26Action11Initialiser:
+.endobj __vt__Q210ActDeliver11Initialiser
+.balign 4
+.obj __vt__Q26Action11Initialiser, weak
 	.4byte __RTTI__Q26Action11Initialiser
 	.4byte 0
 	.4byte initialise__Q26Action11InitialiserFP6Action
+.endobj __vt__Q26Action11Initialiser
 .balign 4
-lbl_802B70AC:
+.obj lbl_802B70AC, local
 	.asciz "ActPickCreature"
+.endobj lbl_802B70AC
 .balign 4
-lbl_802B70BC:
+.obj lbl_802B70BC, local
 	.4byte "__RTTI__15Receiver<4Piki>"
 	.4byte 0
 	.4byte __RTTI__6Action
@@ -330,8 +346,9 @@ lbl_802B70BC:
 	.4byte __RTTI__9AndAction
 	.4byte 0
 	.4byte 0
-.global __vt__15ActPickCreature
-__vt__15ActPickCreature:
+.endobj lbl_802B70BC
+.balign 4
+.obj __vt__15ActPickCreature, global
 	.4byte __RTTI__15ActPickCreature
 	.4byte 0
 	.4byte "procMsg__15Receiver<4Piki>FP4PikiP3Msg"
@@ -357,7 +374,9 @@ __vt__15ActPickCreature:
 	.4byte restart__6ActionFv
 	.4byte resumable__6ActionFv
 	.4byte getInfo__6ActionFPc
-lbl_802B713C:
+.endobj __vt__15ActPickCreature
+.balign 4
+.obj lbl_802B713C, local
 	.4byte .L_800A7908
 	.4byte .L_800A7930
 	.4byte .L_800A7944
@@ -369,31 +388,45 @@ lbl_802B713C:
 	.4byte .L_800A791C
 	.4byte .L_800A79D0
 	.4byte .L_800A79BC
+.endobj lbl_802B713C
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-"__RTTI__15Receiver<4Piki>":
+.obj "__RTTI__15Receiver<4Piki>", local
 	.4byte lbl_802B6FA0
 	.4byte 0
+.endobj "__RTTI__15Receiver<4Piki>"
 .balign 4
-lbl_803E05A8:
+.obj lbl_803E05A8, local
 	.asciz "Action"
+.endobj lbl_803E05A8
 .balign 4
-__RTTI__6Action:
+.obj __RTTI__6Action, local
 	.4byte lbl_803E05A8
 	.4byte lbl_802B6FB0
-__RTTI__9AndAction:
+.endobj __RTTI__6Action
+.balign 4
+.obj __RTTI__9AndAction, local
 	.4byte lbl_802B6FBC
 	.4byte lbl_802B6FC8
-__RTTI__10ActDeliver:
+.endobj __RTTI__9AndAction
+.balign 4
+.obj __RTTI__10ActDeliver, local
 	.4byte lbl_802B6F94
 	.4byte lbl_802B6FDC
-__RTTI__Q26Action11Initialiser:
+.endobj __RTTI__10ActDeliver
+.balign 4
+.obj __RTTI__Q26Action11Initialiser, local
 	.4byte lbl_802B7074
 	.4byte 0
-__RTTI__Q210ActDeliver11Initialiser:
+.endobj __RTTI__Q26Action11Initialiser
+.balign 4
+.obj __RTTI__Q210ActDeliver11Initialiser, local
 	.4byte lbl_802B705C
 	.4byte lbl_802B7088
-__RTTI__15ActPickCreature:
+.endobj __RTTI__Q210ActDeliver11Initialiser
+.balign 4
+.obj __RTTI__15ActPickCreature, local
 	.4byte lbl_802B70AC
 	.4byte lbl_802B70BC
+.endobj __RTTI__15ActPickCreature

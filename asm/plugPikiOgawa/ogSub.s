@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global ogCheckInsCard__3zenFv
-ogCheckInsCard__3zenFv:
+.fn ogCheckInsCard__3zenFv, global
 /* 8017E850 0017B7B0  7C 08 02 A6 */	mflr r0
 /* 8017E854 0017B7B4  3C 60 80 3A */	lis r3, gameflow@ha
 /* 8017E858 0017B7B8  90 01 00 04 */	stw r0, 4(r1)
@@ -13,9 +12,9 @@ ogCheckInsCard__3zenFv:
 /* 8017E870 0017B7D0  38 21 00 08 */	addi r1, r1, 8
 /* 8017E874 0017B7D4  7C 08 03 A6 */	mtlr r0
 /* 8017E878 0017B7D8  4E 80 00 20 */	blr 
+.endfn ogCheckInsCard__3zenFv
 
-.global calcPuruPuruScale__3zenFf
-calcPuruPuruScale__3zenFf:
+.fn calcPuruPuruScale__3zenFf, global
 /* 8017E87C 0017B7DC  7C 08 02 A6 */	mflr r0
 /* 8017E880 0017B7E0  90 01 00 04 */	stw r0, 4(r1)
 /* 8017E884 0017B7E4  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -43,9 +42,9 @@ calcPuruPuruScale__3zenFf:
 /* 8017E8D8 0017B838  38 21 00 20 */	addi r1, r1, 0x20
 /* 8017E8DC 0017B83C  7C 08 03 A6 */	mtlr r0
 /* 8017E8E0 0017B840  4E 80 00 20 */	blr 
+.endfn calcPuruPuruScale__3zenFf
 
-.global setNumberTag__3zenFP9P2DScreenUlPii
-setNumberTag__3zenFP9P2DScreenUlPii:
+.fn setNumberTag__3zenFP9P2DScreenUlPii, global
 /* 8017E8E4 0017B844  7C 08 02 A6 */	mflr r0
 /* 8017E8E8 0017B848  90 01 00 04 */	stw r0, 4(r1)
 /* 8017E8EC 0017B84C  94 21 FF B0 */	stwu r1, -0x50(r1)
@@ -142,9 +141,9 @@ setNumberTag__3zenFP9P2DScreenUlPii:
 /* 8017EA4C 0017B9AC  38 21 00 50 */	addi r1, r1, 0x50
 /* 8017EA50 0017B9B0  7C 08 03 A6 */	mtlr r0
 /* 8017EA54 0017B9B4  4E 80 00 20 */	blr 
+.endfn setNumberTag__3zenFP9P2DScreenUlPii
 
-.global "getNumber__Q23zen12FigureTex<i>Fv"
-"getNumber__Q23zen12FigureTex<i>Fv":
+.fn "getNumber__Q23zen12FigureTex<i>Fv", weak
 /* 8017EA58 0017B9B8  80 A3 00 00 */	lwz r5, 0(r3)
 /* 8017EA5C 0017B9BC  3C 80 66 66 */	lis r4, 0x66666667@ha
 /* 8017EA60 0017B9C0  38 04 66 67 */	addi r0, r4, 0x66666667@l
@@ -160,9 +159,9 @@ setNumberTag__3zenFP9P2DScreenUlPii:
 /* 8017EA88 0017B9E8  4C 80 00 20 */	bgelr 
 /* 8017EA8C 0017B9EC  38 60 00 00 */	li r3, 0
 /* 8017EA90 0017B9F0  4E 80 00 20 */	blr 
+.endfn "getNumber__Q23zen12FigureTex<i>Fv"
 
-.global setTextColor__3zenFP10P2DTextBoxP10P2DPicture
-setTextColor__3zenFP10P2DTextBoxP10P2DPicture:
+.fn setTextColor__3zenFP10P2DTextBoxP10P2DPicture, global
 /* 8017EA94 0017B9F4  94 21 FF D0 */	stwu r1, -0x30(r1)
 /* 8017EA98 0017B9F8  38 00 00 00 */	li r0, 0
 /* 8017EA9C 0017B9FC  88 A3 00 F4 */	lbz r5, 0xf4(r3)
@@ -188,9 +187,9 @@ setTextColor__3zenFP10P2DTextBoxP10P2DPicture:
 /* 8017EAEC 0017BA4C  90 04 01 0C */	stw r0, 0x10c(r4)
 /* 8017EAF0 0017BA50  38 21 00 30 */	addi r1, r1, 0x30
 /* 8017EAF4 0017BA54  4E 80 00 20 */	blr 
+.endfn setTextColor__3zenFP10P2DTextBoxP10P2DPicture
 
-.global getStringCVS__3zenFPcPcs
-getStringCVS__3zenFPcPcs:
+.fn getStringCVS__3zenFPcPcs, global
 /* 8017EAF8 0017BA58  38 C0 02 00 */	li r6, 0x200
 /* 8017EAFC 0017BA5C  48 00 00 30 */	b .L_8017EB2C
 .L_8017EB00:
@@ -232,9 +231,9 @@ getStringCVS__3zenFPcPcs:
 /* 8017EB74 0017BAD4  98 03 00 00 */	stb r0, 0(r3)
 /* 8017EB78 0017BAD8  38 60 00 00 */	li r3, 0
 /* 8017EB7C 0017BADC  4E 80 00 20 */	blr 
+.endfn getStringCVS__3zenFPcPcs
 
-.global __ct__Q23zen12PikaAlphaMgrFP9P2DScreen
-__ct__Q23zen12PikaAlphaMgrFP9P2DScreen:
+.fn __ct__Q23zen12PikaAlphaMgrFP9P2DScreen, global
 /* 8017EB80 0017BAE0  7C 08 02 A6 */	mflr r0
 /* 8017EB84 0017BAE4  90 01 00 04 */	stw r0, 4(r1)
 /* 8017EB88 0017BAE8  38 00 00 00 */	li r0, 0
@@ -443,9 +442,9 @@ __ct__Q23zen12PikaAlphaMgrFP9P2DScreen:
 /* 8017EE9C 0017BDFC  38 21 02 A8 */	addi r1, r1, 0x2a8
 /* 8017EEA0 0017BE00  7C 08 03 A6 */	mtlr r0
 /* 8017EEA4 0017BE04  4E 80 00 20 */	blr 
+.endfn __ct__Q23zen12PikaAlphaMgrFP9P2DScreen
 
-.global start__Q23zen12PikaAlphaMgrFv
-start__Q23zen12PikaAlphaMgrFv:
+.fn start__Q23zen12PikaAlphaMgrFv, global
 /* 8017EEA8 0017BE08  7C 08 02 A6 */	mflr r0
 /* 8017EEAC 0017BE0C  90 01 00 04 */	stw r0, 4(r1)
 /* 8017EEB0 0017BE10  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -475,9 +474,9 @@ start__Q23zen12PikaAlphaMgrFv:
 /* 8017EF08 0017BE68  38 21 00 20 */	addi r1, r1, 0x20
 /* 8017EF0C 0017BE6C  7C 08 03 A6 */	mtlr r0
 /* 8017EF10 0017BE70  4E 80 00 20 */	blr 
+.endfn start__Q23zen12PikaAlphaMgrFv
 
-.global startFadeIn__Q23zen12PikaAlphaMgrFf
-startFadeIn__Q23zen12PikaAlphaMgrFf:
+.fn startFadeIn__Q23zen12PikaAlphaMgrFf, global
 /* 8017EF14 0017BE74  7C 08 02 A6 */	mflr r0
 /* 8017EF18 0017BE78  90 01 00 04 */	stw r0, 4(r1)
 /* 8017EF1C 0017BE7C  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -513,9 +512,9 @@ startFadeIn__Q23zen12PikaAlphaMgrFf:
 /* 8017EF8C 0017BEEC  38 21 00 28 */	addi r1, r1, 0x28
 /* 8017EF90 0017BEF0  7C 08 03 A6 */	mtlr r0
 /* 8017EF94 0017BEF4  4E 80 00 20 */	blr 
+.endfn startFadeIn__Q23zen12PikaAlphaMgrFf
 
-.global startFadeOut__Q23zen12PikaAlphaMgrFf
-startFadeOut__Q23zen12PikaAlphaMgrFf:
+.fn startFadeOut__Q23zen12PikaAlphaMgrFf, global
 /* 8017EF98 0017BEF8  7C 08 02 A6 */	mflr r0
 /* 8017EF9C 0017BEFC  90 01 00 04 */	stw r0, 4(r1)
 /* 8017EFA0 0017BF00  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -551,9 +550,9 @@ startFadeOut__Q23zen12PikaAlphaMgrFf:
 /* 8017F010 0017BF70  38 21 00 28 */	addi r1, r1, 0x28
 /* 8017F014 0017BF74  7C 08 03 A6 */	mtlr r0
 /* 8017F018 0017BF78  4E 80 00 20 */	blr 
+.endfn startFadeOut__Q23zen12PikaAlphaMgrFf
 
-.global update__Q23zen12PikaAlphaMgrFv
-update__Q23zen12PikaAlphaMgrFv:
+.fn update__Q23zen12PikaAlphaMgrFv, global
 /* 8017F01C 0017BF7C  7C 08 02 A6 */	mflr r0
 /* 8017F020 0017BF80  90 01 00 04 */	stw r0, 4(r1)
 /* 8017F024 0017BF84  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -637,9 +636,9 @@ update__Q23zen12PikaAlphaMgrFv:
 /* 8017F128 0017C088  38 21 00 20 */	addi r1, r1, 0x20
 /* 8017F12C 0017C08C  7C 08 03 A6 */	mtlr r0
 /* 8017F130 0017C090  4E 80 00 20 */	blr 
+.endfn update__Q23zen12PikaAlphaMgrFv
 
-.global __ct__Q23zen15setTenmetuAlphaFP10P2DPictureffUcUc
-__ct__Q23zen15setTenmetuAlphaFP10P2DPictureffUcUc:
+.fn __ct__Q23zen15setTenmetuAlphaFP10P2DPictureffUcUc, global
 /* 8017F134 0017C094  7C 08 02 A6 */	mflr r0
 /* 8017F138 0017C098  3C E0 80 03 */	lis r7, __ct__6ColourFv@ha
 /* 8017F13C 0017C09C  90 01 00 04 */	stw r0, 4(r1)
@@ -700,9 +699,9 @@ __ct__Q23zen15setTenmetuAlphaFP10P2DPictureffUcUc:
 /* 8017F218 0017C178  38 21 00 50 */	addi r1, r1, 0x50
 /* 8017F21C 0017C17C  7C 08 03 A6 */	mtlr r0
 /* 8017F220 0017C180  4E 80 00 20 */	blr 
+.endfn __ct__Q23zen15setTenmetuAlphaFP10P2DPictureffUcUc
 
-.global __ct__Q23zen15setTenmetuAlphaFP10P2DPicturef
-__ct__Q23zen15setTenmetuAlphaFP10P2DPicturef:
+.fn __ct__Q23zen15setTenmetuAlphaFP10P2DPicturef, global
 /* 8017F224 0017C184  7C 08 02 A6 */	mflr r0
 /* 8017F228 0017C188  3C A0 80 03 */	lis r5, __ct__6ColourFv@ha
 /* 8017F22C 0017C18C  90 01 00 04 */	stw r0, 4(r1)
@@ -763,9 +762,9 @@ __ct__Q23zen15setTenmetuAlphaFP10P2DPicturef:
 /* 8017F308 0017C268  38 21 00 38 */	addi r1, r1, 0x38
 /* 8017F30C 0017C26C  7C 08 03 A6 */	mtlr r0
 /* 8017F310 0017C270  4E 80 00 20 */	blr 
+.endfn __ct__Q23zen15setTenmetuAlphaFP10P2DPicturef
 
-.global updateColor__Q23zen15setTenmetuAlphaFv
-updateColor__Q23zen15setTenmetuAlphaFv:
+.fn updateColor__Q23zen15setTenmetuAlphaFv, global
 /* 8017F314 0017C274  94 21 FF 60 */	stwu r1, -0xa0(r1)
 /* 8017F318 0017C278  A8 E3 01 28 */	lha r7, 0x128(r3)
 /* 8017F31C 0017C27C  7C E0 07 35 */	extsh. r0, r7
@@ -987,9 +986,9 @@ updateColor__Q23zen15setTenmetuAlphaFv:
 .L_8017F674:
 /* 8017F674 0017C5D4  38 21 00 A0 */	addi r1, r1, 0xa0
 /* 8017F678 0017C5D8  4E 80 00 20 */	blr 
+.endfn updateColor__Q23zen15setTenmetuAlphaFv
 
-.global start__Q23zen15setTenmetuAlphaFv
-start__Q23zen15setTenmetuAlphaFv:
+.fn start__Q23zen15setTenmetuAlphaFv, global
 /* 8017F67C 0017C5DC  38 00 00 00 */	li r0, 0
 /* 8017F680 0017C5E0  B0 03 01 2A */	sth r0, 0x12a(r3)
 /* 8017F684 0017C5E4  38 00 00 01 */	li r0, 1
@@ -999,9 +998,9 @@ start__Q23zen15setTenmetuAlphaFv:
 /* 8017F694 0017C5F4  D0 03 01 20 */	stfs f0, 0x120(r3)
 /* 8017F698 0017C5F8  90 03 00 00 */	stw r0, 0(r3)
 /* 8017F69C 0017C5FC  4E 80 00 20 */	blr 
+.endfn start__Q23zen15setTenmetuAlphaFv
 
-.global startFadeIn__Q23zen15setTenmetuAlphaFfff
-startFadeIn__Q23zen15setTenmetuAlphaFfff:
+.fn startFadeIn__Q23zen15setTenmetuAlphaFfff, global
 /* 8017F6A0 0017C600  80 03 00 00 */	lwz r0, 0(r3)
 /* 8017F6A4 0017C604  2C 00 00 01 */	cmpwi r0, 1
 /* 8017F6A8 0017C608  4D 82 00 20 */	beqlr 
@@ -1027,9 +1026,9 @@ startFadeIn__Q23zen15setTenmetuAlphaFfff:
 /* 8017F6F4 0017C654  D0 03 00 20 */	stfs f0, 0x20(r3)
 /* 8017F6F8 0017C658  90 03 00 00 */	stw r0, 0(r3)
 /* 8017F6FC 0017C65C  4E 80 00 20 */	blr 
+.endfn startFadeIn__Q23zen15setTenmetuAlphaFfff
 
-.global startFadeOut__Q23zen15setTenmetuAlphaFfff
-startFadeOut__Q23zen15setTenmetuAlphaFfff:
+.fn startFadeOut__Q23zen15setTenmetuAlphaFfff, global
 /* 8017F700 0017C660  80 03 00 00 */	lwz r0, 0(r3)
 /* 8017F704 0017C664  2C 00 00 00 */	cmpwi r0, 0
 /* 8017F708 0017C668  4D 82 00 20 */	beqlr 
@@ -1049,9 +1048,9 @@ startFadeOut__Q23zen15setTenmetuAlphaFfff:
 /* 8017F73C 0017C69C  D0 03 00 20 */	stfs f0, 0x20(r3)
 /* 8017F740 0017C6A0  90 03 00 00 */	stw r0, 0(r3)
 /* 8017F744 0017C6A4  4E 80 00 20 */	blr 
+.endfn startFadeOut__Q23zen15setTenmetuAlphaFfff
 
-.global update__Q23zen15setTenmetuAlphaFv
-update__Q23zen15setTenmetuAlphaFv:
+.fn update__Q23zen15setTenmetuAlphaFv, global
 /* 8017F748 0017C6A8  7C 08 02 A6 */	mflr r0
 /* 8017F74C 0017C6AC  90 01 00 04 */	stw r0, 4(r1)
 /* 8017F750 0017C6B0  94 21 FF 78 */	stwu r1, -0x88(r1)
@@ -1280,9 +1279,9 @@ update__Q23zen15setTenmetuAlphaFv:
 /* 8017FA94 0017C9F4  38 21 00 88 */	addi r1, r1, 0x88
 /* 8017FA98 0017C9F8  7C 08 03 A6 */	mtlr r0
 /* 8017FA9C 0017C9FC  4E 80 00 20 */	blr 
+.endfn update__Q23zen15setTenmetuAlphaFv
 
-.global __ct__Q23zen9ogFadeMgrFP7P2DPaneUc
-__ct__Q23zen9ogFadeMgrFP7P2DPaneUc:
+.fn __ct__Q23zen9ogFadeMgrFP7P2DPaneUc, global
 /* 8017FAA0 0017CA00  7C 08 02 A6 */	mflr r0
 /* 8017FAA4 0017CA04  54 A5 06 3E */	clrlwi r5, r5, 0x18
 /* 8017FAA8 0017CA08  90 01 00 04 */	stw r0, 4(r1)
@@ -1315,9 +1314,9 @@ __ct__Q23zen9ogFadeMgrFP7P2DPaneUc:
 /* 8017FB14 0017CA74  38 21 00 30 */	addi r1, r1, 0x30
 /* 8017FB18 0017CA78  7C 08 03 A6 */	mtlr r0
 /* 8017FB1C 0017CA7C  4E 80 00 20 */	blr 
+.endfn __ct__Q23zen9ogFadeMgrFP7P2DPaneUc
 
-.global start__Q23zen9ogFadeMgrFQ33zen9ogFadeMgr16ogFadeStatusFlagf
-start__Q23zen9ogFadeMgrFQ33zen9ogFadeMgr16ogFadeStatusFlagf:
+.fn start__Q23zen9ogFadeMgrFQ33zen9ogFadeMgr16ogFadeStatusFlagf, global
 /* 8017FB20 0017CA80  7C 08 02 A6 */	mflr r0
 /* 8017FB24 0017CA84  90 01 00 04 */	stw r0, 4(r1)
 /* 8017FB28 0017CA88  94 21 FF F8 */	stwu r1, -8(r1)
@@ -1348,9 +1347,9 @@ start__Q23zen9ogFadeMgrFQ33zen9ogFadeMgr16ogFadeStatusFlagf:
 /* 8017FB7C 0017CADC  38 21 00 08 */	addi r1, r1, 8
 /* 8017FB80 0017CAE0  7C 08 03 A6 */	mtlr r0
 /* 8017FB84 0017CAE4  4E 80 00 20 */	blr 
+.endfn start__Q23zen9ogFadeMgrFQ33zen9ogFadeMgr16ogFadeStatusFlagf
 
-.global setAlpha__Q23zen9ogFadeMgrFv
-setAlpha__Q23zen9ogFadeMgrFv:
+.fn setAlpha__Q23zen9ogFadeMgrFv, global
 /* 8017FB88 0017CAE8  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 8017FB8C 0017CAEC  A0 03 00 08 */	lhz r0, 8(r3)
 /* 8017FB90 0017CAF0  2C 00 00 13 */	cmpwi r0, 0x13
@@ -1385,9 +1384,9 @@ setAlpha__Q23zen9ogFadeMgrFv:
 .L_8017FBF8:
 /* 8017FBF8 0017CB58  38 21 00 20 */	addi r1, r1, 0x20
 /* 8017FBFC 0017CB5C  4E 80 00 20 */	blr 
+.endfn setAlpha__Q23zen9ogFadeMgrFv
 
-.global update__Q23zen9ogFadeMgrFv
-update__Q23zen9ogFadeMgrFv:
+.fn update__Q23zen9ogFadeMgrFv, global
 /* 8017FC00 0017CB60  94 21 FF C8 */	stwu r1, -0x38(r1)
 /* 8017FC04 0017CB64  80 03 00 00 */	lwz r0, 0(r3)
 /* 8017FC08 0017CB68  2C 00 00 00 */	cmpwi r0, 0
@@ -1479,9 +1478,9 @@ update__Q23zen9ogFadeMgrFv:
 .L_8017FD38:
 /* 8017FD38 0017CC98  38 21 00 38 */	addi r1, r1, 0x38
 /* 8017FD3C 0017CC9C  4E 80 00 20 */	blr 
+.endfn update__Q23zen9ogFadeMgrFv
 
-.global move__7P2DPaneFii
-move__7P2DPaneFii:
+.fn move__7P2DPaneFii, weak
 /* 8017FD40 0017CCA0  7C 08 02 A6 */	mflr r0
 /* 8017FD44 0017CCA4  38 63 00 18 */	addi r3, r3, 0x18
 /* 8017FD48 0017CCA8  90 01 00 04 */	stw r0, 4(r1)
@@ -1491,9 +1490,9 @@ move__7P2DPaneFii:
 /* 8017FD58 0017CCB8  38 21 00 08 */	addi r1, r1, 8
 /* 8017FD5C 0017CCBC  7C 08 03 A6 */	mtlr r0
 /* 8017FD60 0017CCC0  4E 80 00 20 */	blr 
+.endfn move__7P2DPaneFii
 
-.global __ct__Q23zen15ogTexAnimSubMgrFP9P2DScreenP10P2DPictureP10P2DTextBox
-__ct__Q23zen15ogTexAnimSubMgrFP9P2DScreenP10P2DPictureP10P2DTextBox:
+.fn __ct__Q23zen15ogTexAnimSubMgrFP9P2DScreenP10P2DPictureP10P2DTextBox, global
 /* 8017FD64 0017CCC4  7C 08 02 A6 */	mflr r0
 /* 8017FD68 0017CCC8  90 01 00 04 */	stw r0, 4(r1)
 /* 8017FD6C 0017CCCC  38 00 00 00 */	li r0, 0
@@ -1591,9 +1590,9 @@ __ct__Q23zen15ogTexAnimSubMgrFP9P2DScreenP10P2DPictureP10P2DTextBox:
 /* 8017FED0 0017CE30  38 21 02 50 */	addi r1, r1, 0x250
 /* 8017FED4 0017CE34  7C 08 03 A6 */	mtlr r0
 /* 8017FED8 0017CE38  4E 80 00 20 */	blr 
+.endfn __ct__Q23zen15ogTexAnimSubMgrFP9P2DScreenP10P2DPictureP10P2DTextBox
 
-.global __ct__Q23zen12ogTexAnimMgrFP9P2DScreen
-__ct__Q23zen12ogTexAnimMgrFP9P2DScreen:
+.fn __ct__Q23zen12ogTexAnimMgrFP9P2DScreen, global
 /* 8017FEDC 0017CE3C  7C 08 02 A6 */	mflr r0
 /* 8017FEE0 0017CE40  90 01 00 04 */	stw r0, 4(r1)
 /* 8017FEE4 0017CE44  38 00 00 00 */	li r0, 0
@@ -1658,9 +1657,9 @@ __ct__Q23zen12ogTexAnimMgrFP9P2DScreen:
 /* 8017FFC4 0017CF24  38 21 00 58 */	addi r1, r1, 0x58
 /* 8017FFC8 0017CF28  7C 08 03 A6 */	mtlr r0
 /* 8017FFCC 0017CF2C  4E 80 00 20 */	blr 
+.endfn __ct__Q23zen12ogTexAnimMgrFP9P2DScreen
 
-.global update__Q23zen12ogTexAnimMgrFv
-update__Q23zen12ogTexAnimMgrFv:
+.fn update__Q23zen12ogTexAnimMgrFv, global
 /* 8017FFD0 0017CF30  7C 08 02 A6 */	mflr r0
 /* 8017FFD4 0017CF34  90 01 00 04 */	stw r0, 4(r1)
 /* 8017FFD8 0017CF38  94 21 FF C0 */	stwu r1, -0x40(r1)
@@ -1748,9 +1747,9 @@ update__Q23zen12ogTexAnimMgrFv:
 /* 80180110 0017D070  38 21 00 40 */	addi r1, r1, 0x40
 /* 80180114 0017D074  7C 08 03 A6 */	mtlr r0
 /* 80180118 0017D078  4E 80 00 20 */	blr 
+.endfn update__Q23zen12ogTexAnimMgrFv
 
-.global getSpecialNumber__3zenFi
-getSpecialNumber__3zenFi:
+.fn getSpecialNumber__3zenFi, global
 /* 8018011C 0017D07C  2C 03 00 00 */	cmpwi r3, 0
 /* 80180120 0017D080  41 80 00 0C */	blt .L_8018012C
 /* 80180124 0017D084  2C 03 00 63 */	cmpwi r3, 0x63
@@ -1765,9 +1764,9 @@ getSpecialNumber__3zenFi:
 /* 80180140 0017D0A0  7C 60 1A 14 */	add r3, r0, r3
 /* 80180144 0017D0A4  80 63 00 00 */	lwz r3, 0(r3)
 /* 80180148 0017D0A8  4E 80 00 20 */	blr 
+.endfn getSpecialNumber__3zenFi
 
-.global setSpecialNumber__3zenFii
-setSpecialNumber__3zenFii:
+.fn setSpecialNumber__3zenFii, global
 /* 8018014C 0017D0AC  2C 03 00 00 */	cmpwi r3, 0
 /* 80180150 0017D0B0  4D 80 00 20 */	bltlr 
 /* 80180154 0017D0B4  2C 03 00 63 */	cmpwi r3, 0x63
@@ -1780,9 +1779,9 @@ setSpecialNumber__3zenFii:
 /* 8018016C 0017D0CC  7C 60 1A 14 */	add r3, r0, r3
 /* 80180170 0017D0D0  90 83 00 00 */	stw r4, 0(r3)
 /* 80180174 0017D0D4  4E 80 00 20 */	blr 
+.endfn setSpecialNumber__3zenFii
 
-.global cnvSpecialNumber__3zenFPc
-cnvSpecialNumber__3zenFPc:
+.fn cnvSpecialNumber__3zenFPc, global
 /* 80180178 0017D0D8  7C 08 02 A6 */	mflr r0
 /* 8018017C 0017D0DC  3C 80 80 2D */	lis r4, lbl_802D2750@ha
 /* 80180180 0017D0E0  90 01 00 04 */	stw r0, 4(r1)
@@ -1928,9 +1927,9 @@ cnvSpecialNumber__3zenFPc:
 /* 80180384 0017D2E4  38 21 00 30 */	addi r1, r1, 0x30
 /* 80180388 0017D2E8  7C 08 03 A6 */	mtlr r0
 /* 8018038C 0017D2EC  4E 80 00 20 */	blr 
+.endfn cnvSpecialNumber__3zenFPc
 
-.global __ct__Q23zen13TypingTextMgrFP10P2DTextBox
-__ct__Q23zen13TypingTextMgrFP10P2DTextBox:
+.fn __ct__Q23zen13TypingTextMgrFP10P2DTextBox, global
 /* 80180390 0017D2F0  7C 08 02 A6 */	mflr r0
 /* 80180394 0017D2F4  90 01 00 04 */	stw r0, 4(r1)
 /* 80180398 0017D2F8  4C C6 31 82 */	crclr 6
@@ -1968,9 +1967,9 @@ __ct__Q23zen13TypingTextMgrFP10P2DTextBox:
 /* 80180414 0017D374  38 21 00 20 */	addi r1, r1, 0x20
 /* 80180418 0017D378  7C 08 03 A6 */	mtlr r0
 /* 8018041C 0017D37C  4E 80 00 20 */	blr 
+.endfn __ct__Q23zen13TypingTextMgrFP10P2DTextBox
 
-.global start__Q23zen13TypingTextMgrFv
-start__Q23zen13TypingTextMgrFv:
+.fn start__Q23zen13TypingTextMgrFv, global
 /* 80180420 0017D380  7C 08 02 A6 */	mflr r0
 /* 80180424 0017D384  38 8D 09 60 */	addi r4, r13, lbl_803E5680@sda21
 /* 80180428 0017D388  90 01 00 04 */	stw r0, 4(r1)
@@ -2000,9 +1999,9 @@ start__Q23zen13TypingTextMgrFv:
 /* 80180488 0017D3E8  38 21 00 20 */	addi r1, r1, 0x20
 /* 8018048C 0017D3EC  7C 08 03 A6 */	mtlr r0
 /* 80180490 0017D3F0  4E 80 00 20 */	blr 
+.endfn start__Q23zen13TypingTextMgrFv
 
-.global __ct__Q23zen15ogMsgCtrlTagMgrFv
-__ct__Q23zen15ogMsgCtrlTagMgrFv:
+.fn __ct__Q23zen15ogMsgCtrlTagMgrFv, global
 /* 80180494 0017D3F4  7C 08 02 A6 */	mflr r0
 /* 80180498 0017D3F8  90 01 00 04 */	stw r0, 4(r1)
 /* 8018049C 0017D3FC  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -2092,9 +2091,9 @@ __ct__Q23zen15ogMsgCtrlTagMgrFv:
 /* 801805E8 0017D548  38 21 00 28 */	addi r1, r1, 0x28
 /* 801805EC 0017D54C  7C 08 03 A6 */	mtlr r0
 /* 801805F0 0017D550  4E 80 00 20 */	blr 
+.endfn __ct__Q23zen15ogMsgCtrlTagMgrFv
 
-.global CheckCtrlTag__Q23zen15ogMsgCtrlTagMgrFPcPsPf
-CheckCtrlTag__Q23zen15ogMsgCtrlTagMgrFPcPsPf:
+.fn CheckCtrlTag__Q23zen15ogMsgCtrlTagMgrFPcPsPf, global
 /* 801805F4 0017D554  7C 08 02 A6 */	mflr r0
 /* 801805F8 0017D558  90 01 00 04 */	stw r0, 4(r1)
 /* 801805FC 0017D55C  94 21 FF C0 */	stwu r1, -0x40(r1)
@@ -2341,9 +2340,9 @@ CheckCtrlTag__Q23zen15ogMsgCtrlTagMgrFPcPsPf:
 /* 80180990 0017D8F0  38 21 00 40 */	addi r1, r1, 0x40
 /* 80180994 0017D8F4  7C 08 03 A6 */	mtlr r0
 /* 80180998 0017D8F8  4E 80 00 20 */	blr 
+.endfn CheckCtrlTag__Q23zen15ogMsgCtrlTagMgrFPcPsPf
 
-.global update__Q23zen13TypingTextMgrFv
-update__Q23zen13TypingTextMgrFv:
+.fn update__Q23zen13TypingTextMgrFv, global
 /* 8018099C 0017D8FC  7C 08 02 A6 */	mflr r0
 /* 801809A0 0017D900  90 01 00 04 */	stw r0, 4(r1)
 /* 801809A4 0017D904  94 21 FF D0 */	stwu r1, -0x30(r1)
@@ -2415,9 +2414,9 @@ update__Q23zen13TypingTextMgrFv:
 /* 80180A94 0017D9F4  38 21 00 30 */	addi r1, r1, 0x30
 /* 80180A98 0017D9F8  7C 08 03 A6 */	mtlr r0
 /* 80180A9C 0017D9FC  4E 80 00 20 */	blr 
+.endfn update__Q23zen13TypingTextMgrFv
 
-.global cnvSpecialNumberHyphen__3zenFPc
-cnvSpecialNumberHyphen__3zenFPc:
+.fn cnvSpecialNumberHyphen__3zenFPc, global
 /* 80180AA0 0017DA00  7C 08 02 A6 */	mflr r0
 /* 80180AA4 0017DA04  3C 80 80 2D */	lis r4, lbl_802D2750@ha
 /* 80180AA8 0017DA08  90 01 00 04 */	stw r0, 4(r1)
@@ -2680,14 +2679,14 @@ cnvSpecialNumberHyphen__3zenFPc:
 /* 80180E48 0017DDA8  38 21 02 40 */	addi r1, r1, 0x240
 /* 80180E4C 0017DDAC  7C 08 03 A6 */	mtlr r0
 /* 80180E50 0017DDB0  4E 80 00 20 */	blr 
+.endfn cnvSpecialNumberHyphen__3zenFPc
 
-.global draw__15P2DPaneCallBackFP7P2DPane
-draw__15P2DPaneCallBackFP7P2DPane:
+.fn draw__15P2DPaneCallBackFP7P2DPane, weak
 /* 80180E54 0017DDB4  38 60 00 01 */	li r3, 1
 /* 80180E58 0017DDB8  4E 80 00 20 */	blr 
+.endfn draw__15P2DPaneCallBackFP7P2DPane
 
-.global "invoke__Q23zen20NumberPicCallBack<i>FP7P2DPane"
-"invoke__Q23zen20NumberPicCallBack<i>FP7P2DPane":
+.fn "invoke__Q23zen20NumberPicCallBack<i>FP7P2DPane", weak
 /* 80180E5C 0017DDBC  7C 08 02 A6 */	mflr r0
 /* 80180E60 0017DDC0  90 01 00 04 */	stw r0, 4(r1)
 /* 80180E64 0017DDC4  94 21 FF 98 */	stwu r1, -0x68(r1)
@@ -2822,9 +2821,9 @@ draw__15P2DPaneCallBackFP7P2DPane:
 /* 80181048 0017DFA8  38 21 00 68 */	addi r1, r1, 0x68
 /* 8018104C 0017DFAC  7C 08 03 A6 */	mtlr r0
 /* 80181050 0017DFB0  4E 80 00 20 */	blr 
+.endfn "invoke__Q23zen20NumberPicCallBack<i>FP7P2DPane"
 
-.global "getNumber__Q23zen12FigureTex<i>FRi"
-"getNumber__Q23zen12FigureTex<i>FRi":
+.fn "getNumber__Q23zen12FigureTex<i>FRi", weak
 /* 80181054 0017DFB4  80 A4 00 00 */	lwz r5, 0(r4)
 /* 80181058 0017DFB8  3C 80 66 66 */	lis r4, 0x66666667@ha
 /* 8018105C 0017DFBC  80 63 00 04 */	lwz r3, 4(r3)
@@ -2840,17 +2839,19 @@ draw__15P2DPaneCallBackFP7P2DPane:
 /* 80181084 0017DFE4  4C 80 00 20 */	bgelr 
 /* 80181088 0017DFE8  38 60 00 00 */	li r3, 0
 /* 8018108C 0017DFEC  4E 80 00 20 */	blr 
+.endfn "getNumber__Q23zen12FigureTex<i>FRi"
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802D2750:
+.obj lbl_802D2750, local
 	.asciz "ogSub.cpp"
+.endobj lbl_802D2750
 .balign 4
-lbl_802D275C:
+.obj lbl_802D275C, local
 	.asciz "OgSubSection"
+.endobj lbl_802D275C
 .balign 4
-.global wkstr__3zen
-wkstr__3zen:
+.obj wkstr__3zen, local
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x00000000
@@ -3107,274 +3108,288 @@ wkstr__3zen:
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x00000000
-.global numStrBuf__3zen
-numStrBuf__3zen:
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-.global formatStr__3zen
-formatStr__3zen:
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-.global SpecialNumber__3zen
-SpecialNumber__3zen:
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
+.endobj wkstr__3zen
 .balign 4
-lbl_802D2EFC:
+.obj numStrBuf__3zen, local
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+.endobj numStrBuf__3zen
+.balign 4
+.obj formatStr__3zen, local
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+.endobj formatStr__3zen
+.balign 4
+.obj SpecialNumber__3zen, local
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+.endobj SpecialNumber__3zen
+.balign 4
+.obj lbl_802D2EFC, local
 	.asciz "screen/blo/wait_char.blo"
+.endobj lbl_802D2EFC
 .balign 4
-lbl_802D2F18:
+.obj lbl_802D2F18, local
 	.asciz "zen::NumberPicCallBack<int>"
+.endobj lbl_802D2F18
 .balign 4
-lbl_802D2F34:
+.obj lbl_802D2F34, local
 	.asciz "zen::NumberTex"
+.endobj lbl_802D2F34
 .balign 4
-lbl_802D2F44:
+.obj lbl_802D2F44, local
 	.asciz "zen::FigureTex<int>"
+.endobj lbl_802D2F44
 .balign 4
-lbl_802D2F58:
+.obj lbl_802D2F58, local
 	.4byte __RTTI__Q23zen9NumberTex
 	.4byte 0x00000000
 	.4byte 0x00000000
+.endobj lbl_802D2F58
 .balign 4
-lbl_802D2F64:
+.obj lbl_802D2F64, local
 	.asciz "P2DPaneCallBackBase"
+.endobj lbl_802D2F64
 .balign 4
-lbl_802D2F78:
+.obj lbl_802D2F78, local
 	.asciz "zen::CallBack1<P2DPane *>"
+.endobj lbl_802D2F78
 .balign 4
-lbl_802D2F94:
+.obj lbl_802D2F94, local
 	.asciz "P2DPaneCallBack"
+.endobj lbl_802D2F94
 .balign 4
-lbl_802D2FA4:
+.obj lbl_802D2FA4, local
 	.4byte __RTTI__19P2DPaneCallBackBase
 	.4byte 0x00000004
 	.4byte "__RTTI__Q23zen20CallBack1<P7P2DPane>"
 	.4byte 0x00000000
 	.4byte 0x00000000
-lbl_802D2FB8:
+.endobj lbl_802D2FA4
+.balign 4
+.obj lbl_802D2FB8, local
 	.4byte __RTTI__Q23zen9NumberTex
 	.4byte 0x00000004
 	.4byte "__RTTI__Q23zen12FigureTex<i>"
@@ -3386,155 +3401,218 @@ lbl_802D2FB8:
 	.4byte __RTTI__15P2DPaneCallBack
 	.4byte 0x00000000
 	.4byte 0x00000000
-.global "__vt__Q23zen20NumberPicCallBack<i>"
-"__vt__Q23zen20NumberPicCallBack<i>":
+.endobj lbl_802D2FB8
+.balign 4
+.obj "__vt__Q23zen20NumberPicCallBack<i>", weak
 	.4byte "__RTTI__Q23zen20NumberPicCallBack<i>"
 	.4byte 0
 	.4byte "invoke__Q23zen20NumberPicCallBack<i>FP7P2DPane"
 	.4byte draw__15P2DPaneCallBackFP7P2DPane
-.global __vt__15P2DPaneCallBack
-__vt__15P2DPaneCallBack:
+.endobj "__vt__Q23zen20NumberPicCallBack<i>"
+.balign 4
+.obj __vt__15P2DPaneCallBack, weak
 	.4byte __RTTI__15P2DPaneCallBack
 	.4byte 0
 	.4byte 0
 	.4byte draw__15P2DPaneCallBackFP7P2DPane
-.global "__vt__Q23zen20CallBack1<P7P2DPane>"
-"__vt__Q23zen20CallBack1<P7P2DPane>":
+.endobj __vt__15P2DPaneCallBack
+.balign 4
+.obj "__vt__Q23zen20CallBack1<P7P2DPane>", weak
 	.4byte "__RTTI__Q23zen20CallBack1<P7P2DPane>"
 	.4byte 0
 	.4byte 0
+.endobj "__vt__Q23zen20CallBack1<P7P2DPane>"
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-lbl_803E5678:
+.obj lbl_803E5678, local
 	.asciz "pk%02d"
+.endobj lbl_803E5678
 .balign 4
-lbl_803E5680:
-	.4byte 0x00000000
+.obj lbl_803E5680, local
+	.asciz ""
+.endobj lbl_803E5680
 .balign 4
-lbl_803E5684:
+.obj lbl_803E5684, local
 	.asciz "at%02d"
+.endobj lbl_803E5684
 .balign 4
-lbl_803E568C:
+.obj lbl_803E568C, local
 	.asciz "%d"
+.endobj lbl_803E568C
 .balign 4
-lbl_803E5690:
+.obj lbl_803E5690, local
 	.asciz "TM"
+.endobj lbl_803E5690
 .balign 4
-lbl_803E5694:
+.obj lbl_803E5694, local
 	.asciz "%%0%dd"
+.endobj lbl_803E5694
 .balign 4
-lbl_803E569C:
+.obj lbl_803E569C, local
 	.asciz "CC"
+.endobj lbl_803E569C
 .balign 4
-lbl_803E56A0:
+.obj lbl_803E56A0, local
 	.asciz "GC"
+.endobj lbl_803E56A0
 .balign 4
-lbl_803E56A4:
+.obj lbl_803E56A4, local
 	.asciz "Z"
+.endobj lbl_803E56A4
 .balign 4
-lbl_803E56A8:
+.obj lbl_803E56A8, local
 	.asciz "CA"
+.endobj lbl_803E56A8
 .balign 4
-lbl_803E56AC:
+.obj lbl_803E56AC, local
 	.asciz "GA"
+.endobj lbl_803E56AC
 .balign 4
-lbl_803E56B0:
+.obj lbl_803E56B0, local
 	.asciz "TB"
+.endobj lbl_803E56B0
 .balign 4
-lbl_803E56B4:
+.obj lbl_803E56B4, local
 	.asciz "BS"
+.endobj lbl_803E56B4
 .balign 4
-lbl_803E56B8:
+.obj lbl_803E56B8, local
 	.asciz "CU"
+.endobj lbl_803E56B8
 .balign 4
-lbl_803E56BC:
+.obj lbl_803E56BC, local
 	.asciz "CD"
+.endobj lbl_803E56BC
 .balign 4
-lbl_803E56C0:
+.obj lbl_803E56C0, local
 	.asciz "CL"
+.endobj lbl_803E56C0
 .balign 4
-lbl_803E56C4:
+.obj lbl_803E56C4, local
 	.asciz "CR"
+.endobj lbl_803E56C4
 .balign 4
-lbl_803E56C8:
+.obj lbl_803E56C8, local
 	.asciz "LU"
+.endobj lbl_803E56C8
 .balign 4
-lbl_803E56CC:
+.obj lbl_803E56CC, local
 	.asciz "LD"
+.endobj lbl_803E56CC
 .balign 4
-lbl_803E56D0:
+.obj lbl_803E56D0, local
 	.asciz "HM"
+.endobj lbl_803E56D0
 .balign 4
-lbl_803E56D4:
+.obj lbl_803E56D4, local
 	.asciz "ST"
+.endobj lbl_803E56D4
 .balign 4
-lbl_803E56D8:
+.obj lbl_803E56D8, local
 	.asciz "FX"
+.endobj lbl_803E56D8
 .balign 4
-lbl_803E56DC:
+.obj lbl_803E56DC, local
 	.asciz "FY"
+.endobj lbl_803E56DC
 .balign 4
-lbl_803E56E0:
+.obj lbl_803E56E0, local
 	.asciz "SH"
+.endobj lbl_803E56E0
 .balign 4
-lbl_803E56E4:
+.obj lbl_803E56E4, local
 	.asciz "SV"
+.endobj lbl_803E56E4
 .balign 4
-lbl_803E56E8:
+.obj lbl_803E56E8, local
 	.asciz "GM"
+.endobj lbl_803E56E8
 .balign 4
-lbl_803E56EC:
+.obj lbl_803E56EC, local
 	.asciz "]"
+.endobj lbl_803E56EC
 .balign 4
-lbl_803E56F0:
+.obj lbl_803E56F0, local
 	.asciz "%s"
+.endobj lbl_803E56F0
 .balign 4
-__RTTI__Q23zen9NumberTex:
+.obj __RTTI__Q23zen9NumberTex, local
 	.4byte lbl_802D2F34
 	.4byte 0x00000000
-"__RTTI__Q23zen12FigureTex<i>":
+.endobj __RTTI__Q23zen9NumberTex
+.balign 4
+.obj "__RTTI__Q23zen12FigureTex<i>", local
 	.4byte lbl_802D2F44
 	.4byte lbl_802D2F58
-__RTTI__19P2DPaneCallBackBase:
+.endobj "__RTTI__Q23zen12FigureTex<i>"
+.balign 4
+.obj __RTTI__19P2DPaneCallBackBase, local
 	.4byte lbl_802D2F64
 	.4byte 0
-"__RTTI__Q23zen20CallBack1<P7P2DPane>":
+.endobj __RTTI__19P2DPaneCallBackBase
+.balign 4
+.obj "__RTTI__Q23zen20CallBack1<P7P2DPane>", local
 	.4byte lbl_802D2F78
 	.4byte 0
-__RTTI__15P2DPaneCallBack:
+.endobj "__RTTI__Q23zen20CallBack1<P7P2DPane>"
+.balign 4
+.obj __RTTI__15P2DPaneCallBack, local
 	.4byte lbl_802D2F94
 	.4byte lbl_802D2FA4
-"__RTTI__Q23zen20NumberPicCallBack<i>":
+.endobj __RTTI__15P2DPaneCallBack
+.balign 4
+.obj "__RTTI__Q23zen20NumberPicCallBack<i>", local
 	.4byte lbl_802D2F18
 	.4byte lbl_802D2FB8
+.endobj "__RTTI__Q23zen20NumberPicCallBack<i>"
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803EB118:
+.obj lbl_803EB118, local
 	.float 0.5
-lbl_803EB11C:
+.endobj lbl_803EB118
+.balign 4
+.obj lbl_803EB11C, local
 	.float 1.0
-lbl_803EB120:
-	.4byte 0x41490FDB
-lbl_803EB124:
-	.4byte 0x3DA3D70A
-lbl_803EB128:
-	.4byte 0x00000000
+.endobj lbl_803EB11C
+.balign 4
+.obj lbl_803EB120, local
+	.float 12.566371
+.endobj lbl_803EB120
+.balign 4
+.obj lbl_803EB124, local
+	.float 0.08
+.endobj lbl_803EB124
+.balign 4
+.obj lbl_803EB128, local
+	.float 0.0
+.endobj lbl_803EB128
 .balign 8
-lbl_803EB130:
-	.4byte 0x43300000
-	.4byte 0x80000000
-lbl_803EB138:
-	.4byte 0x43300000
-	.4byte 0x00000000
-lbl_803EB140:
-	.4byte 0x3C23D70A
-lbl_803EB144:
-	.4byte 0x40C90FDB
-lbl_803EB148:
-	.4byte 0x3E800000
-lbl_803EB14C:
-	.4byte 0x3CF2CF95
-lbl_803EB150:
-	.4byte 0x3E99999A
+.obj lbl_803EB130, local
+	.8byte 0x4330000080000000
+.endobj lbl_803EB130
+.balign 8
+.obj lbl_803EB138, local
+	.8byte 0x4330000000000000
+.endobj lbl_803EB138
+.balign 4
+.obj lbl_803EB140, local
+	.float 0.01
+.endobj lbl_803EB140
+.balign 4
+.obj lbl_803EB144, local
+	.float 6.2831855
+.endobj lbl_803EB144
+.balign 4
+.obj lbl_803EB148, local
+	.float 0.25
+.endobj lbl_803EB148
+.balign 4
+.obj lbl_803EB14C, local
+	.float 0.029639998
+.endobj lbl_803EB14C
+.balign 4
+.obj lbl_803EB150, local
+	.float 0.3
+.endobj lbl_803EB150

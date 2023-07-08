@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global __ct__18TAIusubaParametersFv
-__ct__18TAIusubaParametersFv:
+.fn __ct__18TAIusubaParametersFv, global
 /* 801E9FA0 001E6F00  7C 08 02 A6 */	mflr r0
 /* 801E9FA4 001E6F04  38 80 00 14 */	li r4, 0x14
 /* 801E9FA8 001E6F08  90 01 00 04 */	stw r0, 4(r1)
@@ -167,9 +166,9 @@ __ct__18TAIusubaParametersFv:
 /* 801EA228 001E7188  38 21 00 C0 */	addi r1, r1, 0xc0
 /* 801EA22C 001E718C  7C 08 03 A6 */	mtlr r0
 /* 801EA230 001E7190  4E 80 00 20 */	blr 
+.endfn __ct__18TAIusubaParametersFv
 
-.global makeDefaultAnimations__17TAIusubaAnimationFv
-makeDefaultAnimations__17TAIusubaAnimationFv:
+.fn makeDefaultAnimations__17TAIusubaAnimationFv, global
 /* 801EA234 001E7194  7C 08 02 A6 */	mflr r0
 /* 801EA238 001E7198  90 01 00 04 */	stw r0, 4(r1)
 /* 801EA23C 001E719C  94 21 FF 28 */	stwu r1, -0xd8(r1)
@@ -634,9 +633,9 @@ makeDefaultAnimations__17TAIusubaAnimationFv:
 /* 801EA924 001E7884  38 21 00 D8 */	addi r1, r1, 0xd8
 /* 801EA928 001E7888  7C 08 03 A6 */	mtlr r0
 /* 801EA92C 001E788C  4E 80 00 20 */	blr 
+.endfn makeDefaultAnimations__17TAIusubaAnimationFv
 
-.global start__12TAIAflyUsubaFR4Teki
-start__12TAIAflyUsubaFR4Teki:
+.fn start__12TAIAflyUsubaFR4Teki, weak
 /* 801EA930 001E7890  7C 08 02 A6 */	mflr r0
 /* 801EA934 001E7894  90 01 00 04 */	stw r0, 4(r1)
 /* 801EA938 001E7898  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -673,9 +672,9 @@ start__12TAIAflyUsubaFR4Teki:
 /* 801EA9B4 001E7914  38 21 00 18 */	addi r1, r1, 0x18
 /* 801EA9B8 001E7918  7C 08 03 A6 */	mtlr r0
 /* 801EA9BC 001E791C  4E 80 00 20 */	blr 
+.endfn start__12TAIAflyUsubaFR4Teki
 
-.global act__12TAIAflyUsubaFR4Teki
-act__12TAIAflyUsubaFR4Teki:
+.fn act__12TAIAflyUsubaFR4Teki, weak
 /* 801EA9C0 001E7920  7C 08 02 A6 */	mflr r0
 /* 801EA9C4 001E7924  90 01 00 04 */	stw r0, 4(r1)
 /* 801EA9C8 001E7928  94 21 FF 90 */	stwu r1, -0x70(r1)
@@ -723,85 +722,106 @@ act__12TAIAflyUsubaFR4Teki:
 /* 801EAA64 001E79C4  38 21 00 70 */	addi r1, r1, 0x70
 /* 801EAA68 001E79C8  7C 08 03 A6 */	mtlr r0
 /* 801EAA6C 001E79CC  4E 80 00 20 */	blr 
+.endfn act__12TAIAflyUsubaFR4Teki
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802E63F0:
+.obj lbl_802E63F0, local
 	.asciz "TAIusuba.cpp"
+.endobj lbl_802E63F0
 .balign 4
-lbl_802E6400:
+.obj lbl_802E6400, local
 	.asciz "TAIusuba"
+.endobj lbl_802E6400
 .balign 4
-lbl_802E640C:
+.obj lbl_802E640C, local
 	.asciz "tekis/usuba/motion/dead.dca"
+.endobj lbl_802E640C
 .balign 4
-lbl_802E6428:
+.obj lbl_802E6428, local
 	.asciz "tekis/usuba/motion/damage.dca"
+.endobj lbl_802E6428
 .balign 4
-lbl_802E6448:
+.obj lbl_802E6448, local
 	.asciz "tekis/usuba/motion/wait1.dca"
+.endobj lbl_802E6448
 .balign 4
-lbl_802E6468:
+.obj lbl_802E6468, local
 	.asciz "tekis/usuba/motion/wait2.dca"
+.endobj lbl_802E6468
 .balign 4
-lbl_802E6488:
+.obj lbl_802E6488, local
 	.asciz "tekis/usuba/motion/waitact1.dck"
+.endobj lbl_802E6488
 .balign 4
-lbl_802E64A8:
+.obj lbl_802E64A8, local
 	.asciz "tekis/usuba/motion/waitact2.dca"
+.endobj lbl_802E64A8
 .balign 4
-lbl_802E64C8:
+.obj lbl_802E64C8, local
 	.asciz "tekis/usuba/motion/move1.dck"
+.endobj lbl_802E64C8
 .balign 4
-lbl_802E64E8:
+.obj lbl_802E64E8, local
 	.asciz "tekis/usuba/motion/move2.dck"
+.endobj lbl_802E64E8
 .balign 4
-lbl_802E6508:
+.obj lbl_802E6508, local
 	.asciz "tekis/usuba/motion/attack.dca"
+.endobj lbl_802E6508
 .balign 4
-lbl_802E6528:
+.obj lbl_802E6528, local
 	.asciz "tekis/usuba/motion/type1.dck"
+.endobj lbl_802E6528
 .balign 4
-lbl_802E6548:
+.obj lbl_802E6548, local
 	.asciz "tekis/usuba/motion/type2.dca"
+.endobj lbl_802E6548
 .balign 4
-lbl_802E6568:
+.obj lbl_802E6568, local
 	.asciz "TAIusubaAnimation"
+.endobj lbl_802E6568
 .balign 4
-lbl_802E657C:
+.obj lbl_802E657C, local
 	.asciz "TAIanimation"
+.endobj lbl_802E657C
 .balign 4
-lbl_802E658C:
+.obj lbl_802E658C, local
 	.4byte __RTTI__12TAIanimation
 	.4byte 0x00000000
 	.4byte 0x00000000
-.global __vt__17TAIusubaAnimation
-__vt__17TAIusubaAnimation:
+.endobj lbl_802E658C
+.obj __vt__17TAIusubaAnimation, global
 	.4byte __RTTI__17TAIusubaAnimation
 	.4byte 0
 	.4byte makeDefaultAnimations__17TAIusubaAnimationFv
+.endobj __vt__17TAIusubaAnimation
 .balign 4
-lbl_802E65A4:
+.obj lbl_802E65A4, local
 	.asciz "TAIAflyUsuba"
+.endobj lbl_802E65A4
 .balign 4
-lbl_802E65B4:
+.obj lbl_802E65B4, local
 	.asciz "TaiAction"
+.endobj lbl_802E65B4
 .balign 4
-lbl_802E65C0:
+.obj lbl_802E65C0, local
 	.asciz "TAIAmotion"
+.endobj lbl_802E65C0
 .balign 4
-lbl_802E65CC:
+.obj lbl_802E65CC, local
 	.4byte __RTTI__9TaiAction
 	.4byte 0
 	.4byte 0
-lbl_802E65D8:
+.endobj lbl_802E65CC
+.obj lbl_802E65D8, local
 	.4byte __RTTI__9TaiAction
 	.4byte 0
 	.4byte __RTTI__10TAIAmotion
 	.4byte 0
 	.4byte 0
-.global __vt__12TAIAflyUsuba
-__vt__12TAIAflyUsuba:
+.endobj lbl_802E65D8
+.obj __vt__12TAIAflyUsuba, weak
 	.4byte __RTTI__12TAIAflyUsuba
 	.4byte 0
 	.4byte start__12TAIAflyUsubaFR4Teki
@@ -809,35 +829,34 @@ __vt__12TAIAflyUsuba:
 	.4byte act__12TAIAflyUsubaFR4Teki
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
+.endobj __vt__12TAIAflyUsuba
+.skip 0x1C
 .balign 4
-lbl_802E6624:
+.obj lbl_802E6624, local
 	.asciz "TAIusubaStrategy"
+.endobj lbl_802E6624
 .balign 4
-lbl_802E6638:
+.obj lbl_802E6638, local
 	.asciz "TekiStrategy"
+.endobj lbl_802E6638
 .balign 4
-lbl_802E6648:
+.obj lbl_802E6648, local
 	.asciz "YaiStrategy"
+.endobj lbl_802E6648
 .balign 4
-lbl_802E6654:
+.obj lbl_802E6654, local
 	.4byte __RTTI__12TekiStrategy
 	.4byte 0
 	.4byte 0
-lbl_802E6660:
+.endobj lbl_802E6654
+.obj lbl_802E6660, local
 	.4byte __RTTI__12TekiStrategy
 	.4byte 0
 	.4byte __RTTI__11YaiStrategy
 	.4byte 0
 	.4byte 0
-.global __vt__16TAIusubaStrategy
-__vt__16TAIusubaStrategy:
+.endobj lbl_802E6660
+.obj __vt__16TAIusubaStrategy, weak
 	.4byte __RTTI__16TAIusubaStrategy
 	.4byte 0
 	.4byte start__11YaiStrategyFR4Teki
@@ -848,28 +867,34 @@ __vt__16TAIusubaStrategy:
 	.4byte drawDebugInfo__12TekiStrategyFR4TekiR8Graphics
 	.4byte interact__12TekiStrategyFR4TekiR18TekiInteractionKey
 	.4byte spawnCorpseParts__12TekiStrategyFR4Teki
+.endobj __vt__16TAIusubaStrategy
 .balign 4
-lbl_802E669C:
+.obj lbl_802E669C, local
 	.asciz "TAIusubaParameters"
+.endobj lbl_802E669C
 .balign 4
-lbl_802E66B0:
+.obj lbl_802E66B0, local
 	.asciz "CoreNode"
+.endobj lbl_802E66B0
 .balign 4
-lbl_802E66BC:
+.obj lbl_802E66BC, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte 0
-lbl_802E66C8:
+.endobj lbl_802E66BC
+.obj lbl_802E66C8, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte __RTTI__8CoreNode
 	.4byte 0
 	.4byte 0
+.endobj lbl_802E66C8
 .balign 4
-lbl_802E66DC:
+.obj lbl_802E66DC, local
 	.asciz "TekiParameters"
+.endobj lbl_802E66DC
 .balign 4
-lbl_802E66EC:
+.obj lbl_802E66EC, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte __RTTI__8CoreNode
@@ -877,7 +902,8 @@ lbl_802E66EC:
 	.4byte __RTTI__4Node
 	.4byte 0
 	.4byte 0
-lbl_802E6708:
+.endobj lbl_802E66EC
+.obj lbl_802E6708, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte __RTTI__8CoreNode
@@ -887,8 +913,8 @@ lbl_802E6708:
 	.4byte __RTTI__14TekiParameters
 	.4byte 0
 	.4byte 0
-.global __vt__18TAIusubaParameters
-__vt__18TAIusubaParameters:
+.endobj lbl_802E6708
+.obj __vt__18TAIusubaParameters, weak
 	.4byte __RTTI__18TAIusubaParameters
 	.4byte 0
 	.4byte getAgeNodeType__5ANodeFv
@@ -901,116 +927,160 @@ __vt__18TAIusubaParameters:
 	.4byte concat__4NodeFR3SRT
 	.4byte concat__4NodeFR8Matrix4f
 	.4byte getModelMatrix__4NodeFv
+.endobj __vt__18TAIusubaParameters
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-lbl_803E73D8:
-	.4byte 0x00000000
-lbl_803E73DC:
-	.4byte 0x00000000
-lbl_803E73E0:
-	.4byte 0x00000000
-lbl_803E73E4:
-	.4byte 0x00000000
-lbl_803E73E8:
-	.4byte 0x00000000
-lbl_803E73EC:
-	.4byte 0x00000000
-__RTTI__12TAIanimation:
+.obj lbl_803E73D8, local
+	.float 0.0
+.endobj lbl_803E73D8
+.obj lbl_803E73DC, local
+	.float 0.0
+.endobj lbl_803E73DC
+.obj lbl_803E73E0, local
+	.float 0.0
+.endobj lbl_803E73E0
+.obj lbl_803E73E4, local
+	.float 0.0
+.endobj lbl_803E73E4
+.obj lbl_803E73E8, local
+	.float 0.0
+.endobj lbl_803E73E8
+.obj lbl_803E73EC, local
+	.float 0.0
+.endobj lbl_803E73EC
+.obj __RTTI__12TAIanimation, local
 	.4byte lbl_802E657C
-	.4byte 0x00000000
-__RTTI__17TAIusubaAnimation:
+	.4byte 0
+.endobj __RTTI__12TAIanimation
+.obj __RTTI__17TAIusubaAnimation, local
 	.4byte lbl_802E6568
 	.4byte lbl_802E658C
-__RTTI__9TaiAction:
+.endobj __RTTI__17TAIusubaAnimation
+.obj __RTTI__9TaiAction, local
 	.4byte lbl_802E65B4
 	.4byte 0
-__RTTI__10TAIAmotion:
+.endobj __RTTI__9TaiAction
+.obj __RTTI__10TAIAmotion, local
 	.4byte lbl_802E65C0
 	.4byte lbl_802E65CC
-__RTTI__12TAIAflyUsuba:
+.endobj __RTTI__10TAIAmotion
+.obj __RTTI__12TAIAflyUsuba, local
 	.4byte lbl_802E65A4
 	.4byte lbl_802E65D8
-__RTTI__12TekiStrategy:
+.endobj __RTTI__12TAIAflyUsuba
+.obj __RTTI__12TekiStrategy, local
 	.4byte lbl_802E6638
 	.4byte 0
-__RTTI__11YaiStrategy:
+.endobj __RTTI__12TekiStrategy
+.obj __RTTI__11YaiStrategy, local
 	.4byte lbl_802E6648
 	.4byte lbl_802E6654
-__RTTI__16TAIusubaStrategy:
+.endobj __RTTI__11YaiStrategy
+.obj __RTTI__16TAIusubaStrategy, local
 	.4byte lbl_802E6624
 	.4byte lbl_802E6660
+.endobj __RTTI__16TAIusubaStrategy
 .balign 4
-lbl_803E7430:
+.obj lbl_803E7430, local
 	.asciz "ANode"
+.endobj lbl_803E7430
 .balign 4
-__RTTI__5ANode:
+.obj __RTTI__5ANode, local
 	.4byte lbl_803E7430
 	.4byte 0
-__RTTI__8CoreNode:
+.endobj __RTTI__5ANode
+.obj __RTTI__8CoreNode, local
 	.4byte lbl_802E66B0
 	.4byte lbl_802E66BC
+.endobj __RTTI__8CoreNode
 .balign 4
-lbl_803E7448:
+.obj lbl_803E7448, local
 	.asciz "Node"
+.endobj lbl_803E7448
 .balign 4
-__RTTI__4Node:
+.obj __RTTI__4Node, local
 	.4byte lbl_803E7448
 	.4byte lbl_802E66C8
-__RTTI__14TekiParameters:
+.endobj __RTTI__4Node
+.obj __RTTI__14TekiParameters, local
 	.4byte lbl_802E66DC
 	.4byte lbl_802E66EC
-__RTTI__18TAIusubaParameters:
+.endobj __RTTI__14TekiParameters
+.obj __RTTI__18TAIusubaParameters, local
 	.4byte lbl_802E669C
 	.4byte lbl_802E6708
+.endobj __RTTI__18TAIusubaParameters
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803EC248:
-	.4byte 0x42C80000
-lbl_803EC24C:
-	.4byte 0x3F800000
-lbl_803EC250:
-	.4byte 0x459C4000
-lbl_803EC254:
-	.4byte 0x41A00000
-lbl_803EC258:
-	.4byte 0x42F00000
-lbl_803EC25C:
-	.4byte 0x3F7EADAF
-lbl_803EC260:
-	.4byte 0x43160000
-lbl_803EC264:
-	.4byte 0x43340000
-lbl_803EC268:
-	.4byte 0x42200000
-lbl_803EC26C:
-	.4byte 0x41F00000
-lbl_803EC270:
-	.4byte 0x41100000
-lbl_803EC274:
-	.4byte 0x40A00000
-lbl_803EC278:
-	.4byte 0x3E99999A
-lbl_803EC27C:
-	.4byte 0x3E4CCCCD
-lbl_803EC280:
-	.4byte 0x43480000
-lbl_803EC284:
-	.4byte 0x41200000
-lbl_803EC288:
-	.4byte 0x3C23D70A
-lbl_803EC28C:
-	.4byte 0x428C0000
-lbl_803EC290:
-	.4byte 0x42480000
-lbl_803EC294:
-	.4byte 0x42700000
-lbl_803EC298:
-	.4byte 0x00000000
-lbl_803EC29C:
-	.4byte 0x43FA0000
+.obj lbl_803EC248, local
+	.float 100.0
+.endobj lbl_803EC248
+.obj lbl_803EC24C, local
+	.float 1.0
+.endobj lbl_803EC24C
+.obj lbl_803EC250, local
+	.float 5000.0
+.endobj lbl_803EC250
+.obj lbl_803EC254, local
+	.float 20.0
+.endobj lbl_803EC254
+.obj lbl_803EC258, local
+	.float 120.0
+.endobj lbl_803EC258
+.obj lbl_803EC25C, local
+	.float 0.9948377
+.endobj lbl_803EC25C
+.obj lbl_803EC260, local
+	.float 150.0
+.endobj lbl_803EC260
+.obj lbl_803EC264, local
+	.float 180.0
+.endobj lbl_803EC264
+.obj lbl_803EC268, local
+	.float 40.0
+.endobj lbl_803EC268
+.obj lbl_803EC26C, local
+	.float 30.0
+.endobj lbl_803EC26C
+.obj lbl_803EC270, local
+	.float 9.0
+.endobj lbl_803EC270
+.obj lbl_803EC274, local
+	.float 5.0
+.endobj lbl_803EC274
+.obj lbl_803EC278, local
+	.float 0.3
+.endobj lbl_803EC278
+.obj lbl_803EC27C, local
+	.float 0.2
+.endobj lbl_803EC27C
+.obj lbl_803EC280, local
+	.float 200.0
+.endobj lbl_803EC280
+.obj lbl_803EC284, local
+	.float 10.0
+.endobj lbl_803EC284
+.obj lbl_803EC288, local
+	.float 0.01
+.endobj lbl_803EC288
+.obj lbl_803EC28C, local
+	.float 70.0
+.endobj lbl_803EC28C
+.obj lbl_803EC290, local
+	.float 50.0
+.endobj lbl_803EC290
+.obj lbl_803EC294, local
+	.float 60.0
+.endobj lbl_803EC294
+.obj lbl_803EC298, local
+	.float 0.0
+.endobj lbl_803EC298
+.obj lbl_803EC29C, local
+	.float 500.0
+.endobj lbl_803EC29C
 .balign 8
-lbl_803EC2A0:
-	.4byte 0x40A77000
-	.4byte 0x00000000
+.obj lbl_803EC2A0, local
+	.double 3000.0
+.endobj lbl_803EC2A0

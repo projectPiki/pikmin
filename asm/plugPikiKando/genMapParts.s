@@ -849,13 +849,13 @@ kindNames:
 lbl_802C309C:
 	.asciz "object type"
 .balign 4
-lbl_802C30A8:
+lbl_802C30A8: # Shift-JIS
 	.4byte 0x837D8362
 	.4byte 0x83768370
 	.4byte 0x815B8363
 	.4byte 0x82F090B6
 	.4byte 0x82DE0000
-lbl_802C30BC:
+lbl_802C30BC: # Shift-JIS
 	.4byte 0x837D8362
 	.4byte 0x83768370
 	.4byte 0x815B8363
@@ -939,115 +939,159 @@ lbl_802C31B4:
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-lbl_803E2A28:
+.obj lbl_803E2A28, local
 	.float 0.0
-lbl_803E2A2C:
+.endobj lbl_803E2A28
+.obj lbl_803E2A2C, local
 	.float 0.0
-lbl_803E2A30:
+.endobj lbl_803E2A2C
+.obj lbl_803E2A30, local
 	.float 0.0
-lbl_803E2A34:
+.endobj lbl_803E2A30
+.obj lbl_803E2A34, local
 	.float 0.0
-lbl_803E2A38:
+.endobj lbl_803E2A34
+.obj lbl_803E2A38, local
 	.float 0.0
-lbl_803E2A3C:
+.endobj lbl_803E2A38
+.obj lbl_803E2A3C, local
 	.float 0.0
-numShapes:
+.endobj lbl_803E2A3C
+.obj numShapes, local
 	.4byte 5
+.endobj numShapes
 .balign 4
-lbl_803E2A44:
+.obj lbl_803E2A44, local
 	.asciz "box"
+.endobj lbl_803E2A44
 .balign 4
-lbl_803E2A48:
+.obj lbl_803E2A48, local
 	.asciz "1"
+.endobj lbl_803E2A48
 .balign 4
-lbl_803E2A4C:
+.obj lbl_803E2A4C, local
 	.asciz "2"
+.endobj lbl_803E2A4C
 .balign 4
-lbl_803E2A50:
+.obj lbl_803E2A50, local
 	.asciz "3"
+.endobj lbl_803E2A50
 .balign 4
-lbl_803E2A54:
+.obj lbl_803E2A54, local
 	.asciz "log"
+.endobj lbl_803E2A54
 .balign 4
-lbl_803E2A58:
+.obj lbl_803E2A58, local
 	.asciz "slider"
+.endobj lbl_803E2A58
 .balign 4
-lbl_803E2A60:
+.obj lbl_803E2A60, local
 	.asciz "entity"
+.endobj lbl_803E2A60
 .balign 4
-lbl_803E2A68:
+.obj lbl_803E2A68, local
 	.asciz "dynamic"
+.endobj lbl_803E2A68
 .balign 4
-lbl_803E2A70:
+.obj lbl_803E2A70, local
 	.asciz "p00"
+.endobj lbl_803E2A70
 .balign 4
-lbl_803E2A74:
+.obj lbl_803E2A74, local
 	.asciz "p01"
+.endobj lbl_803E2A74
 .balign 4
-lbl_803E2A78:
+.obj lbl_803E2A78, local
 	.asciz "p02"
+.endobj lbl_803E2A78
 .balign 4
-lbl_803E2A7C:
+.obj lbl_803E2A7C, local
 	.asciz "p04"
+.endobj lbl_803E2A7C
 .balign 4
-lbl_803E2A80:
+.obj lbl_803E2A80, local
 	.asciz "p03"
+.endobj lbl_803E2A80
 .balign 4
-lbl_803E2A84:
+.obj lbl_803E2A84, local
 	.float 1.0
-lbl_803E2A88:
+.endobj lbl_803E2A84
+.obj lbl_803E2A88, local
 	.float 1.0
-lbl_803E2A8C:
+.endobj lbl_803E2A88
+.obj lbl_803E2A8C, local
 	.float 1.0
-lbl_803E2A90:
+.endobj lbl_803E2A8C
+.obj lbl_803E2A90, local
 	.float 0.0
-lbl_803E2A94:
+.endobj lbl_803E2A90
+.obj lbl_803E2A94, local
 	.float 0.0
-lbl_803E2A98:
+.endobj lbl_803E2A94
+.obj lbl_803E2A98, local
 	.float 0.0
-lbl_803E2A9C:
+.endobj lbl_803E2A98
+.obj lbl_803E2A9C, local
 	.float 1.0
-lbl_803E2AA0:
+.endobj lbl_803E2A9C
+.obj lbl_803E2AA0, local
 	.float 1.0
-lbl_803E2AA4:
+.endobj lbl_803E2AA0
+.obj lbl_803E2AA4, local
 	.float 1.0
-lbl_803E2AA8:
+.endobj lbl_803E2AA4
+.obj lbl_803E2AA8, local
 	.float 0.0
-lbl_803E2AAC:
+.endobj lbl_803E2AA8
+.obj lbl_803E2AAC, local
 	.float 0.0
-lbl_803E2AB0:
+.endobj lbl_803E2AAC
+.obj lbl_803E2AB0, local
 	.float 0.0
-lbl_803E2AB4:
+.endobj lbl_803E2AB0
+.obj lbl_803E2AB4, local
 	.float 0.0
-lbl_803E2AB8:
+.endobj lbl_803E2AB4
+.obj lbl_803E2AB8, local
 	.float 0.0
-lbl_803E2ABC:
+.endobj lbl_803E2AB8
+.obj lbl_803E2ABC, local
 	.float 0.0
-lbl_803E2AC0:
+.endobj lbl_803E2ABC
+.obj lbl_803E2AC0, local
 	.float 0.0
-lbl_803E2AC4:
+.endobj lbl_803E2AC0
+.obj lbl_803E2AC4, local
 	.float 0.0
-lbl_803E2AC8:
+.endobj lbl_803E2AC4
+.obj lbl_803E2AC8, local
 	.float 0.0
-__RTTI__10Parameters:
+.endobj lbl_803E2AC8
+.obj __RTTI__10Parameters, local
 	.4byte lbl_802C30E4
 	.4byte 0
+.endobj __RTTI__10Parameters
 .balign 4
-lbl_803E2AD4:
+.obj lbl_803E2AD4, local
 	.asciz "GenBase"
+.endobj lbl_803E2AD4
 .balign 4
-__RTTI__7GenBase:
+.obj __RTTI__7GenBase, local
 	.4byte lbl_803E2AD4
 	.4byte lbl_802C30F0
-__RTTI__9GenObject:
+.endobj __RTTI__7GenBase
+.obj __RTTI__9GenObject, local
 	.4byte lbl_802C30FC
 	.4byte lbl_802C3108
-__RTTI__17GenObjectMapParts:
+.endobj __RTTI__9GenObject
+.obj __RTTI__17GenObjectMapParts, local
 	.4byte lbl_802C30D0
 	.4byte lbl_802C311C
-__RTTI__8BaseParm:
+.endobj __RTTI__17GenObjectMapParts
+.obj __RTTI__8BaseParm, local
 	.4byte lbl_802C317C
 	.4byte 0
+.endobj __RTTI__8BaseParm
 
 .section .sbss, "wa"
 .balign 8

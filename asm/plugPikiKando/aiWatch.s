@@ -414,57 +414,76 @@ lbl_802B7D84:
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-lbl_803E08A8:
+.obj lbl_803E08A8, local
 	.float 0.0
-lbl_803E08AC:
+.endobj lbl_803E08A8
+.obj lbl_803E08AC, local
 	.float 0.0
-lbl_803E08B0:
+.endobj lbl_803E08AC
+.obj lbl_803E08B0, local
 	.float 0.0
-lbl_803E08B4:
+.endobj lbl_803E08B0
+.obj lbl_803E08B4, local
 	.float 0.0
-lbl_803E08B8:
+.endobj lbl_803E08B4
+.obj lbl_803E08B8, local
 	.float 0.0
-"__RTTI__15Receiver<4Piki>":
+.endobj lbl_803E08B8
+.obj "__RTTI__15Receiver<4Piki>", local
 	.4byte lbl_802B7C5C
 	.4byte 0
+.endobj "__RTTI__15Receiver<4Piki>"
 .balign 4
-lbl_803E08C4:
+.obj lbl_803E08C4, local
 	.asciz "Action"
+.endobj lbl_803E08C4
 .balign 4
-__RTTI__6Action:
+.obj __RTTI__6Action, local
 	.4byte lbl_803E08C4
 	.4byte lbl_802B7C6C
-__RTTI__8ActWatch:
+.endobj __RTTI__6Action
+.obj __RTTI__8ActWatch, local
 	.4byte lbl_802B7C50
 	.4byte lbl_802B7C78
-__RTTI__Q26Action11Initialiser:
+.endobj __RTTI__8ActWatch
+.obj __RTTI__Q26Action11Initialiser, local
 	.4byte lbl_802B7D08
 	.4byte 0
-__RTTI__Q28ActWatch11Initialiser:
+.endobj __RTTI__Q26Action11Initialiser
+.obj __RTTI__Q28ActWatch11Initialiser, local
 	.4byte lbl_802B7CF0
 	.4byte lbl_802B7D1C
-__RTTI__19PaniAnimKeyListener:
+.endobj __RTTI__Q28ActWatch11Initialiser
+.obj __RTTI__19PaniAnimKeyListener, local
 	.4byte lbl_802B7D34
 	.4byte 0
-__RTTI__Q28ActWatch12AnimListener:
+.endobj __RTTI__19PaniAnimKeyListener
+.obj __RTTI__Q28ActWatch12AnimListener, local
 	.4byte lbl_802B7D54
 	.4byte lbl_802B7D6C
+.endobj __RTTI__Q28ActWatch12AnimListener
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803E9728:
+.obj lbl_803E9728, local
 	.float 0.0
-lbl_803E972C:
+.endobj lbl_803E9728
+.obj lbl_803E972C, local
 	.float 1.0
-lbl_803E9730:
+.endobj lbl_803E972C
+.obj lbl_803E9730, local
 	.float 32767.0
-lbl_803E9734:
+.endobj lbl_803E9730
+.obj lbl_803E9734, local
 	.float 20.0
-lbl_803E9738:
+.endobj lbl_803E9734
+.obj lbl_803E9738, local
 	.float 1.6
+.endobj lbl_803E9738
 .balign 8
-lbl_803E9740:
-	.4byte 0x43300000
-	.4byte 0x80000000
-lbl_803E9748:
+.obj lbl_803E9740, local
+	.8byte 0x4330000080000000
+.endobj lbl_803E9740
+.obj lbl_803E9748, local
 	.float 0.4
+.endobj lbl_803E9748

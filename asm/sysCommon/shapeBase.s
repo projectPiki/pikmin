@@ -13154,7 +13154,7 @@ lbl_constructor:
 
 .section .rodata, "a"  # 0x80221FE0 - 0x80222DC0
 .balign 8
-lbl_802222B8:
+.obj lbl_802222B8, local
 	.4byte 0
 	.4byte 1
 	.4byte 2
@@ -13179,21 +13179,25 @@ lbl_802222B8:
 	.4byte 3
 	.4byte 4
 	.4byte 5
+.endobj lbl_802222B8
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_80228320:
+.obj lbl_80228320, local
 	.asciz "shapeBase.cpp"
+.endobj lbl_80228320
 .balign 4
-lbl_80228330:
+.obj lbl_80228330, local
 	.asciz "shapeBase"
+.endobj lbl_80228330
 .balign 4
-modes:
+.obj modes, local
 	.4byte lbl_803DD05C
 	.4byte lbl_803DD064
 	.4byte lbl_803DD068
 	.4byte lbl_803DD05C
 	.4byte lbl_803DD06C
+.endobj modes
 .balign 4
 lbl_80228350:
 	.asciz "CoreNode"
@@ -13798,12 +13802,15 @@ __RTTI__8DispList:
 
 .section .sbss, "wa"
 .balign 8
-matIndex:
+.obj matIndex, local
 	.skip 4
-usedIndex:
+.endobj matIndex
+.obj usedIndex, local
 	.skip 4
-_dlindx:
+.endobj usedIndex
+.obj _dlindx, local
 	.skip 4
+.endobj _dlindx
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8

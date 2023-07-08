@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global animationKeyUpdated__12ActFormationFR16PaniAnimKeyEvent
-animationKeyUpdated__12ActFormationFR16PaniAnimKeyEvent:
+.fn animationKeyUpdated__12ActFormationFR16PaniAnimKeyEvent, global
 /* 800B98D8 000B6838  7C 08 02 A6 */	mflr r0
 /* 800B98DC 000B683C  90 01 00 04 */	stw r0, 4(r1)
 /* 800B98E0 000B6840  94 21 FF 10 */	stwu r1, -0xf0(r1)
@@ -215,9 +214,9 @@ animationKeyUpdated__12ActFormationFR16PaniAnimKeyEvent:
 /* 800B9BF8 000B6B58  38 21 00 F0 */	addi r1, r1, 0xf0
 /* 800B9BFC 000B6B5C  7C 08 03 A6 */	mtlr r0
 /* 800B9C00 000B6B60  4E 80 00 20 */	blr 
+.endfn animationKeyUpdated__12ActFormationFR16PaniAnimKeyEvent
 
-.global __ct__12ActFormationFP4Piki
-__ct__12ActFormationFP4Piki:
+.fn __ct__12ActFormationFP4Piki, global
 /* 800B9C04 000B6B64  7C 08 02 A6 */	mflr r0
 /* 800B9C08 000B6B68  38 A0 00 01 */	li r5, 1
 /* 800B9C0C 000B6B6C  90 01 00 04 */	stw r0, 4(r1)
@@ -241,9 +240,9 @@ __ct__12ActFormationFP4Piki:
 /* 800B9C54 000B6BB4  38 21 00 18 */	addi r1, r1, 0x18
 /* 800B9C58 000B6BB8  7C 08 03 A6 */	mtlr r0
 /* 800B9C5C 000B6BBC  4E 80 00 20 */	blr 
+.endfn __ct__12ActFormationFP4Piki
 
-.global getFormPoint__12ActFormationFv
-getFormPoint__12ActFormationFv:
+.fn getFormPoint__12ActFormationFv, global
 /* 800B9C60 000B6BC0  7C 08 02 A6 */	mflr r0
 /* 800B9C64 000B6BC4  90 01 00 04 */	stw r0, 4(r1)
 /* 800B9C68 000B6BC8  94 21 FF C0 */	stwu r1, -0x40(r1)
@@ -335,9 +334,9 @@ getFormPoint__12ActFormationFv:
 /* 800B9D9C 000B6CFC  38 21 00 40 */	addi r1, r1, 0x40
 /* 800B9DA0 000B6D00  7C 08 03 A6 */	mtlr r0
 /* 800B9DA4 000B6D04  4E 80 00 20 */	blr 
+.endfn getFormPoint__12ActFormationFv
 
-.global init__12ActFormationFP8Creature
-init__12ActFormationFP8Creature:
+.fn init__12ActFormationFP8Creature, global
 /* 800B9DA8 000B6D08  7C 08 02 A6 */	mflr r0
 /* 800B9DAC 000B6D0C  90 01 00 04 */	stw r0, 4(r1)
 /* 800B9DB0 000B6D10  94 21 FF C8 */	stwu r1, -0x38(r1)
@@ -399,9 +398,9 @@ init__12ActFormationFP8Creature:
 /* 800B9E90 000B6DF0  38 21 00 38 */	addi r1, r1, 0x38
 /* 800B9E94 000B6DF4  7C 08 03 A6 */	mtlr r0
 /* 800B9E98 000B6DF8  4E 80 00 20 */	blr 
+.endfn init__12ActFormationFP8Creature
 
-.global cleanup__12ActFormationFv
-cleanup__12ActFormationFv:
+.fn cleanup__12ActFormationFv, global
 /* 800B9E9C 000B6DFC  7C 08 02 A6 */	mflr r0
 /* 800B9EA0 000B6E00  90 01 00 04 */	stw r0, 4(r1)
 /* 800B9EA4 000B6E04  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -422,9 +421,9 @@ cleanup__12ActFormationFv:
 /* 800B9EDC 000B6E3C  38 21 00 18 */	addi r1, r1, 0x18
 /* 800B9EE0 000B6E40  7C 08 03 A6 */	mtlr r0
 /* 800B9EE4 000B6E44  4E 80 00 20 */	blr 
+.endfn cleanup__12ActFormationFv
 
-.global exec__12ActFormationFv
-exec__12ActFormationFv:
+.fn exec__12ActFormationFv, global
 /* 800B9EE8 000B6E48  7C 08 02 A6 */	mflr r0
 /* 800B9EEC 000B6E4C  90 01 00 04 */	stw r0, 4(r1)
 /* 800B9EF0 000B6E50  94 21 FD D0 */	stwu r1, -0x230(r1)
@@ -871,9 +870,9 @@ exec__12ActFormationFv:
 /* 800BA580 000B74E0  38 21 02 30 */	addi r1, r1, 0x230
 /* 800BA584 000B74E4  7C 08 03 A6 */	mtlr r0
 /* 800BA588 000B74E8  4E 80 00 20 */	blr 
+.endfn exec__12ActFormationFv
 
-.global __dt__12ActFormationFv
-__dt__12ActFormationFv:
+.fn __dt__12ActFormationFv, weak
 /* 800BA58C 000B74EC  7C 08 02 A6 */	mflr r0
 /* 800BA590 000B74F0  90 01 00 04 */	stw r0, 4(r1)
 /* 800BA594 000B74F4  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -902,33 +901,41 @@ __dt__12ActFormationFv:
 /* 800BA5EC 000B754C  38 21 00 18 */	addi r1, r1, 0x18
 /* 800BA5F0 000B7550  7C 08 03 A6 */	mtlr r0
 /* 800BA5F4 000B7554  4E 80 00 20 */	blr 
+.endfn __dt__12ActFormationFv
 
-"@20@animationKeyUpdated__12ActFormationFR16PaniAnimKeyEvent":
+.fn "@20@animationKeyUpdated__12ActFormationFR16PaniAnimKeyEvent", weak
 /* 800BA5F8 000B7558  38 63 FF EC */	addi r3, r3, -20
 /* 800BA5FC 000B755C  4B FF F2 DC */	b animationKeyUpdated__12ActFormationFR16PaniAnimKeyEvent
+.endfn "@20@animationKeyUpdated__12ActFormationFR16PaniAnimKeyEvent"
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802B6938:
+.obj lbl_802B6938, local
 	.asciz "aiFormation.cpp"
+.endobj lbl_802B6938
 .balign 4
-lbl_802B6948:
+.obj lbl_802B6948, local
 	.asciz "aiFormation"
+.endobj lbl_802B6948
 .balign 4
-lbl_802B6954:
+.obj lbl_802B6954, local
 	.asciz "ActFormation"
+.endobj lbl_802B6954
 .balign 4
-lbl_802B6964:
+.obj lbl_802B6964, local
 	.asciz "PaniAnimKeyListener"
+.endobj lbl_802B6964
 .balign 4
-lbl_802B6978:
+.obj lbl_802B6978, local
 	.asciz "Receiver<Piki>"
+.endobj lbl_802B6978
 .balign 4
-lbl_802B6988:
+.obj lbl_802B6988, local
 	.4byte "__RTTI__15Receiver<4Piki>"
 	.4byte 0
 	.4byte 0
-lbl_802B6994:
+.endobj lbl_802B6988
+.obj lbl_802B6994, local
 	.4byte __RTTI__19PaniAnimKeyListener
 	.4byte 0x14
 	.4byte "__RTTI__15Receiver<4Piki>"
@@ -936,8 +943,8 @@ lbl_802B6994:
 	.4byte __RTTI__6Action
 	.4byte 0
 	.4byte 0
-.global __vt__12ActFormation
-__vt__12ActFormation:
+.endobj lbl_802B6994
+.obj __vt__12ActFormation, global
 	.4byte __RTTI__12ActFormation
 	.4byte 0
 	.4byte "procMsg__15Receiver<4Piki>FP4PikiP3Msg"
@@ -967,10 +974,9 @@ __vt__12ActFormation:
 	.4byte 0xFFFFFFEC
 	.4byte "@20@animationKeyUpdated__12ActFormationFR16PaniAnimKeyEvent"
 	.4byte animationKeyUpdated__12ActFormationFR16PaniAnimKeyEvent
-	.4byte 0
-	.4byte 0
-	.4byte 0
-lbl_802B6A30:
+.endobj __vt__12ActFormation
+.skip 0xC
+.obj lbl_802B6A30, local
 	.4byte .L_800A7908
 	.4byte .L_800A7930
 	.4byte .L_800A7944
@@ -982,47 +988,64 @@ lbl_802B6A30:
 	.4byte .L_800A791C
 	.4byte .L_800A79D0
 	.4byte .L_800A79BC
+.endobj lbl_802B6A30
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-lbl_803E0408:
+.obj lbl_803E0408, local
 	.float 0.0
-lbl_803E040C:
+.endobj lbl_803E0408
+.obj lbl_803E040C, local
 	.float 0.0
-lbl_803E0410:
+.endobj lbl_803E040C
+.obj lbl_803E0410, local
 	.float 0.0
-lbl_803E0414:
+.endobj lbl_803E0410
+.obj lbl_803E0414, local
 	.float 0.0
-lbl_803E0418:
+.endobj lbl_803E0414
+.obj lbl_803E0418, local
 	.float 0.0
-lbl_803E041C:
+.endobj lbl_803E0418
+.obj lbl_803E041C, local
 	.float 0.0
-lbl_803E0420:
+.endobj lbl_803E041C
+.obj lbl_803E0420, local
 	.float 0.0
-lbl_803E0424:
+.endobj lbl_803E0420
+.obj lbl_803E0424, local
 	.float 0.0
-lbl_803E0428:
+.endobj lbl_803E0424
+.obj lbl_803E0428, local
 	.float 0.0
-lbl_803E042C:
+.endobj lbl_803E0428
+.obj lbl_803E042C, local
 	.float 0.0
-lbl_803E0430:
+.endobj lbl_803E042C
+.obj lbl_803E0430, local
 	.float 0.0
-__RTTI__19PaniAnimKeyListener:
+.endobj lbl_803E0430
+.obj __RTTI__19PaniAnimKeyListener, local
 	.4byte lbl_802B6964
 	.4byte 0
-"__RTTI__15Receiver<4Piki>":
+.endobj __RTTI__19PaniAnimKeyListener
+.obj "__RTTI__15Receiver<4Piki>", local
 	.4byte lbl_802B6978
 	.4byte 0
+.endobj "__RTTI__15Receiver<4Piki>"
 .balign 4
-lbl_803E0444:
+.obj lbl_803E0444, local
 	.asciz "Action"
+.endobj lbl_803E0444
 .balign 4
-__RTTI__6Action:
+.obj __RTTI__6Action, local
 	.4byte lbl_803E0444
 	.4byte lbl_802B6988
-__RTTI__12ActFormation:
+.endobj __RTTI__6Action
+.obj __RTTI__12ActFormation, local
 	.4byte lbl_802B6954
 	.4byte lbl_802B6994
+.endobj __RTTI__12ActFormation
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8

@@ -1819,87 +1819,129 @@ containerExitMode__7PikiMgr:
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803E9870:
+.obj lbl_803E9870, local
 	.float 0.5
-lbl_803E9874:
+.endobj lbl_803E9870
+.obj lbl_803E9874, local
 	.float 0.0
-lbl_803E9878:
+.endobj lbl_803E9874
+.obj lbl_803E9878, local
 	.float 1.0
-lbl_803E987C:
+.endobj lbl_803E9878
+.obj lbl_803E987C, local
 	.float 0.25
-lbl_803E9880:
+.endobj lbl_803E987C
+.obj lbl_803E9880, local
 	.float 0.1
-lbl_803E9884:
+.endobj lbl_803E9880
+.obj lbl_803E9884, local
 	.float 0.01
-lbl_803E9888:
+.endobj lbl_803E9884
+.obj lbl_803E9888, local
 	.float 2.0
-lbl_803E988C:
+.endobj lbl_803E9888
+.obj lbl_803E988C, local
 	.float 0.3
-lbl_803E9890:
+.endobj lbl_803E988C
+.obj lbl_803E9890, local
 	.float 84.0
-lbl_803E9894:
+.endobj lbl_803E9890
+.obj lbl_803E9894, local
 	.float 162.5
-lbl_803E9898:
+.endobj lbl_803E9894
+.obj lbl_803E9898, local
 	.float 220.0
-lbl_803E989C:
+.endobj lbl_803E9898
+.obj lbl_803E989C, local
 	.float 160.0
-lbl_803E98A0:
+.endobj lbl_803E989C
+.obj lbl_803E98A0, local
 	.float 100.0
-lbl_803E98A4:
+.endobj lbl_803E98A0
+.obj lbl_803E98A4, local
 	.float 150.0
-lbl_803E98A8:
+.endobj lbl_803E98A4
+.obj lbl_803E98A8, local
 	.float 200.0
-lbl_803E98AC:
+.endobj lbl_803E98A8
+.obj lbl_803E98AC, local
 	.float 10.0
-lbl_803E98B0:
+.endobj lbl_803E98AC
+.obj lbl_803E98B0, local
 	.float 15.0
-lbl_803E98B4:
+.endobj lbl_803E98B0
+.obj lbl_803E98B4, local
 	.float 0.8
-lbl_803E98B8:
+.endobj lbl_803E98B4
+.obj lbl_803E98B8, local
 	.float 1.5
-lbl_803E98BC:
+.endobj lbl_803E98B8
+.obj lbl_803E98BC, local
 	.float 1.2
-lbl_803E98C0:
+.endobj lbl_803E98BC
+.obj lbl_803E98C0, local
 	.float 5.0
-lbl_803E98C4:
+.endobj lbl_803E98C0
+.obj lbl_803E98C4, local
 	.float 3.0
-lbl_803E98C8:
+.endobj lbl_803E98C4
+.obj lbl_803E98C8, local
 	.float 40.0
-lbl_803E98CC:
+.endobj lbl_803E98C8
+.obj lbl_803E98CC, local
 	.float 35.0
-lbl_803E98D0:
+.endobj lbl_803E98CC
+.obj lbl_803E98D0, local
 	.float 70.0
-lbl_803E98D4:
+.endobj lbl_803E98D0
+.obj lbl_803E98D4, local
 	.float 30.0
-lbl_803E98D8:
+.endobj lbl_803E98D4
+.obj lbl_803E98D8, local
 	.float 60.0
-lbl_803E98DC:
+.endobj lbl_803E98D8
+.obj lbl_803E98DC, local
 	.float 6.0
-lbl_803E98E0:
+.endobj lbl_803E98DC
+.obj lbl_803E98E0, local
 	.float 8.0
-lbl_803E98E4:
+.endobj lbl_803E98E0
+.obj lbl_803E98E4, local
 	.float 600.0
-lbl_803E98E8:
+.endobj lbl_803E98E4
+.obj lbl_803E98E8, local
 	.float 1000.0
-lbl_803E98EC:
+.endobj lbl_803E98E8
+.obj lbl_803E98EC, local
 	.float 800.0
-lbl_803E98F0:
+.endobj lbl_803E98EC
+.obj lbl_803E98F0, local
 	.float 0.6
-lbl_803E98F4:
+.endobj lbl_803E98F0
+.obj lbl_803E98F4, local
 	.float 0.7
-lbl_803E98F8:
+.endobj lbl_803E98F4
+.obj lbl_803E98F8, local
 	.float 4.0
-lbl_803E98FC:
+.endobj lbl_803E98F8
+.obj lbl_803E98FC, local
 	.float 50.0
-lbl_803E9900:
+.endobj lbl_803E98FC
+.obj lbl_803E9900, local
 	.float 120.0
-lbl_803E9904:
+.endobj lbl_803E9900
+.obj lbl_803E9904, local
 	.float 765.0
-lbl_803E9908:
+.endobj lbl_803E9904
+.obj lbl_803E9908, local
 	.float 250.0
-lbl_803E990C:
+.endobj lbl_803E9908
+.obj lbl_803E990C, local
 	.float 300.0
-lbl_803E9910:
+.endobj lbl_803E990C
+.obj lbl_803E9910, local
 	.float 110.0
-lbl_803E9914:
+.endobj lbl_803E9910
+.obj lbl_803E9914, local
 	.float 0.65
+.endobj lbl_803E9914
