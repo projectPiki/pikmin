@@ -16,11 +16,6 @@ It builds the following DOL:
 pikmin.usa.1.dol: `sha1: 02204260B7EFE8742D34572E58BA3DFECD92E4E9`
 
 ## Building
-This edited compiler modifies the epilogue in such a way as to approximate older scheduling models.
-
-In this case, the epilogue should remain unscheduled.
-
-tools/frank.py cleans up the output.
 
 ### Required Tools
 * [devkitPro](https://devkitpro.org/wiki/Getting_Started)
