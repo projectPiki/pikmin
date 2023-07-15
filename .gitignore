@@ -20,8 +20,8 @@
 *.7z
 *.bat
 build
-epilogue
-tools/mwcc_compiler/
+tools/mwcc_compiler/*
+!tools/mwcc_compiler/.gitkeep
 *.sln
 *.vcxproj
 *.user
