@@ -45,7 +45,7 @@ O_FILES :=	$(GROUP_0_FILES) $(SYSBOOTUP) $(JAUDIO) $(HVQM4DEC) $(SYSCOMMON) $(SY
 #-------------------------------------------------------------------------------
 
 MWCC_VERSION := 1.2.5
-MWLD_VERSION := 1.1
+MWLD_VERSION := 1.2.5
 
 # Compiler versions and flags
 $(COLIN): MWCC_VERSION := 1.2.5n
