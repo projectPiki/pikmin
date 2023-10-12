@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global __ct__10ActPulloutFP4Piki
-__ct__10ActPulloutFP4Piki:
+.fn __ct__10ActPulloutFP4Piki, global
 /* 800BD670 000BA5D0  7C 08 02 A6 */	mflr r0
 /* 800BD674 000BA5D4  38 A0 00 01 */	li r5, 1
 /* 800BD678 000BA5D8  90 01 00 04 */	stw r0, 4(r1)
@@ -69,9 +68,9 @@ __ct__10ActPulloutFP4Piki:
 /* 800BD764 000BA6C4  38 21 00 20 */	addi r1, r1, 0x20
 /* 800BD768 000BA6C8  7C 08 03 A6 */	mtlr r0
 /* 800BD76C 000BA6CC  4E 80 00 20 */	blr 
+.endfn __ct__10ActPulloutFP4Piki
 
-.global init__10ActPulloutFP8Creature
-init__10ActPulloutFP8Creature:
+.fn init__10ActPulloutFP8Creature, global
 /* 800BD770 000BA6D0  7C 08 02 A6 */	mflr r0
 /* 800BD774 000BA6D4  90 01 00 04 */	stw r0, 4(r1)
 /* 800BD778 000BA6D8  94 21 FD F0 */	stwu r1, -0x210(r1)
@@ -234,9 +233,9 @@ init__10ActPulloutFP8Creature:
 /* 800BD9B4 000BA914  38 21 02 10 */	addi r1, r1, 0x210
 /* 800BD9B8 000BA918  7C 08 03 A6 */	mtlr r0
 /* 800BD9BC 000BA91C  4E 80 00 20 */	blr 
+.endfn init__10ActPulloutFP8Creature
 
-.global exec__10ActPulloutFv
-exec__10ActPulloutFv:
+.fn exec__10ActPulloutFv, global
 /* 800BD9C0 000BA920  7C 08 02 A6 */	mflr r0
 /* 800BD9C4 000BA924  90 01 00 04 */	stw r0, 4(r1)
 /* 800BD9C8 000BA928  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -299,9 +298,9 @@ exec__10ActPulloutFv:
 /* 800BDA90 000BA9F0  38 21 00 28 */	addi r1, r1, 0x28
 /* 800BDA94 000BA9F4  7C 08 03 A6 */	mtlr r0
 /* 800BDA98 000BA9F8  4E 80 00 20 */	blr 
+.endfn exec__10ActPulloutFv
 
-.global cleanup__10ActPulloutFv
-cleanup__10ActPulloutFv:
+.fn cleanup__10ActPulloutFv, global
 /* 800BDA9C 000BA9FC  7C 08 02 A6 */	mflr r0
 /* 800BDAA0 000BAA00  90 01 00 04 */	stw r0, 4(r1)
 /* 800BDAA4 000BAA04  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -323,9 +322,9 @@ cleanup__10ActPulloutFv:
 /* 800BDAE0 000BAA40  38 21 00 18 */	addi r1, r1, 0x18
 /* 800BDAE4 000BAA44  7C 08 03 A6 */	mtlr r0
 /* 800BDAE8 000BAA48  4E 80 00 20 */	blr 
+.endfn cleanup__10ActPulloutFv
 
-.global cleanup__18ActPulloutCreatureFv
-cleanup__18ActPulloutCreatureFv:
+.fn cleanup__18ActPulloutCreatureFv, global
 /* 800BDAEC 000BAA4C  7C 08 02 A6 */	mflr r0
 /* 800BDAF0 000BAA50  90 01 00 04 */	stw r0, 4(r1)
 /* 800BDAF4 000BAA54  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -357,9 +356,9 @@ cleanup__18ActPulloutCreatureFv:
 /* 800BDB54 000BAAB4  38 21 00 18 */	addi r1, r1, 0x18
 /* 800BDB58 000BAAB8  7C 08 03 A6 */	mtlr r0
 /* 800BDB5C 000BAABC  4E 80 00 20 */	blr 
+.endfn cleanup__18ActPulloutCreatureFv
 
-.global animationKeyUpdated__18ActPulloutCreatureFR16PaniAnimKeyEvent
-animationKeyUpdated__18ActPulloutCreatureFR16PaniAnimKeyEvent:
+.fn animationKeyUpdated__18ActPulloutCreatureFR16PaniAnimKeyEvent, global
 /* 800BDB60 000BAAC0  7C 08 02 A6 */	mflr r0
 /* 800BDB64 000BAAC4  90 01 00 04 */	stw r0, 4(r1)
 /* 800BDB68 000BAAC8  94 21 FF F8 */	stwu r1, -8(r1)
@@ -393,9 +392,9 @@ animationKeyUpdated__18ActPulloutCreatureFR16PaniAnimKeyEvent:
 /* 800BDBCC 000BAB2C  38 21 00 08 */	addi r1, r1, 8
 /* 800BDBD0 000BAB30  7C 08 03 A6 */	mtlr r0
 /* 800BDBD4 000BAB34  4E 80 00 20 */	blr 
+.endfn animationKeyUpdated__18ActPulloutCreatureFR16PaniAnimKeyEvent
 
-.global __ct__18ActPulloutCreatureFP4Piki
-__ct__18ActPulloutCreatureFP4Piki:
+.fn __ct__18ActPulloutCreatureFP4Piki, global
 /* 800BDBD8 000BAB38  7C 08 02 A6 */	mflr r0
 /* 800BDBDC 000BAB3C  38 A0 00 01 */	li r5, 1
 /* 800BDBE0 000BAB40  90 01 00 04 */	stw r0, 4(r1)
@@ -419,9 +418,9 @@ __ct__18ActPulloutCreatureFP4Piki:
 /* 800BDC28 000BAB88  38 21 00 18 */	addi r1, r1, 0x18
 /* 800BDC2C 000BAB8C  7C 08 03 A6 */	mtlr r0
 /* 800BDC30 000BAB90  4E 80 00 20 */	blr 
+.endfn __ct__18ActPulloutCreatureFP4Piki
 
-.global init__18ActPulloutCreatureFP8Creature
-init__18ActPulloutCreatureFP8Creature:
+.fn init__18ActPulloutCreatureFP8Creature, global
 /* 800BDC34 000BAB94  7C 08 02 A6 */	mflr r0
 /* 800BDC38 000BAB98  90 01 00 04 */	stw r0, 4(r1)
 /* 800BDC3C 000BAB9C  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -461,9 +460,9 @@ init__18ActPulloutCreatureFP8Creature:
 /* 800BDCBC 000BAC1C  38 21 00 20 */	addi r1, r1, 0x20
 /* 800BDCC0 000BAC20  7C 08 03 A6 */	mtlr r0
 /* 800BDCC4 000BAC24  4E 80 00 20 */	blr 
+.endfn init__18ActPulloutCreatureFP8Creature
 
-.global exec__18ActPulloutCreatureFv
-exec__18ActPulloutCreatureFv:
+.fn exec__18ActPulloutCreatureFv, global
 /* 800BDCC8 000BAC28  7C 08 02 A6 */	mflr r0
 /* 800BDCCC 000BAC2C  90 01 00 04 */	stw r0, 4(r1)
 /* 800BDCD0 000BAC30  94 21 FF 60 */	stwu r1, -0xa0(r1)
@@ -617,9 +616,9 @@ exec__18ActPulloutCreatureFv:
 /* 800BDEFC 000BAE5C  38 21 00 A0 */	addi r1, r1, 0xa0
 /* 800BDF00 000BAE60  7C 08 03 A6 */	mtlr r0
 /* 800BDF04 000BAE64  4E 80 00 20 */	blr 
+.endfn exec__18ActPulloutCreatureFv
 
-.global __dt__18ActPulloutCreatureFv
-__dt__18ActPulloutCreatureFv:
+.fn __dt__18ActPulloutCreatureFv, weak
 /* 800BDF08 000BAE68  7C 08 02 A6 */	mflr r0
 /* 800BDF0C 000BAE6C  90 01 00 04 */	stw r0, 4(r1)
 /* 800BDF10 000BAE70  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -648,9 +647,9 @@ __dt__18ActPulloutCreatureFv:
 /* 800BDF68 000BAEC8  38 21 00 18 */	addi r1, r1, 0x18
 /* 800BDF6C 000BAECC  7C 08 03 A6 */	mtlr r0
 /* 800BDF70 000BAED0  4E 80 00 20 */	blr 
+.endfn __dt__18ActPulloutCreatureFv
 
-.global __dt__10ActPulloutFv
-__dt__10ActPulloutFv:
+.fn __dt__10ActPulloutFv, weak
 /* 800BDF74 000BAED4  7C 08 02 A6 */	mflr r0
 /* 800BDF78 000BAED8  90 01 00 04 */	stw r0, 4(r1)
 /* 800BDF7C 000BAEDC  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -682,21 +681,26 @@ __dt__10ActPulloutFv:
 /* 800BDFDC 000BAF3C  38 21 00 18 */	addi r1, r1, 0x18
 /* 800BDFE0 000BAF40  7C 08 03 A6 */	mtlr r0
 /* 800BDFE4 000BAF44  4E 80 00 20 */	blr 
+.endfn __dt__10ActPulloutFv
 
-"@20@animationKeyUpdated__18ActPulloutCreatureFR16PaniAnimKeyEvent":
+.fn "@20@animationKeyUpdated__18ActPulloutCreatureFR16PaniAnimKeyEvent", weak
 /* 800BDFE8 000BAF48  38 63 FF EC */	addi r3, r3, -20
 /* 800BDFEC 000BAF4C  4B FF FB 74 */	b animationKeyUpdated__18ActPulloutCreatureFR16PaniAnimKeyEvent
+.endfn "@20@animationKeyUpdated__18ActPulloutCreatureFR16PaniAnimKeyEvent"
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802B7168:
+.obj lbl_802B7168, local
 	.asciz "aiPullout.cpp"
+.endobj lbl_802B7168
 .balign 4
-lbl_802B7178:
+.obj lbl_802B7178, local
 	.asciz "aiPullout"
+.endobj lbl_802B7178
 .balign 4
-lbl_802B7184:
+.obj lbl_802B7184, local
 	.asciz "Interaction"
+.endobj lbl_802B7184
 .balign 4
 	.4byte 0
 	.4byte 0
@@ -710,24 +714,29 @@ lbl_802B7184:
 	.4byte 0
 	.4byte 0
 .balign 4
-lbl_802B71BC:
+.obj lbl_802B71BC, local
 	.asciz "ActPulloutCreature"
+.endobj lbl_802B71BC
 .balign 4
-lbl_802B71D0:
+.obj lbl_802B71D0, local
 	.asciz "Receiver<Piki>"
+.endobj lbl_802B71D0
 .balign 4
-lbl_802B71E0:
+.obj lbl_802B71E0, local
 	.4byte "__RTTI__15Receiver<4Piki>"
 	.4byte 0
 	.4byte 0
-lbl_802B71EC:
+.endobj lbl_802B71E0
+.balign 4
+.obj lbl_802B71EC, local
 	.4byte "__RTTI__15Receiver<4Piki>"
 	.4byte 0
 	.4byte __RTTI__6Action
 	.4byte 0
 	.4byte 0
-.global __vt__18ActPulloutCreature
-__vt__18ActPulloutCreature:
+.endobj lbl_802B71EC
+.balign 4
+.obj __vt__18ActPulloutCreature, global
 	.4byte __RTTI__18ActPulloutCreature
 	.4byte 0
 	.4byte "procMsg__15Receiver<4Piki>FP4PikiP3Msg"
@@ -757,27 +766,33 @@ __vt__18ActPulloutCreature:
 	.4byte 0xFFFFFFEC
 	.4byte "@20@animationKeyUpdated__18ActPulloutCreatureFR16PaniAnimKeyEvent"
 	.4byte animationKeyUpdated__18ActPulloutCreatureFR16PaniAnimKeyEvent
+.endobj __vt__18ActPulloutCreature
 .balign 4
-lbl_802B7274:
+.obj lbl_802B7274, local
 	.asciz "PaniAnimKeyListener"
+.endobj lbl_802B7274
 .balign 4
 	.4byte 0
 	.4byte 0
 	.4byte 0
 .balign 4
-lbl_802B7294:
+.obj lbl_802B7294, local
 	.asciz "ActPullout"
+.endobj lbl_802B7294
 .balign 4
-lbl_802B72A0:
+.obj lbl_802B72A0, local
 	.asciz "AndAction"
+.endobj lbl_802B72A0
 .balign 4
-lbl_802B72AC:
+.obj lbl_802B72AC, local
 	.4byte "__RTTI__15Receiver<4Piki>"
 	.4byte 0
 	.4byte __RTTI__6Action
 	.4byte 0
 	.4byte 0
-lbl_802B72C0:
+.endobj lbl_802B72AC
+.balign 4
+.obj lbl_802B72C0, local
 	.4byte "__RTTI__15Receiver<4Piki>"
 	.4byte 0
 	.4byte __RTTI__6Action
@@ -785,8 +800,9 @@ lbl_802B72C0:
 	.4byte __RTTI__9AndAction
 	.4byte 0
 	.4byte 0
-.global __vt__10ActPullout
-__vt__10ActPullout:
+.endobj lbl_802B72C0
+.balign 4
+.obj __vt__10ActPullout, global
 	.4byte __RTTI__10ActPullout
 	.4byte 0
 	.4byte "procMsg__15Receiver<4Piki>FP4PikiP3Msg"
@@ -812,7 +828,9 @@ __vt__10ActPullout:
 	.4byte restart__6ActionFv
 	.4byte resumable__6ActionFv
 	.4byte getInfo__6ActionFPc
-lbl_802B7340:
+.endobj __vt__10ActPullout
+.balign 4
+.obj lbl_802B7340, local
 	.4byte .L_800A7908
 	.4byte .L_800A7930
 	.4byte .L_800A7944
@@ -824,6 +842,7 @@ lbl_802B7340:
 	.4byte .L_800A791C
 	.4byte .L_800A79D0
 	.4byte .L_800A79BC
+.endobj lbl_802B7340
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
@@ -863,6 +882,7 @@ lbl_802B7340:
 .obj lbl_803E060C, local
 	.float 0.0
 .endobj lbl_803E060C
+.balign 4
 .obj "__RTTI__15Receiver<4Piki>", local
 	.4byte lbl_802B71D0
 	.4byte 0

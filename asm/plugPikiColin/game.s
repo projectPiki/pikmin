@@ -1,11 +1,10 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global read__9StageInfoFR18RandomAccessStream
-read__9StageInfoFR18RandomAccessStream:
+.fn read__9StageInfoFR18RandomAccessStream, global
 /* 8005315C 000500BC  4E 80 00 20 */	blr 
+.endfn read__9StageInfoFR18RandomAccessStream
 
-.global parseGenerators__9StageInfoFP9CmdStream
-parseGenerators__9StageInfoFP9CmdStream:
+.fn parseGenerators__9StageInfoFP9CmdStream, global
 /* 80053160 000500C0  7C 08 02 A6 */	mflr r0
 /* 80053164 000500C4  3C E0 80 22 */	lis r7, __vt__5ANode@ha
 /* 80053168 000500C8  90 01 00 04 */	stw r0, 4(r1)
@@ -101,9 +100,9 @@ parseGenerators__9StageInfoFP9CmdStream:
 /* 800532BC 0005021C  38 21 00 38 */	addi r1, r1, 0x38
 /* 800532C0 00050220  7C 08 03 A6 */	mtlr r0
 /* 800532C4 00050224  4E 80 00 20 */	blr 
+.endfn parseGenerators__9StageInfoFP9CmdStream
 
-.global readMapList__14FlowControllerFPc
-readMapList__14FlowControllerFPc:
+.fn readMapList__14FlowControllerFPc, global
 /* 800532C8 00050228  7C 08 02 A6 */	mflr r0
 /* 800532CC 0005022C  3C A0 80 2A */	lis r5, lbl_802A66D0@ha
 /* 800532D0 00050230  90 01 00 04 */	stw r0, 4(r1)
@@ -342,9 +341,9 @@ readMapList__14FlowControllerFPc:
 /* 80053634 00050594  38 21 00 50 */	addi r1, r1, 0x50
 /* 80053638 00050598  7C 08 03 A6 */	mtlr r0
 /* 8005363C 0005059C  4E 80 00 20 */	blr 
+.endfn readMapList__14FlowControllerFPc
 
-.global init__16OnePlayerSectionFv
-init__16OnePlayerSectionFv:
+.fn init__16OnePlayerSectionFv, global
 /* 80053640 000505A0  7C 08 02 A6 */	mflr r0
 /* 80053644 000505A4  3C 80 80 2A */	lis r4, lbl_802A66D0@ha
 /* 80053648 000505A8  90 01 00 04 */	stw r0, 4(r1)
@@ -713,6 +712,7 @@ init__16OnePlayerSectionFv:
 /* 80053B60 00050AC0  38 21 00 78 */	addi r1, r1, 0x78
 /* 80053B64 00050AC4  7C 08 03 A6 */	mtlr r0
 /* 80053B68 00050AC8  4E 80 00 20 */	blr 
+.endfn init__16OnePlayerSectionFv
 
 .fn __sinit_game_cpp, local
 /* 80053B6C 00050ACC  7C 08 02 A6 */	mflr r0
@@ -783,53 +783,67 @@ lbl_constructor:
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802A66D0:
+.obj lbl_802A66D0, local
 	.asciz "game.cpp"
+.endobj lbl_802A66D0
 .balign 4
-lbl_802A66DC:
+.obj lbl_802A66DC, local
 	.asciz "GameOnePlayer"
+.endobj lbl_802A66DC
 .balign 4
-lbl_802A66EC:
+.obj lbl_802A66EC, local
 	.asciz "stageInfo"
+.endobj lbl_802A66EC
 .balign 4
-lbl_802A66F8:
+.obj lbl_802A66F8, local
 	.asciz "generator"
+.endobj lbl_802A66F8
 .balign 4
-lbl_802A6704:
+.obj lbl_802A6704, local
 	.asciz "intro/map0.bti"
+.endobj lbl_802A6704
 .balign 4
-lbl_802A6714:
+.obj lbl_802A6714, local
 	.asciz "intro/map1.bti"
+.endobj lbl_802A6714
 .balign 4
-lbl_802A6724:
+.obj lbl_802A6724, local
 	.asciz "intro/map2.bti"
+.endobj lbl_802A6724
 .balign 4
-lbl_802A6734:
+.obj lbl_802A6734, local
 	.asciz "intro/map3.bti"
+.endobj lbl_802A6734
 .balign 4
-lbl_802A6744:
+.obj lbl_802A6744, local
 	.asciz "intro/map4.bti"
+.endobj lbl_802A6744
 .balign 4
-levNames:
+.obj levNames, local
 	.4byte lbl_802A6704
 	.4byte lbl_802A6714
 	.4byte lbl_802A6724
 	.4byte lbl_802A6734
 	.4byte lbl_802A6744
+.endobj levNames
 .balign 4
-lbl_802A6768:
+.obj lbl_802A6768, local
 	.asciz "<OnePlayerSection>"
+.endobj lbl_802A6768
 .balign 4
-lbl_802A677C:
+.obj lbl_802A677C, local
 	.asciz "stages/practice.ini"
+.endobj lbl_802A677C
 .balign 4
-lbl_802A6790:
+.obj lbl_802A6790, local
 	.asciz "stages/stage1.ini"
+.endobj lbl_802A6790
 .balign 4
-lbl_802A67A4:
+.obj lbl_802A67A4, local
 	.asciz "stages/play_3.ini"
+.endobj lbl_802A67A4
 .balign 4
-lbl_802A67B8:
+.obj lbl_802A67B8, local
 	.4byte .L_800536D8
 	.4byte .L_80053764
 	.4byte .L_8005379C
@@ -842,24 +856,31 @@ lbl_802A67B8:
 	.4byte .L_80053AA0
 	.4byte .L_80053ABC
 	.4byte .L_80053B0C
+.endobj lbl_802A67B8
 .balign 4
-lbl_802A67E8:
+.obj lbl_802A67E8, local
 	.asciz "OnePlayerSection"
+.endobj lbl_802A67E8
 .balign 4
-lbl_802A67FC:
+.obj lbl_802A67FC, local
 	.asciz "CoreNode"
+.endobj lbl_802A67FC
 .balign 4
-lbl_802A6808:
+.obj lbl_802A6808, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte 0
-lbl_802A6814:
+.endobj lbl_802A6808
+.balign 4
+.obj lbl_802A6814, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte __RTTI__8CoreNode
 	.4byte 0
 	.4byte 0
-lbl_802A6828:
+.endobj lbl_802A6814
+.balign 4
+.obj lbl_802A6828, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte __RTTI__8CoreNode
@@ -867,7 +888,9 @@ lbl_802A6828:
 	.4byte __RTTI__4Node
 	.4byte 0
 	.4byte 0
-lbl_802A6844:
+.endobj lbl_802A6828
+.balign 4
+.obj lbl_802A6844, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte __RTTI__8CoreNode
@@ -877,8 +900,9 @@ lbl_802A6844:
 	.4byte __RTTI__7Section
 	.4byte 0
 	.4byte 0
-.global __vt__16OnePlayerSection
-__vt__16OnePlayerSection:
+.endobj lbl_802A6844
+.balign 4
+.obj __vt__16OnePlayerSection, global
 	.4byte __RTTI__16OnePlayerSection
 	.4byte 0
 	.4byte getAgeNodeType__5ANodeFv
@@ -892,22 +916,27 @@ __vt__16OnePlayerSection:
 	.4byte concat__4NodeFR8Matrix4f
 	.4byte getModelMatrix__4NodeFv
 	.4byte init__16OnePlayerSectionFv
+.endobj __vt__16OnePlayerSection
 .balign 4
-lbl_802A689C:
+.obj lbl_802A689C, local
 	.asciz "GenFileInfo"
+.endobj lbl_802A689C
 .balign 4
-lbl_802A68A8:
+.obj lbl_802A68A8, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte __RTTI__8CoreNode
 	.4byte 0
 	.4byte 0
-.global __vt__11GenFileInfo
-__vt__11GenFileInfo:
+.endobj lbl_802A68A8
+.balign 4
+.obj __vt__11GenFileInfo, weak
 	.4byte __RTTI__11GenFileInfo
 	.4byte 0
 	.4byte getAgeNodeType__5ANodeFv
 	.4byte read__8CoreNodeFR18RandomAccessStream
+.endobj __vt__11GenFileInfo
+.balign 4
 	.4byte 0
 	.4byte 0
 	.4byte 0
@@ -916,89 +945,117 @@ __vt__11GenFileInfo:
 	.4byte 0
 	.4byte 0
 .balign 4
-lbl_802A68E8:
+.obj lbl_802A68E8, local
 	.asciz "StageInfo"
+.endobj lbl_802A68E8
 .balign 4
-lbl_802A68F4:
+.obj lbl_802A68F4, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte __RTTI__8CoreNode
 	.4byte 0
 	.4byte 0
-.global __vt__9StageInfo
-__vt__9StageInfo:
+.endobj lbl_802A68F4
+.balign 4
+.obj __vt__9StageInfo, global
 	.4byte __RTTI__9StageInfo
 	.4byte 0
 	.4byte getAgeNodeType__5ANodeFv
 	.4byte read__9StageInfoFR18RandomAccessStream
+.endobj __vt__9StageInfo
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-lbl_803DD898:
+.obj lbl_803DD898, local
 	.asciz "genfile"
+.endobj lbl_803DD898
 .balign 4
-lbl_803DD8A0:
+.obj lbl_803DD8A0, local
 	.asciz ""
+.endobj lbl_803DD8A0
 .balign 4
-lbl_803DD8A4:
+.obj lbl_803DD8A4, local
 	.asciz "%d"
+.endobj lbl_803DD8A4
 .balign 4
-lbl_803DD8A8:
+.obj lbl_803DD8A8, local
 	.asciz "%s"
+.endobj lbl_803DD8A8
 .balign 4
-lbl_803DD8AC:
+.obj lbl_803DD8AC, local
 	.asciz "stages"
+.endobj lbl_803DD8AC
 .balign 4
-lbl_803DD8B4:
+.obj lbl_803DD8B4, local
 	.asciz "new_map"
+.endobj lbl_803DD8B4
 .balign 4
-lbl_803DD8BC:
+.obj lbl_803DD8BC, local
 	.asciz "visible"
+.endobj lbl_803DD8BC
 .balign 4
-lbl_803DD8C4:
+.obj lbl_803DD8C4, local
 	.asciz "name"
+.endobj lbl_803DD8C4
 .balign 4
-lbl_803DD8CC:
+.obj lbl_803DD8CC, local
 	.asciz "id"
+.endobj lbl_803DD8CC
 .balign 4
-lbl_803DD8D0:
+.obj lbl_803DD8D0, local
 	.asciz "chid"
+.endobj lbl_803DD8D0
 .balign 4
-lbl_803DD8D8:
+.obj lbl_803DD8D8, local
 	.asciz "file"
+.endobj lbl_803DD8D8
 .balign 4
-lbl_803DD8E0:
+.obj lbl_803DD8E0, local
 	.asciz "ANode"
+.endobj lbl_803DD8E0
 .balign 4
-__RTTI__5ANode:
+.obj __RTTI__5ANode, local
 	.4byte lbl_803DD8E0
 	.4byte 0
-__RTTI__8CoreNode:
+.endobj __RTTI__5ANode
+.balign 4
+.obj __RTTI__8CoreNode, local
 	.4byte lbl_802A67FC
 	.4byte lbl_802A6808
+.endobj __RTTI__8CoreNode
 .balign 4
-lbl_803DD8F8:
+.obj lbl_803DD8F8, local
 	.asciz "Node"
+.endobj lbl_803DD8F8
 .balign 4
-__RTTI__4Node:
+.obj __RTTI__4Node, local
 	.4byte lbl_803DD8F8
 	.4byte lbl_802A6814
+.endobj __RTTI__4Node
 .balign 4
-lbl_803DD908:
+.obj lbl_803DD908, local
 	.asciz "Section"
+.endobj lbl_803DD908
 .balign 4
-__RTTI__7Section:
+.obj __RTTI__7Section, local
 	.4byte lbl_803DD908
 	.4byte lbl_802A6828
-__RTTI__16OnePlayerSection:
+.endobj __RTTI__7Section
+.balign 4
+.obj __RTTI__16OnePlayerSection, local
 	.4byte lbl_802A67E8
 	.4byte lbl_802A6844
-__RTTI__11GenFileInfo:
+.endobj __RTTI__16OnePlayerSection
+.balign 4
+.obj __RTTI__11GenFileInfo, local
 	.4byte lbl_802A689C
 	.4byte lbl_802A68A8
-__RTTI__9StageInfo:
+.endobj __RTTI__11GenFileInfo
+.balign 4
+.obj __RTTI__9StageInfo, local
 	.4byte lbl_802A68E8
 	.4byte lbl_802A68F4
+.endobj __RTTI__9StageInfo
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8

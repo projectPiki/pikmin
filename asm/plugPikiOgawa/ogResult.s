@@ -2508,19 +2508,23 @@ bloFile_Res_Table__3zen:
 	.4byte lbl_802D40A8
 	.4byte lbl_802D40A8
 	.4byte lbl_803E59F0
-.global dummy_blo_num_table__3zen
-dummy_blo_num_table__3zen:
+.balign 4
+.obj dummy_blo_num_table__3zen, global
 	.4byte 0x00000091
 	.4byte 0x00000000
+.endobj dummy_blo_num_table__3zen
 .balign 4
-lbl_802D506C:
+.obj lbl_802D506C, local
 	.asciz "screen/blo/black.blo"
+.endobj lbl_802D506C
 .balign 4
-lbl_802D5084:
+.obj lbl_802D5084, local
 	.asciz "screen/blo/account2.blo"
+.endobj lbl_802D5084
 .balign 4
-lbl_802D509C:
+.obj lbl_802D509C, local
 	.asciz "screen/blo/tu_base.blo"
+.endobj lbl_802D509C
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8

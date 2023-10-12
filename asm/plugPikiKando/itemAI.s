@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global __ct__8SluiceAIFv
-__ct__8SluiceAIFv:
+.fn __ct__8SluiceAIFv, global
 /* 800EECE8 000EBC48  7C 08 02 A6 */	mflr r0
 /* 800EECEC 000EBC4C  90 01 00 04 */	stw r0, 4(r1)
 /* 800EECF0 000EBC50  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -217,9 +216,9 @@ __ct__8SluiceAIFv:
 /* 800EF018 000EBF78  38 21 00 28 */	addi r1, r1, 0x28
 /* 800EF01C 000EBF7C  7C 08 03 A6 */	mtlr r0
 /* 800EF020 000EBF80  4E 80 00 20 */	blr 
+.endfn __ct__8SluiceAIFv
 
-.global act__Q28SluiceAI4InitFP10AICreature
-act__Q28SluiceAI4InitFP10AICreature:
+.fn act__Q28SluiceAI4InitFP10AICreature, global
 /* 800EF024 000EBF84  7C 08 02 A6 */	mflr r0
 /* 800EF028 000EBF88  38 A0 00 01 */	li r5, 1
 /* 800EF02C 000EBF8C  90 01 00 04 */	stw r0, 4(r1)
@@ -235,9 +234,9 @@ act__Q28SluiceAI4InitFP10AICreature:
 /* 800EF054 000EBFB4  38 21 00 08 */	addi r1, r1, 8
 /* 800EF058 000EBFB8  7C 08 03 A6 */	mtlr r0
 /* 800EF05C 000EBFBC  4E 80 00 20 */	blr 
+.endfn act__Q28SluiceAI4InitFP10AICreature
 
-.global act__Q28SluiceAI10MotionDoneFP10AICreature
-act__Q28SluiceAI10MotionDoneFP10AICreature:
+.fn act__Q28SluiceAI10MotionDoneFP10AICreature, global
 /* 800EF060 000EBFC0  7C 08 02 A6 */	mflr r0
 /* 800EF064 000EBFC4  90 01 00 04 */	stw r0, 4(r1)
 /* 800EF068 000EBFC8  94 21 FF F8 */	stwu r1, -8(r1)
@@ -267,16 +266,16 @@ act__Q28SluiceAI10MotionDoneFP10AICreature:
 /* 800EF0C0 000EC020  38 21 00 08 */	addi r1, r1, 8
 /* 800EF0C4 000EC024  7C 08 03 A6 */	mtlr r0
 /* 800EF0C8 000EC028  4E 80 00 20 */	blr 
+.endfn act__Q28SluiceAI10MotionDoneFP10AICreature
 
-.global act__Q28SluiceAI8AddCountFP10AICreature
-act__Q28SluiceAI8AddCountFP10AICreature:
+.fn act__Q28SluiceAI8AddCountFP10AICreature, global
 /* 800EF0CC 000EC02C  80 64 02 D4 */	lwz r3, 0x2d4(r4)
 /* 800EF0D0 000EC030  38 03 00 01 */	addi r0, r3, 1
 /* 800EF0D4 000EC034  90 04 02 D4 */	stw r0, 0x2d4(r4)
 /* 800EF0D8 000EC038  4E 80 00 20 */	blr 
+.endfn act__Q28SluiceAI8AddCountFP10AICreature
 
-.global act__Q28SluiceAI8WaitInitFP10AICreature
-act__Q28SluiceAI8WaitInitFP10AICreature:
+.fn act__Q28SluiceAI8WaitInitFP10AICreature, global
 /* 800EF0DC 000EC03C  7C 08 02 A6 */	mflr r0
 /* 800EF0E0 000EC040  90 01 00 04 */	stw r0, 4(r1)
 /* 800EF0E4 000EC044  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -314,9 +313,9 @@ act__Q28SluiceAI8WaitInitFP10AICreature:
 /* 800EF15C 000EC0BC  38 21 00 18 */	addi r1, r1, 0x18
 /* 800EF160 000EC0C0  7C 08 03 A6 */	mtlr r0
 /* 800EF164 000EC0C4  4E 80 00 20 */	blr 
+.endfn act__Q28SluiceAI8WaitInitFP10AICreature
 
-.global act__Q28SluiceAI10ChangeInitFP10AICreature
-act__Q28SluiceAI10ChangeInitFP10AICreature:
+.fn act__Q28SluiceAI10ChangeInitFP10AICreature, global
 /* 800EF168 000EC0C8  7C 08 02 A6 */	mflr r0
 /* 800EF16C 000EC0CC  90 01 00 04 */	stw r0, 4(r1)
 /* 800EF170 000EC0D0  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -353,9 +352,9 @@ act__Q28SluiceAI10ChangeInitFP10AICreature:
 /* 800EF1E8 000EC148  38 21 00 18 */	addi r1, r1, 0x18
 /* 800EF1EC 000EC14C  7C 08 03 A6 */	mtlr r0
 /* 800EF1F0 000EC150  4E 80 00 20 */	blr 
+.endfn act__Q28SluiceAI10ChangeInitFP10AICreature
 
-.global act__Q28SluiceAI10DamageInitFP10AICreature
-act__Q28SluiceAI10DamageInitFP10AICreature:
+.fn act__Q28SluiceAI10DamageInitFP10AICreature, global
 /* 800EF1F4 000EC154  7C 08 02 A6 */	mflr r0
 /* 800EF1F8 000EC158  90 01 00 04 */	stw r0, 4(r1)
 /* 800EF1FC 000EC15C  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -384,9 +383,9 @@ act__Q28SluiceAI10DamageInitFP10AICreature:
 /* 800EF254 000EC1B4  38 21 00 18 */	addi r1, r1, 0x18
 /* 800EF258 000EC1B8  7C 08 03 A6 */	mtlr r0
 /* 800EF25C 000EC1BC  4E 80 00 20 */	blr 
+.endfn act__Q28SluiceAI10DamageInitFP10AICreature
 
-.global __ct__10PikiHeadAIFv
-__ct__10PikiHeadAIFv:
+.fn __ct__10PikiHeadAIFv, global
 /* 800EF260 000EC1C0  7C 08 02 A6 */	mflr r0
 /* 800EF264 000EC1C4  90 01 00 04 */	stw r0, 4(r1)
 /* 800EF268 000EC1C8  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -727,9 +726,9 @@ __ct__10PikiHeadAIFv:
 /* 800EF760 000EC6C0  38 21 00 28 */	addi r1, r1, 0x28
 /* 800EF764 000EC6C4  7C 08 03 A6 */	mtlr r0
 /* 800EF768 000EC6C8  4E 80 00 20 */	blr 
+.endfn __ct__10PikiHeadAIFv
 
-.global act__Q210PikiHeadAI11BounceSoundFP10AICreature
-act__Q210PikiHeadAI11BounceSoundFP10AICreature:
+.fn act__Q210PikiHeadAI11BounceSoundFP10AICreature, global
 /* 800EF76C 000EC6CC  7C 08 02 A6 */	mflr r0
 /* 800EF770 000EC6D0  90 01 00 04 */	stw r0, 4(r1)
 /* 800EF774 000EC6D4  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -803,9 +802,9 @@ act__Q210PikiHeadAI11BounceSoundFP10AICreature:
 /* 800EF874 000EC7D4  38 21 00 18 */	addi r1, r1, 0x18
 /* 800EF878 000EC7D8  7C 08 03 A6 */	mtlr r0
 /* 800EF87C 000EC7DC  4E 80 00 20 */	blr 
+.endfn act__Q210PikiHeadAI11BounceSoundFP10AICreature
 
-.global act__Q210PikiHeadAI12FlyingEffectFP10AICreature
-act__Q210PikiHeadAI12FlyingEffectFP10AICreature:
+.fn act__Q210PikiHeadAI12FlyingEffectFP10AICreature, global
 /* 800EF880 000EC7E0  7C 08 02 A6 */	mflr r0
 /* 800EF884 000EC7E4  38 A0 00 31 */	li r5, 0x31
 /* 800EF888 000EC7E8  90 01 00 04 */	stw r0, 4(r1)
@@ -823,9 +822,9 @@ act__Q210PikiHeadAI12FlyingEffectFP10AICreature:
 /* 800EF8B8 000EC818  38 21 00 18 */	addi r1, r1, 0x18
 /* 800EF8BC 000EC81C  7C 08 03 A6 */	mtlr r0
 /* 800EF8C0 000EC820  4E 80 00 20 */	blr 
+.endfn act__Q210PikiHeadAI12FlyingEffectFP10AICreature
 
-.global act__Q210PikiHeadAI10FlyingExecFP10AICreature
-act__Q210PikiHeadAI10FlyingExecFP10AICreature:
+.fn act__Q210PikiHeadAI10FlyingExecFP10AICreature, global
 /* 800EF8C4 000EC824  7C 08 02 A6 */	mflr r0
 /* 800EF8C8 000EC828  38 64 03 E4 */	addi r3, r4, 0x3e4
 /* 800EF8CC 000EC82C  90 01 00 04 */	stw r0, 4(r1)
@@ -836,9 +835,9 @@ act__Q210PikiHeadAI10FlyingExecFP10AICreature:
 /* 800EF8E0 000EC840  38 21 00 08 */	addi r1, r1, 8
 /* 800EF8E4 000EC844  7C 08 03 A6 */	mtlr r0
 /* 800EF8E8 000EC848  4E 80 00 20 */	blr 
+.endfn act__Q210PikiHeadAI10FlyingExecFP10AICreature
 
-.global act__Q210PikiHeadAI13FlyingCleanupFP10AICreature
-act__Q210PikiHeadAI13FlyingCleanupFP10AICreature:
+.fn act__Q210PikiHeadAI13FlyingCleanupFP10AICreature, global
 /* 800EF8EC 000EC84C  7C 08 02 A6 */	mflr r0
 /* 800EF8F0 000EC850  38 64 03 E4 */	addi r3, r4, 0x3e4
 /* 800EF8F4 000EC854  90 01 00 04 */	stw r0, 4(r1)
@@ -848,15 +847,15 @@ act__Q210PikiHeadAI13FlyingCleanupFP10AICreature:
 /* 800EF904 000EC864  38 21 00 08 */	addi r1, r1, 8
 /* 800EF908 000EC868  7C 08 03 A6 */	mtlr r0
 /* 800EF90C 000EC86C  4E 80 00 20 */	blr 
+.endfn act__Q210PikiHeadAI13FlyingCleanupFP10AICreature
 
-.global act__Q210PikiHeadAI9BuryInit2FP10AICreature
-act__Q210PikiHeadAI9BuryInit2FP10AICreature:
+.fn act__Q210PikiHeadAI9BuryInit2FP10AICreature, global
 /* 800EF910 000EC870  38 00 00 00 */	li r0, 0
 /* 800EF914 000EC874  90 04 03 D0 */	stw r0, 0x3d0(r4)
 /* 800EF918 000EC878  4E 80 00 20 */	blr 
+.endfn act__Q210PikiHeadAI9BuryInit2FP10AICreature
 
-.global act__Q210PikiHeadAI9BuryExec2FP10AICreature
-act__Q210PikiHeadAI9BuryExec2FP10AICreature:
+.fn act__Q210PikiHeadAI9BuryExec2FP10AICreature, global
 /* 800EF91C 000EC87C  7C 08 02 A6 */	mflr r0
 /* 800EF920 000EC880  38 A0 00 0C */	li r5, 0xc
 /* 800EF924 000EC884  90 01 00 04 */	stw r0, 4(r1)
@@ -870,9 +869,9 @@ act__Q210PikiHeadAI9BuryExec2FP10AICreature:
 /* 800EF944 000EC8A4  38 21 00 08 */	addi r1, r1, 8
 /* 800EF948 000EC8A8  7C 08 03 A6 */	mtlr r0
 /* 800EF94C 000EC8AC  4E 80 00 20 */	blr 
+.endfn act__Q210PikiHeadAI9BuryExec2FP10AICreature
 
-.global act__Q210PikiHeadAI8BuryInitFP10AICreature
-act__Q210PikiHeadAI8BuryInitFP10AICreature:
+.fn act__Q210PikiHeadAI8BuryInitFP10AICreature, global
 /* 800EF950 000EC8B0  7C 08 02 A6 */	mflr r0
 /* 800EF954 000EC8B4  90 01 00 04 */	stw r0, 4(r1)
 /* 800EF958 000EC8B8  38 00 00 00 */	li r0, 0
@@ -907,9 +906,9 @@ act__Q210PikiHeadAI8BuryInitFP10AICreature:
 /* 800EF9CC 000EC92C  38 21 00 38 */	addi r1, r1, 0x38
 /* 800EF9D0 000EC930  7C 08 03 A6 */	mtlr r0
 /* 800EF9D4 000EC934  4E 80 00 20 */	blr 
+.endfn act__Q210PikiHeadAI8BuryInitFP10AICreature
 
-.global act__Q210PikiHeadAI8BuryExecFP10AICreature
-act__Q210PikiHeadAI8BuryExecFP10AICreature:
+.fn act__Q210PikiHeadAI8BuryExecFP10AICreature, global
 /* 800EF9D8 000EC938  7C 08 02 A6 */	mflr r0
 /* 800EF9DC 000EC93C  90 01 00 04 */	stw r0, 4(r1)
 /* 800EF9E0 000EC940  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -943,9 +942,9 @@ act__Q210PikiHeadAI8BuryExecFP10AICreature:
 /* 800EFA4C 000EC9AC  38 21 00 28 */	addi r1, r1, 0x28
 /* 800EFA50 000EC9B0  7C 08 03 A6 */	mtlr r0
 /* 800EFA54 000EC9B4  4E 80 00 20 */	blr 
+.endfn act__Q210PikiHeadAI8BuryExecFP10AICreature
 
-.global act__Q210PikiHeadAI8TaneInitFP10AICreature
-act__Q210PikiHeadAI8TaneInitFP10AICreature:
+.fn act__Q210PikiHeadAI8TaneInitFP10AICreature, global
 /* 800EFA58 000EC9B8  7C 08 02 A6 */	mflr r0
 /* 800EFA5C 000EC9BC  90 01 00 04 */	stw r0, 4(r1)
 /* 800EFA60 000EC9C0  94 21 FF D0 */	stwu r1, -0x30(r1)
@@ -975,9 +974,9 @@ act__Q210PikiHeadAI8TaneInitFP10AICreature:
 /* 800EFAC0 000ECA20  38 21 00 30 */	addi r1, r1, 0x30
 /* 800EFAC4 000ECA24  7C 08 03 A6 */	mtlr r0
 /* 800EFAC8 000ECA28  4E 80 00 20 */	blr 
+.endfn act__Q210PikiHeadAI8TaneInitFP10AICreature
 
-.global act__Q210PikiHeadAI8TaneExecFP10AICreature
-act__Q210PikiHeadAI8TaneExecFP10AICreature:
+.fn act__Q210PikiHeadAI8TaneExecFP10AICreature, global
 /* 800EFACC 000ECA2C  7C 08 02 A6 */	mflr r0
 /* 800EFAD0 000ECA30  90 01 00 04 */	stw r0, 4(r1)
 /* 800EFAD4 000ECA34  94 21 FF F8 */	stwu r1, -8(r1)
@@ -1001,9 +1000,9 @@ act__Q210PikiHeadAI8TaneExecFP10AICreature:
 /* 800EFB18 000ECA78  38 21 00 08 */	addi r1, r1, 8
 /* 800EFB1C 000ECA7C  7C 08 03 A6 */	mtlr r0
 /* 800EFB20 000ECA80  4E 80 00 20 */	blr 
+.endfn act__Q210PikiHeadAI8TaneExecFP10AICreature
 
-.global act__Q210PikiHeadAI8WaitInitFP10AICreature
-act__Q210PikiHeadAI8WaitInitFP10AICreature:
+.fn act__Q210PikiHeadAI8WaitInitFP10AICreature, global
 /* 800EFB24 000ECA84  7C 08 02 A6 */	mflr r0
 /* 800EFB28 000ECA88  90 01 00 04 */	stw r0, 4(r1)
 /* 800EFB2C 000ECA8C  94 21 FF B8 */	stwu r1, -0x48(r1)
@@ -1060,9 +1059,9 @@ act__Q210PikiHeadAI8WaitInitFP10AICreature:
 /* 800EFBF0 000ECB50  38 21 00 48 */	addi r1, r1, 0x48
 /* 800EFBF4 000ECB54  7C 08 03 A6 */	mtlr r0
 /* 800EFBF8 000ECB58  4E 80 00 20 */	blr 
+.endfn act__Q210PikiHeadAI8WaitInitFP10AICreature
 
-.global act__Q210PikiHeadAI8WaitExecFP10AICreature
-act__Q210PikiHeadAI8WaitExecFP10AICreature:
+.fn act__Q210PikiHeadAI8WaitExecFP10AICreature, global
 /* 800EFBFC 000ECB5C  7C 08 02 A6 */	mflr r0
 /* 800EFC00 000ECB60  90 01 00 04 */	stw r0, 4(r1)
 /* 800EFC04 000ECB64  94 21 FF 98 */	stwu r1, -0x68(r1)
@@ -1142,9 +1141,9 @@ act__Q210PikiHeadAI8WaitExecFP10AICreature:
 /* 800EFD20 000ECC80  38 21 00 68 */	addi r1, r1, 0x68
 /* 800EFD24 000ECC84  7C 08 03 A6 */	mtlr r0
 /* 800EFD28 000ECC88  4E 80 00 20 */	blr 
+.endfn act__Q210PikiHeadAI8WaitExecFP10AICreature
 
-.global act__Q210PikiHeadAI12GrowupedExecFP10AICreature
-act__Q210PikiHeadAI12GrowupedExecFP10AICreature:
+.fn act__Q210PikiHeadAI12GrowupedExecFP10AICreature, global
 /* 800EFD2C 000ECC8C  7C 08 02 A6 */	mflr r0
 /* 800EFD30 000ECC90  3C 60 80 22 */	lis r3, lbl_80222668@ha
 /* 800EFD34 000ECC94  90 01 00 04 */	stw r0, 4(r1)
@@ -1229,9 +1228,9 @@ act__Q210PikiHeadAI12GrowupedExecFP10AICreature:
 /* 800EFE68 000ECDC8  38 21 00 68 */	addi r1, r1, 0x68
 /* 800EFE6C 000ECDCC  7C 08 03 A6 */	mtlr r0
 /* 800EFE70 000ECDD0  4E 80 00 20 */	blr 
+.endfn act__Q210PikiHeadAI12GrowupedExecFP10AICreature
 
-.global act__Q210PikiHeadAI10GrowEffectFP10AICreature
-act__Q210PikiHeadAI10GrowEffectFP10AICreature:
+.fn act__Q210PikiHeadAI10GrowEffectFP10AICreature, global
 /* 800EFE74 000ECDD4  7C 08 02 A6 */	mflr r0
 /* 800EFE78 000ECDD8  38 A0 00 06 */	li r5, 6
 /* 800EFE7C 000ECDDC  90 01 00 04 */	stw r0, 4(r1)
@@ -1245,9 +1244,9 @@ act__Q210PikiHeadAI10GrowEffectFP10AICreature:
 /* 800EFE9C 000ECDFC  38 21 00 08 */	addi r1, r1, 8
 /* 800EFEA0 000ECE00  7C 08 03 A6 */	mtlr r0
 /* 800EFEA4 000ECE04  4E 80 00 20 */	blr 
+.endfn act__Q210PikiHeadAI10GrowEffectFP10AICreature
 
-.global act__Q210PikiHeadAI10KaretaInitFP10AICreature
-act__Q210PikiHeadAI10KaretaInitFP10AICreature:
+.fn act__Q210PikiHeadAI10KaretaInitFP10AICreature, global
 /* 800EFEA8 000ECE08  7C 08 02 A6 */	mflr r0
 /* 800EFEAC 000ECE0C  90 01 00 04 */	stw r0, 4(r1)
 /* 800EFEB0 000ECE10  94 21 FF C8 */	stwu r1, -0x38(r1)
@@ -1279,9 +1278,9 @@ act__Q210PikiHeadAI10KaretaInitFP10AICreature:
 /* 800EFF18 000ECE78  38 21 00 38 */	addi r1, r1, 0x38
 /* 800EFF1C 000ECE7C  7C 08 03 A6 */	mtlr r0
 /* 800EFF20 000ECE80  4E 80 00 20 */	blr 
+.endfn act__Q210PikiHeadAI10KaretaInitFP10AICreature
 
-.global act__Q210PikiHeadAI10KaretaExecFP10AICreature
-act__Q210PikiHeadAI10KaretaExecFP10AICreature:
+.fn act__Q210PikiHeadAI10KaretaExecFP10AICreature, global
 /* 800EFF24 000ECE84  7C 08 02 A6 */	mflr r0
 /* 800EFF28 000ECE88  90 01 00 04 */	stw r0, 4(r1)
 /* 800EFF2C 000ECE8C  94 21 FF F8 */	stwu r1, -8(r1)
@@ -1305,9 +1304,9 @@ act__Q210PikiHeadAI10KaretaExecFP10AICreature:
 /* 800EFF70 000ECED0  38 21 00 08 */	addi r1, r1, 8
 /* 800EFF74 000ECED4  7C 08 03 A6 */	mtlr r0
 /* 800EFF78 000ECED8  4E 80 00 20 */	blr 
+.endfn act__Q210PikiHeadAI10KaretaExecFP10AICreature
 
-.global act__Q210PikiHeadAI4DeadFP10AICreature
-act__Q210PikiHeadAI4DeadFP10AICreature:
+.fn act__Q210PikiHeadAI4DeadFP10AICreature, global
 /* 800EFF7C 000ECEDC  7C 08 02 A6 */	mflr r0
 /* 800EFF80 000ECEE0  38 64 00 00 */	addi r3, r4, 0
 /* 800EFF84 000ECEE4  90 01 00 04 */	stw r0, 4(r1)
@@ -1318,9 +1317,9 @@ act__Q210PikiHeadAI4DeadFP10AICreature:
 /* 800EFF98 000ECEF8  38 21 00 08 */	addi r1, r1, 8
 /* 800EFF9C 000ECEFC  7C 08 03 A6 */	mtlr r0
 /* 800EFFA0 000ECF00  4E 80 00 20 */	blr 
+.endfn act__Q210PikiHeadAI4DeadFP10AICreature
 
-.global __ct__6BombAIFv
-__ct__6BombAIFv:
+.fn __ct__6BombAIFv, global
 /* 800EFFA4 000ECF04  7C 08 02 A6 */	mflr r0
 /* 800EFFA8 000ECF08  90 01 00 04 */	stw r0, 4(r1)
 /* 800EFFAC 000ECF0C  94 21 FF D0 */	stwu r1, -0x30(r1)
@@ -1560,9 +1559,9 @@ __ct__6BombAIFv:
 /* 800F0328 000ED288  38 21 00 30 */	addi r1, r1, 0x30
 /* 800F032C 000ED28C  7C 08 03 A6 */	mtlr r0
 /* 800F0330 000ED290  4E 80 00 20 */	blr 
+.endfn __ct__6BombAIFv
 
-.global act__Q26BombAI7SetInitFP10AICreature
-act__Q26BombAI7SetInitFP10AICreature:
+.fn act__Q26BombAI7SetInitFP10AICreature, global
 /* 800F0334 000ED294  7C 08 02 A6 */	mflr r0
 /* 800F0338 000ED298  90 01 00 04 */	stw r0, 4(r1)
 /* 800F033C 000ED29C  94 21 FF D0 */	stwu r1, -0x30(r1)
@@ -1595,9 +1594,9 @@ act__Q26BombAI7SetInitFP10AICreature:
 /* 800F03A8 000ED308  38 21 00 30 */	addi r1, r1, 0x30
 /* 800F03AC 000ED30C  7C 08 03 A6 */	mtlr r0
 /* 800F03B0 000ED310  4E 80 00 20 */	blr 
+.endfn act__Q26BombAI7SetInitFP10AICreature
 
-.global act__Q26BombAI7SetExecFP10AICreature
-act__Q26BombAI7SetExecFP10AICreature:
+.fn act__Q26BombAI7SetExecFP10AICreature, global
 /* 800F03B4 000ED314  7C 08 02 A6 */	mflr r0
 /* 800F03B8 000ED318  90 01 00 04 */	stw r0, 4(r1)
 /* 800F03BC 000ED31C  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -1627,9 +1626,9 @@ act__Q26BombAI7SetExecFP10AICreature:
 /* 800F0418 000ED378  38 21 00 28 */	addi r1, r1, 0x28
 /* 800F041C 000ED37C  7C 08 03 A6 */	mtlr r0
 /* 800F0420 000ED380  4E 80 00 20 */	blr 
+.endfn act__Q26BombAI7SetExecFP10AICreature
 
-.global act__Q26BombAI8BombInitFP10AICreature
-act__Q26BombAI8BombInitFP10AICreature:
+.fn act__Q26BombAI8BombInitFP10AICreature, global
 /* 800F0424 000ED384  7C 08 02 A6 */	mflr r0
 /* 800F0428 000ED388  90 01 00 04 */	stw r0, 4(r1)
 /* 800F042C 000ED38C  94 21 FD 40 */	stwu r1, -0x2c0(r1)
@@ -2607,9 +2606,9 @@ act__Q26BombAI8BombInitFP10AICreature:
 /* 800F1254 000EE1B4  38 21 02 C0 */	addi r1, r1, 0x2c0
 /* 800F1258 000EE1B8  7C 08 03 A6 */	mtlr r0
 /* 800F125C 000EE1BC  4E 80 00 20 */	blr 
+.endfn act__Q26BombAI8BombInitFP10AICreature
 
-.global act__Q26BombAI8BombExecFP10AICreature
-act__Q26BombAI8BombExecFP10AICreature:
+.fn act__Q26BombAI8BombExecFP10AICreature, global
 /* 800F1260 000EE1C0  7C 08 02 A6 */	mflr r0
 /* 800F1264 000EE1C4  38 A0 00 05 */	li r5, 5
 /* 800F1268 000EE1C8  90 01 00 04 */	stw r0, 4(r1)
@@ -2623,15 +2622,15 @@ act__Q26BombAI8BombExecFP10AICreature:
 /* 800F1288 000EE1E8  38 21 00 08 */	addi r1, r1, 8
 /* 800F128C 000EE1EC  7C 08 03 A6 */	mtlr r0
 /* 800F1290 000EE1F0  4E 80 00 20 */	blr 
+.endfn act__Q26BombAI8BombExecFP10AICreature
 
-.global act__Q26BombAI8MizuInitFP10AICreature
-act__Q26BombAI8MizuInitFP10AICreature:
+.fn act__Q26BombAI8MizuInitFP10AICreature, global
 /* 800F1294 000EE1F4  C0 02 9B AC */	lfs f0, lbl_803E9DAC@sda21(r2)
 /* 800F1298 000EE1F8  D0 04 02 D8 */	stfs f0, 0x2d8(r4)
 /* 800F129C 000EE1FC  4E 80 00 20 */	blr 
+.endfn act__Q26BombAI8MizuInitFP10AICreature
 
-.global act__Q26BombAI8MizuExecFP10AICreature
-act__Q26BombAI8MizuExecFP10AICreature:
+.fn act__Q26BombAI8MizuExecFP10AICreature, global
 /* 800F12A0 000EE200  7C 08 02 A6 */	mflr r0
 /* 800F12A4 000EE204  90 01 00 04 */	stw r0, 4(r1)
 /* 800F12A8 000EE208  94 21 FF D0 */	stwu r1, -0x30(r1)
@@ -2665,9 +2664,9 @@ act__Q26BombAI8MizuExecFP10AICreature:
 /* 800F1314 000EE274  38 21 00 30 */	addi r1, r1, 0x30
 /* 800F1318 000EE278  7C 08 03 A6 */	mtlr r0
 /* 800F131C 000EE27C  4E 80 00 20 */	blr 
+.endfn act__Q26BombAI8MizuExecFP10AICreature
 
-.global act__Q26BombAI7DieInitFP10AICreature
-act__Q26BombAI7DieInitFP10AICreature:
+.fn act__Q26BombAI7DieInitFP10AICreature, global
 /* 800F1320 000EE280  C0 02 9B E8 */	lfs f0, lbl_803E9DE8@sda21(r2)
 /* 800F1324 000EE284  D0 04 02 D8 */	stfs f0, 0x2d8(r4)
 /* 800F1328 000EE288  C0 0D CD 80 */	lfs f0, lbl_803E1AA0@sda21(r13)
@@ -2677,9 +2676,9 @@ act__Q26BombAI7DieInitFP10AICreature:
 /* 800F1338 000EE298  C0 0D CD 88 */	lfs f0, lbl_803E1AA8@sda21(r13)
 /* 800F133C 000EE29C  D0 04 00 84 */	stfs f0, 0x84(r4)
 /* 800F1340 000EE2A0  4E 80 00 20 */	blr 
+.endfn act__Q26BombAI7DieInitFP10AICreature
 
-.global act__Q26BombAI7DieExecFP10AICreature
-act__Q26BombAI7DieExecFP10AICreature:
+.fn act__Q26BombAI7DieExecFP10AICreature, global
 /* 800F1344 000EE2A4  7C 08 02 A6 */	mflr r0
 /* 800F1348 000EE2A8  90 01 00 04 */	stw r0, 4(r1)
 /* 800F134C 000EE2AC  94 21 FF D0 */	stwu r1, -0x30(r1)
@@ -2712,9 +2711,9 @@ act__Q26BombAI7DieExecFP10AICreature:
 /* 800F13B4 000EE314  38 21 00 30 */	addi r1, r1, 0x30
 /* 800F13B8 000EE318  7C 08 03 A6 */	mtlr r0
 /* 800F13BC 000EE31C  4E 80 00 20 */	blr 
+.endfn act__Q26BombAI7DieExecFP10AICreature
 
-.global __ct__6GoalAIFv
-__ct__6GoalAIFv:
+.fn __ct__6GoalAIFv, global
 /* 800F13C0 000EE320  7C 08 02 A6 */	mflr r0
 /* 800F13C4 000EE324  90 01 00 04 */	stw r0, 4(r1)
 /* 800F13C8 000EE328  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -2972,9 +2971,9 @@ __ct__6GoalAIFv:
 /* 800F1794 000EE6F4  38 21 00 28 */	addi r1, r1, 0x28
 /* 800F1798 000EE6F8  7C 08 03 A6 */	mtlr r0
 /* 800F179C 000EE6FC  4E 80 00 20 */	blr 
+.endfn __ct__6GoalAIFv
 
-.global satisfy__Q26GoalAI11NotFinishedFP10AICreature
-satisfy__Q26GoalAI11NotFinishedFP10AICreature:
+.fn satisfy__Q26GoalAI11NotFinishedFP10AICreature, global
 /* 800F17A0 000EE700  80 04 02 D0 */	lwz r0, 0x2d0(r4)
 /* 800F17A4 000EE704  2C 00 00 00 */	cmpwi r0, 0
 /* 800F17A8 000EE708  41 81 00 10 */	bgt .L_800F17B8
@@ -2987,9 +2986,9 @@ satisfy__Q26GoalAI11NotFinishedFP10AICreature:
 .L_800F17C0:
 /* 800F17C0 000EE720  38 60 00 00 */	li r3, 0
 /* 800F17C4 000EE724  4E 80 00 20 */	blr 
+.endfn satisfy__Q26GoalAI11NotFinishedFP10AICreature
 
-.global act__Q26GoalAI8WaitInitFP10AICreature
-act__Q26GoalAI8WaitInitFP10AICreature:
+.fn act__Q26GoalAI8WaitInitFP10AICreature, global
 /* 800F17C8 000EE728  7C 08 02 A6 */	mflr r0
 /* 800F17CC 000EE72C  90 01 00 04 */	stw r0, 4(r1)
 /* 800F17D0 000EE730  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -3039,9 +3038,9 @@ act__Q26GoalAI8WaitInitFP10AICreature:
 /* 800F1874 000EE7D4  38 21 00 20 */	addi r1, r1, 0x20
 /* 800F1878 000EE7D8  7C 08 03 A6 */	mtlr r0
 /* 800F187C 000EE7DC  4E 80 00 20 */	blr 
+.endfn act__Q26GoalAI8WaitInitFP10AICreature
 
-.global act__Q26GoalAI8BootInitFP10AICreature
-act__Q26GoalAI8BootInitFP10AICreature:
+.fn act__Q26GoalAI8BootInitFP10AICreature, global
 /* 800F1880 000EE7E0  7C 08 02 A6 */	mflr r0
 /* 800F1884 000EE7E4  7C 83 23 78 */	mr r3, r4
 /* 800F1888 000EE7E8  90 01 00 04 */	stw r0, 4(r1)
@@ -3056,9 +3055,9 @@ act__Q26GoalAI8BootInitFP10AICreature:
 /* 800F18AC 000EE80C  38 21 00 08 */	addi r1, r1, 8
 /* 800F18B0 000EE810  7C 08 03 A6 */	mtlr r0
 /* 800F18B4 000EE814  4E 80 00 20 */	blr 
+.endfn act__Q26GoalAI8BootInitFP10AICreature
 
-.global act__Q26GoalAI8BootEmitFP10AICreature
-act__Q26GoalAI8BootEmitFP10AICreature:
+.fn act__Q26GoalAI8BootEmitFP10AICreature, global
 /* 800F18B8 000EE818  7C 08 02 A6 */	mflr r0
 /* 800F18BC 000EE81C  90 01 00 04 */	stw r0, 4(r1)
 /* 800F18C0 000EE820  94 21 FF 68 */	stwu r1, -0x98(r1)
@@ -3359,13 +3358,13 @@ act__Q26GoalAI8BootEmitFP10AICreature:
 /* 800F1D0C 000EEC6C  38 21 00 98 */	addi r1, r1, 0x98
 /* 800F1D10 000EEC70  7C 08 03 A6 */	mtlr r0
 /* 800F1D14 000EEC74  4E 80 00 20 */	blr 
+.endfn act__Q26GoalAI8BootEmitFP10AICreature
 
-.global act__Q26GoalAI8BootDoneFP10AICreature
-act__Q26GoalAI8BootDoneFP10AICreature:
+.fn act__Q26GoalAI8BootDoneFP10AICreature, global
 /* 800F1D18 000EEC78  4E 80 00 20 */	blr 
+.endfn act__Q26GoalAI8BootDoneFP10AICreature
 
-.global act__Q26GoalAI8EmitPikiFP10AICreature
-act__Q26GoalAI8EmitPikiFP10AICreature:
+.fn act__Q26GoalAI8EmitPikiFP10AICreature, global
 /* 800F1D1C 000EEC7C  7C 08 02 A6 */	mflr r0
 /* 800F1D20 000EEC80  90 01 00 04 */	stw r0, 4(r1)
 /* 800F1D24 000EEC84  94 21 FE 78 */	stwu r1, -0x188(r1)
@@ -3575,13 +3574,13 @@ act__Q26GoalAI8EmitPikiFP10AICreature:
 /* 800F203C 000EEF9C  38 21 01 88 */	addi r1, r1, 0x188
 /* 800F2040 000EEFA0  7C 08 03 A6 */	mtlr r0
 /* 800F2044 000EEFA4  4E 80 00 20 */	blr 
+.endfn act__Q26GoalAI8EmitPikiFP10AICreature
 
-.global act__Q26GoalAI8EmitWaitFP10AICreature
-act__Q26GoalAI8EmitWaitFP10AICreature:
+.fn act__Q26GoalAI8EmitWaitFP10AICreature, global
 /* 800F2048 000EEFA8  4E 80 00 20 */	blr 
+.endfn act__Q26GoalAI8EmitWaitFP10AICreature
 
-.global act__Q26GoalAI6EffectFP10AICreature
-act__Q26GoalAI6EffectFP10AICreature:
+.fn act__Q26GoalAI6EffectFP10AICreature, global
 /* 800F204C 000EEFAC  7C 08 02 A6 */	mflr r0
 /* 800F2050 000EEFB0  38 C0 00 00 */	li r6, 0
 /* 800F2054 000EEFB4  90 01 00 04 */	stw r0, 4(r1)
@@ -3612,9 +3611,9 @@ act__Q26GoalAI6EffectFP10AICreature:
 /* 800F20B8 000EF018  38 21 00 28 */	addi r1, r1, 0x28
 /* 800F20BC 000EF01C  7C 08 03 A6 */	mtlr r0
 /* 800F20C0 000EF020  4E 80 00 20 */	blr 
+.endfn act__Q26GoalAI6EffectFP10AICreature
 
-.global act__Q25GemAI8RiseInitFP10AICreature
-act__Q25GemAI8RiseInitFP10AICreature:
+.fn act__Q25GemAI8RiseInitFP10AICreature, global
 /* 800F20C4 000EF024  7C 08 02 A6 */	mflr r0
 /* 800F20C8 000EF028  38 60 00 00 */	li r3, 0
 /* 800F20CC 000EF02C  90 01 00 04 */	stw r0, 4(r1)
@@ -3663,9 +3662,9 @@ act__Q25GemAI8RiseInitFP10AICreature:
 /* 800F2178 000EF0D8  38 21 00 50 */	addi r1, r1, 0x50
 /* 800F217C 000EF0DC  7C 08 03 A6 */	mtlr r0
 /* 800F2180 000EF0E0  4E 80 00 20 */	blr 
+.endfn act__Q25GemAI8RiseInitFP10AICreature
 
-.global act__Q25GemAI8RiseExecFP10AICreature
-act__Q25GemAI8RiseExecFP10AICreature:
+.fn act__Q25GemAI8RiseExecFP10AICreature, global
 /* 800F2184 000EF0E4  7C 08 02 A6 */	mflr r0
 /* 800F2188 000EF0E8  90 01 00 04 */	stw r0, 4(r1)
 /* 800F218C 000EF0EC  94 21 FF 70 */	stwu r1, -0x90(r1)
@@ -3764,9 +3763,9 @@ act__Q25GemAI8RiseExecFP10AICreature:
 /* 800F22F0 000EF250  38 21 00 90 */	addi r1, r1, 0x90
 /* 800F22F4 000EF254  7C 08 03 A6 */	mtlr r0
 /* 800F22F8 000EF258  4E 80 00 20 */	blr 
+.endfn act__Q25GemAI8RiseExecFP10AICreature
 
-.global act__Q25GemAI3DieFP10AICreature
-act__Q25GemAI3DieFP10AICreature:
+.fn act__Q25GemAI3DieFP10AICreature, global
 /* 800F22FC 000EF25C  7C 08 02 A6 */	mflr r0
 /* 800F2300 000EF260  90 01 00 04 */	stw r0, 4(r1)
 /* 800F2304 000EF264  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -3808,9 +3807,9 @@ act__Q25GemAI3DieFP10AICreature:
 /* 800F2388 000EF2E8  38 21 00 28 */	addi r1, r1, 0x28
 /* 800F238C 000EF2EC  7C 08 03 A6 */	mtlr r0
 /* 800F2390 000EF2F0  4E 80 00 20 */	blr 
+.endfn act__Q25GemAI3DieFP10AICreature
 
-.global __ct__7WaterAIFv
-__ct__7WaterAIFv:
+.fn __ct__7WaterAIFv, global
 /* 800F2394 000EF2F4  7C 08 02 A6 */	mflr r0
 /* 800F2398 000EF2F8  90 01 00 04 */	stw r0, 4(r1)
 /* 800F239C 000EF2FC  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -3963,9 +3962,9 @@ __ct__7WaterAIFv:
 /* 800F25DC 000EF53C  38 21 00 28 */	addi r1, r1, 0x28
 /* 800F25E0 000EF540  7C 08 03 A6 */	mtlr r0
 /* 800F25E4 000EF544  4E 80 00 20 */	blr 
+.endfn __ct__7WaterAIFv
 
-.global satisfy__Q27WaterAI11CollideCharFP10AICreature
-satisfy__Q27WaterAI11CollideCharFP10AICreature:
+.fn satisfy__Q27WaterAI11CollideCharFP10AICreature, global
 /* 800F25E8 000EF548  7C 08 02 A6 */	mflr r0
 /* 800F25EC 000EF54C  90 01 00 04 */	stw r0, 4(r1)
 /* 800F25F0 000EF550  94 21 FF F8 */	stwu r1, -8(r1)
@@ -3984,9 +3983,9 @@ satisfy__Q27WaterAI11CollideCharFP10AICreature:
 /* 800F261C 000EF57C  38 21 00 08 */	addi r1, r1, 8
 /* 800F2620 000EF580  7C 08 03 A6 */	mtlr r0
 /* 800F2624 000EF584  4E 80 00 20 */	blr 
+.endfn satisfy__Q27WaterAI11CollideCharFP10AICreature
 
-.global act__Q27WaterAI3DieFP10AICreature
-act__Q27WaterAI3DieFP10AICreature:
+.fn act__Q27WaterAI3DieFP10AICreature, global
 /* 800F2628 000EF588  7C 08 02 A6 */	mflr r0
 /* 800F262C 000EF58C  38 64 00 00 */	addi r3, r4, 0
 /* 800F2630 000EF590  90 01 00 04 */	stw r0, 4(r1)
@@ -3997,9 +3996,9 @@ act__Q27WaterAI3DieFP10AICreature:
 /* 800F2644 000EF5A4  38 21 00 08 */	addi r1, r1, 8
 /* 800F2648 000EF5A8  7C 08 03 A6 */	mtlr r0
 /* 800F264C 000EF5AC  4E 80 00 20 */	blr 
+.endfn act__Q27WaterAI3DieFP10AICreature
 
-.global __ct__11FallWaterAIFv
-__ct__11FallWaterAIFv:
+.fn __ct__11FallWaterAIFv, global
 /* 800F2650 000EF5B0  7C 08 02 A6 */	mflr r0
 /* 800F2654 000EF5B4  90 01 00 04 */	stw r0, 4(r1)
 /* 800F2658 000EF5B8  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -4121,9 +4120,9 @@ __ct__11FallWaterAIFv:
 /* 800F281C 000EF77C  38 21 00 20 */	addi r1, r1, 0x20
 /* 800F2820 000EF780  7C 08 03 A6 */	mtlr r0
 /* 800F2824 000EF784  4E 80 00 20 */	blr 
+.endfn __ct__11FallWaterAIFv
 
-.global act__Q211FallWaterAI11CollideInitFP10AICreature
-act__Q211FallWaterAI11CollideInitFP10AICreature:
+.fn act__Q211FallWaterAI11CollideInitFP10AICreature, global
 /* 800F2828 000EF788  7C 08 02 A6 */	mflr r0
 /* 800F282C 000EF78C  90 01 00 04 */	stw r0, 4(r1)
 /* 800F2830 000EF790  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -4145,9 +4144,9 @@ act__Q211FallWaterAI11CollideInitFP10AICreature:
 /* 800F2870 000EF7D0  38 21 00 18 */	addi r1, r1, 0x18
 /* 800F2874 000EF7D4  7C 08 03 A6 */	mtlr r0
 /* 800F2878 000EF7D8  4E 80 00 20 */	blr 
+.endfn act__Q211FallWaterAI11CollideInitFP10AICreature
 
-.global act__Q211FallWaterAI8EmitInitFP10AICreature
-act__Q211FallWaterAI8EmitInitFP10AICreature:
+.fn act__Q211FallWaterAI8EmitInitFP10AICreature, global
 /* 800F287C 000EF7DC  7C 08 02 A6 */	mflr r0
 /* 800F2880 000EF7E0  90 01 00 04 */	stw r0, 4(r1)
 /* 800F2884 000EF7E4  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -4181,9 +4180,9 @@ act__Q211FallWaterAI8EmitInitFP10AICreature:
 /* 800F28F0 000EF850  38 21 00 18 */	addi r1, r1, 0x18
 /* 800F28F4 000EF854  7C 08 03 A6 */	mtlr r0
 /* 800F28F8 000EF858  4E 80 00 20 */	blr 
+.endfn act__Q211FallWaterAI8EmitInitFP10AICreature
 
-.global act__Q211FallWaterAI13DisappearInitFP10AICreature
-act__Q211FallWaterAI13DisappearInitFP10AICreature:
+.fn act__Q211FallWaterAI13DisappearInitFP10AICreature, global
 /* 800F28FC 000EF85C  7C 08 02 A6 */	mflr r0
 /* 800F2900 000EF860  38 64 00 00 */	addi r3, r4, 0
 /* 800F2904 000EF864  90 01 00 04 */	stw r0, 4(r1)
@@ -4194,9 +4193,9 @@ act__Q211FallWaterAI13DisappearInitFP10AICreature:
 /* 800F2918 000EF878  38 21 00 08 */	addi r1, r1, 8
 /* 800F291C 000EF87C  7C 08 03 A6 */	mtlr r0
 /* 800F2920 000EF880  4E 80 00 20 */	blr 
+.endfn act__Q211FallWaterAI13DisappearInitFP10AICreature
 
-.global satisfy__11CndBombableFP8CollPart
-satisfy__11CndBombableFP8CollPart:
+.fn satisfy__11CndBombableFP8CollPart, weak
 /* 800F2924 000EF884  7C 08 02 A6 */	mflr r0
 /* 800F2928 000EF888  28 04 00 00 */	cmplwi r4, 0
 /* 800F292C 000EF88C  90 01 00 04 */	stw r0, 4(r1)
@@ -4220,6 +4219,7 @@ satisfy__11CndBombableFP8CollPart:
 /* 800F296C 000EF8CC  38 21 00 20 */	addi r1, r1, 0x20
 /* 800F2970 000EF8D0  7C 08 03 A6 */	mtlr r0
 /* 800F2974 000EF8D4  4E 80 00 20 */	blr 
+.endfn satisfy__11CndBombableFP8CollPart
 
 .section .rodata, "a"  # 0x80221FE0 - 0x80222DC0
 .balign 8
@@ -4236,30 +4236,37 @@ satisfy__11CndBombableFP8CollPart:
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802BD900:
+.obj lbl_802BD900, local
 	.asciz "itemAI.cpp"
+.endobj lbl_802BD900
 .balign 4
-lbl_802BD90C:
+.obj lbl_802BD90C, local
 	.asciz "CoreNode"
+.endobj lbl_802BD90C
 .balign 4
-lbl_802BD918:
+.obj lbl_802BD918, local
 	.asciz "%d : not goal"
+.endobj lbl_802BD918
 .balign 4
-lbl_802BD928:
+.obj lbl_802BD928, local
 	.asciz "FallWaterAI::DisappearInit"
+.endobj lbl_802BD928
 .balign 4
-lbl_802BD944:
+.obj lbl_802BD944, local
 	.asciz "SAIAction"
+.endobj lbl_802BD944
 .balign 4
-lbl_802BD950:
+.obj lbl_802BD950, local
 	.4byte __RTTI__9SAIAction
 	.4byte 0
 	.4byte 0
-.global __vt__Q211FallWaterAI13DisappearInit
-__vt__Q211FallWaterAI13DisappearInit:
+.endobj lbl_802BD950
+.balign 4
+.obj __vt__Q211FallWaterAI13DisappearInit, global
 	.4byte __RTTI__Q211FallWaterAI13DisappearInit
 	.4byte 0
 	.4byte act__Q211FallWaterAI13DisappearInitFP10AICreature
+.endobj __vt__Q211FallWaterAI13DisappearInit
 .balign 4
 lbl_802BD968:
 	.asciz "FallWaterAI::EmitInit"
@@ -5345,12 +5352,15 @@ __RTTI__8SluiceAI:
 .obj lbl_803E9DA8, local
 	.float 30.0
 .endobj lbl_803E9DA8
+.balign 4
 .obj lbl_803E9DAC, local
 	.float 1.0
 .endobj lbl_803E9DAC
+.balign 4
 .obj lbl_803E9DB0, local
 	.float 32767.0
 .endobj lbl_803E9DB0
+.balign 4
 .obj lbl_803E9DB4, local
 	.float 2.0
 .endobj lbl_803E9DB4
@@ -5358,18 +5368,23 @@ __RTTI__8SluiceAI:
 .obj lbl_803E9DB8, local
 	.8byte 0x4330000080000000
 .endobj lbl_803E9DB8
+.balign 4
 .obj lbl_803E9DC0, local
 	.float 0.0
 .endobj lbl_803E9DC0
+.balign 4
 .obj lbl_803E9DC4, local
 	.float 13.0
 .endobj lbl_803E9DC4
+.balign 4
 .obj lbl_803E9DC8, local
 	.float 0.05
 .endobj lbl_803E9DC8
+.balign 4
 .obj lbl_803E9DCC, local
 	.float 1.5
 .endobj lbl_803E9DCC
+.balign 4
 .obj lbl_803E9DD0, local
 	.float 128000.0
 .endobj lbl_803E9DD0
@@ -5381,27 +5396,35 @@ __RTTI__8SluiceAI:
 .obj lbl_803E9DE0, local
 	.double 3.0
 .endobj lbl_803E9DE0
+.balign 4
 .obj lbl_803E9DE8, local
 	.float 5.0
 .endobj lbl_803E9DE8
+.balign 4
 .obj lbl_803E9DEC, local
 	.float 110.0
 .endobj lbl_803E9DEC
+.balign 4
 .obj lbl_803E9DF0, local
 	.float 290.0
 .endobj lbl_803E9DF0
+.balign 4
 .obj lbl_803E9DF4, local
 	.float 3.1415927
 .endobj lbl_803E9DF4
+.balign 4
 .obj lbl_803E9DF8, local
 	.float 90.0
 .endobj lbl_803E9DF8
+.balign 4
 .obj lbl_803E9DFC, local
 	.float 720.0
 .endobj lbl_803E9DFC
+.balign 4
 .obj lbl_803E9E00, local
 	.float 74.0
 .endobj lbl_803E9E00
+.balign 4
 .obj lbl_803E9E04, local
 	.float 29.0
 .endobj lbl_803E9E04

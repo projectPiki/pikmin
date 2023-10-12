@@ -1,11 +1,10 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global animationKeyUpdated__Q28ActWatch12AnimListenerFR16PaniAnimKeyEvent
-animationKeyUpdated__Q28ActWatch12AnimListenerFR16PaniAnimKeyEvent:
+.fn animationKeyUpdated__Q28ActWatch12AnimListenerFR16PaniAnimKeyEvent, global
 /* 800C2C54 000BFBB4  4E 80 00 20 */	blr 
+.endfn animationKeyUpdated__Q28ActWatch12AnimListenerFR16PaniAnimKeyEvent
 
-.global __ct__8ActWatchFP4Piki
-__ct__8ActWatchFP4Piki:
+.fn __ct__8ActWatchFP4Piki, global
 /* 800C2C58 000BFBB8  7C 08 02 A6 */	mflr r0
 /* 800C2C5C 000BFBBC  38 A0 00 01 */	li r5, 1
 /* 800C2C60 000BFBC0  90 01 00 04 */	stw r0, 4(r1)
@@ -57,13 +56,13 @@ __ct__8ActWatchFP4Piki:
 /* 800C2D10 000BFC70  38 21 00 20 */	addi r1, r1, 0x20
 /* 800C2D14 000BFC74  7C 08 03 A6 */	mtlr r0
 /* 800C2D18 000BFC78  4E 80 00 20 */	blr 
+.endfn __ct__8ActWatchFP4Piki
 
-.global initialise__Q28ActWatch11InitialiserFP6Action
-initialise__Q28ActWatch11InitialiserFP6Action:
+.fn initialise__Q28ActWatch11InitialiserFP6Action, global
 /* 800C2D1C 000BFC7C  4E 80 00 20 */	blr 
+.endfn initialise__Q28ActWatch11InitialiserFP6Action
 
-.global init__8ActWatchFP8Creature
-init__8ActWatchFP8Creature:
+.fn init__8ActWatchFP8Creature, global
 /* 800C2D20 000BFC80  7C 08 02 A6 */	mflr r0
 /* 800C2D24 000BFC84  90 01 00 04 */	stw r0, 4(r1)
 /* 800C2D28 000BFC88  94 21 FF B0 */	stwu r1, -0x50(r1)
@@ -149,9 +148,9 @@ init__8ActWatchFP8Creature:
 /* 800C2E5C 000BFDBC  38 21 00 50 */	addi r1, r1, 0x50
 /* 800C2E60 000BFDC0  7C 08 03 A6 */	mtlr r0
 /* 800C2E64 000BFDC4  4E 80 00 20 */	blr 
+.endfn init__8ActWatchFP8Creature
 
-.global cleanup__8ActWatchFv
-cleanup__8ActWatchFv:
+.fn cleanup__8ActWatchFv, global
 /* 800C2E68 000BFDC8  7C 08 02 A6 */	mflr r0
 /* 800C2E6C 000BFDCC  90 01 00 04 */	stw r0, 4(r1)
 /* 800C2E70 000BFDD0  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -171,9 +170,9 @@ cleanup__8ActWatchFv:
 /* 800C2EA4 000BFE04  38 21 00 18 */	addi r1, r1, 0x18
 /* 800C2EA8 000BFE08  7C 08 03 A6 */	mtlr r0
 /* 800C2EAC 000BFE0C  4E 80 00 20 */	blr 
+.endfn cleanup__8ActWatchFv
 
-.global getInfo__8ActWatchFPc
-getInfo__8ActWatchFPc:
+.fn getInfo__8ActWatchFPc, global
 /* 800C2EB0 000BFE10  7C 08 02 A6 */	mflr r0
 /* 800C2EB4 000BFE14  3C C0 80 2B */	lis r6, lbl_802B7C44@ha
 /* 800C2EB8 000BFE18  90 01 00 04 */	stw r0, 4(r1)
@@ -188,9 +187,9 @@ getInfo__8ActWatchFPc:
 /* 800C2EDC 000BFE3C  38 21 00 08 */	addi r1, r1, 8
 /* 800C2EE0 000BFE40  7C 08 03 A6 */	mtlr r0
 /* 800C2EE4 000BFE44  4E 80 00 20 */	blr 
+.endfn getInfo__8ActWatchFPc
 
-.global exec__8ActWatchFv
-exec__8ActWatchFv:
+.fn exec__8ActWatchFv, global
 /* 800C2EE8 000BFE48  7C 08 02 A6 */	mflr r0
 /* 800C2EEC 000BFE4C  90 01 00 04 */	stw r0, 4(r1)
 /* 800C2EF0 000BFE50  94 21 FF 90 */	stwu r1, -0x70(r1)
@@ -282,9 +281,9 @@ exec__8ActWatchFv:
 /* 800C3038 000BFF98  38 21 00 70 */	addi r1, r1, 0x70
 /* 800C303C 000BFF9C  7C 08 03 A6 */	mtlr r0
 /* 800C3040 000BFFA0  4E 80 00 20 */	blr 
+.endfn exec__8ActWatchFv
 
-.global __dt__8ActWatchFv
-__dt__8ActWatchFv:
+.fn __dt__8ActWatchFv, weak
 /* 800C3044 000BFFA4  7C 08 02 A6 */	mflr r0
 /* 800C3048 000BFFA8  90 01 00 04 */	stw r0, 4(r1)
 /* 800C304C 000BFFAC  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -311,33 +310,41 @@ __dt__8ActWatchFv:
 /* 800C309C 000BFFFC  38 21 00 18 */	addi r1, r1, 0x18
 /* 800C30A0 000C0000  7C 08 03 A6 */	mtlr r0
 /* 800C30A4 000C0004  4E 80 00 20 */	blr 
+.endfn __dt__8ActWatchFv
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802B7C38:
+.obj lbl_802B7C38, local
 	.asciz "aiWatch.cpp"
+.endobj lbl_802B7C38
 .balign 4
-lbl_802B7C44:
+.obj lbl_802B7C44, local
 	.asciz "watch(%d)"
+.endobj lbl_802B7C44
 .balign 4
-lbl_802B7C50:
+.obj lbl_802B7C50, local
 	.asciz "ActWatch"
+.endobj lbl_802B7C50
 .balign 4
-lbl_802B7C5C:
+.obj lbl_802B7C5C, local
 	.asciz "Receiver<Piki>"
+.endobj lbl_802B7C5C
 .balign 4
-lbl_802B7C6C:
+.obj lbl_802B7C6C, local
 	.4byte "__RTTI__15Receiver<4Piki>"
 	.4byte 0
 	.4byte 0
-lbl_802B7C78:
+.endobj lbl_802B7C6C
+.balign 4
+.obj lbl_802B7C78, local
 	.4byte "__RTTI__15Receiver<4Piki>"
 	.4byte 0
 	.4byte __RTTI__6Action
 	.4byte 0
 	.4byte 0
-.global __vt__8ActWatch
-__vt__8ActWatch:
+.endobj lbl_802B7C78
+.balign 4
+.obj __vt__8ActWatch, global
 	.4byte __RTTI__8ActWatch
 	.4byte 0
 	.4byte "procMsg__15Receiver<4Piki>FP4PikiP3Msg"
@@ -363,43 +370,53 @@ __vt__8ActWatch:
 	.4byte restart__6ActionFv
 	.4byte resumable__6ActionFv
 	.4byte getInfo__8ActWatchFPc
+.endobj __vt__8ActWatch
 .balign 4
-lbl_802B7CF0:
+.obj lbl_802B7CF0, local
 	.asciz "ActWatch::Initialiser"
+.endobj lbl_802B7CF0
 .balign 4
-lbl_802B7D08:
+.obj lbl_802B7D08, local
 	.asciz "Action::Initialiser"
+.endobj lbl_802B7D08
 .balign 4
-lbl_802B7D1C:
+.obj lbl_802B7D1C, local
 	.4byte __RTTI__Q26Action11Initialiser
 	.4byte 0
 	.4byte 0
-.global __vt__Q28ActWatch11Initialiser
-__vt__Q28ActWatch11Initialiser:
+.endobj lbl_802B7D1C
+.balign 4
+.obj __vt__Q28ActWatch11Initialiser, global
 	.4byte __RTTI__Q28ActWatch11Initialiser
 	.4byte 0
 	.4byte initialise__Q28ActWatch11InitialiserFP6Action
+.endobj __vt__Q28ActWatch11Initialiser
 .balign 4
-lbl_802B7D34:
+.obj lbl_802B7D34, local
 	.asciz "PaniAnimKeyListener"
+.endobj lbl_802B7D34
 .balign 4
 	.4byte 0
 	.4byte 0
 	.4byte 0
 .balign 4
-lbl_802B7D54:
+.obj lbl_802B7D54, local
 	.asciz "ActWatch::AnimListener"
+.endobj lbl_802B7D54
 .balign 4
-lbl_802B7D6C:
+.obj lbl_802B7D6C, local
 	.4byte __RTTI__19PaniAnimKeyListener
 	.4byte 0
 	.4byte 0
-.global __vt__Q28ActWatch12AnimListener
-__vt__Q28ActWatch12AnimListener:
+.endobj lbl_802B7D6C
+.balign 4
+.obj __vt__Q28ActWatch12AnimListener, global
 	.4byte __RTTI__Q28ActWatch12AnimListener
 	.4byte 0
 	.4byte animationKeyUpdated__Q28ActWatch12AnimListenerFR16PaniAnimKeyEvent
-lbl_802B7D84:
+.endobj __vt__Q28ActWatch12AnimListener
+.balign 4
+.obj lbl_802B7D84, local
 	.4byte .L_800A7908
 	.4byte .L_800A7930
 	.4byte .L_800A7944
@@ -411,24 +428,30 @@ lbl_802B7D84:
 	.4byte .L_800A791C
 	.4byte .L_800A79D0
 	.4byte .L_800A79BC
+.endobj lbl_802B7D84
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
 .obj lbl_803E08A8, local
 	.float 0.0
 .endobj lbl_803E08A8
+.balign 4
 .obj lbl_803E08AC, local
 	.float 0.0
 .endobj lbl_803E08AC
+.balign 4
 .obj lbl_803E08B0, local
 	.float 0.0
 .endobj lbl_803E08B0
+.balign 4
 .obj lbl_803E08B4, local
 	.float 0.0
 .endobj lbl_803E08B4
+.balign 4
 .obj lbl_803E08B8, local
 	.float 0.0
 .endobj lbl_803E08B8
+.balign 4
 .obj "__RTTI__15Receiver<4Piki>", local
 	.4byte lbl_802B7C5C
 	.4byte 0
@@ -442,22 +465,27 @@ lbl_802B7D84:
 	.4byte lbl_803E08C4
 	.4byte lbl_802B7C6C
 .endobj __RTTI__6Action
+.balign 4
 .obj __RTTI__8ActWatch, local
 	.4byte lbl_802B7C50
 	.4byte lbl_802B7C78
 .endobj __RTTI__8ActWatch
+.balign 4
 .obj __RTTI__Q26Action11Initialiser, local
 	.4byte lbl_802B7D08
 	.4byte 0
 .endobj __RTTI__Q26Action11Initialiser
+.balign 4
 .obj __RTTI__Q28ActWatch11Initialiser, local
 	.4byte lbl_802B7CF0
 	.4byte lbl_802B7D1C
 .endobj __RTTI__Q28ActWatch11Initialiser
+.balign 4
 .obj __RTTI__19PaniAnimKeyListener, local
 	.4byte lbl_802B7D34
 	.4byte 0
 .endobj __RTTI__19PaniAnimKeyListener
+.balign 4
 .obj __RTTI__Q28ActWatch12AnimListener, local
 	.4byte lbl_802B7D54
 	.4byte lbl_802B7D6C
@@ -468,15 +496,19 @@ lbl_802B7D84:
 .obj lbl_803E9728, local
 	.float 0.0
 .endobj lbl_803E9728
+.balign 4
 .obj lbl_803E972C, local
 	.float 1.0
 .endobj lbl_803E972C
+.balign 4
 .obj lbl_803E9730, local
 	.float 32767.0
 .endobj lbl_803E9730
+.balign 4
 .obj lbl_803E9734, local
 	.float 20.0
 .endobj lbl_803E9734
+.balign 4
 .obj lbl_803E9738, local
 	.float 1.6
 .endobj lbl_803E9738
@@ -484,6 +516,7 @@ lbl_802B7D84:
 .obj lbl_803E9740, local
 	.8byte 0x4330000080000000
 .endobj lbl_803E9740
+.balign 4
 .obj lbl_803E9748, local
 	.float 0.4
 .endobj lbl_803E9748

@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global construct__19NPolynomialFunctionFPfi
-construct__19NPolynomialFunctionFPfi:
+.fn construct__19NPolynomialFunctionFPfi, global
 /* 8011B6E4 00118644  7C 08 02 A6 */	mflr r0
 /* 8011B6E8 00118648  38 63 00 04 */	addi r3, r3, 4
 /* 8011B6EC 0011864C  90 01 00 04 */	stw r0, 4(r1)
@@ -12,9 +11,9 @@ construct__19NPolynomialFunctionFPfi:
 /* 8011B700 00118660  38 21 00 08 */	addi r1, r1, 8
 /* 8011B704 00118664  7C 08 03 A6 */	mtlr r0
 /* 8011B708 00118668  4E 80 00 20 */	blr 
+.endfn construct__19NPolynomialFunctionFPfi
 
-.global getValue__19NPolynomialFunctionFf
-getValue__19NPolynomialFunctionFf:
+.fn getValue__19NPolynomialFunctionFf, global
 /* 8011B70C 0011866C  80 C3 00 08 */	lwz r6, 8(r3)
 /* 8011B710 00118670  38 E0 00 00 */	li r7, 0
 /* 8011B714 00118674  C0 E2 A0 04 */	lfs f7, lbl_803EA204@sda21(r2)
@@ -89,9 +88,9 @@ getValue__19NPolynomialFunctionFf:
 /* 8011B814 00118774  54 E5 10 3A */	slwi r5, r7, 2
 /* 8011B818 00118778  4B FF FF C8 */	b .L_8011B7E0
 /* 8011B81C 0011877C  4E 80 00 20 */	blr 
+.endfn getValue__19NPolynomialFunctionFf
 
-.global println__19NPolynomialFunctionFv
-println__19NPolynomialFunctionFv:
+.fn println__19NPolynomialFunctionFv, global
 /* 8011B820 00118780  80 A3 00 08 */	lwz r5, 8(r3)
 /* 8011B824 00118784  38 C0 00 00 */	li r6, 0
 /* 8011B828 00118788  2C 05 00 00 */	cmpwi r5, 0
@@ -117,9 +116,9 @@ println__19NPolynomialFunctionFv:
 /* 8011B86C 001187CC  4E 80 00 20 */	blr 
 /* 8011B870 001187D0  4B FF FF E8 */	b .L_8011B858
 /* 8011B874 001187D4  4E 80 00 20 */	blr 
+.endfn println__19NPolynomialFunctionFv
 
-.global __ct__20NClampLinearFunctionFPf
-__ct__20NClampLinearFunctionFPf:
+.fn __ct__20NClampLinearFunctionFPf, global
 /* 8011B878 001187D8  7C 08 02 A6 */	mflr r0
 /* 8011B87C 001187DC  3C A0 80 2C */	lis r5, __vt__9NFunction@ha
 /* 8011B880 001187E0  90 01 00 04 */	stw r0, 4(r1)
@@ -151,9 +150,9 @@ __ct__20NClampLinearFunctionFPf:
 /* 8011B8E8 00118848  38 21 00 18 */	addi r1, r1, 0x18
 /* 8011B8EC 0011884C  7C 08 03 A6 */	mtlr r0
 /* 8011B8F0 00118850  4E 80 00 20 */	blr 
+.endfn __ct__20NClampLinearFunctionFPf
 
-.global construct__20NClampLinearFunctionFPf
-construct__20NClampLinearFunctionFPf:
+.fn construct__20NClampLinearFunctionFPf, global
 /* 8011B8F4 00118854  7C 08 02 A6 */	mflr r0
 /* 8011B8F8 00118858  38 63 00 04 */	addi r3, r3, 4
 /* 8011B8FC 0011885C  90 01 00 04 */	stw r0, 4(r1)
@@ -164,9 +163,9 @@ construct__20NClampLinearFunctionFPf:
 /* 8011B910 00118870  38 21 00 08 */	addi r1, r1, 8
 /* 8011B914 00118874  7C 08 03 A6 */	mtlr r0
 /* 8011B918 00118878  4E 80 00 20 */	blr 
+.endfn construct__20NClampLinearFunctionFPf
 
-.global makeClampLinearFunction__20NClampLinearFunctionFffff
-makeClampLinearFunction__20NClampLinearFunctionFffff:
+.fn makeClampLinearFunction__20NClampLinearFunctionFffff, global
 /* 8011B91C 0011887C  EC A3 08 28 */	fsubs f5, f3, f1
 /* 8011B920 00118880  C0 02 A0 00 */	lfs f0, lbl_803EA200@sda21(r2)
 /* 8011B924 00118884  FC 05 00 40 */	fcmpo cr0, f5, f0
@@ -211,9 +210,9 @@ makeClampLinearFunction__20NClampLinearFunctionFffff:
 .L_8011B9A4:
 /* 8011B9A4 00118904  D0 83 00 10 */	stfs f4, 0x10(r3)
 /* 8011B9A8 00118908  4E 80 00 20 */	blr 
+.endfn makeClampLinearFunction__20NClampLinearFunctionFffff
 
-.global getValue__20NClampLinearFunctionFf
-getValue__20NClampLinearFunctionFf:
+.fn getValue__20NClampLinearFunctionFf, global
 /* 8011B9AC 0011890C  80 C3 00 08 */	lwz r6, 8(r3)
 /* 8011B9B0 00118910  38 80 00 00 */	li r4, 0
 /* 8011B9B4 00118914  C1 02 A0 04 */	lfs f8, lbl_803EA204@sda21(r2)
@@ -297,9 +296,9 @@ getValue__20NClampLinearFunctionFf:
 /* 8011BAD4 00118A34  54 85 10 3A */	slwi r5, r4, 2
 /* 8011BAD8 00118A38  4B FF FF A8 */	b .L_8011BA80
 /* 8011BADC 00118A3C  4E 80 00 20 */	blr 
+.endfn getValue__20NClampLinearFunctionFf
 
-.global println__20NClampLinearFunctionFv
-println__20NClampLinearFunctionFv:
+.fn println__20NClampLinearFunctionFv, global
 /* 8011BAE0 00118A40  80 C3 00 08 */	lwz r6, 8(r3)
 /* 8011BAE4 00118A44  38 80 00 00 */	li r4, 0
 /* 8011BAE8 00118A48  2C 06 00 00 */	cmpwi r6, 0
@@ -325,9 +324,9 @@ println__20NClampLinearFunctionFv:
 /* 8011BB2C 00118A8C  4E 80 00 20 */	blr 
 /* 8011BB30 00118A90  4B FF FF E8 */	b .L_8011BB18
 /* 8011BB34 00118A94  4E 80 00 20 */	blr 
+.endfn println__20NClampLinearFunctionFv
 
-.global __ct__18NVibrationFunctionFv
-__ct__18NVibrationFunctionFv:
+.fn __ct__18NVibrationFunctionFv, global
 /* 8011BB38 00118A98  3C 80 80 2C */	lis r4, __vt__9NFunction@ha
 /* 8011BB3C 00118A9C  38 04 42 5C */	addi r0, r4, __vt__9NFunction@l
 /* 8011BB40 00118AA0  3C 80 80 2C */	lis r4, __vt__18NVibrationFunction@ha
@@ -343,9 +342,9 @@ __ct__18NVibrationFunctionFv:
 /* 8011BB68 00118AC8  C0 02 A0 04 */	lfs f0, lbl_803EA204@sda21(r2)
 /* 8011BB6C 00118ACC  D0 03 00 0C */	stfs f0, 0xc(r3)
 /* 8011BB70 00118AD0  4E 80 00 20 */	blr 
+.endfn __ct__18NVibrationFunctionFv
 
-.global makeVibrationFunction__18NVibrationFunctionFfff
-makeVibrationFunction__18NVibrationFunctionFfff:
+.fn makeVibrationFunction__18NVibrationFunctionFfff, global
 /* 8011BB74 00118AD4  D0 23 00 04 */	stfs f1, 4(r3)
 /* 8011BB78 00118AD8  C0 22 A0 08 */	lfs f1, lbl_803EA208@sda21(r2)
 /* 8011BB7C 00118ADC  C0 0D E3 5C */	lfs f0, pi__6NMathF@sda21(r13)
@@ -354,9 +353,9 @@ makeVibrationFunction__18NVibrationFunctionFfff:
 /* 8011BB88 00118AE8  D0 03 00 08 */	stfs f0, 8(r3)
 /* 8011BB8C 00118AEC  D0 63 00 0C */	stfs f3, 0xc(r3)
 /* 8011BB90 00118AF0  4E 80 00 20 */	blr 
+.endfn makeVibrationFunction__18NVibrationFunctionFfff
 
-.global getValue__18NVibrationFunctionFf
-getValue__18NVibrationFunctionFf:
+.fn getValue__18NVibrationFunctionFf, global
 /* 8011BB94 00118AF4  7C 08 02 A6 */	mflr r0
 /* 8011BB98 00118AF8  90 01 00 04 */	stw r0, 4(r1)
 /* 8011BB9C 00118AFC  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -374,9 +373,9 @@ getValue__18NVibrationFunctionFf:
 /* 8011BBCC 00118B2C  38 21 00 20 */	addi r1, r1, 0x20
 /* 8011BBD0 00118B30  7C 08 03 A6 */	mtlr r0
 /* 8011BBD4 00118B34  4E 80 00 20 */	blr 
+.endfn getValue__18NVibrationFunctionFf
 
-.global outputPosition__11NFunction3DFfR9NVector3f
-outputPosition__11NFunction3DFfR9NVector3f:
+.fn outputPosition__11NFunction3DFfR9NVector3f, global
 /* 8011BBD8 00118B38  7C 08 02 A6 */	mflr r0
 /* 8011BBDC 00118B3C  90 01 00 04 */	stw r0, 4(r1)
 /* 8011BBE0 00118B40  94 21 FF C8 */	stwu r1, -0x38(r1)
@@ -419,52 +418,65 @@ outputPosition__11NFunction3DFfR9NVector3f:
 /* 8011BC74 00118BD4  38 21 00 38 */	addi r1, r1, 0x38
 /* 8011BC78 00118BD8  7C 08 03 A6 */	mtlr r0
 /* 8011BC7C 00118BDC  4E 80 00 20 */	blr 
+.endfn outputPosition__11NFunction3DFfR9NVector3f
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802C4158:
+.obj lbl_802C4158, local
 	.asciz "nlibfunction.cpp"
+.endobj lbl_802C4158
 .balign 4
-lbl_802C416C:
+.obj lbl_802C416C, local
 	.asciz "nlibfunction"
+.endobj lbl_802C416C
 .balign 4
-lbl_802C417C:
+.obj lbl_802C417C, local
 	.asciz "NVibrationFunction"
+.endobj lbl_802C417C
 .balign 4
-lbl_802C4190:
+.obj lbl_802C4190, local
 	.asciz "NFunction"
+.endobj lbl_802C4190
 .balign 4
-lbl_802C419C:
+.obj lbl_802C419C, local
 	.4byte __RTTI__9NFunction
 	.4byte 0
 	.4byte 0
-.global __vt__18NVibrationFunction
-__vt__18NVibrationFunction:
+.endobj lbl_802C419C
+.balign 4
+.obj __vt__18NVibrationFunction, global
 	.4byte __RTTI__18NVibrationFunction
 	.4byte 0
 	.4byte getValue__18NVibrationFunctionFf
+.endobj __vt__18NVibrationFunction
 .balign 4
-lbl_802C41B4:
+.obj lbl_802C41B4, local
 	.asciz "NClampLinearFunction"
+.endobj lbl_802C41B4
 .balign 4
-lbl_802C41CC:
+.obj lbl_802C41CC, local
 	.asciz "NPolynomialFunction"
+.endobj lbl_802C41CC
 .balign 4
-lbl_802C41E0:
+.obj lbl_802C41E0, local
 	.4byte __RTTI__9NFunction
 	.4byte 0
 	.4byte 0
+.endobj lbl_802C41E0
 .balign 4
-lbl_802C41EC:
+.obj lbl_802C41EC, local
 	.asciz "NLinearFunction"
+.endobj lbl_802C41EC
 .balign 4
-lbl_802C41FC:
+.obj lbl_802C41FC, local
 	.4byte __RTTI__9NFunction
 	.4byte 0
 	.4byte __RTTI__19NPolynomialFunction
 	.4byte 0
 	.4byte 0
-lbl_802C4210:
+.endobj lbl_802C41FC
+.balign 4
+.obj lbl_802C4210, local
 	.4byte __RTTI__9NFunction
 	.4byte 0
 	.4byte __RTTI__19NPolynomialFunction
@@ -472,29 +484,34 @@ lbl_802C4210:
 	.4byte __RTTI__15NLinearFunction
 	.4byte 0
 	.4byte 0
-.global __vt__20NClampLinearFunction
-__vt__20NClampLinearFunction:
+.endobj lbl_802C4210
+.balign 4
+.obj __vt__20NClampLinearFunction, global
 	.4byte __RTTI__20NClampLinearFunction
 	.4byte 0
 	.4byte getValue__20NClampLinearFunctionFf
 	.4byte println__20NClampLinearFunctionFv
-.global __vt__15NLinearFunction
-__vt__15NLinearFunction:
+.endobj __vt__20NClampLinearFunction
+.balign 4
+.obj __vt__15NLinearFunction, global
 	.4byte __RTTI__15NLinearFunction
 	.4byte 0
 	.4byte getValue__19NPolynomialFunctionFf
 	.4byte println__19NPolynomialFunctionFv
-.global __vt__19NPolynomialFunction
-__vt__19NPolynomialFunction:
+.endobj __vt__15NLinearFunction
+.balign 4
+.obj __vt__19NPolynomialFunction, global
 	.4byte __RTTI__19NPolynomialFunction
 	.4byte 0
 	.4byte getValue__19NPolynomialFunctionFf
 	.4byte println__19NPolynomialFunctionFv
-.global __vt__9NFunction
-__vt__9NFunction:
+.endobj __vt__19NPolynomialFunction
+.balign 4
+.obj __vt__9NFunction, global
 	.4byte __RTTI__9NFunction
 	.4byte 0
 	.4byte 0
+.endobj __vt__9NFunction
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
@@ -502,18 +519,22 @@ __vt__9NFunction:
 	.4byte lbl_802C4190
 	.4byte 0
 .endobj __RTTI__9NFunction
+.balign 4
 .obj __RTTI__18NVibrationFunction, local
 	.4byte lbl_802C417C
 	.4byte lbl_802C419C
 .endobj __RTTI__18NVibrationFunction
+.balign 4
 .obj __RTTI__19NPolynomialFunction, local
 	.4byte lbl_802C41CC
 	.4byte lbl_802C41E0
 .endobj __RTTI__19NPolynomialFunction
+.balign 4
 .obj __RTTI__15NLinearFunction, local
 	.4byte lbl_802C41EC
 	.4byte lbl_802C41FC
 .endobj __RTTI__15NLinearFunction
+.balign 4
 .obj __RTTI__20NClampLinearFunction, local
 	.4byte lbl_802C41B4
 	.4byte lbl_802C4210
@@ -524,9 +545,11 @@ __vt__9NFunction:
 .obj lbl_803EA200, local
 	.float 0.0
 .endobj lbl_803EA200
+.balign 4
 .obj lbl_803EA204, local
 	.float 1.0
 .endobj lbl_803EA204
+.balign 4
 .obj lbl_803EA208, local
 	.float 2.0
 .endobj lbl_803EA208

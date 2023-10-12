@@ -2384,6 +2384,7 @@ RotateAngleData__3zen:
 	.float 58.0
 	.float 60.0
 	.float -1.0
+.balign 4
 pane_name$1940:
 	.byte 0
 	.ascii "l_m"
@@ -2402,6 +2403,7 @@ pane_name$1940:
 	.byte 0
 	.ascii "c_m"
 	.ascii "3d_m"
+.balign 4
 pane_name2$1941:
 	.skip 3
 	.ascii "l"
@@ -2421,6 +2423,7 @@ pane_name2$1941:
 	.ascii "c"
 	.skip 2
 	.ascii "3d"
+.balign 4
 pane_name3$1942:
 	.skip 1
 	.ascii "l_c"
@@ -2439,6 +2442,7 @@ pane_name3$1942:
 	.skip 1
 	.ascii "c_c"
 	.ascii "3d_c"
+.balign 4
 pane_name4$1943:
 	.skip 1
 	.ascii "l_w"
@@ -2559,9 +2563,9 @@ lbl_803EB3D0:
 	.4byte 0x3E000000
 lbl_803EB3D4:
 	.4byte 0x3E4CCCCD
+.balign 8
 lbl_803EB3D8:
-	.4byte 0x43300000
-	.4byte 0x00000000
+	.8byte 0x4330000000000000
 lbl_803EB3E0:
 	.4byte 0x00000000
 lbl_803EB3E4:

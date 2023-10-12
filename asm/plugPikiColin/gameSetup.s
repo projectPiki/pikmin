@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global preCacheShapes__16GameSetupSectionFv
-preCacheShapes__16GameSetupSectionFv:
+.fn preCacheShapes__16GameSetupSectionFv, global
 /* 80054B34 00051A94  7C 08 02 A6 */	mflr r0
 /* 80054B38 00051A98  3C 60 80 2A */	lis r3, lbl_802A69A8@ha
 /* 80054B3C 00051A9C  90 01 00 04 */	stw r0, 4(r1)
@@ -110,9 +109,9 @@ preCacheShapes__16GameSetupSectionFv:
 /* 80054CB8 00051C18  38 21 00 30 */	addi r1, r1, 0x30
 /* 80054CBC 00051C1C  7C 08 03 A6 */	mtlr r0
 /* 80054CC0 00051C20  4E 80 00 20 */	blr 
+.endfn preCacheShapes__16GameSetupSectionFv
 
-.global __ct__16GameSetupSectionFv
-__ct__16GameSetupSectionFv:
+.fn __ct__16GameSetupSectionFv, global
 /* 80054CC4 00051C24  7C 08 02 A6 */	mflr r0
 /* 80054CC8 00051C28  3C 80 80 2A */	lis r4, lbl_802A69A8@ha
 /* 80054CCC 00051C2C  90 01 00 04 */	stw r0, 4(r1)
@@ -279,9 +278,9 @@ __ct__16GameSetupSectionFv:
 /* 80054F3C 00051E9C  38 21 00 58 */	addi r1, r1, 0x58
 /* 80054F40 00051EA0  7C 08 03 A6 */	mtlr r0
 /* 80054F44 00051EA4  4E 80 00 20 */	blr 
+.endfn __ct__16GameSetupSectionFv
 
-.global update__16GameSetupSectionFv
-update__16GameSetupSectionFv:
+.fn update__16GameSetupSectionFv, global
 /* 80054F48 00051EA8  3C 60 80 3A */	lis r3, gameflow@ha
 /* 80054F4C 00051EAC  38 63 D7 B8 */	addi r3, r3, gameflow@l
 /* 80054F50 00051EB0  38 00 00 01 */	li r0, 1
@@ -289,40 +288,40 @@ update__16GameSetupSectionFv:
 /* 80054F58 00051EB8  80 6D 2D EC */	lwz r3, gsys@sda21(r13)
 /* 80054F5C 00051EBC  98 03 00 00 */	stb r0, 0(r3)
 /* 80054F60 00051EC0  4E 80 00 20 */	blr 
+.endfn update__16GameSetupSectionFv
 
-.global init__16GameSetupSectionFv
-init__16GameSetupSectionFv:
+.fn init__16GameSetupSectionFv, weak
 /* 80054F64 00051EC4  4E 80 00 20 */	blr 
+.endfn init__16GameSetupSectionFv
 
-.global getPending__9RamStreamFv
-getPending__9RamStreamFv:
+.fn getPending__9RamStreamFv, weak
 /* 80054F68 00051EC8  80 83 00 0C */	lwz r4, 0xc(r3)
 /* 80054F6C 00051ECC  80 03 00 10 */	lwz r0, 0x10(r3)
 /* 80054F70 00051ED0  7C 64 00 50 */	subf r3, r4, r0
 /* 80054F74 00051ED4  4E 80 00 20 */	blr 
+.endfn getPending__9RamStreamFv
 
-.global setPosition__9RamStreamFi
-setPosition__9RamStreamFi: # weak funcs
+.fn setPosition__9RamStreamFi, weak
 /* 80054F78 00051ED8  90 83 00 0C */	stw r4, 0xc(r3)
 /* 80054F7C 00051EDC  4E 80 00 20 */	blr 
+.endfn setPosition__9RamStreamFi
 
-.global getPosition__9RamStreamFv
-getPosition__9RamStreamFv:
+.fn getPosition__9RamStreamFv, weak
 /* 80054F80 00051EE0  80 63 00 0C */	lwz r3, 0xc(r3)
 /* 80054F84 00051EE4  4E 80 00 20 */	blr 
+.endfn getPosition__9RamStreamFv
 
-.global getLength__9RamStreamFv
-getLength__9RamStreamFv:
+.fn getLength__9RamStreamFv, weak
 /* 80054F88 00051EE8  80 63 00 10 */	lwz r3, 0x10(r3)
 /* 80054F8C 00051EEC  4E 80 00 20 */	blr 
+.endfn getLength__9RamStreamFv
 
-.global setLength__9RamStreamFi
-setLength__9RamStreamFi:
+.fn setLength__9RamStreamFi, weak
 /* 80054F90 00051EF0  90 83 00 10 */	stw r4, 0x10(r3)
 /* 80054F94 00051EF4  4E 80 00 20 */	blr 
+.endfn setLength__9RamStreamFi
 
-.global read__9RamStreamFPvi
-read__9RamStreamFPvi:
+.fn read__9RamStreamFPvi, weak
 /* 80054F98 00051EF8  7C 08 02 A6 */	mflr r0
 /* 80054F9C 00051EFC  90 01 00 04 */	stw r0, 4(r1)
 /* 80054FA0 00051F00  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -344,9 +343,9 @@ read__9RamStreamFPvi:
 /* 80054FE0 00051F40  38 21 00 20 */	addi r1, r1, 0x20
 /* 80054FE4 00051F44  7C 08 03 A6 */	mtlr r0
 /* 80054FE8 00051F48  4E 80 00 20 */	blr 
+.endfn read__9RamStreamFPvi
 
-.global write__9RamStreamFPvi
-write__9RamStreamFPvi:
+.fn write__9RamStreamFPvi, weak
 /* 80054FEC 00051F4C  7C 08 02 A6 */	mflr r0
 /* 80054FF0 00051F50  90 01 00 04 */	stw r0, 4(r1)
 /* 80054FF4 00051F54  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -367,58 +366,75 @@ write__9RamStreamFPvi:
 /* 80055030 00051F90  38 21 00 20 */	addi r1, r1, 0x20
 /* 80055034 00051F94  7C 08 03 A6 */	mtlr r0
 /* 80055038 00051F98  4E 80 00 20 */	blr 
+.endfn write__9RamStreamFPvi
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802A69A8:
+.obj lbl_802A69A8, local
 	.asciz "gameSetup.cpp"
+.endobj lbl_802A69A8
 .balign 4
-lbl_802A69B8:
+.obj lbl_802A69B8, local
 	.asciz "GameSetup"
+.endobj lbl_802A69B8
 .balign 4
-lbl_802A69C4:
+.obj lbl_802A69C4, local
 	.asciz "objects/pellets/white1.mod"
+.endobj lbl_802A69C4
 .balign 4
-lbl_802A69E0:
+.obj lbl_802A69E0, local
 	.asciz "objects/pellets/white1.anm"
+.endobj lbl_802A69E0
 .balign 4
-lbl_802A69FC:
+.obj lbl_802A69FC, local
 	.asciz "objects/pellets/white2.mod"
+.endobj lbl_802A69FC
 .balign 4
-lbl_802A6A18:
+.obj lbl_802A6A18, local
 	.asciz "objects/pellets/white2.anm"
+.endobj lbl_802A6A18
 .balign 4
-lbl_802A6A34:
+.obj lbl_802A6A34, local
 	.asciz "objects/pellets/white3.mod"
+.endobj lbl_802A6A34
 .balign 4
-lbl_802A6A50:
+.obj lbl_802A6A50, local
 	.asciz "objects/pellets/white3.anm"
+.endobj lbl_802A6A50
 .balign 4
-lbl_802A6A6C:
+.obj lbl_802A6A6C, local
 	.asciz "objects/pellets/white4.mod"
+.endobj lbl_802A6A6C
 .balign 4
-lbl_802A6A88:
+.obj lbl_802A6A88, local
 	.asciz "objects/pellets/white4.anm"
+.endobj lbl_802A6A88
 .balign 4
-lbl_802A6AA4:
+.obj lbl_802A6AA4, local
 	.asciz "pikis/bluModel.mod"
+.endobj lbl_802A6AA4
 .balign 4
-lbl_802A6AB8:
+.obj lbl_802A6AB8, local
 	.asciz "pikis/bluModel.anm"
+.endobj lbl_802A6AB8
 .balign 4
-lbl_802A6ACC:
+.obj lbl_802A6ACC, local
 	.asciz "pikis/redModel.mod"
+.endobj lbl_802A6ACC
 .balign 4
-lbl_802A6AE0:
+.obj lbl_802A6AE0, local
 	.asciz "pikis/yelModel.mod"
+.endobj lbl_802A6AE0
 .balign 4
-lbl_802A6AF4:
+.obj lbl_802A6AF4, local
 	.asciz "pikis/kinModel.mod"
+.endobj lbl_802A6AF4
 .balign 4
-lbl_802A6B08:
+.obj lbl_802A6B08, local
 	.asciz "pikis/nv3Model.mod"
+.endobj lbl_802A6B08
 .balign 4
-shapeList:
+.obj shapeList, local
 	.4byte lbl_802A69C4
 	.4byte lbl_802A69E0
 	.4byte lbl_802A69FC
@@ -439,110 +455,145 @@ shapeList:
 	.4byte 0
 	.4byte 0
 	.4byte 0
+.endobj shapeList
 .balign 4
-lbl_802A6B6C:
+.obj lbl_802A6B6C, local
 	.asciz "objects/ufo/ufo0705.mod"
+.endobj lbl_802A6B6C
 .balign 4
-lbl_802A6B84:
+.obj lbl_802A6B84, local
 	.asciz "objects/ufo/ufo0705.anm"
+.endobj lbl_802A6B84
 .balign 4
-lbl_802A6B9C:
+.obj lbl_802A6B9C, local
 	.asciz "objects/ufoparts/soto1.mod"
+.endobj lbl_802A6B9C
 .balign 4
-lbl_802A6BB8:
+.obj lbl_802A6BB8, local
 	.asciz "objects/ufoparts/soto1.anm"
+.endobj lbl_802A6BB8
 .balign 4
-lbl_802A6BD4:
+.obj lbl_802A6BD4, local
 	.asciz "objects/ufoparts/soto2.mod"
+.endobj lbl_802A6BD4
 .balign 4
-lbl_802A6BF0:
+.obj lbl_802A6BF0, local
 	.asciz "objects/ufoparts/soto2.anm"
+.endobj lbl_802A6BF0
 .balign 4
-lbl_802A6C0C:
+.obj lbl_802A6C0C, local
 	.asciz "objects/ufoparts/soto3.mod"
+.endobj lbl_802A6C0C
 .balign 4
-lbl_802A6C28:
+.obj lbl_802A6C28, local
 	.asciz "objects/ufoparts/soto3.anm"
+.endobj lbl_802A6C28
 .balign 4
-lbl_802A6C44:
+.obj lbl_802A6C44, local
 	.asciz "objects/ufoparts/soto4.mod"
+.endobj lbl_802A6C44
 .balign 4
-lbl_802A6C60:
+.obj lbl_802A6C60, local
 	.asciz "objects/ufoparts/soto4.anm"
+.endobj lbl_802A6C60
 .balign 4
-lbl_802A6C7C:
+.obj lbl_802A6C7C, local
 	.asciz "objects/ufoparts/soto5.mod"
+.endobj lbl_802A6C7C
 .balign 4
-lbl_802A6C98:
+.obj lbl_802A6C98, local
 	.asciz "objects/ufoparts/soto5.anm"
+.endobj lbl_802A6C98
 .balign 4
-lbl_802A6CB4:
+.obj lbl_802A6CB4, local
 	.asciz "objects/ufoparts/fuzoku1.mod"
+.endobj lbl_802A6CB4
 .balign 4
-lbl_802A6CD4:
+.obj lbl_802A6CD4, local
 	.asciz "objects/ufoparts/fuzoku1.anm"
+.endobj lbl_802A6CD4
 .balign 4
-lbl_802A6CF4:
+.obj lbl_802A6CF4, local
 	.asciz "objects/ufoparts/fuzoku2.mod"
+.endobj lbl_802A6CF4
 .balign 4
-lbl_802A6D14:
+.obj lbl_802A6D14, local
 	.asciz "objects/ufoparts/fuzoku2.anm"
+.endobj lbl_802A6D14
 .balign 4
-lbl_802A6D34:
+.obj lbl_802A6D34, local
 	.asciz "objects/ufoparts/fuzoku3.mod"
+.endobj lbl_802A6D34
 .balign 4
-lbl_802A6D54:
+.obj lbl_802A6D54, local
 	.asciz "objects/ufoparts/fuzoku3.anm"
+.endobj lbl_802A6D54
 .balign 4
-lbl_802A6D74:
+.obj lbl_802A6D74, local
 	.asciz "objects/ufoparts/fuzoku4.mod"
+.endobj lbl_802A6D74
 .balign 4
-lbl_802A6D94:
+.obj lbl_802A6D94, local
 	.asciz "objects/ufoparts/fuzoku4.anm"
+.endobj lbl_802A6D94
 .balign 4
-lbl_802A6DB4:
+.obj lbl_802A6DB4, local
 	.asciz "objects/ufoparts/fuzoku5.mod"
+.endobj lbl_802A6DB4
 .balign 4
-lbl_802A6DD4:
+.obj lbl_802A6DD4, local
 	.asciz "objects/ufoparts/fuzoku5.anm"
+.endobj lbl_802A6DD4
 .balign 4
-lbl_802A6DF4:
+.obj lbl_802A6DF4, local
 	.asciz "objects/ufoparts/fuzoku6.mod"
+.endobj lbl_802A6DF4
 .balign 4
-lbl_802A6E14:
+.obj lbl_802A6E14, local
 	.asciz "objects/ufoparts/fuzoku6.anm"
+.endobj lbl_802A6E14
 .balign 4
-lbl_802A6E34:
+.obj lbl_802A6E34, local
 	.asciz "objects/ufoparts/fuzoku7.mod"
+.endobj lbl_802A6E34
 .balign 4
-lbl_802A6E54:
+.obj lbl_802A6E54, local
 	.asciz "objects/ufoparts/fuzoku7.anm"
+.endobj lbl_802A6E54
 .balign 4
-lbl_802A6E74:
+.obj lbl_802A6E74, local
 	.asciz "objects/ufoparts/fuzoku8.mod"
+.endobj lbl_802A6E74
 .balign 4
-lbl_802A6E94:
+.obj lbl_802A6E94, local
 	.asciz "objects/ufoparts/fuzoku8.anm"
+.endobj lbl_802A6E94
 .balign 4
-lbl_802A6EB4:
+.obj lbl_802A6EB4, local
 	.asciz "objects/ufoparts/fuzoku9.mod"
+.endobj lbl_802A6EB4
 .balign 4
-lbl_802A6ED4:
+.obj lbl_802A6ED4, local
 	.asciz "objects/ufoparts/fuzoku9.anm"
+.endobj lbl_802A6ED4
 .balign 4
-lbl_802A6EF4:
+.obj lbl_802A6EF4, local
 	.asciz "objects/ufoparts/fuzoku10.mod"
+.endobj lbl_802A6EF4
 .balign 4
-lbl_802A6F14:
+.obj lbl_802A6F14, local
 	.asciz "objects/ufoparts/fuzoku10.anm"
+.endobj lbl_802A6F14
 .balign 4
-lbl_802A6F34:
+.obj lbl_802A6F34, local
 	.asciz "objects/ufoparts/fuzoku11.mod"
+.endobj lbl_802A6F34
 .balign 4
-lbl_802A6F54:
+.obj lbl_802A6F54, local
 	.asciz "objects/ufoparts/fuzoku11.anm"
+.endobj lbl_802A6F54
 .balign 4
-shapeList2:
+.obj shapeList2, local
 	.4byte lbl_802A6B6C
 	.4byte lbl_802A6B84
 	.4byte lbl_802A6B9C
@@ -579,110 +630,145 @@ shapeList2:
 	.4byte lbl_802A6F54
 	.4byte 0
 	.4byte 0
+.endobj shapeList2
 .balign 4
-lbl_802A7004:
+.obj lbl_802A7004, local
 	.asciz "archives/tekis.dir"
+.endobj lbl_802A7004
 .balign 4
-lbl_802A7018:
+.obj lbl_802A7018, local
 	.asciz "dataDir/archives/tekis.arc"
+.endobj lbl_802A7018
 .balign 4
-lbl_802A7034:
+.obj lbl_802A7034, local
 	.asciz "archives/bosses.dir"
+.endobj lbl_802A7034
 .balign 4
-lbl_802A7048:
+.obj lbl_802A7048, local
 	.asciz "dataDir/archives/bosses.arc"
+.endobj lbl_802A7048
 .balign 4
-lbl_802A7064:
+.obj lbl_802A7064, local
 	.asciz "archives/tekipara.dir"
+.endobj lbl_802A7064
 .balign 4
-lbl_802A707C:
+.obj lbl_802A707C, local
 	.asciz "dataDir/archives/tekipara.arc"
+.endobj lbl_802A707C
 .balign 4
-lbl_802A709C:
+.obj lbl_802A709C, local
 	.asciz "archives/tekikey.dir"
+.endobj lbl_802A709C
 .balign 4
-lbl_802A70B4:
+.obj lbl_802A70B4, local
 	.asciz "dataDir/archives/tekikey.arc"
+.endobj lbl_802A70B4
 .balign 4
-lbl_802A70D4:
+.obj lbl_802A70D4, local
 	.asciz "archives/plants.dir"
+.endobj lbl_802A70D4
 .balign 4
-lbl_802A70E8:
+.obj lbl_802A70E8, local
 	.asciz "dataDir/archives/plants.arc"
+.endobj lbl_802A70E8
 .balign 4
-lbl_802A7104:
+.obj lbl_802A7104, local
 	.asciz "archives/ufopartsbin.dir"
+.endobj lbl_802A7104
 .balign 4
-lbl_802A7120:
+.obj lbl_802A7120, local
 	.asciz "dataDir/archives/ufopartsbin.arc"
+.endobj lbl_802A7120
 .balign 4
-lbl_802A7144:
+.obj lbl_802A7144, local
 	.asciz "archives/bridges.dir"
+.endobj lbl_802A7144
 .balign 4
-lbl_802A715C:
+.obj lbl_802A715C, local
 	.asciz "dataDir/archives/bridges.arc"
+.endobj lbl_802A715C
 .balign 4
-lbl_802A717C:
+.obj lbl_802A717C, local
 	.asciz "archives/gates.dir"
+.endobj lbl_802A717C
 .balign 4
-lbl_802A7190:
+.obj lbl_802A7190, local
 	.asciz "dataDir/archives/gates.arc"
+.endobj lbl_802A7190
 .balign 4
-lbl_802A71AC:
+.obj lbl_802A71AC, local
 	.asciz "archives/bomb.dir"
+.endobj lbl_802A71AC
 .balign 4
-lbl_802A71C0:
+.obj lbl_802A71C0, local
 	.asciz "dataDir/archives/bomb.arc"
+.endobj lbl_802A71C0
 .balign 4
-lbl_802A71DC:
+.obj lbl_802A71DC, local
 	.asciz "archives/rope.dir"
+.endobj lbl_802A71DC
 .balign 4
-lbl_802A71F0:
+.obj lbl_802A71F0, local
 	.asciz "dataDir/archives/rope.arc"
+.endobj lbl_802A71F0
 .balign 4
-lbl_802A720C:
+.obj lbl_802A720C, local
 	.asciz "archives/water.dir"
+.endobj lbl_802A720C
 .balign 4
-lbl_802A7220:
+.obj lbl_802A7220, local
 	.asciz "dataDir/archives/water.arc"
+.endobj lbl_802A7220
 .balign 4
-lbl_802A723C:
+.obj lbl_802A723C, local
 	.asciz "archives/fl_water.dir"
+.endobj lbl_802A723C
 .balign 4
-lbl_802A7254:
+.obj lbl_802A7254, local
 	.asciz "dataDir/archives/fl_water.arc"
+.endobj lbl_802A7254
 .balign 4
-lbl_802A7274:
+.obj lbl_802A7274, local
 	.asciz "archives/pelletsbin.dir"
+.endobj lbl_802A7274
 .balign 4
-lbl_802A728C:
+.obj lbl_802A728C, local
 	.asciz "dataDir/archives/pelletsbin.arc"
+.endobj lbl_802A728C
 .balign 4
-lbl_802A72AC:
+.obj lbl_802A72AC, local
 	.asciz "archives/pikihead.dir"
+.endobj lbl_802A72AC
 .balign 4
-lbl_802A72C4:
+.obj lbl_802A72C4, local
 	.asciz "dataDir/archives/pikihead.arc"
+.endobj lbl_802A72C4
 .balign 4
-lbl_802A72E4:
+.obj lbl_802A72E4, local
 	.asciz "archives/effshapes.dir"
+.endobj lbl_802A72E4
 .balign 4
-lbl_802A72FC:
+.obj lbl_802A72FC, local
 	.asciz "dataDir/archives/effshapes.arc"
+.endobj lbl_802A72FC
 .balign 4
-lbl_802A731C:
+.obj lbl_802A731C, local
 	.asciz "archives/weeds.dir"
+.endobj lbl_802A731C
 .balign 4
-lbl_802A7330:
+.obj lbl_802A7330, local
 	.asciz "dataDir/archives/weeds.arc"
+.endobj lbl_802A7330
 .balign 4
-lbl_802A734C:
+.obj lbl_802A734C, local
 	.asciz "archives/goal.dir"
+.endobj lbl_802A734C
 .balign 4
-lbl_802A7360:
+.obj lbl_802A7360, local
 	.asciz "dataDir/archives/goal.arc"
+.endobj lbl_802A7360
 .balign 4
-arambundleList:
+.obj arambundleList, local
 	.4byte lbl_802A7004
 	.4byte lbl_802A7018
 	.4byte lbl_802A7034
@@ -719,36 +805,47 @@ arambundleList:
 	.4byte lbl_802A7360
 	.4byte 0
 	.4byte 0
+.endobj arambundleList
 .balign 4
-lbl_802A740C:
+.obj lbl_802A740C, local
 	.asciz "<GameSetupSection>"
+.endobj lbl_802A740C
 .balign 4
-lbl_802A7420:
+.obj lbl_802A7420, local
 	.asciz "stages/stages.ini"
+.endobj lbl_802A7420
 .balign 4
-lbl_802A7434:
+.obj lbl_802A7434, local
 	.asciz "genCache"
+.endobj lbl_802A7434
 .balign 4
-lbl_802A7440:
+.obj lbl_802A7440, local
 	.asciz "playerInfo"
+.endobj lbl_802A7440
 .balign 4
-lbl_802A744C:
+.obj lbl_802A744C, local
 	.asciz "GameSetupSection"
+.endobj lbl_802A744C
 .balign 4
-lbl_802A7460:
+.obj lbl_802A7460, local
 	.asciz "CoreNode"
+.endobj lbl_802A7460
 .balign 4
-lbl_802A746C:
+.obj lbl_802A746C, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte 0
-lbl_802A7478:
+.endobj lbl_802A746C
+.balign 4
+.obj lbl_802A7478, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte __RTTI__8CoreNode
 	.4byte 0
 	.4byte 0
-lbl_802A748C:
+.endobj lbl_802A7478
+.balign 4
+.obj lbl_802A748C, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte __RTTI__8CoreNode
@@ -756,7 +853,9 @@ lbl_802A748C:
 	.4byte __RTTI__4Node
 	.4byte 0
 	.4byte 0
-lbl_802A74A8:
+.endobj lbl_802A748C
+.balign 4
+.obj lbl_802A74A8, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte __RTTI__8CoreNode
@@ -766,8 +865,9 @@ lbl_802A74A8:
 	.4byte __RTTI__7Section
 	.4byte 0
 	.4byte 0
-.global __vt__16GameSetupSection
-__vt__16GameSetupSection:
+.endobj lbl_802A74A8
+.balign 4
+.obj __vt__16GameSetupSection, global
 	.4byte __RTTI__16GameSetupSection
 	.4byte 0
 	.4byte getAgeNodeType__5ANodeFv
@@ -781,6 +881,8 @@ __vt__16GameSetupSection:
 	.4byte concat__4NodeFR8Matrix4f
 	.4byte getModelMatrix__4NodeFv
 	.4byte init__16GameSetupSectionFv
+.endobj __vt__16GameSetupSection
+.balign 4
 	.4byte 0
 	.4byte 0
 	.4byte 0
@@ -789,24 +891,29 @@ __vt__16GameSetupSection:
 	.4byte 0
 	.4byte 0
 .balign 4
-lbl_802A751C:
+.obj lbl_802A751C, local
 	.asciz "RamStream"
+.endobj lbl_802A751C
 .balign 4
-lbl_802A7528:
+.obj lbl_802A7528, local
 	.asciz "RandomAccessStream"
+.endobj lbl_802A7528
 .balign 4
-lbl_802A753C:
+.obj lbl_802A753C, local
 	.4byte __RTTI__6Stream
 	.4byte 0
 	.4byte 0
-lbl_802A7548:
+.endobj lbl_802A753C
+.balign 4
+.obj lbl_802A7548, local
 	.4byte __RTTI__6Stream
 	.4byte 0
 	.4byte __RTTI__18RandomAccessStream
 	.4byte 0
 	.4byte 0
-.global __vt__9RamStream
-__vt__9RamStream:
+.endobj lbl_802A7548
+.balign 4
+.obj __vt__9RamStream, global
 	.4byte __RTTI__9RamStream
 	.4byte 0
 	.4byte readInt__6StreamFv
@@ -833,6 +940,8 @@ __vt__9RamStream:
 	.4byte setPosition__9RamStreamFi
 	.4byte getLength__9RamStreamFv
 	.4byte setLength__9RamStreamFi
+.endobj __vt__9RamStream
+.balign 4
 	.4byte 0
 	.4byte 0
 	.4byte 0
@@ -875,51 +984,70 @@ __vt__9RamStream:
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-lbl_803DD958:
+.obj lbl_803DD958, local
 	.asciz ""
+.endobj lbl_803DD958
 .balign 4
-lbl_803DD95C:
+.obj lbl_803DD95C, local
 	.asciz "<Node>"
+.endobj lbl_803DD95C
 .balign 4
-lbl_803DD964:
+.obj lbl_803DD964, local
 	.asciz "setup"
+.endobj lbl_803DD964
 .balign 4
-lbl_803DD96C:
+.obj lbl_803DD96C, local
 	.asciz "ANode"
+.endobj lbl_803DD96C
 .balign 4
-__RTTI__5ANode:
+.obj __RTTI__5ANode, local
 	.4byte lbl_803DD96C
 	.4byte 0
-__RTTI__8CoreNode:
+.endobj __RTTI__5ANode
+.balign 4
+.obj __RTTI__8CoreNode, local
 	.4byte lbl_802A7460
 	.4byte lbl_802A746C
+.endobj __RTTI__8CoreNode
 .balign 4
-lbl_803DD984:
+.obj lbl_803DD984, local
 	.asciz "Node"
+.endobj lbl_803DD984
 .balign 4
-__RTTI__4Node:
+.obj __RTTI__4Node, local
 	.4byte lbl_803DD984
 	.4byte lbl_802A7478
+.endobj __RTTI__4Node
 .balign 4
-lbl_803DD994:
+.obj lbl_803DD994, local
 	.asciz "Section"
+.endobj lbl_803DD994
 .balign 4
-__RTTI__7Section:
+.obj __RTTI__7Section, local
 	.4byte lbl_803DD994
 	.4byte lbl_802A748C
-__RTTI__16GameSetupSection:
+.endobj __RTTI__7Section
+.balign 4
+.obj __RTTI__16GameSetupSection, local
 	.4byte lbl_802A744C
 	.4byte lbl_802A74A8
+.endobj __RTTI__16GameSetupSection
 .balign 4
-lbl_803DD9AC:
+.obj lbl_803DD9AC, local
 	.asciz "Stream"
+.endobj lbl_803DD9AC
 .balign 4
-__RTTI__6Stream:
+.obj __RTTI__6Stream, local
 	.4byte lbl_803DD9AC
 	.4byte 0
-__RTTI__18RandomAccessStream:
+.endobj __RTTI__6Stream
+.balign 4
+.obj __RTTI__18RandomAccessStream, local
 	.4byte lbl_802A7528
 	.4byte lbl_802A753C
-__RTTI__9RamStream:
+.endobj __RTTI__18RandomAccessStream
+.balign 4
+.obj __RTTI__9RamStream, local
 	.4byte lbl_802A751C
 	.4byte lbl_802A7548
+.endobj __RTTI__9RamStream
