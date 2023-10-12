@@ -34,7 +34,7 @@ pikmin.usa.1.dol: `sha1: 02204260B7EFE8742D34572E58BA3DFECD92E4E9`
 * OPTIONAL:
 	- Obtain a clean DOL of Pikmin 1 USA 1.01 and place it in the base working directory and rename it to `baserom.dol`.
 	
-1. Download GC_WII_COMPILERS.zip from (https://cdn.discordapp.com/attachments/727918646525165659/917185027656286218/GC_WII_COMPILERS.zip) and extract it to tools/mwcc_compiler/.
+1. Download GC_WII_COMPILERS.zip from (https://files.decomp.dev/compilers_20230715.zip) and extract it to tools/mwcc_compiler/.
 2. Run the `make` command.
 
 ## Project Organisation
