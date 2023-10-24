@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global detach__10AnmobjInfoFv
-detach__10AnmobjInfoFv:
+.fn detach__10AnmobjInfoFv, global
 /* 8003EE34 0003BD94  7C 08 02 A6 */	mflr r0
 /* 8003EE38 0003BD98  90 01 00 04 */	stw r0, 4(r1)
 /* 8003EE3C 0003BD9C  94 21 FF F8 */	stwu r1, -8(r1)
@@ -14,9 +13,9 @@ detach__10AnmobjInfoFv:
 /* 8003EE58 0003BDB8  38 21 00 08 */	addi r1, r1, 8
 /* 8003EE5C 0003BDBC  7C 08 03 A6 */	mtlr r0
 /* 8003EE60 0003BDC0  4E 80 00 20 */	blr 
+.endfn detach__10AnmobjInfoFv
 
-.global __ct__9StdSystemFv
-__ct__9StdSystemFv:
+.fn __ct__9StdSystemFv, global
 /* 8003EE64 0003BDC4  7C 08 02 A6 */	mflr r0
 /* 8003EE68 0003BDC8  3C 80 80 23 */	lis r4, __vt__9StdSystem@ha
 /* 8003EE6C 0003BDCC  90 01 00 04 */	stw r0, 4(r1)
@@ -98,15 +97,15 @@ __ct__9StdSystemFv:
 /* 8003EF9C 0003BEFC  38 21 00 20 */	addi r1, r1, 0x20
 /* 8003EFA0 0003BF00  7C 08 03 A6 */	mtlr r0
 /* 8003EFA4 0003BF04  4E 80 00 20 */	blr 
+.endfn __ct__9StdSystemFv
 
-.global __ct__7AyuHeapFv
-__ct__7AyuHeapFv:
+.fn __ct__7AyuHeapFv, weak
 /* 8003EFA8 0003BF08  38 00 00 00 */	li r0, 0
 /* 8003EFAC 0003BF0C  98 03 00 1D */	stb r0, 0x1d(r3)
 /* 8003EFB0 0003BF10  4E 80 00 20 */	blr 
+.endfn __ct__7AyuHeapFv
 
-.global onceInit__9StdSystemFv
-onceInit__9StdSystemFv:
+.fn onceInit__9StdSystemFv, global
 /* 8003EFB4 0003BF14  7C 08 02 A6 */	mflr r0
 /* 8003EFB8 0003BF18  38 80 00 20 */	li r4, 0x20
 /* 8003EFBC 0003BF1C  90 01 00 04 */	stw r0, 4(r1)
@@ -133,21 +132,21 @@ onceInit__9StdSystemFv:
 /* 8003F010 0003BF70  38 21 00 18 */	addi r1, r1, 0x18
 /* 8003F014 0003BF74  7C 08 03 A6 */	mtlr r0
 /* 8003F018 0003BF78  4E 80 00 20 */	blr 
+.endfn onceInit__9StdSystemFv
 
-.global __ct__8Matrix4fFv
-__ct__8Matrix4fFv:
+.fn __ct__8Matrix4fFv, weak
 /* 8003F01C 0003BF7C  4E 80 00 20 */	blr 
+.endfn __ct__8Matrix4fFv
 
-.global getHeap__9StdSystemFi
-getHeap__9StdSystemFi:
+.fn getHeap__9StdSystemFi, global
 /* 8003F020 0003BF80  1C 84 00 28 */	mulli r4, r4, 0x28
 /* 8003F024 0003BF84  38 03 00 00 */	addi r0, r3, 0
 /* 8003F028 0003BF88  38 64 00 54 */	addi r3, r4, 0x54
 /* 8003F02C 0003BF8C  7C 60 1A 14 */	add r3, r0, r3
 /* 8003F030 0003BF90  4E 80 00 20 */	blr 
+.endfn getHeap__9StdSystemFi
 
-.global resetHeap__9StdSystemFii
-resetHeap__9StdSystemFii:
+.fn resetHeap__9StdSystemFii, global
 /* 8003F034 0003BF94  7C 08 02 A6 */	mflr r0
 /* 8003F038 0003BF98  1C 84 00 28 */	mulli r4, r4, 0x28
 /* 8003F03C 0003BF9C  90 01 00 04 */	stw r0, 4(r1)
@@ -161,16 +160,16 @@ resetHeap__9StdSystemFii:
 /* 8003F05C 0003BFBC  38 21 00 08 */	addi r1, r1, 8
 /* 8003F060 0003BFC0  7C 08 03 A6 */	mtlr r0
 /* 8003F064 0003BFC4  4E 80 00 20 */	blr 
+.endfn resetHeap__9StdSystemFii
 
-.global setHeap__9StdSystemFi
-setHeap__9StdSystemFi:
+.fn setHeap__9StdSystemFi, global
 /* 8003F068 0003BFC8  80 03 01 94 */	lwz r0, 0x194(r3)
 /* 8003F06C 0003BFCC  90 83 01 94 */	stw r4, 0x194(r3)
 /* 8003F070 0003BFD0  7C 03 03 78 */	mr r3, r0
 /* 8003F074 0003BFD4  4E 80 00 20 */	blr 
+.endfn setHeap__9StdSystemFi
 
-.global findGfxObject__9StdSystemFPcUl
-findGfxObject__9StdSystemFPcUl:
+.fn findGfxObject__9StdSystemFPcUl, global
 /* 8003F078 0003BFD8  7C 08 02 A6 */	mflr r0
 /* 8003F07C 0003BFDC  90 01 00 04 */	stw r0, 4(r1)
 /* 8003F080 0003BFE0  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -211,9 +210,9 @@ findGfxObject__9StdSystemFPcUl:
 /* 8003F0FC 0003C05C  38 21 00 28 */	addi r1, r1, 0x28
 /* 8003F100 0003C060  7C 08 03 A6 */	mtlr r0
 /* 8003F104 0003C064  4E 80 00 20 */	blr 
+.endfn findGfxObject__9StdSystemFPcUl
 
-.global loadTexture__9StdSystemFPcb
-loadTexture__9StdSystemFPcb:
+.fn loadTexture__9StdSystemFPcb, global
 /* 8003F108 0003C068  7C 08 02 A6 */	mflr r0
 /* 8003F10C 0003C06C  90 01 00 04 */	stw r0, 4(r1)
 /* 8003F110 0003C070  94 21 FF D0 */	stwu r1, -0x30(r1)
@@ -283,14 +282,14 @@ loadTexture__9StdSystemFPcb:
 /* 8003F1F0 0003C150  38 21 00 30 */	addi r1, r1, 0x30
 /* 8003F1F4 0003C154  7C 08 03 A6 */	mtlr r0
 /* 8003F1F8 0003C158  4E 80 00 20 */	blr 
+.endfn loadTexture__9StdSystemFPcb
 
-.global openFile__9StdSystemFPcbb
-openFile__9StdSystemFPcbb:
+.fn openFile__9StdSystemFPcbb, weak
 /* 8003F1FC 0003C15C  38 60 00 00 */	li r3, 0
 /* 8003F200 0003C160  4E 80 00 20 */	blr 
+.endfn openFile__9StdSystemFPcbb
 
-.global loadShape__9StdSystemFPcb
-loadShape__9StdSystemFPcb:
+.fn loadShape__9StdSystemFPcb, global
 /* 8003F204 0003C164  7C 08 02 A6 */	mflr r0
 /* 8003F208 0003C168  90 01 00 04 */	stw r0, 4(r1)
 /* 8003F20C 0003C16C  54 A0 06 3F */	clrlwi. r0, r5, 0x18
@@ -407,9 +406,9 @@ loadShape__9StdSystemFPcb:
 /* 8003F3A0 0003C300  38 21 01 30 */	addi r1, r1, 0x130
 /* 8003F3A4 0003C304  7C 08 03 A6 */	mtlr r0
 /* 8003F3A8 0003C308  4E 80 00 20 */	blr 
+.endfn loadShape__9StdSystemFPcb
 
-.global findAnimation__9StdSystemFPc
-findAnimation__9StdSystemFPc:
+.fn findAnimation__9StdSystemFPc, global
 /* 8003F3AC 0003C30C  7C 08 02 A6 */	mflr r0
 /* 8003F3B0 0003C310  90 01 00 04 */	stw r0, 4(r1)
 /* 8003F3B4 0003C314  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -456,9 +455,9 @@ findAnimation__9StdSystemFPc:
 /* 8003F440 0003C3A0  38 21 00 28 */	addi r1, r1, 0x28
 /* 8003F444 0003C3A4  7C 08 03 A6 */	mtlr r0
 /* 8003F448 0003C3A8  4E 80 00 20 */	blr 
+.endfn findAnimation__9StdSystemFPc
 
-.global findAnyIndex__9StdSystemFPcPc
-findAnyIndex__9StdSystemFPcPc:
+.fn findAnyIndex__9StdSystemFPcPc, global
 /* 8003F44C 0003C3AC  7C 08 02 A6 */	mflr r0
 /* 8003F450 0003C3B0  90 01 00 04 */	stw r0, 4(r1)
 /* 8003F454 0003C3B4  94 21 FF D0 */	stwu r1, -0x30(r1)
@@ -505,9 +504,9 @@ findAnyIndex__9StdSystemFPcPc:
 /* 8003F4E4 0003C444  38 21 00 30 */	addi r1, r1, 0x30
 /* 8003F4E8 0003C448  7C 08 03 A6 */	mtlr r0
 /* 8003F4EC 0003C44C  4E 80 00 20 */	blr 
+.endfn findAnyIndex__9StdSystemFPcPc
 
-.global loadAnimation__9StdSystemFP5ShapePcb
-loadAnimation__9StdSystemFP5ShapePcb:
+.fn loadAnimation__9StdSystemFP5ShapePcb, global
 /* 8003F4F0 0003C450  7C 08 02 A6 */	mflr r0
 /* 8003F4F4 0003C454  90 01 00 04 */	stw r0, 4(r1)
 /* 8003F4F8 0003C458  94 21 FF C0 */	stwu r1, -0x40(r1)
@@ -562,9 +561,9 @@ loadAnimation__9StdSystemFP5ShapePcb:
 /* 8003F5A0 0003C500  38 21 00 40 */	addi r1, r1, 0x40
 /* 8003F5A4 0003C504  7C 08 03 A6 */	mtlr r0
 /* 8003F5A8 0003C508  4E 80 00 20 */	blr 
+.endfn loadAnimation__9StdSystemFP5ShapePcb
 
-.global addAnimation__9StdSystemFP8AnimDataPc
-addAnimation__9StdSystemFP8AnimDataPc:
+.fn addAnimation__9StdSystemFP8AnimDataPc, global
 /* 8003F5AC 0003C50C  7C 08 02 A6 */	mflr r0
 /* 8003F5B0 0003C510  90 01 00 04 */	stw r0, 4(r1)
 /* 8003F5B4 0003C514  94 21 FF D0 */	stwu r1, -0x30(r1)
@@ -612,9 +611,9 @@ addAnimation__9StdSystemFP8AnimDataPc:
 /* 8003F658 0003C5B8  38 21 00 30 */	addi r1, r1, 0x30
 /* 8003F65C 0003C5BC  7C 08 03 A6 */	mtlr r0
 /* 8003F660 0003C5C0  4E 80 00 20 */	blr 
+.endfn addAnimation__9StdSystemFP8AnimDataPc
 
-.global addGfxObject__9StdSystemFP10GfxobjInfo
-addGfxObject__9StdSystemFP10GfxobjInfo:
+.fn addGfxObject__9StdSystemFP10GfxobjInfo, global
 /* 8003F664 0003C5C4  80 C3 01 D4 */	lwz r6, 0x1d4(r3)
 /* 8003F668 0003C5C8  38 A3 01 D0 */	addi r5, r3, 0x1d0
 /* 8003F66C 0003C5CC  38 00 00 01 */	li r0, 1
@@ -625,9 +624,9 @@ addGfxObject__9StdSystemFP10GfxobjInfo:
 /* 8003F680 0003C5E0  90 83 01 D4 */	stw r4, 0x1d4(r3)
 /* 8003F684 0003C5E4  98 03 01 F0 */	stb r0, 0x1f0(r3)
 /* 8003F688 0003C5E8  4E 80 00 20 */	blr 
+.endfn addGfxObject__9StdSystemFP10GfxobjInfo
 
-.global attachObjs__9StdSystemFv
-attachObjs__9StdSystemFv:
+.fn attachObjs__9StdSystemFv, global
 /* 8003F68C 0003C5EC  7C 08 02 A6 */	mflr r0
 /* 8003F690 0003C5F0  90 01 00 04 */	stw r0, 4(r1)
 /* 8003F694 0003C5F4  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -671,9 +670,9 @@ attachObjs__9StdSystemFv:
 /* 8003F71C 0003C67C  38 21 00 20 */	addi r1, r1, 0x20
 /* 8003F720 0003C680  7C 08 03 A6 */	mtlr r0
 /* 8003F724 0003C684  4E 80 00 20 */	blr 
+.endfn attachObjs__9StdSystemFv
 
-.global detachObjs__9StdSystemFv
-detachObjs__9StdSystemFv:
+.fn detachObjs__9StdSystemFv, global
 /* 8003F728 0003C688  7C 08 02 A6 */	mflr r0
 /* 8003F72C 0003C68C  90 01 00 04 */	stw r0, 4(r1)
 /* 8003F730 0003C690  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -711,9 +710,9 @@ detachObjs__9StdSystemFv:
 /* 8003F7A4 0003C704  38 21 00 20 */	addi r1, r1, 0x20
 /* 8003F7A8 0003C708  7C 08 03 A6 */	mtlr r0
 /* 8003F7AC 0003C70C  4E 80 00 20 */	blr 
+.endfn detachObjs__9StdSystemFv
 
-.global invalidateObjs__9StdSystemFUlUl
-invalidateObjs__9StdSystemFUlUl:
+.fn invalidateObjs__9StdSystemFUlUl, global
 /* 8003F7B0 0003C710  81 03 01 D4 */	lwz r8, 0x1d4(r3)
 /* 8003F7B4 0003C714  38 03 01 D0 */	addi r0, r3, 0x1d0
 /* 8003F7B8 0003C718  48 00 00 34 */	b .L_8003F7EC
@@ -735,9 +734,9 @@ invalidateObjs__9StdSystemFUlUl:
 /* 8003F7EC 0003C74C  7C 08 00 40 */	cmplw r8, r0
 /* 8003F7F0 0003C750  40 82 FF CC */	bne .L_8003F7BC
 /* 8003F7F4 0003C754  4E 80 00 20 */	blr 
+.endfn invalidateObjs__9StdSystemFUlUl
 
-.global addTexture__9StdSystemFP7TexturePc
-addTexture__9StdSystemFP7TexturePc:
+.fn addTexture__9StdSystemFP7TexturePc, global
 /* 8003F7F8 0003C758  7C 08 02 A6 */	mflr r0
 /* 8003F7FC 0003C75C  90 01 00 04 */	stw r0, 4(r1)
 /* 8003F800 0003C760  94 21 FF D0 */	stwu r1, -0x30(r1)
@@ -792,16 +791,16 @@ addTexture__9StdSystemFP7TexturePc:
 /* 8003F8C0 0003C820  38 21 00 30 */	addi r1, r1, 0x30
 /* 8003F8C4 0003C824  7C 08 03 A6 */	mtlr r0
 /* 8003F8C8 0003C828  4E 80 00 20 */	blr 
+.endfn addTexture__9StdSystemFP7TexturePc
 
-.global initSoftReset__9StdSystemFv
-initSoftReset__9StdSystemFv:
+.fn initSoftReset__9StdSystemFv, global
 /* 8003F8CC 0003C82C  38 00 00 00 */	li r0, 0
 /* 8003F8D0 0003C830  90 0D 2D E0 */	stw r0, statbuff__9CmdStream@sda21(r13)
 /* 8003F8D4 0003C834  90 03 01 FC */	stw r0, 0x1fc(r3)
 /* 8003F8D8 0003C838  4E 80 00 20 */	blr 
+.endfn initSoftReset__9StdSystemFv
 
-.global getShape__9StdSystemFPcPcPcb
-getShape__9StdSystemFPcPcPcb:
+.fn getShape__9StdSystemFPcPcPcb, global
 /* 8003F8DC 0003C83C  7C 08 02 A6 */	mflr r0
 /* 8003F8E0 0003C840  90 01 00 04 */	stw r0, 4(r1)
 /* 8003F8E4 0003C844  94 21 FF C8 */	stwu r1, -0x38(r1)
@@ -871,9 +870,9 @@ getShape__9StdSystemFPcPcPcb:
 /* 8003F9D8 0003C938  38 21 00 38 */	addi r1, r1, 0x38
 /* 8003F9DC 0003C93C  7C 08 03 A6 */	mtlr r0
 /* 8003F9E0 0003C940  4E 80 00 20 */	blr 
+.endfn getShape__9StdSystemFPcPcPcb
 
-.global initLFlares__9StdSystemFi
-initLFlares__9StdSystemFi:
+.fn initLFlares__9StdSystemFi, global
 /* 8003F9E4 0003C944  7C 08 02 A6 */	mflr r0
 /* 8003F9E8 0003C948  90 01 00 04 */	stw r0, 4(r1)
 /* 8003F9EC 0003C94C  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -900,9 +899,9 @@ initLFlares__9StdSystemFi:
 /* 8003FA40 0003C9A0  38 21 00 20 */	addi r1, r1, 0x20
 /* 8003FA44 0003C9A4  7C 08 03 A6 */	mtlr r0
 /* 8003FA48 0003C9A8  4E 80 00 20 */	blr 
+.endfn initLFlares__9StdSystemFi
 
-.global __ct__6LFInfoFv
-__ct__6LFInfoFv:
+.fn __ct__6LFInfoFv, weak
 /* 8003FA4C 0003C9AC  C0 02 83 F0 */	lfs f0, lbl_803E85F0@sda21(r2)
 /* 8003FA50 0003C9B0  38 00 00 00 */	li r0, 0
 /* 8003FA54 0003C9B4  D0 03 00 0C */	stfs f0, 0xc(r3)
@@ -910,15 +909,15 @@ __ct__6LFInfoFv:
 /* 8003FA5C 0003C9BC  D0 03 00 04 */	stfs f0, 4(r3)
 /* 8003FA60 0003C9C0  90 03 00 28 */	stw r0, 0x28(r3)
 /* 8003FA64 0003C9C4  4E 80 00 20 */	blr 
+.endfn __ct__6LFInfoFv
 
-.global resetLFlares__9StdSystemFv
-resetLFlares__9StdSystemFv:
+.fn resetLFlares__9StdSystemFv, global
 /* 8003FA68 0003C9C8  38 00 00 00 */	li r0, 0
 /* 8003FA6C 0003C9CC  90 03 02 2C */	stw r0, 0x22c(r3)
 /* 8003FA70 0003C9D0  4E 80 00 20 */	blr 
+.endfn resetLFlares__9StdSystemFv
 
-.global getLFlareInfo__9StdSystemFv
-getLFlareInfo__9StdSystemFv:
+.fn getLFlareInfo__9StdSystemFv, global
 /* 8003FA74 0003C9D4  80 83 02 2C */	lwz r4, 0x22c(r3)
 /* 8003FA78 0003C9D8  80 03 02 30 */	lwz r0, 0x230(r3)
 /* 8003FA7C 0003C9DC  7C 04 00 00 */	cmpw r4, r0
@@ -934,9 +933,9 @@ getLFlareInfo__9StdSystemFv:
 .L_8003FAA4:
 /* 8003FAA4 0003CA04  38 60 00 00 */	li r3, 0
 /* 8003FAA8 0003CA08  4E 80 00 20 */	blr 
+.endfn getLFlareInfo__9StdSystemFv
 
-.global registerLFlare__9StdSystemFP7Texture
-registerLFlare__9StdSystemFP7Texture:
+.fn registerLFlare__9StdSystemFP7Texture, global
 /* 8003FAAC 0003CA0C  7C 08 02 A6 */	mflr r0
 /* 8003FAB0 0003CA10  90 01 00 04 */	stw r0, 4(r1)
 /* 8003FAB4 0003CA14  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -997,9 +996,9 @@ registerLFlare__9StdSystemFP7Texture:
 /* 8003FB7C 0003CADC  38 21 00 20 */	addi r1, r1, 0x20
 /* 8003FB80 0003CAE0  7C 08 03 A6 */	mtlr r0
 /* 8003FB84 0003CAE4  4E 80 00 20 */	blr 
+.endfn registerLFlare__9StdSystemFP7Texture
 
-.global flushLFlares__9StdSystemFR8Graphics
-flushLFlares__9StdSystemFR8Graphics:
+.fn flushLFlares__9StdSystemFR8Graphics, global
 /* 8003FB88 0003CAE8  7C 08 02 A6 */	mflr r0
 /* 8003FB8C 0003CAEC  90 01 00 04 */	stw r0, 4(r1)
 /* 8003FB90 0003CAF0  38 00 00 00 */	li r0, 0
@@ -1155,9 +1154,9 @@ flushLFlares__9StdSystemFR8Graphics:
 /* 8003FDC8 0003CD28  38 21 00 30 */	addi r1, r1, 0x30
 /* 8003FDCC 0003CD2C  7C 08 03 A6 */	mtlr r0
 /* 8003FDD0 0003CD30  4E 80 00 20 */	blr 
+.endfn flushLFlares__9StdSystemFR8Graphics
 
-.global loadBundle__9StdSystemFPcb
-loadBundle__9StdSystemFPcb:
+.fn loadBundle__9StdSystemFPcb, global
 /* 8003FDD4 0003CD34  7C 08 02 A6 */	mflr r0
 /* 8003FDD8 0003CD38  38 C0 00 01 */	li r6, 1
 /* 8003FDDC 0003CD3C  90 01 00 04 */	stw r0, 4(r1)
@@ -1521,18 +1520,18 @@ loadBundle__9StdSystemFPcb:
 /* 80040328 0003D288  38 21 00 88 */	addi r1, r1, 0x88
 /* 8004032C 0003D28C  7C 08 03 A6 */	mtlr r0
 /* 80040330 0003D290  4E 80 00 20 */	blr 
+.endfn loadBundle__9StdSystemFPcb
 
-.global copyWaitUntilDone__9StdSystemFv
-copyWaitUntilDone__9StdSystemFv:
+.fn copyWaitUntilDone__9StdSystemFv, weak
 /* 80040334 0003D294  4E 80 00 20 */	blr 
+.endfn copyWaitUntilDone__9StdSystemFv
 
-.global copyRamToCache__9StdSystemFUlUlUl
-copyRamToCache__9StdSystemFUlUlUl:
+.fn copyRamToCache__9StdSystemFUlUlUl, weak
 /* 80040338 0003D298  38 60 00 00 */	li r3, 0
 /* 8004033C 0003D29C  4E 80 00 20 */	blr 
+.endfn copyRamToCache__9StdSystemFUlUlUl
 
-.global stringDup__9StdSystemFPc
-stringDup__9StdSystemFPc:
+.fn stringDup__9StdSystemFPc, global
 /* 80040340 0003D2A0  7C 08 02 A6 */	mflr r0
 /* 80040344 0003D2A4  90 01 00 04 */	stw r0, 4(r1)
 /* 80040348 0003D2A8  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -1556,9 +1555,9 @@ stringDup__9StdSystemFPc:
 /* 80040390 0003D2F0  38 21 00 20 */	addi r1, r1, 0x20
 /* 80040394 0003D2F4  7C 08 03 A6 */	mtlr r0
 /* 80040398 0003D2F8  4E 80 00 20 */	blr 
+.endfn stringDup__9StdSystemFPc
 
-.global updateInfo__13TextureCacherFP12CacheTexture
-updateInfo__13TextureCacherFP12CacheTexture:
+.fn updateInfo__13TextureCacherFP12CacheTexture, global
 /* 8004039C 0003D2FC  80 03 00 08 */	lwz r0, 8(r3)
 /* 800403A0 0003D300  80 C4 00 40 */	lwz r6, 0x40(r4)
 /* 800403A4 0003D304  7C 00 30 40 */	cmplw r0, r6
@@ -1577,9 +1576,9 @@ updateInfo__13TextureCacherFP12CacheTexture:
 /* 800403D8 0003D338  90 A4 00 04 */	stw r5, 4(r4)
 /* 800403DC 0003D33C  90 A3 00 08 */	stw r5, 8(r3)
 /* 800403E0 0003D340  4E 80 00 20 */	blr 
+.endfn updateInfo__13TextureCacherFP12CacheTexture
 
-.global purgeAll__13TextureCacherFv
-purgeAll__13TextureCacherFv:
+.fn purgeAll__13TextureCacherFv, global
 /* 800403E4 0003D344  7C 08 02 A6 */	mflr r0
 /* 800403E8 0003D348  90 01 00 04 */	stw r0, 4(r1)
 /* 800403EC 0003D34C  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -1599,9 +1598,9 @@ purgeAll__13TextureCacherFv:
 /* 8004041C 0003D37C  38 21 00 18 */	addi r1, r1, 0x18
 /* 80040420 0003D380  7C 08 03 A6 */	mtlr r0
 /* 80040424 0003D384  4E 80 00 20 */	blr 
+.endfn purgeAll__13TextureCacherFv
 
-.global removeOldest__13TextureCacherFv
-removeOldest__13TextureCacherFv:
+.fn removeOldest__13TextureCacherFv, global
 /* 80040428 0003D388  7C 08 02 A6 */	mflr r0
 /* 8004042C 0003D38C  90 01 00 04 */	stw r0, 4(r1)
 /* 80040430 0003D390  38 00 00 00 */	li r0, 0
@@ -1622,9 +1621,9 @@ removeOldest__13TextureCacherFv:
 /* 8004046C 0003D3CC  38 21 00 08 */	addi r1, r1, 8
 /* 80040470 0003D3D0  7C 08 03 A6 */	mtlr r0
 /* 80040474 0003D3D4  4E 80 00 20 */	blr 
+.endfn removeOldest__13TextureCacherFv
 
-.global cacheTexture__13TextureCacherFP12CacheTexture
-cacheTexture__13TextureCacherFP12CacheTexture:
+.fn cacheTexture__13TextureCacherFP12CacheTexture, global
 /* 80040478 0003D3D8  7C 08 02 A6 */	mflr r0
 /* 8004047C 0003D3DC  90 01 00 04 */	stw r0, 4(r1)
 /* 80040480 0003D3E0  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -1684,33 +1683,33 @@ cacheTexture__13TextureCacherFP12CacheTexture:
 /* 8004054C 0003D4AC  38 21 00 28 */	addi r1, r1, 0x28
 /* 80040550 0003D4B0  7C 08 03 A6 */	mtlr r0
 /* 80040554 0003D4B4  4E 80 00 20 */	blr 
+.endfn cacheTexture__13TextureCacherFP12CacheTexture
 
-.global copyCacheToRam__9StdSystemFUlUlUl
-copyCacheToRam__9StdSystemFUlUlUl:
+.fn copyCacheToRam__9StdSystemFUlUlUl, weak
 /* 80040558 0003D4B8  4E 80 00 20 */	blr 
+.endfn copyCacheToRam__9StdSystemFUlUlUl
 
-.global copyCacheToTexture__9StdSystemFP12CacheTexture
-copyCacheToTexture__9StdSystemFP12CacheTexture:
+.fn copyCacheToTexture__9StdSystemFP12CacheTexture, weak
 /* 8004055C 0003D4BC  4E 80 00 20 */	blr 
+.endfn copyCacheToTexture__9StdSystemFP12CacheTexture
 
-.global Activate__9StdSystemFb
-Activate__9StdSystemFb:
+.fn Activate__9StdSystemFb, weak
 /* 80040560 0003D4C0  4E 80 00 20 */	blr 
+.endfn Activate__9StdSystemFb
 
-.global parseArchiveDirectory__9StdSystemFPcPc
-parseArchiveDirectory__9StdSystemFPcPc:
+.fn parseArchiveDirectory__9StdSystemFPcPc, weak
 /* 80040564 0003D4C4  4E 80 00 20 */	blr 
+.endfn parseArchiveDirectory__9StdSystemFPcPc
 
-.global startLoading__9StdSystemFP9LoadIdlerbUl
-startLoading__9StdSystemFP9LoadIdlerbUl:
+.fn startLoading__9StdSystemFP9LoadIdlerbUl, weak
 /* 80040568 0003D4C8  4E 80 00 20 */	blr 
+.endfn startLoading__9StdSystemFP9LoadIdlerbUl
 
-.global endLoading__9StdSystemFv
-endLoading__9StdSystemFv:
+.fn endLoading__9StdSystemFv, weak
 /* 8004056C 0003D4CC  4E 80 00 20 */	blr 
+.endfn endLoading__9StdSystemFv
 
-.global attach__10TexobjInfoFv
-attach__10TexobjInfoFv:
+.fn attach__10TexobjInfoFv, weak
 /* 80040570 0003D4D0  7C 08 02 A6 */	mflr r0
 /* 80040574 0003D4D4  90 01 00 04 */	stw r0, 4(r1)
 /* 80040578 0003D4D8  94 21 FF F8 */	stwu r1, -8(r1)
@@ -1723,13 +1722,13 @@ attach__10TexobjInfoFv:
 /* 80040594 0003D4F4  38 21 00 08 */	addi r1, r1, 8
 /* 80040598 0003D4F8  7C 08 03 A6 */	mtlr r0
 /* 8004059C 0003D4FC  4E 80 00 20 */	blr 
+.endfn attach__10TexobjInfoFv
 
-.global attach__9GfxObjectFv
-attach__9GfxObjectFv:
+.fn attach__9GfxObjectFv, weak
 /* 800405A0 0003D500  4E 80 00 20 */	blr 
+.endfn attach__9GfxObjectFv
 
-.global detach__10TexobjInfoFv
-detach__10TexobjInfoFv:
+.fn detach__10TexobjInfoFv, weak
 /* 800405A4 0003D504  7C 08 02 A6 */	mflr r0
 /* 800405A8 0003D508  90 01 00 04 */	stw r0, 4(r1)
 /* 800405AC 0003D50C  94 21 FF F8 */	stwu r1, -8(r1)
@@ -1742,66 +1741,81 @@ detach__10TexobjInfoFv:
 /* 800405C8 0003D528  38 21 00 08 */	addi r1, r1, 8
 /* 800405CC 0003D52C  7C 08 03 A6 */	mtlr r0
 /* 800405D0 0003D530  4E 80 00 20 */	blr 
+.endfn detach__10TexobjInfoFv
 
-.global detach__9GfxObjectFv
-detach__9GfxObjectFv:
+.fn detach__9GfxObjectFv, weak
 /* 800405D4 0003D534  4E 80 00 20 */	blr 
+.endfn detach__9GfxObjectFv
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_80228BF0:
+.obj lbl_80228BF0, local
 	.asciz "stdSystem.cpp"
+.endobj lbl_80228BF0
 .balign 4
-lbl_80228C00:
+.obj lbl_80228C00, local
 	.asciz "StdSystem"
+.endobj lbl_80228C00
 .balign 4
-lbl_80228C0C:
+.obj lbl_80228C0C, local
 	.asciz "CoreNode"
+.endobj lbl_80228C0C
 .balign 4
-lbl_80228C18:
+.obj lbl_80228C18, local
 	.asciz "dataDir/"
+.endobj lbl_80228C18
 .balign 4
-lbl_80228C24:
+.obj lbl_80228C24, local
 	.asciz "FreeMem %.2fk"
+.endobj lbl_80228C24
 .balign 4
-lbl_80228C34:
+.obj lbl_80228C34, local
 	.asciz "BinobjInfo"
+.endobj lbl_80228C34
 .balign 4
-lbl_80228C40:
+.obj lbl_80228C40, local
 	.asciz "GfxobjInfo"
+.endobj lbl_80228C40
 .balign 4
-lbl_80228C4C:
+.obj lbl_80228C4C, local
 	.4byte __RTTI__10GfxobjInfo
 	.4byte 0
 	.4byte 0
-.global __vt__10BinobjInfo
-__vt__10BinobjInfo:
+.endobj lbl_80228C4C
+.balign 4
+.obj __vt__10BinobjInfo, weak
 	.4byte __RTTI__10BinobjInfo
 	.4byte 0
 	.4byte attach__10GfxobjInfoFv
 	.4byte detach__10GfxobjInfoFv
+.endobj __vt__10BinobjInfo
 .balign 4
-lbl_80228C68:
+.obj lbl_80228C68, local
 	.asciz "LFlareGroup"
+.endobj lbl_80228C68
 .balign 4
-lbl_80228C74:
+.obj lbl_80228C74, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte 0
-lbl_80228C80:
+.endobj lbl_80228C74
+.balign 4
+.obj lbl_80228C80, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte __RTTI__8CoreNode
 	.4byte 0
 	.4byte 0
-.global __vt__11LFlareGroup
-__vt__11LFlareGroup:
+.endobj lbl_80228C80
+.balign 4
+.obj __vt__11LFlareGroup, weak
 	.4byte __RTTI__11LFlareGroup
 	.4byte 0
 	.4byte getAgeNodeType__5ANodeFv
 	.4byte read__8CoreNodeFR18RandomAccessStream
-.global __vt__9StdSystem
-__vt__9StdSystem:
+.endobj __vt__11LFlareGroup
+.balign 4
+.obj __vt__9StdSystem, global
 	.4byte __RTTI__9StdSystem
 	.4byte 0
 	.4byte initSoftReset__9StdSystemFv
@@ -1815,59 +1829,59 @@ __vt__9StdSystem:
 	.4byte 0
 	.4byte startLoading__9StdSystemFP9LoadIdlerbUl
 	.4byte endLoading__9StdSystemFv
+.endobj __vt__9StdSystem
 .balign 4
-lbl_80228CD8:
+.obj lbl_80228CD8, local
 	.asciz "TexobjInfo"
+.endobj lbl_80228CD8
 .balign 4
-lbl_80228CE4:
+.obj lbl_80228CE4, local
 	.4byte __RTTI__10GfxobjInfo
 	.4byte 0
 	.4byte 0
-.global __vt__10TexobjInfo
-__vt__10TexobjInfo:
+.endobj lbl_80228CE4
+.balign 4
+.obj __vt__10TexobjInfo, weak
 	.4byte __RTTI__10TexobjInfo
 	.4byte 0
 	.4byte attach__10TexobjInfoFv
 	.4byte detach__10TexobjInfoFv
+.endobj __vt__10TexobjInfo
 .balign 4
-lbl_80228D00:
+.obj lbl_80228D00, local
 	.asciz "ShpobjInfo"
+.endobj lbl_80228D00
 .balign 4
-lbl_80228D0C:
+.obj lbl_80228D0C, local
 	.4byte __RTTI__10GfxobjInfo
 	.4byte 0
 	.4byte 0
-.global __vt__10ShpobjInfo
-__vt__10ShpobjInfo:
+.endobj lbl_80228D0C
+.balign 4
+.obj __vt__10ShpobjInfo, weak
 	.4byte __RTTI__10ShpobjInfo
 	.4byte 0
 	.4byte attach__10GfxobjInfoFv
 	.4byte detach__10GfxobjInfoFv
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
+.endobj __vt__10ShpobjInfo
+.skip 0x2C # compiler padding
 .balign 4
-lbl_80228D54:
+.obj lbl_80228D54, local
 	.asciz "AnmobjInfo"
+.endobj lbl_80228D54
 .balign 4
-lbl_80228D60:
+.obj lbl_80228D60, local
 	.4byte __RTTI__10GfxobjInfo
 	.4byte 0
 	.4byte 0
-.global __vt__10AnmobjInfo
-__vt__10AnmobjInfo:
+.endobj lbl_80228D60
+.balign 4
+.obj __vt__10AnmobjInfo, global
 	.4byte __RTTI__10AnmobjInfo
 	.4byte 0
 	.4byte attach__10GfxobjInfoFv
 	.4byte detach__10AnmobjInfoFv
+.endobj __vt__10AnmobjInfo
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8

@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global __ct__8ActShootFP4Piki
-__ct__8ActShootFP4Piki:
+.fn __ct__8ActShootFP4Piki, global
 /* 800C216C 000BF0CC  7C 08 02 A6 */	mflr r0
 /* 800C2170 000BF0D0  38 A0 00 01 */	li r5, 1
 /* 800C2174 000BF0D4  90 01 00 04 */	stw r0, 4(r1)
@@ -77,9 +76,9 @@ __ct__8ActShootFP4Piki:
 /* 800C2280 000BF1E0  38 21 00 20 */	addi r1, r1, 0x20
 /* 800C2284 000BF1E4  7C 08 03 A6 */	mtlr r0
 /* 800C2288 000BF1E8  4E 80 00 20 */	blr 
+.endfn __ct__8ActShootFP4Piki
 
-.global init__8ActShootFP8Creature
-init__8ActShootFP8Creature:
+.fn init__8ActShootFP8Creature, global
 /* 800C228C 000BF1EC  7C 08 02 A6 */	mflr r0
 /* 800C2290 000BF1F0  90 01 00 04 */	stw r0, 4(r1)
 /* 800C2294 000BF1F4  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -129,9 +128,9 @@ init__8ActShootFP8Creature:
 /* 800C2330 000BF290  38 21 00 20 */	addi r1, r1, 0x20
 /* 800C2334 000BF294  7C 08 03 A6 */	mtlr r0
 /* 800C2338 000BF298  4E 80 00 20 */	blr 
+.endfn init__8ActShootFP8Creature
 
-.global findTarget__8ActShootFv
-findTarget__8ActShootFv:
+.fn findTarget__8ActShootFv, global
 /* 800C233C 000BF29C  7C 08 02 A6 */	mflr r0
 /* 800C2340 000BF2A0  90 01 00 04 */	stw r0, 4(r1)
 /* 800C2344 000BF2A4  94 21 FF B0 */	stwu r1, -0x50(r1)
@@ -234,9 +233,9 @@ findTarget__8ActShootFv:
 /* 800C24A8 000BF408  38 21 00 50 */	addi r1, r1, 0x50
 /* 800C24AC 000BF40C  7C 08 03 A6 */	mtlr r0
 /* 800C24B0 000BF410  4E 80 00 20 */	blr 
+.endfn findTarget__8ActShootFv
 
-.global exec__8ActShootFv
-exec__8ActShootFv:
+.fn exec__8ActShootFv, global
 /* 800C24B4 000BF414  7C 08 02 A6 */	mflr r0
 /* 800C24B8 000BF418  90 01 00 04 */	stw r0, 4(r1)
 /* 800C24BC 000BF41C  94 21 FF B8 */	stwu r1, -0x48(r1)
@@ -364,9 +363,9 @@ exec__8ActShootFv:
 /* 800C2674 000BF5D4  38 21 00 48 */	addi r1, r1, 0x48
 /* 800C2678 000BF5D8  7C 08 03 A6 */	mtlr r0
 /* 800C267C 000BF5DC  4E 80 00 20 */	blr 
+.endfn exec__8ActShootFv
 
-.global cleanup__8ActShootFv
-cleanup__8ActShootFv:
+.fn cleanup__8ActShootFv, global
 /* 800C2680 000BF5E0  7C 08 02 A6 */	mflr r0
 /* 800C2684 000BF5E4  90 01 00 04 */	stw r0, 4(r1)
 /* 800C2688 000BF5E8  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -384,9 +383,9 @@ cleanup__8ActShootFv:
 /* 800C26B4 000BF614  38 21 00 18 */	addi r1, r1, 0x18
 /* 800C26B8 000BF618  7C 08 03 A6 */	mtlr r0
 /* 800C26BC 000BF61C  4E 80 00 20 */	blr 
+.endfn cleanup__8ActShootFv
 
-.global cleanup__16ActShootCreatureFv
-cleanup__16ActShootCreatureFv:
+.fn cleanup__16ActShootCreatureFv, global
 /* 800C26C0 000BF620  7C 08 02 A6 */	mflr r0
 /* 800C26C4 000BF624  90 01 00 04 */	stw r0, 4(r1)
 /* 800C26C8 000BF628  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -404,9 +403,9 @@ cleanup__16ActShootCreatureFv:
 /* 800C26F4 000BF654  38 21 00 18 */	addi r1, r1, 0x18
 /* 800C26F8 000BF658  7C 08 03 A6 */	mtlr r0
 /* 800C26FC 000BF65C  4E 80 00 20 */	blr 
+.endfn cleanup__16ActShootCreatureFv
 
-.global animationKeyUpdated__16ActShootCreatureFR16PaniAnimKeyEvent
-animationKeyUpdated__16ActShootCreatureFR16PaniAnimKeyEvent:
+.fn animationKeyUpdated__16ActShootCreatureFR16PaniAnimKeyEvent, global
 /* 800C2700 000BF660  7C 08 02 A6 */	mflr r0
 /* 800C2704 000BF664  90 01 00 04 */	stw r0, 4(r1)
 /* 800C2708 000BF668  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -455,9 +454,9 @@ animationKeyUpdated__16ActShootCreatureFR16PaniAnimKeyEvent:
 /* 800C27A0 000BF700  38 21 00 28 */	addi r1, r1, 0x28
 /* 800C27A4 000BF704  7C 08 03 A6 */	mtlr r0
 /* 800C27A8 000BF708  4E 80 00 20 */	blr 
+.endfn animationKeyUpdated__16ActShootCreatureFR16PaniAnimKeyEvent
 
-.global __ct__16ActShootCreatureFP4Piki
-__ct__16ActShootCreatureFP4Piki:
+.fn __ct__16ActShootCreatureFP4Piki, global
 /* 800C27AC 000BF70C  7C 08 02 A6 */	mflr r0
 /* 800C27B0 000BF710  38 A0 00 01 */	li r5, 1
 /* 800C27B4 000BF714  90 01 00 04 */	stw r0, 4(r1)
@@ -481,9 +480,9 @@ __ct__16ActShootCreatureFP4Piki:
 /* 800C27FC 000BF75C  38 21 00 18 */	addi r1, r1, 0x18
 /* 800C2800 000BF760  7C 08 03 A6 */	mtlr r0
 /* 800C2804 000BF764  4E 80 00 20 */	blr 
+.endfn __ct__16ActShootCreatureFP4Piki
 
-.global init__16ActShootCreatureFP8Creature
-init__16ActShootCreatureFP8Creature:
+.fn init__16ActShootCreatureFP8Creature, global
 /* 800C2808 000BF768  7C 08 02 A6 */	mflr r0
 /* 800C280C 000BF76C  90 01 00 04 */	stw r0, 4(r1)
 /* 800C2810 000BF770  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -520,9 +519,9 @@ init__16ActShootCreatureFP8Creature:
 /* 800C2884 000BF7E4  38 21 00 18 */	addi r1, r1, 0x18
 /* 800C2888 000BF7E8  7C 08 03 A6 */	mtlr r0
 /* 800C288C 000BF7EC  4E 80 00 20 */	blr 
+.endfn init__16ActShootCreatureFP8Creature
 
-.global exec__16ActShootCreatureFv
-exec__16ActShootCreatureFv:
+.fn exec__16ActShootCreatureFv, global
 /* 800C2890 000BF7F0  7C 08 02 A6 */	mflr r0
 /* 800C2894 000BF7F4  90 01 00 04 */	stw r0, 4(r1)
 /* 800C2898 000BF7F8  94 21 FF 50 */	stwu r1, -0xb0(r1)
@@ -717,9 +716,9 @@ exec__16ActShootCreatureFv:
 /* 800C2B60 000BFAC0  38 21 00 B0 */	addi r1, r1, 0xb0
 /* 800C2B64 000BFAC4  7C 08 03 A6 */	mtlr r0
 /* 800C2B68 000BFAC8  4E 80 00 20 */	blr 
+.endfn exec__16ActShootCreatureFv
 
-.global __dt__16ActShootCreatureFv
-__dt__16ActShootCreatureFv:
+.fn __dt__16ActShootCreatureFv, weak
 /* 800C2B6C 000BFACC  7C 08 02 A6 */	mflr r0
 /* 800C2B70 000BFAD0  90 01 00 04 */	stw r0, 4(r1)
 /* 800C2B74 000BFAD4  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -748,9 +747,9 @@ __dt__16ActShootCreatureFv:
 /* 800C2BCC 000BFB2C  38 21 00 18 */	addi r1, r1, 0x18
 /* 800C2BD0 000BFB30  7C 08 03 A6 */	mtlr r0
 /* 800C2BD4 000BFB34  4E 80 00 20 */	blr 
+.endfn __dt__16ActShootCreatureFv
 
-.global __dt__8ActShootFv
-__dt__8ActShootFv:
+.fn __dt__8ActShootFv, weak
 /* 800C2BD8 000BFB38  7C 08 02 A6 */	mflr r0
 /* 800C2BDC 000BFB3C  90 01 00 04 */	stw r0, 4(r1)
 /* 800C2BE0 000BFB40  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -782,30 +781,38 @@ __dt__8ActShootFv:
 /* 800C2C40 000BFBA0  38 21 00 18 */	addi r1, r1, 0x18
 /* 800C2C44 000BFBA4  7C 08 03 A6 */	mtlr r0
 /* 800C2C48 000BFBA8  4E 80 00 20 */	blr 
+.endfn __dt__8ActShootFv
 
-"@20@animationKeyUpdated__16ActShootCreatureFR16PaniAnimKeyEvent":
+.fn "@20@animationKeyUpdated__16ActShootCreatureFR16PaniAnimKeyEvent", weak
 /* 800C2C4C 000BFBAC  38 63 FF EC */	addi r3, r3, -20
 /* 800C2C50 000BFBB0  4B FF FA B0 */	b animationKeyUpdated__16ActShootCreatureFR16PaniAnimKeyEvent
+.endfn "@20@animationKeyUpdated__16ActShootCreatureFR16PaniAnimKeyEvent"
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802B7A50:
+.obj lbl_802B7A50, local
 	.asciz "aiShoot.cpp"
+.endobj lbl_802B7A50
 .balign 4
-lbl_802B7A5C:
+.obj lbl_802B7A5C, local
 	.asciz "ActShootCreature"
+.endobj lbl_802B7A5C
 .balign 4
-lbl_802B7A70:
+.obj lbl_802B7A70, local
 	.asciz "PaniAnimKeyListener"
+.endobj lbl_802B7A70
 .balign 4
-lbl_802B7A84:
+.obj lbl_802B7A84, local
 	.asciz "Receiver<Piki>"
+.endobj lbl_802B7A84
 .balign 4
-lbl_802B7A94:
+.obj lbl_802B7A94, local
 	.4byte "__RTTI__15Receiver<4Piki>"
 	.4byte 0
 	.4byte 0
-lbl_802B7AA0:
+.endobj lbl_802B7A94
+.balign 4
+.obj lbl_802B7AA0, local
 	.4byte __RTTI__19PaniAnimKeyListener
 	.4byte 0x14
 	.4byte "__RTTI__15Receiver<4Piki>"
@@ -813,8 +820,9 @@ lbl_802B7AA0:
 	.4byte __RTTI__6Action
 	.4byte 0
 	.4byte 0
-.global __vt__16ActShootCreature
-__vt__16ActShootCreature:
+.endobj lbl_802B7AA0
+.balign 4
+.obj __vt__16ActShootCreature, global
 	.4byte __RTTI__16ActShootCreature
 	.4byte 0
 	.4byte "procMsg__15Receiver<4Piki>FP4PikiP3Msg"
@@ -844,23 +852,26 @@ __vt__16ActShootCreature:
 	.4byte 0xFFFFFFEC
 	.4byte "@20@animationKeyUpdated__16ActShootCreatureFR16PaniAnimKeyEvent"
 	.4byte animationKeyUpdated__16ActShootCreatureFR16PaniAnimKeyEvent
-	.4byte 0
-	.4byte 0
-	.4byte 0
+.endobj __vt__16ActShootCreature
+.skip 0xC # why is there padding in this compiler version?
 .balign 4
-lbl_802B7B3C:
+.obj lbl_802B7B3C, local
 	.asciz "ActShoot"
+.endobj lbl_802B7B3C
 .balign 4
-lbl_802B7B48:
+.obj lbl_802B7B48, local
 	.asciz "AndAction"
+.endobj lbl_802B7B48
 .balign 4
-lbl_802B7B54:
+.obj lbl_802B7B54, local
 	.4byte "__RTTI__15Receiver<4Piki>"
 	.4byte 0
 	.4byte __RTTI__6Action
 	.4byte 0
 	.4byte 0
-lbl_802B7B68:
+.endobj lbl_802B7B54
+.balign 4
+.obj lbl_802B7B68, local
 	.4byte "__RTTI__15Receiver<4Piki>"
 	.4byte 0
 	.4byte __RTTI__6Action
@@ -868,8 +879,9 @@ lbl_802B7B68:
 	.4byte __RTTI__9AndAction
 	.4byte 0
 	.4byte 0
-.global __vt__8ActShoot
-__vt__8ActShoot:
+.endobj lbl_802B7B68
+.balign 4
+.obj __vt__8ActShoot, global
 	.4byte __RTTI__8ActShoot
 	.4byte 0
 	.4byte "procMsg__15Receiver<4Piki>FP4PikiP3Msg"
@@ -895,14 +907,14 @@ __vt__8ActShoot:
 	.4byte restart__6ActionFv
 	.4byte resumable__6ActionFv
 	.4byte getInfo__6ActionFPc
+.endobj __vt__8ActShoot
 .balign 4
-lbl_802B7BE8:
+.obj lbl_802B7BE8, local
 	.asciz "Action::Initialiser"
+.endobj lbl_802B7BE8
+.skip 0xC # More silly padding. I think it makes the previous object align to 16.
 .balign 4
-	.4byte 0
-	.4byte 0
-	.4byte 0
-lbl_802B7C08:
+.obj lbl_802B7C08, local
 	.4byte .L_800A7908
 	.4byte .L_800A7930
 	.4byte .L_800A7944
@@ -914,63 +926,99 @@ lbl_802B7C08:
 	.4byte .L_800A791C
 	.4byte .L_800A79D0
 	.4byte .L_800A79BC
+.endobj lbl_802B7C08
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-lbl_803E0850:
+.obj lbl_803E0850, local
 	.float 0.0
-lbl_803E0854:
+.endobj lbl_803E0850
+.obj lbl_803E0854, local
 	.float 0.0
-lbl_803E0858:
+.endobj lbl_803E0854
+.obj lbl_803E0858, local
 	.float 0.0
-lbl_803E085C:
+.endobj lbl_803E0858
+.obj lbl_803E085C, local
 	.float -1.0
-lbl_803E0860:
+.endobj lbl_803E085C
+.obj lbl_803E0860, local
 	.float 0.0
-lbl_803E0864:
+.endobj lbl_803E0860
+.obj lbl_803E0864, local
 	.float 0.0
-lbl_803E0868:
+.endobj lbl_803E0864
+.obj lbl_803E0868, local
 	.float 0.0
-__RTTI__19PaniAnimKeyListener:
+.endobj lbl_803E0868
+.obj __RTTI__19PaniAnimKeyListener, local
 	.4byte lbl_802B7A70
 	.4byte 0
-"__RTTI__15Receiver<4Piki>":
+.endobj __RTTI__19PaniAnimKeyListener
+.balign 4
+.obj "__RTTI__15Receiver<4Piki>", local
 	.4byte lbl_802B7A84
 	.4byte 0
+.endobj "__RTTI__15Receiver<4Piki>"
 .balign 4
-lbl_803E087C:
+.obj lbl_803E087C, local
 	.asciz "Action"
+.endobj lbl_803E087C
 .balign 4
-__RTTI__6Action:
+.obj __RTTI__6Action, local
 	.4byte lbl_803E087C
 	.4byte lbl_802B7A94
-__RTTI__16ActShootCreature:
+.endobj __RTTI__6Action
+.balign 4
+.obj __RTTI__16ActShootCreature, local
 	.4byte lbl_802B7A5C
 	.4byte lbl_802B7AA0
-__RTTI__9AndAction:
+.endobj __RTTI__16ActShootCreature
+.balign 4
+.obj __RTTI__9AndAction, local
 	.4byte lbl_802B7B48
 	.4byte lbl_802B7B54
-__RTTI__8ActShoot:
+.endobj __RTTI__9AndAction
+.balign 4
+.obj __RTTI__8ActShoot, local
 	.4byte lbl_802B7B3C
 	.4byte lbl_802B7B68
+.endobj __RTTI__8ActShoot
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803E96F8:
+.obj lbl_803E96F8, local
 	.float 220.0
-lbl_803E96FC:
+.endobj lbl_803E96F8
+.balign 4
+.obj lbl_803E96FC, local
 	.float 100.0
-lbl_803E9700:
+.endobj lbl_803E96FC
+.balign 4
+.obj lbl_803E9700, local
 	.float 500.0
-lbl_803E9704:
+.endobj lbl_803E9700
+.balign 4
+.obj lbl_803E9704, local
 	.float 0.0
-lbl_803E9708:
+.endobj lbl_803E9704
+.balign 4
+.obj lbl_803E9708, local
 	.float 1.0
-lbl_803E970C:
+.endobj lbl_803E9708
+.balign 4
+.obj lbl_803E970C, local
 	.float 1.8
-lbl_803E9710:
+.endobj lbl_803E970C
+.balign 8
+.obj lbl_803E9710, local
 	.double 0.5
-lbl_803E9718:
+.endobj lbl_803E9710
+.balign 8
+.obj lbl_803E9718, local
 	.double 3.0
-lbl_803E9720:
+.endobj lbl_803E9718
+.balign 4
+.obj lbl_803E9720, local
 	.float 0.4
+.endobj lbl_803E9720

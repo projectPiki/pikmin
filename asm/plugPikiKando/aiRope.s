@@ -246,6 +246,7 @@
 	.4byte 0
 	.4byte 0
 .endobj lbl_802B799C
+.balign 4
 .obj lbl_802B79A8, local
 	.4byte "__RTTI__15Receiver<4Piki>"
 	.4byte 0
@@ -253,6 +254,7 @@
 	.4byte 0
 	.4byte 0
 .endobj lbl_802B79A8
+.balign 4
 .obj __vt__7ActRope, global
 	.4byte __RTTI__7ActRope
 	.4byte 0
@@ -280,6 +282,7 @@
 	.4byte resumable__6ActionFv
 	.4byte getInfo__6ActionFPc
 .endobj __vt__7ActRope
+.balign 4
 .obj lbl_802B7A20, local
 	.4byte .L_800A7908
 	.4byte .L_800A7930
@@ -303,12 +306,15 @@
 .obj lbl_803E0818, local
 	.float 0.0
 .endobj lbl_803E0818
+.balign 4
 .obj lbl_803E081C, local
 	.float 1.0
 .endobj lbl_803E081C
+.balign 4
 .obj lbl_803E0820, local
 	.float 0.0
 .endobj lbl_803E0820
+.balign 4
 .obj lbl_803E0824, local
 	.float 150.0
 .endobj lbl_803E0824
@@ -330,6 +336,7 @@
 	.4byte lbl_803E0838
 	.4byte lbl_802B799C
 .endobj __RTTI__6Action
+.balign 4
 .obj __RTTI__7ActRope, local
 	.4byte lbl_803E0828
 	.4byte lbl_802B79A8
@@ -340,18 +347,23 @@
 .obj lbl_803E96D8, local
 	.float 0.0
 .endobj lbl_803E96D8
+.balign 4
 .obj lbl_803E96DC, local
 	.float 1.0
 .endobj lbl_803E96DC
+.balign 4
 .obj lbl_803E96E0, local
 	.float 32767.0
 .endobj lbl_803E96E0
+.balign 4
 .obj lbl_803E96E4, local
 	.float 22.0
 .endobj lbl_803E96E4
+.balign 4
 .obj lbl_803E96E8, local
 	.float 4.0
 .endobj lbl_803E96E8
+.balign 4
 .obj lbl_803E96EC, local
 	.float 0.5
 .endobj lbl_803E96EC

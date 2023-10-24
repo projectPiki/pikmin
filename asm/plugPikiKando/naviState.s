@@ -11469,6 +11469,7 @@ invincible__15NaviPelletStateFP4Navi:
 	.4byte 0
 	.4byte 0
 .endobj lbl_802C06E8
+.balign 4
 .obj lbl_802C06FC, local
 	.4byte "__RTTI__15Receiver<4Navi>"
 	.4byte 0
@@ -11478,6 +11479,7 @@ invincible__15NaviPelletStateFP4Navi:
 	.4byte 0
 	.4byte 0
 .endobj lbl_802C06FC
+.balign 4
 .obj __vt__18NaviUfoAccessState, global
 	.4byte __RTTI__18NaviUfoAccessState
 	.4byte 0
@@ -11515,6 +11517,7 @@ invincible__15NaviPelletStateFP4Navi:
 	.4byte 0
 	.4byte 0
 .endobj lbl_802C0784
+.balign 4
 .obj __vt__20NaviPartsAccessState, global
 	.4byte __RTTI__20NaviPartsAccessState
 	.4byte 0
@@ -11552,6 +11555,7 @@ invincible__15NaviPelletStateFP4Navi:
 	.4byte 0
 	.4byte 0
 .endobj lbl_802C0808
+.balign 4
 .obj __vt__17NaviStartingState, global
 	.4byte __RTTI__17NaviStartingState
 	.4byte 0
@@ -11589,6 +11593,7 @@ invincible__15NaviPelletStateFP4Navi:
 	.4byte 0
 	.4byte 0
 .endobj lbl_802C088C
+.balign 4
 .obj __vt__17NaviPikiZeroState, global
 	.4byte __RTTI__17NaviPikiZeroState
 	.4byte 0
@@ -11626,6 +11631,7 @@ invincible__15NaviPelletStateFP4Navi:
 	.4byte 0
 	.4byte 0
 .endobj lbl_802C090C
+.balign 4
 .obj __vt__13NaviDeadState, global
 	.4byte __RTTI__13NaviDeadState
 	.4byte 0
@@ -11663,6 +11669,7 @@ invincible__15NaviPelletStateFP4Navi:
 	.4byte 0
 	.4byte 0
 .endobj lbl_802C098C
+.balign 4
 .obj __vt__15NaviIroIroState, global
 	.4byte __RTTI__15NaviIroIroState
 	.4byte 0
@@ -11700,6 +11707,7 @@ invincible__15NaviPelletStateFP4Navi:
 	.4byte 0
 	.4byte 0
 .endobj lbl_802C0A0C
+.balign 4
 .obj __vt__14NaviClearState, global
 	.4byte __RTTI__14NaviClearState
 	.4byte 0
@@ -11737,6 +11745,7 @@ invincible__15NaviPelletStateFP4Navi:
 	.4byte 0
 	.4byte 0
 .endobj lbl_802C0A8C
+.balign 4
 .obj __vt__13NaviLockState, global
 	.4byte __RTTI__13NaviLockState
 	.4byte 0
@@ -11774,6 +11783,7 @@ invincible__15NaviPelletStateFP4Navi:
 	.4byte 0
 	.4byte 0
 .endobj lbl_802C0B0C
+.balign 4
 .obj __vt__15NaviAttackState, global
 	.4byte __RTTI__15NaviAttackState
 	.4byte 0
@@ -11811,6 +11821,7 @@ invincible__15NaviPelletStateFP4Navi:
 	.4byte 0
 	.4byte 0
 .endobj lbl_802C0B8C
+.balign 4
 .obj __vt__14NaviWaterState, global
 	.4byte __RTTI__14NaviWaterState
 	.4byte 0
@@ -11848,6 +11859,7 @@ invincible__15NaviPelletStateFP4Navi:
 	.4byte 0
 	.4byte 0
 .endobj lbl_802C0C0C
+.balign 4
 .obj __vt__12NaviSowState, global
 	.4byte __RTTI__12NaviSowState
 	.4byte 0
@@ -11885,6 +11897,7 @@ invincible__15NaviPelletStateFP4Navi:
 	.4byte 0
 	.4byte 0
 .endobj lbl_802C0C90
+.balign 4
 .global __vt__16NaviPressedState
 __vt__16NaviPressedState:
 	.4byte __RTTI__16NaviPressedState
@@ -13598,7 +13611,7 @@ lbl_802C1A7C:
 .obj lbl_803E9FFC, local
 	.float 0.01
 .endobj lbl_803E9FFC
-.obj lbl_803EA000, local
+.obj lbl_803EA000, local # pi/3
 	.float 1.0471976
 .endobj lbl_803EA000
 .obj lbl_803EA004, local

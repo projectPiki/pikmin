@@ -13625,180 +13625,239 @@ __vt__8DispList:
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-lbl_803DD038:
+.obj lbl_803DD038, local
 	.float 32768.0
-lbl_803DD03C:
+.endobj lbl_803DD038
+.obj lbl_803DD03C, local
 	.float 32768.0
-lbl_803DD040:
+.endobj lbl_803DD03C
+.obj lbl_803DD040, local
 	.float 32768.0
-lbl_803DD044:
+.endobj lbl_803DD040
+.obj lbl_803DD044, local
 	.float -32768.0
-lbl_803DD048:
+.endobj lbl_803DD044
+.obj lbl_803DD048, local
 	.float -32768.0
-lbl_803DD04C:
+.endobj lbl_803DD048
+.obj lbl_803DD04C, local
 	.float -32768.0
-lbl_803DD050:
+.endobj lbl_803DD04C
+.obj lbl_803DD050, local
 	.float 0.0
-lbl_803DD054:
+.endobj lbl_803DD050
+.obj lbl_803DD054, local
 	.float 0.0
-lbl_803DD058:
+.endobj lbl_803DD054
+.obj lbl_803DD058, local
 	.float 0.0
+.endobj lbl_803DD058
 .balign 4
-lbl_803DD05C:
+.obj lbl_803DD05C, local
 	.asciz "NONE"
+.endobj lbl_803DD05C
 .balign 4
-lbl_803DD064:
+.obj lbl_803DD064, local
 	.asciz "OPA"
+.endobj lbl_803DD064
 .balign 4
-lbl_803DD068:
+.obj lbl_803DD068, local
 	.asciz "TEX"
+.endobj lbl_803DD068
 .balign 4
-lbl_803DD06C:
+.obj lbl_803DD06C, local
 	.asciz "XLU"
+.endobj lbl_803DD06C
 .balign 4
-lbl_803DD070:
+.obj lbl_803DD070, local
 	.asciz "face"
+.endobj lbl_803DD070
 .balign 4
-lbl_803DD078:
+.obj lbl_803DD078, local
 	.asciz ""
+.endobj lbl_803DD078
 .balign 4
-lbl_803DD07C:
+.obj lbl_803DD07C, local
 	.asciz "matpoly"
+.endobj lbl_803DD07C
 .balign 4
-lbl_803DD084:
+.obj lbl_803DD084, local
 	.asciz "size"
+.endobj lbl_803DD084
 .balign 4
-lbl_803DD08C:
+.obj lbl_803DD08C, local
 	.asciz "%d"
+.endobj lbl_803DD08C
 .balign 4
-lbl_803DD090:
+.obj lbl_803DD090, local
 	.asciz "%f"
+.endobj lbl_803DD090
 .balign 4
-lbl_803DD094:
+.obj lbl_803DD094, local
 	.asciz "index"
+.endobj lbl_803DD094
 .balign 4
-lbl_803DD09C:
+.obj lbl_803DD09C, local
 	.asciz "name"
+.endobj lbl_803DD09C
 .balign 4
-lbl_803DD0A4:
+.obj lbl_803DD0A4, local
 	.asciz "cam_far"
+.endobj lbl_803DD0A4
 .balign 4
-lbl_803DD0AC:
+.obj lbl_803DD0AC, local
 	.asciz "<JOINT>"
+.endobj lbl_803DD0AC
 .balign 4
-lbl_803DD0B4:
+.obj lbl_803DD0B4, local
 	.asciz "kind"
+.endobj lbl_803DD0B4
 .balign 4
-lbl_803DD0BC:
+.obj lbl_803DD0BC, local
 	.asciz "parent"
+.endobj lbl_803DD0BC
 .balign 4
-lbl_803DD0C4:
+.obj lbl_803DD0C4, local
 	.asciz "child"
+.endobj lbl_803DD0C4
 .balign 4
-lbl_803DD0CC:
+.obj lbl_803DD0CC, local
 	.asciz "route"
+.endobj lbl_803DD0CC
 .balign 4
-lbl_803DD0D4:
+.obj lbl_803DD0D4, local
 	.asciz "noname"
+.endobj lbl_803DD0D4
 .balign 4
-lbl_803DD0DC:
+.obj lbl_803DD0DC, local
 	.asciz "%s%s"
+.endobj lbl_803DD0DC
 .balign 4
-lbl_803DD0E4:
+.obj lbl_803DD0E4, local
 	.asciz "texattr"
+.endobj lbl_803DD0E4
 .balign 4
-lbl_803DD0EC:
+.obj lbl_803DD0EC, local
 	.asciz "mesh"
+.endobj lbl_803DD0EC
 .balign 4
-lbl_803DD0F4:
+.obj lbl_803DD0F4, local
 	.asciz "texImg"
+.endobj lbl_803DD0F4
 .balign 4
-lbl_803DD0FC:
+.obj lbl_803DD0FC, local
 	.asciz ".dck"
+.endobj lbl_803DD0FC
 .balign 4
-lbl_803DD104:
+.obj lbl_803DD104, local
 	.asciz ".dca"
+.endobj lbl_803DD104
 .balign 4
-lbl_803DD10C:
+.obj lbl_803DD10C, local
 	.asciz "root"
+.endobj lbl_803DD10C
 .balign 4
-__RTTI__10GfxobjInfo:
+.obj __RTTI__10GfxobjInfo, local
 	.4byte lbl_8022867C
 	.4byte 0
-__RTTI__10MatobjInfo:
+.endobj __RTTI__10GfxobjInfo
+.obj __RTTI__10MatobjInfo, local
 	.4byte lbl_80228670
 	.4byte lbl_80228688
+.endobj __RTTI__10MatobjInfo
 .balign 4
-lbl_803DD124:
+.obj lbl_803DD124, local
 	.asciz "ANode"
+.endobj lbl_803DD124
 .balign 4
-__RTTI__5ANode:
+.obj __RTTI__5ANode, local
 	.4byte lbl_803DD124
 	.4byte 0
-__RTTI__8CoreNode:
+.endobj __RTTI__5ANode
+.obj __RTTI__8CoreNode, local
 	.4byte lbl_80228350
 	.4byte lbl_802286C0
-__RTTI__9BaseShape:
+.endobj __RTTI__8CoreNode
+.obj __RTTI__9BaseShape, local
 	.4byte lbl_802286B4
 	.4byte lbl_802286CC
-"__RTTI__22IDelegate2<P5Joint,Ul>":
+.endobj __RTTI__9BaseShape
+.obj "__RTTI__22IDelegate2<P5Joint,Ul>", local
 	.4byte lbl_80228734
 	.4byte 0
-"__RTTI__32Delegate2<9BaseShape,P5Joint,Ul>":
+.endobj "__RTTI__22IDelegate2<P5Joint,Ul>"
+.obj "__RTTI__32Delegate2<9BaseShape,P5Joint,Ul>", local
 	.4byte lbl_80228704
 	.4byte lbl_80228758
-__RTTI__10LightFlare:
+.endobj "__RTTI__32Delegate2<9BaseShape,P5Joint,Ul>"
+.obj __RTTI__10LightFlare, local
 	.4byte lbl_8022877C
 	.4byte lbl_80228788
-__RTTI__10LightGroup:
+.endobj __RTTI__10LightFlare
+.obj __RTTI__10LightGroup, local
 	.4byte lbl_802287AC
 	.4byte lbl_802287B8
-__RTTI__11ObjCollInfo:
+.endobj __RTTI__10LightGroup
+.obj __RTTI__11ObjCollInfo, local
 	.4byte lbl_802287DC
 	.4byte lbl_802287E8
+.endobj __RTTI__11ObjCollInfo
 .balign 4
-lbl_803DD16C:
+.obj lbl_803DD16C, local
 	.asciz "AnimDck"
+.endobj lbl_803DD16C
 .balign 4
-__RTTI__8AnimData:
+.obj __RTTI__8AnimData, local
 	.4byte lbl_8022880C
 	.4byte lbl_80228818
-__RTTI__7AnimDck:
+.endobj __RTTI__8AnimData
+.obj __RTTI__7AnimDck, local
 	.4byte lbl_803DD16C
 	.4byte lbl_8022882C
+.endobj __RTTI__7AnimDck
 .balign 4
-lbl_803DD184:
+.obj lbl_803DD184, local
 	.asciz "AnimDca"
+.endobj lbl_803DD184
 .balign 4
-__RTTI__7AnimDca:
+.obj __RTTI__7AnimDca, local
 	.4byte lbl_803DD184
 	.4byte lbl_80228868
-__RTTI__11AnimContext:
+.endobj __RTTI__7AnimDca
+.obj __RTTI__11AnimContext, local
 	.4byte lbl_802288C4
 	.4byte 0
-__RTTI__Q25Joint7MatPoly:
+.endobj __RTTI__11AnimContext
+.obj __RTTI__Q25Joint7MatPoly, local
 	.4byte lbl_802288DC
 	.4byte lbl_802288EC
+.endobj __RTTI__Q25Joint7MatPoly
 .balign 4
-lbl_803DD1A4:
+.obj lbl_803DD1A4, local
 	.asciz "Joint"
+.endobj lbl_803DD1A4
 .balign 4
-__RTTI__5Joint:
+.obj __RTTI__5Joint, local
 	.4byte lbl_803DD1A4
 	.4byte lbl_80228910
+.endobj __RTTI__5Joint
 .balign 4
-lbl_803DD1B4:
+.obj lbl_803DD1B4, local
 	.asciz "Mesh"
+.endobj lbl_803DD1B4
 .balign 4
-__RTTI__4Mesh:
+.obj __RTTI__4Mesh, local
 	.4byte lbl_803DD1B4
 	.4byte lbl_80228934
-__RTTI__8FaceNode:
+.endobj __RTTI__4Mesh
+.obj __RTTI__8FaceNode, local
 	.4byte lbl_80228958
 	.4byte lbl_80228964
-__RTTI__8DispList:
+.endobj __RTTI__8FaceNode
+.obj __RTTI__8DispList, local
 	.4byte lbl_802289A4
 	.4byte lbl_802289B0
+.endobj __RTTI__8DispList
 
 .section .sbss, "wa"
 .balign 8
@@ -13877,7 +13936,8 @@ __RTTI__8DispList:
 	.8byte 0x4330000080000000
 .endobj lbl_803E8530
 .balign 4
-.obj lbl_803E8538, local
+.obj lbl_803E8538, local # array of two null words
+	.4byte 0x00000000
 	.4byte 0x00000000
 .endobj lbl_803E8538
 .balign 8

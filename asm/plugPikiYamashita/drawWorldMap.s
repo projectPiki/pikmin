@@ -13921,61 +13921,61 @@ lbl_803E71B8:
 OBJ_NUM__Q23zen16WorldMapTitleMgr:
 	.4byte 5
 lbl_803E71C0:
-	.4byte 0x00000000
+	.float 0.0
 lbl_803E71C4:
-	.4byte 0x00000000
+	.float 0.0
 lbl_803E71C8:
-	.4byte 0x3F800000
+	.float 1.0
 lbl_803E71CC:
-	.4byte 0x00000000
+	.float 0.0
 lbl_803E71D0:
-	.4byte 0x00000000
+	.float 0.0
 lbl_803E71D4:
-	.4byte 0x00000000
+	.float 0.0
 lbl_803E71D8:
-	.4byte 0x00000000
+	.float 0.0
 lbl_803E71DC:
-	.4byte 0x00000000
+	.float 0.0
 lbl_803E71E0:
-	.4byte 0x3F800000
+	.float 1.0
 lbl_803E71E4:
-	.4byte 0x00000000
+	.float 0.0
 lbl_803E71E8:
-	.4byte 0x00000000
+	.float 0.0
 lbl_803E71EC:
-	.4byte 0x00000000
+	.float 0.0
 lbl_803E71F0:
-	.4byte 0x00000000
+	.float 0.0
 lbl_803E71F4:
-	.4byte 0x00000000
+	.float 0.0
 lbl_803E71F8:
-	.4byte 0x00000000
+	.float 0.0
 lbl_803E71FC:
-	.4byte 0x00000000
+	.float 0.0
 lbl_803E7200:
-	.4byte 0x00000000
+	.float 0.0
 lbl_803E7204:
-	.4byte 0x00000000
+	.float 0.0
 lbl_803E7208:
-	.4byte 0x00000000
+	.float 0.0
 lbl_803E720C:
-	.4byte 0x00000000
+	.float 0.0
 lbl_803E7210:
-	.4byte 0x00000000
+	.float 0.0
 lbl_803E7214:
-	.4byte 0x00000000
+	.float 0.0
 lbl_803E7218:
-	.4byte 0x00000000
+	.float 0.0
 lbl_803E721C:
-	.4byte 0x00000000
+	.float 0.0
 lbl_803E7220:
-	.4byte 0x00000000
+	.float 0.0
 lbl_803E7224:
-	.4byte 0x00000000
+	.float 0.0
 lbl_803E7228:
-	.4byte 0x00000000
+	.float 0.0
 lbl_803E722C:
-	.4byte 0x00000000
+	.float 0.0
 bottomLengthMin__Q23zen19WorldMapCursorOnyon:
 	.4byte 0x41200000
 bottomLengthDefault__Q23zen19WorldMapCursorOnyon:
@@ -13985,121 +13985,121 @@ bottomLengthMax__Q23zen19WorldMapCursorOnyon:
 scaleFrameMax__Q23zen19WorldMapCursorOnyon:
 	.4byte 0x3F4CCCCD
 lbl_803E7240:
-	.4byte 0x00000000
+	.float 0.0
 lbl_803E7244:
-	.4byte 0x00000000
+	.float 0.0
 lbl_803E7248:
-	.4byte 0x00000000
+	.float 0.0
 lbl_803E724C:
-	.4byte 0x00000000
+	.float 0.0
 lbl_803E7250:
-	.4byte 0x00000000
+	.float 0.0
 lbl_803E7254:
-	.4byte 0x00000000
+	.float 0.0
 lbl_803E7258:
-	.4byte 0x00000000
+	.float 0.0
 lbl_803E725C:
-	.4byte 0x00000000
+	.float 0.0
 lbl_803E7260:
-	.4byte 0x00000000
+	.float 0.0
 lbl_803E7264:
-	.4byte 0x00000000
+	.float 0.0
 lbl_803E7268:
 	.4byte 0x3F000000
 lbl_803E726C:
-	.4byte 0x00000000
+	.float 0.0
 lbl_803E7270:
-	.4byte 0x00000000
+	.float 0.0
 lbl_803E7274:
-	.4byte 0x00000000
+	.float 0.0
 lbl_803E7278:
-	.4byte 0x00000000
+	.float 0.0
 lbl_803E727C:
-	.4byte 0x00000000
+	.float 0.0
 lbl_803E7280:
-	.4byte 0x00000000
+	.float 0.0
 lbl_803E7284:
-	.4byte 0x00000000
+	.float 0.0
 lbl_803E7288:
-	.4byte 0x00000000
+	.float 0.0
 lbl_803E728C:
-	.4byte 0x00000000
+	.float 0.0
 lbl_803E7290:
-	.4byte 0x00000000
+	.float 0.0
 lbl_803E7294:
-	.4byte 0x3F800000
+	.float 1.0
 lbl_803E7298:
-	.4byte 0x00000000
+	.float 0.0
 lbl_803E729C:
-	.4byte 0x00000000
+	.float 0.0
 lbl_803E72A0:
-	.4byte 0x00000000
+	.float 0.0
 lbl_803E72A4:
-	.4byte 0x00000000
+	.float 0.0
 lbl_803E72A8:
-	.4byte 0x00000000
+	.float 0.0
 lbl_803E72AC:
-	.4byte 0x00000000
+	.float 0.0
 lbl_803E72B0:
-	.4byte 0x00000000
+	.float 0.0
 lbl_803E72B4:
-	.4byte 0x00000000
+	.float 0.0
 lbl_803E72B8:
-	.4byte 0x00000000
+	.float 0.0
 lbl_803E72BC:
-	.4byte 0x00000000
+	.float 0.0
 lbl_803E72C0:
-	.4byte 0x00000000
+	.float 0.0
 lbl_803E72C4:
-	.4byte 0x00000000
+	.float 0.0
 lbl_803E72C8:
-	.4byte 0x00000000
+	.float 0.0
 lbl_803E72CC:
-	.4byte 0x00000000
+	.float 0.0
 lbl_803E72D0:
-	.4byte 0x00000000
+	.float 0.0
 lbl_803E72D4:
-	.4byte 0x00000000
+	.float 0.0
 lbl_803E72D8:
-	.4byte 0x00000000
+	.float 0.0
 lbl_803E72DC:
-	.4byte 0x00000000
+	.float 0.0
 lbl_803E72E0:
-	.4byte 0x00000000
+	.float 0.0
 lbl_803E72E4:
-	.4byte 0x00000000
+	.float 0.0
 lbl_803E72E8:
-	.4byte 0x00000000
+	.float 0.0
 lbl_803E72EC:
-	.4byte 0x00000000
+	.float 0.0
 lbl_803E72F0:
-	.4byte 0x00000000
+	.float 0.0
 lbl_803E72F4:
-	.4byte 0x00000000
+	.float 0.0
 lbl_803E72F8:
-	.4byte 0x00000000
+	.float 0.0
 ONYON_POS_RADIUS__Q23zen17WorldMapCursorMgr:
 	.4byte 0x42700000
 ONYON_OFFSET_X__Q23zen17WorldMapCursorMgr:
-	.4byte 0x00000000
+	.float 0.0
 ONYON_OFFSET_Y__Q23zen17WorldMapCursorMgr:
 	.4byte 0x41A00000
 ONYON_OFFSET_Z__Q23zen17WorldMapCursorMgr:
-	.4byte 0x00000000
+	.float 0.0
 lbl_803E730C:
-	.4byte 0x00000000
+	.float 0.0
 lbl_803E7310:
-	.4byte 0x00000000
+	.float 0.0
 lbl_803E7314:
-	.4byte 0x00000000
+	.float 0.0
 lbl_803E7318:
-	.4byte 0x00000000
+	.float 0.0
 lbl_803E731C:
-	.4byte 0x00000000
+	.float 0.0
 lbl_803E7320:
-	.4byte 0x00000000
+	.float 0.0
 lbl_803E7324:
-	.4byte 0x00000000
+	.float 0.0
 "EVENT_NONE__Q29@unnamed@19WorldMapCoursePoint":
 	.4byte 0
 "EVENT_APPEAR_FINISH__Q29@unnamed@19WorldMapCoursePoint":
@@ -14157,9 +14157,9 @@ __RTTI__15P2DPaneCallBack:
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
 lbl_803EC078:
-	.4byte 0x00000000
+	.float 0.0
 lbl_803EC07C:
-	.4byte 0x3F800000
+	.float 1.0
 lbl_803EC080:
 	.4byte 0x3F4CCCCD
 lbl_803EC084:

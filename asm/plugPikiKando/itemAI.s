@@ -4268,92 +4268,112 @@
 	.4byte act__Q211FallWaterAI13DisappearInitFP10AICreature
 .endobj __vt__Q211FallWaterAI13DisappearInit
 .balign 4
-lbl_802BD968:
+.obj lbl_802BD968, local
 	.asciz "FallWaterAI::EmitInit"
+.endobj lbl_802BD968
 .balign 4
-lbl_802BD980:
+.obj lbl_802BD980, local
 	.4byte __RTTI__9SAIAction
 	.4byte 0
 	.4byte 0
-.global __vt__Q211FallWaterAI8EmitInit
-__vt__Q211FallWaterAI8EmitInit:
+.endobj lbl_802BD980
+.balign 4
+.obj __vt__Q211FallWaterAI8EmitInit, global
 	.4byte __RTTI__Q211FallWaterAI8EmitInit
 	.4byte 0
 	.4byte act__Q211FallWaterAI8EmitInitFP10AICreature
+.endobj __vt__Q211FallWaterAI8EmitInit
 .balign 4
-lbl_802BD998:
+.obj lbl_802BD998, local
 	.asciz "FallWaterAI::CollideInit"
+.endobj lbl_802BD998
 .balign 4
-lbl_802BD9B4:
+.obj lbl_802BD9B4, local
 	.4byte __RTTI__9SAIAction
 	.4byte 0
 	.4byte 0
-.global __vt__Q211FallWaterAI11CollideInit
-__vt__Q211FallWaterAI11CollideInit:
+.endobj lbl_802BD9B4
+.balign 4
+.obj __vt__Q211FallWaterAI11CollideInit, global
 	.4byte __RTTI__Q211FallWaterAI11CollideInit
 	.4byte 0
 	.4byte act__Q211FallWaterAI11CollideInitFP10AICreature
+.endobj __vt__Q211FallWaterAI11CollideInit
 .balign 4
-lbl_802BD9CC:
+.obj lbl_802BD9CC, local
 	.asciz "FallWaterAI"
+.endobj lbl_802BD9CC
 .balign 4
-lbl_802BD9D8:
+.obj lbl_802BD9D8, local
 	.asciz "StateMachine<AICreature>"
+.endobj lbl_802BD9D8
 .balign 4
-lbl_802BD9F4:
+.obj lbl_802BD9F4, local
 	.asciz "SimpleAI"
+.endobj lbl_802BD9F4
 .balign 4
-lbl_802BDA00:
+.obj lbl_802BDA00, local
 	.4byte "__RTTI__26StateMachine<10AICreature>"
 	.4byte 0
 	.4byte 0
-lbl_802BDA0C:
+.endobj lbl_802BDA00
+.balign 4
+.obj lbl_802BDA0C, local
 	.4byte "__RTTI__26StateMachine<10AICreature>"
 	.4byte 0
 	.4byte __RTTI__8SimpleAI
 	.4byte 0
 	.4byte 0
-.global __vt__11FallWaterAI
-__vt__11FallWaterAI:
+.endobj lbl_802BDA0C
+.balign 4
+.obj __vt__11FallWaterAI, weak
 	.4byte __RTTI__11FallWaterAI
 	.4byte 0
 	.4byte "init__26StateMachine<10AICreature>FP10AICreature"
 	.4byte exec__8SimpleAIFP10AICreature
 	.4byte procMsg__8SimpleAIFP10AICreatureP3Msg
 	.4byte "transit__26StateMachine<10AICreature>FP10AICreaturei"
+.endobj __vt__11FallWaterAI
 .balign 4
-lbl_802BDA38:
+.obj lbl_802BDA38, local
 	.asciz "WaterAI::Die"
+.endobj lbl_802BDA38
 .balign 4
-lbl_802BDA48:
+.obj lbl_802BDA48, local
 	.4byte __RTTI__9SAIAction
 	.4byte 0
 	.4byte 0
-.global __vt__Q27WaterAI3Die
-__vt__Q27WaterAI3Die:
+.endobj lbl_802BDA48
+.balign 4
+.obj __vt__Q27WaterAI3Die, global
 	.4byte __RTTI__Q27WaterAI3Die
 	.4byte 0
 	.4byte act__Q27WaterAI3DieFP10AICreature
+.endobj __vt__Q27WaterAI3Die
 .balign 4
-lbl_802BDA60:
+.obj lbl_802BDA60, local
 	.asciz "WaterAI::CollideChar"
+.endobj lbl_802BDA60
 .balign 4
-lbl_802BDA78:
+.obj lbl_802BDA78, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte 0
+.endobj lbl_802BDA78
 .balign 4
-lbl_802BDA84:
+.obj lbl_802BDA84, local
 	.asciz "SAICondition"
+.endobj lbl_802BDA84
 .balign 4
-lbl_802BDA94:
+.obj lbl_802BDA94, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte __RTTI__8CoreNode
 	.4byte 0
 	.4byte 0
+.endobj lbl_802BDA94
 .balign 4
-lbl_802BDAA8:
+.obj lbl_802BDAA8, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte __RTTI__8CoreNode
@@ -4361,176 +4381,215 @@ lbl_802BDAA8:
 	.4byte __RTTI__12SAICondition
 	.4byte 0
 	.4byte 0
-.global __vt__Q27WaterAI11CollideChar
-__vt__Q27WaterAI11CollideChar:
+.endobj lbl_802BDAA8
+.balign 4
+.obj __vt__Q27WaterAI11CollideChar, global
 	.4byte __RTTI__Q27WaterAI11CollideChar
 	.4byte 0
 	.4byte getAgeNodeType__5ANodeFv
 	.4byte read__8CoreNodeFR18RandomAccessStream
 	.4byte satisfy__Q27WaterAI11CollideCharFP10AICreature
-lbl_802BDAD8:
+.endobj __vt__Q27WaterAI11CollideChar
+.balign 4
+.obj lbl_802BDAD8, local
 	.4byte "__RTTI__26StateMachine<10AICreature>"
 	.4byte 0
 	.4byte __RTTI__8SimpleAI
 	.4byte 0
 	.4byte 0
-.global __vt__7WaterAI
-__vt__7WaterAI:
+.endobj lbl_802BDAD8
+.balign 4
+.obj __vt__7WaterAI, weak
 	.4byte __RTTI__7WaterAI
 	.4byte 0
 	.4byte "init__26StateMachine<10AICreature>FP10AICreature"
 	.4byte exec__8SimpleAIFP10AICreature
 	.4byte procMsg__8SimpleAIFP10AICreatureP3Msg
 	.4byte "transit__26StateMachine<10AICreature>FP10AICreaturei"
+.endobj __vt__7WaterAI
 .balign 4
-lbl_802BDB04:
+.obj lbl_802BDB04, local
 	.asciz "GemAI::Die"
+.endobj lbl_802BDB04
 .balign 4
-lbl_802BDB10:
+.obj lbl_802BDB10, local
 	.4byte __RTTI__9SAIAction
 	.4byte 0
 	.4byte 0
-.global __vt__Q25GemAI3Die
-__vt__Q25GemAI3Die:
+.endobj lbl_802BDB10
+.balign 4
+.obj __vt__Q25GemAI3Die, global
 	.4byte __RTTI__Q25GemAI3Die
 	.4byte 0
 	.4byte act__Q25GemAI3DieFP10AICreature
+.endobj __vt__Q25GemAI3Die
 .balign 4
-lbl_802BDB28:
+.obj lbl_802BDB28, local
 	.asciz "GemAI::RiseExec"
+.endobj lbl_802BDB28
 .balign 4
-lbl_802BDB38:
+.obj lbl_802BDB38, local
 	.4byte __RTTI__9SAIAction
 	.4byte 0
 	.4byte 0
-.global __vt__Q25GemAI8RiseExec
-__vt__Q25GemAI8RiseExec:
+.endobj lbl_802BDB38
+.balign 4
+.obj __vt__Q25GemAI8RiseExec, global
 	.4byte __RTTI__Q25GemAI8RiseExec
 	.4byte 0
 	.4byte act__Q25GemAI8RiseExecFP10AICreature
+.endobj __vt__Q25GemAI8RiseExec
 .balign 4
-lbl_802BDB50:
+.obj lbl_802BDB50, local
 	.asciz "GemAI::RiseInit"
+.endobj lbl_802BDB50
 .balign 4
-lbl_802BDB60:
+.obj lbl_802BDB60, local
 	.4byte __RTTI__9SAIAction
 	.4byte 0
 	.4byte 0
-.global __vt__Q25GemAI8RiseInit
-__vt__Q25GemAI8RiseInit:
+.endobj lbl_802BDB60
+.balign 4
+.obj __vt__Q25GemAI8RiseInit, global
 	.4byte __RTTI__Q25GemAI8RiseInit
 	.4byte 0
 	.4byte act__Q25GemAI8RiseInitFP10AICreature
-lbl_802BDB78:
+.endobj __vt__Q25GemAI8RiseInit
+.balign 4
+.obj lbl_802BDB78, local
 	.4byte "__RTTI__26StateMachine<10AICreature>"
 	.4byte 0
 	.4byte __RTTI__8SimpleAI
 	.4byte 0
 	.4byte 0
-.global __vt__5GemAI
-__vt__5GemAI:
+.endobj lbl_802BDB78
+.balign 4
+.obj __vt__5GemAI, weak
 	.4byte __RTTI__5GemAI
 	.4byte 0
 	.4byte "init__26StateMachine<10AICreature>FP10AICreature"
 	.4byte exec__8SimpleAIFP10AICreature
 	.4byte procMsg__8SimpleAIFP10AICreatureP3Msg
 	.4byte "transit__26StateMachine<10AICreature>FP10AICreaturei"
+.endobj __vt__5GemAI
 .balign 4
-lbl_802BDBA4:
+.obj lbl_802BDBA4, local
 	.asciz "GoalAI::Effect"
+.endobj lbl_802BDBA4
 .balign 4
-lbl_802BDBB4:
+.obj lbl_802BDBB4, local
 	.4byte __RTTI__9SAIAction
 	.4byte 0
 	.4byte 0
-.global __vt__Q26GoalAI6Effect
-__vt__Q26GoalAI6Effect:
+.endobj lbl_802BDBB4
+.balign 4
+.obj __vt__Q26GoalAI6Effect, global
 	.4byte __RTTI__Q26GoalAI6Effect
 	.4byte 0
 	.4byte act__Q26GoalAI6EffectFP10AICreature
+.endobj __vt__Q26GoalAI6Effect
 .balign 4
-lbl_802BDBCC:
+.obj lbl_802BDBCC, local
 	.asciz "GoalAI::EmitWait"
+.endobj lbl_802BDBCC
 .balign 4
-lbl_802BDBE0:
+.obj lbl_802BDBE0, local
 	.4byte __RTTI__9SAIAction
 	.4byte 0
 	.4byte 0
-.global __vt__Q26GoalAI8EmitWait
-__vt__Q26GoalAI8EmitWait:
+.endobj lbl_802BDBE0
+.balign 4
+.obj __vt__Q26GoalAI8EmitWait, global
 	.4byte __RTTI__Q26GoalAI8EmitWait
 	.4byte 0
 	.4byte act__Q26GoalAI8EmitWaitFP10AICreature
+.endobj __vt__Q26GoalAI8EmitWait
 .balign 4
-lbl_802BDBF8:
+.obj lbl_802BDBF8, local
 	.asciz "GoalAI::EmitPiki"
+.endobj lbl_802BDBF8
 .balign 4
-lbl_802BDC0C:
+.obj lbl_802BDC0C, local
 	.4byte __RTTI__9SAIAction
 	.4byte 0
 	.4byte 0
-.global __vt__Q26GoalAI8EmitPiki
-__vt__Q26GoalAI8EmitPiki:
+.endobj lbl_802BDC0C
+.balign 4
+.obj __vt__Q26GoalAI8EmitPiki, global
 	.4byte __RTTI__Q26GoalAI8EmitPiki
 	.4byte 0
 	.4byte act__Q26GoalAI8EmitPikiFP10AICreature
+.endobj __vt__Q26GoalAI8EmitPiki
 .balign 4
-lbl_802BDC24:
+.obj lbl_802BDC24, local
 	.asciz "GoalAI::BootDone"
+.endobj lbl_802BDC24
 .balign 4
-lbl_802BDC38:
+.obj lbl_802BDC38, local
 	.4byte __RTTI__9SAIAction
 	.4byte 0
 	.4byte 0
-.global __vt__Q26GoalAI8BootDone
-__vt__Q26GoalAI8BootDone:
+.endobj lbl_802BDC38
+.balign 4
+.obj __vt__Q26GoalAI8BootDone, global
 	.4byte __RTTI__Q26GoalAI8BootDone
 	.4byte 0
 	.4byte act__Q26GoalAI8BootDoneFP10AICreature
+.endobj __vt__Q26GoalAI8BootDone
 .balign 4
-lbl_802BDC50:
+.obj lbl_802BDC50, local
 	.asciz "GoalAI::BootEmit"
+.endobj lbl_802BDC50
 .balign 4
-lbl_802BDC64:
+.obj lbl_802BDC64, local
 	.4byte __RTTI__9SAIAction
 	.4byte 0
 	.4byte 0
-.global __vt__Q26GoalAI8BootEmit
-__vt__Q26GoalAI8BootEmit:
+.endobj lbl_802BDC64
+.balign 4
+.obj __vt__Q26GoalAI8BootEmit, global
 	.4byte __RTTI__Q26GoalAI8BootEmit
 	.4byte 0
 	.4byte act__Q26GoalAI8BootEmitFP10AICreature
+.endobj __vt__Q26GoalAI8BootEmit
 .balign 4
-lbl_802BDC7C:
+.obj lbl_802BDC7C, local
 	.asciz "GoalAI::BootInit"
+.endobj lbl_802BDC7C
 .balign 4
-lbl_802BDC90:
+.obj lbl_802BDC90, local
 	.4byte __RTTI__9SAIAction
 	.4byte 0
 	.4byte 0
-.global __vt__Q26GoalAI8BootInit
-__vt__Q26GoalAI8BootInit:
+.endobj lbl_802BDC90
+.balign 4
+.obj __vt__Q26GoalAI8BootInit, global
 	.4byte __RTTI__Q26GoalAI8BootInit
 	.4byte 0
 	.4byte act__Q26GoalAI8BootInitFP10AICreature
+.endobj __vt__Q26GoalAI8BootInit
 .balign 4
-lbl_802BDCA8:
+.obj lbl_802BDCA8, local
 	.asciz "GoalAI::WaitInit"
+.endobj lbl_802BDCA8
 .balign 4
-lbl_802BDCBC:
+.obj lbl_802BDCBC, local
 	.4byte __RTTI__9SAIAction
 	.4byte 0
 	.4byte 0
-.global __vt__Q26GoalAI8WaitInit
-__vt__Q26GoalAI8WaitInit:
+.endobj lbl_802BDCBC
+.balign 4
+.obj __vt__Q26GoalAI8WaitInit, global
 	.4byte __RTTI__Q26GoalAI8WaitInit
 	.4byte 0
 	.4byte act__Q26GoalAI8WaitInitFP10AICreature
+.endobj __vt__Q26GoalAI8WaitInit
 .balign 4
-lbl_802BDCD4:
+.obj lbl_802BDCD4, local
 	.asciz "GoalAI::NotFinished"
+.endobj lbl_802BDCD4
 .balign 4
-lbl_802BDCE8:
+.obj lbl_802BDCE8, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte __RTTI__8CoreNode
@@ -4538,573 +4597,644 @@ lbl_802BDCE8:
 	.4byte __RTTI__12SAICondition
 	.4byte 0
 	.4byte 0
-.global __vt__Q26GoalAI11NotFinished
-__vt__Q26GoalAI11NotFinished:
+.endobj lbl_802BDCE8
+.balign 4
+.obj __vt__Q26GoalAI11NotFinished, global
 	.4byte __RTTI__Q26GoalAI11NotFinished
 	.4byte 0
 	.4byte getAgeNodeType__5ANodeFv
 	.4byte read__8CoreNodeFR18RandomAccessStream
 	.4byte satisfy__Q26GoalAI11NotFinishedFP10AICreature
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-lbl_802BDD48:
+.endobj __vt__Q26GoalAI11NotFinished
+.skip 0x30
+.balign 4
+.obj lbl_802BDD48, local
 	.4byte "__RTTI__26StateMachine<10AICreature>"
 	.4byte 0
 	.4byte __RTTI__8SimpleAI
 	.4byte 0
 	.4byte 0
-.global __vt__6GoalAI
-__vt__6GoalAI:
+.endobj lbl_802BDD48
+.balign 4
+.obj __vt__6GoalAI, weak
 	.4byte __RTTI__6GoalAI
 	.4byte 0
 	.4byte "init__26StateMachine<10AICreature>FP10AICreature"
 	.4byte exec__8SimpleAIFP10AICreature
 	.4byte procMsg__8SimpleAIFP10AICreatureP3Msg
 	.4byte "transit__26StateMachine<10AICreature>FP10AICreaturei"
+.endobj __vt__6GoalAI
 .balign 4
-lbl_802BDD74:
+.obj lbl_802BDD74, local
 	.asciz "BombAI::DieExec"
+.endobj lbl_802BDD74
 .balign 4
-lbl_802BDD84:
+.obj lbl_802BDD84, local
 	.4byte __RTTI__9SAIAction
 	.4byte 0
 	.4byte 0
-.global __vt__Q26BombAI7DieExec
-__vt__Q26BombAI7DieExec:
+.endobj lbl_802BDD84
+.balign 4
+.obj __vt__Q26BombAI7DieExec, global
 	.4byte __RTTI__Q26BombAI7DieExec
 	.4byte 0
 	.4byte act__Q26BombAI7DieExecFP10AICreature
+.endobj __vt__Q26BombAI7DieExec
 .balign 4
-lbl_802BDD9C:
+.obj lbl_802BDD9C, local
 	.asciz "BombAI::DieInit"
+.endobj lbl_802BDD9C
 .balign 4
-lbl_802BDDAC:
+.obj lbl_802BDDAC, local
 	.4byte __RTTI__9SAIAction
 	.4byte 0
 	.4byte 0
-.global __vt__Q26BombAI7DieInit
-__vt__Q26BombAI7DieInit:
+.endobj lbl_802BDDAC
+.balign 4
+.obj __vt__Q26BombAI7DieInit, global
 	.4byte __RTTI__Q26BombAI7DieInit
 	.4byte 0
 	.4byte act__Q26BombAI7DieInitFP10AICreature
+.endobj __vt__Q26BombAI7DieInit
 .balign 4
-lbl_802BDDC4:
+.obj lbl_802BDDC4, local
 	.asciz "BombAI::MizuExec"
+.endobj lbl_802BDDC4
 .balign 4
-lbl_802BDDD8:
+.obj lbl_802BDDD8, local
 	.4byte __RTTI__9SAIAction
 	.4byte 0
 	.4byte 0
-.global __vt__Q26BombAI8MizuExec
-__vt__Q26BombAI8MizuExec:
+.endobj lbl_802BDDD8
+.balign 4
+.obj __vt__Q26BombAI8MizuExec, global
 	.4byte __RTTI__Q26BombAI8MizuExec
 	.4byte 0
 	.4byte act__Q26BombAI8MizuExecFP10AICreature
+.endobj __vt__Q26BombAI8MizuExec
 .balign 4
-lbl_802BDDF0:
+.obj lbl_802BDDF0, local
 	.asciz "BombAI::MizuInit"
+.endobj lbl_802BDDF0
 .balign 4
-lbl_802BDE04:
+.obj lbl_802BDE04, local
 	.4byte __RTTI__9SAIAction
 	.4byte 0
 	.4byte 0
-.global __vt__Q26BombAI8MizuInit
-__vt__Q26BombAI8MizuInit:
+.endobj lbl_802BDE04
+.balign 4
+.obj __vt__Q26BombAI8MizuInit, global
 	.4byte __RTTI__Q26BombAI8MizuInit
 	.4byte 0
 	.4byte act__Q26BombAI8MizuInitFP10AICreature
+.endobj __vt__Q26BombAI8MizuInit
 .balign 4
-lbl_802BDE1C:
+.obj lbl_802BDE1C, local
 	.asciz "BombAI::BombExec"
+.endobj lbl_802BDE1C
 .balign 4
-lbl_802BDE30:
+.obj lbl_802BDE30, local
 	.4byte __RTTI__9SAIAction
 	.4byte 0
 	.4byte 0
-.global __vt__Q26BombAI8BombExec
-__vt__Q26BombAI8BombExec:
+.endobj lbl_802BDE30
+.balign 4
+.obj __vt__Q26BombAI8BombExec, global
 	.4byte __RTTI__Q26BombAI8BombExec
 	.4byte 0
 	.4byte act__Q26BombAI8BombExecFP10AICreature
+.endobj __vt__Q26BombAI8BombExec
 .balign 4
-lbl_802BDE48:
+.obj lbl_802BDE48, local
 	.asciz "Interaction"
+.endobj lbl_802BDE48
 .balign 4
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
+	.skip 0x2C # more silly alignment/padding bytes generated by the compiler
 .balign 4
-lbl_802BDE80:
+.obj lbl_802BDE80, local
 	.asciz "CndBombable"
+.endobj lbl_802BDE80
 .balign 4
-lbl_802BDE8C:
+.obj lbl_802BDE8C, local
 	.asciz "CndCollPart"
+.endobj lbl_802BDE8C
 .balign 4
-lbl_802BDE98:
+.obj lbl_802BDE98, local
 	.4byte __RTTI__11CndCollPart
 	.4byte 0
 	.4byte 0
-.global __vt__11CndBombable
-__vt__11CndBombable:
+.endobj lbl_802BDE98
+.balign 4
+.obj __vt__11CndBombable, weak
 	.4byte __RTTI__11CndBombable
 	.4byte 0
 	.4byte satisfy__11CndBombableFP8CollPart
-.global __vt__11CndCollPart
-__vt__11CndCollPart:
+.endobj __vt__11CndBombable
+.balign 4
+.obj __vt__11CndCollPart, weak
 	.4byte __RTTI__11CndCollPart
 	.4byte 0
 	.4byte satisfy__11CndCollPartFP8CollPart
+.endobj __vt__11CndCollPart
 .balign 4
-lbl_802BDEBC:
+.obj lbl_802BDEBC, local
 	.asciz "BombAI::BombInit"
+.endobj lbl_802BDEBC
 .balign 4
-lbl_802BDED0:
+.obj lbl_802BDED0, local
 	.4byte __RTTI__9SAIAction
 	.4byte 0
 	.4byte 0
-.global __vt__Q26BombAI8BombInit
-__vt__Q26BombAI8BombInit:
+.endobj lbl_802BDED0
+.balign 4
+.obj __vt__Q26BombAI8BombInit, global
 	.4byte __RTTI__Q26BombAI8BombInit
 	.4byte 0
 	.4byte act__Q26BombAI8BombInitFP10AICreature
+.endobj __vt__Q26BombAI8BombInit
 .balign 4
-lbl_802BDEE8:
+.obj lbl_802BDEE8, local
 	.asciz "BombAI::SetExec"
+.endobj lbl_802BDEE8
 .balign 4
-lbl_802BDEF8:
+.obj lbl_802BDEF8, local
 	.4byte __RTTI__9SAIAction
 	.4byte 0
 	.4byte 0
-.global __vt__Q26BombAI7SetExec
-__vt__Q26BombAI7SetExec:
+.endobj lbl_802BDEF8
+.balign 4
+.obj __vt__Q26BombAI7SetExec, global
 	.4byte __RTTI__Q26BombAI7SetExec
 	.4byte 0
 	.4byte act__Q26BombAI7SetExecFP10AICreature
+.endobj __vt__Q26BombAI7SetExec
 .balign 4
-lbl_802BDF10:
+.obj lbl_802BDF10, local
 	.asciz "BombAI::SetInit"
+.endobj lbl_802BDF10
 .balign 4
-lbl_802BDF20:
+.obj lbl_802BDF20, local
 	.4byte __RTTI__9SAIAction
 	.4byte 0
 	.4byte 0
-.global __vt__Q26BombAI7SetInit
-__vt__Q26BombAI7SetInit:
+.endobj lbl_802BDF20
+.balign 4
+.obj __vt__Q26BombAI7SetInit, global
 	.4byte __RTTI__Q26BombAI7SetInit
 	.4byte 0
 	.4byte act__Q26BombAI7SetInitFP10AICreature
-lbl_802BDF38:
+.endobj __vt__Q26BombAI7SetInit
+.balign 4
+.obj lbl_802BDF38, local
 	.4byte "__RTTI__26StateMachine<10AICreature>"
 	.4byte 0
 	.4byte __RTTI__8SimpleAI
 	.4byte 0
 	.4byte 0
-.global __vt__6BombAI
-__vt__6BombAI:
+.endobj lbl_802BDF38
+.balign 4
+.obj __vt__6BombAI, weak
 	.4byte __RTTI__6BombAI
 	.4byte 0
 	.4byte "init__26StateMachine<10AICreature>FP10AICreature"
 	.4byte exec__8SimpleAIFP10AICreature
 	.4byte procMsg__8SimpleAIFP10AICreatureP3Msg
 	.4byte "transit__26StateMachine<10AICreature>FP10AICreaturei"
+.endobj __vt__6BombAI
 .balign 4
-lbl_802BDF64:
+.obj lbl_802BDF64, local
 	.asciz "PikiHeadAI::Dead"
+.endobj lbl_802BDF64
 .balign 4
-lbl_802BDF78:
+.obj lbl_802BDF78, local
 	.4byte __RTTI__9SAIAction
 	.4byte 0
 	.4byte 0
-.global __vt__Q210PikiHeadAI4Dead
-__vt__Q210PikiHeadAI4Dead:
+.endobj lbl_802BDF78
+.balign 4
+.obj __vt__Q210PikiHeadAI4Dead, global
 	.4byte __RTTI__Q210PikiHeadAI4Dead
 	.4byte 0
 	.4byte act__Q210PikiHeadAI4DeadFP10AICreature
+.endobj __vt__Q210PikiHeadAI4Dead
 .balign 4
-lbl_802BDF90:
+.obj lbl_802BDF90, local
 	.asciz "PikiHeadAI::KaretaExec"
+.endobj lbl_802BDF90
 .balign 4
-lbl_802BDFA8:
+.obj lbl_802BDFA8, local
 	.4byte __RTTI__9SAIAction
 	.4byte 0
 	.4byte 0
-.global __vt__Q210PikiHeadAI10KaretaExec
-__vt__Q210PikiHeadAI10KaretaExec:
+.endobj lbl_802BDFA8
+.balign 4
+.obj __vt__Q210PikiHeadAI10KaretaExec, global
 	.4byte __RTTI__Q210PikiHeadAI10KaretaExec
 	.4byte 0
 	.4byte act__Q210PikiHeadAI10KaretaExecFP10AICreature
+.endobj __vt__Q210PikiHeadAI10KaretaExec
 .balign 4
-lbl_802BDFC0:
+.obj lbl_802BDFC0, local
 	.asciz "PikiHeadAI::KaretaInit"
+.endobj lbl_802BDFC0
 .balign 4
-lbl_802BDFD8:
+.obj lbl_802BDFD8, local
 	.4byte __RTTI__9SAIAction
 	.4byte 0
 	.4byte 0
-.global __vt__Q210PikiHeadAI10KaretaInit
-__vt__Q210PikiHeadAI10KaretaInit:
+.endobj lbl_802BDFD8
+.balign 4
+.obj __vt__Q210PikiHeadAI10KaretaInit, global
 	.4byte __RTTI__Q210PikiHeadAI10KaretaInit
 	.4byte 0
 	.4byte act__Q210PikiHeadAI10KaretaInitFP10AICreature
+.endobj __vt__Q210PikiHeadAI10KaretaInit
 .balign 4
-lbl_802BDFF0:
+.obj lbl_802BDFF0, local
 	.asciz "PikiHeadAI::GrowEffect"
+.endobj lbl_802BDFF0
 .balign 4
-lbl_802BE008:
+.obj lbl_802BE008, local
 	.4byte __RTTI__9SAIAction
 	.4byte 0
 	.4byte 0
-.global __vt__Q210PikiHeadAI10GrowEffect
-__vt__Q210PikiHeadAI10GrowEffect:
+.endobj lbl_802BE008
+.balign 4
+.obj __vt__Q210PikiHeadAI10GrowEffect, global
 	.4byte __RTTI__Q210PikiHeadAI10GrowEffect
 	.4byte 0
 	.4byte act__Q210PikiHeadAI10GrowEffectFP10AICreature
+.endobj __vt__Q210PikiHeadAI10GrowEffect
 .balign 4
-lbl_802BE020:
+.obj lbl_802BE020, local
 	.asciz "PikiHeadAI::GrowupedExec"
+.endobj lbl_802BE020
 .balign 4
-lbl_802BE03C:
+.obj lbl_802BE03C, local
 	.4byte __RTTI__9SAIAction
 	.4byte 0
 	.4byte 0
-.global __vt__Q210PikiHeadAI12GrowupedExec
-__vt__Q210PikiHeadAI12GrowupedExec:
+.endobj lbl_802BE03C
+.balign 4
+.obj __vt__Q210PikiHeadAI12GrowupedExec, global
 	.4byte __RTTI__Q210PikiHeadAI12GrowupedExec
 	.4byte 0
 	.4byte act__Q210PikiHeadAI12GrowupedExecFP10AICreature
+.endobj __vt__Q210PikiHeadAI12GrowupedExec
 .balign 4
-lbl_802BE054:
+.obj lbl_802BE054, local
 	.asciz "PikiHeadAI::WaitExec"
+.endobj lbl_802BE054
 .balign 4
-lbl_802BE06C:
+.obj lbl_802BE06C, local
 	.4byte __RTTI__9SAIAction
 	.4byte 0
 	.4byte 0
-.global __vt__Q210PikiHeadAI8WaitExec
-__vt__Q210PikiHeadAI8WaitExec:
+.endobj lbl_802BE06C
+.balign 4
+.obj __vt__Q210PikiHeadAI8WaitExec, global
 	.4byte __RTTI__Q210PikiHeadAI8WaitExec
 	.4byte 0
 	.4byte act__Q210PikiHeadAI8WaitExecFP10AICreature
+.endobj __vt__Q210PikiHeadAI8WaitExec
 .balign 4
-lbl_802BE084:
+.obj lbl_802BE084, local
 	.asciz "PikiHeadAI::WaitInit"
+.endobj lbl_802BE084
 .balign 4
-lbl_802BE09C:
+.obj lbl_802BE09C, local
 	.4byte __RTTI__9SAIAction
 	.4byte 0
 	.4byte 0
-.global __vt__Q210PikiHeadAI8WaitInit
-__vt__Q210PikiHeadAI8WaitInit:
+.endobj lbl_802BE09C
+.balign 4
+.obj __vt__Q210PikiHeadAI8WaitInit, global
 	.4byte __RTTI__Q210PikiHeadAI8WaitInit
 	.4byte 0
 	.4byte act__Q210PikiHeadAI8WaitInitFP10AICreature
+.endobj __vt__Q210PikiHeadAI8WaitInit
 .balign 4
-lbl_802BE0B4:
+.obj lbl_802BE0B4, local
 	.asciz "PikiHeadAI::TaneExec"
+.endobj lbl_802BE0B4
 .balign 4
-lbl_802BE0CC:
+.obj lbl_802BE0CC, local
 	.4byte __RTTI__9SAIAction
 	.4byte 0
 	.4byte 0
-.global __vt__Q210PikiHeadAI8TaneExec
-__vt__Q210PikiHeadAI8TaneExec:
+.endobj lbl_802BE0CC
+.balign 4
+.obj __vt__Q210PikiHeadAI8TaneExec, global
 	.4byte __RTTI__Q210PikiHeadAI8TaneExec
 	.4byte 0
 	.4byte act__Q210PikiHeadAI8TaneExecFP10AICreature
+.endobj __vt__Q210PikiHeadAI8TaneExec
 .balign 4
-lbl_802BE0E4:
+.obj lbl_802BE0E4, local
 	.asciz "PikiHeadAI::TaneInit"
+.endobj lbl_802BE0E4
 .balign 4
-lbl_802BE0FC:
+.obj lbl_802BE0FC, local
 	.4byte __RTTI__9SAIAction
 	.4byte 0
 	.4byte 0
-.global __vt__Q210PikiHeadAI8TaneInit
-__vt__Q210PikiHeadAI8TaneInit:
+.endobj lbl_802BE0FC
+.balign 4
+.obj __vt__Q210PikiHeadAI8TaneInit, global
 	.4byte __RTTI__Q210PikiHeadAI8TaneInit
 	.4byte 0
 	.4byte act__Q210PikiHeadAI8TaneInitFP10AICreature
+.endobj __vt__Q210PikiHeadAI8TaneInit
 .balign 4
-lbl_802BE114:
+.obj lbl_802BE114, local
 	.asciz "PikiHeadAI::BuryExec"
+.endobj lbl_802BE114
 .balign 4
-lbl_802BE12C:
+.obj lbl_802BE12C, local
 	.4byte __RTTI__9SAIAction
 	.4byte 0
 	.4byte 0
-.global __vt__Q210PikiHeadAI8BuryExec
-__vt__Q210PikiHeadAI8BuryExec:
+.endobj lbl_802BE12C
+.balign 4
+.obj __vt__Q210PikiHeadAI8BuryExec, global
 	.4byte __RTTI__Q210PikiHeadAI8BuryExec
 	.4byte 0
 	.4byte act__Q210PikiHeadAI8BuryExecFP10AICreature
+.endobj __vt__Q210PikiHeadAI8BuryExec
 .balign 4
-lbl_802BE144:
+.obj lbl_802BE144, local
 	.asciz "PikiHeadAI::BuryInit"
+.endobj lbl_802BE144
 .balign 4
-lbl_802BE15C:
+.obj lbl_802BE15C, local
 	.4byte __RTTI__9SAIAction
 	.4byte 0
 	.4byte 0
-.global __vt__Q210PikiHeadAI8BuryInit
-__vt__Q210PikiHeadAI8BuryInit:
+.endobj lbl_802BE15C
+.balign 4
+.obj __vt__Q210PikiHeadAI8BuryInit, global
 	.4byte __RTTI__Q210PikiHeadAI8BuryInit
 	.4byte 0
 	.4byte act__Q210PikiHeadAI8BuryInitFP10AICreature
+.endobj __vt__Q210PikiHeadAI8BuryInit
 .balign 4
-lbl_802BE174:
+.obj lbl_802BE174, local
 	.asciz "PikiHeadAI::BuryExec2"
+.endobj lbl_802BE174
 .balign 4
-lbl_802BE18C:
+.obj lbl_802BE18C, local
 	.4byte __RTTI__9SAIAction
 	.4byte 0
 	.4byte 0
-.global __vt__Q210PikiHeadAI9BuryExec2
-__vt__Q210PikiHeadAI9BuryExec2:
+.endobj lbl_802BE18C
+.balign 4
+.obj __vt__Q210PikiHeadAI9BuryExec2, global
 	.4byte __RTTI__Q210PikiHeadAI9BuryExec2
 	.4byte 0
 	.4byte act__Q210PikiHeadAI9BuryExec2FP10AICreature
+.endobj __vt__Q210PikiHeadAI9BuryExec2
 .balign 4
-lbl_802BE1A4:
+.obj lbl_802BE1A4, local
 	.asciz "PikiHeadAI::BuryInit2"
+.endobj lbl_802BE1A4
 .balign 4
-lbl_802BE1BC:
+.obj lbl_802BE1BC, local
 	.4byte __RTTI__9SAIAction
 	.4byte 0
 	.4byte 0
-.global __vt__Q210PikiHeadAI9BuryInit2
-__vt__Q210PikiHeadAI9BuryInit2:
+.endobj lbl_802BE1BC
+.balign 4
+.obj __vt__Q210PikiHeadAI9BuryInit2, global
 	.4byte __RTTI__Q210PikiHeadAI9BuryInit2
 	.4byte 0
 	.4byte act__Q210PikiHeadAI9BuryInit2FP10AICreature
+.endobj __vt__Q210PikiHeadAI9BuryInit2
 .balign 4
-lbl_802BE1D4:
+.obj lbl_802BE1D4, local
 	.asciz "PikiHeadAI::FlyingCleanup"
+.endobj lbl_802BE1D4
 .balign 4
-lbl_802BE1F0:
+.obj lbl_802BE1F0, local
 	.4byte __RTTI__9SAIAction
 	.4byte 0
 	.4byte 0
-.global __vt__Q210PikiHeadAI13FlyingCleanup
-__vt__Q210PikiHeadAI13FlyingCleanup:
+.endobj lbl_802BE1F0
+.balign 4
+.obj __vt__Q210PikiHeadAI13FlyingCleanup, global
 	.4byte __RTTI__Q210PikiHeadAI13FlyingCleanup
 	.4byte 0
 	.4byte act__Q210PikiHeadAI13FlyingCleanupFP10AICreature
+.endobj __vt__Q210PikiHeadAI13FlyingCleanup
 .balign 4
-lbl_802BE208:
+.obj lbl_802BE208, local
 	.asciz "PikiHeadAI::FlyingExec"
+.endobj lbl_802BE208
 .balign 4
-lbl_802BE220:
+.obj lbl_802BE220, local
 	.4byte __RTTI__9SAIAction
 	.4byte 0
 	.4byte 0
-.global __vt__Q210PikiHeadAI10FlyingExec
-__vt__Q210PikiHeadAI10FlyingExec:
+.endobj lbl_802BE220
+.balign 4
+.obj __vt__Q210PikiHeadAI10FlyingExec, global
 	.4byte __RTTI__Q210PikiHeadAI10FlyingExec
 	.4byte 0
 	.4byte act__Q210PikiHeadAI10FlyingExecFP10AICreature
+.endobj __vt__Q210PikiHeadAI10FlyingExec
 .balign 4
-lbl_802BE238:
+.obj lbl_802BE238, local
 	.asciz "PikiHeadAI::FlyingEffect"
+.endobj lbl_802BE238
 .balign 4
-lbl_802BE254:
+.obj lbl_802BE254, local
 	.4byte __RTTI__9SAIAction
 	.4byte 0
 	.4byte 0
-.global __vt__Q210PikiHeadAI12FlyingEffect
-__vt__Q210PikiHeadAI12FlyingEffect:
+.endobj lbl_802BE254
+.balign 4
+.obj __vt__Q210PikiHeadAI12FlyingEffect, global
 	.4byte __RTTI__Q210PikiHeadAI12FlyingEffect
 	.4byte 0
 	.4byte act__Q210PikiHeadAI12FlyingEffectFP10AICreature
+.endobj __vt__Q210PikiHeadAI12FlyingEffect
 .balign 4
-lbl_802BE26C:
+.obj lbl_802BE26C, local
 	.asciz "PikiHeadAI::BounceSound"
+.endobj lbl_802BE26C
 .balign 4
-lbl_802BE284:
+.obj lbl_802BE284, local
 	.4byte __RTTI__9SAIAction
 	.4byte 0
 	.4byte 0
-.global __vt__Q210PikiHeadAI11BounceSound
-__vt__Q210PikiHeadAI11BounceSound:
+.endobj lbl_802BE284
+.balign 4
+.obj __vt__Q210PikiHeadAI11BounceSound, global
 	.4byte __RTTI__Q210PikiHeadAI11BounceSound
 	.4byte 0
 	.4byte act__Q210PikiHeadAI11BounceSoundFP10AICreature
+.endobj __vt__Q210PikiHeadAI11BounceSound
 .balign 4
-lbl_802BE29C:
+.obj lbl_802BE29C, local
 	.asciz "PikiHeadAI"
+.endobj lbl_802BE29C
 .balign 4
-lbl_802BE2A8:
+.obj lbl_802BE2A8, local
 	.4byte "__RTTI__26StateMachine<10AICreature>"
 	.4byte 0
 	.4byte __RTTI__8SimpleAI
 	.4byte 0
 	.4byte 0
-.global __vt__10PikiHeadAI
-__vt__10PikiHeadAI:
+.endobj lbl_802BE2A8
+.balign 4
+.obj __vt__10PikiHeadAI, weak
 	.4byte __RTTI__10PikiHeadAI
 	.4byte 0
 	.4byte "init__26StateMachine<10AICreature>FP10AICreature"
 	.4byte exec__8SimpleAIFP10AICreature
 	.4byte procMsg__8SimpleAIFP10AICreatureP3Msg
 	.4byte "transit__26StateMachine<10AICreature>FP10AICreaturei"
+.endobj __vt__10PikiHeadAI
 .balign 4
-lbl_802BE2D4:
+.obj lbl_802BE2D4, local
 	.asciz "SluiceAI::DamageInit"
+.endobj lbl_802BE2D4
 .balign 4
-lbl_802BE2EC:
+.obj lbl_802BE2EC, local
 	.4byte __RTTI__9SAIAction
 	.4byte 0
 	.4byte 0
-.global __vt__Q28SluiceAI10DamageInit
-__vt__Q28SluiceAI10DamageInit:
+.endobj lbl_802BE2EC
+.balign 4
+.obj __vt__Q28SluiceAI10DamageInit, global
 	.4byte __RTTI__Q28SluiceAI10DamageInit
 	.4byte 0
 	.4byte act__Q28SluiceAI10DamageInitFP10AICreature
+.endobj __vt__Q28SluiceAI10DamageInit
 .balign 4
-lbl_802BE304:
+.obj lbl_802BE304, local
 	.asciz "SluiceAI::ChangeInit"
+.endobj lbl_802BE304
 .balign 4
-lbl_802BE31C:
+.obj lbl_802BE31C, local
 	.4byte __RTTI__9SAIAction
 	.4byte 0
 	.4byte 0
-.global __vt__Q28SluiceAI10ChangeInit
-__vt__Q28SluiceAI10ChangeInit:
+.endobj lbl_802BE31C
+.balign 4
+.obj __vt__Q28SluiceAI10ChangeInit, global
 	.4byte __RTTI__Q28SluiceAI10ChangeInit
 	.4byte 0
 	.4byte act__Q28SluiceAI10ChangeInitFP10AICreature
+.endobj __vt__Q28SluiceAI10ChangeInit
 .balign 4
-lbl_802BE334:
+.obj lbl_802BE334, local
 	.asciz "SluiceAI::WaitInit"
+.endobj lbl_802BE334
 .balign 4
-lbl_802BE348:
+.obj lbl_802BE348, local
 	.4byte __RTTI__9SAIAction
 	.4byte 0
 	.4byte 0
-.global __vt__Q28SluiceAI8WaitInit
-__vt__Q28SluiceAI8WaitInit:
+.endobj lbl_802BE348
+.balign 4
+.obj __vt__Q28SluiceAI8WaitInit, global
 	.4byte __RTTI__Q28SluiceAI8WaitInit
 	.4byte 0
 	.4byte act__Q28SluiceAI8WaitInitFP10AICreature
+.endobj __vt__Q28SluiceAI8WaitInit
 .balign 4
-lbl_802BE360:
+.obj lbl_802BE360, local
 	.asciz "SluiceAI::AddCount"
+.endobj lbl_802BE360
 .balign 4
-lbl_802BE374:
+.obj lbl_802BE374, local
 	.4byte __RTTI__9SAIAction
 	.4byte 0
 	.4byte 0
-.global __vt__Q28SluiceAI8AddCount
-__vt__Q28SluiceAI8AddCount:
+.endobj lbl_802BE374
+.balign 4
+.obj __vt__Q28SluiceAI8AddCount, global
 	.4byte __RTTI__Q28SluiceAI8AddCount
 	.4byte 0
 	.4byte act__Q28SluiceAI8AddCountFP10AICreature
+.endobj __vt__Q28SluiceAI8AddCount
 .balign 4
-lbl_802BE38C:
+.obj lbl_802BE38C, local
 	.asciz "SluiceAI::MotionDone"
+.endobj lbl_802BE38C
 .balign 4
-lbl_802BE3A4:
+.obj lbl_802BE3A4, local
 	.4byte __RTTI__9SAIAction
 	.4byte 0
 	.4byte 0
-.global __vt__Q28SluiceAI10MotionDone
-__vt__Q28SluiceAI10MotionDone:
+.endobj lbl_802BE3A4
+.balign 4
+.obj __vt__Q28SluiceAI10MotionDone, global
 	.4byte __RTTI__Q28SluiceAI10MotionDone
 	.4byte 0
 	.4byte act__Q28SluiceAI10MotionDoneFP10AICreature
+.endobj __vt__Q28SluiceAI10MotionDone
 .balign 4
-lbl_802BE3BC:
+.obj lbl_802BE3BC, local
 	.asciz "SluiceAI::Init"
+.endobj lbl_802BE3BC
 .balign 4
-lbl_802BE3CC:
+.obj lbl_802BE3CC, local
 	.4byte __RTTI__9SAIAction
 	.4byte 0
 	.4byte 0
-.global __vt__Q28SluiceAI4Init
-__vt__Q28SluiceAI4Init:
+.endobj lbl_802BE3CC
+.balign 4
+.obj __vt__Q28SluiceAI4Init, global
 	.4byte __RTTI__Q28SluiceAI4Init
 	.4byte 0
 	.4byte act__Q28SluiceAI4InitFP10AICreature
-.global __vt__9SAIAction
-__vt__9SAIAction:
+.endobj __vt__Q28SluiceAI4Init
+.balign 4
+.obj __vt__9SAIAction, weak
 	.4byte __RTTI__9SAIAction
 	.4byte 0
 	.4byte 0
+.endobj __vt__9SAIAction
 .balign 4
-lbl_802BE3F0:
+.obj lbl_802BE3F0, local
 	.asciz "SAIEvent"
+.endobj lbl_802BE3F0
 .balign 4
-lbl_802BE3FC:
+.obj lbl_802BE3FC, local
 	.asciz "Receiver<AICreature>"
+.endobj lbl_802BE3FC
 .balign 4
-lbl_802BE414:
+.obj lbl_802BE414, local
 	.4byte "__RTTI__22Receiver<10AICreature>"
 	.4byte 0
 	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
+.endobj lbl_802BE414
 .balign 4
-lbl_802BE490:
+.skip 0x70 # why is the compiler like this?
+.balign 4
+.obj lbl_802BE490, local
 	.asciz "SluiceAI"
+.endobj lbl_802BE490
 .balign 4
-lbl_802BE49C:
+.obj lbl_802BE49C, local
 	.4byte "__RTTI__26StateMachine<10AICreature>"
 	.4byte 0
 	.4byte __RTTI__8SimpleAI
 	.4byte 0
 	.4byte 0
-.global __vt__8SluiceAI
-__vt__8SluiceAI:
+.endobj lbl_802BE49C
+.balign 4
+.obj __vt__8SluiceAI, weak
 	.4byte __RTTI__8SluiceAI
 	.4byte 0
 	.4byte "init__26StateMachine<10AICreature>FP10AICreature"
 	.4byte exec__8SimpleAIFP10AICreature
 	.4byte procMsg__8SimpleAIFP10AICreatureP3Msg
 	.4byte "transit__26StateMachine<10AICreature>FP10AICreaturei"
-lbl_802BE4C8:
+.endobj __vt__8SluiceAI
+.balign 4
+.obj lbl_802BE4C8, local
 	.4byte .L_8007D184
 	.4byte .L_8007D1AC
 	.4byte .L_8007D1C0
@@ -5116,236 +5246,314 @@ lbl_802BE4C8:
 	.4byte .L_8007D198
 	.4byte .L_8007D24C
 	.4byte .L_8007D238
+.endobj lbl_802BE4C8
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-lbl_803E1AA0:
+.obj lbl_803E1AA0, local
 	.float 0.0
-lbl_803E1AA4:
+.endobj lbl_803E1AA0
+.obj lbl_803E1AA4, local
 	.float 0.0
-lbl_803E1AA8:
+.endobj lbl_803E1AA4
+.obj lbl_803E1AA8, local
 	.float 0.0
-lbl_803E1AAC:
+.endobj lbl_803E1AA8
+.obj lbl_803E1AAC, local
 	.float 800.0
-lbl_803E1AB0:
+.endobj lbl_803E1AAC
+.obj lbl_803E1AB0, local
 	.float 800.0
-lbl_803E1AB4:
+.endobj lbl_803E1AB0
+.obj lbl_803E1AB4, local
 	.float 0.0
-lbl_803E1AB8:
+.endobj lbl_803E1AB4
+.obj lbl_803E1AB8, local
 	.float 0.0
-lbl_803E1ABC:
+.endobj lbl_803E1AB8
+.obj lbl_803E1ABC, local
 	.float 0.0
-lbl_803E1AC0:
+.endobj lbl_803E1ABC
+.obj lbl_803E1AC0, local
 	.float 60.0
-__RTTI__9SAIAction:
+.endobj lbl_803E1AC0
+.obj __RTTI__9SAIAction, local
 	.4byte lbl_802BD944
 	.4byte 0
-__RTTI__Q211FallWaterAI13DisappearInit:
+.endobj __RTTI__9SAIAction
+.obj __RTTI__Q211FallWaterAI13DisappearInit, local
 	.4byte lbl_802BD928
 	.4byte lbl_802BD950
-__RTTI__Q211FallWaterAI8EmitInit:
+.endobj __RTTI__Q211FallWaterAI13DisappearInit
+.obj __RTTI__Q211FallWaterAI8EmitInit, local
 	.4byte lbl_802BD968
 	.4byte lbl_802BD980
-__RTTI__Q211FallWaterAI11CollideInit:
+.endobj __RTTI__Q211FallWaterAI8EmitInit
+.obj __RTTI__Q211FallWaterAI11CollideInit, local
 	.4byte lbl_802BD998
 	.4byte lbl_802BD9B4
-"__RTTI__26StateMachine<10AICreature>":
+.endobj __RTTI__Q211FallWaterAI11CollideInit
+.obj "__RTTI__26StateMachine<10AICreature>", local
 	.4byte lbl_802BD9D8
 	.4byte 0
-__RTTI__8SimpleAI:
+.endobj "__RTTI__26StateMachine<10AICreature>"
+.obj __RTTI__8SimpleAI, local
 	.4byte lbl_802BD9F4
 	.4byte lbl_802BDA00
-__RTTI__11FallWaterAI:
+.endobj __RTTI__8SimpleAI
+.obj __RTTI__11FallWaterAI, local
 	.4byte lbl_802BD9CC
 	.4byte lbl_802BDA0C
-__RTTI__Q27WaterAI3Die:
+.endobj __RTTI__11FallWaterAI
+.obj __RTTI__Q27WaterAI3Die, local
 	.4byte lbl_802BDA38
 	.4byte lbl_802BDA48
+.endobj __RTTI__Q27WaterAI3Die
 .balign 4
-lbl_803E1B04:
+.obj lbl_803E1B04, local
 	.asciz "ANode"
+.endobj lbl_803E1B04
 .balign 4
-__RTTI__5ANode:
+.obj __RTTI__5ANode, local
 	.4byte lbl_803E1B04
 	.4byte 0
-__RTTI__8CoreNode:
+.endobj __RTTI__5ANode
+.obj __RTTI__8CoreNode, local
 	.4byte lbl_802BD90C
 	.4byte lbl_802BDA78
-__RTTI__12SAICondition:
+.endobj __RTTI__8CoreNode
+.obj __RTTI__12SAICondition, local
 	.4byte lbl_802BDA84
 	.4byte lbl_802BDA94
-__RTTI__Q27WaterAI11CollideChar:
+.endobj __RTTI__12SAICondition
+.obj __RTTI__Q27WaterAI11CollideChar, local
 	.4byte lbl_802BDA60
 	.4byte lbl_802BDAA8
+.endobj __RTTI__Q27WaterAI11CollideChar
 .balign 4
-lbl_803E1B2C:
+.obj lbl_803E1B2C, local
 	.asciz "WaterAI"
+.endobj lbl_803E1B2C
 .balign 4
-__RTTI__7WaterAI:
+.obj __RTTI__7WaterAI, local
 	.4byte lbl_803E1B2C
 	.4byte lbl_802BDAD8
-__RTTI__Q25GemAI3Die:
+.endobj __RTTI__7WaterAI
+.obj __RTTI__Q25GemAI3Die, local
 	.4byte lbl_802BDB04
 	.4byte lbl_802BDB10
-__RTTI__Q25GemAI8RiseExec:
+.endobj __RTTI__Q25GemAI3Die
+.obj __RTTI__Q25GemAI8RiseExec, local
 	.4byte lbl_802BDB28
 	.4byte lbl_802BDB38
-__RTTI__Q25GemAI8RiseInit:
+.endobj __RTTI__Q25GemAI8RiseExec
+.obj __RTTI__Q25GemAI8RiseInit, local
 	.4byte lbl_802BDB50
 	.4byte lbl_802BDB60
+.endobj __RTTI__Q25GemAI8RiseInit
 .balign 4
-lbl_803E1B54:
+.obj lbl_803E1B54, local
 	.asciz "GemAI"
+.endobj lbl_803E1B54
 .balign 4
-__RTTI__5GemAI:
+.obj __RTTI__5GemAI, local
 	.4byte lbl_803E1B54
 	.4byte lbl_802BDB78
-__RTTI__Q26GoalAI6Effect:
+.endobj __RTTI__5GemAI
+.obj __RTTI__Q26GoalAI6Effect, local
 	.4byte lbl_802BDBA4
 	.4byte lbl_802BDBB4
-__RTTI__Q26GoalAI8EmitWait:
+.endobj __RTTI__Q26GoalAI6Effect
+.obj __RTTI__Q26GoalAI8EmitWait, local
 	.4byte lbl_802BDBCC
 	.4byte lbl_802BDBE0
-__RTTI__Q26GoalAI8EmitPiki:
+.endobj __RTTI__Q26GoalAI8EmitWait
+.obj __RTTI__Q26GoalAI8EmitPiki, local
 	.4byte lbl_802BDBF8
 	.4byte lbl_802BDC0C
-__RTTI__Q26GoalAI8BootDone:
+.endobj __RTTI__Q26GoalAI8EmitPiki
+.obj __RTTI__Q26GoalAI8BootDone, local
 	.4byte lbl_802BDC24
 	.4byte lbl_802BDC38
-__RTTI__Q26GoalAI8BootEmit:
+.endobj __RTTI__Q26GoalAI8BootDone
+.obj __RTTI__Q26GoalAI8BootEmit, local
 	.4byte lbl_802BDC50
 	.4byte lbl_802BDC64
-__RTTI__Q26GoalAI8BootInit:
+.endobj __RTTI__Q26GoalAI8BootEmit
+.obj __RTTI__Q26GoalAI8BootInit, local
 	.4byte lbl_802BDC7C
 	.4byte lbl_802BDC90
-__RTTI__Q26GoalAI8WaitInit:
+.endobj __RTTI__Q26GoalAI8BootInit
+.obj __RTTI__Q26GoalAI8WaitInit, local
 	.4byte lbl_802BDCA8
 	.4byte lbl_802BDCBC
-__RTTI__Q26GoalAI11NotFinished:
+.endobj __RTTI__Q26GoalAI8WaitInit
+.obj __RTTI__Q26GoalAI11NotFinished, local
 	.4byte lbl_802BDCD4
 	.4byte lbl_802BDCE8
+.endobj __RTTI__Q26GoalAI11NotFinished
 .balign 4
-lbl_803E1BA4:
+.obj lbl_803E1BA4, local
 	.asciz "GoalAI"
+.endobj lbl_803E1BA4
 .balign 4
-__RTTI__6GoalAI:
+.obj __RTTI__6GoalAI, local
 	.4byte lbl_803E1BA4
 	.4byte lbl_802BDD48
-__RTTI__Q26BombAI7DieExec:
+.endobj __RTTI__6GoalAI
+.obj __RTTI__Q26BombAI7DieExec, local
 	.4byte lbl_802BDD74
 	.4byte lbl_802BDD84
-__RTTI__Q26BombAI7DieInit:
+.endobj __RTTI__Q26BombAI7DieExec
+.obj __RTTI__Q26BombAI7DieInit, local
 	.4byte lbl_802BDD9C
 	.4byte lbl_802BDDAC
-__RTTI__Q26BombAI8MizuExec:
+.endobj __RTTI__Q26BombAI7DieInit
+.obj __RTTI__Q26BombAI8MizuExec, local
 	.4byte lbl_802BDDC4
 	.4byte lbl_802BDDD8
-__RTTI__Q26BombAI8MizuInit:
+.endobj __RTTI__Q26BombAI8MizuExec
+.obj __RTTI__Q26BombAI8MizuInit, local
 	.4byte lbl_802BDDF0
 	.4byte lbl_802BDE04
-__RTTI__Q26BombAI8BombExec:
+.endobj __RTTI__Q26BombAI8MizuInit
+.obj __RTTI__Q26BombAI8BombExec, local
 	.4byte lbl_802BDE1C
 	.4byte lbl_802BDE30
-__RTTI__11CndCollPart:
+.endobj __RTTI__Q26BombAI8BombExec
+.obj __RTTI__11CndCollPart, local
 	.4byte lbl_802BDE8C
 	.4byte 0
-__RTTI__11CndBombable:
+.endobj __RTTI__11CndCollPart
+.obj __RTTI__11CndBombable, local
 	.4byte lbl_802BDE80
 	.4byte lbl_802BDE98
-__RTTI__Q26BombAI8BombInit:
+.endobj __RTTI__11CndBombable
+.obj __RTTI__Q26BombAI8BombInit, local
 	.4byte lbl_802BDEBC
 	.4byte lbl_802BDED0
-__RTTI__Q26BombAI7SetExec:
+.endobj __RTTI__Q26BombAI8BombInit
+.obj __RTTI__Q26BombAI7SetExec, local
 	.4byte lbl_802BDEE8
 	.4byte lbl_802BDEF8
-__RTTI__Q26BombAI7SetInit:
+.endobj __RTTI__Q26BombAI7SetExec
+.obj __RTTI__Q26BombAI7SetInit, local
 	.4byte lbl_802BDF10
 	.4byte lbl_802BDF20
+.endobj __RTTI__Q26BombAI7SetInit
 .balign 4
-lbl_803E1C04:
+.obj lbl_803E1C04, local
 	.asciz "BombAI"
+.endobj lbl_803E1C04
 .balign 4
-__RTTI__6BombAI:
+.obj __RTTI__6BombAI, local
 	.4byte lbl_803E1C04
 	.4byte lbl_802BDF38
-__RTTI__Q210PikiHeadAI4Dead:
+.endobj __RTTI__6BombAI
+.obj __RTTI__Q210PikiHeadAI4Dead, local
 	.4byte lbl_802BDF64
 	.4byte lbl_802BDF78
-__RTTI__Q210PikiHeadAI10KaretaExec:
+.endobj __RTTI__Q210PikiHeadAI4Dead
+.obj __RTTI__Q210PikiHeadAI10KaretaExec, local
 	.4byte lbl_802BDF90
 	.4byte lbl_802BDFA8
-__RTTI__Q210PikiHeadAI10KaretaInit:
+.endobj __RTTI__Q210PikiHeadAI10KaretaExec
+.obj __RTTI__Q210PikiHeadAI10KaretaInit, local
 	.4byte lbl_802BDFC0
 	.4byte lbl_802BDFD8
-__RTTI__Q210PikiHeadAI10GrowEffect:
+.endobj __RTTI__Q210PikiHeadAI10KaretaInit
+.obj __RTTI__Q210PikiHeadAI10GrowEffect, local
 	.4byte lbl_802BDFF0
 	.4byte lbl_802BE008
-__RTTI__Q210PikiHeadAI12GrowupedExec:
+.endobj __RTTI__Q210PikiHeadAI10GrowEffect
+.obj __RTTI__Q210PikiHeadAI12GrowupedExec, local
 	.4byte lbl_802BE020
 	.4byte lbl_802BE03C
-__RTTI__Q210PikiHeadAI8WaitExec:
+.endobj __RTTI__Q210PikiHeadAI12GrowupedExec
+.obj __RTTI__Q210PikiHeadAI8WaitExec, local
 	.4byte lbl_802BE054
 	.4byte lbl_802BE06C
-__RTTI__Q210PikiHeadAI8WaitInit:
+.endobj __RTTI__Q210PikiHeadAI8WaitExec
+.obj __RTTI__Q210PikiHeadAI8WaitInit, local
 	.4byte lbl_802BE084
 	.4byte lbl_802BE09C
-__RTTI__Q210PikiHeadAI8TaneExec:
+.endobj __RTTI__Q210PikiHeadAI8WaitInit
+.obj __RTTI__Q210PikiHeadAI8TaneExec, local
 	.4byte lbl_802BE0B4
 	.4byte lbl_802BE0CC
-__RTTI__Q210PikiHeadAI8TaneInit:
+.endobj __RTTI__Q210PikiHeadAI8TaneExec
+.obj __RTTI__Q210PikiHeadAI8TaneInit, local
 	.4byte lbl_802BE0E4
 	.4byte lbl_802BE0FC
-__RTTI__Q210PikiHeadAI8BuryExec:
+.endobj __RTTI__Q210PikiHeadAI8TaneInit
+.obj __RTTI__Q210PikiHeadAI8BuryExec, local
 	.4byte lbl_802BE114
 	.4byte lbl_802BE12C
-__RTTI__Q210PikiHeadAI8BuryInit:
+.endobj __RTTI__Q210PikiHeadAI8BuryExec
+.obj __RTTI__Q210PikiHeadAI8BuryInit, local
 	.4byte lbl_802BE144
 	.4byte lbl_802BE15C
-__RTTI__Q210PikiHeadAI9BuryExec2:
+.endobj __RTTI__Q210PikiHeadAI8BuryInit
+.obj __RTTI__Q210PikiHeadAI9BuryExec2, local
 	.4byte lbl_802BE174
 	.4byte lbl_802BE18C
-__RTTI__Q210PikiHeadAI9BuryInit2:
+.endobj __RTTI__Q210PikiHeadAI9BuryExec2
+.obj __RTTI__Q210PikiHeadAI9BuryInit2, local
 	.4byte lbl_802BE1A4
 	.4byte lbl_802BE1BC
-__RTTI__Q210PikiHeadAI13FlyingCleanup:
+.endobj __RTTI__Q210PikiHeadAI9BuryInit2
+.obj __RTTI__Q210PikiHeadAI13FlyingCleanup, local
 	.4byte lbl_802BE1D4
 	.4byte lbl_802BE1F0
-__RTTI__Q210PikiHeadAI10FlyingExec:
+.endobj __RTTI__Q210PikiHeadAI13FlyingCleanup
+.obj __RTTI__Q210PikiHeadAI10FlyingExec, local
 	.4byte lbl_802BE208
 	.4byte lbl_802BE220
-__RTTI__Q210PikiHeadAI12FlyingEffect:
+.endobj __RTTI__Q210PikiHeadAI10FlyingExec
+.obj __RTTI__Q210PikiHeadAI12FlyingEffect, local
 	.4byte lbl_802BE238
 	.4byte lbl_802BE254
-__RTTI__Q210PikiHeadAI11BounceSound:
+.endobj __RTTI__Q210PikiHeadAI12FlyingEffect
+.obj __RTTI__Q210PikiHeadAI11BounceSound, local
 	.4byte lbl_802BE26C
 	.4byte lbl_802BE284
-__RTTI__10PikiHeadAI:
+.endobj __RTTI__Q210PikiHeadAI11BounceSound
+.obj __RTTI__10PikiHeadAI, local
 	.4byte lbl_802BE29C
 	.4byte lbl_802BE2A8
-__RTTI__Q28SluiceAI10DamageInit:
+.endobj __RTTI__10PikiHeadAI
+.obj __RTTI__Q28SluiceAI10DamageInit, local
 	.4byte lbl_802BE2D4
 	.4byte lbl_802BE2EC
-__RTTI__Q28SluiceAI10ChangeInit:
+.endobj __RTTI__Q28SluiceAI10DamageInit
+.obj __RTTI__Q28SluiceAI10ChangeInit, local
 	.4byte lbl_802BE304
 	.4byte lbl_802BE31C
-__RTTI__Q28SluiceAI8WaitInit:
+.endobj __RTTI__Q28SluiceAI10ChangeInit
+.obj __RTTI__Q28SluiceAI8WaitInit, local
 	.4byte lbl_802BE334
 	.4byte lbl_802BE348
-__RTTI__Q28SluiceAI8AddCount:
+.endobj __RTTI__Q28SluiceAI8WaitInit
+.obj __RTTI__Q28SluiceAI8AddCount, local
 	.4byte lbl_802BE360
 	.4byte lbl_802BE374
-__RTTI__Q28SluiceAI10MotionDone:
+.endobj __RTTI__Q28SluiceAI8AddCount
+.obj __RTTI__Q28SluiceAI10MotionDone, local
 	.4byte lbl_802BE38C
 	.4byte lbl_802BE3A4
-__RTTI__Q28SluiceAI4Init:
+.endobj __RTTI__Q28SluiceAI10MotionDone
+.obj __RTTI__Q28SluiceAI4Init, local
 	.4byte lbl_802BE3BC
 	.4byte lbl_802BE3CC
-"__RTTI__22Receiver<10AICreature>":
+.endobj __RTTI__Q28SluiceAI4Init
+.obj "__RTTI__22Receiver<10AICreature>", local
 	.4byte lbl_802BE3FC
 	.4byte 0
-__RTTI__8SluiceAI:
+.endobj "__RTTI__22Receiver<10AICreature>"
+.obj __RTTI__8SluiceAI, local
 	.4byte lbl_802BE490
 	.4byte lbl_802BE49C
+.endobj __RTTI__8SluiceAI
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8

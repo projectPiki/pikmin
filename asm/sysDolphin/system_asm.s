@@ -2913,29 +2913,29 @@ lbl_constructor:
 .obj errorMessages, local
 	.4byte lbl_802A5170
 	.4byte 0
-lbl_802A52CC:
+.L_802A52CC:
 	.4byte lbl_802A5188
 	.4byte lbl_802A51A0
 	.4byte lbl_802A51B8
 	.4byte lbl_802A51D4
 	.4byte lbl_802A51EC
 	.4byte 0
-lbl_802A52E4:
+.L_802A52E4:
 	.4byte lbl_802A51FC
 	.4byte lbl_802A5220
 	.4byte lbl_802A5230
 	.4byte lbl_802A5244
 	.4byte lbl_802A5258
 	.4byte 0
-lbl_802A52FC:
+.L_802A52FC:
 	.4byte lbl_802A5270
 	.4byte lbl_802A5280
 	.4byte 0
-lbl_802A5308:
+.L_802A5308:
 	.4byte lbl_802A5294
 	.4byte lbl_802A52A8
 	.4byte 0
-lbl_802A5314:
+.L_802A5314:
 	.4byte lbl_802A52B4
 	.4byte lbl_802A5280
 	.4byte lbl_802A5270
@@ -2944,11 +2944,11 @@ lbl_802A5314:
 .endobj errorMessages
 .obj errorList, local
 	.4byte errorMessages
-	.4byte lbl_802A52CC
-	.4byte lbl_802A52E4
-	.4byte lbl_802A52FC
-	.4byte lbl_802A5308
-	.4byte lbl_802A5314
+	.4byte .L_802A52CC
+	.4byte .L_802A52E4
+	.4byte .L_802A52FC
+	.4byte .L_802A5308
+	.4byte .L_802A5314
 .endobj errorList
 .obj lbl_802A5340, local
 	.4byte 0x00000000

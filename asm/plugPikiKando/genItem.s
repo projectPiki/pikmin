@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global ramSaveParameters__13GenObjectItemFR18RandomAccessStream
-ramSaveParameters__13GenObjectItemFR18RandomAccessStream:
+.fn ramSaveParameters__13GenObjectItemFR18RandomAccessStream, global
 /* 800EE320 000EB280  7C 08 02 A6 */	mflr r0
 /* 800EE324 000EB284  90 01 00 04 */	stw r0, 4(r1)
 /* 800EE328 000EB288  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -44,9 +43,9 @@ ramSaveParameters__13GenObjectItemFR18RandomAccessStream:
 /* 800EE3BC 000EB31C  38 21 00 18 */	addi r1, r1, 0x18
 /* 800EE3C0 000EB320  7C 08 03 A6 */	mtlr r0
 /* 800EE3C4 000EB324  4E 80 00 20 */	blr 
+.endfn ramSaveParameters__13GenObjectItemFR18RandomAccessStream
 
-.global ramLoadParameters__13GenObjectItemFR18RandomAccessStream
-ramLoadParameters__13GenObjectItemFR18RandomAccessStream:
+.fn ramLoadParameters__13GenObjectItemFR18RandomAccessStream, global
 /* 800EE3C8 000EB328  7C 08 02 A6 */	mflr r0
 /* 800EE3CC 000EB32C  90 01 00 04 */	stw r0, 4(r1)
 /* 800EE3D0 000EB330  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -89,9 +88,9 @@ ramLoadParameters__13GenObjectItemFR18RandomAccessStream:
 /* 800EE464 000EB3C4  38 21 00 28 */	addi r1, r1, 0x28
 /* 800EE468 000EB3C8  7C 08 03 A6 */	mtlr r0
 /* 800EE46C 000EB3CC  4E 80 00 20 */	blr 
+.endfn ramLoadParameters__13GenObjectItemFR18RandomAccessStream
 
-.global makeObjectItem__Fv
-makeObjectItem__Fv:
+.fn makeObjectItem__Fv, local
 /* 800EE470 000EB3D0  7C 08 02 A6 */	mflr r0
 /* 800EE474 000EB3D4  38 60 00 9C */	li r3, 0x9c
 /* 800EE478 000EB3D8  90 01 00 04 */	stw r0, 4(r1)
@@ -179,9 +178,9 @@ makeObjectItem__Fv:
 /* 800EE5BC 000EB51C  38 21 00 58 */	addi r1, r1, 0x58
 /* 800EE5C0 000EB520  7C 08 03 A6 */	mtlr r0
 /* 800EE5C4 000EB524  4E 80 00 20 */	blr 
+.endfn makeObjectItem__Fv
 
-.global initialise__13GenObjectItemFv
-initialise__13GenObjectItemFv:
+.fn initialise__13GenObjectItemFv, global
 /* 800EE5C8 000EB528  80 ED 30 74 */	lwz r7, factory__16GenObjectFactory@sda21(r13)
 /* 800EE5CC 000EB52C  80 A7 00 00 */	lwz r5, 0(r7)
 /* 800EE5D0 000EB530  80 07 00 04 */	lwz r0, 4(r7)
@@ -217,9 +216,9 @@ initialise__13GenObjectItemFv:
 /* 800EE648 000EB5A8  38 03 00 01 */	addi r0, r3, 1
 /* 800EE64C 000EB5AC  90 07 00 00 */	stw r0, 0(r7)
 /* 800EE650 000EB5B0  4E 80 00 20 */	blr 
+.endfn initialise__13GenObjectItemFv
 
-.global doRead__13GenObjectItemFR18RandomAccessStream
-doRead__13GenObjectItemFR18RandomAccessStream:
+.fn doRead__13GenObjectItemFR18RandomAccessStream, global
 /* 800EE654 000EB5B4  7C 08 02 A6 */	mflr r0
 /* 800EE658 000EB5B8  90 01 00 04 */	stw r0, 4(r1)
 /* 800EE65C 000EB5BC  94 21 FE E0 */	stwu r1, -0x120(r1)
@@ -296,9 +295,9 @@ doRead__13GenObjectItemFR18RandomAccessStream:
 /* 800EE764 000EB6C4  38 21 01 20 */	addi r1, r1, 0x120
 /* 800EE768 000EB6C8  7C 08 03 A6 */	mtlr r0
 /* 800EE76C 000EB6CC  4E 80 00 20 */	blr 
+.endfn doRead__13GenObjectItemFR18RandomAccessStream
 
-.global doWrite__13GenObjectItemFR18RandomAccessStream
-doWrite__13GenObjectItemFR18RandomAccessStream:
+.fn doWrite__13GenObjectItemFR18RandomAccessStream, global
 /* 800EE770 000EB6D0  7C 08 02 A6 */	mflr r0
 /* 800EE774 000EB6D4  90 01 00 04 */	stw r0, 4(r1)
 /* 800EE778 000EB6D8  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -367,9 +366,9 @@ doWrite__13GenObjectItemFR18RandomAccessStream:
 /* 800EE864 000EB7C4  38 21 00 20 */	addi r1, r1, 0x20
 /* 800EE868 000EB7C8  7C 08 03 A6 */	mtlr r0
 /* 800EE86C 000EB7CC  4E 80 00 20 */	blr 
+.endfn doWrite__13GenObjectItemFR18RandomAccessStream
 
-.global updateUseList__13GenObjectItemFP9Generatori
-updateUseList__13GenObjectItemFP9Generatori:
+.fn updateUseList__13GenObjectItemFP9Generatori, global
 /* 800EE870 000EB7D0  7C 08 02 A6 */	mflr r0
 /* 800EE874 000EB7D4  90 01 00 04 */	stw r0, 4(r1)
 /* 800EE878 000EB7D8  94 21 FF F8 */	stwu r1, -8(r1)
@@ -383,9 +382,9 @@ updateUseList__13GenObjectItemFP9Generatori:
 /* 800EE894 000EB7F4  38 21 00 08 */	addi r1, r1, 8
 /* 800EE898 000EB7F8  7C 08 03 A6 */	mtlr r0
 /* 800EE89C 000EB7FC  4E 80 00 20 */	blr 
+.endfn updateUseList__13GenObjectItemFP9Generatori
 
-.global birth__13GenObjectItemFR9BirthInfo
-birth__13GenObjectItemFR9BirthInfo:
+.fn birth__13GenObjectItemFR9BirthInfo, global
 /* 800EE8A0 000EB800  7C 08 02 A6 */	mflr r0
 /* 800EE8A4 000EB804  90 01 00 04 */	stw r0, 4(r1)
 /* 800EE8A8 000EB808  94 21 FF 58 */	stwu r1, -0xa8(r1)
@@ -686,28 +685,33 @@ birth__13GenObjectItemFR9BirthInfo:
 /* 800EECDC 000EBC3C  38 21 00 A8 */	addi r1, r1, 0xa8
 /* 800EECE0 000EBC40  7C 08 03 A6 */	mtlr r0
 /* 800EECE4 000EBC44  4E 80 00 20 */	blr 
+.endfn birth__13GenObjectItemFR9BirthInfo
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802BD798:
+.obj lbl_802BD798, local
 	.asciz "genItem.cpp"
+.endobj lbl_802BD798
 .balign 4
-lbl_802BD7A4:
+.obj lbl_802BD7A4, local
 	.asciz "object type"
+.endobj lbl_802BD7A4
 .balign 4
-lbl_802BD7B0: # Shift-JIS
+.obj lbl_802BD7B0, local # Shift-JIS
 	.4byte 0x83418343
 	.4byte 0x83658380
 	.4byte 0x82F090B6
 	.4byte 0x82DE0000
+.endobj lbl_802BD7B0
 .balign 4
-lbl_802BD7C0: # Shift-JIS
+.obj lbl_802BD7C0, local # Shift-JIS
 	.4byte 0x83418343
 	.4byte 0x83658380
 	.4byte 0x82F094AD
 	.4byte 0x90B60000
+.endobj lbl_802BD7C0
 .balign 4
-lbl_802BD7D0:
+.obj lbl_802BD7D0, local
 	.4byte .L_800EE9AC
 	.4byte .L_800EEA84
 	.4byte .L_800EEA84
@@ -731,28 +735,35 @@ lbl_802BD7D0:
 	.4byte .L_800EEA84
 	.4byte .L_800EE9CC
 	.4byte .L_800EEA24
+.endobj lbl_802BD7D0
 .balign 4
-lbl_802BD82C:
+.obj lbl_802BD82C, local
 	.asciz "GenObjectItem"
+.endobj lbl_802BD82C
 .balign 4
-lbl_802BD83C:
+.obj lbl_802BD83C, local
 	.asciz "Parameters"
+.endobj lbl_802BD83C
 .balign 4
-lbl_802BD848:
+.obj lbl_802BD848, local
 	.4byte __RTTI__10Parameters
 	.4byte 0
 	.4byte 0
+.endobj lbl_802BD848
 .balign 4
-lbl_802BD854:
+.obj lbl_802BD854, local
 	.asciz "GenObject"
+.endobj lbl_802BD854
 .balign 4
-lbl_802BD860:
+.obj lbl_802BD860, local
 	.4byte __RTTI__10Parameters
 	.4byte 0
 	.4byte __RTTI__7GenBase
 	.4byte 0
 	.4byte 0
-lbl_802BD874:
+.endobj lbl_802BD860
+.balign 4
+.obj lbl_802BD874, local
 	.4byte __RTTI__10Parameters
 	.4byte 0
 	.4byte __RTTI__7GenBase
@@ -760,8 +771,9 @@ lbl_802BD874:
 	.4byte __RTTI__9GenObject
 	.4byte 0
 	.4byte 0
-.global __vt__13GenObjectItem
-__vt__13GenObjectItem:
+.endobj lbl_802BD874
+.balign 4
+.obj __vt__13GenObjectItem, global
 	.4byte __RTTI__13GenObjectItem
 	.4byte 0
 	.4byte doWrite__13GenObjectItemFR18RandomAccessStream
@@ -776,59 +788,73 @@ __vt__13GenObjectItem:
 	.4byte update__9GenObjectFP9Generator
 	.4byte render__9GenObjectFR8GraphicsP9Generator
 	.4byte birth__13GenObjectItemFR9BirthInfo
+.endobj __vt__13GenObjectItem
 .balign 4
-lbl_802BD8C8:
+.obj lbl_802BD8C8, local
 	.asciz "Parm<int>"
+.endobj lbl_802BD8C8
 .balign 4
-lbl_802BD8D4:
+.obj lbl_802BD8D4, local
 	.asciz "BaseParm"
+.endobj lbl_802BD8D4
 .balign 4
-lbl_802BD8E0:
+.obj lbl_802BD8E0, local
 	.4byte __RTTI__8BaseParm
 	.4byte 0
 	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
+.endobj lbl_802BD8E0
+.skip 0x14 # compiler padding
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-lbl_803E1A58:
+.obj lbl_803E1A58, local
 	.asciz "p00"
+.endobj lbl_803E1A58
 .balign 4
-lbl_803E1A5C:
+.obj lbl_803E1A5C, local
 	.asciz "p01"
+.endobj lbl_803E1A5C
 .balign 4
-lbl_803E1A60:
+.obj lbl_803E1A60, local
 	.asciz "p02"
+.endobj lbl_803E1A60
 .balign 4
-lbl_803E1A64:
+.obj lbl_803E1A64, local
 	.asciz "p03"
+.endobj lbl_803E1A64
 .balign 4
-lbl_803E1A68:
+.obj lbl_803E1A68, local
 	.asciz " "
+.endobj lbl_803E1A68
 .balign 4
-__RTTI__10Parameters:
+.obj __RTTI__10Parameters, local
 	.4byte lbl_802BD83C
 	.4byte 0
+.endobj __RTTI__10Parameters
 .balign 4
-lbl_803E1A74:
+.obj lbl_803E1A74, local
 	.asciz "GenBase"
+.endobj lbl_803E1A74
 .balign 4
-__RTTI__7GenBase:
+.obj __RTTI__7GenBase, local
 	.4byte lbl_803E1A74
 	.4byte lbl_802BD848
-__RTTI__9GenObject:
+.endobj __RTTI__7GenBase
+.balign 4
+.obj __RTTI__9GenObject, local
 	.4byte lbl_802BD854
 	.4byte lbl_802BD860
-__RTTI__13GenObjectItem:
+.endobj __RTTI__9GenObject
+.balign 4
+.obj __RTTI__13GenObjectItem, local
 	.4byte lbl_802BD82C
 	.4byte lbl_802BD874
-__RTTI__8BaseParm:
+.endobj __RTTI__13GenObjectItem
+.balign 4
+.obj __RTTI__8BaseParm, local
 	.4byte lbl_802BD8D4
 	.4byte 0
+.endobj __RTTI__8BaseParm
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8

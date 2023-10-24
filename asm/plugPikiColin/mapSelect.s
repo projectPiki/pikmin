@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global openAllChMaps__21MapSelectSetupSectionFR4Menu
-openAllChMaps__21MapSelectSetupSectionFR4Menu:
+.fn openAllChMaps__21MapSelectSetupSectionFR4Menu, weak
 /* 8005570C 0005266C  7C 08 02 A6 */	mflr r0
 /* 80055710 00052670  3C A0 80 3A */	lis r5, gameflow@ha
 /* 80055714 00052674  90 01 00 04 */	stw r0, 4(r1)
@@ -236,9 +235,9 @@ openAllChMaps__21MapSelectSetupSectionFR4Menu:
 /* 80055A68 000529C8  38 21 00 48 */	addi r1, r1, 0x48
 /* 80055A6C 000529CC  7C 08 03 A6 */	mtlr r0
 /* 80055A70 000529D0  4E 80 00 20 */	blr 
+.endfn openAllChMaps__21MapSelectSetupSectionFR4Menu
 
-.global openAllMaps__21MapSelectSetupSectionFR4Menu
-openAllMaps__21MapSelectSetupSectionFR4Menu:
+.fn openAllMaps__21MapSelectSetupSectionFR4Menu, weak
 /* 80055A74 000529D4  7C 08 02 A6 */	mflr r0
 /* 80055A78 000529D8  3C A0 80 3A */	lis r5, gameflow@ha
 /* 80055A7C 000529DC  90 01 00 04 */	stw r0, 4(r1)
@@ -431,9 +430,9 @@ openAllMaps__21MapSelectSetupSectionFR4Menu:
 /* 80055D38 00052C98  38 21 00 48 */	addi r1, r1, 0x48
 /* 80055D3C 00052C9C  7C 08 03 A6 */	mtlr r0
 /* 80055D40 00052CA0  4E 80 00 20 */	blr 
+.endfn openAllMaps__21MapSelectSetupSectionFR4Menu
 
-.global menuSelectOption__21MapSelectSetupSectionFR4Menu
-menuSelectOption__21MapSelectSetupSectionFR4Menu:
+.fn menuSelectOption__21MapSelectSetupSectionFR4Menu, weak
 /* 80055D44 00052CA4  7C 08 02 A6 */	mflr r0
 /* 80055D48 00052CA8  90 01 00 04 */	stw r0, 4(r1)
 /* 80055D4C 00052CAC  4C C6 31 82 */	crclr 6
@@ -502,9 +501,9 @@ menuSelectOption__21MapSelectSetupSectionFR4Menu:
 /* 80055E44 00052DA4  38 21 00 28 */	addi r1, r1, 0x28
 /* 80055E48 00052DA8  7C 08 03 A6 */	mtlr r0
 /* 80055E4C 00052DAC  4E 80 00 20 */	blr 
+.endfn menuSelectOption__21MapSelectSetupSectionFR4Menu
 
-.global __ct__16MapSelectSectionFv
-__ct__16MapSelectSectionFv:
+.fn __ct__16MapSelectSectionFv, global
 /* 80055E50 00052DB0  7C 08 02 A6 */	mflr r0
 /* 80055E54 00052DB4  3C 80 80 2A */	lis r4, lbl_802A7820@ha
 /* 80055E58 00052DB8  90 01 00 04 */	stw r0, 4(r1)
@@ -802,9 +801,9 @@ __ct__16MapSelectSectionFv:
 /* 800562B0 00053210  38 21 00 80 */	addi r1, r1, 0x80
 /* 800562B4 00053214  7C 08 03 A6 */	mtlr r0
 /* 800562B8 00053218  4E 80 00 20 */	blr 
+.endfn __ct__16MapSelectSectionFv
 
-.global makeMapsMenu__21MapSelectSetupSectionFv
-makeMapsMenu__21MapSelectSetupSectionFv:
+.fn makeMapsMenu__21MapSelectSetupSectionFv, weak
 /* 800562BC 0005321C  7C 08 02 A6 */	mflr r0
 /* 800562C0 00053220  90 01 00 04 */	stw r0, 4(r1)
 /* 800562C4 00053224  94 21 FF C0 */	stwu r1, -0x40(r1)
@@ -981,9 +980,9 @@ makeMapsMenu__21MapSelectSetupSectionFv:
 /* 80056544 000534A4  38 21 00 40 */	addi r1, r1, 0x40
 /* 80056548 000534A8  7C 08 03 A6 */	mtlr r0
 /* 8005654C 000534AC  4E 80 00 20 */	blr 
+.endfn makeMapsMenu__21MapSelectSetupSectionFv
 
-.global update__21MapSelectSetupSectionFv
-update__21MapSelectSetupSectionFv:
+.fn update__21MapSelectSetupSectionFv, weak
 /* 80056550 000534B0  7C 08 02 A6 */	mflr r0
 /* 80056554 000534B4  90 01 00 04 */	stw r0, 4(r1)
 /* 80056558 000534B8  94 21 FF B8 */	stwu r1, -0x48(r1)
@@ -1200,9 +1199,9 @@ update__21MapSelectSetupSectionFv:
 /* 8005686C 000537CC  38 21 00 48 */	addi r1, r1, 0x48
 /* 80056870 000537D0  7C 08 03 A6 */	mtlr r0
 /* 80056874 000537D4  4E 80 00 20 */	blr 
+.endfn update__21MapSelectSetupSectionFv
 
-.global draw__21MapSelectSetupSectionFR8Graphics
-draw__21MapSelectSetupSectionFR8Graphics:
+.fn draw__21MapSelectSetupSectionFR8Graphics, weak
 /* 80056878 000537D8  7C 08 02 A6 */	mflr r0
 /* 8005687C 000537DC  90 01 00 04 */	stw r0, 4(r1)
 /* 80056880 000537E0  94 21 FF 00 */	stwu r1, -0x100(r1)
@@ -1343,13 +1342,13 @@ draw__21MapSelectSetupSectionFR8Graphics:
 /* 80056A90 000539F0  38 21 01 00 */	addi r1, r1, 0x100
 /* 80056A94 000539F4  7C 08 03 A6 */	mtlr r0
 /* 80056A98 000539F8  4E 80 00 20 */	blr 
+.endfn draw__21MapSelectSetupSectionFR8Graphics
 
-.global init__16MapSelectSectionFv
-init__16MapSelectSectionFv:
+.fn init__16MapSelectSectionFv, weak
 /* 80056A9C 000539FC  4E 80 00 20 */	blr 
+.endfn init__16MapSelectSectionFv
 
-.global "invoke__23Delegate1<4Menu,R4Menu>FR4Menu"
-"invoke__23Delegate1<4Menu,R4Menu>FR4Menu":
+.fn "invoke__23Delegate1<4Menu,R4Menu>FR4Menu", weak
 /* 80056AA0 00053A00  7C 08 02 A6 */	mflr r0
 /* 80056AA4 00053A04  7C 65 1B 78 */	mr r5, r3
 /* 80056AA8 00053A08  90 01 00 04 */	stw r0, 4(r1)
@@ -1362,9 +1361,9 @@ init__16MapSelectSectionFv:
 /* 80056AC4 00053A24  38 21 00 08 */	addi r1, r1, 8
 /* 80056AC8 00053A28  7C 08 03 A6 */	mtlr r0
 /* 80056ACC 00053A2C  4E 80 00 20 */	blr 
+.endfn "invoke__23Delegate1<4Menu,R4Menu>FR4Menu"
 
-.global "invoke__41Delegate1<21MapSelectSetupSection,R4Menu>FR4Menu"
-"invoke__41Delegate1<21MapSelectSetupSection,R4Menu>FR4Menu":
+.fn "invoke__41Delegate1<21MapSelectSetupSection,R4Menu>FR4Menu", weak
 /* 80056AD0 00053A30  7C 08 02 A6 */	mflr r0
 /* 80056AD4 00053A34  7C 65 1B 78 */	mr r5, r3
 /* 80056AD8 00053A38  90 01 00 04 */	stw r0, 4(r1)
@@ -1377,78 +1376,94 @@ init__16MapSelectSectionFv:
 /* 80056AF4 00053A54  38 21 00 08 */	addi r1, r1, 8
 /* 80056AF8 00053A58  7C 08 03 A6 */	mtlr r0
 /* 80056AFC 00053A5C  4E 80 00 20 */	blr 
+.endfn "invoke__41Delegate1<21MapSelectSetupSection,R4Menu>FR4Menu"
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802A7820:
+.obj lbl_802A7820, local
 	.asciz "mapSelect.cpp"
+.endobj lbl_802A7820
 .balign 4
-lbl_802A7830:
+.obj lbl_802A7830, local
 	.asciz "MapSelect"
+.endobj lbl_802A7830
 .balign 4
-lbl_802A783C:
+.obj lbl_802A783C, local
 	.4byte 0x00000000
 	.4byte 0xFFFFFFFF
 	.4byte openAllMaps__21MapSelectSetupSectionFR4Menu
-lbl_802A7848:
+.endobj lbl_802A783C
+.balign 4
+.obj lbl_802A7848, local
 	.4byte 0x00000000
 	.4byte 0xFFFFFFFF
 	.4byte openAllChMaps__21MapSelectSetupSectionFR4Menu
-lbl_802A7854:
+.endobj lbl_802A7848
+.balign 4
+.obj lbl_802A7854, local
 	.4byte 0x00000000
 	.4byte 0xFFFFFFFF
 	.4byte menuSelectOption__21MapSelectSetupSectionFR4Menu
-lbl_802A7860:
+.endobj lbl_802A7854
+.balign 4
+.obj lbl_802A7860, local
 	.4byte 0x00000000
 	.4byte 0xFFFFFFFF
 	.4byte menuCloseMenu__4MenuFR4Menu
+.endobj lbl_802A7860
 .balign 4
-lbl_802A786C:
+.obj lbl_802A786C, local
 	.asciz "<MapSelectSection>"
+.endobj lbl_802A786C
 .balign 4
-lbl_802A7880:
+.obj lbl_802A7880, local
 	.asciz "MapSelect section"
+.endobj lbl_802A7880
 .balign 4
-lbl_802A7894:
+.obj lbl_802A7894, local
 	.asciz "<Controller>"
+.endobj lbl_802A7894
 .balign 4
-lbl_802A78A4:
+.obj lbl_802A78A4, local
 	.asciz "consFont.bti"
+.endobj lbl_802A78A4
 .balign 4
-lbl_802A78B4:
+.obj lbl_802A78B4, local
 	.asciz "bigFont.bti"
+.endobj lbl_802A78B4
 .balign 4
-lbl_802A78C0:
+.obj lbl_802A78C0, local
 	.asciz "Open All Maps"
+.endobj lbl_802A78C0
 .balign 4
-lbl_802A78D0:
+.obj lbl_802A78D0, local
 	.asciz "DemoFlag Parms"
+.endobj lbl_802A78D0
 .balign 4
-lbl_802A78E0:
+.obj lbl_802A78E0, local
 	.asciz "CoreNode"
+.endobj lbl_802A78E0
 .balign 4
-lbl_802A78EC:
+.obj lbl_802A78EC, local
 	.4byte __RTTI__5ANode
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
+	.4byte 0
+	.4byte 0
+.endobj lbl_802A78EC
+.skip 0x1C # compiler padding
 .balign 4
-lbl_802A7914:
+.obj lbl_802A7914, local
 	.asciz "MapSelectSetupSection"
+.endobj lbl_802A7914
 .balign 4
-lbl_802A792C:
+.obj lbl_802A792C, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte __RTTI__8CoreNode
 	.4byte 0
 	.4byte 0
-lbl_802A7940:
+.endobj lbl_802A792C
+.balign 4
+.obj lbl_802A7940, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte __RTTI__8CoreNode
@@ -1456,8 +1471,9 @@ lbl_802A7940:
 	.4byte __RTTI__4Node
 	.4byte 0
 	.4byte 0
-.global __vt__21MapSelectSetupSection
-__vt__21MapSelectSetupSection:
+.endobj lbl_802A7940
+.balign 4
+.obj __vt__21MapSelectSetupSection, weak
 	.4byte __RTTI__21MapSelectSetupSection
 	.4byte 0
 	.4byte getAgeNodeType__5ANodeFv
@@ -1470,11 +1486,13 @@ __vt__21MapSelectSetupSection:
 	.4byte concat__4NodeFR3SRT
 	.4byte concat__4NodeFR8Matrix4f
 	.4byte getModelMatrix__4NodeFv
+.endobj __vt__21MapSelectSetupSection
 .balign 4
-lbl_802A798C:
+.obj lbl_802A798C, local
 	.asciz "MapSelectSection"
+.endobj lbl_802A798C
 .balign 4
-lbl_802A79A0:
+.obj lbl_802A79A0, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte __RTTI__8CoreNode
@@ -1482,7 +1500,9 @@ lbl_802A79A0:
 	.4byte __RTTI__4Node
 	.4byte 0
 	.4byte 0
-lbl_802A79BC:
+.endobj lbl_802A79A0
+.balign 4
+.obj lbl_802A79BC, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte __RTTI__8CoreNode
@@ -1492,8 +1512,9 @@ lbl_802A79BC:
 	.4byte __RTTI__7Section
 	.4byte 0
 	.4byte 0
-.global __vt__16MapSelectSection
-__vt__16MapSelectSection:
+.endobj lbl_802A79BC
+.balign 4
+.obj __vt__16MapSelectSection, weak
 	.4byte __RTTI__16MapSelectSection
 	.4byte 0
 	.4byte getAgeNodeType__5ANodeFv
@@ -1507,105 +1528,118 @@ __vt__16MapSelectSection:
 	.4byte concat__4NodeFR8Matrix4f
 	.4byte getModelMatrix__4NodeFv
 	.4byte init__16MapSelectSectionFv
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
+.endobj __vt__16MapSelectSection
+.skip 0x34
 .balign 4
-lbl_802A7A48:
+.obj lbl_802A7A48, local
 	.asciz "Delegate1<Menu, Menu &>"
+.endobj lbl_802A7A48
 .balign 4
-lbl_802A7A60:
+.obj lbl_802A7A60, local
 	.asciz "IDelegate1<Menu &>"
+.endobj lbl_802A7A60
 .balign 4
-lbl_802A7A74:
+.obj lbl_802A7A74, local
 	.4byte "__RTTI__18IDelegate1<R4Menu>"
 	.4byte 0
 	.4byte 0
-.global "__vt__23Delegate1<4Menu,R4Menu>"
-"__vt__23Delegate1<4Menu,R4Menu>":
+.endobj lbl_802A7A74
+.balign 4
+.obj "__vt__23Delegate1<4Menu,R4Menu>", weak
 	.4byte "__RTTI__23Delegate1<4Menu,R4Menu>"
 	.4byte 0
 	.4byte "invoke__23Delegate1<4Menu,R4Menu>FR4Menu"
+.endobj "__vt__23Delegate1<4Menu,R4Menu>"
 .balign 4
-lbl_802A7A8C:
+.obj lbl_802A7A8C, local
 	.asciz "Delegate1<MapSelectSetupSection, Menu &>"
+.endobj lbl_802A7A8C
 .balign 4
-lbl_802A7AB8:
+.obj lbl_802A7AB8, local
 	.4byte "__RTTI__18IDelegate1<R4Menu>"
 	.4byte 0
 	.4byte 0
-.global "__vt__41Delegate1<21MapSelectSetupSection,R4Menu>"
-"__vt__41Delegate1<21MapSelectSetupSection,R4Menu>":
+.endobj lbl_802A7AB8
+.balign 4
+.obj "__vt__41Delegate1<21MapSelectSetupSection,R4Menu>", weak
 	.4byte "__RTTI__41Delegate1<21MapSelectSetupSection,R4Menu>"
 	.4byte 0
 	.4byte "invoke__41Delegate1<21MapSelectSetupSection,R4Menu>FR4Menu"
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
+.endobj "__vt__41Delegate1<21MapSelectSetupSection,R4Menu>"
+.skip 0x10 # compiler padding
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-lbl_803DDA28:
+.obj lbl_803DDA28, local
 	.asciz "%s"
+.endobj lbl_803DDA28
 .balign 4
-lbl_803DDA2C:
+.obj lbl_803DDA2C, local
 	.asciz "<Node>"
+.endobj lbl_803DDA2C
 .balign 4
-lbl_803DDA34:
+.obj lbl_803DDA34, local
 	.asciz "message"
+.endobj lbl_803DDA34
 .balign 4
-lbl_803DDA3C:
+.obj lbl_803DDA3C, local
 	.asciz ""
+.endobj lbl_803DDA3C
 .balign 4
-lbl_803DDA40:
+.obj lbl_803DDA40, local
 	.asciz "ANode"
+.endobj lbl_803DDA40
 .balign 4
-__RTTI__5ANode:
+.obj __RTTI__5ANode, local
 	.4byte lbl_803DDA40
 	.4byte 0
-__RTTI__8CoreNode:
+.endobj __RTTI__5ANode
+.obj __RTTI__8CoreNode, local
 	.4byte lbl_802A78E0
 	.4byte lbl_802A78EC
+.endobj __RTTI__8CoreNode
 .balign 4
-lbl_803DDA58:
+.obj lbl_803DDA58, local
 	.asciz "Node"
+.endobj lbl_803DDA58
 .balign 4
-__RTTI__4Node:
+.obj __RTTI__4Node, local
 	.4byte lbl_803DDA58
 	.4byte lbl_802A792C
-__RTTI__21MapSelectSetupSection:
+.endobj __RTTI__4Node
+.obj __RTTI__21MapSelectSetupSection, local
 	.4byte lbl_802A7914
 	.4byte lbl_802A7940
+.endobj __RTTI__21MapSelectSetupSection
 .balign 4
-lbl_803DDA70:
+.obj lbl_803DDA70, local
 	.asciz "Section"
+.endobj lbl_803DDA70
 .balign 4
-__RTTI__7Section:
+.obj __RTTI__7Section, local
 	.4byte lbl_803DDA70
 	.4byte lbl_802A79A0
-__RTTI__16MapSelectSection:
+.endobj __RTTI__7Section
+.balign 4
+.obj __RTTI__16MapSelectSection, local
 	.4byte lbl_802A798C
 	.4byte lbl_802A79BC
-"__RTTI__18IDelegate1<R4Menu>":
+.endobj __RTTI__16MapSelectSection
+.balign 4
+.obj "__RTTI__18IDelegate1<R4Menu>", local
 	.4byte lbl_802A7A60
 	.4byte 0
-"__RTTI__23Delegate1<4Menu,R4Menu>":
+.endobj "__RTTI__18IDelegate1<R4Menu>"
+.balign 4
+.obj "__RTTI__23Delegate1<4Menu,R4Menu>", local
 	.4byte lbl_802A7A48
 	.4byte lbl_802A7A74
-"__RTTI__41Delegate1<21MapSelectSetupSection,R4Menu>":
+.endobj "__RTTI__23Delegate1<4Menu,R4Menu>"
+.balign 4
+.obj "__RTTI__41Delegate1<21MapSelectSetupSection,R4Menu>", local
 	.4byte lbl_802A7A8C
 	.4byte lbl_802A7AB8
+.endobj "__RTTI__41Delegate1<21MapSelectSetupSection,R4Menu>"
 
 .section .sbss, "wa"
 .balign 8

@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global checkAnimData__8AnimInfoFv
-checkAnimData__8AnimInfoFv:
+.fn checkAnimData__8AnimInfoFv, global
 /* 80050024 0004CF84  7C 08 02 A6 */	mflr r0
 /* 80050028 0004CF88  90 01 00 04 */	stw r0, 4(r1)
 /* 8005002C 0004CF8C  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -66,9 +65,9 @@ checkAnimData__8AnimInfoFv:
 /* 800500F4 0004D054  38 21 00 20 */	addi r1, r1, 0x20
 /* 800500F8 0004D058  7C 08 03 A6 */	mtlr r0
 /* 800500FC 0004D05C  4E 80 00 20 */	blr 
+.endfn checkAnimData__8AnimInfoFv
 
-.global __ct__8AnimInfoFP7AnimMgrP8AnimData
-__ct__8AnimInfoFP7AnimMgrP8AnimData:
+.fn __ct__8AnimInfoFP7AnimMgrP8AnimData, global
 /* 80050100 0004D060  7C 08 02 A6 */	mflr r0
 /* 80050104 0004D064  3C C0 80 22 */	lis r6, __vt__5ANode@ha
 /* 80050108 0004D068  90 01 00 04 */	stw r0, 4(r1)
@@ -232,9 +231,9 @@ __ct__8AnimInfoFP7AnimMgrP8AnimData:
 /* 80050370 0004D2D0  38 21 00 58 */	addi r1, r1, 0x58
 /* 80050374 0004D2D4  7C 08 03 A6 */	mtlr r0
 /* 80050378 0004D2D8  4E 80 00 20 */	blr 
+.endfn __ct__8AnimInfoFP7AnimMgrP8AnimData
 
-.global setIndex__8AnimInfoFv
-setIndex__8AnimInfoFv:
+.fn setIndex__8AnimInfoFv, global
 /* 8005037C 0004D2DC  7C 08 02 A6 */	mflr r0
 /* 80050380 0004D2E0  90 01 00 04 */	stw r0, 4(r1)
 /* 80050384 0004D2E4  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -253,9 +252,9 @@ setIndex__8AnimInfoFv:
 /* 800503B8 0004D318  38 21 00 20 */	addi r1, r1, 0x20
 /* 800503BC 0004D31C  7C 08 03 A6 */	mtlr r0
 /* 800503C0 0004D320  4E 80 00 20 */	blr 
+.endfn setIndex__8AnimInfoFv
 
-.global setAnimFlags__8AnimInfoFUl
-setAnimFlags__8AnimInfoFUl:
+.fn setAnimFlags__8AnimInfoFUl, global
 /* 800503C4 0004D324  7C 08 02 A6 */	mflr r0
 /* 800503C8 0004D328  90 01 00 04 */	stw r0, 4(r1)
 /* 800503CC 0004D32C  94 21 FF F8 */	stwu r1, -8(r1)
@@ -265,9 +264,9 @@ setAnimFlags__8AnimInfoFUl:
 /* 800503DC 0004D33C  38 21 00 08 */	addi r1, r1, 8
 /* 800503E0 0004D340  7C 08 03 A6 */	mtlr r0
 /* 800503E4 0004D344  4E 80 00 20 */	blr 
+.endfn setAnimFlags__8AnimInfoFUl
 
-.global countAKeys__8AnimInfoFv
-countAKeys__8AnimInfoFv:
+.fn countAKeys__8AnimInfoFv, global
 /* 800503E8 0004D348  80 83 00 44 */	lwz r4, 0x44(r3)
 /* 800503EC 0004D34C  38 03 00 38 */	addi r0, r3, 0x38
 /* 800503F0 0004D350  38 60 00 00 */	li r3, 0
@@ -279,9 +278,9 @@ countAKeys__8AnimInfoFv:
 /* 80050400 0004D360  7C 04 00 40 */	cmplw r4, r0
 /* 80050404 0004D364  40 82 FF F4 */	bne .L_800503F8
 /* 80050408 0004D368  4E 80 00 20 */	blr 
+.endfn countAKeys__8AnimInfoFv
 
-.global countIKeys__8AnimInfoFv
-countIKeys__8AnimInfoFv:
+.fn countIKeys__8AnimInfoFv, global
 /* 8005040C 0004D36C  80 83 00 64 */	lwz r4, 0x64(r3)
 /* 80050410 0004D370  38 03 00 58 */	addi r0, r3, 0x58
 /* 80050414 0004D374  38 60 00 00 */	li r3, 0
@@ -293,9 +292,9 @@ countIKeys__8AnimInfoFv:
 /* 80050424 0004D384  7C 04 00 40 */	cmplw r4, r0
 /* 80050428 0004D388  40 82 FF F4 */	bne .L_8005041C
 /* 8005042C 0004D38C  4E 80 00 20 */	blr 
+.endfn countIKeys__8AnimInfoFv
 
-.global countEKeys__8AnimInfoFv
-countEKeys__8AnimInfoFv:
+.fn countEKeys__8AnimInfoFv, global
 /* 80050430 0004D390  80 83 00 54 */	lwz r4, 0x54(r3)
 /* 80050434 0004D394  38 03 00 48 */	addi r0, r3, 0x48
 /* 80050438 0004D398  38 60 00 00 */	li r3, 0
@@ -307,9 +306,9 @@ countEKeys__8AnimInfoFv:
 /* 80050448 0004D3A8  7C 04 00 40 */	cmplw r4, r0
 /* 8005044C 0004D3AC  40 82 FF F4 */	bne .L_80050440
 /* 80050450 0004D3B0  4E 80 00 20 */	blr 
+.endfn countEKeys__8AnimInfoFv
 
-.global getInfoKey__8AnimInfoFi
-getInfoKey__8AnimInfoFi:
+.fn getInfoKey__8AnimInfoFi, global
 /* 80050454 0004D3B4  80 A3 00 64 */	lwz r5, 0x64(r3)
 /* 80050458 0004D3B8  38 03 00 58 */	addi r0, r3, 0x58
 /* 8005045C 0004D3BC  38 60 00 00 */	li r3, 0
@@ -327,9 +326,9 @@ getInfoKey__8AnimInfoFi:
 /* 80050480 0004D3E0  40 82 FF E4 */	bne .L_80050464
 /* 80050484 0004D3E4  38 60 00 00 */	li r3, 0
 /* 80050488 0004D3E8  4E 80 00 20 */	blr 
+.endfn getInfoKey__8AnimInfoFi
 
-.global getEventKey__8AnimInfoFi
-getEventKey__8AnimInfoFi:
+.fn getEventKey__8AnimInfoFi, global
 /* 8005048C 0004D3EC  80 A3 00 54 */	lwz r5, 0x54(r3)
 /* 80050490 0004D3F0  38 03 00 48 */	addi r0, r3, 0x48
 /* 80050494 0004D3F4  38 60 00 00 */	li r3, 0
@@ -347,9 +346,9 @@ getEventKey__8AnimInfoFi:
 /* 800504B8 0004D418  40 82 FF E4 */	bne .L_8005049C
 /* 800504BC 0004D41C  38 60 00 00 */	li r3, 0
 /* 800504C0 0004D420  4E 80 00 20 */	blr 
+.endfn getEventKey__8AnimInfoFi
 
-.global getKeyValue__8AnimInfoFi
-getKeyValue__8AnimInfoFi:
+.fn getKeyValue__8AnimInfoFi, global
 /* 800504C4 0004D424  80 A3 00 44 */	lwz r5, 0x44(r3)
 /* 800504C8 0004D428  38 03 00 38 */	addi r0, r3, 0x38
 /* 800504CC 0004D42C  38 60 00 00 */	li r3, 0
@@ -367,9 +366,9 @@ getKeyValue__8AnimInfoFi:
 /* 800504F0 0004D450  40 82 FF E4 */	bne .L_800504D4
 /* 800504F4 0004D454  38 60 00 00 */	li r3, 0
 /* 800504F8 0004D458  4E 80 00 20 */	blr 
+.endfn getKeyValue__8AnimInfoFi
 
-.global doread__8AnimInfoFR18RandomAccessStreami
-doread__8AnimInfoFR18RandomAccessStreami:
+.fn doread__8AnimInfoFR18RandomAccessStreami, global
 /* 800504FC 0004D45C  7C 08 02 A6 */	mflr r0
 /* 80050500 0004D460  90 01 00 04 */	stw r0, 4(r1)
 /* 80050504 0004D464  38 00 00 00 */	li r0, 0
@@ -570,9 +569,9 @@ doread__8AnimInfoFR18RandomAccessStreami:
 /* 800507E8 0004D748  38 21 00 58 */	addi r1, r1, 0x58
 /* 800507EC 0004D74C  7C 08 03 A6 */	mtlr r0
 /* 800507F0 0004D750  4E 80 00 20 */	blr 
+.endfn doread__8AnimInfoFR18RandomAccessStreami
 
-.global __ct__7AnimKeyFv
-__ct__7AnimKeyFv:
+.fn __ct__7AnimKeyFv, weak
 /* 800507F4 0004D754  38 00 00 00 */	li r0, 0
 /* 800507F8 0004D758  90 03 00 00 */	stw r0, 0(r3)
 /* 800507FC 0004D75C  B0 03 00 04 */	sth r0, 4(r3)
@@ -581,16 +580,16 @@ __ct__7AnimKeyFv:
 /* 80050808 0004D768  90 03 00 0C */	stw r0, 0xc(r3)
 /* 8005080C 0004D76C  90 03 00 08 */	stw r0, 8(r3)
 /* 80050810 0004D770  4E 80 00 20 */	blr 
+.endfn __ct__7AnimKeyFv
 
-.global updateAnimFlags__8AnimInfoFv
-updateAnimFlags__8AnimInfoFv:
+.fn updateAnimFlags__8AnimInfoFv, global
 /* 80050814 0004D774  80 03 00 24 */	lwz r0, 0x24(r3)
 /* 80050818 0004D778  80 63 00 68 */	lwz r3, 0x68(r3)
 /* 8005081C 0004D77C  90 03 00 24 */	stw r0, 0x24(r3)
 /* 80050820 0004D780  4E 80 00 20 */	blr 
+.endfn updateAnimFlags__8AnimInfoFv
 
-.global addKeyFrame__8AnimInfoFv
-addKeyFrame__8AnimInfoFv:
+.fn addKeyFrame__8AnimInfoFv, global
 /* 80050824 0004D784  7C 08 02 A6 */	mflr r0
 /* 80050828 0004D788  90 01 00 04 */	stw r0, 4(r1)
 /* 8005082C 0004D78C  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -624,9 +623,9 @@ addKeyFrame__8AnimInfoFv:
 /* 80050898 0004D7F8  38 21 00 18 */	addi r1, r1, 0x18
 /* 8005089C 0004D7FC  7C 08 03 A6 */	mtlr r0
 /* 800508A0 0004D800  4E 80 00 20 */	blr 
+.endfn addKeyFrame__8AnimInfoFv
 
-.global __ct__7AnimMgrFP5ShapePciPc
-__ct__7AnimMgrFP5ShapePciPc:
+.fn __ct__7AnimMgrFP5ShapePciPc, global
 /* 800508A4 0004D804  7C 08 02 A6 */	mflr r0
 /* 800508A8 0004D808  3D 00 80 22 */	lis r8, __vt__5ANode@ha
 /* 800508AC 0004D80C  90 01 00 04 */	stw r0, 4(r1)
@@ -768,15 +767,15 @@ __ct__7AnimMgrFP5ShapePciPc:
 /* 80050ACC 0004DA2C  38 21 00 C0 */	addi r1, r1, 0xc0
 /* 80050AD0 0004DA30  7C 08 03 A6 */	mtlr r0
 /* 80050AD4 0004DA34  4E 80 00 20 */	blr 
+.endfn __ct__7AnimMgrFP5ShapePciPc
 
-.global Set__5ayuIDFPc
-Set__5ayuIDFPc:
+.fn Set__5ayuIDFPc, weak
 /* 80050AD8 0004DA38  80 04 00 00 */	lwz r0, 0(r4)
 /* 80050ADC 0004DA3C  90 03 00 00 */	stw r0, 0(r3)
 /* 80050AE0 0004DA40  4E 80 00 20 */	blr 
+.endfn Set__5ayuIDFPc
 
-.global __nwa__FUl
-__nwa__FUl:
+.fn __nwa__FUl, weak
 /* 80050AE4 0004DA44  7C 08 02 A6 */	mflr r0
 /* 80050AE8 0004DA48  90 01 00 04 */	stw r0, 4(r1)
 /* 80050AEC 0004DA4C  94 21 FF F8 */	stwu r1, -8(r1)
@@ -785,9 +784,9 @@ __nwa__FUl:
 /* 80050AF8 0004DA58  38 21 00 08 */	addi r1, r1, 8
 /* 80050AFC 0004DA5C  7C 08 03 A6 */	mtlr r0
 /* 80050B00 0004DA60  4E 80 00 20 */	blr 
+.endfn __nwa__FUl
 
-.global loadAnims__7AnimMgrFPcPc
-loadAnims__7AnimMgrFPcPc:
+.fn loadAnims__7AnimMgrFPcPc, global
 /* 80050B04 0004DA64  7C 08 02 A6 */	mflr r0
 /* 80050B08 0004DA68  28 04 00 00 */	cmplwi r4, 0
 /* 80050B0C 0004DA6C  90 01 00 04 */	stw r0, 4(r1)
@@ -925,9 +924,9 @@ loadAnims__7AnimMgrFPcPc:
 /* 80050CE0 0004DC40  38 21 03 50 */	addi r1, r1, 0x350
 /* 80050CE4 0004DC44  7C 08 03 A6 */	mtlr r0
 /* 80050CE8 0004DC48  4E 80 00 20 */	blr 
+.endfn loadAnims__7AnimMgrFPcPc
 
-.global addAnimation__7AnimMgrFPcb
-addAnimation__7AnimMgrFPcb:
+.fn addAnimation__7AnimMgrFPcb, global
 /* 80050CEC 0004DC4C  7C 08 02 A6 */	mflr r0
 /* 80050CF0 0004DC50  90 01 00 04 */	stw r0, 4(r1)
 /* 80050CF4 0004DC54  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -964,9 +963,9 @@ addAnimation__7AnimMgrFPcb:
 /* 80050D6C 0004DCCC  38 21 00 28 */	addi r1, r1, 0x28
 /* 80050D70 0004DCD0  7C 08 03 A6 */	mtlr r0
 /* 80050D74 0004DCD4  4E 80 00 20 */	blr 
+.endfn addAnimation__7AnimMgrFPcb
 
-.global countAnims__7AnimMgrFv
-countAnims__7AnimMgrFv:
+.fn countAnims__7AnimMgrFv, global
 /* 80050D78 0004DCD8  80 83 00 50 */	lwz r4, 0x50(r3)
 /* 80050D7C 0004DCDC  38 60 00 00 */	li r3, 0
 /* 80050D80 0004DCE0  48 00 00 0C */	b .L_80050D8C
@@ -977,9 +976,9 @@ countAnims__7AnimMgrFv:
 /* 80050D8C 0004DCEC  28 04 00 00 */	cmplwi r4, 0
 /* 80050D90 0004DCF0  40 82 FF F4 */	bne .L_80050D84
 /* 80050D94 0004DCF4  4E 80 00 20 */	blr 
+.endfn countAnims__7AnimMgrFv
 
-.global read__7AnimMgrFR18RandomAccessStream
-read__7AnimMgrFR18RandomAccessStream:
+.fn read__7AnimMgrFR18RandomAccessStream, global
 /* 80050D98 0004DCF8  7C 08 02 A6 */	mflr r0
 /* 80050D9C 0004DCFC  90 01 00 04 */	stw r0, 4(r1)
 /* 80050DA0 0004DD00  94 21 FF 90 */	stwu r1, -0x70(r1)
@@ -1101,9 +1100,9 @@ read__7AnimMgrFR18RandomAccessStream:
 /* 80050F64 0004DEC4  38 21 00 70 */	addi r1, r1, 0x70
 /* 80050F68 0004DEC8  7C 08 03 A6 */	mtlr r0
 /* 80050F6C 0004DECC  4E 80 00 20 */	blr 
+.endfn read__7AnimMgrFR18RandomAccessStream
 
-.global startAnim__8AnimatorFiiii
-startAnim__8AnimatorFiiii:
+.fn startAnim__8AnimatorFiiii, global
 /* 80050F70 0004DED0  7C 08 02 A6 */	mflr r0
 /* 80050F74 0004DED4  90 01 00 04 */	stw r0, 4(r1)
 /* 80050F78 0004DED8  94 21 FE A0 */	stwu r1, -0x160(r1)
@@ -1261,13 +1260,13 @@ startAnim__8AnimatorFiiii:
 /* 80051180 0004E0E0  38 21 01 60 */	addi r1, r1, 0x160
 /* 80051184 0004E0E4  7C 08 03 A6 */	mtlr r0
 /* 80051188 0004E0E8  4E 80 00 20 */	blr 
+.endfn startAnim__8AnimatorFiiii
 
-.global finishLoop__8AnimatorFv
-finishLoop__8AnimatorFv:
+.fn finishLoop__8AnimatorFv, global
 /* 8005118C 0004E0EC  4E 80 00 20 */	blr 
+.endfn finishLoop__8AnimatorFv
 
-.global finishOneShot__8AnimatorFv
-finishOneShot__8AnimatorFv:
+.fn finishOneShot__8AnimatorFv, global
 /* 80051190 0004E0F0  7C 08 02 A6 */	mflr r0
 /* 80051194 0004E0F4  90 01 00 04 */	stw r0, 4(r1)
 /* 80051198 0004E0F8  94 21 FF F8 */	stwu r1, -8(r1)
@@ -1280,9 +1279,9 @@ finishOneShot__8AnimatorFv:
 /* 800511B4 0004E114  38 21 00 08 */	addi r1, r1, 8
 /* 800511B8 0004E118  7C 08 03 A6 */	mtlr r0
 /* 800511BC 0004E11C  4E 80 00 20 */	blr 
+.endfn finishOneShot__8AnimatorFv
 
-.global updateContext__8AnimatorFv
-updateContext__8AnimatorFv:
+.fn updateContext__8AnimatorFv, global
 /* 800511C0 0004E120  94 21 FF E8 */	stwu r1, -0x18(r1)
 /* 800511C4 0004E124  3C 00 43 30 */	lis r0, 0x4330
 /* 800511C8 0004E128  80 A3 00 28 */	lwz r5, 0x28(r3)
@@ -1306,9 +1305,9 @@ updateContext__8AnimatorFv:
 /* 80051210 0004E170  4C 41 13 82 */	cror 2, 1, 2
 /* 80051214 0004E174  38 21 00 18 */	addi r1, r1, 0x18
 /* 80051218 0004E178  4E 80 00 20 */	blr 
+.endfn updateContext__8AnimatorFv
 
-.global animate__8AnimatorFf
-animate__8AnimatorFf:
+.fn animate__8AnimatorFf, global
 /* 8005121C 0004E17C  7C 08 02 A6 */	mflr r0
 /* 80051220 0004E180  90 01 00 04 */	stw r0, 4(r1)
 /* 80051224 0004E184  94 21 FF A8 */	stwu r1, -0x58(r1)
@@ -1470,211 +1469,250 @@ animate__8AnimatorFf:
 /* 8005144C 0004E3AC  38 21 00 58 */	addi r1, r1, 0x58
 /* 80051450 0004E3B0  7C 08 03 A6 */	mtlr r0
 /* 80051454 0004E3B4  4E 80 00 20 */	blr 
+.endfn animate__8AnimatorFf
 
-.global changeContext__8AnimatorFP11AnimContext
-changeContext__8AnimatorFP11AnimContext:
+.fn changeContext__8AnimatorFP11AnimContext, weak
 /* 80051458 0004E3B8  90 83 00 04 */	stw r4, 4(r3)
 /* 8005145C 0004E3BC  4E 80 00 20 */	blr 
+.endfn changeContext__8AnimatorFP11AnimContext
 
-.global "size__13Parm<6String>Fv"
-"size__13Parm<6String>Fv":
+.fn "size__13Parm<6String>Fv", weak
 /* 80051460 0004E3C0  38 60 00 08 */	li r3, 8
 /* 80051464 0004E3C4  4E 80 00 20 */	blr 
+.endfn "size__13Parm<6String>Fv"
 
-.global "size__7Parm<f>Fv"
-"size__7Parm<f>Fv":
+.fn "size__7Parm<f>Fv", weak
 /* 80051468 0004E3C8  38 60 00 04 */	li r3, 4
 /* 8005146C 0004E3CC  4E 80 00 20 */	blr 
+.endfn "size__7Parm<f>Fv"
 
-.global "size__7Parm<i>Fv"
-"size__7Parm<i>Fv":
+.fn "size__7Parm<i>Fv", weak
 /* 80051470 0004E3D0  38 60 00 04 */	li r3, 4
 /* 80051474 0004E3D4  4E 80 00 20 */	blr 
+.endfn "size__7Parm<i>Fv"
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802A5FC0:
+.obj lbl_802A5FC0, local
 	.asciz "animMgr.cpp"
+.endobj lbl_802A5FC0
 .balign 4
-lbl_802A5FCC:
+.obj lbl_802A5FCC, local
 	.asciz "CoreNode"
+.endobj lbl_802A5FCC
 .balign 4
-lbl_802A5FD8:
+.obj lbl_802A5FD8, local
 	.asciz "base dir"
+.endobj lbl_802A5FD8
 .balign 4
-lbl_802A5FE4:
+.obj lbl_802A5FE4, local
 	.asciz "Null Anim"
+.endobj lbl_802A5FE4
 .balign 4
-lbl_802A5FF0:
+.obj lbl_802A5FF0, local
 	.asciz "Animator"
+.endobj lbl_802A5FF0
 .balign 4
-.global __vt__8Animator
-__vt__8Animator:
+.obj __vt__8Animator, global
 	.4byte __RTTI__8Animator
 	.4byte 0
 	.4byte changeContext__8AnimatorFP11AnimContext
 	.4byte animate__8AnimatorFf
 	.4byte finishOneShot__8AnimatorFv
 	.4byte finishLoop__8AnimatorFv
-lbl_802A6014:
+.endobj __vt__8Animator
+.balign 4
+.obj lbl_802A6014, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte 0
-lbl_802A6020:
+.endobj lbl_802A6014
+.balign 4
+.obj lbl_802A6020, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte __RTTI__8CoreNode
 	.4byte 0
 	.4byte 0
-.global __vt__7AnimMgr
-__vt__7AnimMgr:
+.endobj lbl_802A6020
+.balign 4
+.obj __vt__7AnimMgr, global
 	.4byte __RTTI__7AnimMgr
 	.4byte 0
 	.4byte getAgeNodeType__5ANodeFv
 	.4byte read__7AnimMgrFR18RandomAccessStream
+.endobj __vt__7AnimMgr
 .balign 4
-lbl_802A6044:
+.obj lbl_802A6044, local
 	.asciz "Parm<String>"
+.endobj lbl_802A6044
 .balign 4
-lbl_802A6054:
+.obj lbl_802A6054, local
 	.asciz "BaseParm"
+.endobj lbl_802A6054
 .balign 4
-lbl_802A6060:
+.obj lbl_802A6060, local
 	.4byte __RTTI__8BaseParm
 	.4byte 0
 	.4byte 0
-.global "__vt__13Parm<6String>"
-"__vt__13Parm<6String>":
+.endobj lbl_802A6060
+.balign 4
+.obj "__vt__13Parm<6String>", weak
 	.4byte "__RTTI__13Parm<6String>"
 	.4byte 0
 	.4byte "size__13Parm<6String>Fv"
 	.4byte "write__13Parm<6String>FR18RandomAccessStream"
 	.4byte "read__13Parm<6String>FR18RandomAccessStream"
+.endobj "__vt__13Parm<6String>"
 .balign 4
-lbl_802A6080:
+.obj lbl_802A6080, local
 	.asciz "Parm<float>"
+.endobj lbl_802A6080
 .balign 4
-lbl_802A608C:
+.obj lbl_802A608C, local
 	.4byte __RTTI__8BaseParm
 	.4byte 0
 	.4byte 0
-.global "__vt__7Parm<f>"
-"__vt__7Parm<f>":
+.endobj lbl_802A608C
+.balign 4
+.obj "__vt__7Parm<f>", weak
 	.4byte "__RTTI__7Parm<f>"
 	.4byte 0
 	.4byte "size__7Parm<f>Fv"
 	.4byte "write__7Parm<f>FR18RandomAccessStream"
 	.4byte "read__7Parm<f>FR18RandomAccessStream"
+.endobj "__vt__7Parm<f>"
 .balign 4
-lbl_802A60AC:
+.obj lbl_802A60AC, local
 	.asciz "Parm<int>"
+.endobj lbl_802A60AC
 .balign 4
-lbl_802A60B8:
+.obj lbl_802A60B8, local
 	.4byte __RTTI__8BaseParm
 	.4byte 0
 	.4byte 0
-.global "__vt__7Parm<i>"
-"__vt__7Parm<i>":
+.endobj lbl_802A60B8
+.balign 4
+.obj "__vt__7Parm<i>", weak
 	.4byte "__RTTI__7Parm<i>"
 	.4byte 0
 	.4byte "size__7Parm<i>Fv"
 	.4byte "write__7Parm<i>FR18RandomAccessStream"
 	.4byte "read__7Parm<i>FR18RandomAccessStream"
+.endobj "__vt__7Parm<i>"
 .balign 4
-lbl_802A60D8:
+.obj lbl_802A60D8, local
 	.asciz "AnimInfo"
+.endobj lbl_802A60D8
 .balign 4
-lbl_802A60E4:
+.obj lbl_802A60E4, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte __RTTI__8CoreNode
 	.4byte 0
 	.4byte 0
-.global __vt__8AnimInfo
-__vt__8AnimInfo:
+.endobj lbl_802A60E4
+.balign 4
+.obj __vt__8AnimInfo, weak
 	.4byte __RTTI__8AnimInfo
 	.4byte 0
 	.4byte getAgeNodeType__5ANodeFv
 	.4byte read__8CoreNodeFR18RandomAccessStream
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
+.endobj __vt__8AnimInfo
+.skip 0x20 # compiler padding
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-lbl_803DD6F0:
+.obj lbl_803DD6F0, local
 	.asciz "AnimMgr"
+.endobj lbl_803DD6F0
 .balign 4
-lbl_803DD6F8:
+.obj lbl_803DD6F8, local
 	.asciz ""
+.endobj lbl_803DD6F8
 .balign 4
-lbl_803DD6FC:
+.obj lbl_803DD6FC, local
 	.asciz "p00"
+.endobj lbl_803DD6FC
 .balign 4
-lbl_803DD700:
+.obj lbl_803DD700, local
 	.asciz "spd"
+.endobj lbl_803DD700
 .balign 4
-lbl_803DD704:
+.obj lbl_803DD704, local
 	.asciz "a00"
+.endobj lbl_803DD704
 .balign 4
-lbl_803DD708:
+.obj lbl_803DD708, local
 	.asciz "a01"
+.endobj lbl_803DD708
 .balign 4
-lbl_803DD70C:
+.obj lbl_803DD70C, local
 	.asciz "anims"
+.endobj lbl_803DD70C
 .balign 4
-lbl_803DD714:
+.obj lbl_803DD714, local
 	.asciz "%s/%s"
+.endobj lbl_803DD714
 .balign 4
-lbl_803DD71C:
+.obj lbl_803DD71C, local
 	.asciz "anm"
+.endobj lbl_803DD71C
 .balign 4
-__RTTI__8Animator:
+.obj __RTTI__8Animator, local
 	.4byte lbl_802A5FF0
 	.4byte 0
+.endobj __RTTI__8Animator
 .balign 4
-lbl_803DD728:
+.obj lbl_803DD728, local
 	.asciz "ANode"
+.endobj lbl_803DD728
 .balign 4
-__RTTI__5ANode:
+.obj __RTTI__5ANode, local
 	.4byte lbl_803DD728
 	.4byte 0
-__RTTI__8CoreNode:
+.endobj __RTTI__5ANode
+.obj __RTTI__8CoreNode, local
 	.4byte lbl_802A5FCC
 	.4byte lbl_802A6014
-__RTTI__7AnimMgr:
+.endobj __RTTI__8CoreNode
+.obj __RTTI__7AnimMgr, local
 	.4byte lbl_803DD6F0
 	.4byte lbl_802A6020
-__RTTI__8BaseParm:
+.endobj __RTTI__7AnimMgr
+.obj __RTTI__8BaseParm, local
 	.4byte lbl_802A6054
 	.4byte 0
-"__RTTI__13Parm<6String>":
+.endobj __RTTI__8BaseParm
+.obj "__RTTI__13Parm<6String>", local
 	.4byte lbl_802A6044
 	.4byte lbl_802A6060
-"__RTTI__7Parm<f>":
+.endobj "__RTTI__13Parm<6String>"
+.obj "__RTTI__7Parm<f>", local
 	.4byte lbl_802A6080
 	.4byte lbl_802A608C
-"__RTTI__7Parm<i>":
+.endobj "__RTTI__7Parm<f>"
+.obj "__RTTI__7Parm<i>", local
 	.4byte lbl_802A60AC
 	.4byte lbl_802A60B8
-__RTTI__8AnimInfo:
+.endobj "__RTTI__7Parm<i>"
+.obj __RTTI__8AnimInfo, local
 	.4byte lbl_802A60D8
 	.4byte lbl_802A60E4
+.endobj __RTTI__8AnimInfo
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803E86E0:
+.obj lbl_803E86E0, local
 	.float 30.0
-lbl_803E86E4:
+.endobj lbl_803E86E0
+.obj lbl_803E86E4, local
 	.float 0.0
+.endobj lbl_803E86E4
 .balign 8
-lbl_803E86E8:
-	.4byte 0x43300000
-	.4byte 0x80000000
-lbl_803E86F0:
+.obj lbl_803E86E8, local
+	.8byte 0x4330000080000000
+.endobj lbl_803E86E8
+.obj lbl_803E86F0, local
 	.float 1.0
+.endobj lbl_803E86F0

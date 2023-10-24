@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global animate__20PVWPolygonColourInfoFPfR6Colour
-animate__20PVWPolygonColourInfoFPfR6Colour:
+.fn animate__20PVWPolygonColourInfoFPfR6Colour, global
 /* 80025914 00022874  7C 08 02 A6 */	mflr r0
 /* 80025918 00022878  90 01 00 04 */	stw r0, 4(r1)
 /* 8002591C 0002287C  94 21 FF B8 */	stwu r1, -0x48(r1)
@@ -79,9 +78,9 @@ animate__20PVWPolygonColourInfoFPfR6Colour:
 /* 80025A28 00022988  38 21 00 48 */	addi r1, r1, 0x48
 /* 80025A2C 0002298C  7C 08 03 A6 */	mtlr r0
 /* 80025A30 00022990  4E 80 00 20 */	blr 
+.endfn animate__20PVWPolygonColourInfoFPfR6Colour
 
-.global extract__17PVWColourAnimInfoFfR6Colour
-extract__17PVWColourAnimInfoFfR6Colour:
+.fn extract__17PVWColourAnimInfoFfR6Colour, global
 /* 80025A34 00022994  94 21 FE 08 */	stwu r1, -0x1f8(r1)
 /* 80025A38 00022998  DB E1 01 F0 */	stfd f31, 0x1f0(r1)
 /* 80025A3C 0002299C  DB C1 01 E8 */	stfd f30, 0x1e8(r1)
@@ -390,9 +389,9 @@ extract__17PVWColourAnimInfoFfR6Colour:
 /* 80025EC0 00022E20  CA 21 01 80 */	lfd f17, 0x180(r1)
 /* 80025EC4 00022E24  38 21 01 F8 */	addi r1, r1, 0x1f8
 /* 80025EC8 00022E28  4E 80 00 20 */	blr 
+.endfn extract__17PVWColourAnimInfoFfR6Colour
 
-.global extract__16PVWAlphaAnimInfoFfR6Colour
-extract__16PVWAlphaAnimInfoFfR6Colour:
+.fn extract__16PVWAlphaAnimInfoFfR6Colour, global
 /* 80025ECC 00022E2C  94 21 FF 60 */	stwu r1, -0xa0(r1)
 /* 80025ED0 00022E30  DB E1 00 98 */	stfd f31, 0x98(r1)
 /* 80025ED4 00022E34  DB C1 00 90 */	stfd f30, 0x90(r1)
@@ -527,9 +526,9 @@ extract__16PVWAlphaAnimInfoFfR6Colour:
 /* 800260B8 00023018  CB C1 00 90 */	lfd f30, 0x90(r1)
 /* 800260BC 0002301C  38 21 00 A0 */	addi r1, r1, 0xa0
 /* 800260C0 00023020  4E 80 00 20 */	blr 
+.endfn extract__16PVWAlphaAnimInfoFfR6Colour
 
-.global extract__22PVWColourShortAnimInfoFfR11ShortColour
-extract__22PVWColourShortAnimInfoFfR11ShortColour:
+.fn extract__22PVWColourShortAnimInfoFfR11ShortColour, global
 /* 800260C4 00023024  94 21 FE 28 */	stwu r1, -0x1d8(r1)
 /* 800260C8 00023028  DB E1 01 D0 */	stfd f31, 0x1d0(r1)
 /* 800260CC 0002302C  DB C1 01 C8 */	stfd f30, 0x1c8(r1)
@@ -840,9 +839,9 @@ extract__22PVWColourShortAnimInfoFfR11ShortColour:
 /* 80026558 000234B8  CA A1 01 80 */	lfd f21, 0x180(r1)
 /* 8002655C 000234BC  38 21 01 D8 */	addi r1, r1, 0x1d8
 /* 80026560 000234C0  4E 80 00 20 */	blr 
+.endfn extract__22PVWColourShortAnimInfoFfR11ShortColour
 
-.global extract__21PVWAlphaShortAnimInfoFfR11ShortColour
-extract__21PVWAlphaShortAnimInfoFfR11ShortColour:
+.fn extract__21PVWAlphaShortAnimInfoFfR11ShortColour, global
 /* 80026564 000234C4  94 21 FF 60 */	stwu r1, -0xa0(r1)
 /* 80026568 000234C8  DB E1 00 98 */	stfd f31, 0x98(r1)
 /* 8002656C 000234CC  DB C1 00 90 */	stfd f30, 0x90(r1)
@@ -981,9 +980,9 @@ extract__21PVWAlphaShortAnimInfoFfR11ShortColour:
 /* 80026760 000236C0  CB C1 00 90 */	lfd f30, 0x90(r1)
 /* 80026764 000236C4  38 21 00 A0 */	addi r1, r1, 0xa0
 /* 80026768 000236C8  4E 80 00 20 */	blr 
+.endfn extract__21PVWAlphaShortAnimInfoFfR11ShortColour
 
-.global extract__14PVWTexAnimInfoFfR8Vector3f
-extract__14PVWTexAnimInfoFfR8Vector3f:
+.fn extract__14PVWTexAnimInfoFfR8Vector3f, global
 /* 8002676C 000236CC  94 21 FE A8 */	stwu r1, -0x158(r1)
 /* 80026770 000236D0  DB E1 01 50 */	stfd f31, 0x150(r1)
 /* 80026774 000236D4  DB C1 01 48 */	stfd f30, 0x148(r1)
@@ -1226,9 +1225,9 @@ extract__14PVWTexAnimInfoFfR8Vector3f:
 /* 80026B10 00023A70  CB A1 01 40 */	lfd f29, 0x140(r1)
 /* 80026B14 00023A74  38 21 01 58 */	addi r1, r1, 0x158
 /* 80026B18 00023A78  4E 80 00 20 */	blr 
+.endfn extract__14PVWTexAnimInfoFfR8Vector3f
 
-.global animate__14PVWTextureDataFPfR8Matrix4f
-animate__14PVWTextureDataFPfR8Matrix4f:
+.fn animate__14PVWTextureDataFPfR8Matrix4f, global
 /* 80026B1C 00023A7C  7C 08 02 A6 */	mflr r0
 /* 80026B20 00023A80  90 01 00 04 */	stw r0, 4(r1)
 /* 80026B24 00023A84  94 21 FF 90 */	stwu r1, -0x70(r1)
@@ -1426,9 +1425,9 @@ animate__14PVWTextureDataFPfR8Matrix4f:
 /* 80026E08 00023D68  38 21 00 70 */	addi r1, r1, 0x70
 /* 80026E0C 00023D6C  7C 08 03 A6 */	mtlr r0
 /* 80026E10 00023D70  4E 80 00 20 */	blr 
+.endfn animate__14PVWTextureDataFPfR8Matrix4f
 
-.global read__14PVWTextureDataFR18RandomAccessStream
-read__14PVWTextureDataFR18RandomAccessStream:
+.fn read__14PVWTextureDataFR18RandomAccessStream, global
 /* 80026E14 00023D74  7C 08 02 A6 */	mflr r0
 /* 80026E18 00023D78  90 01 00 04 */	stw r0, 4(r1)
 /* 80026E1C 00023D7C  94 21 FF C8 */	stwu r1, -0x38(r1)
@@ -1799,9 +1798,9 @@ read__14PVWTextureDataFR18RandomAccessStream:
 /* 800273AC 0002430C  38 21 00 38 */	addi r1, r1, 0x38
 /* 800273B0 00024310  7C 08 03 A6 */	mtlr r0
 /* 800273B4 00024314  4E 80 00 20 */	blr 
+.endfn read__14PVWTextureDataFR18RandomAccessStream
 
-.global read__14PVWTextureInfoFR18RandomAccessStream
-read__14PVWTextureInfoFR18RandomAccessStream:
+.fn read__14PVWTextureInfoFR18RandomAccessStream, global
 /* 800273B8 00024318  7C 08 02 A6 */	mflr r0
 /* 800273BC 0002431C  90 01 00 04 */	stw r0, 4(r1)
 /* 800273C0 00024320  94 21 FF C8 */	stwu r1, -0x38(r1)
@@ -1931,18 +1930,18 @@ read__14PVWTextureInfoFR18RandomAccessStream:
 /* 80027594 000244F4  38 21 00 38 */	addi r1, r1, 0x38
 /* 80027598 000244F8  7C 08 03 A6 */	mtlr r0
 /* 8002759C 000244FC  4E 80 00 20 */	blr 
+.endfn read__14PVWTextureInfoFR18RandomAccessStream
 
-.global __ct__14PVWTextureDataFv
-__ct__14PVWTextureDataFv:
+.fn __ct__14PVWTextureDataFv, weak
 /* 800275A0 00024500  C0 02 82 2C */	lfs f0, lbl_803E842C@sda21(r2)
 /* 800275A4 00024504  38 00 00 00 */	li r0, 0
 /* 800275A8 00024508  D0 03 00 58 */	stfs f0, 0x58(r3)
 /* 800275AC 0002450C  90 03 00 08 */	stw r0, 8(r3)
 /* 800275B0 00024510  98 03 00 16 */	stb r0, 0x16(r3)
 /* 800275B4 00024514  4E 80 00 20 */	blr 
+.endfn __ct__14PVWTextureDataFv
 
-.global animate__12PVWTevColRegFPfR11ShortColour
-animate__12PVWTevColRegFPfR11ShortColour:
+.fn animate__12PVWTevColRegFPfR11ShortColour, global
 /* 800275B8 00024518  7C 08 02 A6 */	mflr r0
 /* 800275BC 0002451C  90 01 00 04 */	stw r0, 4(r1)
 /* 800275C0 00024520  94 21 FF B8 */	stwu r1, -0x48(r1)
@@ -2020,9 +2019,9 @@ animate__12PVWTevColRegFPfR11ShortColour:
 /* 800276CC 0002462C  38 21 00 48 */	addi r1, r1, 0x48
 /* 800276D0 00024630  7C 08 03 A6 */	mtlr r0
 /* 800276D4 00024634  4E 80 00 20 */	blr 
+.endfn animate__12PVWTevColRegFPfR11ShortColour
 
-.global attach__8MaterialFv
-attach__8MaterialFv:
+.fn attach__8MaterialFv, global
 /* 800276D8 00024638  7C 08 02 A6 */	mflr r0
 /* 800276DC 0002463C  7C 64 1B 78 */	mr r4, r3
 /* 800276E0 00024640  90 01 00 04 */	stw r0, 4(r1)
@@ -2044,18 +2043,18 @@ attach__8MaterialFv:
 /* 80027720 00024680  38 21 00 08 */	addi r1, r1, 8
 /* 80027724 00024684  7C 08 03 A6 */	mtlr r0
 /* 80027728 00024688  4E 80 00 20 */	blr 
+.endfn attach__8MaterialFv
 
-.global useDList__8GraphicsFUl
-useDList__8GraphicsFUl:
+.fn useDList__8GraphicsFUl, weak
 /* 8002772C 0002468C  4E 80 00 20 */	blr 
+.endfn useDList__8GraphicsFUl
 
-.global compileMaterial__8GraphicsFP8Material
-compileMaterial__8GraphicsFP8Material:
+.fn compileMaterial__8GraphicsFP8Material, weak
 /* 80027730 00024690  38 60 00 00 */	li r3, 0
 /* 80027734 00024694  4E 80 00 20 */	blr 
+.endfn compileMaterial__8GraphicsFP8Material
 
-.global read__8MaterialFR18RandomAccessStream
-read__8MaterialFR18RandomAccessStream:
+.fn read__8MaterialFR18RandomAccessStream, global
 /* 80027738 00024698  7C 08 02 A6 */	mflr r0
 /* 8002773C 0002469C  90 01 00 04 */	stw r0, 4(r1)
 /* 80027740 000246A0  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -2199,9 +2198,9 @@ read__8MaterialFR18RandomAccessStream:
 /* 80027964 000248C4  38 21 00 28 */	addi r1, r1, 0x28
 /* 80027968 000248C8  7C 08 03 A6 */	mtlr r0
 /* 8002796C 000248CC  4E 80 00 20 */	blr 
+.endfn read__8MaterialFR18RandomAccessStream
 
-.global "read__28PVWAnimInfo1<12PVWKeyInfoU8>FR18RandomAccessStream"
-"read__28PVWAnimInfo1<12PVWKeyInfoU8>FR18RandomAccessStream":
+.fn "read__28PVWAnimInfo1<12PVWKeyInfoU8>FR18RandomAccessStream", weak
 /* 80027970 000248D0  7C 08 02 A6 */	mflr r0
 /* 80027974 000248D4  90 01 00 04 */	stw r0, 4(r1)
 /* 80027978 000248D8  94 21 FF D0 */	stwu r1, -0x30(r1)
@@ -2277,9 +2276,9 @@ read__8MaterialFR18RandomAccessStream:
 /* 80027A84 000249E4  38 21 00 30 */	addi r1, r1, 0x30
 /* 80027A88 000249E8  7C 08 03 A6 */	mtlr r0
 /* 80027A8C 000249EC  4E 80 00 20 */	blr 
+.endfn "read__28PVWAnimInfo1<12PVWKeyInfoU8>FR18RandomAccessStream"
 
-.global "read__28PVWAnimInfo3<12PVWKeyInfoU8>FR18RandomAccessStream"
-"read__28PVWAnimInfo3<12PVWKeyInfoU8>FR18RandomAccessStream":
+.fn "read__28PVWAnimInfo3<12PVWKeyInfoU8>FR18RandomAccessStream", weak
 /* 80027A90 000249F0  7C 08 02 A6 */	mflr r0
 /* 80027A94 000249F4  90 01 00 04 */	stw r0, 4(r1)
 /* 80027A98 000249F8  94 21 FF D0 */	stwu r1, -0x30(r1)
@@ -2421,9 +2420,9 @@ read__8MaterialFR18RandomAccessStream:
 /* 80027CAC 00024C0C  38 21 00 30 */	addi r1, r1, 0x30
 /* 80027CB0 00024C10  7C 08 03 A6 */	mtlr r0
 /* 80027CB4 00024C14  4E 80 00 20 */	blr 
+.endfn "read__28PVWAnimInfo3<12PVWKeyInfoU8>FR18RandomAccessStream"
 
-.global setTexture__4FontFP7Textureii
-setTexture__4FontFP7Textureii:
+.fn setTexture__4FontFP7Textureii, global
 /* 80027CB8 00024C18  7C 08 02 A6 */	mflr r0
 /* 80027CBC 00024C1C  90 01 00 04 */	stw r0, 4(r1)
 /* 80027CC0 00024C20  94 21 FF A8 */	stwu r1, -0x58(r1)
@@ -2625,9 +2624,9 @@ setTexture__4FontFP7Textureii:
 /* 80027F7C 00024EDC  38 21 00 58 */	addi r1, r1, 0x58
 /* 80027F80 00024EE0  7C 08 03 A6 */	mtlr r0
 /* 80027F84 00024EE4  4E 80 00 20 */	blr 
+.endfn setTexture__4FontFP7Textureii
 
-.global __ct__8FontCharFv
-__ct__8FontCharFv:
+.fn __ct__8FontCharFv, weak
 /* 80027F88 00024EE8  38 80 00 00 */	li r4, 0
 /* 80027F8C 00024EEC  90 83 00 18 */	stw r4, 0x18(r3)
 /* 80027F90 00024EF0  38 00 00 08 */	li r0, 8
@@ -2639,15 +2638,15 @@ __ct__8FontCharFv:
 /* 80027FA8 00024F08  B0 03 00 06 */	sth r0, 6(r3)
 /* 80027FAC 00024F0C  B0 03 00 04 */	sth r0, 4(r3)
 /* 80027FB0 00024F10  4E 80 00 20 */	blr 
+.endfn __ct__8FontCharFv
 
-.global charToIndex__4FontFc
-charToIndex__4FontFc:
+.fn charToIndex__4FontFc, global
 /* 80027FB4 00024F14  54 83 06 3E */	clrlwi r3, r4, 0x18
 /* 80027FB8 00024F18  38 63 FF E0 */	addi r3, r3, -32
 /* 80027FBC 00024F1C  4E 80 00 20 */	blr 
+.endfn charToIndex__4FontFc
 
-.global searchKanjiCode__FUs
-searchKanjiCode__FUs:
+.fn searchKanjiCode__FUs, local
 /* 80027FC0 00024F20  7C 08 02 A6 */	mflr r0
 /* 80027FC4 00024F24  3C 80 80 22 */	lis r4, kanji_convert_table@ha
 /* 80027FC8 00024F28  90 01 00 04 */	stw r0, 4(r1)
@@ -2690,9 +2689,9 @@ searchKanjiCode__FUs:
 /* 8002804C 00024FAC  38 21 00 28 */	addi r1, r1, 0x28
 /* 80028050 00024FB0  7C 08 03 A6 */	mtlr r0
 /* 80028054 00024FB4  4E 80 00 20 */	blr 
+.endfn searchKanjiCode__FUs
 
-.global charToIndex__4FontFUs
-charToIndex__4FontFUs:
+.fn charToIndex__4FontFUs, global
 /* 80028058 00024FB8  7C 08 02 A6 */	mflr r0
 /* 8002805C 00024FBC  3C 60 80 22 */	lis r3, lbl_80227540@ha
 /* 80028060 00024FC0  90 01 00 04 */	stw r0, 4(r1)
@@ -2755,9 +2754,9 @@ charToIndex__4FontFUs:
 /* 80028128 00025088  38 21 00 30 */	addi r1, r1, 0x30
 /* 8002812C 0002508C  7C 08 03 A6 */	mtlr r0
 /* 80028130 00025090  4E 80 00 20 */	blr 
+.endfn charToIndex__4FontFUs
 
-.global stringWidth__4FontFPc
-stringWidth__4FontFPc:
+.fn stringWidth__4FontFPc, global
 /* 80028134 00025094  7C 08 02 A6 */	mflr r0
 /* 80028138 00025098  3C A0 80 22 */	lis r5, sjis_convert_table@ha
 /* 8002813C 0002509C  90 01 00 04 */	stw r0, 4(r1)
@@ -2821,9 +2820,9 @@ stringWidth__4FontFPc:
 /* 80028208 00025168  38 21 00 30 */	addi r1, r1, 0x30
 /* 8002820C 0002516C  7C 08 03 A6 */	mtlr r0
 /* 80028210 00025170  4E 80 00 20 */	blr 
+.endfn stringWidth__4FontFPc
 
-.global __ct__11CollTriInfoFv
-__ct__11CollTriInfoFv:
+.fn __ct__11CollTriInfoFv, weak
 /* 80028214 00025174  7C 08 02 A6 */	mflr r0
 /* 80028218 00025178  38 A0 00 00 */	li r5, 0
 /* 8002821C 0002517C  90 01 00 04 */	stw r0, 4(r1)
@@ -2846,17 +2845,17 @@ __ct__11CollTriInfoFv:
 /* 80028260 000251C0  38 21 00 18 */	addi r1, r1, 0x18
 /* 80028264 000251C4  7C 08 03 A6 */	mtlr r0
 /* 80028268 000251C8  4E 80 00 20 */	blr 
+.endfn __ct__11CollTriInfoFv
 
-.global __ct__5PlaneFv
-__ct__5PlaneFv:
+.fn __ct__5PlaneFv, weak
 /* 8002826C 000251CC  C0 02 82 2C */	lfs f0, lbl_803E842C@sda21(r2)
 /* 80028270 000251D0  D0 03 00 08 */	stfs f0, 8(r3)
 /* 80028274 000251D4  D0 03 00 04 */	stfs f0, 4(r3)
 /* 80028278 000251D8  D0 03 00 00 */	stfs f0, 0(r3)
 /* 8002827C 000251DC  4E 80 00 20 */	blr 
+.endfn __ct__5PlaneFv
 
-.global setMaterial__15MaterialHandlerFP8Material
-setMaterial__15MaterialHandlerFP8Material:
+.fn setMaterial__15MaterialHandlerFP8Material, global
 /* 80028280 000251E0  7C 08 02 A6 */	mflr r0
 /* 80028284 000251E4  38 A0 00 00 */	li r5, 0
 /* 80028288 000251E8  90 01 00 04 */	stw r0, 4(r1)
@@ -2870,9 +2869,9 @@ setMaterial__15MaterialHandlerFP8Material:
 /* 800282A8 00025208  38 21 00 08 */	addi r1, r1, 8
 /* 800282AC 0002520C  7C 08 03 A6 */	mtlr r0
 /* 800282B0 00025210  4E 80 00 20 */	blr 
+.endfn setMaterial__15MaterialHandlerFP8Material
 
-.global setTexMatrix__15MaterialHandlerFb
-setTexMatrix__15MaterialHandlerFb:
+.fn setTexMatrix__15MaterialHandlerFb, global
 /* 800282B4 00025214  7C 08 02 A6 */	mflr r0
 /* 800282B8 00025218  90 01 00 04 */	stw r0, 4(r1)
 /* 800282BC 0002521C  94 21 FF F8 */	stwu r1, -8(r1)
@@ -2885,9 +2884,9 @@ setTexMatrix__15MaterialHandlerFb:
 /* 800282D8 00025238  38 21 00 08 */	addi r1, r1, 8
 /* 800282DC 0002523C  7C 08 03 A6 */	mtlr r0
 /* 800282E0 00025240  4E 80 00 20 */	blr 
+.endfn setTexMatrix__15MaterialHandlerFb
 
-.global __ct__8GraphicsFv
-__ct__8GraphicsFv:
+.fn __ct__8GraphicsFv, global
 /* 800282E4 00025244  7C 08 02 A6 */	mflr r0
 /* 800282E8 00025248  3C 80 80 23 */	lis r4, __vt__8Graphics@ha
 /* 800282EC 0002524C  90 01 00 04 */	stw r0, 4(r1)
@@ -3004,15 +3003,15 @@ __ct__8GraphicsFv:
 /* 800284A0 00025400  38 21 00 58 */	addi r1, r1, 0x58
 /* 800284A4 00025404  7C 08 03 A6 */	mtlr r0
 /* 800284A8 00025408  4E 80 00 20 */	blr 
+.endfn __ct__8GraphicsFv
 
-.global __ct__11CachedShapeFv
-__ct__11CachedShapeFv:
+.fn __ct__11CachedShapeFv, weak
 /* 800284AC 0002540C  90 63 00 04 */	stw r3, 4(r3)
 /* 800284B0 00025410  90 63 00 00 */	stw r3, 0(r3)
 /* 800284B4 00025414  4E 80 00 20 */	blr 
+.endfn __ct__11CachedShapeFv
 
-.global initRender__8GraphicsFii
-initRender__8GraphicsFii:
+.fn initRender__8GraphicsFii, global
 /* 800284B8 00025418  7C 08 02 A6 */	mflr r0
 /* 800284BC 0002541C  38 80 00 00 */	li r4, 0
 /* 800284C0 00025420  90 01 00 04 */	stw r0, 4(r1)
@@ -3033,15 +3032,15 @@ initRender__8GraphicsFii:
 /* 800284FC 0002545C  38 21 00 20 */	addi r1, r1, 0x20
 /* 80028500 00025460  7C 08 03 A6 */	mtlr r0
 /* 80028504 00025464  4E 80 00 20 */	blr 
+.endfn initRender__8GraphicsFii
 
-.global resetMatrixBuffer__8GraphicsFv
-resetMatrixBuffer__8GraphicsFv:
+.fn resetMatrixBuffer__8GraphicsFv, global
 /* 80028508 00025468  38 00 00 00 */	li r0, 0
 /* 8002850C 0002546C  90 03 03 8C */	stw r0, 0x38c(r3)
 /* 80028510 00025470  4E 80 00 20 */	blr 
+.endfn resetMatrixBuffer__8GraphicsFv
 
-.global getMatrices__8GraphicsFi
-getMatrices__8GraphicsFi:
+.fn getMatrices__8GraphicsFi, global
 /* 80028514 00025474  80 03 03 8C */	lwz r0, 0x38c(r3)
 /* 80028518 00025478  80 C3 03 84 */	lwz r6, 0x384(r3)
 /* 8002851C 0002547C  54 05 30 32 */	slwi r5, r0, 6
@@ -3049,18 +3048,18 @@ getMatrices__8GraphicsFi:
 /* 80028524 00025484  90 03 03 8C */	stw r0, 0x38c(r3)
 /* 80028528 00025488  7C 66 2A 14 */	add r3, r6, r5
 /* 8002852C 0002548C  4E 80 00 20 */	blr 
+.endfn getMatrices__8GraphicsFi
 
-.global resetCacheBuffer__8GraphicsFv
-resetCacheBuffer__8GraphicsFv:
+.fn resetCacheBuffer__8GraphicsFv, global
 /* 80028530 00025490  38 83 03 90 */	addi r4, r3, 0x390
 /* 80028534 00025494  90 83 03 94 */	stw r4, 0x394(r3)
 /* 80028538 00025498  38 00 00 00 */	li r0, 0
 /* 8002853C 0002549C  90 83 03 90 */	stw r4, 0x390(r3)
 /* 80028540 000254A0  90 03 03 B0 */	stw r0, 0x3b0(r3)
 /* 80028544 000254A4  4E 80 00 20 */	blr 
+.endfn resetCacheBuffer__8GraphicsFv
 
-.global cacheShape__8GraphicsFP9BaseShapeP17ShapeDynMaterials
-cacheShape__8GraphicsFP9BaseShapeP17ShapeDynMaterials:
+.fn cacheShape__8GraphicsFP9BaseShapeP17ShapeDynMaterials, global
 /* 80028548 000254A8  7C 08 02 A6 */	mflr r0
 /* 8002854C 000254AC  90 01 00 04 */	stw r0, 4(r1)
 /* 80028550 000254B0  94 21 FF C0 */	stwu r1, -0x40(r1)
@@ -3164,9 +3163,9 @@ cacheShape__8GraphicsFP9BaseShapeP17ShapeDynMaterials:
 /* 800286C0 00025620  38 21 00 40 */	addi r1, r1, 0x40
 /* 800286C4 00025624  7C 08 03 A6 */	mtlr r0
 /* 800286C8 00025628  4E 80 00 20 */	blr 
+.endfn cacheShape__8GraphicsFP9BaseShapeP17ShapeDynMaterials
 
-.global flushCachedShapes__8GraphicsFv
-flushCachedShapes__8GraphicsFv:
+.fn flushCachedShapes__8GraphicsFv, global
 /* 800286CC 0002562C  7C 08 02 A6 */	mflr r0
 /* 800286D0 00025630  90 01 00 04 */	stw r0, 4(r1)
 /* 800286D4 00025634  38 00 04 00 */	li r0, 0x400
@@ -3212,9 +3211,9 @@ flushCachedShapes__8GraphicsFv:
 /* 80028760 000256C0  38 21 00 28 */	addi r1, r1, 0x28
 /* 80028764 000256C4  7C 08 03 A6 */	mtlr r0
 /* 80028768 000256C8  4E 80 00 20 */	blr 
+.endfn flushCachedShapes__8GraphicsFv
 
-.global calcDataSize__6TexImgFiii
-calcDataSize__6TexImgFiii:
+.fn calcDataSize__6TexImgFiii, global
 /* 8002876C 000256CC  28 03 00 09 */	cmplwi r3, 9
 /* 80028770 000256D0  38 E0 00 00 */	li r7, 0
 /* 80028774 000256D4  41 81 00 8C */	bgt .L_80028800
@@ -3265,9 +3264,9 @@ calcDataSize__6TexImgFiii:
 .L_80028800:
 /* 80028800 00025760  7C E3 3B 78 */	mr r3, r7
 /* 80028804 00025764  4E 80 00 20 */	blr 
+.endfn calcDataSize__6TexImgFiii
 
-.global read__6TexImgFR18RandomAccessStream
-read__6TexImgFR18RandomAccessStream:
+.fn read__6TexImgFR18RandomAccessStream, global
 /* 80028808 00025768  7C 08 02 A6 */	mflr r0
 /* 8002880C 0002576C  90 01 00 04 */	stw r0, 4(r1)
 /* 80028810 00025770  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -3344,9 +3343,9 @@ read__6TexImgFR18RandomAccessStream:
 /* 8002892C 0002588C  38 21 00 20 */	addi r1, r1, 0x20
 /* 80028930 00025890  7C 08 03 A6 */	mtlr r0
 /* 80028934 00025894  4E 80 00 20 */	blr 
+.endfn read__6TexImgFR18RandomAccessStream
 
-.global getTileSize__6TexImgFiRUlRUl
-getTileSize__6TexImgFiRUlRUl:
+.fn getTileSize__6TexImgFiRUlRUl, global
 /* 80028938 00025898  2C 03 00 06 */	cmpwi r3, 6
 /* 8002893C 0002589C  40 80 00 14 */	bge .L_80028950
 /* 80028940 000258A0  2C 03 00 03 */	cmpwi r3, 3
@@ -3373,9 +3372,9 @@ getTileSize__6TexImgFiRUlRUl:
 /* 80028984 000258E4  90 04 00 00 */	stw r0, 0(r4)
 /* 80028988 000258E8  90 05 00 00 */	stw r0, 0(r5)
 /* 8002898C 000258EC  4E 80 00 20 */	blr 
+.endfn getTileSize__6TexImgFiRUlRUl
 
-.global importBti__6TexImgFP7TextureR18RandomAccessStreamPUc
-importBti__6TexImgFP7TextureR18RandomAccessStreamPUc:
+.fn importBti__6TexImgFP7TextureR18RandomAccessStreamPUc, global
 /* 80028990 000258F0  7C 08 02 A6 */	mflr r0
 /* 80028994 000258F4  90 01 00 04 */	stw r0, 4(r1)
 /* 80028998 000258F8  94 21 FF 98 */	stwu r1, -0x68(r1)
@@ -3639,9 +3638,9 @@ importBti__6TexImgFP7TextureR18RandomAccessStreamPUc:
 /* 80028D70 00025CD0  38 21 00 68 */	addi r1, r1, 0x68
 /* 80028D74 00025CD4  7C 08 03 A6 */	mtlr r0
 /* 80028D78 00025CD8  4E 80 00 20 */	blr 
+.endfn importBti__6TexImgFP7TextureR18RandomAccessStreamPUc
 
-.global importTxe__6TexImgFP7TextureR18RandomAccessStream
-importTxe__6TexImgFP7TextureR18RandomAccessStream:
+.fn importTxe__6TexImgFP7TextureR18RandomAccessStream, global
 /* 80028D7C 00025CDC  7C 08 02 A6 */	mflr r0
 /* 80028D80 00025CE0  90 01 00 04 */	stw r0, 4(r1)
 /* 80028D84 00025CE4  94 21 FF C0 */	stwu r1, -0x40(r1)
@@ -3749,9 +3748,9 @@ importTxe__6TexImgFP7TextureR18RandomAccessStream:
 /* 80028F18 00025E78  38 21 00 40 */	addi r1, r1, 0x40
 /* 80028F1C 00025E7C  7C 08 03 A6 */	mtlr r0
 /* 80028F20 00025E80  4E 80 00 20 */	blr 
+.endfn importTxe__6TexImgFP7TextureR18RandomAccessStream
 
-.global initImage__7TexAttrFv
-initImage__7TexAttrFv:
+.fn initImage__7TexAttrFv, global
 /* 80028F24 00025E84  7C 08 02 A6 */	mflr r0
 /* 80028F28 00025E88  90 01 00 04 */	stw r0, 4(r1)
 /* 80028F2C 00025E8C  94 21 FE D8 */	stwu r1, -0x128(r1)
@@ -3883,9 +3882,9 @@ initImage__7TexAttrFv:
 /* 800290FC 0002605C  38 21 01 28 */	addi r1, r1, 0x128
 /* 80029100 00026060  7C 08 03 A6 */	mtlr r0
 /* 80029104 00026064  4E 80 00 20 */	blr 
+.endfn initImage__7TexAttrFv
 
-.global read__7TexAttrFR18RandomAccessStream
-read__7TexAttrFR18RandomAccessStream:
+.fn read__7TexAttrFR18RandomAccessStream, global
 /* 80029108 00026068  7C 08 02 A6 */	mflr r0
 /* 8002910C 0002606C  90 01 00 04 */	stw r0, 4(r1)
 /* 80029110 00026070  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -3929,9 +3928,9 @@ read__7TexAttrFR18RandomAccessStream:
 /* 800291A8 00026108  38 21 00 18 */	addi r1, r1, 0x18
 /* 800291AC 0002610C  7C 08 03 A6 */	mtlr r0
 /* 800291B0 00026110  4E 80 00 20 */	blr 
+.endfn read__7TexAttrFR18RandomAccessStream
 
-.global drawCylinder__8GraphicsFR8Vector3fR8Vector3ffR8Matrix4f
-drawCylinder__8GraphicsFR8Vector3fR8Vector3ffR8Matrix4f:
+.fn drawCylinder__8GraphicsFR8Vector3fR8Vector3ffR8Matrix4f, global
 /* 800291B4 00026114  7C 08 02 A6 */	mflr r0
 /* 800291B8 00026118  90 01 00 04 */	stw r0, 4(r1)
 /* 800291BC 0002611C  94 21 FE 50 */	stwu r1, -0x1b0(r1)
@@ -4110,9 +4109,9 @@ drawCylinder__8GraphicsFR8Vector3fR8Vector3ffR8Matrix4f:
 /* 80029464 000263C4  38 21 01 B0 */	addi r1, r1, 0x1b0
 /* 80029468 000263C8  7C 08 03 A6 */	mtlr r0
 /* 8002946C 000263CC  4E 80 00 20 */	blr 
+.endfn drawCylinder__8GraphicsFR8Vector3fR8Vector3ffR8Matrix4f
 
-.global drawSphere__8GraphicsFR8Vector3ffR8Matrix4f
-drawSphere__8GraphicsFR8Vector3ffR8Matrix4f:
+.fn drawSphere__8GraphicsFR8Vector3ffR8Matrix4f, global
 /* 80029470 000263D0  7C 08 02 A6 */	mflr r0
 /* 80029474 000263D4  90 01 00 04 */	stw r0, 4(r1)
 /* 80029478 000263D8  94 21 FE B8 */	stwu r1, -0x148(r1)
@@ -4242,9 +4241,9 @@ drawSphere__8GraphicsFR8Vector3ffR8Matrix4f:
 /* 80029660 000265C0  38 21 01 48 */	addi r1, r1, 0x148
 /* 80029664 000265C4  7C 08 03 A6 */	mtlr r0
 /* 80029668 000265C8  4E 80 00 20 */	blr 
+.endfn drawSphere__8GraphicsFR8Vector3ffR8Matrix4f
 
-.global perspPrintf__8GraphicsFP4FontR8Vector3fiiPce
-perspPrintf__8GraphicsFP4FontR8Vector3fiiPce:
+.fn perspPrintf__8GraphicsFP4FontR8Vector3fiiPce, global
 /* 8002966C 000265CC  7C 08 02 A6 */	mflr r0
 /* 80029670 000265D0  90 01 00 04 */	stw r0, 4(r1)
 /* 80029674 000265D4  94 21 FE 38 */	stwu r1, -0x1c8(r1)
@@ -4340,9 +4339,9 @@ perspPrintf__8GraphicsFP4FontR8Vector3fiiPce:
 /* 800297D0 00026730  38 21 01 C8 */	addi r1, r1, 0x1c8
 /* 800297D4 00026734  7C 08 03 A6 */	mtlr r0
 /* 800297D8 00026738  4E 80 00 20 */	blr 
+.endfn perspPrintf__8GraphicsFP4FontR8Vector3fiiPce
 
-.global calcLighting__8GraphicsFf
-calcLighting__8GraphicsFf:
+.fn calcLighting__8GraphicsFf, global
 /* 800297DC 0002673C  7C 08 02 A6 */	mflr r0
 /* 800297E0 00026740  90 01 00 04 */	stw r0, 4(r1)
 /* 800297E4 00026744  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -4417,13 +4416,13 @@ calcLighting__8GraphicsFf:
 /* 800298E4 00026844  38 21 00 28 */	addi r1, r1, 0x28
 /* 800298E8 00026848  7C 08 03 A6 */	mtlr r0
 /* 800298EC 0002684C  4E 80 00 20 */	blr 
+.endfn calcLighting__8GraphicsFf
 
-.global setAmbient__8GraphicsFv
-setAmbient__8GraphicsFv:
+.fn setAmbient__8GraphicsFv, weak
 /* 800298F0 00026850  4E 80 00 20 */	blr 
+.endfn setAmbient__8GraphicsFv
 
-.global makeResident__12CacheTextureFv
-makeResident__12CacheTextureFv:
+.fn makeResident__12CacheTextureFv, global
 /* 800298F4 00026854  7C 08 02 A6 */	mflr r0
 /* 800298F8 00026858  90 01 00 04 */	stw r0, 4(r1)
 /* 800298FC 0002685C  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -4457,40 +4456,40 @@ makeResident__12CacheTextureFv:
 /* 80029964 000268C4  38 21 00 18 */	addi r1, r1, 0x18
 /* 80029968 000268C8  7C 08 03 A6 */	mtlr r0
 /* 8002996C 000268CC  4E 80 00 20 */	blr 
+.endfn makeResident__12CacheTextureFv
 
-.global videoReset__8GraphicsFv
-videoReset__8GraphicsFv:
+.fn videoReset__8GraphicsFv, weak
 /* 80029970 000268D0  4E 80 00 20 */	blr 
+.endfn videoReset__8GraphicsFv
 
-.global setVerticalFilter__8GraphicsFPUc
-setVerticalFilter__8GraphicsFPUc:
+.fn setVerticalFilter__8GraphicsFPUc, weak
 /* 80029974 000268D4  4E 80 00 20 */	blr 
+.endfn setVerticalFilter__8GraphicsFPUc
 
-.global getVerticalFilter__8GraphicsFPUc
-getVerticalFilter__8GraphicsFPUc:
+.fn getVerticalFilter__8GraphicsFPUc, weak
 /* 80029978 000268D8  4E 80 00 20 */	blr 
+.endfn getVerticalFilter__8GraphicsFPUc
 
-.global getDListPtr__8GraphicsFv
-getDListPtr__8GraphicsFv:
+.fn getDListPtr__8GraphicsFv, weak
 /* 8002997C 000268DC  38 60 00 00 */	li r3, 0
 /* 80029980 000268E0  4E 80 00 20 */	blr 
+.endfn getDListPtr__8GraphicsFv
 
-.global getDListRemainSize__8GraphicsFv
-getDListRemainSize__8GraphicsFv:
+.fn getDListRemainSize__8GraphicsFv, weak
 /* 80029984 000268E4  38 60 00 00 */	li r3, 0
 /* 80029988 000268E8  4E 80 00 20 */	blr 
+.endfn getDListRemainSize__8GraphicsFv
 
-.global setLightcam__8GraphicsFP11LightCamera
-setLightcam__8GraphicsFP11LightCamera:
+.fn setLightcam__8GraphicsFP11LightCamera, weak
 /* 8002998C 000268EC  90 83 03 38 */	stw r4, 0x338(r3)
 /* 80029990 000268F0  4E 80 00 20 */	blr 
+.endfn setLightcam__8GraphicsFP11LightCamera
 
-.global setBlendMode__8GraphicsFUcUcUc
-setBlendMode__8GraphicsFUcUcUc:
+.fn setBlendMode__8GraphicsFUcUcUc, weak
 /* 80029994 000268F4  4E 80 00 20 */	blr 
+.endfn setBlendMode__8GraphicsFUcUcUc
 
-.global setMatHandler__8GraphicsFP15MaterialHandler
-setMatHandler__8GraphicsFP15MaterialHandler:
+.fn setMatHandler__8GraphicsFP15MaterialHandler, weak
 /* 80029998 000268F8  7C 08 02 A6 */	mflr r0
 /* 8002999C 000268FC  90 01 00 04 */	stw r0, 4(r1)
 /* 800299A0 00026900  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -4525,9 +4524,9 @@ setMatHandler__8GraphicsFP15MaterialHandler:
 /* 80029A08 00026968  38 21 00 18 */	addi r1, r1, 0x18
 /* 80029A0C 0002696C  7C 08 03 A6 */	mtlr r0
 /* 80029A10 00026970  4E 80 00 20 */	blr 
+.endfn setMatHandler__8GraphicsFP15MaterialHandler
 
-.global useMaterial__8GraphicsFP8Material
-useMaterial__8GraphicsFP8Material:
+.fn useMaterial__8GraphicsFP8Material, weak
 /* 80029A14 00026974  7C 08 02 A6 */	mflr r0
 /* 80029A18 00026978  90 01 00 04 */	stw r0, 4(r1)
 /* 80029A1C 0002697C  94 21 FF F8 */	stwu r1, -8(r1)
@@ -4540,27 +4539,33 @@ useMaterial__8GraphicsFP8Material:
 /* 80029A38 00026998  38 21 00 08 */	addi r1, r1, 8
 /* 80029A3C 0002699C  7C 08 03 A6 */	mtlr r0
 /* 80029A40 000269A0  4E 80 00 20 */	blr 
+.endfn useMaterial__8GraphicsFP8Material
 
-.global testRectangle__8GraphicsFR8RectArea
-testRectangle__8GraphicsFR8RectArea:
+.fn testRectangle__8GraphicsFR8RectArea, weak
 /* 80029A44 000269A4  4E 80 00 20 */	blr 
+.endfn testRectangle__8GraphicsFR8RectArea
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_80227540:
+.obj lbl_80227540, local
 	.asciz "graphics.cpp"
+.endobj lbl_80227540
 .balign 4
-lbl_80227550:
+.obj lbl_80227550, local
 	.asciz "Graphics"
+.endobj lbl_80227550
 .balign 4
-lbl_8022755C:
+.obj lbl_8022755C, local
 	.asciz "Projection"
+.endobj lbl_8022755C
 .balign 4
-mappingTypes$1231:
+.obj mappingTypes$1231, local
 	.4byte lbl_803DCF14
 	.4byte lbl_8022755C
 	.4byte lbl_803DCF1C
-sjis_convert_table:
+.endobj mappingTypes$1231
+.balign 4
+.obj sjis_convert_table, local
 	.4byte 0x00000118
 	.4byte 0x0119000C
 	.4byte 0x000E0060
@@ -4861,15 +4866,9 @@ sjis_convert_table:
 	.4byte 0x01120113
 	.4byte 0x01140115
 	.4byte 0x01160000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
+.endobj sjis_convert_table
 .balign 32
-kanji_convert_table:
+.obj kanji_convert_table, local
 	.4byte 0x93FA96DA
 	.4byte 0x8E9E8E84
 	.4byte 0x96A2926D
@@ -5164,8 +5163,10 @@ kanji_convert_table:
 	.4byte 0x95769281
 	.4byte 0x92E1949A
 	.4byte 0x8F5A8FCE
-	.4byte 0x00000000
-convFmts:
+	.byte 0x00
+.endobj kanji_convert_table
+.balign 4
+.obj convFmts, local
 	.4byte 0x00000003
 	.4byte 0x00000004
 	.4byte 0x00000005
@@ -5181,32 +5182,41 @@ convFmts:
 	.4byte 0xFFFFFFFF
 	.4byte 0xFFFFFFFF
 	.4byte 0x00000001
+.endobj convFmts
 .balign 4
-lbl_80227F18:
+.obj lbl_80227F18, local
 	.asciz "TEX_FMT_RGB565"
+.endobj lbl_80227F18
 .balign 4
-lbl_80227F28:
+.obj lbl_80227F28, local
 	.asciz "TEX_FMT_S3TC"
+.endobj lbl_80227F28
 .balign 4
-lbl_80227F38:
+.obj lbl_80227F38, local
 	.asciz "TEX_FMT_RGB5A3"
+.endobj lbl_80227F38
 .balign 4
-lbl_80227F48:
+.obj lbl_80227F48, local
 	.asciz "TEX_FMT_I4"
+.endobj lbl_80227F48
 .balign 4
-lbl_80227F54:
+.obj lbl_80227F54, local
 	.asciz "TEX_FMT_I8"
+.endobj lbl_80227F54
 .balign 4
-lbl_80227F60:
+.obj lbl_80227F60, local
 	.asciz "TEX_FMT_IA4"
+.endobj lbl_80227F60
 .balign 4
-lbl_80227F6C:
+.obj lbl_80227F6C, local
 	.asciz "TEX_FMT_IA8"
+.endobj lbl_80227F6C
 .balign 4
-lbl_80227F78:
+.obj lbl_80227F78, local
 	.asciz "TEX_FMT_RGBA8"
+.endobj lbl_80227F78
 .balign 4
-fmtNames:
+.obj fmtNames, local
 	.4byte lbl_80227F18
 	.4byte lbl_80227F28
 	.4byte lbl_80227F38
@@ -5215,7 +5225,9 @@ fmtNames:
 	.4byte lbl_80227F60
 	.4byte lbl_80227F6C
 	.4byte lbl_80227F78
-lbl_80227FA8:
+.endobj fmtNames
+.balign 4
+.obj lbl_80227FA8, local
 	.4byte .L_800287B0
 	.4byte .L_80028790
 	.4byte .L_800287A4
@@ -5226,32 +5238,41 @@ lbl_80227FA8:
 	.4byte .L_800287E8
 	.4byte .L_800287F4
 	.4byte .L_800287FC
+.endobj lbl_80227FA8
 .balign 4
-lbl_80227FD0:
+.obj lbl_80227FD0, local
 	.asciz "GX_TF_I4"
+.endobj lbl_80227FD0
 .balign 4
-lbl_80227FDC:
+.obj lbl_80227FDC, local
 	.asciz "GX_TF_I8"
+.endobj lbl_80227FDC
 .balign 4
-lbl_80227FE8:
+.obj lbl_80227FE8, local
 	.asciz "GX_TF_IA4"
+.endobj lbl_80227FE8
 .balign 4
-lbl_80227FF4:
+.obj lbl_80227FF4, local
 	.asciz "GX_TF_IA8"
+.endobj lbl_80227FF4
 .balign 4
-lbl_80228000:
+.obj lbl_80228000, local
 	.asciz "GX_TF_RGB565"
+.endobj lbl_80228000
 .balign 4
-lbl_80228010:
+.obj lbl_80228010, local
 	.asciz "GX_TF_RGB5A3"
+.endobj lbl_80228010
 .balign 4
-lbl_80228020:
+.obj lbl_80228020, local
 	.asciz "GX_TF_RGBA8"
+.endobj lbl_80228020
 .balign 4
-lbl_8022802C:
+.obj lbl_8022802C, local
 	.asciz "GX_TF_CMPR"
+.endobj lbl_8022802C
 .balign 4
-btitexFmts:
+.obj btitexFmts, local
 	.4byte lbl_80227FD0
 	.4byte lbl_80227FDC
 	.4byte lbl_80227FE8
@@ -5267,78 +5288,97 @@ btitexFmts:
 	.4byte lbl_803DCF28
 	.4byte lbl_803DCF28
 	.4byte lbl_8022802C
+.endobj btitexFmts
 .balign 4
-lbl_80228074:
+.obj lbl_80228074, local
 	.asciz "GX_TF_C4"
+.endobj lbl_80228074
 .balign 4
-lbl_80228080:
+.obj lbl_80228080, local
 	.asciz "GX_TF_C8"
+.endobj lbl_80228080
 .balign 4
-lbl_8022808C:
+.obj lbl_8022808C, local
 	.asciz "GX_TF_C14X2"
+.endobj lbl_8022808C
 .balign 4
-btipalFmts:
+.obj btipalFmts, local
 	.4byte lbl_80228074
 	.4byte lbl_80228080
 	.4byte lbl_8022808C
+.endobj btipalFmts
 .balign 4
-lbl_802280A4:
+.obj lbl_802280A4, local
 	.asciz "CacheTexture"
+.endobj lbl_802280A4
 .balign 4
-lbl_802280B4:
+.obj lbl_802280B4, local
 	.asciz "GfxObject"
+.endobj lbl_802280B4
 .balign 4
-lbl_802280C0:
+.obj lbl_802280C0, local
 	.4byte __RTTI__9GfxObject
 	.4byte 0
 	.4byte 0
-lbl_802280CC:
+.endobj lbl_802280C0
+.balign 4
+.obj lbl_802280CC, local
 	.4byte __RTTI__9GfxObject
 	.4byte 0
 	.4byte __RTTI__7Texture
 	.4byte 0
 	.4byte 0
-.global __vt__12CacheTexture
-__vt__12CacheTexture:
+.endobj lbl_802280CC
+.balign 4
+.obj __vt__12CacheTexture, global
 	.4byte __RTTI__12CacheTexture
 	.4byte 0
 	.4byte attach__7TextureFv
 	.4byte detach__7TextureFv
 	.4byte makeResident__12CacheTextureFv
+.endobj __vt__12CacheTexture
 .balign 4
-lbl_802280F4:
+.obj lbl_802280F4, local
 	.asciz "CoreNode"
+.endobj lbl_802280F4
 .balign 4
-lbl_80228100:
+.obj lbl_80228100, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte 0
-lbl_8022810C:
+.endobj lbl_80228100
+.balign 4
+.obj lbl_8022810C, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte __RTTI__8CoreNode
 	.4byte 0
 	.4byte 0
-.global __vt__7TexAttr
-__vt__7TexAttr:
+.endobj lbl_8022810C
+.balign 4
+.obj __vt__7TexAttr, global
 	.4byte __RTTI__7TexAttr
 	.4byte 0
 	.4byte getAgeNodeType__5ANodeFv
 	.4byte read__7TexAttrFR18RandomAccessStream
-lbl_80228130:
+.endobj __vt__7TexAttr
+.balign 4
+.obj lbl_80228130, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte __RTTI__8CoreNode
 	.4byte 0
 	.4byte 0
-.global __vt__6TexImg
-__vt__6TexImg:
+.endobj lbl_80228130
+.balign 4
+.obj __vt__6TexImg, global
 	.4byte __RTTI__6TexImg
 	.4byte 0
 	.4byte getAgeNodeType__5ANodeFv
 	.4byte read__6TexImgFR18RandomAccessStream
-.global __vt__8Graphics
-__vt__8Graphics:
+.endobj __vt__6TexImg
+.balign 4
+.obj __vt__8Graphics, global
 	.4byte __RTTI__8Graphics
 	.4byte 0
 	.4byte videoReset__8GraphicsFv
@@ -5400,33 +5440,38 @@ __vt__8Graphics:
 	.4byte 0
 	.4byte 0
 	.4byte perspPrintf__8GraphicsFP4FontR8Vector3fiiPce
+.endobj __vt__8Graphics
 .balign 4
-lbl_80228248:
+.obj lbl_80228248, local
 	.asciz "MaterialHandler"
+.endobj lbl_80228248
 .balign 4
-.global __vt__15MaterialHandler
-__vt__15MaterialHandler:
+.obj __vt__15MaterialHandler, global
 	.4byte __RTTI__15MaterialHandler
 	.4byte 0
 	.4byte setMaterial__15MaterialHandlerFP8Material
 	.4byte setTexMatrix__15MaterialHandlerFb
+.endobj __vt__15MaterialHandler
 .balign 4
-lbl_80228268:
+.obj lbl_80228268, local
 	.asciz "Material"
+.endobj lbl_80228268
 .balign 4
-lbl_80228274:
+.obj lbl_80228274, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte __RTTI__8CoreNode
 	.4byte 0
 	.4byte 0
-.global __vt__8Material
-__vt__8Material:
+.endobj lbl_80228274
+.balign 4
+.obj __vt__8Material, global
 	.4byte __RTTI__8Material
 	.4byte 0
 	.4byte getAgeNodeType__5ANodeFv
 	.4byte read__8MaterialFR18RandomAccessStream
 	.4byte attach__8MaterialFv
+.endobj __vt__8Material
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8

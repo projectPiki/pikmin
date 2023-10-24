@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global exitCourse__15PikiShapeObjectFv
-exitCourse__15PikiShapeObjectFv:
+.fn exitCourse__15PikiShapeObjectFv, global
 /* 800D8894 000D57F4  38 00 00 01 */	li r0, 1
 /* 800D8898 000D57F8  3C 60 80 3D */	lis r3, _instances__15PikiShapeObject@ha
 /* 800D889C 000D57FC  98 0D C4 70 */	stb r0, firstTime__15PikiShapeObject@sda21(r13)
@@ -12,9 +11,9 @@ exitCourse__15PikiShapeObjectFv:
 /* 800D88B0 000D5810  90 03 00 04 */	stw r0, 4(r3)
 /* 800D88B4 000D5814  90 03 00 00 */	stw r0, 0(r3)
 /* 800D88B8 000D5818  4E 80 00 20 */	blr 
+.endfn exitCourse__15PikiShapeObjectFv
 
-.global init__15PikiShapeObjectFv
-init__15PikiShapeObjectFv:
+.fn init__15PikiShapeObjectFv, global
 /* 800D88BC 000D581C  38 00 00 01 */	li r0, 1
 /* 800D88C0 000D5820  3C 60 80 3D */	lis r3, _instances__15PikiShapeObject@ha
 /* 800D88C4 000D5824  98 0D C4 70 */	stb r0, firstTime__15PikiShapeObject@sda21(r13)
@@ -25,9 +24,9 @@ init__15PikiShapeObjectFv:
 /* 800D88D8 000D5838  90 03 00 04 */	stw r0, 4(r3)
 /* 800D88DC 000D583C  90 03 00 00 */	stw r0, 0(r3)
 /* 800D88E0 000D5840  4E 80 00 20 */	blr 
+.endfn init__15PikiShapeObjectFv
 
-.global getAnimMgr__15PikiShapeObjectFv
-getAnimMgr__15PikiShapeObjectFv:
+.fn getAnimMgr__15PikiShapeObjectFv, global
 /* 800D88E4 000D5844  7C 08 02 A6 */	mflr r0
 /* 800D88E8 000D5848  90 01 00 04 */	stw r0, 4(r1)
 /* 800D88EC 000D584C  94 21 FF F8 */	stwu r1, -8(r1)
@@ -44,9 +43,9 @@ getAnimMgr__15PikiShapeObjectFv:
 /* 800D8914 000D5874  38 21 00 08 */	addi r1, r1, 8
 /* 800D8918 000D5878  7C 08 03 A6 */	mtlr r0
 /* 800D891C 000D587C  4E 80 00 20 */	blr 
+.endfn getAnimMgr__15PikiShapeObjectFv
 
-.global initOnce__15PikiShapeObjectFv
-initOnce__15PikiShapeObjectFv:
+.fn initOnce__15PikiShapeObjectFv, global
 /* 800D8920 000D5880  7C 08 02 A6 */	mflr r0
 /* 800D8924 000D5884  3C 80 80 2C */	lis r4, lbl_802BA320@ha
 /* 800D8928 000D5888  90 01 00 04 */	stw r0, 4(r1)
@@ -161,9 +160,9 @@ initOnce__15PikiShapeObjectFv:
 /* 800D8AC8 000D5A28  38 21 00 18 */	addi r1, r1, 0x18
 /* 800D8ACC 000D5A2C  7C 08 03 A6 */	mtlr r0
 /* 800D8AD0 000D5A30  4E 80 00 20 */	blr 
+.endfn initOnce__15PikiShapeObjectFv
 
-.global __ct__15PikiShapeObjectFP5Shape
-__ct__15PikiShapeObjectFP5Shape:
+.fn __ct__15PikiShapeObjectFP5Shape, global
 /* 800D8AD4 000D5A34  7C 08 02 A6 */	mflr r0
 /* 800D8AD8 000D5A38  3C A0 80 23 */	lis r5, __vt__11AnimContext@ha
 /* 800D8ADC 000D5A3C  90 01 00 04 */	stw r0, 4(r1)
@@ -203,9 +202,9 @@ __ct__15PikiShapeObjectFP5Shape:
 /* 800D8B64 000D5AC4  38 21 00 18 */	addi r1, r1, 0x18
 /* 800D8B68 000D5AC8  7C 08 03 A6 */	mtlr r0
 /* 800D8B6C 000D5ACC  4E 80 00 20 */	blr 
+.endfn __ct__15PikiShapeObjectFP5Shape
 
-.global isKinoko__8ViewPikiFv
-isKinoko__8ViewPikiFv:
+.fn isKinoko__8ViewPikiFv, global
 /* 800D8B70 000D5AD0  3C 80 80 3D */	lis r4, _instances__15PikiShapeObject@ha
 /* 800D8B74 000D5AD4  80 A3 05 88 */	lwz r5, 0x588(r3)
 /* 800D8B78 000D5AD8  38 64 1E 48 */	addi r3, r4, _instances__15PikiShapeObject@l
@@ -214,9 +213,9 @@ isKinoko__8ViewPikiFv:
 /* 800D8B84 000D5AE4  7C 00 00 34 */	cntlzw r0, r0
 /* 800D8B88 000D5AE8  54 03 D9 7E */	srwi r3, r0, 5
 /* 800D8B8C 000D5AEC  4E 80 00 20 */	blr 
+.endfn isKinoko__8ViewPikiFv
 
-.global changeShape__8ViewPikiFi
-changeShape__8ViewPikiFi:
+.fn changeShape__8ViewPikiFi, global
 /* 800D8B90 000D5AF0  7C 08 02 A6 */	mflr r0
 /* 800D8B94 000D5AF4  90 01 00 04 */	stw r0, 4(r1)
 /* 800D8B98 000D5AF8  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -295,9 +294,9 @@ changeShape__8ViewPikiFi:
 /* 800D8CAC 000D5C0C  38 21 00 28 */	addi r1, r1, 0x28
 /* 800D8CB0 000D5C10  7C 08 03 A6 */	mtlr r0
 /* 800D8CB4 000D5C14  4E 80 00 20 */	blr 
+.endfn changeShape__8ViewPikiFi
 
-.global __ct__8ViewPikiFP12CreatureProp
-__ct__8ViewPikiFP12CreatureProp:
+.fn __ct__8ViewPikiFP12CreatureProp, global
 /* 800D8CB8 000D5C18  7C 08 02 A6 */	mflr r0
 /* 800D8CBC 000D5C1C  90 01 00 04 */	stw r0, 4(r1)
 /* 800D8CC0 000D5C20  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -322,9 +321,9 @@ __ct__8ViewPikiFP12CreatureProp:
 /* 800D8D0C 000D5C6C  38 21 00 18 */	addi r1, r1, 0x18
 /* 800D8D10 000D5C70  7C 08 03 A6 */	mtlr r0
 /* 800D8D14 000D5C74  4E 80 00 20 */	blr 
+.endfn __ct__8ViewPikiFP12CreatureProp
 
-.global initBirth__8ViewPikiFv
-initBirth__8ViewPikiFv:
+.fn initBirth__8ViewPikiFv, global
 /* 800D8D18 000D5C78  7C 08 02 A6 */	mflr r0
 /* 800D8D1C 000D5C7C  90 01 00 04 */	stw r0, 4(r1)
 /* 800D8D20 000D5C80  38 00 00 00 */	li r0, 0
@@ -371,9 +370,9 @@ initBirth__8ViewPikiFv:
 /* 800D8DC0 000D5D20  38 21 00 30 */	addi r1, r1, 0x30
 /* 800D8DC4 000D5D24  7C 08 03 A6 */	mtlr r0
 /* 800D8DC8 000D5D28  4E 80 00 20 */	blr 
+.endfn initBirth__8ViewPikiFv
 
-.global init__8ViewPikiFP5ShapeP6MapMgrP4Navi
-init__8ViewPikiFP5ShapeP6MapMgrP4Navi:
+.fn init__8ViewPikiFP5ShapeP6MapMgrP4Navi, global
 /* 800D8DCC 000D5D2C  7C 08 02 A6 */	mflr r0
 /* 800D8DD0 000D5D30  3C 80 80 2C */	lis r4, lbl_802BA33C@ha
 /* 800D8DD4 000D5D34  90 01 00 04 */	stw r0, 4(r1)
@@ -532,9 +531,9 @@ init__8ViewPikiFP5ShapeP6MapMgrP4Navi:
 /* 800D902C 000D5F8C  38 21 00 78 */	addi r1, r1, 0x78
 /* 800D9030 000D5F90  7C 08 03 A6 */	mtlr r0
 /* 800D9034 000D5F94  4E 80 00 20 */	blr 
+.endfn init__8ViewPikiFP5ShapeP6MapMgrP4Navi
 
-.global setFlower__8ViewPikiFi
-setFlower__8ViewPikiFi:
+.fn setFlower__8ViewPikiFi, global
 /* 800D9038 000D5F98  7C 08 02 A6 */	mflr r0
 /* 800D903C 000D5F9C  90 01 00 04 */	stw r0, 4(r1)
 /* 800D9040 000D5FA0  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -561,13 +560,13 @@ setFlower__8ViewPikiFi:
 /* 800D9090 000D5FF0  38 21 00 18 */	addi r1, r1, 0x18
 /* 800D9094 000D5FF4  7C 08 03 A6 */	mtlr r0
 /* 800D9098 000D5FF8  4E 80 00 20 */	blr 
+.endfn setFlower__8ViewPikiFi
 
-.global setLeaves__8ViewPikiFi
-setLeaves__8ViewPikiFi:
+.fn setLeaves__8ViewPikiFi, global
 /* 800D909C 000D5FFC  4E 80 00 20 */	blr 
+.endfn setLeaves__8ViewPikiFi
 
-.global postUpdate__8ViewPikiFif
-postUpdate__8ViewPikiFif:
+.fn postUpdate__8ViewPikiFif, global
 /* 800D90A0 000D6000  7C 08 02 A6 */	mflr r0
 /* 800D90A4 000D6004  90 01 00 04 */	stw r0, 4(r1)
 /* 800D90A8 000D6008  94 21 FF 80 */	stwu r1, -0x80(r1)
@@ -668,9 +667,9 @@ postUpdate__8ViewPikiFif:
 /* 800D9210 000D6170  38 21 00 80 */	addi r1, r1, 0x80
 /* 800D9214 000D6174  7C 08 03 A6 */	mtlr r0
 /* 800D9218 000D6178  4E 80 00 20 */	blr 
+.endfn postUpdate__8ViewPikiFif
 
-.global update__8ViewPikiFv
-update__8ViewPikiFv:
+.fn update__8ViewPikiFv, global
 /* 800D921C 000D617C  7C 08 02 A6 */	mflr r0
 /* 800D9220 000D6180  90 01 00 04 */	stw r0, 4(r1)
 /* 800D9224 000D6184  94 21 FF 00 */	stwu r1, -0x100(r1)
@@ -940,9 +939,9 @@ update__8ViewPikiFv:
 /* 800D9618 000D6578  38 21 01 00 */	addi r1, r1, 0x100
 /* 800D961C 000D657C  7C 08 03 A6 */	mtlr r0
 /* 800D9620 000D6580  4E 80 00 20 */	blr 
+.endfn update__8ViewPikiFv
 
-.global startHimaLook__4PikiFP8Vector3f
-startHimaLook__4PikiFP8Vector3f:
+.fn startHimaLook__4PikiFP8Vector3f, global
 /* 800D9624 000D6584  7C 08 02 A6 */	mflr r0
 /* 800D9628 000D6588  90 01 00 04 */	stw r0, 4(r1)
 /* 800D962C 000D658C  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -984,26 +983,26 @@ startHimaLook__4PikiFP8Vector3f:
 /* 800D96B8 000D6618  38 21 00 28 */	addi r1, r1, 0x28
 /* 800D96BC 000D661C  7C 08 03 A6 */	mtlr r0
 /* 800D96C0 000D6620  4E 80 00 20 */	blr 
+.endfn startHimaLook__4PikiFP8Vector3f
 
-.global finishLook__4PikiFv
-finishLook__4PikiFv:
+.fn finishLook__4PikiFv, global
 /* 800D96C4 000D6624  38 80 00 00 */	li r4, 0
 /* 800D96C8 000D6628  90 83 03 3C */	stw r4, 0x33c(r3)
 /* 800D96CC 000D662C  38 00 00 0A */	li r0, 0xa
 /* 800D96D0 000D6630  98 03 03 40 */	stb r0, 0x340(r3)
 /* 800D96D4 000D6634  98 83 03 30 */	stb r4, 0x330(r3)
 /* 800D96D8 000D6638  4E 80 00 20 */	blr 
+.endfn finishLook__4PikiFv
 
-.global isLooking__4PikiFv
-isLooking__4PikiFv:
+.fn isLooking__4PikiFv, global
 /* 800D96DC 000D663C  80 03 03 3C */	lwz r0, 0x33c(r3)
 /* 800D96E0 000D6640  7C 60 00 D0 */	neg r3, r0
 /* 800D96E4 000D6644  30 03 FF FF */	addic r0, r3, -1
 /* 800D96E8 000D6648  7C 60 19 10 */	subfe r3, r0, r3
 /* 800D96EC 000D664C  4E 80 00 20 */	blr 
+.endfn isLooking__4PikiFv
 
-.global updateLook__4PikiFv
-updateLook__4PikiFv:
+.fn updateLook__4PikiFv, global
 /* 800D96F0 000D6650  7C 08 02 A6 */	mflr r0
 /* 800D96F4 000D6654  90 01 00 04 */	stw r0, 4(r1)
 /* 800D96F8 000D6658  94 21 FF 90 */	stwu r1, -0x70(r1)
@@ -1240,9 +1239,9 @@ updateLook__4PikiFv:
 /* 800D9A5C 000D69BC  38 21 00 70 */	addi r1, r1, 0x70
 /* 800D9A60 000D69C0  7C 08 03 A6 */	mtlr r0
 /* 800D9A64 000D69C4  4E 80 00 20 */	blr 
+.endfn updateLook__4PikiFv
 
-.global demoDraw__8ViewPikiFR8GraphicsP8Matrix4f
-demoDraw__8ViewPikiFR8GraphicsP8Matrix4f:
+.fn demoDraw__8ViewPikiFR8GraphicsP8Matrix4f, global
 /* 800D9A68 000D69C8  7C 08 02 A6 */	mflr r0
 /* 800D9A6C 000D69CC  90 01 00 04 */	stw r0, 4(r1)
 /* 800D9A70 000D69D0  94 21 FE 70 */	stwu r1, -0x190(r1)
@@ -1680,9 +1679,9 @@ demoDraw__8ViewPikiFR8GraphicsP8Matrix4f:
 /* 800DA0D4 000D7034  38 21 01 90 */	addi r1, r1, 0x190
 /* 800DA0D8 000D7038  7C 08 03 A6 */	mtlr r0
 /* 800DA0DC 000D703C  4E 80 00 20 */	blr 
+.endfn demoDraw__8ViewPikiFR8GraphicsP8Matrix4f
 
-.global refresh__8ViewPikiFR8Graphics
-refresh__8ViewPikiFR8Graphics:
+.fn refresh__8ViewPikiFR8Graphics, global
 /* 800DA0E0 000D7040  7C 08 02 A6 */	mflr r0
 /* 800DA0E4 000D7044  90 01 00 04 */	stw r0, 4(r1)
 /* 800DA0E8 000D7048  94 21 FB F0 */	stwu r1, -0x410(r1)
@@ -2433,68 +2432,86 @@ refresh__8ViewPikiFR8Graphics:
 /* 800DAC1C 000D7B7C  38 21 04 10 */	addi r1, r1, 0x410
 /* 800DAC20 000D7B80  7C 08 03 A6 */	mtlr r0
 /* 800DAC24 000D7B84  4E 80 00 20 */	blr 
+.endfn refresh__8ViewPikiFR8Graphics
 
 .section .rodata, "a"  # 0x80221FE0 - 0x80222DC0
 .balign 8
-lbl_80222580:
+.obj lbl_80222580, local
 	.4byte lbl_803E1220
 	.4byte lbl_803E1224
 	.4byte lbl_803E1228
 	.4byte lbl_803E122C
 	.4byte lbl_803E1230
 	.4byte lbl_803E1234
+.endobj lbl_80222580
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802BA320:
+.obj lbl_802BA320, local
 	.asciz "viewPiki.cpp"
+.endobj lbl_802BA320
 .balign 4
-lbl_802BA330:
+.obj lbl_802BA330, local
 	.asciz "viewPiki"
+.endobj lbl_802BA330
 .balign 4
-lbl_802BA33C:
+.obj lbl_802BA33C, local
 	.asciz "piki animmgr"
+.endobj lbl_802BA33C
 .balign 4
-lbl_802BA34C:
+.obj lbl_802BA34C, local
 	.asciz "pikis/bluModel.mod"
+.endobj lbl_802BA34C
 .balign 4
-lbl_802BA360:
+.obj lbl_802BA360, local
 	.asciz "pikis/animMgr.bin"
+.endobj lbl_802BA360
 .balign 4
-lbl_802BA374:
+.obj lbl_802BA374, local
 	.asciz "pikiAnimMgr"
+.endobj lbl_802BA374
 .balign 4
-lbl_802BA380:
+.obj lbl_802BA380, local
 	.asciz "pikis/redModel.mod"
+.endobj lbl_802BA380
 .balign 4
-lbl_802BA394:
+.obj lbl_802BA394, local
 	.asciz "pikis/yelModel.mod"
+.endobj lbl_802BA394
 .balign 4
-lbl_802BA3A8:
+.obj lbl_802BA3A8, local
 	.asciz "pikis/kinModel.mod"
+.endobj lbl_802BA3A8
 .balign 4
-lbl_802BA3BC:
+.obj lbl_802BA3BC, local
 	.asciz "ViewPiki"
+.endobj lbl_802BA3BC
 .balign 4
-lbl_802BA3C8:
+.obj lbl_802BA3C8, local
 	.asciz "PaniAnimKeyListener"
+.endobj lbl_802BA3C8
 .balign 4
-lbl_802BA3DC:
+.obj lbl_802BA3DC, local
 	.asciz "EventTalker"
+.endobj lbl_802BA3DC
 .balign 4
-lbl_802BA3E8:
+.obj lbl_802BA3E8, local
 	.asciz "RefCountable"
+.endobj lbl_802BA3E8
 .balign 4
-lbl_802BA3F8:
+.obj lbl_802BA3F8, local
 	.asciz "Creature"
+.endobj lbl_802BA3F8
 .balign 4
-lbl_802BA404:
+.obj lbl_802BA404, local
 	.4byte __RTTI__11EventTalker
 	.4byte 0x00000008
 	.4byte __RTTI__12RefCountable
 	.4byte 0x00000000
 	.4byte 0x00000000
-lbl_802BA418:
+.endobj lbl_802BA404
+.balign 4
+.obj lbl_802BA418, local
 	.4byte __RTTI__19PaniAnimKeyListener
 	.4byte 0x000002B8
 	.4byte __RTTI__11EventTalker
@@ -2504,7 +2521,9 @@ lbl_802BA418:
 	.4byte __RTTI__8Creature
 	.4byte 0x00000000
 	.4byte 0x00000000
-lbl_802BA43C:
+.endobj lbl_802BA418
+.balign 4
+.obj lbl_802BA43C, local
 	.4byte __RTTI__19PaniAnimKeyListener
 	.4byte 0x000002B8
 	.4byte __RTTI__11EventTalker
@@ -2516,8 +2535,9 @@ lbl_802BA43C:
 	.4byte __RTTI__4Piki
 	.4byte 0x00000000
 	.4byte 0x00000000
-.global __vt__8ViewPiki
-__vt__8ViewPiki:
+.endobj lbl_802BA43C
+.balign 4
+.obj __vt__8ViewPiki, global
 	.4byte __RTTI__8ViewPiki
 	.4byte 0
 	.4byte addCntCallback__4PikiFv
@@ -2596,201 +2616,291 @@ __vt__8ViewPiki:
 	.4byte changeShape__8ViewPikiFi
 	.4byte setFlower__8ViewPikiFi
 	.4byte setLeaves__8ViewPikiFi
+.endobj __vt__8ViewPiki
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-.global firstTime__15PikiShapeObject
-firstTime__15PikiShapeObject:
+.obj firstTime__15PikiShapeObject, global
 	.byte 1
+.endobj firstTime__15PikiShapeObject
 .balign 4
-lbl_803E1194:
+.obj lbl_803E1194, local
 	.float 1.0
-lbl_803E1198:
+.endobj lbl_803E1194
+.obj lbl_803E1198, local
 	.float 1.0
-lbl_803E119C:
+.endobj lbl_803E1198
+.obj lbl_803E119C, local
 	.float 1.0
-lbl_803E11A0:
+.endobj lbl_803E119C
+.obj lbl_803E11A0, local
 	.float 0.0
-lbl_803E11A4:
+.endobj lbl_803E11A0
+.obj lbl_803E11A4, local
 	.float 0.0
-lbl_803E11A8:
+.endobj lbl_803E11A4
+.obj lbl_803E11A8, local
 	.float 0.0
-lbl_803E11AC:
+.endobj lbl_803E11A8
+.obj lbl_803E11AC, local
 	.float 0.0
-lbl_803E11B0:
+.endobj lbl_803E11AC
+.obj lbl_803E11B0, local
 	.float 0.0
-lbl_803E11B4:
+.endobj lbl_803E11B0
+.obj lbl_803E11B4, local
 	.float 0.0
-lbl_803E11B8:
+.endobj lbl_803E11B4
+.obj lbl_803E11B8, local
 	.float 0.0
-lbl_803E11BC:
+.endobj lbl_803E11B8
+.obj lbl_803E11BC, local
 	.float 0.0
-lbl_803E11C0:
+.endobj lbl_803E11BC
+.obj lbl_803E11C0, local
 	.float 0.0
-lbl_803E11C4:
+.endobj lbl_803E11C0
+.obj lbl_803E11C4, local
 	.float 0.0
-lbl_803E11C8:
+.endobj lbl_803E11C4
+.obj lbl_803E11C8, local
 	.float 0.0
-lbl_803E11CC:
+.endobj lbl_803E11C8
+.obj lbl_803E11CC, local
 	.float 0.0
-lbl_803E11D0:
+.endobj lbl_803E11CC
+.obj lbl_803E11D0, local
 	.float 0.0
-lbl_803E11D4:
+.endobj lbl_803E11D0
+.obj lbl_803E11D4, local
 	.float 0.0
-lbl_803E11D8:
+.endobj lbl_803E11D4
+.obj lbl_803E11D8, local
 	.float 0.0
-lbl_803E11DC:
+.endobj lbl_803E11D8
+.obj lbl_803E11DC, local
 	.float 0.0
-lbl_803E11E0:
+.endobj lbl_803E11DC
+.obj lbl_803E11E0, local
 	.float 1.0
-lbl_803E11E4:
+.endobj lbl_803E11E0
+.obj lbl_803E11E4, local
 	.float 0.0
-lbl_803E11E8:
+.endobj lbl_803E11E4
+.obj lbl_803E11E8, local
 	.float 0.0
-lbl_803E11EC:
+.endobj lbl_803E11E8
+.obj lbl_803E11EC, local
 	.float 0.0
-lbl_803E11F0:
+.endobj lbl_803E11EC
+.obj lbl_803E11F0, local
 	.float 0.0
-lbl_803E11F4:
+.endobj lbl_803E11F0
+.obj lbl_803E11F4, local
 	.float 4.0
-lbl_803E11F8:
+.endobj lbl_803E11F4
+.obj lbl_803E11F8, local
 	.float 0.0
-lbl_803E11FC:
+.endobj lbl_803E11F8
+.obj lbl_803E11FC, local
 	.float 4.0
-lbl_803E1200:
+.endobj lbl_803E11FC
+.obj lbl_803E1200, local
 	.float 0.0
-lbl_803E1204:
+.endobj lbl_803E1200
+.obj lbl_803E1204, local
 	.float 0.0
-lbl_803E1208:
+.endobj lbl_803E1204
+.obj lbl_803E1208, local
 	.float 3.0
-lbl_803E120C:
+.endobj lbl_803E1208
+.obj lbl_803E120C, local
 	.float 0.0
-lbl_803E1210:
+.endobj lbl_803E120C
+.obj lbl_803E1210, local
 	.float 0.0
-lbl_803E1214:
+.endobj lbl_803E1210
+.obj lbl_803E1214, local
 	.float 6.0
-lbl_803E1218:
+.endobj lbl_803E1214
+.obj lbl_803E1218, local
 	.float 0.0
-lbl_803E121C:
+.endobj lbl_803E1218
+.obj lbl_803E121C, local
 	.float 0.0
-lbl_803E1220:
+.endobj lbl_803E121C
+.balign 4
+.obj lbl_803E1220, local
 	.asciz "A"
+.endobj lbl_803E1220
 .balign 4
-lbl_803E1224:
+.obj lbl_803E1224, local
 	.asciz "B"
+.endobj lbl_803E1224
 .balign 4
-lbl_803E1228:
+.obj lbl_803E1228, local
 	.asciz "C"
+.endobj lbl_803E1228
 .balign 4
-lbl_803E122C:
+.obj lbl_803E122C, local
 	.asciz "D"
+.endobj lbl_803E122C
 .balign 4
-lbl_803E1230:
+.obj lbl_803E1230, local
 	.asciz "E"
+.endobj lbl_803E1230
 .balign 4
-lbl_803E1234:
+.obj lbl_803E1234, local
 	.asciz "F"
+.endobj lbl_803E1234
 .balign 4
-lbl_803E1238:
+.obj lbl_803E1238, local
 	.asciz "%s%d"
+.endobj lbl_803E1238
 .balign 4
-lbl_803E1240:
+.obj lbl_803E1240, local
 	.float 0.0
-lbl_803E1244:
+.endobj lbl_803E1240
+.obj lbl_803E1244, local
 	.float 0.0
-lbl_803E1248:
+.endobj lbl_803E1244
+.obj lbl_803E1248, local # pi/2
 	.float 1.5707964
-lbl_803E124C:
+.endobj lbl_803E1248
+.obj lbl_803E124C, local
 	.float 0.0
-lbl_803E1250:
+.endobj lbl_803E124C
+.obj lbl_803E1250, local
 	.float 0.0
-lbl_803E1254:
+.endobj lbl_803E1250
+.obj lbl_803E1254, local
 	.float 0.0
-__RTTI__19PaniAnimKeyListener:
+.endobj lbl_803E1254
+.obj __RTTI__19PaniAnimKeyListener, local
 	.4byte lbl_802BA3C8
 	.4byte 0
-__RTTI__11EventTalker:
+.endobj __RTTI__19PaniAnimKeyListener
+.obj __RTTI__11EventTalker, local
 	.4byte lbl_802BA3DC
 	.4byte 0
-__RTTI__12RefCountable:
+.endobj __RTTI__11EventTalker
+.obj __RTTI__12RefCountable, local
 	.4byte lbl_802BA3E8
 	.4byte 0
-__RTTI__8Creature:
+.endobj __RTTI__12RefCountable
+.obj __RTTI__8Creature, local
 	.4byte lbl_802BA3F8
 	.4byte lbl_802BA404
+.endobj __RTTI__8Creature
 .balign 4
-lbl_803E1278:
+.obj lbl_803E1278, local
 	.asciz "Piki"
+.endobj lbl_803E1278
 .balign 4
-__RTTI__4Piki:
+.obj __RTTI__4Piki, local
 	.4byte lbl_803E1278
 	.4byte lbl_802BA418
-__RTTI__8ViewPiki:
+.endobj __RTTI__4Piki
+.obj __RTTI__8ViewPiki, local
 	.4byte lbl_802BA3BC
 	.4byte lbl_802BA43C
+.endobj __RTTI__8ViewPiki
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803E99E8:
+.obj lbl_803E99E8, local
 	.float 0.0
-lbl_803E99EC:
+.endobj lbl_803E99E8
+.obj lbl_803E99EC, local
 	.float 30.0
-lbl_803E99F0:
+.endobj lbl_803E99EC
+.obj lbl_803E99F0, local
 	.float 1.0
-lbl_803E99F4:
+.endobj lbl_803E99F0
+.obj lbl_803E99F4, local
 	.float 32767.0
-lbl_803E99F8:
+.endobj lbl_803E99F4
+.obj lbl_803E99F8, local
 	.float 300.0
-lbl_803E99FC:
+.endobj lbl_803E99F8
+.obj lbl_803E99FC, local
 	.float 0.5
-lbl_803E9A00:
-	.4byte 0x43300000
-	.4byte 0x80000000
-lbl_803E9A08:
+.endobj lbl_803E99FC
+.balign 8
+.obj lbl_803E9A00, local
+	.8byte 0x4330000080000000
+.endobj lbl_803E9A00
+.balign 8
+.obj lbl_803E9A08, local
 	.double 0.5
-lbl_803E9A10:
+.endobj lbl_803E9A08
+.balign 8
+.obj lbl_803E9A10, local
 	.double 3.0
-lbl_803E9A18:
+.endobj lbl_803E9A10
+.obj lbl_803E9A18, local
 	.float 100.0
-lbl_803E9A1C:
+.endobj lbl_803E9A18
+.obj lbl_803E9A1C, local
 	.float 0.99
-lbl_803E9A20:
+.endobj lbl_803E9A1C
+.obj lbl_803E9A20, local
 	.float 40.0
-lbl_803E9A24:
+.endobj lbl_803E9A20
+.obj lbl_803E9A24, local
 	.float 0.01667
-lbl_803E9A28:
+.endobj lbl_803E9A24
+.obj lbl_803E9A28, local
 	.float 4.0
-lbl_803E9A2C:
+.endobj lbl_803E9A28
+.obj lbl_803E9A2C, local
 	.float 3.0
-lbl_803E9A30:
+.endobj lbl_803E9A2C
+.obj lbl_803E9A30, local
 	.float 0.05
-lbl_803E9A34:
+.endobj lbl_803E9A30
+.obj lbl_803E9A34, local
 	.float 0.2
-lbl_803E9A38:
+.endobj lbl_803E9A34
+.obj lbl_803E9A38, local
 	.float 0.1
-lbl_803E9A3C:
+.endobj lbl_803E9A38
+.obj lbl_803E9A3C, local # pi
 	.float 3.1415927
-lbl_803E9A40:
+.endobj lbl_803E9A3C
+.obj lbl_803E9A40, local # tau
 	.float 6.2831855
-lbl_803E9A44:
+.endobj lbl_803E9A40
+.obj lbl_803E9A44, local
 	.float -1.0
-lbl_803E9A48:
-	.4byte 0x3E20D97C
-lbl_803E9A4C:
-	.4byte 0x40060A92
-lbl_803E9A50:
-	.4byte 0x40860A92
-lbl_803E9A54:
-	.4byte 0x3F860A92
-lbl_803E9A58:
-	.4byte 0x40A78D36
-lbl_803E9A5C:
+.endobj lbl_803E9A44
+.obj lbl_803E9A48, local
+	.float 0.15707964
+.endobj lbl_803E9A48
+.obj lbl_803E9A4C, local # 2pi/3
+	.float 2.0943952
+.endobj lbl_803E9A4C
+.obj lbl_803E9A50, local # 4pi/3
+	.float 4.1887903
+.endobj lbl_803E9A50
+.obj lbl_803E9A54, local # pi/3
+	.float 1.0471976
+.endobj lbl_803E9A54
+.obj lbl_803E9A58, local # 5pi/3
+	.float 5.2359877
+.endobj lbl_803E9A58
+.obj lbl_803E9A5C, local
 	.float 50.0
-lbl_803E9A60:
+.endobj lbl_803E9A5C
+.obj lbl_803E9A60, local
 	.float 2.0
-lbl_803E9A64:
+.endobj lbl_803E9A60
+.obj lbl_803E9A64, local
 	.float 12800.0
-lbl_803E9A68:
+.endobj lbl_803E9A64
+.obj lbl_803E9A68, local
 	.float 0.01
-lbl_803E9A6C:
+.endobj lbl_803E9A68
+.obj lbl_803E9A6C, local
 	.float 1200.0
+.endobj lbl_803E9A6C

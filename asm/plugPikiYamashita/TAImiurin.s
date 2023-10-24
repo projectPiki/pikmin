@@ -5181,8 +5181,8 @@ lbl_803EBFFC:
 	.4byte 0x42280000
 lbl_803EC000:
 	.4byte 0xBF000000
-lbl_803EC004:
-	.4byte 0x3F860A92
+lbl_803EC004: # pi/3
+	.float 1.0471976
 lbl_803EC008:
 	.4byte 0x3FC00000
 lbl_803EC00C:

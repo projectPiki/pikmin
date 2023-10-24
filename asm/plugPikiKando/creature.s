@@ -1,14 +1,13 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global finishFixPosition__8CreatureFv
-finishFixPosition__8CreatureFv:
+.fn finishFixPosition__8CreatureFv, global
 /* 8008A040 00086FA0  80 03 00 C8 */	lwz r0, 0xc8(r3)
 /* 8008A044 00086FA4  54 00 02 D2 */	rlwinm r0, r0, 0, 0xb, 9
 /* 8008A048 00086FA8  90 03 00 C8 */	stw r0, 0xc8(r3)
 /* 8008A04C 00086FAC  4E 80 00 20 */	blr 
+.endfn finishFixPosition__8CreatureFv
 
-.global isTerrible__8CreatureFv
-isTerrible__8CreatureFv:
+.fn isTerrible__8CreatureFv, global
 /* 8008A050 00086FB0  7C 08 02 A6 */	mflr r0
 /* 8008A054 00086FB4  90 01 00 04 */	stw r0, 4(r1)
 /* 8008A058 00086FB8  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -28,9 +27,9 @@ isTerrible__8CreatureFv:
 /* 8008A08C 00086FEC  38 21 00 18 */	addi r1, r1, 0x18
 /* 8008A090 00086FF0  7C 08 03 A6 */	mtlr r0
 /* 8008A094 00086FF4  4E 80 00 20 */	blr 
+.endfn isTerrible__8CreatureFv
 
-.global load__8CreatureFR18RandomAccessStreamb
-load__8CreatureFR18RandomAccessStreamb:
+.fn load__8CreatureFR18RandomAccessStreamb, global
 /* 8008A098 00086FF8  7C 08 02 A6 */	mflr r0
 /* 8008A09C 00086FFC  90 01 00 04 */	stw r0, 4(r1)
 /* 8008A0A0 00087000  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -86,9 +85,9 @@ load__8CreatureFR18RandomAccessStreamb:
 /* 8008A164 000870C4  38 21 00 28 */	addi r1, r1, 0x28
 /* 8008A168 000870C8  7C 08 03 A6 */	mtlr r0
 /* 8008A16C 000870CC  4E 80 00 20 */	blr 
+.endfn load__8CreatureFR18RandomAccessStreamb
 
-.global save__8CreatureFR18RandomAccessStreamb
-save__8CreatureFR18RandomAccessStreamb:
+.fn save__8CreatureFR18RandomAccessStreamb, global
 /* 8008A170 000870D0  7C 08 02 A6 */	mflr r0
 /* 8008A174 000870D4  90 01 00 04 */	stw r0, 4(r1)
 /* 8008A178 000870D8  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -144,9 +143,9 @@ save__8CreatureFR18RandomAccessStreamb:
 /* 8008A23C 0008719C  38 21 00 28 */	addi r1, r1, 0x28
 /* 8008A240 000871A0  7C 08 03 A6 */	mtlr r0
 /* 8008A244 000871A4  4E 80 00 20 */	blr 
+.endfn save__8CreatureFR18RandomAccessStreamb
 
-.global getCollidePlatformCreature__8CreatureFv
-getCollidePlatformCreature__8CreatureFv:
+.fn getCollidePlatformCreature__8CreatureFv, global
 /* 8008A248 000871A8  80 63 02 80 */	lwz r3, 0x280(r3)
 /* 8008A24C 000871AC  28 03 00 00 */	cmplwi r3, 0
 /* 8008A250 000871B0  41 82 00 0C */	beq .L_8008A25C
@@ -155,9 +154,9 @@ getCollidePlatformCreature__8CreatureFv:
 .L_8008A25C:
 /* 8008A25C 000871BC  38 60 00 00 */	li r3, 0
 /* 8008A260 000871C0  4E 80 00 20 */	blr 
+.endfn getCollidePlatformCreature__8CreatureFv
 
-.global getCollidePlatformNormal__8CreatureFv
-getCollidePlatformNormal__8CreatureFv:
+.fn getCollidePlatformNormal__8CreatureFv, global
 /* 8008A264 000871C4  80 84 02 84 */	lwz r4, 0x284(r4)
 /* 8008A268 000871C8  28 04 00 00 */	cmplwi r4, 0
 /* 8008A26C 000871CC  40 82 00 20 */	bne .L_8008A28C
@@ -176,9 +175,9 @@ getCollidePlatformNormal__8CreatureFv:
 /* 8008A29C 000871FC  C0 04 00 08 */	lfs f0, 8(r4)
 /* 8008A2A0 00087200  D0 03 00 08 */	stfs f0, 8(r3)
 /* 8008A2A4 00087204  4E 80 00 20 */	blr 
+.endfn getCollidePlatformNormal__8CreatureFv
 
-.global isBoss__8CreatureFv
-isBoss__8CreatureFv:
+.fn isBoss__8CreatureFv, global
 /* 8008A2A8 00087208  80 03 00 6C */	lwz r0, 0x6c(r3)
 /* 8008A2AC 0008720C  2C 00 00 27 */	cmpwi r0, 0x27
 /* 8008A2B0 00087210  41 80 00 14 */	blt .L_8008A2C4
@@ -189,9 +188,9 @@ isBoss__8CreatureFv:
 .L_8008A2C4:
 /* 8008A2C4 00087224  38 60 00 00 */	li r3, 0
 /* 8008A2C8 00087228  4E 80 00 20 */	blr 
+.endfn isBoss__8CreatureFv
 
-.global enableStick__8CreatureFv
-enableStick__8CreatureFv:
+.fn enableStick__8CreatureFv, global
 /* 8008A2CC 0008722C  7C 08 02 A6 */	mflr r0
 /* 8008A2D0 00087230  90 01 00 04 */	stw r0, 4(r1)
 /* 8008A2D4 00087234  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -211,9 +210,9 @@ enableStick__8CreatureFv:
 /* 8008A308 00087268  38 21 00 18 */	addi r1, r1, 0x18
 /* 8008A30C 0008726C  7C 08 03 A6 */	mtlr r0
 /* 8008A310 00087270  4E 80 00 20 */	blr 
+.endfn enableStick__8CreatureFv
 
-.global disableStick__8CreatureFv
-disableStick__8CreatureFv:
+.fn disableStick__8CreatureFv, global
 /* 8008A314 00087274  7C 08 02 A6 */	mflr r0
 /* 8008A318 00087278  90 01 00 04 */	stw r0, 4(r1)
 /* 8008A31C 0008727C  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -233,9 +232,9 @@ disableStick__8CreatureFv:
 /* 8008A350 000872B0  38 21 00 18 */	addi r1, r1, 0x18
 /* 8008A354 000872B4  7C 08 03 A6 */	mtlr r0
 /* 8008A358 000872B8  4E 80 00 20 */	blr 
+.endfn disableStick__8CreatureFv
 
-.global getNearestCollPart__8CreatureFR8Vector3fUl
-getNearestCollPart__8CreatureFR8Vector3fUl:
+.fn getNearestCollPart__8CreatureFR8Vector3fUl, global
 /* 8008A35C 000872BC  7C 08 02 A6 */	mflr r0
 /* 8008A360 000872C0  90 01 00 04 */	stw r0, 4(r1)
 /* 8008A364 000872C4  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -266,9 +265,9 @@ getNearestCollPart__8CreatureFR8Vector3fUl:
 /* 8008A3C0 00087320  38 21 00 28 */	addi r1, r1, 0x28
 /* 8008A3C4 00087324  7C 08 03 A6 */	mtlr r0
 /* 8008A3C8 00087328  4E 80 00 20 */	blr 
+.endfn getNearestCollPart__8CreatureFR8Vector3fUl
 
-.global getRandomCollPart__8CreatureFUl
-getRandomCollPart__8CreatureFUl:
+.fn getRandomCollPart__8CreatureFUl, global
 /* 8008A3CC 0008732C  7C 08 02 A6 */	mflr r0
 /* 8008A3D0 00087330  90 01 00 04 */	stw r0, 4(r1)
 /* 8008A3D4 00087334  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -295,9 +294,9 @@ getRandomCollPart__8CreatureFUl:
 /* 8008A420 00087380  38 21 00 18 */	addi r1, r1, 0x18
 /* 8008A424 00087384  7C 08 03 A6 */	mtlr r0
 /* 8008A428 00087388  4E 80 00 20 */	blr 
+.endfn getRandomCollPart__8CreatureFUl
 
-.global getBoundingSphereCentre__8CreatureFv
-getBoundingSphereCentre__8CreatureFv:
+.fn getBoundingSphereCentre__8CreatureFv, global
 /* 8008A42C 0008738C  7C 08 02 A6 */	mflr r0
 /* 8008A430 00087390  90 01 00 04 */	stw r0, 4(r1)
 /* 8008A434 00087394  94 21 FF D0 */	stwu r1, -0x30(r1)
@@ -355,9 +354,9 @@ getBoundingSphereCentre__8CreatureFv:
 /* 8008A4F8 00087458  38 21 00 30 */	addi r1, r1, 0x30
 /* 8008A4FC 0008745C  7C 08 03 A6 */	mtlr r0
 /* 8008A500 00087460  4E 80 00 20 */	blr 
+.endfn getBoundingSphereCentre__8CreatureFv
 
-.global getBoundingSphereRadius__8CreatureFv
-getBoundingSphereRadius__8CreatureFv:
+.fn getBoundingSphereRadius__8CreatureFv, global
 /* 8008A504 00087464  7C 08 02 A6 */	mflr r0
 /* 8008A508 00087468  90 01 00 04 */	stw r0, 4(r1)
 /* 8008A50C 0008746C  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -405,9 +404,9 @@ getBoundingSphereRadius__8CreatureFv:
 /* 8008A5A8 00087508  38 21 00 18 */	addi r1, r1, 0x18
 /* 8008A5AC 0008750C  7C 08 03 A6 */	mtlr r0
 /* 8008A5B0 00087510  4E 80 00 20 */	blr 
+.endfn getBoundingSphereRadius__8CreatureFv
 
-.global playEventSound__8CreatureFP8Creaturei
-playEventSound__8CreatureFP8Creaturei:
+.fn playEventSound__8CreatureFP8Creaturei, global
 /* 8008A5B4 00087514  7C 08 02 A6 */	mflr r0
 /* 8008A5B8 00087518  28 04 00 00 */	cmplwi r4, 0
 /* 8008A5BC 0008751C  90 01 00 04 */	stw r0, 4(r1)
@@ -423,9 +422,9 @@ playEventSound__8CreatureFP8Creaturei:
 /* 8008A5E0 00087540  38 21 00 08 */	addi r1, r1, 8
 /* 8008A5E4 00087544  7C 08 03 A6 */	mtlr r0
 /* 8008A5E8 00087548  4E 80 00 20 */	blr 
+.endfn playEventSound__8CreatureFP8Creaturei
 
-.global stopEventSound__8CreatureFP8Creaturei
-stopEventSound__8CreatureFP8Creaturei:
+.fn stopEventSound__8CreatureFP8Creaturei, global
 /* 8008A5EC 0008754C  7C 08 02 A6 */	mflr r0
 /* 8008A5F0 00087550  28 04 00 00 */	cmplwi r4, 0
 /* 8008A5F4 00087554  90 01 00 04 */	stw r0, 4(r1)
@@ -441,9 +440,9 @@ stopEventSound__8CreatureFP8Creaturei:
 /* 8008A618 00087578  38 21 00 08 */	addi r1, r1, 8
 /* 8008A61C 0008757C  7C 08 03 A6 */	mtlr r0
 /* 8008A620 00087580  4E 80 00 20 */	blr 
+.endfn stopEventSound__8CreatureFP8Creaturei
 
-.global getCentre__8CreatureFv
-getCentre__8CreatureFv:
+.fn getCentre__8CreatureFv, global
 /* 8008A624 00087584  7C 08 02 A6 */	mflr r0
 /* 8008A628 00087588  90 01 00 04 */	stw r0, 4(r1)
 /* 8008A62C 0008758C  94 21 FF B0 */	stwu r1, -0x50(r1)
@@ -508,9 +507,9 @@ getCentre__8CreatureFv:
 /* 8008A70C 0008766C  38 21 00 50 */	addi r1, r1, 0x50
 /* 8008A710 00087670  7C 08 03 A6 */	mtlr r0
 /* 8008A714 00087674  4E 80 00 20 */	blr 
+.endfn getCentre__8CreatureFv
 
-.global getCentreSize__8CreatureFv
-getCentreSize__8CreatureFv:
+.fn getCentreSize__8CreatureFv, global
 /* 8008A718 00087678  7C 08 02 A6 */	mflr r0
 /* 8008A71C 0008767C  90 01 00 04 */	stw r0, 4(r1)
 /* 8008A720 00087680  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -542,9 +541,9 @@ getCentreSize__8CreatureFv:
 /* 8008A780 000876E0  38 21 00 18 */	addi r1, r1, 0x18
 /* 8008A784 000876E4  7C 08 03 A6 */	mtlr r0
 /* 8008A788 000876E8  4E 80 00 20 */	blr 
+.endfn getCentreSize__8CreatureFv
 
-.global getStandType__8CreatureFv
-getStandType__8CreatureFv:
+.fn getStandType__8CreatureFv, global
 /* 8008A78C 000876EC  80 03 02 8C */	lwz r0, 0x28c(r3)
 /* 8008A790 000876F0  28 00 00 00 */	cmplwi r0, 0
 /* 8008A794 000876F4  40 82 00 34 */	bne .L_8008A7C8
@@ -577,9 +576,9 @@ getStandType__8CreatureFv:
 .L_8008A7F0:
 /* 8008A7F0 00087750  38 60 00 00 */	li r3, 0
 /* 8008A7F4 00087754  4E 80 00 20 */	blr 
+.endfn getStandType__8CreatureFv
 
-.global __ct__10SearchDataFv
-__ct__10SearchDataFv:
+.fn __ct__10SearchDataFv, global
 /* 8008A7F8 00087758  7C 08 02 A6 */	mflr r0
 /* 8008A7FC 0008775C  90 01 00 04 */	stw r0, 4(r1)
 /* 8008A800 00087760  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -604,9 +603,9 @@ __ct__10SearchDataFv:
 /* 8008A848 000877A8  38 21 00 18 */	addi r1, r1, 0x18
 /* 8008A84C 000877AC  7C 08 03 A6 */	mtlr r0
 /* 8008A850 000877B0  4E 80 00 20 */	blr 
+.endfn __ct__10SearchDataFv
 
-.global getGeneratorID__8CreatureFv
-getGeneratorID__8CreatureFv:
+.fn getGeneratorID__8CreatureFv, global
 /* 8008A854 000877B4  80 63 00 64 */	lwz r3, 0x64(r3)
 /* 8008A858 000877B8  28 03 00 00 */	cmplwi r3, 0
 /* 8008A85C 000877BC  41 82 00 0C */	beq .L_8008A868
@@ -616,9 +615,9 @@ getGeneratorID__8CreatureFv:
 /* 8008A868 000877C8  3C 60 6E 75 */	lis r3, 0x6E756C6C@ha
 /* 8008A86C 000877CC  38 63 6C 6C */	addi r3, r3, 0x6E756C6C@l
 /* 8008A870 000877D0  4E 80 00 20 */	blr 
+.endfn getGeneratorID__8CreatureFv
 
-.global stimulate__8CreatureFR11Interaction
-stimulate__8CreatureFR11Interaction:
+.fn stimulate__8CreatureFR11Interaction, global
 /* 8008A874 000877D4  7C 08 02 A6 */	mflr r0
 /* 8008A878 000877D8  90 01 00 04 */	stw r0, 4(r1)
 /* 8008A87C 000877DC  94 21 FF F8 */	stwu r1, -8(r1)
@@ -629,9 +628,9 @@ stimulate__8CreatureFR11Interaction:
 /* 8008A890 000877F0  38 21 00 08 */	addi r1, r1, 8
 /* 8008A894 000877F4  7C 08 03 A6 */	mtlr r0
 /* 8008A898 000877F8  4E 80 00 20 */	blr 
+.endfn stimulate__8CreatureFR11Interaction
 
-.global setStateGrabbed__8CreatureFP8Creature
-setStateGrabbed__8CreatureFP8Creature:
+.fn setStateGrabbed__8CreatureFP8Creature, global
 /* 8008A89C 000877FC  7C 08 02 A6 */	mflr r0
 /* 8008A8A0 00087800  90 01 00 04 */	stw r0, 4(r1)
 /* 8008A8A4 00087804  94 21 FF C8 */	stwu r1, -0x38(r1)
@@ -717,9 +716,9 @@ setStateGrabbed__8CreatureFP8Creature:
 /* 8008A9C8 00087928  38 21 00 38 */	addi r1, r1, 0x38
 /* 8008A9CC 0008792C  7C 08 03 A6 */	mtlr r0
 /* 8008A9D0 00087930  4E 80 00 20 */	blr 
+.endfn setStateGrabbed__8CreatureFP8Creature
 
-.global resetStateGrabbed__8CreatureFv
-resetStateGrabbed__8CreatureFv:
+.fn resetStateGrabbed__8CreatureFv, global
 /* 8008A9D4 00087934  7C 08 02 A6 */	mflr r0
 /* 8008A9D8 00087938  90 01 00 04 */	stw r0, 4(r1)
 /* 8008A9DC 0008793C  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -748,9 +747,9 @@ resetStateGrabbed__8CreatureFv:
 /* 8008AA30 00087990  38 21 00 18 */	addi r1, r1, 0x18
 /* 8008AA34 00087994  7C 08 03 A6 */	mtlr r0
 /* 8008AA38 00087998  4E 80 00 20 */	blr 
+.endfn resetStateGrabbed__8CreatureFv
 
-.global turnTo__8CreatureFR8Vector3f
-turnTo__8CreatureFR8Vector3f:
+.fn turnTo__8CreatureFR8Vector3f, global
 /* 8008AA3C 0008799C  7C 08 02 A6 */	mflr r0
 /* 8008AA40 000879A0  90 01 00 04 */	stw r0, 4(r1)
 /* 8008AA44 000879A4  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -769,9 +768,9 @@ turnTo__8CreatureFR8Vector3f:
 /* 8008AA78 000879D8  38 21 00 18 */	addi r1, r1, 0x18
 /* 8008AA7C 000879DC  7C 08 03 A6 */	mtlr r0
 /* 8008AA80 000879E0  4E 80 00 20 */	blr 
+.endfn turnTo__8CreatureFR8Vector3f
 
-.global init__8CreatureFv
-init__8CreatureFv:
+.fn init__8CreatureFv, global
 /* 8008AA84 000879E4  7C 08 02 A6 */	mflr r0
 /* 8008AA88 000879E8  90 01 00 04 */	stw r0, 4(r1)
 /* 8008AA8C 000879EC  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -870,9 +869,9 @@ init__8CreatureFv:
 /* 8008ABF8 00087B58  38 21 00 18 */	addi r1, r1, 0x18
 /* 8008ABFC 00087B5C  7C 08 03 A6 */	mtlr r0
 /* 8008AC00 00087B60  4E 80 00 20 */	blr 
+.endfn init__8CreatureFv
 
-.global init__8CreatureFR8Vector3f
-init__8CreatureFR8Vector3f:
+.fn init__8CreatureFR8Vector3f, global
 /* 8008AC04 00087B64  7C 08 02 A6 */	mflr r0
 /* 8008AC08 00087B68  90 01 00 04 */	stw r0, 4(r1)
 /* 8008AC0C 00087B6C  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -898,9 +897,9 @@ init__8CreatureFR8Vector3f:
 /* 8008AC5C 00087BBC  38 21 00 18 */	addi r1, r1, 0x18
 /* 8008AC60 00087BC0  7C 08 03 A6 */	mtlr r0
 /* 8008AC64 00087BC4  4E 80 00 20 */	blr 
+.endfn init__8CreatureFR8Vector3f
 
-.global resetPosition__8CreatureFR8Vector3f
-resetPosition__8CreatureFR8Vector3f:
+.fn resetPosition__8CreatureFR8Vector3f, global
 /* 8008AC68 00087BC8  80 A4 00 00 */	lwz r5, 0(r4)
 /* 8008AC6C 00087BCC  80 04 00 04 */	lwz r0, 4(r4)
 /* 8008AC70 00087BD0  90 A3 00 94 */	stw r5, 0x94(r3)
@@ -914,9 +913,9 @@ resetPosition__8CreatureFR8Vector3f:
 /* 8008AC90 00087BF0  80 04 00 08 */	lwz r0, 8(r4)
 /* 8008AC94 00087BF4  90 03 01 B4 */	stw r0, 0x1b4(r3)
 /* 8008AC98 00087BF8  4E 80 00 20 */	blr 
+.endfn resetPosition__8CreatureFR8Vector3f
 
-.global detachGenerator__8CreatureFv
-detachGenerator__8CreatureFv:
+.fn detachGenerator__8CreatureFv, global
 /* 8008AC9C 00087BFC  7C 08 02 A6 */	mflr r0
 /* 8008ACA0 00087C00  90 01 00 04 */	stw r0, 4(r1)
 /* 8008ACA4 00087C04  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -935,9 +934,9 @@ detachGenerator__8CreatureFv:
 /* 8008ACD4 00087C34  38 21 00 18 */	addi r1, r1, 0x18
 /* 8008ACD8 00087C38  7C 08 03 A6 */	mtlr r0
 /* 8008ACDC 00087C3C  4E 80 00 20 */	blr 
+.endfn detachGenerator__8CreatureFv
 
-.global kill__8CreatureFb
-kill__8CreatureFb:
+.fn kill__8CreatureFb, global
 /* 8008ACE0 00087C40  7C 08 02 A6 */	mflr r0
 /* 8008ACE4 00087C44  90 01 00 04 */	stw r0, 4(r1)
 /* 8008ACE8 00087C48  94 21 FF B8 */	stwu r1, -0x48(r1)
@@ -1082,9 +1081,9 @@ kill__8CreatureFb:
 /* 8008AECC 00087E2C  38 21 00 48 */	addi r1, r1, 0x48
 /* 8008AED0 00087E30  7C 08 03 A6 */	mtlr r0
 /* 8008AED4 00087E34  4E 80 00 20 */	blr 
+.endfn kill__8CreatureFb
 
-.global __ct__8CreatureFP12CreatureProp
-__ct__8CreatureFP12CreatureProp:
+.fn __ct__8CreatureFP12CreatureProp, global
 /* 8008AED8 00087E38  7C 08 02 A6 */	mflr r0
 /* 8008AEDC 00087E3C  90 01 00 04 */	stw r0, 4(r1)
 /* 8008AEE0 00087E40  94 21 FF D0 */	stwu r1, -0x30(r1)
@@ -1261,9 +1260,9 @@ __ct__8CreatureFP12CreatureProp:
 /* 8008B18C 000880EC  38 21 00 30 */	addi r1, r1, 0x30
 /* 8008B190 000880F0  7C 08 03 A6 */	mtlr r0
 /* 8008B194 000880F4  4E 80 00 20 */	blr 
+.endfn __ct__8CreatureFP12CreatureProp
 
-.global updateStatic__8CreatureFv
-updateStatic__8CreatureFv:
+.fn updateStatic__8CreatureFv, global
 /* 8008B198 000880F8  7C 08 02 A6 */	mflr r0
 /* 8008B19C 000880FC  90 01 00 04 */	stw r0, 4(r1)
 /* 8008B1A0 00088100  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -1293,9 +1292,9 @@ updateStatic__8CreatureFv:
 /* 8008B1FC 0008815C  38 21 00 18 */	addi r1, r1, 0x18
 /* 8008B200 00088160  7C 08 03 A6 */	mtlr r0
 /* 8008B204 00088164  4E 80 00 20 */	blr 
+.endfn updateStatic__8CreatureFv
 
-.global update__8CreatureFv
-update__8CreatureFv:
+.fn update__8CreatureFv, global
 /* 8008B208 00088168  7C 08 02 A6 */	mflr r0
 /* 8008B20C 0008816C  90 01 00 04 */	stw r0, 4(r1)
 /* 8008B210 00088170  94 21 FF 58 */	stwu r1, -0xa8(r1)
@@ -1672,9 +1671,9 @@ update__8CreatureFv:
 /* 8008B77C 000886DC  38 21 00 A8 */	addi r1, r1, 0xa8
 /* 8008B780 000886E0  7C 08 03 A6 */	mtlr r0
 /* 8008B784 000886E4  4E 80 00 20 */	blr 
+.endfn update__8CreatureFv
 
-.global postUpdate__8CreatureFif
-postUpdate__8CreatureFif:
+.fn postUpdate__8CreatureFif, global
 /* 8008B788 000886E8  7C 08 02 A6 */	mflr r0
 /* 8008B78C 000886EC  90 01 00 04 */	stw r0, 4(r1)
 /* 8008B790 000886F0  94 21 FF A8 */	stwu r1, -0x58(r1)
@@ -1807,9 +1806,9 @@ postUpdate__8CreatureFif:
 /* 8008B970 000888D0  38 21 00 58 */	addi r1, r1, 0x58
 /* 8008B974 000888D4  7C 08 03 A6 */	mtlr r0
 /* 8008B978 000888D8  4E 80 00 20 */	blr 
+.endfn postUpdate__8CreatureFif
 
-.global updateAI__8CreatureFv
-updateAI__8CreatureFv:
+.fn updateAI__8CreatureFv, global
 /* 8008B97C 000888DC  7C 08 02 A6 */	mflr r0
 /* 8008B980 000888E0  90 01 00 04 */	stw r0, 4(r1)
 /* 8008B984 000888E4  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -1858,9 +1857,9 @@ updateAI__8CreatureFv:
 /* 8008BA24 00088984  38 21 00 18 */	addi r1, r1, 0x18
 /* 8008BA28 00088988  7C 08 03 A6 */	mtlr r0
 /* 8008BA2C 0008898C  4E 80 00 20 */	blr 
+.endfn updateAI__8CreatureFv
 
-.global centreDist__FP8CreatureP8Creature
-centreDist__FP8CreatureP8Creature:
+.fn centreDist__FP8CreatureP8Creature, global
 /* 8008BA30 00088990  7C 08 02 A6 */	mflr r0
 /* 8008BA34 00088994  90 01 00 04 */	stw r0, 4(r1)
 /* 8008BA38 00088998  94 21 FF 98 */	stwu r1, -0x68(r1)
@@ -1922,9 +1921,9 @@ centreDist__FP8CreatureP8Creature:
 /* 8008BB14 00088A74  38 21 00 68 */	addi r1, r1, 0x68
 /* 8008BB18 00088A78  7C 08 03 A6 */	mtlr r0
 /* 8008BB1C 00088A7C  4E 80 00 20 */	blr 
+.endfn centreDist__FP8CreatureP8Creature
 
-.global sphereDist__FP8CreatureP8Creature
-sphereDist__FP8CreatureP8Creature:
+.fn sphereDist__FP8CreatureP8Creature, global
 /* 8008BB20 00088A80  7C 08 02 A6 */	mflr r0
 /* 8008BB24 00088A84  90 01 00 04 */	stw r0, 4(r1)
 /* 8008BB28 00088A88  94 21 FF 80 */	stwu r1, -0x80(r1)
@@ -1996,9 +1995,9 @@ sphereDist__FP8CreatureP8Creature:
 /* 8008BC30 00088B90  38 21 00 80 */	addi r1, r1, 0x80
 /* 8008BC34 00088B94  7C 08 03 A6 */	mtlr r0
 /* 8008BC38 00088B98  4E 80 00 20 */	blr 
+.endfn sphereDist__FP8CreatureP8Creature
 
-.global collisionCheck__8CreatureFf
-collisionCheck__8CreatureFf:
+.fn collisionCheck__8CreatureFf, global
 /* 8008BC3C 00088B9C  7C 08 02 A6 */	mflr r0
 /* 8008BC40 00088BA0  90 01 00 04 */	stw r0, 4(r1)
 /* 8008BC44 00088BA4  94 21 FE E0 */	stwu r1, -0x120(r1)
@@ -2470,9 +2469,9 @@ collisionCheck__8CreatureFf:
 /* 8008C318 00089278  38 21 01 20 */	addi r1, r1, 0x120
 /* 8008C31C 0008927C  7C 08 03 A6 */	mtlr r0
 /* 8008C320 00089280  4E 80 00 20 */	blr 
+.endfn collisionCheck__8CreatureFf
 
-.global getCatchPos__8CreatureFP8Creature
-getCatchPos__8CreatureFP8Creature:
+.fn getCatchPos__8CreatureFP8Creature, global
 /* 8008C324 00089284  7C 08 02 A6 */	mflr r0
 /* 8008C328 00089288  90 01 00 04 */	stw r0, 4(r1)
 /* 8008C32C 0008928C  94 21 FF B0 */	stwu r1, -0x50(r1)
@@ -2513,14 +2512,14 @@ getCatchPos__8CreatureFP8Creature:
 /* 8008C3B8 00089318  38 21 00 50 */	addi r1, r1, 0x50
 /* 8008C3BC 0008931C  7C 08 03 A6 */	mtlr r0
 /* 8008C3C0 00089320  4E 80 00 20 */	blr 
+.endfn getCatchPos__8CreatureFP8Creature
 
-.global needShadow__8CreatureFv
-needShadow__8CreatureFv:
+.fn needShadow__8CreatureFv, global
 /* 8008C3C4 00089324  38 60 00 01 */	li r3, 1
 /* 8008C3C8 00089328  4E 80 00 20 */	blr 
+.endfn needShadow__8CreatureFv
 
-.global getShadowSize__8CreatureFv
-getShadowSize__8CreatureFv:
+.fn getShadowSize__8CreatureFv, global
 /* 8008C3CC 0008932C  7C 08 02 A6 */	mflr r0
 /* 8008C3D0 00089330  90 01 00 04 */	stw r0, 4(r1)
 /* 8008C3D4 00089334  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -2537,9 +2536,9 @@ getShadowSize__8CreatureFv:
 /* 8008C400 00089360  38 21 00 18 */	addi r1, r1, 0x18
 /* 8008C404 00089364  7C 08 03 A6 */	mtlr r0
 /* 8008C408 00089368  4E 80 00 20 */	blr 
+.endfn getShadowSize__8CreatureFv
 
-.global recTraceShadowTris__FR8GraphicsR8Vector3fP11CollTriInfo
-recTraceShadowTris__FR8GraphicsR8Vector3fP11CollTriInfo:
+.fn recTraceShadowTris__FR8GraphicsR8Vector3fP11CollTriInfo, local
 /* 8008C40C 0008936C  7C 08 02 A6 */	mflr r0
 /* 8008C410 00089370  90 01 00 04 */	stw r0, 4(r1)
 /* 8008C414 00089374  38 00 00 03 */	li r0, 3
@@ -2719,9 +2718,9 @@ recTraceShadowTris__FR8GraphicsR8Vector3fP11CollTriInfo:
 /* 8008C6B4 00089614  38 21 00 D0 */	addi r1, r1, 0xd0
 /* 8008C6B8 00089618  7C 08 03 A6 */	mtlr r0
 /* 8008C6BC 0008961C  4E 80 00 20 */	blr 
+.endfn recTraceShadowTris__FR8GraphicsR8Vector3fP11CollTriInfo
 
-.global drawShadow__8CreatureFR8Graphics
-drawShadow__8CreatureFR8Graphics:
+.fn drawShadow__8CreatureFR8Graphics, global
 /* 8008C6C0 00089620  7C 08 02 A6 */	mflr r0
 /* 8008C6C4 00089624  90 01 00 04 */	stw r0, 4(r1)
 /* 8008C6C8 00089628  94 21 FB B0 */	stwu r1, -0x450(r1)
@@ -3231,9 +3230,9 @@ drawShadow__8CreatureFR8Graphics:
 /* 8008CE70 00089DD0  38 21 04 50 */	addi r1, r1, 0x450
 /* 8008CE74 00089DD4  7C 08 03 A6 */	mtlr r0
 /* 8008CE78 00089DD8  4E 80 00 20 */	blr 
+.endfn drawShadow__8CreatureFR8Graphics
 
-.global qdist2__FP8CreatureP8Creature
-qdist2__FP8CreatureP8Creature:
+.fn qdist2__FP8CreatureP8Creature, global
 /* 8008CE7C 00089DDC  94 21 FF E8 */	stwu r1, -0x18(r1)
 /* 8008CE80 00089DE0  C0 63 00 94 */	lfs f3, 0x94(r3)
 /* 8008CE84 00089DE4  C0 04 00 94 */	lfs f0, 0x94(r4)
@@ -3272,9 +3271,9 @@ qdist2__FP8CreatureP8Creature:
 .L_8008CF08:
 /* 8008CF08 00089E68  38 21 00 18 */	addi r1, r1, 0x18
 /* 8008CF0C 00089E6C  4E 80 00 20 */	blr 
+.endfn qdist2__FP8CreatureP8Creature
 
-.global circleDist__FP8CreatureP8Creature
-circleDist__FP8CreatureP8Creature:
+.fn circleDist__FP8CreatureP8Creature, global
 /* 8008CF10 00089E70  7C 08 02 A6 */	mflr r0
 /* 8008CF14 00089E74  90 01 00 04 */	stw r0, 4(r1)
 /* 8008CF18 00089E78  94 21 FF A8 */	stwu r1, -0x58(r1)
@@ -3334,9 +3333,9 @@ circleDist__FP8CreatureP8Creature:
 /* 8008CFF0 00089F50  38 21 00 58 */	addi r1, r1, 0x58
 /* 8008CFF4 00089F54  7C 08 03 A6 */	mtlr r0
 /* 8008CFF8 00089F58  4E 80 00 20 */	blr 
+.endfn circleDist__FP8CreatureP8Creature
 
-.global moveVelocity__8CreatureFv
-moveVelocity__8CreatureFv:
+.fn moveVelocity__8CreatureFv, global
 /* 8008CFFC 00089F5C  7C 08 02 A6 */	mflr r0
 /* 8008D000 00089F60  90 01 00 04 */	stw r0, 4(r1)
 /* 8008D004 00089F64  94 21 FC F0 */	stwu r1, -0x310(r1)
@@ -3681,14 +3680,14 @@ moveVelocity__8CreatureFv:
 /* 8008D530 0008A490  38 21 03 10 */	addi r1, r1, 0x310
 /* 8008D534 0008A494  7C 08 03 A6 */	mtlr r0
 /* 8008D538 0008A498  4E 80 00 20 */	blr 
+.endfn moveVelocity__8CreatureFv
 
-.global getAvoid__8CreatureFR8Vector3fR8Vector3f
-getAvoid__8CreatureFR8Vector3fR8Vector3f:
+.fn getAvoid__8CreatureFR8Vector3fR8Vector3f, global
 /* 8008D53C 0008A49C  38 60 00 00 */	li r3, 0
 /* 8008D540 0008A4A0  4E 80 00 20 */	blr 
+.endfn getAvoid__8CreatureFR8Vector3fR8Vector3f
 
-.global renderAtari__8CreatureFR8Graphics
-renderAtari__8CreatureFR8Graphics:
+.fn renderAtari__8CreatureFR8Graphics, global
 /* 8008D544 0008A4A4  7C 08 02 A6 */	mflr r0
 /* 8008D548 0008A4A8  90 01 00 04 */	stw r0, 4(r1)
 /* 8008D54C 0008A4AC  94 21 FD 58 */	stwu r1, -0x2a8(r1)
@@ -3903,9 +3902,9 @@ renderAtari__8CreatureFR8Graphics:
 /* 8008D884 0008A7E4  38 21 02 A8 */	addi r1, r1, 0x2a8
 /* 8008D888 0008A7E8  7C 08 03 A6 */	mtlr r0
 /* 8008D88C 0008A7EC  4E 80 00 20 */	blr 
+.endfn renderAtari__8CreatureFR8Graphics
 
-.global roughCull__FP8CreatureP8Creaturef
-roughCull__FP8CreatureP8Creaturef:
+.fn roughCull__FP8CreatureP8Creaturef, global
 /* 8008D890 0008A7F0  7C 08 02 A6 */	mflr r0
 /* 8008D894 0008A7F4  90 01 00 04 */	stw r0, 4(r1)
 /* 8008D898 0008A7F8  94 21 FF F8 */	stwu r1, -8(r1)
@@ -3929,9 +3928,9 @@ roughCull__FP8CreatureP8Creaturef:
 /* 8008D8D8 0008A838  38 21 00 08 */	addi r1, r1, 8
 /* 8008D8DC 0008A83C  7C 08 03 A6 */	mtlr r0
 /* 8008D8E0 0008A840  4E 80 00 20 */	blr 
+.endfn roughCull__FP8CreatureP8Creaturef
 
-.global stickUpdate__8CreatureFv
-stickUpdate__8CreatureFv:
+.fn stickUpdate__8CreatureFv, global
 /* 8008D8E4 0008A844  7C 08 02 A6 */	mflr r0
 /* 8008D8E8 0008A848  90 01 00 04 */	stw r0, 4(r1)
 /* 8008D8EC 0008A84C  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -3963,38 +3962,45 @@ stickUpdate__8CreatureFv:
 /* 8008D948 0008A8A8  38 21 00 18 */	addi r1, r1, 0x18
 /* 8008D94C 0008A8AC  7C 08 03 A6 */	mtlr r0
 /* 8008D950 0008A8B0  4E 80 00 20 */	blr 
+.endfn stickUpdate__8CreatureFv
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802AF070:
+.obj lbl_802AF070, local
 	.asciz "creature.cpp"
+.endobj lbl_802AF070
 .balign 4
-lbl_802AF080:
+.obj lbl_802AF080, local
 	.asciz "Creature"
+.endobj lbl_802AF080
 .balign 4
-lbl_802AF08C:
+.obj lbl_802AF08C, local
 	.asciz "Condition"
+.endobj lbl_802AF08C
 .balign 4
-.global __vt__9Condition
-__vt__9Condition:
+.obj __vt__9Condition, weak
 	.4byte __RTTI__9Condition
 	.4byte 0
 	.4byte satisfy__9ConditionFP8Creature
+.endobj __vt__9Condition
 .balign 4
-lbl_802AF0A4:
+.obj lbl_802AF0A4, local
 	.asciz "EventTalker"
+.endobj lbl_802AF0A4
 .balign 4
-lbl_802AF0B0:
+.obj lbl_802AF0B0, local
 	.asciz "RefCountable"
+.endobj lbl_802AF0B0
 .balign 4
-lbl_802AF0C0:
+.obj lbl_802AF0C0, local
 	.4byte __RTTI__11EventTalker
 	.4byte 0x8
 	.4byte __RTTI__12RefCountable
 	.4byte 0
 	.4byte 0
-.global __vt__8Creature
-__vt__8Creature:
+.endobj lbl_802AF0C0
+.balign 4
+.obj __vt__8Creature, global
 	.4byte __RTTI__8Creature
 	.4byte 0
 	.4byte addCntCallback__12RefCountableFv
@@ -4064,246 +4070,361 @@ __vt__8Creature:
 	.4byte doAnimation__8CreatureFv
 	.4byte 0
 	.4byte exitCourse__8CreatureFv
+.endobj __vt__8Creature
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-lbl_803DEED8:
+.obj lbl_803DEED8, local
 	.float 0.0
-lbl_803DEEDC:
+.endobj lbl_803DEED8
+.obj lbl_803DEEDC, local
 	.float 0.0
-lbl_803DEEE0:
+.endobj lbl_803DEEDC
+.obj lbl_803DEEE0, local
 	.float 0.0
-lbl_803DEEE4:
+.endobj lbl_803DEEE0
+.obj lbl_803DEEE4, local
 	.float 0.3926991
-lbl_803DEEE8:
+.endobj lbl_803DEEE4
+.obj lbl_803DEEE8, local
 	.float 0.0
-lbl_803DEEEC:
+.endobj lbl_803DEEE8
+.obj lbl_803DEEEC, local
 	.float 0.0
-lbl_803DEEF0:
+.endobj lbl_803DEEEC
+.obj lbl_803DEEF0, local
 	.float 0.0
-lbl_803DEEF4:
+.endobj lbl_803DEEF0
+.obj lbl_803DEEF4, local
 	.float 0.0
-lbl_803DEEF8:
+.endobj lbl_803DEEF4
+.obj lbl_803DEEF8, local
 	.float 0.0
-lbl_803DEEFC:
+.endobj lbl_803DEEF8
+.obj lbl_803DEEFC, local
 	.float 0.0
-lbl_803DEF00:
+.endobj lbl_803DEEFC
+.obj lbl_803DEF00, local
 	.float 0.0
-lbl_803DEF04:
+.endobj lbl_803DEF00
+.obj lbl_803DEF04, local
 	.float 0.0
-lbl_803DEF08:
+.endobj lbl_803DEF04
+.obj lbl_803DEF08, local
 	.float 0.0
-lbl_803DEF0C:
+.endobj lbl_803DEF08
+.obj lbl_803DEF0C, local
 	.float 0.0
-lbl_803DEF10:
+.endobj lbl_803DEF0C
+.obj lbl_803DEF10, local
 	.float 0.0
-lbl_803DEF14:
+.endobj lbl_803DEF10
+.obj lbl_803DEF14, local
 	.float 0.0
-lbl_803DEF18:
+.endobj lbl_803DEF14
+.obj lbl_803DEF18, local
 	.float 0.0
-lbl_803DEF1C:
+.endobj lbl_803DEF18
+.obj lbl_803DEF1C, local
 	.float 0.0
-lbl_803DEF20:
+.endobj lbl_803DEF1C
+.obj lbl_803DEF20, local
 	.float 0.0
-lbl_803DEF24:
+.endobj lbl_803DEF20
+.obj lbl_803DEF24, local
 	.float 0.0
-lbl_803DEF28:
+.endobj lbl_803DEF24
+.obj lbl_803DEF28, local
 	.float 0.0
-lbl_803DEF2C:
+.endobj lbl_803DEF28
+.obj lbl_803DEF2C, local
 	.float 0.0
-lbl_803DEF30:
+.endobj lbl_803DEF2C
+.obj lbl_803DEF30, local
 	.float 0.0
-lbl_803DEF34:
+.endobj lbl_803DEF30
+.obj lbl_803DEF34, local
 	.float 0.0
-lbl_803DEF38:
+.endobj lbl_803DEF34
+.obj lbl_803DEF38, local
 	.float 0.0
-lbl_803DEF3C:
+.endobj lbl_803DEF38
+.obj lbl_803DEF3C, local
 	.float 0.0
-lbl_803DEF40:
+.endobj lbl_803DEF3C
+.obj lbl_803DEF40, local
 	.float 0.0
-lbl_803DEF44:
+.endobj lbl_803DEF40
+.obj lbl_803DEF44, local
 	.float 1.0
-lbl_803DEF48:
+.endobj lbl_803DEF44
+.obj lbl_803DEF48, local
 	.float 1.0
-lbl_803DEF4C:
+.endobj lbl_803DEF48
+.obj lbl_803DEF4C, local
 	.float 1.0
-lbl_803DEF50:
+.endobj lbl_803DEF4C
+.obj lbl_803DEF50, local
 	.float 0.0
-lbl_803DEF54:
+.endobj lbl_803DEF50
+.obj lbl_803DEF54, local
 	.float 0.0
-lbl_803DEF58:
+.endobj lbl_803DEF54
+.obj lbl_803DEF58, local
 	.float 0.0
-lbl_803DEF5C:
+.endobj lbl_803DEF58
+.obj lbl_803DEF5C, local
 	.float 0.0
-lbl_803DEF60:
+.endobj lbl_803DEF5C
+.obj lbl_803DEF60, local
 	.float 0.0
-lbl_803DEF64:
+.endobj lbl_803DEF60
+.obj lbl_803DEF64, local
 	.float 0.0
-lbl_803DEF68:
+.endobj lbl_803DEF64
+.obj lbl_803DEF68, local
 	.float 0.0
-lbl_803DEF6C:
+.endobj lbl_803DEF68
+.obj lbl_803DEF6C, local
 	.float 0.0
-lbl_803DEF70:
+.endobj lbl_803DEF6C
+.obj lbl_803DEF70, local
 	.float 0.0
-lbl_803DEF74:
+.endobj lbl_803DEF70
+.obj lbl_803DEF74, local
 	.float 0.0
-lbl_803DEF78:
+.endobj lbl_803DEF74
+.obj lbl_803DEF78, local
 	.float 0.1
-lbl_803DEF7C:
+.endobj lbl_803DEF78
+.obj lbl_803DEF7C, local
 	.float 0.0
-lbl_803DEF80:
+.endobj lbl_803DEF7C
+.obj lbl_803DEF80, local
 	.float 1.0
-lbl_803DEF84:
+.endobj lbl_803DEF80
+.obj lbl_803DEF84, local
 	.float 0.0
-lbl_803DEF88:
+.endobj lbl_803DEF84
+.obj lbl_803DEF88, local
 	.float 0.0
-lbl_803DEF8C:
+.endobj lbl_803DEF88
+.obj lbl_803DEF8C, local
 	.float 0.0
-lbl_803DEF90:
+.endobj lbl_803DEF8C
+.obj lbl_803DEF90, local
 	.float 0.0
-lbl_803DEF94:
+.endobj lbl_803DEF90
+.obj lbl_803DEF94, local
 	.float 0.0
-lbl_803DEF98:
+.endobj lbl_803DEF94
+.obj lbl_803DEF98, local
 	.float 0.0
-lbl_803DEF9C:
+.endobj lbl_803DEF98
+.obj lbl_803DEF9C, local
 	.float 0.0
-lbl_803DEFA0:
+.endobj lbl_803DEF9C
+.obj lbl_803DEFA0, local
 	.float 1.0
-lbl_803DEFA4:
+.endobj lbl_803DEFA0
+.obj lbl_803DEFA4, local
 	.float 0.0
-lbl_803DEFA8:
+.endobj lbl_803DEFA4
+.obj lbl_803DEFA8, local
 	.float 0.0
-lbl_803DEFAC:
+.endobj lbl_803DEFA8
+.obj lbl_803DEFAC, local
 	.float 1.0
-lbl_803DEFB0:
+.endobj lbl_803DEFAC
+.obj lbl_803DEFB0, local
 	.float 1.0
-lbl_803DEFB4:
+.endobj lbl_803DEFB0
+.obj lbl_803DEFB4, local
 	.float 1.0
-lbl_803DEFB8:
+.endobj lbl_803DEFB4
+.obj lbl_803DEFB8, local
 	.float 0.0
-lbl_803DEFBC:
+.endobj lbl_803DEFB8
+.obj lbl_803DEFBC, local
 	.float 0.0
-lbl_803DEFC0:
+.endobj lbl_803DEFBC
+.obj lbl_803DEFC0, local
 	.float 0.0
-lbl_803DEFC4:
+.endobj lbl_803DEFC0
+.obj lbl_803DEFC4, local
 	.float 0.0
-lbl_803DEFC8:
+.endobj lbl_803DEFC4
+.obj lbl_803DEFC8, local
 	.float 0.0
-lbl_803DEFCC:
+.endobj lbl_803DEFC8
+.obj lbl_803DEFCC, local
 	.float 0.0
-lbl_803DEFD0:
+.endobj lbl_803DEFCC
+.obj lbl_803DEFD0, local
 	.float 0.0
-lbl_803DEFD4:
+.endobj lbl_803DEFD0
+.obj lbl_803DEFD4, local
 	.float 0.0
-lbl_803DEFD8:
+.endobj lbl_803DEFD4
+.obj lbl_803DEFD8, local
 	.float 0.0
-lbl_803DEFDC:
+.endobj lbl_803DEFD8
+.obj lbl_803DEFDC, local
 	.float 0.0
-lbl_803DEFE0:
+.endobj lbl_803DEFDC
+.obj lbl_803DEFE0, local
 	.float 1.0
-lbl_803DEFE4:
+.endobj lbl_803DEFE0
+.obj lbl_803DEFE4, local
 	.float 1.0
-lbl_803DEFE8:
+.endobj lbl_803DEFE4
+.obj lbl_803DEFE8, local
 	.float 1.0
-lbl_803DEFEC:
+.endobj lbl_803DEFE8
+.obj lbl_803DEFEC, local
 	.float 1.0
-lbl_803DEFF0:
+.endobj lbl_803DEFEC
+.obj lbl_803DEFF0, local
 	.float 1.0
-lbl_803DEFF4:
+.endobj lbl_803DEFF0
+.obj lbl_803DEFF4, local
 	.float 1.0
-lbl_803DEFF8:
+.endobj lbl_803DEFF4
+.obj lbl_803DEFF8, local
 	.float 0.0
-lbl_803DEFFC:
+.endobj lbl_803DEFF8
+.obj lbl_803DEFFC, local
 	.float 0.0
-lbl_803DF000:
+.endobj lbl_803DEFFC
+.obj lbl_803DF000, local
 	.float 0.0
-lbl_803DF004:
+.endobj lbl_803DF000
+.obj lbl_803DF004, local
 	.float 0.0
-lbl_803DF008:
+.endobj lbl_803DF004
+.obj lbl_803DF008, local
 	.float 0.0
-lbl_803DF00C:
+.endobj lbl_803DF008
+.obj lbl_803DF00C, local
 	.float 0.0
-lbl_803DF010:
+.endobj lbl_803DF00C
+.obj lbl_803DF010, local
 	.float 1.0
-lbl_803DF014:
+.endobj lbl_803DF010
+.obj lbl_803DF014, local
 	.float 1.0
-lbl_803DF018:
+.endobj lbl_803DF014
+.obj lbl_803DF018, local
 	.float 1.0
-lbl_803DF01C:
+.endobj lbl_803DF018
+.obj lbl_803DF01C, local
 	.float 0.0
-lbl_803DF020:
+.endobj lbl_803DF01C
+.obj lbl_803DF020, local
 	.float 0.0
-lbl_803DF024:
+.endobj lbl_803DF020
+.obj lbl_803DF024, local
 	.float 0.0
-lbl_803DF028:
+.endobj lbl_803DF024
+.obj lbl_803DF028, local
 	.float 0.0
-lbl_803DF02C:
+.endobj lbl_803DF028
+.obj lbl_803DF02C, local
 	.float 0.0
-__RTTI__9Condition:
+.endobj lbl_803DF02C
+.obj __RTTI__9Condition, local
 	.4byte lbl_802AF08C
 	.4byte 0
-__RTTI__11EventTalker:
+.endobj __RTTI__9Condition
+.obj __RTTI__11EventTalker, local
 	.4byte lbl_802AF0A4
 	.4byte 0
-__RTTI__12RefCountable:
+.endobj __RTTI__11EventTalker
+.obj __RTTI__12RefCountable, local
 	.4byte lbl_802AF0B0
 	.4byte 0
-__RTTI__8Creature:
+.endobj __RTTI__12RefCountable
+.obj __RTTI__8Creature, local
 	.4byte lbl_802AF080
 	.4byte lbl_802AF0C0
+.endobj __RTTI__8Creature
 
 .section .sbss, "wa"
 .balign 8
-numTris:
+.obj numTris, local
 	.skip 4
-baseTri:
+.endobj numTris
+.obj baseTri, local
 	.skip 4
-checkRadius:
+.endobj baseTri
+.obj checkRadius, local
 	.skip 4
+.endobj checkRadius
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803E8C78:
+.obj lbl_803E8C78, local
 	.float 2.0
-lbl_803E8C7C:
+.endobj lbl_803E8C78
+.obj lbl_803E8C7C, local
 	.float 0.0
+.endobj lbl_803E8C7C
 .balign 8
-lbl_803E8C80:
+.obj lbl_803E8C80, local
 	.double 0.5
+.endobj lbl_803E8C80
 .balign 8
-lbl_803E8C88:
+.obj lbl_803E8C88, local
 	.double 3.0
-lbl_803E8C90:
+.endobj lbl_803E8C88
+.obj lbl_803E8C90, local
 	.float 12800.0
-lbl_803E8C94:
+.endobj lbl_803E8C90
+.obj lbl_803E8C94, local
 	.float 1.0
-lbl_803E8C98:
+.endobj lbl_803E8C94
+.obj lbl_803E8C98, local
 	.float 10.0
-lbl_803E8C9C:
+.endobj lbl_803E8C98
+.obj lbl_803E8C9C, local
 	.float 16.0
-lbl_803E8CA0:
+.endobj lbl_803E8C9C
+.obj lbl_803E8CA0, local # pi/3
 	.float 1.0471976
-lbl_803E8CA4:
+.endobj lbl_803E8CA0
+.obj lbl_803E8CA4, local
 	.float 0.01
-lbl_803E8CA8:
+.endobj lbl_803E8CA4
+.obj lbl_803E8CA8, local
 	.float 30.0
-lbl_803E8CAC:
+.endobj lbl_803E8CA8
+.obj lbl_803E8CAC, local
 	.float -1.0
-lbl_803E8CB0:
+.endobj lbl_803E8CAC
+.obj lbl_803E8CB0, local
 	.float 0.95
-lbl_803E8CB4:
+.endobj lbl_803E8CB0
+.obj lbl_803E8CB4, local
 	.float 0.015625
-lbl_803E8CB8:
+.endobj lbl_803E8CB4
+.obj lbl_803E8CB8, local
 	.float 0.5
-lbl_803E8CBC:
+.endobj lbl_803E8CB8
+.obj lbl_803E8CBC, local
 	.float 5.0
-lbl_803E8CC0:
+.endobj lbl_803E8CBC
+.obj lbl_803E8CC0, local
 	.float 20.0
-lbl_803E8CC4:
+.endobj lbl_803E8CC0
+.obj lbl_803E8CC4, local
 	.float 0.1
-lbl_803E8CC8:
+.endobj lbl_803E8CC4
+.obj lbl_803E8CC8, local
 	.float 200.0
-lbl_803E8CCC:
+.endobj lbl_803E8CC8
+.obj lbl_803E8CCC, local
 	.float 255.0
-lbl_803E8CD0:
+.endobj lbl_803E8CCC
+.obj lbl_803E8CD0, local
 	.float 0.25
+.endobj lbl_803E8CD0

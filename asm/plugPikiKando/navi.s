@@ -11156,7 +11156,7 @@
 .obj lbl_803E9F8C, local
 	.float 4.1887903
 .endobj lbl_803E9F8C
-.obj lbl_803E9F90, local
+.obj lbl_803E9F90, local # pi/3
 	.float 1.0471976
 .endobj lbl_803E9F90
 .obj lbl_803E9F94, local

@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global __ct__Q23zen12DrawGameInfoFQ33zen12DrawGameInfo12playModeFlag
-__ct__Q23zen12DrawGameInfoFQ33zen12DrawGameInfo12playModeFlag:
+.fn __ct__Q23zen12DrawGameInfoFQ33zen12DrawGameInfo12playModeFlag, global
 /* 801B6338 001B3298  7C 08 02 A6 */	mflr r0
 /* 801B633C 001B329C  90 01 00 04 */	stw r0, 4(r1)
 /* 801B6340 001B32A0  94 21 FB C8 */	stwu r1, -0x438(r1)
@@ -2101,9 +2100,9 @@ __ct__Q23zen12DrawGameInfoFQ33zen12DrawGameInfo12playModeFlag:
 /* 801B82F8 001B5258  38 21 04 38 */	addi r1, r1, 0x438
 /* 801B82FC 001B525C  7C 08 03 A6 */	mtlr r0
 /* 801B8300 001B5260  4E 80 00 20 */	blr 
+.endfn __ct__Q23zen12DrawGameInfoFQ33zen12DrawGameInfo12playModeFlag
 
-.global "setTex__Q29@unnamed@12DateCallBackFv"
-"setTex__Q29@unnamed@12DateCallBackFv":
+.fn "setTex__Q29@unnamed@12DateCallBackFv", weak
 /* 801B8304 001B5264  3C 80 80 3A */	lis r4, gameflow@ha
 /* 801B8308 001B5268  38 84 D7 B8 */	addi r4, r4, gameflow@l
 /* 801B830C 001B526C  80 04 02 FC */	lwz r0, 0x2fc(r4)
@@ -2246,23 +2245,23 @@ __ct__Q23zen12DrawGameInfoFQ33zen12DrawGameInfo12playModeFlag:
 /* 801B8518 001B5478  50 A0 3E 30 */	rlwimi r0, r5, 7, 0x18, 0x18
 /* 801B851C 001B547C  98 03 00 0C */	stb r0, 0xc(r3)
 /* 801B8520 001B5480  4E 80 00 20 */	blr 
+.endfn "setTex__Q29@unnamed@12DateCallBackFv"
 
-.global getWidth__7PUTRectCFv
-getWidth__7PUTRectCFv:
+.fn getWidth__7PUTRectCFv, weak
 /* 801B8524 001B5484  A8 83 00 00 */	lha r4, 0(r3)
 /* 801B8528 001B5488  A8 03 00 04 */	lha r0, 4(r3)
 /* 801B852C 001B548C  7C 64 00 50 */	subf r3, r4, r0
 /* 801B8530 001B5490  4E 80 00 20 */	blr 
+.endfn getWidth__7PUTRectCFv
 
-.global getHeight__7PUTRectCFv
-getHeight__7PUTRectCFv:
+.fn getHeight__7PUTRectCFv, weak
 /* 801B8534 001B5494  A8 83 00 02 */	lha r4, 2(r3)
 /* 801B8538 001B5498  A8 03 00 06 */	lha r0, 6(r3)
 /* 801B853C 001B549C  7C 64 00 50 */	subf r3, r4, r0
 /* 801B8540 001B54A0  4E 80 00 20 */	blr 
+.endfn getHeight__7PUTRectCFv
 
-.global "getNumber__Q23zen12FigureTex<s>Fv"
-"getNumber__Q23zen12FigureTex<s>Fv":
+.fn "getNumber__Q23zen12FigureTex<s>Fv", weak
 /* 801B8544 001B54A4  80 A3 00 00 */	lwz r5, 0(r3)
 /* 801B8548 001B54A8  3C 80 66 66 */	lis r4, 0x66666667@ha
 /* 801B854C 001B54AC  38 04 66 67 */	addi r0, r4, 0x66666667@l
@@ -2278,9 +2277,9 @@ getHeight__7PUTRectCFv:
 /* 801B8574 001B54D4  4C 80 00 20 */	bgelr 
 /* 801B8578 001B54D8  38 60 00 00 */	li r3, 0
 /* 801B857C 001B54DC  4E 80 00 20 */	blr 
+.endfn "getNumber__Q23zen12FigureTex<s>Fv"
 
-.global update__Q23zen12DrawGameInfoFv
-update__Q23zen12DrawGameInfoFv:
+.fn update__Q23zen12DrawGameInfoFv, global
 /* 801B8580 001B54E0  7C 08 02 A6 */	mflr r0
 /* 801B8584 001B54E4  90 01 00 04 */	stw r0, 4(r1)
 /* 801B8588 001B54E8  94 21 FF 78 */	stwu r1, -0x88(r1)
@@ -2588,9 +2587,9 @@ update__Q23zen12DrawGameInfoFv:
 /* 801B89C8 001B5928  38 21 00 88 */	addi r1, r1, 0x88
 /* 801B89CC 001B592C  7C 08 03 A6 */	mtlr r0
 /* 801B89D0 001B5930  4E 80 00 20 */	blr 
+.endfn update__Q23zen12DrawGameInfoFv
 
-.global draw__Q23zen12DrawGameInfoFR8Graphics
-draw__Q23zen12DrawGameInfoFR8Graphics:
+.fn draw__Q23zen12DrawGameInfoFR8Graphics, global
 /* 801B89D4 001B5934  7C 08 02 A6 */	mflr r0
 /* 801B89D8 001B5938  90 01 00 04 */	stw r0, 4(r1)
 /* 801B89DC 001B593C  94 21 FF 00 */	stwu r1, -0x100(r1)
@@ -2651,9 +2650,9 @@ draw__Q23zen12DrawGameInfoFR8Graphics:
 /* 801B8AB8 001B5A18  38 21 01 00 */	addi r1, r1, 0x100
 /* 801B8ABC 001B5A1C  7C 08 03 A6 */	mtlr r0
 /* 801B8AC0 001B5A20  4E 80 00 20 */	blr 
+.endfn draw__Q23zen12DrawGameInfoFR8Graphics
 
-.global upperFrameIn__Q23zen12DrawGameInfoFfb
-upperFrameIn__Q23zen12DrawGameInfoFfb:
+.fn upperFrameIn__Q23zen12DrawGameInfoFfb, global
 /* 801B8AC4 001B5A24  7C 08 02 A6 */	mflr r0
 /* 801B8AC8 001B5A28  90 01 00 04 */	stw r0, 4(r1)
 /* 801B8ACC 001B5A2C  54 80 06 3F */	clrlwi. r0, r4, 0x18
@@ -2686,9 +2685,9 @@ upperFrameIn__Q23zen12DrawGameInfoFfb:
 /* 801B8B34 001B5A94  38 21 00 28 */	addi r1, r1, 0x28
 /* 801B8B38 001B5A98  7C 08 03 A6 */	mtlr r0
 /* 801B8B3C 001B5A9C  4E 80 00 20 */	blr 
+.endfn upperFrameIn__Q23zen12DrawGameInfoFfb
 
-.global upperFrameOut__Q23zen12DrawGameInfoFfb
-upperFrameOut__Q23zen12DrawGameInfoFfb:
+.fn upperFrameOut__Q23zen12DrawGameInfoFfb, global
 /* 801B8B40 001B5AA0  7C 08 02 A6 */	mflr r0
 /* 801B8B44 001B5AA4  90 01 00 04 */	stw r0, 4(r1)
 /* 801B8B48 001B5AA8  54 80 06 3F */	clrlwi. r0, r4, 0x18
@@ -2722,9 +2721,9 @@ upperFrameOut__Q23zen12DrawGameInfoFfb:
 /* 801B8BB4 001B5B14  38 21 00 28 */	addi r1, r1, 0x28
 /* 801B8BB8 001B5B18  7C 08 03 A6 */	mtlr r0
 /* 801B8BBC 001B5B1C  4E 80 00 20 */	blr 
+.endfn upperFrameOut__Q23zen12DrawGameInfoFfb
 
-.global lowerFrameIn__Q23zen12DrawGameInfoFfb
-lowerFrameIn__Q23zen12DrawGameInfoFfb:
+.fn lowerFrameIn__Q23zen12DrawGameInfoFfb, global
 /* 801B8BC0 001B5B20  7C 08 02 A6 */	mflr r0
 /* 801B8BC4 001B5B24  90 01 00 04 */	stw r0, 4(r1)
 /* 801B8BC8 001B5B28  54 80 06 3F */	clrlwi. r0, r4, 0x18
@@ -2770,9 +2769,9 @@ lowerFrameIn__Q23zen12DrawGameInfoFfb:
 /* 801B8C64 001B5BC4  38 21 00 30 */	addi r1, r1, 0x30
 /* 801B8C68 001B5BC8  7C 08 03 A6 */	mtlr r0
 /* 801B8C6C 001B5BCC  4E 80 00 20 */	blr 
+.endfn lowerFrameIn__Q23zen12DrawGameInfoFfb
 
-.global lowerFrameOut__Q23zen12DrawGameInfoFfb
-lowerFrameOut__Q23zen12DrawGameInfoFfb:
+.fn lowerFrameOut__Q23zen12DrawGameInfoFfb, global
 /* 801B8C70 001B5BD0  7C 08 02 A6 */	mflr r0
 /* 801B8C74 001B5BD4  90 01 00 04 */	stw r0, 4(r1)
 /* 801B8C78 001B5BD8  54 80 06 3F */	clrlwi. r0, r4, 0x18
@@ -2819,9 +2818,9 @@ lowerFrameOut__Q23zen12DrawGameInfoFfb:
 /* 801B8D18 001B5C78  38 21 00 30 */	addi r1, r1, 0x30
 /* 801B8D1C 001B5C7C  7C 08 03 A6 */	mtlr r0
 /* 801B8D20 001B5C80  4E 80 00 20 */	blr 
+.endfn lowerFrameOut__Q23zen12DrawGameInfoFfb
 
-.global "invoke__Q29@unnamed@12DateCallBackFP7P2DPane"
-"invoke__Q29@unnamed@12DateCallBackFP7P2DPane":
+.fn "invoke__Q29@unnamed@12DateCallBackFP7P2DPane", weak
 /* 801B8D24 001B5C84  3C 80 80 3A */	lis r4, gameflow@ha
 /* 801B8D28 001B5C88  38 84 D7 B8 */	addi r4, r4, gameflow@l
 /* 801B8D2C 001B5C8C  80 04 02 FC */	lwz r0, 0x2fc(r4)
@@ -2966,9 +2965,9 @@ lowerFrameOut__Q23zen12DrawGameInfoFfb:
 .L_801B8F40:
 /* 801B8F40 001B5EA0  38 60 00 01 */	li r3, 1
 /* 801B8F44 001B5EA4  4E 80 00 20 */	blr 
+.endfn "invoke__Q29@unnamed@12DateCallBackFP7P2DPane"
 
-.global "invoke__Q29@unnamed@17LifePinchCallBackFP7P2DPane"
-"invoke__Q29@unnamed@17LifePinchCallBackFP7P2DPane":
+.fn "invoke__Q29@unnamed@17LifePinchCallBackFP7P2DPane", weak
 /* 801B8F48 001B5EA8  7C 08 02 A6 */	mflr r0
 /* 801B8F4C 001B5EAC  90 01 00 04 */	stw r0, 4(r1)
 /* 801B8F50 001B5EB0  94 21 FF C0 */	stwu r1, -0x40(r1)
@@ -3121,14 +3120,14 @@ lowerFrameOut__Q23zen12DrawGameInfoFfb:
 /* 801B9170 001B60D0  38 21 00 40 */	addi r1, r1, 0x40
 /* 801B9174 001B60D4  7C 08 03 A6 */	mtlr r0
 /* 801B9178 001B60D8  4E 80 00 20 */	blr 
+.endfn "invoke__Q29@unnamed@17LifePinchCallBackFP7P2DPane"
 
-.global "invoke__Q29@unnamed@16LifeIconCallBackFP7P2DPane"
-"invoke__Q29@unnamed@16LifeIconCallBackFP7P2DPane":
+.fn "invoke__Q29@unnamed@16LifeIconCallBackFP7P2DPane", weak
 /* 801B917C 001B60DC  38 60 00 01 */	li r3, 1
 /* 801B9180 001B60E0  4E 80 00 20 */	blr 
+.endfn "invoke__Q29@unnamed@16LifeIconCallBackFP7P2DPane"
 
-.global "draw__Q29@unnamed@16LifeIconCallBackFP7P2DPane"
-"draw__Q29@unnamed@16LifeIconCallBackFP7P2DPane":
+.fn "draw__Q29@unnamed@16LifeIconCallBackFP7P2DPane", weak
 /* 801B9184 001B60E4  7C 08 02 A6 */	mflr r0
 /* 801B9188 001B60E8  90 01 00 04 */	stw r0, 4(r1)
 /* 801B918C 001B60EC  94 21 FF F8 */	stwu r1, -8(r1)
@@ -3139,9 +3138,9 @@ lowerFrameOut__Q23zen12DrawGameInfoFfb:
 /* 801B91A0 001B6100  38 21 00 08 */	addi r1, r1, 8
 /* 801B91A4 001B6104  7C 08 03 A6 */	mtlr r0
 /* 801B91A8 001B6108  4E 80 00 20 */	blr 
+.endfn "draw__Q29@unnamed@16LifeIconCallBackFP7P2DPane"
 
-.global "invoke__Q29@unnamed@15NaviTexCallBackFP7P2DPane"
-"invoke__Q29@unnamed@15NaviTexCallBackFP7P2DPane":
+.fn "invoke__Q29@unnamed@15NaviTexCallBackFP7P2DPane", weak
 /* 801B91AC 001B610C  7C 08 02 A6 */	mflr r0
 /* 801B91B0 001B6110  90 01 00 04 */	stw r0, 4(r1)
 /* 801B91B4 001B6114  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -3172,9 +3171,9 @@ lowerFrameOut__Q23zen12DrawGameInfoFfb:
 /* 801B920C 001B616C  38 21 00 18 */	addi r1, r1, 0x18
 /* 801B9210 001B6170  7C 08 03 A6 */	mtlr r0
 /* 801B9214 001B6174  4E 80 00 20 */	blr 
+.endfn "invoke__Q29@unnamed@15NaviTexCallBackFP7P2DPane"
 
-.global "invoke__Q29@unnamed@16NaviIconCallBackFP7P2DPane"
-"invoke__Q29@unnamed@16NaviIconCallBackFP7P2DPane":
+.fn "invoke__Q29@unnamed@16NaviIconCallBackFP7P2DPane", weak
 /* 801B9218 001B6178  7C 08 02 A6 */	mflr r0
 /* 801B921C 001B617C  90 01 00 04 */	stw r0, 4(r1)
 /* 801B9220 001B6180  94 21 FF D0 */	stwu r1, -0x30(r1)
@@ -3245,9 +3244,9 @@ lowerFrameOut__Q23zen12DrawGameInfoFfb:
 /* 801B9314 001B6274  38 21 00 30 */	addi r1, r1, 0x30
 /* 801B9318 001B6278  7C 08 03 A6 */	mtlr r0
 /* 801B931C 001B627C  4E 80 00 20 */	blr 
+.endfn "invoke__Q29@unnamed@16NaviIconCallBackFP7P2DPane"
 
-.global "invoke__Q29@unnamed@16MoonIconCallBackFP7P2DPane"
-"invoke__Q29@unnamed@16MoonIconCallBackFP7P2DPane":
+.fn "invoke__Q29@unnamed@16MoonIconCallBackFP7P2DPane", weak
 /* 801B9320 001B6280  7C 08 02 A6 */	mflr r0
 /* 801B9324 001B6284  3C A0 80 3A */	lis r5, gameflow@ha
 /* 801B9328 001B6288  90 01 00 04 */	stw r0, 4(r1)
@@ -3444,9 +3443,9 @@ lowerFrameOut__Q23zen12DrawGameInfoFfb:
 /* 801B95E8 001B6548  38 21 00 60 */	addi r1, r1, 0x60
 /* 801B95EC 001B654C  7C 08 03 A6 */	mtlr r0
 /* 801B95F0 001B6550  4E 80 00 20 */	blr 
+.endfn "invoke__Q29@unnamed@16MoonIconCallBackFP7P2DPane"
 
-.global "invoke__Q29@unnamed@16SunIcon2CallBackFP7P2DPane"
-"invoke__Q29@unnamed@16SunIcon2CallBackFP7P2DPane":
+.fn "invoke__Q29@unnamed@16SunIcon2CallBackFP7P2DPane", weak
 /* 801B95F4 001B6554  7C 08 02 A6 */	mflr r0
 /* 801B95F8 001B6558  3C A0 80 3A */	lis r5, gameflow@ha
 /* 801B95FC 001B655C  90 01 00 04 */	stw r0, 4(r1)
@@ -3646,9 +3645,9 @@ lowerFrameOut__Q23zen12DrawGameInfoFfb:
 /* 801B98CC 001B682C  38 21 00 80 */	addi r1, r1, 0x80
 /* 801B98D0 001B6830  7C 08 03 A6 */	mtlr r0
 /* 801B98D4 001B6834  4E 80 00 20 */	blr 
+.endfn "invoke__Q29@unnamed@16SunIcon2CallBackFP7P2DPane"
 
-.global "invoke__Q29@unnamed@16SunIcon1CallBackFP7P2DPane"
-"invoke__Q29@unnamed@16SunIcon1CallBackFP7P2DPane":
+.fn "invoke__Q29@unnamed@16SunIcon1CallBackFP7P2DPane", weak
 /* 801B98D8 001B6838  7C 08 02 A6 */	mflr r0
 /* 801B98DC 001B683C  3C A0 80 3A */	lis r5, gameflow@ha
 /* 801B98E0 001B6840  90 01 00 04 */	stw r0, 4(r1)
@@ -3765,9 +3764,9 @@ lowerFrameOut__Q23zen12DrawGameInfoFfb:
 /* 801B9A84 001B69E4  38 21 00 70 */	addi r1, r1, 0x70
 /* 801B9A88 001B69E8  7C 08 03 A6 */	mtlr r0
 /* 801B9A8C 001B69EC  4E 80 00 20 */	blr 
+.endfn "invoke__Q29@unnamed@16SunIcon1CallBackFP7P2DPane"
 
-.global "invoke__Q29@unnamed@18SunCapsuleCallBackFP7P2DPane"
-"invoke__Q29@unnamed@18SunCapsuleCallBackFP7P2DPane":
+.fn "invoke__Q29@unnamed@18SunCapsuleCallBackFP7P2DPane", weak
 /* 801B9A90 001B69F0  94 21 FF D0 */	stwu r1, -0x30(r1)
 /* 801B9A94 001B69F4  3C A0 80 39 */	lis r5, sintable@ha
 /* 801B9A98 001B69F8  38 05 08 40 */	addi r0, r5, sintable@l
@@ -3800,9 +3799,9 @@ lowerFrameOut__Q23zen12DrawGameInfoFfb:
 /* 801B9AFC 001B6A5C  98 04 00 F0 */	stb r0, 0xf0(r4)
 /* 801B9B00 001B6A60  38 21 00 30 */	addi r1, r1, 0x30
 /* 801B9B04 001B6A64  4E 80 00 20 */	blr 
+.endfn "invoke__Q29@unnamed@18SunCapsuleCallBackFP7P2DPane"
 
-.global "invoke__Q29@unnamed@15SunBaseCallBackFP7P2DPane"
-"invoke__Q29@unnamed@15SunBaseCallBackFP7P2DPane":
+.fn "invoke__Q29@unnamed@15SunBaseCallBackFP7P2DPane", weak
 /* 801B9B08 001B6A68  7C 08 02 A6 */	mflr r0
 /* 801B9B0C 001B6A6C  3C A0 80 3A */	lis r5, gameflow@ha
 /* 801B9B10 001B6A70  90 01 00 04 */	stw r0, 4(r1)
@@ -3894,9 +3893,9 @@ lowerFrameOut__Q23zen12DrawGameInfoFfb:
 /* 801B9C48 001B6BA8  38 21 00 28 */	addi r1, r1, 0x28
 /* 801B9C4C 001B6BAC  7C 08 03 A6 */	mtlr r0
 /* 801B9C50 001B6BB0  4E 80 00 20 */	blr 
+.endfn "invoke__Q29@unnamed@15SunBaseCallBackFP7P2DPane"
 
-.global "invoke__Q29@unnamed@23MapPikminWindowCallBackFP7P2DPane"
-"invoke__Q29@unnamed@23MapPikminWindowCallBackFP7P2DPane":
+.fn "invoke__Q29@unnamed@23MapPikminWindowCallBackFP7P2DPane", weak
 /* 801B9C54 001B6BB4  7C 08 02 A6 */	mflr r0
 /* 801B9C58 001B6BB8  90 01 00 04 */	stw r0, 4(r1)
 /* 801B9C5C 001B6BBC  94 21 FF 98 */	stwu r1, -0x68(r1)
@@ -4005,9 +4004,9 @@ lowerFrameOut__Q23zen12DrawGameInfoFfb:
 /* 801B9DDC 001B6D3C  38 21 00 68 */	addi r1, r1, 0x68
 /* 801B9DE0 001B6D40  7C 08 03 A6 */	mtlr r0
 /* 801B9DE4 001B6D44  4E 80 00 20 */	blr 
+.endfn "invoke__Q29@unnamed@23MapPikminWindowCallBackFP7P2DPane"
 
-.global "invoke__Q29@unnamed@16PikiIconCallBackFP7P2DPane"
-"invoke__Q29@unnamed@16PikiIconCallBackFP7P2DPane":
+.fn "invoke__Q29@unnamed@16PikiIconCallBackFP7P2DPane", weak
 /* 801B9DE8 001B6D48  7C 08 02 A6 */	mflr r0
 /* 801B9DEC 001B6D4C  90 01 00 04 */	stw r0, 4(r1)
 /* 801B9DF0 001B6D50  94 21 FF D0 */	stwu r1, -0x30(r1)
@@ -4083,9 +4082,9 @@ lowerFrameOut__Q23zen12DrawGameInfoFfb:
 /* 801B9EF4 001B6E54  38 21 00 30 */	addi r1, r1, 0x30
 /* 801B9EF8 001B6E58  7C 08 03 A6 */	mtlr r0
 /* 801B9EFC 001B6E5C  4E 80 00 20 */	blr 
+.endfn "invoke__Q29@unnamed@16PikiIconCallBackFP7P2DPane"
 
-.global "invoke__Q23zen20NumberPicCallBack<s>FP7P2DPane"
-"invoke__Q23zen20NumberPicCallBack<s>FP7P2DPane":
+.fn "invoke__Q23zen20NumberPicCallBack<s>FP7P2DPane", weak
 /* 801B9F00 001B6E60  7C 08 02 A6 */	mflr r0
 /* 801B9F04 001B6E64  90 01 00 04 */	stw r0, 4(r1)
 /* 801B9F08 001B6E68  94 21 FF 98 */	stwu r1, -0x68(r1)
@@ -4220,9 +4219,9 @@ lowerFrameOut__Q23zen12DrawGameInfoFfb:
 /* 801BA0EC 001B704C  38 21 00 68 */	addi r1, r1, 0x68
 /* 801BA0F0 001B7050  7C 08 03 A6 */	mtlr r0
 /* 801BA0F4 001B7054  4E 80 00 20 */	blr 
+.endfn "invoke__Q23zen20NumberPicCallBack<s>FP7P2DPane"
 
-.global "getNumber__Q23zen12FigureTex<s>FRs"
-"getNumber__Q23zen12FigureTex<s>FRs":
+.fn "getNumber__Q23zen12FigureTex<s>FRs", weak
 /* 801BA0F8 001B7058  A8 A4 00 00 */	lha r5, 0(r4)
 /* 801BA0FC 001B705C  3C 80 66 66 */	lis r4, 0x66666667@ha
 /* 801BA100 001B7060  80 63 00 04 */	lwz r3, 4(r3)
@@ -4238,78 +4237,100 @@ lowerFrameOut__Q23zen12DrawGameInfoFfb:
 /* 801BA128 001B7088  4C 80 00 20 */	bgelr 
 /* 801BA12C 001B708C  38 60 00 00 */	li r3, 0
 /* 801BA130 001B7090  4E 80 00 20 */	blr 
+.endfn "getNumber__Q23zen12FigureTex<s>FRs"
 
-.global "@16@invoke__Q29@unnamed@15SunBaseCallBackFP7P2DPane"
-"@16@invoke__Q29@unnamed@15SunBaseCallBackFP7P2DPane":
+.fn "@16@invoke__Q29@unnamed@15SunBaseCallBackFP7P2DPane", weak
 /* 801BA134 001B7094  38 63 FF F0 */	addi r3, r3, -16
 /* 801BA138 001B7098  4B FF F9 D0 */	b "invoke__Q29@unnamed@15SunBaseCallBackFP7P2DPane"
+.endfn "@16@invoke__Q29@unnamed@15SunBaseCallBackFP7P2DPane"
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802E09B0:
+.obj lbl_802E09B0, local
 	.asciz "drawGameInfo.cpp"
+.endobj lbl_802E09B0
 .balign 4
-lbl_802E09C4:
+.obj lbl_802E09C4, local
 	.asciz "drawGameInfo"
+.endobj lbl_802E09C4
 .balign 4
-lbl_802E09D4:
+.obj lbl_802E09D4, local
 	.asciz "screen/tex/piki0.bti"
+.endobj lbl_802E09D4
 .balign 4
-lbl_802E09EC:
+.obj lbl_802E09EC, local
 	.asciz "screen/tex/bp_l64.bti"
+.endobj lbl_802E09EC
 .balign 4
-lbl_802E0A04:
+.obj lbl_802E0A04, local
 	.asciz "screen/tex/bp_b64.bti"
+.endobj lbl_802E0A04
 .balign 4
-lbl_802E0A1C:
+.obj lbl_802E0A1C, local
 	.asciz "screen/tex/bp_f64.bti"
+.endobj lbl_802E0A1C
 .balign 4
-lbl_802E0A34:
+.obj lbl_802E0A34, local
 	.asciz "screen/tex/bp_lb64.bti"
+.endobj lbl_802E0A34
 .balign 4
-lbl_802E0A4C:
+.obj lbl_802E0A4C, local
 	.asciz "screen/tex/bp_bb64.bti"
+.endobj lbl_802E0A4C
 .balign 4
-lbl_802E0A64:
+.obj lbl_802E0A64, local
 	.asciz "screen/tex/bp_fb64.bti"
+.endobj lbl_802E0A64
 .balign 4
-lbl_802E0A7C:
+.obj lbl_802E0A7C, local
 	.asciz "screen/tex/rp_l64.bti"
+.endobj lbl_802E0A7C
 .balign 4
-lbl_802E0A94:
+.obj lbl_802E0A94, local
 	.asciz "screen/tex/rp_b64.bti"
+.endobj lbl_802E0A94
 .balign 4
-lbl_802E0AAC:
+.obj lbl_802E0AAC, local
 	.asciz "screen/tex/rp_f64.bti"
+.endobj lbl_802E0AAC
 .balign 4
-lbl_802E0AC4:
+.obj lbl_802E0AC4, local
 	.asciz "screen/tex/rp_lb64.bti"
+.endobj lbl_802E0AC4
 .balign 4
-lbl_802E0ADC:
+.obj lbl_802E0ADC, local
 	.asciz "screen/tex/rp_bb64.bti"
+.endobj lbl_802E0ADC
 .balign 4
-lbl_802E0AF4:
+.obj lbl_802E0AF4, local
 	.asciz "screen/tex/rp_fb64.bti"
+.endobj lbl_802E0AF4
 .balign 4
-lbl_802E0B0C:
+.obj lbl_802E0B0C, local
 	.asciz "screen/tex/yp_l64.bti"
+.endobj lbl_802E0B0C
 .balign 4
-lbl_802E0B24:
+.obj lbl_802E0B24, local
 	.asciz "screen/tex/yp_b64.bti"
+.endobj lbl_802E0B24
 .balign 4
-lbl_802E0B3C:
+.obj lbl_802E0B3C, local
 	.asciz "screen/tex/yp_f64.bti"
+.endobj lbl_802E0B3C
 .balign 4
-lbl_802E0B54:
+.obj lbl_802E0B54, local
 	.asciz "screen/tex/yp_lb64.bti"
+.endobj lbl_802E0B54
 .balign 4
-lbl_802E0B6C:
+.obj lbl_802E0B6C, local
 	.asciz "screen/tex/yp_bb64.bti"
+.endobj lbl_802E0B6C
 .balign 4
-lbl_802E0B84:
+.obj lbl_802E0B84, local
 	.asciz "screen/tex/yp_fb64.bti"
+.endobj lbl_802E0B84
 .balign 4
-"pikiTexNametable__9@unnamed@":
+.obj "pikiTexNametable__9@unnamed@", local
 	.4byte lbl_802E09D4
 	.4byte lbl_802E09EC
 	.4byte lbl_802E0A04
@@ -4329,40 +4350,53 @@ lbl_802E0B84:
 	.4byte lbl_802E0B54
 	.4byte lbl_802E0B6C
 	.4byte lbl_802E0B84
-lbl_802E0BE8:
+.endobj "pikiTexNametable__9@unnamed@"
+.balign 4
+.obj lbl_802E0BE8, local
 	.asciz "screen/blo/play09.blo"
+.endobj lbl_802E0BE8
 .balign 4
-lbl_802E0C00:
+.obj lbl_802E0C00, local
 	.asciz "screen/blo/play10.blo"
+.endobj lbl_802E0C00
 .balign 4
-lbl_802E0C18:
+.obj lbl_802E0C18, local
 	.asciz "screen/blo/play_day.blo"
+.endobj lbl_802E0C18
 .balign 4
-lbl_802E0C30:
+.obj lbl_802E0C30, local
 	.asciz "screen/blo/play_cha.blo"
+.endobj lbl_802E0C30
 .balign 4
-lbl_802E0C48:
+.obj lbl_802E0C48, local
 	.asciz "@unnamed@::DateCallBack"
+.endobj lbl_802E0C48
 .balign 4
-lbl_802E0C60:
+.obj lbl_802E0C60, local
 	.asciz "zen::NumberTex"
+.endobj lbl_802E0C60
 .balign 4
-lbl_802E0C70:
+.obj lbl_802E0C70, local
 	.asciz "P2DPaneCallBackBase"
+.endobj lbl_802E0C70
 .balign 4
-lbl_802E0C84:
+.obj lbl_802E0C84, local
 	.asciz "zen::CallBack1<P2DPane *>"
+.endobj lbl_802E0C84
 .balign 4
-lbl_802E0CA0:
+.obj lbl_802E0CA0, local
 	.asciz "P2DPaneCallBack"
+.endobj lbl_802E0CA0
 .balign 4
-lbl_802E0CB0:
+.obj lbl_802E0CB0, local
 	.4byte __RTTI__19P2DPaneCallBackBase
 	.4byte 0x00000004
 	.4byte "__RTTI__Q23zen20CallBack1<P7P2DPane>"
 	.4byte 0x00000000
 	.4byte 0x00000000
-lbl_802E0CC4:
+.endobj lbl_802E0CB0
+.balign 4
+.obj lbl_802E0CC4, local
 	.4byte __RTTI__Q23zen9NumberTex
 	.4byte 0x00000004
 	.4byte __RTTI__19P2DPaneCallBackBase
@@ -4372,16 +4406,20 @@ lbl_802E0CC4:
 	.4byte __RTTI__15P2DPaneCallBack
 	.4byte 0x00000000
 	.4byte 0x00000000
-.global "__vt__Q29@unnamed@12DateCallBack"
-"__vt__Q29@unnamed@12DateCallBack":
+.endobj lbl_802E0CC4
+.balign 4
+.obj "__vt__Q29@unnamed@12DateCallBack", weak
 	.4byte "__RTTI__Q29@unnamed@12DateCallBack"
 	.4byte 0
 	.4byte "invoke__Q29@unnamed@12DateCallBackFP7P2DPane"
 	.4byte draw__15P2DPaneCallBackFP7P2DPane
-lbl_802E0CF8:
-	.asciz "@unnamed@::LifePinchCallBack"
+.endobj "__vt__Q29@unnamed@12DateCallBack"
 .balign 4
-lbl_802E0D18:
+.obj lbl_802E0CF8, local
+	.asciz "@unnamed@::LifePinchCallBack"
+.endobj lbl_802E0CF8
+.balign 4
+.obj lbl_802E0D18, local
 	.4byte __RTTI__19P2DPaneCallBackBase
 	.4byte 0x4
 	.4byte "__RTTI__Q23zen20CallBack1<P7P2DPane>"
@@ -4389,16 +4427,20 @@ lbl_802E0D18:
 	.4byte __RTTI__15P2DPaneCallBack
 	.4byte 0
 	.4byte 0
-.global "__vt__Q29@unnamed@17LifePinchCallBack"
-"__vt__Q29@unnamed@17LifePinchCallBack":
+.endobj lbl_802E0D18
+.balign 4
+.obj "__vt__Q29@unnamed@17LifePinchCallBack", weak
 	.4byte "__RTTI__Q29@unnamed@17LifePinchCallBack"
 	.4byte 0
 	.4byte "invoke__Q29@unnamed@17LifePinchCallBackFP7P2DPane"
 	.4byte draw__15P2DPaneCallBackFP7P2DPane
-lbl_802E0D44:
-	.asciz "@unnamed@::LifeIconCallBack"
+.endobj "__vt__Q29@unnamed@17LifePinchCallBack"
 .balign 4
-lbl_802E0D60:
+.obj lbl_802E0D44, local
+	.asciz "@unnamed@::LifeIconCallBack"
+.endobj lbl_802E0D44
+.balign 4
+.obj lbl_802E0D60, local
 	.4byte __RTTI__19P2DPaneCallBackBase
 	.4byte 0x4
 	.4byte "__RTTI__Q23zen20CallBack1<P7P2DPane>"
@@ -4406,16 +4448,20 @@ lbl_802E0D60:
 	.4byte __RTTI__15P2DPaneCallBack
 	.4byte 0
 	.4byte 0
-.global "__vt__Q29@unnamed@16LifeIconCallBack"
-"__vt__Q29@unnamed@16LifeIconCallBack":
+.endobj lbl_802E0D60
+.balign 4
+.obj "__vt__Q29@unnamed@16LifeIconCallBack", weak
 	.4byte "__RTTI__Q29@unnamed@16LifeIconCallBack"
 	.4byte 0
 	.4byte "invoke__Q29@unnamed@16LifeIconCallBackFP7P2DPane"
 	.4byte "draw__Q29@unnamed@16LifeIconCallBackFP7P2DPane"
-lbl_802E0D8C:
-	.asciz "@unnamed@::NaviTexCallBack"
+.endobj "__vt__Q29@unnamed@16LifeIconCallBack"
 .balign 4
-lbl_802E0DA8:
+.obj lbl_802E0D8C, local
+	.asciz "@unnamed@::NaviTexCallBack"
+.endobj lbl_802E0D8C
+.balign 4
+.obj lbl_802E0DA8, local
 	.4byte __RTTI__19P2DPaneCallBackBase
 	.4byte 0x4
 	.4byte "__RTTI__Q23zen20CallBack1<P7P2DPane>"
@@ -4423,16 +4469,20 @@ lbl_802E0DA8:
 	.4byte __RTTI__15P2DPaneCallBack
 	.4byte 0
 	.4byte 0
-.global "__vt__Q29@unnamed@15NaviTexCallBack"
-"__vt__Q29@unnamed@15NaviTexCallBack":
+.endobj lbl_802E0DA8
+.balign 4
+.obj "__vt__Q29@unnamed@15NaviTexCallBack", weak
 	.4byte "__RTTI__Q29@unnamed@15NaviTexCallBack"
 	.4byte 0
 	.4byte "invoke__Q29@unnamed@15NaviTexCallBackFP7P2DPane"
 	.4byte draw__15P2DPaneCallBackFP7P2DPane
-lbl_802E0DD4:
-	.asciz "@unnamed@::NaviIconCallBack"
+.endobj "__vt__Q29@unnamed@15NaviTexCallBack"
 .balign 4
-lbl_802E0DF0:
+.obj lbl_802E0DD4, local
+	.asciz "@unnamed@::NaviIconCallBack"
+.endobj lbl_802E0DD4
+.balign 4
+.obj lbl_802E0DF0, local
 	.4byte __RTTI__19P2DPaneCallBackBase
 	.4byte 0x4
 	.4byte "__RTTI__Q23zen20CallBack1<P7P2DPane>"
@@ -4440,19 +4490,24 @@ lbl_802E0DF0:
 	.4byte __RTTI__15P2DPaneCallBack
 	.4byte 0
 	.4byte 0
-.global "__vt__Q29@unnamed@16NaviIconCallBack"
-"__vt__Q29@unnamed@16NaviIconCallBack":
+.endobj lbl_802E0DF0
+.balign 4
+.obj "__vt__Q29@unnamed@16NaviIconCallBack", weak
 	.4byte "__RTTI__Q29@unnamed@16NaviIconCallBack"
 	.4byte 0
 	.4byte "invoke__Q29@unnamed@16NaviIconCallBackFP7P2DPane"
 	.4byte draw__15P2DPaneCallBackFP7P2DPane
-lbl_802E0E1C:
+.endobj "__vt__Q29@unnamed@16NaviIconCallBack"
+.balign 4
+.obj lbl_802E0E1C, local
 	.asciz "@unnamed@::MoonIconCallBack"
+.endobj lbl_802E0E1C
 .balign 4
-lbl_802E0E38:
+.obj lbl_802E0E38, local
 	.asciz "@unnamed@::SunMove"
+.endobj lbl_802E0E38
 .balign 4
-lbl_802E0E4C:
+.obj lbl_802E0E4C, local
 	.4byte "__RTTI__Q29@unnamed@7SunMove"
 	.4byte 0x4
 	.4byte __RTTI__19P2DPaneCallBackBase
@@ -4462,19 +4517,24 @@ lbl_802E0E4C:
 	.4byte __RTTI__15P2DPaneCallBack
 	.4byte 0
 	.4byte 0
-.global "__vt__Q29@unnamed@16MoonIconCallBack"
-"__vt__Q29@unnamed@16MoonIconCallBack":
+.endobj lbl_802E0E4C
+.balign 4
+.obj "__vt__Q29@unnamed@16MoonIconCallBack", weak
 	.4byte "__RTTI__Q29@unnamed@16MoonIconCallBack"
 	.4byte 0
 	.4byte "invoke__Q29@unnamed@16MoonIconCallBackFP7P2DPane"
 	.4byte draw__15P2DPaneCallBackFP7P2DPane
-lbl_802E0E80:
+.endobj "__vt__Q29@unnamed@16MoonIconCallBack"
+.balign 4
+.obj lbl_802E0E80, local
 	.asciz "@unnamed@::SunIcon2CallBack"
+.endobj lbl_802E0E80
 .balign 4
-lbl_802E0E9C:
+.obj lbl_802E0E9C, local
 	.asciz "@unnamed@::SunAnim"
+.endobj lbl_802E0E9C
 .balign 4
-lbl_802E0EB0:
+.obj lbl_802E0EB0, local
 	.4byte "__RTTI__Q29@unnamed@7SunAnim"
 	.4byte 0x14
 	.4byte "__RTTI__Q29@unnamed@7SunMove"
@@ -4486,16 +4546,20 @@ lbl_802E0EB0:
 	.4byte __RTTI__15P2DPaneCallBack
 	.4byte 0
 	.4byte 0
-.global "__vt__Q29@unnamed@16SunIcon2CallBack"
-"__vt__Q29@unnamed@16SunIcon2CallBack":
+.endobj lbl_802E0EB0
+.balign 4
+.obj "__vt__Q29@unnamed@16SunIcon2CallBack", weak
 	.4byte "__RTTI__Q29@unnamed@16SunIcon2CallBack"
 	.4byte 0
 	.4byte "invoke__Q29@unnamed@16SunIcon2CallBackFP7P2DPane"
 	.4byte draw__15P2DPaneCallBackFP7P2DPane
-lbl_802E0EEC:
-	.asciz "@unnamed@::SunIcon1CallBack"
+.endobj "__vt__Q29@unnamed@16SunIcon2CallBack"
 .balign 4
-lbl_802E0F08:
+.obj lbl_802E0EEC, local
+	.asciz "@unnamed@::SunIcon1CallBack"
+.endobj lbl_802E0EEC
+.balign 4
+.obj lbl_802E0F08, local
 	.4byte "__RTTI__Q29@unnamed@7SunAnim"
 	.4byte 0x4
 	.4byte __RTTI__19P2DPaneCallBackBase
@@ -4505,16 +4569,20 @@ lbl_802E0F08:
 	.4byte __RTTI__15P2DPaneCallBack
 	.4byte 0
 	.4byte 0
-.global "__vt__Q29@unnamed@16SunIcon1CallBack"
-"__vt__Q29@unnamed@16SunIcon1CallBack":
+.endobj lbl_802E0F08
+.balign 4
+.obj "__vt__Q29@unnamed@16SunIcon1CallBack", weak
 	.4byte "__RTTI__Q29@unnamed@16SunIcon1CallBack"
 	.4byte 0
 	.4byte "invoke__Q29@unnamed@16SunIcon1CallBackFP7P2DPane"
 	.4byte draw__15P2DPaneCallBackFP7P2DPane
-lbl_802E0F3C:
-	.asciz "@unnamed@::SunCapsuleCallBack"
+.endobj "__vt__Q29@unnamed@16SunIcon1CallBack"
 .balign 4
-lbl_802E0F5C:
+.obj lbl_802E0F3C, local
+	.asciz "@unnamed@::SunCapsuleCallBack"
+.endobj lbl_802E0F3C
+.balign 4
+.obj lbl_802E0F5C, local
 	.4byte __RTTI__19P2DPaneCallBackBase
 	.4byte 0x4
 	.4byte "__RTTI__Q23zen20CallBack1<P7P2DPane>"
@@ -4522,16 +4590,20 @@ lbl_802E0F5C:
 	.4byte __RTTI__15P2DPaneCallBack
 	.4byte 0
 	.4byte 0
-.global "__vt__Q29@unnamed@18SunCapsuleCallBack"
-"__vt__Q29@unnamed@18SunCapsuleCallBack":
+.endobj lbl_802E0F5C
+.balign 4
+.obj "__vt__Q29@unnamed@18SunCapsuleCallBack", weak
 	.4byte "__RTTI__Q29@unnamed@18SunCapsuleCallBack"
 	.4byte 0
 	.4byte "invoke__Q29@unnamed@18SunCapsuleCallBackFP7P2DPane"
 	.4byte draw__15P2DPaneCallBackFP7P2DPane
-lbl_802E0F88:
-	.asciz "@unnamed@::SunBaseCallBack"
+.endobj "__vt__Q29@unnamed@18SunCapsuleCallBack"
 .balign 4
-lbl_802E0FA4:
+.obj lbl_802E0F88, local
+	.asciz "@unnamed@::SunBaseCallBack"
+.endobj lbl_802E0F88
+.balign 4
+.obj lbl_802E0FA4, local
 	.4byte __RTTI__19P2DPaneCallBackBase
 	.4byte 0x14
 	.4byte "__RTTI__Q23zen20CallBack1<P7P2DPane>"
@@ -4541,8 +4613,9 @@ lbl_802E0FA4:
 	.4byte "__RTTI__Q29@unnamed@7SunMove"
 	.4byte 0
 	.4byte 0
-.global "__vt__Q29@unnamed@15SunBaseCallBack"
-"__vt__Q29@unnamed@15SunBaseCallBack":
+.endobj lbl_802E0FA4
+.balign 4
+.obj "__vt__Q29@unnamed@15SunBaseCallBack", weak
 	.4byte "__RTTI__Q29@unnamed@15SunBaseCallBack"
 	.4byte 0
 	.4byte "__RTTI__Q29@unnamed@15SunBaseCallBack"
@@ -4550,17 +4623,23 @@ lbl_802E0FA4:
 	.4byte "@16@invoke__Q29@unnamed@15SunBaseCallBackFP7P2DPane"
 	.4byte draw__15P2DPaneCallBackFP7P2DPane
 	.4byte "invoke__Q29@unnamed@15SunBaseCallBackFP7P2DPane"
-lbl_802E0FE4:
+.endobj "__vt__Q29@unnamed@15SunBaseCallBack"
+.balign 4
+.obj lbl_802E0FE4, local
 	.asciz "zen::NumberPicCallBack<short>"
+.endobj lbl_802E0FE4
 .balign 4
-lbl_802E1004:
+.obj lbl_802E1004, local
 	.asciz "zen::FigureTex<short>"
+.endobj lbl_802E1004
 .balign 4
-lbl_802E101C:
+.obj lbl_802E101C, local
 	.4byte __RTTI__Q23zen9NumberTex
 	.4byte 0
 	.4byte 0
-lbl_802E1028:
+.endobj lbl_802E101C
+.balign 4
+.obj lbl_802E1028, local
 	.4byte __RTTI__Q23zen9NumberTex
 	.4byte 0x4
 	.4byte "__RTTI__Q23zen12FigureTex<s>"
@@ -4572,16 +4651,20 @@ lbl_802E1028:
 	.4byte __RTTI__15P2DPaneCallBack
 	.4byte 0
 	.4byte 0
-.global "__vt__Q23zen20NumberPicCallBack<s>"
-"__vt__Q23zen20NumberPicCallBack<s>":
+.endobj lbl_802E1028
+.balign 4
+.obj "__vt__Q23zen20NumberPicCallBack<s>", weak
 	.4byte "__RTTI__Q23zen20NumberPicCallBack<s>"
 	.4byte 0
 	.4byte "invoke__Q23zen20NumberPicCallBack<s>FP7P2DPane"
 	.4byte draw__15P2DPaneCallBackFP7P2DPane
-lbl_802E1064:
-	.asciz "@unnamed@::MapPikminWindowCallBack"
+.endobj "__vt__Q23zen20NumberPicCallBack<s>"
 .balign 4
-lbl_802E1088:
+.obj lbl_802E1064, local
+	.asciz "@unnamed@::MapPikminWindowCallBack"
+.endobj lbl_802E1064
+.balign 4
+.obj lbl_802E1088, local
 	.4byte __RTTI__19P2DPaneCallBackBase
 	.4byte 4
 	.4byte "__RTTI__Q23zen20CallBack1<P7P2DPane>"
@@ -4589,16 +4672,20 @@ lbl_802E1088:
 	.4byte __RTTI__15P2DPaneCallBack
 	.4byte 0
 	.4byte 0
-.global "__vt__Q29@unnamed@23MapPikminWindowCallBack"
-"__vt__Q29@unnamed@23MapPikminWindowCallBack":
+.endobj lbl_802E1088
+.balign 4
+.obj "__vt__Q29@unnamed@23MapPikminWindowCallBack", weak
 	.4byte "__RTTI__Q29@unnamed@23MapPikminWindowCallBack"
 	.4byte 0
 	.4byte "invoke__Q29@unnamed@23MapPikminWindowCallBackFP7P2DPane"
 	.4byte draw__15P2DPaneCallBackFP7P2DPane
-lbl_802E10B4:
-	.asciz "@unnamed@::PikiIconCallBack"
+.endobj "__vt__Q29@unnamed@23MapPikminWindowCallBack"
 .balign 4
-lbl_802E10D0:
+.obj lbl_802E10B4, local
+	.asciz "@unnamed@::PikiIconCallBack"
+.endobj lbl_802E10B4
+.balign 4
+.obj lbl_802E10D0, local
 	.4byte __RTTI__19P2DPaneCallBackBase
 	.4byte 4
 	.4byte "__RTTI__Q23zen20CallBack1<P7P2DPane>"
@@ -4606,179 +4693,240 @@ lbl_802E10D0:
 	.4byte __RTTI__15P2DPaneCallBack
 	.4byte 0
 	.4byte 0
-.global "__vt__Q29@unnamed@16PikiIconCallBack"
-"__vt__Q29@unnamed@16PikiIconCallBack":
+.endobj lbl_802E10D0
+.balign 4
+.obj "__vt__Q29@unnamed@16PikiIconCallBack", weak
 	.4byte "__RTTI__Q29@unnamed@16PikiIconCallBack"
 	.4byte 0
 	.4byte "invoke__Q29@unnamed@16PikiIconCallBackFP7P2DPane"
 	.4byte draw__15P2DPaneCallBackFP7P2DPane
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
+.endobj "__vt__Q29@unnamed@16PikiIconCallBack"
+	.skip 0x1C
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-"frameMax__Q29@unnamed@16PikiIconCallBack":
+.obj "frameMax__Q29@unnamed@16PikiIconCallBack", global
 	.float 0.5
-lbl_803E66A4:
+.endobj "frameMax__Q29@unnamed@16PikiIconCallBack"
+.balign 4
+.obj lbl_803E66A4, local
 	.float 0.0
-__RTTI__Q23zen9NumberTex:
+.endobj lbl_803E66A4
+.balign 4
+.obj __RTTI__Q23zen9NumberTex, local
 	.4byte lbl_802E0C60
 	.4byte 0
-__RTTI__19P2DPaneCallBackBase:
+.endobj __RTTI__Q23zen9NumberTex
+.obj __RTTI__19P2DPaneCallBackBase, local
 	.4byte lbl_802E0C70
 	.4byte 0
-"__RTTI__Q23zen20CallBack1<P7P2DPane>":
+.endobj __RTTI__19P2DPaneCallBackBase
+.obj "__RTTI__Q23zen20CallBack1<P7P2DPane>", local
 	.4byte lbl_802E0C84
 	.4byte 0
-__RTTI__15P2DPaneCallBack:
+.endobj "__RTTI__Q23zen20CallBack1<P7P2DPane>"
+.obj __RTTI__15P2DPaneCallBack, local
 	.4byte lbl_802E0CA0
 	.4byte lbl_802E0CB0
-"__RTTI__Q29@unnamed@12DateCallBack":
+.endobj __RTTI__15P2DPaneCallBack
+.obj "__RTTI__Q29@unnamed@12DateCallBack", local
 	.4byte lbl_802E0C48
 	.4byte lbl_802E0CC4
-"__RTTI__Q29@unnamed@17LifePinchCallBack":
+.endobj "__RTTI__Q29@unnamed@12DateCallBack"
+.obj "__RTTI__Q29@unnamed@17LifePinchCallBack", local
 	.4byte lbl_802E0CF8
 	.4byte lbl_802E0D18
-"__RTTI__Q29@unnamed@16LifeIconCallBack":
+.endobj "__RTTI__Q29@unnamed@17LifePinchCallBack"
+.obj "__RTTI__Q29@unnamed@16LifeIconCallBack", local
 	.4byte lbl_802E0D44
 	.4byte lbl_802E0D60
-"__RTTI__Q29@unnamed@15NaviTexCallBack":
+.endobj "__RTTI__Q29@unnamed@16LifeIconCallBack"
+.obj "__RTTI__Q29@unnamed@15NaviTexCallBack", local
 	.4byte lbl_802E0D8C
 	.4byte lbl_802E0DA8
-"__RTTI__Q29@unnamed@16NaviIconCallBack":
+.endobj "__RTTI__Q29@unnamed@15NaviTexCallBack"
+.obj "__RTTI__Q29@unnamed@16NaviIconCallBack", local
 	.4byte lbl_802E0DD4
 	.4byte lbl_802E0DF0
-"__RTTI__Q29@unnamed@7SunMove":
+.endobj "__RTTI__Q29@unnamed@16NaviIconCallBack"
+.obj "__RTTI__Q29@unnamed@7SunMove", local
 	.4byte lbl_802E0E38
 	.4byte 0
-"__RTTI__Q29@unnamed@16MoonIconCallBack":
+.endobj "__RTTI__Q29@unnamed@7SunMove"
+.obj "__RTTI__Q29@unnamed@16MoonIconCallBack", local
 	.4byte lbl_802E0E1C
 	.4byte lbl_802E0E4C
-"__RTTI__Q29@unnamed@7SunAnim":
+.endobj "__RTTI__Q29@unnamed@16MoonIconCallBack"
+.obj "__RTTI__Q29@unnamed@7SunAnim", local
 	.4byte lbl_802E0E9C
 	.4byte 0
-"__RTTI__Q29@unnamed@16SunIcon2CallBack":
+.endobj "__RTTI__Q29@unnamed@7SunAnim"
+.obj "__RTTI__Q29@unnamed@16SunIcon2CallBack", local
 	.4byte lbl_802E0E80
 	.4byte lbl_802E0EB0
-"__RTTI__Q29@unnamed@16SunIcon1CallBack":
+.endobj "__RTTI__Q29@unnamed@16SunIcon2CallBack"
+.obj "__RTTI__Q29@unnamed@16SunIcon1CallBack", local
 	.4byte lbl_802E0EEC
 	.4byte lbl_802E0F08
-"__RTTI__Q29@unnamed@18SunCapsuleCallBack":
+.endobj "__RTTI__Q29@unnamed@16SunIcon1CallBack"
+.obj "__RTTI__Q29@unnamed@18SunCapsuleCallBack", local
 	.4byte lbl_802E0F3C
 	.4byte lbl_802E0F5C
-"__RTTI__Q29@unnamed@15SunBaseCallBack":
+.endobj "__RTTI__Q29@unnamed@18SunCapsuleCallBack"
+.obj "__RTTI__Q29@unnamed@15SunBaseCallBack", local
 	.4byte lbl_802E0F88
 	.4byte lbl_802E0FA4
-"__RTTI__Q23zen12FigureTex<s>":
+.endobj "__RTTI__Q29@unnamed@15SunBaseCallBack"
+.obj "__RTTI__Q23zen12FigureTex<s>", local
 	.4byte lbl_802E1004
 	.4byte lbl_802E101C
-"__RTTI__Q23zen20NumberPicCallBack<s>":
+.endobj "__RTTI__Q23zen12FigureTex<s>"
+.obj "__RTTI__Q23zen20NumberPicCallBack<s>", local
 	.4byte lbl_802E0FE4
 	.4byte lbl_802E1028
-"__RTTI__Q29@unnamed@23MapPikminWindowCallBack":
+.endobj "__RTTI__Q23zen20NumberPicCallBack<s>"
+.obj "__RTTI__Q29@unnamed@23MapPikminWindowCallBack", local
 	.4byte lbl_802E1064
 	.4byte lbl_802E1088
-"__RTTI__Q29@unnamed@16PikiIconCallBack":
+.endobj "__RTTI__Q29@unnamed@23MapPikminWindowCallBack"
+.obj "__RTTI__Q29@unnamed@16PikiIconCallBack", local
 	.4byte lbl_802E10B4
 	.4byte lbl_802E10D0
+.endobj "__RTTI__Q29@unnamed@16PikiIconCallBack"
 
 .section .sbss, "wa"
 .balign 8
-.global pGameInfo__3zen
-pGameInfo__3zen:
+.obj pGameInfo__3zen, global
 	.skip 4
+.endobj pGameInfo__3zen
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803EB938:
+.obj lbl_803EB938, local
 	.float 0.0
-lbl_803EB93C:
+.endobj lbl_803EB938
+.obj lbl_803EB93C, local
 	.float 0.5
-lbl_803EB940:
+.endobj lbl_803EB93C
+.obj lbl_803EB940, local # pi
 	.float 3.1415927
-lbl_803EB944:
+.endobj lbl_803EB940
+.obj lbl_803EB944, local
 	.float 0.017453292
-lbl_803EB948:
+.endobj lbl_803EB944
+.obj lbl_803EB948, local
 	.float -0.017453292
+.endobj lbl_803EB948
 .balign 8
-lbl_803EB950:
-	.4byte 0x43300000
-	.4byte 0x80000000
-lbl_803EB958:
+.obj lbl_803EB950, local
+	.8byte 0x4330000080000000
+.endobj lbl_803EB950
+.obj lbl_803EB958, local # tau
 	.float 6.2831855
-lbl_803EB95C:
+.endobj lbl_803EB958
+.obj lbl_803EB95C, local
 	.float 90.0
-lbl_803EB960:
+.endobj lbl_803EB95C
+.obj lbl_803EB960, local
 	.float 180.0
-lbl_803EB964:
+.endobj lbl_803EB960
+.obj lbl_803EB964, local
 	.float 2.0
-lbl_803EB968:
+.endobj lbl_803EB964
+.obj lbl_803EB968, local
 	.float 1.0
-lbl_803EB96C:
+.endobj lbl_803EB968
+.obj lbl_803EB96C, local
 	.float 30.0
-lbl_803EB970:
+.endobj lbl_803EB96C
+.obj lbl_803EB970, local
 	.float 5000.0
-lbl_803EB974:
+.endobj lbl_803EB970
+.obj lbl_803EB974, local
 	.float 250.0
-lbl_803EB978:
+.endobj lbl_803EB974
+.obj lbl_803EB978, local
 	.float 5.0
-lbl_803EB97C:
+.endobj lbl_803EB978
+.obj lbl_803EB97C, local
 	.float 255.0
-lbl_803EB980:
+.endobj lbl_803EB97C
+.obj lbl_803EB980, local
 	.float 15.0
+.endobj lbl_803EB980
 .balign 8
-lbl_803EB988:
+.obj lbl_803EB988, local
 	.double 5.0
-lbl_803EB990:
+.endobj lbl_803EB988
+.obj lbl_803EB990, local
 	.float 0.2617994
-lbl_803EB994:
+.endobj lbl_803EB990
+.obj lbl_803EB994, local
 	.float 0.15
-lbl_803EB998:
+.endobj lbl_803EB994
+.obj lbl_803EB998, local # pi/3
 	.float 1.0471976
-lbl_803EB99C:
+.endobj lbl_803EB998
+.obj lbl_803EB99C, local
 	.float 18.849556
-lbl_803EB9A0:
+.endobj lbl_803EB99C
+.obj lbl_803EB9A0, local
 	.float 0.2
-lbl_803EB9A4:
+.endobj lbl_803EB9A0
+.obj lbl_803EB9A4, local
 	.float 7.0
-lbl_803EB9A8:
+.endobj lbl_803EB9A4
+.obj lbl_803EB9A8, local
 	.float 19.0
-lbl_803EB9AC:
+.endobj lbl_803EB9A8
+.obj lbl_803EB9AC, local
 	.float 12.0
-lbl_803EB9B0:
+.endobj lbl_803EB9AC
+.obj lbl_803EB9B0, local
 	.float 0.034906585
-lbl_803EB9B4:
+.endobj lbl_803EB9B0
+.obj lbl_803EB9B4, local
 	.float 0.34906587
-lbl_803EB9B8:
+.endobj lbl_803EB9B4
+.obj lbl_803EB9B8, local
 	.float 0.08726647
-lbl_803EB9BC:
+.endobj lbl_803EB9B8
+.obj lbl_803EB9BC, local
 	.float 6.5
-lbl_803EB9C0:
+.endobj lbl_803EB9BC
+.obj lbl_803EB9C0, local
 	.float 19.5
-lbl_803EB9C4:
+.endobj lbl_803EB9C0
+.obj lbl_803EB9C4, local
 	.float 0.9
-lbl_803EB9C8:
+.endobj lbl_803EB9C4
+.obj lbl_803EB9C8, local
 	.float 0.1
-lbl_803EB9CC:
+.endobj lbl_803EB9C8
+.obj lbl_803EB9CC, local
 	.float 191.0
-lbl_803EB9D0:
+.endobj lbl_803EB9CC
+.obj lbl_803EB9D0, local
 	.float 64.0
-lbl_803EB9D4:
+.endobj lbl_803EB9D0
+.obj lbl_803EB9D4, local
 	.float 7.5
-lbl_803EB9D8:
+.endobj lbl_803EB9D4
+.obj lbl_803EB9D8, local
 	.float 18.5
-lbl_803EB9DC:
+.endobj lbl_803EB9D8
+.obj lbl_803EB9DC, local
 	.float 227.5
-lbl_803EB9E0:
+.endobj lbl_803EB9DC
+.obj lbl_803EB9E0, local
 	.float 27.5
-lbl_803EB9E4:
+.endobj lbl_803EB9E0
+.obj lbl_803EB9E4, local
 	.float 50.0
-lbl_803EB9E8:
+.endobj lbl_803EB9E4
+.obj lbl_803EB9E8, local
 	.float 12.566371
-lbl_803EB9EC:
+.endobj lbl_803EB9E8
+.obj lbl_803EB9EC, local
 	.float 0.3
+.endobj lbl_803EB9EC

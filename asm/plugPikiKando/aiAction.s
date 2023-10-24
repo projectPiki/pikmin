@@ -2255,64 +2255,82 @@ __vt__6Action:
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-lbl_803E0968:
+.obj lbl_803E0968, local
 	.asciz "-"
+.endobj lbl_803E0968
 .balign 4
-lbl_803E096C:
+.obj lbl_803E096C, local
 	.asciz "WATCH"
+.endobj lbl_803E096C
 .balign 4
-lbl_803E0974:
+.obj lbl_803E0974, local
 	.asciz "ESCAPE"
+.endobj lbl_803E0974
 .balign 4
-lbl_803E097C:
+.obj lbl_803E097C, local
 	.asciz "CHASE"
+.endobj lbl_803E097C
 .balign 4
-lbl_803E0984:
+.obj lbl_803E0984, local
 	.asciz "GOTO"
+.endobj lbl_803E0984
 .balign 4
-lbl_803E098C:
+.obj lbl_803E098C, local
 	.asciz "PICK"
+.endobj lbl_803E098C
 .balign 4
-lbl_803E0994:
+.obj lbl_803E0994, local
 	.asciz "PUT"
+.endobj lbl_803E0994
 .balign 4
-lbl_803E0998:
+.obj lbl_803E0998, local
 	.asciz "KICK"
+.endobj lbl_803E0998
 .balign 4
-lbl_803E09A0:
+.obj lbl_803E09A0, local
 	.asciz "no name"
+.endobj lbl_803E09A0
 .balign 4
-"__RTTI__15Receiver<4Piki>":
+.obj "__RTTI__15Receiver<4Piki>", local
 	.4byte lbl_802B7FA4
 	.4byte 0
+.endobj "__RTTI__15Receiver<4Piki>"
 .balign 4
-lbl_803E09B0:
+.obj lbl_803E09B0, local
 	.asciz "Action"
+.endobj lbl_803E09B0
 .balign 4
-__RTTI__6Action:
+.obj __RTTI__6Action, local
 	.4byte lbl_803E09B0
 	.4byte lbl_802B7FB4
-__RTTI__9TopAction:
+.endobj __RTTI__6Action
+.obj __RTTI__9TopAction, local
 	.4byte lbl_802B7F98
 	.4byte lbl_802B7FC0
-__RTTI__19PaniAnimKeyListener:
+.endobj __RTTI__9TopAction
+.obj __RTTI__19PaniAnimKeyListener, local
 	.4byte lbl_802B8038
 	.4byte 0
-__RTTI__Q29TopAction14MotionListener:
+.endobj __RTTI__19PaniAnimKeyListener
+.obj __RTTI__Q29TopAction14MotionListener, local
 	.4byte lbl_802B8058
 	.4byte lbl_802B8074
-__RTTI__8OrAction:
+.endobj __RTTI__Q29TopAction14MotionListener
+.obj __RTTI__8OrAction, local
 	.4byte lbl_802B808C
 	.4byte lbl_802B8098
-__RTTI__9AndAction:
+.endobj __RTTI__8OrAction
+.obj __RTTI__9AndAction, local
 	.4byte lbl_802B8110
 	.4byte lbl_802B811C
+.endobj __RTTI__9AndAction
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
 .obj lbl_803E97A0, local
 	.float 1.0
 .endobj lbl_803E97A0
+.balign 4
 .obj lbl_803E97A4, local
 	.float 200.0
 .endobj lbl_803E97A4
