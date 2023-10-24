@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global makeObjectMapParts__Fv
-makeObjectMapParts__Fv:
+.fn makeObjectMapParts__Fv, local
 /* 8011785C 001147BC  7C 08 02 A6 */	mflr r0
 /* 80117860 001147C0  38 60 00 90 */	li r3, 0x90
 /* 80117864 001147C4  90 01 00 04 */	stw r0, 4(r1)
@@ -115,9 +114,9 @@ makeObjectMapParts__Fv:
 /* 80117A10 00114970  38 21 00 60 */	addi r1, r1, 0x60
 /* 80117A14 00114974  7C 08 03 A6 */	mtlr r0
 /* 80117A18 00114978  4E 80 00 20 */	blr 
+.endfn makeObjectMapParts__Fv
 
-.global initialise__17GenObjectMapPartsFP6MapMgr
-initialise__17GenObjectMapPartsFP6MapMgr:
+.fn initialise__17GenObjectMapPartsFP6MapMgr, global
 /* 80117A1C 0011497C  90 6D 31 28 */	stw r3, mapMgr__17GenObjectMapParts@sda21(r13)
 /* 80117A20 00114980  80 ED 30 74 */	lwz r7, factory__16GenObjectFactory@sda21(r13)
 /* 80117A24 00114984  80 A7 00 00 */	lwz r5, 0(r7)
@@ -154,9 +153,9 @@ initialise__17GenObjectMapPartsFP6MapMgr:
 /* 80117AA0 00114A00  38 03 00 01 */	addi r0, r3, 1
 /* 80117AA4 00114A04  90 07 00 00 */	stw r0, 0(r7)
 /* 80117AA8 00114A08  4E 80 00 20 */	blr 
+.endfn initialise__17GenObjectMapPartsFP6MapMgr
 
-.global doRead__17GenObjectMapPartsFR18RandomAccessStream
-doRead__17GenObjectMapPartsFR18RandomAccessStream:
+.fn doRead__17GenObjectMapPartsFR18RandomAccessStream, global
 /* 80117AAC 00114A0C  7C 08 02 A6 */	mflr r0
 /* 80117AB0 00114A10  90 01 00 04 */	stw r0, 4(r1)
 /* 80117AB4 00114A14  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -228,9 +227,9 @@ doRead__17GenObjectMapPartsFR18RandomAccessStream:
 /* 80117BB8 00114B18  38 21 00 18 */	addi r1, r1, 0x18
 /* 80117BBC 00114B1C  7C 08 03 A6 */	mtlr r0
 /* 80117BC0 00114B20  4E 80 00 20 */	blr 
+.endfn doRead__17GenObjectMapPartsFR18RandomAccessStream
 
-.global render__17GenObjectMapPartsFR8GraphicsP9Generator
-render__17GenObjectMapPartsFR8GraphicsP9Generator:
+.fn render__17GenObjectMapPartsFR8GraphicsP9Generator, global
 /* 80117BC4 00114B24  7C 08 02 A6 */	mflr r0
 /* 80117BC8 00114B28  90 01 00 04 */	stw r0, 4(r1)
 /* 80117BCC 00114B2C  94 21 FD 10 */	stwu r1, -0x2f0(r1)
@@ -645,9 +644,9 @@ render__17GenObjectMapPartsFR8GraphicsP9Generator:
 /* 8011821C 0011517C  38 21 02 F0 */	addi r1, r1, 0x2f0
 /* 80118220 00115180  7C 08 03 A6 */	mtlr r0
 /* 80118224 00115184  4E 80 00 20 */	blr 
+.endfn render__17GenObjectMapPartsFR8GraphicsP9Generator
 
-.global birth__17GenObjectMapPartsFR9BirthInfo
-birth__17GenObjectMapPartsFR9BirthInfo:
+.fn birth__17GenObjectMapPartsFR9BirthInfo, global
 /* 80118228 00115188  7C 08 02 A6 */	mflr r0
 /* 8011822C 0011518C  90 01 00 04 */	stw r0, 4(r1)
 /* 80118230 00115190  94 21 FF 90 */	stwu r1, -0x70(r1)
@@ -820,78 +819,92 @@ birth__17GenObjectMapPartsFR9BirthInfo:
 /* 80118498 001153F8  38 21 00 70 */	addi r1, r1, 0x70
 /* 8011849C 001153FC  7C 08 03 A6 */	mtlr r0
 /* 801184A0 00115400  4E 80 00 20 */	blr 
+.endfn birth__17GenObjectMapPartsFR9BirthInfo
 
-.global init__8MapPartsFv
-init__8MapPartsFv:
+.fn init__8MapPartsFv, weak
 /* 801184A4 00115404  4E 80 00 20 */	blr 
+.endfn init__8MapPartsFv
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802C3060:
+.obj lbl_802C3060, local
 	.asciz "genMapParts.cpp"
+.endobj lbl_802C3060
 .balign 4
-lbl_802C3070:
+.obj lbl_802C3070, local
 	.asciz "genMapParts"
+.endobj lbl_802C3070
 .balign 4
-.global shapeNames
-shapeNames:
+.obj shapeNames, local
 	.4byte lbl_803E2A44
 	.4byte lbl_803E2A48
 	.4byte lbl_803E2A4C
 	.4byte lbl_803E2A50
 	.4byte lbl_803E2A54
-.global kindNames
-kindNames:
+.endobj shapeNames
+.balign 4
+.obj kindNames, local
 	.4byte lbl_803E2A58
 	.4byte lbl_803E2A60
 	.4byte lbl_803E2A68
+.endobj kindNames
 .balign 4
 lbl_802C309C:
 	.asciz "object type"
 .balign 4
-lbl_802C30A8: # Shift-JIS
+.obj lbl_802C30A8, local # Shift-JIS
 	.4byte 0x837D8362
 	.4byte 0x83768370
 	.4byte 0x815B8363
 	.4byte 0x82F090B6
 	.4byte 0x82DE0000
-lbl_802C30BC: # Shift-JIS
+.endobj lbl_802C30A8
+.balign 4
+.obj lbl_802C30BC, local # Shift-JIS
 	.4byte 0x837D8362
 	.4byte 0x83768370
 	.4byte 0x815B8363
 	.4byte 0x82F094AD
 	.4byte 0x90B60000
+.endobj lbl_802C30BC
 .balign 4
-lbl_802C30D0:
+.obj lbl_802C30D0, local
 	.asciz "GenObjectMapParts"
+.endobj lbl_802C30D0
 .balign 4
-lbl_802C30E4:
+.obj lbl_802C30E4, local
 	.asciz "Parameters"
+.endobj lbl_802C30E4
 .balign 4
-lbl_802C30F0:
+.obj lbl_802C30F0, local
 	.4byte __RTTI__10Parameters
-	.4byte 0x00000000
-	.4byte 0x00000000
+	.4byte 0
+	.4byte 0
+.endobj lbl_802C30F0
 .balign 4
-lbl_802C30FC:
+.obj lbl_802C30FC, local
 	.asciz "GenObject"
+.endobj lbl_802C30FC
 .balign 4
-lbl_802C3108:
+.obj lbl_802C3108, local
 	.4byte __RTTI__10Parameters
-	.4byte 0x00000000
+	.4byte 0
 	.4byte __RTTI__7GenBase
-	.4byte 0x00000000
-	.4byte 0x00000000
-lbl_802C311C:
+	.4byte 0
+	.4byte 0
+.endobj lbl_802C3108
+.balign 4
+.obj lbl_802C311C, local
 	.4byte __RTTI__10Parameters
-	.4byte 0x00000000
+	.4byte 0
 	.4byte __RTTI__7GenBase
-	.4byte 0x00000000
+	.4byte 0
 	.4byte __RTTI__9GenObject
-	.4byte 0x00000000
-	.4byte 0x00000000
-.global __vt__17GenObjectMapParts
-__vt__17GenObjectMapParts:
+	.4byte 0
+	.4byte 0
+.endobj lbl_802C311C
+.balign 4
+.obj __vt__17GenObjectMapParts, global
 	.4byte __RTTI__17GenObjectMapParts
 	.4byte 0
 	.4byte doWrite__7GenBaseFR18RandomAccessStream
@@ -906,36 +919,33 @@ __vt__17GenObjectMapParts:
 	.4byte update__9GenObjectFP9Generator
 	.4byte render__17GenObjectMapPartsFR8GraphicsP9Generator
 	.4byte birth__17GenObjectMapPartsFR9BirthInfo
+.endobj __vt__17GenObjectMapParts
 .balign 4
-lbl_802C3170:
+.obj lbl_802C3170, local
 	.asciz "Parm<float>"
+.endobj lbl_802C3170
 .balign 4
-lbl_802C317C:
+.obj lbl_802C317C, local
 	.asciz "BaseParm"
+.endobj lbl_802C317C
 .balign 4
-lbl_802C3188:
+.obj lbl_802C3188, local
 	.4byte __RTTI__8BaseParm
 	.4byte 0
 	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
+.endobj lbl_802C3188
+	.skip 20
 .balign 4
-lbl_802C31A8:
+.obj lbl_802C31A8, local
 	.asciz "Parm<int>"
+.endobj lbl_802C31A8
 .balign 4
-lbl_802C31B4:
+.obj lbl_802C31B4, local
 	.4byte __RTTI__8BaseParm
 	.4byte 0
 	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
+.endobj lbl_802C31B4
+	.skip 24
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8

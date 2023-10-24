@@ -13814,54 +13814,77 @@ __RTTI__8DispList:
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803E84E0:
+.obj lbl_803E84E0, local
 	.float 0.0
-lbl_803E84E4:
+.endobj lbl_803E84E0
+.obj lbl_803E84E4, local
 	.float 0.033333335
-lbl_803E84E8:
+.endobj lbl_803E84E4
+.obj lbl_803E84E8, local
 	.float 30.0
-lbl_803E84EC:
+.endobj lbl_803E84E8
+.obj lbl_803E84EC, local
 	.float 2.0
-lbl_803E84F0:
+.endobj lbl_803E84EC
+.obj lbl_803E84F0, local
 	.float 3.0
-lbl_803E84F4:
+.endobj lbl_803E84F0
+.obj lbl_803E84F4, local
 	.float 1.0
-lbl_803E84F8:
+.endobj lbl_803E84F4
+.obj lbl_803E84F8, local
 	.float -2.0
-lbl_803E84FC:
+.endobj lbl_803E84F8
+.obj lbl_803E84FC, local
 	.float 15000.0
-lbl_803E8500:
+.endobj lbl_803E84FC
+.obj lbl_803E8500, local
 	.float 1.3333334
-lbl_803E8504:
+.endobj lbl_803E8500
+.obj lbl_803E8504, local
 	.float 1000.0
-lbl_803E8508: # pi
+.endobj lbl_803E8504
+.obj lbl_803E8508, local # pi
 	.float 3.1415927
-lbl_803E850C:
+.endobj lbl_803E8508
+.obj lbl_803E850C, local
 	.float 180.0
-lbl_803E8510:
+.endobj lbl_803E850C
+.obj lbl_803E8510, local
 	.float 10.0
-lbl_803E8514:
+.endobj lbl_803E8510
+.obj lbl_803E8514, local
 	.float 50.0
-lbl_803E8518:
+.endobj lbl_803E8514
+.obj lbl_803E8518, local
 	.float 0.5
-lbl_803E851C:
+.endobj lbl_803E8518
+.obj lbl_803E851C, local
 	.float 9.765625E-4
-lbl_803E8520:
+.endobj lbl_803E851C
+.obj lbl_803E8520, local
 	.float 64.0
-lbl_803E8524:
+.endobj lbl_803E8520
+.obj lbl_803E8524, local
 	.float 0.001
+.endobj lbl_803E8524
 .balign 8
-lbl_803E8528:
+.obj lbl_803E8528, local
 	.8byte 0x4330000000000000
+.endobj lbl_803E8528
 .balign 8
-lbl_803E8530:
+.obj lbl_803E8530, local
 	.8byte 0x4330000080000000
+.endobj lbl_803E8530
 .balign 4
-lbl_803E8538:
+.obj lbl_803E8538, local
 	.4byte 0x00000000
+.endobj lbl_803E8538
 .balign 8
-lbl_803E8540:
+.obj lbl_803E8540, local
 	.double 0.5
+.endobj lbl_803E8540
 .balign 8
-lbl_803E8548:
+.obj lbl_803E8548, local
 	.double 3.0
+.endobj lbl_803E8548

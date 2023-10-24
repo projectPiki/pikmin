@@ -1609,16 +1609,22 @@ __RTTI__16MapSelectSection:
 
 .section .sbss, "wa"
 .balign 8
-selectWindow:
+.obj selectWindow, local
 	.skip 4
-mapWindow:
+.endobj selectWindow
+.balign 4
+.obj mapWindow, local
 	.skip 4
+.endobj mapWindow
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803E8768:
+.obj lbl_803E8768, local
 	.float 0.0
-lbl_803E876C:
+.endobj lbl_803E8768
+.obj lbl_803E876C, local
 	.float 3.0
-lbl_803E8770:
+.endobj lbl_803E876C
+.obj lbl_803E8770, local
 	.float 1.0
+.endobj lbl_803E8770
