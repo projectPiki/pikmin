@@ -13199,205 +13199,267 @@ lbl_constructor:
 	.4byte lbl_803DD06C
 .endobj modes
 .balign 4
-lbl_80228350:
+.obj lbl_80228350, local
 	.asciz "CoreNode"
+.endobj lbl_80228350
 .balign 4
-lbl_8022835C:
+.obj lbl_8022835C, local
 	.asciz "<SCENE_KEY_ANM_INFO>"
+.endobj lbl_8022835C
 .balign 4
-lbl_80228374:
+.obj lbl_80228374, local
 	.asciz "<KEY_CAMERA_ANM>"
+.endobj lbl_80228374
 .balign 4
-lbl_80228388:
+.obj lbl_80228388, local
 	.asciz "<KEY_CAMERA_TABLE>"
+.endobj lbl_80228388
 .balign 4
-lbl_8022839C:
+.obj lbl_8022839C, local
 	.asciz "cam_pos_x"
+.endobj lbl_8022839C
 .balign 4
-lbl_802283A8:
+.obj lbl_802283A8, local
 	.asciz "cam_pos_y"
+.endobj lbl_802283A8
 .balign 4
-lbl_802283B4:
+.obj lbl_802283B4, local
 	.asciz "cam_pos_z"
+.endobj lbl_802283B4
 .balign 4
-lbl_802283C0:
+.obj lbl_802283C0, local
 	.asciz "cam_lat_x"
+.endobj lbl_802283C0
 .balign 4
-lbl_802283CC:
+.obj lbl_802283CC, local
 	.asciz "cam_lat_y"
+.endobj lbl_802283CC
 .balign 4
-lbl_802283D8:
+.obj lbl_802283D8, local
 	.asciz "cam_lat_z"
+.endobj lbl_802283D8
 .balign 4
-lbl_802283E4:
+.obj lbl_802283E4, local
 	.asciz "cam_twist"
+.endobj lbl_802283E4
 .balign 4
-lbl_802283F0:
+.obj lbl_802283F0, local
 	.asciz "cam_fovy"
+.endobj lbl_802283F0
 .balign 4
-lbl_802283FC:
+.obj lbl_802283FC, local
 	.asciz "cam_near"
+.endobj lbl_802283FC
 .balign 4
-lbl_80228408:
+.obj lbl_80228408, local
 	.asciz "<KEY_DIFFUSE_LIGHT_ANM>"
+.endobj lbl_80228408
 .balign 4
-lbl_80228420:
+.obj lbl_80228420, local
 	.asciz "<KEY_DIFFUSE_LIGHT_TABLE>"
+.endobj lbl_80228420
 .balign 4
-lbl_8022843C:
+.obj lbl_8022843C, local
 	.asciz "light_pos_x"
+.endobj lbl_8022843C
 .balign 4
-lbl_80228448:
+.obj lbl_80228448, local
 	.asciz "light_pos_y"
+.endobj lbl_80228448
 .balign 4
-lbl_80228454:
+.obj lbl_80228454, local
 	.asciz "light_pos_z"
+.endobj lbl_80228454
 .balign 4
-lbl_80228460:
+.obj lbl_80228460, local
 	.asciz "light_r_param"
+.endobj lbl_80228460
 .balign 4
-lbl_80228470:
+.obj lbl_80228470, local
 	.asciz "light_g_param"
+.endobj lbl_80228470
 .balign 4
-lbl_80228480:
+.obj lbl_80228480, local
 	.asciz "light_b_param"
+.endobj lbl_80228480
 .balign 4
-lbl_80228490:
+.obj lbl_80228490, local
 	.asciz "light_visible"
+.endobj lbl_80228490
 .balign 4
-lbl_802284A0:
+.obj lbl_802284A0, local
 	.asciz "numcameras"
+.endobj lbl_802284A0
 .balign 4
-lbl_802284AC:
+.obj lbl_802284AC, local
 	.asciz "numDifLights"
+.endobj lbl_802284AC
 .balign 4
-lbl_802284BC:
+.obj lbl_802284BC, local
 	.asciz "numframes"
+.endobj lbl_802284BC
 .balign 4
-lbl_802284C8:
+.obj lbl_802284C8, local
 	.asciz "<ANM_INFO>"
+.endobj lbl_802284C8
 .balign 4
-lbl_802284D4:
+.obj lbl_802284D4, local
 	.asciz "<SCALING>"
+.endobj lbl_802284D4
 .balign 4
-lbl_802284E0:
+.obj lbl_802284E0, local
 	.asciz "<ROTATION>"
+.endobj lbl_802284E0
 .balign 4
-lbl_802284EC:
+.obj lbl_802284EC, local
 	.asciz "<TRANSLATION>"
+.endobj lbl_802284EC
 .balign 4
-lbl_802284FC:
+.obj lbl_802284FC, local
 	.asciz "brother_next"
+.endobj lbl_802284FC
 .balign 4
-lbl_8022850C:
+.obj lbl_8022850C, local
 	.asciz "brother_prev"
+.endobj lbl_8022850C
 .balign 4
-lbl_8022851C:
+.obj lbl_8022851C, local
 	.asciz "sx_param"
+.endobj lbl_8022851C
 .balign 4
-lbl_80228528:
+.obj lbl_80228528, local
 	.asciz "sy_param"
+.endobj lbl_80228528
 .balign 4
-lbl_80228534:
+.obj lbl_80228534, local
 	.asciz "sz_param"
+.endobj lbl_80228534
 .balign 4
-lbl_80228540:
+.obj lbl_80228540, local
 	.asciz "rx_param"
+.endobj lbl_80228540
 .balign 4
-lbl_8022854C:
+.obj lbl_8022854C, local
 	.asciz "ry_param"
+.endobj lbl_8022854C
 .balign 4
-lbl_80228558:
+.obj lbl_80228558, local
 	.asciz "rz_param"
+.endobj lbl_80228558
 .balign 4
-lbl_80228564:
+.obj lbl_80228564, local
 	.asciz "tx_param"
+.endobj lbl_80228564
 .balign 4
-lbl_80228570:
+.obj lbl_80228570, local
 	.asciz "ty_param"
+.endobj lbl_80228570
 .balign 4
-lbl_8022857C:
+.obj lbl_8022857C, local
 	.asciz "tz_param"
+.endobj lbl_8022857C
 .balign 4
-lbl_80228588:
+.obj lbl_80228588, local
 	.asciz "numjoints"
+.endobj lbl_80228588
 .balign 4
-lbl_80228594:
+.obj lbl_80228594, local
 	.asciz "<KEY_ANM_INFO>"
+.endobj lbl_80228594
 .balign 4
-lbl_802285A4:
+.obj lbl_802285A4, local
 	.asciz "<KEY_SCALING>"
+.endobj lbl_802285A4
 .balign 4
-lbl_802285B4:
+.obj lbl_802285B4, local
 	.asciz "<KEY_ROTATION>"
+.endobj lbl_802285B4
 .balign 4
-lbl_802285C4:
+.obj lbl_802285C4, local
 	.asciz "<KEY_TRANSLATION>"
+.endobj lbl_802285C4
 .balign 4
-lbl_802285D8:
+.obj lbl_802285D8, local
 	.asciz "// Route info file for %s"
+.endobj lbl_802285D8
 .balign 4
-lbl_802285F4:
+.obj lbl_802285F4, local
 	.asciz "// LightGroups info file for %s"
+.endobj lbl_802285F4
 .balign 4
-lbl_80228614:
+.obj lbl_80228614, local
 	.asciz "// Collision info file for %s"
+.endobj lbl_80228614
 .balign 4
-lbl_80228634:
+.obj lbl_80228634, local
 	.asciz "collinfo"
+.endobj lbl_80228634
 .balign 4
-lbl_80228640:
+.obj lbl_80228640, local
 	.asciz "lightgroup"
+.endobj lbl_80228640
 .balign 4
-lbl_8022864C:
+.obj lbl_8022864C, local
 	.4byte 0x00000000
 	.4byte 0xFFFFFFFF
 	.4byte countMaterials__9BaseShapeFP5JointUl
+.endobj lbl_8022864C
 .balign 4
-lbl_80228658:
+.obj lbl_80228658, local
 	.asciz "material"
+.endobj lbl_80228658
 .balign 4
-lbl_80228664:
+.obj lbl_80228664, local
 	.asciz "Null Anim"
+.endobj lbl_80228664
 .balign 4
-lbl_80228670:
+.obj lbl_80228670, local
 	.asciz "MatobjInfo"
+.endobj lbl_80228670
 .balign 4
-lbl_8022867C:
+.obj lbl_8022867C, local
 	.asciz "GfxobjInfo"
+.endobj lbl_8022867C
 .balign 4
-lbl_80228688:
+.obj lbl_80228688, local
 	.4byte __RTTI__10GfxobjInfo
 	.4byte 0
 	.4byte 0
-.global __vt__10MatobjInfo
-__vt__10MatobjInfo:
+.endobj lbl_80228688
+.balign 4
+.obj __vt__10MatobjInfo, weak
 	.4byte __RTTI__10MatobjInfo
 	.4byte 0
 	.4byte attach__10MatobjInfoFv
 	.4byte detach__10MatobjInfoFv
-.global __vt__10GfxobjInfo
-__vt__10GfxobjInfo:
+.endobj __vt__10MatobjInfo
+.balign 4
+.obj __vt__10GfxobjInfo, weak
 	.4byte __RTTI__10GfxobjInfo
 	.4byte 0
 	.4byte attach__10GfxobjInfoFv
 	.4byte detach__10GfxobjInfoFv
+.endobj __vt__10GfxobjInfo
 .balign 4
-lbl_802286B4:
+.obj lbl_802286B4, local
 	.asciz "BaseShape"
+.endobj lbl_802286B4
 .balign 4
-lbl_802286C0:
+.obj lbl_802286C0, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte 0
-lbl_802286CC:
+.endobj lbl_802286C0
+.balign 4
+.obj lbl_802286CC, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte __RTTI__8CoreNode
 	.4byte 0
 	.4byte 0
-.global __vt__9BaseShape
-__vt__9BaseShape:
+.endobj lbl_802286CC
+.balign 4
+.obj __vt__9BaseShape, global
 	.4byte __RTTI__9BaseShape
 	.4byte 0
 	.4byte getAgeNodeType__5ANodeFv
@@ -13407,86 +13469,104 @@ __vt__9BaseShape:
 	.4byte render__9BaseShapeFR8Graphics
 	.4byte render2d__9BaseShapeFR8Graphics
 	.4byte makeRouteGroup__9BaseShapeFv
+.endobj __vt__9BaseShape
 .balign 4
-lbl_80228704:
+.obj lbl_80228704, local
 	.asciz "Delegate2<BaseShape, Joint *, unsigned long>"
+.endobj lbl_80228704
 .balign 4
-lbl_80228734:
+.obj lbl_80228734, local
 	.asciz "IDelegate2<Joint *, unsigned long>"
+.endobj lbl_80228734
 .balign 4
-lbl_80228758:
+.obj lbl_80228758, local
 	.4byte "__RTTI__22IDelegate2<P5Joint,Ul>"
 	.4byte 0
 	.4byte 0
-.global "__vt__32Delegate2<9BaseShape,P5Joint,Ul>"
-"__vt__32Delegate2<9BaseShape,P5Joint,Ul>":
+.endobj lbl_80228758
+.balign 4
+.obj "__vt__32Delegate2<9BaseShape,P5Joint,Ul>", weak
 	.4byte "__RTTI__32Delegate2<9BaseShape,P5Joint,Ul>"
 	.4byte 0
 	.4byte "invoke__32Delegate2<9BaseShape,P5Joint,Ul>FP5JointUl"
-.global "__vt__22IDelegate2<P5Joint,Ul>"
-"__vt__22IDelegate2<P5Joint,Ul>":
+.endobj "__vt__32Delegate2<9BaseShape,P5Joint,Ul>"
+.balign 4
+.obj "__vt__22IDelegate2<P5Joint,Ul>", weak
 	.4byte "__RTTI__22IDelegate2<P5Joint,Ul>"
 	.4byte 0
 	.4byte 0
+.endobj "__vt__22IDelegate2<P5Joint,Ul>"
 .balign 4
-lbl_8022877C:
+.obj lbl_8022877C, local
 	.asciz "LightFlare"
+.endobj lbl_8022877C
 .balign 4
-lbl_80228788:
+.obj lbl_80228788, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte __RTTI__8CoreNode
 	.4byte 0
 	.4byte 0
-.global __vt__10LightFlare
-__vt__10LightFlare:
+.endobj lbl_80228788
+.balign 4
+.obj __vt__10LightFlare, weak
 	.4byte __RTTI__10LightFlare
 	.4byte 0
 	.4byte getAgeNodeType__5ANodeFv
 	.4byte read__8CoreNodeFR18RandomAccessStream
+.endobj __vt__10LightFlare
 .balign 4
-lbl_802287AC:
+.obj lbl_802287AC, local
 	.asciz "LightGroup"
+.endobj lbl_802287AC
 .balign 4
-lbl_802287B8:
+.obj lbl_802287B8, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte __RTTI__8CoreNode
 	.4byte 0
 	.4byte 0
-.global __vt__10LightGroup
-__vt__10LightGroup:
+.endobj lbl_802287B8
+.balign 4
+.obj __vt__10LightGroup, weak
 	.4byte __RTTI__10LightGroup
 	.4byte 0
 	.4byte getAgeNodeType__5ANodeFv
 	.4byte read__8CoreNodeFR18RandomAccessStream
+.endobj __vt__10LightGroup
 .balign 4
-lbl_802287DC:
+.obj lbl_802287DC, local
 	.asciz "ObjCollInfo"
+.endobj lbl_802287DC
 .balign 4
-lbl_802287E8:
+.obj lbl_802287E8, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte __RTTI__8CoreNode
 	.4byte 0
 	.4byte 0
-.global __vt__11ObjCollInfo
-__vt__11ObjCollInfo:
+.endobj lbl_802287E8
+.balign 4
+.obj __vt__11ObjCollInfo, weak
 	.4byte __RTTI__11ObjCollInfo
 	.4byte 0
 	.4byte getAgeNodeType__5ANodeFv
 	.4byte read__8CoreNodeFR18RandomAccessStream
+.endobj __vt__11ObjCollInfo
 .balign 4
-lbl_8022880C:
+.obj lbl_8022880C, local
 	.asciz "AnimData"
+.endobj lbl_8022880C
 .balign 4
-lbl_80228818:
+.obj lbl_80228818, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte __RTTI__8CoreNode
 	.4byte 0
 	.4byte 0
-lbl_8022882C:
+.endobj lbl_80228818
+.balign 4
+.obj lbl_8022882C, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte __RTTI__8CoreNode
@@ -13494,8 +13574,9 @@ lbl_8022882C:
 	.4byte __RTTI__8AnimData
 	.4byte 0
 	.4byte 0
-.global __vt__7AnimDck
-__vt__7AnimDck:
+.endobj lbl_8022882C
+.balign 4
+.obj __vt__7AnimDck, global
 	.4byte __RTTI__7AnimDck
 	.4byte 0
 	.4byte getAgeNodeType__5ANodeFv
@@ -13504,7 +13585,9 @@ __vt__7AnimDck:
 	.4byte makeAnimSRT__7AnimDckFiP8Matrix4fP8Matrix4fP12AnimDataInfof
 	.4byte detach__8AnimDataFv
 	.4byte writeType__8AnimDataFR18RandomAccessStream
-lbl_80228868:
+.endobj __vt__7AnimDck
+.balign 4
+.obj lbl_80228868, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte __RTTI__8CoreNode
@@ -13512,8 +13595,9 @@ lbl_80228868:
 	.4byte __RTTI__8AnimData
 	.4byte 0
 	.4byte 0
-.global __vt__7AnimDca
-__vt__7AnimDca:
+.endobj lbl_80228868
+.balign 4
+.obj __vt__7AnimDca, global
 	.4byte __RTTI__7AnimDca
 	.4byte 0
 	.4byte getAgeNodeType__5ANodeFv
@@ -13522,8 +13606,9 @@ __vt__7AnimDca:
 	.4byte makeAnimSRT__8AnimDataFiP8Matrix4fP8Matrix4fP12AnimDataInfof
 	.4byte detach__8AnimDataFv
 	.4byte writeType__8AnimDataFR18RandomAccessStream
-.global __vt__8AnimData
-__vt__8AnimData:
+.endobj __vt__7AnimDca
+.balign 4
+.obj __vt__8AnimData, global
 	.4byte __RTTI__8AnimData
 	.4byte 0
 	.4byte getAgeNodeType__5ANodeFv
@@ -13532,96 +13617,105 @@ __vt__8AnimData:
 	.4byte makeAnimSRT__8AnimDataFiP8Matrix4fP8Matrix4fP12AnimDataInfof
 	.4byte detach__8AnimDataFv
 	.4byte writeType__8AnimDataFR18RandomAccessStream
+.endobj __vt__8AnimData
 .balign 4
-lbl_802288C4:
+.obj lbl_802288C4, local
 	.asciz "AnimContext"
+.endobj lbl_802288C4
 .balign 4
-.global __vt__11AnimContext
-__vt__11AnimContext:
+.obj __vt__11AnimContext, global
 	.4byte __RTTI__11AnimContext
 	.4byte 0
 	.4byte animate__11AnimContextFf
+.endobj __vt__11AnimContext
 .balign 4
-lbl_802288DC:
+.obj lbl_802288DC, local
 	.asciz "Joint::MatPoly"
+.endobj lbl_802288DC
 .balign 4
-lbl_802288EC:
+.obj lbl_802288EC, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte __RTTI__8CoreNode
 	.4byte 0
 	.4byte 0
-.global __vt__Q25Joint7MatPoly
-__vt__Q25Joint7MatPoly:
+.endobj lbl_802288EC
+.balign 4
+.obj __vt__Q25Joint7MatPoly, weak
 	.4byte __RTTI__Q25Joint7MatPoly
 	.4byte 0
 	.4byte getAgeNodeType__5ANodeFv
 	.4byte read__8CoreNodeFR18RandomAccessStream
+.endobj __vt__Q25Joint7MatPoly
 .balign 4
-lbl_80228910:
+.obj lbl_80228910, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte __RTTI__8CoreNode
 	.4byte 0
 	.4byte 0
-.global __vt__5Joint
-__vt__5Joint:
+.endobj lbl_80228910
+.balign 4
+.obj __vt__5Joint, global
 	.4byte __RTTI__5Joint
 	.4byte 0
 	.4byte getAgeNodeType__5ANodeFv
 	.4byte read__5JointFR18RandomAccessStream
+.endobj __vt__5Joint
 .balign 4
-lbl_80228934:
+.obj lbl_80228934, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte __RTTI__8CoreNode
 	.4byte 0
 	.4byte 0
-.global __vt__4Mesh
-__vt__4Mesh:
+.endobj lbl_80228934
+.balign 4
+.obj __vt__4Mesh, global
 	.4byte __RTTI__4Mesh
 	.4byte 0
 	.4byte getAgeNodeType__5ANodeFv
 	.4byte read__4MeshFR18RandomAccessStream
+.endobj __vt__4Mesh
 .balign 4
-lbl_80228958:
+.obj lbl_80228958, local
 	.asciz "FaceNode"
+.endobj lbl_80228958
 .balign 4
-lbl_80228964:
+.obj lbl_80228964, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte __RTTI__8CoreNode
 	.4byte 0
 	.4byte 0
-.global __vt__8FaceNode
-__vt__8FaceNode:
+.endobj lbl_80228964
+.balign 4
+.obj __vt__8FaceNode, weak
 	.4byte __RTTI__8FaceNode
 	.4byte 0
 	.4byte getAgeNodeType__5ANodeFv
 	.4byte read__8CoreNodeFR18RandomAccessStream
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
+.endobj __vt__8FaceNode
+.skip 0x1C # compiler padding
 .balign 4
-lbl_802289A4:
+.obj lbl_802289A4, local
 	.asciz "DispList"
+.endobj lbl_802289A4
 .balign 4
-lbl_802289B0:
+.obj lbl_802289B0, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte __RTTI__8CoreNode
 	.4byte 0
 	.4byte 0
-.global __vt__8DispList
-__vt__8DispList:
+.endobj lbl_802289B0
+.balign 4
+.obj __vt__8DispList, global
 	.4byte __RTTI__8DispList
 	.4byte 0
 	.4byte getAgeNodeType__5ANodeFv
 	.4byte read__8DispListFR18RandomAccessStream
+.endobj __vt__8DispList
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
