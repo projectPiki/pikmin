@@ -1455,7 +1455,7 @@ __vt__4Menu:
 	.4byte open__4MenuFb
 	.4byte close__4MenuFv
 	.4byte doUpdate__4MenuFb
-.skip 32 #padding
+.skip 32 # padding
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8

@@ -465,45 +465,56 @@ drawChar__7P2DFontFffiii:
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802E0950:
+.obj lbl_802E0950, local
 	.asciz "P2DFont.cpp"
+.endobj lbl_802E0950
 .balign 4
-lbl_802E095C:
+.obj lbl_802E095C, local
 	.asciz "bigFont.bti"
+.endobj lbl_802E095C
 .balign 4
-lbl_802E0968:
+.obj lbl_802E0968, local
 	.asciz "FntobjInfo"
+.endobj lbl_802E0968
 .balign 4
-lbl_802E0974:
+.obj lbl_802E0974, local
 	.asciz "GfxobjInfo"
+.endobj lbl_802E0974
 .balign 4
-lbl_802E0980:
+.obj lbl_802E0980, local
 	.4byte __RTTI__10GfxobjInfo
-	.4byte 0x00000000
-	.4byte 0x00000000
-.global __vt__10FntobjInfo
-__vt__10FntobjInfo:
+	.4byte 0
+	.4byte 0
+.endobj lbl_802E0980
+.balign 4
+.obj __vt__10FntobjInfo, weak
 	.4byte __RTTI__10FntobjInfo
 	.4byte 0
 	.4byte attach__10GfxobjInfoFv
 	.4byte detach__10GfxobjInfoFv
-	.skip 8
+.endobj __vt__10FntobjInfo
+.skip 8
 .balign 0x10
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-lbl_803E6688:
+.obj lbl_803E6688, local
 	.asciz ""
+.endobj lbl_803E6688
 .balign 4
-lbl_803E668C:
+.obj lbl_803E668C, local
 	.asciz "%s"
+.endobj lbl_803E668C
 .balign 4
-__RTTI__10GfxobjInfo:
+.obj __RTTI__10GfxobjInfo, local
 	.4byte lbl_802E0974
-	.4byte 0x00000000
-__RTTI__10FntobjInfo:
+	.4byte 0
+.endobj __RTTI__10GfxobjInfo
+.balign 4
+.obj __RTTI__10FntobjInfo, local
 	.4byte lbl_802E0968
 	.4byte lbl_802E0980
+.endobj __RTTI__10FntobjInfo
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8

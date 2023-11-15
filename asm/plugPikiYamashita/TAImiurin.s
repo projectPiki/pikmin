@@ -4370,8 +4370,8 @@ lbl_802E4E00:
 .balign 4
 lbl_802E4E10:
 	.4byte __RTTI__12TAIanimation
-	.4byte 0x00000000
-	.4byte 0x00000000
+	.4byte 0
+	.4byte 0
 .global __vt__18TAImiurinAnimation
 __vt__18TAImiurinAnimation:
 	.4byte __RTTI__18TAImiurinAnimation
@@ -4712,20 +4712,17 @@ __vt__22TAIAstickingPikiMiurin:
 	.4byte hasNextState__9TaiActionFv
 	.4byte getPikiNum__22TAIAstickingPikiMiurinFR4Teki
 .balign 4
-lbl_802E533C:
+.obj lbl_802E533C, local
 	.asciz "TAIAnoReaction"
+.endobj lbl_802E533C
 .balign 4
-lbl_802E534C:
+.obj lbl_802E534C, local
 	.4byte __RTTI__9TaiAction
 	.4byte 0
 	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
+.endobj lbl_802E534C
+.balign 4
+	.skip 0x1C # padding
 .balign 4
 lbl_802E5374:
 	.asciz "TAIAcheckSatisfyMiurin"

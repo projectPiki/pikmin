@@ -2454,7 +2454,7 @@ updateCont__9RigidBodyFv:
 
 .section .rodata, "a"  # 0x80221FE0 - 0x80222DC0
 .balign 8
-lbl_80222318:
+.obj lbl_80222318, local
 	.4byte 0
 	.4byte 1
 	.4byte 1
@@ -2479,32 +2479,41 @@ lbl_80222318:
 	.4byte 7
 	.4byte 4
 	.4byte 6
+.endobj lbl_80222318
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802A5ED8:
+.obj lbl_802A5ED8, local
 	.asciz "dynsimulator.cpp"
+.endobj lbl_802A5ED8
 .balign 4
-lbl_802A5EEC:
+.obj lbl_802A5EEC, local
 	.asciz "DynSimulator"
+.endobj lbl_802A5EEC
 .balign 4
-lbl_802A5EFC:
+.obj lbl_802A5EFC, local
 	.asciz "RigidBody"
+.endobj lbl_802A5EFC
 .balign 4
-lbl_802A5F08:
+.obj lbl_802A5F08, local
 	.asciz "CoreNode"
+.endobj lbl_802A5F08
 .balign 4
-lbl_802A5F14:
+.obj lbl_802A5F14, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte 0
-lbl_802A5F20:
+.endobj lbl_802A5F14
+.balign 4
+.obj lbl_802A5F20, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte __RTTI__8CoreNode
 	.4byte 0
 	.4byte 0
-lbl_802A5F34:
+.endobj lbl_802A5F20
+.balign 4
+.obj lbl_802A5F34, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte __RTTI__8CoreNode
@@ -2512,8 +2521,9 @@ lbl_802A5F34:
 	.4byte __RTTI__4Node
 	.4byte 0
 	.4byte 0
-.global __vt__9RigidBody
-__vt__9RigidBody:
+.endobj lbl_802A5F34
+.balign 4
+.obj __vt__9RigidBody, global
 	.4byte __RTTI__9RigidBody
 	.4byte 0
 	.4byte getAgeNodeType__5ANodeFv
@@ -2542,107 +2552,155 @@ __vt__9RigidBody:
 	.4byte getViewScale__9RigidBodyFv
 	.4byte updateCont__9RigidBodyFv
 	.4byte applyGroundForces__9RigidBodyFiP9CollGroup
+.endobj __vt__9RigidBody
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-lbl_803DD638:
+.obj lbl_803DD638, local
 	.float 32768.0
-lbl_803DD63C:
+.endobj lbl_803DD638
+.obj lbl_803DD63C, local
 	.float 32768.0
-lbl_803DD640:
+.endobj lbl_803DD63C
+.obj lbl_803DD640, local
 	.float 32768.0
-lbl_803DD644:
+.endobj lbl_803DD640
+.obj lbl_803DD644, local
 	.float -32768.0
-lbl_803DD648:
+.endobj lbl_803DD644
+.obj lbl_803DD648, local
 	.float -32768.0
-lbl_803DD64C:
+.endobj lbl_803DD648
+.obj lbl_803DD64C, local
 	.float -32768.0
-lbl_803DD650:
+.endobj lbl_803DD64C
+.obj lbl_803DD650, local
 	.float 0.0
-lbl_803DD654:
+.endobj lbl_803DD650
+.obj lbl_803DD654, local
 	.float 0.0
-lbl_803DD658:
+.endobj lbl_803DD654
+.obj lbl_803DD658, local
 	.float 0.0
-lbl_803DD65C:
+.endobj lbl_803DD658
+.obj lbl_803DD65C, local
 	.float 0.0
-lbl_803DD660:
+.endobj lbl_803DD65C
+.obj lbl_803DD660, local
 	.float 0.0
-lbl_803DD664:
+.endobj lbl_803DD660
+.obj lbl_803DD664, local
 	.float 0.0
-lbl_803DD668:
+.endobj lbl_803DD664
+.obj lbl_803DD668, local
 	.float 0.0
-lbl_803DD66C: # gravity acceleration?
+.endobj lbl_803DD668
+.obj lbl_803DD66C, local # gravity acceleration?
 	.float -9.81
-lbl_803DD670:
+.endobj lbl_803DD66C
+.obj lbl_803DD670, local
 	.float 0.0
-lbl_803DD674:
+.endobj lbl_803DD670
+.obj lbl_803DD674, local
 	.float 0.0
-lbl_803DD678:
+.endobj lbl_803DD674
+.obj lbl_803DD678, local
 	.float 0.0
-lbl_803DD67C:
+.endobj lbl_803DD678
+.obj lbl_803DD67C, local
 	.float 0.0
-lbl_803DD680:
+.endobj lbl_803DD67C
+.obj lbl_803DD680, local
 	.float 0.0
-lbl_803DD684:
+.endobj lbl_803DD680
+.obj lbl_803DD684, local
 	.float 0.0
-lbl_803DD688:
+.endobj lbl_803DD684
+.obj lbl_803DD688, local
 	.float 0.0
-lbl_803DD68C:
+.endobj lbl_803DD688
+.obj lbl_803DD68C, local
 	.float 0.0
-lbl_803DD690:
+.endobj lbl_803DD68C
+.obj lbl_803DD690, local
 	.float 0.0
-lbl_803DD694:
+.endobj lbl_803DD690
+.obj lbl_803DD694, local
 	.float 0.0
-lbl_803DD698:
+.endobj lbl_803DD694
+.obj lbl_803DD698, local
 	.float 1.0
-lbl_803DD69C:
+.endobj lbl_803DD698
+.obj lbl_803DD69C, local
 	.float 1.0
-lbl_803DD6A0:
+.endobj lbl_803DD69C
+.obj lbl_803DD6A0, local
 	.float 1.0
-lbl_803DD6A4:
+.endobj lbl_803DD6A0
+.obj lbl_803DD6A4, local
 	.float 0.0
-lbl_803DD6A8:
+.endobj lbl_803DD6A4
+.obj lbl_803DD6A8, local
 	.float 0.0
-lbl_803DD6AC:
+.endobj lbl_803DD6A8
+.obj lbl_803DD6AC, local
 	.float 0.0
-lbl_803DD6B0:
+.endobj lbl_803DD6AC
+.obj lbl_803DD6B0, local
 	.float 0.0
-lbl_803DD6B4:
+.endobj lbl_803DD6B0
+.obj lbl_803DD6B4, local
 	.float 0.0
-lbl_803DD6B8:
+.endobj lbl_803DD6B4
+.obj lbl_803DD6B8, local
 	.float 0.0
+.endobj lbl_803DD6B8
 .balign 4
-lbl_803DD6BC:
+.obj lbl_803DD6BC, local
 	.asciz "ANode"
+.endobj lbl_803DD6BC
 .balign 4
-__RTTI__5ANode:
+.obj __RTTI__5ANode, local
 	.4byte lbl_803DD6BC
 	.4byte 0
-__RTTI__8CoreNode:
+.endobj __RTTI__5ANode
+.balign 4
+.obj __RTTI__8CoreNode, local
 	.4byte lbl_802A5F08
 	.4byte lbl_802A5F14
+.endobj __RTTI__8CoreNode
 .balign 4
-lbl_803DD6D4:
+.obj lbl_803DD6D4, local
 	.asciz "Node"
+.endobj lbl_803DD6D4
 .balign 4
-__RTTI__4Node:
+.obj __RTTI__4Node, local
 	.4byte lbl_803DD6D4
 	.4byte lbl_802A5F20
-__RTTI__9RigidBody:
+.endobj __RTTI__4Node
+.balign 4
+.obj __RTTI__9RigidBody, local
 	.4byte lbl_802A5EFC
 	.4byte lbl_802A5F34
+.endobj __RTTI__9RigidBody
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803E86C8:
+.obj lbl_803E86C8, local
 	.float 0.5
-lbl_803E86CC:
+.endobj lbl_803E86C8
+.obj lbl_803E86CC, local
 	.float 1.0
-lbl_803E86D0:
+.endobj lbl_803E86CC
+.obj lbl_803E86D0, local
 	.float 0.0
-lbl_803E86D4:
+.endobj lbl_803E86D0
+.obj lbl_803E86D4, local
 	.float 3.0
-lbl_803E86D8:
+.endobj lbl_803E86D4
+.obj lbl_803E86D8, local
 	.float 0.4
-lbl_803E86DC:
+.endobj lbl_803E86D8
+.obj lbl_803E86DC, local
 	.float 0.125
+.endobj lbl_803E86DC

@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global DoMount__FlPv
-DoMount__FlPv:
+.fn DoMount__FlPv, local
 /* 8004C93C 0004989C  7C 08 02 A6 */	mflr r0
 /* 8004C940 000498A0  3C A0 80 3A */	lis r5, CardThread@ha
 /* 8004C944 000498A4  90 01 00 04 */	stw r0, 4(r1)
@@ -74,9 +73,9 @@ DoMount__FlPv:
 /* 8004CA34 00049994  38 21 00 28 */	addi r1, r1, 0x28
 /* 8004CA38 00049998  7C 08 03 A6 */	mtlr r0
 /* 8004CA3C 0004999C  4E 80 00 20 */	blr 
+.endfn DoMount__FlPv
 
-.global DoErase__Fll
-DoErase__Fll:
+.fn DoErase__Fll, local
 /* 8004CA40 000499A0  7C 08 02 A6 */	mflr r0
 /* 8004CA44 000499A4  3C A0 80 3A */	lis r5, CardThread@ha
 /* 8004CA48 000499A8  90 01 00 04 */	stw r0, 4(r1)
@@ -146,9 +145,9 @@ DoErase__Fll:
 /* 8004CB30 00049A90  38 21 00 30 */	addi r1, r1, 0x30
 /* 8004CB34 00049A94  7C 08 03 A6 */	mtlr r0
 /* 8004CB38 00049A98  4E 80 00 20 */	blr 
+.endfn DoErase__Fll
 
-.global DoList__FlP14CardUtilDirent
-DoList__FlP14CardUtilDirent:
+.fn DoList__FlP14CardUtilDirent, local
 /* 8004CB3C 00049A9C  7C 08 02 A6 */	mflr r0
 /* 8004CB40 00049AA0  3C A0 80 3A */	lis r5, CardThread@ha
 /* 8004CB44 00049AA4  90 01 00 04 */	stw r0, 4(r1)
@@ -544,9 +543,9 @@ DoList__FlP14CardUtilDirent:
 /* 8004D0FC 0004A05C  38 21 00 A0 */	addi r1, r1, 0xa0
 /* 8004D100 0004A060  7C 08 03 A6 */	mtlr r0
 /* 8004D104 0004A064  4E 80 00 20 */	blr 
+.endfn DoList__FlP14CardUtilDirent
 
-.global DoSave__FlP8CARDStatPv
-DoSave__FlP8CARDStatPv:
+.fn DoSave__FlP8CARDStatPv, local
 /* 8004D108 0004A068  7C 08 02 A6 */	mflr r0
 /* 8004D10C 0004A06C  3C C0 80 3A */	lis r6, CardThread@ha
 /* 8004D110 0004A070  90 01 00 04 */	stw r0, 4(r1)
@@ -937,9 +936,9 @@ DoSave__FlP8CARDStatPv:
 /* 8004D6A8 0004A608  38 21 00 90 */	addi r1, r1, 0x90
 /* 8004D6AC 0004A60C  7C 08 03 A6 */	mtlr r0
 /* 8004D6B0 0004A610  4E 80 00 20 */	blr 
+.endfn DoSave__FlP8CARDStatPv
 
-.global CardUtilCommand__FlllPvUlUl
-CardUtilCommand__FlllPvUlUl:
+.fn CardUtilCommand__FlllPvUlUl, local
 /* 8004D6B4 0004A614  7C 08 02 A6 */	mflr r0
 /* 8004D6B8 0004A618  3D 20 80 3A */	lis r9, CardThread@ha
 /* 8004D6BC 0004A61C  90 01 00 04 */	stw r0, 4(r1)
@@ -987,16 +986,16 @@ CardUtilCommand__FlllPvUlUl:
 /* 8004D758 0004A6B8  38 21 00 40 */	addi r1, r1, 0x40
 /* 8004D75C 0004A6BC  7C 08 03 A6 */	mtlr r0
 /* 8004D760 0004A6C0  4E 80 00 20 */	blr 
+.endfn CardUtilCommand__FlllPvUlUl
 
-.global CardUtilResultCode__Fv
-CardUtilResultCode__Fv:
+.fn CardUtilResultCode__Fv, global
 /* 8004D764 0004A6C4  3C 60 80 3A */	lis r3, CardControl@ha
 /* 8004D768 0004A6C8  38 63 D7 48 */	addi r3, r3, CardControl@l
 /* 8004D76C 0004A6CC  80 63 00 38 */	lwz r3, 0x38(r3)
 /* 8004D770 0004A6D0  4E 80 00 20 */	blr 
+.endfn CardUtilResultCode__Fv
 
-.global CardUtilMount__FlPv
-CardUtilMount__FlPv:
+.fn CardUtilMount__FlPv, global
 /* 8004D774 0004A6D4  7C 08 02 A6 */	mflr r0
 /* 8004D778 0004A6D8  38 C4 00 00 */	addi r6, r4, 0
 /* 8004D77C 0004A6DC  90 01 00 04 */	stw r0, 4(r1)
@@ -1010,9 +1009,9 @@ CardUtilMount__FlPv:
 /* 8004D79C 0004A6FC  38 21 00 08 */	addi r1, r1, 8
 /* 8004D7A0 0004A700  7C 08 03 A6 */	mtlr r0
 /* 8004D7A4 0004A704  4E 80 00 20 */	blr 
+.endfn CardUtilMount__FlPv
 
-.global CardUtilUnmount__Fl
-CardUtilUnmount__Fl:
+.fn CardUtilUnmount__Fl, global
 /* 8004D7A8 0004A708  7C 08 02 A6 */	mflr r0
 /* 8004D7AC 0004A70C  38 80 00 02 */	li r4, 2
 /* 8004D7B0 0004A710  90 01 00 04 */	stw r0, 4(r1)
@@ -1026,9 +1025,9 @@ CardUtilUnmount__Fl:
 /* 8004D7D0 0004A730  38 21 00 08 */	addi r1, r1, 8
 /* 8004D7D4 0004A734  7C 08 03 A6 */	mtlr r0
 /* 8004D7D8 0004A738  4E 80 00 20 */	blr 
+.endfn CardUtilUnmount__Fl
 
-.global CardUtilIsCardBusy__Fv
-CardUtilIsCardBusy__Fv:
+.fn CardUtilIsCardBusy__Fv, global
 /* 8004D7DC 0004A73C  3C 60 80 3A */	lis r3, CardControl@ha
 /* 8004D7E0 0004A740  38 63 D7 48 */	addi r3, r3, CardControl@l
 /* 8004D7E4 0004A744  80 03 00 20 */	lwz r0, 0x20(r3)
@@ -1036,9 +1035,9 @@ CardUtilIsCardBusy__Fv:
 /* 8004D7EC 0004A74C  30 03 FF FF */	addic r0, r3, -1
 /* 8004D7F0 0004A750  7C 60 19 10 */	subfe r3, r0, r3
 /* 8004D7F4 0004A754  4E 80 00 20 */	blr 
+.endfn CardUtilIsCardBusy__Fv
 
-.global CardUtilIdleWhileBusy__Fv
-CardUtilIdleWhileBusy__Fv:
+.fn CardUtilIdleWhileBusy__Fv, global
 /* 8004D7F8 0004A758  7C 08 02 A6 */	mflr r0
 /* 8004D7FC 0004A75C  3C 60 80 3A */	lis r3, CardControl@ha
 /* 8004D800 0004A760  90 01 00 04 */	stw r0, 4(r1)
@@ -1057,9 +1056,9 @@ CardUtilIdleWhileBusy__Fv:
 /* 8004D82C 0004A78C  38 21 00 10 */	addi r1, r1, 0x10
 /* 8004D830 0004A790  7C 08 03 A6 */	mtlr r0
 /* 8004D834 0004A794  4E 80 00 20 */	blr 
+.endfn CardUtilIdleWhileBusy__Fv
 
-.global CardUtilErase__Fll
-CardUtilErase__Fll:
+.fn CardUtilErase__Fll, global
 /* 8004D838 0004A798  7C 08 02 A6 */	mflr r0
 /* 8004D83C 0004A79C  38 A4 00 00 */	addi r5, r4, 0
 /* 8004D840 0004A7A0  90 01 00 04 */	stw r0, 4(r1)
@@ -1073,9 +1072,9 @@ CardUtilErase__Fll:
 /* 8004D860 0004A7C0  38 21 00 08 */	addi r1, r1, 8
 /* 8004D864 0004A7C4  7C 08 03 A6 */	mtlr r0
 /* 8004D868 0004A7C8  4E 80 00 20 */	blr 
+.endfn CardUtilErase__Fll
 
-.global CardUtilOpen__FllPv
-CardUtilOpen__FllPv:
+.fn CardUtilOpen__FllPv, global
 /* 8004D86C 0004A7CC  7C 08 02 A6 */	mflr r0
 /* 8004D870 0004A7D0  38 C5 00 00 */	addi r6, r5, 0
 /* 8004D874 0004A7D4  90 01 00 04 */	stw r0, 4(r1)
@@ -1089,9 +1088,9 @@ CardUtilOpen__FllPv:
 /* 8004D894 0004A7F4  38 21 00 08 */	addi r1, r1, 8
 /* 8004D898 0004A7F8  7C 08 03 A6 */	mtlr r0
 /* 8004D89C 0004A7FC  4E 80 00 20 */	blr 
+.endfn CardUtilOpen__FllPv
 
-.global CardUtilSave__FlP8CARDStatPv
-CardUtilSave__FlP8CARDStatPv:
+.fn CardUtilSave__FlP8CARDStatPv, global
 /* 8004D8A0 0004A800  7C 08 02 A6 */	mflr r0
 /* 8004D8A4 0004A804  38 C5 00 00 */	addi r6, r5, 0
 /* 8004D8A8 0004A808  90 01 00 04 */	stw r0, 4(r1)
@@ -1105,9 +1104,9 @@ CardUtilSave__FlP8CARDStatPv:
 /* 8004D8C8 0004A828  38 21 00 08 */	addi r1, r1, 8
 /* 8004D8CC 0004A82C  7C 08 03 A6 */	mtlr r0
 /* 8004D8D0 0004A830  4E 80 00 20 */	blr 
+.endfn CardUtilSave__FlP8CARDStatPv
 
-.global CardUtilWrite__FllPvUlUl
-CardUtilWrite__FllPvUlUl:
+.fn CardUtilWrite__FllPvUlUl, global
 /* 8004D8D4 0004A834  7C 08 02 A6 */	mflr r0
 /* 8004D8D8 0004A838  39 25 00 00 */	addi r9, r5, 0
 /* 8004D8DC 0004A83C  90 01 00 04 */	stw r0, 4(r1)
@@ -1123,9 +1122,9 @@ CardUtilWrite__FllPvUlUl:
 /* 8004D904 0004A864  38 21 00 08 */	addi r1, r1, 8
 /* 8004D908 0004A868  7C 08 03 A6 */	mtlr r0
 /* 8004D90C 0004A86C  4E 80 00 20 */	blr 
+.endfn CardUtilWrite__FllPvUlUl
 
-.global CardUtilMain__FPv
-CardUtilMain__FPv:
+.fn CardUtilMain__FPv, local
 /* 8004D910 0004A870  7C 08 02 A6 */	mflr r0
 /* 8004D914 0004A874  3C 60 80 3A */	lis r3, CardThread@ha
 /* 8004D918 0004A878  90 01 00 04 */	stw r0, 4(r1)
@@ -1297,9 +1296,9 @@ CardUtilMain__FPv:
 /* 8004DB60 0004AAC0  90 1E 00 00 */	stw r0, 0(r30)
 /* 8004DB64 0004AAC4  48 1A BF 69 */	bl OSUnlockMutex
 /* 8004DB68 0004AAC8  4B FF FD EC */	b .L_8004D954
+.endfn CardUtilMain__FPv
 
-.global CardUtilInit__FPvUll
-CardUtilInit__FPvUll:
+.fn CardUtilInit__FPvUll, global
 /* 8004DB6C 0004AACC  7C 08 02 A6 */	mflr r0
 /* 8004DB70 0004AAD0  3C C0 80 3A */	lis r6, CardThread@ha
 /* 8004DB74 0004AAD4  90 01 00 04 */	stw r0, 4(r1)
@@ -1337,10 +1336,11 @@ CardUtilInit__FPvUll:
 /* 8004DBF4 0004AB54  38 21 00 28 */	addi r1, r1, 0x28
 /* 8004DBF8 0004AB58  7C 08 03 A6 */	mtlr r0
 /* 8004DBFC 0004AB5C  4E 80 00 20 */	blr 
+.endfn CardUtilInit__FPvUll
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802A5EB0:
+.obj lbl_802A5EB0, local
 	.4byte .L_8004DB3C
 	.4byte .L_8004D9B0
 	.4byte .L_8004D9C4
@@ -1351,3 +1351,4 @@ lbl_802A5EB0:
 	.4byte .L_8004DAC0
 	.4byte .L_8004DB3C
 	.4byte .L_8004DAD8
+.endobj lbl_802A5EB0

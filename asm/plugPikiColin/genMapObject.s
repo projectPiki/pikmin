@@ -482,15 +482,15 @@ lbl_802A8348:
 .balign 4
 lbl_802A8354:
 	.4byte __RTTI__5ANode
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
+	.4byte 0
 .balign 4
 lbl_802A837C:
 	.asciz "DynObjBridge"
@@ -676,17 +676,21 @@ __RTTI__18GenObjectMapObject:
 
 .section .sbss, "wa"
 .balign 8
-.global mapMgr__18GenObjectMapObject
-mapMgr__18GenObjectMapObject:
+.obj mapMgr__18GenObjectMapObject, global
 	.skip 4
+.endobj mapMgr__18GenObjectMapObject
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803E8880:
+.obj lbl_803E8880, local
 	.float 0.0
-lbl_803E8884:
+.endobj lbl_803E8880
+.obj lbl_803E8884, local
 	.float 1.0
-lbl_803E8888:
+.endobj lbl_803E8884
+.obj lbl_803E8888, local
 	.float 7.5E-5
-lbl_803E888C:
+.endobj lbl_803E8888
+.obj lbl_803E888C, local
 	.float 0.5
+.endobj lbl_803E888C

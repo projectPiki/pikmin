@@ -1500,9 +1500,7 @@ __vt__8PikiProp:
 	.4byte __RTTI__8PikiProp
 	.4byte 0
 	.4byte read__8PikiPropFR18RandomAccessStream
-	.4byte 0
-	.4byte 0
-	.4byte 0
+.skip 0xC # padding
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
@@ -1801,21 +1799,21 @@ __RTTI__8PikiProp:
 
 .section .sbss, "wa"
 .balign 8
-.global pikiMgr
-pikiMgr:
+.obj pikiMgr, global
 	.skip 0x4
-.global containerDebug__7PikiMgr
-containerDebug__7PikiMgr:
+.endobj pikiMgr
+.obj containerDebug__7PikiMgr, global
 	.skip 0x1
-.global meBirthMode__7PikiMgr
-meBirthMode__7PikiMgr:
+.endobj containerDebug__7PikiMgr
+.obj meBirthMode__7PikiMgr, global
 	.skip 0x1
-.global meNukiMode__7PikiMgr
-meNukiMode__7PikiMgr:
+.endobj meBirthMode__7PikiMgr
+.obj meNukiMode__7PikiMgr, global
 	.skip 0x1
-.global containerExitMode__7PikiMgr
-containerExitMode__7PikiMgr:
+.endobj meNukiMode__7PikiMgr
+.obj containerExitMode__7PikiMgr, global
 	.skip 0x1
+.endobj containerExitMode__7PikiMgr
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8

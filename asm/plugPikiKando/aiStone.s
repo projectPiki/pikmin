@@ -1006,9 +1006,8 @@ __vt__8ActStone:
 lbl_802B5024:
 	.asciz "PaniAnimKeyListener"
 .balign 4
-	.4byte 0
-	.4byte 0
-	.4byte 0
+.skip 0xC # padding
+.balign 4
 lbl_802B5044:
 	.4byte .L_800A7908
 	.4byte .L_800A7930

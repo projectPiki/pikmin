@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global read__8DispListFR18RandomAccessStream
-read__8DispListFR18RandomAccessStream:
+.fn read__8DispListFR18RandomAccessStream, global
 /* 80029F98 00026EF8  7C 08 02 A6 */	mflr r0
 /* 80029F9C 00026EFC  90 01 00 04 */	stw r0, 4(r1)
 /* 80029FA0 00026F00  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -68,9 +67,9 @@ read__8DispListFR18RandomAccessStream:
 /* 8002A08C 00026FEC  38 21 00 28 */	addi r1, r1, 0x28
 /* 8002A090 00026FF0  7C 08 03 A6 */	mtlr r0
 /* 8002A094 00026FF4  4E 80 00 20 */	blr 
+.endfn read__8DispListFR18RandomAccessStream
 
-.global read__8MtxGroupFR18RandomAccessStream
-read__8MtxGroupFR18RandomAccessStream:
+.fn read__8MtxGroupFR18RandomAccessStream, global
 /* 8002A098 00026FF8  7C 08 02 A6 */	mflr r0
 /* 8002A09C 00026FFC  90 01 00 04 */	stw r0, 4(r1)
 /* 8002A0A0 00027000  94 21 FF D0 */	stwu r1, -0x30(r1)
@@ -156,9 +155,9 @@ read__8MtxGroupFR18RandomAccessStream:
 /* 8002A1C8 00027128  38 21 00 30 */	addi r1, r1, 0x30
 /* 8002A1CC 0002712C  7C 08 03 A6 */	mtlr r0
 /* 8002A1D0 00027130  4E 80 00 20 */	blr 
+.endfn read__8MtxGroupFR18RandomAccessStream
 
-.global __ct__8DispListFv
-__ct__8DispListFv:
+.fn __ct__8DispListFv, weak
 /* 8002A1D4 00027134  3C 80 80 22 */	lis r4, __vt__5ANode@ha
 /* 8002A1D8 00027138  39 44 73 8C */	addi r10, r4, __vt__5ANode@l
 /* 8002A1DC 0002713C  3C 80 80 22 */	lis r4, __vt__8CoreNode@ha
@@ -196,9 +195,9 @@ __ct__8DispListFv:
 /* 8002A25C 000271BC  91 03 00 14 */	stw r8, 0x14(r3)
 /* 8002A260 000271C0  90 03 00 20 */	stw r0, 0x20(r3)
 /* 8002A264 000271C4  4E 80 00 20 */	blr 
+.endfn __ct__8DispListFv
 
-.global read__4MeshFR18RandomAccessStream
-read__4MeshFR18RandomAccessStream:
+.fn read__4MeshFR18RandomAccessStream, global
 /* 8002A268 000271C8  7C 08 02 A6 */	mflr r0
 /* 8002A26C 000271CC  90 01 00 04 */	stw r0, 4(r1)
 /* 8002A270 000271D0  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -271,17 +270,17 @@ read__4MeshFR18RandomAccessStream:
 /* 8002A36C 000272CC  38 21 00 28 */	addi r1, r1, 0x28
 /* 8002A370 000272D0  7C 08 03 A6 */	mtlr r0
 /* 8002A374 000272D4  4E 80 00 20 */	blr 
+.endfn read__4MeshFR18RandomAccessStream
 
-.global __ct__8MtxGroupFv
-__ct__8MtxGroupFv:
+.fn __ct__8MtxGroupFv, weak
 /* 8002A378 000272D8  38 00 00 00 */	li r0, 0
 /* 8002A37C 000272DC  90 03 00 00 */	stw r0, 0(r3)
 /* 8002A380 000272E0  90 03 00 08 */	stw r0, 8(r3)
 /* 8002A384 000272E4  90 03 00 0C */	stw r0, 0xc(r3)
 /* 8002A388 000272E8  4E 80 00 20 */	blr 
+.endfn __ct__8MtxGroupFv
 
-.global recOverrideAnim__5JointFP11AnimContext
-recOverrideAnim__5JointFP11AnimContext:
+.fn recOverrideAnim__5JointFP11AnimContext, global
 /* 8002A38C 000272EC  7C 08 02 A6 */	mflr r0
 /* 8002A390 000272F0  90 01 00 04 */	stw r0, 4(r1)
 /* 8002A394 000272F4  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -329,9 +328,9 @@ recOverrideAnim__5JointFP11AnimContext:
 /* 8002A424 00027384  38 21 00 28 */	addi r1, r1, 0x28
 /* 8002A428 00027388  7C 08 03 A6 */	mtlr r0
 /* 8002A42C 0002738C  4E 80 00 20 */	blr 
+.endfn recOverrideAnim__5JointFP11AnimContext
 
-.global read__5JointFR18RandomAccessStream
-read__5JointFR18RandomAccessStream:
+.fn read__5JointFR18RandomAccessStream, global
 /* 8002A430 00027390  7C 08 02 A6 */	mflr r0
 /* 8002A434 00027394  90 01 00 04 */	stw r0, 4(r1)
 /* 8002A438 00027398  94 21 FF C8 */	stwu r1, -0x38(r1)
@@ -518,9 +517,9 @@ read__5JointFR18RandomAccessStream:
 /* 8002A700 00027660  38 21 00 38 */	addi r1, r1, 0x38
 /* 8002A704 00027664  7C 08 03 A6 */	mtlr r0
 /* 8002A708 00027668  4E 80 00 20 */	blr 
+.endfn read__5JointFR18RandomAccessStream
 
-.global animate__11AnimContextFf
-animate__11AnimContextFf:
+.fn animate__11AnimContextFf, global
 /* 8002A70C 0002766C  94 21 FF D8 */	stwu r1, -0x28(r1)
 /* 8002A710 00027670  80 8D 2D EC */	lwz r4, gsys@sda21(r13)
 /* 8002A714 00027674  C0 43 00 04 */	lfs f2, 4(r3)
@@ -541,9 +540,9 @@ animate__11AnimContextFf:
 .L_8002A750:
 /* 8002A750 000276B0  38 21 00 28 */	addi r1, r1, 0x28
 /* 8002A754 000276B4  4E 80 00 20 */	blr 
+.endfn animate__11AnimContextFf
 
-.global extract__FfR9AnimParamR9DataChunk
-extract__FfR9AnimParamR9DataChunk:
+.fn extract__FfR9AnimParamR9DataChunk, local
 /* 8002A758 000276B8  94 21 FF B0 */	stwu r1, -0x50(r1)
 /* 8002A75C 000276BC  DB E1 00 48 */	stfd f31, 0x48(r1)
 /* 8002A760 000276C0  DB C1 00 40 */	stfd f30, 0x40(r1)
@@ -666,9 +665,9 @@ extract__FfR9AnimParamR9DataChunk:
 /* 8002A910 00027870  CB C1 00 40 */	lfd f30, 0x40(r1)
 /* 8002A914 00027874  38 21 00 50 */	addi r1, r1, 0x50
 /* 8002A918 00027878  4E 80 00 20 */	blr 
+.endfn extract__FfR9AnimParamR9DataChunk
 
-.global __ct__11CamDataInfoFv
-__ct__11CamDataInfoFv:
+.fn __ct__11CamDataInfoFv, global
 /* 8002A91C 0002787C  7C 08 02 A6 */	mflr r0
 /* 8002A920 00027880  90 01 00 04 */	stw r0, 4(r1)
 /* 8002A924 00027884  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -700,9 +699,9 @@ __ct__11CamDataInfoFv:
 /* 8002A98C 000278EC  38 21 00 18 */	addi r1, r1, 0x18
 /* 8002A990 000278F0  7C 08 03 A6 */	mtlr r0
 /* 8002A994 000278F4  4E 80 00 20 */	blr 
+.endfn __ct__11CamDataInfoFv
 
-.global update__11CamDataInfoFfR8Matrix4f
-update__11CamDataInfoFfR8Matrix4f:
+.fn update__11CamDataInfoFfR8Matrix4f, global
 /* 8002A998 000278F8  7C 08 02 A6 */	mflr r0
 /* 8002A99C 000278FC  90 01 00 04 */	stw r0, 4(r1)
 /* 8002A9A0 00027900  94 21 FF 98 */	stwu r1, -0x68(r1)
@@ -928,9 +927,9 @@ update__11CamDataInfoFfR8Matrix4f:
 /* 8002ACC0 00027C20  38 21 00 68 */	addi r1, r1, 0x68
 /* 8002ACC4 00027C24  7C 08 03 A6 */	mtlr r0
 /* 8002ACC8 00027C28  4E 80 00 20 */	blr 
+.endfn update__11CamDataInfoFfR8Matrix4f
 
-.global update__13LightDataInfoFf
-update__13LightDataInfoFf:
+.fn update__13LightDataInfoFf, global
 /* 8002ACCC 00027C2C  7C 08 02 A6 */	mflr r0
 /* 8002ACD0 00027C30  90 01 00 04 */	stw r0, 4(r1)
 /* 8002ACD4 00027C34  94 21 FF 80 */	stwu r1, -0x80(r1)
@@ -1099,9 +1098,9 @@ update__13LightDataInfoFf:
 /* 8002AF24 00027E84  38 21 00 80 */	addi r1, r1, 0x80
 /* 8002AF28 00027E88  7C 08 03 A6 */	mtlr r0
 /* 8002AF2C 00027E8C  4E 80 00 20 */	blr 
+.endfn update__13LightDataInfoFf
 
-.global parse__9SceneDataFP9CmdStream
-parse__9SceneDataFP9CmdStream:
+.fn parse__9SceneDataFP9CmdStream, global
 /* 8002AF30 00027E90  7C 08 02 A6 */	mflr r0
 /* 8002AF34 00027E94  90 01 00 04 */	stw r0, 4(r1)
 /* 8002AF38 00027E98  38 00 00 00 */	li r0, 0
@@ -1999,9 +1998,9 @@ parse__9SceneDataFP9CmdStream:
 /* 8002BC70 00028BD0  38 21 00 40 */	addi r1, r1, 0x40
 /* 8002BC74 00028BD4  7C 08 03 A6 */	mtlr r0
 /* 8002BC78 00028BD8  4E 80 00 20 */	blr 
+.endfn parse__9SceneDataFP9CmdStream
 
-.global addData__9DataChunkFf
-addData__9DataChunkFf:
+.fn addData__9DataChunkFf, weak
 /* 8002BC7C 00028BDC  7C 08 02 A6 */	mflr r0
 /* 8002BC80 00028BE0  90 01 00 04 */	stw r0, 4(r1)
 /* 8002BC84 00028BE4  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -2044,9 +2043,9 @@ addData__9DataChunkFf:
 /* 8002BD10 00028C70  38 21 00 28 */	addi r1, r1, 0x28
 /* 8002BD14 00028C74  7C 08 03 A6 */	mtlr r0
 /* 8002BD18 00028C78  4E 80 00 20 */	blr 
+.endfn addData__9DataChunkFf
 
-.global getAnimInfo__9SceneDataFP9CmdStream
-getAnimInfo__9SceneDataFP9CmdStream:
+.fn getAnimInfo__9SceneDataFP9CmdStream, global
 /* 8002BD1C 00028C7C  7C 08 02 A6 */	mflr r0
 /* 8002BD20 00028C80  3C E0 80 23 */	lis r7, lbl_80228320@ha
 /* 8002BD24 00028C84  90 01 00 04 */	stw r0, 4(r1)
@@ -2183,9 +2182,9 @@ getAnimInfo__9SceneDataFP9CmdStream:
 /* 8002BF04 00028E64  38 21 00 38 */	addi r1, r1, 0x38
 /* 8002BF08 00028E68  7C 08 03 A6 */	mtlr r0
 /* 8002BF0C 00028E6C  4E 80 00 20 */	blr 
+.endfn getAnimInfo__9SceneDataFP9CmdStream
 
-.global __ct__13LightDataInfoFv
-__ct__13LightDataInfoFv:
+.fn __ct__13LightDataInfoFv, weak
 /* 8002BF10 00028E70  7C 08 02 A6 */	mflr r0
 /* 8002BF14 00028E74  90 01 00 04 */	stw r0, 4(r1)
 /* 8002BF18 00028E78  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -2201,9 +2200,9 @@ __ct__13LightDataInfoFv:
 /* 8002BF40 00028EA0  38 21 00 18 */	addi r1, r1, 0x18
 /* 8002BF44 00028EA4  7C 08 03 A6 */	mtlr r0
 /* 8002BF48 00028EA8  4E 80 00 20 */	blr 
+.endfn __ct__13LightDataInfoFv
 
-.global extractSRT__8AnimDataFR3SRTiP12AnimDataInfof
-extractSRT__8AnimDataFR3SRTiP12AnimDataInfof:
+.fn extractSRT__8AnimDataFR3SRTiP12AnimDataInfof, global
 /* 8002BF4C 00028EAC  94 21 FF C8 */	stwu r1, -0x38(r1)
 /* 8002BF50 00028EB0  A0 A6 00 D8 */	lhz r5, 0xd8(r6)
 /* 8002BF54 00028EB4  54 A0 04 21 */	rlwinm. r0, r5, 0, 0x10, 0x10
@@ -2445,9 +2444,9 @@ extractSRT__8AnimDataFR3SRTiP12AnimDataInfof:
 .L_8002C2B4:
 /* 8002C2B4 00029214  38 21 00 38 */	addi r1, r1, 0x38
 /* 8002C2B8 00029218  4E 80 00 20 */	blr 
+.endfn extractSRT__8AnimDataFR3SRTiP12AnimDataInfof
 
-.global makeAnimSRT__8AnimDataFiP8Matrix4fP8Matrix4fP12AnimDataInfof
-makeAnimSRT__8AnimDataFiP8Matrix4fP8Matrix4fP12AnimDataInfof:
+.fn makeAnimSRT__8AnimDataFiP8Matrix4fP8Matrix4fP12AnimDataInfof, global
 /* 8002C2BC 0002921C  7C 08 02 A6 */	mflr r0
 /* 8002C2C0 00029220  FC 00 08 1E */	fctiwz f0, f1
 /* 8002C2C4 00029224  90 01 00 04 */	stw r0, 4(r1)
@@ -2540,9 +2539,9 @@ makeAnimSRT__8AnimDataFiP8Matrix4fP8Matrix4fP12AnimDataInfof:
 /* 8002C400 00029360  38 21 00 88 */	addi r1, r1, 0x88
 /* 8002C404 00029364  7C 08 03 A6 */	mtlr r0
 /* 8002C408 00029368  4E 80 00 20 */	blr 
+.endfn makeAnimSRT__8AnimDataFiP8Matrix4fP8Matrix4fP12AnimDataInfof
 
-.global detach__8AnimDataFv
-detach__8AnimDataFv:
+.fn detach__8AnimDataFv, global
 /* 8002C40C 0002936C  38 E0 00 00 */	li r7, 0
 /* 8002C410 00029370  38 A7 00 00 */	addi r5, r7, 0
 /* 8002C414 00029374  38 87 00 00 */	addi r4, r7, 0
@@ -2560,16 +2559,16 @@ detach__8AnimDataFv:
 /* 8002C43C 0002939C  7C 08 00 00 */	cmpw r8, r0
 /* 8002C440 000293A0  41 80 FF E0 */	blt .L_8002C420
 /* 8002C444 000293A4  4E 80 00 20 */	blr 
+.endfn detach__8AnimDataFv
 
-.global __ct__13AnimCacheInfoFv
-__ct__13AnimCacheInfoFv:
+.fn __ct__13AnimCacheInfoFv, weak
 /* 8002C448 000293A8  38 00 00 00 */	li r0, 0
 /* 8002C44C 000293AC  90 03 00 14 */	stw r0, 0x14(r3)
 /* 8002C450 000293B0  90 03 00 10 */	stw r0, 0x10(r3)
 /* 8002C454 000293B4  4E 80 00 20 */	blr 
+.endfn __ct__13AnimCacheInfoFv
 
-.global checkMask__8AnimDataFv
-checkMask__8AnimDataFv:
+.fn checkMask__8AnimDataFv, global
 /* 8002C458 000293B8  7C 08 02 A6 */	mflr r0
 /* 8002C45C 000293BC  38 E0 00 00 */	li r7, 0
 /* 8002C460 000293C0  90 01 00 04 */	stw r0, 4(r1)
@@ -2736,9 +2735,9 @@ checkMask__8AnimDataFv:
 /* 8002C6A8 00029608  38 21 00 18 */	addi r1, r1, 0x18
 /* 8002C6AC 0002960C  7C 08 03 A6 */	mtlr r0
 /* 8002C6B0 00029610  4E 80 00 20 */	blr 
+.endfn checkMask__8AnimDataFv
 
-.global read__7AnimDcaFR18RandomAccessStream
-read__7AnimDcaFR18RandomAccessStream:
+.fn read__7AnimDcaFR18RandomAccessStream, global
 /* 8002C6B4 00029614  7C 08 02 A6 */	mflr r0
 /* 8002C6B8 00029618  90 01 00 04 */	stw r0, 4(r1)
 /* 8002C6BC 0002961C  94 21 FF B8 */	stwu r1, -0x48(r1)
@@ -3000,9 +2999,9 @@ read__7AnimDcaFR18RandomAccessStream:
 /* 8002CA7C 000299DC  38 21 00 48 */	addi r1, r1, 0x48
 /* 8002CA80 000299E0  7C 08 03 A6 */	mtlr r0
 /* 8002CA84 000299E4  4E 80 00 20 */	blr 
+.endfn read__7AnimDcaFR18RandomAccessStream
 
-.global __ct__12AnimDataInfoFv
-__ct__12AnimDataInfoFv:
+.fn __ct__12AnimDataInfoFv, weak
 /* 8002CA88 000299E8  C0 02 82 E0 */	lfs f0, lbl_803E84E0@sda21(r2)
 /* 8002CA8C 000299EC  38 00 00 00 */	li r0, 0
 /* 8002CA90 000299F0  D0 03 00 BC */	stfs f0, 0xbc(r3)
@@ -3016,9 +3015,9 @@ __ct__12AnimDataInfoFv:
 /* 8002CAB0 00029A10  D0 03 00 CC */	stfs f0, 0xcc(r3)
 /* 8002CAB4 00029A14  B0 03 00 D8 */	sth r0, 0xd8(r3)
 /* 8002CAB8 00029A18  4E 80 00 20 */	blr 
+.endfn __ct__12AnimDataInfoFv
 
-.global parse__7AnimDcaFP9CmdStream
-parse__7AnimDcaFP9CmdStream:
+.fn parse__7AnimDcaFP9CmdStream, global
 /* 8002CABC 00029A1C  7C 08 02 A6 */	mflr r0
 /* 8002CAC0 00029A20  90 01 00 04 */	stw r0, 4(r1)
 /* 8002CAC4 00029A24  38 00 00 00 */	li r0, 0
@@ -3745,9 +3744,9 @@ parse__7AnimDcaFP9CmdStream:
 /* 8002D53C 0002A49C  38 21 00 68 */	addi r1, r1, 0x68
 /* 8002D540 0002A4A0  7C 08 03 A6 */	mtlr r0
 /* 8002D544 0002A4A4  4E 80 00 20 */	blr 
+.endfn parse__7AnimDcaFP9CmdStream
 
-.global getAnimInfo__7AnimDcaFP9CmdStream
-getAnimInfo__7AnimDcaFP9CmdStream:
+.fn getAnimInfo__7AnimDcaFP9CmdStream, global
 /* 8002D548 0002A4A8  7C 08 02 A6 */	mflr r0
 /* 8002D54C 0002A4AC  3C A0 80 23 */	lis r5, lbl_802284BC@ha
 /* 8002D550 0002A4B0  90 01 00 04 */	stw r0, 4(r1)
@@ -3841,9 +3840,9 @@ getAnimInfo__7AnimDcaFP9CmdStream:
 /* 8002D690 0002A5F0  38 21 00 30 */	addi r1, r1, 0x30
 /* 8002D694 0002A5F4  7C 08 03 A6 */	mtlr r0
 /* 8002D698 0002A5F8  4E 80 00 20 */	blr 
+.endfn getAnimInfo__7AnimDcaFP9CmdStream
 
-.global __ct__7AnimDckFP9BaseShapei
-__ct__7AnimDckFP9BaseShapei:
+.fn __ct__7AnimDckFP9BaseShapei, global
 /* 8002D69C 0002A5FC  7C 08 02 A6 */	mflr r0
 /* 8002D6A0 0002A600  3C C0 80 22 */	lis r6, __vt__5ANode@ha
 /* 8002D6A4 0002A604  90 01 00 04 */	stw r0, 4(r1)
@@ -3915,9 +3914,9 @@ __ct__7AnimDckFP9BaseShapei:
 /* 8002D79C 0002A6FC  38 21 00 38 */	addi r1, r1, 0x38
 /* 8002D7A0 0002A700  7C 08 03 A6 */	mtlr r0
 /* 8002D7A4 0002A704  4E 80 00 20 */	blr 
+.endfn __ct__7AnimDckFP9BaseShapei
 
-.global read__7AnimDckFR18RandomAccessStream
-read__7AnimDckFR18RandomAccessStream:
+.fn read__7AnimDckFR18RandomAccessStream, global
 /* 8002D7A8 0002A708  7C 08 02 A6 */	mflr r0
 /* 8002D7AC 0002A70C  90 01 00 04 */	stw r0, 4(r1)
 /* 8002D7B0 0002A710  94 21 FF B8 */	stwu r1, -0x48(r1)
@@ -4197,9 +4196,9 @@ read__7AnimDckFR18RandomAccessStream:
 /* 8002DBB8 0002AB18  38 21 00 48 */	addi r1, r1, 0x48
 /* 8002DBBC 0002AB1C  7C 08 03 A6 */	mtlr r0
 /* 8002DBC0 0002AB20  4E 80 00 20 */	blr 
+.endfn read__7AnimDckFR18RandomAccessStream
 
-.global parse__7AnimDckFP9CmdStream
-parse__7AnimDckFP9CmdStream:
+.fn parse__7AnimDckFP9CmdStream, global
 /* 8002DBC4 0002AB24  7C 08 02 A6 */	mflr r0
 /* 8002DBC8 0002AB28  90 01 00 04 */	stw r0, 4(r1)
 /* 8002DBCC 0002AB2C  38 00 00 00 */	li r0, 0
@@ -5088,9 +5087,9 @@ parse__7AnimDckFP9CmdStream:
 /* 8002E89C 0002B7FC  38 21 00 60 */	addi r1, r1, 0x60
 /* 8002E8A0 0002B800  7C 08 03 A6 */	mtlr r0
 /* 8002E8A4 0002B804  4E 80 00 20 */	blr 
+.endfn parse__7AnimDckFP9CmdStream
 
-.global getAnimInfo__7AnimDckFP9CmdStream
-getAnimInfo__7AnimDckFP9CmdStream:
+.fn getAnimInfo__7AnimDckFP9CmdStream, global
 /* 8002E8A8 0002B808  7C 08 02 A6 */	mflr r0
 /* 8002E8AC 0002B80C  3C A0 80 23 */	lis r5, lbl_802284BC@ha
 /* 8002E8B0 0002B810  90 01 00 04 */	stw r0, 4(r1)
@@ -5184,9 +5183,9 @@ getAnimInfo__7AnimDckFP9CmdStream:
 /* 8002E9F0 0002B950  38 21 00 30 */	addi r1, r1, 0x30
 /* 8002E9F4 0002B954  7C 08 03 A6 */	mtlr r0
 /* 8002E9F8 0002B958  4E 80 00 20 */	blr 
+.endfn getAnimInfo__7AnimDckFP9CmdStream
 
-.global extractSRT__7AnimDckFR3SRTiP12AnimDataInfof
-extractSRT__7AnimDckFR3SRTiP12AnimDataInfof:
+.fn extractSRT__7AnimDckFR3SRTiP12AnimDataInfof, global
 /* 8002E9FC 0002B95C  7C 08 02 A6 */	mflr r0
 /* 8002EA00 0002B960  90 01 00 04 */	stw r0, 4(r1)
 /* 8002EA04 0002B964  94 21 FF A0 */	stwu r1, -0x60(r1)
@@ -5341,9 +5340,9 @@ extractSRT__7AnimDckFR3SRTiP12AnimDataInfof:
 /* 8002EC10 0002BB70  38 21 00 60 */	addi r1, r1, 0x60
 /* 8002EC14 0002BB74  7C 08 03 A6 */	mtlr r0
 /* 8002EC18 0002BB78  4E 80 00 20 */	blr 
+.endfn extractSRT__7AnimDckFR3SRTiP12AnimDataInfof
 
-.global makeAnimSRT__7AnimDckFiP8Matrix4fP8Matrix4fP12AnimDataInfof
-makeAnimSRT__7AnimDckFiP8Matrix4fP8Matrix4fP12AnimDataInfof:
+.fn makeAnimSRT__7AnimDckFiP8Matrix4fP8Matrix4fP12AnimDataInfof, global
 /* 8002EC1C 0002BB7C  7C 08 02 A6 */	mflr r0
 /* 8002EC20 0002BB80  90 01 00 04 */	stw r0, 4(r1)
 /* 8002EC24 0002BB84  38 04 00 00 */	addi r0, r4, 0
@@ -5398,9 +5397,9 @@ makeAnimSRT__7AnimDckFiP8Matrix4fP8Matrix4fP12AnimDataInfof:
 /* 8002ECDC 0002BC3C  38 21 00 70 */	addi r1, r1, 0x70
 /* 8002ECE0 0002BC40  7C 08 03 A6 */	mtlr r0
 /* 8002ECE4 0002BC44  4E 80 00 20 */	blr 
+.endfn makeAnimSRT__7AnimDckFiP8Matrix4fP8Matrix4fP12AnimDataInfof
 
-.global importIni__9BaseShapeFR18RandomAccessStream
-importIni__9BaseShapeFR18RandomAccessStream:
+.fn importIni__9BaseShapeFR18RandomAccessStream, global
 /* 8002ECE8 0002BC48  7C 08 02 A6 */	mflr r0
 /* 8002ECEC 0002BC4C  3C A0 80 23 */	lis r5, lbl_80228320@ha
 /* 8002ECF0 0002BC50  90 01 00 04 */	stw r0, 4(r1)
@@ -5627,9 +5626,9 @@ importIni__9BaseShapeFR18RandomAccessStream:
 /* 8002F040 0002BFA0  38 21 00 58 */	addi r1, r1, 0x58
 /* 8002F044 0002BFA4  7C 08 03 A6 */	mtlr r0
 /* 8002F048 0002BFA8  4E 80 00 20 */	blr 
+.endfn importIni__9BaseShapeFR18RandomAccessStream
 
-.global makeRouteGroup__9BaseShapeFv
-makeRouteGroup__9BaseShapeFv:
+.fn makeRouteGroup__9BaseShapeFv, weak
 /* 8002F04C 0002BFAC  7C 08 02 A6 */	mflr r0
 /* 8002F050 0002BFB0  90 01 00 04 */	stw r0, 4(r1)
 /* 8002F054 0002BFB4  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -5651,9 +5650,9 @@ makeRouteGroup__9BaseShapeFv:
 /* 8002F090 0002BFF0  38 21 00 18 */	addi r1, r1, 0x18
 /* 8002F094 0002BFF4  7C 08 03 A6 */	mtlr r0
 /* 8002F098 0002BFF8  4E 80 00 20 */	blr 
+.endfn makeRouteGroup__9BaseShapeFv
 
-.global animate__17ShapeDynMaterialsFPf
-animate__17ShapeDynMaterialsFPf:
+.fn animate__17ShapeDynMaterialsFPf, global
 /* 8002F09C 0002BFFC  7C 08 02 A6 */	mflr r0
 /* 8002F0A0 0002C000  90 01 00 04 */	stw r0, 4(r1)
 /* 8002F0A4 0002C004  94 21 FF D0 */	stwu r1, -0x30(r1)
@@ -5724,9 +5723,9 @@ animate__17ShapeDynMaterialsFPf:
 /* 8002F184 0002C0E4  38 21 00 30 */	addi r1, r1, 0x30
 /* 8002F188 0002C0E8  7C 08 03 A6 */	mtlr r0
 /* 8002F18C 0002C0EC  4E 80 00 20 */	blr 
+.endfn animate__17ShapeDynMaterialsFPf
 
-.global updateContext__17ShapeDynMaterialsFv
-updateContext__17ShapeDynMaterialsFv:
+.fn updateContext__17ShapeDynMaterialsFv, global
 /* 8002F190 0002C0F0  94 21 FF D8 */	stwu r1, -0x28(r1)
 /* 8002F194 0002C0F4  39 00 00 00 */	li r8, 0
 /* 8002F198 0002C0F8  38 A0 00 00 */	li r5, 0
@@ -5858,9 +5857,9 @@ updateContext__17ShapeDynMaterialsFv:
 /* 8002F36C 0002C2CC  83 E1 00 24 */	lwz r31, 0x24(r1)
 /* 8002F370 0002C2D0  38 21 00 28 */	addi r1, r1, 0x28
 /* 8002F374 0002C2D4  4E 80 00 20 */	blr 
+.endfn updateContext__17ShapeDynMaterialsFv
 
-.global __ct__9BaseShapeFv
-__ct__9BaseShapeFv:
+.fn __ct__9BaseShapeFv, global
 /* 8002F378 0002C2D8  7C 08 02 A6 */	mflr r0
 /* 8002F37C 0002C2DC  3C 80 80 22 */	lis r4, __vt__5ANode@ha
 /* 8002F380 0002C2E0  90 01 00 04 */	stw r0, 4(r1)
@@ -6056,9 +6055,9 @@ __ct__9BaseShapeFv:
 /* 8002F678 0002C5D8  38 21 00 28 */	addi r1, r1, 0x28
 /* 8002F67C 0002C5DC  7C 08 03 A6 */	mtlr r0
 /* 8002F680 0002C5E0  4E 80 00 20 */	blr 
+.endfn __ct__9BaseShapeFv
 
-.global countMaterials__9BaseShapeFP5JointUl
-countMaterials__9BaseShapeFP5JointUl:
+.fn countMaterials__9BaseShapeFP5JointUl, global
 /* 8002F684 0002C5E4  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 8002F688 0002C5E8  3C A0 80 39 */	lis r5, matUsed@ha
 /* 8002F68C 0002C5EC  38 05 07 40 */	addi r0, r5, matUsed@l
@@ -6163,9 +6162,9 @@ countMaterials__9BaseShapeFP5JointUl:
 /* 8002F7E4 0002C744  83 E1 00 1C */	lwz r31, 0x1c(r1)
 /* 8002F7E8 0002C748  38 21 00 20 */	addi r1, r1, 0x20
 /* 8002F7EC 0002C74C  4E 80 00 20 */	blr 
+.endfn countMaterials__9BaseShapeFP5JointUl
 
-.global "recTraverseMaterials__9BaseShapeFP5JointP22IDelegate2<P5Joint,Ul>"
-"recTraverseMaterials__9BaseShapeFP5JointP22IDelegate2<P5Joint,Ul>":
+.fn "recTraverseMaterials__9BaseShapeFP5JointP22IDelegate2<P5Joint,Ul>", global
 /* 8002F7F0 0002C750  7C 08 02 A6 */	mflr r0
 /* 8002F7F4 0002C754  90 01 00 04 */	stw r0, 4(r1)
 /* 8002F7F8 0002C758  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -6221,9 +6220,9 @@ countMaterials__9BaseShapeFP5JointUl:
 /* 8002F8A8 0002C808  38 21 00 28 */	addi r1, r1, 0x28
 /* 8002F8AC 0002C80C  7C 08 03 A6 */	mtlr r0
 /* 8002F8B0 0002C810  4E 80 00 20 */	blr 
+.endfn "recTraverseMaterials__9BaseShapeFP5JointP22IDelegate2<P5Joint,Ul>"
 
-.global instanceMaterials__9BaseShapeFi
-instanceMaterials__9BaseShapeFi:
+.fn instanceMaterials__9BaseShapeFi, global
 /* 8002F8B4 0002C814  7C 08 02 A6 */	mflr r0
 /* 8002F8B8 0002C818  90 01 00 04 */	stw r0, 4(r1)
 /* 8002F8BC 0002C81C  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -6255,9 +6254,9 @@ instanceMaterials__9BaseShapeFi:
 /* 8002F920 0002C880  38 21 00 20 */	addi r1, r1, 0x20
 /* 8002F924 0002C884  7C 08 03 A6 */	mtlr r0
 /* 8002F928 0002C888  4E 80 00 20 */	blr 
+.endfn instanceMaterials__9BaseShapeFi
 
-.global makeInstance__9BaseShapeFR17ShapeDynMaterialsi
-makeInstance__9BaseShapeFR17ShapeDynMaterialsi:
+.fn makeInstance__9BaseShapeFR17ShapeDynMaterialsi, global
 /* 8002F92C 0002C88C  7C 08 02 A6 */	mflr r0
 /* 8002F930 0002C890  3C C0 80 39 */	lis r6, matUsed@ha
 /* 8002F934 0002C894  90 01 00 04 */	stw r0, 4(r1)
@@ -6462,19 +6461,19 @@ makeInstance__9BaseShapeFR17ShapeDynMaterialsi:
 /* 8002FC2C 0002CB8C  38 21 00 78 */	addi r1, r1, 0x78
 /* 8002FC30 0002CB90  7C 08 03 A6 */	mtlr r0
 /* 8002FC34 0002CB94  4E 80 00 20 */	blr 
+.endfn makeInstance__9BaseShapeFR17ShapeDynMaterialsi
 
-.global __ct__6ColourFv
-__ct__6ColourFv:
+.fn __ct__6ColourFv, weak
 /* 8002FC38 0002CB98  4E 80 00 20 */	blr 
+.endfn __ct__6ColourFv
 
-.global __ct__12PVWTevColRegFv
-__ct__12PVWTevColRegFv:
+.fn __ct__12PVWTevColRegFv, weak
 /* 8002FC3C 0002CB9C  C0 02 82 E0 */	lfs f0, lbl_803E84E0@sda21(r2)
 /* 8002FC40 0002CBA0  D0 03 00 20 */	stfs f0, 0x20(r3)
 /* 8002FC44 0002CBA4  4E 80 00 20 */	blr 
+.endfn __ct__12PVWTevColRegFv
 
-.global __ct__8MaterialFv
-__ct__8MaterialFv:
+.fn __ct__8MaterialFv, weak
 /* 8002FC48 0002CBA8  3C 80 80 22 */	lis r4, __vt__5ANode@ha
 /* 8002FC4C 0002CBAC  38 04 73 8C */	addi r0, r4, __vt__5ANode@l
 /* 8002FC50 0002CBB0  3C 80 80 22 */	lis r4, __vt__8CoreNode@ha
@@ -6518,9 +6517,9 @@ __ct__8MaterialFv:
 /* 8002FCE8 0002CC48  90 E3 00 8C */	stw r7, 0x8c(r3)
 /* 8002FCEC 0002CC4C  90 E3 00 98 */	stw r7, 0x98(r3)
 /* 8002FCF0 0002CC50  4E 80 00 20 */	blr 
+.endfn __ct__8MaterialFv
 
-.global drawculled__9BaseShapeFR8GraphicsR6CameraP17ShapeDynMaterials
-drawculled__9BaseShapeFR8GraphicsR6CameraP17ShapeDynMaterials:
+.fn drawculled__9BaseShapeFR8GraphicsR6CameraP17ShapeDynMaterials, global
 /* 8002FCF4 0002CC54  7C 08 02 A6 */	mflr r0
 /* 8002FCF8 0002CC58  90 01 00 04 */	stw r0, 4(r1)
 /* 8002FCFC 0002CC5C  94 21 FE 78 */	stwu r1, -0x188(r1)
@@ -7025,9 +7024,9 @@ drawculled__9BaseShapeFR8GraphicsR6CameraP17ShapeDynMaterials:
 /* 80030460 0002D3C0  38 21 01 88 */	addi r1, r1, 0x188
 /* 80030464 0002D3C4  7C 08 03 A6 */	mtlr r0
 /* 80030468 0002D3C8  4E 80 00 20 */	blr 
+.endfn drawculled__9BaseShapeFR8GraphicsR6CameraP17ShapeDynMaterials
 
-.global drawshape__9BaseShapeFR8GraphicsR6CameraP17ShapeDynMaterials
-drawshape__9BaseShapeFR8GraphicsR6CameraP17ShapeDynMaterials:
+.fn drawshape__9BaseShapeFR8GraphicsR6CameraP17ShapeDynMaterials, global
 /* 8003046C 0002D3CC  7C 08 02 A6 */	mflr r0
 /* 80030470 0002D3D0  90 01 00 04 */	stw r0, 4(r1)
 /* 80030474 0002D3D4  94 21 FF C8 */	stwu r1, -0x38(r1)
@@ -7143,9 +7142,9 @@ drawshape__9BaseShapeFR8GraphicsR6CameraP17ShapeDynMaterials:
 /* 80030600 0002D560  38 21 00 38 */	addi r1, r1, 0x38
 /* 80030604 0002D564  7C 08 03 A6 */	mtlr r0
 /* 80030608 0002D568  4E 80 00 20 */	blr 
+.endfn drawshape__9BaseShapeFR8GraphicsR6CameraP17ShapeDynMaterials
 
-.global resolveTextureNames__9BaseShapeFv
-resolveTextureNames__9BaseShapeFv:
+.fn resolveTextureNames__9BaseShapeFv, global
 /* 8003060C 0002D56C  7C 08 02 A6 */	mflr r0
 /* 80030610 0002D570  90 01 00 04 */	stw r0, 4(r1)
 /* 80030614 0002D574  94 21 FE C0 */	stwu r1, -0x140(r1)
@@ -7424,9 +7423,9 @@ resolveTextureNames__9BaseShapeFv:
 /* 80030A0C 0002D96C  38 21 01 40 */	addi r1, r1, 0x140
 /* 80030A10 0002D970  7C 08 03 A6 */	mtlr r0
 /* 80030A14 0002D974  4E 80 00 20 */	blr 
+.endfn resolveTextureNames__9BaseShapeFv
 
-.global __ct__7TexAttrFv
-__ct__7TexAttrFv:
+.fn __ct__7TexAttrFv, weak
 /* 80030A18 0002D978  3C 80 80 22 */	lis r4, __vt__5ANode@ha
 /* 80030A1C 0002D97C  38 04 73 8C */	addi r0, r4, __vt__5ANode@l
 /* 80030A20 0002D980  3C 80 80 22 */	lis r4, __vt__8CoreNode@ha
@@ -7450,9 +7449,9 @@ __ct__7TexAttrFv:
 /* 80030A68 0002D9C8  C0 02 82 E0 */	lfs f0, lbl_803E84E0@sda21(r2)
 /* 80030A6C 0002D9CC  D0 03 00 24 */	stfs f0, 0x24(r3)
 /* 80030A70 0002D9D0  4E 80 00 20 */	blr 
+.endfn __ct__7TexAttrFv
 
-.global recAddMatpoly__9BaseShapeFP5Jointi
-recAddMatpoly__9BaseShapeFP5Jointi:
+.fn recAddMatpoly__9BaseShapeFP5Jointi, global
 /* 80030A74 0002D9D4  7C 08 02 A6 */	mflr r0
 /* 80030A78 0002D9D8  90 01 00 04 */	stw r0, 4(r1)
 /* 80030A7C 0002D9DC  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -7510,9 +7509,9 @@ recAddMatpoly__9BaseShapeFP5Jointi:
 /* 80030B34 0002DA94  38 21 00 28 */	addi r1, r1, 0x28
 /* 80030B38 0002DA98  7C 08 03 A6 */	mtlr r0
 /* 80030B3C 0002DA9C  4E 80 00 20 */	blr 
+.endfn recAddMatpoly__9BaseShapeFP5Jointi
 
-.global read__9BaseShapeFR18RandomAccessStream
-read__9BaseShapeFR18RandomAccessStream:
+.fn read__9BaseShapeFR18RandomAccessStream, global
 /* 80030B40 0002DAA0  7C 08 02 A6 */	mflr r0
 /* 80030B44 0002DAA4  3D 80 80 03 */	lis r12, __ct__9CollGroupFv@ha
 /* 80030B48 0002DAA8  90 01 00 04 */	stw r0, 4(r1)
@@ -10102,18 +10101,18 @@ read__9BaseShapeFR18RandomAccessStream:
 /* 800330C4 00030024  38 21 02 C0 */	addi r1, r1, 0x2c0
 /* 800330C8 00030028  7C 08 03 A6 */	mtlr r0
 /* 800330CC 0003002C  4E 80 00 20 */	blr 
+.endfn read__9BaseShapeFR18RandomAccessStream
 
-.global __ct__9CollGroupFv
-__ct__9CollGroupFv:
+.fn __ct__9CollGroupFv, weak
 /* 800330D0 00030030  38 00 00 00 */	li r0, 0
 /* 800330D4 00030034  90 03 00 08 */	stw r0, 8(r3)
 /* 800330D8 00030038  B0 03 00 04 */	sth r0, 4(r3)
 /* 800330DC 0003003C  90 03 00 18 */	stw r0, 0x18(r3)
 /* 800330E0 00030040  90 03 00 0C */	stw r0, 0xc(r3)
 /* 800330E4 00030044  4E 80 00 20 */	blr 
+.endfn __ct__9CollGroupFv
 
-.global __ct__5JointFv
-__ct__5JointFv:
+.fn __ct__5JointFv, weak
 /* 800330E8 00030048  3C 80 80 22 */	lis r4, __vt__5ANode@ha
 /* 800330EC 0003004C  39 24 73 8C */	addi r9, r4, __vt__5ANode@l
 /* 800330F0 00030050  3C 80 80 22 */	lis r4, __vt__8CoreNode@ha
@@ -10171,9 +10170,9 @@ __ct__5JointFv:
 /* 800331C0 00030120  90 03 00 20 */	stw r0, 0x20(r3)
 /* 800331C4 00030124  90 E3 01 0C */	stw r7, 0x10c(r3)
 /* 800331C8 00030128  4E 80 00 20 */	blr 
+.endfn __ct__5JointFv
 
-.global __ct__4MeshFv
-__ct__4MeshFv:
+.fn __ct__4MeshFv, weak
 /* 800331CC 0003012C  3C 80 80 22 */	lis r4, __vt__5ANode@ha
 /* 800331D0 00030130  38 04 73 8C */	addi r0, r4, __vt__5ANode@l
 /* 800331D4 00030134  3C 80 80 22 */	lis r4, __vt__8CoreNode@ha
@@ -10195,17 +10194,17 @@ __ct__4MeshFv:
 /* 80033214 00030174  90 83 00 18 */	stw r4, 0x18(r3)
 /* 80033218 00030178  90 03 00 2C */	stw r0, 0x2c(r3)
 /* 8003321C 0003017C  4E 80 00 20 */	blr 
+.endfn __ct__4MeshFv
 
-.global __ct__8EnvelopeFv
-__ct__8EnvelopeFv:
+.fn __ct__8EnvelopeFv, weak
 /* 80033220 00030180  38 00 00 00 */	li r0, 0
 /* 80033224 00030184  90 03 00 00 */	stw r0, 0(r3)
 /* 80033228 00030188  90 03 00 04 */	stw r0, 4(r3)
 /* 8003322C 0003018C  90 03 00 08 */	stw r0, 8(r3)
 /* 80033230 00030190  4E 80 00 20 */	blr 
+.endfn __ct__8EnvelopeFv
 
-.global read__11PVWTevStageFR18RandomAccessStream
-read__11PVWTevStageFR18RandomAccessStream:
+.fn read__11PVWTevStageFR18RandomAccessStream, weak
 /* 80033234 00030194  7C 08 02 A6 */	mflr r0
 /* 80033238 00030198  90 01 00 04 */	stw r0, 4(r1)
 /* 8003323C 0003019C  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -10409,9 +10408,9 @@ read__11PVWTevStageFR18RandomAccessStream:
 /* 80033554 000304B4  38 21 00 20 */	addi r1, r1, 0x20
 /* 80033558 000304B8  7C 08 03 A6 */	mtlr r0
 /* 8003355C 000304BC  4E 80 00 20 */	blr 
+.endfn read__11PVWTevStageFR18RandomAccessStream
 
-.global "read__29PVWAnimInfo1<13PVWKeyInfoS10>FR18RandomAccessStream"
-"read__29PVWAnimInfo1<13PVWKeyInfoS10>FR18RandomAccessStream":
+.fn "read__29PVWAnimInfo1<13PVWKeyInfoS10>FR18RandomAccessStream", weak
 /* 80033560 000304C0  7C 08 02 A6 */	mflr r0
 /* 80033564 000304C4  90 01 00 04 */	stw r0, 4(r1)
 /* 80033568 000304C8  94 21 FF D0 */	stwu r1, -0x30(r1)
@@ -10477,9 +10476,9 @@ read__11PVWTevStageFR18RandomAccessStream:
 /* 8003364C 000305AC  38 21 00 30 */	addi r1, r1, 0x30
 /* 80033650 000305B0  7C 08 03 A6 */	mtlr r0
 /* 80033654 000305B4  4E 80 00 20 */	blr 
+.endfn "read__29PVWAnimInfo1<13PVWKeyInfoS10>FR18RandomAccessStream"
 
-.global "read__29PVWAnimInfo3<13PVWKeyInfoS10>FR18RandomAccessStream"
-"read__29PVWAnimInfo3<13PVWKeyInfoS10>FR18RandomAccessStream":
+.fn "read__29PVWAnimInfo3<13PVWKeyInfoS10>FR18RandomAccessStream", weak
 /* 80033658 000305B8  7C 08 02 A6 */	mflr r0
 /* 8003365C 000305BC  90 01 00 04 */	stw r0, 4(r1)
 /* 80033660 000305C0  94 21 FF C8 */	stwu r1, -0x38(r1)
@@ -10591,9 +10590,9 @@ read__11PVWTevStageFR18RandomAccessStream:
 /* 800337FC 0003075C  38 21 00 38 */	addi r1, r1, 0x38
 /* 80033800 00030760  7C 08 03 A6 */	mtlr r0
 /* 80033804 00030764  4E 80 00 20 */	blr 
+.endfn "read__29PVWAnimInfo3<13PVWKeyInfoS10>FR18RandomAccessStream"
 
-.global __ct__10PVWTevInfoFv
-__ct__10PVWTevInfoFv:
+.fn __ct__10PVWTevInfoFv, weak
 /* 80033808 00030768  7C 08 02 A6 */	mflr r0
 /* 8003380C 0003076C  3C 80 80 03 */	lis r4, __ct__12PVWTevColRegFv@ha
 /* 80033810 00030770  90 01 00 04 */	stw r0, 4(r1)
@@ -10618,9 +10617,9 @@ __ct__10PVWTevInfoFv:
 /* 8003385C 000307BC  38 21 00 18 */	addi r1, r1, 0x18
 /* 80033860 000307C0  7C 08 03 A6 */	mtlr r0
 /* 80033864 000307C4  4E 80 00 20 */	blr 
+.endfn __ct__10PVWTevInfoFv
 
-.global __ct__6TexImgFv
-__ct__6TexImgFv:
+.fn __ct__6TexImgFv, weak
 /* 80033868 000307C8  3C 80 80 22 */	lis r4, __vt__5ANode@ha
 /* 8003386C 000307CC  38 04 73 8C */	addi r0, r4, __vt__5ANode@l
 /* 80033870 000307D0  3C 80 80 22 */	lis r4, __vt__8CoreNode@ha
@@ -10640,13 +10639,13 @@ __ct__6TexImgFv:
 /* 800338A8 00030808  90 03 00 24 */	stw r0, 0x24(r3)
 /* 800338AC 0003080C  90 C3 00 30 */	stw r6, 0x30(r3)
 /* 800338B0 00030810  4E 80 00 20 */	blr 
+.endfn __ct__6TexImgFv
 
-.global __ct__8Vector2fFv
-__ct__8Vector2fFv:
+.fn __ct__8Vector2fFv, weak
 /* 800338B4 00030814  4E 80 00 20 */	blr 
+.endfn __ct__8Vector2fFv
 
-.global initIni__9BaseShapeFb
-initIni__9BaseShapeFb:
+.fn initIni__9BaseShapeFb, global
 /* 800338B8 00030818  7C 08 02 A6 */	mflr r0
 /* 800338BC 0003081C  90 01 00 04 */	stw r0, 4(r1)
 /* 800338C0 00030820  94 21 FF C0 */	stwu r1, -0x40(r1)
@@ -10816,9 +10815,9 @@ initIni__9BaseShapeFb:
 /* 80033AF4 00030A54  38 21 00 40 */	addi r1, r1, 0x40
 /* 80033AF8 00030A58  7C 08 03 A6 */	mtlr r0
 /* 80033AFC 00030A5C  4E 80 00 20 */	blr 
+.endfn initIni__9BaseShapeFb
 
-.global initialise__9BaseShapeFv
-initialise__9BaseShapeFv:
+.fn initialise__9BaseShapeFv, global
 /* 80033B00 00030A60  7C 08 02 A6 */	mflr r0
 /* 80033B04 00030A64  90 01 00 04 */	stw r0, 4(r1)
 /* 80033B08 00030A68  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -10984,9 +10983,9 @@ initialise__9BaseShapeFv:
 /* 80033D4C 00030CAC  38 21 00 28 */	addi r1, r1, 0x28
 /* 80033D50 00030CB0  7C 08 03 A6 */	mtlr r0
 /* 80033D54 00030CB4  4E 80 00 20 */	blr 
+.endfn initialise__9BaseShapeFv
 
-.global createCollisions__9BaseShapeFi
-createCollisions__9BaseShapeFi:
+.fn createCollisions__9BaseShapeFi, global
 /* 80033D58 00030CB8  7C 08 02 A6 */	mflr r0
 /* 80033D5C 00030CBC  90 01 00 04 */	stw r0, 4(r1)
 /* 80033D60 00030CC0  94 21 ED 40 */	stwu r1, -0x12c0(r1)
@@ -11814,9 +11813,9 @@ createCollisions__9BaseShapeFi:
 /* 800348F4 00031854  38 21 12 C0 */	addi r1, r1, 0x12c0
 /* 800348F8 00031858  7C 08 03 A6 */	mtlr r0
 /* 800348FC 0003185C  4E 80 00 20 */	blr 
+.endfn createCollisions__9BaseShapeFi
 
-.global calcBasePose__9BaseShapeFR8Matrix4f
-calcBasePose__9BaseShapeFR8Matrix4f:
+.fn calcBasePose__9BaseShapeFR8Matrix4f, global
 /* 80034900 00031860  7C 08 02 A6 */	mflr r0
 /* 80034904 00031864  90 01 00 04 */	stw r0, 4(r1)
 /* 80034908 00031868  94 21 FF 70 */	stwu r1, -0x90(r1)
@@ -11905,9 +11904,9 @@ calcBasePose__9BaseShapeFR8Matrix4f:
 /* 80034A44 000319A4  38 21 00 90 */	addi r1, r1, 0x90
 /* 80034A48 000319A8  7C 08 03 A6 */	mtlr r0
 /* 80034A4C 000319AC  4E 80 00 20 */	blr 
+.endfn calcBasePose__9BaseShapeFR8Matrix4f
 
-.global loadDck__9BaseShapeFPcR18RandomAccessStream
-loadDck__9BaseShapeFPcR18RandomAccessStream:
+.fn loadDck__9BaseShapeFPcR18RandomAccessStream, global
 /* 80034A50 000319B0  7C 08 02 A6 */	mflr r0
 /* 80034A54 000319B4  90 01 00 04 */	stw r0, 4(r1)
 /* 80034A58 000319B8  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -11967,9 +11966,9 @@ loadDck__9BaseShapeFPcR18RandomAccessStream:
 /* 80034B2C 00031A8C  38 21 00 28 */	addi r1, r1, 0x28
 /* 80034B30 00031A90  7C 08 03 A6 */	mtlr r0
 /* 80034B34 00031A94  4E 80 00 20 */	blr 
+.endfn loadDck__9BaseShapeFPcR18RandomAccessStream
 
-.global importDck__9BaseShapeFPcP9CmdStream
-importDck__9BaseShapeFPcP9CmdStream:
+.fn importDck__9BaseShapeFPcP9CmdStream, global
 /* 80034B38 00031A98  7C 08 02 A6 */	mflr r0
 /* 80034B3C 00031A9C  90 01 00 04 */	stw r0, 4(r1)
 /* 80034B40 00031AA0  94 21 FF C8 */	stwu r1, -0x38(r1)
@@ -12098,9 +12097,9 @@ importDck__9BaseShapeFPcP9CmdStream:
 /* 80034D0C 00031C6C  38 21 00 38 */	addi r1, r1, 0x38
 /* 80034D10 00031C70  7C 08 03 A6 */	mtlr r0
 /* 80034D14 00031C74  4E 80 00 20 */	blr 
+.endfn importDck__9BaseShapeFPcP9CmdStream
 
-.global loadDca__9BaseShapeFPcR18RandomAccessStream
-loadDca__9BaseShapeFPcR18RandomAccessStream:
+.fn loadDca__9BaseShapeFPcR18RandomAccessStream, global
 /* 80034D18 00031C78  7C 08 02 A6 */	mflr r0
 /* 80034D1C 00031C7C  90 01 00 04 */	stw r0, 4(r1)
 /* 80034D20 00031C80  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -12157,9 +12156,9 @@ loadDca__9BaseShapeFPcR18RandomAccessStream:
 /* 80034DE8 00031D48  38 21 00 28 */	addi r1, r1, 0x28
 /* 80034DEC 00031D4C  7C 08 03 A6 */	mtlr r0
 /* 80034DF0 00031D50  4E 80 00 20 */	blr 
+.endfn loadDca__9BaseShapeFPcR18RandomAccessStream
 
-.global loadAnimation__9BaseShapeFPcb
-loadAnimation__9BaseShapeFPcb:
+.fn loadAnimation__9BaseShapeFPcb, global
 /* 80034DF4 00031D54  7C 08 02 A6 */	mflr r0
 /* 80034DF8 00031D58  38 C0 00 01 */	li r6, 1
 /* 80034DFC 00031D5C  90 01 00 04 */	stw r0, 4(r1)
@@ -12283,9 +12282,9 @@ loadAnimation__9BaseShapeFPcb:
 /* 80034FAC 00031F0C  38 21 00 30 */	addi r1, r1, 0x30
 /* 80034FB0 00031F10  7C 08 03 A6 */	mtlr r0
 /* 80034FB4 00031F14  4E 80 00 20 */	blr 
+.endfn loadAnimation__9BaseShapeFPcb
 
-.global __ct__8CoreNodeFPc
-__ct__8CoreNodeFPc:
+.fn __ct__8CoreNodeFPc, weak
 /* 80034FB8 00031F18  3C A0 80 22 */	lis r5, __vt__5ANode@ha
 /* 80034FBC 00031F1C  38 05 73 8C */	addi r0, r5, __vt__5ANode@l
 /* 80034FC0 00031F20  3C A0 80 22 */	lis r5, __vt__8CoreNode@ha
@@ -12298,16 +12297,16 @@ __ct__8CoreNodeFPc:
 /* 80034FDC 00031F3C  90 03 00 08 */	stw r0, 8(r3)
 /* 80034FE0 00031F40  90 83 00 04 */	stw r4, 4(r3)
 /* 80034FE4 00031F44  4E 80 00 20 */	blr 
+.endfn __ct__8CoreNodeFPc
 
-.global getAnimMatrix__9BaseShapeFi
-getAnimMatrix__9BaseShapeFi:
+.fn getAnimMatrix__9BaseShapeFi, global
 /* 80034FE8 00031F48  80 63 00 28 */	lwz r3, 0x28(r3)
 /* 80034FEC 00031F4C  54 80 30 32 */	slwi r0, r4, 6
 /* 80034FF0 00031F50  7C 63 02 14 */	add r3, r3, r0
 /* 80034FF4 00031F54  4E 80 00 20 */	blr 
+.endfn getAnimMatrix__9BaseShapeFi
 
-.global backupAnimOverrides__9BaseShapeFPP11AnimContext
-backupAnimOverrides__9BaseShapeFPP11AnimContext:
+.fn backupAnimOverrides__9BaseShapeFPP11AnimContext, global
 /* 80034FF8 00031F58  90 83 00 20 */	stw r4, 0x20(r3)
 /* 80034FFC 00031F5C  38 E0 00 00 */	li r7, 0
 /* 80035000 00031F60  38 C0 00 00 */	li r6, 0
@@ -12324,9 +12323,9 @@ backupAnimOverrides__9BaseShapeFPP11AnimContext:
 /* 80035024 00031F84  7C 07 00 00 */	cmpw r7, r0
 /* 80035028 00031F88  41 80 FF E0 */	blt .L_80035008
 /* 8003502C 00031F8C  4E 80 00 20 */	blr 
+.endfn backupAnimOverrides__9BaseShapeFPP11AnimContext
 
-.global restoreAnimOverrides__9BaseShapeFv
-restoreAnimOverrides__9BaseShapeFv:
+.fn restoreAnimOverrides__9BaseShapeFv, global
 /* 80035030 00031F90  38 E0 00 00 */	li r7, 0
 /* 80035034 00031F94  38 C0 00 00 */	li r6, 0
 /* 80035038 00031F98  48 00 00 1C */	b .L_80035054
@@ -12342,9 +12341,9 @@ restoreAnimOverrides__9BaseShapeFv:
 /* 80035058 00031FB8  7C 07 00 00 */	cmpw r7, r0
 /* 8003505C 00031FBC  41 80 FF E0 */	blt .L_8003503C
 /* 80035060 00031FC0  4E 80 00 20 */	blr 
+.endfn restoreAnimOverrides__9BaseShapeFv
 
-.global overrideAnim__9BaseShapeFiP11AnimContext
-overrideAnim__9BaseShapeFiP11AnimContext:
+.fn overrideAnim__9BaseShapeFiP11AnimContext, global
 /* 80035064 00031FC4  7C 08 02 A6 */	mflr r0
 /* 80035068 00031FC8  90 01 00 04 */	stw r0, 4(r1)
 /* 8003506C 00031FCC  1C 04 01 1C */	mulli r0, r4, 0x11c
@@ -12386,9 +12385,9 @@ overrideAnim__9BaseShapeFiP11AnimContext:
 /* 800350EC 0003204C  38 21 00 28 */	addi r1, r1, 0x28
 /* 800350F0 00032050  7C 08 03 A6 */	mtlr r0
 /* 800350F4 00032054  4E 80 00 20 */	blr 
+.endfn overrideAnim__9BaseShapeFiP11AnimContext
 
-.global __ct__15AnimFrameCacherFi
-__ct__15AnimFrameCacherFi:
+.fn __ct__15AnimFrameCacherFi, global
 /* 800350F8 00032058  7C 08 02 A6 */	mflr r0
 /* 800350FC 0003205C  90 01 00 04 */	stw r0, 4(r1)
 /* 80035100 00032060  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -12419,9 +12418,9 @@ __ct__15AnimFrameCacherFi:
 /* 80035160 000320C0  38 21 00 20 */	addi r1, r1, 0x20
 /* 80035164 000320C4  7C 08 03 A6 */	mtlr r0
 /* 80035168 000320C8  4E 80 00 20 */	blr 
+.endfn __ct__15AnimFrameCacherFi
 
-.global cacheFrameSpace__15AnimFrameCacherFiP13AnimCacheInfo
-cacheFrameSpace__15AnimFrameCacherFiP13AnimCacheInfo:
+.fn cacheFrameSpace__15AnimFrameCacherFiP13AnimCacheInfo, global
 /* 8003516C 000320CC  7C 08 02 A6 */	mflr r0
 /* 80035170 000320D0  90 01 00 04 */	stw r0, 4(r1)
 /* 80035174 000320D4  54 80 30 32 */	slwi r0, r4, 6
@@ -12536,9 +12535,9 @@ cacheFrameSpace__15AnimFrameCacherFiP13AnimCacheInfo:
 /* 80035308 00032268  38 21 00 38 */	addi r1, r1, 0x38
 /* 8003530C 0003226C  7C 08 03 A6 */	mtlr r0
 /* 80035310 00032270  4E 80 00 20 */	blr 
+.endfn cacheFrameSpace__15AnimFrameCacherFiP13AnimCacheInfo
 
-.global updateAnim__9BaseShapeFR8GraphicsR8Matrix4fPf
-updateAnim__9BaseShapeFR8GraphicsR8Matrix4fPf:
+.fn updateAnim__9BaseShapeFR8GraphicsR8Matrix4fPf, global
 /* 80035314 00032274  7C 08 02 A6 */	mflr r0
 /* 80035318 00032278  90 01 00 04 */	stw r0, 4(r1)
 /* 8003531C 0003227C  94 21 FF 30 */	stwu r1, -0xd0(r1)
@@ -12740,9 +12739,9 @@ updateAnim__9BaseShapeFR8GraphicsR8Matrix4fPf:
 /* 800355E8 00032548  38 21 00 D0 */	addi r1, r1, 0xd0
 /* 800355EC 0003254C  7C 08 03 A6 */	mtlr r0
 /* 800355F0 00032550  4E 80 00 20 */	blr 
+.endfn updateAnim__9BaseShapeFR8GraphicsR8Matrix4fPf
 
-.global calcWeightedMatrices__9BaseShapeFv
-calcWeightedMatrices__9BaseShapeFv:
+.fn calcWeightedMatrices__9BaseShapeFv, global
 /* 800355F4 00032554  7C 08 02 A6 */	mflr r0
 /* 800355F8 00032558  90 01 00 04 */	stw r0, 4(r1)
 /* 800355FC 0003255C  94 21 FF 78 */	stwu r1, -0x88(r1)
@@ -12848,9 +12847,9 @@ calcWeightedMatrices__9BaseShapeFv:
 /* 80035778 000326D8  38 21 00 88 */	addi r1, r1, 0x88
 /* 8003577C 000326DC  7C 08 03 A6 */	mtlr r0
 /* 80035780 000326E0  4E 80 00 20 */	blr 
+.endfn calcWeightedMatrices__9BaseShapeFv
 
-.global makeNormalIndexes__9BaseShapeFPUs
-makeNormalIndexes__9BaseShapeFPUs:
+.fn makeNormalIndexes__9BaseShapeFPUs, global
 /* 80035784 000326E4  94 21 FF D0 */	stwu r1, -0x30(r1)
 /* 80035788 000326E8  38 E0 00 00 */	li r7, 0
 /* 8003578C 000326EC  38 C0 00 00 */	li r6, 0
@@ -12945,9 +12944,9 @@ makeNormalIndexes__9BaseShapeFPUs:
 /* 800358B8 00032818  BB 61 00 1C */	lmw r27, 0x1c(r1)
 /* 800358BC 0003281C  38 21 00 30 */	addi r1, r1, 0x30
 /* 800358C0 00032820  4E 80 00 20 */	blr 
+.endfn makeNormalIndexes__9BaseShapeFPUs
 
-.global calcJointWorldPos__9BaseShapeFR8GraphicsiR8Vector3f
-calcJointWorldPos__9BaseShapeFR8GraphicsiR8Vector3f:
+.fn calcJointWorldPos__9BaseShapeFR8GraphicsiR8Vector3f, global
 /* 800358C4 00032824  7C 08 02 A6 */	mflr r0
 /* 800358C8 00032828  2C 05 FF FF */	cmpwi r5, -1
 /* 800358CC 0003282C  90 01 00 04 */	stw r0, 4(r1)
@@ -13012,9 +13011,9 @@ calcJointWorldPos__9BaseShapeFR8GraphicsiR8Vector3f:
 /* 800359B0 00032910  38 21 00 30 */	addi r1, r1, 0x30
 /* 800359B4 00032914  7C 08 03 A6 */	mtlr r0
 /* 800359B8 00032918  4E 80 00 20 */	blr 
+.endfn calcJointWorldPos__9BaseShapeFR8GraphicsiR8Vector3f
 
-.global calcJointWorldDir__9BaseShapeFR8GraphicsiR8Vector3f
-calcJointWorldDir__9BaseShapeFR8GraphicsiR8Vector3f:
+.fn calcJointWorldDir__9BaseShapeFR8GraphicsiR8Vector3f, global
 /* 800359BC 0003291C  7C 08 02 A6 */	mflr r0
 /* 800359C0 00032920  2C 05 FF FF */	cmpwi r5, -1
 /* 800359C4 00032924  90 01 00 04 */	stw r0, 4(r1)
@@ -13040,9 +13039,9 @@ calcJointWorldDir__9BaseShapeFR8GraphicsiR8Vector3f:
 /* 80035A10 00032970  38 21 00 28 */	addi r1, r1, 0x28
 /* 80035A14 00032974  7C 08 03 A6 */	mtlr r0
 /* 80035A18 00032978  4E 80 00 20 */	blr 
+.endfn calcJointWorldDir__9BaseShapeFR8GraphicsiR8Vector3f
 
-.global attach__10MatobjInfoFv
-attach__10MatobjInfoFv:
+.fn attach__10MatobjInfoFv, weak
 /* 80035A1C 0003297C  7C 08 02 A6 */	mflr r0
 /* 80035A20 00032980  90 01 00 04 */	stw r0, 4(r1)
 /* 80035A24 00032984  94 21 FF F8 */	stwu r1, -8(r1)
@@ -13055,41 +13054,41 @@ attach__10MatobjInfoFv:
 /* 80035A40 000329A0  38 21 00 08 */	addi r1, r1, 8
 /* 80035A44 000329A4  7C 08 03 A6 */	mtlr r0
 /* 80035A48 000329A8  4E 80 00 20 */	blr 
+.endfn attach__10MatobjInfoFv
 
-.global detach__10MatobjInfoFv
-detach__10MatobjInfoFv:
+.fn detach__10MatobjInfoFv, weak
 /* 80035A4C 000329AC  4E 80 00 20 */	blr 
+.endfn detach__10MatobjInfoFv
 
-.global attach__10GfxobjInfoFv
-attach__10GfxobjInfoFv:
+.fn attach__10GfxobjInfoFv, weak
 /* 80035A50 000329B0  4E 80 00 20 */	blr 
+.endfn attach__10GfxobjInfoFv
 
-.global detach__10GfxobjInfoFv
-detach__10GfxobjInfoFv:
+.fn detach__10GfxobjInfoFv, weak
 /* 80035A54 000329B4  4E 80 00 20 */	blr 
+.endfn detach__10GfxobjInfoFv
 
-.global optimize__9BaseShapeFv
-optimize__9BaseShapeFv:
+.fn optimize__9BaseShapeFv, weak
 /* 80035A58 000329B8  4E 80 00 20 */	blr 
+.endfn optimize__9BaseShapeFv
 
-.global update__9BaseShapeFv
-update__9BaseShapeFv:
+.fn update__9BaseShapeFv, weak
 /* 80035A5C 000329BC  4E 80 00 20 */	blr 
+.endfn update__9BaseShapeFv
 
-.global render__9BaseShapeFR8Graphics
-render__9BaseShapeFR8Graphics:
+.fn render__9BaseShapeFR8Graphics, weak
 /* 80035A60 000329C0  4E 80 00 20 */	blr 
+.endfn render__9BaseShapeFR8Graphics
 
-.global render2d__9BaseShapeFR8Graphics
-render2d__9BaseShapeFR8Graphics:
+.fn render2d__9BaseShapeFR8Graphics, weak
 /* 80035A64 000329C4  4E 80 00 20 */	blr 
+.endfn render2d__9BaseShapeFR8Graphics
 
-.global writeType__8AnimDataFR18RandomAccessStream
-writeType__8AnimDataFR18RandomAccessStream:
+.fn writeType__8AnimDataFR18RandomAccessStream, weak
 /* 80035A68 000329C8  4E 80 00 20 */	blr 
+.endfn writeType__8AnimDataFR18RandomAccessStream
 
-.global "invoke__32Delegate2<9BaseShape,P5Joint,Ul>FP5JointUl"
-"invoke__32Delegate2<9BaseShape,P5Joint,Ul>FP5JointUl":
+.fn "invoke__32Delegate2<9BaseShape,P5Joint,Ul>FP5JointUl", weak
 /* 80035A6C 000329CC  7C 08 02 A6 */	mflr r0
 /* 80035A70 000329D0  7C 66 1B 78 */	mr r6, r3
 /* 80035A74 000329D4  90 01 00 04 */	stw r0, 4(r1)
@@ -13102,6 +13101,7 @@ writeType__8AnimDataFR18RandomAccessStream:
 /* 80035A90 000329F0  38 21 00 08 */	addi r1, r1, 8
 /* 80035A94 000329F4  7C 08 03 A6 */	mtlr r0
 /* 80035A98 000329F8  4E 80 00 20 */	blr 
+.endfn "invoke__32Delegate2<9BaseShape,P5Joint,Ul>FP5JointUl"
 
 .fn __sinit_shapeBase_cpp, local
 /* 80035A9C 000329FC  7C 08 02 A6 */	mflr r0
@@ -13140,13 +13140,13 @@ writeType__8AnimDataFR18RandomAccessStream:
 /* 80035B20 00032A80  4E 80 00 20 */	blr 
 .endfn __sinit_shapeBase_cpp
 
-.global __ct__8Vector3fFv
-__ct__8Vector3fFv:
+.fn __ct__8Vector3fFv, weak
 /* 80035B24 00032A84  C0 02 82 E0 */	lfs f0, lbl_803E84E0@sda21(r2)
 /* 80035B28 00032A88  D0 03 00 08 */	stfs f0, 8(r3)
 /* 80035B2C 00032A8C  D0 03 00 04 */	stfs f0, 4(r3)
 /* 80035B30 00032A90  D0 03 00 00 */	stfs f0, 0(r3)
 /* 80035B34 00032A94  4E 80 00 20 */	blr 
+.endfn __ct__8Vector3fFv
 
 .section .ctors, "wa"  # 0x80221F60 - 0x80221FC0
 lbl_constructor:

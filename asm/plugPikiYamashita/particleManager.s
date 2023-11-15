@@ -507,11 +507,12 @@ pmGetPtclGen__Q23zen15particleManagerFv:
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-.global DEFAULT_FRAME_RATE__Q23zen15particleManager
-DEFAULT_FRAME_RATE__Q23zen15particleManager:
-	.4byte 0x41F00000
+.obj DEFAULT_FRAME_RATE__Q23zen15particleManager, global
+	.float 30.0
+.endobj DEFAULT_FRAME_RATE__Q23zen15particleManager
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803EB5E0:
-	.4byte 0x42C80000
+.obj lbl_803EB5E0, local
+	.float 100.0
+.endobj lbl_803EB5E0

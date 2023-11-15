@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global procMsg__6ActionFP3Msg
-procMsg__6ActionFP3Msg:
+.fn procMsg__6ActionFP3Msg, global
 /* 800C3AE4 000C0A44  7C 08 02 A6 */	mflr r0
 /* 800C3AE8 000C0A48  90 01 00 04 */	stw r0, 4(r1)
 /* 800C3AEC 000C0A4C  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -159,9 +158,9 @@ procMsg__6ActionFP3Msg:
 /* 800C3D18 000C0C78  38 21 00 28 */	addi r1, r1, 0x28
 /* 800C3D1C 000C0C7C  7C 08 03 A6 */	mtlr r0
 /* 800C3D20 000C0C80  4E 80 00 20 */	blr 
+.endfn procMsg__6ActionFP3Msg
 
-.global initialise__Q26Action5ChildFP8Creature
-initialise__Q26Action5ChildFP8Creature:
+.fn initialise__Q26Action5ChildFP8Creature, global
 /* 800C3D24 000C0C84  7C 08 02 A6 */	mflr r0
 /* 800C3D28 000C0C88  90 01 00 04 */	stw r0, 4(r1)
 /* 800C3D2C 000C0C8C  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -209,9 +208,9 @@ initialise__Q26Action5ChildFP8Creature:
 /* 800C3DC4 000C0D24  38 21 00 18 */	addi r1, r1, 0x18
 /* 800C3DC8 000C0D28  7C 08 03 A6 */	mtlr r0
 /* 800C3DCC 000C0D2C  4E 80 00 20 */	blr 
+.endfn initialise__Q26Action5ChildFP8Creature
 
-.global __ct__6ActionFP4Pikib
-__ct__6ActionFP4Pikib:
+.fn __ct__6ActionFP4Pikib, global
 /* 800C3DD0 000C0D30  3C A0 80 2C */	lis r5, "__vt__15Receiver<4Piki>"@ha
 /* 800C3DD4 000C0D34  38 05 81 F8 */	addi r0, r5, "__vt__15Receiver<4Piki>"@l
 /* 800C3DD8 000C0D38  3C A0 80 2C */	lis r5, __vt__6Action@ha
@@ -226,9 +225,9 @@ __ct__6ActionFP4Pikib:
 /* 800C3DFC 000C0D5C  B0 A3 00 08 */	sth r5, 8(r3)
 /* 800C3E00 000C0D60  90 03 00 10 */	stw r0, 0x10(r3)
 /* 800C3E04 000C0D64  4E 80 00 20 */	blr 
+.endfn __ct__6ActionFP4Pikib
 
-.global __dt__6ActionFv
-__dt__6ActionFv:
+.fn __dt__6ActionFv, global
 /* 800C3E08 000C0D68  7C 08 02 A6 */	mflr r0
 /* 800C3E0C 000C0D6C  90 01 00 04 */	stw r0, 4(r1)
 /* 800C3E10 000C0D70  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -261,9 +260,9 @@ __dt__6ActionFv:
 /* 800C3E74 000C0DD4  38 21 00 18 */	addi r1, r1, 0x18
 /* 800C3E78 000C0DD8  7C 08 03 A6 */	mtlr r0
 /* 800C3E7C 000C0DDC  4E 80 00 20 */	blr 
+.endfn __dt__6ActionFv
 
-.global __dt__Q26Action5ChildFv
-__dt__Q26Action5ChildFv:
+.fn __dt__Q26Action5ChildFv, weak
 /* 800C3E80 000C0DE0  7C 08 02 A6 */	mflr r0
 /* 800C3E84 000C0DE4  90 01 00 04 */	stw r0, 4(r1)
 /* 800C3E88 000C0DE8  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -299,20 +298,20 @@ __dt__Q26Action5ChildFv:
 /* 800C3EF4 000C0E54  38 21 00 18 */	addi r1, r1, 0x18
 /* 800C3EF8 000C0E58  7C 08 03 A6 */	mtlr r0
 /* 800C3EFC 000C0E5C  4E 80 00 20 */	blr 
+.endfn __dt__Q26Action5ChildFv
 
-.global init__6ActionFP8Creature
-init__6ActionFP8Creature:
+.fn init__6ActionFP8Creature, global
 /* 800C3F00 000C0E60  38 00 00 00 */	li r0, 0
 /* 800C3F04 000C0E64  B0 03 00 08 */	sth r0, 8(r3)
 /* 800C3F08 000C0E68  4E 80 00 20 */	blr 
+.endfn init__6ActionFP8Creature
 
-.global exec__6ActionFv
-exec__6ActionFv:
+.fn exec__6ActionFv, global
 /* 800C3F0C 000C0E6C  38 60 00 02 */	li r3, 2
 /* 800C3F10 000C0E70  4E 80 00 20 */	blr 
+.endfn exec__6ActionFv
 
-.global init__9AndActionFP8Creature
-init__9AndActionFP8Creature:
+.fn init__9AndActionFP8Creature, global
 /* 800C3F14 000C0E74  7C 08 02 A6 */	mflr r0
 /* 800C3F18 000C0E78  90 01 00 04 */	stw r0, 4(r1)
 /* 800C3F1C 000C0E7C  38 00 00 00 */	li r0, 0
@@ -373,9 +372,9 @@ init__9AndActionFP8Creature:
 /* 800C3FE8 000C0F48  38 21 00 20 */	addi r1, r1, 0x20
 /* 800C3FEC 000C0F4C  7C 08 03 A6 */	mtlr r0
 /* 800C3FF0 000C0F50  4E 80 00 20 */	blr 
+.endfn init__9AndActionFP8Creature
 
-.global exec__9AndActionFv
-exec__9AndActionFv:
+.fn exec__9AndActionFv, global
 /* 800C3FF4 000C0F54  7C 08 02 A6 */	mflr r0
 /* 800C3FF8 000C0F58  90 01 00 04 */	stw r0, 4(r1)
 /* 800C3FFC 000C0F5C  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -467,9 +466,9 @@ exec__9AndActionFv:
 /* 800C4134 000C1094  38 21 00 18 */	addi r1, r1, 0x18
 /* 800C4138 000C1098  7C 08 03 A6 */	mtlr r0
 /* 800C413C 000C109C  4E 80 00 20 */	blr 
+.endfn exec__9AndActionFv
 
-.global init__8OrActionFP8Creature
-init__8OrActionFP8Creature:
+.fn init__8OrActionFP8Creature, global
 /* 800C4140 000C10A0  7C 08 02 A6 */	mflr r0
 /* 800C4144 000C10A4  90 01 00 04 */	stw r0, 4(r1)
 /* 800C4148 000C10A8  38 00 00 00 */	li r0, 0
@@ -530,9 +529,9 @@ init__8OrActionFP8Creature:
 /* 800C4214 000C1174  38 21 00 20 */	addi r1, r1, 0x20
 /* 800C4218 000C1178  7C 08 03 A6 */	mtlr r0
 /* 800C421C 000C117C  4E 80 00 20 */	blr 
+.endfn init__8OrActionFP8Creature
 
-.global exec__8OrActionFv
-exec__8OrActionFv:
+.fn exec__8OrActionFv, global
 /* 800C4220 000C1180  7C 08 02 A6 */	mflr r0
 /* 800C4224 000C1184  90 01 00 04 */	stw r0, 4(r1)
 /* 800C4228 000C1188  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -626,9 +625,9 @@ exec__8OrActionFv:
 /* 800C4364 000C12C4  38 21 00 18 */	addi r1, r1, 0x18
 /* 800C4368 000C12C8  7C 08 03 A6 */	mtlr r0
 /* 800C436C 000C12CC  4E 80 00 20 */	blr 
+.endfn exec__8OrActionFv
 
-.global setChildren__6ActionFie
-setChildren__6ActionFie:
+.fn setChildren__6ActionFie, global
 /* 800C4370 000C12D0  7C 08 02 A6 */	mflr r0
 /* 800C4374 000C12D4  90 01 00 04 */	stw r0, 4(r1)
 /* 800C4378 000C12D8  94 21 FF 68 */	stwu r1, -0x98(r1)
@@ -705,16 +704,16 @@ setChildren__6ActionFie:
 /* 800C4488 000C13E8  38 21 00 98 */	addi r1, r1, 0x98
 /* 800C448C 000C13EC  7C 08 03 A6 */	mtlr r0
 /* 800C4490 000C13F0  4E 80 00 20 */	blr 
+.endfn setChildren__6ActionFie
 
-.global __ct__Q26Action5ChildFv
-__ct__Q26Action5ChildFv:
+.fn __ct__Q26Action5ChildFv, weak
 /* 800C4494 000C13F4  38 00 00 00 */	li r0, 0
 /* 800C4498 000C13F8  90 03 00 00 */	stw r0, 0(r3)
 /* 800C449C 000C13FC  90 03 00 04 */	stw r0, 4(r3)
 /* 800C44A0 000C1400  4E 80 00 20 */	blr 
+.endfn __ct__Q26Action5ChildFv
 
-.global cleanup__6ActionFv
-cleanup__6ActionFv:
+.fn cleanup__6ActionFv, global
 /* 800C44A4 000C1404  7C 08 02 A6 */	mflr r0
 /* 800C44A8 000C1408  90 01 00 04 */	stw r0, 4(r1)
 /* 800C44AC 000C140C  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -745,9 +744,9 @@ cleanup__6ActionFv:
 /* 800C4508 000C1468  38 21 00 20 */	addi r1, r1, 0x20
 /* 800C450C 000C146C  7C 08 03 A6 */	mtlr r0
 /* 800C4510 000C1470  4E 80 00 20 */	blr 
+.endfn cleanup__6ActionFv
 
-.global animationKeyUpdated__Q29TopAction14MotionListenerFR16PaniAnimKeyEvent
-animationKeyUpdated__Q29TopAction14MotionListenerFR16PaniAnimKeyEvent:
+.fn animationKeyUpdated__Q29TopAction14MotionListenerFR16PaniAnimKeyEvent, global
 /* 800C4514 000C1474  7C 08 02 A6 */	mflr r0
 /* 800C4518 000C1478  90 01 00 04 */	stw r0, 4(r1)
 /* 800C451C 000C147C  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -808,9 +807,9 @@ animationKeyUpdated__Q29TopAction14MotionListenerFR16PaniAnimKeyEvent:
 /* 800C45E4 000C1544  38 21 00 18 */	addi r1, r1, 0x18
 /* 800C45E8 000C1548  7C 08 03 A6 */	mtlr r0
 /* 800C45EC 000C154C  4E 80 00 20 */	blr 
+.endfn animationKeyUpdated__Q29TopAction14MotionListenerFR16PaniAnimKeyEvent
 
-.global __ct__9TopActionFP4Piki
-__ct__9TopActionFP4Piki:
+.fn __ct__9TopActionFP4Piki, global
 /* 800C45F0 000C1550  7C 08 02 A6 */	mflr r0
 /* 800C45F4 000C1554  3C A0 80 2C */	lis r5, __vt__6Action@ha
 /* 800C45F8 000C1558  90 01 00 04 */	stw r0, 4(r1)
@@ -1246,9 +1245,9 @@ __ct__9TopActionFP4Piki:
 /* 800C4C30 000C1B90  38 21 01 78 */	addi r1, r1, 0x178
 /* 800C4C34 000C1B94  7C 08 03 A6 */	mtlr r0
 /* 800C4C38 000C1B98  4E 80 00 20 */	blr 
+.endfn __ct__9TopActionFP4Piki
 
-.global __dt__9TopActionFv
-__dt__9TopActionFv:
+.fn __dt__9TopActionFv, global
 /* 800C4C3C 000C1B9C  7C 08 02 A6 */	mflr r0
 /* 800C4C40 000C1BA0  90 01 00 04 */	stw r0, 4(r1)
 /* 800C4C44 000C1BA4  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -1286,9 +1285,9 @@ __dt__9TopActionFv:
 /* 800C4CB8 000C1C18  38 21 00 18 */	addi r1, r1, 0x18
 /* 800C4CBC 000C1C1C  7C 08 03 A6 */	mtlr r0
 /* 800C4CC0 000C1C20  4E 80 00 20 */	blr 
+.endfn __dt__9TopActionFv
 
-.global init__9TopActionFP8Creature
-init__9TopActionFP8Creature:
+.fn init__9TopActionFP8Creature, global
 /* 800C4CC4 000C1C24  7C 08 02 A6 */	mflr r0
 /* 800C4CC8 000C1C28  90 01 00 04 */	stw r0, 4(r1)
 /* 800C4CCC 000C1C2C  38 00 00 00 */	li r0, 0
@@ -1351,9 +1350,9 @@ init__9TopActionFP8Creature:
 /* 800C4DA0 000C1D00  38 21 00 18 */	addi r1, r1, 0x18
 /* 800C4DA4 000C1D04  7C 08 03 A6 */	mtlr r0
 /* 800C4DA8 000C1D08  4E 80 00 20 */	blr 
+.endfn init__9TopActionFP8Creature
 
-.global exec__9TopActionFv
-exec__9TopActionFv:
+.fn exec__9TopActionFv, global
 /* 800C4DAC 000C1D0C  7C 08 02 A6 */	mflr r0
 /* 800C4DB0 000C1D10  90 01 00 04 */	stw r0, 4(r1)
 /* 800C4DB4 000C1D14  94 21 FF A0 */	stwu r1, -0x60(r1)
@@ -1746,9 +1745,9 @@ exec__9TopActionFv:
 /* 800C5338 000C2298  38 21 00 60 */	addi r1, r1, 0x60
 /* 800C533C 000C229C  7C 08 03 A6 */	mtlr r0
 /* 800C5340 000C22A0  4E 80 00 20 */	blr 
+.endfn exec__9TopActionFv
 
-.global abandon__9TopActionFPQ23zen17particleGenerator
-abandon__9TopActionFPQ23zen17particleGenerator:
+.fn abandon__9TopActionFPQ23zen17particleGenerator, global
 /* 800C5344 000C22A4  7C 08 02 A6 */	mflr r0
 /* 800C5348 000C22A8  90 01 00 04 */	stw r0, 4(r1)
 /* 800C534C 000C22AC  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -1783,9 +1782,9 @@ abandon__9TopActionFPQ23zen17particleGenerator:
 /* 800C53BC 000C231C  38 21 00 18 */	addi r1, r1, 0x18
 /* 800C53C0 000C2320  7C 08 03 A6 */	mtlr r0
 /* 800C53C4 000C2324  4E 80 00 20 */	blr 
+.endfn abandon__9TopActionFPQ23zen17particleGenerator
 
-.global resumable__9TopActionFv
-resumable__9TopActionFv:
+.fn resumable__9TopActionFv, global
 /* 800C53C8 000C2328  7C 08 02 A6 */	mflr r0
 /* 800C53CC 000C232C  90 01 00 04 */	stw r0, 4(r1)
 /* 800C53D0 000C2330  94 21 FF F8 */	stwu r1, -8(r1)
@@ -1807,9 +1806,9 @@ resumable__9TopActionFv:
 /* 800C5408 000C2368  38 21 00 08 */	addi r1, r1, 8
 /* 800C540C 000C236C  7C 08 03 A6 */	mtlr r0
 /* 800C5410 000C2370  4E 80 00 20 */	blr 
+.endfn resumable__9TopActionFv
 
-.global resume__9TopActionFv
-resume__9TopActionFv:
+.fn resume__9TopActionFv, global
 /* 800C5414 000C2374  7C 08 02 A6 */	mflr r0
 /* 800C5418 000C2378  90 01 00 04 */	stw r0, 4(r1)
 /* 800C541C 000C237C  38 00 00 01 */	li r0, 1
@@ -1830,9 +1829,9 @@ resume__9TopActionFv:
 /* 800C5454 000C23B4  38 21 00 08 */	addi r1, r1, 8
 /* 800C5458 000C23B8  7C 08 03 A6 */	mtlr r0
 /* 800C545C 000C23BC  4E 80 00 20 */	blr 
+.endfn resume__9TopActionFv
 
-.global restart__9TopActionFv
-restart__9TopActionFv:
+.fn restart__9TopActionFv, global
 /* 800C5460 000C23C0  7C 08 02 A6 */	mflr r0
 /* 800C5464 000C23C4  90 01 00 04 */	stw r0, 4(r1)
 /* 800C5468 000C23C8  38 00 00 00 */	li r0, 0
@@ -1853,9 +1852,9 @@ restart__9TopActionFv:
 /* 800C54A0 000C2400  38 21 00 08 */	addi r1, r1, 8
 /* 800C54A4 000C2404  7C 08 03 A6 */	mtlr r0
 /* 800C54A8 000C2408  4E 80 00 20 */	blr 
+.endfn restart__9TopActionFv
 
-.global __ct__Q29TopAction7ObjBoreFv
-__ct__Q29TopAction7ObjBoreFv:
+.fn __ct__Q29TopAction7ObjBoreFv, global
 /* 800C54AC 000C240C  7C 08 02 A6 */	mflr r0
 /* 800C54B0 000C2410  90 01 00 04 */	stw r0, 4(r1)
 /* 800C54B4 000C2414  38 00 00 05 */	li r0, 5
@@ -1894,9 +1893,9 @@ __ct__Q29TopAction7ObjBoreFv:
 /* 800C5530 000C2490  38 21 00 20 */	addi r1, r1, 0x20
 /* 800C5534 000C2494  7C 08 03 A6 */	mtlr r0
 /* 800C5538 000C2498  4E 80 00 20 */	blr 
+.endfn __ct__Q29TopAction7ObjBoreFv
 
-.global __ct__Q29TopAction7BoredomFv
-__ct__Q29TopAction7BoredomFv:
+.fn __ct__Q29TopAction7BoredomFv, global
 /* 800C553C 000C249C  7C 08 02 A6 */	mflr r0
 /* 800C5540 000C24A0  90 01 00 04 */	stw r0, 4(r1)
 /* 800C5544 000C24A4  38 00 00 1E */	li r0, 0x1e
@@ -1932,9 +1931,9 @@ __ct__Q29TopAction7BoredomFv:
 /* 800C55BC 000C251C  38 21 00 28 */	addi r1, r1, 0x28
 /* 800C55C0 000C2520  7C 08 03 A6 */	mtlr r0
 /* 800C55C4 000C2524  4E 80 00 20 */	blr 
+.endfn __ct__Q29TopAction7BoredomFv
 
-.global getInfo__9TopActionFPc
-getInfo__9TopActionFPc:
+.fn getInfo__9TopActionFPc, weak
 /* 800C55C8 000C2528  7C 08 02 A6 */	mflr r0
 /* 800C55CC 000C252C  90 01 00 04 */	stw r0, 4(r1)
 /* 800C55D0 000C2530  94 21 FF F8 */	stwu r1, -8(r1)
@@ -1950,9 +1949,9 @@ getInfo__9TopActionFPc:
 /* 800C55F8 000C2558  38 21 00 08 */	addi r1, r1, 8
 /* 800C55FC 000C255C  7C 08 03 A6 */	mtlr r0
 /* 800C5600 000C2560  4E 80 00 20 */	blr 
+.endfn getInfo__9TopActionFPc
 
-.global draw__9TopActionFR8Graphics
-draw__9TopActionFR8Graphics:
+.fn draw__9TopActionFR8Graphics, weak
 /* 800C5604 000C2564  7C 08 02 A6 */	mflr r0
 /* 800C5608 000C2568  90 01 00 04 */	stw r0, 4(r1)
 /* 800C560C 000C256C  94 21 FF F8 */	stwu r1, -8(r1)
@@ -1972,9 +1971,9 @@ draw__9TopActionFR8Graphics:
 /* 800C5640 000C25A0  38 21 00 08 */	addi r1, r1, 8
 /* 800C5644 000C25A4  7C 08 03 A6 */	mtlr r0
 /* 800C5648 000C25A8  4E 80 00 20 */	blr 
+.endfn draw__9TopActionFR8Graphics
 
-.global __dt__8OrActionFv
-__dt__8OrActionFv:
+.fn __dt__8OrActionFv, weak
 /* 800C564C 000C25AC  7C 08 02 A6 */	mflr r0
 /* 800C5650 000C25B0  90 01 00 04 */	stw r0, 4(r1)
 /* 800C5654 000C25B4  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -2012,20 +2011,23 @@ __dt__8OrActionFv:
 /* 800C56C8 000C2628  38 21 00 18 */	addi r1, r1, 0x18
 /* 800C56CC 000C262C  7C 08 03 A6 */	mtlr r0
 /* 800C56D0 000C2630  4E 80 00 20 */	blr 
+.endfn __dt__8OrActionFv
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802B7EB0:
+.obj lbl_802B7EB0, local
 	.asciz "aiAction.cpp"
+.endobj lbl_802B7EB0
 .balign 4
-lbl_802B7EC0:
+.obj lbl_802B7EC0, local
 	.asciz "aiAction"
+.endobj lbl_802B7EC0
 .balign 4
-lbl_802B7ECC:
+.obj lbl_802B7ECC, local
 	.asciz "FORMATION"
+.endobj lbl_802B7ECC
 .balign 4
-.global info__8Reaction
-info__8Reaction:
+.obj info__8Reaction, global
 	.4byte lbl_803E0968
 	.4byte lbl_803E096C
 	.4byte lbl_803E0974
@@ -2035,7 +2037,9 @@ info__8Reaction:
 	.4byte lbl_803E0994
 	.4byte lbl_803E0998
 	.4byte lbl_802B7ECC
-lbl_802B7EFC:
+.endobj info__8Reaction
+.balign 4
+.obj lbl_802B7EFC, local
 	.4byte .L_800C3B34
 	.4byte .L_800C3B74
 	.4byte .L_800C3B94
@@ -2047,7 +2051,9 @@ lbl_802B7EFC:
 	.4byte .L_800C3B54
 	.4byte .L_800C3C74
 	.4byte .L_800C3C54
-lbl_802B7F28:
+.endobj lbl_802B7EFC
+.balign 4
+.obj lbl_802B7F28, local
 	.4byte .L_800A7908
 	.4byte .L_800A7930
 	.4byte .L_800A7944
@@ -2059,37 +2065,47 @@ lbl_802B7F28:
 	.4byte .L_800A791C
 	.4byte .L_800A79D0
 	.4byte .L_800A79BC
+.endobj lbl_802B7F28
 .balign 4
-lbl_802B7F54:
+.obj lbl_802B7F54, local
 	.asciz "topaction"
+.endobj lbl_802B7F54
 .balign 4
-lbl_802B7F60:
+.obj lbl_802B7F60, local
 	.asciz "top action"
+.endobj lbl_802B7F60
 .balign 4
-lbl_802B7F6C:
+.obj lbl_802B7F6C, local
 	.asciz "boredom for <%s>"
+.endobj lbl_802B7F6C
 .balign 4
-lbl_802B7F80:
+.obj lbl_802B7F80, local
 	.asciz "  %1d : %8s = %.1f %s"
+.endobj lbl_802B7F80
 .balign 4
-lbl_802B7F98:
+.obj lbl_802B7F98, local
 	.asciz "TopAction"
+.endobj lbl_802B7F98
 .balign 4
-lbl_802B7FA4:
+.obj lbl_802B7FA4, local
 	.asciz "Receiver<Piki>"
+.endobj lbl_802B7FA4
 .balign 4
-lbl_802B7FB4:
+.obj lbl_802B7FB4, local
 	.4byte "__RTTI__15Receiver<4Piki>"
 	.4byte 0
 	.4byte 0
-lbl_802B7FC0:
+.endobj lbl_802B7FB4
+.balign 4
+.obj lbl_802B7FC0, local
 	.4byte "__RTTI__15Receiver<4Piki>"
 	.4byte 0
 	.4byte __RTTI__6Action
 	.4byte 0
 	.4byte 0
-.global __vt__9TopAction
-__vt__9TopAction:
+.endobj lbl_802B7FC0
+.balign 4
+.obj __vt__9TopAction, global
 	.4byte __RTTI__9TopAction
 	.4byte 0
 	.4byte "procMsg__15Receiver<4Piki>FP4PikiP3Msg"
@@ -2115,38 +2131,43 @@ __vt__9TopAction:
 	.4byte restart__9TopActionFv
 	.4byte resumable__9TopActionFv
 	.4byte getInfo__9TopActionFPc
+.endobj __vt__9TopAction
 .balign 4
-lbl_802B8038:
+.obj lbl_802B8038, local
 	.asciz "PaniAnimKeyListener"
+.endobj lbl_802B8038
 .balign 4
-	.4byte 0
-	.4byte 0
-	.4byte 0
+.skip 0xC # padding
 .balign 4
-lbl_802B8058:
+.obj lbl_802B8058, local
 	.asciz "TopAction::MotionListener"
+.endobj lbl_802B8058
 .balign 4
-lbl_802B8074:
+.obj lbl_802B8074, local
 	.4byte __RTTI__19PaniAnimKeyListener
 	.4byte 0
 	.4byte 0
-.global __vt__Q29TopAction14MotionListener
-__vt__Q29TopAction14MotionListener:
+.endobj lbl_802B8074
+.balign 4
+.obj __vt__Q29TopAction14MotionListener, global
 	.4byte __RTTI__Q29TopAction14MotionListener
 	.4byte 0
 	.4byte animationKeyUpdated__Q29TopAction14MotionListenerFR16PaniAnimKeyEvent
+.endobj __vt__Q29TopAction14MotionListener
 .balign 4
-lbl_802B808C:
+.obj lbl_802B808C, local
 	.asciz "OrAction"
+.endobj lbl_802B808C
 .balign 4
-lbl_802B8098:
+.obj lbl_802B8098, local
 	.4byte "__RTTI__15Receiver<4Piki>"
 	.4byte 0
 	.4byte __RTTI__6Action
 	.4byte 0
 	.4byte 0
-.global __vt__8OrAction
-__vt__8OrAction:
+.endobj lbl_802B8098
+.balign 4
+.obj __vt__8OrAction, global
 	.4byte __RTTI__8OrAction
 	.4byte 0
 	.4byte "procMsg__15Receiver<4Piki>FP4PikiP3Msg"
@@ -2172,18 +2193,21 @@ __vt__8OrAction:
 	.4byte restart__6ActionFv
 	.4byte resumable__6ActionFv
 	.4byte getInfo__6ActionFPc
+.endobj __vt__8OrAction
 .balign 4
-lbl_802B8110:
+.obj lbl_802B8110, local
 	.asciz "AndAction"
+.endobj lbl_802B8110
 .balign 4
-lbl_802B811C:
+.obj lbl_802B811C, local
 	.4byte "__RTTI__15Receiver<4Piki>"
 	.4byte 0
 	.4byte __RTTI__6Action
 	.4byte 0
 	.4byte 0
-.global __vt__9AndAction
-__vt__9AndAction:
+.endobj lbl_802B811C
+.balign 4
+.obj __vt__9AndAction, global
 	.4byte __RTTI__9AndAction
 	.4byte 0
 	.4byte "procMsg__15Receiver<4Piki>FP4PikiP3Msg"
@@ -2209,8 +2233,9 @@ __vt__9AndAction:
 	.4byte restart__6ActionFv
 	.4byte resumable__6ActionFv
 	.4byte getInfo__6ActionFPc
-.global __vt__6Action
-__vt__6Action:
+.endobj __vt__9AndAction
+.balign 4
+.obj __vt__6Action, global
 	.4byte __RTTI__6Action
 	.4byte 0
 	.4byte "procMsg__15Receiver<4Piki>FP4PikiP3Msg"
@@ -2236,8 +2261,9 @@ __vt__6Action:
 	.4byte restart__6ActionFv
 	.4byte resumable__6ActionFv
 	.4byte getInfo__6ActionFPc
-.global "__vt__15Receiver<4Piki>"
-"__vt__15Receiver<4Piki>":
+.endobj __vt__6Action
+.balign 4
+.obj "__vt__15Receiver<4Piki>", weak
 	.4byte "__RTTI__15Receiver<4Piki>"
 	.4byte 0
 	.4byte "procMsg__15Receiver<4Piki>FP4PikiP3Msg"
@@ -2252,6 +2278,7 @@ __vt__6Action:
 	.4byte "procOffWallMsg__15Receiver<4Piki>FP4PikiP10MsgOffWall"
 	.4byte "procUserMsg__15Receiver<4Piki>FP4PikiP7MsgUser"
 	.4byte "procGroundMsg__15Receiver<4Piki>FP4PikiP9MsgGround"
+.endobj "__vt__15Receiver<4Piki>"
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8

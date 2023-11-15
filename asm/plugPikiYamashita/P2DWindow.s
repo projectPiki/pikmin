@@ -887,18 +887,21 @@ __dt__9P2DWindowFv:
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802E0820:
+.obj lbl_802E0820, local
 	.asciz "P2DWindow.cpp"
+.endobj lbl_802E0820
 .balign 4
-lbl_802E0830:
+.obj lbl_802E0830, local
 	.asciz "P2DWindow"
+.endobj lbl_802E0830
 .balign 4
-lbl_802E083C:
+.obj lbl_802E083C, local
 	.4byte __RTTI__7P2DPane
 	.4byte 0
 	.4byte 0
-.global __vt__9P2DWindow
-__vt__9P2DWindow:
+.endobj lbl_802E083C
+.balign 4
+.obj __vt__9P2DWindow, global
 	.4byte __RTTI__9P2DWindow
 	.4byte 0
 	.4byte loadResource__9P2DWindowFv
@@ -914,16 +917,20 @@ __vt__9P2DWindow:
 	.4byte drawSelf__9P2DWindowFiiP8Matrix4f
 	.4byte search__7P2DPaneFUlb
 	.4byte makeMatrix__7P2DPaneFii
-	.4byte 0
+.endobj __vt__9P2DWindow
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-lbl_803E6658:
+.obj lbl_803E6658, local
 	.asciz "P2DPane"
+.endobj lbl_803E6658
 .balign 4
-__RTTI__7P2DPane:
+.obj __RTTI__7P2DPane, local
 	.4byte lbl_803E6658
 	.4byte 0
-__RTTI__9P2DWindow:
+.endobj __RTTI__7P2DPane
+.balign 4
+.obj __RTTI__9P2DWindow, local
 	.4byte lbl_802E0830
 	.4byte lbl_802E083C
+.endobj __RTTI__9P2DWindow

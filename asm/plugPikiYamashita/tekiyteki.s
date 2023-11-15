@@ -737,6 +737,7 @@ lbl_802DD8B4:
 	.4byte 0
 	.4byte 0
 	.4byte 0
+.balign 4
 lbl_802DD8EC:
 	.asciz "PelletView"
 .balign 4
@@ -930,17 +931,16 @@ __vt__5YTeki:
 	.4byte __RTTI__5YTeki
 	.4byte 0xFFFFFAC8
 	.4byte "@1336@4@animationKeyUpdated__5BTekiFR16PaniAnimKeyEvent"
+.balign 4
 lbl_802DDBE4:
 	.asciz "zen::CallBack1<zen::particleGenerator *>"
 .balign 4
-	.4byte 0
-	.4byte 0
-	.4byte 0
+	.skip 0xC
+.balign 4
 lbl_802DDC1C:
 	.asciz "TAIeffectAttackEventCallBack"
 .balign 4
-.global __vt__28TAIeffectAttackEventCallBack
-__vt__28TAIeffectAttackEventCallBack:
+.obj __vt__28TAIeffectAttackEventCallBack, weak
 	.4byte __RTTI__28TAIeffectAttackEventCallBack
 	.4byte 0
 	.4byte hitCreature__28TAIeffectAttackEventCallBackFP20TAIeffectAttackParamP8Creature
@@ -950,10 +950,8 @@ __vt__28TAIeffectAttackEventCallBack:
 	.4byte playEventSound__28TAIeffectAttackEventCallBackFPQ23zen17particleGeneratorP20TAIeffectAttackParam
 	.4byte ptclHitMap__28TAIeffectAttackEventCallBackFPQ23zen17particleGeneratorP20TAIeffectAttackParam
 	.4byte hitCheckCulling__28TAIeffectAttackEventCallBackFPQ23zen17particleGeneratorP20TAIeffectAttackParamP8Creature
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
+.endobj __vt__28TAIeffectAttackEventCallBack
+	.skip 0x10
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
@@ -985,6 +983,7 @@ lbl_803E5EB8:
 	.4byte 0x00000000
 lbl_803E5EBC:
 	.4byte 0x00000000
+.balign 4
 lbl_803E5EC0:
 	.asciz "YTeki"
 .balign 4
@@ -1003,12 +1002,14 @@ __RTTI__12RefCountable:
 __RTTI__8Creature:
 	.4byte lbl_802DD928
 	.4byte lbl_802DD934
+.balign 4
 lbl_803E5EF0:
 	.asciz "BTeki"
 .balign 4
 __RTTI__5BTeki:
 	.4byte lbl_803E5EF0
 	.4byte lbl_802DD948
+.balign 4
 lbl_803E5F00:
 	.asciz "NTeki"
 .balign 4

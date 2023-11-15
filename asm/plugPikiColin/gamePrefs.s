@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global openStage__9PlayStateFi
-openStage__9PlayStateFi:
+.fn openStage__9PlayStateFi, global
 /* 80053C5C 00050BBC  2C 04 00 00 */	cmpwi r4, 0
 /* 80053C60 00050BC0  4D 80 00 20 */	bltlr 
 /* 80053C64 00050BC4  2C 04 00 05 */	cmpwi r4, 5
@@ -19,9 +18,9 @@ openStage__9PlayStateFi:
 /* 80053C90 00050BF0  7C 00 33 78 */	or r0, r0, r6
 /* 80053C94 00050BF4  90 03 00 24 */	stw r0, 0x24(r3)
 /* 80053C98 00050BF8  4E 80 00 20 */	blr 
+.endfn openStage__9PlayStateFi
 
-.global setBgmVol__9GamePrefsFUc
-setBgmVol__9GamePrefsFUc:
+.fn setBgmVol__9GamePrefsFUc, global
 /* 80053C9C 00050BFC  7C 08 02 A6 */	mflr r0
 /* 80053CA0 00050C00  54 85 06 3E */	clrlwi r5, r4, 0x18
 /* 80053CA4 00050C04  90 01 00 04 */	stw r0, 4(r1)
@@ -39,9 +38,9 @@ setBgmVol__9GamePrefsFUc:
 /* 80053CD0 00050C30  38 21 00 08 */	addi r1, r1, 8
 /* 80053CD4 00050C34  7C 08 03 A6 */	mtlr r0
 /* 80053CD8 00050C38  4E 80 00 20 */	blr 
+.endfn setBgmVol__9GamePrefsFUc
 
-.global setSfxVol__9GamePrefsFUc
-setSfxVol__9GamePrefsFUc:
+.fn setSfxVol__9GamePrefsFUc, global
 /* 80053CDC 00050C3C  7C 08 02 A6 */	mflr r0
 /* 80053CE0 00050C40  54 85 06 3E */	clrlwi r5, r4, 0x18
 /* 80053CE4 00050C44  90 01 00 04 */	stw r0, 4(r1)
@@ -59,9 +58,9 @@ setSfxVol__9GamePrefsFUc:
 /* 80053D10 00050C70  38 21 00 08 */	addi r1, r1, 8
 /* 80053D14 00050C74  7C 08 03 A6 */	mtlr r0
 /* 80053D18 00050C78  4E 80 00 20 */	blr 
+.endfn setSfxVol__9GamePrefsFUc
 
-.global setStereoMode__9GamePrefsFb
-setStereoMode__9GamePrefsFb:
+.fn setStereoMode__9GamePrefsFb, global
 /* 80053D1C 00050C7C  7C 08 02 A6 */	mflr r0
 /* 80053D20 00050C80  54 85 06 3E */	clrlwi r5, r4, 0x18
 /* 80053D24 00050C84  90 01 00 04 */	stw r0, 4(r1)
@@ -106,9 +105,9 @@ setStereoMode__9GamePrefsFb:
 /* 80053DAC 00050D0C  38 21 00 18 */	addi r1, r1, 0x18
 /* 80053DB0 00050D10  7C 08 03 A6 */	mtlr r0
 /* 80053DB4 00050D14  4E 80 00 20 */	blr 
+.endfn setStereoMode__9GamePrefsFb
 
-.global setVibeMode__9GamePrefsFb
-setVibeMode__9GamePrefsFb:
+.fn setVibeMode__9GamePrefsFb, global
 /* 80053DB8 00050D18  7C 08 02 A6 */	mflr r0
 /* 80053DBC 00050D1C  90 01 00 04 */	stw r0, 4(r1)
 /* 80053DC0 00050D20  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -160,9 +159,9 @@ setVibeMode__9GamePrefsFb:
 /* 80053E64 00050DC4  38 21 00 20 */	addi r1, r1, 0x20
 /* 80053E68 00050DC8  7C 08 03 A6 */	mtlr r0
 /* 80053E6C 00050DCC  4E 80 00 20 */	blr 
+.endfn setVibeMode__9GamePrefsFb
 
-.global setChildMode__9GamePrefsFb
-setChildMode__9GamePrefsFb:
+.fn setChildMode__9GamePrefsFb, global
 /* 80053E70 00050DD0  80 03 00 18 */	lwz r0, 0x18(r3)
 /* 80053E74 00050DD4  54 86 06 3E */	clrlwi r6, r4, 0x18
 /* 80053E78 00050DD8  54 00 07 7A */	rlwinm r0, r0, 0, 0x1d, 0x1d
@@ -187,9 +186,9 @@ setChildMode__9GamePrefsFb:
 /* 80053EB8 00050E18  7C 00 23 78 */	or r0, r0, r4
 /* 80053EBC 00050E1C  90 03 00 18 */	stw r0, 0x18(r3)
 /* 80053EC0 00050E20  4E 80 00 20 */	blr 
+.endfn setChildMode__9GamePrefsFb
 
-.global getChallengeScores__9GamePrefsFR17GameChalQuickInfo
-getChallengeScores__9GamePrefsFR17GameChalQuickInfo:
+.fn getChallengeScores__9GamePrefsFR17GameChalQuickInfo, global
 /* 80053EC4 00050E24  80 04 00 00 */	lwz r0, 0(r4)
 /* 80053EC8 00050E28  1C 00 00 14 */	mulli r0, r0, 0x14
 /* 80053ECC 00050E2C  7C A3 02 14 */	add r5, r3, r0
@@ -216,9 +215,9 @@ getChallengeScores__9GamePrefsFR17GameChalQuickInfo:
 /* 80053F20 00050E80  80 03 00 88 */	lwz r0, 0x88(r3)
 /* 80053F24 00050E84  90 04 00 1C */	stw r0, 0x1c(r4)
 /* 80053F28 00050E88  4E 80 00 20 */	blr 
+.endfn getChallengeScores__9GamePrefsFR17GameChalQuickInfo
 
-.global checkIsHiscore__9GamePrefsFR17GameChalQuickInfo
-checkIsHiscore__9GamePrefsFR17GameChalQuickInfo:
+.fn checkIsHiscore__9GamePrefsFR17GameChalQuickInfo, global
 /* 80053F2C 00050E8C  38 00 FF FF */	li r0, -1
 /* 80053F30 00050E90  90 04 00 08 */	stw r0, 8(r4)
 /* 80053F34 00050E94  38 00 00 01 */	li r0, 1
@@ -320,9 +319,9 @@ checkIsHiscore__9GamePrefsFR17GameChalQuickInfo:
 /* 80054094 00050FF4  80 03 00 88 */	lwz r0, 0x88(r3)
 /* 80054098 00050FF8  90 04 00 1C */	stw r0, 0x1c(r4)
 /* 8005409C 00050FFC  4E 80 00 20 */	blr 
+.endfn checkIsHiscore__9GamePrefsFR17GameChalQuickInfo
 
-.global checkIsHiscore__9GamePrefsFR13GameQuickInfo
-checkIsHiscore__9GamePrefsFR13GameQuickInfo:
+.fn checkIsHiscore__9GamePrefsFR13GameQuickInfo, global
 /* 800540A0 00051000  38 00 FF FF */	li r0, -1
 /* 800540A4 00051004  90 04 00 14 */	stw r0, 0x14(r4)
 /* 800540A8 00051008  38 E0 00 00 */	li r7, 0
@@ -562,9 +561,9 @@ checkIsHiscore__9GamePrefsFR13GameQuickInfo:
 /* 800543E0 00051340  7C 63 02 14 */	add r3, r3, r0
 /* 800543E4 00051344  90 83 00 64 */	stw r4, 0x64(r3)
 /* 800543E8 00051348  4E 80 00 20 */	blr 
+.endfn checkIsHiscore__9GamePrefsFR13GameQuickInfo
 
-.global write__9GamePrefsFR18RandomAccessStream
-write__9GamePrefsFR18RandomAccessStream:
+.fn write__9GamePrefsFR18RandomAccessStream, global
 /* 800543EC 0005134C  7C 08 02 A6 */	mflr r0
 /* 800543F0 00051350  90 01 00 04 */	stw r0, 4(r1)
 /* 800543F4 00051354  94 21 FF D0 */	stwu r1, -0x30(r1)
@@ -661,9 +660,9 @@ write__9GamePrefsFR18RandomAccessStream:
 /* 80054558 000514B8  38 21 00 30 */	addi r1, r1, 0x30
 /* 8005455C 000514BC  7C 08 03 A6 */	mtlr r0
 /* 80054560 000514C0  4E 80 00 20 */	blr 
+.endfn write__9GamePrefsFR18RandomAccessStream
 
-.global fixSoundMode__9GamePrefsFv
-fixSoundMode__9GamePrefsFv:
+.fn fixSoundMode__9GamePrefsFv, global
 /* 80054564 000514C4  7C 08 02 A6 */	mflr r0
 /* 80054568 000514C8  90 01 00 04 */	stw r0, 4(r1)
 /* 8005456C 000514CC  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -715,9 +714,9 @@ fixSoundMode__9GamePrefsFv:
 /* 80054610 00051570  38 21 00 20 */	addi r1, r1, 0x20
 /* 80054614 00051574  7C 08 03 A6 */	mtlr r0
 /* 80054618 00051578  4E 80 00 20 */	blr 
+.endfn fixSoundMode__9GamePrefsFv
 
-.global read__9GamePrefsFR18RandomAccessStream
-read__9GamePrefsFR18RandomAccessStream:
+.fn read__9GamePrefsFR18RandomAccessStream, global
 /* 8005461C 0005157C  7C 08 02 A6 */	mflr r0
 /* 80054620 00051580  90 01 00 04 */	stw r0, 4(r1)
 /* 80054624 00051584  94 21 FF B0 */	stwu r1, -0x50(r1)
@@ -941,9 +940,9 @@ read__9GamePrefsFR18RandomAccessStream:
 /* 80054940 000518A0  38 21 00 50 */	addi r1, r1, 0x50
 /* 80054944 000518A4  7C 08 03 A6 */	mtlr r0
 /* 80054948 000518A8  4E 80 00 20 */	blr 
+.endfn read__9GamePrefsFR18RandomAccessStream
 
-.global write__9PlayStateFR18RandomAccessStream
-write__9PlayStateFR18RandomAccessStream:
+.fn write__9PlayStateFR18RandomAccessStream, global
 /* 8005494C 000518AC  7C 08 02 A6 */	mflr r0
 /* 80054950 000518B0  90 01 00 04 */	stw r0, 4(r1)
 /* 80054954 000518B4  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -1005,9 +1004,9 @@ write__9PlayStateFR18RandomAccessStream:
 /* 80054A34 00051994  38 21 00 18 */	addi r1, r1, 0x18
 /* 80054A38 00051998  7C 08 03 A6 */	mtlr r0
 /* 80054A3C 0005199C  4E 80 00 20 */	blr 
+.endfn write__9PlayStateFR18RandomAccessStream
 
-.global read__9PlayStateFR18RandomAccessStream
-read__9PlayStateFR18RandomAccessStream:
+.fn read__9PlayStateFR18RandomAccessStream, global
 /* 80054A40 000519A0  7C 08 02 A6 */	mflr r0
 /* 80054A44 000519A4  90 01 00 04 */	stw r0, 4(r1)
 /* 80054A48 000519A8  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -1069,66 +1068,86 @@ read__9PlayStateFR18RandomAccessStream:
 /* 80054B28 00051A88  38 21 00 18 */	addi r1, r1, 0x18
 /* 80054B2C 00051A8C  7C 08 03 A6 */	mtlr r0
 /* 80054B30 00051A90  4E 80 00 20 */	blr 
+.endfn read__9PlayStateFR18RandomAccessStream
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802A6918:
+.obj lbl_802A6918, local
 	.asciz "gamePrefs.cpp"
+.endobj lbl_802A6918
 .balign 4
-lbl_802A6928:
+.obj lbl_802A6928, local
 	.asciz "GamePrefs"
+.endobj lbl_802A6928
 .balign 4
-lbl_802A6934:
+.obj lbl_802A6934, local
 	.asciz "PlayState"
+.endobj lbl_802A6934
 .balign 4
-lbl_802A6940:
+.obj lbl_802A6940, local
 	.asciz "CoreNode"
+.endobj lbl_802A6940
 .balign 4
-lbl_802A694C:
+.obj lbl_802A694C, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte 0
-lbl_802A6958:
+.endobj lbl_802A694C
+.balign 4
+.obj lbl_802A6958, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte __RTTI__8CoreNode
 	.4byte 0
 	.4byte 0
-.global __vt__9PlayState
-__vt__9PlayState:
+.endobj lbl_802A6958
+.balign 4
+.obj __vt__9PlayState, global
 	.4byte __RTTI__9PlayState
 	.4byte 0
 	.4byte getAgeNodeType__5ANodeFv
 	.4byte read__9PlayStateFR18RandomAccessStream
 	.4byte write__9PlayStateFR18RandomAccessStream
-lbl_802A6980:
+.endobj __vt__9PlayState
+.balign 4
+.obj lbl_802A6980, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte __RTTI__8CoreNode
 	.4byte 0
 	.4byte 0
-.global __vt__9GamePrefs
-__vt__9GamePrefs:
+.endobj lbl_802A6980
+.balign 4
+.obj __vt__9GamePrefs, global
 	.4byte __RTTI__9GamePrefs
 	.4byte 0
 	.4byte getAgeNodeType__5ANodeFv
 	.4byte read__9GamePrefsFR18RandomAccessStream
 	.4byte write__9GamePrefsFR18RandomAccessStream
+.endobj __vt__9GamePrefs
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-lbl_803DD930:
+.obj lbl_803DD930, local
 	.asciz "ANode"
+.endobj lbl_803DD930
 .balign 4
-__RTTI__5ANode:
+.obj __RTTI__5ANode, local
 	.4byte lbl_803DD930
 	.4byte 0
-__RTTI__8CoreNode:
+.endobj __RTTI__5ANode
+.balign 4
+.obj __RTTI__8CoreNode, local
 	.4byte lbl_802A6940
 	.4byte lbl_802A694C
-__RTTI__9PlayState:
+.endobj __RTTI__8CoreNode
+.balign 4
+.obj __RTTI__9PlayState, local
 	.4byte lbl_802A6934
 	.4byte lbl_802A6958
-__RTTI__9GamePrefs:
+.endobj __RTTI__9PlayState
+.balign 4
+.obj __RTTI__9GamePrefs, local
 	.4byte lbl_802A6928
 	.4byte lbl_802A6980
+.endobj __RTTI__9GamePrefs

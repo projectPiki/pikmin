@@ -438,31 +438,36 @@ remove__Q23zen16particleChildMdlFv:
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802DD7A0:
+.obj lbl_802DD7A0, local
 	.asciz "particleMdlManager.cpp"
+.endobj lbl_802DD7A0
 .balign 4
-lbl_802DD7B8:
+.obj lbl_802DD7B8, local
 	.asciz "particleMdlManager"
+.endobj lbl_802DD7B8
 .balign 4
-lbl_802DD7CC:
+.obj lbl_802DD7CC, local
 	.asciz "zen::particleMdl"
+.endobj lbl_802DD7CC
 .balign 4
-lbl_802DD7E0:
+.obj lbl_802DD7E0, local
 	.asciz "zen::zenList"
+.endobj lbl_802DD7E0
 .balign 4
-lbl_802DD7F0:
+.obj lbl_802DD7F0, local
 	.asciz "zen::particleMdlBase"
+.endobj lbl_802DD7F0
 .balign 4
 lbl_802DD808:
 	.4byte __RTTI__Q23zen7zenList
-	.4byte 0x00000000
-	.4byte 0x00000000
+	.4byte 0
+	.4byte 0
 lbl_802DD814:
 	.4byte __RTTI__Q23zen7zenList
-	.4byte 0x00000000
+	.4byte 0
 	.4byte __RTTI__Q23zen15particleMdlBase
-	.4byte 0x00000000
-	.4byte 0x00000000
+	.4byte 0
+	.4byte 0
 .global __vt__Q23zen11particleMdl
 __vt__Q23zen11particleMdl:
 	.4byte __RTTI__Q23zen11particleMdl
@@ -494,50 +499,71 @@ __vt__Q23zen16particleChildMdl:
 	.4byte 0
 	.4byte insertAfter__Q23zen7zenListFPQ23zen7zenList
 	.4byte remove__Q23zen16particleChildMdlFv
-	.4byte 0
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-lbl_803E5E38:
-	.4byte 0x00000000
-lbl_803E5E3C:
-	.4byte 0x00000000
-lbl_803E5E40:
-	.4byte 0x00000000
-lbl_803E5E44:
-	.4byte 0x00000000
-lbl_803E5E48:
-	.4byte 0x00000000
-lbl_803E5E4C:
-	.4byte 0x00000000
-lbl_803E5E50:
-	.4byte 0x00000000
-lbl_803E5E54:
-	.4byte 0x00000000
-lbl_803E5E58:
-	.4byte 0x00000000
-lbl_803E5E5C:
-	.4byte 0x00000000
-lbl_803E5E60:
-	.4byte 0x00000000
-lbl_803E5E64:
-	.4byte 0x00000000
-__RTTI__Q23zen7zenList:
+.obj lbl_803E5E38, local
+	.float 0.0
+.endobj lbl_803E5E38
+.obj lbl_803E5E3C, local
+	.float 0.0
+.endobj lbl_803E5E3C
+.obj lbl_803E5E40, local
+	.float 0.0
+.endobj lbl_803E5E40
+.obj lbl_803E5E44, local
+	.float 0.0
+.endobj lbl_803E5E44
+.obj lbl_803E5E48, local
+	.float 0.0
+.endobj lbl_803E5E48
+.obj lbl_803E5E4C, local
+	.float 0.0
+.endobj lbl_803E5E4C
+.obj lbl_803E5E50, local
+	.float 0.0
+.endobj lbl_803E5E50
+.obj lbl_803E5E54, local
+	.float 0.0
+.endobj lbl_803E5E54
+.obj lbl_803E5E58, local
+	.float 0.0
+.endobj lbl_803E5E58
+.obj lbl_803E5E5C, local
+	.float 0.0
+.endobj lbl_803E5E5C
+.obj lbl_803E5E60, local
+	.float 0.0
+.endobj lbl_803E5E60
+.obj lbl_803E5E64, local
+	.float 0.0
+.endobj lbl_803E5E64
+.obj __RTTI__Q23zen7zenList, local
 	.4byte lbl_802DD7E0
 	.4byte 0
-__RTTI__Q23zen15particleMdlBase:
+.endobj __RTTI__Q23zen7zenList
+.balign 4
+.obj __RTTI__Q23zen15particleMdlBase, local
 	.4byte lbl_802DD7F0
 	.4byte lbl_802DD808
-__RTTI__Q23zen11particleMdl:
+.endobj __RTTI__Q23zen15particleMdlBase
+.balign 4
+.obj __RTTI__Q23zen11particleMdl, local
 	.4byte lbl_802DD7CC
 	.4byte lbl_802DD814
-__RTTI__Q23zen16particleChildMdl:
+.endobj __RTTI__Q23zen11particleMdl
+.balign 4
+.obj __RTTI__Q23zen16particleChildMdl, local
 	.4byte lbl_802DD858
 	.4byte lbl_802DD870
+.endobj __RTTI__Q23zen16particleChildMdl
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803EB5E8:
-	.4byte 0x00000000
-lbl_803EB5EC:
-	.4byte 0x3F800000
+.obj lbl_803EB5E8, local
+	.float 0.0
+.endobj lbl_803EB5E8
+.balign 4
+.obj lbl_803EB5EC, local
+	.float 1.0
+.endobj lbl_803EB5EC

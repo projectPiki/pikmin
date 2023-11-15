@@ -1286,8 +1286,7 @@ drawSelf__7P2DPaneFii:
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-.global __vt__7P2DPane
-__vt__7P2DPane:
+.obj __vt__7P2DPane, global
 	.4byte __RTTI__7P2DPane
 	.4byte 0
 	.4byte loadResource__7P2DPaneFv
@@ -1303,7 +1302,7 @@ __vt__7P2DPane:
 	.4byte drawSelf__7P2DPaneFiiP8Matrix4f
 	.4byte search__7P2DPaneFUlb
 	.4byte makeMatrix__7P2DPaneFii
-	.4byte 0
+.endobj __vt__7P2DPane
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8

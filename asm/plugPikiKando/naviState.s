@@ -1,12 +1,11 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global getNaviState__16NaviStateMachineFP4Navi
-getNaviState__16NaviStateMachineFP4Navi:
+.fn getNaviState__16NaviStateMachineFP4Navi, global
 /* 80101140 000FE0A0  80 64 0A DC */	lwz r3, 0xadc(r4)
 /* 80101144 000FE0A4  4E 80 00 20 */	blr 
+.endfn getNaviState__16NaviStateMachineFP4Navi
 
-.global init__16NaviStateMachineFP4Navi
-init__16NaviStateMachineFP4Navi:
+.fn init__16NaviStateMachineFP4Navi, global
 /* 80101148 000FE0A8  7C 08 02 A6 */	mflr r0
 /* 8010114C 000FE0AC  90 01 00 04 */	stw r0, 4(r1)
 /* 80101150 000FE0B0  38 00 00 24 */	li r0, 0x24
@@ -1584,9 +1583,9 @@ init__16NaviStateMachineFP4Navi:
 /* 80102710 000FF670  38 21 01 D8 */	addi r1, r1, 0x1d8
 /* 80102714 000FF674  7C 08 03 A6 */	mtlr r0
 /* 80102718 000FF678  4E 80 00 20 */	blr 
+.endfn init__16NaviStateMachineFP4Navi
 
-.global __ct__15NaviPelletStateFv
-__ct__15NaviPelletStateFv:
+.fn __ct__15NaviPelletStateFv, global
 /* 8010271C 000FF67C  3C 80 80 2C */	lis r4, "__vt__15Receiver<4Navi>"@ha
 /* 80102720 000FF680  38 04 19 F8 */	addi r0, r4, "__vt__15Receiver<4Navi>"@l
 /* 80102724 000FF684  3C 80 80 2C */	lis r4, "__vt__13AState<4Navi>"@ha
@@ -1604,9 +1603,9 @@ __ct__15NaviPelletStateFv:
 /* 80102754 000FF6B4  90 A3 00 00 */	stw r5, 0(r3)
 /* 80102758 000FF6B8  90 03 00 00 */	stw r0, 0(r3)
 /* 8010275C 000FF6BC  4E 80 00 20 */	blr 
+.endfn __ct__15NaviPelletStateFv
 
-.global init__15NaviPelletStateFP4Navi
-init__15NaviPelletStateFP4Navi:
+.fn init__15NaviPelletStateFP4Navi, global
 /* 80102760 000FF6C0  7C 08 02 A6 */	mflr r0
 /* 80102764 000FF6C4  90 01 00 04 */	stw r0, 4(r1)
 /* 80102768 000FF6C8  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -1634,9 +1633,9 @@ init__15NaviPelletStateFP4Navi:
 /* 801027C0 000FF720  38 21 00 18 */	addi r1, r1, 0x18
 /* 801027C4 000FF724  7C 08 03 A6 */	mtlr r0
 /* 801027C8 000FF728  4E 80 00 20 */	blr 
+.endfn init__15NaviPelletStateFP4Navi
 
-.global exec__15NaviPelletStateFP4Navi
-exec__15NaviPelletStateFP4Navi:
+.fn exec__15NaviPelletStateFP4Navi, global
 /* 801027CC 000FF72C  7C 08 02 A6 */	mflr r0
 /* 801027D0 000FF730  90 01 00 04 */	stw r0, 4(r1)
 /* 801027D4 000FF734  94 21 FF 88 */	stwu r1, -0x78(r1)
@@ -1774,9 +1773,9 @@ exec__15NaviPelletStateFP4Navi:
 /* 801029C0 000FF920  38 21 00 78 */	addi r1, r1, 0x78
 /* 801029C4 000FF924  7C 08 03 A6 */	mtlr r0
 /* 801029C8 000FF928  4E 80 00 20 */	blr 
+.endfn exec__15NaviPelletStateFP4Navi
 
-.global procAnimMsg__15NaviPelletStateFP4NaviP7MsgAnim
-procAnimMsg__15NaviPelletStateFP4NaviP7MsgAnim:
+.fn procAnimMsg__15NaviPelletStateFP4NaviP7MsgAnim, global
 /* 801029CC 000FF92C  7C 08 02 A6 */	mflr r0
 /* 801029D0 000FF930  90 01 00 04 */	stw r0, 4(r1)
 /* 801029D4 000FF934  94 21 FF F8 */	stwu r1, -8(r1)
@@ -1799,9 +1798,9 @@ procAnimMsg__15NaviPelletStateFP4NaviP7MsgAnim:
 /* 80102A10 000FF970  38 21 00 08 */	addi r1, r1, 8
 /* 80102A14 000FF974  7C 08 03 A6 */	mtlr r0
 /* 80102A18 000FF978  4E 80 00 20 */	blr 
+.endfn procAnimMsg__15NaviPelletStateFP4NaviP7MsgAnim
 
-.global "transit__13AState<4Navi>FP4Navii"
-"transit__13AState<4Navi>FP4Navii":
+.fn "transit__13AState<4Navi>FP4Navii", weak
 /* 80102A1C 000FF97C  7C 08 02 A6 */	mflr r0
 /* 80102A20 000FF980  90 01 00 04 */	stw r0, 4(r1)
 /* 80102A24 000FF984  94 21 FF F8 */	stwu r1, -8(r1)
@@ -1814,9 +1813,9 @@ procAnimMsg__15NaviPelletStateFP4NaviP7MsgAnim:
 /* 80102A40 000FF9A0  38 21 00 08 */	addi r1, r1, 8
 /* 80102A44 000FF9A4  7C 08 03 A6 */	mtlr r0
 /* 80102A48 000FF9A8  4E 80 00 20 */	blr 
+.endfn "transit__13AState<4Navi>FP4Navii"
 
-.global cleanup__15NaviPelletStateFP4Navi
-cleanup__15NaviPelletStateFP4Navi:
+.fn cleanup__15NaviPelletStateFP4Navi, global
 /* 80102A4C 000FF9AC  7C 08 02 A6 */	mflr r0
 /* 80102A50 000FF9B0  90 01 00 04 */	stw r0, 4(r1)
 /* 80102A54 000FF9B4  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -1835,9 +1834,9 @@ cleanup__15NaviPelletStateFP4Navi:
 /* 80102A84 000FF9E4  38 21 00 18 */	addi r1, r1, 0x18
 /* 80102A88 000FF9E8  7C 08 03 A6 */	mtlr r0
 /* 80102A8C 000FF9EC  4E 80 00 20 */	blr 
+.endfn cleanup__15NaviPelletStateFP4Navi
 
-.global __ct__17NaviDemoWaitStateFv
-__ct__17NaviDemoWaitStateFv:
+.fn __ct__17NaviDemoWaitStateFv, global
 /* 80102A90 000FF9F0  3C 80 80 2C */	lis r4, "__vt__15Receiver<4Navi>"@ha
 /* 80102A94 000FF9F4  38 04 19 F8 */	addi r0, r4, "__vt__15Receiver<4Navi>"@l
 /* 80102A98 000FF9F8  3C 80 80 2C */	lis r4, "__vt__13AState<4Navi>"@ha
@@ -1859,9 +1858,9 @@ __ct__17NaviDemoWaitStateFv:
 /* 80102AD8 000FFA38  D0 03 00 14 */	stfs f0, 0x14(r3)
 /* 80102ADC 000FFA3C  D0 03 00 10 */	stfs f0, 0x10(r3)
 /* 80102AE0 000FFA40  4E 80 00 20 */	blr 
+.endfn __ct__17NaviDemoWaitStateFv
 
-.global init__17NaviDemoWaitStateFP4Navi
-init__17NaviDemoWaitStateFP4Navi:
+.fn init__17NaviDemoWaitStateFP4Navi, global
 /* 80102AE4 000FFA44  7C 08 02 A6 */	mflr r0
 /* 80102AE8 000FFA48  3C A0 80 3A */	lis r5, gameflow@ha
 /* 80102AEC 000FFA4C  90 01 00 04 */	stw r0, 4(r1)
@@ -1913,9 +1912,9 @@ init__17NaviDemoWaitStateFP4Navi:
 /* 80102BA0 000FFB00  38 21 00 28 */	addi r1, r1, 0x28
 /* 80102BA4 000FFB04  7C 08 03 A6 */	mtlr r0
 /* 80102BA8 000FFB08  4E 80 00 20 */	blr 
+.endfn init__17NaviDemoWaitStateFP4Navi
 
-.global exec__17NaviDemoWaitStateFP4Navi
-exec__17NaviDemoWaitStateFP4Navi:
+.fn exec__17NaviDemoWaitStateFP4Navi, global
 /* 80102BAC 000FFB0C  7C 08 02 A6 */	mflr r0
 /* 80102BB0 000FFB10  3C A0 80 3A */	lis r5, gameflow@ha
 /* 80102BB4 000FFB14  90 01 00 04 */	stw r0, 4(r1)
@@ -1977,9 +1976,9 @@ exec__17NaviDemoWaitStateFP4Navi:
 /* 80102C8C 000FFBEC  38 21 00 20 */	addi r1, r1, 0x20
 /* 80102C90 000FFBF0  7C 08 03 A6 */	mtlr r0
 /* 80102C94 000FFBF4  4E 80 00 20 */	blr 
+.endfn exec__17NaviDemoWaitStateFP4Navi
 
-.global cleanup__17NaviDemoWaitStateFP4Navi
-cleanup__17NaviDemoWaitStateFP4Navi:
+.fn cleanup__17NaviDemoWaitStateFP4Navi, global
 /* 80102C98 000FFBF8  7C 08 02 A6 */	mflr r0
 /* 80102C9C 000FFBFC  90 01 00 04 */	stw r0, 4(r1)
 /* 80102CA0 000FFC00  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -2016,9 +2015,9 @@ cleanup__17NaviDemoWaitStateFP4Navi:
 /* 80102D10 000FFC70  38 21 00 20 */	addi r1, r1, 0x20
 /* 80102D14 000FFC74  7C 08 03 A6 */	mtlr r0
 /* 80102D18 000FFC78  4E 80 00 20 */	blr 
+.endfn cleanup__17NaviDemoWaitStateFP4Navi
 
-.global __ct__16NaviDemoInfStateFv
-__ct__16NaviDemoInfStateFv:
+.fn __ct__16NaviDemoInfStateFv, global
 /* 80102D1C 000FFC7C  3C 80 80 2C */	lis r4, "__vt__15Receiver<4Navi>"@ha
 /* 80102D20 000FFC80  38 04 19 F8 */	addi r0, r4, "__vt__15Receiver<4Navi>"@l
 /* 80102D24 000FFC84  3C 80 80 2C */	lis r4, "__vt__13AState<4Navi>"@ha
@@ -2036,13 +2035,13 @@ __ct__16NaviDemoInfStateFv:
 /* 80102D54 000FFCB4  90 A3 00 00 */	stw r5, 0(r3)
 /* 80102D58 000FFCB8  90 03 00 00 */	stw r0, 0(r3)
 /* 80102D5C 000FFCBC  4E 80 00 20 */	blr 
+.endfn __ct__16NaviDemoInfStateFv
 
-.global init__16NaviDemoInfStateFP4Navi
-init__16NaviDemoInfStateFP4Navi:
+.fn init__16NaviDemoInfStateFP4Navi, global
 /* 80102D60 000FFCC0  4E 80 00 20 */	blr 
+.endfn init__16NaviDemoInfStateFP4Navi
 
-.global exec__16NaviDemoInfStateFP4Navi
-exec__16NaviDemoInfStateFP4Navi:
+.fn exec__16NaviDemoInfStateFP4Navi, global
 /* 80102D64 000FFCC4  C0 0D D5 C8 */	lfs f0, lbl_803E22E8@sda21(r13)
 /* 80102D68 000FFCC8  D0 04 00 70 */	stfs f0, 0x70(r4)
 /* 80102D6C 000FFCCC  C0 0D D5 CC */	lfs f0, lbl_803E22EC@sda21(r13)
@@ -2050,13 +2049,13 @@ exec__16NaviDemoInfStateFP4Navi:
 /* 80102D74 000FFCD4  C0 0D D5 D0 */	lfs f0, lbl_803E22F0@sda21(r13)
 /* 80102D78 000FFCD8  D0 04 00 78 */	stfs f0, 0x78(r4)
 /* 80102D7C 000FFCDC  4E 80 00 20 */	blr 
+.endfn exec__16NaviDemoInfStateFP4Navi
 
-.global cleanup__16NaviDemoInfStateFP4Navi
-cleanup__16NaviDemoInfStateFP4Navi:
+.fn cleanup__16NaviDemoInfStateFP4Navi, global
 /* 80102D80 000FFCE0  4E 80 00 20 */	blr 
+.endfn cleanup__16NaviDemoInfStateFP4Navi
 
-.global __ct__14NaviStuckStateFv
-__ct__14NaviStuckStateFv:
+.fn __ct__14NaviStuckStateFv, global
 /* 80102D84 000FFCE4  3C 80 80 2C */	lis r4, "__vt__15Receiver<4Navi>"@ha
 /* 80102D88 000FFCE8  38 04 19 F8 */	addi r0, r4, "__vt__15Receiver<4Navi>"@l
 /* 80102D8C 000FFCEC  3C 80 80 2C */	lis r4, "__vt__13AState<4Navi>"@ha
@@ -2078,9 +2077,9 @@ __ct__14NaviStuckStateFv:
 /* 80102DCC 000FFD2C  D0 03 00 14 */	stfs f0, 0x14(r3)
 /* 80102DD0 000FFD30  D0 03 00 10 */	stfs f0, 0x10(r3)
 /* 80102DD4 000FFD34  4E 80 00 20 */	blr 
+.endfn __ct__14NaviStuckStateFv
 
-.global init__14NaviStuckStateFP4Navi
-init__14NaviStuckStateFP4Navi:
+.fn init__14NaviStuckStateFP4Navi, global
 /* 80102DD8 000FFD38  7C 08 02 A6 */	mflr r0
 /* 80102DDC 000FFD3C  90 01 00 04 */	stw r0, 4(r1)
 /* 80102DE0 000FFD40  38 00 00 00 */	li r0, 0
@@ -2117,9 +2116,9 @@ init__14NaviStuckStateFP4Navi:
 /* 80102E5C 000FFDBC  38 21 00 30 */	addi r1, r1, 0x30
 /* 80102E60 000FFDC0  7C 08 03 A6 */	mtlr r0
 /* 80102E64 000FFDC4  4E 80 00 20 */	blr 
+.endfn init__14NaviStuckStateFP4Navi
 
-.global exec__14NaviStuckStateFP4Navi
-exec__14NaviStuckStateFP4Navi:
+.fn exec__14NaviStuckStateFP4Navi, global
 /* 80102E68 000FFDC8  7C 08 02 A6 */	mflr r0
 /* 80102E6C 000FFDCC  90 01 00 04 */	stw r0, 4(r1)
 /* 80102E70 000FFDD0  94 21 FF 18 */	stwu r1, -0xe8(r1)
@@ -2341,13 +2340,13 @@ exec__14NaviStuckStateFP4Navi:
 /* 8010319C 001000FC  38 21 00 E8 */	addi r1, r1, 0xe8
 /* 801031A0 00100100  7C 08 03 A6 */	mtlr r0
 /* 801031A4 00100104  4E 80 00 20 */	blr 
+.endfn exec__14NaviStuckStateFP4Navi
 
-.global cleanup__14NaviStuckStateFP4Navi
-cleanup__14NaviStuckStateFP4Navi:
+.fn cleanup__14NaviStuckStateFP4Navi, global
 /* 801031A8 00100108  4E 80 00 20 */	blr 
+.endfn cleanup__14NaviStuckStateFP4Navi
 
-.global __ct__13NaviBuryStateFv
-__ct__13NaviBuryStateFv:
+.fn __ct__13NaviBuryStateFv, global
 /* 801031AC 0010010C  3C 80 80 2C */	lis r4, "__vt__15Receiver<4Navi>"@ha
 /* 801031B0 00100110  38 04 19 F8 */	addi r0, r4, "__vt__15Receiver<4Navi>"@l
 /* 801031B4 00100114  3C 80 80 2C */	lis r4, "__vt__13AState<4Navi>"@ha
@@ -2369,9 +2368,9 @@ __ct__13NaviBuryStateFv:
 /* 801031F4 00100154  D0 03 00 14 */	stfs f0, 0x14(r3)
 /* 801031F8 00100158  D0 03 00 10 */	stfs f0, 0x10(r3)
 /* 801031FC 0010015C  4E 80 00 20 */	blr 
+.endfn __ct__13NaviBuryStateFv
 
-.global init__13NaviBuryStateFP4Navi
-init__13NaviBuryStateFP4Navi:
+.fn init__13NaviBuryStateFP4Navi, global
 /* 80103200 00100160  7C 08 02 A6 */	mflr r0
 /* 80103204 00100164  90 01 00 04 */	stw r0, 4(r1)
 /* 80103208 00100168  94 21 FF D0 */	stwu r1, -0x30(r1)
@@ -2440,9 +2439,9 @@ init__13NaviBuryStateFP4Navi:
 /* 80103300 00100260  38 21 00 30 */	addi r1, r1, 0x30
 /* 80103304 00100264  7C 08 03 A6 */	mtlr r0
 /* 80103308 00100268  4E 80 00 20 */	blr 
+.endfn init__13NaviBuryStateFP4Navi
 
-.global exec__13NaviBuryStateFP4Navi
-exec__13NaviBuryStateFP4Navi:
+.fn exec__13NaviBuryStateFP4Navi, global
 /* 8010330C 0010026C  7C 08 02 A6 */	mflr r0
 /* 80103310 00100270  90 01 00 04 */	stw r0, 4(r1)
 /* 80103314 00100274  94 21 FF 68 */	stwu r1, -0x98(r1)
@@ -2651,9 +2650,9 @@ exec__13NaviBuryStateFP4Navi:
 /* 80103610 00100570  38 21 00 98 */	addi r1, r1, 0x98
 /* 80103614 00100574  7C 08 03 A6 */	mtlr r0
 /* 80103618 00100578  4E 80 00 20 */	blr 
+.endfn exec__13NaviBuryStateFP4Navi
 
-.global procAnimMsg__13NaviBuryStateFP4NaviP7MsgAnim
-procAnimMsg__13NaviBuryStateFP4NaviP7MsgAnim:
+.fn procAnimMsg__13NaviBuryStateFP4NaviP7MsgAnim, global
 /* 8010361C 0010057C  7C 08 02 A6 */	mflr r0
 /* 80103620 00100580  90 01 00 04 */	stw r0, 4(r1)
 /* 80103624 00100584  94 21 FF 10 */	stwu r1, -0xf0(r1)
@@ -2917,13 +2916,13 @@ procAnimMsg__13NaviBuryStateFP4NaviP7MsgAnim:
 /* 801039E4 00100944  38 21 00 F0 */	addi r1, r1, 0xf0
 /* 801039E8 00100948  7C 08 03 A6 */	mtlr r0
 /* 801039EC 0010094C  4E 80 00 20 */	blr 
+.endfn procAnimMsg__13NaviBuryStateFP4NaviP7MsgAnim
 
-.global cleanup__13NaviBuryStateFP4Navi
-cleanup__13NaviBuryStateFP4Navi:
+.fn cleanup__13NaviBuryStateFP4Navi, global
 /* 801039F0 00100950  4E 80 00 20 */	blr 
+.endfn cleanup__13NaviBuryStateFP4Navi
 
-.global __ct__13NaviWalkStateFv
-__ct__13NaviWalkStateFv:
+.fn __ct__13NaviWalkStateFv, global
 /* 801039F4 00100954  3C 80 80 2C */	lis r4, "__vt__15Receiver<4Navi>"@ha
 /* 801039F8 00100958  38 04 19 F8 */	addi r0, r4, "__vt__15Receiver<4Navi>"@l
 /* 801039FC 0010095C  3C 80 80 2C */	lis r4, "__vt__13AState<4Navi>"@ha
@@ -2940,6 +2939,7 @@ __ct__13NaviWalkStateFv:
 /* 80103A28 00100988  90 A3 00 00 */	stw r5, 0(r3)
 /* 80103A2C 0010098C  90 03 00 00 */	stw r0, 0(r3)
 /* 80103A30 00100990  4E 80 00 20 */	blr 
+.endfn __ct__13NaviWalkStateFv
 
 .global init__13NaviWalkStateFP4Navi
 init__13NaviWalkStateFP4Navi:
@@ -11898,8 +11898,7 @@ invincible__15NaviPelletStateFP4Navi:
 	.4byte 0
 .endobj lbl_802C0C90
 .balign 4
-.global __vt__16NaviPressedState
-__vt__16NaviPressedState:
+.obj __vt__16NaviPressedState, global
 	.4byte __RTTI__16NaviPressedState
 	.4byte 0
 	.4byte "procMsg__15Receiver<4Navi>FP4NaviP3Msg"
@@ -11921,11 +11920,13 @@ __vt__16NaviPressedState:
 	.4byte "restart__13AState<4Navi>FP4Navi"
 	.4byte "transit__13AState<4Navi>FP4Navii"
 	.4byte invincible__16NaviPressedStateFP4Navi
+.endobj __vt__16NaviPressedState
 .balign 4
-lbl_802C0D00:
+.obj lbl_802C0D00, local
 	.asciz "NaviNukuAdjustState"
+.endobj lbl_802C0D00
 .balign 4
-lbl_802C0D14:
+.obj lbl_802C0D14, local
 	.4byte "__RTTI__15Receiver<4Navi>"
 	.4byte 0
 	.4byte "__RTTI__13AState<4Navi>"
@@ -11933,8 +11934,9 @@ lbl_802C0D14:
 	.4byte __RTTI__9NaviState
 	.4byte 0
 	.4byte 0
-.global __vt__19NaviNukuAdjustState
-__vt__19NaviNukuAdjustState:
+.endobj lbl_802C0D14
+.balign 4
+.obj __vt__19NaviNukuAdjustState, global
 	.4byte __RTTI__19NaviNukuAdjustState
 	.4byte 0
 	.4byte "procMsg__15Receiver<4Navi>FP4NaviP3Msg"
@@ -11956,11 +11958,13 @@ __vt__19NaviNukuAdjustState:
 	.4byte restart__19NaviNukuAdjustStateFP4Navi
 	.4byte "transit__13AState<4Navi>FP4Navii"
 	.4byte invincible__9NaviStateFP4Navi
+.endobj __vt__19NaviNukuAdjustState
 .balign 4
-lbl_802C0D84:
+.obj lbl_802C0D84, local
 	.asciz "NaviNukuState"
+.endobj lbl_802C0D84
 .balign 4
-lbl_802C0D94:
+.obj lbl_802C0D94, local
 	.4byte "__RTTI__15Receiver<4Navi>"
 	.4byte 0
 	.4byte "__RTTI__13AState<4Navi>"
@@ -11968,8 +11972,9 @@ lbl_802C0D94:
 	.4byte __RTTI__9NaviState
 	.4byte 0
 	.4byte 0
-.global __vt__13NaviNukuState
-__vt__13NaviNukuState:
+.endobj lbl_802C0D94
+.balign 4
+.obj __vt__13NaviNukuState, global
 	.4byte __RTTI__13NaviNukuState
 	.4byte 0
 	.4byte "procMsg__15Receiver<4Navi>FP4NaviP3Msg"
@@ -11991,11 +11996,13 @@ __vt__13NaviNukuState:
 	.4byte "restart__13AState<4Navi>FP4Navi"
 	.4byte "transit__13AState<4Navi>FP4Navii"
 	.4byte invincible__13NaviNukuStateFP4Navi
+.endobj __vt__13NaviNukuState
 .balign 4
-lbl_802C0E04:
+.obj lbl_802C0E04, local
 	.asciz "NaviPushPikiState"
+.endobj lbl_802C0E04
 .balign 4
-lbl_802C0E18:
+.obj lbl_802C0E18, local
 	.4byte "__RTTI__15Receiver<4Navi>"
 	.4byte 0
 	.4byte "__RTTI__13AState<4Navi>"
@@ -12003,8 +12010,9 @@ lbl_802C0E18:
 	.4byte __RTTI__9NaviState
 	.4byte 0
 	.4byte 0
-.global __vt__17NaviPushPikiState
-__vt__17NaviPushPikiState:
+.endobj lbl_802C0E18
+.balign 4
+.obj __vt__17NaviPushPikiState, global
 	.4byte __RTTI__17NaviPushPikiState
 	.4byte 0
 	.4byte "procMsg__15Receiver<4Navi>FP4NaviP3Msg"
@@ -12026,11 +12034,13 @@ __vt__17NaviPushPikiState:
 	.4byte "restart__13AState<4Navi>FP4Navi"
 	.4byte "transit__13AState<4Navi>FP4Navii"
 	.4byte invincible__9NaviStateFP4Navi
+.endobj __vt__17NaviPushPikiState
 .balign 4
-lbl_802C0E88:
+.obj lbl_802C0E88, local
 	.asciz "NaviPushState"
+.endobj lbl_802C0E88
 .balign 4
-lbl_802C0E98:
+.obj lbl_802C0E98, local
 	.4byte "__RTTI__15Receiver<4Navi>"
 	.4byte 0
 	.4byte "__RTTI__13AState<4Navi>"
@@ -12038,8 +12048,9 @@ lbl_802C0E98:
 	.4byte __RTTI__9NaviState
 	.4byte 0
 	.4byte 0
-.global __vt__13NaviPushState
-__vt__13NaviPushState:
+.endobj lbl_802C0E98
+.balign 4
+.obj __vt__13NaviPushState, global
 	.4byte __RTTI__13NaviPushState
 	.4byte 0
 	.4byte "procMsg__15Receiver<4Navi>FP4NaviP3Msg"
@@ -12061,11 +12072,13 @@ __vt__13NaviPushState:
 	.4byte "restart__13AState<4Navi>FP4Navi"
 	.4byte "transit__13AState<4Navi>FP4Navii"
 	.4byte invincible__9NaviStateFP4Navi
+.endobj __vt__13NaviPushState
 .balign 4
-lbl_802C0F08:
+.obj lbl_802C0F08, local
 	.asciz "NaviThrowState"
+.endobj lbl_802C0F08
 .balign 4
-lbl_802C0F18:
+.obj lbl_802C0F18, local
 	.4byte "__RTTI__15Receiver<4Navi>"
 	.4byte 0
 	.4byte "__RTTI__13AState<4Navi>"
@@ -12073,8 +12086,9 @@ lbl_802C0F18:
 	.4byte __RTTI__9NaviState
 	.4byte 0
 	.4byte 0
-.global __vt__14NaviThrowState
-__vt__14NaviThrowState:
+.endobj lbl_802C0F18
+.balign 4
+.obj __vt__14NaviThrowState, global
 	.4byte __RTTI__14NaviThrowState
 	.4byte 0
 	.4byte "procMsg__15Receiver<4Navi>FP4NaviP3Msg"
@@ -12096,11 +12110,13 @@ __vt__14NaviThrowState:
 	.4byte "restart__13AState<4Navi>FP4Navi"
 	.4byte "transit__13AState<4Navi>FP4Navii"
 	.4byte invincible__9NaviStateFP4Navi
+.endobj __vt__14NaviThrowState
 .balign 4
-lbl_802C0F88:
+.obj lbl_802C0F88, local
 	.asciz "NaviThrowWaitState"
+.endobj lbl_802C0F88
 .balign 4
-lbl_802C0F9C:
+.obj lbl_802C0F9C, local
 	.4byte "__RTTI__15Receiver<4Navi>"
 	.4byte 0
 	.4byte "__RTTI__13AState<4Navi>"
@@ -12108,8 +12124,9 @@ lbl_802C0F9C:
 	.4byte __RTTI__9NaviState
 	.4byte 0
 	.4byte 0
-.global __vt__18NaviThrowWaitState
-__vt__18NaviThrowWaitState:
+.endobj lbl_802C0F9C
+.balign 4
+.obj __vt__18NaviThrowWaitState, global
 	.4byte __RTTI__18NaviThrowWaitState
 	.4byte 0
 	.4byte "procMsg__15Receiver<4Navi>FP4NaviP3Msg"
@@ -12131,11 +12148,13 @@ __vt__18NaviThrowWaitState:
 	.4byte restart__18NaviThrowWaitStateFP4Navi
 	.4byte "transit__13AState<4Navi>FP4Navii"
 	.4byte invincible__9NaviStateFP4Navi
+.endobj __vt__18NaviThrowWaitState
 .balign 4
-lbl_802C100C:
+.obj lbl_802C100C, local
 	.asciz "NaviReleaseState"
+.endobj lbl_802C100C
 .balign 4
-lbl_802C1020:
+.obj lbl_802C1020, local
 	.4byte "__RTTI__15Receiver<4Navi>"
 	.4byte 0
 	.4byte "__RTTI__13AState<4Navi>"
@@ -12143,8 +12162,9 @@ lbl_802C1020:
 	.4byte __RTTI__9NaviState
 	.4byte 0
 	.4byte 0
-.global __vt__16NaviReleaseState
-__vt__16NaviReleaseState:
+.endobj lbl_802C1020
+.balign 4
+.obj __vt__16NaviReleaseState, global
 	.4byte __RTTI__16NaviReleaseState
 	.4byte 0
 	.4byte "procMsg__15Receiver<4Navi>FP4NaviP3Msg"
@@ -12166,11 +12186,13 @@ __vt__16NaviReleaseState:
 	.4byte "restart__13AState<4Navi>FP4Navi"
 	.4byte "transit__13AState<4Navi>FP4Navii"
 	.4byte invincible__9NaviStateFP4Navi
+.endobj __vt__16NaviReleaseState
 .balign 4
-lbl_802C1090:
+.obj lbl_802C1090, local
 	.asciz "NaviGatherState"
+.endobj lbl_802C1090
 .balign 4
-lbl_802C10A0:
+.obj lbl_802C10A0, local
 	.4byte "__RTTI__15Receiver<4Navi>"
 	.4byte 0
 	.4byte "__RTTI__13AState<4Navi>"
@@ -12178,8 +12200,9 @@ lbl_802C10A0:
 	.4byte __RTTI__9NaviState
 	.4byte 0
 	.4byte 0
-.global __vt__15NaviGatherState
-__vt__15NaviGatherState:
+.endobj lbl_802C10A0
+.balign 4
+.obj __vt__15NaviGatherState, global
 	.4byte __RTTI__15NaviGatherState
 	.4byte 0
 	.4byte "procMsg__15Receiver<4Navi>FP4NaviP3Msg"
@@ -12201,11 +12224,13 @@ __vt__15NaviGatherState:
 	.4byte restart__15NaviGatherStateFP4Navi
 	.4byte "transit__13AState<4Navi>FP4Navii"
 	.4byte invincible__9NaviStateFP4Navi
+.endobj __vt__15NaviGatherState
 .balign 4
-lbl_802C1110:
+.obj lbl_802C1110, local
 	.asciz "NaviGeyzerState"
+.endobj lbl_802C1110
 .balign 4
-lbl_802C1120:
+.obj lbl_802C1120, local
 	.4byte "__RTTI__15Receiver<4Navi>"
 	.4byte 0
 	.4byte "__RTTI__13AState<4Navi>"
@@ -12213,8 +12238,9 @@ lbl_802C1120:
 	.4byte __RTTI__9NaviState
 	.4byte 0
 	.4byte 0
-.global __vt__15NaviGeyzerState
-__vt__15NaviGeyzerState:
+.endobj lbl_802C1120
+.balign 4
+.obj __vt__15NaviGeyzerState, global
 	.4byte __RTTI__15NaviGeyzerState
 	.4byte 0
 	.4byte "procMsg__15Receiver<4Navi>FP4NaviP3Msg"
@@ -12236,11 +12262,13 @@ __vt__15NaviGeyzerState:
 	.4byte "restart__13AState<4Navi>FP4Navi"
 	.4byte "transit__13AState<4Navi>FP4Navii"
 	.4byte invincible__15NaviGeyzerStateFP4Navi
+.endobj __vt__15NaviGeyzerState
 .balign 4
-lbl_802C1190:
+.obj lbl_802C1190, local
 	.asciz "NaviFlickState"
+.endobj lbl_802C1190
 .balign 4
-lbl_802C11A0:
+.obj lbl_802C11A0, local
 	.4byte "__RTTI__15Receiver<4Navi>"
 	.4byte 0
 	.4byte "__RTTI__13AState<4Navi>"
@@ -12248,8 +12276,9 @@ lbl_802C11A0:
 	.4byte __RTTI__9NaviState
 	.4byte 0
 	.4byte 0
-.global __vt__14NaviFlickState
-__vt__14NaviFlickState:
+.endobj lbl_802C11A0
+.balign 4
+.obj __vt__14NaviFlickState, global
 	.4byte __RTTI__14NaviFlickState
 	.4byte 0
 	.4byte "procMsg__15Receiver<4Navi>FP4NaviP3Msg"
@@ -12271,11 +12300,13 @@ __vt__14NaviFlickState:
 	.4byte "restart__13AState<4Navi>FP4Navi"
 	.4byte "transit__13AState<4Navi>FP4Navii"
 	.4byte invincible__14NaviFlickStateFP4Navi
+.endobj __vt__14NaviFlickState
 .balign 4
-lbl_802C1210:
+.obj lbl_802C1210, local
 	.asciz "NaviIdleState"
+.endobj lbl_802C1210
 .balign 4
-lbl_802C1220:
+.obj lbl_802C1220, local
 	.4byte "__RTTI__15Receiver<4Navi>"
 	.4byte 0
 	.4byte "__RTTI__13AState<4Navi>"
@@ -12283,8 +12314,9 @@ lbl_802C1220:
 	.4byte __RTTI__9NaviState
 	.4byte 0
 	.4byte 0
-.global __vt__13NaviIdleState
-__vt__13NaviIdleState:
+.endobj lbl_802C1220
+.balign 4
+.obj __vt__13NaviIdleState, global
 	.4byte __RTTI__13NaviIdleState
 	.4byte 0
 	.4byte "procMsg__15Receiver<4Navi>FP4NaviP3Msg"
@@ -12306,11 +12338,13 @@ __vt__13NaviIdleState:
 	.4byte "restart__13AState<4Navi>FP4Navi"
 	.4byte "transit__13AState<4Navi>FP4Navii"
 	.4byte invincible__9NaviStateFP4Navi
+.endobj __vt__13NaviIdleState
 .balign 4
-lbl_802C1290:
+.obj lbl_802C1290, local
 	.asciz "NaviFunbariState"
+.endobj lbl_802C1290
 .balign 4
-lbl_802C12A4:
+.obj lbl_802C12A4, local
 	.4byte "__RTTI__15Receiver<4Navi>"
 	.4byte 0
 	.4byte "__RTTI__13AState<4Navi>"
@@ -12318,8 +12352,9 @@ lbl_802C12A4:
 	.4byte __RTTI__9NaviState
 	.4byte 0
 	.4byte 0
-.global __vt__16NaviFunbariState
-__vt__16NaviFunbariState:
+.endobj lbl_802C12A4
+.balign 4
+.obj __vt__16NaviFunbariState, global
 	.4byte __RTTI__16NaviFunbariState
 	.4byte 0
 	.4byte "procMsg__15Receiver<4Navi>FP4NaviP3Msg"
@@ -12341,11 +12376,13 @@ __vt__16NaviFunbariState:
 	.4byte "restart__13AState<4Navi>FP4Navi"
 	.4byte "transit__13AState<4Navi>FP4Navii"
 	.4byte invincible__9NaviStateFP4Navi
+.endobj __vt__16NaviFunbariState
 .balign 4
-lbl_802C1314:
+.obj lbl_802C1314, local
 	.asciz "NaviRopeExitState"
+.endobj lbl_802C1314
 .balign 4
-lbl_802C1328:
+.obj lbl_802C1328, local
 	.4byte "__RTTI__15Receiver<4Navi>"
 	.4byte 0
 	.4byte "__RTTI__13AState<4Navi>"
@@ -12353,8 +12390,9 @@ lbl_802C1328:
 	.4byte __RTTI__9NaviState
 	.4byte 0
 	.4byte 0
-.global __vt__17NaviRopeExitState
-__vt__17NaviRopeExitState:
+.endobj lbl_802C1328
+.balign 4
+.obj __vt__17NaviRopeExitState, global
 	.4byte __RTTI__17NaviRopeExitState
 	.4byte 0
 	.4byte "procMsg__15Receiver<4Navi>FP4NaviP3Msg"
@@ -12376,11 +12414,13 @@ __vt__17NaviRopeExitState:
 	.4byte "restart__13AState<4Navi>FP4Navi"
 	.4byte "transit__13AState<4Navi>FP4Navii"
 	.4byte invincible__9NaviStateFP4Navi
+.endobj __vt__17NaviRopeExitState
 .balign 4
-lbl_802C1398:
+.obj lbl_802C1398, local
 	.asciz "NaviRopeState"
+.endobj lbl_802C1398
 .balign 4
-lbl_802C13A8:
+.obj lbl_802C13A8, local
 	.4byte "__RTTI__15Receiver<4Navi>"
 	.4byte 0
 	.4byte "__RTTI__13AState<4Navi>"
@@ -12388,8 +12428,9 @@ lbl_802C13A8:
 	.4byte __RTTI__9NaviState
 	.4byte 0
 	.4byte 0
-.global __vt__13NaviRopeState
-__vt__13NaviRopeState:
+.endobj lbl_802C13A8
+.balign 4
+.obj __vt__13NaviRopeState, global
 	.4byte __RTTI__13NaviRopeState
 	.4byte 0
 	.4byte "procMsg__15Receiver<4Navi>FP4NaviP3Msg"
@@ -12411,11 +12452,13 @@ __vt__13NaviRopeState:
 	.4byte "restart__13AState<4Navi>FP4Navi"
 	.4byte "transit__13AState<4Navi>FP4Navii"
 	.4byte invincible__9NaviStateFP4Navi
+.endobj __vt__13NaviRopeState
 .balign 4
-lbl_802C1418:
+.obj lbl_802C1418, local
 	.asciz "NaviPickState"
+.endobj lbl_802C1418
 .balign 4
-lbl_802C1428:
+.obj lbl_802C1428, local
 	.4byte "__RTTI__15Receiver<4Navi>"
 	.4byte 0
 	.4byte "__RTTI__13AState<4Navi>"
@@ -12423,8 +12466,9 @@ lbl_802C1428:
 	.4byte __RTTI__9NaviState
 	.4byte 0
 	.4byte 0
-.global __vt__13NaviPickState
-__vt__13NaviPickState:
+.endobj lbl_802C1428
+.balign 4
+.obj __vt__13NaviPickState, global
 	.4byte __RTTI__13NaviPickState
 	.4byte 0
 	.4byte "procMsg__15Receiver<4Navi>FP4NaviP3Msg"
@@ -12446,17 +12490,21 @@ __vt__13NaviPickState:
 	.4byte "restart__13AState<4Navi>FP4Navi"
 	.4byte "transit__13AState<4Navi>FP4Navii"
 	.4byte invincible__9NaviStateFP4Navi
+.endobj __vt__13NaviPickState
 .balign 4
-lbl_802C1498:
+.obj lbl_802C1498, local
 	.asciz "NaviContainerState"
+.endobj lbl_802C1498
 .balign 4
-lbl_802C14AC:
+.obj lbl_802C14AC, local
 	.asciz "GmWin::CloseListener"
+.endobj lbl_802C14AC
 .balign 4
-lbl_802C14C4:
+.obj lbl_802C14C4, local
 	.asciz "ContainerWin::Listener"
+.endobj lbl_802C14C4
 .balign 4
-lbl_802C14DC:
+.obj lbl_802C14DC, local
 	.4byte __RTTI__Q25GmWin13CloseListener
 	.4byte 0x28
 	.4byte __RTTI__Q212ContainerWin8Listener
@@ -12468,8 +12516,9 @@ lbl_802C14DC:
 	.4byte __RTTI__9NaviState
 	.4byte 0
 	.4byte 0
-.global __vt__18NaviContainerState
-__vt__18NaviContainerState:
+.endobj lbl_802C14DC
+.balign 4
+.obj __vt__18NaviContainerState, global
 	.4byte __RTTI__18NaviContainerState
 	.4byte 0
 	.4byte "procMsg__15Receiver<4Navi>FP4NaviP3Msg"
@@ -12499,21 +12548,25 @@ __vt__18NaviContainerState:
 	.4byte __RTTI__18NaviContainerState
 	.4byte 0xFFFFFFD8
 	.4byte "@40@4@onCloseWindow__18NaviContainerStateFv"
-.global __vt__Q25GmWin13CloseListener
-__vt__Q25GmWin13CloseListener:
+.endobj __vt__18NaviContainerState
+.balign 4
+.obj __vt__Q25GmWin13CloseListener, weak
 	.4byte __RTTI__Q25GmWin13CloseListener
 	.4byte 0
 	.4byte onCloseWindow__Q25GmWin13CloseListenerFv
-.global __vt__Q212ContainerWin8Listener
-__vt__Q212ContainerWin8Listener:
+.endobj __vt__Q25GmWin13CloseListener
+.balign 4
+.obj __vt__Q212ContainerWin8Listener, weak
 	.4byte __RTTI__Q212ContainerWin8Listener
 	.4byte 0
 	.4byte 0
+.endobj __vt__Q212ContainerWin8Listener
 .balign 4
-lbl_802C1594:
+.obj lbl_802C1594, local
 	.asciz "NaviUfoState"
+.endobj lbl_802C1594
 .balign 4
-lbl_802C15A4:
+.obj lbl_802C15A4, local
 	.4byte "__RTTI__15Receiver<4Navi>"
 	.4byte 0
 	.4byte "__RTTI__13AState<4Navi>"
@@ -12521,8 +12574,9 @@ lbl_802C15A4:
 	.4byte __RTTI__9NaviState
 	.4byte 0
 	.4byte 0
-.global __vt__12NaviUfoState
-__vt__12NaviUfoState:
+.endobj lbl_802C15A4
+.balign 4
+.obj __vt__12NaviUfoState, global
 	.4byte __RTTI__12NaviUfoState
 	.4byte 0
 	.4byte "procMsg__15Receiver<4Navi>FP4NaviP3Msg"
@@ -12544,11 +12598,13 @@ __vt__12NaviUfoState:
 	.4byte "restart__13AState<4Navi>FP4Navi"
 	.4byte "transit__13AState<4Navi>FP4Navii"
 	.4byte invincible__12NaviUfoStateFP4Navi
+.endobj __vt__12NaviUfoState
 .balign 4
-lbl_802C1614:
+.obj lbl_802C1614, local
 	.asciz "NaviWalkState"
+.endobj lbl_802C1614
 .balign 4
-lbl_802C1624:
+.obj lbl_802C1624, local
 	.4byte "__RTTI__15Receiver<4Navi>"
 	.4byte 0
 	.4byte "__RTTI__13AState<4Navi>"
@@ -12556,8 +12612,9 @@ lbl_802C1624:
 	.4byte __RTTI__9NaviState
 	.4byte 0
 	.4byte 0
-.global __vt__13NaviWalkState
-__vt__13NaviWalkState:
+.endobj lbl_802C1624
+.balign 4
+.obj __vt__13NaviWalkState, global
 	.4byte __RTTI__13NaviWalkState
 	.4byte 0
 	.4byte "procMsg__15Receiver<4Navi>FP4NaviP3Msg"
@@ -12579,11 +12636,13 @@ __vt__13NaviWalkState:
 	.4byte restart__13NaviWalkStateFP4Navi
 	.4byte "transit__13AState<4Navi>FP4Navii"
 	.4byte invincible__9NaviStateFP4Navi
+.endobj __vt__13NaviWalkState
 .balign 4
-lbl_802C1694:
+.obj lbl_802C1694, local
 	.asciz "NaviBuryState"
+.endobj lbl_802C1694
 .balign 4
-lbl_802C16A4:
+.obj lbl_802C16A4, local
 	.4byte "__RTTI__15Receiver<4Navi>"
 	.4byte 0
 	.4byte "__RTTI__13AState<4Navi>"
@@ -12591,8 +12650,9 @@ lbl_802C16A4:
 	.4byte __RTTI__9NaviState
 	.4byte 0
 	.4byte 0
-.global __vt__13NaviBuryState
-__vt__13NaviBuryState:
+.endobj lbl_802C16A4
+.balign 4
+.obj __vt__13NaviBuryState, global
 	.4byte __RTTI__13NaviBuryState
 	.4byte 0
 	.4byte "procMsg__15Receiver<4Navi>FP4NaviP3Msg"
@@ -12614,26 +12674,19 @@ __vt__13NaviBuryState:
 	.4byte "restart__13AState<4Navi>FP4Navi"
 	.4byte "transit__13AState<4Navi>FP4Navii"
 	.4byte invincible__13NaviBuryStateFP4Navi
+.endobj __vt__13NaviBuryState
 .balign 4
-lbl_802C1714:
+.obj lbl_802C1714, local
 	.asciz "Interaction"
+.endobj lbl_802C1714
 .balign 4
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
+	.skip 0x2C # compiler padding
 .balign 4
-lbl_802C174C:
+.obj lbl_802C174C, local
 	.asciz "NaviStuckState"
+.endobj lbl_802C174C
 .balign 4
-lbl_802C175C:
+.obj lbl_802C175C, local
 	.4byte "__RTTI__15Receiver<4Navi>"
 	.4byte 0
 	.4byte "__RTTI__13AState<4Navi>"
@@ -12641,8 +12694,9 @@ lbl_802C175C:
 	.4byte __RTTI__9NaviState
 	.4byte 0
 	.4byte 0
-.global __vt__14NaviStuckState
-__vt__14NaviStuckState:
+.endobj lbl_802C175C
+.balign 4
+.obj __vt__14NaviStuckState, global
 	.4byte __RTTI__14NaviStuckState
 	.4byte 0
 	.4byte "procMsg__15Receiver<4Navi>FP4NaviP3Msg"
@@ -12664,11 +12718,13 @@ __vt__14NaviStuckState:
 	.4byte "restart__13AState<4Navi>FP4Navi"
 	.4byte "transit__13AState<4Navi>FP4Navii"
 	.4byte invincible__9NaviStateFP4Navi
+.endobj __vt__14NaviStuckState
 .balign 4
-lbl_802C17CC:
+.obj lbl_802C17CC, local
 	.asciz "NaviDemoInfState"
+.endobj lbl_802C17CC
 .balign 4
-lbl_802C17E0:
+.obj lbl_802C17E0, local
 	.4byte "__RTTI__15Receiver<4Navi>"
 	.4byte 0
 	.4byte "__RTTI__13AState<4Navi>"
@@ -12676,8 +12732,9 @@ lbl_802C17E0:
 	.4byte __RTTI__9NaviState
 	.4byte 0
 	.4byte 0
-.global __vt__16NaviDemoInfState
-__vt__16NaviDemoInfState:
+.endobj lbl_802C17E0
+.balign 4
+.obj __vt__16NaviDemoInfState, global
 	.4byte __RTTI__16NaviDemoInfState
 	.4byte 0
 	.4byte "procMsg__15Receiver<4Navi>FP4NaviP3Msg"
@@ -12699,11 +12756,13 @@ __vt__16NaviDemoInfState:
 	.4byte "restart__13AState<4Navi>FP4Navi"
 	.4byte "transit__13AState<4Navi>FP4Navii"
 	.4byte invincible__16NaviDemoInfStateFP4Navi
+.endobj __vt__16NaviDemoInfState
 .balign 4
-lbl_802C1850:
+.obj lbl_802C1850, local
 	.asciz "NaviDemoWaitState"
+.endobj lbl_802C1850
 .balign 4
-lbl_802C1864:
+.obj lbl_802C1864, local
 	.4byte "__RTTI__15Receiver<4Navi>"
 	.4byte 0
 	.4byte "__RTTI__13AState<4Navi>"
@@ -12711,8 +12770,9 @@ lbl_802C1864:
 	.4byte __RTTI__9NaviState
 	.4byte 0
 	.4byte 0
-.global __vt__17NaviDemoWaitState
-__vt__17NaviDemoWaitState:
+.endobj lbl_802C1864
+.balign 4
+.obj __vt__17NaviDemoWaitState, global
 	.4byte __RTTI__17NaviDemoWaitState
 	.4byte 0
 	.4byte "procMsg__15Receiver<4Navi>FP4NaviP3Msg"
@@ -12734,11 +12794,13 @@ __vt__17NaviDemoWaitState:
 	.4byte "restart__13AState<4Navi>FP4Navi"
 	.4byte "transit__13AState<4Navi>FP4Navii"
 	.4byte invincible__17NaviDemoWaitStateFP4Navi
+.endobj __vt__17NaviDemoWaitState
 .balign 4
-lbl_802C18D4:
+.obj lbl_802C18D4, local
 	.asciz "NaviPelletState"
+.endobj lbl_802C18D4
 .balign 4
-lbl_802C18E4:
+.obj lbl_802C18E4, local
 	.4byte "__RTTI__15Receiver<4Navi>"
 	.4byte 0
 	.4byte "__RTTI__13AState<4Navi>"
@@ -12746,8 +12808,9 @@ lbl_802C18E4:
 	.4byte __RTTI__9NaviState
 	.4byte 0
 	.4byte 0
-.global __vt__15NaviPelletState
-__vt__15NaviPelletState:
+.endobj lbl_802C18E4
+.balign 4
+.obj __vt__15NaviPelletState, global
 	.4byte __RTTI__15NaviPelletState
 	.4byte 0
 	.4byte "procMsg__15Receiver<4Navi>FP4NaviP3Msg"
@@ -12769,8 +12832,9 @@ __vt__15NaviPelletState:
 	.4byte "restart__13AState<4Navi>FP4Navi"
 	.4byte "transit__13AState<4Navi>FP4Navii"
 	.4byte invincible__15NaviPelletStateFP4Navi
-.global __vt__9NaviState
-__vt__9NaviState:
+.endobj __vt__15NaviPelletState
+.balign 4
+.obj __vt__9NaviState, weak
 	.4byte __RTTI__9NaviState
 	.4byte 0
 	.4byte "procMsg__15Receiver<4Navi>FP4NaviP3Msg"
@@ -12792,8 +12856,9 @@ __vt__9NaviState:
 	.4byte "restart__13AState<4Navi>FP4Navi"
 	.4byte "transit__13AState<4Navi>FP4Navii"
 	.4byte invincible__9NaviStateFP4Navi
-.global "__vt__13AState<4Navi>"
-"__vt__13AState<4Navi>":
+.endobj __vt__9NaviState
+.balign 4
+.obj "__vt__13AState<4Navi>", weak
 	.4byte "__RTTI__13AState<4Navi>"
 	.4byte 0
 	.4byte "procMsg__15Receiver<4Navi>FP4NaviP3Msg"
@@ -12814,8 +12879,9 @@ __vt__9NaviState:
 	.4byte "resume__13AState<4Navi>FP4Navi"
 	.4byte "restart__13AState<4Navi>FP4Navi"
 	.4byte "transit__13AState<4Navi>FP4Navii"
-.global "__vt__15Receiver<4Navi>"
-"__vt__15Receiver<4Navi>":
+.endobj "__vt__13AState<4Navi>"
+.balign 4
+.obj "__vt__15Receiver<4Navi>", weak
 	.4byte "__RTTI__15Receiver<4Navi>"
 	.4byte 0
 	.4byte "procMsg__15Receiver<4Navi>FP4NaviP3Msg"
@@ -12830,26 +12896,32 @@ __vt__9NaviState:
 	.4byte "procOffWallMsg__15Receiver<4Navi>FP4NaviP10MsgOffWall"
 	.4byte "procUserMsg__15Receiver<4Navi>FP4NaviP7MsgUser"
 	.4byte "procGroundMsg__15Receiver<4Navi>FP4NaviP9MsgGround"
+.endobj "__vt__15Receiver<4Navi>"
 .balign 4
-lbl_802C1A30:
+.obj lbl_802C1A30, local
 	.asciz "NaviStateMachine"
+.endobj lbl_802C1A30
 .balign 4
-lbl_802C1A44:
+.obj lbl_802C1A44, local
 	.asciz "StateMachine<Navi>"
+.endobj lbl_802C1A44
 .balign 4
-lbl_802C1A58:
+.obj lbl_802C1A58, local
 	.4byte "__RTTI__19StateMachine<4Navi>"
 	.4byte 0
 	.4byte 0
-.global __vt__16NaviStateMachine
-__vt__16NaviStateMachine:
+.endobj lbl_802C1A58
+.balign 4
+.obj __vt__16NaviStateMachine, global
 	.4byte __RTTI__16NaviStateMachine
 	.4byte 0
 	.4byte init__16NaviStateMachineFP4Navi
 	.4byte "exec__19StateMachine<4Navi>FP4Navi"
 	.4byte "procMsg__19StateMachine<4Navi>FP4NaviP3Msg"
 	.4byte "transit__19StateMachine<4Navi>FP4Navii"
-lbl_802C1A7C:
+.endobj __vt__16NaviStateMachine
+.balign 4
+.obj lbl_802C1A7C, local
 	.4byte .L_800FF854
 	.4byte .L_800FF87C
 	.4byte .L_800FF890
@@ -12861,6 +12933,7 @@ lbl_802C1A7C:
 	.4byte .L_800FF868
 	.4byte .L_800FF91C
 	.4byte .L_800FF908
+.endobj lbl_802C1A7C
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
@@ -13593,7 +13666,7 @@ lbl_802C1A7C:
 .obj lbl_803E9FE4, local
 	.float 2.0
 .endobj lbl_803E9FE4
-.obj lbl_803E9FE8, local
+.obj lbl_803E9FE8, local # pi
 	.float 3.1415927
 .endobj lbl_803E9FE8
 .obj lbl_803E9FEC, local

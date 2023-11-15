@@ -630,6 +630,7 @@ __RTTI__5ANode:
 __RTTI__8CoreNode:
 	.4byte lbl_802C2F00
 	.4byte lbl_802C2F0C
+.balign 4
 lbl_803E29F8:
 	.asciz "Node"
 .balign 4
@@ -651,6 +652,6 @@ __RTTI__7NaviMgr:
 
 .section .sbss, "wa"
 .balign 8
-.global naviMgr
-naviMgr:
+.obj naviMgr, global
 	.skip 0x4
+.endobj naviMgr
