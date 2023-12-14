@@ -1,19 +1,18 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global getOptionsOffset__10MemoryCardFi
-getOptionsOffset__10MemoryCardFi:
+.fn getOptionsOffset__10MemoryCardFi, global
 /* 800738C8 00070828  54 83 68 24 */	slwi r3, r4, 0xd
 /* 800738CC 0007082C  38 63 20 00 */	addi r3, r3, 0x2000
 /* 800738D0 00070830  4E 80 00 20 */	blr 
+.endfn getOptionsOffset__10MemoryCardFi
 
-.global getGameFileOffset__10MemoryCardFi
-getGameFileOffset__10MemoryCardFi:
+.fn getGameFileOffset__10MemoryCardFi, global
 /* 800738D4 00070834  54 83 78 20 */	slwi r3, r4, 0xf
 /* 800738D8 00070838  38 63 60 00 */	addi r3, r3, 0x6000
 /* 800738DC 0007083C  4E 80 00 20 */	blr 
+.endfn getGameFileOffset__10MemoryCardFi
 
-.global calcChecksum__10MemoryCardFPvUl
-calcChecksum__10MemoryCardFPvUl:
+.fn calcChecksum__10MemoryCardFPvUl, global
 /* 800738E0 00070840  94 21 FF D8 */	stwu r1, -0x28(r1)
 /* 800738E4 00070844  54 AC F0 BE */	srwi r12, r5, 2
 /* 800738E8 00070848  28 0C 00 00 */	cmplwi r12, 0
@@ -113,9 +112,9 @@ calcChecksum__10MemoryCardFPvUl:
 /* 80073A50 000709B0  83 E1 00 24 */	lwz r31, 0x24(r1)
 /* 80073A54 000709B4  38 21 00 28 */	addi r1, r1, 0x28
 /* 80073A58 000709B8  4E 80 00 20 */	blr 
+.endfn calcChecksum__10MemoryCardFPvUl
 
-.global hasCardFinished__10MemoryCardFv
-hasCardFinished__10MemoryCardFv:
+.fn hasCardFinished__10MemoryCardFv, global
 /* 80073A5C 000709BC  7C 08 02 A6 */	mflr r0
 /* 80073A60 000709C0  90 01 00 04 */	stw r0, 4(r1)
 /* 80073A64 000709C4  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -145,9 +144,9 @@ hasCardFinished__10MemoryCardFv:
 /* 80073AC0 00070A20  38 21 00 18 */	addi r1, r1, 0x18
 /* 80073AC4 00070A24  7C 08 03 A6 */	mtlr r0
 /* 80073AC8 00070A28  4E 80 00 20 */	blr 
+.endfn hasCardFinished__10MemoryCardFv
 
-.global attemptFormatCard__10MemoryCardFi
-attemptFormatCard__10MemoryCardFi:
+.fn attemptFormatCard__10MemoryCardFi, global
 /* 80073ACC 00070A2C  7C 08 02 A6 */	mflr r0
 /* 80073AD0 00070A30  90 01 00 04 */	stw r0, 4(r1)
 /* 80073AD4 00070A34  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -233,9 +232,9 @@ attemptFormatCard__10MemoryCardFi:
 /* 80073BF4 00070B54  38 21 00 18 */	addi r1, r1, 0x18
 /* 80073BF8 00070B58  7C 08 03 A6 */	mtlr r0
 /* 80073BFC 00070B5C  4E 80 00 20 */	blr 
+.endfn attemptFormatCard__10MemoryCardFi
 
-.global waitWhileBusy__10MemoryCardFi
-waitWhileBusy__10MemoryCardFi:
+.fn waitWhileBusy__10MemoryCardFi, global
 /* 80073C00 00070B60  7C 08 02 A6 */	mflr r0
 /* 80073C04 00070B64  90 01 00 04 */	stw r0, 4(r1)
 /* 80073C08 00070B68  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -251,9 +250,9 @@ waitWhileBusy__10MemoryCardFi:
 /* 80073C2C 00070B8C  38 21 00 18 */	addi r1, r1, 0x18
 /* 80073C30 00070B90  7C 08 03 A6 */	mtlr r0
 /* 80073C34 00070B94  4E 80 00 20 */	blr 
+.endfn waitWhileBusy__10MemoryCardFi
 
-.global getCardStatus__10MemoryCardFi
-getCardStatus__10MemoryCardFi:
+.fn getCardStatus__10MemoryCardFi, global
 /* 80073C38 00070B98  7C 08 02 A6 */	mflr r0
 /* 80073C3C 00070B9C  90 01 00 04 */	stw r0, 4(r1)
 /* 80073C40 00070BA0  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -380,9 +379,9 @@ getCardStatus__10MemoryCardFi:
 /* 80073DE8 00070D48  38 21 00 20 */	addi r1, r1, 0x20
 /* 80073DEC 00070D4C  7C 08 03 A6 */	mtlr r0
 /* 80073DF0 00070D50  4E 80 00 20 */	blr 
+.endfn getCardStatus__10MemoryCardFi
 
-.global checkUseFile__10MemoryCardFv
-checkUseFile__10MemoryCardFv:
+.fn checkUseFile__10MemoryCardFv, global
 /* 80073DF4 00070D54  7C 08 02 A6 */	mflr r0
 /* 80073DF8 00070D58  3C 80 80 00 */	lis r4, 0x800000F8@ha
 /* 80073DFC 00070D5C  90 01 00 04 */	stw r0, 4(r1)
@@ -451,9 +450,9 @@ checkUseFile__10MemoryCardFv:
 /* 80073EE4 00070E44  38 21 00 B8 */	addi r1, r1, 0xb8
 /* 80073EE8 00070E48  7C 08 03 A6 */	mtlr r0
 /* 80073EEC 00070E4C  4E 80 00 20 */	blr 
+.endfn checkUseFile__10MemoryCardFv
 
-.global getMemoryCardState__10MemoryCardFb
-getMemoryCardState__10MemoryCardFb:
+.fn getMemoryCardState__10MemoryCardFb, global
 /* 80073EF0 00070E50  7C 08 02 A6 */	mflr r0
 /* 80073EF4 00070E54  3C A0 80 3A */	lis r5, CardWorkArea@ha
 /* 80073EF8 00070E58  90 01 00 04 */	stw r0, 4(r1)
@@ -553,9 +552,9 @@ getMemoryCardState__10MemoryCardFb:
 /* 80074058 00070FB8  38 21 00 30 */	addi r1, r1, 0x30
 /* 8007405C 00070FBC  7C 08 03 A6 */	mtlr r0
 /* 80074060 00070FC0  4E 80 00 20 */	blr 
+.endfn getMemoryCardState__10MemoryCardFb
 
-.global loadCurrentFile__10MemoryCardFv
-loadCurrentFile__10MemoryCardFv:
+.fn loadCurrentFile__10MemoryCardFv, global
 /* 80074064 00070FC4  7C 08 02 A6 */	mflr r0
 /* 80074068 00070FC8  3C 80 80 3A */	lis r4, cst@ha
 /* 8007406C 00070FCC  90 01 00 04 */	stw r0, 4(r1)
@@ -600,9 +599,9 @@ loadCurrentFile__10MemoryCardFv:
 /* 80074108 00071068  38 21 00 40 */	addi r1, r1, 0x40
 /* 8007410C 0007106C  7C 08 03 A6 */	mtlr r0
 /* 80074110 00071070  4E 80 00 20 */	blr 
+.endfn loadCurrentFile__10MemoryCardFv
 
-.global getNewestOptionsIndex__10MemoryCardFv
-getNewestOptionsIndex__10MemoryCardFv:
+.fn getNewestOptionsIndex__10MemoryCardFv, global
 /* 80074114 00071074  7C 08 02 A6 */	mflr r0
 /* 80074118 00071078  3C C0 80 3B */	lis r6, cardData@ha
 /* 8007411C 0007107C  90 01 00 04 */	stw r0, 4(r1)
@@ -727,9 +726,9 @@ getNewestOptionsIndex__10MemoryCardFv:
 /* 800742E4 00071244  38 21 00 80 */	addi r1, r1, 0x80
 /* 800742E8 00071248  7C 08 03 A6 */	mtlr r0
 /* 800742EC 0007124C  4E 80 00 20 */	blr 
+.endfn getNewestOptionsIndex__10MemoryCardFv
 
-.global loadOptions__10MemoryCardFv
-loadOptions__10MemoryCardFv:
+.fn loadOptions__10MemoryCardFv, global
 /* 800742F0 00071250  7C 08 02 A6 */	mflr r0
 /* 800742F4 00071254  90 01 00 04 */	stw r0, 4(r1)
 /* 800742F8 00071258  94 21 FF D0 */	stwu r1, -0x30(r1)
@@ -773,9 +772,9 @@ loadOptions__10MemoryCardFv:
 /* 80074388 000712E8  38 21 00 30 */	addi r1, r1, 0x30
 /* 8007438C 000712EC  7C 08 03 A6 */	mtlr r0
 /* 80074390 000712F0  4E 80 00 20 */	blr 
+.endfn loadOptions__10MemoryCardFv
 
-.global saveOptions__10MemoryCardFv
-saveOptions__10MemoryCardFv:
+.fn saveOptions__10MemoryCardFv, global
 /* 80074394 000712F4  7C 08 02 A6 */	mflr r0
 /* 80074398 000712F8  90 01 00 04 */	stw r0, 4(r1)
 /* 8007439C 000712FC  38 00 00 01 */	li r0, 1
@@ -831,9 +830,9 @@ saveOptions__10MemoryCardFv:
 /* 8007445C 000713BC  38 21 00 20 */	addi r1, r1, 0x20
 /* 80074460 000713C0  7C 08 03 A6 */	mtlr r0
 /* 80074464 000713C4  4E 80 00 20 */	blr 
+.endfn saveOptions__10MemoryCardFv
 
-.global loadCurrentGame__10MemoryCardFv
-loadCurrentGame__10MemoryCardFv:
+.fn loadCurrentGame__10MemoryCardFv, global
 /* 80074468 000713C8  7C 08 02 A6 */	mflr r0
 /* 8007446C 000713CC  3C 80 80 3A */	lis r4, gameflow@ha
 /* 80074470 000713D0  90 01 00 04 */	stw r0, 4(r1)
@@ -878,9 +877,9 @@ loadCurrentGame__10MemoryCardFv:
 /* 80074508 00071468  38 21 00 30 */	addi r1, r1, 0x30
 /* 8007450C 0007146C  7C 08 03 A6 */	mtlr r0
 /* 80074510 00071470  4E 80 00 20 */	blr 
+.endfn loadCurrentGame__10MemoryCardFv
 
-.global saveCurrentGame__10MemoryCardFv
-saveCurrentGame__10MemoryCardFv:
+.fn saveCurrentGame__10MemoryCardFv, global
 /* 80074514 00071474  7C 08 02 A6 */	mflr r0
 /* 80074518 00071478  3C A0 80 3A */	lis r5, cst@ha
 /* 8007451C 0007147C  90 01 00 04 */	stw r0, 4(r1)
@@ -1154,9 +1153,9 @@ saveCurrentGame__10MemoryCardFv:
 /* 8007492C 0007188C  38 21 00 90 */	addi r1, r1, 0x90
 /* 80074930 00071890  7C 08 03 A6 */	mtlr r0
 /* 80074934 00071894  4E 80 00 20 */	blr 
+.endfn saveCurrentGame__10MemoryCardFv
 
-.global writeCurrentGame__10MemoryCardFP18RandomAccessStreamR9PlayState
-writeCurrentGame__10MemoryCardFP18RandomAccessStreamR9PlayState:
+.fn writeCurrentGame__10MemoryCardFP18RandomAccessStreamR9PlayState, global
 /* 80074938 00071898  7C 08 02 A6 */	mflr r0
 /* 8007493C 0007189C  90 01 00 04 */	stw r0, 4(r1)
 /* 80074940 000718A0  94 21 FF C0 */	stwu r1, -0x40(r1)
@@ -1239,9 +1238,9 @@ writeCurrentGame__10MemoryCardFP18RandomAccessStreamR9PlayState:
 /* 80074A54 000719B4  38 21 00 40 */	addi r1, r1, 0x40
 /* 80074A58 000719B8  7C 08 03 A6 */	mtlr r0
 /* 80074A5C 000719BC  4E 80 00 20 */	blr 
+.endfn writeCurrentGame__10MemoryCardFP18RandomAccessStreamR9PlayState
 
-.global readCurrentGame__10MemoryCardFP18RandomAccessStream
-readCurrentGame__10MemoryCardFP18RandomAccessStream:
+.fn readCurrentGame__10MemoryCardFP18RandomAccessStream, global
 /* 80074A60 000719C0  7C 08 02 A6 */	mflr r0
 /* 80074A64 000719C4  3C 60 80 3A */	lis r3, gameflow@ha
 /* 80074A68 000719C8  90 01 00 04 */	stw r0, 4(r1)
@@ -1271,9 +1270,9 @@ readCurrentGame__10MemoryCardFP18RandomAccessStream:
 /* 80074AC4 00071A24  38 21 00 18 */	addi r1, r1, 0x18
 /* 80074AC8 00071A28  7C 08 03 A6 */	mtlr r0
 /* 80074ACC 00071A2C  4E 80 00 20 */	blr 
+.endfn readCurrentGame__10MemoryCardFP18RandomAccessStream
 
-.global initBannerArea__10MemoryCardFR8CARDStatPc
-initBannerArea__10MemoryCardFR8CARDStatPc:
+.fn initBannerArea__10MemoryCardFR8CARDStatPc, global
 /* 80074AD0 00071A30  7C 08 02 A6 */	mflr r0
 /* 80074AD4 00071A34  3C 60 80 22 */	lis r3, __vt__6Stream@ha
 /* 80074AD8 00071A38  90 01 00 04 */	stw r0, 4(r1)
@@ -1520,9 +1519,9 @@ initBannerArea__10MemoryCardFR8CARDStatPc:
 /* 80074E74 00071DD4  38 21 00 88 */	addi r1, r1, 0x88
 /* 80074E78 00071DD8  7C 08 03 A6 */	mtlr r0
 /* 80074E7C 00071DDC  4E 80 00 20 */	blr 
+.endfn initBannerArea__10MemoryCardFR8CARDStatPc
 
-.global initOptionsArea__10MemoryCardFi
-initOptionsArea__10MemoryCardFi:
+.fn initOptionsArea__10MemoryCardFi, global
 /* 80074E80 00071DE0  7C 08 02 A6 */	mflr r0
 /* 80074E84 00071DE4  38 60 00 14 */	li r3, 0x14
 /* 80074E88 00071DE8  90 01 00 04 */	stw r0, 4(r1)
@@ -1659,9 +1658,9 @@ initOptionsArea__10MemoryCardFi:
 /* 80075084 00071FE4  38 21 00 60 */	addi r1, r1, 0x60
 /* 80075088 00071FE8  7C 08 03 A6 */	mtlr r0
 /* 8007508C 00071FEC  4E 80 00 20 */	blr 
+.endfn initOptionsArea__10MemoryCardFi
 
-.global makeDefaultFile__10MemoryCardFv
-makeDefaultFile__10MemoryCardFv:
+.fn makeDefaultFile__10MemoryCardFv, global
 /* 80075090 00071FF0  7C 08 02 A6 */	mflr r0
 /* 80075094 00071FF4  3C 80 80 3A */	lis r4, gameflow@ha
 /* 80075098 00071FF8  90 01 00 04 */	stw r0, 4(r1)
@@ -1932,16 +1931,16 @@ makeDefaultFile__10MemoryCardFv:
 /* 80075498 000723F8  38 21 01 20 */	addi r1, r1, 0x120
 /* 8007549C 000723FC  7C 08 03 A6 */	mtlr r0
 /* 800754A0 00072400  4E 80 00 20 */	blr 
+.endfn makeDefaultFile__10MemoryCardFv
 
-.global __ct__6StreamFv
-__ct__6StreamFv:
+.fn __ct__6StreamFv, weak
 /* 800754A4 00072404  3C 80 80 22 */	lis r4, __vt__6Stream@ha
 /* 800754A8 00072408  38 04 73 98 */	addi r0, r4, __vt__6Stream@l
 /* 800754AC 0007240C  90 03 00 04 */	stw r0, 4(r3)
 /* 800754B0 00072410  4E 80 00 20 */	blr 
+.endfn __ct__6StreamFv
 
-.global copyFile__10MemoryCardFR13CardQuickInfoR13CardQuickInfo
-copyFile__10MemoryCardFR13CardQuickInfoR13CardQuickInfo:
+.fn copyFile__10MemoryCardFR13CardQuickInfoR13CardQuickInfo, global
 /* 800754B4 00072414  7C 08 02 A6 */	mflr r0
 /* 800754B8 00072418  3C C0 80 3A */	lis r6, cst@ha
 /* 800754BC 0007241C  90 01 00 04 */	stw r0, 4(r1)
@@ -2141,9 +2140,9 @@ copyFile__10MemoryCardFR13CardQuickInfoR13CardQuickInfo:
 /* 800757BC 0007271C  38 21 00 B0 */	addi r1, r1, 0xb0
 /* 800757C0 00072720  7C 08 03 A6 */	mtlr r0
 /* 800757C4 00072724  4E 80 00 20 */	blr 
+.endfn copyFile__10MemoryCardFR13CardQuickInfoR13CardQuickInfo
 
-.global delFile__10MemoryCardFR13CardQuickInfo
-delFile__10MemoryCardFR13CardQuickInfo:
+.fn delFile__10MemoryCardFR13CardQuickInfo, global
 /* 800757C8 00072728  7C 08 02 A6 */	mflr r0
 /* 800757CC 0007272C  3C C0 80 2B */	lis r6, lbl_802ABB44@ha
 /* 800757D0 00072730  90 01 00 04 */	stw r0, 4(r1)
@@ -2433,9 +2432,9 @@ delFile__10MemoryCardFR13CardQuickInfo:
 /* 80075C10 00072B70  38 21 00 C8 */	addi r1, r1, 0xc8
 /* 80075C14 00072B74  7C 08 03 A6 */	mtlr r0
 /* 80075C18 00072B78  4E 80 00 20 */	blr 
+.endfn delFile__10MemoryCardFR13CardQuickInfo
 
-.global doFormatCard__10MemoryCardFv
-doFormatCard__10MemoryCardFv:
+.fn doFormatCard__10MemoryCardFv, global
 /* 80075C1C 00072B7C  7C 08 02 A6 */	mflr r0
 /* 80075C20 00072B80  38 80 00 00 */	li r4, 0
 /* 80075C24 00072B84  90 01 00 04 */	stw r0, 4(r1)
@@ -2463,9 +2462,9 @@ doFormatCard__10MemoryCardFv:
 /* 80075C7C 00072BDC  38 21 00 20 */	addi r1, r1, 0x20
 /* 80075C80 00072BE0  7C 08 03 A6 */	mtlr r0
 /* 80075C84 00072BE4  4E 80 00 20 */	blr 
+.endfn doFormatCard__10MemoryCardFv
 
-.global isCardInserted__10MemoryCardFv
-isCardInserted__10MemoryCardFv:
+.fn isCardInserted__10MemoryCardFv, global
 /* 80075C88 00072BE8  7C 08 02 A6 */	mflr r0
 /* 80075C8C 00072BEC  38 60 00 00 */	li r3, 0
 /* 80075C90 00072BF0  90 01 00 04 */	stw r0, 4(r1)
@@ -2479,9 +2478,9 @@ isCardInserted__10MemoryCardFv:
 /* 80075CB0 00072C10  38 21 00 08 */	addi r1, r1, 8
 /* 80075CB4 00072C14  7C 08 03 A6 */	mtlr r0
 /* 80075CB8 00072C18  4E 80 00 20 */	blr 
+.endfn isCardInserted__10MemoryCardFv
 
-.global hasCardChanged__10MemoryCardFv
-hasCardChanged__10MemoryCardFv:
+.fn hasCardChanged__10MemoryCardFv, global
 /* 80075CBC 00072C1C  7C 08 02 A6 */	mflr r0
 /* 80075CC0 00072C20  3C 80 80 3A */	lis r4, gameflow@ha
 /* 80075CC4 00072C24  90 01 00 04 */	stw r0, 4(r1)
@@ -2629,9 +2628,9 @@ hasCardChanged__10MemoryCardFv:
 /* 80075EDC 00072E3C  38 21 00 60 */	addi r1, r1, 0x60
 /* 80075EE0 00072E40  7C 08 03 A6 */	mtlr r0
 /* 80075EE4 00072E44  4E 80 00 20 */	blr 
+.endfn hasCardChanged__10MemoryCardFv
 
-.global getOkSections__10MemoryCardFv
-getOkSections__10MemoryCardFv:
+.fn getOkSections__10MemoryCardFv, global
 /* 80075EE8 00072E48  7C 08 02 A6 */	mflr r0
 /* 80075EEC 00072E4C  3C 80 80 3A */	lis r4, cst@ha
 /* 80075EF0 00072E50  90 01 00 04 */	stw r0, 4(r1)
@@ -2994,9 +2993,9 @@ getOkSections__10MemoryCardFv:
 /* 80076450 000733B0  38 21 01 30 */	addi r1, r1, 0x130
 /* 80076454 000733B4  7C 08 03 A6 */	mtlr r0
 /* 80076458 000733B8  4E 80 00 20 */	blr 
+.endfn getOkSections__10MemoryCardFv
 
-.global isFileBroken__10MemoryCardFv
-isFileBroken__10MemoryCardFv:
+.fn isFileBroken__10MemoryCardFv, global
 /* 8007645C 000733BC  7C 08 02 A6 */	mflr r0
 /* 80076460 000733C0  3C 80 80 3A */	lis r4, gameflow@ha
 /* 80076464 000733C4  90 01 00 04 */	stw r0, 4(r1)
@@ -3041,9 +3040,9 @@ isFileBroken__10MemoryCardFv:
 /* 800764F0 00073450  38 21 00 18 */	addi r1, r1, 0x18
 /* 800764F4 00073454  7C 08 03 A6 */	mtlr r0
 /* 800764F8 00073458  4E 80 00 20 */	blr 
+.endfn isFileBroken__10MemoryCardFv
 
-.global repairFile__10MemoryCardFv
-repairFile__10MemoryCardFv:
+.fn repairFile__10MemoryCardFv, global
 /* 800764FC 0007345C  7C 08 02 A6 */	mflr r0
 /* 80076500 00073460  90 01 00 04 */	stw r0, 4(r1)
 /* 80076504 00073464  38 00 00 00 */	li r0, 0
@@ -3396,9 +3395,9 @@ repairFile__10MemoryCardFv:
 /* 80076A1C 0007397C  38 21 01 20 */	addi r1, r1, 0x120
 /* 80076A20 00073980  7C 08 03 A6 */	mtlr r0
 /* 80076A24 00073984  4E 80 00 20 */	blr 
+.endfn repairFile__10MemoryCardFv
 
-.global didSaveFail__10MemoryCardFv
-didSaveFail__10MemoryCardFv:
+.fn didSaveFail__10MemoryCardFv, global
 /* 80076A28 00073988  7C 08 02 A6 */	mflr r0
 /* 80076A2C 0007398C  90 01 00 04 */	stw r0, 4(r1)
 /* 80076A30 00073990  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -3416,9 +3415,9 @@ didSaveFail__10MemoryCardFv:
 /* 80076A5C 000739BC  38 21 00 18 */	addi r1, r1, 0x18
 /* 80076A60 000739C0  7C 08 03 A6 */	mtlr r0
 /* 80076A64 000739C4  4E 80 00 20 */	blr 
+.endfn didSaveFail__10MemoryCardFv
 
-.global getQuickInfos__10MemoryCardFP13CardQuickInfo
-getQuickInfos__10MemoryCardFP13CardQuickInfo:
+.fn getQuickInfos__10MemoryCardFP13CardQuickInfo, global
 /* 80076A68 000739C8  7C 08 02 A6 */	mflr r0
 /* 80076A6C 000739CC  3C 60 80 22 */	lis r3, __vt__5ANode@ha
 /* 80076A70 000739D0  90 01 00 04 */	stw r0, 4(r1)
@@ -3658,9 +3657,9 @@ getQuickInfos__10MemoryCardFP13CardQuickInfo:
 /* 80076DF4 00073D54  38 21 00 E8 */	addi r1, r1, 0xe8
 /* 80076DF8 00073D58  7C 08 03 A6 */	mtlr r0
 /* 80076DFC 00073D5C  4E 80 00 20 */	blr 
+.endfn getQuickInfos__10MemoryCardFP13CardQuickInfo
 
-.global init__10MemoryCardFv
-init__10MemoryCardFv:
+.fn init__10MemoryCardFv, global
 /* 80076E00 00073D60  7C 08 02 A6 */	mflr r0
 /* 80076E04 00073D64  3C 60 80 3D */	lis r3, CardStack@ha
 /* 80076E08 00073D68  90 01 00 04 */	stw r0, 4(r1)
@@ -3674,19 +3673,23 @@ init__10MemoryCardFv:
 /* 80076E28 00073D88  38 21 00 08 */	addi r1, r1, 8
 /* 80076E2C 00073D8C  7C 08 03 A6 */	mtlr r0
 /* 80076E30 00073D90  4E 80 00 20 */	blr 
+.endfn init__10MemoryCardFv
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802AA020:
+.obj lbl_802AA020, local
 	.asciz "memoryCard.cpp"
+.endobj lbl_802AA020
 .balign 4
-lbl_802AA030:
+.obj lbl_802AA030, local
 	.asciz "MemoryCard"
+.endobj lbl_802AA030
 .balign 4
-basecardname:
+.obj basecardname, local
 	.asciz "Pikmin dataFile"
+.endobj basecardname
 .balign 32
-p_icon_palette:
+.obj p_icon_palette, local
 	.4byte 0x8000FFFF
 	.4byte 0xFE60DDF0
 	.4byte 0xC129BD4B
@@ -3815,8 +3818,9 @@ p_icon_palette:
 	.4byte 0xB5ADEB5A
 	.4byte 0xB9CE8000
 	.4byte 0x8000FFFF
+.endobj p_icon_palette
 .balign 32
-p_icon_data:
+.obj p_icon_data, local
 	.4byte 0xAF020202
 	.4byte 0x02020202
 	.4byte 0x02000000
@@ -4073,8 +4077,9 @@ p_icon_data:
 	.4byte 0x00000002
 	.4byte 0x02020202
 	.4byte 0x020202AF
+.endobj p_icon_data
 .balign 32
-o_icon_palette:
+.obj o_icon_palette, local
 	.4byte 0x8000FFFF
 	.4byte 0xFE60DDF0
 	.4byte 0xC129BD4B
@@ -4203,8 +4208,9 @@ o_icon_palette:
 	.4byte 0xB5ADEB5A
 	.4byte 0xB9CE8000
 	.4byte 0x8000FFFF
+.endobj o_icon_palette
 .balign 32
-o_icon_data:
+.obj o_icon_data, local
 	.4byte 0xAF020202
 	.4byte 0x02020202
 	.4byte 0x02000000
@@ -4461,8 +4467,9 @@ o_icon_data:
 	.4byte 0x00000002
 	.4byte 0x02020202
 	.4byte 0x020202AF
+.endobj o_icon_data
 .balign 32
-p_card_v_palette:
+.obj p_card_v_palette, local
 	.4byte 0xFFFFFFE0
 	.4byte 0xFC1FFC00
 	.4byte 0x83FF83E0
@@ -4591,8 +4598,9 @@ p_card_v_palette:
 	.4byte 0xBC20E8A4
 	.4byte 0xF4E68800
 	.4byte 0xA0C6FFFF
+.endobj p_card_v_palette
 .balign 32
-p_card_v_data:
+.obj p_card_v_data, local
 	.4byte 0x0707070E
 	.4byte 0x14352707
 	.4byte 0x07070E18
@@ -5361,7 +5369,9 @@ p_card_v_data:
 	.4byte 0x07070707
 	.4byte 0x07070707
 	.4byte 0x07070707
-icon_datas:
+.endobj p_card_v_data
+.balign 4
+.obj icon_datas, local
 	.4byte p_icon_data
 	.4byte 0x00000000
 	.4byte 0x00000000
@@ -5370,35 +5380,45 @@ icon_datas:
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte o_icon_data
+.endobj icon_datas
 .balign 4
-lbl_802ABA80:
+.obj lbl_802ABA80, local
 	.asciz "No Error"
+.endobj lbl_802ABA80
 .balign 4
-lbl_802ABA8C:
+.obj lbl_802ABA8C, local
 	.asciz "ERR! No Card"
+.endobj lbl_802ABA8C
 .balign 4
-lbl_802ABA9C:
+.obj lbl_802ABA9C, local
 	.asciz "ERR! Not a Card"
+.endobj lbl_802ABA9C
 .balign 4
-lbl_802ABAAC:
+.obj lbl_802ABAAC, local
 	.asciz "ERR! Card Fullup"
+.endobj lbl_802ABAAC
 .balign 4
-lbl_802ABAC0:
+.obj lbl_802ABAC0, local
 	.asciz "ERR! Card Broken"
+.endobj lbl_802ABAC0
 .balign 4
-lbl_802ABAD4:
+.obj lbl_802ABAD4, local
 	.asciz "ERR! Card Wrong Country"
+.endobj lbl_802ABAD4
 .balign 4
-lbl_802ABAEC:
+.obj lbl_802ABAEC, local
 	.asciz "ERR! Unusable"
+.endobj lbl_802ABAEC
 .balign 4
-lbl_802ABAFC:
+.obj lbl_802ABAFC, local
 	.asciz "ERR! Unknown"
+.endobj lbl_802ABAFC
 .balign 4
-lbl_802ABB0C:
+.obj lbl_802ABB0C, local
 	.asciz "ERR! No Files Left"
+.endobj lbl_802ABB0C
 .balign 4
-errCodes:
+.obj errCodes, local
 	.4byte lbl_802ABA80
 	.4byte lbl_802ABA8C
 	.4byte lbl_802ABA9C
@@ -5408,32 +5428,41 @@ errCodes:
 	.4byte lbl_802ABAEC
 	.4byte lbl_802ABAFC
 	.4byte lbl_802ABB0C
+.endobj errCodes
 .balign 4
-lbl_802ABB44:
+.obj lbl_802ABB44, local
 	.asciz "playState"
+.endobj lbl_802ABB44
 .balign 4
-lbl_802ABB50:
+.obj lbl_802ABB50, local
 	.asciz "%02d/%02d %02d:%02d"
+.endobj lbl_802ABB50
 .balign 4
-lbl_802ABB64:
+.obj lbl_802ABB64, local
 	.asciz "options 0"
+.endobj lbl_802ABB64
 .balign 4
-lbl_802ABB70:
+.obj lbl_802ABB70, local
 	.asciz "options 1"
+.endobj lbl_802ABB70
 .balign 4
-lbl_802ABB7C:
+.obj lbl_802ABB7C, local
 	.asciz "gamefile 0"
+.endobj lbl_802ABB7C
 .balign 4
-lbl_802ABB88:
+.obj lbl_802ABB88, local
 	.asciz "gamefile 1"
+.endobj lbl_802ABB88
 .balign 4
-lbl_802ABB94:
+.obj lbl_802ABB94, local
 	.asciz "gamefile 2"
+.endobj lbl_802ABB94
 .balign 4
-lbl_802ABBA0:
+.obj lbl_802ABBA0, local
 	.asciz "gamefile 3"
+.endobj lbl_802ABBA0
 .balign 4
-sectionNames$2018:
+.obj sectionNames$2018, local
 	.4byte lbl_803DE7F0
 	.4byte lbl_802ABB64
 	.4byte lbl_802ABB70
@@ -5441,123 +5470,87 @@ sectionNames$2018:
 	.4byte lbl_802ABB88
 	.4byte lbl_802ABB94
 	.4byte lbl_802ABBA0
+.endobj sectionNames$2018
 .balign 4
-lbl_802ABBC8:
+.obj lbl_802ABBC8, local
 	.asciz "CoreNode"
+.endobj lbl_802ABBC8
 .balign 4
-lbl_802ABBD4:
+.obj lbl_802ABBD4, local
 	.4byte __RTTI__5ANode
 	.4byte 0x00000000
 	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
+.endobj lbl_802ABBD4
+.skip 0x1C # compiler padding
 .balign 4
-lbl_802ABBFC:
+.obj lbl_802ABBFC, local
 	.asciz "RamStream"
+.endobj lbl_802ABBFC
 .balign 4
-lbl_802ABC08:
+.obj lbl_802ABC08, local
 	.asciz "RandomAccessStream"
+.endobj lbl_802ABC08
 .balign 4
-lbl_802ABC1C:
+.obj lbl_802ABC1C, local
 	.4byte __RTTI__6Stream
 	.4byte 0x00000000
 	.4byte 0x00000000
-lbl_802ABC28:
+.endobj lbl_802ABC1C
+.balign 4
+.obj lbl_802ABC28, local
 	.4byte __RTTI__6Stream
 	.4byte 0x00000000
 	.4byte __RTTI__18RandomAccessStream
 	.4byte 0x00000000
 	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
+.endobj lbl_802ABC28
+.skip 0xCC # compiler padding
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-icon_pals:
+.obj icon_pals, local
 	.4byte p_icon_palette
+.endobj icon_pals
 .balign 4
-lbl_803DE7D4:
+.obj lbl_803DE7D4, local
 	.asciz "Pikmin"
+.endobj lbl_803DE7D4
 .balign 4
-lbl_803DE7DC:
+.obj lbl_803DE7DC, local
 	.asciz "~Pikmin"
+.endobj lbl_803DE7DC
 .balign 4
-lbl_803DE7E4:
+.obj lbl_803DE7E4, local
 	.asciz "Blocks"
+.endobj lbl_803DE7E4
 .balign 4
-lbl_803DE7EC:
+.obj lbl_803DE7EC, local
 	.asciz "%s"
+.endobj lbl_803DE7EC
 .balign 4
-lbl_803DE7F0:
+.obj lbl_803DE7F0, local
 	.asciz "banner"
+.endobj lbl_803DE7F0
 .balign 4
-lbl_803DE7F8:
+.obj lbl_803DE7F8, local
 	.asciz "ANode"
+.endobj lbl_803DE7F8
 .balign 4
-__RTTI__5ANode:
+.obj __RTTI__5ANode, local
 	.4byte lbl_803DE7F8
 	.4byte 0
+.endobj __RTTI__5ANode
 .balign 4
-lbl_803DE808:
+.obj lbl_803DE808, local
 	.asciz "Stream"
+.endobj lbl_803DE808
 .balign 4
-__RTTI__6Stream:
+.obj __RTTI__6Stream, local
 	.4byte lbl_803DE808
 	.4byte 0
-__RTTI__18RandomAccessStream:
+.endobj __RTTI__6Stream
+.balign 4
+.obj __RTTI__18RandomAccessStream, local
 	.4byte lbl_802ABC08
 	.4byte lbl_802ABC1C
+.endobj __RTTI__18RandomAccessStream

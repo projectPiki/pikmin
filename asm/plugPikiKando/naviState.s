@@ -2941,8 +2941,7 @@
 /* 80103A30 00100990  4E 80 00 20 */	blr 
 .endfn __ct__13NaviWalkStateFv
 
-.global init__13NaviWalkStateFP4Navi
-init__13NaviWalkStateFP4Navi:
+.fn init__13NaviWalkStateFP4Navi, global
 /* 80103A34 00100994  7C 08 02 A6 */	mflr r0
 /* 80103A38 00100998  90 01 00 04 */	stw r0, 4(r1)
 /* 80103A3C 0010099C  94 21 FF D0 */	stwu r1, -0x30(r1)
@@ -2976,9 +2975,9 @@ init__13NaviWalkStateFP4Navi:
 /* 80103AAC 00100A0C  38 21 00 30 */	addi r1, r1, 0x30
 /* 80103AB0 00100A10  7C 08 03 A6 */	mtlr r0
 /* 80103AB4 00100A14  4E 80 00 20 */	blr 
+.endfn init__13NaviWalkStateFP4Navi
 
-.global restart__13NaviWalkStateFP4Navi
-restart__13NaviWalkStateFP4Navi:
+.fn restart__13NaviWalkStateFP4Navi, global
 /* 80103AB8 00100A18  7C 08 02 A6 */	mflr r0
 /* 80103ABC 00100A1C  90 01 00 04 */	stw r0, 4(r1)
 /* 80103AC0 00100A20  94 21 FF F8 */	stwu r1, -8(r1)
@@ -2990,9 +2989,9 @@ restart__13NaviWalkStateFP4Navi:
 /* 80103AD8 00100A38  38 21 00 08 */	addi r1, r1, 8
 /* 80103ADC 00100A3C  7C 08 03 A6 */	mtlr r0
 /* 80103AE0 00100A40  4E 80 00 20 */	blr 
+.endfn restart__13NaviWalkStateFP4Navi
 
-.global exec__13NaviWalkStateFP4Navi
-exec__13NaviWalkStateFP4Navi:
+.fn exec__13NaviWalkStateFP4Navi, global
 /* 80103AE4 00100A44  7C 08 02 A6 */	mflr r0
 /* 80103AE8 00100A48  90 01 00 04 */	stw r0, 4(r1)
 /* 80103AEC 00100A4C  94 21 FD 78 */	stwu r1, -0x288(r1)
@@ -3930,9 +3929,9 @@ exec__13NaviWalkStateFP4Navi:
 /* 801048C0 00101820  38 21 02 88 */	addi r1, r1, 0x288
 /* 801048C4 00101824  7C 08 03 A6 */	mtlr r0
 /* 801048C8 00101828  4E 80 00 20 */	blr 
+.endfn exec__13NaviWalkStateFP4Navi
 
-.global cleanup__13NaviWalkStateFP4Navi
-cleanup__13NaviWalkStateFP4Navi:
+.fn cleanup__13NaviWalkStateFP4Navi, global
 /* 801048CC 0010182C  7C 08 02 A6 */	mflr r0
 /* 801048D0 00101830  7C 83 23 78 */	mr r3, r4
 /* 801048D4 00101834  90 01 00 04 */	stw r0, 4(r1)
@@ -3942,9 +3941,9 @@ cleanup__13NaviWalkStateFP4Navi:
 /* 801048E4 00101844  38 21 00 08 */	addi r1, r1, 8
 /* 801048E8 00101848  7C 08 03 A6 */	mtlr r0
 /* 801048EC 0010184C  4E 80 00 20 */	blr 
+.endfn cleanup__13NaviWalkStateFP4Navi
 
-.global procWallMsg__13NaviWalkStateFP4NaviP7MsgWall
-procWallMsg__13NaviWalkStateFP4NaviP7MsgWall:
+.fn procWallMsg__13NaviWalkStateFP4NaviP7MsgWall, global
 /* 801048F0 00101850  7C 08 02 A6 */	mflr r0
 /* 801048F4 00101854  90 01 00 04 */	stw r0, 4(r1)
 /* 801048F8 00101858  94 21 FF D0 */	stwu r1, -0x30(r1)
@@ -3970,23 +3969,23 @@ procWallMsg__13NaviWalkStateFP4NaviP7MsgWall:
 /* 80104944 001018A4  38 21 00 30 */	addi r1, r1, 0x30
 /* 80104948 001018A8  7C 08 03 A6 */	mtlr r0
 /* 8010494C 001018AC  4E 80 00 20 */	blr 
+.endfn procWallMsg__13NaviWalkStateFP4NaviP7MsgWall
 
-.global procOffWallMsg__13NaviWalkStateFP4NaviP10MsgOffWall
-procOffWallMsg__13NaviWalkStateFP4NaviP10MsgOffWall:
+.fn procOffWallMsg__13NaviWalkStateFP4NaviP10MsgOffWall, global
 /* 80104950 001018B0  38 00 00 00 */	li r0, 0
 /* 80104954 001018B4  90 03 00 18 */	stw r0, 0x18(r3)
 /* 80104958 001018B8  C0 02 9D 98 */	lfs f0, lbl_803E9F98@sda21(r2)
 /* 8010495C 001018BC  D0 03 00 1C */	stfs f0, 0x1c(r3)
 /* 80104960 001018C0  4E 80 00 20 */	blr 
+.endfn procOffWallMsg__13NaviWalkStateFP4NaviP10MsgOffWall
 
-.global procCollideMsg__13NaviWalkStateFP4NaviP10MsgCollide
-procCollideMsg__13NaviWalkStateFP4NaviP10MsgCollide:
+.fn procCollideMsg__13NaviWalkStateFP4NaviP10MsgCollide, global
 /* 80104964 001018C4  80 05 00 04 */	lwz r0, 4(r5)
 /* 80104968 001018C8  90 03 00 10 */	stw r0, 0x10(r3)
 /* 8010496C 001018CC  4E 80 00 20 */	blr 
+.endfn procCollideMsg__13NaviWalkStateFP4NaviP10MsgCollide
 
-.global __ct__12NaviUfoStateFv
-__ct__12NaviUfoStateFv:
+.fn __ct__12NaviUfoStateFv, global
 /* 80104970 001018D0  3C 80 80 2C */	lis r4, "__vt__15Receiver<4Navi>"@ha
 /* 80104974 001018D4  38 04 19 F8 */	addi r0, r4, "__vt__15Receiver<4Navi>"@l
 /* 80104978 001018D8  3C 80 80 2C */	lis r4, "__vt__13AState<4Navi>"@ha
@@ -4008,9 +4007,9 @@ __ct__12NaviUfoStateFv:
 /* 801049B8 00101918  D0 03 00 18 */	stfs f0, 0x18(r3)
 /* 801049BC 0010191C  D0 03 00 14 */	stfs f0, 0x14(r3)
 /* 801049C0 00101920  4E 80 00 20 */	blr 
+.endfn __ct__12NaviUfoStateFv
 
-.global init__12NaviUfoStateFP4Navi
-init__12NaviUfoStateFP4Navi:
+.fn init__12NaviUfoStateFP4Navi, global
 /* 801049C4 00101924  7C 08 02 A6 */	mflr r0
 /* 801049C8 00101928  90 01 00 04 */	stw r0, 4(r1)
 /* 801049CC 0010192C  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -4046,9 +4045,9 @@ init__12NaviUfoStateFP4Navi:
 /* 80104A40 001019A0  38 21 00 20 */	addi r1, r1, 0x20
 /* 80104A44 001019A4  7C 08 03 A6 */	mtlr r0
 /* 80104A48 001019A8  4E 80 00 20 */	blr 
+.endfn init__12NaviUfoStateFP4Navi
 
-.global procCollideMsg__12NaviUfoStateFP4NaviP10MsgCollide
-procCollideMsg__12NaviUfoStateFP4NaviP10MsgCollide:
+.fn procCollideMsg__12NaviUfoStateFP4NaviP10MsgCollide, global
 /* 80104A4C 001019AC  7C 08 02 A6 */	mflr r0
 /* 80104A50 001019B0  90 01 00 04 */	stw r0, 4(r1)
 /* 80104A54 001019B4  94 21 FF C8 */	stwu r1, -0x38(r1)
@@ -4097,9 +4096,9 @@ procCollideMsg__12NaviUfoStateFP4NaviP10MsgCollide:
 /* 80104AF8 00101A58  38 21 00 38 */	addi r1, r1, 0x38
 /* 80104AFC 00101A5C  7C 08 03 A6 */	mtlr r0
 /* 80104B00 00101A60  4E 80 00 20 */	blr 
+.endfn procCollideMsg__12NaviUfoStateFP4NaviP10MsgCollide
 
-.global exec__12NaviUfoStateFP4Navi
-exec__12NaviUfoStateFP4Navi:
+.fn exec__12NaviUfoStateFP4Navi, global
 /* 80104B04 00101A64  7C 08 02 A6 */	mflr r0
 /* 80104B08 00101A68  90 01 00 04 */	stw r0, 4(r1)
 /* 80104B0C 00101A6C  94 21 FF 18 */	stwu r1, -0xe8(r1)
@@ -4394,9 +4393,9 @@ exec__12NaviUfoStateFP4Navi:
 /* 80104F60 00101EC0  38 21 00 E8 */	addi r1, r1, 0xe8
 /* 80104F64 00101EC4  7C 08 03 A6 */	mtlr r0
 /* 80104F68 00101EC8  4E 80 00 20 */	blr 
+.endfn exec__12NaviUfoStateFP4Navi
 
-.global cleanup__12NaviUfoStateFP4Navi
-cleanup__12NaviUfoStateFP4Navi:
+.fn cleanup__12NaviUfoStateFP4Navi, global
 /* 80104F6C 00101ECC  7C 08 02 A6 */	mflr r0
 /* 80104F70 00101ED0  90 01 00 04 */	stw r0, 4(r1)
 /* 80104F74 00101ED4  94 21 FF F8 */	stwu r1, -8(r1)
@@ -4416,9 +4415,9 @@ cleanup__12NaviUfoStateFP4Navi:
 /* 80104FA8 00101F08  38 21 00 08 */	addi r1, r1, 8
 /* 80104FAC 00101F0C  7C 08 03 A6 */	mtlr r0
 /* 80104FB0 00101F10  4E 80 00 20 */	blr 
+.endfn cleanup__12NaviUfoStateFP4Navi
 
-.global procAnimMsg__12NaviUfoStateFP4NaviP7MsgAnim
-procAnimMsg__12NaviUfoStateFP4NaviP7MsgAnim:
+.fn procAnimMsg__12NaviUfoStateFP4NaviP7MsgAnim, global
 /* 80104FB4 00101F14  80 85 00 04 */	lwz r4, 4(r5)
 /* 80104FB8 00101F18  80 04 00 00 */	lwz r0, 0(r4)
 /* 80104FBC 00101F1C  2C 00 00 00 */	cmpwi r0, 0
@@ -4431,9 +4430,9 @@ procAnimMsg__12NaviUfoStateFP4NaviP7MsgAnim:
 /* 80104FD8 00101F38  38 00 00 0A */	li r0, 0xa
 /* 80104FDC 00101F3C  B0 03 00 12 */	sth r0, 0x12(r3)
 /* 80104FE0 00101F40  4E 80 00 20 */	blr 
+.endfn procAnimMsg__12NaviUfoStateFP4NaviP7MsgAnim
 
-.global __ct__18NaviContainerStateFv
-__ct__18NaviContainerStateFv:
+.fn __ct__18NaviContainerStateFv, global
 /* 80104FE4 00101F44  7C 80 07 35 */	extsh. r0, r4
 /* 80104FE8 00101F48  41 82 00 2C */	beq .L_80105014
 /* 80104FEC 00101F4C  38 03 00 20 */	addi r0, r3, 0x20
@@ -4478,9 +4477,9 @@ __ct__18NaviContainerStateFv:
 /* 80105084 00101FE4  7C 04 00 50 */	subf r0, r4, r0
 /* 80105088 00101FE8  90 04 00 04 */	stw r0, 4(r4)
 /* 8010508C 00101FEC  4E 80 00 20 */	blr 
+.endfn __ct__18NaviContainerStateFv
 
-.global init__18NaviContainerStateFP4Navi
-init__18NaviContainerStateFP4Navi:
+.fn init__18NaviContainerStateFP4Navi, global
 /* 80105090 00101FF0  7C 08 02 A6 */	mflr r0
 /* 80105094 00101FF4  90 01 00 04 */	stw r0, 4(r1)
 /* 80105098 00101FF8  38 00 00 01 */	li r0, 1
@@ -4620,9 +4619,9 @@ init__18NaviContainerStateFP4Navi:
 /* 80105288 001021E8  38 21 00 60 */	addi r1, r1, 0x60
 /* 8010528C 001021EC  7C 08 03 A6 */	mtlr r0
 /* 80105290 001021F0  4E 80 00 20 */	blr 
+.endfn init__18NaviContainerStateFP4Navi
 
-.global informWin__18NaviContainerStateFi
-informWin__18NaviContainerStateFi:
+.fn informWin__18NaviContainerStateFi, global
 /* 80105294 001021F4  2C 04 00 00 */	cmpwi r4, 0
 /* 80105298 001021F8  40 81 00 14 */	ble .L_801052AC
 /* 8010529C 001021FC  38 00 00 01 */	li r0, 1
@@ -4636,18 +4635,18 @@ informWin__18NaviContainerStateFi:
 /* 801052B8 00102218  7C 04 00 D0 */	neg r0, r4
 /* 801052BC 0010221C  90 03 00 1C */	stw r0, 0x1c(r3)
 /* 801052C0 00102220  4E 80 00 20 */	blr 
+.endfn informWin__18NaviContainerStateFi
 
-.global onCloseWindow__18NaviContainerStateFv
-onCloseWindow__18NaviContainerStateFv:
+.fn onCloseWindow__18NaviContainerStateFv, global
 /* 801052C4 00102224  80 03 00 18 */	lwz r0, 0x18(r3)
 /* 801052C8 00102228  2C 00 00 00 */	cmpwi r0, 0
 /* 801052CC 0010222C  4C 82 00 20 */	bnelr 
 /* 801052D0 00102230  38 00 00 03 */	li r0, 3
 /* 801052D4 00102234  90 03 00 18 */	stw r0, 0x18(r3)
 /* 801052D8 00102238  4E 80 00 20 */	blr 
+.endfn onCloseWindow__18NaviContainerStateFv
 
-.global exec__18NaviContainerStateFP4Navi
-exec__18NaviContainerStateFP4Navi:
+.fn exec__18NaviContainerStateFP4Navi, global
 /* 801052DC 0010223C  7C 08 02 A6 */	mflr r0
 /* 801052E0 00102240  90 01 00 04 */	stw r0, 4(r1)
 /* 801052E4 00102244  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -4709,9 +4708,9 @@ exec__18NaviContainerStateFP4Navi:
 /* 801053B8 00102318  38 21 00 20 */	addi r1, r1, 0x20
 /* 801053BC 0010231C  7C 08 03 A6 */	mtlr r0
 /* 801053C0 00102320  4E 80 00 20 */	blr 
+.endfn exec__18NaviContainerStateFP4Navi
 
-.global enterPikis__18NaviContainerStateFP4Navii
-enterPikis__18NaviContainerStateFP4Navii:
+.fn enterPikis__18NaviContainerStateFP4Navii, global
 /* 801053C4 00102324  7C 08 02 A6 */	mflr r0
 /* 801053C8 00102328  90 01 00 04 */	stw r0, 4(r1)
 /* 801053CC 0010232C  94 21 FC 90 */	stwu r1, -0x370(r1)
@@ -4847,9 +4846,9 @@ enterPikis__18NaviContainerStateFP4Navii:
 /* 801055A0 00102500  38 21 03 70 */	addi r1, r1, 0x370
 /* 801055A4 00102504  7C 08 03 A6 */	mtlr r0
 /* 801055A8 00102508  4E 80 00 20 */	blr 
+.endfn enterPikis__18NaviContainerStateFP4Navii
 
-.global exitPikis__18NaviContainerStateFP4Navii
-exitPikis__18NaviContainerStateFP4Navii:
+.fn exitPikis__18NaviContainerStateFP4Navii, global
 /* 801055AC 0010250C  7C 08 02 A6 */	mflr r0
 /* 801055B0 00102510  90 01 00 04 */	stw r0, 4(r1)
 /* 801055B4 00102514  94 21 FF F8 */	stwu r1, -8(r1)
@@ -4860,9 +4859,9 @@ exitPikis__18NaviContainerStateFP4Navii:
 /* 801055C8 00102528  38 21 00 08 */	addi r1, r1, 8
 /* 801055CC 0010252C  7C 08 03 A6 */	mtlr r0
 /* 801055D0 00102530  4E 80 00 20 */	blr 
+.endfn exitPikis__18NaviContainerStateFP4Navii
 
-.global cleanup__18NaviContainerStateFP4Navi
-cleanup__18NaviContainerStateFP4Navi:
+.fn cleanup__18NaviContainerStateFP4Navi, global
 /* 801055D4 00102534  7C 08 02 A6 */	mflr r0
 /* 801055D8 00102538  3C 60 80 3A */	lis r3, gameflow@ha
 /* 801055DC 0010253C  90 01 00 04 */	stw r0, 4(r1)
@@ -4877,9 +4876,9 @@ cleanup__18NaviContainerStateFP4Navi:
 /* 80105600 00102560  38 21 00 08 */	addi r1, r1, 8
 /* 80105604 00102564  7C 08 03 A6 */	mtlr r0
 /* 80105608 00102568  4E 80 00 20 */	blr 
+.endfn cleanup__18NaviContainerStateFP4Navi
 
-.global __ct__13NaviPickStateFv
-__ct__13NaviPickStateFv:
+.fn __ct__13NaviPickStateFv, global
 /* 8010560C 0010256C  3C 80 80 2C */	lis r4, "__vt__15Receiver<4Navi>"@ha
 /* 80105610 00102570  38 04 19 F8 */	addi r0, r4, "__vt__15Receiver<4Navi>"@l
 /* 80105614 00102574  3C 80 80 2C */	lis r4, "__vt__13AState<4Navi>"@ha
@@ -4897,13 +4896,13 @@ __ct__13NaviPickStateFv:
 /* 80105644 001025A4  90 A3 00 00 */	stw r5, 0(r3)
 /* 80105648 001025A8  90 03 00 00 */	stw r0, 0(r3)
 /* 8010564C 001025AC  4E 80 00 20 */	blr 
+.endfn __ct__13NaviPickStateFv
 
-.global procAnimMsg__13NaviPickStateFP4NaviP7MsgAnim
-procAnimMsg__13NaviPickStateFP4NaviP7MsgAnim:
+.fn procAnimMsg__13NaviPickStateFP4NaviP7MsgAnim, global
 /* 80105650 001025B0  4E 80 00 20 */	blr 
+.endfn procAnimMsg__13NaviPickStateFP4NaviP7MsgAnim
 
-.global init__13NaviPickStateFP4Navi
-init__13NaviPickStateFP4Navi:
+.fn init__13NaviPickStateFP4Navi, global
 /* 80105654 001025B4  7C 08 02 A6 */	mflr r0
 /* 80105658 001025B8  90 01 00 04 */	stw r0, 4(r1)
 /* 8010565C 001025BC  94 21 FF D0 */	stwu r1, -0x30(r1)
@@ -4932,9 +4931,9 @@ init__13NaviPickStateFP4Navi:
 /* 801056B8 00102618  38 21 00 30 */	addi r1, r1, 0x30
 /* 801056BC 0010261C  7C 08 03 A6 */	mtlr r0
 /* 801056C0 00102620  4E 80 00 20 */	blr 
+.endfn init__13NaviPickStateFP4Navi
 
-.global exec__13NaviPickStateFP4Navi
-exec__13NaviPickStateFP4Navi:
+.fn exec__13NaviPickStateFP4Navi, global
 /* 801056C4 00102624  7C 08 02 A6 */	mflr r0
 /* 801056C8 00102628  90 01 00 04 */	stw r0, 4(r1)
 /* 801056CC 0010262C  94 21 FF F8 */	stwu r1, -8(r1)
@@ -4956,9 +4955,9 @@ exec__13NaviPickStateFP4Navi:
 /* 80105704 00102664  38 21 00 08 */	addi r1, r1, 8
 /* 80105708 00102668  7C 08 03 A6 */	mtlr r0
 /* 8010570C 0010266C  4E 80 00 20 */	blr 
+.endfn exec__13NaviPickStateFP4Navi
 
-.global cleanup__13NaviPickStateFP4Navi
-cleanup__13NaviPickStateFP4Navi:
+.fn cleanup__13NaviPickStateFP4Navi, global
 /* 80105710 00102670  7C 08 02 A6 */	mflr r0
 /* 80105714 00102674  7C 83 23 78 */	mr r3, r4
 /* 80105718 00102678  90 01 00 04 */	stw r0, 4(r1)
@@ -4968,9 +4967,9 @@ cleanup__13NaviPickStateFP4Navi:
 /* 80105728 00102688  38 21 00 08 */	addi r1, r1, 8
 /* 8010572C 0010268C  7C 08 03 A6 */	mtlr r0
 /* 80105730 00102690  4E 80 00 20 */	blr 
+.endfn cleanup__13NaviPickStateFP4Navi
 
-.global __ct__13NaviRopeStateFv
-__ct__13NaviRopeStateFv:
+.fn __ct__13NaviRopeStateFv, global
 /* 80105734 00102694  3C 80 80 2C */	lis r4, "__vt__15Receiver<4Navi>"@ha
 /* 80105738 00102698  38 04 19 F8 */	addi r0, r4, "__vt__15Receiver<4Navi>"@l
 /* 8010573C 0010269C  3C 80 80 2C */	lis r4, "__vt__13AState<4Navi>"@ha
@@ -4988,9 +4987,9 @@ __ct__13NaviRopeStateFv:
 /* 8010576C 001026CC  90 A3 00 00 */	stw r5, 0(r3)
 /* 80105770 001026D0  90 03 00 00 */	stw r0, 0(r3)
 /* 80105774 001026D4  4E 80 00 20 */	blr 
+.endfn __ct__13NaviRopeStateFv
 
-.global init__13NaviRopeStateFP4Navi
-init__13NaviRopeStateFP4Navi:
+.fn init__13NaviRopeStateFP4Navi, global
 /* 80105778 001026D8  7C 08 02 A6 */	mflr r0
 /* 8010577C 001026DC  90 01 00 04 */	stw r0, 4(r1)
 /* 80105780 001026E0  94 21 FF D0 */	stwu r1, -0x30(r1)
@@ -5021,9 +5020,9 @@ init__13NaviRopeStateFP4Navi:
 /* 801057E0 00102740  38 21 00 30 */	addi r1, r1, 0x30
 /* 801057E4 00102744  7C 08 03 A6 */	mtlr r0
 /* 801057E8 00102748  4E 80 00 20 */	blr 
+.endfn init__13NaviRopeStateFP4Navi
 
-.global exec__13NaviRopeStateFP4Navi
-exec__13NaviRopeStateFP4Navi:
+.fn exec__13NaviRopeStateFP4Navi, global
 /* 801057EC 0010274C  7C 08 02 A6 */	mflr r0
 /* 801057F0 00102750  90 01 00 04 */	stw r0, 4(r1)
 /* 801057F4 00102754  94 21 FE B8 */	stwu r1, -0x148(r1)
@@ -5181,13 +5180,13 @@ exec__13NaviRopeStateFP4Navi:
 /* 80105A3C 0010299C  38 21 01 48 */	addi r1, r1, 0x148
 /* 80105A40 001029A0  7C 08 03 A6 */	mtlr r0
 /* 80105A44 001029A4  4E 80 00 20 */	blr 
+.endfn exec__13NaviRopeStateFP4Navi
 
-.global cleanup__13NaviRopeStateFP4Navi
-cleanup__13NaviRopeStateFP4Navi:
+.fn cleanup__13NaviRopeStateFP4Navi, global
 /* 80105A48 001029A8  4E 80 00 20 */	blr 
+.endfn cleanup__13NaviRopeStateFP4Navi
 
-.global __ct__17NaviRopeExitStateFv
-__ct__17NaviRopeExitStateFv:
+.fn __ct__17NaviRopeExitStateFv, global
 /* 80105A4C 001029AC  3C 80 80 2C */	lis r4, "__vt__15Receiver<4Navi>"@ha
 /* 80105A50 001029B0  38 04 19 F8 */	addi r0, r4, "__vt__15Receiver<4Navi>"@l
 /* 80105A54 001029B4  3C 80 80 2C */	lis r4, "__vt__13AState<4Navi>"@ha
@@ -5205,9 +5204,9 @@ __ct__17NaviRopeExitStateFv:
 /* 80105A84 001029E4  90 A3 00 00 */	stw r5, 0(r3)
 /* 80105A88 001029E8  90 03 00 00 */	stw r0, 0(r3)
 /* 80105A8C 001029EC  4E 80 00 20 */	blr 
+.endfn __ct__17NaviRopeExitStateFv
 
-.global init__17NaviRopeExitStateFP4Navi
-init__17NaviRopeExitStateFP4Navi:
+.fn init__17NaviRopeExitStateFP4Navi, global
 /* 80105A90 001029F0  7C 08 02 A6 */	mflr r0
 /* 80105A94 001029F4  90 01 00 04 */	stw r0, 4(r1)
 /* 80105A98 001029F8  94 21 FF B8 */	stwu r1, -0x48(r1)
@@ -5264,17 +5263,17 @@ init__17NaviRopeExitStateFP4Navi:
 /* 80105B60 00102AC0  38 21 00 48 */	addi r1, r1, 0x48
 /* 80105B64 00102AC4  7C 08 03 A6 */	mtlr r0
 /* 80105B68 00102AC8  4E 80 00 20 */	blr 
+.endfn init__17NaviRopeExitStateFP4Navi
 
-.global exec__17NaviRopeExitStateFP4Navi
-exec__17NaviRopeExitStateFP4Navi:
+.fn exec__17NaviRopeExitStateFP4Navi, global
 /* 80105B6C 00102ACC  4E 80 00 20 */	blr 
+.endfn exec__17NaviRopeExitStateFP4Navi
 
-.global cleanup__17NaviRopeExitStateFP4Navi
-cleanup__17NaviRopeExitStateFP4Navi:
+.fn cleanup__17NaviRopeExitStateFP4Navi, global
 /* 80105B70 00102AD0  4E 80 00 20 */	blr 
+.endfn cleanup__17NaviRopeExitStateFP4Navi
 
-.global procBounceMsg__17NaviRopeExitStateFP4NaviP9MsgBounce
-procBounceMsg__17NaviRopeExitStateFP4NaviP9MsgBounce:
+.fn procBounceMsg__17NaviRopeExitStateFP4NaviP9MsgBounce, global
 /* 80105B74 00102AD4  7C 08 02 A6 */	mflr r0
 /* 80105B78 00102AD8  38 A0 00 00 */	li r5, 0
 /* 80105B7C 00102ADC  90 01 00 04 */	stw r0, 4(r1)
@@ -5287,9 +5286,9 @@ procBounceMsg__17NaviRopeExitStateFP4NaviP9MsgBounce:
 /* 80105B98 00102AF8  38 21 00 08 */	addi r1, r1, 8
 /* 80105B9C 00102AFC  7C 08 03 A6 */	mtlr r0
 /* 80105BA0 00102B00  4E 80 00 20 */	blr 
+.endfn procBounceMsg__17NaviRopeExitStateFP4NaviP9MsgBounce
 
-.global __ct__16NaviFunbariStateFv
-__ct__16NaviFunbariStateFv:
+.fn __ct__16NaviFunbariStateFv, global
 /* 80105BA4 00102B04  3C 80 80 2C */	lis r4, "__vt__15Receiver<4Navi>"@ha
 /* 80105BA8 00102B08  38 04 19 F8 */	addi r0, r4, "__vt__15Receiver<4Navi>"@l
 /* 80105BAC 00102B0C  3C 80 80 2C */	lis r4, "__vt__13AState<4Navi>"@ha
@@ -5307,9 +5306,9 @@ __ct__16NaviFunbariStateFv:
 /* 80105BDC 00102B3C  90 A3 00 00 */	stw r5, 0(r3)
 /* 80105BE0 00102B40  90 03 00 00 */	stw r0, 0(r3)
 /* 80105BE4 00102B44  4E 80 00 20 */	blr 
+.endfn __ct__16NaviFunbariStateFv
 
-.global init__16NaviFunbariStateFP4Navi
-init__16NaviFunbariStateFP4Navi:
+.fn init__16NaviFunbariStateFP4Navi, global
 /* 80105BE8 00102B48  7C 08 02 A6 */	mflr r0
 /* 80105BEC 00102B4C  90 01 00 04 */	stw r0, 4(r1)
 /* 80105BF0 00102B50  94 21 FF D0 */	stwu r1, -0x30(r1)
@@ -5349,9 +5348,9 @@ init__16NaviFunbariStateFP4Navi:
 /* 80105C70 00102BD0  38 21 00 30 */	addi r1, r1, 0x30
 /* 80105C74 00102BD4  7C 08 03 A6 */	mtlr r0
 /* 80105C78 00102BD8  4E 80 00 20 */	blr 
+.endfn init__16NaviFunbariStateFP4Navi
 
-.global exec__16NaviFunbariStateFP4Navi
-exec__16NaviFunbariStateFP4Navi:
+.fn exec__16NaviFunbariStateFP4Navi, global
 /* 80105C7C 00102BDC  C0 0D D6 88 */	lfs f0, lbl_803E23A8@sda21(r13)
 /* 80105C80 00102BE0  D0 04 00 A4 */	stfs f0, 0xa4(r4)
 /* 80105C84 00102BE4  C0 0D D6 8C */	lfs f0, lbl_803E23AC@sda21(r13)
@@ -5359,9 +5358,9 @@ exec__16NaviFunbariStateFP4Navi:
 /* 80105C8C 00102BEC  C0 0D D6 90 */	lfs f0, lbl_803E23B0@sda21(r13)
 /* 80105C90 00102BF0  D0 04 00 AC */	stfs f0, 0xac(r4)
 /* 80105C94 00102BF4  4E 80 00 20 */	blr 
+.endfn exec__16NaviFunbariStateFP4Navi
 
-.global procAnimMsg__16NaviFunbariStateFP4NaviP7MsgAnim
-procAnimMsg__16NaviFunbariStateFP4NaviP7MsgAnim:
+.fn procAnimMsg__16NaviFunbariStateFP4NaviP7MsgAnim, global
 /* 80105C98 00102BF8  7C 08 02 A6 */	mflr r0
 /* 80105C9C 00102BFC  90 01 00 04 */	stw r0, 4(r1)
 /* 80105CA0 00102C00  94 21 FF F8 */	stwu r1, -8(r1)
@@ -5381,13 +5380,13 @@ procAnimMsg__16NaviFunbariStateFP4NaviP7MsgAnim:
 /* 80105CD0 00102C30  38 21 00 08 */	addi r1, r1, 8
 /* 80105CD4 00102C34  7C 08 03 A6 */	mtlr r0
 /* 80105CD8 00102C38  4E 80 00 20 */	blr 
+.endfn procAnimMsg__16NaviFunbariStateFP4NaviP7MsgAnim
 
-.global cleanup__16NaviFunbariStateFP4Navi
-cleanup__16NaviFunbariStateFP4Navi:
+.fn cleanup__16NaviFunbariStateFP4Navi, global
 /* 80105CDC 00102C3C  4E 80 00 20 */	blr 
+.endfn cleanup__16NaviFunbariStateFP4Navi
 
-.global __ct__13NaviIdleStateFv
-__ct__13NaviIdleStateFv:
+.fn __ct__13NaviIdleStateFv, global
 /* 80105CE0 00102C40  3C 80 80 2C */	lis r4, "__vt__15Receiver<4Navi>"@ha
 /* 80105CE4 00102C44  38 04 19 F8 */	addi r0, r4, "__vt__15Receiver<4Navi>"@l
 /* 80105CE8 00102C48  3C 80 80 2C */	lis r4, "__vt__13AState<4Navi>"@ha
@@ -5405,9 +5404,9 @@ __ct__13NaviIdleStateFv:
 /* 80105D18 00102C78  90 A3 00 00 */	stw r5, 0(r3)
 /* 80105D1C 00102C7C  90 03 00 00 */	stw r0, 0(r3)
 /* 80105D20 00102C80  4E 80 00 20 */	blr 
+.endfn __ct__13NaviIdleStateFv
 
-.global init__13NaviIdleStateFP4Navi
-init__13NaviIdleStateFP4Navi:
+.fn init__13NaviIdleStateFP4Navi, global
 /* 80105D24 00102C84  7C 08 02 A6 */	mflr r0
 /* 80105D28 00102C88  3C A0 80 22 */	lis r5, lbl_80222680@ha
 /* 80105D2C 00102C8C  90 01 00 04 */	stw r0, 4(r1)
@@ -5460,9 +5459,9 @@ init__13NaviIdleStateFP4Navi:
 /* 80105DE4 00102D44  38 21 00 58 */	addi r1, r1, 0x58
 /* 80105DE8 00102D48  7C 08 03 A6 */	mtlr r0
 /* 80105DEC 00102D4C  4E 80 00 20 */	blr 
+.endfn init__13NaviIdleStateFP4Navi
 
-.global exec__13NaviIdleStateFP4Navi
-exec__13NaviIdleStateFP4Navi:
+.fn exec__13NaviIdleStateFP4Navi, global
 /* 80105DF0 00102D50  7C 08 02 A6 */	mflr r0
 /* 80105DF4 00102D54  90 01 00 04 */	stw r0, 4(r1)
 /* 80105DF8 00102D58  94 21 FF B0 */	stwu r1, -0x50(r1)
@@ -5547,9 +5546,9 @@ exec__13NaviIdleStateFP4Navi:
 /* 80105F20 00102E80  38 21 00 50 */	addi r1, r1, 0x50
 /* 80105F24 00102E84  7C 08 03 A6 */	mtlr r0
 /* 80105F28 00102E88  4E 80 00 20 */	blr 
+.endfn exec__13NaviIdleStateFP4Navi
 
-.global procAnimMsg__13NaviIdleStateFP4NaviP7MsgAnim
-procAnimMsg__13NaviIdleStateFP4NaviP7MsgAnim:
+.fn procAnimMsg__13NaviIdleStateFP4NaviP7MsgAnim, global
 /* 80105F2C 00102E8C  7C 08 02 A6 */	mflr r0
 /* 80105F30 00102E90  90 01 00 04 */	stw r0, 4(r1)
 /* 80105F34 00102E94  94 21 FF F8 */	stwu r1, -8(r1)
@@ -5578,15 +5577,15 @@ procAnimMsg__13NaviIdleStateFP4NaviP7MsgAnim:
 /* 80105F84 00102EE4  38 21 00 08 */	addi r1, r1, 8
 /* 80105F88 00102EE8  7C 08 03 A6 */	mtlr r0
 /* 80105F8C 00102EEC  4E 80 00 20 */	blr 
+.endfn procAnimMsg__13NaviIdleStateFP4NaviP7MsgAnim
 
-.global cleanup__13NaviIdleStateFP4Navi
-cleanup__13NaviIdleStateFP4Navi:
+.fn cleanup__13NaviIdleStateFP4Navi, global
 /* 80105F90 00102EF0  C0 02 9D 98 */	lfs f0, lbl_803E9F98@sda21(r2)
 /* 80105F94 00102EF4  D0 04 07 38 */	stfs f0, 0x738(r4)
 /* 80105F98 00102EF8  4E 80 00 20 */	blr 
+.endfn cleanup__13NaviIdleStateFP4Navi
 
-.global __ct__14NaviFlickStateFv
-__ct__14NaviFlickStateFv:
+.fn __ct__14NaviFlickStateFv, global
 /* 80105F9C 00102EFC  3C 80 80 2C */	lis r4, "__vt__15Receiver<4Navi>"@ha
 /* 80105FA0 00102F00  38 04 19 F8 */	addi r0, r4, "__vt__15Receiver<4Navi>"@l
 /* 80105FA4 00102F04  3C 80 80 2C */	lis r4, "__vt__13AState<4Navi>"@ha
@@ -5604,9 +5603,9 @@ __ct__14NaviFlickStateFv:
 /* 80105FD4 00102F34  90 A3 00 00 */	stw r5, 0(r3)
 /* 80105FD8 00102F38  90 03 00 00 */	stw r0, 0(r3)
 /* 80105FDC 00102F3C  4E 80 00 20 */	blr 
+.endfn __ct__14NaviFlickStateFv
 
-.global init__14NaviFlickStateFP4Navi
-init__14NaviFlickStateFP4Navi:
+.fn init__14NaviFlickStateFP4Navi, global
 /* 80105FE0 00102F40  7C 08 02 A6 */	mflr r0
 /* 80105FE4 00102F44  90 01 00 04 */	stw r0, 4(r1)
 /* 80105FE8 00102F48  38 00 00 00 */	li r0, 0
@@ -5681,9 +5680,9 @@ init__14NaviFlickStateFP4Navi:
 /* 801060F8 00103058  38 21 00 48 */	addi r1, r1, 0x48
 /* 801060FC 0010305C  7C 08 03 A6 */	mtlr r0
 /* 80106100 00103060  4E 80 00 20 */	blr 
+.endfn init__14NaviFlickStateFP4Navi
 
-.global exec__14NaviFlickStateFP4Navi
-exec__14NaviFlickStateFP4Navi:
+.fn exec__14NaviFlickStateFP4Navi, global
 /* 80106104 00103064  7C 08 02 A6 */	mflr r0
 /* 80106108 00103068  90 01 00 04 */	stw r0, 4(r1)
 /* 8010610C 0010306C  94 21 FF B8 */	stwu r1, -0x48(r1)
@@ -5783,9 +5782,9 @@ exec__14NaviFlickStateFP4Navi:
 /* 80106270 001031D0  38 21 00 48 */	addi r1, r1, 0x48
 /* 80106274 001031D4  7C 08 03 A6 */	mtlr r0
 /* 80106278 001031D8  4E 80 00 20 */	blr 
+.endfn exec__14NaviFlickStateFP4Navi
 
-.global procAnimMsg__14NaviFlickStateFP4NaviP7MsgAnim
-procAnimMsg__14NaviFlickStateFP4NaviP7MsgAnim:
+.fn procAnimMsg__14NaviFlickStateFP4NaviP7MsgAnim, global
 /* 8010627C 001031DC  7C 08 02 A6 */	mflr r0
 /* 80106280 001031E0  90 01 00 04 */	stw r0, 4(r1)
 /* 80106284 001031E4  94 21 FF C0 */	stwu r1, -0x40(r1)
@@ -5876,9 +5875,9 @@ procAnimMsg__14NaviFlickStateFP4NaviP7MsgAnim:
 /* 801063C0 00103320  38 21 00 40 */	addi r1, r1, 0x40
 /* 801063C4 00103324  7C 08 03 A6 */	mtlr r0
 /* 801063C8 00103328  4E 80 00 20 */	blr 
+.endfn procAnimMsg__14NaviFlickStateFP4NaviP7MsgAnim
 
-.global cleanup__14NaviFlickStateFP4Navi
-cleanup__14NaviFlickStateFP4Navi:
+.fn cleanup__14NaviFlickStateFP4Navi, global
 /* 801063CC 0010332C  7C 08 02 A6 */	mflr r0
 /* 801063D0 00103330  7C 83 23 78 */	mr r3, r4
 /* 801063D4 00103334  90 01 00 04 */	stw r0, 4(r1)
@@ -5892,9 +5891,9 @@ cleanup__14NaviFlickStateFP4Navi:
 /* 801063F4 00103354  38 21 00 08 */	addi r1, r1, 8
 /* 801063F8 00103358  7C 08 03 A6 */	mtlr r0
 /* 801063FC 0010335C  4E 80 00 20 */	blr 
+.endfn cleanup__14NaviFlickStateFP4Navi
 
-.global __ct__15NaviGeyzerStateFv
-__ct__15NaviGeyzerStateFv:
+.fn __ct__15NaviGeyzerStateFv, global
 /* 80106400 00103360  3C 80 80 2C */	lis r4, "__vt__15Receiver<4Navi>"@ha
 /* 80106404 00103364  38 04 19 F8 */	addi r0, r4, "__vt__15Receiver<4Navi>"@l
 /* 80106408 00103368  3C 80 80 2C */	lis r4, "__vt__13AState<4Navi>"@ha
@@ -5916,9 +5915,9 @@ __ct__15NaviGeyzerStateFv:
 /* 80106448 001033A8  D0 03 00 24 */	stfs f0, 0x24(r3)
 /* 8010644C 001033AC  D0 03 00 20 */	stfs f0, 0x20(r3)
 /* 80106450 001033B0  4E 80 00 20 */	blr 
+.endfn __ct__15NaviGeyzerStateFv
 
-.global init__15NaviGeyzerStateFP4Navi
-init__15NaviGeyzerStateFP4Navi:
+.fn init__15NaviGeyzerStateFP4Navi, global
 /* 80106454 001033B4  7C 08 02 A6 */	mflr r0
 /* 80106458 001033B8  90 01 00 04 */	stw r0, 4(r1)
 /* 8010645C 001033BC  38 00 00 01 */	li r0, 1
@@ -6001,9 +6000,9 @@ init__15NaviGeyzerStateFP4Navi:
 /* 80106588 001034E8  38 21 00 50 */	addi r1, r1, 0x50
 /* 8010658C 001034EC  7C 08 03 A6 */	mtlr r0
 /* 80106590 001034F0  4E 80 00 20 */	blr 
+.endfn init__15NaviGeyzerStateFP4Navi
 
-.global exec__15NaviGeyzerStateFP4Navi
-exec__15NaviGeyzerStateFP4Navi:
+.fn exec__15NaviGeyzerStateFP4Navi, global
 /* 80106594 001034F4  7C 08 02 A6 */	mflr r0
 /* 80106598 001034F8  90 01 00 04 */	stw r0, 4(r1)
 /* 8010659C 001034FC  94 21 FF 90 */	stwu r1, -0x70(r1)
@@ -6143,9 +6142,9 @@ exec__15NaviGeyzerStateFP4Navi:
 /* 8010679C 001036FC  38 21 00 70 */	addi r1, r1, 0x70
 /* 801067A0 00103700  7C 08 03 A6 */	mtlr r0
 /* 801067A4 00103704  4E 80 00 20 */	blr 
+.endfn exec__15NaviGeyzerStateFP4Navi
 
-.global procAnimMsg__15NaviGeyzerStateFP4NaviP7MsgAnim
-procAnimMsg__15NaviGeyzerStateFP4NaviP7MsgAnim:
+.fn procAnimMsg__15NaviGeyzerStateFP4NaviP7MsgAnim, global
 /* 801067A8 00103708  7C 08 02 A6 */	mflr r0
 /* 801067AC 0010370C  90 01 00 04 */	stw r0, 4(r1)
 /* 801067B0 00103710  94 21 FF B8 */	stwu r1, -0x48(r1)
@@ -6224,9 +6223,9 @@ procAnimMsg__15NaviGeyzerStateFP4NaviP7MsgAnim:
 /* 801068BC 0010381C  38 21 00 48 */	addi r1, r1, 0x48
 /* 801068C0 00103820  7C 08 03 A6 */	mtlr r0
 /* 801068C4 00103824  4E 80 00 20 */	blr 
+.endfn procAnimMsg__15NaviGeyzerStateFP4NaviP7MsgAnim
 
-.global procBounceMsg__15NaviGeyzerStateFP4NaviP9MsgBounce
-procBounceMsg__15NaviGeyzerStateFP4NaviP9MsgBounce:
+.fn procBounceMsg__15NaviGeyzerStateFP4NaviP9MsgBounce, global
 /* 801068C8 00103828  7C 08 02 A6 */	mflr r0
 /* 801068CC 0010382C  90 01 00 04 */	stw r0, 4(r1)
 /* 801068D0 00103830  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -6265,9 +6264,9 @@ procBounceMsg__15NaviGeyzerStateFP4NaviP9MsgBounce:
 /* 80106950 001038B0  38 21 00 28 */	addi r1, r1, 0x28
 /* 80106954 001038B4  7C 08 03 A6 */	mtlr r0
 /* 80106958 001038B8  4E 80 00 20 */	blr 
+.endfn procBounceMsg__15NaviGeyzerStateFP4NaviP9MsgBounce
 
-.global cleanup__15NaviGeyzerStateFP4Navi
-cleanup__15NaviGeyzerStateFP4Navi:
+.fn cleanup__15NaviGeyzerStateFP4Navi, global
 /* 8010695C 001038BC  7C 08 02 A6 */	mflr r0
 /* 80106960 001038C0  7C 83 23 78 */	mr r3, r4
 /* 80106964 001038C4  90 01 00 04 */	stw r0, 4(r1)
@@ -6281,9 +6280,9 @@ cleanup__15NaviGeyzerStateFP4Navi:
 /* 80106984 001038E4  38 21 00 08 */	addi r1, r1, 8
 /* 80106988 001038E8  7C 08 03 A6 */	mtlr r0
 /* 8010698C 001038EC  4E 80 00 20 */	blr 
+.endfn cleanup__15NaviGeyzerStateFP4Navi
 
-.global __ct__15NaviGatherStateFv
-__ct__15NaviGatherStateFv:
+.fn __ct__15NaviGatherStateFv, global
 /* 80106990 001038F0  3C 80 80 2C */	lis r4, "__vt__15Receiver<4Navi>"@ha
 /* 80106994 001038F4  38 04 19 F8 */	addi r0, r4, "__vt__15Receiver<4Navi>"@l
 /* 80106998 001038F8  3C 80 80 2C */	lis r4, "__vt__13AState<4Navi>"@ha
@@ -6301,9 +6300,9 @@ __ct__15NaviGatherStateFv:
 /* 801069C8 00103928  90 A3 00 00 */	stw r5, 0(r3)
 /* 801069CC 0010392C  90 03 00 00 */	stw r0, 0(r3)
 /* 801069D0 00103930  4E 80 00 20 */	blr 
+.endfn __ct__15NaviGatherStateFv
 
-.global resume__15NaviGatherStateFP4Navi
-resume__15NaviGatherStateFP4Navi:
+.fn resume__15NaviGatherStateFP4Navi, global
 /* 801069D4 00103934  7C 08 02 A6 */	mflr r0
 /* 801069D8 00103938  90 01 00 04 */	stw r0, 4(r1)
 /* 801069DC 0010393C  94 21 FF F8 */	stwu r1, -8(r1)
@@ -6315,9 +6314,9 @@ resume__15NaviGatherStateFP4Navi:
 /* 801069F4 00103954  38 21 00 08 */	addi r1, r1, 8
 /* 801069F8 00103958  7C 08 03 A6 */	mtlr r0
 /* 801069FC 0010395C  4E 80 00 20 */	blr 
+.endfn resume__15NaviGatherStateFP4Navi
 
-.global restart__15NaviGatherStateFP4Navi
-restart__15NaviGatherStateFP4Navi:
+.fn restart__15NaviGatherStateFP4Navi, global
 /* 80106A00 00103960  7C 08 02 A6 */	mflr r0
 /* 80106A04 00103964  38 A0 00 00 */	li r5, 0
 /* 80106A08 00103968  90 01 00 04 */	stw r0, 4(r1)
@@ -6330,9 +6329,9 @@ restart__15NaviGatherStateFP4Navi:
 /* 80106A24 00103984  38 21 00 08 */	addi r1, r1, 8
 /* 80106A28 00103988  7C 08 03 A6 */	mtlr r0
 /* 80106A2C 0010398C  4E 80 00 20 */	blr 
+.endfn restart__15NaviGatherStateFP4Navi
 
-.global init__15NaviGatherStateFP4Navi
-init__15NaviGatherStateFP4Navi:
+.fn init__15NaviGatherStateFP4Navi, global
 /* 80106A30 00103990  7C 08 02 A6 */	mflr r0
 /* 80106A34 00103994  90 01 00 04 */	stw r0, 4(r1)
 /* 80106A38 00103998  94 21 FF A0 */	stwu r1, -0x60(r1)
@@ -6414,9 +6413,9 @@ init__15NaviGatherStateFP4Navi:
 /* 80106B5C 00103ABC  38 21 00 60 */	addi r1, r1, 0x60
 /* 80106B60 00103AC0  7C 08 03 A6 */	mtlr r0
 /* 80106B64 00103AC4  4E 80 00 20 */	blr 
+.endfn init__15NaviGatherStateFP4Navi
 
-.global exec__15NaviGatherStateFP4Navi
-exec__15NaviGatherStateFP4Navi:
+.fn exec__15NaviGatherStateFP4Navi, global
 /* 80106B68 00103AC8  7C 08 02 A6 */	mflr r0
 /* 80106B6C 00103ACC  90 01 00 04 */	stw r0, 4(r1)
 /* 80106B70 00103AD0  94 21 FE 48 */	stwu r1, -0x1b8(r1)
@@ -6822,9 +6821,9 @@ exec__15NaviGatherStateFP4Navi:
 /* 80107148 001040A8  38 21 01 B8 */	addi r1, r1, 0x1b8
 /* 8010714C 001040AC  7C 08 03 A6 */	mtlr r0
 /* 80107150 001040B0  4E 80 00 20 */	blr 
+.endfn exec__15NaviGatherStateFP4Navi
 
-.global procAnimMsg__15NaviGatherStateFP4NaviP7MsgAnim
-procAnimMsg__15NaviGatherStateFP4NaviP7MsgAnim:
+.fn procAnimMsg__15NaviGatherStateFP4NaviP7MsgAnim, global
 /* 80107154 001040B4  7C 08 02 A6 */	mflr r0
 /* 80107158 001040B8  90 01 00 04 */	stw r0, 4(r1)
 /* 8010715C 001040BC  94 21 FF F8 */	stwu r1, -8(r1)
@@ -6854,9 +6853,9 @@ procAnimMsg__15NaviGatherStateFP4NaviP7MsgAnim:
 /* 801071B0 00104110  38 21 00 08 */	addi r1, r1, 8
 /* 801071B4 00104114  7C 08 03 A6 */	mtlr r0
 /* 801071B8 00104118  4E 80 00 20 */	blr 
+.endfn procAnimMsg__15NaviGatherStateFP4NaviP7MsgAnim
 
-.global cleanup__15NaviGatherStateFP4Navi
-cleanup__15NaviGatherStateFP4Navi:
+.fn cleanup__15NaviGatherStateFP4Navi, global
 /* 801071BC 0010411C  7C 08 02 A6 */	mflr r0
 /* 801071C0 00104120  38 A0 00 00 */	li r5, 0
 /* 801071C4 00104124  90 01 00 04 */	stw r0, 4(r1)
@@ -6886,9 +6885,9 @@ cleanup__15NaviGatherStateFP4Navi:
 /* 8010721C 0010417C  38 21 00 18 */	addi r1, r1, 0x18
 /* 80107220 00104180  7C 08 03 A6 */	mtlr r0
 /* 80107224 00104184  4E 80 00 20 */	blr 
+.endfn cleanup__15NaviGatherStateFP4Navi
 
-.global __ct__16NaviReleaseStateFv
-__ct__16NaviReleaseStateFv:
+.fn __ct__16NaviReleaseStateFv, global
 /* 80107228 00104188  3C 80 80 2C */	lis r4, "__vt__15Receiver<4Navi>"@ha
 /* 8010722C 0010418C  38 04 19 F8 */	addi r0, r4, "__vt__15Receiver<4Navi>"@l
 /* 80107230 00104190  3C 80 80 2C */	lis r4, "__vt__13AState<4Navi>"@ha
@@ -6906,9 +6905,9 @@ __ct__16NaviReleaseStateFv:
 /* 80107260 001041C0  90 A3 00 00 */	stw r5, 0(r3)
 /* 80107264 001041C4  90 03 00 00 */	stw r0, 0(r3)
 /* 80107268 001041C8  4E 80 00 20 */	blr 
+.endfn __ct__16NaviReleaseStateFv
 
-.global init__16NaviReleaseStateFP4Navi
-init__16NaviReleaseStateFP4Navi:
+.fn init__16NaviReleaseStateFP4Navi, global
 /* 8010726C 001041CC  7C 08 02 A6 */	mflr r0
 /* 80107270 001041D0  90 01 00 04 */	stw r0, 4(r1)
 /* 80107274 001041D4  94 21 FF D0 */	stwu r1, -0x30(r1)
@@ -6950,9 +6949,9 @@ init__16NaviReleaseStateFP4Navi:
 /* 80107300 00104260  38 21 00 30 */	addi r1, r1, 0x30
 /* 80107304 00104264  7C 08 03 A6 */	mtlr r0
 /* 80107308 00104268  4E 80 00 20 */	blr 
+.endfn init__16NaviReleaseStateFP4Navi
 
-.global exec__16NaviReleaseStateFP4Navi
-exec__16NaviReleaseStateFP4Navi:
+.fn exec__16NaviReleaseStateFP4Navi, global
 /* 8010730C 0010426C  7C 08 02 A6 */	mflr r0
 /* 80107310 00104270  90 01 00 04 */	stw r0, 4(r1)
 /* 80107314 00104274  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -6990,13 +6989,13 @@ exec__16NaviReleaseStateFP4Navi:
 /* 80107390 001042F0  38 21 00 20 */	addi r1, r1, 0x20
 /* 80107394 001042F4  7C 08 03 A6 */	mtlr r0
 /* 80107398 001042F8  4E 80 00 20 */	blr 
+.endfn exec__16NaviReleaseStateFP4Navi
 
-.global cleanup__16NaviReleaseStateFP4Navi
-cleanup__16NaviReleaseStateFP4Navi:
+.fn cleanup__16NaviReleaseStateFP4Navi, global
 /* 8010739C 001042FC  4E 80 00 20 */	blr 
+.endfn cleanup__16NaviReleaseStateFP4Navi
 
-.global procAnimMsg__16NaviReleaseStateFP4NaviP7MsgAnim
-procAnimMsg__16NaviReleaseStateFP4NaviP7MsgAnim:
+.fn procAnimMsg__16NaviReleaseStateFP4NaviP7MsgAnim, global
 /* 801073A0 00104300  7C 08 02 A6 */	mflr r0
 /* 801073A4 00104304  90 01 00 04 */	stw r0, 4(r1)
 /* 801073A8 00104308  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -7037,9 +7036,9 @@ procAnimMsg__16NaviReleaseStateFP4NaviP7MsgAnim:
 /* 80107424 00104384  38 21 00 20 */	addi r1, r1, 0x20
 /* 80107428 00104388  7C 08 03 A6 */	mtlr r0
 /* 8010742C 0010438C  4E 80 00 20 */	blr 
+.endfn procAnimMsg__16NaviReleaseStateFP4NaviP7MsgAnim
 
-.global __ct__18NaviThrowWaitStateFv
-__ct__18NaviThrowWaitStateFv:
+.fn __ct__18NaviThrowWaitStateFv, global
 /* 80107430 00104390  3C 80 80 2C */	lis r4, "__vt__15Receiver<4Navi>"@ha
 /* 80107434 00104394  38 04 19 F8 */	addi r0, r4, "__vt__15Receiver<4Navi>"@l
 /* 80107438 00104398  3C 80 80 2C */	lis r4, "__vt__13AState<4Navi>"@ha
@@ -7057,9 +7056,9 @@ __ct__18NaviThrowWaitStateFv:
 /* 80107468 001043C8  90 A3 00 00 */	stw r5, 0(r3)
 /* 8010746C 001043CC  90 03 00 00 */	stw r0, 0(r3)
 /* 80107470 001043D0  4E 80 00 20 */	blr 
+.endfn __ct__18NaviThrowWaitStateFv
 
-.global resume__18NaviThrowWaitStateFP4Navi
-resume__18NaviThrowWaitStateFP4Navi:
+.fn resume__18NaviThrowWaitStateFP4Navi, global
 /* 80107474 001043D4  7C 08 02 A6 */	mflr r0
 /* 80107478 001043D8  90 01 00 04 */	stw r0, 4(r1)
 /* 8010747C 001043DC  94 21 FF F8 */	stwu r1, -8(r1)
@@ -7071,9 +7070,9 @@ resume__18NaviThrowWaitStateFP4Navi:
 /* 80107494 001043F4  38 21 00 08 */	addi r1, r1, 8
 /* 80107498 001043F8  7C 08 03 A6 */	mtlr r0
 /* 8010749C 001043FC  4E 80 00 20 */	blr 
+.endfn resume__18NaviThrowWaitStateFP4Navi
 
-.global restart__18NaviThrowWaitStateFP4Navi
-restart__18NaviThrowWaitStateFP4Navi:
+.fn restart__18NaviThrowWaitStateFP4Navi, global
 /* 801074A0 00104400  7C 08 02 A6 */	mflr r0
 /* 801074A4 00104404  38 A0 00 00 */	li r5, 0
 /* 801074A8 00104408  90 01 00 04 */	stw r0, 4(r1)
@@ -7086,9 +7085,9 @@ restart__18NaviThrowWaitStateFP4Navi:
 /* 801074C4 00104424  38 21 00 08 */	addi r1, r1, 8
 /* 801074C8 00104428  7C 08 03 A6 */	mtlr r0
 /* 801074CC 0010442C  4E 80 00 20 */	blr 
+.endfn restart__18NaviThrowWaitStateFP4Navi
 
-.global init__18NaviThrowWaitStateFP4Navi
-init__18NaviThrowWaitStateFP4Navi:
+.fn init__18NaviThrowWaitStateFP4Navi, global
 /* 801074D0 00104430  7C 08 02 A6 */	mflr r0
 /* 801074D4 00104434  90 01 00 04 */	stw r0, 4(r1)
 /* 801074D8 00104438  38 00 00 00 */	li r0, 0
@@ -7347,9 +7346,9 @@ init__18NaviThrowWaitStateFP4Navi:
 /* 80107890 001047F0  38 21 01 50 */	addi r1, r1, 0x150
 /* 80107894 001047F4  7C 08 03 A6 */	mtlr r0
 /* 80107898 001047F8  4E 80 00 20 */	blr 
+.endfn init__18NaviThrowWaitStateFP4Navi
 
-.global procAnimMsg__18NaviThrowWaitStateFP4NaviP7MsgAnim
-procAnimMsg__18NaviThrowWaitStateFP4NaviP7MsgAnim:
+.fn procAnimMsg__18NaviThrowWaitStateFP4NaviP7MsgAnim, global
 /* 8010789C 001047FC  7C 08 02 A6 */	mflr r0
 /* 801078A0 00104800  90 01 00 04 */	stw r0, 4(r1)
 /* 801078A4 00104804  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -7388,9 +7387,9 @@ procAnimMsg__18NaviThrowWaitStateFP4NaviP7MsgAnim:
 /* 8010791C 0010487C  38 21 00 20 */	addi r1, r1, 0x20
 /* 80107920 00104880  7C 08 03 A6 */	mtlr r0
 /* 80107924 00104884  4E 80 00 20 */	blr 
+.endfn procAnimMsg__18NaviThrowWaitStateFP4NaviP7MsgAnim
 
-.global exec__18NaviThrowWaitStateFP4Navi
-exec__18NaviThrowWaitStateFP4Navi:
+.fn exec__18NaviThrowWaitStateFP4Navi, global
 /* 80107928 00104888  7C 08 02 A6 */	mflr r0
 /* 8010792C 0010488C  90 01 00 04 */	stw r0, 4(r1)
 /* 80107930 00104890  94 21 FE 80 */	stwu r1, -0x180(r1)
@@ -7764,9 +7763,9 @@ exec__18NaviThrowWaitStateFP4Navi:
 /* 80107EB8 00104E18  38 21 01 80 */	addi r1, r1, 0x180
 /* 80107EBC 00104E1C  7C 08 03 A6 */	mtlr r0
 /* 80107EC0 00104E20  4E 80 00 20 */	blr 
+.endfn exec__18NaviThrowWaitStateFP4Navi
 
-.global sortPikis__18NaviThrowWaitStateFP4Navi
-sortPikis__18NaviThrowWaitStateFP4Navi:
+.fn sortPikis__18NaviThrowWaitStateFP4Navi, global
 /* 80107EC4 00104E24  7C 08 02 A6 */	mflr r0
 /* 80107EC8 00104E28  90 01 00 04 */	stw r0, 4(r1)
 /* 80107ECC 00104E2C  94 21 FF C0 */	stwu r1, -0x40(r1)
@@ -7868,13 +7867,13 @@ sortPikis__18NaviThrowWaitStateFP4Navi:
 /* 80108024 00104F84  38 21 00 40 */	addi r1, r1, 0x40
 /* 80108028 00104F88  7C 08 03 A6 */	mtlr r0
 /* 8010802C 00104F8C  4E 80 00 20 */	blr 
+.endfn sortPikis__18NaviThrowWaitStateFP4Navi
 
-.global cleanup__18NaviThrowWaitStateFP4Navi
-cleanup__18NaviThrowWaitStateFP4Navi:
+.fn cleanup__18NaviThrowWaitStateFP4Navi, global
 /* 80108030 00104F90  4E 80 00 20 */	blr 
+.endfn cleanup__18NaviThrowWaitStateFP4Navi
 
-.global __ct__14NaviThrowStateFv
-__ct__14NaviThrowStateFv:
+.fn __ct__14NaviThrowStateFv, global
 /* 80108034 00104F94  3C 80 80 2C */	lis r4, "__vt__15Receiver<4Navi>"@ha
 /* 80108038 00104F98  38 04 19 F8 */	addi r0, r4, "__vt__15Receiver<4Navi>"@l
 /* 8010803C 00104F9C  3C 80 80 2C */	lis r4, "__vt__13AState<4Navi>"@ha
@@ -7892,9 +7891,9 @@ __ct__14NaviThrowStateFv:
 /* 8010806C 00104FCC  90 A3 00 00 */	stw r5, 0(r3)
 /* 80108070 00104FD0  90 03 00 00 */	stw r0, 0(r3)
 /* 80108074 00104FD4  4E 80 00 20 */	blr 
+.endfn __ct__14NaviThrowStateFv
 
-.global init__14NaviThrowStateFP4Navi
-init__14NaviThrowStateFP4Navi:
+.fn init__14NaviThrowStateFP4Navi, global
 /* 80108078 00104FD8  7C 08 02 A6 */	mflr r0
 /* 8010807C 00104FDC  90 01 00 04 */	stw r0, 4(r1)
 /* 80108080 00104FE0  94 21 FF D0 */	stwu r1, -0x30(r1)
@@ -7937,15 +7936,15 @@ init__14NaviThrowStateFP4Navi:
 /* 80108110 00105070  38 21 00 30 */	addi r1, r1, 0x30
 /* 80108114 00105074  7C 08 03 A6 */	mtlr r0
 /* 80108118 00105078  4E 80 00 20 */	blr 
+.endfn init__14NaviThrowStateFP4Navi
 
-.global procTargetMsg__14NaviThrowStateFP4NaviP9MsgTarget
-procTargetMsg__14NaviThrowStateFP4NaviP9MsgTarget:
+.fn procTargetMsg__14NaviThrowStateFP4NaviP9MsgTarget, global
 /* 8010811C 0010507C  80 05 00 04 */	lwz r0, 4(r5)
 /* 80108120 00105080  90 03 00 14 */	stw r0, 0x14(r3)
 /* 80108124 00105084  4E 80 00 20 */	blr 
+.endfn procTargetMsg__14NaviThrowStateFP4NaviP9MsgTarget
 
-.global procAnimMsg__14NaviThrowStateFP4NaviP7MsgAnim
-procAnimMsg__14NaviThrowStateFP4NaviP7MsgAnim:
+.fn procAnimMsg__14NaviThrowStateFP4NaviP7MsgAnim, global
 /* 80108128 00105088  7C 08 02 A6 */	mflr r0
 /* 8010812C 0010508C  90 01 00 04 */	stw r0, 4(r1)
 /* 80108130 00105090  94 21 FF 68 */	stwu r1, -0x98(r1)
@@ -8031,9 +8030,9 @@ procAnimMsg__14NaviThrowStateFP4NaviP7MsgAnim:
 /* 80108264 001051C4  38 21 00 98 */	addi r1, r1, 0x98
 /* 80108268 001051C8  7C 08 03 A6 */	mtlr r0
 /* 8010826C 001051CC  4E 80 00 20 */	blr 
+.endfn procAnimMsg__14NaviThrowStateFP4NaviP7MsgAnim
 
-.global exec__14NaviThrowStateFP4Navi
-exec__14NaviThrowStateFP4Navi:
+.fn exec__14NaviThrowStateFP4Navi, global
 /* 80108270 001051D0  7C 08 02 A6 */	mflr r0
 /* 80108274 001051D4  90 01 00 04 */	stw r0, 4(r1)
 /* 80108278 001051D8  94 21 FF D0 */	stwu r1, -0x30(r1)
@@ -8099,13 +8098,13 @@ exec__14NaviThrowStateFP4Navi:
 /* 8010835C 001052BC  38 21 00 30 */	addi r1, r1, 0x30
 /* 80108360 001052C0  7C 08 03 A6 */	mtlr r0
 /* 80108364 001052C4  4E 80 00 20 */	blr 
+.endfn exec__14NaviThrowStateFP4Navi
 
-.global cleanup__14NaviThrowStateFP4Navi
-cleanup__14NaviThrowStateFP4Navi:
+.fn cleanup__14NaviThrowStateFP4Navi, global
 /* 80108368 001052C8  4E 80 00 20 */	blr 
+.endfn cleanup__14NaviThrowStateFP4Navi
 
-.global __ct__13NaviPushStateFv
-__ct__13NaviPushStateFv:
+.fn __ct__13NaviPushStateFv, global
 /* 8010836C 001052CC  3C 80 80 2C */	lis r4, "__vt__15Receiver<4Navi>"@ha
 /* 80108370 001052D0  38 04 19 F8 */	addi r0, r4, "__vt__15Receiver<4Navi>"@l
 /* 80108374 001052D4  3C 80 80 2C */	lis r4, "__vt__13AState<4Navi>"@ha
@@ -8123,9 +8122,9 @@ __ct__13NaviPushStateFv:
 /* 801083A4 00105304  90 A3 00 00 */	stw r5, 0(r3)
 /* 801083A8 00105308  90 03 00 00 */	stw r0, 0(r3)
 /* 801083AC 0010530C  4E 80 00 20 */	blr 
+.endfn __ct__13NaviPushStateFv
 
-.global init__13NaviPushStateFP4Navi
-init__13NaviPushStateFP4Navi:
+.fn init__13NaviPushStateFP4Navi, global
 /* 801083B0 00105310  7C 08 02 A6 */	mflr r0
 /* 801083B4 00105314  90 01 00 04 */	stw r0, 4(r1)
 /* 801083B8 00105318  94 21 FF D0 */	stwu r1, -0x30(r1)
@@ -8163,9 +8162,9 @@ init__13NaviPushStateFP4Navi:
 /* 80108434 00105394  38 21 00 30 */	addi r1, r1, 0x30
 /* 80108438 00105398  7C 08 03 A6 */	mtlr r0
 /* 8010843C 0010539C  4E 80 00 20 */	blr 
+.endfn init__13NaviPushStateFP4Navi
 
-.global exec__13NaviPushStateFP4Navi
-exec__13NaviPushStateFP4Navi:
+.fn exec__13NaviPushStateFP4Navi, global
 /* 80108440 001053A0  7C 08 02 A6 */	mflr r0
 /* 80108444 001053A4  90 01 00 04 */	stw r0, 4(r1)
 /* 80108448 001053A8  94 21 FF 38 */	stwu r1, -0xc8(r1)
@@ -8318,17 +8317,17 @@ exec__13NaviPushStateFP4Navi:
 /* 8010867C 001055DC  38 21 00 C8 */	addi r1, r1, 0xc8
 /* 80108680 001055E0  7C 08 03 A6 */	mtlr r0
 /* 80108684 001055E4  4E 80 00 20 */	blr 
+.endfn exec__13NaviPushStateFP4Navi
 
-.global cleanup__13NaviPushStateFP4Navi
-cleanup__13NaviPushStateFP4Navi:
+.fn cleanup__13NaviPushStateFP4Navi, global
 /* 80108688 001055E8  80 04 08 7C */	lwz r0, 0x87c(r4)
 /* 8010868C 001055EC  2C 00 00 00 */	cmpwi r0, 0
 /* 80108690 001055F0  80 04 08 D0 */	lwz r0, 0x8d0(r4)
 /* 80108694 001055F4  2C 00 00 00 */	cmpwi r0, 0
 /* 80108698 001055F8  4E 80 00 20 */	blr 
+.endfn cleanup__13NaviPushStateFP4Navi
 
-.global procAnimMsg__13NaviPushStateFP4NaviP7MsgAnim
-procAnimMsg__13NaviPushStateFP4NaviP7MsgAnim:
+.fn procAnimMsg__13NaviPushStateFP4NaviP7MsgAnim, global
 /* 8010869C 001055FC  7C 08 02 A6 */	mflr r0
 /* 801086A0 00105600  90 01 00 04 */	stw r0, 4(r1)
 /* 801086A4 00105604  94 21 FF C0 */	stwu r1, -0x40(r1)
@@ -8393,13 +8392,13 @@ procAnimMsg__13NaviPushStateFP4NaviP7MsgAnim:
 /* 80108784 001056E4  38 21 00 40 */	addi r1, r1, 0x40
 /* 80108788 001056E8  7C 08 03 A6 */	mtlr r0
 /* 8010878C 001056EC  4E 80 00 20 */	blr 
+.endfn procAnimMsg__13NaviPushStateFP4NaviP7MsgAnim
 
-.global procOffWallMsg__13NaviPushStateFP4NaviP10MsgOffWall
-procOffWallMsg__13NaviPushStateFP4NaviP10MsgOffWall:
+.fn procOffWallMsg__13NaviPushStateFP4NaviP10MsgOffWall, global
 /* 80108790 001056F0  4E 80 00 20 */	blr 
+.endfn procOffWallMsg__13NaviPushStateFP4NaviP10MsgOffWall
 
-.global __ct__17NaviPushPikiStateFv
-__ct__17NaviPushPikiStateFv:
+.fn __ct__17NaviPushPikiStateFv, global
 /* 80108794 001056F4  3C 80 80 2C */	lis r4, "__vt__15Receiver<4Navi>"@ha
 /* 80108798 001056F8  38 04 19 F8 */	addi r0, r4, "__vt__15Receiver<4Navi>"@l
 /* 8010879C 001056FC  3C 80 80 2C */	lis r4, "__vt__13AState<4Navi>"@ha
@@ -8417,9 +8416,9 @@ __ct__17NaviPushPikiStateFv:
 /* 801087CC 0010572C  90 A3 00 00 */	stw r5, 0(r3)
 /* 801087D0 00105730  90 03 00 00 */	stw r0, 0(r3)
 /* 801087D4 00105734  4E 80 00 20 */	blr 
+.endfn __ct__17NaviPushPikiStateFv
 
-.global init__17NaviPushPikiStateFP4Navi
-init__17NaviPushPikiStateFP4Navi:
+.fn init__17NaviPushPikiStateFP4Navi, global
 /* 801087D8 00105738  7C 08 02 A6 */	mflr r0
 /* 801087DC 0010573C  90 01 00 04 */	stw r0, 4(r1)
 /* 801087E0 00105740  94 21 FF D0 */	stwu r1, -0x30(r1)
@@ -8457,9 +8456,9 @@ init__17NaviPushPikiStateFP4Navi:
 /* 8010885C 001057BC  38 21 00 30 */	addi r1, r1, 0x30
 /* 80108860 001057C0  7C 08 03 A6 */	mtlr r0
 /* 80108864 001057C4  4E 80 00 20 */	blr 
+.endfn init__17NaviPushPikiStateFP4Navi
 
-.global exec__17NaviPushPikiStateFP4Navi
-exec__17NaviPushPikiStateFP4Navi:
+.fn exec__17NaviPushPikiStateFP4Navi, global
 /* 80108868 001057C8  7C 08 02 A6 */	mflr r0
 /* 8010886C 001057CC  90 01 00 04 */	stw r0, 4(r1)
 /* 80108870 001057D0  94 21 FF 98 */	stwu r1, -0x68(r1)
@@ -8572,13 +8571,13 @@ exec__17NaviPushPikiStateFP4Navi:
 /* 80108A04 00105964  38 21 00 68 */	addi r1, r1, 0x68
 /* 80108A08 00105968  7C 08 03 A6 */	mtlr r0
 /* 80108A0C 0010596C  4E 80 00 20 */	blr 
+.endfn exec__17NaviPushPikiStateFP4Navi
 
-.global cleanup__17NaviPushPikiStateFP4Navi
-cleanup__17NaviPushPikiStateFP4Navi:
+.fn cleanup__17NaviPushPikiStateFP4Navi, global
 /* 80108A10 00105970  4E 80 00 20 */	blr 
+.endfn cleanup__17NaviPushPikiStateFP4Navi
 
-.global procAnimMsg__17NaviPushPikiStateFP4NaviP7MsgAnim
-procAnimMsg__17NaviPushPikiStateFP4NaviP7MsgAnim:
+.fn procAnimMsg__17NaviPushPikiStateFP4NaviP7MsgAnim, global
 /* 80108A14 00105974  7C 08 02 A6 */	mflr r0
 /* 80108A18 00105978  90 01 00 04 */	stw r0, 4(r1)
 /* 80108A1C 0010597C  94 21 FF C8 */	stwu r1, -0x38(r1)
@@ -8639,15 +8638,15 @@ procAnimMsg__17NaviPushPikiStateFP4NaviP7MsgAnim:
 /* 80108AEC 00105A4C  38 21 00 38 */	addi r1, r1, 0x38
 /* 80108AF0 00105A50  7C 08 03 A6 */	mtlr r0
 /* 80108AF4 00105A54  4E 80 00 20 */	blr 
+.endfn procAnimMsg__17NaviPushPikiStateFP4NaviP7MsgAnim
 
-.global procCollideMsg__17NaviPushPikiStateFP4NaviP10MsgCollide
-procCollideMsg__17NaviPushPikiStateFP4NaviP10MsgCollide:
+.fn procCollideMsg__17NaviPushPikiStateFP4NaviP10MsgCollide, global
 /* 80108AF8 00105A58  38 00 00 01 */	li r0, 1
 /* 80108AFC 00105A5C  90 03 00 10 */	stw r0, 0x10(r3)
 /* 80108B00 00105A60  4E 80 00 20 */	blr 
+.endfn procCollideMsg__17NaviPushPikiStateFP4NaviP10MsgCollide
 
-.global __ct__13NaviNukuStateFv
-__ct__13NaviNukuStateFv:
+.fn __ct__13NaviNukuStateFv, global
 /* 80108B04 00105A64  3C 80 80 2C */	lis r4, "__vt__15Receiver<4Navi>"@ha
 /* 80108B08 00105A68  38 04 19 F8 */	addi r0, r4, "__vt__15Receiver<4Navi>"@l
 /* 80108B0C 00105A6C  3C 80 80 2C */	lis r4, "__vt__13AState<4Navi>"@ha
@@ -8665,9 +8664,9 @@ __ct__13NaviNukuStateFv:
 /* 80108B3C 00105A9C  90 A3 00 00 */	stw r5, 0(r3)
 /* 80108B40 00105AA0  90 03 00 00 */	stw r0, 0(r3)
 /* 80108B44 00105AA4  4E 80 00 20 */	blr 
+.endfn __ct__13NaviNukuStateFv
 
-.global init__13NaviNukuStateFP4Navi
-init__13NaviNukuStateFP4Navi:
+.fn init__13NaviNukuStateFP4Navi, global
 /* 80108B48 00105AA8  7C 08 02 A6 */	mflr r0
 /* 80108B4C 00105AAC  90 01 00 04 */	stw r0, 4(r1)
 /* 80108B50 00105AB0  94 21 FF A0 */	stwu r1, -0x60(r1)
@@ -8771,9 +8770,9 @@ init__13NaviNukuStateFP4Navi:
 /* 80108CC0 00105C20  38 21 00 60 */	addi r1, r1, 0x60
 /* 80108CC4 00105C24  7C 08 03 A6 */	mtlr r0
 /* 80108CC8 00105C28  4E 80 00 20 */	blr 
+.endfn init__13NaviNukuStateFP4Navi
 
-.global exec__13NaviNukuStateFP4Navi
-exec__13NaviNukuStateFP4Navi:
+.fn exec__13NaviNukuStateFP4Navi, global
 /* 80108CCC 00105C2C  7C 08 02 A6 */	mflr r0
 /* 80108CD0 00105C30  90 01 00 04 */	stw r0, 4(r1)
 /* 80108CD4 00105C34  94 21 FF C8 */	stwu r1, -0x38(r1)
@@ -8845,9 +8844,9 @@ exec__13NaviNukuStateFP4Navi:
 /* 80108DD0 00105D30  38 21 00 38 */	addi r1, r1, 0x38
 /* 80108DD4 00105D34  7C 08 03 A6 */	mtlr r0
 /* 80108DD8 00105D38  4E 80 00 20 */	blr 
+.endfn exec__13NaviNukuStateFP4Navi
 
-.global cleanup__13NaviNukuStateFP4Navi
-cleanup__13NaviNukuStateFP4Navi:
+.fn cleanup__13NaviNukuStateFP4Navi, global
 /* 80108DDC 00105D3C  88 03 00 14 */	lbz r0, 0x14(r3)
 /* 80108DE0 00105D40  28 00 00 00 */	cmplwi r0, 0
 /* 80108DE4 00105D44  40 82 00 1C */	bne .L_80108E00
@@ -8863,9 +8862,9 @@ cleanup__13NaviNukuStateFP4Navi:
 /* 80108E08 00105D68  38 03 00 01 */	addi r0, r3, 1
 /* 80108E0C 00105D6C  90 04 00 0C */	stw r0, 0xc(r4)
 /* 80108E10 00105D70  4E 80 00 20 */	blr 
+.endfn cleanup__13NaviNukuStateFP4Navi
 
-.global procAnimMsg__13NaviNukuStateFP4NaviP7MsgAnim
-procAnimMsg__13NaviNukuStateFP4NaviP7MsgAnim:
+.fn procAnimMsg__13NaviNukuStateFP4NaviP7MsgAnim, global
 /* 80108E14 00105D74  7C 08 02 A6 */	mflr r0
 /* 80108E18 00105D78  90 01 00 04 */	stw r0, 4(r1)
 /* 80108E1C 00105D7C  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -8947,9 +8946,9 @@ procAnimMsg__13NaviNukuStateFP4NaviP7MsgAnim:
 /* 80108F34 00105E94  38 21 00 28 */	addi r1, r1, 0x28
 /* 80108F38 00105E98  7C 08 03 A6 */	mtlr r0
 /* 80108F3C 00105E9C  4E 80 00 20 */	blr 
+.endfn procAnimMsg__13NaviNukuStateFP4NaviP7MsgAnim
 
-.global __ct__19NaviNukuAdjustStateFv
-__ct__19NaviNukuAdjustStateFv:
+.fn __ct__19NaviNukuAdjustStateFv, global
 /* 80108F40 00105EA0  3C 80 80 2C */	lis r4, "__vt__15Receiver<4Navi>"@ha
 /* 80108F44 00105EA4  38 04 19 F8 */	addi r0, r4, "__vt__15Receiver<4Navi>"@l
 /* 80108F48 00105EA8  3C 80 80 2C */	lis r4, "__vt__13AState<4Navi>"@ha
@@ -8974,9 +8973,9 @@ __ct__19NaviNukuAdjustStateFv:
 /* 80108F94 00105EF4  D0 03 00 28 */	stfs f0, 0x28(r3)
 /* 80108F98 00105EF8  D0 03 00 24 */	stfs f0, 0x24(r3)
 /* 80108F9C 00105EFC  4E 80 00 20 */	blr 
+.endfn __ct__19NaviNukuAdjustStateFv
 
-.global resume__19NaviNukuAdjustStateFP4Navi
-resume__19NaviNukuAdjustStateFP4Navi:
+.fn resume__19NaviNukuAdjustStateFP4Navi, global
 /* 80108FA0 00105F00  7C 08 02 A6 */	mflr r0
 /* 80108FA4 00105F04  90 01 00 04 */	stw r0, 4(r1)
 /* 80108FA8 00105F08  94 21 FF F8 */	stwu r1, -8(r1)
@@ -8988,9 +8987,9 @@ resume__19NaviNukuAdjustStateFP4Navi:
 /* 80108FC0 00105F20  38 21 00 08 */	addi r1, r1, 8
 /* 80108FC4 00105F24  7C 08 03 A6 */	mtlr r0
 /* 80108FC8 00105F28  4E 80 00 20 */	blr 
+.endfn resume__19NaviNukuAdjustStateFP4Navi
 
-.global restart__19NaviNukuAdjustStateFP4Navi
-restart__19NaviNukuAdjustStateFP4Navi:
+.fn restart__19NaviNukuAdjustStateFP4Navi, global
 /* 80108FCC 00105F2C  7C 08 02 A6 */	mflr r0
 /* 80108FD0 00105F30  38 A0 00 00 */	li r5, 0
 /* 80108FD4 00105F34  90 01 00 04 */	stw r0, 4(r1)
@@ -9003,9 +9002,9 @@ restart__19NaviNukuAdjustStateFP4Navi:
 /* 80108FF0 00105F50  38 21 00 08 */	addi r1, r1, 8
 /* 80108FF4 00105F54  7C 08 03 A6 */	mtlr r0
 /* 80108FF8 00105F58  4E 80 00 20 */	blr 
+.endfn restart__19NaviNukuAdjustStateFP4Navi
 
-.global init__19NaviNukuAdjustStateFP4Navi
-init__19NaviNukuAdjustStateFP4Navi:
+.fn init__19NaviNukuAdjustStateFP4Navi, global
 /* 80108FFC 00105F5C  7C 08 02 A6 */	mflr r0
 /* 80109000 00105F60  90 01 00 04 */	stw r0, 4(r1)
 /* 80109004 00105F64  94 21 FE F8 */	stwu r1, -0x108(r1)
@@ -9132,9 +9131,9 @@ init__19NaviNukuAdjustStateFP4Navi:
 /* 801091D4 00106134  38 21 01 08 */	addi r1, r1, 0x108
 /* 801091D8 00106138  7C 08 03 A6 */	mtlr r0
 /* 801091DC 0010613C  4E 80 00 20 */	blr 
+.endfn init__19NaviNukuAdjustStateFP4Navi
 
-.global exec__19NaviNukuAdjustStateFP4Navi
-exec__19NaviNukuAdjustStateFP4Navi:
+.fn exec__19NaviNukuAdjustStateFP4Navi, global
 /* 801091E0 00106140  7C 08 02 A6 */	mflr r0
 /* 801091E4 00106144  90 01 00 04 */	stw r0, 4(r1)
 /* 801091E8 00106148  94 21 FE E0 */	stwu r1, -0x120(r1)
@@ -9428,16 +9427,16 @@ exec__19NaviNukuAdjustStateFP4Navi:
 /* 80109630 00106590  38 21 01 20 */	addi r1, r1, 0x120
 /* 80109634 00106594  7C 08 03 A6 */	mtlr r0
 /* 80109638 00106598  4E 80 00 20 */	blr 
+.endfn exec__19NaviNukuAdjustStateFP4Navi
 
-.global cleanup__19NaviNukuAdjustStateFP4Navi
-cleanup__19NaviNukuAdjustStateFP4Navi:
+.fn cleanup__19NaviNukuAdjustStateFP4Navi, global
 /* 8010963C 0010659C  80 04 00 C8 */	lwz r0, 0xc8(r4)
 /* 80109640 001065A0  54 00 05 A8 */	rlwinm r0, r0, 0, 0x16, 0x14
 /* 80109644 001065A4  90 04 00 C8 */	stw r0, 0xc8(r4)
 /* 80109648 001065A8  4E 80 00 20 */	blr 
+.endfn cleanup__19NaviNukuAdjustStateFP4Navi
 
-.global __ct__16NaviPressedStateFv
-__ct__16NaviPressedStateFv:
+.fn __ct__16NaviPressedStateFv, global
 /* 8010964C 001065AC  3C 80 80 2C */	lis r4, "__vt__15Receiver<4Navi>"@ha
 /* 80109650 001065B0  38 04 19 F8 */	addi r0, r4, "__vt__15Receiver<4Navi>"@l
 /* 80109654 001065B4  3C 80 80 2C */	lis r4, "__vt__13AState<4Navi>"@ha
@@ -9455,16 +9454,16 @@ __ct__16NaviPressedStateFv:
 /* 80109684 001065E4  90 A3 00 00 */	stw r5, 0(r3)
 /* 80109688 001065E8  90 03 00 00 */	stw r0, 0(r3)
 /* 8010968C 001065EC  4E 80 00 20 */	blr 
+.endfn __ct__16NaviPressedStateFv
 
-.global init__16NaviPressedStateFP4Navi
-init__16NaviPressedStateFP4Navi:
+.fn init__16NaviPressedStateFP4Navi, global
 /* 80109690 001065F0  80 64 02 24 */	lwz r3, 0x224(r4)
 /* 80109694 001065F4  C0 03 02 E8 */	lfs f0, 0x2e8(r3)
 /* 80109698 001065F8  D0 04 08 14 */	stfs f0, 0x814(r4)
 /* 8010969C 001065FC  4E 80 00 20 */	blr 
+.endfn init__16NaviPressedStateFP4Navi
 
-.global exec__16NaviPressedStateFP4Navi
-exec__16NaviPressedStateFP4Navi:
+.fn exec__16NaviPressedStateFP4Navi, global
 /* 801096A0 00106600  7C 08 02 A6 */	mflr r0
 /* 801096A4 00106604  90 01 00 04 */	stw r0, 4(r1)
 /* 801096A8 00106608  94 21 FF F8 */	stwu r1, -8(r1)
@@ -9531,13 +9530,13 @@ exec__16NaviPressedStateFP4Navi:
 /* 80109788 001066E8  38 21 00 08 */	addi r1, r1, 8
 /* 8010978C 001066EC  7C 08 03 A6 */	mtlr r0
 /* 80109790 001066F0  4E 80 00 20 */	blr 
+.endfn exec__16NaviPressedStateFP4Navi
 
-.global cleanup__16NaviPressedStateFP4Navi
-cleanup__16NaviPressedStateFP4Navi:
+.fn cleanup__16NaviPressedStateFP4Navi, global
 /* 80109794 001066F4  4E 80 00 20 */	blr 
+.endfn cleanup__16NaviPressedStateFP4Navi
 
-.global __ct__12NaviSowStateFv
-__ct__12NaviSowStateFv:
+.fn __ct__12NaviSowStateFv, global
 /* 80109798 001066F8  3C 80 80 2C */	lis r4, "__vt__15Receiver<4Navi>"@ha
 /* 8010979C 001066FC  38 04 19 F8 */	addi r0, r4, "__vt__15Receiver<4Navi>"@l
 /* 801097A0 00106700  3C 80 80 2C */	lis r4, "__vt__13AState<4Navi>"@ha
@@ -9555,9 +9554,9 @@ __ct__12NaviSowStateFv:
 /* 801097D0 00106730  90 A3 00 00 */	stw r5, 0(r3)
 /* 801097D4 00106734  90 03 00 00 */	stw r0, 0(r3)
 /* 801097D8 00106738  4E 80 00 20 */	blr 
+.endfn __ct__12NaviSowStateFv
 
-.global init__12NaviSowStateFP4Navi
-init__12NaviSowStateFP4Navi:
+.fn init__12NaviSowStateFP4Navi, global
 /* 801097DC 0010673C  7C 08 02 A6 */	mflr r0
 /* 801097E0 00106740  90 01 00 04 */	stw r0, 4(r1)
 /* 801097E4 00106744  94 21 FF D0 */	stwu r1, -0x30(r1)
@@ -9588,17 +9587,17 @@ init__12NaviSowStateFP4Navi:
 /* 80109844 001067A4  38 21 00 30 */	addi r1, r1, 0x30
 /* 80109848 001067A8  7C 08 03 A6 */	mtlr r0
 /* 8010984C 001067AC  4E 80 00 20 */	blr 
+.endfn init__12NaviSowStateFP4Navi
 
-.global exec__12NaviSowStateFP4Navi
-exec__12NaviSowStateFP4Navi:
+.fn exec__12NaviSowStateFP4Navi, global
 /* 80109850 001067B0  4E 80 00 20 */	blr 
+.endfn exec__12NaviSowStateFP4Navi
 
-.global cleanup__12NaviSowStateFP4Navi
-cleanup__12NaviSowStateFP4Navi:
+.fn cleanup__12NaviSowStateFP4Navi, global
 /* 80109854 001067B4  4E 80 00 20 */	blr 
+.endfn cleanup__12NaviSowStateFP4Navi
 
-.global __ct__14NaviWaterStateFv
-__ct__14NaviWaterStateFv:
+.fn __ct__14NaviWaterStateFv, global
 /* 80109858 001067B8  3C 80 80 2C */	lis r4, "__vt__15Receiver<4Navi>"@ha
 /* 8010985C 001067BC  38 04 19 F8 */	addi r0, r4, "__vt__15Receiver<4Navi>"@l
 /* 80109860 001067C0  3C 80 80 2C */	lis r4, "__vt__13AState<4Navi>"@ha
@@ -9616,9 +9615,9 @@ __ct__14NaviWaterStateFv:
 /* 80109890 001067F0  90 A3 00 00 */	stw r5, 0(r3)
 /* 80109894 001067F4  90 03 00 00 */	stw r0, 0(r3)
 /* 80109898 001067F8  4E 80 00 20 */	blr 
+.endfn __ct__14NaviWaterStateFv
 
-.global init__14NaviWaterStateFP4Navi
-init__14NaviWaterStateFP4Navi:
+.fn init__14NaviWaterStateFP4Navi, global
 /* 8010989C 001067FC  7C 08 02 A6 */	mflr r0
 /* 801098A0 00106800  90 01 00 04 */	stw r0, 4(r1)
 /* 801098A4 00106804  94 21 FF D0 */	stwu r1, -0x30(r1)
@@ -9661,17 +9660,17 @@ init__14NaviWaterStateFP4Navi:
 /* 80109934 00106894  38 21 00 30 */	addi r1, r1, 0x30
 /* 80109938 00106898  7C 08 03 A6 */	mtlr r0
 /* 8010993C 0010689C  4E 80 00 20 */	blr 
+.endfn init__14NaviWaterStateFP4Navi
 
-.global exec__14NaviWaterStateFP4Navi
-exec__14NaviWaterStateFP4Navi:
+.fn exec__14NaviWaterStateFP4Navi, global
 /* 80109940 001068A0  4E 80 00 20 */	blr 
+.endfn exec__14NaviWaterStateFP4Navi
 
-.global cleanup__14NaviWaterStateFP4Navi
-cleanup__14NaviWaterStateFP4Navi:
+.fn cleanup__14NaviWaterStateFP4Navi, global
 /* 80109944 001068A4  4E 80 00 20 */	blr 
+.endfn cleanup__14NaviWaterStateFP4Navi
 
-.global __ct__15NaviAttackStateFv
-__ct__15NaviAttackStateFv:
+.fn __ct__15NaviAttackStateFv, global
 /* 80109948 001068A8  3C 80 80 2C */	lis r4, "__vt__15Receiver<4Navi>"@ha
 /* 8010994C 001068AC  38 04 19 F8 */	addi r0, r4, "__vt__15Receiver<4Navi>"@l
 /* 80109950 001068B0  3C 80 80 2C */	lis r4, "__vt__13AState<4Navi>"@ha
@@ -9689,9 +9688,9 @@ __ct__15NaviAttackStateFv:
 /* 80109980 001068E0  90 A3 00 00 */	stw r5, 0(r3)
 /* 80109984 001068E4  90 03 00 00 */	stw r0, 0(r3)
 /* 80109988 001068E8  4E 80 00 20 */	blr 
+.endfn __ct__15NaviAttackStateFv
 
-.global resume__15NaviAttackStateFP4Navi
-resume__15NaviAttackStateFP4Navi:
+.fn resume__15NaviAttackStateFP4Navi, global
 /* 8010998C 001068EC  7C 08 02 A6 */	mflr r0
 /* 80109990 001068F0  90 01 00 04 */	stw r0, 4(r1)
 /* 80109994 001068F4  94 21 FF F8 */	stwu r1, -8(r1)
@@ -9703,9 +9702,9 @@ resume__15NaviAttackStateFP4Navi:
 /* 801099AC 0010690C  38 21 00 08 */	addi r1, r1, 8
 /* 801099B0 00106910  7C 08 03 A6 */	mtlr r0
 /* 801099B4 00106914  4E 80 00 20 */	blr 
+.endfn resume__15NaviAttackStateFP4Navi
 
-.global restart__15NaviAttackStateFP4Navi
-restart__15NaviAttackStateFP4Navi:
+.fn restart__15NaviAttackStateFP4Navi, global
 /* 801099B8 00106918  7C 08 02 A6 */	mflr r0
 /* 801099BC 0010691C  38 A0 00 00 */	li r5, 0
 /* 801099C0 00106920  90 01 00 04 */	stw r0, 4(r1)
@@ -9718,9 +9717,9 @@ restart__15NaviAttackStateFP4Navi:
 /* 801099DC 0010693C  38 21 00 08 */	addi r1, r1, 8
 /* 801099E0 00106940  7C 08 03 A6 */	mtlr r0
 /* 801099E4 00106944  4E 80 00 20 */	blr 
+.endfn restart__15NaviAttackStateFP4Navi
 
-.global init__15NaviAttackStateFP4Navi
-init__15NaviAttackStateFP4Navi:
+.fn init__15NaviAttackStateFP4Navi, global
 /* 801099E8 00106948  7C 08 02 A6 */	mflr r0
 /* 801099EC 0010694C  90 01 00 04 */	stw r0, 4(r1)
 /* 801099F0 00106950  94 21 FF C0 */	stwu r1, -0x40(r1)
@@ -9773,9 +9772,9 @@ init__15NaviAttackStateFP4Navi:
 /* 80109AA8 00106A08  38 21 00 40 */	addi r1, r1, 0x40
 /* 80109AAC 00106A0C  7C 08 03 A6 */	mtlr r0
 /* 80109AB0 00106A10  4E 80 00 20 */	blr 
+.endfn init__15NaviAttackStateFP4Navi
 
-.global exec__15NaviAttackStateFP4Navi
-exec__15NaviAttackStateFP4Navi:
+.fn exec__15NaviAttackStateFP4Navi, global
 /* 80109AB4 00106A14  7C 08 02 A6 */	mflr r0
 /* 80109AB8 00106A18  90 01 00 04 */	stw r0, 4(r1)
 /* 80109ABC 00106A1C  94 21 FE E0 */	stwu r1, -0x120(r1)
@@ -10053,13 +10052,13 @@ exec__15NaviAttackStateFP4Navi:
 /* 80109ECC 00106E2C  38 21 01 20 */	addi r1, r1, 0x120
 /* 80109ED0 00106E30  7C 08 03 A6 */	mtlr r0
 /* 80109ED4 00106E34  4E 80 00 20 */	blr 
+.endfn exec__15NaviAttackStateFP4Navi
 
-.global cleanup__15NaviAttackStateFP4Navi
-cleanup__15NaviAttackStateFP4Navi:
+.fn cleanup__15NaviAttackStateFP4Navi, global
 /* 80109ED8 00106E38  4E 80 00 20 */	blr 
+.endfn cleanup__15NaviAttackStateFP4Navi
 
-.global procAnimMsg__15NaviAttackStateFP4NaviP7MsgAnim
-procAnimMsg__15NaviAttackStateFP4NaviP7MsgAnim:
+.fn procAnimMsg__15NaviAttackStateFP4NaviP7MsgAnim, global
 /* 80109EDC 00106E3C  7C 08 02 A6 */	mflr r0
 /* 80109EE0 00106E40  90 01 00 04 */	stw r0, 4(r1)
 /* 80109EE4 00106E44  94 21 FF F8 */	stwu r1, -8(r1)
@@ -10096,9 +10095,9 @@ procAnimMsg__15NaviAttackStateFP4NaviP7MsgAnim:
 /* 80109F50 00106EB0  38 21 00 08 */	addi r1, r1, 8
 /* 80109F54 00106EB4  7C 08 03 A6 */	mtlr r0
 /* 80109F58 00106EB8  4E 80 00 20 */	blr 
+.endfn procAnimMsg__15NaviAttackStateFP4NaviP7MsgAnim
 
-.global __ct__13NaviLockStateFv
-__ct__13NaviLockStateFv:
+.fn __ct__13NaviLockStateFv, global
 /* 80109F5C 00106EBC  3C 80 80 2C */	lis r4, "__vt__15Receiver<4Navi>"@ha
 /* 80109F60 00106EC0  38 04 19 F8 */	addi r0, r4, "__vt__15Receiver<4Navi>"@l
 /* 80109F64 00106EC4  3C 80 80 2C */	lis r4, "__vt__13AState<4Navi>"@ha
@@ -10116,21 +10115,21 @@ __ct__13NaviLockStateFv:
 /* 80109F94 00106EF4  90 A3 00 00 */	stw r5, 0(r3)
 /* 80109F98 00106EF8  90 03 00 00 */	stw r0, 0(r3)
 /* 80109F9C 00106EFC  4E 80 00 20 */	blr 
+.endfn __ct__13NaviLockStateFv
 
-.global init__13NaviLockStateFP4Navi
-init__13NaviLockStateFP4Navi:
+.fn init__13NaviLockStateFP4Navi, global
 /* 80109FA0 00106F00  4E 80 00 20 */	blr 
+.endfn init__13NaviLockStateFP4Navi
 
-.global exec__13NaviLockStateFP4Navi
-exec__13NaviLockStateFP4Navi:
+.fn exec__13NaviLockStateFP4Navi, global
 /* 80109FA4 00106F04  4E 80 00 20 */	blr 
+.endfn exec__13NaviLockStateFP4Navi
 
-.global cleanup__13NaviLockStateFP4Navi
-cleanup__13NaviLockStateFP4Navi:
+.fn cleanup__13NaviLockStateFP4Navi, global
 /* 80109FA8 00106F08  4E 80 00 20 */	blr 
+.endfn cleanup__13NaviLockStateFP4Navi
 
-.global __ct__14NaviClearStateFv
-__ct__14NaviClearStateFv:
+.fn __ct__14NaviClearStateFv, global
 /* 80109FAC 00106F0C  3C 80 80 2C */	lis r4, "__vt__15Receiver<4Navi>"@ha
 /* 80109FB0 00106F10  38 04 19 F8 */	addi r0, r4, "__vt__15Receiver<4Navi>"@l
 /* 80109FB4 00106F14  3C 80 80 2C */	lis r4, "__vt__13AState<4Navi>"@ha
@@ -10148,9 +10147,9 @@ __ct__14NaviClearStateFv:
 /* 80109FE4 00106F44  90 A3 00 00 */	stw r5, 0(r3)
 /* 80109FE8 00106F48  90 03 00 00 */	stw r0, 0(r3)
 /* 80109FEC 00106F4C  4E 80 00 20 */	blr 
+.endfn __ct__14NaviClearStateFv
 
-.global init__14NaviClearStateFP4Navi
-init__14NaviClearStateFP4Navi:
+.fn init__14NaviClearStateFP4Navi, global
 /* 80109FF0 00106F50  7C 08 02 A6 */	mflr r0
 /* 80109FF4 00106F54  90 01 00 04 */	stw r0, 4(r1)
 /* 80109FF8 00106F58  94 21 FF D0 */	stwu r1, -0x30(r1)
@@ -10193,13 +10192,13 @@ init__14NaviClearStateFP4Navi:
 /* 8010A088 00106FE8  38 21 00 30 */	addi r1, r1, 0x30
 /* 8010A08C 00106FEC  7C 08 03 A6 */	mtlr r0
 /* 8010A090 00106FF0  4E 80 00 20 */	blr 
+.endfn init__14NaviClearStateFP4Navi
 
-.global exec__14NaviClearStateFP4Navi
-exec__14NaviClearStateFP4Navi:
+.fn exec__14NaviClearStateFP4Navi, global
 /* 8010A094 00106FF4  4E 80 00 20 */	blr 
+.endfn exec__14NaviClearStateFP4Navi
 
-.global procAnimMsg__14NaviClearStateFP4NaviP7MsgAnim
-procAnimMsg__14NaviClearStateFP4NaviP7MsgAnim:
+.fn procAnimMsg__14NaviClearStateFP4NaviP7MsgAnim, global
 /* 8010A098 00106FF8  7C 08 02 A6 */	mflr r0
 /* 8010A09C 00106FFC  90 01 00 04 */	stw r0, 4(r1)
 /* 8010A0A0 00107000  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -10221,13 +10220,13 @@ procAnimMsg__14NaviClearStateFP4NaviP7MsgAnim:
 /* 8010A0DC 0010703C  38 21 00 20 */	addi r1, r1, 0x20
 /* 8010A0E0 00107040  7C 08 03 A6 */	mtlr r0
 /* 8010A0E4 00107044  4E 80 00 20 */	blr 
+.endfn procAnimMsg__14NaviClearStateFP4NaviP7MsgAnim
 
-.global cleanup__14NaviClearStateFP4Navi
-cleanup__14NaviClearStateFP4Navi:
+.fn cleanup__14NaviClearStateFP4Navi, global
 /* 8010A0E8 00107048  4E 80 00 20 */	blr 
+.endfn cleanup__14NaviClearStateFP4Navi
 
-.global __ct__15NaviIroIroStateFv
-__ct__15NaviIroIroStateFv:
+.fn __ct__15NaviIroIroStateFv, global
 /* 8010A0EC 0010704C  3C 80 80 2C */	lis r4, "__vt__15Receiver<4Navi>"@ha
 /* 8010A0F0 00107050  38 04 19 F8 */	addi r0, r4, "__vt__15Receiver<4Navi>"@l
 /* 8010A0F4 00107054  3C 80 80 2C */	lis r4, "__vt__13AState<4Navi>"@ha
@@ -10245,13 +10244,13 @@ __ct__15NaviIroIroStateFv:
 /* 8010A124 00107084  90 A3 00 00 */	stw r5, 0(r3)
 /* 8010A128 00107088  90 03 00 00 */	stw r0, 0(r3)
 /* 8010A12C 0010708C  4E 80 00 20 */	blr 
+.endfn __ct__15NaviIroIroStateFv
 
-.global init__15NaviIroIroStateFP4Navi
-init__15NaviIroIroStateFP4Navi:
+.fn init__15NaviIroIroStateFP4Navi, global
 /* 8010A130 00107090  4E 80 00 20 */	blr 
+.endfn init__15NaviIroIroStateFP4Navi
 
-.global exec__15NaviIroIroStateFP4Navi
-exec__15NaviIroIroStateFP4Navi:
+.fn exec__15NaviIroIroStateFP4Navi, global
 /* 8010A134 00107094  C0 0D D7 70 */	lfs f0, lbl_803E2490@sda21(r13)
 /* 8010A138 00107098  D0 04 00 A4 */	stfs f0, 0xa4(r4)
 /* 8010A13C 0010709C  C0 0D D7 74 */	lfs f0, lbl_803E2494@sda21(r13)
@@ -10259,13 +10258,13 @@ exec__15NaviIroIroStateFP4Navi:
 /* 8010A144 001070A4  C0 0D D7 78 */	lfs f0, lbl_803E2498@sda21(r13)
 /* 8010A148 001070A8  D0 04 00 AC */	stfs f0, 0xac(r4)
 /* 8010A14C 001070AC  4E 80 00 20 */	blr 
+.endfn exec__15NaviIroIroStateFP4Navi
 
-.global cleanup__15NaviIroIroStateFP4Navi
-cleanup__15NaviIroIroStateFP4Navi:
+.fn cleanup__15NaviIroIroStateFP4Navi, global
 /* 8010A150 001070B0  4E 80 00 20 */	blr 
+.endfn cleanup__15NaviIroIroStateFP4Navi
 
-.global __ct__13NaviDeadStateFv
-__ct__13NaviDeadStateFv:
+.fn __ct__13NaviDeadStateFv, global
 /* 8010A154 001070B4  3C 80 80 2C */	lis r4, "__vt__15Receiver<4Navi>"@ha
 /* 8010A158 001070B8  38 04 19 F8 */	addi r0, r4, "__vt__15Receiver<4Navi>"@l
 /* 8010A15C 001070BC  3C 80 80 2C */	lis r4, "__vt__13AState<4Navi>"@ha
@@ -10283,13 +10282,13 @@ __ct__13NaviDeadStateFv:
 /* 8010A18C 001070EC  90 A3 00 00 */	stw r5, 0(r3)
 /* 8010A190 001070F0  90 03 00 00 */	stw r0, 0(r3)
 /* 8010A194 001070F4  4E 80 00 20 */	blr 
+.endfn __ct__13NaviDeadStateFv
 
-.global restart__13NaviDeadStateFP4Navi
-restart__13NaviDeadStateFP4Navi:
+.fn restart__13NaviDeadStateFP4Navi, global
 /* 8010A198 001070F8  4E 80 00 20 */	blr 
+.endfn restart__13NaviDeadStateFP4Navi
 
-.global init__13NaviDeadStateFP4Navi
-init__13NaviDeadStateFP4Navi:
+.fn init__13NaviDeadStateFP4Navi, global
 /* 8010A19C 001070FC  7C 08 02 A6 */	mflr r0
 /* 8010A1A0 00107100  90 01 00 04 */	stw r0, 4(r1)
 /* 8010A1A4 00107104  38 00 00 01 */	li r0, 1
@@ -10376,9 +10375,9 @@ init__13NaviDeadStateFP4Navi:
 /* 8010A2E4 00107244  38 21 00 30 */	addi r1, r1, 0x30
 /* 8010A2E8 00107248  7C 08 03 A6 */	mtlr r0
 /* 8010A2EC 0010724C  4E 80 00 20 */	blr 
+.endfn init__13NaviDeadStateFP4Navi
 
-.global exec__13NaviDeadStateFP4Navi
-exec__13NaviDeadStateFP4Navi:
+.fn exec__13NaviDeadStateFP4Navi, global
 /* 8010A2F0 00107250  C0 0D D7 94 */	lfs f0, lbl_803E24B4@sda21(r13)
 /* 8010A2F4 00107254  D0 04 00 70 */	stfs f0, 0x70(r4)
 /* 8010A2F8 00107258  C0 0D D7 98 */	lfs f0, lbl_803E24B8@sda21(r13)
@@ -10386,13 +10385,13 @@ exec__13NaviDeadStateFP4Navi:
 /* 8010A300 00107260  C0 0D D7 9C */	lfs f0, lbl_803E24BC@sda21(r13)
 /* 8010A304 00107264  D0 04 00 78 */	stfs f0, 0x78(r4)
 /* 8010A308 00107268  4E 80 00 20 */	blr 
+.endfn exec__13NaviDeadStateFP4Navi
 
-.global cleanup__13NaviDeadStateFP4Navi
-cleanup__13NaviDeadStateFP4Navi:
+.fn cleanup__13NaviDeadStateFP4Navi, global
 /* 8010A30C 0010726C  4E 80 00 20 */	blr 
+.endfn cleanup__13NaviDeadStateFP4Navi
 
-.global procAnimMsg__13NaviDeadStateFP4NaviP7MsgAnim
-procAnimMsg__13NaviDeadStateFP4NaviP7MsgAnim:
+.fn procAnimMsg__13NaviDeadStateFP4NaviP7MsgAnim, global
 /* 8010A310 00107270  7C 08 02 A6 */	mflr r0
 /* 8010A314 00107274  90 01 00 04 */	stw r0, 4(r1)
 /* 8010A318 00107278  94 21 FF F8 */	stwu r1, -8(r1)
@@ -10416,9 +10415,9 @@ procAnimMsg__13NaviDeadStateFP4NaviP7MsgAnim:
 /* 8010A358 001072B8  38 21 00 08 */	addi r1, r1, 8
 /* 8010A35C 001072BC  7C 08 03 A6 */	mtlr r0
 /* 8010A360 001072C0  4E 80 00 20 */	blr 
+.endfn procAnimMsg__13NaviDeadStateFP4NaviP7MsgAnim
 
-.global __ct__17NaviPikiZeroStateFv
-__ct__17NaviPikiZeroStateFv:
+.fn __ct__17NaviPikiZeroStateFv, global
 /* 8010A364 001072C4  3C 80 80 2C */	lis r4, "__vt__15Receiver<4Navi>"@ha
 /* 8010A368 001072C8  38 04 19 F8 */	addi r0, r4, "__vt__15Receiver<4Navi>"@l
 /* 8010A36C 001072CC  3C 80 80 2C */	lis r4, "__vt__13AState<4Navi>"@ha
@@ -10436,9 +10435,9 @@ __ct__17NaviPikiZeroStateFv:
 /* 8010A39C 001072FC  90 A3 00 00 */	stw r5, 0(r3)
 /* 8010A3A0 00107300  90 03 00 00 */	stw r0, 0(r3)
 /* 8010A3A4 00107304  4E 80 00 20 */	blr 
+.endfn __ct__17NaviPikiZeroStateFv
 
-.global init__17NaviPikiZeroStateFP4Navi
-init__17NaviPikiZeroStateFP4Navi:
+.fn init__17NaviPikiZeroStateFP4Navi, global
 /* 8010A3A8 00107308  7C 08 02 A6 */	mflr r0
 /* 8010A3AC 0010730C  3C 80 80 3A */	lis r4, gameflow@ha
 /* 8010A3B0 00107310  90 01 00 04 */	stw r0, 4(r1)
@@ -10477,9 +10476,9 @@ init__17NaviPikiZeroStateFP4Navi:
 /* 8010A434 00107394  38 21 00 18 */	addi r1, r1, 0x18
 /* 8010A438 00107398  7C 08 03 A6 */	mtlr r0
 /* 8010A43C 0010739C  4E 80 00 20 */	blr 
+.endfn init__17NaviPikiZeroStateFP4Navi
 
-.global exec__17NaviPikiZeroStateFP4Navi
-exec__17NaviPikiZeroStateFP4Navi:
+.fn exec__17NaviPikiZeroStateFP4Navi, global
 /* 8010A440 001073A0  7C 08 02 A6 */	mflr r0
 /* 8010A444 001073A4  90 01 00 04 */	stw r0, 4(r1)
 /* 8010A448 001073A8  94 21 FF F8 */	stwu r1, -8(r1)
@@ -10502,17 +10501,17 @@ exec__17NaviPikiZeroStateFP4Navi:
 /* 8010A488 001073E8  38 21 00 08 */	addi r1, r1, 8
 /* 8010A48C 001073EC  7C 08 03 A6 */	mtlr r0
 /* 8010A490 001073F0  4E 80 00 20 */	blr 
+.endfn exec__17NaviPikiZeroStateFP4Navi
 
-.global cleanup__17NaviPikiZeroStateFP4Navi
-cleanup__17NaviPikiZeroStateFP4Navi:
+.fn cleanup__17NaviPikiZeroStateFP4Navi, global
 /* 8010A494 001073F4  4E 80 00 20 */	blr 
+.endfn cleanup__17NaviPikiZeroStateFP4Navi
 
-.global procAnimMsg__17NaviPikiZeroStateFP4NaviP7MsgAnim
-procAnimMsg__17NaviPikiZeroStateFP4NaviP7MsgAnim:
+.fn procAnimMsg__17NaviPikiZeroStateFP4NaviP7MsgAnim, global
 /* 8010A498 001073F8  4E 80 00 20 */	blr 
+.endfn procAnimMsg__17NaviPikiZeroStateFP4NaviP7MsgAnim
 
-.global __ct__17NaviStartingStateFv
-__ct__17NaviStartingStateFv:
+.fn __ct__17NaviStartingStateFv, global
 /* 8010A49C 001073FC  3C 80 80 2C */	lis r4, "__vt__15Receiver<4Navi>"@ha
 /* 8010A4A0 00107400  38 04 19 F8 */	addi r0, r4, "__vt__15Receiver<4Navi>"@l
 /* 8010A4A4 00107404  3C 80 80 2C */	lis r4, "__vt__13AState<4Navi>"@ha
@@ -10540,9 +10539,9 @@ __ct__17NaviStartingStateFv:
 /* 8010A4FC 0010745C  D0 03 00 38 */	stfs f0, 0x38(r3)
 /* 8010A500 00107460  D0 03 00 34 */	stfs f0, 0x34(r3)
 /* 8010A504 00107464  4E 80 00 20 */	blr 
+.endfn __ct__17NaviStartingStateFv
 
-.global init__17NaviStartingStateFP4Navi
-init__17NaviStartingStateFP4Navi:
+.fn init__17NaviStartingStateFP4Navi, global
 /* 8010A508 00107468  7C 08 02 A6 */	mflr r0
 /* 8010A50C 0010746C  3C A0 80 3A */	lis r5, gameflow@ha
 /* 8010A510 00107470  90 01 00 04 */	stw r0, 4(r1)
@@ -10703,9 +10702,9 @@ init__17NaviStartingStateFP4Navi:
 /* 8010A770 001076D0  38 21 01 10 */	addi r1, r1, 0x110
 /* 8010A774 001076D4  7C 08 03 A6 */	mtlr r0
 /* 8010A778 001076D8  4E 80 00 20 */	blr 
+.endfn init__17NaviStartingStateFP4Navi
 
-.global procCollideMsg__17NaviStartingStateFP4NaviP10MsgCollide
-procCollideMsg__17NaviStartingStateFP4NaviP10MsgCollide:
+.fn procCollideMsg__17NaviStartingStateFP4NaviP10MsgCollide, global
 /* 8010A77C 001076DC  7C 08 02 A6 */	mflr r0
 /* 8010A780 001076E0  90 01 00 04 */	stw r0, 4(r1)
 /* 8010A784 001076E4  94 21 FF C8 */	stwu r1, -0x38(r1)
@@ -10763,9 +10762,9 @@ procCollideMsg__17NaviStartingStateFP4NaviP10MsgCollide:
 /* 8010A84C 001077AC  38 21 00 38 */	addi r1, r1, 0x38
 /* 8010A850 001077B0  7C 08 03 A6 */	mtlr r0
 /* 8010A854 001077B4  4E 80 00 20 */	blr 
+.endfn procCollideMsg__17NaviStartingStateFP4NaviP10MsgCollide
 
-.global exec__17NaviStartingStateFP4Navi
-exec__17NaviStartingStateFP4Navi:
+.fn exec__17NaviStartingStateFP4Navi, global
 /* 8010A858 001077B8  7C 08 02 A6 */	mflr r0
 /* 8010A85C 001077BC  90 01 00 04 */	stw r0, 4(r1)
 /* 8010A860 001077C0  94 21 FF 38 */	stwu r1, -0xc8(r1)
@@ -10945,9 +10944,9 @@ exec__17NaviStartingStateFP4Navi:
 /* 8010AAF0 00107A50  38 21 00 C8 */	addi r1, r1, 0xc8
 /* 8010AAF4 00107A54  7C 08 03 A6 */	mtlr r0
 /* 8010AAF8 00107A58  4E 80 00 20 */	blr 
+.endfn exec__17NaviStartingStateFP4Navi
 
-.global procAnimMsg__17NaviStartingStateFP4NaviP7MsgAnim
-procAnimMsg__17NaviStartingStateFP4NaviP7MsgAnim:
+.fn procAnimMsg__17NaviStartingStateFP4NaviP7MsgAnim, global
 /* 8010AAFC 00107A5C  80 85 00 04 */	lwz r4, 4(r5)
 /* 8010AB00 00107A60  80 04 00 00 */	lwz r0, 0(r4)
 /* 8010AB04 00107A64  2C 00 00 06 */	cmpwi r0, 6
@@ -10962,9 +10961,9 @@ procAnimMsg__17NaviStartingStateFP4NaviP7MsgAnim:
 /* 8010AB24 00107A84  38 00 00 01 */	li r0, 1
 /* 8010AB28 00107A88  98 03 00 32 */	stb r0, 0x32(r3)
 /* 8010AB2C 00107A8C  4E 80 00 20 */	blr 
+.endfn procAnimMsg__17NaviStartingStateFP4NaviP7MsgAnim
 
-.global cleanup__17NaviStartingStateFP4Navi
-cleanup__17NaviStartingStateFP4Navi:
+.fn cleanup__17NaviStartingStateFP4Navi, global
 /* 8010AB30 00107A90  7C 08 02 A6 */	mflr r0
 /* 8010AB34 00107A94  3C 60 80 3A */	lis r3, gameflow@ha
 /* 8010AB38 00107A98  90 01 00 04 */	stw r0, 4(r1)
@@ -10998,9 +10997,9 @@ cleanup__17NaviStartingStateFP4Navi:
 /* 8010ABA8 00107B08  38 21 00 18 */	addi r1, r1, 0x18
 /* 8010ABAC 00107B0C  7C 08 03 A6 */	mtlr r0
 /* 8010ABB0 00107B10  4E 80 00 20 */	blr 
+.endfn cleanup__17NaviStartingStateFP4Navi
 
-.global __ct__20NaviPartsAccessStateFv
-__ct__20NaviPartsAccessStateFv:
+.fn __ct__20NaviPartsAccessStateFv, global
 /* 8010ABB4 00107B14  3C 80 80 2C */	lis r4, "__vt__15Receiver<4Navi>"@ha
 /* 8010ABB8 00107B18  38 04 19 F8 */	addi r0, r4, "__vt__15Receiver<4Navi>"@l
 /* 8010ABBC 00107B1C  3C 80 80 2C */	lis r4, "__vt__13AState<4Navi>"@ha
@@ -11018,9 +11017,9 @@ __ct__20NaviPartsAccessStateFv:
 /* 8010ABEC 00107B4C  90 A3 00 00 */	stw r5, 0(r3)
 /* 8010ABF0 00107B50  90 03 00 00 */	stw r0, 0(r3)
 /* 8010ABF4 00107B54  4E 80 00 20 */	blr 
+.endfn __ct__20NaviPartsAccessStateFv
 
-.global init__20NaviPartsAccessStateFP4Navi
-init__20NaviPartsAccessStateFP4Navi:
+.fn init__20NaviPartsAccessStateFP4Navi, global
 /* 8010ABF8 00107B58  7C 08 02 A6 */	mflr r0
 /* 8010ABFC 00107B5C  90 01 00 04 */	stw r0, 4(r1)
 /* 8010AC00 00107B60  94 21 FF D0 */	stwu r1, -0x30(r1)
@@ -11087,9 +11086,9 @@ init__20NaviPartsAccessStateFP4Navi:
 /* 8010ACF0 00107C50  38 21 00 30 */	addi r1, r1, 0x30
 /* 8010ACF4 00107C54  7C 08 03 A6 */	mtlr r0
 /* 8010ACF8 00107C58  4E 80 00 20 */	blr 
+.endfn init__20NaviPartsAccessStateFP4Navi
 
-.global exec__20NaviPartsAccessStateFP4Navi
-exec__20NaviPartsAccessStateFP4Navi:
+.fn exec__20NaviPartsAccessStateFP4Navi, global
 /* 8010ACFC 00107C5C  7C 08 02 A6 */	mflr r0
 /* 8010AD00 00107C60  90 01 00 04 */	stw r0, 4(r1)
 /* 8010AD04 00107C64  94 21 FF F8 */	stwu r1, -8(r1)
@@ -11111,9 +11110,9 @@ exec__20NaviPartsAccessStateFP4Navi:
 /* 8010AD40 00107CA0  38 21 00 08 */	addi r1, r1, 8
 /* 8010AD44 00107CA4  7C 08 03 A6 */	mtlr r0
 /* 8010AD48 00107CA8  4E 80 00 20 */	blr 
+.endfn exec__20NaviPartsAccessStateFP4Navi
 
-.global cleanup__20NaviPartsAccessStateFP4Navi
-cleanup__20NaviPartsAccessStateFP4Navi:
+.fn cleanup__20NaviPartsAccessStateFP4Navi, global
 /* 8010AD4C 00107CAC  7C 08 02 A6 */	mflr r0
 /* 8010AD50 00107CB0  90 01 00 04 */	stw r0, 4(r1)
 /* 8010AD54 00107CB4  38 00 00 00 */	li r0, 0
@@ -11133,9 +11132,9 @@ cleanup__20NaviPartsAccessStateFP4Navi:
 /* 8010AD8C 00107CEC  38 21 00 08 */	addi r1, r1, 8
 /* 8010AD90 00107CF0  7C 08 03 A6 */	mtlr r0
 /* 8010AD94 00107CF4  4E 80 00 20 */	blr 
+.endfn cleanup__20NaviPartsAccessStateFP4Navi
 
-.global procAnimMsg__20NaviPartsAccessStateFP4NaviP7MsgAnim
-procAnimMsg__20NaviPartsAccessStateFP4NaviP7MsgAnim:
+.fn procAnimMsg__20NaviPartsAccessStateFP4NaviP7MsgAnim, global
 /* 8010AD98 00107CF8  7C 08 02 A6 */	mflr r0
 /* 8010AD9C 00107CFC  90 01 00 04 */	stw r0, 4(r1)
 /* 8010ADA0 00107D00  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -11180,9 +11179,9 @@ procAnimMsg__20NaviPartsAccessStateFP4NaviP7MsgAnim:
 /* 8010AE34 00107D94  38 21 00 28 */	addi r1, r1, 0x28
 /* 8010AE38 00107D98  7C 08 03 A6 */	mtlr r0
 /* 8010AE3C 00107D9C  4E 80 00 20 */	blr 
+.endfn procAnimMsg__20NaviPartsAccessStateFP4NaviP7MsgAnim
 
-.global __ct__18NaviUfoAccessStateFv
-__ct__18NaviUfoAccessStateFv:
+.fn __ct__18NaviUfoAccessStateFv, global
 /* 8010AE40 00107DA0  3C 80 80 2C */	lis r4, "__vt__15Receiver<4Navi>"@ha
 /* 8010AE44 00107DA4  38 04 19 F8 */	addi r0, r4, "__vt__15Receiver<4Navi>"@l
 /* 8010AE48 00107DA8  3C 80 80 2C */	lis r4, "__vt__13AState<4Navi>"@ha
@@ -11200,9 +11199,9 @@ __ct__18NaviUfoAccessStateFv:
 /* 8010AE78 00107DD8  90 A3 00 00 */	stw r5, 0(r3)
 /* 8010AE7C 00107DDC  90 03 00 00 */	stw r0, 0(r3)
 /* 8010AE80 00107DE0  4E 80 00 20 */	blr 
+.endfn __ct__18NaviUfoAccessStateFv
 
-.global init__18NaviUfoAccessStateFP4Navi
-init__18NaviUfoAccessStateFP4Navi:
+.fn init__18NaviUfoAccessStateFP4Navi, global
 /* 8010AE84 00107DE4  7C 08 02 A6 */	mflr r0
 /* 8010AE88 00107DE8  90 01 00 04 */	stw r0, 4(r1)
 /* 8010AE8C 00107DEC  94 21 FF D0 */	stwu r1, -0x30(r1)
@@ -11256,9 +11255,9 @@ init__18NaviUfoAccessStateFP4Navi:
 /* 8010AF48 00107EA8  38 21 00 30 */	addi r1, r1, 0x30
 /* 8010AF4C 00107EAC  7C 08 03 A6 */	mtlr r0
 /* 8010AF50 00107EB0  4E 80 00 20 */	blr 
+.endfn init__18NaviUfoAccessStateFP4Navi
 
-.global exec__18NaviUfoAccessStateFP4Navi
-exec__18NaviUfoAccessStateFP4Navi:
+.fn exec__18NaviUfoAccessStateFP4Navi, global
 /* 8010AF54 00107EB4  7C 08 02 A6 */	mflr r0
 /* 8010AF58 00107EB8  90 01 00 04 */	stw r0, 4(r1)
 /* 8010AF5C 00107EBC  94 21 FF F8 */	stwu r1, -8(r1)
@@ -11280,9 +11279,9 @@ exec__18NaviUfoAccessStateFP4Navi:
 /* 8010AF98 00107EF8  38 21 00 08 */	addi r1, r1, 8
 /* 8010AF9C 00107EFC  7C 08 03 A6 */	mtlr r0
 /* 8010AFA0 00107F00  4E 80 00 20 */	blr 
+.endfn exec__18NaviUfoAccessStateFP4Navi
 
-.global cleanup__18NaviUfoAccessStateFP4Navi
-cleanup__18NaviUfoAccessStateFP4Navi:
+.fn cleanup__18NaviUfoAccessStateFP4Navi, global
 /* 8010AFA4 00107F04  7C 08 02 A6 */	mflr r0
 /* 8010AFA8 00107F08  90 01 00 04 */	stw r0, 4(r1)
 /* 8010AFAC 00107F0C  38 00 00 00 */	li r0, 0
@@ -11293,9 +11292,9 @@ cleanup__18NaviUfoAccessStateFP4Navi:
 /* 8010AFC0 00107F20  38 21 00 08 */	addi r1, r1, 8
 /* 8010AFC4 00107F24  7C 08 03 A6 */	mtlr r0
 /* 8010AFC8 00107F28  4E 80 00 20 */	blr 
+.endfn cleanup__18NaviUfoAccessStateFP4Navi
 
-.global procAnimMsg__18NaviUfoAccessStateFP4NaviP7MsgAnim
-procAnimMsg__18NaviUfoAccessStateFP4NaviP7MsgAnim:
+.fn procAnimMsg__18NaviUfoAccessStateFP4NaviP7MsgAnim, global
 /* 8010AFCC 00107F2C  7C 08 02 A6 */	mflr r0
 /* 8010AFD0 00107F30  90 01 00 04 */	stw r0, 4(r1)
 /* 8010AFD4 00107F34  94 21 FF F8 */	stwu r1, -8(r1)
@@ -11328,94 +11327,97 @@ procAnimMsg__18NaviUfoAccessStateFP4NaviP7MsgAnim:
 /* 8010B038 00107F98  38 21 00 08 */	addi r1, r1, 8
 /* 8010B03C 00107F9C  7C 08 03 A6 */	mtlr r0
 /* 8010B040 00107FA0  4E 80 00 20 */	blr 
+.endfn procAnimMsg__18NaviUfoAccessStateFP4NaviP7MsgAnim
 
-.global invincible__18NaviUfoAccessStateFP4Navi
-invincible__18NaviUfoAccessStateFP4Navi:
+.fn invincible__18NaviUfoAccessStateFP4Navi, weak
 /* 8010B044 00107FA4  38 60 00 01 */	li r3, 1
 /* 8010B048 00107FA8  4E 80 00 20 */	blr 
+.endfn invincible__18NaviUfoAccessStateFP4Navi
 
-.global invincible__20NaviPartsAccessStateFP4Navi
-invincible__20NaviPartsAccessStateFP4Navi:
+.fn invincible__20NaviPartsAccessStateFP4Navi, weak
 /* 8010B04C 00107FAC  38 60 00 01 */	li r3, 1
 /* 8010B050 00107FB0  4E 80 00 20 */	blr 
+.endfn invincible__20NaviPartsAccessStateFP4Navi
 
-.global invincible__17NaviPikiZeroStateFP4Navi
-invincible__17NaviPikiZeroStateFP4Navi:
+.fn invincible__17NaviPikiZeroStateFP4Navi, weak
 /* 8010B054 00107FB4  38 60 00 01 */	li r3, 1
 /* 8010B058 00107FB8  4E 80 00 20 */	blr 
+.endfn invincible__17NaviPikiZeroStateFP4Navi
 
-.global invincible__13NaviDeadStateFP4Navi
-invincible__13NaviDeadStateFP4Navi:
+.fn invincible__13NaviDeadStateFP4Navi, weak
 /* 8010B05C 00107FBC  38 60 00 01 */	li r3, 1
 /* 8010B060 00107FC0  4E 80 00 20 */	blr 
+.endfn invincible__13NaviDeadStateFP4Navi
 
-.global invincible__16NaviPressedStateFP4Navi
-invincible__16NaviPressedStateFP4Navi:
+.fn invincible__16NaviPressedStateFP4Navi, weak
 /* 8010B064 00107FC4  38 60 00 01 */	li r3, 1
 /* 8010B068 00107FC8  4E 80 00 20 */	blr 
+.endfn invincible__16NaviPressedStateFP4Navi
 
-.global invincible__13NaviNukuStateFP4Navi
-invincible__13NaviNukuStateFP4Navi:
+.fn invincible__13NaviNukuStateFP4Navi, weak
 /* 8010B06C 00107FCC  38 60 00 01 */	li r3, 1
 /* 8010B070 00107FD0  4E 80 00 20 */	blr 
+.endfn invincible__13NaviNukuStateFP4Navi
 
-.global invincible__15NaviGeyzerStateFP4Navi
-invincible__15NaviGeyzerStateFP4Navi:
+.fn invincible__15NaviGeyzerStateFP4Navi, weak
 /* 8010B074 00107FD4  38 60 00 01 */	li r3, 1
 /* 8010B078 00107FD8  4E 80 00 20 */	blr 
+.endfn invincible__15NaviGeyzerStateFP4Navi
 
-.global invincible__14NaviFlickStateFP4Navi
-invincible__14NaviFlickStateFP4Navi:
+.fn invincible__14NaviFlickStateFP4Navi, weak
 /* 8010B07C 00107FDC  38 60 00 01 */	li r3, 1
 /* 8010B080 00107FE0  4E 80 00 20 */	blr 
+.endfn invincible__14NaviFlickStateFP4Navi
 
-.global invincible__18NaviContainerStateFP4Navi
-invincible__18NaviContainerStateFP4Navi:
+.fn invincible__18NaviContainerStateFP4Navi, weak
 /* 8010B084 00107FE4  38 60 00 01 */	li r3, 1
 /* 8010B088 00107FE8  4E 80 00 20 */	blr 
+.endfn invincible__18NaviContainerStateFP4Navi
 
-.global onCloseWindow__Q25GmWin13CloseListenerFv
-onCloseWindow__Q25GmWin13CloseListenerFv:
+.fn onCloseWindow__Q25GmWin13CloseListenerFv, weak
 /* 8010B08C 00107FEC  4E 80 00 20 */	blr 
+.endfn onCloseWindow__Q25GmWin13CloseListenerFv
 
-.global invincible__12NaviUfoStateFP4Navi
-invincible__12NaviUfoStateFP4Navi:
+.fn invincible__12NaviUfoStateFP4Navi, weak
 /* 8010B090 00107FF0  38 60 00 01 */	li r3, 1
 /* 8010B094 00107FF4  4E 80 00 20 */	blr 
+.endfn invincible__12NaviUfoStateFP4Navi
 
-.global invincible__13NaviBuryStateFP4Navi
-invincible__13NaviBuryStateFP4Navi:
+.fn invincible__13NaviBuryStateFP4Navi, weak
 /* 8010B098 00107FF8  38 60 00 01 */	li r3, 1
 /* 8010B09C 00107FFC  4E 80 00 20 */	blr 
+.endfn invincible__13NaviBuryStateFP4Navi
 
-.global invincible__16NaviDemoInfStateFP4Navi
-invincible__16NaviDemoInfStateFP4Navi:
+.fn invincible__16NaviDemoInfStateFP4Navi, weak
 /* 8010B0A0 00108000  38 60 00 01 */	li r3, 1
 /* 8010B0A4 00108004  4E 80 00 20 */	blr 
+.endfn invincible__16NaviDemoInfStateFP4Navi
 
-.global invincible__17NaviDemoWaitStateFP4Navi
-invincible__17NaviDemoWaitStateFP4Navi:
+.fn invincible__17NaviDemoWaitStateFP4Navi, weak
 /* 8010B0A8 00108008  38 60 00 01 */	li r3, 1
 /* 8010B0AC 0010800C  4E 80 00 20 */	blr 
+.endfn invincible__17NaviDemoWaitStateFP4Navi
 
-.global invincible__15NaviPelletStateFP4Navi
-invincible__15NaviPelletStateFP4Navi:
+.fn invincible__15NaviPelletStateFP4Navi, weak
 /* 8010B0B0 00108010  38 60 00 01 */	li r3, 1
 /* 8010B0B4 00108014  4E 80 00 20 */	blr 
+.endfn invincible__15NaviPelletStateFP4Navi
 
-"@32@4@informWin__18NaviContainerStateFi":
+.fn "@32@4@informWin__18NaviContainerStateFi", weak
 /* 8010B0B8 00108018  39 60 00 04 */	li r11, 4
 /* 8010B0BC 0010801C  7D 63 58 2E */	lwzx r11, r3, r11
 /* 8010B0C0 00108020  7C 63 5A 14 */	add r3, r3, r11
 /* 8010B0C4 00108024  38 63 FF E0 */	addi r3, r3, -32
 /* 8010B0C8 00108028  4B FF A1 CC */	b informWin__18NaviContainerStateFi
+.endfn "@32@4@informWin__18NaviContainerStateFi"
 
-"@40@4@onCloseWindow__18NaviContainerStateFv":
+.fn "@40@4@onCloseWindow__18NaviContainerStateFv", weak
 /* 8010B0CC 0010802C  39 60 00 04 */	li r11, 4
 /* 8010B0D0 00108030  7D 63 58 2E */	lwzx r11, r3, r11
 /* 8010B0D4 00108034  7C 63 5A 14 */	add r3, r3, r11
 /* 8010B0D8 00108038  38 63 FF D8 */	addi r3, r3, -40
 /* 8010B0DC 0010803C  4B FF A1 E8 */	b onCloseWindow__18NaviContainerStateFv
+.endfn "@40@4@onCloseWindow__18NaviContainerStateFv"
 
 .section .rodata, "a"  # 0x80221FE0 - 0x80222DC0
 .balign 8

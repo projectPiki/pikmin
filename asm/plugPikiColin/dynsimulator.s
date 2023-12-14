@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global initializeBody__9RigidBodyFv
-initializeBody__9RigidBodyFv:
+.fn initializeBody__9RigidBodyFv, global
 /* 8004DC00 0004AB60  7C 08 02 A6 */	mflr r0
 /* 8004DC04 0004AB64  90 01 00 04 */	stw r0, 4(r1)
 /* 8004DC08 0004AB68  94 21 FF 50 */	stwu r1, -0xb0(r1)
@@ -209,13 +208,13 @@ initializeBody__9RigidBodyFv:
 /* 8004DF00 0004AE60  38 21 00 B0 */	addi r1, r1, 0xb0
 /* 8004DF04 0004AE64  7C 08 03 A6 */	mtlr r0
 /* 8004DF08 0004AE68  4E 80 00 20 */	blr 
+.endfn initializeBody__9RigidBodyFv
 
-.global initRender__9RigidBodyFi
-initRender__9RigidBodyFi:
+.fn initRender__9RigidBodyFi, global
 /* 8004DF0C 0004AE6C  4E 80 00 20 */	blr 
+.endfn initRender__9RigidBodyFi
 
-.global render__9RigidBodyFR8Graphics
-render__9RigidBodyFR8Graphics:
+.fn render__9RigidBodyFR8Graphics, global
 /* 8004DF10 0004AE70  7C 08 02 A6 */	mflr r0
 /* 8004DF14 0004AE74  3C A0 80 22 */	lis r5, lbl_80222318@ha
 /* 8004DF18 0004AE78  90 01 00 04 */	stw r0, 4(r1)
@@ -329,9 +328,9 @@ render__9RigidBodyFR8Graphics:
 /* 8004E0C0 0004B020  38 21 01 18 */	addi r1, r1, 0x118
 /* 8004E0C4 0004B024  7C 08 03 A6 */	mtlr r0
 /* 8004E0C8 0004B028  4E 80 00 20 */	blr 
+.endfn render__9RigidBodyFR8Graphics
 
-.global applyCMForce__9RigidBodyFR8Vector3f
-applyCMForce__9RigidBodyFR8Vector3f:
+.fn applyCMForce__9RigidBodyFR8Vector3f, global
 /* 8004E0CC 0004B02C  C0 24 00 00 */	lfs f1, 0(r4)
 /* 8004E0D0 0004B030  3C A3 00 01 */	addis r5, r3, 1
 /* 8004E0D4 0004B034  C0 03 00 5C */	lfs f0, 0x5c(r3)
@@ -352,9 +351,9 @@ applyCMForce__9RigidBodyFR8Vector3f:
 /* 8004E110 0004B070  EC 02 00 2A */	fadds f0, f2, f0
 /* 8004E114 0004B074  D0 05 A2 38 */	stfs f0, -0x5dc8(r5)
 /* 8004E118 0004B078  4E 80 00 20 */	blr 
+.endfn applyCMForce__9RigidBodyFR8Vector3f
 
-.global integrate__9RigidBodyFiif
-integrate__9RigidBodyFiif:
+.fn integrate__9RigidBodyFiif, global
 /* 8004E11C 0004B07C  7C 08 02 A6 */	mflr r0
 /* 8004E120 0004B080  1C 84 30 8C */	mulli r4, r4, 0x308c
 /* 8004E124 0004B084  90 01 00 04 */	stw r0, 4(r1)
@@ -1226,9 +1225,9 @@ integrate__9RigidBodyFiif:
 /* 8004EEA0 0004BE00  38 21 05 C8 */	addi r1, r1, 0x5c8
 /* 8004EEA4 0004BE04  7C 08 03 A6 */	mtlr r0
 /* 8004EEA8 0004BE08  4E 80 00 20 */	blr 
+.endfn integrate__9RigidBodyFiif
 
-.global identity__8Matrix3fFv
-identity__8Matrix3fFv:
+.fn identity__8Matrix3fFv, weak
 /* 8004EEAC 0004BE0C  C0 02 84 D0 */	lfs f0, lbl_803E86D0@sda21(r2)
 /* 8004EEB0 0004BE10  38 A0 00 08 */	li r5, 8
 /* 8004EEB4 0004BE14  D0 03 00 00 */	stfs f0, 0(r3)
@@ -1260,9 +1259,9 @@ identity__8Matrix3fFv:
 /* 8004EF0C 0004BE6C  7C 83 02 14 */	add r4, r3, r0
 /* 8004EF10 0004BE70  4B FF FF C8 */	b .L_8004EED8
 /* 8004EF14 0004BE74  4E 80 00 20 */	blr 
+.endfn identity__8Matrix3fFv
 
-.global resolveCollisions__9RigidBodyFiR9Collision
-resolveCollisions__9RigidBodyFiR9Collision:
+.fn resolveCollisions__9RigidBodyFiR9Collision, global
 /* 8004EF18 0004BE78  1C 84 30 8C */	mulli r4, r4, 0x308c
 /* 8004EF1C 0004BE7C  94 21 FE 40 */	stwu r1, -0x1c0(r1)
 /* 8004EF20 0004BE80  DB E1 01 B8 */	stfd f31, 0x1b8(r1)
@@ -1476,9 +1475,9 @@ resolveCollisions__9RigidBodyFiR9Collision:
 /* 8004F258 0004C1B8  CB E1 01 B8 */	lfd f31, 0x1b8(r1)
 /* 8004F25C 0004C1BC  38 21 01 C0 */	addi r1, r1, 0x1c0
 /* 8004F260 0004C1C0  4E 80 00 20 */	blr 
+.endfn resolveCollisions__9RigidBodyFiR9Collision
 
-.global applyGroundForces__9RigidBodyFiP9CollGroup
-applyGroundForces__9RigidBodyFiP9CollGroup:
+.fn applyGroundForces__9RigidBodyFiP9CollGroup, global
 /* 8004F264 0004C1C4  7C 08 02 A6 */	mflr r0
 /* 8004F268 0004C1C8  90 01 00 04 */	stw r0, 4(r1)
 /* 8004F26C 0004C1CC  94 21 FF 08 */	stwu r1, -0xf8(r1)
@@ -1725,9 +1724,9 @@ applyGroundForces__9RigidBodyFiP9CollGroup:
 /* 8004F5F0 0004C550  38 21 00 F8 */	addi r1, r1, 0xf8
 /* 8004F5F4 0004C554  7C 08 03 A6 */	mtlr r0
 /* 8004F5F8 0004C558  4E 80 00 20 */	blr 
+.endfn applyGroundForces__9RigidBodyFiP9CollGroup
 
-.global applyBodyFriction__9RigidBodyFiR8Vector3fR8Vector3fR8Vector3f
-applyBodyFriction__9RigidBodyFiR8Vector3fR8Vector3fR8Vector3f:
+.fn applyBodyFriction__9RigidBodyFiR8Vector3fR8Vector3fR8Vector3f, weak
 /* 8004F5FC 0004C55C  7C 08 02 A6 */	mflr r0
 /* 8004F600 0004C560  90 01 00 04 */	stw r0, 4(r1)
 /* 8004F604 0004C564  94 21 FF 58 */	stwu r1, -0xa8(r1)
@@ -1838,9 +1837,9 @@ applyBodyFriction__9RigidBodyFiR8Vector3fR8Vector3fR8Vector3f:
 /* 8004F7A8 0004C708  38 21 00 A8 */	addi r1, r1, 0xa8
 /* 8004F7AC 0004C70C  7C 08 03 A6 */	mtlr r0
 /* 8004F7B0 0004C710  4E 80 00 20 */	blr 
+.endfn applyBodyFriction__9RigidBodyFiR8Vector3fR8Vector3fR8Vector3f
 
-.global updateViewInfo__9RigidBodyFii
-updateViewInfo__9RigidBodyFii:
+.fn updateViewInfo__9RigidBodyFii, global
 /* 8004F7B4 0004C714  7C 08 02 A6 */	mflr r0
 /* 8004F7B8 0004C718  1D 25 30 8C */	mulli r9, r5, 0x308c
 /* 8004F7BC 0004C71C  90 01 00 04 */	stw r0, 4(r1)
@@ -1899,13 +1898,13 @@ updateViewInfo__9RigidBodyFii:
 /* 8004F888 0004C7E8  38 21 00 08 */	addi r1, r1, 8
 /* 8004F88C 0004C7EC  7C 08 03 A6 */	mtlr r0
 /* 8004F890 0004C7F0  4E 80 00 20 */	blr 
+.endfn updateViewInfo__9RigidBodyFii
 
-.global makeBodyQuat__9RigidBodyFR4Quat
-makeBodyQuat__9RigidBodyFR4Quat:
+.fn makeBodyQuat__9RigidBodyFR4Quat, weak
 /* 8004F894 0004C7F4  4E 80 00 20 */	blr 
+.endfn makeBodyQuat__9RigidBodyFR4Quat
 
-.global updateVecQuats__9RigidBodyFif
-updateVecQuats__9RigidBodyFif:
+.fn updateVecQuats__9RigidBodyFif, global
 /* 8004F898 0004C7F8  7C 08 02 A6 */	mflr r0
 /* 8004F89C 0004C7FC  68 8A 00 01 */	xori r10, r4, 1
 /* 8004F8A0 0004C800  90 01 00 04 */	stw r0, 4(r1)
@@ -2030,9 +2029,9 @@ updateVecQuats__9RigidBodyFif:
 /* 8004FA74 0004C9D4  38 21 00 F8 */	addi r1, r1, 0xf8
 /* 8004FA78 0004C9D8  7C 08 03 A6 */	mtlr r0
 /* 8004FA7C 0004C9DC  4E 80 00 20 */	blr 
+.endfn updateVecQuats__9RigidBodyFif
 
-.global calculateVertices__9RigidBodyFi
-calculateVertices__9RigidBodyFi:
+.fn calculateVertices__9RigidBodyFi, global
 /* 8004FA80 0004C9E0  1C 84 30 8C */	mulli r4, r4, 0x308c
 /* 8004FA84 0004C9E4  94 21 FF 78 */	stwu r1, -0x88(r1)
 /* 8004FA88 0004C9E8  C0 02 84 D0 */	lfs f0, lbl_803E86D0@sda21(r2)
@@ -2114,14 +2113,14 @@ calculateVertices__9RigidBodyFi:
 /* 8004FBB0 0004CB10  41 80 FE F8 */	blt .L_8004FAA8
 /* 8004FBB4 0004CB14  38 21 00 88 */	addi r1, r1, 0x88
 /* 8004FBB8 0004CB18  4E 80 00 20 */	blr 
+.endfn calculateVertices__9RigidBodyFi
 
-.global checkForCollisions__9RigidBodyFiR9CollState
-checkForCollisions__9RigidBodyFiR9CollState:
+.fn checkForCollisions__9RigidBodyFiR9CollState, global
 /* 8004FBBC 0004CB1C  38 60 00 00 */	li r3, 0
 /* 8004FBC0 0004CB20  4E 80 00 20 */	blr 
+.endfn checkForCollisions__9RigidBodyFiR9CollState
 
-.global resetWorld__12DynSimulatorFv
-resetWorld__12DynSimulatorFv:
+.fn resetWorld__12DynSimulatorFv, global
 /* 8004FBC4 0004CB24  7C 08 02 A6 */	mflr r0
 /* 8004FBC8 0004CB28  90 01 00 04 */	stw r0, 4(r1)
 /* 8004FBCC 0004CB2C  38 00 00 00 */	li r0, 0
@@ -2171,9 +2170,9 @@ resetWorld__12DynSimulatorFv:
 /* 8004FC70 0004CBD0  38 21 00 20 */	addi r1, r1, 0x20
 /* 8004FC74 0004CBD4  7C 08 03 A6 */	mtlr r0
 /* 8004FC78 0004CBD8  4E 80 00 20 */	blr 
+.endfn resetWorld__12DynSimulatorFv
 
-.global doSimulation__12DynSimulatorFffP5Shape
-doSimulation__12DynSimulatorFffP5Shape:
+.fn doSimulation__12DynSimulatorFffP5Shape, global
 /* 8004FC7C 0004CBDC  7C 08 02 A6 */	mflr r0
 /* 8004FC80 0004CBE0  90 01 00 04 */	stw r0, 4(r1)
 /* 8004FC84 0004CBE4  94 21 FF C0 */	stwu r1, -0x40(r1)
@@ -2295,9 +2294,9 @@ doSimulation__12DynSimulatorFffP5Shape:
 /* 8004FE24 0004CD84  38 21 00 40 */	addi r1, r1, 0x40
 /* 8004FE28 0004CD88  7C 08 03 A6 */	mtlr r0
 /* 8004FE2C 0004CD8C  4E 80 00 20 */	blr 
+.endfn doSimulation__12DynSimulatorFffP5Shape
 
-.global computeForces__9RigidBodyFif
-computeForces__9RigidBodyFif:
+.fn computeForces__9RigidBodyFif, weak
 /* 8004FE30 0004CD90  C0 0D 89 30 */	lfs f0, lbl_803DD650@sda21(r13)
 /* 8004FE34 0004CD94  3C 83 00 01 */	addis r4, r3, 1
 /* 8004FE38 0004CD98  D0 04 A2 30 */	stfs f0, -0x5dd0(r4)
@@ -2330,9 +2329,9 @@ computeForces__9RigidBodyFif:
 /* 8004FEA4 0004CE04  EC 01 00 2A */	fadds f0, f1, f0
 /* 8004FEA8 0004CE08  D0 04 A2 38 */	stfs f0, -0x5dc8(r4)
 /* 8004FEAC 0004CE0C  4E 80 00 20 */	blr 
+.endfn computeForces__9RigidBodyFif
 
-.global initCollisions__9RigidBodyFi
-initCollisions__9RigidBodyFi:
+.fn initCollisions__9RigidBodyFi, weak
 /* 8004FEB0 0004CE10  C0 0D 89 18 */	lfs f0, lbl_803DD638@sda21(r13)
 /* 8004FEB4 0004CE14  3C A3 00 01 */	addis r5, r3, 1
 /* 8004FEB8 0004CE18  1C 84 30 8C */	mulli r4, r4, 0x308c
@@ -2399,9 +2398,9 @@ initCollisions__9RigidBodyFi:
 /* 8004FF8C 0004CEEC  7C 07 00 00 */	cmpw r7, r0
 /* 8004FF90 0004CEF0  41 80 FF 68 */	blt .L_8004FEF8
 /* 8004FF94 0004CEF4  4E 80 00 20 */	blr 
+.endfn initCollisions__9RigidBodyFi
 
-.global updateVecQuats__12DynSimulatorFf
-updateVecQuats__12DynSimulatorFf:
+.fn updateVecQuats__12DynSimulatorFf, global
 /* 8004FF98 0004CEF8  7C 08 02 A6 */	mflr r0
 /* 8004FF9C 0004CEFC  90 01 00 04 */	stw r0, 4(r1)
 /* 8004FFA0 0004CF00  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -2431,26 +2430,27 @@ updateVecQuats__12DynSimulatorFf:
 /* 8004FFF8 0004CF58  38 21 00 28 */	addi r1, r1, 0x28
 /* 8004FFFC 0004CF5C  7C 08 03 A6 */	mtlr r0
 /* 80050000 0004CF60  4E 80 00 20 */	blr 
+.endfn updateVecQuats__12DynSimulatorFf
 
-.global initDimensions__9RigidBodyFfff
-initDimensions__9RigidBodyFfff:
+.fn initDimensions__9RigidBodyFfff, weak
 /* 80050004 0004CF64  D0 23 00 50 */	stfs f1, 0x50(r3)
 /* 80050008 0004CF68  D0 43 00 54 */	stfs f2, 0x54(r3)
 /* 8005000C 0004CF6C  D0 63 00 58 */	stfs f3, 0x58(r3)
 /* 80050010 0004CF70  4E 80 00 20 */	blr 
+.endfn initDimensions__9RigidBodyFfff
 
-.global shadrender__9RigidBodyFR8GraphicsP11LightCamera
-shadrender__9RigidBodyFR8GraphicsP11LightCamera:
+.fn shadrender__9RigidBodyFR8GraphicsP11LightCamera, weak
 /* 80050014 0004CF74  4E 80 00 20 */	blr 
+.endfn shadrender__9RigidBodyFR8GraphicsP11LightCamera
 
-.global getViewScale__9RigidBodyFv
-getViewScale__9RigidBodyFv:
+.fn getViewScale__9RigidBodyFv, weak
 /* 80050018 0004CF78  C0 22 84 CC */	lfs f1, lbl_803E86CC@sda21(r2)
 /* 8005001C 0004CF7C  4E 80 00 20 */	blr 
+.endfn getViewScale__9RigidBodyFv
 
-.global updateCont__9RigidBodyFv
-updateCont__9RigidBodyFv:
+.fn updateCont__9RigidBodyFv, weak
 /* 80050020 0004CF80  4E 80 00 20 */	blr 
+.endfn updateCont__9RigidBodyFv
 
 .section .rodata, "a"  # 0x80221FE0 - 0x80222DC0
 .balign 8

@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global __ct__4MenuFP10ControllerP4Fontb
-__ct__4MenuFP10ControllerP4Fontb:
+.fn __ct__4MenuFP10ControllerP4Fontb, global
 /* 8005D6F8 0005A658  7C 08 02 A6 */	mflr r0
 /* 8005D6FC 0005A65C  3C E0 80 22 */	lis r7, __vt__5ANode@ha
 /* 8005D700 0005A660  90 01 00 04 */	stw r0, 4(r1)
@@ -117,9 +116,9 @@ __ct__4MenuFP10ControllerP4Fontb:
 /* 8005D8B4 0005A814  38 21 00 30 */	addi r1, r1, 0x30
 /* 8005D8B8 0005A818  7C 08 03 A6 */	mtlr r0
 /* 8005D8BC 0005A81C  4E 80 00 20 */	blr 
+.endfn __ct__4MenuFP10ControllerP4Fontb
 
-.global "__ct__Q24Menu8MenuItemFiiPcP18IDelegate1<R4Menu>"
-"__ct__Q24Menu8MenuItemFiiPcP18IDelegate1<R4Menu>":
+.fn "__ct__Q24Menu8MenuItemFiiPcP18IDelegate1<R4Menu>", global
 /* 8005D8C0 0005A820  7C 08 02 A6 */	mflr r0
 /* 8005D8C4 0005A824  90 01 00 04 */	stw r0, 4(r1)
 /* 8005D8C8 0005A828  38 00 00 01 */	li r0, 1
@@ -158,9 +157,9 @@ __ct__4MenuFP10ControllerP4Fontb:
 /* 8005D948 0005A8A8  38 21 00 28 */	addi r1, r1, 0x28
 /* 8005D94C 0005A8AC  7C 08 03 A6 */	mtlr r0
 /* 8005D950 0005A8B0  4E 80 00 20 */	blr 
+.endfn "__ct__Q24Menu8MenuItemFiiPcP18IDelegate1<R4Menu>"
 
-.global "addKeyEvent__4MenuFiiP18IDelegate1<R4Menu>"
-"addKeyEvent__4MenuFiiP18IDelegate1<R4Menu>":
+.fn "addKeyEvent__4MenuFiiP18IDelegate1<R4Menu>", global
 /* 8005D954 0005A8B4  7C 08 02 A6 */	mflr r0
 /* 8005D958 0005A8B8  90 01 00 04 */	stw r0, 4(r1)
 /* 8005D95C 0005A8BC  94 21 FF D0 */	stwu r1, -0x30(r1)
@@ -214,13 +213,13 @@ __ct__4MenuFP10ControllerP4Fontb:
 /* 8005DA10 0005A970  38 21 00 30 */	addi r1, r1, 0x30
 /* 8005DA14 0005A974  7C 08 03 A6 */	mtlr r0
 /* 8005DA18 0005A978  4E 80 00 20 */	blr 
+.endfn "addKeyEvent__4MenuFiiP18IDelegate1<R4Menu>"
 
-.global enterOption__4MenuFv
-enterOption__4MenuFv:
+.fn enterOption__4MenuFv, global
 /* 8005DA1C 0005A97C  4E 80 00 20 */	blr 
+.endfn enterOption__4MenuFv
 
-.global enterMenu__4MenuFP4Menu
-enterMenu__4MenuFP4Menu:
+.fn enterMenu__4MenuFP4Menu, global
 /* 8005DA20 0005A980  7C 08 02 A6 */	mflr r0
 /* 8005DA24 0005A984  90 01 00 04 */	stw r0, 4(r1)
 /* 8005DA28 0005A988  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -240,9 +239,9 @@ enterMenu__4MenuFP4Menu:
 /* 8005DA5C 0005A9BC  38 21 00 18 */	addi r1, r1, 0x18
 /* 8005DA60 0005A9C0  7C 08 03 A6 */	mtlr r0
 /* 8005DA64 0005A9C4  4E 80 00 20 */	blr 
+.endfn enterMenu__4MenuFP4Menu
 
-.global exitMenu__4MenuFP4Menu
-exitMenu__4MenuFP4Menu:
+.fn exitMenu__4MenuFP4Menu, global
 /* 8005DA68 0005A9C8  7C 08 02 A6 */	mflr r0
 /* 8005DA6C 0005A9CC  90 01 00 04 */	stw r0, 4(r1)
 /* 8005DA70 0005A9D0  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -261,9 +260,9 @@ exitMenu__4MenuFP4Menu:
 /* 8005DAA0 0005AA00  38 21 00 18 */	addi r1, r1, 0x18
 /* 8005DAA4 0005AA04  7C 08 03 A6 */	mtlr r0
 /* 8005DAA8 0005AA08  4E 80 00 20 */	blr 
+.endfn exitMenu__4MenuFP4Menu
 
-.global open__4MenuFb
-open__4MenuFb:
+.fn open__4MenuFb, global
 /* 8005DAAC 0005AA0C  C0 02 86 94 */	lfs f0, lbl_803E8894@sda21(r2)
 /* 8005DAB0 0005AA10  38 00 00 01 */	li r0, 1
 /* 8005DAB4 0005AA14  D0 03 00 B0 */	stfs f0, 0xb0(r3)
@@ -275,9 +274,9 @@ open__4MenuFb:
 /* 8005DACC 0005AA2C  80 04 00 04 */	lwz r0, 4(r4)
 /* 8005DAD0 0005AA30  90 03 00 30 */	stw r0, 0x30(r3)
 /* 8005DAD4 0005AA34  4E 80 00 20 */	blr 
+.endfn open__4MenuFb
 
-.global close__4MenuFv
-close__4MenuFv:
+.fn close__4MenuFv, global
 /* 8005DAD8 0005AA38  80 03 00 20 */	lwz r0, 0x20(r3)
 /* 8005DADC 0005AA3C  28 00 00 00 */	cmplwi r0, 0
 /* 8005DAE0 0005AA40  40 82 00 08 */	bne .L_8005DAE8
@@ -288,9 +287,9 @@ close__4MenuFv:
 /* 8005DAF0 0005AA50  D0 03 00 B0 */	stfs f0, 0xb0(r3)
 /* 8005DAF4 0005AA54  90 03 00 AC */	stw r0, 0xac(r3)
 /* 8005DAF8 0005AA58  4E 80 00 20 */	blr 
+.endfn close__4MenuFv
 
-.global resetOptions__4MenuFv
-resetOptions__4MenuFv:
+.fn resetOptions__4MenuFv, global
 /* 8005DAFC 0005AA5C  38 00 00 00 */	li r0, 0
 /* 8005DB00 0005AA60  90 03 00 40 */	stw r0, 0x40(r3)
 /* 8005DB04 0005AA64  90 03 00 30 */	stw r0, 0x30(r3)
@@ -299,9 +298,9 @@ resetOptions__4MenuFv:
 /* 8005DB10 0005AA70  80 63 00 2C */	lwz r3, 0x2c(r3)
 /* 8005DB14 0005AA74  90 83 00 00 */	stw r4, 0(r3)
 /* 8005DB18 0005AA78  4E 80 00 20 */	blr 
+.endfn resetOptions__4MenuFv
 
-.global "addOption__4MenuFiPcP18IDelegate1<R4Menu>b"
-"addOption__4MenuFiPcP18IDelegate1<R4Menu>b":
+.fn "addOption__4MenuFiPcP18IDelegate1<R4Menu>b", global
 /* 8005DB1C 0005AA7C  7C 08 02 A6 */	mflr r0
 /* 8005DB20 0005AA80  90 01 00 04 */	stw r0, 4(r1)
 /* 8005DB24 0005AA84  94 21 FF B0 */	stwu r1, -0x50(r1)
@@ -409,9 +408,9 @@ resetOptions__4MenuFv:
 /* 8005DCA4 0005AC04  38 21 00 50 */	addi r1, r1, 0x50
 /* 8005DCA8 0005AC08  7C 08 03 A6 */	mtlr r0
 /* 8005DCAC 0005AC0C  4E 80 00 20 */	blr 
+.endfn "addOption__4MenuFiPcP18IDelegate1<R4Menu>b"
 
-.global addMenu__4MenuFP4MenuiPc
-addMenu__4MenuFP4MenuiPc:
+.fn addMenu__4MenuFP4MenuiPc, global
 /* 8005DCB0 0005AC10  7C 08 02 A6 */	mflr r0
 /* 8005DCB4 0005AC14  90 01 00 04 */	stw r0, 4(r1)
 /* 8005DCB8 0005AC18  94 21 FF B8 */	stwu r1, -0x48(r1)
@@ -515,9 +514,9 @@ addMenu__4MenuFP4MenuiPc:
 /* 8005DE28 0005AD88  38 21 00 48 */	addi r1, r1, 0x48
 /* 8005DE2C 0005AD8C  7C 08 03 A6 */	mtlr r0
 /* 8005DE30 0005AD90  4E 80 00 20 */	blr 
+.endfn addMenu__4MenuFP4MenuiPc
 
-.global checkNewOption__4MenuFv
-checkNewOption__4MenuFv:
+.fn checkNewOption__4MenuFv, global
 /* 8005DE34 0005AD94  7C 08 02 A6 */	mflr r0
 /* 8005DE38 0005AD98  90 01 00 04 */	stw r0, 4(r1)
 /* 8005DE3C 0005AD9C  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -610,9 +609,9 @@ checkNewOption__4MenuFv:
 /* 8005DF78 0005AED8  38 21 00 28 */	addi r1, r1, 0x28
 /* 8005DF7C 0005AEDC  7C 08 03 A6 */	mtlr r0
 /* 8005DF80 0005AEE0  4E 80 00 20 */	blr 
+.endfn checkNewOption__4MenuFv
 
-.global checkSelectKey__4MenuFv
-checkSelectKey__4MenuFv:
+.fn checkSelectKey__4MenuFv, global
 /* 8005DF84 0005AEE4  80 63 00 58 */	lwz r3, 0x58(r3)
 /* 8005DF88 0005AEE8  80 03 00 28 */	lwz r0, 0x28(r3)
 /* 8005DF8C 0005AEEC  54 00 04 E6 */	rlwinm r0, r0, 0, 0x13, 0x13
@@ -620,9 +619,9 @@ checkSelectKey__4MenuFv:
 /* 8005DF94 0005AEF4  30 03 FF FF */	addic r0, r3, -1
 /* 8005DF98 0005AEF8  7C 60 19 10 */	subfe r3, r0, r3
 /* 8005DF9C 0005AEFC  4E 80 00 20 */	blr 
+.endfn checkSelectKey__4MenuFv
 
-.global checkCancelKey__4MenuFv
-checkCancelKey__4MenuFv:
+.fn checkCancelKey__4MenuFv, global
 /* 8005DFA0 0005AF00  80 63 00 58 */	lwz r3, 0x58(r3)
 /* 8005DFA4 0005AF04  80 03 00 28 */	lwz r0, 0x28(r3)
 /* 8005DFA8 0005AF08  54 00 04 A4 */	rlwinm r0, r0, 0, 0x12, 0x12
@@ -630,9 +629,9 @@ checkCancelKey__4MenuFv:
 /* 8005DFB0 0005AF10  30 03 FF FF */	addic r0, r3, -1
 /* 8005DFB4 0005AF14  7C 60 19 10 */	subfe r3, r0, r3
 /* 8005DFB8 0005AF18  4E 80 00 20 */	blr 
+.endfn checkCancelKey__4MenuFv
 
-.global doUpdate__4MenuFb
-doUpdate__4MenuFb:
+.fn doUpdate__4MenuFb, global
 /* 8005DFBC 0005AF1C  7C 08 02 A6 */	mflr r0
 /* 8005DFC0 0005AF20  90 01 00 04 */	stw r0, 4(r1)
 /* 8005DFC4 0005AF24  94 21 FF B0 */	stwu r1, -0x50(r1)
@@ -797,9 +796,9 @@ doUpdate__4MenuFb:
 /* 8005E208 0005B168  38 21 00 50 */	addi r1, r1, 0x50
 /* 8005E20C 0005B16C  7C 08 03 A6 */	mtlr r0
 /* 8005E210 0005B170  4E 80 00 20 */	blr 
+.endfn doUpdate__4MenuFb
 
-.global checkEvents__Q24Menu8MenuItemFP4Menui
-checkEvents__Q24Menu8MenuItemFP4Menui:
+.fn checkEvents__Q24Menu8MenuItemFP4Menui, global
 /* 8005E214 0005B174  7C 08 02 A6 */	mflr r0
 /* 8005E218 0005B178  90 01 00 04 */	stw r0, 4(r1)
 /* 8005E21C 0005B17C  94 21 FF B8 */	stwu r1, -0x48(r1)
@@ -938,9 +937,9 @@ checkEvents__Q24Menu8MenuItemFP4Menui:
 /* 8005E404 0005B364  38 21 00 48 */	addi r1, r1, 0x48
 /* 8005E408 0005B368  7C 08 03 A6 */	mtlr r0
 /* 8005E40C 0005B36C  4E 80 00 20 */	blr 
+.endfn checkEvents__Q24Menu8MenuItemFP4Menui
 
-.global draw__4MenuFR8Graphicsf
-draw__4MenuFR8Graphicsf:
+.fn draw__4MenuFR8Graphicsf, global
 /* 8005E410 0005B370  7C 08 02 A6 */	mflr r0
 /* 8005E414 0005B374  90 01 00 04 */	stw r0, 4(r1)
 /* 8005E418 0005B378  94 21 FE 08 */	stwu r1, -0x1f8(r1)
@@ -1344,9 +1343,9 @@ draw__4MenuFR8Graphicsf:
 /* 8005EA10 0005B970  38 21 01 F8 */	addi r1, r1, 0x1f8
 /* 8005EA14 0005B974  7C 08 03 A6 */	mtlr r0
 /* 8005EA18 0005B978  4E 80 00 20 */	blr 
+.endfn draw__4MenuFR8Graphicsf
 
-.global menuCloseMenu__4MenuFR4Menu
-menuCloseMenu__4MenuFR4Menu:
+.fn menuCloseMenu__4MenuFR4Menu, global
 /* 8005EA1C 0005B97C  7C 08 02 A6 */	mflr r0
 /* 8005EA20 0005B980  90 01 00 04 */	stw r0, 4(r1)
 /* 8005EA24 0005B984  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -1373,10 +1372,11 @@ menuCloseMenu__4MenuFR4Menu:
 /* 8005EA74 0005B9D4  38 21 00 18 */	addi r1, r1, 0x18
 /* 8005EA78 0005B9D8  7C 08 03 A6 */	mtlr r0
 /* 8005EA7C 0005B9DC  4E 80 00 20 */	blr 
+.endfn menuCloseMenu__4MenuFR4Menu
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802A8540:
+.obj lbl_802A8540, local
 	.4byte .L_8005E3E8
 	.4byte .L_8005E268
 	.4byte .L_8005E284
@@ -1410,21 +1410,27 @@ lbl_802A8540:
 	.4byte .L_8005E3E8
 	.4byte .L_8005E3E8
 	.4byte .L_8005E2D0
+.endobj lbl_802A8540
 .balign 4
-lbl_802A85C4:
+.obj lbl_802A85C4, local
 	.asciz "CoreNode"
+.endobj lbl_802A85C4
 .balign 4
-lbl_802A85D0:
+.obj lbl_802A85D0, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte 0
-lbl_802A85DC:
+.endobj lbl_802A85D0
+.balign 4
+.obj lbl_802A85DC, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte __RTTI__8CoreNode
 	.4byte 0
 	.4byte 0
-lbl_802A85F0:
+.endobj lbl_802A85DC
+.balign 4
+.obj lbl_802A85F0, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte __RTTI__8CoreNode
@@ -1432,8 +1438,9 @@ lbl_802A85F0:
 	.4byte __RTTI__4Node
 	.4byte 0
 	.4byte 0
-.global __vt__4Menu
-__vt__4Menu:
+.endobj lbl_802A85F0
+.balign 4
+.obj __vt__4Menu, global
 	.4byte __RTTI__4Menu
 	.4byte 0
 	.4byte getAgeNodeType__5ANodeFv
@@ -1455,65 +1462,86 @@ __vt__4Menu:
 	.4byte open__4MenuFb
 	.4byte close__4MenuFv
 	.4byte doUpdate__4MenuFb
+.endobj __vt__4Menu
 .skip 32 # padding
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-lbl_803DDDE0:
+.obj lbl_803DDDE0, local
 	.asciz "<Node>"
+.endobj lbl_803DDDE0
 .balign 4
-lbl_803DDDE8:
+.obj lbl_803DDDE8, local
 	.asciz "menu"
+.endobj lbl_803DDDE8
 .balign 4
-lbl_803DDDF0:
+.obj lbl_803DDDF0, local
 	.asciz "%s"
+.endobj lbl_803DDDF0
 .balign 4
-lbl_803DDDF4:
+.obj lbl_803DDDF4, local
 	.asciz "Menu"
+.endobj lbl_803DDDF4
 .balign 4
-lbl_803DDDFC:
+.obj lbl_803DDDFC, local
 	.asciz "ANode"
+.endobj lbl_803DDDFC
 .balign 4
-__RTTI__5ANode:
+.obj __RTTI__5ANode, local
 	.4byte lbl_803DDDFC
 	.4byte 0
-__RTTI__8CoreNode:
+.endobj __RTTI__5ANode
+.balign 4
+.obj __RTTI__8CoreNode, local
 	.4byte lbl_802A85C4
 	.4byte lbl_802A85D0
+.endobj __RTTI__8CoreNode
 .balign 4
-lbl_803DDE14:
+.obj lbl_803DDE14, local
 	.asciz "Node"
+.endobj lbl_803DDE14
 .balign 4
-__RTTI__4Node:
+.obj __RTTI__4Node, local
 	.4byte lbl_803DDE14
 	.4byte lbl_802A85DC
-__RTTI__4Menu:
+.endobj __RTTI__4Node
+.balign 4
+.obj __RTTI__4Menu, local
 	.4byte lbl_803DDDF4
 	.4byte lbl_802A85F0
+.endobj __RTTI__4Menu
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803E8890: # pi
+.obj lbl_803E8890, local # pi
 	.float 3.1415927
-lbl_803E8894:
+.endobj lbl_803E8890
+.obj lbl_803E8894, local
 	.float 0.0
-lbl_803E8898:
+.endobj lbl_803E8894
+.obj lbl_803E8898, local
 	.float 1.0
-lbl_803E889C:
+.endobj lbl_803E8898
+.obj lbl_803E889C, local
 	.float 7.0
-lbl_803E88A0:
+.endobj lbl_803E889C
+.obj lbl_803E88A0, local
 	.float 8.0
-lbl_803E88A4:
+.endobj lbl_803E88A0
+.obj lbl_803E88A4, local
 	.float 0.5
-lbl_803E88A8:
+.endobj lbl_803E88A4
+.obj lbl_803E88A8, local
 	.float 255.0
-lbl_803E88AC:
+.endobj lbl_803E88A8
+.obj lbl_803E88AC, local
 	.float 64.0
+.endobj lbl_803E88AC
 .balign 8
-lbl_803E88B0:
-	.4byte 0x43300000
-	.4byte 0x80000000
+.obj lbl_803E88B0, local
+	.8byte 0x4330000080000000
+.endobj lbl_803E88B0
 .balign 8
-lbl_803E88B8:
-	.4byte 0x43300000
-	.4byte 0x00000000
+.obj lbl_803E88B8, local
+	.8byte 0x4330000000000000
+.endobj lbl_803E88B8

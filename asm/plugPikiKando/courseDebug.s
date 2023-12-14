@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global makeObjectDebug__Fv
-makeObjectDebug__Fv:
+.fn makeObjectDebug__Fv, local
 /* 800864A8 00083408  7C 08 02 A6 */	mflr r0
 /* 800864AC 0008340C  38 60 00 58 */	li r3, 0x58
 /* 800864B0 00083410  90 01 00 04 */	stw r0, 4(r1)
@@ -78,9 +77,9 @@ makeObjectDebug__Fv:
 /* 800865C8 00083528  38 21 00 58 */	addi r1, r1, 0x58
 /* 800865CC 0008352C  7C 08 03 A6 */	mtlr r0
 /* 800865D0 00083530  4E 80 00 20 */	blr 
+.endfn makeObjectDebug__Fv
 
-.global initialise__14GenObjectDebugFv
-initialise__14GenObjectDebugFv:
+.fn initialise__14GenObjectDebugFv, global
 /* 800865D4 00083534  80 ED 30 74 */	lwz r7, factory__16GenObjectFactory@sda21(r13)
 /* 800865D8 00083538  80 A7 00 00 */	lwz r5, 0(r7)
 /* 800865DC 0008353C  80 07 00 04 */	lwz r0, 4(r7)
@@ -116,13 +115,13 @@ initialise__14GenObjectDebugFv:
 /* 80086654 000835B4  38 03 00 01 */	addi r0, r3, 1
 /* 80086658 000835B8  90 07 00 00 */	stw r0, 0(r7)
 /* 8008665C 000835BC  4E 80 00 20 */	blr 
+.endfn initialise__14GenObjectDebugFv
 
-.global doRead__14GenObjectDebugFR18RandomAccessStream
-doRead__14GenObjectDebugFR18RandomAccessStream:
+.fn doRead__14GenObjectDebugFR18RandomAccessStream, global
 /* 80086660 000835C0  4E 80 00 20 */	blr 
+.endfn doRead__14GenObjectDebugFR18RandomAccessStream
 
-.global birth__14GenObjectDebugFR9BirthInfo
-birth__14GenObjectDebugFR9BirthInfo:
+.fn birth__14GenObjectDebugFR9BirthInfo, global
 /* 80086664 000835C4  80 03 00 24 */	lwz r0, 0x24(r3)
 /* 80086668 000835C8  90 0D 2F D8 */	stw r0, collision__11CourseDebug@sda21(r13)
 /* 8008666C 000835CC  80 03 00 34 */	lwz r0, 0x34(r3)
@@ -133,55 +132,67 @@ birth__14GenObjectDebugFR9BirthInfo:
 /* 80086680 000835E0  38 60 00 00 */	li r3, 0
 /* 80086684 000835E4  90 0D 2F E4 */	stw r0, pelletDebug__11CourseDebug@sda21(r13)
 /* 80086688 000835E8  4E 80 00 20 */	blr 
+.endfn birth__14GenObjectDebugFR9BirthInfo
 
-.global render__9GenObjectFR8GraphicsP9Generator
-render__9GenObjectFR8GraphicsP9Generator:
+.fn render__9GenObjectFR8GraphicsP9Generator, weak
 /* 8008668C 000835EC  4E 80 00 20 */	blr 
+.endfn render__9GenObjectFR8GraphicsP9Generator
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802AEE38:
+.obj lbl_802AEE38, local
 	.asciz "courseDebug.cpp"
+.endobj lbl_802AEE38
 .balign 4
-lbl_802AEE48:
+.obj lbl_802AEE48, local
 	.asciz "courseDebug"
+.endobj lbl_802AEE48
 .balign 4
-lbl_802AEE54:
+.obj lbl_802AEE54, local
 	.asciz "object type"
+.endobj lbl_802AEE54
 .balign 4
-lbl_802AEE60:
+.obj lbl_802AEE60, local
 	.asciz "Debug Switches"
+.endobj lbl_802AEE60
 .balign 4
-lbl_802AEE70:
+.obj lbl_802AEE70, local
 	.asciz "GenObjectDebug"
+.endobj lbl_802AEE70
 .balign 4
-lbl_802AEE80:
+.obj lbl_802AEE80, local
 	.asciz "Parameters"
+.endobj lbl_802AEE80
 .balign 4
-lbl_802AEE8C:
+.obj lbl_802AEE8C, local
 	.4byte __RTTI__10Parameters
-	.4byte 0x00000000
-	.4byte 0x00000000
+	.4byte 0
+	.4byte 0
+.endobj lbl_802AEE8C
 .balign 4
-lbl_802AEE98:
+.obj lbl_802AEE98, local
 	.asciz "GenObject"
+.endobj lbl_802AEE98
 .balign 4
-lbl_802AEEA4:
+.obj lbl_802AEEA4, local
 	.4byte __RTTI__10Parameters
-	.4byte 0x00000000
+	.4byte 0
 	.4byte __RTTI__7GenBase
-	.4byte 0x00000000
-	.4byte 0x00000000
-lbl_802AEEB8:
+	.4byte 0
+	.4byte 0
+.endobj lbl_802AEEA4
+.balign 4
+.obj lbl_802AEEB8, local
 	.4byte __RTTI__10Parameters
-	.4byte 0x00000000
+	.4byte 0
 	.4byte __RTTI__7GenBase
-	.4byte 0x00000000
+	.4byte 0
 	.4byte __RTTI__9GenObject
-	.4byte 0x00000000
-	.4byte 0x00000000
-.global __vt__14GenObjectDebug
-__vt__14GenObjectDebug:
+	.4byte 0
+	.4byte 0
+.endobj lbl_802AEEB8
+.balign 4
+.obj __vt__14GenObjectDebug, global
 	.4byte __RTTI__14GenObjectDebug
 	.4byte 0
 	.4byte doWrite__7GenBaseFR18RandomAccessStream
@@ -196,69 +207,84 @@ __vt__14GenObjectDebug:
 	.4byte update__9GenObjectFP9Generator
 	.4byte render__9GenObjectFR8GraphicsP9Generator
 	.4byte birth__14GenObjectDebugFR9BirthInfo
+.endobj __vt__14GenObjectDebug
 .balign 4
-lbl_802AEF0C:
+.obj lbl_802AEF0C, local
 	.asciz "Parm<int>"
+.endobj lbl_802AEF0C
 .balign 4
-lbl_802AEF18:
+.obj lbl_802AEF18, local
 	.asciz "BaseParm"
+.endobj lbl_802AEF18
 .balign 4
-lbl_802AEF24:
+.obj lbl_802AEF24, local
 	.4byte __RTTI__8BaseParm
 	.4byte 0
 	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
+.endobj lbl_802AEF24
+.skip 0x18 # compiler padding
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-lbl_803DEE50:
+.obj lbl_803DEE50, local
 	.asciz "p00"
+.endobj lbl_803DEE50
 .balign 4
-lbl_803DEE54:
+.obj lbl_803DEE54, local
 	.asciz "p01"
+.endobj lbl_803DEE54
 .balign 4
-lbl_803DEE58:
+.obj lbl_803DEE58, local
 	.asciz "p02"
+.endobj lbl_803DEE58
 .balign 4
-lbl_803DEE5C:
+.obj lbl_803DEE5C, local
 	.asciz "p03"
+.endobj lbl_803DEE5C
 .balign 4
-__RTTI__10Parameters:
+.obj __RTTI__10Parameters, local
 	.4byte lbl_802AEE80
 	.4byte 0
+.endobj __RTTI__10Parameters
 .balign 4
-lbl_803DEE68:
+.obj lbl_803DEE68, local
 	.asciz "GenBase"
+.endobj lbl_803DEE68
 .balign 4
-__RTTI__7GenBase:
+.obj __RTTI__7GenBase, local
 	.4byte lbl_803DEE68
 	.4byte lbl_802AEE8C
-__RTTI__9GenObject:
+.endobj __RTTI__7GenBase
+.balign 4
+.obj __RTTI__9GenObject, local
 	.4byte lbl_802AEE98
 	.4byte lbl_802AEEA4
-__RTTI__14GenObjectDebug:
+.endobj __RTTI__9GenObject
+.balign 4
+.obj __RTTI__14GenObjectDebug, local
 	.4byte lbl_802AEE70
 	.4byte lbl_802AEEB8
-__RTTI__8BaseParm:
+.endobj __RTTI__14GenObjectDebug
+.balign 4
+.obj __RTTI__8BaseParm, local
 	.4byte lbl_802AEF18
 	.4byte 0
+.endobj __RTTI__8BaseParm
 
 .section .sbss, "wa"
 .balign 8
-.global collision__11CourseDebug
-collision__11CourseDebug:
+.obj collision__11CourseDebug, global
 	.skip 4
-.global pikiNoAttack__11CourseDebug
-pikiNoAttack__11CourseDebug:
+.endobj collision__11CourseDebug
+.balign 4
+.obj pikiNoAttack__11CourseDebug, global
 	.skip 4
-.global noCarryover__11CourseDebug
-noCarryover__11CourseDebug:
+.endobj pikiNoAttack__11CourseDebug
+.balign 4
+.obj noCarryover__11CourseDebug, global
 	.skip 4
-.global pelletDebug__11CourseDebug
-pelletDebug__11CourseDebug:
+.endobj noCarryover__11CourseDebug
+.balign 4
+.obj pelletDebug__11CourseDebug, global
 	.skip 4
+.endobj pelletDebug__11CourseDebug

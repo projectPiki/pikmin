@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global __ct__16IntroGameSectionFv
-__ct__16IntroGameSectionFv:
+.fn __ct__16IntroGameSectionFv, global
 /* 8005AE1C 00057D7C  7C 08 02 A6 */	mflr r0
 /* 8005AE20 00057D80  38 8D 8F 24 */	addi r4, r13, lbl_803DDC44@sda21
 /* 8005AE24 00057D84  90 01 00 04 */	stw r0, 4(r1)
@@ -172,9 +171,9 @@ __ct__16IntroGameSectionFv:
 /* 8005B0A8 00058008  38 21 00 50 */	addi r1, r1, 0x50
 /* 8005B0AC 0005800C  7C 08 03 A6 */	mtlr r0
 /* 8005B0B0 00058010  4E 80 00 20 */	blr 
+.endfn __ct__16IntroGameSectionFv
 
-.global update__14IntroModeStateFRUl
-update__14IntroModeStateFRUl:
+.fn update__14IntroModeStateFRUl, weak
 /* 8005B0B4 00058014  7C 08 02 A6 */	mflr r0
 /* 8005B0B8 00058018  3C A0 80 3A */	lis r5, gameflow@ha
 /* 8005B0BC 0005801C  90 01 00 04 */	stw r0, 4(r1)
@@ -209,19 +208,19 @@ update__14IntroModeStateFRUl:
 /* 8005B128 00058088  38 21 00 18 */	addi r1, r1, 0x18
 /* 8005B12C 0005808C  7C 08 03 A6 */	mtlr r0
 /* 8005B130 00058090  4E 80 00 20 */	blr 
+.endfn update__14IntroModeStateFRUl
 
-.global postRender__14IntroModeStateFR8Graphics
-postRender__14IntroModeStateFR8Graphics:
+.fn postRender__14IntroModeStateFR8Graphics, weak
 /* 8005B134 00058094  4E 80 00 20 */	blr 
+.endfn postRender__14IntroModeStateFR8Graphics
 
-.global update__17QuittingModeStateFRUl
-update__17QuittingModeStateFRUl:
+.fn update__17QuittingModeStateFRUl, weak
 /* 8005B138 00058098  38 00 00 00 */	li r0, 0
 /* 8005B13C 0005809C  90 04 00 00 */	stw r0, 0(r4)
 /* 8005B140 000580A0  4E 80 00 20 */	blr 
+.endfn update__17QuittingModeStateFRUl
 
-.global postUpdate__17QuittingModeStateFv
-postUpdate__17QuittingModeStateFv:
+.fn postUpdate__17QuittingModeStateFv, weak
 /* 8005B144 000580A4  7C 08 02 A6 */	mflr r0
 /* 8005B148 000580A8  90 01 00 04 */	stw r0, 4(r1)
 /* 8005B14C 000580AC  94 21 FF F8 */	stwu r1, -8(r1)
@@ -246,9 +245,9 @@ postUpdate__17QuittingModeStateFv:
 /* 8005B194 000580F4  38 21 00 08 */	addi r1, r1, 8
 /* 8005B198 000580F8  7C 08 03 A6 */	mtlr r0
 /* 8005B19C 000580FC  4E 80 00 20 */	blr 
+.endfn postUpdate__17QuittingModeStateFv
 
-.global update__21IntroGameSetupSectionFv
-update__21IntroGameSetupSectionFv:
+.fn update__21IntroGameSetupSectionFv, weak
 /* 8005B1A0 00058100  7C 08 02 A6 */	mflr r0
 /* 8005B1A4 00058104  90 01 00 04 */	stw r0, 4(r1)
 /* 8005B1A8 00058108  94 21 FF F8 */	stwu r1, -8(r1)
@@ -261,9 +260,9 @@ update__21IntroGameSetupSectionFv:
 /* 8005B1C4 00058124  38 21 00 08 */	addi r1, r1, 8
 /* 8005B1C8 00058128  7C 08 03 A6 */	mtlr r0
 /* 8005B1CC 0005812C  4E 80 00 20 */	blr 
+.endfn update__21IntroGameSetupSectionFv
 
-.global draw__21IntroGameSetupSectionFR8Graphics
-draw__21IntroGameSetupSectionFR8Graphics:
+.fn draw__21IntroGameSetupSectionFR8Graphics, weak
 /* 8005B1D0 00058130  7C 08 02 A6 */	mflr r0
 /* 8005B1D4 00058134  3C A0 80 3A */	lis r5, gameflow@ha
 /* 8005B1D8 00058138  90 01 00 04 */	stw r0, 4(r1)
@@ -577,89 +576,95 @@ draw__21IntroGameSetupSectionFR8Graphics:
 /* 8005B680 000585E0  38 21 01 80 */	addi r1, r1, 0x180
 /* 8005B684 000585E4  7C 08 03 A6 */	mtlr r0
 /* 8005B688 000585E8  4E 80 00 20 */	blr 
+.endfn draw__21IntroGameSetupSectionFR8Graphics
 
-.global init__16IntroGameSectionFv
-init__16IntroGameSectionFv:
+.fn init__16IntroGameSectionFv, weak
 /* 8005B68C 000585EC  4E 80 00 20 */	blr 
+.endfn init__16IntroGameSectionFv
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802A7F68:
+.obj lbl_802A7F68, local
 	.asciz "introGame.cpp"
+.endobj lbl_802A7F68
 .balign 4
-lbl_802A7F78:
+.obj lbl_802A7F78, local
 	.asciz "introGame"
+.endobj lbl_802A7F78
 .balign 4
-lbl_802A7F84:
+.obj lbl_802A7F84, local
 	.asciz "<IntroGameSection>"
+.endobj lbl_802A7F84
 .balign 4
-lbl_802A7F98:
+.obj lbl_802A7F98, local
 	.asciz "CoreNode"
+.endobj lbl_802A7F98
 .balign 4
-lbl_802A7FA4:
+.obj lbl_802A7FA4, local
 	.4byte __RTTI__5ANode
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
+	.4byte 0
+	.4byte 0
+.endobj lbl_802A7FA4
+.skip 0x1C # compiler padding
 .balign 4
-lbl_802A7FCC:
+.obj lbl_802A7FCC, local
 	.asciz "IntroModeState"
+.endobj lbl_802A7FCC
 .balign 4
-lbl_802A7FDC:
+.obj lbl_802A7FDC, local
 	.asciz "ModeState"
+.endobj lbl_802A7FDC
 .balign 4
-lbl_802A7FE8:
+.obj lbl_802A7FE8, local
 	.4byte __RTTI__9ModeState
-	.4byte 0x00000000
-	.4byte 0x00000000
-.global __vt__14IntroModeState
-__vt__14IntroModeState:
+	.4byte 0
+	.4byte 0
+.endobj lbl_802A7FE8
+.balign 4
+.obj __vt__14IntroModeState, weak
 	.4byte __RTTI__14IntroModeState
 	.4byte 0
 	.4byte update__14IntroModeStateFRUl
 	.4byte postRender__14IntroModeStateFR8Graphics
 	.4byte postUpdate__9ModeStateFv
+.endobj __vt__14IntroModeState
 .balign 4
-lbl_802A8008:
+.obj lbl_802A8008, local
 	.asciz "QuittingModeState"
+.endobj lbl_802A8008
 .balign 4
-lbl_802A801C:
+.obj lbl_802A801C, local
 	.4byte __RTTI__9ModeState
 	.4byte 0
 	.4byte 0
-.global __vt__17QuittingModeState
-__vt__17QuittingModeState:
+.endobj lbl_802A801C
+.balign 4
+.obj __vt__17QuittingModeState, weak
 	.4byte __RTTI__17QuittingModeState
 	.4byte 0
 	.4byte update__17QuittingModeStateFRUl
 	.4byte postRender__9ModeStateFR8Graphics
 	.4byte postUpdate__17QuittingModeStateFv
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
+.endobj __vt__17QuittingModeState
+.skip 0x14 # compiler padding
 .balign 4
-lbl_802A8050:
+.obj lbl_802A8050, local
 	.asciz "IntroGameSetupSection"
+.endobj lbl_802A8050
 .balign 4
-lbl_802A8068:
+.obj lbl_802A8068, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte __RTTI__8CoreNode
 	.4byte 0
 	.4byte 0
+.endobj lbl_802A8068
 .balign 4
-lbl_802A807C:
+.obj lbl_802A807C, local
 	.asciz "BaseGameSection"
+.endobj lbl_802A807C
 .balign 4
-lbl_802A808C:
+.obj lbl_802A808C, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte __RTTI__8CoreNode
@@ -667,7 +672,9 @@ lbl_802A808C:
 	.4byte __RTTI__4Node
 	.4byte 0
 	.4byte 0
-lbl_802A80A8:
+.endobj lbl_802A808C
+.balign 4
+.obj lbl_802A80A8, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte __RTTI__8CoreNode
@@ -677,8 +684,9 @@ lbl_802A80A8:
 	.4byte __RTTI__15BaseGameSection
 	.4byte 0
 	.4byte 0
-.global __vt__21IntroGameSetupSection
-__vt__21IntroGameSetupSection:
+.endobj lbl_802A80A8
+.balign 4
+.obj __vt__21IntroGameSetupSection, weak
 	.4byte __RTTI__21IntroGameSetupSection
 	.4byte 0
 	.4byte getAgeNodeType__5ANodeFv
@@ -692,11 +700,13 @@ __vt__21IntroGameSetupSection:
 	.4byte concat__4NodeFR8Matrix4f
 	.4byte getModelMatrix__4NodeFv
 	.4byte openMenu__15BaseGameSectionFv
+.endobj __vt__21IntroGameSetupSection
 .balign 4
-lbl_802A8100:
+.obj lbl_802A8100, local
 	.asciz "IntroGameSection"
+.endobj lbl_802A8100
 .balign 4
-lbl_802A8114:
+.obj lbl_802A8114, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte __RTTI__8CoreNode
@@ -704,7 +714,9 @@ lbl_802A8114:
 	.4byte __RTTI__4Node
 	.4byte 0
 	.4byte 0
-lbl_802A8130:
+.endobj lbl_802A8114
+.balign 4
+.obj lbl_802A8130, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte __RTTI__8CoreNode
@@ -714,8 +726,9 @@ lbl_802A8130:
 	.4byte __RTTI__7Section
 	.4byte 0
 	.4byte 0
-.global __vt__16IntroGameSection
-__vt__16IntroGameSection:
+.endobj lbl_802A8130
+.balign 4
+.obj __vt__16IntroGameSection, weak
 	.4byte __RTTI__16IntroGameSection
 	.4byte 0
 	.4byte getAgeNodeType__5ANodeFv
@@ -729,120 +742,151 @@ __vt__16IntroGameSection:
 	.4byte concat__4NodeFR8Matrix4f
 	.4byte getModelMatrix__4NodeFv
 	.4byte init__16IntroGameSectionFv
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
+.endobj __vt__16IntroGameSection
+.skip 0x38 # compiler padding
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-lbl_803DDC08:
+.obj lbl_803DDC08, local
 	.float 0.1
-lbl_803DDC0C:
+.endobj lbl_803DDC08
+.obj lbl_803DDC0C, local
 	.float 0.1
-lbl_803DDC10:
+.endobj lbl_803DDC0C
+.obj lbl_803DDC10, local
 	.float 0.1
-lbl_803DDC14:
+.endobj lbl_803DDC10
+.obj lbl_803DDC14, local
 	.float 0.0
-lbl_803DDC18:
+.endobj lbl_803DDC14
+.obj lbl_803DDC18, local
 	.float 0.0
-lbl_803DDC1C:
+.endobj lbl_803DDC18
+.obj lbl_803DDC1C, local
 	.float 0.0
-lbl_803DDC20:
+.endobj lbl_803DDC1C
+.obj lbl_803DDC20, local
 	.float 0.0
-lbl_803DDC24:
+.endobj lbl_803DDC20
+.obj lbl_803DDC24, local
 	.float 0.0
-lbl_803DDC28:
+.endobj lbl_803DDC24
+.obj lbl_803DDC28, local
 	.float -5.0
-lbl_803DDC2C:
+.endobj lbl_803DDC28
+.obj lbl_803DDC2C, local
 	.float 0.0
-lbl_803DDC30:
+.endobj lbl_803DDC2C
+.obj lbl_803DDC30, local
 	.float 0.0
-lbl_803DDC34:
+.endobj lbl_803DDC30
+.obj lbl_803DDC34, local
 	.float 0.0
-lbl_803DDC38:
+.endobj lbl_803DDC34
+.obj lbl_803DDC38, local
 	.float 0.0
-lbl_803DDC3C:
+.endobj lbl_803DDC38
+.obj lbl_803DDC3C, local
 	.float 0.0
-lbl_803DDC40:
+.endobj lbl_803DDC3C
+.obj lbl_803DDC40, local
 	.float 0.0
+.endobj lbl_803DDC40
 .balign 4
-lbl_803DDC44:
+.obj lbl_803DDC44, local
 	.asciz "<Node>"
+.endobj lbl_803DDC44
 .balign 4
-lbl_803DDC4C:
+.obj lbl_803DDC4C, local
 	.asciz "movie"
+.endobj lbl_803DDC4C
 .balign 4
-lbl_803DDC54:
+.obj lbl_803DDC54, local
 	.asciz "ANode"
+.endobj lbl_803DDC54
 .balign 4
-__RTTI__5ANode:
+.obj __RTTI__5ANode, local
 	.4byte lbl_803DDC54
 	.4byte 0
-__RTTI__8CoreNode:
+.endobj __RTTI__5ANode
+.balign 4
+.obj __RTTI__8CoreNode, local
 	.4byte lbl_802A7F98
 	.4byte lbl_802A7FA4
-__RTTI__9ModeState:
+.endobj __RTTI__8CoreNode
+.balign 4
+.obj __RTTI__9ModeState, local
 	.4byte lbl_802A7FDC
 	.4byte 0
-__RTTI__14IntroModeState:
+.endobj __RTTI__9ModeState
+.balign 4
+.obj __RTTI__14IntroModeState, local
 	.4byte lbl_802A7FCC
 	.4byte lbl_802A7FE8
-__RTTI__17QuittingModeState:
+.endobj __RTTI__14IntroModeState
+.balign 4
+.obj __RTTI__17QuittingModeState, local
 	.4byte lbl_802A8008
 	.4byte lbl_802A801C
+.endobj __RTTI__17QuittingModeState
 .balign 4
-lbl_803DDC84:
+.obj lbl_803DDC84, local
 	.asciz "Node"
+.endobj lbl_803DDC84
 .balign 4
-__RTTI__4Node:
+.obj __RTTI__4Node, local
 	.4byte lbl_803DDC84
 	.4byte lbl_802A8068
-__RTTI__15BaseGameSection:
+.endobj __RTTI__4Node
+.balign 4
+.obj __RTTI__15BaseGameSection, local
 	.4byte lbl_802A807C
 	.4byte lbl_802A808C
-__RTTI__21IntroGameSetupSection:
+.endobj __RTTI__15BaseGameSection
+.balign 4
+.obj __RTTI__21IntroGameSetupSection, local
 	.4byte lbl_802A8050
 	.4byte lbl_802A80A8
+.endobj __RTTI__21IntroGameSetupSection
 .balign 4
-lbl_803DDCA4:
+.obj lbl_803DDCA4, local
 	.asciz "Section"
+.endobj lbl_803DDCA4
 .balign 4
-__RTTI__7Section:
+.obj __RTTI__7Section, local
 	.4byte lbl_803DDCA4
 	.4byte lbl_802A8114
-__RTTI__16IntroGameSection:
+.endobj __RTTI__7Section
+.balign 4
+.obj __RTTI__16IntroGameSection, local
 	.4byte lbl_802A8100
 	.4byte lbl_802A8130
+.endobj __RTTI__16IntroGameSection
 
 .section .sbss, "wa"
 .balign 8
-igss:
+.obj igss, local
 	.skip 4
+.endobj igss
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803E87E0:
+.obj lbl_803E87E0, local
 	.float 60.0
-lbl_803E87E4:
+.endobj lbl_803E87E0
+.obj lbl_803E87E4, local
 	.float 1.0
-lbl_803E87E8:
+.endobj lbl_803E87E4
+.obj lbl_803E87E8, local
 	.float 3.0
-lbl_803E87EC:
+.endobj lbl_803E87E8
+.obj lbl_803E87EC, local
 	.float 100.0
-lbl_803E87F0:
+.endobj lbl_803E87EC
+.obj lbl_803E87F0, local
 	.float 25.0
+.endobj lbl_803E87F0
 .balign 8
-lbl_803E87F8:
-	.4byte 0x43300000
-	.4byte 0x80000000
+.obj lbl_803E87F8, local
+	.8byte 0x4330000080000000
+.endobj lbl_803E87F8

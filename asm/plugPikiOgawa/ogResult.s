@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global ogScrResultMgrSub__Q23zen14ogScrResultMgrFv
-ogScrResultMgrSub__Q23zen14ogScrResultMgrFv:
+.fn ogScrResultMgrSub__Q23zen14ogScrResultMgrFv, global
 /* 80183408 00180368  7C 08 02 A6 */	mflr r0
 /* 8018340C 0018036C  3C 80 80 2D */	lis r4, lbl_802D4088@ha
 /* 80183410 00180370  90 01 00 04 */	stw r0, 4(r1)
@@ -907,9 +906,9 @@ ogScrResultMgrSub__Q23zen14ogScrResultMgrFv:
 /* 801841DC 0018113C  38 21 00 90 */	addi r1, r1, 0x90
 /* 801841E0 00181140  7C 08 03 A6 */	mtlr r0
 /* 801841E4 00181144  4E 80 00 20 */	blr 
+.endfn ogScrResultMgrSub__Q23zen14ogScrResultMgrFv
 
-.global __ct__Q23zen14ogScrResultMgrFv
-__ct__Q23zen14ogScrResultMgrFv:
+.fn __ct__Q23zen14ogScrResultMgrFv, global
 /* 801841E8 00181148  7C 08 02 A6 */	mflr r0
 /* 801841EC 0018114C  3C 80 80 2D */	lis r4, dummy_blo_num_table__3zen@ha
 /* 801841F0 00181150  90 01 00 04 */	stw r0, 4(r1)
@@ -1007,9 +1006,9 @@ __ct__Q23zen14ogScrResultMgrFv:
 /* 80184358 001812B8  38 21 00 18 */	addi r1, r1, 0x18
 /* 8018435C 001812BC  7C 08 03 A6 */	mtlr r0
 /* 80184360 001812C0  4E 80 00 20 */	blr 
+.endfn __ct__Q23zen14ogScrResultMgrFv
 
-.global __ct__Q23zen14ogScrResultMgrFPQ23zen10EnumResult
-__ct__Q23zen14ogScrResultMgrFPQ23zen10EnumResult:
+.fn __ct__Q23zen14ogScrResultMgrFPQ23zen10EnumResult, global
 /* 80184364 001812C4  7C 08 02 A6 */	mflr r0
 /* 80184368 001812C8  38 E0 00 00 */	li r7, 0
 /* 8018436C 001812CC  90 01 00 04 */	stw r0, 4(r1)
@@ -1104,9 +1103,9 @@ __ct__Q23zen14ogScrResultMgrFPQ23zen10EnumResult:
 /* 801844C8 00181428  38 21 00 18 */	addi r1, r1, 0x18
 /* 801844CC 0018142C  7C 08 03 A6 */	mtlr r0
 /* 801844D0 00181430  4E 80 00 20 */	blr 
+.endfn __ct__Q23zen14ogScrResultMgrFPQ23zen10EnumResult
 
-.global start__Q23zen14ogScrResultMgrFv
-start__Q23zen14ogScrResultMgrFv:
+.fn start__Q23zen14ogScrResultMgrFv, global
 /* 801844D4 00181434  7C 08 02 A6 */	mflr r0
 /* 801844D8 00181438  90 01 00 04 */	stw r0, 4(r1)
 /* 801844DC 0018143C  94 21 FE F0 */	stwu r1, -0x110(r1)
@@ -1598,9 +1597,9 @@ start__Q23zen14ogScrResultMgrFv:
 /* 80184C0C 00181B6C  38 21 01 10 */	addi r1, r1, 0x110
 /* 80184C10 00181B70  7C 08 03 A6 */	mtlr r0
 /* 80184C14 00181B74  4E 80 00 20 */	blr 
+.endfn start__Q23zen14ogScrResultMgrFv
 
-.global update__Q23zen14ogScrResultMgrFP10Controller
-update__Q23zen14ogScrResultMgrFP10Controller:
+.fn update__Q23zen14ogScrResultMgrFP10Controller, global
 /* 80184C18 00181B78  7C 08 02 A6 */	mflr r0
 /* 80184C1C 00181B7C  90 01 00 04 */	stw r0, 4(r1)
 /* 80184C20 00181B80  94 21 FF A0 */	stwu r1, -0x60(r1)
@@ -1847,9 +1846,9 @@ update__Q23zen14ogScrResultMgrFP10Controller:
 /* 80184F90 00181EF0  38 21 00 60 */	addi r1, r1, 0x60
 /* 80184F94 00181EF4  7C 08 03 A6 */	mtlr r0
 /* 80184F98 00181EF8  4E 80 00 20 */	blr 
+.endfn update__Q23zen14ogScrResultMgrFP10Controller
 
-.global draw__Q23zen14ogScrResultMgrFR8Graphics
-draw__Q23zen14ogScrResultMgrFR8Graphics:
+.fn draw__Q23zen14ogScrResultMgrFR8Graphics, global
 /* 80184F9C 00181EFC  7C 08 02 A6 */	mflr r0
 /* 80184FA0 00181F00  90 01 00 04 */	stw r0, 4(r1)
 /* 80184FA4 00181F04  94 21 FF 00 */	stwu r1, -0x100(r1)
@@ -1919,6 +1918,7 @@ draw__Q23zen14ogScrResultMgrFR8Graphics:
 /* 80185094 00181FF4  38 21 01 00 */	addi r1, r1, 0x100
 /* 80185098 00181FF8  7C 08 03 A6 */	mtlr r0
 /* 8018509C 00181FFC  4E 80 00 20 */	blr 
+.endfn draw__Q23zen14ogScrResultMgrFR8Graphics
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
@@ -2030,362 +2030,479 @@ draw__Q23zen14ogScrResultMgrFR8Graphics:
 	.asciz "screen/blo/re_q2_01.blo"
 .endobj lbl_802D42E8
 .balign 4
-lbl_802D4300:
+.obj lbl_802D4300, local
 	.asciz "screen/blo/re_r2_00.blo"
+.endobj lbl_802D4300
 .balign 4
-lbl_802D4318:
+.obj lbl_802D4318, local
 	.asciz "screen/blo/re_l_00.blo"
+.endobj lbl_802D4318
 .balign 4
-lbl_802D4330:
+.obj lbl_802D4330, local
 	.asciz "screen/blo/re_l_01.blo"
+.endobj lbl_802D4330
 .balign 4
-lbl_802D4348:
+.obj lbl_802D4348, local
 	.asciz "screen/blo/re_m_00.blo"
+.endobj lbl_802D4348
 .balign 4
-lbl_802D4360:
+.obj lbl_802D4360, local
 	.asciz "screen/blo/re_m_01.blo"
+.endobj lbl_802D4360
 .balign 4
-lbl_802D4378:
+.obj lbl_802D4378, local
 	.asciz "screen/blo/re_n_00.blo"
+.endobj lbl_802D4378
 .balign 4
-lbl_802D4390:
+.obj lbl_802D4390, local
 	.asciz "screen/blo/re_o_00.blo"
+.endobj lbl_802D4390
 .balign 4
-lbl_802D43A8:
+.obj lbl_802D43A8, local
 	.asciz "screen/blo/re_p_00.blo"
+.endobj lbl_802D43A8
 .balign 4
-lbl_802D43C0:
+.obj lbl_802D43C0, local
 	.asciz "screen/blo/re_p_01.blo"
+.endobj lbl_802D43C0
 .balign 4
-lbl_802D43D8:
+.obj lbl_802D43D8, local
 	.asciz "screen/blo/re_q_00.blo"
+.endobj lbl_802D43D8
 .balign 4
-lbl_802D43F0:
+.obj lbl_802D43F0, local
 	.asciz "screen/blo/re_r_00.blo"
+.endobj lbl_802D43F0
 .balign 4
-lbl_802D4408:
+.obj lbl_802D4408, local
 	.asciz "screen/blo/re_s_00.blo"
+.endobj lbl_802D4408
 .balign 4
-lbl_802D4420:
+.obj lbl_802D4420, local
 	.asciz "screen/blo/re_t_00.blo"
+.endobj lbl_802D4420
 .balign 4
-lbl_802D4438:
+.obj lbl_802D4438, local
 	.asciz "screen/blo/re_u_00.blo"
+.endobj lbl_802D4438
 .balign 4
-lbl_802D4450:
+.obj lbl_802D4450, local
 	.asciz "screen/blo/re_v_00.blo"
+.endobj lbl_802D4450
 .balign 4
-lbl_802D4468:
+.obj lbl_802D4468, local
 	.asciz "screen/blo/re_w_00.blo"
+.endobj lbl_802D4468
 .balign 4
-lbl_802D4480:
+.obj lbl_802D4480, local
 	.asciz "screen/blo/re_x_00.blo"
+.endobj lbl_802D4480
 .balign 4
-lbl_802D4498:
+.obj lbl_802D4498, local
 	.asciz "screen/blo/re_y_00.blo"
+.endobj lbl_802D4498
 .balign 4
-lbl_802D44B0:
+.obj lbl_802D44B0, local
 	.asciz "screen/blo/re_z_00.blo"
+.endobj lbl_802D44B0
 .balign 4
-lbl_802D44C8:
+.obj lbl_802D44C8, local
 	.asciz "screen/blo/re_a1_00.blo"
+.endobj lbl_802D44C8
 .balign 4
-lbl_802D44E0:
+.obj lbl_802D44E0, local
 	.asciz "screen/blo/re_b1_00.blo"
+.endobj lbl_802D44E0
 .balign 4
-lbl_802D44F8:
+.obj lbl_802D44F8, local
 	.asciz "screen/blo/re_c1_00.blo"
+.endobj lbl_802D44F8
 .balign 4
-lbl_802D4510:
+.obj lbl_802D4510, local
 	.asciz "screen/blo/re_d1_00.blo"
+.endobj lbl_802D4510
 .balign 4
-lbl_802D4528:
+.obj lbl_802D4528, local
 	.asciz "screen/blo/re_e1_00.blo"
+.endobj lbl_802D4528
 .balign 4
-lbl_802D4540:
+.obj lbl_802D4540, local
 	.asciz "screen/blo/re_f1_00.blo"
+.endobj lbl_802D4540
 .balign 4
-lbl_802D4558:
+.obj lbl_802D4558, local
 	.asciz "screen/blo/re_g1_00.blo"
+.endobj lbl_802D4558
 .balign 4
-lbl_802D4570:
+.obj lbl_802D4570, local
 	.asciz "screen/blo/re_h1_00.blo"
+.endobj lbl_802D4570
 .balign 4
-lbl_802D4588:
+.obj lbl_802D4588, local
 	.asciz "screen/blo/re_i1_00.blo"
+.endobj lbl_802D4588
 .balign 4
-lbl_802D45A0:
+.obj lbl_802D45A0, local
 	.asciz "screen/blo/re_j1_00.blo"
+.endobj lbl_802D45A0
 .balign 4
-lbl_802D45B8:
+.obj lbl_802D45B8, local
 	.asciz "screen/blo/re_k1_00.blo"
+.endobj lbl_802D45B8
 .balign 4
-lbl_802D45D0:
+.obj lbl_802D45D0, local
 	.asciz "screen/blo/re_l1_00.blo"
+.endobj lbl_802D45D0
 .balign 4
-lbl_802D45E8:
+.obj lbl_802D45E8, local
 	.asciz "screen/blo/re_m1_00.blo"
+.endobj lbl_802D45E8
 .balign 4
-lbl_802D4600:
+.obj lbl_802D4600, local
 	.asciz "screen/blo/re_n1_00.blo"
+.endobj lbl_802D4600
 .balign 4
-lbl_802D4618:
+.obj lbl_802D4618, local
 	.asciz "screen/blo/re_o1_00.blo"
+.endobj lbl_802D4618
 .balign 4
-lbl_802D4630:
+.obj lbl_802D4630, local
 	.asciz "screen/blo/re_p1_00.blo"
+.endobj lbl_802D4630
 .balign 4
-lbl_802D4648:
+.obj lbl_802D4648, local
 	.asciz "screen/blo/re_q1_00.blo"
+.endobj lbl_802D4648
 .balign 4
-lbl_802D4660:
+.obj lbl_802D4660, local
 	.asciz "screen/blo/re_r1_00.blo"
+.endobj lbl_802D4660
 .balign 4
-lbl_802D4678:
+.obj lbl_802D4678, local
 	.asciz "screen/blo/re_w1_00.blo"
+.endobj lbl_802D4678
 .balign 4
-lbl_802D4690:
+.obj lbl_802D4690, local
 	.asciz "screen/blo/re_x1_00.blo"
+.endobj lbl_802D4690
 .balign 4
-lbl_802D46A8:
+.obj lbl_802D46A8, local
 	.asciz "screen/blo/re_y1_00.blo"
+.endobj lbl_802D46A8
 .balign 4
-lbl_802D46C0:
+.obj lbl_802D46C0, local
 	.asciz "screen/blo/re_z1_00.blo"
+.endobj lbl_802D46C0
 .balign 4
-lbl_802D46D8:
+.obj lbl_802D46D8, local
 	.asciz "screen/blo/re_a2_00.blo"
+.endobj lbl_802D46D8
 .balign 4
-lbl_802D46F0:
+.obj lbl_802D46F0, local
 	.asciz "screen/blo/re_b2_00.blo"
+.endobj lbl_802D46F0
 .balign 4
-lbl_802D4708:
+.obj lbl_802D4708, local
 	.asciz "screen/blo/re_c2_00.blo"
+.endobj lbl_802D4708
 .balign 4
-lbl_802D4720:
+.obj lbl_802D4720, local
 	.asciz "screen/blo/re_d2_00.blo"
+.endobj lbl_802D4720
 .balign 4
-lbl_802D4738:
+.obj lbl_802D4738, local
 	.asciz "screen/blo/re_e2_00.blo"
+.endobj lbl_802D4738
 .balign 4
-lbl_802D4750:
+.obj lbl_802D4750, local
 	.asciz "screen/blo/re_f2_00.blo"
+.endobj lbl_802D4750
 .balign 4
-lbl_802D4768:
+.obj lbl_802D4768, local
 	.asciz "screen/blo/re_g2_00.blo"
+.endobj lbl_802D4768
 .balign 4
-lbl_802D4780:
+.obj lbl_802D4780, local
 	.asciz "screen/blo/re_h2_00.blo"
+.endobj lbl_802D4780
 .balign 4
-lbl_802D4798:
+.obj lbl_802D4798, local
 	.asciz "screen/blo/re_i2_00.blo"
+.endobj lbl_802D4798
 .balign 4
-lbl_802D47B0:
+.obj lbl_802D47B0, local
 	.asciz "screen/blo/re_l2_00.blo"
+.endobj lbl_802D47B0
 .balign 4
-lbl_802D47C8:
+.obj lbl_802D47C8, local
 	.asciz "screen/blo/re_m2_00.blo"
+.endobj lbl_802D47C8
 .balign 4
-lbl_802D47E0:
+.obj lbl_802D47E0, local
 	.asciz "screen/blo/re_n2_00.blo"
+.endobj lbl_802D47E0
 .balign 4
-lbl_802D47F8:
+.obj lbl_802D47F8, local
 	.asciz "screen/blo/re_o2_00.blo"
+.endobj lbl_802D47F8
 .balign 4
-lbl_802D4810:
+.obj lbl_802D4810, local
 	.asciz "screen/blo/re_s2_00.blo"
+.endobj lbl_802D4810
 .balign 4
-lbl_802D4828:
+.obj lbl_802D4828, local
 	.asciz "screen/blo/re_t2_00.blo"
+.endobj lbl_802D4828
 .balign 4
-lbl_802D4840:
+.obj lbl_802D4840, local
 	.asciz "screen/blo/re_u2_00.blo"
+.endobj lbl_802D4840
 .balign 4
-lbl_802D4858:
+.obj lbl_802D4858, local
 	.asciz "screen/blo/re_v2_00.blo"
+.endobj lbl_802D4858
 .balign 4
-lbl_802D4870:
+.obj lbl_802D4870, local
 	.asciz "screen/blo/re_w2_00.blo"
+.endobj lbl_802D4870
 .balign 4
-lbl_802D4888:
+.obj lbl_802D4888, local
 	.asciz "screen/blo/ufo_a_0.blo"
+.endobj lbl_802D4888
 .balign 4
-lbl_802D48A0:
+.obj lbl_802D48A0, local
 	.asciz "screen/blo/ufo_b_0.blo"
+.endobj lbl_802D48A0
 .balign 4
-lbl_802D48B8:
+.obj lbl_802D48B8, local
 	.asciz "screen/blo/ufo_c_0.blo"
+.endobj lbl_802D48B8
 .balign 4
-lbl_802D48D0:
+.obj lbl_802D48D0, local
 	.asciz "screen/blo/ufo_d_0.blo"
+.endobj lbl_802D48D0
 .balign 4
-lbl_802D48E8:
+.obj lbl_802D48E8, local
 	.asciz "screen/blo/ufo_e_0.blo"
+.endobj lbl_802D48E8
 .balign 4
-lbl_802D4900:
+.obj lbl_802D4900, local
 	.asciz "screen/blo/ufo_f_0.blo"
+.endobj lbl_802D4900
 .balign 4
-lbl_802D4918:
+.obj lbl_802D4918, local
 	.asciz "screen/blo/ufo_g_0.blo"
+.endobj lbl_802D4918
 .balign 4
-lbl_802D4930:
+.obj lbl_802D4930, local
 	.asciz "screen/blo/ufo_h_0.blo"
+.endobj lbl_802D4930
 .balign 4
-lbl_802D4948:
+.obj lbl_802D4948, local
 	.asciz "screen/blo/ufo_i_0.blo"
+.endobj lbl_802D4948
 .balign 4
-lbl_802D4960:
+.obj lbl_802D4960, local
 	.asciz "screen/blo/ufo_j_0.blo"
+.endobj lbl_802D4960
 .balign 4
-lbl_802D4978:
+.obj lbl_802D4978, local
 	.asciz "screen/blo/ufo_k_0.blo"
+.endobj lbl_802D4978
 .balign 4
-lbl_802D4990:
+.obj lbl_802D4990, local
 	.asciz "screen/blo/ufo_l_0.blo"
+.endobj lbl_802D4990
 .balign 4
-lbl_802D49A8:
+.obj lbl_802D49A8, local
 	.asciz "screen/blo/ufo_m_0.blo"
+.endobj lbl_802D49A8
 .balign 4
-lbl_802D49C0:
+.obj lbl_802D49C0, local
 	.asciz "screen/blo/ufo_n_0.blo"
+.endobj lbl_802D49C0
 .balign 4
-lbl_802D49D8:
+.obj lbl_802D49D8, local
 	.asciz "screen/blo/ufo_o_0.blo"
+.endobj lbl_802D49D8
 .balign 4
-lbl_802D49F0:
+.obj lbl_802D49F0, local
 	.asciz "screen/blo/ufo_p_0.blo"
+.endobj lbl_802D49F0
 .balign 4
-lbl_802D4A08:
+.obj lbl_802D4A08, local
 	.asciz "screen/blo/ufo_q_0.blo"
+.endobj lbl_802D4A08
 .balign 4
-lbl_802D4A20:
+.obj lbl_802D4A20, local
 	.asciz "screen/blo/ufo_r_0.blo"
+.endobj lbl_802D4A20
 .balign 4
-lbl_802D4A38:
+.obj lbl_802D4A38, local
 	.asciz "screen/blo/ufo_s_0.blo"
+.endobj lbl_802D4A38
 .balign 4
-lbl_802D4A50:
+.obj lbl_802D4A50, local
 	.asciz "screen/blo/ufo_t_0.blo"
+.endobj lbl_802D4A50
 .balign 4
-lbl_802D4A68:
+.obj lbl_802D4A68, local
 	.asciz "screen/blo/ufo_u_0.blo"
+.endobj lbl_802D4A68
 .balign 4
-lbl_802D4A80:
+.obj lbl_802D4A80, local
 	.asciz "screen/blo/ufo_v_0.blo"
+.endobj lbl_802D4A80
 .balign 4
-lbl_802D4A98:
+.obj lbl_802D4A98, local
 	.asciz "screen/blo/ufo_w_0.blo"
+.endobj lbl_802D4A98
 .balign 4
-lbl_802D4AB0:
+.obj lbl_802D4AB0, local
 	.asciz "screen/blo/ufo_x_0.blo"
+.endobj lbl_802D4AB0
 .balign 4
-lbl_802D4AC8:
+.obj lbl_802D4AC8, local
 	.asciz "screen/blo/ufo_y_0.blo"
+.endobj lbl_802D4AC8
 .balign 4
-lbl_802D4AE0:
+.obj lbl_802D4AE0, local
 	.asciz "screen/blo/ufo_z_0.blo"
+.endobj lbl_802D4AE0
 .balign 4
-lbl_802D4AF8:
+.obj lbl_802D4AF8, local
 	.asciz "screen/blo/ufo_a1_0.blo"
+.endobj lbl_802D4AF8
 .balign 4
-lbl_802D4B10:
+.obj lbl_802D4B10, local
 	.asciz "screen/blo/ufo_b1_0.blo"
+.endobj lbl_802D4B10
 .balign 4
-lbl_802D4B28:
+.obj lbl_802D4B28, local
 	.asciz "screen/blo/ufo_c1_0.blo"
+.endobj lbl_802D4B28
 .balign 4
-lbl_802D4B40:
+.obj lbl_802D4B40, local
 	.asciz "screen/blo/auf_a_0.blo"
+.endobj lbl_802D4B40
 .balign 4
-lbl_802D4B58:
+.obj lbl_802D4B58, local
 	.asciz "screen/blo/auf_b_0.blo"
+.endobj lbl_802D4B58
 .balign 4
-lbl_802D4B70:
+.obj lbl_802D4B70, local
 	.asciz "screen/blo/auf_c_0.blo"
+.endobj lbl_802D4B70
 .balign 4
-lbl_802D4B88:
+.obj lbl_802D4B88, local
 	.asciz "screen/blo/auf_d_0.blo"
+.endobj lbl_802D4B88
 .balign 4
-lbl_802D4BA0:
+.obj lbl_802D4BA0, local
 	.asciz "screen/blo/auf_e_0.blo"
+.endobj lbl_802D4BA0
 .balign 4
-lbl_802D4BB8:
+.obj lbl_802D4BB8, local
 	.asciz "screen/blo/auf_f_0.blo"
+.endobj lbl_802D4BB8
 .balign 4
-lbl_802D4BD0:
+.obj lbl_802D4BD0, local
 	.asciz "screen/blo/auf_g_0.blo"
+.endobj lbl_802D4BD0
 .balign 4
-lbl_802D4BE8:
+.obj lbl_802D4BE8, local
 	.asciz "screen/blo/auf_h_0.blo"
+.endobj lbl_802D4BE8
 .balign 4
-lbl_802D4C00:
+.obj lbl_802D4C00, local
 	.asciz "screen/blo/auf_i_0.blo"
+.endobj lbl_802D4C00
 .balign 4
-lbl_802D4C18:
+.obj lbl_802D4C18, local
 	.asciz "screen/blo/auf_j_0.blo"
+.endobj lbl_802D4C18
 .balign 4
-lbl_802D4C30:
+.obj lbl_802D4C30, local
 	.asciz "screen/blo/auf_k_0.blo"
+.endobj lbl_802D4C30
 .balign 4
-lbl_802D4C48:
+.obj lbl_802D4C48, local
 	.asciz "screen/blo/auf_l_0.blo"
+.endobj lbl_802D4C48
 .balign 4
-lbl_802D4C60:
+.obj lbl_802D4C60, local
 	.asciz "screen/blo/auf_m_0.blo"
+.endobj lbl_802D4C60
 .balign 4
-lbl_802D4C78:
+.obj lbl_802D4C78, local
 	.asciz "screen/blo/auf_n_0.blo"
+.endobj lbl_802D4C78
 .balign 4
-lbl_802D4C90:
+.obj lbl_802D4C90, local
 	.asciz "screen/blo/auf_o_0.blo"
+.endobj lbl_802D4C90
 .balign 4
-lbl_802D4CA8:
+.obj lbl_802D4CA8, local
 	.asciz "screen/blo/auf_p_0.blo"
+.endobj lbl_802D4CA8
 .balign 4
-lbl_802D4CC0:
+.obj lbl_802D4CC0, local
 	.asciz "screen/blo/auf_q_0.blo"
+.endobj lbl_802D4CC0
 .balign 4
-lbl_802D4CD8:
+.obj lbl_802D4CD8, local
 	.asciz "screen/blo/auf_r_0.blo"
+.endobj lbl_802D4CD8
 .balign 4
-lbl_802D4CF0:
+.obj lbl_802D4CF0, local
 	.asciz "screen/blo/auf_s_0.blo"
+.endobj lbl_802D4CF0
 .balign 4
-lbl_802D4D08:
+.obj lbl_802D4D08, local
 	.asciz "screen/blo/auf_t_0.blo"
+.endobj lbl_802D4D08
 .balign 4
-lbl_802D4D20:
+.obj lbl_802D4D20, local
 	.asciz "screen/blo/auf_u_0.blo"
+.endobj lbl_802D4D20
 .balign 4
-lbl_802D4D38:
+.obj lbl_802D4D38, local
 	.asciz "screen/blo/auf_v_0.blo"
+.endobj lbl_802D4D38
 .balign 4
-lbl_802D4D50:
+.obj lbl_802D4D50, local
 	.asciz "screen/blo/auf_w_0.blo"
+.endobj lbl_802D4D50
 .balign 4
-lbl_802D4D68:
+.obj lbl_802D4D68, local
 	.asciz "screen/blo/auf_x_0.blo"
+.endobj lbl_802D4D68
 .balign 4
-lbl_802D4D80:
+.obj lbl_802D4D80, local
 	.asciz "screen/blo/auf_y_0.blo"
+.endobj lbl_802D4D80
 .balign 4
-lbl_802D4D98:
+.obj lbl_802D4D98, local
 	.asciz "screen/blo/auf_z_0.blo"
+.endobj lbl_802D4D98
 .balign 4
-lbl_802D4DB0:
+.obj lbl_802D4DB0, local
 	.asciz "screen/blo/auf_a1_0.blo"
+.endobj lbl_802D4DB0
 .balign 4
-lbl_802D4DC8:
+.obj lbl_802D4DC8, local
 	.asciz "screen/blo/auf_b1_0.blo"
+.endobj lbl_802D4DC8
 .balign 4
-lbl_802D4DE0:
+.obj lbl_802D4DE0, local
 	.asciz "screen/blo/auf_c1_0.blo"
+.endobj lbl_802D4DE0
 .balign 4
-lbl_802D4DF8:
+.obj lbl_802D4DF8, local
 	.asciz "screen/blo/auf_d1_0.blo"
+.endobj lbl_802D4DF8
 .balign 4
-.global bloFile_Res_Table__3zen
-bloFile_Res_Table__3zen:
+.obj bloFile_Res_Table__3zen, global
 	.4byte lbl_803E59F0
 	.4byte lbl_802D40A8
 	.4byte lbl_802D40C0
@@ -2535,6 +2652,7 @@ bloFile_Res_Table__3zen:
 	.4byte lbl_802D40A8
 	.4byte lbl_802D40A8
 	.4byte lbl_803E59F0
+.endobj bloFile_Res_Table__3zen
 .balign 4
 .obj dummy_blo_num_table__3zen, global
 	.4byte 0x00000091

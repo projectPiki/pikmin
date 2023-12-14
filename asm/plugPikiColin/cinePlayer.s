@@ -3937,14 +3937,7 @@ __vt__9SceneData:
 	.4byte 0
 	.4byte getAgeNodeType__5ANodeFv
 	.4byte read__8CoreNodeFR18RandomAccessStream
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
+.skip 0x20 # compiler padding
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
@@ -4267,21 +4260,28 @@ __RTTI__9SceneData:
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803E8A50:
+.obj lbl_803E8A50, local
 	.float 0.0
-lbl_803E8A54:
+.endobj lbl_803E8A50
+.obj lbl_803E8A54, local
 	.float 30.0
-lbl_803E8A58:
+.endobj lbl_803E8A54
+.obj lbl_803E8A58, local
 	.float 1.0
+.endobj lbl_803E8A58
 .balign 8
-lbl_803E8A60:
-	.4byte 0x43300000
-	.4byte 0x80000000
-lbl_803E8A68:
+.obj lbl_803E8A60, local
+	.8byte 0x4330000080000000
+.endobj lbl_803E8A60
+.obj lbl_803E8A68, local
 	.float -1.0
-lbl_803E8A6C:
+.endobj lbl_803E8A68
+.obj lbl_803E8A6C, local
 	.float 0.5
-lbl_803E8A70:
+.endobj lbl_803E8A6C
+.obj lbl_803E8A70, local
 	.float 2.0
-lbl_803E8A74:
+.endobj lbl_803E8A70
+.obj lbl_803E8A74, local
 	.float 4.0
+.endobj lbl_803E8A74

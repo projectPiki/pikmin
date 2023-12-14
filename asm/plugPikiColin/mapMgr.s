@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global createDupCollData__12DynCollShapeFv
-createDupCollData__12DynCollShapeFv:
+.fn createDupCollData__12DynCollShapeFv, global
 /* 800617C0 0005E720  7C 08 02 A6 */	mflr r0
 /* 800617C4 0005E724  90 01 00 04 */	stw r0, 4(r1)
 /* 800617C8 0005E728  94 21 FF C8 */	stwu r1, -0x38(r1)
@@ -168,9 +167,9 @@ createDupCollData__12DynCollShapeFv:
 /* 80061A1C 0005E97C  38 21 00 38 */	addi r1, r1, 0x38
 /* 80061A20 0005E980  7C 08 03 A6 */	mtlr r0
 /* 80061A24 0005E984  4E 80 00 20 */	blr 
+.endfn createDupCollData__12DynCollShapeFv
 
-.global updatePos__12DynCollShapeFv
-updatePos__12DynCollShapeFv:
+.fn updatePos__12DynCollShapeFv, global
 /* 80061A28 0005E988  7C 08 02 A6 */	mflr r0
 /* 80061A2C 0005E98C  38 C0 00 00 */	li r6, 0
 /* 80061A30 0005E990  90 01 00 04 */	stw r0, 4(r1)
@@ -427,9 +426,9 @@ updatePos__12DynCollShapeFv:
 /* 80061DE8 0005ED48  38 21 00 58 */	addi r1, r1, 0x58
 /* 80061DEC 0005ED4C  7C 08 03 A6 */	mtlr r0
 /* 80061DF0 0005ED50  4E 80 00 20 */	blr 
+.endfn updatePos__12DynCollShapeFv
 
-.global jointVisible__12DynCollShapeFii
-jointVisible__12DynCollShapeFii:
+.fn jointVisible__12DynCollShapeFii, global
 /* 80061DF4 0005ED54  80 C3 00 2C */	lwz r6, 0x2c(r3)
 /* 80061DF8 0005ED58  1C 04 01 1C */	mulli r0, r4, 0x11c
 /* 80061DFC 0005ED5C  80 86 00 5C */	lwz r4, 0x5c(r6)
@@ -449,9 +448,9 @@ jointVisible__12DynCollShapeFii:
 /* 80061E2C 0005ED8C  28 07 00 00 */	cmplwi r7, 0
 /* 80061E30 0005ED90  40 82 FF E4 */	bne .L_80061E14
 /* 80061E34 0005ED94  4E 80 00 20 */	blr 
+.endfn jointVisible__12DynCollShapeFii
 
-.global adjust__12DynCollShapeFP8Creature
-adjust__12DynCollShapeFP8Creature:
+.fn adjust__12DynCollShapeFP8Creature, global
 /* 80061E38 0005ED98  7C 08 02 A6 */	mflr r0
 /* 80061E3C 0005ED9C  90 01 00 04 */	stw r0, 4(r1)
 /* 80061E40 0005EDA0  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -489,9 +488,9 @@ adjust__12DynCollShapeFP8Creature:
 /* 80061EC0 0005EE20  38 21 00 18 */	addi r1, r1, 0x18
 /* 80061EC4 0005EE24  7C 08 03 A6 */	mtlr r0
 /* 80061EC8 0005EE28  4E 80 00 20 */	blr 
+.endfn adjust__12DynCollShapeFP8Creature
 
-.global update__12DynCollShapeFv
-update__12DynCollShapeFv:
+.fn update__12DynCollShapeFv, global
 /* 80061ECC 0005EE2C  7C 08 02 A6 */	mflr r0
 /* 80061ED0 0005EE30  90 01 00 04 */	stw r0, 4(r1)
 /* 80061ED4 0005EE34  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -510,9 +509,9 @@ update__12DynCollShapeFv:
 /* 80061F08 0005EE68  38 21 00 18 */	addi r1, r1, 0x18
 /* 80061F0C 0005EE6C  7C 08 03 A6 */	mtlr r0
 /* 80061F10 0005EE70  4E 80 00 20 */	blr 
+.endfn update__12DynCollShapeFv
 
-.global updateContext__12DynCollShapeFv
-updateContext__12DynCollShapeFv:
+.fn updateContext__12DynCollShapeFv, global
 /* 80061F14 0005EE74  38 E0 00 00 */	li r7, 0
 /* 80061F18 0005EE78  38 C0 00 00 */	li r6, 0
 /* 80061F1C 0005EE7C  48 00 00 20 */	b .L_80061F3C
@@ -530,9 +529,9 @@ updateContext__12DynCollShapeFv:
 /* 80061F44 0005EEA4  7C 07 00 00 */	cmpw r7, r0
 /* 80061F48 0005EEA8  41 80 FF D8 */	blt .L_80061F20
 /* 80061F4C 0005EEAC  4E 80 00 20 */	blr 
+.endfn updateContext__12DynCollShapeFv
 
-.global refresh__12DynCollShapeFR8Graphics
-refresh__12DynCollShapeFR8Graphics:
+.fn refresh__12DynCollShapeFR8Graphics, global
 /* 80061F50 0005EEB0  7C 08 02 A6 */	mflr r0
 /* 80061F54 0005EEB4  38 E0 00 00 */	li r7, 0
 /* 80061F58 0005EEB8  90 01 00 04 */	stw r0, 4(r1)
@@ -560,9 +559,9 @@ refresh__12DynCollShapeFR8Graphics:
 /* 80061FA8 0005EF08  38 21 00 08 */	addi r1, r1, 8
 /* 80061FAC 0005EF0C  7C 08 03 A6 */	mtlr r0
 /* 80061FB0 0005EF10  4E 80 00 20 */	blr 
+.endfn refresh__12DynCollShapeFR8Graphics
 
-.global finishOneShot__14MapObjAnimatorFv
-finishOneShot__14MapObjAnimatorFv:
+.fn finishOneShot__14MapObjAnimatorFv, global
 /* 80061FB4 0005EF14  7C 08 02 A6 */	mflr r0
 /* 80061FB8 0005EF18  90 01 00 04 */	stw r0, 4(r1)
 /* 80061FBC 0005EF1C  38 00 00 00 */	li r0, 0
@@ -577,9 +576,9 @@ finishOneShot__14MapObjAnimatorFv:
 /* 80061FDC 0005EF3C  38 21 00 08 */	addi r1, r1, 8
 /* 80061FE0 0005EF40  7C 08 03 A6 */	mtlr r0
 /* 80061FE4 0005EF44  4E 80 00 20 */	blr 
+.endfn finishOneShot__14MapObjAnimatorFv
 
-.global __ct__12DynCollShapeFP5Shape
-__ct__12DynCollShapeFP5Shape:
+.fn __ct__12DynCollShapeFP5Shape, weak
 /* 80061FE8 0005EF48  7C 08 02 A6 */	mflr r0
 /* 80061FEC 0005EF4C  3C A0 80 22 */	lis r5, __vt__5ANode@ha
 /* 80061FF0 0005EF50  90 01 00 04 */	stw r0, 4(r1)
@@ -692,9 +691,9 @@ __ct__12DynCollShapeFP5Shape:
 /* 80062198 0005F0F8  38 21 00 40 */	addi r1, r1, 0x40
 /* 8006219C 0005F0FC  7C 08 03 A6 */	mtlr r0
 /* 800621A0 0005F100  4E 80 00 20 */	blr 
+.endfn __ct__12DynCollShapeFP5Shape
 
-.global nextState__12DynMapObjectFv
-nextState__12DynMapObjectFv:
+.fn nextState__12DynMapObjectFv, global
 /* 800621A4 0005F104  80 83 05 18 */	lwz r4, 0x518(r3)
 /* 800621A8 0005F108  38 04 00 01 */	addi r0, r4, 1
 /* 800621AC 0005F10C  90 03 05 18 */	stw r0, 0x518(r3)
@@ -704,9 +703,9 @@ nextState__12DynMapObjectFv:
 /* 800621BC 0005F11C  38 00 00 00 */	li r0, 0
 /* 800621C0 0005F120  90 03 05 18 */	stw r0, 0x518(r3)
 /* 800621C4 0005F124  4E 80 00 20 */	blr 
+.endfn nextState__12DynMapObjectFv
 
-.global touchCallback__12DynMapObjectFR5PlaneR8Vector3fR8Vector3f
-touchCallback__12DynMapObjectFR5PlaneR8Vector3fR8Vector3f:
+.fn touchCallback__12DynMapObjectFR5PlaneR8Vector3fR8Vector3f, global
 /* 800621C8 0005F128  80 03 05 18 */	lwz r0, 0x518(r3)
 /* 800621CC 0005F12C  2C 00 00 04 */	cmpwi r0, 4
 /* 800621D0 0005F130  41 82 00 28 */	beq .L_800621F8
@@ -723,9 +722,9 @@ touchCallback__12DynMapObjectFR5PlaneR8Vector3fR8Vector3f:
 /* 800621F8 0005F158  C0 02 87 6C */	lfs f0, lbl_803E896C@sda21(r2)
 /* 800621FC 0005F15C  D0 03 05 1C */	stfs f0, 0x51c(r3)
 /* 80062200 0005F160  4E 80 00 20 */	blr 
+.endfn touchCallback__12DynMapObjectFR5PlaneR8Vector3fR8Vector3f
 
-.global update__12DynMapObjectFv
-update__12DynMapObjectFv:
+.fn update__12DynMapObjectFv, global
 /* 80062204 0005F164  7C 08 02 A6 */	mflr r0
 /* 80062208 0005F168  90 01 00 04 */	stw r0, 4(r1)
 /* 8006220C 0005F16C  94 21 FF C0 */	stwu r1, -0x40(r1)
@@ -837,9 +836,9 @@ update__12DynMapObjectFv:
 /* 800623A0 0005F300  38 21 00 40 */	addi r1, r1, 0x40
 /* 800623A4 0005F304  7C 08 03 A6 */	mtlr r0
 /* 800623A8 0005F308  4E 80 00 20 */	blr 
+.endfn update__12DynMapObjectFv
 
-.global draw__12DynMapObjectFR8Graphics
-draw__12DynMapObjectFR8Graphics:
+.fn draw__12DynMapObjectFR8Graphics, global
 /* 800623AC 0005F30C  7C 08 02 A6 */	mflr r0
 /* 800623B0 0005F310  90 01 00 04 */	stw r0, 4(r1)
 /* 800623B4 0005F314  94 21 FF F8 */	stwu r1, -8(r1)
@@ -851,9 +850,9 @@ draw__12DynMapObjectFR8Graphics:
 /* 800623CC 0005F32C  38 21 00 08 */	addi r1, r1, 8
 /* 800623D0 0005F330  7C 08 03 A6 */	mtlr r0
 /* 800623D4 0005F334  4E 80 00 20 */	blr 
+.endfn draw__12DynMapObjectFR8Graphics
 
-.global refresh__12DynMapObjectFR8Graphics
-refresh__12DynMapObjectFR8Graphics:
+.fn refresh__12DynMapObjectFR8Graphics, global
 /* 800623D8 0005F338  7C 08 02 A6 */	mflr r0
 /* 800623DC 0005F33C  90 01 00 04 */	stw r0, 4(r1)
 /* 800623E0 0005F340  94 21 FF 18 */	stwu r1, -0xe8(r1)
@@ -953,9 +952,9 @@ refresh__12DynMapObjectFR8Graphics:
 /* 80062550 0005F4B0  38 21 00 E8 */	addi r1, r1, 0xe8
 /* 80062554 0005F4B4  7C 08 03 A6 */	mtlr r0
 /* 80062558 0005F4B8  4E 80 00 20 */	blr 
+.endfn refresh__12DynMapObjectFR8Graphics
 
-.global touchCallback__14DynCollObjBodyFR5PlaneR8Vector3fR8Vector3f
-touchCallback__14DynCollObjBodyFR5PlaneR8Vector3fR8Vector3f:
+.fn touchCallback__14DynCollObjBodyFR5PlaneR8Vector3fR8Vector3f, global
 /* 8006255C 0005F4BC  7C 08 02 A6 */	mflr r0
 /* 80062560 0005F4C0  90 01 00 04 */	stw r0, 4(r1)
 /* 80062564 0005F4C4  94 21 FF F8 */	stwu r1, -8(r1)
@@ -968,9 +967,9 @@ touchCallback__14DynCollObjBodyFR5PlaneR8Vector3fR8Vector3f:
 /* 80062580 0005F4E0  38 21 00 08 */	addi r1, r1, 8
 /* 80062584 0005F4E4  7C 08 03 A6 */	mtlr r0
 /* 80062588 0005F4E8  4E 80 00 20 */	blr 
+.endfn touchCallback__14DynCollObjBodyFR5PlaneR8Vector3fR8Vector3f
 
-.global applyVelocity__14DynCollObjBodyFR5PlaneR8Vector3fR8Vector3f
-applyVelocity__14DynCollObjBodyFR5PlaneR8Vector3fR8Vector3f:
+.fn applyVelocity__14DynCollObjBodyFR5PlaneR8Vector3fR8Vector3f, global
 /* 8006258C 0005F4EC  7C 08 02 A6 */	mflr r0
 /* 80062590 0005F4F0  90 01 00 04 */	stw r0, 4(r1)
 /* 80062594 0005F4F4  94 21 FF F8 */	stwu r1, -8(r1)
@@ -983,9 +982,9 @@ applyVelocity__14DynCollObjBodyFR5PlaneR8Vector3fR8Vector3f:
 /* 800625B0 0005F510  38 21 00 08 */	addi r1, r1, 8
 /* 800625B4 0005F514  7C 08 03 A6 */	mtlr r0
 /* 800625B8 0005F518  4E 80 00 20 */	blr 
+.endfn applyVelocity__14DynCollObjBodyFR5PlaneR8Vector3fR8Vector3f
 
-.global touchCallback__10DynObjBodyFR5PlaneR8Vector3fR8Vector3f
-touchCallback__10DynObjBodyFR5PlaneR8Vector3fR8Vector3f:
+.fn touchCallback__10DynObjBodyFR5PlaneR8Vector3fR8Vector3f, global
 /* 800625BC 0005F51C  7C 08 02 A6 */	mflr r0
 /* 800625C0 0005F520  90 01 00 04 */	stw r0, 4(r1)
 /* 800625C4 0005F524  94 21 FF 28 */	stwu r1, -0xd8(r1)
@@ -1097,9 +1096,9 @@ touchCallback__10DynObjBodyFR5PlaneR8Vector3fR8Vector3f:
 /* 80062768 0005F6C8  38 21 00 D8 */	addi r1, r1, 0xd8
 /* 8006276C 0005F6CC  7C 08 03 A6 */	mtlr r0
 /* 80062770 0005F6D0  4E 80 00 20 */	blr 
+.endfn touchCallback__10DynObjBodyFR5PlaneR8Vector3fR8Vector3f
 
-.global applyVelocity__10DynObjBodyFR5PlaneR8Vector3fR8Vector3f
-applyVelocity__10DynObjBodyFR5PlaneR8Vector3fR8Vector3f:
+.fn applyVelocity__10DynObjBodyFR5PlaneR8Vector3fR8Vector3f, global
 /* 80062774 0005F6D4  7C 08 02 A6 */	mflr r0
 /* 80062778 0005F6D8  90 01 00 04 */	stw r0, 4(r1)
 /* 8006277C 0005F6DC  94 21 FF 28 */	stwu r1, -0xd8(r1)
@@ -1211,9 +1210,9 @@ applyVelocity__10DynObjBodyFR5PlaneR8Vector3fR8Vector3f:
 /* 80062920 0005F880  38 21 00 D8 */	addi r1, r1, 0xd8
 /* 80062924 0005F884  7C 08 03 A6 */	mtlr r0
 /* 80062928 0005F888  4E 80 00 20 */	blr 
+.endfn applyVelocity__10DynObjBodyFR5PlaneR8Vector3fR8Vector3f
 
-.global integrate__10DynObjBodyFiif
-integrate__10DynObjBodyFiif:
+.fn integrate__10DynObjBodyFiif, global
 /* 8006292C 0005F88C  7C 08 02 A6 */	mflr r0
 /* 80062930 0005F890  90 01 00 04 */	stw r0, 4(r1)
 /* 80062934 0005F894  94 21 FC F8 */	stwu r1, -0x308(r1)
@@ -1755,9 +1754,9 @@ integrate__10DynObjBodyFiif:
 /* 80063188 000600E8  38 21 03 08 */	addi r1, r1, 0x308
 /* 8006318C 000600EC  7C 08 03 A6 */	mtlr r0
 /* 80063190 000600F0  4E 80 00 20 */	blr 
+.endfn integrate__10DynObjBodyFiif
 
-.global integrate__12DynObjSeeSawFiif
-integrate__12DynObjSeeSawFiif:
+.fn integrate__12DynObjSeeSawFiif, global
 /* 80063194 000600F4  7C 08 02 A6 */	mflr r0
 /* 80063198 000600F8  90 01 00 04 */	stw r0, 4(r1)
 /* 8006319C 000600FC  94 21 FC F8 */	stwu r1, -0x308(r1)
@@ -2315,9 +2314,9 @@ integrate__12DynObjSeeSawFiif:
 /* 80063A30 00060990  38 21 03 08 */	addi r1, r1, 0x308
 /* 80063A34 00060994  7C 08 03 A6 */	mtlr r0
 /* 80063A38 00060998  4E 80 00 20 */	blr 
+.endfn integrate__12DynObjSeeSawFiif
 
-.global initRender__10DynObjBodyFi
-initRender__10DynObjBodyFi:
+.fn initRender__10DynObjBodyFi, global
 /* 80063A3C 0006099C  7C 08 02 A6 */	mflr r0
 /* 80063A40 000609A0  90 01 00 04 */	stw r0, 4(r1)
 /* 80063A44 000609A4  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -2380,9 +2379,9 @@ initRender__10DynObjBodyFi:
 /* 80063B28 00060A88  38 21 00 28 */	addi r1, r1, 0x28
 /* 80063B2C 00060A8C  7C 08 03 A6 */	mtlr r0
 /* 80063B30 00060A90  4E 80 00 20 */	blr 
+.endfn initRender__10DynObjBodyFi
 
-.global applyWorldSpring__10DynObjBodyFiiR8Vector3f
-applyWorldSpring__10DynObjBodyFiiR8Vector3f:
+.fn applyWorldSpring__10DynObjBodyFiiR8Vector3f, global
 /* 80063B34 00060A94  7C 08 02 A6 */	mflr r0
 /* 80063B38 00060A98  90 01 00 04 */	stw r0, 4(r1)
 /* 80063B3C 00060A9C  1C 05 00 0C */	mulli r0, r5, 0xc
@@ -2636,9 +2635,9 @@ applyWorldSpring__10DynObjBodyFiiR8Vector3f:
 /* 80063F10 00060E70  38 21 01 E0 */	addi r1, r1, 0x1e0
 /* 80063F14 00060E74  7C 08 03 A6 */	mtlr r0
 /* 80063F18 00060E78  4E 80 00 20 */	blr 
+.endfn applyWorldSpring__10DynObjBodyFiiR8Vector3f
 
-.global render__10DynObjBodyFR8Graphics
-render__10DynObjBodyFR8Graphics:
+.fn render__10DynObjBodyFR8Graphics, global
 /* 80063F1C 00060E7C  7C 08 02 A6 */	mflr r0
 /* 80063F20 00060E80  90 01 00 04 */	stw r0, 4(r1)
 /* 80063F24 00060E84  94 21 FF 98 */	stwu r1, -0x68(r1)
@@ -2750,9 +2749,9 @@ render__10DynObjBodyFR8Graphics:
 /* 800640BC 0006101C  38 21 00 68 */	addi r1, r1, 0x68
 /* 800640C0 00061020  7C 08 03 A6 */	mtlr r0
 /* 800640C4 00061024  4E 80 00 20 */	blr 
+.endfn render__10DynObjBodyFR8Graphics
 
-.global computeForces__10DynObjBodyFif
-computeForces__10DynObjBodyFif:
+.fn computeForces__10DynObjBodyFif, global
 /* 800640C8 00061028  7C 08 02 A6 */	mflr r0
 /* 800640CC 0006102C  90 01 00 04 */	stw r0, 4(r1)
 /* 800640D0 00061030  94 21 FF 78 */	stwu r1, -0x88(r1)
@@ -2878,9 +2877,9 @@ computeForces__10DynObjBodyFif:
 /* 8006429C 000611FC  38 21 00 88 */	addi r1, r1, 0x88
 /* 800642A0 00061200  7C 08 03 A6 */	mtlr r0
 /* 800642A4 00061204  4E 80 00 20 */	blr 
+.endfn computeForces__10DynObjBodyFif
 
-.global initBodyCollisions__10DynObjBodyFv
-initBodyCollisions__10DynObjBodyFv:
+.fn initBodyCollisions__10DynObjBodyFv, global
 /* 800642A8 00061208  7C 08 02 A6 */	mflr r0
 /* 800642AC 0006120C  39 00 00 00 */	li r8, 0
 /* 800642B0 00061210  90 01 00 04 */	stw r0, 4(r1)
@@ -3047,9 +3046,9 @@ initBodyCollisions__10DynObjBodyFv:
 /* 80064504 00061464  38 21 00 38 */	addi r1, r1, 0x38
 /* 80064508 00061468  7C 08 03 A6 */	mtlr r0
 /* 8006450C 0006146C  4E 80 00 20 */	blr 
+.endfn initBodyCollisions__10DynObjBodyFv
 
-.global readScript__10DynObjBodyFP6MapMgrPc
-readScript__10DynObjBodyFP6MapMgrPc:
+.fn readScript__10DynObjBodyFP6MapMgrPc, global
 /* 80064510 00061470  7C 08 02 A6 */	mflr r0
 /* 80064514 00061474  3C C0 80 2B */	lis r6, lbl_802A8D68@ha
 /* 80064518 00061478  90 01 00 04 */	stw r0, 4(r1)
@@ -3293,9 +3292,9 @@ readScript__10DynObjBodyFP6MapMgrPc:
 /* 800648A8 00061808  38 21 00 60 */	addi r1, r1, 0x60
 /* 800648AC 0006180C  7C 08 03 A6 */	mtlr r0
 /* 800648B0 00061810  4E 80 00 20 */	blr 
+.endfn readScript__10DynObjBodyFP6MapMgrPc
 
-.global render__14DynObjPushableFR8Graphics
-render__14DynObjPushableFR8Graphics:
+.fn render__14DynObjPushableFR8Graphics, global
 /* 800648B4 00061814  7C 08 02 A6 */	mflr r0
 /* 800648B8 00061818  90 01 00 04 */	stw r0, 4(r1)
 /* 800648BC 0006181C  94 21 FE 28 */	stwu r1, -0x1d8(r1)
@@ -3640,9 +3639,9 @@ render__14DynObjPushableFR8Graphics:
 /* 80064DE0 00061D40  38 21 01 D8 */	addi r1, r1, 0x1d8
 /* 80064DE4 00061D44  7C 08 03 A6 */	mtlr r0
 /* 80064DE8 00061D48  4E 80 00 20 */	blr 
+.endfn render__14DynObjPushableFR8Graphics
 
-.global __ct__6MapMgrFP10Controller
-__ct__6MapMgrFP10Controller:
+.fn __ct__6MapMgrFP10Controller, global
 /* 80064DEC 00061D4C  7C 08 02 A6 */	mflr r0
 /* 80064DF0 00061D50  90 01 00 04 */	stw r0, 4(r1)
 /* 80064DF4 00061D54  94 21 FF 98 */	stwu r1, -0x68(r1)
@@ -4082,18 +4081,18 @@ __ct__6MapMgrFP10Controller:
 /* 80065490 000623F0  38 21 00 68 */	addi r1, r1, 0x68
 /* 80065494 000623F4  7C 08 03 A6 */	mtlr r0
 /* 80065498 000623F8  4E 80 00 20 */	blr 
+.endfn __ct__6MapMgrFP10Controller
 
-.global __ct__7MapRoomFv
-__ct__7MapRoomFv:
+.fn __ct__7MapRoomFv, weak
 /* 8006549C 000623FC  38 00 00 00 */	li r0, 0
 /* 800654A0 00062400  90 03 00 08 */	stw r0, 8(r3)
 /* 800654A4 00062404  C0 02 87 7C */	lfs f0, lbl_803E897C@sda21(r2)
 /* 800654A8 00062408  D0 03 00 04 */	stfs f0, 4(r3)
 /* 800654AC 0006240C  D0 03 00 00 */	stfs f0, 0(r3)
 /* 800654B0 00062410  4E 80 00 20 */	blr 
+.endfn __ct__7MapRoomFv
 
-.global initEffects__6MapMgrFv
-initEffects__6MapMgrFv:
+.fn initEffects__6MapMgrFv, global
 /* 800654B4 00062414  7C 08 02 A6 */	mflr r0
 /* 800654B8 00062418  38 60 06 B4 */	li r3, 0x6b4
 /* 800654BC 0006241C  90 01 00 04 */	stw r0, 4(r1)
@@ -4107,9 +4106,9 @@ initEffects__6MapMgrFv:
 /* 800654D8 00062438  38 21 00 08 */	addi r1, r1, 8
 /* 800654DC 0006243C  7C 08 03 A6 */	mtlr r0
 /* 800654E0 00062440  4E 80 00 20 */	blr 
+.endfn initEffects__6MapMgrFv
 
-.global initShape__6MapMgrFv
-initShape__6MapMgrFv:
+.fn initShape__6MapMgrFv, global
 /* 800654E4 00062444  7C 08 02 A6 */	mflr r0
 /* 800654E8 00062448  3C 80 80 3A */	lis r4, flowCont@ha
 /* 800654EC 0006244C  90 01 00 04 */	stw r0, 4(r1)
@@ -4367,9 +4366,9 @@ initShape__6MapMgrFv:
 /* 8006589C 000627FC  38 21 00 70 */	addi r1, r1, 0x70
 /* 800658A0 00062800  7C 08 03 A6 */	mtlr r0
 /* 800658A4 00062804  4E 80 00 20 */	blr 
+.endfn initShape__6MapMgrFv
 
-.global __ct__9CollisionFv
-__ct__9CollisionFv:
+.fn __ct__9CollisionFv, weak
 /* 800658A8 00062808  C0 02 87 50 */	lfs f0, lbl_803E8950@sda21(r2)
 /* 800658AC 0006280C  D0 03 00 0C */	stfs f0, 0xc(r3)
 /* 800658B0 00062810  D0 03 00 08 */	stfs f0, 8(r3)
@@ -4378,13 +4377,13 @@ __ct__9CollisionFv:
 /* 800658BC 0006281C  D0 03 00 14 */	stfs f0, 0x14(r3)
 /* 800658C0 00062820  D0 03 00 10 */	stfs f0, 0x10(r3)
 /* 800658C4 00062824  4E 80 00 20 */	blr 
+.endfn __ct__9CollisionFv
 
-.global createLights__6MapMgrFv
-createLights__6MapMgrFv:
+.fn createLights__6MapMgrFv, global
 /* 800658C8 00062828  4E 80 00 20 */	blr 
+.endfn createLights__6MapMgrFv
 
-.global updateSimulation__6MapMgrFv
-updateSimulation__6MapMgrFv:
+.fn updateSimulation__6MapMgrFv, global
 /* 800658CC 0006282C  7C 08 02 A6 */	mflr r0
 /* 800658D0 00062830  90 01 00 04 */	stw r0, 4(r1)
 /* 800658D4 00062834  94 21 FF C0 */	stwu r1, -0x40(r1)
@@ -4455,9 +4454,9 @@ updateSimulation__6MapMgrFv:
 /* 800659BC 0006291C  38 21 00 40 */	addi r1, r1, 0x40
 /* 800659C0 00062920  7C 08 03 A6 */	mtlr r0
 /* 800659C4 00062924  4E 80 00 20 */	blr 
+.endfn updateSimulation__6MapMgrFv
 
-.global update__6MapMgrFv
-update__6MapMgrFv:
+.fn update__6MapMgrFv, global
 /* 800659C8 00062928  7C 08 02 A6 */	mflr r0
 /* 800659CC 0006292C  90 01 00 04 */	stw r0, 4(r1)
 /* 800659D0 00062930  94 21 FF D0 */	stwu r1, -0x30(r1)
@@ -4592,14 +4591,14 @@ update__6MapMgrFv:
 /* 80065B90 00062AF0  38 21 00 30 */	addi r1, r1, 0x30
 /* 80065B94 00062AF4  7C 08 03 A6 */	mtlr r0
 /* 80065B98 00062AF8  4E 80 00 20 */	blr 
+.endfn update__6MapMgrFv
 
-.global alwaysUpdatePlatform__8CreatureFv
-alwaysUpdatePlatform__8CreatureFv:
+.fn alwaysUpdatePlatform__8CreatureFv, weak
 /* 80065B9C 00062AFC  38 60 00 00 */	li r3, 0
 /* 80065BA0 00062B00  4E 80 00 20 */	blr 
+.endfn alwaysUpdatePlatform__8CreatureFv
 
-.global preRender__6MapMgrFR8Graphics
-preRender__6MapMgrFR8Graphics:
+.fn preRender__6MapMgrFR8Graphics, global
 /* 80065BA4 00062B04  7C 08 02 A6 */	mflr r0
 /* 80065BA8 00062B08  90 01 00 04 */	stw r0, 4(r1)
 /* 80065BAC 00062B0C  38 00 00 00 */	li r0, 0
@@ -4666,9 +4665,9 @@ preRender__6MapMgrFR8Graphics:
 /* 80065C8C 00062BEC  38 21 00 20 */	addi r1, r1, 0x20
 /* 80065C90 00062BF0  7C 08 03 A6 */	mtlr r0
 /* 80065C94 00062BF4  4E 80 00 20 */	blr 
+.endfn preRender__6MapMgrFR8Graphics
 
-.global drawShadowCasters__6MapMgrFR8Graphics
-drawShadowCasters__6MapMgrFR8Graphics:
+.fn drawShadowCasters__6MapMgrFR8Graphics, global
 /* 80065C98 00062BF8  7C 08 02 A6 */	mflr r0
 /* 80065C9C 00062BFC  90 01 00 04 */	stw r0, 4(r1)
 /* 80065CA0 00062C00  94 21 FF D0 */	stwu r1, -0x30(r1)
@@ -4774,9 +4773,9 @@ drawShadowCasters__6MapMgrFR8Graphics:
 /* 80065E28 00062D88  38 21 00 30 */	addi r1, r1, 0x30
 /* 80065E2C 00062D8C  7C 08 03 A6 */	mtlr r0
 /* 80065E30 00062D90  4E 80 00 20 */	blr 
+.endfn drawShadowCasters__6MapMgrFR8Graphics
 
-.global refresh__6MapMgrFR8Graphics
-refresh__6MapMgrFR8Graphics:
+.fn refresh__6MapMgrFR8Graphics, global
 /* 80065E34 00062D94  7C 08 02 A6 */	mflr r0
 /* 80065E38 00062D98  90 01 00 04 */	stw r0, 4(r1)
 /* 80065E3C 00062D9C  94 21 FE C8 */	stwu r1, -0x138(r1)
@@ -5065,9 +5064,9 @@ refresh__6MapMgrFR8Graphics:
 /* 80066260 000631C0  38 21 01 38 */	addi r1, r1, 0x138
 /* 80066264 000631C4  7C 08 03 A6 */	mtlr r0
 /* 80066268 000631C8  4E 80 00 20 */	blr 
+.endfn refresh__6MapMgrFR8Graphics
 
-.global addLight__9SoftLightFUlP12LShortColourP5Shape
-addLight__9SoftLightFUlP12LShortColourP5Shape:
+.fn addLight__9SoftLightFUlP12LShortColourP5Shape, weak
 /* 8006626C 000631CC  80 03 00 30 */	lwz r0, 0x30(r3)
 /* 80066270 000631D0  28 00 00 00 */	cmplwi r0, 0
 /* 80066274 000631D4  4D 82 00 20 */	beqlr 
@@ -5108,9 +5107,9 @@ addLight__9SoftLightFUlP12LShortColourP5Shape:
 /* 800662F4 00063254  7C 09 00 00 */	cmpw r9, r0
 /* 800662F8 00063258  41 80 FF 90 */	blt .L_80066288
 /* 800662FC 0006325C  4E 80 00 20 */	blr 
+.endfn addLight__9SoftLightFUlP12LShortColourP5Shape
 
-.global subLight__9SoftLightFP12LShortColour
-subLight__9SoftLightFP12LShortColour:
+.fn subLight__9SoftLightFP12LShortColour, weak
 /* 80066300 00063260  80 03 00 30 */	lwz r0, 0x30(r3)
 /* 80066304 00063264  28 00 00 00 */	cmplwi r0, 0
 /* 80066308 00063268  4D 82 00 20 */	beqlr 
@@ -5137,9 +5136,9 @@ subLight__9SoftLightFP12LShortColour:
 /* 80066354 000632B4  7C 08 00 00 */	cmpw r8, r0
 /* 80066358 000632B8  41 80 FF C4 */	blt .L_8006631C
 /* 8006635C 000632BC  4E 80 00 20 */	blr 
+.endfn subLight__9SoftLightFP12LShortColour
 
-.global showCollisions__6MapMgrFR8Vector3f
-showCollisions__6MapMgrFR8Vector3f:
+.fn showCollisions__6MapMgrFR8Vector3f, global
 /* 80066360 000632C0  94 21 FF 08 */	stwu r1, -0xf8(r1)
 /* 80066364 000632C4  3C A0 43 30 */	lis r5, 0x4330
 /* 80066368 000632C8  80 C4 00 00 */	lwz r6, 0(r4)
@@ -5680,9 +5679,9 @@ showCollisions__6MapMgrFR8Vector3f:
 .L_80066AE4:
 /* 80066AE4 00063A44  38 21 00 F8 */	addi r1, r1, 0xf8
 /* 80066AE8 00063A48  4E 80 00 20 */	blr 
+.endfn showCollisions__6MapMgrFR8Vector3f
 
-.global drawXLU__6MapMgrFR8Graphics
-drawXLU__6MapMgrFR8Graphics:
+.fn drawXLU__6MapMgrFR8Graphics, global
 /* 80066AEC 00063A4C  7C 08 02 A6 */	mflr r0
 /* 80066AF0 00063A50  90 01 00 04 */	stw r0, 4(r1)
 /* 80066AF4 00063A54  94 21 FF 40 */	stwu r1, -0xc0(r1)
@@ -5772,9 +5771,9 @@ drawXLU__6MapMgrFR8Graphics:
 /* 80066C40 00063BA0  38 21 00 C0 */	addi r1, r1, 0xc0
 /* 80066C44 00063BA4  7C 08 03 A6 */	mtlr r0
 /* 80066C48 00063BA8  4E 80 00 20 */	blr 
+.endfn drawXLU__6MapMgrFR8Graphics
 
-.global postrefresh__6MapMgrFR8Graphics
-postrefresh__6MapMgrFR8Graphics:
+.fn postrefresh__6MapMgrFR8Graphics, global
 /* 80066C4C 00063BAC  7C 08 02 A6 */	mflr r0
 /* 80066C50 00063BB0  90 01 00 04 */	stw r0, 4(r1)
 /* 80066C54 00063BB4  94 21 FB 98 */	stwu r1, -0x468(r1)
@@ -6746,9 +6745,9 @@ postrefresh__6MapMgrFR8Graphics:
 /* 80067B1C 00064A7C  38 21 04 68 */	addi r1, r1, 0x468
 /* 80067B20 00064A80  7C 08 03 A6 */	mtlr r0
 /* 80067B24 00064A84  4E 80 00 20 */	blr 
+.endfn postrefresh__6MapMgrFR8Graphics
 
-.global updatePos__6MapMgrFff
-updatePos__6MapMgrFff:
+.fn updatePos__6MapMgrFff, global
 /* 80067B28 00064A88  7C 08 02 A6 */	mflr r0
 /* 80067B2C 00064A8C  90 01 00 04 */	stw r0, 4(r1)
 /* 80067B30 00064A90  94 21 FF 00 */	stwu r1, -0x100(r1)
@@ -6915,14 +6914,14 @@ updatePos__6MapMgrFff:
 /* 80067D8C 00064CEC  38 21 01 00 */	addi r1, r1, 0x100
 /* 80067D90 00064CF0  7C 08 03 A6 */	mtlr r0
 /* 80067D94 00064CF4  4E 80 00 20 */	blr 
+.endfn updatePos__6MapMgrFff
 
-.global getLight__6MapMgrFff
-getLight__6MapMgrFff:
+.fn getLight__6MapMgrFff, global
 /* 80067D98 00064CF8  C0 22 87 7C */	lfs f1, lbl_803E897C@sda21(r2)
 /* 80067D9C 00064CFC  4E 80 00 20 */	blr 
+.endfn getLight__6MapMgrFff
 
-.global getCollGroupList__6MapMgrFffb
-getCollGroupList__6MapMgrFffb:
+.fn getCollGroupList__6MapMgrFffb, global
 /* 80067DA0 00064D00  54 80 06 3F */	clrlwi. r0, r4, 0x18
 /* 80067DA4 00064D04  94 21 FF B0 */	stwu r1, -0x50(r1)
 /* 80067DA8 00064D08  38 E0 00 00 */	li r7, 0
@@ -7023,9 +7022,9 @@ getCollGroupList__6MapMgrFffb:
 /* 80067EF8 00064E58  7C E3 3B 78 */	mr r3, r7
 /* 80067EFC 00064E5C  38 21 00 50 */	addi r1, r1, 0x50
 /* 80067F00 00064E60  4E 80 00 20 */	blr 
+.endfn getCollGroupList__6MapMgrFffb
 
-.global getMinY__6MapMgrFffb
-getMinY__6MapMgrFffb:
+.fn getMinY__6MapMgrFffb, global
 /* 80067F04 00064E64  7C 08 02 A6 */	mflr r0
 /* 80067F08 00064E68  90 01 00 04 */	stw r0, 4(r1)
 /* 80067F0C 00064E6C  94 21 FF A8 */	stwu r1, -0x58(r1)
@@ -7129,9 +7128,9 @@ getMinY__6MapMgrFffb:
 /* 8006805C 00064FBC  38 21 00 58 */	addi r1, r1, 0x58
 /* 80068060 00064FC0  7C 08 03 A6 */	mtlr r0
 /* 80068064 00064FC4  4E 80 00 20 */	blr 
+.endfn getMinY__6MapMgrFffb
 
-.global getMaxY__6MapMgrFffb
-getMaxY__6MapMgrFffb:
+.fn getMaxY__6MapMgrFffb, global
 /* 80068068 00064FC8  7C 08 02 A6 */	mflr r0
 /* 8006806C 00064FCC  90 01 00 04 */	stw r0, 4(r1)
 /* 80068070 00064FD0  94 21 FF A8 */	stwu r1, -0x58(r1)
@@ -7238,9 +7237,9 @@ getMaxY__6MapMgrFffb:
 /* 800681CC 0006512C  38 21 00 58 */	addi r1, r1, 0x58
 /* 800681D0 00065130  7C 08 03 A6 */	mtlr r0
 /* 800681D4 00065134  4E 80 00 20 */	blr 
+.endfn getMaxY__6MapMgrFffb
 
-.global getCurrTri__6MapMgrFffb
-getCurrTri__6MapMgrFffb:
+.fn getCurrTri__6MapMgrFffb, global
 /* 800681D8 00065138  7C 08 02 A6 */	mflr r0
 /* 800681DC 0006513C  90 01 00 04 */	stw r0, 4(r1)
 /* 800681E0 00065140  94 21 FF A0 */	stwu r1, -0x60(r1)
@@ -7340,9 +7339,9 @@ getCurrTri__6MapMgrFffb:
 /* 80068328 00065288  38 21 00 60 */	addi r1, r1, 0x60
 /* 8006832C 0006528C  7C 08 03 A6 */	mtlr r0
 /* 80068330 00065290  4E 80 00 20 */	blr 
+.endfn getCurrTri__6MapMgrFffb
 
-.global findEdgePenetration__6MapMgrFR11CollTriInfoP8Vector3fR8Vector3ffR8Vector3f
-findEdgePenetration__6MapMgrFR11CollTriInfoP8Vector3fR8Vector3ffR8Vector3f:
+.fn findEdgePenetration__6MapMgrFR11CollTriInfoP8Vector3fR8Vector3ffR8Vector3f, global
 /* 80068334 00065294  7C 08 02 A6 */	mflr r0
 /* 80068338 00065298  3C 60 55 55 */	lis r3, 0x55555556@ha
 /* 8006833C 0006529C  90 01 00 04 */	stw r0, 4(r1)
@@ -7538,9 +7537,9 @@ findEdgePenetration__6MapMgrFR11CollTriInfoP8Vector3fR8Vector3ffR8Vector3f:
 /* 80068614 00065574  38 21 01 88 */	addi r1, r1, 0x188
 /* 80068618 00065578  7C 08 03 A6 */	mtlr r0
 /* 8006861C 0006557C  4E 80 00 20 */	blr 
+.endfn findEdgePenetration__6MapMgrFR11CollTriInfoP8Vector3fR8Vector3ffR8Vector3f
 
-.global recTraceMove__6MapMgrFP9CollGroupR9MoveTracef
-recTraceMove__6MapMgrFP9CollGroupR9MoveTracef:
+.fn recTraceMove__6MapMgrFP9CollGroupR9MoveTracef, global
 /* 80068620 00065580  7C 08 02 A6 */	mflr r0
 /* 80068624 00065584  90 01 00 04 */	stw r0, 4(r1)
 /* 80068628 00065588  94 21 FE A8 */	stwu r1, -0x158(r1)
@@ -8097,17 +8096,17 @@ recTraceMove__6MapMgrFP9CollGroupR9MoveTracef:
 /* 80068E40 00065DA0  38 21 01 58 */	addi r1, r1, 0x158
 /* 80068E44 00065DA4  7C 08 03 A6 */	mtlr r0
 /* 80068E48 00065DA8  4E 80 00 20 */	blr 
+.endfn recTraceMove__6MapMgrFP9CollGroupR9MoveTracef
 
-.global touchCallback__13DynCollObjectFR5PlaneR8Vector3fR8Vector3f
-touchCallback__13DynCollObjectFR5PlaneR8Vector3fR8Vector3f:
+.fn touchCallback__13DynCollObjectFR5PlaneR8Vector3fR8Vector3f, weak
 /* 80068E4C 00065DAC  4E 80 00 20 */	blr 
+.endfn touchCallback__13DynCollObjectFR5PlaneR8Vector3fR8Vector3f
 
-.global wallCallback__8CreatureFR5PlaneP13DynCollObject
-wallCallback__8CreatureFR5PlaneP13DynCollObject:
+.fn wallCallback__8CreatureFR5PlaneP13DynCollObject, weak
 /* 80068E50 00065DB0  4E 80 00 20 */	blr 
+.endfn wallCallback__8CreatureFR5PlaneP13DynCollObject
 
-.global traceMove__6MapMgrFP8CreatureR9MoveTracef
-traceMove__6MapMgrFP8CreatureR9MoveTracef:
+.fn traceMove__6MapMgrFP8CreatureR9MoveTracef, global
 /* 80068E54 00065DB4  7C 08 02 A6 */	mflr r0
 /* 80068E58 00065DB8  90 01 00 04 */	stw r0, 4(r1)
 /* 80068E5C 00065DBC  94 21 FF 00 */	stwu r1, -0x100(r1)
@@ -8509,9 +8508,9 @@ traceMove__6MapMgrFP8CreatureR9MoveTracef:
 /* 80069418 00066378  38 21 01 00 */	addi r1, r1, 0x100
 /* 8006941C 0006637C  7C 08 03 A6 */	mtlr r0
 /* 80069420 00066380  4E 80 00 20 */	blr 
+.endfn traceMove__6MapMgrFP8CreatureR9MoveTracef
 
-.global loadPlatshape__6MapMgrFPc
-loadPlatshape__6MapMgrFPc:
+.fn loadPlatshape__6MapMgrFPc, global
 /* 80069424 00066384  7C 08 02 A6 */	mflr r0
 /* 80069428 00066388  3C A0 5F 73 */	lis r5, 0x5F736870@ha
 /* 8006942C 0006638C  90 01 00 04 */	stw r0, 4(r1)
@@ -8542,9 +8541,9 @@ loadPlatshape__6MapMgrFPc:
 /* 80069488 000663E8  38 21 00 18 */	addi r1, r1, 0x18
 /* 8006948C 000663EC  7C 08 03 A6 */	mtlr r0
 /* 80069490 000663F0  4E 80 00 20 */	blr 
+.endfn loadPlatshape__6MapMgrFPc
 
-.global requestCollPart__6MapMgrFP11ObjCollInfoP8Creature
-requestCollPart__6MapMgrFP11ObjCollInfoP8Creature:
+.fn requestCollPart__6MapMgrFP11ObjCollInfoP8Creature, global
 /* 80069494 000663F4  7C 08 02 A6 */	mflr r0
 /* 80069498 000663F8  90 01 00 04 */	stw r0, 4(r1)
 /* 8006949C 000663FC  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -8585,9 +8584,9 @@ requestCollPart__6MapMgrFP11ObjCollInfoP8Creature:
 /* 80069524 00066484  38 21 00 28 */	addi r1, r1, 0x28
 /* 80069528 00066488  7C 08 03 A6 */	mtlr r0
 /* 8006952C 0006648C  4E 80 00 20 */	blr 
+.endfn requestCollPart__6MapMgrFP11ObjCollInfoP8Creature
 
-.global __ct__12ShadowCasterFv
-__ct__12ShadowCasterFv:
+.fn __ct__12ShadowCasterFv, global
 /* 80069530 00066490  7C 08 02 A6 */	mflr r0
 /* 80069534 00066494  3C 80 80 22 */	lis r4, __vt__5ANode@ha
 /* 80069538 00066498  90 01 00 04 */	stw r0, 4(r1)
@@ -8665,9 +8664,9 @@ __ct__12ShadowCasterFv:
 /* 80069658 000665B8  38 21 00 18 */	addi r1, r1, 0x18
 /* 8006965C 000665BC  7C 08 03 A6 */	mtlr r0
 /* 80069660 000665C0  4E 80 00 20 */	blr 
+.endfn __ct__12ShadowCasterFv
 
-.global initShadow__12ShadowCasterFv
-initShadow__12ShadowCasterFv:
+.fn initShadow__12ShadowCasterFv, global
 /* 80069664 000665C4  7C 08 02 A6 */	mflr r0
 /* 80069668 000665C8  38 63 00 14 */	addi r3, r3, 0x14
 /* 8006966C 000665CC  90 01 00 04 */	stw r0, 4(r1)
@@ -8679,9 +8678,9 @@ initShadow__12ShadowCasterFv:
 /* 80069684 000665E4  38 21 00 08 */	addi r1, r1, 8
 /* 80069688 000665E8  7C 08 03 A6 */	mtlr r0
 /* 8006968C 000665EC  4E 80 00 20 */	blr 
+.endfn initShadow__12ShadowCasterFv
 
-.global setMaterial__17MapProjMatHandlerFP8Material
-setMaterial__17MapProjMatHandlerFP8Material:
+.fn setMaterial__17MapProjMatHandlerFP8Material, weak
 /* 80069690 000665F0  7C 08 02 A6 */	mflr r0
 /* 80069694 000665F4  7C 64 1B 78 */	mr r4, r3
 /* 80069698 000665F8  90 01 00 04 */	stw r0, 4(r1)
@@ -8697,9 +8696,9 @@ setMaterial__17MapProjMatHandlerFP8Material:
 /* 800696C0 00066620  38 21 00 08 */	addi r1, r1, 8
 /* 800696C4 00066624  7C 08 03 A6 */	mtlr r0
 /* 800696C8 00066628  4E 80 00 20 */	blr 
+.endfn setMaterial__17MapProjMatHandlerFP8Material
 
-.global setTexMatrix__17MapProjMatHandlerFb
-setTexMatrix__17MapProjMatHandlerFb:
+.fn setTexMatrix__17MapProjMatHandlerFb, weak
 /* 800696CC 0006662C  7C 08 02 A6 */	mflr r0
 /* 800696D0 00066630  7C 65 1B 78 */	mr r5, r3
 /* 800696D4 00066634  90 01 00 04 */	stw r0, 4(r1)
@@ -8714,9 +8713,9 @@ setTexMatrix__17MapProjMatHandlerFb:
 /* 800696F8 00066658  38 21 00 08 */	addi r1, r1, 8
 /* 800696FC 0006665C  7C 08 03 A6 */	mtlr r0
 /* 80069700 00066660  4E 80 00 20 */	blr 
+.endfn setTexMatrix__17MapProjMatHandlerFb
 
-.global setMaterial__17MapShadMatHandlerFP8Material
-setMaterial__17MapShadMatHandlerFP8Material:
+.fn setMaterial__17MapShadMatHandlerFP8Material, weak
 /* 80069704 00066664  7C 08 02 A6 */	mflr r0
 /* 80069708 00066668  7C 64 1B 78 */	mr r4, r3
 /* 8006970C 0006666C  90 01 00 04 */	stw r0, 4(r1)
@@ -8732,38 +8731,38 @@ setMaterial__17MapShadMatHandlerFP8Material:
 /* 80069734 00066694  38 21 00 08 */	addi r1, r1, 8
 /* 80069738 00066698  7C 08 03 A6 */	mtlr r0
 /* 8006973C 0006669C  4E 80 00 20 */	blr 
+.endfn setMaterial__17MapShadMatHandlerFP8Material
 
-.global touchCallback__14DynObjPushableFR5PlaneR8Vector3fR8Vector3f
-touchCallback__14DynObjPushableFR5PlaneR8Vector3fR8Vector3f:
+.fn touchCallback__14DynObjPushableFR5PlaneR8Vector3fR8Vector3f, weak
 /* 80069740 000666A0  4E 80 00 20 */	blr 
+.endfn touchCallback__14DynObjPushableFR5PlaneR8Vector3fR8Vector3f
 
-.global update__14DynCollObjBodyFv
-update__14DynCollObjBodyFv:
+.fn update__14DynCollObjBodyFv, weak
 /* 80069744 000666A4  4E 80 00 20 */	blr 
+.endfn update__14DynCollObjBodyFv
 
-.global adjust__14DynCollObjBodyFP8Creature
-adjust__14DynCollObjBodyFP8Creature:
+.fn adjust__14DynCollObjBodyFP8Creature, weak
 /* 80069748 000666A8  4E 80 00 20 */	blr 
+.endfn adjust__14DynCollObjBodyFP8Creature
 
-.global getShape__12DynCollShapeFv
-getShape__12DynCollShapeFv:
+.fn getShape__12DynCollShapeFv, weak
 /* 8006974C 000666AC  80 63 00 2C */	lwz r3, 0x2c(r3)
 /* 80069750 000666B0  4E 80 00 20 */	blr 
+.endfn getShape__12DynCollShapeFv
 
-.global applyVelocity__13DynCollObjectFR5PlaneR8Vector3fR8Vector3f
-applyVelocity__13DynCollObjectFR5PlaneR8Vector3fR8Vector3f:
+.fn applyVelocity__13DynCollObjectFR5PlaneR8Vector3fR8Vector3f, weak
 /* 80069754 000666B4  4E 80 00 20 */	blr 
+.endfn applyVelocity__13DynCollObjectFR5PlaneR8Vector3fR8Vector3f
 
-.global update__13MapObjectPartFv
-update__13MapObjectPartFv:
+.fn update__13MapObjectPartFv, weak
 /* 80069758 000666B8  4E 80 00 20 */	blr 
+.endfn update__13MapObjectPartFv
 
-.global refresh__13MapObjectPartFR8Graphics
-refresh__13MapObjectPartFR8Graphics:
+.fn refresh__13MapObjectPartFR8Graphics, weak
 /* 8006975C 000666BC  4E 80 00 20 */	blr 
+.endfn refresh__13MapObjectPartFR8Graphics
 
-.global touchCallback__13MapObjectPartFR5PlaneR8Vector3fR8Vector3f
-touchCallback__13MapObjectPartFR5PlaneR8Vector3fR8Vector3f:
+.fn touchCallback__13MapObjectPartFR5PlaneR8Vector3fR8Vector3f, weak
 /* 80069760 000666C0  7C 08 02 A6 */	mflr r0
 /* 80069764 000666C4  90 01 00 04 */	stw r0, 4(r1)
 /* 80069768 000666C8  94 21 FF F8 */	stwu r1, -8(r1)
@@ -8779,15 +8778,16 @@ touchCallback__13MapObjectPartFR5PlaneR8Vector3fR8Vector3f:
 /* 8006978C 000666EC  38 21 00 08 */	addi r1, r1, 8
 /* 80069790 000666F0  7C 08 03 A6 */	mtlr r0
 /* 80069794 000666F4  4E 80 00 20 */	blr 
+.endfn touchCallback__13MapObjectPartFR5PlaneR8Vector3fR8Vector3f
 
-.global adjust__13DynCollObjectFP8Creature
-adjust__13DynCollObjectFP8Creature:
+.fn adjust__13DynCollObjectFP8Creature, weak
 /* 80069798 000666F8  4E 80 00 20 */	blr 
+.endfn adjust__13DynCollObjectFP8Creature
 
-.global getShape__13DynCollObjectFv
-getShape__13DynCollObjectFv:
+.fn getShape__13DynCollObjectFv, weak
 /* 8006979C 000666FC  38 60 00 00 */	li r3, 0
 /* 800697A0 00066700  4E 80 00 20 */	blr 
+.endfn getShape__13DynCollObjectFv
 
 .fn __sinit_mapMgr_cpp, local
 /* 800697A4 00066704  3C 60 80 3A */	lis r3, collExtents@ha
@@ -8820,90 +8820,116 @@ lbl_constructor:
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802A8D68:
+.obj lbl_802A8D68, local
 	.asciz "mapMgr.cpp"
+.endobj lbl_802A8D68
 .balign 4
-lbl_802A8D74:
+.obj lbl_802A8D74, local
 	.asciz "body_shell"
+.endobj lbl_802A8D74
 .balign 4
-lbl_802A8D80:
+.obj lbl_802A8D80, local
 	.asciz "add_hook"
+.endobj lbl_802A8D80
 .balign 4
-lbl_802A8D8C:
+.obj lbl_802A8D8C, local
 	.asciz "add_spring"
+.endobj lbl_802A8D8C
 .balign 4
-lbl_802A8D98:
+.obj lbl_802A8D98, local
 	.asciz "use_verts"
+.endobj lbl_802A8D98
 .balign 4
-lbl_802A8DA4:
+.obj lbl_802A8DA4, local
 	.asciz "vel_mask"
+.endobj lbl_802A8DA4
 .balign 4
-lbl_802A8DB0:
+.obj lbl_802A8DB0, local
 	.asciz "ang_mask"
+.endobj lbl_802A8DB0
 .balign 4
-lbl_802A8DBC:
+.obj lbl_802A8DBC, local
 	.asciz "collisions"
+.endobj lbl_802A8DBC
 .balign 4
-lbl_802A8DC8:
+.obj lbl_802A8DC8, local
 	.asciz "collparts"
+.endobj lbl_802A8DC8
 .balign 4
-lbl_802A8DD4:
+.obj lbl_802A8DD4, local
 	.asciz "dyncolshape"
+.endobj lbl_802A8DD4
 .balign 4
-lbl_802A8DE0:
+.obj lbl_802A8DE0, local
 	.asciz "shadMats"
+.endobj lbl_802A8DE0
 .balign 4
-lbl_802A8DEC:
+.obj lbl_802A8DEC, local
 	.asciz "blurTextures"
+.endobj lbl_802A8DEC
 .balign 4
-lbl_802A8DFC:
+.obj lbl_802A8DFC, local
 	.asciz "internalLightmap"
+.endobj lbl_802A8DFC
 .balign 4
-lbl_802A8E10:
+.obj lbl_802A8E10, local
 	.asciz "material"
+.endobj lbl_802A8E10
 .balign 4
-lbl_802A8E1C:
+.obj lbl_802A8E1C, local
 	.asciz "simulator"
+.endobj lbl_802A8E1C
 .balign 4
-lbl_802A8E28:
+.obj lbl_802A8E28, local
 	.asciz "traffic/specLog.ini"
+.endobj lbl_802A8E28
 .balign 4
-lbl_802A8E3C:
+.obj lbl_802A8E3C, local
 	.asciz "rigidBody"
+.endobj lbl_802A8E3C
 .balign 4
-lbl_802A8E48:
+.obj lbl_802A8E48, local
 	.asciz "ShadowCaster"
+.endobj lbl_802A8E48
 .balign 4
-lbl_802A8E58:
+.obj lbl_802A8E58, local
 	.asciz "CoreNode"
+.endobj lbl_802A8E58
 .balign 4
-lbl_802A8E64:
+.obj lbl_802A8E64, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte 0
-lbl_802A8E70:
+.endobj lbl_802A8E64
+.balign 4
+.obj lbl_802A8E70, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte __RTTI__8CoreNode
 	.4byte 0
 	.4byte 0
-.global __vt__12ShadowCaster
-__vt__12ShadowCaster:
+.endobj lbl_802A8E70
+.balign 4
+.obj __vt__12ShadowCaster, weak
 	.4byte __RTTI__12ShadowCaster
 	.4byte 0
 	.4byte getAgeNodeType__5ANodeFv
 	.4byte read__8CoreNodeFR18RandomAccessStream
+.endobj __vt__12ShadowCaster
 .balign 4
-lbl_802A8E94:
+.obj lbl_802A8E94, local
 	.asciz "DynSimulator"
+.endobj lbl_802A8E94
 .balign 4
-lbl_802A8EA4:
+.obj lbl_802A8EA4, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte __RTTI__8CoreNode
 	.4byte 0
 	.4byte 0
-lbl_802A8EB8:
+.endobj lbl_802A8EA4
+.balign 4
+.obj lbl_802A8EB8, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte __RTTI__8CoreNode
@@ -8911,8 +8937,9 @@ lbl_802A8EB8:
 	.4byte __RTTI__4Node
 	.4byte 0
 	.4byte 0
-.global __vt__12DynSimulator
-__vt__12DynSimulator:
+.endobj lbl_802A8EB8
+.balign 4
+.obj __vt__12DynSimulator, weak
 	.4byte __RTTI__12DynSimulator
 	.4byte 0
 	.4byte getAgeNodeType__5ANodeFv
@@ -8925,45 +8952,55 @@ __vt__12DynSimulator:
 	.4byte concat__4NodeFR3SRT
 	.4byte concat__4NodeFR8Matrix4f
 	.4byte getModelMatrix__4NodeFv
+.endobj __vt__12DynSimulator
 .balign 4
-lbl_802A8F04:
+.obj lbl_802A8F04, local
 	.asciz "MapProjMatHandler"
+.endobj lbl_802A8F04
 .balign 4
-lbl_802A8F18:
+.obj lbl_802A8F18, local
 	.asciz "MaterialHandler"
+.endobj lbl_802A8F18
 .balign 4
-lbl_802A8F28:
+.obj lbl_802A8F28, local
 	.4byte __RTTI__15MaterialHandler
 	.4byte 0
 	.4byte 0
-.global __vt__17MapProjMatHandler
-__vt__17MapProjMatHandler:
+.endobj lbl_802A8F28
+.balign 4
+.obj __vt__17MapProjMatHandler, weak
 	.4byte __RTTI__17MapProjMatHandler
 	.4byte 0
 	.4byte setMaterial__17MapProjMatHandlerFP8Material
 	.4byte setTexMatrix__17MapProjMatHandlerFb
+.endobj __vt__17MapProjMatHandler
 .balign 4
-lbl_802A8F44:
+.obj lbl_802A8F44, local
 	.asciz "MapShadMatHandler"
+.endobj lbl_802A8F44
 .balign 4
-lbl_802A8F58:
+.obj lbl_802A8F58, local
 	.4byte __RTTI__15MaterialHandler
 	.4byte 0
 	.4byte 0
-.global __vt__17MapShadMatHandler
-__vt__17MapShadMatHandler:
+.endobj lbl_802A8F58
+.balign 4
+.obj __vt__17MapShadMatHandler, weak
 	.4byte __RTTI__17MapShadMatHandler
 	.4byte 0
 	.4byte setMaterial__17MapShadMatHandlerFP8Material
 	.4byte setTexMatrix__15MaterialHandlerFb
+.endobj __vt__17MapShadMatHandler
 .balign 4
-lbl_802A8F74:
+.obj lbl_802A8F74, local
 	.asciz "DynObjPushable"
+.endobj lbl_802A8F74
 .balign 4
-lbl_802A8F84:
+.obj lbl_802A8F84, local
 	.asciz "RigidBody"
+.endobj lbl_802A8F84
 .balign 4
-lbl_802A8F90:
+.obj lbl_802A8F90, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte __RTTI__8CoreNode
@@ -8971,11 +9008,13 @@ lbl_802A8F90:
 	.4byte __RTTI__4Node
 	.4byte 0
 	.4byte 0
+.endobj lbl_802A8F90
 .balign 4
-lbl_802A8FAC:
+.obj lbl_802A8FAC, local
 	.asciz "DynObjBody"
+.endobj lbl_802A8FAC
 .balign 4
-lbl_802A8FB8:
+.obj lbl_802A8FB8, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte __RTTI__8CoreNode
@@ -8985,7 +9024,9 @@ lbl_802A8FB8:
 	.4byte __RTTI__9RigidBody
 	.4byte 0
 	.4byte 0
-lbl_802A8FDC:
+.endobj lbl_802A8FB8
+.balign 4
+.obj lbl_802A8FDC, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte __RTTI__8CoreNode
@@ -8997,8 +9038,9 @@ lbl_802A8FDC:
 	.4byte __RTTI__10DynObjBody
 	.4byte 0
 	.4byte 0
-.global __vt__14DynObjPushable
-__vt__14DynObjPushable:
+.endobj lbl_802A8FDC
+.balign 4
+.obj __vt__14DynObjPushable, global
 	.4byte __RTTI__14DynObjPushable
 	.4byte 0
 	.4byte getAgeNodeType__5ANodeFv
@@ -9029,8 +9071,9 @@ __vt__14DynObjPushable:
 	.4byte applyGroundForces__9RigidBodyFiP9CollGroup
 	.4byte touchCallback__14DynObjPushableFR5PlaneR8Vector3fR8Vector3f
 	.4byte applyVelocity__10DynObjBodyFR5PlaneR8Vector3fR8Vector3f
-.global __vt__10DynObjBody
-__vt__10DynObjBody:
+.endobj __vt__14DynObjPushable
+.balign 4
+.obj __vt__10DynObjBody, global
 	.4byte __RTTI__10DynObjBody
 	.4byte 0
 	.4byte getAgeNodeType__5ANodeFv
@@ -9061,11 +9104,13 @@ __vt__10DynObjBody:
 	.4byte applyGroundForces__9RigidBodyFiP9CollGroup
 	.4byte touchCallback__10DynObjBodyFR5PlaneR8Vector3fR8Vector3f
 	.4byte applyVelocity__10DynObjBodyFR5PlaneR8Vector3fR8Vector3f
+.endobj __vt__10DynObjBody
 .balign 4
-lbl_802A90F8:
+.obj lbl_802A90F8, local
 	.asciz "DynObjSeeSaw"
+.endobj lbl_802A90F8
 .balign 4
-lbl_802A9108:
+.obj lbl_802A9108, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte __RTTI__8CoreNode
@@ -9077,8 +9122,9 @@ lbl_802A9108:
 	.4byte __RTTI__10DynObjBody
 	.4byte 0
 	.4byte 0
-.global __vt__12DynObjSeeSaw
-__vt__12DynObjSeeSaw:
+.endobj lbl_802A9108
+.balign 4
+.obj __vt__12DynObjSeeSaw, global
 	.4byte __RTTI__12DynObjSeeSaw
 	.4byte 0
 	.4byte getAgeNodeType__5ANodeFv
@@ -9109,14 +9155,17 @@ __vt__12DynObjSeeSaw:
 	.4byte applyGroundForces__9RigidBodyFiP9CollGroup
 	.4byte touchCallback__10DynObjBodyFR5PlaneR8Vector3fR8Vector3f
 	.4byte applyVelocity__10DynObjBodyFR5PlaneR8Vector3fR8Vector3f
+.endobj __vt__12DynObjSeeSaw
 .balign 4
-lbl_802A91AC:
+.obj lbl_802A91AC, local
 	.asciz "DynCollObjBody"
+.endobj lbl_802A91AC
 .balign 4
-lbl_802A91BC:
+.obj lbl_802A91BC, local
 	.asciz "DynCollObject"
+.endobj lbl_802A91BC
 .balign 4
-lbl_802A91CC:
+.obj lbl_802A91CC, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte __RTTI__8CoreNode
@@ -9124,11 +9173,13 @@ lbl_802A91CC:
 	.4byte __RTTI__4Node
 	.4byte 0
 	.4byte 0
+.endobj lbl_802A91CC
 .balign 4
-lbl_802A91E8:
+.obj lbl_802A91E8, local
 	.asciz "DynCollShape"
+.endobj lbl_802A91E8
 .balign 4
-lbl_802A91F8:
+.obj lbl_802A91F8, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte __RTTI__8CoreNode
@@ -9138,7 +9189,9 @@ lbl_802A91F8:
 	.4byte __RTTI__13DynCollObject
 	.4byte 0
 	.4byte 0
-lbl_802A921C:
+.endobj lbl_802A91F8
+.balign 4
+.obj lbl_802A921C, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte __RTTI__8CoreNode
@@ -9150,8 +9203,9 @@ lbl_802A921C:
 	.4byte __RTTI__12DynCollShape
 	.4byte 0
 	.4byte 0
-.global __vt__14DynCollObjBody
-__vt__14DynCollObjBody:
+.endobj lbl_802A921C
+.balign 4
+.obj __vt__14DynCollObjBody, global
 	.4byte __RTTI__14DynCollObjBody
 	.4byte 0
 	.4byte getAgeNodeType__5ANodeFv
@@ -9170,11 +9224,13 @@ __vt__14DynCollObjBody:
 	.4byte getShape__12DynCollShapeFv
 	.4byte jointVisible__12DynCollShapeFii
 	.4byte refresh__12DynCollShapeFR8Graphics
+.endobj __vt__14DynCollObjBody
 .balign 4
-lbl_802A9290:
+.obj lbl_802A9290, local
 	.asciz "DynMapObject"
+.endobj lbl_802A9290
 .balign 4
-lbl_802A92A0:
+.obj lbl_802A92A0, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte __RTTI__8CoreNode
@@ -9186,8 +9242,9 @@ lbl_802A92A0:
 	.4byte __RTTI__12DynCollShape
 	.4byte 0
 	.4byte 0
-.global __vt__12DynMapObject
-__vt__12DynMapObject:
+.endobj lbl_802A92A0
+.balign 4
+.obj __vt__12DynMapObject, global
 	.4byte __RTTI__12DynMapObject
 	.4byte 0
 	.4byte getAgeNodeType__5ANodeFv
@@ -9206,18 +9263,15 @@ __vt__12DynMapObject:
 	.4byte getShape__12DynCollShapeFv
 	.4byte jointVisible__12DynCollShapeFii
 	.4byte refresh__12DynMapObjectFR8Graphics
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
+.endobj __vt__12DynMapObject
 .balign 4
-lbl_802A9330:
+.skip 0x1C # compiler padding
+.balign 4
+.obj lbl_802A9330, local
 	.asciz "MapObjectPart"
+.endobj lbl_802A9330
 .balign 4
-lbl_802A9340:
+.obj lbl_802A9340, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte __RTTI__8CoreNode
@@ -9229,8 +9283,9 @@ lbl_802A9340:
 	.4byte __RTTI__12DynCollShape
 	.4byte 0
 	.4byte 0
-.global __vt__13MapObjectPart
-__vt__13MapObjectPart:
+.endobj lbl_802A9340
+.balign 4
+.obj __vt__13MapObjectPart, weak
 	.4byte __RTTI__13MapObjectPart
 	.4byte 0
 	.4byte getAgeNodeType__5ANodeFv
@@ -9249,8 +9304,9 @@ __vt__13MapObjectPart:
 	.4byte getShape__12DynCollShapeFv
 	.4byte jointVisible__12DynCollShapeFii
 	.4byte refresh__13MapObjectPartFR8Graphics
-.global __vt__13DynCollObject
-__vt__13DynCollObject:
+.endobj __vt__13MapObjectPart
+.balign 4
+.obj __vt__13DynCollObject, weak
 	.4byte __RTTI__13DynCollObject
 	.4byte 0
 	.4byte getAgeNodeType__5ANodeFv
@@ -9267,27 +9323,32 @@ __vt__13DynCollObject:
 	.4byte applyVelocity__13DynCollObjectFR5PlaneR8Vector3fR8Vector3f
 	.4byte touchCallback__13DynCollObjectFR5PlaneR8Vector3fR8Vector3f
 	.4byte getShape__13DynCollObjectFv
+.endobj __vt__13DynCollObject
 .balign 4
-lbl_802A93F4:
+.obj lbl_802A93F4, local
 	.asciz "MapObjAnimator"
+.endobj lbl_802A93F4
 .balign 4
-lbl_802A9404:
+.obj lbl_802A9404, local
 	.asciz "Animator"
+.endobj lbl_802A9404
 .balign 4
-lbl_802A9410:
+.obj lbl_802A9410, local
 	.4byte __RTTI__8Animator
 	.4byte 0
 	.4byte 0
-.global __vt__14MapObjAnimator
-__vt__14MapObjAnimator:
+.endobj lbl_802A9410
+.balign 4
+.obj __vt__14MapObjAnimator, global
 	.4byte __RTTI__14MapObjAnimator
 	.4byte 0
 	.4byte changeContext__8AnimatorFP11AnimContext
 	.4byte animate__8AnimatorFf
 	.4byte finishOneShot__14MapObjAnimatorFv
 	.4byte finishLoop__8AnimatorFv
-.global __vt__12DynCollShape
-__vt__12DynCollShape:
+.endobj __vt__14MapObjAnimator
+.balign 4
+.obj __vt__12DynCollShape, global
 	.4byte __RTTI__12DynCollShape
 	.4byte 0
 	.4byte getAgeNodeType__5ANodeFv
@@ -9306,372 +9367,529 @@ __vt__12DynCollShape:
 	.4byte getShape__12DynCollShapeFv
 	.4byte jointVisible__12DynCollShapeFii
 	.4byte refresh__12DynCollShapeFR8Graphics
+.endobj __vt__12DynCollShape
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-lbl_803DE008:
+.obj lbl_803DE008, local
 	.float 32768.0
-lbl_803DE00C:
+.endobj lbl_803DE008
+.obj lbl_803DE00C, local
 	.float 32768.0
-lbl_803DE010:
+.endobj lbl_803DE00C
+.obj lbl_803DE010, local
 	.float 32768.0
-lbl_803DE014:
+.endobj lbl_803DE010
+.obj lbl_803DE014, local
 	.float -32768.0
-lbl_803DE018:
+.endobj lbl_803DE014
+.obj lbl_803DE018, local
 	.float -32768.0
-lbl_803DE01C:
+.endobj lbl_803DE018
+.obj lbl_803DE01C, local
 	.float -32768.0
-lbl_803DE020:
+.endobj lbl_803DE01C
+.obj lbl_803DE020, local
 	.float 1.0
-lbl_803DE024:
+.endobj lbl_803DE020
+.obj lbl_803DE024, local
 	.float 1.0
-lbl_803DE028:
+.endobj lbl_803DE024
+.obj lbl_803DE028, local
 	.float 1.0
-lbl_803DE02C:
+.endobj lbl_803DE028
+.obj lbl_803DE02C, local
 	.float 0.0
-lbl_803DE030:
+.endobj lbl_803DE02C
+.obj lbl_803DE030, local
 	.float 0.0
-lbl_803DE034:
+.endobj lbl_803DE030
+.obj lbl_803DE034, local
 	.float 0.0
-lbl_803DE038:
+.endobj lbl_803DE034
+.obj lbl_803DE038, local
 	.float 1.0
-lbl_803DE03C:
+.endobj lbl_803DE038
+.obj lbl_803DE03C, local
 	.float 1.0
-lbl_803DE040:
+.endobj lbl_803DE03C
+.obj lbl_803DE040, local
 	.float 1.0
-lbl_803DE044:
+.endobj lbl_803DE040
+.obj lbl_803DE044, local
 	.float 1.0
-lbl_803DE048:
+.endobj lbl_803DE044
+.obj lbl_803DE048, local
 	.float 1.0
-lbl_803DE04C:
+.endobj lbl_803DE048
+.obj lbl_803DE04C, local
 	.float 1.0
+.endobj lbl_803DE04C
 .balign 4
-lbl_803DE050:
+.obj lbl_803DE050, local
 	.asciz ""
+.endobj lbl_803DE050
 .balign 4
-Kdl:
+.obj Kdl, local
 	.float 1.25
-lbl_803DE058:
+.endobj Kdl
+.obj lbl_803DE058, local
 	.float 1.0
-lbl_803DE05C:
+.endobj lbl_803DE058
+.obj lbl_803DE05C, local
 	.float 1.0
-lbl_803DE060:
+.endobj lbl_803DE05C
+.obj lbl_803DE060, local
 	.float 1.0
-lbl_803DE064:
+.endobj lbl_803DE060
+.obj lbl_803DE064, local
 	.float 0.0
-lbl_803DE068:
+.endobj lbl_803DE064
+.obj lbl_803DE068, local
 	.float -140.81
-lbl_803DE06C:
+.endobj lbl_803DE068
+.obj lbl_803DE06C, local
 	.float 0.0
+.endobj lbl_803DE06C
 .balign 4
-lbl_803DE070:
+.obj lbl_803DE070, local
 	.asciz "name"
+.endobj lbl_803DE070
 .balign 4
-lbl_803DE078:
+.obj lbl_803DE078, local
 	.asciz "%f"
+.endobj lbl_803DE078
 .balign 4
-lbl_803DE07C:
+.obj lbl_803DE07C, local
 	.asciz "%d"
+.endobj lbl_803DE07C
 .balign 4
-lbl_803DE080:
+.obj lbl_803DE080, local
 	.float 0.0
-lbl_803DE084:
+.endobj lbl_803DE080
+.obj lbl_803DE084, local
 	.float 0.0
-lbl_803DE088:
+.endobj lbl_803DE084
+.obj lbl_803DE088, local
 	.float 0.0
-lbl_803DE08C:
+.endobj lbl_803DE088
+.obj lbl_803DE08C, local
 	.float 0.0
-lbl_803DE090:
+.endobj lbl_803DE08C
+.obj lbl_803DE090, local
 	.float 0.0
-lbl_803DE094:
+.endobj lbl_803DE090
+.obj lbl_803DE094, local
 	.float 0.0
-lbl_803DE098:
+.endobj lbl_803DE094
+.obj lbl_803DE098, local
 	.float 0.0
-lbl_803DE09C:
+.endobj lbl_803DE098
+.obj lbl_803DE09C, local
 	.float 90.0
-lbl_803DE0A0:
+.endobj lbl_803DE09C
+.obj lbl_803DE0A0, local
 	.float 0.0
+.endobj lbl_803DE0A0
 .balign 4
-lbl_803DE0A4:
+.obj lbl_803DE0A4, local
 	.asciz "%.1f"
+.endobj lbl_803DE0A4
 .balign 4
-lbl_803DE0AC:
+.obj lbl_803DE0AC, local
 	.asciz "dayMgr"
+.endobj lbl_803DE0AC
 .balign 4
-lbl_803DE0B4:
+.obj lbl_803DE0B4, local
 	.asciz "rooms"
+.endobj lbl_803DE0B4
 .balign 4
-lbl_803DE0BC:
+.obj lbl_803DE0BC, local
 	.float 0.0
-lbl_803DE0C0:
+.endobj lbl_803DE0BC
+.obj lbl_803DE0C0, local
 	.float 60.0
-lbl_803DE0C4:
+.endobj lbl_803DE0C0
+.obj lbl_803DE0C4, local
 	.float 100.0
-lbl_803DE0C8:
+.endobj lbl_803DE0C4
+.obj lbl_803DE0C8, local
 	.float 1.0
-lbl_803DE0CC:
+.endobj lbl_803DE0C8
+.obj lbl_803DE0CC, local
 	.float 0.0
-lbl_803DE0D0:
+.endobj lbl_803DE0CC
+.obj lbl_803DE0D0, local
 	.float 0.0
-lbl_803DE0D4:
+.endobj lbl_803DE0D0
+.obj lbl_803DE0D4, local
 	.float 0.0
-lbl_803DE0D8:
+.endobj lbl_803DE0D4
+.obj lbl_803DE0D8, local
 	.float 1.0
-lbl_803DE0DC:
+.endobj lbl_803DE0D8
+.obj lbl_803DE0DC, local
 	.float 0.0
-lbl_803DE0E0:
+.endobj lbl_803DE0DC
+.obj lbl_803DE0E0, local
 	.float 0.0
-lbl_803DE0E4:
+.endobj lbl_803DE0E0
+.obj lbl_803DE0E4, local
 	.float 0.0
-lbl_803DE0E8:
+.endobj lbl_803DE0E4
+.obj lbl_803DE0E8, local
 	.float 1.0
-lbl_803DE0EC:
+.endobj lbl_803DE0E8
+.obj lbl_803DE0EC, local
 	.float 1.0
-lbl_803DE0F0:
+.endobj lbl_803DE0EC
+.obj lbl_803DE0F0, local
 	.float 1.0
-lbl_803DE0F4:
+.endobj lbl_803DE0F0
+.obj lbl_803DE0F4, local
 	.float 1.0
-lbl_803DE0F8:
+.endobj lbl_803DE0F4
+.obj lbl_803DE0F8, local
 	.float 0.0
-lbl_803DE0FC:
+.endobj lbl_803DE0F8
+.obj lbl_803DE0FC, local
 	.float 0.0
-lbl_803DE100:
+.endobj lbl_803DE0FC
+.obj lbl_803DE100, local
 	.float 0.0
-lbl_803DE104:
+.endobj lbl_803DE100
+.obj lbl_803DE104, local
 	.float 0.0
-lbl_803DE108:
+.endobj lbl_803DE104
+.obj lbl_803DE108, local
 	.float 0.0
-lbl_803DE10C:
+.endobj lbl_803DE108
+.obj lbl_803DE10C, local
 	.float 0.0
-lbl_803DE110:
+.endobj lbl_803DE10C
+.obj lbl_803DE110, local
 	.float 16.0
-lbl_803DE114:
+.endobj lbl_803DE110
+.obj lbl_803DE114, local
 	.float 16.0
-lbl_803DE118:
+.endobj lbl_803DE114
+.obj lbl_803DE118, local
 	.float 16.0
-lbl_803DE11C:
+.endobj lbl_803DE118
+.obj lbl_803DE11C, local
 	.float 16.0
-lbl_803DE120:
+.endobj lbl_803DE11C
+.obj lbl_803DE120, local
 	.float 16.0
-lbl_803DE124:
+.endobj lbl_803DE120
+.obj lbl_803DE124, local
 	.float 16.0
-lbl_803DE128:
+.endobj lbl_803DE124
+.obj lbl_803DE128, local
 	.float 1.0
-lbl_803DE12C:
+.endobj lbl_803DE128
+.obj lbl_803DE12C, local
 	.float 1.0
-lbl_803DE130:
+.endobj lbl_803DE12C
+.obj lbl_803DE130, local
 	.float 1.0
-lbl_803DE134:
+.endobj lbl_803DE130
+.obj lbl_803DE134, local
 	.float 0.0
-lbl_803DE138:
+.endobj lbl_803DE134
+.obj lbl_803DE138, local
 	.float 0.0
-lbl_803DE13C:
+.endobj lbl_803DE138
+.obj lbl_803DE13C, local
 	.float 0.0
-lbl_803DE140:
+.endobj lbl_803DE13C
+.obj lbl_803DE140, local
 	.float 0.0
-lbl_803DE144:
+.endobj lbl_803DE140
+.obj lbl_803DE144, local
 	.float 0.0
-lbl_803DE148:
+.endobj lbl_803DE144
+.obj lbl_803DE148, local
 	.float 0.0
-lbl_803DE14C:
+.endobj lbl_803DE148
+.obj lbl_803DE14C, local
 	.float 0.1
-lbl_803DE150:
+.endobj lbl_803DE14C
+.obj lbl_803DE150, local
 	.float 0.1
-lbl_803DE154:
+.endobj lbl_803DE150
+.obj lbl_803DE154, local
 	.float 0.1
-lbl_803DE158:
+.endobj lbl_803DE154
+.obj lbl_803DE158, local
 	.float 10.0
+.endobj lbl_803DE158
 .balign 4
-lbl_803DE15C:
+.obj lbl_803DE15C, local
 	.asciz "%d / %d"
+.endobj lbl_803DE15C
 .balign 4
-lbl_803DE164:
+.obj lbl_803DE164, local
 	.float 0.0
-lbl_803DE168:
+.endobj lbl_803DE164
+.obj lbl_803DE168, local
 	.float 0.0
-lbl_803DE16C:
+.endobj lbl_803DE168
+.obj lbl_803DE16C, local
 	.float 0.0
-lbl_803DE170:
+.endobj lbl_803DE16C
+.obj lbl_803DE170, local
 	.float 0.0
-lbl_803DE174:
+.endobj lbl_803DE170
+.obj lbl_803DE174, local
 	.float 0.0
-lbl_803DE178:
+.endobj lbl_803DE174
+.obj lbl_803DE178, local
 	.float 0.0
-lbl_803DE17C:
+.endobj lbl_803DE178
+.obj lbl_803DE17C, local
 	.float 10.0
-lbl_803DE180:
+.endobj lbl_803DE17C
+.obj lbl_803DE180, local
 	.float 0.0
-lbl_803DE184:
+.endobj lbl_803DE180
+.obj lbl_803DE184, local
 	.float 0.0
-lbl_803DE188:
+.endobj lbl_803DE184
+.obj lbl_803DE188, local
 	.float 0.0
-lbl_803DE18C:
+.endobj lbl_803DE188
+.obj lbl_803DE18C, local
 	.float 1.0E-5
-lbl_803DE190:
+.endobj lbl_803DE18C
+.obj lbl_803DE190, local
 	.float 0.0
-lbl_803DE194:
+.endobj lbl_803DE190
+.obj lbl_803DE194, local
 	.float 0.0
-lbl_803DE198:
+.endobj lbl_803DE194
+.obj lbl_803DE198, local
 	.float 0.0
+.endobj lbl_803DE198
 .balign 4
-lbl_803DE19C:
+.obj lbl_803DE19C, local
 	.asciz "ANode"
+.endobj lbl_803DE19C
 .balign 4
-__RTTI__5ANode:
+.obj __RTTI__5ANode, local
 	.4byte lbl_803DE19C
 	.4byte 0
-__RTTI__8CoreNode:
+.endobj __RTTI__5ANode
+.obj __RTTI__8CoreNode, local
 	.4byte lbl_802A8E58
 	.4byte lbl_802A8E64
-__RTTI__12ShadowCaster:
+.endobj __RTTI__8CoreNode
+.obj __RTTI__12ShadowCaster, local
 	.4byte lbl_802A8E48
 	.4byte lbl_802A8E70
+.endobj __RTTI__12ShadowCaster
 .balign 4
-lbl_803DE1BC:
+.obj lbl_803DE1BC, local
 	.asciz "Node"
+.endobj lbl_803DE1BC
 .balign 4
-__RTTI__4Node:
+.obj __RTTI__4Node, local
 	.4byte lbl_803DE1BC
 	.4byte lbl_802A8EA4
-__RTTI__12DynSimulator:
+.endobj __RTTI__4Node
+.obj __RTTI__12DynSimulator, local
 	.4byte lbl_802A8E94
 	.4byte lbl_802A8EB8
-__RTTI__15MaterialHandler:
+.endobj __RTTI__12DynSimulator
+.obj __RTTI__15MaterialHandler, local
 	.4byte lbl_802A8F18
 	.4byte 0
-__RTTI__17MapProjMatHandler:
+.endobj __RTTI__15MaterialHandler
+.obj __RTTI__17MapProjMatHandler, local
 	.4byte lbl_802A8F04
 	.4byte lbl_802A8F28
-__RTTI__17MapShadMatHandler:
+.endobj __RTTI__17MapProjMatHandler
+.obj __RTTI__17MapShadMatHandler, local
 	.4byte lbl_802A8F44
 	.4byte lbl_802A8F58
-__RTTI__9RigidBody:
+.endobj __RTTI__17MapShadMatHandler
+.obj __RTTI__9RigidBody, local
 	.4byte lbl_802A8F84
 	.4byte lbl_802A8F90
-__RTTI__10DynObjBody:
+.endobj __RTTI__9RigidBody
+.obj __RTTI__10DynObjBody, local
 	.4byte lbl_802A8FAC
 	.4byte lbl_802A8FB8
-__RTTI__14DynObjPushable:
+.endobj __RTTI__10DynObjBody
+.obj __RTTI__14DynObjPushable, local
 	.4byte lbl_802A8F74
 	.4byte lbl_802A8FDC
-__RTTI__12DynObjSeeSaw:
+.endobj __RTTI__14DynObjPushable
+.obj __RTTI__12DynObjSeeSaw, local
 	.4byte lbl_802A90F8
 	.4byte lbl_802A9108
-__RTTI__13DynCollObject:
+.endobj __RTTI__12DynObjSeeSaw
+.obj __RTTI__13DynCollObject, local
 	.4byte lbl_802A91BC
 	.4byte lbl_802A91CC
-__RTTI__12DynCollShape:
+.endobj __RTTI__13DynCollObject
+.obj __RTTI__12DynCollShape, local
 	.4byte lbl_802A91E8
 	.4byte lbl_802A91F8
-__RTTI__14DynCollObjBody:
+.endobj __RTTI__12DynCollShape
+.obj __RTTI__14DynCollObjBody, local
 	.4byte lbl_802A91AC
 	.4byte lbl_802A921C
-__RTTI__12DynMapObject:
+.endobj __RTTI__14DynCollObjBody
+.obj __RTTI__12DynMapObject, local
 	.4byte lbl_802A9290
 	.4byte lbl_802A92A0
-__RTTI__13MapObjectPart:
+.endobj __RTTI__12DynMapObject
+.obj __RTTI__13MapObjectPart, local
 	.4byte lbl_802A9330
 	.4byte lbl_802A9340
-__RTTI__8Animator:
+.endobj __RTTI__13MapObjectPart
+.obj __RTTI__8Animator, local
 	.4byte lbl_802A9404
 	.4byte 0
-__RTTI__14MapObjAnimator:
+.endobj __RTTI__8Animator
+.obj __RTTI__14MapObjAnimator, local
 	.4byte lbl_802A93F4
 	.4byte lbl_802A9410
+.endobj __RTTI__14MapObjAnimator
 
 .section .sbss, "wa"
 .balign 8
-.global mapMgr
-mapMgr:
+.obj mapMgr, global
 	.skip 4
-Kda:
+.endobj mapMgr
+.obj Kda, local
 	.skip 4
-numRepeats:
+.endobj Kda
+.obj numRepeats, local
 	.skip 4
-numUpdated:
+.endobj numRepeats
+.obj numUpdated, local
 	.skip 4
-vlink:
+.endobj numUpdated
+.obj vlink, local
 	.skip 4
+.endobj vlink
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803E8950:
+.obj lbl_803E8950, local
 	.float 0.0
-lbl_803E8954:
+.endobj lbl_803E8950
+.obj lbl_803E8954, local
 	.float 4.0
+.endobj lbl_803E8954
 .balign 8
-lbl_803E8958:
+.obj lbl_803E8958, local
 	.double 0.5
+.endobj lbl_803E8958
 .balign 8
-lbl_803E8960:
+.obj lbl_803E8960, local
 	.double 3.0
-lbl_803E8968:
+.endobj lbl_803E8960
+.obj lbl_803E8968, local
 	.float 20.0
-lbl_803E896C:
+.endobj lbl_803E8968
+.obj lbl_803E896C, local
 	.float 2.0
-lbl_803E8970:
+.endobj lbl_803E896C
+.obj lbl_803E8970, local
 	.float 300.0
-lbl_803E8974:
+.endobj lbl_803E8970
+.obj lbl_803E8974, local
 	.float 100.0
-lbl_803E8978:
+.endobj lbl_803E8974
+.obj lbl_803E8978, local
 	.float 30.0
-lbl_803E897C:
+.endobj lbl_803E8978
+.obj lbl_803E897C, local
 	.float 1.0
-lbl_803E8980:
+.endobj lbl_803E897C
+.obj lbl_803E8980, local
 	.float 1.3
-lbl_803E8984:
+.endobj lbl_803E8980
+.obj lbl_803E8984, local
 	.float 0.2
-lbl_803E8988:
+.endobj lbl_803E8984
+.obj lbl_803E8988, local
 	.float 0.5
-lbl_803E898C:
+.endobj lbl_803E8988
+.obj lbl_803E898C, local
 	.float 0.003125
-lbl_803E8990:
+.endobj lbl_803E898C
+.obj lbl_803E8990, local
 	.float 0.004166667
-lbl_803E8994:
+.endobj lbl_803E8990
+.obj lbl_803E8994, local
 	.float 50.0
-lbl_803E8998:
+.endobj lbl_803E8994
+.obj lbl_803E8998, local
 	.float 0.0001
-lbl_803E899C:
+.endobj lbl_803E8998
+.obj lbl_803E899C, local
 	.float 0.016666668
-lbl_803E89A0:
+.endobj lbl_803E899C
+.obj lbl_803E89A0, local
 	.float 0.0125
-lbl_803E89A4:
+.endobj lbl_803E89A0
+.obj lbl_803E89A4, local
 	.float 0.95
+.endobj lbl_803E89A4
 .balign 8
-lbl_803E89A8:
-	.4byte 0x43300000
-	.4byte 0x00000000
-lbl_803E89B0:
+.obj lbl_803E89A8, local
+	.8byte 0x4330000000000000
+.endobj lbl_803E89A8
+.obj lbl_803E89B0, local
 	.float 0.015625
-lbl_803E89B4:
+.endobj lbl_803E89B0
+.obj lbl_803E89B4, local
 	.float 64.0
+.endobj lbl_803E89B4
 .balign 8
-lbl_803E89B8:
-	.4byte 0x43300000
-	.4byte 0x80000000
-lbl_803E89C0:
+.obj lbl_803E89B8, local
+	.8byte 0x4330000080000000
+.endobj lbl_803E89B8
+.obj lbl_803E89C0, local
 	.float 255.0
-lbl_803E89C4:
+.endobj lbl_803E89C0
+.obj lbl_803E89C4, local
 	.float 0.33333334
-lbl_803E89C8:
+.endobj lbl_803E89C4
+.obj lbl_803E89C8, local
 	.float 1.5707964 # half-pi
-lbl_803E89CC:
+.endobj lbl_803E89C8
+.obj lbl_803E89CC, local
 	.float 1.5
-lbl_803E89D0:
+.endobj lbl_803E89CC
+.obj lbl_803E89D0, local
 	.float 0.4
-lbl_803E89D4:
+.endobj lbl_803E89D0
+.obj lbl_803E89D4, local
 	.float -32768.0
-lbl_803E89D8:
+.endobj lbl_803E89D4
+.obj lbl_803E89D8, local
 	.float 32768.0
-lbl_803E89DC:
+.endobj lbl_803E89D8
+.obj lbl_803E89DC, local
 	.float -2500.0
-lbl_803E89E0:
+.endobj lbl_803E89DC
+.obj lbl_803E89E0, local
 	.float 0.05
-lbl_803E89E4:
+.endobj lbl_803E89E0
+.obj lbl_803E89E4, local
 	.float -0.5
-lbl_803E89E8:
+.endobj lbl_803E89E4
+.obj lbl_803E89E8, local
 	.float 0.6
-lbl_803E89EC:
+.endobj lbl_803E89E8
+.obj lbl_803E89EC, local
 	.float 90.0
-lbl_803E89F0:
+.endobj lbl_803E89EC
+.obj lbl_803E89F0, local
 	.float 3000.0
+.endobj lbl_803E89F0

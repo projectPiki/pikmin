@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global __ct__8BaseParmFP10Parameters5ayuID
-__ct__8BaseParmFP10Parameters5ayuID:
+.fn __ct__8BaseParmFP10Parameters5ayuID, global
 /* 8005EA80 0005B9E0  3C C0 80 2B */	lis r6, __vt__8BaseParm@ha
 /* 8005EA84 0005B9E4  38 06 86 9C */	addi r0, r6, __vt__8BaseParm@l
 /* 8005EA88 0005B9E8  90 03 00 08 */	stw r0, 8(r3)
@@ -35,9 +34,9 @@ __ct__8BaseParmFP10Parameters5ayuID:
 /* 8005EAE0 0005BA40  90 83 00 00 */	stw r4, 0(r3)
 /* 8005EAE4 0005BA44  90 03 00 04 */	stw r0, 4(r3)
 /* 8005EAE8 0005BA48  4E 80 00 20 */	blr 
+.endfn __ct__8BaseParmFP10Parameters5ayuID
 
-.global write__10ParametersFR18RandomAccessStream
-write__10ParametersFR18RandomAccessStream:
+.fn write__10ParametersFR18RandomAccessStream, global
 /* 8005EAEC 0005BA4C  7C 08 02 A6 */	mflr r0
 /* 8005EAF0 0005BA50  90 01 00 04 */	stw r0, 4(r1)
 /* 8005EAF4 0005BA54  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -82,13 +81,13 @@ write__10ParametersFR18RandomAccessStream:
 /* 8005EB88 0005BAE8  38 21 00 20 */	addi r1, r1, 0x20
 /* 8005EB8C 0005BAEC  7C 08 03 A6 */	mtlr r0
 /* 8005EB90 0005BAF0  4E 80 00 20 */	blr 
+.endfn write__10ParametersFR18RandomAccessStream
 
-.global write__8BaseParmFR18RandomAccessStream
-write__8BaseParmFR18RandomAccessStream:
+.fn write__8BaseParmFR18RandomAccessStream, weak
 /* 8005EB94 0005BAF4  4E 80 00 20 */	blr 
+.endfn write__8BaseParmFR18RandomAccessStream
 
-.global read__10ParametersFR18RandomAccessStream
-read__10ParametersFR18RandomAccessStream:
+.fn read__10ParametersFR18RandomAccessStream, global
 /* 8005EB98 0005BAF8  7C 08 02 A6 */	mflr r0
 /* 8005EB9C 0005BAFC  90 01 00 04 */	stw r0, 4(r1)
 /* 8005EBA0 0005BB00  94 21 FE D8 */	stwu r1, -0x128(r1)
@@ -148,13 +147,13 @@ read__10ParametersFR18RandomAccessStream:
 /* 8005EC60 0005BBC0  38 21 01 28 */	addi r1, r1, 0x128
 /* 8005EC64 0005BBC4  7C 08 03 A6 */	mtlr r0
 /* 8005EC68 0005BBC8  4E 80 00 20 */	blr 
+.endfn read__10ParametersFR18RandomAccessStream
 
-.global read__8BaseParmFR18RandomAccessStream
-read__8BaseParmFR18RandomAccessStream:
+.fn read__8BaseParmFR18RandomAccessStream, weak
 /* 8005EC6C 0005BBCC  4E 80 00 20 */	blr 
+.endfn read__8BaseParmFR18RandomAccessStream
 
-.global "read__7Parm<f>FR18RandomAccessStream"
-"read__7Parm<f>FR18RandomAccessStream":
+.fn "read__7Parm<f>FR18RandomAccessStream", global
 /* 8005EC70 0005BBD0  7C 08 02 A6 */	mflr r0
 /* 8005EC74 0005BBD4  90 01 00 04 */	stw r0, 4(r1)
 /* 8005EC78 0005BBD8  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -171,9 +170,9 @@ read__8BaseParmFR18RandomAccessStream:
 /* 8005ECA4 0005BC04  38 21 00 18 */	addi r1, r1, 0x18
 /* 8005ECA8 0005BC08  7C 08 03 A6 */	mtlr r0
 /* 8005ECAC 0005BC0C  4E 80 00 20 */	blr 
+.endfn "read__7Parm<f>FR18RandomAccessStream"
 
-.global "write__7Parm<f>FR18RandomAccessStream"
-"write__7Parm<f>FR18RandomAccessStream":
+.fn "write__7Parm<f>FR18RandomAccessStream", global
 /* 8005ECB0 0005BC10  7C 08 02 A6 */	mflr r0
 /* 8005ECB4 0005BC14  38 A3 00 00 */	addi r5, r3, 0
 /* 8005ECB8 0005BC18  90 01 00 04 */	stw r0, 4(r1)
@@ -188,9 +187,9 @@ read__8BaseParmFR18RandomAccessStream:
 /* 8005ECDC 0005BC3C  38 21 00 08 */	addi r1, r1, 8
 /* 8005ECE0 0005BC40  7C 08 03 A6 */	mtlr r0
 /* 8005ECE4 0005BC44  4E 80 00 20 */	blr 
+.endfn "write__7Parm<f>FR18RandomAccessStream"
 
-.global "read__7Parm<i>FR18RandomAccessStream"
-"read__7Parm<i>FR18RandomAccessStream":
+.fn "read__7Parm<i>FR18RandomAccessStream", global
 /* 8005ECE8 0005BC48  7C 08 02 A6 */	mflr r0
 /* 8005ECEC 0005BC4C  90 01 00 04 */	stw r0, 4(r1)
 /* 8005ECF0 0005BC50  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -207,9 +206,9 @@ read__8BaseParmFR18RandomAccessStream:
 /* 8005ED1C 0005BC7C  38 21 00 18 */	addi r1, r1, 0x18
 /* 8005ED20 0005BC80  7C 08 03 A6 */	mtlr r0
 /* 8005ED24 0005BC84  4E 80 00 20 */	blr 
+.endfn "read__7Parm<i>FR18RandomAccessStream"
 
-.global "write__7Parm<i>FR18RandomAccessStream"
-"write__7Parm<i>FR18RandomAccessStream":
+.fn "write__7Parm<i>FR18RandomAccessStream", global
 /* 8005ED28 0005BC88  7C 08 02 A6 */	mflr r0
 /* 8005ED2C 0005BC8C  38 A3 00 00 */	addi r5, r3, 0
 /* 8005ED30 0005BC90  90 01 00 04 */	stw r0, 4(r1)
@@ -224,9 +223,9 @@ read__8BaseParmFR18RandomAccessStream:
 /* 8005ED54 0005BCB4  38 21 00 08 */	addi r1, r1, 8
 /* 8005ED58 0005BCB8  7C 08 03 A6 */	mtlr r0
 /* 8005ED5C 0005BCBC  4E 80 00 20 */	blr 
+.endfn "write__7Parm<i>FR18RandomAccessStream"
 
-.global "read__13Parm<6String>FR18RandomAccessStream"
-"read__13Parm<6String>FR18RandomAccessStream":
+.fn "read__13Parm<6String>FR18RandomAccessStream", global
 /* 8005ED60 0005BCC0  7C 08 02 A6 */	mflr r0
 /* 8005ED64 0005BCC4  90 01 00 04 */	stw r0, 4(r1)
 /* 8005ED68 0005BCC8  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -249,9 +248,9 @@ read__8BaseParmFR18RandomAccessStream:
 /* 8005EDAC 0005BD0C  38 21 00 28 */	addi r1, r1, 0x28
 /* 8005EDB0 0005BD10  7C 08 03 A6 */	mtlr r0
 /* 8005EDB4 0005BD14  4E 80 00 20 */	blr 
+.endfn "read__13Parm<6String>FR18RandomAccessStream"
 
-.global "write__13Parm<6String>FR18RandomAccessStream"
-"write__13Parm<6String>FR18RandomAccessStream":
+.fn "write__13Parm<6String>FR18RandomAccessStream", global
 /* 8005EDB8 0005BD18  7C 08 02 A6 */	mflr r0
 /* 8005EDBC 0005BD1C  38 A3 00 00 */	addi r5, r3, 0
 /* 8005EDC0 0005BD20  90 01 00 04 */	stw r0, 4(r1)
@@ -266,25 +265,29 @@ read__8BaseParmFR18RandomAccessStream:
 /* 8005EDE4 0005BD44  38 21 00 08 */	addi r1, r1, 8
 /* 8005EDE8 0005BD48  7C 08 03 A6 */	mtlr r0
 /* 8005EDEC 0005BD4C  4E 80 00 20 */	blr 
+.endfn "write__13Parm<6String>FR18RandomAccessStream"
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802A8680:
+.obj lbl_802A8680, local
 	.asciz "parameters.cpp"
+.endobj lbl_802A8680
 .balign 4
-lbl_802A8690:
+.obj lbl_802A8690, local
 	.asciz "BaseParm"
+.endobj lbl_802A8690
 .balign 4
-.global __vt__8BaseParm
-__vt__8BaseParm:
+.obj __vt__8BaseParm, weak
 	.4byte __RTTI__8BaseParm
 	.4byte 0
 	.4byte 0
 	.4byte write__8BaseParmFR18RandomAccessStream
 	.4byte read__8BaseParmFR18RandomAccessStream
+.endobj __vt__8BaseParm
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-__RTTI__8BaseParm:
+.obj __RTTI__8BaseParm, local
 	.4byte lbl_802A8690
 	.4byte 0
+.endobj __RTTI__8BaseParm

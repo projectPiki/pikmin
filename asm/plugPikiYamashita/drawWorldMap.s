@@ -14005,7 +14005,7 @@ lbl_803E7260:
 lbl_803E7264:
 	.float 0.0
 lbl_803E7268:
-	.4byte 0x3F000000
+	.float 0.5
 lbl_803E726C:
 	.float 0.0
 lbl_803E7270:

@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global loadFont__7P2DFontFPcRiRi
-loadFont__7P2DFontFPcRiRi:
+.fn loadFont__7P2DFontFPcRiRi, global
 /* 801B5C64 001B2BC4  7C 08 02 A6 */	mflr r0
 /* 801B5C68 001B2BC8  3C E0 66 6F */	lis r7, 0x666F6E74@ha
 /* 801B5C6C 001B2BCC  90 01 00 04 */	stw r0, 4(r1)
@@ -90,9 +89,9 @@ loadFont__7P2DFontFPcRiRi:
 /* 801B5DA8 001B2D08  38 21 01 30 */	addi r1, r1, 0x130
 /* 801B5DAC 001B2D0C  7C 08 03 A6 */	mtlr r0
 /* 801B5DB0 001B2D10  4E 80 00 20 */	blr 
+.endfn loadFont__7P2DFontFPcRiRi
 
-.global __ct__7P2DFontFPc
-__ct__7P2DFontFPc:
+.fn __ct__7P2DFontFPc, global
 /* 801B5DB4 001B2D14  7C 08 02 A6 */	mflr r0
 /* 801B5DB8 001B2D18  90 01 00 04 */	stw r0, 4(r1)
 /* 801B5DBC 001B2D1C  94 21 FF C8 */	stwu r1, -0x38(r1)
@@ -140,9 +139,9 @@ __ct__7P2DFontFPc:
 /* 801B5E64 001B2DC4  38 21 00 38 */	addi r1, r1, 0x38
 /* 801B5E68 001B2DC8  7C 08 03 A6 */	mtlr r0
 /* 801B5E6C 001B2DCC  4E 80 00 20 */	blr 
+.endfn __ct__7P2DFontFPc
 
-.global setGX__7P2DFontFv
-setGX__7P2DFontFv:
+.fn setGX__7P2DFontFv, global
 /* 801B5E70 001B2DD0  7C 08 02 A6 */	mflr r0
 /* 801B5E74 001B2DD4  38 60 00 01 */	li r3, 1
 /* 801B5E78 001B2DD8  90 01 00 04 */	stw r0, 4(r1)
@@ -197,9 +196,9 @@ setGX__7P2DFontFv:
 /* 801B5F3C 001B2E9C  38 21 00 08 */	addi r1, r1, 8
 /* 801B5F40 001B2EA0  7C 08 03 A6 */	mtlr r0
 /* 801B5F44 001B2EA4  4E 80 00 20 */	blr 
+.endfn setGX__7P2DFontFv
 
-.global setGradColor__7P2DFontFRC6ColourRC6Colour
-setGradColor__7P2DFontFRC6ColourRC6Colour:
+.fn setGradColor__7P2DFontFRC6ColourRC6Colour, global
 /* 801B5F48 001B2EA8  80 04 00 00 */	lwz r0, 0(r4)
 /* 801B5F4C 001B2EAC  90 03 00 0E */	stw r0, 0xe(r3)
 /* 801B5F50 001B2EB0  80 04 00 00 */	lwz r0, 0(r4)
@@ -209,9 +208,9 @@ setGradColor__7P2DFontFRC6ColourRC6Colour:
 /* 801B5F60 001B2EC0  80 05 00 00 */	lwz r0, 0(r5)
 /* 801B5F64 001B2EC4  90 03 00 1A */	stw r0, 0x1a(r3)
 /* 801B5F68 001B2EC8  4E 80 00 20 */	blr 
+.endfn setGradColor__7P2DFontFRC6ColourRC6Colour
 
-.global getWidth__7P2DFontFii
-getWidth__7P2DFontFii:
+.fn getWidth__7P2DFontFii, global
 /* 801B5F6C 001B2ECC  7C 08 02 A6 */	mflr r0
 /* 801B5F70 001B2ED0  90 01 00 04 */	stw r0, 4(r1)
 /* 801B5F74 001B2ED4  54 80 00 2F */	rlwinm. r0, r4, 0, 0, 0x17
@@ -263,9 +262,9 @@ getWidth__7P2DFontFii:
 /* 801B6024 001B2F84  38 21 00 40 */	addi r1, r1, 0x40
 /* 801B6028 001B2F88  7C 08 03 A6 */	mtlr r0
 /* 801B602C 001B2F8C  4E 80 00 20 */	blr 
+.endfn getWidth__7P2DFontFii
 
-.global drawChar__7P2DFontFffiii
-drawChar__7P2DFontFffiii:
+.fn drawChar__7P2DFontFffiii, global
 /* 801B6030 001B2F90  7C 08 02 A6 */	mflr r0
 /* 801B6034 001B2F94  90 01 00 04 */	stw r0, 4(r1)
 /* 801B6038 001B2F98  54 80 00 2F */	rlwinm. r0, r4, 0, 0, 0x17
@@ -462,6 +461,7 @@ drawChar__7P2DFontFffiii:
 /* 801B632C 001B328C  38 21 01 00 */	addi r1, r1, 0x100
 /* 801B6330 001B3290  7C 08 03 A6 */	mtlr r0
 /* 801B6334 001B3294  4E 80 00 20 */	blr 
+.endfn drawChar__7P2DFontFffiii
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
@@ -518,19 +518,23 @@ drawChar__7P2DFontFffiii:
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803EB910:
-	.4byte 0x00000000
+.obj lbl_803EB910, local
+	.float 0.0
+.endobj lbl_803EB910
 .balign 8
-lbl_803EB918:
-	.4byte 0x43300000
-	.4byte 0x80000000
-lbl_803EB920:
-	.4byte 0x3F800000
+.obj lbl_803EB918, local
+	.8byte 0x4330000080000000
+.endobj lbl_803EB918
+.obj lbl_803EB920, local
+	.float 1.0
+.endobj lbl_803EB920
 .balign 8
-lbl_803EB928:
-	.4byte 0x43300000
-	.4byte 0x00000000
-lbl_803EB930:
-	.4byte 0x47000000
-lbl_803EB934:
-	.4byte 0x3F000000
+.obj lbl_803EB928, local
+	.8byte 0x4330000000000000
+.endobj lbl_803EB928
+.obj lbl_803EB930, local
+	.float 32768.0
+.endobj lbl_803EB930
+.obj lbl_803EB934, local
+	.float 0.5
+.endobj lbl_803EB934

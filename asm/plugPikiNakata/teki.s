@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global __ct__4TekiFv
-__ct__4TekiFv:
+.fn __ct__4TekiFv, global
 /* 80143BF0 00140B50  7C 08 02 A6 */	mflr r0
 /* 80143BF4 00140B54  90 01 00 04 */	stw r0, 4(r1)
 /* 80143BF8 00140B58  7C 80 07 35 */	extsh. r0, r4
@@ -36,9 +35,9 @@ __ct__4TekiFv:
 /* 80143C68 00140BC8  38 21 00 18 */	addi r1, r1, 0x18
 /* 80143C6C 00140BCC  7C 08 03 A6 */	mtlr r0
 /* 80143C70 00140BD0  4E 80 00 20 */	blr 
+.endfn __ct__4TekiFv
 
-.global init__5YTekiFi
-init__5YTekiFi:
+.fn init__5YTekiFi, weak
 /* 80143C74 00140BD4  7C 08 02 A6 */	mflr r0
 /* 80143C78 00140BD8  90 01 00 04 */	stw r0, 4(r1)
 /* 80143C7C 00140BDC  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -78,54 +77,54 @@ init__5YTekiFi:
 /* 80143CF4 00140C54  38 21 00 20 */	addi r1, r1, 0x20
 /* 80143CF8 00140C58  7C 08 03 A6 */	mtlr r0
 /* 80143CFC 00140C5C  4E 80 00 20 */	blr 
+.endfn init__5YTekiFi
 
-.global setTekiOptions__5BTekiFi
-setTekiOptions__5BTekiFi:
+.fn setTekiOptions__5BTekiFi, weak
 /* 80143D00 00140C60  90 83 04 10 */	stw r4, 0x410(r3)
 /* 80143D04 00140C64  4E 80 00 20 */	blr 
+.endfn setTekiOptions__5BTekiFi
 
-.global clearTekiOptions__5BTekiFv
-clearTekiOptions__5BTekiFv:
+.fn clearTekiOptions__5BTekiFv, weak
 /* 80143D08 00140C68  38 00 00 00 */	li r0, 0
 /* 80143D0C 00140C6C  90 03 04 10 */	stw r0, 0x410(r3)
 /* 80143D10 00140C70  4E 80 00 20 */	blr 
+.endfn clearTekiOptions__5BTekiFv
 
-.global setAnimationKeyOption__5BTekiFi
-setAnimationKeyOption__5BTekiFi:
+.fn setAnimationKeyOption__5BTekiFi, weak
 /* 80143D14 00140C74  80 03 04 14 */	lwz r0, 0x414(r3)
 /* 80143D18 00140C78  7C 00 23 78 */	or r0, r0, r4
 /* 80143D1C 00140C7C  90 03 04 14 */	stw r0, 0x414(r3)
 /* 80143D20 00140C80  4E 80 00 20 */	blr 
+.endfn setAnimationKeyOption__5BTekiFi
 
-.global clearAnimationKeyOption__5BTekiFi
-clearAnimationKeyOption__5BTekiFi:
+.fn clearAnimationKeyOption__5BTekiFi, weak
 /* 80143D24 00140C84  80 03 04 14 */	lwz r0, 0x414(r3)
 /* 80143D28 00140C88  7C 00 20 78 */	andc r0, r0, r4
 /* 80143D2C 00140C8C  90 03 04 14 */	stw r0, 0x414(r3)
 /* 80143D30 00140C90  4E 80 00 20 */	blr 
+.endfn clearAnimationKeyOption__5BTekiFi
 
-.global setAnimationKeyOptions__5BTekiFi
-setAnimationKeyOptions__5BTekiFi:
+.fn setAnimationKeyOptions__5BTekiFi, weak
 /* 80143D34 00140C94  90 83 04 14 */	stw r4, 0x414(r3)
 /* 80143D38 00140C98  4E 80 00 20 */	blr 
+.endfn setAnimationKeyOptions__5BTekiFi
 
-.global clearAnimationKeyOptions__5BTekiFv
-clearAnimationKeyOptions__5BTekiFv:
+.fn clearAnimationKeyOptions__5BTekiFv, weak
 /* 80143D3C 00140C9C  38 00 00 00 */	li r0, 0
 /* 80143D40 00140CA0  90 03 04 14 */	stw r0, 0x414(r3)
 /* 80143D44 00140CA4  4E 80 00 20 */	blr 
+.endfn clearAnimationKeyOptions__5BTekiFv
 
-.global getShadowSize__5BTekiFv
-getShadowSize__5BTekiFv:
+.fn getShadowSize__5BTekiFv, weak
 /* 80143D48 00140CA8  80 63 02 C4 */	lwz r3, 0x2c4(r3)
 /* 80143D4C 00140CAC  80 63 00 84 */	lwz r3, 0x84(r3)
 /* 80143D50 00140CB0  80 63 00 04 */	lwz r3, 4(r3)
 /* 80143D54 00140CB4  80 63 00 00 */	lwz r3, 0(r3)
 /* 80143D58 00140CB8  C0 23 00 48 */	lfs f1, 0x48(r3)
 /* 80143D5C 00140CBC  4E 80 00 20 */	blr 
+.endfn getShadowSize__5BTekiFv
 
-.global isVisible__5BTekiFv
-isVisible__5BTekiFv:
+.fn isVisible__5BTekiFv, weak
 /* 80143D60 00140CC0  80 63 04 10 */	lwz r3, 0x410(r3)
 /* 80143D64 00140CC4  80 0D F6 2C */	lwz r0, TEKI_OPTION_VISIBLE__5BTeki@sda21(r13)
 /* 80143D68 00140CC8  7C 60 00 38 */	and r0, r3, r0
@@ -133,9 +132,9 @@ isVisible__5BTekiFv:
 /* 80143D70 00140CD0  30 03 FF FF */	addic r0, r3, -1
 /* 80143D74 00140CD4  7C 60 19 10 */	subfe r3, r0, r3
 /* 80143D78 00140CD8  4E 80 00 20 */	blr 
+.endfn isVisible__5BTekiFv
 
-.global isOrganic__5BTekiFv
-isOrganic__5BTekiFv:
+.fn isOrganic__5BTekiFv, weak
 /* 80143D7C 00140CDC  80 63 04 10 */	lwz r3, 0x410(r3)
 /* 80143D80 00140CE0  80 0D F6 40 */	lwz r0, TEKI_OPTION_ORGANIC__5BTeki@sda21(r13)
 /* 80143D84 00140CE4  7C 60 00 38 */	and r0, r3, r0
@@ -143,9 +142,9 @@ isOrganic__5BTekiFv:
 /* 80143D8C 00140CEC  30 03 FF FF */	addic r0, r3, -1
 /* 80143D90 00140CF0  7C 60 19 10 */	subfe r3, r0, r3
 /* 80143D94 00140CF4  4E 80 00 20 */	blr 
+.endfn isOrganic__5BTekiFv
 
-.global isAtari__5BTekiFv
-isAtari__5BTekiFv:
+.fn isAtari__5BTekiFv, weak
 /* 80143D98 00140CF8  80 63 04 10 */	lwz r3, 0x410(r3)
 /* 80143D9C 00140CFC  80 0D F6 38 */	lwz r0, TEKI_OPTION_ATARI__5BTeki@sda21(r13)
 /* 80143DA0 00140D00  7C 60 00 38 */	and r0, r3, r0
@@ -153,9 +152,9 @@ isAtari__5BTekiFv:
 /* 80143DA8 00140D08  30 03 FF FF */	addic r0, r3, -1
 /* 80143DAC 00140D0C  7C 60 19 10 */	subfe r3, r0, r3
 /* 80143DB0 00140D10  4E 80 00 20 */	blr 
+.endfn isAtari__5BTekiFv
 
-.global isAlive__5BTekiFv
-isAlive__5BTekiFv:
+.fn isAlive__5BTekiFv, weak
 /* 80143DB4 00140D14  80 63 04 10 */	lwz r3, 0x410(r3)
 /* 80143DB8 00140D18  80 0D F6 3C */	lwz r0, TEKI_OPTION_ALIVE__5BTeki@sda21(r13)
 /* 80143DBC 00140D1C  7C 60 00 38 */	and r0, r3, r0
@@ -163,9 +162,9 @@ isAlive__5BTekiFv:
 /* 80143DC4 00140D24  30 03 FF FF */	addic r0, r3, -1
 /* 80143DC8 00140D28  7C 60 19 10 */	subfe r3, r0, r3
 /* 80143DCC 00140D2C  4E 80 00 20 */	blr 
+.endfn isAlive__5BTekiFv
 
-.global needShadow__5BTekiFv
-needShadow__5BTekiFv:
+.fn needShadow__5BTekiFv, weak
 /* 80143DD0 00140D30  80 63 04 10 */	lwz r3, 0x410(r3)
 /* 80143DD4 00140D34  80 0D F6 30 */	lwz r0, TEKI_OPTION_SHADOW_VISIBLE__5BTeki@sda21(r13)
 /* 80143DD8 00140D38  7C 60 00 38 */	and r0, r3, r0
@@ -173,87 +172,96 @@ needShadow__5BTekiFv:
 /* 80143DE0 00140D40  30 03 FF FF */	addic r0, r3, -1
 /* 80143DE4 00140D44  7C 60 19 10 */	subfe r3, r0, r3
 /* 80143DE8 00140D48  4E 80 00 20 */	blr 
+.endfn needShadow__5BTekiFv
 
-.global "@1336@4@animationKeyUpdated__5BTekiFR16PaniAnimKeyEvent"
-"@1336@4@animationKeyUpdated__5BTekiFR16PaniAnimKeyEvent":
+.fn "@1336@4@animationKeyUpdated__5BTekiFR16PaniAnimKeyEvent", weak
 /* 80143DEC 00140D4C  39 60 00 04 */	li r11, 4
 /* 80143DF0 00140D50  7D 63 58 2E */	lwzx r11, r3, r11
 /* 80143DF4 00140D54  7C 63 5A 14 */	add r3, r3, r11
 /* 80143DF8 00140D58  38 63 FA C8 */	addi r3, r3, -1336
 /* 80143DFC 00140D5C  48 00 13 E4 */	b animationKeyUpdated__5BTekiFR16PaniAnimKeyEvent
+.endfn "@1336@4@animationKeyUpdated__5BTekiFR16PaniAnimKeyEvent"
 
-.global "@696@viewGetScale__5BTekiFv"
-"@696@viewGetScale__5BTekiFv":
+.fn "@696@viewGetScale__5BTekiFv", weak
 /* 80143E00 00140D60  38 84 FD 48 */	addi r4, r4, -696
 /* 80143E04 00140D64  48 00 02 3C */	b viewGetScale__5BTekiFv
+.endfn "@696@viewGetScale__5BTekiFv"
 
-.global "@696@viewGetHeight__5BTekiFv"
-"@696@viewGetHeight__5BTekiFv":
+.fn "@696@viewGetHeight__5BTekiFv", weak
 /* 80143E08 00140D68  38 63 FD 48 */	addi r3, r3, -696
 /* 80143E0C 00140D6C  48 00 02 68 */	b viewGetHeight__5BTekiFv
+.endfn "@696@viewGetHeight__5BTekiFv"
 
-.global "@696@viewGetBottomRadius__5BTekiFv"
-"@696@viewGetBottomRadius__5BTekiFv":
+.fn "@696@viewGetBottomRadius__5BTekiFv", weak
 /* 80143E10 00140D70  38 63 FD 48 */	addi r3, r3, -696
 /* 80143E14 00140D74  48 00 02 48 */	b viewGetBottomRadius__5BTekiFv
+.endfn "@696@viewGetBottomRadius__5BTekiFv"
 
-.global "@696@viewDoAnimation__5BTekiFv"
-"@696@viewDoAnimation__5BTekiFv":
+.fn "@696@viewDoAnimation__5BTekiFv", weak
 /* 80143E18 00140D78  38 63 FD 48 */	addi r3, r3, -696
 /* 80143E1C 00140D7C  48 00 01 AC */	b viewDoAnimation__5BTekiFv
+.endfn "@696@viewDoAnimation__5BTekiFv"
 
-.global "@696@viewFinishMotion__5BTekiFv"
-"@696@viewFinishMotion__5BTekiFv":
+.fn "@696@viewFinishMotion__5BTekiFv", weak
 /* 80143E20 00140D80  38 63 FD 48 */	addi r3, r3, -696
 /* 80143E24 00140D84  48 00 01 D0 */	b viewFinishMotion__5BTekiFv
+.endfn "@696@viewFinishMotion__5BTekiFv"
 
-.global "@696@viewSetMotionSpeed__5BTekiFf"
-"@696@viewSetMotionSpeed__5BTekiFf":
+.fn "@696@viewSetMotionSpeed__5BTekiFf", weak
 /* 80143E28 00140D88  38 63 FD 48 */	addi r3, r3, -696
 /* 80143E2C 00140D8C  48 00 01 94 */	b viewSetMotionSpeed__5BTekiFf
+.endfn "@696@viewSetMotionSpeed__5BTekiFf"
 
-.global "@696@viewStartTrembleMotion__5BTekiFf"
-"@696@viewStartTrembleMotion__5BTekiFf":
+.fn "@696@viewStartTrembleMotion__5BTekiFf", weak
 /* 80143E30 00140D90  38 63 FD 48 */	addi r3, r3, -696
 /* 80143E34 00140D94  48 00 01 28 */	b viewStartTrembleMotion__5BTekiFf
+.endfn "@696@viewStartTrembleMotion__5BTekiFf"
 
-.global "@696@viewDraw__5BTekiFR8GraphicsR8Matrix4f"
-"@696@viewDraw__5BTekiFR8GraphicsR8Matrix4f":
+.fn "@696@viewDraw__5BTekiFR8GraphicsR8Matrix4f", weak
 /* 80143E38 00140D98  38 63 FD 48 */	addi r3, r3, -696
 /* 80143E3C 00140D9C  48 00 02 50 */	b viewDraw__5BTekiFR8GraphicsR8Matrix4f
+.endfn "@696@viewDraw__5BTekiFR8GraphicsR8Matrix4f"
 
-.global "@696@viewKill__5BTekiFv"
-"@696@viewKill__5BTekiFv":
+.fn "@696@viewKill__5BTekiFv", weak
 /* 80143E40 00140DA0  38 63 FD 48 */	addi r3, r3, -696
 /* 80143E44 00140DA4  48 00 02 EC */	b viewKill__5BTekiFv
+.endfn "@696@viewKill__5BTekiFv"
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802CCAE0:
+.obj lbl_802CCAE0, local
 	.asciz "teki.cpp"
+.endobj lbl_802CCAE0
 .balign 4
-lbl_802CCAEC:
+.obj lbl_802CCAEC, local
 	.asciz "PelletView"
+.endobj lbl_802CCAEC
 .balign 4
-lbl_802CCAF8:
+.obj lbl_802CCAF8, local
 	.asciz "PaniAnimKeyListener"
+.endobj lbl_802CCAF8
 .balign 4
-lbl_802CCB0C:
+.obj lbl_802CCB0C, local
 	.asciz "EventTalker"
+.endobj lbl_802CCB0C
 .balign 4
-lbl_802CCB18:
+.obj lbl_802CCB18, local
 	.asciz "RefCountable"
+.endobj lbl_802CCB18
 .balign 4
-lbl_802CCB28:
+.obj lbl_802CCB28, local
 	.asciz "Creature"
+.endobj lbl_802CCB28
 .balign 4
-lbl_802CCB34:
+.obj lbl_802CCB34, local
 	.4byte __RTTI__11EventTalker
 	.4byte 0x8
 	.4byte __RTTI__12RefCountable
 	.4byte 0
 	.4byte 0
-lbl_802CCB48:
+.endobj lbl_802CCB34
+.balign 4
+.obj lbl_802CCB48, local
 	.4byte __RTTI__10PelletView
 	.4byte 0x2B8
 	.4byte __RTTI__19PaniAnimKeyListener
@@ -265,7 +273,9 @@ lbl_802CCB48:
 	.4byte __RTTI__8Creature
 	.4byte 0
 	.4byte 0
-lbl_802CCB74:
+.endobj lbl_802CCB48
+.balign 4
+.obj lbl_802CCB74, local
 	.4byte __RTTI__10PelletView
 	.4byte 0x2B8
 	.4byte __RTTI__19PaniAnimKeyListener
@@ -279,7 +289,9 @@ lbl_802CCB74:
 	.4byte __RTTI__5BTeki
 	.4byte 0
 	.4byte 0
-lbl_802CCBA8:
+.endobj lbl_802CCB74
+.balign 4
+.obj lbl_802CCBA8, local
 	.4byte __RTTI__10PelletView
 	.4byte 0x2B8
 	.4byte __RTTI__19PaniAnimKeyListener
@@ -295,7 +307,9 @@ lbl_802CCBA8:
 	.4byte __RTTI__5NTeki
 	.4byte 0
 	.4byte 0
-lbl_802CCBE4:
+.endobj lbl_802CCBA8
+.balign 4
+.obj lbl_802CCBE4, local
 	.4byte __RTTI__10PelletView
 	.4byte 0x2B8
 	.4byte __RTTI__19PaniAnimKeyListener
@@ -313,8 +327,9 @@ lbl_802CCBE4:
 	.4byte __RTTI__5YTeki
 	.4byte 0
 	.4byte 0
-.global __vt__4Teki
-__vt__4Teki:
+.endobj lbl_802CCBE4
+.balign 4
+.obj __vt__4Teki, weak
 	.4byte __RTTI__4Teki
 	.4byte 0
 	.4byte addCntCallback__12RefCountableFv
@@ -443,57 +458,74 @@ __vt__4Teki:
 	.4byte __RTTI__4Teki
 	.4byte 0xFFFFFAC8
 	.4byte "@1336@4@animationKeyUpdated__5BTekiFR16PaniAnimKeyEvent"
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
+.endobj __vt__4Teki
+.skip 0x10 # compiler padding
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-lbl_803E4298:
+.obj lbl_803E4298, local
 	.asciz "Teki"
+.endobj lbl_803E4298
 .balign 4
-__RTTI__10PelletView:
+.obj __RTTI__10PelletView, local
 	.4byte lbl_802CCAEC
 	.4byte 0
-__RTTI__19PaniAnimKeyListener:
+.endobj __RTTI__10PelletView
+.balign 4
+.obj __RTTI__19PaniAnimKeyListener, local
 	.4byte lbl_802CCAF8
 	.4byte 0
-__RTTI__11EventTalker:
+.endobj __RTTI__19PaniAnimKeyListener
+.balign 4
+.obj __RTTI__11EventTalker, local
 	.4byte lbl_802CCB0C
 	.4byte 0
-__RTTI__12RefCountable:
+.endobj __RTTI__11EventTalker
+.balign 4
+.obj __RTTI__12RefCountable, local
 	.4byte lbl_802CCB18
 	.4byte 0
-__RTTI__8Creature:
+.endobj __RTTI__12RefCountable
+.balign 4
+.obj __RTTI__8Creature, local
 	.4byte lbl_802CCB28
 	.4byte lbl_802CCB34
+.endobj __RTTI__8Creature
 .balign 4
-lbl_803E42C8:
+.obj lbl_803E42C8, local
 	.asciz "BTeki"
+.endobj lbl_803E42C8
 .balign 4
-__RTTI__5BTeki:
+.obj __RTTI__5BTeki, local
 	.4byte lbl_803E42C8
 	.4byte lbl_802CCB48
+.endobj __RTTI__5BTeki
 .balign 4
-lbl_803E42D8:
+.obj lbl_803E42D8, local
 	.asciz "NTeki"
+.endobj lbl_803E42D8
 .balign 4
-__RTTI__5NTeki:
+.obj __RTTI__5NTeki, local
 	.4byte lbl_803E42D8
 	.4byte lbl_802CCB74
+.endobj __RTTI__5NTeki
 .balign 4
-lbl_803E42E8:
+.obj lbl_803E42E8, local
 	.asciz "YTeki"
+.endobj lbl_803E42E8
 .balign 4
-__RTTI__5YTeki:
+.obj __RTTI__5YTeki, local
 	.4byte lbl_803E42E8
 	.4byte lbl_802CCBA8
-__RTTI__4Teki:
+.endobj __RTTI__5YTeki
+.balign 4
+.obj __RTTI__4Teki, local
 	.4byte lbl_803E4298
 	.4byte lbl_802CCBE4
+.endobj __RTTI__4Teki
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803EA948:
+.obj lbl_803EA948, local
 	.float 0.0
+.endobj lbl_803EA948

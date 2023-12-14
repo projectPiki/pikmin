@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global update__9GaugeInfoFv
-update__9GaugeInfoFv:
+.fn update__9GaugeInfoFv, global
 /* 8005B780 000586E0  7C 08 02 A6 */	mflr r0
 /* 8005B784 000586E4  90 01 00 04 */	stw r0, 4(r1)
 /* 8005B788 000586E8  94 21 FF C8 */	stwu r1, -0x38(r1)
@@ -94,9 +93,9 @@ update__9GaugeInfoFv:
 /* 8005B8C4 00058824  38 21 00 38 */	addi r1, r1, 0x38
 /* 8005B8C8 00058828  7C 08 03 A6 */	mtlr r0
 /* 8005B8CC 0005882C  4E 80 00 20 */	blr 
+.endfn update__9GaugeInfoFv
 
-.global showDigits__9GaugeInfoF8Vector3fR6Colouriff
-showDigits__9GaugeInfoF8Vector3fR6Colouriff:
+.fn showDigits__9GaugeInfoF8Vector3fR6Colouriff, global
 /* 8005B8D0 00058830  7C 08 02 A6 */	mflr r0
 /* 8005B8D4 00058834  2C 06 00 63 */	cmpwi r6, 0x63
 /* 8005B8D8 00058838  90 01 00 04 */	stw r0, 4(r1)
@@ -238,9 +237,9 @@ showDigits__9GaugeInfoF8Vector3fR6Colouriff:
 /* 8005BAD4 00058A34  38 21 00 C0 */	addi r1, r1, 0xc0
 /* 8005BAD8 00058A38  7C 08 03 A6 */	mtlr r0
 /* 8005BADC 00058A3C  4E 80 00 20 */	blr 
+.endfn showDigits__9GaugeInfoF8Vector3fR6Colouriff
 
-.global refresh__9GaugeInfoFR8Graphics
-refresh__9GaugeInfoFR8Graphics:
+.fn refresh__9GaugeInfoFR8Graphics, global
 /* 8005BAE0 00058A40  7C 08 02 A6 */	mflr r0
 /* 8005BAE4 00058A44  90 01 00 04 */	stw r0, 4(r1)
 /* 8005BAE8 00058A48  94 21 FF 78 */	stwu r1, -0x88(r1)
@@ -404,9 +403,9 @@ refresh__9GaugeInfoFR8Graphics:
 /* 8005BD44 00058CA4  38 21 00 88 */	addi r1, r1, 0x88
 /* 8005BD48 00058CA8  7C 08 03 A6 */	mtlr r0
 /* 8005BD4C 00058CAC  4E 80 00 20 */	blr 
+.endfn refresh__9GaugeInfoFR8Graphics
 
-.global init__12LifeGaugeMgrFi
-init__12LifeGaugeMgrFi:
+.fn init__12LifeGaugeMgrFi, global
 /* 8005BD50 00058CB0  7C 08 02 A6 */	mflr r0
 /* 8005BD54 00058CB4  38 A0 00 00 */	li r5, 0
 /* 8005BD58 00058CB8  90 01 00 04 */	stw r0, 4(r1)
@@ -469,9 +468,9 @@ init__12LifeGaugeMgrFi:
 /* 8005BE34 00058D94  38 21 00 28 */	addi r1, r1, 0x28
 /* 8005BE38 00058D98  7C 08 03 A6 */	mtlr r0
 /* 8005BE3C 00058D9C  4E 80 00 20 */	blr 
+.endfn init__12LifeGaugeMgrFi
 
-.global __ct__9GaugeInfoFv
-__ct__9GaugeInfoFv:
+.fn __ct__9GaugeInfoFv, weak
 /* 8005BE40 00058DA0  3C 80 80 22 */	lis r4, __vt__5ANode@ha
 /* 8005BE44 00058DA4  38 04 73 8C */	addi r0, r4, __vt__5ANode@l
 /* 8005BE48 00058DA8  3C 80 80 22 */	lis r4, __vt__8CoreNode@ha
@@ -493,9 +492,9 @@ __ct__9GaugeInfoFv:
 /* 8005BE88 00058DE8  D0 03 00 28 */	stfs f0, 0x28(r3)
 /* 8005BE8C 00058DEC  90 C3 00 14 */	stw r6, 0x14(r3)
 /* 8005BE90 00058DF0  4E 80 00 20 */	blr 
+.endfn __ct__9GaugeInfoFv
 
-.global update__12LifeGaugeMgrFv
-update__12LifeGaugeMgrFv:
+.fn update__12LifeGaugeMgrFv, global
 /* 8005BE94 00058DF4  7C 08 02 A6 */	mflr r0
 /* 8005BE98 00058DF8  90 01 00 04 */	stw r0, 4(r1)
 /* 8005BE9C 00058DFC  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -514,9 +513,9 @@ update__12LifeGaugeMgrFv:
 /* 8005BEC8 00058E28  38 21 00 18 */	addi r1, r1, 0x18
 /* 8005BECC 00058E2C  7C 08 03 A6 */	mtlr r0
 /* 8005BED0 00058E30  4E 80 00 20 */	blr 
+.endfn update__12LifeGaugeMgrFv
 
-.global refresh__12LifeGaugeMgrFR8Graphics
-refresh__12LifeGaugeMgrFR8Graphics:
+.fn refresh__12LifeGaugeMgrFR8Graphics, global
 /* 8005BED4 00058E34  7C 08 02 A6 */	mflr r0
 /* 8005BED8 00058E38  3C A0 80 3A */	lis r5, gameflow@ha
 /* 8005BEDC 00058E3C  90 01 00 04 */	stw r0, 4(r1)
@@ -546,9 +545,9 @@ refresh__12LifeGaugeMgrFR8Graphics:
 /* 8005BF30 00058E90  38 21 00 18 */	addi r1, r1, 0x18
 /* 8005BF34 00058E94  7C 08 03 A6 */	mtlr r0
 /* 8005BF38 00058E98  4E 80 00 20 */	blr 
+.endfn refresh__12LifeGaugeMgrFR8Graphics
 
-.global removeLG__12LifeGaugeMgrFP9GaugeInfo
-removeLG__12LifeGaugeMgrFP9GaugeInfo:
+.fn removeLG__12LifeGaugeMgrFP9GaugeInfo, global
 /* 8005BF3C 00058E9C  7C 08 02 A6 */	mflr r0
 /* 8005BF40 00058EA0  90 01 00 04 */	stw r0, 4(r1)
 /* 8005BF44 00058EA4  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -573,9 +572,9 @@ removeLG__12LifeGaugeMgrFP9GaugeInfo:
 /* 8005BF90 00058EF0  38 21 00 18 */	addi r1, r1, 0x18
 /* 8005BF94 00058EF4  7C 08 03 A6 */	mtlr r0
 /* 8005BF98 00058EF8  4E 80 00 20 */	blr 
+.endfn removeLG__12LifeGaugeMgrFP9GaugeInfo
 
-.global __ct__9LifeGaugeFv
-__ct__9LifeGaugeFv:
+.fn __ct__9LifeGaugeFv, global
 /* 8005BF9C 00058EFC  C0 02 86 00 */	lfs f0, lbl_803E8800@sda21(r2)
 /* 8005BFA0 00058F00  39 60 00 00 */	li r11, 0
 /* 8005BFA4 00058F04  39 40 00 80 */	li r10, 0x80
@@ -630,9 +629,9 @@ __ct__9LifeGaugeFv:
 /* 8005C068 00058FC8  D0 03 00 34 */	stfs f0, 0x34(r3)
 /* 8005C06C 00058FCC  91 63 00 38 */	stw r11, 0x38(r3)
 /* 8005C070 00058FD0  4E 80 00 20 */	blr 
+.endfn __ct__9LifeGaugeFv
 
-.global updValue__9LifeGaugeFff
-updValue__9LifeGaugeFff:
+.fn updValue__9LifeGaugeFff, global
 /* 8005C074 00058FD4  EC 01 10 24 */	fdivs f0, f1, f2
 /* 8005C078 00058FD8  D0 03 00 2C */	stfs f0, 0x2c(r3)
 /* 8005C07C 00058FDC  C0 03 00 2C */	lfs f0, 0x2c(r3)
@@ -645,9 +644,9 @@ updValue__9LifeGaugeFff:
 /* 8005C098 00058FF8  38 00 00 01 */	li r0, 1
 /* 8005C09C 00058FFC  90 03 00 18 */	stw r0, 0x18(r3)
 /* 8005C0A0 00059000  4E 80 00 20 */	blr 
+.endfn updValue__9LifeGaugeFff
 
-.global refresh__9LifeGaugeFR8Graphics
-refresh__9LifeGaugeFR8Graphics:
+.fn refresh__9LifeGaugeFR8Graphics, global
 /* 8005C0A4 00059004  7C 08 02 A6 */	mflr r0
 /* 8005C0A8 00059008  3C A0 80 3A */	lis r5, gameflow@ha
 /* 8005C0AC 0005900C  90 01 00 04 */	stw r0, 4(r1)
@@ -1615,9 +1614,9 @@ refresh__9LifeGaugeFR8Graphics:
 /* 8005CF60 00059EC0  38 21 02 B8 */	addi r1, r1, 0x2b8
 /* 8005CF64 00059EC4  7C 08 03 A6 */	mtlr r0
 /* 8005CF68 00059EC8  4E 80 00 20 */	blr 
+.endfn refresh__9LifeGaugeFR8Graphics
 
-.global countOn__9LifeGaugeFR8Vector3fii
-countOn__9LifeGaugeFR8Vector3fii:
+.fn countOn__9LifeGaugeFR8Vector3fii, global
 /* 8005CF6C 00059ECC  7C 08 02 A6 */	mflr r0
 /* 8005CF70 00059ED0  90 01 00 04 */	stw r0, 4(r1)
 /* 8005CF74 00059ED4  94 21 FF B8 */	stwu r1, -0x48(r1)
@@ -1706,9 +1705,9 @@ countOn__9LifeGaugeFR8Vector3fii:
 /* 8005D0A8 0005A008  38 21 00 48 */	addi r1, r1, 0x48
 /* 8005D0AC 0005A00C  7C 08 03 A6 */	mtlr r0
 /* 8005D0B0 0005A010  4E 80 00 20 */	blr 
+.endfn countOn__9LifeGaugeFR8Vector3fii
 
-.global countOff__9LifeGaugeFv
-countOff__9LifeGaugeFv:
+.fn countOff__9LifeGaugeFv, global
 /* 8005D0B4 0005A014  38 00 FF FF */	li r0, -1
 /* 8005D0B8 0005A018  90 03 00 18 */	stw r0, 0x18(r3)
 /* 8005D0BC 0005A01C  C0 02 86 00 */	lfs f0, lbl_803E8800@sda21(r2)
@@ -1721,6 +1720,7 @@ countOff__9LifeGaugeFv:
 /* 8005D0D8 0005A038  38 00 00 00 */	li r0, 0
 /* 8005D0DC 0005A03C  90 03 00 38 */	stw r0, 0x38(r3)
 /* 8005D0E0 0005A040  4E 80 00 20 */	blr 
+.endfn countOff__9LifeGaugeFv
 
 .fn __sinit_gauges_cpp, local
 /* 8005D0E4 0005A044  4E 80 00 20 */	blr 

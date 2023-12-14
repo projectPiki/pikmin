@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global __ct__Q23zen10ogRaderMgrFv
-__ct__Q23zen10ogRaderMgrFv:
+.fn __ct__Q23zen10ogRaderMgrFv, global
 /* 801850A0 00182000  7C 08 02 A6 */	mflr r0
 /* 801850A4 00182004  90 01 00 04 */	stw r0, 4(r1)
 /* 801850A8 00182008  94 21 FE 60 */	stwu r1, -0x1a0(r1)
@@ -626,9 +625,9 @@ __ct__Q23zen10ogRaderMgrFv:
 /* 80185A04 00182964  38 21 01 A0 */	addi r1, r1, 0x1a0
 /* 80185A08 00182968  7C 08 03 A6 */	mtlr r0
 /* 80185A0C 0018296C  4E 80 00 20 */	blr 
+.endfn __ct__Q23zen10ogRaderMgrFv
 
-.global setRaderAngle__Q23zen10ogRaderMgrFf
-setRaderAngle__Q23zen10ogRaderMgrFf:
+.fn setRaderAngle__Q23zen10ogRaderMgrFf, global
 /* 80185A10 00182970  94 21 FF D8 */	stwu r1, -0x28(r1)
 /* 80185A14 00182974  38 80 00 02 */	li r4, 2
 /* 80185A18 00182978  C0 03 00 0C */	lfs f0, 0xc(r3)
@@ -666,9 +665,9 @@ setRaderAngle__Q23zen10ogRaderMgrFf:
 .L_80185A94:
 /* 80185A94 001829F4  38 21 00 28 */	addi r1, r1, 0x28
 /* 80185A98 001829F8  4E 80 00 20 */	blr 
+.endfn setRaderAngle__Q23zen10ogRaderMgrFf
 
-.global setRaderScroll__Q23zen10ogRaderMgrFii
-setRaderScroll__Q23zen10ogRaderMgrFii:
+.fn setRaderScroll__Q23zen10ogRaderMgrFii, global
 /* 80185A9C 001829FC  7C 08 02 A6 */	mflr r0
 /* 80185AA0 00182A00  90 01 00 04 */	stw r0, 4(r1)
 /* 80185AA4 00182A04  94 21 FF C8 */	stwu r1, -0x38(r1)
@@ -707,9 +706,9 @@ setRaderScroll__Q23zen10ogRaderMgrFii:
 /* 80185B28 00182A88  38 21 00 38 */	addi r1, r1, 0x38
 /* 80185B2C 00182A8C  7C 08 03 A6 */	mtlr r0
 /* 80185B30 00182A90  4E 80 00 20 */	blr 
+.endfn setRaderScroll__Q23zen10ogRaderMgrFii
 
-.global getPartsPos__Q23zen10ogRaderMgrFv
-getPartsPos__Q23zen10ogRaderMgrFv:
+.fn getPartsPos__Q23zen10ogRaderMgrFv, global
 /* 80185B34 00182A94  7C 08 02 A6 */	mflr r0
 /* 80185B38 00182A98  38 C0 00 00 */	li r6, 0
 /* 80185B3C 00182A9C  90 01 00 04 */	stw r0, 4(r1)
@@ -854,9 +853,9 @@ getPartsPos__Q23zen10ogRaderMgrFv:
 /* 80185D48 00182CA8  38 21 01 10 */	addi r1, r1, 0x110
 /* 80185D4C 00182CAC  7C 08 03 A6 */	mtlr r0
 /* 80185D50 00182CB0  4E 80 00 20 */	blr 
+.endfn getPartsPos__Q23zen10ogRaderMgrFv
 
-.global getAllPikiPos__Q23zen10ogRaderMgrFv
-getAllPikiPos__Q23zen10ogRaderMgrFv:
+.fn getAllPikiPos__Q23zen10ogRaderMgrFv, global
 /* 80185D54 00182CB4  7C 08 02 A6 */	mflr r0
 /* 80185D58 00182CB8  38 C0 00 00 */	li r6, 0
 /* 80185D5C 00182CBC  90 01 00 04 */	stw r0, 4(r1)
@@ -1188,9 +1187,9 @@ getAllPikiPos__Q23zen10ogRaderMgrFv:
 /* 8018622C 0018318C  38 21 01 80 */	addi r1, r1, 0x180
 /* 80186230 00183190  7C 08 03 A6 */	mtlr r0
 /* 80186234 00183194  4E 80 00 20 */	blr 
+.endfn getAllPikiPos__Q23zen10ogRaderMgrFv
 
-.global startSub__Q23zen10ogRaderMgrFv
-startSub__Q23zen10ogRaderMgrFv:
+.fn startSub__Q23zen10ogRaderMgrFv, global
 /* 80186238 00183198  7C 08 02 A6 */	mflr r0
 /* 8018623C 0018319C  90 01 00 04 */	stw r0, 4(r1)
 /* 80186240 001831A0  38 00 00 04 */	li r0, 4
@@ -1574,9 +1573,9 @@ startSub__Q23zen10ogRaderMgrFv:
 /* 80186800 00183760  38 21 01 B8 */	addi r1, r1, 0x1b8
 /* 80186804 00183764  7C 08 03 A6 */	mtlr r0
 /* 80186808 00183768  4E 80 00 20 */	blr 
+.endfn startSub__Q23zen10ogRaderMgrFv
 
-.global rotate__7P2DPaneF13P2DRotateAxisf
-rotate__7P2DPaneF13P2DRotateAxisf:
+.fn rotate__7P2DPaneF13P2DRotateAxisf, weak
 /* 8018680C 0018376C  88 03 00 0C */	lbz r0, 0xc(r3)
 /* 80186810 00183770  50 80 2E 74 */	rlwimi r0, r4, 5, 0x19, 0x1a
 /* 80186814 00183774  98 03 00 0C */	stb r0, 0xc(r3)
@@ -1596,9 +1595,9 @@ rotate__7P2DPaneF13P2DRotateAxisf:
 /* 80186848 001837A8  EC 01 00 28 */	fsubs f0, f1, f0
 /* 8018684C 001837AC  D0 03 00 BC */	stfs f0, 0xbc(r3)
 /* 80186850 001837B0  4E 80 00 20 */	blr 
+.endfn rotate__7P2DPaneF13P2DRotateAxisf
 
-.global startMenu__Q23zen10ogRaderMgrFP7P2DPane
-startMenu__Q23zen10ogRaderMgrFP7P2DPane:
+.fn startMenu__Q23zen10ogRaderMgrFP7P2DPane, global
 /* 80186854 001837B4  7C 08 02 A6 */	mflr r0
 /* 80186858 001837B8  90 01 00 04 */	stw r0, 4(r1)
 /* 8018685C 001837BC  94 21 FF B0 */	stwu r1, -0x50(r1)
@@ -1675,9 +1674,9 @@ startMenu__Q23zen10ogRaderMgrFP7P2DPane:
 /* 80186970 001838D0  38 21 00 50 */	addi r1, r1, 0x50
 /* 80186974 001838D4  7C 08 03 A6 */	mtlr r0
 /* 80186978 001838D8  4E 80 00 20 */	blr 
+.endfn startMenu__Q23zen10ogRaderMgrFP7P2DPane
 
-.global MapOn__Q23zen10ogRaderMgrFv
-MapOn__Q23zen10ogRaderMgrFv:
+.fn MapOn__Q23zen10ogRaderMgrFv, global
 /* 8018697C 001838DC  80 8D 2F 6C */	lwz r4, playerState@sda21(r13)
 /* 80186980 001838E0  28 04 00 00 */	cmplwi r4, 0
 /* 80186984 001838E4  41 82 00 10 */	beq .L_80186994
@@ -1688,9 +1687,9 @@ MapOn__Q23zen10ogRaderMgrFv:
 /* 80186994 001838F4  38 00 00 00 */	li r0, 0
 /* 80186998 001838F8  90 03 00 08 */	stw r0, 8(r3)
 /* 8018699C 001838FC  4E 80 00 20 */	blr 
+.endfn MapOn__Q23zen10ogRaderMgrFv
 
-.global updateGame__Q23zen10ogRaderMgrFP10Controller
-updateGame__Q23zen10ogRaderMgrFP10Controller:
+.fn updateGame__Q23zen10ogRaderMgrFP10Controller, global
 /* 801869A0 00183900  7C 08 02 A6 */	mflr r0
 /* 801869A4 00183904  90 01 00 04 */	stw r0, 4(r1)
 /* 801869A8 00183908  94 21 FF D0 */	stwu r1, -0x30(r1)
@@ -1789,9 +1788,9 @@ updateGame__Q23zen10ogRaderMgrFP10Controller:
 /* 80186AFC 00183A5C  38 21 00 30 */	addi r1, r1, 0x30
 /* 80186B00 00183A60  7C 08 03 A6 */	mtlr r0
 /* 80186B04 00183A64  4E 80 00 20 */	blr 
+.endfn updateGame__Q23zen10ogRaderMgrFP10Controller
 
-.global AreaScroll__Q23zen10ogRaderMgrFPfPfff
-AreaScroll__Q23zen10ogRaderMgrFPfPfff:
+.fn AreaScroll__Q23zen10ogRaderMgrFPfPfff, global
 /* 80186B08 00183A68  7C 08 02 A6 */	mflr r0
 /* 80186B0C 00183A6C  90 01 00 04 */	stw r0, 4(r1)
 /* 80186B10 00183A70  94 21 FF C0 */	stwu r1, -0x40(r1)
@@ -1859,9 +1858,9 @@ AreaScroll__Q23zen10ogRaderMgrFPfPfff:
 /* 80186BFC 00183B5C  38 21 00 40 */	addi r1, r1, 0x40
 /* 80186C00 00183B60  7C 08 03 A6 */	mtlr r0
 /* 80186C04 00183B64  4E 80 00 20 */	blr 
+.endfn AreaScroll__Q23zen10ogRaderMgrFPfPfff
 
-.global updateMenu__Q23zen10ogRaderMgrFP10Controller
-updateMenu__Q23zen10ogRaderMgrFP10Controller:
+.fn updateMenu__Q23zen10ogRaderMgrFP10Controller, global
 /* 80186C08 00183B68  7C 08 02 A6 */	mflr r0
 /* 80186C0C 00183B6C  90 01 00 04 */	stw r0, 4(r1)
 /* 80186C10 00183B70  94 21 FF C8 */	stwu r1, -0x38(r1)
@@ -2040,9 +2039,9 @@ updateMenu__Q23zen10ogRaderMgrFP10Controller:
 /* 80186E94 00183DF4  38 21 00 38 */	addi r1, r1, 0x38
 /* 80186E98 00183DF8  7C 08 03 A6 */	mtlr r0
 /* 80186E9C 00183DFC  4E 80 00 20 */	blr 
+.endfn updateMenu__Q23zen10ogRaderMgrFP10Controller
 
-.global update__Q23zen10ogRaderMgrFP10Controller
-update__Q23zen10ogRaderMgrFP10Controller:
+.fn update__Q23zen10ogRaderMgrFP10Controller, global
 /* 80186EA0 00183E00  7C 08 02 A6 */	mflr r0
 /* 80186EA4 00183E04  90 01 00 04 */	stw r0, 4(r1)
 /* 80186EA8 00183E08  94 21 FE 10 */	stwu r1, -0x1f0(r1)
@@ -2533,9 +2532,9 @@ update__Q23zen10ogRaderMgrFP10Controller:
 /* 801875DC 0018453C  38 21 01 F0 */	addi r1, r1, 0x1f0
 /* 801875E0 00184540  7C 08 03 A6 */	mtlr r0
 /* 801875E4 00184544  4E 80 00 20 */	blr 
+.endfn update__Q23zen10ogRaderMgrFP10Controller
 
-.global end__Q23zen10ogRaderMgrFv
-end__Q23zen10ogRaderMgrFv:
+.fn end__Q23zen10ogRaderMgrFv, global
 /* 801875E8 00184548  7C 08 02 A6 */	mflr r0
 /* 801875EC 0018454C  90 01 00 04 */	stw r0, 4(r1)
 /* 801875F0 00184550  38 00 FF FF */	li r0, -1
@@ -2551,9 +2550,9 @@ end__Q23zen10ogRaderMgrFv:
 /* 80187618 00184578  38 21 00 08 */	addi r1, r1, 8
 /* 8018761C 0018457C  7C 08 03 A6 */	mtlr r0
 /* 80187620 00184580  4E 80 00 20 */	blr 
+.endfn end__Q23zen10ogRaderMgrFv
 
-.global draw__Q23zen10ogRaderMgrFR8Graphics
-draw__Q23zen10ogRaderMgrFR8Graphics:
+.fn draw__Q23zen10ogRaderMgrFR8Graphics, global
 /* 80187624 00184584  7C 08 02 A6 */	mflr r0
 /* 80187628 00184588  90 01 00 04 */	stw r0, 4(r1)
 /* 8018762C 0018458C  94 21 FE E8 */	stwu r1, -0x118(r1)
@@ -2648,16 +2647,19 @@ draw__Q23zen10ogRaderMgrFR8Graphics:
 /* 80187784 001846E4  38 21 01 18 */	addi r1, r1, 0x118
 /* 80187788 001846E8  7C 08 03 A6 */	mtlr r0
 /* 8018778C 001846EC  4E 80 00 20 */	blr 
+.endfn draw__Q23zen10ogRaderMgrFR8Graphics
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802D50B8:
+.obj lbl_802D50B8, local
 	.asciz "ogRader.cpp"
+.endobj lbl_802D50B8
 .balign 4
-lbl_802D50C4:
+.obj lbl_802D50C4, local
 	.asciz "OgRaderSection"
+.endobj lbl_802D50C4
 .balign 4
-map_area_data__3zen:
+.obj map_area_data__3zen, local
 	.float -698.0
 	.float 2024.0
 	.float 2880.0
@@ -2673,89 +2675,126 @@ map_area_data__3zen:
 	.float -44.0
 	.float 1504.0
 	.float 2322.0
+.endobj map_area_data__3zen
 .balign 4
-lbl_802D5110:
+.obj lbl_802D5110, local
 	.asciz "screen/blo/p_map00.blo"
+.endobj lbl_802D5110
 .balign 4
-lbl_802D5128:
+.obj lbl_802D5128, local
 	.asciz "screen/blo/p_map01.blo"
+.endobj lbl_802D5128
 .balign 4
-lbl_802D5140:
+.obj lbl_802D5140, local
 	.asciz "screen/blo/p_map02.blo"
+.endobj lbl_802D5140
 .balign 4
-lbl_802D5158:
+.obj lbl_802D5158, local
 	.asciz "screen/blo/p_map03.blo"
+.endobj lbl_802D5158
 .balign 4
-lbl_802D5170:
+.obj lbl_802D5170, local
 	.asciz "screen/blo/p_map04.blo"
+.endobj lbl_802D5170
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803EB1D0:
-	.4byte 0x41200000
-lbl_803EB1D4:
-	.4byte 0x44040000
-lbl_803EB1D8:
-	.4byte 0x45866000
-lbl_803EB1DC:
-	.4byte 0x460FC000
-lbl_803EB1E0:
-	.4byte 0x439B0000
-lbl_803EB1E4:
-	.4byte 0x452F0000
-lbl_803EB1E8:
-	.4byte 0x45A8C000
-lbl_803EB1EC:
-	.4byte 0x00000000
-lbl_803EB1F0:
-	.4byte 0x40F00000
-lbl_803EB1F4:
-	.4byte 0x40000000
-lbl_803EB1F8:
-	.4byte 0x40A00000
-lbl_803EB1FC:
-	.4byte 0x40C90FDB
-lbl_803EB200:
-	.4byte 0x40490FDB
-lbl_803EB204:
-	.4byte 0x3F000000
-lbl_803EB208:
-	.4byte 0x43300000
-	.4byte 0x80000000
-lbl_803EB210:
-	.4byte 0x40800000
-lbl_803EB214:
-	.4byte 0x41000000
-lbl_803EB218:
-	.4byte 0x3E4CCCCD
+.obj lbl_803EB1D0, local
+	.float 10.0
+.endobj lbl_803EB1D0
+.obj lbl_803EB1D4, local
+	.float 528.0
+.endobj lbl_803EB1D4
+.obj lbl_803EB1D8, local
+	.float 4300.0
+.endobj lbl_803EB1D8
+.obj lbl_803EB1DC, local
+	.float 9200.0
+.endobj lbl_803EB1DC
+.obj lbl_803EB1E0, local
+	.float 310.0
+.endobj lbl_803EB1E0
+.obj lbl_803EB1E4, local
+	.float 2800.0
+.endobj lbl_803EB1E4
+.obj lbl_803EB1E8, local
+	.float 5400.0
+.endobj lbl_803EB1E8
+.obj lbl_803EB1EC, local
+	.float 0.0
+.endobj lbl_803EB1EC
+.obj lbl_803EB1F0, local
+	.float 7.5
+.endobj lbl_803EB1F0
+.obj lbl_803EB1F4, local
+	.float 2.0
+.endobj lbl_803EB1F4
+.obj lbl_803EB1F8, local
+	.float 5.0
+.endobj lbl_803EB1F8
+.obj lbl_803EB1FC, local # tau
+	.float 6.2831855
+.endobj lbl_803EB1FC
+.obj lbl_803EB200, local # pi
+	.float 3.1415927
+.endobj lbl_803EB200
+.obj lbl_803EB204, local
+	.float 0.5
+.endobj lbl_803EB204
 .balign 8
-lbl_803EB220:
-	.4byte 0x3FE00000
+.obj lbl_803EB208, local
+	.8byte 0x4330000080000000
+.endobj lbl_803EB208
+.obj lbl_803EB210, local
+	.float 4.0
+.endobj lbl_803EB210
+.obj lbl_803EB214, local
+	.float 8.0
+.endobj lbl_803EB214
+.obj lbl_803EB218, local
+	.float 0.2
+.endobj lbl_803EB218
+.balign 8
+.obj lbl_803EB220, local
+	.double 0.5
+.endobj lbl_803EB220
+.balign 8
+.obj lbl_803EB228, local
+	.double 3.0
+.endobj lbl_803EB228
+.obj lbl_803EB230, local
+	.float 0.3
+.endobj lbl_803EB230
+.obj lbl_803EB234, local
+	.float 1.1
+.endobj lbl_803EB234
+.obj lbl_803EB238, local
+	.float -0.3
+.endobj lbl_803EB238
+.obj lbl_803EB23C, local
+	.float 0.9
+.endobj lbl_803EB23C
+.obj lbl_803EB240, local
+	.float 1.0
+.endobj lbl_803EB240
+.obj lbl_803EB244, local
+	.float -20.0
+.endobj lbl_803EB244
+.obj lbl_803EB248, local
+	.float 20.0
+.endobj lbl_803EB248
+.obj lbl_803EB24C, local
+	.float -0.2
+.endobj lbl_803EB24C
+.obj lbl_803EB250, local
 	.4byte 0x00000000
-lbl_803EB228:
-	.4byte 0x40080000
-	.4byte 0x00000000
-lbl_803EB230:
-	.4byte 0x3E99999A
-lbl_803EB234:
-	.4byte 0x3F8CCCCD
-lbl_803EB238:
-	.4byte 0xBE99999A
-lbl_803EB23C:
-	.4byte 0x3F666666
-lbl_803EB240:
-	.4byte 0x3F800000
-lbl_803EB244:
-	.4byte 0xC1A00000
-lbl_803EB248:
-	.4byte 0x41A00000
-lbl_803EB24C:
-	.4byte 0xBE4CCCCD
-lbl_803EB250:
-	.4byte 0x00000000
-lbl_803EB254:
-	.4byte 0x3DCCCCCD
-lbl_803EB258:
-	.4byte 0x41F00000
-lbl_803EB25C:
-	.4byte 0x459C4000
+.endobj lbl_803EB250
+.obj lbl_803EB254, local
+	.float 0.1
+.endobj lbl_803EB254
+.obj lbl_803EB258, local
+	.float 30.0
+.endobj lbl_803EB258
+.obj lbl_803EB25C, local
+	.float 5000.0
+.endobj lbl_803EB25C

@@ -562,12 +562,16 @@ __vt__9P2DScreen:
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-lbl_803E6640:
+.obj lbl_803E6640, local
 	.asciz "P2DPane"
+.endobj lbl_803E6640
 .balign 4
-__RTTI__7P2DPane:
+.obj __RTTI__7P2DPane, local
 	.4byte lbl_803E6640
 	.4byte 0
-__RTTI__9P2DScreen:
+.endobj __RTTI__7P2DPane
+.balign 4
+.obj __RTTI__9P2DScreen, local
 	.4byte lbl_802E0778
 	.4byte lbl_802E07D4
+.endobj __RTTI__9P2DScreen

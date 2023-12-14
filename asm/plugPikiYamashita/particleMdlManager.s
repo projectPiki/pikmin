@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global init__Q23zen18particleMdlManagerFUlUl
-init__Q23zen18particleMdlManagerFUlUl:
+.fn init__Q23zen18particleMdlManagerFUlUl, global
 /* 801A17D4 0019E734  7C 08 02 A6 */	mflr r0
 /* 801A17D8 0019E738  90 01 00 04 */	stw r0, 4(r1)
 /* 801A17DC 0019E73C  94 21 FF C0 */	stwu r1, -0x40(r1)
@@ -82,9 +81,9 @@ init__Q23zen18particleMdlManagerFUlUl:
 /* 801A18F8 0019E858  38 21 00 40 */	addi r1, r1, 0x40
 /* 801A18FC 0019E85C  7C 08 03 A6 */	mtlr r0
 /* 801A1900 0019E860  4E 80 00 20 */	blr 
+.endfn init__Q23zen18particleMdlManagerFUlUl
 
-.global __dt__Q23zen16particleChildMdlFv
-__dt__Q23zen16particleChildMdlFv:
+.fn __dt__Q23zen16particleChildMdlFv, weak
 /* 801A1904 0019E864  7C 08 02 A6 */	mflr r0
 /* 801A1908 0019E868  90 01 00 04 */	stw r0, 4(r1)
 /* 801A190C 0019E86C  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -110,9 +109,9 @@ __dt__Q23zen16particleChildMdlFv:
 /* 801A1954 0019E8B4  38 21 00 18 */	addi r1, r1, 0x18
 /* 801A1958 0019E8B8  7C 08 03 A6 */	mtlr r0
 /* 801A195C 0019E8BC  4E 80 00 20 */	blr 
+.endfn __dt__Q23zen16particleChildMdlFv
 
-.global __ct__Q23zen16particleChildMdlFv
-__ct__Q23zen16particleChildMdlFv:
+.fn __ct__Q23zen16particleChildMdlFv, weak
 /* 801A1960 0019E8C0  3C 80 80 2D */	lis r4, __vt__Q23zen7zenList@ha
 /* 801A1964 0019E8C4  38 04 68 DC */	addi r0, r4, __vt__Q23zen7zenList@l
 /* 801A1968 0019E8C8  90 03 00 00 */	stw r0, 0(r3)
@@ -155,9 +154,9 @@ __ct__Q23zen16particleChildMdlFv:
 /* 801A19FC 0019E95C  98 A3 00 30 */	stb r5, 0x30(r3)
 /* 801A1A00 0019E960  98 A3 00 32 */	stb r5, 0x32(r3)
 /* 801A1A04 0019E964  4E 80 00 20 */	blr 
+.endfn __ct__Q23zen16particleChildMdlFv
 
-.global __dt__Q23zen11particleMdlFv
-__dt__Q23zen11particleMdlFv:
+.fn __dt__Q23zen11particleMdlFv, weak
 /* 801A1A08 0019E968  7C 08 02 A6 */	mflr r0
 /* 801A1A0C 0019E96C  90 01 00 04 */	stw r0, 4(r1)
 /* 801A1A10 0019E970  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -183,9 +182,9 @@ __dt__Q23zen11particleMdlFv:
 /* 801A1A58 0019E9B8  38 21 00 18 */	addi r1, r1, 0x18
 /* 801A1A5C 0019E9BC  7C 08 03 A6 */	mtlr r0
 /* 801A1A60 0019E9C0  4E 80 00 20 */	blr 
+.endfn __dt__Q23zen11particleMdlFv
 
-.global __ct__Q23zen11particleMdlFv
-__ct__Q23zen11particleMdlFv:
+.fn __ct__Q23zen11particleMdlFv, weak
 /* 801A1A64 0019E9C4  7C 08 02 A6 */	mflr r0
 /* 801A1A68 0019E9C8  3C 80 80 2E */	lis r4, __vt__Q23zen15particleMdlBase@ha
 /* 801A1A6C 0019E9CC  90 01 00 04 */	stw r0, 4(r1)
@@ -282,9 +281,9 @@ __ct__Q23zen11particleMdlFv:
 /* 801A1BD8 0019EB38  38 21 00 18 */	addi r1, r1, 0x18
 /* 801A1BDC 0019EB3C  7C 08 03 A6 */	mtlr r0
 /* 801A1BE0 0019EB40  4E 80 00 20 */	blr 
+.endfn __ct__Q23zen11particleMdlFv
 
-.global init__Q23zen16bBoardColourAnimFPQ23zen20bBoardColourAnimDatas
-init__Q23zen16bBoardColourAnimFPQ23zen20bBoardColourAnimDatas:
+.fn init__Q23zen16bBoardColourAnimFPQ23zen20bBoardColourAnimDatas, weak
 /* 801A1BE4 0019EB44  C0 02 B3 E8 */	lfs f0, lbl_803EB5E8@sda21(r2)
 /* 801A1BE8 0019EB48  38 00 00 00 */	li r0, 0
 /* 801A1BEC 0019EB4C  D0 03 00 00 */	stfs f0, 0(r3)
@@ -305,9 +304,9 @@ init__Q23zen16bBoardColourAnimFPQ23zen20bBoardColourAnimDatas:
 .L_801A1C24:
 /* 801A1C24 0019EB84  B0 A3 00 06 */	sth r5, 6(r3)
 /* 801A1C28 0019EB88  4E 80 00 20 */	blr 
+.endfn init__Q23zen16bBoardColourAnimFPQ23zen20bBoardColourAnimDatas
 
-.global remove__Q23zen11particleMdlFv
-remove__Q23zen11particleMdlFv:
+.fn remove__Q23zen11particleMdlFv, weak
 /* 801A1C2C 0019EB8C  7C 08 02 A6 */	mflr r0
 /* 801A1C30 0019EB90  38 80 00 00 */	li r4, 0
 /* 801A1C34 0019EB94  90 01 00 04 */	stw r0, 4(r1)
@@ -377,9 +376,9 @@ remove__Q23zen11particleMdlFv:
 /* 801A1D34 0019EC94  38 21 00 18 */	addi r1, r1, 0x18
 /* 801A1D38 0019EC98  7C 08 03 A6 */	mtlr r0
 /* 801A1D3C 0019EC9C  4E 80 00 20 */	blr 
+.endfn remove__Q23zen11particleMdlFv
 
-.global remove__Q23zen15particleMdlBaseFv
-remove__Q23zen15particleMdlBaseFv:
+.fn remove__Q23zen15particleMdlBaseFv, weak
 /* 801A1D40 0019ECA0  80 A3 00 04 */	lwz r5, 4(r3)
 /* 801A1D44 0019ECA4  38 00 00 00 */	li r0, 0
 /* 801A1D48 0019ECA8  80 83 00 08 */	lwz r4, 8(r3)
@@ -406,9 +405,9 @@ remove__Q23zen15particleMdlBaseFv:
 /* 801A1D9C 0019ECFC  98 03 00 2A */	stb r0, 0x2a(r3)
 /* 801A1DA0 0019ED00  98 03 00 2B */	stb r0, 0x2b(r3)
 /* 801A1DA4 0019ED04  4E 80 00 20 */	blr 
+.endfn remove__Q23zen15particleMdlBaseFv
 
-.global remove__Q23zen16particleChildMdlFv
-remove__Q23zen16particleChildMdlFv:
+.fn remove__Q23zen16particleChildMdlFv, weak
 /* 801A1DA8 0019ED08  80 A3 00 04 */	lwz r5, 4(r3)
 /* 801A1DAC 0019ED0C  38 00 00 00 */	li r0, 0
 /* 801A1DB0 0019ED10  80 83 00 08 */	lwz r4, 8(r3)
@@ -435,6 +434,7 @@ remove__Q23zen16particleChildMdlFv:
 /* 801A1E04 0019ED64  98 03 00 2A */	stb r0, 0x2a(r3)
 /* 801A1E08 0019ED68  98 03 00 2B */	stb r0, 0x2b(r3)
 /* 801A1E0C 0019ED6C  4E 80 00 20 */	blr 
+.endfn remove__Q23zen16particleChildMdlFv
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
@@ -458,47 +458,53 @@ remove__Q23zen16particleChildMdlFv:
 	.asciz "zen::particleMdlBase"
 .endobj lbl_802DD7F0
 .balign 4
-lbl_802DD808:
+.obj lbl_802DD808, local
 	.4byte __RTTI__Q23zen7zenList
 	.4byte 0
 	.4byte 0
-lbl_802DD814:
+.endobj lbl_802DD808
+.balign 4
+.obj lbl_802DD814, local
 	.4byte __RTTI__Q23zen7zenList
 	.4byte 0
 	.4byte __RTTI__Q23zen15particleMdlBase
 	.4byte 0
 	.4byte 0
-.global __vt__Q23zen11particleMdl
-__vt__Q23zen11particleMdl:
+.endobj lbl_802DD814
+.balign 4
+.obj __vt__Q23zen11particleMdl, weak
 	.4byte __RTTI__Q23zen11particleMdl
 	.4byte 0
 	.4byte insertAfter__Q23zen7zenListFPQ23zen7zenList
 	.4byte remove__Q23zen11particleMdlFv
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-.global __vt__Q23zen15particleMdlBase
-__vt__Q23zen15particleMdlBase:
+.endobj __vt__Q23zen11particleMdl
+.balign 4
+.skip 0x10 # compiler padding
+.obj __vt__Q23zen15particleMdlBase, weak
 	.4byte __RTTI__Q23zen15particleMdlBase
 	.4byte 0
 	.4byte insertAfter__Q23zen7zenListFPQ23zen7zenList
 	.4byte remove__Q23zen15particleMdlBaseFv
-lbl_802DD858:
-	.asciz "zen::particleChildMdl"
+.endobj __vt__Q23zen15particleMdlBase
 .balign 4
-lbl_802DD870:
+.obj lbl_802DD858, local
+	.asciz "zen::particleChildMdl"
+.endobj lbl_802DD858
+.balign 4
+.obj lbl_802DD870, local
 	.4byte __RTTI__Q23zen7zenList
 	.4byte 0
 	.4byte __RTTI__Q23zen15particleMdlBase
 	.4byte 0
 	.4byte 0
-.global __vt__Q23zen16particleChildMdl
-__vt__Q23zen16particleChildMdl:
+.endobj lbl_802DD870
+.balign 4
+.obj __vt__Q23zen16particleChildMdl, weak
 	.4byte __RTTI__Q23zen16particleChildMdl
 	.4byte 0
 	.4byte insertAfter__Q23zen7zenListFPQ23zen7zenList
 	.4byte remove__Q23zen16particleChildMdlFv
+.endobj __vt__Q23zen16particleChildMdl
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8

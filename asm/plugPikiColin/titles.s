@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global menuSelectOption__17TitleSetupSectionFR4Menu
-menuSelectOption__17TitleSetupSectionFR4Menu:
+.fn menuSelectOption__17TitleSetupSectionFR4Menu, weak
 /* 8005F804 0005C764  7C 08 02 A6 */	mflr r0
 /* 8005F808 0005C768  90 01 00 04 */	stw r0, 4(r1)
 /* 8005F80C 0005C76C  38 00 00 00 */	li r0, 0
@@ -37,9 +36,9 @@ menuSelectOption__17TitleSetupSectionFR4Menu:
 /* 8005F884 0005C7E4  38 21 00 18 */	addi r1, r1, 0x18
 /* 8005F888 0005C7E8  7C 08 03 A6 */	mtlr r0
 /* 8005F88C 0005C7EC  4E 80 00 20 */	blr 
+.endfn menuSelectOption__17TitleSetupSectionFR4Menu
 
-.global message__20TitlesMovieInterfaceFii
-message__20TitlesMovieInterfaceFii:
+.fn message__20TitlesMovieInterfaceFii, global
 /* 8005F890 0005C7F0  7C 08 02 A6 */	mflr r0
 /* 8005F894 0005C7F4  2C 04 00 00 */	cmpwi r4, 0
 /* 8005F898 0005C7F8  90 01 00 04 */	stw r0, 4(r1)
@@ -56,9 +55,9 @@ message__20TitlesMovieInterfaceFii:
 /* 8005F8BC 0005C81C  38 21 00 08 */	addi r1, r1, 8
 /* 8005F8C0 0005C820  7C 08 03 A6 */	mtlr r0
 /* 8005F8C4 0005C824  4E 80 00 20 */	blr 
+.endfn message__20TitlesMovieInterfaceFii
 
-.global init__13TitlesSectionFv
-init__13TitlesSectionFv:
+.fn init__13TitlesSectionFv, global
 /* 8005F8C8 0005C828  7C 08 02 A6 */	mflr r0
 /* 8005F8CC 0005C82C  3C 80 80 2B */	lis r4, lbl_802A8920@ha
 /* 8005F8D0 0005C830  90 01 00 04 */	stw r0, 4(r1)
@@ -636,9 +635,9 @@ init__13TitlesSectionFv:
 /* 80060138 0005D098  38 21 00 C8 */	addi r1, r1, 0xc8
 /* 8006013C 0005D09C  7C 08 03 A6 */	mtlr r0
 /* 80060140 0005D0A0  4E 80 00 20 */	blr 
+.endfn init__13TitlesSectionFv
 
-.global update__17TitleSetupSectionFv
-update__17TitleSetupSectionFv:
+.fn update__17TitleSetupSectionFv, weak
 /* 80060144 0005D0A4  7C 08 02 A6 */	mflr r0
 /* 80060148 0005D0A8  90 01 00 04 */	stw r0, 4(r1)
 /* 8006014C 0005D0AC  94 21 FE B0 */	stwu r1, -0x150(r1)
@@ -1121,9 +1120,9 @@ update__17TitleSetupSectionFv:
 /* 8006086C 0005D7CC  38 21 01 50 */	addi r1, r1, 0x150
 /* 80060870 0005D7D0  7C 08 03 A6 */	mtlr r0
 /* 80060874 0005D7D4  4E 80 00 20 */	blr 
+.endfn update__17TitleSetupSectionFv
 
-.global draw__17TitleSetupSectionFR8Graphics
-draw__17TitleSetupSectionFR8Graphics:
+.fn draw__17TitleSetupSectionFR8Graphics, weak
 /* 80060878 0005D7D8  7C 08 02 A6 */	mflr r0
 /* 8006087C 0005D7DC  90 01 00 04 */	stw r0, 4(r1)
 /* 80060880 0005D7E0  94 21 FE 08 */	stwu r1, -0x1f8(r1)
@@ -1711,9 +1710,9 @@ draw__17TitleSetupSectionFR8Graphics:
 /* 80061128 0005E088  38 21 01 F8 */	addi r1, r1, 0x1f8
 /* 8006112C 0005E08C  7C 08 03 A6 */	mtlr r0
 /* 80061130 0005E090  4E 80 00 20 */	blr 
+.endfn draw__17TitleSetupSectionFR8Graphics
 
-.global drawMenu__17TitleSetupSectionFR8GraphicsP4Menuf
-drawMenu__17TitleSetupSectionFR8GraphicsP4Menuf:
+.fn drawMenu__17TitleSetupSectionFR8GraphicsP4Menuf, weak
 /* 80061134 0005E094  7C 08 02 A6 */	mflr r0
 /* 80061138 0005E098  90 01 00 04 */	stw r0, 4(r1)
 /* 8006113C 0005E09C  94 21 FF C8 */	stwu r1, -0x38(r1)
@@ -1777,9 +1776,9 @@ drawMenu__17TitleSetupSectionFR8GraphicsP4Menuf:
 /* 80061214 0005E174  38 21 00 38 */	addi r1, r1, 0x38
 /* 80061218 0005E178  7C 08 03 A6 */	mtlr r0
 /* 8006121C 0005E17C  4E 80 00 20 */	blr 
+.endfn drawMenu__17TitleSetupSectionFR8GraphicsP4Menuf
 
-.global "invoke__37Delegate1<17TitleSetupSection,R4Menu>FR4Menu"
-"invoke__37Delegate1<17TitleSetupSection,R4Menu>FR4Menu":
+.fn "invoke__37Delegate1<17TitleSetupSection,R4Menu>FR4Menu", weak
 /* 80061220 0005E180  7C 08 02 A6 */	mflr r0
 /* 80061224 0005E184  7C 65 1B 78 */	mr r5, r3
 /* 80061228 0005E188  90 01 00 04 */	stw r0, 4(r1)
@@ -1792,113 +1791,124 @@ drawMenu__17TitleSetupSectionFR8GraphicsP4Menuf:
 /* 80061244 0005E1A4  38 21 00 08 */	addi r1, r1, 8
 /* 80061248 0005E1A8  7C 08 03 A6 */	mtlr r0
 /* 8006124C 0005E1AC  4E 80 00 20 */	blr 
+.endfn "invoke__37Delegate1<17TitleSetupSection,R4Menu>FR4Menu"
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802A8920:
+.obj lbl_802A8920, local
 	.asciz "titles.cpp"
+.endobj lbl_802A8920
 .balign 4
-lbl_802A892C:
+.obj lbl_802A892C, local
 	.4byte 0x00000000
 	.4byte 0xFFFFFFFF
 	.4byte menuSelectOption__17TitleSetupSectionFR4Menu
-lbl_802A8938:
+.endobj lbl_802A892C
+.balign 4
+.obj lbl_802A8938, local
 	.4byte 0x00000000
 	.4byte 0xFFFFFFFF
 	.4byte menuCloseMenu__4MenuFR4Menu
+.endobj lbl_802A8938
 .balign 4
-lbl_802A8944:
+.obj lbl_802A8944, local
 	.asciz "<TitlesSection>"
+.endobj lbl_802A8944
 .balign 4
-lbl_802A8954:
+.obj lbl_802A8954, local
 	.asciz "dataDir/"
+.endobj lbl_802A8954
 .balign 4
-lbl_802A8960:
+.obj lbl_802A8960, local
 	.asciz "Titles section"
+.endobj lbl_802A8960
 .balign 4
-lbl_802A8970:
+.obj lbl_802A8970, local
 	.asciz "<Controller>"
+.endobj lbl_802A8970
 .balign 4
-lbl_802A8980:
+.obj lbl_802A8980, local
 	.asciz "cinemas/opening.cin"
+.endobj lbl_802A8980
 .balign 4
-lbl_802A8994:
+.obj lbl_802A8994, local
 	.asciz "cinemas/opening.ini"
+.endobj lbl_802A8994
 .balign 4
-lbl_802A89A8:
+.obj lbl_802A89A8, local
 	.asciz "lightPools"
+.endobj lbl_802A89A8
 .balign 4
-lbl_802A89B4:
+.obj lbl_802A89B4, local
 	.asciz "effects/halowhit.txe"
+.endobj lbl_802A89B4
 .balign 4
-lbl_802A89CC:
+.obj lbl_802A89CC, local
 	.asciz "lightPool"
+.endobj lbl_802A89CC
 .balign 4
-lbl_802A89D8:
+.obj lbl_802A89D8, local
 	.asciz "CoreNode"
+.endobj lbl_802A89D8
 .balign 4
-lbl_802A89E4:
+.obj lbl_802A89E4, local
 	.4byte __RTTI__5ANode
 	.4byte 0x00000000
 	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
+.endobj lbl_802A89E4
+.skip 0x1C # compiler padding
 .balign 4
-lbl_802A8A0C:
+.obj lbl_802A8A0C, local
 	.asciz "Delegate1<Menu, Menu &>"
+.endobj lbl_802A8A0C
 .balign 4
-lbl_802A8A24:
+.obj lbl_802A8A24, local
 	.asciz "IDelegate1<Menu &>"
+.endobj lbl_802A8A24
 .balign 4
-lbl_802A8A38:
+.obj lbl_802A8A38, local
 	.4byte "__RTTI__18IDelegate1<R4Menu>"
 	.4byte 0x00000000
 	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
+.endobj lbl_802A8A38
+.skip 0xC # compiler padding
 .balign 4
-lbl_802A8A50:
+.obj lbl_802A8A50, local
 	.asciz "Delegate1<TitleSetupSection, Menu &>"
+.endobj lbl_802A8A50
 .balign 4
-lbl_802A8A78:
+.obj lbl_802A8A78, local
 	.4byte "__RTTI__18IDelegate1<R4Menu>"
 	.4byte 0
 	.4byte 0
-.global "__vt__37Delegate1<17TitleSetupSection,R4Menu>"
-"__vt__37Delegate1<17TitleSetupSection,R4Menu>":
+.endobj lbl_802A8A78
+.balign 4
+.obj "__vt__37Delegate1<17TitleSetupSection,R4Menu>", weak
 	.4byte "__RTTI__37Delegate1<17TitleSetupSection,R4Menu>"
 	.4byte 0
 	.4byte "invoke__37Delegate1<17TitleSetupSection,R4Menu>FR4Menu"
-	.4byte 0
-	.4byte 0
-	.4byte 0
+.endobj "__vt__37Delegate1<17TitleSetupSection,R4Menu>"
+.skip 0xC # compiler padding
 .balign 4
-lbl_802A8A9C:
+.obj lbl_802A8A9C, local
 	.asciz "GameInterface"
+.endobj lbl_802A8A9C
 .balign 4
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
+.skip 0x18 # compiler padding
 .balign 4
-lbl_802A8AC4:
+.obj lbl_802A8AC4, local
 	.asciz "TitleSetupSection"
+.endobj lbl_802A8AC4
 .balign 4
-lbl_802A8AD8:
+.obj lbl_802A8AD8, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte __RTTI__8CoreNode
 	.4byte 0
 	.4byte 0
-lbl_802A8AEC:
+.endobj lbl_802A8AD8
+.balign 4
+.obj lbl_802A8AEC, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte __RTTI__8CoreNode
@@ -1906,8 +1916,9 @@ lbl_802A8AEC:
 	.4byte __RTTI__4Node
 	.4byte 0
 	.4byte 0
-.global __vt__17TitleSetupSection
-__vt__17TitleSetupSection:
+.endobj lbl_802A8AEC
+.balign 4
+.obj __vt__17TitleSetupSection, weak
 	.4byte __RTTI__17TitleSetupSection
 	.4byte 0
 	.4byte getAgeNodeType__5ANodeFv
@@ -1920,11 +1931,13 @@ __vt__17TitleSetupSection:
 	.4byte concat__4NodeFR3SRT
 	.4byte concat__4NodeFR8Matrix4f
 	.4byte getModelMatrix__4NodeFv
+.endobj __vt__17TitleSetupSection
 .balign 4
-lbl_802A8B38:
+.obj lbl_802A8B38, local
 	.asciz "TitlesSection"
+.endobj lbl_802A8B38
 .balign 4
-lbl_802A8B48:
+.obj lbl_802A8B48, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte __RTTI__8CoreNode
@@ -1932,7 +1945,9 @@ lbl_802A8B48:
 	.4byte __RTTI__4Node
 	.4byte 0
 	.4byte 0
-lbl_802A8B64:
+.endobj lbl_802A8B48
+.balign 4
+.obj lbl_802A8B64, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte __RTTI__8CoreNode
@@ -1942,8 +1957,9 @@ lbl_802A8B64:
 	.4byte __RTTI__7Section
 	.4byte 0
 	.4byte 0
-.global __vt__13TitlesSection
-__vt__13TitlesSection:
+.endobj lbl_802A8B64
+.balign 4
+.obj __vt__13TitlesSection, global
 	.4byte __RTTI__13TitlesSection
 	.4byte 0
 	.4byte getAgeNodeType__5ANodeFv
@@ -1957,176 +1973,248 @@ __vt__13TitlesSection:
 	.4byte concat__4NodeFR8Matrix4f
 	.4byte getModelMatrix__4NodeFv
 	.4byte init__13TitlesSectionFv
+.endobj __vt__13TitlesSection
 .balign 4
-lbl_802A8BBC:
+.obj lbl_802A8BBC, local
 	.asciz "TitlesMovieInterface"
+.endobj lbl_802A8BBC
 .balign 4
-lbl_802A8BD4:
+.obj lbl_802A8BD4, local
 	.4byte __RTTI__13GameInterface
 	.4byte 0
 	.4byte 0
-.global __vt__20TitlesMovieInterface
-__vt__20TitlesMovieInterface:
+.endobj lbl_802A8BD4
+.balign 4
+.obj __vt__20TitlesMovieInterface, global
 	.4byte __RTTI__20TitlesMovieInterface
 	.4byte 0
 	.4byte message__20TitlesMovieInterfaceFii
 	.4byte movie__13GameInterfaceFiiP8CreatureP8Vector3fP8Vector3fUlb
 	.4byte parseMessages__13GameInterfaceFv
 	.4byte parse__13GameInterfaceFii
+.endobj __vt__20TitlesMovieInterface
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-lbl_803DDEC8:
+.obj lbl_803DDEC8, local
 	.float 0.0
-lbl_803DDECC:
+.endobj lbl_803DDEC8
+.obj lbl_803DDECC, local
 	.float 0.0
-lbl_803DDED0:
+.endobj lbl_803DDECC
+.obj lbl_803DDED0, local
 	.float 1.0
-lbl_803DDED4:
+.endobj lbl_803DDED0
+.obj lbl_803DDED4, local
 	.float 0.0
-lbl_803DDED8:
+.endobj lbl_803DDED4
+.obj lbl_803DDED8, local
 	.float 0.0
-lbl_803DDEDC:
+.endobj lbl_803DDED8
+.obj lbl_803DDEDC, local
 	.float 0.0
-lbl_803DDEE0:
+.endobj lbl_803DDEDC
+.obj lbl_803DDEE0, local
 	.float 1.0
-lbl_803DDEE4:
+.endobj lbl_803DDEE0
+.obj lbl_803DDEE4, local
 	.float 0.0
-lbl_803DDEE8:
+.endobj lbl_803DDEE4
+.obj lbl_803DDEE8, local
 	.float 0.0
-lbl_803DDEEC:
+.endobj lbl_803DDEE8
+.obj lbl_803DDEEC, local
 	.float 20.0
-lbl_803DDEF0:
+.endobj lbl_803DDEEC
+.obj lbl_803DDEF0, local
 	.float 0.0
-lbl_803DDEF4:
+.endobj lbl_803DDEF0
+.obj lbl_803DDEF4, local
 	.float 500.0
-lbl_803DDEF8:
+.endobj lbl_803DDEF4
+.obj lbl_803DDEF8, local
 	.float 300.0
-lbl_803DDEFC:
+.endobj lbl_803DDEF8
+.obj lbl_803DDEFC, local
 	.float -25.0
-lbl_803DDF00:
+.endobj lbl_803DDEFC
+.obj lbl_803DDF00, local
 	.float 25.0
-lbl_803DDF04:
+.endobj lbl_803DDF00
+.obj lbl_803DDF04, local
 	.float 300.0
-lbl_803DDF08:
+.endobj lbl_803DDF04
+.obj lbl_803DDF08, local
 	.float -12.0
-lbl_803DDF0C:
+.endobj lbl_803DDF08
+.obj lbl_803DDF0C, local
 	.float 500.0
-lbl_803DDF10:
+.endobj lbl_803DDF0C
+.obj lbl_803DDF10, local
 	.float 300.0
-lbl_803DDF14:
+.endobj lbl_803DDF10
+.obj lbl_803DDF14, local
 	.float 500.0
-lbl_803DDF18:
+.endobj lbl_803DDF14
+.obj lbl_803DDF18, local
 	.float 0.0
-lbl_803DDF1C:
+.endobj lbl_803DDF18
+.obj lbl_803DDF1C, local
 	.float 0.0
-lbl_803DDF20:
+.endobj lbl_803DDF1C
+.obj lbl_803DDF20, local
 	.float 0.0
-lbl_803DDF24:
+.endobj lbl_803DDF20
+.obj lbl_803DDF24, local
 	.float 0.0
-lbl_803DDF28:
+.endobj lbl_803DDF24
+.obj lbl_803DDF28, local
 	.float -1.0
-lbl_803DDF2C:
+.endobj lbl_803DDF28
+.obj lbl_803DDF2C, local
 	.float 0.0
-lbl_803DDF30:
+.endobj lbl_803DDF2C
+.obj lbl_803DDF30, local
 	.float 200.0
-lbl_803DDF34:
+.endobj lbl_803DDF30
+.obj lbl_803DDF34, local
 	.float 200.0
-lbl_803DDF38:
+.endobj lbl_803DDF34
+.obj lbl_803DDF38, local
 	.float 50.0
+.endobj lbl_803DDF38
 .balign 4
-lbl_803DDF3C:
+.obj lbl_803DDF3C, local
 	.asciz "<Node>"
+.endobj lbl_803DDF3C
 .balign 4
-lbl_803DDF44:
+.obj lbl_803DDF44, local
 	.asciz "dayMgr"
+.endobj lbl_803DDF44
 .balign 4
-lbl_803DDF4C:
+.obj lbl_803DDF4C, local
 	.asciz "ANode"
+.endobj lbl_803DDF4C
 .balign 4
-__RTTI__5ANode:
+.obj __RTTI__5ANode, local
 	.4byte lbl_803DDF4C
 	.4byte 0
-__RTTI__8CoreNode:
+.endobj __RTTI__5ANode
+.balign 4
+.obj __RTTI__8CoreNode, local
 	.4byte lbl_802A89D8
 	.4byte lbl_802A89E4
-"__RTTI__18IDelegate1<R4Menu>":
+.endobj __RTTI__8CoreNode
+.balign 4
+.obj "__RTTI__18IDelegate1<R4Menu>", local
 	.4byte lbl_802A8A24
 	.4byte 0
-"__RTTI__37Delegate1<17TitleSetupSection,R4Menu>":
+.endobj "__RTTI__18IDelegate1<R4Menu>"
+.balign 4
+.obj "__RTTI__37Delegate1<17TitleSetupSection,R4Menu>", local
 	.4byte lbl_802A8A50
 	.4byte lbl_802A8A78
-__RTTI__13GameInterface:
+.endobj "__RTTI__37Delegate1<17TitleSetupSection,R4Menu>"
+.balign 4
+.obj __RTTI__13GameInterface, local
 	.4byte lbl_802A8A9C
 	.4byte 0
+.endobj __RTTI__13GameInterface
 .balign 4
-lbl_803DDF7C:
+.obj lbl_803DDF7C, local
 	.asciz "Node"
+.endobj lbl_803DDF7C
 .balign 4
-__RTTI__4Node:
+.obj __RTTI__4Node, local
 	.4byte lbl_803DDF7C
 	.4byte lbl_802A8AD8
-__RTTI__17TitleSetupSection:
+.endobj __RTTI__4Node
+.balign 4
+.obj __RTTI__17TitleSetupSection, local
 	.4byte lbl_802A8AC4
 	.4byte lbl_802A8AEC
+.endobj __RTTI__17TitleSetupSection
 .balign 4
-lbl_803DDF94:
+.obj lbl_803DDF94, local
 	.asciz ""
+.endobj lbl_803DDF94
 .balign 4
-lbl_803DDF98:
+.obj lbl_803DDF98, local
 	.asciz "Section"
+.endobj lbl_803DDF98
 .balign 4
-__RTTI__7Section:
+.obj __RTTI__7Section, local
 	.4byte lbl_803DDF98
 	.4byte lbl_802A8B48
-__RTTI__13TitlesSection:
+.endobj __RTTI__7Section
+.balign 4
+.obj __RTTI__13TitlesSection, local
 	.4byte lbl_802A8B38
 	.4byte lbl_802A8B64
-__RTTI__20TitlesMovieInterface:
+.endobj __RTTI__13TitlesSection
+.balign 4
+.obj __RTTI__20TitlesMovieInterface, local
 	.4byte lbl_802A8BBC
 	.4byte lbl_802A8BD4
+.endobj __RTTI__20TitlesMovieInterface
 
 .section .sbss, "wa"
 .balign 8
-titleWindow:
+.obj titleWindow, local
 	.skip 4
-titleWindowOn:
+.endobj titleWindow
+.obj titleWindowOn, local
 	.skip 1
+.endobj titleWindowOn
 .balign 4
-totalWindow:
+.obj totalWindow, local
 	.skip 4
-totalWindowOn:
+.endobj totalWindow
+.obj totalWindowOn, local
 	.skip 1
+.endobj totalWindowOn
 .balign 4
-startWindow:
+.obj startWindow, local
 	.skip 4
-startWindowOn:
+.endobj startWindow
+.obj startWindowOn, local
 	.skip 1
+.endobj startWindowOn
 .balign 4
-spin$localstatic0$draw__17TitleSetupSectionFR8Graphics:
+.obj spin$localstatic0$draw__17TitleSetupSectionFR8Graphics, weak
 	.skip 4
-init$localstatic1$draw__17TitleSetupSectionFR8Graphics:
+.endobj spin$localstatic0$draw__17TitleSetupSectionFR8Graphics
+.obj init$localstatic1$draw__17TitleSetupSectionFR8Graphics, weak
 	.skip 1
+.endobj init$localstatic1$draw__17TitleSetupSectionFR8Graphics
 .balign 4
-chas$localstatic2$draw__17TitleSetupSectionFR8Graphics:
+.obj chas$localstatic2$draw__17TitleSetupSectionFR8Graphics, weak
 	.skip 4
-init$localstatic3$draw__17TitleSetupSectionFR8Graphics:
+.endobj chas$localstatic2$draw__17TitleSetupSectionFR8Graphics
+.obj init$localstatic3$draw__17TitleSetupSectionFR8Graphics, weak
 	.skip 1
+.endobj init$localstatic3$draw__17TitleSetupSectionFR8Graphics
 .balign 4
-cmax$localstatic4$draw__17TitleSetupSectionFR8Graphics:
+.obj cmax$localstatic4$draw__17TitleSetupSectionFR8Graphics, weak
 	.skip 4
-init$localstatic5$draw__17TitleSetupSectionFR8Graphics:
+.endobj cmax$localstatic4$draw__17TitleSetupSectionFR8Graphics
+.obj init$localstatic5$draw__17TitleSetupSectionFR8Graphics, weak
 	.skip 1
+.endobj init$localstatic5$draw__17TitleSetupSectionFR8Graphics
 .balign 4
-rspin$localstatic6$draw__17TitleSetupSectionFR8Graphics:
+.obj rspin$localstatic6$draw__17TitleSetupSectionFR8Graphics, weak
 	.skip 4
-init$localstatic7$draw__17TitleSetupSectionFR8Graphics:
+.endobj rspin$localstatic6$draw__17TitleSetupSectionFR8Graphics
+.obj init$localstatic7$draw__17TitleSetupSectionFR8Graphics, weak
 	.skip 1
+.endobj init$localstatic7$draw__17TitleSetupSectionFR8Graphics
 .balign 4
-mfade$localstatic8$draw__17TitleSetupSectionFR8Graphics:
+.obj mfade$localstatic8$draw__17TitleSetupSectionFR8Graphics, weak
 	.skip 4
-init$localstatic9$draw__17TitleSetupSectionFR8Graphics:
+.endobj mfade$localstatic8$draw__17TitleSetupSectionFR8Graphics
+.obj init$localstatic9$draw__17TitleSetupSectionFR8Graphics, weak
 	.skip 1
+.endobj init$localstatic9$draw__17TitleSetupSectionFR8Graphics
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8

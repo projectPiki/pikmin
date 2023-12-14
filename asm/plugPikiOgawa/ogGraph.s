@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global __ct__Q23zen10ogGraphMgrFP9P2DScreen
-__ct__Q23zen10ogGraphMgrFP9P2DScreen:
+.fn __ct__Q23zen10ogGraphMgrFP9P2DScreen, global
 /* 80197F28 00194E88  7C 08 02 A6 */	mflr r0
 /* 80197F2C 00194E8C  38 A0 00 01 */	li r5, 1
 /* 80197F30 00194E90  90 01 00 04 */	stw r0, 4(r1)
@@ -53,9 +52,9 @@ __ct__Q23zen10ogGraphMgrFP9P2DScreen:
 /* 80197FE0 00194F40  38 21 00 20 */	addi r1, r1, 0x20
 /* 80197FE4 00194F44  7C 08 03 A6 */	mtlr r0
 /* 80197FE8 00194F48  4E 80 00 20 */	blr 
+.endfn __ct__Q23zen10ogGraphMgrFP9P2DScreen
 
-.global SetDummyLineData__Q23zen10ogGraphMgrFv
-SetDummyLineData__Q23zen10ogGraphMgrFv:
+.fn SetDummyLineData__Q23zen10ogGraphMgrFv, global
 /* 80197FEC 00194F4C  94 21 FF A8 */	stwu r1, -0x58(r1)
 /* 80197FF0 00194F50  3C 80 80 2D */	lis r4, lbl_802D6120@ha
 /* 80197FF4 00194F54  38 84 61 20 */	addi r4, r4, lbl_802D6120@l
@@ -254,9 +253,9 @@ SetDummyLineData__Q23zen10ogGraphMgrFv:
 /* 801982E4 00195244  83 C1 00 50 */	lwz r30, 0x50(r1)
 /* 801982E8 00195248  38 21 00 58 */	addi r1, r1, 0x58
 /* 801982EC 0019524C  4E 80 00 20 */	blr 
+.endfn SetDummyLineData__Q23zen10ogGraphMgrFv
 
-.global MakeData__Q23zen10ogGraphMgrFv
-MakeData__Q23zen10ogGraphMgrFv:
+.fn MakeData__Q23zen10ogGraphMgrFv, global
 /* 801982F0 00195250  7C 08 02 A6 */	mflr r0
 /* 801982F4 00195254  3C 80 80 2D */	lis r4, lbl_802D6120@ha
 /* 801982F8 00195258  90 01 00 04 */	stw r0, 4(r1)
@@ -487,9 +486,9 @@ MakeData__Q23zen10ogGraphMgrFv:
 /* 80198604 00195564  38 21 00 80 */	addi r1, r1, 0x80
 /* 80198608 00195568  7C 08 03 A6 */	mtlr r0
 /* 8019860C 0019556C  4E 80 00 20 */	blr 
+.endfn MakeData__Q23zen10ogGraphMgrFv
 
-.global setGraphGX__3zenFPviUc
-setGraphGX__3zenFPviUc:
+.fn setGraphGX__3zenFPviUc, local
 /* 80198610 00195570  7C 08 02 A6 */	mflr r0
 /* 80198614 00195574  90 01 00 04 */	stw r0, 4(r1)
 /* 80198618 00195578  94 21 FF C8 */	stwu r1, -0x38(r1)
@@ -670,9 +669,9 @@ setGraphGX__3zenFPviUc:
 /* 801988A0 00195800  38 21 00 38 */	addi r1, r1, 0x38
 /* 801988A4 00195804  7C 08 03 A6 */	mtlr r0
 /* 801988A8 00195808  4E 80 00 20 */	blr 
+.endfn setGraphGX__3zenFPviUc
 
-.global draw__Q23zen10ogGraphMgrFUc
-draw__Q23zen10ogGraphMgrFUc:
+.fn draw__Q23zen10ogGraphMgrFUc, global
 /* 801988AC 0019580C  7C 08 02 A6 */	mflr r0
 /* 801988B0 00195810  3C A0 80 2D */	lis r5, lbl_802D6120@ha
 /* 801988B4 00195814  90 01 00 04 */	stw r0, 4(r1)
@@ -731,17 +730,19 @@ draw__Q23zen10ogGraphMgrFUc:
 /* 8019897C 001958DC  38 21 01 08 */	addi r1, r1, 0x108
 /* 80198980 001958E0  7C 08 03 A6 */	mtlr r0
 /* 80198984 001958E4  4E 80 00 20 */	blr 
+.endfn draw__Q23zen10ogGraphMgrFUc
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802D6120:
+.obj lbl_802D6120, local
 	.asciz "ogGraph.cpp"
+.endobj lbl_802D6120
 .balign 4
-lbl_802D612C:
+.obj lbl_802D612C, local
 	.asciz "OgResultSection"
+.endobj lbl_802D612C
 .balign 32
-.global LinePointB__3zen
-LinePointB__3zen:
+.obj LinePointB__3zen, local
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x00000000
@@ -758,9 +759,9 @@ LinePointB__3zen:
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x00000000
+.endobj LinePointB__3zen
 .balign 32
-.global LinePointR__3zen
-LinePointR__3zen:
+.obj LinePointR__3zen, local
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x00000000
@@ -777,9 +778,9 @@ LinePointR__3zen:
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x00000000
+.endobj LinePointR__3zen
 .balign 32
-.global LinePointY__3zen
-LinePointY__3zen:
+.obj LinePointY__3zen, local
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x00000000
@@ -796,8 +797,9 @@ LinePointY__3zen:
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x00000000
-.global ogawa_per_line__3zen
-ogawa_per_line__3zen:
+.endobj LinePointY__3zen
+.balign 4
+.obj ogawa_per_line__3zen, local
 	.2byte 0x0001
 	.2byte 0x0001
 	.2byte 0x0002
@@ -811,18 +813,22 @@ ogawa_per_line__3zen:
 	.2byte 0x0013
 	.2byte 0x0014
 	.2byte 0x0016
+.endobj ogawa_per_line__3zen
 .balign 32
-.global og_piki_lines_color__3zen
-og_piki_lines_color__3zen:
-	.4byte 0x00C0FFFF #Color4 struct
-	.4byte 0xFF0000FF #Color4 struct
-	.4byte 0xFFFF00FF #Color4 struct
+.obj og_piki_lines_color__3zen, local
+	.4byte 0x00C0FFFF # Color4 struct
+	.4byte 0xFF0000FF # Color4 struct
+	.4byte 0xFFFF00FF # Color4 struct
+.endobj og_piki_lines_color__3zen
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803EB4E0:
+.obj lbl_803EB4E0, local
 	.float 30.0
-lbl_803EB4E4:
+.endobj lbl_803EB4E0
+.obj lbl_803EB4E4, local
 	.float 1.0
-lbl_803EB4E8:
+.endobj lbl_803EB4E4
+.obj lbl_803EB4E8, local
 	.float 5000.0
+.endobj lbl_803EB4E8

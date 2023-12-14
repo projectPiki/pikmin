@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global __ct__10ChannelMgrFv
-__ct__10ChannelMgrFv:
+.fn __ct__10ChannelMgrFv, global
 /* 8017C868 001797C8  C0 02 AE E0 */	lfs f0, lbl_803EB0E0@sda21(r2)
 /* 8017C86C 001797CC  38 80 FF FF */	li r4, -1
 /* 8017C870 001797D0  38 00 00 00 */	li r0, 0
@@ -12,9 +11,9 @@ __ct__10ChannelMgrFv:
 /* 8017C884 001797E4  90 83 00 0C */	stw r4, 0xc(r3)
 /* 8017C888 001797E8  90 03 00 10 */	stw r0, 0x10(r3)
 /* 8017C88C 001797EC  4E 80 00 20 */	blr 
+.endfn __ct__10ChannelMgrFv
 
-.global start__10ChannelMgrFiPf
-start__10ChannelMgrFiPf:
+.fn start__10ChannelMgrFiPf, global
 /* 8017C890 001797F0  C0 22 AE E0 */	lfs f1, lbl_803EB0E0@sda21(r2)
 /* 8017C894 001797F4  1C E4 00 0C */	mulli r7, r4, 0xc
 /* 8017C898 001797F8  D0 23 00 00 */	stfs f1, 0(r3)
@@ -41,9 +40,9 @@ start__10ChannelMgrFiPf:
 /* 8017C8E4 00179844  C0 02 AE E4 */	lfs f0, lbl_803EB0E4@sda21(r2)
 /* 8017C8E8 00179848  D0 03 00 08 */	stfs f0, 8(r3)
 /* 8017C8EC 0017984C  4E 80 00 20 */	blr 
+.endfn start__10ChannelMgrFiPf
 
-.global update__10ChannelMgrFv
-update__10ChannelMgrFv:
+.fn update__10ChannelMgrFv, global
 /* 8017C8F0 00179850  C0 02 AE E0 */	lfs f0, lbl_803EB0E0@sda21(r2)
 /* 8017C8F4 00179854  D0 03 00 04 */	stfs f0, 4(r3)
 /* 8017C8F8 00179858  80 03 00 10 */	lwz r0, 0x10(r3)
@@ -111,9 +110,9 @@ update__10ChannelMgrFv:
 /* 8017C9E0 00179940  D0 03 00 04 */	stfs f0, 4(r3)
 /* 8017C9E4 00179944  C0 23 00 04 */	lfs f1, 4(r3)
 /* 8017C9E8 00179948  4E 80 00 20 */	blr 
+.endfn update__10ChannelMgrFv
 
-.global start__12ControlerMgrFiPf
-start__12ControlerMgrFiPf:
+.fn start__12ControlerMgrFiPf, global
 /* 8017C9EC 0017994C  38 00 00 20 */	li r0, 0x20
 /* 8017C9F0 00179950  7C 09 03 A6 */	mtctr r0
 /* 8017C9F4 00179954  39 00 00 00 */	li r8, 0
@@ -157,9 +156,9 @@ start__12ControlerMgrFiPf:
 /* 8017CA7C 001799DC  39 08 00 01 */	addi r8, r8, 1
 /* 8017CA80 001799E0  42 00 FF 7C */	bdnz .L_8017C9FC
 /* 8017CA84 001799E4  4E 80 00 20 */	blr 
+.endfn start__12ControlerMgrFiPf
 
-.global __ct__9RumbleMgrFbbbb
-__ct__9RumbleMgrFbbbb:
+.fn __ct__9RumbleMgrFbbbb, global
 /* 8017CA88 001799E8  7C 08 02 A6 */	mflr r0
 /* 8017CA8C 001799EC  90 01 00 04 */	stw r0, 4(r1)
 /* 8017CA90 001799F0  94 21 FF C8 */	stwu r1, -0x38(r1)
@@ -237,9 +236,9 @@ __ct__9RumbleMgrFbbbb:
 /* 8017CB9C 00179AFC  38 21 00 38 */	addi r1, r1, 0x38
 /* 8017CBA0 00179B00  7C 08 03 A6 */	mtlr r0
 /* 8017CBA4 00179B04  4E 80 00 20 */	blr 
+.endfn __ct__9RumbleMgrFbbbb
 
-.global reset__9RumbleMgrFv
-reset__9RumbleMgrFv:
+.fn reset__9RumbleMgrFv, global
 /* 8017CBA8 00179B08  7C 08 02 A6 */	mflr r0
 /* 8017CBAC 00179B0C  90 01 00 04 */	stw r0, 4(r1)
 /* 8017CBB0 00179B10  94 21 FF B8 */	stwu r1, -0x48(r1)
@@ -348,9 +347,9 @@ reset__9RumbleMgrFv:
 /* 8017CD3C 00179C9C  38 21 00 48 */	addi r1, r1, 0x48
 /* 8017CD40 00179CA0  7C 08 03 A6 */	mtlr r0
 /* 8017CD44 00179CA4  4E 80 00 20 */	blr 
+.endfn reset__9RumbleMgrFv
 
-.global start__9RumbleMgrFiiPf
-start__9RumbleMgrFiiPf:
+.fn start__9RumbleMgrFiiPf, global
 /* 8017CD48 00179CA8  7C 08 02 A6 */	mflr r0
 /* 8017CD4C 00179CAC  90 01 00 04 */	stw r0, 4(r1)
 /* 8017CD50 00179CB0  94 21 FF F8 */	stwu r1, -8(r1)
@@ -389,9 +388,9 @@ start__9RumbleMgrFiiPf:
 /* 8017CDC8 00179D28  38 21 00 08 */	addi r1, r1, 8
 /* 8017CDCC 00179D2C  7C 08 03 A6 */	mtlr r0
 /* 8017CDD0 00179D30  4E 80 00 20 */	blr 
+.endfn start__9RumbleMgrFiiPf
 
-.global start__9RumbleMgrFiiR8Vector3f
-start__9RumbleMgrFiiR8Vector3f:
+.fn start__9RumbleMgrFiiR8Vector3f, global
 /* 8017CDD4 00179D34  7C 08 02 A6 */	mflr r0
 /* 8017CDD8 00179D38  90 01 00 04 */	stw r0, 4(r1)
 /* 8017CDDC 00179D3C  94 21 FF A8 */	stwu r1, -0x58(r1)
@@ -465,9 +464,9 @@ start__9RumbleMgrFiiR8Vector3f:
 /* 8017CEE8 00179E48  38 21 00 58 */	addi r1, r1, 0x58
 /* 8017CEEC 00179E4C  7C 08 03 A6 */	mtlr r0
 /* 8017CEF0 00179E50  4E 80 00 20 */	blr 
+.endfn start__9RumbleMgrFiiR8Vector3f
 
-.global stop__9RumbleMgrFv
-stop__9RumbleMgrFv:
+.fn stop__9RumbleMgrFv, global
 /* 8017CEF4 00179E54  C0 22 AE E0 */	lfs f1, lbl_803EB0E0@sda21(r2)
 /* 8017CEF8 00179E58  39 40 00 00 */	li r10, 0
 /* 8017CEFC 00179E5C  C0 02 AE E4 */	lfs f0, lbl_803EB0E4@sda21(r2)
@@ -592,9 +591,9 @@ stop__9RumbleMgrFv:
 /* 8017D0AC 0017A00C  38 63 00 04 */	addi r3, r3, 4
 /* 8017D0B0 0017A010  41 80 FE 50 */	blt .L_8017CF00
 /* 8017D0B4 0017A014  4E 80 00 20 */	blr 
+.endfn stop__9RumbleMgrFv
 
-.global stop__9RumbleMgrFii
-stop__9RumbleMgrFii:
+.fn stop__9RumbleMgrFii, global
 /* 8017D0B8 0017A018  88 03 00 09 */	lbz r0, 9(r3)
 /* 8017D0BC 0017A01C  28 00 00 00 */	cmplwi r0, 0
 /* 8017D0C0 0017A020  4C 82 00 20 */	bnelr 
@@ -680,9 +679,9 @@ stop__9RumbleMgrFii:
 /* 8017D1EC 0017A14C  38 C6 00 01 */	addi r6, r6, 1
 /* 8017D1F0 0017A150  42 00 FF 14 */	bdnz .L_8017D104
 /* 8017D1F4 0017A154  4E 80 00 20 */	blr 
+.endfn stop__9RumbleMgrFii
 
-.global update__9RumbleMgrFv
-update__9RumbleMgrFv:
+.fn update__9RumbleMgrFv, global
 /* 8017D1F8 0017A158  7C 08 02 A6 */	mflr r0
 /* 8017D1FC 0017A15C  90 01 00 04 */	stw r0, 4(r1)
 /* 8017D200 0017A160  94 21 FF A8 */	stwu r1, -0x58(r1)
@@ -784,9 +783,9 @@ update__9RumbleMgrFv:
 /* 8017D358 0017A2B8  38 21 00 58 */	addi r1, r1, 0x58
 /* 8017D35C 0017A2BC  7C 08 03 A6 */	mtlr r0
 /* 8017D360 0017A2C0  4E 80 00 20 */	blr 
+.endfn update__9RumbleMgrFv
 
-.global rumbleOption__9RumbleMgrFb
-rumbleOption__9RumbleMgrFb:
+.fn rumbleOption__9RumbleMgrFb, global
 /* 8017D364 0017A2C4  7C 08 02 A6 */	mflr r0
 /* 8017D368 0017A2C8  90 01 00 04 */	stw r0, 4(r1)
 /* 8017D36C 0017A2CC  94 21 FF A8 */	stwu r1, -0x58(r1)
@@ -996,20 +995,25 @@ rumbleOption__9RumbleMgrFb:
 /* 8017D674 0017A5D4  38 21 00 58 */	addi r1, r1, 0x58
 /* 8017D678 0017A5D8  7C 08 03 A6 */	mtlr r0
 /* 8017D67C 0017A5DC  4E 80 00 20 */	blr 
+.endfn rumbleOption__9RumbleMgrFb
 
 .section .sbss, "wa"
 .balign 8
-.global rumbleMgr
-rumbleMgr:
+.obj rumbleMgr, global
 	.skip 0x4
+.endobj rumbleMgr
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803EB0E0:
+.obj lbl_803EB0E0, local
 	.float 0.0
-lbl_803EB0E4:
+.endobj lbl_803EB0E0
+.obj lbl_803EB0E4, local
 	.float 1.0
-lbl_803EB0E8:
+.endobj lbl_803EB0E4
+.obj lbl_803EB0E8, local
 	.float 1000.0
-lbl_803EB0EC:
+.endobj lbl_803EB0E8
+.obj lbl_803EB0EC, local
 	.float 0.5
+.endobj lbl_803EB0EC

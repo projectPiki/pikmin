@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global __ct__Q23zen14ogScrMemChkMgrFv
-__ct__Q23zen14ogScrMemChkMgrFv:
+.fn __ct__Q23zen14ogScrMemChkMgrFv, global
 /* 8018D04C 00189FAC  7C 08 02 A6 */	mflr r0
 /* 8018D050 00189FB0  90 01 00 04 */	stw r0, 4(r1)
 /* 8018D054 00189FB4  94 21 FF 60 */	stwu r1, -0xa0(r1)
@@ -653,9 +652,9 @@ __ct__Q23zen14ogScrMemChkMgrFv:
 /* 8018DA10 0018A970  38 21 00 A0 */	addi r1, r1, 0xa0
 /* 8018DA14 0018A974  7C 08 03 A6 */	mtlr r0
 /* 8018DA18 0018A978  4E 80 00 20 */	blr 
+.endfn __ct__Q23zen14ogScrMemChkMgrFv
 
-.global StatusCheck__Q23zen14ogScrMemChkMgrFv
-StatusCheck__Q23zen14ogScrMemChkMgrFv:
+.fn StatusCheck__Q23zen14ogScrMemChkMgrFv, global
 /* 8018DA1C 0018A97C  7C 08 02 A6 */	mflr r0
 /* 8018DA20 0018A980  90 01 00 04 */	stw r0, 4(r1)
 /* 8018DA24 0018A984  94 21 FF 48 */	stwu r1, -0xb8(r1)
@@ -821,9 +820,9 @@ StatusCheck__Q23zen14ogScrMemChkMgrFv:
 /* 8018DC68 0018ABC8  38 21 00 B8 */	addi r1, r1, 0xb8
 /* 8018DC6C 0018ABCC  7C 08 03 A6 */	mtlr r0
 /* 8018DC70 0018ABD0  4E 80 00 20 */	blr 
+.endfn StatusCheck__Q23zen14ogScrMemChkMgrFv
 
-.global setPCtex__Q23zen14ogScrMemChkMgrFPQ23zen13TypingTextMgr
-setPCtex__Q23zen14ogScrMemChkMgrFPQ23zen13TypingTextMgr:
+.fn setPCtex__Q23zen14ogScrMemChkMgrFPQ23zen13TypingTextMgr, global
 /* 8018DC74 0018ABD4  7C 08 02 A6 */	mflr r0
 /* 8018DC78 0018ABD8  38 C0 00 00 */	li r6, 0
 /* 8018DC7C 0018ABDC  90 01 00 04 */	stw r0, 4(r1)
@@ -841,9 +840,9 @@ setPCtex__Q23zen14ogScrMemChkMgrFPQ23zen13TypingTextMgr:
 /* 8018DCAC 0018AC0C  38 21 00 08 */	addi r1, r1, 8
 /* 8018DCB0 0018AC10  7C 08 03 A6 */	mtlr r0
 /* 8018DCB4 0018AC14  4E 80 00 20 */	blr 
+.endfn setPCtex__Q23zen14ogScrMemChkMgrFPQ23zen13TypingTextMgr
 
-.global DispYesNo__Q23zen14ogScrMemChkMgrFb
-DispYesNo__Q23zen14ogScrMemChkMgrFb:
+.fn DispYesNo__Q23zen14ogScrMemChkMgrFb, global
 /* 8018DCB8 0018AC18  54 80 06 3F */	clrlwi. r0, r4, 0x18
 /* 8018DCBC 0018AC1C  41 82 00 1C */	beq .L_8018DCD8
 /* 8018DCC0 0018AC20  80 63 00 98 */	lwz r3, 0x98(r3)
@@ -859,9 +858,9 @@ DispYesNo__Q23zen14ogScrMemChkMgrFb:
 /* 8018DCE4 0018AC44  50 80 3E 30 */	rlwimi r0, r4, 7, 0x18, 0x18
 /* 8018DCE8 0018AC48  98 03 00 0C */	stb r0, 0xc(r3)
 /* 8018DCEC 0018AC4C  4E 80 00 20 */	blr 
+.endfn DispYesNo__Q23zen14ogScrMemChkMgrFb
 
-.global DispAcup__Q23zen14ogScrMemChkMgrFb
-DispAcup__Q23zen14ogScrMemChkMgrFb:
+.fn DispAcup__Q23zen14ogScrMemChkMgrFb, global
 /* 8018DCF0 0018AC50  54 80 06 3F */	clrlwi. r0, r4, 0x18
 /* 8018DCF4 0018AC54  41 82 00 1C */	beq .L_8018DD10
 /* 8018DCF8 0018AC58  80 63 00 9C */	lwz r3, 0x9c(r3)
@@ -877,9 +876,9 @@ DispAcup__Q23zen14ogScrMemChkMgrFb:
 /* 8018DD1C 0018AC7C  50 80 3E 30 */	rlwimi r0, r4, 7, 0x18, 0x18
 /* 8018DD20 0018AC80  98 03 00 0C */	stb r0, 0xc(r3)
 /* 8018DD24 0018AC84  4E 80 00 20 */	blr 
+.endfn DispAcup__Q23zen14ogScrMemChkMgrFb
 
-.global start__Q23zen14ogScrMemChkMgrFv
-start__Q23zen14ogScrMemChkMgrFv:
+.fn start__Q23zen14ogScrMemChkMgrFv, global
 /* 8018DD28 0018AC88  7C 08 02 A6 */	mflr r0
 /* 8018DD2C 0018AC8C  90 01 00 04 */	stw r0, 4(r1)
 /* 8018DD30 0018AC90  94 21 FF 90 */	stwu r1, -0x70(r1)
@@ -1026,9 +1025,9 @@ start__Q23zen14ogScrMemChkMgrFv:
 /* 8018DF40 0018AEA0  38 21 00 70 */	addi r1, r1, 0x70
 /* 8018DF44 0018AEA4  7C 08 03 A6 */	mtlr r0
 /* 8018DF48 0018AEA8  4E 80 00 20 */	blr 
+.endfn start__Q23zen14ogScrMemChkMgrFv
 
-.global DebugStart__Q23zen14ogScrMemChkMgrFi
-DebugStart__Q23zen14ogScrMemChkMgrFi:
+.fn DebugStart__Q23zen14ogScrMemChkMgrFi, global
 /* 8018DF4C 0018AEAC  7C 08 02 A6 */	mflr r0
 /* 8018DF50 0018AEB0  2C 04 00 01 */	cmpwi r4, 1
 /* 8018DF54 0018AEB4  90 01 00 04 */	stw r0, 4(r1)
@@ -1133,9 +1132,9 @@ DebugStart__Q23zen14ogScrMemChkMgrFi:
 /* 8018E0D0 0018B030  38 21 00 70 */	addi r1, r1, 0x70
 /* 8018E0D4 0018B034  7C 08 03 A6 */	mtlr r0
 /* 8018E0D8 0018B038  4E 80 00 20 */	blr 
+.endfn DebugStart__Q23zen14ogScrMemChkMgrFi
 
-.global update__Q23zen14ogScrMemChkMgrFP10Controller
-update__Q23zen14ogScrMemChkMgrFP10Controller:
+.fn update__Q23zen14ogScrMemChkMgrFP10Controller, global
 /* 8018E0DC 0018B03C  7C 08 02 A6 */	mflr r0
 /* 8018E0E0 0018B040  90 01 00 04 */	stw r0, 4(r1)
 /* 8018E0E4 0018B044  94 21 FC 88 */	stwu r1, -0x378(r1)
@@ -2153,9 +2152,9 @@ update__Q23zen14ogScrMemChkMgrFP10Controller:
 /* 8018EF94 0018BEF4  38 21 03 78 */	addi r1, r1, 0x378
 /* 8018EF98 0018BEF8  7C 08 03 A6 */	mtlr r0
 /* 8018EF9C 0018BEFC  4E 80 00 20 */	blr 
+.endfn update__Q23zen14ogScrMemChkMgrFP10Controller
 
-.global draw__Q23zen14ogScrMemChkMgrFR8Graphics
-draw__Q23zen14ogScrMemChkMgrFR8Graphics:
+.fn draw__Q23zen14ogScrMemChkMgrFR8Graphics, global
 /* 8018EFA0 0018BF00  7C 08 02 A6 */	mflr r0
 /* 8018EFA4 0018BF04  90 01 00 04 */	stw r0, 4(r1)
 /* 8018EFA8 0018BF08  94 21 FF 00 */	stwu r1, -0x100(r1)
@@ -2229,9 +2228,9 @@ draw__Q23zen14ogScrMemChkMgrFR8Graphics:
 /* 8018F0A4 0018C004  38 21 01 00 */	addi r1, r1, 0x100
 /* 8018F0A8 0018C008  7C 08 03 A6 */	mtlr r0
 /* 8018F0AC 0018C00C  4E 80 00 20 */	blr 
+.endfn draw__Q23zen14ogScrMemChkMgrFR8Graphics
 
-.global setErrorMessage__Q23zen14ogScrMemChkMgrFv
-setErrorMessage__Q23zen14ogScrMemChkMgrFv:
+.fn setErrorMessage__Q23zen14ogScrMemChkMgrFv, global
 /* 8018F0B0 0018C010  80 83 00 EC */	lwz r4, 0xec(r3)
 /* 8018F0B4 0018C014  38 A0 00 00 */	li r5, 0
 /* 8018F0B8 0018C018  88 04 00 0C */	lbz r0, 0xc(r4)
@@ -2320,16 +2319,19 @@ setErrorMessage__Q23zen14ogScrMemChkMgrFv:
 /* 8018F1E8 0018C148  50 80 3E 30 */	rlwimi r0, r4, 7, 0x18, 0x18
 /* 8018F1EC 0018C14C  98 03 00 0C */	stb r0, 0xc(r3)
 /* 8018F1F0 0018C150  4E 80 00 20 */	blr 
+.endfn setErrorMessage__Q23zen14ogScrMemChkMgrFv
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802D5CC8:
+.obj lbl_802D5CC8, local
 	.asciz "screen/blo/black.blo"
+.endobj lbl_802D5CC8
 .balign 4
-lbl_802D5CE0:
+.obj lbl_802D5CE0, local
 	.asciz "screen/blo/data_m.blo"
+.endobj lbl_802D5CE0
 .balign 4
-lbl_802D5CF8:
+.obj lbl_802D5CF8, local
 	.4byte .L_8018DC3C
 	.4byte .L_8018DC58
 	.4byte .L_8018DC3C
@@ -2349,7 +2351,9 @@ lbl_802D5CF8:
 	.4byte .L_8018DC0C
 	.4byte .L_8018DC1C
 	.4byte .L_8018DC2C
-lbl_802D5D44:
+.endobj lbl_802D5CF8
+.balign 4
+.obj lbl_802D5D44, local
 	.4byte .L_8018EF04
 	.4byte .L_8018E5A4
 	.4byte .L_8018E638
@@ -2369,7 +2373,9 @@ lbl_802D5D44:
 	.4byte .L_8018EC88
 	.4byte .L_8018ED80
 	.4byte .L_8018EE0C
-lbl_802D5D90:
+.endobj lbl_802D5D44
+.balign 4
+.obj lbl_802D5D90, local
 	.4byte .L_8018F060
 	.4byte .L_8018F060
 	.4byte .L_8018F060
@@ -2384,7 +2390,9 @@ lbl_802D5D90:
 	.4byte .L_8018F080
 	.4byte .L_8018F060
 	.4byte .L_8018F080
-lbl_802D5DC8:
+.endobj lbl_802D5D90
+.balign 4
+.obj lbl_802D5DC8, local
 	.4byte .L_8018F14C
 	.4byte .L_8018F164
 	.4byte .L_8018F17C
@@ -2392,34 +2400,47 @@ lbl_802D5DC8:
 	.4byte .L_8018F1AC
 	.4byte .L_8018F1C4
 	.4byte .L_8018F1DC
+.endobj lbl_802D5DC8
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-lbl_803E5A98:
+.obj lbl_803E5A98, local
 	.float 320.0
-lbl_803E5A9C:
+.endobj lbl_803E5A98
+.obj lbl_803E5A9C, local
 	.float 240.0
-lbl_803E5AA0:
+.endobj lbl_803E5A9C
+.obj lbl_803E5AA0, local
 	.float 0.0
+.endobj lbl_803E5AA0
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803EB300:
+.obj lbl_803EB300, local
 	.float 1.0
-lbl_803EB304:
+.endobj lbl_803EB300
+.obj lbl_803EB304, local
 	.float 0.5
-lbl_803EB308:
+.endobj lbl_803EB304
+.obj lbl_803EB308, local
 	.float 0.0
-lbl_803EB30C:
+.endobj lbl_803EB308
+.obj lbl_803EB30C, local
 	.float 480.0
-lbl_803EB310:
-	.4byte 0x43300000
-	.4byte 0x80000000
-lbl_803EB318:
+.endobj lbl_803EB30C
+.balign 8
+.obj lbl_803EB310, local
+	.8byte 0x4330000080000000
+.endobj lbl_803EB310
+.obj lbl_803EB318, local
 	.float 6.0
-lbl_803EB31C:
+.endobj lbl_803EB318
+.obj lbl_803EB31C, local
 	.float 10.0
-lbl_803EB320:
+.endobj lbl_803EB31C
+.obj lbl_803EB320, local
 	.float 30.0
-lbl_803EB324:
+.endobj lbl_803EB320
+.obj lbl_803EB324, local
 	.float 5000.0
+.endobj lbl_803EB324

@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global init__Q23zen15particleManagerFUlUlUlf
-init__Q23zen15particleManagerFUlUlUlf:
+.fn init__Q23zen15particleManagerFUlUlUlf, global
 /* 801A1100 0019E060  7C 08 02 A6 */	mflr r0
 /* 801A1104 0019E064  90 01 00 04 */	stw r0, 4(r1)
 /* 801A1108 0019E068  94 21 FF B8 */	stwu r1, -0x48(r1)
@@ -86,9 +85,9 @@ init__Q23zen15particleManagerFUlUlUlf:
 /* 801A1230 0019E190  38 21 00 48 */	addi r1, r1, 0x48
 /* 801A1234 0019E194  7C 08 03 A6 */	mtlr r0
 /* 801A1238 0019E198  4E 80 00 20 */	blr 
+.endfn init__Q23zen15particleManagerFUlUlUlf
 
-.global __dt__Q23zen17particleGeneratorFv
-__dt__Q23zen17particleGeneratorFv:
+.fn __dt__Q23zen17particleGeneratorFv, weak
 /* 801A123C 0019E19C  7C 08 02 A6 */	mflr r0
 /* 801A1240 0019E1A0  90 01 00 04 */	stw r0, 4(r1)
 /* 801A1244 0019E1A4  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -109,9 +108,9 @@ __dt__Q23zen17particleGeneratorFv:
 /* 801A127C 0019E1DC  38 21 00 18 */	addi r1, r1, 0x18
 /* 801A1280 0019E1E0  7C 08 03 A6 */	mtlr r0
 /* 801A1284 0019E1E4  4E 80 00 20 */	blr 
+.endfn __dt__Q23zen17particleGeneratorFv
 
-.global "createGenerator__Q23zen15particleManagerFPUcP7TextureP7TextureR8Vector3fPQ23zen37CallBack1<PQ23zen17particleGenerator>PQ23zen58CallBack2<PQ23zen17particleGenerator,PQ23zen11particleMdl>"
-"createGenerator__Q23zen15particleManagerFPUcP7TextureP7TextureR8Vector3fPQ23zen37CallBack1<PQ23zen17particleGenerator>PQ23zen58CallBack2<PQ23zen17particleGenerator,PQ23zen11particleMdl>":
+.fn "createGenerator__Q23zen15particleManagerFPUcP7TextureP7TextureR8Vector3fPQ23zen37CallBack1<PQ23zen17particleGenerator>PQ23zen58CallBack2<PQ23zen17particleGenerator,PQ23zen11particleMdl>", global
 /* 801A1288 0019E1E8  7C 08 02 A6 */	mflr r0
 /* 801A128C 0019E1EC  90 01 00 04 */	stw r0, 4(r1)
 /* 801A1290 0019E1F0  94 21 FF B8 */	stwu r1, -0x48(r1)
@@ -142,9 +141,9 @@ __dt__Q23zen17particleGeneratorFv:
 /* 801A12F0 0019E250  38 21 00 48 */	addi r1, r1, 0x48
 /* 801A12F4 0019E254  7C 08 03 A6 */	mtlr r0
 /* 801A12F8 0019E258  4E 80 00 20 */	blr 
+.endfn "createGenerator__Q23zen15particleManagerFPUcP7TextureP7TextureR8Vector3fPQ23zen37CallBack1<PQ23zen17particleGenerator>PQ23zen58CallBack2<PQ23zen17particleGenerator,PQ23zen11particleMdl>"
 
-.global update__Q23zen15particleManagerFv
-update__Q23zen15particleManagerFv:
+.fn update__Q23zen15particleManagerFv, global
 /* 801A12FC 0019E25C  7C 08 02 A6 */	mflr r0
 /* 801A1300 0019E260  90 01 00 04 */	stw r0, 4(r1)
 /* 801A1304 0019E264  94 21 FF B8 */	stwu r1, -0x48(r1)
@@ -217,9 +216,9 @@ update__Q23zen15particleManagerFv:
 /* 801A1400 0019E360  38 21 00 48 */	addi r1, r1, 0x48
 /* 801A1404 0019E364  7C 08 03 A6 */	mtlr r0
 /* 801A1408 0019E368  4E 80 00 20 */	blr 
+.endfn update__Q23zen15particleManagerFv
 
-.global draw__Q23zen15particleManagerFR8Graphics
-draw__Q23zen15particleManagerFR8Graphics:
+.fn draw__Q23zen15particleManagerFR8Graphics, global
 /* 801A140C 0019E36C  7C 08 02 A6 */	mflr r0
 /* 801A1410 0019E370  90 01 00 04 */	stw r0, 4(r1)
 /* 801A1414 0019E374  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -251,9 +250,9 @@ draw__Q23zen15particleManagerFR8Graphics:
 /* 801A1474 0019E3D4  38 21 00 28 */	addi r1, r1, 0x28
 /* 801A1478 0019E3D8  7C 08 03 A6 */	mtlr r0
 /* 801A147C 0019E3DC  4E 80 00 20 */	blr 
+.endfn draw__Q23zen15particleManagerFR8Graphics
 
-.global cullingDraw__Q23zen15particleManagerFR8Graphics
-cullingDraw__Q23zen15particleManagerFR8Graphics:
+.fn cullingDraw__Q23zen15particleManagerFR8Graphics, global
 /* 801A1480 0019E3E0  7C 08 02 A6 */	mflr r0
 /* 801A1484 0019E3E4  90 01 00 04 */	stw r0, 4(r1)
 /* 801A1488 0019E3E8  94 21 FF C0 */	stwu r1, -0x40(r1)
@@ -301,9 +300,9 @@ cullingDraw__Q23zen15particleManagerFR8Graphics:
 /* 801A151C 0019E47C  38 21 00 40 */	addi r1, r1, 0x40
 /* 801A1520 0019E480  7C 08 03 A6 */	mtlr r0
 /* 801A1524 0019E484  4E 80 00 20 */	blr 
+.endfn cullingDraw__Q23zen15particleManagerFR8Graphics
 
-.global killAllGenarator__Q23zen15particleManagerFb
-killAllGenarator__Q23zen15particleManagerFb:
+.fn killAllGenarator__Q23zen15particleManagerFb, global
 /* 801A1528 0019E488  7C 08 02 A6 */	mflr r0
 /* 801A152C 0019E48C  90 01 00 04 */	stw r0, 4(r1)
 /* 801A1530 0019E490  54 80 06 3F */	clrlwi. r0, r4, 0x18
@@ -349,9 +348,9 @@ killAllGenarator__Q23zen15particleManagerFb:
 /* 801A15B8 0019E518  38 21 00 38 */	addi r1, r1, 0x38
 /* 801A15BC 0019E51C  7C 08 03 A6 */	mtlr r0
 /* 801A15C0 0019E520  4E 80 00 20 */	blr 
+.endfn killAllGenarator__Q23zen15particleManagerFb
 
-.global killGenerator__Q23zen15particleManagerFPQ23zen17particleGeneratorb
-killGenerator__Q23zen15particleManagerFPQ23zen17particleGeneratorb:
+.fn killGenerator__Q23zen15particleManagerFPQ23zen17particleGeneratorb, global
 /* 801A15C4 0019E524  7C 08 02 A6 */	mflr r0
 /* 801A15C8 0019E528  90 01 00 04 */	stw r0, 4(r1)
 /* 801A15CC 0019E52C  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -392,9 +391,9 @@ killGenerator__Q23zen15particleManagerFPQ23zen17particleGeneratorb:
 /* 801A1650 0019E5B0  38 21 00 28 */	addi r1, r1, 0x28
 /* 801A1654 0019E5B4  7C 08 03 A6 */	mtlr r0
 /* 801A1658 0019E5B8  4E 80 00 20 */	blr 
+.endfn killGenerator__Q23zen15particleManagerFPQ23zen17particleGeneratorb
 
-.global "killGenerator__Q23zen15particleManagerFPQ23zen37CallBack1<PQ23zen17particleGenerator>PQ23zen58CallBack2<PQ23zen17particleGenerator,PQ23zen11particleMdl>b"
-"killGenerator__Q23zen15particleManagerFPQ23zen37CallBack1<PQ23zen17particleGenerator>PQ23zen58CallBack2<PQ23zen17particleGenerator,PQ23zen11particleMdl>b":
+.fn "killGenerator__Q23zen15particleManagerFPQ23zen37CallBack1<PQ23zen17particleGenerator>PQ23zen58CallBack2<PQ23zen17particleGenerator,PQ23zen11particleMdl>b", global
 /* 801A165C 0019E5BC  7C 08 02 A6 */	mflr r0
 /* 801A1660 0019E5C0  90 01 00 04 */	stw r0, 4(r1)
 /* 801A1664 0019E5C4  94 21 FF C0 */	stwu r1, -0x40(r1)
@@ -444,9 +443,9 @@ killGenerator__Q23zen15particleManagerFPQ23zen17particleGeneratorb:
 /* 801A1704 0019E664  38 21 00 40 */	addi r1, r1, 0x40
 /* 801A1708 0019E668  7C 08 03 A6 */	mtlr r0
 /* 801A170C 0019E66C  4E 80 00 20 */	blr 
+.endfn "killGenerator__Q23zen15particleManagerFPQ23zen37CallBack1<PQ23zen17particleGenerator>PQ23zen58CallBack2<PQ23zen17particleGenerator,PQ23zen11particleMdl>b"
 
-.global pmCheckList__Q23zen15particleManagerFPQ23zen17particleGenerator
-pmCheckList__Q23zen15particleManagerFPQ23zen17particleGenerator:
+.fn pmCheckList__Q23zen15particleManagerFPQ23zen17particleGenerator, global
 /* 801A1710 0019E670  80 A3 00 00 */	lwz r5, 0(r3)
 /* 801A1714 0019E674  38 60 00 00 */	li r3, 0
 /* 801A1718 0019E678  80 C5 00 08 */	lwz r6, 8(r5)
@@ -462,9 +461,9 @@ pmCheckList__Q23zen15particleManagerFPQ23zen17particleGenerator:
 /* 801A1734 0019E694  7C 06 28 40 */	cmplw r6, r5
 /* 801A1738 0019E698  40 82 FF E8 */	bne .L_801A1720
 /* 801A173C 0019E69C  4E 80 00 20 */	blr 
+.endfn pmCheckList__Q23zen15particleManagerFPQ23zen17particleGenerator
 
-.global pmGetPtclGen__Q23zen15particleManagerFv
-pmGetPtclGen__Q23zen15particleManagerFv:
+.fn pmGetPtclGen__Q23zen15particleManagerFv, global
 /* 801A1740 0019E6A0  7C 08 02 A6 */	mflr r0
 /* 801A1744 0019E6A4  90 01 00 04 */	stw r0, 4(r1)
 /* 801A1748 0019E6A8  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -504,6 +503,7 @@ pmGetPtclGen__Q23zen15particleManagerFv:
 /* 801A17C8 0019E728  38 21 00 18 */	addi r1, r1, 0x18
 /* 801A17CC 0019E72C  7C 08 03 A6 */	mtlr r0
 /* 801A17D0 0019E730  4E 80 00 20 */	blr 
+.endfn pmGetPtclGen__Q23zen15particleManagerFv
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8

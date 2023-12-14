@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global draw__13GameLoadIdlerFR8Graphics
-draw__13GameLoadIdlerFR8Graphics:
+.fn draw__13GameLoadIdlerFR8Graphics, global
 /* 80051478 0004E3D8  7C 08 02 A6 */	mflr r0
 /* 8005147C 0004E3DC  38 60 00 30 */	li r3, 0x30
 /* 80051480 0004E3E0  90 01 00 04 */	stw r0, 4(r1)
@@ -88,9 +87,9 @@ draw__13GameLoadIdlerFR8Graphics:
 /* 800515BC 0004E51C  38 21 00 48 */	addi r1, r1, 0x48
 /* 800515C0 0004E520  7C 08 03 A6 */	mtlr r0
 /* 800515C4 0004E524  4E 80 00 20 */	blr 
+.endfn draw__13GameLoadIdlerFR8Graphics
 
-.global drawLoadLogo__8GameFlowFR8GraphicsbP7Texturef
-drawLoadLogo__8GameFlowFR8GraphicsbP7Texturef:
+.fn drawLoadLogo__8GameFlowFR8GraphicsbP7Texturef, global
 /* 800515C8 0004E528  7C 08 02 A6 */	mflr r0
 /* 800515CC 0004E52C  90 01 00 04 */	stw r0, 4(r1)
 /* 800515D0 0004E530  94 21 FF 18 */	stwu r1, -0xe8(r1)
@@ -246,9 +245,9 @@ drawLoadLogo__8GameFlowFR8GraphicsbP7Texturef:
 /* 80051810 0004E770  38 21 00 E8 */	addi r1, r1, 0xe8
 /* 80051814 0004E774  7C 08 03 A6 */	mtlr r0
 /* 80051818 0004E778  4E 80 00 20 */	blr 
+.endfn drawLoadLogo__8GameFlowFR8GraphicsbP7Texturef
 
-.global setTime__10WorldClockFf
-setTime__10WorldClockFf:
+.fn setTime__10WorldClockFf, global
 /* 8005181C 0004E77C  FC 00 08 1E */	fctiwz f0, f1
 /* 80051820 0004E780  94 21 FF C8 */	stwu r1, -0x38(r1)
 /* 80051824 0004E784  3C 80 43 30 */	lis r4, 0x4330
@@ -291,9 +290,9 @@ setTime__10WorldClockFf:
 /* 800518B8 0004E818  D0 03 00 10 */	stfs f0, 0x10(r3)
 /* 800518BC 0004E81C  38 21 00 38 */	addi r1, r1, 0x38
 /* 800518C0 0004E820  4E 80 00 20 */	blr 
+.endfn setTime__10WorldClockFf
 
-.global update__10WorldClockFf
-update__10WorldClockFf:
+.fn update__10WorldClockFf, global
 /* 800518C4 0004E824  94 21 FF D0 */	stwu r1, -0x30(r1)
 /* 800518C8 0004E828  80 8D 2D EC */	lwz r4, gsys@sda21(r13)
 /* 800518CC 0004E82C  C0 43 00 14 */	lfs f2, 0x14(r3)
@@ -358,9 +357,9 @@ update__10WorldClockFf:
 /* 800519B0 0004E910  D0 03 00 10 */	stfs f0, 0x10(r3)
 /* 800519B4 0004E914  38 21 00 30 */	addi r1, r1, 0x30
 /* 800519B8 0004E918  4E 80 00 20 */	blr 
+.endfn update__10WorldClockFf
 
-.global menuToggleTimers__8GameFlowFR4Menu
-menuToggleTimers__8GameFlowFR4Menu:
+.fn menuToggleTimers__8GameFlowFR4Menu, global
 /* 800519BC 0004E91C  7C 08 02 A6 */	mflr r0
 /* 800519C0 0004E920  3C 60 AA AB */	lis r3, 0xAAAAAAAB@ha
 /* 800519C4 0004E924  90 01 00 04 */	stw r0, 4(r1)
@@ -397,9 +396,9 @@ menuToggleTimers__8GameFlowFR4Menu:
 /* 80051A40 0004E9A0  38 21 00 18 */	addi r1, r1, 0x18
 /* 80051A44 0004E9A4  7C 08 03 A6 */	mtlr r0
 /* 80051A48 0004E9A8  4E 80 00 20 */	blr 
+.endfn menuToggleTimers__8GameFlowFR4Menu
 
-.global menuTogglePrint__8GameFlowFR4Menu
-menuTogglePrint__8GameFlowFR4Menu:
+.fn menuTogglePrint__8GameFlowFR4Menu, global
 /* 80051A4C 0004E9AC  7C 08 02 A6 */	mflr r0
 /* 80051A50 0004E9B0  90 01 00 04 */	stw r0, 4(r1)
 /* 80051A54 0004E9B4  94 21 FF F8 */	stwu r1, -8(r1)
@@ -426,9 +425,9 @@ menuTogglePrint__8GameFlowFR4Menu:
 /* 80051AA0 0004EA00  38 21 00 08 */	addi r1, r1, 8
 /* 80051AA4 0004EA04  7C 08 03 A6 */	mtlr r0
 /* 80051AA8 0004EA08  4E 80 00 20 */	blr 
+.endfn menuTogglePrint__8GameFlowFR4Menu
 
-.global menuToggleDInfo__8GameFlowFR4Menu
-menuToggleDInfo__8GameFlowFR4Menu:
+.fn menuToggleDInfo__8GameFlowFR4Menu, global
 /* 80051AAC 0004EA0C  7C 08 02 A6 */	mflr r0
 /* 80051AB0 0004EA10  90 01 00 04 */	stw r0, 4(r1)
 /* 80051AB4 0004EA14  94 21 FF F8 */	stwu r1, -8(r1)
@@ -455,9 +454,9 @@ menuToggleDInfo__8GameFlowFR4Menu:
 /* 80051B00 0004EA60  38 21 00 08 */	addi r1, r1, 8
 /* 80051B04 0004EA64  7C 08 03 A6 */	mtlr r0
 /* 80051B08 0004EA68  4E 80 00 20 */	blr 
+.endfn menuToggleDInfo__8GameFlowFR4Menu
 
-.global menuToggleDExtra__8GameFlowFR4Menu
-menuToggleDExtra__8GameFlowFR4Menu:
+.fn menuToggleDExtra__8GameFlowFR4Menu, global
 /* 80051B0C 0004EA6C  7C 08 02 A6 */	mflr r0
 /* 80051B10 0004EA70  90 01 00 04 */	stw r0, 4(r1)
 /* 80051B14 0004EA74  94 21 FF F8 */	stwu r1, -8(r1)
@@ -484,9 +483,9 @@ menuToggleDExtra__8GameFlowFR4Menu:
 /* 80051B60 0004EAC0  38 21 00 08 */	addi r1, r1, 8
 /* 80051B64 0004EAC4  7C 08 03 A6 */	mtlr r0
 /* 80051B68 0004EAC8  4E 80 00 20 */	blr 
+.endfn menuToggleDExtra__8GameFlowFR4Menu
 
-.global menuToggleBlur__8GameFlowFR4Menu
-menuToggleBlur__8GameFlowFR4Menu:
+.fn menuToggleBlur__8GameFlowFR4Menu, global
 /* 80051B6C 0004EACC  7C 08 02 A6 */	mflr r0
 /* 80051B70 0004EAD0  90 01 00 04 */	stw r0, 4(r1)
 /* 80051B74 0004EAD4  94 21 FF F8 */	stwu r1, -8(r1)
@@ -513,9 +512,9 @@ menuToggleBlur__8GameFlowFR4Menu:
 /* 80051BC0 0004EB20  38 21 00 08 */	addi r1, r1, 8
 /* 80051BC4 0004EB24  7C 08 03 A6 */	mtlr r0
 /* 80051BC8 0004EB28  4E 80 00 20 */	blr 
+.endfn menuToggleBlur__8GameFlowFR4Menu
 
-.global menuToggleInfo__8GameFlowFR4Menu
-menuToggleInfo__8GameFlowFR4Menu:
+.fn menuToggleInfo__8GameFlowFR4Menu, global
 /* 80051BCC 0004EB2C  7C 08 02 A6 */	mflr r0
 /* 80051BD0 0004EB30  90 01 00 04 */	stw r0, 4(r1)
 /* 80051BD4 0004EB34  94 21 FF F8 */	stwu r1, -8(r1)
@@ -542,9 +541,9 @@ menuToggleInfo__8GameFlowFR4Menu:
 /* 80051C20 0004EB80  38 21 00 08 */	addi r1, r1, 8
 /* 80051C24 0004EB84  7C 08 03 A6 */	mtlr r0
 /* 80051C28 0004EB88  4E 80 00 20 */	blr 
+.endfn menuToggleInfo__8GameFlowFR4Menu
 
-.global menuToggleColls__8GameFlowFR4Menu
-menuToggleColls__8GameFlowFR4Menu:
+.fn menuToggleColls__8GameFlowFR4Menu, global
 /* 80051C2C 0004EB8C  7C 08 02 A6 */	mflr r0
 /* 80051C30 0004EB90  90 01 00 04 */	stw r0, 4(r1)
 /* 80051C34 0004EB94  94 21 FF F8 */	stwu r1, -8(r1)
@@ -571,9 +570,9 @@ menuToggleColls__8GameFlowFR4Menu:
 /* 80051C80 0004EBE0  38 21 00 08 */	addi r1, r1, 8
 /* 80051C84 0004EBE4  7C 08 03 A6 */	mtlr r0
 /* 80051C88 0004EBE8  4E 80 00 20 */	blr 
+.endfn menuToggleColls__8GameFlowFR4Menu
 
-.global menuChangeFilter__8GameFlowFR4Menu
-menuChangeFilter__8GameFlowFR4Menu:
+.fn menuChangeFilter__8GameFlowFR4Menu, global
 /* 80051C8C 0004EBEC  7C 08 02 A6 */	mflr r0
 /* 80051C90 0004EBF0  38 AD 8A 88 */	addi r5, r13, filterNames@sda21
 /* 80051C94 0004EBF4  90 01 00 04 */	stw r0, 4(r1)
@@ -614,9 +613,9 @@ menuChangeFilter__8GameFlowFR4Menu:
 /* 80051D20 0004EC80  38 21 00 18 */	addi r1, r1, 0x18
 /* 80051D24 0004EC84  7C 08 03 A6 */	mtlr r0
 /* 80051D28 0004EC88  4E 80 00 20 */	blr 
+.endfn menuChangeFilter__8GameFlowFR4Menu
 
-.global menuIncreaseFilter__8GameFlowFR4Menu
-menuIncreaseFilter__8GameFlowFR4Menu:
+.fn menuIncreaseFilter__8GameFlowFR4Menu, global
 /* 80051D2C 0004EC8C  7C 08 02 A6 */	mflr r0
 /* 80051D30 0004EC90  90 01 00 04 */	stw r0, 4(r1)
 /* 80051D34 0004EC94  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -662,9 +661,9 @@ menuIncreaseFilter__8GameFlowFR4Menu:
 /* 80051DCC 0004ED2C  38 21 00 18 */	addi r1, r1, 0x18
 /* 80051DD0 0004ED30  7C 08 03 A6 */	mtlr r0
 /* 80051DD4 0004ED34  4E 80 00 20 */	blr 
+.endfn menuIncreaseFilter__8GameFlowFR4Menu
 
-.global menuDecreaseFilter__8GameFlowFR4Menu
-menuDecreaseFilter__8GameFlowFR4Menu:
+.fn menuDecreaseFilter__8GameFlowFR4Menu, global
 /* 80051DD8 0004ED38  7C 08 02 A6 */	mflr r0
 /* 80051DDC 0004ED3C  90 01 00 04 */	stw r0, 4(r1)
 /* 80051DE0 0004ED40  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -710,9 +709,9 @@ menuDecreaseFilter__8GameFlowFR4Menu:
 /* 80051E78 0004EDD8  38 21 00 18 */	addi r1, r1, 0x18
 /* 80051E7C 0004EDDC  7C 08 03 A6 */	mtlr r0
 /* 80051E80 0004EDE0  4E 80 00 20 */	blr 
+.endfn menuDecreaseFilter__8GameFlowFR4Menu
 
-.global read__8GameFlowFR18RandomAccessStream
-read__8GameFlowFR18RandomAccessStream:
+.fn read__8GameFlowFR18RandomAccessStream, global
 /* 80051E84 0004EDE4  7C 08 02 A6 */	mflr r0
 /* 80051E88 0004EDE8  90 01 00 04 */	stw r0, 4(r1)
 /* 80051E8C 0004EDEC  94 21 FF F8 */	stwu r1, -8(r1)
@@ -722,9 +721,9 @@ read__8GameFlowFR18RandomAccessStream:
 /* 80051E9C 0004EDFC  38 21 00 08 */	addi r1, r1, 8
 /* 80051EA0 0004EE00  7C 08 03 A6 */	mtlr r0
 /* 80051EA4 0004EE04  4E 80 00 20 */	blr 
+.endfn read__8GameFlowFR18RandomAccessStream
 
-.global preloadLanguage__Fv
-preloadLanguage__Fv:
+.fn preloadLanguage__Fv, global
 /* 80051EA8 0004EE08  7C 08 02 A6 */	mflr r0
 /* 80051EAC 0004EE0C  3C 80 80 3A */	lis r4, gameflow@ha
 /* 80051EB0 0004EE10  90 01 00 04 */	stw r0, 4(r1)
@@ -806,9 +805,9 @@ preloadLanguage__Fv:
 /* 80051FE0 0004EF40  38 21 00 38 */	addi r1, r1, 0x38
 /* 80051FE4 0004EF44  7C 08 03 A6 */	mtlr r0
 /* 80051FE8 0004EF48  4E 80 00 20 */	blr 
+.endfn preloadLanguage__Fv
 
-.global setLoadBanner__8GameFlowFPc
-setLoadBanner__8GameFlowFPc:
+.fn setLoadBanner__8GameFlowFPc, global
 /* 80051FEC 0004EF4C  7C 08 02 A6 */	mflr r0
 /* 80051FF0 0004EF50  38 A0 00 02 */	li r5, 2
 /* 80051FF4 0004EF54  90 01 00 04 */	stw r0, 4(r1)
@@ -849,9 +848,9 @@ setLoadBanner__8GameFlowFPc:
 /* 8005207C 0004EFDC  38 21 00 18 */	addi r1, r1, 0x18
 /* 80052080 0004EFE0  7C 08 03 A6 */	mtlr r0
 /* 80052084 0004EFE4  4E 80 00 20 */	blr 
+.endfn setLoadBanner__8GameFlowFPc
 
-.global hardReset__8GameFlowFP7BaseApp
-hardReset__8GameFlowFP7BaseApp:
+.fn hardReset__8GameFlowFP7BaseApp, global
 /* 80052088 0004EFE8  7C 08 02 A6 */	mflr r0
 /* 8005208C 0004EFEC  39 40 FF FF */	li r10, -1
 /* 80052090 0004EFF0  90 01 00 04 */	stw r0, 4(r1)
@@ -1244,9 +1243,9 @@ hardReset__8GameFlowFP7BaseApp:
 /* 80052688 0004F5E8  38 21 01 48 */	addi r1, r1, 0x148
 /* 8005268C 0004F5EC  7C 08 03 A6 */	mtlr r0
 /* 80052690 0004F5F0  4E 80 00 20 */	blr 
+.endfn hardReset__8GameFlowFP7BaseApp
 
-.global Initialise__12GameHiscoresFv
-Initialise__12GameHiscoresFv:
+.fn Initialise__12GameHiscoresFv, weak
 /* 80052694 0004F5F4  38 A0 00 00 */	li r5, 0
 /* 80052698 0004F5F8  90 A3 00 00 */	stw r5, 0(r3)
 /* 8005269C 0004F5FC  38 80 00 1E */	li r4, 0x1e
@@ -1297,9 +1296,9 @@ Initialise__12GameHiscoresFv:
 /* 80052750 0004F6B0  90 A3 00 B8 */	stw r5, 0xb8(r3)
 /* 80052754 0004F6B4  90 A3 00 B8 */	stw r5, 0xb8(r3)
 /* 80052758 0004F6B8  4E 80 00 20 */	blr 
+.endfn Initialise__12GameHiscoresFv
 
-.global softReset__8GameFlowFv
-softReset__8GameFlowFv:
+.fn softReset__8GameFlowFv, global
 /* 8005275C 0004F6BC  7C 08 02 A6 */	mflr r0
 /* 80052760 0004F6C0  90 01 00 04 */	stw r0, 4(r1)
 /* 80052764 0004F6C4  94 21 FF 68 */	stwu r1, -0x98(r1)
@@ -1662,9 +1661,9 @@ softReset__8GameFlowFv:
 /* 80052C98 0004FBF8  38 21 00 98 */	addi r1, r1, 0x98
 /* 80052C9C 0004FBFC  7C 08 03 A6 */	mtlr r0
 /* 80052CA0 0004FC00  4E 80 00 20 */	blr 
+.endfn softReset__8GameFlowFv
 
-.global __ct__4NodeFPc
-__ct__4NodeFPc:
+.fn __ct__4NodeFPc, weak
 /* 80052CA4 0004FC04  7C 08 02 A6 */	mflr r0
 /* 80052CA8 0004FC08  3C A0 80 22 */	lis r5, __vt__5ANode@ha
 /* 80052CAC 0004FC0C  90 01 00 04 */	stw r0, 4(r1)
@@ -1692,9 +1691,9 @@ __ct__4NodeFPc:
 /* 80052D04 0004FC64  38 21 00 18 */	addi r1, r1, 0x18
 /* 80052D08 0004FC68  7C 08 03 A6 */	mtlr r0
 /* 80052D0C 0004FC6C  4E 80 00 20 */	blr 
+.endfn __ct__4NodeFPc
 
-.global loadShape__8GameFlowFPcb
-loadShape__8GameFlowFPcb:
+.fn loadShape__8GameFlowFPcb, global
 /* 80052D10 0004FC70  7C 08 02 A6 */	mflr r0
 /* 80052D14 0004FC74  90 01 00 04 */	stw r0, 4(r1)
 /* 80052D18 0004FC78  94 21 FF F8 */	stwu r1, -8(r1)
@@ -1704,9 +1703,9 @@ loadShape__8GameFlowFPcb:
 /* 80052D28 0004FC88  38 21 00 08 */	addi r1, r1, 8
 /* 80052D2C 0004FC8C  7C 08 03 A6 */	mtlr r0
 /* 80052D30 0004FC90  4E 80 00 20 */	blr 
+.endfn loadShape__8GameFlowFPcb
 
-.global update__8GameFlowFv
-update__8GameFlowFv:
+.fn update__8GameFlowFv, global
 /* 80052D34 0004FC94  7C 08 02 A6 */	mflr r0
 /* 80052D38 0004FC98  90 01 00 04 */	stw r0, 4(r1)
 /* 80052D3C 0004FC9C  94 21 FF F8 */	stwu r1, -8(r1)
@@ -1719,9 +1718,9 @@ update__8GameFlowFv:
 /* 80052D54 0004FCB4  38 21 00 08 */	addi r1, r1, 8
 /* 80052D58 0004FCB8  7C 08 03 A6 */	mtlr r0
 /* 80052D5C 0004FCBC  4E 80 00 20 */	blr 
+.endfn update__8GameFlowFv
 
-.global addGenNode__8GameFlowFPcP8CoreNode
-addGenNode__8GameFlowFPcP8CoreNode:
+.fn addGenNode__8GameFlowFPcP8CoreNode, global
 /* 80052D60 0004FCC0  7C 08 02 A6 */	mflr r0
 /* 80052D64 0004FCC4  90 01 00 04 */	stw r0, 4(r1)
 /* 80052D68 0004FCC8  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -1777,9 +1776,9 @@ addGenNode__8GameFlowFPcP8CoreNode:
 /* 80052E24 0004FD84  38 21 00 28 */	addi r1, r1, 0x28
 /* 80052E28 0004FD88  7C 08 03 A6 */	mtlr r0
 /* 80052E2C 0004FD8C  4E 80 00 20 */	blr 
+.endfn addGenNode__8GameFlowFPcP8CoreNode
 
-.global update__11GameGenFlowFv
-update__11GameGenFlowFv:
+.fn update__11GameGenFlowFv, weak
 /* 80052E30 0004FD90  7C 08 02 A6 */	mflr r0
 /* 80052E34 0004FD94  3C 80 80 3A */	lis r4, gameflow@ha
 /* 80052E38 0004FD98  90 01 00 04 */	stw r0, 4(r1)
@@ -1804,13 +1803,13 @@ update__11GameGenFlowFv:
 /* 80052E84 0004FDE4  38 21 00 08 */	addi r1, r1, 8
 /* 80052E88 0004FDE8  7C 08 03 A6 */	mtlr r0
 /* 80052E8C 0004FDEC  4E 80 00 20 */	blr 
+.endfn update__11GameGenFlowFv
 
-.global init__13GameLoadIdlerFv
-init__13GameLoadIdlerFv:
+.fn init__13GameLoadIdlerFv, weak
 /* 80052E90 0004FDF0  4E 80 00 20 */	blr 
+.endfn init__13GameLoadIdlerFv
 
-.global "invoke__27Delegate1<8GameFlow,R4Menu>FR4Menu"
-"invoke__27Delegate1<8GameFlow,R4Menu>FR4Menu":
+.fn "invoke__27Delegate1<8GameFlow,R4Menu>FR4Menu", weak
 /* 80052E94 0004FDF4  7C 08 02 A6 */	mflr r0
 /* 80052E98 0004FDF8  7C 65 1B 78 */	mr r5, r3
 /* 80052E9C 0004FDFC  90 01 00 04 */	stw r0, 4(r1)
@@ -1823,6 +1822,7 @@ init__13GameLoadIdlerFv:
 /* 80052EB8 0004FE18  38 21 00 08 */	addi r1, r1, 8
 /* 80052EBC 0004FE1C  7C 08 03 A6 */	mtlr r0
 /* 80052EC0 0004FE20  4E 80 00 20 */	blr 
+.endfn "invoke__27Delegate1<8GameFlow,R4Menu>FR4Menu"
 
 .fn __sinit_gameflow_cpp, local
 /* 80052EC4 0004FE24  7C 08 02 A6 */	mflr r0
@@ -1942,8 +1942,7 @@ init__13GameLoadIdlerFv:
 /* 8005308C 0004FFEC  4E 80 00 20 */	blr 
 .endfn __sinit_gameflow_cpp
 
-.global Initialise__9GamePrefsFv
-Initialise__9GamePrefsFv:
+.fn Initialise__9GamePrefsFv, weak
 /* 80053090 0004FFF0  38 00 00 03 */	li r0, 3
 /* 80053094 0004FFF4  90 03 00 18 */	stw r0, 0x18(r3)
 /* 80053098 0004FFF8  38 80 00 08 */	li r4, 8
@@ -1978,9 +1977,9 @@ Initialise__9GamePrefsFv:
 /* 80053108 00050068  39 08 00 14 */	addi r8, r8, 0x14
 /* 8005310C 0005006C  42 00 FF D4 */	bdnz .L_800530E0
 /* 80053110 00050070  4E 80 00 20 */	blr 
+.endfn Initialise__9GamePrefsFv
 
-.global __ct__17GameRecChalCourseFv
-__ct__17GameRecChalCourseFv:
+.fn __ct__17GameRecChalCourseFv, weak
 /* 80053114 00050074  38 00 00 00 */	li r0, 0
 /* 80053118 00050078  90 03 00 14 */	stw r0, 0x14(r3)
 /* 8005311C 0005007C  90 03 00 14 */	stw r0, 0x14(r3)
@@ -1988,26 +1987,27 @@ __ct__17GameRecChalCourseFv:
 /* 80053124 00050084  90 03 00 14 */	stw r0, 0x14(r3)
 /* 80053128 00050088  90 03 00 14 */	stw r0, 0x14(r3)
 /* 8005312C 0005008C  4E 80 00 20 */	blr 
+.endfn __ct__17GameRecChalCourseFv
 
-.global __ct__17GameRecDeadPikminFv
-__ct__17GameRecDeadPikminFv:
+.fn __ct__17GameRecDeadPikminFv, weak
 /* 80053130 00050090  38 00 27 0F */	li r0, 0x270f
 /* 80053134 00050094  90 03 00 00 */	stw r0, 0(r3)
 /* 80053138 00050098  4E 80 00 20 */	blr 
+.endfn __ct__17GameRecDeadPikminFv
 
-.global __ct__17GameRecBornPikminFv
-__ct__17GameRecBornPikminFv:
+.fn __ct__17GameRecBornPikminFv, weak
 /* 8005313C 0005009C  38 00 00 00 */	li r0, 0
 /* 80053140 000500A0  90 03 00 00 */	stw r0, 0(r3)
 /* 80053144 000500A4  4E 80 00 20 */	blr 
+.endfn __ct__17GameRecBornPikminFv
 
-.global __ct__13GameRecMinDayFv
-__ct__13GameRecMinDayFv:
+.fn __ct__13GameRecMinDayFv, weak
 /* 80053148 000500A8  38 00 00 00 */	li r0, 0
 /* 8005314C 000500AC  90 03 00 00 */	stw r0, 0(r3)
 /* 80053150 000500B0  38 00 00 1E */	li r0, 0x1e
 /* 80053154 000500B4  90 03 00 04 */	stw r0, 4(r3)
 /* 80053158 000500B8  4E 80 00 20 */	blr 
+.endfn __ct__13GameRecMinDayFv
 
 .section .ctors, "wa"  # 0x80221F60 - 0x80221FC0
 lbl_constructor:
@@ -2015,139 +2015,187 @@ lbl_constructor:
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802A6128:
+.obj lbl_802A6128, local
 	.asciz "gameflow.cpp"
+.endobj lbl_802A6128
 .balign 4
-lbl_802A6138:
+.obj lbl_802A6138, local
 	.asciz "GameFlow"
+.endobj lbl_802A6138
 .balign 4
-timopts:
+.obj timopts, local
 	.4byte lbl_803DD770
 	.4byte lbl_803DD778
 	.4byte lbl_803DD780
+.endobj timopts
 .balign 4
-lbl_802A6150:
+.obj lbl_802A6150, local
 	.asciz "Toggle Timers %s"
+.endobj lbl_802A6150
 .balign 4
-lbl_802A6164:
+.obj lbl_802A6164, local
 	.asciz "Toggle Print %s"
+.endobj lbl_802A6164
 .balign 4
-lbl_802A6174:
+.obj lbl_802A6174, local
 	.asciz "Toggle DInfo %s"
+.endobj lbl_802A6174
 .balign 4
-lbl_802A6184:
+.obj lbl_802A6184, local
 	.asciz "Toggle DExtra %s"
+.endobj lbl_802A6184
 .balign 4
-lbl_802A6198:
+.obj lbl_802A6198, local
 	.asciz "Toggle Blur %s"
+.endobj lbl_802A6198
 .balign 4
-lbl_802A61A8:
+.obj lbl_802A61A8, local
 	.asciz "Toggle FileInfo %s"
+.endobj lbl_802A61A8
 .balign 4
-lbl_802A61BC:
+.obj lbl_802A61BC, local
 	.asciz "Toggle Colls %s"
+.endobj lbl_802A61BC
 .balign 4
-lbl_802A61CC:
+.obj lbl_802A61CC, local
 	.4byte 0x00000000
 	.4byte 0xFFFFFFFF
 	.4byte menuToggleTimers__8GameFlowFR4Menu
-lbl_802A61D8:
+.endobj lbl_802A61CC
+.balign 4
+.obj lbl_802A61D8, local
 	.4byte 0x00000000
 	.4byte 0xFFFFFFFF
 	.4byte menuTogglePrint__8GameFlowFR4Menu
-lbl_802A61E4:
+.endobj lbl_802A61D8
+.balign 4
+.obj lbl_802A61E4, local
 	.4byte 0x00000000
 	.4byte 0xFFFFFFFF
 	.4byte menuToggleDInfo__8GameFlowFR4Menu
-lbl_802A61F0:
+.endobj lbl_802A61E4
+.balign 4
+.obj lbl_802A61F0, local
 	.4byte 0x00000000
 	.4byte 0xFFFFFFFF
 	.4byte menuToggleDExtra__8GameFlowFR4Menu
-lbl_802A61FC:
+.endobj lbl_802A61F0
+.balign 4
+.obj lbl_802A61FC, local
 	.4byte 0x00000000
 	.4byte 0xFFFFFFFF
 	.4byte menuToggleBlur__8GameFlowFR4Menu
-lbl_802A6208:
+.endobj lbl_802A61FC
+.balign 4
+.obj lbl_802A6208, local
 	.4byte 0x00000000
 	.4byte 0xFFFFFFFF
 	.4byte menuToggleInfo__8GameFlowFR4Menu
-lbl_802A6214:
+.endobj lbl_802A6208
+.balign 4
+.obj lbl_802A6214, local
 	.4byte 0x00000000
 	.4byte 0xFFFFFFFF
 	.4byte menuToggleColls__8GameFlowFR4Menu
+.endobj lbl_802A6214
 .balign 4
-lbl_802A6220:
+.obj lbl_802A6220, local
 	.asciz "type = %s"
+.endobj lbl_802A6220
 .balign 4
-lbl_802A622C:
+.obj lbl_802A622C, local
 	.asciz "Filter setting %d"
+.endobj lbl_802A622C
 .balign 4
-lbl_802A6240:
+.obj lbl_802A6240, local
 	.4byte 0x00000000
 	.4byte 0xFFFFFFFF
 	.4byte menuChangeFilter__8GameFlowFR4Menu
-lbl_802A624C:
+.endobj lbl_802A6240
+.balign 4
+.obj lbl_802A624C, local
 	.4byte 0x00000000
 	.4byte 0xFFFFFFFF
 	.4byte menuDecreaseFilter__8GameFlowFR4Menu
-lbl_802A6258:
+.endobj lbl_802A624C
+.balign 4
+.obj lbl_802A6258, local
 	.4byte 0x00000000
 	.4byte 0xFFFFFFFF
 	.4byte menuIncreaseFilter__8GameFlowFR4Menu
+.endobj lbl_802A6258
 .balign 4
-lbl_802A6264:
+.obj lbl_802A6264, local
 	.asciz "archives/blo_eng.dir"
+.endobj lbl_802A6264
 .balign 4
-lbl_802A627C:
+.obj lbl_802A627C, local
 	.asciz "dataDir/archives/blo_eng.arc"
+.endobj lbl_802A627C
 .balign 4
-lbl_802A629C:
+.obj lbl_802A629C, local
 	.asciz "screen/eng_tex/screen.bun"
+.endobj lbl_802A629C
 .balign 4
-lbl_802A62B8:
+.obj lbl_802A62B8, local
 	.asciz "screen/eng_blo/"
+.endobj lbl_802A62B8
 .balign 4
-lbl_802A62C8:
+.obj lbl_802A62C8, local
 	.asciz "screen/eng_tex/"
+.endobj lbl_802A62C8
 .balign 4
-lbl_802A62D8:
+.obj lbl_802A62D8, local
 	.asciz "screen/sys_blo/"
+.endobj lbl_802A62D8
 .balign 4
-lbl_802A62E8:
+.obj lbl_802A62E8, local
 	.asciz "screen/otona_tex/"
+.endobj lbl_802A62E8
 .balign 4
-lbl_802A62FC:
+.obj lbl_802A62FC, local
 	.asciz "intro/nintendo.bti"
+.endobj lbl_802A62FC
 .balign 4
-lbl_802A6310:
+.obj lbl_802A6310, local
 	.asciz "gamePrms.bin"
+.endobj lbl_802A6310
 .balign 4
-lbl_802A6320:
+.obj lbl_802A6320, local
 	.asciz "GameGenFlow"
+.endobj lbl_802A6320
 .balign 4
-lbl_802A632C:
+.obj lbl_802A632C, local
 	.asciz "effects/pcr/effects.bun"
+.endobj lbl_802A632C
 .balign 4
-lbl_802A6344:
+.obj lbl_802A6344, local
 	.asciz "effects/tex/effects.bun"
+.endobj lbl_802A6344
 .balign 4
-lbl_802A635C:
+.obj lbl_802A635C, local
 	.asciz "GameGenNode"
+.endobj lbl_802A635C
 .balign 4
-lbl_802A6368:
+.obj lbl_802A6368, local
 	.asciz "CoreNode"
+.endobj lbl_802A6368
 .balign 4
-lbl_802A6374:
+.obj lbl_802A6374, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte 0
-lbl_802A6380:
+.endobj lbl_802A6374
+.balign 4
+.obj lbl_802A6380, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte __RTTI__8CoreNode
 	.4byte 0
 	.4byte 0
-lbl_802A6394:
+.endobj lbl_802A6380
+.balign 4
+.obj lbl_802A6394, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte __RTTI__8CoreNode
@@ -2155,8 +2203,9 @@ lbl_802A6394:
 	.4byte __RTTI__4Node
 	.4byte 0
 	.4byte 0
-.global __vt__11GameGenNode
-__vt__11GameGenNode:
+.endobj lbl_802A6394
+.balign 4
+.obj __vt__11GameGenNode, weak
 	.4byte __RTTI__11GameGenNode
 	.4byte 0
 	.4byte getAgeNodeType__5ANodeFv
@@ -2169,21 +2218,22 @@ __vt__11GameGenNode:
 	.4byte concat__4NodeFR3SRT
 	.4byte concat__4NodeFR8Matrix4f
 	.4byte getModelMatrix__4NodeFv
+.endobj __vt__11GameGenNode
 .balign 4
-lbl_802A63E0:
+.obj lbl_802A63E0, local
 	.asciz "LFlareGroup"
+.endobj lbl_802A63E0
 .balign 4
-lbl_802A63EC:
+.obj lbl_802A63EC, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte __RTTI__8CoreNode
 	.4byte 0
 	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-lbl_802A6410:
+.endobj lbl_802A63EC
+.skip 0x10 # compiler padding
+.balign 4
+.obj lbl_802A6410, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte __RTTI__8CoreNode
@@ -2191,8 +2241,9 @@ lbl_802A6410:
 	.4byte __RTTI__4Node
 	.4byte 0
 	.4byte 0
-.global __vt__7Section
-__vt__7Section:
+.endobj lbl_802A6410
+.balign 4
+.obj __vt__7Section, weak
 	.4byte __RTTI__7Section
 	.4byte 0
 	.4byte getAgeNodeType__5ANodeFv
@@ -2206,7 +2257,9 @@ __vt__7Section:
 	.4byte concat__4NodeFR8Matrix4f
 	.4byte getModelMatrix__4NodeFv
 	.4byte 0
-lbl_802A6460:
+.endobj __vt__7Section
+.balign 4
+.obj lbl_802A6460, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte __RTTI__8CoreNode
@@ -2214,8 +2267,9 @@ lbl_802A6460:
 	.4byte __RTTI__4Node
 	.4byte 0
 	.4byte 0
-.global __vt__11GameGenFlow
-__vt__11GameGenFlow:
+.endobj lbl_802A6460
+.balign 4
+.obj __vt__11GameGenFlow, weak
 	.4byte __RTTI__11GameGenFlow
 	.4byte 0
 	.4byte getAgeNodeType__5ANodeFv
@@ -2228,56 +2282,51 @@ __vt__11GameGenFlow:
 	.4byte concat__4NodeFR3SRT
 	.4byte concat__4NodeFR8Matrix4f
 	.4byte getModelMatrix__4NodeFv
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
+.endobj __vt__11GameGenFlow
 .balign 4
-lbl_802A64C8:
+.skip 0x1C # compiler padding
+.balign 4
+.obj lbl_802A64C8, local
 	.asciz "Parm<String>"
+.endobj lbl_802A64C8
 .balign 4
-lbl_802A64D8:
+.obj lbl_802A64D8, local
 	.asciz "BaseParm"
+.endobj lbl_802A64D8
 .balign 4
-lbl_802A64E4:
+.obj lbl_802A64E4, local
 	.4byte __RTTI__8BaseParm
 	.4byte 0
 	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
+.endobj lbl_802A64E4
 .balign 4
-lbl_802A6504:
+.skip 0x14 # compiler padding
+.balign 4
+.obj lbl_802A6504, local
 	.asciz "Parm<int>"
+.endobj lbl_802A6504
 .balign 4
-lbl_802A6510:
+.obj lbl_802A6510, local
 	.4byte __RTTI__8BaseParm
 	.4byte 0
 	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
+.endobj lbl_802A6510
 .balign 4
-lbl_802A6530:
+.skip 0x14 # compiler padding
+.balign 4
+.obj lbl_802A6530, local
 	.asciz "Parm<float>"
+.endobj lbl_802A6530
 .balign 4
-lbl_802A653C:
+.obj lbl_802A653C, local
 	.4byte __RTTI__8BaseParm
 	.4byte 0
 	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-lbl_802A655C:
+.endobj lbl_802A653C
+.balign 4
+.skip 0x14 # compiler padding
+.balign 4
+.obj lbl_802A655C, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte __RTTI__8CoreNode
@@ -2285,8 +2334,9 @@ lbl_802A655C:
 	.4byte __RTTI__4Node
 	.4byte 0
 	.4byte 0
-.global __vt__8GameFlow
-__vt__8GameFlow:
+.endobj lbl_802A655C
+.balign 4
+.obj __vt__8GameFlow, global
 	.4byte __RTTI__8GameFlow
 	.4byte 0
 	.4byte getAgeNodeType__5ANodeFv
@@ -2299,41 +2349,51 @@ __vt__8GameFlow:
 	.4byte concat__4NodeFR3SRT
 	.4byte concat__4NodeFR8Matrix4f
 	.4byte getModelMatrix__4NodeFv
+.endobj __vt__8GameFlow
 .balign 4
-lbl_802A65A8:
+.obj lbl_802A65A8, local
 	.asciz "Delegate1<GameFlow, Menu &>"
+.endobj lbl_802A65A8
 .balign 4
-lbl_802A65C4:
+.obj lbl_802A65C4, local
 	.asciz "IDelegate1<Menu &>"
+.endobj lbl_802A65C4
 .balign 4
-lbl_802A65D8:
+.obj lbl_802A65D8, local
 	.4byte "__RTTI__18IDelegate1<R4Menu>"
 	.4byte 0
 	.4byte 0
-.global "__vt__27Delegate1<8GameFlow,R4Menu>"
-"__vt__27Delegate1<8GameFlow,R4Menu>":
+.endobj lbl_802A65D8
+.balign 4
+.obj "__vt__27Delegate1<8GameFlow,R4Menu>", weak
 	.4byte "__RTTI__27Delegate1<8GameFlow,R4Menu>"
 	.4byte 0
 	.4byte "invoke__27Delegate1<8GameFlow,R4Menu>FR4Menu"
-.global "__vt__18IDelegate1<R4Menu>"
-"__vt__18IDelegate1<R4Menu>":
+.endobj "__vt__27Delegate1<8GameFlow,R4Menu>"
+.balign 4
+.obj "__vt__18IDelegate1<R4Menu>", weak
 	.4byte "__RTTI__18IDelegate1<R4Menu>"
 	.4byte 0
 	.4byte 0
+.endobj "__vt__18IDelegate1<R4Menu>"
 .balign 4
-lbl_802A65FC:
+.obj lbl_802A65FC, local
 	.asciz "GameLoadIdler"
+.endobj lbl_802A65FC
 .balign 4
-lbl_802A660C:
+.obj lbl_802A660C, local
 	.asciz "LoadIdler"
+.endobj lbl_802A660C
 .balign 4
-lbl_802A6618:
+.obj lbl_802A6618, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte __RTTI__8CoreNode
 	.4byte 0
 	.4byte 0
-lbl_802A662C:
+.endobj lbl_802A6618
+.balign 4
+.obj lbl_802A662C, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte __RTTI__8CoreNode
@@ -2341,236 +2401,319 @@ lbl_802A662C:
 	.4byte __RTTI__9LoadIdler
 	.4byte 0
 	.4byte 0
-.global __vt__13GameLoadIdler
-__vt__13GameLoadIdler:
+.endobj lbl_802A662C
+.balign 4
+.obj __vt__13GameLoadIdler, global
 	.4byte __RTTI__13GameLoadIdler
 	.4byte 0
 	.4byte getAgeNodeType__5ANodeFv
 	.4byte read__8CoreNodeFR18RandomAccessStream
 	.4byte init__13GameLoadIdlerFv
 	.4byte draw__13GameLoadIdlerFR8Graphics
+.endobj __vt__13GameLoadIdler
 .balign 4
-lbl_802A6660:
+.obj lbl_802A6660, local
 	.asciz "memoryCard"
+.endobj lbl_802A6660
 .balign 4
-lbl_802A666C:
+.obj lbl_802A666C, local
 	.asciz "gamePrefs"
+.endobj lbl_802A666C
 .balign 4
-lbl_802A6678:
+.obj lbl_802A6678, local
 	.asciz "playState"
+.endobj lbl_802A6678
 .balign 4
-.global __vt__9LoadIdler
-__vt__9LoadIdler:
+.obj __vt__9LoadIdler, weak
 	.4byte __RTTI__9LoadIdler
 	.4byte 0
 	.4byte getAgeNodeType__5ANodeFv
 	.4byte read__8CoreNodeFR18RandomAccessStream
 	.4byte init__9LoadIdlerFv
 	.4byte draw__9LoadIdlerFR8Graphics
+.endobj __vt__9LoadIdler
 .balign 4
-lbl_802A669C:
+.obj lbl_802A669C, local
 	.asciz "MemoryCard"
+.endobj lbl_802A669C
 .balign 4
-lbl_802A66A8:
+.obj lbl_802A66A8, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte __RTTI__8CoreNode
 	.4byte 0
 	.4byte 0
-.global __vt__10MemoryCard
-__vt__10MemoryCard:
+.endobj lbl_802A66A8
+.balign 4
+.obj __vt__10MemoryCard, weak
 	.4byte __RTTI__10MemoryCard
 	.4byte 0
 	.4byte getAgeNodeType__5ANodeFv
 	.4byte read__8CoreNodeFR18RandomAccessStream
+.endobj __vt__10MemoryCard
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-lbl_803DD770:
+.obj lbl_803DD770, local
 	.asciz " [off]"
+.endobj lbl_803DD770
 .balign 4
-lbl_803DD778:
+.obj lbl_803DD778, local
 	.asciz "  [on]"
+.endobj lbl_803DD778
 .balign 4
-lbl_803DD780:
+.obj lbl_803DD780, local
 	.asciz "[full]"
+.endobj lbl_803DD780
 .balign 4
-lbl_803DD788:
+.obj lbl_803DD788, local
 	.asciz " [on]"
+.endobj lbl_803DD788
 .balign 4
-lbl_803DD790:
+.obj lbl_803DD790, local
 	.asciz "[off]"
+.endobj lbl_803DD790
 .balign 4
-lbl_803DD798:
+.obj lbl_803DD798, local
 	.asciz "custom"
+.endobj lbl_803DD798
 .balign 4
-lbl_803DD7A0:
+.obj lbl_803DD7A0, local
 	.asciz "DF off"
+.endobj lbl_803DD7A0
 .balign 4
-filterNames:
+.obj filterNames, local
 	.4byte lbl_803DD798
 	.4byte lbl_803DD7A0
+.endobj filterNames
 .balign 4
-lbl_803DD7B0:
+.obj lbl_803DD7B0, local
 	.asciz ""
+.endobj lbl_803DD7B0
 .balign 4
-lbl_803DD7B4:
+.obj lbl_803DD7B4, local
 	.asciz "t00"
+.endobj lbl_803DD7B4
 .balign 4
-lbl_803DD7B8:
+.obj lbl_803DD7B8, local
 	.asciz "t01"
+.endobj lbl_803DD7B8
 .balign 4
-lbl_803DD7BC:
+.obj lbl_803DD7BC, local
 	.asciz "p00"
+.endobj lbl_803DD7BC
 .balign 4
-lbl_803DD7C0:
+.obj lbl_803DD7C0, local
 	.asciz "p01"
+.endobj lbl_803DD7C0
 .balign 4
-lbl_803DD7C4:
+.obj lbl_803DD7C4, local
 	.asciz "s01"
+.endobj lbl_803DD7C4
 .balign 4
-lbl_803DD7C8:
+.obj lbl_803DD7C8, local
 	.asciz "p02"
+.endobj lbl_803DD7C8
 .balign 4
-lbl_803DD7CC:
+.obj lbl_803DD7CC, local
 	.asciz "p03"
+.endobj lbl_803DD7CC
 .balign 4
-lbl_803DD7D0:
+.obj lbl_803DD7D0, local
 	.asciz "s03"
+.endobj lbl_803DD7D0
 .balign 4
-lbl_803DD7D4:
+.obj lbl_803DD7D4, local
 	.asciz "p04"
+.endobj lbl_803DD7D4
 .balign 4
-lbl_803DD7D8:
+.obj lbl_803DD7D8, local
 	.asciz "p05"
+.endobj lbl_803DD7D8
 .balign 4
-lbl_803DD7DC:
+.obj lbl_803DD7DC, local
 	.asciz "p06"
+.endobj lbl_803DD7DC
 .balign 4
-lbl_803DD7E0:
+.obj lbl_803DD7E0, local
 	.asciz "x99"
+.endobj lbl_803DD7E0
 .balign 4
-lbl_803DD7E4:
+.obj lbl_803DD7E4, local
 	.asciz "x98"
+.endobj lbl_803DD7E4
 .balign 4
-lbl_803DD7E8:
+.obj lbl_803DD7E8, local
 	.asciz "blah"
+.endobj lbl_803DD7E8
 .balign 4
-lbl_803DD7F0:
+.obj lbl_803DD7F0, local
 	.asciz "load"
+.endobj lbl_803DD7F0
 .balign 4
-lbl_803DD7F8:
+.obj lbl_803DD7F8, local
 	.asciz "parms/"
+.endobj lbl_803DD7F8
 .balign 4
-lbl_803DD800:
+.obj lbl_803DD800, local
 	.asciz "app"
+.endobj lbl_803DD800
 .balign 4
-lbl_803DD804:
+.obj lbl_803DD804, local
 	.asciz "<Node>"
+.endobj lbl_803DD804
 .balign 4
-lbl_803DD80C:
+.obj lbl_803DD80C, local
 	.asciz "lfgroup"
+.endobj lbl_803DD80C
 .balign 4
-lbl_803DD814:
+.obj lbl_803DD814, local
 	.asciz "ANode"
+.endobj lbl_803DD814
 .balign 4
-__RTTI__5ANode:
+.obj __RTTI__5ANode, local
 	.4byte lbl_803DD814
 	.4byte 0
-__RTTI__8CoreNode:
+.endobj __RTTI__5ANode
+.balign 4
+.obj __RTTI__8CoreNode, local
 	.4byte lbl_802A6368
 	.4byte lbl_802A6374
+.endobj __RTTI__8CoreNode
 .balign 4
-lbl_803DD82C:
+.obj lbl_803DD82C, local
 	.asciz "Node"
+.endobj lbl_803DD82C
 .balign 4
-__RTTI__4Node:
+.obj __RTTI__4Node, local
 	.4byte lbl_803DD82C
 	.4byte lbl_802A6380
-__RTTI__11GameGenNode:
+.endobj __RTTI__4Node
+.balign 4
+.obj __RTTI__11GameGenNode, local
 	.4byte lbl_802A635C
 	.4byte lbl_802A6394
+.endobj __RTTI__11GameGenNode
 .balign 4
-lbl_803DD844:
+.obj lbl_803DD844, local
 	.asciz "Section"
+.endobj lbl_803DD844
 .balign 4
-__RTTI__7Section:
+.obj __RTTI__7Section, local
 	.4byte lbl_803DD844
 	.4byte lbl_802A6410
-__RTTI__11GameGenFlow:
+.endobj __RTTI__7Section
+.balign 4
+.obj __RTTI__11GameGenFlow, local
 	.4byte lbl_802A6320
 	.4byte lbl_802A6460
-__RTTI__8BaseParm:
+.endobj __RTTI__11GameGenFlow
+.balign 4
+.obj __RTTI__8BaseParm, local
 	.4byte lbl_802A64D8
 	.4byte 0
-__RTTI__8GameFlow:
+.endobj __RTTI__8BaseParm
+.balign 4
+.obj __RTTI__8GameFlow, local
 	.4byte lbl_802A6138
 	.4byte lbl_802A655C
-"__RTTI__18IDelegate1<R4Menu>":
+.endobj __RTTI__8GameFlow
+.balign 4
+.obj "__RTTI__18IDelegate1<R4Menu>", local
 	.4byte lbl_802A65C4
 	.4byte 0
-"__RTTI__27Delegate1<8GameFlow,R4Menu>":
+.endobj "__RTTI__18IDelegate1<R4Menu>"
+.balign 4
+.obj "__RTTI__27Delegate1<8GameFlow,R4Menu>", local
 	.4byte lbl_802A65A8
 	.4byte lbl_802A65D8
-__RTTI__9LoadIdler:
+.endobj "__RTTI__27Delegate1<8GameFlow,R4Menu>"
+.balign 4
+.obj __RTTI__9LoadIdler, local
 	.4byte lbl_802A660C
 	.4byte lbl_802A6618
-__RTTI__13GameLoadIdler:
+.endobj __RTTI__9LoadIdler
+.balign 4
+.obj __RTTI__13GameLoadIdler, local
 	.4byte lbl_802A65FC
 	.4byte lbl_802A662C
-__RTTI__10MemoryCard:
+.endobj __RTTI__13GameLoadIdler
+.balign 4
+.obj __RTTI__10MemoryCard, local
 	.4byte lbl_802A669C
 	.4byte lbl_802A66A8
+.endobj __RTTI__10MemoryCard
 
 .section .sbss, "wa"
 .balign 8
-.global app
-app:
+.obj app, global
 	.skip 4
-llspin:
+.endobj app
+.balign 4
+.obj llspin, local
 	.skip 4
+.endobj llspin
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803E86F8:
+.obj lbl_803E86F8, local
 	.float 0.0033333334
-lbl_803E86FC:
+.endobj lbl_803E86F8
+.obj lbl_803E86FC, local
 	.float 1.0
-lbl_803E8700:
+.endobj lbl_803E86FC
+.obj lbl_803E8700, local
 	.float 0.016666668
-lbl_803E8704:
+.endobj lbl_803E8700
+.obj lbl_803E8704, local
 	.float 255.0
-lbl_803E8708:
+.endobj lbl_803E8704
+.obj lbl_803E8708, local
 	.float 60.0
+.endobj lbl_803E8708
 .balign 8
-lbl_803E8710:
-	.4byte 0x43300000
-	.4byte 0x80000000
-lbl_803E8718:
+.obj lbl_803E8710, local
+	.8byte 0x4330000080000000
+.endobj lbl_803E8710
+.obj lbl_803E8718, local
 	.float 0.0
-lbl_803E871C:
+.endobj lbl_803E8718
+.obj lbl_803E871C, local
 	.float 24.0
-lbl_803E8720:
+.endobj lbl_803E871C
+.obj lbl_803E8720, local
 	.float 7.0
-lbl_803E8724:
+.endobj lbl_803E8720
+.obj lbl_803E8724, local
 	.float 19.0
-lbl_803E8728:
+.endobj lbl_803E8724
+.obj lbl_803E8728, local
 	.float 20.0
-lbl_803E872C:
+.endobj lbl_803E8728
+.obj lbl_803E872C, local
 	.float 8.0
-lbl_803E8730:
+.endobj lbl_803E872C
+.obj lbl_803E8730, local
 	.float 9.0
-lbl_803E8734:
+.endobj lbl_803E8730
+.obj lbl_803E8734, local
 	.float 17.5
-lbl_803E8738:
+.endobj lbl_803E8734
+.obj lbl_803E8738, local
 	.float 18.5
-lbl_803E873C:
+.endobj lbl_803E8738
+.obj lbl_803E873C, local
 	.float 19.5
-lbl_803E8740:
+.endobj lbl_803E873C
+.obj lbl_803E8740, local
 	.float 16.0
-lbl_803E8744:
+.endobj lbl_803E8740
+.obj lbl_803E8744, local
 	.float 1000.0
-lbl_803E8748:
+.endobj lbl_803E8744
+.obj lbl_803E8748, local
 	.float 0.02
-lbl_803E874C:
+.endobj lbl_803E8748
+.obj lbl_803E874C, local
 	.float 15.0
+.endobj lbl_803E874C

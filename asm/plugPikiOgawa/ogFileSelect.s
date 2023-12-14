@@ -1,8 +1,7 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
 
-.global copyCardInfosSub__Q23zen18ogScrFileSelectMgrFv
-copyCardInfosSub__Q23zen18ogScrFileSelectMgrFv:
+.fn copyCardInfosSub__Q23zen18ogScrFileSelectMgrFv, global
 /* 80187790 001846F0  7C 08 02 A6 */	mflr r0
 /* 80187794 001846F4  3C 80 80 3A */	lis r4, gameflow@ha
 /* 80187798 001846F8  90 01 00 04 */	stw r0, 4(r1)
@@ -83,9 +82,9 @@ copyCardInfosSub__Q23zen18ogScrFileSelectMgrFv:
 /* 801878C4 00184824  38 21 00 C0 */	addi r1, r1, 0xc0
 /* 801878C8 00184828  7C 08 03 A6 */	mtlr r0
 /* 801878CC 0018482C  4E 80 00 20 */	blr 
+.endfn copyCardInfosSub__Q23zen18ogScrFileSelectMgrFv
 
-.global getCardFileInfos__Q23zen18ogScrFileSelectMgrFv
-getCardFileInfos__Q23zen18ogScrFileSelectMgrFv:
+.fn getCardFileInfos__Q23zen18ogScrFileSelectMgrFv, global
 /* 801878D0 00184830  7C 08 02 A6 */	mflr r0
 /* 801878D4 00184834  3C 80 80 3A */	lis r4, gameflow@ha
 /* 801878D8 00184838  90 01 00 04 */	stw r0, 4(r1)
@@ -213,9 +212,9 @@ getCardFileInfos__Q23zen18ogScrFileSelectMgrFv:
 /* 80187AB8 00184A18  38 21 00 E0 */	addi r1, r1, 0xe0
 /* 80187ABC 00184A1C  7C 08 03 A6 */	mtlr r0
 /* 80187AC0 00184A20  4E 80 00 20 */	blr 
+.endfn getCardFileInfos__Q23zen18ogScrFileSelectMgrFv
 
-.global paneOnOffXY__Q23zen18ogScrFileSelectMgrFb
-paneOnOffXY__Q23zen18ogScrFileSelectMgrFb:
+.fn paneOnOffXY__Q23zen18ogScrFileSelectMgrFb, global
 /* 80187AC4 00184A24  88 03 00 28 */	lbz r0, 0x28(r3)
 /* 80187AC8 00184A28  28 00 00 00 */	cmplwi r0, 0
 /* 80187ACC 00184A2C  41 82 00 10 */	beq .L_80187ADC
@@ -225,9 +224,9 @@ paneOnOffXY__Q23zen18ogScrFileSelectMgrFb:
 .L_80187ADC:
 /* 80187ADC 00184A3C  98 83 02 78 */	stb r4, 0x278(r3)
 /* 80187AE0 00184A40  4E 80 00 20 */	blr 
+.endfn paneOnOffXY__Q23zen18ogScrFileSelectMgrFb
 
-.global MovePaneXY__Q23zen18ogScrFileSelectMgrFv
-MovePaneXY__Q23zen18ogScrFileSelectMgrFv:
+.fn MovePaneXY__Q23zen18ogScrFileSelectMgrFv, global
 /* 80187AE4 00184A44  7C 08 02 A6 */	mflr r0
 /* 80187AE8 00184A48  90 01 00 04 */	stw r0, 4(r1)
 /* 80187AEC 00184A4C  94 21 FF B8 */	stwu r1, -0x48(r1)
@@ -288,9 +287,9 @@ MovePaneXY__Q23zen18ogScrFileSelectMgrFv:
 /* 80187BB8 00184B18  38 21 00 48 */	addi r1, r1, 0x48
 /* 80187BBC 00184B1C  7C 08 03 A6 */	mtlr r0
 /* 80187BC0 00184B20  4E 80 00 20 */	blr 
+.endfn MovePaneXY__Q23zen18ogScrFileSelectMgrFv
 
-.global OpenYesNoWindow__Q23zen18ogScrFileSelectMgrFv
-OpenYesNoWindow__Q23zen18ogScrFileSelectMgrFv:
+.fn OpenYesNoWindow__Q23zen18ogScrFileSelectMgrFv, global
 /* 80187BC4 00184B24  7C 08 02 A6 */	mflr r0
 /* 80187BC8 00184B28  90 01 00 04 */	stw r0, 4(r1)
 /* 80187BCC 00184B2C  94 21 FF C0 */	stwu r1, -0x40(r1)
@@ -336,17 +335,17 @@ OpenYesNoWindow__Q23zen18ogScrFileSelectMgrFv:
 /* 80187C6C 00184BCC  38 21 00 40 */	addi r1, r1, 0x40
 /* 80187C70 00184BD0  7C 08 03 A6 */	mtlr r0
 /* 80187C74 00184BD4  4E 80 00 20 */	blr 
+.endfn OpenYesNoWindow__Q23zen18ogScrFileSelectMgrFv
 
-.global CloseYesNoWindow__Q23zen18ogScrFileSelectMgrFv
-CloseYesNoWindow__Q23zen18ogScrFileSelectMgrFv:
+.fn CloseYesNoWindow__Q23zen18ogScrFileSelectMgrFv, global
 /* 80187C78 00184BD8  38 00 00 00 */	li r0, 0
 /* 80187C7C 00184BDC  98 03 02 8D */	stb r0, 0x28d(r3)
 /* 80187C80 00184BE0  C0 02 B0 60 */	lfs f0, lbl_803EB260@sda21(r2)
 /* 80187C84 00184BE4  D0 03 02 90 */	stfs f0, 0x290(r3)
 /* 80187C88 00184BE8  4E 80 00 20 */	blr 
+.endfn CloseYesNoWindow__Q23zen18ogScrFileSelectMgrFv
 
-.global setOperateMode__Q23zen18ogScrFileSelectMgrFQ33zen18ogScrFileSelectMgr15FileOperateMode
-setOperateMode__Q23zen18ogScrFileSelectMgrFQ33zen18ogScrFileSelectMgr15FileOperateMode:
+.fn setOperateMode__Q23zen18ogScrFileSelectMgrFQ33zen18ogScrFileSelectMgr15FileOperateMode, global
 /* 80187C8C 00184BEC  7C 08 02 A6 */	mflr r0
 /* 80187C90 00184BF0  90 01 00 04 */	stw r0, 4(r1)
 /* 80187C94 00184BF4  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -416,9 +415,9 @@ setOperateMode__Q23zen18ogScrFileSelectMgrFQ33zen18ogScrFileSelectMgr15FileOpera
 /* 80187D70 00184CD0  38 21 00 18 */	addi r1, r1, 0x18
 /* 80187D74 00184CD4  7C 08 03 A6 */	mtlr r0
 /* 80187D78 00184CD8  4E 80 00 20 */	blr 
+.endfn setOperateMode__Q23zen18ogScrFileSelectMgrFQ33zen18ogScrFileSelectMgr15FileOperateMode
 
-.global getPane_FileTop1__Q23zen18ogScrFileSelectMgrFv
-getPane_FileTop1__Q23zen18ogScrFileSelectMgrFv:
+.fn getPane_FileTop1__Q23zen18ogScrFileSelectMgrFv, global
 /* 80187D7C 00184CDC  7C 08 02 A6 */	mflr r0
 /* 80187D80 00184CE0  38 A0 00 01 */	li r5, 1
 /* 80187D84 00184CE4  90 01 00 04 */	stw r0, 4(r1)
@@ -735,9 +734,9 @@ getPane_FileTop1__Q23zen18ogScrFileSelectMgrFv:
 /* 80188250 001851B0  38 21 00 58 */	addi r1, r1, 0x58
 /* 80188254 001851B4  7C 08 03 A6 */	mtlr r0
 /* 80188258 001851B8  4E 80 00 20 */	blr 
+.endfn getPane_FileTop1__Q23zen18ogScrFileSelectMgrFv
 
-.global getPane_FileTop2__Q23zen18ogScrFileSelectMgrFv
-getPane_FileTop2__Q23zen18ogScrFileSelectMgrFv:
+.fn getPane_FileTop2__Q23zen18ogScrFileSelectMgrFv, global
 /* 8018825C 001851BC  7C 08 02 A6 */	mflr r0
 /* 80188260 001851C0  38 A0 00 01 */	li r5, 1
 /* 80188264 001851C4  90 01 00 04 */	stw r0, 4(r1)
@@ -941,9 +940,9 @@ getPane_FileTop2__Q23zen18ogScrFileSelectMgrFv:
 /* 8018857C 001854DC  38 21 00 40 */	addi r1, r1, 0x40
 /* 80188580 001854E0  7C 08 03 A6 */	mtlr r0
 /* 80188584 001854E4  4E 80 00 20 */	blr 
+.endfn getPane_FileTop2__Q23zen18ogScrFileSelectMgrFv
 
-.global setFileData__Q23zen18ogScrFileSelectMgrFi
-setFileData__Q23zen18ogScrFileSelectMgrFi:
+.fn setFileData__Q23zen18ogScrFileSelectMgrFi, global
 /* 80188588 001854E8  7C 08 02 A6 */	mflr r0
 /* 8018858C 001854EC  38 C0 00 0A */	li r6, 0xa
 /* 80188590 001854F0  90 01 00 04 */	stw r0, 4(r1)
@@ -1033,9 +1032,9 @@ setFileData__Q23zen18ogScrFileSelectMgrFi:
 /* 801886E0 00185640  38 21 00 30 */	addi r1, r1, 0x30
 /* 801886E4 00185644  7C 08 03 A6 */	mtlr r0
 /* 801886E8 00185648  4E 80 00 20 */	blr 
+.endfn setFileData__Q23zen18ogScrFileSelectMgrFi
 
-.global getPane_FileIcon__Q23zen18ogScrFileSelectMgrFv
-getPane_FileIcon__Q23zen18ogScrFileSelectMgrFv:
+.fn getPane_FileIcon__Q23zen18ogScrFileSelectMgrFv, global
 /* 801886EC 0018564C  7C 08 02 A6 */	mflr r0
 /* 801886F0 00185650  3C 80 6E 6F */	lis r4, 0x6E6F5F63@ha
 /* 801886F4 00185654  90 01 00 04 */	stw r0, 4(r1)
@@ -1365,9 +1364,9 @@ getPane_FileIcon__Q23zen18ogScrFileSelectMgrFv:
 /* 80188C00 00185B60  38 21 01 B0 */	addi r1, r1, 0x1b0
 /* 80188C04 00185B64  7C 08 03 A6 */	mtlr r0
 /* 80188C08 00185B68  4E 80 00 20 */	blr 
+.endfn getPane_FileIcon__Q23zen18ogScrFileSelectMgrFv
 
-.global OnOffKetaNissuu__Q23zen18ogScrFileSelectMgrFi
-OnOffKetaNissuu__Q23zen18ogScrFileSelectMgrFi:
+.fn OnOffKetaNissuu__Q23zen18ogScrFileSelectMgrFi, global
 /* 80188C0C 00185B6C  7C 08 02 A6 */	mflr r0
 /* 80188C10 00185B70  1C C4 00 28 */	mulli r6, r4, 0x28
 /* 80188C14 00185B74  90 01 00 04 */	stw r0, 4(r1)
@@ -1480,9 +1479,9 @@ OnOffKetaNissuu__Q23zen18ogScrFileSelectMgrFi:
 /* 80188DB8 00185D18  38 21 00 58 */	addi r1, r1, 0x58
 /* 80188DBC 00185D1C  7C 08 03 A6 */	mtlr r0
 /* 80188DC0 00185D20  4E 80 00 20 */	blr 
+.endfn OnOffKetaNissuu__Q23zen18ogScrFileSelectMgrFi
 
-.global getPane_CpyCurScreen__Q23zen18ogScrFileSelectMgrFv
-getPane_CpyCurScreen__Q23zen18ogScrFileSelectMgrFv:
+.fn getPane_CpyCurScreen__Q23zen18ogScrFileSelectMgrFv, global
 /* 80188DC4 00185D24  7C 08 02 A6 */	mflr r0
 /* 80188DC8 00185D28  38 A0 00 01 */	li r5, 1
 /* 80188DCC 00185D2C  90 01 00 04 */	stw r0, 4(r1)
@@ -1671,9 +1670,9 @@ getPane_CpyCurScreen__Q23zen18ogScrFileSelectMgrFv:
 /* 801890A8 00186008  38 21 00 C0 */	addi r1, r1, 0xc0
 /* 801890AC 0018600C  7C 08 03 A6 */	mtlr r0
 /* 801890B0 00186010  4E 80 00 20 */	blr 
+.endfn getPane_CpyCurScreen__Q23zen18ogScrFileSelectMgrFv
 
-.global SetTitleMsg__Q23zen18ogScrFileSelectMgrFQ33zen18ogScrFileSelectMgr16titleMessageFlag
-SetTitleMsg__Q23zen18ogScrFileSelectMgrFQ33zen18ogScrFileSelectMgr16titleMessageFlag:
+.fn SetTitleMsg__Q23zen18ogScrFileSelectMgrFQ33zen18ogScrFileSelectMgr16titleMessageFlag, global
 /* 801890B4 00186014  7C 08 02 A6 */	mflr r0
 /* 801890B8 00186018  90 01 00 04 */	stw r0, 4(r1)
 /* 801890BC 0018601C  38 00 00 00 */	li r0, 0
@@ -1897,9 +1896,9 @@ SetTitleMsg__Q23zen18ogScrFileSelectMgrFQ33zen18ogScrFileSelectMgr16titleMessage
 /* 801893E8 00186348  38 21 00 D0 */	addi r1, r1, 0xd0
 /* 801893EC 0018634C  7C 08 03 A6 */	mtlr r0
 /* 801893F0 00186350  4E 80 00 20 */	blr 
+.endfn SetTitleMsg__Q23zen18ogScrFileSelectMgrFQ33zen18ogScrFileSelectMgr16titleMessageFlag
 
-.global setDataNumber__Q23zen18ogScrFileSelectMgrFi
-setDataNumber__Q23zen18ogScrFileSelectMgrFi:
+.fn setDataNumber__Q23zen18ogScrFileSelectMgrFi, global
 /* 801893F4 00186354  7C 08 02 A6 */	mflr r0
 /* 801893F8 00186358  38 C0 00 01 */	li r6, 1
 /* 801893FC 0018635C  90 01 00 04 */	stw r0, 4(r1)
@@ -2085,9 +2084,9 @@ setDataNumber__Q23zen18ogScrFileSelectMgrFi:
 /* 801896B0 00186610  38 21 00 98 */	addi r1, r1, 0x98
 /* 801896B4 00186614  7C 08 03 A6 */	mtlr r0
 /* 801896B8 00186618  4E 80 00 20 */	blr 
+.endfn setDataNumber__Q23zen18ogScrFileSelectMgrFi
 
-.global __ct__Q23zen18ogScrFileSelectMgrFv
-__ct__Q23zen18ogScrFileSelectMgrFv:
+.fn __ct__Q23zen18ogScrFileSelectMgrFv, global
 /* 801896BC 0018661C  7C 08 02 A6 */	mflr r0
 /* 801896C0 00186620  3C 80 80 19 */	lis r4, __ct__13CardQuickInfoFv@ha
 /* 801896C4 00186624  90 01 00 04 */	stw r0, 4(r1)
@@ -2683,15 +2682,15 @@ __ct__Q23zen18ogScrFileSelectMgrFv:
 /* 80189FA8 00186F08  38 21 00 88 */	addi r1, r1, 0x88
 /* 80189FAC 00186F0C  7C 08 03 A6 */	mtlr r0
 /* 80189FB0 00186F10  4E 80 00 20 */	blr 
+.endfn __ct__Q23zen18ogScrFileSelectMgrFv
 
-.global __ct__13CardQuickInfoFv
-__ct__13CardQuickInfoFv:
+.fn __ct__13CardQuickInfoFv, weak
 /* 80189FB4 00186F14  38 00 00 00 */	li r0, 0
 /* 80189FB8 00186F18  90 03 00 08 */	stw r0, 8(r3)
 /* 80189FBC 00186F1C  4E 80 00 20 */	blr 
+.endfn __ct__13CardQuickInfoFv
 
-.global chaseDataScale__Q23zen18ogScrFileSelectMgrFv
-chaseDataScale__Q23zen18ogScrFileSelectMgrFv:
+.fn chaseDataScale__Q23zen18ogScrFileSelectMgrFv, global
 /* 80189FC0 00186F20  7C 08 02 A6 */	mflr r0
 /* 80189FC4 00186F24  90 01 00 04 */	stw r0, 4(r1)
 /* 80189FC8 00186F28  94 21 FF C0 */	stwu r1, -0x40(r1)
@@ -2805,9 +2804,9 @@ chaseDataScale__Q23zen18ogScrFileSelectMgrFv:
 /* 8018A16C 001870CC  38 21 00 40 */	addi r1, r1, 0x40
 /* 8018A170 001870D0  7C 08 03 A6 */	mtlr r0
 /* 8018A174 001870D4  4E 80 00 20 */	blr 
+.endfn chaseDataScale__Q23zen18ogScrFileSelectMgrFv
 
-.global OnOffNewPane__Q23zen18ogScrFileSelectMgrFi
-OnOffNewPane__Q23zen18ogScrFileSelectMgrFi:
+.fn OnOffNewPane__Q23zen18ogScrFileSelectMgrFi, global
 /* 8018A178 001870D8  7C 08 02 A6 */	mflr r0
 /* 8018A17C 001870DC  90 01 00 04 */	stw r0, 4(r1)
 /* 8018A180 001870E0  94 21 FF A8 */	stwu r1, -0x58(r1)
@@ -2922,9 +2921,9 @@ OnOffNewPane__Q23zen18ogScrFileSelectMgrFi:
 /* 8018A324 00187284  38 21 00 58 */	addi r1, r1, 0x58
 /* 8018A328 00187288  7C 08 03 A6 */	mtlr r0
 /* 8018A32C 0018728C  4E 80 00 20 */	blr 
+.endfn OnOffNewPane__Q23zen18ogScrFileSelectMgrFi
 
-.global ChkOnyonOnOff__Q23zen18ogScrFileSelectMgrFv
-ChkOnyonOnOff__Q23zen18ogScrFileSelectMgrFv:
+.fn ChkOnyonOnOff__Q23zen18ogScrFileSelectMgrFv, global
 /* 8018A330 00187290  A8 03 01 34 */	lha r0, 0x134(r3)
 /* 8018A334 00187294  1C 00 00 28 */	mulli r0, r0, 0x28
 /* 8018A338 00187298  7C 83 02 14 */	add r4, r3, r0
@@ -2976,9 +2975,9 @@ ChkOnyonOnOff__Q23zen18ogScrFileSelectMgrFv:
 /* 8018A3DC 0018733C  50 80 3E 30 */	rlwimi r0, r4, 7, 0x18, 0x18
 /* 8018A3E0 00187340  98 03 00 0C */	stb r0, 0xc(r3)
 /* 8018A3E4 00187344  4E 80 00 20 */	blr 
+.endfn ChkOnyonOnOff__Q23zen18ogScrFileSelectMgrFv
 
-.global ChkNewData__Q23zen18ogScrFileSelectMgrFv
-ChkNewData__Q23zen18ogScrFileSelectMgrFv:
+.fn ChkNewData__Q23zen18ogScrFileSelectMgrFv, global
 /* 8018A3E8 00187348  7C 08 02 A6 */	mflr r0
 /* 8018A3EC 0018734C  90 01 00 04 */	stw r0, 4(r1)
 /* 8018A3F0 00187350  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -3014,9 +3013,9 @@ ChkNewData__Q23zen18ogScrFileSelectMgrFv:
 /* 8018A464 001873C4  38 21 00 18 */	addi r1, r1, 0x18
 /* 8018A468 001873C8  7C 08 03 A6 */	mtlr r0
 /* 8018A46C 001873CC  4E 80 00 20 */	blr 
+.endfn ChkNewData__Q23zen18ogScrFileSelectMgrFv
 
-.global start__Q23zen18ogScrFileSelectMgrFbi
-start__Q23zen18ogScrFileSelectMgrFbi:
+.fn start__Q23zen18ogScrFileSelectMgrFbi, global
 /* 8018A470 001873D0  7C 08 02 A6 */	mflr r0
 /* 8018A474 001873D4  90 01 00 04 */	stw r0, 4(r1)
 /* 8018A478 001873D8  38 00 FF FF */	li r0, -1
@@ -3283,9 +3282,9 @@ start__Q23zen18ogScrFileSelectMgrFbi:
 /* 8018A868 001877C8  38 21 00 58 */	addi r1, r1, 0x58
 /* 8018A86C 001877CC  7C 08 03 A6 */	mtlr r0
 /* 8018A870 001877D0  4E 80 00 20 */	blr 
+.endfn start__Q23zen18ogScrFileSelectMgrFbi
 
-.global OperateSelect__Q23zen18ogScrFileSelectMgrFP10Controller
-OperateSelect__Q23zen18ogScrFileSelectMgrFP10Controller:
+.fn OperateSelect__Q23zen18ogScrFileSelectMgrFP10Controller, global
 /* 8018A874 001877D4  7C 08 02 A6 */	mflr r0
 /* 8018A878 001877D8  90 01 00 04 */	stw r0, 4(r1)
 /* 8018A87C 001877DC  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -3531,9 +3530,9 @@ OperateSelect__Q23zen18ogScrFileSelectMgrFP10Controller:
 /* 8018ABD4 00187B34  38 21 00 18 */	addi r1, r1, 0x18
 /* 8018ABD8 00187B38  7C 08 03 A6 */	mtlr r0
 /* 8018ABDC 00187B3C  4E 80 00 20 */	blr 
+.endfn OperateSelect__Q23zen18ogScrFileSelectMgrFP10Controller
 
-.global KetteiEffectStart__Q23zen18ogScrFileSelectMgrFv
-KetteiEffectStart__Q23zen18ogScrFileSelectMgrFv:
+.fn KetteiEffectStart__Q23zen18ogScrFileSelectMgrFv, global
 /* 8018ABE0 00187B40  7C 08 02 A6 */	mflr r0
 /* 8018ABE4 00187B44  38 80 00 25 */	li r4, 0x25
 /* 8018ABE8 00187B48  90 01 00 04 */	stw r0, 4(r1)
@@ -3661,9 +3660,9 @@ KetteiEffectStart__Q23zen18ogScrFileSelectMgrFv:
 /* 8018ADD0 00187D30  38 21 00 C0 */	addi r1, r1, 0xc0
 /* 8018ADD4 00187D34  7C 08 03 A6 */	mtlr r0
 /* 8018ADD8 00187D38  4E 80 00 20 */	blr 
+.endfn KetteiEffectStart__Q23zen18ogScrFileSelectMgrFv
 
-.global TailEffectStart__Q23zen18ogScrFileSelectMgrFv
-TailEffectStart__Q23zen18ogScrFileSelectMgrFv:
+.fn TailEffectStart__Q23zen18ogScrFileSelectMgrFv, global
 /* 8018ADDC 00187D3C  7C 08 02 A6 */	mflr r0
 /* 8018ADE0 00187D40  38 80 00 26 */	li r4, 0x26
 /* 8018ADE4 00187D44  90 01 00 04 */	stw r0, 4(r1)
@@ -3781,9 +3780,9 @@ TailEffectStart__Q23zen18ogScrFileSelectMgrFv:
 /* 8018AFA4 00187F04  38 21 00 B0 */	addi r1, r1, 0xb0
 /* 8018AFA8 00187F08  7C 08 03 A6 */	mtlr r0
 /* 8018AFAC 00187F0C  4E 80 00 20 */	blr 
+.endfn TailEffectStart__Q23zen18ogScrFileSelectMgrFv
 
-.global update__Q23zen18ogScrFileSelectMgrFP10ControllerR13CardQuickInfo
-update__Q23zen18ogScrFileSelectMgrFP10ControllerR13CardQuickInfo:
+.fn update__Q23zen18ogScrFileSelectMgrFP10ControllerR13CardQuickInfo, global
 /* 8018AFB0 00187F10  7C 08 02 A6 */	mflr r0
 /* 8018AFB4 00187F14  90 01 00 04 */	stw r0, 4(r1)
 /* 8018AFB8 00187F18  94 21 FD 78 */	stwu r1, -0x288(r1)
@@ -4466,9 +4465,9 @@ update__Q23zen18ogScrFileSelectMgrFP10ControllerR13CardQuickInfo:
 /* 8018B9C4 00188924  38 21 02 88 */	addi r1, r1, 0x288
 /* 8018B9C8 00188928  7C 08 03 A6 */	mtlr r0
 /* 8018B9CC 0018892C  4E 80 00 20 */	blr 
+.endfn update__Q23zen18ogScrFileSelectMgrFP10ControllerR13CardQuickInfo
 
-.global __ct__6ColourFRC6Colour
-__ct__6ColourFRC6Colour:
+.fn __ct__6ColourFRC6Colour, weak
 /* 8018B9D0 00188930  88 04 00 00 */	lbz r0, 0(r4)
 /* 8018B9D4 00188934  98 03 00 00 */	stb r0, 0(r3)
 /* 8018B9D8 00188938  88 04 00 01 */	lbz r0, 1(r4)
@@ -4478,9 +4477,9 @@ __ct__6ColourFRC6Colour:
 /* 8018B9E8 00188948  88 04 00 03 */	lbz r0, 3(r4)
 /* 8018B9EC 0018894C  98 03 00 03 */	stb r0, 3(r3)
 /* 8018B9F0 00188950  4E 80 00 20 */	blr 
+.endfn __ct__6ColourFRC6Colour
 
-.global draw__Q23zen18ogScrFileSelectMgrFR8Graphics
-draw__Q23zen18ogScrFileSelectMgrFR8Graphics:
+.fn draw__Q23zen18ogScrFileSelectMgrFR8Graphics, global
 /* 8018B9F4 00188954  7C 08 02 A6 */	mflr r0
 /* 8018B9F8 00188958  90 01 00 04 */	stw r0, 4(r1)
 /* 8018B9FC 0018895C  94 21 FE F8 */	stwu r1, -0x108(r1)
@@ -4570,15 +4569,19 @@ draw__Q23zen18ogScrFileSelectMgrFR8Graphics:
 /* 8018BB44 00188AA4  38 21 01 08 */	addi r1, r1, 0x108
 /* 8018BB48 00188AA8  7C 08 03 A6 */	mtlr r0
 /* 8018BB4C 00188AAC  4E 80 00 20 */	blr 
+.endfn draw__Q23zen18ogScrFileSelectMgrFR8Graphics
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802D5188:
+.obj lbl_802D5188, local
 	.asciz "ogFileSelect.cpp"
+.endobj lbl_802D5188
 .balign 4
-lbl_802D519C:
+.obj lbl_802D519C, local
 	.asciz "OgFileSelectSection"
-lbl_802D51B0:
+.endobj lbl_802D519C
+.balign 4
+.obj lbl_802D51B0, local
 	.4byte .L_801893D8
 	.4byte .L_801892A4
 	.4byte .L_801892BC
@@ -4593,112 +4596,157 @@ lbl_802D51B0:
 	.4byte .L_80189394
 	.4byte .L_801893AC
 	.4byte .L_801893C4
+.endobj lbl_802D51B0
 .balign 4
-lbl_802D51E8:
+.obj lbl_802D51E8, local
 	.asciz "screen/blo/data1.blo"
+.endobj lbl_802D51E8
 .balign 4
-lbl_802D5200:
+.obj lbl_802D5200, local
 	.asciz "screen/blo/data2.blo"
+.endobj lbl_802D5200
 .balign 4
-lbl_802D5218:
+.obj lbl_802D5218, local
 	.asciz "screen/blo/data3.blo"
+.endobj lbl_802D5218
 .balign 4
-lbl_802D5230:
+.obj lbl_802D5230, local
 	.asciz "screen/blo/data1_n.blo"
+.endobj lbl_802D5230
 .balign 4
-lbl_802D5248:
+.obj lbl_802D5248, local
 	.asciz "screen/blo/data2_n.blo"
+.endobj lbl_802D5248
 .balign 4
-lbl_802D5260:
+.obj lbl_802D5260, local
 	.asciz "screen/blo/data3_n.blo"
+.endobj lbl_802D5260
 .balign 4
-lbl_802D5278:
+.obj lbl_802D5278, local
 	.asciz "screen/blo/data_t1.blo"
+.endobj lbl_802D5278
 .balign 4
-lbl_802D5290:
+.obj lbl_802D5290, local
 	.asciz "screen/blo/data_t2.blo"
+.endobj lbl_802D5290
 .balign 4
-lbl_802D52A8:
+.obj lbl_802D52A8, local
 	.asciz "screen/blo/data_i.blo"
+.endobj lbl_802D52A8
 .balign 4
-lbl_802D52C0:
+.obj lbl_802D52C0, local
 	.asciz "screen/blo/black.blo"
+.endobj lbl_802D52C0
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-lbl_803E59F8:
+.obj lbl_803E59F8, local
 	.float 0.0
-lbl_803E59FC:
+.endobj lbl_803E59F8
+.obj lbl_803E59FC, local
 	.float 0.0
-lbl_803E5A00:
+.endobj lbl_803E59FC
+.obj lbl_803E5A00, local
 	.float 0.0
-lbl_803E5A04:
+.endobj lbl_803E5A00
+.obj lbl_803E5A04, local
 	.float 0.0
-lbl_803E5A08:
+.endobj lbl_803E5A04
+.obj lbl_803E5A08, local
 	.float 0.0
-lbl_803E5A0C:
+.endobj lbl_803E5A08
+.obj lbl_803E5A0C, local
 	.float 0.0
-lbl_803E5A10:
+.endobj lbl_803E5A0C
+.obj lbl_803E5A10, local
 	.float 320.0
-lbl_803E5A14:
+.endobj lbl_803E5A10
+.obj lbl_803E5A14, local
 	.float 240.0
-lbl_803E5A18:
+.endobj lbl_803E5A14
+.obj lbl_803E5A18, local
 	.float 0.0
-lbl_803E5A1C:
+.endobj lbl_803E5A18
+.obj lbl_803E5A1C, local
 	.float 0.0
-lbl_803E5A20:
+.endobj lbl_803E5A1C
+.obj lbl_803E5A20, local
 	.float 0.0
-lbl_803E5A24:
+.endobj lbl_803E5A20
+.obj lbl_803E5A24, local
 	.float 0.0
-lbl_803E5A28:
+.endobj lbl_803E5A24
+.obj lbl_803E5A28, local
 	.float 0.0
-lbl_803E5A2C:
+.endobj lbl_803E5A28
+.obj lbl_803E5A2C, local
 	.float 0.0
-lbl_803E5A30:
+.endobj lbl_803E5A2C
+.obj lbl_803E5A30, local
 	.float 0.0
-lbl_803E5A34:
+.endobj lbl_803E5A30
+.obj lbl_803E5A34, local
 	.float 0.0
-lbl_803E5A38:
+.endobj lbl_803E5A34
+.obj lbl_803E5A38, local
 	.float 0.0
+.endobj lbl_803E5A38
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803EB260:
-	.4byte 0x00000000
-lbl_803EB264:
-	.4byte 0x3E800000
-lbl_803EB268:
-	.4byte 0x3F800000
+.obj lbl_803EB260, local
+	.float 0.0
+.endobj lbl_803EB260
+.obj lbl_803EB264, local
+	.float 0.25
+.endobj lbl_803EB264
+.obj lbl_803EB268, local
+	.float 1.0
+.endobj lbl_803EB268
 .balign 8
-lbl_803EB270:
-	.4byte 0x43300000
-	.4byte 0x00000000
-lbl_803EB278:
-	.4byte 0x3E4CCCCD
-lbl_803EB27C:
-	.4byte 0x3F333333
-lbl_803EB280:
-	.4byte 0x43300000
-	.4byte 0x80000000
-lbl_803EB288:
-	.4byte 0x40A00000
-lbl_803EB28C:
-	.4byte 0x3F000000
-lbl_803EB290:
-	.4byte 0x43F00000
-lbl_803EB294:
-	.4byte 0x41200000
-lbl_803EB298:
-	.4byte 0x3DCCCCCD
-lbl_803EB29C:
-	.4byte 0x437F0000
-lbl_803EB2A0:
-	.4byte 0x3D4CCCCD
-lbl_803EB2A4:
-	.4byte 0x3ECCCCCD
-lbl_803EB2A8:
-	.4byte 0x43480000
-lbl_803EB2AC:
-	.4byte 0x41F00000
-lbl_803EB2B0:
-	.4byte 0x459C4000
+.obj lbl_803EB270, local
+	.8byte 0x4330000000000000
+.endobj lbl_803EB270
+.obj lbl_803EB278, local
+	.float 0.2
+.endobj lbl_803EB278
+.obj lbl_803EB27C, local
+	.float 0.7
+.endobj lbl_803EB27C
+.balign 8
+.obj lbl_803EB280, local
+	.8byte 0x4330000080000000
+.endobj lbl_803EB280
+.obj lbl_803EB288, local
+	.float 5.0
+.endobj lbl_803EB288
+.obj lbl_803EB28C, local
+	.float 0.5
+.endobj lbl_803EB28C
+.obj lbl_803EB290, local
+	.float 480.0
+.endobj lbl_803EB290
+.obj lbl_803EB294, local
+	.float 10.0
+.endobj lbl_803EB294
+.obj lbl_803EB298, local
+	.float 0.1
+.endobj lbl_803EB298
+.obj lbl_803EB29C, local
+	.float 255.0
+.endobj lbl_803EB29C
+.obj lbl_803EB2A0, local
+	.float 0.05
+.endobj lbl_803EB2A0
+.obj lbl_803EB2A4, local
+	.float 0.4
+.endobj lbl_803EB2A4
+.obj lbl_803EB2A8, local
+	.float 200.0
+.endobj lbl_803EB2A8
+.obj lbl_803EB2AC, local
+	.float 30.0
+.endobj lbl_803EB2AC
+.obj lbl_803EB2B0, local
+	.float 5000.0
+.endobj lbl_803EB2B0

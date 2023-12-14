@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global __ct__11MoviePlayerFv
-__ct__11MoviePlayerFv:
+.fn __ct__11MoviePlayerFv, global
 /* 80076E34 00073D94  3C 80 80 22 */	lis r4, __vt__5ANode@ha
 /* 80076E38 00073D98  39 04 73 8C */	addi r8, r4, __vt__5ANode@l
 /* 80076E3C 00073D9C  3C 80 80 22 */	lis r4, __vt__8CoreNode@ha
@@ -49,9 +48,9 @@ __ct__11MoviePlayerFv:
 /* 80076EE4 00073E44  D0 03 01 54 */	stfs f0, 0x154(r3)
 /* 80076EE8 00073E48  D0 03 01 68 */	stfs f0, 0x168(r3)
 /* 80076EEC 00073E4C  4E 80 00 20 */	blr 
+.endfn __ct__11MoviePlayerFv
 
-.global resetMovieList__11MoviePlayerFv
-resetMovieList__11MoviePlayerFv:
+.fn resetMovieList__11MoviePlayerFv, global
 /* 80076EF0 00073E50  7C 08 02 A6 */	mflr r0
 /* 80076EF4 00073E54  3C A0 80 22 */	lis r5, __vt__5ANode@ha
 /* 80076EF8 00073E58  90 01 00 04 */	stw r0, 4(r1)
@@ -110,9 +109,9 @@ resetMovieList__11MoviePlayerFv:
 /* 80076FC4 00073F24  38 21 00 30 */	addi r1, r1, 0x30
 /* 80076FC8 00073F28  7C 08 03 A6 */	mtlr r0
 /* 80076FCC 00073F2C  4E 80 00 20 */	blr 
+.endfn resetMovieList__11MoviePlayerFv
 
-.global fixMovieList__11MoviePlayerFv
-fixMovieList__11MoviePlayerFv:
+.fn fixMovieList__11MoviePlayerFv, global
 /* 80076FD0 00073F30  7C 08 02 A6 */	mflr r0
 /* 80076FD4 00073F34  90 01 00 04 */	stw r0, 4(r1)
 /* 80076FD8 00073F38  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -151,9 +150,9 @@ fixMovieList__11MoviePlayerFv:
 /* 80077054 00073FB4  38 21 00 20 */	addi r1, r1, 0x20
 /* 80077058 00073FB8  7C 08 03 A6 */	mtlr r0
 /* 8007705C 00073FBC  4E 80 00 20 */	blr 
+.endfn fixMovieList__11MoviePlayerFv
 
-.global initMovie__11MoviePlayerFP9MovieInfoi
-initMovie__11MoviePlayerFP9MovieInfoi:
+.fn initMovie__11MoviePlayerFP9MovieInfoi, global
 /* 80077060 00073FC0  7C 08 02 A6 */	mflr r0
 /* 80077064 00073FC4  90 01 00 04 */	stw r0, 4(r1)
 /* 80077068 00073FC8  38 00 00 00 */	li r0, 0
@@ -222,9 +221,9 @@ initMovie__11MoviePlayerFP9MovieInfoi:
 /* 80077154 000740B4  38 21 00 40 */	addi r1, r1, 0x40
 /* 80077158 000740B8  7C 08 03 A6 */	mtlr r0
 /* 8007715C 000740BC  4E 80 00 20 */	blr 
+.endfn initMovie__11MoviePlayerFP9MovieInfoi
 
-.global startMovie__11MoviePlayerFiiP8CreatureP8Vector3fP8Vector3fUlb
-startMovie__11MoviePlayerFiiP8CreatureP8Vector3fP8Vector3fUlb:
+.fn startMovie__11MoviePlayerFiiP8CreatureP8Vector3fP8Vector3fUlb, global
 /* 80077160 000740C0  7C 08 02 A6 */	mflr r0
 /* 80077164 000740C4  90 01 00 04 */	stw r0, 4(r1)
 /* 80077168 000740C8  94 21 FF 68 */	stwu r1, -0x98(r1)
@@ -553,9 +552,9 @@ startMovie__11MoviePlayerFiiP8CreatureP8Vector3fP8Vector3fUlb:
 /* 800775F0 00074550  38 21 00 98 */	addi r1, r1, 0x98
 /* 800775F4 00074554  7C 08 03 A6 */	mtlr r0
 /* 800775F8 00074558  4E 80 00 20 */	blr 
+.endfn startMovie__11MoviePlayerFiiP8CreatureP8Vector3fP8Vector3fUlb
 
-.global sndStartMovie__11MoviePlayerFP9MovieInfo
-sndStartMovie__11MoviePlayerFP9MovieInfo:
+.fn sndStartMovie__11MoviePlayerFP9MovieInfo, global
 /* 800775FC 0007455C  7C 08 02 A6 */	mflr r0
 /* 80077600 00074560  3C 60 80 3A */	lis r3, gameflow@ha
 /* 80077604 00074564  90 01 00 04 */	stw r0, 4(r1)
@@ -626,9 +625,9 @@ sndStartMovie__11MoviePlayerFP9MovieInfo:
 /* 800776F4 00074654  38 21 00 20 */	addi r1, r1, 0x20
 /* 800776F8 00074658  7C 08 03 A6 */	mtlr r0
 /* 800776FC 0007465C  4E 80 00 20 */	blr 
+.endfn sndStartMovie__11MoviePlayerFP9MovieInfo
 
-.global initMovieFlags__11MoviePlayerFP9MovieInfo
-initMovieFlags__11MoviePlayerFP9MovieInfo:
+.fn initMovieFlags__11MoviePlayerFP9MovieInfo, global
 /* 80077700 00074660  7C 08 02 A6 */	mflr r0
 /* 80077704 00074664  90 01 00 04 */	stw r0, 4(r1)
 /* 80077708 00074668  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -713,9 +712,9 @@ initMovieFlags__11MoviePlayerFP9MovieInfo:
 /* 80077818 00074778  38 21 00 20 */	addi r1, r1, 0x20
 /* 8007781C 0007477C  7C 08 03 A6 */	mtlr r0
 /* 80077820 00074780  4E 80 00 20 */	blr 
+.endfn initMovieFlags__11MoviePlayerFP9MovieInfo
 
-.global sndStopMovie__11MoviePlayerFP9MovieInfo
-sndStopMovie__11MoviePlayerFP9MovieInfo:
+.fn sndStopMovie__11MoviePlayerFP9MovieInfo, global
 /* 80077824 00074784  7C 08 02 A6 */	mflr r0
 /* 80077828 00074788  90 01 00 04 */	stw r0, 4(r1)
 /* 8007782C 0007478C  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -742,9 +741,9 @@ sndStopMovie__11MoviePlayerFP9MovieInfo:
 /* 8007787C 000747DC  38 21 00 20 */	addi r1, r1, 0x20
 /* 80077880 000747E0  7C 08 03 A6 */	mtlr r0
 /* 80077884 000747E4  4E 80 00 20 */	blr 
+.endfn sndStopMovie__11MoviePlayerFP9MovieInfo
 
-.global update__11MoviePlayerFv
-update__11MoviePlayerFv:
+.fn update__11MoviePlayerFv, global
 /* 80077888 000747E8  7C 08 02 A6 */	mflr r0
 /* 8007788C 000747EC  3C 80 80 3A */	lis r4, gameflow@ha
 /* 80077890 000747F0  90 01 00 04 */	stw r0, 4(r1)
@@ -1004,9 +1003,9 @@ update__11MoviePlayerFv:
 /* 80077C48 00074BA8  38 21 00 78 */	addi r1, r1, 0x78
 /* 80077C4C 00074BAC  7C 08 03 A6 */	mtlr r0
 /* 80077C50 00074BB0  4E 80 00 20 */	blr 
+.endfn update__11MoviePlayerFv
 
-.global skipScene__11MoviePlayerFi
-skipScene__11MoviePlayerFi:
+.fn skipScene__11MoviePlayerFi, global
 /* 80077C54 00074BB4  7C 08 02 A6 */	mflr r0
 /* 80077C58 00074BB8  90 01 00 04 */	stw r0, 4(r1)
 /* 80077C5C 00074BBC  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -1055,9 +1054,9 @@ skipScene__11MoviePlayerFi:
 /* 80077CF4 00074C54  38 21 00 20 */	addi r1, r1, 0x20
 /* 80077CF8 00074C58  7C 08 03 A6 */	mtlr r0
 /* 80077CFC 00074C5C  4E 80 00 20 */	blr 
+.endfn skipScene__11MoviePlayerFi
 
-.global getLookAtPos__11MoviePlayerFR8Vector3f
-getLookAtPos__11MoviePlayerFR8Vector3f:
+.fn getLookAtPos__11MoviePlayerFR8Vector3f, global
 /* 80077D00 00074C60  C0 03 01 38 */	lfs f0, 0x138(r3)
 /* 80077D04 00074C64  D0 04 00 00 */	stfs f0, 0(r4)
 /* 80077D08 00074C68  C0 03 01 3C */	lfs f0, 0x13c(r3)
@@ -1065,9 +1064,9 @@ getLookAtPos__11MoviePlayerFR8Vector3f:
 /* 80077D10 00074C70  C0 03 01 40 */	lfs f0, 0x140(r3)
 /* 80077D14 00074C74  D0 04 00 08 */	stfs f0, 8(r4)
 /* 80077D18 00074C78  4E 80 00 20 */	blr 
+.endfn getLookAtPos__11MoviePlayerFR8Vector3f
 
-.global setCamera__11MoviePlayerFR8Graphics
-setCamera__11MoviePlayerFR8Graphics:
+.fn setCamera__11MoviePlayerFR8Graphics, global
 /* 80077D1C 00074C7C  7C 08 02 A6 */	mflr r0
 /* 80077D20 00074C80  90 01 00 04 */	stw r0, 4(r1)
 /* 80077D24 00074C84  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -1136,9 +1135,9 @@ setCamera__11MoviePlayerFR8Graphics:
 /* 80077E10 00074D70  38 21 00 28 */	addi r1, r1, 0x28
 /* 80077E14 00074D74  7C 08 03 A6 */	mtlr r0
 /* 80077E18 00074D78  4E 80 00 20 */	blr 
+.endfn setCamera__11MoviePlayerFR8Graphics
 
-.global addLights__11MoviePlayerFR8Graphics
-addLights__11MoviePlayerFR8Graphics:
+.fn addLights__11MoviePlayerFR8Graphics, global
 /* 80077E1C 00074D7C  7C 08 02 A6 */	mflr r0
 /* 80077E20 00074D80  90 01 00 04 */	stw r0, 4(r1)
 /* 80077E24 00074D84  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -1166,9 +1165,9 @@ addLights__11MoviePlayerFR8Graphics:
 /* 80077E70 00074DD0  38 21 00 18 */	addi r1, r1, 0x18
 /* 80077E74 00074DD4  7C 08 03 A6 */	mtlr r0
 /* 80077E78 00074DD8  4E 80 00 20 */	blr 
+.endfn addLights__11MoviePlayerFR8Graphics
 
-.global refresh__11MoviePlayerFR8Graphics
-refresh__11MoviePlayerFR8Graphics:
+.fn refresh__11MoviePlayerFR8Graphics, global
 /* 80077E7C 00074DDC  7C 08 02 A6 */	mflr r0
 /* 80077E80 00074DE0  38 A0 00 00 */	li r5, 0
 /* 80077E84 00074DE4  90 01 00 04 */	stw r0, 4(r1)
@@ -1200,274 +1199,363 @@ refresh__11MoviePlayerFR8Graphics:
 /* 80077EE4 00074E44  38 21 00 18 */	addi r1, r1, 0x18
 /* 80077EE8 00074E48  7C 08 03 A6 */	mtlr r0
 /* 80077EEC 00074E4C  4E 80 00 20 */	blr 
+.endfn refresh__11MoviePlayerFR8Graphics
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802ABD08:
+.obj lbl_802ABD08, local
 	.asciz "moviePlayer.cpp"
+.endobj lbl_802ABD08
 .balign 4
-lbl_802ABD18:
+.obj lbl_802ABD18, local
 	.asciz "MoviePlayer"
+.endobj lbl_802ABD18
 .balign 4
-lbl_802ABD24:
+.obj lbl_802ABD24, local
 	.asciz "cinemas/demo01.cin"
+.endobj lbl_802ABD24
 .balign 4
-lbl_802ABD38:
+.obj lbl_802ABD38, local
 	.asciz "cinemas/demo02.cin"
+.endobj lbl_802ABD38
 .balign 4
-lbl_802ABD4C:
+.obj lbl_802ABD4C, local
 	.asciz "cinemas/demo03.cin"
+.endobj lbl_802ABD4C
 .balign 4
-lbl_802ABD60:
+.obj lbl_802ABD60, local
 	.asciz "cinemas/demo04.cin"
+.endobj lbl_802ABD60
 .balign 4
-lbl_802ABD74:
+.obj lbl_802ABD74, local
 	.asciz "cinemas/demo05.cin"
+.endobj lbl_802ABD74
 .balign 4
-lbl_802ABD88:
+.obj lbl_802ABD88, local
 	.asciz "cinemas/demo06.cin"
+.endobj lbl_802ABD88
 .balign 4
-lbl_802ABD9C:
+.obj lbl_802ABD9C, local
 	.asciz "cinemas/demo07.cin"
+.endobj lbl_802ABD9C
 .balign 4
-lbl_802ABDB0:
+.obj lbl_802ABDB0, local
 	.asciz "cinemas/demo08.cin"
+.endobj lbl_802ABDB0
 .balign 4
-lbl_802ABDC4:
+.obj lbl_802ABDC4, local
 	.asciz "cinemas/demo09.cin"
+.endobj lbl_802ABDC4
 .balign 4
-lbl_802ABDD8:
+.obj lbl_802ABDD8, local
 	.asciz "cinemas/demo10.cin"
+.endobj lbl_802ABDD8
 .balign 4
-lbl_802ABDEC:
+.obj lbl_802ABDEC, local
 	.asciz "cinemas/demo11.cin"
+.endobj lbl_802ABDEC
 .balign 4
-lbl_802ABE00:
+.obj lbl_802ABE00, local
 	.asciz "cinemas/demo12.cin"
+.endobj lbl_802ABE00
 .balign 4
-lbl_802ABE14:
+.obj lbl_802ABE14, local
 	.asciz "cinemas/demo13.cin"
+.endobj lbl_802ABE14
 .balign 4
-lbl_802ABE28:
+.obj lbl_802ABE28, local
 	.asciz "cinemas/demo14.cin"
+.endobj lbl_802ABE28
 .balign 4
-lbl_802ABE3C:
+.obj lbl_802ABE3C, local
 	.asciz "cinemas/demo15.cin"
+.endobj lbl_802ABE3C
 .balign 4
-lbl_802ABE50:
+.obj lbl_802ABE50, local
 	.asciz "cinemas/demo16.cin"
+.endobj lbl_802ABE50
 .balign 4
-lbl_802ABE64:
+.obj lbl_802ABE64, local
 	.asciz "cinemas/demo17.cin"
+.endobj lbl_802ABE64
 .balign 4
-lbl_802ABE78:
+.obj lbl_802ABE78, local
 	.asciz "cinemas/demo20.cin"
+.endobj lbl_802ABE78
 .balign 4
-lbl_802ABE8C:
+.obj lbl_802ABE8C, local
 	.asciz "cinemas/demo80.cin"
+.endobj lbl_802ABE8C
 .balign 4
-lbl_802ABEA0:
+.obj lbl_802ABEA0, local
 	.asciz "cinemas/demo18.cin"
+.endobj lbl_802ABEA0
 .balign 4
-lbl_802ABEB4:
+.obj lbl_802ABEB4, local
 	.asciz "cinemas/demo19.cin"
+.endobj lbl_802ABEB4
 .balign 4
-lbl_802ABEC8:
+.obj lbl_802ABEC8, local
 	.asciz "cinemas/demo25.cin"
+.endobj lbl_802ABEC8
 .balign 4
-lbl_802ABEDC:
+.obj lbl_802ABEDC, local
 	.asciz "cinemas/demo26.cin"
+.endobj lbl_802ABEDC
 .balign 4
-lbl_802ABEF0:
+.obj lbl_802ABEF0, local
 	.asciz "cinemas/demo79.cin"
+.endobj lbl_802ABEF0
 .balign 4
-lbl_802ABF04:
+.obj lbl_802ABF04, local
 	.asciz "cinemas/demo21.cin"
+.endobj lbl_802ABF04
 .balign 4
-lbl_802ABF18:
+.obj lbl_802ABF18, local
 	.asciz "cinemas/demo22.cin"
+.endobj lbl_802ABF18
 .balign 4
-lbl_802ABF2C:
+.obj lbl_802ABF2C, local
 	.asciz "cinemas/demo23.cin"
+.endobj lbl_802ABF2C
 .balign 4
-lbl_802ABF40:
+.obj lbl_802ABF40, local
 	.asciz "cinemas/demo24.cin"
+.endobj lbl_802ABF40
 .balign 4
-lbl_802ABF54:
+.obj lbl_802ABF54, local
 	.asciz "cinemas/demo28.cin"
+.endobj lbl_802ABF54
 .balign 4
-lbl_802ABF68:
+.obj lbl_802ABF68, local
 	.asciz "cinemas/demo29.cin"
+.endobj lbl_802ABF68
 .balign 4
-lbl_802ABF7C:
+.obj lbl_802ABF7C, local
 	.asciz "cinemas/demo30.cin"
+.endobj lbl_802ABF7C
 .balign 4
-lbl_802ABF90:
+.obj lbl_802ABF90, local
 	.asciz "cinemas/demo31.cin"
+.endobj lbl_802ABF90
 .balign 4
-lbl_802ABFA4:
+.obj lbl_802ABFA4, local
 	.asciz "cinemas/demo32.cin"
+.endobj lbl_802ABFA4
 .balign 4
-lbl_802ABFB8:
+.obj lbl_802ABFB8, local
 	.asciz "cinemas/demo33.cin"
+.endobj lbl_802ABFB8
 .balign 4
-lbl_802ABFCC:
+.obj lbl_802ABFCC, local
 	.asciz "cinemas/demo34.cin"
+.endobj lbl_802ABFCC
 .balign 4
-lbl_802ABFE0:
+.obj lbl_802ABFE0, local
 	.asciz "cinemas/demo35.cin"
+.endobj lbl_802ABFE0
 .balign 4
-lbl_802ABFF4:
+.obj lbl_802ABFF4, local
 	.asciz "cinemas/demo88.cin"
+.endobj lbl_802ABFF4
 .balign 4
-lbl_802AC008:
+.obj lbl_802AC008, local
 	.asciz "cinemas/demo36.cin"
+.endobj lbl_802AC008
 .balign 4
-lbl_802AC01C:
+.obj lbl_802AC01C, local
 	.asciz "cinemas/demo37.cin"
+.endobj lbl_802AC01C
 .balign 4
-lbl_802AC030:
+.obj lbl_802AC030, local
 	.asciz "cinemas/demo38.cin"
+.endobj lbl_802AC030
 .balign 4
-lbl_802AC044:
+.obj lbl_802AC044, local
 	.asciz "cinemas/demo39.cin"
+.endobj lbl_802AC044
 .balign 4
-lbl_802AC058:
+.obj lbl_802AC058, local
 	.asciz "cinemas/demo40.cin"
+.endobj lbl_802AC058
 .balign 4
-lbl_802AC06C:
+.obj lbl_802AC06C, local
 	.asciz "cinemas/demo41.cin"
+.endobj lbl_802AC06C
 .balign 4
-lbl_802AC080:
+.obj lbl_802AC080, local
 	.asciz "cinemas/demo42.cin"
+.endobj lbl_802AC080
 .balign 4
-lbl_802AC094:
+.obj lbl_802AC094, local
 	.asciz "cinemas/demo43.cin"
+.endobj lbl_802AC094
 .balign 4
-lbl_802AC0A8:
+.obj lbl_802AC0A8, local
 	.asciz "cinemas/demo44.cin"
+.endobj lbl_802AC0A8
 .balign 4
-lbl_802AC0BC:
+.obj lbl_802AC0BC, local
 	.asciz "cinemas/demo45.cin"
+.endobj lbl_802AC0BC
 .balign 4
-lbl_802AC0D0:
+.obj lbl_802AC0D0, local
 	.asciz "cinemas/demo46.cin"
+.endobj lbl_802AC0D0
 .balign 4
-lbl_802AC0E4:
+.obj lbl_802AC0E4, local
 	.asciz "cinemas/demo47.cin"
+.endobj lbl_802AC0E4
 .balign 4
-lbl_802AC0F8:
+.obj lbl_802AC0F8, local
 	.asciz "cinemas/demo48.cin"
+.endobj lbl_802AC0F8
 .balign 4
-lbl_802AC10C:
+.obj lbl_802AC10C, local
 	.asciz "cinemas/demo49.cin"
+.endobj lbl_802AC10C
 .balign 4
-lbl_802AC120:
+.obj lbl_802AC120, local
 	.asciz "cinemas/demo50.cin"
+.endobj lbl_802AC120
 .balign 4
-lbl_802AC134:
+.obj lbl_802AC134, local
 	.asciz "cinemas/demo51.cin"
+.endobj lbl_802AC134
 .balign 4
-lbl_802AC148:
+.obj lbl_802AC148, local
 	.asciz "cinemas/demo52.cin"
+.endobj lbl_802AC148
 .balign 4
-lbl_802AC15C:
+.obj lbl_802AC15C, local
 	.asciz "cinemas/demo53.cin"
+.endobj lbl_802AC15C
 .balign 4
-lbl_802AC170:
+.obj lbl_802AC170, local
 	.asciz "cinemas/demo54.cin"
+.endobj lbl_802AC170
 .balign 4
-lbl_802AC184:
+.obj lbl_802AC184, local
 	.asciz "cinemas/demo55.cin"
+.endobj lbl_802AC184
 .balign 4
-lbl_802AC198:
+.obj lbl_802AC198, local
 	.asciz "cinemas/demo56.cin"
+.endobj lbl_802AC198
 .balign 4
-lbl_802AC1AC:
+.obj lbl_802AC1AC, local
 	.asciz "cinemas/demo57.cin"
+.endobj lbl_802AC1AC
 .balign 4
-lbl_802AC1C0:
+.obj lbl_802AC1C0, local
 	.asciz "cinemas/demo58.cin"
+.endobj lbl_802AC1C0
 .balign 4
-lbl_802AC1D4:
+.obj lbl_802AC1D4, local
 	.asciz "cinemas/demo59.cin"
+.endobj lbl_802AC1D4
 .balign 4
-lbl_802AC1E8:
+.obj lbl_802AC1E8, local
 	.asciz "cinemas/demo109.cin"
+.endobj lbl_802AC1E8
 .balign 4
-lbl_802AC1FC:
+.obj lbl_802AC1FC, local
 	.asciz "cinemas/demo60.cin"
+.endobj lbl_802AC1FC
 .balign 4
-lbl_802AC210:
+.obj lbl_802AC210, local
 	.asciz "cinemas/demo61.cin"
+.endobj lbl_802AC210
 .balign 4
-lbl_802AC224:
+.obj lbl_802AC224, local
 	.asciz "cinemas/demo62.cin"
+.endobj lbl_802AC224
 .balign 4
-lbl_802AC238:
+.obj lbl_802AC238, local
 	.asciz "cinemas/demo63.cin"
+.endobj lbl_802AC238
 .balign 4
-lbl_802AC24C:
+.obj lbl_802AC24C, local
 	.asciz "cinemas/demo64.cin"
+.endobj lbl_802AC24C
 .balign 4
-lbl_802AC260:
+.obj lbl_802AC260, local
 	.asciz "cinemas/demo65.cin"
+.endobj lbl_802AC260
 .balign 4
-lbl_802AC274:
+.obj lbl_802AC274, local
 	.asciz "cinemas/demo66.cin"
+.endobj lbl_802AC274
 .balign 4
-lbl_802AC288:
+.obj lbl_802AC288, local
 	.asciz "cinemas/demo67.cin"
+.endobj lbl_802AC288
 .balign 4
-lbl_802AC29C:
+.obj lbl_802AC29C, local
 	.asciz "cinemas/demo68.cin"
+.endobj lbl_802AC29C
 .balign 4
-lbl_802AC2B0:
+.obj lbl_802AC2B0, local
 	.asciz "cinemas/demo69.cin"
+.endobj lbl_802AC2B0
 .balign 4
-lbl_802AC2C4:
+.obj lbl_802AC2C4, local
 	.asciz "cinemas/demo70.cin"
+.endobj lbl_802AC2C4
 .balign 4
-lbl_802AC2D8:
+.obj lbl_802AC2D8, local
 	.asciz "cinemas/demo71.cin"
+.endobj lbl_802AC2D8
 .balign 4
-lbl_802AC2EC:
+.obj lbl_802AC2EC, local
 	.asciz "cinemas/demo72.cin"
+.endobj lbl_802AC2EC
 .balign 4
-lbl_802AC300:
+.obj lbl_802AC300, local
 	.asciz "cinemas/demo73.cin"
+.endobj lbl_802AC300
 .balign 4
-lbl_802AC314:
+.obj lbl_802AC314, local
 	.asciz "cinemas/demo74.cin"
+.endobj lbl_802AC314
 .balign 4
-lbl_802AC328:
+.obj lbl_802AC328, local
 	.asciz "cinemas/demo75.cin"
+.endobj lbl_802AC328
 .balign 4
-lbl_802AC33C:
+.obj lbl_802AC33C, local
 	.asciz "cinemas/demo78.cin"
+.endobj lbl_802AC33C
 .balign 4
-lbl_802AC350:
+.obj lbl_802AC350, local
 	.asciz "cinemas/demo113.cin"
+.endobj lbl_802AC350
 .balign 4
-lbl_802AC364:
+.obj lbl_802AC364, local
 	.asciz "cinemas/demo114.cin"
+.endobj lbl_802AC364
 .balign 4
-lbl_802AC378:
+.obj lbl_802AC378, local
 	.asciz "cinemas/demo76.cin"
+.endobj lbl_802AC378
 .balign 4
-lbl_802AC38C:
+.obj lbl_802AC38C, local
 	.asciz "cinemas/demo77.cin"
+.endobj lbl_802AC38C
 .balign 4
-lbl_802AC3A0:
+.obj lbl_802AC3A0, local
 	.asciz "cinemas/demo84.cin"
+.endobj lbl_802AC3A0
 .balign 4
-lbl_802AC3B4:
+.obj lbl_802AC3B4, local
 	.asciz "cinemas/demo85.cin"
+.endobj lbl_802AC3B4
 .balign 4
-lbl_802AC3C8:
+.obj lbl_802AC3C8, local
 	.asciz "cinemas/demo86.cin"
+.endobj lbl_802AC3C8
 .balign 4
-movieTitles:
+.obj movieTitles, local
 	.4byte 0x00000001
 	.4byte lbl_802ABD24
 	.4byte 0x00000002
@@ -1642,107 +1730,141 @@ movieTitles:
 	.4byte lbl_802AC3C8
 	.4byte 0x00000000
 	.4byte 0x00000000
+.endobj movieTitles
 .balign 4
-lbl_802AC694:
+.obj lbl_802AC694, local
 	.asciz "playList"
+.endobj lbl_802AC694
 .balign 4
-lbl_802AC6A0:
+.obj lbl_802AC6A0, local
 	.asciz "movieList"
+.endobj lbl_802AC6A0
 .balign 4
-lbl_802AC6AC:
+.obj lbl_802AC6AC, local
 	.asciz "stackList"
+.endobj lbl_802AC6AC
 .balign 4
-movie04table:
+.obj movie04table, local
 	.4byte 0x00000004
 	.4byte 0x00000005
 	.4byte 0x00000006
 	.4byte 0x00000006
 	.4byte 0x00000006
-movie09table:
+.endobj movie04table
+.balign 4
+.obj movie09table, local
 	.4byte 0x00000009
 	.4byte 0x0000000A
 	.4byte 0x0000000B
 	.4byte 0x0000000B
 	.4byte 0x0000000B
-movie17table:
+.endobj movie09table
+.balign 4
+.obj movie17table, local
 	.4byte 0x00000011
 	.4byte 0x00000012
 	.4byte 0x00000013
 	.4byte 0x00000019
 	.4byte 0x0000001A
-movie20table:
+.endobj movie17table
+.balign 4
+.obj movie20table, local
 	.4byte 0x0000004F
 	.4byte 0x00000015
 	.4byte 0x00000016
 	.4byte 0x00000017
 	.4byte 0x00000016
-movie18table:
+.endobj movie20table
+.balign 4
+.obj movie18table, local
 	.4byte 0x00000050
 	.4byte 0x00000012
 	.4byte 0x00000013
 	.4byte 0x00000019
 	.4byte 0x0000001A
-movie28table:
+.endobj movie18table
+.balign 4
+.obj movie28table, local
 	.4byte 0x0000001C
 	.4byte 0x0000001D
 	.4byte 0x0000001E
 	.4byte 0x0000001F
 	.4byte 0x0000001E
-movie32table:
+.endobj movie28table
+.balign 4
+.obj movie32table, local
 	.4byte 0x00000020
 	.4byte 0x00000021
 	.4byte 0x00000022
 	.4byte 0x00000023
 	.4byte 0x00000058
-movie40table:
+.endobj movie32table
+.balign 4
+.obj movie40table, local
 	.4byte 0x00000028
 	.4byte 0x00000029
 	.4byte 0x0000002A
 	.4byte 0x0000002B
 	.4byte 0x0000002A
-movie44table:
+.endobj movie40table
+.balign 4
+.obj movie44table, local
 	.4byte 0x0000002C
 	.4byte 0x0000002D
 	.4byte 0x0000002D
 	.4byte 0x0000002D
 	.4byte 0x0000002D
-movie47table:
+.endobj movie44table
+.balign 4
+.obj movie47table, local
 	.4byte 0x0000002F
 	.4byte 0x00000030
 	.4byte 0x00000031
 	.4byte 0x00000032
 	.4byte 0x00000031
-movie52table:
+.endobj movie47table
+.balign 4
+.obj movie52table, local
 	.4byte 0x00000034
 	.4byte 0x00000035
 	.4byte 0x00000036
 	.4byte 0x00000037
 	.4byte 0x00000036
-movie56table:
+.endobj movie52table
+.balign 4
+.obj movie56table, local
 	.4byte 0x00000038
 	.4byte 0x00000039
 	.4byte 0x0000003A
 	.4byte 0x0000003B
 	.4byte 0x0000006D
-movie60table:
+.endobj movie56table
+.balign 4
+.obj movie60table, local
 	.4byte 0x0000003C
 	.4byte 0x0000003D
 	.4byte 0x0000003E
 	.4byte 0x0000003F
 	.4byte 0x0000003E
-movie64table:
+.endobj movie60table
+.balign 4
+.obj movie64table, local
 	.4byte 0x00000040
 	.4byte 0x00000041
 	.4byte 0x00000042
 	.4byte 0x00000043
 	.4byte 0x00000042
-movie69table:
+.endobj movie64table
+.balign 4
+.obj movie69table, local
 	.4byte 0x00000045
 	.4byte 0x00000046
 	.4byte 0x00000047
 	.4byte 0x00000048
 	.4byte 0x00000047
-transTable:
+.endobj movie69table
+.balign 4
+.obj transTable, local
 	.4byte 0x00000004
 	.4byte movie04table
 	.4byte 0x00000009
@@ -1779,80 +1901,101 @@ transTable:
 	.4byte movie69table
 	.4byte 0x00000000
 	.4byte 0x00000000
+.endobj transTable
 .balign 4
-lbl_802AC874:
+.obj lbl_802AC874, local
 	.asciz "MovieInfo"
+.endobj lbl_802AC874
 .balign 4
-lbl_802AC880:
+.obj lbl_802AC880, local
 	.asciz "CoreNode"
+.endobj lbl_802AC880
 .balign 4
-lbl_802AC88C:
+.obj lbl_802AC88C, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte 0
-lbl_802AC898:
+.endobj lbl_802AC88C
+.balign 4
+.obj lbl_802AC898, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte __RTTI__8CoreNode
 	.4byte 0
 	.4byte 0
-.global __vt__9MovieInfo
-__vt__9MovieInfo:
+.endobj lbl_802AC898
+.balign 4
+.obj __vt__9MovieInfo, weak
 	.4byte __RTTI__9MovieInfo
 	.4byte 0
 	.4byte getAgeNodeType__5ANodeFv
 	.4byte read__8CoreNodeFR18RandomAccessStream
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
+.endobj __vt__9MovieInfo
+.skip 0x1C # compiler padding
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-lbl_803DE820:
+.obj lbl_803DE820, local
 	.4byte 0
-lbl_803DE824:
+.endobj lbl_803DE820
+.obj lbl_803DE824, local
 	.float 1.0
-lbl_803DE828:
+.endobj lbl_803DE824
+.obj lbl_803DE828, local
 	.float 1.0
-lbl_803DE82C:
+.endobj lbl_803DE828
+.obj lbl_803DE82C, local
 	.float 1.0
-lbl_803DE830:
+.endobj lbl_803DE82C
+.obj lbl_803DE830, local
 	.float 0.0
-lbl_803DE834:
+.endobj lbl_803DE830
+.obj lbl_803DE834, local
 	.float 0.0
-lbl_803DE838:
+.endobj lbl_803DE834
+.obj lbl_803DE838, local
 	.float 0.0
+.endobj lbl_803DE838
 .balign 4
-lbl_803DE83C:
+.obj lbl_803DE83C, local
 	.asciz "ANode"
+.endobj lbl_803DE83C
 .balign 4
-__RTTI__5ANode:
+.obj __RTTI__5ANode, local
 	.4byte lbl_803DE83C
 	.4byte 0
-__RTTI__8CoreNode:
+.endobj __RTTI__5ANode
+.balign 4
+.obj __RTTI__8CoreNode, local
 	.4byte lbl_802AC880
 	.4byte lbl_802AC88C
-__RTTI__9MovieInfo:
+.endobj __RTTI__8CoreNode
+.balign 4
+.obj __RTTI__9MovieInfo, local
 	.4byte lbl_802AC874
 	.4byte lbl_802AC898
+.endobj __RTTI__9MovieInfo
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803E8AA8:
+.obj lbl_803E8AA8, local
 	.float 30.0
-lbl_803E8AAC:
+.endobj lbl_803E8AA8
+.obj lbl_803E8AAC, local
 	.float 0.0
-lbl_803E8AB0:
+.endobj lbl_803E8AAC
+.obj lbl_803E8AB0, local
 	.float 1.0
-lbl_803E8AB4:
+.endobj lbl_803E8AB0
+.obj lbl_803E8AB4, local
 	.float 0.6
-lbl_803E8AB8:
+.endobj lbl_803E8AB4
+.obj lbl_803E8AB8, local
 	.float 0.5
-lbl_803E8ABC:
+.endobj lbl_803E8AB8
+.obj lbl_803E8ABC, local # pi
 	.float 3.1415927
-lbl_803E8AC0:
+.endobj lbl_803E8ABC
+.obj lbl_803E8AC0, local # pi/2
 	.float 1.5707964
+.endobj lbl_803E8AC0

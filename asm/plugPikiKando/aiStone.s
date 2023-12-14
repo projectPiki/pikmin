@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global __ct__8ActStoneFP4Piki
-__ct__8ActStoneFP4Piki:
+.fn __ct__8ActStoneFP4Piki, global
 /* 800A6D94 000A3CF4  7C 08 02 A6 */	mflr r0
 /* 800A6D98 000A3CF8  38 A0 00 01 */	li r5, 1
 /* 800A6D9C 000A3CFC  90 01 00 04 */	stw r0, 4(r1)
@@ -23,9 +22,9 @@ __ct__8ActStoneFP4Piki:
 /* 800A6DDC 000A3D3C  38 21 00 18 */	addi r1, r1, 0x18
 /* 800A6DE0 000A3D40  7C 08 03 A6 */	mtlr r0
 /* 800A6DE4 000A3D44  4E 80 00 20 */	blr 
+.endfn __ct__8ActStoneFP4Piki
 
-.global init__8ActStoneFP8Creature
-init__8ActStoneFP8Creature:
+.fn init__8ActStoneFP8Creature, global
 /* 800A6DE8 000A3D48  7C 08 02 A6 */	mflr r0
 /* 800A6DEC 000A3D4C  28 04 00 00 */	cmplwi r4, 0
 /* 800A6DF0 000A3D50  90 01 00 04 */	stw r0, 4(r1)
@@ -49,9 +48,9 @@ init__8ActStoneFP8Creature:
 /* 800A6E34 000A3D94  38 21 00 18 */	addi r1, r1, 0x18
 /* 800A6E38 000A3D98  7C 08 03 A6 */	mtlr r0
 /* 800A6E3C 000A3D9C  4E 80 00 20 */	blr 
+.endfn init__8ActStoneFP8Creature
 
-.global exec__8ActStoneFv
-exec__8ActStoneFv:
+.fn exec__8ActStoneFv, global
 /* 800A6E40 000A3DA0  7C 08 02 A6 */	mflr r0
 /* 800A6E44 000A3DA4  90 01 00 04 */	stw r0, 4(r1)
 /* 800A6E48 000A3DA8  94 21 FF F8 */	stwu r1, -8(r1)
@@ -88,9 +87,9 @@ exec__8ActStoneFv:
 /* 800A6EA8 000A3E08  38 21 00 08 */	addi r1, r1, 8
 /* 800A6EAC 000A3E0C  7C 08 03 A6 */	mtlr r0
 /* 800A6EB0 000A3E10  4E 80 00 20 */	blr 
+.endfn exec__8ActStoneFv
 
-.global cleanup__8ActStoneFv
-cleanup__8ActStoneFv:
+.fn cleanup__8ActStoneFv, global
 /* 800A6EB4 000A3E14  7C 08 02 A6 */	mflr r0
 /* 800A6EB8 000A3E18  90 01 00 04 */	stw r0, 4(r1)
 /* 800A6EBC 000A3E1C  94 21 FF F8 */	stwu r1, -8(r1)
@@ -111,9 +110,9 @@ cleanup__8ActStoneFv:
 /* 800A6EF4 000A3E54  38 21 00 08 */	addi r1, r1, 8
 /* 800A6EF8 000A3E58  7C 08 03 A6 */	mtlr r0
 /* 800A6EFC 000A3E5C  4E 80 00 20 */	blr 
+.endfn cleanup__8ActStoneFv
 
-.global initApproach__8ActStoneFv
-initApproach__8ActStoneFv:
+.fn initApproach__8ActStoneFv, global
 /* 800A6F00 000A3E60  7C 08 02 A6 */	mflr r0
 /* 800A6F04 000A3E64  90 01 00 04 */	stw r0, 4(r1)
 /* 800A6F08 000A3E68  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -149,9 +148,9 @@ initApproach__8ActStoneFv:
 /* 800A6F78 000A3ED8  38 21 00 28 */	addi r1, r1, 0x28
 /* 800A6F7C 000A3EDC  7C 08 03 A6 */	mtlr r0
 /* 800A6F80 000A3EE0  4E 80 00 20 */	blr 
+.endfn initApproach__8ActStoneFv
 
-.global exeApproach__8ActStoneFv
-exeApproach__8ActStoneFv:
+.fn exeApproach__8ActStoneFv, global
 /* 800A6F84 000A3EE4  7C 08 02 A6 */	mflr r0
 /* 800A6F88 000A3EE8  90 01 00 04 */	stw r0, 4(r1)
 /* 800A6F8C 000A3EEC  94 21 FF 98 */	stwu r1, -0x68(r1)
@@ -258,15 +257,15 @@ exeApproach__8ActStoneFv:
 /* 800A7108 000A4068  38 21 00 68 */	addi r1, r1, 0x68
 /* 800A710C 000A406C  7C 08 03 A6 */	mtlr r0
 /* 800A7110 000A4070  4E 80 00 20 */	blr 
+.endfn exeApproach__8ActStoneFv
 
-.global initAdjust__8ActStoneFv
-initAdjust__8ActStoneFv:
+.fn initAdjust__8ActStoneFv, global
 /* 800A7114 000A4074  38 00 00 01 */	li r0, 1
 /* 800A7118 000A4078  B0 03 00 18 */	sth r0, 0x18(r3)
 /* 800A711C 000A407C  4E 80 00 20 */	blr 
+.endfn initAdjust__8ActStoneFv
 
-.global exeAdjust__8ActStoneFv
-exeAdjust__8ActStoneFv:
+.fn exeAdjust__8ActStoneFv, global
 /* 800A7120 000A4080  7C 08 02 A6 */	mflr r0
 /* 800A7124 000A4084  90 01 00 04 */	stw r0, 4(r1)
 /* 800A7128 000A4088  94 21 FF 98 */	stwu r1, -0x68(r1)
@@ -386,9 +385,9 @@ exeAdjust__8ActStoneFv:
 /* 800A72D8 000A4238  38 21 00 68 */	addi r1, r1, 0x68
 /* 800A72DC 000A423C  7C 08 03 A6 */	mtlr r0
 /* 800A72E0 000A4240  4E 80 00 20 */	blr 
+.endfn exeAdjust__8ActStoneFv
 
-.global initAttack__8ActStoneFv
-initAttack__8ActStoneFv:
+.fn initAttack__8ActStoneFv, global
 /* 800A72E4 000A4244  7C 08 02 A6 */	mflr r0
 /* 800A72E8 000A4248  90 01 00 04 */	stw r0, 4(r1)
 /* 800A72EC 000A424C  38 00 00 02 */	li r0, 2
@@ -427,9 +426,9 @@ initAttack__8ActStoneFv:
 /* 800A736C 000A42CC  38 21 00 30 */	addi r1, r1, 0x30
 /* 800A7370 000A42D0  7C 08 03 A6 */	mtlr r0
 /* 800A7374 000A42D4  4E 80 00 20 */	blr 
+.endfn initAttack__8ActStoneFv
 
-.global exeAttack__8ActStoneFv
-exeAttack__8ActStoneFv:
+.fn exeAttack__8ActStoneFv, global
 /* 800A7378 000A42D8  7C 08 02 A6 */	mflr r0
 /* 800A737C 000A42DC  90 01 00 04 */	stw r0, 4(r1)
 /* 800A7380 000A42E0  94 21 FF B8 */	stwu r1, -0x48(r1)
@@ -529,9 +528,9 @@ exeAttack__8ActStoneFv:
 /* 800A74E0 000A4440  38 21 00 48 */	addi r1, r1, 0x48
 /* 800A74E4 000A4444  7C 08 03 A6 */	mtlr r0
 /* 800A74E8 000A4448  4E 80 00 20 */	blr 
+.endfn exeAttack__8ActStoneFv
 
-.global animationKeyUpdated__8ActStoneFR16PaniAnimKeyEvent
-animationKeyUpdated__8ActStoneFR16PaniAnimKeyEvent:
+.fn animationKeyUpdated__8ActStoneFR16PaniAnimKeyEvent, global
 /* 800A74EC 000A444C  7C 08 02 A6 */	mflr r0
 /* 800A74F0 000A4450  90 01 00 04 */	stw r0, 4(r1)
 /* 800A74F4 000A4454  94 21 FF 40 */	stwu r1, -0xc0(r1)
@@ -735,9 +734,9 @@ animationKeyUpdated__8ActStoneFR16PaniAnimKeyEvent:
 /* 800A77EC 000A474C  38 21 00 C0 */	addi r1, r1, 0xc0
 /* 800A77F0 000A4750  7C 08 03 A6 */	mtlr r0
 /* 800A77F4 000A4754  4E 80 00 20 */	blr 
+.endfn animationKeyUpdated__8ActStoneFR16PaniAnimKeyEvent
 
-.global __dt__8ActStoneFv
-__dt__8ActStoneFv:
+.fn __dt__8ActStoneFv, weak
 /* 800A77F8 000A4758  7C 08 02 A6 */	mflr r0
 /* 800A77FC 000A475C  90 01 00 04 */	stw r0, 4(r1)
 /* 800A7800 000A4760  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -766,34 +765,34 @@ __dt__8ActStoneFv:
 /* 800A7858 000A47B8  38 21 00 18 */	addi r1, r1, 0x18
 /* 800A785C 000A47BC  7C 08 03 A6 */	mtlr r0
 /* 800A7860 000A47C0  4E 80 00 20 */	blr 
+.endfn __dt__8ActStoneFv
 
-.global defaultInitialiser__6ActionFv
-defaultInitialiser__6ActionFv:
+.fn defaultInitialiser__6ActionFv, weak
 /* 800A7864 000A47C4  4E 80 00 20 */	blr 
+.endfn defaultInitialiser__6ActionFv
 
-.global dump__6ActionFv
-dump__6ActionFv:
+.fn dump__6ActionFv, weak
 /* 800A7868 000A47C8  4E 80 00 20 */	blr 
+.endfn dump__6ActionFv
 
-.global draw__6ActionFR8Graphics
-draw__6ActionFR8Graphics:
+.fn draw__6ActionFR8Graphics, weak
 /* 800A786C 000A47CC  4E 80 00 20 */	blr 
+.endfn draw__6ActionFR8Graphics
 
-.global resume__6ActionFv
-resume__6ActionFv:
+.fn resume__6ActionFv, weak
 /* 800A7870 000A47D0  4E 80 00 20 */	blr 
+.endfn resume__6ActionFv
 
-.global restart__6ActionFv
-restart__6ActionFv:
+.fn restart__6ActionFv, weak
 /* 800A7874 000A47D4  4E 80 00 20 */	blr 
+.endfn restart__6ActionFv
 
-.global resumable__6ActionFv
-resumable__6ActionFv:
+.fn resumable__6ActionFv, weak
 /* 800A7878 000A47D8  38 60 00 00 */	li r3, 0
 /* 800A787C 000A47DC  4E 80 00 20 */	blr 
+.endfn resumable__6ActionFv
 
-.global getInfo__6ActionFPc
-getInfo__6ActionFPc:
+.fn getInfo__6ActionFPc, weak
 /* 800A7880 000A47E0  7C 08 02 A6 */	mflr r0
 /* 800A7884 000A47E4  38 64 00 00 */	addi r3, r4, 0
 /* 800A7888 000A47E8  90 01 00 04 */	stw r0, 4(r1)
@@ -805,53 +804,53 @@ getInfo__6ActionFPc:
 /* 800A78A0 000A4800  38 21 00 08 */	addi r1, r1, 8
 /* 800A78A4 000A4804  7C 08 03 A6 */	mtlr r0
 /* 800A78A8 000A4808  4E 80 00 20 */	blr 
+.endfn getInfo__6ActionFPc
 
-.global "procBounceMsg__15Receiver<4Piki>FP4PikiP9MsgBounce"
-"procBounceMsg__15Receiver<4Piki>FP4PikiP9MsgBounce":
+.fn "procBounceMsg__15Receiver<4Piki>FP4PikiP9MsgBounce", weak
 /* 800A78AC 000A480C  4E 80 00 20 */	blr 
+.endfn "procBounceMsg__15Receiver<4Piki>FP4PikiP9MsgBounce"
 
-.global "procStickMsg__15Receiver<4Piki>FP4PikiP8MsgStick"
-"procStickMsg__15Receiver<4Piki>FP4PikiP8MsgStick":
+.fn "procStickMsg__15Receiver<4Piki>FP4PikiP8MsgStick", weak
 /* 800A78B0 000A4810  4E 80 00 20 */	blr 
+.endfn "procStickMsg__15Receiver<4Piki>FP4PikiP8MsgStick"
 
-.global "procHangMsg__15Receiver<4Piki>FP4PikiP7MsgHang"
-"procHangMsg__15Receiver<4Piki>FP4PikiP7MsgHang":
+.fn "procHangMsg__15Receiver<4Piki>FP4PikiP7MsgHang", weak
 /* 800A78B4 000A4814  4E 80 00 20 */	blr 
+.endfn "procHangMsg__15Receiver<4Piki>FP4PikiP7MsgHang"
 
-.global "procTargetMsg__15Receiver<4Piki>FP4PikiP9MsgTarget"
-"procTargetMsg__15Receiver<4Piki>FP4PikiP9MsgTarget":
+.fn "procTargetMsg__15Receiver<4Piki>FP4PikiP9MsgTarget", weak
 /* 800A78B8 000A4818  4E 80 00 20 */	blr 
+.endfn "procTargetMsg__15Receiver<4Piki>FP4PikiP9MsgTarget"
 
-.global "procCollideMsg__15Receiver<4Piki>FP4PikiP10MsgCollide"
-"procCollideMsg__15Receiver<4Piki>FP4PikiP10MsgCollide":
+.fn "procCollideMsg__15Receiver<4Piki>FP4PikiP10MsgCollide", weak
 /* 800A78BC 000A481C  4E 80 00 20 */	blr 
+.endfn "procCollideMsg__15Receiver<4Piki>FP4PikiP10MsgCollide"
 
-.global "procAnimMsg__15Receiver<4Piki>FP4PikiP7MsgAnim"
-"procAnimMsg__15Receiver<4Piki>FP4PikiP7MsgAnim":
+.fn "procAnimMsg__15Receiver<4Piki>FP4PikiP7MsgAnim", weak
 /* 800A78C0 000A4820  4E 80 00 20 */	blr 
+.endfn "procAnimMsg__15Receiver<4Piki>FP4PikiP7MsgAnim"
 
-.global "procDamageMsg__15Receiver<4Piki>FP4PikiP9MsgDamage"
-"procDamageMsg__15Receiver<4Piki>FP4PikiP9MsgDamage":
+.fn "procDamageMsg__15Receiver<4Piki>FP4PikiP9MsgDamage", weak
 /* 800A78C4 000A4824  4E 80 00 20 */	blr 
+.endfn "procDamageMsg__15Receiver<4Piki>FP4PikiP9MsgDamage"
 
-.global "procWallMsg__15Receiver<4Piki>FP4PikiP7MsgWall"
-"procWallMsg__15Receiver<4Piki>FP4PikiP7MsgWall":
+.fn "procWallMsg__15Receiver<4Piki>FP4PikiP7MsgWall", weak
 /* 800A78C8 000A4828  4E 80 00 20 */	blr 
+.endfn "procWallMsg__15Receiver<4Piki>FP4PikiP7MsgWall"
 
-.global "procOffWallMsg__15Receiver<4Piki>FP4PikiP10MsgOffWall"
-"procOffWallMsg__15Receiver<4Piki>FP4PikiP10MsgOffWall":
+.fn "procOffWallMsg__15Receiver<4Piki>FP4PikiP10MsgOffWall", weak
 /* 800A78CC 000A482C  4E 80 00 20 */	blr 
+.endfn "procOffWallMsg__15Receiver<4Piki>FP4PikiP10MsgOffWall"
 
-.global "procUserMsg__15Receiver<4Piki>FP4PikiP7MsgUser"
-"procUserMsg__15Receiver<4Piki>FP4PikiP7MsgUser":
+.fn "procUserMsg__15Receiver<4Piki>FP4PikiP7MsgUser", weak
 /* 800A78D0 000A4830  4E 80 00 20 */	blr 
+.endfn "procUserMsg__15Receiver<4Piki>FP4PikiP7MsgUser"
 
-.global "procGroundMsg__15Receiver<4Piki>FP4PikiP9MsgGround"
-"procGroundMsg__15Receiver<4Piki>FP4PikiP9MsgGround":
+.fn "procGroundMsg__15Receiver<4Piki>FP4PikiP9MsgGround", weak
 /* 800A78D4 000A4834  4E 80 00 20 */	blr 
+.endfn "procGroundMsg__15Receiver<4Piki>FP4PikiP9MsgGround"
 
-.global "procMsg__15Receiver<4Piki>FP4PikiP3Msg"
-"procMsg__15Receiver<4Piki>FP4PikiP3Msg":
+.fn "procMsg__15Receiver<4Piki>FP4PikiP3Msg", weak
 /* 800A78D8 000A4838  7C 08 02 A6 */	mflr r0
 /* 800A78DC 000A483C  90 01 00 04 */	stw r0, 4(r1)
 /* 800A78E0 000A4840  94 21 FF F8 */	stwu r1, -8(r1)
@@ -945,34 +944,42 @@ getInfo__6ActionFPc:
 /* 800A79E4 000A4944  38 21 00 08 */	addi r1, r1, 8
 /* 800A79E8 000A4948  7C 08 03 A6 */	mtlr r0
 /* 800A79EC 000A494C  4E 80 00 20 */	blr 
+.endfn "procMsg__15Receiver<4Piki>FP4PikiP3Msg"
 
-"@20@animationKeyUpdated__8ActStoneFR16PaniAnimKeyEvent":
+.fn "@20@animationKeyUpdated__8ActStoneFR16PaniAnimKeyEvent", weak
 /* 800A79F0 000A4950  38 63 FF EC */	addi r3, r3, -20
 /* 800A79F4 000A4954  4B FF FA F8 */	b animationKeyUpdated__8ActStoneFR16PaniAnimKeyEvent
+.endfn "@20@animationKeyUpdated__8ActStoneFR16PaniAnimKeyEvent"
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802B4F68:
+.obj lbl_802B4F68, local
 	.asciz "aiStone.cpp"
+.endobj lbl_802B4F68
 .balign 4
-lbl_802B4F74:
+.obj lbl_802B4F74, local
 	.asciz "ActStone"
+.endobj lbl_802B4F74
 .balign 4
-lbl_802B4F80:
+.obj lbl_802B4F80, local
 	.asciz "Receiver<Piki>"
+.endobj lbl_802B4F80
 .balign 4
-lbl_802B4F90:
+.obj lbl_802B4F90, local
 	.4byte "__RTTI__15Receiver<4Piki>"
 	.4byte 0
 	.4byte 0
-lbl_802B4F9C:
+.endobj lbl_802B4F90
+.balign 4
+.obj lbl_802B4F9C, local
 	.4byte "__RTTI__15Receiver<4Piki>"
 	.4byte 0
 	.4byte __RTTI__6Action
 	.4byte 0
 	.4byte 0
-.global __vt__8ActStone
-__vt__8ActStone:
+.endobj lbl_802B4F9C
+.balign 4
+.obj __vt__8ActStone, global
 	.4byte __RTTI__8ActStone
 	.4byte 0
 	.4byte "procMsg__15Receiver<4Piki>FP4PikiP3Msg"
@@ -1002,13 +1009,15 @@ __vt__8ActStone:
 	.4byte 0xFFFFFFEC
 	.4byte "@20@animationKeyUpdated__8ActStoneFR16PaniAnimKeyEvent"
 	.4byte animationKeyUpdated__8ActStoneFR16PaniAnimKeyEvent
+.endobj __vt__8ActStone
 .balign 4
-lbl_802B5024:
+.obj lbl_802B5024, local
 	.asciz "PaniAnimKeyListener"
+.endobj lbl_802B5024
 .balign 4
-.skip 0xC # padding
+.skip 0xC # compiler padding
 .balign 4
-lbl_802B5044:
+.obj lbl_802B5044, local
 	.4byte .L_800A7908
 	.4byte .L_800A7930
 	.4byte .L_800A7944
@@ -1020,6 +1029,7 @@ lbl_802B5044:
 	.4byte .L_800A791C
 	.4byte .L_800A79D0
 	.4byte .L_800A79BC
+.endobj lbl_802B5044
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
