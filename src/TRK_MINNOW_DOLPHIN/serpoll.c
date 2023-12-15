@@ -1,6 +1,5 @@
 #include "serpoll.h"
 
-#ifdef NOMATCH
 /*
  * --INFO--
  * Address:	........
@@ -191,7 +190,6 @@ void TRKProcessInput(void)
 	  blr
 	*/
 }
-#endif
 
 /*
  * --INFO--

@@ -1339,7 +1339,6 @@ __vt__10P2DPicture:
 	.4byte drawSelf__10P2DPictureFiiP8Matrix4f
 	.4byte search__7P2DPaneFUlb
 	.4byte makeMatrix__7P2DPaneFii
-	.4byte 0
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8

@@ -121,3 +121,20 @@
 /* 8021CEA8 00219E08  7C 08 03 A6 */	mtlr r0
 /* 8021CEAC 00219E0C  4E 80 00 20 */	blr 
 .endfn TRKProcessInput
+
+.fn TRKInitializeSerialHandler, global
+/* 8021CEB0 00219E10  3C 60 80 3D */	lis r3, gTRKFramingState@ha
+/* 8021CEB4 00219E14  38 83 5C D0 */	addi r4, r3, gTRKFramingState@l
+/* 8021CEB8 00219E18  38 00 FF FF */	li r0, -1
+/* 8021CEBC 00219E1C  90 04 00 00 */	stw r0, 0(r4)
+/* 8021CEC0 00219E20  38 00 00 00 */	li r0, 0
+/* 8021CEC4 00219E24  38 60 00 00 */	li r3, 0
+/* 8021CEC8 00219E28  98 04 00 08 */	stb r0, 8(r4)
+/* 8021CECC 00219E2C  90 04 00 0C */	stw r0, 0xc(r4)
+/* 8021CED0 00219E30  4E 80 00 20 */	blr 
+.endfn TRKInitializeSerialHandler
+
+.fn TRKTerminateSerialHandler, global
+li r3, 0
+blr
+.endfn TRKTerminateSerialHandler

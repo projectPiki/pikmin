@@ -539,8 +539,8 @@ lbl_802E0784:
 	.4byte .L_801B2E90
 lbl_802E07D4:
 	.4byte __RTTI__7P2DPane
-	.4byte 0x00000000
-	.4byte 0x00000000
+	.4byte 0
+	.4byte 0
 .global __vt__9P2DScreen
 __vt__9P2DScreen:
 	.4byte __RTTI__9P2DScreen

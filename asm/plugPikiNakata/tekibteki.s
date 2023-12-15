@@ -6576,40 +6576,46 @@ getCollisionSize__5BTekiFv:
 /* 80149BA4 00146B04  7C 08 03 A6 */	mtlr r0
 /* 80149BA8 00146B08  4E 80 00 20 */	blr 
 
-"@1108@4@animationKeyUpdated__5BTekiFR16PaniAnimKeyEvent":
+.fn "@1108@4@animationKeyUpdated__5BTekiFR16PaniAnimKeyEvent", weak
 /* 80149BAC 00146B0C  39 60 00 04 */	li r11, 4
 /* 80149BB0 00146B10  7D 63 58 2E */	lwzx r11, r3, r11
 /* 80149BB4 00146B14  7C 63 5A 14 */	add r3, r3, r11
 /* 80149BB8 00146B18  38 63 FB AC */	addi r3, r3, -1108
 /* 80149BBC 00146B1C  4B FF B6 24 */	b animationKeyUpdated__5BTekiFR16PaniAnimKeyEvent
+.endfn "@1108@4@animationKeyUpdated__5BTekiFR16PaniAnimKeyEvent"
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802CCF18:
+.obj lbl_802CCF18, local
 	.asciz "tekibteki.cpp"
+.endobj lbl_802CCF18
 .balign 4
-lbl_802CCF28:
+.obj lbl_802CCF28, local
 	.asciz "TekiNotCondition"
+.endobj lbl_802CCF28
 .balign 4
-lbl_802CCF3C:
+.obj lbl_802CCF3C, local
 	.asciz "Condition"
+.endobj lbl_802CCF3C
 .balign 4
-lbl_802CCF48:
+.obj lbl_802CCF48, local
 	.asciz "TekiCondition"
+.endobj lbl_802CCF48
 .balign 4
-lbl_802CCF58:
+.obj lbl_802CCF58, local
 	.4byte __RTTI__9Condition
 	.4byte 0
 	.4byte 0
-lbl_802CCF64:
+.endobj lbl_802CCF58
+.balign 4
+.obj lbl_802CCF64, local
 	.4byte __RTTI__9Condition
 	.4byte 0
 	.4byte __RTTI__13TekiCondition
 	.4byte 0
 	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
+.endobj lbl_802CCF64
+.skip 0xC # compiler padding
 .balign 4
 lbl_802CCF84:
 	.asciz "TekiAndCondition"
@@ -6871,20 +6877,27 @@ __vt__5BTeki:
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-lbl_803E4330:
+.obj lbl_803E4330, local
 	.float 0.0
-lbl_803E4334:
+.endobj lbl_803E4330
+.obj lbl_803E4334, local
 	.float 0.0
-lbl_803E4338:
+.endobj lbl_803E4334
+.obj lbl_803E4338, local
 	.float 0.0
-lbl_803E433C:
+.endobj lbl_803E4338
+.obj lbl_803E433C, local
 	.float 0.0
-lbl_803E4340:
+.endobj lbl_803E433C
+.obj lbl_803E4340, local
 	.float 0.0
-lbl_803E4344:
+.endobj lbl_803E4340
+.obj lbl_803E4344, local
 	.float 0.0
-lbl_803E4348:
+.endobj lbl_803E4344
+.obj lbl_803E4348, local
 	.float 0.0
+.endobj lbl_803E4348
 
 # TEKI_OPTION bitmasks
 

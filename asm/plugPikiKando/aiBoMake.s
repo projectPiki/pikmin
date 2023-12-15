@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global __ct__9ActBoMakeFP4Piki
-__ct__9ActBoMakeFP4Piki:
+.fn __ct__9ActBoMakeFP4Piki, global
 /* 800AC30C 000A926C  7C 08 02 A6 */	mflr r0
 /* 800AC310 000A9270  38 A0 00 01 */	li r5, 1
 /* 800AC314 000A9274  90 01 00 04 */	stw r0, 4(r1)
@@ -23,9 +22,9 @@ __ct__9ActBoMakeFP4Piki:
 /* 800AC354 000A92B4  38 21 00 18 */	addi r1, r1, 0x18
 /* 800AC358 000A92B8  7C 08 03 A6 */	mtlr r0
 /* 800AC35C 000A92BC  4E 80 00 20 */	blr 
+.endfn __ct__9ActBoMakeFP4Piki
 
-.global init__9ActBoMakeFP8Creature
-init__9ActBoMakeFP8Creature:
+.fn init__9ActBoMakeFP8Creature, global
 /* 800AC360 000A92C0  7C 08 02 A6 */	mflr r0
 /* 800AC364 000A92C4  28 04 00 00 */	cmplwi r4, 0
 /* 800AC368 000A92C8  90 01 00 04 */	stw r0, 4(r1)
@@ -43,9 +42,9 @@ init__9ActBoMakeFP8Creature:
 /* 800AC394 000A92F4  38 21 00 08 */	addi r1, r1, 8
 /* 800AC398 000A92F8  7C 08 03 A6 */	mtlr r0
 /* 800AC39C 000A92FC  4E 80 00 20 */	blr 
+.endfn init__9ActBoMakeFP8Creature
 
-.global exec__9ActBoMakeFv
-exec__9ActBoMakeFv:
+.fn exec__9ActBoMakeFv, global
 /* 800AC3A0 000A9300  7C 08 02 A6 */	mflr r0
 /* 800AC3A4 000A9304  90 01 00 04 */	stw r0, 4(r1)
 /* 800AC3A8 000A9308  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -92,9 +91,9 @@ exec__9ActBoMakeFv:
 /* 800AC434 000A9394  38 21 00 18 */	addi r1, r1, 0x18
 /* 800AC438 000A9398  7C 08 03 A6 */	mtlr r0
 /* 800AC43C 000A939C  4E 80 00 20 */	blr 
+.endfn exec__9ActBoMakeFv
 
-.global initApproach__9ActBoMakeFv
-initApproach__9ActBoMakeFv:
+.fn initApproach__9ActBoMakeFv, global
 /* 800AC440 000A93A0  7C 08 02 A6 */	mflr r0
 /* 800AC444 000A93A4  38 80 00 02 */	li r4, 2
 /* 800AC448 000A93A8  90 01 00 04 */	stw r0, 4(r1)
@@ -120,9 +119,9 @@ initApproach__9ActBoMakeFv:
 /* 800AC498 000A93F8  38 21 00 28 */	addi r1, r1, 0x28
 /* 800AC49C 000A93FC  7C 08 03 A6 */	mtlr r0
 /* 800AC4A0 000A9400  4E 80 00 20 */	blr 
+.endfn initApproach__9ActBoMakeFv
 
-.global exeApproach__9ActBoMakeFv
-exeApproach__9ActBoMakeFv:
+.fn exeApproach__9ActBoMakeFv, global
 /* 800AC4A4 000A9404  7C 08 02 A6 */	mflr r0
 /* 800AC4A8 000A9408  90 01 00 04 */	stw r0, 4(r1)
 /* 800AC4AC 000A940C  94 21 FF A8 */	stwu r1, -0x58(r1)
@@ -201,9 +200,9 @@ exeApproach__9ActBoMakeFv:
 /* 800AC5C4 000A9524  38 21 00 58 */	addi r1, r1, 0x58
 /* 800AC5C8 000A9528  7C 08 03 A6 */	mtlr r0
 /* 800AC5CC 000A952C  4E 80 00 20 */	blr 
+.endfn exeApproach__9ActBoMakeFv
 
-.global initWork__9ActBoMakeFv
-initWork__9ActBoMakeFv:
+.fn initWork__9ActBoMakeFv, global
 /* 800AC5D0 000A9530  7C 08 02 A6 */	mflr r0
 /* 800AC5D4 000A9534  90 01 00 04 */	stw r0, 4(r1)
 /* 800AC5D8 000A9538  94 21 FF D0 */	stwu r1, -0x30(r1)
@@ -251,14 +250,14 @@ initWork__9ActBoMakeFv:
 /* 800AC678 000A95D8  38 21 00 30 */	addi r1, r1, 0x30
 /* 800AC67C 000A95DC  7C 08 03 A6 */	mtlr r0
 /* 800AC680 000A95E0  4E 80 00 20 */	blr 
+.endfn initWork__9ActBoMakeFv
 
-.global exeWork__9ActBoMakeFv
-exeWork__9ActBoMakeFv:
+.fn exeWork__9ActBoMakeFv, global
 /* 800AC684 000A95E4  38 60 00 00 */	li r3, 0
 /* 800AC688 000A95E8  4E 80 00 20 */	blr 
+.endfn exeWork__9ActBoMakeFv
 
-.global cleanup__9ActBoMakeFv
-cleanup__9ActBoMakeFv:
+.fn cleanup__9ActBoMakeFv, global
 /* 800AC68C 000A95EC  7C 08 02 A6 */	mflr r0
 /* 800AC690 000A95F0  90 01 00 04 */	stw r0, 4(r1)
 /* 800AC694 000A95F4  94 21 FF F8 */	stwu r1, -8(r1)
@@ -268,9 +267,9 @@ cleanup__9ActBoMakeFv:
 /* 800AC6A4 000A9604  38 21 00 08 */	addi r1, r1, 8
 /* 800AC6A8 000A9608  7C 08 03 A6 */	mtlr r0
 /* 800AC6AC 000A960C  4E 80 00 20 */	blr 
+.endfn cleanup__9ActBoMakeFv
 
-.global animationKeyUpdated__9ActBoMakeFR16PaniAnimKeyEvent
-animationKeyUpdated__9ActBoMakeFR16PaniAnimKeyEvent:
+.fn animationKeyUpdated__9ActBoMakeFR16PaniAnimKeyEvent, global
 /* 800AC6B0 000A9610  7C 08 02 A6 */	mflr r0
 /* 800AC6B4 000A9614  90 01 00 04 */	stw r0, 4(r1)
 /* 800AC6B8 000A9618  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -303,9 +302,9 @@ animationKeyUpdated__9ActBoMakeFR16PaniAnimKeyEvent:
 /* 800AC71C 000A967C  38 21 00 20 */	addi r1, r1, 0x20
 /* 800AC720 000A9680  7C 08 03 A6 */	mtlr r0
 /* 800AC724 000A9684  4E 80 00 20 */	blr 
+.endfn animationKeyUpdated__9ActBoMakeFR16PaniAnimKeyEvent
 
-.global __dt__9ActBoMakeFv
-__dt__9ActBoMakeFv:
+.fn __dt__9ActBoMakeFv, weak
 /* 800AC728 000A9688  7C 08 02 A6 */	mflr r0
 /* 800AC72C 000A968C  90 01 00 04 */	stw r0, 4(r1)
 /* 800AC730 000A9690  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -334,52 +333,52 @@ __dt__9ActBoMakeFv:
 /* 800AC788 000A96E8  38 21 00 18 */	addi r1, r1, 0x18
 /* 800AC78C 000A96EC  7C 08 03 A6 */	mtlr r0
 /* 800AC790 000A96F0  4E 80 00 20 */	blr 
+.endfn __dt__9ActBoMakeFv
 
-"@20@animationKeyUpdated__9ActBoMakeFR16PaniAnimKeyEvent":
+.fn "@20@animationKeyUpdated__9ActBoMakeFR16PaniAnimKeyEvent", weak
 /* 800AC794 000A96F4  38 63 FF EC */	addi r3, r3, -20
 /* 800AC798 000A96F8  4B FF FF 18 */	b animationKeyUpdated__9ActBoMakeFR16PaniAnimKeyEvent
+.endfn "@20@animationKeyUpdated__9ActBoMakeFR16PaniAnimKeyEvent"
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802B59C0:
+.obj lbl_802B59C0, local
 	.asciz "aiBoMake.cpp"
+.endobj lbl_802B59C0
 .balign 4
-lbl_802B59D0:
+.obj lbl_802B59D0, local
 	.asciz "aiBoMake"
+.endobj lbl_802B59D0
 .balign 4
-lbl_802B59DC:
+.obj lbl_802B59DC, local
 	.asciz "Interaction"
+.endobj lbl_802B59DC
 .balign 4
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
+.skip 0x2C # compiler padding
 .balign 4
-lbl_802B5A14:
+.obj lbl_802B5A14, local
 	.asciz "ActBoMake"
+.endobj lbl_802B5A14
 .balign 4
-lbl_802B5A20:
+.obj lbl_802B5A20, local
 	.asciz "Receiver<Piki>"
+.endobj lbl_802B5A20
 .balign 4
-lbl_802B5A30:
+.obj lbl_802B5A30, local
 	.4byte "__RTTI__15Receiver<4Piki>"
 	.4byte 0
 	.4byte 0
-lbl_802B5A3C:
+.endobj lbl_802B5A30
+.balign 4
+.obj lbl_802B5A3C, local
 	.4byte "__RTTI__15Receiver<4Piki>"
 	.4byte 0
 	.4byte __RTTI__6Action
 	.4byte 0
 	.4byte 0
-.global __vt__9ActBoMake
-__vt__9ActBoMake:
+.endobj lbl_802B5A3C
+.balign 4
+.obj __vt__9ActBoMake, global
 	.4byte __RTTI__9ActBoMake
 	.4byte 0
 	.4byte "procMsg__15Receiver<4Piki>FP4PikiP3Msg"
@@ -409,14 +408,14 @@ __vt__9ActBoMake:
 	.4byte 0xFFFFFFEC
 	.4byte "@20@animationKeyUpdated__9ActBoMakeFR16PaniAnimKeyEvent"
 	.4byte animationKeyUpdated__9ActBoMakeFR16PaniAnimKeyEvent
+.endobj __vt__9ActBoMake
 .balign 4
-lbl_802B5AC4:
+.obj lbl_802B5AC4, local
 	.asciz "PaniAnimKeyListener"
+.endobj lbl_802B5AC4
 .balign 4
-	.4byte 0
-	.4byte 0
-	.4byte 0
-lbl_802B5AE4:
+.skip 0xC # compiler padding
+.obj lbl_802B5AE4, local
 	.4byte .L_800A7908
 	.4byte .L_800A7930
 	.4byte .L_800A7944
@@ -428,28 +427,37 @@ lbl_802B5AE4:
 	.4byte .L_800A791C
 	.4byte .L_800A79D0
 	.4byte .L_800A79BC
+.endobj lbl_802B5AE4
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-"__RTTI__15Receiver<4Piki>":
+.obj "__RTTI__15Receiver<4Piki>", local
 	.4byte lbl_802B5A20
 	.4byte 0
+.endobj "__RTTI__15Receiver<4Piki>"
 .balign 4
-lbl_803DFE48:
+.obj lbl_803DFE48, local
 	.asciz "Action"
+.endobj lbl_803DFE48
 .balign 4
-__RTTI__6Action:
+.obj __RTTI__6Action, local
 	.4byte lbl_803DFE48
 	.4byte lbl_802B5A30
-__RTTI__9ActBoMake:
+.endobj __RTTI__6Action
+.balign 4
+.obj __RTTI__9ActBoMake, local
 	.4byte lbl_802B5A14
 	.4byte lbl_802B5A3C
+.endobj __RTTI__9ActBoMake
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803E9130:
+.obj lbl_803E9130, local
 	.float 0.0
-lbl_803E9134:
+.endobj lbl_803E9130
+.obj lbl_803E9134, local
 	.float 3.0
-lbl_803E9138:
+.endobj lbl_803E9134
+.obj lbl_803E9138, local
 	.float 1.0
+.endobj lbl_803E9138

@@ -726,17 +726,7 @@ lbl_802DD8A8:
 lbl_802DD8B4:
 	.asciz "Interaction"
 .balign 4
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
+.skip 0x2C # compiler padding
 .balign 4
 lbl_802DD8EC:
 	.asciz "PelletView"
@@ -951,7 +941,7 @@ lbl_802DDC1C:
 	.4byte ptclHitMap__28TAIeffectAttackEventCallBackFPQ23zen17particleGeneratorP20TAIeffectAttackParam
 	.4byte hitCheckCulling__28TAIeffectAttackEventCallBackFPQ23zen17particleGeneratorP20TAIeffectAttackParamP8Creature
 .endobj __vt__28TAIeffectAttackEventCallBack
-	.skip 0x10
+	.skip 0x10 # compiler padding
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8

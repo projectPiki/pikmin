@@ -93,8 +93,7 @@ SYSCOMMON :=\
 
 SYSDOLPHIN :=\
 	$(BUILD_DIR)/asm/sysDolphin/texture.o\
-	$(BUILD_DIR)/src/sysDolphin/system.o\
-	$(BUILD_DIR)/asm/sysDolphin/system_asm.o\
+	$(BUILD_DIR)/asm/sysDolphin/system.o\
 	$(BUILD_DIR)/asm/sysDolphin/sysNew.o\
 	$(BUILD_DIR)/asm/sysDolphin/controllerMgr.o\
 	$(BUILD_DIR)/asm/sysDolphin/dgxGraphics.o\
@@ -619,8 +618,7 @@ TRK_MINNOW_DOLPHIN :=\
 	$(BUILD_DIR)/asm/TRK_MINNOW_DOLPHIN/nubinit.o\
 	$(BUILD_DIR)/asm/TRK_MINNOW_DOLPHIN/msg.o\
 	$(BUILD_DIR)/asm/TRK_MINNOW_DOLPHIN/msgbuf.o\
-	$(BUILD_DIR)/asm/TRK_MINNOW_DOLPHIN/serpoll_asm.o\
-	$(BUILD_DIR)/src/TRK_MINNOW_DOLPHIN/serpoll.o\
+	$(BUILD_DIR)/asm/TRK_MINNOW_DOLPHIN/serpoll.o\
 	$(BUILD_DIR)/src/TRK_MINNOW_DOLPHIN/usr_put.o\
 	$(BUILD_DIR)/asm/TRK_MINNOW_DOLPHIN/dispatch.o\
 	$(BUILD_DIR)/asm/TRK_MINNOW_DOLPHIN/msghndlr.o\
