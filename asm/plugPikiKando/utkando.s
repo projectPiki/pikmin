@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global selectRandomly__FP6Choicei
-selectRandomly__FP6Choicei:
+.fn selectRandomly__FP6Choicei, global
 /* 80116110 00113070  7C 08 02 A6 */	mflr r0
 /* 80116114 00113074  90 01 00 04 */	stw r0, 4(r1)
 /* 80116118 00113078  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -50,16 +49,16 @@ selectRandomly__FP6Choicei:
 /* 801161B4 00113114  38 21 00 28 */	addi r1, r1, 0x28
 /* 801161B8 00113118  7C 08 03 A6 */	mtlr r0
 /* 801161BC 0011311C  4E 80 00 20 */	blr 
+.endfn selectRandomly__FP6Choicei
 
-.global __ct__8BitFlagsFv
-__ct__8BitFlagsFv:
+.fn __ct__8BitFlagsFv, global
 /* 801161C0 00113120  38 00 00 00 */	li r0, 0
 /* 801161C4 00113124  90 03 00 00 */	stw r0, 0(r3)
 /* 801161C8 00113128  B0 03 00 06 */	sth r0, 6(r3)
 /* 801161CC 0011312C  4E 80 00 20 */	blr 
+.endfn __ct__8BitFlagsFv
 
-.global dump__8BitFlagsFv
-dump__8BitFlagsFv:
+.fn dump__8BitFlagsFv, global
 /* 801161D0 00113130  A0 A3 00 06 */	lhz r5, 6(r3)
 /* 801161D4 00113134  38 C0 00 00 */	li r6, 0
 /* 801161D8 00113138  2C 05 00 00 */	cmpwi r5, 0
@@ -85,9 +84,9 @@ dump__8BitFlagsFv:
 /* 8011621C 0011317C  4E 80 00 20 */	blr 
 /* 80116220 00113180  4B FF FF E8 */	b .L_80116208
 /* 80116224 00113184  4E 80 00 20 */	blr 
+.endfn dump__8BitFlagsFv
 
-.global loadCard__8BitFlagsFR18RandomAccessStream
-loadCard__8BitFlagsFR18RandomAccessStream:
+.fn loadCard__8BitFlagsFR18RandomAccessStream, global
 /* 80116228 00113188  7C 08 02 A6 */	mflr r0
 /* 8011622C 0011318C  90 01 00 04 */	stw r0, 4(r1)
 /* 80116230 00113190  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -118,9 +117,9 @@ loadCard__8BitFlagsFR18RandomAccessStream:
 /* 8011628C 001131EC  38 21 00 20 */	addi r1, r1, 0x20
 /* 80116290 001131F0  7C 08 03 A6 */	mtlr r0
 /* 80116294 001131F4  4E 80 00 20 */	blr 
+.endfn loadCard__8BitFlagsFR18RandomAccessStream
 
-.global saveCard__8BitFlagsFR18RandomAccessStream
-saveCard__8BitFlagsFR18RandomAccessStream:
+.fn saveCard__8BitFlagsFR18RandomAccessStream, global
 /* 80116298 001131F8  7C 08 02 A6 */	mflr r0
 /* 8011629C 001131FC  90 01 00 04 */	stw r0, 4(r1)
 /* 801162A0 00113200  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -151,9 +150,9 @@ saveCard__8BitFlagsFR18RandomAccessStream:
 /* 801162FC 0011325C  38 21 00 20 */	addi r1, r1, 0x20
 /* 80116300 00113260  7C 08 03 A6 */	mtlr r0
 /* 80116304 00113264  4E 80 00 20 */	blr 
+.endfn saveCard__8BitFlagsFR18RandomAccessStream
 
-.global create__8BitFlagsFUsPUc
-create__8BitFlagsFUsPUc:
+.fn create__8BitFlagsFUsPUc, global
 /* 80116308 00113268  7C 08 02 A6 */	mflr r0
 /* 8011630C 0011326C  28 05 00 00 */	cmplwi r5, 0
 /* 80116310 00113270  90 01 00 04 */	stw r0, 4(r1)
@@ -177,9 +176,9 @@ create__8BitFlagsFUsPUc:
 /* 80116350 001132B0  38 21 00 20 */	addi r1, r1, 0x20
 /* 80116354 001132B4  7C 08 03 A6 */	mtlr r0
 /* 80116358 001132B8  4E 80 00 20 */	blr 
+.endfn create__8BitFlagsFUsPUc
 
-.global reset__8BitFlagsFv
-reset__8BitFlagsFv:
+.fn reset__8BitFlagsFv, global
 /* 8011635C 001132BC  38 C0 00 00 */	li r6, 0
 /* 80116360 001132C0  38 A0 00 00 */	li r5, 0
 /* 80116364 001132C4  48 00 00 10 */	b .L_80116374
@@ -192,9 +191,9 @@ reset__8BitFlagsFv:
 /* 80116378 001132D8  7C 06 00 00 */	cmpw r6, r0
 /* 8011637C 001132DC  41 80 FF EC */	blt .L_80116368
 /* 80116380 001132E0  4E 80 00 20 */	blr 
+.endfn reset__8BitFlagsFv
 
-.global setFlag__8BitFlagsFUs
-setFlag__8BitFlagsFUs:
+.fn setFlag__8BitFlagsFUs, global
 /* 80116384 001132E4  80 A3 00 00 */	lwz r5, 0(r3)
 /* 80116388 001132E8  54 86 04 3E */	clrlwi r6, r4, 0x10
 /* 8011638C 001132EC  54 80 04 38 */	rlwinm r0, r4, 0, 0x10, 0x1c
@@ -207,9 +206,9 @@ setFlag__8BitFlagsFUs:
 /* 801163A8 00113308  7C 80 03 78 */	or r0, r4, r0
 /* 801163AC 0011330C  7C 05 39 AE */	stbx r0, r5, r7
 /* 801163B0 00113310  4E 80 00 20 */	blr 
+.endfn setFlag__8BitFlagsFUs
 
-.global isFlag__8BitFlagsFUs
-isFlag__8BitFlagsFUs:
+.fn isFlag__8BitFlagsFUs, global
 /* 801163B4 00113314  80 63 00 00 */	lwz r3, 0(r3)
 /* 801163B8 00113318  54 80 EC FE */	rlwinm r0, r4, 0x1d, 0x13, 0x1f
 /* 801163BC 0011331C  54 85 04 3E */	clrlwi r5, r4, 0x10
@@ -224,15 +223,15 @@ isFlag__8BitFlagsFUs:
 /* 801163E0 00113340  30 03 FF FF */	addic r0, r3, -1
 /* 801163E4 00113344  7C 60 19 10 */	subfe r3, r0, r3
 /* 801163E8 00113348  4E 80 00 20 */	blr 
+.endfn isFlag__8BitFlagsFUs
 
-.global __ct__11LoopCheckerFPcf
-__ct__11LoopCheckerFPcf:
+.fn __ct__11LoopCheckerFPcf, global
 /* 801163EC 0011334C  D0 23 00 00 */	stfs f1, 0(r3)
 /* 801163F0 00113350  90 83 00 04 */	stw r4, 4(r3)
 /* 801163F4 00113354  4E 80 00 20 */	blr 
+.endfn __ct__11LoopCheckerFPcf
 
-.global update__11LoopCheckerFv
-update__11LoopCheckerFv:
+.fn update__11LoopCheckerFv, global
 /* 801163F8 00113358  80 8D 2D EC */	lwz r4, gsys@sda21(r13)
 /* 801163FC 0011335C  C0 23 00 00 */	lfs f1, 0(r3)
 /* 80116400 00113360  C0 04 02 8C */	lfs f0, 0x28c(r4)
@@ -243,9 +242,9 @@ update__11LoopCheckerFv:
 /* 80116414 00113374  FC 01 00 40 */	fcmpo cr0, f1, f0
 /* 80116418 00113378  4C 40 13 82 */	cror 2, 0, 2
 /* 8011641C 0011337C  4E 80 00 20 */	blr 
+.endfn update__11LoopCheckerFv
 
-.global drawBatten__FR8GraphicsR8Vector3ff
-drawBatten__FR8GraphicsR8Vector3ff:
+.fn drawBatten__FR8GraphicsR8Vector3ff, global
 /* 80116420 00113380  7C 08 02 A6 */	mflr r0
 /* 80116424 00113384  90 01 00 04 */	stw r0, 4(r1)
 /* 80116428 00113388  94 21 FF 30 */	stwu r1, -0xd0(r1)
@@ -337,9 +336,9 @@ drawBatten__FR8GraphicsR8Vector3ff:
 /* 80116580 001134E0  38 21 00 D0 */	addi r1, r1, 0xd0
 /* 80116584 001134E4  7C 08 03 A6 */	mtlr r0
 /* 80116588 001134E8  4E 80 00 20 */	blr 
+.endfn drawBatten__FR8GraphicsR8Vector3ff
 
-.global drawBattenPole__FR8GraphicsR8Vector3ffPc
-drawBattenPole__FR8GraphicsR8Vector3ffPc:
+.fn drawBattenPole__FR8GraphicsR8Vector3ffPc, global
 /* 8011658C 001134EC  7C 08 02 A6 */	mflr r0
 /* 80116590 001134F0  90 01 00 04 */	stw r0, 4(r1)
 /* 80116594 001134F4  94 21 FE 00 */	stwu r1, -0x200(r1)
@@ -606,9 +605,9 @@ drawBattenPole__FR8GraphicsR8Vector3ffPc:
 /* 801169A4 00113904  38 21 02 00 */	addi r1, r1, 0x200
 /* 801169A8 00113908  7C 08 03 A6 */	mtlr r0
 /* 801169AC 0011390C  4E 80 00 20 */	blr 
+.endfn drawBattenPole__FR8GraphicsR8Vector3ffPc
 
-.global drawArrow__FR8GraphicsR8Vector3fR8Vector3ff
-drawArrow__FR8GraphicsR8Vector3fR8Vector3ff:
+.fn drawArrow__FR8GraphicsR8Vector3fR8Vector3ff, global
 /* 801169B0 00113910  7C 08 02 A6 */	mflr r0
 /* 801169B4 00113914  90 01 00 04 */	stw r0, 4(r1)
 /* 801169B8 00113918  94 21 FE B8 */	stwu r1, -0x148(r1)
@@ -765,9 +764,9 @@ drawArrow__FR8GraphicsR8Vector3fR8Vector3ff:
 /* 80116C10 00113B70  38 21 01 48 */	addi r1, r1, 0x148
 /* 80116C14 00113B74  7C 08 03 A6 */	mtlr r0
 /* 80116C18 00113B78  4E 80 00 20 */	blr 
+.endfn drawArrow__FR8GraphicsR8Vector3fR8Vector3ff
 
-.global CRSplineDraw__FR8GraphicsiP8Vector3f
-CRSplineDraw__FR8GraphicsiP8Vector3f:
+.fn CRSplineDraw__FR8GraphicsiP8Vector3f, global
 /* 80116C1C 00113B7C  7C 08 02 A6 */	mflr r0
 /* 80116C20 00113B80  90 01 00 04 */	stw r0, 4(r1)
 /* 80116C24 00113B84  94 21 FF 60 */	stwu r1, -0xa0(r1)
@@ -892,9 +891,9 @@ CRSplineDraw__FR8GraphicsiP8Vector3f:
 /* 80116DF8 00113D58  38 21 00 A0 */	addi r1, r1, 0xa0
 /* 80116DFC 00113D5C  7C 08 03 A6 */	mtlr r0
 /* 80116E00 00113D60  4E 80 00 20 */	blr 
+.endfn CRSplineDraw__FR8GraphicsiP8Vector3f
 
-.global drawCube__FR8GraphicsR8Vector3ff
-drawCube__FR8GraphicsR8Vector3ff:
+.fn drawCube__FR8GraphicsR8Vector3ff, global
 /* 80116E04 00113D64  7C 08 02 A6 */	mflr r0
 /* 80116E08 00113D68  90 01 00 04 */	stw r0, 4(r1)
 /* 80116E0C 00113D6C  94 21 FD 50 */	stwu r1, -0x2b0(r1)
@@ -1136,39 +1135,53 @@ drawCube__FR8GraphicsR8Vector3ff:
 /* 801171B8 00114118  38 21 02 B0 */	addi r1, r1, 0x2b0
 /* 801171BC 0011411C  7C 08 03 A6 */	mtlr r0
 /* 801171C0 00114120  4E 80 00 20 */	blr 
+.endfn drawCube__FR8GraphicsR8Vector3ff
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-lbl_803E29B0:
+.obj lbl_803E29B0, local
 	.float 0.0
-lbl_803E29B4:
+.endobj lbl_803E29B0
+.obj lbl_803E29B4, local
 	.float 0.0
-lbl_803E29B8:
+.endobj lbl_803E29B4
+.obj lbl_803E29B8, local
 	.float 0.0
-lbl_803E29BC:
+.endobj lbl_803E29B8
+.obj lbl_803E29BC, local
 	.float 0.0
-lbl_803E29C0:
+.endobj lbl_803E29BC
+.obj lbl_803E29C0, local
 	.float 0.0
-lbl_803E29C4:
+.endobj lbl_803E29C0
+.obj lbl_803E29C4, local
 	.float 4.0
-lbl_803E29C8:
+.endobj lbl_803E29C4
+.obj lbl_803E29C8, local
 	.float 0.0
-lbl_803E29CC:
+.endobj lbl_803E29C8
+.obj lbl_803E29CC, local
 	.float 4.0
+.endobj lbl_803E29CC
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803EA188:
+.obj lbl_803EA188, local
 	.float 1.0
-lbl_803EA18C:
+.endobj lbl_803EA188
+.obj lbl_803EA18C, local
 	.float 32767.0
-lbl_803EA190:
+.endobj lbl_803EA18C
+.obj lbl_803EA190, local
 	.float 0.0
+.endobj lbl_803EA190
 .balign 8
-lbl_803EA198:
-	.4byte 0x43300000
-	.4byte 0x80000000
-lbl_803EA1A0:
+.obj lbl_803EA198, local
+	.8byte 0x4330000080000000
+.endobj lbl_803EA198
+.obj lbl_803EA1A0, local
 	.float 8.0
-lbl_803EA1A4:
+.endobj lbl_803EA1A0
+.obj lbl_803EA1A4, local
 	.float 10.0
+.endobj lbl_803EA1A4

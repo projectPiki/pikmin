@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global __ct__7NaviMgrFv
-__ct__7NaviMgrFv:
+.fn __ct__7NaviMgrFv, global
 /* 801171C4 00114124  7C 08 02 A6 */	mflr r0
 /* 801171C8 00114128  90 01 00 04 */	stw r0, 4(r1)
 /* 801171CC 0011412C  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -100,9 +99,9 @@ __ct__7NaviMgrFv:
 /* 80117338 00114298  38 21 00 20 */	addi r1, r1, 0x20
 /* 8011733C 0011429C  7C 08 03 A6 */	mtlr r0
 /* 80117340 001142A0  4E 80 00 20 */	blr 
+.endfn __ct__7NaviMgrFv
 
-.global createObject__7NaviMgrFv
-createObject__7NaviMgrFv:
+.fn createObject__7NaviMgrFv, global
 /* 80117344 001142A4  7C 08 02 A6 */	mflr r0
 /* 80117348 001142A8  90 01 00 04 */	stw r0, 4(r1)
 /* 8011734C 001142AC  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -128,9 +127,9 @@ createObject__7NaviMgrFv:
 /* 80117398 001142F8  38 21 00 18 */	addi r1, r1, 0x18
 /* 8011739C 001142FC  7C 08 03 A6 */	mtlr r0
 /* 801173A0 00114300  4E 80 00 20 */	blr 
+.endfn createObject__7NaviMgrFv
 
-.global update__7NaviMgrFv
-update__7NaviMgrFv:
+.fn update__7NaviMgrFv, global
 /* 801173A4 00114304  7C 08 02 A6 */	mflr r0
 /* 801173A8 00114308  90 01 00 04 */	stw r0, 4(r1)
 /* 801173AC 0011430C  94 21 FF F8 */	stwu r1, -8(r1)
@@ -139,9 +138,9 @@ update__7NaviMgrFv:
 /* 801173B8 00114318  38 21 00 08 */	addi r1, r1, 8
 /* 801173BC 0011431C  7C 08 03 A6 */	mtlr r0
 /* 801173C0 00114320  4E 80 00 20 */	blr 
+.endfn update__7NaviMgrFv
 
-.global getNavi__7NaviMgrFv
-getNavi__7NaviMgrFv:
+.fn getNavi__7NaviMgrFv, global
 /* 801173C4 00114324  7C 08 02 A6 */	mflr r0
 /* 801173C8 00114328  90 01 00 04 */	stw r0, 4(r1)
 /* 801173CC 0011432C  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -173,18 +172,18 @@ getNavi__7NaviMgrFv:
 /* 8011742C 0011438C  38 21 00 28 */	addi r1, r1, 0x28
 /* 80117430 00114390  7C 08 03 A6 */	mtlr r0
 /* 80117434 00114394  4E 80 00 20 */	blr 
+.endfn getNavi__7NaviMgrFv
 
-.global getNavi__7NaviMgrFi
-getNavi__7NaviMgrFi:
+.fn getNavi__7NaviMgrFi, global
 /* 80117438 00114398  80 03 00 30 */	lwz r0, 0x30(r3)
 /* 8011743C 0011439C  7C 04 00 00 */	cmpw r4, r0
 /* 80117440 001143A0  80 63 00 28 */	lwz r3, 0x28(r3)
 /* 80117444 001143A4  54 80 10 3A */	slwi r0, r4, 2
 /* 80117448 001143A8  7C 63 00 2E */	lwzx r3, r3, r0
 /* 8011744C 001143AC  4E 80 00 20 */	blr 
+.endfn getNavi__7NaviMgrFi
 
-.global refresh2d__7NaviMgrFR8Graphics
-refresh2d__7NaviMgrFR8Graphics:
+.fn refresh2d__7NaviMgrFR8Graphics, global
 /* 80117450 001143B0  7C 08 02 A6 */	mflr r0
 /* 80117454 001143B4  90 01 00 04 */	stw r0, 4(r1)
 /* 80117458 001143B8  94 21 FF C8 */	stwu r1, -0x38(r1)
@@ -263,9 +262,9 @@ refresh2d__7NaviMgrFR8Graphics:
 /* 80117560 001144C0  38 21 00 38 */	addi r1, r1, 0x38
 /* 80117564 001144C4  7C 08 03 A6 */	mtlr r0
 /* 80117568 001144C8  4E 80 00 20 */	blr 
+.endfn refresh2d__7NaviMgrFR8Graphics
 
-.global renderCircle__7NaviMgrFR8Graphics
-renderCircle__7NaviMgrFR8Graphics:
+.fn renderCircle__7NaviMgrFR8Graphics, global
 /* 8011756C 001144CC  7C 08 02 A6 */	mflr r0
 /* 80117570 001144D0  90 01 00 04 */	stw r0, 4(r1)
 /* 80117574 001144D4  94 21 FF C8 */	stwu r1, -0x38(r1)
@@ -341,9 +340,9 @@ renderCircle__7NaviMgrFR8Graphics:
 /* 80117670 001145D0  38 21 00 38 */	addi r1, r1, 0x38
 /* 80117674 001145D4  7C 08 03 A6 */	mtlr r0
 /* 80117678 001145D8  4E 80 00 20 */	blr 
+.endfn renderCircle__7NaviMgrFR8Graphics
 
-.global drawShadow__7NaviMgrFR8Graphics
-drawShadow__7NaviMgrFR8Graphics:
+.fn drawShadow__7NaviMgrFR8Graphics, global
 /* 8011767C 001145DC  7C 08 02 A6 */	mflr r0
 /* 80117680 001145E0  90 01 00 04 */	stw r0, 4(r1)
 /* 80117684 001145E4  94 21 FF C8 */	stwu r1, -0x38(r1)
@@ -422,9 +421,9 @@ drawShadow__7NaviMgrFR8Graphics:
 /* 8011778C 001146EC  38 21 00 38 */	addi r1, r1, 0x38
 /* 80117790 001146F0  7C 08 03 A6 */	mtlr r0
 /* 80117794 001146F4  4E 80 00 20 */	blr 
+.endfn drawShadow__7NaviMgrFR8Graphics
 
-.global read__7NaviMgrFR18RandomAccessStream
-read__7NaviMgrFR18RandomAccessStream:
+.fn read__7NaviMgrFR18RandomAccessStream, global
 /* 80117798 001146F8  7C 08 02 A6 */	mflr r0
 /* 8011779C 001146FC  90 01 00 04 */	stw r0, 4(r1)
 /* 801177A0 00114700  94 21 FF F8 */	stwu r1, -8(r1)
@@ -437,9 +436,9 @@ read__7NaviMgrFR18RandomAccessStream:
 /* 801177BC 0011471C  38 21 00 08 */	addi r1, r1, 8
 /* 801177C0 00114720  7C 08 03 A6 */	mtlr r0
 /* 801177C4 00114724  4E 80 00 20 */	blr 
+.endfn read__7NaviMgrFR18RandomAccessStream
 
-.global __dt__7NaviMgrFv
-__dt__7NaviMgrFv:
+.fn __dt__7NaviMgrFv, weak
 /* 801177C8 00114728  7C 08 02 A6 */	mflr r0
 /* 801177CC 0011472C  90 01 00 04 */	stw r0, 4(r1)
 /* 801177D0 00114730  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -475,68 +474,87 @@ __dt__7NaviMgrFv:
 /* 80117840 001147A0  38 21 00 18 */	addi r1, r1, 0x18
 /* 80117844 001147A4  7C 08 03 A6 */	mtlr r0
 /* 80117848 001147A8  4E 80 00 20 */	blr 
+.endfn __dt__7NaviMgrFv
 
-"@8@read__7NaviMgrFR18RandomAccessStream":
+.fn "@8@read__7NaviMgrFR18RandomAccessStream", weak
 /* 8011784C 001147AC  38 63 FF F8 */	addi r3, r3, -8
 /* 80117850 001147B0  4B FF FF 48 */	b read__7NaviMgrFR18RandomAccessStream
+.endfn "@8@read__7NaviMgrFR18RandomAccessStream"
 
-"@8@update__7NaviMgrFv":
+.fn "@8@update__7NaviMgrFv", weak
 /* 80117854 001147B4  38 63 FF F8 */	addi r3, r3, -8
 /* 80117858 001147B8  4B FF FB 4C */	b update__7NaviMgrFv
+.endfn "@8@update__7NaviMgrFv"
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802C2E70:
+.obj lbl_802C2E70, local
 	.asciz "naviMgr.cpp"
+.endobj lbl_802C2E70
 .balign 4
-lbl_802C2E7C:
+.obj lbl_802C2E7C, local
 	.asciz "naviiMgr"
+.endobj lbl_802C2E7C
 .balign 4
-lbl_802C2E88:
+.obj lbl_802C2E88, local
 	.asciz "naviparms"
+.endobj lbl_802C2E88
 .balign 4
-lbl_802C2E94:
+.obj lbl_802C2E94, local
 	.asciz "naviMgr.bin"
+.endobj lbl_802C2E94
 .balign 4
-lbl_802C2EA0:
+.obj lbl_802C2EA0, local
 	.asciz "navi shape anim"
+.endobj lbl_802C2EA0
 .balign 4
-lbl_802C2EB0:
+.obj lbl_802C2EB0, local
 	.asciz "navi mtable"
+.endobj lbl_802C2EB0
 .balign 4
-lbl_802C2EBC:
+.obj lbl_802C2EBC, local
 	.asciz "navi shape"
+.endobj lbl_802C2EBC
 .balign 4
-lbl_802C2EC8:
+.obj lbl_802C2EC8, local
 	.asciz "pikis/nv3Model.mod"
+.endobj lbl_802C2EC8
 .balign 4
-lbl_802C2EDC:
+.obj lbl_802C2EDC, local
 	.asciz "navi shapeobject"
+.endobj lbl_802C2EDC
 .balign 4
-lbl_802C2EF0:
+.obj lbl_802C2EF0, local
 	.asciz "navi animmgr"
+.endobj lbl_802C2EF0
 .balign 4
-lbl_802C2F00:
+.obj lbl_802C2F00, local
 	.asciz "CoreNode"
+.endobj lbl_802C2F00
 .balign 4
-lbl_802C2F0C:
+.obj lbl_802C2F0C, local
 	.4byte __RTTI__5ANode
-	.4byte 0x00000000
-	.4byte 0x00000000
-lbl_802C2F18:
+	.4byte 0
+	.4byte 0
+.endobj lbl_802C2F0C
+.balign 4
+.obj lbl_802C2F18, local
 	.4byte __RTTI__5ANode
-	.4byte 0x00000000
+	.4byte 0
 	.4byte __RTTI__8CoreNode
-	.4byte 0x00000000
-	.4byte 0x00000000
+	.4byte 0
+	.4byte 0
+.endobj lbl_802C2F18
 .balign 4
-lbl_802C2F2C:
+.obj lbl_802C2F2C, local
 	.asciz "Traversable"
+.endobj lbl_802C2F2C
 .balign 4
-lbl_802C2F38:
+.obj lbl_802C2F38, local
 	.asciz "ObjectMgr"
+.endobj lbl_802C2F38
 .balign 4
-lbl_802C2F44:
+.obj lbl_802C2F44, local
 	.4byte __RTTI__5ANode
 	.4byte 0x00000008
 	.4byte __RTTI__8CoreNode
@@ -544,13 +562,15 @@ lbl_802C2F44:
 	.4byte __RTTI__4Node
 	.4byte 0x00000008
 	.4byte __RTTI__11Traversable
-	.4byte 0x00000000
-	.4byte 0x00000000
+	.4byte 0
+	.4byte 0
+.endobj lbl_802C2F44
 .balign 4
-lbl_802C2F68:
+.obj lbl_802C2F68, local
 	.asciz "MonoObjectMgr"
+.endobj lbl_802C2F68
 .balign 4
-lbl_802C2F78:
+.obj lbl_802C2F78, local
 	.4byte __RTTI__5ANode
 	.4byte 0x00000008
 	.4byte __RTTI__8CoreNode
@@ -558,11 +578,13 @@ lbl_802C2F78:
 	.4byte __RTTI__4Node
 	.4byte 0x00000008
 	.4byte __RTTI__11Traversable
-	.4byte 0x00000000
+	.4byte 0
 	.4byte __RTTI__9ObjectMgr
-	.4byte 0x00000000
-	.4byte 0x00000000
-lbl_802C2FA4:
+	.4byte 0
+	.4byte 0
+.endobj lbl_802C2F78
+.balign 4
+.obj lbl_802C2FA4, local
 	.4byte __RTTI__5ANode
 	.4byte 0x00000008
 	.4byte __RTTI__8CoreNode
@@ -570,14 +592,15 @@ lbl_802C2FA4:
 	.4byte __RTTI__4Node
 	.4byte 0x00000008
 	.4byte __RTTI__11Traversable
-	.4byte 0x00000000
+	.4byte 0
 	.4byte __RTTI__9ObjectMgr
-	.4byte 0x00000000
+	.4byte 0
 	.4byte __RTTI__13MonoObjectMgr
-	.4byte 0x00000000
-	.4byte 0x00000000
-.global __vt__7NaviMgr
-__vt__7NaviMgr:
+	.4byte 0
+	.4byte 0
+.endobj lbl_802C2FA4
+.balign 4
+.obj __vt__7NaviMgr, global
 	.4byte __RTTI__7NaviMgr
 	.4byte 0
 	.4byte getCreature__13MonoObjectMgrFi
@@ -612,43 +635,60 @@ __vt__7NaviMgr:
 	.4byte kill__13MonoObjectMgrFP8Creature
 	.4byte createObject__7NaviMgrFv
 	.4byte read__7NaviMgrFR18RandomAccessStream
+.endobj __vt__7NaviMgr
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-lbl_803E29D0:
+.obj lbl_803E29D0, local
 	.asciz "parms/"
+.endobj lbl_803E29D0
 .balign 4
-lbl_803E29D8:
+.obj lbl_803E29D8, local
 	.asciz "NaviMgr"
+.endobj lbl_803E29D8
 .balign 4
-lbl_803E29E0:
+.obj lbl_803E29E0, local
 	.asciz "ANode"
+.endobj lbl_803E29E0
 .balign 4
-__RTTI__5ANode:
+.obj __RTTI__5ANode, local
 	.4byte lbl_803E29E0
 	.4byte 0
-__RTTI__8CoreNode:
+.endobj __RTTI__5ANode
+.balign 4
+.obj __RTTI__8CoreNode, local
 	.4byte lbl_802C2F00
 	.4byte lbl_802C2F0C
+.endobj __RTTI__8CoreNode
 .balign 4
-lbl_803E29F8:
+.obj lbl_803E29F8, local
 	.asciz "Node"
+.endobj lbl_803E29F8
 .balign 4
-__RTTI__4Node:
+.obj __RTTI__4Node, local
 	.4byte lbl_803E29F8
 	.4byte lbl_802C2F18
-__RTTI__11Traversable:
+.endobj __RTTI__4Node
+.balign 4
+.obj __RTTI__11Traversable, local
 	.4byte lbl_802C2F2C
 	.4byte 0
-__RTTI__9ObjectMgr:
+.endobj __RTTI__11Traversable
+.balign 4
+.obj __RTTI__9ObjectMgr, local
 	.4byte lbl_802C2F38
 	.4byte lbl_802C2F44
-__RTTI__13MonoObjectMgr:
+.endobj __RTTI__9ObjectMgr
+.balign 4
+.obj __RTTI__13MonoObjectMgr, local
 	.4byte lbl_802C2F68
 	.4byte lbl_802C2F78
-__RTTI__7NaviMgr:
+.endobj __RTTI__13MonoObjectMgr
+.balign 4
+.obj __RTTI__7NaviMgr, local
 	.4byte lbl_803E29D8
 	.4byte lbl_802C2FA4
+.endobj __RTTI__7NaviMgr
 
 .section .sbss, "wa"
 .balign 8

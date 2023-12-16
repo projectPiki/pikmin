@@ -5235,17 +5235,17 @@
 .endobj __vt__8SluiceAI
 .balign 4
 .obj lbl_802BE4C8, local
-	.4byte .L_8007D184
-	.4byte .L_8007D1AC
-	.4byte .L_8007D1C0
-	.4byte .L_8007D1D4
-	.4byte .L_8007D1E8
-	.4byte .L_8007D1FC
-	.4byte .L_8007D210
-	.4byte .L_8007D224
-	.4byte .L_8007D198
-	.4byte .L_8007D24C
-	.4byte .L_8007D238
+	.4byte ("procMsg__22Receiver<10AICreature>FP10AICreatureP3Msg"+0x30)
+	.4byte ("procMsg__22Receiver<10AICreature>FP10AICreatureP3Msg"+0x58)
+	.4byte ("procMsg__22Receiver<10AICreature>FP10AICreatureP3Msg"+0x6C)
+	.4byte ("procMsg__22Receiver<10AICreature>FP10AICreatureP3Msg"+0x80)
+	.4byte ("procMsg__22Receiver<10AICreature>FP10AICreatureP3Msg"+0x94)
+	.4byte ("procMsg__22Receiver<10AICreature>FP10AICreatureP3Msg"+0xA8)
+	.4byte ("procMsg__22Receiver<10AICreature>FP10AICreatureP3Msg"+0xBC)
+	.4byte ("procMsg__22Receiver<10AICreature>FP10AICreatureP3Msg"+0xD0)
+	.4byte ("procMsg__22Receiver<10AICreature>FP10AICreatureP3Msg"+0x44)
+	.4byte ("procMsg__22Receiver<10AICreature>FP10AICreatureP3Msg"+0xF8)
+	.4byte ("procMsg__22Receiver<10AICreature>FP10AICreatureP3Msg"+0xE4)
 .endobj lbl_802BE4C8
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820

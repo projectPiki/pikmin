@@ -292,83 +292,71 @@
 /* 8007D178 0007A0D8  7C 06 00 2E */	lwzx r0, r6, r0
 /* 8007D17C 0007A0DC  7C 09 03 A6 */	mtctr r0
 /* 8007D180 0007A0E0  4E 80 04 20 */	bctr 
-.global .L_8007D184
 .L_8007D184:
 /* 8007D184 0007A0E4  81 83 00 00 */	lwz r12, 0(r3)
 /* 8007D188 0007A0E8  81 8C 00 0C */	lwz r12, 0xc(r12)
 /* 8007D18C 0007A0EC  7D 88 03 A6 */	mtlr r12
 /* 8007D190 0007A0F0  4E 80 00 21 */	blrl 
 /* 8007D194 0007A0F4  48 00 00 C8 */	b .L_8007D25C
-.global .L_8007D198
 .L_8007D198:
 /* 8007D198 0007A0F8  81 83 00 00 */	lwz r12, 0(r3)
 /* 8007D19C 0007A0FC  81 8C 00 10 */	lwz r12, 0x10(r12)
 /* 8007D1A0 0007A100  7D 88 03 A6 */	mtlr r12
 /* 8007D1A4 0007A104  4E 80 00 21 */	blrl 
 /* 8007D1A8 0007A108  48 00 00 B4 */	b .L_8007D25C
-.global .L_8007D1AC
 .L_8007D1AC:
 /* 8007D1AC 0007A10C  81 83 00 00 */	lwz r12, 0(r3)
 /* 8007D1B0 0007A110  81 8C 00 14 */	lwz r12, 0x14(r12)
 /* 8007D1B4 0007A114  7D 88 03 A6 */	mtlr r12
 /* 8007D1B8 0007A118  4E 80 00 21 */	blrl 
 /* 8007D1BC 0007A11C  48 00 00 A0 */	b .L_8007D25C
-.global .L_8007D1C0
 .L_8007D1C0:
 /* 8007D1C0 0007A120  81 83 00 00 */	lwz r12, 0(r3)
 /* 8007D1C4 0007A124  81 8C 00 18 */	lwz r12, 0x18(r12)
 /* 8007D1C8 0007A128  7D 88 03 A6 */	mtlr r12
 /* 8007D1CC 0007A12C  4E 80 00 21 */	blrl 
 /* 8007D1D0 0007A130  48 00 00 8C */	b .L_8007D25C
-.global .L_8007D1D4
 .L_8007D1D4:
 /* 8007D1D4 0007A134  81 83 00 00 */	lwz r12, 0(r3)
 /* 8007D1D8 0007A138  81 8C 00 1C */	lwz r12, 0x1c(r12)
 /* 8007D1DC 0007A13C  7D 88 03 A6 */	mtlr r12
 /* 8007D1E0 0007A140  4E 80 00 21 */	blrl 
 /* 8007D1E4 0007A144  48 00 00 78 */	b .L_8007D25C
-.global .L_8007D1E8
 .L_8007D1E8:
 /* 8007D1E8 0007A148  81 83 00 00 */	lwz r12, 0(r3)
 /* 8007D1EC 0007A14C  81 8C 00 20 */	lwz r12, 0x20(r12)
 /* 8007D1F0 0007A150  7D 88 03 A6 */	mtlr r12
 /* 8007D1F4 0007A154  4E 80 00 21 */	blrl 
 /* 8007D1F8 0007A158  48 00 00 64 */	b .L_8007D25C
-.global .L_8007D1FC
 .L_8007D1FC:
 /* 8007D1FC 0007A15C  81 83 00 00 */	lwz r12, 0(r3)
 /* 8007D200 0007A160  81 8C 00 24 */	lwz r12, 0x24(r12)
 /* 8007D204 0007A164  7D 88 03 A6 */	mtlr r12
 /* 8007D208 0007A168  4E 80 00 21 */	blrl 
 /* 8007D20C 0007A16C  48 00 00 50 */	b .L_8007D25C
-.global .L_8007D210
 .L_8007D210:
 /* 8007D210 0007A170  81 83 00 00 */	lwz r12, 0(r3)
 /* 8007D214 0007A174  81 8C 00 28 */	lwz r12, 0x28(r12)
 /* 8007D218 0007A178  7D 88 03 A6 */	mtlr r12
 /* 8007D21C 0007A17C  4E 80 00 21 */	blrl 
 /* 8007D220 0007A180  48 00 00 3C */	b .L_8007D25C
-.global .L_8007D224
 .L_8007D224:
 /* 8007D224 0007A184  81 83 00 00 */	lwz r12, 0(r3)
 /* 8007D228 0007A188  81 8C 00 2C */	lwz r12, 0x2c(r12)
 /* 8007D22C 0007A18C  7D 88 03 A6 */	mtlr r12
 /* 8007D230 0007A190  4E 80 00 21 */	blrl 
 /* 8007D234 0007A194  48 00 00 28 */	b .L_8007D25C
-.global .L_8007D238
 .L_8007D238:
 /* 8007D238 0007A198  81 83 00 00 */	lwz r12, 0(r3)
 /* 8007D23C 0007A19C  81 8C 00 30 */	lwz r12, 0x30(r12)
 /* 8007D240 0007A1A0  7D 88 03 A6 */	mtlr r12
 /* 8007D244 0007A1A4  4E 80 00 21 */	blrl 
 /* 8007D248 0007A1A8  48 00 00 14 */	b .L_8007D25C
-.global .L_8007D24C
 .L_8007D24C:
 /* 8007D24C 0007A1AC  81 83 00 00 */	lwz r12, 0(r3)
 /* 8007D250 0007A1B0  81 8C 00 34 */	lwz r12, 0x34(r12)
 /* 8007D254 0007A1B4  7D 88 03 A6 */	mtlr r12
 /* 8007D258 0007A1B8  4E 80 00 21 */	blrl 
-.global .L_8007D25C
 .L_8007D25C:
 /* 8007D25C 0007A1BC  80 01 00 0C */	lwz r0, 0xc(r1)
 /* 8007D260 0007A1C0  38 21 00 08 */	addi r1, r1, 8
@@ -655,17 +643,17 @@
 	.4byte "procGroundMsg__22Receiver<10AICreature>FP10AICreatureP9MsgGround"
 .endobj "__vt__22Receiver<10AICreature>"
 .obj lbl_802AD6E8, local
-	.4byte .L_8007D184
-	.4byte .L_8007D1AC
-	.4byte .L_8007D1C0
-	.4byte .L_8007D1D4
-	.4byte .L_8007D1E8
-	.4byte .L_8007D1FC
-	.4byte .L_8007D210
-	.4byte .L_8007D224
-	.4byte .L_8007D198
-	.4byte .L_8007D24C
-	.4byte .L_8007D238
+	.4byte ("procMsg__22Receiver<10AICreature>FP10AICreatureP3Msg"+0x30)
+	.4byte ("procMsg__22Receiver<10AICreature>FP10AICreatureP3Msg"+0x58)
+	.4byte ("procMsg__22Receiver<10AICreature>FP10AICreatureP3Msg"+0x6C)
+	.4byte ("procMsg__22Receiver<10AICreature>FP10AICreatureP3Msg"+0x80)
+	.4byte ("procMsg__22Receiver<10AICreature>FP10AICreatureP3Msg"+0x94)
+	.4byte ("procMsg__22Receiver<10AICreature>FP10AICreatureP3Msg"+0xA8)
+	.4byte ("procMsg__22Receiver<10AICreature>FP10AICreatureP3Msg"+0xBC)
+	.4byte ("procMsg__22Receiver<10AICreature>FP10AICreatureP3Msg"+0xD0)
+	.4byte ("procMsg__22Receiver<10AICreature>FP10AICreatureP3Msg"+0x44)
+	.4byte ("procMsg__22Receiver<10AICreature>FP10AICreatureP3Msg"+0xF8)
+	.4byte ("procMsg__22Receiver<10AICreature>FP10AICreatureP3Msg"+0xE4)
 .endobj lbl_802AD6E8
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820

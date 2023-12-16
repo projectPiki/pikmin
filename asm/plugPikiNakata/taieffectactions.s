@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global start__15TaiEffectActionFR4Teki
-start__15TaiEffectActionFR4Teki:
+.fn start__15TaiEffectActionFR4Teki, global
 /* 8012E5A8 0012B508  7C 08 02 A6 */	mflr r0
 /* 8012E5AC 0012B50C  7C 66 1B 78 */	mr r6, r3
 /* 8012E5B0 0012B510  90 01 00 04 */	stw r0, 4(r1)
@@ -16,9 +15,9 @@ start__15TaiEffectActionFR4Teki:
 /* 8012E5D4 0012B534  38 21 00 08 */	addi r1, r1, 8
 /* 8012E5D8 0012B538  7C 08 03 A6 */	mtlr r0
 /* 8012E5DC 0012B53C  4E 80 00 20 */	blr 
+.endfn start__15TaiEffectActionFR4Teki
 
-.global start__34TaiStartGenParticleGeneratorActionFR4Teki
-start__34TaiStartGenParticleGeneratorActionFR4Teki:
+.fn start__34TaiStartGenParticleGeneratorActionFR4Teki, global
 /* 8012E5E0 0012B540  7C 08 02 A6 */	mflr r0
 /* 8012E5E4 0012B544  90 01 00 04 */	stw r0, 4(r1)
 /* 8012E5E8 0012B548  7C 80 23 78 */	mr r0, r4
@@ -30,9 +29,9 @@ start__34TaiStartGenParticleGeneratorActionFR4Teki:
 /* 8012E600 0012B560  38 21 00 08 */	addi r1, r1, 8
 /* 8012E604 0012B564  7C 08 03 A6 */	mtlr r0
 /* 8012E608 0012B568  4E 80 00 20 */	blr 
+.endfn start__34TaiStartGenParticleGeneratorActionFR4Teki
 
-.global start__33TaiStopGenParticleGeneratorActionFR4Teki
-start__33TaiStopGenParticleGeneratorActionFR4Teki:
+.fn start__33TaiStopGenParticleGeneratorActionFR4Teki, global
 /* 8012E60C 0012B56C  7C 08 02 A6 */	mflr r0
 /* 8012E610 0012B570  90 01 00 04 */	stw r0, 4(r1)
 /* 8012E614 0012B574  7C 80 23 78 */	mr r0, r4
@@ -44,9 +43,9 @@ start__33TaiStopGenParticleGeneratorActionFR4Teki:
 /* 8012E62C 0012B58C  38 21 00 08 */	addi r1, r1, 8
 /* 8012E630 0012B590  7C 08 03 A6 */	mtlr r0
 /* 8012E634 0012B594  4E 80 00 20 */	blr 
+.endfn start__33TaiStopGenParticleGeneratorActionFR4Teki
 
-.global __ct__20TaiJointEffectActionFfiiiii
-__ct__20TaiJointEffectActionFfiiiii:
+.fn __ct__20TaiJointEffectActionFfiiiii, global
 /* 8012E638 0012B598  7C 08 02 A6 */	mflr r0
 /* 8012E63C 0012B59C  39 46 00 00 */	addi r10, r6, 0
 /* 8012E640 0012B5A0  90 01 00 04 */	stw r0, 4(r1)
@@ -82,40 +81,49 @@ __ct__20TaiJointEffectActionFfiiiii:
 /* 8012E6B8 0012B618  38 21 00 38 */	addi r1, r1, 0x38
 /* 8012E6BC 0012B61C  7C 08 03 A6 */	mtlr r0
 /* 8012E6C0 0012B620  4E 80 00 20 */	blr 
+.endfn __ct__20TaiJointEffectActionFfiiiii
 
-.global setType__20TaiJointEffectActionFR8Vector3fii
-setType__20TaiJointEffectActionFR8Vector3fii:
+.fn setType__20TaiJointEffectActionFR8Vector3fii, global
 /* 8012E6C4 0012B624  4E 80 00 20 */	blr 
+.endfn setType__20TaiJointEffectActionFR8Vector3fii
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802C7E68:
+.obj lbl_802C7E68, local
 	.asciz "taieffectactions.cpp"
+.endobj lbl_802C7E68
 .balign 4
-lbl_802C7E80:
+.obj lbl_802C7E80, local
 	.asciz "taieffectactions"
+.endobj lbl_802C7E80
 .balign 4
-lbl_802C7E94:
+.obj lbl_802C7E94, local
 	.asciz "TaiJointEffectAction"
+.endobj lbl_802C7E94
 .balign 4
-lbl_802C7EAC:
+.obj lbl_802C7EAC, local
 	.asciz "TaiAction"
+.endobj lbl_802C7EAC
 .balign 4
-lbl_802C7EB8:
+.obj lbl_802C7EB8, local
 	.asciz "TAIAeffCloudOfDust"
+.endobj lbl_802C7EB8
 .balign 4
-lbl_802C7ECC:
+.obj lbl_802C7ECC, local
 	.4byte __RTTI__9TaiAction
 	.4byte 0
 	.4byte 0
-lbl_802C7ED8:
+.endobj lbl_802C7ECC
+.balign 4
+.obj lbl_802C7ED8, local
 	.4byte __RTTI__9TaiAction
 	.4byte 0
 	.4byte __RTTI__18TAIAeffCloudOfDust
 	.4byte 0
 	.4byte 0
-.global __vt__20TaiJointEffectAction
-__vt__20TaiJointEffectAction:
+.endobj lbl_802C7ED8
+.balign 4
+.obj __vt__20TaiJointEffectAction, global
 	.4byte __RTTI__20TaiJointEffectAction
 	.4byte 0
 	.4byte start__18TAIAeffCloudOfDustFR4Teki
@@ -124,23 +132,20 @@ __vt__20TaiJointEffectAction:
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
 	.4byte setType__20TaiJointEffectActionFR8Vector3fii
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
+.endobj __vt__20TaiJointEffectAction
+.skip 0x1C # compiler padding
 .balign 4
-lbl_802C7F28:
+.obj lbl_802C7F28, local
 	.asciz "TaiStopGenParticleGeneratorAction"
+.endobj lbl_802C7F28
 .balign 4
-lbl_802C7F4C:
+.obj lbl_802C7F4C, local
 	.4byte __RTTI__9TaiAction
 	.4byte 0
 	.4byte 0
-.global __vt__33TaiStopGenParticleGeneratorAction
-__vt__33TaiStopGenParticleGeneratorAction:
+.endobj lbl_802C7F4C
+.balign 4
+.obj __vt__33TaiStopGenParticleGeneratorAction, global
 	.4byte __RTTI__33TaiStopGenParticleGeneratorAction
 	.4byte 0
 	.4byte start__33TaiStopGenParticleGeneratorActionFR4Teki
@@ -148,16 +153,19 @@ __vt__33TaiStopGenParticleGeneratorAction:
 	.4byte act__9TaiActionFR4Teki
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
+.endobj __vt__33TaiStopGenParticleGeneratorAction
 .balign 4
-lbl_802C7F74:
+.obj lbl_802C7F74, local
 	.asciz "TaiStartGenParticleGeneratorAction"
+.endobj lbl_802C7F74
 .balign 4
-lbl_802C7F98:
+.obj lbl_802C7F98, local
 	.4byte __RTTI__9TaiAction
 	.4byte 0
 	.4byte 0
-.global __vt__34TaiStartGenParticleGeneratorAction
-__vt__34TaiStartGenParticleGeneratorAction:
+.endobj lbl_802C7F98
+.balign 4
+.obj __vt__34TaiStartGenParticleGeneratorAction, global
 	.4byte __RTTI__34TaiStartGenParticleGeneratorAction
 	.4byte 0
 	.4byte start__34TaiStartGenParticleGeneratorActionFR4Teki
@@ -165,16 +173,19 @@ __vt__34TaiStartGenParticleGeneratorAction:
 	.4byte act__9TaiActionFR4Teki
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
+.endobj __vt__34TaiStartGenParticleGeneratorAction
 .balign 4
-lbl_802C7FC0:
+.obj lbl_802C7FC0, local
 	.asciz "TaiEffectAction"
+.endobj lbl_802C7FC0
 .balign 4
-lbl_802C7FD0:
+.obj lbl_802C7FD0, local
 	.4byte __RTTI__9TaiAction
 	.4byte 0
 	.4byte 0
-.global __vt__15TaiEffectAction
-__vt__15TaiEffectAction:
+.endobj lbl_802C7FD0
+.balign 4
+.obj __vt__15TaiEffectAction, global
 	.4byte __RTTI__15TaiEffectAction
 	.4byte 0
 	.4byte start__15TaiEffectActionFR4Teki
@@ -182,24 +193,36 @@ __vt__15TaiEffectAction:
 	.4byte act__9TaiActionFR4Teki
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
+.endobj __vt__15TaiEffectAction
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-__RTTI__9TaiAction:
+.obj __RTTI__9TaiAction, local
 	.4byte lbl_802C7EAC
 	.4byte 0
-__RTTI__18TAIAeffCloudOfDust:
+.endobj __RTTI__9TaiAction
+.balign 4
+.obj __RTTI__18TAIAeffCloudOfDust, local
 	.4byte lbl_802C7EB8
 	.4byte lbl_802C7ECC
-__RTTI__20TaiJointEffectAction:
+.endobj __RTTI__18TAIAeffCloudOfDust
+.balign 4
+.obj __RTTI__20TaiJointEffectAction, local
 	.4byte lbl_802C7E94
 	.4byte lbl_802C7ED8
-__RTTI__33TaiStopGenParticleGeneratorAction:
+.endobj __RTTI__20TaiJointEffectAction
+.balign 4
+.obj __RTTI__33TaiStopGenParticleGeneratorAction, local
 	.4byte lbl_802C7F28
 	.4byte lbl_802C7F4C
-__RTTI__34TaiStartGenParticleGeneratorAction:
+.endobj __RTTI__33TaiStopGenParticleGeneratorAction
+.balign 4
+.obj __RTTI__34TaiStartGenParticleGeneratorAction, local
 	.4byte lbl_802C7F74
 	.4byte lbl_802C7F98
-__RTTI__15TaiEffectAction:
+.endobj __RTTI__34TaiStartGenParticleGeneratorAction
+.balign 4
+.obj __RTTI__15TaiEffectAction, local
 	.4byte lbl_802C7FC0
 	.4byte lbl_802C7FD0
+.endobj __RTTI__15TaiEffectAction

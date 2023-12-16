@@ -1566,17 +1566,17 @@
 	.4byte "transit__21StateMachine<6Pellet>FP6Pelleti"
 .endobj __vt__18PelletStateMachine
 .obj lbl_802B0E5C, local
-	.4byte .L_80099404
-	.4byte .L_8009942C
-	.4byte .L_80099440
-	.4byte .L_80099454
-	.4byte .L_80099468
-	.4byte .L_8009947C
-	.4byte .L_80099490
-	.4byte .L_800994A4
-	.4byte .L_80099418
-	.4byte .L_800994CC
-	.4byte .L_800994B8
+	.4byte ("procMsg__17Receiver<6Pellet>FP6PelletP3Msg"+0x30)
+	.4byte ("procMsg__17Receiver<6Pellet>FP6PelletP3Msg"+0x58)
+	.4byte ("procMsg__17Receiver<6Pellet>FP6PelletP3Msg"+0x6C)
+	.4byte ("procMsg__17Receiver<6Pellet>FP6PelletP3Msg"+0x80)
+	.4byte ("procMsg__17Receiver<6Pellet>FP6PelletP3Msg"+0x94)
+	.4byte ("procMsg__17Receiver<6Pellet>FP6PelletP3Msg"+0xA8)
+	.4byte ("procMsg__17Receiver<6Pellet>FP6PelletP3Msg"+0xBC)
+	.4byte ("procMsg__17Receiver<6Pellet>FP6PelletP3Msg"+0xD0)
+	.4byte ("procMsg__17Receiver<6Pellet>FP6PelletP3Msg"+0x44)
+	.4byte ("procMsg__17Receiver<6Pellet>FP6PelletP3Msg"+0xF8)
+	.4byte ("procMsg__17Receiver<6Pellet>FP6PelletP3Msg"+0xE4)
 .endobj lbl_802B0E5C
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820

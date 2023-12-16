@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global makeObjectMapObject__Fv
-makeObjectMapObject__Fv:
+.fn makeObjectMapObject__Fv, local
 /* 8005D0E8 0005A048  7C 08 02 A6 */	mflr r0
 /* 8005D0EC 0005A04C  38 60 00 1C */	li r3, 0x1c
 /* 8005D0F0 0005A050  90 01 00 04 */	stw r0, 4(r1)
@@ -19,9 +18,9 @@ makeObjectMapObject__Fv:
 /* 8005D11C 0005A07C  38 21 00 10 */	addi r1, r1, 0x10
 /* 8005D120 0005A080  7C 08 03 A6 */	mtlr r0
 /* 8005D124 0005A084  4E 80 00 20 */	blr 
+.endfn makeObjectMapObject__Fv
 
-.global __ct__18GenObjectMapObjectFv
-__ct__18GenObjectMapObjectFv:
+.fn __ct__18GenObjectMapObjectFv, global
 /* 8005D128 0005A088  7C 08 02 A6 */	mflr r0
 /* 8005D12C 0005A08C  3C 80 80 2B */	lis r4, lbl_802A8328@ha
 /* 8005D130 0005A090  90 01 00 04 */	stw r0, 4(r1)
@@ -48,9 +47,9 @@ __ct__18GenObjectMapObjectFv:
 /* 8005D184 0005A0E4  38 21 00 18 */	addi r1, r1, 0x18
 /* 8005D188 0005A0E8  7C 08 03 A6 */	mtlr r0
 /* 8005D18C 0005A0EC  4E 80 00 20 */	blr 
+.endfn __ct__18GenObjectMapObjectFv
 
-.global initialise__18GenObjectMapObjectFP6MapMgr
-initialise__18GenObjectMapObjectFP6MapMgr:
+.fn initialise__18GenObjectMapObjectFP6MapMgr, global
 /* 8005D190 0005A0F0  90 6D 2E B0 */	stw r3, mapMgr__18GenObjectMapObject@sda21(r13)
 /* 8005D194 0005A0F4  80 ED 30 74 */	lwz r7, factory__16GenObjectFactory@sda21(r13)
 /* 8005D198 0005A0F8  80 A7 00 00 */	lwz r5, 0(r7)
@@ -87,9 +86,9 @@ initialise__18GenObjectMapObjectFP6MapMgr:
 /* 8005D214 0005A174  38 03 00 01 */	addi r0, r3, 1
 /* 8005D218 0005A178  90 07 00 00 */	stw r0, 0(r7)
 /* 8005D21C 0005A17C  4E 80 00 20 */	blr 
+.endfn initialise__18GenObjectMapObjectFP6MapMgr
 
-.global doRead__18GenObjectMapObjectFR18RandomAccessStream
-doRead__18GenObjectMapObjectFR18RandomAccessStream:
+.fn doRead__18GenObjectMapObjectFR18RandomAccessStream, global
 /* 8005D220 0005A180  7C 08 02 A6 */	mflr r0
 /* 8005D224 0005A184  90 01 00 04 */	stw r0, 4(r1)
 /* 8005D228 0005A188  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -106,18 +105,18 @@ doRead__18GenObjectMapObjectFR18RandomAccessStream:
 /* 8005D254 0005A1B4  38 21 00 18 */	addi r1, r1, 0x18
 /* 8005D258 0005A1B8  7C 08 03 A6 */	mtlr r0
 /* 8005D25C 0005A1BC  4E 80 00 20 */	blr 
+.endfn doRead__18GenObjectMapObjectFR18RandomAccessStream
 
-.global render__18GenObjectMapObjectFR8GraphicsP9Generator
-render__18GenObjectMapObjectFR8GraphicsP9Generator:
+.fn render__18GenObjectMapObjectFR8GraphicsP9Generator, global
 /* 8005D260 0005A1C0  4E 80 00 20 */	blr 
+.endfn render__18GenObjectMapObjectFR8GraphicsP9Generator
 
-.global birth__18GenObjectMapObjectFR9BirthInfo
-birth__18GenObjectMapObjectFR9BirthInfo:
+.fn birth__18GenObjectMapObjectFR9BirthInfo, global
 /* 8005D264 0005A1C4  38 60 00 00 */	li r3, 0
 /* 8005D268 0005A1C8  4E 80 00 20 */	blr 
+.endfn birth__18GenObjectMapObjectFR9BirthInfo
 
-.global __ct__9RigidBodyFv
-__ct__9RigidBodyFv:
+.fn __ct__9RigidBodyFv, weak
 /* 8005D26C 0005A1CC  7C 08 02 A6 */	mflr r0
 /* 8005D270 0005A1D0  3C 80 80 22 */	lis r4, __vt__5ANode@ha
 /* 8005D274 0005A1D4  90 01 00 04 */	stw r0, 4(r1)
@@ -293,17 +292,17 @@ __ct__9RigidBodyFv:
 /* 8005D508 0005A468  38 21 00 20 */	addi r1, r1, 0x20
 /* 8005D50C 0005A46C  7C 08 03 A6 */	mtlr r0
 /* 8005D510 0005A470  4E 80 00 20 */	blr 
+.endfn __ct__9RigidBodyFv
 
-.global __ct__4QuatFv
-__ct__4QuatFv:
+.fn __ct__4QuatFv, weak
 /* 8005D514 0005A474  C0 02 86 80 */	lfs f0, lbl_803E8880@sda21(r2)
 /* 8005D518 0005A478  D0 03 00 08 */	stfs f0, 8(r3)
 /* 8005D51C 0005A47C  D0 03 00 04 */	stfs f0, 4(r3)
 /* 8005D520 0005A480  D0 03 00 00 */	stfs f0, 0(r3)
 /* 8005D524 0005A484  4E 80 00 20 */	blr 
+.endfn __ct__4QuatFv
 
-.global __ct__Q29RigidBody13configurationFv
-__ct__Q29RigidBody13configurationFv:
+.fn __ct__Q29RigidBody13configurationFv, weak
 /* 8005D528 0005A488  7C 08 02 A6 */	mflr r0
 /* 8005D52C 0005A48C  90 01 00 04 */	stw r0, 4(r1)
 /* 8005D530 0005A490  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -397,17 +396,17 @@ __ct__Q29RigidBody13configurationFv:
 /* 8005D66C 0005A5CC  38 21 00 20 */	addi r1, r1, 0x20
 /* 8005D670 0005A5D0  7C 08 03 A6 */	mtlr r0
 /* 8005D674 0005A5D4  4E 80 00 20 */	blr 
+.endfn __ct__Q29RigidBody13configurationFv
 
-.global __ct__11WorldSpringFv
-__ct__11WorldSpringFv:
+.fn __ct__11WorldSpringFv, weak
 /* 8005D678 0005A5D8  C0 02 86 80 */	lfs f0, lbl_803E8880@sda21(r2)
 /* 8005D67C 0005A5DC  D0 03 00 0C */	stfs f0, 0xc(r3)
 /* 8005D680 0005A5E0  D0 03 00 08 */	stfs f0, 8(r3)
 /* 8005D684 0005A5E4  D0 03 00 04 */	stfs f0, 4(r3)
 /* 8005D688 0005A5E8  4E 80 00 20 */	blr 
+.endfn __ct__11WorldSpringFv
 
-.global set__8Vector3fFRCfRCfRCf
-set__8Vector3fFRCfRCfRCf:
+.fn set__8Vector3fFRCfRCfRCf, weak
 /* 8005D68C 0005A5EC  C0 04 00 00 */	lfs f0, 0(r4)
 /* 8005D690 0005A5F0  D0 03 00 00 */	stfs f0, 0(r3)
 /* 8005D694 0005A5F4  C0 05 00 00 */	lfs f0, 0(r5)
@@ -415,13 +414,13 @@ set__8Vector3fFRCfRCfRCf:
 /* 8005D69C 0005A5FC  C0 06 00 00 */	lfs f0, 0(r6)
 /* 8005D6A0 0005A600  D0 03 00 08 */	stfs f0, 8(r3)
 /* 8005D6A4 0005A604  4E 80 00 20 */	blr 
+.endfn set__8Vector3fFRCfRCfRCf
 
-.global applyGroundForces__12DynObjBridgeFiP9CollGroup
-applyGroundForces__12DynObjBridgeFiP9CollGroup:
+.fn applyGroundForces__12DynObjBridgeFiP9CollGroup, weak
 /* 8005D6A8 0005A608  4E 80 00 20 */	blr 
+.endfn applyGroundForces__12DynObjBridgeFiP9CollGroup
 
-.global initDimensions__10DynObjBodyFfff
-initDimensions__10DynObjBodyFfff:
+.fn initDimensions__10DynObjBodyFfff, weak
 /* 8005D6AC 0005A60C  D0 23 00 50 */	stfs f1, 0x50(r3)
 /* 8005D6B0 0005A610  D0 43 00 54 */	stfs f2, 0x54(r3)
 /* 8005D6B4 0005A614  D0 63 00 58 */	stfs f3, 0x58(r3)
@@ -435,77 +434,82 @@ initDimensions__10DynObjBodyFfff:
 /* 8005D6D4 0005A634  EC 05 00 32 */	fmuls f0, f5, f0
 /* 8005D6D8 0005A638  D0 03 00 5C */	stfs f0, 0x5c(r3)
 /* 8005D6DC 0005A63C  4E 80 00 20 */	blr 
+.endfn initDimensions__10DynObjBodyFfff
 
-.global updateUseList__9GenObjectFP9Generatori
-updateUseList__9GenObjectFP9Generatori:
+.fn updateUseList__9GenObjectFP9Generatori, weak
 /* 8005D6E0 0005A640  4E 80 00 20 */	blr 
+.endfn updateUseList__9GenObjectFP9Generatori
 
-.global init__9GenObjectFP9Generator
-init__9GenObjectFP9Generator:
+.fn init__9GenObjectFP9Generator, weak
 /* 8005D6E4 0005A644  4E 80 00 20 */	blr 
+.endfn init__9GenObjectFP9Generator
 
-.global update__9GenObjectFP9Generator
-update__9GenObjectFP9Generator:
+.fn update__9GenObjectFP9Generator, weak
 /* 8005D6E8 0005A648  4E 80 00 20 */	blr 
+.endfn update__9GenObjectFP9Generator
 
-.global doWrite__7GenBaseFR18RandomAccessStream
-doWrite__7GenBaseFR18RandomAccessStream:
+.fn doWrite__7GenBaseFR18RandomAccessStream, weak
 /* 8005D6EC 0005A64C  4E 80 00 20 */	blr 
+.endfn doWrite__7GenBaseFR18RandomAccessStream
 
-.global update__7GenBaseFv
-update__7GenBaseFv:
+.fn update__7GenBaseFv, weak
 /* 8005D6F0 0005A650  4E 80 00 20 */	blr 
+.endfn update__7GenBaseFv
 
-.global render__7GenBaseFR8Graphics
-render__7GenBaseFR8Graphics:
+.fn render__7GenBaseFR8Graphics, weak
 /* 8005D6F4 0005A654  4E 80 00 20 */	blr 
+.endfn render__7GenBaseFR8Graphics
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802A82F8:
+.obj lbl_802A82F8, local
 	.asciz "genMapObject.cpp"
+.endobj lbl_802A82F8
 .balign 4
-lbl_802A830C:
+.obj lbl_802A830C, local
 	.asciz "genMapObject"
+.endobj lbl_802A830C
 .balign 4
-lbl_802A831C:
+.obj lbl_802A831C, local
 	.asciz "object type"
+.endobj lbl_802A831C
 .balign 4
-lbl_802A8328:
+.obj lbl_802A8328, local
 	.asciz "create MAP OBJECT"
+.endobj lbl_802A8328
 .balign 4
-lbl_802A833C:
+.obj lbl_802A833C, local
 	.asciz "rigidBody"
+.endobj lbl_802A833C
 .balign 4
-lbl_802A8348:
+.obj lbl_802A8348, local
 	.asciz "CoreNode"
+.endobj lbl_802A8348
 .balign 4
-lbl_802A8354:
+.obj lbl_802A8354, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
+.endobj lbl_802A8354
+.skip 0x1C # compiler padding
 .balign 4
-lbl_802A837C:
+.obj lbl_802A837C, local
 	.asciz "DynObjBridge"
+.endobj lbl_802A837C
 .balign 4
-lbl_802A838C:
+.obj lbl_802A838C, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte __RTTI__8CoreNode
 	.4byte 0
 	.4byte 0
+.endobj lbl_802A838C
 .balign 4
-lbl_802A83A0:
+.obj lbl_802A83A0, local
 	.asciz "RigidBody"
+.endobj lbl_802A83A0
 .balign 4
-lbl_802A83AC:
+.obj lbl_802A83AC, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte __RTTI__8CoreNode
@@ -513,11 +517,13 @@ lbl_802A83AC:
 	.4byte __RTTI__4Node
 	.4byte 0
 	.4byte 0
+.endobj lbl_802A83AC
 .balign 4
-lbl_802A83C8:
+.obj lbl_802A83C8, local
 	.asciz "DynObjBody"
+.endobj lbl_802A83C8
 .balign 4
-lbl_802A83D4:
+.obj lbl_802A83D4, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte __RTTI__8CoreNode
@@ -527,7 +533,9 @@ lbl_802A83D4:
 	.4byte __RTTI__9RigidBody
 	.4byte 0
 	.4byte 0
-lbl_802A83F8:
+.endobj lbl_802A83D4
+.balign 4
+.obj lbl_802A83F8, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte __RTTI__8CoreNode
@@ -539,8 +547,9 @@ lbl_802A83F8:
 	.4byte __RTTI__10DynObjBody
 	.4byte 0
 	.4byte 0
-.global __vt__12DynObjBridge
-__vt__12DynObjBridge:
+.endobj lbl_802A83F8
+.balign 4
+.obj __vt__12DynObjBridge, weak
 	.4byte __RTTI__12DynObjBridge
 	.4byte 0
 	.4byte getAgeNodeType__5ANodeFv
@@ -571,28 +580,35 @@ __vt__12DynObjBridge:
 	.4byte applyGroundForces__12DynObjBridgeFiP9CollGroup
 	.4byte touchCallback__10DynObjBodyFR5PlaneR8Vector3fR8Vector3f
 	.4byte applyVelocity__10DynObjBodyFR5PlaneR8Vector3fR8Vector3f
+.endobj __vt__12DynObjBridge
 .balign 4
-lbl_802A849C:
+.obj lbl_802A849C, local
 	.asciz "GenObjectMapObject"
+.endobj lbl_802A849C
 .balign 4
-lbl_802A84B0:
+.obj lbl_802A84B0, local
 	.asciz "Parameters"
+.endobj lbl_802A84B0
 .balign 4
-lbl_802A84BC:
+.obj lbl_802A84BC, local
 	.4byte __RTTI__10Parameters
 	.4byte 0
 	.4byte 0
+.endobj lbl_802A84BC
 .balign 4
-lbl_802A84C8:
+.obj lbl_802A84C8, local
 	.asciz "GenObject"
+.endobj lbl_802A84C8
 .balign 4
-lbl_802A84D4:
+.obj lbl_802A84D4, local
 	.4byte __RTTI__10Parameters
 	.4byte 0
 	.4byte __RTTI__7GenBase
 	.4byte 0
 	.4byte 0
-lbl_802A84E8:
+.endobj lbl_802A84D4
+.balign 4
+.obj lbl_802A84E8, local
 	.4byte __RTTI__10Parameters
 	.4byte 0
 	.4byte __RTTI__7GenBase
@@ -600,8 +616,9 @@ lbl_802A84E8:
 	.4byte __RTTI__9GenObject
 	.4byte 0
 	.4byte 0
-.global __vt__18GenObjectMapObject
-__vt__18GenObjectMapObject:
+.endobj lbl_802A84E8
+.balign 4
+.obj __vt__18GenObjectMapObject, global
 	.4byte __RTTI__18GenObjectMapObject
 	.4byte 0
 	.4byte doWrite__7GenBaseFR18RandomAccessStream
@@ -616,63 +633,90 @@ __vt__18GenObjectMapObject:
 	.4byte update__9GenObjectFP9Generator
 	.4byte render__18GenObjectMapObjectFR8GraphicsP9Generator
 	.4byte birth__18GenObjectMapObjectFR9BirthInfo
+.endobj __vt__18GenObjectMapObject
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-lbl_803DDD60:
+.obj lbl_803DDD60, local
 	.float 32768.0
-lbl_803DDD64:
+.endobj lbl_803DDD60
+.obj lbl_803DDD64, local
 	.float 32768.0
-lbl_803DDD68:
+.endobj lbl_803DDD64
+.obj lbl_803DDD68, local
 	.float 32768.0
-lbl_803DDD6C:
+.endobj lbl_803DDD68
+.obj lbl_803DDD6C, local
 	.float -32768.0
-lbl_803DDD70:
+.endobj lbl_803DDD6C
+.obj lbl_803DDD70, local
 	.float -32768.0
-lbl_803DDD74:
+.endobj lbl_803DDD70
+.obj lbl_803DDD74, local
 	.float -32768.0
+.endobj lbl_803DDD74
 .balign 4
-lbl_803DDD78:
+.obj lbl_803DDD78, local
 	.asciz "ANode"
+.endobj lbl_803DDD78
 .balign 4
-__RTTI__5ANode:
+.obj __RTTI__5ANode, local
 	.4byte lbl_803DDD78
 	.4byte 0
-__RTTI__8CoreNode:
+.endobj __RTTI__5ANode
+.balign 4
+.obj __RTTI__8CoreNode, local
 	.4byte lbl_802A8348
 	.4byte lbl_802A8354
+.endobj __RTTI__8CoreNode
 .balign 4
-lbl_803DDD90:
+.obj lbl_803DDD90, local
 	.asciz "Node"
+.endobj lbl_803DDD90
 .balign 4
-__RTTI__4Node:
+.obj __RTTI__4Node, local
 	.4byte lbl_803DDD90
 	.4byte lbl_802A838C
-__RTTI__9RigidBody:
+.endobj __RTTI__4Node
+.balign 4
+.obj __RTTI__9RigidBody, local
 	.4byte lbl_802A83A0
 	.4byte lbl_802A83AC
-__RTTI__10DynObjBody:
+.endobj __RTTI__9RigidBody
+.balign 4
+.obj __RTTI__10DynObjBody, local
 	.4byte lbl_802A83C8
 	.4byte lbl_802A83D4
-__RTTI__12DynObjBridge:
+.endobj __RTTI__10DynObjBody
+.balign 4
+.obj __RTTI__12DynObjBridge, local
 	.4byte lbl_802A837C
 	.4byte lbl_802A83F8
-__RTTI__10Parameters:
+.endobj __RTTI__12DynObjBridge
+.balign 4
+.obj __RTTI__10Parameters, local
 	.4byte lbl_802A84B0
 	.4byte 0
+.endobj __RTTI__10Parameters
 .balign 4
-lbl_803DDDC0:
+.obj lbl_803DDDC0, local
 	.asciz "GenBase"
+.endobj lbl_803DDDC0
 .balign 4
-__RTTI__7GenBase:
+.obj __RTTI__7GenBase, local
 	.4byte lbl_803DDDC0
 	.4byte lbl_802A84BC
-__RTTI__9GenObject:
+.endobj __RTTI__7GenBase
+.balign 4
+.obj __RTTI__9GenObject, local
 	.4byte lbl_802A84C8
 	.4byte lbl_802A84D4
-__RTTI__18GenObjectMapObject:
+.endobj __RTTI__9GenObject
+.balign 4
+.obj __RTTI__18GenObjectMapObject, local
 	.4byte lbl_802A849C
 	.4byte lbl_802A84E8
+.endobj __RTTI__18GenObjectMapObject
 
 .section .sbss, "wa"
 .balign 8
@@ -685,12 +729,15 @@ __RTTI__18GenObjectMapObject:
 .obj lbl_803E8880, local
 	.float 0.0
 .endobj lbl_803E8880
+.balign 4
 .obj lbl_803E8884, local
 	.float 1.0
 .endobj lbl_803E8884
+.balign 4
 .obj lbl_803E8888, local
 	.float 7.5E-5
 .endobj lbl_803E8888
+.balign 4
 .obj lbl_803E888C, local
 	.float 0.5
 .endobj lbl_803E888C

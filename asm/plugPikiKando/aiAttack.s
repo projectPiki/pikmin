@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global __ct__9ActAttackFP4Piki
-__ct__9ActAttackFP4Piki:
+.fn __ct__9ActAttackFP4Piki, global
 /* 800A82E8 000A5248  7C 08 02 A6 */	mflr r0
 /* 800A82EC 000A524C  38 A0 00 01 */	li r5, 1
 /* 800A82F0 000A5250  90 01 00 04 */	stw r0, 4(r1)
@@ -53,9 +52,9 @@ __ct__9ActAttackFP4Piki:
 /* 800A83A4 000A5304  38 21 00 18 */	addi r1, r1, 0x18
 /* 800A83A8 000A5308  7C 08 03 A6 */	mtlr r0
 /* 800A83AC 000A530C  4E 80 00 20 */	blr 
+.endfn __ct__9ActAttackFP4Piki
 
-.global __dt__9AndActionFv
-__dt__9AndActionFv:
+.fn __dt__9AndActionFv, weak
 /* 800A83B0 000A5310  7C 08 02 A6 */	mflr r0
 /* 800A83B4 000A5314  90 01 00 04 */	stw r0, 4(r1)
 /* 800A83B8 000A5318  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -82,9 +81,9 @@ __dt__9AndActionFv:
 /* 800A8408 000A5368  38 21 00 18 */	addi r1, r1, 0x18
 /* 800A840C 000A536C  7C 08 03 A6 */	mtlr r0
 /* 800A8410 000A5370  4E 80 00 20 */	blr 
+.endfn __dt__9AndActionFv
 
-.global init__9ActAttackFP8Creature
-init__9ActAttackFP8Creature:
+.fn init__9ActAttackFP8Creature, global
 /* 800A8414 000A5374  7C 08 02 A6 */	mflr r0
 /* 800A8418 000A5378  90 01 00 04 */	stw r0, 4(r1)
 /* 800A841C 000A537C  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -176,9 +175,9 @@ init__9ActAttackFP8Creature:
 /* 800A8558 000A54B8  38 21 00 28 */	addi r1, r1, 0x28
 /* 800A855C 000A54BC  7C 08 03 A6 */	mtlr r0
 /* 800A8560 000A54C0  4E 80 00 20 */	blr 
+.endfn init__9ActAttackFP8Creature
 
-.global animationKeyUpdated__9ActAttackFR16PaniAnimKeyEvent
-animationKeyUpdated__9ActAttackFR16PaniAnimKeyEvent:
+.fn animationKeyUpdated__9ActAttackFR16PaniAnimKeyEvent, global
 /* 800A8564 000A54C4  7C 08 02 A6 */	mflr r0
 /* 800A8568 000A54C8  90 01 00 04 */	stw r0, 4(r1)
 /* 800A856C 000A54CC  94 21 FF D0 */	stwu r1, -0x30(r1)
@@ -247,15 +246,15 @@ animationKeyUpdated__9ActAttackFR16PaniAnimKeyEvent:
 /* 800A8654 000A55B4  38 21 00 30 */	addi r1, r1, 0x30
 /* 800A8658 000A55B8  7C 08 03 A6 */	mtlr r0
 /* 800A865C 000A55BC  4E 80 00 20 */	blr 
+.endfn animationKeyUpdated__9ActAttackFR16PaniAnimKeyEvent
 
-.global resume__9ActAttackFv
-resume__9ActAttackFv:
+.fn resume__9ActAttackFv, global
 /* 800A8660 000A55C0  38 00 00 00 */	li r0, 0
 /* 800A8664 000A55C4  98 03 00 1C */	stb r0, 0x1c(r3)
 /* 800A8668 000A55C8  4E 80 00 20 */	blr 
+.endfn resume__9ActAttackFv
 
-.global restart__9ActAttackFv
-restart__9ActAttackFv:
+.fn restart__9ActAttackFv, global
 /* 800A866C 000A55CC  7C 08 02 A6 */	mflr r0
 /* 800A8670 000A55D0  90 01 00 04 */	stw r0, 4(r1)
 /* 800A8674 000A55D4  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -278,19 +277,19 @@ restart__9ActAttackFv:
 /* 800A86B4 000A5614  38 21 00 18 */	addi r1, r1, 0x18
 /* 800A86B8 000A5618  7C 08 03 A6 */	mtlr r0
 /* 800A86BC 000A561C  4E 80 00 20 */	blr 
+.endfn restart__9ActAttackFv
 
-.global resumable__9ActAttackFv
-resumable__9ActAttackFv:
+.fn resumable__9ActAttackFv, global
 /* 800A86C0 000A5620  38 60 00 01 */	li r3, 1
 /* 800A86C4 000A5624  4E 80 00 20 */	blr 
+.endfn resumable__9ActAttackFv
 
-.global findTarget__9ActAttackFv
-findTarget__9ActAttackFv:
+.fn findTarget__9ActAttackFv, global
 /* 800A86C8 000A5628  38 60 00 00 */	li r3, 0
 /* 800A86CC 000A562C  4E 80 00 20 */	blr 
+.endfn findTarget__9ActAttackFv
 
-.global exec__9ActAttackFv
-exec__9ActAttackFv:
+.fn exec__9ActAttackFv, global
 /* 800A86D0 000A5630  7C 08 02 A6 */	mflr r0
 /* 800A86D4 000A5634  90 01 00 04 */	stw r0, 4(r1)
 /* 800A86D8 000A5638  94 21 FF A0 */	stwu r1, -0x60(r1)
@@ -517,9 +516,9 @@ exec__9ActAttackFv:
 /* 800A8A00 000A5960  38 21 00 60 */	addi r1, r1, 0x60
 /* 800A8A04 000A5964  7C 08 03 A6 */	mtlr r0
 /* 800A8A08 000A5968  4E 80 00 20 */	blr 
+.endfn exec__9ActAttackFv
 
-.global cleanup__9ActAttackFv
-cleanup__9ActAttackFv:
+.fn cleanup__9ActAttackFv, global
 /* 800A8A0C 000A596C  7C 08 02 A6 */	mflr r0
 /* 800A8A10 000A5970  90 01 00 04 */	stw r0, 4(r1)
 /* 800A8A14 000A5974  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -546,9 +545,9 @@ cleanup__9ActAttackFv:
 /* 800A8A64 000A59C4  38 21 00 18 */	addi r1, r1, 0x18
 /* 800A8A68 000A59C8  7C 08 03 A6 */	mtlr r0
 /* 800A8A6C 000A59CC  4E 80 00 20 */	blr 
+.endfn cleanup__9ActAttackFv
 
-.global __ct__13ActJumpAttackFP4Piki
-__ct__13ActJumpAttackFP4Piki:
+.fn __ct__13ActJumpAttackFP4Piki, global
 /* 800A8A70 000A59D0  7C 08 02 A6 */	mflr r0
 /* 800A8A74 000A59D4  38 A0 00 01 */	li r5, 1
 /* 800A8A78 000A59D8  90 01 00 04 */	stw r0, 4(r1)
@@ -573,9 +572,9 @@ __ct__13ActJumpAttackFP4Piki:
 /* 800A8AC4 000A5A24  38 21 00 18 */	addi r1, r1, 0x18
 /* 800A8AC8 000A5A28  7C 08 03 A6 */	mtlr r0
 /* 800A8ACC 000A5A2C  4E 80 00 20 */	blr 
+.endfn __ct__13ActJumpAttackFP4Piki
 
-.global init__13ActJumpAttackFP8Creature
-init__13ActJumpAttackFP8Creature:
+.fn init__13ActJumpAttackFP8Creature, global
 /* 800A8AD0 000A5A30  7C 08 02 A6 */	mflr r0
 /* 800A8AD4 000A5A34  90 01 00 04 */	stw r0, 4(r1)
 /* 800A8AD8 000A5A38  38 00 00 05 */	li r0, 5
@@ -700,9 +699,9 @@ init__13ActJumpAttackFP8Creature:
 /* 800A8C90 000A5BF0  38 21 00 58 */	addi r1, r1, 0x58
 /* 800A8C94 000A5BF4  7C 08 03 A6 */	mtlr r0
 /* 800A8C98 000A5BF8  4E 80 00 20 */	blr 
+.endfn init__13ActJumpAttackFP8Creature
 
-.global procStickMsg__13ActJumpAttackFP4PikiP8MsgStick
-procStickMsg__13ActJumpAttackFP4PikiP8MsgStick:
+.fn procStickMsg__13ActJumpAttackFP4PikiP8MsgStick, global
 /* 800A8C9C 000A5BFC  7C 08 02 A6 */	mflr r0
 /* 800A8CA0 000A5C00  90 01 00 04 */	stw r0, 4(r1)
 /* 800A8CA4 000A5C04  38 00 00 05 */	li r0, 5
@@ -743,9 +742,9 @@ procStickMsg__13ActJumpAttackFP4PikiP8MsgStick:
 /* 800A8D2C 000A5C8C  38 21 00 38 */	addi r1, r1, 0x38
 /* 800A8D30 000A5C90  7C 08 03 A6 */	mtlr r0
 /* 800A8D34 000A5C94  4E 80 00 20 */	blr 
+.endfn procStickMsg__13ActJumpAttackFP4PikiP8MsgStick
 
-.global procBounceMsg__13ActJumpAttackFP4PikiP9MsgBounce
-procBounceMsg__13ActJumpAttackFP4PikiP9MsgBounce:
+.fn procBounceMsg__13ActJumpAttackFP4PikiP9MsgBounce, global
 /* 800A8D38 000A5C98  80 03 00 18 */	lwz r0, 0x18(r3)
 /* 800A8D3C 000A5C9C  2C 00 00 01 */	cmpwi r0, 1
 /* 800A8D40 000A5CA0  4C 82 00 20 */	bnelr 
@@ -753,9 +752,9 @@ procBounceMsg__13ActJumpAttackFP4PikiP9MsgBounce:
 /* 800A8D48 000A5CA8  90 03 00 18 */	stw r0, 0x18(r3)
 /* 800A8D4C 000A5CAC  98 03 00 2C */	stb r0, 0x2c(r3)
 /* 800A8D50 000A5CB0  4E 80 00 20 */	blr 
+.endfn procBounceMsg__13ActJumpAttackFP4PikiP9MsgBounce
 
-.global procCollideMsg__13ActJumpAttackFP4PikiP10MsgCollide
-procCollideMsg__13ActJumpAttackFP4PikiP10MsgCollide:
+.fn procCollideMsg__13ActJumpAttackFP4PikiP10MsgCollide, global
 /* 800A8D54 000A5CB4  7C 08 02 A6 */	mflr r0
 /* 800A8D58 000A5CB8  90 01 00 04 */	stw r0, 4(r1)
 /* 800A8D5C 000A5CBC  94 21 FF A0 */	stwu r1, -0x60(r1)
@@ -922,9 +921,9 @@ procCollideMsg__13ActJumpAttackFP4PikiP10MsgCollide:
 /* 800A8FB0 000A5F10  38 21 00 60 */	addi r1, r1, 0x60
 /* 800A8FB4 000A5F14  7C 08 03 A6 */	mtlr r0
 /* 800A8FB8 000A5F18  4E 80 00 20 */	blr 
+.endfn procCollideMsg__13ActJumpAttackFP4PikiP10MsgCollide
 
-.global exec__13ActJumpAttackFv
-exec__13ActJumpAttackFv:
+.fn exec__13ActJumpAttackFv, global
 /* 800A8FBC 000A5F1C  7C 08 02 A6 */	mflr r0
 /* 800A8FC0 000A5F20  90 01 00 04 */	stw r0, 4(r1)
 /* 800A8FC4 000A5F24  94 21 FD B0 */	stwu r1, -0x250(r1)
@@ -1000,12 +999,10 @@ exec__13ActJumpAttackFv:
 /* 800A90C8 000A6028  7C 03 00 2E */	lwzx r0, r3, r0
 /* 800A90CC 000A602C  7C 09 03 A6 */	mtctr r0
 /* 800A90D0 000A6030  4E 80 04 20 */	bctr 
-.global .L_800A90D4
 .L_800A90D4:
 /* 800A90D4 000A6034  7F E3 FB 78 */	mr r3, r31
 /* 800A90D8 000A6038  48 00 0E F5 */	bl doClimb__13ActJumpAttackFv
 /* 800A90DC 000A603C  48 00 0D 18 */	b .L_800A9DF4
-.global .L_800A90E0
 .L_800A90E0:
 /* 800A90E0 000A6040  80 9F 00 28 */	lwz r4, 0x28(r31)
 /* 800A90E4 000A6044  80 7F 00 0C */	lwz r3, 0xc(r31)
@@ -1188,7 +1185,6 @@ exec__13ActJumpAttackFv:
 /* 800A9380 000A62E0  80 7F 00 0C */	lwz r3, 0xc(r31)
 /* 800A9384 000A62E4  D0 23 00 A0 */	stfs f1, 0xa0(r3)
 /* 800A9388 000A62E8  48 00 0A 6C */	b .L_800A9DF4
-.global .L_800A938C
 .L_800A938C:
 /* 800A938C 000A62EC  80 9F 00 28 */	lwz r4, 0x28(r31)
 /* 800A9390 000A62F0  80 7F 00 0C */	lwz r3, 0xc(r31)
@@ -1456,7 +1452,6 @@ exec__13ActJumpAttackFv:
 /* 800A9768 000A66C8  38 00 00 00 */	li r0, 0
 /* 800A976C 000A66CC  90 1F 00 20 */	stw r0, 0x20(r31)
 /* 800A9770 000A66D0  48 00 06 84 */	b .L_800A9DF4
-.global .L_800A9774
 .L_800A9774:
 /* 800A9774 000A66D4  80 7F 00 0C */	lwz r3, 0xc(r31)
 /* 800A9778 000A66D8  C0 0D B0 28 */	lfs f0, lbl_803DFD48@sda21(r13)
@@ -1727,7 +1722,6 @@ exec__13ActJumpAttackFv:
 /* 800A9B60 000A6AC0  40 82 02 94 */	bne .L_800A9DF4
 /* 800A9B64 000A6AC4  38 60 00 02 */	li r3, 2
 /* 800A9B68 000A6AC8  48 00 02 90 */	b .L_800A9DF8
-.global .L_800A9B6C
 .L_800A9B6C:
 /* 800A9B6C 000A6ACC  80 7F 00 0C */	lwz r3, 0xc(r31)
 /* 800A9B70 000A6AD0  C0 0D B0 34 */	lfs f0, lbl_803DFD54@sda21(r13)
@@ -1900,7 +1894,6 @@ exec__13ActJumpAttackFv:
 /* 800A9DE8 000A6D48  90 1F 00 18 */	stw r0, 0x18(r31)
 /* 800A9DEC 000A6D4C  38 60 00 00 */	li r3, 0
 /* 800A9DF0 000A6D50  48 00 00 08 */	b .L_800A9DF8
-.global .L_800A9DF4
 .L_800A9DF4:
 /* 800A9DF4 000A6D54  38 60 00 00 */	li r3, 0
 .L_800A9DF8:
@@ -1916,9 +1909,9 @@ exec__13ActJumpAttackFv:
 /* 800A9E1C 000A6D7C  38 21 02 50 */	addi r1, r1, 0x250
 /* 800A9E20 000A6D80  7C 08 03 A6 */	mtlr r0
 /* 800A9E24 000A6D84  4E 80 00 20 */	blr 
+.endfn exec__13ActJumpAttackFv
 
-.global cleanup__13ActJumpAttackFv
-cleanup__13ActJumpAttackFv:
+.fn cleanup__13ActJumpAttackFv, global
 /* 800A9E28 000A6D88  7C 08 02 A6 */	mflr r0
 /* 800A9E2C 000A6D8C  90 01 00 04 */	stw r0, 4(r1)
 /* 800A9E30 000A6D90  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -1939,9 +1932,9 @@ cleanup__13ActJumpAttackFv:
 /* 800A9E68 000A6DC8  38 21 00 18 */	addi r1, r1, 0x18
 /* 800A9E6C 000A6DCC  7C 08 03 A6 */	mtlr r0
 /* 800A9E70 000A6DD0  4E 80 00 20 */	blr 
+.endfn cleanup__13ActJumpAttackFv
 
-.global attackHit__13ActJumpAttackFv
-attackHit__13ActJumpAttackFv:
+.fn attackHit__13ActJumpAttackFv, global
 /* 800A9E74 000A6DD4  7C 08 02 A6 */	mflr r0
 /* 800A9E78 000A6DD8  38 A0 00 19 */	li r5, 0x19
 /* 800A9E7C 000A6DDC  90 01 00 04 */	stw r0, 4(r1)
@@ -1953,9 +1946,9 @@ attackHit__13ActJumpAttackFv:
 /* 800A9E94 000A6DF4  38 21 00 08 */	addi r1, r1, 8
 /* 800A9E98 000A6DF8  7C 08 03 A6 */	mtlr r0
 /* 800A9E9C 000A6DFC  4E 80 00 20 */	blr 
+.endfn attackHit__13ActJumpAttackFv
 
-.global animationKeyUpdated__13ActJumpAttackFR16PaniAnimKeyEvent
-animationKeyUpdated__13ActJumpAttackFR16PaniAnimKeyEvent:
+.fn animationKeyUpdated__13ActJumpAttackFR16PaniAnimKeyEvent, global
 /* 800A9EA0 000A6E00  7C 08 02 A6 */	mflr r0
 /* 800A9EA4 000A6E04  90 01 00 04 */	stw r0, 4(r1)
 /* 800A9EA8 000A6E08  94 21 FF D0 */	stwu r1, -0x30(r1)
@@ -2040,9 +2033,9 @@ animationKeyUpdated__13ActJumpAttackFR16PaniAnimKeyEvent:
 /* 800A9FC0 000A6F20  38 21 00 30 */	addi r1, r1, 0x30
 /* 800A9FC4 000A6F24  7C 08 03 A6 */	mtlr r0
 /* 800A9FC8 000A6F28  4E 80 00 20 */	blr 
+.endfn animationKeyUpdated__13ActJumpAttackFR16PaniAnimKeyEvent
 
-.global doClimb__13ActJumpAttackFv
-doClimb__13ActJumpAttackFv:
+.fn doClimb__13ActJumpAttackFv, global
 /* 800A9FCC 000A6F2C  7C 08 02 A6 */	mflr r0
 /* 800A9FD0 000A6F30  90 01 00 04 */	stw r0, 4(r1)
 /* 800A9FD4 000A6F34  94 21 FF 10 */	stwu r1, -0xf0(r1)
@@ -2331,9 +2324,9 @@ doClimb__13ActJumpAttackFv:
 /* 800AA418 000A7378  38 21 00 F0 */	addi r1, r1, 0xf0
 /* 800AA41C 000A737C  7C 08 03 A6 */	mtlr r0
 /* 800AA420 000A7380  4E 80 00 20 */	blr 
+.endfn doClimb__13ActJumpAttackFv
 
-.global __dt__13ActJumpAttackFv
-__dt__13ActJumpAttackFv:
+.fn __dt__13ActJumpAttackFv, weak
 /* 800AA424 000A7384  7C 08 02 A6 */	mflr r0
 /* 800AA428 000A7388  90 01 00 04 */	stw r0, 4(r1)
 /* 800AA42C 000A738C  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -2362,9 +2355,9 @@ __dt__13ActJumpAttackFv:
 /* 800AA484 000A73E4  38 21 00 18 */	addi r1, r1, 0x18
 /* 800AA488 000A73E8  7C 08 03 A6 */	mtlr r0
 /* 800AA48C 000A73EC  4E 80 00 20 */	blr 
+.endfn __dt__13ActJumpAttackFv
 
-.global __dt__9ActAttackFv
-__dt__9ActAttackFv:
+.fn __dt__9ActAttackFv, weak
 /* 800AA490 000A73F0  7C 08 02 A6 */	mflr r0
 /* 800AA494 000A73F4  90 01 00 04 */	stw r0, 4(r1)
 /* 800AA498 000A73F8  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -2398,24 +2391,29 @@ __dt__9ActAttackFv:
 /* 800AA500 000A7460  38 21 00 18 */	addi r1, r1, 0x18
 /* 800AA504 000A7464  7C 08 03 A6 */	mtlr r0
 /* 800AA508 000A7468  4E 80 00 20 */	blr 
+.endfn __dt__9ActAttackFv
 
-"@24@animationKeyUpdated__9ActAttackFR16PaniAnimKeyEvent":
+.fn "@24@animationKeyUpdated__9ActAttackFR16PaniAnimKeyEvent", weak
 /* 800AA50C 000A746C  38 63 FF E8 */	addi r3, r3, -24
 /* 800AA510 000A7470  4B FF E0 54 */	b animationKeyUpdated__9ActAttackFR16PaniAnimKeyEvent
+.endfn "@24@animationKeyUpdated__9ActAttackFR16PaniAnimKeyEvent"
 
-"@20@animationKeyUpdated__13ActJumpAttackFR16PaniAnimKeyEvent":
+.fn "@20@animationKeyUpdated__13ActJumpAttackFR16PaniAnimKeyEvent", weak
 /* 800AA514 000A7474  38 63 FF EC */	addi r3, r3, -20
 /* 800AA518 000A7478  4B FF F9 88 */	b animationKeyUpdated__13ActJumpAttackFR16PaniAnimKeyEvent
+.endfn "@20@animationKeyUpdated__13ActJumpAttackFR16PaniAnimKeyEvent"
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802B5358:
+.obj lbl_802B5358, local
 	.asciz "aiAttack.cpp"
+.endobj lbl_802B5358
 .balign 4
-lbl_802B5368:
+.obj lbl_802B5368, local
 	.asciz "aiAttack"
+.endobj lbl_802B5368
 .balign 4
-lbl_802B5374:
+.obj lbl_802B5374, local
 	.4byte .L_800A938C
 	.4byte .L_800A9DF4
 	.4byte .L_800A90E0
@@ -2423,45 +2421,43 @@ lbl_802B5374:
 	.4byte .L_800A9774
 	.4byte .L_800A9B6C
 	.4byte .L_800A90D4
+.endobj lbl_802B5374
 .balign 4
-lbl_802B5390:
+.obj lbl_802B5390, local
 	.asciz "Interaction"
+.endobj lbl_802B5390
 .balign 4
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
+.skip 0x2C # compiler padding
 .balign 4
-lbl_802B53C8:
+.obj lbl_802B53C8, local
 	.asciz "ActJumpAttack"
+.endobj lbl_802B53C8
 .balign 4
-lbl_802B53D8:
+.obj lbl_802B53D8, local
 	.asciz "PaniAnimKeyListener"
+.endobj lbl_802B53D8
 .balign 4
-lbl_802B53EC:
+.obj lbl_802B53EC, local
 	.asciz "Receiver<Piki>"
+.endobj lbl_802B53EC
 .balign 4
-lbl_802B53FC:
+.obj lbl_802B53FC, local
 	.4byte "__RTTI__15Receiver<4Piki>"
-	.4byte 0x00000000
-	.4byte 0x00000000
-lbl_802B5408:
+	.4byte 0
+	.4byte 0
+.endobj lbl_802B53FC
+.balign 4
+.obj lbl_802B5408, local
 	.4byte __RTTI__19PaniAnimKeyListener
 	.4byte 0x00000014
 	.4byte "__RTTI__15Receiver<4Piki>"
-	.4byte 0x00000000
+	.4byte 0
 	.4byte __RTTI__6Action
-	.4byte 0x00000000
-	.4byte 0x00000000
-.global __vt__13ActJumpAttack
-__vt__13ActJumpAttack:
+	.4byte 0
+	.4byte 0
+.endobj lbl_802B5408
+.balign 4
+.obj __vt__13ActJumpAttack, global
 	.4byte __RTTI__13ActJumpAttack
 	.4byte 0
 	.4byte "procMsg__15Receiver<4Piki>FP4PikiP3Msg"
@@ -2491,20 +2487,25 @@ __vt__13ActJumpAttack:
 	.4byte 0xFFFFFFEC
 	.4byte "@20@animationKeyUpdated__13ActJumpAttackFR16PaniAnimKeyEvent"
 	.4byte animationKeyUpdated__13ActJumpAttackFR16PaniAnimKeyEvent
+.endobj __vt__13ActJumpAttack
 .balign 4
-lbl_802B5498:
+.obj lbl_802B5498, local
 	.asciz "ActAttack"
+.endobj lbl_802B5498
 .balign 4
-lbl_802B54A4:
+.obj lbl_802B54A4, local
 	.asciz "AndAction"
+.endobj lbl_802B54A4
 .balign 4
-lbl_802B54B0:
+.obj lbl_802B54B0, local
 	.4byte "__RTTI__15Receiver<4Piki>"
 	.4byte 0
 	.4byte __RTTI__6Action
 	.4byte 0
 	.4byte 0
-lbl_802B54C4:
+.endobj lbl_802B54B0
+.balign 4
+.obj lbl_802B54C4, local
 	.4byte __RTTI__19PaniAnimKeyListener
 	.4byte 0x18
 	.4byte "__RTTI__15Receiver<4Piki>"
@@ -2514,8 +2515,9 @@ lbl_802B54C4:
 	.4byte __RTTI__9AndAction
 	.4byte 0
 	.4byte 0
-.global __vt__9ActAttack
-__vt__9ActAttack:
+.endobj lbl_802B54C4
+.balign 4
+.obj __vt__9ActAttack, global
 	.4byte __RTTI__9ActAttack
 	.4byte 0
 	.4byte "procMsg__15Receiver<4Piki>FP4PikiP3Msg"
@@ -2545,148 +2547,210 @@ __vt__9ActAttack:
 	.4byte 0xFFFFFFE8
 	.4byte "@24@animationKeyUpdated__9ActAttackFR16PaniAnimKeyEvent"
 	.4byte animationKeyUpdated__9ActAttackFR16PaniAnimKeyEvent
-	.4byte 0
-	.4byte 0
-	.4byte 0
-lbl_802B5568:
-	.4byte .L_800A7908
-	.4byte .L_800A7930
-	.4byte .L_800A7944
-	.4byte .L_800A7958
-	.4byte .L_800A796C
-	.4byte .L_800A7980
-	.4byte .L_800A7994
-	.4byte .L_800A79A8
-	.4byte .L_800A791C
-	.4byte .L_800A79D0
-	.4byte .L_800A79BC
+.endobj __vt__9ActAttack
+.skip 0xC # compiler padding
+.balign 4
+.obj lbl_802B5568, local
+	.4byte ("procMsg__15Receiver<4Piki>FP4PikiP3Msg"+0x30)
+	.4byte ("procMsg__15Receiver<4Piki>FP4PikiP3Msg"+0x58)
+	.4byte ("procMsg__15Receiver<4Piki>FP4PikiP3Msg"+0x6C)
+	.4byte ("procMsg__15Receiver<4Piki>FP4PikiP3Msg"+0x80)
+	.4byte ("procMsg__15Receiver<4Piki>FP4PikiP3Msg"+0x94)
+	.4byte ("procMsg__15Receiver<4Piki>FP4PikiP3Msg"+0xA8)
+	.4byte ("procMsg__15Receiver<4Piki>FP4PikiP3Msg"+0xBC)
+	.4byte ("procMsg__15Receiver<4Piki>FP4PikiP3Msg"+0xD0)
+	.4byte ("procMsg__15Receiver<4Piki>FP4PikiP3Msg"+0x44)
+	.4byte ("procMsg__15Receiver<4Piki>FP4PikiP3Msg"+0xF8)
+	.4byte ("procMsg__15Receiver<4Piki>FP4PikiP3Msg"+0xE4)
+.endobj lbl_802B5568
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-lbl_803DFD18:
+.obj lbl_803DFD18, local
 	.asciz "attack"
+.endobj lbl_803DFD18
 .balign 4
-lbl_803DFD20:
+.obj lbl_803DFD20, local
 	.float 0.0
-lbl_803DFD24:
+.endobj lbl_803DFD20
+.obj lbl_803DFD24, local
 	.float 0.0
-lbl_803DFD28:
+.endobj lbl_803DFD24
+.obj lbl_803DFD28, local
 	.float 0.0
-lbl_803DFD2C:
+.endobj lbl_803DFD28
+.obj lbl_803DFD2C, local
 	.float -1.0
-lbl_803DFD30:
+.endobj lbl_803DFD2C
+.obj lbl_803DFD30, local
 	.float 0.0
-lbl_803DFD34:
+.endobj lbl_803DFD30
+.obj lbl_803DFD34, local
 	.float 0.0
-lbl_803DFD38:
+.endobj lbl_803DFD34
+.obj lbl_803DFD38, local
 	.float 0.0
-lbl_803DFD3C:
+.endobj lbl_803DFD38
+.obj lbl_803DFD3C, local
 	.float 0.0
-lbl_803DFD40:
+.endobj lbl_803DFD3C
+.obj lbl_803DFD40, local
 	.float 0.0
-lbl_803DFD44:
+.endobj lbl_803DFD40
+.obj lbl_803DFD44, local
 	.float 0.0
-lbl_803DFD48:
+.endobj lbl_803DFD44
+.obj lbl_803DFD48, local
 	.float 0.0
-lbl_803DFD4C:
+.endobj lbl_803DFD48
+.obj lbl_803DFD4C, local
 	.float 0.0
-lbl_803DFD50:
+.endobj lbl_803DFD4C
+.obj lbl_803DFD50, local
 	.float 0.0
-lbl_803DFD54:
+.endobj lbl_803DFD50
+.obj lbl_803DFD54, local
 	.float 0.0
-lbl_803DFD58:
+.endobj lbl_803DFD54
+.obj lbl_803DFD58, local
 	.float 0.0
-lbl_803DFD5C:
+.endobj lbl_803DFD58
+.obj lbl_803DFD5C, local
 	.float 0.0
-lbl_803DFD60:
+.endobj lbl_803DFD5C
+.obj lbl_803DFD60, local
 	.float 0.0
-lbl_803DFD64:
+.endobj lbl_803DFD60
+.obj lbl_803DFD64, local
 	.float 0.0
-lbl_803DFD68:
+.endobj lbl_803DFD64
+.obj lbl_803DFD68, local
 	.float 0.0
-lbl_803DFD6C:
+.endobj lbl_803DFD68
+.obj lbl_803DFD6C, local
 	.float 0.0
-lbl_803DFD70:
+.endobj lbl_803DFD6C
+.obj lbl_803DFD70, local
 	.float 0.0
-lbl_803DFD74:
+.endobj lbl_803DFD70
+.obj lbl_803DFD74, local
 	.float 0.0
-lbl_803DFD78:
+.endobj lbl_803DFD74
+.obj lbl_803DFD78, local
 	.float 0.0
-lbl_803DFD7C:
+.endobj lbl_803DFD78
+.obj lbl_803DFD7C, local
 	.float 0.0
-lbl_803DFD80:
+.endobj lbl_803DFD7C
+.obj lbl_803DFD80, local
 	.float 0.0
-lbl_803DFD84:
+.endobj lbl_803DFD80
+.obj lbl_803DFD84, local
 	.float 0.0
-lbl_803DFD88:
+.endobj lbl_803DFD84
+.obj lbl_803DFD88, local
 	.float 1.0
-lbl_803DFD8C:
+.endobj lbl_803DFD88
+.obj lbl_803DFD8C, local
 	.float 0.0
-lbl_803DFD90:
+.endobj lbl_803DFD8C
+.obj lbl_803DFD90, local
 	.float 20.0
-__RTTI__19PaniAnimKeyListener:
+.endobj lbl_803DFD90
+.balign 4
+.obj __RTTI__19PaniAnimKeyListener, local
 	.4byte lbl_802B53D8
 	.4byte 0
-"__RTTI__15Receiver<4Piki>":
+.endobj __RTTI__19PaniAnimKeyListener
+.balign 4
+.obj "__RTTI__15Receiver<4Piki>", local
 	.4byte lbl_802B53EC
 	.4byte 0
+.endobj "__RTTI__15Receiver<4Piki>"
 .balign 4
-lbl_803DFDA4:
+.obj lbl_803DFDA4, local
 	.asciz "Action"
+.endobj lbl_803DFDA4
 .balign 4
-__RTTI__6Action:
+.obj __RTTI__6Action, local
 	.4byte lbl_803DFDA4
 	.4byte lbl_802B53FC
-__RTTI__13ActJumpAttack:
+.endobj __RTTI__6Action
+.balign 4
+.obj __RTTI__13ActJumpAttack, local
 	.4byte lbl_802B53C8
 	.4byte lbl_802B5408
-__RTTI__9AndAction:
+.endobj __RTTI__13ActJumpAttack
+.balign 4
+.obj __RTTI__9AndAction, local
 	.4byte lbl_802B54A4
 	.4byte lbl_802B54B0
-__RTTI__9ActAttack:
+.endobj __RTTI__9AndAction
+.balign 4
+.obj __RTTI__9ActAttack, local
 	.4byte lbl_802B5498
 	.4byte lbl_802B54C4
+.endobj __RTTI__9ActAttack
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803E9098:
+.obj lbl_803E9098, local
 	.float 0.0
-lbl_803E909C:
+.endobj lbl_803E9098
+.obj lbl_803E909C, local
 	.float 1.0
-lbl_803E90A0:
+.endobj lbl_803E909C
+.obj lbl_803E90A0, local
 	.float 32767.0
+.endobj lbl_803E90A0
 .balign 8
-lbl_803E90A8:
-	.4byte 0x43300000
-	.4byte 0x80000000
-lbl_803E90B0:
+.obj lbl_803E90A8, local
+	.8byte 0x4330000080000000
+.endobj lbl_803E90A8
+.obj lbl_803E90B0, local
 	.float 0.5
-lbl_803E90B4:
+.endobj lbl_803E90B0
+.obj lbl_803E90B4, local
 	.float 6.0
-lbl_803E90B8:
+.endobj lbl_803E90B4
+.obj lbl_803E90B8, local # pi/10
 	.float 0.31415927
-lbl_803E90BC:
+.endobj lbl_803E90B8
+.obj lbl_803E90BC, local
 	.float 100.0
-lbl_803E90C0:
+.endobj lbl_803E90BC
+.obj lbl_803E90C0, local
 	.float 200.0
-lbl_803E90C4:
+.endobj lbl_803E90C0
+.obj lbl_803E90C4, local
 	.float 0.2
-lbl_803E90C8:
+.endobj lbl_803E90C4
+.obj lbl_803E90C8, local
 	.float 10.0
-lbl_803E90CC:
+.endobj lbl_803E90C8
+.obj lbl_803E90CC, local
 	.float 0.9
-lbl_803E90D0:
+.endobj lbl_803E90CC
+.obj lbl_803E90D0, local
 	.float 0.7
+.endobj lbl_803E90D0
 .balign 8
-lbl_803E90D8:
+.obj lbl_803E90D8, local
 	.double 0.5
-lbl_803E90E0:
+.endobj lbl_803E90D8
+.balign 8
+.obj lbl_803E90E0, local
 	.double 3.0
-lbl_803E90E8:
+.endobj lbl_803E90E0
+.obj lbl_803E90E8, local
 	.float 0.7853982
-lbl_803E90EC:
+.endobj lbl_803E90E8
+.obj lbl_803E90EC, local
 	.float 0.001
-lbl_803E90F0:
+.endobj lbl_803E90EC
+.obj lbl_803E90F0, local
 	.float 5.0
-lbl_803E90F4:
+.endobj lbl_803E90F0
+.obj lbl_803E90F4, local
 	.float -2.0
+.endobj lbl_803E90F4

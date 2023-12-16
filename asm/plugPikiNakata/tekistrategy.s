@@ -1,30 +1,29 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global __ct__12TekiStrategyFv
-__ct__12TekiStrategyFv:
+.fn __ct__12TekiStrategyFv, global
 /* 8014D1A4 0014A104  3C 80 80 2D */	lis r4, __vt__12TekiStrategy@ha
 /* 8014D1A8 0014A108  38 04 E6 E4 */	addi r0, r4, __vt__12TekiStrategy@l
 /* 8014D1AC 0014A10C  90 03 00 00 */	stw r0, 0(r3)
 /* 8014D1B0 0014A110  4E 80 00 20 */	blr 
+.endfn __ct__12TekiStrategyFv
 
-.global start__12TekiStrategyFR4Teki
-start__12TekiStrategyFR4Teki:
+.fn start__12TekiStrategyFR4Teki, global
 /* 8014D1B4 0014A114  4E 80 00 20 */	blr 
+.endfn start__12TekiStrategyFR4Teki
 
-.global act__12TekiStrategyFR4Teki
-act__12TekiStrategyFR4Teki:
+.fn act__12TekiStrategyFR4Teki, global
 /* 8014D1B8 0014A118  4E 80 00 20 */	blr 
+.endfn act__12TekiStrategyFR4Teki
 
-.global eventPerformed__12TekiStrategyFR9TekiEvent
-eventPerformed__12TekiStrategyFR9TekiEvent:
+.fn eventPerformed__12TekiStrategyFR9TekiEvent, global
 /* 8014D1BC 0014A11C  4E 80 00 20 */	blr 
+.endfn eventPerformed__12TekiStrategyFR9TekiEvent
 
-.global createEffect__12TekiStrategyFR4Tekii
-createEffect__12TekiStrategyFR4Tekii:
+.fn createEffect__12TekiStrategyFR4Tekii, global
 /* 8014D1C0 0014A120  4E 80 00 20 */	blr 
+.endfn createEffect__12TekiStrategyFR4Tekii
 
-.global draw__12TekiStrategyFR4TekiR8Graphics
-draw__12TekiStrategyFR4TekiR8Graphics:
+.fn draw__12TekiStrategyFR4TekiR8Graphics, global
 /* 8014D1C4 0014A124  7C 08 02 A6 */	mflr r0
 /* 8014D1C8 0014A128  7C 83 23 78 */	mr r3, r4
 /* 8014D1CC 0014A12C  90 01 00 04 */	stw r0, 4(r1)
@@ -38,9 +37,9 @@ draw__12TekiStrategyFR4TekiR8Graphics:
 /* 8014D1EC 0014A14C  38 21 00 08 */	addi r1, r1, 8
 /* 8014D1F0 0014A150  7C 08 03 A6 */	mtlr r0
 /* 8014D1F4 0014A154  4E 80 00 20 */	blr 
+.endfn draw__12TekiStrategyFR4TekiR8Graphics
 
-.global drawDebugInfo__12TekiStrategyFR4TekiR8Graphics
-drawDebugInfo__12TekiStrategyFR4TekiR8Graphics:
+.fn drawDebugInfo__12TekiStrategyFR4TekiR8Graphics, global
 /* 8014D1F8 0014A158  7C 08 02 A6 */	mflr r0
 /* 8014D1FC 0014A15C  7C 83 23 78 */	mr r3, r4
 /* 8014D200 0014A160  90 01 00 04 */	stw r0, 4(r1)
@@ -54,9 +53,9 @@ drawDebugInfo__12TekiStrategyFR4TekiR8Graphics:
 /* 8014D220 0014A180  38 21 00 08 */	addi r1, r1, 8
 /* 8014D224 0014A184  7C 08 03 A6 */	mtlr r0
 /* 8014D228 0014A188  4E 80 00 20 */	blr 
+.endfn drawDebugInfo__12TekiStrategyFR4TekiR8Graphics
 
-.global interact__12TekiStrategyFR4TekiR18TekiInteractionKey
-interact__12TekiStrategyFR4TekiR18TekiInteractionKey:
+.fn interact__12TekiStrategyFR4TekiR18TekiInteractionKey, global
 /* 8014D22C 0014A18C  7C 08 02 A6 */	mflr r0
 /* 8014D230 0014A190  7C 83 23 78 */	mr r3, r4
 /* 8014D234 0014A194  90 01 00 04 */	stw r0, 4(r1)
@@ -70,13 +69,13 @@ interact__12TekiStrategyFR4TekiR18TekiInteractionKey:
 /* 8014D254 0014A1B4  38 21 00 08 */	addi r1, r1, 8
 /* 8014D258 0014A1B8  7C 08 03 A6 */	mtlr r0
 /* 8014D25C 0014A1BC  4E 80 00 20 */	blr 
+.endfn interact__12TekiStrategyFR4TekiR18TekiInteractionKey
 
-.global spawnCorpseParts__12TekiStrategyFR4Teki
-spawnCorpseParts__12TekiStrategyFR4Teki:
+.fn spawnCorpseParts__12TekiStrategyFR4Teki, global
 /* 8014D260 0014A1C0  4E 80 00 20 */	blr 
+.endfn spawnCorpseParts__12TekiStrategyFR4Teki
 
-.global __ct__17TekiStrategyTableFi
-__ct__17TekiStrategyTableFi:
+.fn __ct__17TekiStrategyTableFi, global
 /* 8014D264 0014A1C4  7C 08 02 A6 */	mflr r0
 /* 8014D268 0014A1C8  90 01 00 04 */	stw r0, 4(r1)
 /* 8014D26C 0014A1CC  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -106,20 +105,23 @@ __ct__17TekiStrategyTableFi:
 /* 8014D2C4 0014A224  38 21 00 20 */	addi r1, r1, 0x20
 /* 8014D2C8 0014A228  7C 08 03 A6 */	mtlr r0
 /* 8014D2CC 0014A22C  4E 80 00 20 */	blr 
+.endfn __ct__17TekiStrategyTableFi
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802CE6B0:
+.obj lbl_802CE6B0, local
 	.asciz "tekistrategy.cpp"
+.endobj lbl_802CE6B0
 .balign 4
-lbl_802CE6C4:
+.obj lbl_802CE6C4, local
 	.asciz "tekistrategy"
+.endobj lbl_802CE6C4
 .balign 4
-lbl_802CE6D4:
+.obj lbl_802CE6D4, local
 	.asciz "TekiStrategy"
+.endobj lbl_802CE6D4
 .balign 4
-.global __vt__12TekiStrategy
-__vt__12TekiStrategy:
+.obj __vt__12TekiStrategy, global
 	.4byte __RTTI__12TekiStrategy
 	.4byte 0
 	.4byte start__12TekiStrategyFR4Teki
@@ -130,9 +132,11 @@ __vt__12TekiStrategy:
 	.4byte drawDebugInfo__12TekiStrategyFR4TekiR8Graphics
 	.4byte interact__12TekiStrategyFR4TekiR18TekiInteractionKey
 	.4byte spawnCorpseParts__12TekiStrategyFR4Teki
+.endobj __vt__12TekiStrategy
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-__RTTI__12TekiStrategy:
+.obj __RTTI__12TekiStrategy, local
 	.4byte lbl_802CE6D4
 	.4byte 0
+.endobj __RTTI__12TekiStrategy

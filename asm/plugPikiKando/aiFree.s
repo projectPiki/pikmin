@@ -724,17 +724,17 @@ __vt__7ActFree:
 	.4byte 0
 	.4byte 0
 lbl_802B6B48:
-	.4byte .L_800A7908
-	.4byte .L_800A7930
-	.4byte .L_800A7944
-	.4byte .L_800A7958
-	.4byte .L_800A796C
-	.4byte .L_800A7980
-	.4byte .L_800A7994
-	.4byte .L_800A79A8
-	.4byte .L_800A791C
-	.4byte .L_800A79D0
-	.4byte .L_800A79BC
+	.4byte ("procMsg__15Receiver<4Piki>FP4PikiP3Msg"+0x30)
+	.4byte ("procMsg__15Receiver<4Piki>FP4PikiP3Msg"+0x58)
+	.4byte ("procMsg__15Receiver<4Piki>FP4PikiP3Msg"+0x6C)
+	.4byte ("procMsg__15Receiver<4Piki>FP4PikiP3Msg"+0x80)
+	.4byte ("procMsg__15Receiver<4Piki>FP4PikiP3Msg"+0x94)
+	.4byte ("procMsg__15Receiver<4Piki>FP4PikiP3Msg"+0xA8)
+	.4byte ("procMsg__15Receiver<4Piki>FP4PikiP3Msg"+0xBC)
+	.4byte ("procMsg__15Receiver<4Piki>FP4PikiP3Msg"+0xD0)
+	.4byte ("procMsg__15Receiver<4Piki>FP4PikiP3Msg"+0x44)
+	.4byte ("procMsg__15Receiver<4Piki>FP4PikiP3Msg"+0xF8)
+	.4byte ("procMsg__15Receiver<4Piki>FP4PikiP3Msg"+0xE4)
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8

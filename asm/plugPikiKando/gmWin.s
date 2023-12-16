@@ -1,13 +1,12 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global open__5GmWinFv
-open__5GmWinFv:
+.fn open__5GmWinFv, global
 /* 80111E14 0010ED74  38 00 10 00 */	li r0, 0x1000
 /* 80111E18 0010ED78  90 03 00 28 */	stw r0, 0x28(r3)
 /* 80111E1C 0010ED7C  4E 80 00 20 */	blr 
+.endfn open__5GmWinFv
 
-.global close__5GmWinFv
-close__5GmWinFv:
+.fn close__5GmWinFv, global
 /* 80111E20 0010ED80  7C 08 02 A6 */	mflr r0
 /* 80111E24 0010ED84  90 01 00 04 */	stw r0, 4(r1)
 /* 80111E28 0010ED88  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -28,9 +27,9 @@ close__5GmWinFv:
 /* 80111E60 0010EDC0  38 21 00 18 */	addi r1, r1, 0x18
 /* 80111E64 0010EDC4  7C 08 03 A6 */	mtlr r0
 /* 80111E68 0010EDC8  4E 80 00 20 */	blr 
+.endfn close__5GmWinFv
 
-.global render__5GmWinFR8Graphics
-render__5GmWinFR8Graphics:
+.fn render__5GmWinFR8Graphics, global
 /* 80111E6C 0010EDCC  7C 08 02 A6 */	mflr r0
 /* 80111E70 0010EDD0  90 01 00 04 */	stw r0, 4(r1)
 /* 80111E74 0010EDD4  94 21 FF 78 */	stwu r1, -0x88(r1)
@@ -134,9 +133,9 @@ render__5GmWinFR8Graphics:
 /* 80111FFC 0010EF5C  38 21 00 88 */	addi r1, r1, 0x88
 /* 80112000 0010EF60  7C 08 03 A6 */	mtlr r0
 /* 80112004 0010EF64  4E 80 00 20 */	blr 
+.endfn render__5GmWinFR8Graphics
 
-.global placeCentre__5GmWinFv
-placeCentre__5GmWinFv:
+.fn placeCentre__5GmWinFv, global
 /* 80112008 0010EF68  80 83 00 1C */	lwz r4, 0x1c(r3)
 /* 8011200C 0010EF6C  80 03 00 18 */	lwz r0, 0x18(r3)
 /* 80112010 0010EF70  7C 84 0E 70 */	srawi r4, r4, 1
@@ -146,9 +145,9 @@ placeCentre__5GmWinFv:
 /* 80112020 0010EF80  20 04 00 F0 */	subfic r0, r4, 0xf0
 /* 80112024 0010EF84  90 03 00 24 */	stw r0, 0x24(r3)
 /* 80112028 0010EF88  4E 80 00 20 */	blr 
+.endfn placeCentre__5GmWinFv
 
-.global print__5GmWinFR8GraphicsiiPc
-print__5GmWinFR8GraphicsiiPc:
+.fn print__5GmWinFR8GraphicsiiPc, global
 /* 8011202C 0010EF8C  7C 08 02 A6 */	mflr r0
 /* 80112030 0010EF90  39 23 00 00 */	addi r9, r3, 0
 /* 80112034 0010EF94  90 01 00 04 */	stw r0, 4(r1)
@@ -169,9 +168,9 @@ print__5GmWinFR8GraphicsiiPc:
 /* 80112070 0010EFD0  38 21 00 08 */	addi r1, r1, 8
 /* 80112074 0010EFD4  7C 08 03 A6 */	mtlr r0
 /* 80112078 0010EFD8  4E 80 00 20 */	blr 
+.endfn print__5GmWinFR8GraphicsiiPc
 
-.global printcentre__5GmWinFR8GraphicsiPc
-printcentre__5GmWinFR8GraphicsiPc:
+.fn printcentre__5GmWinFR8GraphicsiPc, global
 /* 8011207C 0010EFDC  7C 08 02 A6 */	mflr r0
 /* 80112080 0010EFE0  90 01 00 04 */	stw r0, 4(r1)
 /* 80112084 0010EFE4  94 21 FF D0 */	stwu r1, -0x30(r1)
@@ -204,9 +203,9 @@ printcentre__5GmWinFR8GraphicsiPc:
 /* 801120F0 0010F050  38 21 00 30 */	addi r1, r1, 0x30
 /* 801120F4 0010F054  7C 08 03 A6 */	mtlr r0
 /* 801120F8 0010F058  4E 80 00 20 */	blr 
+.endfn printcentre__5GmWinFR8GraphicsiPc
 
-.global printright__5GmWinFR8GraphicsiPc
-printright__5GmWinFR8GraphicsiPc:
+.fn printright__5GmWinFR8GraphicsiPc, global
 /* 801120FC 0010F05C  7C 08 02 A6 */	mflr r0
 /* 80112100 0010F060  90 01 00 04 */	stw r0, 4(r1)
 /* 80112104 0010F064  94 21 FF D0 */	stwu r1, -0x30(r1)
@@ -239,9 +238,9 @@ printright__5GmWinFR8GraphicsiPc:
 /* 80112170 0010F0D0  38 21 00 30 */	addi r1, r1, 0x30
 /* 80112174 0010F0D4  7C 08 03 A6 */	mtlr r0
 /* 80112178 0010F0D8  4E 80 00 20 */	blr 
+.endfn printright__5GmWinFR8GraphicsiPc
 
-.global printleft__5GmWinFR8GraphicsiPc
-printleft__5GmWinFR8GraphicsiPc:
+.fn printleft__5GmWinFR8GraphicsiPc, global
 /* 8011217C 0010F0DC  7C 08 02 A6 */	mflr r0
 /* 80112180 0010F0E0  38 E3 00 00 */	addi r7, r3, 0
 /* 80112184 0010F0E4  90 01 00 04 */	stw r0, 4(r1)
@@ -264,9 +263,9 @@ printleft__5GmWinFR8GraphicsiPc:
 /* 801121C8 0010F128  38 21 00 08 */	addi r1, r1, 8
 /* 801121CC 0010F12C  7C 08 03 A6 */	mtlr r0
 /* 801121D0 0010F130  4E 80 00 20 */	blr 
+.endfn printleft__5GmWinFR8GraphicsiPc
 
-.global printStart__5GmWinFR8Graphics
-printStart__5GmWinFR8Graphics:
+.fn printStart__5GmWinFR8Graphics, global
 /* 801121D4 0010F134  7C 08 02 A6 */	mflr r0
 /* 801121D8 0010F138  38 A0 00 01 */	li r5, 1
 /* 801121DC 0010F13C  90 01 00 04 */	stw r0, 4(r1)
@@ -293,9 +292,9 @@ printStart__5GmWinFR8Graphics:
 /* 80112230 0010F190  38 21 00 18 */	addi r1, r1, 0x18
 /* 80112234 0010F194  7C 08 03 A6 */	mtlr r0
 /* 80112238 0010F198  4E 80 00 20 */	blr 
+.endfn printStart__5GmWinFR8Graphics
 
-.global texture__5GmWinFR8GraphicsP7Textureiiii8RectArea
-texture__5GmWinFR8GraphicsP7Textureiiii8RectArea:
+.fn texture__5GmWinFR8GraphicsP7Textureiiii8RectArea, global
 /* 8011223C 0010F19C  7C 08 02 A6 */	mflr r0
 /* 80112240 0010F1A0  90 01 00 04 */	stw r0, 4(r1)
 /* 80112244 0010F1A4  94 21 FF B0 */	stwu r1, -0x50(r1)
@@ -334,9 +333,9 @@ texture__5GmWinFR8GraphicsP7Textureiiii8RectArea:
 /* 801122C8 0010F228  38 21 00 50 */	addi r1, r1, 0x50
 /* 801122CC 0010F22C  7C 08 03 A6 */	mtlr r0
 /* 801122D0 0010F230  4E 80 00 20 */	blr 
+.endfn texture__5GmWinFR8GraphicsP7Textureiiii8RectArea
 
-.global texturecentre__5GmWinFR8GraphicsP7Textureiii8RectArea
-texturecentre__5GmWinFR8GraphicsP7Textureiii8RectArea:
+.fn texturecentre__5GmWinFR8GraphicsP7Textureiii8RectArea, global
 /* 801122D4 0010F234  7C 08 02 A6 */	mflr r0
 /* 801122D8 0010F238  90 01 00 04 */	stw r0, 4(r1)
 /* 801122DC 0010F23C  94 21 FF B0 */	stwu r1, -0x50(r1)
@@ -379,9 +378,9 @@ texturecentre__5GmWinFR8GraphicsP7Textureiii8RectArea:
 /* 80112370 0010F2D0  38 21 00 50 */	addi r1, r1, 0x50
 /* 80112374 0010F2D4  7C 08 03 A6 */	mtlr r0
 /* 80112378 0010F2D8  4E 80 00 20 */	blr 
+.endfn texturecentre__5GmWinFR8GraphicsP7Textureiii8RectArea
 
-.global textureleft__5GmWinFR8GraphicsP7Textureiii8RectArea
-textureleft__5GmWinFR8GraphicsP7Textureiii8RectArea:
+.fn textureleft__5GmWinFR8GraphicsP7Textureiii8RectArea, global
 /* 8011237C 0010F2DC  7C 08 02 A6 */	mflr r0
 /* 80112380 0010F2E0  90 01 00 04 */	stw r0, 4(r1)
 /* 80112384 0010F2E4  94 21 FF B0 */	stwu r1, -0x50(r1)
@@ -420,9 +419,9 @@ textureleft__5GmWinFR8GraphicsP7Textureiii8RectArea:
 /* 80112408 0010F368  38 21 00 50 */	addi r1, r1, 0x50
 /* 8011240C 0010F36C  7C 08 03 A6 */	mtlr r0
 /* 80112410 0010F370  4E 80 00 20 */	blr 
+.endfn textureleft__5GmWinFR8GraphicsP7Textureiii8RectArea
 
-.global textureright__5GmWinFR8GraphicsP7Textureiii8RectArea
-textureright__5GmWinFR8GraphicsP7Textureiii8RectArea:
+.fn textureright__5GmWinFR8GraphicsP7Textureiii8RectArea, global
 /* 80112414 0010F374  7C 08 02 A6 */	mflr r0
 /* 80112418 0010F378  90 01 00 04 */	stw r0, 4(r1)
 /* 8011241C 0010F37C  94 21 FF B0 */	stwu r1, -0x50(r1)
@@ -464,12 +463,14 @@ textureright__5GmWinFR8GraphicsP7Textureiii8RectArea:
 /* 801124AC 0010F40C  38 21 00 50 */	addi r1, r1, 0x50
 /* 801124B0 0010F410  7C 08 03 A6 */	mtlr r0
 /* 801124B4 0010F414  4E 80 00 20 */	blr 
+.endfn textureright__5GmWinFR8GraphicsP7Textureiii8RectArea
 
 .section .sbss, "wa"
 .balign 8
-.global wintex
-wintex:
+.obj wintex, local
 	.skip 0x4
-.global font
-font:
+.endobj wintex
+.balign 4
+.obj font, local
 	.skip 0x4
+.endobj font

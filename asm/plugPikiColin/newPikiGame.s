@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global createMenuWindow__Fv
-createMenuWindow__Fv:
+.fn createMenuWindow__Fv, local
 /* 80056B00 00053A60  7C 08 02 A6 */	mflr r0
 /* 80056B04 00053A64  38 80 00 00 */	li r4, 0
 /* 80056B08 00053A68  90 01 00 04 */	stw r0, 4(r1)
@@ -73,9 +72,9 @@ createMenuWindow__Fv:
 /* 80056C0C 00053B6C  38 21 00 30 */	addi r1, r1, 0x30
 /* 80056C10 00053B70  7C 08 03 A6 */	mtlr r0
 /* 80056C14 00053B74  4E 80 00 20 */	blr 
+.endfn createMenuWindow__Fv
 
-.global createTutorialWindow__Fiib
-createTutorialWindow__Fiib:
+.fn createTutorialWindow__Fiib, local
 /* 80056C18 00053B78  7C 08 02 A6 */	mflr r0
 /* 80056C1C 00053B7C  38 C0 00 00 */	li r6, 0
 /* 80056C20 00053B80  90 01 00 04 */	stw r0, 4(r1)
@@ -190,9 +189,9 @@ createTutorialWindow__Fiib:
 /* 80056DBC 00053D1C  38 21 00 48 */	addi r1, r1, 0x48
 /* 80056DC0 00053D20  7C 08 03 A6 */	mtlr r0
 /* 80056DC4 00053D24  4E 80 00 20 */	blr 
+.endfn createTutorialWindow__Fiib
 
-.global deleteTutorialWindow__Fv
-deleteTutorialWindow__Fv:
+.fn deleteTutorialWindow__Fv, local
 /* 80056DC8 00053D28  7C 08 02 A6 */	mflr r0
 /* 80056DCC 00053D2C  90 01 00 04 */	stw r0, 4(r1)
 /* 80056DD0 00053D30  94 21 FF F8 */	stwu r1, -8(r1)
@@ -244,9 +243,9 @@ deleteTutorialWindow__Fv:
 /* 80056E78 00053DD8  38 21 00 08 */	addi r1, r1, 8
 /* 80056E7C 00053DDC  7C 08 03 A6 */	mtlr r0
 /* 80056E80 00053DE0  4E 80 00 20 */	blr 
+.endfn deleteTutorialWindow__Fv
 
-.global __ct__15BaseGameSectionFv
-__ct__15BaseGameSectionFv:
+.fn __ct__15BaseGameSectionFv, global
 /* 80056E84 00053DE4  7C 08 02 A6 */	mflr r0
 /* 80056E88 00053DE8  3C 80 80 22 */	lis r4, __vt__5ANode@ha
 /* 80056E8C 00053DEC  90 01 00 04 */	stw r0, 4(r1)
@@ -318,9 +317,9 @@ __ct__15BaseGameSectionFv:
 /* 80056F90 00053EF0  38 21 00 28 */	addi r1, r1, 0x28
 /* 80056F94 00053EF4  7C 08 03 A6 */	mtlr r0
 /* 80056F98 00053EF8  4E 80 00 20 */	blr 
+.endfn __ct__15BaseGameSectionFv
 
-.global draw__15BaseGameSectionFR8Graphics
-draw__15BaseGameSectionFR8Graphics:
+.fn draw__15BaseGameSectionFR8Graphics, global
 /* 80056F9C 00053EFC  7C 08 02 A6 */	mflr r0
 /* 80056FA0 00053F00  90 01 00 04 */	stw r0, 4(r1)
 /* 80056FA4 00053F04  38 00 00 00 */	li r0, 0
@@ -473,13 +472,13 @@ draw__15BaseGameSectionFR8Graphics:
 /* 800571D4 00054134  38 21 00 C8 */	addi r1, r1, 0xc8
 /* 800571D8 00054138  7C 08 03 A6 */	mtlr r0
 /* 800571DC 0005413C  4E 80 00 20 */	blr 
+.endfn draw__15BaseGameSectionFR8Graphics
 
-.global postUpdate__9ModeStateFv
-postUpdate__9ModeStateFv:
+.fn postUpdate__9ModeStateFv, weak
 /* 800571E0 00054140  4E 80 00 20 */	blr 
+.endfn postUpdate__9ModeStateFv
 
-.global update__18IntroGameModeStateFRUl
-update__18IntroGameModeStateFRUl:
+.fn update__18IntroGameModeStateFRUl, global
 /* 800571E4 00054144  7C 08 02 A6 */	mflr r0
 /* 800571E8 00054148  90 01 00 04 */	stw r0, 4(r1)
 /* 800571EC 0005414C  38 00 00 01 */	li r0, 1
@@ -560,9 +559,9 @@ update__18IntroGameModeStateFRUl:
 /* 80057300 00054260  38 21 00 18 */	addi r1, r1, 0x18
 /* 80057304 00054264  7C 08 03 A6 */	mtlr r0
 /* 80057308 00054268  4E 80 00 20 */	blr 
+.endfn update__18IntroGameModeStateFRUl
 
-.global update__16RunningModeStateFRUl
-update__16RunningModeStateFRUl:
+.fn update__16RunningModeStateFRUl, global
 /* 8005730C 0005426C  7C 08 02 A6 */	mflr r0
 /* 80057310 00054270  3C A0 80 3A */	lis r5, gameflow@ha
 /* 80057314 00054274  90 01 00 04 */	stw r0, 4(r1)
@@ -986,13 +985,13 @@ update__16RunningModeStateFRUl:
 /* 80057940 000548A0  38 21 00 58 */	addi r1, r1, 0x58
 /* 80057944 000548A4  7C 08 03 A6 */	mtlr r0
 /* 80057948 000548A8  4E 80 00 20 */	blr 
+.endfn update__16RunningModeStateFRUl
 
-.global message__13GameInterfaceFii
-message__13GameInterfaceFii:
+.fn message__13GameInterfaceFii, weak
 /* 8005794C 000548AC  4E 80 00 20 */	blr 
+.endfn message__13GameInterfaceFii
 
-.global postRender__18IntroGameModeStateFR8Graphics
-postRender__18IntroGameModeStateFR8Graphics:
+.fn postRender__18IntroGameModeStateFR8Graphics, global
 /* 80057950 000548B0  7C 08 02 A6 */	mflr r0
 /* 80057954 000548B4  90 01 00 04 */	stw r0, 4(r1)
 /* 80057958 000548B8  94 21 FF 98 */	stwu r1, -0x68(r1)
@@ -1024,9 +1023,9 @@ postRender__18IntroGameModeStateFR8Graphics:
 /* 800579BC 0005491C  38 21 00 68 */	addi r1, r1, 0x68
 /* 800579C0 00054920  7C 08 03 A6 */	mtlr r0
 /* 800579C4 00054924  4E 80 00 20 */	blr 
+.endfn postRender__18IntroGameModeStateFR8Graphics
 
-.global postRender__16RunningModeStateFR8Graphics
-postRender__16RunningModeStateFR8Graphics:
+.fn postRender__16RunningModeStateFR8Graphics, global
 /* 800579C8 00054928  7C 08 02 A6 */	mflr r0
 /* 800579CC 0005492C  90 01 00 04 */	stw r0, 4(r1)
 /* 800579D0 00054930  94 21 FE D0 */	stwu r1, -0x130(r1)
@@ -1197,9 +1196,9 @@ postRender__16RunningModeStateFR8Graphics:
 /* 80057C50 00054BB0  38 21 01 30 */	addi r1, r1, 0x130
 /* 80057C54 00054BB4  7C 08 03 A6 */	mtlr r0
 /* 80057C58 00054BB8  4E 80 00 20 */	blr 
+.endfn postRender__16RunningModeStateFR8Graphics
 
-.global update__16MessageModeStateFRUl
-update__16MessageModeStateFRUl:
+.fn update__16MessageModeStateFRUl, global
 /* 80057C5C 00054BBC  7C 08 02 A6 */	mflr r0
 /* 80057C60 00054BC0  3C 80 80 3A */	lis r4, flowCont@ha
 /* 80057C64 00054BC4  90 01 00 04 */	stw r0, 4(r1)
@@ -1429,9 +1428,9 @@ update__16MessageModeStateFRUl:
 /* 80057FB0 00054F10  38 21 00 60 */	addi r1, r1, 0x60
 /* 80057FB4 00054F14  7C 08 03 A6 */	mtlr r0
 /* 80057FB8 00054F18  4E 80 00 20 */	blr 
+.endfn update__16MessageModeStateFRUl
 
-.global update__16DayOverModeStateFRUl
-update__16DayOverModeStateFRUl:
+.fn update__16DayOverModeStateFRUl, global
 /* 80057FBC 00054F1C  7C 08 02 A6 */	mflr r0
 /* 80057FC0 00054F20  90 01 00 04 */	stw r0, 4(r1)
 /* 80057FC4 00054F24  38 00 00 01 */	li r0, 1
@@ -1737,9 +1736,9 @@ update__16DayOverModeStateFRUl:
 /* 80058424 00055384  38 21 00 58 */	addi r1, r1, 0x58
 /* 80058428 00055388  7C 08 03 A6 */	mtlr r0
 /* 8005842C 0005538C  4E 80 00 20 */	blr 
+.endfn update__16DayOverModeStateFRUl
 
-.global makeTotalScoreWindow__16DayOverModeStateFv
-makeTotalScoreWindow__16DayOverModeStateFv:
+.fn makeTotalScoreWindow__16DayOverModeStateFv, global
 /* 80058430 00055390  7C 08 02 A6 */	mflr r0
 /* 80058434 00055394  3C 60 80 3A */	lis r3, gameflow@ha
 /* 80058438 00055398  90 01 00 04 */	stw r0, 4(r1)
@@ -1894,9 +1893,9 @@ makeTotalScoreWindow__16DayOverModeStateFv:
 /* 80058674 000555D4  38 21 00 40 */	addi r1, r1, 0x40
 /* 80058678 000555D8  7C 08 03 A6 */	mtlr r0
 /* 8005867C 000555DC  4E 80 00 20 */	blr 
+.endfn makeTotalScoreWindow__16DayOverModeStateFv
 
-.global initialisePhaseOne__16DayOverModeStateFv
-initialisePhaseOne__16DayOverModeStateFv:
+.fn initialisePhaseOne__16DayOverModeStateFv, global
 /* 80058680 000555E0  7C 08 02 A6 */	mflr r0
 /* 80058684 000555E4  90 01 00 04 */	stw r0, 4(r1)
 /* 80058688 000555E8  94 21 FF B8 */	stwu r1, -0x48(r1)
@@ -2129,9 +2128,9 @@ initialisePhaseOne__16DayOverModeStateFv:
 /* 800589DC 0005593C  38 21 00 48 */	addi r1, r1, 0x48
 /* 800589E0 00055940  7C 08 03 A6 */	mtlr r0
 /* 800589E4 00055944  4E 80 00 20 */	blr 
+.endfn initialisePhaseOne__16DayOverModeStateFv
 
-.global initialisePhaseTwo__16DayOverModeStateFv
-initialisePhaseTwo__16DayOverModeStateFv:
+.fn initialisePhaseTwo__16DayOverModeStateFv, global
 /* 800589E8 00055948  7C 08 02 A6 */	mflr r0
 /* 800589EC 0005594C  3C 80 80 3A */	lis r4, resultTable@ha
 /* 800589F0 00055950  90 01 00 04 */	stw r0, 4(r1)
@@ -2408,9 +2407,9 @@ initialisePhaseTwo__16DayOverModeStateFv:
 /* 80058DEC 00055D4C  38 21 00 60 */	addi r1, r1, 0x60
 /* 80058DF0 00055D50  7C 08 03 A6 */	mtlr r0
 /* 80058DF4 00055D54  4E 80 00 20 */	blr 
+.endfn initialisePhaseTwo__16DayOverModeStateFv
 
-.global initialisePhaseThree__16DayOverModeStateFv
-initialisePhaseThree__16DayOverModeStateFv:
+.fn initialisePhaseThree__16DayOverModeStateFv, global
 /* 80058DF8 00055D58  7C 08 02 A6 */	mflr r0
 /* 80058DFC 00055D5C  38 80 00 00 */	li r4, 0
 /* 80058E00 00055D60  90 01 00 04 */	stw r0, 4(r1)
@@ -2567,9 +2566,9 @@ initialisePhaseThree__16DayOverModeStateFv:
 /* 80059044 00055FA4  38 21 00 38 */	addi r1, r1, 0x38
 /* 80059048 00055FA8  7C 08 03 A6 */	mtlr r0
 /* 8005904C 00055FAC  4E 80 00 20 */	blr 
+.endfn initialisePhaseThree__16DayOverModeStateFv
 
-.global initialisePhaseFour__16DayOverModeStateFv
-initialisePhaseFour__16DayOverModeStateFv:
+.fn initialisePhaseFour__16DayOverModeStateFv, global
 /* 80059050 00055FB0  7C 08 02 A6 */	mflr r0
 /* 80059054 00055FB4  3C 80 80 3A */	lis r4, gameflow@ha
 /* 80059058 00055FB8  90 01 00 04 */	stw r0, 4(r1)
@@ -2652,9 +2651,9 @@ initialisePhaseFour__16DayOverModeStateFv:
 /* 80059180 000560E0  38 21 00 20 */	addi r1, r1, 0x20
 /* 80059184 000560E4  7C 08 03 A6 */	mtlr r0
 /* 80059188 000560E8  4E 80 00 20 */	blr 
+.endfn initialisePhaseFour__16DayOverModeStateFv
 
-.global parseMessages__18GameMovieInterfaceFv
-parseMessages__18GameMovieInterfaceFv:
+.fn parseMessages__18GameMovieInterfaceFv, global
 /* 8005918C 000560EC  7C 08 02 A6 */	mflr r0
 /* 80059190 000560F0  90 01 00 04 */	stw r0, 4(r1)
 /* 80059194 000560F4  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -2707,9 +2706,9 @@ parseMessages__18GameMovieInterfaceFv:
 /* 80059240 000561A0  38 21 00 20 */	addi r1, r1, 0x20
 /* 80059244 000561A4  7C 08 03 A6 */	mtlr r0
 /* 80059248 000561A8  4E 80 00 20 */	blr 
+.endfn parseMessages__18GameMovieInterfaceFv
 
-.global parse__18GameMovieInterfaceFRQ218GameMovieInterface13SimpleMessage
-parse__18GameMovieInterfaceFRQ218GameMovieInterface13SimpleMessage:
+.fn parse__18GameMovieInterfaceFRQ218GameMovieInterface13SimpleMessage, global
 /* 8005924C 000561AC  7C 08 02 A6 */	mflr r0
 /* 80059250 000561B0  90 01 00 04 */	stw r0, 4(r1)
 /* 80059254 000561B4  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -3008,9 +3007,9 @@ parse__18GameMovieInterfaceFRQ218GameMovieInterface13SimpleMessage:
 /* 80059668 000565C8  38 21 00 28 */	addi r1, r1, 0x28
 /* 8005966C 000565CC  7C 08 03 A6 */	mtlr r0
 /* 80059670 000565D0  4E 80 00 20 */	blr 
+.endfn parse__18GameMovieInterfaceFRQ218GameMovieInterface13SimpleMessage
 
-.global parse__18GameMovieInterfaceFRQ218GameMovieInterface14ComplexMessage
-parse__18GameMovieInterfaceFRQ218GameMovieInterface14ComplexMessage:
+.fn parse__18GameMovieInterfaceFRQ218GameMovieInterface14ComplexMessage, global
 /* 80059674 000565D4  7C 08 02 A6 */	mflr r0
 /* 80059678 000565D8  39 44 00 00 */	addi r10, r4, 0
 /* 8005967C 000565DC  90 01 00 04 */	stw r0, 4(r1)
@@ -3030,9 +3029,9 @@ parse__18GameMovieInterfaceFRQ218GameMovieInterface14ComplexMessage:
 /* 800596B4 00056614  38 21 00 08 */	addi r1, r1, 8
 /* 800596B8 00056618  7C 08 03 A6 */	mtlr r0
 /* 800596BC 0005661C  4E 80 00 20 */	blr 
+.endfn parse__18GameMovieInterfaceFRQ218GameMovieInterface14ComplexMessage
 
-.global __ct__18NewPikiGameSectionFv
-__ct__18NewPikiGameSectionFv:
+.fn __ct__18NewPikiGameSectionFv, global
 /* 800596C0 00056620  7C 08 02 A6 */	mflr r0
 /* 800596C4 00056624  3C 80 80 2A */	lis r4, lbl_802A7AE0@ha
 /* 800596C8 00056628  90 01 00 04 */	stw r0, 4(r1)
@@ -3503,9 +3502,9 @@ __ct__18NewPikiGameSectionFv:
 /* 80059DD8 00056D38  38 21 00 58 */	addi r1, r1, 0x58
 /* 80059DDC 00056D3C  7C 08 03 A6 */	mtlr r0
 /* 80059DE0 00056D40  4E 80 00 20 */	blr 
+.endfn __ct__18NewPikiGameSectionFv
 
-.global init2Ddata__23NewPikiGameSetupSectionFv
-init2Ddata__23NewPikiGameSetupSectionFv:
+.fn init2Ddata__23NewPikiGameSetupSectionFv, weak
 /* 80059DE4 00056D44  7C 08 02 A6 */	mflr r0
 /* 80059DE8 00056D48  3C 80 80 2A */	lis r4, lbl_802A7AE0@ha
 /* 80059DEC 00056D4C  90 01 00 04 */	stw r0, 4(r1)
@@ -3597,9 +3596,9 @@ init2Ddata__23NewPikiGameSetupSectionFv:
 /* 80059F38 00056E98  38 21 00 28 */	addi r1, r1, 0x28
 /* 80059F3C 00056E9C  7C 08 03 A6 */	mtlr r0
 /* 80059F40 00056EA0  4E 80 00 20 */	blr 
+.endfn init2Ddata__23NewPikiGameSetupSectionFv
 
-.global createMapObjects__23NewPikiGameSetupSectionFP6MapMgr
-createMapObjects__23NewPikiGameSetupSectionFP6MapMgr:
+.fn createMapObjects__23NewPikiGameSetupSectionFP6MapMgr, weak
 /* 80059F44 00056EA4  7C 08 02 A6 */	mflr r0
 /* 80059F48 00056EA8  90 01 00 04 */	stw r0, 4(r1)
 /* 80059F4C 00056EAC  94 21 FF B8 */	stwu r1, -0x48(r1)
@@ -3717,9 +3716,9 @@ createMapObjects__23NewPikiGameSetupSectionFP6MapMgr:
 /* 8005A0EC 0005704C  38 21 00 48 */	addi r1, r1, 0x48
 /* 8005A0F0 00057050  7C 08 03 A6 */	mtlr r0
 /* 8005A0F4 00057054  4E 80 00 20 */	blr 
+.endfn createMapObjects__23NewPikiGameSetupSectionFP6MapMgr
 
-.global __ct__Q218GameMovieInterface14ComplexMessageFv
-__ct__Q218GameMovieInterface14ComplexMessageFv:
+.fn __ct__Q218GameMovieInterface14ComplexMessageFv, weak
 /* 8005A0F8 00057058  C0 02 85 7C */	lfs f0, lbl_803E877C@sda21(r2)
 /* 8005A0FC 0005705C  D0 03 00 14 */	stfs f0, 0x14(r3)
 /* 8005A100 00057060  D0 03 00 10 */	stfs f0, 0x10(r3)
@@ -3728,21 +3727,21 @@ __ct__Q218GameMovieInterface14ComplexMessageFv:
 /* 8005A10C 0005706C  D0 03 00 1C */	stfs f0, 0x1c(r3)
 /* 8005A110 00057070  D0 03 00 18 */	stfs f0, 0x18(r3)
 /* 8005A114 00057074  4E 80 00 20 */	blr 
+.endfn __ct__Q218GameMovieInterface14ComplexMessageFv
 
-.global movie__13GameInterfaceFiiP8CreatureP8Vector3fP8Vector3fUlb
-movie__13GameInterfaceFiiP8CreatureP8Vector3fP8Vector3fUlb:
+.fn movie__13GameInterfaceFiiP8CreatureP8Vector3fP8Vector3fUlb, weak
 /* 8005A118 00057078  4E 80 00 20 */	blr 
+.endfn movie__13GameInterfaceFiiP8CreatureP8Vector3fP8Vector3fUlb
 
-.global parseMessages__13GameInterfaceFv
-parseMessages__13GameInterfaceFv:
+.fn parseMessages__13GameInterfaceFv, weak
 /* 8005A11C 0005707C  4E 80 00 20 */	blr 
+.endfn parseMessages__13GameInterfaceFv
 
-.global parse__13GameInterfaceFii
-parse__13GameInterfaceFii:
+.fn parse__13GameInterfaceFii, weak
 /* 8005A120 00057080  4E 80 00 20 */	blr 
+.endfn parse__13GameInterfaceFii
 
-.global openMenu__23NewPikiGameSetupSectionFv
-openMenu__23NewPikiGameSetupSectionFv:
+.fn openMenu__23NewPikiGameSetupSectionFv, weak
 /* 8005A124 00057084  7C 08 02 A6 */	mflr r0
 /* 8005A128 00057088  38 80 00 00 */	li r4, 0
 /* 8005A12C 0005708C  90 01 00 04 */	stw r0, 4(r1)
@@ -3764,9 +3763,9 @@ openMenu__23NewPikiGameSetupSectionFv:
 /* 8005A16C 000570CC  38 21 00 18 */	addi r1, r1, 0x18
 /* 8005A170 000570D0  7C 08 03 A6 */	mtlr r0
 /* 8005A174 000570D4  4E 80 00 20 */	blr 
+.endfn openMenu__23NewPikiGameSetupSectionFv
 
-.global update__23NewPikiGameSetupSectionFv
-update__23NewPikiGameSetupSectionFv:
+.fn update__23NewPikiGameSetupSectionFv, weak
 /* 8005A178 000570D8  7C 08 02 A6 */	mflr r0
 /* 8005A17C 000570DC  90 01 00 04 */	stw r0, 4(r1)
 /* 8005A180 000570E0  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -3849,15 +3848,15 @@ update__23NewPikiGameSetupSectionFv:
 /* 8005A2A4 00057204  38 21 00 18 */	addi r1, r1, 0x18
 /* 8005A2A8 00057208  7C 08 03 A6 */	mtlr r0
 /* 8005A2AC 0005720C  4E 80 00 20 */	blr 
+.endfn update__23NewPikiGameSetupSectionFv
 
-.global update__9ModeStateFRUl
-update__9ModeStateFRUl:
+.fn update__9ModeStateFRUl, weak
 /* 8005A2B0 00057210  38 00 00 03 */	li r0, 3
 /* 8005A2B4 00057214  90 04 00 00 */	stw r0, 0(r4)
 /* 8005A2B8 00057218  4E 80 00 20 */	blr 
+.endfn update__9ModeStateFRUl
 
-.global draw__23NewPikiGameSetupSectionFR8Graphics
-draw__23NewPikiGameSetupSectionFR8Graphics:
+.fn draw__23NewPikiGameSetupSectionFR8Graphics, weak
 /* 8005A2BC 0005721C  7C 08 02 A6 */	mflr r0
 /* 8005A2C0 00057220  3C A0 80 3A */	lis r5, gameflow@ha
 /* 8005A2C4 00057224  90 01 00 04 */	stw r0, 4(r1)
@@ -4415,17 +4414,17 @@ draw__23NewPikiGameSetupSectionFR8Graphics:
 /* 8005AAEC 00057A4C  38 21 02 A8 */	addi r1, r1, 0x2a8
 /* 8005AAF0 00057A50  7C 08 03 A6 */	mtlr r0
 /* 8005AAF4 00057A54  4E 80 00 20 */	blr 
+.endfn draw__23NewPikiGameSetupSectionFR8Graphics
 
-.global postRender__9ModeStateFR8Graphics
-postRender__9ModeStateFR8Graphics:
+.fn postRender__9ModeStateFR8Graphics, weak
 /* 8005AAF8 00057A58  4E 80 00 20 */	blr 
+.endfn postRender__9ModeStateFR8Graphics
 
-.global init__18NewPikiGameSectionFv
-init__18NewPikiGameSectionFv:
+.fn init__18NewPikiGameSectionFv, weak
 /* 8005AAFC 00057A5C  4E 80 00 20 */	blr 
+.endfn init__18NewPikiGameSectionFv
 
-.global message__18GameMovieInterfaceFii
-message__18GameMovieInterfaceFii:
+.fn message__18GameMovieInterfaceFii, weak
 /* 8005AB00 00057A60  80 C3 01 0C */	lwz r6, 0x10c(r3)
 /* 8005AB04 00057A64  80 03 00 08 */	lwz r0, 8(r3)
 /* 8005AB08 00057A68  7C 06 00 00 */	cmpw r6, r0
@@ -4441,9 +4440,9 @@ message__18GameMovieInterfaceFii:
 /* 8005AB30 00057A90  38 04 00 01 */	addi r0, r4, 1
 /* 8005AB34 00057A94  90 03 01 0C */	stw r0, 0x10c(r3)
 /* 8005AB38 00057A98  4E 80 00 20 */	blr 
+.endfn message__18GameMovieInterfaceFii
 
-.global movie__18GameMovieInterfaceFiiP8CreatureP8Vector3fP8Vector3fUlb
-movie__18GameMovieInterfaceFiiP8CreatureP8Vector3fP8Vector3fUlb:
+.fn movie__18GameMovieInterfaceFiiP8CreatureP8Vector3fP8Vector3fUlb, weak
 /* 8005AB3C 00057A9C  81 63 06 90 */	lwz r11, 0x690(r3)
 /* 8005AB40 00057AA0  80 03 00 08 */	lwz r0, 8(r3)
 /* 8005AB44 00057AA4  7C 0B 00 00 */	cmpw r11, r0
@@ -4519,9 +4518,9 @@ movie__18GameMovieInterfaceFiiP8CreatureP8Vector3fP8Vector3fUlb:
 /* 8005AC4C 00057BAC  38 04 00 01 */	addi r0, r4, 1
 /* 8005AC50 00057BB0  90 03 06 90 */	stw r0, 0x690(r3)
 /* 8005AC54 00057BB4  4E 80 00 20 */	blr 
+.endfn movie__18GameMovieInterfaceFiiP8CreatureP8Vector3fP8Vector3fUlb
 
-.global postRender__16DayOverModeStateFR8Graphics
-postRender__16DayOverModeStateFR8Graphics:
+.fn postRender__16DayOverModeStateFR8Graphics, weak
 /* 8005AC58 00057BB8  7C 08 02 A6 */	mflr r0
 /* 8005AC5C 00057BBC  90 01 00 04 */	stw r0, 4(r1)
 /* 8005AC60 00057BC0  94 21 FF 88 */	stwu r1, -0x78(r1)
@@ -4574,9 +4573,9 @@ postRender__16DayOverModeStateFR8Graphics:
 /* 8005AD14 00057C74  38 21 00 78 */	addi r1, r1, 0x78
 /* 8005AD18 00057C78  7C 08 03 A6 */	mtlr r0
 /* 8005AD1C 00057C7C  4E 80 00 20 */	blr 
+.endfn postRender__16DayOverModeStateFR8Graphics
 
-.global postRender__16MessageModeStateFR8Graphics
-postRender__16MessageModeStateFR8Graphics:
+.fn postRender__16MessageModeStateFR8Graphics, weak
 /* 8005AD20 00057C80  7C 08 02 A6 */	mflr r0
 /* 8005AD24 00057C84  90 01 00 04 */	stw r0, 4(r1)
 /* 8005AD28 00057C88  94 21 FF 98 */	stwu r1, -0x68(r1)
@@ -4608,15 +4607,15 @@ postRender__16MessageModeStateFR8Graphics:
 /* 8005AD8C 00057CEC  38 21 00 68 */	addi r1, r1, 0x68
 /* 8005AD90 00057CF0  7C 08 03 A6 */	mtlr r0
 /* 8005AD94 00057CF4  4E 80 00 20 */	blr 
+.endfn postRender__16MessageModeStateFR8Graphics
 
-.global update__21QuittingGameModeStateFRUl
-update__21QuittingGameModeStateFRUl:
+.fn update__21QuittingGameModeStateFRUl, weak
 /* 8005AD98 00057CF8  38 00 00 00 */	li r0, 0
 /* 8005AD9C 00057CFC  90 04 00 00 */	stw r0, 0(r4)
 /* 8005ADA0 00057D00  4E 80 00 20 */	blr 
+.endfn update__21QuittingGameModeStateFRUl
 
-.global postUpdate__21QuittingGameModeStateFv
-postUpdate__21QuittingGameModeStateFv:
+.fn postUpdate__21QuittingGameModeStateFv, weak
 /* 8005ADA4 00057D04  7C 08 02 A6 */	mflr r0
 /* 8005ADA8 00057D08  90 01 00 04 */	stw r0, 4(r1)
 /* 8005ADAC 00057D0C  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -4647,38 +4646,47 @@ postUpdate__21QuittingGameModeStateFv:
 /* 8005AE0C 00057D6C  38 21 00 18 */	addi r1, r1, 0x18
 /* 8005AE10 00057D70  7C 08 03 A6 */	mtlr r0
 /* 8005AE14 00057D74  4E 80 00 20 */	blr 
+.endfn postUpdate__21QuittingGameModeStateFv
 
-.global openMenu__15BaseGameSectionFv
-openMenu__15BaseGameSectionFv:
+.fn openMenu__15BaseGameSectionFv, weak
 /* 8005AE18 00057D78  4E 80 00 20 */	blr 
+.endfn openMenu__15BaseGameSectionFv
 
 .section .rodata, "a"  # 0x80221FE0 - 0x80222DC0
 .balign 8
-lbl_80222378:
+.obj lbl_80222378, local
 	.4byte 1
 	.4byte 2
 	.4byte 0
-lbl_80222384:
+.endobj lbl_80222378
+.balign 4
+.obj lbl_80222384, local
 	.4byte 1
 	.4byte 2
 	.4byte 0
-lbl_80222390:
+.endobj lbl_80222384
+.balign 4
+.obj lbl_80222390, local
 	.4byte 1
 	.4byte 2
 	.4byte 0
+.endobj lbl_80222390
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802A7AE0:
+.obj lbl_802A7AE0, local
 	.asciz "newPikiGame.cpp"
+.endobj lbl_802A7AE0
 .balign 4
-lbl_802A7AF0:
+.obj lbl_802A7AF0, local
 	.asciz "newPikiGame"
+.endobj lbl_802A7AF0
 .balign 4
-lbl_802A7AFC:
+.obj lbl_802A7AFC, local
 	.asciz "<Controller>"
+.endobj lbl_802A7AFC
 .balign 4
-lbl_802A7B0C:
+.obj lbl_802A7B0C, local
 	.4byte .L_80059284
 	.4byte .L_80059660
 	.4byte .L_80059364
@@ -4697,83 +4705,103 @@ lbl_802A7B0C:
 	.4byte .L_80059660
 	.4byte .L_80059650
 	.4byte .L_8005965C
+.endobj lbl_802A7B0C
 .balign 4
-lbl_802A7B54:
+.obj lbl_802A7B54, local
 	.asciz "<NewPikiGameSection>"
+.endobj lbl_802A7B54
 .balign 4
-lbl_802A7B6C:
+.obj lbl_802A7B6C, local
 	.asciz "animCacher"
+.endobj lbl_802A7B6C
 .balign 4
-lbl_802A7B78:
+.obj lbl_802A7B78, local
 	.asciz "constructor"
+.endobj lbl_802A7B78
 .balign 4
-lbl_802A7B84:
+.obj lbl_802A7B84, local
 	.asciz "bigFont.bti"
+.endobj lbl_802A7B84
 .balign 4
-lbl_802A7B90:
+.obj lbl_802A7B90, local
 	.asciz "gameover"
+.endobj lbl_802A7B90
 .balign 4
-lbl_802A7B9C:
+.obj lbl_802A7B9C, local
 	.asciz "countdown"
+.endobj lbl_802A7B9C
 .balign 4
-lbl_802A7BA8:
+.obj lbl_802A7BA8, local
 	.asciz "map_file"
+.endobj lbl_802A7BA8
 .balign 4
-lbl_802A7BB4:
+.obj lbl_802A7BB4, local
 	.asciz "day_multiply"
+.endobj lbl_802A7BB4
 .balign 4
-lbl_802A7BC4:
+.obj lbl_802A7BC4, local
 	.asciz "material"
+.endobj lbl_802A7BC4
 .balign 4
-lbl_802A7BD0:
+.obj lbl_802A7BD0, local
 	.asciz "GameInterface"
+.endobj lbl_802A7BD0
 .balign 4
-.global __vt__13GameInterface
-__vt__13GameInterface:
+.obj __vt__13GameInterface, weak
 	.4byte __RTTI__13GameInterface
 	.4byte 0
 	.4byte message__13GameInterfaceFii
 	.4byte movie__13GameInterfaceFiiP8CreatureP8Vector3fP8Vector3fUlb
 	.4byte parseMessages__13GameInterfaceFv
 	.4byte parse__13GameInterfaceFii
+.endobj __vt__13GameInterface
 .balign 4
-lbl_802A7BF8:
+.obj lbl_802A7BF8, local
 	.asciz "GaugeInfo"
+.endobj lbl_802A7BF8
 .balign 4
-lbl_802A7C04:
+.obj lbl_802A7C04, local
 	.asciz "CoreNode"
+.endobj lbl_802A7C04
 .balign 4
-lbl_802A7C10:
+.obj lbl_802A7C10, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte 0
-lbl_802A7C1C:
+.endobj lbl_802A7C10
+.balign 4
+.obj lbl_802A7C1C, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte __RTTI__8CoreNode
 	.4byte 0
 	.4byte 0
-.global __vt__9GaugeInfo
-__vt__9GaugeInfo:
+.endobj lbl_802A7C1C
+.balign 4
+.obj __vt__9GaugeInfo, weak
 	.4byte __RTTI__9GaugeInfo
 	.4byte 0
 	.4byte getAgeNodeType__5ANodeFv
 	.4byte read__8CoreNodeFR18RandomAccessStream
+.endobj __vt__9GaugeInfo
 .balign 4
-lbl_802A7C40:
+.obj lbl_802A7C40, local
 	.asciz "NewPikiGameSetupSection"
+.endobj lbl_802A7C40
 .balign 4
-lbl_802A7C58:
+.obj lbl_802A7C58, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte __RTTI__8CoreNode
 	.4byte 0
 	.4byte 0
+.endobj lbl_802A7C58
 .balign 4
-lbl_802A7C6C:
+.obj lbl_802A7C6C, local
 	.asciz "BaseGameSection"
+.endobj lbl_802A7C6C
 .balign 4
-lbl_802A7C7C:
+.obj lbl_802A7C7C, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte __RTTI__8CoreNode
@@ -4781,7 +4809,9 @@ lbl_802A7C7C:
 	.4byte __RTTI__4Node
 	.4byte 0
 	.4byte 0
-lbl_802A7C98:
+.endobj lbl_802A7C7C
+.balign 4
+.obj lbl_802A7C98, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte __RTTI__8CoreNode
@@ -4791,8 +4821,9 @@ lbl_802A7C98:
 	.4byte __RTTI__15BaseGameSection
 	.4byte 0
 	.4byte 0
-.global __vt__23NewPikiGameSetupSection
-__vt__23NewPikiGameSetupSection:
+.endobj lbl_802A7C98
+.balign 4
+.obj __vt__23NewPikiGameSetupSection, weak
 	.4byte __RTTI__23NewPikiGameSetupSection
 	.4byte 0
 	.4byte getAgeNodeType__5ANodeFv
@@ -4806,11 +4837,13 @@ __vt__23NewPikiGameSetupSection:
 	.4byte concat__4NodeFR8Matrix4f
 	.4byte getModelMatrix__4NodeFv
 	.4byte openMenu__23NewPikiGameSetupSectionFv
+.endobj __vt__23NewPikiGameSetupSection
 .balign 4
-lbl_802A7CF0:
+.obj lbl_802A7CF0, local
 	.asciz "NewPikiGameSection"
+.endobj lbl_802A7CF0
 .balign 4
-lbl_802A7D04:
+.obj lbl_802A7D04, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte __RTTI__8CoreNode
@@ -4818,7 +4851,9 @@ lbl_802A7D04:
 	.4byte __RTTI__4Node
 	.4byte 0
 	.4byte 0
-lbl_802A7D20:
+.endobj lbl_802A7D04
+.balign 4
+.obj lbl_802A7D20, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte __RTTI__8CoreNode
@@ -4828,8 +4863,9 @@ lbl_802A7D20:
 	.4byte __RTTI__7Section
 	.4byte 0
 	.4byte 0
-.global __vt__18NewPikiGameSection
-__vt__18NewPikiGameSection:
+.endobj lbl_802A7D20
+.balign 4
+.obj __vt__18NewPikiGameSection, weak
 	.4byte __RTTI__18NewPikiGameSection
 	.4byte 0
 	.4byte getAgeNodeType__5ANodeFv
@@ -4843,29 +4879,20 @@ __vt__18NewPikiGameSection:
 	.4byte concat__4NodeFR8Matrix4f
 	.4byte getModelMatrix__4NodeFv
 	.4byte init__18NewPikiGameSectionFv
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
+.endobj __vt__18NewPikiGameSection
+.skip 0x34 # compiler padding
 .balign 4
-lbl_802A7DAC:
+.obj lbl_802A7DAC, local
 	.asciz "GameMovieInterface"
+.endobj lbl_802A7DAC
 .balign 4
-lbl_802A7DC0:
+.obj lbl_802A7DC0, local
 	.4byte __RTTI__13GameInterface
 	.4byte 0
 	.4byte 0
-.global __vt__18GameMovieInterface
-__vt__18GameMovieInterface:
+.endobj lbl_802A7DC0
+.balign 4
+.obj __vt__18GameMovieInterface, global
 	.4byte __RTTI__18GameMovieInterface
 	.4byte 0
 	.4byte message__18GameMovieInterfaceFii
@@ -4874,93 +4901,111 @@ __vt__18GameMovieInterface:
 	.4byte parse__13GameInterfaceFii
 	.4byte parse__18GameMovieInterfaceFRQ218GameMovieInterface13SimpleMessage
 	.4byte parse__18GameMovieInterfaceFRQ218GameMovieInterface14ComplexMessage
+.endobj __vt__18GameMovieInterface
 .balign 4
-lbl_802A7DEC:
+.obj lbl_802A7DEC, local
 	.asciz "DayOverModeState"
+.endobj lbl_802A7DEC
 .balign 4
-lbl_802A7E00:
+.obj lbl_802A7E00, local
 	.asciz "ModeState"
+.endobj lbl_802A7E00
 .balign 4
-lbl_802A7E0C:
+.obj lbl_802A7E0C, local
 	.4byte __RTTI__9ModeState
 	.4byte 0
 	.4byte 0
-.global __vt__16DayOverModeState
-__vt__16DayOverModeState:
+.endobj lbl_802A7E0C
+.balign 4
+.obj __vt__16DayOverModeState, global
 	.4byte __RTTI__16DayOverModeState
 	.4byte 0
 	.4byte update__16DayOverModeStateFRUl
 	.4byte postRender__16DayOverModeStateFR8Graphics
 	.4byte postUpdate__9ModeStateFv
+.endobj __vt__16DayOverModeState
 .balign 4
-lbl_802A7E2C:
+.obj lbl_802A7E2C, local
 	.asciz "MessageModeState"
+.endobj lbl_802A7E2C
 .balign 4
-lbl_802A7E40:
+.obj lbl_802A7E40, local
 	.4byte __RTTI__9ModeState
 	.4byte 0
 	.4byte 0
-.global __vt__16MessageModeState
-__vt__16MessageModeState:
+.endobj lbl_802A7E40
+.balign 4
+.obj __vt__16MessageModeState, global
 	.4byte __RTTI__16MessageModeState
 	.4byte 0
 	.4byte update__16MessageModeStateFRUl
 	.4byte postRender__16MessageModeStateFR8Graphics
 	.4byte postUpdate__9ModeStateFv
+.endobj __vt__16MessageModeState
 .balign 4
-lbl_802A7E60:
+.obj lbl_802A7E60, local
 	.asciz "RunningModeState"
+.endobj lbl_802A7E60
 .balign 4
-lbl_802A7E74:
+.obj lbl_802A7E74, local
 	.4byte __RTTI__9ModeState
 	.4byte 0
 	.4byte 0
-.global __vt__16RunningModeState
-__vt__16RunningModeState:
+.endobj lbl_802A7E74
+.balign 4
+.obj __vt__16RunningModeState, global
 	.4byte __RTTI__16RunningModeState
 	.4byte 0
 	.4byte update__16RunningModeStateFRUl
 	.4byte postRender__16RunningModeStateFR8Graphics
 	.4byte postUpdate__9ModeStateFv
+.endobj __vt__16RunningModeState
 .balign 4
-lbl_802A7E94:
+.obj lbl_802A7E94, local
 	.asciz "QuittingGameModeState"
+.endobj lbl_802A7E94
 .balign 4
-lbl_802A7EAC:
+.obj lbl_802A7EAC, local
 	.4byte __RTTI__9ModeState
 	.4byte 0
 	.4byte 0
-.global __vt__21QuittingGameModeState
-__vt__21QuittingGameModeState:
+.endobj lbl_802A7EAC
+.balign 4
+.obj __vt__21QuittingGameModeState, weak
 	.4byte __RTTI__21QuittingGameModeState
 	.4byte 0
 	.4byte update__21QuittingGameModeStateFRUl
 	.4byte postRender__9ModeStateFR8Graphics
 	.4byte postUpdate__21QuittingGameModeStateFv
-.global __vt__9ModeState
-__vt__9ModeState:
+.endobj __vt__21QuittingGameModeState
+.balign 4
+.obj __vt__9ModeState, weak
 	.4byte __RTTI__9ModeState
 	.4byte 0
 	.4byte update__9ModeStateFRUl
 	.4byte postRender__9ModeStateFR8Graphics
 	.4byte postUpdate__9ModeStateFv
+.endobj __vt__9ModeState
 .balign 4
-lbl_802A7EE0:
+.obj lbl_802A7EE0, local
 	.asciz "IntroGameModeState"
+.endobj lbl_802A7EE0
 .balign 4
-lbl_802A7EF4:
+.obj lbl_802A7EF4, local
 	.4byte __RTTI__9ModeState
 	.4byte 0
 	.4byte 0
-.global __vt__18IntroGameModeState
-__vt__18IntroGameModeState:
+.endobj lbl_802A7EF4
+.balign 4
+.obj __vt__18IntroGameModeState, global
 	.4byte __RTTI__18IntroGameModeState
 	.4byte 0
 	.4byte update__18IntroGameModeStateFRUl
 	.4byte postRender__18IntroGameModeStateFR8Graphics
 	.4byte postUpdate__9ModeStateFv
-.global __vt__15BaseGameSection
-__vt__15BaseGameSection:
+.endobj __vt__18IntroGameModeState
+.balign 4
+.obj __vt__15BaseGameSection, global
 	.4byte __RTTI__15BaseGameSection
 	.4byte 0
 	.4byte getAgeNodeType__5ANodeFv
@@ -4974,14 +5019,8 @@ __vt__15BaseGameSection:
 	.4byte concat__4NodeFR8Matrix4f
 	.4byte getModelMatrix__4NodeFv
 	.4byte openMenu__15BaseGameSectionFv
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
+.endobj __vt__15BaseGameSection
+.skip 0x20 # compiler padding
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
@@ -5211,41 +5250,58 @@ __vt__15BaseGameSection:
 
 .section .sbss, "wa"
 .balign 8
-npgss:
+.obj npgss, local
 	.skip 4
-gamecore:
+.endobj npgss
+.obj gamecore, local
 	.skip 4
-movieIndex:
+.endobj gamecore
+.obj movieIndex, local
 	.skip 4
-challengeWindow:
+.endobj movieIndex
+.obj challengeWindow, local
 	.skip 4
-gameoverWindow:
+.endobj challengeWindow
+.obj gameoverWindow, local
 	.skip 4
-countWindow:
+.endobj gameoverWindow
+.obj countWindow, local
 	.skip 4
-pauseWindow:
+.endobj countWindow
+.obj pauseWindow, local
 	.skip 4
-resultWindow:
+.endobj pauseWindow
+.obj resultWindow, local
 	.skip 4
-totalWindow:
+.endobj resultWindow
+.obj totalWindow, local
 	.skip 4
-memcardWindow:
+.endobj totalWindow
+.obj memcardWindow, local
 	.skip 4
-menuOn:
+.endobj memcardWindow
+.obj menuOn, local
 	.skip 1
-gameInfoOn:
+.endobj menuOn
+.obj gameInfoOn, local
 	.skip 1
-gameInfoIn:
+.endobj gameInfoOn
+.obj gameInfoIn, local
 	.skip 1
+.endobj gameInfoIn
 .balign 4
-menuWindow:
+.obj menuWindow, local
 	.skip 4
-tutorialWindow:
+.endobj menuWindow
+.obj tutorialWindow, local
 	.skip 4
-hasDemoSound:
+.endobj tutorialWindow
+.obj hasDemoSound, local
 	.skip 1
-dontShowFrame:
+.endobj hasDemoSound
+.obj dontShowFrame, local
 	.skip 1
+.endobj dontShowFrame
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8

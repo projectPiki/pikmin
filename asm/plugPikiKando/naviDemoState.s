@@ -2625,17 +2625,17 @@
 .endobj __vt__Q219NaviDemoSunsetState16DemoStateMachine
 .balign 4
 .obj lbl_802C2158, local
-	.4byte .L_800FF854
-	.4byte .L_800FF87C
-	.4byte .L_800FF890
-	.4byte .L_800FF8A4
-	.4byte .L_800FF8B8
-	.4byte .L_800FF8CC
-	.4byte .L_800FF8E0
-	.4byte .L_800FF8F4
-	.4byte .L_800FF868
-	.4byte .L_800FF91C
-	.4byte .L_800FF908
+	.4byte ("procMsg__15Receiver<4Navi>FP4NaviP3Msg"+0x30)
+	.4byte ("procMsg__15Receiver<4Navi>FP4NaviP3Msg"+0x58)
+	.4byte ("procMsg__15Receiver<4Navi>FP4NaviP3Msg"+0x6C)
+	.4byte ("procMsg__15Receiver<4Navi>FP4NaviP3Msg"+0x80)
+	.4byte ("procMsg__15Receiver<4Navi>FP4NaviP3Msg"+0x94)
+	.4byte ("procMsg__15Receiver<4Navi>FP4NaviP3Msg"+0xA8)
+	.4byte ("procMsg__15Receiver<4Navi>FP4NaviP3Msg"+0xBC)
+	.4byte ("procMsg__15Receiver<4Navi>FP4NaviP3Msg"+0xD0)
+	.4byte ("procMsg__15Receiver<4Navi>FP4NaviP3Msg"+0x44)
+	.4byte ("procMsg__15Receiver<4Navi>FP4NaviP3Msg"+0xF8)
+	.4byte ("procMsg__15Receiver<4Navi>FP4NaviP3Msg"+0xE4)
 .endobj lbl_802C2158
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820

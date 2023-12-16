@@ -863,77 +863,66 @@
 /* 800A78FC 000A485C  7C 06 00 2E */	lwzx r0, r6, r0
 /* 800A7900 000A4860  7C 09 03 A6 */	mtctr r0
 /* 800A7904 000A4864  4E 80 04 20 */	bctr 
-.global .L_800A7908
 .L_800A7908:
 /* 800A7908 000A4868  81 83 00 00 */	lwz r12, 0(r3)
 /* 800A790C 000A486C  81 8C 00 0C */	lwz r12, 0xc(r12)
 /* 800A7910 000A4870  7D 88 03 A6 */	mtlr r12
 /* 800A7914 000A4874  4E 80 00 21 */	blrl 
 /* 800A7918 000A4878  48 00 00 C8 */	b .L_800A79E0
-.global .L_800A791C
 .L_800A791C:
 /* 800A791C 000A487C  81 83 00 00 */	lwz r12, 0(r3)
 /* 800A7920 000A4880  81 8C 00 10 */	lwz r12, 0x10(r12)
 /* 800A7924 000A4884  7D 88 03 A6 */	mtlr r12
 /* 800A7928 000A4888  4E 80 00 21 */	blrl 
 /* 800A792C 000A488C  48 00 00 B4 */	b .L_800A79E0
-.global .L_800A7930
 .L_800A7930:
 /* 800A7930 000A4890  81 83 00 00 */	lwz r12, 0(r3)
 /* 800A7934 000A4894  81 8C 00 14 */	lwz r12, 0x14(r12)
 /* 800A7938 000A4898  7D 88 03 A6 */	mtlr r12
 /* 800A793C 000A489C  4E 80 00 21 */	blrl 
 /* 800A7940 000A48A0  48 00 00 A0 */	b .L_800A79E0
-.global .L_800A7944
 .L_800A7944:
 /* 800A7944 000A48A4  81 83 00 00 */	lwz r12, 0(r3)
 /* 800A7948 000A48A8  81 8C 00 18 */	lwz r12, 0x18(r12)
 /* 800A794C 000A48AC  7D 88 03 A6 */	mtlr r12
 /* 800A7950 000A48B0  4E 80 00 21 */	blrl 
 /* 800A7954 000A48B4  48 00 00 8C */	b .L_800A79E0
-.global .L_800A7958
 .L_800A7958:
 /* 800A7958 000A48B8  81 83 00 00 */	lwz r12, 0(r3)
 /* 800A795C 000A48BC  81 8C 00 1C */	lwz r12, 0x1c(r12)
 /* 800A7960 000A48C0  7D 88 03 A6 */	mtlr r12
 /* 800A7964 000A48C4  4E 80 00 21 */	blrl 
 /* 800A7968 000A48C8  48 00 00 78 */	b .L_800A79E0
-.global .L_800A796C
 .L_800A796C:
 /* 800A796C 000A48CC  81 83 00 00 */	lwz r12, 0(r3)
 /* 800A7970 000A48D0  81 8C 00 20 */	lwz r12, 0x20(r12)
 /* 800A7974 000A48D4  7D 88 03 A6 */	mtlr r12
 /* 800A7978 000A48D8  4E 80 00 21 */	blrl 
 /* 800A797C 000A48DC  48 00 00 64 */	b .L_800A79E0
-.global .L_800A7980
 .L_800A7980:
 /* 800A7980 000A48E0  81 83 00 00 */	lwz r12, 0(r3)
 /* 800A7984 000A48E4  81 8C 00 24 */	lwz r12, 0x24(r12)
 /* 800A7988 000A48E8  7D 88 03 A6 */	mtlr r12
 /* 800A798C 000A48EC  4E 80 00 21 */	blrl 
 /* 800A7990 000A48F0  48 00 00 50 */	b .L_800A79E0
-.global .L_800A7994
 .L_800A7994:
 /* 800A7994 000A48F4  81 83 00 00 */	lwz r12, 0(r3)
 /* 800A7998 000A48F8  81 8C 00 28 */	lwz r12, 0x28(r12)
 /* 800A799C 000A48FC  7D 88 03 A6 */	mtlr r12
 /* 800A79A0 000A4900  4E 80 00 21 */	blrl 
 /* 800A79A4 000A4904  48 00 00 3C */	b .L_800A79E0
-.global .L_800A79A8
 .L_800A79A8:
 /* 800A79A8 000A4908  81 83 00 00 */	lwz r12, 0(r3)
 /* 800A79AC 000A490C  81 8C 00 2C */	lwz r12, 0x2c(r12)
 /* 800A79B0 000A4910  7D 88 03 A6 */	mtlr r12
 /* 800A79B4 000A4914  4E 80 00 21 */	blrl 
 /* 800A79B8 000A4918  48 00 00 28 */	b .L_800A79E0
-.global .L_800A79BC
 .L_800A79BC:
 /* 800A79BC 000A491C  81 83 00 00 */	lwz r12, 0(r3)
 /* 800A79C0 000A4920  81 8C 00 30 */	lwz r12, 0x30(r12)
 /* 800A79C4 000A4924  7D 88 03 A6 */	mtlr r12
 /* 800A79C8 000A4928  4E 80 00 21 */	blrl 
 /* 800A79CC 000A492C  48 00 00 14 */	b .L_800A79E0
-.global .L_800A79D0
 .L_800A79D0:
 /* 800A79D0 000A4930  81 83 00 00 */	lwz r12, 0(r3)
 /* 800A79D4 000A4934  81 8C 00 34 */	lwz r12, 0x34(r12)
@@ -1018,17 +1007,17 @@
 .skip 0xC # compiler padding
 .balign 4
 .obj lbl_802B5044, local
-	.4byte .L_800A7908
-	.4byte .L_800A7930
-	.4byte .L_800A7944
-	.4byte .L_800A7958
-	.4byte .L_800A796C
-	.4byte .L_800A7980
-	.4byte .L_800A7994
-	.4byte .L_800A79A8
-	.4byte .L_800A791C
-	.4byte .L_800A79D0
-	.4byte .L_800A79BC
+	.4byte ("procMsg__15Receiver<4Piki>FP4PikiP3Msg"+0x30)
+	.4byte ("procMsg__15Receiver<4Piki>FP4PikiP3Msg"+0x58)
+	.4byte ("procMsg__15Receiver<4Piki>FP4PikiP3Msg"+0x6C)
+	.4byte ("procMsg__15Receiver<4Piki>FP4PikiP3Msg"+0x80)
+	.4byte ("procMsg__15Receiver<4Piki>FP4PikiP3Msg"+0x94)
+	.4byte ("procMsg__15Receiver<4Piki>FP4PikiP3Msg"+0xA8)
+	.4byte ("procMsg__15Receiver<4Piki>FP4PikiP3Msg"+0xBC)
+	.4byte ("procMsg__15Receiver<4Piki>FP4PikiP3Msg"+0xD0)
+	.4byte ("procMsg__15Receiver<4Piki>FP4PikiP3Msg"+0x44)
+	.4byte ("procMsg__15Receiver<4Piki>FP4PikiP3Msg"+0xF8)
+	.4byte ("procMsg__15Receiver<4Piki>FP4PikiP3Msg"+0xE4)
 .endobj lbl_802B5044
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820

@@ -7230,9 +7230,7 @@ lbl_802A9CDC:
 	.4byte "__RTTI__28Delegate1<9LightMenu,R4Menu>"
 	.4byte 0
 	.4byte "invoke__28Delegate1<9LightMenu,R4Menu>FR4Menu"
-	.4byte 0
-	.4byte 0
-	.4byte 0
+.skip 0xC # compiler padding
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8

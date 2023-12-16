@@ -5297,77 +5297,66 @@
 /* 800993F8 00096358  7C 06 00 2E */	lwzx r0, r6, r0
 /* 800993FC 0009635C  7C 09 03 A6 */	mtctr r0
 /* 80099400 00096360  4E 80 04 20 */	bctr 
-.global .L_80099404
 .L_80099404:
 /* 80099404 00096364  81 83 00 00 */	lwz r12, 0(r3)
 /* 80099408 00096368  81 8C 00 0C */	lwz r12, 0xc(r12)
 /* 8009940C 0009636C  7D 88 03 A6 */	mtlr r12
 /* 80099410 00096370  4E 80 00 21 */	blrl 
 /* 80099414 00096374  48 00 00 C8 */	b .L_800994DC
-.global .L_80099418
 .L_80099418:
 /* 80099418 00096378  81 83 00 00 */	lwz r12, 0(r3)
 /* 8009941C 0009637C  81 8C 00 10 */	lwz r12, 0x10(r12)
 /* 80099420 00096380  7D 88 03 A6 */	mtlr r12
 /* 80099424 00096384  4E 80 00 21 */	blrl 
 /* 80099428 00096388  48 00 00 B4 */	b .L_800994DC
-.global .L_8009942C
 .L_8009942C:
 /* 8009942C 0009638C  81 83 00 00 */	lwz r12, 0(r3)
 /* 80099430 00096390  81 8C 00 14 */	lwz r12, 0x14(r12)
 /* 80099434 00096394  7D 88 03 A6 */	mtlr r12
 /* 80099438 00096398  4E 80 00 21 */	blrl 
 /* 8009943C 0009639C  48 00 00 A0 */	b .L_800994DC
-.global .L_80099440
 .L_80099440:
 /* 80099440 000963A0  81 83 00 00 */	lwz r12, 0(r3)
 /* 80099444 000963A4  81 8C 00 18 */	lwz r12, 0x18(r12)
 /* 80099448 000963A8  7D 88 03 A6 */	mtlr r12
 /* 8009944C 000963AC  4E 80 00 21 */	blrl 
 /* 80099450 000963B0  48 00 00 8C */	b .L_800994DC
-.global .L_80099454
 .L_80099454:
 /* 80099454 000963B4  81 83 00 00 */	lwz r12, 0(r3)
 /* 80099458 000963B8  81 8C 00 1C */	lwz r12, 0x1c(r12)
 /* 8009945C 000963BC  7D 88 03 A6 */	mtlr r12
 /* 80099460 000963C0  4E 80 00 21 */	blrl 
 /* 80099464 000963C4  48 00 00 78 */	b .L_800994DC
-.global .L_80099468
 .L_80099468:
 /* 80099468 000963C8  81 83 00 00 */	lwz r12, 0(r3)
 /* 8009946C 000963CC  81 8C 00 20 */	lwz r12, 0x20(r12)
 /* 80099470 000963D0  7D 88 03 A6 */	mtlr r12
 /* 80099474 000963D4  4E 80 00 21 */	blrl 
 /* 80099478 000963D8  48 00 00 64 */	b .L_800994DC
-.global .L_8009947C
 .L_8009947C:
 /* 8009947C 000963DC  81 83 00 00 */	lwz r12, 0(r3)
 /* 80099480 000963E0  81 8C 00 24 */	lwz r12, 0x24(r12)
 /* 80099484 000963E4  7D 88 03 A6 */	mtlr r12
 /* 80099488 000963E8  4E 80 00 21 */	blrl 
 /* 8009948C 000963EC  48 00 00 50 */	b .L_800994DC
-.global .L_80099490
 .L_80099490:
 /* 80099490 000963F0  81 83 00 00 */	lwz r12, 0(r3)
 /* 80099494 000963F4  81 8C 00 28 */	lwz r12, 0x28(r12)
 /* 80099498 000963F8  7D 88 03 A6 */	mtlr r12
 /* 8009949C 000963FC  4E 80 00 21 */	blrl 
 /* 800994A0 00096400  48 00 00 3C */	b .L_800994DC
-.global .L_800994A4
 .L_800994A4:
 /* 800994A4 00096404  81 83 00 00 */	lwz r12, 0(r3)
 /* 800994A8 00096408  81 8C 00 2C */	lwz r12, 0x2c(r12)
 /* 800994AC 0009640C  7D 88 03 A6 */	mtlr r12
 /* 800994B0 00096410  4E 80 00 21 */	blrl 
 /* 800994B4 00096414  48 00 00 28 */	b .L_800994DC
-.global .L_800994B8
 .L_800994B8:
 /* 800994B8 00096418  81 83 00 00 */	lwz r12, 0(r3)
 /* 800994BC 0009641C  81 8C 00 30 */	lwz r12, 0x30(r12)
 /* 800994C0 00096420  7D 88 03 A6 */	mtlr r12
 /* 800994C4 00096424  4E 80 00 21 */	blrl 
 /* 800994C8 00096428  48 00 00 14 */	b .L_800994DC
-.global .L_800994CC
 .L_800994CC:
 /* 800994CC 0009642C  81 83 00 00 */	lwz r12, 0(r3)
 /* 800994D0 00096430  81 8C 00 34 */	lwz r12, 0x34(r12)
@@ -6072,17 +6061,17 @@
 	.4byte 0
 	.4byte 0
 .obj lbl_802B071C, local
-	.4byte .L_80099404
-	.4byte .L_8009942C
-	.4byte .L_80099440
-	.4byte .L_80099454
-	.4byte .L_80099468
-	.4byte .L_8009947C
-	.4byte .L_80099490
-	.4byte .L_800994A4
-	.4byte .L_80099418
-	.4byte .L_800994CC
-	.4byte .L_800994B8
+	.4byte ("procMsg__17Receiver<6Pellet>FP6PelletP3Msg"+0x30)
+	.4byte ("procMsg__17Receiver<6Pellet>FP6PelletP3Msg"+0x58)
+	.4byte ("procMsg__17Receiver<6Pellet>FP6PelletP3Msg"+0x6C)
+	.4byte ("procMsg__17Receiver<6Pellet>FP6PelletP3Msg"+0x80)
+	.4byte ("procMsg__17Receiver<6Pellet>FP6PelletP3Msg"+0x94)
+	.4byte ("procMsg__17Receiver<6Pellet>FP6PelletP3Msg"+0xA8)
+	.4byte ("procMsg__17Receiver<6Pellet>FP6PelletP3Msg"+0xBC)
+	.4byte ("procMsg__17Receiver<6Pellet>FP6PelletP3Msg"+0xD0)
+	.4byte ("procMsg__17Receiver<6Pellet>FP6PelletP3Msg"+0x44)
+	.4byte ("procMsg__17Receiver<6Pellet>FP6PelletP3Msg"+0xF8)
+	.4byte ("procMsg__17Receiver<6Pellet>FP6PelletP3Msg"+0xE4)
 .endobj lbl_802B071C
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
