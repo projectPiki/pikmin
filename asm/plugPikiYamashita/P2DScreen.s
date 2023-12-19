@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global update__9P2DScreenFv
-update__9P2DScreenFv:
+.fn update__9P2DScreenFv, global
 /* 801B2B50 001AFAB0  7C 08 02 A6 */	mflr r0
 /* 801B2B54 001AFAB4  90 01 00 04 */	stw r0, 4(r1)
 /* 801B2B58 001AFAB8  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -23,9 +22,9 @@ update__9P2DScreenFv:
 /* 801B2B90 001AFAF0  38 21 00 18 */	addi r1, r1, 0x18
 /* 801B2B94 001AFAF4  7C 08 03 A6 */	mtlr r0
 /* 801B2B98 001AFAF8  4E 80 00 20 */	blr 
+.endfn update__9P2DScreenFv
 
-.global __dt__9P2DScreenFv
-__dt__9P2DScreenFv:
+.fn __dt__9P2DScreenFv, global
 /* 801B2B9C 001AFAFC  7C 08 02 A6 */	mflr r0
 /* 801B2BA0 001AFB00  90 01 00 04 */	stw r0, 4(r1)
 /* 801B2BA4 001AFB04  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -52,9 +51,9 @@ __dt__9P2DScreenFv:
 /* 801B2BF4 001AFB54  38 21 00 18 */	addi r1, r1, 0x18
 /* 801B2BF8 001AFB58  7C 08 03 A6 */	mtlr r0
 /* 801B2BFC 001AFB5C  4E 80 00 20 */	blr 
+.endfn __dt__9P2DScreenFv
 
-.global set__9P2DScreenFPCcbbb
-set__9P2DScreenFPCcbbb:
+.fn set__9P2DScreenFPCcbbb, global
 /* 801B2C00 001AFB60  7C 08 02 A6 */	mflr r0
 /* 801B2C04 001AFB64  90 01 00 04 */	stw r0, 4(r1)
 /* 801B2C08 001AFB68  94 21 FE D8 */	stwu r1, -0x128(r1)
@@ -137,9 +136,9 @@ set__9P2DScreenFPCcbbb:
 /* 801B2D20 001AFC80  38 21 01 28 */	addi r1, r1, 0x128
 /* 801B2D24 001AFC84  7C 08 03 A6 */	mtlr r0
 /* 801B2D28 001AFC88  4E 80 00 20 */	blr 
+.endfn set__9P2DScreenFPCcbbb
 
-.global makeHiearachyPanes__9P2DScreenFP7P2DPaneP18RandomAccessStreambb
-makeHiearachyPanes__9P2DScreenFP7P2DPaneP18RandomAccessStreambb:
+.fn makeHiearachyPanes__9P2DScreenFP7P2DPaneP18RandomAccessStreambb, global
 /* 801B2D2C 001AFC8C  7C 08 02 A6 */	mflr r0
 /* 801B2D30 001AFC90  90 01 00 04 */	stw r0, 4(r1)
 /* 801B2D34 001AFC94  94 21 FF B0 */	stwu r1, -0x50(r1)
@@ -254,14 +253,14 @@ makeHiearachyPanes__9P2DScreenFP7P2DPaneP18RandomAccessStreambb:
 /* 801B2EC0 001AFE20  38 21 00 50 */	addi r1, r1, 0x50
 /* 801B2EC4 001AFE24  7C 08 03 A6 */	mtlr r0
 /* 801B2EC8 001AFE28  4E 80 00 20 */	blr 
+.endfn makeHiearachyPanes__9P2DScreenFP7P2DPaneP18RandomAccessStreambb
 
-.global makeUserPane__9P2DScreenFUsP7P2DPaneP18RandomAccessStream
-makeUserPane__9P2DScreenFUsP7P2DPaneP18RandomAccessStream:
+.fn makeUserPane__9P2DScreenFUsP7P2DPaneP18RandomAccessStream, global
 /* 801B2ECC 001AFE2C  38 60 00 00 */	li r3, 0
 /* 801B2ED0 001AFE30  4E 80 00 20 */	blr 
+.endfn makeUserPane__9P2DScreenFUsP7P2DPaneP18RandomAccessStream
 
-.global draw__9P2DScreenFiiPC14P2DGrafContext
-draw__9P2DScreenFiiPC14P2DGrafContext:
+.fn draw__9P2DScreenFiiPC14P2DGrafContext, global
 /* 801B2ED4 001AFE34  7C 08 02 A6 */	mflr r0
 /* 801B2ED8 001AFE38  90 01 00 04 */	stw r0, 4(r1)
 /* 801B2EDC 001AFE3C  94 21 FE 18 */	stwu r1, -0x1e8(r1)
@@ -466,9 +465,9 @@ draw__9P2DScreenFiiPC14P2DGrafContext:
 /* 801B31F0 001B0150  38 21 01 E8 */	addi r1, r1, 0x1e8
 /* 801B31F4 001B0154  7C 08 03 A6 */	mtlr r0
 /* 801B31F8 001B0158  4E 80 00 20 */	blr 
+.endfn draw__9P2DScreenFiiPC14P2DGrafContext
 
-.global search__9P2DScreenFUlb
-search__9P2DScreenFUlb:
+.fn search__9P2DScreenFUlb, global
 /* 801B31FC 001B015C  7C 08 02 A6 */	mflr r0
 /* 801B3200 001B0160  28 04 00 00 */	cmplwi r4, 0
 /* 801B3204 001B0164  90 01 00 04 */	stw r0, 4(r1)
@@ -483,9 +482,9 @@ search__9P2DScreenFUlb:
 /* 801B3220 001B0180  38 21 00 08 */	addi r1, r1, 8
 /* 801B3224 001B0184  7C 08 03 A6 */	mtlr r0
 /* 801B3228 001B0188  4E 80 00 20 */	blr 
+.endfn search__9P2DScreenFUlb
 
-.global loadResource__9P2DScreenFv
-loadResource__9P2DScreenFv:
+.fn loadResource__9P2DScreenFv, global
 /* 801B322C 001B018C  7C 08 02 A6 */	mflr r0
 /* 801B3230 001B0190  90 01 00 04 */	stw r0, 4(r1)
 /* 801B3234 001B0194  94 21 FF F8 */	stwu r1, -8(r1)
@@ -494,9 +493,9 @@ loadResource__9P2DScreenFv:
 /* 801B3240 001B01A0  38 21 00 08 */	addi r1, r1, 8
 /* 801B3244 001B01A4  7C 08 03 A6 */	mtlr r0
 /* 801B3248 001B01A8  4E 80 00 20 */	blr 
+.endfn loadResource__9P2DScreenFv
 
-.global makeResName__9P2DScreenFPCcPc
-makeResName__9P2DScreenFPCcPc:
+.fn makeResName__9P2DScreenFPCcPc, global
 /* 801B324C 001B01AC  7C 08 02 A6 */	mflr r0
 /* 801B3250 001B01B0  90 01 00 04 */	stw r0, 4(r1)
 /* 801B3254 001B01B4  94 21 FF F8 */	stwu r1, -8(r1)
@@ -507,16 +506,19 @@ makeResName__9P2DScreenFPCcPc:
 /* 801B3268 001B01C8  38 21 00 08 */	addi r1, r1, 8
 /* 801B326C 001B01CC  7C 08 03 A6 */	mtlr r0
 /* 801B3270 001B01D0  4E 80 00 20 */	blr 
+.endfn makeResName__9P2DScreenFPCcPc
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802E0768:
+.obj lbl_802E0768, local
 	.asciz "P2DScreen.cpp"
+.endobj lbl_802E0768
 .balign 4
-lbl_802E0778:
+.obj lbl_802E0778, local
 	.asciz "P2DScreen"
+.endobj lbl_802E0778
 .balign 4
-lbl_802E0784:
+.obj lbl_802E0784, local
 	.4byte .L_801B2D8C
 	.4byte .L_801B2D90
 	.4byte .L_801B2DC0
@@ -537,12 +539,15 @@ lbl_802E0784:
 	.4byte .L_801B2E40
 	.4byte .L_801B2E68
 	.4byte .L_801B2E90
-lbl_802E07D4:
+.endobj lbl_802E0784
+.balign 4
+.obj lbl_802E07D4, local
 	.4byte __RTTI__7P2DPane
 	.4byte 0
 	.4byte 0
-.global __vt__9P2DScreen
-__vt__9P2DScreen:
+.endobj lbl_802E07D4
+.balign 4
+.obj __vt__9P2DScreen, global
 	.4byte __RTTI__9P2DScreen
 	.4byte 0
 	.4byte loadResource__9P2DScreenFv
@@ -559,6 +564,7 @@ __vt__9P2DScreen:
 	.4byte search__9P2DScreenFUlb
 	.4byte makeMatrix__7P2DPaneFii
 	.4byte makeUserPane__9P2DScreenFUsP7P2DPaneP18RandomAccessStream
+.endobj __vt__9P2DScreen
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8

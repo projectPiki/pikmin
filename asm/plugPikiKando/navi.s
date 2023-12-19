@@ -10030,7 +10030,11 @@
 	.4byte 0
 	.4byte 0
 .endobj lbl_802C0288
-# data between symbols???
+.balign 4
+# This doesn't show in the map. What the hell is this?!
+# Looks like remnants of a virtual table containing thunks.
+# Appears in pikiheadItem.cpp, navi.cpp, piki.cpp, and uteffect.cpp.
+#.obj UNKNOWN_WEIRD_SHIT, local
 	.4byte 0
 	.4byte 0
 	.4byte 0
@@ -10055,6 +10059,7 @@
 	.4byte 0
 	.4byte 0
 	.4byte 0
+#.endobj UNKNOWN_WEIRD_SHIT
 .balign 4
 .obj lbl_802C0304, local
 	.asciz "NaviDrawer"
@@ -10069,6 +10074,7 @@
 	.4byte 0
 	.4byte 0
 .endobj lbl_802C031C
+.balign 4
 .obj lbl_802C0328, local
 	.4byte __RTTI__5ANode
 	.4byte 0
@@ -10076,6 +10082,7 @@
 	.4byte 0
 	.4byte 0
 .endobj lbl_802C0328
+.balign 4
 .obj lbl_802C033C, local
 	.4byte __RTTI__5ANode
 	.4byte 0
@@ -10085,6 +10092,7 @@
 	.4byte 0
 	.4byte 0
 .endobj lbl_802C033C
+.balign 4
 .obj __vt__10NaviDrawer, weak
 	.4byte __RTTI__10NaviDrawer
 	.4byte 0
@@ -10099,7 +10107,8 @@
 	.4byte concat__4NodeFR8Matrix4f
 	.4byte getModelMatrix__4NodeFv
 .endobj __vt__10NaviDrawer
-.skip 0x1C
+.balign 4
+.skip 0x1C # compiler padding
 .balign 4
 .obj lbl_802C03A4, local
 	.asciz "PelletView"
@@ -10125,7 +10134,7 @@
 	.asciz "PaniAnimKeyListener"
 .endobj lbl_802C03E4
 .balign 4
-.skip 0xC
+.skip 0xC # compiler padding
 .balign 4
 .obj lbl_802C0404, local
 	.asciz "Parm<int>"
@@ -10170,14 +10179,8 @@
 	.4byte 0
 	.4byte 0
 .endobj lbl_802C047C
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
+.balign 4
+.skip 0x20 # compiler padding
 .balign 4
 .obj lbl_802C04A8, local
 	.asciz "EventTalker"
@@ -10198,6 +10201,7 @@
 	.4byte 0
 	.4byte 0
 .endobj lbl_802C04D0
+.balign 4
 .obj lbl_802C04E4, local
 	.4byte __RTTI__10PelletView
 	.4byte 0x2BC
@@ -10211,6 +10215,7 @@
 	.4byte 0
 	.4byte 0
 .endobj lbl_802C04E4
+.balign 4
 .obj __vt__4Navi, global
 	.4byte __RTTI__4Navi
 	.4byte 0
@@ -11088,13 +11093,13 @@
 .obj lbl_803E9F40, local
 	.float -0.8
 .endobj lbl_803E9F40
-.obj lbl_803E9F44, local
+.obj lbl_803E9F44, local # pi/2
 	.float 1.5707964
 .endobj lbl_803E9F44
 .obj lbl_803E9F48, local
 	.float 0.017453292
 .endobj lbl_803E9F48
-.obj lbl_803E9F4C, local
+.obj lbl_803E9F4C, local # 45 degrees in radians
 	.float 0.7853982
 .endobj lbl_803E9F4C
 .obj lbl_803E9F50, local

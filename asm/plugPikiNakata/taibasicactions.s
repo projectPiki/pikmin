@@ -1,13 +1,12 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global start__20TaiActionStateActionFR4Teki
-start__20TaiActionStateActionFR4Teki:
+.fn start__20TaiActionStateActionFR4Teki, global
 /* 801283A8 00125308  38 00 00 00 */	li r0, 0
 /* 801283AC 0012530C  90 04 03 38 */	stw r0, 0x338(r4)
 /* 801283B0 00125310  4E 80 00 20 */	blr 
+.endfn start__20TaiActionStateActionFR4Teki
 
-.global act__20TaiActionStateActionFR4Teki
-act__20TaiActionStateActionFR4Teki:
+.fn act__20TaiActionStateActionFR4Teki, global
 /* 801283B4 00125314  80 84 03 38 */	lwz r4, 0x338(r4)
 /* 801283B8 00125318  80 03 00 08 */	lwz r0, 8(r3)
 /* 801283BC 0012531C  7C 04 00 00 */	cmpw r4, r0
@@ -17,9 +16,9 @@ act__20TaiActionStateActionFR4Teki:
 .L_801283CC:
 /* 801283CC 0012532C  38 60 00 00 */	li r3, 0
 /* 801283D0 00125330  4E 80 00 20 */	blr 
+.endfn act__20TaiActionStateActionFR4Teki
 
-.global start__18TaiSetOptionActionFR4Teki
-start__18TaiSetOptionActionFR4Teki:
+.fn start__18TaiSetOptionActionFR4Teki, global
 /* 801283D4 00125334  7C 08 02 A6 */	mflr r0
 /* 801283D8 00125338  7C 65 1B 78 */	mr r5, r3
 /* 801283DC 0012533C  90 01 00 04 */	stw r0, 4(r1)
@@ -46,9 +45,9 @@ start__18TaiSetOptionActionFR4Teki:
 /* 80128428 00125388  38 21 00 08 */	addi r1, r1, 8
 /* 8012842C 0012538C  7C 08 03 A6 */	mtlr r0
 /* 80128430 00125390  4E 80 00 20 */	blr 
+.endfn start__18TaiSetOptionActionFR4Teki
 
-.global start__18TaiPlaySoundActionFR4Teki
-start__18TaiPlaySoundActionFR4Teki:
+.fn start__18TaiPlaySoundActionFR4Teki, global
 /* 80128434 00125394  7C 08 02 A6 */	mflr r0
 /* 80128438 00125398  38 A3 00 00 */	addi r5, r3, 0
 /* 8012843C 0012539C  90 01 00 04 */	stw r0, 4(r1)
@@ -63,9 +62,9 @@ start__18TaiPlaySoundActionFR4Teki:
 /* 80128460 001253C0  38 21 00 08 */	addi r1, r1, 8
 /* 80128464 001253C4  7C 08 03 A6 */	mtlr r0
 /* 80128468 001253C8  4E 80 00 20 */	blr 
+.endfn start__18TaiPlaySoundActionFR4Teki
 
-.global start__18TaiStopSoundActionFR4Teki
-start__18TaiStopSoundActionFR4Teki:
+.fn start__18TaiStopSoundActionFR4Teki, global
 /* 8012846C 001253CC  7C 08 02 A6 */	mflr r0
 /* 80128470 001253D0  38 A3 00 00 */	addi r5, r3, 0
 /* 80128474 001253D4  90 01 00 04 */	stw r0, 4(r1)
@@ -80,9 +79,9 @@ start__18TaiStopSoundActionFR4Teki:
 /* 80128498 001253F8  38 21 00 08 */	addi r1, r1, 8
 /* 8012849C 001253FC  7C 08 03 A6 */	mtlr r0
 /* 801284A0 00125400  4E 80 00 20 */	blr 
+.endfn start__18TaiStopSoundActionFR4Teki
 
-.global start__30TaiTypeNaviWatchResultOnActionFR4Teki
-start__30TaiTypeNaviWatchResultOnActionFR4Teki:
+.fn start__30TaiTypeNaviWatchResultOnActionFR4Teki, global
 /* 801284A4 00125404  7C 08 02 A6 */	mflr r0
 /* 801284A8 00125408  90 01 00 04 */	stw r0, 4(r1)
 /* 801284AC 0012540C  94 21 FF F8 */	stwu r1, -8(r1)
@@ -101,9 +100,9 @@ start__30TaiTypeNaviWatchResultOnActionFR4Teki:
 /* 801284DC 0012543C  38 21 00 08 */	addi r1, r1, 8
 /* 801284E0 00125440  7C 08 03 A6 */	mtlr r0
 /* 801284E4 00125444  4E 80 00 20 */	blr 
+.endfn start__30TaiTypeNaviWatchResultOnActionFR4Teki
 
-.global start__26TaiNaviWatchResultOnActionFR4Teki
-start__26TaiNaviWatchResultOnActionFR4Teki:
+.fn start__26TaiNaviWatchResultOnActionFR4Teki, global
 /* 801284E8 00125448  7C 08 02 A6 */	mflr r0
 /* 801284EC 0012544C  90 01 00 04 */	stw r0, 4(r1)
 /* 801284F0 00125450  94 21 FF F8 */	stwu r1, -8(r1)
@@ -119,27 +118,33 @@ start__26TaiNaviWatchResultOnActionFR4Teki:
 /* 80128514 00125474  38 21 00 08 */	addi r1, r1, 8
 /* 80128518 00125478  7C 08 03 A6 */	mtlr r0
 /* 8012851C 0012547C  4E 80 00 20 */	blr 
+.endfn start__26TaiNaviWatchResultOnActionFR4Teki
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802C69C0:
+.obj lbl_802C69C0, local
 	.asciz "taibasicactions.cpp"
+.endobj lbl_802C69C0
 .balign 4
-lbl_802C69D4:
+.obj lbl_802C69D4, local
 	.asciz "taibasicactions"
+.endobj lbl_802C69D4
 .balign 4
-lbl_802C69E4:
+.obj lbl_802C69E4, local
 	.asciz "TaiNaviWatchResultOnAction"
+.endobj lbl_802C69E4
 .balign 4
-lbl_802C6A00:
+.obj lbl_802C6A00, local
 	.asciz "TaiAction"
+.endobj lbl_802C6A00
 .balign 4
-lbl_802C6A0C:
+.obj lbl_802C6A0C, local
 	.4byte __RTTI__9TaiAction
 	.4byte 0
 	.4byte 0
-.global __vt__26TaiNaviWatchResultOnAction
-__vt__26TaiNaviWatchResultOnAction:
+.endobj lbl_802C6A0C
+.balign 4
+.obj __vt__26TaiNaviWatchResultOnAction, global
 	.4byte __RTTI__26TaiNaviWatchResultOnAction
 	.4byte 0
 	.4byte start__26TaiNaviWatchResultOnActionFR4Teki
@@ -147,16 +152,19 @@ __vt__26TaiNaviWatchResultOnAction:
 	.4byte act__9TaiActionFR4Teki
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
+.endobj __vt__26TaiNaviWatchResultOnAction
 .balign 4
-lbl_802C6A34:
+.obj lbl_802C6A34, local
 	.asciz "TaiTypeNaviWatchResultOnAction"
+.endobj lbl_802C6A34
 .balign 4
-lbl_802C6A54:
+.obj lbl_802C6A54, local
 	.4byte __RTTI__9TaiAction
 	.4byte 0
 	.4byte 0
-.global __vt__30TaiTypeNaviWatchResultOnAction
-__vt__30TaiTypeNaviWatchResultOnAction:
+.endobj lbl_802C6A54
+.balign 4
+.obj __vt__30TaiTypeNaviWatchResultOnAction, global
 	.4byte __RTTI__30TaiTypeNaviWatchResultOnAction
 	.4byte 0
 	.4byte start__30TaiTypeNaviWatchResultOnActionFR4Teki
@@ -164,16 +172,19 @@ __vt__30TaiTypeNaviWatchResultOnAction:
 	.4byte act__9TaiActionFR4Teki
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
+.endobj __vt__30TaiTypeNaviWatchResultOnAction
 .balign 4
-lbl_802C6A7C:
+.obj lbl_802C6A7C, local
 	.asciz "TaiStopSoundAction"
+.endobj lbl_802C6A7C
 .balign 4
-lbl_802C6A90:
+.obj lbl_802C6A90, local
 	.4byte __RTTI__9TaiAction
 	.4byte 0
 	.4byte 0
-.global __vt__18TaiStopSoundAction
-__vt__18TaiStopSoundAction:
+.endobj lbl_802C6A90
+.balign 4
+.obj __vt__18TaiStopSoundAction, global
 	.4byte __RTTI__18TaiStopSoundAction
 	.4byte 0
 	.4byte start__18TaiStopSoundActionFR4Teki
@@ -181,16 +192,19 @@ __vt__18TaiStopSoundAction:
 	.4byte act__9TaiActionFR4Teki
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
+.endobj __vt__18TaiStopSoundAction
 .balign 4
-lbl_802C6AB8:
+.obj lbl_802C6AB8, local
 	.asciz "TaiPlaySoundAction"
+.endobj lbl_802C6AB8
 .balign 4
-lbl_802C6ACC:
+.obj lbl_802C6ACC, local
 	.4byte __RTTI__9TaiAction
 	.4byte 0
 	.4byte 0
-.global __vt__18TaiPlaySoundAction
-__vt__18TaiPlaySoundAction:
+.endobj lbl_802C6ACC
+.balign 4
+.obj __vt__18TaiPlaySoundAction, global
 	.4byte __RTTI__18TaiPlaySoundAction
 	.4byte 0
 	.4byte start__18TaiPlaySoundActionFR4Teki
@@ -198,16 +212,19 @@ __vt__18TaiPlaySoundAction:
 	.4byte act__9TaiActionFR4Teki
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
+.endobj __vt__18TaiPlaySoundAction
 .balign 4
-lbl_802C6AF4:
+.obj lbl_802C6AF4, local
 	.asciz "TaiSetOptionAction"
+.endobj lbl_802C6AF4
 .balign 4
-lbl_802C6B08:
+.obj lbl_802C6B08, local
 	.4byte __RTTI__9TaiAction
 	.4byte 0
 	.4byte 0
-.global __vt__18TaiSetOptionAction
-__vt__18TaiSetOptionAction:
+.endobj lbl_802C6B08
+.balign 4
+.obj __vt__18TaiSetOptionAction, global
 	.4byte __RTTI__18TaiSetOptionAction
 	.4byte 0
 	.4byte start__18TaiSetOptionActionFR4Teki
@@ -215,16 +232,19 @@ __vt__18TaiSetOptionAction:
 	.4byte act__9TaiActionFR4Teki
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
+.endobj __vt__18TaiSetOptionAction
 .balign 4
-lbl_802C6B30:
+.obj lbl_802C6B30, local
 	.asciz "TaiActionStateAction"
+.endobj lbl_802C6B30
 .balign 4
-lbl_802C6B48:
+.obj lbl_802C6B48, local
 	.4byte __RTTI__9TaiAction
 	.4byte 0
 	.4byte 0
-.global __vt__20TaiActionStateAction
-__vt__20TaiActionStateAction:
+.endobj lbl_802C6B48
+.balign 4
+.obj __vt__20TaiActionStateAction, global
 	.4byte __RTTI__20TaiActionStateAction
 	.4byte 0
 	.4byte start__20TaiActionStateActionFR4Teki
@@ -232,27 +252,41 @@ __vt__20TaiActionStateAction:
 	.4byte act__20TaiActionStateActionFR4Teki
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
+.endobj __vt__20TaiActionStateAction
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-__RTTI__9TaiAction:
+.obj __RTTI__9TaiAction, local
 	.4byte lbl_802C6A00
 	.4byte 0
-__RTTI__26TaiNaviWatchResultOnAction:
+.endobj __RTTI__9TaiAction
+.balign 4
+.obj __RTTI__26TaiNaviWatchResultOnAction, local
 	.4byte lbl_802C69E4
 	.4byte lbl_802C6A0C
-__RTTI__30TaiTypeNaviWatchResultOnAction:
+.endobj __RTTI__26TaiNaviWatchResultOnAction
+.balign 4
+.obj __RTTI__30TaiTypeNaviWatchResultOnAction, local
 	.4byte lbl_802C6A34
 	.4byte lbl_802C6A54
-__RTTI__18TaiStopSoundAction:
+.endobj __RTTI__30TaiTypeNaviWatchResultOnAction
+.balign 4
+.obj __RTTI__18TaiStopSoundAction, local
 	.4byte lbl_802C6A7C
 	.4byte lbl_802C6A90
-__RTTI__18TaiPlaySoundAction:
+.endobj __RTTI__18TaiStopSoundAction
+.balign 4
+.obj __RTTI__18TaiPlaySoundAction, local
 	.4byte lbl_802C6AB8
 	.4byte lbl_802C6ACC
-__RTTI__18TaiSetOptionAction:
+.endobj __RTTI__18TaiPlaySoundAction
+.balign 4
+.obj __RTTI__18TaiSetOptionAction, local
 	.4byte lbl_802C6AF4
 	.4byte lbl_802C6B08
-__RTTI__20TaiActionStateAction:
+.endobj __RTTI__18TaiSetOptionAction
+.balign 4
+.obj __RTTI__20TaiActionStateAction, local
 	.4byte lbl_802C6B30
 	.4byte lbl_802C6B48
+.endobj __RTTI__20TaiActionStateAction

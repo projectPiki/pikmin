@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global startAI__8ItemBallFi
-startAI__8ItemBallFi:
+.fn startAI__8ItemBallFi, global
 /* 800F7958 000F48B8  7C 08 02 A6 */	mflr r0
 /* 800F795C 000F48BC  38 83 00 00 */	addi r4, r3, 0
 /* 800F7960 000F48C0  90 01 00 04 */	stw r0, 4(r1)
@@ -17,23 +16,23 @@ startAI__8ItemBallFi:
 /* 800F7988 000F48E8  38 21 00 08 */	addi r1, r1, 8
 /* 800F798C 000F48EC  7C 08 03 A6 */	mtlr r0
 /* 800F7990 000F48F0  4E 80 00 20 */	blr 
+.endfn startAI__8ItemBallFi
 
-.global isAlive__8ItemBallFv
-isAlive__8ItemBallFv:
+.fn isAlive__8ItemBallFv, global
 /* 800F7994 000F48F4  38 60 00 01 */	li r3, 1
 /* 800F7998 000F48F8  4E 80 00 20 */	blr 
+.endfn isAlive__8ItemBallFv
 
-.global isVisible__8ItemBallFv
-isVisible__8ItemBallFv:
+.fn isVisible__8ItemBallFv, global
 /* 800F799C 000F48FC  38 60 00 01 */	li r3, 1
 /* 800F79A0 000F4900  4E 80 00 20 */	blr 
+.endfn isVisible__8ItemBallFv
 
-.global update__10ItemObjectFv
-update__10ItemObjectFv:
+.fn update__10ItemObjectFv, global
 /* 800F79A4 000F4904  4E 80 00 20 */	blr 
+.endfn update__10ItemObjectFv
 
-.global __ct__11BombGenItemFP5Shape
-__ct__11BombGenItemFP5Shape:
+.fn __ct__11BombGenItemFP5Shape, global
 /* 800F79A8 000F4908  7C 08 02 A6 */	mflr r0
 /* 800F79AC 000F490C  38 C4 00 00 */	addi r6, r4, 0
 /* 800F79B0 000F4910  90 01 00 04 */	stw r0, 4(r1)
@@ -65,9 +64,9 @@ __ct__11BombGenItemFP5Shape:
 /* 800F7A18 000F4978  38 21 00 18 */	addi r1, r1, 0x18
 /* 800F7A1C 000F497C  7C 08 03 A6 */	mtlr r0
 /* 800F7A20 000F4980  4E 80 00 20 */	blr 
+.endfn __ct__11BombGenItemFP5Shape
 
-.global pickable__11BombGenItemFv
-pickable__11BombGenItemFv:
+.fn pickable__11BombGenItemFv, global
 /* 800F7A24 000F4984  A8 03 03 C8 */	lha r0, 0x3c8(r3)
 /* 800F7A28 000F4988  2C 00 FF FF */	cmpwi r0, -1
 /* 800F7A2C 000F498C  40 82 00 0C */	bne .L_800F7A38
@@ -82,9 +81,9 @@ pickable__11BombGenItemFv:
 .L_800F7A4C:
 /* 800F7A4C 000F49AC  38 60 00 00 */	li r3, 0
 /* 800F7A50 000F49B0  4E 80 00 20 */	blr 
+.endfn pickable__11BombGenItemFv
 
-.global pick__11BombGenItemFv
-pick__11BombGenItemFv:
+.fn pick__11BombGenItemFv, global
 /* 800F7A54 000F49B4  A8 83 03 C8 */	lha r4, 0x3c8(r3)
 /* 800F7A58 000F49B8  2C 04 FF FF */	cmpwi r4, -1
 /* 800F7A5C 000F49BC  40 82 00 0C */	bne .L_800F7A68
@@ -118,9 +117,9 @@ pick__11BombGenItemFv:
 .L_800F7AB8:
 /* 800F7AB8 000F4A18  38 60 00 01 */	li r3, 1
 /* 800F7ABC 000F4A1C  4E 80 00 20 */	blr 
+.endfn pick__11BombGenItemFv
 
-.global __ct__7FulcrumFv
-__ct__7FulcrumFv:
+.fn __ct__7FulcrumFv, global
 /* 800F7AC0 000F4A20  7C 08 02 A6 */	mflr r0
 /* 800F7AC4 000F4A24  38 80 00 11 */	li r4, 0x11
 /* 800F7AC8 000F4A28  90 01 00 04 */	stw r0, 4(r1)
@@ -148,9 +147,9 @@ __ct__7FulcrumFv:
 /* 800F7B20 000F4A80  38 21 00 18 */	addi r1, r1, 0x18
 /* 800F7B24 000F4A84  7C 08 03 A6 */	mtlr r0
 /* 800F7B28 000F4A88  4E 80 00 20 */	blr 
+.endfn __ct__7FulcrumFv
 
-.global __ct__19NaviDemoSunsetStartFv
-__ct__19NaviDemoSunsetStartFv:
+.fn __ct__19NaviDemoSunsetStartFv, global
 /* 800F7B2C 000F4A8C  7C 08 02 A6 */	mflr r0
 /* 800F7B30 000F4A90  38 80 00 1B */	li r4, 0x1b
 /* 800F7B34 000F4A94  90 01 00 04 */	stw r0, 4(r1)
@@ -178,9 +177,9 @@ __ct__19NaviDemoSunsetStartFv:
 /* 800F7B8C 000F4AEC  38 21 00 18 */	addi r1, r1, 0x18
 /* 800F7B90 000F4AF0  7C 08 03 A6 */	mtlr r0
 /* 800F7B94 000F4AF4  4E 80 00 20 */	blr 
+.endfn __ct__19NaviDemoSunsetStartFv
 
-.global __ct__18NaviDemoSunsetGoalFv
-__ct__18NaviDemoSunsetGoalFv:
+.fn __ct__18NaviDemoSunsetGoalFv, global
 /* 800F7B98 000F4AF8  7C 08 02 A6 */	mflr r0
 /* 800F7B9C 000F4AFC  38 80 00 1C */	li r4, 0x1c
 /* 800F7BA0 000F4B00  90 01 00 04 */	stw r0, 4(r1)
@@ -208,23 +207,23 @@ __ct__18NaviDemoSunsetGoalFv:
 /* 800F7BF8 000F4B58  38 21 00 18 */	addi r1, r1, 0x18
 /* 800F7BFC 000F4B5C  7C 08 03 A6 */	mtlr r0
 /* 800F7C00 000F4B60  4E 80 00 20 */	blr 
+.endfn __ct__18NaviDemoSunsetGoalFv
 
-.global needShadow__10ItemObjectFv
-needShadow__10ItemObjectFv:
+.fn needShadow__10ItemObjectFv, weak
 /* 800F7C04 000F4B64  38 60 00 00 */	li r3, 0
 /* 800F7C08 000F4B68  4E 80 00 20 */	blr 
+.endfn needShadow__10ItemObjectFv
 
-.global postUpdate__10ItemObjectFif
-postUpdate__10ItemObjectFif:
+.fn postUpdate__10ItemObjectFif, weak
 /* 800F7C0C 000F4B6C  4E 80 00 20 */	blr 
+.endfn postUpdate__10ItemObjectFif
 
-.global isAtari__10ItemObjectFv
-isAtari__10ItemObjectFv:
+.fn isAtari__10ItemObjectFv, weak
 /* 800F7C10 000F4B70  38 60 00 00 */	li r3, 0
 /* 800F7C14 000F4B74  4E 80 00 20 */	blr 
+.endfn isAtari__10ItemObjectFv
 
-.global isAtari__11BombGenItemFv
-isAtari__11BombGenItemFv:
+.fn isAtari__11BombGenItemFv, weak
 /* 800F7C18 000F4B78  A8 03 03 C8 */	lha r0, 0x3c8(r3)
 /* 800F7C1C 000F4B7C  2C 00 FF FF */	cmpwi r0, -1
 /* 800F7C20 000F4B80  40 82 00 0C */	bne .L_800F7C2C
@@ -239,14 +238,14 @@ isAtari__11BombGenItemFv:
 .L_800F7C40:
 /* 800F7C40 000F4BA0  38 60 00 00 */	li r3, 0
 /* 800F7C44 000F4BA4  4E 80 00 20 */	blr 
+.endfn isAtari__11BombGenItemFv
 
-.global needFlick__11BombGenItemFP8Creature
-needFlick__11BombGenItemFP8Creature:
+.fn needFlick__11BombGenItemFP8Creature, weak
 /* 800F7C48 000F4BA8  38 60 00 00 */	li r3, 0
 /* 800F7C4C 000F4BAC  4E 80 00 20 */	blr 
+.endfn needFlick__11BombGenItemFP8Creature
 
-.global isVisible__11BombGenItemFv
-isVisible__11BombGenItemFv:
+.fn isVisible__11BombGenItemFv, weak
 /* 800F7C50 000F4BB0  A8 03 03 C8 */	lha r0, 0x3c8(r3)
 /* 800F7C54 000F4BB4  2C 00 FF FF */	cmpwi r0, -1
 /* 800F7C58 000F4BB8  40 82 00 0C */	bne .L_800F7C64
@@ -261,9 +260,9 @@ isVisible__11BombGenItemFv:
 .L_800F7C78:
 /* 800F7C78 000F4BD8  38 60 00 00 */	li r3, 0
 /* 800F7C7C 000F4BDC  4E 80 00 20 */	blr 
+.endfn isVisible__11BombGenItemFv
 
-.global isAlive__11BombGenItemFv
-isAlive__11BombGenItemFv:
+.fn isAlive__11BombGenItemFv, weak
 /* 800F7C80 000F4BE0  A8 03 03 C8 */	lha r0, 0x3c8(r3)
 /* 800F7C84 000F4BE4  2C 00 FF FF */	cmpwi r0, -1
 /* 800F7C88 000F4BE8  40 82 00 0C */	bne .L_800F7C94
@@ -278,41 +277,51 @@ isAlive__11BombGenItemFv:
 .L_800F7CA8:
 /* 800F7CA8 000F4C08  38 60 00 00 */	li r3, 0
 /* 800F7CAC 000F4C0C  4E 80 00 20 */	blr 
+.endfn isAlive__11BombGenItemFv
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802BF1C0:
+.obj lbl_802BF1C0, local
 	.asciz "itemObject.cpp"
+.endobj lbl_802BF1C0
 .balign 4
-lbl_802BF1D0:
+.obj lbl_802BF1D0, local
 	.asciz "itemObject"
+.endobj lbl_802BF1D0
 .balign 4
-lbl_802BF1DC:
+.obj lbl_802BF1DC, local
 	.asciz "NaviDemoSunsetGoal"
+.endobj lbl_802BF1DC
 .balign 4
-lbl_802BF1F0:
+.obj lbl_802BF1F0, local
 	.asciz "PaniAnimKeyListener"
+.endobj lbl_802BF1F0
 .balign 4
-lbl_802BF204:
+.obj lbl_802BF204, local
 	.asciz "EventTalker"
+.endobj lbl_802BF204
 .balign 4
-lbl_802BF210:
+.obj lbl_802BF210, local
 	.asciz "RefCountable"
+.endobj lbl_802BF210
 .balign 4
-lbl_802BF220:
+.obj lbl_802BF220, local
 	.asciz "Creature"
+.endobj lbl_802BF220
 .balign 4
-lbl_802BF22C:
+.obj lbl_802BF22C, local
 	.4byte __RTTI__11EventTalker
 	.4byte 0x8
 	.4byte __RTTI__12RefCountable
 	.4byte 0
 	.4byte 0
+.endobj lbl_802BF22C
 .balign 4
-lbl_802BF240:
+.obj lbl_802BF240, local
 	.asciz "AICreature"
+.endobj lbl_802BF240
 .balign 4
-lbl_802BF24C:
+.obj lbl_802BF24C, local
 	.4byte __RTTI__19PaniAnimKeyListener
 	.4byte 0x2B8
 	.4byte __RTTI__11EventTalker
@@ -322,11 +331,13 @@ lbl_802BF24C:
 	.4byte __RTTI__8Creature
 	.4byte 0
 	.4byte 0
+.endobj lbl_802BF24C
 .balign 4
-lbl_802BF270:
+.obj lbl_802BF270, local
 	.asciz "ItemCreature"
+.endobj lbl_802BF270
 .balign 4
-lbl_802BF280:
+.obj lbl_802BF280, local
 	.4byte __RTTI__19PaniAnimKeyListener
 	.4byte 0x2B8
 	.4byte __RTTI__11EventTalker
@@ -338,11 +349,13 @@ lbl_802BF280:
 	.4byte __RTTI__10AICreature
 	.4byte 0
 	.4byte 0
+.endobj lbl_802BF280
 .balign 4
-lbl_802BF2AC:
+.obj lbl_802BF2AC, local
 	.asciz "ItemObject"
+.endobj lbl_802BF2AC
 .balign 4
-lbl_802BF2B8:
+.obj lbl_802BF2B8, local
 	.4byte __RTTI__19PaniAnimKeyListener
 	.4byte 0x2B8
 	.4byte __RTTI__11EventTalker
@@ -356,7 +369,9 @@ lbl_802BF2B8:
 	.4byte __RTTI__12ItemCreature
 	.4byte 0
 	.4byte 0
-lbl_802BF2EC:
+.endobj lbl_802BF2B8
+.balign 4
+.obj lbl_802BF2EC, local
 	.4byte __RTTI__19PaniAnimKeyListener
 	.4byte 0x2B8
 	.4byte __RTTI__11EventTalker
@@ -372,8 +387,9 @@ lbl_802BF2EC:
 	.4byte __RTTI__10ItemObject
 	.4byte 0
 	.4byte 0
-.global __vt__18NaviDemoSunsetGoal
-__vt__18NaviDemoSunsetGoal:
+.endobj lbl_802BF2EC
+.balign 4
+.obj __vt__18NaviDemoSunsetGoal, weak
 	.4byte __RTTI__18NaviDemoSunsetGoal
 	.4byte 0
 	.4byte addCntCallback__12RefCountableFv
@@ -461,11 +477,13 @@ __vt__18NaviDemoSunsetGoal:
 	.4byte stopMotion__12ItemCreatureFv
 	.4byte animationKeyUpdated__10AICreatureFR16PaniAnimKeyEvent
 	.4byte finalSetup__12ItemCreatureFv
+.endobj __vt__18NaviDemoSunsetGoal
 .balign 4
-lbl_802BF484:
+.obj lbl_802BF484, local
 	.asciz "NaviDemoSunsetStart"
+.endobj lbl_802BF484
 .balign 4
-lbl_802BF498:
+.obj lbl_802BF498, local
 	.4byte __RTTI__19PaniAnimKeyListener
 	.4byte 0x2B8
 	.4byte __RTTI__11EventTalker
@@ -481,8 +499,9 @@ lbl_802BF498:
 	.4byte __RTTI__10ItemObject
 	.4byte 0
 	.4byte 0
-.global __vt__19NaviDemoSunsetStart
-__vt__19NaviDemoSunsetStart:
+.endobj lbl_802BF498
+.balign 4
+.obj __vt__19NaviDemoSunsetStart, weak
 	.4byte __RTTI__19NaviDemoSunsetStart
 	.4byte 0
 	.4byte addCntCallback__12RefCountableFv
@@ -570,7 +589,9 @@ __vt__19NaviDemoSunsetStart:
 	.4byte stopMotion__12ItemCreatureFv
 	.4byte animationKeyUpdated__10AICreatureFR16PaniAnimKeyEvent
 	.4byte finalSetup__12ItemCreatureFv
-lbl_802BF630:
+.endobj __vt__19NaviDemoSunsetStart
+.balign 4
+.obj lbl_802BF630, local
 	.4byte __RTTI__19PaniAnimKeyListener
 	.4byte 0x2B8
 	.4byte __RTTI__11EventTalker
@@ -586,8 +607,9 @@ lbl_802BF630:
 	.4byte __RTTI__10ItemObject
 	.4byte 0
 	.4byte 0
-.global __vt__7Fulcrum
-__vt__7Fulcrum:
+.endobj lbl_802BF630
+.balign 4
+.obj __vt__7Fulcrum, weak
 	.4byte __RTTI__7Fulcrum
 	.4byte 0
 	.4byte addCntCallback__12RefCountableFv
@@ -675,11 +697,13 @@ __vt__7Fulcrum:
 	.4byte stopMotion__12ItemCreatureFv
 	.4byte animationKeyUpdated__10AICreatureFR16PaniAnimKeyEvent
 	.4byte finalSetup__12ItemCreatureFv
+.endobj __vt__7Fulcrum
 .balign 4
-lbl_802BF7C8:
+.obj lbl_802BF7C8, local
 	.asciz "BombGenItem"
+.endobj lbl_802BF7C8
 .balign 4
-lbl_802BF7D4:
+.obj lbl_802BF7D4, local
 	.4byte __RTTI__19PaniAnimKeyListener
 	.4byte 0x2B8
 	.4byte __RTTI__11EventTalker
@@ -695,8 +719,9 @@ lbl_802BF7D4:
 	.4byte __RTTI__10ItemObject
 	.4byte 0
 	.4byte 0
-.global __vt__11BombGenItem
-__vt__11BombGenItem:
+.endobj lbl_802BF7D4
+.balign 4
+.obj __vt__11BombGenItem, weak
 	.4byte __RTTI__11BombGenItem
 	.4byte 0
 	.4byte addCntCallback__12RefCountableFv
@@ -784,8 +809,9 @@ __vt__11BombGenItem:
 	.4byte stopMotion__12ItemCreatureFv
 	.4byte animationKeyUpdated__10AICreatureFR16PaniAnimKeyEvent
 	.4byte finalSetup__12ItemCreatureFv
-.global __vt__10ItemObject
-__vt__10ItemObject:
+.endobj __vt__11BombGenItem
+.balign 4
+.obj __vt__10ItemObject, global
 	.4byte __RTTI__10ItemObject
 	.4byte 0
 	.4byte addCntCallback__12RefCountableFv
@@ -873,11 +899,13 @@ __vt__10ItemObject:
 	.4byte stopMotion__12ItemCreatureFv
 	.4byte animationKeyUpdated__10AICreatureFR16PaniAnimKeyEvent
 	.4byte finalSetup__12ItemCreatureFv
+.endobj __vt__10ItemObject
 .balign 4
-lbl_802BFAC8:
+.obj lbl_802BFAC8, local
 	.asciz "ItemBall"
+.endobj lbl_802BFAC8
 .balign 4
-lbl_802BFAD4:
+.obj lbl_802BFAD4, local
 	.4byte __RTTI__19PaniAnimKeyListener
 	.4byte 0x2B8
 	.4byte __RTTI__11EventTalker
@@ -891,8 +919,9 @@ lbl_802BFAD4:
 	.4byte __RTTI__12ItemCreature
 	.4byte 0
 	.4byte 0
-.global __vt__8ItemBall
-__vt__8ItemBall:
+.endobj lbl_802BFAD4
+.balign 4
+.obj __vt__8ItemBall, global
 	.4byte __RTTI__8ItemBall
 	.4byte 0
 	.4byte addCntCallback__12RefCountableFv
@@ -980,46 +1009,70 @@ __vt__8ItemBall:
 	.4byte stopMotion__12ItemCreatureFv
 	.4byte animationKeyUpdated__10AICreatureFR16PaniAnimKeyEvent
 	.4byte finalSetup__12ItemCreatureFv
+.endobj __vt__8ItemBall
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-__RTTI__19PaniAnimKeyListener:
+.obj __RTTI__19PaniAnimKeyListener, local
 	.4byte lbl_802BF1F0
 	.4byte 0
-__RTTI__11EventTalker:
+.endobj __RTTI__19PaniAnimKeyListener
+.balign 4
+.obj __RTTI__11EventTalker, local
 	.4byte lbl_802BF204
 	.4byte 0
-__RTTI__12RefCountable:
+.endobj __RTTI__11EventTalker
+.balign 4
+.obj __RTTI__12RefCountable, local
 	.4byte lbl_802BF210
 	.4byte 0
-__RTTI__8Creature:
+.endobj __RTTI__12RefCountable
+.balign 4
+.obj __RTTI__8Creature, local
 	.4byte lbl_802BF220
 	.4byte lbl_802BF22C
-__RTTI__10AICreature:
+.endobj __RTTI__8Creature
+.balign 4
+.obj __RTTI__10AICreature, local
 	.4byte lbl_802BF240
 	.4byte lbl_802BF24C
-__RTTI__12ItemCreature:
+.endobj __RTTI__10AICreature
+.balign 4
+.obj __RTTI__12ItemCreature, local
 	.4byte lbl_802BF270
 	.4byte lbl_802BF280
-__RTTI__10ItemObject:
+.endobj __RTTI__12ItemCreature
+.balign 4
+.obj __RTTI__10ItemObject, local
 	.4byte lbl_802BF2AC
 	.4byte lbl_802BF2B8
-__RTTI__18NaviDemoSunsetGoal:
+.endobj __RTTI__10ItemObject
+.balign 4
+.obj __RTTI__18NaviDemoSunsetGoal, local
 	.4byte lbl_802BF1DC
 	.4byte lbl_802BF2EC
-__RTTI__19NaviDemoSunsetStart:
+.endobj __RTTI__18NaviDemoSunsetGoal
+.balign 4
+.obj __RTTI__19NaviDemoSunsetStart, local
 	.4byte lbl_802BF484
 	.4byte lbl_802BF498
+.endobj __RTTI__19NaviDemoSunsetStart
 .balign 4
-lbl_803E1EC8:
+.obj lbl_803E1EC8, local
 	.asciz "Fulcrum"
+.endobj lbl_803E1EC8
 .balign 4
-__RTTI__7Fulcrum:
+.obj __RTTI__7Fulcrum, local
 	.4byte lbl_803E1EC8
 	.4byte lbl_802BF630
-__RTTI__11BombGenItem:
+.endobj __RTTI__7Fulcrum
+.balign 4
+.obj __RTTI__11BombGenItem, local
 	.4byte lbl_802BF7C8
 	.4byte lbl_802BF7D4
-__RTTI__8ItemBall:
+.endobj __RTTI__11BombGenItem
+.balign 4
+.obj __RTTI__8ItemBall, local
 	.4byte lbl_802BFAC8
 	.4byte lbl_802BFAD4
+.endobj __RTTI__8ItemBall

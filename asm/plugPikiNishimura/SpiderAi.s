@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global __ct__8SpiderAiFP6Spider
-__ct__8SpiderAiFP6Spider:
+.fn __ct__8SpiderAiFP6Spider, global
 /* 80153840 001507A0  3C A0 80 2B */	lis r5, __vt__19PaniAnimKeyListener@ha
 /* 80153844 001507A4  38 05 DB 94 */	addi r0, r5, __vt__19PaniAnimKeyListener@l
 /* 80153848 001507A8  3C A0 80 2D */	lis r5, __vt__8SpiderAi@ha
@@ -10,9 +9,9 @@ __ct__8SpiderAiFP6Spider:
 /* 80153854 001507B4  90 03 00 00 */	stw r0, 0(r3)
 /* 80153858 001507B8  90 83 00 04 */	stw r4, 4(r3)
 /* 8015385C 001507BC  4E 80 00 20 */	blr 
+.endfn __ct__8SpiderAiFP6Spider
 
-.global initAI__8SpiderAiFP6Spider
-initAI__8SpiderAiFP6Spider:
+.fn initAI__8SpiderAiFP6Spider, global
 /* 80153860 001507C0  7C 08 02 A6 */	mflr r0
 /* 80153864 001507C4  90 01 00 04 */	stw r0, 4(r1)
 /* 80153868 001507C8  38 00 00 07 */	li r0, 7
@@ -57,9 +56,9 @@ initAI__8SpiderAiFP6Spider:
 /* 801538FC 0015085C  38 21 00 48 */	addi r1, r1, 0x48
 /* 80153900 00150860  7C 08 03 A6 */	mtlr r0
 /* 80153904 00150864  4E 80 00 20 */	blr 
+.endfn initAI__8SpiderAiFP6Spider
 
-.global animationKeyUpdated__8SpiderAiFR16PaniAnimKeyEvent
-animationKeyUpdated__8SpiderAiFR16PaniAnimKeyEvent:
+.fn animationKeyUpdated__8SpiderAiFR16PaniAnimKeyEvent, global
 /* 80153908 00150868  7C 08 02 A6 */	mflr r0
 /* 8015390C 0015086C  90 01 00 04 */	stw r0, 4(r1)
 /* 80153910 00150870  94 21 FF F8 */	stwu r1, -8(r1)
@@ -98,9 +97,9 @@ animationKeyUpdated__8SpiderAiFR16PaniAnimKeyEvent:
 /* 80153978 001508D8  38 21 00 08 */	addi r1, r1, 8
 /* 8015397C 001508DC  7C 08 03 A6 */	mtlr r0
 /* 80153980 001508E0  4E 80 00 20 */	blr 
+.endfn animationKeyUpdated__8SpiderAiFR16PaniAnimKeyEvent
 
-.global keyAction0__8SpiderAiFv
-keyAction0__8SpiderAiFv:
+.fn keyAction0__8SpiderAiFv, global
 /* 80153984 001508E4  7C 08 02 A6 */	mflr r0
 /* 80153988 001508E8  90 01 00 04 */	stw r0, 4(r1)
 /* 8015398C 001508EC  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -145,9 +144,9 @@ keyAction0__8SpiderAiFv:
 /* 80153A20 00150980  38 21 00 28 */	addi r1, r1, 0x28
 /* 80153A24 00150984  7C 08 03 A6 */	mtlr r0
 /* 80153A28 00150988  4E 80 00 20 */	blr 
+.endfn keyAction0__8SpiderAiFv
 
-.global keyAction1__8SpiderAiFv
-keyAction1__8SpiderAiFv:
+.fn keyAction1__8SpiderAiFv, global
 /* 80153A2C 0015098C  80 63 00 04 */	lwz r3, 4(r3)
 /* 80153A30 00150990  80 03 02 E4 */	lwz r0, 0x2e4(r3)
 /* 80153A34 00150994  2C 00 00 08 */	cmpwi r0, 8
@@ -156,24 +155,24 @@ keyAction1__8SpiderAiFv:
 /* 80153A40 001509A0  38 00 00 00 */	li r0, 0
 /* 80153A44 001509A4  98 03 00 05 */	stb r0, 5(r3)
 /* 80153A48 001509A8  4E 80 00 20 */	blr 
+.endfn keyAction1__8SpiderAiFv
 
-.global keyLoopEnd__8SpiderAiFv
-keyLoopEnd__8SpiderAiFv:
+.fn keyLoopEnd__8SpiderAiFv, global
 /* 80153A4C 001509AC  80 83 00 04 */	lwz r4, 4(r3)
 /* 80153A50 001509B0  80 64 02 EC */	lwz r3, 0x2ec(r4)
 /* 80153A54 001509B4  38 03 00 01 */	addi r0, r3, 1
 /* 80153A58 001509B8  90 04 02 EC */	stw r0, 0x2ec(r4)
 /* 80153A5C 001509BC  4E 80 00 20 */	blr 
+.endfn keyLoopEnd__8SpiderAiFv
 
-.global keyFinished__8SpiderAiFv
-keyFinished__8SpiderAiFv:
+.fn keyFinished__8SpiderAiFv, global
 /* 80153A60 001509C0  80 63 00 04 */	lwz r3, 4(r3)
 /* 80153A64 001509C4  38 00 00 01 */	li r0, 1
 /* 80153A68 001509C8  98 03 02 BD */	stb r0, 0x2bd(r3)
 /* 80153A6C 001509CC  4E 80 00 20 */	blr 
+.endfn keyFinished__8SpiderAiFv
 
-.global playSound__8SpiderAiFi
-playSound__8SpiderAiFi:
+.fn playSound__8SpiderAiFi, global
 /* 80153A70 001509D0  7C 08 02 A6 */	mflr r0
 /* 80153A74 001509D4  90 01 00 04 */	stw r0, 4(r1)
 /* 80153A78 001509D8  94 21 FF F8 */	stwu r1, -8(r1)
@@ -192,9 +191,9 @@ playSound__8SpiderAiFi:
 /* 80153AA8 00150A08  38 21 00 08 */	addi r1, r1, 8
 /* 80153AAC 00150A0C  7C 08 03 A6 */	mtlr r0
 /* 80153AB0 00150A10  4E 80 00 20 */	blr 
+.endfn playSound__8SpiderAiFi
 
-.global appearTransit__8SpiderAiFv
-appearTransit__8SpiderAiFv:
+.fn appearTransit__8SpiderAiFv, global
 /* 80153AB4 00150A14  7C 08 02 A6 */	mflr r0
 /* 80153AB8 00150A18  90 01 00 04 */	stw r0, 4(r1)
 /* 80153ABC 00150A1C  94 21 FF 48 */	stwu r1, -0xb8(r1)
@@ -405,9 +404,9 @@ appearTransit__8SpiderAiFv:
 /* 80153DA4 00150D04  38 21 00 B8 */	addi r1, r1, 0xb8
 /* 80153DA8 00150D08  7C 08 03 A6 */	mtlr r0
 /* 80153DAC 00150D0C  4E 80 00 20 */	blr 
+.endfn appearTransit__8SpiderAiFv
 
-.global dieState__8SpiderAiFv
-dieState__8SpiderAiFv:
+.fn dieState__8SpiderAiFv, global
 /* 80153DB0 00150D10  7C 08 02 A6 */	mflr r0
 /* 80153DB4 00150D14  90 01 00 04 */	stw r0, 4(r1)
 /* 80153DB8 00150D18  94 21 FF 58 */	stwu r1, -0xa8(r1)
@@ -567,9 +566,9 @@ dieState__8SpiderAiFv:
 /* 80154004 00150F64  38 21 00 A8 */	addi r1, r1, 0xa8
 /* 80154008 00150F68  7C 08 03 A6 */	mtlr r0
 /* 8015400C 00150F6C  4E 80 00 20 */	blr 
+.endfn dieState__8SpiderAiFv
 
-.global update__8SpiderAiFv
-update__8SpiderAiFv:
+.fn update__8SpiderAiFv, global
 /* 80154010 00150F70  7C 08 02 A6 */	mflr r0
 /* 80154014 00150F74  90 01 00 04 */	stw r0, 4(r1)
 /* 80154018 00150F78  94 21 F9 18 */	stwu r1, -0x6e8(r1)
@@ -2310,23 +2309,27 @@ update__8SpiderAiFv:
 /* 801559FC 0015295C  38 21 06 E8 */	addi r1, r1, 0x6e8
 /* 80155A00 00152960  7C 08 03 A6 */	mtlr r0
 /* 80155A04 00152964  4E 80 00 20 */	blr 
+.endfn update__8SpiderAiFv
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-spiderSE:
+.obj spiderSE, local
 	.4byte 0x00000029
 	.4byte 0x0000002A
 	.4byte 0x0000002B
 	.4byte 0x0000002C
 	.4byte 0x0000002D
+.endobj spiderSE
 .balign 4
-lbl_802CF4AC:
+.obj lbl_802CF4AC, local
 	.asciz "SpiderAi.cpp"
+.endobj lbl_802CF4AC
 .balign 4
-lbl_802CF4BC:
+.obj lbl_802CF4BC, local
 	.asciz "SpiderAi"
+.endobj lbl_802CF4BC
 .balign 4
-lbl_802CF4C8:
+.obj lbl_802CF4C8, local
 	.4byte .L_801540F4
 	.4byte .L_80154100
 	.4byte .L_8015452C
@@ -2336,72 +2339,96 @@ lbl_802CF4C8:
 	.4byte .L_80155790
 	.4byte .L_80155520
 	.4byte .L_801555D0
+.endobj lbl_802CF4C8
 .balign 4
-lbl_802CF4EC:
+.obj lbl_802CF4EC, local
 	.asciz "PaniAnimKeyListener"
+.endobj lbl_802CF4EC
 .balign 4
-lbl_802CF500:
+.obj lbl_802CF500, local
 	.4byte __RTTI__19PaniAnimKeyListener
 	.4byte 0
 	.4byte 0
-.global __vt__8SpiderAi
-__vt__8SpiderAi:
+.endobj lbl_802CF500
+.balign 4
+.obj __vt__8SpiderAi, global
 	.4byte __RTTI__8SpiderAi
 	.4byte 0
 	.4byte animationKeyUpdated__8SpiderAiFR16PaniAnimKeyEvent
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
+.endobj __vt__8SpiderAi
+.balign 4
+.skip 0x10 # compiler padding
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-__RTTI__19PaniAnimKeyListener:
+.obj __RTTI__19PaniAnimKeyListener, local
 	.4byte lbl_802CF4EC
 	.4byte 0
-__RTTI__8SpiderAi:
+.endobj __RTTI__19PaniAnimKeyListener
+.balign 4
+.obj __RTTI__8SpiderAi, local
 	.4byte lbl_802CF4BC
 	.4byte lbl_802CF500
+.endobj __RTTI__8SpiderAi
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803EAB20:
+.obj lbl_803EAB20, local
 	.float 20.0
-lbl_803EAB24:
+.endobj lbl_803EAB20
+.obj lbl_803EAB24, local
 	.float 0.0
-lbl_803EAB28:
+.endobj lbl_803EAB24
+.obj lbl_803EAB28, local
 	.float 200.0
-lbl_803EAB2C:
+.endobj lbl_803EAB28
+.obj lbl_803EAB2C, local
 	.float 0.35
-lbl_803EAB30:
+.endobj lbl_803EAB2C
+.obj lbl_803EAB30, local
 	.float 5.0
-lbl_803EAB34:
+.endobj lbl_803EAB30
+.obj lbl_803EAB34, local
 	.float 1.0
-lbl_803EAB38:
+.endobj lbl_803EAB34
+.obj lbl_803EAB38, local
 	.float 32767.0
-lbl_803EAB3C:
+.endobj lbl_803EAB38
+.obj lbl_803EAB3C, local
 	.float 0.999999
+.endobj lbl_803EAB3C
 .balign 8
-lbl_803EAB40:
-	.4byte 0x43300000
-	.4byte 0x80000000
-lbl_803EAB48:
+.obj lbl_803EAB40, local
+	.8byte 0x4330000080000000
+.endobj lbl_803EAB40
+.balign 4
+.obj lbl_803EAB48, local
 	.float 1.999998
-lbl_803EAB4C:
+.endobj lbl_803EAB48
+.obj lbl_803EAB4C, local
 	.float 30.0
-lbl_803EAB50: # pi
+.endobj lbl_803EAB4C
+.obj lbl_803EAB50, local # pi
 	.float 3.1415896
-lbl_803EAB54: # half-pi
+.endobj lbl_803EAB50
+.obj lbl_803EAB54, local # half-pi
 	.float 1.5707964
-lbl_803EAB58:
+.endobj lbl_803EAB54
+.obj lbl_803EAB58, local
 	.float 2.0
-lbl_803EAB5C:
+.endobj lbl_803EAB58
+.obj lbl_803EAB5C, local
 	.float 3.0
-lbl_803EAB60:
+.endobj lbl_803EAB5C
+.obj lbl_803EAB60, local
 	.float 0.2
-lbl_803EAB64:
+.endobj lbl_803EAB60
+.obj lbl_803EAB64, local
 	.float 0.5
-lbl_803EAB68:
+.endobj lbl_803EAB64
+.obj lbl_803EAB68, local
 	.float 1.5
-lbl_803EAB6C:
+.endobj lbl_803EAB68
+.obj lbl_803EAB6C, local
 	.float 1200.0
+.endobj lbl_803EAB6C

@@ -1,16 +1,15 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global getShapeFile__8MapPartsFi
-getShapeFile__8MapPartsFi:
+.fn getShapeFile__8MapPartsFi, global
 /* 801184A8 00115408  3C 80 80 2C */	lis r4, shapeFiles__8MapParts@ha
 /* 801184AC 0011540C  54 63 10 3A */	slwi r3, r3, 2
 /* 801184B0 00115410  38 04 32 48 */	addi r0, r4, shapeFiles__8MapParts@l
 /* 801184B4 00115414  7C 60 1A 14 */	add r3, r0, r3
 /* 801184B8 00115418  80 63 00 00 */	lwz r3, 0(r3)
 /* 801184BC 0011541C  4E 80 00 20 */	blr 
+.endfn getShapeFile__8MapPartsFi
 
-.global applyVelocity__8MapPartsFR5PlaneR8Vector3fR8Vector3f
-applyVelocity__8MapPartsFR5PlaneR8Vector3fR8Vector3f:
+.fn applyVelocity__8MapPartsFR5PlaneR8Vector3fR8Vector3f, global
 /* 801184C0 00115420  94 21 FF C0 */	stwu r1, -0x40(r1)
 /* 801184C4 00115424  C0 23 01 44 */	lfs f1, 0x144(r3)
 /* 801184C8 00115428  C0 06 00 00 */	lfs f0, 0(r6)
@@ -34,9 +33,9 @@ applyVelocity__8MapPartsFR5PlaneR8Vector3fR8Vector3f:
 /* 80118510 00115470  90 03 01 4C */	stw r0, 0x14c(r3)
 /* 80118514 00115474  38 21 00 40 */	addi r1, r1, 0x40
 /* 80118518 00115478  4E 80 00 20 */	blr 
+.endfn applyVelocity__8MapPartsFR5PlaneR8Vector3fR8Vector3f
 
-.global __ct__9MapEntityFP5Shape
-__ct__9MapEntityFP5Shape:
+.fn __ct__9MapEntityFP5Shape, global
 /* 8011851C 0011547C  7C 08 02 A6 */	mflr r0
 /* 80118520 00115480  90 01 00 04 */	stw r0, 4(r1)
 /* 80118524 00115484  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -67,9 +66,9 @@ __ct__9MapEntityFP5Shape:
 /* 80118588 001154E8  38 21 00 18 */	addi r1, r1, 0x18
 /* 8011858C 001154EC  7C 08 03 A6 */	mtlr r0
 /* 80118590 001154F0  4E 80 00 20 */	blr 
+.endfn __ct__9MapEntityFP5Shape
 
-.global update__9MapEntityFv
-update__9MapEntityFv:
+.fn update__9MapEntityFv, global
 /* 80118594 001154F4  7C 08 02 A6 */	mflr r0
 /* 80118598 001154F8  90 01 00 04 */	stw r0, 4(r1)
 /* 8011859C 001154FC  94 21 FF 58 */	stwu r1, -0xa8(r1)
@@ -134,9 +133,9 @@ update__9MapEntityFv:
 /* 80118688 001155E8  38 21 00 A8 */	addi r1, r1, 0xa8
 /* 8011868C 001155EC  7C 08 03 A6 */	mtlr r0
 /* 80118690 001155F0  4E 80 00 20 */	blr 
+.endfn update__9MapEntityFv
 
-.global __ct__9MapSliderFP5Shapeiifffi
-__ct__9MapSliderFP5Shapeiifffi:
+.fn __ct__9MapSliderFP5Shapeiifffi, global
 /* 80118694 001155F4  7C 08 02 A6 */	mflr r0
 /* 80118698 001155F8  90 01 00 04 */	stw r0, 4(r1)
 /* 8011869C 001155FC  94 21 FF B0 */	stwu r1, -0x50(r1)
@@ -189,9 +188,9 @@ __ct__9MapSliderFP5Shapeiifffi:
 /* 80118758 001156B8  38 21 00 50 */	addi r1, r1, 0x50
 /* 8011875C 001156BC  7C 08 03 A6 */	mtlr r0
 /* 80118760 001156C0  4E 80 00 20 */	blr 
+.endfn __ct__9MapSliderFP5Shapeiifffi
 
-.global init__9MapSliderFv
-init__9MapSliderFv:
+.fn init__9MapSliderFv, global
 /* 80118764 001156C4  80 E3 01 40 */	lwz r7, 0x140(r3)
 /* 80118768 001156C8  28 07 00 00 */	cmplwi r7, 0
 /* 8011876C 001156CC  4D 82 00 20 */	beqlr 
@@ -208,9 +207,9 @@ init__9MapSliderFv:
 /* 80118798 001156F8  90 83 01 78 */	stw r4, 0x178(r3)
 /* 8011879C 001156FC  90 03 01 7C */	stw r0, 0x17c(r3)
 /* 801187A0 00115700  4E 80 00 20 */	blr 
+.endfn init__9MapSliderFv
 
-.global update__9MapSliderFv
-update__9MapSliderFv:
+.fn update__9MapSliderFv, global
 /* 801187A4 00115704  7C 08 02 A6 */	mflr r0
 /* 801187A8 00115708  90 01 00 04 */	stw r0, 4(r1)
 /* 801187AC 0011570C  94 21 FE F0 */	stwu r1, -0x110(r1)
@@ -448,9 +447,9 @@ update__9MapSliderFv:
 /* 80118B04 00115A64  38 21 01 10 */	addi r1, r1, 0x110
 /* 80118B08 00115A68  7C 08 03 A6 */	mtlr r0
 /* 80118B0C 00115A6C  4E 80 00 20 */	blr 
+.endfn update__9MapSliderFv
 
-.global refresh__9MapSliderFR8Graphics
-refresh__9MapSliderFR8Graphics:
+.fn refresh__9MapSliderFR8Graphics, global
 /* 80118B10 00115A70  7C 08 02 A6 */	mflr r0
 /* 80118B14 00115A74  90 01 00 04 */	stw r0, 4(r1)
 /* 80118B18 00115A78  94 21 FE D0 */	stwu r1, -0x130(r1)
@@ -575,65 +574,80 @@ refresh__9MapSliderFR8Graphics:
 /* 80118CF0 00115C50  38 21 01 30 */	addi r1, r1, 0x130
 /* 80118CF4 00115C54  7C 08 03 A6 */	mtlr r0
 /* 80118CF8 00115C58  4E 80 00 20 */	blr 
+.endfn refresh__9MapSliderFR8Graphics
 
-.global read__8MapPartsFR18RandomAccessStream
-read__8MapPartsFR18RandomAccessStream:
+.fn read__8MapPartsFR18RandomAccessStream, weak
 /* 80118CFC 00115C5C  4E 80 00 20 */	blr 
+.endfn read__8MapPartsFR18RandomAccessStream
 
-.global update__8MapPartsFv
-update__8MapPartsFv:
+.fn update__8MapPartsFv, weak
 /* 80118D00 00115C60  4E 80 00 20 */	blr 
+.endfn update__8MapPartsFv
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802C31D8:
+.obj lbl_802C31D8, local
 	.asciz "mapParts.cpp"
+.endobj lbl_802C31D8
 .balign 4
-lbl_802C31E8:
+.obj lbl_802C31E8, local
 	.asciz "mapParts"
+.endobj lbl_802C31E8
 .balign 4
-lbl_802C31F4:
+.obj lbl_802C31F4, local
 	.asciz "mapparts/cone.mod"
+.endobj lbl_802C31F4
 .balign 4
-lbl_802C3208:
+.obj lbl_802C3208, local
 	.asciz "mapparts/cylinder.mod"
+.endobj lbl_802C3208
 .balign 4
-lbl_802C3220:
+.obj lbl_802C3220, local
 	.asciz "mapparts/cube.mod"
+.endobj lbl_802C3220
 .balign 4
-lbl_802C3234:
+.obj lbl_802C3234, local
 	.asciz "mapparts/board.mod"
+.endobj lbl_802C3234
 .balign 4
-.global shapeFiles__8MapParts
-shapeFiles__8MapParts:
+.obj shapeFiles__8MapParts, global
 	.4byte lbl_802C31F4
 	.4byte lbl_802C3208
 	.4byte lbl_802C3220
 	.4byte lbl_802C3234
-lbl_802C3258:
+.endobj shapeFiles__8MapParts
+.balign 4
+.obj lbl_802C3258, local
 	.asciz "%d to go!\n"
+.endobj lbl_802C3258
 .balign 4
-lbl_802C3264:
+.obj lbl_802C3264, local
 	.asciz "MapSlider"
+.endobj lbl_802C3264
 .balign 4
-lbl_802C3270:
+.obj lbl_802C3270, local
 	.asciz "CoreNode"
+.endobj lbl_802C3270
 .balign 4
-lbl_802C327C:
+.obj lbl_802C327C, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte 0
-lbl_802C3288:
+.endobj lbl_802C327C
+.balign 4
+.obj lbl_802C3288, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte __RTTI__8CoreNode
 	.4byte 0
 	.4byte 0
+.endobj lbl_802C3288
 .balign 4
-lbl_802C329C:
+.obj lbl_802C329C, local
 	.asciz "DynCollObject"
+.endobj lbl_802C329C
 .balign 4
-lbl_802C32AC:
+.obj lbl_802C32AC, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte __RTTI__8CoreNode
@@ -641,11 +655,13 @@ lbl_802C32AC:
 	.4byte __RTTI__4Node
 	.4byte 0
 	.4byte 0
+.endobj lbl_802C32AC
 .balign 4
-lbl_802C32C8:
+.obj lbl_802C32C8, local
 	.asciz "DynCollShape"
+.endobj lbl_802C32C8
 .balign 4
-lbl_802C32D8:
+.obj lbl_802C32D8, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte __RTTI__8CoreNode
@@ -655,11 +671,13 @@ lbl_802C32D8:
 	.4byte __RTTI__13DynCollObject
 	.4byte 0
 	.4byte 0
+.endobj lbl_802C32D8
 .balign 4
-lbl_802C32FC:
+.obj lbl_802C32FC, local
 	.asciz "MapParts"
+.endobj lbl_802C32FC
 .balign 4
-lbl_802C3308:
+.obj lbl_802C3308, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte __RTTI__8CoreNode
@@ -671,7 +689,9 @@ lbl_802C3308:
 	.4byte __RTTI__12DynCollShape
 	.4byte 0
 	.4byte 0
-lbl_802C3334:
+.endobj lbl_802C3308
+.balign 4
+.obj lbl_802C3334, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte __RTTI__8CoreNode
@@ -685,8 +705,9 @@ lbl_802C3334:
 	.4byte __RTTI__8MapParts
 	.4byte 0
 	.4byte 0
-.global __vt__9MapSlider
-__vt__9MapSlider:
+.endobj lbl_802C3334
+.balign 4
+.obj __vt__9MapSlider, global
 	.4byte __RTTI__9MapSlider
 	.4byte 0
 	.4byte getAgeNodeType__5ANodeFv
@@ -706,11 +727,13 @@ __vt__9MapSlider:
 	.4byte jointVisible__12DynCollShapeFii
 	.4byte refresh__9MapSliderFR8Graphics
 	.4byte init__9MapSliderFv
+.endobj __vt__9MapSlider
 .balign 4
-lbl_802C33B4:
+.obj lbl_802C33B4, local
 	.asciz "MapEntity"
+.endobj lbl_802C33B4
 .balign 4
-lbl_802C33C0:
+.obj lbl_802C33C0, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte __RTTI__8CoreNode
@@ -724,8 +747,9 @@ lbl_802C33C0:
 	.4byte __RTTI__8MapParts
 	.4byte 0
 	.4byte 0
-.global __vt__9MapEntity
-__vt__9MapEntity:
+.endobj lbl_802C33C0
+.balign 4
+.obj __vt__9MapEntity, global
 	.4byte __RTTI__9MapEntity
 	.4byte 0
 	.4byte getAgeNodeType__5ANodeFv
@@ -745,31 +769,11 @@ __vt__9MapEntity:
 	.4byte jointVisible__12DynCollShapeFii
 	.4byte refresh__12DynCollShapeFR8Graphics
 	.4byte init__8MapPartsFv
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-.global __vt__8MapParts
-__vt__8MapParts:
+.endobj __vt__9MapEntity
+.balign 4
+.skip 0x5C # compiler padding
+.balign 4
+.obj __vt__8MapParts, global
 	.4byte __RTTI__8MapParts
 	.4byte 0
 	.4byte getAgeNodeType__5ANodeFv
@@ -789,73 +793,108 @@ __vt__8MapParts:
 	.4byte jointVisible__12DynCollShapeFii
 	.4byte refresh__12DynCollShapeFR8Graphics
 	.4byte init__8MapPartsFv
+.endobj __vt__8MapParts
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-lbl_803E2B00:
+.obj lbl_803E2B00, local
 	.float 0.0
-lbl_803E2B04:
+.endobj lbl_803E2B00
+.obj lbl_803E2B04, local
 	.float 0.0
-lbl_803E2B08:
+.endobj lbl_803E2B04
+.obj lbl_803E2B08, local
 	.float 0.0
-lbl_803E2B0C:
+.endobj lbl_803E2B08
+.obj lbl_803E2B0C, local
 	.float 0.1
-lbl_803E2B10:
+.endobj lbl_803E2B0C
+.obj lbl_803E2B10, local
 	.float 0.0
-lbl_803E2B14:
+.endobj lbl_803E2B10
+.obj lbl_803E2B14, local
 	.float 0.0
-lbl_803E2B18:
+.endobj lbl_803E2B14
+.obj lbl_803E2B18, local
 	.float 0.0
-lbl_803E2B1C:
+.endobj lbl_803E2B18
+.obj lbl_803E2B1C, local
 	.float 0.0
-lbl_803E2B20:
+.endobj lbl_803E2B1C
+.obj lbl_803E2B20, local
 	.float 0.0
-lbl_803E2B24:
+.endobj lbl_803E2B20
+.obj lbl_803E2B24, local
 	.float 0.0
-lbl_803E2B28:
+.endobj lbl_803E2B24
+.obj lbl_803E2B28, local
 	.float 0.0
-lbl_803E2B2C:
+.endobj lbl_803E2B28
+.obj lbl_803E2B2C, local
 	.float 20.0
-lbl_803E2B30:
+.endobj lbl_803E2B2C
+.obj lbl_803E2B30, local
 	.float 0.0
+.endobj lbl_803E2B30
 .balign 4
-lbl_803E2B34:
+.obj lbl_803E2B34, local
 	.asciz "ANode"
+.endobj lbl_803E2B34
 .balign 4
-__RTTI__5ANode:
+.obj __RTTI__5ANode, local
 	.4byte lbl_803E2B34
 	.4byte 0
-__RTTI__8CoreNode:
+.endobj __RTTI__5ANode
+.balign 4
+.obj __RTTI__8CoreNode, local
 	.4byte lbl_802C3270
 	.4byte lbl_802C327C
+.endobj __RTTI__8CoreNode
 .balign 4
-lbl_803E2B4C:
+.obj lbl_803E2B4C, local
 	.asciz "Node"
+.endobj lbl_803E2B4C
 .balign 4
-__RTTI__4Node:
+.obj __RTTI__4Node, local
 	.4byte lbl_803E2B4C
 	.4byte lbl_802C3288
-__RTTI__13DynCollObject:
+.endobj __RTTI__4Node
+.balign 4
+.obj __RTTI__13DynCollObject, local
 	.4byte lbl_802C329C
 	.4byte lbl_802C32AC
-__RTTI__12DynCollShape:
+.endobj __RTTI__13DynCollObject
+.balign 4
+.obj __RTTI__12DynCollShape, local
 	.4byte lbl_802C32C8
 	.4byte lbl_802C32D8
-__RTTI__8MapParts:
+.endobj __RTTI__12DynCollShape
+.balign 4
+.obj __RTTI__8MapParts, local
 	.4byte lbl_802C32FC
 	.4byte lbl_802C3308
-__RTTI__9MapSlider:
+.endobj __RTTI__8MapParts
+.balign 4
+.obj __RTTI__9MapSlider, local
 	.4byte lbl_802C3264
 	.4byte lbl_802C3334
-__RTTI__9MapEntity:
+.endobj __RTTI__9MapSlider
+.balign 4
+.obj __RTTI__9MapEntity, local
 	.4byte lbl_802C33B4
 	.4byte lbl_802C33C0
+.endobj __RTTI__9MapEntity
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803EA1B8:
+.obj lbl_803EA1B8, local
 	.float 0.0
-lbl_803EA1BC:
+.endobj lbl_803EA1B8
+.balign 4
+.obj lbl_803EA1BC, local
 	.float 1.0
-lbl_803EA1C0:
+.endobj lbl_803EA1BC
+.balign 4
+.obj lbl_803EA1C0, local
 	.float 0.5
+.endobj lbl_803EA1C0

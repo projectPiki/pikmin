@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global startWaterEffect__12PikiHeadItemFv
-startWaterEffect__12PikiHeadItemFv:
+.fn startWaterEffect__12PikiHeadItemFv, global
 /* 800EC4C8 000E9428  7C 08 02 A6 */	mflr r0
 /* 800EC4CC 000E942C  90 01 00 04 */	stw r0, 4(r1)
 /* 800EC4D0 000E9430  38 03 00 94 */	addi r0, r3, 0x94
@@ -26,9 +25,9 @@ startWaterEffect__12PikiHeadItemFv:
 /* 800EC51C 000E947C  38 21 00 38 */	addi r1, r1, 0x38
 /* 800EC520 000E9480  7C 08 03 A6 */	mtlr r0
 /* 800EC524 000E9484  4E 80 00 20 */	blr 
+.endfn startWaterEffect__12PikiHeadItemFv
 
-.global finishWaterEffect__12PikiHeadItemFv
-finishWaterEffect__12PikiHeadItemFv:
+.fn finishWaterEffect__12PikiHeadItemFv, global
 /* 800EC528 000E9488  7C 08 02 A6 */	mflr r0
 /* 800EC52C 000E948C  90 01 00 04 */	stw r0, 4(r1)
 /* 800EC530 000E9490  94 21 FF F8 */	stwu r1, -8(r1)
@@ -41,9 +40,9 @@ finishWaterEffect__12PikiHeadItemFv:
 /* 800EC54C 000E94AC  38 21 00 08 */	addi r1, r1, 8
 /* 800EC550 000E94B0  7C 08 03 A6 */	mtlr r0
 /* 800EC554 000E94B4  4E 80 00 20 */	blr 
+.endfn finishWaterEffect__12PikiHeadItemFv
 
-.global playSound__12PikiHeadItemFi
-playSound__12PikiHeadItemFi:
+.fn playSound__12PikiHeadItemFi, global
 /* 800EC558 000E94B8  7C 08 02 A6 */	mflr r0
 /* 800EC55C 000E94BC  7C 66 1B 78 */	mr r6, r3
 /* 800EC560 000E94C0  90 01 00 04 */	stw r0, 4(r1)
@@ -75,9 +74,9 @@ playSound__12PikiHeadItemFi:
 /* 800EC5C0 000E9520  38 21 00 18 */	addi r1, r1, 0x18
 /* 800EC5C4 000E9524  7C 08 03 A6 */	mtlr r0
 /* 800EC5C8 000E9528  4E 80 00 20 */	blr 
+.endfn playSound__12PikiHeadItemFi
 
-.global canPullout__12PikiHeadItemFv
-canPullout__12PikiHeadItemFv:
+.fn canPullout__12PikiHeadItemFv, global
 /* 800EC5CC 000E952C  7C 08 02 A6 */	mflr r0
 /* 800EC5D0 000E9530  90 01 00 04 */	stw r0, 4(r1)
 /* 800EC5D4 000E9534  94 21 FF F8 */	stwu r1, -8(r1)
@@ -104,14 +103,14 @@ canPullout__12PikiHeadItemFv:
 /* 800EC618 000E9578  38 21 00 08 */	addi r1, r1, 8
 /* 800EC61C 000E957C  7C 08 03 A6 */	mtlr r0
 /* 800EC620 000E9580  4E 80 00 20 */	blr 
+.endfn canPullout__12PikiHeadItemFv
 
-.global isVisible__12PikiHeadItemFv
-isVisible__12PikiHeadItemFv:
+.fn isVisible__12PikiHeadItemFv, global
 /* 800EC624 000E9584  38 60 00 01 */	li r3, 1
 /* 800EC628 000E9588  4E 80 00 20 */	blr 
+.endfn isVisible__12PikiHeadItemFv
 
-.global needShadow__12PikiHeadItemFv
-needShadow__12PikiHeadItemFv:
+.fn needShadow__12PikiHeadItemFv, global
 /* 800EC62C 000E958C  7C 08 02 A6 */	mflr r0
 /* 800EC630 000E9590  90 01 00 04 */	stw r0, 4(r1)
 /* 800EC634 000E9594  94 21 FF F8 */	stwu r1, -8(r1)
@@ -143,14 +142,14 @@ needShadow__12PikiHeadItemFv:
 /* 800EC688 000E95E8  38 21 00 08 */	addi r1, r1, 8
 /* 800EC68C 000E95EC  7C 08 03 A6 */	mtlr r0
 /* 800EC690 000E95F0  4E 80 00 20 */	blr 
+.endfn needShadow__12PikiHeadItemFv
 
-.global isAlive__12PikiHeadItemFv
-isAlive__12PikiHeadItemFv:
+.fn isAlive__12PikiHeadItemFv, global
 /* 800EC694 000E95F4  38 60 00 01 */	li r3, 1
 /* 800EC698 000E95F8  4E 80 00 20 */	blr 
+.endfn isAlive__12PikiHeadItemFv
 
-.global __ct__12PikiHeadItemFP12CreaturePropP15ItemShapeObjectP8SimpleAI
-__ct__12PikiHeadItemFP12CreaturePropP15ItemShapeObjectP8SimpleAI:
+.fn __ct__12PikiHeadItemFP12CreaturePropP15ItemShapeObjectP8SimpleAI, global
 /* 800EC69C 000E95FC  7C 08 02 A6 */	mflr r0
 /* 800EC6A0 000E9600  90 01 00 04 */	stw r0, 4(r1)
 /* 800EC6A4 000E9604  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -252,9 +251,9 @@ __ct__12PikiHeadItemFP12CreaturePropP15ItemShapeObjectP8SimpleAI:
 /* 800EC81C 000E977C  38 21 00 28 */	addi r1, r1, 0x28
 /* 800EC820 000E9780  7C 08 03 A6 */	mtlr r0
 /* 800EC824 000E9784  4E 80 00 20 */	blr 
+.endfn __ct__12PikiHeadItemFP12CreaturePropP15ItemShapeObjectP8SimpleAI
 
-.global startAI__12PikiHeadItemFi
-startAI__12PikiHeadItemFi:
+.fn startAI__12PikiHeadItemFi, global
 /* 800EC828 000E9788  7C 08 02 A6 */	mflr r0
 /* 800EC82C 000E978C  90 01 00 04 */	stw r0, 4(r1)
 /* 800EC830 000E9790  38 00 00 00 */	li r0, 0
@@ -339,9 +338,9 @@ startAI__12PikiHeadItemFi:
 /* 800EC96C 000E98CC  38 21 00 68 */	addi r1, r1, 0x68
 /* 800EC970 000E98D0  7C 08 03 A6 */	mtlr r0
 /* 800EC974 000E98D4  4E 80 00 20 */	blr 
+.endfn startAI__12PikiHeadItemFi
 
-.global setPermanentEffects__12PikiHeadItemFb
-setPermanentEffects__12PikiHeadItemFb:
+.fn setPermanentEffects__12PikiHeadItemFb, global
 /* 800EC978 000E98D8  7C 08 02 A6 */	mflr r0
 /* 800EC97C 000E98DC  90 01 00 04 */	stw r0, 4(r1)
 /* 800EC980 000E98E0  54 80 06 3F */	clrlwi. r0, r4, 0x18
@@ -379,9 +378,9 @@ setPermanentEffects__12PikiHeadItemFb:
 /* 800EC9F8 000E9958  38 21 00 40 */	addi r1, r1, 0x40
 /* 800EC9FC 000E995C  7C 08 03 A6 */	mtlr r0
 /* 800ECA00 000E9960  4E 80 00 20 */	blr 
+.endfn setPermanentEffects__12PikiHeadItemFb
 
-.global doKill__12PikiHeadItemFv
-doKill__12PikiHeadItemFv:
+.fn doKill__12PikiHeadItemFv, global
 /* 800ECA04 000E9964  7C 08 02 A6 */	mflr r0
 /* 800ECA08 000E9968  90 01 00 04 */	stw r0, 4(r1)
 /* 800ECA0C 000E996C  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -417,24 +416,24 @@ doKill__12PikiHeadItemFv:
 /* 800ECA84 000E99E4  38 21 00 20 */	addi r1, r1, 0x20
 /* 800ECA88 000E99E8  7C 08 03 A6 */	mtlr r0
 /* 800ECA8C 000E99EC  4E 80 00 20 */	blr 
+.endfn doKill__12PikiHeadItemFv
 
-.global getSize__12PikiHeadItemFv
-getSize__12PikiHeadItemFv:
+.fn getSize__12PikiHeadItemFv, global
 /* 800ECA90 000E99F0  C0 22 9A B8 */	lfs f1, lbl_803E9CB8@sda21(r2)
 /* 800ECA94 000E99F4  4E 80 00 20 */	blr 
+.endfn getSize__12PikiHeadItemFv
 
-.global getiMass__12PikiHeadItemFv
-getiMass__12PikiHeadItemFv:
+.fn getiMass__12PikiHeadItemFv, global
 /* 800ECA98 000E99F8  C0 22 9A BC */	lfs f1, lbl_803E9CBC@sda21(r2)
 /* 800ECA9C 000E99FC  4E 80 00 20 */	blr 
+.endfn getiMass__12PikiHeadItemFv
 
-.global setColor__12PikiHeadItemFi
-setColor__12PikiHeadItemFi:
+.fn setColor__12PikiHeadItemFi, global
 /* 800ECAA0 000E9A00  90 83 03 CC */	stw r4, 0x3cc(r3)
 /* 800ECAA4 000E9A04  4E 80 00 20 */	blr 
+.endfn setColor__12PikiHeadItemFi
 
-.global refresh__12PikiHeadItemFR8Graphics
-refresh__12PikiHeadItemFR8Graphics:
+.fn refresh__12PikiHeadItemFR8Graphics, global
 /* 800ECAA8 000E9A08  7C 08 02 A6 */	mflr r0
 /* 800ECAAC 000E9A0C  90 01 00 04 */	stw r0, 4(r1)
 /* 800ECAB0 000E9A10  94 21 FF 28 */	stwu r1, -0xd8(r1)
@@ -786,9 +785,9 @@ refresh__12PikiHeadItemFR8Graphics:
 /* 800ECFE8 000E9F48  38 21 00 D8 */	addi r1, r1, 0xd8
 /* 800ECFEC 000E9F4C  7C 08 03 A6 */	mtlr r0
 /* 800ECFF0 000E9F50  4E 80 00 20 */	blr 
+.endfn refresh__12PikiHeadItemFR8Graphics
 
-.global interactBikkuri__12PikiHeadItemFR15InteractBikkuri
-interactBikkuri__12PikiHeadItemFR15InteractBikkuri:
+.fn interactBikkuri__12PikiHeadItemFR15InteractBikkuri, global
 /* 800ECFF4 000E9F54  7C 08 02 A6 */	mflr r0
 /* 800ECFF8 000E9F58  90 01 00 04 */	stw r0, 4(r1)
 /* 800ECFFC 000E9F5C  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -857,9 +856,9 @@ interactBikkuri__12PikiHeadItemFR15InteractBikkuri:
 /* 800ED0F0 000EA050  38 21 00 20 */	addi r1, r1, 0x20
 /* 800ED0F4 000EA054  7C 08 03 A6 */	mtlr r0
 /* 800ED0F8 000EA058  4E 80 00 20 */	blr 
+.endfn interactBikkuri__12PikiHeadItemFR15InteractBikkuri
 
-.global interactSwallow__12PikiHeadItemFR15InteractSwallow
-interactSwallow__12PikiHeadItemFR15InteractSwallow:
+.fn interactSwallow__12PikiHeadItemFR15InteractSwallow, global
 /* 800ED0FC 000EA05C  7C 08 02 A6 */	mflr r0
 /* 800ED100 000EA060  90 01 00 04 */	stw r0, 4(r1)
 /* 800ED104 000EA064  38 00 00 01 */	li r0, 1
@@ -926,46 +925,56 @@ interactSwallow__12PikiHeadItemFR15InteractSwallow:
 /* 800ED1F0 000EA150  38 21 00 20 */	addi r1, r1, 0x20
 /* 800ED1F4 000EA154  7C 08 03 A6 */	mtlr r0
 /* 800ED1F8 000EA158  4E 80 00 20 */	blr 
+.endfn interactSwallow__12PikiHeadItemFR15InteractSwallow
 
-.global isAtari__12PikiHeadItemFv
-isAtari__12PikiHeadItemFv:
+.fn isAtari__12PikiHeadItemFv, weak
 /* 800ED1FC 000EA15C  38 60 00 00 */	li r3, 0
 /* 800ED200 000EA160  4E 80 00 20 */	blr 
+.endfn isAtari__12PikiHeadItemFv
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802BCD10:
+.obj lbl_802BCD10, local
 	.asciz "pikiheadItem.cpp"
+.endobj lbl_802BCD10
 .balign 4
-lbl_802BCD24:
+.obj lbl_802BCD24, local
 	.asciz "pikiheadItem"
+.endobj lbl_802BCD24
 .balign 4
-lbl_802BCD34:
+.obj lbl_802BCD34, local
 	.asciz "PikiHeadItem"
+.endobj lbl_802BCD34
 .balign 4
-lbl_802BCD44:
+.obj lbl_802BCD44, local
 	.asciz "PaniAnimKeyListener"
+.endobj lbl_802BCD44
 .balign 4
-lbl_802BCD58:
+.obj lbl_802BCD58, local
 	.asciz "EventTalker"
+.endobj lbl_802BCD58
 .balign 4
-lbl_802BCD64:
+.obj lbl_802BCD64, local
 	.asciz "RefCountable"
+.endobj lbl_802BCD64
 .balign 4
-lbl_802BCD74:
+.obj lbl_802BCD74, local
 	.asciz "Creature"
+.endobj lbl_802BCD74
 .balign 4
-lbl_802BCD80:
+.obj lbl_802BCD80, local
 	.4byte __RTTI__11EventTalker
 	.4byte 0x8
 	.4byte __RTTI__12RefCountable
 	.4byte 0
 	.4byte 0
+.endobj lbl_802BCD80
 .balign 4
-lbl_802BCD94:
+.obj lbl_802BCD94, local
 	.asciz "AICreature"
+.endobj lbl_802BCD94
 .balign 4
-lbl_802BCDA0:
+.obj lbl_802BCDA0, local
 	.4byte __RTTI__19PaniAnimKeyListener
 	.4byte 0x2B8
 	.4byte __RTTI__11EventTalker
@@ -975,11 +984,13 @@ lbl_802BCDA0:
 	.4byte __RTTI__8Creature
 	.4byte 0
 	.4byte 0
+.endobj lbl_802BCDA0
 .balign 4
-lbl_802BCDC4:
+.obj lbl_802BCDC4, local
 	.asciz "ItemCreature"
+.endobj lbl_802BCDC4
 .balign 4
-lbl_802BCDD4:
+.obj lbl_802BCDD4, local
 	.4byte __RTTI__19PaniAnimKeyListener
 	.4byte 0x2B8
 	.4byte __RTTI__11EventTalker
@@ -991,7 +1002,9 @@ lbl_802BCDD4:
 	.4byte __RTTI__10AICreature
 	.4byte 0
 	.4byte 0
-lbl_802BCE00:
+.endobj lbl_802BCDD4
+.balign 4
+.obj lbl_802BCE00, local
 	.4byte __RTTI__19PaniAnimKeyListener
 	.4byte 0x2B8
 	.4byte __RTTI__11EventTalker
@@ -1005,8 +1018,9 @@ lbl_802BCE00:
 	.4byte __RTTI__12ItemCreature
 	.4byte 0
 	.4byte 0
-.global __vt__12PikiHeadItem
-__vt__12PikiHeadItem:
+.endobj lbl_802BCE00
+.balign 4
+.obj __vt__12PikiHeadItem, global
 	.4byte __RTTI__12PikiHeadItem
 	.4byte 0
 	.4byte addCntCallback__12RefCountableFv
@@ -1094,17 +1108,21 @@ __vt__12PikiHeadItem:
 	.4byte stopMotion__12ItemCreatureFv
 	.4byte animationKeyUpdated__10AICreatureFR16PaniAnimKeyEvent
 	.4byte finalSetup__12ItemCreatureFv
+.endobj __vt__12PikiHeadItem
 .balign 4
-lbl_802BCF90:
+.obj lbl_802BCF90, local
 	.asciz "zen::CallBack1<zen::particleMdl *>"
+.endobj lbl_802BCF90
 .balign 4
-lbl_802BCFB4:
+.obj lbl_802BCFB4, local
 	.asciz "zen::CallBack2<zen::particleGenerator *, zen::particleMdl *>"
+.endobj lbl_802BCFB4
 .balign 4
-lbl_802BCFF4:
+.obj lbl_802BCFF4, local
 	.asciz "zen::CallBack1<zen::particleGenerator *>"
+.endobj lbl_802BCFF4
 .balign 4
-lbl_802BD020:
+.obj lbl_802BD020, local
 	.4byte "__RTTI__Q23zen31CallBack1<PQ23zen11particleMdl>"
 	.4byte 0x8
 	.4byte "__RTTI__Q23zen58CallBack2<PQ23zen17particleGenerator,PQ23zen11particleMdl>"
@@ -1112,6 +1130,12 @@ lbl_802BD020:
 	.4byte "__RTTI__Q23zen37CallBack1<PQ23zen17particleGenerator>"
 	.4byte 0
 	.4byte 0
+.endobj lbl_802BD020
+.balign 4
+# This doesn't show in the map. What the hell is this?!
+# Looks like remnants of a virtual table containing thunks.
+# Appears in pikiheadItem.cpp, navi.cpp, piki.cpp, and uteffect.cpp.
+#.obj UNKNOWN_WEIRD_SHIT, local
 	.4byte 0
 	.4byte 0
 	.4byte 0
@@ -1137,89 +1161,136 @@ lbl_802BD020:
 	.4byte 0
 	.4byte 0
 	.4byte 0
+#.endobj UNKNOWN_WEIRD_SHIT
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-lbl_803E1920:
+.obj lbl_803E1920, local
 	.float -1.0
-lbl_803E1924:
+.endobj lbl_803E1920
+.obj lbl_803E1924, local
 	.float 0.0
-lbl_803E1928:
+.endobj lbl_803E1924
+.obj lbl_803E1928, local
 	.float 0.0
-lbl_803E192C:
+.endobj lbl_803E1928
+.obj lbl_803E192C, local
 	.float 1.0
-lbl_803E1930:
+.endobj lbl_803E192C
+.obj lbl_803E1930, local
 	.float 4.0
-lbl_803E1934:
+.endobj lbl_803E1930
+.obj lbl_803E1934, local
 	.float 0.0
-lbl_803E1938:
+.endobj lbl_803E1934
+.obj lbl_803E1938, local
 	.float 0.0
-lbl_803E193C:
+.endobj lbl_803E1938
+.obj lbl_803E193C, local
 	.float 3.0
-lbl_803E1940:
+.endobj lbl_803E193C
+.obj lbl_803E1940, local
 	.float 0.0
-lbl_803E1944:
+.endobj lbl_803E1940
+.obj lbl_803E1944, local
 	.float 0.0
-lbl_803E1948:
+.endobj lbl_803E1944
+.obj lbl_803E1948, local
 	.float 6.0
-lbl_803E194C:
+.endobj lbl_803E1948
+.obj lbl_803E194C, local
 	.float 0.0
-lbl_803E1950:
+.endobj lbl_803E194C
+.obj lbl_803E1950, local
 	.float 0.0
-__RTTI__19PaniAnimKeyListener:
+.endobj lbl_803E1950
+.balign 4
+.obj __RTTI__19PaniAnimKeyListener, local
 	.4byte lbl_802BCD44
 	.4byte 0
-__RTTI__11EventTalker:
+.endobj __RTTI__19PaniAnimKeyListener
+.balign 4
+.obj __RTTI__11EventTalker, local
 	.4byte lbl_802BCD58
 	.4byte 0
-__RTTI__12RefCountable:
+.endobj __RTTI__11EventTalker
+.balign 4
+.obj __RTTI__12RefCountable, local
 	.4byte lbl_802BCD64
 	.4byte 0
-__RTTI__8Creature:
+.endobj __RTTI__12RefCountable
+.balign 4
+.obj __RTTI__8Creature, local
 	.4byte lbl_802BCD74
 	.4byte lbl_802BCD80
-__RTTI__10AICreature:
+.endobj __RTTI__8Creature
+.balign 4
+.obj __RTTI__10AICreature, local
 	.4byte lbl_802BCD94
 	.4byte lbl_802BCDA0
-__RTTI__12ItemCreature:
+.endobj __RTTI__10AICreature
+.balign 4
+.obj __RTTI__12ItemCreature, local
 	.4byte lbl_802BCDC4
 	.4byte lbl_802BCDD4
-__RTTI__12PikiHeadItem:
+.endobj __RTTI__12ItemCreature
+.balign 4
+.obj __RTTI__12PikiHeadItem, local
 	.4byte lbl_802BCD34
 	.4byte lbl_802BCE00
-"__RTTI__Q23zen31CallBack1<PQ23zen11particleMdl>":
+.endobj __RTTI__12PikiHeadItem
+.balign 4
+.obj "__RTTI__Q23zen31CallBack1<PQ23zen11particleMdl>", local
 	.4byte lbl_802BCF90
 	.4byte 0
-"__RTTI__Q23zen58CallBack2<PQ23zen17particleGenerator,PQ23zen11particleMdl>":
+.endobj "__RTTI__Q23zen31CallBack1<PQ23zen11particleMdl>"
+.balign 4
+.obj "__RTTI__Q23zen58CallBack2<PQ23zen17particleGenerator,PQ23zen11particleMdl>", local
 	.4byte lbl_802BCFB4
 	.4byte 0
-"__RTTI__Q23zen37CallBack1<PQ23zen17particleGenerator>":
+.endobj "__RTTI__Q23zen58CallBack2<PQ23zen17particleGenerator,PQ23zen11particleMdl>"
+.balign 4
+.obj "__RTTI__Q23zen37CallBack1<PQ23zen17particleGenerator>", local
 	.4byte lbl_802BCFF4
 	.4byte 0
+.endobj "__RTTI__Q23zen37CallBack1<PQ23zen17particleGenerator>"
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803E9C98:
+.obj lbl_803E9C98, local
 	.float 0.0
-lbl_803E9C9C:
+.endobj lbl_803E9C98
+.obj lbl_803E9C9C, local
 	.float 1.0
-lbl_803E9CA0:
+.endobj lbl_803E9C9C
+.obj lbl_803E9CA0, local
 	.float 32767.0
-lbl_803E9CA4:
+.endobj lbl_803E9CA0
+.obj lbl_803E9CA4, local
 	.float 10.0
-lbl_803E9CA8:
+.endobj lbl_803E9CA4
+.obj lbl_803E9CA8, local
 	.float 0.5
+.endobj lbl_803E9CA8
 .balign 8
-lbl_803E9CB0:
-	.4byte 0x43300000
-	.4byte 0x80000000
-lbl_803E9CB8:
+.obj lbl_803E9CB0, local
+	.8byte 0x4330000080000000
+.endobj lbl_803E9CB0
+.balign 4
+.obj lbl_803E9CB8, local
 	.float 5.0
-lbl_803E9CBC:
+.endobj lbl_803E9CB8
+.obj lbl_803E9CBC, local
 	.float 50.0
-lbl_803E9CC0:
+.endobj lbl_803E9CBC
+.balign 8
+.obj lbl_803E9CC0, local
 	.double 0.5
-lbl_803E9CC8:
+.endobj lbl_803E9CC0
+.balign 8
+.obj lbl_803E9CC8, local
 	.double 3.0
-lbl_803E9CD0:
+.endobj lbl_803E9CC8
+.obj lbl_803E9CD0, local
 	.float 0.84
+.endobj lbl_803E9CD0

@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global makeResident__9P2DWindowFv
-makeResident__9P2DWindowFv:
+.fn makeResident__9P2DWindowFv, global
 /* 801B37F0 001B0750  7C 08 02 A6 */	mflr r0
 /* 801B37F4 001B0754  90 01 00 04 */	stw r0, 4(r1)
 /* 801B37F8 001B0758  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -36,9 +35,9 @@ makeResident__9P2DWindowFv:
 /* 801B386C 001B07CC  38 21 00 18 */	addi r1, r1, 0x18
 /* 801B3870 001B07D0  7C 08 03 A6 */	mtlr r0
 /* 801B3874 001B07D4  4E 80 00 20 */	blr 
+.endfn makeResident__9P2DWindowFv
 
-.global loadResource__9P2DWindowFv
-loadResource__9P2DWindowFv:
+.fn loadResource__9P2DWindowFv, global
 /* 801B3878 001B07D8  7C 08 02 A6 */	mflr r0
 /* 801B387C 001B07DC  90 01 00 04 */	stw r0, 4(r1)
 /* 801B3880 001B07E0  94 21 FF A8 */	stwu r1, -0x58(r1)
@@ -135,9 +134,9 @@ loadResource__9P2DWindowFv:
 /* 801B39CC 001B092C  38 21 00 58 */	addi r1, r1, 0x58
 /* 801B39D0 001B0930  7C 08 03 A6 */	mtlr r0
 /* 801B39D4 001B0934  4E 80 00 20 */	blr 
+.endfn loadResource__9P2DWindowFv
 
-.global __ct__9P2DWindowFP7P2DPaneP18RandomAccessStreamUs
-__ct__9P2DWindowFP7P2DPaneP18RandomAccessStreamUs:
+.fn __ct__9P2DWindowFP7P2DPaneP18RandomAccessStreamUs, global
 /* 801B39D8 001B0938  7C 08 02 A6 */	mflr r0
 /* 801B39DC 001B093C  90 01 00 04 */	stw r0, 4(r1)
 /* 801B39E0 001B0940  94 21 FF C0 */	stwu r1, -0x40(r1)
@@ -288,9 +287,9 @@ __ct__9P2DWindowFP7P2DPaneP18RandomAccessStreamUs:
 /* 801B3C24 001B0B84  38 21 00 40 */	addi r1, r1, 0x40
 /* 801B3C28 001B0B88  7C 08 03 A6 */	mtlr r0
 /* 801B3C2C 001B0B8C  4E 80 00 20 */	blr 
+.endfn __ct__9P2DWindowFP7P2DPaneP18RandomAccessStreamUs
 
-.global drawSelf__9P2DWindowFii
-drawSelf__9P2DWindowFii:
+.fn drawSelf__9P2DWindowFii, global
 /* 801B3C30 001B0B90  7C 08 02 A6 */	mflr r0
 /* 801B3C34 001B0B94  90 01 00 04 */	stw r0, 4(r1)
 /* 801B3C38 001B0B98  94 21 FF 98 */	stwu r1, -0x68(r1)
@@ -317,9 +316,9 @@ drawSelf__9P2DWindowFii:
 /* 801B3C8C 001B0BEC  38 21 00 68 */	addi r1, r1, 0x68
 /* 801B3C90 001B0BF0  7C 08 03 A6 */	mtlr r0
 /* 801B3C94 001B0BF4  4E 80 00 20 */	blr 
+.endfn drawSelf__9P2DWindowFii
 
-.global drawSelf__9P2DWindowFiiP8Matrix4f
-drawSelf__9P2DWindowFiiP8Matrix4f:
+.fn drawSelf__9P2DWindowFiiP8Matrix4f, global
 /* 801B3C98 001B0BF8  7C 08 02 A6 */	mflr r0
 /* 801B3C9C 001B0BFC  90 01 00 04 */	stw r0, 4(r1)
 /* 801B3CA0 001B0C00  94 21 FF D0 */	stwu r1, -0x30(r1)
@@ -358,9 +357,9 @@ drawSelf__9P2DWindowFiiP8Matrix4f:
 /* 801B3D24 001B0C84  38 21 00 30 */	addi r1, r1, 0x30
 /* 801B3D28 001B0C88  7C 08 03 A6 */	mtlr r0
 /* 801B3D2C 001B0C8C  4E 80 00 20 */	blr 
+.endfn drawSelf__9P2DWindowFiiP8Matrix4f
 
-.global draw_private__9P2DWindowFRC7PUTRectRC7PUTRectP8Matrix4f
-draw_private__9P2DWindowFRC7PUTRectRC7PUTRectP8Matrix4f:
+.fn draw_private__9P2DWindowFRC7PUTRectRC7PUTRectP8Matrix4f, global
 /* 801B3D30 001B0C90  7C 08 02 A6 */	mflr r0
 /* 801B3D34 001B0C94  90 01 00 04 */	stw r0, 4(r1)
 /* 801B3D38 001B0C98  94 21 FF 40 */	stwu r1, -0xc0(r1)
@@ -607,9 +606,9 @@ draw_private__9P2DWindowFRC7PUTRectRC7PUTRectP8Matrix4f:
 /* 801B40B8 001B1018  38 21 00 C0 */	addi r1, r1, 0xc0
 /* 801B40BC 001B101C  7C 08 03 A6 */	mtlr r0
 /* 801B40C0 001B1020  4E 80 00 20 */	blr 
+.endfn draw_private__9P2DWindowFRC7PUTRectRC7PUTRectP8Matrix4f
 
-.global drawContents__9P2DWindowFRC7PUTRect
-drawContents__9P2DWindowFRC7PUTRect:
+.fn drawContents__9P2DWindowFRC7PUTRect, global
 /* 801B40C4 001B1024  7C 08 02 A6 */	mflr r0
 /* 801B40C8 001B1028  90 01 00 04 */	stw r0, 4(r1)
 /* 801B40CC 001B102C  94 21 FF C8 */	stwu r1, -0x38(r1)
@@ -712,9 +711,9 @@ drawContents__9P2DWindowFRC7PUTRect:
 /* 801B4244 001B11A4  38 21 00 38 */	addi r1, r1, 0x38
 /* 801B4248 001B11A8  7C 08 03 A6 */	mtlr r0
 /* 801B424C 001B11AC  4E 80 00 20 */	blr 
+.endfn drawContents__9P2DWindowFRC7PUTRect
 
-.global draw__Q29P2DWindow16P2DWindowTextureFiiiiUsUsUsUs
-draw__Q29P2DWindow16P2DWindowTextureFiiiiUsUsUsUs:
+.fn draw__Q29P2DWindow16P2DWindowTextureFiiiiUsUsUsUs, global
 /* 801B4250 001B11B0  7C 08 02 A6 */	mflr r0
 /* 801B4254 001B11B4  90 01 00 04 */	stw r0, 4(r1)
 /* 801B4258 001B11B8  94 21 FF B0 */	stwu r1, -0x50(r1)
@@ -779,9 +778,9 @@ draw__Q29P2DWindow16P2DWindowTextureFiiiiUsUsUsUs:
 /* 801B4344 001B12A4  38 21 00 50 */	addi r1, r1, 0x50
 /* 801B4348 001B12A8  7C 08 03 A6 */	mtlr r0
 /* 801B434C 001B12AC  4E 80 00 20 */	blr 
+.endfn draw__Q29P2DWindow16P2DWindowTextureFiiiiUsUsUsUs
 
-.global draw__Q29P2DWindow16P2DWindowTextureFiibb
-draw__Q29P2DWindow16P2DWindowTextureFiibb:
+.fn draw__Q29P2DWindow16P2DWindowTextureFiibb, global
 /* 801B4350 001B12B0  7C 08 02 A6 */	mflr r0
 /* 801B4354 001B12B4  90 01 00 04 */	stw r0, 4(r1)
 /* 801B4358 001B12B8  54 E0 06 3F */	clrlwi. r0, r7, 0x18
@@ -830,9 +829,9 @@ draw__Q29P2DWindow16P2DWindowTextureFiibb:
 /* 801B43E4 001B1344  38 21 00 20 */	addi r1, r1, 0x20
 /* 801B43E8 001B1348  7C 08 03 A6 */	mtlr r0
 /* 801B43EC 001B134C  4E 80 00 20 */	blr 
+.endfn draw__Q29P2DWindow16P2DWindowTextureFiibb
 
-.global setTevMode__Q29P2DWindow16P2DWindowTextureFv
-setTevMode__Q29P2DWindow16P2DWindowTextureFv:
+.fn setTevMode__Q29P2DWindow16P2DWindowTextureFv, global
 /* 801B43F0 001B1350  7C 08 02 A6 */	mflr r0
 /* 801B43F4 001B1354  38 60 00 01 */	li r3, 1
 /* 801B43F8 001B1358  90 01 00 04 */	stw r0, 4(r1)
@@ -855,9 +854,9 @@ setTevMode__Q29P2DWindow16P2DWindowTextureFv:
 /* 801B443C 001B139C  38 21 00 08 */	addi r1, r1, 8
 /* 801B4440 001B13A0  7C 08 03 A6 */	mtlr r0
 /* 801B4444 001B13A4  4E 80 00 20 */	blr 
+.endfn setTevMode__Q29P2DWindow16P2DWindowTextureFv
 
-.global __dt__9P2DWindowFv
-__dt__9P2DWindowFv:
+.fn __dt__9P2DWindowFv, weak
 /* 801B4448 001B13A8  7C 08 02 A6 */	mflr r0
 /* 801B444C 001B13AC  90 01 00 04 */	stw r0, 4(r1)
 /* 801B4450 001B13B0  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -884,6 +883,7 @@ __dt__9P2DWindowFv:
 /* 801B44A0 001B1400  38 21 00 18 */	addi r1, r1, 0x18
 /* 801B44A4 001B1404  7C 08 03 A6 */	mtlr r0
 /* 801B44A8 001B1408  4E 80 00 20 */	blr 
+.endfn __dt__9P2DWindowFv
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8

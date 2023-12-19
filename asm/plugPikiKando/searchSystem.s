@@ -1,11 +1,10 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global __ct__12SearchSystemFv
-__ct__12SearchSystemFv:
+.fn __ct__12SearchSystemFv, global
 /* 800E2FB4 000DFF14  4E 80 00 20 */	blr 
+.endfn __ct__12SearchSystemFv
 
-.global update__12SearchSystemFv
-update__12SearchSystemFv:
+.fn update__12SearchSystemFv, global
 /* 800E2FB8 000DFF18  7C 08 02 A6 */	mflr r0
 /* 800E2FBC 000DFF1C  90 01 00 04 */	stw r0, 4(r1)
 /* 800E2FC0 000DFF20  94 21 FF F8 */	stwu r1, -8(r1)
@@ -302,9 +301,9 @@ update__12SearchSystemFv:
 /* 800E3418 000E0378  38 21 00 08 */	addi r1, r1, 8
 /* 800E341C 000E037C  7C 08 03 A6 */	mtlr r0
 /* 800E3420 000E0380  4E 80 00 20 */	blr 
+.endfn update__12SearchSystemFv
 
-.global updateLoopOptimised__12SearchSystemFv
-updateLoopOptimised__12SearchSystemFv:
+.fn updateLoopOptimised__12SearchSystemFv, global
 /* 800E3424 000E0384  7C 08 02 A6 */	mflr r0
 /* 800E3428 000E0388  90 01 00 04 */	stw r0, 4(r1)
 /* 800E342C 000E038C  94 21 FF 70 */	stwu r1, -0x90(r1)
@@ -862,9 +861,9 @@ updateLoopOptimised__12SearchSystemFv:
 /* 800E3C04 000E0B64  38 21 00 90 */	addi r1, r1, 0x90
 /* 800E3C08 000E0B68  7C 08 03 A6 */	mtlr r0
 /* 800E3C0C 000E0B6C  4E 80 00 20 */	blr 
+.endfn updateLoopOptimised__12SearchSystemFv
 
-.global __ct__12SearchBufferFv
-__ct__12SearchBufferFv:
+.fn __ct__12SearchBufferFv, global
 /* 800E3C10 000E0B70  7C 08 02 A6 */	mflr r0
 /* 800E3C14 000E0B74  3C 80 80 2B */	lis r4, __vt__11Traversable@ha
 /* 800E3C18 000E0B78  90 01 00 04 */	stw r0, 4(r1)
@@ -893,9 +892,9 @@ __ct__12SearchBufferFv:
 /* 800E3C74 000E0BD4  38 21 00 18 */	addi r1, r1, 0x18
 /* 800E3C78 000E0BD8  7C 08 03 A6 */	mtlr r0
 /* 800E3C7C 000E0BDC  4E 80 00 20 */	blr 
+.endfn __ct__12SearchBufferFv
 
-.global init__12SearchBufferFP10SearchDatai
-init__12SearchBufferFP10SearchDatai:
+.fn init__12SearchBufferFP10SearchDatai, global
 /* 800E3C80 000E0BE0  7C 08 02 A6 */	mflr r0
 /* 800E3C84 000E0BE4  39 20 00 00 */	li r9, 0
 /* 800E3C88 000E0BE8  90 01 00 04 */	stw r0, 4(r1)
@@ -1018,9 +1017,9 @@ init__12SearchBufferFP10SearchDatai:
 /* 800E3E4C 000E0DAC  38 21 00 08 */	addi r1, r1, 8
 /* 800E3E50 000E0DB0  7C 08 03 A6 */	mtlr r0
 /* 800E3E54 000E0DB4  4E 80 00 20 */	blr 
+.endfn init__12SearchBufferFP10SearchDatai
 
-.global clear__12SearchBufferFv
-clear__12SearchBufferFv:
+.fn clear__12SearchBufferFv, global
 /* 800E3E58 000E0DB8  38 C0 00 00 */	li r6, 0
 /* 800E3E5C 000E0DBC  38 A6 00 00 */	addi r5, r6, 0
 /* 800E3E60 000E0DC0  38 E0 00 00 */	li r7, 0
@@ -1038,9 +1037,9 @@ clear__12SearchBufferFv:
 /* 800E3E88 000E0DE8  B0 03 00 18 */	sth r0, 0x18(r3)
 /* 800E3E8C 000E0DEC  B0 03 00 1C */	sth r0, 0x1c(r3)
 /* 800E3E90 000E0DF0  4E 80 00 20 */	blr 
+.endfn clear__12SearchBufferFv
 
-.global invalidate__12SearchBufferFv
-invalidate__12SearchBufferFv:
+.fn invalidate__12SearchBufferFv, global
 /* 800E3E94 000E0DF4  88 0D A0 F9 */	lbz r0, insQuick__6AIPerf@sda21(r13)
 /* 800E3E98 000E0DF8  28 00 00 00 */	cmplwi r0, 0
 /* 800E3E9C 000E0DFC  4D 82 00 20 */	beqlr 
@@ -1067,9 +1066,9 @@ invalidate__12SearchBufferFv:
 /* 800E3EE8 000E0E48  B0 83 00 18 */	sth r4, 0x18(r3)
 /* 800E3EEC 000E0E4C  B0 83 00 1C */	sth r4, 0x1c(r3)
 /* 800E3EF0 000E0E50  4E 80 00 20 */	blr 
+.endfn invalidate__12SearchBufferFv
 
-.global insertQuick__12SearchBufferFP8Creaturef
-insertQuick__12SearchBufferFP8Creaturef:
+.fn insertQuick__12SearchBufferFP8Creaturef, global
 /* 800E3EF4 000E0E54  7C 08 02 A6 */	mflr r0
 /* 800E3EF8 000E0E58  90 01 00 04 */	stw r0, 4(r1)
 /* 800E3EFC 000E0E5C  94 21 FF A0 */	stwu r1, -0x60(r1)
@@ -1207,9 +1206,9 @@ insertQuick__12SearchBufferFP8Creaturef:
 /* 800E40D0 000E1030  38 21 00 60 */	addi r1, r1, 0x60
 /* 800E40D4 000E1034  7C 08 03 A6 */	mtlr r0
 /* 800E40D8 000E1038  4E 80 00 20 */	blr 
+.endfn insertQuick__12SearchBufferFP8Creaturef
 
-.global insert__12SearchBufferFP8Creaturef
-insert__12SearchBufferFP8Creaturef:
+.fn insert__12SearchBufferFP8Creaturef, global
 /* 800E40DC 000E103C  7C 08 02 A6 */	mflr r0
 /* 800E40E0 000E1040  90 01 00 04 */	stw r0, 4(r1)
 /* 800E40E4 000E1044  94 21 FF B8 */	stwu r1, -0x48(r1)
@@ -1354,9 +1353,9 @@ insert__12SearchBufferFP8Creaturef:
 /* 800E42D4 000E1234  38 21 00 48 */	addi r1, r1, 0x48
 /* 800E42D8 000E1238  7C 08 03 A6 */	mtlr r0
 /* 800E42DC 000E123C  4E 80 00 20 */	blr 
+.endfn insert__12SearchBufferFP8Creaturef
 
-.global getCreature__12SearchBufferFi
-getCreature__12SearchBufferFi:
+.fn getCreature__12SearchBufferFi, global
 /* 800E42E0 000E1240  2C 04 00 00 */	cmpwi r4, 0
 /* 800E42E4 000E1244  41 80 00 10 */	blt .L_800E42F4
 /* 800E42E8 000E1248  A8 03 00 18 */	lha r0, 0x18(r3)
@@ -1370,19 +1369,19 @@ getCreature__12SearchBufferFi:
 /* 800E4300 000E1260  80 63 00 14 */	lwz r3, 0x14(r3)
 /* 800E4304 000E1264  7C 63 00 2E */	lwzx r3, r3, r0
 /* 800E4308 000E1268  4E 80 00 20 */	blr 
+.endfn getCreature__12SearchBufferFi
 
-.global getFirst__12SearchBufferFv
-getFirst__12SearchBufferFv:
+.fn getFirst__12SearchBufferFv, global
 /* 800E430C 000E126C  38 60 00 00 */	li r3, 0
 /* 800E4310 000E1270  4E 80 00 20 */	blr 
+.endfn getFirst__12SearchBufferFv
 
-.global getNext__12SearchBufferFi
-getNext__12SearchBufferFi:
+.fn getNext__12SearchBufferFi, global
 /* 800E4314 000E1274  38 64 00 01 */	addi r3, r4, 1
 /* 800E4318 000E1278  4E 80 00 20 */	blr 
+.endfn getNext__12SearchBufferFi
 
-.global isDone__12SearchBufferFi
-isDone__12SearchBufferFi:
+.fn isDone__12SearchBufferFi, global
 /* 800E431C 000E127C  A8 03 00 18 */	lha r0, 0x18(r3)
 /* 800E4320 000E1280  7C 04 00 00 */	cmpw r4, r0
 /* 800E4324 000E1284  41 80 00 0C */	blt .L_800E4330
@@ -1391,54 +1390,63 @@ isDone__12SearchBufferFi:
 .L_800E4330:
 /* 800E4330 000E1290  38 60 00 00 */	li r3, 0
 /* 800E4334 000E1294  4E 80 00 20 */	blr 
+.endfn isDone__12SearchBufferFi
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802BB0F8:
+.obj lbl_802BB0F8, local
 	.asciz "searchSystem.cpp"
+.endobj lbl_802BB0F8
 .balign 4
-lbl_802BB10C:
+.obj lbl_802BB10C, local
 	.asciz "searchSys"
+.endobj lbl_802BB10C
 .balign 4
-lbl_802BB118:
+.obj lbl_802BB118, local
 	.asciz "SearchBuffer"
+.endobj lbl_802BB118
 .balign 4
-lbl_802BB128:
+.obj lbl_802BB128, local
 	.asciz "Traversable"
+.endobj lbl_802BB128
 .balign 4
-lbl_802BB134:
+.obj lbl_802BB134, local
 	.4byte __RTTI__11Traversable
 	.4byte 0
 	.4byte 0
-.global __vt__12SearchBuffer
-__vt__12SearchBuffer:
+.endobj lbl_802BB134
+.balign 4
+.obj __vt__12SearchBuffer, global
 	.4byte __RTTI__12SearchBuffer
 	.4byte 0
 	.4byte getCreature__12SearchBufferFi
 	.4byte getFirst__12SearchBufferFv
 	.4byte getNext__12SearchBufferFi
 	.4byte isDone__12SearchBufferFi
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
+.endobj __vt__12SearchBuffer
+.balign 4
+.skip 0x18 # compiler padding
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-__RTTI__11Traversable:
+.obj __RTTI__11Traversable, local
 	.4byte lbl_802BB128
 	.4byte 0
-__RTTI__12SearchBuffer:
+.endobj __RTTI__11Traversable
+.balign 4
+.obj __RTTI__12SearchBuffer, local
 	.4byte lbl_802BB118
 	.4byte lbl_802BB134
+.endobj __RTTI__12SearchBuffer
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803E9AD0:
+.obj lbl_803E9AD0, local
 	.float 300.0
-lbl_803E9AD4:
+.endobj lbl_803E9AD0
+.obj lbl_803E9AD4, local
 	.float 12800.0
-lbl_803E9AD8:
+.endobj lbl_803E9AD4
+.obj lbl_803E9AD8, local
 	.float -100.0
+.endobj lbl_803E9AD8

@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global __ct__17PeveTimeConditionFv
-__ct__17PeveTimeConditionFv:
+.fn __ct__17PeveTimeConditionFv, global
 /* 80125C68 00122BC8  7C 08 02 A6 */	mflr r0
 /* 80125C6C 00122BCC  90 01 00 04 */	stw r0, 4(r1)
 /* 80125C70 00122BD0  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -20,16 +19,16 @@ __ct__17PeveTimeConditionFv:
 /* 80125CA4 00122C04  38 21 00 18 */	addi r1, r1, 0x18
 /* 80125CA8 00122C08  7C 08 03 A6 */	mtlr r0
 /* 80125CAC 00122C0C  4E 80 00 20 */	blr 
+.endfn __ct__17PeveTimeConditionFv
 
-.global construct__17PeveTimeConditionFf
-construct__17PeveTimeConditionFf:
+.fn construct__17PeveTimeConditionFf, global
 /* 80125CB0 00122C10  C0 02 A2 00 */	lfs f0, lbl_803EA400@sda21(r2)
 /* 80125CB4 00122C14  D0 03 00 04 */	stfs f0, 4(r3)
 /* 80125CB8 00122C18  D0 23 00 08 */	stfs f1, 8(r3)
 /* 80125CBC 00122C1C  4E 80 00 20 */	blr 
+.endfn construct__17PeveTimeConditionFf
 
-.global update__21PeveDistanceConditionFv
-update__21PeveDistanceConditionFv:
+.fn update__21PeveDistanceConditionFv, global
 /* 80125CC0 00122C20  7C 08 02 A6 */	mflr r0
 /* 80125CC4 00122C24  90 01 00 04 */	stw r0, 4(r1)
 /* 80125CC8 00122C28  94 21 FF A0 */	stwu r1, -0x60(r1)
@@ -98,9 +97,9 @@ update__21PeveDistanceConditionFv:
 /* 80125DC0 00122D20  38 21 00 60 */	addi r1, r1, 0x60
 /* 80125DC4 00122D24  7C 08 03 A6 */	mtlr r0
 /* 80125DC8 00122D28  4E 80 00 20 */	blr 
+.endfn update__21PeveDistanceConditionFv
 
-.global update__24PeveComparisonYConditionFv
-update__24PeveComparisonYConditionFv:
+.fn update__24PeveComparisonYConditionFv, global
 /* 80125DCC 00122D2C  7C 08 02 A6 */	mflr r0
 /* 80125DD0 00122D30  90 01 00 04 */	stw r0, 4(r1)
 /* 80125DD4 00122D34  94 21 FF C8 */	stwu r1, -0x38(r1)
@@ -142,26 +141,26 @@ update__24PeveComparisonYConditionFv:
 /* 80125E60 00122DC0  38 21 00 38 */	addi r1, r1, 0x38
 /* 80125E64 00122DC4  7C 08 03 A6 */	mtlr r0
 /* 80125E68 00122DC8  4E 80 00 20 */	blr 
+.endfn update__24PeveComparisonYConditionFv
 
-.global reset__24PeveComparisonYConditionFv
-reset__24PeveComparisonYConditionFv:
+.fn reset__24PeveComparisonYConditionFv, weak
 /* 80125E6C 00122DCC  38 00 00 00 */	li r0, 0
 /* 80125E70 00122DD0  98 03 00 04 */	stb r0, 4(r3)
 /* 80125E74 00122DD4  4E 80 00 20 */	blr 
+.endfn reset__24PeveComparisonYConditionFv
 
-.global isMet__20PeveBooleanConditionFv
-isMet__20PeveBooleanConditionFv:
+.fn isMet__20PeveBooleanConditionFv, weak
 /* 80125E78 00122DD8  88 63 00 04 */	lbz r3, 4(r3)
 /* 80125E7C 00122DDC  4E 80 00 20 */	blr 
+.endfn isMet__20PeveBooleanConditionFv
 
-.global reset__21PeveDistanceConditionFv
-reset__21PeveDistanceConditionFv:
+.fn reset__21PeveDistanceConditionFv, weak
 /* 80125E80 00122DE0  38 00 00 00 */	li r0, 0
 /* 80125E84 00122DE4  98 03 00 04 */	stb r0, 4(r3)
 /* 80125E88 00122DE8  4E 80 00 20 */	blr 
+.endfn reset__21PeveDistanceConditionFv
 
-.global isMet__17PeveTimeConditionFv
-isMet__17PeveTimeConditionFv:
+.fn isMet__17PeveTimeConditionFv, weak
 /* 80125E8C 00122DEC  C0 23 00 04 */	lfs f1, 4(r3)
 /* 80125E90 00122DF0  C0 03 00 08 */	lfs f0, 8(r3)
 /* 80125E94 00122DF4  FC 01 00 40 */	fcmpo cr0, f1, f0
@@ -169,24 +168,24 @@ isMet__17PeveTimeConditionFv:
 /* 80125E9C 00122DFC  7C 00 00 26 */	mfcr r0
 /* 80125EA0 00122E00  54 03 1F FE */	rlwinm r3, r0, 3, 0x1f, 0x1f
 /* 80125EA4 00122E04  4E 80 00 20 */	blr 
+.endfn isMet__17PeveTimeConditionFv
 
-.global reset__17PeveTimeConditionFv
-reset__17PeveTimeConditionFv:
+.fn reset__17PeveTimeConditionFv, weak
 /* 80125EA8 00122E08  C0 02 A2 00 */	lfs f0, lbl_803EA400@sda21(r2)
 /* 80125EAC 00122E0C  D0 03 00 04 */	stfs f0, 4(r3)
 /* 80125EB0 00122E10  4E 80 00 20 */	blr 
+.endfn reset__17PeveTimeConditionFv
 
-.global update__17PeveTimeConditionFv
-update__17PeveTimeConditionFv:
+.fn update__17PeveTimeConditionFv, weak
 /* 80125EB4 00122E14  80 8D 31 50 */	lwz r4, system__7NSystem@sda21(r13)
 /* 80125EB8 00122E18  C0 23 00 04 */	lfs f1, 4(r3)
 /* 80125EBC 00122E1C  C0 04 02 8C */	lfs f0, 0x28c(r4)
 /* 80125EC0 00122E20  EC 01 00 2A */	fadds f0, f1, f0
 /* 80125EC4 00122E24  D0 03 00 04 */	stfs f0, 4(r3)
 /* 80125EC8 00122E28  4E 80 00 20 */	blr 
+.endfn update__17PeveTimeConditionFv
 
-.global isMet__23PeveDependenceConditionFv
-isMet__23PeveDependenceConditionFv:
+.fn isMet__23PeveDependenceConditionFv, weak
 /* 80125ECC 00122E2C  7C 08 02 A6 */	mflr r0
 /* 80125ED0 00122E30  90 01 00 04 */	stw r0, 4(r1)
 /* 80125ED4 00122E34  94 21 FF F8 */	stwu r1, -8(r1)
@@ -199,126 +198,158 @@ isMet__23PeveDependenceConditionFv:
 /* 80125EF0 00122E50  38 21 00 08 */	addi r1, r1, 8
 /* 80125EF4 00122E54  7C 08 03 A6 */	mtlr r0
 /* 80125EF8 00122E58  4E 80 00 20 */	blr 
+.endfn isMet__23PeveDependenceConditionFv
 
-.global reset__23PeveDependenceConditionFv
-reset__23PeveDependenceConditionFv:
+.fn reset__23PeveDependenceConditionFv, weak
 /* 80125EFC 00122E5C  4E 80 00 20 */	blr 
+.endfn reset__23PeveDependenceConditionFv
 
-.global update__23PeveDependenceConditionFv
-update__23PeveDependenceConditionFv:
+.fn update__23PeveDependenceConditionFv, weak
 /* 80125F00 00122E60  4E 80 00 20 */	blr 
+.endfn update__23PeveDependenceConditionFv
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802C5E38:
+.obj lbl_802C5E38, local
 	.asciz "peveconditions.cpp"
+.endobj lbl_802C5E38
 .balign 4
-lbl_802C5E4C:
+.obj lbl_802C5E4C, local
 	.asciz "peveconditions"
+.endobj lbl_802C5E4C
 .balign 4
-lbl_802C5E5C:
+.obj lbl_802C5E5C, local
 	.asciz "PeveComparisonYCondition"
+.endobj lbl_802C5E5C
 .balign 4
-lbl_802C5E78:
+.obj lbl_802C5E78, local
 	.asciz "PeveCondition"
+.endobj lbl_802C5E78
 .balign 4
-lbl_802C5E88:
+.obj lbl_802C5E88, local
 	.asciz "PeveBooleanCondition"
+.endobj lbl_802C5E88
 .balign 4
-lbl_802C5EA0:
+.obj lbl_802C5EA0, local
 	.4byte __RTTI__13PeveCondition
 	.4byte 0
 	.4byte 0
-lbl_802C5EAC:
+.endobj lbl_802C5EA0
+.balign 4
+.obj lbl_802C5EAC, local
 	.4byte __RTTI__13PeveCondition
 	.4byte 0
 	.4byte __RTTI__20PeveBooleanCondition
 	.4byte 0
 	.4byte 0
-.global __vt__24PeveComparisonYCondition
-__vt__24PeveComparisonYCondition:
+.endobj lbl_802C5EAC
+.balign 4
+.obj __vt__24PeveComparisonYCondition, global
 	.4byte __RTTI__24PeveComparisonYCondition
 	.4byte 0
 	.4byte isMet__20PeveBooleanConditionFv
 	.4byte reset__24PeveComparisonYConditionFv
 	.4byte update__24PeveComparisonYConditionFv
+.endobj __vt__24PeveComparisonYCondition
 .balign 4
-lbl_802C5ED4:
+.obj lbl_802C5ED4, local
 	.asciz "PeveDistanceCondition"
+.endobj lbl_802C5ED4
 .balign 4
-lbl_802C5EEC:
+.obj lbl_802C5EEC, local
 	.4byte __RTTI__13PeveCondition
 	.4byte 0
 	.4byte __RTTI__20PeveBooleanCondition
 	.4byte 0
 	.4byte 0
-.global __vt__21PeveDistanceCondition
-__vt__21PeveDistanceCondition:
+.endobj lbl_802C5EEC
+.balign 4
+.obj __vt__21PeveDistanceCondition, global
 	.4byte __RTTI__21PeveDistanceCondition
 	.4byte 0
 	.4byte isMet__20PeveBooleanConditionFv
 	.4byte reset__21PeveDistanceConditionFv
 	.4byte update__21PeveDistanceConditionFv
+.endobj __vt__21PeveDistanceCondition
 .balign 4
-lbl_802C5F14:
+.obj lbl_802C5F14, local
 	.asciz "PeveTimeCondition"
+.endobj lbl_802C5F14
 .balign 4
-lbl_802C5F28:
+.obj lbl_802C5F28, local
 	.4byte __RTTI__13PeveCondition
 	.4byte 0
 	.4byte 0
-.global __vt__17PeveTimeCondition
-__vt__17PeveTimeCondition:
+.endobj lbl_802C5F28
+.balign 4
+.obj __vt__17PeveTimeCondition, weak
 	.4byte __RTTI__17PeveTimeCondition
 	.4byte 0
 	.4byte isMet__17PeveTimeConditionFv
 	.4byte reset__17PeveTimeConditionFv
 	.4byte update__17PeveTimeConditionFv
+.endobj __vt__17PeveTimeCondition
 .balign 4
-lbl_802C5F48:
+.obj lbl_802C5F48, local
 	.asciz "PeveDependenceCondition"
+.endobj lbl_802C5F48
 .balign 4
-lbl_802C5F60:
+.obj lbl_802C5F60, local
 	.4byte __RTTI__13PeveCondition
 	.4byte 0
 	.4byte 0
-.global __vt__23PeveDependenceCondition
-__vt__23PeveDependenceCondition:
+.endobj lbl_802C5F60
+.balign 4
+.obj __vt__23PeveDependenceCondition, weak
 	.4byte __RTTI__23PeveDependenceCondition
 	.4byte 0
 	.4byte isMet__23PeveDependenceConditionFv
 	.4byte reset__23PeveDependenceConditionFv
 	.4byte update__23PeveDependenceConditionFv
-.global __vt__20PeveBooleanCondition
-__vt__20PeveBooleanCondition:
+.endobj __vt__23PeveDependenceCondition
+.balign 4
+.obj __vt__20PeveBooleanCondition, weak
 	.4byte __RTTI__20PeveBooleanCondition
 	.4byte 0
 	.4byte isMet__20PeveBooleanConditionFv
 	.4byte reset__13PeveConditionFv
 	.4byte update__13PeveConditionFv
+.endobj __vt__20PeveBooleanCondition
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-__RTTI__13PeveCondition:
+.obj __RTTI__13PeveCondition, local
 	.4byte lbl_802C5E78
 	.4byte 0
-__RTTI__20PeveBooleanCondition:
+.endobj __RTTI__13PeveCondition
+.balign 4
+.obj __RTTI__20PeveBooleanCondition, local
 	.4byte lbl_802C5E88
 	.4byte lbl_802C5EA0
-__RTTI__24PeveComparisonYCondition:
+.endobj __RTTI__20PeveBooleanCondition
+.balign 4
+.obj __RTTI__24PeveComparisonYCondition, local
 	.4byte lbl_802C5E5C
 	.4byte lbl_802C5EAC
-__RTTI__21PeveDistanceCondition:
+.endobj __RTTI__24PeveComparisonYCondition
+.balign 4
+.obj __RTTI__21PeveDistanceCondition, local
 	.4byte lbl_802C5ED4
 	.4byte lbl_802C5EEC
-__RTTI__17PeveTimeCondition:
+.endobj __RTTI__21PeveDistanceCondition
+.balign 4
+.obj __RTTI__17PeveTimeCondition, local
 	.4byte lbl_802C5F14
 	.4byte lbl_802C5F28
-__RTTI__23PeveDependenceCondition:
+.endobj __RTTI__17PeveTimeCondition
+.balign 4
+.obj __RTTI__23PeveDependenceCondition, local
 	.4byte lbl_802C5F48
 	.4byte lbl_802C5F60
+.endobj __RTTI__23PeveDependenceCondition
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803EA400:
+.obj lbl_803EA400, local
 	.float 0.0
+.endobj lbl_803EA400

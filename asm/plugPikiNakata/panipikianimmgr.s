@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global __ct__15PaniPikiAnimMgrFv
-__ct__15PaniPikiAnimMgrFv:
+.fn __ct__15PaniPikiAnimMgrFv, global
 /* 8011F8A0 0011C800  7C 08 02 A6 */	mflr r0
 /* 8011F8A4 0011C804  90 01 00 04 */	stw r0, 4(r1)
 /* 8011F8A8 0011C808  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -17,9 +16,9 @@ __ct__15PaniPikiAnimMgrFv:
 /* 8011F8D0 0011C830  38 21 00 18 */	addi r1, r1, 0x18
 /* 8011F8D4 0011C834  7C 08 03 A6 */	mtlr r0
 /* 8011F8D8 0011C838  4E 80 00 20 */	blr 
+.endfn __ct__15PaniPikiAnimMgrFv
 
-.global init__15PaniPikiAnimMgrFP7AnimMgrP11AnimContextP11AnimContextP15PaniMotionTable
-init__15PaniPikiAnimMgrFP7AnimMgrP11AnimContextP11AnimContextP15PaniMotionTable:
+.fn init__15PaniPikiAnimMgrFP7AnimMgrP11AnimContextP11AnimContextP15PaniMotionTable, global
 /* 8011F8DC 0011C83C  7C 08 02 A6 */	mflr r0
 /* 8011F8E0 0011C840  90 01 00 04 */	stw r0, 4(r1)
 /* 8011F8E4 0011C844  94 21 FF C8 */	stwu r1, -0x38(r1)
@@ -52,9 +51,9 @@ init__15PaniPikiAnimMgrFP7AnimMgrP11AnimContextP11AnimContextP15PaniMotionTable:
 /* 8011F94C 0011C8AC  38 21 00 38 */	addi r1, r1, 0x38
 /* 8011F950 0011C8B0  7C 08 03 A6 */	mtlr r0
 /* 8011F954 0011C8B4  4E 80 00 20 */	blr 
+.endfn init__15PaniPikiAnimMgrFP7AnimMgrP11AnimContextP11AnimContextP15PaniMotionTable
 
-.global changeContext__15PaniPikiAnimMgrFP11AnimContextP11AnimContext
-changeContext__15PaniPikiAnimMgrFP11AnimContextP11AnimContext:
+.fn changeContext__15PaniPikiAnimMgrFP11AnimContextP11AnimContext, global
 /* 8011F958 0011C8B8  7C 08 02 A6 */	mflr r0
 /* 8011F95C 0011C8BC  90 01 00 04 */	stw r0, 4(r1)
 /* 8011F960 0011C8C0  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -79,9 +78,9 @@ changeContext__15PaniPikiAnimMgrFP11AnimContextP11AnimContext:
 /* 8011F9AC 0011C90C  38 21 00 20 */	addi r1, r1, 0x20
 /* 8011F9B0 0011C910  7C 08 03 A6 */	mtlr r0
 /* 8011F9B4 0011C914  4E 80 00 20 */	blr 
+.endfn changeContext__15PaniPikiAnimMgrFP11AnimContextP11AnimContext
 
-.global startMotion__15PaniPikiAnimMgrFP14PaniMotionInfoP14PaniMotionInfo
-startMotion__15PaniPikiAnimMgrFP14PaniMotionInfoP14PaniMotionInfo:
+.fn startMotion__15PaniPikiAnimMgrFP14PaniMotionInfoP14PaniMotionInfo, global
 /* 8011F9B8 0011C918  7C 08 02 A6 */	mflr r0
 /* 8011F9BC 0011C91C  28 04 00 00 */	cmplwi r4, 0
 /* 8011F9C0 0011C920  90 01 00 04 */	stw r0, 4(r1)
@@ -106,9 +105,9 @@ startMotion__15PaniPikiAnimMgrFP14PaniMotionInfoP14PaniMotionInfo:
 /* 8011FA04 0011C964  38 21 00 20 */	addi r1, r1, 0x20
 /* 8011FA08 0011C968  7C 08 03 A6 */	mtlr r0
 /* 8011FA0C 0011C96C  4E 80 00 20 */	blr 
+.endfn startMotion__15PaniPikiAnimMgrFP14PaniMotionInfoP14PaniMotionInfo
 
-.global finishMotion__15PaniPikiAnimMgrFP14PaniMotionInfoP14PaniMotionInfo
-finishMotion__15PaniPikiAnimMgrFP14PaniMotionInfoP14PaniMotionInfo:
+.fn finishMotion__15PaniPikiAnimMgrFP14PaniMotionInfoP14PaniMotionInfo, global
 /* 8011FA10 0011C970  7C 08 02 A6 */	mflr r0
 /* 8011FA14 0011C974  28 04 00 00 */	cmplwi r4, 0
 /* 8011FA18 0011C978  90 01 00 04 */	stw r0, 4(r1)
@@ -133,9 +132,9 @@ finishMotion__15PaniPikiAnimMgrFP14PaniMotionInfoP14PaniMotionInfo:
 /* 8011FA5C 0011C9BC  38 21 00 20 */	addi r1, r1, 0x20
 /* 8011FA60 0011C9C0  7C 08 03 A6 */	mtlr r0
 /* 8011FA64 0011C9C4  4E 80 00 20 */	blr 
+.endfn finishMotion__15PaniPikiAnimMgrFP14PaniMotionInfoP14PaniMotionInfo
 
-.global startMotion__15PaniPikiAnimMgrFR14PaniMotionInfoR14PaniMotionInfo
-startMotion__15PaniPikiAnimMgrFR14PaniMotionInfoR14PaniMotionInfo:
+.fn startMotion__15PaniPikiAnimMgrFR14PaniMotionInfoR14PaniMotionInfo, global
 /* 8011FA68 0011C9C8  7C 08 02 A6 */	mflr r0
 /* 8011FA6C 0011C9CC  28 04 00 00 */	cmplwi r4, 0
 /* 8011FA70 0011C9D0  90 01 00 04 */	stw r0, 4(r1)
@@ -160,9 +159,9 @@ startMotion__15PaniPikiAnimMgrFR14PaniMotionInfoR14PaniMotionInfo:
 /* 8011FAB4 0011CA14  38 21 00 20 */	addi r1, r1, 0x20
 /* 8011FAB8 0011CA18  7C 08 03 A6 */	mtlr r0
 /* 8011FABC 0011CA1C  4E 80 00 20 */	blr 
+.endfn startMotion__15PaniPikiAnimMgrFR14PaniMotionInfoR14PaniMotionInfo
 
-.global finishMotion__15PaniPikiAnimMgrFP19PaniAnimKeyListener
-finishMotion__15PaniPikiAnimMgrFP19PaniAnimKeyListener:
+.fn finishMotion__15PaniPikiAnimMgrFP19PaniAnimKeyListener, global
 /* 8011FAC0 0011CA20  7C 08 02 A6 */	mflr r0
 /* 8011FAC4 0011CA24  38 A0 00 00 */	li r5, 0
 /* 8011FAC8 0011CA28  90 01 00 04 */	stw r0, 4(r1)
@@ -198,9 +197,9 @@ finishMotion__15PaniPikiAnimMgrFP19PaniAnimKeyListener:
 /* 8011FB38 0011CA98  38 21 00 30 */	addi r1, r1, 0x30
 /* 8011FB3C 0011CA9C  7C 08 03 A6 */	mtlr r0
 /* 8011FB40 0011CAA0  4E 80 00 20 */	blr 
+.endfn finishMotion__15PaniPikiAnimMgrFP19PaniAnimKeyListener
 
-.global updateAnimation__15PaniPikiAnimMgrFf
-updateAnimation__15PaniPikiAnimMgrFf:
+.fn updateAnimation__15PaniPikiAnimMgrFf, global
 /* 8011FB44 0011CAA4  7C 08 02 A6 */	mflr r0
 /* 8011FB48 0011CAA8  90 01 00 04 */	stw r0, 4(r1)
 /* 8011FB4C 0011CAAC  94 21 FF 90 */	stwu r1, -0x70(r1)
@@ -253,9 +252,9 @@ updateAnimation__15PaniPikiAnimMgrFf:
 /* 8011FBF8 0011CB58  38 21 00 70 */	addi r1, r1, 0x70
 /* 8011FBFC 0011CB5C  7C 08 03 A6 */	mtlr r0
 /* 8011FC00 0011CB60  4E 80 00 20 */	blr 
+.endfn updateAnimation__15PaniPikiAnimMgrFf
 
-.global updateContext__15PaniPikiAnimMgrFv
-updateContext__15PaniPikiAnimMgrFv:
+.fn updateContext__15PaniPikiAnimMgrFv, global
 /* 8011FC04 0011CB64  7C 08 02 A6 */	mflr r0
 /* 8011FC08 0011CB68  90 01 00 04 */	stw r0, 4(r1)
 /* 8011FC0C 0011CB6C  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -276,14 +275,16 @@ updateContext__15PaniPikiAnimMgrFv:
 /* 8011FC48 0011CBA8  38 21 00 18 */	addi r1, r1, 0x18
 /* 8011FC4C 0011CBAC  7C 08 03 A6 */	mtlr r0
 /* 8011FC50 0011CBB0  4E 80 00 20 */	blr 
+.endfn updateContext__15PaniPikiAnimMgrFv
 
 .section .sbss, "wa"
 .balign 8
-.global motionTable__15PaniPikiAnimMgr
-motionTable__15PaniPikiAnimMgr:
+.obj motionTable__15PaniPikiAnimMgr, global
 	.skip 0x4
+.endobj motionTable__15PaniPikiAnimMgr
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803EA280:
+.obj lbl_803EA280, local
 	.float 30.0
+.endobj lbl_803EA280

@@ -6901,12 +6901,14 @@ __vt__5BTeki:
 
 # TEKI_OPTION bitmasks
 
-.global TEKI_OPTION_VISIBLE__5BTeki
-TEKI_OPTION_VISIBLE__5BTeki:
+.obj TEKI_OPTION_VISIBLE__5BTeki, global
 	.4byte 0x00000001
-.global TEKI_OPTION_SHADOW_VISIBLE__5BTeki
-TEKI_OPTION_SHADOW_VISIBLE__5BTeki:
+.endobj TEKI_OPTION_VISIBLE__5BTeki
+.balign 4
+.obj TEKI_OPTION_SHADOW_VISIBLE__5BTeki, global
 	.4byte 0x00000002
+.endobj TEKI_OPTION_SHADOW_VISIBLE__5BTeki
+.balign 4
 .global TEKI_OPTION_LIFE_GAUGE_VISIBLE__5BTeki
 TEKI_OPTION_LIFE_GAUGE_VISIBLE__5BTeki:
 	.4byte 0x00000004
@@ -7069,8 +7071,10 @@ __RTTI__5BTeki:
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803EA950:
+.obj lbl_803EA950, local
 	.float 0.0
+.endobj lbl_803EA950
+.balign 4
 lbl_803EA954:
 	.4byte 0x41F00000
 lbl_803EA958:

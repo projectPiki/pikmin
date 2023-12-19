@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global __ct__8SeedItemFP12CreaturePropPP5Shape
-__ct__8SeedItemFP12CreaturePropPP5Shape:
+.fn __ct__8SeedItemFP12CreaturePropPP5Shape, global
 /* 800EDDD0 000EAD30  7C 08 02 A6 */	mflr r0
 /* 800EDDD4 000EAD34  90 01 00 04 */	stw r0, 4(r1)
 /* 800EDDD8 000EAD38  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -57,14 +56,14 @@ __ct__8SeedItemFP12CreaturePropPP5Shape:
 /* 800EDEA0 000EAE00  38 21 00 20 */	addi r1, r1, 0x20
 /* 800EDEA4 000EAE04  7C 08 03 A6 */	mtlr r0
 /* 800EDEA8 000EAE08  4E 80 00 20 */	blr 
+.endfn __ct__8SeedItemFP12CreaturePropPP5Shape
 
-.global getSize__8SeedItemFv
-getSize__8SeedItemFv:
+.fn getSize__8SeedItemFv, global
 /* 800EDEAC 000EAE0C  C0 22 9B 40 */	lfs f1, lbl_803E9D40@sda21(r2)
 /* 800EDEB0 000EAE10  4E 80 00 20 */	blr 
+.endfn getSize__8SeedItemFv
 
-.global init__8SeedItemFR8Vector3f
-init__8SeedItemFR8Vector3f:
+.fn init__8SeedItemFR8Vector3f, global
 /* 800EDEB4 000EAE14  7C 08 02 A6 */	mflr r0
 /* 800EDEB8 000EAE18  90 01 00 04 */	stw r0, 4(r1)
 /* 800EDEBC 000EAE1C  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -82,22 +81,22 @@ init__8SeedItemFR8Vector3f:
 /* 800EDEEC 000EAE4C  38 21 00 18 */	addi r1, r1, 0x18
 /* 800EDEF0 000EAE50  7C 08 03 A6 */	mtlr r0
 /* 800EDEF4 000EAE54  4E 80 00 20 */	blr 
+.endfn init__8SeedItemFR8Vector3f
 
-.global isVisible__8SeedItemFv
-isVisible__8SeedItemFv:
+.fn isVisible__8SeedItemFv, global
 /* 800EDEF8 000EAE58  80 03 02 B8 */	lwz r0, 0x2b8(r3)
 /* 800EDEFC 000EAE5C  20 60 00 02 */	subfic r3, r0, 2
 /* 800EDF00 000EAE60  30 03 FF FF */	addic r0, r3, -1
 /* 800EDF04 000EAE64  7C 60 19 10 */	subfe r3, r0, r3
 /* 800EDF08 000EAE68  4E 80 00 20 */	blr 
+.endfn isVisible__8SeedItemFv
 
-.global isAtari__8SeedItemFv
-isAtari__8SeedItemFv:
+.fn isAtari__8SeedItemFv, global
 /* 800EDF0C 000EAE6C  38 60 00 00 */	li r3, 0
 /* 800EDF10 000EAE70  4E 80 00 20 */	blr 
+.endfn isAtari__8SeedItemFv
 
-.global doKill__8SeedItemFv
-doKill__8SeedItemFv:
+.fn doKill__8SeedItemFv, global
 /* 800EDF14 000EAE74  7C 08 02 A6 */	mflr r0
 /* 800EDF18 000EAE78  7C 64 1B 78 */	mr r4, r3
 /* 800EDF1C 000EAE7C  90 01 00 04 */	stw r0, 4(r1)
@@ -113,9 +112,9 @@ doKill__8SeedItemFv:
 /* 800EDF44 000EAEA4  38 21 00 08 */	addi r1, r1, 8
 /* 800EDF48 000EAEA8  7C 08 03 A6 */	mtlr r0
 /* 800EDF4C 000EAEAC  4E 80 00 20 */	blr 
+.endfn doKill__8SeedItemFv
 
-.global update__8SeedItemFv
-update__8SeedItemFv:
+.fn update__8SeedItemFv, global
 /* 800EDF50 000EAEB0  7C 08 02 A6 */	mflr r0
 /* 800EDF54 000EAEB4  90 01 00 04 */	stw r0, 4(r1)
 /* 800EDF58 000EAEB8  94 21 FF 50 */	stwu r1, -0xb0(r1)
@@ -265,16 +264,16 @@ update__8SeedItemFv:
 /* 800EE180 000EB0E0  38 21 00 B0 */	addi r1, r1, 0xb0
 /* 800EE184 000EB0E4  7C 08 03 A6 */	mtlr r0
 /* 800EE188 000EB0E8  4E 80 00 20 */	blr 
+.endfn update__8SeedItemFv
 
-.global doAI__8SeedItemFv
-doAI__8SeedItemFv:
+.fn doAI__8SeedItemFv, global
 /* 800EE18C 000EB0EC  80 03 02 B8 */	lwz r0, 0x2b8(r3)
 /* 800EE190 000EB0F0  2C 00 00 02 */	cmpwi r0, 2
 /* 800EE194 000EB0F4  4D 82 00 20 */	beqlr 
 /* 800EE198 000EB0F8  4E 80 00 20 */	blr 
+.endfn doAI__8SeedItemFv
 
-.global refresh__8SeedItemFR8Graphics
-refresh__8SeedItemFR8Graphics:
+.fn refresh__8SeedItemFR8Graphics, global
 /* 800EE19C 000EB0FC  7C 08 02 A6 */	mflr r0
 /* 800EE1A0 000EB100  90 01 00 04 */	stw r0, 4(r1)
 /* 800EE1A4 000EB104  94 21 FF 60 */	stwu r1, -0xa0(r1)
@@ -355,9 +354,9 @@ refresh__8SeedItemFR8Graphics:
 /* 800EE2C8 000EB228  38 21 00 A0 */	addi r1, r1, 0xa0
 /* 800EE2CC 000EB22C  7C 08 03 A6 */	mtlr r0
 /* 800EE2D0 000EB230  4E 80 00 20 */	blr 
+.endfn refresh__8SeedItemFR8Graphics
 
-.global stimulate__8SeedItemFR11Interaction
-stimulate__8SeedItemFR11Interaction:
+.fn stimulate__8SeedItemFR11Interaction, weak
 /* 800EE2D4 000EB234  7C 08 02 A6 */	mflr r0
 /* 800EE2D8 000EB238  90 01 00 04 */	stw r0, 4(r1)
 /* 800EE2DC 000EB23C  38 03 00 00 */	addi r0, r3, 0
@@ -373,44 +372,53 @@ stimulate__8SeedItemFR11Interaction:
 /* 800EE304 000EB264  38 21 00 08 */	addi r1, r1, 8
 /* 800EE308 000EB268  7C 08 03 A6 */	mtlr r0
 /* 800EE30C 000EB26C  4E 80 00 20 */	blr 
+.endfn stimulate__8SeedItemFR11Interaction
 
-.global getHeight__8SeedItemFv
-getHeight__8SeedItemFv:
+.fn getHeight__8SeedItemFv, weak
 /* 800EE310 000EB270  C0 22 9B 38 */	lfs f1, lbl_803E9D38@sda21(r2)
 /* 800EE314 000EB274  4E 80 00 20 */	blr 
+.endfn getHeight__8SeedItemFv
 
-.global getiMass__8SeedItemFv
-getiMass__8SeedItemFv:
+.fn getiMass__8SeedItemFv, weak
 /* 800EE318 000EB278  C0 22 9B 74 */	lfs f1, lbl_803E9D74@sda21(r2)
 /* 800EE31C 000EB27C  4E 80 00 20 */	blr 
+.endfn getiMass__8SeedItemFv
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802BD600:
+.obj lbl_802BD600, local
 	.asciz "seedItem.cpp"
+.endobj lbl_802BD600
 .balign 4
-lbl_802BD610:
+.obj lbl_802BD610, local
 	.asciz "seedItem"
+.endobj lbl_802BD610
 .balign 4
-lbl_802BD61C:
+.obj lbl_802BD61C, local
 	.asciz "SeedItem"
+.endobj lbl_802BD61C
 .balign 4
-lbl_802BD628:
+.obj lbl_802BD628, local
 	.asciz "EventTalker"
+.endobj lbl_802BD628
 .balign 4
-lbl_802BD634:
+.obj lbl_802BD634, local
 	.asciz "RefCountable"
+.endobj lbl_802BD634
 .balign 4
-lbl_802BD644:
+.obj lbl_802BD644, local
 	.asciz "Creature"
+.endobj lbl_802BD644
 .balign 4
-lbl_802BD650:
+.obj lbl_802BD650, local
 	.4byte __RTTI__11EventTalker
 	.4byte 0x8
 	.4byte __RTTI__12RefCountable
 	.4byte 0
 	.4byte 0
-lbl_802BD664:
+.endobj lbl_802BD650
+.balign 4
+.obj lbl_802BD664, local
 	.4byte __RTTI__11EventTalker
 	.4byte 0x8
 	.4byte __RTTI__12RefCountable
@@ -418,8 +426,9 @@ lbl_802BD664:
 	.4byte __RTTI__8Creature
 	.4byte 0
 	.4byte 0
-.global __vt__8SeedItem
-__vt__8SeedItem:
+.endobj lbl_802BD664
+.balign 4
+.obj __vt__8SeedItem, global
 	.4byte __RTTI__8SeedItem
 	.4byte 0
 	.4byte addCntCallback__12RefCountableFv
@@ -489,63 +498,97 @@ __vt__8SeedItem:
 	.4byte doAnimation__8CreatureFv
 	.4byte doKill__8SeedItemFv
 	.4byte exitCourse__8CreatureFv
+.endobj __vt__8SeedItem
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-lbl_803E1A30:
+.obj lbl_803E1A30, local
 	.float 0.0
-lbl_803E1A34:
+.endobj lbl_803E1A30
+.balign 4
+.obj lbl_803E1A34, local
 	.float 0.0
-__RTTI__11EventTalker:
+.endobj lbl_803E1A34
+.balign 4
+.obj __RTTI__11EventTalker, local
 	.4byte lbl_802BD628
 	.4byte 0
-__RTTI__12RefCountable:
+.endobj __RTTI__11EventTalker
+.balign 4
+.obj __RTTI__12RefCountable, local
 	.4byte lbl_802BD634
 	.4byte 0
-__RTTI__8Creature:
+.endobj __RTTI__12RefCountable
+.balign 4
+.obj __RTTI__8Creature, local
 	.4byte lbl_802BD644
 	.4byte lbl_802BD650
-__RTTI__8SeedItem:
+.endobj __RTTI__8Creature
+.balign 4
+.obj __RTTI__8SeedItem, local
 	.4byte lbl_802BD61C
 	.4byte lbl_802BD664
+.endobj __RTTI__8SeedItem
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803E9D38:
+.obj lbl_803E9D38, local
 	.float 0.0
-lbl_803E9D3C:
+.endobj lbl_803E9D38
+.obj lbl_803E9D3C, local
 	.float 0.2
-lbl_803E9D40:
+.endobj lbl_803E9D3C
+.obj lbl_803E9D40, local
 	.float 10.0
-lbl_803E9D44:
+.endobj lbl_803E9D40
+.obj lbl_803E9D44, local
 	.float 200.0
-lbl_803E9D48:
+.endobj lbl_803E9D44
+.balign 8
+.obj lbl_803E9D48, local
 	.double 0.5
-lbl_803E9D50:
+.endobj lbl_803E9D48
+.balign 8
+.obj lbl_803E9D50, local
 	.double 3.0
-lbl_803E9D58:
+.endobj lbl_803E9D50
+.balign 4
+.obj lbl_803E9D58, local
 	.float 20.0
-lbl_803E9D5C:
+.endobj lbl_803E9D58
+.obj lbl_803E9D5C, local
 	.float 30.0
-lbl_803E9D60:
+.endobj lbl_803E9D5C
+.obj lbl_803E9D60, local
 	.float 1.0
-lbl_803E9D64:
+.endobj lbl_803E9D60
+.obj lbl_803E9D64, local
 	.float 70.0
-lbl_803E9D68:
+.endobj lbl_803E9D64
+.obj lbl_803E9D68, local
 	.float 180.0
-lbl_803E9D6C:
+.endobj lbl_803E9D68
+.obj lbl_803E9D6C, local
 	.float 150.0
-lbl_803E9D70:
+.endobj lbl_803E9D6C
+.obj lbl_803E9D70, local
 	.float 5.0
-lbl_803E9D74:
+.endobj lbl_803E9D70
+.obj lbl_803E9D74, local
 	.float 100.0
-lbl_803E9D78:
+.endobj lbl_803E9D74
+.obj lbl_803E9D78, local
 	.float 350.0
-lbl_803E9D7C:
+.endobj lbl_803E9D78
+.obj lbl_803E9D7C, local
 	.float 6.0
-lbl_803E9D80:
+.endobj lbl_803E9D7C
+.obj lbl_803E9D80, local # pi
 	.float 3.1415927
-lbl_803E9D84:
+.endobj lbl_803E9D80
+.obj lbl_803E9D84, local
 	.float 2.5
-lbl_803E9D88:
+.endobj lbl_803E9D84
+.obj lbl_803E9D88, local
 	.float 8.0
+.endobj lbl_803E9D88

@@ -8108,10 +8108,10 @@ setLeaves__4PikiFi:
 /* 800CD7F8 000CA758  4E 80 00 20 */	blr 
 .endfn __sinit_piki_cpp
 
-.global "@696@animationKeyUpdated__4PikiFR16PaniAnimKeyEvent"
-"@696@animationKeyUpdated__4PikiFR16PaniAnimKeyEvent":
+.fn "@696@animationKeyUpdated__4PikiFR16PaniAnimKeyEvent", weak
 /* 800CD7FC 000CA75C  38 63 FD 48 */	addi r3, r3, -696
 /* 800CD800 000CA760  4B FF C9 10 */	b animationKeyUpdated__4PikiFR16PaniAnimKeyEvent
+.endfn "@696@animationKeyUpdated__4PikiFR16PaniAnimKeyEvent"
 
 .section .ctors, "wa"  # 0x80221F60 - 0x80221FC0
 lbl_constructor:
@@ -8364,6 +8364,11 @@ lbl_802B881C:
 	.4byte "__RTTI__Q23zen37CallBack1<PQ23zen17particleGenerator>"
 	.4byte 0
 	.4byte 0
+.balign 4
+# This doesn't show in the map. What the hell is this?!
+# Looks like remnants of a virtual table containing thunks.
+# Appears in pikiheadItem.cpp, navi.cpp, piki.cpp, and uteffect.cpp.
+#.obj UNKNOWN_WEIRD_SHIT, local
 	.4byte 0
 	.4byte 0
 	.4byte 0
@@ -8388,6 +8393,7 @@ lbl_802B881C:
 	.4byte 0
 	.4byte 0
 	.4byte 0
+#.endobj UNKNOWN_WEIRD_SHIT
 .balign 4
 lbl_802B8898:
 	.asciz "PaniAnimKeyListener"
@@ -8504,187 +8510,267 @@ __vt__4Piki:
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-lbl_803E0A78:
+.obj lbl_803E0A78, local
 	.float 0.0
-lbl_803E0A7C:
+.endobj lbl_803E0A78
+.obj lbl_803E0A7C, local
 	.float 0.0
-lbl_803E0A80:
+.endobj lbl_803E0A7C
+.obj lbl_803E0A80, local
 	.float 0.0
-lbl_803E0A84:
+.endobj lbl_803E0A80
+.obj lbl_803E0A84, local
 	.float 0.0
-lbl_803E0A88:
+.endobj lbl_803E0A84
+.obj lbl_803E0A88, local
 	.float 1.0
-lbl_803E0A8C:
+.endobj lbl_803E0A88
+.obj lbl_803E0A8C, local
 	.float 0.0
-lbl_803E0A90:
+.endobj lbl_803E0A8C
+.obj lbl_803E0A90, local
 	.float 0.0
-lbl_803E0A94:
+.endobj lbl_803E0A90
+.obj lbl_803E0A94, local
 	.float 0.0
-lbl_803E0A98:
+.endobj lbl_803E0A94
+.obj lbl_803E0A98, local
 	.float 0.0
-lbl_803E0A9C:
+.endobj lbl_803E0A98
+.obj lbl_803E0A9C, local
 	.float 0.0
-lbl_803E0AA0:
+.endobj lbl_803E0A9C
+.obj lbl_803E0AA0, local
 	.float 1.0
-lbl_803E0AA4:
+.endobj lbl_803E0AA0
+.obj lbl_803E0AA4, local
 	.float 1.0
-lbl_803E0AA8:
+.endobj lbl_803E0AA4
+.obj lbl_803E0AA8, local
 	.float 1.0
-lbl_803E0AAC:
+.endobj lbl_803E0AA8
+.obj lbl_803E0AAC, local
 	.float 0.0
-lbl_803E0AB0:
+.endobj lbl_803E0AAC
+.obj lbl_803E0AB0, local
 	.float 0.0
-lbl_803E0AB4:
+.endobj lbl_803E0AB0
+.obj lbl_803E0AB4, local
 	.float 0.0
+.endobj lbl_803E0AB4
 .balign 4
-lbl_803E0AB8:
+.obj lbl_803E0AB8, local
 	.asciz "NORMAL"
+.endobj lbl_803E0AB8
 .balign 4
-lbl_803E0AC0:
+.obj lbl_803E0AC0, local
 	.asciz "GROW"
+.endobj lbl_803E0AC0
 .balign 4
-lbl_803E0AC8:
+.obj lbl_803E0AC8, local
 	.asciz "BURY"
+.endobj lbl_803E0AC8
 .balign 4
-lbl_803E0AD0:
+.obj lbl_803E0AD0, local
 	.asciz "NUKARE"
+.endobj lbl_803E0AD0
 .balign 4
-lbl_803E0AD8:
+.obj lbl_803E0AD8, local
 	.asciz "DYING"
+.endobj lbl_803E0AD8
 .balign 4
-lbl_803E0AE0:
+.obj lbl_803E0AE0, local
 	.asciz "DEAD"
+.endobj lbl_803E0AE0
 .balign 4
-lbl_803E0AE8:
+.obj lbl_803E0AE8, local
 	.asciz "GROWUP"
+.endobj lbl_803E0AE8
 .balign 4
-lbl_803E0AF0:
+.obj lbl_803E0AF0, local
 	.asciz "ABSORB"
+.endobj lbl_803E0AF0
 .balign 4
-lbl_803E0AF8:
+.obj lbl_803E0AF8, local
 	.asciz "ILLEGAL"
+.endobj lbl_803E0AF8
 .balign 4
-lbl_803E0B00:
+.obj lbl_803E0B00, local
 	.asciz "GROUND"
+.endobj lbl_803E0B00
 .balign 4
-lbl_803E0B08:
+.obj lbl_803E0B08, local
 	.asciz "PLAT"
+.endobj lbl_803E0B08
 .balign 4
-lbl_803E0B10:
+.obj lbl_803E0B10, local
 	.asciz "AIR"
+.endobj lbl_803E0B10
 .balign 4
-lbl_803E0B14:
+.obj lbl_803E0B14, local
 	.asciz "BO_MODE"
+.endobj lbl_803E0B14
 .balign 4
-lbl_803E0B1C:
+.obj lbl_803E0B1C, local
 	.asciz "blue"
+.endobj lbl_803E0B1C
 .balign 4
-lbl_803E0B24:
+.obj lbl_803E0B24, local
 	.asciz "red"
+.endobj lbl_803E0B24
 .balign 4
-lbl_803E0B28:
+.obj lbl_803E0B28, local
 	.asciz "yellow"
+.endobj lbl_803E0B28
 .balign 4
-"__RTTI__19StateMachine<4Piki>":
+.obj "__RTTI__19StateMachine<4Piki>", local
 	.4byte lbl_802B8760
 	.4byte 0
-"__RTTI__Q23zen31CallBack1<PQ23zen11particleMdl>":
+.endobj "__RTTI__19StateMachine<4Piki>"
+.balign 4
+.obj "__RTTI__Q23zen31CallBack1<PQ23zen11particleMdl>", local
 	.4byte lbl_802B878C
 	.4byte 0
-"__RTTI__Q23zen58CallBack2<PQ23zen17particleGenerator,PQ23zen11particleMdl>":
+.endobj "__RTTI__Q23zen31CallBack1<PQ23zen11particleMdl>"
+.balign 4
+.obj "__RTTI__Q23zen58CallBack2<PQ23zen17particleGenerator,PQ23zen11particleMdl>", local
 	.4byte lbl_802B87B0
 	.4byte 0
-"__RTTI__Q23zen37CallBack1<PQ23zen17particleGenerator>":
+.endobj "__RTTI__Q23zen58CallBack2<PQ23zen17particleGenerator,PQ23zen11particleMdl>"
+.balign 4
+.obj "__RTTI__Q23zen37CallBack1<PQ23zen17particleGenerator>", local
 	.4byte lbl_802B87F0
 	.4byte 0
-__RTTI__19PaniAnimKeyListener:
+.endobj "__RTTI__Q23zen37CallBack1<PQ23zen17particleGenerator>"
+.balign 4
+.obj __RTTI__19PaniAnimKeyListener, local
 	.4byte lbl_802B8898
 	.4byte 0
+.endobj __RTTI__19PaniAnimKeyListener
 .balign 4
-lbl_803E0B58:
+.obj lbl_803E0B58, local
 	.asciz "Piki"
+.endobj lbl_803E0B58
 .balign 4
-__RTTI__11EventTalker:
+.obj __RTTI__11EventTalker, local
 	.4byte lbl_802B88B8
 	.4byte 0
-__RTTI__12RefCountable:
+.endobj __RTTI__11EventTalker
+.balign 4
+.obj __RTTI__12RefCountable, local
 	.4byte lbl_802B88C4
 	.4byte 0
-__RTTI__8Creature:
+.endobj __RTTI__12RefCountable
+.balign 4
+.obj __RTTI__8Creature, local
 	.4byte lbl_802B88D4
 	.4byte lbl_802B88E0
-__RTTI__4Piki:
+.endobj __RTTI__8Creature
+.balign 4
+.obj __RTTI__4Piki, local
 	.4byte lbl_803E0B58
 	.4byte lbl_802B88F4
+.endobj __RTTI__4Piki
 
 .section .sbss, "wa"
 .balign 8
-.global directDumpMode__4Piki
-directDumpMode__4Piki:
+.obj directDumpMode__4Piki, global
 	.skip 0x1
+.endobj directDumpMode__4Piki
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803E97B8:
+.obj lbl_803E97B8, local
 	.float 0.0
+.endobj lbl_803E97B8
 .balign 8
-lbl_803E97C0:
+.obj lbl_803E97C0, local
 	.double 0.5
-lbl_803E97C8:
+.endobj lbl_803E97C0
+.balign 8
+.obj lbl_803E97C8, local
 	.double 3.0
-lbl_803E97D0:
+.endobj lbl_803E97C8
+.obj lbl_803E97D0, local
 	.float 110.0
-lbl_803E97D4:
+.endobj lbl_803E97D0
+.obj lbl_803E97D4, local
 	.float 0.75
-lbl_803E97D8:
-	.4byte 0x43300000
-	.4byte 0x80000000
-lbl_803E97E0:
+.endobj lbl_803E97D4
+.balign 8
+.obj lbl_803E97D8, local
+	.8byte 0x4330000080000000
+.endobj lbl_803E97D8
+.obj lbl_803E97E0, local
 	.float 1.0
-lbl_803E97E4:
+.endobj lbl_803E97E0
+.obj lbl_803E97E4, local
 	.float 20.0
-lbl_803E97E8:
+.endobj lbl_803E97E4
+.obj lbl_803E97E8, local
 	.float 50.0
-lbl_803E97EC:
+.endobj lbl_803E97E8
+.obj lbl_803E97EC, local
 	.float 12800.0
-lbl_803E97F0:
+.endobj lbl_803E97EC
+.obj lbl_803E97F0, local
 	.float 100.0
-lbl_803E97F4:
+.endobj lbl_803E97F0
+.obj lbl_803E97F4, local
 	.float 5.0
-lbl_803E97F8:
+.endobj lbl_803E97F4
+.obj lbl_803E97F8, local
 	.float 7.0
-lbl_803E97FC:
+.endobj lbl_803E97F8
+.obj lbl_803E97FC, local
 	.float 1.2
-lbl_803E9800:
-	.4byte 0x43300000
-	.4byte 0x00000000
-lbl_803E9808:
+.endobj lbl_803E97FC
+.balign 8
+.obj lbl_803E9800, local
+	.8byte 0x4330000000000000
+.endobj lbl_803E9800
+.obj lbl_803E9808, local
 	.float 0.7
-lbl_803E980C:
+.endobj lbl_803E9808
+.obj lbl_803E980C, local
 	.float 10.0
-lbl_803E9810:
+.endobj lbl_803E980C
+.obj lbl_803E9810, local
 	.float 2.0
-lbl_803E9814:
+.endobj lbl_803E9810
+.obj lbl_803E9814, local
 	.float 32767.0
-lbl_803E9818:
+.endobj lbl_803E9814
+.obj lbl_803E9818, local
 	.float -0.8
-lbl_803E981C:
+.endobj lbl_803E9818
+.obj lbl_803E981C, local
 	.float 0.1
-lbl_803E9820:
+.endobj lbl_803E981C
+.obj lbl_803E9820, local
 	.float 8.0
-lbl_803E9824:
+.endobj lbl_803E9820
+.obj lbl_803E9824, local
 	.float 3.0
-lbl_803E9828:
+.endobj lbl_803E9824
+.obj lbl_803E9828, local
 	.float 128000.0
-lbl_803E982C:
+.endobj lbl_803E9828
+.obj lbl_803E982C, local
 	.float 200.0
-lbl_803E9830:
+.endobj lbl_803E982C
+.obj lbl_803E9830, local
 	.float 0.2
-lbl_803E9834:
+.endobj lbl_803E9830
+.obj lbl_803E9834, local
 	.float 18.0
-lbl_803E9838:
+.endobj lbl_803E9834
+.obj lbl_803E9838, local
 	.float 30.0
-lbl_803E983C:
+.endobj lbl_803E9838
+.obj lbl_803E983C, local
 	.float 0.01
-lbl_803E9840:
+.endobj lbl_803E983C
+.obj lbl_803E9840, local # pi/2
 	.float 1.5707964
+.endobj lbl_803E9840

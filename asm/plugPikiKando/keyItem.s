@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global __ct__7KeyItemFP12CreaturePropP5Shape
-__ct__7KeyItemFP12CreaturePropP5Shape:
+.fn __ct__7KeyItemFP12CreaturePropP5Shape, global
 /* 800ED204 000EA164  7C 08 02 A6 */	mflr r0
 /* 800ED208 000EA168  90 01 00 04 */	stw r0, 4(r1)
 /* 800ED20C 000EA16C  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -44,14 +43,14 @@ __ct__7KeyItemFP12CreaturePropP5Shape:
 /* 800ED2A0 000EA200  38 21 00 20 */	addi r1, r1, 0x20
 /* 800ED2A4 000EA204  7C 08 03 A6 */	mtlr r0
 /* 800ED2A8 000EA208  4E 80 00 20 */	blr 
+.endfn __ct__7KeyItemFP12CreaturePropP5Shape
 
-.global getSize__7KeyItemFv
-getSize__7KeyItemFv:
+.fn getSize__7KeyItemFv, global
 /* 800ED2AC 000EA20C  C0 22 9A D8 */	lfs f1, lbl_803E9CD8@sda21(r2)
 /* 800ED2B0 000EA210  4E 80 00 20 */	blr 
+.endfn getSize__7KeyItemFv
 
-.global init__7KeyItemFR8Vector3f
-init__7KeyItemFR8Vector3f:
+.fn init__7KeyItemFR8Vector3f, global
 /* 800ED2B4 000EA214  7C 08 02 A6 */	mflr r0
 /* 800ED2B8 000EA218  90 01 00 04 */	stw r0, 4(r1)
 /* 800ED2BC 000EA21C  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -73,15 +72,15 @@ init__7KeyItemFR8Vector3f:
 /* 800ED2FC 000EA25C  38 21 00 20 */	addi r1, r1, 0x20
 /* 800ED300 000EA260  7C 08 03 A6 */	mtlr r0
 /* 800ED304 000EA264  4E 80 00 20 */	blr 
+.endfn init__7KeyItemFR8Vector3f
 
-.global startAI__7KeyItemFi
-startAI__7KeyItemFi:
+.fn startAI__7KeyItemFi, global
 /* 800ED308 000EA268  38 00 00 00 */	li r0, 0
 /* 800ED30C 000EA26C  90 03 02 B8 */	stw r0, 0x2b8(r3)
 /* 800ED310 000EA270  4E 80 00 20 */	blr 
+.endfn startAI__7KeyItemFi
 
-.global isVisible__7KeyItemFv
-isVisible__7KeyItemFv:
+.fn isVisible__7KeyItemFv, global
 /* 800ED314 000EA274  80 03 02 B8 */	lwz r0, 0x2b8(r3)
 /* 800ED318 000EA278  38 60 00 00 */	li r3, 0
 /* 800ED31C 000EA27C  2C 00 00 01 */	cmpwi r0, 1
@@ -90,9 +89,9 @@ isVisible__7KeyItemFv:
 /* 800ED328 000EA288  4D 82 00 20 */	beqlr 
 /* 800ED32C 000EA28C  38 60 00 01 */	li r3, 1
 /* 800ED330 000EA290  4E 80 00 20 */	blr 
+.endfn isVisible__7KeyItemFv
 
-.global doKill__7KeyItemFv
-doKill__7KeyItemFv:
+.fn doKill__7KeyItemFv, global
 /* 800ED334 000EA294  7C 08 02 A6 */	mflr r0
 /* 800ED338 000EA298  7C 64 1B 78 */	mr r4, r3
 /* 800ED33C 000EA29C  90 01 00 04 */	stw r0, 4(r1)
@@ -108,9 +107,9 @@ doKill__7KeyItemFv:
 /* 800ED364 000EA2C4  38 21 00 08 */	addi r1, r1, 8
 /* 800ED368 000EA2C8  7C 08 03 A6 */	mtlr r0
 /* 800ED36C 000EA2CC  4E 80 00 20 */	blr 
+.endfn doKill__7KeyItemFv
 
-.global update__7KeyItemFv
-update__7KeyItemFv:
+.fn update__7KeyItemFv, global
 /* 800ED370 000EA2D0  7C 08 02 A6 */	mflr r0
 /* 800ED374 000EA2D4  90 01 00 04 */	stw r0, 4(r1)
 /* 800ED378 000EA2D8  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -180,18 +179,18 @@ update__7KeyItemFv:
 /* 800ED470 000EA3D0  38 21 00 28 */	addi r1, r1, 0x28
 /* 800ED474 000EA3D4  7C 08 03 A6 */	mtlr r0
 /* 800ED478 000EA3D8  4E 80 00 20 */	blr 
+.endfn update__7KeyItemFv
 
-.global collisionCallback__7KeyItemFR9CollEvent
-collisionCallback__7KeyItemFR9CollEvent:
+.fn collisionCallback__7KeyItemFR9CollEvent, global
 /* 800ED47C 000EA3DC  4E 80 00 20 */	blr 
+.endfn collisionCallback__7KeyItemFR9CollEvent
 
-.global getiMass__7KeyItemFv
-getiMass__7KeyItemFv:
+.fn getiMass__7KeyItemFv, global
 /* 800ED480 000EA3E0  C0 22 9B 0C */	lfs f1, lbl_803E9D0C@sda21(r2)
 /* 800ED484 000EA3E4  4E 80 00 20 */	blr 
+.endfn getiMass__7KeyItemFv
 
-.global refresh__7KeyItemFR8Graphics
-refresh__7KeyItemFR8Graphics:
+.fn refresh__7KeyItemFR8Graphics, global
 /* 800ED488 000EA3E8  7C 08 02 A6 */	mflr r0
 /* 800ED48C 000EA3EC  90 01 00 04 */	stw r0, 4(r1)
 /* 800ED490 000EA3F0  94 21 FF 58 */	stwu r1, -0xa8(r1)
@@ -277,9 +276,9 @@ refresh__7KeyItemFR8Graphics:
 /* 800ED5C8 000EA528  38 21 00 A8 */	addi r1, r1, 0xa8
 /* 800ED5CC 000EA52C  7C 08 03 A6 */	mtlr r0
 /* 800ED5D0 000EA530  4E 80 00 20 */	blr 
+.endfn refresh__7KeyItemFR8Graphics
 
-.global __ct__8DoorItemFiP12CreaturePropP5Shape
-__ct__8DoorItemFiP12CreaturePropP5Shape:
+.fn __ct__8DoorItemFiP12CreaturePropP5Shape, global
 /* 800ED5D4 000EA534  7C 08 02 A6 */	mflr r0
 /* 800ED5D8 000EA538  90 01 00 04 */	stw r0, 4(r1)
 /* 800ED5DC 000EA53C  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -304,9 +303,9 @@ __ct__8DoorItemFiP12CreaturePropP5Shape:
 /* 800ED628 000EA588  38 21 00 20 */	addi r1, r1, 0x20
 /* 800ED62C 000EA58C  7C 08 03 A6 */	mtlr r0
 /* 800ED630 000EA590  4E 80 00 20 */	blr 
+.endfn __ct__8DoorItemFiP12CreaturePropP5Shape
 
-.global disappear__8DoorItemFv
-disappear__8DoorItemFv:
+.fn disappear__8DoorItemFv, global
 /* 800ED634 000EA594  80 03 03 CC */	lwz r0, 0x3cc(r3)
 /* 800ED638 000EA598  2C 00 00 03 */	cmpwi r0, 3
 /* 800ED63C 000EA59C  4D 82 00 20 */	beqlr 
@@ -315,9 +314,9 @@ disappear__8DoorItemFv:
 /* 800ED648 000EA5A8  C0 02 9B 14 */	lfs f0, lbl_803E9D14@sda21(r2)
 /* 800ED64C 000EA5AC  D0 03 03 C8 */	stfs f0, 0x3c8(r3)
 /* 800ED650 000EA5B0  4E 80 00 20 */	blr 
+.endfn disappear__8DoorItemFv
 
-.global getSize__8DoorItemFv
-getSize__8DoorItemFv:
+.fn getSize__8DoorItemFv, global
 /* 800ED654 000EA5B4  80 03 00 6C */	lwz r0, 0x6c(r3)
 /* 800ED658 000EA5B8  2C 00 00 05 */	cmpwi r0, 5
 /* 800ED65C 000EA5BC  40 82 00 0C */	bne .L_800ED668
@@ -326,9 +325,9 @@ getSize__8DoorItemFv:
 .L_800ED668:
 /* 800ED668 000EA5C8  C0 22 9B 1C */	lfs f1, lbl_803E9D1C@sda21(r2)
 /* 800ED66C 000EA5CC  4E 80 00 20 */	blr 
+.endfn getSize__8DoorItemFv
 
-.global init__8DoorItemFR8Vector3f
-init__8DoorItemFR8Vector3f:
+.fn init__8DoorItemFR8Vector3f, global
 /* 800ED670 000EA5D0  7C 08 02 A6 */	mflr r0
 /* 800ED674 000EA5D4  90 01 00 04 */	stw r0, 4(r1)
 /* 800ED678 000EA5D8  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -351,15 +350,15 @@ init__8DoorItemFR8Vector3f:
 /* 800ED6B8 000EA618  38 21 00 18 */	addi r1, r1, 0x18
 /* 800ED6BC 000EA61C  7C 08 03 A6 */	mtlr r0
 /* 800ED6C0 000EA620  4E 80 00 20 */	blr 
+.endfn init__8DoorItemFR8Vector3f
 
-.global startAI__8DoorItemFi
-startAI__8DoorItemFi:
+.fn startAI__8DoorItemFi, global
 /* 800ED6C4 000EA624  38 00 00 00 */	li r0, 0
 /* 800ED6C8 000EA628  90 03 03 CC */	stw r0, 0x3cc(r3)
 /* 800ED6CC 000EA62C  4E 80 00 20 */	blr 
+.endfn startAI__8DoorItemFi
 
-.global update__8DoorItemFv
-update__8DoorItemFv:
+.fn update__8DoorItemFv, global
 /* 800ED6D0 000EA630  7C 08 02 A6 */	mflr r0
 /* 800ED6D4 000EA634  90 01 00 04 */	stw r0, 4(r1)
 /* 800ED6D8 000EA638  94 21 FF F8 */	stwu r1, -8(r1)
@@ -404,9 +403,9 @@ update__8DoorItemFv:
 /* 800ED76C 000EA6CC  38 21 00 08 */	addi r1, r1, 8
 /* 800ED770 000EA6D0  7C 08 03 A6 */	mtlr r0
 /* 800ED774 000EA6D4  4E 80 00 20 */	blr 
+.endfn update__8DoorItemFv
 
-.global isVisible__8DoorItemFv
-isVisible__8DoorItemFv:
+.fn isVisible__8DoorItemFv, global
 /* 800ED778 000EA6D8  80 03 03 CC */	lwz r0, 0x3cc(r3)
 /* 800ED77C 000EA6DC  38 60 00 00 */	li r3, 0
 /* 800ED780 000EA6E0  2C 00 00 01 */	cmpwi r0, 1
@@ -415,14 +414,14 @@ isVisible__8DoorItemFv:
 /* 800ED78C 000EA6EC  4D 82 00 20 */	beqlr 
 /* 800ED790 000EA6F0  38 60 00 01 */	li r3, 1
 /* 800ED794 000EA6F4  4E 80 00 20 */	blr 
+.endfn isVisible__8DoorItemFv
 
-.global getiMass__8DoorItemFv
-getiMass__8DoorItemFv:
+.fn getiMass__8DoorItemFv, global
 /* 800ED798 000EA6F8  C0 22 9A E0 */	lfs f1, lbl_803E9CE0@sda21(r2)
 /* 800ED79C 000EA6FC  4E 80 00 20 */	blr 
+.endfn getiMass__8DoorItemFv
 
-.global isAtari__8DoorItemFv
-isAtari__8DoorItemFv:
+.fn isAtari__8DoorItemFv, global
 /* 800ED7A0 000EA700  80 03 03 CC */	lwz r0, 0x3cc(r3)
 /* 800ED7A4 000EA704  38 60 00 01 */	li r3, 1
 /* 800ED7A8 000EA708  2C 00 00 00 */	cmpwi r0, 0
@@ -431,9 +430,9 @@ isAtari__8DoorItemFv:
 /* 800ED7B4 000EA714  4D 82 00 20 */	beqlr 
 /* 800ED7B8 000EA718  38 60 00 00 */	li r3, 0
 /* 800ED7BC 000EA71C  4E 80 00 20 */	blr 
+.endfn isAtari__8DoorItemFv
 
-.global refresh__8DoorItemFR8Graphics
-refresh__8DoorItemFR8Graphics:
+.fn refresh__8DoorItemFR8Graphics, global
 /* 800ED7C0 000EA720  7C 08 02 A6 */	mflr r0
 /* 800ED7C4 000EA724  90 01 00 04 */	stw r0, 4(r1)
 /* 800ED7C8 000EA728  94 21 FE 90 */	stwu r1, -0x170(r1)
@@ -563,53 +562,62 @@ refresh__8DoorItemFR8Graphics:
 /* 800ED9B8 000EA918  38 21 01 70 */	addi r1, r1, 0x170
 /* 800ED9BC 000EA91C  7C 08 03 A6 */	mtlr r0
 /* 800ED9C0 000EA920  4E 80 00 20 */	blr 
+.endfn refresh__8DoorItemFR8Graphics
 
-.global isAlive__8DoorItemFv
-isAlive__8DoorItemFv:
+.fn isAlive__8DoorItemFv, weak
 /* 800ED9C4 000EA924  38 60 00 01 */	li r3, 1
 /* 800ED9C8 000EA928  4E 80 00 20 */	blr 
+.endfn isAlive__8DoorItemFv
 
-.global getHeight__8DoorItemFv
-getHeight__8DoorItemFv:
+.fn getHeight__8DoorItemFv, weak
 /* 800ED9CC 000EA92C  C0 22 9A E0 */	lfs f1, lbl_803E9CE0@sda21(r2)
 /* 800ED9D0 000EA930  4E 80 00 20 */	blr 
+.endfn getHeight__8DoorItemFv
 
-.global getHeight__7KeyItemFv
-getHeight__7KeyItemFv:
+.fn getHeight__7KeyItemFv, weak
 /* 800ED9D4 000EA934  C0 22 9A E0 */	lfs f1, lbl_803E9CE0@sda21(r2)
 /* 800ED9D8 000EA938  4E 80 00 20 */	blr 
+.endfn getHeight__7KeyItemFv
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802BD0A0:
+.obj lbl_802BD0A0, local
 	.asciz "keyItem.cpp"
+.endobj lbl_802BD0A0
 .balign 4
-lbl_802BD0AC:
+.obj lbl_802BD0AC, local
 	.asciz "DoorItem"
+.endobj lbl_802BD0AC
 .balign 4
-lbl_802BD0B8:
+.obj lbl_802BD0B8, local
 	.asciz "PaniAnimKeyListener"
+.endobj lbl_802BD0B8
 .balign 4
-lbl_802BD0CC:
+.obj lbl_802BD0CC, local
 	.asciz "EventTalker"
+.endobj lbl_802BD0CC
 .balign 4
-lbl_802BD0D8:
+.obj lbl_802BD0D8, local
 	.asciz "RefCountable"
+.endobj lbl_802BD0D8
 .balign 4
-lbl_802BD0E8:
+.obj lbl_802BD0E8, local
 	.asciz "Creature"
+.endobj lbl_802BD0E8
 .balign 4
-lbl_802BD0F4:
+.obj lbl_802BD0F4, local
 	.4byte __RTTI__11EventTalker
 	.4byte 0x8
 	.4byte __RTTI__12RefCountable
 	.4byte 0
 	.4byte 0
+.endobj lbl_802BD0F4
 .balign 4
-lbl_802BD108:
+.obj lbl_802BD108, local
 	.asciz "AICreature"
+.endobj lbl_802BD108
 .balign 4
-lbl_802BD114:
+.obj lbl_802BD114, local
 	.4byte __RTTI__19PaniAnimKeyListener
 	.4byte 0x2B8
 	.4byte __RTTI__11EventTalker
@@ -619,11 +627,13 @@ lbl_802BD114:
 	.4byte __RTTI__8Creature
 	.4byte 0
 	.4byte 0
+.endobj lbl_802BD114
 .balign 4
-lbl_802BD138:
+.obj lbl_802BD138, local
 	.asciz "ItemCreature"
+.endobj lbl_802BD138
 .balign 4
-lbl_802BD148:
+.obj lbl_802BD148, local
 	.4byte __RTTI__19PaniAnimKeyListener
 	.4byte 0x2B8
 	.4byte __RTTI__11EventTalker
@@ -635,7 +645,9 @@ lbl_802BD148:
 	.4byte __RTTI__10AICreature
 	.4byte 0
 	.4byte 0
-lbl_802BD174:
+.endobj lbl_802BD148
+.balign 4
+.obj lbl_802BD174, local
 	.4byte __RTTI__19PaniAnimKeyListener
 	.4byte 0x2B8
 	.4byte __RTTI__11EventTalker
@@ -649,8 +661,9 @@ lbl_802BD174:
 	.4byte __RTTI__12ItemCreature
 	.4byte 0
 	.4byte 0
-.global __vt__8DoorItem
-__vt__8DoorItem:
+.endobj lbl_802BD174
+.balign 4
+.obj __vt__8DoorItem, global
 	.4byte __RTTI__8DoorItem
 	.4byte 0
 	.4byte addCntCallback__12RefCountableFv
@@ -738,7 +751,9 @@ __vt__8DoorItem:
 	.4byte stopMotion__12ItemCreatureFv
 	.4byte animationKeyUpdated__10AICreatureFR16PaniAnimKeyEvent
 	.4byte finalSetup__12ItemCreatureFv
-lbl_802BD304:
+.endobj __vt__8DoorItem
+.balign 4
+.obj lbl_802BD304, local
 	.4byte __RTTI__11EventTalker
 	.4byte 0x8
 	.4byte __RTTI__12RefCountable
@@ -746,8 +761,9 @@ lbl_802BD304:
 	.4byte __RTTI__8Creature
 	.4byte 0
 	.4byte 0
-.global __vt__7KeyItem
-__vt__7KeyItem:
+.endobj lbl_802BD304
+.balign 4
+.obj __vt__7KeyItem, global
 	.4byte __RTTI__7KeyItem
 	.4byte 0
 	.4byte addCntCallback__12RefCountableFv
@@ -817,83 +833,124 @@ __vt__7KeyItem:
 	.4byte doAnimation__8CreatureFv
 	.4byte doKill__7KeyItemFv
 	.4byte exitCourse__8CreatureFv
+.endobj __vt__7KeyItem
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-lbl_803E19A8:
+.obj lbl_803E19A8, local
 	.float 2.0
-lbl_803E19AC:
+.endobj lbl_803E19A8
+.obj lbl_803E19AC, local
 	.float 2.0
-lbl_803E19B0:
+.endobj lbl_803E19AC
+.obj lbl_803E19B0, local
 	.float 0.0
-lbl_803E19B4:
+.endobj lbl_803E19B0
+.obj lbl_803E19B4, local
 	.float 40.0
-lbl_803E19B8:
+.endobj lbl_803E19B4
+.obj lbl_803E19B8, local
 	.float 0.0
-lbl_803E19BC:
-	.asciz "%s"
+.endobj lbl_803E19B8
 .balign 4
-__RTTI__19PaniAnimKeyListener:
+.obj lbl_803E19BC, local
+	.asciz "%s"
+.endobj lbl_803E19BC
+.balign 4
+.obj __RTTI__19PaniAnimKeyListener, local
 	.4byte lbl_802BD0B8
 	.4byte 0
-__RTTI__11EventTalker:
+.endobj __RTTI__19PaniAnimKeyListener
+.balign 4
+.obj __RTTI__11EventTalker, local
 	.4byte lbl_802BD0CC
 	.4byte 0
-__RTTI__12RefCountable:
+.endobj __RTTI__11EventTalker
+.balign 4
+.obj __RTTI__12RefCountable, local
 	.4byte lbl_802BD0D8
 	.4byte 0
-__RTTI__8Creature:
+.endobj __RTTI__12RefCountable
+.balign 4
+.obj __RTTI__8Creature, local
 	.4byte lbl_802BD0E8
 	.4byte lbl_802BD0F4
-__RTTI__10AICreature:
+.endobj __RTTI__8Creature
+.balign 4
+.obj __RTTI__10AICreature, local
 	.4byte lbl_802BD108
 	.4byte lbl_802BD114
-__RTTI__12ItemCreature:
+.endobj __RTTI__10AICreature
+.balign 4
+.obj __RTTI__12ItemCreature, local
 	.4byte lbl_802BD138
 	.4byte lbl_802BD148
-__RTTI__8DoorItem:
+.endobj __RTTI__12ItemCreature
+.balign 4
+.obj __RTTI__8DoorItem, local
 	.4byte lbl_802BD0AC
 	.4byte lbl_802BD174
+.endobj __RTTI__8DoorItem
 .balign 4
-lbl_803E19F8:
+.obj lbl_803E19F8, local
 	.asciz "KeyItem"
+.endobj lbl_803E19F8
 .balign 4
-__RTTI__7KeyItem:
+.obj __RTTI__7KeyItem, local
 	.4byte lbl_803E19F8
 	.4byte lbl_802BD304
+.endobj __RTTI__7KeyItem
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803E9CD8:
+.obj lbl_803E9CD8, local
 	.float 25.0
-lbl_803E9CDC:
+.endobj lbl_803E9CD8
+.obj lbl_803E9CDC, local
 	.float 1.0
-lbl_803E9CE0:
+.endobj lbl_803E9CDC
+.obj lbl_803E9CE0, local
 	.float 0.0
+.endobj lbl_803E9CE0
 .balign 8
-lbl_803E9CE8:
+.obj lbl_803E9CE8, local
 	.double 0.5
-lbl_803E9CF0:
+.endobj lbl_803E9CE8
+.balign 8
+.obj lbl_803E9CF0, local
 	.double 3.0
-lbl_803E9CF8:
+.endobj lbl_803E9CF0
+.balign 4
+.obj lbl_803E9CF8, local
 	.float 0.025
-lbl_803E9CFC:
+.endobj lbl_803E9CF8
+.obj lbl_803E9CFC, local
 	.float 0.01
-lbl_803E9D00:
+.endobj lbl_803E9CFC
+.obj lbl_803E9D00, local
 	.float 150.0
-lbl_803E9D04:
+.endobj lbl_803E9D00
+.obj lbl_803E9D04, local
 	.float 2.0
-lbl_803E9D08:
+.endobj lbl_803E9D04
+.obj lbl_803E9D08, local # tau
 	.float 6.2831855
-lbl_803E9D0C:
+.endobj lbl_803E9D08
+.obj lbl_803E9D0C, local
 	.float 10.0
-lbl_803E9D10:
+.endobj lbl_803E9D0C
+.obj lbl_803E9D10, local
 	.float 20.0
-lbl_803E9D14:
+.endobj lbl_803E9D10
+.obj lbl_803E9D14, local
 	.float 2.5
-lbl_803E9D18:
+.endobj lbl_803E9D14
+.obj lbl_803E9D18, local
 	.float 60.0
-lbl_803E9D1C:
+.endobj lbl_803E9D18
+.obj lbl_803E9D1C, local
 	.float 30.0
-lbl_803E9D20:
+.endobj lbl_803E9D1C
+.obj lbl_803E9D20, local
 	.float 3.0
+.endobj lbl_803E9D20

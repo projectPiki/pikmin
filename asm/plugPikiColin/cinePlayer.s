@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global init__15CinematicPlayerFPc
-init__15CinematicPlayerFPc:
+.fn init__15CinematicPlayerFPc, global
 /* 8006FA1C 0006C97C  7C 08 02 A6 */	mflr r0
 /* 8006FA20 0006C980  28 04 00 00 */	cmplwi r4, 0
 /* 8006FA24 0006C984  90 01 00 04 */	stw r0, 4(r1)
@@ -121,9 +120,9 @@ init__15CinematicPlayerFPc:
 /* 8006FBCC 0006CB2C  38 21 00 30 */	addi r1, r1, 0x30
 /* 8006FBD0 0006CB30  7C 08 03 A6 */	mtlr r0
 /* 8006FBD4 0006CB34  4E 80 00 20 */	blr 
+.endfn init__15CinematicPlayerFPc
 
-.global __ct__15CinematicPlayerFPc
-__ct__15CinematicPlayerFPc:
+.fn __ct__15CinematicPlayerFPc, global
 /* 8006FBD8 0006CB38  7C 08 02 A6 */	mflr r0
 /* 8006FBDC 0006CB3C  3C A0 80 22 */	lis r5, __vt__5ANode@ha
 /* 8006FBE0 0006CB40  90 01 00 04 */	stw r0, 4(r1)
@@ -232,9 +231,9 @@ __ct__15CinematicPlayerFPc:
 /* 8006FD7C 0006CCDC  38 21 00 20 */	addi r1, r1, 0x20
 /* 8006FD80 0006CCE0  7C 08 03 A6 */	mtlr r0
 /* 8006FD84 0006CCE4  4E 80 00 20 */	blr 
+.endfn __ct__15CinematicPlayerFPc
 
-.global __ct__13ActorInstanceFv
-__ct__13ActorInstanceFv:
+.fn __ct__13ActorInstanceFv, weak
 /* 8006FD88 0006CCE8  7C 08 02 A6 */	mflr r0
 /* 8006FD8C 0006CCEC  3C A0 80 2B */	lis r5, __vt__13ActorInstance@ha
 /* 8006FD90 0006CCF0  90 01 00 04 */	stw r0, 4(r1)
@@ -311,9 +310,9 @@ __ct__13ActorInstanceFv:
 /* 8006FEAC 0006CE0C  38 21 00 20 */	addi r1, r1, 0x20
 /* 8006FEB0 0006CE10  7C 08 03 A6 */	mtlr r0
 /* 8006FEB4 0006CE14  4E 80 00 20 */	blr 
+.endfn __ct__13ActorInstanceFv
 
-.global loadCin__15CinematicPlayerFPc
-loadCin__15CinematicPlayerFPc:
+.fn loadCin__15CinematicPlayerFPc, global
 /* 8006FEB8 0006CE18  7C 08 02 A6 */	mflr r0
 /* 8006FEBC 0006CE1C  38 A0 00 01 */	li r5, 1
 /* 8006FEC0 0006CE20  90 01 00 04 */	stw r0, 4(r1)
@@ -803,9 +802,9 @@ loadCin__15CinematicPlayerFPc:
 /* 800705CC 0006D52C  38 21 00 90 */	addi r1, r1, 0x90
 /* 800705D0 0006D530  7C 08 03 A6 */	mtlr r0
 /* 800705D4 0006D534  4E 80 00 20 */	blr 
+.endfn loadCin__15CinematicPlayerFPc
 
-.global addScene__15CinematicPlayerFP9SceneData
-addScene__15CinematicPlayerFP9SceneData:
+.fn addScene__15CinematicPlayerFP9SceneData, global
 /* 800705D8 0006D538  7C 08 02 A6 */	mflr r0
 /* 800705DC 0006D53C  38 A0 00 01 */	li r5, 1
 /* 800705E0 0006D540  90 01 00 04 */	stw r0, 4(r1)
@@ -854,9 +853,9 @@ addScene__15CinematicPlayerFP9SceneData:
 /* 80070680 0006D5E0  38 21 00 20 */	addi r1, r1, 0x20
 /* 80070684 0006D5E4  7C 08 03 A6 */	mtlr r0
 /* 80070688 0006D5E8  4E 80 00 20 */	blr 
+.endfn addScene__15CinematicPlayerFP9SceneData
 
-.global addCut__15CinematicPlayerFiii
-addCut__15CinematicPlayerFiii:
+.fn addCut__15CinematicPlayerFiii, global
 /* 8007068C 0006D5EC  7C 08 02 A6 */	mflr r0
 /* 80070690 0006D5F0  90 01 00 04 */	stw r0, 4(r1)
 /* 80070694 0006D5F4  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -897,9 +896,9 @@ addCut__15CinematicPlayerFiii:
 /* 80070710 0006D670  38 21 00 28 */	addi r1, r1, 0x28
 /* 80070714 0006D674  7C 08 03 A6 */	mtlr r0
 /* 80070718 0006D678  4E 80 00 20 */	blr 
+.endfn addCut__15CinematicPlayerFiii
 
-.global addActor__15CinematicPlayerFP15CineShapeObject
-addActor__15CinematicPlayerFP15CineShapeObject:
+.fn addActor__15CinematicPlayerFP15CineShapeObject, global
 /* 8007071C 0006D67C  7C 08 02 A6 */	mflr r0
 /* 80070720 0006D680  3C 60 80 3A */	lis r3, gameflow@ha
 /* 80070724 0006D684  90 01 00 04 */	stw r0, 4(r1)
@@ -942,9 +941,9 @@ addActor__15CinematicPlayerFP15CineShapeObject:
 /* 800707B0 0006D710  38 21 00 20 */	addi r1, r1, 0x20
 /* 800707B4 0006D714  7C 08 03 A6 */	mtlr r0
 /* 800707B8 0006D718  4E 80 00 20 */	blr 
+.endfn addActor__15CinematicPlayerFP15CineShapeObject
 
-.global addSceneCut__15CinematicPlayerFv
-addSceneCut__15CinematicPlayerFv:
+.fn addSceneCut__15CinematicPlayerFv, global
 /* 800707BC 0006D71C  7C 08 02 A6 */	mflr r0
 /* 800707C0 0006D720  90 01 00 04 */	stw r0, 4(r1)
 /* 800707C4 0006D724  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -1028,9 +1027,9 @@ addSceneCut__15CinematicPlayerFv:
 /* 800708E8 0006D848  38 21 00 20 */	addi r1, r1, 0x20
 /* 800708EC 0006D84C  7C 08 03 A6 */	mtlr r0
 /* 800708F0 0006D850  4E 80 00 20 */	blr 
+.endfn addSceneCut__15CinematicPlayerFv
 
-.global skipScene__15CinematicPlayerFi
-skipScene__15CinematicPlayerFi:
+.fn skipScene__15CinematicPlayerFi, global
 /* 800708F4 0006D854  7C 08 02 A6 */	mflr r0
 /* 800708F8 0006D858  90 01 00 04 */	stw r0, 4(r1)
 /* 800708FC 0006D85C  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -1065,9 +1064,9 @@ skipScene__15CinematicPlayerFi:
 /* 8007096C 0006D8CC  38 21 00 20 */	addi r1, r1, 0x20
 /* 80070970 0006D8D0  7C 08 03 A6 */	mtlr r0
 /* 80070974 0006D8D4  4E 80 00 20 */	blr 
+.endfn skipScene__15CinematicPlayerFi
 
-.global update__15CinematicPlayerFv
-update__15CinematicPlayerFv:
+.fn update__15CinematicPlayerFv, global
 /* 80070978 0006D8D8  7C 08 02 A6 */	mflr r0
 /* 8007097C 0006D8DC  90 01 00 04 */	stw r0, 4(r1)
 /* 80070980 0006D8E0  94 21 FF 90 */	stwu r1, -0x70(r1)
@@ -1442,9 +1441,9 @@ update__15CinematicPlayerFv:
 /* 80070EE0 0006DE40  38 21 00 70 */	addi r1, r1, 0x70
 /* 80070EE4 0006DE44  7C 08 03 A6 */	mtlr r0
 /* 80070EE8 0006DE48  4E 80 00 20 */	blr 
+.endfn update__15CinematicPlayerFv
 
-.global addLights__15CinematicPlayerFR8Graphics
-addLights__15CinematicPlayerFR8Graphics:
+.fn addLights__15CinematicPlayerFR8Graphics, global
 /* 80070EEC 0006DE4C  7C 08 02 A6 */	mflr r0
 /* 80070EF0 0006DE50  90 01 00 04 */	stw r0, 4(r1)
 /* 80070EF4 0006DE54  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -1498,9 +1497,9 @@ addLights__15CinematicPlayerFR8Graphics:
 /* 80070FA4 0006DF04  38 21 00 28 */	addi r1, r1, 0x28
 /* 80070FA8 0006DF08  7C 08 03 A6 */	mtlr r0
 /* 80070FAC 0006DF0C  4E 80 00 20 */	blr 
+.endfn addLights__15CinematicPlayerFR8Graphics
 
-.global refresh__15CinematicPlayerFR8Graphics
-refresh__15CinematicPlayerFR8Graphics:
+.fn refresh__15CinematicPlayerFR8Graphics, global
 /* 80070FB0 0006DF10  7C 08 02 A6 */	mflr r0
 /* 80070FB4 0006DF14  90 01 00 04 */	stw r0, 4(r1)
 /* 80070FB8 0006DF18  94 21 FF 98 */	stwu r1, -0x68(r1)
@@ -1548,9 +1547,9 @@ refresh__15CinematicPlayerFR8Graphics:
 /* 8007104C 0006DFAC  38 21 00 68 */	addi r1, r1, 0x68
 /* 80071050 0006DFB0  7C 08 03 A6 */	mtlr r0
 /* 80071054 0006DFB4  4E 80 00 20 */	blr 
+.endfn refresh__15CinematicPlayerFR8Graphics
 
-.global addInstance__8SceneCutFPc
-addInstance__8SceneCutFPc:
+.fn addInstance__8SceneCutFPc, global
 /* 80071058 0006DFB8  7C 08 02 A6 */	mflr r0
 /* 8007105C 0006DFBC  90 01 00 04 */	stw r0, 4(r1)
 /* 80071060 0006DFC0  94 21 FF D0 */	stwu r1, -0x30(r1)
@@ -1657,9 +1656,9 @@ addInstance__8SceneCutFPc:
 /* 800711DC 0006E13C  38 21 00 30 */	addi r1, r1, 0x30
 /* 800711E0 0006E140  7C 08 03 A6 */	mtlr r0
 /* 800711E4 0006E144  4E 80 00 20 */	blr 
+.endfn addInstance__8SceneCutFPc
 
-.global exitInstance__13ActorInstanceFv
-exitInstance__13ActorInstanceFv:
+.fn exitInstance__13ActorInstanceFv, global
 /* 800711E8 0006E148  7C 08 02 A6 */	mflr r0
 /* 800711EC 0006E14C  90 01 00 04 */	stw r0, 4(r1)
 /* 800711F0 0006E150  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -1715,9 +1714,9 @@ exitInstance__13ActorInstanceFv:
 /* 800712A0 0006E200  38 21 00 28 */	addi r1, r1, 0x28
 /* 800712A4 0006E204  7C 08 03 A6 */	mtlr r0
 /* 800712A8 0006E208  4E 80 00 20 */	blr 
+.endfn exitInstance__13ActorInstanceFv
 
-.global initInstance__13ActorInstanceFv
-initInstance__13ActorInstanceFv:
+.fn initInstance__13ActorInstanceFv, global
 /* 800712AC 0006E20C  7C 08 02 A6 */	mflr r0
 /* 800712B0 0006E210  90 01 00 04 */	stw r0, 4(r1)
 /* 800712B4 0006E214  38 00 00 00 */	li r0, 0
@@ -1834,9 +1833,9 @@ initInstance__13ActorInstanceFv:
 /* 8007145C 0006E3BC  38 21 00 30 */	addi r1, r1, 0x30
 /* 80071460 0006E3C0  7C 08 03 A6 */	mtlr r0
 /* 80071464 0006E3C4  4E 80 00 20 */	blr 
+.endfn initInstance__13ActorInstanceFv
 
-.global checkEventKeys__13ActorInstanceFffR8Vector3f
-checkEventKeys__13ActorInstanceFffR8Vector3f:
+.fn checkEventKeys__13ActorInstanceFffR8Vector3f, global
 /* 80071468 0006E3C8  7C 08 02 A6 */	mflr r0
 /* 8007146C 0006E3CC  90 01 00 04 */	stw r0, 4(r1)
 /* 80071470 0006E3D0  94 21 FE 48 */	stwu r1, -0x1b8(r1)
@@ -2758,9 +2757,9 @@ checkEventKeys__13ActorInstanceFffR8Vector3f:
 /* 80072228 0006F188  38 21 01 B8 */	addi r1, r1, 0x1b8
 /* 8007222C 0006F18C  7C 08 03 A6 */	mtlr r0
 /* 80072230 0006F190  4E 80 00 20 */	blr 
+.endfn checkEventKeys__13ActorInstanceFffR8Vector3f
 
-.global refresh__13ActorInstanceFR8Matrix4fR8GraphicsPf
-refresh__13ActorInstanceFR8Matrix4fR8GraphicsPf:
+.fn refresh__13ActorInstanceFR8Matrix4fR8GraphicsPf, global
 /* 80072234 0006F194  7C 08 02 A6 */	mflr r0
 /* 80072238 0006F198  90 01 00 04 */	stw r0, 4(r1)
 /* 8007223C 0006F19C  94 21 FE 70 */	stwu r1, -0x190(r1)
@@ -3774,9 +3773,9 @@ refresh__13ActorInstanceFR8Matrix4fR8GraphicsPf:
 /* 80073138 00070098  38 21 01 90 */	addi r1, r1, 0x190
 /* 8007313C 0007009C  7C 08 03 A6 */	mtlr r0
 /* 80073140 000700A0  4E 80 00 20 */	blr 
+.endfn refresh__13ActorInstanceFR8Matrix4fR8GraphicsPf
 
-.global __ct__8Vector3fFRC8Vector3f
-__ct__8Vector3fFRC8Vector3f:
+.fn __ct__8Vector3fFRC8Vector3f, weak
 /* 80073144 000700A4  C0 04 00 00 */	lfs f0, 0(r4)
 /* 80073148 000700A8  D0 03 00 00 */	stfs f0, 0(r3)
 /* 8007314C 000700AC  C0 04 00 04 */	lfs f0, 4(r4)
@@ -3784,29 +3783,35 @@ __ct__8Vector3fFRC8Vector3f:
 /* 80073154 000700B4  C0 04 00 08 */	lfs f0, 8(r4)
 /* 80073158 000700B8  D0 03 00 08 */	stfs f0, 8(r3)
 /* 8007315C 000700BC  4E 80 00 20 */	blr 
+.endfn __ct__8Vector3fFRC8Vector3f
 
-.global demoDraw__8CreatureFR8GraphicsP8Matrix4f
-demoDraw__8CreatureFR8GraphicsP8Matrix4f:
+.fn demoDraw__8CreatureFR8GraphicsP8Matrix4f, weak
 /* 80073160 000700C0  4E 80 00 20 */	blr 
+.endfn demoDraw__8CreatureFR8GraphicsP8Matrix4f
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802A9D00:
+.obj lbl_802A9D00, local
 	.asciz "cinePlayer.cpp"
+.endobj lbl_802A9D00
 .balign 4
-lbl_802A9D10:
+.obj lbl_802A9D10, local
 	.asciz "CinePlayer"
+.endobj lbl_802A9D10
 .balign 4
-lbl_802A9D1C:
+.obj lbl_802A9D1C, local
 	.asciz "addScene"
+.endobj lbl_802A9D1C
 .balign 4
-lbl_802A9D28:
+.obj lbl_802A9D28, local
 	.asciz "addActor"
+.endobj lbl_802A9D28
 .balign 4
-lbl_802A9D34:
+.obj lbl_802A9D34, local
 	.asciz "pikis/happas/leaf.mod"
+.endobj lbl_802A9D34
 .balign 4
-onionColours$1858:
+.obj onionColours$1858, local
 	.float 10.0
 	.float 9.0
 	.float 8.0
@@ -3821,7 +3826,9 @@ onionColours$1858:
 	.float 8.0
 	.float 9.0
 	.float 10.0
-lbl_802A9D84:
+.endobj onionColours$1858
+.balign 4
+.obj lbl_802A9D84, local
 	.4byte .L_8007158C
 	.4byte .L_800715C8
 	.4byte .L_80071604
@@ -3854,409 +3861,581 @@ lbl_802A9D84:
 	.4byte .L_80072074
 	.4byte .L_80072160
 	.4byte .L_8007217C
+.endobj lbl_802A9D84
 .balign 4
-lbl_802A9E04:
+.obj lbl_802A9E04, local
 	.asciz "pikis/bluModel.mod"
+.endobj lbl_802A9E04
 .balign 4
-lbl_802A9E18:
+.obj lbl_802A9E18, local
 	.asciz "pikis/redModel.mod"
+.endobj lbl_802A9E18
 .balign 4
-lbl_802A9E2C:
+.obj lbl_802A9E2C, local
 	.asciz "pikis/yelModel.mod"
+.endobj lbl_802A9E2C
 .balign 4
-lbl_802A9E40:
+.obj lbl_802A9E40, local
 	.asciz "objects/pikihead/navihead.mod"
+.endobj lbl_802A9E40
 .balign 4
-lbl_802A9E60:
+.obj lbl_802A9E60, local
 	.asciz "ActorInstance"
+.endobj lbl_802A9E60
 .balign 4
-lbl_802A9E70:
+.obj lbl_802A9E70, local
 	.asciz "CoreNode"
+.endobj lbl_802A9E70
 .balign 4
-lbl_802A9E7C:
+.obj lbl_802A9E7C, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte 0
-lbl_802A9E88:
+.endobj lbl_802A9E7C
+.balign 4
+.obj lbl_802A9E88, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte __RTTI__8CoreNode
 	.4byte 0
 	.4byte 0
-.global __vt__13ActorInstance
-__vt__13ActorInstance:
+.endobj lbl_802A9E88
+.balign 4
+.obj __vt__13ActorInstance, weak
 	.4byte __RTTI__13ActorInstance
 	.4byte 0
 	.4byte getAgeNodeType__5ANodeFv
 	.4byte read__8CoreNodeFR18RandomAccessStream
+.endobj __vt__13ActorInstance
 .balign 4
-lbl_802A9EAC:
+.obj lbl_802A9EAC, local
 	.asciz "SceneCut"
+.endobj lbl_802A9EAC
 .balign 4
-lbl_802A9EB8:
+.obj lbl_802A9EB8, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte __RTTI__8CoreNode
 	.4byte 0
 	.4byte 0
-.global __vt__8SceneCut
-__vt__8SceneCut:
+.endobj lbl_802A9EB8
+.balign 4
+.obj __vt__8SceneCut, weak
 	.4byte __RTTI__8SceneCut
 	.4byte 0
 	.4byte getAgeNodeType__5ANodeFv
 	.4byte read__8CoreNodeFR18RandomAccessStream
+.endobj __vt__8SceneCut
 .balign 4
-lbl_802A9EDC:
+.obj lbl_802A9EDC, local
 	.asciz "CineShapeObject"
+.endobj lbl_802A9EDC
 .balign 4
-lbl_802A9EEC:
+.obj lbl_802A9EEC, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte __RTTI__8CoreNode
 	.4byte 0
 	.4byte 0
-.global __vt__15CineShapeObject
-__vt__15CineShapeObject:
+.endobj lbl_802A9EEC
+.balign 4
+.obj __vt__15CineShapeObject, weak
 	.4byte __RTTI__15CineShapeObject
 	.4byte 0
 	.4byte getAgeNodeType__5ANodeFv
 	.4byte read__8CoreNodeFR18RandomAccessStream
+.endobj __vt__15CineShapeObject
 .balign 4
-lbl_802A9F10:
+.obj lbl_802A9F10, local
 	.asciz "SceneData"
+.endobj lbl_802A9F10
 .balign 4
-lbl_802A9F1C:
+.obj lbl_802A9F1C, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte __RTTI__8CoreNode
 	.4byte 0
 	.4byte 0
-.global __vt__9SceneData
-__vt__9SceneData:
+.endobj lbl_802A9F1C
+.balign 4
+.obj __vt__9SceneData, weak
 	.4byte __RTTI__9SceneData
 	.4byte 0
 	.4byte getAgeNodeType__5ANodeFv
 	.4byte read__8CoreNodeFR18RandomAccessStream
+.endobj __vt__9SceneData
 .skip 0x20 # compiler padding
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-lbl_803DE4D8:
+.obj lbl_803DE4D8, local
 	.asciz ""
+.endobj lbl_803DE4D8
 .balign 4
-lbl_803DE4DC:
+.obj lbl_803DE4DC, local
 	.asciz "type"
+.endobj lbl_803DE4DC
 .balign 4
-lbl_803DE4E4:
+.obj lbl_803DE4E4, local
 	.asciz "%d"
+.endobj lbl_803DE4E4
 .balign 4
-lbl_803DE4E8:
+.obj lbl_803DE4E8, local
 	.asciz "flags"
+.endobj lbl_803DE4E8
 .balign 4
-lbl_803DE4F0:
+.obj lbl_803DE4F0, local
 	.asciz "scene"
+.endobj lbl_803DE4F0
 .balign 4
-lbl_803DE4F8:
+.obj lbl_803DE4F8, local
 	.asciz "shape"
+.endobj lbl_803DE4F8
 .balign 4
-lbl_803DE500:
+.obj lbl_803DE500, local
 	.asciz "bundle"
+.endobj lbl_803DE500
 .balign 4
-lbl_803DE508:
+.obj lbl_803DE508, local
 	.asciz "anims"
+.endobj lbl_803DE508
 .balign 4
-lbl_803DE510:
+.obj lbl_803DE510, local
 	.asciz "addCut"
+.endobj lbl_803DE510
 .balign 4
-lbl_803DE518:
+.obj lbl_803DE518, local
 	.asciz "cut"
+.endobj lbl_803DE518
 .balign 4
-lbl_803DE51C:
+.obj lbl_803DE51C, local
 	.asciz "actor"
+.endobj lbl_803DE51C
 .balign 4
-lbl_803DE524:
+.obj lbl_803DE524, local
 	.asciz "acflags"
+.endobj lbl_803DE524
 .balign 4
-lbl_803DE52C:
+.obj lbl_803DE52C, local
 	.asciz "anim"
+.endobj lbl_803DE52C
 .balign 4
-lbl_803DE534:
+.obj lbl_803DE534, local
 	.asciz "keys"
+.endobj lbl_803DE534
 .balign 4
-lbl_803DE53C:
+.obj lbl_803DE53C, local
 	.float 0.0
-lbl_803DE540:
+.endobj lbl_803DE53C
+.obj lbl_803DE540, local
 	.float 0.0
-lbl_803DE544:
+.endobj lbl_803DE540
+.obj lbl_803DE544, local
 	.float 0.0
-lbl_803DE548:
+.endobj lbl_803DE544
+.obj lbl_803DE548, local
 	.float 64.0
-lbl_803DE54C:
+.endobj lbl_803DE548
+.obj lbl_803DE54C, local
 	.float 44.0
-lbl_803DE550:
+.endobj lbl_803DE54C
+.obj lbl_803DE550, local
 	.float 1913.0
-lbl_803DE554:
+.endobj lbl_803DE550
+.obj lbl_803DE554, local
 	.float 53.0
-lbl_803DE558:
+.endobj lbl_803DE554
+.obj lbl_803DE558, local
 	.float 1164.0
-lbl_803DE55C:
+.endobj lbl_803DE558
+.obj lbl_803DE55C, local
 	.float 848.0
-lbl_803DE560:
+.endobj lbl_803DE55C
+.obj lbl_803DE560, local
 	.float -25000.0
-lbl_803DE564:
+.endobj lbl_803DE560
+.obj lbl_803DE564, local
 	.float -25000.0
-lbl_803DE568:
+.endobj lbl_803DE564
+.obj lbl_803DE568, local
 	.float -25000.0
-lbl_803DE56C:
+.endobj lbl_803DE568
+.obj lbl_803DE56C, local
 	.float 1.0
-lbl_803DE570:
+.endobj lbl_803DE56C
+.obj lbl_803DE570, local
 	.float 0.0
-lbl_803DE574:
+.endobj lbl_803DE570
+.obj lbl_803DE574, local
 	.float 0.0
-lbl_803DE578:
+.endobj lbl_803DE574
+.obj lbl_803DE578, local
 	.float -25000.0
-lbl_803DE57C:
+.endobj lbl_803DE578
+.obj lbl_803DE57C, local
 	.float -25000.0
-lbl_803DE580:
+.endobj lbl_803DE57C
+.obj lbl_803DE580, local
 	.float -25000.0
-lbl_803DE584:
+.endobj lbl_803DE580
+.obj lbl_803DE584, local
 	.float -25000.0
-lbl_803DE588:
+.endobj lbl_803DE584
+.obj lbl_803DE588, local
 	.float -25000.0
-lbl_803DE58C:
+.endobj lbl_803DE588
+.obj lbl_803DE58C, local
 	.float -25000.0
-lbl_803DE590:
+.endobj lbl_803DE58C
+.obj lbl_803DE590, local
 	.float -25000.0
-lbl_803DE594:
+.endobj lbl_803DE590
+.obj lbl_803DE594, local
 	.float -25000.0
-lbl_803DE598:
+.endobj lbl_803DE594
+.obj lbl_803DE598, local
 	.float -25000.0
-lbl_803DE59C:
+.endobj lbl_803DE598
+.obj lbl_803DE59C, local
 	.float -25000.0
-lbl_803DE5A0:
+.endobj lbl_803DE59C
+.obj lbl_803DE5A0, local
 	.float -25000.0
-lbl_803DE5A4:
+.endobj lbl_803DE5A0
+.obj lbl_803DE5A4, local
 	.float -25000.0
-lbl_803DE5A8:
+.endobj lbl_803DE5A4
+.obj lbl_803DE5A8, local
 	.float 0.0
-lbl_803DE5AC:
+.endobj lbl_803DE5A8
+.obj lbl_803DE5AC, local
 	.float 1.0
-lbl_803DE5B0:
+.endobj lbl_803DE5AC
+.obj lbl_803DE5B0, local
 	.float 0.0
-lbl_803DE5B4:
+.endobj lbl_803DE5B0
+.obj lbl_803DE5B4, local
 	.float -25000.0
-lbl_803DE5B8:
+.endobj lbl_803DE5B4
+.obj lbl_803DE5B8, local
 	.float -25000.0
-lbl_803DE5BC:
+.endobj lbl_803DE5B8
+.obj lbl_803DE5BC, local
 	.float -25000.0
-lbl_803DE5C0:
+.endobj lbl_803DE5BC
+.obj lbl_803DE5C0, local
 	.float -25000.0
-lbl_803DE5C4:
+.endobj lbl_803DE5C0
+.obj lbl_803DE5C4, local
 	.float -25000.0
-lbl_803DE5C8:
+.endobj lbl_803DE5C4
+.obj lbl_803DE5C8, local
 	.float -25000.0
-lbl_803DE5CC:
+.endobj lbl_803DE5C8
+.obj lbl_803DE5CC, local
 	.float -25000.0
-lbl_803DE5D0:
+.endobj lbl_803DE5CC
+.obj lbl_803DE5D0, local
 	.float -25000.0
-lbl_803DE5D4:
+.endobj lbl_803DE5D0
+.obj lbl_803DE5D4, local
 	.float -25000.0
-lbl_803DE5D8:
+.endobj lbl_803DE5D4
+.obj lbl_803DE5D8, local
 	.float -25000.0
-lbl_803DE5DC:
+.endobj lbl_803DE5D8
+.obj lbl_803DE5DC, local
 	.float -25000.0
-lbl_803DE5E0:
+.endobj lbl_803DE5DC
+.obj lbl_803DE5E0, local
 	.float -25000.0
-lbl_803DE5E4:
+.endobj lbl_803DE5E0
+.obj lbl_803DE5E4, local
 	.float 0.0
-lbl_803DE5E8:
+.endobj lbl_803DE5E4
+.obj lbl_803DE5E8, local
 	.float 0.0
-lbl_803DE5EC:
+.endobj lbl_803DE5E8
+.obj lbl_803DE5EC, local
 	.float 0.0
-lbl_803DE5F0:
+.endobj lbl_803DE5EC
+.obj lbl_803DE5F0, local
 	.float 0.0
-lbl_803DE5F4:
+.endobj lbl_803DE5F0
+.obj lbl_803DE5F4, local
 	.float 0.0
-lbl_803DE5F8:
+.endobj lbl_803DE5F4
+.obj lbl_803DE5F8, local
 	.float 0.0
-lbl_803DE5FC:
+.endobj lbl_803DE5F8
+.obj lbl_803DE5FC, local
 	.float 0.0
-lbl_803DE600:
+.endobj lbl_803DE5FC
+.obj lbl_803DE600, local
 	.float 0.0
-lbl_803DE604:
+.endobj lbl_803DE600
+.obj lbl_803DE604, local
 	.float 0.0
-lbl_803DE608:
+.endobj lbl_803DE604
+.obj lbl_803DE608, local
 	.float 0.0
-lbl_803DE60C:
+.endobj lbl_803DE608
+.obj lbl_803DE60C, local
 	.float 0.0
-lbl_803DE610:
+.endobj lbl_803DE60C
+.obj lbl_803DE610, local
 	.float 0.0
-lbl_803DE614:
+.endobj lbl_803DE610
+.obj lbl_803DE614, local
 	.float 0.0
-lbl_803DE618:
+.endobj lbl_803DE614
+.obj lbl_803DE618, local
 	.float 1.0
-lbl_803DE61C:
+.endobj lbl_803DE618
+.obj lbl_803DE61C, local
 	.float 0.0
-lbl_803DE620:
+.endobj lbl_803DE61C
+.obj lbl_803DE620, local
 	.float 0.0
-lbl_803DE624:
+.endobj lbl_803DE620
+.obj lbl_803DE624, local
 	.float 0.0
-lbl_803DE628:
+.endobj lbl_803DE624
+.obj lbl_803DE628, local
 	.float 0.0
-lbl_803DE62C:
+.endobj lbl_803DE628
+.obj lbl_803DE62C, local
 	.float 0.0
-lbl_803DE630:
+.endobj lbl_803DE62C
+.obj lbl_803DE630, local
 	.float 0.0
-lbl_803DE634:
+.endobj lbl_803DE630
+.obj lbl_803DE634, local
 	.float 0.0
-lbl_803DE638:
+.endobj lbl_803DE634
+.obj lbl_803DE638, local
 	.float 0.0
-lbl_803DE63C:
+.endobj lbl_803DE638
+.obj lbl_803DE63C, local
 	.float 0.0
-lbl_803DE640:
+.endobj lbl_803DE63C
+.obj lbl_803DE640, local
 	.float 0.0
-lbl_803DE644:
+.endobj lbl_803DE640
+.obj lbl_803DE644, local
 	.float 0.0
-lbl_803DE648:
+.endobj lbl_803DE644
+.obj lbl_803DE648, local
 	.float 0.0
-lbl_803DE64C:
+.endobj lbl_803DE648
+.obj lbl_803DE64C, local
 	.float 0.0
-lbl_803DE650:
+.endobj lbl_803DE64C
+.obj lbl_803DE650, local
 	.float 0.0
-lbl_803DE654:
+.endobj lbl_803DE650
+.obj lbl_803DE654, local
 	.float 134.0
-lbl_803DE658:
+.endobj lbl_803DE654
+.obj lbl_803DE658, local
 	.float 0.0
-lbl_803DE65C:
+.endobj lbl_803DE658
+.obj lbl_803DE65C, local
 	.float 0.0
-lbl_803DE660:
+.endobj lbl_803DE65C
+.obj lbl_803DE660, local
 	.float 7.0
-lbl_803DE664:
+.endobj lbl_803DE660
+.obj lbl_803DE664, local
 	.float 0.0
-lbl_803DE668:
+.endobj lbl_803DE664
+.obj lbl_803DE668, local
 	.float -14.4
-lbl_803DE66C:
+.endobj lbl_803DE668
+.obj lbl_803DE66C, local
 	.float 14.9
-lbl_803DE670:
+.endobj lbl_803DE66C
+.obj lbl_803DE670, local
 	.float 14.4
-lbl_803DE674:
+.endobj lbl_803DE670
+.obj lbl_803DE674, local
 	.float -14.4
-lbl_803DE678:
+.endobj lbl_803DE674
+.obj lbl_803DE678, local
 	.float 14.9
-lbl_803DE67C:
+.endobj lbl_803DE678
+.obj lbl_803DE67C, local
 	.float -14.4
-lbl_803DE680:
+.endobj lbl_803DE67C
+.obj lbl_803DE680, local
 	.float 14.4
-lbl_803DE684:
+.endobj lbl_803DE680
+.obj lbl_803DE684, local
 	.float 14.9
-lbl_803DE688:
+.endobj lbl_803DE684
+.obj lbl_803DE688, local
 	.float 14.4
-lbl_803DE68C:
+.endobj lbl_803DE688
+.obj lbl_803DE68C, local
 	.float 14.4
-lbl_803DE690:
+.endobj lbl_803DE68C
+.obj lbl_803DE690, local
 	.float 14.9
-lbl_803DE694:
+.endobj lbl_803DE690
+.obj lbl_803DE694, local
 	.float -14.4
-lbl_803DE698:
+.endobj lbl_803DE694
+.obj lbl_803DE698, local
 	.float 0.0
-lbl_803DE69C:
+.endobj lbl_803DE698
+.obj lbl_803DE69C, local
 	.float 0.0
-lbl_803DE6A0:
+.endobj lbl_803DE69C
+.obj lbl_803DE6A0, local
 	.float 0.0
-lbl_803DE6A4:
+.endobj lbl_803DE6A0
+.obj lbl_803DE6A4, local
 	.float 0.0
-lbl_803DE6A8:
+.endobj lbl_803DE6A4
+.obj lbl_803DE6A8, local
 	.float -28.0
-lbl_803DE6AC:
+.endobj lbl_803DE6A8
+.obj lbl_803DE6AC, local
 	.float 0.0
-lbl_803DE6B0:
+.endobj lbl_803DE6AC
+.obj lbl_803DE6B0, local
 	.float 0.0
-lbl_803DE6B4:
+.endobj lbl_803DE6B0
+.obj lbl_803DE6B4, local
 	.float 0.0
-lbl_803DE6B8:
+.endobj lbl_803DE6B4
+.obj lbl_803DE6B8, local
 	.float 0.0
-lbl_803DE6BC:
+.endobj lbl_803DE6B8
+.obj lbl_803DE6BC, local
 	.float 0.0
-lbl_803DE6C0:
+.endobj lbl_803DE6BC
+.obj lbl_803DE6C0, local
 	.float 0.0
-lbl_803DE6C4:
+.endobj lbl_803DE6C0
+.obj lbl_803DE6C4, local
 	.float 0.0
-lbl_803DE6C8:
+.endobj lbl_803DE6C4
+.obj lbl_803DE6C8, local
 	.float 0.0
-lbl_803DE6CC:
+.endobj lbl_803DE6C8
+.obj lbl_803DE6CC, local
 	.float 0.0
-lbl_803DE6D0:
+.endobj lbl_803DE6CC
+.obj lbl_803DE6D0, local
 	.float 0.0
-lbl_803DE6D4:
+.endobj lbl_803DE6D0
+.obj lbl_803DE6D4, local
 	.float 0.0
-lbl_803DE6D8:
+.endobj lbl_803DE6D4
+.obj lbl_803DE6D8, local
 	.float 0.0
-lbl_803DE6DC:
+.endobj lbl_803DE6D8
+.obj lbl_803DE6DC, local
 	.float 0.0
-lbl_803DE6E0:
+.endobj lbl_803DE6DC
+.obj lbl_803DE6E0, local
 	.float 0.0
-lbl_803DE6E4:
+.endobj lbl_803DE6E0
+.obj lbl_803DE6E4, local
 	.float 0.0
-lbl_803DE6E8:
+.endobj lbl_803DE6E4
+.obj lbl_803DE6E8, local
 	.float 0.0
-lbl_803DE6EC:
+.endobj lbl_803DE6E8
+.obj lbl_803DE6EC, local
 	.float 0.0
-lbl_803DE6F0:
+.endobj lbl_803DE6EC
+.obj lbl_803DE6F0, local
 	.float 0.0
-lbl_803DE6F4:
+.endobj lbl_803DE6F0
+.obj lbl_803DE6F4, local
 	.float 0.0
-lbl_803DE6F8:
+.endobj lbl_803DE6F4
+.obj lbl_803DE6F8, local
 	.float 0.0
-lbl_803DE6FC:
+.endobj lbl_803DE6F8
+.obj lbl_803DE6FC, local
 	.float 0.0
-lbl_803DE700:
+.endobj lbl_803DE6FC
+.obj lbl_803DE700, local
 	.float 0.0
-lbl_803DE704:
+.endobj lbl_803DE700
+.obj lbl_803DE704, local
 	.float 0.0
-lbl_803DE708:
+.endobj lbl_803DE704
+.obj lbl_803DE708, local
 	.float 0.0
-lbl_803DE70C:
+.endobj lbl_803DE708
+.obj lbl_803DE70C, local
 	.float 0.0
-lbl_803DE710:
+.endobj lbl_803DE70C
+.obj lbl_803DE710, local
 	.float 0.0
-lbl_803DE714:
+.endobj lbl_803DE710
+.obj lbl_803DE714, local
 	.float 0.0
-lbl_803DE718:
+.endobj lbl_803DE714
+.obj lbl_803DE718, local
 	.float 0.0
-lbl_803DE71C:
+.endobj lbl_803DE718
+.obj lbl_803DE71C, local
 	.float 0.0
-lbl_803DE720:
+.endobj lbl_803DE71C
+.obj lbl_803DE720, local
 	.float 0.0
-lbl_803DE724:
+.endobj lbl_803DE720
+.obj lbl_803DE724, local
 	.float 0.0
-lbl_803DE728:
+.endobj lbl_803DE724
+.obj lbl_803DE728, local
 	.float 0.0
-lbl_803DE72C:
+.endobj lbl_803DE728
+.obj lbl_803DE72C, local
 	.float 0.0
-lbl_803DE730:
+.endobj lbl_803DE72C
+.obj lbl_803DE730, local
 	.float 0.0
+.endobj lbl_803DE730
 .balign 4
-lbl_803DE734:
+.obj lbl_803DE734, local
 	.asciz "ANode"
+.endobj lbl_803DE734
 .balign 4
-__RTTI__5ANode:
+.obj __RTTI__5ANode, local
 	.4byte lbl_803DE734
 	.4byte 0
-__RTTI__8CoreNode:
+.endobj __RTTI__5ANode
+.balign 4
+.obj __RTTI__8CoreNode, local
 	.4byte lbl_802A9E70
 	.4byte lbl_802A9E7C
-__RTTI__13ActorInstance:
+.endobj __RTTI__8CoreNode
+.balign 4
+.obj __RTTI__13ActorInstance, local
 	.4byte lbl_802A9E60
 	.4byte lbl_802A9E88
-__RTTI__8SceneCut:
+.endobj __RTTI__13ActorInstance
+.balign 4
+.obj __RTTI__8SceneCut, local
 	.4byte lbl_802A9EAC
 	.4byte lbl_802A9EB8
-__RTTI__15CineShapeObject:
+.endobj __RTTI__8SceneCut
+.balign 4
+.obj __RTTI__15CineShapeObject, local
 	.4byte lbl_802A9EDC
 	.4byte lbl_802A9EEC
-__RTTI__9SceneData:
+.endobj __RTTI__15CineShapeObject
+.balign 4
+.obj __RTTI__9SceneData, local
 	.4byte lbl_802A9F10
 	.4byte lbl_802A9F1C
+.endobj __RTTI__9SceneData
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8

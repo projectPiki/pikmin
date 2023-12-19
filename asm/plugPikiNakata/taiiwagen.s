@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global __ct__19TaiIwagonParametersFv
-__ct__19TaiIwagonParametersFv:
+.fn __ct__19TaiIwagonParametersFv, global
 /* 8012E6C8 0012B628  7C 08 02 A6 */	mflr r0
 /* 8012E6CC 0012B62C  38 80 00 14 */	li r4, 0x14
 /* 8012E6D0 0012B630  90 01 00 04 */	stw r0, 4(r1)
@@ -68,9 +67,9 @@ __ct__19TaiIwagonParametersFv:
 /* 8012E7C4 0012B724  38 21 00 48 */	addi r1, r1, 0x48
 /* 8012E7C8 0012B728  7C 08 03 A6 */	mtlr r0
 /* 8012E7CC 0012B72C  4E 80 00 20 */	blr 
+.endfn __ct__19TaiIwagonParametersFv
 
-.global __ct__19TaiIwagonSoundTableFv
-__ct__19TaiIwagonSoundTableFv:
+.fn __ct__19TaiIwagonSoundTableFv, global
 /* 8012E7D0 0012B730  7C 08 02 A6 */	mflr r0
 /* 8012E7D4 0012B734  38 80 00 02 */	li r4, 2
 /* 8012E7D8 0012B738  90 01 00 04 */	stw r0, 4(r1)
@@ -107,9 +106,9 @@ __ct__19TaiIwagonSoundTableFv:
 /* 8012E848 0012B7A8  38 21 00 20 */	addi r1, r1, 0x20
 /* 8012E84C 0012B7AC  7C 08 03 A6 */	mtlr r0
 /* 8012E850 0012B7B0  4E 80 00 20 */	blr 
+.endfn __ct__19TaiIwagonSoundTableFv
 
-.global __ct__17TaiIwagonStrategyFP14TekiParameters
-__ct__17TaiIwagonStrategyFP14TekiParameters:
+.fn __ct__17TaiIwagonStrategyFP14TekiParameters, global
 /* 8012E854 0012B7B4  7C 08 02 A6 */	mflr r0
 /* 8012E858 0012B7B8  38 A0 00 01 */	li r5, 1
 /* 8012E85C 0012B7BC  90 01 00 04 */	stw r0, 4(r1)
@@ -430,9 +429,9 @@ __ct__17TaiIwagonStrategyFP14TekiParameters:
 /* 8012ED08 0012BC68  38 21 00 98 */	addi r1, r1, 0x98
 /* 8012ED0C 0012BC6C  7C 08 03 A6 */	mtlr r0
 /* 8012ED10 0012BC70  4E 80 00 20 */	blr 
+.endfn __ct__17TaiIwagonStrategyFP14TekiParameters
 
-.global start__17TaiIwagonStrategyFR4Teki
-start__17TaiIwagonStrategyFR4Teki:
+.fn start__17TaiIwagonStrategyFR4Teki, global
 /* 8012ED14 0012BC74  7C 08 02 A6 */	mflr r0
 /* 8012ED18 0012BC78  90 01 00 04 */	stw r0, 4(r1)
 /* 8012ED1C 0012BC7C  94 21 FF 98 */	stwu r1, -0x68(r1)
@@ -505,9 +504,9 @@ start__17TaiIwagonStrategyFR4Teki:
 /* 8012EE1C 0012BD7C  38 21 00 68 */	addi r1, r1, 0x68
 /* 8012EE20 0012BD80  7C 08 03 A6 */	mtlr r0
 /* 8012EE24 0012BD84  4E 80 00 20 */	blr 
+.endfn start__17TaiIwagonStrategyFR4Teki
 
-.global act__25TaiIwagonDustEffectActionFR4Teki
-act__25TaiIwagonDustEffectActionFR4Teki:
+.fn act__25TaiIwagonDustEffectActionFR4Teki, global
 /* 8012EE28 0012BD88  7C 08 02 A6 */	mflr r0
 /* 8012EE2C 0012BD8C  90 01 00 04 */	stw r0, 4(r1)
 /* 8012EE30 0012BD90  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -539,9 +538,9 @@ act__25TaiIwagonDustEffectActionFR4Teki:
 /* 8012EE8C 0012BDEC  38 21 00 18 */	addi r1, r1, 0x18
 /* 8012EE90 0012BDF0  7C 08 03 A6 */	mtlr r0
 /* 8012EE94 0012BDF4  4E 80 00 20 */	blr 
+.endfn act__25TaiIwagonDustEffectActionFR4Teki
 
-.global start__22TaiIwagonRollingActionFR4Teki
-start__22TaiIwagonRollingActionFR4Teki:
+.fn start__22TaiIwagonRollingActionFR4Teki, global
 /* 8012EE98 0012BDF8  C0 04 00 70 */	lfs f0, 0x70(r4)
 /* 8012EE9C 0012BDFC  D0 04 03 98 */	stfs f0, 0x398(r4)
 /* 8012EEA0 0012BE00  C0 04 00 74 */	lfs f0, 0x74(r4)
@@ -549,9 +548,9 @@ start__22TaiIwagonRollingActionFR4Teki:
 /* 8012EEA8 0012BE08  C0 04 00 78 */	lfs f0, 0x78(r4)
 /* 8012EEAC 0012BE0C  D0 04 03 A0 */	stfs f0, 0x3a0(r4)
 /* 8012EEB0 0012BE10  4E 80 00 20 */	blr 
+.endfn start__22TaiIwagonRollingActionFR4Teki
 
-.global act__22TaiIwagonRollingActionFR4Teki
-act__22TaiIwagonRollingActionFR4Teki:
+.fn act__22TaiIwagonRollingActionFR4Teki, global
 /* 8012EEB4 0012BE14  C0 04 03 98 */	lfs f0, 0x398(r4)
 /* 8012EEB8 0012BE18  38 60 00 00 */	li r3, 0
 /* 8012EEBC 0012BE1C  D0 04 00 A4 */	stfs f0, 0xa4(r4)
@@ -560,9 +559,9 @@ act__22TaiIwagonRollingActionFR4Teki:
 /* 8012EEC8 0012BE28  C0 04 03 A0 */	lfs f0, 0x3a0(r4)
 /* 8012EECC 0012BE2C  D0 04 00 AC */	stfs f0, 0xac(r4)
 /* 8012EED0 0012BE30  4E 80 00 20 */	blr 
+.endfn act__22TaiIwagonRollingActionFR4Teki
 
-.global __ct__19TaiIwagenParametersFv
-__ct__19TaiIwagenParametersFv:
+.fn __ct__19TaiIwagenParametersFv, global
 /* 8012EED4 0012BE34  7C 08 02 A6 */	mflr r0
 /* 8012EED8 0012BE38  38 80 00 14 */	li r4, 0x14
 /* 8012EEDC 0012BE3C  90 01 00 04 */	stw r0, 4(r1)
@@ -633,9 +632,9 @@ __ct__19TaiIwagenParametersFv:
 /* 8012EFE0 0012BF40  38 21 00 48 */	addi r1, r1, 0x48
 /* 8012EFE4 0012BF44  7C 08 03 A6 */	mtlr r0
 /* 8012EFE8 0012BF48  4E 80 00 20 */	blr 
+.endfn __ct__19TaiIwagenParametersFv
 
-.global __ct__17TaiIwagenStrategyFP14TekiParameters
-__ct__17TaiIwagenStrategyFP14TekiParameters:
+.fn __ct__17TaiIwagenStrategyFP14TekiParameters, global
 /* 8012EFEC 0012BF4C  7C 08 02 A6 */	mflr r0
 /* 8012EFF0 0012BF50  38 A0 00 00 */	li r5, 0
 /* 8012EFF4 0012BF54  90 01 00 04 */	stw r0, 4(r1)
@@ -775,9 +774,9 @@ __ct__17TaiIwagenStrategyFP14TekiParameters:
 /* 8012F1F0 0012C150  38 21 00 50 */	addi r1, r1, 0x50
 /* 8012F1F4 0012C154  7C 08 03 A6 */	mtlr r0
 /* 8012F1F8 0012C158  4E 80 00 20 */	blr 
+.endfn __ct__17TaiIwagenStrategyFP14TekiParameters
 
-.global draw__17TaiIwagenStrategyFR4TekiR8Graphics
-draw__17TaiIwagenStrategyFR4TekiR8Graphics:
+.fn draw__17TaiIwagenStrategyFR4TekiR8Graphics, global
 /* 8012F1FC 0012C15C  7C 08 02 A6 */	mflr r0
 /* 8012F200 0012C160  90 01 00 04 */	stw r0, 4(r1)
 /* 8012F204 0012C164  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -812,9 +811,9 @@ draw__17TaiIwagenStrategyFR4TekiR8Graphics:
 /* 8012F26C 0012C1CC  38 21 00 20 */	addi r1, r1, 0x20
 /* 8012F270 0012C1D0  7C 08 03 A6 */	mtlr r0
 /* 8012F274 0012C1D4  4E 80 00 20 */	blr 
+.endfn draw__17TaiIwagenStrategyFR4TekiR8Graphics
 
-.global start__17TaiIwagenStrategyFR4Teki
-start__17TaiIwagenStrategyFR4Teki:
+.fn start__17TaiIwagenStrategyFR4Teki, global
 /* 8012F278 0012C1D8  7C 08 02 A6 */	mflr r0
 /* 8012F27C 0012C1DC  90 01 00 04 */	stw r0, 4(r1)
 /* 8012F280 0012C1E0  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -832,9 +831,9 @@ start__17TaiIwagenStrategyFR4Teki:
 /* 8012F2B0 0012C210  38 21 00 18 */	addi r1, r1, 0x18
 /* 8012F2B4 0012C214  7C 08 03 A6 */	mtlr r0
 /* 8012F2B8 0012C218  4E 80 00 20 */	blr 
+.endfn start__17TaiIwagenStrategyFR4Teki
 
-.global start__23TaiIwagenShootingActionFR4Teki
-start__23TaiIwagenShootingActionFR4Teki:
+.fn start__23TaiIwagenShootingActionFR4Teki, global
 /* 8012F2BC 0012C21C  7C 08 02 A6 */	mflr r0
 /* 8012F2C0 0012C220  38 AD EA D8 */	addi r5, r13, lbl_803E37F8@sda21
 /* 8012F2C4 0012C224  90 01 00 04 */	stw r0, 4(r1)
@@ -865,9 +864,9 @@ start__23TaiIwagenShootingActionFR4Teki:
 /* 8012F328 0012C288  38 21 00 30 */	addi r1, r1, 0x30
 /* 8012F32C 0012C28C  7C 08 03 A6 */	mtlr r0
 /* 8012F330 0012C290  4E 80 00 20 */	blr 
+.endfn start__23TaiIwagenShootingActionFR4Teki
 
-.global act__23TaiIwagenShootingActionFR4Teki
-act__23TaiIwagenShootingActionFR4Teki:
+.fn act__23TaiIwagenShootingActionFR4Teki, global
 /* 8012F334 0012C294  7C 08 02 A6 */	mflr r0
 /* 8012F338 0012C298  90 01 00 04 */	stw r0, 4(r1)
 /* 8012F33C 0012C29C  94 21 FF 20 */	stwu r1, -0xe0(r1)
@@ -973,30 +972,37 @@ act__23TaiIwagenShootingActionFR4Teki:
 /* 8012F4C0 0012C420  38 21 00 E0 */	addi r1, r1, 0xe0
 /* 8012F4C4 0012C424  7C 08 03 A6 */	mtlr r0
 /* 8012F4C8 0012C428  4E 80 00 20 */	blr 
+.endfn act__23TaiIwagenShootingActionFR4Teki
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802C7FF8:
+.obj lbl_802C7FF8, local
 	.asciz "taiiwagen.cpp"
+.endobj lbl_802C7FF8
 .balign 4
-lbl_802C8008:
+.obj lbl_802C8008, local
 	.asciz "taiiwagen"
+.endobj lbl_802C8008
 .balign 4
-lbl_802C8014:
+.obj lbl_802C8014, local
 	.asciz "IWAGON_SCALE"
+.endobj lbl_802C8014
 .balign 4
-lbl_802C8024:
+.obj lbl_802C8024, local
 	.asciz "TaiIwagenShootingAction"
+.endobj lbl_802C8024
 .balign 4
-lbl_802C803C:
+.obj lbl_802C803C, local
 	.asciz "TaiAction"
+.endobj lbl_802C803C
 .balign 4
-lbl_802C8048:
+.obj lbl_802C8048, local
 	.4byte __RTTI__9TaiAction
 	.4byte 0
 	.4byte 0
-.global __vt__23TaiIwagenShootingAction
-__vt__23TaiIwagenShootingAction:
+.endobj lbl_802C8048
+.balign 4
+.obj __vt__23TaiIwagenShootingAction, global
 	.4byte __RTTI__23TaiIwagenShootingAction
 	.4byte 0
 	.4byte start__23TaiIwagenShootingActionFR4Teki
@@ -1004,28 +1010,35 @@ __vt__23TaiIwagenShootingAction:
 	.4byte act__23TaiIwagenShootingActionFR4Teki
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
+.endobj __vt__23TaiIwagenShootingAction
 .balign 4
-lbl_802C8070:
+.obj lbl_802C8070, local
 	.asciz "TaiIwagenStrategy"
+.endobj lbl_802C8070
 .balign 4
-lbl_802C8084:
+.obj lbl_802C8084, local
 	.asciz "TekiStrategy"
+.endobj lbl_802C8084
 .balign 4
-lbl_802C8094:
+.obj lbl_802C8094, local
 	.asciz "TaiStrategy"
+.endobj lbl_802C8094
 .balign 4
-lbl_802C80A0:
+.obj lbl_802C80A0, local
 	.4byte __RTTI__12TekiStrategy
 	.4byte 0
 	.4byte 0
-lbl_802C80AC:
+.endobj lbl_802C80A0
+.balign 4
+.obj lbl_802C80AC, local
 	.4byte __RTTI__12TekiStrategy
 	.4byte 0
 	.4byte __RTTI__11TaiStrategy
 	.4byte 0
 	.4byte 0
-.global __vt__17TaiIwagenStrategy
-__vt__17TaiIwagenStrategy:
+.endobj lbl_802C80AC
+.balign 4
+.obj __vt__17TaiIwagenStrategy, global
 	.4byte __RTTI__17TaiIwagenStrategy
 	.4byte 0
 	.4byte start__17TaiIwagenStrategyFR4Teki
@@ -1036,28 +1049,35 @@ __vt__17TaiIwagenStrategy:
 	.4byte drawDebugInfo__12TekiStrategyFR4TekiR8Graphics
 	.4byte interact__12TekiStrategyFR4TekiR18TekiInteractionKey
 	.4byte spawnCorpseParts__12TekiStrategyFR4Teki
+.endobj __vt__17TaiIwagenStrategy
 .balign 4
-lbl_802C80E8:
+.obj lbl_802C80E8, local
 	.asciz "TaiIwagenParameters"
+.endobj lbl_802C80E8
 .balign 4
-lbl_802C80FC:
+.obj lbl_802C80FC, local
 	.asciz "CoreNode"
+.endobj lbl_802C80FC
 .balign 4
-lbl_802C8108:
+.obj lbl_802C8108, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte 0
-lbl_802C8114:
+.endobj lbl_802C8108
+.balign 4
+.obj lbl_802C8114, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte __RTTI__8CoreNode
 	.4byte 0
 	.4byte 0
+.endobj lbl_802C8114
 .balign 4
-lbl_802C8128:
+.obj lbl_802C8128, local
 	.asciz "TekiParameters"
+.endobj lbl_802C8128
 .balign 4
-lbl_802C8138:
+.obj lbl_802C8138, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte __RTTI__8CoreNode
@@ -1065,7 +1085,9 @@ lbl_802C8138:
 	.4byte __RTTI__4Node
 	.4byte 0
 	.4byte 0
-lbl_802C8154:
+.endobj lbl_802C8138
+.balign 4
+.obj lbl_802C8154, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte __RTTI__8CoreNode
@@ -1075,8 +1097,9 @@ lbl_802C8154:
 	.4byte __RTTI__14TekiParameters
 	.4byte 0
 	.4byte 0
-.global __vt__19TaiIwagenParameters
-__vt__19TaiIwagenParameters:
+.endobj lbl_802C8154
+.balign 4
+.obj __vt__19TaiIwagenParameters, weak
 	.4byte __RTTI__19TaiIwagenParameters
 	.4byte 0
 	.4byte getAgeNodeType__5ANodeFv
@@ -1089,16 +1112,19 @@ __vt__19TaiIwagenParameters:
 	.4byte concat__4NodeFR3SRT
 	.4byte concat__4NodeFR8Matrix4f
 	.4byte getModelMatrix__4NodeFv
+.endobj __vt__19TaiIwagenParameters
 .balign 4
-lbl_802C81A8:
+.obj lbl_802C81A8, local
 	.asciz "TaiIwagonRollingAction"
+.endobj lbl_802C81A8
 .balign 4
-lbl_802C81C0:
+.obj lbl_802C81C0, local
 	.4byte __RTTI__9TaiAction
 	.4byte 0
 	.4byte 0
-.global __vt__22TaiIwagonRollingAction
-__vt__22TaiIwagonRollingAction:
+.endobj lbl_802C81C0
+.balign 4
+.obj __vt__22TaiIwagonRollingAction, global
 	.4byte __RTTI__22TaiIwagonRollingAction
 	.4byte 0
 	.4byte start__22TaiIwagonRollingActionFR4Teki
@@ -1106,16 +1132,19 @@ __vt__22TaiIwagonRollingAction:
 	.4byte act__22TaiIwagonRollingActionFR4Teki
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
+.endobj __vt__22TaiIwagonRollingAction
 .balign 4
-lbl_802C81E8:
+.obj lbl_802C81E8, local
 	.asciz "TaiIwagonDustEffectAction"
+.endobj lbl_802C81E8
 .balign 4
-lbl_802C8204:
+.obj lbl_802C8204, local
 	.4byte __RTTI__9TaiAction
 	.4byte 0
 	.4byte 0
-.global __vt__25TaiIwagonDustEffectAction
-__vt__25TaiIwagonDustEffectAction:
+.endobj lbl_802C8204
+.balign 4
+.obj __vt__25TaiIwagonDustEffectAction, global
 	.4byte __RTTI__25TaiIwagonDustEffectAction
 	.4byte 0
 	.4byte start__9TaiActionFR4Teki
@@ -1123,18 +1152,21 @@ __vt__25TaiIwagonDustEffectAction:
 	.4byte act__25TaiIwagonDustEffectActionFR4Teki
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
+.endobj __vt__25TaiIwagonDustEffectAction
 .balign 4
-lbl_802C822C:
+.obj lbl_802C822C, local
 	.asciz "TaiIwagonStrategy"
+.endobj lbl_802C822C
 .balign 4
-lbl_802C8240:
+.obj lbl_802C8240, local
 	.4byte __RTTI__12TekiStrategy
 	.4byte 0
 	.4byte __RTTI__11TaiStrategy
 	.4byte 0
 	.4byte 0
-.global __vt__17TaiIwagonStrategy
-__vt__17TaiIwagonStrategy:
+.endobj lbl_802C8240
+.balign 4
+.obj __vt__17TaiIwagonStrategy, global
 	.4byte __RTTI__17TaiIwagonStrategy
 	.4byte 0
 	.4byte start__17TaiIwagonStrategyFR4Teki
@@ -1145,18 +1177,15 @@ __vt__17TaiIwagonStrategy:
 	.4byte drawDebugInfo__12TekiStrategyFR4TekiR8Graphics
 	.4byte interact__12TekiStrategyFR4TekiR18TekiInteractionKey
 	.4byte spawnCorpseParts__12TekiStrategyFR4Teki
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
+.endobj __vt__17TaiIwagonStrategy
 .balign 4
-lbl_802C8298:
+.skip 0x1C # compiler padding
+.balign 4
+.obj lbl_802C8298, local
 	.asciz "TaiIwagonParameters"
+.endobj lbl_802C8298
 .balign 4
-lbl_802C82AC:
+.obj lbl_802C82AC, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte __RTTI__8CoreNode
@@ -1166,8 +1195,9 @@ lbl_802C82AC:
 	.4byte __RTTI__14TekiParameters
 	.4byte 0
 	.4byte 0
-.global __vt__19TaiIwagonParameters
-__vt__19TaiIwagonParameters:
+.endobj lbl_802C82AC
+.balign 4
+.obj __vt__19TaiIwagonParameters, weak
 	.4byte __RTTI__19TaiIwagonParameters
 	.4byte 0
 	.4byte getAgeNodeType__5ANodeFv
@@ -1180,113 +1210,168 @@ __vt__19TaiIwagonParameters:
 	.4byte concat__4NodeFR3SRT
 	.4byte concat__4NodeFR8Matrix4f
 	.4byte getModelMatrix__4NodeFv
+.endobj __vt__19TaiIwagonParameters
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-lbl_803E37E8:
+.obj lbl_803E37E8, local
 	.4byte 0x00000000
-lbl_803E37EC:
+.endobj lbl_803E37E8
+.obj lbl_803E37EC, local
 	.4byte 0x00000000
-lbl_803E37F0:
+.endobj lbl_803E37EC
+.obj lbl_803E37F0, local
 	.4byte 0x00000000
-lbl_803E37F4:
+.endobj lbl_803E37F0
+.obj lbl_803E37F4, local
 	.4byte 0x00000000
-lbl_803E37F8:
+.endobj lbl_803E37F4
+.obj lbl_803E37F8, local
 	.4byte 0x00000000
-lbl_803E37FC:
+.endobj lbl_803E37F8
+.obj lbl_803E37FC, local
 	.4byte 0x00000000
-lbl_803E3800:
+.endobj lbl_803E37FC
+.obj lbl_803E3800, local
 	.float 0.0
-lbl_803E3804:
+.endobj lbl_803E3800
+.obj lbl_803E3804, local
 	.float 0.0
-lbl_803E3808:
+.endobj lbl_803E3804
+.obj lbl_803E3808, local
 	.float 0.0
-lbl_803E380C:
+.endobj lbl_803E3808
+.obj lbl_803E380C, local
 	.float 0.0
-lbl_803E3810:
+.endobj lbl_803E380C
+.obj lbl_803E3810, local
 	.float 0.0
-lbl_803E3814:
+.endobj lbl_803E3810
+.obj lbl_803E3814, local
 	.float 0.0
-lbl_803E3818:
+.endobj lbl_803E3814
+.obj lbl_803E3818, local
 	.float 0.0
-__RTTI__9TaiAction:
+.endobj lbl_803E3818
+.obj __RTTI__9TaiAction, local
 	.4byte lbl_802C803C
 	.4byte 0
-__RTTI__23TaiIwagenShootingAction:
+.endobj __RTTI__9TaiAction
+.balign 4
+.obj __RTTI__23TaiIwagenShootingAction, local
 	.4byte lbl_802C8024
 	.4byte lbl_802C8048
-__RTTI__12TekiStrategy:
+.endobj __RTTI__23TaiIwagenShootingAction
+.balign 4
+.obj __RTTI__12TekiStrategy, local
 	.4byte lbl_802C8084
 	.4byte 0
-__RTTI__11TaiStrategy:
+.endobj __RTTI__12TekiStrategy
+.balign 4
+.obj __RTTI__11TaiStrategy, local
 	.4byte lbl_802C8094
 	.4byte lbl_802C80A0
-__RTTI__17TaiIwagenStrategy:
+.endobj __RTTI__11TaiStrategy
+.balign 4
+.obj __RTTI__17TaiIwagenStrategy, local
 	.4byte lbl_802C8070
 	.4byte lbl_802C80AC
+.endobj __RTTI__17TaiIwagenStrategy
 .balign 4
-lbl_803E3844:
+.obj lbl_803E3844, local
 	.asciz "ANode"
+.endobj lbl_803E3844
 .balign 4
-__RTTI__5ANode:
+.obj __RTTI__5ANode, local
 	.4byte lbl_803E3844
 	.4byte 0
-__RTTI__8CoreNode:
+.endobj __RTTI__5ANode
+.balign 4
+.obj __RTTI__8CoreNode, local
 	.4byte lbl_802C80FC
 	.4byte lbl_802C8108
+.endobj __RTTI__8CoreNode
 .balign 4
-lbl_803E385C:
+.obj lbl_803E385C, local
 	.asciz "Node"
+.endobj lbl_803E385C
 .balign 4
-__RTTI__4Node:
+.obj __RTTI__4Node, local
 	.4byte lbl_803E385C
 	.4byte lbl_802C8114
-__RTTI__14TekiParameters:
+.endobj __RTTI__4Node
+.balign 4
+.obj __RTTI__14TekiParameters, local
 	.4byte lbl_802C8128
 	.4byte lbl_802C8138
-__RTTI__19TaiIwagenParameters:
+.endobj __RTTI__14TekiParameters
+.balign 4
+.obj __RTTI__19TaiIwagenParameters, local
 	.4byte lbl_802C80E8
 	.4byte lbl_802C8154
-__RTTI__22TaiIwagonRollingAction:
+.endobj __RTTI__19TaiIwagenParameters
+.balign 4
+.obj __RTTI__22TaiIwagonRollingAction, local
 	.4byte lbl_802C81A8
 	.4byte lbl_802C81C0
-__RTTI__25TaiIwagonDustEffectAction:
+.endobj __RTTI__22TaiIwagonRollingAction
+.balign 4
+.obj __RTTI__25TaiIwagonDustEffectAction, local
 	.4byte lbl_802C81E8
 	.4byte lbl_802C8204
-__RTTI__17TaiIwagonStrategy:
+.endobj __RTTI__25TaiIwagonDustEffectAction
+.balign 4
+.obj __RTTI__17TaiIwagonStrategy, local
 	.4byte lbl_802C822C
 	.4byte lbl_802C8240
-__RTTI__19TaiIwagonParameters:
+.endobj __RTTI__17TaiIwagonStrategy
+.balign 4
+.obj __RTTI__19TaiIwagonParameters, local
 	.4byte lbl_802C8298
 	.4byte lbl_802C82AC
+.endobj __RTTI__19TaiIwagonParameters
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803EA510:
+.obj lbl_803EA510, local
 	.float 10.0
-lbl_803EA514:
+.endobj lbl_803EA510
+.obj lbl_803EA514, local
 	.float 1.0
-lbl_803EA518:
+.endobj lbl_803EA514
+.obj lbl_803EA518, local
 	.float 30.0
-lbl_803EA51C:
+.endobj lbl_803EA518
+.obj lbl_803EA51C, local
 	.float 3.0
-lbl_803EA520:
+.endobj lbl_803EA51C
+.obj lbl_803EA520, local
 	.float 38.0
-lbl_803EA524:
+.endobj lbl_803EA520
+.obj lbl_803EA524, local
 	.float 5.0
-lbl_803EA528:
+.endobj lbl_803EA524
+.obj lbl_803EA528, local
 	.float 24.0
-lbl_803EA52C:
+.endobj lbl_803EA528
+.obj lbl_803EA52C, local
 	.float 0.0
-lbl_803EA530:
+.endobj lbl_803EA52C
+.obj lbl_803EA530, local
 	.float 1.3
-lbl_803EA534:
+.endobj lbl_803EA530
+.obj lbl_803EA534, local
 	.float 2.0
-lbl_803EA538:
+.endobj lbl_803EA534
+.obj lbl_803EA538, local
 	.float 19.0
-lbl_803EA53C:
+.endobj lbl_803EA538
+.obj lbl_803EA53C, local
 	.float 23.0
-lbl_803EA540:
+.endobj lbl_803EA53C
+.obj lbl_803EA540, local
 	.float 100.0
-lbl_803EA544:
+.endobj lbl_803EA540
+.obj lbl_803EA544, local
 	.float 0.5
+.endobj lbl_803EA544

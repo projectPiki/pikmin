@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global makeResident__10P2DPictureFv
-makeResident__10P2DPictureFv:
+.fn makeResident__10P2DPictureFv, global
 /* 801B18C4 001AE824  7C 08 02 A6 */	mflr r0
 /* 801B18C8 001AE828  90 01 00 04 */	stw r0, 4(r1)
 /* 801B18CC 001AE82C  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -34,9 +33,9 @@ makeResident__10P2DPictureFv:
 /* 801B192C 001AE88C  38 21 00 20 */	addi r1, r1, 0x20
 /* 801B1930 001AE890  7C 08 03 A6 */	mtlr r0
 /* 801B1934 001AE894  4E 80 00 20 */	blr 
+.endfn makeResident__10P2DPictureFv
 
-.global loadResource__10P2DPictureFv
-loadResource__10P2DPictureFv:
+.fn loadResource__10P2DPictureFv, global
 /* 801B1938 001AE898  7C 08 02 A6 */	mflr r0
 /* 801B193C 001AE89C  90 01 00 04 */	stw r0, 4(r1)
 /* 801B1940 001AE8A0  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -60,9 +59,9 @@ loadResource__10P2DPictureFv:
 /* 801B1984 001AE8E4  38 21 00 18 */	addi r1, r1, 0x18
 /* 801B1988 001AE8E8  7C 08 03 A6 */	mtlr r0
 /* 801B198C 001AE8EC  4E 80 00 20 */	blr 
+.endfn loadResource__10P2DPictureFv
 
-.global __dt__10P2DPictureFv
-__dt__10P2DPictureFv:
+.fn __dt__10P2DPictureFv, global
 /* 801B1990 001AE8F0  7C 08 02 A6 */	mflr r0
 /* 801B1994 001AE8F4  90 01 00 04 */	stw r0, 4(r1)
 /* 801B1998 001AE8F8  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -112,9 +111,9 @@ __dt__10P2DPictureFv:
 /* 801B1A38 001AE998  38 21 00 20 */	addi r1, r1, 0x20
 /* 801B1A3C 001AE99C  7C 08 03 A6 */	mtlr r0
 /* 801B1A40 001AE9A0  4E 80 00 20 */	blr 
+.endfn __dt__10P2DPictureFv
 
-.global __ct__10P2DPictureFP7P2DPaneP18RandomAccessStreamUs
-__ct__10P2DPictureFP7P2DPaneP18RandomAccessStreamUs:
+.fn __ct__10P2DPictureFP7P2DPaneP18RandomAccessStreamUs, global
 /* 801B1A44 001AE9A4  7C 08 02 A6 */	mflr r0
 /* 801B1A48 001AE9A8  90 01 00 04 */	stw r0, 4(r1)
 /* 801B1A4C 001AE9AC  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -194,9 +193,9 @@ __ct__10P2DPictureFP7P2DPaneP18RandomAccessStreamUs:
 /* 801B1B6C 001AEACC  38 21 00 28 */	addi r1, r1, 0x28
 /* 801B1B70 001AEAD0  7C 08 03 A6 */	mtlr r0
 /* 801B1B74 001AEAD4  4E 80 00 20 */	blr 
+.endfn __ct__10P2DPictureFP7P2DPaneP18RandomAccessStreamUs
 
-.global __ct__10P2DPictureFP7Texture
-__ct__10P2DPictureFP7Texture:
+.fn __ct__10P2DPictureFP7Texture, global
 /* 801B1B78 001AEAD8  7C 08 02 A6 */	mflr r0
 /* 801B1B7C 001AEADC  90 01 00 04 */	stw r0, 4(r1)
 /* 801B1B80 001AEAE0  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -241,9 +240,9 @@ __ct__10P2DPictureFP7Texture:
 /* 801B1C18 001AEB78  38 21 00 20 */	addi r1, r1, 0x20
 /* 801B1C1C 001AEB7C  7C 08 03 A6 */	mtlr r0
 /* 801B1C20 001AEB80  4E 80 00 20 */	blr 
+.endfn __ct__10P2DPictureFP7Texture
 
-.global insert__10P2DPictureFP7TextureUcf
-insert__10P2DPictureFP7TextureUcf:
+.fn insert__10P2DPictureFP7TextureUcf, global
 /* 801B1C24 001AEB84  7C 6A 1B 78 */	mr r10, r3
 /* 801B1C28 001AEB88  88 03 00 F1 */	lbz r0, 0xf1(r3)
 /* 801B1C2C 001AEB8C  28 00 00 01 */	cmplwi r0, 1
@@ -287,9 +286,9 @@ insert__10P2DPictureFP7TextureUcf:
 /* 801B1CB4 001AEC14  38 04 00 01 */	addi r0, r4, 1
 /* 801B1CB8 001AEC18  98 0A 00 F1 */	stb r0, 0xf1(r10)
 /* 801B1CBC 001AEC1C  4E 80 00 20 */	blr 
+.endfn insert__10P2DPictureFP7TextureUcf
 
-.global initinfo__10P2DPictureFv
-initinfo__10P2DPictureFv:
+.fn initinfo__10P2DPictureFv, global
 /* 801B1CC0 001AEC20  38 00 00 12 */	li r0, 0x12
 /* 801B1CC4 001AEC24  B0 03 00 08 */	sth r0, 8(r3)
 /* 801B1CC8 001AEC28  38 00 00 0F */	li r0, 0xf
@@ -311,9 +310,9 @@ initinfo__10P2DPictureFv:
 /* 801B1D08 001AEC68  98 03 01 0A */	stb r0, 0x10a(r3)
 /* 801B1D0C 001AEC6C  98 03 01 0B */	stb r0, 0x10b(r3)
 /* 801B1D10 001AEC70  4E 80 00 20 */	blr 
+.endfn initinfo__10P2DPictureFv
 
-.global drawSelf__10P2DPictureFii
-drawSelf__10P2DPictureFii:
+.fn drawSelf__10P2DPictureFii, global
 /* 801B1D14 001AEC74  7C 08 02 A6 */	mflr r0
 /* 801B1D18 001AEC78  90 01 00 04 */	stw r0, 4(r1)
 /* 801B1D1C 001AEC7C  94 21 FF 98 */	stwu r1, -0x68(r1)
@@ -340,9 +339,9 @@ drawSelf__10P2DPictureFii:
 /* 801B1D70 001AECD0  38 21 00 68 */	addi r1, r1, 0x68
 /* 801B1D74 001AECD4  7C 08 03 A6 */	mtlr r0
 /* 801B1D78 001AECD8  4E 80 00 20 */	blr 
+.endfn drawSelf__10P2DPictureFii
 
-.global drawSelf__10P2DPictureFiiP8Matrix4f
-drawSelf__10P2DPictureFiiP8Matrix4f:
+.fn drawSelf__10P2DPictureFiiP8Matrix4f, global
 /* 801B1D7C 001AECDC  7C 08 02 A6 */	mflr r0
 /* 801B1D80 001AECE0  90 01 00 04 */	stw r0, 4(r1)
 /* 801B1D84 001AECE4  94 21 FF D0 */	stwu r1, -0x30(r1)
@@ -374,9 +373,9 @@ drawSelf__10P2DPictureFiiP8Matrix4f:
 /* 801B1DE8 001AED48  38 21 00 30 */	addi r1, r1, 0x30
 /* 801B1DEC 001AED4C  7C 08 03 A6 */	mtlr r0
 /* 801B1DF0 001AED50  4E 80 00 20 */	blr 
+.endfn drawSelf__10P2DPictureFiiP8Matrix4f
 
-.global drawFullSet__10P2DPictureFiiii10P2DBinding9P2DMirrorb11P2DWrapmode11P2DWrapmodeP8Matrix4f
-drawFullSet__10P2DPictureFiiii10P2DBinding9P2DMirrorb11P2DWrapmode11P2DWrapmodeP8Matrix4f:
+.fn drawFullSet__10P2DPictureFiiii10P2DBinding9P2DMirrorb11P2DWrapmode11P2DWrapmodeP8Matrix4f, global
 /* 801B1DF4 001AED54  7C 08 02 A6 */	mflr r0
 /* 801B1DF8 001AED58  90 01 00 04 */	stw r0, 4(r1)
 /* 801B1DFC 001AED5C  94 21 FF 88 */	stwu r1, -0x78(r1)
@@ -832,9 +831,9 @@ drawFullSet__10P2DPictureFiiii10P2DBinding9P2DMirrorb11P2DWrapmode11P2DWrapmodeP
 /* 801B244C 001AF3AC  38 21 00 78 */	addi r1, r1, 0x78
 /* 801B2450 001AF3B0  7C 08 03 A6 */	mtlr r0
 /* 801B2454 001AF3B4  4E 80 00 20 */	blr 
+.endfn drawFullSet__10P2DPictureFiiii10P2DBinding9P2DMirrorb11P2DWrapmode11P2DWrapmodeP8Matrix4f
 
-.global drawTexCoord__10P2DPictureFiiiiffffffffP8Matrix4f
-drawTexCoord__10P2DPictureFiiiiffffffffP8Matrix4f:
+.fn drawTexCoord__10P2DPictureFiiiiffffffffP8Matrix4f, global
 /* 801B2458 001AF3B8  7C 08 02 A6 */	mflr r0
 /* 801B245C 001AF3BC  90 01 00 04 */	stw r0, 4(r1)
 /* 801B2460 001AF3C0  94 21 FF 18 */	stwu r1, -0xe8(r1)
@@ -979,9 +978,9 @@ drawTexCoord__10P2DPictureFiiiiffffffffP8Matrix4f:
 /* 801B2680 001AF5E0  38 21 00 E8 */	addi r1, r1, 0xe8
 /* 801B2684 001AF5E4  7C 08 03 A6 */	mtlr r0
 /* 801B2688 001AF5E8  4E 80 00 20 */	blr 
+.endfn drawTexCoord__10P2DPictureFiiiiffffffffP8Matrix4f
 
-.global setTevMode__10P2DPictureFv
-setTevMode__10P2DPictureFv:
+.fn setTevMode__10P2DPictureFv, global
 /* 801B268C 001AF5EC  7C 08 02 A6 */	mflr r0
 /* 801B2690 001AF5F0  90 01 00 04 */	stw r0, 4(r1)
 /* 801B2694 001AF5F4  94 21 FF B8 */	stwu r1, -0x48(r1)
@@ -1301,29 +1300,33 @@ setTevMode__10P2DPictureFv:
 /* 801B2B30 001AFA90  38 21 00 48 */	addi r1, r1, 0x48
 /* 801B2B34 001AFA94  7C 08 03 A6 */	mtlr r0
 /* 801B2B38 001AFA98  4E 80 00 20 */	blr 
+.endfn setTevMode__10P2DPictureFv
 
-.global swap__10P2DPictureFRfRf
-swap__10P2DPictureFRfRf:
+.fn swap__10P2DPictureFRfRf, global
 /* 801B2B3C 001AFA9C  C0 24 00 00 */	lfs f1, 0(r4)
 /* 801B2B40 001AFAA0  C0 05 00 00 */	lfs f0, 0(r5)
 /* 801B2B44 001AFAA4  D0 04 00 00 */	stfs f0, 0(r4)
 /* 801B2B48 001AFAA8  D0 25 00 00 */	stfs f1, 0(r5)
 /* 801B2B4C 001AFAAC  4E 80 00 20 */	blr 
+.endfn swap__10P2DPictureFRfRf
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802E0700:
+.obj lbl_802E0700, local
 	.asciz "P2DPicture.cpp"
+.endobj lbl_802E0700
 .balign 4
-lbl_802E0710:
+.obj lbl_802E0710, local
 	.asciz "P2DPicture"
+.endobj lbl_802E0710
 .balign 4
-lbl_802E071C:
+.obj lbl_802E071C, local
 	.4byte __RTTI__7P2DPane
 	.4byte 0
 	.4byte 0
-.global __vt__10P2DPicture
-__vt__10P2DPicture:
+.endobj lbl_802E071C
+.balign 4
+.obj __vt__10P2DPicture, global
 	.4byte __RTTI__10P2DPicture
 	.4byte 0
 	.4byte loadResource__10P2DPictureFv
@@ -1339,35 +1342,50 @@ __vt__10P2DPicture:
 	.4byte drawSelf__10P2DPictureFiiP8Matrix4f
 	.4byte search__7P2DPaneFUlb
 	.4byte makeMatrix__7P2DPaneFii
+.endobj __vt__10P2DPicture
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-lbl_803E6628:
+.obj lbl_803E6628, local
 	.asciz "P2DPane"
+.endobj lbl_803E6628
 .balign 4
-__RTTI__7P2DPane:
+.obj __RTTI__7P2DPane, local
 	.4byte lbl_803E6628
-	.4byte 0x00000000
-__RTTI__10P2DPicture:
+	.4byte 0
+.endobj __RTTI__7P2DPane
+.balign 4
+.obj __RTTI__10P2DPicture, local
 	.4byte lbl_802E0710
 	.4byte lbl_802E071C
+.endobj __RTTI__10P2DPicture
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803EB8B8:
-	.4byte 0x3F800000
-lbl_803EB8BC:
-	.4byte 0x00000000
-lbl_803EB8C0:
-	.4byte 0x3F000000
+.obj lbl_803EB8B8, local
+	.float 1.0
+.endobj lbl_803EB8B8
+.balign 4
+.obj lbl_803EB8BC, local
+	.float 0.0
+.endobj lbl_803EB8BC
+.balign 4
+.obj lbl_803EB8C0, local
+	.float 0.5
+.endobj lbl_803EB8C0
 .balign 8
-lbl_803EB8C8:
-	.4byte 0x43300000
-	.4byte 0x00000000
-lbl_803EB8D0:
-	.4byte 0x43300000
-	.4byte 0x80000000
-lbl_803EB8D8:
+.obj lbl_803EB8C8, local
+	.8byte 0x4330000000000000
+.endobj lbl_803EB8C8
+.balign 8
+.obj lbl_803EB8D0, local
+	.8byte 0x4330000080000000
+.endobj lbl_803EB8D0
+.balign 4
+.obj lbl_803EB8D8, local
 	.4byte 0xFFFFFF00
-lbl_803EB8DC:
+.endobj lbl_803EB8D8
+.balign 4
+.obj lbl_803EB8DC, local
 	.4byte 0xFFFFFFFF
+.endobj lbl_803EB8DC

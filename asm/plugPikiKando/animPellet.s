@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global __ct__14PelletAnimInfoFv
-__ct__14PelletAnimInfoFv:
+.fn __ct__14PelletAnimInfoFv, global
 /* 80099548 000964A8  7C 08 02 A6 */	mflr r0
 /* 8009954C 000964AC  3C A0 80 2B */	lis r5, lbl_802B0764@ha
 /* 80099550 000964B0  90 01 00 04 */	stw r0, 4(r1)
@@ -98,9 +97,9 @@ __ct__14PelletAnimInfoFv:
 /* 800996BC 0009661C  38 21 00 B8 */	addi r1, r1, 0xb8
 /* 800996C0 00096620  7C 08 03 A6 */	mtlr r0
 /* 800996C4 00096624  4E 80 00 20 */	blr 
+.endfn __ct__14PelletAnimInfoFv
 
-.global createShapeObject__14PelletAnimInfoFv
-createShapeObject__14PelletAnimInfoFv:
+.fn createShapeObject__14PelletAnimInfoFv, global
 /* 800996C8 00096628  7C 08 02 A6 */	mflr r0
 /* 800996CC 0009662C  90 01 00 04 */	stw r0, 4(r1)
 /* 800996D0 00096630  4C C6 31 82 */	crclr 6
@@ -157,9 +156,9 @@ createShapeObject__14PelletAnimInfoFv:
 /* 80099790 000966F0  38 21 02 20 */	addi r1, r1, 0x220
 /* 80099794 000966F4  7C 08 03 A6 */	mtlr r0
 /* 80099798 000966F8  4E 80 00 20 */	blr 
+.endfn createShapeObject__14PelletAnimInfoFv
 
-.global read__14PelletAnimInfoFR18RandomAccessStream
-read__14PelletAnimInfoFR18RandomAccessStream:
+.fn read__14PelletAnimInfoFR18RandomAccessStream, global
 /* 8009979C 000966FC  7C 08 02 A6 */	mflr r0
 /* 800997A0 00096700  90 01 00 04 */	stw r0, 4(r1)
 /* 800997A4 00096704  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -196,9 +195,9 @@ read__14PelletAnimInfoFR18RandomAccessStream:
 /* 80099820 00096780  38 21 00 18 */	addi r1, r1, 0x18
 /* 80099824 00096784  7C 08 03 A6 */	mtlr r0
 /* 80099828 00096788  4E 80 00 20 */	blr 
+.endfn read__14PelletAnimInfoFR18RandomAccessStream
 
-.global __ct__17PelletShapeObjectFPcP5ShapePcPci
-__ct__17PelletShapeObjectFPcP5ShapePcPci:
+.fn __ct__17PelletShapeObjectFPcP5ShapePcPci, global
 /* 8009982C 0009678C  7C 08 02 A6 */	mflr r0
 /* 80099830 00096790  3D 20 80 23 */	lis r9, __vt__11AnimContext@ha
 /* 80099834 00096794  90 01 00 04 */	stw r0, 4(r1)
@@ -284,9 +283,9 @@ __ct__17PelletShapeObjectFPcP5ShapePcPci:
 /* 80099960 000968C0  38 21 00 B8 */	addi r1, r1, 0xb8
 /* 80099964 000968C4  7C 08 03 A6 */	mtlr r0
 /* 80099968 000968C8  4E 80 00 20 */	blr 
+.endfn __ct__17PelletShapeObjectFPcP5ShapePcPci
 
-.global __ct__14PelletAnimatorFv
-__ct__14PelletAnimatorFv:
+.fn __ct__14PelletAnimatorFv, global
 /* 8009996C 000968CC  7C 08 02 A6 */	mflr r0
 /* 80099970 000968D0  90 01 00 04 */	stw r0, 4(r1)
 /* 80099974 000968D4  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -301,9 +300,9 @@ __ct__14PelletAnimatorFv:
 /* 80099998 000968F8  38 21 00 18 */	addi r1, r1, 0x18
 /* 8009999C 000968FC  7C 08 03 A6 */	mtlr r0
 /* 800999A0 00096900  4E 80 00 20 */	blr 
+.endfn __ct__14PelletAnimatorFv
 
-.global init__14PelletAnimatorFP11AnimContextP11AnimContextP7AnimMgrP15PaniMotionTable
-init__14PelletAnimatorFP11AnimContextP11AnimContextP7AnimMgrP15PaniMotionTable:
+.fn init__14PelletAnimatorFP11AnimContextP11AnimContextP7AnimMgrP15PaniMotionTable, global
 /* 800999A4 00096904  7C 08 02 A6 */	mflr r0
 /* 800999A8 00096908  90 01 00 04 */	stw r0, 4(r1)
 /* 800999AC 0009690C  94 21 FF D0 */	stwu r1, -0x30(r1)
@@ -331,9 +330,9 @@ init__14PelletAnimatorFP11AnimContextP11AnimContextP7AnimMgrP15PaniMotionTable:
 /* 80099A04 00096964  38 21 00 30 */	addi r1, r1, 0x30
 /* 80099A08 00096968  7C 08 03 A6 */	mtlr r0
 /* 80099A0C 0009696C  4E 80 00 20 */	blr 
+.endfn init__14PelletAnimatorFP11AnimContextP11AnimContextP7AnimMgrP15PaniMotionTable
 
-.global finishMotion__14PelletAnimatorFP14PaniMotionInfoP14PaniMotionInfo
-finishMotion__14PelletAnimatorFP14PaniMotionInfoP14PaniMotionInfo:
+.fn finishMotion__14PelletAnimatorFP14PaniMotionInfoP14PaniMotionInfo, global
 /* 80099A10 00096970  7C 08 02 A6 */	mflr r0
 /* 80099A14 00096974  28 04 00 00 */	cmplwi r4, 0
 /* 80099A18 00096978  90 01 00 04 */	stw r0, 4(r1)
@@ -358,9 +357,9 @@ finishMotion__14PelletAnimatorFP14PaniMotionInfoP14PaniMotionInfo:
 /* 80099A5C 000969BC  38 21 00 20 */	addi r1, r1, 0x20
 /* 80099A60 000969C0  7C 08 03 A6 */	mtlr r0
 /* 80099A64 000969C4  4E 80 00 20 */	blr 
+.endfn finishMotion__14PelletAnimatorFP14PaniMotionInfoP14PaniMotionInfo
 
-.global startMotion__14PelletAnimatorFR14PaniMotionInfoR14PaniMotionInfo
-startMotion__14PelletAnimatorFR14PaniMotionInfoR14PaniMotionInfo:
+.fn startMotion__14PelletAnimatorFR14PaniMotionInfoR14PaniMotionInfo, global
 /* 80099A68 000969C8  7C 08 02 A6 */	mflr r0
 /* 80099A6C 000969CC  28 04 00 00 */	cmplwi r4, 0
 /* 80099A70 000969D0  90 01 00 04 */	stw r0, 4(r1)
@@ -385,9 +384,9 @@ startMotion__14PelletAnimatorFR14PaniMotionInfoR14PaniMotionInfo:
 /* 80099AB4 00096A14  38 21 00 20 */	addi r1, r1, 0x20
 /* 80099AB8 00096A18  7C 08 03 A6 */	mtlr r0
 /* 80099ABC 00096A1C  4E 80 00 20 */	blr 
+.endfn startMotion__14PelletAnimatorFR14PaniMotionInfoR14PaniMotionInfo
 
-.global startMotion__14PelletAnimatorFR14PaniMotionInfo
-startMotion__14PelletAnimatorFR14PaniMotionInfo:
+.fn startMotion__14PelletAnimatorFR14PaniMotionInfo, global
 /* 80099AC0 00096A20  7C 08 02 A6 */	mflr r0
 /* 80099AC4 00096A24  28 04 00 00 */	cmplwi r4, 0
 /* 80099AC8 00096A28  90 01 00 04 */	stw r0, 4(r1)
@@ -399,9 +398,9 @@ startMotion__14PelletAnimatorFR14PaniMotionInfo:
 /* 80099ADC 00096A3C  38 21 00 08 */	addi r1, r1, 8
 /* 80099AE0 00096A40  7C 08 03 A6 */	mtlr r0
 /* 80099AE4 00096A44  4E 80 00 20 */	blr 
+.endfn startMotion__14PelletAnimatorFR14PaniMotionInfo
 
-.global updateAnimation__14PelletAnimatorFff
-updateAnimation__14PelletAnimatorFff:
+.fn updateAnimation__14PelletAnimatorFff, global
 /* 80099AE8 00096A48  7C 08 02 A6 */	mflr r0
 /* 80099AEC 00096A4C  90 01 00 04 */	stw r0, 4(r1)
 /* 80099AF0 00096A50  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -425,9 +424,9 @@ updateAnimation__14PelletAnimatorFff:
 /* 80099B38 00096A98  38 21 00 28 */	addi r1, r1, 0x28
 /* 80099B3C 00096A9C  7C 08 03 A6 */	mtlr r0
 /* 80099B40 00096AA0  4E 80 00 20 */	blr 
+.endfn updateAnimation__14PelletAnimatorFff
 
-.global updateContext__14PelletAnimatorFv
-updateContext__14PelletAnimatorFv:
+.fn updateContext__14PelletAnimatorFv, global
 /* 80099B44 00096AA4  7C 08 02 A6 */	mflr r0
 /* 80099B48 00096AA8  90 01 00 04 */	stw r0, 4(r1)
 /* 80099B4C 00096AAC  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -447,9 +446,9 @@ updateContext__14PelletAnimatorFv:
 /* 80099B84 00096AE4  38 21 00 18 */	addi r1, r1, 0x18
 /* 80099B88 00096AE8  7C 08 03 A6 */	mtlr r0
 /* 80099B8C 00096AEC  4E 80 00 20 */	blr 
+.endfn updateContext__14PelletAnimatorFv
 
-.global createMotionTable__18PaniPelletAnimatorFv
-createMotionTable__18PaniPelletAnimatorFv:
+.fn createMotionTable__18PaniPelletAnimatorFv, global
 /* 80099B90 00096AF0  7C 08 02 A6 */	mflr r0
 /* 80099B94 00096AF4  38 60 00 08 */	li r3, 8
 /* 80099B98 00096AF8  90 01 00 04 */	stw r0, 4(r1)
@@ -540,9 +539,9 @@ createMotionTable__18PaniPelletAnimatorFv:
 /* 80099CCC 00096C2C  38 21 00 18 */	addi r1, r1, 0x18
 /* 80099CD0 00096C30  7C 08 03 A6 */	mtlr r0
 /* 80099CD4 00096C34  4E 80 00 20 */	blr 
+.endfn createMotionTable__18PaniPelletAnimatorFv
 
-.global __ct__18PaniPelletAnimatorFv
-__ct__18PaniPelletAnimatorFv:
+.fn __ct__18PaniPelletAnimatorFv, global
 /* 80099CD8 00096C38  7C 08 02 A6 */	mflr r0
 /* 80099CDC 00096C3C  90 01 00 04 */	stw r0, 4(r1)
 /* 80099CE0 00096C40  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -558,33 +557,40 @@ __ct__18PaniPelletAnimatorFv:
 /* 80099D08 00096C68  38 21 00 18 */	addi r1, r1, 0x18
 /* 80099D0C 00096C6C  7C 08 03 A6 */	mtlr r0
 /* 80099D10 00096C70  4E 80 00 20 */	blr 
+.endfn __ct__18PaniPelletAnimatorFv
 
-"@4@read__14PelletAnimInfoFR18RandomAccessStream":
+.fn "@4@read__14PelletAnimInfoFR18RandomAccessStream", weak
 /* 80099D14 00096C74  38 63 FF FC */	addi r3, r3, -4
 /* 80099D18 00096C78  4B FF FA 84 */	b read__14PelletAnimInfoFR18RandomAccessStream
+.endfn "@4@read__14PelletAnimInfoFR18RandomAccessStream"
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802B0748:
+.obj lbl_802B0748, local
 	.asciz "animPellet.cpp"
+.endobj lbl_802B0748
 .balign 4
-lbl_802B0758:
+.obj lbl_802B0758, local
 	.asciz "animPellet"
+.endobj lbl_802B0758
 .balign 4
-lbl_802B0764:
+.obj lbl_802B0764, local
 	.asciz "CoreNode"
+.endobj lbl_802B0764
 .balign 4
-lbl_802B0770:
+.obj lbl_802B0770, local
 	.asciz "pelletAnimInfo"
+.endobj lbl_802B0770
 .balign 4
-lbl_802B0780:
+.obj lbl_802B0780, local
 	.asciz "objects/%s/%s.mod"
+.endobj lbl_802B0780
 .balign 4
-lbl_802B0794:
+.obj lbl_802B0794, local
 	.asciz "objects/%s/%s"
+.endobj lbl_802B0794
 .balign 4
-.global motionLabels__18PaniPelletAnimator
-motionLabels__18PaniPelletAnimator:
+.obj motionLabels__18PaniPelletAnimator, global
 	.4byte lbl_803DF690
 	.4byte lbl_803DF698
 	.4byte lbl_803DF6A0
@@ -592,28 +598,35 @@ motionLabels__18PaniPelletAnimator:
 	.4byte lbl_803DF6A8
 	.4byte lbl_803DF6AC
 	.4byte lbl_803DF6B0
+.endobj motionLabels__18PaniPelletAnimator
 .balign 4
-lbl_802B07C0:
+.obj lbl_802B07C0, local
 	.asciz "PaniPelletAnimator"
+.endobj lbl_802B07C0
 .balign 4
-lbl_802B07D4:
+.obj lbl_802B07D4, local
 	.asciz "Animator"
+.endobj lbl_802B07D4
 .balign 4
-lbl_802B07E0:
+.obj lbl_802B07E0, local
 	.asciz "PaniAnimator"
+.endobj lbl_802B07E0
 .balign 4
-lbl_802B07F0:
+.obj lbl_802B07F0, local
 	.4byte __RTTI__8Animator
 	.4byte 0
 	.4byte 0
-lbl_802B07FC:
+.endobj lbl_802B07F0
+.balign 4
+.obj lbl_802B07FC, local
 	.4byte __RTTI__8Animator
 	.4byte 0
 	.4byte __RTTI__12PaniAnimator
 	.4byte 0
 	.4byte 0
-.global __vt__18PaniPelletAnimator
-__vt__18PaniPelletAnimator:
+.endobj lbl_802B07FC
+.balign 4
+.obj __vt__18PaniPelletAnimator, weak
 	.4byte __RTTI__18PaniPelletAnimator
 	.4byte 0
 	.4byte changeContext__12PaniAnimatorFP11AnimContext
@@ -621,19 +634,23 @@ __vt__18PaniPelletAnimator:
 	.4byte finishOneShot__8AnimatorFv
 	.4byte finishLoop__8AnimatorFv
 	.4byte updateContext__12PaniAnimatorFv
+.endobj __vt__18PaniPelletAnimator
 .balign 4
-lbl_802B082C:
+.obj lbl_802B082C, local
 	.asciz "PelletAnimInfo"
+.endobj lbl_802B082C
 .balign 4
-lbl_802B083C:
+.obj lbl_802B083C, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte 0
+.endobj lbl_802B083C
 .balign 4
-lbl_802B0848:
+.obj lbl_802B0848, local
 	.asciz "Parameters"
+.endobj lbl_802B0848
 .balign 4
-lbl_802B0854:
+.obj lbl_802B0854, local
 	.4byte __RTTI__5ANode
 	.4byte 0x4
 	.4byte __RTTI__8CoreNode
@@ -641,8 +658,9 @@ lbl_802B0854:
 	.4byte __RTTI__10Parameters
 	.4byte 0
 	.4byte 0
-.global __vt__14PelletAnimInfo
-__vt__14PelletAnimInfo:
+.endobj lbl_802B0854
+.balign 4
+.obj __vt__14PelletAnimInfo, global
 	.4byte __RTTI__14PelletAnimInfo
 	.4byte 0
 	.4byte __RTTI__14PelletAnimInfo
@@ -650,101 +668,124 @@ __vt__14PelletAnimInfo:
 	.4byte getAgeNodeType__5ANodeFv
 	.4byte "@4@read__14PelletAnimInfoFR18RandomAccessStream"
 	.4byte read__14PelletAnimInfoFR18RandomAccessStream
+.endobj __vt__14PelletAnimInfo
 .balign 4
-lbl_802B088C:
+.obj lbl_802B088C, local
 	.asciz "Parm<String>"
+.endobj lbl_802B088C
 .balign 4
-lbl_802B089C:
+.obj lbl_802B089C, local
 	.asciz "BaseParm"
+.endobj lbl_802B089C
 .balign 4
-lbl_802B08A8:
+.obj lbl_802B08A8, local
 	.4byte __RTTI__8BaseParm
 	.4byte 0
 	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
+.endobj lbl_802B08A8
+.balign 4
+.skip 0x34 # compiler padding
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-lbl_803DF670:
+.obj lbl_803DF670, local
 	.asciz "x00"
+.endobj lbl_803DF670
 .balign 4
-lbl_803DF674:
+.obj lbl_803DF674, local
 	.asciz "pellets"
+.endobj lbl_803DF674
 .balign 4
-lbl_803DF67C:
+.obj lbl_803DF67C, local
 	.asciz "x01"
+.endobj lbl_803DF67C
 .balign 4
-lbl_803DF680:
+.obj lbl_803DF680, local
 	.asciz "noname"
+.endobj lbl_803DF680
 .balign 4
-lbl_803DF688:
+.obj lbl_803DF688, local
 	.asciz "%s.bin"
+.endobj lbl_803DF688
 .balign 4
-lbl_803DF690:
+.obj lbl_803DF690, local
 	.asciz "Carry"
+.endobj lbl_803DF690
 .balign 4
-lbl_803DF698:
+.obj lbl_803DF698, local
 	.asciz "Appear"
+.endobj lbl_803DF698
 .balign 4
-lbl_803DF6A0:
+.obj lbl_803DF6A0, local
 	.asciz "3"
+.endobj lbl_803DF6A0
 .balign 4
-lbl_803DF6A4:
+.obj lbl_803DF6A4, local
 	.asciz "4"
+.endobj lbl_803DF6A4
 .balign 4
-lbl_803DF6A8:
+.obj lbl_803DF6A8, local
 	.asciz "5"
+.endobj lbl_803DF6A8
 .balign 4
-lbl_803DF6AC:
+.obj lbl_803DF6AC, local
 	.asciz "6"
+.endobj lbl_803DF6AC
 .balign 4
-lbl_803DF6B0:
+.obj lbl_803DF6B0, local
 	.asciz "7"
+.endobj lbl_803DF6B0
 .balign 4
-__RTTI__8Animator:
+.obj __RTTI__8Animator, local
 	.4byte lbl_802B07D4
 	.4byte 0
-__RTTI__12PaniAnimator:
+.endobj __RTTI__8Animator
+.balign 4
+.obj __RTTI__12PaniAnimator, local
 	.4byte lbl_802B07E0
 	.4byte lbl_802B07F0
-__RTTI__18PaniPelletAnimator:
+.endobj __RTTI__12PaniAnimator
+.balign 4
+.obj __RTTI__18PaniPelletAnimator, local
 	.4byte lbl_802B07C0
 	.4byte lbl_802B07FC
+.endobj __RTTI__18PaniPelletAnimator
 .balign 4
-lbl_803DF6CC:
+.obj lbl_803DF6CC, local
 	.asciz "ANode"
+.endobj lbl_803DF6CC
 .balign 4
-__RTTI__5ANode:
+.obj __RTTI__5ANode, local
 	.4byte lbl_803DF6CC
 	.4byte 0
-__RTTI__8CoreNode:
+.endobj __RTTI__5ANode
+.balign 4
+.obj __RTTI__8CoreNode, local
 	.4byte lbl_802B0764
 	.4byte lbl_802B083C
-__RTTI__10Parameters:
+.endobj __RTTI__8CoreNode
+.balign 4
+.obj __RTTI__10Parameters, local
 	.4byte lbl_802B0848
 	.4byte 0
-__RTTI__14PelletAnimInfo:
+.endobj __RTTI__10Parameters
+.balign 4
+.obj __RTTI__14PelletAnimInfo, local
 	.4byte lbl_802B082C
 	.4byte lbl_802B0854
-__RTTI__8BaseParm:
+.endobj __RTTI__14PelletAnimInfo
+.balign 4
+.obj __RTTI__8BaseParm, local
 	.4byte lbl_802B089C
 	.4byte 0
+.endobj __RTTI__8BaseParm
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803E8E90:
+.obj lbl_803E8E90, local
 	.float 0.0
-lbl_803E8E94:
+.endobj lbl_803E8E90
+.balign 4
+.obj lbl_803E8E94, local
 	.float 30.0
+.endobj lbl_803E8E94

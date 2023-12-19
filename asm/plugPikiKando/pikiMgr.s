@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global birth__7PikiMgrFv
-birth__7PikiMgrFv:
+.fn birth__7PikiMgrFv, global
 /* 800CDCD0 000CAC30  7C 08 02 A6 */	mflr r0
 /* 800CDCD4 000CAC34  3C 80 80 3D */	lis r4, mapPikis__8GameStat@ha
 /* 800CDCD8 000CAC38  90 01 00 04 */	stw r0, 4(r1)
@@ -54,9 +53,9 @@ birth__7PikiMgrFv:
 /* 800CDD80 000CACE0  38 21 00 30 */	addi r1, r1, 0x30
 /* 800CDD84 000CACE4  7C 08 03 A6 */	mtlr r0
 /* 800CDD88 000CACE8  4E 80 00 20 */	blr 
+.endfn birth__7PikiMgrFv
 
-.global __ct__7PikiMgrFP4Navi
-__ct__7PikiMgrFP4Navi:
+.fn __ct__7PikiMgrFP4Navi, global
 /* 800CDD8C 000CACEC  7C 08 02 A6 */	mflr r0
 /* 800CDD90 000CACF0  3C A0 80 2C */	lis r5, lbl_802B8A50@ha
 /* 800CDD94 000CACF4  90 01 00 04 */	stw r0, 4(r1)
@@ -208,9 +207,9 @@ __ct__7PikiMgrFP4Navi:
 /* 800CDFD8 000CAF38  38 21 00 60 */	addi r1, r1, 0x60
 /* 800CDFDC 000CAF3C  7C 08 03 A6 */	mtlr r0
 /* 800CDFE0 000CAF40  4E 80 00 20 */	blr 
+.endfn __ct__7PikiMgrFP4Navi
 
-.global __ct__Q28PikiProp5ParmsFv
-__ct__Q28PikiProp5ParmsFv:
+.fn __ct__Q28PikiProp5ParmsFv, weak
 /* 800CDFE4 000CAF44  7C 08 02 A6 */	mflr r0
 /* 800CDFE8 000CAF48  90 01 00 04 */	stw r0, 4(r1)
 /* 800CDFEC 000CAF4C  38 00 00 00 */	li r0, 0
@@ -1079,18 +1078,18 @@ __ct__Q28PikiProp5ParmsFv:
 /* 800CED68 000CBCC8  38 21 04 F0 */	addi r1, r1, 0x4f0
 /* 800CED6C 000CBCCC  7C 08 03 A6 */	mtlr r0
 /* 800CED70 000CBCD0  4E 80 00 20 */	blr 
+.endfn __ct__Q28PikiProp5ParmsFv
 
-.global init__7PikiMgrFv
-init__7PikiMgrFv:
+.fn init__7PikiMgrFv, global
 /* 800CED74 000CBCD4  38 00 00 00 */	li r0, 0
 /* 800CED78 000CBCD8  90 0D 30 58 */	stw r0, uniqueInstance__7AiTable@sda21(r13)
 /* 800CED7C 000CBCDC  90 03 00 60 */	stw r0, 0x60(r3)
 /* 800CED80 000CBCE0  98 0D 30 6E */	stb r0, meNukiMode__7PikiMgr@sda21(r13)
 /* 800CED84 000CBCE4  98 0D 30 6D */	stb r0, meBirthMode__7PikiMgr@sda21(r13)
 /* 800CED88 000CBCE8  4E 80 00 20 */	blr 
+.endfn init__7PikiMgrFv
 
-.global createObject__7PikiMgrFv
-createObject__7PikiMgrFv:
+.fn createObject__7PikiMgrFv, global
 /* 800CED8C 000CBCEC  7C 08 02 A6 */	mflr r0
 /* 800CED90 000CBCF0  38 8D BF B0 */	addi r4, r13, lbl_803E0CD0@sda21
 /* 800CED94 000CBCF4  90 01 00 04 */	stw r0, 4(r1)
@@ -1123,9 +1122,9 @@ createObject__7PikiMgrFv:
 /* 800CEDFC 000CBD5C  38 21 00 18 */	addi r1, r1, 0x18
 /* 800CEE00 000CBD60  7C 08 03 A6 */	mtlr r0
 /* 800CEE04 000CBD64  4E 80 00 20 */	blr 
+.endfn createObject__7PikiMgrFv
 
-.global update__7PikiMgrFv
-update__7PikiMgrFv:
+.fn update__7PikiMgrFv, global
 /* 800CEE08 000CBD68  7C 08 02 A6 */	mflr r0
 /* 800CEE0C 000CBD6C  90 01 00 04 */	stw r0, 4(r1)
 /* 800CEE10 000CBD70  94 21 FF F8 */	stwu r1, -8(r1)
@@ -1134,9 +1133,9 @@ update__7PikiMgrFv:
 /* 800CEE1C 000CBD7C  38 21 00 08 */	addi r1, r1, 8
 /* 800CEE20 000CBD80  7C 08 03 A6 */	mtlr r0
 /* 800CEE24 000CBD84  4E 80 00 20 */	blr 
+.endfn update__7PikiMgrFv
 
-.global refresh__7PikiMgrFR8Graphics
-refresh__7PikiMgrFR8Graphics:
+.fn refresh__7PikiMgrFR8Graphics, global
 /* 800CEE28 000CBD88  7C 08 02 A6 */	mflr r0
 /* 800CEE2C 000CBD8C  90 01 00 04 */	stw r0, 4(r1)
 /* 800CEE30 000CBD90  94 21 FF F8 */	stwu r1, -8(r1)
@@ -1145,9 +1144,9 @@ refresh__7PikiMgrFR8Graphics:
 /* 800CEE3C 000CBD9C  38 21 00 08 */	addi r1, r1, 8
 /* 800CEE40 000CBDA0  7C 08 03 A6 */	mtlr r0
 /* 800CEE44 000CBDA4  4E 80 00 20 */	blr 
+.endfn refresh__7PikiMgrFR8Graphics
 
-.global read__7PikiMgrFR18RandomAccessStream
-read__7PikiMgrFR18RandomAccessStream:
+.fn read__7PikiMgrFR18RandomAccessStream, global
 /* 800CEE48 000CBDA8  7C 08 02 A6 */	mflr r0
 /* 800CEE4C 000CBDAC  90 01 00 04 */	stw r0, 4(r1)
 /* 800CEE50 000CBDB0  94 21 FF F8 */	stwu r1, -8(r1)
@@ -1160,9 +1159,9 @@ read__7PikiMgrFR18RandomAccessStream:
 /* 800CEE6C 000CBDCC  38 21 00 08 */	addi r1, r1, 8
 /* 800CEE70 000CBDD0  7C 08 03 A6 */	mtlr r0
 /* 800CEE74 000CBDD4  4E 80 00 20 */	blr 
+.endfn read__7PikiMgrFR18RandomAccessStream
 
-.global read__8PikiPropFR18RandomAccessStream
-read__8PikiPropFR18RandomAccessStream:
+.fn read__8PikiPropFR18RandomAccessStream, weak
 /* 800CEE78 000CBDD8  7C 08 02 A6 */	mflr r0
 /* 800CEE7C 000CBDDC  90 01 00 04 */	stw r0, 4(r1)
 /* 800CEE80 000CBDE0  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -1180,9 +1179,9 @@ read__8PikiPropFR18RandomAccessStream:
 /* 800CEEB0 000CBE10  38 21 00 18 */	addi r1, r1, 0x18
 /* 800CEEB4 000CBE14  7C 08 03 A6 */	mtlr r0
 /* 800CEEB8 000CBE18  4E 80 00 20 */	blr 
+.endfn read__8PikiPropFR18RandomAccessStream
 
-.global dumpAll__7PikiMgrFv
-dumpAll__7PikiMgrFv:
+.fn dumpAll__7PikiMgrFv, global
 /* 800CEEBC 000CBE1C  7C 08 02 A6 */	mflr r0
 /* 800CEEC0 000CBE20  90 01 00 04 */	stw r0, 4(r1)
 /* 800CEEC4 000CBE24  94 21 FF 88 */	stwu r1, -0x78(r1)
@@ -1292,9 +1291,9 @@ dumpAll__7PikiMgrFv:
 /* 800CF048 000CBFA8  38 21 00 78 */	addi r1, r1, 0x78
 /* 800CF04C 000CBFAC  7C 08 03 A6 */	mtlr r0
 /* 800CF050 000CBFB0  4E 80 00 20 */	blr 
+.endfn dumpAll__7PikiMgrFv
 
-.global __dt__7PikiMgrFv
-__dt__7PikiMgrFv:
+.fn __dt__7PikiMgrFv, weak
 /* 800CF054 000CBFB4  7C 08 02 A6 */	mflr r0
 /* 800CF058 000CBFB8  90 01 00 04 */	stw r0, 4(r1)
 /* 800CF05C 000CBFBC  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -1330,56 +1329,71 @@ __dt__7PikiMgrFv:
 /* 800CF0CC 000CC02C  38 21 00 18 */	addi r1, r1, 0x18
 /* 800CF0D0 000CC030  7C 08 03 A6 */	mtlr r0
 /* 800CF0D4 000CC034  4E 80 00 20 */	blr 
+.endfn __dt__7PikiMgrFv
 
-"@8@read__7PikiMgrFR18RandomAccessStream":
+.fn "@8@read__7PikiMgrFR18RandomAccessStream", weak
 /* 800CF0D8 000CC038  38 63 FF F8 */	addi r3, r3, -8
 /* 800CF0DC 000CC03C  4B FF FD 6C */	b read__7PikiMgrFR18RandomAccessStream
+.endfn "@8@read__7PikiMgrFR18RandomAccessStream"
 
-"@8@update__7PikiMgrFv":
+.fn "@8@update__7PikiMgrFv", weak
 /* 800CF0E0 000CC040  38 63 FF F8 */	addi r3, r3, -8
 /* 800CF0E4 000CC044  4B FF FD 24 */	b update__7PikiMgrFv
+.endfn "@8@update__7PikiMgrFv"
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802B8A50:
+.obj lbl_802B8A50, local
 	.asciz "pikiMgr.cpp"
+.endobj lbl_802B8A50
 .balign 4
-lbl_802B8A5C:
+.obj lbl_802B8A5C, local
 	.asciz "pikis/happas/leaf.mod"
+.endobj lbl_802B8A5C
 .balign 4
-lbl_802B8A74:
+.obj lbl_802B8A74, local
 	.asciz "pikis/happas/bud.mod"
+.endobj lbl_802B8A74
 .balign 4
-lbl_802B8A8C:
+.obj lbl_802B8A8C, local
 	.asciz "pikis/happas/flower.mod"
+.endobj lbl_802B8A8C
 .balign 4
-lbl_802B8AA4:
+.obj lbl_802B8AA4, local
 	.asciz "pikiMgr.bin"
+.endobj lbl_802B8AA4
 .balign 4
-lbl_802B8AB0:
+.obj lbl_802B8AB0, local
 	.asciz "piki mtable"
+.endobj lbl_802B8AB0
 .balign 4
-lbl_802B8ABC:
+.obj lbl_802B8ABC, local
 	.asciz "CoreNode"
+.endobj lbl_802B8ABC
 .balign 4
-lbl_802B8AC8:
+.obj lbl_802B8AC8, local
 	.4byte __RTTI__5ANode
 	.4byte 0x00000000
 	.4byte 0x00000000
-lbl_802B8AD4:
+.endobj lbl_802B8AC8
+.balign 4
+.obj lbl_802B8AD4, local
 	.4byte __RTTI__5ANode
 	.4byte 0x00000000
 	.4byte __RTTI__8CoreNode
 	.4byte 0x00000000
 	.4byte 0x00000000
+.endobj lbl_802B8AD4
 .balign 4
-lbl_802B8AE8:
+.obj lbl_802B8AE8, local
 	.asciz "Traversable"
+.endobj lbl_802B8AE8
 .balign 4
-lbl_802B8AF4:
+.obj lbl_802B8AF4, local
 	.asciz "ObjectMgr"
+.endobj lbl_802B8AF4
 .balign 4
-lbl_802B8B00:
+.obj lbl_802B8B00, local
 	.4byte __RTTI__5ANode
 	.4byte 0x00000008
 	.4byte __RTTI__8CoreNode
@@ -1389,11 +1403,13 @@ lbl_802B8B00:
 	.4byte __RTTI__11Traversable
 	.4byte 0x00000000
 	.4byte 0x00000000
+.endobj lbl_802B8B00
 .balign 4
-lbl_802B8B24:
+.obj lbl_802B8B24, local
 	.asciz "MonoObjectMgr"
+.endobj lbl_802B8B24
 .balign 4
-lbl_802B8B34:
+.obj lbl_802B8B34, local
 	.4byte __RTTI__5ANode
 	.4byte 0x00000008
 	.4byte __RTTI__8CoreNode
@@ -1405,7 +1421,9 @@ lbl_802B8B34:
 	.4byte __RTTI__9ObjectMgr
 	.4byte 0x00000000
 	.4byte 0x00000000
-lbl_802B8B60:
+.endobj lbl_802B8B34
+.balign 4
+.obj lbl_802B8B60, local
 	.4byte __RTTI__5ANode
 	.4byte 0x00000008
 	.4byte __RTTI__8CoreNode
@@ -1419,8 +1437,9 @@ lbl_802B8B60:
 	.4byte __RTTI__13MonoObjectMgr
 	.4byte 0x00000000
 	.4byte 0x00000000
-.global __vt__7PikiMgr
-__vt__7PikiMgr:
+.endobj lbl_802B8B60
+.balign 4
+.obj __vt__7PikiMgr, global
 	.4byte __RTTI__7PikiMgr
 	.4byte 0
 	.4byte getCreature__13MonoObjectMgrFi
@@ -1455,347 +1474,455 @@ __vt__7PikiMgr:
 	.4byte kill__13MonoObjectMgrFP8Creature
 	.4byte createObject__7PikiMgrFv
 	.4byte read__7PikiMgrFR18RandomAccessStream
+.endobj __vt__7PikiMgr
 .balign 4
-lbl_802B8C1C:
+.obj lbl_802B8C1C, local
 	.asciz "Parm<int>"
+.endobj lbl_802B8C1C
 .balign 4
-lbl_802B8C28:
+.obj lbl_802B8C28, local
 	.asciz "BaseParm"
+.endobj lbl_802B8C28
 .balign 4
-lbl_802B8C34:
+.obj lbl_802B8C34, local
 	.4byte __RTTI__8BaseParm
 	.4byte 0
 	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
+.endobj lbl_802B8C34
+.balign 4
+.skip 0x14 # compiler padding
 .balign 4
 lbl_802B8C54:
 	.asciz "Parm<float>"
 .balign 4
-lbl_802B8C60:
+.obj lbl_802B8C60, local
 	.4byte __RTTI__8BaseParm
 	.4byte 0
 	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
+.endobj lbl_802B8C60
 .balign 4
-lbl_802B8C80:
+.skip 0x14 # compiler padding
+.balign 4
+.obj lbl_802B8C80, local
 	.asciz "PikiProp"
+.endobj lbl_802B8C80
 .balign 4
-lbl_802B8C8C:
+.obj lbl_802B8C8C, local
 	.asciz "CreatureProp"
+.endobj lbl_802B8C8C
 .balign 4
-lbl_802B8C9C:
+.obj lbl_802B8C9C, local
 	.4byte __RTTI__12CreatureProp
 	.4byte 0
 	.4byte 0
-.global __vt__8PikiProp
-__vt__8PikiProp:
+.endobj lbl_802B8C9C
+.balign 4
+.obj __vt__8PikiProp, weak
 	.4byte __RTTI__8PikiProp
 	.4byte 0
 	.4byte read__8PikiPropFR18RandomAccessStream
-.skip 0xC # padding
+.endobj __vt__8PikiProp
+.skip 0xC # compiler padding
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-lbl_803E0B80:
+.obj lbl_803E0B80, local
 	.asciz "s00"
+.endobj lbl_803E0B80
 .balign 4
-lbl_803E0B84:
+.obj lbl_803E0B84, local
 	.asciz "s01"
+.endobj lbl_803E0B84
 .balign 4
-lbl_803E0B88:
+.obj lbl_803E0B88, local
 	.asciz "s02"
+.endobj lbl_803E0B88
 .balign 4
-lbl_803E0B8C:
+.obj lbl_803E0B8C, local
 	.asciz "s03"
+.endobj lbl_803E0B8C
 .balign 4
-lbl_803E0B90:
+.obj lbl_803E0B90, local
 	.asciz "s04"
+.endobj lbl_803E0B90
 .balign 4
-lbl_803E0B94:
+.obj lbl_803E0B94, local
 	.asciz "parms/"
+.endobj lbl_803E0B94
 .balign 4
-lbl_803E0B9C:
+.obj lbl_803E0B9C, local
 	.asciz "p00"
+.endobj lbl_803E0B9C
 .balign 4
-lbl_803E0BA0:
+.obj lbl_803E0BA0, local
 	.asciz "p01"
+.endobj lbl_803E0BA0
 .balign 4
-lbl_803E0BA4:
+.obj lbl_803E0BA4, local
 	.asciz "p54"
+.endobj lbl_803E0BA4
 .balign 4
-lbl_803E0BA8:
+.obj lbl_803E0BA8, local
 	.asciz "p65"
+.endobj lbl_803E0BA8
 .balign 4
-lbl_803E0BAC:
+.obj lbl_803E0BAC, local
 	.asciz "p38"
+.endobj lbl_803E0BAC
 .balign 4
-lbl_803E0BB0:
+.obj lbl_803E0BB0, local
 	.asciz "p03"
+.endobj lbl_803E0BB0
 .balign 4
-lbl_803E0BB4:
+.obj lbl_803E0BB4, local
 	.asciz "p10"
+.endobj lbl_803E0BB4
 .balign 4
-lbl_803E0BB8:
+.obj lbl_803E0BB8, local
 	.asciz "p11"
+.endobj lbl_803E0BB8
 .balign 4
-lbl_803E0BBC:
+.obj lbl_803E0BBC, local
 	.asciz "p04"
+.endobj lbl_803E0BBC
 .balign 4
-lbl_803E0BC0:
+.obj lbl_803E0BC0, local
 	.asciz "p12"
+.endobj lbl_803E0BC0
 .balign 4
-lbl_803E0BC4:
+.obj lbl_803E0BC4, local
 	.asciz "p13"
+.endobj lbl_803E0BC4
 .balign 4
-lbl_803E0BC8:
+.obj lbl_803E0BC8, local
 	.asciz "p05"
+.endobj lbl_803E0BC8
 .balign 4
-lbl_803E0BCC:
+.obj lbl_803E0BCC, local
 	.asciz "p06"
+.endobj lbl_803E0BCC
 .balign 4
-lbl_803E0BD0:
+.obj lbl_803E0BD0, local
 	.asciz "p07"
+.endobj lbl_803E0BD0
 .balign 4
-lbl_803E0BD4:
+.obj lbl_803E0BD4, local
 	.asciz "p08"
+.endobj lbl_803E0BD4
 .balign 4
-lbl_803E0BD8:
+.obj lbl_803E0BD8, local
 	.asciz "p09"
+.endobj lbl_803E0BD8
 .balign 4
-lbl_803E0BDC:
+.obj lbl_803E0BDC, local
 	.asciz "p14"
+.endobj lbl_803E0BDC
 .balign 4
-lbl_803E0BE0:
+.obj lbl_803E0BE0, local
 	.asciz "p15"
+.endobj lbl_803E0BE0
 .balign 4
-lbl_803E0BE4:
+.obj lbl_803E0BE4, local
 	.asciz "p16"
+.endobj lbl_803E0BE4
 .balign 4
-lbl_803E0BE8:
+.obj lbl_803E0BE8, local
 	.asciz "p37"
+.endobj lbl_803E0BE8
 .balign 4
-lbl_803E0BEC:
+.obj lbl_803E0BEC, local
 	.asciz "p17"
+.endobj lbl_803E0BEC
 .balign 4
-lbl_803E0BF0:
+.obj lbl_803E0BF0, local
 	.asciz "p18"
+.endobj lbl_803E0BF0
 .balign 4
-lbl_803E0BF4:
+.obj lbl_803E0BF4, local
 	.asciz "p19"
+.endobj lbl_803E0BF4
 .balign 4
-lbl_803E0BF8:
+.obj lbl_803E0BF8, local
 	.asciz "p20"
+.endobj lbl_803E0BF8
 .balign 4
-lbl_803E0BFC:
+.obj lbl_803E0BFC, local
 	.asciz "p21"
+.endobj lbl_803E0BFC
 .balign 4
-lbl_803E0C00:
+.obj lbl_803E0C00, local
 	.asciz "p22"
+.endobj lbl_803E0C00
 .balign 4
-lbl_803E0C04:
+.obj lbl_803E0C04, local
 	.asciz "p23"
+.endobj lbl_803E0C04
 .balign 4
-lbl_803E0C08:
+.obj lbl_803E0C08, local
 	.asciz "p24"
+.endobj lbl_803E0C08
 .balign 4
-lbl_803E0C0C:
+.obj lbl_803E0C0C, local
 	.asciz "p25"
+.endobj lbl_803E0C0C
 .balign 4
-lbl_803E0C10:
+.obj lbl_803E0C10, local
 	.asciz "p26"
+.endobj lbl_803E0C10
 .balign 4
-lbl_803E0C14:
+.obj lbl_803E0C14, local
 	.asciz "p27"
+.endobj lbl_803E0C14
 .balign 4
-lbl_803E0C18:
+.obj lbl_803E0C18, local
 	.asciz "p34"
+.endobj lbl_803E0C18
 .balign 4
-lbl_803E0C1C:
+.obj lbl_803E0C1C, local
 	.asciz "p28"
+.endobj lbl_803E0C1C
 .balign 4
-lbl_803E0C20:
+.obj lbl_803E0C20, local
 	.asciz "p39"
+.endobj lbl_803E0C20
 .balign 4
-lbl_803E0C24:
+.obj lbl_803E0C24, local
 	.asciz "p29"
+.endobj lbl_803E0C24
 .balign 4
-lbl_803E0C28:
+.obj lbl_803E0C28, local
 	.asciz "p30"
+.endobj lbl_803E0C28
 .balign 4
-lbl_803E0C2C:
+.obj lbl_803E0C2C, local
 	.asciz "p31"
+.endobj lbl_803E0C2C
 .balign 4
-lbl_803E0C30:
+.obj lbl_803E0C30, local
 	.asciz "p32"
+.endobj lbl_803E0C30
 .balign 4
-lbl_803E0C34:
+.obj lbl_803E0C34, local
 	.asciz "p33"
+.endobj lbl_803E0C34
 .balign 4
-lbl_803E0C38:
+.obj lbl_803E0C38, local
 	.asciz "p35"
+.endobj lbl_803E0C38
 .balign 4
-lbl_803E0C3C:
+.obj lbl_803E0C3C, local
 	.asciz "p36"
+.endobj lbl_803E0C3C
 .balign 4
-lbl_803E0C40:
+.obj lbl_803E0C40, local
 	.asciz "p40"
+.endobj lbl_803E0C40
 .balign 4
-lbl_803E0C44:
+.obj lbl_803E0C44, local
 	.asciz "p41"
+.endobj lbl_803E0C44
 .balign 4
-lbl_803E0C48:
+.obj lbl_803E0C48, local
 	.asciz "p42"
+.endobj lbl_803E0C48
 .balign 4
-lbl_803E0C4C:
+.obj lbl_803E0C4C, local
 	.asciz "p43"
+.endobj lbl_803E0C4C
 .balign 4
-lbl_803E0C50:
+.obj lbl_803E0C50, local
 	.asciz "p74"
+.endobj lbl_803E0C50
 .balign 4
-lbl_803E0C54:
+.obj lbl_803E0C54, local
 	.asciz "p44"
+.endobj lbl_803E0C54
 .balign 4
-lbl_803E0C58:
+.obj lbl_803E0C58, local
 	.asciz "p45"
+.endobj lbl_803E0C58
 .balign 4
-lbl_803E0C5C:
+.obj lbl_803E0C5C, local
 	.asciz "p46"
+.endobj lbl_803E0C5C
 .balign 4
-lbl_803E0C60:
+.obj lbl_803E0C60, local
 	.asciz "p47"
+.endobj lbl_803E0C60
 .balign 4
-lbl_803E0C64:
+.obj lbl_803E0C64, local
 	.asciz "p48"
+.endobj lbl_803E0C64
 .balign 4
-lbl_803E0C68:
+.obj lbl_803E0C68, local
 	.asciz "p49"
+.endobj lbl_803E0C68
 .balign 4
-lbl_803E0C6C:
+.obj lbl_803E0C6C, local
 	.asciz "p50"
+.endobj lbl_803E0C6C
 .balign 4
-lbl_803E0C70:
+.obj lbl_803E0C70, local
 	.asciz "p51"
+.endobj lbl_803E0C70
 .balign 4
-lbl_803E0C74:
+.obj lbl_803E0C74, local
 	.asciz "p52"
+.endobj lbl_803E0C74
 .balign 4
-lbl_803E0C78:
+.obj lbl_803E0C78, local
 	.asciz "p53"
+.endobj lbl_803E0C78
 .balign 4
-lbl_803E0C7C:
+.obj lbl_803E0C7C, local
 	.asciz "p55"
+.endobj lbl_803E0C7C
 .balign 4
-lbl_803E0C80:
+.obj lbl_803E0C80, local
 	.asciz "p56"
+.endobj lbl_803E0C80
 .balign 4
-lbl_803E0C84:
+.obj lbl_803E0C84, local
 	.asciz "p57"
+.endobj lbl_803E0C84
 .balign 4
-lbl_803E0C88:
+.obj lbl_803E0C88, local
 	.asciz "p58"
+.endobj lbl_803E0C88
 .balign 4
-lbl_803E0C8C:
+.obj lbl_803E0C8C, local
 	.asciz "p59"
+.endobj lbl_803E0C8C
 .balign 4
-lbl_803E0C90:
+.obj lbl_803E0C90, local
 	.asciz "p75"
+.endobj lbl_803E0C90
 .balign 4
-lbl_803E0C94:
+.obj lbl_803E0C94, local
 	.asciz "p76"
+.endobj lbl_803E0C94
 .balign 4
-lbl_803E0C98:
+.obj lbl_803E0C98, local
 	.asciz "p77"
+.endobj lbl_803E0C98
 .balign 4
-lbl_803E0C9C:
+.obj lbl_803E0C9C, local
 	.asciz "p60"
+.endobj lbl_803E0C9C
 .balign 4
-lbl_803E0CA0:
+.obj lbl_803E0CA0, local
 	.asciz "p61"
+.endobj lbl_803E0CA0
 .balign 4
-lbl_803E0CA4:
+.obj lbl_803E0CA4, local
 	.asciz "p62"
+.endobj lbl_803E0CA4
 .balign 4
-lbl_803E0CA8:
+.obj lbl_803E0CA8, local
 	.asciz "p63"
+.endobj lbl_803E0CA8
 .balign 4
-lbl_803E0CAC:
+.obj lbl_803E0CAC, local
 	.asciz "p64"
+.endobj lbl_803E0CAC
 .balign 4
-lbl_803E0CB0:
+.obj lbl_803E0CB0, local
 	.asciz "p66"
+.endobj lbl_803E0CB0
 .balign 4
-lbl_803E0CB4:
+.obj lbl_803E0CB4, local
 	.asciz "p67"
+.endobj lbl_803E0CB4
 .balign 4
-lbl_803E0CB8:
+.obj lbl_803E0CB8, local
 	.asciz "p68"
+.endobj lbl_803E0CB8
 .balign 4
-lbl_803E0CBC:
+.obj lbl_803E0CBC, local
 	.asciz "p69"
+.endobj lbl_803E0CBC
 .balign 4
-lbl_803E0CC0:
+.obj lbl_803E0CC0, local
 	.asciz "p70"
+.endobj lbl_803E0CC0
 .balign 4
-lbl_803E0CC4:
+.obj lbl_803E0CC4, local
 	.asciz "p71"
+.endobj lbl_803E0CC4
 .balign 4
-lbl_803E0CC8:
+.obj lbl_803E0CC8, local
 	.asciz "p72"
+.endobj lbl_803E0CC8
 .balign 4
-lbl_803E0CCC:
+.obj lbl_803E0CCC, local
 	.asciz "p73"
+.endobj lbl_803E0CCC
 .balign 4
-lbl_803E0CD0:
+.obj lbl_803E0CD0, local
 	.asciz "pikiNew"
+.endobj lbl_803E0CD0
 .balign 4
-lbl_803E0CD8:
+.obj lbl_803E0CD8, local
 	.asciz "PikiMgr"
+.endobj lbl_803E0CD8
 .balign 4
-lbl_803E0CE0:
+.obj lbl_803E0CE0, local
 	.asciz "ANode"
+.endobj lbl_803E0CE0
 .balign 4
-__RTTI__5ANode:
+.obj __RTTI__5ANode, local
 	.4byte lbl_803E0CE0
 	.4byte 0
-__RTTI__8CoreNode:
+.endobj __RTTI__5ANode
+.balign 4
+.obj __RTTI__8CoreNode, local
 	.4byte lbl_802B8ABC
 	.4byte lbl_802B8AC8
+.endobj __RTTI__8CoreNode
 .balign 4
-lbl_803E0CF8:
+.obj lbl_803E0CF8, local
 	.asciz "Node"
+.endobj lbl_803E0CF8
 .balign 4
-__RTTI__4Node:
+.obj __RTTI__4Node, local
 	.4byte lbl_803E0CF8
 	.4byte lbl_802B8AD4
-__RTTI__11Traversable:
+.endobj __RTTI__4Node
+.balign 4
+.obj __RTTI__11Traversable, local
 	.4byte lbl_802B8AE8
 	.4byte 0
-__RTTI__9ObjectMgr:
+.endobj __RTTI__11Traversable
+.balign 4
+.obj __RTTI__9ObjectMgr, local
 	.4byte lbl_802B8AF4
 	.4byte lbl_802B8B00
-__RTTI__13MonoObjectMgr:
+.endobj __RTTI__9ObjectMgr
+.balign 4
+.obj __RTTI__13MonoObjectMgr, local
 	.4byte lbl_802B8B24
 	.4byte lbl_802B8B34
-__RTTI__7PikiMgr:
+.endobj __RTTI__13MonoObjectMgr
+.balign 4
+.obj __RTTI__7PikiMgr, local
 	.4byte lbl_803E0CD8
 	.4byte lbl_802B8B60
-__RTTI__8BaseParm:
+.endobj __RTTI__7PikiMgr
+.balign 4
+.obj __RTTI__8BaseParm, local
 	.4byte lbl_802B8C28
 	.4byte 0
-__RTTI__12CreatureProp:
+.endobj __RTTI__8BaseParm
+.balign 4
+.obj __RTTI__12CreatureProp, local
 	.4byte lbl_802B8C8C
 	.4byte 0
-__RTTI__8PikiProp:
+.endobj __RTTI__12CreatureProp
+.balign 4
+.obj __RTTI__8PikiProp, local
 	.4byte lbl_802B8C80
 	.4byte lbl_802B8C9C
+.endobj __RTTI__8PikiProp
 
 .section .sbss, "wa"
 .balign 8

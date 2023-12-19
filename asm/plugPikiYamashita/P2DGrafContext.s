@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global __ct__14P2DGrafContextFiiii
-__ct__14P2DGrafContextFiiii:
+.fn __ct__14P2DGrafContextFiiii, global
 /* 801AF7AC 001AC70C  7C 08 02 A6 */	mflr r0
 /* 801AF7B0 001AC710  3D 00 80 2E */	lis r8, __vt__14P2DGrafContext@ha
 /* 801AF7B4 001AC714  90 01 00 04 */	stw r0, 4(r1)
@@ -47,9 +46,9 @@ __ct__14P2DGrafContextFiiii:
 /* 801AF854 001AC7B4  38 21 00 38 */	addi r1, r1, 0x38
 /* 801AF858 001AC7B8  7C 08 03 A6 */	mtlr r0
 /* 801AF85C 001AC7BC  4E 80 00 20 */	blr 
+.endfn __ct__14P2DGrafContextFiiii
 
-.global setPort__14P2DGrafContextFv
-setPort__14P2DGrafContextFv:
+.fn setPort__14P2DGrafContextFv, global
 /* 801AF860 001AC7C0  7C 08 02 A6 */	mflr r0
 /* 801AF864 001AC7C4  3C A0 43 30 */	lis r5, 0x4330
 /* 801AF868 001AC7C8  90 01 00 04 */	stw r0, 4(r1)
@@ -101,9 +100,9 @@ setPort__14P2DGrafContextFv:
 /* 801AF920 001AC880  38 21 00 38 */	addi r1, r1, 0x38
 /* 801AF924 001AC884  7C 08 03 A6 */	mtlr r0
 /* 801AF928 001AC888  4E 80 00 20 */	blr 
+.endfn setPort__14P2DGrafContextFv
 
-.global setup2D__14P2DGrafContextFv
-setup2D__14P2DGrafContextFv:
+.fn setup2D__14P2DGrafContextFv, global
 /* 801AF92C 001AC88C  7C 08 02 A6 */	mflr r0
 /* 801AF930 001AC890  90 01 00 04 */	stw r0, 4(r1)
 /* 801AF934 001AC894  94 21 FF A8 */	stwu r1, -0x58(r1)
@@ -197,9 +196,9 @@ setup2D__14P2DGrafContextFv:
 /* 801AFA94 001AC9F4  38 21 00 58 */	addi r1, r1, 0x58
 /* 801AFA98 001AC9F8  7C 08 03 A6 */	mtlr r0
 /* 801AFA9C 001AC9FC  4E 80 00 20 */	blr 
+.endfn setup2D__14P2DGrafContextFv
 
-.global setScissor__14P2DGrafContextFv
-setScissor__14P2DGrafContextFv:
+.fn setScissor__14P2DGrafContextFv, global
 /* 801AFAA0 001ACA00  7C 08 02 A6 */	mflr r0
 /* 801AFAA4 001ACA04  38 80 00 00 */	li r4, 0
 /* 801AFAA8 001ACA08  90 01 00 04 */	stw r0, 4(r1)
@@ -241,17 +240,17 @@ setScissor__14P2DGrafContextFv:
 /* 801AFB34 001ACA94  38 21 00 28 */	addi r1, r1, 0x28
 /* 801AFB38 001ACA98  7C 08 03 A6 */	mtlr r0
 /* 801AFB3C 001ACA9C  4E 80 00 20 */	blr 
+.endfn setScissor__14P2DGrafContextFv
 
-.global scissor__14P2DGrafContextFRC7PUTRect
-scissor__14P2DGrafContextFRC7PUTRect:
+.fn scissor__14P2DGrafContextFRC7PUTRect, global
 /* 801AFB40 001ACAA0  80 A4 00 00 */	lwz r5, 0(r4)
 /* 801AFB44 001ACAA4  80 04 00 04 */	lwz r0, 4(r4)
 /* 801AFB48 001ACAA8  90 A3 00 10 */	stw r5, 0x10(r3)
 /* 801AFB4C 001ACAAC  90 03 00 14 */	stw r0, 0x14(r3)
 /* 801AFB50 001ACAB0  4E 80 00 20 */	blr 
+.endfn scissor__14P2DGrafContextFRC7PUTRect
 
-.global place__14P2DGrafContextFRC7PUTRect
-place__14P2DGrafContextFRC7PUTRect:
+.fn place__14P2DGrafContextFRC7PUTRect, global
 /* 801AFB54 001ACAB4  80 A4 00 00 */	lwz r5, 0(r4)
 /* 801AFB58 001ACAB8  80 04 00 04 */	lwz r0, 4(r4)
 /* 801AFB5C 001ACABC  90 A3 00 08 */	stw r5, 8(r3)
@@ -261,9 +260,9 @@ place__14P2DGrafContextFRC7PUTRect:
 /* 801AFB6C 001ACACC  90 A3 00 10 */	stw r5, 0x10(r3)
 /* 801AFB70 001ACAD0  90 03 00 14 */	stw r0, 0x14(r3)
 /* 801AFB74 001ACAD4  4E 80 00 20 */	blr 
+.endfn place__14P2DGrafContextFRC7PUTRect
 
-.global setColor__14P2DGrafContextFR6ColourR6ColourR6ColourR6Colour
-setColor__14P2DGrafContextFR6ColourR6ColourR6ColourR6Colour:
+.fn setColor__14P2DGrafContextFR6ColourR6ColourR6ColourR6Colour, global
 /* 801AFB78 001ACAD8  80 04 00 00 */	lwz r0, 0(r4)
 /* 801AFB7C 001ACADC  39 00 00 01 */	li r8, 1
 /* 801AFB80 001ACAE0  38 80 00 04 */	li r4, 4
@@ -307,9 +306,9 @@ setColor__14P2DGrafContextFR6ColourR6ColourR6ColourR6Colour:
 /* 801AFC18 001ACB78  91 03 00 CC */	stw r8, 0xcc(r3)
 /* 801AFC1C 001ACB7C  90 83 00 D0 */	stw r4, 0xd0(r3)
 /* 801AFC20 001ACB80  4E 80 00 20 */	blr 
+.endfn setColor__14P2DGrafContextFR6ColourR6ColourR6ColourR6Colour
 
-.global setLineWidth__14P2DGrafContextFUc
-setLineWidth__14P2DGrafContextFUc:
+.fn setLineWidth__14P2DGrafContextFUc, global
 /* 801AFC24 001ACB84  7C 08 02 A6 */	mflr r0
 /* 801AFC28 001ACB88  90 01 00 04 */	stw r0, 4(r1)
 /* 801AFC2C 001ACB8C  94 21 FF F8 */	stwu r1, -8(r1)
@@ -321,9 +320,9 @@ setLineWidth__14P2DGrafContextFUc:
 /* 801AFC44 001ACBA4  38 21 00 08 */	addi r1, r1, 8
 /* 801AFC48 001ACBA8  7C 08 03 A6 */	mtlr r0
 /* 801AFC4C 001ACBAC  4E 80 00 20 */	blr 
+.endfn setLineWidth__14P2DGrafContextFUc
 
-.global __dt__14P2DGrafContextFv
-__dt__14P2DGrafContextFv:
+.fn __dt__14P2DGrafContextFv, weak
 /* 801AFC50 001ACBB0  7C 08 02 A6 */	mflr r0
 /* 801AFC54 001ACBB4  90 01 00 04 */	stw r0, 4(r1)
 /* 801AFC58 001ACBB8  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -344,9 +343,9 @@ __dt__14P2DGrafContextFv:
 /* 801AFC90 001ACBF0  38 21 00 18 */	addi r1, r1, 0x18
 /* 801AFC94 001ACBF4  7C 08 03 A6 */	mtlr r0
 /* 801AFC98 001ACBF8  4E 80 00 20 */	blr 
+.endfn __dt__14P2DGrafContextFv
 
-.global place__14P2DGrafContextFiiii
-place__14P2DGrafContextFiiii:
+.fn place__14P2DGrafContextFiiii, weak
 /* 801AFC9C 001ACBFC  7C 08 02 A6 */	mflr r0
 /* 801AFCA0 001ACC00  7C C4 32 14 */	add r6, r4, r6
 /* 801AFCA4 001ACC04  90 01 00 04 */	stw r0, 4(r1)
@@ -367,21 +366,23 @@ place__14P2DGrafContextFiiii:
 /* 801AFCE0 001ACC40  38 21 00 30 */	addi r1, r1, 0x30
 /* 801AFCE4 001ACC44  7C 08 03 A6 */	mtlr r0
 /* 801AFCE8 001ACC48  4E 80 00 20 */	blr 
+.endfn place__14P2DGrafContextFiiii
 
-.global setLookat__14P2DGrafContextFv
-setLookat__14P2DGrafContextFv:
+.fn setLookat__14P2DGrafContextFv, weak
 /* 801AFCEC 001ACC4C  4E 80 00 20 */	blr 
+.endfn setLookat__14P2DGrafContextFv
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802E05B0:
+.obj lbl_802E05B0, local
 	.asciz "P2DGrafContext.cpp"
+.endobj lbl_802E05B0
 .balign 4
-lbl_802E05C4:
+.obj lbl_802E05C4, local
 	.asciz "P2DGrafContext"
+.endobj lbl_802E05C4
 .balign 4
-.global __vt__14P2DGrafContext
-__vt__14P2DGrafContext:
+.obj __vt__14P2DGrafContext, global
 	.4byte __RTTI__14P2DGrafContext
 	.4byte 0
 	.4byte __dt__14P2DGrafContextFv
@@ -391,19 +392,25 @@ __vt__14P2DGrafContext:
 	.4byte setup2D__14P2DGrafContextFv
 	.4byte setScissor__14P2DGrafContextFv
 	.4byte setLookat__14P2DGrafContextFv
+.endobj __vt__14P2DGrafContext
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-__RTTI__14P2DGrafContext:
+.obj __RTTI__14P2DGrafContext, local
 	.4byte lbl_802E05C4
 	.4byte 0
+.endobj __RTTI__14P2DGrafContext
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803EB860:
-	.4byte 0x00000000
-lbl_803EB864:
-	.4byte 0x3F800000
-lbl_803EB868:
-	.4byte 0x43300000
-	.4byte 0x80000000
+.obj lbl_803EB860, local
+	.float 0.0
+.endobj lbl_803EB860
+.balign 4
+.obj lbl_803EB864, local
+	.float 1.0
+.endobj lbl_803EB864
+.balign 8
+.obj lbl_803EB868, local
+	.8byte 0x4330000080000000
+.endobj lbl_803EB868

@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global __ct__8RopeItemFP12CreaturePropP5Shape
-__ct__8RopeItemFP12CreaturePropP5Shape:
+.fn __ct__8RopeItemFP12CreaturePropP5Shape, global
 /* 800ED9DC 000EA93C  7C 08 02 A6 */	mflr r0
 /* 800ED9E0 000EA940  90 01 00 04 */	stw r0, 4(r1)
 /* 800ED9E4 000EA944  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -46,19 +45,19 @@ __ct__8RopeItemFP12CreaturePropP5Shape:
 /* 800EDA80 000EA9E0  38 21 00 20 */	addi r1, r1, 0x20
 /* 800EDA84 000EA9E4  7C 08 03 A6 */	mtlr r0
 /* 800EDA88 000EA9E8  4E 80 00 20 */	blr 
+.endfn __ct__8RopeItemFP12CreaturePropP5Shape
 
-.global isAtari__8RopeItemFv
-isAtari__8RopeItemFv:
+.fn isAtari__8RopeItemFv, global
 /* 800EDA8C 000EA9EC  38 60 00 00 */	li r3, 0
 /* 800EDA90 000EA9F0  4E 80 00 20 */	blr 
+.endfn isAtari__8RopeItemFv
 
-.global getSize__8RopeItemFv
-getSize__8RopeItemFv:
+.fn getSize__8RopeItemFv, global
 /* 800EDA94 000EA9F4  C0 22 9B 28 */	lfs f1, lbl_803E9D28@sda21(r2)
 /* 800EDA98 000EA9F8  4E 80 00 20 */	blr 
+.endfn getSize__8RopeItemFv
 
-.global init__8RopeItemFR8Vector3f
-init__8RopeItemFR8Vector3f:
+.fn init__8RopeItemFR8Vector3f, global
 /* 800EDA9C 000EA9FC  7C 08 02 A6 */	mflr r0
 /* 800EDAA0 000EAA00  90 01 00 04 */	stw r0, 4(r1)
 /* 800EDAA4 000EAA04  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -78,9 +77,9 @@ init__8RopeItemFR8Vector3f:
 /* 800EDADC 000EAA3C  38 21 00 20 */	addi r1, r1, 0x20
 /* 800EDAE0 000EAA40  7C 08 03 A6 */	mtlr r0
 /* 800EDAE4 000EAA44  4E 80 00 20 */	blr 
+.endfn init__8RopeItemFR8Vector3f
 
-.global autoInit__8RopeItemFv
-autoInit__8RopeItemFv:
+.fn autoInit__8RopeItemFv, global
 /* 800EDAE8 000EAA48  7C 08 02 A6 */	mflr r0
 /* 800EDAEC 000EAA4C  90 01 00 04 */	stw r0, 4(r1)
 /* 800EDAF0 000EAA50  94 21 FF B8 */	stwu r1, -0x48(r1)
@@ -263,13 +262,13 @@ autoInit__8RopeItemFv:
 /* 800EDD6C 000EACCC  38 21 00 48 */	addi r1, r1, 0x48
 /* 800EDD70 000EACD0  7C 08 03 A6 */	mtlr r0
 /* 800EDD74 000EACD4  4E 80 00 20 */	blr 
+.endfn autoInit__8RopeItemFv
 
-.global startAI__8RopeItemFi
-startAI__8RopeItemFi:
+.fn startAI__8RopeItemFi, global
 /* 800EDD78 000EACD8  4E 80 00 20 */	blr 
+.endfn startAI__8RopeItemFi
 
-.global doKill__8RopeItemFv
-doKill__8RopeItemFv:
+.fn doKill__8RopeItemFv, global
 /* 800EDD7C 000EACDC  7C 08 02 A6 */	mflr r0
 /* 800EDD80 000EACE0  7C 64 1B 78 */	mr r4, r3
 /* 800EDD84 000EACE4  90 01 00 04 */	stw r0, 4(r1)
@@ -283,58 +282,67 @@ doKill__8RopeItemFv:
 /* 800EDDA4 000EAD04  38 21 00 08 */	addi r1, r1, 8
 /* 800EDDA8 000EAD08  7C 08 03 A6 */	mtlr r0
 /* 800EDDAC 000EAD0C  4E 80 00 20 */	blr 
+.endfn doKill__8RopeItemFv
 
-.global getiMass__8RopeItemFv
-getiMass__8RopeItemFv:
+.fn getiMass__8RopeItemFv, global
 /* 800EDDB0 000EAD10  C0 22 9B 34 */	lfs f1, lbl_803E9D34@sda21(r2)
 /* 800EDDB4 000EAD14  4E 80 00 20 */	blr 
+.endfn getiMass__8RopeItemFv
 
-.global needShadow__8RopeItemFv
-needShadow__8RopeItemFv:
+.fn needShadow__8RopeItemFv, weak
 /* 800EDDB8 000EAD18  38 60 00 00 */	li r3, 0
 /* 800EDDBC 000EAD1C  4E 80 00 20 */	blr 
+.endfn needShadow__8RopeItemFv
 
-.global isAlive__8RopeItemFv
-isAlive__8RopeItemFv:
+.fn isAlive__8RopeItemFv, weak
 /* 800EDDC0 000EAD20  38 60 00 01 */	li r3, 1
 /* 800EDDC4 000EAD24  4E 80 00 20 */	blr 
+.endfn isAlive__8RopeItemFv
 
-.global isVisible__8RopeItemFv
-isVisible__8RopeItemFv:
+.fn isVisible__8RopeItemFv, weak
 /* 800EDDC8 000EAD28  38 60 00 01 */	li r3, 1
 /* 800EDDCC 000EAD2C  4E 80 00 20 */	blr 
+.endfn isVisible__8RopeItemFv
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802BD438:
+.obj lbl_802BD438, local
 	.asciz "ropeItem.cpp"
+.endobj lbl_802BD438
 .balign 4
-lbl_802BD448:
+.obj lbl_802BD448, local
 	.asciz "ropeItem"
+.endobj lbl_802BD448
 .balign 4
-lbl_802BD454:
+.obj lbl_802BD454, local
 	.asciz "RopeItem"
+.endobj lbl_802BD454
 .balign 4
-lbl_802BD460:
+.obj lbl_802BD460, local
 	.asciz "EventTalker"
+.endobj lbl_802BD460
 .balign 4
-lbl_802BD46C:
+.obj lbl_802BD46C, local
 	.asciz "RefCountable"
+.endobj lbl_802BD46C
 .balign 4
-lbl_802BD47C:
+.obj lbl_802BD47C, local
 	.asciz "Creature"
+.endobj lbl_802BD47C
 .balign 4
-lbl_802BD488:
+.obj lbl_802BD488, local
 	.4byte __RTTI__11EventTalker
 	.4byte 0x8
 	.4byte __RTTI__12RefCountable
 	.4byte 0
 	.4byte 0
+.endobj lbl_802BD488
 .balign 4
-lbl_802BD49C:
+.obj lbl_802BD49C, local
 	.asciz "RopeCreature"
+.endobj lbl_802BD49C
 .balign 4
-lbl_802BD4AC:
+.obj lbl_802BD4AC, local
 	.4byte __RTTI__11EventTalker
 	.4byte 0x8
 	.4byte __RTTI__12RefCountable
@@ -342,7 +350,9 @@ lbl_802BD4AC:
 	.4byte __RTTI__8Creature
 	.4byte 0
 	.4byte 0
-lbl_802BD4C8:
+.endobj lbl_802BD4AC
+.balign 4
+.obj lbl_802BD4C8, local
 	.4byte __RTTI__11EventTalker
 	.4byte 0x8
 	.4byte __RTTI__12RefCountable
@@ -352,8 +362,9 @@ lbl_802BD4C8:
 	.4byte __RTTI__12RopeCreature
 	.4byte 0
 	.4byte 0
-.global __vt__8RopeItem
-__vt__8RopeItem:
+.endobj lbl_802BD4C8
+.balign 4
+.obj __vt__8RopeItem, global
 	.4byte __RTTI__8RopeItem
 	.4byte 0
 	.4byte addCntCallback__12RefCountableFv
@@ -423,32 +434,46 @@ __vt__8RopeItem:
 	.4byte doAnimation__8CreatureFv
 	.4byte doKill__8RopeItemFv
 	.4byte exitCourse__8CreatureFv
+.endobj __vt__8RopeItem
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-__RTTI__11EventTalker:
+.obj __RTTI__11EventTalker, local
 	.4byte lbl_802BD460
 	.4byte 0
-__RTTI__12RefCountable:
+.endobj __RTTI__11EventTalker
+.balign 4
+.obj __RTTI__12RefCountable, local
 	.4byte lbl_802BD46C
 	.4byte 0
-__RTTI__8Creature:
+.endobj __RTTI__12RefCountable
+.balign 4
+.obj __RTTI__8Creature, local
 	.4byte lbl_802BD47C
 	.4byte lbl_802BD488
-__RTTI__12RopeCreature:
+.endobj __RTTI__8Creature
+.balign 4
+.obj __RTTI__12RopeCreature, local
 	.4byte lbl_802BD49C
 	.4byte lbl_802BD4AC
-__RTTI__8RopeItem:
+.endobj __RTTI__12RopeCreature
+.balign 4
+.obj __RTTI__8RopeItem, local
 	.4byte lbl_802BD454
 	.4byte lbl_802BD4C8
+.endobj __RTTI__8RopeItem
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803E9D28:
+.obj lbl_803E9D28, local
 	.float 5.0
-lbl_803E9D2C:
+.endobj lbl_803E9D28
+.obj lbl_803E9D2C, local
 	.float 1.0
-lbl_803E9D30:
+.endobj lbl_803E9D2C
+.obj lbl_803E9D30, local
 	.float 12800.0
-lbl_803E9D34:
+.endobj lbl_803E9D30
+.obj lbl_803E9D34, local
 	.float 10.0
+.endobj lbl_803E9D34

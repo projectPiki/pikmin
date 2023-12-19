@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global __ct__Q23zen11DrawSaveMesFv
-__ct__Q23zen11DrawSaveMesFv:
+.fn __ct__Q23zen11DrawSaveMesFv, global
 /* 801F265C 001EF5BC  7C 08 02 A6 */	mflr r0
 /* 801F2660 001EF5C0  90 01 00 04 */	stw r0, 4(r1)
 /* 801F2664 001EF5C4  94 21 FF 40 */	stwu r1, -0xc0(r1)
@@ -214,9 +213,9 @@ __ct__Q23zen11DrawSaveMesFv:
 /* 801F2998 001EF8F8  38 21 00 C0 */	addi r1, r1, 0xc0
 /* 801F299C 001EF8FC  7C 08 03 A6 */	mtlr r0
 /* 801F29A0 001EF900  4E 80 00 20 */	blr 
+.endfn __ct__Q23zen11DrawSaveMesFv
 
-.global sleep__Q23zen11DrawSaveMesFv
-sleep__Q23zen11DrawSaveMesFv:
+.fn sleep__Q23zen11DrawSaveMesFv, global
 /* 801F29A4 001EF904  7C 08 02 A6 */	mflr r0
 /* 801F29A8 001EF908  38 80 FF FF */	li r4, -1
 /* 801F29AC 001EF90C  90 01 00 04 */	stw r0, 4(r1)
@@ -226,9 +225,9 @@ sleep__Q23zen11DrawSaveMesFv:
 /* 801F29BC 001EF91C  38 21 00 08 */	addi r1, r1, 8
 /* 801F29C0 001EF920  7C 08 03 A6 */	mtlr r0
 /* 801F29C4 001EF924  4E 80 00 20 */	blr 
+.endfn sleep__Q23zen11DrawSaveMesFv
 
-.global mesAppear__Q23zen11DrawSaveMesFv
-mesAppear__Q23zen11DrawSaveMesFv:
+.fn mesAppear__Q23zen11DrawSaveMesFv, global
 /* 801F29C8 001EF928  7C 08 02 A6 */	mflr r0
 /* 801F29CC 001EF92C  38 80 00 00 */	li r4, 0
 /* 801F29D0 001EF930  90 01 00 04 */	stw r0, 4(r1)
@@ -249,9 +248,9 @@ mesAppear__Q23zen11DrawSaveMesFv:
 /* 801F2A0C 001EF96C  38 21 00 18 */	addi r1, r1, 0x18
 /* 801F2A10 001EF970  7C 08 03 A6 */	mtlr r0
 /* 801F2A14 001EF974  4E 80 00 20 */	blr 
+.endfn mesAppear__Q23zen11DrawSaveMesFv
 
-.global saveFinish__Q23zen11DrawSaveMesFv
-saveFinish__Q23zen11DrawSaveMesFv:
+.fn saveFinish__Q23zen11DrawSaveMesFv, global
 /* 801F2A18 001EF978  7C 08 02 A6 */	mflr r0
 /* 801F2A1C 001EF97C  38 80 00 04 */	li r4, 4
 /* 801F2A20 001EF980  90 01 00 04 */	stw r0, 4(r1)
@@ -270,9 +269,9 @@ saveFinish__Q23zen11DrawSaveMesFv:
 /* 801F2A54 001EF9B4  38 21 00 18 */	addi r1, r1, 0x18
 /* 801F2A58 001EF9B8  7C 08 03 A6 */	mtlr r0
 /* 801F2A5C 001EF9BC  4E 80 00 20 */	blr 
+.endfn saveFinish__Q23zen11DrawSaveMesFv
 
-.global saveError__Q23zen11DrawSaveMesFv
-saveError__Q23zen11DrawSaveMesFv:
+.fn saveError__Q23zen11DrawSaveMesFv, global
 /* 801F2A60 001EF9C0  7C 08 02 A6 */	mflr r0
 /* 801F2A64 001EF9C4  38 80 00 07 */	li r4, 7
 /* 801F2A68 001EF9C8  90 01 00 04 */	stw r0, 4(r1)
@@ -282,9 +281,9 @@ saveError__Q23zen11DrawSaveMesFv:
 /* 801F2A78 001EF9D8  38 21 00 08 */	addi r1, r1, 8
 /* 801F2A7C 001EF9DC  7C 08 03 A6 */	mtlr r0
 /* 801F2A80 001EF9E0  4E 80 00 20 */	blr 
+.endfn saveError__Q23zen11DrawSaveMesFv
 
-.global update__Q23zen11DrawSaveMesFP10Controller
-update__Q23zen11DrawSaveMesFP10Controller:
+.fn update__Q23zen11DrawSaveMesFP10Controller, global
 /* 801F2A84 001EF9E4  7C 08 02 A6 */	mflr r0
 /* 801F2A88 001EF9E8  90 01 00 04 */	stw r0, 4(r1)
 /* 801F2A8C 001EF9EC  94 21 FE A8 */	stwu r1, -0x158(r1)
@@ -890,9 +889,9 @@ update__Q23zen11DrawSaveMesFP10Controller:
 /* 801F331C 001F027C  38 21 01 58 */	addi r1, r1, 0x158
 /* 801F3320 001F0280  7C 08 03 A6 */	mtlr r0
 /* 801F3324 001F0284  4E 80 00 20 */	blr 
+.endfn update__Q23zen11DrawSaveMesFP10Controller
 
-.global draw__Q23zen11DrawSaveMesFR8Graphics
-draw__Q23zen11DrawSaveMesFR8Graphics:
+.fn draw__Q23zen11DrawSaveMesFR8Graphics, global
 /* 801F3328 001F0288  7C 08 02 A6 */	mflr r0
 /* 801F332C 001F028C  90 01 00 04 */	stw r0, 4(r1)
 /* 801F3330 001F0290  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -919,9 +918,9 @@ draw__Q23zen11DrawSaveMesFR8Graphics:
 /* 801F3384 001F02E4  38 21 00 18 */	addi r1, r1, 0x18
 /* 801F3388 001F02E8  7C 08 03 A6 */	mtlr r0
 /* 801F338C 001F02EC  4E 80 00 20 */	blr 
+.endfn draw__Q23zen11DrawSaveMesFR8Graphics
 
-.global setMode__Q23zen11DrawSaveMesFQ33zen11DrawSaveMes8modeFlag
-setMode__Q23zen11DrawSaveMesFQ33zen11DrawSaveMes8modeFlag:
+.fn setMode__Q23zen11DrawSaveMesFQ33zen11DrawSaveMes8modeFlag, global
 /* 801F3390 001F02F0  7C 08 02 A6 */	mflr r0
 /* 801F3394 001F02F4  90 01 00 04 */	stw r0, 4(r1)
 /* 801F3398 001F02F8  94 21 FF 58 */	stwu r1, -0xa8(r1)
@@ -1047,27 +1046,19 @@ setMode__Q23zen11DrawSaveMesFQ33zen11DrawSaveMes8modeFlag:
 /* 801F3554 001F04B4  38 21 00 A8 */	addi r1, r1, 0xa8
 /* 801F3558 001F04B8  7C 08 03 A6 */	mtlr r0
 /* 801F355C 001F04BC  4E 80 00 20 */	blr 
+.endfn setMode__Q23zen11DrawSaveMesFQ33zen11DrawSaveMes8modeFlag
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-.global lbl_802E7160
-lbl_802E7160:
-	.4byte 0x73637265
-	.4byte 0x656E2F62
-	.4byte 0x6C6F2F63
-	.4byte 0x68615F73
-	.4byte 0x6176322E
-	.4byte 0x626C6F00
-.global lbl_802E7178
-lbl_802E7178:
-	.4byte 0x73637265
-	.4byte 0x656E2F62
-	.4byte 0x6C6F2F61
-	.4byte 0x635F6368
-	.4byte 0x75692E62
-	.4byte 0x6C6F0000
-.global lbl_802E7190
-lbl_802E7190:
+.obj lbl_802E7160, local
+	.asciz "screen/blo/cha_sav2.blo"
+.endobj lbl_802E7160
+.balign 4
+.obj lbl_802E7178, local
+	.asciz "screen/blo/ac_chui.blo"
+.endobj lbl_802E7178
+.balign 4
+.obj lbl_802E7190, local
 	.4byte .L_801F2AD8
 	.4byte .L_801F2C0C
 	.4byte .L_801F2D40
@@ -1078,8 +1069,9 @@ lbl_802E7190:
 	.4byte .L_801F2AD8
 	.4byte .L_801F321C
 	.4byte .L_801F3214
-.global lbl_802E71B8
-lbl_802E71B8:
+.endobj lbl_802E7190
+.balign 4
+.obj lbl_802E71B8, local
 	.4byte .L_801F33D4
 	.4byte .L_801F33FC
 	.4byte .L_801F34C8
@@ -1090,32 +1082,46 @@ lbl_802E71B8:
 	.4byte .L_801F3548
 	.4byte .L_801F3528
 	.4byte .L_801F3548
+.endobj lbl_802E71B8
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803EC458:
-	.4byte 0x00000000
-lbl_803EC45C:
-	.4byte 0x3F000000
-lbl_803EC460:
-	.4byte 0x3FC90FDB
-lbl_803EC464:
-	.4byte 0x3F800000
-lbl_803EC468:
-	.4byte 0x43480000
-lbl_803EC46C:
-	.4byte 0x40000000
-lbl_803EC470:
-	.4byte 0x40C90FDB
-lbl_803EC474:
-	.4byte 0x42FF0000
-lbl_803EC478:
-	.4byte 0x437F0000
-lbl_803EC47C:
-	.4byte 0x42A00000
-lbl_803EC480:
-	.4byte 0x43960000
-lbl_803EC484:
-	.4byte 0x43F00000
-lbl_803EC488:
-	.4byte 0x3FC00000
+.obj lbl_803EC458, local
+	.float 0.0
+.endobj lbl_803EC458
+.obj lbl_803EC45C, local
+	.float 0.5
+.endobj lbl_803EC45C
+.obj lbl_803EC460, local # pi/2
+	.float 1.5707964
+.endobj lbl_803EC460
+.obj lbl_803EC464, local
+	.float 1.0
+.endobj lbl_803EC464
+.obj lbl_803EC468, local
+	.float 200.0
+.endobj lbl_803EC468
+.obj lbl_803EC46C, local
+	.float 2.0
+.endobj lbl_803EC46C
+.obj lbl_803EC470, local # tau
+	.float 6.2831855
+.endobj lbl_803EC470
+.obj lbl_803EC474, local
+	.float 127.5
+.endobj lbl_803EC474
+.obj lbl_803EC478, local
+	.float 255.0
+.endobj lbl_803EC478
+.obj lbl_803EC47C, local
+	.float 80.0
+.endobj lbl_803EC47C
+.obj lbl_803EC480, local
+	.float 300.0
+.endobj lbl_803EC480
+.obj lbl_803EC484, local
+	.float 480.0
+.endobj lbl_803EC484
+.obj lbl_803EC488, local
+	.float 1.5
+.endobj lbl_803EC488

@@ -23,5 +23,5 @@
 	.float -0.30842513
 	.float -0.08074551
 	.float 1.0
-	.float 0.7853982
+	.float 0.7853982 # 45 degrees in radians
 .endobj __sincos_poly

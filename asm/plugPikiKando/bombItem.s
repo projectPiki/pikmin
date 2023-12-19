@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global collisionCallback__8BombItemFR9CollEvent
-collisionCallback__8BombItemFR9CollEvent:
+.fn collisionCallback__8BombItemFR9CollEvent, global
 /* 800EA190 000E70F0  7C 08 02 A6 */	mflr r0
 /* 800EA194 000E70F4  90 01 00 04 */	stw r0, 4(r1)
 /* 800EA198 000E70F8  94 21 FF C8 */	stwu r1, -0x38(r1)
@@ -46,9 +45,9 @@ collisionCallback__8BombItemFR9CollEvent:
 /* 800EA22C 000E718C  38 21 00 38 */	addi r1, r1, 0x38
 /* 800EA230 000E7190  7C 08 03 A6 */	mtlr r0
 /* 800EA234 000E7194  4E 80 00 20 */	blr 
+.endfn collisionCallback__8BombItemFR9CollEvent
 
-.global isVisible__8BombItemFv
-isVisible__8BombItemFv:
+.fn isVisible__8BombItemFv, global
 /* 800EA238 000E7198  7C 08 02 A6 */	mflr r0
 /* 800EA23C 000E719C  90 01 00 04 */	stw r0, 4(r1)
 /* 800EA240 000E71A0  94 21 FF F8 */	stwu r1, -8(r1)
@@ -74,14 +73,14 @@ isVisible__8BombItemFv:
 /* 800EA284 000E71E4  38 21 00 08 */	addi r1, r1, 8
 /* 800EA288 000E71E8  7C 08 03 A6 */	mtlr r0
 /* 800EA28C 000E71EC  4E 80 00 20 */	blr 
+.endfn isVisible__8BombItemFv
 
-.global needShadow__8BombItemFv
-needShadow__8BombItemFv:
+.fn needShadow__8BombItemFv, global
 /* 800EA290 000E71F0  38 60 00 00 */	li r3, 0
 /* 800EA294 000E71F4  4E 80 00 20 */	blr 
+.endfn needShadow__8BombItemFv
 
-.global isAlive__8BombItemFv
-isAlive__8BombItemFv:
+.fn isAlive__8BombItemFv, global
 /* 800EA298 000E71F8  7C 08 02 A6 */	mflr r0
 /* 800EA29C 000E71FC  90 01 00 04 */	stw r0, 4(r1)
 /* 800EA2A0 000E7200  94 21 FF F8 */	stwu r1, -8(r1)
@@ -107,9 +106,9 @@ isAlive__8BombItemFv:
 /* 800EA2E4 000E7244  38 21 00 08 */	addi r1, r1, 8
 /* 800EA2E8 000E7248  7C 08 03 A6 */	mtlr r0
 /* 800EA2EC 000E724C  4E 80 00 20 */	blr 
+.endfn isAlive__8BombItemFv
 
-.global __ct__8BombItemFP12CreaturePropP15ItemShapeObjectP8SimpleAI
-__ct__8BombItemFP12CreaturePropP15ItemShapeObjectP8SimpleAI:
+.fn __ct__8BombItemFP12CreaturePropP15ItemShapeObjectP8SimpleAI, global
 /* 800EA2F0 000E7250  7C 08 02 A6 */	mflr r0
 /* 800EA2F4 000E7254  90 01 00 04 */	stw r0, 4(r1)
 /* 800EA2F8 000E7258  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -153,9 +152,9 @@ __ct__8BombItemFP12CreaturePropP15ItemShapeObjectP8SimpleAI:
 /* 800EA390 000E72F0  38 21 00 28 */	addi r1, r1, 0x28
 /* 800EA394 000E72F4  7C 08 03 A6 */	mtlr r0
 /* 800EA398 000E72F8  4E 80 00 20 */	blr 
+.endfn __ct__8BombItemFP12CreaturePropP15ItemShapeObjectP8SimpleAI
 
-.global startAI__8BombItemFi
-startAI__8BombItemFi:
+.fn startAI__8BombItemFi, global
 /* 800EA39C 000E72FC  7C 08 02 A6 */	mflr r0
 /* 800EA3A0 000E7300  38 A0 00 01 */	li r5, 1
 /* 800EA3A4 000E7304  90 01 00 04 */	stw r0, 4(r1)
@@ -214,19 +213,19 @@ startAI__8BombItemFi:
 /* 800EA478 000E73D8  38 21 00 28 */	addi r1, r1, 0x28
 /* 800EA47C 000E73DC  7C 08 03 A6 */	mtlr r0
 /* 800EA480 000E73E0  4E 80 00 20 */	blr 
+.endfn startAI__8BombItemFi
 
-.global getSize__8BombItemFv
-getSize__8BombItemFv:
+.fn getSize__8BombItemFv, global
 /* 800EA484 000E73E4  C0 22 9A 30 */	lfs f1, lbl_803E9C30@sda21(r2)
 /* 800EA488 000E73E8  4E 80 00 20 */	blr 
+.endfn getSize__8BombItemFv
 
-.global getiMass__8BombItemFv
-getiMass__8BombItemFv:
+.fn getiMass__8BombItemFv, global
 /* 800EA48C 000E73EC  C0 22 9A 28 */	lfs f1, lbl_803E9C28@sda21(r2)
 /* 800EA490 000E73F0  4E 80 00 20 */	blr 
+.endfn getiMass__8BombItemFv
 
-.global update__8BombItemFv
-update__8BombItemFv:
+.fn update__8BombItemFv, global
 /* 800EA494 000E73F4  7C 08 02 A6 */	mflr r0
 /* 800EA498 000E73F8  3C 80 80 3A */	lis r4, gameflow@ha
 /* 800EA49C 000E73FC  90 01 00 04 */	stw r0, 4(r1)
@@ -283,13 +282,13 @@ update__8BombItemFv:
 /* 800EA560 000E74C0  38 21 00 20 */	addi r1, r1, 0x20
 /* 800EA564 000E74C4  7C 08 03 A6 */	mtlr r0
 /* 800EA568 000E74C8  4E 80 00 20 */	blr 
+.endfn update__8BombItemFv
 
-.global renderTimer__8BombItemFR8Graphics
-renderTimer__8BombItemFR8Graphics:
+.fn renderTimer__8BombItemFR8Graphics, global
 /* 800EA56C 000E74CC  4E 80 00 20 */	blr 
+.endfn renderTimer__8BombItemFR8Graphics
 
-.global refresh2d__8BombItemFR8Graphics
-refresh2d__8BombItemFR8Graphics:
+.fn refresh2d__8BombItemFR8Graphics, global
 /* 800EA570 000E74D0  7C 08 02 A6 */	mflr r0
 /* 800EA574 000E74D4  90 01 00 04 */	stw r0, 4(r1)
 /* 800EA578 000E74D8  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -329,9 +328,9 @@ refresh2d__8BombItemFR8Graphics:
 /* 800EA5FC 000E755C  38 21 00 28 */	addi r1, r1, 0x28
 /* 800EA600 000E7560  7C 08 03 A6 */	mtlr r0
 /* 800EA604 000E7564  4E 80 00 20 */	blr 
+.endfn refresh2d__8BombItemFR8Graphics
 
-.global refresh__8BombItemFR8Graphics
-refresh__8BombItemFR8Graphics:
+.fn refresh__8BombItemFR8Graphics, global
 /* 800EA608 000E7568  7C 08 02 A6 */	mflr r0
 /* 800EA60C 000E756C  3C A0 80 3A */	lis r5, gameflow@ha
 /* 800EA610 000E7570  90 01 00 04 */	stw r0, 4(r1)
@@ -375,13 +374,13 @@ refresh__8BombItemFR8Graphics:
 /* 800EA6A4 000E7604  38 21 00 30 */	addi r1, r1, 0x30
 /* 800EA6A8 000E7608  7C 08 03 A6 */	mtlr r0
 /* 800EA6AC 000E760C  4E 80 00 20 */	blr 
+.endfn refresh__8BombItemFR8Graphics
 
-.global renderBlast__8BombItemFR8Graphics
-renderBlast__8BombItemFR8Graphics:
+.fn renderBlast__8BombItemFR8Graphics, global
 /* 800EA6B0 000E7610  4E 80 00 20 */	blr 
+.endfn renderBlast__8BombItemFR8Graphics
 
-.global dump__8BombItemFv
-dump__8BombItemFv:
+.fn dump__8BombItemFv, global
 /* 800EA6B4 000E7614  7C 08 02 A6 */	mflr r0
 /* 800EA6B8 000E7618  90 01 00 04 */	stw r0, 4(r1)
 /* 800EA6BC 000E761C  94 21 FF D0 */	stwu r1, -0x30(r1)
@@ -406,41 +405,51 @@ dump__8BombItemFv:
 /* 800EA708 000E7668  38 21 00 30 */	addi r1, r1, 0x30
 /* 800EA70C 000E766C  7C 08 03 A6 */	mtlr r0
 /* 800EA710 000E7670  4E 80 00 20 */	blr 
+.endfn dump__8BombItemFv
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802BC5D8:
+.obj lbl_802BC5D8, local
 	.asciz "bombItem.cpp"
+.endobj lbl_802BC5D8
 .balign 4
-lbl_802BC5E8:
+.obj lbl_802BC5E8, local
 	.asciz "bombItem"
+.endobj lbl_802BC5E8
 .balign 4
-lbl_802BC5F4:
+.obj lbl_802BC5F4, local
 	.asciz "BombItem"
+.endobj lbl_802BC5F4
 .balign 4
-lbl_802BC600:
+.obj lbl_802BC600, local
 	.asciz "PaniAnimKeyListener"
+.endobj lbl_802BC600
 .balign 4
-lbl_802BC614:
+.obj lbl_802BC614, local
 	.asciz "EventTalker"
+.endobj lbl_802BC614
 .balign 4
-lbl_802BC620:
+.obj lbl_802BC620, local
 	.asciz "RefCountable"
+.endobj lbl_802BC620
 .balign 4
-lbl_802BC630:
+.obj lbl_802BC630, local
 	.asciz "Creature"
+.endobj lbl_802BC630
 .balign 4
-lbl_802BC63C:
+.obj lbl_802BC63C, local
 	.4byte __RTTI__11EventTalker
 	.4byte 0x8
 	.4byte __RTTI__12RefCountable
 	.4byte 0
 	.4byte 0
+.endobj lbl_802BC63C
 .balign 4
-lbl_802BC650:
+.obj lbl_802BC650, local
 	.asciz "AICreature"
+.endobj lbl_802BC650
 .balign 4
-lbl_802BC65C:
+.obj lbl_802BC65C, local
 	.4byte __RTTI__19PaniAnimKeyListener
 	.4byte 0x2B8
 	.4byte __RTTI__11EventTalker
@@ -450,11 +459,13 @@ lbl_802BC65C:
 	.4byte __RTTI__8Creature
 	.4byte 0
 	.4byte 0
+.endobj lbl_802BC65C
 .balign 4
-lbl_802BC680:
+.obj lbl_802BC680, local
 	.asciz "ItemCreature"
+.endobj lbl_802BC680
 .balign 4
-lbl_802BC690:
+.obj lbl_802BC690, local
 	.4byte __RTTI__19PaniAnimKeyListener
 	.4byte 0x2B8
 	.4byte __RTTI__11EventTalker
@@ -466,7 +477,9 @@ lbl_802BC690:
 	.4byte __RTTI__10AICreature
 	.4byte 0
 	.4byte 0
-lbl_802BC6BC:
+.endobj lbl_802BC690
+.balign 4
+.obj lbl_802BC6BC, local
 	.4byte __RTTI__19PaniAnimKeyListener
 	.4byte 0x2B8
 	.4byte __RTTI__11EventTalker
@@ -480,8 +493,9 @@ lbl_802BC6BC:
 	.4byte __RTTI__12ItemCreature
 	.4byte 0
 	.4byte 0
-.global __vt__8BombItem
-__vt__8BombItem:
+.endobj lbl_802BC6BC
+.balign 4
+.obj __vt__8BombItem, global
 	.4byte __RTTI__8BombItem
 	.4byte 0
 	.4byte addCntCallback__12RefCountableFv
@@ -571,44 +585,66 @@ __vt__8BombItem:
 	.4byte finalSetup__12ItemCreatureFv
 	.4byte renderTimer__8BombItemFR8Graphics
 	.4byte renderBlast__8BombItemFR8Graphics
+.endobj __vt__8BombItem
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-lbl_803E1828:
+.obj lbl_803E1828, local
 	.float 0.0
-lbl_803E182C:
+.endobj lbl_803E1828
+.obj lbl_803E182C, local
 	.float 20.0
-lbl_803E1830:
+.endobj lbl_803E182C
+.obj lbl_803E1830, local
 	.float 0.0
-__RTTI__19PaniAnimKeyListener:
+.endobj lbl_803E1830
+.balign 4
+.obj __RTTI__19PaniAnimKeyListener, local
 	.4byte lbl_802BC600
 	.4byte 0
-__RTTI__11EventTalker:
+.endobj __RTTI__19PaniAnimKeyListener
+.balign 4
+.obj __RTTI__11EventTalker, local
 	.4byte lbl_802BC614
 	.4byte 0
-__RTTI__12RefCountable:
+.endobj __RTTI__11EventTalker
+.balign 4
+.obj __RTTI__12RefCountable, local
 	.4byte lbl_802BC620
 	.4byte 0
-__RTTI__8Creature:
+.endobj __RTTI__12RefCountable
+.balign 4
+.obj __RTTI__8Creature, local
 	.4byte lbl_802BC630
 	.4byte lbl_802BC63C
-__RTTI__10AICreature:
+.endobj __RTTI__8Creature
+.balign 4
+.obj __RTTI__10AICreature, local
 	.4byte lbl_802BC650
 	.4byte lbl_802BC65C
-__RTTI__12ItemCreature:
+.endobj __RTTI__10AICreature
+.balign 4
+.obj __RTTI__12ItemCreature, local
 	.4byte lbl_802BC680
 	.4byte lbl_802BC690
-__RTTI__8BombItem:
+.endobj __RTTI__12ItemCreature
+.balign 4
+.obj __RTTI__8BombItem, local
 	.4byte lbl_802BC5F4
 	.4byte lbl_802BC6BC
+.endobj __RTTI__8BombItem
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803E9C28:
+.obj lbl_803E9C28, local
 	.float 0.0
-lbl_803E9C2C:
+.endobj lbl_803E9C28
+.obj lbl_803E9C2C, local
 	.float 1.0
-lbl_803E9C30:
+.endobj lbl_803E9C2C
+.obj lbl_803E9C30, local
 	.float 5.0
-lbl_803E9C34:
+.endobj lbl_803E9C30
+.obj lbl_803E9C34, local
 	.float 5000.0
+.endobj lbl_803E9C34

@@ -2555,29 +2555,41 @@ __RTTI__13ActFreeSelect:
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803E90F8:
+.obj lbl_803E90F8, local
 	.float 2.0
-lbl_803E90FC:
+.endobj lbl_803E90F8
+.obj lbl_803E90FC, local
 	.float 1.0
-lbl_803E9100:
+.endobj lbl_803E90FC
+.obj lbl_803E9100, local
 	.float 32767.0
-lbl_803E9104:
+.endobj lbl_803E9100
+.obj lbl_803E9104, local # pi
 	.float 3.1415927
-lbl_803E9108:
+.endobj lbl_803E9104
+.obj lbl_803E9108, local
 	.float 0.5
-lbl_803E910C:
+.endobj lbl_803E9108
+.obj lbl_803E910C, local
 	.float 3.0
+.endobj lbl_803E910C
 .balign 8
-lbl_803E9110:
-	.4byte 0x43300000
-	.4byte 0x80000000
-lbl_803E9118:
+.obj lbl_803E9110, local
+	.8byte 0x4330000080000000
+.endobj lbl_803E9110
+.balign 4
+.obj lbl_803E9118, local
 	.float 0.0
-lbl_803E911C:
+.endobj lbl_803E9118
+.obj lbl_803E911C, local
 	.float 5.0
-lbl_803E9120:
+.endobj lbl_803E911C
+.obj lbl_803E9120, local
 	.float 0.1
-lbl_803E9124:
+.endobj lbl_803E9120
+.obj lbl_803E9124, local
 	.float 4.0
-lbl_803E9128:
+.endobj lbl_803E9124
+.obj lbl_803E9128, local
 	.float 30.0
+.endobj lbl_803E9128

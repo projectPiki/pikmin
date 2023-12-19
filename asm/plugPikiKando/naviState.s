@@ -13689,7 +13689,7 @@
 .obj lbl_803EA000, local # pi/3
 	.float 1.0471976
 .endobj lbl_803EA000
-.obj lbl_803EA004, local
+.obj lbl_803EA004, local # 45 degrees in radians
 	.float 0.7853982
 .endobj lbl_803EA004
 .obj lbl_803EA008, local

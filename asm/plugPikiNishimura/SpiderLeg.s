@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global setHalfDeadFallEffect__9SpiderLegFUl
-setHalfDeadFallEffect__9SpiderLegFUl:
+.fn setHalfDeadFallEffect__9SpiderLegFUl, global
 /* 80155A08 00152968  7C 08 02 A6 */	mflr r0
 /* 80155A0C 0015296C  90 01 00 04 */	stw r0, 4(r1)
 /* 80155A10 00152970  94 21 FF 68 */	stwu r1, -0x98(r1)
@@ -103,9 +102,9 @@ setHalfDeadFallEffect__9SpiderLegFUl:
 /* 80155B80 00152AE0  38 21 00 98 */	addi r1, r1, 0x98
 /* 80155B84 00152AE4  7C 08 03 A6 */	mtlr r0
 /* 80155B88 00152AE8  4E 80 00 20 */	blr 
+.endfn setHalfDeadFallEffect__9SpiderLegFUl
 
-.global setDeadBombEffect__9SpiderLegFUl
-setDeadBombEffect__9SpiderLegFUl:
+.fn setDeadBombEffect__9SpiderLegFUl, global
 /* 80155B8C 00152AEC  7C 08 02 A6 */	mflr r0
 /* 80155B90 00152AF0  90 01 00 04 */	stw r0, 4(r1)
 /* 80155B94 00152AF4  94 21 FF 78 */	stwu r1, -0x88(r1)
@@ -230,9 +229,9 @@ setDeadBombEffect__9SpiderLegFUl:
 /* 80155D5C 00152CBC  38 21 00 88 */	addi r1, r1, 0x88
 /* 80155D60 00152CC0  7C 08 03 A6 */	mtlr r0
 /* 80155D64 00152CC4  4E 80 00 20 */	blr 
+.endfn setDeadBombEffect__9SpiderLegFUl
 
-.global createHalfDeadEffect__9SpiderLegFv
-createHalfDeadEffect__9SpiderLegFv:
+.fn createHalfDeadEffect__9SpiderLegFv, global
 /* 80155D68 00152CC8  7C 08 02 A6 */	mflr r0
 /* 80155D6C 00152CCC  90 01 00 04 */	stw r0, 4(r1)
 /* 80155D70 00152CD0  94 21 FF D0 */	stwu r1, -0x30(r1)
@@ -383,9 +382,9 @@ createHalfDeadEffect__9SpiderLegFv:
 /* 80155F84 00152EE4  38 21 00 30 */	addi r1, r1, 0x30
 /* 80155F88 00152EE8  7C 08 03 A6 */	mtlr r0
 /* 80155F8C 00152EEC  4E 80 00 20 */	blr 
+.endfn createHalfDeadEffect__9SpiderLegFv
 
-.global createDeadBombEffect__9SpiderLegFv
-createDeadBombEffect__9SpiderLegFv:
+.fn createDeadBombEffect__9SpiderLegFv, global
 /* 80155F90 00152EF0  7C 08 02 A6 */	mflr r0
 /* 80155F94 00152EF4  90 01 00 04 */	stw r0, 4(r1)
 /* 80155F98 00152EF8  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -435,9 +434,9 @@ createDeadBombEffect__9SpiderLegFv:
 /* 80156044 00152FA4  38 21 00 18 */	addi r1, r1, 0x18
 /* 80156048 00152FA8  7C 08 03 A6 */	mtlr r0
 /* 8015604C 00152FAC  4E 80 00 20 */	blr 
+.endfn createDeadBombEffect__9SpiderLegFv
 
-.global createSmallSparkEffect__9SpiderLegFi
-createSmallSparkEffect__9SpiderLegFi:
+.fn createSmallSparkEffect__9SpiderLegFi, global
 /* 80156050 00152FB0  7C 08 02 A6 */	mflr r0
 /* 80156054 00152FB4  3C A0 80 22 */	lis r5, lbl_802226A0@ha
 /* 80156058 00152FB8  90 01 00 04 */	stw r0, 4(r1)
@@ -684,9 +683,9 @@ createSmallSparkEffect__9SpiderLegFi:
 /* 801563C8 00153328  38 21 00 98 */	addi r1, r1, 0x98
 /* 801563CC 0015332C  7C 08 03 A6 */	mtlr r0
 /* 801563D0 00153330  4E 80 00 20 */	blr 
+.endfn createSmallSparkEffect__9SpiderLegFi
 
-.global createPerishEffect__9SpiderLegFv
-createPerishEffect__9SpiderLegFv:
+.fn createPerishEffect__9SpiderLegFv, global
 /* 801563D4 00153334  7C 08 02 A6 */	mflr r0
 /* 801563D8 00153338  90 01 00 04 */	stw r0, 4(r1)
 /* 801563DC 0015333C  94 21 FF B8 */	stwu r1, -0x48(r1)
@@ -869,9 +868,9 @@ createPerishEffect__9SpiderLegFv:
 /* 80156680 001535E0  38 21 00 48 */	addi r1, r1, 0x48
 /* 80156684 001535E4  7C 08 03 A6 */	mtlr r0
 /* 80156688 001535E8  4E 80 00 20 */	blr 
+.endfn createPerishEffect__9SpiderLegFv
 
-.global createRippleEffect__9SpiderLegFi
-createRippleEffect__9SpiderLegFi:
+.fn createRippleEffect__9SpiderLegFi, global
 /* 8015668C 001535EC  7C 08 02 A6 */	mflr r0
 /* 80156690 001535F0  38 C0 00 00 */	li r6, 0
 /* 80156694 001535F4  90 01 00 04 */	stw r0, 4(r1)
@@ -958,9 +957,9 @@ createRippleEffect__9SpiderLegFi:
 /* 801567CC 0015372C  38 21 00 40 */	addi r1, r1, 0x40
 /* 801567D0 00153730  7C 08 03 A6 */	mtlr r0
 /* 801567D4 00153734  4E 80 00 20 */	blr 
+.endfn createRippleEffect__9SpiderLegFi
 
-.global killCallBackEffect__9SpiderLegFb
-killCallBackEffect__9SpiderLegFb:
+.fn killCallBackEffect__9SpiderLegFb, global
 /* 801567D8 00153738  7C 08 02 A6 */	mflr r0
 /* 801567DC 0015373C  90 01 00 04 */	stw r0, 4(r1)
 /* 801567E0 00153740  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -1020,9 +1019,9 @@ killCallBackEffect__9SpiderLegFb:
 /* 801568AC 0015380C  38 21 00 20 */	addi r1, r1, 0x20
 /* 801568B0 00153810  7C 08 03 A6 */	mtlr r0
 /* 801568B4 00153814  4E 80 00 20 */	blr 
+.endfn killCallBackEffect__9SpiderLegFb
 
-.global setLegScaleParam__9SpiderLegFi
-setLegScaleParam__9SpiderLegFi:
+.fn setLegScaleParam__9SpiderLegFi, global
 /* 801568B8 00153818  80 A3 00 00 */	lwz r5, 0(r3)
 /* 801568BC 0015381C  2C 04 00 03 */	cmpwi r4, 3
 /* 801568C0 00153820  C0 22 A9 88 */	lfs f1, lbl_803EAB88@sda21(r2)
@@ -1197,9 +1196,9 @@ setLegScaleParam__9SpiderLegFi:
 .L_80156AE8:
 /* 80156AE8 00153A48  D0 03 00 20 */	stfs f0, 0x20(r3)
 /* 80156AEC 00153A4C  4E 80 00 20 */	blr 
+.endfn setLegScaleParam__9SpiderLegFi
 
-.global __ct__9SpiderLegFP6Spider
-__ct__9SpiderLegFP6Spider:
+.fn __ct__9SpiderLegFP6Spider, global
 /* 80156AF0 00153A50  7C 08 02 A6 */	mflr r0
 /* 80156AF4 00153A54  3C A0 80 03 */	lis r5, __ct__8Vector3fFv@ha
 /* 80156AF8 00153A58  90 01 00 04 */	stw r0, 4(r1)
@@ -1285,9 +1284,9 @@ __ct__9SpiderLegFP6Spider:
 /* 80156C38 00153B98  38 21 00 20 */	addi r1, r1, 0x20
 /* 80156C3C 00153B9C  7C 08 03 A6 */	mtlr r0
 /* 80156C40 00153BA0  4E 80 00 20 */	blr 
+.endfn __ct__9SpiderLegFP6Spider
 
-.global __ct__23SpiderGenRippleCallBackFv
-__ct__23SpiderGenRippleCallBackFv:
+.fn __ct__23SpiderGenRippleCallBackFv, weak
 /* 80156C44 00153BA4  3C 80 80 2B */	lis r4, "__vt__Q23zen37CallBack1<PQ23zen17particleGenerator>"@ha
 /* 80156C48 00153BA8  38 04 06 00 */	addi r0, r4, "__vt__Q23zen37CallBack1<PQ23zen17particleGenerator>"@l
 /* 80156C4C 00153BAC  3C 80 80 2D */	lis r4, __vt__23SpiderGenRippleCallBack@ha
@@ -1295,9 +1294,9 @@ __ct__23SpiderGenRippleCallBackFv:
 /* 80156C54 00153BB4  38 04 F6 88 */	addi r0, r4, __vt__23SpiderGenRippleCallBack@l
 /* 80156C58 00153BB8  90 03 00 00 */	stw r0, 0(r3)
 /* 80156C5C 00153BBC  4E 80 00 20 */	blr 
+.endfn __ct__23SpiderGenRippleCallBackFv
 
-.global __ct__23SpiderGenPerishCallBackFv
-__ct__23SpiderGenPerishCallBackFv:
+.fn __ct__23SpiderGenPerishCallBackFv, weak
 /* 80156C60 00153BC0  3C 80 80 2B */	lis r4, "__vt__Q23zen37CallBack1<PQ23zen17particleGenerator>"@ha
 /* 80156C64 00153BC4  38 04 06 00 */	addi r0, r4, "__vt__Q23zen37CallBack1<PQ23zen17particleGenerator>"@l
 /* 80156C68 00153BC8  3C 80 80 2D */	lis r4, __vt__23SpiderGenPerishCallBack@ha
@@ -1305,9 +1304,9 @@ __ct__23SpiderGenPerishCallBackFv:
 /* 80156C70 00153BD0  38 04 F6 58 */	addi r0, r4, __vt__23SpiderGenPerishCallBack@l
 /* 80156C74 00153BD4  90 03 00 00 */	stw r0, 0(r3)
 /* 80156C78 00153BD8  4E 80 00 20 */	blr 
+.endfn __ct__23SpiderGenPerishCallBackFv
 
-.global __ct__30SpiderGenHalfDeadCallBackJointFv
-__ct__30SpiderGenHalfDeadCallBackJointFv:
+.fn __ct__30SpiderGenHalfDeadCallBackJointFv, weak
 /* 80156C7C 00153BDC  3C 80 80 2B */	lis r4, "__vt__Q23zen37CallBack1<PQ23zen17particleGenerator>"@ha
 /* 80156C80 00153BE0  38 04 06 00 */	addi r0, r4, "__vt__Q23zen37CallBack1<PQ23zen17particleGenerator>"@l
 /* 80156C84 00153BE4  3C 80 80 2D */	lis r4, __vt__30SpiderGenHalfDeadCallBackJoint@ha
@@ -1315,9 +1314,9 @@ __ct__30SpiderGenHalfDeadCallBackJointFv:
 /* 80156C8C 00153BEC  38 04 F6 28 */	addi r0, r4, __vt__30SpiderGenHalfDeadCallBackJoint@l
 /* 80156C90 00153BF0  90 03 00 00 */	stw r0, 0(r3)
 /* 80156C94 00153BF4  4E 80 00 20 */	blr 
+.endfn __ct__30SpiderGenHalfDeadCallBackJointFv
 
-.global init__9SpiderLegFP6Spider
-init__9SpiderLegFP6Spider:
+.fn init__9SpiderLegFP6Spider, global
 /* 80156C98 00153BF8  7C 08 02 A6 */	mflr r0
 /* 80156C9C 00153BFC  90 01 00 04 */	stw r0, 4(r1)
 /* 80156CA0 00153C00  94 21 FF D0 */	stwu r1, -0x30(r1)
@@ -1419,9 +1418,9 @@ init__9SpiderLegFP6Spider:
 /* 80156E1C 00153D7C  38 21 00 30 */	addi r1, r1, 0x30
 /* 80156E20 00153D80  7C 08 03 A6 */	mtlr r0
 /* 80156E24 00153D84  4E 80 00 20 */	blr 
+.endfn init__9SpiderLegFP6Spider
 
-.global initParm__9SpiderLegFi
-initParm__9SpiderLegFi:
+.fn initParm__9SpiderLegFi, global
 /* 80156E28 00153D88  90 83 00 F8 */	stw r4, 0xf8(r3)
 /* 80156E2C 00153D8C  38 80 00 01 */	li r4, 1
 /* 80156E30 00153D90  38 00 00 00 */	li r0, 0
@@ -1458,9 +1457,9 @@ initParm__9SpiderLegFi:
 /* 80156EAC 00153E0C  D0 03 00 84 */	stfs f0, 0x84(r3)
 /* 80156EB0 00153E10  D0 03 00 80 */	stfs f0, 0x80(r3)
 /* 80156EB4 00153E14  4E 80 00 20 */	blr 
+.endfn initParm__9SpiderLegFi
 
-.global setLegParameter__9SpiderLegFv
-setLegParameter__9SpiderLegFv:
+.fn setLegParameter__9SpiderLegFv, global
 /* 80156EB8 00153E18  7C 08 02 A6 */	mflr r0
 /* 80156EBC 00153E1C  90 01 00 04 */	stw r0, 4(r1)
 /* 80156EC0 00153E20  94 21 FF 70 */	stwu r1, -0x90(r1)
@@ -1560,9 +1559,9 @@ setLegParameter__9SpiderLegFv:
 /* 80157014 00153F74  38 21 00 90 */	addi r1, r1, 0x90
 /* 80157018 00153F78  7C 08 03 A6 */	mtlr r0
 /* 8015701C 00153F7C  4E 80 00 20 */	blr 
+.endfn setLegParameter__9SpiderLegFv
 
-.global setWalkNewParameter__9SpiderLegFv
-setWalkNewParameter__9SpiderLegFv:
+.fn setWalkNewParameter__9SpiderLegFv, global
 /* 80157020 00153F80  88 03 00 09 */	lbz r0, 9(r3)
 /* 80157024 00153F84  28 00 00 00 */	cmplwi r0, 0
 /* 80157028 00153F88  4C 82 00 20 */	bnelr 
@@ -1585,9 +1584,9 @@ setWalkNewParameter__9SpiderLegFv:
 /* 80157068 00153FC8  38 04 00 01 */	addi r0, r4, 1
 /* 8015706C 00153FCC  90 05 00 00 */	stw r0, 0(r5)
 /* 80157070 00153FD0  4E 80 00 20 */	blr 
+.endfn setWalkNewParameter__9SpiderLegFv
 
-.global setShakeOffNewParameter__9SpiderLegFv
-setShakeOffNewParameter__9SpiderLegFv:
+.fn setShakeOffNewParameter__9SpiderLegFv, global
 /* 80157074 00153FD4  7C 08 02 A6 */	mflr r0
 /* 80157078 00153FD8  90 01 00 04 */	stw r0, 4(r1)
 /* 8015707C 00153FDC  94 21 FF B8 */	stwu r1, -0x48(r1)
@@ -1670,9 +1669,9 @@ setShakeOffNewParameter__9SpiderLegFv:
 /* 801571A0 00154100  38 21 00 48 */	addi r1, r1, 0x48
 /* 801571A4 00154104  7C 08 03 A6 */	mtlr r0
 /* 801571A8 00154108  4E 80 00 20 */	blr 
+.endfn setShakeOffNewParameter__9SpiderLegFv
 
-.global setBodyShakeNewParameter__9SpiderLegFv
-setBodyShakeNewParameter__9SpiderLegFv:
+.fn setBodyShakeNewParameter__9SpiderLegFv, global
 /* 801571AC 0015410C  7C 08 02 A6 */	mflr r0
 /* 801571B0 00154110  90 01 00 04 */	stw r0, 4(r1)
 /* 801571B4 00154114  94 21 FF A8 */	stwu r1, -0x58(r1)
@@ -1792,9 +1791,9 @@ setBodyShakeNewParameter__9SpiderLegFv:
 /* 80157354 001542B4  38 21 00 58 */	addi r1, r1, 0x58
 /* 80157358 001542B8  7C 08 03 A6 */	mtlr r0
 /* 8015735C 001542BC  4E 80 00 20 */	blr 
+.endfn setBodyShakeNewParameter__9SpiderLegFv
 
-.global setNextDirAndCent__9SpiderLegFv
-setNextDirAndCent__9SpiderLegFv:
+.fn setNextDirAndCent__9SpiderLegFv, global
 /* 80157360 001542C0  7C 08 02 A6 */	mflr r0
 /* 80157364 001542C4  90 01 00 04 */	stw r0, 4(r1)
 /* 80157368 001542C8  94 21 FE C0 */	stwu r1, -0x140(r1)
@@ -2047,9 +2046,9 @@ setNextDirAndCent__9SpiderLegFv:
 /* 801576F8 00154658  38 21 01 40 */	addi r1, r1, 0x140
 /* 801576FC 0015465C  7C 08 03 A6 */	mtlr r0
 /* 80157700 00154660  4E 80 00 20 */	blr 
+.endfn setNextDirAndCent__9SpiderLegFv
 
-.global setWalkNewPosition__9SpiderLegFv
-setWalkNewPosition__9SpiderLegFv:
+.fn setWalkNewPosition__9SpiderLegFv, global
 /* 80157704 00154664  7C 08 02 A6 */	mflr r0
 /* 80157708 00154668  90 01 00 04 */	stw r0, 4(r1)
 /* 8015770C 0015466C  94 21 FE E0 */	stwu r1, -0x120(r1)
@@ -2246,9 +2245,9 @@ setWalkNewPosition__9SpiderLegFv:
 /* 801579E0 00154940  38 21 01 20 */	addi r1, r1, 0x120
 /* 801579E4 00154944  7C 08 03 A6 */	mtlr r0
 /* 801579E8 00154948  4E 80 00 20 */	blr 
+.endfn setWalkNewPosition__9SpiderLegFv
 
-.global checkMotionRatio__9SpiderLegFv
-checkMotionRatio__9SpiderLegFv:
+.fn checkMotionRatio__9SpiderLegFv, global
 /* 801579EC 0015494C  94 21 FF 78 */	stwu r1, -0x88(r1)
 /* 801579F0 00154950  88 03 00 08 */	lbz r0, 8(r3)
 /* 801579F4 00154954  28 00 00 00 */	cmplwi r0, 0
@@ -2346,9 +2345,9 @@ checkMotionRatio__9SpiderLegFv:
 .L_80157B4C:
 /* 80157B4C 00154AAC  38 21 00 88 */	addi r1, r1, 0x88
 /* 80157B50 00154AB0  4E 80 00 20 */	blr 
+.endfn checkMotionRatio__9SpiderLegFv
 
-.global makeNewPosition__9SpiderLegFv
-makeNewPosition__9SpiderLegFv:
+.fn makeNewPosition__9SpiderLegFv, global
 /* 80157B54 00154AB4  7C 08 02 A6 */	mflr r0
 /* 80157B58 00154AB8  90 01 00 04 */	stw r0, 4(r1)
 /* 80157B5C 00154ABC  94 21 FF 90 */	stwu r1, -0x70(r1)
@@ -2445,9 +2444,9 @@ makeNewPosition__9SpiderLegFv:
 /* 80157CB0 00154C10  38 21 00 70 */	addi r1, r1, 0x70
 /* 80157CB4 00154C14  7C 08 03 A6 */	mtlr r0
 /* 80157CB8 00154C18  4E 80 00 20 */	blr 
+.endfn makeNewPosition__9SpiderLegFv
 
-.global calcStickersPiki__9SpiderLegFv
-calcStickersPiki__9SpiderLegFv:
+.fn calcStickersPiki__9SpiderLegFv, global
 /* 80157CBC 00154C1C  7C 08 02 A6 */	mflr r0
 /* 80157CC0 00154C20  90 01 00 04 */	stw r0, 4(r1)
 /* 80157CC4 00154C24  38 00 00 00 */	li r0, 0
@@ -2575,9 +2574,9 @@ calcStickersPiki__9SpiderLegFv:
 /* 80157E80 00154DE0  38 21 00 78 */	addi r1, r1, 0x78
 /* 80157E84 00154DE4  7C 08 03 A6 */	mtlr r0
 /* 80157E88 00154DE8  4E 80 00 20 */	blr 
+.endfn calcStickersPiki__9SpiderLegFv
 
-.global setIdealCentre__9SpiderLegFR8Vector3f
-setIdealCentre__9SpiderLegFR8Vector3f:
+.fn setIdealCentre__9SpiderLegFR8Vector3f, global
 /* 80157E8C 00154DEC  80 A3 00 00 */	lwz r5, 0(r3)
 /* 80157E90 00154DF0  80 05 02 E4 */	lwz r0, 0x2e4(r5)
 /* 80157E94 00154DF4  2C 00 00 07 */	cmpwi r0, 7
@@ -2759,9 +2758,9 @@ setIdealCentre__9SpiderLegFR8Vector3f:
 /* 80158140 001550A0  EC 02 00 28 */	fsubs f0, f2, f0
 /* 80158144 001550A4  D0 04 00 04 */	stfs f0, 4(r4)
 /* 80158148 001550A8  4E 80 00 20 */	blr 
+.endfn setIdealCentre__9SpiderLegFR8Vector3f
 
-.global setRealCentre__9SpiderLegFR8Vector3f
-setRealCentre__9SpiderLegFR8Vector3f:
+.fn setRealCentre__9SpiderLegFR8Vector3f, global
 /* 8015814C 001550AC  7C 08 02 A6 */	mflr r0
 /* 80158150 001550B0  90 01 00 04 */	stw r0, 4(r1)
 /* 80158154 001550B4  94 21 FF A0 */	stwu r1, -0x60(r1)
@@ -2896,9 +2895,9 @@ setRealCentre__9SpiderLegFR8Vector3f:
 /* 8015834C 001552AC  38 21 00 60 */	addi r1, r1, 0x60
 /* 80158350 001552B0  7C 08 03 A6 */	mtlr r0
 /* 80158354 001552B4  4E 80 00 20 */	blr 
+.endfn setRealCentre__9SpiderLegFR8Vector3f
 
-.global updateAnimation__9SpiderLegFPC15BossShapeObjectR8GraphicsR8Matrix4f
-updateAnimation__9SpiderLegFPC15BossShapeObjectR8GraphicsR8Matrix4f:
+.fn updateAnimation__9SpiderLegFPC15BossShapeObjectR8GraphicsR8Matrix4f, global
 /* 80158358 001552B8  7C 08 02 A6 */	mflr r0
 /* 8015835C 001552BC  90 01 00 04 */	stw r0, 4(r1)
 /* 80158360 001552C0  94 21 FE B0 */	stwu r1, -0x150(r1)
@@ -2997,9 +2996,9 @@ updateAnimation__9SpiderLegFPC15BossShapeObjectR8GraphicsR8Matrix4f:
 /* 801584C0 00155420  38 21 01 50 */	addi r1, r1, 0x150
 /* 801584C4 00155424  7C 08 03 A6 */	mtlr r0
 /* 801584C8 00155428  4E 80 00 20 */	blr 
+.endfn updateAnimation__9SpiderLegFPC15BossShapeObjectR8GraphicsR8Matrix4f
 
-.global getHeight__9SpiderLegFv
-getHeight__9SpiderLegFv:
+.fn getHeight__9SpiderLegFv, global
 /* 801584CC 0015542C  7C 08 02 A6 */	mflr r0
 /* 801584D0 00155430  90 01 00 04 */	stw r0, 4(r1)
 /* 801584D4 00155434  94 21 FF D0 */	stwu r1, -0x30(r1)
@@ -3082,9 +3081,9 @@ getHeight__9SpiderLegFv:
 /* 801585F0 00155550  38 21 00 30 */	addi r1, r1, 0x30
 /* 801585F4 00155554  7C 08 03 A6 */	mtlr r0
 /* 801585F8 00155558  4E 80 00 20 */	blr 
+.endfn getHeight__9SpiderLegFv
 
-.global stepDamageNavi__9SpiderLegFi
-stepDamageNavi__9SpiderLegFi:
+.fn stepDamageNavi__9SpiderLegFi, global
 /* 801585FC 0015555C  7C 08 02 A6 */	mflr r0
 /* 80158600 00155560  90 01 00 04 */	stw r0, 4(r1)
 /* 80158604 00155564  1C 04 00 24 */	mulli r0, r4, 0x24
@@ -3239,9 +3238,9 @@ stepDamageNavi__9SpiderLegFi:
 /* 80158838 00155798  38 21 00 A8 */	addi r1, r1, 0xa8
 /* 8015883C 0015579C  7C 08 03 A6 */	mtlr r0
 /* 80158840 001557A0  4E 80 00 20 */	blr 
+.endfn stepDamageNavi__9SpiderLegFi
 
-.global stepDamagePiki__9SpiderLegFi
-stepDamagePiki__9SpiderLegFi:
+.fn stepDamagePiki__9SpiderLegFi, global
 /* 80158844 001557A4  7C 08 02 A6 */	mflr r0
 /* 80158848 001557A8  90 01 00 04 */	stw r0, 4(r1)
 /* 8015884C 001557AC  1C 04 00 24 */	mulli r0, r4, 0x24
@@ -3390,9 +3389,9 @@ stepDamagePiki__9SpiderLegFi:
 /* 80158A68 001559C8  38 21 00 A8 */	addi r1, r1, 0xa8
 /* 80158A6C 001559CC  7C 08 03 A6 */	mtlr r0
 /* 80158A70 001559D0  4E 80 00 20 */	blr 
+.endfn stepDamagePiki__9SpiderLegFi
 
-.global stepShakeOffPiki__9SpiderLegFi
-stepShakeOffPiki__9SpiderLegFi:
+.fn stepShakeOffPiki__9SpiderLegFi, global
 /* 80158A74 001559D4  7C 08 02 A6 */	mflr r0
 /* 80158A78 001559D8  90 01 00 04 */	stw r0, 4(r1)
 /* 80158A7C 001559DC  94 21 FE F8 */	stwu r1, -0x108(r1)
@@ -3582,9 +3581,9 @@ stepShakeOffPiki__9SpiderLegFi:
 /* 80158D2C 00155C8C  38 21 01 08 */	addi r1, r1, 0x108
 /* 80158D30 00155C90  7C 08 03 A6 */	mtlr r0
 /* 80158D34 00155C94  4E 80 00 20 */	blr 
+.endfn stepShakeOffPiki__9SpiderLegFi
 
-.global emitOnGroundEffect__9SpiderLegFi
-emitOnGroundEffect__9SpiderLegFi:
+.fn emitOnGroundEffect__9SpiderLegFi, global
 /* 80158D38 00155C98  7C 08 02 A6 */	mflr r0
 /* 80158D3C 00155C9C  90 01 00 04 */	stw r0, 4(r1)
 /* 80158D40 00155CA0  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -3672,9 +3671,9 @@ emitOnGroundEffect__9SpiderLegFi:
 /* 80158E6C 00155DCC  38 21 00 20 */	addi r1, r1, 0x20
 /* 80158E70 00155DD0  7C 08 03 A6 */	mtlr r0
 /* 80158E74 00155DD4  4E 80 00 20 */	blr 
+.endfn emitOnGroundEffect__9SpiderLegFi
 
-.global setKneeDirection__9SpiderLegFv
-setKneeDirection__9SpiderLegFv:
+.fn setKneeDirection__9SpiderLegFv, global
 /* 80158E78 00155DD8  7C 08 02 A6 */	mflr r0
 /* 80158E7C 00155DDC  90 01 00 04 */	stw r0, 4(r1)
 /* 80158E80 00155DE0  94 21 FF 30 */	stwu r1, -0xd0(r1)
@@ -3836,9 +3835,9 @@ setKneeDirection__9SpiderLegFv:
 /* 801590DC 0015603C  38 21 00 D0 */	addi r1, r1, 0xd0
 /* 801590E0 00156040  7C 08 03 A6 */	mtlr r0
 /* 801590E4 00156044  4E 80 00 20 */	blr 
+.endfn setKneeDirection__9SpiderLegFv
 
-.global create3Joint__9SpiderLegFP15BossShapeObjectR8Graphics
-create3Joint__9SpiderLegFP15BossShapeObjectR8Graphics:
+.fn create3Joint__9SpiderLegFP15BossShapeObjectR8Graphics, global
 /* 801590E8 00156048  7C 08 02 A6 */	mflr r0
 /* 801590EC 0015604C  90 01 00 04 */	stw r0, 4(r1)
 /* 801590F0 00156050  94 21 FE 38 */	stwu r1, -0x1c8(r1)
@@ -4265,9 +4264,9 @@ create3Joint__9SpiderLegFP15BossShapeObjectR8Graphics:
 /* 80159760 001566C0  38 21 01 C8 */	addi r1, r1, 0x1c8
 /* 80159764 001566C4  7C 08 03 A6 */	mtlr r0
 /* 80159768 001566C8  4E 80 00 20 */	blr 
+.endfn create3Joint__9SpiderLegFP15BossShapeObjectR8Graphics
 
-.global update__9SpiderLegFv
-update__9SpiderLegFv:
+.fn update__9SpiderLegFv, global
 /* 8015976C 001566CC  7C 08 02 A6 */	mflr r0
 /* 80159770 001566D0  90 01 00 04 */	stw r0, 4(r1)
 /* 80159774 001566D4  94 21 FF 60 */	stwu r1, -0xa0(r1)
@@ -4465,9 +4464,9 @@ update__9SpiderLegFv:
 /* 80159A4C 001569AC  38 21 00 A0 */	addi r1, r1, 0xa0
 /* 80159A50 001569B0  7C 08 03 A6 */	mtlr r0
 /* 80159A54 001569B4  4E 80 00 20 */	blr 
+.endfn update__9SpiderLegFv
 
-.global refresh__9SpiderLegFP15BossShapeObjectR8Graphics
-refresh__9SpiderLegFP15BossShapeObjectR8Graphics:
+.fn refresh__9SpiderLegFP15BossShapeObjectR8Graphics, global
 /* 80159A58 001569B8  7C 08 02 A6 */	mflr r0
 /* 80159A5C 001569BC  90 01 00 04 */	stw r0, 4(r1)
 /* 80159A60 001569C0  94 21 FE A0 */	stwu r1, -0x160(r1)
@@ -4933,9 +4932,9 @@ refresh__9SpiderLegFP15BossShapeObjectR8Graphics:
 /* 8015A0F0 00157050  38 21 01 60 */	addi r1, r1, 0x160
 /* 8015A0F4 00157054  7C 08 03 A6 */	mtlr r0
 /* 8015A0F8 00157058  4E 80 00 20 */	blr 
+.endfn refresh__9SpiderLegFP15BossShapeObjectR8Graphics
 
-.global invoke__30SpiderGenHalfDeadCallBackJointFPQ23zen17particleGenerator
-invoke__30SpiderGenHalfDeadCallBackJointFPQ23zen17particleGenerator:
+.fn invoke__30SpiderGenHalfDeadCallBackJointFPQ23zen17particleGenerator, weak
 /* 8015A0FC 0015705C  80 03 00 04 */	lwz r0, 4(r3)
 /* 8015A100 00157060  90 04 00 18 */	stw r0, 0x18(r4)
 /* 8015A104 00157064  80 63 00 08 */	lwz r3, 8(r3)
@@ -4953,9 +4952,9 @@ invoke__30SpiderGenHalfDeadCallBackJointFPQ23zen17particleGenerator:
 .L_8015A130:
 /* 8015A130 00157090  38 60 00 01 */	li r3, 1
 /* 8015A134 00157094  4E 80 00 20 */	blr 
+.endfn invoke__30SpiderGenHalfDeadCallBackJointFPQ23zen17particleGenerator
 
-.global invoke__23SpiderGenPerishCallBackFPQ23zen17particleGenerator
-invoke__23SpiderGenPerishCallBackFPQ23zen17particleGenerator:
+.fn invoke__23SpiderGenPerishCallBackFPQ23zen17particleGenerator, weak
 /* 8015A138 00157098  7C 08 02 A6 */	mflr r0
 /* 8015A13C 0015709C  90 01 00 04 */	stw r0, 4(r1)
 /* 8015A140 001570A0  94 21 FF 80 */	stwu r1, -0x80(r1)
@@ -5048,9 +5047,9 @@ invoke__23SpiderGenPerishCallBackFPQ23zen17particleGenerator:
 /* 8015A294 001571F4  38 21 00 80 */	addi r1, r1, 0x80
 /* 8015A298 001571F8  7C 08 03 A6 */	mtlr r0
 /* 8015A29C 001571FC  4E 80 00 20 */	blr 
+.endfn invoke__23SpiderGenPerishCallBackFPQ23zen17particleGenerator
 
-.global invoke__23SpiderGenRippleCallBackFPQ23zen17particleGenerator
-invoke__23SpiderGenRippleCallBackFPQ23zen17particleGenerator:
+.fn invoke__23SpiderGenRippleCallBackFPQ23zen17particleGenerator, weak
 /* 8015A2A0 00157200  80 63 00 04 */	lwz r3, 4(r3)
 /* 8015A2A4 00157204  88 03 00 00 */	lbz r0, 0(r3)
 /* 8015A2A8 00157208  28 00 00 00 */	cmplwi r0, 0
@@ -5061,10 +5060,11 @@ invoke__23SpiderGenRippleCallBackFPQ23zen17particleGenerator:
 .L_8015A2BC:
 /* 8015A2BC 0015721C  38 60 00 01 */	li r3, 1
 /* 8015A2C0 00157220  4E 80 00 20 */	blr 
+.endfn invoke__23SpiderGenRippleCallBackFPQ23zen17particleGenerator
 
 .section .rodata, "a"  # 0x80221FE0 - 0x80222DC0
 .balign 8
-lbl_802226A0:
+.obj lbl_802226A0, local
 	.float 0.0
 	.float 0.0
 	.float 0.0
@@ -5077,20 +5077,25 @@ lbl_802226A0:
 	.float 0.0
 	.float 0.0
 	.float 0.0
-lbl_802226D0:
+.endobj lbl_802226A0
+.balign 4
+.obj lbl_802226D0, local
 	.float 1.75
 	.float 1.25
 	.float 0.25
 	.float 0.75
-lbl_802226E0:
+.endobj lbl_802226D0
+.balign 4
+.obj lbl_802226E0, local
 	.float 1.75
 	.float 1.25
 	.float 0.25
 	.float 0.75
+.endobj lbl_802226E0
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-leg_index__4Kumo:
+.obj leg_index__4Kumo, local
 	.4byte 0x0000000C
 	.4byte 0x0000000B
 	.4byte 0x0000000A
@@ -5103,7 +5108,9 @@ leg_index__4Kumo:
 	.4byte 0x00000009
 	.4byte 0x00000008
 	.4byte 0x00000007
-legId__4Kumo:
+.endobj leg_index__4Kumo
+.balign 4
+.obj legId__4Kumo, local
 	.4byte 0x00000003
 	.4byte 0x00000002
 	.4byte 0x00000000
@@ -5113,202 +5120,266 @@ legId__4Kumo:
 	.4byte 0x00000003
 	.4byte 0x00000000
 	.4byte 0x00000001
+.endobj legId__4Kumo
 .balign 4
-lbl_802CF57C:
+.obj lbl_802CF57C, local
 	.asciz "SpiderLeg.cpp"
+.endobj lbl_802CF57C
 .balign 4
-lbl_802CF58C:
+.obj lbl_802CF58C, local
 	.asciz "SpiderLeg"
+.endobj lbl_802CF58C
 .balign 4
-lbl_802CF598:
+.obj lbl_802CF598, local
 	.asciz "Interaction"
+.endobj lbl_802CF598
 .balign 4
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
+.skip 0x2C # compiler padding
 .balign 4
-lbl_802CF5D0:
+.obj lbl_802CF5D0, local
 	.asciz "SpiderGenHalfDeadCallBackJoint"
+.endobj lbl_802CF5D0
 .balign 4
-lbl_802CF5F0:
+.obj lbl_802CF5F0, local
 	.asciz "zen::CallBack1<zen::particleGenerator *>"
+.endobj lbl_802CF5F0
 .balign 4
-lbl_802CF61C:
+.obj lbl_802CF61C, local
 	.4byte "__RTTI__Q23zen37CallBack1<PQ23zen17particleGenerator>"
-	.4byte 0x00000000
-	.4byte 0x00000000
-.global __vt__30SpiderGenHalfDeadCallBackJoint
-__vt__30SpiderGenHalfDeadCallBackJoint:
+	.4byte 0
+	.4byte 0
+.endobj lbl_802CF61C
+.balign 4
+.obj __vt__30SpiderGenHalfDeadCallBackJoint, weak
 	.4byte __RTTI__30SpiderGenHalfDeadCallBackJoint
 	.4byte 0
 	.4byte invoke__30SpiderGenHalfDeadCallBackJointFPQ23zen17particleGenerator
+.endobj __vt__30SpiderGenHalfDeadCallBackJoint
 .balign 4
-lbl_802CF634:
+.obj lbl_802CF634, local
 	.asciz "SpiderGenPerishCallBack"
+.endobj lbl_802CF634
 .balign 4
-lbl_802CF64C:
+.obj lbl_802CF64C, local
 	.4byte "__RTTI__Q23zen37CallBack1<PQ23zen17particleGenerator>"
 	.4byte 0
 	.4byte 0
-.global __vt__23SpiderGenPerishCallBack
-__vt__23SpiderGenPerishCallBack:
+.endobj lbl_802CF64C
+.balign 4
+.obj __vt__23SpiderGenPerishCallBack, weak
 	.4byte __RTTI__23SpiderGenPerishCallBack
 	.4byte 0
 	.4byte invoke__23SpiderGenPerishCallBackFPQ23zen17particleGenerator
+.endobj __vt__23SpiderGenPerishCallBack
 .balign 4
-lbl_802CF664:
+.obj lbl_802CF664, local
 	.asciz "SpiderGenRippleCallBack"
+.endobj lbl_802CF664
 .balign 4
-lbl_802CF67C:
+.obj lbl_802CF67C, local
 	.4byte "__RTTI__Q23zen37CallBack1<PQ23zen17particleGenerator>"
 	.4byte 0
 	.4byte 0
-.global __vt__23SpiderGenRippleCallBack
-__vt__23SpiderGenRippleCallBack:
+.endobj lbl_802CF67C
+.balign 4
+.obj __vt__23SpiderGenRippleCallBack, weak
 	.4byte __RTTI__23SpiderGenRippleCallBack
 	.4byte 0
 	.4byte invoke__23SpiderGenRippleCallBackFPQ23zen17particleGenerator
-	.4byte 0
-	.4byte 0
-	.4byte 0
+.endobj __vt__23SpiderGenRippleCallBack
+.skip 0xC # compiler padding
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-lbl_803E4AF0:
+.obj lbl_803E4AF0, local
 	.float 0.0
-lbl_803E4AF4:
+.endobj lbl_803E4AF0
+.obj lbl_803E4AF4, local
 	.float 0.0
-lbl_803E4AF8:
+.endobj lbl_803E4AF4
+.obj lbl_803E4AF8, local
 	.float 0.0
-lbl_803E4AFC:
+.endobj lbl_803E4AF8
+.obj lbl_803E4AFC, local
 	.float 0.0
-lbl_803E4B00:
+.endobj lbl_803E4AFC
+.obj lbl_803E4B00, local
 	.float 0.0
-lbl_803E4B04:
+.endobj lbl_803E4B00
+.obj lbl_803E4B04, local
 	.float 0.0
-lbl_803E4B08:
+.endobj lbl_803E4B04
+.obj lbl_803E4B08, local
 	.float 0.0
-lbl_803E4B0C:
+.endobj lbl_803E4B08
+.obj lbl_803E4B0C, local
 	.float 1.0
-lbl_803E4B10:
+.endobj lbl_803E4B0C
+.obj lbl_803E4B10, local
 	.float 0.0
-lbl_803E4B14:
+.endobj lbl_803E4B10
+.obj lbl_803E4B14, local
 	.float 0.0
-lbl_803E4B18:
+.endobj lbl_803E4B14
+.obj lbl_803E4B18, local
 	.float 0.0
-lbl_803E4B1C:
+.endobj lbl_803E4B18
+.obj lbl_803E4B1C, local
 	.float 1.0
-lbl_803E4B20:
+.endobj lbl_803E4B1C
+.obj lbl_803E4B20, local
 	.float 0.0
-lbl_803E4B24:
+.endobj lbl_803E4B20
+.obj lbl_803E4B24, local
 	.float 0.0
-lbl_803E4B28:
+.endobj lbl_803E4B24
+.obj lbl_803E4B28, local
 	.float 0.0
-lbl_803E4B2C:
+.endobj lbl_803E4B28
+.obj lbl_803E4B2C, local
 	.float 1.0
-lbl_803E4B30:
+.endobj lbl_803E4B2C
+.obj lbl_803E4B30, local
 	.float 0.0
-lbl_803E4B34:
+.endobj lbl_803E4B30
+.obj lbl_803E4B34, local
 	.float 0.0
-lbl_803E4B38:
+.endobj lbl_803E4B34
+.obj lbl_803E4B38, local
 	.float 0.0
-lbl_803E4B3C:
+.endobj lbl_803E4B38
+.obj lbl_803E4B3C, local
 	.float 1.0
-lbl_803E4B40:
+.endobj lbl_803E4B3C
+.obj lbl_803E4B40, local
 	.float 1.0
-lbl_803E4B44:
+.endobj lbl_803E4B40
+.obj lbl_803E4B44, local
 	.float 1.0
-"__RTTI__Q23zen37CallBack1<PQ23zen17particleGenerator>":
+.endobj lbl_803E4B44
+.balign 4
+.obj "__RTTI__Q23zen37CallBack1<PQ23zen17particleGenerator>", local
 	.4byte lbl_802CF5F0
 	.4byte 0
-__RTTI__30SpiderGenHalfDeadCallBackJoint:
+.endobj "__RTTI__Q23zen37CallBack1<PQ23zen17particleGenerator>"
+.balign 4
+.obj __RTTI__30SpiderGenHalfDeadCallBackJoint, local
 	.4byte lbl_802CF5D0
 	.4byte lbl_802CF61C
-__RTTI__23SpiderGenPerishCallBack:
+.endobj __RTTI__30SpiderGenHalfDeadCallBackJoint
+.balign 4
+.obj __RTTI__23SpiderGenPerishCallBack, local
 	.4byte lbl_802CF634
 	.4byte lbl_802CF64C
-__RTTI__23SpiderGenRippleCallBack:
+.endobj __RTTI__23SpiderGenPerishCallBack
+.balign 4
+.obj __RTTI__23SpiderGenRippleCallBack, local
 	.4byte lbl_802CF664
 	.4byte lbl_802CF67C
+.endobj __RTTI__23SpiderGenRippleCallBack
 
 .section .sbss, "wa"
 .balign 8
-vibSpin$2820:
+.obj vibSpin$2820, local
 	.skip 0x4
-init$2821:
+.endobj vibSpin$2820
+.balign 4
+.obj init$2821, local
 	.skip 0x1
+.endobj init$2821
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803EAB70:
+.obj lbl_803EAB70, local
 	.float 0.5
-lbl_803EAB74:
+.endobj lbl_803EAB70
+.obj lbl_803EAB74, local
 	.float 0.0
+.endobj lbl_803EAB74
 .balign 8
-lbl_803EAB78:
+.obj lbl_803EAB78, local
 	.double 0.5
+.endobj lbl_803EAB78
 .balign 8
-lbl_803EAB80:
+.obj lbl_803EAB80, local
 	.double 3.0
-lbl_803EAB88:
+.endobj lbl_803EAB80
+.obj lbl_803EAB88, local
 	.float 1.0
-lbl_803EAB8C:
+.endobj lbl_803EAB88
+.obj lbl_803EAB8C, local
 	.float 32767.0
-lbl_803EAB90:
+.endobj lbl_803EAB8C
+.obj lbl_803EAB90, local
 	.float 11.999988
+.endobj lbl_803EAB90
 .balign 8
-lbl_803EAB98:
-	.4byte 0x43300000
-	.4byte 0x80000000
-lbl_803EABA0:
+.obj lbl_803EAB98, local
+	.8byte 0x4330000080000000
+.endobj lbl_803EAB98
+.obj lbl_803EABA0, local
 	.float 5.0
-lbl_803EABA4:
+.endobj lbl_803EABA0
+.obj lbl_803EABA4, local
 	.float 3.0
-lbl_803EABA8: # pi
+.endobj lbl_803EABA4
+.obj lbl_803EABA8, local # pi
 	.float 3.1415927
-lbl_803EABAC: # half-pi
+.endobj lbl_803EABA8
+.obj lbl_803EABAC, local # half-pi
 	.float 1.5707964
-lbl_803EABB0: # tau
+.endobj lbl_803EABAC
+.obj lbl_803EABB0, local # tau
 	.float 6.2831855
-lbl_803EABB4:
+.endobj lbl_803EABB0
+.obj lbl_803EABB4, local
 	.float 1.5
-lbl_803EABB8:
+.endobj lbl_803EABB4
+.obj lbl_803EABB8, local
 	.float 30.0
-lbl_803EABBC:
+.endobj lbl_803EABB8
+.obj lbl_803EABBC, local
 	.float 0.05
-lbl_803EABC0:
+.endobj lbl_803EABBC
+.obj lbl_803EABC0, local
 	.float 0.97
-lbl_803EABC4:
+.endobj lbl_803EABC0
+.obj lbl_803EABC4, local
 	.float 0.999999
-lbl_803EABC8:
+.endobj lbl_803EABC4
+.obj lbl_803EABC8, local # 45 degrees in radians
 	.float 0.7853982
-lbl_803EABCC:
+.endobj lbl_803EABC8
+.obj lbl_803EABCC, local
 	.float 10.0
-lbl_803EABD0:
+.endobj lbl_803EABCC
+.obj lbl_803EABD0, local
 	.float 4.0
-lbl_803EABD4:
+.endobj lbl_803EABD0
+.obj lbl_803EABD4, local
 	.float 1.1
-lbl_803EABD8:
+.endobj lbl_803EABD4
+.obj lbl_803EABD8, local
 	.float 50.0
-lbl_803EABDC:
+.endobj lbl_803EABD8
+.obj lbl_803EABDC, local
 	.float 0.01
-lbl_803EABE0:
+.endobj lbl_803EABDC
+.obj lbl_803EABE0, local
 	.float 0.25
-lbl_803EABE4:
+.endobj lbl_803EABE0
+.obj lbl_803EABE4, local
 	.float 15.0
-lbl_803EABE8:
+.endobj lbl_803EABE4
+.obj lbl_803EABE8, local
 	.float 6.0
-lbl_803EABEC:
+.endobj lbl_803EABE8
+.obj lbl_803EABEC, local
 	.float -5.0
-lbl_803EABF0:
+.endobj lbl_803EABEC
+.obj lbl_803EABF0, local
 	.float 2.0
-lbl_803EABF4:
+.endobj lbl_803EABF0
+.obj lbl_803EABF4, local
 	.float -1000.0
+.endobj lbl_803EABF4

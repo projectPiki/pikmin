@@ -1,15 +1,14 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global getCreature__6CPlateFi
-getCreature__6CPlateFi:
+.fn getCreature__6CPlateFi, global
 /* 800A5710 000A2670  54 84 28 34 */	slwi r4, r4, 5
 /* 800A5714 000A2674  80 63 00 80 */	lwz r3, 0x80(r3)
 /* 800A5718 000A2678  38 04 00 18 */	addi r0, r4, 0x18
 /* 800A571C 000A267C  7C 63 00 2E */	lwzx r3, r3, r0
 /* 800A5720 000A2680  4E 80 00 20 */	blr 
+.endfn getCreature__6CPlateFi
 
-.global __ct__6CPlateFP6MapMgr
-__ct__6CPlateFP6MapMgr:
+.fn __ct__6CPlateFP6MapMgr, global
 /* 800A5724 000A2684  7C 08 02 A6 */	mflr r0
 /* 800A5728 000A2688  3C 80 80 2B */	lis r4, __vt__11Traversable@ha
 /* 800A572C 000A268C  90 01 00 04 */	stw r0, 4(r1)
@@ -149,9 +148,9 @@ __ct__6CPlateFP6MapMgr:
 /* 800A5944 000A28A4  38 21 00 58 */	addi r1, r1, 0x58
 /* 800A5948 000A28A8  7C 08 03 A6 */	mtlr r0
 /* 800A594C 000A28AC  4E 80 00 20 */	blr 
+.endfn __ct__6CPlateFP6MapMgr
 
-.global __ct__Q26CPlate4SlotFv
-__ct__Q26CPlate4SlotFv:
+.fn __ct__Q26CPlate4SlotFv, weak
 /* 800A5950 000A28B0  C0 02 8D CC */	lfs f0, lbl_803E8FCC@sda21(r2)
 /* 800A5954 000A28B4  38 00 00 00 */	li r0, 0
 /* 800A5958 000A28B8  D0 03 00 08 */	stfs f0, 8(r3)
@@ -164,18 +163,18 @@ __ct__Q26CPlate4SlotFv:
 /* 800A5974 000A28D4  90 03 00 18 */	stw r0, 0x18(r3)
 /* 800A5978 000A28D8  90 03 00 1C */	stw r0, 0x1c(r3)
 /* 800A597C 000A28DC  4E 80 00 20 */	blr 
+.endfn __ct__Q26CPlate4SlotFv
 
-.global canNaviRunFast__6CPlateFv
-canNaviRunFast__6CPlateFv:
+.fn canNaviRunFast__6CPlateFv, global
 /* 800A5980 000A28E0  38 60 00 01 */	li r3, 1
 /* 800A5984 000A28E4  4E 80 00 20 */	blr 
+.endfn canNaviRunFast__6CPlateFv
 
-.global init__6CPlateFR8Vector3f
-init__6CPlateFR8Vector3f:
+.fn init__6CPlateFR8Vector3f, global
 /* 800A5988 000A28E8  4E 80 00 20 */	blr 
+.endfn init__6CPlateFR8Vector3f
 
-.global setPos__6CPlateFR8Vector3ffR8Vector3f
-setPos__6CPlateFR8Vector3ffR8Vector3f:
+.fn setPos__6CPlateFR8Vector3ffR8Vector3f, global
 /* 800A598C 000A28EC  7C 08 02 A6 */	mflr r0
 /* 800A5990 000A28F0  90 01 00 04 */	stw r0, 4(r1)
 /* 800A5994 000A28F4  94 21 FF 20 */	stwu r1, -0xe0(r1)
@@ -290,9 +289,9 @@ setPos__6CPlateFR8Vector3ffR8Vector3f:
 /* 800A5B40 000A2AA0  38 21 00 E0 */	addi r1, r1, 0xe0
 /* 800A5B44 000A2AA4  7C 08 03 A6 */	mtlr r0
 /* 800A5B48 000A2AA8  4E 80 00 20 */	blr 
+.endfn setPos__6CPlateFR8Vector3ffR8Vector3f
 
-.global setPosGray__6CPlateFR8Vector3ffR8Vector3f
-setPosGray__6CPlateFR8Vector3ffR8Vector3f:
+.fn setPosGray__6CPlateFR8Vector3ffR8Vector3f, global
 /* 800A5B4C 000A2AAC  7C 08 02 A6 */	mflr r0
 /* 800A5B50 000A2AB0  90 01 00 04 */	stw r0, 4(r1)
 /* 800A5B54 000A2AB4  94 21 FF 20 */	stwu r1, -0xe0(r1)
@@ -406,9 +405,9 @@ setPosGray__6CPlateFR8Vector3ffR8Vector3f:
 /* 800A5CFC 000A2C5C  38 21 00 E0 */	addi r1, r1, 0xe0
 /* 800A5D00 000A2C60  7C 08 03 A6 */	mtlr r0
 /* 800A5D04 000A2C64  4E 80 00 20 */	blr 
+.endfn setPosGray__6CPlateFR8Vector3ffR8Vector3f
 
-.global getSlot__6CPlateFP8CreatureP17SlotChangeListner
-getSlot__6CPlateFP8CreatureP17SlotChangeListner:
+.fn getSlot__6CPlateFP8CreatureP17SlotChangeListner, global
 /* 800A5D08 000A2C68  7C 08 02 A6 */	mflr r0
 /* 800A5D0C 000A2C6C  90 01 00 04 */	stw r0, 4(r1)
 /* 800A5D10 000A2C70  94 21 FF D0 */	stwu r1, -0x30(r1)
@@ -455,9 +454,9 @@ getSlot__6CPlateFP8CreatureP17SlotChangeListner:
 /* 800A5DAC 000A2D0C  38 21 00 30 */	addi r1, r1, 0x30
 /* 800A5DB0 000A2D10  7C 08 03 A6 */	mtlr r0
 /* 800A5DB4 000A2D14  4E 80 00 20 */	blr 
+.endfn getSlot__6CPlateFP8CreatureP17SlotChangeListner
 
-.global changeFlower__6CPlateFP4Piki
-changeFlower__6CPlateFP4Piki:
+.fn changeFlower__6CPlateFP4Piki, global
 /* 800A5DB8 000A2D18  80 A4 05 20 */	lwz r5, 0x520(r4)
 /* 800A5DBC 000A2D1C  3C 80 55 55 */	lis r4, 0x55555556@ha
 /* 800A5DC0 000A2D20  38 04 55 56 */	addi r0, r4, 0x55555556@l
@@ -478,9 +477,9 @@ changeFlower__6CPlateFP4Piki:
 /* 800A5DFC 000A2D5C  38 03 FF FF */	addi r0, r3, -1
 /* 800A5E00 000A2D60  90 04 00 BC */	stw r0, 0xbc(r4)
 /* 800A5E04 000A2D64  4E 80 00 20 */	blr 
+.endfn changeFlower__6CPlateFP4Piki
 
-.global releaseSlot__6CPlateFP8Creaturei
-releaseSlot__6CPlateFP8Creaturei:
+.fn releaseSlot__6CPlateFP8Creaturei, global
 /* 800A5E08 000A2D68  7C 08 02 A6 */	mflr r0
 /* 800A5E0C 000A2D6C  90 01 00 04 */	stw r0, 4(r1)
 /* 800A5E10 000A2D70  94 21 FF C0 */	stwu r1, -0x40(r1)
@@ -568,9 +567,9 @@ releaseSlot__6CPlateFP8Creaturei:
 /* 800A5F40 000A2EA0  38 21 00 40 */	addi r1, r1, 0x40
 /* 800A5F44 000A2EA4  7C 08 03 A6 */	mtlr r0
 /* 800A5F48 000A2EA8  4E 80 00 20 */	blr 
+.endfn releaseSlot__6CPlateFP8Creaturei
 
-.global validSlot__6CPlateFi
-validSlot__6CPlateFi:
+.fn validSlot__6CPlateFi, global
 /* 800A5F4C 000A2EAC  2C 04 00 00 */	cmpwi r4, 0
 /* 800A5F50 000A2EB0  41 80 00 10 */	blt .L_800A5F60
 /* 800A5F54 000A2EB4  80 03 00 7C */	lwz r0, 0x7c(r3)
@@ -582,9 +581,9 @@ validSlot__6CPlateFi:
 .L_800A5F68:
 /* 800A5F68 000A2EC8  38 60 00 01 */	li r3, 1
 /* 800A5F6C 000A2ECC  4E 80 00 20 */	blr 
+.endfn validSlot__6CPlateFi
 
-.global sortByColor__6CPlateFP4Piki
-sortByColor__6CPlateFP4Piki:
+.fn sortByColor__6CPlateFP4Piki, global
 /* 800A5F70 000A2ED0  7C 08 02 A6 */	mflr r0
 /* 800A5F74 000A2ED4  90 01 00 04 */	stw r0, 4(r1)
 /* 800A5F78 000A2ED8  94 21 FF 50 */	stwu r1, -0xb0(r1)
@@ -890,9 +889,9 @@ sortByColor__6CPlateFP4Piki:
 /* 800A6388 000A32E8  38 21 00 B0 */	addi r1, r1, 0xb0
 /* 800A638C 000A32EC  7C 08 03 A6 */	mtlr r0
 /* 800A6390 000A32F0  4E 80 00 20 */	blr 
+.endfn sortByColor__6CPlateFP4Piki
 
-.global rearrangeSlot__6CPlateFR8Vector3ffR8Vector3f
-rearrangeSlot__6CPlateFR8Vector3ffR8Vector3f:
+.fn rearrangeSlot__6CPlateFR8Vector3ffR8Vector3f, global
 /* 800A6394 000A32F4  7C 08 02 A6 */	mflr r0
 /* 800A6398 000A32F8  90 01 00 04 */	stw r0, 4(r1)
 /* 800A639C 000A32FC  94 21 FF 20 */	stwu r1, -0xe0(r1)
@@ -1089,9 +1088,9 @@ rearrangeSlot__6CPlateFR8Vector3ffR8Vector3f:
 /* 800A6664 000A35C4  38 21 00 E0 */	addi r1, r1, 0xe0
 /* 800A6668 000A35C8  7C 08 03 A6 */	mtlr r0
 /* 800A666C 000A35CC  4E 80 00 20 */	blr 
+.endfn rearrangeSlot__6CPlateFR8Vector3ffR8Vector3f
 
-.global refresh__6CPlateFif
-refresh__6CPlateFif:
+.fn refresh__6CPlateFif, global
 /* 800A6670 000A35D0  7C 08 02 A6 */	mflr r0
 /* 800A6674 000A35D4  90 01 00 04 */	stw r0, 4(r1)
 /* 800A6678 000A35D8  94 21 FF B8 */	stwu r1, -0x48(r1)
@@ -1197,9 +1196,9 @@ refresh__6CPlateFif:
 /* 800A67EC 000A374C  38 21 00 48 */	addi r1, r1, 0x48
 /* 800A67F0 000A3750  7C 08 03 A6 */	mtlr r0
 /* 800A67F4 000A3754  4E 80 00 20 */	blr 
+.endfn refresh__6CPlateFif
 
-.global refreshSlot__6CPlateFv
-refreshSlot__6CPlateFv:
+.fn refreshSlot__6CPlateFv, global
 /* 800A67F8 000A3758  7C 08 02 A6 */	mflr r0
 /* 800A67FC 000A375C  90 01 00 04 */	stw r0, 4(r1)
 /* 800A6800 000A3760  94 21 FF 00 */	stwu r1, -0x100(r1)
@@ -1348,9 +1347,9 @@ refreshSlot__6CPlateFv:
 /* 800A6A20 000A3980  38 21 01 00 */	addi r1, r1, 0x100
 /* 800A6A24 000A3984  7C 08 03 A6 */	mtlr r0
 /* 800A6A28 000A3988  4E 80 00 20 */	blr 
+.endfn refreshSlot__6CPlateFv
 
-.global update__6CPlateFv
-update__6CPlateFv:
+.fn update__6CPlateFv, global
 /* 800A6A2C 000A398C  7C 08 02 A6 */	mflr r0
 /* 800A6A30 000A3990  90 01 00 04 */	stw r0, 4(r1)
 /* 800A6A34 000A3994  94 21 FF 98 */	stwu r1, -0x68(r1)
@@ -1365,9 +1364,9 @@ update__6CPlateFv:
 /* 800A6A58 000A39B8  38 21 00 68 */	addi r1, r1, 0x68
 /* 800A6A5C 000A39BC  7C 08 03 A6 */	mtlr r0
 /* 800A6A60 000A39C0  4E 80 00 20 */	blr 
+.endfn update__6CPlateFv
 
-.global render__6CPlateFR8Graphics
-render__6CPlateFR8Graphics:
+.fn render__6CPlateFR8Graphics, global
 /* 800A6A64 000A39C4  7C 08 02 A6 */	mflr r0
 /* 800A6A68 000A39C8  90 01 00 04 */	stw r0, 4(r1)
 /* 800A6A6C 000A39CC  94 21 FE E0 */	stwu r1, -0x120(r1)
@@ -1550,28 +1549,28 @@ render__6CPlateFR8Graphics:
 /* 800A6D24 000A3C84  38 21 01 20 */	addi r1, r1, 0x120
 /* 800A6D28 000A3C88  7C 08 03 A6 */	mtlr r0
 /* 800A6D2C 000A3C8C  4E 80 00 20 */	blr 
+.endfn render__6CPlateFR8Graphics
 
-.global getFirst__6CPlateFv
-getFirst__6CPlateFv:
+.fn getFirst__6CPlateFv, weak
 /* 800A6D30 000A3C90  38 60 00 00 */	li r3, 0
 /* 800A6D34 000A3C94  4E 80 00 20 */	blr 
+.endfn getFirst__6CPlateFv
 
-.global getNext__6CPlateFi
-getNext__6CPlateFi:
+.fn getNext__6CPlateFi, weak
 /* 800A6D38 000A3C98  38 64 00 01 */	addi r3, r4, 1
 /* 800A6D3C 000A3C9C  4E 80 00 20 */	blr 
+.endfn getNext__6CPlateFi
 
-.global isDone__6CPlateFi
-isDone__6CPlateFi:
+.fn isDone__6CPlateFi, weak
 /* 800A6D40 000A3CA0  80 03 00 74 */	lwz r0, 0x74(r3)
 /* 800A6D44 000A3CA4  7C 83 FE 70 */	srawi r3, r4, 0x1f
 /* 800A6D48 000A3CA8  54 05 0F FE */	srwi r5, r0, 0x1f
 /* 800A6D4C 000A3CAC  7C 00 20 10 */	subfc r0, r0, r4
 /* 800A6D50 000A3CB0  7C 63 29 14 */	adde r3, r3, r5
 /* 800A6D54 000A3CB4  4E 80 00 20 */	blr 
+.endfn isDone__6CPlateFi
 
-.global read__6CPlateFR18RandomAccessStream
-read__6CPlateFR18RandomAccessStream:
+.fn read__6CPlateFR18RandomAccessStream, weak
 /* 800A6D58 000A3CB8  7C 08 02 A6 */	mflr r0
 /* 800A6D5C 000A3CBC  38 63 00 28 */	addi r3, r3, 0x28
 /* 800A6D60 000A3CC0  90 01 00 04 */	stw r0, 4(r1)
@@ -1581,45 +1580,56 @@ read__6CPlateFR18RandomAccessStream:
 /* 800A6D70 000A3CD0  38 21 00 08 */	addi r1, r1, 8
 /* 800A6D74 000A3CD4  7C 08 03 A6 */	mtlr r0
 /* 800A6D78 000A3CD8  4E 80 00 20 */	blr 
+.endfn read__6CPlateFR18RandomAccessStream
 
-"@8@read__6CPlateFR18RandomAccessStream":
+.fn "@8@read__6CPlateFR18RandomAccessStream", weak
 /* 800A6D7C 000A3CDC  38 63 FF F8 */	addi r3, r3, -8
 /* 800A6D80 000A3CE0  4B FF FF D8 */	b read__6CPlateFR18RandomAccessStream
+.endfn "@8@read__6CPlateFR18RandomAccessStream"
 
-"@8@render__6CPlateFR8Graphics":
+.fn "@8@render__6CPlateFR8Graphics", weak
 /* 800A6D84 000A3CE4  38 63 FF F8 */	addi r3, r3, -8
 /* 800A6D88 000A3CE8  4B FF FC DC */	b render__6CPlateFR8Graphics
+.endfn "@8@render__6CPlateFR8Graphics"
 
-"@8@update__6CPlateFv":
+.fn "@8@update__6CPlateFv", weak
 /* 800A6D8C 000A3CEC  38 63 FF F8 */	addi r3, r3, -8
 /* 800A6D90 000A3CF0  4B FF FC 9C */	b update__6CPlateFv
+.endfn "@8@update__6CPlateFv"
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802B4E30:
+.obj lbl_802B4E30, local
 	.asciz "cPlate.cpp"
+.endobj lbl_802B4E30
 .balign 4
-lbl_802B4E3C:
+.obj lbl_802B4E3C, local
 	.asciz "cunit.bin"
+.endobj lbl_802B4E3C
 .balign 4
-lbl_802B4E48:
+.obj lbl_802B4E48, local
 	.asciz "CoreNode"
+.endobj lbl_802B4E48
 .balign 4
-lbl_802B4E54:
+.obj lbl_802B4E54, local
 	.4byte __RTTI__5ANode
-	.4byte 0x00000000
-	.4byte 0x00000000
-lbl_802B4E60:
+	.4byte 0
+	.4byte 0
+.endobj lbl_802B4E54
+.balign 4
+.obj lbl_802B4E60, local
 	.4byte __RTTI__5ANode
-	.4byte 0x00000000
+	.4byte 0
 	.4byte __RTTI__8CoreNode
-	.4byte 0x00000000
-	.4byte 0x00000000
+	.4byte 0
+	.4byte 0
+.endobj lbl_802B4E60
 .balign 4
-lbl_802B4E74:
+.obj lbl_802B4E74, local
 	.asciz "Traversable"
+.endobj lbl_802B4E74
 .balign 4
-lbl_802B4E80:
+.obj lbl_802B4E80, local
 	.4byte __RTTI__5ANode
 	.4byte 0x00000008
 	.4byte __RTTI__8CoreNode
@@ -1627,10 +1637,11 @@ lbl_802B4E80:
 	.4byte __RTTI__4Node
 	.4byte 0x00000008
 	.4byte __RTTI__11Traversable
-	.4byte 0x00000000
-	.4byte 0x00000000
-.global __vt__6CPlate
-__vt__6CPlate:
+	.4byte 0
+	.4byte 0
+.endobj lbl_802B4E80
+.balign 4
+.obj __vt__6CPlate, global
 	.4byte __RTTI__6CPlate
 	.4byte 0
 	.4byte getCreature__6CPlateFi
@@ -1652,180 +1663,235 @@ __vt__6CPlate:
 	.4byte read__6CPlateFR18RandomAccessStream
 	.4byte update__6CPlateFv
 	.4byte render__6CPlateFR8Graphics
+.endobj __vt__6CPlate
 .balign 4
-lbl_802B4EF8:
+.obj lbl_802B4EF8, local
 	.asciz "Parm<float>"
+.endobj lbl_802B4EF8
 .balign 4
-lbl_802B4F04:
+.obj lbl_802B4F04, local
 	.asciz "BaseParm"
+.endobj lbl_802B4F04
 .balign 4
-lbl_802B4F10:
+.obj lbl_802B4F10, local
 	.4byte __RTTI__8BaseParm
 	.4byte 0
 	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
+.endobj lbl_802B4F10
+.balign 4
+.skip 0x4C # compiler padding
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-lbl_803DFB50:
+.obj lbl_803DFB50, local
 	.float 0.0
-lbl_803DFB54:
+.endobj lbl_803DFB50
+.obj lbl_803DFB54, local
 	.float 0.0
-lbl_803DFB58:
+.endobj lbl_803DFB54
+.obj lbl_803DFB58, local
 	.float 0.0
-lbl_803DFB5C:
+.endobj lbl_803DFB58
+.obj lbl_803DFB5C, local
 	.float 0.0
-lbl_803DFB60:
+.endobj lbl_803DFB5C
+.obj lbl_803DFB60, local
 	.float 0.0
-lbl_803DFB64:
+.endobj lbl_803DFB60
+.obj lbl_803DFB64, local
 	.float 0.0
+.endobj lbl_803DFB64
 .balign 4
-lbl_803DFB68:
+.obj lbl_803DFB68, local
 	.asciz "<Node>"
+.endobj lbl_803DFB68
 .balign 4
-lbl_803DFB70:
+.obj lbl_803DFB70, local
 	.asciz "p00"
+.endobj lbl_803DFB70
 .balign 4
-lbl_803DFB74:
+.obj lbl_803DFB74, local
 	.asciz "p01"
+.endobj lbl_803DFB74
 .balign 4
-lbl_803DFB78:
+.obj lbl_803DFB78, local
 	.asciz "p02"
+.endobj lbl_803DFB78
 .balign 4
-lbl_803DFB7C:
+.obj lbl_803DFB7C, local
 	.asciz "parms/"
+.endobj lbl_803DFB7C
 .balign 4
-lbl_803DFB84:
+.obj lbl_803DFB84, local
 	.float 0.0
-lbl_803DFB88:
+.endobj lbl_803DFB84
+.obj lbl_803DFB88, local
 	.float 0.0
-lbl_803DFB8C:
+.endobj lbl_803DFB88
+.obj lbl_803DFB8C, local
 	.float 0.0
-lbl_803DFB90:
+.endobj lbl_803DFB8C
+.obj lbl_803DFB90, local
 	.float 0.0
-lbl_803DFB94:
+.endobj lbl_803DFB90
+.obj lbl_803DFB94, local
 	.float 1.0
-lbl_803DFB98:
+.endobj lbl_803DFB94
+.obj lbl_803DFB98, local
 	.float 1.0
-lbl_803DFB9C:
+.endobj lbl_803DFB98
+.obj lbl_803DFB9C, local
 	.float 1.0
-lbl_803DFBA0:
+.endobj lbl_803DFB9C
+.obj lbl_803DFBA0, local
 	.float 0.0
-lbl_803DFBA4:
+.endobj lbl_803DFBA0
+.obj lbl_803DFBA4, local
 	.float 0.0
-lbl_803DFBA8:
+.endobj lbl_803DFBA4
+.obj lbl_803DFBA8, local
 	.float 0.0
-lbl_803DFBAC:
+.endobj lbl_803DFBA8
+.obj lbl_803DFBAC, local
 	.float 0.0
-lbl_803DFBB0:
+.endobj lbl_803DFBAC
+.obj lbl_803DFBB0, local
 	.float 0.0
-lbl_803DFBB4:
+.endobj lbl_803DFBB0
+.obj lbl_803DFBB4, local
 	.float 0.0
-lbl_803DFBB8:
+.endobj lbl_803DFBB4
+.obj lbl_803DFBB8, local
 	.float 0.0
-lbl_803DFBBC:
+.endobj lbl_803DFBB8
+.obj lbl_803DFBBC, local
 	.float 0.0
-lbl_803DFBC0:
+.endobj lbl_803DFBBC
+.obj lbl_803DFBC0, local
 	.float 0.0
-lbl_803DFBC4:
+.endobj lbl_803DFBC0
+.obj lbl_803DFBC4, local
 	.float 0.0
-lbl_803DFBC8:
+.endobj lbl_803DFBC4
+.obj lbl_803DFBC8, local
 	.float 0.0
-lbl_803DFBCC:
+.endobj lbl_803DFBC8
+.obj lbl_803DFBCC, local
 	.float 0.0
-lbl_803DFBD0:
+.endobj lbl_803DFBCC
+.obj lbl_803DFBD0, local
 	.float 0.0
-lbl_803DFBD4:
+.endobj lbl_803DFBD0
+.obj lbl_803DFBD4, local
 	.float 0.0
-lbl_803DFBD8:
+.endobj lbl_803DFBD4
+.obj lbl_803DFBD8, local
 	.float 0.0
-lbl_803DFBDC:
+.endobj lbl_803DFBD8
+.obj lbl_803DFBDC, local
 	.float 0.0
-lbl_803DFBE0:
+.endobj lbl_803DFBDC
+.obj lbl_803DFBE0, local
 	.float 4.0
-lbl_803DFBE4:
+.endobj lbl_803DFBE0
+.obj lbl_803DFBE4, local
 	.float 0.0
+.endobj lbl_803DFBE4
 .balign 4
-lbl_803DFBE8:
+.obj lbl_803DFBE8, local
 	.asciz "CPlate"
+.endobj lbl_803DFBE8
 .balign 4
-lbl_803DFBF0:
+.obj lbl_803DFBF0, local
 	.asciz "ANode"
+.endobj lbl_803DFBF0
 .balign 4
-__RTTI__5ANode:
+.obj __RTTI__5ANode, local
 	.4byte lbl_803DFBF0
 	.4byte 0
-__RTTI__8CoreNode:
+.endobj __RTTI__5ANode
+.balign 4
+.obj __RTTI__8CoreNode, local
 	.4byte lbl_802B4E48
 	.4byte lbl_802B4E54
+.endobj __RTTI__8CoreNode
 .balign 4
-lbl_803DFC08:
+.obj lbl_803DFC08, local
 	.asciz "Node"
+.endobj lbl_803DFC08
 .balign 4
-__RTTI__4Node:
+.obj __RTTI__4Node, local
 	.4byte lbl_803DFC08
 	.4byte lbl_802B4E60
-__RTTI__11Traversable:
+.endobj __RTTI__4Node
+.balign 4
+.obj __RTTI__11Traversable, local
 	.4byte lbl_802B4E74
 	.4byte 0
-__RTTI__6CPlate:
+.endobj __RTTI__11Traversable
+.balign 4
+.obj __RTTI__6CPlate, local
 	.4byte lbl_803DFBE8
 	.4byte lbl_802B4E80
-__RTTI__8BaseParm:
+.endobj __RTTI__6CPlate
+.balign 4
+.obj __RTTI__8BaseParm, local
 	.4byte lbl_802B4F04
 	.4byte 0
+.endobj __RTTI__8BaseParm
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803E8FC0:
+.obj lbl_803E8FC0, local
 	.float 30.0
-lbl_803E8FC4:
+.endobj lbl_803E8FC0
+.obj lbl_803E8FC4, local
 	.float 150.0
-lbl_803E8FC8:
+.endobj lbl_803E8FC4
+.obj lbl_803E8FC8, local
 	.float 12.0
-lbl_803E8FCC:
+.endobj lbl_803E8FC8
+.obj lbl_803E8FCC, local
 	.float 0.0
-lbl_803E8FD0:
+.endobj lbl_803E8FCC
+.obj lbl_803E8FD0, local
 	.float 10.0
-lbl_803E8FD4:
+.endobj lbl_803E8FD0
+.obj lbl_803E8FD4, local
 	.float 5.0
-lbl_803E8FD8:
-	.double 0.5
-lbl_803E8FE0:
-	.double 3.0
-lbl_803E8FE8:
-	.float 3.1415927
-lbl_803E8FEC:
-	.float 2.0
-lbl_803E8FF0:
-	.float 2.1
-lbl_803E8FF4:
-	.float 1.9
-lbl_803E8FF8:
-	.float 4.0
+.endobj lbl_803E8FD4
 .balign 8
-lbl_803E9000:
-	.4byte 0x43300000
-	.4byte 0x80000000
-lbl_803E9008:
+.obj lbl_803E8FD8, local
+	.double 0.5
+.endobj lbl_803E8FD8
+.balign 8
+.obj lbl_803E8FE0, local
+	.double 3.0
+.endobj lbl_803E8FE0
+.balign 4
+.obj lbl_803E8FE8, local # pi
+	.float 3.1415927
+.endobj lbl_803E8FE8
+.obj lbl_803E8FEC, local
+	.float 2.0
+.endobj lbl_803E8FEC
+.obj lbl_803E8FF0, local
+	.float 2.1
+.endobj lbl_803E8FF0
+.obj lbl_803E8FF4, local
+	.float 1.9
+.endobj lbl_803E8FF4
+.obj lbl_803E8FF8, local
+	.float 4.0
+.endobj lbl_803E8FF8
+.balign 8
+.obj lbl_803E9000, local
+	.8byte 0x4330000080000000
+.endobj lbl_803E9000
+.balign 4
+.obj lbl_803E9008, local
 	.float 0.25
-lbl_803E900C:
+.endobj lbl_803E9008
+.obj lbl_803E900C, local
 	.float 0.08
+.endobj lbl_803E900C

@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global __ct__9ActRescueFP4Piki
-__ct__9ActRescueFP4Piki:
+.fn __ct__9ActRescueFP4Piki, global
 /* 800C12E8 000BE248  7C 08 02 A6 */	mflr r0
 /* 800C12EC 000BE24C  90 01 00 04 */	stw r0, 4(r1)
 /* 800C12F0 000BE250  7C 80 07 35 */	extsh. r0, r4
@@ -41,9 +40,9 @@ __ct__9ActRescueFP4Piki:
 /* 800C1374 000BE2D4  38 21 00 20 */	addi r1, r1, 0x20
 /* 800C1378 000BE2D8  7C 08 03 A6 */	mtlr r0
 /* 800C137C 000BE2DC  4E 80 00 20 */	blr 
+.endfn __ct__9ActRescueFP4Piki
 
-.global init__9ActRescueFP8Creature
-init__9ActRescueFP8Creature:
+.fn init__9ActRescueFP8Creature, global
 /* 800C1380 000BE2E0  7C 08 02 A6 */	mflr r0
 /* 800C1384 000BE2E4  28 04 00 00 */	cmplwi r4, 0
 /* 800C1388 000BE2E8  90 01 00 04 */	stw r0, 4(r1)
@@ -64,9 +63,9 @@ init__9ActRescueFP8Creature:
 /* 800C13B8 000BE318  38 21 00 08 */	addi r1, r1, 8
 /* 800C13BC 000BE31C  7C 08 03 A6 */	mtlr r0
 /* 800C13C0 000BE320  4E 80 00 20 */	blr 
+.endfn init__9ActRescueFP8Creature
 
-.global exec__9ActRescueFv
-exec__9ActRescueFv:
+.fn exec__9ActRescueFv, global
 /* 800C13C4 000BE324  7C 08 02 A6 */	mflr r0
 /* 800C13C8 000BE328  90 01 00 04 */	stw r0, 4(r1)
 /* 800C13CC 000BE32C  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -163,9 +162,9 @@ exec__9ActRescueFv:
 /* 800C1504 000BE464  38 21 00 18 */	addi r1, r1, 0x18
 /* 800C1508 000BE468  7C 08 03 A6 */	mtlr r0
 /* 800C150C 000BE46C  4E 80 00 20 */	blr 
+.endfn exec__9ActRescueFv
 
-.global animationKeyUpdated__9ActRescueFR16PaniAnimKeyEvent
-animationKeyUpdated__9ActRescueFR16PaniAnimKeyEvent:
+.fn animationKeyUpdated__9ActRescueFR16PaniAnimKeyEvent, global
 /* 800C1510 000BE470  80 04 00 00 */	lwz r0, 0(r4)
 /* 800C1514 000BE474  2C 00 00 01 */	cmpwi r0, 1
 /* 800C1518 000BE478  41 82 00 14 */	beq .L_800C152C
@@ -196,9 +195,9 @@ animationKeyUpdated__9ActRescueFR16PaniAnimKeyEvent:
 /* 800C1570 000BE4D0  38 00 00 01 */	li r0, 1
 /* 800C1574 000BE4D4  98 03 00 31 */	stb r0, 0x31(r3)
 /* 800C1578 000BE4D8  4E 80 00 20 */	blr 
+.endfn animationKeyUpdated__9ActRescueFR16PaniAnimKeyEvent
 
-.global initApproach__9ActRescueFv
-initApproach__9ActRescueFv:
+.fn initApproach__9ActRescueFv, global
 /* 800C157C 000BE4DC  7C 08 02 A6 */	mflr r0
 /* 800C1580 000BE4E0  38 80 00 02 */	li r4, 2
 /* 800C1584 000BE4E4  90 01 00 04 */	stw r0, 4(r1)
@@ -224,9 +223,9 @@ initApproach__9ActRescueFv:
 /* 800C15D4 000BE534  38 21 00 28 */	addi r1, r1, 0x28
 /* 800C15D8 000BE538  7C 08 03 A6 */	mtlr r0
 /* 800C15DC 000BE53C  4E 80 00 20 */	blr 
+.endfn initApproach__9ActRescueFv
 
-.global exeApproach__9ActRescueFv
-exeApproach__9ActRescueFv:
+.fn exeApproach__9ActRescueFv, global
 /* 800C15E0 000BE540  7C 08 02 A6 */	mflr r0
 /* 800C15E4 000BE544  90 01 00 04 */	stw r0, 4(r1)
 /* 800C15E8 000BE548  94 21 FF B0 */	stwu r1, -0x50(r1)
@@ -287,9 +286,9 @@ exeApproach__9ActRescueFv:
 /* 800C16B8 000BE618  38 21 00 50 */	addi r1, r1, 0x50
 /* 800C16BC 000BE61C  7C 08 03 A6 */	mtlr r0
 /* 800C16C0 000BE620  4E 80 00 20 */	blr 
+.endfn exeApproach__9ActRescueFv
 
-.global initRescue__9ActRescueFv
-initRescue__9ActRescueFv:
+.fn initRescue__9ActRescueFv, global
 /* 800C16C4 000BE624  7C 08 02 A6 */	mflr r0
 /* 800C16C8 000BE628  90 01 00 04 */	stw r0, 4(r1)
 /* 800C16CC 000BE62C  38 00 00 01 */	li r0, 1
@@ -326,9 +325,9 @@ initRescue__9ActRescueFv:
 /* 800C1744 000BE6A4  38 21 00 30 */	addi r1, r1, 0x30
 /* 800C1748 000BE6A8  7C 08 03 A6 */	mtlr r0
 /* 800C174C 000BE6AC  4E 80 00 20 */	blr 
+.endfn initRescue__9ActRescueFv
 
-.global exeRescue__9ActRescueFv
-exeRescue__9ActRescueFv:
+.fn exeRescue__9ActRescueFv, global
 /* 800C1750 000BE6B0  7C 08 02 A6 */	mflr r0
 /* 800C1754 000BE6B4  90 01 00 04 */	stw r0, 4(r1)
 /* 800C1758 000BE6B8  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -360,9 +359,9 @@ exeRescue__9ActRescueFv:
 /* 800C17BC 000BE71C  38 21 00 18 */	addi r1, r1, 0x18
 /* 800C17C0 000BE720  7C 08 03 A6 */	mtlr r0
 /* 800C17C4 000BE724  4E 80 00 20 */	blr 
+.endfn exeRescue__9ActRescueFv
 
-.global initGo__9ActRescueFv
-initGo__9ActRescueFv:
+.fn initGo__9ActRescueFv, global
 /* 800C17C8 000BE728  7C 08 02 A6 */	mflr r0
 /* 800C17CC 000BE72C  38 C0 00 01 */	li r6, 1
 /* 800C17D0 000BE730  90 01 00 04 */	stw r0, 4(r1)
@@ -462,9 +461,9 @@ initGo__9ActRescueFv:
 /* 800C1940 000BE8A0  38 21 00 E8 */	addi r1, r1, 0xe8
 /* 800C1944 000BE8A4  7C 08 03 A6 */	mtlr r0
 /* 800C1948 000BE8A8  4E 80 00 20 */	blr 
+.endfn initGo__9ActRescueFv
 
-.global exeGo__9ActRescueFv
-exeGo__9ActRescueFv:
+.fn exeGo__9ActRescueFv, global
 /* 800C194C 000BE8AC  7C 08 02 A6 */	mflr r0
 /* 800C1950 000BE8B0  90 01 00 04 */	stw r0, 4(r1)
 /* 800C1954 000BE8B4  94 21 FF 78 */	stwu r1, -0x88(r1)
@@ -559,9 +558,9 @@ exeGo__9ActRescueFv:
 /* 800C1AAC 000BEA0C  38 21 00 88 */	addi r1, r1, 0x88
 /* 800C1AB0 000BEA10  7C 08 03 A6 */	mtlr r0
 /* 800C1AB4 000BEA14  4E 80 00 20 */	blr 
+.endfn exeGo__9ActRescueFv
 
-.global initThrow__9ActRescueFv
-initThrow__9ActRescueFv:
+.fn initThrow__9ActRescueFv, global
 /* 800C1AB8 000BEA18  38 00 00 03 */	li r0, 3
 /* 800C1ABC 000BEA1C  B0 03 00 18 */	sth r0, 0x18(r3)
 /* 800C1AC0 000BEA20  38 80 00 00 */	li r4, 0
@@ -570,9 +569,9 @@ initThrow__9ActRescueFv:
 /* 800C1ACC 000BEA2C  98 83 00 31 */	stb r4, 0x31(r3)
 /* 800C1AD0 000BEA30  98 03 00 32 */	stb r0, 0x32(r3)
 /* 800C1AD4 000BEA34  4E 80 00 20 */	blr 
+.endfn initThrow__9ActRescueFv
 
-.global exeThrow__9ActRescueFv
-exeThrow__9ActRescueFv:
+.fn exeThrow__9ActRescueFv, global
 /* 800C1AD8 000BEA38  7C 08 02 A6 */	mflr r0
 /* 800C1ADC 000BEA3C  90 01 00 04 */	stw r0, 4(r1)
 /* 800C1AE0 000BEA40  94 21 FF 30 */	stwu r1, -0xd0(r1)
@@ -754,13 +753,13 @@ exeThrow__9ActRescueFv:
 /* 800C1D80 000BECE0  38 21 00 D0 */	addi r1, r1, 0xd0
 /* 800C1D84 000BECE4  7C 08 03 A6 */	mtlr r0
 /* 800C1D88 000BECE8  4E 80 00 20 */	blr 
+.endfn exeThrow__9ActRescueFv
 
-.global cleanup__9ActRescueFv
-cleanup__9ActRescueFv:
+.fn cleanup__9ActRescueFv, global
 /* 800C1D8C 000BECEC  4E 80 00 20 */	blr 
+.endfn cleanup__9ActRescueFv
 
-.global __dt__9ActRescueFv
-__dt__9ActRescueFv:
+.fn __dt__9ActRescueFv, weak
 /* 800C1D90 000BECF0  7C 08 02 A6 */	mflr r0
 /* 800C1D94 000BECF4  90 01 00 04 */	stw r0, 4(r1)
 /* 800C1D98 000BECF8  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -794,36 +793,45 @@ __dt__9ActRescueFv:
 /* 800C1E04 000BED64  38 21 00 18 */	addi r1, r1, 0x18
 /* 800C1E08 000BED68  7C 08 03 A6 */	mtlr r0
 /* 800C1E0C 000BED6C  4E 80 00 20 */	blr 
+.endfn __dt__9ActRescueFv
 
-"@52@4@animationKeyUpdated__9ActRescueFR16PaniAnimKeyEvent":
+.fn "@52@4@animationKeyUpdated__9ActRescueFR16PaniAnimKeyEvent", weak
 /* 800C1E10 000BED70  39 60 00 04 */	li r11, 4
 /* 800C1E14 000BED74  7D 63 58 2E */	lwzx r11, r3, r11
 /* 800C1E18 000BED78  7C 63 5A 14 */	add r3, r3, r11
 /* 800C1E1C 000BED7C  38 63 FF CC */	addi r3, r3, -52
 /* 800C1E20 000BED80  4B FF F6 F0 */	b animationKeyUpdated__9ActRescueFR16PaniAnimKeyEvent
+.endfn "@52@4@animationKeyUpdated__9ActRescueFR16PaniAnimKeyEvent"
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802B7860:
+.obj lbl_802B7860, local
 	.asciz "aiRescue.cpp"
+.endobj lbl_802B7860
 .balign 4
-lbl_802B7870:
+.obj lbl_802B7870, local
 	.asciz "aiRescue"
+.endobj lbl_802B7870
 .balign 4
-lbl_802B787C:
+.obj lbl_802B787C, local
 	.asciz "ActRescue"
+.endobj lbl_802B787C
 .balign 4
-lbl_802B7888:
+.obj lbl_802B7888, local
 	.asciz "PaniAnimKeyListener"
+.endobj lbl_802B7888
 .balign 4
-lbl_802B789C:
+.obj lbl_802B789C, local
 	.asciz "Receiver<Piki>"
+.endobj lbl_802B789C
 .balign 4
-lbl_802B78AC:
+.obj lbl_802B78AC, local
 	.4byte "__RTTI__15Receiver<4Piki>"
 	.4byte 0
 	.4byte 0
-lbl_802B78B8:
+.endobj lbl_802B78AC
+.balign 4
+.obj lbl_802B78B8, local
 	.4byte __RTTI__19PaniAnimKeyListener
 	.4byte 0x34
 	.4byte "__RTTI__15Receiver<4Piki>"
@@ -831,8 +839,9 @@ lbl_802B78B8:
 	.4byte __RTTI__6Action
 	.4byte 0
 	.4byte 0
-.global __vt__9ActRescue
-__vt__9ActRescue:
+.endobj lbl_802B78B8
+.balign 4
+.obj __vt__9ActRescue, global
 	.4byte __RTTI__9ActRescue
 	.4byte 0
 	.4byte "procMsg__15Receiver<4Piki>FP4PikiP3Msg"
@@ -862,10 +871,11 @@ __vt__9ActRescue:
 	.4byte __RTTI__9ActRescue
 	.4byte 0xFFFFFFCC
 	.4byte "@52@4@animationKeyUpdated__9ActRescueFR16PaniAnimKeyEvent"
-	.4byte 0
-	.4byte 0
-	.4byte 0
-lbl_802B7954:
+.endobj __vt__9ActRescue
+.balign 4
+.skip 0xC # compiler padding
+.balign 4
+.obj lbl_802B7954, local
 	.4byte ("procMsg__15Receiver<4Piki>FP4PikiP3Msg"+0x30)
 	.4byte ("procMsg__15Receiver<4Piki>FP4PikiP3Msg"+0x58)
 	.4byte ("procMsg__15Receiver<4Piki>FP4PikiP3Msg"+0x6C)
@@ -877,50 +887,71 @@ lbl_802B7954:
 	.4byte ("procMsg__15Receiver<4Piki>FP4PikiP3Msg"+0x44)
 	.4byte ("procMsg__15Receiver<4Piki>FP4PikiP3Msg"+0xF8)
 	.4byte ("procMsg__15Receiver<4Piki>FP4PikiP3Msg"+0xE4)
+.endobj lbl_802B7954
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-lbl_803E07B0:
+.obj lbl_803E07B0, local
 	.asciz "Rescue"
+.endobj lbl_803E07B0
 .balign 4
-lbl_803E07B8:
+.obj lbl_803E07B8, local
 	.float 0.0
-lbl_803E07BC:
+.endobj lbl_803E07B8
+.obj lbl_803E07BC, local
 	.float 0.0
-lbl_803E07C0:
+.endobj lbl_803E07BC
+.obj lbl_803E07C0, local
 	.float 0.0
-lbl_803E07C4:
+.endobj lbl_803E07C0
+.obj lbl_803E07C4, local
 	.float 0.8
-lbl_803E07C8:
+.endobj lbl_803E07C4
+.obj lbl_803E07C8, local
 	.float 0.0
-lbl_803E07CC:
+.endobj lbl_803E07C8
+.obj lbl_803E07CC, local
 	.float 0.0
-lbl_803E07D0:
+.endobj lbl_803E07CC
+.obj lbl_803E07D0, local
 	.float 0.0
-lbl_803E07D4:
+.endobj lbl_803E07D0
+.obj lbl_803E07D4, local
 	.float 0.0
-lbl_803E07D8:
+.endobj lbl_803E07D4
+.obj lbl_803E07D8, local
 	.float 0.0
-lbl_803E07DC:
+.endobj lbl_803E07D8
+.obj lbl_803E07DC, local
 	.float 0.0
-lbl_803E07E0:
+.endobj lbl_803E07DC
+.obj lbl_803E07E0, local
 	.float 0.0
-__RTTI__19PaniAnimKeyListener:
+.endobj lbl_803E07E0
+.balign 4
+.obj __RTTI__19PaniAnimKeyListener, local
 	.4byte lbl_802B7888
 	.4byte 0
-"__RTTI__15Receiver<4Piki>":
+.endobj __RTTI__19PaniAnimKeyListener
+.balign 4
+.obj "__RTTI__15Receiver<4Piki>", local
 	.4byte lbl_802B789C
 	.4byte 0
-lbl_803E07F4:
+.endobj "__RTTI__15Receiver<4Piki>"
 .balign 4
+.obj lbl_803E07F4, local
 	.asciz "Action"
+.endobj lbl_803E07F4
 .balign 4
-__RTTI__6Action:
+.obj __RTTI__6Action, local
 	.4byte lbl_803E07F4
 	.4byte lbl_802B78AC
-__RTTI__9ActRescue:
+.endobj __RTTI__6Action
+.balign 4
+.obj __RTTI__9ActRescue, local
 	.4byte lbl_802B787C
 	.4byte lbl_802B78B8
+.endobj __RTTI__9ActRescue
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8

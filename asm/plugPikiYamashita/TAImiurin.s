@@ -4281,19 +4281,21 @@ lbl_802E4BC8:
 lbl_802E4BD8:
 	.asciz "TAImiurin"
 .balign 4
-lbl_802E4BE4:
+lbl_802E4BE4: # Shift-JIS
 	.4byte 0x8DC591E5
 	.4byte 0x88F882C1
 	.4byte 0x957482AB
 	.4byte 0x8373834C
 	.4byte 0x00000000
-lbl_802E4BF8:
+.balign 4
+lbl_802E4BF8: # Shift-JIS
 	.4byte 0x905582E8
 	.4byte 0x95A582A2
 	.4byte 0x94AD90B6
 	.4byte 0x91C58C82
 	.4byte 0x90940000
-lbl_802E4C0C:
+.balign 4
+lbl_802E4C0C: # Shift-JIS
 	.4byte 0x838A8389
 	.4byte 0x8362834E
 	.4byte 0x835882B7
@@ -4302,27 +4304,31 @@ lbl_802E4C0C:
 	.4byte 0x837E8393
 	.4byte 0x82CC9094
 	.4byte 0x00000000
-lbl_802E4C2C:
+.balign 4
+lbl_802E4C2C: # Shift-JIS
 	.4byte 0x838A8389
 	.4byte 0x8362834E
 	.4byte 0x835882CC
 	.4byte 0x92B782B3
 	.4byte 0x81699562
 	.4byte 0x816A0000
-lbl_802E4C44:
+.balign 4
+lbl_802E4C44: # Shift-JIS
 	.4byte 0x96DA82F0
 	.4byte 0x89F182B7
 	.4byte 0x8E9E8AD4
 	.4byte 0x81699562
 	.4byte 0x816A0000
-lbl_802E4C58:
+.balign 4
+lbl_802E4C58: # Shift-JIS
 	.4byte 0x83698372
 	.4byte 0x82F08360
 	.4byte 0x83468362
 	.4byte 0x834E82B7
 	.4byte 0x82E98A84
 	.4byte 0x8D870000
-lbl_802E4C70:
+.balign 4
+lbl_802E4C70: # Shift-JIS
 	.4byte 0x937B82E8
 	.4byte 0x8E9E82CC
 	.4byte 0x89F1935D
@@ -4991,36 +4997,56 @@ __vt__19TAImiurinParameters:
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-__RTTI__12TAIanimation:
+.obj __RTTI__12TAIanimation, local
 	.4byte lbl_802E4E00
 	.4byte 0
-__RTTI__18TAImiurinAnimation:
+.endobj __RTTI__12TAIanimation
+.balign 4
+.obj __RTTI__18TAImiurinAnimation, local
 	.4byte lbl_802E4DEC
 	.4byte lbl_802E4E10
-__RTTI__12TekiStrategy:
+.endobj __RTTI__18TAImiurinAnimation
+.balign 4
+.obj __RTTI__12TekiStrategy, local
 	.4byte lbl_802E4E3C
 	.4byte 0
-__RTTI__11YaiStrategy:
+.endobj __RTTI__12TekiStrategy
+.balign 4
+.obj __RTTI__11YaiStrategy, local
 	.4byte lbl_802E4E4C
 	.4byte lbl_802E4E58
-__RTTI__17TAImiurinStrategy:
+.endobj __RTTI__11YaiStrategy
+.balign 4
+.obj __RTTI__17TAImiurinStrategy, local
 	.4byte lbl_802E4E28
 	.4byte lbl_802E4E64
-__RTTI__9TaiAction:
+.endobj __RTTI__17TAImiurinStrategy
+.balign 4
+.obj __RTTI__9TaiAction, local
 	.4byte lbl_802E4EB4
 	.4byte 0
-__RTTI__17TAIAreserveMotion:
+.endobj __RTTI__9TaiAction
+.balign 4
+.obj __RTTI__17TAIAreserveMotion, local
 	.4byte lbl_802E4EC0
 	.4byte lbl_802E4ED4
-__RTTI__16TAIAgroggyMiurin:
+.endobj __RTTI__17TAIAreserveMotion
+.balign 4
+.obj __RTTI__16TAIAgroggyMiurin, local
 	.4byte lbl_802E4EA0
 	.4byte lbl_802E4EE0
-__RTTI__24TAIAresetAnimSpeedMiurin:
+.endobj __RTTI__16TAIAgroggyMiurin
+.balign 4
+.obj __RTTI__24TAIAresetAnimSpeedMiurin, local
 	.4byte lbl_802E4F10
 	.4byte lbl_802E4F2C
-__RTTI__10TAIAmotion:
+.endobj __RTTI__24TAIAresetAnimSpeedMiurin
+.balign 4
+.obj __RTTI__10TAIAmotion, local
 	.4byte lbl_802E4F64
 	.4byte lbl_802E4F70
+.endobj __RTTI__10TAIAmotion
+.balign 4
 __RTTI__15TAIAangryMiurin:
 	.4byte lbl_802E4F54
 	.4byte lbl_802E4F7C
@@ -5129,7 +5155,7 @@ __RTTI__19TAImiurinParameters:
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
 lbl_803EBFA0:
-	.4byte 0x00000000
+	.float 0.0
 lbl_803EBFA4:
 	.4byte 0x42700000
 lbl_803EBFA8:
@@ -5190,11 +5216,9 @@ lbl_803EC014:
 	.4byte 0x40860A92
 lbl_803EC018:
 	.4byte 0x46FFFE00
-	.4byte 0x00000000
 .balign 8
 lbl_803EC020:
-	.4byte 0x43300000
-	.4byte 0x80000000
+	.8byte 0x4330000080000000
 lbl_803EC028:
 	.4byte 0x40C90FDB
 lbl_803EC02C:

@@ -2743,7 +2743,7 @@
 	.double 3.0
 .endobj lbl_803E90E0
 .obj lbl_803E90E8, local
-	.float 0.7853982
+	.float 0.7853982 # 45 degrees in radians
 .endobj lbl_803E90E8
 .obj lbl_803E90EC, local
 	.float 0.001

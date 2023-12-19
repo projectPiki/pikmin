@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global __ct__8P2DPrintFP7P2DFontii6Colour6Colour
-__ct__8P2DPrintFP7P2DFontii6Colour6Colour:
+.fn __ct__8P2DPrintFP7P2DFontii6Colour6Colour, global
 /* 801B49A4 001B1904  7C 08 02 A6 */	mflr r0
 /* 801B49A8 001B1908  90 01 00 04 */	stw r0, 4(r1)
 /* 801B49AC 001B190C  94 21 FF D0 */	stwu r1, -0x30(r1)
@@ -20,9 +19,9 @@ __ct__8P2DPrintFP7P2DFontii6Colour6Colour:
 /* 801B49E0 001B1940  38 21 00 30 */	addi r1, r1, 0x30
 /* 801B49E4 001B1944  7C 08 03 A6 */	mtlr r0
 /* 801B49E8 001B1948  4E 80 00 20 */	blr 
+.endfn __ct__8P2DPrintFP7P2DFontii6Colour6Colour
 
-.global private_initiate__8P2DPrintFP7P2DFontii6Colour6Colour
-private_initiate__8P2DPrintFP7P2DFontii6Colour6Colour:
+.fn private_initiate__8P2DPrintFP7P2DFontii6Colour6Colour, global
 /* 801B49EC 001B194C  7C 08 02 A6 */	mflr r0
 /* 801B49F0 001B1950  90 01 00 04 */	stw r0, 4(r1)
 /* 801B49F4 001B1954  38 00 00 20 */	li r0, 0x20
@@ -94,9 +93,9 @@ private_initiate__8P2DPrintFP7P2DFontii6Colour6Colour:
 /* 801B4AE0 001B1A40  38 21 00 40 */	addi r1, r1, 0x40
 /* 801B4AE4 001B1A44  7C 08 03 A6 */	mtlr r0
 /* 801B4AE8 001B1A48  4E 80 00 20 */	blr 
+.endfn private_initiate__8P2DPrintFP7P2DFontii6Colour6Colour
 
-.global locate__8P2DPrintFii
-locate__8P2DPrintFii:
+.fn locate__8P2DPrintFii, global
 /* 801B4AEC 001B1A4C  94 21 FF D8 */	stwu r1, -0x28(r1)
 /* 801B4AF0 001B1A50  6C 86 80 00 */	xoris r6, r4, 0x8000
 /* 801B4AF4 001B1A54  6C A0 80 00 */	xoris r0, r5, 0x8000
@@ -118,9 +117,9 @@ locate__8P2DPrintFii:
 /* 801B4B34 001B1A94  D0 03 00 20 */	stfs f0, 0x20(r3)
 /* 801B4B38 001B1A98  38 21 00 28 */	addi r1, r1, 0x28
 /* 801B4B3C 001B1A9C  4E 80 00 20 */	blr 
+.endfn locate__8P2DPrintFii
 
-.global setFontSize__8P2DPrintFv
-setFontSize__8P2DPrintFv:
+.fn setFontSize__8P2DPrintFv, global
 /* 801B4B40 001B1AA0  80 83 00 00 */	lwz r4, 0(r3)
 /* 801B4B44 001B1AA4  28 04 00 00 */	cmplwi r4, 0
 /* 801B4B48 001B1AA8  4D 82 00 20 */	beqlr 
@@ -131,9 +130,9 @@ setFontSize__8P2DPrintFv:
 /* 801B4B5C 001B1ABC  80 04 00 08 */	lwz r0, 8(r4)
 /* 801B4B60 001B1AC0  90 03 00 3C */	stw r0, 0x3c(r3)
 /* 801B4B64 001B1AC4  4E 80 00 20 */	blr 
+.endfn setFontSize__8P2DPrintFv
 
-.global initchar__8P2DPrintFv
-initchar__8P2DPrintFv:
+.fn initchar__8P2DPrintFv, global
 /* 801B4B68 001B1AC8  80 03 00 28 */	lwz r0, 0x28(r3)
 /* 801B4B6C 001B1ACC  90 03 00 24 */	stw r0, 0x24(r3)
 /* 801B4B70 001B1AD0  80 03 00 30 */	lwz r0, 0x30(r3)
@@ -151,9 +150,9 @@ initchar__8P2DPrintFv:
 /* 801B4BA0 001B1B00  80 03 00 3C */	lwz r0, 0x3c(r3)
 /* 801B4BA4 001B1B04  90 03 00 54 */	stw r0, 0x54(r3)
 /* 801B4BA8 001B1B08  4E 80 00 20 */	blr 
+.endfn initchar__8P2DPrintFv
 
-.global printReturn__8P2DPrintFPCcii18P2DTextBoxHBinding18P2DTextBoxVBindingii
-printReturn__8P2DPrintFPCcii18P2DTextBoxHBinding18P2DTextBoxVBindingii:
+.fn printReturn__8P2DPrintFPCcii18P2DTextBoxHBinding18P2DTextBoxVBindingii, global
 /* 801B4BAC 001B1B0C  7C 08 02 A6 */	mflr r0
 /* 801B4BB0 001B1B10  90 01 00 04 */	stw r0, 4(r1)
 /* 801B4BB4 001B1B14  94 21 F7 88 */	stwu r1, -0x878(r1)
@@ -312,9 +311,9 @@ printReturn__8P2DPrintFPCcii18P2DTextBoxHBinding18P2DTextBoxVBindingii:
 /* 801B4DF0 001B1D50  38 21 08 78 */	addi r1, r1, 0x878
 /* 801B4DF4 001B1D54  7C 08 03 A6 */	mtlr r0
 /* 801B4DF8 001B1D58  4E 80 00 20 */	blr 
+.endfn printReturn__8P2DPrintFPCcii18P2DTextBoxHBinding18P2DTextBoxVBindingii
 
-.global parse__8P2DPrintFPCUciiPUsRQ28P2DPrint5TSizeb
-parse__8P2DPrintFPCUciiPUsRQ28P2DPrint5TSizeb:
+.fn parse__8P2DPrintFPCUciiPUsRQ28P2DPrint5TSizeb, global
 /* 801B4DFC 001B1D5C  7C 08 02 A6 */	mflr r0
 /* 801B4E00 001B1D60  90 01 00 04 */	stw r0, 4(r1)
 /* 801B4E04 001B1D64  94 21 FE F0 */	stwu r1, -0x110(r1)
@@ -711,9 +710,9 @@ parse__8P2DPrintFPCUciiPUsRQ28P2DPrint5TSizeb:
 /* 801B53B8 001B2318  38 21 01 10 */	addi r1, r1, 0x110
 /* 801B53BC 001B231C  7C 08 03 A6 */	mtlr r0
 /* 801B53C0 001B2320  4E 80 00 20 */	blr 
+.endfn parse__8P2DPrintFPCUciiPUsRQ28P2DPrint5TSizeb
 
-.global doEscapeCode__8P2DPrintFPPCUc
-doEscapeCode__8P2DPrintFPPCUc:
+.fn doEscapeCode__8P2DPrintFPPCUc, global
 /* 801B53C4 001B2324  7C 08 02 A6 */	mflr r0
 /* 801B53C8 001B2328  90 01 00 04 */	stw r0, 4(r1)
 /* 801B53CC 001B232C  94 21 FF B8 */	stwu r1, -0x48(r1)
@@ -1145,9 +1144,9 @@ doEscapeCode__8P2DPrintFPPCUc:
 /* 801B59DC 001B293C  38 21 00 48 */	addi r1, r1, 0x48
 /* 801B59E0 001B2940  7C 08 03 A6 */	mtlr r0
 /* 801B59E4 001B2944  4E 80 00 20 */	blr 
+.endfn doEscapeCode__8P2DPrintFPPCUc
 
-.global doCtrlCode__8P2DPrintFi
-doCtrlCode__8P2DPrintFi:
+.fn doCtrlCode__8P2DPrintFi, global
 /* 801B59E8 001B2948  38 04 FF F8 */	addi r0, r4, -8
 /* 801B59EC 001B294C  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 801B59F0 001B2950  28 00 00 17 */	cmplwi r0, 0x17
@@ -1250,9 +1249,9 @@ doCtrlCode__8P2DPrintFi:
 .L_801B5B54:
 /* 801B5B54 001B2AB4  38 21 00 20 */	addi r1, r1, 0x20
 /* 801B5B58 001B2AB8  4E 80 00 20 */	blr 
+.endfn doCtrlCode__8P2DPrintFi
 
-.global getNumber__8P2DPrintFPPCUclli
-getNumber__8P2DPrintFPPCUclli:
+.fn getNumber__8P2DPrintFPPCUclli, global
 /* 801B5B5C 001B2ABC  7C 08 02 A6 */	mflr r0
 /* 801B5B60 001B2AC0  90 01 00 04 */	stw r0, 4(r1)
 /* 801B5B64 001B2AC4  94 21 FF D0 */	stwu r1, -0x30(r1)
@@ -1326,10 +1325,11 @@ getNumber__8P2DPrintFPPCUclli:
 /* 801B5C58 001B2BB8  38 21 00 30 */	addi r1, r1, 0x30
 /* 801B5C5C 001B2BBC  7C 08 03 A6 */	mtlr r0
 /* 801B5C60 001B2BC0  4E 80 00 20 */	blr 
+.endfn getNumber__8P2DPrintFPPCUclli
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802E08F0:
+.obj lbl_802E08F0, local
 	.4byte .L_801B5A10
 	.4byte .L_801B5A2C
 	.4byte .L_801B5A84
@@ -1354,20 +1354,24 @@ lbl_802E08F0:
 	.4byte .L_801B5B1C
 	.4byte .L_801B5B30
 	.4byte .L_801B5B44
+.endobj lbl_802E08F0
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803EB8E8:
-	.4byte 0x00000000
+.obj lbl_803EB8E8, local
+	.float 0.0
+.endobj lbl_803EB8E8
 .balign 8
-lbl_803EB8F0:
-	.4byte 0x43300000
-	.4byte 0x80000000
-lbl_803EB8F8:
-	.4byte 0x3F000000
+.obj lbl_803EB8F0, local
+	.8byte 0x4330000080000000
+.endobj lbl_803EB8F0
+.obj lbl_803EB8F8, local
+	.float 0.5
+.endobj lbl_803EB8F8
 .balign 8
-lbl_803EB900:
-	.4byte 0x43300000
-	.4byte 0x00000000
-lbl_803EB908:
-	.4byte 0x3F800000
+.obj lbl_803EB900, local
+	.8byte 0x4330000000000000
+.endobj lbl_803EB900
+.obj lbl_803EB908, local
+	.float 1.0
+.endobj lbl_803EB908

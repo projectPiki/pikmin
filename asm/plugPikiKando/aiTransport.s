@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global turnOver__12ActTransportFv
-turnOver__12ActTransportFv:
+.fn turnOver__12ActTransportFv, global
 /* 800AEC80 000ABBE0  7C 08 02 A6 */	mflr r0
 /* 800AEC84 000ABBE4  90 01 00 04 */	stw r0, 4(r1)
 /* 800AEC88 000ABBE8  94 21 FF 10 */	stwu r1, -0xf0(r1)
@@ -179,9 +178,9 @@ turnOver__12ActTransportFv:
 /* 800AEF04 000ABE64  38 21 00 F0 */	addi r1, r1, 0xf0
 /* 800AEF08 000ABE68  7C 08 03 A6 */	mtlr r0
 /* 800AEF0C 000ABE6C  4E 80 00 20 */	blr 
+.endfn turnOver__12ActTransportFv
 
-.global isStickLeader__12ActTransportFv
-isStickLeader__12ActTransportFv:
+.fn isStickLeader__12ActTransportFv, global
 /* 800AEF10 000ABE70  7C 08 02 A6 */	mflr r0
 /* 800AEF14 000ABE74  90 01 00 04 */	stw r0, 4(r1)
 /* 800AEF18 000ABE78  94 21 FF B8 */	stwu r1, -0x48(r1)
@@ -276,9 +275,9 @@ isStickLeader__12ActTransportFv:
 /* 800AF054 000ABFB4  38 21 00 48 */	addi r1, r1, 0x48
 /* 800AF058 000ABFB8  7C 08 03 A6 */	mtlr r0
 /* 800AF05C 000ABFBC  4E 80 00 20 */	blr 
+.endfn isStickLeader__12ActTransportFv
 
-.global getCarriers__12ActTransportFv
-getCarriers__12ActTransportFv:
+.fn getCarriers__12ActTransportFv, global
 /* 800AF060 000ABFC0  7C 08 02 A6 */	mflr r0
 /* 800AF064 000ABFC4  90 01 00 04 */	stw r0, 4(r1)
 /* 800AF068 000ABFC8  94 21 FF 88 */	stwu r1, -0x78(r1)
@@ -389,9 +388,9 @@ getCarriers__12ActTransportFv:
 /* 800AF1E4 000AC144  38 21 00 78 */	addi r1, r1, 0x78
 /* 800AF1E8 000AC148  7C 08 03 A6 */	mtlr r0
 /* 800AF1EC 000AC14C  4E 80 00 20 */	blr 
+.endfn getCarriers__12ActTransportFv
 
-.global __ct__12ActTransportFP4Piki
-__ct__12ActTransportFP4Piki:
+.fn __ct__12ActTransportFP4Piki, global
 /* 800AF1F0 000AC150  7C 08 02 A6 */	mflr r0
 /* 800AF1F4 000AC154  90 01 00 04 */	stw r0, 4(r1)
 /* 800AF1F8 000AC158  7C 80 07 35 */	extsh. r0, r4
@@ -454,9 +453,9 @@ __ct__12ActTransportFP4Piki:
 /* 800AF2D8 000AC238  38 21 00 20 */	addi r1, r1, 0x20
 /* 800AF2DC 000AC23C  7C 08 03 A6 */	mtlr r0
 /* 800AF2E0 000AC240  4E 80 00 20 */	blr 
+.endfn __ct__12ActTransportFP4Piki
 
-.global findPellet__12ActTransportFv
-findPellet__12ActTransportFv:
+.fn findPellet__12ActTransportFv, global
 /* 800AF2E4 000AC244  7C 08 02 A6 */	mflr r0
 /* 800AF2E8 000AC248  90 01 00 04 */	stw r0, 4(r1)
 /* 800AF2EC 000AC24C  94 21 FF B8 */	stwu r1, -0x48(r1)
@@ -553,9 +552,9 @@ findPellet__12ActTransportFv:
 /* 800AF438 000AC398  38 21 00 48 */	addi r1, r1, 0x48
 /* 800AF43C 000AC39C  7C 08 03 A6 */	mtlr r0
 /* 800AF440 000AC3A0  4E 80 00 20 */	blr 
+.endfn findPellet__12ActTransportFv
 
-.global init__12ActTransportFP8Creature
-init__12ActTransportFP8Creature:
+.fn init__12ActTransportFP8Creature, global
 /* 800AF444 000AC3A4  7C 08 02 A6 */	mflr r0
 /* 800AF448 000AC3A8  90 01 00 04 */	stw r0, 4(r1)
 /* 800AF44C 000AC3AC  38 00 00 01 */	li r0, 1
@@ -651,9 +650,9 @@ init__12ActTransportFP8Creature:
 /* 800AF598 000AC4F8  38 21 00 40 */	addi r1, r1, 0x40
 /* 800AF59C 000AC4FC  7C 08 03 A6 */	mtlr r0
 /* 800AF5A0 000AC500  4E 80 00 20 */	blr 
+.endfn init__12ActTransportFP8Creature
 
-.global setSlotIndex__12ActTransportFv
-setSlotIndex__12ActTransportFv:
+.fn setSlotIndex__12ActTransportFv, global
 /* 800AF5A4 000AC504  7C 08 02 A6 */	mflr r0
 /* 800AF5A8 000AC508  90 01 00 04 */	stw r0, 4(r1)
 /* 800AF5AC 000AC50C  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -675,9 +674,9 @@ setSlotIndex__12ActTransportFv:
 /* 800AF5E4 000AC544  38 21 00 18 */	addi r1, r1, 0x18
 /* 800AF5E8 000AC548  7C 08 03 A6 */	mtlr r0
 /* 800AF5EC 000AC54C  4E 80 00 20 */	blr 
+.endfn setSlotIndex__12ActTransportFv
 
-.global animationKeyUpdated__12ActTransportFR16PaniAnimKeyEvent
-animationKeyUpdated__12ActTransportFR16PaniAnimKeyEvent:
+.fn animationKeyUpdated__12ActTransportFR16PaniAnimKeyEvent, global
 /* 800AF5F0 000AC550  7C 08 02 A6 */	mflr r0
 /* 800AF5F4 000AC554  90 01 00 04 */	stw r0, 4(r1)
 /* 800AF5F8 000AC558  94 21 FF A0 */	stwu r1, -0x60(r1)
@@ -789,9 +788,9 @@ animationKeyUpdated__12ActTransportFR16PaniAnimKeyEvent:
 /* 800AF778 000AC6D8  38 21 00 60 */	addi r1, r1, 0x60
 /* 800AF77C 000AC6DC  7C 08 03 A6 */	mtlr r0
 /* 800AF780 000AC6E0  4E 80 00 20 */	blr 
+.endfn animationKeyUpdated__12ActTransportFR16PaniAnimKeyEvent
 
-.global execJump__12ActTransportFv
-execJump__12ActTransportFv:
+.fn execJump__12ActTransportFv, global
 /* 800AF784 000AC6E4  7C 08 02 A6 */	mflr r0
 /* 800AF788 000AC6E8  90 01 00 04 */	stw r0, 4(r1)
 /* 800AF78C 000AC6EC  94 21 FE D8 */	stwu r1, -0x128(r1)
@@ -1131,9 +1130,9 @@ execJump__12ActTransportFv:
 /* 800AFC68 000ACBC8  38 21 01 28 */	addi r1, r1, 0x128
 /* 800AFC6C 000ACBCC  7C 08 03 A6 */	mtlr r0
 /* 800AFC70 000ACBD0  4E 80 00 20 */	blr 
+.endfn execJump__12ActTransportFv
 
-.global gotoLiftPos__12ActTransportFv
-gotoLiftPos__12ActTransportFv:
+.fn gotoLiftPos__12ActTransportFv, global
 /* 800AFC74 000ACBD4  7C 08 02 A6 */	mflr r0
 /* 800AFC78 000ACBD8  90 01 00 04 */	stw r0, 4(r1)
 /* 800AFC7C 000ACBDC  94 21 FE 48 */	stwu r1, -0x1b8(r1)
@@ -1628,9 +1627,9 @@ gotoLiftPos__12ActTransportFv:
 /* 800B03A8 000AD308  38 21 01 B8 */	addi r1, r1, 0x1b8
 /* 800B03AC 000AD30C  7C 08 03 A6 */	mtlr r0
 /* 800B03B0 000AD310  4E 80 00 20 */	blr 
+.endfn gotoLiftPos__12ActTransportFv
 
-.global doLift__12ActTransportFv
-doLift__12ActTransportFv:
+.fn doLift__12ActTransportFv, global
 /* 800B03B4 000AD314  7C 08 02 A6 */	mflr r0
 /* 800B03B8 000AD318  90 01 00 04 */	stw r0, 4(r1)
 /* 800B03BC 000AD31C  94 21 FE B0 */	stwu r1, -0x150(r1)
@@ -2077,9 +2076,9 @@ doLift__12ActTransportFv:
 /* 800B0A0C 000AD96C  38 21 01 50 */	addi r1, r1, 0x150
 /* 800B0A10 000AD970  7C 08 03 A6 */	mtlr r0
 /* 800B0A14 000AD974  4E 80 00 20 */	blr 
+.endfn doLift__12ActTransportFv
 
-.global useWaterRoute__12ActTransportFv
-useWaterRoute__12ActTransportFv:
+.fn useWaterRoute__12ActTransportFv, global
 /* 800B0A18 000AD978  7C 08 02 A6 */	mflr r0
 /* 800B0A1C 000AD97C  90 01 00 04 */	stw r0, 4(r1)
 /* 800B0A20 000AD980  94 21 FF B8 */	stwu r1, -0x48(r1)
@@ -2181,9 +2180,9 @@ useWaterRoute__12ActTransportFv:
 /* 800B0B74 000ADAD4  38 21 00 48 */	addi r1, r1, 0x48
 /* 800B0B78 000ADAD8  7C 08 03 A6 */	mtlr r0
 /* 800B0B7C 000ADADC  4E 80 00 20 */	blr 
+.endfn useWaterRoute__12ActTransportFv
 
-.global exec__12ActTransportFv
-exec__12ActTransportFv:
+.fn exec__12ActTransportFv, global
 /* 800B0B80 000ADAE0  7C 08 02 A6 */	mflr r0
 /* 800B0B84 000ADAE4  90 01 00 04 */	stw r0, 4(r1)
 /* 800B0B88 000ADAE8  94 21 FE 90 */	stwu r1, -0x170(r1)
@@ -2799,9 +2798,9 @@ exec__12ActTransportFv:
 /* 800B1428 000AE388  38 21 01 70 */	addi r1, r1, 0x170
 /* 800B142C 000AE38C  7C 08 03 A6 */	mtlr r0
 /* 800B1430 000AE390  4E 80 00 20 */	blr 
+.endfn exec__12ActTransportFv
 
-.global moveGuruGuru__12ActTransportFv
-moveGuruGuru__12ActTransportFv:
+.fn moveGuruGuru__12ActTransportFv, global
 /* 800B1434 000AE394  7C 08 02 A6 */	mflr r0
 /* 800B1438 000AE398  90 01 00 04 */	stw r0, 4(r1)
 /* 800B143C 000AE39C  94 21 FE 40 */	stwu r1, -0x1c0(r1)
@@ -3398,9 +3397,9 @@ moveGuruGuru__12ActTransportFv:
 /* 800B1CD0 000AEC30  38 21 01 C0 */	addi r1, r1, 0x1c0
 /* 800B1CD4 000AEC34  7C 08 03 A6 */	mtlr r0
 /* 800B1CD8 000AEC38  4E 80 00 20 */	blr 
+.endfn moveGuruGuru__12ActTransportFv
 
-.global decideGoal__12ActTransportFP8Creature
-decideGoal__12ActTransportFP8Creature:
+.fn decideGoal__12ActTransportFP8Creature, global
 /* 800B1CDC 000AEC3C  7C 08 02 A6 */	mflr r0
 /* 800B1CE0 000AEC40  90 01 00 04 */	stw r0, 4(r1)
 /* 800B1CE4 000AEC44  94 21 FF 48 */	stwu r1, -0xb8(r1)
@@ -3620,9 +3619,9 @@ decideGoal__12ActTransportFP8Creature:
 /* 800B1FE8 000AEF48  38 21 00 B8 */	addi r1, r1, 0xb8
 /* 800B1FEC 000AEF4C  7C 08 03 A6 */	mtlr r0
 /* 800B1FF0 000AEF50  4E 80 00 20 */	blr 
+.endfn decideGoal__12ActTransportFP8Creature
 
-.global cleanup__12ActTransportFv
-cleanup__12ActTransportFv:
+.fn cleanup__12ActTransportFv, global
 /* 800B1FF4 000AEF54  7C 08 02 A6 */	mflr r0
 /* 800B1FF8 000AEF58  90 01 00 04 */	stw r0, 4(r1)
 /* 800B1FFC 000AEF5C  94 21 FF 98 */	stwu r1, -0x68(r1)
@@ -3746,9 +3745,9 @@ cleanup__12ActTransportFv:
 /* 800B21A0 000AF100  38 21 00 68 */	addi r1, r1, 0x68
 /* 800B21A4 000AF104  7C 08 03 A6 */	mtlr r0
 /* 800B21A8 000AF108  4E 80 00 20 */	blr 
+.endfn cleanup__12ActTransportFv
 
-.global crGetPoint__12ActTransportFi
-crGetPoint__12ActTransportFi:
+.fn crGetPoint__12ActTransportFi, global
 /* 800B21AC 000AF10C  7C 08 02 A6 */	mflr r0
 /* 800B21B0 000AF110  90 01 00 04 */	stw r0, 4(r1)
 /* 800B21B4 000AF114  94 21 FF 78 */	stwu r1, -0x88(r1)
@@ -3873,9 +3872,9 @@ crGetPoint__12ActTransportFi:
 /* 800B2378 000AF2D8  38 21 00 88 */	addi r1, r1, 0x88
 /* 800B237C 000AF2DC  7C 08 03 A6 */	mtlr r0
 /* 800B2380 000AF2E0  4E 80 00 20 */	blr 
+.endfn crGetPoint__12ActTransportFi
 
-.global crPointOpen__12ActTransportFi
-crPointOpen__12ActTransportFi:
+.fn crPointOpen__12ActTransportFi, global
 /* 800B2384 000AF2E4  7C 08 02 A6 */	mflr r0
 /* 800B2388 000AF2E8  2C 04 00 00 */	cmpwi r4, 0
 /* 800B238C 000AF2EC  90 01 00 04 */	stw r0, 4(r1)
@@ -3915,9 +3914,9 @@ crPointOpen__12ActTransportFi:
 /* 800B2404 000AF364  38 21 00 18 */	addi r1, r1, 0x18
 /* 800B2408 000AF368  7C 08 03 A6 */	mtlr r0
 /* 800B240C 000AF36C  4E 80 00 20 */	blr 
+.endfn crPointOpen__12ActTransportFi
 
-.global crInit__12ActTransportFv
-crInit__12ActTransportFv:
+.fn crInit__12ActTransportFv, global
 /* 800B2410 000AF370  7C 08 02 A6 */	mflr r0
 /* 800B2414 000AF374  90 01 00 04 */	stw r0, 4(r1)
 /* 800B2418 000AF378  38 00 FF FF */	li r0, -1
@@ -4260,9 +4259,9 @@ crInit__12ActTransportFv:
 /* 800B2918 000AF878  38 21 01 E8 */	addi r1, r1, 0x1e8
 /* 800B291C 000AF87C  7C 08 03 A6 */	mtlr r0
 /* 800B2920 000AF880  4E 80 00 20 */	blr 
+.endfn crInit__12ActTransportFv
 
-.global crMakeRefs__12ActTransportFv
-crMakeRefs__12ActTransportFv:
+.fn crMakeRefs__12ActTransportFv, global
 /* 800B2924 000AF884  7C 08 02 A6 */	mflr r0
 /* 800B2928 000AF888  90 01 00 04 */	stw r0, 4(r1)
 /* 800B292C 000AF88C  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -4296,9 +4295,9 @@ crMakeRefs__12ActTransportFv:
 /* 800B2998 000AF8F8  38 21 00 28 */	addi r1, r1, 0x28
 /* 800B299C 000AF8FC  7C 08 03 A6 */	mtlr r0
 /* 800B29A0 000AF900  4E 80 00 20 */	blr 
+.endfn crMakeRefs__12ActTransportFv
 
-.global findObstacle__12ActTransportFv
-findObstacle__12ActTransportFv:
+.fn findObstacle__12ActTransportFv, global
 /* 800B29A4 000AF904  7C 08 02 A6 */	mflr r0
 /* 800B29A8 000AF908  90 01 00 04 */	stw r0, 4(r1)
 /* 800B29AC 000AF90C  38 00 00 00 */	li r0, 0
@@ -4514,9 +4513,9 @@ findObstacle__12ActTransportFv:
 /* 800B2CC4 000AFC24  38 21 01 88 */	addi r1, r1, 0x188
 /* 800B2CC8 000AFC28  7C 08 03 A6 */	mtlr r0
 /* 800B2CCC 000AFC2C  4E 80 00 20 */	blr 
+.endfn findObstacle__12ActTransportFv
 
-.global crMove__12ActTransportFv
-crMove__12ActTransportFv:
+.fn crMove__12ActTransportFv, global
 /* 800B2CD0 000AFC30  7C 08 02 A6 */	mflr r0
 /* 800B2CD4 000AFC34  90 01 00 04 */	stw r0, 4(r1)
 /* 800B2CD8 000AFC38  94 21 FD 88 */	stwu r1, -0x278(r1)
@@ -5149,9 +5148,9 @@ crMove__12ActTransportFv:
 /* 800B3610 000B0570  38 21 02 78 */	addi r1, r1, 0x278
 /* 800B3614 000B0574  7C 08 03 A6 */	mtlr r0
 /* 800B3618 000B0578  4E 80 00 20 */	blr 
+.endfn crMove__12ActTransportFv
 
-.global draw__12ActTransportFR8Graphics
-draw__12ActTransportFR8Graphics:
+.fn draw__12ActTransportFR8Graphics, global
 /* 800B361C 000B057C  7C 08 02 A6 */	mflr r0
 /* 800B3620 000B0580  3C A0 80 2B */	lis r5, lbl_802B5EB0@ha
 /* 800B3624 000B0584  90 01 00 04 */	stw r0, 4(r1)
@@ -5674,9 +5673,9 @@ draw__12ActTransportFR8Graphics:
 /* 800B3DD4 000B0D34  38 21 04 38 */	addi r1, r1, 0x438
 /* 800B3DD8 000B0D38  7C 08 03 A6 */	mtlr r0
 /* 800B3DDC 000B0D3C  4E 80 00 20 */	blr 
+.endfn draw__12ActTransportFR8Graphics
 
-.global moveToWayPoint__12ActTransportFv
-moveToWayPoint__12ActTransportFv:
+.fn moveToWayPoint__12ActTransportFv, global
 /* 800B3DE0 000B0D40  7C 08 02 A6 */	mflr r0
 /* 800B3DE4 000B0D44  90 01 00 04 */	stw r0, 4(r1)
 /* 800B3DE8 000B0D48  94 21 FE 98 */	stwu r1, -0x168(r1)
@@ -6162,9 +6161,9 @@ moveToWayPoint__12ActTransportFv:
 /* 800B44D0 000B1430  38 21 01 68 */	addi r1, r1, 0x168
 /* 800B44D4 000B1434  7C 08 03 A6 */	mtlr r0
 /* 800B44D8 000B1438  4E 80 00 20 */	blr 
+.endfn moveToWayPoint__12ActTransportFv
 
-.global __dt__12ActTransportFv
-__dt__12ActTransportFv:
+.fn __dt__12ActTransportFv, weak
 /* 800B44DC 000B143C  7C 08 02 A6 */	mflr r0
 /* 800B44E0 000B1440  90 01 00 04 */	stw r0, 4(r1)
 /* 800B44E4 000B1444  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -6198,17 +6197,19 @@ __dt__12ActTransportFv:
 /* 800B4550 000B14B0  38 21 00 18 */	addi r1, r1, 0x18
 /* 800B4554 000B14B4  7C 08 03 A6 */	mtlr r0
 /* 800B4558 000B14B8  4E 80 00 20 */	blr 
+.endfn __dt__12ActTransportFv
 
-"@184@4@animationKeyUpdated__12ActTransportFR16PaniAnimKeyEvent":
+.fn "@184@4@animationKeyUpdated__12ActTransportFR16PaniAnimKeyEvent", weak
 /* 800B455C 000B14BC  39 60 00 04 */	li r11, 4
 /* 800B4560 000B14C0  7D 63 58 2E */	lwzx r11, r3, r11
 /* 800B4564 000B14C4  7C 63 5A 14 */	add r3, r3, r11
 /* 800B4568 000B14C8  38 63 FF 48 */	addi r3, r3, -184
 /* 800B456C 000B14CC  4B FF B0 84 */	b animationKeyUpdated__12ActTransportFR16PaniAnimKeyEvent
+.endfn "@184@4@animationKeyUpdated__12ActTransportFR16PaniAnimKeyEvent"
 
 .section .rodata, "a"  # 0x80221FE0 - 0x80222DC0
 .balign 8
-lbl_802224B0:
+.obj lbl_802224B0, local
 	.4byte lbl_803E003C
 	.4byte lbl_803E0040
 	.4byte lbl_803E0048
@@ -6216,23 +6217,29 @@ lbl_802224B0:
 	.4byte lbl_803E0058
 	.4byte lbl_803E0060
 	.4byte lbl_803E0068
-lbl_802224CC:
+.endobj lbl_802224B0
+.balign 4
+.obj lbl_802224CC, local
 	.4byte lbl_803E006C
 	.4byte lbl_803E0074
 	.4byte lbl_803E007C
+.endobj lbl_802224CC
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802B5EB0:
+.obj lbl_802B5EB0, local
 	.asciz "aiTransport.cpp"
+.endobj lbl_802B5EB0
 .balign 4
-lbl_802B5EC0:
+.obj lbl_802B5EC0, local
 	.asciz "Transport"
+.endobj lbl_802B5EC0
 .balign 4
-lbl_802B5ECC:
+.obj lbl_802B5ECC, local
 	.asciz "carry-endstick"
+.endobj lbl_802B5ECC
 .balign 4
-lbl_802B5EDC:
+.obj lbl_802B5EDC, local
 	.4byte .L_800B0D0C
 	.4byte .L_800B0C9C
 	.4byte .L_800B0D44
@@ -6241,39 +6248,49 @@ lbl_802B5EDC:
 	.4byte .L_800B0D50
 	.4byte .L_800B135C
 	.4byte .L_800B0D38
+.endobj lbl_802B5EDC
 .balign 4
-lbl_802B5EFC:
+.obj lbl_802B5EFC, local
 	.asciz "%s %d %.1f"
+.endobj lbl_802B5EFC
 .balign 4
-lbl_802B5F08:
+.obj lbl_802B5F08, local
 	.asciz "%.1f/%.1f %s"
+.endobj lbl_802B5F08
 .balign 4
-lbl_802B5F18:
+.obj lbl_802B5F18, local
 	.asciz "%s %d %.1f %s"
+.endobj lbl_802B5F18
 .balign 4
-lbl_802B5F28:
+.obj lbl_802B5F28, local
 	.asciz "ActTransport"
+.endobj lbl_802B5F28
 .balign 4
-lbl_802B5F38:
+.obj lbl_802B5F38, local
 	.asciz "PaniAnimKeyListener"
+.endobj lbl_802B5F38
 .balign 4
-lbl_802B5F4C:
+.obj lbl_802B5F4C, local
 	.asciz "Receiver<Piki>"
+.endobj lbl_802B5F4C
 .balign 4
-lbl_802B5F5C:
+.obj lbl_802B5F5C, local
 	.4byte "__RTTI__15Receiver<4Piki>"
-	.4byte 0x00000000
-	.4byte 0x00000000
-lbl_802B5F68:
+	.4byte 0
+	.4byte 0
+.endobj lbl_802B5F5C
+.balign 4
+.obj lbl_802B5F68, local
 	.4byte __RTTI__19PaniAnimKeyListener
 	.4byte 0x000000B8
 	.4byte "__RTTI__15Receiver<4Piki>"
-	.4byte 0x00000000
+	.4byte 0
 	.4byte __RTTI__6Action
-	.4byte 0x00000000
-	.4byte 0x00000000
-.global __vt__12ActTransport
-__vt__12ActTransport:
+	.4byte 0
+	.4byte 0
+.endobj lbl_802B5F68
+.balign 4
+.obj __vt__12ActTransport, global
 	.4byte __RTTI__12ActTransport
 	.4byte 0
 	.4byte "procMsg__15Receiver<4Piki>FP4PikiP3Msg"
@@ -6303,10 +6320,11 @@ __vt__12ActTransport:
 	.4byte __RTTI__12ActTransport
 	.4byte 0xFFFFFF48
 	.4byte "@184@4@animationKeyUpdated__12ActTransportFR16PaniAnimKeyEvent"
-	.4byte 0
-	.4byte 0
-	.4byte 0
-lbl_802B6004:
+.endobj __vt__12ActTransport
+.balign 4
+.skip 0xC # compiler padding
+.balign 4
+.obj lbl_802B6004, local
 	.4byte ("procMsg__15Receiver<4Piki>FP4PikiP3Msg"+0x30)
 	.4byte ("procMsg__15Receiver<4Piki>FP4PikiP3Msg"+0x58)
 	.4byte ("procMsg__15Receiver<4Piki>FP4PikiP3Msg"+0x6C)
@@ -6318,313 +6336,460 @@ lbl_802B6004:
 	.4byte ("procMsg__15Receiver<4Piki>FP4PikiP3Msg"+0x44)
 	.4byte ("procMsg__15Receiver<4Piki>FP4PikiP3Msg"+0xF8)
 	.4byte ("procMsg__15Receiver<4Piki>FP4PikiP3Msg"+0xE4)
+.endobj lbl_802B6004
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-lbl_803DFF38:
+.obj lbl_803DFF38, local
 	.float 0.0
-lbl_803DFF3C:
+.endobj lbl_803DFF38
+.obj lbl_803DFF3C, local
 	.float 0.0
-lbl_803DFF40:
+.endobj lbl_803DFF3C
+.obj lbl_803DFF40, local
 	.float 0.0
-lbl_803DFF44:
+.endobj lbl_803DFF40
+.obj lbl_803DFF44, local
 	.float 0.0
-lbl_803DFF48:
+.endobj lbl_803DFF44
+.obj lbl_803DFF48, local
 	.float 0.0
-lbl_803DFF4C:
+.endobj lbl_803DFF48
+.obj lbl_803DFF4C, local
 	.float 0.0
-lbl_803DFF50:
+.endobj lbl_803DFF4C
+.obj lbl_803DFF50, local
 	.float 0.0
-lbl_803DFF54:
+.endobj lbl_803DFF50
+.obj lbl_803DFF54, local
 	.float 0.0
-lbl_803DFF58:
+.endobj lbl_803DFF54
+.obj lbl_803DFF58, local
 	.float 0.0
-lbl_803DFF5C:
+.endobj lbl_803DFF58
+.obj lbl_803DFF5C, local
 	.float 0.0
-lbl_803DFF60:
+.endobj lbl_803DFF5C
+.obj lbl_803DFF60, local
 	.float 0.0
-lbl_803DFF64:
+.endobj lbl_803DFF60
+.obj lbl_803DFF64, local
 	.float 0.0
-lbl_803DFF68:
+.endobj lbl_803DFF64
+.obj lbl_803DFF68, local
 	.float 0.0
-lbl_803DFF6C:
+.endobj lbl_803DFF68
+.obj lbl_803DFF6C, local
 	.float 0.0
-lbl_803DFF70:
+.endobj lbl_803DFF6C
+.obj lbl_803DFF70, local
 	.float 0.0
-lbl_803DFF74:
+.endobj lbl_803DFF70
+.obj lbl_803DFF74, local
 	.float 0.0
-lbl_803DFF78:
+.endobj lbl_803DFF74
+.obj lbl_803DFF78, local
 	.float 0.0
-lbl_803DFF7C:
+.endobj lbl_803DFF78
+.obj lbl_803DFF7C, local
 	.float 0.0
-lbl_803DFF80:
+.endobj lbl_803DFF7C
+.obj lbl_803DFF80, local
 	.float 0.0
-lbl_803DFF84:
+.endobj lbl_803DFF80
+.obj lbl_803DFF84, local
 	.float 0.0
-lbl_803DFF88:
+.endobj lbl_803DFF84
+.obj lbl_803DFF88, local
 	.float 0.0
-lbl_803DFF8C:
+.endobj lbl_803DFF88
+.obj lbl_803DFF8C, local
 	.float 0.0
-lbl_803DFF90:
+.endobj lbl_803DFF8C
+.obj lbl_803DFF90, local
 	.float 0.0
-lbl_803DFF94:
+.endobj lbl_803DFF90
+.obj lbl_803DFF94, local
 	.float 0.0
-lbl_803DFF98:
+.endobj lbl_803DFF94
+.obj lbl_803DFF98, local
 	.float 0.0
-lbl_803DFF9C:
+.endobj lbl_803DFF98
+.obj lbl_803DFF9C, local
 	.float 0.0
-lbl_803DFFA0:
+.endobj lbl_803DFF9C
+.obj lbl_803DFFA0, local
 	.float 0.0
-lbl_803DFFA4:
+.endobj lbl_803DFFA0
+.obj lbl_803DFFA4, local
 	.float 0.0
-lbl_803DFFA8:
+.endobj lbl_803DFFA4
+.obj lbl_803DFFA8, local
 	.float 0.0
-lbl_803DFFAC:
+.endobj lbl_803DFFA8
+.obj lbl_803DFFAC, local
 	.float 0.0
-lbl_803DFFB0:
+.endobj lbl_803DFFAC
+.obj lbl_803DFFB0, local
 	.float 0.0
-lbl_803DFFB4:
+.endobj lbl_803DFFB0
+.obj lbl_803DFFB4, local
 	.float 0.0
-lbl_803DFFB8:
+.endobj lbl_803DFFB4
+.obj lbl_803DFFB8, local
 	.float 0.0
-lbl_803DFFBC:
+.endobj lbl_803DFFB8
+.obj lbl_803DFFBC, local
 	.float 0.0
-lbl_803DFFC0:
+.endobj lbl_803DFFBC
+.obj lbl_803DFFC0, local
 	.float 0.0
-lbl_803DFFC4:
+.endobj lbl_803DFFC0
+.obj lbl_803DFFC4, local
 	.float 0.0
-lbl_803DFFC8:
+.endobj lbl_803DFFC4
+.obj lbl_803DFFC8, local
 	.float 0.0
-lbl_803DFFCC:
+.endobj lbl_803DFFC8
+.obj lbl_803DFFCC, local
 	.float 0.0
-lbl_803DFFD0:
+.endobj lbl_803DFFCC
+.obj lbl_803DFFD0, local
 	.float 0.0
-lbl_803DFFD4:
+.endobj lbl_803DFFD0
+.obj lbl_803DFFD4, local
 	.float 0.0
-lbl_803DFFD8:
+.endobj lbl_803DFFD4
+.obj lbl_803DFFD8, local
 	.float 0.0
-lbl_803DFFDC:
+.endobj lbl_803DFFD8
+.obj lbl_803DFFDC, local
 	.float 0.0
-lbl_803DFFE0:
+.endobj lbl_803DFFDC
+.obj lbl_803DFFE0, local
 	.float 0.0
-lbl_803DFFE4:
+.endobj lbl_803DFFE0
+.obj lbl_803DFFE4, local
 	.float 0.0
-lbl_803DFFE8:
+.endobj lbl_803DFFE4
+.obj lbl_803DFFE8, local
 	.float 0.0
-lbl_803DFFEC:
+.endobj lbl_803DFFE8
+.obj lbl_803DFFEC, local
 	.float 0.0
-lbl_803DFFF0:
+.endobj lbl_803DFFEC
+.obj lbl_803DFFF0, local
 	.float 0.0
-lbl_803DFFF4:
+.endobj lbl_803DFFF0
+.obj lbl_803DFFF4, local
 	.float 0.0
-lbl_803DFFF8:
+.endobj lbl_803DFFF4
+.obj lbl_803DFFF8, local
 	.float 0.0
-lbl_803DFFFC:
+.endobj lbl_803DFFF8
+.obj lbl_803DFFFC, local
 	.float 0.0
-lbl_803E0000:
+.endobj lbl_803DFFFC
+.obj lbl_803E0000, local
 	.float 0.0
-lbl_803E0004:
+.endobj lbl_803E0000
+.obj lbl_803E0004, local
 	.float 0.0
-lbl_803E0008:
+.endobj lbl_803E0004
+.obj lbl_803E0008, local
 	.float 0.0
-lbl_803E000C:
+.endobj lbl_803E0008
+.obj lbl_803E000C, local
 	.float 0.0
-lbl_803E0010:
+.endobj lbl_803E000C
+.obj lbl_803E0010, local
 	.float 0.0
-lbl_803E0014:
+.endobj lbl_803E0010
+.obj lbl_803E0014, local
 	.float 0.0
-lbl_803E0018:
+.endobj lbl_803E0014
+.obj lbl_803E0018, local
 	.float 0.0
-lbl_803E001C:
+.endobj lbl_803E0018
+.obj lbl_803E001C, local
 	.float 0.0
-lbl_803E0020:
+.endobj lbl_803E001C
+.obj lbl_803E0020, local
 	.float 0.0
-lbl_803E0024:
+.endobj lbl_803E0020
+.obj lbl_803E0024, local
 	.float 0.0
-lbl_803E0028:
+.endobj lbl_803E0024
+.obj lbl_803E0028, local
 	.float 0.0
-lbl_803E002C:
+.endobj lbl_803E0028
+.obj lbl_803E002C, local
 	.float 0.0
-lbl_803E0030:
+.endobj lbl_803E002C
+.obj lbl_803E0030, local
 	.float 0.0
-lbl_803E0034:
+.endobj lbl_803E0030
+.obj lbl_803E0034, local
 	.float 0.0
-lbl_803E0038:
+.endobj lbl_803E0034
+.obj lbl_803E0038, local
 	.float 0.0
+.endobj lbl_803E0038
 .balign 4
-lbl_803E003C:
+.obj lbl_803E003C, local
 	.asciz "go"
+.endobj lbl_803E003C
 .balign 4
-lbl_803E0040:
+.obj lbl_803E0040, local
 	.asciz "wait"
+.endobj lbl_803E0040
 .balign 4
-lbl_803E0048:
+.obj lbl_803E0048, local
 	.asciz "lift"
+.endobj lbl_803E0048
 .balign 4
-lbl_803E0050:
+.obj lbl_803E0050, local
 	.asciz "move"
+.endobj lbl_803E0050
 .balign 4
-lbl_803E0058:
+.obj lbl_803E0058, local
 	.asciz "guru"
+.endobj lbl_803E0058
 .balign 4
-lbl_803E0060:
+.obj lbl_803E0060, local
 	.asciz "goal"
+.endobj lbl_803E0060
 .balign 4
-lbl_803E0068:
+.obj lbl_803E0068, local
 	.asciz "put"
+.endobj lbl_803E0068
 .balign 4
-lbl_803E006C:
+.obj lbl_803E006C, local
 	.asciz "tube"
+.endobj lbl_803E006C
 .balign 4
-lbl_803E0074:
+.obj lbl_803E0074, local
 	.asciz "vert"
+.endobj lbl_803E0074
 .balign 4
-lbl_803E007C:
+.obj lbl_803E007C, local
 	.asciz "other"
+.endobj lbl_803E007C
 .balign 4
-lbl_803E0084:
+.obj lbl_803E0084, local
 	.asciz " "
+.endobj lbl_803E0084
 .balign 4
-lbl_803E0088:
+.obj lbl_803E0088, local
 	.asciz "%d"
+.endobj lbl_803E0088
 .balign 4
-lbl_803E008C:
+.obj lbl_803E008C, local
 	.float 0.0
-lbl_803E0090:
+.endobj lbl_803E008C
+.obj lbl_803E0090, local
 	.float 0.0
-lbl_803E0094:
+.endobj lbl_803E0090
+.obj lbl_803E0094, local
 	.float 0.0
-lbl_803E0098:
+.endobj lbl_803E0094
+.obj lbl_803E0098, local
 	.float 0.0
-lbl_803E009C:
+.endobj lbl_803E0098
+.obj lbl_803E009C, local
 	.float 0.0
-lbl_803E00A0:
+.endobj lbl_803E009C
+.obj lbl_803E00A0, local
 	.float 0.0
-lbl_803E00A4:
+.endobj lbl_803E00A0
+.obj lbl_803E00A4, local
 	.float 0.0
-lbl_803E00A8:
+.endobj lbl_803E00A4
+.obj lbl_803E00A8, local
 	.float 0.0
-lbl_803E00AC:
+.endobj lbl_803E00A8
+.obj lbl_803E00AC, local
 	.float 0.0
-lbl_803E00B0:
+.endobj lbl_803E00AC
+.obj lbl_803E00B0, local
 	.float 0.0
-lbl_803E00B4:
+.endobj lbl_803E00B0
+.obj lbl_803E00B4, local
 	.float 0.0
-lbl_803E00B8:
+.endobj lbl_803E00B4
+.obj lbl_803E00B8, local
 	.float 0.0
-lbl_803E00BC:
+.endobj lbl_803E00B8
+.obj lbl_803E00BC, local
 	.float 0.0
-lbl_803E00C0:
+.endobj lbl_803E00BC
+.obj lbl_803E00C0, local
 	.float 0.0
-lbl_803E00C4:
+.endobj lbl_803E00C0
+.obj lbl_803E00C4, local
 	.float 0.0
-lbl_803E00C8:
+.endobj lbl_803E00C4
+.obj lbl_803E00C8, local
 	.float 0.0
-lbl_803E00CC:
+.endobj lbl_803E00C8
+.obj lbl_803E00CC, local
 	.float 0.0
-lbl_803E00D0:
+.endobj lbl_803E00CC
+.obj lbl_803E00D0, local
 	.float 0.0
-lbl_803E00D4:
+.endobj lbl_803E00D0
+.obj lbl_803E00D4, local
 	.float 0.0
-lbl_803E00D8:
+.endobj lbl_803E00D4
+.obj lbl_803E00D8, local
 	.float 0.0
-lbl_803E00DC:
+.endobj lbl_803E00D8
+.obj lbl_803E00DC, local
 	.float 0.0
-lbl_803E00E0:
+.endobj lbl_803E00DC
+.obj lbl_803E00E0, local
 	.float 0.0
-lbl_803E00E4:
+.endobj lbl_803E00E0
+.obj lbl_803E00E4, local
 	.float 0.0
-lbl_803E00E8:
+.endobj lbl_803E00E4
+.obj lbl_803E00E8, local
 	.float 0.0
-__RTTI__19PaniAnimKeyListener:
+.endobj lbl_803E00E8
+.balign 4
+.obj __RTTI__19PaniAnimKeyListener, local
 	.4byte lbl_802B5F38
 	.4byte 0
-"__RTTI__15Receiver<4Piki>":
+.endobj __RTTI__19PaniAnimKeyListener
+.balign 4
+.obj "__RTTI__15Receiver<4Piki>", local
 	.4byte lbl_802B5F4C
 	.4byte 0
+.endobj "__RTTI__15Receiver<4Piki>"
 .balign 4
-lbl_803E00FC:
+.obj lbl_803E00FC, local
 	.asciz "Action"
+.endobj lbl_803E00FC
 .balign 4
-__RTTI__6Action:
+.obj __RTTI__6Action, local
 	.4byte lbl_803E00FC
 	.4byte lbl_802B5F5C
-__RTTI__12ActTransport:
+.endobj __RTTI__6Action
+.balign 4
+.obj __RTTI__12ActTransport, local
 	.4byte lbl_802B5F28
 	.4byte lbl_802B5F68
+.endobj __RTTI__12ActTransport
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803E91E8:
+.obj lbl_803E91E8, local
 	.float 0.0
-lbl_803E91EC:
+.endobj lbl_803E91E8
+.obj lbl_803E91EC, local
 	.float 400.0
-lbl_803E91F0:
+.endobj lbl_803E91EC
+.obj lbl_803E91F0, local
 	.float 20.0
+.endobj lbl_803E91F0
 .balign 8
-lbl_803E91F8:
+.obj lbl_803E91F8, local
 	.double 0.5
-lbl_803E9200:
-	.double 3.0
-lbl_803E9208:
-	.float 3.0
-lbl_803E920C:
-	.float 1.0
-lbl_803E9210:
-	.float 0.5
+.endobj lbl_803E91F8
 .balign 8
-lbl_803E9218:
-	.4byte 0x43300000
-	.4byte 0x80000000
-lbl_803E9220:
+.obj lbl_803E9200, local
+	.double 3.0
+.endobj lbl_803E9200
+.balign 4
+.obj lbl_803E9208, local
+	.float 3.0
+.endobj lbl_803E9208
+.obj lbl_803E920C, local
+	.float 1.0
+.endobj lbl_803E920C
+.obj lbl_803E9210, local
+	.float 0.5
+.endobj lbl_803E9210
+.balign 8
+.obj lbl_803E9218, local
+	.8byte 0x4330000080000000
+.endobj lbl_803E9218
+.balign 4
+.obj lbl_803E9220, local
 	.float 200.0
-lbl_803E9224:
+.endobj lbl_803E9220
+.obj lbl_803E9224, local
 	.float 32767.0
-lbl_803E9228:
+.endobj lbl_803E9224
+.obj lbl_803E9228, local
 	.float 60.0
-lbl_803E922C:
+.endobj lbl_803E9228
+.obj lbl_803E922C, local
 	.float 8.8
-lbl_803E9230:
+.endobj lbl_803E922C
+.obj lbl_803E9230, local
 	.float 5.0
-lbl_803E9234:
+.endobj lbl_803E9230
+.obj lbl_803E9234, local
 	.float 100.0
-lbl_803E9238:
+.endobj lbl_803E9234
+.obj lbl_803E9238, local
 	.float 6.0
-lbl_803E923C:
+.endobj lbl_803E9238
+.obj lbl_803E923C, local
 	.float -8.0
-lbl_803E9240:
+.endobj lbl_803E923C
+.obj lbl_803E9240, local
 	.float 8.0
-lbl_803E9244:
+.endobj lbl_803E9240
+.obj lbl_803E9244, local
 	.float -1.0
-lbl_803E9248:
+.endobj lbl_803E9244
+.obj lbl_803E9248, local
 	.float 0.2
-lbl_803E924C:
+.endobj lbl_803E9248
+.obj lbl_803E924C, local
 	.float 11.0
-lbl_803E9250:
+.endobj lbl_803E924C
+.obj lbl_803E9250, local
 	.float 50.0
-lbl_803E9254:
+.endobj lbl_803E9250
+.obj lbl_803E9254, local
 	.float 10.0
-lbl_803E9258:
+.endobj lbl_803E9254
+.obj lbl_803E9258, local
 	.float 0.7
-lbl_803E925C:
+.endobj lbl_803E9258
+.obj lbl_803E925C, local
 	.float 160.0
-lbl_803E9260:
+.endobj lbl_803E925C
+.obj lbl_803E9260, local # pi
 	.float 3.1415927
-lbl_803E9264:
+.endobj lbl_803E9260
+.obj lbl_803E9264, local # tau
 	.float 6.2831855
-lbl_803E9268:
+.endobj lbl_803E9264
+.obj lbl_803E9268, local
 	.float 80.0
-lbl_803E926C:
+.endobj lbl_803E9268
+.obj lbl_803E926C, local
 	.float 4.0
-lbl_803E9270:
+.endobj lbl_803E926C
+.obj lbl_803E9270, local
 	.float 0.3
-lbl_803E9274:
+.endobj lbl_803E9270
+.obj lbl_803E9274, local
 	.float 2.0
-lbl_803E9278:
+.endobj lbl_803E9274
+.obj lbl_803E9278, local
 	.float 130.0
-lbl_803E927C:
+.endobj lbl_803E9278
+.obj lbl_803E927C, local
 	.float 40.0
-lbl_803E9280:
+.endobj lbl_803E927C
+.obj lbl_803E9280, local
 	.float 30.0
-lbl_803E9284:
+.endobj lbl_803E9280
+.obj lbl_803E9284, local
 	.float 15.0
+.endobj lbl_803E9284

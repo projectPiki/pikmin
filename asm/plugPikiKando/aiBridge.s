@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global __ct__9ActBridgeFP4Piki
-__ct__9ActBridgeFP4Piki:
+.fn __ct__9ActBridgeFP4Piki, global
 /* 800ACEA0 000A9E00  7C 08 02 A6 */	mflr r0
 /* 800ACEA4 000A9E04  90 01 00 04 */	stw r0, 4(r1)
 /* 800ACEA8 000A9E08  7C 80 07 35 */	extsh. r0, r4
@@ -46,9 +45,9 @@ __ct__9ActBridgeFP4Piki:
 /* 800ACF40 000A9EA0  38 21 00 20 */	addi r1, r1, 0x20
 /* 800ACF44 000A9EA4  7C 08 03 A6 */	mtlr r0
 /* 800ACF48 000A9EA8  4E 80 00 20 */	blr 
+.endfn __ct__9ActBridgeFP4Piki
 
-.global init__9ActBridgeFP8Creature
-init__9ActBridgeFP8Creature:
+.fn init__9ActBridgeFP8Creature, global
 /* 800ACF4C 000A9EAC  7C 08 02 A6 */	mflr r0
 /* 800ACF50 000A9EB0  38 A0 00 00 */	li r5, 0
 /* 800ACF54 000A9EB4  90 01 00 04 */	stw r0, 4(r1)
@@ -105,9 +104,9 @@ init__9ActBridgeFP8Creature:
 /* 800AD01C 000A9F7C  38 21 00 30 */	addi r1, r1, 0x30
 /* 800AD020 000A9F80  7C 08 03 A6 */	mtlr r0
 /* 800AD024 000A9F84  4E 80 00 20 */	blr 
+.endfn init__9ActBridgeFP8Creature
 
-.global dump__9ActBridgeFv
-dump__9ActBridgeFv:
+.fn dump__9ActBridgeFv, global
 /* 800AD028 000A9F88  7C 08 02 A6 */	mflr r0
 /* 800AD02C 000A9F8C  3C 80 80 22 */	lis r4, lbl_802224A0@ha
 /* 800AD030 000A9F90  90 01 00 04 */	stw r0, 4(r1)
@@ -135,9 +134,9 @@ dump__9ActBridgeFv:
 /* 800AD088 000A9FE8  38 21 00 B8 */	addi r1, r1, 0xb8
 /* 800AD08C 000A9FEC  7C 08 03 A6 */	mtlr r0
 /* 800AD090 000A9FF0  4E 80 00 20 */	blr 
+.endfn dump__9ActBridgeFv
 
-.global exec__9ActBridgeFv
-exec__9ActBridgeFv:
+.fn exec__9ActBridgeFv, global
 /* 800AD094 000A9FF4  7C 08 02 A6 */	mflr r0
 /* 800AD098 000A9FF8  90 01 00 04 */	stw r0, 4(r1)
 /* 800AD09C 000A9FFC  94 21 FF F8 */	stwu r1, -8(r1)
@@ -183,9 +182,9 @@ exec__9ActBridgeFv:
 /* 800AD11C 000AA07C  38 21 00 08 */	addi r1, r1, 8
 /* 800AD120 000AA080  7C 08 03 A6 */	mtlr r0
 /* 800AD124 000AA084  4E 80 00 20 */	blr 
+.endfn exec__9ActBridgeFv
 
-.global procWallMsg__9ActBridgeFP4PikiP7MsgWall
-procWallMsg__9ActBridgeFP4PikiP7MsgWall:
+.fn procWallMsg__9ActBridgeFP4PikiP7MsgWall, global
 /* 800AD128 000AA088  80 C5 00 04 */	lwz r6, 4(r5)
 /* 800AD12C 000AA08C  38 00 00 08 */	li r0, 8
 /* 800AD130 000AA090  80 A6 00 00 */	lwz r5, 0(r6)
@@ -196,9 +195,9 @@ procWallMsg__9ActBridgeFP4PikiP7MsgWall:
 /* 800AD144 000AA0A4  90 83 00 3C */	stw r4, 0x3c(r3)
 /* 800AD148 000AA0A8  98 03 00 33 */	stb r0, 0x33(r3)
 /* 800AD14C 000AA0AC  4E 80 00 20 */	blr 
+.endfn procWallMsg__9ActBridgeFP4PikiP7MsgWall
 
-.global animationKeyUpdated__9ActBridgeFR16PaniAnimKeyEvent
-animationKeyUpdated__9ActBridgeFR16PaniAnimKeyEvent:
+.fn animationKeyUpdated__9ActBridgeFR16PaniAnimKeyEvent, global
 /* 800AD150 000AA0B0  7C 08 02 A6 */	mflr r0
 /* 800AD154 000AA0B4  90 01 00 04 */	stw r0, 4(r1)
 /* 800AD158 000AA0B8  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -249,9 +248,9 @@ animationKeyUpdated__9ActBridgeFR16PaniAnimKeyEvent:
 /* 800AD1F4 000AA154  38 21 00 28 */	addi r1, r1, 0x28
 /* 800AD1F8 000AA158  7C 08 03 A6 */	mtlr r0
 /* 800AD1FC 000AA15C  4E 80 00 20 */	blr 
+.endfn animationKeyUpdated__9ActBridgeFR16PaniAnimKeyEvent
 
-.global cleanup__9ActBridgeFv
-cleanup__9ActBridgeFv:
+.fn cleanup__9ActBridgeFv, global
 /* 800AD200 000AA160  80 83 00 0C */	lwz r4, 0xc(r3)
 /* 800AD204 000AA164  80 04 00 C8 */	lwz r0, 0xc8(r4)
 /* 800AD208 000AA168  54 00 03 98 */	rlwinm r0, r0, 0, 0xe, 0xc
@@ -261,9 +260,9 @@ cleanup__9ActBridgeFv:
 /* 800AD218 000AA178  54 00 06 6E */	rlwinm r0, r0, 0, 0x19, 0x17
 /* 800AD21C 000AA17C  90 03 00 C8 */	stw r0, 0xc8(r3)
 /* 800AD220 000AA180  4E 80 00 20 */	blr 
+.endfn cleanup__9ActBridgeFv
 
-.global newExeApproach__9ActBridgeFv
-newExeApproach__9ActBridgeFv:
+.fn newExeApproach__9ActBridgeFv, global
 /* 800AD224 000AA184  7C 08 02 A6 */	mflr r0
 /* 800AD228 000AA188  90 01 00 04 */	stw r0, 4(r1)
 /* 800AD22C 000AA18C  94 21 FE F0 */	stwu r1, -0x110(r1)
@@ -493,9 +492,9 @@ newExeApproach__9ActBridgeFv:
 /* 800AD578 000AA4D8  38 21 01 10 */	addi r1, r1, 0x110
 /* 800AD57C 000AA4DC  7C 08 03 A6 */	mtlr r0
 /* 800AD580 000AA4E0  4E 80 00 20 */	blr 
+.endfn newExeApproach__9ActBridgeFv
 
-.global newInitGo__9ActBridgeFv
-newInitGo__9ActBridgeFv:
+.fn newInitGo__9ActBridgeFv, global
 /* 800AD584 000AA4E4  7C 08 02 A6 */	mflr r0
 /* 800AD588 000AA4E8  90 01 00 04 */	stw r0, 4(r1)
 /* 800AD58C 000AA4EC  38 00 00 02 */	li r0, 2
@@ -555,9 +554,9 @@ newInitGo__9ActBridgeFv:
 /* 800AD658 000AA5B8  38 21 00 38 */	addi r1, r1, 0x38
 /* 800AD65C 000AA5BC  7C 08 03 A6 */	mtlr r0
 /* 800AD660 000AA5C0  4E 80 00 20 */	blr 
+.endfn newInitGo__9ActBridgeFv
 
-.global newExeGo__9ActBridgeFv
-newExeGo__9ActBridgeFv:
+.fn newExeGo__9ActBridgeFv, global
 /* 800AD664 000AA5C4  7C 08 02 A6 */	mflr r0
 /* 800AD668 000AA5C8  90 01 00 04 */	stw r0, 4(r1)
 /* 800AD66C 000AA5CC  94 21 FE B0 */	stwu r1, -0x150(r1)
@@ -765,9 +764,9 @@ newExeGo__9ActBridgeFv:
 /* 800AD964 000AA8C4  38 21 01 50 */	addi r1, r1, 0x150
 /* 800AD968 000AA8C8  7C 08 03 A6 */	mtlr r0
 /* 800AD96C 000AA8CC  4E 80 00 20 */	blr 
+.endfn newExeGo__9ActBridgeFv
 
-.global newInitWork__9ActBridgeFv
-newInitWork__9ActBridgeFv:
+.fn newInitWork__9ActBridgeFv, global
 /* 800AD970 000AA8D0  7C 08 02 A6 */	mflr r0
 /* 800AD974 000AA8D4  90 01 00 04 */	stw r0, 4(r1)
 /* 800AD978 000AA8D8  38 00 00 04 */	li r0, 4
@@ -822,9 +821,9 @@ newInitWork__9ActBridgeFv:
 /* 800ADA34 000AA994  38 21 00 30 */	addi r1, r1, 0x30
 /* 800ADA38 000AA998  7C 08 03 A6 */	mtlr r0
 /* 800ADA3C 000AA99C  4E 80 00 20 */	blr 
+.endfn newInitWork__9ActBridgeFv
 
-.global newExeWork__9ActBridgeFv
-newExeWork__9ActBridgeFv:
+.fn newExeWork__9ActBridgeFv, global
 /* 800ADA40 000AA9A0  7C 08 02 A6 */	mflr r0
 /* 800ADA44 000AA9A4  90 01 00 04 */	stw r0, 4(r1)
 /* 800ADA48 000AA9A8  94 21 FE 70 */	stwu r1, -0x190(r1)
@@ -1257,9 +1256,9 @@ newExeWork__9ActBridgeFv:
 /* 800AE09C 000AAFFC  38 21 01 90 */	addi r1, r1, 0x190
 /* 800AE0A0 000AB000  7C 08 03 A6 */	mtlr r0
 /* 800AE0A4 000AB004  4E 80 00 20 */	blr 
+.endfn newExeWork__9ActBridgeFv
 
-.global __dt__9ActBridgeFv
-__dt__9ActBridgeFv:
+.fn __dt__9ActBridgeFv, weak
 /* 800AE0A8 000AB008  7C 08 02 A6 */	mflr r0
 /* 800AE0AC 000AB00C  90 01 00 04 */	stw r0, 4(r1)
 /* 800AE0B0 000AB010  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -1293,62 +1292,64 @@ __dt__9ActBridgeFv:
 /* 800AE11C 000AB07C  38 21 00 18 */	addi r1, r1, 0x18
 /* 800AE120 000AB080  7C 08 03 A6 */	mtlr r0
 /* 800AE124 000AB084  4E 80 00 20 */	blr 
+.endfn __dt__9ActBridgeFv
 
-"@80@4@animationKeyUpdated__9ActBridgeFR16PaniAnimKeyEvent":
+.fn "@80@4@animationKeyUpdated__9ActBridgeFR16PaniAnimKeyEvent", weak
 /* 800AE128 000AB088  39 60 00 04 */	li r11, 4
 /* 800AE12C 000AB08C  7D 63 58 2E */	lwzx r11, r3, r11
 /* 800AE130 000AB090  7C 63 5A 14 */	add r3, r3, r11
 /* 800AE134 000AB094  38 63 FF B0 */	addi r3, r3, -80
 /* 800AE138 000AB098  4B FF F0 18 */	b animationKeyUpdated__9ActBridgeFR16PaniAnimKeyEvent
+.endfn "@80@4@animationKeyUpdated__9ActBridgeFR16PaniAnimKeyEvent"
 
 .section .rodata, "a"  # 0x80221FE0 - 0x80222DC0
 .balign 8
-lbl_802224A0:
+.obj lbl_802224A0, local
 	.4byte lbl_802B5BFC
 	.4byte lbl_803DFEB0
 	.4byte lbl_803DFEB8
 	.4byte lbl_803DFEBC
+.endobj lbl_802224A0
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802B5BE0:
+.obj lbl_802B5BE0, local
 	.asciz "aiBridge.cpp"
+.endobj lbl_802B5BE0
 .balign 4
-lbl_802B5BF0:
+.obj lbl_802B5BF0, local
 	.asciz "aiBridge"
+.endobj lbl_802B5BF0
 .balign 4
-lbl_802B5BFC:
+.obj lbl_802B5BFC, local
 	.asciz "approach"
+.endobj lbl_802B5BFC
 .balign 4
-lbl_802B5C08:
+.obj lbl_802B5C08, local
 	.asciz "Interaction"
+.endobj lbl_802B5C08
 .balign 4
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
+.skip 0x2C # compiler padding
 .balign 4
-lbl_802B5C40:
+.obj lbl_802B5C40, local
 	.asciz "ActBridge"
+.endobj lbl_802B5C40
 .balign 4
-lbl_802B5C4C:
+.obj lbl_802B5C4C, local
 	.asciz "PaniAnimKeyListener"
+.endobj lbl_802B5C4C
 .balign 4
-lbl_802B5C60:
+.obj lbl_802B5C60, local
 	.asciz "Receiver<Piki>"
+.endobj lbl_802B5C60
 .balign 4
-lbl_802B5C70:
+.obj lbl_802B5C70, local
 	.4byte "__RTTI__15Receiver<4Piki>"
 	.4byte 0
 	.4byte 0
-lbl_802B5C7C:
+.endobj lbl_802B5C70
+.balign 4
+.obj lbl_802B5C7C, local
 	.4byte __RTTI__19PaniAnimKeyListener
 	.4byte 0x50
 	.4byte "__RTTI__15Receiver<4Piki>"
@@ -1356,8 +1357,9 @@ lbl_802B5C7C:
 	.4byte __RTTI__6Action
 	.4byte 0
 	.4byte 0
-.global __vt__9ActBridge
-__vt__9ActBridge:
+.endobj lbl_802B5C7C
+.balign 4
+.obj __vt__9ActBridge, global
 	.4byte __RTTI__9ActBridge
 	.4byte 0
 	.4byte "procMsg__15Receiver<4Piki>FP4PikiP3Msg"
@@ -1387,10 +1389,11 @@ __vt__9ActBridge:
 	.4byte __RTTI__9ActBridge
 	.4byte 0xFFFFFFB0
 	.4byte "@80@4@animationKeyUpdated__9ActBridgeFR16PaniAnimKeyEvent"
-	.4byte 0
-	.4byte 0
-	.4byte 0
-lbl_802B5D18:
+.endobj __vt__9ActBridge
+.balign 4
+.skip 0xC # compiler padding
+.balign 4
+.obj lbl_802B5D18, local
 	.4byte ("procMsg__15Receiver<4Piki>FP4PikiP3Msg"+0x30)
 	.4byte ("procMsg__15Receiver<4Piki>FP4PikiP3Msg"+0x58)
 	.4byte ("procMsg__15Receiver<4Piki>FP4PikiP3Msg"+0x6C)
@@ -1402,77 +1405,109 @@ lbl_802B5D18:
 	.4byte ("procMsg__15Receiver<4Piki>FP4PikiP3Msg"+0x44)
 	.4byte ("procMsg__15Receiver<4Piki>FP4PikiP3Msg"+0xF8)
 	.4byte ("procMsg__15Receiver<4Piki>FP4PikiP3Msg"+0xE4)
+.endobj lbl_802B5D18
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-lbl_803DFEA8:
+.obj lbl_803DFEA8, local
 	.asciz "Bridge"
+.endobj lbl_803DFEA8
 .balign 4
-lbl_803DFEB0:
+.obj lbl_803DFEB0, local
 	.asciz "detour"
+.endobj lbl_803DFEB0
 .balign 4
-lbl_803DFEB8:
+.obj lbl_803DFEB8, local
 	.asciz "go"
+.endobj lbl_803DFEB8
 .balign 4
-lbl_803DFEBC:
+.obj lbl_803DFEBC, local
 	.asciz "work"
+.endobj lbl_803DFEBC
 .balign 4
-lbl_803DFEC4:
+.obj lbl_803DFEC4, local
 	.float 0.0
-lbl_803DFEC8:
+.endobj lbl_803DFEC4
+.obj lbl_803DFEC8, local
 	.float 0.0
-lbl_803DFECC:
+.endobj lbl_803DFEC8
+.obj lbl_803DFECC, local
 	.float 0.0
-__RTTI__19PaniAnimKeyListener:
+.endobj lbl_803DFECC
+.balign 4
+.obj __RTTI__19PaniAnimKeyListener, local
 	.4byte lbl_802B5C4C
 	.4byte 0
-"__RTTI__15Receiver<4Piki>":
+.endobj __RTTI__19PaniAnimKeyListener
+.balign 4
+.obj "__RTTI__15Receiver<4Piki>", local
 	.4byte lbl_802B5C60
 	.4byte 0
+.endobj "__RTTI__15Receiver<4Piki>"
 .balign 4
-lbl_803DFEE0:
+.obj lbl_803DFEE0, local
 	.asciz "Action"
+.endobj lbl_803DFEE0
 .balign 4
-__RTTI__6Action:
+.obj __RTTI__6Action, local
 	.4byte lbl_803DFEE0
 	.4byte lbl_802B5C70
-__RTTI__9ActBridge:
+.endobj __RTTI__6Action
+.balign 4
+.obj __RTTI__9ActBridge, local
 	.4byte lbl_802B5C40
 	.4byte lbl_802B5C7C
+.endobj __RTTI__9ActBridge
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803E9168:
+.obj lbl_803E9168, local
 	.float 0.0
-lbl_803E916C:
+.endobj lbl_803E9168
+.obj lbl_803E916C, local
 	.float 1.0
-lbl_803E9170:
+.endobj lbl_803E916C
+.obj lbl_803E9170, local
 	.float 32767.0
-lbl_803E9174:
+.endobj lbl_803E9170
+.obj lbl_803E9174, local
 	.float 4.0
+.endobj lbl_803E9174
 .balign 8
-lbl_803E9178:
-	.4byte 0x43300000
-	.4byte 0x80000000
-lbl_803E9180:
+.obj lbl_803E9178, local
+	.8byte 0x4330000080000000
+.endobj lbl_803E9178
+.balign 4
+.obj lbl_803E9180, local
 	.float 0.8
-lbl_803E9184:
+.endobj lbl_803E9180
+.obj lbl_803E9184, local
 	.float -0.8
-lbl_803E9188:
+.endobj lbl_803E9184
+.obj lbl_803E9188, local
 	.float 0.5
-lbl_803E918C:
+.endobj lbl_803E9188
+.obj lbl_803E918C, local
 	.float -1.0
-lbl_803E9190:
+.endobj lbl_803E918C
+.obj lbl_803E9190, local
 	.float 0.7
-lbl_803E9194:
+.endobj lbl_803E9190
+.obj lbl_803E9194, local
 	.float 300.0
-lbl_803E9198:
+.endobj lbl_803E9194
+.obj lbl_803E9198, local
 	.float -10.0
-lbl_803E919C:
+.endobj lbl_803E9198
+.obj lbl_803E919C, local
 	.float 60.0
-lbl_803E91A0:
+.endobj lbl_803E919C
+.obj lbl_803E91A0, local
 	.float 20.0
-lbl_803E91A4:
+.endobj lbl_803E91A0
+.obj lbl_803E91A4, local
 	.float 24.0
-lbl_803E91A8:
+.endobj lbl_803E91A4
+.obj lbl_803E91A8, local
 	.float 0.3
+.endobj lbl_803E91A8

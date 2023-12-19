@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global menuEnterZ__12PositionMenuFR4Menu
-menuEnterZ__12PositionMenuFR4Menu:
+.fn menuEnterZ__12PositionMenuFR4Menu, weak
 /* 800697FC 0006675C  7C 08 02 A6 */	mflr r0
 /* 80069800 00066760  38 CD 95 D0 */	addi r6, r13, lbl_803DE2F0@sda21
 /* 80069804 00066764  90 01 00 04 */	stw r0, 4(r1)
@@ -24,9 +23,9 @@ menuEnterZ__12PositionMenuFR4Menu:
 /* 80069848 000667A8  38 21 00 08 */	addi r1, r1, 8
 /* 8006984C 000667AC  7C 08 03 A6 */	mtlr r0
 /* 80069850 000667B0  4E 80 00 20 */	blr 
+.endfn menuEnterZ__12PositionMenuFR4Menu
 
-.global menuEnterY__12PositionMenuFR4Menu
-menuEnterY__12PositionMenuFR4Menu:
+.fn menuEnterY__12PositionMenuFR4Menu, weak
 /* 80069854 000667B4  7C 08 02 A6 */	mflr r0
 /* 80069858 000667B8  38 CD 95 D4 */	addi r6, r13, lbl_803DE2F4@sda21
 /* 8006985C 000667BC  90 01 00 04 */	stw r0, 4(r1)
@@ -49,9 +48,9 @@ menuEnterY__12PositionMenuFR4Menu:
 /* 800698A0 00066800  38 21 00 08 */	addi r1, r1, 8
 /* 800698A4 00066804  7C 08 03 A6 */	mtlr r0
 /* 800698A8 00066808  4E 80 00 20 */	blr 
+.endfn menuEnterY__12PositionMenuFR4Menu
 
-.global menuEnterX__12PositionMenuFR4Menu
-menuEnterX__12PositionMenuFR4Menu:
+.fn menuEnterX__12PositionMenuFR4Menu, weak
 /* 800698AC 0006680C  7C 08 02 A6 */	mflr r0
 /* 800698B0 00066810  38 CD 95 D8 */	addi r6, r13, lbl_803DE2F8@sda21
 /* 800698B4 00066814  90 01 00 04 */	stw r0, 4(r1)
@@ -73,9 +72,9 @@ menuEnterX__12PositionMenuFR4Menu:
 /* 800698F4 00066854  38 21 00 08 */	addi r1, r1, 8
 /* 800698F8 00066858  7C 08 03 A6 */	mtlr r0
 /* 800698FC 0006685C  4E 80 00 20 */	blr 
+.endfn menuEnterX__12PositionMenuFR4Menu
 
-.global menuIncrease__12PositionMenuFR4Menu
-menuIncrease__12PositionMenuFR4Menu:
+.fn menuIncrease__12PositionMenuFR4Menu, weak
 /* 80069900 00066860  7C 08 02 A6 */	mflr r0
 /* 80069904 00066864  90 01 00 04 */	stw r0, 4(r1)
 /* 80069908 00066868  94 21 FF F8 */	stwu r1, -8(r1)
@@ -119,9 +118,9 @@ menuIncrease__12PositionMenuFR4Menu:
 /* 80069998 000668F8  38 21 00 08 */	addi r1, r1, 8
 /* 8006999C 000668FC  7C 08 03 A6 */	mtlr r0
 /* 800699A0 00066900  4E 80 00 20 */	blr 
+.endfn menuIncrease__12PositionMenuFR4Menu
 
-.global menuDecrease__12PositionMenuFR4Menu
-menuDecrease__12PositionMenuFR4Menu:
+.fn menuDecrease__12PositionMenuFR4Menu, weak
 /* 800699A4 00066904  7C 08 02 A6 */	mflr r0
 /* 800699A8 00066908  90 01 00 04 */	stw r0, 4(r1)
 /* 800699AC 0006690C  94 21 FF F8 */	stwu r1, -8(r1)
@@ -165,9 +164,9 @@ menuDecrease__12PositionMenuFR4Menu:
 /* 80069A3C 0006699C  38 21 00 08 */	addi r1, r1, 8
 /* 80069A40 000669A0  7C 08 03 A6 */	mtlr r0
 /* 80069A44 000669A4  4E 80 00 20 */	blr 
+.endfn menuDecrease__12PositionMenuFR4Menu
 
-.global menuEnterA__10ColourMenuFR4Menu
-menuEnterA__10ColourMenuFR4Menu:
+.fn menuEnterA__10ColourMenuFR4Menu, weak
 /* 80069A48 000669A8  7C 08 02 A6 */	mflr r0
 /* 80069A4C 000669AC  90 01 00 04 */	stw r0, 4(r1)
 /* 80069A50 000669B0  38 0D 95 DC */	addi r0, r13, lbl_803DE2FC@sda21
@@ -188,9 +187,9 @@ menuEnterA__10ColourMenuFR4Menu:
 /* 80069A8C 000669EC  38 21 00 08 */	addi r1, r1, 8
 /* 80069A90 000669F0  7C 08 03 A6 */	mtlr r0
 /* 80069A94 000669F4  4E 80 00 20 */	blr 
+.endfn menuEnterA__10ColourMenuFR4Menu
 
-.global menuEnterB__10ColourMenuFR4Menu
-menuEnterB__10ColourMenuFR4Menu:
+.fn menuEnterB__10ColourMenuFR4Menu, weak
 /* 80069A98 000669F8  7C 08 02 A6 */	mflr r0
 /* 80069A9C 000669FC  90 01 00 04 */	stw r0, 4(r1)
 /* 80069AA0 00066A00  38 0D 95 E8 */	addi r0, r13, lbl_803DE308@sda21
@@ -211,9 +210,9 @@ menuEnterB__10ColourMenuFR4Menu:
 /* 80069ADC 00066A3C  38 21 00 08 */	addi r1, r1, 8
 /* 80069AE0 00066A40  7C 08 03 A6 */	mtlr r0
 /* 80069AE4 00066A44  4E 80 00 20 */	blr 
+.endfn menuEnterB__10ColourMenuFR4Menu
 
-.global menuEnterG__10ColourMenuFR4Menu
-menuEnterG__10ColourMenuFR4Menu:
+.fn menuEnterG__10ColourMenuFR4Menu, weak
 /* 80069AE8 00066A48  7C 08 02 A6 */	mflr r0
 /* 80069AEC 00066A4C  90 01 00 04 */	stw r0, 4(r1)
 /* 80069AF0 00066A50  38 0D 95 EC */	addi r0, r13, lbl_803DE30C@sda21
@@ -234,9 +233,9 @@ menuEnterG__10ColourMenuFR4Menu:
 /* 80069B2C 00066A8C  38 21 00 08 */	addi r1, r1, 8
 /* 80069B30 00066A90  7C 08 03 A6 */	mtlr r0
 /* 80069B34 00066A94  4E 80 00 20 */	blr 
+.endfn menuEnterG__10ColourMenuFR4Menu
 
-.global menuEnterR__10ColourMenuFR4Menu
-menuEnterR__10ColourMenuFR4Menu:
+.fn menuEnterR__10ColourMenuFR4Menu, weak
 /* 80069B38 00066A98  7C 08 02 A6 */	mflr r0
 /* 80069B3C 00066A9C  90 01 00 04 */	stw r0, 4(r1)
 /* 80069B40 00066AA0  38 0D 95 F0 */	addi r0, r13, lbl_803DE310@sda21
@@ -256,9 +255,9 @@ menuEnterR__10ColourMenuFR4Menu:
 /* 80069B78 00066AD8  38 21 00 08 */	addi r1, r1, 8
 /* 80069B7C 00066ADC  7C 08 03 A6 */	mtlr r0
 /* 80069B80 00066AE0  4E 80 00 20 */	blr 
+.endfn menuEnterR__10ColourMenuFR4Menu
 
-.global menuIncrease__10ColourMenuFR4Menu
-menuIncrease__10ColourMenuFR4Menu:
+.fn menuIncrease__10ColourMenuFR4Menu, weak
 /* 80069B84 00066AE4  7C 08 02 A6 */	mflr r0
 /* 80069B88 00066AE8  90 01 00 04 */	stw r0, 4(r1)
 /* 80069B8C 00066AEC  94 21 FF F8 */	stwu r1, -8(r1)
@@ -281,9 +280,9 @@ menuIncrease__10ColourMenuFR4Menu:
 /* 80069BCC 00066B2C  38 21 00 08 */	addi r1, r1, 8
 /* 80069BD0 00066B30  7C 08 03 A6 */	mtlr r0
 /* 80069BD4 00066B34  4E 80 00 20 */	blr 
+.endfn menuIncrease__10ColourMenuFR4Menu
 
-.global menuDecrease__10ColourMenuFR4Menu
-menuDecrease__10ColourMenuFR4Menu:
+.fn menuDecrease__10ColourMenuFR4Menu, weak
 /* 80069BD8 00066B38  7C 08 02 A6 */	mflr r0
 /* 80069BDC 00066B3C  90 01 00 04 */	stw r0, 4(r1)
 /* 80069BE0 00066B40  94 21 FF F8 */	stwu r1, -8(r1)
@@ -306,9 +305,9 @@ menuDecrease__10ColourMenuFR4Menu:
 /* 80069C20 00066B80  38 21 00 08 */	addi r1, r1, 8
 /* 80069C24 00066B84  7C 08 03 A6 */	mtlr r0
 /* 80069C28 00066B88  4E 80 00 20 */	blr 
+.endfn menuDecrease__10ColourMenuFR4Menu
 
-.global menuEnterFar__7FogMenuFR4Menu
-menuEnterFar__7FogMenuFR4Menu:
+.fn menuEnterFar__7FogMenuFR4Menu, weak
 /* 80069C2C 00066B8C  7C 08 02 A6 */	mflr r0
 /* 80069C30 00066B90  38 CD 95 F4 */	addi r6, r13, lbl_803DE314@sda21
 /* 80069C34 00066B94  90 01 00 04 */	stw r0, 4(r1)
@@ -330,9 +329,9 @@ menuEnterFar__7FogMenuFR4Menu:
 /* 80069C74 00066BD4  38 21 00 08 */	addi r1, r1, 8
 /* 80069C78 00066BD8  7C 08 03 A6 */	mtlr r0
 /* 80069C7C 00066BDC  4E 80 00 20 */	blr 
+.endfn menuEnterFar__7FogMenuFR4Menu
 
-.global menuEnterNear__7FogMenuFR4Menu
-menuEnterNear__7FogMenuFR4Menu:
+.fn menuEnterNear__7FogMenuFR4Menu, weak
 /* 80069C80 00066BE0  7C 08 02 A6 */	mflr r0
 /* 80069C84 00066BE4  38 CD 95 F8 */	addi r6, r13, lbl_803DE318@sda21
 /* 80069C88 00066BE8  90 01 00 04 */	stw r0, 4(r1)
@@ -354,9 +353,9 @@ menuEnterNear__7FogMenuFR4Menu:
 /* 80069CC8 00066C28  38 21 00 08 */	addi r1, r1, 8
 /* 80069CCC 00066C2C  7C 08 03 A6 */	mtlr r0
 /* 80069CD0 00066C30  4E 80 00 20 */	blr 
+.endfn menuEnterNear__7FogMenuFR4Menu
 
-.global menuIncrease__7FogMenuFR4Menu
-menuIncrease__7FogMenuFR4Menu:
+.fn menuIncrease__7FogMenuFR4Menu, weak
 /* 80069CD4 00066C34  7C 08 02 A6 */	mflr r0
 /* 80069CD8 00066C38  3C A0 80 2B */	lis r5, lbl_802A9504@ha
 /* 80069CDC 00066C3C  90 01 00 04 */	stw r0, 4(r1)
@@ -379,9 +378,9 @@ menuIncrease__7FogMenuFR4Menu:
 /* 80069D20 00066C80  38 21 00 08 */	addi r1, r1, 8
 /* 80069D24 00066C84  7C 08 03 A6 */	mtlr r0
 /* 80069D28 00066C88  4E 80 00 20 */	blr 
+.endfn menuIncrease__7FogMenuFR4Menu
 
-.global menuDecrease__7FogMenuFR4Menu
-menuDecrease__7FogMenuFR4Menu:
+.fn menuDecrease__7FogMenuFR4Menu, weak
 /* 80069D2C 00066C8C  7C 08 02 A6 */	mflr r0
 /* 80069D30 00066C90  3C A0 80 2B */	lis r5, lbl_802A9504@ha
 /* 80069D34 00066C94  90 01 00 04 */	stw r0, 4(r1)
@@ -404,9 +403,9 @@ menuDecrease__7FogMenuFR4Menu:
 /* 80069D78 00066CD8  38 21 00 08 */	addi r1, r1, 8
 /* 80069D7C 00066CDC  7C 08 03 A6 */	mtlr r0
 /* 80069D80 00066CE0  4E 80 00 20 */	blr 
+.endfn menuDecrease__7FogMenuFR4Menu
 
-.global menuChangeMove__9LightMenuFR4Menu
-menuChangeMove__9LightMenuFR4Menu:
+.fn menuChangeMove__9LightMenuFR4Menu, weak
 /* 80069D84 00066CE4  7C 08 02 A6 */	mflr r0
 /* 80069D88 00066CE8  3C A0 80 2B */	lis r5, lbl_802A9480@ha
 /* 80069D8C 00066CEC  90 01 00 04 */	stw r0, 4(r1)
@@ -687,9 +686,9 @@ menuChangeMove__9LightMenuFR4Menu:
 /* 8006A1AC 0006710C  38 21 00 70 */	addi r1, r1, 0x70
 /* 8006A1B0 00067110  7C 08 03 A6 */	mtlr r0
 /* 8006A1B4 00067114  4E 80 00 20 */	blr 
+.endfn menuChangeMove__9LightMenuFR4Menu
 
-.global menuChangeType__9LightMenuFR4Menu
-menuChangeType__9LightMenuFR4Menu:
+.fn menuChangeType__9LightMenuFR4Menu, weak
 /* 8006A1B8 00067118  7C 08 02 A6 */	mflr r0
 /* 8006A1BC 0006711C  3C A0 80 2B */	lis r5, lbl_802A9480@ha
 /* 8006A1C0 00067120  90 01 00 04 */	stw r0, 4(r1)
@@ -979,9 +978,9 @@ menuChangeType__9LightMenuFR4Menu:
 /* 8006A604 00067564  38 21 00 70 */	addi r1, r1, 0x70
 /* 8006A608 00067568  7C 08 03 A6 */	mtlr r0
 /* 8006A60C 0006756C  4E 80 00 20 */	blr 
+.endfn menuChangeType__9LightMenuFR4Menu
 
-.global menuEnterNear__9LightMenuFR4Menu
-menuEnterNear__9LightMenuFR4Menu:
+.fn menuEnterNear__9LightMenuFR4Menu, weak
 /* 8006A610 00067570  7C 08 02 A6 */	mflr r0
 /* 8006A614 00067574  38 CD 96 34 */	addi r6, r13, lbl_803DE354@sda21
 /* 8006A618 00067578  90 01 00 04 */	stw r0, 4(r1)
@@ -1003,9 +1002,9 @@ menuEnterNear__9LightMenuFR4Menu:
 /* 8006A658 000675B8  38 21 00 08 */	addi r1, r1, 8
 /* 8006A65C 000675BC  7C 08 03 A6 */	mtlr r0
 /* 8006A660 000675C0  4E 80 00 20 */	blr 
+.endfn menuEnterNear__9LightMenuFR4Menu
 
-.global menuIncrease__9LightMenuFR4Menu
-menuIncrease__9LightMenuFR4Menu:
+.fn menuIncrease__9LightMenuFR4Menu, weak
 /* 8006A664 000675C4  7C 08 02 A6 */	mflr r0
 /* 8006A668 000675C8  3C A0 80 2B */	lis r5, lbl_802A9504@ha
 /* 8006A66C 000675CC  90 01 00 04 */	stw r0, 4(r1)
@@ -1028,9 +1027,9 @@ menuIncrease__9LightMenuFR4Menu:
 /* 8006A6B0 00067610  38 21 00 08 */	addi r1, r1, 8
 /* 8006A6B4 00067614  7C 08 03 A6 */	mtlr r0
 /* 8006A6B8 00067618  4E 80 00 20 */	blr 
+.endfn menuIncrease__9LightMenuFR4Menu
 
-.global menuDecrease__9LightMenuFR4Menu
-menuDecrease__9LightMenuFR4Menu:
+.fn menuDecrease__9LightMenuFR4Menu, weak
 /* 8006A6BC 0006761C  7C 08 02 A6 */	mflr r0
 /* 8006A6C0 00067620  3C A0 80 2B */	lis r5, lbl_802A9504@ha
 /* 8006A6C4 00067624  90 01 00 04 */	stw r0, 4(r1)
@@ -1053,9 +1052,9 @@ menuDecrease__9LightMenuFR4Menu:
 /* 8006A708 00067668  38 21 00 08 */	addi r1, r1, 8
 /* 8006A70C 0006766C  7C 08 03 A6 */	mtlr r0
 /* 8006A710 00067670  4E 80 00 20 */	blr 
+.endfn menuDecrease__9LightMenuFR4Menu
 
-.global __ct__10ColourMenuFP6ColourP10ControllerP4Fontb
-__ct__10ColourMenuFP6ColourP10ControllerP4Fontb:
+.fn __ct__10ColourMenuFP6ColourP10ControllerP4Fontb, weak
 /* 8006A714 00067674  7C 08 02 A6 */	mflr r0
 /* 8006A718 00067678  3D 00 80 2B */	lis r8, lbl_802A9480@ha
 /* 8006A71C 0006767C  90 01 00 04 */	stw r0, 4(r1)
@@ -1528,9 +1527,9 @@ __ct__10ColourMenuFP6ColourP10ControllerP4Fontb:
 /* 8006AE34 00067D94  38 21 00 C8 */	addi r1, r1, 0xc8
 /* 8006AE38 00067D98  7C 08 03 A6 */	mtlr r0
 /* 8006AE3C 00067D9C  4E 80 00 20 */	blr 
+.endfn __ct__10ColourMenuFP6ColourP10ControllerP4Fontb
 
-.global __ct__12PositionMenuFP8Vector3fP10ControllerP4Fontbb
-__ct__12PositionMenuFP8Vector3fP10ControllerP4Fontbb:
+.fn __ct__12PositionMenuFP8Vector3fP10ControllerP4Fontbb, weak
 /* 8006AE40 00067DA0  7C 08 02 A6 */	mflr r0
 /* 8006AE44 00067DA4  3D 20 80 2B */	lis r9, lbl_802A9480@ha
 /* 8006AE48 00067DA8  90 01 00 04 */	stw r0, 4(r1)
@@ -1908,9 +1907,9 @@ __ct__12PositionMenuFP8Vector3fP10ControllerP4Fontbb:
 /* 8006B3F0 00068350  38 21 00 A8 */	addi r1, r1, 0xa8
 /* 8006B3F4 00068354  7C 08 03 A6 */	mtlr r0
 /* 8006B3F8 00068358  4E 80 00 20 */	blr 
+.endfn __ct__12PositionMenuFP8Vector3fP10ControllerP4Fontbb
 
-.global menuBIncrease__6DayMgrFR4Menu
-menuBIncrease__6DayMgrFR4Menu:
+.fn menuBIncrease__6DayMgrFR4Menu, global
 /* 8006B3FC 0006835C  7C 08 02 A6 */	mflr r0
 /* 8006B400 00068360  90 01 00 04 */	stw r0, 4(r1)
 /* 8006B404 00068364  94 21 FF F8 */	stwu r1, -8(r1)
@@ -1935,9 +1934,9 @@ menuBIncrease__6DayMgrFR4Menu:
 /* 8006B44C 000683AC  38 21 00 08 */	addi r1, r1, 8
 /* 8006B450 000683B0  7C 08 03 A6 */	mtlr r0
 /* 8006B454 000683B4  4E 80 00 20 */	blr 
+.endfn menuBIncrease__6DayMgrFR4Menu
 
-.global menuBDecrease__6DayMgrFR4Menu
-menuBDecrease__6DayMgrFR4Menu:
+.fn menuBDecrease__6DayMgrFR4Menu, global
 /* 8006B458 000683B8  7C 08 02 A6 */	mflr r0
 /* 8006B45C 000683BC  90 01 00 04 */	stw r0, 4(r1)
 /* 8006B460 000683C0  94 21 FF F8 */	stwu r1, -8(r1)
@@ -1962,9 +1961,9 @@ menuBDecrease__6DayMgrFR4Menu:
 /* 8006B4A8 00068408  38 21 00 08 */	addi r1, r1, 8
 /* 8006B4AC 0006840C  7C 08 03 A6 */	mtlr r0
 /* 8006B4B0 00068410  4E 80 00 20 */	blr 
+.endfn menuBDecrease__6DayMgrFR4Menu
 
-.global __ct__6DayMgrFP6MapMgrP10Controller
-__ct__6DayMgrFP6MapMgrP10Controller:
+.fn __ct__6DayMgrFP6MapMgrP10Controller, global
 /* 8006B4B4 00068414  7C 08 02 A6 */	mflr r0
 /* 8006B4B8 00068418  3C C0 80 03 */	lis r6, __ct__5LightFv@ha
 /* 8006B4BC 0006841C  90 01 00 04 */	stw r0, 4(r1)
@@ -3790,9 +3789,9 @@ __ct__6DayMgrFP6MapMgrP10Controller:
 /* 8006D028 00069F88  38 21 01 18 */	addi r1, r1, 0x118
 /* 8006D02C 00069F8C  7C 08 03 A6 */	mtlr r0
 /* 8006D030 00069F90  4E 80 00 20 */	blr 
+.endfn __ct__6DayMgrFP6MapMgrP10Controller
 
-.global __ct__9LightMenuFP5LightPiP10ControllerP4Fontb
-__ct__9LightMenuFP5LightPiP10ControllerP4Fontb:
+.fn __ct__9LightMenuFP5LightPiP10ControllerP4Fontb, weak
 /* 8006D034 00069F94  7C 08 02 A6 */	mflr r0
 /* 8006D038 00069F98  3D 20 80 2B */	lis r9, lbl_802A9480@ha
 /* 8006D03C 00069F9C  90 01 00 04 */	stw r0, 4(r1)
@@ -4136,9 +4135,9 @@ __ct__9LightMenuFP5LightPiP10ControllerP4Fontb:
 /* 8006D554 0006A4B4  38 21 00 90 */	addi r1, r1, 0x90
 /* 8006D558 0006A4B8  7C 08 03 A6 */	mtlr r0
 /* 8006D55C 0006A4BC  4E 80 00 20 */	blr 
+.endfn __ct__9LightMenuFP5LightPiP10ControllerP4Fontb
 
-.global __ct__7FogMenuFP6ColourPfPfP10ControllerP4Fontb
-__ct__7FogMenuFP6ColourPfPfP10ControllerP4Fontb:
+.fn __ct__7FogMenuFP6ColourPfPfP10ControllerP4Fontb, weak
 /* 8006D560 0006A4C0  7C 08 02 A6 */	mflr r0
 /* 8006D564 0006A4C4  3D 40 80 2B */	lis r10, lbl_802A9480@ha
 /* 8006D568 0006A4C8  90 01 00 04 */	stw r0, 4(r1)
@@ -4876,9 +4875,9 @@ __ct__7FogMenuFP6ColourPfPfP10ControllerP4Fontb:
 /* 8006E084 0006AFE4  38 21 01 60 */	addi r1, r1, 0x160
 /* 8006E088 0006AFE8  7C 08 03 A6 */	mtlr r0
 /* 8006E08C 0006AFEC  4E 80 00 20 */	blr 
+.endfn __ct__7FogMenuFP6ColourPfPfP10ControllerP4Fontb
 
-.global __ct__11TimeSettingFv
-__ct__11TimeSettingFv:
+.fn __ct__11TimeSettingFv, weak
 /* 8006E090 0006AFF0  7C 08 02 A6 */	mflr r0
 /* 8006E094 0006AFF4  3C 80 80 03 */	lis r4, __ct__5LightFv@ha
 /* 8006E098 0006AFF8  90 01 00 04 */	stw r0, 4(r1)
@@ -5076,9 +5075,9 @@ __ct__11TimeSettingFv:
 /* 8006E398 0006B2F8  38 21 00 20 */	addi r1, r1, 0x20
 /* 8006E39C 0006B2FC  7C 08 03 A6 */	mtlr r0
 /* 8006E3A0 0006B300  4E 80 00 20 */	blr 
+.endfn __ct__11TimeSettingFv
 
-.global menuIncreaseLights__6DayMgrFR4Menu
-menuIncreaseLights__6DayMgrFR4Menu:
+.fn menuIncreaseLights__6DayMgrFR4Menu, global
 /* 8006E3A4 0006B304  7C 08 02 A6 */	mflr r0
 /* 8006E3A8 0006B308  90 01 00 04 */	stw r0, 4(r1)
 /* 8006E3AC 0006B30C  94 21 FF F8 */	stwu r1, -8(r1)
@@ -5102,9 +5101,9 @@ menuIncreaseLights__6DayMgrFR4Menu:
 /* 8006E3F0 0006B350  38 21 00 08 */	addi r1, r1, 8
 /* 8006E3F4 0006B354  7C 08 03 A6 */	mtlr r0
 /* 8006E3F8 0006B358  4E 80 00 20 */	blr 
+.endfn menuIncreaseLights__6DayMgrFR4Menu
 
-.global menuDecreaseLights__6DayMgrFR4Menu
-menuDecreaseLights__6DayMgrFR4Menu:
+.fn menuDecreaseLights__6DayMgrFR4Menu, global
 /* 8006E3FC 0006B35C  7C 08 02 A6 */	mflr r0
 /* 8006E400 0006B360  90 01 00 04 */	stw r0, 4(r1)
 /* 8006E404 0006B364  94 21 FF F8 */	stwu r1, -8(r1)
@@ -5128,9 +5127,9 @@ menuDecreaseLights__6DayMgrFR4Menu:
 /* 8006E448 0006B3A8  38 21 00 08 */	addi r1, r1, 8
 /* 8006E44C 0006B3AC  7C 08 03 A6 */	mtlr r0
 /* 8006E450 0006B3B0  4E 80 00 20 */	blr 
+.endfn menuDecreaseLights__6DayMgrFR4Menu
 
-.global menuIncreaseTime__6DayMgrFR4Menu
-menuIncreaseTime__6DayMgrFR4Menu:
+.fn menuIncreaseTime__6DayMgrFR4Menu, global
 /* 8006E454 0006B3B4  7C 08 02 A6 */	mflr r0
 /* 8006E458 0006B3B8  3C 60 80 3A */	lis r3, gameflow@ha
 /* 8006E45C 0006B3BC  90 01 00 04 */	stw r0, 4(r1)
@@ -5165,9 +5164,9 @@ menuIncreaseTime__6DayMgrFR4Menu:
 /* 8006E4CC 0006B42C  38 21 00 18 */	addi r1, r1, 0x18
 /* 8006E4D0 0006B430  7C 08 03 A6 */	mtlr r0
 /* 8006E4D4 0006B434  4E 80 00 20 */	blr 
+.endfn menuIncreaseTime__6DayMgrFR4Menu
 
-.global menuDecreaseTime__6DayMgrFR4Menu
-menuDecreaseTime__6DayMgrFR4Menu:
+.fn menuDecreaseTime__6DayMgrFR4Menu, global
 /* 8006E4D8 0006B438  7C 08 02 A6 */	mflr r0
 /* 8006E4DC 0006B43C  3C 60 80 3A */	lis r3, gameflow@ha
 /* 8006E4E0 0006B440  90 01 00 04 */	stw r0, 4(r1)
@@ -5202,9 +5201,9 @@ menuDecreaseTime__6DayMgrFR4Menu:
 /* 8006E550 0006B4B0  38 21 00 18 */	addi r1, r1, 0x18
 /* 8006E554 0006B4B4  7C 08 03 A6 */	mtlr r0
 /* 8006E558 0006B4B8  4E 80 00 20 */	blr 
+.endfn menuDecreaseTime__6DayMgrFR4Menu
 
-.global refresh__6DayMgrFR8Graphicsfi
-refresh__6DayMgrFR8Graphicsfi:
+.fn refresh__6DayMgrFR8Graphicsfi, global
 /* 8006E55C 0006B4BC  7C 08 02 A6 */	mflr r0
 /* 8006E560 0006B4C0  90 01 00 04 */	stw r0, 4(r1)
 /* 8006E564 0006B4C4  94 21 FD 80 */	stwu r1, -0x280(r1)
@@ -5878,9 +5877,9 @@ refresh__6DayMgrFR8Graphicsfi:
 /* 8006EF88 0006BEE8  38 21 02 80 */	addi r1, r1, 0x280
 /* 8006EF8C 0006BEEC  7C 08 03 A6 */	mtlr r0
 /* 8006EF90 0006BEF0  4E 80 00 20 */	blr 
+.endfn refresh__6DayMgrFR8Graphicsfi
 
-.global setFog__6DayMgrFR8GraphicsP6Colour
-setFog__6DayMgrFR8GraphicsP6Colour:
+.fn setFog__6DayMgrFR8GraphicsP6Colour, global
 /* 8006EF94 0006BEF4  7C 08 02 A6 */	mflr r0
 /* 8006EF98 0006BEF8  28 05 00 00 */	cmplwi r5, 0
 /* 8006EF9C 0006BEFC  90 01 00 04 */	stw r0, 4(r1)
@@ -5904,9 +5903,9 @@ setFog__6DayMgrFR8GraphicsP6Colour:
 /* 8006EFDC 0006BF3C  38 21 00 08 */	addi r1, r1, 8
 /* 8006EFE0 0006BF40  7C 08 03 A6 */	mtlr r0
 /* 8006EFE4 0006BF44  4E 80 00 20 */	blr 
+.endfn setFog__6DayMgrFR8GraphicsP6Colour
 
-.global menuDumpSettings__6DayMgrFR4Menu
-menuDumpSettings__6DayMgrFR4Menu:
+.fn menuDumpSettings__6DayMgrFR4Menu, global
 /* 8006EFE8 0006BF48  80 AD 2D EC */	lwz r5, gsys@sda21(r13)
 /* 8006EFEC 0006BF4C  39 00 00 00 */	li r8, 0
 /* 8006EFF0 0006BF50  38 00 00 01 */	li r0, 1
@@ -5943,9 +5942,9 @@ menuDumpSettings__6DayMgrFR4Menu:
 /* 8006F060 0006BFC0  80 6D 2D EC */	lwz r3, gsys@sda21(r13)
 /* 8006F064 0006BFC4  91 63 00 1C */	stw r11, 0x1c(r3)
 /* 8006F068 0006BFC8  4E 80 00 20 */	blr 
+.endfn menuDumpSettings__6DayMgrFR4Menu
 
-.global init__6DayMgrFP9CmdStream
-init__6DayMgrFP9CmdStream:
+.fn init__6DayMgrFP9CmdStream, global
 /* 8006F06C 0006BFCC  7C 08 02 A6 */	mflr r0
 /* 8006F070 0006BFD0  90 01 00 04 */	stw r0, 4(r1)
 /* 8006F074 0006BFD4  38 00 00 00 */	li r0, 0
@@ -6536,9 +6535,9 @@ init__6DayMgrFP9CmdStream:
 /* 8006F920 0006C880  38 21 00 90 */	addi r1, r1, 0x90
 /* 8006F924 0006C884  7C 08 03 A6 */	mtlr r0
 /* 8006F928 0006C888  4E 80 00 20 */	blr 
+.endfn init__6DayMgrFP9CmdStream
 
-.global "invoke__25Delegate1<6DayMgr,R4Menu>FR4Menu"
-"invoke__25Delegate1<6DayMgr,R4Menu>FR4Menu":
+.fn "invoke__25Delegate1<6DayMgr,R4Menu>FR4Menu", weak
 /* 8006F92C 0006C88C  7C 08 02 A6 */	mflr r0
 /* 8006F930 0006C890  7C 65 1B 78 */	mr r5, r3
 /* 8006F934 0006C894  90 01 00 04 */	stw r0, 4(r1)
@@ -6551,9 +6550,9 @@ init__6DayMgrFP9CmdStream:
 /* 8006F950 0006C8B0  38 21 00 08 */	addi r1, r1, 8
 /* 8006F954 0006C8B4  7C 08 03 A6 */	mtlr r0
 /* 8006F958 0006C8B8  4E 80 00 20 */	blr 
+.endfn "invoke__25Delegate1<6DayMgr,R4Menu>FR4Menu"
 
-.global "invoke__28Delegate1<9LightMenu,R4Menu>FR4Menu"
-"invoke__28Delegate1<9LightMenu,R4Menu>FR4Menu":
+.fn "invoke__28Delegate1<9LightMenu,R4Menu>FR4Menu", weak
 /* 8006F95C 0006C8BC  7C 08 02 A6 */	mflr r0
 /* 8006F960 0006C8C0  7C 65 1B 78 */	mr r5, r3
 /* 8006F964 0006C8C4  90 01 00 04 */	stw r0, 4(r1)
@@ -6566,9 +6565,9 @@ init__6DayMgrFP9CmdStream:
 /* 8006F980 0006C8E0  38 21 00 08 */	addi r1, r1, 8
 /* 8006F984 0006C8E4  7C 08 03 A6 */	mtlr r0
 /* 8006F988 0006C8E8  4E 80 00 20 */	blr 
+.endfn "invoke__28Delegate1<9LightMenu,R4Menu>FR4Menu"
 
-.global "invoke__26Delegate1<7FogMenu,R4Menu>FR4Menu"
-"invoke__26Delegate1<7FogMenu,R4Menu>FR4Menu":
+.fn "invoke__26Delegate1<7FogMenu,R4Menu>FR4Menu", weak
 /* 8006F98C 0006C8EC  7C 08 02 A6 */	mflr r0
 /* 8006F990 0006C8F0  7C 65 1B 78 */	mr r5, r3
 /* 8006F994 0006C8F4  90 01 00 04 */	stw r0, 4(r1)
@@ -6581,9 +6580,9 @@ init__6DayMgrFP9CmdStream:
 /* 8006F9B0 0006C910  38 21 00 08 */	addi r1, r1, 8
 /* 8006F9B4 0006C914  7C 08 03 A6 */	mtlr r0
 /* 8006F9B8 0006C918  4E 80 00 20 */	blr 
+.endfn "invoke__26Delegate1<7FogMenu,R4Menu>FR4Menu"
 
-.global "invoke__30Delegate1<10ColourMenu,R4Menu>FR4Menu"
-"invoke__30Delegate1<10ColourMenu,R4Menu>FR4Menu":
+.fn "invoke__30Delegate1<10ColourMenu,R4Menu>FR4Menu", weak
 /* 8006F9BC 0006C91C  7C 08 02 A6 */	mflr r0
 /* 8006F9C0 0006C920  7C 65 1B 78 */	mr r5, r3
 /* 8006F9C4 0006C924  90 01 00 04 */	stw r0, 4(r1)
@@ -6596,9 +6595,9 @@ init__6DayMgrFP9CmdStream:
 /* 8006F9E0 0006C940  38 21 00 08 */	addi r1, r1, 8
 /* 8006F9E4 0006C944  7C 08 03 A6 */	mtlr r0
 /* 8006F9E8 0006C948  4E 80 00 20 */	blr 
+.endfn "invoke__30Delegate1<10ColourMenu,R4Menu>FR4Menu"
 
-.global "invoke__32Delegate1<12PositionMenu,R4Menu>FR4Menu"
-"invoke__32Delegate1<12PositionMenu,R4Menu>FR4Menu":
+.fn "invoke__32Delegate1<12PositionMenu,R4Menu>FR4Menu", weak
 /* 8006F9EC 0006C94C  7C 08 02 A6 */	mflr r0
 /* 8006F9F0 0006C950  7C 65 1B 78 */	mr r5, r3
 /* 8006F9F4 0006C954  90 01 00 04 */	stw r0, 4(r1)
@@ -6611,6 +6610,7 @@ init__6DayMgrFP9CmdStream:
 /* 8006FA10 0006C970  38 21 00 08 */	addi r1, r1, 8
 /* 8006FA14 0006C974  7C 08 03 A6 */	mtlr r0
 /* 8006FA18 0006C978  4E 80 00 20 */	blr 
+.endfn "invoke__32Delegate1<12PositionMenu,R4Menu>FR4Menu"
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
@@ -6694,244 +6694,339 @@ init__6DayMgrFP9CmdStream:
 	.4byte menuEnterR__10ColourMenuFR4Menu
 .endobj lbl_802A951C
 .balign 4
-lbl_802A9528:
+.obj lbl_802A9528, local
 	.4byte 0
 	.4byte 0xFFFFFFFF
 	.4byte menuDecrease__10ColourMenuFR4Menu
-lbl_802A9534:
+.endobj lbl_802A9528
+.balign 4
+.obj lbl_802A9534, local
 	.4byte 0
 	.4byte 0xFFFFFFFF
 	.4byte menuIncrease__10ColourMenuFR4Menu
-lbl_802A9540:
+.endobj lbl_802A9534
+.balign 4
+.obj lbl_802A9540, local
 	.4byte 0
 	.4byte 0xFFFFFFFF
 	.4byte menuEnterG__10ColourMenuFR4Menu
-lbl_802A954C:
+.endobj lbl_802A9540
+.balign 4
+.obj lbl_802A954C, local
 	.4byte 0
 	.4byte 0xFFFFFFFF
 	.4byte menuDecrease__10ColourMenuFR4Menu
-lbl_802A9558:
+.endobj lbl_802A954C
+.balign 4
+.obj lbl_802A9558, local
 	.4byte 0
 	.4byte 0xFFFFFFFF
 	.4byte menuIncrease__10ColourMenuFR4Menu
-lbl_802A9564:
+.endobj lbl_802A9558
+.balign 4
+.obj lbl_802A9564, local
 	.4byte 0
 	.4byte 0xFFFFFFFF
 	.4byte menuEnterB__10ColourMenuFR4Menu
-lbl_802A9570:
+.endobj lbl_802A9564
+.balign 4
+.obj lbl_802A9570, local
 	.4byte 0
 	.4byte 0xFFFFFFFF
 	.4byte menuDecrease__10ColourMenuFR4Menu
-lbl_802A957C:
+.endobj lbl_802A9570
+.balign 4
+.obj lbl_802A957C, local
 	.4byte 0
 	.4byte 0xFFFFFFFF
 	.4byte menuIncrease__10ColourMenuFR4Menu
-lbl_802A9588:
+.endobj lbl_802A957C
+.balign 4
+.obj lbl_802A9588, local
 	.4byte 0
 	.4byte 0xFFFFFFFF
 	.4byte menuEnterA__10ColourMenuFR4Menu
-lbl_802A9594:
+.endobj lbl_802A9588
+.balign 4
+.obj lbl_802A9594, local
 	.4byte 0
 	.4byte 0xFFFFFFFF
 	.4byte menuDecrease__10ColourMenuFR4Menu
-lbl_802A95A0:
+.endobj lbl_802A9594
+.balign 4
+.obj lbl_802A95A0, local
 	.4byte 0
 	.4byte 0xFFFFFFFF
 	.4byte menuIncrease__10ColourMenuFR4Menu
-lbl_802A95AC:
+.endobj lbl_802A95A0
+.balign 4
+.obj lbl_802A95AC, local
 	.4byte 0
 	.4byte 0xFFFFFFFF
 	.4byte menuCloseMenu__4MenuFR4Menu
-lbl_802A95B8:
+.endobj lbl_802A95AC
+.balign 4
+.obj lbl_802A95B8, local
 	.4byte 0
 	.4byte 0xFFFFFFFF
 	.4byte menuEnterNear__7FogMenuFR4Menu
-lbl_802A95C4:
+.endobj lbl_802A95B8
+.balign 4
+.obj lbl_802A95C4, local
 	.4byte 0
 	.4byte 0xFFFFFFFF
 	.4byte menuDecrease__7FogMenuFR4Menu
-lbl_802A95D0:
+.endobj lbl_802A95C4
+.balign 4
+.obj lbl_802A95D0, local
 	.4byte 0
 	.4byte 0xFFFFFFFF
 	.4byte menuIncrease__7FogMenuFR4Menu
-lbl_802A95DC:
+.endobj lbl_802A95D0
+.balign 4
+.obj lbl_802A95DC, local
 	.4byte 0
 	.4byte 0xFFFFFFFF
 	.4byte menuEnterFar__7FogMenuFR4Menu
-lbl_802A95E8:
+.endobj lbl_802A95DC
+.balign 4
+.obj lbl_802A95E8, local
 	.4byte 0
 	.4byte 0xFFFFFFFF
 	.4byte menuDecrease__7FogMenuFR4Menu
-lbl_802A95F4:
+.endobj lbl_802A95E8
+.balign 4
+.obj lbl_802A95F4, local
 	.4byte 0
 	.4byte 0xFFFFFFFF
 	.4byte menuIncrease__7FogMenuFR4Menu
+.endobj lbl_802A95F4
 .balign 4
-lbl_802A9600:
+.obj lbl_802A9600, local
 	.asciz "PARALLEL"
+.endobj lbl_802A9600
 .balign 4
-lightTypeNames:
+.obj lightTypeNames, local
 	.4byte lbl_803DE320
 	.4byte lbl_802A9600
 	.4byte lbl_803DE324
 	.4byte lbl_803DE32C
-lightConv:
+.endobj lightTypeNames
+.balign 4
+.obj lightConv, local
 	.4byte 0
 	.4byte 0
 	.4byte 0
 	.4byte 1
+.endobj lightConv
 .balign 4
-lbl_802A962C:
+.obj lbl_802A962C, local
 	.asciz "attach to navi"
+.endobj lbl_802A962C
 .balign 4
-lbl_802A963C:
+.obj lbl_802A963C, local
 	.4byte 0
 	.4byte 0xFFFFFFFF
 	.4byte menuChangeType__9LightMenuFR4Menu
-lbl_802A9648:
+.endobj lbl_802A963C
+.balign 4
+.obj lbl_802A9648, local
 	.4byte 0
 	.4byte 0xFFFFFFFF
 	.4byte menuChangeMove__9LightMenuFR4Menu
-lbl_802A9654:
+.endobj lbl_802A9648
+.balign 4
+.obj lbl_802A9654, local
 	.4byte 0
 	.4byte 0xFFFFFFFF
 	.4byte menuEnterNear__9LightMenuFR4Menu
-lbl_802A9660:
+.endobj lbl_802A9654
+.balign 4
+.obj lbl_802A9660, local
 	.4byte 0
 	.4byte 0xFFFFFFFF
 	.4byte menuDecrease__9LightMenuFR4Menu
-lbl_802A966C:
+.endobj lbl_802A9660
+.balign 4
+.obj lbl_802A966C, local
 	.4byte 0
 	.4byte 0xFFFFFFFF
 	.4byte menuIncrease__9LightMenuFR4Menu
+.endobj lbl_802A966C
 .balign 4
-lbl_802A9678:
+.obj lbl_802A9678, local
 	.asciz "Fov = %.2f"
+.endobj lbl_802A9678
 .balign 4
-lbl_802A9684:
+.obj lbl_802A9684, local
 	.asciz "position"
+.endobj lbl_802A9684
 .balign 4
-lbl_802A9690:
+.obj lbl_802A9690, local
 	.asciz "direction"
+.endobj lbl_802A9690
 .balign 4
-lbl_802A969C:
+.obj lbl_802A969C, local
 	.4byte 0
 	.4byte 0xFFFFFFFF
 	.4byte menuCloseMenu__4MenuFR4Menu
+.endobj lbl_802A969C
 .balign 4
-lbl_802A96A8:
+.obj lbl_802A96A8, local
 	.asciz "X = %.2f"
+.endobj lbl_802A96A8
 .balign 4
-lbl_802A96B4:
+.obj lbl_802A96B4, local
 	.asciz "Y = %.2f"
+.endobj lbl_802A96B4
 .balign 4
-lbl_802A96C0:
+.obj lbl_802A96C0, local
 	.asciz "Z = %.2f"
+.endobj lbl_802A96C0
 .balign 4
-lbl_802A96CC:
+.obj lbl_802A96CC, local
 	.4byte 0
 	.4byte 0xFFFFFFFF
 	.4byte menuCloseMenu__4MenuFR4Menu
-lbl_802A96D8:
+.endobj lbl_802A96CC
+.balign 4
+.obj lbl_802A96D8, local
 	.4byte 0
 	.4byte 0xFFFFFFFF
 	.4byte menuCloseMenu__4MenuFR4Menu
-lbl_802A96E4:
+.endobj lbl_802A96D8
+.balign 4
+.obj lbl_802A96E4, local
 	.4byte 0
 	.4byte 0xFFFFFFFF
 	.4byte menuDecreaseLights__6DayMgrFR4Menu
-lbl_802A96F0:
+.endobj lbl_802A96E4
+.balign 4
+.obj lbl_802A96F0, local
 	.4byte 0
 	.4byte 0xFFFFFFFF
 	.4byte menuIncreaseLights__6DayMgrFR4Menu
-lbl_802A96FC:
+.endobj lbl_802A96F0
+.balign 4
+.obj lbl_802A96FC, local
 	.4byte 0
 	.4byte 0xFFFFFFFF
 	.4byte menuDecreaseTime__6DayMgrFR4Menu
-lbl_802A9708:
+.endobj lbl_802A96FC
+.balign 4
+.obj lbl_802A9708, local
 	.4byte 0
 	.4byte 0xFFFFFFFF
 	.4byte menuIncreaseTime__6DayMgrFR4Menu
-lbl_802A9714:
+.endobj lbl_802A9708
+.balign 4
+.obj lbl_802A9714, local
 	.4byte 0
 	.4byte 0xFFFFFFFF
 	.4byte menuDumpSettings__6DayMgrFR4Menu
-lbl_802A9720:
+.endobj lbl_802A9714
+.balign 4
+.obj lbl_802A9720, local
 	.4byte 0
 	.4byte 0xFFFFFFFF
 	.4byte menuBDecrease__6DayMgrFR4Menu
-lbl_802A972C:
+.endobj lbl_802A9720
+.balign 4
+.obj lbl_802A972C, local
 	.4byte 0
 	.4byte 0xFFFFFFFF
 	.4byte menuBIncrease__6DayMgrFR4Menu
+.endobj lbl_802A972C
 .balign 4
-lbl_802A9738:
+.obj lbl_802A9738, local
 	.asciz "Light Count %d"
+.endobj lbl_802A9738
 .balign 4
-lbl_802A9748:
+.obj lbl_802A9748, local
 	.asciz "Time : % 2.1f"
+.endobj lbl_802A9748
 .balign 4
-lbl_802A9758:
+.obj lbl_802A9758, local
 	.asciz "Dump Settings"
+.endobj lbl_802A9758
 .balign 4
-lbl_802A9768:
+.obj lbl_802A9768, local
 	.asciz "morning : % 2.1f"
+.endobj lbl_802A9768
 .balign 4
-lbl_802A977C:
+.obj lbl_802A977C, local
 	.asciz "ambient colour"
+.endobj lbl_802A977C
 .balign 4
-lbl_802A978C:
+.obj lbl_802A978C, local
 	.asciz "main light"
+.endobj lbl_802A978C
 .balign 4
-lbl_802A9798:
+.obj lbl_802A9798, local
 	.asciz "sub light"
+.endobj lbl_802A9798
 .balign 4
-lbl_802A97A4:
+.obj lbl_802A97A4, local
 	.asciz "+1 light"
+.endobj lbl_802A97A4
 .balign 4
-lbl_802A97B0:
+.obj lbl_802A97B0, local
 	.asciz "+2 light"
+.endobj lbl_802A97B0
 .balign 4
-lbl_802A97BC:
+.obj lbl_802A97BC, local
 	.asciz "+3 light"
+.endobj lbl_802A97BC
 .balign 4
-lbl_802A97C8:
+.obj lbl_802A97C8, local
 	.asciz "+4 light"
+.endobj lbl_802A97C8
 .balign 4
-lbl_802A97D4:
+.obj lbl_802A97D4, local
 	.asciz "+5 light"
+.endobj lbl_802A97D4
 .balign 4
-lbl_802A97E0:
+.obj lbl_802A97E0, local
 	.asciz "day     : % 2.1f -> % 2.1f"
+.endobj lbl_802A97E0
 .balign 4
-lbl_802A97FC:
+.obj lbl_802A97FC, local
 	.asciz "evening : % 2.1f"
+.endobj lbl_802A97FC
 .balign 4
-lbl_802A9810:
+.obj lbl_802A9810, local
 	.asciz "night   : % 2.1f -> % 2.1f"
+.endobj lbl_802A9810
 .balign 4
-lbl_802A982C:
+.obj lbl_802A982C, local
 	.asciz "movie   : % 2.1f -> % 2.1f"
+.endobj lbl_802A982C
 .balign 4
-lbl_802A9848:
+.obj lbl_802A9848, local
 	.asciz "Blur = %d"
+.endobj lbl_802A9848
 .balign 4
-lbl_802A9854:
+.obj lbl_802A9854, local
 	.asciz "fog colour"
+.endobj lbl_802A9854
 .balign 4
-lbl_802A9860:
+.obj lbl_802A9860, local
 	.asciz "Near = %.2f"
+.endobj lbl_802A9860
 .balign 4
-lbl_802A986C:
+.obj lbl_802A986C, local
 	.asciz "Far = %.2f"
+.endobj lbl_802A986C
 .balign 4
-settingnames$2810:
+.obj settingnames$2810, local
 	.4byte lbl_803DE3D4
 	.4byte lbl_803DE3DC
 	.4byte lbl_803DE3E4
 	.4byte lbl_803DE3E8
 	.4byte lbl_803DE3F0
-lightnames$2816:
+.endobj settingnames$2810
+.balign 4
+.obj lightnames$2816, local
 	.4byte lbl_802A978C
 	.4byte lbl_802A9798
 	.4byte lbl_803DE3F8
@@ -6939,46 +7034,59 @@ lightnames$2816:
 	.4byte lbl_803DE400
 	.4byte lbl_803DE404
 	.4byte lbl_803DE408
+.endobj lightnames$2816
 .balign 4
-lbl_802A98A8:
+.obj lbl_802A98A8, local
 	.asciz "numsettings"
+.endobj lbl_802A98A8
 .balign 4
-lbl_802A98B4:
+.obj lbl_802A98B4, local
 	.asciz "timesetting"
+.endobj lbl_802A98B4
 .balign 4
-lbl_802A98C0:
+.obj lbl_802A98C0, local
 	.asciz "specular"
+.endobj lbl_802A98C0
 .balign 4
-lbl_802A98CC:
+.obj lbl_802A98CC, local
 	.asciz "Delegate1<FogMenu, Menu &>"
+.endobj lbl_802A98CC
 .balign 4
-lbl_802A98E8:
+.obj lbl_802A98E8, local
 	.asciz "IDelegate1<Menu &>"
+.endobj lbl_802A98E8
 .balign 4
-lbl_802A98FC:
+.obj lbl_802A98FC, local
 	.4byte "__RTTI__18IDelegate1<R4Menu>"
 	.4byte 0
 	.4byte 0
-.global "__vt__26Delegate1<7FogMenu,R4Menu>"
-"__vt__26Delegate1<7FogMenu,R4Menu>":
+.endobj lbl_802A98FC
+.balign 4
+.obj "__vt__26Delegate1<7FogMenu,R4Menu>", weak
 	.4byte "__RTTI__26Delegate1<7FogMenu,R4Menu>"
 	.4byte 0
 	.4byte "invoke__26Delegate1<7FogMenu,R4Menu>FR4Menu"
+.endobj "__vt__26Delegate1<7FogMenu,R4Menu>"
 .balign 4
-lbl_802A9914:
+.obj lbl_802A9914, local
 	.asciz "CoreNode"
+.endobj lbl_802A9914
 .balign 4
-lbl_802A9920:
+.obj lbl_802A9920, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte 0
-lbl_802A992C:
+.endobj lbl_802A9920
+.balign 4
+.obj lbl_802A992C, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte __RTTI__8CoreNode
 	.4byte 0
 	.4byte 0
-lbl_802A9940:
+.endobj lbl_802A992C
+.balign 4
+.obj lbl_802A9940, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte __RTTI__8CoreNode
@@ -6986,7 +7094,9 @@ lbl_802A9940:
 	.4byte __RTTI__4Node
 	.4byte 0
 	.4byte 0
-lbl_802A995C:
+.endobj lbl_802A9940
+.balign 4
+.obj lbl_802A995C, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte __RTTI__8CoreNode
@@ -6996,8 +7106,9 @@ lbl_802A995C:
 	.4byte __RTTI__4Menu
 	.4byte 0
 	.4byte 0
-.global __vt__7FogMenu
-__vt__7FogMenu:
+.endobj lbl_802A995C
+.balign 4
+.obj __vt__7FogMenu, weak
 	.4byte __RTTI__7FogMenu
 	.4byte 0
 	.4byte getAgeNodeType__5ANodeFv
@@ -7019,11 +7130,13 @@ __vt__7FogMenu:
 	.4byte open__4MenuFb
 	.4byte close__4MenuFv
 	.4byte doUpdate__4MenuFb
+.endobj __vt__7FogMenu
 .balign 4
-lbl_802A99D4:
+.obj lbl_802A99D4, local
 	.asciz "LightMenu"
+.endobj lbl_802A99D4
 .balign 4
-lbl_802A99E0:
+.obj lbl_802A99E0, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte __RTTI__8CoreNode
@@ -7033,8 +7146,9 @@ lbl_802A99E0:
 	.4byte __RTTI__4Menu
 	.4byte 0
 	.4byte 0
-.global __vt__9LightMenu
-__vt__9LightMenu:
+.endobj lbl_802A99E0
+.balign 4
+.obj __vt__9LightMenu, weak
 	.4byte __RTTI__9LightMenu
 	.4byte 0
 	.4byte getAgeNodeType__5ANodeFv
@@ -7056,11 +7170,13 @@ __vt__9LightMenu:
 	.4byte open__4MenuFb
 	.4byte close__4MenuFv
 	.4byte doUpdate__4MenuFb
+.endobj __vt__9LightMenu
 .balign 4
-lbl_802A9A58:
+.obj lbl_802A9A58, local
 	.asciz "DaySetMenu"
+.endobj lbl_802A9A58
 .balign 4
-lbl_802A9A64:
+.obj lbl_802A9A64, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte __RTTI__8CoreNode
@@ -7070,8 +7186,9 @@ lbl_802A9A64:
 	.4byte __RTTI__4Menu
 	.4byte 0
 	.4byte 0
-.global __vt__10DaySetMenu
-__vt__10DaySetMenu:
+.endobj lbl_802A9A64
+.balign 4
+.obj __vt__10DaySetMenu, weak
 	.4byte __RTTI__10DaySetMenu
 	.4byte 0
 	.4byte getAgeNodeType__5ANodeFv
@@ -7093,37 +7210,45 @@ __vt__10DaySetMenu:
 	.4byte open__4MenuFb
 	.4byte close__4MenuFv
 	.4byte doUpdate__4MenuFb
+.endobj __vt__10DaySetMenu
 .balign 4
-lbl_802A9ADC:
+.obj lbl_802A9ADC, local
 	.asciz "Delegate1<DayMgr, Menu &>"
+.endobj lbl_802A9ADC
 .balign 4
-lbl_802A9AF8:
+.obj lbl_802A9AF8, local
 	.4byte "__RTTI__18IDelegate1<R4Menu>"
 	.4byte 0
 	.4byte 0
-.global "__vt__25Delegate1<6DayMgr,R4Menu>"
-"__vt__25Delegate1<6DayMgr,R4Menu>":
+.endobj lbl_802A9AF8
+.balign 4
+.obj "__vt__25Delegate1<6DayMgr,R4Menu>", weak
 	.4byte "__RTTI__25Delegate1<6DayMgr,R4Menu>"
 	.4byte 0
 	.4byte "invoke__25Delegate1<6DayMgr,R4Menu>FR4Menu"
+.endobj "__vt__25Delegate1<6DayMgr,R4Menu>"
 .balign 4
-lbl_802A9B10:
+.obj lbl_802A9B10, local
 	.asciz "Delegate1<PositionMenu, Menu &>"
+.endobj lbl_802A9B10
 .balign 4
-lbl_802A9B30:
+.obj lbl_802A9B30, local
 	.4byte "__RTTI__18IDelegate1<R4Menu>"
 	.4byte 0
 	.4byte 0
-.global "__vt__32Delegate1<12PositionMenu,R4Menu>"
-"__vt__32Delegate1<12PositionMenu,R4Menu>":
+.endobj lbl_802A9B30
+.balign 4
+.obj "__vt__32Delegate1<12PositionMenu,R4Menu>", weak
 	.4byte "__RTTI__32Delegate1<12PositionMenu,R4Menu>"
 	.4byte 0
 	.4byte "invoke__32Delegate1<12PositionMenu,R4Menu>FR4Menu"
+.endobj "__vt__32Delegate1<12PositionMenu,R4Menu>"
 .balign 4
-lbl_802A9B48:
+.obj lbl_802A9B48, local
 	.asciz "PositionMenu"
+.endobj lbl_802A9B48
 .balign 4
-lbl_802A9B58:
+.obj lbl_802A9B58, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte __RTTI__8CoreNode
@@ -7133,8 +7258,9 @@ lbl_802A9B58:
 	.4byte __RTTI__4Menu
 	.4byte 0
 	.4byte 0
-.global __vt__12PositionMenu
-__vt__12PositionMenu:
+.endobj lbl_802A9B58
+.balign 4
+.obj __vt__12PositionMenu, weak
 	.4byte __RTTI__12PositionMenu
 	.4byte 0
 	.4byte getAgeNodeType__5ANodeFv
@@ -7156,35 +7282,41 @@ __vt__12PositionMenu:
 	.4byte open__4MenuFb
 	.4byte close__4MenuFv
 	.4byte doUpdate__4MenuFb
+.endobj __vt__12PositionMenu
 .balign 4
-lbl_802A9BD0:
+.obj lbl_802A9BD0, local
 	.asciz "Delegate1<ColourMenu, Menu &>"
+.endobj lbl_802A9BD0
 .balign 4
-lbl_802A9BF0:
+.obj lbl_802A9BF0, local
 	.4byte "__RTTI__18IDelegate1<R4Menu>"
 	.4byte 0
 	.4byte 0
-.global "__vt__30Delegate1<10ColourMenu,R4Menu>"
-"__vt__30Delegate1<10ColourMenu,R4Menu>":
+.endobj lbl_802A9BF0
+.balign 4
+.obj "__vt__30Delegate1<10ColourMenu,R4Menu>", weak
 	.4byte "__RTTI__30Delegate1<10ColourMenu,R4Menu>"
 	.4byte 0
 	.4byte "invoke__30Delegate1<10ColourMenu,R4Menu>FR4Menu"
+.endobj "__vt__30Delegate1<10ColourMenu,R4Menu>"
 .balign 4
-lbl_802A9C08:
+.obj lbl_802A9C08, local
 	.asciz "Delegate1<Menu, Menu &>"
+.endobj lbl_802A9C08
 .balign 4
-lbl_802A9C20:
+.obj lbl_802A9C20, local
 	.4byte "__RTTI__18IDelegate1<R4Menu>"
 	.4byte 0
 	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
+.endobj lbl_802A9C20
 .balign 4
-lbl_802A9C38:
+.skip 0xC # compiler padding
+.balign 4
+.obj lbl_802A9C38, local
 	.asciz "ColourMenu"
+.endobj lbl_802A9C38
 .balign 4
-lbl_802A9C44:
+.obj lbl_802A9C44, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte __RTTI__8CoreNode
@@ -7194,8 +7326,9 @@ lbl_802A9C44:
 	.4byte __RTTI__4Menu
 	.4byte 0
 	.4byte 0
-.global __vt__10ColourMenu
-__vt__10ColourMenu:
+.endobj lbl_802A9C44
+.balign 4
+.obj __vt__10ColourMenu, weak
 	.4byte __RTTI__10ColourMenu
 	.4byte 0
 	.4byte getAgeNodeType__5ANodeFv
@@ -7217,19 +7350,24 @@ __vt__10ColourMenu:
 	.4byte open__4MenuFb
 	.4byte close__4MenuFv
 	.4byte doUpdate__4MenuFb
+.endobj __vt__10ColourMenu
 .balign 4
-lbl_802A9CBC:
+.obj lbl_802A9CBC, local
 	.asciz "Delegate1<LightMenu, Menu &>"
+.endobj lbl_802A9CBC
 .balign 4
-lbl_802A9CDC:
+.obj lbl_802A9CDC, local
 	.4byte "__RTTI__18IDelegate1<R4Menu>"
 	.4byte 0
 	.4byte 0
-.global "__vt__28Delegate1<9LightMenu,R4Menu>"
-"__vt__28Delegate1<9LightMenu,R4Menu>":
+.endobj lbl_802A9CDC
+.balign 4
+.obj "__vt__28Delegate1<9LightMenu,R4Menu>", weak
 	.4byte "__RTTI__28Delegate1<9LightMenu,R4Menu>"
 	.4byte 0
 	.4byte "invoke__28Delegate1<9LightMenu,R4Menu>FR4Menu"
+.endobj "__vt__28Delegate1<9LightMenu,R4Menu>"
+.balign 4
 .skip 0xC # compiler padding
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820

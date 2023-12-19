@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global __ct__14UfoShapeObjectFP5Shape
-__ct__14UfoShapeObjectFP5Shape:
+.fn __ct__14UfoShapeObjectFP5Shape, global
 /* 800E97AC 000E670C  7C 08 02 A6 */	mflr r0
 /* 800E97B0 000E6710  90 01 00 04 */	stw r0, 4(r1)
 /* 800E97B4 000E6714  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -89,9 +88,9 @@ __ct__14UfoShapeObjectFP5Shape:
 /* 800E98F8 000E6858  38 21 00 20 */	addi r1, r1, 0x20
 /* 800E98FC 000E685C  7C 08 03 A6 */	mtlr r0
 /* 800E9900 000E6860  4E 80 00 20 */	blr 
+.endfn __ct__14UfoShapeObjectFP5Shape
 
-.global __ct__11AnimContextFv
-__ct__11AnimContextFv:
+.fn __ct__11AnimContextFv, weak
 /* 800E9904 000E6864  3C 80 80 23 */	lis r4, __vt__11AnimContext@ha
 /* 800E9908 000E6868  38 04 88 D0 */	addi r0, r4, __vt__11AnimContext@l
 /* 800E990C 000E686C  90 03 00 0C */	stw r0, 0xc(r3)
@@ -102,9 +101,9 @@ __ct__11AnimContextFv:
 /* 800E9920 000E6880  C0 02 9A 14 */	lfs f0, lbl_803E9C14@sda21(r2)
 /* 800E9924 000E6884  D0 03 00 08 */	stfs f0, 8(r3)
 /* 800E9928 000E6888  4E 80 00 20 */	blr 
+.endfn __ct__11AnimContextFv
 
-.global createMotionTable__15PaniUfoAnimatorFv
-createMotionTable__15PaniUfoAnimatorFv:
+.fn createMotionTable__15PaniUfoAnimatorFv, global
 /* 800E992C 000E688C  7C 08 02 A6 */	mflr r0
 /* 800E9930 000E6890  38 60 00 08 */	li r3, 8
 /* 800E9934 000E6894  90 01 00 04 */	stw r0, 4(r1)
@@ -295,9 +294,9 @@ createMotionTable__15PaniUfoAnimatorFv:
 /* 800E9BD0 000E6B30  38 21 00 18 */	addi r1, r1, 0x18
 /* 800E9BD4 000E6B34  7C 08 03 A6 */	mtlr r0
 /* 800E9BD8 000E6B38  4E 80 00 20 */	blr 
+.endfn createMotionTable__15PaniUfoAnimatorFv
 
-.global __ct__15PaniUfoAnimatorFv
-__ct__15PaniUfoAnimatorFv:
+.fn __ct__15PaniUfoAnimatorFv, global
 /* 800E9BDC 000E6B3C  7C 08 02 A6 */	mflr r0
 /* 800E9BE0 000E6B40  90 01 00 04 */	stw r0, 4(r1)
 /* 800E9BE4 000E6B44  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -313,9 +312,9 @@ __ct__15PaniUfoAnimatorFv:
 /* 800E9C0C 000E6B6C  38 21 00 18 */	addi r1, r1, 0x18
 /* 800E9C10 000E6B70  7C 08 03 A6 */	mtlr r0
 /* 800E9C14 000E6B74  4E 80 00 20 */	blr 
+.endfn __ct__15PaniUfoAnimatorFv
 
-.global __ct__11UfoAnimatorFv
-__ct__11UfoAnimatorFv:
+.fn __ct__11UfoAnimatorFv, global
 /* 800E9C18 000E6B78  7C 08 02 A6 */	mflr r0
 /* 800E9C1C 000E6B7C  90 01 00 04 */	stw r0, 4(r1)
 /* 800E9C20 000E6B80  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -339,9 +338,9 @@ __ct__11UfoAnimatorFv:
 /* 800E9C68 000E6BC8  38 21 00 18 */	addi r1, r1, 0x18
 /* 800E9C6C 000E6BCC  7C 08 03 A6 */	mtlr r0
 /* 800E9C70 000E6BD0  4E 80 00 20 */	blr 
+.endfn __ct__11UfoAnimatorFv
 
-.global init__11UfoAnimatorFP14UfoShapeObjectP15PaniMotionTable
-init__11UfoAnimatorFP14UfoShapeObjectP15PaniMotionTable:
+.fn init__11UfoAnimatorFP14UfoShapeObjectP15PaniMotionTable, global
 /* 800E9C74 000E6BD4  7C 08 02 A6 */	mflr r0
 /* 800E9C78 000E6BD8  90 01 00 04 */	stw r0, 4(r1)
 /* 800E9C7C 000E6BDC  94 21 FF B8 */	stwu r1, -0x48(r1)
@@ -384,9 +383,9 @@ init__11UfoAnimatorFP14UfoShapeObjectP15PaniMotionTable:
 /* 800E9D0C 000E6C6C  38 21 00 48 */	addi r1, r1, 0x48
 /* 800E9D10 000E6C70  7C 08 03 A6 */	mtlr r0
 /* 800E9D14 000E6C74  4E 80 00 20 */	blr 
+.endfn init__11UfoAnimatorFP14UfoShapeObjectP15PaniMotionTable
 
-.global startMotion__11UfoAnimatorFiP14PaniMotionInfo
-startMotion__11UfoAnimatorFiP14PaniMotionInfo:
+.fn startMotion__11UfoAnimatorFiP14PaniMotionInfo, global
 /* 800E9D18 000E6C78  7C 08 02 A6 */	mflr r0
 /* 800E9D1C 000E6C7C  28 05 00 00 */	cmplwi r5, 0
 /* 800E9D20 000E6C80  90 01 00 04 */	stw r0, 4(r1)
@@ -402,24 +401,24 @@ startMotion__11UfoAnimatorFiP14PaniMotionInfo:
 /* 800E9D44 000E6CA4  38 21 00 08 */	addi r1, r1, 8
 /* 800E9D48 000E6CA8  7C 08 03 A6 */	mtlr r0
 /* 800E9D4C 000E6CAC  4E 80 00 20 */	blr 
+.endfn startMotion__11UfoAnimatorFiP14PaniMotionInfo
 
-.global setMotionSpeed__11UfoAnimatorFif
-setMotionSpeed__11UfoAnimatorFif:
+.fn setMotionSpeed__11UfoAnimatorFif, global
 /* 800E9D50 000E6CB0  80 63 00 04 */	lwz r3, 4(r3)
 /* 800E9D54 000E6CB4  54 80 10 3A */	slwi r0, r4, 2
 /* 800E9D58 000E6CB8  7C 23 05 2E */	stfsx f1, r3, r0
 /* 800E9D5C 000E6CBC  4E 80 00 20 */	blr 
+.endfn setMotionSpeed__11UfoAnimatorFif
 
-.global getMotionIndex__11UfoAnimatorFi
-getMotionIndex__11UfoAnimatorFi:
+.fn getMotionIndex__11UfoAnimatorFi, global
 /* 800E9D60 000E6CC0  1C 84 00 54 */	mulli r4, r4, 0x54
 /* 800E9D64 000E6CC4  80 63 00 00 */	lwz r3, 0(r3)
 /* 800E9D68 000E6CC8  38 04 00 44 */	addi r0, r4, 0x44
 /* 800E9D6C 000E6CCC  7C 63 00 2E */	lwzx r3, r3, r0
 /* 800E9D70 000E6CD0  4E 80 00 20 */	blr 
+.endfn getMotionIndex__11UfoAnimatorFi
 
-.global stopAllMotions__11UfoAnimatorFv
-stopAllMotions__11UfoAnimatorFv:
+.fn stopAllMotions__11UfoAnimatorFv, global
 /* 800E9D74 000E6CD4  C0 02 9A 10 */	lfs f0, lbl_803E9C10@sda21(r2)
 /* 800E9D78 000E6CD8  80 83 00 04 */	lwz r4, 4(r3)
 /* 800E9D7C 000E6CDC  D0 04 00 00 */	stfs f0, 0(r4)
@@ -438,9 +437,9 @@ stopAllMotions__11UfoAnimatorFv:
 /* 800E9DB0 000E6D10  80 63 00 04 */	lwz r3, 4(r3)
 /* 800E9DB4 000E6D14  D0 03 00 1C */	stfs f0, 0x1c(r3)
 /* 800E9DB8 000E6D18  4E 80 00 20 */	blr 
+.endfn stopAllMotions__11UfoAnimatorFv
 
-.global initFlagMotions__11UfoAnimatorFi
-initFlagMotions__11UfoAnimatorFi:
+.fn initFlagMotions__11UfoAnimatorFi, global
 /* 800E9DBC 000E6D1C  7C 08 02 A6 */	mflr r0
 /* 800E9DC0 000E6D20  90 01 00 04 */	stw r0, 4(r1)
 /* 800E9DC4 000E6D24  94 21 FF C8 */	stwu r1, -0x38(r1)
@@ -521,9 +520,9 @@ initFlagMotions__11UfoAnimatorFi:
 /* 800E9ED0 000E6E30  38 21 00 38 */	addi r1, r1, 0x38
 /* 800E9ED4 000E6E34  7C 08 03 A6 */	mtlr r0
 /* 800E9ED8 000E6E38  4E 80 00 20 */	blr 
+.endfn initFlagMotions__11UfoAnimatorFi
 
-.global startFlagMotions__11UfoAnimatorFi
-startFlagMotions__11UfoAnimatorFi:
+.fn startFlagMotions__11UfoAnimatorFi, global
 /* 800E9EDC 000E6E3C  7C 08 02 A6 */	mflr r0
 /* 800E9EE0 000E6E40  2C 04 00 03 */	cmpwi r4, 3
 /* 800E9EE4 000E6E44  90 01 00 04 */	stw r0, 4(r1)
@@ -616,9 +615,9 @@ startFlagMotions__11UfoAnimatorFi:
 /* 800EA014 000E6F74  38 21 00 38 */	addi r1, r1, 0x38
 /* 800EA018 000E6F78  7C 08 03 A6 */	mtlr r0
 /* 800EA01C 000E6F7C  4E 80 00 20 */	blr 
+.endfn startFlagMotions__11UfoAnimatorFi
 
-.global setMotionLastFrame__11UfoAnimatorFi
-setMotionLastFrame__11UfoAnimatorFi:
+.fn setMotionLastFrame__11UfoAnimatorFi, global
 /* 800EA020 000E6F80  7C 08 02 A6 */	mflr r0
 /* 800EA024 000E6F84  90 01 00 04 */	stw r0, 4(r1)
 /* 800EA028 000E6F88  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -653,9 +652,9 @@ setMotionLastFrame__11UfoAnimatorFi:
 /* 800EA09C 000E6FFC  38 21 00 20 */	addi r1, r1, 0x20
 /* 800EA0A0 000E7000  7C 08 03 A6 */	mtlr r0
 /* 800EA0A4 000E7004  4E 80 00 20 */	blr 
+.endfn setMotionLastFrame__11UfoAnimatorFi
 
-.global updateAnimation__11UfoAnimatorFv
-updateAnimation__11UfoAnimatorFv:
+.fn updateAnimation__11UfoAnimatorFv, global
 /* 800EA0A8 000E7008  7C 08 02 A6 */	mflr r0
 /* 800EA0AC 000E700C  90 01 00 04 */	stw r0, 4(r1)
 /* 800EA0B0 000E7010  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -689,9 +688,9 @@ updateAnimation__11UfoAnimatorFv:
 /* 800EA11C 000E707C  38 21 00 20 */	addi r1, r1, 0x20
 /* 800EA120 000E7080  7C 08 03 A6 */	mtlr r0
 /* 800EA124 000E7084  4E 80 00 20 */	blr 
+.endfn updateAnimation__11UfoAnimatorFv
 
-.global updateContext__11UfoAnimatorFv
-updateContext__11UfoAnimatorFv:
+.fn updateContext__11UfoAnimatorFv, global
 /* 800EA128 000E7088  7C 08 02 A6 */	mflr r0
 /* 800EA12C 000E708C  90 01 00 04 */	stw r0, 4(r1)
 /* 800EA130 000E7090  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -719,41 +718,51 @@ updateContext__11UfoAnimatorFv:
 /* 800EA184 000E70E4  38 21 00 20 */	addi r1, r1, 0x20
 /* 800EA188 000E70E8  7C 08 03 A6 */	mtlr r0
 /* 800EA18C 000E70EC  4E 80 00 20 */	blr 
+.endfn updateContext__11UfoAnimatorFv
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802BC4A8:
+.obj lbl_802BC4A8, local
 	.asciz "ufoAnim.cpp"
+.endobj lbl_802BC4A8
 .balign 4
-lbl_802BC4B4:
+.obj lbl_802BC4B4, local
 	.asciz "objects/ufo/ufo0705.bin"
+.endobj lbl_802BC4B4
 .balign 4
-lbl_802BC4CC:
+.obj lbl_802BC4CC, local
 	.asciz "ufo shape"
+.endobj lbl_802BC4CC
 .balign 4
-lbl_802BC4D8:
+.obj lbl_802BC4D8, local
 	.asciz "wait tut"
+.endobj lbl_802BC4D8
 .balign 4
-lbl_802BC4E4:
+.obj lbl_802BC4E4, local
 	.asciz "takeoff-1"
+.endobj lbl_802BC4E4
 .balign 4
-lbl_802BC4F0:
+.obj lbl_802BC4F0, local
 	.asciz "takeoff-2"
+.endobj lbl_802BC4F0
 .balign 4
-lbl_802BC4FC:
+.obj lbl_802BC4FC, local
 	.asciz "takeoff-3"
+.endobj lbl_802BC4FC
 .balign 4
-lbl_802BC508:
+.obj lbl_802BC508, local
 	.asciz "takeoff-4"
+.endobj lbl_802BC508
 .balign 4
-lbl_802BC514:
+.obj lbl_802BC514, local
 	.asciz "takeoff-5"
+.endobj lbl_802BC514
 .balign 4
-lbl_802BC520:
+.obj lbl_802BC520, local
 	.asciz "open-close"
+.endobj lbl_802BC520
 .balign 4
-.global motionLabels__15PaniUfoAnimator
-motionLabels__15PaniUfoAnimator:
+.obj motionLabels__15PaniUfoAnimator, global
 	.4byte lbl_802BC4D8
 	.4byte lbl_803E17C0
 	.4byte lbl_803E17C8
@@ -771,28 +780,35 @@ motionLabels__15PaniUfoAnimator:
 	.4byte lbl_802BC508
 	.4byte lbl_802BC514
 	.4byte lbl_802BC520
+.endobj motionLabels__15PaniUfoAnimator
 .balign 4
-lbl_802BC570:
+.obj lbl_802BC570, local
 	.asciz "PaniUfoAnimator"
+.endobj lbl_802BC570
 .balign 4
-lbl_802BC580:
+.obj lbl_802BC580, local
 	.asciz "Animator"
+.endobj lbl_802BC580
 .balign 4
-lbl_802BC58C:
+.obj lbl_802BC58C, local
 	.asciz "PaniAnimator"
+.endobj lbl_802BC58C
 .balign 4
-lbl_802BC59C:
+.obj lbl_802BC59C, local
 	.4byte __RTTI__8Animator
 	.4byte 0
 	.4byte 0
-lbl_802BC5A8:
+.endobj lbl_802BC59C
+.balign 4
+.obj lbl_802BC5A8, local
 	.4byte __RTTI__8Animator
 	.4byte 0
 	.4byte __RTTI__12PaniAnimator
 	.4byte 0
 	.4byte 0
-.global __vt__15PaniUfoAnimator
-__vt__15PaniUfoAnimator:
+.endobj lbl_802BC5A8
+.balign 4
+.obj __vt__15PaniUfoAnimator, weak
 	.4byte __RTTI__15PaniUfoAnimator
 	.4byte 0
 	.4byte changeContext__12PaniAnimatorFP11AnimContext
@@ -800,58 +816,77 @@ __vt__15PaniUfoAnimator:
 	.4byte finishOneShot__8AnimatorFv
 	.4byte finishLoop__8AnimatorFv
 	.4byte updateContext__12PaniAnimatorFv
+.endobj __vt__15PaniUfoAnimator
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-lbl_803E17C0:
+.obj lbl_803E17C0, local
 	.asciz "wait"
+.endobj lbl_803E17C0
 .balign 4
-lbl_803E17C8:
+.obj lbl_803E17C8, local
 	.asciz "takeoff"
+.endobj lbl_803E17C8
 .balign 4
-lbl_803E17D0:
+.obj lbl_803E17D0, local
 	.asciz "henka1"
+.endobj lbl_803E17D0
 .balign 4
-lbl_803E17D8:
+.obj lbl_803E17D8, local
 	.asciz "henka1b"
+.endobj lbl_803E17D8
 .balign 4
-lbl_803E17E0:
+.obj lbl_803E17E0, local
 	.asciz "henka1d"
+.endobj lbl_803E17E0
 .balign 4
-lbl_803E17E8:
+.obj lbl_803E17E8, local
 	.asciz "henka2"
+.endobj lbl_803E17E8
 .balign 4
-lbl_803E17F0:
+.obj lbl_803E17F0, local
 	.asciz "henka2d"
+.endobj lbl_803E17F0
 .balign 4
-lbl_803E17F8:
+.obj lbl_803E17F8, local
 	.asciz "henka3"
+.endobj lbl_803E17F8
 .balign 4
-lbl_803E1800:
+.obj lbl_803E1800, local
 	.asciz "henka4a"
+.endobj lbl_803E1800
 .balign 4
-lbl_803E1808:
+.obj lbl_803E1808, local
 	.asciz "henka4b"
+.endobj lbl_803E1808
 .balign 4
-__RTTI__8Animator:
+.obj __RTTI__8Animator, local
 	.4byte lbl_802BC580
 	.4byte 0
-__RTTI__12PaniAnimator:
+.endobj __RTTI__8Animator
+.balign 4
+.obj __RTTI__12PaniAnimator, local
 	.4byte lbl_802BC58C
 	.4byte lbl_802BC59C
-__RTTI__15PaniUfoAnimator:
+.endobj __RTTI__12PaniAnimator
+.balign 4
+.obj __RTTI__15PaniUfoAnimator, local
 	.4byte lbl_802BC570
 	.4byte lbl_802BC5A8
+.endobj __RTTI__15PaniUfoAnimator
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803E9C10:
+.obj lbl_803E9C10, local
 	.float 0.0
-lbl_803E9C14:
+.endobj lbl_803E9C10
+.obj lbl_803E9C14, local
 	.float 30.0
-lbl_803E9C18:
+.endobj lbl_803E9C14
+.obj lbl_803E9C18, local
 	.float 1.0
+.endobj lbl_803E9C18
 .balign 8
-lbl_803E9C20:
-	.4byte 0x43300000
-	.4byte 0x80000000
+.obj lbl_803E9C20, local
+	.8byte 0x4330000080000000
+.endobj lbl_803E9C20

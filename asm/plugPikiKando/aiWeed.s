@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global __ct__7ActWeedFP4Piki
-__ct__7ActWeedFP4Piki:
+.fn __ct__7ActWeedFP4Piki, global
 /* 800C30A8 000C0008  7C 08 02 A6 */	mflr r0
 /* 800C30AC 000C000C  38 A0 00 01 */	li r5, 1
 /* 800C30B0 000C0010  90 01 00 04 */	stw r0, 4(r1)
@@ -23,9 +22,9 @@ __ct__7ActWeedFP4Piki:
 /* 800C30F0 000C0050  38 21 00 18 */	addi r1, r1, 0x18
 /* 800C30F4 000C0054  7C 08 03 A6 */	mtlr r0
 /* 800C30F8 000C0058  4E 80 00 20 */	blr 
+.endfn __ct__7ActWeedFP4Piki
 
-.global init__7ActWeedFP8Creature
-init__7ActWeedFP8Creature:
+.fn init__7ActWeedFP8Creature, global
 /* 800C30FC 000C005C  7C 08 02 A6 */	mflr r0
 /* 800C3100 000C0060  28 04 00 00 */	cmplwi r4, 0
 /* 800C3104 000C0064  90 01 00 04 */	stw r0, 4(r1)
@@ -49,9 +48,9 @@ init__7ActWeedFP8Creature:
 /* 800C3148 000C00A8  38 21 00 18 */	addi r1, r1, 0x18
 /* 800C314C 000C00AC  7C 08 03 A6 */	mtlr r0
 /* 800C3150 000C00B0  4E 80 00 20 */	blr 
+.endfn init__7ActWeedFP8Creature
 
-.global exec__7ActWeedFv
-exec__7ActWeedFv:
+.fn exec__7ActWeedFv, global
 /* 800C3154 000C00B4  7C 08 02 A6 */	mflr r0
 /* 800C3158 000C00B8  90 01 00 04 */	stw r0, 4(r1)
 /* 800C315C 000C00BC  94 21 FF F8 */	stwu r1, -8(r1)
@@ -82,9 +81,9 @@ exec__7ActWeedFv:
 /* 800C31A8 000C0108  38 21 00 08 */	addi r1, r1, 8
 /* 800C31AC 000C010C  7C 08 03 A6 */	mtlr r0
 /* 800C31B0 000C0110  4E 80 00 20 */	blr 
+.endfn exec__7ActWeedFv
 
-.global cleanup__7ActWeedFv
-cleanup__7ActWeedFv:
+.fn cleanup__7ActWeedFv, global
 /* 800C31B4 000C0114  7C 08 02 A6 */	mflr r0
 /* 800C31B8 000C0118  90 01 00 04 */	stw r0, 4(r1)
 /* 800C31BC 000C011C  94 21 FF F8 */	stwu r1, -8(r1)
@@ -97,9 +96,9 @@ cleanup__7ActWeedFv:
 /* 800C31D4 000C0134  38 21 00 08 */	addi r1, r1, 8
 /* 800C31D8 000C0138  7C 08 03 A6 */	mtlr r0
 /* 800C31DC 000C013C  4E 80 00 20 */	blr 
+.endfn cleanup__7ActWeedFv
 
-.global initApproach__7ActWeedFv
-initApproach__7ActWeedFv:
+.fn initApproach__7ActWeedFv, global
 /* 800C31E0 000C0140  7C 08 02 A6 */	mflr r0
 /* 800C31E4 000C0144  90 01 00 04 */	stw r0, 4(r1)
 /* 800C31E8 000C0148  38 00 00 00 */	li r0, 0
@@ -128,9 +127,9 @@ initApproach__7ActWeedFv:
 /* 800C3244 000C01A4  38 21 00 28 */	addi r1, r1, 0x28
 /* 800C3248 000C01A8  7C 08 03 A6 */	mtlr r0
 /* 800C324C 000C01AC  4E 80 00 20 */	blr 
+.endfn initApproach__7ActWeedFv
 
-.global exeApproach__7ActWeedFv
-exeApproach__7ActWeedFv:
+.fn exeApproach__7ActWeedFv, global
 /* 800C3250 000C01B0  7C 08 02 A6 */	mflr r0
 /* 800C3254 000C01B4  90 01 00 04 */	stw r0, 4(r1)
 /* 800C3258 000C01B8  94 21 FF 88 */	stwu r1, -0x78(r1)
@@ -257,15 +256,15 @@ exeApproach__7ActWeedFv:
 /* 800C3424 000C0384  38 21 00 78 */	addi r1, r1, 0x78
 /* 800C3428 000C0388  7C 08 03 A6 */	mtlr r0
 /* 800C342C 000C038C  4E 80 00 20 */	blr 
+.endfn exeApproach__7ActWeedFv
 
-.global initAdjust__7ActWeedFv
-initAdjust__7ActWeedFv:
+.fn initAdjust__7ActWeedFv, global
 /* 800C3430 000C0390  38 00 00 01 */	li r0, 1
 /* 800C3434 000C0394  B0 03 00 18 */	sth r0, 0x18(r3)
 /* 800C3438 000C0398  4E 80 00 20 */	blr 
+.endfn initAdjust__7ActWeedFv
 
-.global exeAdjust__7ActWeedFv
-exeAdjust__7ActWeedFv:
+.fn exeAdjust__7ActWeedFv, global
 /* 800C343C 000C039C  7C 08 02 A6 */	mflr r0
 /* 800C3440 000C03A0  90 01 00 04 */	stw r0, 4(r1)
 /* 800C3444 000C03A4  94 21 FF 88 */	stwu r1, -0x78(r1)
@@ -405,9 +404,9 @@ exeAdjust__7ActWeedFv:
 /* 800C3644 000C05A4  38 21 00 78 */	addi r1, r1, 0x78
 /* 800C3648 000C05A8  7C 08 03 A6 */	mtlr r0
 /* 800C364C 000C05AC  4E 80 00 20 */	blr 
+.endfn exeAdjust__7ActWeedFv
 
-.global initNuking__7ActWeedFv
-initNuking__7ActWeedFv:
+.fn initNuking__7ActWeedFv, global
 /* 800C3650 000C05B0  7C 08 02 A6 */	mflr r0
 /* 800C3654 000C05B4  90 01 00 04 */	stw r0, 4(r1)
 /* 800C3658 000C05B8  38 00 00 02 */	li r0, 2
@@ -444,9 +443,9 @@ initNuking__7ActWeedFv:
 /* 800C36D0 000C0630  38 21 00 30 */	addi r1, r1, 0x30
 /* 800C36D4 000C0634  7C 08 03 A6 */	mtlr r0
 /* 800C36D8 000C0638  4E 80 00 20 */	blr 
+.endfn initNuking__7ActWeedFv
 
-.global exeNuking__7ActWeedFv
-exeNuking__7ActWeedFv:
+.fn exeNuking__7ActWeedFv, global
 /* 800C36DC 000C063C  7C 08 02 A6 */	mflr r0
 /* 800C36E0 000C0640  90 01 00 04 */	stw r0, 4(r1)
 /* 800C36E4 000C0644  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -506,9 +505,9 @@ exeNuking__7ActWeedFv:
 /* 800C37B0 000C0710  38 21 00 28 */	addi r1, r1, 0x28
 /* 800C37B4 000C0714  7C 08 03 A6 */	mtlr r0
 /* 800C37B8 000C0718  4E 80 00 20 */	blr 
+.endfn exeNuking__7ActWeedFv
 
-.global animationKeyUpdated__7ActWeedFR16PaniAnimKeyEvent
-animationKeyUpdated__7ActWeedFR16PaniAnimKeyEvent:
+.fn animationKeyUpdated__7ActWeedFR16PaniAnimKeyEvent, global
 /* 800C37BC 000C071C  7C 08 02 A6 */	mflr r0
 /* 800C37C0 000C0720  90 01 00 04 */	stw r0, 4(r1)
 /* 800C37C4 000C0724  94 21 FF 88 */	stwu r1, -0x78(r1)
@@ -690,9 +689,9 @@ animationKeyUpdated__7ActWeedFR16PaniAnimKeyEvent:
 /* 800C3A64 000C09C4  38 21 00 78 */	addi r1, r1, 0x78
 /* 800C3A68 000C09C8  7C 08 03 A6 */	mtlr r0
 /* 800C3A6C 000C09CC  4E 80 00 20 */	blr 
+.endfn animationKeyUpdated__7ActWeedFR16PaniAnimKeyEvent
 
-.global __dt__7ActWeedFv
-__dt__7ActWeedFv:
+.fn __dt__7ActWeedFv, weak
 /* 800C3A70 000C09D0  7C 08 02 A6 */	mflr r0
 /* 800C3A74 000C09D4  90 01 00 04 */	stw r0, 4(r1)
 /* 800C3A78 000C09D8  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -721,31 +720,38 @@ __dt__7ActWeedFv:
 /* 800C3AD0 000C0A30  38 21 00 18 */	addi r1, r1, 0x18
 /* 800C3AD4 000C0A34  7C 08 03 A6 */	mtlr r0
 /* 800C3AD8 000C0A38  4E 80 00 20 */	blr 
+.endfn __dt__7ActWeedFv
 
-"@20@animationKeyUpdated__7ActWeedFR16PaniAnimKeyEvent":
+.fn "@20@animationKeyUpdated__7ActWeedFR16PaniAnimKeyEvent", weak
 /* 800C3ADC 000C0A3C  38 63 FF EC */	addi r3, r3, -20
 /* 800C3AE0 000C0A40  4B FF FC DC */	b animationKeyUpdated__7ActWeedFR16PaniAnimKeyEvent
+.endfn "@20@animationKeyUpdated__7ActWeedFR16PaniAnimKeyEvent"
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802B7DB0:
+.obj lbl_802B7DB0, local
 	.asciz "aiWeed.cpp"
+.endobj lbl_802B7DB0
 .balign 4
-lbl_802B7DBC:
+.obj lbl_802B7DBC, local
 	.asciz "Receiver<Piki>"
+.endobj lbl_802B7DBC
 .balign 4
-lbl_802B7DCC:
+.obj lbl_802B7DCC, local
 	.4byte "__RTTI__15Receiver<4Piki>"
 	.4byte 0
 	.4byte 0
-lbl_802B7DD8:
+.endobj lbl_802B7DCC
+.balign 4
+.obj lbl_802B7DD8, local
 	.4byte "__RTTI__15Receiver<4Piki>"
 	.4byte 0
 	.4byte __RTTI__6Action
 	.4byte 0
 	.4byte 0
-.global __vt__7ActWeed
-__vt__7ActWeed:
+.endobj lbl_802B7DD8
+.balign 4
+.obj __vt__7ActWeed, global
 	.4byte __RTTI__7ActWeed
 	.4byte 0
 	.4byte "procMsg__15Receiver<4Piki>FP4PikiP3Msg"
@@ -775,14 +781,15 @@ __vt__7ActWeed:
 	.4byte 0xFFFFFFEC
 	.4byte "@20@animationKeyUpdated__7ActWeedFR16PaniAnimKeyEvent"
 	.4byte animationKeyUpdated__7ActWeedFR16PaniAnimKeyEvent
+.endobj __vt__7ActWeed
 .balign 4
-lbl_802B7E60:
+.obj lbl_802B7E60, local
 	.asciz "PaniAnimKeyListener"
+.endobj lbl_802B7E60
 .balign 4
-	.4byte 0
-	.4byte 0
-	.4byte 0
-lbl_802B7E80:
+.skip 0xC # compiler padding
+.balign 4
+.obj lbl_802B7E80, local
 	.4byte ("procMsg__15Receiver<4Piki>FP4PikiP3Msg"+0x30)
 	.4byte ("procMsg__15Receiver<4Piki>FP4PikiP3Msg"+0x58)
 	.4byte ("procMsg__15Receiver<4Piki>FP4PikiP3Msg"+0x6C)
@@ -794,90 +801,129 @@ lbl_802B7E80:
 	.4byte ("procMsg__15Receiver<4Piki>FP4PikiP3Msg"+0x44)
 	.4byte ("procMsg__15Receiver<4Piki>FP4PikiP3Msg"+0xF8)
 	.4byte ("procMsg__15Receiver<4Piki>FP4PikiP3Msg"+0xE4)
+.endobj lbl_802B7E80
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-lbl_803E0900:
+.obj lbl_803E0900, local
 	.float 0.0
-lbl_803E0904:
+.endobj lbl_803E0900
+.obj lbl_803E0904, local
 	.float 0.0
-lbl_803E0908:
+.endobj lbl_803E0904
+.obj lbl_803E0908, local
 	.float 0.0
-lbl_803E090C:
+.endobj lbl_803E0908
+.obj lbl_803E090C, local
 	.float 0.0
-lbl_803E0910:
+.endobj lbl_803E090C
+.obj lbl_803E0910, local
 	.float 0.0
-lbl_803E0914:
+.endobj lbl_803E0910
+.obj lbl_803E0914, local
 	.float 0.0
-lbl_803E0918:
+.endobj lbl_803E0914
+.obj lbl_803E0918, local
 	.float 0.0
-lbl_803E091C:
+.endobj lbl_803E0918
+.obj lbl_803E091C, local
 	.float 0.0
-lbl_803E0920:
+.endobj lbl_803E091C
+.obj lbl_803E0920, local
 	.float 0.0
-lbl_803E0924:
+.endobj lbl_803E0920
+.obj lbl_803E0924, local
 	.float 0.0
-lbl_803E0928:
+.endobj lbl_803E0924
+.obj lbl_803E0928, local
 	.float 0.0
-lbl_803E092C:
+.endobj lbl_803E0928
+.obj lbl_803E092C, local
 	.float 0.0
-lbl_803E0930:
+.endobj lbl_803E092C
+.obj lbl_803E0930, local
 	.float 0.0
-lbl_803E0934:
+.endobj lbl_803E0930
+.obj lbl_803E0934, local
 	.float 1.0
-lbl_803E0938:
+.endobj lbl_803E0934
+.obj lbl_803E0938, local
 	.float 0.0
+.endobj lbl_803E0938
 .balign 4
-lbl_803E093C:
+.obj lbl_803E093C, local
 	.asciz "ActWeed"
+.endobj lbl_803E093C
 .balign 4
-"__RTTI__15Receiver<4Piki>":
+.obj "__RTTI__15Receiver<4Piki>", local
 	.4byte lbl_802B7DBC
 	.4byte 0
+.endobj "__RTTI__15Receiver<4Piki>"
 .balign 4
-lbl_803E094C:
+.obj lbl_803E094C, local
 	.asciz "Action"
+.endobj lbl_803E094C
 .balign 4
-__RTTI__6Action:
+.obj __RTTI__6Action, local
 	.4byte lbl_803E094C
 	.4byte lbl_802B7DCC
-__RTTI__7ActWeed:
+.endobj __RTTI__6Action
+.balign 4
+.obj __RTTI__7ActWeed, local
 	.4byte lbl_803E093C
 	.4byte lbl_802B7DD8
+.endobj __RTTI__7ActWeed
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803E9750:
+.obj lbl_803E9750, local
 	.float 0.0
+.endobj lbl_803E9750
 .balign 8
-lbl_803E9758:
+.obj lbl_803E9758, local
 	.double 0.5
-lbl_803E9760:
+.endobj lbl_803E9758
+.balign 8
+.obj lbl_803E9760, local
 	.double 3.0
-lbl_803E9768:
+.endobj lbl_803E9760
+.obj lbl_803E9768, local
 	.float 20.0
-lbl_803E976C:
+.endobj lbl_803E9768
+.obj lbl_803E976C, local
 	.float 0.7
-lbl_803E9770:
+.endobj lbl_803E976C
+.obj lbl_803E9770, local
 	.float 4.0
-lbl_803E9774:
+.endobj lbl_803E9770
+.obj lbl_803E9774, local
 	.float 0.5
-lbl_803E9778:
+.endobj lbl_803E9774
+.obj lbl_803E9778, local
 	.float 1.0
-lbl_803E977C:
+.endobj lbl_803E9778
+.obj lbl_803E977C, local
 	.float 32767.0
-lbl_803E9780:
+.endobj lbl_803E977C
+.obj lbl_803E9780, local
 	.float 0.92
-lbl_803E9784:
+.endobj lbl_803E9780
+.obj lbl_803E9784, local
 	.float 10.0
-lbl_803E9788:
+.endobj lbl_803E9784
+.obj lbl_803E9788, local
 	.float 2.0
-lbl_803E978C:
+.endobj lbl_803E9788
+.obj lbl_803E978C, local # pi
 	.float 3.1415927
-lbl_803E9790:
+.endobj lbl_803E978C
+.obj lbl_803E9790, local
 	.float 30.0
-lbl_803E9794:
+.endobj lbl_803E9790
+.obj lbl_803E9794, local
 	.float 400.0
-lbl_803E9798:
-	.4byte 0x43300000
-	.4byte 0x80000000
+.endobj lbl_803E9794
+.balign 8
+.obj lbl_803E9798, local
+	.8byte 0x4330000080000000
+.endobj lbl_803E9798

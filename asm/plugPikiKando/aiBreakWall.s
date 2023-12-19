@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global __ct__12ActBreakWallFP4Piki
-__ct__12ActBreakWallFP4Piki:
+.fn __ct__12ActBreakWallFP4Piki, global
 /* 800AE13C 000AB09C  7C 08 02 A6 */	mflr r0
 /* 800AE140 000AB0A0  38 A0 00 01 */	li r5, 1
 /* 800AE144 000AB0A4  90 01 00 04 */	stw r0, 4(r1)
@@ -30,9 +29,9 @@ __ct__12ActBreakWallFP4Piki:
 /* 800AE1A0 000AB100  38 21 00 18 */	addi r1, r1, 0x18
 /* 800AE1A4 000AB104  7C 08 03 A6 */	mtlr r0
 /* 800AE1A8 000AB108  4E 80 00 20 */	blr 
+.endfn __ct__12ActBreakWallFP4Piki
 
-.global init__12ActBreakWallFP8Creature
-init__12ActBreakWallFP8Creature:
+.fn init__12ActBreakWallFP8Creature, global
 /* 800AE1AC 000AB10C  7C 08 02 A6 */	mflr r0
 /* 800AE1B0 000AB110  38 C0 00 01 */	li r6, 1
 /* 800AE1B4 000AB114  90 01 00 04 */	stw r0, 4(r1)
@@ -124,9 +123,9 @@ init__12ActBreakWallFP8Creature:
 /* 800AE2F4 000AB254  38 21 00 48 */	addi r1, r1, 0x48
 /* 800AE2F8 000AB258  7C 08 03 A6 */	mtlr r0
 /* 800AE2FC 000AB25C  4E 80 00 20 */	blr 
+.endfn init__12ActBreakWallFP8Creature
 
-.global procCollideMsg__12ActBreakWallFP4PikiP10MsgCollide
-procCollideMsg__12ActBreakWallFP4PikiP10MsgCollide:
+.fn procCollideMsg__12ActBreakWallFP4PikiP10MsgCollide, global
 /* 800AE300 000AB260  7C 08 02 A6 */	mflr r0
 /* 800AE304 000AB264  90 01 00 04 */	stw r0, 4(r1)
 /* 800AE308 000AB268  94 21 FF D0 */	stwu r1, -0x30(r1)
@@ -177,9 +176,9 @@ procCollideMsg__12ActBreakWallFP4PikiP10MsgCollide:
 /* 800AE3B8 000AB318  38 21 00 30 */	addi r1, r1, 0x30
 /* 800AE3BC 000AB31C  7C 08 03 A6 */	mtlr r0
 /* 800AE3C0 000AB320  4E 80 00 20 */	blr 
+.endfn procCollideMsg__12ActBreakWallFP4PikiP10MsgCollide
 
-.global animationKeyUpdated__12ActBreakWallFR16PaniAnimKeyEvent
-animationKeyUpdated__12ActBreakWallFR16PaniAnimKeyEvent:
+.fn animationKeyUpdated__12ActBreakWallFR16PaniAnimKeyEvent, global
 /* 800AE3C4 000AB324  7C 08 02 A6 */	mflr r0
 /* 800AE3C8 000AB328  90 01 00 04 */	stw r0, 4(r1)
 /* 800AE3CC 000AB32C  94 21 FF 90 */	stwu r1, -0x70(r1)
@@ -289,9 +288,9 @@ animationKeyUpdated__12ActBreakWallFR16PaniAnimKeyEvent:
 /* 800AE548 000AB4A8  38 21 00 70 */	addi r1, r1, 0x70
 /* 800AE54C 000AB4AC  7C 08 03 A6 */	mtlr r0
 /* 800AE550 000AB4B0  4E 80 00 20 */	blr 
+.endfn animationKeyUpdated__12ActBreakWallFR16PaniAnimKeyEvent
 
-.global exec__12ActBreakWallFv
-exec__12ActBreakWallFv:
+.fn exec__12ActBreakWallFv, global
 /* 800AE554 000AB4B4  7C 08 02 A6 */	mflr r0
 /* 800AE558 000AB4B8  90 01 00 04 */	stw r0, 4(r1)
 /* 800AE55C 000AB4BC  94 21 FF B0 */	stwu r1, -0x50(r1)
@@ -382,9 +381,9 @@ exec__12ActBreakWallFv:
 /* 800AE690 000AB5F0  38 21 00 50 */	addi r1, r1, 0x50
 /* 800AE694 000AB5F4  7C 08 03 A6 */	mtlr r0
 /* 800AE698 000AB5F8  4E 80 00 20 */	blr 
+.endfn exec__12ActBreakWallFv
 
-.global isAlive__12BuildingItemFv
-isAlive__12BuildingItemFv:
+.fn isAlive__12BuildingItemFv, weak
 /* 800AE69C 000AB5FC  80 83 04 40 */	lwz r4, 0x440(r3)
 /* 800AE6A0 000AB600  80 63 04 44 */	lwz r3, 0x444(r3)
 /* 800AE6A4 000AB604  7C 80 1A 38 */	eqv r0, r4, r3
@@ -393,9 +392,9 @@ isAlive__12BuildingItemFv:
 /* 800AE6B0 000AB610  7C 60 01 94 */	addze r3, r0
 /* 800AE6B4 000AB614  54 63 07 FE */	clrlwi r3, r3, 0x1f
 /* 800AE6B8 000AB618  4E 80 00 20 */	blr 
+.endfn isAlive__12BuildingItemFv
 
-.global gotoWall__12ActBreakWallFv
-gotoWall__12ActBreakWallFv:
+.fn gotoWall__12ActBreakWallFv, global
 /* 800AE6BC 000AB61C  7C 08 02 A6 */	mflr r0
 /* 800AE6C0 000AB620  90 01 00 04 */	stw r0, 4(r1)
 /* 800AE6C4 000AB624  94 21 FF B8 */	stwu r1, -0x48(r1)
@@ -447,9 +446,9 @@ gotoWall__12ActBreakWallFv:
 /* 800AE778 000AB6D8  38 21 00 48 */	addi r1, r1, 0x48
 /* 800AE77C 000AB6DC  7C 08 03 A6 */	mtlr r0
 /* 800AE780 000AB6E0  4E 80 00 20 */	blr 
+.endfn gotoWall__12ActBreakWallFv
 
-.global initBreakWall__12ActBreakWallFv
-initBreakWall__12ActBreakWallFv:
+.fn initBreakWall__12ActBreakWallFv, global
 /* 800AE784 000AB6E4  7C 08 02 A6 */	mflr r0
 /* 800AE788 000AB6E8  90 01 00 04 */	stw r0, 4(r1)
 /* 800AE78C 000AB6EC  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -486,9 +485,9 @@ initBreakWall__12ActBreakWallFv:
 /* 800AE808 000AB768  38 21 00 28 */	addi r1, r1, 0x28
 /* 800AE80C 000AB76C  7C 08 03 A6 */	mtlr r0
 /* 800AE810 000AB770  4E 80 00 20 */	blr 
+.endfn initBreakWall__12ActBreakWallFv
 
-.global startWorkMotion__12ActBreakWallFv
-startWorkMotion__12ActBreakWallFv:
+.fn startWorkMotion__12ActBreakWallFv, global
 /* 800AE814 000AB774  7C 08 02 A6 */	mflr r0
 /* 800AE818 000AB778  90 01 00 04 */	stw r0, 4(r1)
 /* 800AE81C 000AB77C  94 21 FF A0 */	stwu r1, -0x60(r1)
@@ -554,9 +553,9 @@ startWorkMotion__12ActBreakWallFv:
 /* 800AE8FC 000AB85C  38 21 00 60 */	addi r1, r1, 0x60
 /* 800AE900 000AB860  7C 08 03 A6 */	mtlr r0
 /* 800AE904 000AB864  4E 80 00 20 */	blr 
+.endfn startWorkMotion__12ActBreakWallFv
 
-.global breakWall__12ActBreakWallFv
-breakWall__12ActBreakWallFv:
+.fn breakWall__12ActBreakWallFv, global
 /* 800AE908 000AB868  7C 08 02 A6 */	mflr r0
 /* 800AE90C 000AB86C  90 01 00 04 */	stw r0, 4(r1)
 /* 800AE910 000AB870  94 21 FF 78 */	stwu r1, -0x88(r1)
@@ -752,9 +751,9 @@ breakWall__12ActBreakWallFv:
 /* 800AEBE0 000ABB40  38 21 00 88 */	addi r1, r1, 0x88
 /* 800AEBE4 000ABB44  7C 08 03 A6 */	mtlr r0
 /* 800AEBE8 000ABB48  4E 80 00 20 */	blr 
+.endfn breakWall__12ActBreakWallFv
 
-.global isCompleted__12BuildingItemFv
-isCompleted__12BuildingItemFv:
+.fn isCompleted__12BuildingItemFv, weak
 /* 800AEBEC 000ABB4C  80 A3 04 44 */	lwz r5, 0x444(r3)
 /* 800AEBF0 000ABB50  80 03 04 40 */	lwz r0, 0x440(r3)
 /* 800AEBF4 000ABB54  7C A3 FE 70 */	srawi r3, r5, 0x1f
@@ -762,13 +761,13 @@ isCompleted__12BuildingItemFv:
 /* 800AEBFC 000ABB5C  7C 00 28 10 */	subfc r0, r0, r5
 /* 800AEC00 000ABB60  7C 63 21 14 */	adde r3, r3, r4
 /* 800AEC04 000ABB64  4E 80 00 20 */	blr 
+.endfn isCompleted__12BuildingItemFv
 
-.global cleanup__12ActBreakWallFv
-cleanup__12ActBreakWallFv:
+.fn cleanup__12ActBreakWallFv, global
 /* 800AEC08 000ABB68  4E 80 00 20 */	blr 
+.endfn cleanup__12ActBreakWallFv
 
-.global __dt__12ActBreakWallFv
-__dt__12ActBreakWallFv:
+.fn __dt__12ActBreakWallFv, weak
 /* 800AEC0C 000ABB6C  7C 08 02 A6 */	mflr r0
 /* 800AEC10 000ABB70  90 01 00 04 */	stw r0, 4(r1)
 /* 800AEC14 000ABB74  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -797,51 +796,52 @@ __dt__12ActBreakWallFv:
 /* 800AEC6C 000ABBCC  38 21 00 18 */	addi r1, r1, 0x18
 /* 800AEC70 000ABBD0  7C 08 03 A6 */	mtlr r0
 /* 800AEC74 000ABBD4  4E 80 00 20 */	blr 
+.endfn __dt__12ActBreakWallFv
 
-"@20@animationKeyUpdated__12ActBreakWallFR16PaniAnimKeyEvent":
+.fn "@20@animationKeyUpdated__12ActBreakWallFR16PaniAnimKeyEvent", weak
 /* 800AEC78 000ABBD8  38 63 FF EC */	addi r3, r3, -20
 /* 800AEC7C 000ABBDC  4B FF F7 48 */	b animationKeyUpdated__12ActBreakWallFR16PaniAnimKeyEvent
+.endfn "@20@animationKeyUpdated__12ActBreakWallFR16PaniAnimKeyEvent"
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802B5D48:
+.obj lbl_802B5D48, local
 	.asciz "aiBreakWall.cpp"
+.endobj lbl_802B5D48
 .balign 4
-lbl_802B5D58:
+.obj lbl_802B5D58, local
 	.asciz "aiBreakWall"
+.endobj lbl_802B5D58
 .balign 4
-lbl_802B5D64:
+.obj lbl_802B5D64, local
 	.asciz "breakWall"
+.endobj lbl_802B5D64
 .balign 4
-lbl_802B5D70:
+.obj lbl_802B5D70, local
 	.asciz "Interaction"
+.endobj lbl_802B5D70
 .balign 4
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
+.skip 0x2C # compiler padding
 .balign 4
-lbl_802B5DA8:
+.obj lbl_802B5DA8, local
 	.asciz "ActBreakWall"
+.endobj lbl_802B5DA8
 .balign 4
-lbl_802B5DB8:
+.obj lbl_802B5DB8, local
 	.asciz "PaniAnimKeyListener"
+.endobj lbl_802B5DB8
 .balign 4
-lbl_802B5DCC:
+.obj lbl_802B5DCC, local
 	.asciz "Receiver<Piki>"
+.endobj lbl_802B5DCC
 .balign 4
-lbl_802B5DDC:
+.obj lbl_802B5DDC, local
 	.4byte "__RTTI__15Receiver<4Piki>"
 	.4byte 0x00000000
 	.4byte 0x00000000
-lbl_802B5DE8:
+.endobj lbl_802B5DDC
+.balign 4
+.obj lbl_802B5DE8, local
 	.4byte __RTTI__19PaniAnimKeyListener
 	.4byte 0x00000014
 	.4byte "__RTTI__15Receiver<4Piki>"
@@ -849,8 +849,9 @@ lbl_802B5DE8:
 	.4byte __RTTI__6Action
 	.4byte 0x00000000
 	.4byte 0x00000000
-.global __vt__12ActBreakWall
-__vt__12ActBreakWall:
+.endobj lbl_802B5DE8
+.balign 4
+.obj __vt__12ActBreakWall, global
 	.4byte __RTTI__12ActBreakWall
 	.4byte 0
 	.4byte "procMsg__15Receiver<4Piki>FP4PikiP3Msg"
@@ -880,10 +881,11 @@ __vt__12ActBreakWall:
 	.4byte 0xFFFFFFEC
 	.4byte "@20@animationKeyUpdated__12ActBreakWallFR16PaniAnimKeyEvent"
 	.4byte animationKeyUpdated__12ActBreakWallFR16PaniAnimKeyEvent
-	.4byte 0
-	.4byte 0
-	.4byte 0
-lbl_802B5E84:
+.endobj __vt__12ActBreakWall
+.balign 4
+.skip 0xC # compiler padding
+.balign 4
+.obj lbl_802B5E84, local
 	.4byte ("procMsg__15Receiver<4Piki>FP4PikiP3Msg"+0x30)
 	.4byte ("procMsg__15Receiver<4Piki>FP4PikiP3Msg"+0x58)
 	.4byte ("procMsg__15Receiver<4Piki>FP4PikiP3Msg"+0x6C)
@@ -895,60 +897,88 @@ lbl_802B5E84:
 	.4byte ("procMsg__15Receiver<4Piki>FP4PikiP3Msg"+0x44)
 	.4byte ("procMsg__15Receiver<4Piki>FP4PikiP3Msg"+0xF8)
 	.4byte ("procMsg__15Receiver<4Piki>FP4PikiP3Msg"+0xE4)
+.endobj lbl_802B5E84
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-lbl_803DFEF8:
+.obj lbl_803DFEF8, local
 	.float 0.0
-lbl_803DFEFC:
+.endobj lbl_803DFEF8
+.obj lbl_803DFEFC, local
 	.float 0.0
-lbl_803DFF00:
+.endobj lbl_803DFEFC
+.obj lbl_803DFF00, local
 	.float 0.0
-lbl_803DFF04:
+.endobj lbl_803DFF00
+.obj lbl_803DFF04, local
 	.float 0.0
-lbl_803DFF08:
+.endobj lbl_803DFF04
+.obj lbl_803DFF08, local
 	.float 0.0
-lbl_803DFF0C:
+.endobj lbl_803DFF08
+.obj lbl_803DFF0C, local
 	.float 0.0
-__RTTI__19PaniAnimKeyListener:
+.endobj lbl_803DFF0C
+.balign 4
+.obj __RTTI__19PaniAnimKeyListener, local
 	.4byte lbl_802B5DB8
 	.4byte 0
-"__RTTI__15Receiver<4Piki>":
+.endobj __RTTI__19PaniAnimKeyListener
+.balign 4
+.obj "__RTTI__15Receiver<4Piki>", local
 	.4byte lbl_802B5DCC
 	.4byte 0
+.endobj "__RTTI__15Receiver<4Piki>"
 .balign 4
-lbl_803DFF20:
+.obj lbl_803DFF20, local
 	.asciz "Action"
+.endobj lbl_803DFF20
 .balign 4
-__RTTI__6Action:
+.obj __RTTI__6Action, local
 	.4byte lbl_803DFF20
 	.4byte lbl_802B5DDC
-__RTTI__12ActBreakWall:
+.endobj __RTTI__6Action
+.balign 4
+.obj __RTTI__12ActBreakWall, local
 	.4byte lbl_802B5DA8
 	.4byte lbl_802B5DE8
+.endobj __RTTI__12ActBreakWall
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803E91B0:
+.obj lbl_803E91B0, local
 	.float 0.0
-lbl_803E91B4:
+.endobj lbl_803E91B0
+.obj lbl_803E91B4, local
 	.float 1.0
-lbl_803E91B8:
+.endobj lbl_803E91B4
+.obj lbl_803E91B8, local
 	.float 32767.0
-lbl_803E91BC:
+.endobj lbl_803E91B8
+.obj lbl_803E91BC, local
 	.float 4.0
-lbl_803E91C0:
-	.4byte 0x43300000
-	.4byte 0x80000000
-lbl_803E91C8:
+.endobj lbl_803E91BC
+.balign 8
+.obj lbl_803E91C0, local
+	.8byte 0x4330000080000000
+.endobj lbl_803E91C0
+.balign 8
+.obj lbl_803E91C8, local
 	.double 0.5
-lbl_803E91D0:
+.endobj lbl_803E91C8
+.balign 8
+.obj lbl_803E91D0, local
 	.double 3.0
-lbl_803E91D8:
+.endobj lbl_803E91D0
+.obj lbl_803E91D8, local
 	.float 5.0
-lbl_803E91DC:
+.endobj lbl_803E91D8
+.obj lbl_803E91DC, local
 	.float 0.7
-lbl_803E91E0:
+.endobj lbl_803E91DC
+.obj lbl_803E91E0, local
 	.float 60.0
-lbl_803E91E4:
+.endobj lbl_803E91E0
+.obj lbl_803E91E4, local
 	.float 3.0
+.endobj lbl_803E91E4

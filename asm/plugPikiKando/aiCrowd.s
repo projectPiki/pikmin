@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global __ct__8ActCrowdFP4Piki
-__ct__8ActCrowdFP4Piki:
+.fn __ct__8ActCrowdFP4Piki, global
 /* 800B5AAC 000B2A0C  7C 08 02 A6 */	mflr r0
 /* 800B5AB0 000B2A10  90 01 00 04 */	stw r0, 4(r1)
 /* 800B5AB4 000B2A14  7C 80 07 35 */	extsh. r0, r4
@@ -67,14 +66,14 @@ __ct__8ActCrowdFP4Piki:
 /* 800B5B9C 000B2AFC  38 21 00 20 */	addi r1, r1, 0x20
 /* 800B5BA0 000B2B00  7C 08 03 A6 */	mtlr r0
 /* 800B5BA4 000B2B04  4E 80 00 20 */	blr 
+.endfn __ct__8ActCrowdFP4Piki
 
-.global inform__8ActCrowdFi
-inform__8ActCrowdFi:
+.fn inform__8ActCrowdFi, global
 /* 800B5BA8 000B2B08  90 83 00 58 */	stw r4, 0x58(r3)
 /* 800B5BAC 000B2B0C  4E 80 00 20 */	blr 
+.endfn inform__8ActCrowdFi
 
-.global startSort__8ActCrowdFv
-startSort__8ActCrowdFv:
+.fn startSort__8ActCrowdFv, global
 /* 800B5BB0 000B2B10  7C 08 02 A6 */	mflr r0
 /* 800B5BB4 000B2B14  90 01 00 04 */	stw r0, 4(r1)
 /* 800B5BB8 000B2B18  38 00 00 02 */	li r0, 2
@@ -86,9 +85,9 @@ startSort__8ActCrowdFv:
 /* 800B5BD0 000B2B30  38 21 00 08 */	addi r1, r1, 8
 /* 800B5BD4 000B2B34  7C 08 03 A6 */	mtlr r0
 /* 800B5BD8 000B2B38  4E 80 00 20 */	blr 
+.endfn startSort__8ActCrowdFv
 
-.global init__8ActCrowdFP8Creature
-init__8ActCrowdFP8Creature:
+.fn init__8ActCrowdFP8Creature, global
 /* 800B5BDC 000B2B3C  7C 08 02 A6 */	mflr r0
 /* 800B5BE0 000B2B40  90 01 00 04 */	stw r0, 4(r1)
 /* 800B5BE4 000B2B44  38 00 00 00 */	li r0, 0
@@ -179,9 +178,9 @@ init__8ActCrowdFP8Creature:
 /* 800B5D2C 000B2C8C  38 21 00 38 */	addi r1, r1, 0x38
 /* 800B5D30 000B2C90  7C 08 03 A6 */	mtlr r0
 /* 800B5D34 000B2C94  4E 80 00 20 */	blr 
+.endfn init__8ActCrowdFP8Creature
 
-.global procCollideMsg__8ActCrowdFP4PikiP10MsgCollide
-procCollideMsg__8ActCrowdFP4PikiP10MsgCollide:
+.fn procCollideMsg__8ActCrowdFP4PikiP10MsgCollide, global
 /* 800B5D38 000B2C98  7C 08 02 A6 */	mflr r0
 /* 800B5D3C 000B2C9C  90 01 00 04 */	stw r0, 4(r1)
 /* 800B5D40 000B2CA0  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -243,9 +242,9 @@ procCollideMsg__8ActCrowdFP4PikiP10MsgCollide:
 /* 800B5E10 000B2D70  38 21 00 28 */	addi r1, r1, 0x28
 /* 800B5E14 000B2D74  7C 08 03 A6 */	mtlr r0
 /* 800B5E18 000B2D78  4E 80 00 20 */	blr 
+.endfn procCollideMsg__8ActCrowdFP4PikiP10MsgCollide
 
-.global procWallMsg__8ActCrowdFP4PikiP7MsgWall
-procWallMsg__8ActCrowdFP4PikiP7MsgWall:
+.fn procWallMsg__8ActCrowdFP4PikiP7MsgWall, global
 /* 800B5E1C 000B2D7C  80 03 00 58 */	lwz r0, 0x58(r3)
 /* 800B5E20 000B2D80  2C 00 FF FF */	cmpwi r0, -1
 /* 800B5E24 000B2D84  4D 82 00 20 */	beqlr 
@@ -259,9 +258,9 @@ procWallMsg__8ActCrowdFP4PikiP7MsgWall:
 /* 800B5E44 000B2DA4  90 83 00 78 */	stw r4, 0x78(r3)
 /* 800B5E48 000B2DA8  98 03 00 35 */	stb r0, 0x35(r3)
 /* 800B5E4C 000B2DAC  4E 80 00 20 */	blr 
+.endfn procWallMsg__8ActCrowdFP4PikiP7MsgWall
 
-.global procAnimMsg__8ActCrowdFP4PikiP7MsgAnim
-procAnimMsg__8ActCrowdFP4PikiP7MsgAnim:
+.fn procAnimMsg__8ActCrowdFP4PikiP7MsgAnim, global
 /* 800B5E50 000B2DB0  7C 08 02 A6 */	mflr r0
 /* 800B5E54 000B2DB4  90 01 00 04 */	stw r0, 4(r1)
 /* 800B5E58 000B2DB8  94 21 FF D0 */	stwu r1, -0x30(r1)
@@ -339,9 +338,9 @@ procAnimMsg__8ActCrowdFP4PikiP7MsgAnim:
 /* 800B5F60 000B2EC0  38 21 00 30 */	addi r1, r1, 0x30
 /* 800B5F64 000B2EC4  7C 08 03 A6 */	mtlr r0
 /* 800B5F68 000B2EC8  4E 80 00 20 */	blr 
+.endfn procAnimMsg__8ActCrowdFP4PikiP7MsgAnim
 
-.global cleanup__8ActCrowdFv
-cleanup__8ActCrowdFv:
+.fn cleanup__8ActCrowdFv, global
 /* 800B5F6C 000B2ECC  7C 08 02 A6 */	mflr r0
 /* 800B5F70 000B2ED0  90 01 00 04 */	stw r0, 4(r1)
 /* 800B5F74 000B2ED4  94 21 FF C8 */	stwu r1, -0x38(r1)
@@ -407,9 +406,9 @@ cleanup__8ActCrowdFv:
 /* 800B605C 000B2FBC  38 21 00 38 */	addi r1, r1, 0x38
 /* 800B6060 000B2FC0  7C 08 03 A6 */	mtlr r0
 /* 800B6064 000B2FC4  4E 80 00 20 */	blr 
+.endfn cleanup__8ActCrowdFv
 
-.global exec__8ActCrowdFv
-exec__8ActCrowdFv:
+.fn exec__8ActCrowdFv, global
 /* 800B6068 000B2FC8  7C 08 02 A6 */	mflr r0
 /* 800B606C 000B2FCC  90 01 00 04 */	stw r0, 4(r1)
 /* 800B6070 000B2FD0  38 00 00 05 */	li r0, 5
@@ -1908,9 +1907,9 @@ exec__8ActCrowdFv:
 /* 800B76A8 000B4608  38 21 05 A0 */	addi r1, r1, 0x5a0
 /* 800B76AC 000B460C  7C 08 03 A6 */	mtlr r0
 /* 800B76B0 000B4610  4E 80 00 20 */	blr 
+.endfn exec__8ActCrowdFv
 
-.global startZawatuki__8ActCrowdFv
-startZawatuki__8ActCrowdFv:
+.fn startZawatuki__8ActCrowdFv, global
 /* 800B76B4 000B4614  7C 08 02 A6 */	mflr r0
 /* 800B76B8 000B4618  90 01 00 04 */	stw r0, 4(r1)
 /* 800B76BC 000B461C  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -1934,13 +1933,13 @@ startZawatuki__8ActCrowdFv:
 /* 800B7700 000B4660  38 21 00 18 */	addi r1, r1, 0x18
 /* 800B7704 000B4664  7C 08 03 A6 */	mtlr r0
 /* 800B7708 000B4668  4E 80 00 20 */	blr 
+.endfn startZawatuki__8ActCrowdFv
 
-.global finishZawatuki__8ActCrowdFv
-finishZawatuki__8ActCrowdFv:
+.fn finishZawatuki__8ActCrowdFv, global
 /* 800B770C 000B466C  4E 80 00 20 */	blr 
+.endfn finishZawatuki__8ActCrowdFv
 
-.global __dt__8ActCrowdFv
-__dt__8ActCrowdFv:
+.fn __dt__8ActCrowdFv, weak
 /* 800B7710 000B4670  7C 08 02 A6 */	mflr r0
 /* 800B7714 000B4674  90 01 00 04 */	stw r0, 4(r1)
 /* 800B7718 000B4678  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -1974,38 +1973,46 @@ __dt__8ActCrowdFv:
 /* 800B7784 000B46E4  38 21 00 18 */	addi r1, r1, 0x18
 /* 800B7788 000B46E8  7C 08 03 A6 */	mtlr r0
 /* 800B778C 000B46EC  4E 80 00 20 */	blr 
+.endfn __dt__8ActCrowdFv
 
-.global resumable__8ActCrowdFv
-resumable__8ActCrowdFv:
+.fn resumable__8ActCrowdFv, weak
 /* 800B7790 000B46F0  38 60 00 01 */	li r3, 1
 /* 800B7794 000B46F4  4E 80 00 20 */	blr 
+.endfn resumable__8ActCrowdFv
 
-"@128@4@inform__8ActCrowdFi":
+.fn "@128@4@inform__8ActCrowdFi", weak
 /* 800B7798 000B46F8  39 60 00 04 */	li r11, 4
 /* 800B779C 000B46FC  7D 63 58 2E */	lwzx r11, r3, r11
 /* 800B77A0 000B4700  7C 63 5A 14 */	add r3, r3, r11
 /* 800B77A4 000B4704  38 63 FF 80 */	addi r3, r3, -128
 /* 800B77A8 000B4708  4B FF E4 00 */	b inform__8ActCrowdFi
+.endfn "@128@4@inform__8ActCrowdFi"
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802B62B8:
+.obj lbl_802B62B8, local
 	.asciz "aiCrowd.cpp"
+.endobj lbl_802B62B8
 .balign 4
-lbl_802B62C4:
+.obj lbl_802B62C4, local
 	.asciz "ActCrowd"
+.endobj lbl_802B62C4
 .balign 4
-lbl_802B62D0:
+.obj lbl_802B62D0, local
 	.asciz "SlotChangeListner"
+.endobj lbl_802B62D0
 .balign 4
-lbl_802B62E4:
+.obj lbl_802B62E4, local
 	.asciz "Receiver<Piki>"
+.endobj lbl_802B62E4
 .balign 4
-lbl_802B62F4:
+.obj lbl_802B62F4, local
 	.4byte "__RTTI__15Receiver<4Piki>"
 	.4byte 0
 	.4byte 0
-lbl_802B6300:
+.endobj lbl_802B62F4
+.balign 4
+.obj lbl_802B6300, local
 	.4byte __RTTI__17SlotChangeListner
 	.4byte 0x80
 	.4byte "__RTTI__15Receiver<4Piki>"
@@ -2013,8 +2020,9 @@ lbl_802B6300:
 	.4byte __RTTI__6Action
 	.4byte 0
 	.4byte 0
-.global __vt__8ActCrowd
-__vt__8ActCrowd:
+.endobj lbl_802B6300
+.balign 4
+.obj __vt__8ActCrowd, global
 	.4byte __RTTI__8ActCrowd
 	.4byte 0
 	.4byte "procMsg__15Receiver<4Piki>FP4PikiP3Msg"
@@ -2044,12 +2052,15 @@ __vt__8ActCrowd:
 	.4byte __RTTI__8ActCrowd
 	.4byte 0xFFFFFF80
 	.4byte "@128@4@inform__8ActCrowdFi"
-.global __vt__17SlotChangeListner
-__vt__17SlotChangeListner:
+.endobj __vt__8ActCrowd
+.balign 4
+.obj __vt__17SlotChangeListner, weak
 	.4byte __RTTI__17SlotChangeListner
 	.4byte 0
 	.4byte 0
-lbl_802B639C:
+.endobj __vt__17SlotChangeListner
+.balign 4
+.obj lbl_802B639C, local
 	.4byte ("procMsg__15Receiver<4Piki>FP4PikiP3Msg"+0x30)
 	.4byte ("procMsg__15Receiver<4Piki>FP4PikiP3Msg"+0x58)
 	.4byte ("procMsg__15Receiver<4Piki>FP4PikiP3Msg"+0x6C)
@@ -2061,129 +2072,189 @@ lbl_802B639C:
 	.4byte ("procMsg__15Receiver<4Piki>FP4PikiP3Msg"+0x44)
 	.4byte ("procMsg__15Receiver<4Piki>FP4PikiP3Msg"+0xF8)
 	.4byte ("procMsg__15Receiver<4Piki>FP4PikiP3Msg"+0xE4)
+.endobj lbl_802B639C
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-newVer:
+.obj newVer, local
 	.byte 1
+.endobj newVer
 .balign 4
-lbl_803E01CC:
+.obj lbl_803E01CC, local
 	.asciz "crowd"
+.endobj lbl_803E01CC
 .balign 4
-lbl_803E01D4:
+.obj lbl_803E01D4, local
 	.float 0.0
-lbl_803E01D8:
+.endobj lbl_803E01D4
+.obj lbl_803E01D8, local
 	.float 0.0
-lbl_803E01DC:
+.endobj lbl_803E01D8
+.obj lbl_803E01DC, local
 	.float 0.0
-lbl_803E01E0:
+.endobj lbl_803E01DC
+.obj lbl_803E01E0, local
 	.float 0.0
-lbl_803E01E4:
+.endobj lbl_803E01E0
+.obj lbl_803E01E4, local
 	.float 0.0
-lbl_803E01E8:
+.endobj lbl_803E01E4
+.obj lbl_803E01E8, local
 	.float 0.0
-lbl_803E01EC:
+.endobj lbl_803E01E8
+.obj lbl_803E01EC, local
 	.float 0.955
-lbl_803E01F0:
+.endobj lbl_803E01EC
+.obj lbl_803E01F0, local
 	.float 0.0
-lbl_803E01F4:
+.endobj lbl_803E01F0
+.obj lbl_803E01F4, local
 	.float 0.0
-lbl_803E01F8:
+.endobj lbl_803E01F4
+.obj lbl_803E01F8, local
 	.float 0.0
-lbl_803E01FC:
+.endobj lbl_803E01F8
+.obj lbl_803E01FC, local
 	.float 0.0
-lbl_803E0200:
+.endobj lbl_803E01FC
+.obj lbl_803E0200, local
 	.float 0.0
-lbl_803E0204:
+.endobj lbl_803E0200
+.obj lbl_803E0204, local
 	.float 0.0
-lbl_803E0208:
+.endobj lbl_803E0204
+.obj lbl_803E0208, local
 	.float 0.0
-lbl_803E020C:
+.endobj lbl_803E0208
+.obj lbl_803E020C, local
 	.float 0.0
-lbl_803E0210:
+.endobj lbl_803E020C
+.obj lbl_803E0210, local
 	.float 0.0
-lbl_803E0214:
+.endobj lbl_803E0210
+.obj lbl_803E0214, local
 	.float 0.0
-lbl_803E0218:
+.endobj lbl_803E0214
+.obj lbl_803E0218, local
 	.float 0.0
-lbl_803E021C:
+.endobj lbl_803E0218
+.obj lbl_803E021C, local
 	.float 0.0
-lbl_803E0220:
+.endobj lbl_803E021C
+.obj lbl_803E0220, local
 	.float 0.0
-lbl_803E0224:
+.endobj lbl_803E0220
+.obj lbl_803E0224, local
 	.float 0.0
-lbl_803E0228:
+.endobj lbl_803E0224
+.obj lbl_803E0228, local
 	.float 0.0
-lbl_803E022C:
+.endobj lbl_803E0228
+.obj lbl_803E022C, local
 	.float 0.0
-lbl_803E0230:
+.endobj lbl_803E022C
+.obj lbl_803E0230, local
 	.float 0.0
-__RTTI__17SlotChangeListner:
+.endobj lbl_803E0230
+.balign 4
+.obj __RTTI__17SlotChangeListner, local
 	.4byte lbl_802B62D0
 	.4byte 0
-"__RTTI__15Receiver<4Piki>":
+.endobj __RTTI__17SlotChangeListner
+.balign 4
+.obj "__RTTI__15Receiver<4Piki>", local
 	.4byte lbl_802B62E4
 	.4byte 0
+.endobj "__RTTI__15Receiver<4Piki>"
 .balign 4
-lbl_803E0244:
+.obj lbl_803E0244, local
 	.asciz "Action"
+.endobj lbl_803E0244
 .balign 4
-__RTTI__6Action:
+.obj __RTTI__6Action, local
 	.4byte lbl_803E0244
 	.4byte lbl_802B62F4
-__RTTI__8ActCrowd:
+.endobj __RTTI__6Action
+.balign 4
+.obj __RTTI__8ActCrowd, local
 	.4byte lbl_802B62C4
 	.4byte lbl_802B6300
+.endobj __RTTI__8ActCrowd
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803E9310:
+.obj lbl_803E9310, local
 	.float 0.0
-lbl_803E9314:
+.endobj lbl_803E9310
+.obj lbl_803E9314, local
 	.float 2.0
-lbl_803E9318:
+.endobj lbl_803E9314
+.obj lbl_803E9318, local
 	.float 20.0
-lbl_803E931C:
+.endobj lbl_803E9318
+.obj lbl_803E931C, local
 	.float 5.0
-lbl_803E9320:
+.endobj lbl_803E931C
+.obj lbl_803E9320, local
 	.float 1.0
+.endobj lbl_803E9320
 .balign 8
-lbl_803E9328:
+.obj lbl_803E9328, local
 	.double 0.5
-lbl_803E9330:
+.endobj lbl_803E9328
+.balign 8
+.obj lbl_803E9330, local
 	.double 3.0
-lbl_803E9338:
+.endobj lbl_803E9330
+.obj lbl_803E9338, local
 	.float 100.0
-lbl_803E933C:
+.endobj lbl_803E9338
+.obj lbl_803E933C, local
 	.float 110.0
-lbl_803E9340:
+.endobj lbl_803E933C
+.obj lbl_803E9340, local
 	.float 32767.0
-lbl_803E9344:
+.endobj lbl_803E9340
+.obj lbl_803E9344, local
 	.float 0.9999
-lbl_803E9348:
+.endobj lbl_803E9344
+.obj lbl_803E9348, local
 	.float 0.7
-lbl_803E934C:
+.endobj lbl_803E9348
+.obj lbl_803E934C, local
 	.float 4.0
-lbl_803E9350:
+.endobj lbl_803E934C
+.obj lbl_803E9350, local
 	.float 60.0
-lbl_803E9354:
+.endobj lbl_803E9350
+.obj lbl_803E9354, local
 	.float 40.0
-lbl_803E9358:
+.endobj lbl_803E9354
+.obj lbl_803E9358, local
 	.float 0.3
-lbl_803E935C:
+.endobj lbl_803E9358
+.obj lbl_803E935C, local
 	.float 7.0
-lbl_803E9360:
+.endobj lbl_803E935C
+.obj lbl_803E9360, local
 	.float 15.0
-lbl_803E9364:
+.endobj lbl_803E9360
+.obj lbl_803E9364, local
 	.float 0.1
-lbl_803E9368:
+.endobj lbl_803E9364
+.obj lbl_803E9368, local
 	.float 10.0
-lbl_803E936C:
+.endobj lbl_803E9368
+.obj lbl_803E936C, local
 	.float 0.5
-lbl_803E9370:
+.endobj lbl_803E936C
+.obj lbl_803E9370, local
 	.float 8.0
-lbl_803E9374:
+.endobj lbl_803E9370
+.obj lbl_803E9374, local
 	.float -1.0
-lbl_803E9378:
-	.4byte 0x43300000
-	.4byte 0x80000000
+.endobj lbl_803E9374
+.balign 8
+.obj lbl_803E9378, local
+	.8byte 0x4330000080000000
+.endobj lbl_803E9378

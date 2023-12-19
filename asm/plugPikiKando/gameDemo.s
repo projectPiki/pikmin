@@ -843,22 +843,27 @@ read__9DemoParmsFR18RandomAccessStream:
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802ADE20:
+.obj lbl_802ADE20, local
 	.asciz "gameDemo.cpp"
+.endobj lbl_802ADE20
 .balign 4
-lbl_802ADE30:
+.obj lbl_802ADE30, local
 	.asciz "demoFlag"
+.endobj lbl_802ADE30
 .balign 4
-lbl_802ADE3C:
+.obj lbl_802ADE3C, local
 	.asciz "demo.bin"
+.endobj lbl_802ADE3C
 .balign 4
-lbl_802ADE48: # Shift-JIS
+.obj lbl_802ADE48, local # Shift-JIS
 	.4byte 0x90D48352
 	.4byte 0x83938365
 	.4byte 0x836982C9
 	.4byte 0x8F8982DF
 	.4byte 0x82C490DA
 	.4byte 0x8BDF0000
+.endobj lbl_802ADE48
+.balign 4
 lbl_802ADE60: # Shift-JIS
 	.4byte 0x89A98352
 	.4byte 0x83938365
@@ -1062,7 +1067,7 @@ __vt__9DemoParms:
 	.4byte concat__4NodeFR3SRT
 	.4byte concat__4NodeFR8Matrix4f
 	.4byte getModelMatrix__4NodeFv
-	.skip 0x20
+.skip 0x20 # compiler padding
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
@@ -1124,25 +1129,33 @@ __RTTI__9DemoParms:
 
 .section .sbss, "wa"
 .balign 8
-.global demoParms
-demoParms:
+.obj demoParms, global
 	.skip 4
+.endobj demoParms
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803E8BE8:
+.obj lbl_803E8BE8, local
 	.float 150.0
-lbl_803E8BEC:
+.endobj lbl_803E8BE8
+.obj lbl_803E8BEC, local
 	.float 100.0
-lbl_803E8BF0:
+.endobj lbl_803E8BEC
+.obj lbl_803E8BF0, local
 	.float 6.0
-lbl_803E8BF4:
+.endobj lbl_803E8BF0
+.obj lbl_803E8BF4, local
 	.float 30.0
-lbl_803E8BF8:
+.endobj lbl_803E8BF4
+.obj lbl_803E8BF8, local
 	.float 0.0
-lbl_803E8BFC:
+.endobj lbl_803E8BF8
+.obj lbl_803E8BFC, local # pi/2
 	.float 1.5707964
-lbl_803E8C00:
+.endobj lbl_803E8BFC
+.obj lbl_803E8C00, local
 	.float 200.0
-lbl_803E8C04:
+.endobj lbl_803E8C00
+.obj lbl_803E8C04, local
 	.float 10.0
+.endobj lbl_803E8C04

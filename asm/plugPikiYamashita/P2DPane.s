@@ -1,20 +1,19 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global setCallBack__7P2DPaneFP15P2DPaneCallBack
-setCallBack__7P2DPaneFP15P2DPaneCallBack:
+.fn setCallBack__7P2DPaneFP15P2DPaneCallBack, global
 /* 801B069C 001AD5FC  90 83 00 04 */	stw r4, 4(r3)
 /* 801B06A0 001AD600  4E 80 00 20 */	blr 
+.endfn setCallBack__7P2DPaneFP15P2DPaneCallBack
 
-.global printTagName__7P2DPaneFb
-printTagName__7P2DPaneFb:
+.fn printTagName__7P2DPaneFb, global
 /* 801B06A4 001AD604  54 80 06 3F */	clrlwi. r0, r4, 0x18
 /* 801B06A8 001AD608  4D 82 00 20 */	beqlr 
 /* 801B06AC 001AD60C  80 03 00 10 */	lwz r0, 0x10(r3)
 /* 801B06B0 001AD610  28 00 00 00 */	cmplwi r0, 0
 /* 801B06B4 001AD614  4E 80 00 20 */	blr 
+.endfn printTagName__7P2DPaneFb
 
-.global drawSelf__7P2DPaneFiiP8Matrix4f
-drawSelf__7P2DPaneFiiP8Matrix4f:
+.fn drawSelf__7P2DPaneFiiP8Matrix4f, global
 /* 801B06B8 001AD618  7C 08 02 A6 */	mflr r0
 /* 801B06BC 001AD61C  7C 64 1B 78 */	mr r4, r3
 /* 801B06C0 001AD620  90 01 00 04 */	stw r0, 4(r1)
@@ -34,9 +33,9 @@ drawSelf__7P2DPaneFiiP8Matrix4f:
 /* 801B06F4 001AD654  38 21 00 58 */	addi r1, r1, 0x58
 /* 801B06F8 001AD658  7C 08 03 A6 */	mtlr r0
 /* 801B06FC 001AD65C  4E 80 00 20 */	blr 
+.endfn drawSelf__7P2DPaneFiiP8Matrix4f
 
-.global __ct__19P2DPaneCallBackBaseFP7P2DPane11P2DPaneType
-__ct__19P2DPaneCallBackBaseFP7P2DPane11P2DPaneType:
+.fn __ct__19P2DPaneCallBackBaseFP7P2DPane11P2DPaneType, global
 /* 801B0700 001AD660  7C 08 02 A6 */	mflr r0
 /* 801B0704 001AD664  90 01 00 04 */	stw r0, 4(r1)
 /* 801B0708 001AD668  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -49,17 +48,17 @@ __ct__19P2DPaneCallBackBaseFP7P2DPane11P2DPaneType:
 /* 801B0724 001AD684  38 21 00 20 */	addi r1, r1, 0x20
 /* 801B0728 001AD688  7C 08 03 A6 */	mtlr r0
 /* 801B072C 001AD68C  4E 80 00 20 */	blr 
+.endfn __ct__19P2DPaneCallBackBaseFP7P2DPane11P2DPaneType
 
-.global checkPaneType__19P2DPaneCallBackBaseFP7P2DPane11P2DPaneType
-checkPaneType__19P2DPaneCallBackBaseFP7P2DPane11P2DPaneType:
+.fn checkPaneType__19P2DPaneCallBackBaseFP7P2DPane11P2DPaneType, global
 /* 801B0730 001AD690  28 04 00 00 */	cmplwi r4, 0
 /* 801B0734 001AD694  4D 82 00 20 */	beqlr 
 /* 801B0738 001AD698  A0 04 00 08 */	lhz r0, 8(r4)
 /* 801B073C 001AD69C  7C 05 00 00 */	cmpw r5, r0
 /* 801B0740 001AD6A0  4E 80 00 20 */	blr 
+.endfn checkPaneType__19P2DPaneCallBackBaseFP7P2DPane11P2DPaneType
 
-.global update__7P2DPaneFv
-update__7P2DPaneFv:
+.fn update__7P2DPaneFv, global
 /* 801B0744 001AD6A4  7C 08 02 A6 */	mflr r0
 /* 801B0748 001AD6A8  90 01 00 04 */	stw r0, 4(r1)
 /* 801B074C 001AD6AC  94 21 FF 68 */	stwu r1, -0x98(r1)
@@ -147,14 +146,14 @@ update__7P2DPaneFv:
 /* 801B086C 001AD7CC  38 21 00 98 */	addi r1, r1, 0x98
 /* 801B0870 001AD7D0  7C 08 03 A6 */	mtlr r0
 /* 801B0874 001AD7D4  4E 80 00 20 */	blr 
+.endfn update__7P2DPaneFv
 
-.global getFirstLink__10PSUPtrListCFv
-getFirstLink__10PSUPtrListCFv:
+.fn getFirstLink__10PSUPtrListCFv, weak
 /* 801B0878 001AD7D8  80 63 00 00 */	lwz r3, 0(r3)
 /* 801B087C 001AD7DC  4E 80 00 20 */	blr 
+.endfn getFirstLink__10PSUPtrListCFv
 
-.global __ct__7P2DPaneFv
-__ct__7P2DPaneFv:
+.fn __ct__7P2DPaneFv, global
 /* 801B0880 001AD7E0  7C 08 02 A6 */	mflr r0
 /* 801B0884 001AD7E4  38 80 00 00 */	li r4, 0
 /* 801B0888 001AD7E8  90 01 00 04 */	stw r0, 4(r1)
@@ -238,9 +237,9 @@ __ct__7P2DPaneFv:
 /* 801B09C0 001AD920  38 21 00 18 */	addi r1, r1, 0x18
 /* 801B09C4 001AD924  7C 08 03 A6 */	mtlr r0
 /* 801B09C8 001AD928  4E 80 00 20 */	blr 
+.endfn __ct__7P2DPaneFv
 
-.global __ct__7P2DPaneFP7P2DPaneUsbUlRC7PUTRect
-__ct__7P2DPaneFP7P2DPaneUsbUlRC7PUTRect:
+.fn __ct__7P2DPaneFP7P2DPaneUsbUlRC7PUTRect, global
 /* 801B09CC 001AD92C  7C 08 02 A6 */	mflr r0
 /* 801B09D0 001AD930  38 C0 00 00 */	li r6, 0
 /* 801B09D4 001AD934  90 01 00 04 */	stw r0, 4(r1)
@@ -333,9 +332,9 @@ __ct__7P2DPaneFP7P2DPaneUsbUlRC7PUTRect:
 /* 801B0B28 001ADA88  38 21 00 40 */	addi r1, r1, 0x40
 /* 801B0B2C 001ADA8C  7C 08 03 A6 */	mtlr r0
 /* 801B0B30 001ADA90  4E 80 00 20 */	blr 
+.endfn __ct__7P2DPaneFP7P2DPaneUsbUlRC7PUTRect
 
-.global __ct__7P2DPaneFP7P2DPaneP18RandomAccessStreamUs
-__ct__7P2DPaneFP7P2DPaneP18RandomAccessStreamUs:
+.fn __ct__7P2DPaneFP7P2DPaneP18RandomAccessStreamUs, global
 /* 801B0B34 001ADA94  7C 08 02 A6 */	mflr r0
 /* 801B0B38 001ADA98  38 E0 00 00 */	li r7, 0
 /* 801B0B3C 001ADA9C  90 01 00 04 */	stw r0, 4(r1)
@@ -506,9 +505,9 @@ __ct__7P2DPaneFP7P2DPaneP18RandomAccessStreamUs:
 /* 801B0DB8 001ADD18  38 21 00 38 */	addi r1, r1, 0x38
 /* 801B0DBC 001ADD1C  7C 08 03 A6 */	mtlr r0
 /* 801B0DC0 001ADD20  4E 80 00 20 */	blr 
+.endfn __ct__7P2DPaneFP7P2DPaneP18RandomAccessStreamUs
 
-.global __dt__7P2DPaneFv
-__dt__7P2DPaneFv:
+.fn __dt__7P2DPaneFv, global
 /* 801B0DC4 001ADD24  7C 08 02 A6 */	mflr r0
 /* 801B0DC8 001ADD28  90 01 00 04 */	stw r0, 4(r1)
 /* 801B0DCC 001ADD2C  94 21 FF 90 */	stwu r1, -0x70(r1)
@@ -571,9 +570,9 @@ __dt__7P2DPaneFv:
 /* 801B0E98 001ADDF8  38 21 00 70 */	addi r1, r1, 0x70
 /* 801B0E9C 001ADDFC  7C 08 03 A6 */	mtlr r0
 /* 801B0EA0 001ADE00  4E 80 00 20 */	blr 
+.endfn __dt__7P2DPaneFv
 
-.global draw__7P2DPaneFiiPC14P2DGrafContextb
-draw__7P2DPaneFiiPC14P2DGrafContextb:
+.fn draw__7P2DPaneFiiPC14P2DGrafContextb, global
 /* 801B0EA4 001ADE04  7C 08 02 A6 */	mflr r0
 /* 801B0EA8 001ADE08  3D 00 80 2E */	lis r8, __vt__14P2DGrafContext@ha
 /* 801B0EAC 001ADE0C  90 01 00 04 */	stw r0, 4(r1)
@@ -882,9 +881,9 @@ draw__7P2DPaneFiiPC14P2DGrafContextb:
 /* 801B133C 001AE29C  38 21 01 40 */	addi r1, r1, 0x140
 /* 801B1340 001AE2A0  7C 08 03 A6 */	mtlr r0
 /* 801B1344 001AE2A4  4E 80 00 20 */	blr 
+.endfn draw__7P2DPaneFiiPC14P2DGrafContextb
 
-.global clip__7P2DPaneFRC7PUTRect
-clip__7P2DPaneFRC7PUTRect:
+.fn clip__7P2DPaneFRC7PUTRect, global
 /* 801B1348 001AE2A8  7C 08 02 A6 */	mflr r0
 /* 801B134C 001AE2AC  90 01 00 04 */	stw r0, 4(r1)
 /* 801B1350 001AE2B0  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -904,9 +903,9 @@ clip__7P2DPaneFRC7PUTRect:
 /* 801B1388 001AE2E8  38 21 00 20 */	addi r1, r1, 0x20
 /* 801B138C 001AE2EC  7C 08 03 A6 */	mtlr r0
 /* 801B1390 001AE2F0  4E 80 00 20 */	blr 
+.endfn clip__7P2DPaneFRC7PUTRect
 
-.global search__7P2DPaneFUlb
-search__7P2DPaneFUlb:
+.fn search__7P2DPaneFUlb, global
 /* 801B1394 001AE2F4  7C 08 02 A6 */	mflr r0
 /* 801B1398 001AE2F8  90 01 00 04 */	stw r0, 4(r1)
 /* 801B139C 001AE2FC  94 21 FF B8 */	stwu r1, -0x48(r1)
@@ -953,9 +952,9 @@ search__7P2DPaneFUlb:
 /* 801B142C 001AE38C  38 21 00 48 */	addi r1, r1, 0x48
 /* 801B1430 001AE390  7C 08 03 A6 */	mtlr r0
 /* 801B1434 001AE394  4E 80 00 20 */	blr 
+.endfn search__7P2DPaneFUlb
 
-.global makeMatrix__7P2DPaneFii
-makeMatrix__7P2DPaneFii:
+.fn makeMatrix__7P2DPaneFii, global
 /* 801B1438 001AE398  7C 08 02 A6 */	mflr r0
 /* 801B143C 001AE39C  90 01 00 04 */	stw r0, 4(r1)
 /* 801B1440 001AE3A0  94 21 FF 70 */	stwu r1, -0x90(r1)
@@ -1112,9 +1111,9 @@ makeMatrix__7P2DPaneFii:
 /* 801B1688 001AE5E8  38 21 00 90 */	addi r1, r1, 0x90
 /* 801B168C 001AE5EC  7C 08 03 A6 */	mtlr r0
 /* 801B1690 001AE5F0  4E 80 00 20 */	blr 
+.endfn makeMatrix__7P2DPaneFii
 
-.global loadChildResource__7P2DPaneFv
-loadChildResource__7P2DPaneFv:
+.fn loadChildResource__7P2DPaneFv, global
 /* 801B1694 001AE5F4  7C 08 02 A6 */	mflr r0
 /* 801B1698 001AE5F8  90 01 00 04 */	stw r0, 4(r1)
 /* 801B169C 001AE5FC  94 21 FF 38 */	stwu r1, -0xc8(r1)
@@ -1189,17 +1188,17 @@ loadChildResource__7P2DPaneFv:
 /* 801B1794 001AE6F4  38 21 00 C8 */	addi r1, r1, 0xc8
 /* 801B1798 001AE6F8  7C 08 03 A6 */	mtlr r0
 /* 801B179C 001AE6FC  4E 80 00 20 */	blr 
+.endfn loadChildResource__7P2DPaneFv
 
-.global loadResource__7P2DPaneFv
-loadResource__7P2DPaneFv:
+.fn loadResource__7P2DPaneFv, weak
 /* 801B17A0 001AE700  4E 80 00 20 */	blr 
+.endfn loadResource__7P2DPaneFv
 
-.global makeResident__7P2DPaneFv
-makeResident__7P2DPaneFv:
+.fn makeResident__7P2DPaneFv, weak
 /* 801B17A4 001AE704  4E 80 00 20 */	blr 
+.endfn makeResident__7P2DPaneFv
 
-.global move__7P2DPaneFR8Vector3f
-move__7P2DPaneFR8Vector3f:
+.fn move__7P2DPaneFR8Vector3f, weak
 /* 801B17A8 001AE708  7C 08 02 A6 */	mflr r0
 /* 801B17AC 001AE70C  90 01 00 04 */	stw r0, 4(r1)
 /* 801B17B0 001AE710  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -1225,14 +1224,14 @@ move__7P2DPaneFR8Vector3f:
 /* 801B1800 001AE760  38 21 00 28 */	addi r1, r1, 0x28
 /* 801B1804 001AE764  7C 08 03 A6 */	mtlr r0
 /* 801B1808 001AE768  4E 80 00 20 */	blr 
+.endfn move__7P2DPaneFR8Vector3f
 
-.global moveZ__7P2DPaneFf
-moveZ__7P2DPaneFf:
+.fn moveZ__7P2DPaneFf, weak
 /* 801B180C 001AE76C  D0 23 00 14 */	stfs f1, 0x14(r3)
 /* 801B1810 001AE770  4E 80 00 20 */	blr 
+.endfn moveZ__7P2DPaneFf
 
-.global add__7P2DPaneFii
-add__7P2DPaneFii:
+.fn add__7P2DPaneFii, weak
 /* 801B1814 001AE774  7C 08 02 A6 */	mflr r0
 /* 801B1818 001AE778  38 63 00 18 */	addi r3, r3, 0x18
 /* 801B181C 001AE77C  90 01 00 04 */	stw r0, 4(r1)
@@ -1242,9 +1241,9 @@ add__7P2DPaneFii:
 /* 801B182C 001AE78C  38 21 00 08 */	addi r1, r1, 8
 /* 801B1830 001AE790  7C 08 03 A6 */	mtlr r0
 /* 801B1834 001AE794  4E 80 00 20 */	blr 
+.endfn add__7P2DPaneFii
 
-.global resize__7P2DPaneFii
-resize__7P2DPaneFii:
+.fn resize__7P2DPaneFii, weak
 /* 801B1838 001AE798  7C 08 02 A6 */	mflr r0
 /* 801B183C 001AE79C  38 63 00 18 */	addi r3, r3, 0x18
 /* 801B1840 001AE7A0  90 01 00 04 */	stw r0, 4(r1)
@@ -1254,9 +1253,9 @@ resize__7P2DPaneFii:
 /* 801B1850 001AE7B0  38 21 00 08 */	addi r1, r1, 8
 /* 801B1854 001AE7B4  7C 08 03 A6 */	mtlr r0
 /* 801B1858 001AE7B8  4E 80 00 20 */	blr 
+.endfn resize__7P2DPaneFii
 
-.global drawSelf__7P2DPaneFii
-drawSelf__7P2DPaneFii:
+.fn drawSelf__7P2DPaneFii, weak
 /* 801B185C 001AE7BC  7C 08 02 A6 */	mflr r0
 /* 801B1860 001AE7C0  90 01 00 04 */	stw r0, 4(r1)
 /* 801B1864 001AE7C4  94 21 FF 98 */	stwu r1, -0x68(r1)
@@ -1283,6 +1282,7 @@ drawSelf__7P2DPaneFii:
 /* 801B18B8 001AE818  38 21 00 68 */	addi r1, r1, 0x68
 /* 801B18BC 001AE81C  7C 08 03 A6 */	mtlr r0
 /* 801B18C0 001AE820  4E 80 00 20 */	blr 
+.endfn drawSelf__7P2DPaneFii
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
@@ -1306,37 +1306,49 @@ drawSelf__7P2DPaneFii:
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-lbl_803E65F0:
+.obj lbl_803E65F0, local
 	.asciz "P2DPane"
+.endobj lbl_803E65F0
 .balign 4
-lbl_803E65F8:
+.obj lbl_803E65F8, local
 	.float 1.0
-lbl_803E65FC:
+.endobj lbl_803E65F8
+.obj lbl_803E65FC, local
 	.float 1.0
-lbl_803E6600:
+.endobj lbl_803E65FC
+.obj lbl_803E6600, local
 	.float 1.0
-lbl_803E6604:
-	.4byte 0x00000000
-lbl_803E6608:
-	.4byte 0x00000000
-lbl_803E660C:
-	.4byte 0x00000000
-lbl_803E6610:
-	.4byte 0x00000000
-lbl_803E6614:
-	.4byte 0x00000000
-lbl_803E6618:
-	.4byte 0x00000000
-__RTTI__7P2DPane:
+.endobj lbl_803E6600
+.obj lbl_803E6604, local
+	.float 0.0
+.endobj lbl_803E6604
+.obj lbl_803E6608, local
+	.float 0.0
+.endobj lbl_803E6608
+.obj lbl_803E660C, local
+	.float 0.0
+.endobj lbl_803E660C
+.obj lbl_803E6610, local
+	.float 0.0
+.endobj lbl_803E6610
+.obj lbl_803E6614, local
+	.float 0.0
+.endobj lbl_803E6614
+.obj lbl_803E6618, local
+	.float 0.0
+.endobj lbl_803E6618
+.balign 4
+.obj __RTTI__7P2DPane, local
 	.4byte lbl_803E65F0
-	.4byte 0x00000000
-	.4byte 0x00000000
+	.4byte 0
+.endobj __RTTI__7P2DPane
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803EB8A8:
-	.4byte 0x00000000
+.obj lbl_803EB8A8, local
+	.float 0.0
+.endobj lbl_803EB8A8
 .balign 8
-lbl_803EB8B0:
-	.4byte 0x43300000
-	.4byte 0x80000000
+.obj lbl_803EB8B0, local
+	.8byte 0x4330000080000000
+.endobj lbl_803EB8B0

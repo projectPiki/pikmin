@@ -2966,17 +2966,20 @@ emit__10GoalEffectFR10EffectParm:
 /* 80115B6C 00112ACC  7C 08 03 A6 */	mtlr r0
 /* 80115B70 00112AD0  4E 80 00 20 */	blr 
 
-"@4@invoke__11SlimeEffectFPQ23zen17particleGeneratorPQ23zen11particleMdl":
+.fn "@4@invoke__11SlimeEffectFPQ23zen17particleGeneratorPQ23zen11particleMdl", weak
 /* 80115B74 00112AD4  38 63 FF FC */	addi r3, r3, -4
 /* 80115B78 00112AD8  4B FF D7 1C */	b invoke__11SlimeEffectFPQ23zen17particleGeneratorPQ23zen11particleMdl
+.endfn "@4@invoke__11SlimeEffectFPQ23zen17particleGeneratorPQ23zen11particleMdl"
 
-"@4@invoke__11NaviWhistleFPQ23zen17particleGeneratorPQ23zen11particleMdl":
+.fn "@4@invoke__11NaviWhistleFPQ23zen17particleGeneratorPQ23zen11particleMdl", weak
 /* 80115B7C 00112ADC  38 63 FF FC */	addi r3, r3, -4
 /* 80115B80 00112AE0  4B FF FC 1C */	b invoke__11NaviWhistleFPQ23zen17particleGeneratorPQ23zen11particleMdl
+.endfn "@4@invoke__11NaviWhistleFPQ23zen17particleGeneratorPQ23zen11particleMdl"
 
-"@4@invoke__15WhistleTemplateFPQ23zen17particleGeneratorPQ23zen11particleMdl":
+.fn "@4@invoke__15WhistleTemplateFPQ23zen17particleGeneratorPQ23zen11particleMdl", weak
 /* 80115B84 00112AE4  38 63 FF FC */	addi r3, r3, -4
 /* 80115B88 00112AE8  4B FF F2 A0 */	b invoke__15WhistleTemplateFPQ23zen17particleGeneratorPQ23zen11particleMdl
+.endfn "@4@invoke__15WhistleTemplateFPQ23zen17particleGeneratorPQ23zen11particleMdl"
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
@@ -3526,6 +3529,11 @@ __vt__11SlimeEffect:
 	.4byte kill__11SlimeEffectFv
 	.4byte stop__11SlimeEffectFv
 	.4byte restart__11SlimeEffectFv
+.balign 4
+# This doesn't show in the map. What the hell is this?!
+# Looks like remnants of a virtual table containing thunks.
+# Appears in pikiheadItem.cpp, navi.cpp, piki.cpp, and uteffect.cpp.
+#.obj UNKNOWN_WEIRD_SHIT, local
 	.4byte 0
 	.4byte 0
 	.4byte 0
@@ -3551,159 +3559,236 @@ __vt__11SlimeEffect:
 	.4byte 0
 	.4byte 0
 	.4byte 0
+#.endobj UNKNOWN_WEIRD_SHIT
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-lbl_803E2860:
+.obj lbl_803E2860, local
 	.float 0.9
-lbl_803E2864:
+.endobj lbl_803E2860
+.obj lbl_803E2864, local
 	.float 0.0
-lbl_803E2868:
+.endobj lbl_803E2864
+.obj lbl_803E2868, local
 	.float 0.0
-lbl_803E286C:
+.endobj lbl_803E2868
+.obj lbl_803E286C, local
 	.float 0.0
-lbl_803E2870:
+.endobj lbl_803E286C
+.obj lbl_803E2870, local
 	.float 0.0
-lbl_803E2874:
+.endobj lbl_803E2870
+.obj lbl_803E2874, local
 	.float 1.0
-lbl_803E2878:
+.endobj lbl_803E2874
+.obj lbl_803E2878, local
 	.float 0.0
-lbl_803E287C:
+.endobj lbl_803E2878
+.obj lbl_803E287C, local
 	.float 0.0
-lbl_803E2880:
+.endobj lbl_803E287C
+.obj lbl_803E2880, local
 	.float 1.0
-lbl_803E2884:
+.endobj lbl_803E2880
+.obj lbl_803E2884, local
 	.float 0.0
-lbl_803E2888:
+.endobj lbl_803E2884
+.obj lbl_803E2888, local
 	.float -1.0
-lbl_803E288C:
+.endobj lbl_803E2888
+.obj lbl_803E288C, local
 	.float -1.0
-lbl_803E2890:
+.endobj lbl_803E288C
+.obj lbl_803E2890, local
 	.float 0.0
-lbl_803E2894:
+.endobj lbl_803E2890
+.obj lbl_803E2894, local
 	.float 0.0
-lbl_803E2898:
+.endobj lbl_803E2894
+.obj lbl_803E2898, local
 	.float 0.0
-lbl_803E289C:
+.endobj lbl_803E2898
+.obj lbl_803E289C, local
 	.float 0.0
-lbl_803E28A0:
+.endobj lbl_803E289C
+.obj lbl_803E28A0, local
 	.float 1.0
-lbl_803E28A4:
+.endobj lbl_803E28A0
+.obj lbl_803E28A4, local
 	.float 0.0
-lbl_803E28A8:
+.endobj lbl_803E28A4
+.obj lbl_803E28A8, local
 	.float 0.0
-lbl_803E28AC:
+.endobj lbl_803E28A8
+.obj lbl_803E28AC, local
 	.float 1.0
-lbl_803E28B0:
+.endobj lbl_803E28AC
+.obj lbl_803E28B0, local
 	.float 0.0
-lbl_803E28B4:
+.endobj lbl_803E28B0
+.obj lbl_803E28B4, local
 	.float 1.0
-lbl_803E28B8:
+.endobj lbl_803E28B4
+.obj lbl_803E28B8, local
 	.float 0.0
-lbl_803E28BC:
+.endobj lbl_803E28B8
+.obj lbl_803E28BC, local
 	.float 0.0
-"__RTTI__Q23zen31CallBack1<PQ23zen11particleMdl>":
+.endobj lbl_803E28BC
+.balign 4
+.obj "__RTTI__Q23zen31CallBack1<PQ23zen11particleMdl>", local
 	.4byte lbl_802C2520
 	.4byte 0
-"__RTTI__Q23zen58CallBack2<PQ23zen17particleGenerator,PQ23zen11particleMdl>":
+.endobj "__RTTI__Q23zen31CallBack1<PQ23zen11particleMdl>"
+.balign 4
+.obj "__RTTI__Q23zen58CallBack2<PQ23zen17particleGenerator,PQ23zen11particleMdl>", local
 	.4byte lbl_802C2544
 	.4byte 0
-"__RTTI__Q23zen37CallBack1<PQ23zen17particleGenerator>":
+.endobj "__RTTI__Q23zen58CallBack2<PQ23zen17particleGenerator,PQ23zen11particleMdl>"
+.balign 4
+.obj "__RTTI__Q23zen37CallBack1<PQ23zen17particleGenerator>", local
 	.4byte lbl_802C2584
 	.4byte 0
+.endobj "__RTTI__Q23zen37CallBack1<PQ23zen17particleGenerator>"
 .balign 4
-lbl_803E28D8:
+.obj lbl_803E28D8, local
 	.asciz "KEffect"
+.endobj lbl_803E28D8
 .balign 4
-__RTTI__7KEffect:
+.obj __RTTI__7KEffect, local
 	.4byte lbl_803E28D8
 	.4byte lbl_802C25B0
-__RTTI__10BurnEffect:
+.endobj __RTTI__7KEffect
+.balign 4
+.obj __RTTI__10BurnEffect, local
 	.4byte lbl_802C2514
 	.4byte lbl_802C25CC
-__RTTI__12RippleEffect:
+.endobj __RTTI__10BurnEffect
+.balign 4
+.obj __RTTI__12RippleEffect, local
 	.4byte lbl_802C262C
 	.4byte lbl_802C263C
-__RTTI__15FreeLightEffect:
+.endobj __RTTI__12RippleEffect
+.balign 4
+.obj __RTTI__15FreeLightEffect, local
 	.4byte lbl_802C269C
 	.4byte lbl_802C26AC
-__RTTI__16UfoSuikomiEffect:
+.endobj __RTTI__15FreeLightEffect
+.balign 4
+.obj __RTTI__16UfoSuikomiEffect, local
 	.4byte lbl_802C270C
 	.4byte lbl_802C2720
-__RTTI__15WhistleTemplate:
+.endobj __RTTI__16UfoSuikomiEffect
+.balign 4
+.obj __RTTI__15WhistleTemplate, local
 	.4byte lbl_802C2790
 	.4byte lbl_802C27A0
-__RTTI__13UfoSuckEffect:
+.endobj __RTTI__15WhistleTemplate
+.balign 4
+.obj __RTTI__13UfoSuckEffect, local
 	.4byte lbl_802C2780
 	.4byte lbl_802C27C4
-__RTTI__15BombEffectLight:
+.endobj __RTTI__13UfoSuckEffect
+.balign 4
+.obj __RTTI__15BombEffectLight, local
 	.4byte lbl_802C2868
 	.4byte lbl_802C2878
-__RTTI__10BombEffect:
+.endobj __RTTI__15BombEffectLight
+.balign 4
+.obj __RTTI__10BombEffect, local
 	.4byte lbl_802C28D8
 	.4byte lbl_802C28E4
-__RTTI__12SimpleEffect:
+.endobj __RTTI__10BombEffect
+.balign 4
+.obj __RTTI__12SimpleEffect, local
 	.4byte lbl_802C2944
 	.4byte lbl_802C2954
+.endobj __RTTI__12SimpleEffect
 .balign 4
-lbl_803E2930:
+.obj lbl_803E2930, local
 	.asciz "NaviFue"
+.endobj lbl_803E2930
 .balign 4
-__RTTI__7NaviFue:
+.obj __RTTI__7NaviFue, local
 	.4byte lbl_803E2930
 	.4byte lbl_802C29B4
-__RTTI__15SmokeTreeEffect:
+.endobj __RTTI__7NaviFue
+.balign 4
+.obj __RTTI__15SmokeTreeEffect, local
 	.4byte lbl_802C2A14
 	.4byte lbl_802C2A24
-__RTTI__15SmokeRockEffect:
+.endobj __RTTI__15SmokeTreeEffect
+.balign 4
+.obj __RTTI__15SmokeRockEffect, local
 	.4byte lbl_802C2A84
 	.4byte lbl_802C2A94
-__RTTI__16SmokeGrassEffect:
+.endobj __RTTI__15SmokeRockEffect
+.balign 4
+.obj __RTTI__16SmokeGrassEffect, local
 	.4byte lbl_802C2AF4
 	.4byte lbl_802C2B08
-__RTTI__15SmokeSoilEffect:
+.endobj __RTTI__16SmokeGrassEffect
+.balign 4
+.obj __RTTI__15SmokeSoilEffect, local
 	.4byte lbl_802C2B68
 	.4byte lbl_802C2B78
-__RTTI__11NaviWhistle:
+.endobj __RTTI__15SmokeSoilEffect
+.balign 4
+.obj __RTTI__11NaviWhistle, local
 	.4byte lbl_802C2BD8
 	.4byte lbl_802C2BE4
-__RTTI__10GoalEffect:
+.endobj __RTTI__11NaviWhistle
+.balign 4
+.obj __RTTI__10GoalEffect, local
 	.4byte lbl_802C2C44
 	.4byte lbl_802C2C50
-__RTTI__11SlimeEffect:
+.endobj __RTTI__10GoalEffect
+.balign 4
+.obj __RTTI__11SlimeEffect, local
 	.4byte lbl_802C2CB0
 	.4byte lbl_802C2CBC
+.endobj __RTTI__11SlimeEffect
 
 .section .sbss, "wa"
 .balign 8
-.global utEffectMgr
-utEffectMgr:
+.obj utEffectMgr, global
 	.skip 0x4
-.global effects__11UtEffectMgr
-effects__11UtEffectMgr:
+.endobj utEffectMgr
+.balign 4
+.obj effects__11UtEffectMgr, global
 	.skip 0x4
+.endobj effects__11UtEffectMgr
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803EA150:
+.obj lbl_803EA150, local
 	.float 0.0
-lbl_803EA154:
+.endobj lbl_803EA150
+.obj lbl_803EA154, local
 	.float 0.01
-lbl_803EA158:
+.endobj lbl_803EA154
+.obj lbl_803EA158, local
 	.float 0.0016
-lbl_803EA15C:
+.endobj lbl_803EA158
+.obj lbl_803EA15C, local
 	.float -0.12
-lbl_803EA160:
+.endobj lbl_803EA15C
+.obj lbl_803EA160, local
 	.float -0.09
-lbl_803EA164:
+.endobj lbl_803EA160
+.obj lbl_803EA164, local
 	.float 0.3
-lbl_803EA168:
+.endobj lbl_803EA164
+.obj lbl_803EA168, local
 	.float 400.0
-lbl_803EA16C:
+.endobj lbl_803EA168
+.obj lbl_803EA16C, local
 	.float 15.0
-lbl_803EA170:
+.endobj lbl_803EA16C
+.obj lbl_803EA170, local
 	.float 1.0
+.endobj lbl_803EA170
 .balign 8
-lbl_803EA178:
-	.4byte 0x43300000
-	.4byte 0x80000000
+.obj lbl_803EA178, local
+	.8byte 0x4330000080000000
+.endobj lbl_803EA178

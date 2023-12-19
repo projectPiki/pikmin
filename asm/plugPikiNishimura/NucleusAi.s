@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global __ct__9NucleusAiFP7Nucleus
-__ct__9NucleusAiFP7Nucleus:
+.fn __ct__9NucleusAiFP7Nucleus, global
 /* 8017A544 001774A4  3C A0 80 2B */	lis r5, __vt__19PaniAnimKeyListener@ha
 /* 8017A548 001774A8  38 05 DB 94 */	addi r0, r5, __vt__19PaniAnimKeyListener@l
 /* 8017A54C 001774AC  3C A0 80 2D */	lis r5, __vt__9NucleusAi@ha
@@ -10,9 +9,9 @@ __ct__9NucleusAiFP7Nucleus:
 /* 8017A558 001774B8  90 03 00 00 */	stw r0, 0(r3)
 /* 8017A55C 001774BC  90 83 00 08 */	stw r4, 8(r3)
 /* 8017A560 001774C0  4E 80 00 20 */	blr 
+.endfn __ct__9NucleusAiFP7Nucleus
 
-.global initAI__9NucleusAiFP7Nucleus
-initAI__9NucleusAiFP7Nucleus:
+.fn initAI__9NucleusAiFP7Nucleus, global
 /* 8017A564 001774C4  7C 08 02 A6 */	mflr r0
 /* 8017A568 001774C8  90 01 00 04 */	stw r0, 4(r1)
 /* 8017A56C 001774CC  38 00 00 02 */	li r0, 2
@@ -42,9 +41,9 @@ initAI__9NucleusAiFP7Nucleus:
 /* 8017A5CC 0017752C  38 21 00 30 */	addi r1, r1, 0x30
 /* 8017A5D0 00177530  7C 08 03 A6 */	mtlr r0
 /* 8017A5D4 00177534  4E 80 00 20 */	blr 
+.endfn initAI__9NucleusAiFP7Nucleus
 
-.global animationKeyUpdated__9NucleusAiFR16PaniAnimKeyEvent
-animationKeyUpdated__9NucleusAiFR16PaniAnimKeyEvent:
+.fn animationKeyUpdated__9NucleusAiFR16PaniAnimKeyEvent, global
 /* 8017A5D8 00177538  7C 08 02 A6 */	mflr r0
 /* 8017A5DC 0017753C  90 01 00 04 */	stw r0, 4(r1)
 /* 8017A5E0 00177540  94 21 FF F8 */	stwu r1, -8(r1)
@@ -83,36 +82,36 @@ animationKeyUpdated__9NucleusAiFR16PaniAnimKeyEvent:
 /* 8017A648 001775A8  38 21 00 08 */	addi r1, r1, 8
 /* 8017A64C 001775AC  7C 08 03 A6 */	mtlr r0
 /* 8017A650 001775B0  4E 80 00 20 */	blr 
+.endfn animationKeyUpdated__9NucleusAiFR16PaniAnimKeyEvent
 
-.global keyAction0__9NucleusAiFv
-keyAction0__9NucleusAiFv:
+.fn keyAction0__9NucleusAiFv, global
 /* 8017A654 001775B4  4E 80 00 20 */	blr 
+.endfn keyAction0__9NucleusAiFv
 
-.global keyAction1__9NucleusAiFv
-keyAction1__9NucleusAiFv:
+.fn keyAction1__9NucleusAiFv, global
 /* 8017A658 001775B8  4E 80 00 20 */	blr 
+.endfn keyAction1__9NucleusAiFv
 
-.global keyLoopEnd__9NucleusAiFv
-keyLoopEnd__9NucleusAiFv:
+.fn keyLoopEnd__9NucleusAiFv, global
 /* 8017A65C 001775BC  80 83 00 08 */	lwz r4, 8(r3)
 /* 8017A660 001775C0  80 64 02 EC */	lwz r3, 0x2ec(r4)
 /* 8017A664 001775C4  38 03 00 01 */	addi r0, r3, 1
 /* 8017A668 001775C8  90 04 02 EC */	stw r0, 0x2ec(r4)
 /* 8017A66C 001775CC  4E 80 00 20 */	blr 
+.endfn keyLoopEnd__9NucleusAiFv
 
-.global keyFinished__9NucleusAiFv
-keyFinished__9NucleusAiFv:
+.fn keyFinished__9NucleusAiFv, global
 /* 8017A670 001775D0  80 63 00 08 */	lwz r3, 8(r3)
 /* 8017A674 001775D4  38 00 00 01 */	li r0, 1
 /* 8017A678 001775D8  98 03 02 BD */	stb r0, 0x2bd(r3)
 /* 8017A67C 001775DC  4E 80 00 20 */	blr 
+.endfn keyFinished__9NucleusAiFv
 
-.global playSound__9NucleusAiFi
-playSound__9NucleusAiFi:
+.fn playSound__9NucleusAiFi, global
 /* 8017A680 001775E0  4E 80 00 20 */	blr 
+.endfn playSound__9NucleusAiFi
 
-.global update__9NucleusAiFv
-update__9NucleusAiFv:
+.fn update__9NucleusAiFv, global
 /* 8017A684 001775E4  7C 08 02 A6 */	mflr r0
 /* 8017A688 001775E8  90 01 00 04 */	stw r0, 4(r1)
 /* 8017A68C 001775EC  94 21 FF 68 */	stwu r1, -0x98(r1)
@@ -301,44 +300,52 @@ update__9NucleusAiFv:
 /* 8017A948 001778A8  38 21 00 98 */	addi r1, r1, 0x98
 /* 8017A94C 001778AC  7C 08 03 A6 */	mtlr r0
 /* 8017A950 001778B0  4E 80 00 20 */	blr 
+.endfn update__9NucleusAiFv
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802D12D8:
+.obj lbl_802D12D8, local
 	.asciz "NucleusAi.cpp"
+.endobj lbl_802D12D8
 .balign 4
-lbl_802D12E8:
+.obj lbl_802D12E8, local
 	.asciz "NucleusAi"
+.endobj lbl_802D12E8
 .balign 4
-lbl_802D12F4:
+.obj lbl_802D12F4, local
 	.asciz "PaniAnimKeyListener"
+.endobj lbl_802D12F4
 .balign 4
-lbl_802D1308:
+.obj lbl_802D1308, local
 	.4byte __RTTI__19PaniAnimKeyListener
 	.4byte 0
 	.4byte 0
-.global __vt__9NucleusAi
-__vt__9NucleusAi:
+.endobj lbl_802D1308
+.balign 4
+.obj __vt__9NucleusAi, global
 	.4byte __RTTI__9NucleusAi
 	.4byte 0
 	.4byte animationKeyUpdated__9NucleusAiFR16PaniAnimKeyEvent
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
+.endobj __vt__9NucleusAi
+.skip 0x10 # compiler padding
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-__RTTI__19PaniAnimKeyListener:
+.obj __RTTI__19PaniAnimKeyListener, local
 	.4byte lbl_802D12F4
 	.4byte 0
-__RTTI__9NucleusAi:
+.endobj __RTTI__19PaniAnimKeyListener
+.balign 4
+.obj __RTTI__9NucleusAi, local
 	.4byte lbl_802D12E8
 	.4byte lbl_802D1308
+.endobj __RTTI__9NucleusAi
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803EB060:
+.obj lbl_803EB060, local
 	.float 30.0
-lbl_803EB064:
+.endobj lbl_803EB060
+.obj lbl_803EB064, local
 	.float 0.0
+.endobj lbl_803EB064

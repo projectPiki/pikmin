@@ -13777,43 +13777,55 @@ openMapInfo__Q23zen12DrawWorldMapFv:
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802E57B0:
+.obj lbl_802E57B0, local
 	.asciz "drawWorldMap.cpp"
+.endobj lbl_802E57B0
 .balign 4
-lbl_802E57C4:
+.obj lbl_802E57C4, local
 	.asciz "drawWorldMap"
+.endobj lbl_802E57C4
 .balign 4
-lbl_802E57D4:
+.obj lbl_802E57D4, local
 	.asciz "screen/blo/w_wipe.blo"
+.endobj lbl_802E57D4
 .balign 4
-lbl_802E57EC:
+.obj lbl_802E57EC, local
 	.asciz "screen/blo/w_icon.blo"
+.endobj lbl_802E57EC
 .balign 4
-lbl_802E5804:
+.obj lbl_802E5804, local
 	.asciz "screen/blo/w_title.blo"
+.endobj lbl_802E5804
 .balign 4
-lbl_802E581C:
+.obj lbl_802E581C, local
 	.asciz "screen/blo/w_moni.blo"
+.endobj lbl_802E581C
 .balign 4
-lbl_802E5834:
+.obj lbl_802E5834, local
 	.asciz "screen/blo/w_data1.blo"
+.endobj lbl_802E5834
 .balign 4
-lbl_802E584C:
+.obj lbl_802E584C, local
 	.asciz "screen/blo/w_data2.blo"
+.endobj lbl_802E584C
 .balign 4
-lbl_802E5864:
+.obj lbl_802E5864, local
 	.asciz "screen/blo/w_point.blo"
+.endobj lbl_802E5864
 .balign 4
-lbl_802E587C:
+.obj lbl_802E587C, local
 	.asciz "screen/blo/w_line.blo"
+.endobj lbl_802E587C
 .balign 4
-lbl_802E5894:
+.obj lbl_802E5894, local
 	.asciz "screen/blo/w_back.blo"
+.endobj lbl_802E5894
 .balign 4
-lbl_802E58AC:
+.obj lbl_802E58AC, local
 	.asciz "screen/blo/w_ok.blo"
+.endobj lbl_802E58AC
 .balign 4
-lbl_802E58C0:
+.obj lbl_802E58C0, local
 	.4byte .L_801DEC60
 	.4byte .L_801DEC94
 	.4byte .L_801DECCC
@@ -13823,35 +13835,47 @@ lbl_802E58C0:
 	.4byte .L_801DF044
 	.4byte .L_801DEB40
 	.4byte .L_801DF028
-lbl_802E58E4:
+.endobj lbl_802E58C0
+.balign 4
+.obj lbl_802E58E4, local
 	.asciz "zen::NumberPicCallBack<int>"
+.endobj lbl_802E58E4
 .balign 4
-lbl_802E5900:
+.obj lbl_802E5900, local
 	.asciz "zen::NumberTex"
+.endobj lbl_802E5900
 .balign 4
-lbl_802E5910:
+.obj lbl_802E5910, local
 	.asciz "zen::FigureTex<int>"
-lbl_802E5924:
+.endobj lbl_802E5910
+.balign 4
+.obj lbl_802E5924, local
 	.4byte __RTTI__Q23zen9NumberTex
 	.4byte 0x00000000
 	.4byte 0x00000000
+.endobj lbl_802E5924
 .balign 4
-lbl_802E5930:
+.obj lbl_802E5930, local
 	.asciz "P2DPaneCallBackBase"
+.endobj lbl_802E5930
 .balign 4
-lbl_802E5944:
+.obj lbl_802E5944, local
 	.asciz "zen::CallBack1<P2DPane *>"
+.endobj lbl_802E5944
 .balign 4
-lbl_802E5960:
+.obj lbl_802E5960, local
 	.asciz "P2DPaneCallBack"
+.endobj lbl_802E5960
 .balign 4
-lbl_802E5970:
+.obj lbl_802E5970, local
 	.4byte __RTTI__19P2DPaneCallBackBase
 	.4byte 0x00000004
 	.4byte "__RTTI__Q23zen20CallBack1<P7P2DPane>"
 	.4byte 0x00000000
 	.4byte 0x00000000
-lbl_802E5984:
+.endobj lbl_802E5970
+.balign 4
+.obj lbl_802E5984, local
 	.4byte __RTTI__Q23zen9NumberTex
 	.4byte 0x00000004
 	.4byte "__RTTI__Q23zen12FigureTex<i>"
@@ -13863,15 +13887,15 @@ lbl_802E5984:
 	.4byte __RTTI__15P2DPaneCallBack
 	.4byte 0x00000000
 	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
+.endobj lbl_802E5984
 .balign 4
-lbl_802E59C0:
+.skip 0x10 # compiler padding
+.balign 4
+.obj lbl_802E59C0, local
 	.asciz "@unnamed@::DrawWorldMapDateCallBack"
+.endobj lbl_802E59C0
 .balign 4
-lbl_802E59E4:
+.obj lbl_802E59E4, local
 	.4byte __RTTI__Q23zen9NumberTex
 	.4byte 0x00000004
 	.4byte __RTTI__19P2DPaneCallBackBase
@@ -13881,20 +13905,16 @@ lbl_802E59E4:
 	.4byte __RTTI__15P2DPaneCallBack
 	.4byte 0x00000000
 	.4byte 0x00000000
-.global "__vt__Q29@unnamed@24DrawWorldMapDateCallBack"
-"__vt__Q29@unnamed@24DrawWorldMapDateCallBack":
+.endobj lbl_802E59E4
+.balign 4
+.obj "__vt__Q29@unnamed@24DrawWorldMapDateCallBack", weak
 	.4byte "__RTTI__Q29@unnamed@24DrawWorldMapDateCallBack"
 	.4byte 0
 	.4byte "invoke__Q29@unnamed@24DrawWorldMapDateCallBackFP7P2DPane"
 	.4byte draw__15P2DPaneCallBackFP7P2DPane
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
+.endobj "__vt__Q29@unnamed@24DrawWorldMapDateCallBack"
+.balign 4
+.skip 0x20 # compiler padding
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
@@ -13918,6 +13938,7 @@ lbl_803E71B4:
 	.float 30.0
 lbl_803E71B8:
 	.float 0.0
+.global OBJ_NUM__Q23zen16WorldMapTitleMgr
 OBJ_NUM__Q23zen16WorldMapTitleMgr:
 	.4byte 5
 lbl_803E71C0:
@@ -13976,12 +13997,16 @@ lbl_803E7228:
 	.float 0.0
 lbl_803E722C:
 	.float 0.0
+.global bottomLengthMin__Q23zen19WorldMapCursorOnyon
 bottomLengthMin__Q23zen19WorldMapCursorOnyon:
 	.4byte 0x41200000
+.global bottomLengthDefault__Q23zen19WorldMapCursorOnyon
 bottomLengthDefault__Q23zen19WorldMapCursorOnyon:
 	.4byte 0x41700000
+.global bottomLengthMax__Q23zen19WorldMapCursorOnyon
 bottomLengthMax__Q23zen19WorldMapCursorOnyon:
 	.4byte 0x41A00000
+.global scaleFrameMax__Q23zen19WorldMapCursorOnyon
 scaleFrameMax__Q23zen19WorldMapCursorOnyon:
 	.4byte 0x3F4CCCCD
 lbl_803E7240:
@@ -14078,12 +14103,16 @@ lbl_803E72F4:
 	.float 0.0
 lbl_803E72F8:
 	.float 0.0
+.global ONYON_POS_RADIUS__Q23zen17WorldMapCursorMgr
 ONYON_POS_RADIUS__Q23zen17WorldMapCursorMgr:
 	.4byte 0x42700000
+.global ONYON_OFFSET_X__Q23zen17WorldMapCursorMgr
 ONYON_OFFSET_X__Q23zen17WorldMapCursorMgr:
 	.float 0.0
+.global ONYON_OFFSET_Y__Q23zen17WorldMapCursorMgr
 ONYON_OFFSET_Y__Q23zen17WorldMapCursorMgr:
 	.4byte 0x41A00000
+.global ONYON_OFFSET_Z__Q23zen17WorldMapCursorMgr
 ONYON_OFFSET_Z__Q23zen17WorldMapCursorMgr:
 	.float 0.0
 lbl_803E730C:
@@ -14100,8 +14129,10 @@ lbl_803E7320:
 	.float 0.0
 lbl_803E7324:
 	.float 0.0
+.global "EVENT_NONE__Q29@unnamed@19WorldMapCoursePoint"
 "EVENT_NONE__Q29@unnamed@19WorldMapCoursePoint":
 	.4byte 0
+.global "EVENT_APPEAR_FINISH__Q29@unnamed@19WorldMapCoursePoint"
 "EVENT_APPEAR_FINISH__Q29@unnamed@19WorldMapCoursePoint":
 	.4byte 1
 .balign 4
