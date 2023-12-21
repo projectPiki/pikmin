@@ -266,3 +266,9 @@
 .obj init$195, local
 	.skip 1
 .endobj init$195
+
+.section .bss, "wa"  # 0x802E9640 - 0x803E81E5
+.balign 8
+.obj dsp_buf, local
+	.skip 0xC
+.endobj dsp_buf

@@ -721,3 +721,17 @@
 .obj lbl_803E83C8, local
 	.float 1.0
 .endobj lbl_803E83C8
+
+.section .bss, "wa"  # 0x802E9640 - 0x803E81E5
+.balign 8
+.obj player_se$123, local
+	.skip 0x6C
+.endobj player_se$123
+.balign 4
+.obj player_se_stop$189, local
+	.skip 0x6C
+.endobj player_se_stop$189
+.balign 4
+.obj outerparam$219, local
+	.skip 0x40
+.endobj outerparam$219

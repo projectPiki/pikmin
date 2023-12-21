@@ -137,3 +137,9 @@
 .obj lbl_803E82C8, local
 	.float 256.0
 .endobj lbl_803E82C8
+
+.section .bss, "wa"  # 0x802E9640 - 0x803E81E5
+.balign 8
+.obj SINTABLE, local
+	.skip 0x404
+.endobj SINTABLE

@@ -90,3 +90,6 @@
 .obj SELECTED_ARAM_SIZE, local
 	.skip 4
 .endobj SELECTED_ARAM_SIZE
+
+.section .bss, "wa"  # 0x802E9640 - 0x803E81E5
+.comm aram_hp, 0x14, 4

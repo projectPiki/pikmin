@@ -271,3 +271,9 @@
 /* 8000C1E0 00009140  80 63 00 00 */	lwz r3, 0(r3)
 /* 8000C1E4 00009144  4E 80 00 20 */	blr 
 .endfn Bank_Get__FUl
+
+.section .bss, "wa"  # 0x802E9640 - 0x803E81E5
+.balign 8
+.obj bankp, local
+	.skip 0x400
+.endobj bankp

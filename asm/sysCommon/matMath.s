@@ -1128,3 +1128,17 @@ lbl_constructor:
 .obj lbl_803E85E8, local
 	.float 2.0
 .endobj lbl_803E85E8
+
+.section .bss, "wa"  # 0x802E9640 - 0x803E81E5
+.balign 8
+.obj sintable, global
+	.skip 0x4000
+.endobj sintable
+.balign 4
+.obj costable, global
+	.skip 0x4000
+.endobj costable
+.balign 4
+.obj ident__8Matrix4f, global
+	.skip 0x40
+.endobj ident__8Matrix4f

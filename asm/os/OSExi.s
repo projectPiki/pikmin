@@ -1397,3 +1397,9 @@
 /* 801F8F1C 001F5E7C  80 63 00 0C */	lwz r3, 0xc(r3)
 /* 801F8F20 001F5E80  4E 80 00 20 */	blr 
 .endfn EXIGetState
+
+.section .bss, "wa"  # 0x802E9640 - 0x803E81E5
+.balign 8
+.obj Ecb, local
+	.skip 0xA8
+.endobj Ecb

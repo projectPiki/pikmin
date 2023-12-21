@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global __ct__5SeMgrFv
-__ct__5SeMgrFv:
+.fn __ct__5SeMgrFv, global
 /* 800A3428 000A0388  7C 08 02 A6 */	mflr r0
 /* 800A342C 000A038C  3C 80 80 22 */	lis r4, __vt__5ANode@ha
 /* 800A3430 000A0390  90 01 00 04 */	stw r0, 4(r1)
@@ -98,9 +97,9 @@ __ct__5SeMgrFv:
 /* 800A359C 000A04FC  38 21 00 20 */	addi r1, r1, 0x20
 /* 800A35A0 000A0500  7C 08 03 A6 */	mtlr r0
 /* 800A35A4 000A0504  4E 80 00 20 */	blr 
+.endfn __ct__5SeMgrFv
 
-.global playNaviSound__5SeMgrFll
-playNaviSound__5SeMgrFll:
+.fn playNaviSound__5SeMgrFll, global
 /* 800A35A8 000A0508  7C 08 02 A6 */	mflr r0
 /* 800A35AC 000A050C  38 64 00 00 */	addi r3, r4, 0
 /* 800A35B0 000A0510  90 01 00 04 */	stw r0, 4(r1)
@@ -111,9 +110,9 @@ playNaviSound__5SeMgrFll:
 /* 800A35C4 000A0524  38 21 00 08 */	addi r1, r1, 8
 /* 800A35C8 000A0528  7C 08 03 A6 */	mtlr r0
 /* 800A35CC 000A052C  4E 80 00 20 */	blr 
+.endfn playNaviSound__5SeMgrFll
 
-.global addInfo__5SeMgrFiPc
-addInfo__5SeMgrFiPc:
+.fn addInfo__5SeMgrFiPc, global
 /* 800A35D0 000A0530  80 03 00 24 */	lwz r0, 0x24(r3)
 /* 800A35D4 000A0534  80 C3 00 2C */	lwz r6, 0x2c(r3)
 /* 800A35D8 000A0538  54 00 18 38 */	slwi r0, r0, 3
@@ -127,20 +126,20 @@ addInfo__5SeMgrFiPc:
 /* 800A35F8 000A0558  38 04 00 01 */	addi r0, r4, 1
 /* 800A35FC 000A055C  90 03 00 24 */	stw r0, 0x24(r3)
 /* 800A3600 000A0560  4E 80 00 20 */	blr 
+.endfn addInfo__5SeMgrFiPc
 
-.global update__5SeMgrFv
-update__5SeMgrFv:
+.fn update__5SeMgrFv, global
 /* 800A3604 000A0564  4E 80 00 20 */	blr 
+.endfn update__5SeMgrFv
 
-.global joinBattle__5SeMgrFv
-joinBattle__5SeMgrFv:
+.fn joinBattle__5SeMgrFv, global
 /* 800A3608 000A0568  80 83 00 20 */	lwz r4, 0x20(r3)
 /* 800A360C 000A056C  38 04 00 01 */	addi r0, r4, 1
 /* 800A3610 000A0570  90 03 00 20 */	stw r0, 0x20(r3)
 /* 800A3614 000A0574  4E 80 00 20 */	blr 
+.endfn joinBattle__5SeMgrFv
 
-.global leaveBattle__5SeMgrFv
-leaveBattle__5SeMgrFv:
+.fn leaveBattle__5SeMgrFv, global
 /* 800A3618 000A0578  80 83 00 20 */	lwz r4, 0x20(r3)
 /* 800A361C 000A057C  38 04 FF FF */	addi r0, r4, -1
 /* 800A3620 000A0580  90 03 00 20 */	stw r0, 0x20(r3)
@@ -150,9 +149,9 @@ leaveBattle__5SeMgrFv:
 /* 800A3630 000A0590  38 00 00 00 */	li r0, 0
 /* 800A3634 000A0594  90 03 00 20 */	stw r0, 0x20(r3)
 /* 800A3638 000A0598  4E 80 00 20 */	blr 
+.endfn leaveBattle__5SeMgrFv
 
-.global setPikiNum__5SeMgrFi
-setPikiNum__5SeMgrFi:
+.fn setPikiNum__5SeMgrFi, global
 /* 800A363C 000A059C  7C 08 02 A6 */	mflr r0
 /* 800A3640 000A05A0  2C 04 00 00 */	cmpwi r4, 0
 /* 800A3644 000A05A4  90 01 00 04 */	stw r0, 4(r1)
@@ -169,9 +168,9 @@ setPikiNum__5SeMgrFi:
 /* 800A3668 000A05C8  38 21 00 08 */	addi r1, r1, 8
 /* 800A366C 000A05CC  7C 08 03 A6 */	mtlr r0
 /* 800A3670 000A05D0  4E 80 00 20 */	blr 
+.endfn setPikiNum__5SeMgrFi
 
-.global doRender__5SeWinFR8Graphics
-doRender__5SeWinFR8Graphics:
+.fn doRender__5SeWinFR8Graphics, global
 /* 800A3674 000A05D4  7C 08 02 A6 */	mflr r0
 /* 800A3678 000A05D8  90 01 00 04 */	stw r0, 4(r1)
 /* 800A367C 000A05DC  94 21 FF 98 */	stwu r1, -0x68(r1)
@@ -229,9 +228,9 @@ doRender__5SeWinFR8Graphics:
 /* 800A374C 000A06AC  38 21 00 68 */	addi r1, r1, 0x68
 /* 800A3750 000A06B0  7C 08 03 A6 */	mtlr r0
 /* 800A3754 000A06B4  4E 80 00 20 */	blr 
+.endfn doRender__5SeWinFR8Graphics
 
-.global update__5SeWinFv
-update__5SeWinFv:
+.fn update__5SeWinFv, global
 /* 800A3758 000A06B8  7C 08 02 A6 */	mflr r0
 /* 800A375C 000A06BC  90 01 00 04 */	stw r0, 4(r1)
 /* 800A3760 000A06C0  94 21 FF 90 */	stwu r1, -0x70(r1)
@@ -439,9 +438,9 @@ update__5SeWinFv:
 /* 800A3A30 000A0990  38 21 00 70 */	addi r1, r1, 0x70
 /* 800A3A34 000A0994  7C 08 03 A6 */	mtlr r0
 /* 800A3A38 000A0998  4E 80 00 20 */	blr 
+.endfn update__5SeWinFv
 
-.global open__5SeWinFv
-open__5SeWinFv:
+.fn open__5SeWinFv, global
 /* 800A3A3C 000A099C  7C 08 02 A6 */	mflr r0
 /* 800A3A40 000A09A0  90 01 00 04 */	stw r0, 4(r1)
 /* 800A3A44 000A09A4  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -474,9 +473,9 @@ open__5SeWinFv:
 /* 800A3AAC 000A0A0C  38 21 00 18 */	addi r1, r1, 0x18
 /* 800A3AB0 000A0A10  7C 08 03 A6 */	mtlr r0
 /* 800A3AB4 000A0A14  4E 80 00 20 */	blr 
+.endfn open__5SeWinFv
 
-.global close__5SeWinFv
-close__5SeWinFv:
+.fn close__5SeWinFv, global
 /* 800A3AB8 000A0A18  7C 08 02 A6 */	mflr r0
 /* 800A3ABC 000A0A1C  90 01 00 04 */	stw r0, 4(r1)
 /* 800A3AC0 000A0A20  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -497,58 +496,75 @@ close__5SeWinFv:
 /* 800A3AF8 000A0A58  38 21 00 18 */	addi r1, r1, 0x18
 /* 800A3AFC 000A0A5C  7C 08 03 A6 */	mtlr r0
 /* 800A3B00 000A0A60  4E 80 00 20 */	blr 
+.endfn close__5SeWinFv
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802B1B70:
+.obj lbl_802B1B70, local
 	.asciz "seMgr.cpp"
+.endobj lbl_802B1B70
 .balign 4
-lbl_802B1B7C:
+.obj lbl_802B1B7C, local
 	.asciz "Piki Hit"
+.endobj lbl_802B1B7C
 .balign 4
-lbl_802B1B88:
+.obj lbl_802B1B88, local
 	.asciz "Piki Fly"
+.endobj lbl_802B1B88
 .balign 4
-lbl_802B1B94:
+.obj lbl_802B1B94, local
 	.asciz "Piki Pulling"
+.endobj lbl_802B1B94
 .balign 4
-lbl_802B1BA4:
+.obj lbl_802B1BA4, local
 	.asciz "Piki Pulled"
+.endobj lbl_802B1BA4
 .balign 4
-lbl_802B1BB0:
+.obj lbl_802B1BB0, local
 	.asciz "Piki Breakup Voice"
+.endobj lbl_802B1BB0
 .balign 4
-lbl_802B1BC4:
+.obj lbl_802B1BC4, local
 	.asciz "Piki Lift"
+.endobj lbl_802B1BC4
 .balign 4
-lbl_802B1BD0:
+.obj lbl_802B1BD0, local
 	.asciz "Piki Find"
+.endobj lbl_802B1BD0
 .balign 4
-lbl_802B1BDC:
+.obj lbl_802B1BDC, local
 	.asciz "Piki Flyready"
+.endobj lbl_802B1BDC
 .balign 4
-lbl_802B1BEC:
+.obj lbl_802B1BEC, local
 	.asciz "Piki Called"
+.endobj lbl_802B1BEC
 .balign 4
-lbl_802B1BF8:
+.obj lbl_802B1BF8, local # Shift-JIS
 	.4byte 0x53452083
 	.4byte 0x65835883
 	.4byte 0x67000000
+.endobj lbl_802B1BF8
 .balign 4
-lbl_802B1C04:
+.obj lbl_802B1C04, local
 	.asciz "CoreNode"
+.endobj lbl_802B1C04
 .balign 4
-lbl_802B1C10:
+.obj lbl_802B1C10, local
 	.4byte __RTTI__5ANode
 	.4byte 0x00000000
 	.4byte 0x00000000
-lbl_802B1C1C:
+.endobj lbl_802B1C10
+.balign 4
+.obj lbl_802B1C1C, local
 	.4byte __RTTI__5ANode
 	.4byte 0x00000000
 	.4byte __RTTI__8CoreNode
 	.4byte 0x00000000
 	.4byte 0x00000000
-lbl_802B1C30:
+.endobj lbl_802B1C1C
+.balign 4
+.obj lbl_802B1C30, local
 	.4byte __RTTI__5ANode
 	.4byte 0x00000000
 	.4byte __RTTI__8CoreNode
@@ -556,8 +572,9 @@ lbl_802B1C30:
 	.4byte __RTTI__5GmWin
 	.4byte 0x00000000
 	.4byte 0x00000000
-.global __vt__5SeWin
-__vt__5SeWin:
+.endobj lbl_802B1C30
+.balign 4
+.obj __vt__5SeWin, global
 	.4byte __RTTI__5SeWin
 	.4byte 0
 	.4byte getAgeNodeType__5ANodeFv
@@ -576,13 +593,17 @@ __vt__5SeWin:
 	.4byte texturecentre__5GmWinFR8GraphicsP7Textureiii8RectArea
 	.4byte textureleft__5GmWinFR8GraphicsP7Textureiii8RectArea
 	.4byte textureright__5GmWinFR8GraphicsP7Textureiii8RectArea
-lbl_802B1C94:
+.endobj __vt__5SeWin
+.balign 4
+.obj lbl_802B1C94, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte __RTTI__8CoreNode
 	.4byte 0
 	.4byte 0
-lbl_802B1CA8:
+.endobj lbl_802B1C94
+.balign 4
+.obj lbl_802B1CA8, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte __RTTI__8CoreNode
@@ -590,8 +611,9 @@ lbl_802B1CA8:
 	.4byte __RTTI__4Node
 	.4byte 0
 	.4byte 0
-.global __vt__5SeMgr
-__vt__5SeMgr:
+.endobj lbl_802B1CA8
+.balign 4
+.obj __vt__5SeMgr, global
 	.4byte __RTTI__5SeMgr
 	.4byte 0
 	.4byte getAgeNodeType__5ANodeFv
@@ -604,85 +626,105 @@ __vt__5SeMgr:
 	.4byte concat__4NodeFR3SRT
 	.4byte concat__4NodeFR8Matrix4f
 	.4byte getModelMatrix__4NodeFv
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
+.endobj __vt__5SeMgr
+.skip 0x1C # compiler padding
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-lbl_803DF9A0:
+.obj lbl_803DF9A0, local
 	.asciz "<Node>"
+.endobj lbl_803DF9A0
 .balign 4
-lbl_803DF9A8:
+.obj lbl_803DF9A8, local
 	.asciz "Breakup"
+.endobj lbl_803DF9A8
 .balign 4
-lbl_803DF9B0:
+.obj lbl_803DF9B0, local
 	.asciz "Gather"
+.endobj lbl_803DF9B0
 .balign 4
-lbl_803DF9B8:
+.obj lbl_803DF9B8, local
 	.asciz "Throw"
+.endobj lbl_803DF9B8
 .balign 4
-lbl_803DF9C0:
+.obj lbl_803DF9C0, local
 	.asciz "SE %d"
+.endobj lbl_803DF9C0
 .balign 4
-lbl_803DF9C8:
+.obj lbl_803DF9C8, local
 	.asciz "%s"
+.endobj lbl_803DF9C8
 .balign 4
-lbl_803DF9CC:
+.obj lbl_803DF9CC, local
 	.asciz "SeWin"
+.endobj lbl_803DF9CC
 .balign 4
-lbl_803DF9D4:
+.obj lbl_803DF9D4, local
 	.asciz "ANode"
+.endobj lbl_803DF9D4
 .balign 4
-__RTTI__5ANode:
+.obj __RTTI__5ANode, local
 	.4byte lbl_803DF9D4
 	.4byte 0
-__RTTI__8CoreNode:
+.endobj __RTTI__5ANode
+.balign 4
+.obj __RTTI__8CoreNode, local
 	.4byte lbl_802B1C04
 	.4byte lbl_802B1C10
+.endobj __RTTI__8CoreNode
 .balign 4
-lbl_803DF9EC:
+.obj lbl_803DF9EC, local
 	.asciz "GmWin"
+.endobj lbl_803DF9EC
 .balign 4
-__RTTI__5GmWin:
+.obj __RTTI__5GmWin, local
 	.4byte lbl_803DF9EC
 	.4byte lbl_802B1C1C
-__RTTI__5SeWin:
+.endobj __RTTI__5GmWin
+.balign 4
+.obj __RTTI__5SeWin, local
 	.4byte lbl_803DF9CC
 	.4byte lbl_802B1C30
+.endobj __RTTI__5SeWin
 .balign 4
-lbl_803DFA04:
+.obj lbl_803DFA04, local
 	.asciz "SeMgr"
+.endobj lbl_803DFA04
 .balign 4
-lbl_803DFA0C:
+.obj lbl_803DFA0C, local
 	.asciz "Node"
+.endobj lbl_803DFA0C
 .balign 4
-__RTTI__4Node:
+.obj __RTTI__4Node, local
 	.4byte lbl_803DFA0C
 	.4byte lbl_802B1C94
-__RTTI__5SeMgr:
+.endobj __RTTI__4Node
+.balign 4
+.obj __RTTI__5SeMgr, local
 	.4byte lbl_803DFA04
 	.4byte lbl_802B1CA8
+.endobj __RTTI__5SeMgr
 
 .section .sbss, "wa"
 .balign 8
-.global seMgr
-seMgr:
+.obj seMgr, global
 	.skip 0x4
+.endobj seMgr
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803E8F70:
+.obj lbl_803E8F70, local
 	.float 0.5
-lbl_803E8F74:
+.endobj lbl_803E8F70
+.obj lbl_803E8F74, local
 	.float 0.0
-lbl_803E8F78:
+.endobj lbl_803E8F74
+.obj lbl_803E8F78, local
 	.float 0.8
-lbl_803E8F7C:
+.endobj lbl_803E8F78
+.obj lbl_803E8F7C, local
 	.float 1.4
-lbl_803E8F80:
+.endobj lbl_803E8F7C
+.obj lbl_803E8F80, local
 	.float -0.5
+.endobj lbl_803E8F80

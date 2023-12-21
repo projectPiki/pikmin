@@ -1463,3 +1463,13 @@
 .obj __CARDDiskID, global
 	.skip 0x4
 .endobj __CARDDiskID
+
+.section .bss, "wa"  # 0x802E9640 - 0x803E81E5
+.balign 8
+.obj __CARDBlock, global
+	.skip 0x210
+.endobj __CARDBlock
+.balign 4
+.obj __CARDDiskNone, global
+	.skip 0x20
+.endobj __CARDDiskNone

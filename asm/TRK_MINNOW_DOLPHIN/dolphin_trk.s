@@ -200,3 +200,9 @@
 	.4byte 0x00001400
 	.4byte 0x00001700
 .endobj TRK_ISR_OFFSETS
+
+.section .bss, "wa"  # 0x802E9640 - 0x803E81E5
+.balign 8
+.obj lc_base, local
+	.skip 0x4
+.endobj lc_base

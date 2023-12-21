@@ -5378,3 +5378,9 @@
 .obj lbl_803E87D8, local
 	.8byte 0x4330000080000000
 .endobj lbl_803E87D8
+
+.section .bss, "wa"  # 0x802E9640 - 0x803E81E5
+.balign 8
+.obj resultTable, local
+	.skip 0x40
+.endobj resultTable

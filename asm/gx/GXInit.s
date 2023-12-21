@@ -1109,3 +1109,13 @@
 .obj lbl_803EC548, local
 	.8byte 0x4330000000000000
 .endobj lbl_803EC548
+
+.section .bss, "wa"  # 0x802E9640 - 0x803E81E5
+.balign 8
+.obj gxData, local
+	.skip 0x4F4
+.endobj gxData
+.balign 4
+.obj FifoObj, global
+	.skip 0x80
+.endobj FifoObj

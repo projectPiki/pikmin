@@ -156,3 +156,9 @@
 .obj Prepared, global
 	.skip 0x4
 .endobj Prepared
+
+.section .bss, "wa"  # 0x802E9640 - 0x803E81E5
+.balign 32
+.obj Header, global
+	.skip 0x20
+.endobj Header

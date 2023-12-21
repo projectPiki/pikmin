@@ -5554,3 +5554,21 @@
 	.4byte lbl_802ABC08
 	.4byte lbl_802ABC1C
 .endobj __RTTI__18RandomAccessStream
+
+.section .bss, "wa"  # 0x802E9640 - 0x803E81E5
+.balign 8
+.obj cst, local
+	.skip 0x6C
+.endobj cst
+.balign 32
+.obj CardWorkArea, local
+	.skip 0xA000
+.endobj CardWorkArea
+.balign 32
+.obj cardData, global
+	.skip 0x26000
+.endobj cardData
+.balign 32
+.obj CardStack, local
+	.skip 0x2000
+.endobj CardStack

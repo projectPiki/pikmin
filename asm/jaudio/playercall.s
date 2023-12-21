@@ -189,3 +189,9 @@
 /* 800073D4 00004334  7C 08 03 A6 */	mtlr r0
 /* 800073D8 00004338  4E 80 00 20 */	blr 
 .endfn DspPlayerCallback__Fv
+
+.section .bss, "wa"  # 0x802E9640 - 0x803E81E5
+.balign 8
+.obj PLAYER_CALLLIST, local
+	.skip 0xC0
+.endobj PLAYER_CALLLIST

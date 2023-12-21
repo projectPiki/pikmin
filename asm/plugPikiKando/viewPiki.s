@@ -2904,3 +2904,9 @@
 .obj lbl_803E9A6C, local
 	.float 1200.0
 .endobj lbl_803E9A6C
+
+.section .bss, "wa"  # 0x802E9640 - 0x803E81E5
+.balign 8
+.obj _instances__15PikiShapeObject, global
+	.skip 0x10
+.endobj _instances__15PikiShapeObject

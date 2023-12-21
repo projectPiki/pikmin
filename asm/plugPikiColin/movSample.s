@@ -1211,3 +1211,21 @@
 .obj lbl_803E8AE8, local
 	.float 0.0
 .endobj lbl_803E8AE8
+
+.section .bss, "wa"  # 0x802E9640 - 0x803E81E5
+.balign 8
+.obj YtexObj, local
+	.skip 0x20
+.endobj YtexObj
+.balign 4
+.obj UVtexObj, local
+	.skip 0x20
+.endobj UVtexObj
+.balign 8
+.obj playbackThread, local
+	.skip 0x310
+.endobj playbackThread
+.balign 4
+.obj playbackThreadStack, local
+	.skip 0x1000
+.endobj playbackThreadStack

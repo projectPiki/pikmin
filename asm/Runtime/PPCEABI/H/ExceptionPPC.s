@@ -38,3 +38,9 @@
 .L_80214DC4:
 /* 80214DC4 00211D24  4E 80 00 20 */	blr 
 .endfn __register_fragment
+
+.section .bss, "wa"  # 0x802E9640 - 0x803E81E5
+.balign 8
+.obj fragmentinfo, local
+	.skip 0xC
+.endobj fragmentinfo

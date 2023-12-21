@@ -154,3 +154,9 @@
 .obj buf, local
 	.4byte interleavebuf
 .endobj buf
+
+.section .bss, "wa"  # 0x802E9640 - 0x803E81E5
+.balign 8
+.obj interleavebuf, local
+	.skip 0x1C
+.endobj interleavebuf

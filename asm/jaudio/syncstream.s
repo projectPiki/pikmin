@@ -2098,3 +2098,13 @@
 .obj lbl_803E8418, local
 	.float 0.499
 .endobj lbl_803E8418
+
+.section .bss, "wa"  # 0x802E9640 - 0x803E81E5
+.balign 32
+.obj SC, local
+	.skip 0x21A50
+.endobj SC
+.balign 4
+.obj copyinfo, local
+	.skip 0x14
+.endobj copyinfo

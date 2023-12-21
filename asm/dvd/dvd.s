@@ -2913,3 +2913,17 @@
 .obj LastState, local
 	.skip 0x4
 .endobj LastState
+
+.section .bss, "wa"  # 0x802E9640 - 0x803E81E5
+.balign 32
+.obj tmpBuffer, local
+	.skip 0x80
+.endobj tmpBuffer
+.balign 4
+.obj DummyCommandBlock, local
+	.skip 0x30
+.endobj DummyCommandBlock
+.balign 8
+.obj ResetAlarm, local
+	.skip 0x28
+.endobj ResetAlarm

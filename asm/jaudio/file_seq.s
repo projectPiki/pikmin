@@ -265,8 +265,8 @@
 .balign 32, 0
 .fn Jaf_HandleToSeq__FUl, global
 /* 8001B780 000186E0  1C 83 04 34 */	mulli r4, r3, 0x434
-/* 8001B784 000186E4  3C 60 80 36 */	lis r3, rootseq_1@ha
-/* 8001B788 000186E8  38 03 4A 88 */	addi r0, r3, rootseq_1@l
+/* 8001B784 000186E4  3C 60 80 36 */	lis r3, rootseq@ha
+/* 8001B788 000186E8  38 03 4A 88 */	addi r0, r3, rootseq@l
 /* 8001B78C 000186EC  7C 60 22 14 */	add r3, r0, r4
 /* 8001B790 000186F0  4E 80 00 20 */	blr 
 .endfn Jaf_HandleToSeq__FUl
@@ -398,3 +398,21 @@
 .obj seq_archandle, local
 	.skip 4
 .endobj seq_archandle
+
+.section .bss, "wa"  # 0x802E9640 - 0x803E81E5
+.balign 8
+.obj seq_loadbuffer, local
+	.skip 0x400
+.endobj seq_loadbuffer
+.balign 4
+.obj rootseq, local
+	.skip 0x4340
+.endobj rootseq
+.balign 4
+.obj rootseqhandle, local
+	.skip 0x40
+.endobj rootseqhandle
+.balign 4
+.obj as, local
+	.skip 0x80
+.endobj as

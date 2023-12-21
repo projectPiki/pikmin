@@ -303,3 +303,13 @@
 .obj lbl_803E8220, local
 	.float 0.0
 .endobj lbl_803E8220
+
+.section .bss, "wa"  # 0x802E9640 - 0x803E81E5
+.balign 8
+.obj finfo$42, local
+	.skip 0x3C
+.endobj finfo$42
+.balign 4
+.obj cmd$43, local
+	.skip 0x30
+.endobj cmd$43

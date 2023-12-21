@@ -1843,3 +1843,21 @@
 .obj lbl_803E8250, local
 	.8byte 0x4330000000000000
 .endobj lbl_803E8250
+
+.section .bss, "wa"  # 0x802E9640 - 0x803E81E5
+.balign 8
+.obj GLOBAL_CHANNEL, local
+	.skip 0x74
+.endobj GLOBAL_CHANNEL
+.balign 32
+.obj CHANNEL, local
+	.skip 0x14000
+.endobj CHANNEL
+.balign 4
+.obj waitp, local
+	.skip 0x80
+.endobj waitp
+.balign 4
+.obj waittime, local
+	.skip 0x80
+.endobj waittime

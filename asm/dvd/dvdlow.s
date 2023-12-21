@@ -1073,3 +1073,29 @@
 .obj NextCommandNumber, local
 	.skip 0x4
 .endobj NextCommandNumber
+
+.section .bss, "wa"  # 0x802E9640 - 0x803E81E5
+.balign 8
+.obj CommandList, local
+	.skip 0x3C
+.endobj CommandList
+.balign 8
+.obj AlarmForWA, local
+	.skip 0x28
+.endobj AlarmForWA
+.balign 8
+.obj AlarmForTimeout, local
+	.skip 0x28
+.endobj AlarmForTimeout
+.balign 8
+.obj AlarmForBreak, local
+	.skip 0x28
+.endobj AlarmForBreak
+.balign 4
+.obj Prev, local
+	.skip 0xC
+.endobj Prev
+.balign 4
+.obj Curr, local
+	.skip 0xC
+.endobj Curr

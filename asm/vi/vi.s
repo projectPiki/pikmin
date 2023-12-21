@@ -1798,3 +1798,17 @@
 .obj FBSet, local
 	.skip 0x4
 .endobj FBSet
+
+.section .bss, "wa"  # 0x802E9640 - 0x803E81E5
+.balign 8
+.obj regs, local
+	.skip 0x76
+.endobj regs
+.balign 4
+.obj shdwRegs, local
+	.skip 0x76
+.endobj shdwRegs
+.balign 4
+.obj HorVer, local
+	.skip 0x58
+.endobj HorVer

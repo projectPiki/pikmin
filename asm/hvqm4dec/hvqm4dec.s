@@ -6426,3 +6426,17 @@
 .obj readTree_scale, local
 	.skip 4
 .endobj readTree_scale
+
+.section .bss, "wa"  # 0x802E9640 - 0x803E81E5
+.balign 8
+.obj clipTable, local
+	.skip 0x200
+.endobj clipTable
+.balign 4
+.obj divTable, local
+	.skip 0x40
+.endobj divTable
+.balign 4
+.obj mcdivTable, local
+	.skip 0x800
+.endobj mcdivTable

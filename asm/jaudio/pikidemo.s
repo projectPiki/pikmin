@@ -2221,3 +2221,9 @@
 .obj lbl_803E83F8, local
 	.float 0.1
 .endobj lbl_803E83F8
+
+.section .bss, "wa"  # 0x802E9640 - 0x803E81E5
+.balign 8
+.obj demo_q, local
+	.skip 0x6C
+.endobj demo_q

@@ -1997,37 +1997,54 @@ __RTTI__18TaiShellParameters:
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803EA8C0:
+.obj lbl_803EA8C0, local
 	.float 0.0
-lbl_803EA8C4:
+.endobj lbl_803EA8C0
+.obj lbl_803EA8C4, local
 	.float 30.0
-lbl_803EA8C8:
+.endobj lbl_803EA8C4
+.obj lbl_803EA8C8, local
 	.float 1.0
-lbl_803EA8CC:
+.endobj lbl_803EA8C8
+.obj lbl_803EA8CC, local
 	.float -1.0
-lbl_803EA8D0:
+.endobj lbl_803EA8CC
+.obj lbl_803EA8D0, local
 	.float 42.0
-lbl_803EA8D4:
+.endobj lbl_803EA8D0
+.obj lbl_803EA8D4, local
 	.float 10.0
-lbl_803EA8D8:
+.endobj lbl_803EA8D4
+.obj lbl_803EA8D8, local
 	.float 3.0
-lbl_803EA8DC:
+.endobj lbl_803EA8D8
+.obj lbl_803EA8DC, local
 	.float 4.0
-lbl_803EA8E0:
+.endobj lbl_803EA8DC
+.obj lbl_803EA8E0, local
 	.float 24.0
-lbl_803EA8E4:
+.endobj lbl_803EA8E0
+.obj lbl_803EA8E4, local
 	.float 1000.0
-lbl_803EA8E8:
+.endobj lbl_803EA8E4
+.obj lbl_803EA8E8, local
 	.float 0.3
-lbl_803EA8EC:
+.endobj lbl_803EA8E8
+.obj lbl_803EA8EC, local
 	.float 0.2
-lbl_803EA8F0:
+.endobj lbl_803EA8EC
+.obj lbl_803EA8F0, local
 	.float 25.0
-lbl_803EA8F4:
+.endobj lbl_803EA8F0
+.obj lbl_803EA8F4, local
 	.float 5.0
-lbl_803EA8F8:
+.endobj lbl_803EA8F4
+.obj lbl_803EA8F8, local
 	.float 400.0
-lbl_803EA8FC:
+.endobj lbl_803EA8F8
+.obj lbl_803EA8FC, local
 	.float 300.0
-lbl_803EA900:
+.endobj lbl_803EA8FC
+.obj lbl_803EA900, local
 	.float 16.0
+.endobj lbl_803EA900

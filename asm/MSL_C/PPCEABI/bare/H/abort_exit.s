@@ -95,3 +95,13 @@
 .obj __console_exit, global
 	.skip 0x4
 .endobj __console_exit
+
+.section .bss, "wa"  # 0x802E9640 - 0x803E81E5
+.balign 8
+.obj atexit_funcs, local
+	.skip 0x100
+.endobj atexit_funcs
+.balign 4
+.obj __atexit_funcs, local
+	.skip 0x100
+.endobj __atexit_funcs

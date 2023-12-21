@@ -731,3 +731,10 @@
 .obj global_id, local
 	.skip 4
 .endobj global_id
+
+.section .bss, "wa"  # 0x802E9640 - 0x803E81E5
+.balign 8
+.balign 32
+.obj dmabuffer, local
+	.skip 0x10000
+.endobj dmabuffer

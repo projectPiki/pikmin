@@ -1109,9 +1109,11 @@
 .obj gop_subframe, local
 	.4byte 0xFFFFFFFF
 .endobj gop_subframe
+.balign 4
 .obj playback_first_wait, local
 	.4byte 1
 .endobj playback_first_wait
+.balign 4
 .obj hvqm_first, local
 	.4byte 1
 .endobj hvqm_first
@@ -1121,60 +1123,79 @@
 .obj dvd_loadfinish, local
 	.skip 4
 .endobj dvd_loadfinish
+.balign 4
 .obj dvdcount, local
 	.skip 4
 .endobj dvdcount
+.balign 4
 .obj arcoffset, local
 	.skip 4
 .endobj arcoffset
+.balign 4
 .obj AUDIO_FRAME, local
 	.skip 4
 .endobj AUDIO_FRAME
+.balign 4
 .obj PIC_FRAME, local
 	.skip 4
 .endobj PIC_FRAME
+.balign 4
 .obj drop_picture_flag, local
 	.skip 4
 .endobj drop_picture_flag
+.balign 4
 .obj PIC_BUFFERS, local
 	.skip 4
 .endobj PIC_BUFFERS
+.balign 4
 .obj dvdload_size, local
 	.skip 4
 .endobj dvdload_size
+.balign 4
 .obj dvdfile_size, local
 	.skip 4
 .endobj dvdfile_size
+.balign 4
 .obj rec_header, local
 	.skip 8
 .endobj rec_header
+.balign 4
 .obj v_header, local
 	.skip 4
 .endobj v_header
+.balign 4
 .obj gop_baseframe, local
 	.skip 4
 .endobj gop_baseframe
+.balign 4
 .obj gop_frame, local
 	.skip 4
 .endobj gop_frame
+.balign 4
 .obj vh_state, local
 	.skip 4
 .endobj vh_state
+.balign 4
 .obj hvqm_obj, local
 	.skip 4
 .endobj hvqm_obj
+.balign 4
 .obj dvd_active, local
 	.skip 4
 .endobj dvd_active
+.balign 4
 .obj virtualfile_buf, local
 	.skip 4
 .endobj virtualfile_buf
+.balign 4
 .obj record_ok, local
 	.skip 4
 .endobj record_ok
+.balign 4
 .obj ref1, local
 	.skip 4
 .endobj ref1
+.balign 4
 .obj ref2, local
 	.skip 4
 .endobj ref2
@@ -1184,3 +1205,29 @@
 .obj lbl_803E8420, local
 	.float 1.0
 .endobj lbl_803E8420
+
+.section .bss, "wa"  # 0x802E9640 - 0x803E81E5
+.balign 32
+.obj filename, local
+	.skip 0x40
+.endobj filename
+.balign 4
+.obj dvd_buf, local
+	.skip 0xC
+.endobj dvd_buf
+.balign 4
+.obj file_header, local
+	.skip 0x44
+.endobj file_header
+.balign 4
+.obj gop_header, local
+	.skip 0x14
+.endobj gop_header
+.balign 8
+.obj jac_hvqmThread, local
+	.skip 0x310
+.endobj jac_hvqmThread
+.balign 32
+.obj hvqmStack, local
+	.skip 0x1000
+.endobj hvqmStack

@@ -1062,3 +1062,9 @@ lbl_constructor:
 .obj lbl_803E8750, local
 	.float 0.0
 .endobj lbl_803E8750
+
+.section .bss, "wa"  # 0x802E9640 - 0x803E81E5
+.balign 8
+.obj flowCont, global
+	.skip 0x25C
+.endobj flowCont

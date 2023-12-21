@@ -130399,3 +130399,61 @@ lbl_constructor:
 .obj lbl_803E8690, local
 	.float 0.033333335
 .endobj lbl_803E8690
+
+.section .bss, "wa"  # 0x802E9640 - 0x803E81E5
+.balign 8
+.obj lbl_80398880, local
+	.skip 0xC
+.endobj lbl_80398880
+.balign 4
+.obj sys, global
+	.skip 0x334
+.endobj sys
+.balign 4
+.obj dvdMesgQueue, local
+	.skip 0x20
+.endobj dvdMesgQueue
+.balign 4
+.obj loadMesgQueue, local
+	.skip 0x20
+.endobj loadMesgQueue
+.balign 4
+.obj sysMesgQueue, local
+	.skip 0x20
+.endobj sysMesgQueue
+.balign 4
+.obj aramStream, local
+	.skip 0x14
+.endobj aramStream
+.balign 4
+.obj lastName, local
+	.skip 0x100
+.endobj lastName
+.balign 4
+.obj dvdStream, local
+	.skip 0x54
+.endobj dvdStream
+.balign 4
+.obj dvdBufferedStream, local
+	.skip 0x20
+.endobj dvdBufferedStream
+.balign 4
+.obj mMemoryTable$1026, local
+	.skip 0xC
+.endobj mMemoryTable$1026
+.balign 8
+.obj Thread, global
+	.skip 0x310
+.endobj Thread
+.balign 32
+.obj ThreadStack, global
+	.skip 0x2000
+.endobj ThreadStack
+.balign 8
+.obj dvdThread, global
+	.skip 0x310
+.endobj dvdThread
+.balign 32
+.obj dvdThreadStack, global
+	.skip 0x2000
+.endobj dvdThreadStack

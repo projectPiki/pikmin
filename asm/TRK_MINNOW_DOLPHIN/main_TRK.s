@@ -21,3 +21,9 @@
 /* 80220458 0021D3B8  7C 08 03 A6 */	mtlr r0
 /* 8022045C 0021D3BC  4E 80 00 20 */	blr 
 .endfn TRK_main
+
+.section .bss, "wa"  # 0x802E9640 - 0x803E81E5
+.balign 8
+.obj TRK_mainError, local
+	.skip 0x4
+.endobj TRK_mainError

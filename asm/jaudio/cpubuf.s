@@ -5,10 +5,10 @@
 /* 80006EE0 00003E40  7C 08 02 A6 */	mflr r0
 /* 80006EE4 00003E44  2C 03 00 01 */	cmpwi r3, 1
 /* 80006EE8 00003E48  90 01 00 04 */	stw r0, 4(r1)
-/* 80006EEC 00003E4C  3C 80 80 2F */	lis r4, dsp_buf_1@ha
+/* 80006EEC 00003E4C  3C 80 80 2F */	lis r4, dsp_buf@ha
 /* 80006EF0 00003E50  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 80006EF4 00003E54  BF 81 00 10 */	stmw r28, 0x10(r1)
-/* 80006EF8 00003E58  3B E4 97 40 */	addi r31, r4, dsp_buf_1@l
+/* 80006EF8 00003E58  3B E4 97 40 */	addi r31, r4, dsp_buf@l
 /* 80006EFC 00003E5C  41 82 00 9C */	beq .L_80006F98
 /* 80006F00 00003E60  40 80 00 10 */	bge .L_80006F10
 /* 80006F04 00003E64  2C 03 00 00 */	cmpwi r3, 0
@@ -173,3 +173,9 @@
 .obj dspstatus, local
 	.skip 1
 .endobj dspstatus
+
+.section .bss, "wa"  # 0x802E9640 - 0x803E81E5
+.balign 8
+.obj dsp_buf, local
+	.skip 0xC
+.endobj dsp_buf

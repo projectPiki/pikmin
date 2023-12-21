@@ -173,3 +173,9 @@
 /* 8021C308 00219268  7C 08 03 A6 */	mtlr r0
 /* 8021C30C 0021926C  4E 80 00 20 */	blr 
 .endfn TRKDestructEvent
+
+.section .bss, "wa"  # 0x802E9640 - 0x803E81E5
+.balign 8
+.obj gTRKEventQueue, global
+	.skip 0x28
+.endobj gTRKEventQueue

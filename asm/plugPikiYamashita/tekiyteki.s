@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global __ct__5YTekiFv
-__ct__5YTekiFv:
+.fn __ct__5YTekiFv, global
 /* 801A2754 0019F6B4  7C 08 02 A6 */	mflr r0
 /* 801A2758 0019F6B8  90 01 00 04 */	stw r0, 4(r1)
 /* 801A275C 0019F6BC  7C 80 07 35 */	extsh. r0, r4
@@ -65,9 +64,9 @@ __ct__5YTekiFv:
 /* 801A2840 0019F7A0  38 21 00 18 */	addi r1, r1, 0x18
 /* 801A2844 0019F7A4  7C 08 03 A6 */	mtlr r0
 /* 801A2848 0019F7A8  4E 80 00 20 */	blr 
+.endfn __ct__5YTekiFv
 
-.global init__20TAIeffectAttackParamFv
-init__20TAIeffectAttackParamFv:
+.fn init__20TAIeffectAttackParamFv, weak
 /* 801A284C 0019F7AC  38 80 00 00 */	li r4, 0
 /* 801A2850 0019F7B0  90 83 00 38 */	stw r4, 0x38(r3)
 /* 801A2854 0019F7B4  38 03 00 48 */	addi r0, r3, 0x48
@@ -101,9 +100,9 @@ init__20TAIeffectAttackParamFv:
 /* 801A28C4 0019F824  C0 02 B4 34 */	lfs f0, lbl_803EB634@sda21(r2)
 /* 801A28C8 0019F828  D0 03 00 08 */	stfs f0, 8(r3)
 /* 801A28CC 0019F82C  4E 80 00 20 */	blr 
+.endfn init__20TAIeffectAttackParamFv
 
-.global doKill__5YTekiFv
-doKill__5YTekiFv:
+.fn doKill__5YTekiFv, global
 /* 801A28D0 0019F830  7C 08 02 A6 */	mflr r0
 /* 801A28D4 0019F834  90 01 00 04 */	stw r0, 4(r1)
 /* 801A28D8 0019F838  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -185,9 +184,9 @@ doKill__5YTekiFv:
 /* 801A29E4 0019F944  38 21 00 18 */	addi r1, r1, 0x18
 /* 801A29E8 0019F948  7C 08 03 A6 */	mtlr r0
 /* 801A29EC 0019F94C  4E 80 00 20 */	blr 
+.endfn doKill__5YTekiFv
 
-.global exitCourse__5YTekiFv
-exitCourse__5YTekiFv:
+.fn exitCourse__5YTekiFv, global
 /* 801A29F0 0019F950  7C 08 02 A6 */	mflr r0
 /* 801A29F4 0019F954  90 01 00 04 */	stw r0, 4(r1)
 /* 801A29F8 0019F958  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -212,9 +211,9 @@ exitCourse__5YTekiFv:
 /* 801A2A3C 0019F99C  38 21 00 18 */	addi r1, r1, 0x18
 /* 801A2A40 0019F9A0  7C 08 03 A6 */	mtlr r0
 /* 801A2A44 0019F9A4  4E 80 00 20 */	blr 
+.endfn exitCourse__5YTekiFv
 
-.global isNaviWatch__5YTekiFv
-isNaviWatch__5YTekiFv:
+.fn isNaviWatch__5YTekiFv, global
 /* 801A2A48 0019F9A8  7C 08 02 A6 */	mflr r0
 /* 801A2A4C 0019F9AC  90 01 00 04 */	stw r0, 4(r1)
 /* 801A2A50 0019F9B0  94 21 FF C0 */	stwu r1, -0x40(r1)
@@ -248,9 +247,9 @@ isNaviWatch__5YTekiFv:
 /* 801A2ABC 0019FA1C  38 21 00 40 */	addi r1, r1, 0x40
 /* 801A2AC0 0019FA20  7C 08 03 A6 */	mtlr r0
 /* 801A2AC4 0019FA24  4E 80 00 20 */	blr 
+.endfn isNaviWatch__5YTekiFv
 
-.global moveTowardPriorityFaceDir__5YTekiFR8Vector3ff
-moveTowardPriorityFaceDir__5YTekiFR8Vector3ff:
+.fn moveTowardPriorityFaceDir__5YTekiFR8Vector3ff, global
 /* 801A2AC8 0019FA28  7C 08 02 A6 */	mflr r0
 /* 801A2ACC 0019FA2C  90 01 00 04 */	stw r0, 4(r1)
 /* 801A2AD0 0019FA30  94 21 FF F8 */	stwu r1, -8(r1)
@@ -264,9 +263,9 @@ moveTowardPriorityFaceDir__5YTekiFR8Vector3ff:
 /* 801A2AF0 0019FA50  38 21 00 08 */	addi r1, r1, 8
 /* 801A2AF4 0019FA54  7C 08 03 A6 */	mtlr r0
 /* 801A2AF8 0019FA58  4E 80 00 20 */	blr 
+.endfn moveTowardPriorityFaceDir__5YTekiFR8Vector3ff
 
-.global moveTowardPriorityFaceDir__5YTekiFR8Vector3fff
-moveTowardPriorityFaceDir__5YTekiFR8Vector3fff:
+.fn moveTowardPriorityFaceDir__5YTekiFR8Vector3fff, global
 /* 801A2AFC 0019FA5C  7C 08 02 A6 */	mflr r0
 /* 801A2B00 0019FA60  90 01 00 04 */	stw r0, 4(r1)
 /* 801A2B04 0019FA64  94 21 FF A0 */	stwu r1, -0x60(r1)
@@ -354,9 +353,9 @@ moveTowardPriorityFaceDir__5YTekiFR8Vector3fff:
 /* 801A2C40 0019FBA0  38 21 00 60 */	addi r1, r1, 0x60
 /* 801A2C44 0019FBA4  7C 08 03 A6 */	mtlr r0
 /* 801A2C48 0019FBA8  4E 80 00 20 */	blr 
+.endfn moveTowardPriorityFaceDir__5YTekiFR8Vector3fff
 
-.global turnToTarget__5YTekiFv
-turnToTarget__5YTekiFv:
+.fn turnToTarget__5YTekiFv, global
 /* 801A2C4C 0019FBAC  7C 08 02 A6 */	mflr r0
 /* 801A2C50 0019FBB0  90 01 00 04 */	stw r0, 4(r1)
 /* 801A2C54 0019FBB4  94 21 FF A0 */	stwu r1, -0x60(r1)
@@ -423,9 +422,9 @@ turnToTarget__5YTekiFv:
 /* 801A2D3C 0019FC9C  38 21 00 60 */	addi r1, r1, 0x60
 /* 801A2D40 0019FCA0  7C 08 03 A6 */	mtlr r0
 /* 801A2D44 0019FCA4  4E 80 00 20 */	blr 
+.endfn turnToTarget__5YTekiFv
 
-.global flyingStay__5YTekiFf
-flyingStay__5YTekiFf:
+.fn flyingStay__5YTekiFf, global
 /* 801A2D48 0019FCA8  7C 08 02 A6 */	mflr r0
 /* 801A2D4C 0019FCAC  90 01 00 04 */	stw r0, 4(r1)
 /* 801A2D50 0019FCB0  94 21 FF 98 */	stwu r1, -0x68(r1)
@@ -505,9 +504,9 @@ flyingStay__5YTekiFf:
 /* 801A2E50 0019FDB0  38 21 00 68 */	addi r1, r1, 0x68
 /* 801A2E54 0019FDB4  7C 08 03 A6 */	mtlr r0
 /* 801A2E58 0019FDB8  4E 80 00 20 */	blr 
+.endfn flyingStay__5YTekiFf
 
-.global killStickToMouthPiki__5YTekiFv
-killStickToMouthPiki__5YTekiFv:
+.fn killStickToMouthPiki__5YTekiFv, global
 /* 801A2E5C 0019FDBC  7C 08 02 A6 */	mflr r0
 /* 801A2E60 0019FDC0  90 01 00 04 */	stw r0, 4(r1)
 /* 801A2E64 0019FDC4  94 21 FF A0 */	stwu r1, -0x60(r1)
@@ -621,9 +620,9 @@ killStickToMouthPiki__5YTekiFv:
 /* 801A2FF4 0019FF54  38 21 00 60 */	addi r1, r1, 0x60
 /* 801A2FF8 0019FF58  7C 08 03 A6 */	mtlr r0
 /* 801A2FFC 0019FF5C  4E 80 00 20 */	blr 
+.endfn killStickToMouthPiki__5YTekiFv
 
-.global startNewMotion__5YTekiFi
-startNewMotion__5YTekiFi:
+.fn startNewMotion__5YTekiFi, global
 /* 801A3000 0019FF60  7C 08 02 A6 */	mflr r0
 /* 801A3004 0019FF64  90 01 00 04 */	stw r0, 4(r1)
 /* 801A3008 0019FF68  94 21 FF C0 */	stwu r1, -0x40(r1)
@@ -681,75 +680,86 @@ startNewMotion__5YTekiFi:
 /* 801A30BC 001A001C  38 21 00 40 */	addi r1, r1, 0x40
 /* 801A30C0 001A0020  7C 08 03 A6 */	mtlr r0
 /* 801A30C4 001A0024  4E 80 00 20 */	blr 
+.endfn startNewMotion__5YTekiFi
 
-.global hitCreature__28TAIeffectAttackEventCallBackFPQ23zen17particleGeneratorP20TAIeffectAttackParamP8Creature8Vector3f
-hitCreature__28TAIeffectAttackEventCallBackFPQ23zen17particleGeneratorP20TAIeffectAttackParamP8Creature8Vector3f:
+.fn hitCreature__28TAIeffectAttackEventCallBackFPQ23zen17particleGeneratorP20TAIeffectAttackParamP8Creature8Vector3f, weak
 /* 801A30C8 001A0028  38 60 00 00 */	li r3, 0
 /* 801A30CC 001A002C  4E 80 00 20 */	blr 
+.endfn hitCreature__28TAIeffectAttackEventCallBackFPQ23zen17particleGeneratorP20TAIeffectAttackParamP8Creature8Vector3f
 
-.global hitCreature__28TAIeffectAttackEventCallBackFP20TAIeffectAttackParamP8Creature8Vector3f
-hitCreature__28TAIeffectAttackEventCallBackFP20TAIeffectAttackParamP8Creature8Vector3f:
+.fn hitCreature__28TAIeffectAttackEventCallBackFP20TAIeffectAttackParamP8Creature8Vector3f, weak
 /* 801A30D0 001A0030  38 60 00 00 */	li r3, 0
 /* 801A30D4 001A0034  4E 80 00 20 */	blr 
+.endfn hitCreature__28TAIeffectAttackEventCallBackFP20TAIeffectAttackParamP8Creature8Vector3f
 
-.global hitCreature__28TAIeffectAttackEventCallBackFP20TAIeffectAttackParamP8Creature
-hitCreature__28TAIeffectAttackEventCallBackFP20TAIeffectAttackParamP8Creature:
+.fn hitCreature__28TAIeffectAttackEventCallBackFP20TAIeffectAttackParamP8Creature, weak
 /* 801A30D8 001A0038  38 60 00 00 */	li r3, 0
 /* 801A30DC 001A003C  4E 80 00 20 */	blr 
+.endfn hitCreature__28TAIeffectAttackEventCallBackFP20TAIeffectAttackParamP8Creature
 
-.global hitMap__28TAIeffectAttackEventCallBackFP20TAIeffectAttackParam
-hitMap__28TAIeffectAttackEventCallBackFP20TAIeffectAttackParam:
+.fn hitMap__28TAIeffectAttackEventCallBackFP20TAIeffectAttackParam, weak
 /* 801A30E0 001A0040  38 60 00 00 */	li r3, 0
 /* 801A30E4 001A0044  4E 80 00 20 */	blr 
+.endfn hitMap__28TAIeffectAttackEventCallBackFP20TAIeffectAttackParam
 
-.global playEventSound__28TAIeffectAttackEventCallBackFPQ23zen17particleGeneratorP20TAIeffectAttackParam
-playEventSound__28TAIeffectAttackEventCallBackFPQ23zen17particleGeneratorP20TAIeffectAttackParam:
+.fn playEventSound__28TAIeffectAttackEventCallBackFPQ23zen17particleGeneratorP20TAIeffectAttackParam, weak
 /* 801A30E8 001A0048  4E 80 00 20 */	blr 
+.endfn playEventSound__28TAIeffectAttackEventCallBackFPQ23zen17particleGeneratorP20TAIeffectAttackParam
 
-.global ptclHitMap__28TAIeffectAttackEventCallBackFPQ23zen17particleGeneratorP20TAIeffectAttackParam
-ptclHitMap__28TAIeffectAttackEventCallBackFPQ23zen17particleGeneratorP20TAIeffectAttackParam:
+.fn ptclHitMap__28TAIeffectAttackEventCallBackFPQ23zen17particleGeneratorP20TAIeffectAttackParam, weak
 /* 801A30EC 001A004C  4E 80 00 20 */	blr 
+.endfn ptclHitMap__28TAIeffectAttackEventCallBackFPQ23zen17particleGeneratorP20TAIeffectAttackParam
 
-.global hitCheckCulling__28TAIeffectAttackEventCallBackFPQ23zen17particleGeneratorP20TAIeffectAttackParamP8Creature
-hitCheckCulling__28TAIeffectAttackEventCallBackFPQ23zen17particleGeneratorP20TAIeffectAttackParamP8Creature:
+.fn hitCheckCulling__28TAIeffectAttackEventCallBackFPQ23zen17particleGeneratorP20TAIeffectAttackParamP8Creature, weak
 /* 801A30F0 001A0050  38 60 00 01 */	li r3, 1
 /* 801A30F4 001A0054  4E 80 00 20 */	blr 
+.endfn hitCheckCulling__28TAIeffectAttackEventCallBackFPQ23zen17particleGeneratorP20TAIeffectAttackParamP8Creature
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802DD898:
+.obj lbl_802DD898, local
 	.asciz "tekiyteki.cpp"
+.endobj lbl_802DD898
 .balign 4
-lbl_802DD8A8:
+.obj lbl_802DD8A8, local
 	.asciz "tekiyteki"
+.endobj lbl_802DD8A8
 .balign 4
-lbl_802DD8B4:
+.obj lbl_802DD8B4, local
 	.asciz "Interaction"
+.endobj lbl_802DD8B4
 .balign 4
 .skip 0x2C # compiler padding
 .balign 4
-lbl_802DD8EC:
+.obj lbl_802DD8EC, local
 	.asciz "PelletView"
+.endobj lbl_802DD8EC
 .balign 4
-lbl_802DD8F8:
+.obj lbl_802DD8F8, local
 	.asciz "PaniAnimKeyListener"
+.endobj lbl_802DD8F8
 .balign 4
-lbl_802DD90C:
+.obj lbl_802DD90C, local
 	.asciz "EventTalker"
+.endobj lbl_802DD90C
 .balign 4
-lbl_802DD918:
+.obj lbl_802DD918, local
 	.asciz "RefCountable"
+.endobj lbl_802DD918
 .balign 4
-lbl_802DD928:
+.obj lbl_802DD928, local
 	.asciz "Creature"
+.endobj lbl_802DD928
 .balign 4
-lbl_802DD934:
+.obj lbl_802DD934, local
 	.4byte __RTTI__11EventTalker
 	.4byte 0x8
 	.4byte __RTTI__12RefCountable
 	.4byte 0
 	.4byte 0
-lbl_802DD948:
+.endobj lbl_802DD934
+.balign 4
+.obj lbl_802DD948, local
 	.4byte __RTTI__10PelletView
 	.4byte 0x2b8
 	.4byte __RTTI__19PaniAnimKeyListener
@@ -761,7 +771,9 @@ lbl_802DD948:
 	.4byte __RTTI__8Creature
 	.4byte 0
 	.4byte 0
-lbl_802DD974:
+.endobj lbl_802DD948
+.balign 4
+.obj lbl_802DD974, local
 	.4byte __RTTI__10PelletView
 	.4byte 0x2b8
 	.4byte __RTTI__19PaniAnimKeyListener
@@ -775,7 +787,9 @@ lbl_802DD974:
 	.4byte __RTTI__5BTeki
 	.4byte 0
 	.4byte 0
-lbl_802DD9A8:
+.endobj lbl_802DD974
+.balign 4
+.obj lbl_802DD9A8, local
 	.4byte __RTTI__10PelletView
 	.4byte 0x2b8
 	.4byte __RTTI__19PaniAnimKeyListener
@@ -791,8 +805,9 @@ lbl_802DD9A8:
 	.4byte __RTTI__5NTeki
 	.4byte 0
 	.4byte 0
-.global __vt__5YTeki
-__vt__5YTeki:
+.endobj lbl_802DD9A8
+.balign 4
+.obj __vt__5YTeki, global
 	.4byte __RTTI__5YTeki
 	.4byte 0
 	.4byte addCntCallback__12RefCountableFv
@@ -921,14 +936,17 @@ __vt__5YTeki:
 	.4byte __RTTI__5YTeki
 	.4byte 0xFFFFFAC8
 	.4byte "@1336@4@animationKeyUpdated__5BTekiFR16PaniAnimKeyEvent"
+.endobj __vt__5YTeki
 .balign 4
-lbl_802DDBE4:
+.obj lbl_802DDBE4, local
 	.asciz "zen::CallBack1<zen::particleGenerator *>"
+.endobj lbl_802DDBE4
 .balign 4
-	.skip 0xC
+.skip 0xC # compiler padding
 .balign 4
-lbl_802DDC1C:
+.obj lbl_802DDC1C, local
 	.asciz "TAIeffectAttackEventCallBack"
+.endobj lbl_802DDC1C
 .balign 4
 .obj __vt__28TAIeffectAttackEventCallBack, weak
 	.4byte __RTTI__28TAIeffectAttackEventCallBack
@@ -941,97 +959,140 @@ lbl_802DDC1C:
 	.4byte ptclHitMap__28TAIeffectAttackEventCallBackFPQ23zen17particleGeneratorP20TAIeffectAttackParam
 	.4byte hitCheckCulling__28TAIeffectAttackEventCallBackFPQ23zen17particleGeneratorP20TAIeffectAttackParamP8Creature
 .endobj __vt__28TAIeffectAttackEventCallBack
-	.skip 0x10 # compiler padding
+.balign 4
+.skip 0x10 # compiler padding
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-lbl_803E5E88:
-	.4byte 0x00000000
-lbl_803E5E8C:
-	.4byte 0x00000000
-lbl_803E5E90:
-	.4byte 0x00000000
-lbl_803E5E94:
-	.4byte 0x00000000
-lbl_803E5E98:
-	.4byte 0x00000000
-lbl_803E5E9C:
-	.4byte 0x00000000
-lbl_803E5EA0:
-	.4byte 0x00000000
-lbl_803E5EA4:
-	.4byte 0x00000000
-lbl_803E5EA8:
-	.4byte 0x00000000
-lbl_803E5EAC:
-	.4byte 0x00000000
-lbl_803E5EB0:
-	.4byte 0x00000000
-lbl_803E5EB4:
-	.4byte 0x00000000
-lbl_803E5EB8:
-	.4byte 0x00000000
-lbl_803E5EBC:
-	.4byte 0x00000000
+.obj lbl_803E5E88, local
+	.float 0.0
+.endobj lbl_803E5E88
+.obj lbl_803E5E8C, local
+	.float 0.0
+.endobj lbl_803E5E8C
+.obj lbl_803E5E90, local
+	.float 0.0
+.endobj lbl_803E5E90
+.obj lbl_803E5E94, local
+	.float 0.0
+.endobj lbl_803E5E94
+.obj lbl_803E5E98, local
+	.float 0.0
+.endobj lbl_803E5E98
+.obj lbl_803E5E9C, local
+	.float 0.0
+.endobj lbl_803E5E9C
+.obj lbl_803E5EA0, local
+	.float 0.0
+.endobj lbl_803E5EA0
+.obj lbl_803E5EA4, local
+	.float 0.0
+.endobj lbl_803E5EA4
+.obj lbl_803E5EA8, local
+	.float 0.0
+.endobj lbl_803E5EA8
+.obj lbl_803E5EAC, local
+	.float 0.0
+.endobj lbl_803E5EAC
+.obj lbl_803E5EB0, local
+	.float 0.0
+.endobj lbl_803E5EB0
+.obj lbl_803E5EB4, local
+	.float 0.0
+.endobj lbl_803E5EB4
+.obj lbl_803E5EB8, local
+	.float 0.0
+.endobj lbl_803E5EB8
+.obj lbl_803E5EBC, local
+	.float 0.0
+.endobj lbl_803E5EBC
 .balign 4
-lbl_803E5EC0:
+.obj lbl_803E5EC0, local
 	.asciz "YTeki"
+.endobj lbl_803E5EC0
 .balign 4
-__RTTI__10PelletView:
+.obj __RTTI__10PelletView, local
 	.4byte lbl_802DD8EC
 	.4byte 0
-__RTTI__19PaniAnimKeyListener:
+.endobj __RTTI__10PelletView
+.balign 4
+.obj __RTTI__19PaniAnimKeyListener, local
 	.4byte lbl_802DD8F8
 	.4byte 0
-__RTTI__11EventTalker:
+.endobj __RTTI__19PaniAnimKeyListener
+.balign 4
+.obj __RTTI__11EventTalker, local
 	.4byte lbl_802DD90C
 	.4byte 0
-__RTTI__12RefCountable:
+.endobj __RTTI__11EventTalker
+.balign 4
+.obj __RTTI__12RefCountable, local
 	.4byte lbl_802DD918
 	.4byte 0
-__RTTI__8Creature:
+.endobj __RTTI__12RefCountable
+.balign 4
+.obj __RTTI__8Creature, local
 	.4byte lbl_802DD928
 	.4byte lbl_802DD934
+.endobj __RTTI__8Creature
 .balign 4
-lbl_803E5EF0:
+.obj lbl_803E5EF0, local
 	.asciz "BTeki"
+.endobj lbl_803E5EF0
 .balign 4
-__RTTI__5BTeki:
+.obj __RTTI__5BTeki, local
 	.4byte lbl_803E5EF0
 	.4byte lbl_802DD948
+.endobj __RTTI__5BTeki
 .balign 4
-lbl_803E5F00:
+.obj lbl_803E5F00, local
 	.asciz "NTeki"
+.endobj lbl_803E5F00
 .balign 4
-__RTTI__5NTeki:
+.obj __RTTI__5NTeki, local
 	.4byte lbl_803E5F00
 	.4byte lbl_802DD974
-__RTTI__5YTeki:
+.endobj __RTTI__5NTeki
+.balign 4
+.obj __RTTI__5YTeki, local
 	.4byte lbl_803E5EC0
 	.4byte lbl_802DD9A8
-__RTTI__28TAIeffectAttackEventCallBack:
+.endobj __RTTI__5YTeki
+.balign 4
+.obj __RTTI__28TAIeffectAttackEventCallBack, local
 	.4byte lbl_802DDC1C
 	.4byte 0
+.endobj __RTTI__28TAIeffectAttackEventCallBack
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803EB630:
-	.4byte 0x00000000
-lbl_803EB634:
-	.4byte 0x42C80000
-lbl_803EB638:
-	.4byte 0x40000000
-lbl_803EB63C:
-	.4byte 0x40490FDB
-lbl_803EB640:
-	.4byte 0x3F800000
-lbl_803EB644:
-	.4byte 0x41200000
-lbl_803EB648:
-	.4byte 0x43340000
-lbl_803EB64C:
-	.4byte 0x3D4CCCCD
-lbl_803EB650:
-	.4byte 0xBF800000
-lbl_803EB654:
-	.4byte 0x44610000
+.obj lbl_803EB630, local
+	.float 0.0
+.endobj lbl_803EB630
+.obj lbl_803EB634, local
+	.float 100.0
+.endobj lbl_803EB634
+.obj lbl_803EB638, local
+	.float 2.0
+.endobj lbl_803EB638
+.obj lbl_803EB63C, local # pi
+	.float 3.1415927
+.endobj lbl_803EB63C
+.obj lbl_803EB640, local
+	.float 1.0
+.endobj lbl_803EB640
+.obj lbl_803EB644, local
+	.float 10.0
+.endobj lbl_803EB644
+.obj lbl_803EB648, local
+	.float 180.0
+.endobj lbl_803EB648
+.obj lbl_803EB64C, local
+	.float 0.05
+.endobj lbl_803EB64C
+.obj lbl_803EB650, local
+	.float -1.0
+.endobj lbl_803EB650
+.obj lbl_803EB654, local
+	.float 900.0
+.endobj lbl_803EB654

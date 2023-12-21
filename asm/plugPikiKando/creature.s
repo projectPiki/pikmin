@@ -4428,3 +4428,9 @@
 .obj lbl_803E8CD0, local
 	.float 0.25
 .endobj lbl_803E8CD0
+
+.section .bss, "wa"  # 0x802E9640 - 0x803E81E5
+.balign 8
+.obj triList, local
+	.skip 0x800
+.endobj triList

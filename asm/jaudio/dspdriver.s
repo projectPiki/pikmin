@@ -622,3 +622,9 @@
 .obj lbl_803E8260, local
 	.8byte 0x4330000000000000
 .endobj lbl_803E8260
+
+.section .bss, "wa"  # 0x802E9640 - 0x803E81E5
+.balign 32
+.obj DSPCH, local
+	.skip 0x400
+.endobj DSPCH

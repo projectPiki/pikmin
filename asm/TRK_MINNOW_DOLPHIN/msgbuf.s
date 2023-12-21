@@ -635,3 +635,9 @@
 /* 8021CD0C 00219C6C  7C 08 03 A6 */	mtlr r0
 /* 8021CD10 00219C70  4E 80 00 20 */	blr 
 .endfn TRKReadBuffer_ui32
+
+.section .bss, "wa"  # 0x802E9640 - 0x803E81E5
+.balign 8
+.obj gTRKMsgBufs, global
+	.skip 0x19B0
+.endobj gTRKMsgBufs

@@ -3577,7 +3577,7 @@
 	.float 1.0
 .endobj lbl_803EB11C
 .balign 4
-.obj lbl_803EB120, local
+.obj lbl_803EB120, local # 4 pi
 	.float 12.566371
 .endobj lbl_803EB120
 .balign 4
@@ -3601,7 +3601,7 @@
 	.float 0.01
 .endobj lbl_803EB140
 .balign 4
-.obj lbl_803EB144, local
+.obj lbl_803EB144, local # tau
 	.float 6.2831855
 .endobj lbl_803EB144
 .balign 4
@@ -3616,3 +3616,9 @@
 .obj lbl_803EB150, local
 	.float 0.3
 .endobj lbl_803EB150
+
+.section .bss, "wa"  # 0x802E9640 - 0x803E81E5
+.balign 8
+.obj workString__3zen, local
+	.skip 0x400
+.endobj workString__3zen

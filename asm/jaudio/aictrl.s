@@ -605,3 +605,13 @@
 .obj lbl_803E8208, local
 	.asciz "MIXING"
 .endobj lbl_803E8208
+
+.section .bss, "wa"  # 0x802E9640 - 0x803E81E5
+.balign 8
+.obj dac, local
+	.skip 0xC
+.endobj dac
+.balign 4
+.obj audio_hp, local
+	.skip 0x14
+.endobj audio_hp

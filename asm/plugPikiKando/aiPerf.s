@@ -1916,14 +1916,17 @@ isBridge__10WorkObjectFv:
 
 .section .rodata, "a"  # 0x80221FE0 - 0x80222DC0
 .balign 8
-lbl_802223E0:
+.obj lbl_802223E0, local
 	.4byte lbl_803DEE20
 	.4byte lbl_803DEE28
 	.4byte lbl_803DEE30
-lbl_802223EC:
+.endobj lbl_802223E0
+.balign 4
+.obj lbl_802223EC, local
 	.4byte lbl_803DEE20
 	.4byte lbl_803DEE28
 	.4byte lbl_803DEE30
+.endobj lbl_802223EC
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
@@ -1944,86 +1947,125 @@ gridStrings:
 	.4byte lbl_802AE92C
 	.4byte lbl_802AE938
 	.4byte lbl_802AE944
-lbl_802AE95C:
+.obj lbl_802AE95C, local
 	.4byte 0x00000000
 	.4byte 0xFFFFFFFF
 	.4byte menuCloseMenu__4MenuFR4Menu
-lbl_802AE968:
+.endobj lbl_802AE95C
+.balign 4
+.obj lbl_802AE968, local
 	.4byte 0x00000000
 	.4byte 0xFFFFFFFF
 	.4byte toggleBridge__6AIPerfFR4Menu
-lbl_802AE974:
+.endobj lbl_802AE968
+.balign 4
+.obj lbl_802AE974, local
 	.4byte 0x00000000
 	.4byte 0xFFFFFFFF
 	.4byte toggleShowRoute__6AIPerfFR4Menu
-lbl_802AE980:
+.endobj lbl_802AE974
+.balign 4
+.obj lbl_802AE980, local
 	.4byte 0x00000000
 	.4byte 0xFFFFFFFF
 	.4byte decOptLevel__6AIPerfFR4Menu
-lbl_802AE98C:
+.endobj lbl_802AE980
+.balign 4
+.obj lbl_802AE98C, local
 	.4byte 0x00000000
 	.4byte 0xFFFFFFFF
 	.4byte incOptLevel__6AIPerfFR4Menu
-lbl_802AE998:
+.endobj lbl_802AE98C
+.balign 4
+.obj lbl_802AE998, local
 	.4byte 0x00000000
 	.4byte 0xFFFFFFFF
 	.4byte toggleCollSort__6AIPerfFR4Menu
-lbl_802AE9A4:
+.endobj lbl_802AE998
+.balign 4
+.obj lbl_802AE9A4, local
 	.4byte 0x00000000
 	.4byte 0xFFFFFFFF
 	.4byte toggleKando__6AIPerfFR4Menu
-lbl_802AE9B0:
+.endobj lbl_802AE9A4
+.balign 4
+.obj lbl_802AE9B0, local
 	.4byte 0x00000000
 	.4byte 0xFFFFFFFF
 	.4byte toggleSoundDebug__6AIPerfFR4Menu
-lbl_802AE9BC:
+.endobj lbl_802AE9B0
+.balign 4
+.obj lbl_802AE9BC, local
 	.4byte 0x00000000
 	.4byte 0xFFFFFFFF
 	.4byte toggleGeneratorMode__6AIPerfFR4Menu
-lbl_802AE9C8:
+.endobj lbl_802AE9BC
+.balign 4
+.obj lbl_802AE9C8, local
 	.4byte 0x00000000
 	.4byte 0xFFFFFFFF
 	.4byte toggleMoveType__6AIPerfFR4Menu
-lbl_802AE9D4:
+.endobj lbl_802AE9C8
+.balign 4
+.obj lbl_802AE9D4, local
 	.4byte 0x00000000
 	.4byte 0xFFFFFFFF
 	.4byte toggleLOD__6AIPerfFR4Menu
-lbl_802AE9E0:
+.endobj lbl_802AE9D4
+.balign 4
+.obj lbl_802AE9E0, local
 	.4byte 0x00000000
 	.4byte 0xFFFFFFFF
 	.4byte toggleColls__6AIPerfFR4Menu
-lbl_802AE9EC:
+.endobj lbl_802AE9E0
+.balign 4
+.obj lbl_802AE9EC, local
 	.4byte 0x00000000
 	.4byte 0xFFFFFFFF
 	.4byte toggleASync__6AIPerfFR4Menu
-lbl_802AE9F8:
+.endobj lbl_802AE9EC
+.balign 4
+.obj lbl_802AE9F8, local
 	.4byte 0x00000000
 	.4byte 0xFFFFFFFF
 	.4byte toggleInsQuick__6AIPerfFR4Menu
-lbl_802AEA04:
+.endobj lbl_802AE9F8
+.balign 4
+.obj lbl_802AEA04, local
 	.4byte 0x00000000
 	.4byte 0xFFFFFFFF
 	.4byte decUfoLevel__6AIPerfFR4Menu
-lbl_802AEA10:
+.endobj lbl_802AEA04
+.balign 4
+.obj lbl_802AEA10, local
 	.4byte 0x00000000
 	.4byte 0xFFFFFFFF
 	.4byte incUfoLevel__6AIPerfFR4Menu
-lbl_802AEA1C:
+.endobj lbl_802AEA10
+.balign 4
+.obj lbl_802AEA1C, local
 	.4byte 0x00000000
 	.4byte 0xFFFFFFFF
 	.4byte flowerPiki__6AIPerfFR4Menu
-lbl_802AEA28:
+.endobj lbl_802AEA1C
+.balign 4
+.obj lbl_802AEA28, local
 	.4byte 0x00000000
 	.4byte 0xFFFFFFFF
 	.4byte breakSluice__6AIPerfFR4Menu
-lbl_802AEA34:
+.endobj lbl_802AEA28
+.balign 4
+.obj lbl_802AEA34, local
 	.4byte 0x00000000
 	.4byte 0xFFFFFFFF
 	.4byte collectPikis__6AIPerfFR4Menu
-lbl_802AEA40:
+.endobj lbl_802AEA34
+.balign 4
+.obj lbl_802AEA40, local
 	.4byte 0x00000000
 	.4byte 0xFFFFFFFF
 	.4byte fullfillPiki__6AIPerfFR4Menu
+.endobj lbl_802AEA40
 .balign 4
 lbl_802AEA4C:
 	.asciz "Bridge Opt [on]"
@@ -2350,9 +2392,12 @@ drawshapeCullCnt__6AIPerf:
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803E8C30:
+.obj lbl_803E8C30, local
 	.float 30.0
-lbl_803E8C34:
+.endobj lbl_803E8C30
+.obj lbl_803E8C34, local
 	.float 1000.0
-lbl_803E8C38:
+.endobj lbl_803E8C34
+.obj lbl_803E8C38, local
 	.float 12800.0
+.endobj lbl_803E8C38

@@ -138,3 +138,13 @@
 li r3, 0
 blr
 .endfn TRKTerminateSerialHandler
+
+.section .bss, "wa"  # 0x802E9640 - 0x803E81E5
+.balign 8
+.obj gTRKFramingState, local
+	.skip 0x14
+.endobj gTRKFramingState
+.balign 4
+.obj gTRKInputPendingPtr, global
+	.skip 0x4
+.endobj gTRKInputPendingPtr

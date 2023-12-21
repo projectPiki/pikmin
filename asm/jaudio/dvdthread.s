@@ -175,9 +175,9 @@
 /* 80007640 000045A0  7C 08 02 A6 */	mflr r0
 /* 80007644 000045A4  3C 60 80 2F */	lis r3, mq@ha
 /* 80007648 000045A8  90 01 00 04 */	stw r0, 4(r1)
-/* 8000764C 000045AC  3C 80 80 2F */	lis r4, msgbuf_1@ha
+/* 8000764C 000045AC  3C 80 80 2F */	lis r4, msgbuf@ha
 /* 80007650 000045B0  38 63 98 10 */	addi r3, r3, mq@l
-/* 80007654 000045B4  38 84 98 30 */	addi r4, r4, msgbuf_1@l
+/* 80007654 000045B4  38 84 98 30 */	addi r4, r4, msgbuf@l
 /* 80007658 000045B8  94 21 FF F8 */	stwu r1, -8(r1)
 /* 8000765C 000045BC  38 A0 00 80 */	li r5, 0x80
 /* 80007660 000045C0  48 1F 21 55 */	bl OSInitMessageQueue
@@ -998,3 +998,61 @@
 .obj dvdfile_dics, local
 	.skip 4
 .endobj dvdfile_dics
+
+.section .bss, "wa"  # 0x802E9640 - 0x803E81E5
+.balign 8
+.obj mq, local
+	.skip 0x20
+.endobj mq
+.balign 4
+.obj msgbuf, local
+	.skip 0x200
+.endobj msgbuf
+.balign 4
+.obj CALLSTACK, local
+	.skip 0x8000
+.endobj CALLSTACK
+.balign 4
+.obj finfo$221, local
+	.skip 0x3C
+.endobj finfo$221
+.balign 4
+.obj req$222, local
+	.skip 0x80
+.endobj req$222
+.balign 4
+.obj finfo$264, local
+	.skip 0x3C
+.endobj finfo$264
+.balign 4
+.obj req$265, local
+	.skip 0x20
+.endobj req$265
+.balign 4
+.obj finfo$272, local
+	.skip 0x3C
+.endobj finfo$272
+.balign 4
+.obj req$273, local
+	.skip 0x20
+.endobj req$273
+.balign 4
+.obj finfo$290, local
+	.skip 0x3C
+.endobj finfo$290
+.balign 4
+.obj finfo$307, local
+	.skip 0x3C
+.endobj finfo$307
+.balign 4
+.obj finfo$312, local
+	.skip 0x3C
+.endobj finfo$312
+.balign 4
+.obj dvd_file, local
+	.skip 0x800
+.endobj dvd_file
+.balign 4
+.obj dvd_entrynum, local
+	.skip 0x80
+.endobj dvd_entrynum

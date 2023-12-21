@@ -5023,3 +5023,13 @@
 	.2byte 0x0200
 	.byte 0x02
 .endobj lbl_803E8318
+
+.section .bss, "wa"  # 0x802E9640 - 0x803E81E5
+.balign 8
+.obj TRACK_LIST, local
+	.skip 0x100
+.endobj TRACK_LIST
+.balign 4
+.obj SEQ_ARG, local
+	.skip 0x20
+.endobj SEQ_ARG

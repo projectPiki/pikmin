@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global __ct__Q23zen10DrawScreenFPcP14P2DGrafContextbb
-__ct__Q23zen10DrawScreenFPcP14P2DGrafContextbb:
+.fn __ct__Q23zen10DrawScreenFPcP14P2DGrafContextbb, global
 /* 801BF574 001BC4D4  7C 08 02 A6 */	mflr r0
 /* 801BF578 001BC4D8  90 01 00 04 */	stw r0, 4(r1)
 /* 801BF57C 001BC4DC  94 21 FF C8 */	stwu r1, -0x38(r1)
@@ -71,9 +70,9 @@ __ct__Q23zen10DrawScreenFPcP14P2DGrafContextbb:
 /* 801BF670 001BC5D0  38 21 00 38 */	addi r1, r1, 0x38
 /* 801BF674 001BC5D4  7C 08 03 A6 */	mtlr r0
 /* 801BF678 001BC5D8  4E 80 00 20 */	blr 
+.endfn __ct__Q23zen10DrawScreenFPcP14P2DGrafContextbb
 
-.global update__Q23zen10DrawScreenFv
-update__Q23zen10DrawScreenFv:
+.fn update__Q23zen10DrawScreenFv, global
 /* 801BF67C 001BC5DC  7C 08 02 A6 */	mflr r0
 /* 801BF680 001BC5E0  38 63 00 04 */	addi r3, r3, 4
 /* 801BF684 001BC5E4  90 01 00 04 */	stw r0, 4(r1)
@@ -83,9 +82,9 @@ update__Q23zen10DrawScreenFv:
 /* 801BF694 001BC5F4  38 21 00 08 */	addi r1, r1, 8
 /* 801BF698 001BC5F8  7C 08 03 A6 */	mtlr r0
 /* 801BF69C 001BC5FC  4E 80 00 20 */	blr 
+.endfn update__Q23zen10DrawScreenFv
 
-.global draw__Q23zen10DrawScreenFv
-draw__Q23zen10DrawScreenFv:
+.fn draw__Q23zen10DrawScreenFv, global
 /* 801BF6A0 001BC600  7C 08 02 A6 */	mflr r0
 /* 801BF6A4 001BC604  90 01 00 04 */	stw r0, 4(r1)
 /* 801BF6A8 001BC608  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -106,9 +105,9 @@ draw__Q23zen10DrawScreenFv:
 /* 801BF6E4 001BC644  38 21 00 18 */	addi r1, r1, 0x18
 /* 801BF6E8 001BC648  7C 08 03 A6 */	mtlr r0
 /* 801BF6EC 001BC64C  4E 80 00 20 */	blr 
+.endfn draw__Q23zen10DrawScreenFv
 
-.global __ct__Q23zen9NumberTexFv
-__ct__Q23zen9NumberTexFv:
+.fn __ct__Q23zen9NumberTexFv, global
 /* 801BF6F0 001BC650  7C 08 02 A6 */	mflr r0
 /* 801BF6F4 001BC654  3C A0 80 3D */	lis r5, texTable__Q23zen9NumberTex@ha
 /* 801BF6F8 001BC658  90 01 00 04 */	stw r0, 4(r1)
@@ -155,9 +154,9 @@ __ct__Q23zen9NumberTexFv:
 /* 801BF798 001BC6F8  38 21 01 28 */	addi r1, r1, 0x128
 /* 801BF79C 001BC6FC  7C 08 03 A6 */	mtlr r0
 /* 801BF7A0 001BC700  4E 80 00 20 */	blr 
+.endfn __ct__Q23zen9NumberTexFv
 
-.global makeResident__Q23zen14P2DPaneLibraryFP7P2DPane
-makeResident__Q23zen14P2DPaneLibraryFP7P2DPane:
+.fn makeResident__Q23zen14P2DPaneLibraryFP7P2DPane, global
 /* 801BF7A4 001BC704  7C 08 02 A6 */	mflr r0
 /* 801BF7A8 001BC708  90 01 00 04 */	stw r0, 4(r1)
 /* 801BF7AC 001BC70C  94 21 FF 60 */	stwu r1, -0xa0(r1)
@@ -235,22 +234,22 @@ makeResident__Q23zen14P2DPaneLibraryFP7P2DPane:
 /* 801BF8B0 001BC810  38 21 00 A0 */	addi r1, r1, 0xa0
 /* 801BF8B4 001BC814  7C 08 03 A6 */	mtlr r0
 /* 801BF8B8 001BC818  4E 80 00 20 */	blr 
+.endfn makeResident__Q23zen14P2DPaneLibraryFP7P2DPane
 
-.global "getEndChild__17PSUTree<7P2DPane>CFv"
-"getEndChild__17PSUTree<7P2DPane>CFv":
+.fn "getEndChild__17PSUTree<7P2DPane>CFv", weak
 /* 801BF8BC 001BC81C  38 60 00 00 */	li r3, 0
 /* 801BF8C0 001BC820  4E 80 00 20 */	blr 
+.endfn "getEndChild__17PSUTree<7P2DPane>CFv"
 
-.global "getFirstChild__17PSUTree<7P2DPane>CFv"
-"getFirstChild__17PSUTree<7P2DPane>CFv":
+.fn "getFirstChild__17PSUTree<7P2DPane>CFv", weak
 /* 801BF8C4 001BC824  80 63 00 00 */	lwz r3, 0(r3)
 /* 801BF8C8 001BC828  28 03 00 00 */	cmplwi r3, 0
 /* 801BF8CC 001BC82C  4D 82 00 20 */	beqlr 
 /* 801BF8D0 001BC830  38 63 FF F4 */	addi r3, r3, -12
 /* 801BF8D4 001BC834  4E 80 00 20 */	blr 
+.endfn "getFirstChild__17PSUTree<7P2DPane>CFv"
 
-.global setFamilyAlpha__Q23zen14P2DPaneLibraryFP7P2DPaneUc
-setFamilyAlpha__Q23zen14P2DPaneLibraryFP7P2DPaneUc:
+.fn setFamilyAlpha__Q23zen14P2DPaneLibraryFP7P2DPaneUc, global
 /* 801BF8D8 001BC838  7C 08 02 A6 */	mflr r0
 /* 801BF8DC 001BC83C  90 01 00 04 */	stw r0, 4(r1)
 /* 801BF8E0 001BC840  94 21 FF 50 */	stwu r1, -0xb0(r1)
@@ -317,9 +316,9 @@ setFamilyAlpha__Q23zen14P2DPaneLibraryFP7P2DPaneUc:
 /* 801BF9B8 001BC918  38 21 00 B0 */	addi r1, r1, 0xb0
 /* 801BF9BC 001BC91C  7C 08 03 A6 */	mtlr r0
 /* 801BF9C0 001BC920  4E 80 00 20 */	blr 
+.endfn setFamilyAlpha__Q23zen14P2DPaneLibraryFP7P2DPaneUc
 
-.global setAlpha__Q23zen14P2DPaneLibraryFP7P2DPaneUc
-setAlpha__Q23zen14P2DPaneLibraryFP7P2DPaneUc:
+.fn setAlpha__Q23zen14P2DPaneLibraryFP7P2DPaneUc, global
 /* 801BF9C4 001BC924  A0 03 00 08 */	lhz r0, 8(r3)
 /* 801BF9C8 001BC928  2C 00 00 12 */	cmpwi r0, 0x12
 /* 801BF9CC 001BC92C  41 82 00 14 */	beq .L_801BF9E0
@@ -334,9 +333,9 @@ setAlpha__Q23zen14P2DPaneLibraryFP7P2DPaneUc:
 /* 801BF9E8 001BC948  98 83 00 F7 */	stb r4, 0xf7(r3)
 /* 801BF9EC 001BC94C  98 83 00 FB */	stb r4, 0xfb(r3)
 /* 801BF9F0 001BC950  4E 80 00 20 */	blr 
+.endfn setAlpha__Q23zen14P2DPaneLibraryFP7P2DPaneUc
 
-.global setFamilyMirror__Q23zen14P2DPaneLibraryFP7P2DPane9P2DMirror
-setFamilyMirror__Q23zen14P2DPaneLibraryFP7P2DPane9P2DMirror:
+.fn setFamilyMirror__Q23zen14P2DPaneLibraryFP7P2DPane9P2DMirror, global
 /* 801BF9F4 001BC954  7C 08 02 A6 */	mflr r0
 /* 801BF9F8 001BC958  90 01 00 04 */	stw r0, 4(r1)
 /* 801BF9FC 001BC95C  94 21 FF 38 */	stwu r1, -0xc8(r1)
@@ -422,9 +421,9 @@ setFamilyMirror__Q23zen14P2DPaneLibraryFP7P2DPane9P2DMirror:
 /* 801BFB08 001BCA68  38 21 00 C8 */	addi r1, r1, 0xc8
 /* 801BFB0C 001BCA6C  7C 08 03 A6 */	mtlr r0
 /* 801BFB10 001BCA70  4E 80 00 20 */	blr 
+.endfn setFamilyMirror__Q23zen14P2DPaneLibraryFP7P2DPane9P2DMirror
 
-.global getParentPane__Q23zen14P2DPaneLibraryFP7P2DPane
-getParentPane__Q23zen14P2DPaneLibraryFP7P2DPane:
+.fn getParentPane__Q23zen14P2DPaneLibraryFP7P2DPane, global
 /* 801BFB14 001BCA74  80 63 00 E0 */	lwz r3, 0xe0(r3)
 /* 801BFB18 001BCA78  28 03 00 00 */	cmplwi r3, 0
 /* 801BFB1C 001BCA7C  41 82 00 0C */	beq .L_801BFB28
@@ -433,9 +432,9 @@ getParentPane__Q23zen14P2DPaneLibraryFP7P2DPane:
 .L_801BFB28:
 /* 801BFB28 001BCA88  38 60 00 00 */	li r3, 0
 /* 801BFB2C 001BCA8C  4E 80 00 20 */	blr 
+.endfn getParentPane__Q23zen14P2DPaneLibraryFP7P2DPane
 
-.global getWorldPos__Q23zen14P2DPaneLibraryFP7P2DPanePiPi
-getWorldPos__Q23zen14P2DPaneLibraryFP7P2DPanePiPi:
+.fn getWorldPos__Q23zen14P2DPaneLibraryFP7P2DPanePiPi, global
 /* 801BFB30 001BCA90  A8 03 00 18 */	lha r0, 0x18(r3)
 /* 801BFB34 001BCA94  90 04 00 00 */	stw r0, 0(r4)
 /* 801BFB38 001BCA98  A8 03 00 1A */	lha r0, 0x1a(r3)
@@ -468,9 +467,9 @@ getWorldPos__Q23zen14P2DPaneLibraryFP7P2DPanePiPi:
 /* 801BFB94 001BCAF4  28 06 00 00 */	cmplwi r6, 0
 /* 801BFB98 001BCAF8  40 82 FF C4 */	bne .L_801BFB5C
 /* 801BFB9C 001BCAFC  4E 80 00 20 */	blr 
+.endfn getWorldPos__Q23zen14P2DPaneLibraryFP7P2DPanePiPi
 
-.global changeParent__Q23zen14P2DPaneLibraryFP7P2DPaneP7P2DPane
-changeParent__Q23zen14P2DPaneLibraryFP7P2DPaneP7P2DPane:
+.fn changeParent__Q23zen14P2DPaneLibraryFP7P2DPaneP7P2DPane, global
 /* 801BFBA0 001BCB00  7C 08 02 A6 */	mflr r0
 /* 801BFBA4 001BCB04  90 01 00 04 */	stw r0, 4(r1)
 /* 801BFBA8 001BCB08  94 21 FF 98 */	stwu r1, -0x68(r1)
@@ -553,9 +552,9 @@ changeParent__Q23zen14P2DPaneLibraryFP7P2DPaneP7P2DPane:
 /* 801BFCB8 001BCC18  38 21 00 68 */	addi r1, r1, 0x68
 /* 801BFCBC 001BCC1C  7C 08 03 A6 */	mtlr r0
 /* 801BFCC0 001BCC20  4E 80 00 20 */	blr 
+.endfn changeParent__Q23zen14P2DPaneLibraryFP7P2DPaneP7P2DPane
 
-.global __ct__Q23zen11BalloonPaneFP7P2DPanef
-__ct__Q23zen11BalloonPaneFP7P2DPanef:
+.fn __ct__Q23zen11BalloonPaneFP7P2DPanef, global
 /* 801BFCC4 001BCC24  7C 08 02 A6 */	mflr r0
 /* 801BFCC8 001BCC28  3C A0 80 2D */	lis r5, "__vt__Q23zen20CallBack1<P7P2DPane>"@ha
 /* 801BFCCC 001BCC2C  90 01 00 04 */	stw r0, 4(r1)
@@ -646,9 +645,9 @@ __ct__Q23zen11BalloonPaneFP7P2DPanef:
 /* 801BFE20 001BCD80  38 21 00 58 */	addi r1, r1, 0x58
 /* 801BFE24 001BCD84  7C 08 03 A6 */	mtlr r0
 /* 801BFE28 001BCD88  4E 80 00 20 */	blr 
+.endfn __ct__Q23zen11BalloonPaneFP7P2DPanef
 
-.global invoke__Q23zen11BalloonPaneFP7P2DPane
-invoke__Q23zen11BalloonPaneFP7P2DPane:
+.fn invoke__Q23zen11BalloonPaneFP7P2DPane, global
 /* 801BFE2C 001BCD8C  7C 08 02 A6 */	mflr r0
 /* 801BFE30 001BCD90  90 01 00 04 */	stw r0, 4(r1)
 /* 801BFE34 001BCD94  94 21 FF 28 */	stwu r1, -0xd8(r1)
@@ -890,9 +889,9 @@ invoke__Q23zen11BalloonPaneFP7P2DPane:
 /* 801C01BC 001BD11C  38 21 00 D8 */	addi r1, r1, 0xd8
 /* 801C01C0 001BD120  7C 08 03 A6 */	mtlr r0
 /* 801C01C4 001BD124  4E 80 00 20 */	blr 
+.endfn invoke__Q23zen11BalloonPaneFP7P2DPane
 
-.global setGoalPos__Q23zen11BalloonPaneFv
-setGoalPos__Q23zen11BalloonPaneFv:
+.fn setGoalPos__Q23zen11BalloonPaneFv, global
 /* 801C01C8 001BD128  7C 08 02 A6 */	mflr r0
 /* 801C01CC 001BD12C  90 01 00 04 */	stw r0, 4(r1)
 /* 801C01D0 001BD130  94 21 FF 88 */	stwu r1, -0x78(r1)
@@ -948,9 +947,9 @@ setGoalPos__Q23zen11BalloonPaneFv:
 /* 801C0298 001BD1F8  38 21 00 78 */	addi r1, r1, 0x78
 /* 801C029C 001BD1FC  7C 08 03 A6 */	mtlr r0
 /* 801C02A0 001BD200  4E 80 00 20 */	blr 
+.endfn setGoalPos__Q23zen11BalloonPaneFv
 
-.global setGoalRotate__Q23zen11BalloonPaneFv
-setGoalRotate__Q23zen11BalloonPaneFv:
+.fn setGoalRotate__Q23zen11BalloonPaneFv, global
 /* 801C02A4 001BD204  7C 08 02 A6 */	mflr r0
 /* 801C02A8 001BD208  90 01 00 04 */	stw r0, 4(r1)
 /* 801C02AC 001BD20C  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -978,40 +977,51 @@ setGoalRotate__Q23zen11BalloonPaneFv:
 /* 801C0304 001BD264  38 21 00 28 */	addi r1, r1, 0x28
 /* 801C0308 001BD268  7C 08 03 A6 */	mtlr r0
 /* 801C030C 001BD26C  4E 80 00 20 */	blr 
+.endfn setGoalRotate__Q23zen11BalloonPaneFv
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802E1488:
+.obj lbl_802E1488, local
 	.asciz "drawCommon.cpp"
+.endobj lbl_802E1488
 .balign 4
-lbl_802E1498:
+.obj lbl_802E1498, local
 	.asciz "drawCommon"
+.endobj lbl_802E1498
 .balign 4
-lbl_802E14A4:
+.obj lbl_802E14A4, local
 	.asciz "%d_64.bti"
+.endobj lbl_802E14A4
 .balign 4
-lbl_802E14B0:
+.obj lbl_802E14B0, local
 	.asciz "%d_sha64.bti"
+.endobj lbl_802E14B0
 .balign 4
-lbl_802E14C0:
+.obj lbl_802E14C0, local
 	.asciz "zen::BalloonPane"
+.endobj lbl_802E14C0
 .balign 4
-lbl_802E14D4:
+.obj lbl_802E14D4, local
 	.asciz "P2DPaneCallBackBase"
+.endobj lbl_802E14D4
 .balign 4
-lbl_802E14E8:
+.obj lbl_802E14E8, local
 	.asciz "zen::CallBack1<P2DPane *>"
+.endobj lbl_802E14E8
 .balign 4
-lbl_802E1504:
+.obj lbl_802E1504, local
 	.asciz "P2DPaneCallBack"
+.endobj lbl_802E1504
 .balign 4
-lbl_802E1514:
+.obj lbl_802E1514, local
 	.4byte __RTTI__19P2DPaneCallBackBase
 	.4byte 0x00000004
 	.4byte "__RTTI__Q23zen20CallBack1<P7P2DPane>"
 	.4byte 0x00000000
 	.4byte 0x00000000
-lbl_802E1528:
+.endobj lbl_802E1514
+.balign 4
+.obj lbl_802E1528, local
 	.4byte __RTTI__19P2DPaneCallBackBase
 	.4byte 0x00000004
 	.4byte "__RTTI__Q23zen20CallBack1<P7P2DPane>"
@@ -1019,94 +1029,135 @@ lbl_802E1528:
 	.4byte __RTTI__15P2DPaneCallBack
 	.4byte 0x00000000
 	.4byte 0x00000000
-.global __vt__Q23zen11BalloonPane
-__vt__Q23zen11BalloonPane:
+.endobj lbl_802E1528
+.balign 4
+.obj __vt__Q23zen11BalloonPane, global
 	.4byte __RTTI__Q23zen11BalloonPane
 	.4byte 0
 	.4byte invoke__Q23zen11BalloonPaneFP7P2DPane
 	.4byte draw__15P2DPaneCallBackFP7P2DPane
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-lbl_802E1570:
-	.asciz "zen::DrawScreen"
+.endobj __vt__Q23zen11BalloonPane
 .balign 4
-.global __vt__Q23zen10DrawScreen
-__vt__Q23zen10DrawScreen:
+.skip 0x1C # compiler padding
+.balign 4
+.obj lbl_802E1570, local
+	.asciz "zen::DrawScreen"
+.endobj lbl_802E1570
+.balign 4
+.obj __vt__Q23zen10DrawScreen, global
 	.4byte __RTTI__Q23zen10DrawScreen
 	.4byte 0
 	.4byte update__Q23zen10DrawScreenFv
 	.4byte draw__Q23zen10DrawScreenFv
+.endobj __vt__Q23zen10DrawScreen
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-lbl_803E6800:
+.obj lbl_803E6800, local
 	.float 0.0
-lbl_803E6804:
+.endobj lbl_803E6800
+.obj lbl_803E6804, local
 	.float 0.0
-lbl_803E6808:
+.endobj lbl_803E6804
+.obj lbl_803E6808, local
 	.float 0.0
-lbl_803E680C:
+.endobj lbl_803E6808
+.obj lbl_803E680C, local
 	.float 0.0
-lbl_803E6810:
+.endobj lbl_803E680C
+.obj lbl_803E6810, local
 	.float 0.0
-__RTTI__19P2DPaneCallBackBase:
+.endobj lbl_803E6810
+.balign 4
+.obj __RTTI__19P2DPaneCallBackBase, local
 	.4byte lbl_802E14D4
 	.4byte 0
-"__RTTI__Q23zen20CallBack1<P7P2DPane>":
+.endobj __RTTI__19P2DPaneCallBackBase
+.balign 4
+.obj "__RTTI__Q23zen20CallBack1<P7P2DPane>", local
 	.4byte lbl_802E14E8
 	.4byte 0
-__RTTI__15P2DPaneCallBack:
+.endobj "__RTTI__Q23zen20CallBack1<P7P2DPane>"
+.balign 4
+.obj __RTTI__15P2DPaneCallBack, local
 	.4byte lbl_802E1504
 	.4byte lbl_802E1514
-__RTTI__Q23zen11BalloonPane:
+.endobj __RTTI__15P2DPaneCallBack
+.balign 4
+.obj __RTTI__Q23zen11BalloonPane, local
 	.4byte lbl_802E14C0
 	.4byte lbl_802E1528
-__RTTI__Q23zen10DrawScreen:
+.endobj __RTTI__Q23zen11BalloonPane
+.balign 4
+.obj __RTTI__Q23zen10DrawScreen, local
 	.4byte lbl_802E1570
 	.4byte 0
+.endobj __RTTI__Q23zen10DrawScreen
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803EBAA0:
+.obj lbl_803EBAA0, local
 	.float 30.0
-lbl_803EBAA4:
+.endobj lbl_803EBAA0
+.obj lbl_803EBAA4, local
 	.float 1.0
-lbl_803EBAA8:
+.endobj lbl_803EBAA4
+.obj lbl_803EBAA8, local
 	.float 5000.0
-lbl_803EBAAC:
+.endobj lbl_803EBAA8
+.obj lbl_803EBAAC, local
 	.float 0.0
+.endobj lbl_803EBAAC
 .balign 8
-lbl_803EBAB0:
-	.4byte 0x43300000
-	.4byte 0x80000000
+.obj lbl_803EBAB0, local
+	.8byte 0x4330000080000000
+.endobj lbl_803EBAB0
 .balign 8
-lbl_803EBAB8:
+.obj lbl_803EBAB8, local
 	.double 0.5
+.endobj lbl_803EBAB8
 .balign 8
-lbl_803EBAC0:
+.obj lbl_803EBAC0, local
 	.double 3.0
-lbl_803EBAC8:
+.endobj lbl_803EBAC0
+.balign 4
+.obj lbl_803EBAC8, local
 	.float 0.1
-lbl_803EBACC:
+.endobj lbl_803EBAC8
+.obj lbl_803EBACC, local
 	.float 32767.0
-lbl_803EBAD0:
+.endobj lbl_803EBACC
+.obj lbl_803EBAD0, local
 	.float 0.99
-lbl_803EBAD4:
+.endobj lbl_803EBAD0
+.obj lbl_803EBAD4, local
 	.float 5.0
-lbl_803EBAD8:
+.endobj lbl_803EBAD4
+.obj lbl_803EBAD8, local
 	.float 0.5
-lbl_803EBADC:
+.endobj lbl_803EBAD8
+.obj lbl_803EBADC, local # pi
 	.float 3.1415927
-lbl_803EBAE0:
+.endobj lbl_803EBADC
+.obj lbl_803EBAE0, local # tau
 	.float 6.2831855
-lbl_803EBAE4:
+.endobj lbl_803EBAE0
+.obj lbl_803EBAE4, local # -pi
 	.float -3.1415927
-lbl_803EBAE8:
+.endobj lbl_803EBAE4
+.obj lbl_803EBAE8, local
 	.float 2.0
-lbl_803EBAEC:
+.endobj lbl_803EBAE8
+.obj lbl_803EBAEC, local
 	.float 0.2617994
+.endobj lbl_803EBAEC
+
+.section .bss, "wa"  # 0x802E9640 - 0x803E81E5
+.balign 8
+.obj texTable__Q23zen9NumberTex, global
+	.skip 0x28
+.endobj texTable__Q23zen9NumberTex
+.balign 4
+.obj shadowTexTable__Q23zen9NumberTex, global
+	.skip 0x28
+.endobj shadowTexTable__Q23zen9NumberTex

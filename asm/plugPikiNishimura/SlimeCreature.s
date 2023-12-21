@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global __ct__13SlimeCreatureFP12CreatureProp
-__ct__13SlimeCreatureFP12CreatureProp:
+.fn __ct__13SlimeCreatureFP12CreatureProp, global
 /* 8016B278 001681D8  7C 08 02 A6 */	mflr r0
 /* 8016B27C 001681DC  90 01 00 04 */	stw r0, 4(r1)
 /* 8016B280 001681E0  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -32,9 +31,9 @@ __ct__13SlimeCreatureFP12CreatureProp:
 /* 8016B2E4 00168244  38 21 00 18 */	addi r1, r1, 0x18
 /* 8016B2E8 00168248  7C 08 03 A6 */	mtlr r0
 /* 8016B2EC 0016824C  4E 80 00 20 */	blr 
+.endfn __ct__13SlimeCreatureFP12CreatureProp
 
-.global init__13SlimeCreatureFR8Vector3fP5Slime
-init__13SlimeCreatureFR8Vector3fP5Slime:
+.fn init__13SlimeCreatureFR8Vector3fP5Slime, global
 /* 8016B2F0 00168250  7C 08 02 A6 */	mflr r0
 /* 8016B2F4 00168254  90 01 00 04 */	stw r0, 4(r1)
 /* 8016B2F8 00168258  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -67,19 +66,19 @@ init__13SlimeCreatureFR8Vector3fP5Slime:
 /* 8016B364 001682C4  38 21 00 20 */	addi r1, r1, 0x20
 /* 8016B368 001682C8  7C 08 03 A6 */	mtlr r0
 /* 8016B36C 001682CC  4E 80 00 20 */	blr 
+.endfn init__13SlimeCreatureFR8Vector3fP5Slime
 
-.global getSize__13SlimeCreatureFv
-getSize__13SlimeCreatureFv:
+.fn getSize__13SlimeCreatureFv, global
 /* 8016B370 001682D0  C0 22 AB FC */	lfs f1, lbl_803EADFC@sda21(r2)
 /* 8016B374 001682D4  4E 80 00 20 */	blr 
+.endfn getSize__13SlimeCreatureFv
 
-.global getiMass__13SlimeCreatureFv
-getiMass__13SlimeCreatureFv:
+.fn getiMass__13SlimeCreatureFv, global
 /* 8016B378 001682D8  C0 22 AC 00 */	lfs f1, lbl_803EAE00@sda21(r2)
 /* 8016B37C 001682DC  4E 80 00 20 */	blr 
+.endfn getiMass__13SlimeCreatureFv
 
-.global getCentre__13SlimeCreatureFv
-getCentre__13SlimeCreatureFv:
+.fn getCentre__13SlimeCreatureFv, global
 /* 8016B380 001682E0  C0 04 00 94 */	lfs f0, 0x94(r4)
 /* 8016B384 001682E4  D0 03 00 00 */	stfs f0, 0(r3)
 /* 8016B388 001682E8  C0 04 00 98 */	lfs f0, 0x98(r4)
@@ -87,9 +86,9 @@ getCentre__13SlimeCreatureFv:
 /* 8016B390 001682F0  C0 04 00 9C */	lfs f0, 0x9c(r4)
 /* 8016B394 001682F4  D0 03 00 08 */	stfs f0, 8(r3)
 /* 8016B398 001682F8  4E 80 00 20 */	blr 
+.endfn getCentre__13SlimeCreatureFv
 
-.global doKill__13SlimeCreatureFv
-doKill__13SlimeCreatureFv:
+.fn doKill__13SlimeCreatureFv, global
 /* 8016B39C 001682FC  7C 08 02 A6 */	mflr r0
 /* 8016B3A0 00168300  38 80 00 00 */	li r4, 0
 /* 8016B3A4 00168304  90 01 00 04 */	stw r0, 4(r1)
@@ -99,9 +98,9 @@ doKill__13SlimeCreatureFv:
 /* 8016B3B4 00168314  38 21 00 08 */	addi r1, r1, 8
 /* 8016B3B8 00168318  7C 08 03 A6 */	mtlr r0
 /* 8016B3BC 0016831C  4E 80 00 20 */	blr 
+.endfn doKill__13SlimeCreatureFv
 
-.global isAlive__13SlimeCreatureFv
-isAlive__13SlimeCreatureFv:
+.fn isAlive__13SlimeCreatureFv, global
 /* 8016B3C0 00168320  7C 08 02 A6 */	mflr r0
 /* 8016B3C4 00168324  90 01 00 04 */	stw r0, 4(r1)
 /* 8016B3C8 00168328  94 21 FF F8 */	stwu r1, -8(r1)
@@ -114,9 +113,9 @@ isAlive__13SlimeCreatureFv:
 /* 8016B3E4 00168344  38 21 00 08 */	addi r1, r1, 8
 /* 8016B3E8 00168348  7C 08 03 A6 */	mtlr r0
 /* 8016B3EC 0016834C  4E 80 00 20 */	blr 
+.endfn isAlive__13SlimeCreatureFv
 
-.global isAtari__13SlimeCreatureFv
-isAtari__13SlimeCreatureFv:
+.fn isAtari__13SlimeCreatureFv, global
 /* 8016B3F0 00168350  7C 08 02 A6 */	mflr r0
 /* 8016B3F4 00168354  90 01 00 04 */	stw r0, 4(r1)
 /* 8016B3F8 00168358  94 21 FF F8 */	stwu r1, -8(r1)
@@ -129,9 +128,9 @@ isAtari__13SlimeCreatureFv:
 /* 8016B414 00168374  38 21 00 08 */	addi r1, r1, 8
 /* 8016B418 00168378  7C 08 03 A6 */	mtlr r0
 /* 8016B41C 0016837C  4E 80 00 20 */	blr 
+.endfn isAtari__13SlimeCreatureFv
 
-.global ignoreAtari__13SlimeCreatureFP8Creature
-ignoreAtari__13SlimeCreatureFP8Creature:
+.fn ignoreAtari__13SlimeCreatureFP8Creature, global
 /* 8016B420 00168380  80 84 00 6C */	lwz r4, 0x6c(r4)
 /* 8016B424 00168384  80 03 00 6C */	lwz r0, 0x6c(r3)
 /* 8016B428 00168388  7C 04 00 00 */	cmpw r4, r0
@@ -141,17 +140,17 @@ ignoreAtari__13SlimeCreatureFP8Creature:
 .L_8016B438:
 /* 8016B438 00168398  38 60 00 00 */	li r3, 0
 /* 8016B43C 0016839C  4E 80 00 20 */	blr 
+.endfn ignoreAtari__13SlimeCreatureFP8Creature
 
-.global doAI__13SlimeCreatureFv
-doAI__13SlimeCreatureFv:
+.fn doAI__13SlimeCreatureFv, global
 /* 8016B440 001683A0  4E 80 00 20 */	blr 
+.endfn doAI__13SlimeCreatureFv
 
-.global doAnimation__13SlimeCreatureFv
-doAnimation__13SlimeCreatureFv:
+.fn doAnimation__13SlimeCreatureFv, global
 /* 8016B444 001683A4  4E 80 00 20 */	blr 
+.endfn doAnimation__13SlimeCreatureFv
 
-.global update__13SlimeCreatureFv
-update__13SlimeCreatureFv:
+.fn update__13SlimeCreatureFv, global
 /* 8016B448 001683A8  7C 08 02 A6 */	mflr r0
 /* 8016B44C 001683AC  90 01 00 04 */	stw r0, 4(r1)
 /* 8016B450 001683B0  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -171,44 +170,52 @@ update__13SlimeCreatureFv:
 /* 8016B488 001683E8  38 21 00 20 */	addi r1, r1, 0x20
 /* 8016B48C 001683EC  7C 08 03 A6 */	mtlr r0
 /* 8016B490 001683F0  4E 80 00 20 */	blr 
+.endfn update__13SlimeCreatureFv
 
-.global refresh__13SlimeCreatureFR8Graphics
-refresh__13SlimeCreatureFR8Graphics:
+.fn refresh__13SlimeCreatureFR8Graphics, global
 /* 8016B494 001683F4  4E 80 00 20 */	blr 
+.endfn refresh__13SlimeCreatureFR8Graphics
 
-.global setCentre__13SlimeCreatureFR8Vector3f
-setCentre__13SlimeCreatureFR8Vector3f:
+.fn setCentre__13SlimeCreatureFR8Vector3f, weak
 /* 8016B498 001683F8  4E 80 00 20 */	blr 
+.endfn setCentre__13SlimeCreatureFR8Vector3f
 
-.global isFixed__13SlimeCreatureFv
-isFixed__13SlimeCreatureFv:
+.fn isFixed__13SlimeCreatureFv, weak
 /* 8016B49C 001683FC  38 60 00 01 */	li r3, 1
 /* 8016B4A0 00168400  4E 80 00 20 */	blr 
+.endfn isFixed__13SlimeCreatureFv
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802CFF18:
+.obj lbl_802CFF18, local
 	.asciz "SlimeCreature.cpp"
+.endobj lbl_802CFF18
 .balign 4
-lbl_802CFF2C:
+.obj lbl_802CFF2C, local
 	.asciz "SlimeCreature"
+.endobj lbl_802CFF2C
 .balign 4
-lbl_802CFF3C:
+.obj lbl_802CFF3C, local
 	.asciz "EventTalker"
+.endobj lbl_802CFF3C
 .balign 4
-lbl_802CFF48:
+.obj lbl_802CFF48, local
 	.asciz "RefCountable"
+.endobj lbl_802CFF48
 .balign 4
-lbl_802CFF58:
+.obj lbl_802CFF58, local
 	.asciz "Creature"
+.endobj lbl_802CFF58
 .balign 4
-lbl_802CFF64:
+.obj lbl_802CFF64, local
 	.4byte __RTTI__11EventTalker
 	.4byte 0x00000008
 	.4byte __RTTI__12RefCountable
 	.4byte 0x00000000
 	.4byte 0x00000000
-lbl_802CFF78:
+.endobj lbl_802CFF64
+.balign 4
+.obj lbl_802CFF78, local
 	.4byte __RTTI__11EventTalker
 	.4byte 0x00000008
 	.4byte __RTTI__12RefCountable
@@ -216,8 +223,9 @@ lbl_802CFF78:
 	.4byte __RTTI__8Creature
 	.4byte 0x00000000
 	.4byte 0x00000000
-.global __vt__13SlimeCreature
-__vt__13SlimeCreature:
+.endobj lbl_802CFF78
+.balign 4
+.obj __vt__13SlimeCreature, global
 	.4byte __RTTI__13SlimeCreature
 	.4byte 0
 	.4byte addCntCallback__12RefCountableFv
@@ -287,29 +295,41 @@ __vt__13SlimeCreature:
 	.4byte doAnimation__13SlimeCreatureFv
 	.4byte doKill__13SlimeCreatureFv
 	.4byte exitCourse__8CreatureFv
+.endobj __vt__13SlimeCreature
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-__RTTI__11EventTalker:
+.obj __RTTI__11EventTalker, local
 	.4byte lbl_802CFF3C
 	.4byte 0x00000000
-__RTTI__12RefCountable:
+.endobj __RTTI__11EventTalker
+.balign 4
+.obj __RTTI__12RefCountable, local
 	.4byte lbl_802CFF48
 	.4byte 0x00000000
-__RTTI__8Creature:
+.endobj __RTTI__12RefCountable
+.balign 4
+.obj __RTTI__8Creature, local
 	.4byte lbl_802CFF58
 	.4byte lbl_802CFF64
-__RTTI__13SlimeCreature:
+.endobj __RTTI__8Creature
+.balign 4
+.obj __RTTI__13SlimeCreature, local
 	.4byte lbl_802CFF2C
 	.4byte lbl_802CFF78
+.endobj __RTTI__13SlimeCreature
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803EADF8:
+.obj lbl_803EADF8, local
 	.float 0.0
-lbl_803EADFC:
+.endobj lbl_803EADF8
+.obj lbl_803EADFC, local
 	.float 20.0
-lbl_803EAE00:
+.endobj lbl_803EADFC
+.obj lbl_803EAE00, local
 	.float 0.01
-lbl_803EAE04:
+.endobj lbl_803EAE00
+.obj lbl_803EAE04, local
 	.float 0.5
+.endobj lbl_803EAE04

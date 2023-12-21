@@ -141,3 +141,6 @@
 .obj TASK_REMAIN, local
 	.skip 1
 .endobj TASK_REMAIN
+
+.section .bss, "wa"  # 0x802E9640 - 0x803E81E5
+.comm EX_DSPTASK, 0x40, 4

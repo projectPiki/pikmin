@@ -439,9 +439,9 @@
 
 .fn AmcEXIInit, global
 /* 80220DEC 0021DD4C  7C 08 02 A6 */	mflr r0
-/* 80220DF0 0021DD50  3C 60 80 3D */	lis r3, Ecb_1@ha
+/* 80220DF0 0021DD50  3C 60 80 3D */	lis r3, Ecb@ha
 /* 80220DF4 0021DD54  90 01 00 04 */	stw r0, 4(r1)
-/* 80220DF8 0021DD58  38 63 62 80 */	addi r3, r3, Ecb_1@l
+/* 80220DF8 0021DD58  38 63 62 80 */	addi r3, r3, Ecb@l
 /* 80220DFC 0021DD5C  38 80 00 00 */	li r4, 0
 /* 80220E00 0021DD60  94 21 FF F8 */	stwu r1, -8(r1)
 /* 80220E04 0021DD64  38 A0 00 18 */	li r5, 0x18
@@ -459,5 +459,11 @@
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
 .obj exi, local
-	.4byte Ecb_1
+	.4byte Ecb
 .endobj exi
+
+.section .bss, "wa"  # 0x802E9640 - 0x803E81E5
+.balign 8
+.obj Ecb, local
+	.skip 0x18
+.endobj Ecb

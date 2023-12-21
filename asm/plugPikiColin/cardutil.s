@@ -1352,3 +1352,13 @@
 	.4byte .L_8004DB3C
 	.4byte .L_8004DAD8
 .endobj lbl_802A5EB0
+
+.section .bss, "wa"  # 0x802E9640 - 0x803E81E5
+.balign 8
+.obj CardThread, local
+	.skip 0x310
+.endobj CardThread
+.balign 4
+.obj CardControl, local
+	.skip 0x70
+.endobj CardControl

@@ -872,3 +872,13 @@
 .obj lbl_803E8394, local
 	.float 2.0
 .endobj lbl_803E8394
+
+.section .bss, "wa"  # 0x802E9640 - 0x803E81E5
+.balign 8
+.obj system_se, local
+	.skip 0x6C
+.endobj system_se
+.balign 4
+.obj system_se_stop, local
+	.skip 0x6C
+.endobj system_se_stop

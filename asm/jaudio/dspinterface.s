@@ -812,3 +812,13 @@
 	.4byte 0x09050810
 	.4byte 0x01010101
 .endobj COMP_BLOCKBYTES$82
+
+.section .bss, "wa"  # 0x802E9640 - 0x803E81E5
+.balign 32
+.obj CH_BUF, local
+	.skip 0x6000
+.endobj CH_BUF
+.balign 32
+.obj FX_BUF, local
+	.skip 0x80
+.endobj FX_BUF

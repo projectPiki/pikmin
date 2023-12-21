@@ -2351,3 +2351,9 @@
 .obj lbl_803EB370, local
 	.float 5000.0
 .endobj lbl_803EB370
+
+.section .bss, "wa"  # 0x802E9640 - 0x803E81E5
+.balign 8
+.obj bloFile_Diary_Table__3zen, local
+	.skip 0x28
+.endobj bloFile_Diary_Table__3zen

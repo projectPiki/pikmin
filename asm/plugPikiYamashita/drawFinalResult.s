@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global __ct__Q23zen14DrawTotalScoreFPQ23zen16TotalScoreRecord
-__ct__Q23zen14DrawTotalScoreFPQ23zen16TotalScoreRecord:
+.fn __ct__Q23zen14DrawTotalScoreFPQ23zen16TotalScoreRecord, global
 /* 801F3A38 001F0998  7C 08 02 A6 */	mflr r0
 /* 801F3A3C 001F099C  90 01 00 04 */	stw r0, 4(r1)
 /* 801F3A40 001F09A0  94 21 FF 68 */	stwu r1, -0x98(r1)
@@ -708,9 +707,9 @@ __ct__Q23zen14DrawTotalScoreFPQ23zen16TotalScoreRecord:
 /* 801F44EC 001F144C  38 21 00 98 */	addi r1, r1, 0x98
 /* 801F44F0 001F1450  7C 08 03 A6 */	mtlr r0
 /* 801F44F4 001F1454  4E 80 00 20 */	blr 
+.endfn __ct__Q23zen14DrawTotalScoreFPQ23zen16TotalScoreRecord
 
-.global update__Q23zen14DrawTotalScoreFP10Controller
-update__Q23zen14DrawTotalScoreFP10Controller:
+.fn update__Q23zen14DrawTotalScoreFP10Controller, global
 /* 801F44F8 001F1458  7C 08 02 A6 */	mflr r0
 /* 801F44FC 001F145C  90 01 00 04 */	stw r0, 4(r1)
 /* 801F4500 001F1460  94 21 FF 68 */	stwu r1, -0x98(r1)
@@ -837,9 +836,9 @@ update__Q23zen14DrawTotalScoreFP10Controller:
 /* 801F46C0 001F1620  38 21 00 98 */	addi r1, r1, 0x98
 /* 801F46C4 001F1624  7C 08 03 A6 */	mtlr r0
 /* 801F46C8 001F1628  4E 80 00 20 */	blr 
+.endfn update__Q23zen14DrawTotalScoreFP10Controller
 
-.global setMode__Q23zen14DrawTotalScoreFQ33zen14DrawTotalScore8modeFlag
-setMode__Q23zen14DrawTotalScoreFQ33zen14DrawTotalScore8modeFlag:
+.fn setMode__Q23zen14DrawTotalScoreFQ33zen14DrawTotalScore8modeFlag, global
 /* 801F46CC 001F162C  7C 08 02 A6 */	mflr r0
 /* 801F46D0 001F1630  90 01 00 04 */	stw r0, 4(r1)
 /* 801F46D4 001F1634  94 21 FF A0 */	stwu r1, -0x60(r1)
@@ -924,13 +923,13 @@ setMode__Q23zen14DrawTotalScoreFQ33zen14DrawTotalScore8modeFlag:
 /* 801F47F8 001F1758  38 21 00 60 */	addi r1, r1, 0x60
 /* 801F47FC 001F175C  7C 08 03 A6 */	mtlr r0
 /* 801F4800 001F1760  4E 80 00 20 */	blr 
+.endfn setMode__Q23zen14DrawTotalScoreFQ33zen14DrawTotalScore8modeFlag
 
-.global playRankInFanfare__Q23zen14DrawTotalScoreFv
-playRankInFanfare__Q23zen14DrawTotalScoreFv:
+.fn playRankInFanfare__Q23zen14DrawTotalScoreFv, global
 /* 801F4804 001F1764  4E 80 00 20 */	blr 
+.endfn playRankInFanfare__Q23zen14DrawTotalScoreFv
 
-.global setRankInEffect__Q23zen14DrawTotalScoreFv
-setRankInEffect__Q23zen14DrawTotalScoreFv:
+.fn setRankInEffect__Q23zen14DrawTotalScoreFv, global
 /* 801F4808 001F1768  7C 08 02 A6 */	mflr r0
 /* 801F480C 001F176C  90 01 00 04 */	stw r0, 4(r1)
 /* 801F4810 001F1770  94 21 FE 20 */	stwu r1, -0x1e0(r1)
@@ -1377,9 +1376,9 @@ setRankInEffect__Q23zen14DrawTotalScoreFv:
 /* 801F4EE8 001F1E48  38 21 01 E0 */	addi r1, r1, 0x1e0
 /* 801F4EEC 001F1E4C  7C 08 03 A6 */	mtlr r0
 /* 801F4EF0 001F1E50  4E 80 00 20 */	blr 
+.endfn setRankInEffect__Q23zen14DrawTotalScoreFv
 
-.global setRankInColor__Q23zen14DrawTotalScoreFv
-setRankInColor__Q23zen14DrawTotalScoreFv:
+.fn setRankInColor__Q23zen14DrawTotalScoreFv, global
 /* 801F4EF4 001F1E54  94 21 FF 18 */	stwu r1, -0xe8(r1)
 /* 801F4EF8 001F1E58  80 83 00 7C */	lwz r4, 0x7c(r3)
 /* 801F4EFC 001F1E5C  88 04 01 08 */	lbz r0, 0x108(r4)
@@ -1500,9 +1499,9 @@ setRankInColor__Q23zen14DrawTotalScoreFv:
 .L_801F50C0:
 /* 801F50C0 001F2020  38 21 00 E8 */	addi r1, r1, 0xe8
 /* 801F50C4 001F2024  4E 80 00 20 */	blr 
+.endfn setRankInColor__Q23zen14DrawTotalScoreFv
 
-.global __ct__Q23zen15DrawFinalResultFPQ23zen16TotalScoreRecord
-__ct__Q23zen15DrawFinalResultFPQ23zen16TotalScoreRecord:
+.fn __ct__Q23zen15DrawFinalResultFPQ23zen16TotalScoreRecord, global
 /* 801F50C8 001F2028  7C 08 02 A6 */	mflr r0
 /* 801F50CC 001F202C  90 01 00 04 */	stw r0, 4(r1)
 /* 801F50D0 001F2030  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -1532,9 +1531,9 @@ __ct__Q23zen15DrawFinalResultFPQ23zen16TotalScoreRecord:
 /* 801F512C 001F208C  38 21 00 20 */	addi r1, r1, 0x20
 /* 801F5130 001F2090  7C 08 03 A6 */	mtlr r0
 /* 801F5134 001F2094  4E 80 00 20 */	blr 
+.endfn __ct__Q23zen15DrawFinalResultFPQ23zen16TotalScoreRecord
 
-.global update__Q23zen15DrawFinalResultFP10Controller
-update__Q23zen15DrawFinalResultFP10Controller:
+.fn update__Q23zen15DrawFinalResultFP10Controller, global
 /* 801F5138 001F2098  7C 08 02 A6 */	mflr r0
 /* 801F513C 001F209C  90 01 00 04 */	stw r0, 4(r1)
 /* 801F5140 001F20A0  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -1655,9 +1654,9 @@ update__Q23zen15DrawFinalResultFP10Controller:
 /* 801F52D0 001F2230  38 21 00 18 */	addi r1, r1, 0x18
 /* 801F52D4 001F2234  7C 08 03 A6 */	mtlr r0
 /* 801F52D8 001F2238  4E 80 00 20 */	blr 
+.endfn update__Q23zen15DrawFinalResultFP10Controller
 
-.global draw__Q23zen15DrawFinalResultFR8Graphics
-draw__Q23zen15DrawFinalResultFR8Graphics:
+.fn draw__Q23zen15DrawFinalResultFR8Graphics, global
 /* 801F52DC 001F223C  7C 08 02 A6 */	mflr r0
 /* 801F52E0 001F2240  90 01 00 04 */	stw r0, 4(r1)
 /* 801F52E4 001F2244  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -1744,9 +1743,9 @@ draw__Q23zen15DrawFinalResultFR8Graphics:
 /* 801F5408 001F2368  38 21 00 28 */	addi r1, r1, 0x28
 /* 801F540C 001F236C  7C 08 03 A6 */	mtlr r0
 /* 801F5410 001F2370  4E 80 00 20 */	blr 
+.endfn draw__Q23zen15DrawFinalResultFR8Graphics
 
-.global start__Q23zen15DrawFinalResultFv
-start__Q23zen15DrawFinalResultFv:
+.fn start__Q23zen15DrawFinalResultFv, global
 /* 801F5414 001F2374  7C 08 02 A6 */	mflr r0
 /* 801F5418 001F2378  38 80 00 01 */	li r4, 1
 /* 801F541C 001F237C  90 01 00 04 */	stw r0, 4(r1)
@@ -1756,9 +1755,9 @@ start__Q23zen15DrawFinalResultFv:
 /* 801F542C 001F238C  38 21 00 08 */	addi r1, r1, 8
 /* 801F5430 001F2390  7C 08 03 A6 */	mtlr r0
 /* 801F5434 001F2394  4E 80 00 20 */	blr 
+.endfn start__Q23zen15DrawFinalResultFv
 
-.global setMode__Q23zen15DrawFinalResultFQ33zen15DrawFinalResult8modeFlag
-setMode__Q23zen15DrawFinalResultFQ33zen15DrawFinalResult8modeFlag:
+.fn setMode__Q23zen15DrawFinalResultFQ33zen15DrawFinalResult8modeFlag, global
 /* 801F5438 001F2398  7C 08 02 A6 */	mflr r0
 /* 801F543C 001F239C  90 01 00 04 */	stw r0, 4(r1)
 /* 801F5440 001F23A0  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -1815,13 +1814,15 @@ setMode__Q23zen15DrawFinalResultFQ33zen15DrawFinalResult8modeFlag:
 /* 801F54F4 001F2454  38 21 00 18 */	addi r1, r1, 0x18
 /* 801F54F8 001F2458  7C 08 03 A6 */	mtlr r0
 /* 801F54FC 001F245C  4E 80 00 20 */	blr 
+.endfn setMode__Q23zen15DrawFinalResultFQ33zen15DrawFinalResult8modeFlag
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802E71F0:
+.obj lbl_802E71F0, local
 	.asciz "f_result.blo"
+.endobj lbl_802E71F0
 .balign 4
-lbl_802E7200:
+.obj lbl_802E7200, local
 	.4byte .L_801F5178
 	.4byte .L_801F5198
 	.4byte .L_801F51B8
@@ -1829,7 +1830,9 @@ lbl_802E7200:
 	.4byte .L_801F523C
 	.4byte .L_801F52C0
 	.4byte .L_801F52BC
-lbl_802E721C:
+.endobj lbl_802E7200
+.balign 4
+.obj lbl_802E721C, local
 	.4byte .L_801F53F8
 	.4byte .L_801F5320
 	.4byte .L_801F5350
@@ -1837,7 +1840,9 @@ lbl_802E721C:
 	.4byte .L_801F53C4
 	.4byte .L_801F53F8
 	.4byte .L_801F53E0
-lbl_802E7238:
+.endobj lbl_802E721C
+.balign 4
+.obj lbl_802E7238, local
 	.4byte .L_801F5478
 	.4byte .L_801F54A0
 	.4byte .L_801F54E8
@@ -1845,43 +1850,57 @@ lbl_802E7238:
 	.4byte .L_801F54CC
 	.4byte .L_801F54D8
 	.4byte .L_801F54E8
+.endobj lbl_802E7238
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-lbl_803E76D0:
+.obj lbl_803E76D0, local
 	.asciz "win%d"
+.endobj lbl_803E76D0
 .balign 4
-lbl_803E76D8:
+.obj lbl_803E76D8, local
 	.asciz "pd%02d"
+.endobj lbl_803E76D8
 .balign 4
-lbl_803E76E0:
+.obj lbl_803E76E0, local
 	.asciz "lp%02d"
+.endobj lbl_803E76E0
 .balign 4
-lbl_803E76E8:
+.obj lbl_803E76E8, local
 	.asciz "dp%02d"
+.endobj lbl_803E76E8
 .balign 4
-lbl_803E76F0:
+.obj lbl_803E76F0, local
 	.float 0.0
+.endobj lbl_803E76F0
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803EC4A8:
+.obj lbl_803EC4A8, local
 	.float 0.8
-lbl_803EC4AC:
+.endobj lbl_803EC4A8
+.obj lbl_803EC4AC, local
 	.float 0.0
-lbl_803EC4B0:
+.endobj lbl_803EC4AC
+.obj lbl_803EC4B0, local
 	.float 0.5
+.endobj lbl_803EC4B0
 .balign 8
-lbl_803EC4B8:
-	.4byte 0x43300000
-	.4byte 0x80000000
-lbl_803EC4C0:
+.obj lbl_803EC4B8, local
+	.8byte 0x4330000080000000
+.endobj lbl_803EC4B8
+.obj lbl_803EC4C0, local # pi/2
 	.float 1.5707964
-lbl_803EC4C4:
+.endobj lbl_803EC4C0
+.obj lbl_803EC4C4, local
 	.float 1.0
-lbl_803EC4C8:
+.endobj lbl_803EC4C4
+.obj lbl_803EC4C8, local
 	.float -960.0
-lbl_803EC4CC:
+.endobj lbl_803EC4C8
+.obj lbl_803EC4CC, local # pi
 	.float 3.1415927
-lbl_803EC4D0:
+.endobj lbl_803EC4CC
+.obj lbl_803EC4D0, local
 	.float 2.0
+.endobj lbl_803EC4D0

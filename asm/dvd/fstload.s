@@ -198,3 +198,13 @@
 .obj idTmp, local
 	.skip 0x4
 .endobj idTmp
+
+.section .bss, "wa"  # 0x802E9640 - 0x803E81E5
+.balign 8
+.obj bb2Buf, local
+	.skip 0x3F
+.endobj bb2Buf
+.balign 4
+.obj block$16, local
+	.skip 0x30
+.endobj block$16

@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global __ct__9DemoFlagsFv
-__ct__9DemoFlagsFv:
+.fn __ct__9DemoFlagsFv, global
 /* 80081C10 0007EB70  7C 08 02 A6 */	mflr r0
 /* 80081C14 0007EB74  3C 80 80 2B */	lis r4, lbl_802ADE20@ha
 /* 80081C18 0007EB78  90 01 00 04 */	stw r0, 4(r1)
@@ -389,9 +388,9 @@ __ct__9DemoFlagsFv:
 /* 800821F8 0007F158  38 21 00 78 */	addi r1, r1, 0x78
 /* 800821FC 0007F15C  7C 08 03 A6 */	mtlr r0
 /* 80082200 0007F160  4E 80 00 20 */	blr 
+.endfn __ct__9DemoFlagsFv
 
-.global initGame__9DemoFlagsFv
-initGame__9DemoFlagsFv:
+.fn initGame__9DemoFlagsFv, global
 /* 80082204 0007F164  7C 08 02 A6 */	mflr r0
 /* 80082208 0007F168  38 C0 00 00 */	li r6, 0
 /* 8008220C 0007F16C  90 01 00 04 */	stw r0, 4(r1)
@@ -416,17 +415,17 @@ initGame__9DemoFlagsFv:
 /* 80082250 0007F1B0  38 21 00 08 */	addi r1, r1, 8
 /* 80082254 0007F1B4  7C 08 03 A6 */	mtlr r0
 /* 80082258 0007F1B8  4E 80 00 20 */	blr 
+.endfn initGame__9DemoFlagsFv
 
-.global initCourse__9DemoFlagsFv
-initCourse__9DemoFlagsFv:
+.fn initCourse__9DemoFlagsFv, global
 /* 8008225C 0007F1BC  38 00 FF FF */	li r0, -1
 /* 80082260 0007F1C0  B0 03 00 18 */	sth r0, 0x18(r3)
 /* 80082264 0007F1C4  C0 02 89 F8 */	lfs f0, lbl_803E8BF8@sda21(r2)
 /* 80082268 0007F1C8  D0 03 00 14 */	stfs f0, 0x14(r3)
 /* 8008226C 0007F1CC  4E 80 00 20 */	blr 
+.endfn initCourse__9DemoFlagsFv
 
-.global update__9DemoFlagsFv
-update__9DemoFlagsFv:
+.fn update__9DemoFlagsFv, global
 /* 80082270 0007F1D0  7C 08 02 A6 */	mflr r0
 /* 80082274 0007F1D4  3C 80 80 3A */	lis r4, gameflow@ha
 /* 80082278 0007F1D8  90 01 00 04 */	stw r0, 4(r1)
@@ -492,9 +491,9 @@ update__9DemoFlagsFv:
 /* 8008235C 0007F2BC  38 21 00 28 */	addi r1, r1, 0x28
 /* 80082360 0007F2C0  7C 08 03 A6 */	mtlr r0
 /* 80082364 0007F2C4  4E 80 00 20 */	blr 
+.endfn update__9DemoFlagsFv
 
-.global saveCard__9DemoFlagsFR18RandomAccessStream
-saveCard__9DemoFlagsFR18RandomAccessStream:
+.fn saveCard__9DemoFlagsFR18RandomAccessStream, global
 /* 80082368 0007F2C8  7C 08 02 A6 */	mflr r0
 /* 8008236C 0007F2CC  90 01 00 04 */	stw r0, 4(r1)
 /* 80082370 0007F2D0  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -525,9 +524,9 @@ saveCard__9DemoFlagsFR18RandomAccessStream:
 /* 800823CC 0007F32C  38 21 00 20 */	addi r1, r1, 0x20
 /* 800823D0 0007F330  7C 08 03 A6 */	mtlr r0
 /* 800823D4 0007F334  4E 80 00 20 */	blr 
+.endfn saveCard__9DemoFlagsFR18RandomAccessStream
 
-.global loadCard__9DemoFlagsFR18RandomAccessStream
-loadCard__9DemoFlagsFR18RandomAccessStream:
+.fn loadCard__9DemoFlagsFR18RandomAccessStream, global
 /* 800823D8 0007F338  7C 08 02 A6 */	mflr r0
 /* 800823DC 0007F33C  90 01 00 04 */	stw r0, 4(r1)
 /* 800823E0 0007F340  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -558,9 +557,9 @@ loadCard__9DemoFlagsFR18RandomAccessStream:
 /* 8008243C 0007F39C  38 21 00 20 */	addi r1, r1, 0x20
 /* 80082440 0007F3A0  7C 08 03 A6 */	mtlr r0
 /* 80082444 0007F3A4  4E 80 00 20 */	blr 
+.endfn loadCard__9DemoFlagsFR18RandomAccessStream
 
-.global registerDemoFlag__9DemoFlagsFiPcUsUsb
-registerDemoFlag__9DemoFlagsFiPcUsUsb:
+.fn registerDemoFlag__9DemoFlagsFiPcUsUsb, global
 /* 80082448 0007F3A8  7C 08 02 A6 */	mflr r0
 /* 8008244C 0007F3AC  90 01 00 04 */	stw r0, 4(r1)
 /* 80082450 0007F3B0  94 21 FF C8 */	stwu r1, -0x38(r1)
@@ -592,9 +591,9 @@ registerDemoFlag__9DemoFlagsFiPcUsUsb:
 /* 800824B8 0007F418  38 21 00 38 */	addi r1, r1, 0x38
 /* 800824BC 0007F41C  7C 08 03 A6 */	mtlr r0
 /* 800824C0 0007F420  4E 80 00 20 */	blr 
+.endfn registerDemoFlag__9DemoFlagsFiPcUsUsb
 
-.global isFlag__9DemoFlagsFi
-isFlag__9DemoFlagsFi:
+.fn isFlag__9DemoFlagsFi, global
 /* 800824C4 0007F424  7C 85 1E 70 */	srawi r5, r4, 3
 /* 800824C8 0007F428  80 63 00 08 */	lwz r3, 8(r3)
 /* 800824CC 0007F42C  54 A0 18 38 */	slwi r0, r5, 3
@@ -607,9 +606,9 @@ isFlag__9DemoFlagsFi:
 /* 800824E8 0007F448  30 03 FF FF */	addic r0, r3, -1
 /* 800824EC 0007F44C  7C 60 19 10 */	subfe r3, r0, r3
 /* 800824F0 0007F450  4E 80 00 20 */	blr 
+.endfn isFlag__9DemoFlagsFi
 
-.global resetFlag__9DemoFlagsFi
-resetFlag__9DemoFlagsFi:
+.fn resetFlag__9DemoFlagsFi, global
 /* 800824F4 0007F454  7C 86 1E 70 */	srawi r6, r4, 3
 /* 800824F8 0007F458  80 A3 00 08 */	lwz r5, 8(r3)
 /* 800824FC 0007F45C  54 C0 18 38 */	slwi r0, r6, 3
@@ -620,9 +619,9 @@ resetFlag__9DemoFlagsFi:
 /* 80082510 0007F470  7C 80 00 78 */	andc r0, r4, r0
 /* 80082514 0007F474  7C 05 31 AE */	stbx r0, r5, r6
 /* 80082518 0007F478  4E 80 00 20 */	blr 
+.endfn resetFlag__9DemoFlagsFi
 
-.global setFlag__9DemoFlagsFiP8Creature
-setFlag__9DemoFlagsFiP8Creature:
+.fn setFlag__9DemoFlagsFiP8Creature, global
 /* 8008251C 0007F47C  7C 08 02 A6 */	mflr r0
 /* 80082520 0007F480  90 01 00 04 */	stw r0, 4(r1)
 /* 80082524 0007F484  94 21 FF 80 */	stwu r1, -0x80(r1)
@@ -775,9 +774,9 @@ setFlag__9DemoFlagsFiP8Creature:
 /* 80082744 0007F6A4  38 21 00 80 */	addi r1, r1, 0x80
 /* 80082748 0007F6A8  7C 08 03 A6 */	mtlr r0
 /* 8008274C 0007F6AC  4E 80 00 20 */	blr 
+.endfn setFlag__9DemoFlagsFiP8Creature
 
-.global setFlagOnly__9DemoFlagsFi
-setFlagOnly__9DemoFlagsFi:
+.fn setFlagOnly__9DemoFlagsFi, global
 /* 80082750 0007F6B0  7C 85 1E 70 */	srawi r5, r4, 3
 /* 80082754 0007F6B4  80 C3 00 08 */	lwz r6, 8(r3)
 /* 80082758 0007F6B8  54 A0 18 38 */	slwi r0, r5, 3
@@ -790,9 +789,9 @@ setFlagOnly__9DemoFlagsFi:
 /* 80082774 0007F6D4  7C 60 23 78 */	or r0, r3, r4
 /* 80082778 0007F6D8  7C 06 29 AE */	stbx r0, r6, r5
 /* 8008277C 0007F6DC  4E 80 00 20 */	blr 
+.endfn setFlagOnly__9DemoFlagsFi
 
-.global setTimer__9DemoFlagsFfiP8Creature
-setTimer__9DemoFlagsFfiP8Creature:
+.fn setTimer__9DemoFlagsFfiP8Creature, global
 /* 80082780 0007F6E0  7C 08 02 A6 */	mflr r0
 /* 80082784 0007F6E4  90 01 00 04 */	stw r0, 4(r1)
 /* 80082788 0007F6E8  7C 80 07 34 */	extsh r0, r4
@@ -811,9 +810,9 @@ setTimer__9DemoFlagsFfiP8Creature:
 /* 800827BC 0007F71C  38 21 00 20 */	addi r1, r1, 0x20
 /* 800827C0 0007F720  7C 08 03 A6 */	mtlr r0
 /* 800827C4 0007F724  4E 80 00 20 */	blr 
+.endfn setTimer__9DemoFlagsFfiP8Creature
 
-.global resetTimer__9DemoFlagsFv
-resetTimer__9DemoFlagsFv:
+.fn resetTimer__9DemoFlagsFv, global
 /* 800827C8 0007F728  38 00 00 00 */	li r0, 0
 /* 800827CC 0007F72C  90 03 00 10 */	stw r0, 0x10(r3)
 /* 800827D0 0007F730  38 00 FF FF */	li r0, -1
@@ -821,16 +820,16 @@ resetTimer__9DemoFlagsFv:
 /* 800827D8 0007F738  D0 03 00 14 */	stfs f0, 0x14(r3)
 /* 800827DC 0007F73C  B0 03 00 18 */	sth r0, 0x18(r3)
 /* 800827E0 0007F740  4E 80 00 20 */	blr 
+.endfn resetTimer__9DemoFlagsFv
 
-.global getDemoFlag__9DemoFlagsFi
-getDemoFlag__9DemoFlagsFi:
+.fn getDemoFlag__9DemoFlagsFi, global
 /* 800827E4 0007F744  80 63 00 0C */	lwz r3, 0xc(r3)
 /* 800827E8 0007F748  54 80 10 3A */	slwi r0, r4, 2
 /* 800827EC 0007F74C  7C 63 00 2E */	lwzx r3, r3, r0
 /* 800827F0 0007F750  4E 80 00 20 */	blr 
+.endfn getDemoFlag__9DemoFlagsFi
 
-.global read__9DemoParmsFR18RandomAccessStream
-read__9DemoParmsFR18RandomAccessStream:
+.fn read__9DemoParmsFR18RandomAccessStream, weak
 /* 800827F4 0007F754  7C 08 02 A6 */	mflr r0
 /* 800827F8 0007F758  38 63 00 20 */	addi r3, r3, 0x20
 /* 800827FC 0007F75C  90 01 00 04 */	stw r0, 4(r1)
@@ -840,6 +839,7 @@ read__9DemoParmsFR18RandomAccessStream:
 /* 8008280C 0007F76C  38 21 00 08 */	addi r1, r1, 8
 /* 80082810 0007F770  7C 08 03 A6 */	mtlr r0
 /* 80082814 0007F774  4E 80 00 20 */	blr 
+.endfn read__9DemoParmsFR18RandomAccessStream
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
@@ -864,53 +864,69 @@ read__9DemoParmsFR18RandomAccessStream:
 	.4byte 0x8BDF0000
 .endobj lbl_802ADE48
 .balign 4
-lbl_802ADE60: # Shift-JIS
+.obj lbl_802ADE60, local # Shift-JIS
 	.4byte 0x89A98352
 	.4byte 0x83938365
 	.4byte 0x836982C9
 	.4byte 0x8F8982DF
 	.4byte 0x82C490DA
 	.4byte 0x8BDF0000
-lbl_802ADE78: # Shift-JIS
+.endobj lbl_802ADE60
+.balign 4
+.obj lbl_802ADE78, local # Shift-JIS
 	.4byte 0x90C28352
 	.4byte 0x83938365
 	.4byte 0x836982C9
 	.4byte 0x8F8982DF
 	.4byte 0x82C490DA
 	.4byte 0x8BDF0000
-lbl_802ADE90: # Shift-JIS
+.endobj lbl_802ADE78
+.balign 4
+.obj lbl_802ADE90, local # Shift-JIS
 	.4byte 0x89E88373
 	.4byte 0x834C82C9
 	.4byte 0x8F8982DF
 	.4byte 0x82C490DA
 	.4byte 0x8BDF0000
-lbl_802ADEA4: # Shift-JIS
+.endobj lbl_802ADE90
+.balign 4
+.obj lbl_802ADEA4, local # Shift-JIS
 	.4byte 0x90D48373
 	.4byte 0x834C94B2
 	.4byte 0x82A282BD
 	.4byte 0x00000000
-lbl_802ADEB4: # Shift-JIS
+.endobj lbl_802ADEA4
+.balign 4
+.obj lbl_802ADEB4, local # Shift-JIS
 	.4byte 0x89A98373
 	.4byte 0x834C94B2
 	.4byte 0x82A282BD
 	.4byte 0x00000000
-lbl_802ADEC4: # Shift-JIS
+.endobj lbl_802ADEB4
+.balign 4
+.obj lbl_802ADEC4, local # Shift-JIS
 	.4byte 0x90C28373
 	.4byte 0x834C94B2
 	.4byte 0x82A282BD
 	.4byte 0x00000000
-lbl_802ADED4: # Shift-JIS
+.endobj lbl_802ADEC4
+.balign 4
+.obj lbl_802ADED4, local # Shift-JIS
 	.4byte 0x8373834C
 	.4byte 0x94B282A9
 	.4byte 0x82B8835E
 	.4byte 0x83438380
 	.4byte 0x83418345
 	.4byte 0x83670000
-lbl_802ADEEC: # Shift-JIS
+.endobj lbl_802ADED4
+.balign 4
+.obj lbl_802ADEEC, local # Shift-JIS
 	.4byte 0x834A8381
 	.4byte 0x838990E0
 	.4byte 0x96BE0000
-lbl_802ADEF8: # Shift-JIS
+.endobj lbl_802ADEEC
+.balign 4
+.obj lbl_802ADEF8, local # Shift-JIS
 	.4byte 0x8379838C
 	.4byte 0x83628367
 	.4byte 0x9190836F
@@ -919,133 +935,171 @@ lbl_802ADEF8: # Shift-JIS
 	.4byte 0x83808341
 	.4byte 0x83458367
 	.4byte 0x00000000
-lbl_802ADF18: # Shift-JIS
+.endobj lbl_802ADEF8
+.balign 4
+.obj lbl_802ADF18, local # Shift-JIS
 	.4byte 0x8DC58F89
 	.4byte 0x82CC8379
 	.4byte 0x838C8362
 	.4byte 0x83678343
 	.4byte 0x83930000
-lbl_802ADF2C: # Shift-JIS
+.endobj lbl_802ADF18
+.balign 4
+.obj lbl_802ADF2C, local # Shift-JIS
 	.4byte 0x8F8982DF
 	.4byte 0x82C49085
 	.4byte 0x96E582F0
 	.4byte 0x8A4A82AF
 	.4byte 0x82BD0000
-lbl_802ADF40: # Shift-JIS
+.endobj lbl_802ADF2C
+.balign 4
+.obj lbl_802ADF40, local # Shift-JIS
 	.4byte 0x8F8982DF
 	.4byte 0x82C48347
 	.4byte 0x83938357
 	.4byte 0x839382C9
 	.4byte 0x90DA8BDF
 	.4byte 0x00000000
-lbl_802ADF58: # Shift-JIS
+.endobj lbl_802ADF40
+.balign 4
+.obj lbl_802ADF58, local # Shift-JIS
 	.4byte 0x83478393
 	.4byte 0x83578393
 	.4byte 0x82F08B7A
 	.4byte 0x82A28D9E
 	.4byte 0x82DD0000
-lbl_802ADF6C: # Shift-JIS
+.endobj lbl_802ADF58
+.balign 4
+.obj lbl_802ADF6C, local # Shift-JIS
 	.4byte 0x8AE282F0
 	.4byte 0x899F82B5
 	.4byte 0x8E6E82DF
 	.4byte 0x82BD0000
-lbl_802ADF7C: # Shift-JIS
+.endobj lbl_802ADF6C
+.balign 4
+.obj lbl_802ADF7C, local # Shift-JIS
 	.4byte 0x8AE282F0
 	.4byte 0x899F82B5
 	.4byte 0x90D882C1
 	.4byte 0x82BD0000
-lbl_802ADF8C: # Shift-JIS
+.endobj lbl_802ADF7C
+.balign 4
+.obj lbl_802ADF8C, local # Shift-JIS
 	.4byte 0x83528393
 	.4byte 0x83658369
 	.4byte 0x8F6F82B5
 	.4byte 0x93FC82EA
 	.4byte 0x90E096BE
 	.4byte 0x00000000
-lbl_802ADFA4: # Shift-JIS
+.endobj lbl_802ADF8C
+.balign 4
+.obj lbl_802ADFA4, local # Shift-JIS
 	.4byte 0x8373834C
 	.4byte 0x915396C5
 	.4byte 0x82C58250
 	.4byte 0x954382DC
 	.4byte 0x82AD90E0
 	.4byte 0x96BE0000
-lbl_802ADFBC: # Shift-JIS
+.endobj lbl_802ADFA4
+.balign 4
+.obj lbl_802ADFBC, local # Shift-JIS
 	.4byte 0x837B8380
 	.4byte 0x8E9D82BF
 	.4byte 0x8B4182E8
 	.4byte 0x00000000
+.endobj lbl_802ADFBC
 .balign 4
-lbl_802ADFCC:
+.obj lbl_802ADFCC, local
 	.asciz "First HurryUp"
+.endobj lbl_802ADFCC
 .balign 4
-lbl_802ADFDC:
+.obj lbl_802ADFDC, local
 	.asciz "First Bomb Explode"
+.endobj lbl_802ADFDC
 .balign 4
-lbl_802ADFF0:
+.obj lbl_802ADFF0, local
 	.asciz "Exceed 100 pikis Tutorial"
+.endobj lbl_802ADFF0
 .balign 4
-lbl_802AE00C:
+.obj lbl_802AE00C, local
 	.asciz "Exceed 100 pikis Forest"
+.endobj lbl_802AE00C
 .balign 4
-lbl_802AE024:
+.obj lbl_802AE024, local
 	.asciz "Exceed 100 pikis Cave"
+.endobj lbl_802AE024
 .balign 4
-lbl_802AE03C:
+.obj lbl_802AE03C, local
 	.asciz "Exceed 100 pikis Yakushima"
+.endobj lbl_802AE03C
 .balign 4
-lbl_802AE058:
+.obj lbl_802AE058, local
 	.asciz "Exceed 100 pikis Last"
+.endobj lbl_802AE058
 .balign 4
-lbl_802AE070:
+.obj lbl_802AE070, local
 	.asciz "First Honey Dew"
+.endobj lbl_802AE070
 .balign 4
-lbl_802AE080:
+.obj lbl_802AE080, local
 	.asciz "First Bomb Dead"
+.endobj lbl_802AE080
 .balign 4
-lbl_802AE090:
+.obj lbl_802AE090, local
 	.asciz "GURU GURU"
+.endobj lbl_802AE090
 .balign 4
-lbl_802AE09C:
+.obj lbl_802AE09C, local
 	.asciz "ORIMA DAMAGED"
+.endobj lbl_802AE09C
 .balign 4
-lbl_802AE0AC:
+.obj lbl_802AE0AC, local
 	.asciz "FIRST NOON"
+.endobj lbl_802AE0AC
 .balign 4
-lbl_802AE0B8:
+.obj lbl_802AE0B8, local
 	.asciz "UFO PARTS"
+.endobj lbl_802AE0B8
 .balign 4
-lbl_802AE0C4:
+.obj lbl_802AE0C4, local
 	.asciz "Parm<float>"
+.endobj lbl_802AE0C4
 .balign 4
-lbl_802AE0D0:
+.obj lbl_802AE0D0, local
 	.asciz "BaseParm"
+.endobj lbl_802AE0D0
 .balign 4
-lbl_802AE0DC:
+.obj lbl_802AE0DC, local
 	.4byte __RTTI__8BaseParm
 	.4byte 0x00000000
 	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
+.endobj lbl_802AE0DC
 .balign 4
-lbl_802AE0FC:
+.skip 0x14 # compiler padding
+.balign 4
+.obj lbl_802AE0FC, local
 	.asciz "DemoParms"
+.endobj lbl_802AE0FC
 .balign 4
-lbl_802AE108:
+.obj lbl_802AE108, local
 	.asciz "CoreNode"
+.endobj lbl_802AE108
 .balign 4
-lbl_802AE114:
+.obj lbl_802AE114, local
 	.4byte __RTTI__5ANode
 	.4byte 0x00000000
 	.4byte 0x00000000
-lbl_802AE120:
+.endobj lbl_802AE114
+.balign 4
+.obj lbl_802AE120, local
 	.4byte __RTTI__5ANode
 	.4byte 0x00000000
 	.4byte __RTTI__8CoreNode
 	.4byte 0x00000000
 	.4byte 0x00000000
-lbl_802AE134:
+.endobj lbl_802AE120
+.balign 4
+.obj lbl_802AE134, local
 	.4byte __RTTI__5ANode
 	.4byte 0x00000000
 	.4byte __RTTI__8CoreNode
@@ -1053,8 +1107,9 @@ lbl_802AE134:
 	.4byte __RTTI__4Node
 	.4byte 0x00000000
 	.4byte 0x00000000
-.global __vt__9DemoParms
-__vt__9DemoParms:
+.endobj lbl_802AE134
+.balign 4
+.obj __vt__9DemoParms, weak
 	.4byte __RTTI__9DemoParms
 	.4byte 0
 	.4byte getAgeNodeType__5ANodeFv
@@ -1067,65 +1122,89 @@ __vt__9DemoParms:
 	.4byte concat__4NodeFR3SRT
 	.4byte concat__4NodeFR8Matrix4f
 	.4byte getModelMatrix__4NodeFv
+.endobj __vt__9DemoParms
+.balign 4
 .skip 0x20 # compiler padding
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-lbl_803DEC60:
+.obj lbl_803DEC60, local
 	.asciz "<Node>"
+.endobj lbl_803DEC60
 .balign 4
-lbl_803DEC68:
+.obj lbl_803DEC68, local
 	.asciz "parms/"
+.endobj lbl_803DEC68
 .balign 4
-lbl_803DEC70:
+.obj lbl_803DEC70, local
 	.asciz "p00"
+.endobj lbl_803DEC70
 .balign 4
-lbl_803DEC74:
+.obj lbl_803DEC74, local
 	.asciz "p01"
+.endobj lbl_803DEC74
 .balign 4
-lbl_803DEC78:
+.obj lbl_803DEC78, local
 	.asciz "p02"
+.endobj lbl_803DEC78
 .balign 4
-lbl_803DEC7C:
+.obj lbl_803DEC7C, local
 	.asciz "p03"
+.endobj lbl_803DEC7C
 .balign 4
-lbl_803DEC80:
+.obj lbl_803DEC80, local
 	.asciz "p04"
+.endobj lbl_803DEC80
 .balign 4
-lbl_803DEC84:
+.obj lbl_803DEC84, local
 	.asciz "15 NUKI"
+.endobj lbl_803DEC84
 .balign 4
-lbl_803DEC8C:
+.obj lbl_803DEC8C, local
 	.float 0.0
-lbl_803DEC90:
+.endobj lbl_803DEC8C
+.obj lbl_803DEC90, local
 	.float 0.0
-lbl_803DEC94:
+.endobj lbl_803DEC90
+.obj lbl_803DEC94, local
 	.float 0.0
-lbl_803DEC98:
+.endobj lbl_803DEC94
+.obj lbl_803DEC98, local
 	.float 0.0
-__RTTI__8BaseParm:
+.endobj lbl_803DEC98
+.balign 4
+.obj __RTTI__8BaseParm, local
 	.4byte lbl_802AE0D0
 	.4byte 0
+.endobj __RTTI__8BaseParm
 .balign 4
-lbl_803DECA4:
+.obj lbl_803DECA4, local
 	.asciz "ANode"
+.endobj lbl_803DECA4
 .balign 4
-__RTTI__5ANode:
+.obj __RTTI__5ANode, local
 	.4byte lbl_803DECA4
 	.4byte 0
-__RTTI__8CoreNode:
+.endobj __RTTI__5ANode
+.balign 4
+.obj __RTTI__8CoreNode, local
 	.4byte lbl_802AE108
 	.4byte lbl_802AE114
+.endobj __RTTI__8CoreNode
 .balign 4
-lbl_803DECBC:
+.obj lbl_803DECBC, local
 	.asciz "Node"
+.endobj lbl_803DECBC
 .balign 4
-__RTTI__4Node:
+.obj __RTTI__4Node, local
 	.4byte lbl_803DECBC
 	.4byte lbl_802AE120
-__RTTI__9DemoParms:
+.endobj __RTTI__4Node
+.balign 4
+.obj __RTTI__9DemoParms, local
 	.4byte lbl_802AE0FC
 	.4byte lbl_802AE134
+.endobj __RTTI__9DemoParms
 
 .section .sbss, "wa"
 .balign 8

@@ -2059,3 +2059,21 @@
 .obj Reschedule, local
 	.skip 4
 .endobj Reschedule
+
+.section .bss, "wa"  # 0x802E9640 - 0x803E81E5
+.balign 8
+.obj RunQueue, local
+	.skip 0x100
+.endobj RunQueue
+.balign 8
+.obj IdleThread, local
+	.skip 0x310
+.endobj IdleThread
+.balign 8
+.obj DefaultThread, local
+	.skip 0x310
+.endobj DefaultThread
+.balign 8
+.obj IdleContext, local
+	.skip 0x2C8
+.endobj IdleContext

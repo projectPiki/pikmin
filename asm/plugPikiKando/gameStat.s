@@ -164,3 +164,49 @@ lbl_constructor:
 .obj orimaDead__8GameStat, global
 	.skip 0x1
 .endobj orimaDead__8GameStat
+
+.section .bss, "wa"  # 0x802E9640 - 0x803E81E5
+.balign 8
+.obj deadPikis__8GameStat, global
+	.skip 0xC
+.endobj deadPikis__8GameStat
+.balign 4
+.obj fallPikis__8GameStat, global
+	.skip 0xC
+.endobj fallPikis__8GameStat
+.balign 4
+.obj formationPikis__8GameStat, global
+	.skip 0xC
+.endobj formationPikis__8GameStat
+.balign 4
+.obj freePikis__8GameStat, global
+	.skip 0xC
+.endobj freePikis__8GameStat
+.balign 4
+.obj workPikis__8GameStat, global
+	.skip 0xC
+.endobj workPikis__8GameStat
+.balign 4
+.obj mePikis__8GameStat, global
+	.skip 0xC
+.endobj mePikis__8GameStat
+.balign 4
+.obj containerPikis__8GameStat, global
+	.skip 0xC
+.endobj containerPikis__8GameStat
+.balign 4
+.obj bornPikis__8GameStat, global
+	.skip 0xC
+.endobj bornPikis__8GameStat
+.balign 4
+.obj victimPikis__8GameStat, global
+	.skip 0xC
+.endobj victimPikis__8GameStat
+.balign 4
+.obj mapPikis__8GameStat, global
+	.skip 0xC
+.endobj mapPikis__8GameStat
+.balign 4
+.obj allPikis__8GameStat, global
+	.skip 0xC
+.endobj allPikis__8GameStat

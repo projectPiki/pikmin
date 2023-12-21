@@ -2983,25 +2983,31 @@ emit__10GoalEffectFR10EffectParm:
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802C24F8:
+.obj lbl_802C24F8, local
 	.asciz "uteffect.cpp"
+.endobj lbl_802C24F8
 .balign 4
-lbl_802C2508:
+.obj lbl_802C2508, local
 	.asciz "utEffect"
+.endobj lbl_802C2508
 .balign 4
-lbl_802C2514:
+.obj lbl_802C2514, local
 	.asciz "BurnEffect"
+.endobj lbl_802C2514
 .balign 4
-lbl_802C2520:
+.obj lbl_802C2520, local
 	.asciz "zen::CallBack1<zen::particleMdl *>"
+.endobj lbl_802C2520
 .balign 4
-lbl_802C2544:
+.obj lbl_802C2544, local
 	.asciz "zen::CallBack2<zen::particleGenerator *, zen::particleMdl *>"
+.endobj lbl_802C2544
 .balign 4
-lbl_802C2584:
+.obj lbl_802C2584, local
 	.asciz "zen::CallBack1<zen::particleGenerator *>"
+.endobj lbl_802C2584
 .balign 4
-lbl_802C25B0:
+.obj lbl_802C25B0, local
 	.4byte "__RTTI__Q23zen31CallBack1<PQ23zen11particleMdl>"
 	.4byte 0x8
 	.4byte "__RTTI__Q23zen58CallBack2<PQ23zen17particleGenerator,PQ23zen11particleMdl>"
@@ -3009,7 +3015,9 @@ lbl_802C25B0:
 	.4byte "__RTTI__Q23zen37CallBack1<PQ23zen17particleGenerator>"
 	.4byte 0
 	.4byte 0
-lbl_802C25CC:
+.endobj lbl_802C25B0
+.balign 4
+.obj lbl_802C25CC, local
 	.4byte "__RTTI__Q23zen31CallBack1<PQ23zen11particleMdl>"
 	.4byte 0x8
 	.4byte "__RTTI__Q23zen58CallBack2<PQ23zen17particleGenerator,PQ23zen11particleMdl>"
@@ -3019,8 +3027,9 @@ lbl_802C25CC:
 	.4byte __RTTI__7KEffect
 	.4byte 0
 	.4byte 0
-.global __vt__10BurnEffect
-__vt__10BurnEffect:
+.endobj lbl_802C25CC
+.balign 4
+.obj __vt__10BurnEffect, global
 	.4byte __RTTI__10BurnEffect
 	.4byte 0
 	.4byte invoke__10BurnEffectFPQ23zen17particleGenerator
@@ -3036,11 +3045,13 @@ __vt__10BurnEffect:
 	.4byte kill__10BurnEffectFv
 	.4byte stop__10BurnEffectFv
 	.4byte restart__10BurnEffectFv
+.endobj __vt__10BurnEffect
 .balign 4
-lbl_802C262C:
+.obj lbl_802C262C, local
 	.asciz "RippleEffect"
+.endobj lbl_802C262C
 .balign 4
-lbl_802C263C:
+.obj lbl_802C263C, local
 	.4byte "__RTTI__Q23zen31CallBack1<PQ23zen11particleMdl>"
 	.4byte 0x8
 	.4byte "__RTTI__Q23zen58CallBack2<PQ23zen17particleGenerator,PQ23zen11particleMdl>"
@@ -3050,8 +3061,9 @@ lbl_802C263C:
 	.4byte __RTTI__7KEffect
 	.4byte 0
 	.4byte 0
-.global __vt__12RippleEffect
-__vt__12RippleEffect:
+.endobj lbl_802C263C
+.balign 4
+.obj __vt__12RippleEffect, global
 	.4byte __RTTI__12RippleEffect
 	.4byte 0
 	.4byte invoke__7KEffectFPQ23zen17particleGenerator
@@ -3067,9 +3079,11 @@ __vt__12RippleEffect:
 	.4byte kill__12RippleEffectFv
 	.4byte stop__12RippleEffectFv
 	.4byte restart__12RippleEffectFv
+.endobj __vt__12RippleEffect
 .balign 4
-lbl_802C269C:
+.obj lbl_802C269C, local
 	.asciz "FreeLightEffect"
+.endobj lbl_802C269C
 .balign 4
 lbl_802C26AC:
 	.4byte "__RTTI__Q23zen31CallBack1<PQ23zen11particleMdl>"

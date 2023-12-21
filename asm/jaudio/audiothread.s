@@ -374,3 +374,18 @@
 .obj lbl_803E8210, local
 	.asciz "SFR_DSP"
 .endobj lbl_803E8210
+
+.section .bss, "wa"  # 0x802E9640 - 0x803E81E5
+.balign 8
+.obj audioproc_mq, local
+	.skip 0x20
+.endobj audioproc_mq
+.balign 4
+.obj msgbuf, local
+	.skip 0x40
+.endobj msgbuf
+
+.comm jac_audioThread, 0x2940, 32
+.comm jac_audioStack, 0x1000, 32
+.comm jac_dvdThread, 0x310, 8
+# .comm jac_dvdStack, 0x1000, 32 # keeps wanting to be placed before jac_dvdThread

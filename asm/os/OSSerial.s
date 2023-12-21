@@ -698,3 +698,13 @@
 	.4byte 0x00000000
 	.4byte 0x00000000
 .endobj Si
+
+.section .bss, "wa"  # 0x802E9640 - 0x803E81E5
+.balign 8
+.obj Packet, local
+	.skip 0x80
+.endobj Packet
+.balign 8
+.obj Alarm, local
+	.skip 0xA0
+.endobj Alarm

@@ -153,3 +153,13 @@
 .obj OldCPUFifo, local
 	.skip 0x4
 .endobj OldCPUFifo
+
+.section .bss, "wa"  # 0x802E9640 - 0x803E81E5
+.balign 8
+.obj DisplayListFifo, local
+	.skip 0x24
+.endobj DisplayListFifo
+.balign 4
+.obj __savedGXdata, local
+	.skip 0x4F4
+.endobj __savedGXdata

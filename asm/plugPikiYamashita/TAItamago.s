@@ -1065,7 +1065,7 @@ start__23TAIAtimerReactionTamagoFR4Teki:
 /* 801D0DB8 001CDD18  80 63 00 84 */	lwz r3, 0x84(r3)
 /* 801D0DBC 001CDD1C  EC 1F F0 28 */	fsubs f0, f31, f30
 /* 801D0DC0 001CDD20  90 01 00 60 */	stw r0, 0x60(r1)
-/* 801D0DC4 001CDD24  C8 62 BC 98 */	lfd f3, "@2280"@sda21(r2)
+/* 801D0DC4 001CDD24  C8 62 BC 98 */	lfd f3, lbl_803EBE98@sda21(r2)
 /* 801D0DC8 001CDD28  38 80 00 32 */	li r4, 0x32
 /* 801D0DCC 001CDD2C  C8 41 00 60 */	lfd f2, 0x60(r1)
 /* 801D0DD0 001CDD30  C0 22 BC 90 */	lfs f1, lbl_803EBE90@sda21(r2)
@@ -1216,20 +1216,22 @@ lbl_802E38B0:
 lbl_802E38C0:
 	.asciz "TAItamago"
 .balign 4
-lbl_802E38CC:
+lbl_802E38CC: # Shift-JIS
 	.4byte 0x894889BB
 	.4byte 0x82CC8DC5
 	.4byte 0x925A8E9E
 	.4byte 0x8AD48169
 	.4byte 0x9562816A
-	.4byte 0x00000000
-lbl_802E38E4:
+	.byte 0x00
+.balign 4
+lbl_802E38E4: # Shift-JIS
 	.4byte 0x894889BB
 	.4byte 0x82CC8DC5
 	.4byte 0x92B78E9E
 	.4byte 0x8AD48169
 	.4byte 0x9562816A
-	.4byte 0x00000000
+	.byte 0x00
+.balign 4
 lbl_802E38FC:
 	.asciz "tekis/tamago/motion/dead.dca"
 .balign 4
@@ -1278,6 +1280,7 @@ __vt__18TAItamagoAnimation:
 	.4byte __RTTI__18TAItamagoAnimation
 	.4byte 0
 	.4byte makeDefaultAnimations__18TAItamagoAnimationFv
+.balign 4
 lbl_802E3AA0:
 	.asciz "TAIAcountStartTamago"
 .balign 4
@@ -1297,6 +1300,7 @@ __vt__20TAIAcountStartTamago:
 	.4byte act__20TAIAcountStartTamagoFR4Teki
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
+.balign 4
 lbl_802E3AEC:
 	.asciz "TAIAhatch"
 .balign 4
@@ -1322,6 +1326,7 @@ __vt__9TAIAhatch:
 	.4byte act__9TAIAhatchFR4Teki
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
+.balign 4
 lbl_802E3B40:
 	.asciz "TAIAtimerReactionTamago"
 .balign 4
@@ -1381,6 +1386,7 @@ __vt__15TAIAdyingTamago:
 	.4byte 0
 	.4byte 0
 	.4byte 0
+.balign 4
 lbl_802E3C28:
 	.asciz "TAItamagoStrategy"
 .balign 4
@@ -1412,6 +1418,7 @@ __vt__17TAItamagoStrategy:
 	.4byte drawDebugInfo__12TekiStrategyFR4TekiR8Graphics
 	.4byte interact__12TekiStrategyFR4TekiR18TekiInteractionKey
 	.4byte spawnCorpseParts__12TekiStrategyFR4Teki
+.balign 4
 lbl_802E3CA0:
 	.asciz "TAItamagoParameters"
 .balign 4
@@ -1502,6 +1509,7 @@ __RTTI__11YaiStrategy:
 __RTTI__17TAItamagoStrategy:
 	.4byte lbl_802E3C28
 	.4byte lbl_802E3C64
+.balign 4
 lbl_803E6DF0:
 	.asciz "ANode"
 .balign 4
@@ -1511,6 +1519,7 @@ __RTTI__5ANode:
 __RTTI__8CoreNode:
 	.4byte lbl_802E3CB4
 	.4byte lbl_802E3CC0
+.balign 4
 lbl_803E6E08:
 	.asciz "Node"
 .balign 4
@@ -1572,7 +1581,6 @@ lbl_803EBE8C:
 	.4byte 0x420C0000
 lbl_803EBE90:
 	.4byte 0x46FFFE00
-	.4byte 0x00000000
-"@2280":
-	.4byte 0x43300000
-	.4byte 0x80000000
+.balign 8
+lbl_803EBE98:
+	.8byte 0x4330000080000000

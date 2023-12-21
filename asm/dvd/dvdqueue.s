@@ -149,3 +149,9 @@
 /* 802020F4 001FF054  7C 08 03 A6 */	mtlr r0
 /* 802020F8 001FF058  4E 80 00 20 */	blr 
 .endfn __DVDDequeueWaitingQueue
+
+.section .bss, "wa"  # 0x802E9640 - 0x803E81E5
+.balign 8
+.obj WaitingQueue, local
+	.skip 0x20
+.endobj WaitingQueue

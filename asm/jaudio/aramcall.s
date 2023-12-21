@@ -267,3 +267,6 @@
 .obj init$65, local
 	.skip 1
 .endobj init$65
+
+.section .bss, "wa"  # 0x802E9640 - 0x803E81E5
+.comm aram_mother, 0x2C, 4

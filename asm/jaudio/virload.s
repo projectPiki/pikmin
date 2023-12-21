@@ -325,3 +325,21 @@
 .obj lbl_803E82D0, local
 	.asciz "/"
 .endobj lbl_803E82D0
+
+.section .bss, "wa"  # 0x802E9640 - 0x803E81E5
+.balign 8
+.obj JV_DIR_NAME, local
+	.skip 0x400
+.endobj JV_DIR_NAME
+.balign 4
+.obj JV_ARC_NAME, local
+	.skip 0x200
+.endobj JV_ARC_NAME
+.balign 4
+.obj JV_ARC, local
+	.skip 0x40
+.endobj JV_ARC
+.balign 4
+.obj finfo$150, local
+	.skip 0x3C
+.endobj finfo$150

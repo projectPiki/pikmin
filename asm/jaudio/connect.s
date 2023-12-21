@@ -526,3 +526,13 @@
 /* 8000CFB4 00009F14  42 00 FF EC */	bdnz .L_8000CFA0
 /* 8000CFB8 00009F18  4E 80 00 20 */	blr 
 .endfn Jac_ConnectTableInit__Fv
+
+.section .bss, "wa"  # 0x802E9640 - 0x803E81E5
+.balign 8
+.obj WS_V2P_TABLE, local
+	.skip 0x200
+.endobj WS_V2P_TABLE
+.balign 4
+.obj BNK_V2P_TABLE, local
+	.skip 0x200
+.endobj BNK_V2P_TABLE

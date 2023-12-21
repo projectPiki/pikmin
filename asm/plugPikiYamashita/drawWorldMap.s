@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global __ct__Q23zen12DrawWorldMapFv
-__ct__Q23zen12DrawWorldMapFv:
+.fn __ct__Q23zen12DrawWorldMapFv, global
 /* 801DB14C 001D80AC  7C 08 02 A6 */	mflr r0
 /* 801DB150 001D80B0  90 01 00 04 */	stw r0, 4(r1)
 /* 801DB154 001D80B4  94 21 FB 50 */	stwu r1, -0x4b0(r1)
@@ -2427,9 +2426,9 @@ __ct__Q23zen12DrawWorldMapFv:
 /* 801DD5AC 001DA50C  38 21 04 B0 */	addi r1, r1, 0x4b0
 /* 801DD5B0 001DA510  7C 08 03 A6 */	mtlr r0
 /* 801DD5B4 001DA514  4E 80 00 20 */	blr 
+.endfn __ct__Q23zen12DrawWorldMapFv
 
-.global init__Q23zen18WorldMapConfirmMgrFQ33zen18WorldMapConfirmMgr10statusFlag
-init__Q23zen18WorldMapConfirmMgrFQ33zen18WorldMapConfirmMgr10statusFlag:
+.fn init__Q23zen18WorldMapConfirmMgrFQ33zen18WorldMapConfirmMgr10statusFlag, weak
 /* 801DD5B8 001DA518  7C 08 02 A6 */	mflr r0
 /* 801DD5BC 001DA51C  38 A0 00 00 */	li r5, 0
 /* 801DD5C0 001DA520  90 01 00 04 */	stw r0, 4(r1)
@@ -2524,17 +2523,17 @@ init__Q23zen18WorldMapConfirmMgrFQ33zen18WorldMapConfirmMgr10statusFlag:
 /* 801DD720 001DA680  38 21 00 B0 */	addi r1, r1, 0xb0
 /* 801DD724 001DA684  7C 08 03 A6 */	mtlr r0
 /* 801DD728 001DA688  4E 80 00 20 */	blr 
+.endfn init__Q23zen18WorldMapConfirmMgrFQ33zen18WorldMapConfirmMgr10statusFlag
 
-.global hide__7P2DPaneFv
-hide__7P2DPaneFv:
+.fn hide__7P2DPaneFv, weak
 /* 801DD72C 001DA68C  88 03 00 0C */	lbz r0, 0xc(r3)
 /* 801DD730 001DA690  38 80 00 00 */	li r4, 0
 /* 801DD734 001DA694  50 80 3E 30 */	rlwimi r0, r4, 7, 0x18, 0x18
 /* 801DD738 001DA698  98 03 00 0C */	stb r0, 0xc(r3)
 /* 801DD73C 001DA69C  4E 80 00 20 */	blr 
+.endfn hide__7P2DPaneFv
 
-.global "__ct__Q29@unnamed@16WorldMapTitleObjFv"
-"__ct__Q29@unnamed@16WorldMapTitleObjFv":
+.fn "__ct__Q29@unnamed@16WorldMapTitleObjFv", weak
 /* 801DD740 001DA6A0  C0 02 BE 78 */	lfs f0, lbl_803EC078@sda21(r2)
 /* 801DD744 001DA6A4  38 00 00 00 */	li r0, 0
 /* 801DD748 001DA6A8  D0 03 00 18 */	stfs f0, 0x18(r3)
@@ -2546,9 +2545,9 @@ hide__7P2DPaneFv:
 /* 801DD760 001DA6C0  90 03 00 04 */	stw r0, 4(r3)
 /* 801DD764 001DA6C4  90 03 00 00 */	stw r0, 0(r3)
 /* 801DD768 001DA6C8  4E 80 00 20 */	blr 
+.endfn "__ct__Q29@unnamed@16WorldMapTitleObjFv"
 
-.global init__Q23zen17WorldMapCursorMgrFv
-init__Q23zen17WorldMapCursorMgrFv:
+.fn init__Q23zen17WorldMapCursorMgrFv, weak
 /* 801DD76C 001DA6CC  7C 08 02 A6 */	mflr r0
 /* 801DD770 001DA6D0  90 01 00 04 */	stw r0, 4(r1)
 /* 801DD774 001DA6D4  94 21 FE 50 */	stwu r1, -0x1b0(r1)
@@ -2979,9 +2978,9 @@ init__Q23zen17WorldMapCursorMgrFv:
 /* 801DDDDC 001DAD3C  38 21 01 B0 */	addi r1, r1, 0x1b0
 /* 801DDDE0 001DAD40  7C 08 03 A6 */	mtlr r0
 /* 801DDDE4 001DAD44  4E 80 00 20 */	blr 
+.endfn init__Q23zen17WorldMapCursorMgrFv
 
-.global setLandingFlag__Q23zen17WorldMapCursorMgrFb
-setLandingFlag__Q23zen17WorldMapCursorMgrFb:
+.fn setLandingFlag__Q23zen17WorldMapCursorMgrFb, weak
 /* 801DDDE8 001DAD48  7C 08 02 A6 */	mflr r0
 /* 801DDDEC 001DAD4C  90 01 00 04 */	stw r0, 4(r1)
 /* 801DDDF0 001DAD50  54 80 06 3F */	clrlwi. r0, r4, 0x18
@@ -3029,9 +3028,9 @@ setLandingFlag__Q23zen17WorldMapCursorMgrFb:
 /* 801DDE88 001DADE8  38 21 00 38 */	addi r1, r1, 0x38
 /* 801DDE8C 001DADEC  7C 08 03 A6 */	mtlr r0
 /* 801DDE90 001DADF0  4E 80 00 20 */	blr 
+.endfn setLandingFlag__Q23zen17WorldMapCursorMgrFb
 
-.global init__Q23zen19WorldMapCursorOnyonFv
-init__Q23zen19WorldMapCursorOnyonFv:
+.fn init__Q23zen19WorldMapCursorOnyonFv, weak
 /* 801DDE94 001DADF4  7C 08 02 A6 */	mflr r0
 /* 801DDE98 001DADF8  90 01 00 04 */	stw r0, 4(r1)
 /* 801DDE9C 001DADFC  94 21 FF 98 */	stwu r1, -0x68(r1)
@@ -3104,9 +3103,9 @@ init__Q23zen19WorldMapCursorOnyonFv:
 /* 801DDFA4 001DAF04  38 21 00 68 */	addi r1, r1, 0x68
 /* 801DDFA8 001DAF08  7C 08 03 A6 */	mtlr r0
 /* 801DDFAC 001DAF0C  4E 80 00 20 */	blr 
+.endfn init__Q23zen19WorldMapCursorOnyonFv
 
-.global initParams__Q23zen17WorldMapCursorMgrFv
-initParams__Q23zen17WorldMapCursorMgrFv:
+.fn initParams__Q23zen17WorldMapCursorMgrFv, weak
 /* 801DDFB0 001DAF10  38 00 00 00 */	li r0, 0
 /* 801DDFB4 001DAF14  98 03 00 34 */	stb r0, 0x34(r3)
 /* 801DDFB8 001DAF18  80 83 01 10 */	lwz r4, 0x110(r3)
@@ -3176,9 +3175,9 @@ initParams__Q23zen17WorldMapCursorMgrFv:
 /* 801DE0A8 001DB008  C0 02 BE 7C */	lfs f0, lbl_803EC07C@sda21(r2)
 /* 801DE0AC 001DB00C  D0 03 01 28 */	stfs f0, 0x128(r3)
 /* 801DE0B0 001DB010  4E 80 00 20 */	blr 
+.endfn initParams__Q23zen17WorldMapCursorMgrFv
 
-.global __ct__Q23zen19WorldMapCursorOnyonFv
-__ct__Q23zen19WorldMapCursorOnyonFv:
+.fn __ct__Q23zen19WorldMapCursorOnyonFv, weak
 /* 801DE0B4 001DB014  7C 08 02 A6 */	mflr r0
 /* 801DE0B8 001DB018  90 01 00 04 */	stw r0, 4(r1)
 /* 801DE0BC 001DB01C  38 00 00 00 */	li r0, 0
@@ -3238,9 +3237,9 @@ __ct__Q23zen19WorldMapCursorOnyonFv:
 /* 801DE194 001DB0F4  38 21 00 30 */	addi r1, r1, 0x30
 /* 801DE198 001DB0F8  7C 08 03 A6 */	mtlr r0
 /* 801DE19C 001DB0FC  4E 80 00 20 */	blr 
+.endfn __ct__Q23zen19WorldMapCursorOnyonFv
 
-.global "setTex__Q29@unnamed@24DrawWorldMapDateCallBackFv"
-"setTex__Q29@unnamed@24DrawWorldMapDateCallBackFv":
+.fn "setTex__Q29@unnamed@24DrawWorldMapDateCallBackFv", weak
 /* 801DE1A0 001DB100  7C 08 02 A6 */	mflr r0
 /* 801DE1A4 001DB104  90 01 00 04 */	stw r0, 4(r1)
 /* 801DE1A8 001DB108  94 21 FF D0 */	stwu r1, -0x30(r1)
@@ -3334,9 +3333,9 @@ __ct__Q23zen19WorldMapCursorOnyonFv:
 /* 801DE2F8 001DB258  38 21 00 30 */	addi r1, r1, 0x30
 /* 801DE2FC 001DB25C  7C 08 03 A6 */	mtlr r0
 /* 801DE300 001DB260  4E 80 00 20 */	blr 
+.endfn "setTex__Q29@unnamed@24DrawWorldMapDateCallBackFv"
 
-.global init__Q23zen19WorldMapMapImageMgrFv
-init__Q23zen19WorldMapMapImageMgrFv:
+.fn init__Q23zen19WorldMapMapImageMgrFv, weak
 /* 801DE304 001DB264  38 C0 00 00 */	li r6, 0
 /* 801DE308 001DB268  38 00 00 05 */	li r0, 5
 /* 801DE30C 001DB26C  90 C3 00 04 */	stw r6, 4(r3)
@@ -3388,9 +3387,9 @@ init__Q23zen19WorldMapMapImageMgrFv:
 /* 801DE3B0 001DB310  38 00 00 01 */	li r0, 1
 /* 801DE3B4 001DB314  98 03 00 20 */	stb r0, 0x20(r3)
 /* 801DE3B8 001DB318  4E 80 00 20 */	blr 
+.endfn init__Q23zen19WorldMapMapImageMgrFv
 
-.global init__Q23zen12WorldMapWipeFP9P2DScreenUl
-init__Q23zen12WorldMapWipeFP9P2DScreenUl:
+.fn init__Q23zen12WorldMapWipeFP9P2DScreenUl, weak
 /* 801DE3BC 001DB31C  7C 08 02 A6 */	mflr r0
 /* 801DE3C0 001DB320  90 01 00 04 */	stw r0, 4(r1)
 /* 801DE3C4 001DB324  94 21 FF 20 */	stwu r1, -0xe0(r1)
@@ -3481,9 +3480,9 @@ init__Q23zen12WorldMapWipeFP9P2DScreenUl:
 /* 801DE514 001DB474  38 21 00 E0 */	addi r1, r1, 0xe0
 /* 801DE518 001DB478  7C 08 03 A6 */	mtlr r0
 /* 801DE51C 001DB47C  4E 80 00 20 */	blr 
+.endfn init__Q23zen12WorldMapWipeFP9P2DScreenUl
 
-.global __ct__Q23zen12WorldMapWipeFv
-__ct__Q23zen12WorldMapWipeFv:
+.fn __ct__Q23zen12WorldMapWipeFv, weak
 /* 801DE520 001DB480  C0 02 BE 78 */	lfs f0, lbl_803EC078@sda21(r2)
 /* 801DE524 001DB484  38 00 00 00 */	li r0, 0
 /* 801DE528 001DB488  D0 03 00 08 */	stfs f0, 8(r3)
@@ -3497,9 +3496,9 @@ __ct__Q23zen12WorldMapWipeFv:
 /* 801DE548 001DB4A8  D0 03 00 18 */	stfs f0, 0x18(r3)
 /* 801DE54C 001DB4AC  90 03 00 24 */	stw r0, 0x24(r3)
 /* 801DE550 001DB4B0  4E 80 00 20 */	blr 
+.endfn __ct__Q23zen12WorldMapWipeFv
 
-.global "setPane__Q29@unnamed@19WorldMapCoursePointFP9P2DScreenUlUlUlP9P2DScreenUl"
-"setPane__Q29@unnamed@19WorldMapCoursePointFP9P2DScreenUlUlUlP9P2DScreenUl":
+.fn "setPane__Q29@unnamed@19WorldMapCoursePointFP9P2DScreenUlUlUlP9P2DScreenUl", weak
 /* 801DE554 001DB4B4  7C 08 02 A6 */	mflr r0
 /* 801DE558 001DB4B8  90 01 00 04 */	stw r0, 4(r1)
 /* 801DE55C 001DB4BC  94 21 FF 48 */	stwu r1, -0xb8(r1)
@@ -3601,9 +3600,9 @@ __ct__Q23zen12WorldMapWipeFv:
 /* 801DE6D0 001DB630  38 21 00 B8 */	addi r1, r1, 0xb8
 /* 801DE6D4 001DB634  7C 08 03 A6 */	mtlr r0
 /* 801DE6D8 001DB638  4E 80 00 20 */	blr 
+.endfn "setPane__Q29@unnamed@19WorldMapCoursePointFP9P2DScreenUlUlUlP9P2DScreenUl"
 
-.global "__ct__Q29@unnamed@19WorldMapCoursePointFv"
-"__ct__Q29@unnamed@19WorldMapCoursePointFv":
+.fn "__ct__Q29@unnamed@19WorldMapCoursePointFv", weak
 /* 801DE6DC 001DB63C  38 00 00 00 */	li r0, 0
 /* 801DE6E0 001DB640  90 03 00 04 */	stw r0, 4(r3)
 /* 801DE6E4 001DB644  C0 02 BE 78 */	lfs f0, lbl_803EC078@sda21(r2)
@@ -3618,9 +3617,9 @@ __ct__Q23zen12WorldMapWipeFv:
 /* 801DE708 001DB668  90 03 00 34 */	stw r0, 0x34(r3)
 /* 801DE70C 001DB66C  90 03 00 38 */	stw r0, 0x38(r3)
 /* 801DE710 001DB670  4E 80 00 20 */	blr 
+.endfn "__ct__Q29@unnamed@19WorldMapCoursePointFv"
 
-.global update__Q23zen12DrawWorldMapFP10Controller
-update__Q23zen12DrawWorldMapFP10Controller:
+.fn update__Q23zen12DrawWorldMapFP10Controller, global
 /* 801DE714 001DB674  7C 08 02 A6 */	mflr r0
 /* 801DE718 001DB678  90 01 00 04 */	stw r0, 4(r1)
 /* 801DE71C 001DB67C  94 21 FE 30 */	stwu r1, -0x1d0(r1)
@@ -4462,9 +4461,9 @@ update__Q23zen12DrawWorldMapFP10Controller:
 /* 801DF31C 001DC27C  38 21 01 D0 */	addi r1, r1, 0x1d0
 /* 801DF320 001DC280  7C 08 03 A6 */	mtlr r0
 /* 801DF324 001DC284  4E 80 00 20 */	blr 
+.endfn update__Q23zen12DrawWorldMapFP10Controller
 
-.global "update__Q29@unnamed@16WorldMapTitleObjFv"
-"update__Q29@unnamed@16WorldMapTitleObjFv":
+.fn "update__Q29@unnamed@16WorldMapTitleObjFv", weak
 /* 801DF328 001DC288  7C 08 02 A6 */	mflr r0
 /* 801DF32C 001DC28C  90 01 00 04 */	stw r0, 4(r1)
 /* 801DF330 001DC290  94 21 FF B0 */	stwu r1, -0x50(r1)
@@ -4630,9 +4629,9 @@ update__Q23zen12DrawWorldMapFP10Controller:
 /* 801DF578 001DC4D8  38 21 00 50 */	addi r1, r1, 0x50
 /* 801DF57C 001DC4DC  7C 08 03 A6 */	mtlr r0
 /* 801DF580 001DC4E0  4E 80 00 20 */	blr 
+.endfn "update__Q29@unnamed@16WorldMapTitleObjFv"
 
-.global modeOpen__Q23zen19WorldMapMapImageMgrFv
-modeOpen__Q23zen19WorldMapMapImageMgrFv:
+.fn modeOpen__Q23zen19WorldMapMapImageMgrFv, weak
 /* 801DF584 001DC4E4  80 8D 2D EC */	lwz r4, gsys@sda21(r13)
 /* 801DF588 001DC4E8  C0 23 00 00 */	lfs f1, 0(r3)
 /* 801DF58C 001DC4EC  C0 04 02 8C */	lfs f0, 0x28c(r4)
@@ -4698,9 +4697,9 @@ modeOpen__Q23zen19WorldMapMapImageMgrFv:
 /* 801DF664 001DC5C4  50 80 3E 30 */	rlwimi r0, r4, 7, 0x18, 0x18
 /* 801DF668 001DC5C8  98 03 00 0C */	stb r0, 0xc(r3)
 /* 801DF66C 001DC5CC  4E 80 00 20 */	blr 
+.endfn modeOpen__Q23zen19WorldMapMapImageMgrFv
 
-.global modeClose__Q23zen19WorldMapMapImageMgrFv
-modeClose__Q23zen19WorldMapMapImageMgrFv:
+.fn modeClose__Q23zen19WorldMapMapImageMgrFv, weak
 /* 801DF670 001DC5D0  80 8D 2D EC */	lwz r4, gsys@sda21(r13)
 /* 801DF674 001DC5D4  C0 23 00 00 */	lfs f1, 0(r3)
 /* 801DF678 001DC5D8  C0 04 02 8C */	lfs f0, 0x28c(r4)
@@ -4761,9 +4760,9 @@ modeClose__Q23zen19WorldMapMapImageMgrFv:
 /* 801DF744 001DC6A4  50 80 3E 30 */	rlwimi r0, r4, 7, 0x18, 0x18
 /* 801DF748 001DC6A8  98 03 00 0C */	stb r0, 0xc(r3)
 /* 801DF74C 001DC6AC  4E 80 00 20 */	blr 
+.endfn modeClose__Q23zen19WorldMapMapImageMgrFv
 
-.global effect__Q23zen17WorldMapCursorMgrFv
-effect__Q23zen17WorldMapCursorMgrFv:
+.fn effect__Q23zen17WorldMapCursorMgrFv, weak
 /* 801DF750 001DC6B0  7C 08 02 A6 */	mflr r0
 /* 801DF754 001DC6B4  90 01 00 04 */	stw r0, 4(r1)
 /* 801DF758 001DC6B8  94 21 FE 58 */	stwu r1, -0x1a8(r1)
@@ -4982,9 +4981,9 @@ effect__Q23zen17WorldMapCursorMgrFv:
 /* 801DFA9C 001DC9FC  38 21 01 A8 */	addi r1, r1, 0x1a8
 /* 801DFAA0 001DCA00  7C 08 03 A6 */	mtlr r0
 /* 801DFAA4 001DCA04  4E 80 00 20 */	blr 
+.endfn effect__Q23zen17WorldMapCursorMgrFv
 
-.global update__Q23zen19WorldMapCursorOnyonFR8Vector3f
-update__Q23zen19WorldMapCursorOnyonFR8Vector3f:
+.fn update__Q23zen19WorldMapCursorOnyonFR8Vector3f, weak
 /* 801DFAA8 001DCA08  7C 08 02 A6 */	mflr r0
 /* 801DFAAC 001DCA0C  90 01 00 04 */	stw r0, 4(r1)
 /* 801DFAB0 001DCA10  94 21 FE 60 */	stwu r1, -0x1a0(r1)
@@ -5388,9 +5387,9 @@ update__Q23zen19WorldMapCursorOnyonFR8Vector3f:
 /* 801E00C4 001DD024  38 21 01 A0 */	addi r1, r1, 0x1a0
 /* 801E00C8 001DD028  7C 08 03 A6 */	mtlr r0
 /* 801E00CC 001DD02C  4E 80 00 20 */	blr 
+.endfn update__Q23zen19WorldMapCursorOnyonFR8Vector3f
 
-.global moveOnyon__Q23zen17WorldMapCursorMgrFv
-moveOnyon__Q23zen17WorldMapCursorMgrFv:
+.fn moveOnyon__Q23zen17WorldMapCursorMgrFv, weak
 /* 801E00D0 001DD030  7C 08 02 A6 */	mflr r0
 /* 801E00D4 001DD034  90 01 00 04 */	stw r0, 4(r1)
 /* 801E00D8 001DD038  94 21 FE A0 */	stwu r1, -0x160(r1)
@@ -5605,9 +5604,9 @@ moveOnyon__Q23zen17WorldMapCursorMgrFv:
 /* 801E0414 001DD374  38 21 01 60 */	addi r1, r1, 0x160
 /* 801E0418 001DD378  7C 08 03 A6 */	mtlr r0
 /* 801E041C 001DD37C  4E 80 00 20 */	blr 
+.endfn moveOnyon__Q23zen17WorldMapCursorMgrFv
 
-.global forceMove__Q23zen17WorldMapCursorMgrFv
-forceMove__Q23zen17WorldMapCursorMgrFv:
+.fn forceMove__Q23zen17WorldMapCursorMgrFv, weak
 /* 801E0420 001DD380  7C 08 02 A6 */	mflr r0
 /* 801E0424 001DD384  90 01 00 04 */	stw r0, 4(r1)
 /* 801E0428 001DD388  94 21 FF C8 */	stwu r1, -0x38(r1)
@@ -5664,9 +5663,9 @@ forceMove__Q23zen17WorldMapCursorMgrFv:
 /* 801E04E4 001DD444  38 21 00 38 */	addi r1, r1, 0x38
 /* 801E04E8 001DD448  7C 08 03 A6 */	mtlr r0
 /* 801E04EC 001DD44C  4E 80 00 20 */	blr 
+.endfn forceMove__Q23zen17WorldMapCursorMgrFv
 
-.global moveUfo__Q23zen17WorldMapCursorMgrFv
-moveUfo__Q23zen17WorldMapCursorMgrFv:
+.fn moveUfo__Q23zen17WorldMapCursorMgrFv, weak
 /* 801E04F0 001DD450  7C 08 02 A6 */	mflr r0
 /* 801E04F4 001DD454  90 01 00 04 */	stw r0, 4(r1)
 /* 801E04F8 001DD458  94 21 FF 08 */	stwu r1, -0xf8(r1)
@@ -5990,9 +5989,9 @@ moveUfo__Q23zen17WorldMapCursorMgrFv:
 /* 801E0978 001DD8D8  38 21 00 F8 */	addi r1, r1, 0xf8
 /* 801E097C 001DD8DC  7C 08 03 A6 */	mtlr r0
 /* 801E0980 001DD8E0  4E 80 00 20 */	blr 
+.endfn moveUfo__Q23zen17WorldMapCursorMgrFv
 
-.global stayUfo__Q23zen17WorldMapCursorMgrFv
-stayUfo__Q23zen17WorldMapCursorMgrFv:
+.fn stayUfo__Q23zen17WorldMapCursorMgrFv, weak
 /* 801E0984 001DD8E4  7C 08 02 A6 */	mflr r0
 /* 801E0988 001DD8E8  90 01 00 04 */	stw r0, 4(r1)
 /* 801E098C 001DD8EC  94 21 FF 40 */	stwu r1, -0xc0(r1)
@@ -6249,9 +6248,9 @@ stayUfo__Q23zen17WorldMapCursorMgrFv:
 /* 801E0D2C 001DDC8C  38 21 00 C0 */	addi r1, r1, 0xc0
 /* 801E0D30 001DDC90  7C 08 03 A6 */	mtlr r0
 /* 801E0D34 001DDC94  4E 80 00 20 */	blr 
+.endfn stayUfo__Q23zen17WorldMapCursorMgrFv
 
-.global draw__Q23zen12DrawWorldMapFR8Graphics
-draw__Q23zen12DrawWorldMapFR8Graphics:
+.fn draw__Q23zen12DrawWorldMapFR8Graphics, global
 /* 801E0D38 001DDC98  7C 08 02 A6 */	mflr r0
 /* 801E0D3C 001DDC9C  90 01 00 04 */	stw r0, 4(r1)
 /* 801E0D40 001DDCA0  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -6331,9 +6330,9 @@ draw__Q23zen12DrawWorldMapFR8Graphics:
 /* 801E0E60 001DDDC0  38 21 00 18 */	addi r1, r1, 0x18
 /* 801E0E64 001DDDC4  7C 08 03 A6 */	mtlr r0
 /* 801E0E68 001DDDC8  4E 80 00 20 */	blr 
+.endfn draw__Q23zen12DrawWorldMapFR8Graphics
 
-.global start__Q23zen12DrawWorldMapFQ33zen12DrawWorldMap13startModeFlagQ33zen12DrawWorldMap14startPlaceFlag
-start__Q23zen12DrawWorldMapFQ33zen12DrawWorldMap13startModeFlagQ33zen12DrawWorldMap14startPlaceFlag:
+.fn start__Q23zen12DrawWorldMapFQ33zen12DrawWorldMap13startModeFlagQ33zen12DrawWorldMap14startPlaceFlag, global
 /* 801E0E6C 001DDDCC  7C 08 02 A6 */	mflr r0
 /* 801E0E70 001DDDD0  90 01 00 04 */	stw r0, 4(r1)
 /* 801E0E74 001DDDD4  38 00 00 00 */	li r0, 0
@@ -8198,9 +8197,9 @@ start__Q23zen12DrawWorldMapFQ33zen12DrawWorldMap13startModeFlagQ33zen12DrawWorld
 /* 801E29D8 001DF938  38 21 04 70 */	addi r1, r1, 0x470
 /* 801E29DC 001DF93C  7C 08 03 A6 */	mtlr r0
 /* 801E29E0 001DF940  4E 80 00 20 */	blr 
+.endfn start__Q23zen12DrawWorldMapFQ33zen12DrawWorldMap13startModeFlagQ33zen12DrawWorldMap14startPlaceFlag
 
-.global setDisplayParts__Q23zen20WorldMapPartsInfoMgrFii
-setDisplayParts__Q23zen20WorldMapPartsInfoMgrFii:
+.fn setDisplayParts__Q23zen20WorldMapPartsInfoMgrFii, weak
 /* 801E29E4 001DF944  38 E0 00 00 */	li r7, 0
 /* 801E29E8 001DF948  38 C0 00 00 */	li r6, 0
 /* 801E29EC 001DF94C  48 00 00 B0 */	b .L_801E2A9C
@@ -8256,9 +8255,9 @@ setDisplayParts__Q23zen20WorldMapPartsInfoMgrFii:
 /* 801E2AA0 001DFA00  7C 07 00 00 */	cmpw r7, r0
 /* 801E2AA4 001DFA04  41 80 FF 4C */	blt .L_801E29F0
 /* 801E2AA8 001DFA08  4E 80 00 20 */	blr 
+.endfn setDisplayParts__Q23zen20WorldMapPartsInfoMgrFii
 
-.global updateOnyonPos__Q23zen17WorldMapCursorMgrFP8Vector3fP8Vector3fP8Vector3f
-updateOnyonPos__Q23zen17WorldMapCursorMgrFP8Vector3fP8Vector3fP8Vector3f:
+.fn updateOnyonPos__Q23zen17WorldMapCursorMgrFP8Vector3fP8Vector3fP8Vector3f, weak
 /* 801E2AAC 001DFA0C  7C 08 02 A6 */	mflr r0
 /* 801E2AB0 001DFA10  90 01 00 04 */	stw r0, 4(r1)
 /* 801E2AB4 001DFA14  94 21 FE B0 */	stwu r1, -0x150(r1)
@@ -8460,9 +8459,9 @@ updateOnyonPos__Q23zen17WorldMapCursorMgrFP8Vector3fP8Vector3fP8Vector3f:
 /* 801E2DB8 001DFD18  38 21 01 50 */	addi r1, r1, 0x150
 /* 801E2DBC 001DFD1C  7C 08 03 A6 */	mtlr r0
 /* 801E2DC0 001DFD20  4E 80 00 20 */	blr 
+.endfn updateOnyonPos__Q23zen17WorldMapCursorMgrFP8Vector3fP8Vector3fP8Vector3f
 
-.global "select__Q29@unnamed@19WorldMapCoursePointFv"
-"select__Q29@unnamed@19WorldMapCoursePointFv":
+.fn "select__Q29@unnamed@19WorldMapCoursePointFv", weak
 /* 801E2DC4 001DFD24  88 03 00 0C */	lbz r0, 0xc(r3)
 /* 801E2DC8 001DFD28  28 00 00 00 */	cmplwi r0, 0
 /* 801E2DCC 001DFD2C  4D 82 00 20 */	beqlr 
@@ -8481,9 +8480,9 @@ updateOnyonPos__Q23zen17WorldMapCursorMgrFP8Vector3fP8Vector3fP8Vector3f:
 /* 801E2E00 001DFD60  50 A0 3E 30 */	rlwimi r0, r5, 7, 0x18, 0x18
 /* 801E2E04 001DFD64  98 03 00 0C */	stb r0, 0xc(r3)
 /* 801E2E08 001DFD68  4E 80 00 20 */	blr 
+.endfn "select__Q29@unnamed@19WorldMapCoursePointFv"
 
-.global modeStart__Q23zen12DrawWorldMapFP10Controller
-modeStart__Q23zen12DrawWorldMapFP10Controller:
+.fn modeStart__Q23zen12DrawWorldMapFP10Controller, global
 /* 801E2E0C 001DFD6C  7C 08 02 A6 */	mflr r0
 /* 801E2E10 001DFD70  90 01 00 04 */	stw r0, 4(r1)
 /* 801E2E14 001DFD74  94 21 FF 18 */	stwu r1, -0xe8(r1)
@@ -8785,9 +8784,9 @@ modeStart__Q23zen12DrawWorldMapFP10Controller:
 /* 801E327C 001E01DC  38 21 00 E8 */	addi r1, r1, 0xe8
 /* 801E3280 001E01E0  7C 08 03 A6 */	mtlr r0
 /* 801E3284 001E01E4  4E 80 00 20 */	blr 
+.endfn modeStart__Q23zen12DrawWorldMapFP10Controller
 
-.global modeAppear__Q23zen12DrawWorldMapFP10Controller
-modeAppear__Q23zen12DrawWorldMapFP10Controller:
+.fn modeAppear__Q23zen12DrawWorldMapFP10Controller, global
 /* 801E3288 001E01E8  7C 08 02 A6 */	mflr r0
 /* 801E328C 001E01EC  90 01 00 04 */	stw r0, 4(r1)
 /* 801E3290 001E01F0  94 21 FE 40 */	stwu r1, -0x1c0(r1)
@@ -11474,9 +11473,9 @@ modeAppear__Q23zen12DrawWorldMapFP10Controller:
 /* 801E59C0 001E2920  38 21 01 C0 */	addi r1, r1, 0x1c0
 /* 801E59C4 001E2924  7C 08 03 A6 */	mtlr r0
 /* 801E59C8 001E2928  4E 80 00 20 */	blr 
+.endfn modeAppear__Q23zen12DrawWorldMapFP10Controller
 
-.global modeAppear__Q23zen22WorldMapCoursePointMgrFv
-modeAppear__Q23zen22WorldMapCoursePointMgrFv:
+.fn modeAppear__Q23zen22WorldMapCoursePointMgrFv, weak
 /* 801E59CC 001E292C  7C 08 02 A6 */	mflr r0
 /* 801E59D0 001E2930  90 01 00 04 */	stw r0, 4(r1)
 /* 801E59D4 001E2934  94 21 FF 30 */	stwu r1, -0xd0(r1)
@@ -11617,9 +11616,9 @@ modeAppear__Q23zen22WorldMapCoursePointMgrFv:
 /* 801E5BD4 001E2B34  38 21 00 D0 */	addi r1, r1, 0xd0
 /* 801E5BD8 001E2B38  7C 08 03 A6 */	mtlr r0
 /* 801E5BDC 001E2B3C  4E 80 00 20 */	blr 
+.endfn modeAppear__Q23zen22WorldMapCoursePointMgrFv
 
-.global modeOperation__Q23zen22WorldMapCoursePointMgrFP10Controllerb
-modeOperation__Q23zen22WorldMapCoursePointMgrFP10Controllerb:
+.fn modeOperation__Q23zen22WorldMapCoursePointMgrFP10Controllerb, weak
 /* 801E5BE0 001E2B40  7C 08 02 A6 */	mflr r0
 /* 801E5BE4 001E2B44  90 01 00 04 */	stw r0, 4(r1)
 /* 801E5BE8 001E2B48  94 21 FE 88 */	stwu r1, -0x178(r1)
@@ -12001,9 +12000,9 @@ modeOperation__Q23zen22WorldMapCoursePointMgrFP10Controllerb:
 /* 801E6178 001E30D8  38 21 01 78 */	addi r1, r1, 0x178
 /* 801E617C 001E30DC  7C 08 03 A6 */	mtlr r0
 /* 801E6180 001E30E0  4E 80 00 20 */	blr 
+.endfn modeOperation__Q23zen22WorldMapCoursePointMgrFP10Controllerb
 
-.global modeOperation__Q23zen12DrawWorldMapFP10Controller
-modeOperation__Q23zen12DrawWorldMapFP10Controller:
+.fn modeOperation__Q23zen12DrawWorldMapFP10Controller, global
 /* 801E6184 001E30E4  7C 08 02 A6 */	mflr r0
 /* 801E6188 001E30E8  90 01 00 04 */	stw r0, 4(r1)
 /* 801E618C 001E30EC  94 21 FD F8 */	stwu r1, -0x208(r1)
@@ -12576,9 +12575,9 @@ modeOperation__Q23zen12DrawWorldMapFP10Controller:
 /* 801E69E0 001E3940  38 21 02 08 */	addi r1, r1, 0x208
 /* 801E69E4 001E3944  7C 08 03 A6 */	mtlr r0
 /* 801E69E8 001E3948  4E 80 00 20 */	blr 
+.endfn modeOperation__Q23zen12DrawWorldMapFP10Controller
 
-.global modeConfirm__Q23zen12DrawWorldMapFP10Controller
-modeConfirm__Q23zen12DrawWorldMapFP10Controller:
+.fn modeConfirm__Q23zen12DrawWorldMapFP10Controller, global
 /* 801E69EC 001E394C  7C 08 02 A6 */	mflr r0
 /* 801E69F0 001E3950  90 01 00 04 */	stw r0, 4(r1)
 /* 801E69F4 001E3954  94 21 FE D8 */	stwu r1, -0x128(r1)
@@ -13003,9 +13002,9 @@ modeConfirm__Q23zen12DrawWorldMapFP10Controller:
 /* 801E6FF4 001E3F54  38 21 01 28 */	addi r1, r1, 0x128
 /* 801E6FF8 001E3F58  7C 08 03 A6 */	mtlr r0
 /* 801E6FFC 001E3F5C  4E 80 00 20 */	blr 
+.endfn modeConfirm__Q23zen12DrawWorldMapFP10Controller
 
-.global modeOperation__Q23zen18WorldMapConfirmMgrFP10Controller
-modeOperation__Q23zen18WorldMapConfirmMgrFP10Controller:
+.fn modeOperation__Q23zen18WorldMapConfirmMgrFP10Controller, weak
 /* 801E7000 001E3F60  7C 08 02 A6 */	mflr r0
 /* 801E7004 001E3F64  90 01 00 04 */	stw r0, 4(r1)
 /* 801E7008 001E3F68  94 21 FF 80 */	stwu r1, -0x80(r1)
@@ -13126,9 +13125,9 @@ modeOperation__Q23zen18WorldMapConfirmMgrFP10Controller:
 /* 801E71BC 001E411C  38 21 00 80 */	addi r1, r1, 0x80
 /* 801E71C0 001E4120  7C 08 03 A6 */	mtlr r0
 /* 801E71C4 001E4124  4E 80 00 20 */	blr 
+.endfn modeOperation__Q23zen18WorldMapConfirmMgrFP10Controller
 
-.global modeEnd__Q23zen12DrawWorldMapFP10Controller
-modeEnd__Q23zen12DrawWorldMapFP10Controller:
+.fn modeEnd__Q23zen12DrawWorldMapFP10Controller, global
 /* 801E71C8 001E4128  7C 08 02 A6 */	mflr r0
 /* 801E71CC 001E412C  90 01 00 04 */	stw r0, 4(r1)
 /* 801E71D0 001E4130  94 21 FF C8 */	stwu r1, -0x38(r1)
@@ -13223,9 +13222,9 @@ modeEnd__Q23zen12DrawWorldMapFP10Controller:
 /* 801E7310 001E4270  38 21 00 38 */	addi r1, r1, 0x38
 /* 801E7314 001E4274  7C 08 03 A6 */	mtlr r0
 /* 801E7318 001E4278  4E 80 00 20 */	blr 
+.endfn modeEnd__Q23zen12DrawWorldMapFP10Controller
 
-.global updateScreens__Q23zen12DrawWorldMapFv
-updateScreens__Q23zen12DrawWorldMapFv:
+.fn updateScreens__Q23zen12DrawWorldMapFv, global
 /* 801E731C 001E427C  7C 08 02 A6 */	mflr r0
 /* 801E7320 001E4280  90 01 00 04 */	stw r0, 4(r1)
 /* 801E7324 001E4284  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -13281,9 +13280,9 @@ updateScreens__Q23zen12DrawWorldMapFv:
 /* 801E73EC 001E434C  38 21 00 18 */	addi r1, r1, 0x18
 /* 801E73F0 001E4350  7C 08 03 A6 */	mtlr r0
 /* 801E73F4 001E4354  4E 80 00 20 */	blr 
+.endfn updateScreens__Q23zen12DrawWorldMapFv
 
-.global closeMapInfo__Q23zen12DrawWorldMapFv
-closeMapInfo__Q23zen12DrawWorldMapFv:
+.fn closeMapInfo__Q23zen12DrawWorldMapFv, global
 /* 801E73F8 001E4358  7C 08 02 A6 */	mflr r0
 /* 801E73FC 001E435C  90 01 00 04 */	stw r0, 4(r1)
 /* 801E7400 001E4360  94 21 FF C0 */	stwu r1, -0x40(r1)
@@ -13362,9 +13361,9 @@ closeMapInfo__Q23zen12DrawWorldMapFv:
 /* 801E7510 001E4470  38 21 00 40 */	addi r1, r1, 0x40
 /* 801E7514 001E4474  7C 08 03 A6 */	mtlr r0
 /* 801E7518 001E4478  4E 80 00 20 */	blr 
+.endfn closeMapInfo__Q23zen12DrawWorldMapFv
 
-.global "setActiveMapNo__Q23zen20WorldMapPartsInfoMgrFQ29@unnamed@12WorldMapName"
-"setActiveMapNo__Q23zen20WorldMapPartsInfoMgrFQ29@unnamed@12WorldMapName":
+.fn "setActiveMapNo__Q23zen20WorldMapPartsInfoMgrFQ29@unnamed@12WorldMapName", weak
 /* 801E751C 001E447C  7C 08 02 A6 */	mflr r0
 /* 801E7520 001E4480  2C 04 FF FF */	cmpwi r4, -1
 /* 801E7524 001E4484  90 01 00 04 */	stw r0, 4(r1)
@@ -13518,9 +13517,9 @@ closeMapInfo__Q23zen12DrawWorldMapFv:
 /* 801E771C 001E467C  38 21 00 30 */	addi r1, r1, 0x30
 /* 801E7720 001E4680  7C 08 03 A6 */	mtlr r0
 /* 801E7724 001E4684  4E 80 00 20 */	blr 
+.endfn "setActiveMapNo__Q23zen20WorldMapPartsInfoMgrFQ29@unnamed@12WorldMapName"
 
-.global openMapInfo__Q23zen12DrawWorldMapFv
-openMapInfo__Q23zen12DrawWorldMapFv:
+.fn openMapInfo__Q23zen12DrawWorldMapFv, global
 /* 801E7728 001E4688  7C 08 02 A6 */	mflr r0
 /* 801E772C 001E468C  38 C0 FF FF */	li r6, -1
 /* 801E7730 001E4690  90 01 00 04 */	stw r0, 4(r1)
@@ -13677,9 +13676,9 @@ openMapInfo__Q23zen12DrawWorldMapFv:
 /* 801E793C 001E489C  38 21 00 28 */	addi r1, r1, 0x28
 /* 801E7940 001E48A0  7C 08 03 A6 */	mtlr r0
 /* 801E7944 001E48A4  4E 80 00 20 */	blr 
+.endfn openMapInfo__Q23zen12DrawWorldMapFv
 
-.global "invoke__Q29@unnamed@24DrawWorldMapDateCallBackFP7P2DPane"
-"invoke__Q29@unnamed@24DrawWorldMapDateCallBackFP7P2DPane":
+.fn "invoke__Q29@unnamed@24DrawWorldMapDateCallBackFP7P2DPane", weak
 /* 801E7948 001E48A8  7C 08 02 A6 */	mflr r0
 /* 801E794C 001E48AC  90 01 00 04 */	stw r0, 4(r1)
 /* 801E7950 001E48B0  94 21 FF D0 */	stwu r1, -0x30(r1)
@@ -13774,6 +13773,7 @@ openMapInfo__Q23zen12DrawWorldMapFv:
 /* 801E7AA4 001E4A04  38 21 00 30 */	addi r1, r1, 0x30
 /* 801E7AA8 001E4A08  7C 08 03 A6 */	mtlr r0
 /* 801E7AAC 001E4A0C  4E 80 00 20 */	blr 
+.endfn "invoke__Q29@unnamed@24DrawWorldMapDateCallBackFP7P2DPane"
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
@@ -13918,266 +13918,385 @@ openMapInfo__Q23zen12DrawWorldMapFv:
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-"mapNoScr2Game__9@unnamed@":
+.obj "mapNoScr2Game__9@unnamed@", local
 	.4byte 0x03010002
-	.4byte 0x04000000
-"mapNoGame2Scr__9@unnamed@":
+	.byte 0x04
+.endobj "mapNoScr2Game__9@unnamed@"
+.balign 4
+.obj "mapNoGame2Scr__9@unnamed@", local
 	.4byte 0x02010300
-	.4byte 0x04000000
-lbl_803E71A0:
+	.byte 0x04
+.endobj "mapNoGame2Scr__9@unnamed@"
+.balign 4
+.obj lbl_803E71A0, local
 	.float 0.0
-lbl_803E71A4:
+.endobj lbl_803E71A0
+.obj lbl_803E71A4, local
 	.float 640.0
-lbl_803E71A8:
+.endobj lbl_803E71A4
+.obj lbl_803E71A8, local
 	.float 30.0
-lbl_803E71AC:
+.endobj lbl_803E71A8
+.obj lbl_803E71AC, local
 	.float 0.0
-lbl_803E71B0:
+.endobj lbl_803E71AC
+.obj lbl_803E71B0, local
 	.float 40.0
-lbl_803E71B4:
+.endobj lbl_803E71B0
+.obj lbl_803E71B4, local
 	.float 30.0
-lbl_803E71B8:
+.endobj lbl_803E71B4
+.obj lbl_803E71B8, local
 	.float 0.0
-.global OBJ_NUM__Q23zen16WorldMapTitleMgr
-OBJ_NUM__Q23zen16WorldMapTitleMgr:
+.endobj lbl_803E71B8
+.balign 4
+.obj OBJ_NUM__Q23zen16WorldMapTitleMgr, global
 	.4byte 5
-lbl_803E71C0:
+.endobj OBJ_NUM__Q23zen16WorldMapTitleMgr
+.balign 4
+.obj lbl_803E71C0, local
 	.float 0.0
-lbl_803E71C4:
+.endobj lbl_803E71C0
+.obj lbl_803E71C4, local
 	.float 0.0
-lbl_803E71C8:
+.endobj lbl_803E71C4
+.obj lbl_803E71C8, local
 	.float 1.0
-lbl_803E71CC:
+.endobj lbl_803E71C8
+.obj lbl_803E71CC, local
 	.float 0.0
-lbl_803E71D0:
+.endobj lbl_803E71CC
+.obj lbl_803E71D0, local
 	.float 0.0
-lbl_803E71D4:
+.endobj lbl_803E71D0
+.obj lbl_803E71D4, local
 	.float 0.0
-lbl_803E71D8:
+.endobj lbl_803E71D4
+.obj lbl_803E71D8, local
 	.float 0.0
-lbl_803E71DC:
+.endobj lbl_803E71D8
+.obj lbl_803E71DC, local
 	.float 0.0
-lbl_803E71E0:
+.endobj lbl_803E71DC
+.obj lbl_803E71E0, local
 	.float 1.0
-lbl_803E71E4:
+.endobj lbl_803E71E0
+.obj lbl_803E71E4, local
 	.float 0.0
-lbl_803E71E8:
+.endobj lbl_803E71E4
+.obj lbl_803E71E8, local
 	.float 0.0
-lbl_803E71EC:
+.endobj lbl_803E71E8
+.obj lbl_803E71EC, local
 	.float 0.0
-lbl_803E71F0:
+.endobj lbl_803E71EC
+.obj lbl_803E71F0, local
 	.float 0.0
-lbl_803E71F4:
+.endobj lbl_803E71F0
+.obj lbl_803E71F4, local
 	.float 0.0
-lbl_803E71F8:
+.endobj lbl_803E71F4
+.obj lbl_803E71F8, local
 	.float 0.0
-lbl_803E71FC:
+.endobj lbl_803E71F8
+.obj lbl_803E71FC, local
 	.float 0.0
-lbl_803E7200:
+.endobj lbl_803E71FC
+.obj lbl_803E7200, local
 	.float 0.0
-lbl_803E7204:
+.endobj lbl_803E7200
+.obj lbl_803E7204, local
 	.float 0.0
-lbl_803E7208:
+.endobj lbl_803E7204
+.obj lbl_803E7208, local
 	.float 0.0
-lbl_803E720C:
+.endobj lbl_803E7208
+.obj lbl_803E720C, local
 	.float 0.0
-lbl_803E7210:
+.endobj lbl_803E720C
+.obj lbl_803E7210, local
 	.float 0.0
-lbl_803E7214:
+.endobj lbl_803E7210
+.obj lbl_803E7214, local
 	.float 0.0
-lbl_803E7218:
+.endobj lbl_803E7214
+.obj lbl_803E7218, local
 	.float 0.0
-lbl_803E721C:
+.endobj lbl_803E7218
+.obj lbl_803E721C, local
 	.float 0.0
-lbl_803E7220:
+.endobj lbl_803E721C
+.obj lbl_803E7220, local
 	.float 0.0
-lbl_803E7224:
+.endobj lbl_803E7220
+.obj lbl_803E7224, local
 	.float 0.0
-lbl_803E7228:
+.endobj lbl_803E7224
+.obj lbl_803E7228, local
 	.float 0.0
-lbl_803E722C:
+.endobj lbl_803E7228
+.obj lbl_803E722C, local
 	.float 0.0
-.global bottomLengthMin__Q23zen19WorldMapCursorOnyon
-bottomLengthMin__Q23zen19WorldMapCursorOnyon:
-	.4byte 0x41200000
-.global bottomLengthDefault__Q23zen19WorldMapCursorOnyon
-bottomLengthDefault__Q23zen19WorldMapCursorOnyon:
-	.4byte 0x41700000
-.global bottomLengthMax__Q23zen19WorldMapCursorOnyon
-bottomLengthMax__Q23zen19WorldMapCursorOnyon:
-	.4byte 0x41A00000
-.global scaleFrameMax__Q23zen19WorldMapCursorOnyon
-scaleFrameMax__Q23zen19WorldMapCursorOnyon:
-	.4byte 0x3F4CCCCD
-lbl_803E7240:
+.endobj lbl_803E722C
+.balign 4
+.obj bottomLengthMin__Q23zen19WorldMapCursorOnyon, global
+	.float 10.0
+.endobj bottomLengthMin__Q23zen19WorldMapCursorOnyon
+.obj bottomLengthDefault__Q23zen19WorldMapCursorOnyon, global
+	.float 15.0
+.endobj bottomLengthDefault__Q23zen19WorldMapCursorOnyon
+.obj bottomLengthMax__Q23zen19WorldMapCursorOnyon, global
+	.float 20.0
+.endobj bottomLengthMax__Q23zen19WorldMapCursorOnyon
+.obj scaleFrameMax__Q23zen19WorldMapCursorOnyon, global
+	.float 0.8
+.endobj scaleFrameMax__Q23zen19WorldMapCursorOnyon
+.balign 4
+.obj lbl_803E7240, local
 	.float 0.0
-lbl_803E7244:
+.endobj lbl_803E7240
+.obj lbl_803E7244, local
 	.float 0.0
-lbl_803E7248:
+.endobj lbl_803E7244
+.obj lbl_803E7248, local
 	.float 0.0
-lbl_803E724C:
+.endobj lbl_803E7248
+.obj lbl_803E724C, local
 	.float 0.0
-lbl_803E7250:
+.endobj lbl_803E724C
+.obj lbl_803E7250, local
 	.float 0.0
-lbl_803E7254:
+.endobj lbl_803E7250
+.obj lbl_803E7254, local
 	.float 0.0
-lbl_803E7258:
+.endobj lbl_803E7254
+.obj lbl_803E7258, local
 	.float 0.0
-lbl_803E725C:
+.endobj lbl_803E7258
+.obj lbl_803E725C, local
 	.float 0.0
-lbl_803E7260:
+.endobj lbl_803E725C
+.obj lbl_803E7260, local
 	.float 0.0
-lbl_803E7264:
+.endobj lbl_803E7260
+.obj lbl_803E7264, local
 	.float 0.0
-lbl_803E7268:
+.endobj lbl_803E7264
+.obj lbl_803E7268, local
 	.float 0.5
-lbl_803E726C:
+.endobj lbl_803E7268
+.obj lbl_803E726C, local
 	.float 0.0
-lbl_803E7270:
+.endobj lbl_803E726C
+.obj lbl_803E7270, local
 	.float 0.0
-lbl_803E7274:
+.endobj lbl_803E7270
+.obj lbl_803E7274, local
 	.float 0.0
-lbl_803E7278:
+.endobj lbl_803E7274
+.obj lbl_803E7278, local
 	.float 0.0
-lbl_803E727C:
+.endobj lbl_803E7278
+.obj lbl_803E727C, local
 	.float 0.0
-lbl_803E7280:
+.endobj lbl_803E727C
+.obj lbl_803E7280, local
 	.float 0.0
-lbl_803E7284:
+.endobj lbl_803E7280
+.obj lbl_803E7284, local
 	.float 0.0
-lbl_803E7288:
+.endobj lbl_803E7284
+.obj lbl_803E7288, local
 	.float 0.0
-lbl_803E728C:
+.endobj lbl_803E7288
+.obj lbl_803E728C, local
 	.float 0.0
-lbl_803E7290:
+.endobj lbl_803E728C
+.obj lbl_803E7290, local
 	.float 0.0
-lbl_803E7294:
+.endobj lbl_803E7290
+.obj lbl_803E7294, local
 	.float 1.0
-lbl_803E7298:
+.endobj lbl_803E7294
+.obj lbl_803E7298, local
 	.float 0.0
-lbl_803E729C:
+.endobj lbl_803E7298
+.obj lbl_803E729C, local
 	.float 0.0
-lbl_803E72A0:
+.endobj lbl_803E729C
+.obj lbl_803E72A0, local
 	.float 0.0
-lbl_803E72A4:
+.endobj lbl_803E72A0
+.obj lbl_803E72A4, local
 	.float 0.0
-lbl_803E72A8:
+.endobj lbl_803E72A4
+.obj lbl_803E72A8, local
 	.float 0.0
-lbl_803E72AC:
+.endobj lbl_803E72A8
+.obj lbl_803E72AC, local
 	.float 0.0
-lbl_803E72B0:
+.endobj lbl_803E72AC
+.obj lbl_803E72B0, local
 	.float 0.0
-lbl_803E72B4:
+.endobj lbl_803E72B0
+.obj lbl_803E72B4, local
 	.float 0.0
-lbl_803E72B8:
+.endobj lbl_803E72B4
+.obj lbl_803E72B8, local
 	.float 0.0
-lbl_803E72BC:
+.endobj lbl_803E72B8
+.obj lbl_803E72BC, local
 	.float 0.0
-lbl_803E72C0:
+.endobj lbl_803E72BC
+.obj lbl_803E72C0, local
 	.float 0.0
-lbl_803E72C4:
+.endobj lbl_803E72C0
+.obj lbl_803E72C4, local
 	.float 0.0
-lbl_803E72C8:
+.endobj lbl_803E72C4
+.obj lbl_803E72C8, local
 	.float 0.0
-lbl_803E72CC:
+.endobj lbl_803E72C8
+.obj lbl_803E72CC, local
 	.float 0.0
-lbl_803E72D0:
+.endobj lbl_803E72CC
+.obj lbl_803E72D0, local
 	.float 0.0
-lbl_803E72D4:
+.endobj lbl_803E72D0
+.obj lbl_803E72D4, local
 	.float 0.0
-lbl_803E72D8:
+.endobj lbl_803E72D4
+.obj lbl_803E72D8, local
 	.float 0.0
-lbl_803E72DC:
+.endobj lbl_803E72D8
+.obj lbl_803E72DC, local
 	.float 0.0
-lbl_803E72E0:
+.endobj lbl_803E72DC
+.obj lbl_803E72E0, local
 	.float 0.0
-lbl_803E72E4:
+.endobj lbl_803E72E0
+.obj lbl_803E72E4, local
 	.float 0.0
-lbl_803E72E8:
+.endobj lbl_803E72E4
+.obj lbl_803E72E8, local
 	.float 0.0
-lbl_803E72EC:
+.endobj lbl_803E72E8
+.obj lbl_803E72EC, local
 	.float 0.0
-lbl_803E72F0:
+.endobj lbl_803E72EC
+.obj lbl_803E72F0, local
 	.float 0.0
-lbl_803E72F4:
+.endobj lbl_803E72F0
+.obj lbl_803E72F4, local
 	.float 0.0
-lbl_803E72F8:
+.endobj lbl_803E72F4
+.obj lbl_803E72F8, local
 	.float 0.0
-.global ONYON_POS_RADIUS__Q23zen17WorldMapCursorMgr
-ONYON_POS_RADIUS__Q23zen17WorldMapCursorMgr:
-	.4byte 0x42700000
-.global ONYON_OFFSET_X__Q23zen17WorldMapCursorMgr
-ONYON_OFFSET_X__Q23zen17WorldMapCursorMgr:
+.endobj lbl_803E72F8
+.balign 4
+.obj ONYON_POS_RADIUS__Q23zen17WorldMapCursorMgr, global
+	.float 60.0
+.endobj ONYON_POS_RADIUS__Q23zen17WorldMapCursorMgr
+.obj ONYON_OFFSET_X__Q23zen17WorldMapCursorMgr, global
 	.float 0.0
-.global ONYON_OFFSET_Y__Q23zen17WorldMapCursorMgr
-ONYON_OFFSET_Y__Q23zen17WorldMapCursorMgr:
-	.4byte 0x41A00000
-.global ONYON_OFFSET_Z__Q23zen17WorldMapCursorMgr
-ONYON_OFFSET_Z__Q23zen17WorldMapCursorMgr:
+.endobj ONYON_OFFSET_X__Q23zen17WorldMapCursorMgr
+.obj ONYON_OFFSET_Y__Q23zen17WorldMapCursorMgr, global
+	.float 20.0
+.endobj ONYON_OFFSET_Y__Q23zen17WorldMapCursorMgr
+.obj ONYON_OFFSET_Z__Q23zen17WorldMapCursorMgr, global
 	.float 0.0
-lbl_803E730C:
+.endobj ONYON_OFFSET_Z__Q23zen17WorldMapCursorMgr
+.balign 4
+.obj lbl_803E730C, local
 	.float 0.0
-lbl_803E7310:
+.endobj lbl_803E730C
+.obj lbl_803E7310, local
 	.float 0.0
-lbl_803E7314:
+.endobj lbl_803E7310
+.obj lbl_803E7314, local
 	.float 0.0
-lbl_803E7318:
+.endobj lbl_803E7314
+.obj lbl_803E7318, local
 	.float 0.0
-lbl_803E731C:
+.endobj lbl_803E7318
+.obj lbl_803E731C, local
 	.float 0.0
-lbl_803E7320:
+.endobj lbl_803E731C
+.obj lbl_803E7320, local
 	.float 0.0
-lbl_803E7324:
+.endobj lbl_803E7320
+.obj lbl_803E7324, local
 	.float 0.0
-.global "EVENT_NONE__Q29@unnamed@19WorldMapCoursePoint"
-"EVENT_NONE__Q29@unnamed@19WorldMapCoursePoint":
+.endobj lbl_803E7324
+.obj "EVENT_NONE__Q29@unnamed@19WorldMapCoursePoint", global
 	.4byte 0
-.global "EVENT_APPEAR_FINISH__Q29@unnamed@19WorldMapCoursePoint"
-"EVENT_APPEAR_FINISH__Q29@unnamed@19WorldMapCoursePoint":
+.endobj "EVENT_NONE__Q29@unnamed@19WorldMapCoursePoint"
+.balign 4
+.obj "EVENT_APPEAR_FINISH__Q29@unnamed@19WorldMapCoursePoint", global
 	.4byte 1
+.endobj "EVENT_APPEAR_FINISH__Q29@unnamed@19WorldMapCoursePoint"
 .balign 4
-lbl_803E7330:
+.obj lbl_803E7330, local
 	.asciz "ony%d"
+.endobj lbl_803E7330
 .balign 4
-lbl_803E7338:
+.obj lbl_803E7338, local
 	.asciz "cha%d"
+.endobj lbl_803E7338
 .balign 4
-lbl_803E7340:
+.obj lbl_803E7340, local
 	.asciz "map%d"
+.endobj lbl_803E7340
 .balign 4
-lbl_803E7348:
+.obj lbl_803E7348, local
 	.asciz "pa%02d"
+.endobj lbl_803E7348
 .balign 4
-lbl_803E7350:
+.obj lbl_803E7350, local
 	.asciz "pn%02d"
+.endobj lbl_803E7350
 .balign 4
-lbl_803E7358:
+.obj lbl_803E7358, local
 	.asciz "he%02d"
+.endobj lbl_803E7358
 .balign 4
-lbl_803E7360:
+.obj lbl_803E7360, local
 	.asciz "i%02dl"
+.endobj lbl_803E7360
 .balign 4
-lbl_803E7368:
+.obj lbl_803E7368, local
 	.asciz "i%02dr"
+.endobj lbl_803E7368
 .balign 4
-__RTTI__Q23zen9NumberTex:
+.obj __RTTI__Q23zen9NumberTex, local
 	.4byte lbl_802E5900
-	.4byte 0x00000000
-"__RTTI__Q23zen12FigureTex<i>":
+	.4byte 0
+.endobj __RTTI__Q23zen9NumberTex
+.balign 4
+.obj "__RTTI__Q23zen12FigureTex<i>", local
 	.4byte lbl_802E5910
 	.4byte lbl_802E5924
-__RTTI__19P2DPaneCallBackBase:
+.endobj "__RTTI__Q23zen12FigureTex<i>"
+.balign 4
+.obj __RTTI__19P2DPaneCallBackBase, local
 	.4byte lbl_802E5930
 	.4byte 0
-"__RTTI__Q23zen20CallBack1<P7P2DPane>":
+.endobj __RTTI__19P2DPaneCallBackBase
+.balign 4
+.obj "__RTTI__Q23zen20CallBack1<P7P2DPane>", local
 	.4byte lbl_802E5944
 	.4byte 0
-__RTTI__15P2DPaneCallBack:
+.endobj "__RTTI__Q23zen20CallBack1<P7P2DPane>"
+.balign 4
+.obj __RTTI__15P2DPaneCallBack, local
 	.4byte lbl_802E5960
 	.4byte lbl_802E5970
-"__RTTI__Q29@unnamed@24DrawWorldMapDateCallBack":
+.endobj __RTTI__15P2DPaneCallBack
+.balign 4
+.obj "__RTTI__Q29@unnamed@24DrawWorldMapDateCallBack", local
 	.4byte lbl_802E59C0
 	.4byte lbl_802E59E4
+.endobj "__RTTI__Q29@unnamed@24DrawWorldMapDateCallBack"
 
 .section .sbss, "wa"
 .balign 8
@@ -14187,112 +14306,164 @@ __RTTI__15P2DPaneCallBack:
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803EC078:
+.obj lbl_803EC078, local
 	.float 0.0
-lbl_803EC07C:
+.endobj lbl_803EC078
+.obj lbl_803EC07C, local
 	.float 1.0
-lbl_803EC080:
-	.4byte 0x3F4CCCCD
-lbl_803EC084:
-	.4byte 0x41200000
-lbl_803EC088:
-	.4byte 0x42C80000
-lbl_803EC08C:
-	.4byte 0x42480000
-lbl_803EC090:
-	.4byte 0x3E4CCCCD
+.endobj lbl_803EC07C
+.obj lbl_803EC080, local
+	.float 0.8
+.endobj lbl_803EC080
+.obj lbl_803EC084, local
+	.float 10.0
+.endobj lbl_803EC084
+.obj lbl_803EC088, local
+	.float 100.0
+.endobj lbl_803EC088
+.obj lbl_803EC08C, local
+	.float 50.0
+.endobj lbl_803EC08C
+.obj lbl_803EC090, local
+	.float 0.2
+.endobj lbl_803EC090
 .balign 8
-lbl_803EC098:
+.obj lbl_803EC098, local
 	.8byte 0x4330000080000000
-lbl_803EC0A0:
-	.4byte 0x46FFFE00
-lbl_803EC0A4:
-	.4byte 0x40800000
-lbl_803EC0A8:
-	.4byte 0x40A00000
-lbl_803EC0AC:
-	.4byte 0x3F000000
-lbl_803EC0B0:
-	.4byte 0x40490FDB
-lbl_803EC0B4:
-	.4byte 0x437F0000
-lbl_803EC0B8:
-	.4byte 0x3FC90FDB
-lbl_803EC0BC:
-	.4byte 0x3E800000
-lbl_803EC0C0:
-	.4byte 0x3D4CCCCD
-lbl_803EC0C4:
-	.4byte 0x43F00000
-lbl_803EC0C8:
-	.4byte 0x40000000
-lbl_803EC0CC:
-	.4byte 0x3F333333
-lbl_803EC0D0:
-	.4byte 0x42700000
+.endobj lbl_803EC098
+.balign 4
+.obj lbl_803EC0A0, local
+	.float 32767.0
+.endobj lbl_803EC0A0
+.obj lbl_803EC0A4, local
+	.float 4.0
+.endobj lbl_803EC0A4
+.obj lbl_803EC0A8, local
+	.float 5.0
+.endobj lbl_803EC0A8
+.obj lbl_803EC0AC, local
+	.float 0.5
+.endobj lbl_803EC0AC
+.obj lbl_803EC0B0, local # pi
+	.float 3.1415927
+.endobj lbl_803EC0B0
+.obj lbl_803EC0B4, local
+	.float 255.0
+.endobj lbl_803EC0B4
+.obj lbl_803EC0B8, local # pi/2
+	.float 1.5707964
+.endobj lbl_803EC0B8
+.obj lbl_803EC0BC, local
+	.float 0.25
+.endobj lbl_803EC0BC
+.obj lbl_803EC0C0, local
+	.float 0.05
+.endobj lbl_803EC0C0
+.obj lbl_803EC0C4, local
+	.float 480.0
+.endobj lbl_803EC0C4
+.obj lbl_803EC0C8, local
+	.float 2.0
+.endobj lbl_803EC0C8
+.obj lbl_803EC0CC, local
+	.float 0.7
+.endobj lbl_803EC0CC
+.obj lbl_803EC0D0, local
+	.float 60.0
+.endobj lbl_803EC0D0
 .balign 8
-lbl_803EC0D8:
-	.4byte 0x3FE00000
-	.4byte 0x00000000
+.obj lbl_803EC0D8, local
+	.double 0.5
+.endobj lbl_803EC0D8
 .balign 8
-lbl_803EC0E0:
-	.4byte 0x40080000
-	.4byte 0x00000000
-lbl_803EC0E8:
-	.4byte 0x358637BD
-lbl_803EC0EC:
-	.4byte 0x43960000
-lbl_803EC0F0:
-	.4byte 0x41700000
-lbl_803EC0F4:
-	.4byte 0x40400000
-lbl_803EC0F8:
-	.4byte 0x40C90FDB
-lbl_803EC0FC:
-	.4byte 0x3F666666
-lbl_803EC100:
-	.4byte 0x3DCCCCCD
-lbl_803EC104:
-	.4byte 0x40060A92
-lbl_803EC108:
-	.4byte 0x40860A92
-lbl_803EC10C:
-	.4byte 0x3FC00000
-lbl_803EC110:
-	.4byte 0x41A00000
-lbl_803EC114:
-	.4byte 0x43340000
-lbl_803EC118:
-	.4byte 0xBF800000
-lbl_803EC11C:
-	.4byte 0xC2C80000
-lbl_803EC120:
-	.4byte 0x44390000
-lbl_803EC124:
-	.4byte 0x44110000
-lbl_803EC128:
-	.4byte 0x3CA3D70A
-lbl_803EC12C:
-	.4byte 0x3F6B851F
-lbl_803EC130:
-	.4byte 0x3C8EFA35
-lbl_803EC134:
-	.4byte 0x3F7FF972
-lbl_803EC138:
-	.4byte 0x3DB2B8C3
-lbl_803EC13C:
-	.4byte 0xBDB2B8C3
-lbl_803EC140:
-	.4byte 0x43480000
-lbl_803EC144:
-	.4byte 0xC0000000
-lbl_803EC148:
-	.4byte 0x43160000
-lbl_803EC14C:
-	.4byte 0x44200000
-lbl_803EC150:
-	.4byte 0x43FA0000
-lbl_803EC154:
-	.4byte 0xC3F00000
-lbl_803EC158:
-	.4byte 0x43A00000
+.obj lbl_803EC0E0, local
+	.double 3.0
+.endobj lbl_803EC0E0
+.balign 4
+.obj lbl_803EC0E8, local
+	.float 1.0E-6
+.endobj lbl_803EC0E8
+.obj lbl_803EC0EC, local
+	.float 300.0
+.endobj lbl_803EC0EC
+.obj lbl_803EC0F0, local
+	.float 15.0
+.endobj lbl_803EC0F0
+.obj lbl_803EC0F4, local
+	.float 3.0
+.endobj lbl_803EC0F4
+.obj lbl_803EC0F8, local # tau
+	.float 6.2831855
+.endobj lbl_803EC0F8
+.obj lbl_803EC0FC, local
+	.float 0.9
+.endobj lbl_803EC0FC
+.obj lbl_803EC100, local
+	.float 0.1
+.endobj lbl_803EC100
+.obj lbl_803EC104, local # 2pi/3
+	.float 2.0943952
+.endobj lbl_803EC104
+.obj lbl_803EC108, local # 4pi/3
+	.float 4.1887903
+.endobj lbl_803EC108
+.obj lbl_803EC10C, local
+	.float 1.5
+.endobj lbl_803EC10C
+.obj lbl_803EC110, local
+	.float 20.0
+.endobj lbl_803EC110
+.obj lbl_803EC114, local
+	.float 180.0
+.endobj lbl_803EC114
+.obj lbl_803EC118, local
+	.float -1.0
+.endobj lbl_803EC118
+.obj lbl_803EC11C, local
+	.float -100.0
+.endobj lbl_803EC11C
+.obj lbl_803EC120, local
+	.float 740.0
+.endobj lbl_803EC120
+.obj lbl_803EC124, local
+	.float 580.0
+.endobj lbl_803EC124
+.obj lbl_803EC128, local
+	.float 0.02
+.endobj lbl_803EC128
+.obj lbl_803EC12C, local
+	.float 0.92
+.endobj lbl_803EC12C
+.obj lbl_803EC130, local
+	.float 0.017453292
+.endobj lbl_803EC130
+.obj lbl_803EC134, local
+	.float 0.9999
+.endobj lbl_803EC134
+.obj lbl_803EC138, local
+	.float 0.08726647
+.endobj lbl_803EC138
+.obj lbl_803EC13C, local
+	.float -0.08726647
+.endobj lbl_803EC13C
+.obj lbl_803EC140, local
+	.float 200.0
+.endobj lbl_803EC140
+.obj lbl_803EC144, local
+	.float -2.0
+.endobj lbl_803EC144
+.obj lbl_803EC148, local
+	.float 150.0
+.endobj lbl_803EC148
+.obj lbl_803EC14C, local
+	.float 640.0
+.endobj lbl_803EC14C
+.obj lbl_803EC150, local
+	.float 500.0
+.endobj lbl_803EC150
+.obj lbl_803EC154, local
+	.float -480.0
+.endobj lbl_803EC154
+.obj lbl_803EC158, local
+	.float 320.0
+.endobj lbl_803EC158

@@ -9893,3 +9893,9 @@ lbl_constructor:
 .obj lbl_803E89F0, local
 	.float 3000.0
 .endobj lbl_803E89F0
+
+.section .bss, "wa"  # 0x802E9640 - 0x803E81E5
+.balign 8
+.obj collExtents, global
+	.skip 0x18
+.endobj collExtents

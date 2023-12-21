@@ -14042,3 +14042,21 @@ lbl_constructor:
 .obj lbl_803E8548, local
 	.double 3.0
 .endobj lbl_803E8548
+
+.section .bss, "wa"  # 0x802E9640 - 0x803E81E5
+.balign 8
+.obj fnVerts, local
+	.skip 0x1800
+.endobj fnVerts
+.balign 4
+.obj fnNorms, local
+	.skip 0x1800
+.endobj fnNorms
+.balign 4
+.obj fnTexs, local
+	.skip 0x1000
+.endobj fnTexs
+.balign 4
+.obj matUsed, local
+	.skip 0x100
+.endobj matUsed

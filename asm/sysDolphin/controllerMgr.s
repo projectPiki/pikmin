@@ -258,3 +258,9 @@
 	.4byte lbl_802A56BC
 	.4byte 0
 .endobj __RTTI__13ControllerMgr
+
+.section .bss, "wa"  # 0x802E9640 - 0x803E81E5
+.balign 8
+.obj sControllerPad, local
+	.skip 0x30
+.endobj sControllerPad

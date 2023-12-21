@@ -1165,6 +1165,7 @@
 .obj lbl_803E83D0, local
 	.float 0.0
 .endobj lbl_803E83D0
+.balign 4
 .obj lbl_803E83D4, local
 	.float 1.2
 .endobj lbl_803E83D4
@@ -1172,3 +1173,9 @@
 .obj lbl_803E83D8, local
 	.8byte 0x4330000000000000
 .endobj lbl_803E83D8
+
+.section .bss, "wa"  # 0x802E9640 - 0x803E81E5
+.balign 8
+.obj bgm, local
+	.skip 0xD38
+.endobj bgm

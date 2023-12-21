@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global initGame__10PikiInfMgrFv
-initGame__10PikiInfMgrFv:
+.fn initGame__10PikiInfMgrFv, global
 /* 800C56D4 000C2634  7C 08 02 A6 */	mflr r0
 /* 800C56D8 000C2638  3C 60 80 3D */	lis r3, pikiInfMgr@ha
 /* 800C56DC 000C263C  90 01 00 04 */	stw r0, 4(r1)
@@ -12,9 +11,9 @@ initGame__10PikiInfMgrFv:
 /* 800C56F0 000C2650  38 21 00 08 */	addi r1, r1, 8
 /* 800C56F4 000C2654  7C 08 03 A6 */	mtlr r0
 /* 800C56F8 000C2658  4E 80 00 20 */	blr 
+.endfn initGame__10PikiInfMgrFv
 
-.global saveCard__10PikiInfMgrFR18RandomAccessStream
-saveCard__10PikiInfMgrFR18RandomAccessStream:
+.fn saveCard__10PikiInfMgrFR18RandomAccessStream, global
 /* 800C56FC 000C265C  7C 08 02 A6 */	mflr r0
 /* 800C5700 000C2660  90 01 00 04 */	stw r0, 4(r1)
 /* 800C5704 000C2664  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -47,9 +46,9 @@ saveCard__10PikiInfMgrFR18RandomAccessStream:
 /* 800C5768 000C26C8  38 21 00 28 */	addi r1, r1, 0x28
 /* 800C576C 000C26CC  7C 08 03 A6 */	mtlr r0
 /* 800C5770 000C26D0  4E 80 00 20 */	blr 
+.endfn saveCard__10PikiInfMgrFR18RandomAccessStream
 
-.global loadCard__10PikiInfMgrFR18RandomAccessStream
-loadCard__10PikiInfMgrFR18RandomAccessStream:
+.fn loadCard__10PikiInfMgrFR18RandomAccessStream, global
 /* 800C5774 000C26D4  7C 08 02 A6 */	mflr r0
 /* 800C5778 000C26D8  90 01 00 04 */	stw r0, 4(r1)
 /* 800C577C 000C26DC  94 21 FF D0 */	stwu r1, -0x30(r1)
@@ -80,9 +79,9 @@ loadCard__10PikiInfMgrFR18RandomAccessStream:
 /* 800C57D8 000C2738  38 21 00 30 */	addi r1, r1, 0x30
 /* 800C57DC 000C273C  7C 08 03 A6 */	mtlr r0
 /* 800C57E0 000C2740  4E 80 00 20 */	blr 
+.endfn loadCard__10PikiInfMgrFR18RandomAccessStream
 
-.global incPiki__10PikiInfMgrFP4Piki
-incPiki__10PikiInfMgrFP4Piki:
+.fn incPiki__10PikiInfMgrFP4Piki, global
 /* 800C57E4 000C2744  A0 04 05 10 */	lhz r0, 0x510(r4)
 /* 800C57E8 000C2748  28 00 00 02 */	cmplwi r0, 2
 /* 800C57EC 000C274C  80 A4 05 20 */	lwz r5, 0x520(r4)
@@ -97,9 +96,9 @@ incPiki__10PikiInfMgrFP4Piki:
 /* 800C580C 000C276C  38 04 00 01 */	addi r0, r4, 1
 /* 800C5810 000C2770  7C 03 29 2E */	stwx r0, r3, r5
 /* 800C5814 000C2774  4E 80 00 20 */	blr 
+.endfn incPiki__10PikiInfMgrFP4Piki
 
-.global incPiki__10PikiInfMgrFii
-incPiki__10PikiInfMgrFii:
+.fn incPiki__10PikiInfMgrFii, global
 /* 800C5818 000C2778  1C 84 00 0C */	mulli r4, r4, 0xc
 /* 800C581C 000C277C  54 A0 10 3A */	slwi r0, r5, 2
 /* 800C5820 000C2780  7C A4 02 14 */	add r5, r4, r0
@@ -107,9 +106,9 @@ incPiki__10PikiInfMgrFii:
 /* 800C5828 000C2788  38 04 00 01 */	addi r0, r4, 1
 /* 800C582C 000C278C  7C 03 29 2E */	stwx r0, r3, r5
 /* 800C5830 000C2790  4E 80 00 20 */	blr 
+.endfn incPiki__10PikiInfMgrFii
 
-.global decPiki__10PikiInfMgrFP4Piki
-decPiki__10PikiInfMgrFP4Piki:
+.fn decPiki__10PikiInfMgrFP4Piki, global
 /* 800C5834 000C2794  A0 04 05 10 */	lhz r0, 0x510(r4)
 /* 800C5838 000C2798  28 00 00 02 */	cmplwi r0, 2
 /* 800C583C 000C279C  80 A4 05 20 */	lwz r5, 0x520(r4)
@@ -124,9 +123,9 @@ decPiki__10PikiInfMgrFP4Piki:
 /* 800C585C 000C27BC  38 04 FF FF */	addi r0, r4, -1
 /* 800C5860 000C27C0  7C 03 29 2E */	stwx r0, r3, r5
 /* 800C5864 000C27C4  4E 80 00 20 */	blr 
+.endfn decPiki__10PikiInfMgrFP4Piki
 
-.global clear__10PikiInfMgrFv
-clear__10PikiInfMgrFv:
+.fn clear__10PikiInfMgrFv, global
 /* 800C5868 000C27C8  38 00 00 00 */	li r0, 0
 /* 800C586C 000C27CC  90 03 00 18 */	stw r0, 0x18(r3)
 /* 800C5870 000C27D0  90 03 00 0C */	stw r0, 0xc(r3)
@@ -138,9 +137,9 @@ clear__10PikiInfMgrFv:
 /* 800C5888 000C27E8  90 03 00 14 */	stw r0, 0x14(r3)
 /* 800C588C 000C27EC  90 03 00 08 */	stw r0, 8(r3)
 /* 800C5890 000C27F0  4E 80 00 20 */	blr 
+.endfn clear__10PikiInfMgrFv
 
-.global store__7BaseInfFP8Creature
-store__7BaseInfFP8Creature:
+.fn store__7BaseInfFP8Creature, global
 /* 800C5894 000C27F4  7C 08 02 A6 */	mflr r0
 /* 800C5898 000C27F8  90 01 00 04 */	stw r0, 4(r1)
 /* 800C589C 000C27FC  94 21 FF F8 */	stwu r1, -8(r1)
@@ -164,13 +163,13 @@ store__7BaseInfFP8Creature:
 /* 800C58E4 000C2844  38 21 00 08 */	addi r1, r1, 8
 /* 800C58E8 000C2848  7C 08 03 A6 */	mtlr r0
 /* 800C58EC 000C284C  4E 80 00 20 */	blr 
+.endfn store__7BaseInfFP8Creature
 
-.global doStore__7BaseInfFP8Creature
-doStore__7BaseInfFP8Creature:
+.fn doStore__7BaseInfFP8Creature, weak
 /* 800C58F0 000C2850  4E 80 00 20 */	blr 
+.endfn doStore__7BaseInfFP8Creature
 
-.global restore__7BaseInfFP8Creature
-restore__7BaseInfFP8Creature:
+.fn restore__7BaseInfFP8Creature, global
 /* 800C58F4 000C2854  7C 08 02 A6 */	mflr r0
 /* 800C58F8 000C2858  90 01 00 04 */	stw r0, 4(r1)
 /* 800C58FC 000C285C  94 21 FF F8 */	stwu r1, -8(r1)
@@ -194,13 +193,13 @@ restore__7BaseInfFP8Creature:
 /* 800C5944 000C28A4  38 21 00 08 */	addi r1, r1, 8
 /* 800C5948 000C28A8  7C 08 03 A6 */	mtlr r0
 /* 800C594C 000C28AC  4E 80 00 20 */	blr 
+.endfn restore__7BaseInfFP8Creature
 
-.global doRestore__7BaseInfFP8Creature
-doRestore__7BaseInfFP8Creature:
+.fn doRestore__7BaseInfFP8Creature, weak
 /* 800C5950 000C28B0  4E 80 00 20 */	blr 
+.endfn doRestore__7BaseInfFP8Creature
 
-.global saveCard__7BaseInfFR18RandomAccessStream
-saveCard__7BaseInfFR18RandomAccessStream:
+.fn saveCard__7BaseInfFR18RandomAccessStream, global
 /* 800C5954 000C28B4  7C 08 02 A6 */	mflr r0
 /* 800C5958 000C28B8  90 01 00 04 */	stw r0, 4(r1)
 /* 800C595C 000C28BC  94 21 FF D0 */	stwu r1, -0x30(r1)
@@ -241,9 +240,9 @@ saveCard__7BaseInfFR18RandomAccessStream:
 /* 800C59E8 000C2948  38 21 00 30 */	addi r1, r1, 0x30
 /* 800C59EC 000C294C  7C 08 03 A6 */	mtlr r0
 /* 800C59F0 000C2950  4E 80 00 20 */	blr 
+.endfn saveCard__7BaseInfFR18RandomAccessStream
 
-.global loadCard__7BaseInfFR18RandomAccessStream
-loadCard__7BaseInfFR18RandomAccessStream:
+.fn loadCard__7BaseInfFR18RandomAccessStream, global
 /* 800C59F4 000C2954  7C 08 02 A6 */	mflr r0
 /* 800C59F8 000C2958  90 01 00 04 */	stw r0, 4(r1)
 /* 800C59FC 000C295C  94 21 FF C8 */	stwu r1, -0x38(r1)
@@ -305,9 +304,9 @@ loadCard__7BaseInfFR18RandomAccessStream:
 /* 800C5ADC 000C2A3C  38 21 00 38 */	addi r1, r1, 0x38
 /* 800C5AE0 000C2A40  7C 08 03 A6 */	mtlr r0
 /* 800C5AE4 000C2A44  4E 80 00 20 */	blr 
+.endfn loadCard__7BaseInfFR18RandomAccessStream
 
-.global saveCard__8BPikiInfFR18RandomAccessStream
-saveCard__8BPikiInfFR18RandomAccessStream:
+.fn saveCard__8BPikiInfFR18RandomAccessStream, global
 /* 800C5AE8 000C2A48  7C 08 02 A6 */	mflr r0
 /* 800C5AEC 000C2A4C  90 01 00 04 */	stw r0, 4(r1)
 /* 800C5AF0 000C2A50  94 21 FF D0 */	stwu r1, -0x30(r1)
@@ -357,9 +356,9 @@ saveCard__8BPikiInfFR18RandomAccessStream:
 /* 800C5BA0 000C2B00  38 21 00 30 */	addi r1, r1, 0x30
 /* 800C5BA4 000C2B04  7C 08 03 A6 */	mtlr r0
 /* 800C5BA8 000C2B08  4E 80 00 20 */	blr 
+.endfn saveCard__8BPikiInfFR18RandomAccessStream
 
-.global loadCard__8BPikiInfFR18RandomAccessStream
-loadCard__8BPikiInfFR18RandomAccessStream:
+.fn loadCard__8BPikiInfFR18RandomAccessStream, global
 /* 800C5BAC 000C2B0C  7C 08 02 A6 */	mflr r0
 /* 800C5BB0 000C2B10  90 01 00 04 */	stw r0, 4(r1)
 /* 800C5BB4 000C2B14  94 21 FF C8 */	stwu r1, -0x38(r1)
@@ -430,25 +429,25 @@ loadCard__8BPikiInfFR18RandomAccessStream:
 /* 800C5CB8 000C2C18  38 21 00 38 */	addi r1, r1, 0x38
 /* 800C5CBC 000C2C1C  7C 08 03 A6 */	mtlr r0
 /* 800C5CC0 000C2C20  4E 80 00 20 */	blr 
+.endfn loadCard__8BPikiInfFR18RandomAccessStream
 
-.global doStore__8BPikiInfFP8Creature
-doStore__8BPikiInfFP8Creature:
+.fn doStore__8BPikiInfFP8Creature, global
 /* 800C5CC4 000C2C24  80 04 03 CC */	lwz r0, 0x3cc(r4)
 /* 800C5CC8 000C2C28  98 03 00 2C */	stb r0, 0x2c(r3)
 /* 800C5CCC 000C2C2C  80 04 03 D0 */	lwz r0, 0x3d0(r4)
 /* 800C5CD0 000C2C30  98 03 00 2D */	stb r0, 0x2d(r3)
 /* 800C5CD4 000C2C34  4E 80 00 20 */	blr 
+.endfn doStore__8BPikiInfFP8Creature
 
-.global doRestore__8BPikiInfFP8Creature
-doRestore__8BPikiInfFP8Creature:
+.fn doRestore__8BPikiInfFP8Creature, global
 /* 800C5CD8 000C2C38  88 03 00 2C */	lbz r0, 0x2c(r3)
 /* 800C5CDC 000C2C3C  90 04 03 CC */	stw r0, 0x3cc(r4)
 /* 800C5CE0 000C2C40  88 03 00 2D */	lbz r0, 0x2d(r3)
 /* 800C5CE4 000C2C44  90 04 03 D0 */	stw r0, 0x3d0(r4)
 /* 800C5CE8 000C2C48  4E 80 00 20 */	blr 
+.endfn doRestore__8BPikiInfFP8Creature
 
-.global __ct__10MonoInfMgrFv
-__ct__10MonoInfMgrFv:
+.fn __ct__10MonoInfMgrFv, global
 /* 800C5CEC 000C2C4C  7C 08 02 A6 */	mflr r0
 /* 800C5CF0 000C2C50  3C 80 80 2C */	lis r4, __vt__6InfMgr@ha
 /* 800C5CF4 000C2C54  90 01 00 04 */	stw r0, 4(r1)
@@ -541,9 +540,9 @@ __ct__10MonoInfMgrFv:
 /* 800C5E50 000C2DB0  38 21 00 30 */	addi r1, r1, 0x30
 /* 800C5E54 000C2DB4  7C 08 03 A6 */	mtlr r0
 /* 800C5E58 000C2DB8  4E 80 00 20 */	blr 
+.endfn __ct__10MonoInfMgrFv
 
-.global init__10MonoInfMgrFi
-init__10MonoInfMgrFi:
+.fn init__10MonoInfMgrFi, global
 /* 800C5E5C 000C2DBC  7C 08 02 A6 */	mflr r0
 /* 800C5E60 000C2DC0  3C A0 80 2C */	lis r5, lbl_802B8248@ha
 /* 800C5E64 000C2DC4  90 01 00 04 */	stw r0, 4(r1)
@@ -598,9 +597,9 @@ init__10MonoInfMgrFi:
 /* 800C5F20 000C2E80  38 21 00 28 */	addi r1, r1, 0x28
 /* 800C5F24 000C2E84  7C 08 03 A6 */	mtlr r0
 /* 800C5F28 000C2E88  4E 80 00 20 */	blr 
+.endfn init__10MonoInfMgrFi
 
-.global getFreeInf__10MonoInfMgrFv
-getFreeInf__10MonoInfMgrFv:
+.fn getFreeInf__10MonoInfMgrFv, global
 /* 800C5F2C 000C2E8C  7C 08 02 A6 */	mflr r0
 /* 800C5F30 000C2E90  90 01 00 04 */	stw r0, 4(r1)
 /* 800C5F34 000C2E94  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -624,9 +623,9 @@ getFreeInf__10MonoInfMgrFv:
 /* 800C5F78 000C2ED8  38 21 00 18 */	addi r1, r1, 0x18
 /* 800C5F7C 000C2EDC  7C 08 03 A6 */	mtlr r0
 /* 800C5F80 000C2EE0  4E 80 00 20 */	blr 
+.endfn getFreeInf__10MonoInfMgrFv
 
-.global delInf__10MonoInfMgrFP7BaseInf
-delInf__10MonoInfMgrFP7BaseInf:
+.fn delInf__10MonoInfMgrFP7BaseInf, global
 /* 800C5F84 000C2EE4  7C 08 02 A6 */	mflr r0
 /* 800C5F88 000C2EE8  90 01 00 04 */	stw r0, 4(r1)
 /* 800C5F8C 000C2EEC  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -645,9 +644,9 @@ delInf__10MonoInfMgrFP7BaseInf:
 /* 800C5FC0 000C2F20  38 21 00 18 */	addi r1, r1, 0x18
 /* 800C5FC4 000C2F24  7C 08 03 A6 */	mtlr r0
 /* 800C5FC8 000C2F28  4E 80 00 20 */	blr 
+.endfn delInf__10MonoInfMgrFP7BaseInf
 
-.global getActiveNum__10MonoInfMgrFv
-getActiveNum__10MonoInfMgrFv:
+.fn getActiveNum__10MonoInfMgrFv, global
 /* 800C5FCC 000C2F2C  7C 08 02 A6 */	mflr r0
 /* 800C5FD0 000C2F30  38 63 00 0C */	addi r3, r3, 0xc
 /* 800C5FD4 000C2F34  90 01 00 04 */	stw r0, 4(r1)
@@ -657,9 +656,9 @@ getActiveNum__10MonoInfMgrFv:
 /* 800C5FE4 000C2F44  38 21 00 08 */	addi r1, r1, 8
 /* 800C5FE8 000C2F48  7C 08 03 A6 */	mtlr r0
 /* 800C5FEC 000C2F4C  4E 80 00 20 */	blr 
+.endfn getActiveNum__10MonoInfMgrFv
 
-.global getFreeNum__10MonoInfMgrFv
-getFreeNum__10MonoInfMgrFv:
+.fn getFreeNum__10MonoInfMgrFv, global
 /* 800C5FF0 000C2F50  7C 08 02 A6 */	mflr r0
 /* 800C5FF4 000C2F54  38 63 00 38 */	addi r3, r3, 0x38
 /* 800C5FF8 000C2F58  90 01 00 04 */	stw r0, 4(r1)
@@ -669,9 +668,9 @@ getFreeNum__10MonoInfMgrFv:
 /* 800C6008 000C2F68  38 21 00 08 */	addi r1, r1, 8
 /* 800C600C 000C2F6C  7C 08 03 A6 */	mtlr r0
 /* 800C6010 000C2F70  4E 80 00 20 */	blr 
+.endfn getFreeNum__10MonoInfMgrFv
 
-.global loadCard__10MonoInfMgrFR18RandomAccessStream
-loadCard__10MonoInfMgrFR18RandomAccessStream:
+.fn loadCard__10MonoInfMgrFR18RandomAccessStream, global
 /* 800C6014 000C2F74  7C 08 02 A6 */	mflr r0
 /* 800C6018 000C2F78  90 01 00 04 */	stw r0, 4(r1)
 /* 800C601C 000C2F7C  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -725,9 +724,9 @@ loadCard__10MonoInfMgrFR18RandomAccessStream:
 /* 800C60CC 000C302C  38 21 00 20 */	addi r1, r1, 0x20
 /* 800C60D0 000C3030  7C 08 03 A6 */	mtlr r0
 /* 800C60D4 000C3034  4E 80 00 20 */	blr 
+.endfn loadCard__10MonoInfMgrFR18RandomAccessStream
 
-.global newInf__11BPikiInfMgrFv
-newInf__11BPikiInfMgrFv:
+.fn newInf__11BPikiInfMgrFv, global
 /* 800C60D8 000C3038  7C 08 02 A6 */	mflr r0
 /* 800C60DC 000C303C  38 60 00 30 */	li r3, 0x30
 /* 800C60E0 000C3040  90 01 00 04 */	stw r0, 4(r1)
@@ -780,9 +779,9 @@ newInf__11BPikiInfMgrFv:
 /* 800C6198 000C30F8  38 21 00 18 */	addi r1, r1, 0x18
 /* 800C619C 000C30FC  7C 08 03 A6 */	mtlr r0
 /* 800C61A0 000C3100  4E 80 00 20 */	blr 
+.endfn newInf__11BPikiInfMgrFv
 
-.global getPikiCount__11BPikiInfMgrFi
-getPikiCount__11BPikiInfMgrFi:
+.fn getPikiCount__11BPikiInfMgrFi, global
 /* 800C61A4 000C3104  80 A3 00 1C */	lwz r5, 0x1c(r3)
 /* 800C61A8 000C3108  38 60 00 00 */	li r3, 0
 /* 800C61AC 000C310C  48 00 00 18 */	b .L_800C61C4
@@ -797,9 +796,9 @@ getPikiCount__11BPikiInfMgrFi:
 /* 800C61C4 000C3124  28 05 00 00 */	cmplwi r5, 0
 /* 800C61C8 000C3128  40 82 FF E8 */	bne .L_800C61B0
 /* 800C61CC 000C312C  4E 80 00 20 */	blr 
+.endfn getPikiCount__11BPikiInfMgrFi
 
-.global newInf__14CreatureInfMgrFv
-newInf__14CreatureInfMgrFv:
+.fn newInf__14CreatureInfMgrFv, global
 /* 800C61D0 000C3130  7C 08 02 A6 */	mflr r0
 /* 800C61D4 000C3134  38 60 00 4C */	li r3, 0x4c
 /* 800C61D8 000C3138  90 01 00 04 */	stw r0, 4(r1)
@@ -854,9 +853,9 @@ newInf__14CreatureInfMgrFv:
 /* 800C6298 000C31F8  38 21 00 18 */	addi r1, r1, 0x18
 /* 800C629C 000C31FC  7C 08 03 A6 */	mtlr r0
 /* 800C62A0 000C3200  4E 80 00 20 */	blr 
+.endfn newInf__14CreatureInfMgrFv
 
-.global doStore__11CreatureInfFP8Creature
-doStore__11CreatureInfFP8Creature:
+.fn doStore__11CreatureInfFP8Creature, global
 /* 800C62A4 000C3204  7C 08 02 A6 */	mflr r0
 /* 800C62A8 000C3208  90 01 00 04 */	stw r0, 4(r1)
 /* 800C62AC 000C320C  94 21 FF D0 */	stwu r1, -0x30(r1)
@@ -915,9 +914,9 @@ doStore__11CreatureInfFP8Creature:
 /* 800C6378 000C32D8  38 21 00 30 */	addi r1, r1, 0x30
 /* 800C637C 000C32DC  7C 08 03 A6 */	mtlr r0
 /* 800C6380 000C32E0  4E 80 00 20 */	blr 
+.endfn doStore__11CreatureInfFP8Creature
 
-.global doRestore__11CreatureInfFP8Creature
-doRestore__11CreatureInfFP8Creature:
+.fn doRestore__11CreatureInfFP8Creature, global
 /* 800C6384 000C32E4  7C 08 02 A6 */	mflr r0
 /* 800C6388 000C32E8  7C 65 1B 78 */	mr r5, r3
 /* 800C638C 000C32EC  90 01 00 04 */	stw r0, 4(r1)
@@ -944,9 +943,9 @@ doRestore__11CreatureInfFP8Creature:
 /* 800C63D8 000C3338  38 21 00 08 */	addi r1, r1, 8
 /* 800C63DC 000C333C  7C 08 03 A6 */	mtlr r0
 /* 800C63E0 000C3340  4E 80 00 20 */	blr 
+.endfn doRestore__11CreatureInfFP8Creature
 
-.global init__8StageInfFv
-init__8StageInfFv:
+.fn init__8StageInfFv, global
 /* 800C63E4 000C3344  7C 08 02 A6 */	mflr r0
 /* 800C63E8 000C3348  38 80 00 64 */	li r4, 0x64
 /* 800C63EC 000C334C  90 01 00 04 */	stw r0, 4(r1)
@@ -959,9 +958,9 @@ init__8StageInfFv:
 /* 800C6408 000C3368  38 21 00 08 */	addi r1, r1, 8
 /* 800C640C 000C336C  7C 08 03 A6 */	mtlr r0
 /* 800C6410 000C3370  4E 80 00 20 */	blr 
+.endfn init__8StageInfFv
 
-.global initGame__8StageInfFv
-initGame__8StageInfFv:
+.fn initGame__8StageInfFv, global
 /* 800C6414 000C3374  7C 08 02 A6 */	mflr r0
 /* 800C6418 000C3378  90 01 00 04 */	stw r0, 4(r1)
 /* 800C641C 000C337C  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -989,9 +988,9 @@ initGame__8StageInfFv:
 /* 800C646C 000C33CC  38 21 00 20 */	addi r1, r1, 0x20
 /* 800C6470 000C33D0  7C 08 03 A6 */	mtlr r0
 /* 800C6474 000C33D4  4E 80 00 20 */	blr 
+.endfn initGame__8StageInfFv
 
-.global saveCard__8StageInfFR18RandomAccessStream
-saveCard__8StageInfFR18RandomAccessStream:
+.fn saveCard__8StageInfFR18RandomAccessStream, global
 /* 800C6478 000C33D8  7C 08 02 A6 */	mflr r0
 /* 800C647C 000C33DC  90 01 00 04 */	stw r0, 4(r1)
 /* 800C6480 000C33E0  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -1028,9 +1027,9 @@ saveCard__8StageInfFR18RandomAccessStream:
 /* 800C64F4 000C3454  38 21 00 18 */	addi r1, r1, 0x18
 /* 800C64F8 000C3458  7C 08 03 A6 */	mtlr r0
 /* 800C64FC 000C345C  4E 80 00 20 */	blr 
+.endfn saveCard__8StageInfFR18RandomAccessStream
 
-.global loadCard__8StageInfFR18RandomAccessStream
-loadCard__8StageInfFR18RandomAccessStream:
+.fn loadCard__8StageInfFR18RandomAccessStream, global
 /* 800C6500 000C3460  7C 08 02 A6 */	mflr r0
 /* 800C6504 000C3464  90 01 00 04 */	stw r0, 4(r1)
 /* 800C6508 000C3468  94 21 FF F8 */	stwu r1, -8(r1)
@@ -1039,10 +1038,11 @@ loadCard__8StageInfFR18RandomAccessStream:
 /* 800C6514 000C3474  38 21 00 08 */	addi r1, r1, 8
 /* 800C6518 000C3478  7C 08 03 A6 */	mtlr r0
 /* 800C651C 000C347C  4E 80 00 20 */	blr 
+.endfn loadCard__8StageInfFR18RandomAccessStream
 
-.global init__6InfMgrFi
-init__6InfMgrFi:
+.fn init__6InfMgrFi, weak
 /* 800C6520 000C3480  4E 80 00 20 */	blr 
+.endfn init__6InfMgrFi
 
 .fn __sinit_pikiInf_cpp, local
 /* 800C6524 000C3484  3C 60 80 3D */	lis r3, pikiInfMgr@ha
@@ -1066,32 +1066,41 @@ lbl_constructor:
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802B8230:
+.obj lbl_802B8230, local
 	.asciz "pikiInf.cpp"
+.endobj lbl_802B8230
 .balign 4
-lbl_802B823C:
+.obj lbl_802B823C, local
 	.asciz "CoreNode"
+.endobj lbl_802B823C
 .balign 4
-lbl_802B8248:
+.obj lbl_802B8248, local
 	.asciz "activeList"
+.endobj lbl_802B8248
 .balign 4
-lbl_802B8254:
+.obj lbl_802B8254, local
 	.asciz "freeList"
+.endobj lbl_802B8254
 .balign 4
-lbl_802B8260:
+.obj lbl_802B8260, local
 	.asciz "CreatureInf"
+.endobj lbl_802B8260
 .balign 4
-lbl_802B826C:
+.obj lbl_802B826C, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte 0
-lbl_802B8278:
+.endobj lbl_802B826C
+.balign 4
+.obj lbl_802B8278, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte __RTTI__8CoreNode
 	.4byte 0
 	.4byte 0
-lbl_802B828C:
+.endobj lbl_802B8278
+.balign 4
+.obj lbl_802B828C, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte __RTTI__8CoreNode
@@ -1099,8 +1108,9 @@ lbl_802B828C:
 	.4byte __RTTI__7BaseInf
 	.4byte 0
 	.4byte 0
-.global __vt__11CreatureInf
-__vt__11CreatureInf:
+.endobj lbl_802B828C
+.balign 4
+.obj __vt__11CreatureInf, global
 	.4byte __RTTI__11CreatureInf
 	.4byte 0
 	.4byte getAgeNodeType__5ANodeFv
@@ -1109,25 +1119,31 @@ __vt__11CreatureInf:
 	.4byte doRestore__11CreatureInfFP8Creature
 	.4byte saveCard__7BaseInfFR18RandomAccessStream
 	.4byte loadCard__7BaseInfFR18RandomAccessStream
+.endobj __vt__11CreatureInf
 .balign 4
-lbl_802B82C8:
+.obj lbl_802B82C8, local
 	.asciz "CreatureInfMgr"
+.endobj lbl_802B82C8
 .balign 4
-lbl_802B82D8:
+.obj lbl_802B82D8, local
 	.asciz "MonoInfMgr"
+.endobj lbl_802B82D8
 .balign 4
-lbl_802B82E4:
+.obj lbl_802B82E4, local
 	.4byte __RTTI__6InfMgr
 	.4byte 0
 	.4byte 0
-lbl_802B82F0:
+.endobj lbl_802B82E4
+.balign 4
+.obj lbl_802B82F0, local
 	.4byte __RTTI__6InfMgr
 	.4byte 0
 	.4byte __RTTI__10MonoInfMgr
 	.4byte 0
 	.4byte 0
-.global __vt__14CreatureInfMgr
-__vt__14CreatureInfMgr:
+.endobj lbl_802B82F0
+.balign 4
+.obj __vt__14CreatureInfMgr, global
 	.4byte __RTTI__14CreatureInfMgr
 	.4byte 0
 	.4byte init__10MonoInfMgrFi
@@ -1136,18 +1152,21 @@ __vt__14CreatureInfMgr:
 	.4byte getFreeNum__10MonoInfMgrFv
 	.4byte getActiveNum__10MonoInfMgrFv
 	.4byte newInf__14CreatureInfMgrFv
+.endobj __vt__14CreatureInfMgr
 .balign 4
-lbl_802B8324:
+.obj lbl_802B8324, local
 	.asciz "BPikiInfMgr"
+.endobj lbl_802B8324
 .balign 4
-lbl_802B8330:
+.obj lbl_802B8330, local
 	.4byte __RTTI__6InfMgr
 	.4byte 0
 	.4byte __RTTI__10MonoInfMgr
 	.4byte 0
 	.4byte 0
-.global __vt__11BPikiInfMgr
-__vt__11BPikiInfMgr:
+.endobj lbl_802B8330
+.balign 4
+.obj __vt__11BPikiInfMgr, global
 	.4byte __RTTI__11BPikiInfMgr
 	.4byte 0
 	.4byte init__10MonoInfMgrFi
@@ -1156,8 +1175,9 @@ __vt__11BPikiInfMgr:
 	.4byte getFreeNum__10MonoInfMgrFv
 	.4byte getActiveNum__10MonoInfMgrFv
 	.4byte newInf__11BPikiInfMgrFv
-.global __vt__10MonoInfMgr
-__vt__10MonoInfMgr:
+.endobj __vt__11BPikiInfMgr
+.balign 4
+.obj __vt__10MonoInfMgr, global
 	.4byte __RTTI__10MonoInfMgr
 	.4byte 0
 	.4byte init__10MonoInfMgrFi
@@ -1166,8 +1186,9 @@ __vt__10MonoInfMgr:
 	.4byte getFreeNum__10MonoInfMgrFv
 	.4byte getActiveNum__10MonoInfMgrFv
 	.4byte 0
-.global __vt__6InfMgr
-__vt__6InfMgr:
+.endobj __vt__10MonoInfMgr
+.balign 4
+.obj __vt__6InfMgr, weak
 	.4byte __RTTI__6InfMgr
 	.4byte 0
 	.4byte init__6InfMgrFi
@@ -1175,11 +1196,13 @@ __vt__6InfMgr:
 	.4byte 0
 	.4byte 0
 	.4byte 0
+.endobj __vt__6InfMgr
 .balign 4
-lbl_802B83A0:
+.obj lbl_802B83A0, local
 	.asciz "BPikiInf"
+.endobj lbl_802B83A0
 .balign 4
-lbl_802B83AC:
+.obj lbl_802B83AC, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte __RTTI__8CoreNode
@@ -1187,8 +1210,9 @@ lbl_802B83AC:
 	.4byte __RTTI__7BaseInf
 	.4byte 0
 	.4byte 0
-.global __vt__8BPikiInf
-__vt__8BPikiInf:
+.endobj lbl_802B83AC
+.balign 4
+.obj __vt__8BPikiInf, global
 	.4byte __RTTI__8BPikiInf
 	.4byte 0
 	.4byte getAgeNodeType__5ANodeFv
@@ -1197,8 +1221,9 @@ __vt__8BPikiInf:
 	.4byte doRestore__8BPikiInfFP8Creature
 	.4byte saveCard__8BPikiInfFR18RandomAccessStream
 	.4byte loadCard__8BPikiInfFR18RandomAccessStream
-.global __vt__7BaseInf
-__vt__7BaseInf:
+.endobj __vt__8BPikiInf
+.balign 4
+.obj __vt__7BaseInf, global
 	.4byte __RTTI__7BaseInf
 	.4byte 0
 	.4byte getAgeNodeType__5ANodeFv
@@ -1207,84 +1232,114 @@ __vt__7BaseInf:
 	.4byte doRestore__7BaseInfFP8Creature
 	.4byte saveCard__7BaseInfFR18RandomAccessStream
 	.4byte loadCard__7BaseInfFR18RandomAccessStream
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
+.endobj __vt__7BaseInf
+.balign 4
+.skip 0x20 # compiler padding
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-lbl_803E09E8:
+.obj lbl_803E09E8, local
 	.float 0.0
-lbl_803E09EC:
+.endobj lbl_803E09E8
+.obj lbl_803E09EC, local
 	.float 0.0
-lbl_803E09F0:
+.endobj lbl_803E09EC
+.obj lbl_803E09F0, local
 	.float 0.0
-lbl_803E09F4:
+.endobj lbl_803E09F0
+.obj lbl_803E09F4, local
 	.float 0.0
-lbl_803E09F8:
+.endobj lbl_803E09F4
+.obj lbl_803E09F8, local
 	.float 0.0
-lbl_803E09FC:
+.endobj lbl_803E09F8
+.obj lbl_803E09FC, local
 	.float 0.0
+.endobj lbl_803E09FC
 .balign 4
-lbl_803E0A00:
+.obj lbl_803E0A00, local
 	.asciz "baseInf"
+.endobj lbl_803E0A00
 .balign 4
-lbl_803E0A08:
+.obj lbl_803E0A08, local
 	.float 0.0
-lbl_803E0A0C:
+.endobj lbl_803E0A08
+.obj lbl_803E0A0C, local
 	.float 0.0
-lbl_803E0A10:
+.endobj lbl_803E0A0C
+.obj lbl_803E0A10, local
 	.float 0.0
+.endobj lbl_803E0A10
 .balign 4
-lbl_803E0A14:
+.obj lbl_803E0A14, local
 	.asciz "ANode"
+.endobj lbl_803E0A14
 .balign 4
-__RTTI__5ANode:
+.obj __RTTI__5ANode, local
 	.4byte lbl_803E0A14
 	.4byte 0
-__RTTI__8CoreNode:
+.endobj __RTTI__5ANode
+.balign 4
+.obj __RTTI__8CoreNode, local
 	.4byte lbl_802B823C
 	.4byte lbl_802B826C
+.endobj __RTTI__8CoreNode
 .balign 4
-lbl_803E0A2C:
+.obj lbl_803E0A2C, local
 	.asciz "BaseInf"
+.endobj lbl_803E0A2C
 .balign 4
-__RTTI__7BaseInf:
+.obj __RTTI__7BaseInf, local
 	.4byte lbl_803E0A2C
 	.4byte lbl_802B8278
-__RTTI__11CreatureInf:
+.endobj __RTTI__7BaseInf
+.balign 4
+.obj __RTTI__11CreatureInf, local
 	.4byte lbl_802B8260
 	.4byte lbl_802B828C
+.endobj __RTTI__11CreatureInf
 .balign 4
-lbl_803E0A44:
+.obj lbl_803E0A44, local
 	.asciz "InfMgr"
+.endobj lbl_803E0A44
 .balign 4
-__RTTI__6InfMgr:
+.obj __RTTI__6InfMgr, local
 	.4byte lbl_803E0A44
 	.4byte 0
-__RTTI__10MonoInfMgr:
+.endobj __RTTI__6InfMgr
+.balign 4
+.obj __RTTI__10MonoInfMgr, local
 	.4byte lbl_802B82D8
 	.4byte lbl_802B82E4
-__RTTI__14CreatureInfMgr:
+.endobj __RTTI__10MonoInfMgr
+.balign 4
+.obj __RTTI__14CreatureInfMgr, local
 	.4byte lbl_802B82C8
 	.4byte lbl_802B82F0
-__RTTI__11BPikiInfMgr:
+.endobj __RTTI__14CreatureInfMgr
+.balign 4
+.obj __RTTI__11BPikiInfMgr, local
 	.4byte lbl_802B8324
 	.4byte lbl_802B8330
-__RTTI__8BPikiInf:
+.endobj __RTTI__11BPikiInfMgr
+.balign 4
+.obj __RTTI__8BPikiInf, local
 	.4byte lbl_802B83A0
 	.4byte lbl_802B83AC
+.endobj __RTTI__8BPikiInf
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803E97A8:
+.obj lbl_803E97A8, local
 	.float 0.0
+.endobj lbl_803E97A8
 .balign 8
-lbl_803E97B0:
-	.4byte 0x43300000
-	.4byte 0x80000000
+.obj lbl_803E97B0, local
+	.8byte 0x4330000080000000
+.endobj lbl_803E97B0
+
+.section .bss, "wa"  # 0x802E9640 - 0x803E81E5
+.balign 8
+.obj pikiInfMgr, global
+	.skip 0x24
+.endobj pikiInfMgr

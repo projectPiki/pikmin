@@ -1,8 +1,5 @@
 # Linker order for every file, passed to the Metrowerks linker.
 
-GROUP_0_FILES :=\
-	$(BUILD_DIR)/asm/bss.o\
-
 SYSBOOTUP :=\
 	$(BUILD_DIR)/src/sysBootup.o\
 
@@ -13,6 +10,7 @@ JAUDIO :=\
 	$(BUILD_DIR)/asm/jaudio/sample.o\
 	$(BUILD_DIR)/asm/jaudio/dummyrom.o\
 	$(BUILD_DIR)/asm/jaudio/audiothread.o\
+	$(BUILD_DIR)/asm/jaudio/audiothread_fakebss.o\
 	$(BUILD_DIR)/asm/jaudio/streamctrl.o\
 	$(BUILD_DIR)/asm/jaudio/dspbuf.o\
 	$(BUILD_DIR)/asm/jaudio/cpubuf.o\
@@ -63,6 +61,8 @@ JAUDIO :=\
 	$(BUILD_DIR)/asm/jaudio/bankloader.o\
 	$(BUILD_DIR)/asm/jaudio/interleave.o\
 	$(BUILD_DIR)/asm/jaudio/pikiseq.o\
+	$(BUILD_DIR)/asm/jaudio/hplaybss.o\
+	$(BUILD_DIR)/asm/jaudio/hplaybss2.o\
 	$(BUILD_DIR)/asm/jaudio/hvqm_play.o\
 
 HVQM4DEC :=\

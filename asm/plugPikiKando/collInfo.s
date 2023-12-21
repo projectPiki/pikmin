@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global get2dDist__8CylinderFR8Vector3f
-get2dDist__8CylinderFR8Vector3f:
+.fn get2dDist__8CylinderFR8Vector3f, global
 /* 80086CC4 00083C24  7C 08 02 A6 */	mflr r0
 /* 80086CC8 00083C28  90 01 00 04 */	stw r0, 4(r1)
 /* 80086CCC 00083C2C  94 21 FE 70 */	stwu r1, -0x190(r1)
@@ -189,9 +188,9 @@ get2dDist__8CylinderFR8Vector3f:
 /* 80086F94 00083EF4  38 21 01 90 */	addi r1, r1, 0x190
 /* 80086F98 00083EF8  7C 08 03 A6 */	mtlr r0
 /* 80086F9C 00083EFC  4E 80 00 20 */	blr 
+.endfn get2dDist__8CylinderFR8Vector3f
 
-.global collide__8CylinderFRC6SphereR8Vector3fRf
-collide__8CylinderFRC6SphereR8Vector3fRf:
+.fn collide__8CylinderFRC6SphereR8Vector3fRf, global
 /* 80086FA0 00083F00  7C 08 02 A6 */	mflr r0
 /* 80086FA4 00083F04  90 01 00 04 */	stw r0, 4(r1)
 /* 80086FA8 00083F08  94 21 FE 70 */	stwu r1, -0x190(r1)
@@ -439,9 +438,9 @@ collide__8CylinderFRC6SphereR8Vector3fRf:
 /* 80087354 000842B4  38 21 01 90 */	addi r1, r1, 0x190
 /* 80087358 000842B8  7C 08 03 A6 */	mtlr r0
 /* 8008735C 000842BC  4E 80 00 20 */	blr 
+.endfn collide__8CylinderFRC6SphereR8Vector3fRf
 
-.global getYRatio__4TubeFf
-getYRatio__4TubeFf:
+.fn getYRatio__4TubeFf, global
 /* 80087360 000842C0  C0 43 00 10 */	lfs f2, 0x10(r3)
 /* 80087364 000842C4  C0 63 00 04 */	lfs f3, 4(r3)
 /* 80087368 000842C8  C0 02 8A 40 */	lfs f0, lbl_803E8C40@sda21(r2)
@@ -454,9 +453,9 @@ getYRatio__4TubeFf:
 .L_80087384:
 /* 80087384 000842E4  C0 22 8A 60 */	lfs f1, lbl_803E8C60@sda21(r2)
 /* 80087388 000842E8  4E 80 00 20 */	blr 
+.endfn getYRatio__4TubeFf
 
-.global collide__4TubeFRC6SphereR8Vector3fRf
-collide__4TubeFRC6SphereR8Vector3fRf:
+.fn collide__4TubeFRC6SphereR8Vector3fRf, global
 /* 8008738C 000842EC  7C 08 02 A6 */	mflr r0
 /* 80087390 000842F0  90 01 00 04 */	stw r0, 4(r1)
 /* 80087394 000842F4  94 21 FE 88 */	stwu r1, -0x178(r1)
@@ -669,9 +668,9 @@ collide__4TubeFRC6SphereR8Vector3fRf:
 /* 800876BC 0008461C  38 21 01 78 */	addi r1, r1, 0x178
 /* 800876C0 00084620  7C 08 03 A6 */	mtlr r0
 /* 800876C4 00084624  4E 80 00 20 */	blr 
+.endfn collide__4TubeFRC6SphereR8Vector3fRf
 
-.global getPosRatio__8CylinderFRC8Vector3f
-getPosRatio__8CylinderFRC8Vector3f:
+.fn getPosRatio__8CylinderFRC8Vector3f, global
 /* 800876C8 00084628  7C 08 02 A6 */	mflr r0
 /* 800876CC 0008462C  90 01 00 04 */	stw r0, 4(r1)
 /* 800876D0 00084630  94 21 FF 40 */	stwu r1, -0xc0(r1)
@@ -730,9 +729,9 @@ getPosRatio__8CylinderFRC8Vector3f:
 /* 800877A0 00084700  38 21 00 C0 */	addi r1, r1, 0xc0
 /* 800877A4 00084704  7C 08 03 A6 */	mtlr r0
 /* 800877A8 00084708  4E 80 00 20 */	blr 
+.endfn getPosRatio__8CylinderFRC8Vector3f
 
-.global getPosRatio__4TubeFRC8Vector3f
-getPosRatio__4TubeFRC8Vector3f:
+.fn getPosRatio__4TubeFRC8Vector3f, global
 /* 800877AC 0008470C  7C 08 02 A6 */	mflr r0
 /* 800877B0 00084710  90 01 00 04 */	stw r0, 4(r1)
 /* 800877B4 00084714  94 21 FF 40 */	stwu r1, -0xc0(r1)
@@ -791,9 +790,9 @@ getPosRatio__4TubeFRC8Vector3f:
 /* 80087884 000847E4  38 21 00 C0 */	addi r1, r1, 0xc0
 /* 80087888 000847E8  7C 08 03 A6 */	mtlr r0
 /* 8008788C 000847EC  4E 80 00 20 */	blr 
+.endfn getPosRatio__4TubeFRC8Vector3f
 
-.global getPosGradient__4TubeFR8Vector3ffR8Vector3fR8Vector3f
-getPosGradient__4TubeFR8Vector3ffR8Vector3fR8Vector3f:
+.fn getPosGradient__4TubeFR8Vector3ffR8Vector3fR8Vector3f, global
 /* 80087890 000847F0  7C 08 02 A6 */	mflr r0
 /* 80087894 000847F4  90 01 00 04 */	stw r0, 4(r1)
 /* 80087898 000847F8  94 21 FE 90 */	stwu r1, -0x170(r1)
@@ -938,9 +937,9 @@ getPosGradient__4TubeFR8Vector3ffR8Vector3fR8Vector3f:
 /* 80087ABC 00084A1C  38 21 01 70 */	addi r1, r1, 0x170
 /* 80087AC0 00084A20  7C 08 03 A6 */	mtlr r0
 /* 80087AC4 00084A24  4E 80 00 20 */	blr 
+.endfn getPosGradient__4TubeFR8Vector3ffR8Vector3fR8Vector3f
 
-.global setPos__4TubeFf
-setPos__4TubeFf:
+.fn setPos__4TubeFf, global
 /* 80087AC8 00084A28  7C 08 02 A6 */	mflr r0
 /* 80087ACC 00084A2C  90 01 00 04 */	stw r0, 4(r1)
 /* 80087AD0 00084A30  94 21 FF 78 */	stwu r1, -0x88(r1)
@@ -1003,9 +1002,9 @@ setPos__4TubeFf:
 /* 80087BB4 00084B14  38 21 00 88 */	addi r1, r1, 0x88
 /* 80087BB8 00084B18  7C 08 03 A6 */	mtlr r0
 /* 80087BBC 00084B1C  4E 80 00 20 */	blr 
+.endfn setPos__4TubeFf
 
-.global isStickable__8CollPartFv
-isStickable__8CollPartFv:
+.fn isStickable__8CollPartFv, global
 /* 80087BC0 00084B20  7C 08 02 A6 */	mflr r0
 /* 80087BC4 00084B24  90 01 00 04 */	stw r0, 4(r1)
 /* 80087BC8 00084B28  94 21 FF B0 */	stwu r1, -0x50(r1)
@@ -1087,9 +1086,9 @@ isStickable__8CollPartFv:
 /* 80087CD8 00084C38  38 21 00 50 */	addi r1, r1, 0x50
 /* 80087CDC 00084C3C  7C 08 03 A6 */	mtlr r0
 /* 80087CE0 00084C40  4E 80 00 20 */	blr 
+.endfn isStickable__8CollPartFv
 
-.global isClimbable__8CollPartFv
-isClimbable__8CollPartFv:
+.fn isClimbable__8CollPartFv, global
 /* 80087CE4 00084C44  7C 08 02 A6 */	mflr r0
 /* 80087CE8 00084C48  7C 64 1B 78 */	mr r4, r3
 /* 80087CEC 00084C4C  90 01 00 04 */	stw r0, 4(r1)
@@ -1115,9 +1114,9 @@ isClimbable__8CollPartFv:
 /* 80087D34 00084C94  38 21 00 18 */	addi r1, r1, 0x18
 /* 80087D38 00084C98  7C 08 03 A6 */	mtlr r0
 /* 80087D3C 00084C9C  4E 80 00 20 */	blr 
+.endfn isClimbable__8CollPartFv
 
-.global isBouncy__8CollPartFv
-isBouncy__8CollPartFv:
+.fn isBouncy__8CollPartFv, global
 /* 80087D40 00084CA0  7C 08 02 A6 */	mflr r0
 /* 80087D44 00084CA4  38 83 00 00 */	addi r4, r3, 0
 /* 80087D48 00084CA8  90 01 00 04 */	stw r0, 4(r1)
@@ -1140,9 +1139,9 @@ isBouncy__8CollPartFv:
 /* 80087D84 00084CE4  38 21 00 18 */	addi r1, r1, 0x18
 /* 80087D88 00084CE8  7C 08 03 A6 */	mtlr r0
 /* 80087D8C 00084CEC  4E 80 00 20 */	blr 
+.endfn isBouncy__8CollPartFv
 
-.global getChildCount__8CollPartFv
-getChildCount__8CollPartFv:
+.fn getChildCount__8CollPartFv, global
 /* 80087D90 00084CF0  7C 08 02 A6 */	mflr r0
 /* 80087D94 00084CF4  90 01 00 04 */	stw r0, 4(r1)
 /* 80087D98 00084CF8  94 21 FF F8 */	stwu r1, -8(r1)
@@ -1158,9 +1157,9 @@ getChildCount__8CollPartFv:
 /* 80087DB8 00084D18  38 21 00 08 */	addi r1, r1, 8
 /* 80087DBC 00084D1C  7C 08 03 A6 */	mtlr r0
 /* 80087DC0 00084D20  4E 80 00 20 */	blr 
+.endfn getChildCount__8CollPartFv
 
-.global getChild__8CollPartFv
-getChild__8CollPartFv:
+.fn getChild__8CollPartFv, global
 /* 80087DC4 00084D24  A8 03 00 54 */	lha r0, 0x54(r3)
 /* 80087DC8 00084D28  2C 00 FF FF */	cmpwi r0, -1
 /* 80087DCC 00084D2C  41 82 00 18 */	beq .L_80087DE4
@@ -1172,9 +1171,9 @@ getChild__8CollPartFv:
 .L_80087DE4:
 /* 80087DE4 00084D44  38 60 00 00 */	li r3, 0
 /* 80087DE8 00084D48  4E 80 00 20 */	blr 
+.endfn getChild__8CollPartFv
 
-.global getChildAt__8CollPartFi
-getChildAt__8CollPartFi:
+.fn getChildAt__8CollPartFi, global
 /* 80087DEC 00084D4C  2C 04 00 00 */	cmpwi r4, 0
 /* 80087DF0 00084D50  A8 03 00 54 */	lha r0, 0x54(r3)
 /* 80087DF4 00084D54  7C 89 03 A6 */	mtctr r4
@@ -1202,9 +1201,9 @@ getChildAt__8CollPartFi:
 /* 80087E3C 00084D9C  80 63 00 04 */	lwz r3, 4(r3)
 /* 80087E40 00084DA0  7C 63 02 14 */	add r3, r3, r0
 /* 80087E44 00084DA4  4E 80 00 20 */	blr 
+.endfn getChildAt__8CollPartFi
 
-.global __ct__8CollPartFv
-__ct__8CollPartFv:
+.fn __ct__8CollPartFv, global
 /* 80087E48 00084DA8  C0 02 8A 40 */	lfs f0, lbl_803E8C40@sda21(r2)
 /* 80087E4C 00084DAC  38 A0 00 01 */	li r5, 1
 /* 80087E50 00084DB0  38 80 FF FF */	li r4, -1
@@ -1220,9 +1219,9 @@ __ct__8CollPartFv:
 /* 80087E78 00084DD8  90 03 00 64 */	stw r0, 0x64(r3)
 /* 80087E7C 00084DDC  98 A3 00 51 */	stb r5, 0x51(r3)
 /* 80087E80 00084DE0  4E 80 00 20 */	blr 
+.endfn __ct__8CollPartFv
 
-.global getTypeString__8CollPartFv
-getTypeString__8CollPartFv:
+.fn getTypeString__8CollPartFv, global
 /* 80087E84 00084DE4  88 83 00 5C */	lbz r4, 0x5c(r3)
 /* 80087E88 00084DE8  3C 60 80 2B */	lis r3, _typeStr@ha
 /* 80087E8C 00084DEC  38 03 F0 54 */	addi r0, r3, _typeStr@l
@@ -1230,9 +1229,9 @@ getTypeString__8CollPartFv:
 /* 80087E94 00084DF4  7C 60 1A 14 */	add r3, r0, r3
 /* 80087E98 00084DF8  80 63 00 00 */	lwz r3, 0(r3)
 /* 80087E9C 00084DFC  4E 80 00 20 */	blr 
+.endfn getTypeString__8CollPartFv
 
-.global getID__8CollPartFv
-getID__8CollPartFv:
+.fn getID__8CollPartFv, global
 /* 80087EA0 00084E00  7C 08 02 A6 */	mflr r0
 /* 80087EA4 00084E04  38 C3 00 00 */	addi r6, r3, 0
 /* 80087EA8 00084E08  90 01 00 04 */	stw r0, 4(r1)
@@ -1248,9 +1247,9 @@ getID__8CollPartFv:
 /* 80087ED0 00084E30  38 21 00 08 */	addi r1, r1, 8
 /* 80087ED4 00084E34  7C 08 03 A6 */	mtlr r0
 /* 80087ED8 00084E38  4E 80 00 20 */	blr 
+.endfn getID__8CollPartFv
 
-.global getCode__8CollPartFv
-getCode__8CollPartFv:
+.fn getCode__8CollPartFv, global
 /* 80087EDC 00084E3C  7C 08 02 A6 */	mflr r0
 /* 80087EE0 00084E40  38 C3 00 00 */	addi r6, r3, 0
 /* 80087EE4 00084E44  90 01 00 04 */	stw r0, 4(r1)
@@ -1266,9 +1265,9 @@ getCode__8CollPartFv:
 /* 80087F0C 00084E6C  38 21 00 08 */	addi r1, r1, 8
 /* 80087F10 00084E70  7C 08 03 A6 */	mtlr r0
 /* 80087F14 00084E74  4E 80 00 20 */	blr 
+.endfn getCode__8CollPartFv
 
-.global getMatrix__8CollPartFv
-getMatrix__8CollPartFv:
+.fn getMatrix__8CollPartFv, global
 /* 80087F18 00084E78  7C 08 02 A6 */	mflr r0
 /* 80087F1C 00084E7C  90 01 00 04 */	stw r0, 4(r1)
 /* 80087F20 00084E80  94 21 FF 60 */	stwu r1, -0xa0(r1)
@@ -1358,9 +1357,9 @@ getMatrix__8CollPartFv:
 /* 80088070 00084FD0  38 21 00 A0 */	addi r1, r1, 0xa0
 /* 80088074 00084FD4  7C 08 03 A6 */	mtlr r0
 /* 80088078 00084FD8  4E 80 00 20 */	blr 
+.endfn getMatrix__8CollPartFv
 
-.global update__8CollPartFR8Graphicsb
-update__8CollPartFR8Graphicsb:
+.fn update__8CollPartFR8Graphicsb, global
 /* 8008807C 00084FDC  7C 08 02 A6 */	mflr r0
 /* 80088080 00084FE0  90 01 00 04 */	stw r0, 4(r1)
 /* 80088084 00084FE4  94 21 FF B8 */	stwu r1, -0x48(r1)
@@ -1675,9 +1674,9 @@ update__8CollPartFR8Graphicsb:
 /* 80088514 00085474  38 21 00 48 */	addi r1, r1, 0x48
 /* 80088518 00085478  7C 08 03 A6 */	mtlr r0
 /* 8008851C 0008547C  4E 80 00 20 */	blr 
+.endfn update__8CollPartFR8Graphicsb
 
-.global collide__8CollPartFP8CollPartR8Vector3f
-collide__8CollPartFP8CollPartR8Vector3f:
+.fn collide__8CollPartFP8CollPartR8Vector3f, global
 /* 80088520 00085480  7C 08 02 A6 */	mflr r0
 /* 80088524 00085484  90 01 00 04 */	stw r0, 4(r1)
 /* 80088528 00085488  38 00 00 01 */	li r0, 1
@@ -2120,9 +2119,9 @@ collide__8CollPartFP8CollPartR8Vector3f:
 /* 80088B80 00085AE0  38 21 01 D8 */	addi r1, r1, 0x1d8
 /* 80088B84 00085AE4  7C 08 03 A6 */	mtlr r0
 /* 80088B88 00085AE8  4E 80 00 20 */	blr 
+.endfn collide__8CollPartFP8CollPartR8Vector3f
 
-.global makeTube__8CollPartFR4Tube
-makeTube__8CollPartFR4Tube:
+.fn makeTube__8CollPartFR4Tube, global
 /* 80088B8C 00085AEC  88 03 00 5C */	lbz r0, 0x5c(r3)
 /* 80088B90 00085AF0  28 00 00 05 */	cmplwi r0, 5
 /* 80088B94 00085AF4  40 82 00 30 */	bne .L_80088BC4
@@ -2170,9 +2169,9 @@ makeTube__8CollPartFR4Tube:
 /* 80088C24 00085B84  C0 06 00 00 */	lfs f0, 0(r6)
 /* 80088C28 00085B88  D0 04 00 1C */	stfs f0, 0x1c(r4)
 /* 80088C2C 00085B8C  4E 80 00 20 */	blr 
+.endfn makeTube__8CollPartFR4Tube
 
-.global __ct__8CollInfoFi
-__ct__8CollInfoFi:
+.fn __ct__8CollInfoFi, global
 /* 80088C30 00085B90  7C 08 02 A6 */	mflr r0
 /* 80088C34 00085B94  2C 04 00 00 */	cmpwi r4, 0
 /* 80088C38 00085B98  90 01 00 04 */	stw r0, 4(r1)
@@ -2215,9 +2214,9 @@ __ct__8CollInfoFi:
 /* 80088CC4 00085C24  38 21 00 28 */	addi r1, r1, 0x28
 /* 80088CC8 00085C28  7C 08 03 A6 */	mtlr r0
 /* 80088CCC 00085C2C  4E 80 00 20 */	blr 
+.endfn __ct__8CollInfoFi
 
-.global enableStick__8CollInfoFv
-enableStick__8CollInfoFv:
+.fn enableStick__8CollInfoFv, global
 /* 80088CD0 00085C30  38 E0 00 00 */	li r7, 0
 /* 80088CD4 00085C34  38 C0 00 00 */	li r6, 0
 /* 80088CD8 00085C38  38 A0 00 01 */	li r5, 1
@@ -2233,9 +2232,9 @@ enableStick__8CollInfoFv:
 /* 80088CF8 00085C58  7C 07 00 00 */	cmpw r7, r0
 /* 80088CFC 00085C5C  41 80 FF E4 */	blt .L_80088CE0
 /* 80088D00 00085C60  4E 80 00 20 */	blr 
+.endfn enableStick__8CollInfoFv
 
-.global disableStick__8CollInfoFv
-disableStick__8CollInfoFv:
+.fn disableStick__8CollInfoFv, global
 /* 80088D04 00085C64  38 C0 00 00 */	li r6, 0
 /* 80088D08 00085C68  38 A6 00 00 */	addi r5, r6, 0
 /* 80088D0C 00085C6C  38 E0 00 00 */	li r7, 0
@@ -2251,9 +2250,9 @@ disableStick__8CollInfoFv:
 /* 80088D2C 00085C8C  7C 07 00 00 */	cmpw r7, r0
 /* 80088D30 00085C90  41 80 FF E4 */	blt .L_80088D14
 /* 80088D34 00085C94  4E 80 00 20 */	blr 
+.endfn disableStick__8CollInfoFv
 
-.global checkCollisionSpecial__8CollInfoFR8Vector3ffP11CndCollPart
-checkCollisionSpecial__8CollInfoFR8Vector3ffP11CndCollPart:
+.fn checkCollisionSpecial__8CollInfoFR8Vector3ffP11CndCollPart, global
 /* 80088D38 00085C98  7C 08 02 A6 */	mflr r0
 /* 80088D3C 00085C9C  90 01 00 04 */	stw r0, 4(r1)
 /* 80088D40 00085CA0  94 21 FF 40 */	stwu r1, -0xc0(r1)
@@ -2374,14 +2373,14 @@ checkCollisionSpecial__8CollInfoFR8Vector3ffP11CndCollPart:
 /* 80088EEC 00085E4C  38 21 00 C0 */	addi r1, r1, 0xc0
 /* 80088EF0 00085E50  7C 08 03 A6 */	mtlr r0
 /* 80088EF4 00085E54  4E 80 00 20 */	blr 
+.endfn checkCollisionSpecial__8CollInfoFR8Vector3ffP11CndCollPart
 
-.global satisfy__11CndCollPartFP8CollPart
-satisfy__11CndCollPartFP8CollPart:
+.fn satisfy__11CndCollPartFP8CollPart, weak
 /* 80088EF8 00085E58  38 60 00 00 */	li r3, 0
 /* 80088EFC 00085E5C  4E 80 00 20 */	blr 
+.endfn satisfy__11CndCollPartFP8CollPart
 
-.global checkCollision__8CollInfoFP8CreatureR8Vector3f
-checkCollision__8CollInfoFP8CreatureR8Vector3f:
+.fn checkCollision__8CollInfoFP8CreatureR8Vector3f, global
 /* 80088F00 00085E60  7C 08 02 A6 */	mflr r0
 /* 80088F04 00085E64  38 C5 00 00 */	addi r6, r5, 0
 /* 80088F08 00085E68  90 01 00 04 */	stw r0, 4(r1)
@@ -2392,9 +2391,9 @@ checkCollision__8CollInfoFP8CreatureR8Vector3f:
 /* 80088F1C 00085E7C  38 21 00 08 */	addi r1, r1, 8
 /* 80088F20 00085E80  7C 08 03 A6 */	mtlr r0
 /* 80088F24 00085E84  4E 80 00 20 */	blr 
+.endfn checkCollision__8CollInfoFP8CreatureR8Vector3f
 
-.global checkCollisionRec__8CollInfoFP8CreatureiR8Vector3f
-checkCollisionRec__8CollInfoFP8CreatureiR8Vector3f:
+.fn checkCollisionRec__8CollInfoFP8CreatureiR8Vector3f, global
 /* 80088F28 00085E88  7C 08 02 A6 */	mflr r0
 /* 80088F2C 00085E8C  90 01 00 04 */	stw r0, 4(r1)
 /* 80088F30 00085E90  94 21 FE A0 */	stwu r1, -0x160(r1)
@@ -2812,9 +2811,9 @@ checkCollisionRec__8CollInfoFP8CreatureiR8Vector3f:
 /* 80089540 000864A0  38 21 01 60 */	addi r1, r1, 0x160
 /* 80089544 000864A4  7C 08 03 A6 */	mtlr r0
 /* 80089548 000864A8  4E 80 00 20 */	blr 
+.endfn checkCollisionRec__8CollInfoFP8CreatureiR8Vector3f
 
-.global div__8Vector3fFf
-div__8Vector3fFf:
+.fn div__8Vector3fFf, weak
 /* 8008954C 000864AC  C0 03 00 00 */	lfs f0, 0(r3)
 /* 80089550 000864B0  EC 00 08 24 */	fdivs f0, f0, f1
 /* 80089554 000864B4  D0 03 00 00 */	stfs f0, 0(r3)
@@ -2825,9 +2824,9 @@ div__8Vector3fFf:
 /* 80089568 000864C8  EC 00 08 24 */	fdivs f0, f0, f1
 /* 8008956C 000864CC  D0 03 00 08 */	stfs f0, 8(r3)
 /* 80089570 000864D0  4E 80 00 20 */	blr 
+.endfn div__8Vector3fFf
 
-.global checkCollision__8CollInfoFP8CollInfoPP8CollPartPP8CollPartR8Vector3f
-checkCollision__8CollInfoFP8CollInfoPP8CollPartPP8CollPartR8Vector3f:
+.fn checkCollision__8CollInfoFP8CollInfoPP8CollPartPP8CollPartR8Vector3f, global
 /* 80089574 000864D4  7C 08 02 A6 */	mflr r0
 /* 80089578 000864D8  39 27 00 00 */	addi r9, r7, 0
 /* 8008957C 000864DC  90 01 00 04 */	stw r0, 4(r1)
@@ -2841,9 +2840,9 @@ checkCollision__8CollInfoFP8CollInfoPP8CollPartPP8CollPartR8Vector3f:
 /* 8008959C 000864FC  38 21 00 08 */	addi r1, r1, 8
 /* 800895A0 00086500  7C 08 03 A6 */	mtlr r0
 /* 800895A4 00086504  4E 80 00 20 */	blr 
+.endfn checkCollision__8CollInfoFP8CollInfoPP8CollPartPP8CollPartR8Vector3f
 
-.global checkCollisionRec__8CollInfoFP8CollInfoiiPP8CollPartPP8CollPartR8Vector3f
-checkCollisionRec__8CollInfoFP8CollInfoiiPP8CollPartPP8CollPartR8Vector3f:
+.fn checkCollisionRec__8CollInfoFP8CollInfoiiPP8CollPartPP8CollPartR8Vector3f, global
 /* 800895A8 00086508  7C 08 02 A6 */	mflr r0
 /* 800895AC 0008650C  90 01 00 04 */	stw r0, 4(r1)
 /* 800895B0 00086510  94 21 FF B0 */	stwu r1, -0x50(r1)
@@ -2938,14 +2937,14 @@ checkCollisionRec__8CollInfoFP8CollInfoiiPP8CollPartPP8CollPartR8Vector3f:
 /* 800896FC 0008665C  38 21 00 50 */	addi r1, r1, 0x50
 /* 80089700 00086660  7C 08 03 A6 */	mtlr r0
 /* 80089704 00086664  4E 80 00 20 */	blr 
+.endfn checkCollisionRec__8CollInfoFP8CollInfoiiPP8CollPartPP8CollPartR8Vector3f
 
-.global getBoundingSphere__8CollInfoFv
-getBoundingSphere__8CollInfoFv:
+.fn getBoundingSphere__8CollInfoFv, global
 /* 80089708 00086668  80 63 00 04 */	lwz r3, 4(r3)
 /* 8008970C 0008666C  4E 80 00 20 */	blr 
+.endfn getBoundingSphere__8CollInfoFv
 
-.global getSphere__8CollInfoFUl
-getSphere__8CollInfoFUl:
+.fn getSphere__8CollInfoFUl, global
 /* 80089710 00086670  7C 08 02 A6 */	mflr r0
 /* 80089714 00086674  90 01 00 04 */	stw r0, 4(r1)
 /* 80089718 00086678  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -2972,9 +2971,9 @@ getSphere__8CollInfoFUl:
 /* 80089764 000866C4  38 21 00 28 */	addi r1, r1, 0x28
 /* 80089768 000866C8  7C 08 03 A6 */	mtlr r0
 /* 8008976C 000866CC  4E 80 00 20 */	blr 
+.endfn getSphere__8CollInfoFUl
 
-.global getNearestCollPart__8CollInfoFR8Vector3fUl
-getNearestCollPart__8CollInfoFR8Vector3fUl:
+.fn getNearestCollPart__8CollInfoFR8Vector3fUl, global
 /* 80089770 000866D0  7C 08 02 A6 */	mflr r0
 /* 80089774 000866D4  90 01 00 04 */	stw r0, 4(r1)
 /* 80089778 000866D8  94 21 FF 58 */	stwu r1, -0xa8(r1)
@@ -3074,9 +3073,9 @@ getNearestCollPart__8CollInfoFR8Vector3fUl:
 /* 800898E0 00086840  38 21 00 A8 */	addi r1, r1, 0xa8
 /* 800898E4 00086844  7C 08 03 A6 */	mtlr r0
 /* 800898E8 00086848  4E 80 00 20 */	blr 
+.endfn getNearestCollPart__8CollInfoFR8Vector3fUl
 
-.global getRandomCollPart__8CollInfoFUl
-getRandomCollPart__8CollInfoFUl:
+.fn getRandomCollPart__8CollInfoFUl, global
 /* 800898EC 0008684C  7C 08 02 A6 */	mflr r0
 /* 800898F0 00086850  90 01 00 04 */	stw r0, 4(r1)
 /* 800898F4 00086854  94 21 FD 90 */	stwu r1, -0x270(r1)
@@ -3158,9 +3157,9 @@ getRandomCollPart__8CollInfoFUl:
 /* 80089A10 00086970  38 21 02 70 */	addi r1, r1, 0x270
 /* 80089A14 00086974  7C 08 03 A6 */	mtlr r0
 /* 80089A18 00086978  4E 80 00 20 */	blr 
+.endfn getRandomCollPart__8CollInfoFUl
 
-.global getPlatform__8CollInfoFP13DynCollObject
-getPlatform__8CollInfoFP13DynCollObject:
+.fn getPlatform__8CollInfoFP13DynCollObject, global
 /* 80089A1C 0008697C  7C 08 02 A6 */	mflr r0
 /* 80089A20 00086980  90 01 00 04 */	stw r0, 4(r1)
 /* 80089A24 00086984  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -3220,9 +3219,9 @@ getPlatform__8CollInfoFP13DynCollObject:
 /* 80089AE0 00086A40  38 21 00 18 */	addi r1, r1, 0x18
 /* 80089AE4 00086A44  7C 08 03 A6 */	mtlr r0
 /* 80089AE8 00086A48  4E 80 00 20 */	blr 
+.endfn getPlatform__8CollInfoFP13DynCollObject
 
-.global updateInfo__8CollInfoFR8Graphicsb
-updateInfo__8CollInfoFR8Graphicsb:
+.fn updateInfo__8CollInfoFR8Graphicsb, global
 /* 80089AEC 00086A4C  7C 08 02 A6 */	mflr r0
 /* 80089AF0 00086A50  90 01 00 04 */	stw r0, 4(r1)
 /* 80089AF4 00086A54  94 21 FF D0 */	stwu r1, -0x30(r1)
@@ -3250,17 +3249,17 @@ updateInfo__8CollInfoFR8Graphicsb:
 /* 80089B44 00086AA4  38 21 00 30 */	addi r1, r1, 0x30
 /* 80089B48 00086AA8  7C 08 03 A6 */	mtlr r0
 /* 80089B4C 00086AAC  4E 80 00 20 */	blr 
+.endfn updateInfo__8CollInfoFR8Graphicsb
 
-.global hasInfo__8CollInfoFv
-hasInfo__8CollInfoFv:
+.fn hasInfo__8CollInfoFv, global
 /* 80089B50 00086AB0  A0 03 00 0C */	lhz r0, 0xc(r3)
 /* 80089B54 00086AB4  7C 60 00 D0 */	neg r3, r0
 /* 80089B58 00086AB8  30 03 FF FF */	addic r0, r3, -1
 /* 80089B5C 00086ABC  7C 60 19 10 */	subfe r3, r0, r3
 /* 80089B60 00086AC0  4E 80 00 20 */	blr 
+.endfn hasInfo__8CollInfoFv
 
-.global initInfo__8CollInfoFP5ShapeP8CollPartPUl
-initInfo__8CollInfoFP5ShapeP8CollPartPUl:
+.fn initInfo__8CollInfoFP5ShapeP8CollPartPUl, global
 /* 80089B64 00086AC4  7C 08 02 A6 */	mflr r0
 /* 80089B68 00086AC8  90 01 00 04 */	stw r0, 4(r1)
 /* 80089B6C 00086ACC  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -3305,9 +3304,9 @@ initInfo__8CollInfoFP5ShapeP8CollPartPUl:
 /* 80089BFC 00086B5C  38 21 00 20 */	addi r1, r1, 0x20
 /* 80089C00 00086B60  7C 08 03 A6 */	mtlr r0
 /* 80089C04 00086B64  4E 80 00 20 */	blr 
+.endfn initInfo__8CollInfoFP5ShapeP8CollPartPUl
 
-.global makeTubesChild__8CollInfoFUli
-makeTubesChild__8CollInfoFUli:
+.fn makeTubesChild__8CollInfoFUli, global
 /* 80089C08 00086B68  7C 08 02 A6 */	mflr r0
 /* 80089C0C 00086B6C  90 01 00 04 */	stw r0, 4(r1)
 /* 80089C10 00086B70  94 21 FF C8 */	stwu r1, -0x38(r1)
@@ -3358,9 +3357,9 @@ makeTubesChild__8CollInfoFUli:
 /* 80089CAC 00086C0C  38 21 00 38 */	addi r1, r1, 0x38
 /* 80089CB0 00086C10  7C 08 03 A6 */	mtlr r0
 /* 80089CB4 00086C14  4E 80 00 20 */	blr 
+.endfn makeTubesChild__8CollInfoFUli
 
-.global setUpdater__8CollInfoFUlP15CollPartUpdater
-setUpdater__8CollInfoFUlP15CollPartUpdater:
+.fn setUpdater__8CollInfoFUlP15CollPartUpdater, global
 /* 80089CB8 00086C18  7C 08 02 A6 */	mflr r0
 /* 80089CBC 00086C1C  90 01 00 04 */	stw r0, 4(r1)
 /* 80089CC0 00086C20  94 21 FF C8 */	stwu r1, -0x38(r1)
@@ -3394,9 +3393,9 @@ setUpdater__8CollInfoFUlP15CollPartUpdater:
 /* 80089D24 00086C84  38 21 00 38 */	addi r1, r1, 0x38
 /* 80089D28 00086C88  7C 08 03 A6 */	mtlr r0
 /* 80089D2C 00086C8C  4E 80 00 20 */	blr 
+.endfn setUpdater__8CollInfoFUlP15CollPartUpdater
 
-.global createPart__8CollInfoFP11ObjCollInfoib
-createPart__8CollInfoFP11ObjCollInfoib:
+.fn createPart__8CollInfoFP11ObjCollInfoib, global
 /* 80089D30 00086C90  7C 08 02 A6 */	mflr r0
 /* 80089D34 00086C94  90 01 00 04 */	stw r0, 4(r1)
 /* 80089D38 00086C98  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -3518,9 +3517,9 @@ createPart__8CollInfoFP11ObjCollInfoib:
 /* 80089EE0 00086E40  38 21 00 28 */	addi r1, r1, 0x28
 /* 80089EE4 00086E44  7C 08 03 A6 */	mtlr r0
 /* 80089EE8 00086E48  4E 80 00 20 */	blr 
+.endfn createPart__8CollInfoFP11ObjCollInfoib
 
-.global getId2Index__8CollInfoFUl
-getId2Index__8CollInfoFUl:
+.fn getId2Index__8CollInfoFUl, global
 /* 80089EEC 00086E4C  A0 03 00 0C */	lhz r0, 0xc(r3)
 /* 80089EF0 00086E50  38 E0 00 00 */	li r7, 0
 /* 80089EF4 00086E54  38 C0 00 00 */	li r6, 0
@@ -3541,9 +3540,9 @@ getId2Index__8CollInfoFUl:
 .L_80089F28:
 /* 80089F28 00086E88  38 60 FF FF */	li r3, -1
 /* 80089F2C 00086E8C  4E 80 00 20 */	blr 
+.endfn getId2Index__8CollInfoFUl
 
-.global makeTree__8CollInfoFv
-makeTree__8CollInfoFv:
+.fn makeTree__8CollInfoFv, global
 /* 80089F30 00086E90  38 80 00 00 */	li r4, 0
 /* 80089F34 00086E94  39 00 00 00 */	li r8, 0
 /* 80089F38 00086E98  48 00 00 E0 */	b .L_8008A018
@@ -3620,6 +3619,7 @@ makeTree__8CollInfoFv:
 /* 8008A01C 00086F7C  7C 04 00 00 */	cmpw r4, r0
 /* 8008A020 00086F80  41 80 FF 1C */	blt .L_80089F3C
 /* 8008A024 00086F84  4E 80 00 20 */	blr 
+.endfn makeTree__8CollInfoFv
 
 .fn __sinit_collInfo_cpp, local
 /* 8008A028 00086F88  4E 80 00 20 */	blr 
@@ -3631,31 +3631,39 @@ lbl_constructor:
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802AEFF0:
+.obj lbl_802AEFF0, local
 	.asciz "collInfo.cpp"
+.endobj lbl_802AEFF0
 .balign 4
-lbl_802AF000:
+.obj lbl_802AF000, local
 	.asciz "collInfo"
+.endobj lbl_802AF000
 .balign 4
-lbl_802AF00C:
+.obj lbl_802AF00C, local
 	.asciz "COLLISION"
+.endobj lbl_802AF00C
 .balign 4
-lbl_802AF018:
+.obj lbl_802AF018, local
 	.asciz "BOUNDSPHERE"
+.endobj lbl_802AF018
 .balign 4
-lbl_802AF024:
+.obj lbl_802AF024, local
 	.asciz "REFERENCE"
+.endobj lbl_802AF024
 .balign 4
-lbl_802AF030:
+.obj lbl_802AF030, local
 	.asciz "PLATFORM"
+.endobj lbl_802AF030
 .balign 4
-lbl_802AF03C:
+.obj lbl_802AF03C, local
 	.asciz "CYLINDER"
+.endobj lbl_802AF03C
 .balign 4
-lbl_802AF048:
+.obj lbl_802AF048, local
 	.asciz "TUBE_CHILD"
+.endobj lbl_802AF048
 .balign 4
-_typeStr:
+.obj _typeStr, local
 	.4byte lbl_802AF00C
 	.4byte lbl_802AF018
 	.4byte lbl_802AF024
@@ -3663,39 +3671,61 @@ _typeStr:
 	.4byte lbl_802AF03C
 	.4byte lbl_803DEEC8
 	.4byte lbl_802AF048
+.endobj _typeStr
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-lbl_803DEEC8:
+.obj lbl_803DEEC8, local
 	.asciz "TUBE"
+.endobj lbl_803DEEC8
 .balign 4
-lbl_803DEED0:
+.obj lbl_803DEED0, local
 	.float -1.0
-lbl_803DEED4:
+.endobj lbl_803DEED0
+.balign 4
+.obj lbl_803DEED4, local
 	.float -1.0
+.endobj lbl_803DEED4
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803E8C40:
+.obj lbl_803E8C40, local
 	.float 0.0
+.endobj lbl_803E8C40
 .balign 8
-lbl_803E8C48:
+.obj lbl_803E8C48, local
 	.double 0.5
+.endobj lbl_803E8C48
 .balign 8
-lbl_803E8C50:
+.obj lbl_803E8C50, local
 	.double 3.0
-lbl_803E8C58:
+.endobj lbl_803E8C50
+.balign 4
+.obj lbl_803E8C58, local
 	.float 1.0
-lbl_803E8C5C:
+.endobj lbl_803E8C58
+.obj lbl_803E8C5C, local
 	.float 0.5
-lbl_803E8C60:
+.endobj lbl_803E8C5C
+.obj lbl_803E8C60, local
 	.float -1.0
-lbl_803E8C64:
+.endobj lbl_803E8C60
+.obj lbl_803E8C64, local
 	.float 1280000.0
-lbl_803E8C68:
+.endobj lbl_803E8C64
+.obj lbl_803E8C68, local
 	.float 32767.0
-lbl_803E8C6C:
+.endobj lbl_803E8C68
+.obj lbl_803E8C6C, local
 	.float 0.999
-lbl_803E8C70:
-	.4byte 0x43300000
-	.4byte 0x80000000
+.endobj lbl_803E8C6C
+.balign 8
+.obj lbl_803E8C70, local
+	.8byte 0x4330000080000000
+.endobj lbl_803E8C70
+
+.section .bss, "wa"  # 0x802E9640 - 0x803E81E5
+.balign 8
+.obj invCamMat, local
+	.skip 0x40
+.endobj invCamMat

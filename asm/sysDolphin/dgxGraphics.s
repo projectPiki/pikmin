@@ -6545,3 +6545,9 @@ lbl_constructor:
 .obj lbl_803E86C0, local
 	.asciz ""
 .endobj lbl_803E86C0
+
+.section .bss, "wa"  # 0x802E9640 - 0x803E81E5
+.balign 8
+.obj GColors, global
+	.skip 0x8
+.endobj GColors

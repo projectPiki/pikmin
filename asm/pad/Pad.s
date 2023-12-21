@@ -2463,3 +2463,25 @@
 .obj __PADFixBits, global
 	.skip 0x4
 .endobj __PADFixBits
+
+.section .bss, "wa"  # 0x802E9640 - 0x803E81E5
+.balign 8
+.obj PADType, local
+	.skip 0x10
+.endobj PADType
+.balign 4
+.obj Type, local
+	.skip 0x10
+.endobj Type
+.balign 4
+.obj Origin, local
+	.skip 0x30
+.endobj Origin
+.balign 4
+.obj cmdProbeDevice, local
+	.skip 0x10
+.endobj cmdProbeDevice
+.balign 4
+.obj cmdFixDevice, local
+	.skip 0x10
+.endobj cmdFixDevice

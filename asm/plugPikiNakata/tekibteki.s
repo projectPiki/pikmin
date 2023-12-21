@@ -7036,13 +7036,13 @@ lbl_803E441C:
 	.float 0.0
 __RTTI__9Condition:
 	.4byte lbl_802CCF3C
-	.4byte 0x00000000
+	.4byte 0
 __RTTI__13TekiCondition:
 	.4byte lbl_802CCF48
 	.4byte lbl_802CCF58
 __RTTI__8BaseParm:
 	.4byte lbl_802CD014
-	.4byte 0x00000000
+	.4byte 0
 __RTTI__11NVector3fIO:
 	.4byte lbl_802CD070
 	.4byte 0
@@ -7075,34 +7075,48 @@ __RTTI__5BTeki:
 	.float 0.0
 .endobj lbl_803EA950
 .balign 4
-lbl_803EA954:
-	.4byte 0x41F00000
-lbl_803EA958:
-	.4byte 0x3FE00000
-	.4byte 0x00000000
-lbl_803EA960:
-	.4byte 0x40080000
-	.4byte 0x00000000
-lbl_803EA968:
-	.4byte 0x40000000
-lbl_803EA96C:
-	.4byte 0x3F000000
-lbl_803EA970:
-	.4byte 0x3E800000
-lbl_803EA974:
-	.4byte 0x3DCCCCCD
-lbl_803EA978:
-	.4byte 0x3E99999A
-lbl_803EA97C:
-	.4byte 0x41200000
-lbl_803EA980:
+.obj lbl_803EA954, local
+	.float 30.0
+.endobj lbl_803EA954
+.balign 8
+.obj lbl_803EA958, local
+	.double 0.5
+.endobj lbl_803EA958
+.balign 8
+.obj lbl_803EA960, local
+	.double 3.0
+.endobj lbl_803EA960
+.obj lbl_803EA968, local
+	.float 2.0
+.endobj lbl_803EA968
+.obj lbl_803EA96C, local
+	.float 0.5
+.endobj lbl_803EA96C
+.obj lbl_803EA970, local
+	.float 0.25
+.endobj lbl_803EA970
+.obj lbl_803EA974, local
+	.float 0.1
+.endobj lbl_803EA974
+.obj lbl_803EA978, local
+	.float 0.3
+.endobj lbl_803EA978
+.obj lbl_803EA97C, local
+	.float 10.0
+.endobj lbl_803EA97C
+.obj lbl_803EA980, local
 	.float 1.0
-lbl_803EA984:
-	.4byte 0x46FFFE00
-lbl_803EA988:
-	.4byte 0x43300000
-	.4byte 0x80000000
-lbl_803EA990:
-	.4byte 0xC47A0000
-lbl_803EA994:
-	.4byte 0x459C4000
+.endobj lbl_803EA980
+.obj lbl_803EA984, local
+	.float 32767.0
+.endobj lbl_803EA984
+.balign 8
+.obj lbl_803EA988, local
+	.8byte 0x4330000080000000
+.endobj lbl_803EA988
+.obj lbl_803EA990, local
+	.float -1000.0
+.endobj lbl_803EA990
+.obj lbl_803EA994, local
+	.float 5000.0
+.endobj lbl_803EA994

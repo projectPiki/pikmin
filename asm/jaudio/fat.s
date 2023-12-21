@@ -375,3 +375,17 @@
 .obj fatheapptr, local
 	.skip 4
 .endobj fatheapptr
+
+.section .bss, "wa"  # 0x802E9640 - 0x803E81E5
+.balign 8
+.obj FH_TO_FAT, local
+	.skip 0x400
+.endobj FH_TO_FAT
+.balign 4
+.obj FAT, local
+	.skip 0x800
+.endobj FAT
+.balign 4
+.obj fattmp, local
+	.skip 0x800
+.endobj fattmp

@@ -1664,3 +1664,25 @@
 	.4byte 0x00000000
 	.4byte 0x00000000
 .endobj gTRKStepStatus
+
+.section .bss, "wa"  # 0x802E9640 - 0x803E81E5
+.balign 8
+.obj TRK_saved_exceptionID, local
+	.skip 0x2
+.endobj TRK_saved_exceptionID
+.balign 4
+.obj gTRKSaveState, global
+	.skip 0x94
+.endobj gTRKSaveState
+.balign 4
+.obj TRKvalue128_temp, global
+	.skip 0x10
+.endobj TRKvalue128_temp
+.balign 4
+.obj gTRKState, global
+	.skip 0xA4
+.endobj gTRKState
+.balign 8
+.obj gTRKCPUState, global
+	.skip 0x430
+.endobj gTRKCPUState

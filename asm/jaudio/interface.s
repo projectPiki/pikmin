@@ -114,3 +114,9 @@
 .obj stacklevel, local
 	.skip 4
 .endobj stacklevel
+
+.section .bss, "wa"  # 0x802E9640 - 0x803E81E5
+.balign 8
+.obj process_stack, local
+	.skip 0x10
+.endobj process_stack

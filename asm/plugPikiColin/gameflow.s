@@ -2717,3 +2717,9 @@ lbl_constructor:
 .obj lbl_803E874C, local
 	.float 15.0
 .endobj lbl_803E874C
+
+.section .bss, "wa"  # 0x802E9640 - 0x803E81E5
+.balign 8
+.obj gameflow, global
+	.skip 0x364
+.endobj gameflow

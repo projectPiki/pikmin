@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global __ct__Q23zen13DrawContainerFv
-__ct__Q23zen13DrawContainerFv:
+.fn __ct__Q23zen13DrawContainerFv, global
 /* 801BA600 001B7560  7C 08 02 A6 */	mflr r0
 /* 801BA604 001B7564  38 80 00 00 */	li r4, 0
 /* 801BA608 001B7568  90 01 00 04 */	stw r0, 4(r1)
@@ -2931,17 +2930,17 @@ __ct__Q23zen13DrawContainerFv:
 /* 801BD2A0 001BA200  38 21 05 70 */	addi r1, r1, 0x570
 /* 801BD2A4 001BA204  7C 08 03 A6 */	mtlr r0
 /* 801BD2A8 001BA208  4E 80 00 20 */	blr 
+.endfn __ct__Q23zen13DrawContainerFv
 
-.global __ct__Q33zen7TexAnim8AnimDataFv
-__ct__Q33zen7TexAnim8AnimDataFv:
+.fn __ct__Q33zen7TexAnim8AnimDataFv, weak
 /* 801BD2AC 001BA20C  38 00 00 00 */	li r0, 0
 /* 801BD2B0 001BA210  90 03 00 00 */	stw r0, 0(r3)
 /* 801BD2B4 001BA214  C0 02 B8 28 */	lfs f0, lbl_803EBA28@sda21(r2)
 /* 801BD2B8 001BA218  D0 03 00 04 */	stfs f0, 4(r3)
 /* 801BD2BC 001BA21C  4E 80 00 20 */	blr 
+.endfn __ct__Q33zen7TexAnim8AnimDataFv
 
-.global setTexture__Q23zen19ArrowCenterCallBackFP10P2DPicture
-setTexture__Q23zen19ArrowCenterCallBackFP10P2DPicture:
+.fn setTexture__Q23zen19ArrowCenterCallBackFP10P2DPicture, weak
 /* 801BD2C0 001BA220  80 A3 00 04 */	lwz r5, 4(r3)
 /* 801BD2C4 001BA224  80 05 00 00 */	lwz r0, 0(r5)
 /* 801BD2C8 001BA228  2C 00 00 00 */	cmpwi r0, 0
@@ -3000,9 +2999,9 @@ setTexture__Q23zen19ArrowCenterCallBackFP10P2DPicture:
 .L_801BD380:
 /* 801BD380 001BA2E0  80 63 00 1C */	lwz r3, 0x1c(r3)
 /* 801BD384 001BA2E4  4E 80 00 20 */	blr 
+.endfn setTexture__Q23zen19ArrowCenterCallBackFP10P2DPicture
 
-.global judgeArrowType__Q23zen18ArrowBasicCallBackFv
-judgeArrowType__Q23zen18ArrowBasicCallBackFv:
+.fn judgeArrowType__Q23zen18ArrowBasicCallBackFv, weak
 /* 801BD388 001BA2E8  80 83 00 00 */	lwz r4, 0(r3)
 /* 801BD38C 001BA2EC  80 04 00 00 */	lwz r0, 0(r4)
 /* 801BD390 001BA2F0  2C 00 00 00 */	cmpwi r0, 0
@@ -3033,9 +3032,9 @@ judgeArrowType__Q23zen18ArrowBasicCallBackFv:
 .L_801BD3E8:
 /* 801BD3E8 001BA348  80 63 00 18 */	lwz r3, 0x18(r3)
 /* 801BD3EC 001BA34C  4E 80 00 20 */	blr 
+.endfn judgeArrowType__Q23zen18ArrowBasicCallBackFv
 
-.global init__Q23zen10MessageMgrFQ33zen13DrawContainer13containerType
-init__Q23zen10MessageMgrFQ33zen13DrawContainer13containerType:
+.fn init__Q23zen10MessageMgrFQ33zen13DrawContainer13containerType, weak
 /* 801BD3F0 001BA350  90 83 00 28 */	stw r4, 0x28(r3)
 /* 801BD3F4 001BA354  38 00 00 0B */	li r0, 0xb
 /* 801BD3F8 001BA358  38 80 FF FF */	li r4, -1
@@ -3074,9 +3073,9 @@ init__Q23zen10MessageMgrFQ33zen13DrawContainer13containerType:
 /* 801BD478 001BA3D8  98 04 00 FB */	stb r0, 0xfb(r4)
 /* 801BD47C 001BA3DC  42 00 FF 98 */	bdnz .L_801BD414
 /* 801BD480 001BA3E0  4E 80 00 20 */	blr 
+.endfn init__Q23zen10MessageMgrFQ33zen13DrawContainer13containerType
 
-.global setTextBox__Q23zen10MessageMgrFQ33zen13DrawContainer13containerTypeR9P2DScreeniii
-setTextBox__Q23zen10MessageMgrFQ33zen13DrawContainer13containerTypeR9P2DScreeniii:
+.fn setTextBox__Q23zen10MessageMgrFQ33zen13DrawContainer13containerTypeR9P2DScreeniii, weak
 /* 801BD484 001BA3E4  7C 08 02 A6 */	mflr r0
 /* 801BD488 001BA3E8  90 01 00 04 */	stw r0, 4(r1)
 /* 801BD48C 001BA3EC  94 21 FF C8 */	stwu r1, -0x38(r1)
@@ -3166,9 +3165,9 @@ setTextBox__Q23zen10MessageMgrFQ33zen13DrawContainer13containerTypeR9P2DScreenii
 /* 801BD5C8 001BA528  38 21 00 38 */	addi r1, r1, 0x38
 /* 801BD5CC 001BA52C  7C 08 03 A6 */	mtlr r0
 /* 801BD5D0 001BA530  4E 80 00 20 */	blr 
+.endfn setTextBox__Q23zen10MessageMgrFQ33zen13DrawContainer13containerTypeR9P2DScreeniii
 
-.global start__Q23zen13DrawContainerFQ33zen13DrawContainer13containerTypeiiiiii
-start__Q23zen13DrawContainerFQ33zen13DrawContainer13containerTypeiiiiii:
+.fn start__Q23zen13DrawContainerFQ33zen13DrawContainer13containerTypeiiiiii, global
 /* 801BD5D4 001BA534  7C 08 02 A6 */	mflr r0
 /* 801BD5D8 001BA538  90 01 00 04 */	stw r0, 4(r1)
 /* 801BD5DC 001BA53C  94 21 FE F8 */	stwu r1, -0x108(r1)
@@ -3484,9 +3483,9 @@ start__Q23zen13DrawContainerFQ33zen13DrawContainer13containerTypeiiiiii:
 /* 801BDA80 001BA9E0  38 21 01 08 */	addi r1, r1, 0x108
 /* 801BDA84 001BA9E4  7C 08 03 A6 */	mtlr r0
 /* 801BDA88 001BA9E8  4E 80 00 20 */	blr 
+.endfn start__Q23zen13DrawContainerFQ33zen13DrawContainer13containerTypeiiiiii
 
-.global setMessage__Q23zen10MessageMgrFQ33zen10MessageMgr11messageFlagf
-setMessage__Q23zen10MessageMgrFQ33zen10MessageMgr11messageFlagf:
+.fn setMessage__Q23zen10MessageMgrFQ33zen10MessageMgr11messageFlagf, weak
 /* 801BDA8C 001BA9EC  7C 08 02 A6 */	mflr r0
 /* 801BDA90 001BA9F0  90 01 00 04 */	stw r0, 4(r1)
 /* 801BDA94 001BA9F4  94 21 FF C0 */	stwu r1, -0x40(r1)
@@ -3583,9 +3582,9 @@ setMessage__Q23zen10MessageMgrFQ33zen10MessageMgr11messageFlagf:
 /* 801BDBE4 001BAB44  38 21 00 40 */	addi r1, r1, 0x40
 /* 801BDBE8 001BAB48  7C 08 03 A6 */	mtlr r0
 /* 801BDBEC 001BAB4C  4E 80 00 20 */	blr 
+.endfn setMessage__Q23zen10MessageMgrFQ33zen10MessageMgr11messageFlagf
 
-.global setDispParam__Q23zen13DrawContainerFv
-setDispParam__Q23zen13DrawContainerFv:
+.fn setDispParam__Q23zen13DrawContainerFv, global
 /* 801BDBF0 001BAB50  80 83 01 78 */	lwz r4, 0x178(r3)
 /* 801BDBF4 001BAB54  80 03 01 94 */	lwz r0, 0x194(r3)
 /* 801BDBF8 001BAB58  7C 04 02 14 */	add r0, r4, r0
@@ -3601,9 +3600,9 @@ setDispParam__Q23zen13DrawContainerFv:
 .L_801BDC20:
 /* 801BDC20 001BAB80  90 03 01 A0 */	stw r0, 0x1a0(r3)
 /* 801BDC24 001BAB84  4E 80 00 20 */	blr 
+.endfn setDispParam__Q23zen13DrawContainerFv
 
-.global operationStatus__Q23zen13DrawContainerFv
-operationStatus__Q23zen13DrawContainerFv:
+.fn operationStatus__Q23zen13DrawContainerFv, global
 /* 801BDC28 001BAB88  7C 08 02 A6 */	mflr r0
 /* 801BDC2C 001BAB8C  90 01 00 04 */	stw r0, 4(r1)
 /* 801BDC30 001BAB90  94 21 FE 68 */	stwu r1, -0x198(r1)
@@ -4438,9 +4437,9 @@ operationStatus__Q23zen13DrawContainerFv:
 /* 801BE83C 001BB79C  38 21 01 98 */	addi r1, r1, 0x198
 /* 801BE840 001BB7A0  7C 08 03 A6 */	mtlr r0
 /* 801BE844 001BB7A4  4E 80 00 20 */	blr 
+.endfn operationStatus__Q23zen13DrawContainerFv
 
-.global update__Q23zen13DrawContainerFRi
-update__Q23zen13DrawContainerFRi:
+.fn update__Q23zen13DrawContainerFRi, global
 /* 801BE848 001BB7A8  7C 08 02 A6 */	mflr r0
 /* 801BE84C 001BB7AC  90 01 00 04 */	stw r0, 4(r1)
 /* 801BE850 001BB7B0  94 21 FF 40 */	stwu r1, -0xc0(r1)
@@ -4808,9 +4807,9 @@ update__Q23zen13DrawContainerFRi:
 /* 801BED68 001BBCC8  38 21 00 C0 */	addi r1, r1, 0xc0
 /* 801BED6C 001BBCCC  7C 08 03 A6 */	mtlr r0
 /* 801BED70 001BBCD0  4E 80 00 20 */	blr 
+.endfn update__Q23zen13DrawContainerFRi
 
-.global update__Q23zen13WindowPaneMgrFQ33zen13WindowPaneMgr8modeFlagff
-update__Q23zen13WindowPaneMgrFQ33zen13WindowPaneMgr8modeFlagff:
+.fn update__Q23zen13WindowPaneMgrFQ33zen13WindowPaneMgr8modeFlagff, weak
 /* 801BED74 001BBCD4  7C 08 02 A6 */	mflr r0
 /* 801BED78 001BBCD8  2C 04 00 02 */	cmpwi r4, 2
 /* 801BED7C 001BBCDC  90 01 00 04 */	stw r0, 4(r1)
@@ -5068,9 +5067,9 @@ update__Q23zen13WindowPaneMgrFQ33zen13WindowPaneMgr8modeFlagff:
 /* 801BF12C 001BC08C  38 21 00 B0 */	addi r1, r1, 0xb0
 /* 801BF130 001BC090  7C 08 03 A6 */	mtlr r0
 /* 801BF134 001BC094  4E 80 00 20 */	blr 
+.endfn update__Q23zen13WindowPaneMgrFQ33zen13WindowPaneMgr8modeFlagff
 
-.global draw__Q23zen13DrawContainerFR8Graphics
-draw__Q23zen13DrawContainerFR8Graphics:
+.fn draw__Q23zen13DrawContainerFR8Graphics, global
 /* 801BF138 001BC098  7C 08 02 A6 */	mflr r0
 /* 801BF13C 001BC09C  90 01 00 04 */	stw r0, 4(r1)
 /* 801BF140 001BC0A0  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -5095,9 +5094,9 @@ draw__Q23zen13DrawContainerFR8Graphics:
 /* 801BF188 001BC0E8  38 21 00 18 */	addi r1, r1, 0x18
 /* 801BF18C 001BC0EC  7C 08 03 A6 */	mtlr r0
 /* 801BF190 001BC0F0  4E 80 00 20 */	blr 
+.endfn draw__Q23zen13DrawContainerFR8Graphics
 
-.global invoke__Q23zen13StickCallBackFP7P2DPane
-invoke__Q23zen13StickCallBackFP7P2DPane:
+.fn invoke__Q23zen13StickCallBackFP7P2DPane, weak
 /* 801BF194 001BC0F4  7C 08 02 A6 */	mflr r0
 /* 801BF198 001BC0F8  90 01 00 04 */	stw r0, 4(r1)
 /* 801BF19C 001BC0FC  94 21 FF B8 */	stwu r1, -0x48(r1)
@@ -5173,9 +5172,9 @@ invoke__Q23zen13StickCallBackFP7P2DPane:
 /* 801BF290 001BC1F0  38 21 00 48 */	addi r1, r1, 0x48
 /* 801BF294 001BC1F4  7C 08 03 A6 */	mtlr r0
 /* 801BF298 001BC1F8  4E 80 00 20 */	blr 
+.endfn invoke__Q23zen13StickCallBackFP7P2DPane
 
-.global invoke__Q23zen15ArrowLRCallBackFP7P2DPane
-invoke__Q23zen15ArrowLRCallBackFP7P2DPane:
+.fn invoke__Q23zen15ArrowLRCallBackFP7P2DPane, weak
 /* 801BF29C 001BC1FC  7C 08 02 A6 */	mflr r0
 /* 801BF2A0 001BC200  90 01 00 04 */	stw r0, 4(r1)
 /* 801BF2A4 001BC204  94 21 FF B0 */	stwu r1, -0x50(r1)
@@ -5282,9 +5281,9 @@ invoke__Q23zen15ArrowLRCallBackFP7P2DPane:
 /* 801BF408 001BC368  38 21 00 50 */	addi r1, r1, 0x50
 /* 801BF40C 001BC36C  7C 08 03 A6 */	mtlr r0
 /* 801BF410 001BC370  4E 80 00 20 */	blr 
+.endfn invoke__Q23zen15ArrowLRCallBackFP7P2DPane
 
-.global invoke__Q23zen19ArrowCenterCallBackFP7P2DPane
-invoke__Q23zen19ArrowCenterCallBackFP7P2DPane:
+.fn invoke__Q23zen19ArrowCenterCallBackFP7P2DPane, weak
 /* 801BF414 001BC374  7C 08 02 A6 */	mflr r0
 /* 801BF418 001BC378  90 01 00 04 */	stw r0, 4(r1)
 /* 801BF41C 001BC37C  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -5383,96 +5382,124 @@ invoke__Q23zen19ArrowCenterCallBackFP7P2DPane:
 /* 801BF568 001BC4C8  38 21 00 28 */	addi r1, r1, 0x28
 /* 801BF56C 001BC4CC  7C 08 03 A6 */	mtlr r0
 /* 801BF570 001BC4D0  4E 80 00 20 */	blr 
+.endfn invoke__Q23zen19ArrowCenterCallBackFP7P2DPane
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802E1118:
+.obj lbl_802E1118, local
 	.asciz "drawContainer.cpp"
+.endobj lbl_802E1118
 .balign 4
-lbl_802E112C:
+.obj lbl_802E112C, local
 	.asciz "DrawContainer"
+.endobj lbl_802E112C
 .balign 4
-lbl_802E113C:
+.obj lbl_802E113C, local
 	.asciz "<Controller>"
+.endobj lbl_802E113C
 .balign 4
-lbl_802E114C:
+.obj lbl_802E114C, local
 	.asciz "screen/blo/con01.blo"
+.endobj lbl_802E114C
 .balign 4
-lbl_802E1164:
+.obj lbl_802E1164, local
 	.asciz "ys_u.bti" # should be ya_u.bti, but the dev typo'd
+.endobj lbl_802E1164
 .balign 4
-lbl_802E1170:
+.obj lbl_802E1170, local
 	.asciz "ya_l.bti"
+.endobj lbl_802E1170
 .balign 4
-lbl_802E117C:
+.obj lbl_802E117C, local
 	.asciz "c_anim%02d.bti"
+.endobj lbl_802E117C
 .balign 4
-lbl_802E118C:
+.obj lbl_802E118C, local
 	.asciz "screen/tex/p2b_64.bti"
+.endobj lbl_802E118C
 .balign 4
-lbl_802E11A4:
+.obj lbl_802E11A4, local
 	.asciz "screen/tex/p2r_64.bti"
+.endobj lbl_802E11A4
 .balign 4
-lbl_802E11BC:
+.obj lbl_802E11BC, local
 	.asciz "screen/tex/p2y_64.bti"
+.endobj lbl_802E11BC
 .balign 4
-lbl_802E11D4:
+.obj lbl_802E11D4, local
 	.asciz "screen/tex/ws08_160.bti"
+.endobj lbl_802E11D4
 .balign 4
-lbl_802E11EC:
+.obj lbl_802E11EC, local
 	.asciz "screen/tex/ws08_red.bti"
+.endobj lbl_802E11EC
 .balign 4
-lbl_802E1204:
+.obj lbl_802E1204, local
 	.asciz "screen/tex/ws08_yel.bti"
+.endobj lbl_802E1204
 .balign 4
-lbl_802E121C:
+.obj lbl_802E121C, local
 	.asciz "screen/tex/p2b_c_4.bti"
+.endobj lbl_802E121C
 .balign 4
-lbl_802E1234:
+.obj lbl_802E1234, local
 	.asciz "screen/tex/p2b_c_r.bti"
+.endobj lbl_802E1234
 .balign 4
-lbl_802E124C:
+.obj lbl_802E124C, local
 	.asciz "screen/tex/p2b_c_y.bti"
+.endobj lbl_802E124C
 .balign 4
-lbl_802E1264:
+.obj lbl_802E1264, local
 	.asciz "zen::StickCallBack"
+.endobj lbl_802E1264
 .balign 4
-lbl_802E1278:
+.obj lbl_802E1278, local
 	.asciz "P2DPaneCallBackBase"
+.endobj lbl_802E1278
 .balign 4
-lbl_802E128C:
+.obj lbl_802E128C, local
 	.asciz "zen::CallBack1<P2DPane *>"
+.endobj lbl_802E128C
 .balign 4
-lbl_802E12A8:
+.obj lbl_802E12A8, local
 	.asciz "P2DPaneCallBack"
+.endobj lbl_802E12A8
 .balign 4
-lbl_802E12B8:
+.obj lbl_802E12B8, local
 	.4byte __RTTI__19P2DPaneCallBackBase
-	.4byte 0x00000004
+	.4byte 0x4
 	.4byte "__RTTI__Q23zen20CallBack1<P7P2DPane>"
-	.4byte 0x00000000
-	.4byte 0x00000000
-lbl_802E12CC:
+	.4byte 0
+	.4byte 0
+.endobj lbl_802E12B8
+.balign 4
+.obj lbl_802E12CC, local
 	.4byte __RTTI__19P2DPaneCallBackBase
-	.4byte 0x00000004
+	.4byte 0x4
 	.4byte "__RTTI__Q23zen20CallBack1<P7P2DPane>"
-	.4byte 0x00000000
+	.4byte 0
 	.4byte __RTTI__15P2DPaneCallBack
-	.4byte 0x00000000
-	.4byte 0x00000000
-.global __vt__Q23zen13StickCallBack
-__vt__Q23zen13StickCallBack:
+	.4byte 0
+	.4byte 0
+.endobj lbl_802E12CC
+.balign 4
+.obj __vt__Q23zen13StickCallBack, weak
 	.4byte __RTTI__Q23zen13StickCallBack
 	.4byte 0
 	.4byte invoke__Q23zen13StickCallBackFP7P2DPane
 	.4byte draw__15P2DPaneCallBackFP7P2DPane
-lbl_802E12F8:
+.endobj __vt__Q23zen13StickCallBack
+.balign 4
+.obj lbl_802E12F8, local
 	.asciz "zen::ArrowLRCallBack"
+.endobj lbl_802E12F8
 .balign 4
-lbl_802E1310:
+.obj lbl_802E1310, local
 	.asciz "zen::ArrowBasicCallBack"
+.endobj lbl_802E1310
 .balign 4
-lbl_802E1328:
+.obj lbl_802E1328, local
 	.4byte __RTTI__Q23zen18ArrowBasicCallBack
 	.4byte 0x4
 	.4byte __RTTI__19P2DPaneCallBackBase
@@ -5482,16 +5509,20 @@ lbl_802E1328:
 	.4byte __RTTI__15P2DPaneCallBack
 	.4byte 0
 	.4byte 0
-.global __vt__Q23zen15ArrowLRCallBack
-__vt__Q23zen15ArrowLRCallBack:
+.endobj lbl_802E1328
+.balign 4
+.obj __vt__Q23zen15ArrowLRCallBack, weak
 	.4byte __RTTI__Q23zen15ArrowLRCallBack
 	.4byte 0
 	.4byte invoke__Q23zen15ArrowLRCallBackFP7P2DPane
 	.4byte draw__15P2DPaneCallBackFP7P2DPane
-lbl_802E135C:
-	.asciz "zen::ArrowCenterCallBack"
+.endobj __vt__Q23zen15ArrowLRCallBack
 .balign 4
-lbl_802E1378:
+.obj lbl_802E135C, local
+	.asciz "zen::ArrowCenterCallBack"
+.endobj lbl_802E135C
+.balign 4
+.obj lbl_802E1378, local
 	.4byte __RTTI__Q23zen18ArrowBasicCallBack
 	.4byte 0x4
 	.4byte __RTTI__19P2DPaneCallBackBase
@@ -5501,26 +5532,34 @@ lbl_802E1378:
 	.4byte __RTTI__15P2DPaneCallBack
 	.4byte 0
 	.4byte 0
-.global __vt__Q23zen19ArrowCenterCallBack
-__vt__Q23zen19ArrowCenterCallBack:
+.endobj lbl_802E1378
+.balign 4
+.obj __vt__Q23zen19ArrowCenterCallBack, weak
 	.4byte __RTTI__Q23zen19ArrowCenterCallBack
 	.4byte 0
 	.4byte invoke__Q23zen19ArrowCenterCallBackFP7P2DPane
 	.4byte draw__15P2DPaneCallBackFP7P2DPane
-lbl_802E13AC:
+.endobj __vt__Q23zen19ArrowCenterCallBack
+.balign 4
+.obj lbl_802E13AC, local
 	.asciz "zen::NumberPicCallBack<int>"
+.endobj lbl_802E13AC
 .balign 4
-lbl_802E13C8:
+.obj lbl_802E13C8, local
 	.asciz "zen::NumberTex"
+.endobj lbl_802E13C8
 .balign 4
-lbl_802E13D8:
+.obj lbl_802E13D8, local
 	.asciz "zen::FigureTex<int>"
+.endobj lbl_802E13D8
 .balign 4
-lbl_802E13EC:
+.obj lbl_802E13EC, local
 	.4byte __RTTI__Q23zen9NumberTex
 	.4byte 0
 	.4byte 0
-lbl_802E13F8:
+.endobj lbl_802E13EC
+.balign 4
+.obj lbl_802E13F8, local
 	.4byte __RTTI__Q23zen9NumberTex
 	.4byte 0x4
 	.4byte "__RTTI__Q23zen12FigureTex<i>"
@@ -5532,166 +5571,230 @@ lbl_802E13F8:
 	.4byte __RTTI__15P2DPaneCallBack
 	.4byte 0
 	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-lbl_802E1450:
-	.asciz "CoreNode"
+.endobj lbl_802E13F8
 .balign 4
-lbl_802E145C:
+.skip 0x2C # compiler padding
+.balign 4
+.obj lbl_802E1450, local
+	.asciz "CoreNode"
+.endobj lbl_802E1450
+.balign 4
+.obj lbl_802E145C, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
+.endobj lbl_802E145C
+.balign 4
+.skip 0x20 # compiler padding
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-lbl_803E6750:
-	.4byte 0x00000000
-lbl_803E6754:
-	.4byte 0x00000000
-lbl_803E6758:
-	.4byte 0x00000000
-lbl_803E675C:
-	.4byte 0x00000000
-lbl_803E6760:
-	.4byte 0x00000000
-lbl_803E6764:
-	.4byte 0x00000000
-lbl_803E6768:
-	.4byte 0x00000000
-weightPosLength__Q23zen13WindowPaneMgr:
+.obj lbl_803E6750, local
+	.float 0.0
+.endobj lbl_803E6750
+.obj lbl_803E6754, local
+	.float 0.0
+.endobj lbl_803E6754
+.obj lbl_803E6758, local
+	.float 0.0
+.endobj lbl_803E6758
+.obj lbl_803E675C, local
+	.float 0.0
+.endobj lbl_803E675C
+.obj lbl_803E6760, local
+	.float 0.0
+.endobj lbl_803E6760
+.obj lbl_803E6764, local
+	.float 0.0
+.endobj lbl_803E6764
+.obj lbl_803E6768, local
+	.float 0.0
+.endobj lbl_803E6768
+.balign 4
+.obj weightPosLength__Q23zen13WindowPaneMgr, global
 	.float 50.0
-weightPosGravity__Q23zen13WindowPaneMgr:
+.endobj weightPosLength__Q23zen13WindowPaneMgr
+.balign 4
+.obj weightPosGravity__Q23zen13WindowPaneMgr, global
 	.float 9.8
-lbl_803E6774:
+.endobj weightPosGravity__Q23zen13WindowPaneMgr
+.balign 4
+.obj lbl_803E6774, local
 	.asciz "rm%02d"
+.endobj lbl_803E6774
 .balign 4
-lbl_803E677C:
+.obj lbl_803E677C, local
 	.asciz "rs%02d"
+.endobj lbl_803E677C
 .balign 4
-lbl_803E6784:
+.obj lbl_803E6784, local
 	.asciz "bm%02d"
+.endobj lbl_803E6784
 .balign 4
-lbl_803E678C:
+.obj lbl_803E678C, local
 	.asciz "bs%02d"
+.endobj lbl_803E678C
 .balign 4
-lbl_803E6794:
+.obj lbl_803E6794, local
 	.asciz "ym%02d"
+.endobj lbl_803E6794
 .balign 4
-lbl_803E679C:
+.obj lbl_803E679C, local
 	.asciz "ys%02d"
+.endobj lbl_803E679C
 .balign 4
-__RTTI__19P2DPaneCallBackBase:
+.obj __RTTI__19P2DPaneCallBackBase, local
 	.4byte lbl_802E1278
-	.4byte 0x00000000
-"__RTTI__Q23zen20CallBack1<P7P2DPane>":
+	.4byte 0
+.endobj __RTTI__19P2DPaneCallBackBase
+.balign 4
+.obj "__RTTI__Q23zen20CallBack1<P7P2DPane>", local
 	.4byte lbl_802E128C
-	.4byte 0x00000000
-__RTTI__15P2DPaneCallBack:
+	.4byte 0
+.endobj "__RTTI__Q23zen20CallBack1<P7P2DPane>"
+.balign 4
+.obj __RTTI__15P2DPaneCallBack, local
 	.4byte lbl_802E12A8
 	.4byte lbl_802E12B8
-__RTTI__Q23zen13StickCallBack:
+.endobj __RTTI__15P2DPaneCallBack
+.balign 4
+.obj __RTTI__Q23zen13StickCallBack, local
 	.4byte lbl_802E1264
 	.4byte lbl_802E12CC
-__RTTI__Q23zen18ArrowBasicCallBack:
+.endobj __RTTI__Q23zen13StickCallBack
+.balign 4
+.obj __RTTI__Q23zen18ArrowBasicCallBack, local
 	.4byte lbl_802E1310
 	.4byte 0
-__RTTI__Q23zen15ArrowLRCallBack:
+.endobj __RTTI__Q23zen18ArrowBasicCallBack
+.balign 4
+.obj __RTTI__Q23zen15ArrowLRCallBack, local
 	.4byte lbl_802E12F8
 	.4byte lbl_802E1328
-__RTTI__Q23zen19ArrowCenterCallBack:
+.endobj __RTTI__Q23zen15ArrowLRCallBack
+.balign 4
+.obj __RTTI__Q23zen19ArrowCenterCallBack, local
 	.4byte lbl_802E135C
 	.4byte lbl_802E1378
-__RTTI__Q23zen9NumberTex:
+.endobj __RTTI__Q23zen19ArrowCenterCallBack
+.balign 4
+.obj __RTTI__Q23zen9NumberTex, local
 	.4byte lbl_802E13C8
 	.4byte 0
-"__RTTI__Q23zen12FigureTex<i>":
+.endobj __RTTI__Q23zen9NumberTex
+.balign 4
+.obj "__RTTI__Q23zen12FigureTex<i>", local
 	.4byte lbl_802E13D8
 	.4byte lbl_802E13EC
-lbl_803E67EC:
-	.asciz "ANode"
+.endobj "__RTTI__Q23zen12FigureTex<i>"
 .balign 4
-__RTTI__5ANode:
+.obj lbl_803E67EC, local
+	.asciz "ANode"
+.endobj lbl_803E67EC
+.balign 4
+.obj __RTTI__5ANode, local
 	.4byte lbl_803E67EC
 	.4byte 0
+.endobj __RTTI__5ANode
 
 .section .sbss, "wa"
 .balign 8
-pUpTex__Q23zen19ArrowCenterCallBack:
+.obj pUpTex__Q23zen19ArrowCenterCallBack, global
 	.skip 0x4
-pDownTex__Q23zen19ArrowCenterCallBack:
+.endobj pUpTex__Q23zen19ArrowCenterCallBack
+.balign 4
+.obj pDownTex__Q23zen19ArrowCenterCallBack, global
 	.skip 0x4
+.endobj pDownTex__Q23zen19ArrowCenterCallBack
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803EBA28:
-	.4byte 0x00000000
-lbl_803EBA2C:
-	.4byte 0x41F00000
-lbl_803EBA30:
-	.4byte 0x3F800000
-lbl_803EBA34:
-	.4byte 0x459C4000
-lbl_803EBA38:
-	.4byte 0x44200000
-lbl_803EBA3C:
-	.4byte 0x40400000
-lbl_803EBA40:
-	.4byte 0x3E32B8C3
-lbl_803EBA44:
-	.4byte 0xBE32B8C3
-lbl_803EBA48:
-	.4byte 0x3E4CCCCD
-lbl_803EBA4C:
-	.4byte 0x3D4CCCCD
-lbl_803EBA50:
-	.4byte 0x3E99999A
-lbl_803EBA54:
-	.4byte 0x3CCCCCCD
-lbl_803EBA58:
-	.4byte 0x43300000
-	.4byte 0x80000000
-lbl_803EBA60:
-	.4byte 0x40C90FDB
-lbl_803EBA64:
-	.4byte 0x3DCCCCCD
-lbl_803EBA68:
-	.4byte 0x3F000000
-lbl_803EBA6C:
-	.4byte 0x40490FDB
-lbl_803EBA70:
-	.4byte 0x3FC90FDB
-lbl_803EBA74:
-	.4byte 0x43480000
-lbl_803EBA78:
-	.4byte 0x3FE00000
-	.4byte 0x00000000
-lbl_803EBA80:
-	.4byte 0x40080000
-	.4byte 0x00000000
-lbl_803EBA88:
-	.4byte 0x40000000
-lbl_803EBA8C:
-	.4byte 0x42480000
-lbl_803EBA90:
-	.4byte 0xBF800000
-lbl_803EBA94:
-	.4byte 0x40800000
-lbl_803EBA98:
-	.4byte 0x41200000
+.obj lbl_803EBA28, local
+	.float 0.0
+.endobj lbl_803EBA28
+.obj lbl_803EBA2C, local
+	.float 30.0
+.endobj lbl_803EBA2C
+.obj lbl_803EBA30, local
+	.float 1.0
+.endobj lbl_803EBA30
+.obj lbl_803EBA34, local
+	.float 5000.0
+.endobj lbl_803EBA34
+.obj lbl_803EBA38, local
+	.float 640.0
+.endobj lbl_803EBA38
+.obj lbl_803EBA3C, local
+	.float 3.0
+.endobj lbl_803EBA3C
+.obj lbl_803EBA40, local
+	.float 0.17453294
+.endobj lbl_803EBA40
+.obj lbl_803EBA44, local
+	.float -0.17453294
+.endobj lbl_803EBA44
+.obj lbl_803EBA48, local
+	.float 0.2
+.endobj lbl_803EBA48
+.obj lbl_803EBA4C, local
+	.float 0.05
+.endobj lbl_803EBA4C
+.obj lbl_803EBA50, local
+	.float 0.3
+.endobj lbl_803EBA50
+.obj lbl_803EBA54, local
+	.float 0.025
+.endobj lbl_803EBA54
+.balign 8
+.obj lbl_803EBA58, local
+	.8byte 0x4330000080000000
+.endobj lbl_803EBA58
+.balign 4
+.obj lbl_803EBA60, local # tau
+	.float 6.2831855
+.endobj lbl_803EBA60
+.obj lbl_803EBA64, local
+	.float 0.1
+.endobj lbl_803EBA64
+.obj lbl_803EBA68, local
+	.float 0.5
+.endobj lbl_803EBA68
+.obj lbl_803EBA6C, local # pi
+	.float 3.1415927
+.endobj lbl_803EBA6C
+.obj lbl_803EBA70, local # pi/2
+	.float 1.5707964
+.endobj lbl_803EBA70
+.obj lbl_803EBA74, local
+	.float 200.0
+.endobj lbl_803EBA74
+.balign 8
+.obj lbl_803EBA78, local
+	.double 0.5
+.endobj lbl_803EBA78
+.balign 8
+.obj lbl_803EBA80, local
+	.double 3.0
+.endobj lbl_803EBA80
+.balign 4
+.obj lbl_803EBA88, local
+	.float 2.0
+.endobj lbl_803EBA88
+.obj lbl_803EBA8C, local
+	.float 50.0
+.endobj lbl_803EBA8C
+.obj lbl_803EBA90, local
+	.float -1.0
+.endobj lbl_803EBA90
+.obj lbl_803EBA94, local
+	.float 4.0
+.endobj lbl_803EBA94
+.obj lbl_803EBA98, local
+	.float 10.0
+.endobj lbl_803EBA98
+
+.section .bss, "wa"  # 0x802E9640 - 0x803E81E5
+.balign 8
+.obj pTexTable__Q23zen13StickCallBack, global
+	.skip 0x54
+.endobj pTexTable__Q23zen13StickCallBack

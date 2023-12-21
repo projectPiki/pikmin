@@ -4492,17 +4492,7 @@ __vt__15TAIAangryMiurin:
 lbl_802E4FB0:
 	.asciz "Interaction"
 .balign 4
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
+.skip 0x2C # compiler padding
 .balign 4
 lbl_802E4FE8:
 	.asciz "TAIAcheckNaviMiurin"

@@ -427,3 +427,15 @@
 /* 8000C83C 0000979C  7C 08 03 A6 */	mtlr r0
 /* 8000C840 000097A0  4E 80 00 20 */	blr 
 .endfn WaveScene_Erase__FUlUl
+
+.section .bss, "wa"  # 0x802E9640 - 0x803E81E5
+.balign 8
+.obj wavearc, local
+	.skip 0x400
+.endobj wavearc
+.balign 4
+.obj wavegroup, local
+	.skip 0x400
+.endobj wavegroup
+
+.comm CGRP_ARRAY, 0x40, 4

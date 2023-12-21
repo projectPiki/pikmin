@@ -4464,3 +4464,9 @@
 .obj lbl_803E8A74, local
 	.float 4.0
 .endobj lbl_803E8A74
+
+.section .bss, "wa"  # 0x802E9640 - 0x803E81E5
+.balign 8
+.obj bcs, local
+	.skip 0x400
+.endobj bcs

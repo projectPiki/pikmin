@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global __ct__8MizuPropFv
-__ct__8MizuPropFv:
+.fn __ct__8MizuPropFv, global
 /* 8017B3D4 00178334  7C 08 02 A6 */	mflr r0
 /* 8017B3D8 00178338  90 01 00 04 */	stw r0, 4(r1)
 /* 8017B3DC 0017833C  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -38,9 +37,9 @@ __ct__8MizuPropFv:
 /* 8017B458 001783B8  38 21 00 18 */	addi r1, r1, 0x18
 /* 8017B45C 001783BC  7C 08 03 A6 */	mtlr r0
 /* 8017B460 001783C0  4E 80 00 20 */	blr 
+.endfn __ct__8MizuPropFv
 
-.global __ct__4MizuFP12CreatureProp
-__ct__4MizuFP12CreatureProp:
+.fn __ct__4MizuFP12CreatureProp, global
 /* 8017B464 001783C4  7C 08 02 A6 */	mflr r0
 /* 8017B468 001783C8  90 01 00 04 */	stw r0, 4(r1)
 /* 8017B46C 001783CC  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -76,9 +75,9 @@ __ct__4MizuFP12CreatureProp:
 /* 8017B4DC 0017843C  38 21 00 18 */	addi r1, r1, 0x18
 /* 8017B4E0 00178440  7C 08 03 A6 */	mtlr r0
 /* 8017B4E4 00178444  4E 80 00 20 */	blr 
+.endfn __ct__4MizuFP12CreatureProp
 
-.global attackDefaultPortion__4MizuFv
-attackDefaultPortion__4MizuFv:
+.fn attackDefaultPortion__4MizuFv, global
 /* 8017B4E8 00178448  7C 08 02 A6 */	mflr r0
 /* 8017B4EC 0017844C  38 80 00 33 */	li r4, 0x33
 /* 8017B4F0 00178450  90 01 00 04 */	stw r0, 4(r1)
@@ -102,14 +101,14 @@ attackDefaultPortion__4MizuFv:
 /* 8017B538 00178498  38 21 00 18 */	addi r1, r1, 0x18
 /* 8017B53C 0017849C  7C 08 03 A6 */	mtlr r0
 /* 8017B540 001784A0  4E 80 00 20 */	blr 
+.endfn attackDefaultPortion__4MizuFv
 
-.global getiMass__4MizuFv
-getiMass__4MizuFv:
+.fn getiMass__4MizuFv, global
 /* 8017B544 001784A4  C0 22 AE 90 */	lfs f1, lbl_803EB090@sda21(r2)
 /* 8017B548 001784A8  4E 80 00 20 */	blr 
+.endfn getiMass__4MizuFv
 
-.global initMizu__4MizuFR8Vector3f
-initMizu__4MizuFR8Vector3f:
+.fn initMizu__4MizuFR8Vector3f, global
 /* 8017B54C 001784AC  7C 08 02 A6 */	mflr r0
 /* 8017B550 001784B0  7C 64 1B 78 */	mr r4, r3
 /* 8017B554 001784B4  90 01 00 04 */	stw r0, 4(r1)
@@ -126,9 +125,9 @@ initMizu__4MizuFR8Vector3f:
 /* 8017B580 001784E0  38 21 00 08 */	addi r1, r1, 8
 /* 8017B584 001784E4  7C 08 03 A6 */	mtlr r0
 /* 8017B588 001784E8  4E 80 00 20 */	blr 
+.endfn initMizu__4MizuFR8Vector3f
 
-.global initGeyzer__4MizuFR8Vector3f
-initGeyzer__4MizuFR8Vector3f:
+.fn initGeyzer__4MizuFR8Vector3f, global
 /* 8017B58C 001784EC  7C 08 02 A6 */	mflr r0
 /* 8017B590 001784F0  7C 64 1B 78 */	mr r4, r3
 /* 8017B594 001784F4  90 01 00 04 */	stw r0, 4(r1)
@@ -145,9 +144,9 @@ initGeyzer__4MizuFR8Vector3f:
 /* 8017B5C0 00178520  38 21 00 08 */	addi r1, r1, 8
 /* 8017B5C4 00178524  7C 08 03 A6 */	mtlr r0
 /* 8017B5C8 00178528  4E 80 00 20 */	blr 
+.endfn initGeyzer__4MizuFR8Vector3f
 
-.global doKill__4MizuFv
-doKill__4MizuFv:
+.fn doKill__4MizuFv, global
 /* 8017B5CC 0017852C  7C 08 02 A6 */	mflr r0
 /* 8017B5D0 00178530  38 80 00 00 */	li r4, 0
 /* 8017B5D4 00178534  90 01 00 04 */	stw r0, 4(r1)
@@ -167,9 +166,9 @@ doKill__4MizuFv:
 /* 8017B60C 0017856C  38 21 00 18 */	addi r1, r1, 0x18
 /* 8017B610 00178570  7C 08 03 A6 */	mtlr r0
 /* 8017B614 00178574  4E 80 00 20 */	blr 
+.endfn doKill__4MizuFv
 
-.global exitCourse__4MizuFv
-exitCourse__4MizuFv:
+.fn exitCourse__4MizuFv, global
 /* 8017B618 00178578  7C 08 02 A6 */	mflr r0
 /* 8017B61C 0017857C  38 80 00 01 */	li r4, 1
 /* 8017B620 00178580  90 01 00 04 */	stw r0, 4(r1)
@@ -180,9 +179,9 @@ exitCourse__4MizuFv:
 /* 8017B634 00178594  38 21 00 08 */	addi r1, r1, 8
 /* 8017B638 00178598  7C 08 03 A6 */	mtlr r0
 /* 8017B63C 0017859C  4E 80 00 20 */	blr 
+.endfn exitCourse__4MizuFv
 
-.global update__4MizuFv
-update__4MizuFv:
+.fn update__4MizuFv, global
 /* 8017B640 001785A0  7C 08 02 A6 */	mflr r0
 /* 8017B644 001785A4  90 01 00 04 */	stw r0, 4(r1)
 /* 8017B648 001785A8  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -202,9 +201,9 @@ update__4MizuFv:
 /* 8017B680 001785E0  38 21 00 18 */	addi r1, r1, 0x18
 /* 8017B684 001785E4  7C 08 03 A6 */	mtlr r0
 /* 8017B688 001785E8  4E 80 00 20 */	blr 
+.endfn update__4MizuFv
 
-.global refresh__4MizuFR8Graphics
-refresh__4MizuFR8Graphics:
+.fn refresh__4MizuFR8Graphics, global
 /* 8017B68C 001785EC  7C 08 02 A6 */	mflr r0
 /* 8017B690 001785F0  90 01 00 04 */	stw r0, 4(r1)
 /* 8017B694 001785F4  94 21 FF A8 */	stwu r1, -0x58(r1)
@@ -243,9 +242,9 @@ refresh__4MizuFR8Graphics:
 /* 8017B718 00178678  38 21 00 58 */	addi r1, r1, 0x58
 /* 8017B71C 0017867C  7C 08 03 A6 */	mtlr r0
 /* 8017B720 00178680  4E 80 00 20 */	blr 
+.endfn refresh__4MizuFR8Graphics
 
-.global drawShape__4MizuFR8Graphics
-drawShape__4MizuFR8Graphics:
+.fn drawShape__4MizuFR8Graphics, global
 /* 8017B724 00178684  7C 08 02 A6 */	mflr r0
 /* 8017B728 00178688  38 A0 00 00 */	li r5, 0
 /* 8017B72C 0017868C  90 01 00 04 */	stw r0, 4(r1)
@@ -273,9 +272,9 @@ drawShape__4MizuFR8Graphics:
 /* 8017B784 001786E4  38 21 00 18 */	addi r1, r1, 0x18
 /* 8017B788 001786E8  7C 08 03 A6 */	mtlr r0
 /* 8017B78C 001786EC  4E 80 00 20 */	blr 
+.endfn drawShape__4MizuFR8Graphics
 
-.global doAI__4MizuFv
-doAI__4MizuFv:
+.fn doAI__4MizuFv, global
 /* 8017B790 001786F0  7C 08 02 A6 */	mflr r0
 /* 8017B794 001786F4  90 01 00 04 */	stw r0, 4(r1)
 /* 8017B798 001786F8  94 21 FF F8 */	stwu r1, -8(r1)
@@ -285,9 +284,9 @@ doAI__4MizuFv:
 /* 8017B7A8 00178708  38 21 00 08 */	addi r1, r1, 8
 /* 8017B7AC 0017870C  7C 08 03 A6 */	mtlr r0
 /* 8017B7B0 00178710  4E 80 00 20 */	blr 
+.endfn doAI__4MizuFv
 
-.global doAnimation__4MizuFv
-doAnimation__4MizuFv:
+.fn doAnimation__4MizuFv, global
 /* 8017B7B4 00178714  7C 08 02 A6 */	mflr r0
 /* 8017B7B8 00178718  7C 64 1B 78 */	mr r4, r3
 /* 8017B7BC 0017871C  90 01 00 04 */	stw r0, 4(r1)
@@ -306,14 +305,14 @@ doAnimation__4MizuFv:
 /* 8017B7EC 0017874C  38 21 00 08 */	addi r1, r1, 8
 /* 8017B7F0 00178750  7C 08 03 A6 */	mtlr r0
 /* 8017B7F4 00178754  4E 80 00 20 */	blr 
+.endfn doAnimation__4MizuFv
 
-.global isVisible__4MizuFv
-isVisible__4MizuFv:
+.fn isVisible__4MizuFv, weak
 /* 8017B7F8 00178758  88 63 03 B9 */	lbz r3, 0x3b9(r3)
 /* 8017B7FC 0017875C  4E 80 00 20 */	blr 
+.endfn isVisible__4MizuFv
 
-.global read__8MizuPropFR18RandomAccessStream
-read__8MizuPropFR18RandomAccessStream:
+.fn read__8MizuPropFR18RandomAccessStream, weak
 /* 8017B800 00178760  7C 08 02 A6 */	mflr r0
 /* 8017B804 00178764  90 01 00 04 */	stw r0, 4(r1)
 /* 8017B808 00178768  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -334,36 +333,44 @@ read__8MizuPropFR18RandomAccessStream:
 /* 8017B844 001787A4  38 21 00 18 */	addi r1, r1, 0x18
 /* 8017B848 001787A8  7C 08 03 A6 */	mtlr r0
 /* 8017B84C 001787AC  4E 80 00 20 */	blr 
+.endfn read__8MizuPropFR18RandomAccessStream
 
-.global "@492@read__8MizuPropFR18RandomAccessStream"
-"@492@read__8MizuPropFR18RandomAccessStream":
+.fn "@492@read__8MizuPropFR18RandomAccessStream", weak
 /* 8017B850 001787B0  38 63 FE 14 */	addi r3, r3, -492
 /* 8017B854 001787B4  4B FF FF AC */	b read__8MizuPropFR18RandomAccessStream
+.endfn "@492@read__8MizuPropFR18RandomAccessStream"
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802D15F8:
+.obj lbl_802D15F8, local
 	.asciz "Mizu.cpp"
+.endobj lbl_802D15F8
 .balign 4
-lbl_802D1604:
+.obj lbl_802D1604, local
 	.asciz "CoreNode"
+.endobj lbl_802D1604
 .balign 4
-lbl_802D1610:
+.obj lbl_802D1610, local
 	.asciz "EventTalker"
+.endobj lbl_802D1610
 .balign 4
-lbl_802D161C:
+.obj lbl_802D161C, local
 	.asciz "RefCountable"
+.endobj lbl_802D161C
 .balign 4
-lbl_802D162C:
+.obj lbl_802D162C, local
 	.asciz "Creature"
+.endobj lbl_802D162C
 .balign 4
-lbl_802D1638:
+.obj lbl_802D1638, local
 	.4byte __RTTI__11EventTalker
 	.4byte 0x00000008
 	.4byte __RTTI__12RefCountable
 	.4byte 0x00000000
 	.4byte 0x00000000
-lbl_802D164C:
+.endobj lbl_802D1638
+.balign 4
+.obj lbl_802D164C, local
 	.4byte __RTTI__11EventTalker
 	.4byte 0x00000008
 	.4byte __RTTI__12RefCountable
@@ -371,7 +378,9 @@ lbl_802D164C:
 	.4byte __RTTI__8Creature
 	.4byte 0x00000000
 	.4byte 0x00000000
-lbl_802D1668:
+.endobj lbl_802D164C
+.balign 4
+.obj lbl_802D1668, local
 	.4byte __RTTI__11EventTalker
 	.4byte 0x00000008
 	.4byte __RTTI__12RefCountable
@@ -381,8 +390,9 @@ lbl_802D1668:
 	.4byte __RTTI__4Boss
 	.4byte 0x00000000
 	.4byte 0x00000000
-.global __vt__4Mizu
-__vt__4Mizu:
+.endobj lbl_802D1668
+.balign 4
+.obj __vt__4Mizu, global
 	.4byte __RTTI__4Mizu
 	.4byte 0
 	.4byte addCntCallback__12RefCountableFv
@@ -456,26 +466,33 @@ __vt__4Mizu:
 	.4byte attackDefaultPortion__4MizuFv
 	.4byte bombDamageCounter__4BossFP8CollPart
 	.4byte drawShape__4MizuFR8Graphics
+.endobj __vt__4Mizu
 .balign 4
-lbl_802D17B0:
+.obj lbl_802D17B0, local
 	.asciz "MizuProp"
+.endobj lbl_802D17B0
 .balign 4
-lbl_802D17BC:
+.obj lbl_802D17BC, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte 0
+.endobj lbl_802D17BC
 .balign 4
-lbl_802D17C8:
+.obj lbl_802D17C8, local
 	.asciz "CreatureProp"
+.endobj lbl_802D17C8
 .balign 4
-lbl_802D17D8:
+.obj lbl_802D17D8, local
 	.asciz "BossProp"
+.endobj lbl_802D17D8
 .balign 4
-lbl_802D17E4:
+.obj lbl_802D17E4, local
 	.4byte __RTTI__12CreatureProp
 	.4byte 0
 	.4byte 0
-lbl_802D17F0:
+.endobj lbl_802D17E4
+.balign 4
+.obj lbl_802D17F0, local
 	.4byte __RTTI__5ANode
 	.4byte 0x1ec
 	.4byte __RTTI__8CoreNode
@@ -485,8 +502,9 @@ lbl_802D17F0:
 	.4byte __RTTI__8BossProp
 	.4byte 0
 	.4byte 0
-.global __vt__8MizuProp
-__vt__8MizuProp:
+.endobj lbl_802D17F0
+.balign 4
+.obj __vt__8MizuProp, weak
 	.4byte __RTTI__8MizuProp
 	.4byte 0
 	.4byte read__8MizuPropFR18RandomAccessStream
@@ -494,68 +512,88 @@ __vt__8MizuProp:
 	.4byte 0xfffffe14
 	.4byte getAgeNodeType__5ANodeFv
 	.4byte "@492@read__8MizuPropFR18RandomAccessStream"
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
+.endobj __vt__8MizuProp
+.balign 4
+.skip 0x20 # compiler padding
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-lbl_803E5510:
+.obj lbl_803E5510, local
 	.asciz "Mizu"
+.endobj lbl_803E5510
 .balign 4
-__RTTI__11EventTalker:
+.obj __RTTI__11EventTalker, local
 	.4byte lbl_802D1610
 	.4byte 0
-__RTTI__12RefCountable:
+.endobj __RTTI__11EventTalker
+.balign 4
+.obj __RTTI__12RefCountable, local
 	.4byte lbl_802D161C
 	.4byte 0
-__RTTI__8Creature:
+.endobj __RTTI__12RefCountable
+.balign 4
+.obj __RTTI__8Creature, local
 	.4byte lbl_802D162C
 	.4byte lbl_802D1638
+.endobj __RTTI__8Creature
 .balign 4
-lbl_803E5530:
+.obj lbl_803E5530, local
 	.asciz "Boss"
+.endobj lbl_803E5530
 .balign 4
-__RTTI__4Boss:
+.obj __RTTI__4Boss, local
 	.4byte lbl_803E5530
 	.4byte lbl_802D164C
-__RTTI__4Mizu:
+.endobj __RTTI__4Boss
+.balign 4
+.obj __RTTI__4Mizu, local
 	.4byte lbl_803E5510
 	.4byte lbl_802D1668
+.endobj __RTTI__4Mizu
 .balign 4
-lbl_803E5548:
+.obj lbl_803E5548, local
 	.asciz "ANode"
+.endobj lbl_803E5548
 .balign 4
-__RTTI__5ANode:
+.obj __RTTI__5ANode, local
 	.4byte lbl_803E5548
 	.4byte 0
-__RTTI__8CoreNode:
+.endobj __RTTI__5ANode
+.balign 4
+.obj __RTTI__8CoreNode, local
 	.4byte lbl_802D1604
 	.4byte lbl_802D17BC
-__RTTI__12CreatureProp:
+.endobj __RTTI__8CoreNode
+.balign 4
+.obj __RTTI__12CreatureProp, local
 	.4byte lbl_802D17C8
 	.4byte 0
-__RTTI__8BossProp:
+.endobj __RTTI__12CreatureProp
+.balign 4
+.obj __RTTI__8BossProp, local
 	.4byte lbl_802D17D8
 	.4byte lbl_802D17E4
-__RTTI__8MizuProp:
+.endobj __RTTI__8BossProp
+.balign 4
+.obj __RTTI__8MizuProp, local
 	.4byte lbl_802D17B0
 	.4byte lbl_802D17F0
+.endobj __RTTI__8MizuProp
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803EB088:
+.obj lbl_803EB088, local
 	.float 1.0
-lbl_803EB08C:
+.endobj lbl_803EB088
+.obj lbl_803EB08C, local
 	.float 0.0
-lbl_803EB090:
+.endobj lbl_803EB08C
+.obj lbl_803EB090, local
 	.float 0.0001
-lbl_803EB094:
+.endobj lbl_803EB090
+.obj lbl_803EB094, local
 	.float 10.0
-lbl_803EB098:
+.endobj lbl_803EB094
+.obj lbl_803EB098, local
 	.float 20.0
+.endobj lbl_803EB098

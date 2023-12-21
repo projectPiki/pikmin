@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global __ct__12KingBackPropFv
-__ct__12KingBackPropFv:
+.fn __ct__12KingBackPropFv, global
 /* 80179E08 00176D68  7C 08 02 A6 */	mflr r0
 /* 80179E0C 00176D6C  90 01 00 04 */	stw r0, 4(r1)
 /* 80179E10 00176D70  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -38,9 +37,9 @@ __ct__12KingBackPropFv:
 /* 80179E8C 00176DEC  38 21 00 18 */	addi r1, r1, 0x18
 /* 80179E90 00176DF0  7C 08 03 A6 */	mtlr r0
 /* 80179E94 00176DF4  4E 80 00 20 */	blr 
+.endfn __ct__12KingBackPropFv
 
-.global __ct__8KingBackFP12CreatureProp
-__ct__8KingBackFP12CreatureProp:
+.fn __ct__8KingBackFP12CreatureProp, global
 /* 80179E98 00176DF8  7C 08 02 A6 */	mflr r0
 /* 80179E9C 00176DFC  90 01 00 04 */	stw r0, 4(r1)
 /* 80179EA0 00176E00  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -69,14 +68,14 @@ __ct__8KingBackFP12CreatureProp:
 /* 80179EF8 00176E58  38 21 00 18 */	addi r1, r1, 0x18
 /* 80179EFC 00176E5C  7C 08 03 A6 */	mtlr r0
 /* 80179F00 00176E60  4E 80 00 20 */	blr 
+.endfn __ct__8KingBackFP12CreatureProp
 
-.global getiMass__8KingBackFv
-getiMass__8KingBackFv:
+.fn getiMass__8KingBackFv, global
 /* 80179F04 00176E64  C0 22 AE 40 */	lfs f1, lbl_803EB040@sda21(r2)
 /* 80179F08 00176E68  4E 80 00 20 */	blr 
+.endfn getiMass__8KingBackFv
 
-.global init__8KingBackFR8Vector3f
-init__8KingBackFR8Vector3f:
+.fn init__8KingBackFR8Vector3f, global
 /* 80179F0C 00176E6C  7C 08 02 A6 */	mflr r0
 /* 80179F10 00176E70  38 83 00 00 */	addi r4, r3, 0
 /* 80179F14 00176E74  90 01 00 04 */	stw r0, 4(r1)
@@ -96,9 +95,9 @@ init__8KingBackFR8Vector3f:
 /* 80179F4C 00176EAC  38 21 00 08 */	addi r1, r1, 8
 /* 80179F50 00176EB0  7C 08 03 A6 */	mtlr r0
 /* 80179F54 00176EB4  4E 80 00 20 */	blr 
+.endfn init__8KingBackFR8Vector3f
 
-.global doKill__8KingBackFv
-doKill__8KingBackFv:
+.fn doKill__8KingBackFv, global
 /* 80179F58 00176EB8  7C 08 02 A6 */	mflr r0
 /* 80179F5C 00176EBC  90 01 00 04 */	stw r0, 4(r1)
 /* 80179F60 00176EC0  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -114,13 +113,13 @@ doKill__8KingBackFv:
 /* 80179F88 00176EE8  38 21 00 18 */	addi r1, r1, 0x18
 /* 80179F8C 00176EEC  7C 08 03 A6 */	mtlr r0
 /* 80179F90 00176EF0  4E 80 00 20 */	blr 
+.endfn doKill__8KingBackFv
 
-.global exitCourse__8KingBackFv
-exitCourse__8KingBackFv:
+.fn exitCourse__8KingBackFv, global
 /* 80179F94 00176EF4  4E 80 00 20 */	blr 
+.endfn exitCourse__8KingBackFv
 
-.global update__8KingBackFv
-update__8KingBackFv:
+.fn update__8KingBackFv, global
 /* 80179F98 00176EF8  7C 08 02 A6 */	mflr r0
 /* 80179F9C 00176EFC  90 01 00 04 */	stw r0, 4(r1)
 /* 80179FA0 00176F00  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -140,9 +139,9 @@ update__8KingBackFv:
 /* 80179FD8 00176F38  38 21 00 18 */	addi r1, r1, 0x18
 /* 80179FDC 00176F3C  7C 08 03 A6 */	mtlr r0
 /* 80179FE0 00176F40  4E 80 00 20 */	blr 
+.endfn update__8KingBackFv
 
-.global refresh__8KingBackFR8Graphics
-refresh__8KingBackFR8Graphics:
+.fn refresh__8KingBackFR8Graphics, global
 /* 80179FE4 00176F44  7C 08 02 A6 */	mflr r0
 /* 80179FE8 00176F48  90 01 00 04 */	stw r0, 4(r1)
 /* 80179FEC 00176F4C  94 21 FF A8 */	stwu r1, -0x58(r1)
@@ -184,9 +183,9 @@ refresh__8KingBackFR8Graphics:
 /* 8017A07C 00176FDC  38 21 00 58 */	addi r1, r1, 0x58
 /* 8017A080 00176FE0  7C 08 03 A6 */	mtlr r0
 /* 8017A084 00176FE4  4E 80 00 20 */	blr 
+.endfn refresh__8KingBackFR8Graphics
 
-.global drawShape__8KingBackFR8Graphics
-drawShape__8KingBackFR8Graphics:
+.fn drawShape__8KingBackFR8Graphics, global
 /* 8017A088 00176FE8  7C 08 02 A6 */	mflr r0
 /* 8017A08C 00176FEC  38 A0 00 00 */	li r5, 0
 /* 8017A090 00176FF0  90 01 00 04 */	stw r0, 4(r1)
@@ -214,9 +213,9 @@ drawShape__8KingBackFR8Graphics:
 /* 8017A0E8 00177048  38 21 00 18 */	addi r1, r1, 0x18
 /* 8017A0EC 0017704C  7C 08 03 A6 */	mtlr r0
 /* 8017A0F0 00177050  4E 80 00 20 */	blr 
+.endfn drawShape__8KingBackFR8Graphics
 
-.global doAI__8KingBackFv
-doAI__8KingBackFv:
+.fn doAI__8KingBackFv, global
 /* 8017A0F4 00177054  C0 03 03 00 */	lfs f0, 0x300(r3)
 /* 8017A0F8 00177058  D0 03 00 94 */	stfs f0, 0x94(r3)
 /* 8017A0FC 0017705C  C0 03 03 04 */	lfs f0, 0x304(r3)
@@ -224,9 +223,9 @@ doAI__8KingBackFv:
 /* 8017A104 00177064  C0 03 03 08 */	lfs f0, 0x308(r3)
 /* 8017A108 00177068  D0 03 00 9C */	stfs f0, 0x9c(r3)
 /* 8017A10C 0017706C  4E 80 00 20 */	blr 
+.endfn doAI__8KingBackFv
 
-.global doAnimation__8KingBackFv
-doAnimation__8KingBackFv:
+.fn doAnimation__8KingBackFv, global
 /* 8017A110 00177070  7C 08 02 A6 */	mflr r0
 /* 8017A114 00177074  7C 64 1B 78 */	mr r4, r3
 /* 8017A118 00177078  90 01 00 04 */	stw r0, 4(r1)
@@ -245,9 +244,9 @@ doAnimation__8KingBackFv:
 /* 8017A148 001770A8  38 21 00 08 */	addi r1, r1, 8
 /* 8017A14C 001770AC  7C 08 03 A6 */	mtlr r0
 /* 8017A150 001770B0  4E 80 00 20 */	blr 
+.endfn doAnimation__8KingBackFv
 
-.global read__12KingBackPropFR18RandomAccessStream
-read__12KingBackPropFR18RandomAccessStream:
+.fn read__12KingBackPropFR18RandomAccessStream, weak
 /* 8017A154 001770B4  7C 08 02 A6 */	mflr r0
 /* 8017A158 001770B8  90 01 00 04 */	stw r0, 4(r1)
 /* 8017A15C 001770BC  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -268,57 +267,70 @@ read__12KingBackPropFR18RandomAccessStream:
 /* 8017A198 001770F8  38 21 00 18 */	addi r1, r1, 0x18
 /* 8017A19C 001770FC  7C 08 03 A6 */	mtlr r0
 /* 8017A1A0 00177100  4E 80 00 20 */	blr 
+.endfn read__12KingBackPropFR18RandomAccessStream
 
-"@492@read__12KingBackPropFR18RandomAccessStream":
+.fn "@492@read__12KingBackPropFR18RandomAccessStream", weak
 /* 8017A1A4 00177104  38 63 FE 14 */	addi r3, r3, -492
 /* 8017A1A8 00177108  4B FF FF AC */	b read__12KingBackPropFR18RandomAccessStream
+.endfn "@492@read__12KingBackPropFR18RandomAccessStream"
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802D0E18:
+.obj lbl_802D0E18, local
 	.asciz "KingBack.cpp"
+.endobj lbl_802D0E18
 .balign 4
-lbl_802D0E28:
+.obj lbl_802D0E28, local
 	.asciz "KingBack"
+.endobj lbl_802D0E28
 .balign 4
-lbl_802D0E34:
+.obj lbl_802D0E34, local
 	.asciz "CoreNode"
+.endobj lbl_802D0E34
 .balign 4
-lbl_802D0E40:
+.obj lbl_802D0E40, local
 	.asciz "EventTalker"
+.endobj lbl_802D0E40
 .balign 4
-lbl_802D0E4C:
+.obj lbl_802D0E4C, local
 	.asciz "RefCountable"
+.endobj lbl_802D0E4C
 .balign 4
-lbl_802D0E5C:
+.obj lbl_802D0E5C, local
 	.asciz "Creature"
+.endobj lbl_802D0E5C
 .balign 4
-lbl_802D0E68:
+.obj lbl_802D0E68, local
 	.4byte __RTTI__11EventTalker
 	.4byte 0x00000008
 	.4byte __RTTI__12RefCountable
-	.4byte 0x00000000
-	.4byte 0x00000000
-lbl_802D0E7C:
+	.4byte 0
+	.4byte 0
+.endobj lbl_802D0E68
+.balign 4
+.obj lbl_802D0E7C, local
 	.4byte __RTTI__11EventTalker
 	.4byte 0x00000008
 	.4byte __RTTI__12RefCountable
-	.4byte 0x00000000
+	.4byte 0
 	.4byte __RTTI__8Creature
-	.4byte 0x00000000
-	.4byte 0x00000000
-lbl_802D0E98:
+	.4byte 0
+	.4byte 0
+.endobj lbl_802D0E7C
+.balign 4
+.obj lbl_802D0E98, local
 	.4byte __RTTI__11EventTalker
 	.4byte 0x00000008
 	.4byte __RTTI__12RefCountable
-	.4byte 0x00000000
+	.4byte 0
 	.4byte __RTTI__8Creature
-	.4byte 0x00000000
+	.4byte 0
 	.4byte __RTTI__4Boss
-	.4byte 0x00000000
-	.4byte 0x00000000
-.global __vt__8KingBack
-__vt__8KingBack:
+	.4byte 0
+	.4byte 0
+.endobj lbl_802D0E98
+.balign 4
+.obj __vt__8KingBack, global
 	.4byte __RTTI__8KingBack
 	.4byte 0
 	.4byte addCntCallback__12RefCountableFv
@@ -392,26 +404,33 @@ __vt__8KingBack:
 	.4byte attackDefaultPortion__4BossFv
 	.4byte bombDamageCounter__4BossFP8CollPart
 	.4byte drawShape__8KingBackFR8Graphics
+.endobj __vt__8KingBack
 .balign 4
-lbl_802D0FE0:
+.obj lbl_802D0FE0, local
 	.asciz "KingBackProp"
+.endobj lbl_802D0FE0
 .balign 4
-lbl_802D0FF0:
+.obj lbl_802D0FF0, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte 0
+.endobj lbl_802D0FF0
 .balign 4
-lbl_802D0FFC:
+.obj lbl_802D0FFC, local
 	.asciz "CreatureProp"
+.endobj lbl_802D0FFC
 .balign 4
-lbl_802D100C:
+.obj lbl_802D100C, local
 	.asciz "BossProp"
+.endobj lbl_802D100C
 .balign 4
-lbl_802D1018:
+.obj lbl_802D1018, local
 	.4byte __RTTI__12CreatureProp
 	.4byte 0
 	.4byte 0
-lbl_802D1024:
+.endobj lbl_802D1018
+.balign 4
+.obj lbl_802D1024, local
 	.4byte __RTTI__5ANode
 	.4byte 0x1ec
 	.4byte __RTTI__8CoreNode
@@ -421,8 +440,9 @@ lbl_802D1024:
 	.4byte __RTTI__8BossProp
 	.4byte 0
 	.4byte 0
-.global __vt__12KingBackProp
-__vt__12KingBackProp:
+.endobj lbl_802D1024
+.balign 4
+.obj __vt__12KingBackProp, weak
 	.4byte __RTTI__12KingBackProp
 	.4byte 0
 	.4byte read__12KingBackPropFR18RandomAccessStream
@@ -430,62 +450,80 @@ __vt__12KingBackProp:
 	.4byte 0xfffffe14
 	.4byte getAgeNodeType__5ANodeFv
 	.4byte "@492@read__12KingBackPropFR18RandomAccessStream"
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
+.endobj __vt__12KingBackProp
+.skip 0x1C # compiler padding
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-__RTTI__11EventTalker:
+.obj __RTTI__11EventTalker, local
 	.4byte lbl_802D0E40
 	.4byte 0
-__RTTI__12RefCountable:
+.endobj __RTTI__11EventTalker
+.balign 4
+.obj __RTTI__12RefCountable, local
 	.4byte lbl_802D0E4C
 	.4byte 0
-__RTTI__8Creature:
+.endobj __RTTI__12RefCountable
+.balign 4
+.obj __RTTI__8Creature, local
 	.4byte lbl_802D0E5C
 	.4byte lbl_802D0E68
+.endobj __RTTI__8Creature
 .balign 4
-lbl_803E53B8:
+.obj lbl_803E53B8, local
 	.asciz "Boss"
+.endobj lbl_803E53B8
 .balign 4
-__RTTI__4Boss:
+.obj __RTTI__4Boss, local
 	.4byte lbl_803E53B8
 	.4byte lbl_802D0E7C
-__RTTI__8KingBack:
+.endobj __RTTI__4Boss
+.balign 4
+.obj __RTTI__8KingBack, local
 	.4byte lbl_802D0E28
 	.4byte lbl_802D0E98
+.endobj __RTTI__8KingBack
 .balign 4
-lbl_803E53D0:
+.obj lbl_803E53D0, local
 	.asciz "ANode"
+.endobj lbl_803E53D0
 .balign 4
-__RTTI__5ANode:
+.obj __RTTI__5ANode, local
 	.4byte lbl_803E53D0
 	.4byte 0
-__RTTI__8CoreNode:
+.endobj __RTTI__5ANode
+.balign 4
+.obj __RTTI__8CoreNode, local
 	.4byte lbl_802D0E34
 	.4byte lbl_802D0FF0
-__RTTI__12CreatureProp:
+.endobj __RTTI__8CoreNode
+.balign 4
+.obj __RTTI__12CreatureProp, local
 	.4byte lbl_802D0FFC
 	.4byte 0
-__RTTI__8BossProp:
+.endobj __RTTI__12CreatureProp
+.balign 4
+.obj __RTTI__8BossProp, local
 	.4byte lbl_802D100C
 	.4byte lbl_802D1018
-__RTTI__12KingBackProp:
+.endobj __RTTI__8BossProp
+.balign 4
+.obj __RTTI__12KingBackProp, local
 	.4byte lbl_802D0FE0
 	.4byte lbl_802D1024
+.endobj __RTTI__12KingBackProp
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803EB038:
+.obj lbl_803EB038, local
 	.float 1.0
-lbl_803EB03C:
+.endobj lbl_803EB038
+.obj lbl_803EB03C, local
 	.float 0.0
-lbl_803EB040:
+.endobj lbl_803EB03C
+.obj lbl_803EB040, local
 	.float 0.0001
-lbl_803EB044:
+.endobj lbl_803EB040
+.obj lbl_803EB044, local
 	.float 20.0
+.endobj lbl_803EB044

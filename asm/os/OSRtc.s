@@ -654,3 +654,9 @@
 /* 801FAFA0 001F7F00  38 21 00 20 */	addi r1, r1, 0x20
 /* 801FAFA4 001F7F04  4E 80 00 20 */	blr 
 .endfn OSSetProgressiveMode
+
+.section .bss, "wa"  # 0x802E9640 - 0x803E81E5
+.balign 32
+.obj Scb, local
+	.skip 0x54
+.endobj Scb

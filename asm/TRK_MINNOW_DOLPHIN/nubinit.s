@@ -128,3 +128,9 @@
 .obj lbl_80222D50, local
 	.asciz "MetroTRK for Dolphin v0.8"
 .endobj lbl_80222D50
+
+.section .bss, "wa"  # 0x802E9640 - 0x803E81E5
+.balign 8
+.obj gTRKBigEndian, global
+	.skip 0x4
+.endobj gTRKBigEndian

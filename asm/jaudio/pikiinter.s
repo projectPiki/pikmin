@@ -1285,3 +1285,6 @@
 .obj lbl_803E83B0, local
 	.float 0.8
 .endobj lbl_803E83B0
+
+.section .bss, "wa"  # 0x802E9640 - 0x803E81E5
+.comm EVENT, 0x1B64, 4

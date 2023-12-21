@@ -35,7 +35,7 @@ MAP     := $(BUILD_DIR)/build.map
 
 include obj_files.mk
 
-O_FILES :=	$(GROUP_0_FILES) $(SYSBOOTUP) $(JAUDIO) $(HVQM4DEC) $(SYSCOMMON) $(SYSDOLPHIN)\
+O_FILES :=	$(SYSBOOTUP) $(JAUDIO) $(HVQM4DEC) $(SYSCOMMON) $(SYSDOLPHIN)\
 			$(COLIN) $(KANDO) $(NAKATA) $(NISHIMURA) $(OGAWA) $(YAMASHITA)\
 			$(BASE) $(OS) $(DB) $(MTX) $(DVD) $(VI) $(PAD) $(AI) $(AR) $(DSP)\
 			$(CARD) $(HIO) $(GX) $(RUNTIME) $(MSL_C) $(TRK_MINNOW_DOLPHIN)\

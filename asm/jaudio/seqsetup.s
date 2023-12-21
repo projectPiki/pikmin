@@ -1006,3 +1006,21 @@
 .obj lbl_803E8330, local
 	.float 0.5
 .endobj lbl_803E8330
+
+.section .bss, "wa"  # 0x802E9640 - 0x803E81E5
+.balign 8
+.obj seq, local
+	.skip 0x43400
+.endobj seq
+.balign 4
+.obj ROOT_OUTER, local
+	.skip 0x400
+.endobj ROOT_OUTER
+.balign 4
+.obj rootseq, local
+	.skip 0x40
+.endobj rootseq
+.balign 4
+.obj FREE_SEQP_QUEUE, local
+	.skip 0x400
+.endobj FREE_SEQP_QUEUE
