@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global modeMove__Q23zen14DrawCMscoreObjFv
-modeMove__Q23zen14DrawCMscoreObjFv:
+.fn modeMove__Q23zen14DrawCMscoreObjFv, weak
 /* 801ED8AC 001EA80C  7C 08 02 A6 */	mflr r0
 /* 801ED8B0 001EA810  90 01 00 04 */	stw r0, 4(r1)
 /* 801ED8B4 001EA814  94 21 FF C8 */	stwu r1, -0x38(r1)
@@ -92,14 +91,14 @@ modeMove__Q23zen14DrawCMscoreObjFv:
 /* 801ED9F0 001EA950  38 21 00 38 */	addi r1, r1, 0x38
 /* 801ED9F4 001EA954  7C 08 03 A6 */	mtlr r0
 /* 801ED9F8 001EA958  4E 80 00 20 */	blr 
+.endfn modeMove__Q23zen14DrawCMscoreObjFv
 
-.global modeWait__Q23zen14DrawCMscoreObjFv
-modeWait__Q23zen14DrawCMscoreObjFv:
+.fn modeWait__Q23zen14DrawCMscoreObjFv, weak
 /* 801ED9FC 001EA95C  38 60 00 00 */	li r3, 0
 /* 801EDA00 001EA960  4E 80 00 20 */	blr 
+.endfn modeWait__Q23zen14DrawCMscoreObjFv
 
-.global init__Q23zen14DrawCMscoreMgrFP9P2DScreen
-init__Q23zen14DrawCMscoreMgrFP9P2DScreen:
+.fn init__Q23zen14DrawCMscoreMgrFP9P2DScreen, global
 /* 801EDA04 001EA964  7C 08 02 A6 */	mflr r0
 /* 801EDA08 001EA968  90 01 00 04 */	stw r0, 4(r1)
 /* 801EDA0C 001EA96C  94 21 FF 18 */	stwu r1, -0xe8(r1)
@@ -122,7 +121,7 @@ init__Q23zen14DrawCMscoreMgrFP9P2DScreen:
 /* 801EDA50 001EA9B0  3C C0 80 2D */	lis r6, "__vt__Q23zen20CallBack1<P7P2DPane>"@ha
 /* 801EDA54 001EA9B4  3C A0 80 2D */	lis r5, __vt__15P2DPaneCallBack@ha
 /* 801EDA58 001EA9B8  3C 80 80 2D */	lis r4, "__vt__Q23zen20NumberPicCallBack<i>"@ha
-/* 801EDA5C 001EA9BC  CB C2 C1 88 */	lfd f30, "@816"@sda21(r2)
+/* 801EDA5C 001EA9BC  CB C2 C1 88 */	lfd f30, lbl_803EC388@sda21(r2)
 /* 801EDA60 001EA9C0  3C 60 80 2E */	lis r3, lbl_802E6DD8@ha
 /* 801EDA64 001EA9C4  C3 E2 C1 7C */	lfs f31, lbl_803EC37C@sda21(r2)
 /* 801EDA68 001EA9C8  3B 86 30 04 */	addi r28, r6, "__vt__Q23zen20CallBack1<P7P2DPane>"@l
@@ -421,9 +420,9 @@ init__Q23zen14DrawCMscoreMgrFP9P2DScreen:
 /* 801EDEDC 001EAE3C  38 21 00 E8 */	addi r1, r1, 0xe8
 /* 801EDEE0 001EAE40  7C 08 03 A6 */	mtlr r0
 /* 801EDEE4 001EAE44  4E 80 00 20 */	blr 
+.endfn init__Q23zen14DrawCMscoreMgrFP9P2DScreen
 
-.global "setTexture__Q23zen20NumberPicCallBack<i>FP7P2DPane"
-"setTexture__Q23zen20NumberPicCallBack<i>FP7P2DPane":
+.fn "setTexture__Q23zen20NumberPicCallBack<i>FP7P2DPane", weak
 /* 801EDEE8 001EAE48  7C 08 02 A6 */	mflr r0
 /* 801EDEEC 001EAE4C  7C 65 1B 78 */	mr r5, r3
 /* 801EDEF0 001EAE50  90 01 00 04 */	stw r0, 4(r1)
@@ -465,9 +464,9 @@ init__Q23zen14DrawCMscoreMgrFP9P2DScreen:
 /* 801EDF78 001EAED8  38 21 00 20 */	addi r1, r1, 0x20
 /* 801EDF7C 001EAEDC  7C 08 03 A6 */	mtlr r0
 /* 801EDF80 001EAEE0  4E 80 00 20 */	blr 
+.endfn "setTexture__Q23zen20NumberPicCallBack<i>FP7P2DPane"
 
-.global __ct__Q23zen14DrawCMscoreObjFv
-__ct__Q23zen14DrawCMscoreObjFv:
+.fn __ct__Q23zen14DrawCMscoreObjFv, weak
 /* 801EDF84 001EAEE4  C0 02 C1 7C */	lfs f0, lbl_803EC37C@sda21(r2)
 /* 801EDF88 001EAEE8  3C 80 80 22 */	lis r4, __ptmf_null@ha
 /* 801EDF8C 001EAEEC  38 C0 00 00 */	li r6, 0
@@ -497,9 +496,9 @@ __ct__Q23zen14DrawCMscoreObjFv:
 /* 801EDFEC 001EAF4C  80 05 00 08 */	lwz r0, 8(r5)
 /* 801EDFF0 001EAF50  90 03 00 4C */	stw r0, 0x4c(r3)
 /* 801EDFF4 001EAF54  4E 80 00 20 */	blr 
+.endfn __ct__Q23zen14DrawCMscoreObjFv
 
-.global update__Q23zen14DrawCMscoreMgrFv
-update__Q23zen14DrawCMscoreMgrFv:
+.fn update__Q23zen14DrawCMscoreMgrFv, global
 /* 801EDFF8 001EAF58  7C 08 02 A6 */	mflr r0
 /* 801EDFFC 001EAF5C  90 01 00 04 */	stw r0, 4(r1)
 /* 801EE000 001EAF60  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -533,9 +532,9 @@ update__Q23zen14DrawCMscoreMgrFv:
 /* 801EE068 001EAFC8  38 21 00 20 */	addi r1, r1, 0x20
 /* 801EE06C 001EAFCC  7C 08 03 A6 */	mtlr r0
 /* 801EE070 001EAFD0  4E 80 00 20 */	blr 
+.endfn update__Q23zen14DrawCMscoreMgrFv
 
-.global hide__Q23zen14DrawCMscoreMgrFv
-hide__Q23zen14DrawCMscoreMgrFv:
+.fn hide__Q23zen14DrawCMscoreMgrFv, global
 /* 801EE074 001EAFD4  38 C0 00 00 */	li r6, 0
 /* 801EE078 001EAFD8  38 A6 00 00 */	addi r5, r6, 0
 /* 801EE07C 001EAFDC  38 E0 00 00 */	li r7, 0
@@ -553,9 +552,9 @@ hide__Q23zen14DrawCMscoreMgrFv:
 /* 801EE0A4 001EB004  7C 07 00 00 */	cmpw r7, r0
 /* 801EE0A8 001EB008  41 80 FF DC */	blt .L_801EE084
 /* 801EE0AC 001EB00C  4E 80 00 20 */	blr 
+.endfn hide__Q23zen14DrawCMscoreMgrFv
 
-.global sleep__Q23zen14DrawCMscoreMgrFv
-sleep__Q23zen14DrawCMscoreMgrFv:
+.fn sleep__Q23zen14DrawCMscoreMgrFv, global
 /* 801EE0B0 001EB010  38 C0 00 00 */	li r6, 0
 /* 801EE0B4 001EB014  38 E6 00 00 */	addi r7, r6, 0
 /* 801EE0B8 001EB018  38 A6 00 00 */	addi r5, r6, 0
@@ -583,9 +582,9 @@ sleep__Q23zen14DrawCMscoreMgrFv:
 /* 801EE108 001EB068  80 05 00 08 */	lwz r0, 8(r5)
 /* 801EE10C 001EB06C  90 03 00 10 */	stw r0, 0x10(r3)
 /* 801EE110 001EB070  4E 80 00 20 */	blr 
+.endfn sleep__Q23zen14DrawCMscoreMgrFv
 
-.global appear__Q23zen14DrawCMscoreMgrFf
-appear__Q23zen14DrawCMscoreMgrFf:
+.fn appear__Q23zen14DrawCMscoreMgrFf, global
 /* 801EE114 001EB074  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 801EE118 001EB078  39 20 00 00 */	li r9, 0
 /* 801EE11C 001EB07C  3C 80 80 2E */	lis r4, lbl_802E6DFC@ha
@@ -603,7 +602,7 @@ appear__Q23zen14DrawCMscoreMgrFf:
 /* 801EE14C 001EB0AC  90 03 00 10 */	stw r0, 0x10(r3)
 /* 801EE150 001EB0B0  C0 A2 C1 7C */	lfs f5, lbl_803EC37C@sda21(r2)
 /* 801EE154 001EB0B4  C0 82 C1 90 */	lfs f4, lbl_803EC390@sda21(r2)
-/* 801EE158 001EB0B8  C8 62 C1 88 */	lfd f3, "@816"@sda21(r2)
+/* 801EE158 001EB0B8  C8 62 C1 88 */	lfd f3, lbl_803EC388@sda21(r2)
 /* 801EE15C 001EB0BC  C0 42 C1 94 */	lfs f2, lbl_803EC394@sda21(r2)
 /* 801EE160 001EB0C0  48 00 00 B4 */	b .L_801EE214
 .L_801EE164:
@@ -657,14 +656,14 @@ appear__Q23zen14DrawCMscoreMgrFf:
 /* 801EE21C 001EB17C  41 80 FF 48 */	blt .L_801EE164
 /* 801EE220 001EB180  38 21 00 20 */	addi r1, r1, 0x20
 /* 801EE224 001EB184  4E 80 00 20 */	blr 
+.endfn appear__Q23zen14DrawCMscoreMgrFf
 
-.global modeSleep__Q23zen14DrawCMscoreMgrFv
-modeSleep__Q23zen14DrawCMscoreMgrFv:
+.fn modeSleep__Q23zen14DrawCMscoreMgrFv, global
 /* 801EE228 001EB188  38 60 00 00 */	li r3, 0
 /* 801EE22C 001EB18C  4E 80 00 20 */	blr 
+.endfn modeSleep__Q23zen14DrawCMscoreMgrFv
 
-.global modeAppear__Q23zen14DrawCMscoreMgrFv
-modeAppear__Q23zen14DrawCMscoreMgrFv:
+.fn modeAppear__Q23zen14DrawCMscoreMgrFv, global
 /* 801EE230 001EB190  80 CD 28 C4 */	lwz r6, MEMORY_BEST_SCORE__Q23zen14DrawCMscoreMgr@sda21(r13)
 /* 801EE234 001EB194  38 E0 00 00 */	li r7, 0
 /* 801EE238 001EB198  38 A0 00 00 */	li r5, 0
@@ -700,17 +699,17 @@ modeAppear__Q23zen14DrawCMscoreMgrFv:
 .L_801EE2A4:
 /* 801EE2A4 001EB204  38 60 00 00 */	li r3, 0
 /* 801EE2A8 001EB208  4E 80 00 20 */	blr 
+.endfn modeAppear__Q23zen14DrawCMscoreMgrFv
 
-.global modeWait__Q23zen14DrawCMscoreMgrFv
-modeWait__Q23zen14DrawCMscoreMgrFv:
+.fn modeWait__Q23zen14DrawCMscoreMgrFv, global
 /* 801EE2AC 001EB20C  80 03 00 1C */	lwz r0, 0x1c(r3)
 /* 801EE2B0 001EB210  60 00 00 02 */	ori r0, r0, 2
 /* 801EE2B4 001EB214  90 03 00 1C */	stw r0, 0x1c(r3)
 /* 801EE2B8 001EB218  38 60 00 00 */	li r3, 0
 /* 801EE2BC 001EB21C  4E 80 00 20 */	blr 
+.endfn modeWait__Q23zen14DrawCMscoreMgrFv
 
-.global setScore__Q23zen14DrawCMscoreMgrFii
-setScore__Q23zen14DrawCMscoreMgrFii:
+.fn setScore__Q23zen14DrawCMscoreMgrFii, global
 /* 801EE2C0 001EB220  2C 04 00 00 */	cmpwi r4, 0
 /* 801EE2C4 001EB224  4D 80 00 20 */	bltlr 
 /* 801EE2C8 001EB228  80 0D 28 C4 */	lwz r0, MEMORY_BEST_SCORE__Q23zen14DrawCMscoreMgr@sda21(r13)
@@ -721,91 +720,100 @@ setScore__Q23zen14DrawCMscoreMgrFii:
 /* 801EE2DC 001EB23C  38 04 00 10 */	addi r0, r4, 0x10
 /* 801EE2E0 001EB240  7C A3 01 2E */	stwx r5, r3, r0
 /* 801EE2E4 001EB244  4E 80 00 20 */	blr 
+.endfn setScore__Q23zen14DrawCMscoreMgrFii
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-.global lbl_802E6DC0
-lbl_802E6DC0:
+.obj lbl_802E6DC0, local
 	.4byte 0x00000000
 	.4byte 0xFFFFFFFF
 	.4byte modeWait__Q23zen14DrawCMscoreObjFv
-.global lbl_802E6DCC
-lbl_802E6DCC:
+.endobj lbl_802E6DC0
+.balign 4
+.obj lbl_802E6DCC, local
 	.4byte 0x00000000
 	.4byte 0xFFFFFFFF
 	.4byte modeMove__Q23zen14DrawCMscoreObjFv
-.global lbl_802E6DD8
-lbl_802E6DD8:
+.endobj lbl_802E6DCC
+.balign 4
+.obj lbl_802E6DD8, local
 	.4byte 0x00000000
 	.4byte 0xFFFFFFFF
 	.4byte modeWait__Q23zen14DrawCMscoreObjFv
-.global lbl_802E6DE4
-lbl_802E6DE4:
+.endobj lbl_802E6DD8
+.balign 4
+.obj lbl_802E6DE4, local
 	.4byte 0x00000000
 	.4byte 0xFFFFFFFF
 	.4byte modeSleep__Q23zen14DrawCMscoreMgrFv
-.global lbl_802E6DF0
-lbl_802E6DF0:
+.endobj lbl_802E6DE4
+.balign 4
+.obj lbl_802E6DF0, local
 	.4byte 0x00000000
 	.4byte 0xFFFFFFFF
 	.4byte modeSleep__Q23zen14DrawCMscoreMgrFv
-.global lbl_802E6DFC
-lbl_802E6DFC:
+.endobj lbl_802E6DF0
+.balign 4
+.obj lbl_802E6DFC, local
 	.4byte 0x00000000
 	.4byte 0xFFFFFFFF
 	.4byte modeAppear__Q23zen14DrawCMscoreMgrFv
-.global lbl_802E6E08
-lbl_802E6E08:
+.endobj lbl_802E6DFC
+.balign 4
+.obj lbl_802E6E08, local
 	.4byte 0x00000000
 	.4byte 0xFFFFFFFF
 	.4byte modeWait__Q23zen14DrawCMscoreMgrFv
+.endobj lbl_802E6E08
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-.global lbl_803E75C0
-lbl_803E75C0:
-	.4byte 0x00000000
-.global lbl_803E75C4
-lbl_803E75C4:
-	.4byte 0x25646261
-	.4byte 0x6E000000
-.global lbl_803E75CC
-lbl_803E75CC:
-	.4byte 0x2564695F
-	.4byte 0x6C000000
-.global lbl_803E75D4
-lbl_803E75D4:
-	.4byte 0x2564695F
-	.4byte 0x63000000
-.global lbl_803E75DC
-lbl_803E75DC:
-	.4byte 0x2564695F
-	.4byte 0x72000000
-.global MEMORY_BEST_SCORE__Q23zen14DrawCMscoreMgr
-MEMORY_BEST_SCORE__Q23zen14DrawCMscoreMgr:
+.obj lbl_803E75C0, local
+	.float 0.0
+.endobj lbl_803E75C0
+.balign 4
+.obj lbl_803E75C4, local
+	.asciz "%dban"
+.endobj lbl_803E75C4
+.balign 4
+.obj lbl_803E75CC, local
+	.asciz "%di_l"
+.endobj lbl_803E75CC
+.balign 4
+.obj lbl_803E75D4, local
+	.asciz "%di_c"
+.endobj lbl_803E75D4
+.balign 4
+.obj lbl_803E75DC, local
+	.asciz "%di_r"
+.endobj lbl_803E75DC
+.balign 4
+.obj MEMORY_BEST_SCORE__Q23zen14DrawCMscoreMgr, global
 	.4byte 0x00000005
+.endobj MEMORY_BEST_SCORE__Q23zen14DrawCMscoreMgr
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-.global lbl_803EC378
-lbl_803EC378:
-	.4byte 0x3F800000
-.global lbl_803EC37C
-lbl_803EC37C:
-	.4byte 0x00000000
-.global lbl_803EC380
-lbl_803EC380:
-	.4byte 0x3FC90FDB
-.global lbl_803EC384
-lbl_803EC384:
-	.4byte 0x3F000000
-.global "@816"
-"@816":
-	.4byte 0x43300000
-	.4byte 0x80000000
-.global lbl_803EC390
-lbl_803EC390:
-	.4byte 0x3E800000
-.global lbl_803EC394
-lbl_803EC394:
-	.4byte 0x44200000
+.obj lbl_803EC378, local
+	.float 1.0
+.endobj lbl_803EC378
+.obj lbl_803EC37C, local
+	.float 0.0
+.endobj lbl_803EC37C
+.obj lbl_803EC380, local # pi/2
+	.float 1.5707964
+.endobj lbl_803EC380
+.obj lbl_803EC384, local
+	.float 0.5
+.endobj lbl_803EC384
+.balign 8
+.obj lbl_803EC388, local
+	.8byte 0x4330000080000000
+.endobj lbl_803EC388
+.balign 4
+.obj lbl_803EC390, local
+	.float 0.25
+.endobj lbl_803EC390
+.obj lbl_803EC394, local
+	.float 640.0
+.endobj lbl_803EC394

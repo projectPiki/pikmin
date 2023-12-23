@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global __ct__Q23zen15DrawSaveFailureFv
-__ct__Q23zen15DrawSaveFailureFv:
+.fn __ct__Q23zen15DrawSaveFailureFv, global
 /* 801F3560 001F04C0  7C 08 02 A6 */	mflr r0
 /* 801F3564 001F04C4  90 01 00 04 */	stw r0, 4(r1)
 /* 801F3568 001F04C8  94 21 FF B8 */	stwu r1, -0x48(r1)
@@ -64,9 +63,9 @@ __ct__Q23zen15DrawSaveFailureFv:
 /* 801F3648 001F05A8  38 21 00 48 */	addi r1, r1, 0x48
 /* 801F364C 001F05AC  7C 08 03 A6 */	mtlr r0
 /* 801F3650 001F05B0  4E 80 00 20 */	blr 
+.endfn __ct__Q23zen15DrawSaveFailureFv
 
-.global update__Q23zen15DrawSaveFailureFP10Controller
-update__Q23zen15DrawSaveFailureFP10Controller:
+.fn update__Q23zen15DrawSaveFailureFP10Controller, global
 /* 801F3654 001F05B4  7C 08 02 A6 */	mflr r0
 /* 801F3658 001F05B8  90 01 00 04 */	stw r0, 4(r1)
 /* 801F365C 001F05BC  94 21 FF B8 */	stwu r1, -0x48(r1)
@@ -203,9 +202,9 @@ update__Q23zen15DrawSaveFailureFP10Controller:
 /* 801F3838 001F0798  38 21 00 48 */	addi r1, r1, 0x48
 /* 801F383C 001F079C  7C 08 03 A6 */	mtlr r0
 /* 801F3840 001F07A0  4E 80 00 20 */	blr 
+.endfn update__Q23zen15DrawSaveFailureFP10Controller
 
-.global draw__Q23zen15DrawSaveFailureFR8Graphics
-draw__Q23zen15DrawSaveFailureFR8Graphics:
+.fn draw__Q23zen15DrawSaveFailureFR8Graphics, global
 /* 801F3844 001F07A4  7C 08 02 A6 */	mflr r0
 /* 801F3848 001F07A8  90 01 00 04 */	stw r0, 4(r1)
 /* 801F384C 001F07AC  94 21 FF F8 */	stwu r1, -8(r1)
@@ -222,9 +221,9 @@ draw__Q23zen15DrawSaveFailureFR8Graphics:
 /* 801F3874 001F07D4  38 21 00 08 */	addi r1, r1, 8
 /* 801F3878 001F07D8  7C 08 03 A6 */	mtlr r0
 /* 801F387C 001F07DC  4E 80 00 20 */	blr 
+.endfn draw__Q23zen15DrawSaveFailureFR8Graphics
 
-.global open__Q23zen15DrawSaveFailureFf
-open__Q23zen15DrawSaveFailureFf:
+.fn open__Q23zen15DrawSaveFailureFf, global
 /* 801F3880 001F07E0  7C 08 02 A6 */	mflr r0
 /* 801F3884 001F07E4  38 80 00 01 */	li r4, 1
 /* 801F3888 001F07E8  90 01 00 04 */	stw r0, 4(r1)
@@ -246,9 +245,9 @@ open__Q23zen15DrawSaveFailureFf:
 /* 801F38C8 001F0828  38 21 00 20 */	addi r1, r1, 0x20
 /* 801F38CC 001F082C  7C 08 03 A6 */	mtlr r0
 /* 801F38D0 001F0830  4E 80 00 20 */	blr 
+.endfn open__Q23zen15DrawSaveFailureFf
 
-.global setMode__Q23zen15DrawSaveFailureFQ33zen15DrawSaveFailure8modeFlag
-setMode__Q23zen15DrawSaveFailureFQ33zen15DrawSaveFailure8modeFlag:
+.fn setMode__Q23zen15DrawSaveFailureFQ33zen15DrawSaveFailure8modeFlag, global
 /* 801F38D4 001F0834  90 83 00 04 */	stw r4, 4(r3)
 /* 801F38D8 001F0838  80 03 00 04 */	lwz r0, 4(r3)
 /* 801F38DC 001F083C  2C 00 00 02 */	cmpwi r0, 2
@@ -292,9 +291,9 @@ setMode__Q23zen15DrawSaveFailureFQ33zen15DrawSaveFailure8modeFlag:
 /* 801F3960 001F08C0  C0 02 C2 9C */	lfs f0, lbl_803EC49C@sda21(r2)
 /* 801F3964 001F08C4  D0 03 00 08 */	stfs f0, 8(r3)
 /* 801F3968 001F08C8  4E 80 00 20 */	blr 
+.endfn setMode__Q23zen15DrawSaveFailureFQ33zen15DrawSaveFailure8modeFlag
 
-.global calcFrame__Q23zen15DrawSaveFailureFf
-calcFrame__Q23zen15DrawSaveFailureFf:
+.fn calcFrame__Q23zen15DrawSaveFailureFf, global
 /* 801F396C 001F08CC  80 8D 2D EC */	lwz r4, gsys@sda21(r13)
 /* 801F3970 001F08D0  C0 43 00 08 */	lfs f2, 8(r3)
 /* 801F3974 001F08D4  C0 04 02 8C */	lfs f0, 0x28c(r4)
@@ -309,9 +308,9 @@ calcFrame__Q23zen15DrawSaveFailureFf:
 .L_801F3998:
 /* 801F3998 001F08F8  EC 20 08 24 */	fdivs f1, f0, f1
 /* 801F399C 001F08FC  4E 80 00 20 */	blr 
+.endfn calcFrame__Q23zen15DrawSaveFailureFf
 
-.global init__Q23zen15DrawSaveFailureFv
-init__Q23zen15DrawSaveFailureFv:
+.fn init__Q23zen15DrawSaveFailureFv, global
 /* 801F39A0 001F0900  38 80 00 00 */	li r4, 0
 /* 801F39A4 001F0904  90 83 00 04 */	stw r4, 4(r3)
 /* 801F39A8 001F0908  80 03 00 04 */	lwz r0, 4(r3)
@@ -355,32 +354,31 @@ init__Q23zen15DrawSaveFailureFv:
 /* 801F3A2C 001F098C  C0 02 C2 9C */	lfs f0, lbl_803EC49C@sda21(r2)
 /* 801F3A30 001F0990  D0 03 00 08 */	stfs f0, 8(r3)
 /* 801F3A34 001F0994  4E 80 00 20 */	blr 
+.endfn init__Q23zen15DrawSaveFailureFv
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-.global lbl_802E71E0
-lbl_802E71E0:
-	.4byte 0x73617665
-	.4byte 0x5F782E62
-	.4byte 0x6C6F0000
+.obj lbl_802E71E0, local
+	.asciz "save_x.blo"
+.endobj lbl_802E71E0
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-.global lbl_803EC490
-lbl_803EC490:
-	.4byte 0x3F800000
-.global lbl_803EC494
-lbl_803EC494:
-	.4byte 0x416231D6
-.global lbl_803EC498
-lbl_803EC498:
-	.4byte 0x43340000
-.global lbl_803EC49C
-lbl_803EC49C:
-	.4byte 0x00000000
-.global lbl_803EC4A0
-lbl_803EC4A0:
-	.4byte 0x3F000000
-.global lbl_803EC4A4
-lbl_803EC4A4:
-	.4byte 0x41490FDB
+.obj lbl_803EC490, local
+	.float 1.0
+.endobj lbl_803EC490
+.obj lbl_803EC494, local
+	.float 14.137167
+.endobj lbl_803EC494
+.obj lbl_803EC498, local
+	.float 180.0
+.endobj lbl_803EC498
+.obj lbl_803EC49C, local
+	.float 0.0
+.endobj lbl_803EC49C
+.obj lbl_803EC4A0, local
+	.float 0.5
+.endobj lbl_803EC4A0
+.obj lbl_803EC4A4, local # 4 pi
+	.float 12.566371
+.endobj lbl_803EC4A4

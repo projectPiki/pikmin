@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global __ct__10KoganePropFv
-__ct__10KoganePropFv:
+.fn __ct__10KoganePropFv, global
 /* 80175A30 00172990  7C 08 02 A6 */	mflr r0
 /* 80175A34 00172994  90 01 00 04 */	stw r0, 4(r1)
 /* 80175A38 00172998  94 21 FE F8 */	stwu r1, -0x108(r1)
@@ -206,9 +205,9 @@ __ct__10KoganePropFv:
 /* 80175D54 00172CB4  38 21 01 08 */	addi r1, r1, 0x108
 /* 80175D58 00172CB8  7C 08 03 A6 */	mtlr r0
 /* 80175D5C 00172CBC  4E 80 00 20 */	blr 
+.endfn __ct__10KoganePropFv
 
-.global __ct__6KoganeFP12CreatureProp
-__ct__6KoganeFP12CreatureProp:
+.fn __ct__6KoganeFP12CreatureProp, global
 /* 80175D60 00172CC0  7C 08 02 A6 */	mflr r0
 /* 80175D64 00172CC4  90 01 00 04 */	stw r0, 4(r1)
 /* 80175D68 00172CC8  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -244,14 +243,14 @@ __ct__6KoganeFP12CreatureProp:
 /* 80175DD8 00172D38  38 21 00 18 */	addi r1, r1, 0x18
 /* 80175DDC 00172D3C  7C 08 03 A6 */	mtlr r0
 /* 80175DE0 00172D40  4E 80 00 20 */	blr 
+.endfn __ct__6KoganeFP12CreatureProp
 
-.global getiMass__6KoganeFv
-getiMass__6KoganeFv:
+.fn getiMass__6KoganeFv, global
 /* 80175DE4 00172D44  C0 22 AD 54 */	lfs f1, lbl_803EAF54@sda21(r2)
 /* 80175DE8 00172D48  4E 80 00 20 */	blr 
+.endfn getiMass__6KoganeFv
 
-.global init__6KoganeFR8Vector3f
-init__6KoganeFR8Vector3f:
+.fn init__6KoganeFR8Vector3f, global
 /* 80175DEC 00172D4C  7C 08 02 A6 */	mflr r0
 /* 80175DF0 00172D50  38 A0 00 00 */	li r5, 0
 /* 80175DF4 00172D54  90 01 00 04 */	stw r0, 4(r1)
@@ -273,9 +272,9 @@ init__6KoganeFR8Vector3f:
 /* 80175E34 00172D94  38 21 00 08 */	addi r1, r1, 8
 /* 80175E38 00172D98  7C 08 03 A6 */	mtlr r0
 /* 80175E3C 00172D9C  4E 80 00 20 */	blr 
+.endfn init__6KoganeFR8Vector3f
 
-.global doKill__6KoganeFv
-doKill__6KoganeFv:
+.fn doKill__6KoganeFv, global
 /* 80175E40 00172DA0  7C 08 02 A6 */	mflr r0
 /* 80175E44 00172DA4  38 80 00 00 */	li r4, 0
 /* 80175E48 00172DA8  90 01 00 04 */	stw r0, 4(r1)
@@ -295,9 +294,9 @@ doKill__6KoganeFv:
 /* 80175E80 00172DE0  38 21 00 18 */	addi r1, r1, 0x18
 /* 80175E84 00172DE4  7C 08 03 A6 */	mtlr r0
 /* 80175E88 00172DE8  4E 80 00 20 */	blr 
+.endfn doKill__6KoganeFv
 
-.global exitCourse__6KoganeFv
-exitCourse__6KoganeFv:
+.fn exitCourse__6KoganeFv, global
 /* 80175E8C 00172DEC  7C 08 02 A6 */	mflr r0
 /* 80175E90 00172DF0  38 80 00 01 */	li r4, 1
 /* 80175E94 00172DF4  90 01 00 04 */	stw r0, 4(r1)
@@ -308,9 +307,9 @@ exitCourse__6KoganeFv:
 /* 80175EA8 00172E08  38 21 00 08 */	addi r1, r1, 8
 /* 80175EAC 00172E0C  7C 08 03 A6 */	mtlr r0
 /* 80175EB0 00172E10  4E 80 00 20 */	blr 
+.endfn exitCourse__6KoganeFv
 
-.global update__6KoganeFv
-update__6KoganeFv:
+.fn update__6KoganeFv, global
 /* 80175EB4 00172E14  7C 08 02 A6 */	mflr r0
 /* 80175EB8 00172E18  90 01 00 04 */	stw r0, 4(r1)
 /* 80175EBC 00172E1C  94 21 FF F8 */	stwu r1, -8(r1)
@@ -319,9 +318,9 @@ update__6KoganeFv:
 /* 80175EC8 00172E28  38 21 00 08 */	addi r1, r1, 8
 /* 80175ECC 00172E2C  7C 08 03 A6 */	mtlr r0
 /* 80175ED0 00172E30  4E 80 00 20 */	blr 
+.endfn update__6KoganeFv
 
-.global refresh__6KoganeFR8Graphics
-refresh__6KoganeFR8Graphics:
+.fn refresh__6KoganeFR8Graphics, global
 /* 80175ED4 00172E34  7C 08 02 A6 */	mflr r0
 /* 80175ED8 00172E38  90 01 00 04 */	stw r0, 4(r1)
 /* 80175EDC 00172E3C  94 21 FF A8 */	stwu r1, -0x58(r1)
@@ -360,9 +359,9 @@ refresh__6KoganeFR8Graphics:
 /* 80175F60 00172EC0  38 21 00 58 */	addi r1, r1, 0x58
 /* 80175F64 00172EC4  7C 08 03 A6 */	mtlr r0
 /* 80175F68 00172EC8  4E 80 00 20 */	blr 
+.endfn refresh__6KoganeFR8Graphics
 
-.global drawShape__6KoganeFR8Graphics
-drawShape__6KoganeFR8Graphics:
+.fn drawShape__6KoganeFR8Graphics, global
 /* 80175F6C 00172ECC  7C 08 02 A6 */	mflr r0
 /* 80175F70 00172ED0  38 A0 00 00 */	li r5, 0
 /* 80175F74 00172ED4  90 01 00 04 */	stw r0, 4(r1)
@@ -390,9 +389,9 @@ drawShape__6KoganeFR8Graphics:
 /* 80175FCC 00172F2C  38 21 00 18 */	addi r1, r1, 0x18
 /* 80175FD0 00172F30  7C 08 03 A6 */	mtlr r0
 /* 80175FD4 00172F34  4E 80 00 20 */	blr 
+.endfn drawShape__6KoganeFR8Graphics
 
-.global doAI__6KoganeFv
-doAI__6KoganeFv:
+.fn doAI__6KoganeFv, global
 /* 80175FD8 00172F38  7C 08 02 A6 */	mflr r0
 /* 80175FDC 00172F3C  90 01 00 04 */	stw r0, 4(r1)
 /* 80175FE0 00172F40  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -407,9 +406,9 @@ doAI__6KoganeFv:
 /* 80176004 00172F64  38 21 00 18 */	addi r1, r1, 0x18
 /* 80176008 00172F68  7C 08 03 A6 */	mtlr r0
 /* 8017600C 00172F6C  4E 80 00 20 */	blr 
+.endfn doAI__6KoganeFv
 
-.global doAnimation__6KoganeFv
-doAnimation__6KoganeFv:
+.fn doAnimation__6KoganeFv, global
 /* 80176010 00172F70  7C 08 02 A6 */	mflr r0
 /* 80176014 00172F74  7C 64 1B 78 */	mr r4, r3
 /* 80176018 00172F78  90 01 00 04 */	stw r0, 4(r1)
@@ -428,9 +427,9 @@ doAnimation__6KoganeFv:
 /* 80176048 00172FA8  38 21 00 08 */	addi r1, r1, 8
 /* 8017604C 00172FAC  7C 08 03 A6 */	mtlr r0
 /* 80176050 00172FB0  4E 80 00 20 */	blr 
+.endfn doAnimation__6KoganeFv
 
-.global collisionCallback__6KoganeFR9CollEvent
-collisionCallback__6KoganeFR9CollEvent:
+.fn collisionCallback__6KoganeFR9CollEvent, global
 /* 80176054 00172FB4  7C 08 02 A6 */	mflr r0
 /* 80176058 00172FB8  90 01 00 04 */	stw r0, 4(r1)
 /* 8017605C 00172FBC  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -454,9 +453,9 @@ collisionCallback__6KoganeFR9CollEvent:
 /* 801760A0 00173000  38 21 00 18 */	addi r1, r1, 0x18
 /* 801760A4 00173004  7C 08 03 A6 */	mtlr r0
 /* 801760A8 00173008  4E 80 00 20 */	blr 
+.endfn collisionCallback__6KoganeFR9CollEvent
 
-.global read__10KoganePropFR18RandomAccessStream
-read__10KoganePropFR18RandomAccessStream:
+.fn read__10KoganePropFR18RandomAccessStream, weak
 /* 801760AC 0017300C  7C 08 02 A6 */	mflr r0
 /* 801760B0 00173010  90 01 00 04 */	stw r0, 4(r1)
 /* 801760B4 00173014  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -477,54 +476,66 @@ read__10KoganePropFR18RandomAccessStream:
 /* 801760F0 00173050  38 21 00 18 */	addi r1, r1, 0x18
 /* 801760F4 00173054  7C 08 03 A6 */	mtlr r0
 /* 801760F8 00173058  4E 80 00 20 */	blr 
+.endfn read__10KoganePropFR18RandomAccessStream
 
-"@492@read__10KoganePropFR18RandomAccessStream":
+.fn "@492@read__10KoganePropFR18RandomAccessStream", weak
 /* 801760FC 0017305C  38 63 FE 14 */	addi r3, r3, -492
 /* 80176100 00173060  4B FF FF AC */	b read__10KoganePropFR18RandomAccessStream
+.endfn "@492@read__10KoganePropFR18RandomAccessStream"
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802D0710:
+.obj lbl_802D0710, local
 	.asciz "Kogane.cpp"
+.endobj lbl_802D0710
 .balign 4
-lbl_802D071C:
+.obj lbl_802D071C, local
 	.asciz "CoreNode"
+.endobj lbl_802D071C
 .balign 4
-lbl_802D0728:
+.obj lbl_802D0728, local
 	.asciz "EventTalker"
+.endobj lbl_802D0728
 .balign 4
-lbl_802D0734:
+.obj lbl_802D0734, local
 	.asciz "RefCountable"
+.endobj lbl_802D0734
 .balign 4
-lbl_802D0744:
+.obj lbl_802D0744, local
 	.asciz "Creature"
+.endobj lbl_802D0744
 .balign 4
-lbl_802D0750:
+.obj lbl_802D0750, local
 	.4byte __RTTI__11EventTalker
 	.4byte 0x00000008
 	.4byte __RTTI__12RefCountable
-	.4byte 0x00000000
-	.4byte 0x00000000
-lbl_802D0764:
+	.4byte 0
+	.4byte 0
+.endobj lbl_802D0750
+.balign 4
+.obj lbl_802D0764, local
 	.4byte __RTTI__11EventTalker
 	.4byte 0x00000008
 	.4byte __RTTI__12RefCountable
-	.4byte 0x00000000
+	.4byte 0
 	.4byte __RTTI__8Creature
-	.4byte 0x00000000
-	.4byte 0x00000000
-lbl_802D0780:
+	.4byte 0
+	.4byte 0
+.endobj lbl_802D0764
+.balign 4
+.obj lbl_802D0780, local
 	.4byte __RTTI__11EventTalker
 	.4byte 0x00000008
 	.4byte __RTTI__12RefCountable
-	.4byte 0x00000000
+	.4byte 0
 	.4byte __RTTI__8Creature
-	.4byte 0x00000000
+	.4byte 0
 	.4byte __RTTI__4Boss
-	.4byte 0x00000000
-	.4byte 0x00000000
-.global __vt__6Kogane
-__vt__6Kogane:
+	.4byte 0
+	.4byte 0
+.endobj lbl_802D0780
+.balign 4
+.obj __vt__6Kogane, global
 	.4byte __RTTI__6Kogane
 	.4byte 0
 	.4byte addCntCallback__12RefCountableFv
@@ -598,42 +609,49 @@ __vt__6Kogane:
 	.4byte attackDefaultPortion__4BossFv
 	.4byte bombDamageCounter__4BossFP8CollPart
 	.4byte drawShape__6KoganeFR8Graphics
+.endobj __vt__6Kogane
 .balign 4
-lbl_802D08C8:
+.obj lbl_802D08C8, local
 	.asciz "Parm<float>"
+.endobj lbl_802D08C8
 .balign 4
-lbl_802D08D4:
+.obj lbl_802D08D4, local
 	.asciz "BaseParm"
+.endobj lbl_802D08D4
 .balign 4
-lbl_802D08E0:
+.obj lbl_802D08E0, local
 	.4byte __RTTI__8BaseParm
 	.4byte 0
 	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
+.endobj lbl_802D08E0
 .balign 4
-lbl_802D0900:
+.skip 0x14 # compiler padding
+.balign 4
+.obj lbl_802D0900, local
 	.asciz "KoganeProp"
+.endobj lbl_802D0900
 .balign 4
-lbl_802D090C:
+.obj lbl_802D090C, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte 0
+.endobj lbl_802D090C
 .balign 4
-lbl_802D0918:
+.obj lbl_802D0918, local
 	.asciz "CreatureProp"
+.endobj lbl_802D0918
 .balign 4
-lbl_802D0928:
+.obj lbl_802D0928, local
 	.asciz "BossProp"
+.endobj lbl_802D0928
 .balign 4
-lbl_802D0934:
+.obj lbl_802D0934, local
 	.4byte __RTTI__12CreatureProp
 	.4byte 0
 	.4byte 0
-lbl_802D0940:
+.endobj lbl_802D0934
+.balign 4
+.obj lbl_802D0940, local
 	.4byte __RTTI__5ANode
 	.4byte 0x1ec
 	.4byte __RTTI__8CoreNode
@@ -643,8 +661,9 @@ lbl_802D0940:
 	.4byte __RTTI__8BossProp
 	.4byte 0
 	.4byte 0
-.global __vt__10KoganeProp
-__vt__10KoganeProp:
+.endobj lbl_802D0940
+.balign 4
+.obj __vt__10KoganeProp, weak
 	.4byte __RTTI__10KoganeProp
 	.4byte 0
 	.4byte read__10KoganePropFR18RandomAccessStream
@@ -652,136 +671,183 @@ __vt__10KoganeProp:
 	.4byte 0xfffffe14
 	.4byte getAgeNodeType__5ANodeFv
 	.4byte "@492@read__10KoganePropFR18RandomAccessStream"
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
+.endobj __vt__10KoganeProp
+.balign 4
+.skip 0x20 # compiler padding
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-lbl_803E5168:
+.obj lbl_803E5168, local
 	.asciz "Kogane"
+.endobj lbl_803E5168
 .balign 4
-lbl_803E5170:
+.obj lbl_803E5170, local
 	.asciz "o00"
+.endobj lbl_803E5170
 .balign 4
-lbl_803E5174:
+.obj lbl_803E5174, local
 	.asciz "o01"
+.endobj lbl_803E5174
 .balign 4
-lbl_803E5178:
+.obj lbl_803E5178, local
 	.asciz "o02"
+.endobj lbl_803E5178
 .balign 4
-lbl_803E517C:
+.obj lbl_803E517C, local
 	.asciz "p00"
+.endobj lbl_803E517C
 .balign 4
-lbl_803E5180:
+.obj lbl_803E5180, local
 	.asciz "p10"
+.endobj lbl_803E5180
 .balign 4
-lbl_803E5184:
+.obj lbl_803E5184, local
 	.asciz "p50"
+.endobj lbl_803E5184
 .balign 4
-lbl_803E5188:
+.obj lbl_803E5188, local
 	.asciz "p51"
+.endobj lbl_803E5188
 .balign 4
-lbl_803E518C:
+.obj lbl_803E518C, local
 	.asciz "p52"
+.endobj lbl_803E518C
 .balign 4
-lbl_803E5190:
+.obj lbl_803E5190, local
 	.asciz "p53"
+.endobj lbl_803E5190
 .balign 4
-lbl_803E5194:
+.obj lbl_803E5194, local
 	.asciz "t00"
+.endobj lbl_803E5194
 .balign 4
-lbl_803E5198:
+.obj lbl_803E5198, local
 	.asciz "t01"
+.endobj lbl_803E5198
 .balign 4
-lbl_803E519C:
+.obj lbl_803E519C, local
 	.asciz "t10"
+.endobj lbl_803E519C
 .balign 4
-lbl_803E51A0:
+.obj lbl_803E51A0, local
 	.asciz "t11"
+.endobj lbl_803E51A0
 .balign 4
-lbl_803E51A4:
+.obj lbl_803E51A4, local
 	.asciz "t50"
+.endobj lbl_803E51A4
 .balign 4
-lbl_803E51A8:
+.obj lbl_803E51A8, local
 	.asciz "s00"
+.endobj lbl_803E51A8
 .balign 4
-__RTTI__11EventTalker:
+.obj __RTTI__11EventTalker, local
 	.4byte lbl_802D0728
 	.4byte 0
-__RTTI__12RefCountable:
+.endobj __RTTI__11EventTalker
+.balign 4
+.obj __RTTI__12RefCountable, local
 	.4byte lbl_802D0734
 	.4byte 0
-__RTTI__8Creature:
+.endobj __RTTI__12RefCountable
+.balign 4
+.obj __RTTI__8Creature, local
 	.4byte lbl_802D0744
 	.4byte lbl_802D0750
+.endobj __RTTI__8Creature
 .balign 4
-lbl_803E51C4:
+.obj lbl_803E51C4, local
 	.asciz "Boss"
+.endobj lbl_803E51C4
 .balign 4
-__RTTI__4Boss:
+.obj __RTTI__4Boss, local
 	.4byte lbl_803E51C4
 	.4byte lbl_802D0764
-__RTTI__6Kogane:
+.endobj __RTTI__4Boss
+.balign 4
+.obj __RTTI__6Kogane, local
 	.4byte lbl_803E5168
 	.4byte lbl_802D0780
-__RTTI__8BaseParm:
+.endobj __RTTI__6Kogane
+.balign 4
+.obj __RTTI__8BaseParm, local
 	.4byte lbl_802D08D4
 	.4byte 0
+.endobj __RTTI__8BaseParm
 .balign 4
-lbl_803E51E4:
+.obj lbl_803E51E4, local
 	.asciz "ANode"
+.endobj lbl_803E51E4
 .balign 4
-__RTTI__5ANode:
+.obj __RTTI__5ANode, local
 	.4byte lbl_803E51E4
 	.4byte 0
-__RTTI__8CoreNode:
+.endobj __RTTI__5ANode
+.balign 4
+.obj __RTTI__8CoreNode, local
 	.4byte lbl_802D071C
 	.4byte lbl_802D090C
-__RTTI__12CreatureProp:
+.endobj __RTTI__8CoreNode
+.balign 4
+.obj __RTTI__12CreatureProp, local
 	.4byte lbl_802D0918
 	.4byte 0
-__RTTI__8BossProp:
+.endobj __RTTI__12CreatureProp
+.balign 4
+.obj __RTTI__8BossProp, local
 	.4byte lbl_802D0928
 	.4byte lbl_802D0934
-__RTTI__10KoganeProp:
+.endobj __RTTI__8BossProp
+.balign 4
+.obj __RTTI__10KoganeProp, local
 	.4byte lbl_802D0900
 	.4byte lbl_802D0940
+.endobj __RTTI__10KoganeProp
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803EAF20:
+.obj lbl_803EAF20, local
 	.float 30.0
-lbl_803EAF24:
-	.4byte 0x40C00000
-lbl_803EAF28:
-	.4byte 0x437A0000
-lbl_803EAF2C:
-	.4byte 0x41200000
-lbl_803EAF30:
-	.4byte 0x42B40000
-lbl_803EAF34:
-	.4byte 0x42C80000
-lbl_803EAF38:
-	.4byte 0x43480000
-lbl_803EAF3C:
+.endobj lbl_803EAF20
+.obj lbl_803EAF24, local
+	.float 6.0
+.endobj lbl_803EAF24
+.obj lbl_803EAF28, local
+	.float 250.0
+.endobj lbl_803EAF28
+.obj lbl_803EAF2C, local
+	.float 10.0
+.endobj lbl_803EAF2C
+.obj lbl_803EAF30, local
+	.float 90.0
+.endobj lbl_803EAF30
+.obj lbl_803EAF34, local
+	.float 100.0
+.endobj lbl_803EAF34
+.obj lbl_803EAF38, local
+	.float 200.0
+.endobj lbl_803EAF38
+.obj lbl_803EAF3C, local
 	.float 20.0
-lbl_803EAF40:
+.endobj lbl_803EAF3C
+.obj lbl_803EAF40, local
 	.float 0.5
-lbl_803EAF44:
-	.4byte 0x40400000
-lbl_803EAF48:
-	.4byte 0x3FC00000
-lbl_803EAF4C:
+.endobj lbl_803EAF40
+.obj lbl_803EAF44, local
+	.float 3.0
+.endobj lbl_803EAF44
+.obj lbl_803EAF48, local
+	.float 1.5
+.endobj lbl_803EAF48
+.obj lbl_803EAF4C, local
 	.float 1.0
-lbl_803EAF50:
+.endobj lbl_803EAF4C
+.obj lbl_803EAF50, local
 	.float 0.0
-lbl_803EAF54:
-	.4byte 0x3DCCCCCD
-lbl_803EAF58:
-	.4byte 0x41C80000
+.endobj lbl_803EAF50
+.obj lbl_803EAF54, local
+	.float 0.1
+.endobj lbl_803EAF54
+.obj lbl_803EAF58, local
+	.float 25.0
+.endobj lbl_803EAF58

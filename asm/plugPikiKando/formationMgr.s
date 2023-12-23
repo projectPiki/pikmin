@@ -1,24 +1,23 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global getCreature__12FormationMgrFi
-getCreature__12FormationMgrFi:
+.fn getCreature__12FormationMgrFi, global
 /* 8007DF5C 0007AEBC  80 63 00 20 */	lwz r3, 0x20(r3)
 /* 8007DF60 0007AEC0  54 80 10 3A */	slwi r0, r4, 2
 /* 8007DF64 0007AEC4  7C 63 00 2E */	lwzx r3, r3, r0
 /* 8007DF68 0007AEC8  4E 80 00 20 */	blr 
+.endfn getCreature__12FormationMgrFi
 
-.global getFirst__12FormationMgrFv
-getFirst__12FormationMgrFv:
+.fn getFirst__12FormationMgrFv, global
 /* 8007DF6C 0007AECC  38 60 00 00 */	li r3, 0
 /* 8007DF70 0007AED0  4E 80 00 20 */	blr 
+.endfn getFirst__12FormationMgrFv
 
-.global getNext__12FormationMgrFi
-getNext__12FormationMgrFi:
+.fn getNext__12FormationMgrFi, global
 /* 8007DF74 0007AED4  38 64 00 01 */	addi r3, r4, 1
 /* 8007DF78 0007AED8  4E 80 00 20 */	blr 
+.endfn getNext__12FormationMgrFi
 
-.global isDone__12FormationMgrFi
-isDone__12FormationMgrFi:
+.fn isDone__12FormationMgrFi, global
 /* 8007DF7C 0007AEDC  80 03 00 2C */	lwz r0, 0x2c(r3)
 /* 8007DF80 0007AEE0  7C 04 00 00 */	cmpw r4, r0
 /* 8007DF84 0007AEE4  41 80 00 0C */	blt .L_8007DF90
@@ -27,9 +26,9 @@ isDone__12FormationMgrFi:
 .L_8007DF90:
 /* 8007DF90 0007AEF0  38 60 00 00 */	li r3, 0
 /* 8007DF94 0007AEF4  4E 80 00 20 */	blr 
+.endfn isDone__12FormationMgrFi
 
-.global getPos__9FormPointFv
-getPos__9FormPointFv:
+.fn getPos__9FormPointFv, global
 /* 8007DF98 0007AEF8  7C 08 02 A6 */	mflr r0
 /* 8007DF9C 0007AEFC  90 01 00 04 */	stw r0, 4(r1)
 /* 8007DFA0 0007AF00  94 21 FF 98 */	stwu r1, -0x68(r1)
@@ -86,9 +85,9 @@ getPos__9FormPointFv:
 /* 8007E06C 0007AFCC  38 21 00 68 */	addi r1, r1, 0x68
 /* 8007E070 0007AFD0  7C 08 03 A6 */	mtlr r0
 /* 8007E074 0007AFD4  4E 80 00 20 */	blr 
+.endfn getPos__9FormPointFv
 
-.global getLastCentre__12FormationMgrFv
-getLastCentre__12FormationMgrFv:
+.fn getLastCentre__12FormationMgrFv, global
 /* 8007E078 0007AFD8  7C 08 02 A6 */	mflr r0
 /* 8007E07C 0007AFDC  90 01 00 04 */	stw r0, 4(r1)
 /* 8007E080 0007AFE0  94 21 FF A8 */	stwu r1, -0x58(r1)
@@ -131,14 +130,14 @@ getLastCentre__12FormationMgrFv:
 /* 8007E114 0007B074  38 21 00 58 */	addi r1, r1, 0x58
 /* 8007E118 0007B078  7C 08 03 A6 */	mtlr r0
 /* 8007E11C 0007B07C  4E 80 00 20 */	blr 
+.endfn getLastCentre__12FormationMgrFv
 
-.global getLength__12FormArrangerFP12FormationMgr
-getLength__12FormArrangerFP12FormationMgr:
+.fn getLength__12FormArrangerFP12FormationMgr, weak
 /* 8007E120 0007B080  C0 22 89 88 */	lfs f1, lbl_803E8B88@sda21(r2)
 /* 8007E124 0007B084  4E 80 00 20 */	blr 
+.endfn getLength__12FormArrangerFP12FormationMgr
 
-.global getFormPoint__12FormationMgrFP8Creature
-getFormPoint__12FormationMgrFP8Creature:
+.fn getFormPoint__12FormationMgrFP8Creature, global
 /* 8007E128 0007B088  7C 08 02 A6 */	mflr r0
 /* 8007E12C 0007B08C  90 01 00 04 */	stw r0, 4(r1)
 /* 8007E130 0007B090  94 21 FF C0 */	stwu r1, -0x40(r1)
@@ -276,9 +275,9 @@ getFormPoint__12FormationMgrFP8Creature:
 /* 8007E300 0007B260  38 21 00 40 */	addi r1, r1, 0x40
 /* 8007E304 0007B264  7C 08 03 A6 */	mtlr r0
 /* 8007E308 0007B268  4E 80 00 20 */	blr 
+.endfn getFormPoint__12FormationMgrFP8Creature
 
-.global slide__12FormationMgrFP8Creaturei
-slide__12FormationMgrFP8Creaturei:
+.fn slide__12FormationMgrFP8Creaturei, global
 /* 8007E30C 0007B26C  7C 08 02 A6 */	mflr r0
 /* 8007E310 0007B270  90 01 00 04 */	stw r0, 4(r1)
 /* 8007E314 0007B274  94 21 FF B8 */	stwu r1, -0x48(r1)
@@ -420,9 +419,9 @@ slide__12FormationMgrFP8Creaturei:
 /* 8007E4F4 0007B454  38 21 00 48 */	addi r1, r1, 0x48
 /* 8007E4F8 0007B458  7C 08 03 A6 */	mtlr r0
 /* 8007E4FC 0007B45C  4E 80 00 20 */	blr 
+.endfn slide__12FormationMgrFP8Creaturei
 
-.global exit__12FormationMgrFP8Creature
-exit__12FormationMgrFP8Creature:
+.fn exit__12FormationMgrFP8Creature, global
 /* 8007E500 0007B460  7C 08 02 A6 */	mflr r0
 /* 8007E504 0007B464  38 A0 00 00 */	li r5, 0
 /* 8007E508 0007B468  90 01 00 04 */	stw r0, 4(r1)
@@ -543,9 +542,9 @@ exit__12FormationMgrFP8Creature:
 /* 8007E694 0007B5F4  38 21 00 38 */	addi r1, r1, 0x38
 /* 8007E698 0007B5F8  7C 08 03 A6 */	mtlr r0
 /* 8007E69C 0007B5FC  4E 80 00 20 */	blr 
+.endfn exit__12FormationMgrFP8Creature
 
-.global arrange__14CircleArrangerFP12FormationMgr
-arrange__14CircleArrangerFP12FormationMgr:
+.fn arrange__14CircleArrangerFP12FormationMgr, global
 /* 8007E6A0 0007B600  7C 08 02 A6 */	mflr r0
 /* 8007E6A4 0007B604  90 01 00 04 */	stw r0, 4(r1)
 /* 8007E6A8 0007B608  94 21 FE 58 */	stwu r1, -0x1a8(r1)
@@ -742,9 +741,9 @@ arrange__14CircleArrangerFP12FormationMgr:
 /* 8007E994 0007B8F4  38 21 01 A8 */	addi r1, r1, 0x1a8
 /* 8007E998 0007B8F8  7C 08 03 A6 */	mtlr r0
 /* 8007E99C 0007B8FC  4E 80 00 20 */	blr 
+.endfn arrange__14CircleArrangerFP12FormationMgr
 
-.global arrange__15PyramidArrangerFP12FormationMgr
-arrange__15PyramidArrangerFP12FormationMgr:
+.fn arrange__15PyramidArrangerFP12FormationMgr, global
 /* 8007E9A0 0007B900  7C 08 02 A6 */	mflr r0
 /* 8007E9A4 0007B904  90 01 00 04 */	stw r0, 4(r1)
 /* 8007E9A8 0007B908  94 21 FE 98 */	stwu r1, -0x168(r1)
@@ -923,9 +922,9 @@ arrange__15PyramidArrangerFP12FormationMgr:
 /* 8007EC4C 0007BBAC  38 21 01 68 */	addi r1, r1, 0x168
 /* 8007EC50 0007BBB0  7C 08 03 A6 */	mtlr r0
 /* 8007EC54 0007BBB4  4E 80 00 20 */	blr 
+.endfn arrange__15PyramidArrangerFP12FormationMgr
 
-.global getLength__15PyramidArrangerFP12FormationMgr
-getLength__15PyramidArrangerFP12FormationMgr:
+.fn getLength__15PyramidArrangerFP12FormationMgr, global
 /* 8007EC58 0007BBB8  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 8007EC5C 0007BBBC  3C 00 43 30 */	lis r0, 0x4330
 /* 8007EC60 0007BBC0  80 64 00 2C */	lwz r3, 0x2c(r4)
@@ -987,9 +986,9 @@ getLength__15PyramidArrangerFP12FormationMgr:
 /* 8007ED38 0007BC98  EC 22 00 32 */	fmuls f1, f2, f0
 /* 8007ED3C 0007BC9C  38 21 00 20 */	addi r1, r1, 0x20
 /* 8007ED40 0007BCA0  4E 80 00 20 */	blr 
+.endfn getLength__15PyramidArrangerFP12FormationMgr
 
-.global arrange__12LineArrangerFP12FormationMgr
-arrange__12LineArrangerFP12FormationMgr:
+.fn arrange__12LineArrangerFP12FormationMgr, global
 /* 8007ED44 0007BCA4  7C 08 02 A6 */	mflr r0
 /* 8007ED48 0007BCA8  90 01 00 04 */	stw r0, 4(r1)
 /* 8007ED4C 0007BCAC  94 21 FE A8 */	stwu r1, -0x158(r1)
@@ -1149,9 +1148,9 @@ arrange__12LineArrangerFP12FormationMgr:
 /* 8007EFA4 0007BF04  38 21 01 58 */	addi r1, r1, 0x158
 /* 8007EFA8 0007BF08  7C 08 03 A6 */	mtlr r0
 /* 8007EFAC 0007BF0C  4E 80 00 20 */	blr 
+.endfn arrange__12LineArrangerFP12FormationMgr
 
-.global arrange__12WingArrangerFP12FormationMgr
-arrange__12WingArrangerFP12FormationMgr:
+.fn arrange__12WingArrangerFP12FormationMgr, global
 /* 8007EFB0 0007BF10  94 21 FF 40 */	stwu r1, -0xc0(r1)
 /* 8007EFB4 0007BF14  38 00 01 2C */	li r0, 0x12c
 /* 8007EFB8 0007BF18  7C 09 03 A6 */	mtctr r0
@@ -1348,236 +1347,322 @@ arrange__12WingArrangerFP12FormationMgr:
 /* 8007F2A0 0007C200  CB C1 00 B0 */	lfd f30, 0xb0(r1)
 /* 8007F2A4 0007C204  38 21 00 C0 */	addi r1, r1, 0xc0
 /* 8007F2A8 0007C208  4E 80 00 20 */	blr 
+.endfn arrange__12WingArrangerFP12FormationMgr
 
-.global getFrameTime__6SystemFv
-getFrameTime__6SystemFv:
+.fn getFrameTime__6SystemFv, weak
 /* 8007F2AC 0007C20C  C0 23 02 8C */	lfs f1, 0x28c(r3)
 /* 8007F2B0 0007C210  4E 80 00 20 */	blr 
+.endfn getFrameTime__6SystemFv
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802ADBA0:
+.obj lbl_802ADBA0, local
 	.asciz "formationMgr.cpp"
+.endobj lbl_802ADBA0
 .balign 4
-lbl_802ADBB4:
+.obj lbl_802ADBB4, local
 	.asciz "formation"
+.endobj lbl_802ADBB4
 .balign 4
-lbl_802ADBC0:
+.obj lbl_802ADBC0, local
 	.asciz "WingArranger"
+.endobj lbl_802ADBC0
 .balign 4
-lbl_802ADBD0:
+.obj lbl_802ADBD0, local
 	.asciz "FormArranger"
+.endobj lbl_802ADBD0
 .balign 4
-lbl_802ADBE0:
+.obj lbl_802ADBE0, local
 	.4byte __RTTI__12FormArranger
 	.4byte 0
 	.4byte 0
-.global __vt__12WingArranger
-__vt__12WingArranger:
+.endobj lbl_802ADBE0
+.balign 4
+.obj __vt__12WingArranger, global
 	.4byte __RTTI__12WingArranger
 	.4byte 0
 	.4byte arrange__12WingArrangerFP12FormationMgr
 	.4byte getLength__12FormArrangerFP12FormationMgr
+.endobj __vt__12WingArranger
 .balign 4
-lbl_802ADBFC:
+.obj lbl_802ADBFC, local
 	.asciz "LineArranger"
+.endobj lbl_802ADBFC
 .balign 4
-lbl_802ADC0C:
+.obj lbl_802ADC0C, local
 	.4byte __RTTI__12FormArranger
 	.4byte 0
 	.4byte 0
-.global __vt__12LineArranger
-__vt__12LineArranger:
+.endobj lbl_802ADC0C
+.balign 4
+.obj __vt__12LineArranger, global
 	.4byte __RTTI__12LineArranger
 	.4byte 0
 	.4byte arrange__12LineArrangerFP12FormationMgr
 	.4byte getLength__12FormArrangerFP12FormationMgr
+.endobj __vt__12LineArranger
 .balign 4
-lbl_802ADC28:
+.obj lbl_802ADC28, local
 	.asciz "PyramidArranger"
+.endobj lbl_802ADC28
 .balign 4
-lbl_802ADC38:
+.obj lbl_802ADC38, local
 	.4byte __RTTI__12FormArranger
 	.4byte 0
 	.4byte 0
-.global __vt__15PyramidArranger
-__vt__15PyramidArranger:
+.endobj lbl_802ADC38
+.balign 4
+.obj __vt__15PyramidArranger, global
 	.4byte __RTTI__15PyramidArranger
 	.4byte 0
 	.4byte arrange__15PyramidArrangerFP12FormationMgr
 	.4byte getLength__15PyramidArrangerFP12FormationMgr
+.endobj __vt__15PyramidArranger
 .balign 4
-lbl_802ADC54:
+.obj lbl_802ADC54, local
 	.asciz "CircleArranger"
+.endobj lbl_802ADC54
 .balign 4
-lbl_802ADC64:
+.obj lbl_802ADC64, local
 	.4byte __RTTI__12FormArranger
 	.4byte 0
 	.4byte 0
-.global __vt__14CircleArranger
-__vt__14CircleArranger:
+.endobj lbl_802ADC64
+.balign 4
+.obj __vt__14CircleArranger, global
 	.4byte __RTTI__14CircleArranger
 	.4byte 0
 	.4byte arrange__14CircleArrangerFP12FormationMgr
 	.4byte getLength__12FormArrangerFP12FormationMgr
+.endobj __vt__14CircleArranger
 .balign 4
-lbl_802ADC80:
+.obj lbl_802ADC80, local
 	.asciz "Traversable"
+.endobj lbl_802ADC80
 .balign 4
-.global __vt__11Traversable
-__vt__11Traversable:
+.obj __vt__11Traversable, weak
 	.4byte __RTTI__11Traversable
 	.4byte 0
 	.4byte 0
 	.4byte 0
 	.4byte 0
 	.4byte 0
+.endobj __vt__11Traversable
 .balign 4
-lbl_802ADCA4:
+.obj lbl_802ADCA4, local
 	.asciz "FormationMgr"
+.endobj lbl_802ADCA4
 .balign 4
-lbl_802ADCB4:
+.obj lbl_802ADCB4, local
 	.4byte __RTTI__11Traversable
 	.4byte 0
 	.4byte 0
-.global __vt__12FormationMgr
-__vt__12FormationMgr:
+.endobj lbl_802ADCB4
+.balign 4
+.obj __vt__12FormationMgr, global
 	.4byte __RTTI__12FormationMgr
 	.4byte 0
 	.4byte getCreature__12FormationMgrFi
 	.4byte getFirst__12FormationMgrFv
 	.4byte getNext__12FormationMgrFi
 	.4byte isDone__12FormationMgrFi
+.endobj __vt__12FormationMgr
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-lbl_803DEB18:
+.obj lbl_803DEB18, local
 	.float 0.0
-lbl_803DEB1C:
+.endobj lbl_803DEB18
+.obj lbl_803DEB1C, local
 	.float 0.0
-lbl_803DEB20:
+.endobj lbl_803DEB1C
+.obj lbl_803DEB20, local
 	.float 1.0
-lbl_803DEB24:
+.endobj lbl_803DEB20
+.obj lbl_803DEB24, local
 	.float 0.0
-lbl_803DEB28:
+.endobj lbl_803DEB24
+.obj lbl_803DEB28, local
 	.float 0.0
-lbl_803DEB2C:
+.endobj lbl_803DEB28
+.obj lbl_803DEB2C, local
 	.float 1.0
-lbl_803DEB30:
+.endobj lbl_803DEB2C
+.obj lbl_803DEB30, local
 	.float 1.0
-lbl_803DEB34:
+.endobj lbl_803DEB30
+.obj lbl_803DEB34, local
 	.float 0.0
-lbl_803DEB38:
+.endobj lbl_803DEB34
+.obj lbl_803DEB38, local
 	.float 0.0
-lbl_803DEB3C:
+.endobj lbl_803DEB38
+.obj lbl_803DEB3C, local
 	.float 0.0
-lbl_803DEB40:
+.endobj lbl_803DEB3C
+.obj lbl_803DEB40, local
 	.float 1.0
-lbl_803DEB44:
+.endobj lbl_803DEB40
+.obj lbl_803DEB44, local
 	.float 0.0
-lbl_803DEB48:
+.endobj lbl_803DEB44
+.obj lbl_803DEB48, local
 	.float 0.5
-lbl_803DEB4C:
+.endobj lbl_803DEB48
+.obj lbl_803DEB4C, local
 	.float 1.0
-lbl_803DEB50:
+.endobj lbl_803DEB4C
+.obj lbl_803DEB50, local
 	.float 0.0
-lbl_803DEB54:
+.endobj lbl_803DEB50
+.obj lbl_803DEB54, local
 	.float 0.0
-lbl_803DEB58:
+.endobj lbl_803DEB54
+.obj lbl_803DEB58, local
 	.float 0.0
-lbl_803DEB5C:
+.endobj lbl_803DEB58
+.obj lbl_803DEB5C, local
 	.float 1.0
-lbl_803DEB60:
+.endobj lbl_803DEB5C
+.obj lbl_803DEB60, local
 	.float 1.0
-lbl_803DEB64:
+.endobj lbl_803DEB60
+.obj lbl_803DEB64, local
 	.float 1.0
-lbl_803DEB68:
+.endobj lbl_803DEB64
+.obj lbl_803DEB68, local
 	.float 0.0
-lbl_803DEB6C:
+.endobj lbl_803DEB68
+.obj lbl_803DEB6C, local
 	.float 1.0
-lbl_803DEB70:
+.endobj lbl_803DEB6C
+.obj lbl_803DEB70, local
 	.float 0.0
-lbl_803DEB74:
+.endobj lbl_803DEB70
+.obj lbl_803DEB74, local
 	.float 0.0
-lbl_803DEB78:
+.endobj lbl_803DEB74
+.obj lbl_803DEB78, local
 	.float 0.0
-lbl_803DEB7C:
+.endobj lbl_803DEB78
+.obj lbl_803DEB7C, local
 	.float 0.0
-lbl_803DEB80:
+.endobj lbl_803DEB7C
+.obj lbl_803DEB80, local
 	.float 1.0
-lbl_803DEB84:
+.endobj lbl_803DEB80
+.obj lbl_803DEB84, local
 	.float 0.0
-lbl_803DEB88:
+.endobj lbl_803DEB84
+.obj lbl_803DEB88, local
 	.float 1.0
-lbl_803DEB8C:
+.endobj lbl_803DEB88
+.obj lbl_803DEB8C, local
 	.float 0.0
-lbl_803DEB90:
+.endobj lbl_803DEB8C
+.obj lbl_803DEB90, local
 	.float 1.0
-lbl_803DEB94:
+.endobj lbl_803DEB90
+.obj lbl_803DEB94, local
 	.float 1.0
-lbl_803DEB98:
+.endobj lbl_803DEB94
+.obj lbl_803DEB98, local
 	.float 0.0
-__RTTI__12FormArranger:
+.endobj lbl_803DEB98
+.balign 4
+.obj __RTTI__12FormArranger, local
 	.4byte lbl_802ADBD0
 	.4byte 0
-__RTTI__12WingArranger:
+.endobj __RTTI__12FormArranger
+.balign 4
+.obj __RTTI__12WingArranger, local
 	.4byte lbl_802ADBC0
 	.4byte lbl_802ADBE0
-__RTTI__12LineArranger:
+.endobj __RTTI__12WingArranger
+.balign 4
+.obj __RTTI__12LineArranger, local
 	.4byte lbl_802ADBFC
 	.4byte lbl_802ADC0C
-__RTTI__15PyramidArranger:
+.endobj __RTTI__12LineArranger
+.balign 4
+.obj __RTTI__15PyramidArranger, local
 	.4byte lbl_802ADC28
 	.4byte lbl_802ADC38
-__RTTI__14CircleArranger:
+.endobj __RTTI__15PyramidArranger
+.balign 4
+.obj __RTTI__14CircleArranger, local
 	.4byte lbl_802ADC54
 	.4byte lbl_802ADC64
-__RTTI__11Traversable:
+.endobj __RTTI__14CircleArranger
+.balign 4
+.obj __RTTI__11Traversable, local
 	.4byte lbl_802ADC80
 	.4byte 0
-__RTTI__12FormationMgr:
+.endobj __RTTI__11Traversable
+.balign 4
+.obj __RTTI__12FormationMgr, local
 	.4byte lbl_802ADCA4
 	.4byte lbl_802ADCB4
+.endobj __RTTI__12FormationMgr
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803E8B88:
+.obj lbl_803E8B88, local
 	.float 0.0
-lbl_803E8B8C:
+.endobj lbl_803E8B88
+.obj lbl_803E8B8C, local
 	.float 255.0
-lbl_803E8B90:
+.endobj lbl_803E8B8C
+.obj lbl_803E8B90, local
 	.float 40.0
-lbl_803E8B94:
+.endobj lbl_803E8B90
+.obj lbl_803E8B94, local # pi/2
 	.float 1.5707964
-lbl_803E8B98:
+.endobj lbl_803E8B94
+.obj lbl_803E8B98, local
 	.float 1.0
-lbl_803E8B9C:
+.endobj lbl_803E8B98
+.obj lbl_803E8B9C, local
 	.float 0.5
-lbl_803E8BA0:
+.endobj lbl_803E8B9C
+.obj lbl_803E8BA0, local
 	.float 30.0
-lbl_803E8BA4:
+.endobj lbl_803E8BA0
+.obj lbl_803E8BA4, local
 	.float 0.1
-lbl_803E8BA8:
+.endobj lbl_803E8BA4
+.obj lbl_803E8BA8, local
 	.float 26.0
-lbl_803E8BAC:
+.endobj lbl_803E8BA8
+.obj lbl_803E8BAC, local
 	.float -1.0
+.endobj lbl_803E8BAC
 .balign 8
-lbl_803E8BB0:
-	.4byte 0x43300000
-	.4byte 0x80000000
-lbl_803E8BB8:
+.obj lbl_803E8BB0, local
+	.8byte 0x4330000080000000
+.endobj lbl_803E8BB0
+.balign 4
+.obj lbl_803E8BB8, local
 	.float 8.0
+.endobj lbl_803E8BB8
 .balign 8
-lbl_803E8BC0:
+.obj lbl_803E8BC0, local
 	.double 0.5
+.endobj lbl_803E8BC0
 .balign 8
-lbl_803E8BC8:
+.obj lbl_803E8BC8, local
 	.double 3.0
-lbl_803E8BD0:
+.endobj lbl_803E8BC8
+.balign 4
+.obj lbl_803E8BD0, local
 	.float 50.0
-lbl_803E8BD4:
+.endobj lbl_803E8BD0
+.obj lbl_803E8BD4, local
 	.float 25.0
-lbl_803E8BD8:
+.endobj lbl_803E8BD4
+.obj lbl_803E8BD8, local
 	.float 80.0
-lbl_803E8BDC:
+.endobj lbl_803E8BD8
+.obj lbl_803E8BDC, local
 	.float -80.0
+.endobj lbl_803E8BDC

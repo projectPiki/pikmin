@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global viewStartTrembleMotion__5BTekiFf
-viewStartTrembleMotion__5BTekiFf:
+.fn viewStartTrembleMotion__5BTekiFf, global
 /* 80143F5C 00140EBC  7C 08 02 A6 */	mflr r0
 /* 80143F60 00140EC0  38 80 00 0E */	li r4, 0xe
 /* 80143F64 00140EC4  90 01 00 04 */	stw r0, 4(r1)
@@ -27,14 +26,14 @@ viewStartTrembleMotion__5BTekiFf:
 /* 80143FB4 00140F14  38 21 00 20 */	addi r1, r1, 0x20
 /* 80143FB8 00140F18  7C 08 03 A6 */	mtlr r0
 /* 80143FBC 00140F1C  4E 80 00 20 */	blr 
+.endfn viewStartTrembleMotion__5BTekiFf
 
-.global viewSetMotionSpeed__5BTekiFf
-viewSetMotionSpeed__5BTekiFf:
+.fn viewSetMotionSpeed__5BTekiFf, global
 /* 80143FC0 00140F20  D0 23 03 B4 */	stfs f1, 0x3b4(r3)
 /* 80143FC4 00140F24  4E 80 00 20 */	blr 
+.endfn viewSetMotionSpeed__5BTekiFf
 
-.global viewDoAnimation__5BTekiFv
-viewDoAnimation__5BTekiFv:
+.fn viewDoAnimation__5BTekiFv, global
 /* 80143FC8 00140F28  7C 08 02 A6 */	mflr r0
 /* 80143FCC 00140F2C  90 01 00 04 */	stw r0, 4(r1)
 /* 80143FD0 00140F30  94 21 FF F8 */	stwu r1, -8(r1)
@@ -46,9 +45,9 @@ viewDoAnimation__5BTekiFv:
 /* 80143FE8 00140F48  38 21 00 08 */	addi r1, r1, 8
 /* 80143FEC 00140F4C  7C 08 03 A6 */	mtlr r0
 /* 80143FF0 00140F50  4E 80 00 20 */	blr 
+.endfn viewDoAnimation__5BTekiFv
 
-.global viewFinishMotion__5BTekiFv
-viewFinishMotion__5BTekiFv:
+.fn viewFinishMotion__5BTekiFv, global
 /* 80143FF4 00140F54  7C 08 02 A6 */	mflr r0
 /* 80143FF8 00140F58  90 01 00 04 */	stw r0, 4(r1)
 /* 80143FFC 00140F5C  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -69,9 +68,9 @@ viewFinishMotion__5BTekiFv:
 /* 80144034 00140F94  38 21 00 20 */	addi r1, r1, 0x20
 /* 80144038 00140F98  7C 08 03 A6 */	mtlr r0
 /* 8014403C 00140F9C  4E 80 00 20 */	blr 
+.endfn viewFinishMotion__5BTekiFv
 
-.global viewGetScale__5BTekiFv
-viewGetScale__5BTekiFv:
+.fn viewGetScale__5BTekiFv, global
 /* 80144040 00140FA0  C0 04 00 7C */	lfs f0, 0x7c(r4)
 /* 80144044 00140FA4  D0 03 00 00 */	stfs f0, 0(r3)
 /* 80144048 00140FA8  C0 04 00 80 */	lfs f0, 0x80(r4)
@@ -79,27 +78,27 @@ viewGetScale__5BTekiFv:
 /* 80144050 00140FB0  C0 04 00 84 */	lfs f0, 0x84(r4)
 /* 80144054 00140FB4  D0 03 00 08 */	stfs f0, 8(r3)
 /* 80144058 00140FB8  4E 80 00 20 */	blr 
+.endfn viewGetScale__5BTekiFv
 
-.global viewGetBottomRadius__5BTekiFv
-viewGetBottomRadius__5BTekiFv:
+.fn viewGetBottomRadius__5BTekiFv, global
 /* 8014405C 00140FBC  80 63 02 C4 */	lwz r3, 0x2c4(r3)
 /* 80144060 00140FC0  80 63 00 84 */	lwz r3, 0x84(r3)
 /* 80144064 00140FC4  80 63 00 04 */	lwz r3, 4(r3)
 /* 80144068 00140FC8  80 63 00 00 */	lwz r3, 0(r3)
 /* 8014406C 00140FCC  C0 23 00 50 */	lfs f1, 0x50(r3)
 /* 80144070 00140FD0  4E 80 00 20 */	blr 
+.endfn viewGetBottomRadius__5BTekiFv
 
-.global viewGetHeight__5BTekiFv
-viewGetHeight__5BTekiFv:
+.fn viewGetHeight__5BTekiFv, global
 /* 80144074 00140FD4  80 63 02 C4 */	lwz r3, 0x2c4(r3)
 /* 80144078 00140FD8  80 63 00 84 */	lwz r3, 0x84(r3)
 /* 8014407C 00140FDC  80 63 00 04 */	lwz r3, 4(r3)
 /* 80144080 00140FE0  80 63 00 00 */	lwz r3, 0(r3)
 /* 80144084 00140FE4  C0 23 00 54 */	lfs f1, 0x54(r3)
 /* 80144088 00140FE8  4E 80 00 20 */	blr 
+.endfn viewGetHeight__5BTekiFv
 
-.global viewDraw__5BTekiFR8GraphicsR8Matrix4f
-viewDraw__5BTekiFR8GraphicsR8Matrix4f:
+.fn viewDraw__5BTekiFR8GraphicsR8Matrix4f, global
 /* 8014408C 00140FEC  7C 08 02 A6 */	mflr r0
 /* 80144090 00140FF0  90 01 00 04 */	stw r0, 4(r1)
 /* 80144094 00140FF4  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -141,9 +140,9 @@ viewDraw__5BTekiFR8GraphicsR8Matrix4f:
 /* 80144124 00141084  38 21 00 28 */	addi r1, r1, 0x28
 /* 80144128 00141088  7C 08 03 A6 */	mtlr r0
 /* 8014412C 0014108C  4E 80 00 20 */	blr 
+.endfn viewDraw__5BTekiFR8GraphicsR8Matrix4f
 
-.global viewKill__5BTekiFv
-viewKill__5BTekiFv:
+.fn viewKill__5BTekiFv, global
 /* 80144130 00141090  7C 08 02 A6 */	mflr r0
 /* 80144134 00141094  38 80 00 00 */	li r4, 0
 /* 80144138 00141098  90 01 00 04 */	stw r0, 4(r1)
@@ -153,21 +152,21 @@ viewKill__5BTekiFv:
 /* 80144148 001410A8  38 21 00 08 */	addi r1, r1, 8
 /* 8014414C 001410AC  7C 08 03 A6 */	mtlr r0
 /* 80144150 001410B0  4E 80 00 20 */	blr 
+.endfn viewKill__5BTekiFv
 
-.global doStore__5BTekiFP11CreatureInf
-doStore__5BTekiFP11CreatureInf:
+.fn doStore__5BTekiFP11CreatureInf, global
 /* 80144154 001410B4  80 03 03 20 */	lwz r0, 0x320(r3)
 /* 80144158 001410B8  90 04 00 3C */	stw r0, 0x3c(r4)
 /* 8014415C 001410BC  4E 80 00 20 */	blr 
+.endfn doStore__5BTekiFP11CreatureInf
 
-.global doRestore__5BTekiFP11CreatureInf
-doRestore__5BTekiFP11CreatureInf:
+.fn doRestore__5BTekiFP11CreatureInf, global
 /* 80144160 001410C0  80 04 00 3C */	lwz r0, 0x3c(r4)
 /* 80144164 001410C4  90 03 03 20 */	stw r0, 0x320(r3)
 /* 80144168 001410C8  4E 80 00 20 */	blr 
+.endfn doRestore__5BTekiFP11CreatureInf
 
-.global __ct__15TekiShapeObjectFP5Shape
-__ct__15TekiShapeObjectFP5Shape:
+.fn __ct__15TekiShapeObjectFP5Shape, global
 /* 8014416C 001410CC  7C 08 02 A6 */	mflr r0
 /* 80144170 001410D0  3C A0 80 23 */	lis r5, __vt__11AnimContext@ha
 /* 80144174 001410D4  90 01 00 04 */	stw r0, 4(r1)
@@ -213,16 +212,16 @@ __ct__15TekiShapeObjectFP5Shape:
 /* 80144210 00141170  38 21 00 20 */	addi r1, r1, 0x20
 /* 80144214 00141174  7C 08 03 A6 */	mtlr r0
 /* 80144218 00141178  4E 80 00 20 */	blr 
+.endfn __ct__15TekiShapeObjectFP5Shape
 
-.global isPellet__5BTekiFi
-isPellet__5BTekiFi:
+.fn isPellet__5BTekiFi, global
 /* 8014421C 0014117C  20 03 00 34 */	subfic r0, r3, 0x34
 /* 80144220 00141180  7C 00 00 34 */	cntlzw r0, r0
 /* 80144224 00141184  54 03 D9 7E */	srwi r3, r0, 5
 /* 80144228 00141188  4E 80 00 20 */	blr 
+.endfn isPellet__5BTekiFi
 
-.global calcCircleDistanceStatic__5BTekiFR8Vector3ffR8Vector3ff
-calcCircleDistanceStatic__5BTekiFR8Vector3ffR8Vector3ff:
+.fn calcCircleDistanceStatic__5BTekiFR8Vector3ffR8Vector3ff, global
 /* 8014422C 0014118C  7C 08 02 A6 */	mflr r0
 /* 80144230 00141190  90 01 00 04 */	stw r0, 4(r1)
 /* 80144234 00141194  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -243,17 +242,17 @@ calcCircleDistanceStatic__5BTekiFR8Vector3ffR8Vector3ff:
 /* 80144270 001411D0  38 21 00 28 */	addi r1, r1, 0x28
 /* 80144274 001411D4  7C 08 03 A6 */	mtlr r0
 /* 80144278 001411D8  4E 80 00 20 */	blr 
+.endfn calcCircleDistanceStatic__5BTekiFR8Vector3ffR8Vector3ff
 
-.global alwaysUpdatePlatform__5BTekiFv
-alwaysUpdatePlatform__5BTekiFv:
+.fn alwaysUpdatePlatform__5BTekiFv, global
 /* 8014427C 001411DC  80 03 03 20 */	lwz r0, 0x320(r3)
 /* 80144280 001411E0  20 00 00 0A */	subfic r0, r0, 0xa
 /* 80144284 001411E4  7C 00 00 34 */	cntlzw r0, r0
 /* 80144288 001411E8  54 03 D9 7E */	srwi r3, r0, 5
 /* 8014428C 001411EC  4E 80 00 20 */	blr 
+.endfn alwaysUpdatePlatform__5BTekiFv
 
-.global calcSphereDistanceStatic__5BTekiFR8Vector3ffR8Vector3ff
-calcSphereDistanceStatic__5BTekiFR8Vector3ffR8Vector3ff:
+.fn calcSphereDistanceStatic__5BTekiFR8Vector3ffR8Vector3ff, global
 /* 80144290 001411F0  7C 08 02 A6 */	mflr r0
 /* 80144294 001411F4  90 01 00 04 */	stw r0, 4(r1)
 /* 80144298 001411F8  94 21 FF B0 */	stwu r1, -0x50(r1)
@@ -296,9 +295,9 @@ calcSphereDistanceStatic__5BTekiFR8Vector3ffR8Vector3ff:
 /* 8014432C 0014128C  38 21 00 50 */	addi r1, r1, 0x50
 /* 80144330 00141290  7C 08 03 A6 */	mtlr r0
 /* 80144334 00141294  4E 80 00 20 */	blr 
+.endfn calcSphereDistanceStatic__5BTekiFR8Vector3ffR8Vector3ff
 
-.global moveTowardStatic__5BTekiFR8Vector3fR8Vector3ffR8Vector3f
-moveTowardStatic__5BTekiFR8Vector3fR8Vector3ffR8Vector3f:
+.fn moveTowardStatic__5BTekiFR8Vector3fR8Vector3ffR8Vector3f, global
 /* 80144338 00141298  7C 08 02 A6 */	mflr r0
 /* 8014433C 0014129C  90 01 00 04 */	stw r0, 4(r1)
 /* 80144340 001412A0  94 21 FF 78 */	stwu r1, -0x88(r1)
@@ -447,9 +446,9 @@ moveTowardStatic__5BTekiFR8Vector3fR8Vector3ffR8Vector3f:
 /* 80144564 001414C4  38 21 00 88 */	addi r1, r1, 0x88
 /* 80144568 001414C8  7C 08 03 A6 */	mtlr r0
 /* 8014456C 001414CC  4E 80 00 20 */	blr 
+.endfn moveTowardStatic__5BTekiFR8Vector3fR8Vector3ffR8Vector3f
 
-.global arrivedAt__5BTekiFff
-arrivedAt__5BTekiFff:
+.fn arrivedAt__5BTekiFff, global
 /* 80144570 001414D0  C0 02 A7 68 */	lfs f0, lbl_803EA968@sda21(r2)
 /* 80144574 001414D4  80 6D 31 50 */	lwz r3, system__7NSystem@sda21(r13)
 /* 80144578 001414D8  EC 40 00 B2 */	fmuls f2, f0, f2
@@ -460,9 +459,9 @@ arrivedAt__5BTekiFff:
 /* 8014458C 001414EC  7C 00 00 26 */	mfcr r0
 /* 80144590 001414F0  54 03 1F FE */	rlwinm r3, r0, 3, 0x1f, 0x1f
 /* 80144594 001414F4  4E 80 00 20 */	blr 
+.endfn arrivedAt__5BTekiFff
 
-.global __ct__5BTekiFv
-__ct__5BTekiFv:
+.fn __ct__5BTekiFv, global
 /* 80144598 001414F8  7C 08 02 A6 */	mflr r0
 /* 8014459C 001414FC  90 01 00 04 */	stw r0, 4(r1)
 /* 801445A0 00141500  7C 80 07 35 */	extsh. r0, r4
@@ -703,9 +702,9 @@ __ct__5BTekiFv:
 /* 80144924 00141884  38 21 00 78 */	addi r1, r1, 0x78
 /* 80144928 00141888  7C 08 03 A6 */	mtlr r0
 /* 8014492C 0014188C  4E 80 00 20 */	blr 
+.endfn __ct__5BTekiFv
 
-.global init__5BTekiFi
-init__5BTekiFi:
+.fn init__5BTekiFi, global
 /* 80144930 00141890  7C 08 02 A6 */	mflr r0
 /* 80144934 00141894  90 01 00 04 */	stw r0, 4(r1)
 /* 80144938 00141898  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -731,9 +730,9 @@ init__5BTekiFi:
 /* 80144988 001418E8  38 21 00 18 */	addi r1, r1, 0x18
 /* 8014498C 001418EC  7C 08 03 A6 */	mtlr r0
 /* 80144990 001418F0  4E 80 00 20 */	blr 
+.endfn init__5BTekiFi
 
-.global reset__5BTekiFv
-reset__5BTekiFv:
+.fn reset__5BTekiFv, global
 /* 80144994 001418F4  7C 08 02 A6 */	mflr r0
 /* 80144998 001418F8  90 01 00 04 */	stw r0, 4(r1)
 /* 8014499C 001418FC  94 21 FF 28 */	stwu r1, -0xd8(r1)
@@ -964,9 +963,9 @@ reset__5BTekiFv:
 /* 80144D00 00141C60  38 21 00 D8 */	addi r1, r1, 0xd8
 /* 80144D04 00141C64  7C 08 03 A6 */	mtlr r0
 /* 80144D08 00141C68  4E 80 00 20 */	blr 
+.endfn reset__5BTekiFv
 
-.global prepareEffects__5BTekiFv
-prepareEffects__5BTekiFv:
+.fn prepareEffects__5BTekiFv, global
 /* 80144D0C 00141C6C  7C 08 02 A6 */	mflr r0
 /* 80144D10 00141C70  90 01 00 04 */	stw r0, 4(r1)
 /* 80144D14 00141C74  94 21 FF 90 */	stwu r1, -0x70(r1)
@@ -1042,9 +1041,9 @@ prepareEffects__5BTekiFv:
 /* 80144E1C 00141D7C  38 21 00 70 */	addi r1, r1, 0x70
 /* 80144E20 00141D80  7C 08 03 A6 */	mtlr r0
 /* 80144E24 00141D84  4E 80 00 20 */	blr 
+.endfn prepareEffects__5BTekiFv
 
-.global startAI__5BTekiFi
-startAI__5BTekiFi:
+.fn startAI__5BTekiFi, global
 /* 80144E28 00141D88  7C 08 02 A6 */	mflr r0
 /* 80144E2C 00141D8C  90 01 00 04 */	stw r0, 4(r1)
 /* 80144E30 00141D90  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -1078,9 +1077,9 @@ startAI__5BTekiFi:
 /* 80144E9C 00141DFC  38 21 00 18 */	addi r1, r1, 0x18
 /* 80144EA0 00141E00  7C 08 03 A6 */	mtlr r0
 /* 80144EA4 00141E04  4E 80 00 20 */	blr 
+.endfn startAI__5BTekiFi
 
-.global update__5BTekiFv
-update__5BTekiFv:
+.fn update__5BTekiFv, global
 /* 80144EA8 00141E08  7C 08 02 A6 */	mflr r0
 /* 80144EAC 00141E0C  90 01 00 04 */	stw r0, 4(r1)
 /* 80144EB0 00141E10  94 21 FF 88 */	stwu r1, -0x78(r1)
@@ -1122,9 +1121,9 @@ update__5BTekiFv:
 /* 80144F3C 00141E9C  38 21 00 78 */	addi r1, r1, 0x78
 /* 80144F40 00141EA0  7C 08 03 A6 */	mtlr r0
 /* 80144F44 00141EA4  4E 80 00 20 */	blr 
+.endfn update__5BTekiFv
 
-.global doAnimation__5BTekiFv
-doAnimation__5BTekiFv:
+.fn doAnimation__5BTekiFv, global
 /* 80144F48 00141EA8  7C 08 02 A6 */	mflr r0
 /* 80144F4C 00141EAC  90 01 00 04 */	stw r0, 4(r1)
 /* 80144F50 00141EB0  94 21 FF C0 */	stwu r1, -0x40(r1)
@@ -1180,9 +1179,9 @@ doAnimation__5BTekiFv:
 /* 80145004 00141F64  38 21 00 40 */	addi r1, r1, 0x40
 /* 80145008 00141F68  7C 08 03 A6 */	mtlr r0
 /* 8014500C 00141F6C  4E 80 00 20 */	blr 
+.endfn doAnimation__5BTekiFv
 
-.global startMotion__5BTekiFi
-startMotion__5BTekiFi:
+.fn startMotion__5BTekiFi, global
 /* 80145010 00141F70  7C 08 02 A6 */	mflr r0
 /* 80145014 00141F74  90 01 00 04 */	stw r0, 4(r1)
 /* 80145018 00141F78  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -1209,9 +1208,9 @@ startMotion__5BTekiFi:
 /* 80145068 00141FC8  38 21 00 20 */	addi r1, r1, 0x20
 /* 8014506C 00141FCC  7C 08 03 A6 */	mtlr r0
 /* 80145070 00141FD0  4E 80 00 20 */	blr 
+.endfn startMotion__5BTekiFi
 
-.global startStoppingMove__5BTekiFv
-startStoppingMove__5BTekiFv:
+.fn startStoppingMove__5BTekiFv, global
 /* 80145074 00141FD4  7C 08 02 A6 */	mflr r0
 /* 80145078 00141FD8  38 8D F6 1C */	addi r4, r13, lbl_803E433C@sda21
 /* 8014507C 00141FDC  90 01 00 04 */	stw r0, 4(r1)
@@ -1250,9 +1249,9 @@ startStoppingMove__5BTekiFv:
 /* 80145100 00142060  38 21 00 30 */	addi r1, r1, 0x30
 /* 80145104 00142064  7C 08 03 A6 */	mtlr r0
 /* 80145108 00142068  4E 80 00 20 */	blr 
+.endfn startStoppingMove__5BTekiFv
 
-.global finishStoppingMove__5BTekiFv
-finishStoppingMove__5BTekiFv:
+.fn finishStoppingMove__5BTekiFv, global
 /* 8014510C 0014206C  7C 08 02 A6 */	mflr r0
 /* 80145110 00142070  38 80 10 00 */	li r4, 0x1000
 /* 80145114 00142074  90 01 00 04 */	stw r0, 4(r1)
@@ -1265,9 +1264,9 @@ finishStoppingMove__5BTekiFv:
 /* 80145130 00142090  38 21 00 08 */	addi r1, r1, 8
 /* 80145134 00142094  7C 08 03 A6 */	mtlr r0
 /* 80145138 00142098  4E 80 00 20 */	blr 
+.endfn finishStoppingMove__5BTekiFv
 
-.global getVelocityAnimationSpeed__5BTekiFf
-getVelocityAnimationSpeed__5BTekiFf:
+.fn getVelocityAnimationSpeed__5BTekiFf, global
 /* 8014513C 0014209C  7C 08 02 A6 */	mflr r0
 /* 80145140 001420A0  38 80 00 00 */	li r4, 0
 /* 80145144 001420A4  90 01 00 04 */	stw r0, 4(r1)
@@ -1310,9 +1309,9 @@ getVelocityAnimationSpeed__5BTekiFf:
 /* 801451D4 00142134  38 21 00 78 */	addi r1, r1, 0x78
 /* 801451D8 00142138  7C 08 03 A6 */	mtlr r0
 /* 801451DC 0014213C  4E 80 00 20 */	blr 
+.endfn getVelocityAnimationSpeed__5BTekiFf
 
-.global animationKeyUpdated__5BTekiFR16PaniAnimKeyEvent
-animationKeyUpdated__5BTekiFR16PaniAnimKeyEvent:
+.fn animationKeyUpdated__5BTekiFR16PaniAnimKeyEvent, global
 /* 801451E0 00142140  7C 08 02 A6 */	mflr r0
 /* 801451E4 00142144  90 01 00 04 */	stw r0, 4(r1)
 /* 801451E8 00142148  94 21 FF F8 */	stwu r1, -8(r1)
@@ -1348,9 +1347,9 @@ animationKeyUpdated__5BTekiFR16PaniAnimKeyEvent:
 /* 80145254 001421B4  38 21 00 08 */	addi r1, r1, 8
 /* 80145258 001421B8  7C 08 03 A6 */	mtlr r0
 /* 8014525C 001421BC  4E 80 00 20 */	blr 
+.endfn animationKeyUpdated__5BTekiFR16PaniAnimKeyEvent
 
-.global doAI__5BTekiFv
-doAI__5BTekiFv:
+.fn doAI__5BTekiFv, global
 /* 80145260 001421C0  7C 08 02 A6 */	mflr r0
 /* 80145264 001421C4  90 01 00 04 */	stw r0, 4(r1)
 /* 80145268 001421C8  94 21 FF B0 */	stwu r1, -0x50(r1)
@@ -1480,15 +1479,15 @@ doAI__5BTekiFv:
 /* 80145434 00142394  38 21 00 50 */	addi r1, r1, 0x50
 /* 80145438 00142398  7C 08 03 A6 */	mtlr r0
 /* 8014543C 0014239C  4E 80 00 20 */	blr 
+.endfn doAI__5BTekiFv
 
-.global die__5BTekiFv
-die__5BTekiFv:
+.fn die__5BTekiFv, global
 /* 80145440 001423A0  38 00 00 01 */	li r0, 1
 /* 80145444 001423A4  90 03 03 1C */	stw r0, 0x31c(r3)
 /* 80145448 001423A8  4E 80 00 20 */	blr 
+.endfn die__5BTekiFv
 
-.global dieSoon__5BTekiFv
-dieSoon__5BTekiFv:
+.fn dieSoon__5BTekiFv, global
 /* 8014544C 001423AC  7C 08 02 A6 */	mflr r0
 /* 80145450 001423B0  38 80 00 1B */	li r4, 0x1b
 /* 80145454 001423B4  90 01 00 04 */	stw r0, 4(r1)
@@ -1646,9 +1645,9 @@ dieSoon__5BTekiFv:
 /* 80145698 001425F8  38 21 00 E8 */	addi r1, r1, 0xe8
 /* 8014569C 001425FC  7C 08 03 A6 */	mtlr r0
 /* 801456A0 00142600  4E 80 00 20 */	blr 
+.endfn dieSoon__5BTekiFv
 
-.global becomeCorpse__5BTekiFv
-becomeCorpse__5BTekiFv:
+.fn becomeCorpse__5BTekiFv, global
 /* 801456A4 00142604  7C 08 02 A6 */	mflr r0
 /* 801456A8 00142608  90 01 00 04 */	stw r0, 4(r1)
 /* 801456AC 0014260C  94 21 FF F8 */	stwu r1, -8(r1)
@@ -1690,9 +1689,9 @@ becomeCorpse__5BTekiFv:
 /* 8014572C 0014268C  38 21 00 08 */	addi r1, r1, 8
 /* 80145730 00142690  7C 08 03 A6 */	mtlr r0
 /* 80145734 00142694  4E 80 00 20 */	blr 
+.endfn becomeCorpse__5BTekiFv
 
-.global doKill__5BTekiFv
-doKill__5BTekiFv:
+.fn doKill__5BTekiFv, global
 /* 80145738 00142698  7C 08 02 A6 */	mflr r0
 /* 8014573C 0014269C  90 01 00 04 */	stw r0, 4(r1)
 /* 80145740 001426A0  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -1784,9 +1783,9 @@ doKill__5BTekiFv:
 /* 8014587C 001427DC  38 21 00 28 */	addi r1, r1, 0x28
 /* 80145880 001427E0  7C 08 03 A6 */	mtlr r0
 /* 80145884 001427E4  4E 80 00 20 */	blr 
+.endfn doKill__5BTekiFv
 
-.global exitCourse__5BTekiFv
-exitCourse__5BTekiFv:
+.fn exitCourse__5BTekiFv, global
 /* 80145888 001427E8  7C 08 02 A6 */	mflr r0
 /* 8014588C 001427EC  90 01 00 04 */	stw r0, 4(r1)
 /* 80145890 001427F0  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -1821,9 +1820,9 @@ exitCourse__5BTekiFv:
 /* 801458FC 0014285C  38 21 00 20 */	addi r1, r1, 0x20
 /* 80145900 00142860  7C 08 03 A6 */	mtlr r0
 /* 80145904 00142864  4E 80 00 20 */	blr 
+.endfn exitCourse__5BTekiFv
 
-.global gravitate__5BTekiFf
-gravitate__5BTekiFf:
+.fn gravitate__5BTekiFf, global
 /* 80145908 00142868  7C 08 02 A6 */	mflr r0
 /* 8014590C 0014286C  90 01 00 04 */	stw r0, 4(r1)
 /* 80145910 00142870  94 21 FF C0 */	stwu r1, -0x40(r1)
@@ -1868,9 +1867,9 @@ gravitate__5BTekiFf:
 /* 801459A8 00142908  38 21 00 40 */	addi r1, r1, 0x40
 /* 801459AC 0014290C  7C 08 03 A6 */	mtlr r0
 /* 801459B0 00142910  4E 80 00 20 */	blr 
+.endfn gravitate__5BTekiFf
 
-.global updateTimers__5BTekiFv
-updateTimers__5BTekiFv:
+.fn updateTimers__5BTekiFv, global
 /* 801459B4 00142914  C0 22 A7 50 */	lfs f1, lbl_803EA950@sda21(r2)
 /* 801459B8 00142918  C0 03 03 C4 */	lfs f0, 0x3c4(r3)
 /* 801459BC 0014291C  80 8D 31 50 */	lwz r4, system__7NSystem@sda21(r13)
@@ -1928,9 +1927,9 @@ updateTimers__5BTekiFv:
 /* 80145A7C 001429DC  4C 80 00 20 */	bgelr 
 /* 80145A80 001429E0  D0 23 03 C4 */	stfs f1, 0x3c4(r3)
 /* 80145A84 001429E4  4E 80 00 20 */	blr 
+.endfn updateTimers__5BTekiFv
 
-.global stimulate__5BTekiFR11Interaction
-stimulate__5BTekiFR11Interaction:
+.fn stimulate__5BTekiFR11Interaction, global
 /* 80145A88 001429E8  7C 08 02 A6 */	mflr r0
 /* 80145A8C 001429EC  90 01 00 04 */	stw r0, 4(r1)
 /* 80145A90 001429F0  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -1962,9 +1961,9 @@ stimulate__5BTekiFR11Interaction:
 /* 80145AF0 00142A50  38 21 00 18 */	addi r1, r1, 0x18
 /* 80145AF4 00142A54  7C 08 03 A6 */	mtlr r0
 /* 80145AF8 00142A58  4E 80 00 20 */	blr 
+.endfn stimulate__5BTekiFR11Interaction
 
-.global getiMass__5BTekiFv
-getiMass__5BTekiFv:
+.fn getiMass__5BTekiFv, global
 /* 80145AFC 00142A5C  7C 08 02 A6 */	mflr r0
 /* 80145B00 00142A60  90 01 00 04 */	stw r0, 4(r1)
 /* 80145B04 00142A64  94 21 FF 88 */	stwu r1, -0x78(r1)
@@ -2006,9 +2005,9 @@ getiMass__5BTekiFv:
 /* 80145B8C 00142AEC  38 21 00 78 */	addi r1, r1, 0x78
 /* 80145B90 00142AF0  7C 08 03 A6 */	mtlr r0
 /* 80145B94 00142AF4  4E 80 00 20 */	blr 
+.endfn getiMass__5BTekiFv
 
-.global getTekiCollisionSize__5BTekiFv
-getTekiCollisionSize__5BTekiFv:
+.fn getTekiCollisionSize__5BTekiFv, global
 /* 80145B98 00142AF8  7C 08 02 A6 */	mflr r0
 /* 80145B9C 00142AFC  90 01 00 04 */	stw r0, 4(r1)
 /* 80145BA0 00142B00  94 21 FF F8 */	stwu r1, -8(r1)
@@ -2020,9 +2019,9 @@ getTekiCollisionSize__5BTekiFv:
 /* 80145BB8 00142B18  38 21 00 08 */	addi r1, r1, 8
 /* 80145BBC 00142B1C  7C 08 03 A6 */	mtlr r0
 /* 80145BC0 00142B20  4E 80 00 20 */	blr 
+.endfn getTekiCollisionSize__5BTekiFv
 
-.global makeDamaged__5BTekiFv
-makeDamaged__5BTekiFv:
+.fn makeDamaged__5BTekiFv, global
 /* 80145BC4 00142B24  C0 23 00 58 */	lfs f1, 0x58(r3)
 /* 80145BC8 00142B28  C0 03 03 3C */	lfs f0, 0x33c(r3)
 /* 80145BCC 00142B2C  EC 01 00 28 */	fsubs f0, f1, f0
@@ -2036,9 +2035,9 @@ makeDamaged__5BTekiFv:
 /* 80145BE8 00142B48  C0 02 A7 50 */	lfs f0, lbl_803EA950@sda21(r2)
 /* 80145BEC 00142B4C  D0 03 03 3C */	stfs f0, 0x33c(r3)
 /* 80145BF0 00142B50  4E 80 00 20 */	blr 
+.endfn makeDamaged__5BTekiFv
 
-.global startDamageMotion__5BTekiFff
-startDamageMotion__5BTekiFff:
+.fn startDamageMotion__5BTekiFff, global
 /* 80145BF4 00142B54  7C 08 02 A6 */	mflr r0
 /* 80145BF8 00142B58  FC A0 08 90 */	fmr f5, f1
 /* 80145BFC 00142B5C  90 01 00 04 */	stw r0, 4(r1)
@@ -2059,9 +2058,9 @@ startDamageMotion__5BTekiFff:
 /* 80145C34 00142B94  38 21 00 08 */	addi r1, r1, 8
 /* 80145C38 00142B98  7C 08 03 A6 */	mtlr r0
 /* 80145C3C 00142B9C  4E 80 00 20 */	blr 
+.endfn startDamageMotion__5BTekiFff
 
-.global releasePlatCollisions__5BTekiFv
-releasePlatCollisions__5BTekiFv:
+.fn releasePlatCollisions__5BTekiFv, global
 /* 80145C40 00142BA0  7C 08 02 A6 */	mflr r0
 /* 80145C44 00142BA4  38 63 02 D4 */	addi r3, r3, 0x2d4
 /* 80145C48 00142BA8  90 01 00 04 */	stw r0, 4(r1)
@@ -2071,9 +2070,9 @@ releasePlatCollisions__5BTekiFv:
 /* 80145C58 00142BB8  38 21 00 08 */	addi r1, r1, 8
 /* 80145C5C 00142BBC  7C 08 03 A6 */	mtlr r0
 /* 80145C60 00142BC0  4E 80 00 20 */	blr 
+.endfn releasePlatCollisions__5BTekiFv
 
-.global createDeadEffect__5BTekiFv
-createDeadEffect__5BTekiFv:
+.fn createDeadEffect__5BTekiFv, global
 /* 80145C64 00142BC4  7C 08 02 A6 */	mflr r0
 /* 80145C68 00142BC8  90 01 00 04 */	stw r0, 4(r1)
 /* 80145C6C 00142BCC  94 21 FF B8 */	stwu r1, -0x48(r1)
@@ -2161,9 +2160,9 @@ createDeadEffect__5BTekiFv:
 /* 80145DA8 00142D08  38 21 00 48 */	addi r1, r1, 0x48
 /* 80145DAC 00142D0C  7C 08 03 A6 */	mtlr r0
 /* 80145DB0 00142D10  4E 80 00 20 */	blr 
+.endfn createDeadEffect__5BTekiFv
 
-.global createSoulEffect__5BTekiFv
-createSoulEffect__5BTekiFv:
+.fn createSoulEffect__5BTekiFv, global
 /* 80145DB4 00142D14  7C 08 02 A6 */	mflr r0
 /* 80145DB8 00142D18  90 01 00 04 */	stw r0, 4(r1)
 /* 80145DBC 00142D1C  94 21 FF B8 */	stwu r1, -0x48(r1)
@@ -2212,9 +2211,9 @@ createSoulEffect__5BTekiFv:
 /* 80145E5C 00142DBC  38 21 00 48 */	addi r1, r1, 0x48
 /* 80145E60 00142DC0  7C 08 03 A6 */	mtlr r0
 /* 80145E64 00142DC4  4E 80 00 20 */	blr 
+.endfn createSoulEffect__5BTekiFv
 
-.global spawnItems__5BTekiFv
-spawnItems__5BTekiFv:
+.fn spawnItems__5BTekiFv, global
 /* 80145E68 00142DC8  7C 08 02 A6 */	mflr r0
 /* 80145E6C 00142DCC  90 01 00 04 */	stw r0, 4(r1)
 /* 80145E70 00142DD0  94 21 FE C8 */	stwu r1, -0x138(r1)
@@ -2321,9 +2320,9 @@ spawnItems__5BTekiFv:
 /* 80145FF8 00142F58  38 21 01 38 */	addi r1, r1, 0x138
 /* 80145FFC 00142F5C  7C 08 03 A6 */	mtlr r0
 /* 80146000 00142F60  4E 80 00 20 */	blr 
+.endfn spawnItems__5BTekiFv
 
-.global spawnPellets__5BTekiFiii
-spawnPellets__5BTekiFiii:
+.fn spawnPellets__5BTekiFiii, global
 /* 80146004 00142F64  7C 08 02 A6 */	mflr r0
 /* 80146008 00142F68  90 01 00 04 */	stw r0, 4(r1)
 /* 8014600C 00142F6C  94 21 FE B8 */	stwu r1, -0x148(r1)
@@ -2505,9 +2504,9 @@ spawnPellets__5BTekiFiii:
 /* 801462A0 00143200  38 21 01 48 */	addi r1, r1, 0x148
 /* 801462A4 00143204  7C 08 03 A6 */	mtlr r0
 /* 801462A8 00143208  4E 80 00 20 */	blr 
+.endfn spawnPellets__5BTekiFiii
 
-.global spawnWaters__5BTekiFi
-spawnWaters__5BTekiFi:
+.fn spawnWaters__5BTekiFi, global
 /* 801462AC 0014320C  7C 08 02 A6 */	mflr r0
 /* 801462B0 00143210  90 01 00 04 */	stw r0, 4(r1)
 /* 801462B4 00143214  94 21 FE F0 */	stwu r1, -0x110(r1)
@@ -2636,9 +2635,9 @@ spawnWaters__5BTekiFi:
 /* 8014648C 001433EC  38 21 01 10 */	addi r1, r1, 0x110
 /* 80146490 001433F0  7C 08 03 A6 */	mtlr r0
 /* 80146494 001433F4  4E 80 00 20 */	blr 
+.endfn spawnWaters__5BTekiFi
 
-.global spawnCorpseParts__5BTekiFv
-spawnCorpseParts__5BTekiFv:
+.fn spawnCorpseParts__5BTekiFv, global
 /* 80146498 001433F8  7C 08 02 A6 */	mflr r0
 /* 8014649C 001433FC  90 01 00 04 */	stw r0, 4(r1)
 /* 801464A0 00143400  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -2655,9 +2654,9 @@ spawnCorpseParts__5BTekiFv:
 /* 801464CC 0014342C  38 21 00 18 */	addi r1, r1, 0x18
 /* 801464D0 00143430  7C 08 03 A6 */	mtlr r0
 /* 801464D4 00143434  4E 80 00 20 */	blr 
+.endfn spawnCorpseParts__5BTekiFv
 
-.global generateTeki__5BTekiFi
-generateTeki__5BTekiFi:
+.fn generateTeki__5BTekiFi, global
 /* 801464D8 00143438  7C 08 02 A6 */	mflr r0
 /* 801464DC 0014343C  90 01 00 04 */	stw r0, 4(r1)
 /* 801464E0 00143440  94 21 FF B0 */	stwu r1, -0x50(r1)
@@ -2714,9 +2713,9 @@ generateTeki__5BTekiFi:
 /* 801465A4 00143504  38 21 00 50 */	addi r1, r1, 0x50
 /* 801465A8 00143508  7C 08 03 A6 */	mtlr r0
 /* 801465AC 0014350C  4E 80 00 20 */	blr 
+.endfn generateTeki__5BTekiFi
 
-.global outputSpawnPosition__5BTekiFR8Vector3f
-outputSpawnPosition__5BTekiFR8Vector3f:
+.fn outputSpawnPosition__5BTekiFR8Vector3f, global
 /* 801465B0 00143510  7C 08 02 A6 */	mflr r0
 /* 801465B4 00143514  90 01 00 04 */	stw r0, 4(r1)
 /* 801465B8 00143518  94 21 FF 60 */	stwu r1, -0xa0(r1)
@@ -2817,9 +2816,9 @@ outputSpawnPosition__5BTekiFR8Vector3f:
 /* 80146734 00143694  38 21 00 A0 */	addi r1, r1, 0xa0
 /* 80146738 00143698  7C 08 03 A6 */	mtlr r0
 /* 8014673C 0014369C  4E 80 00 20 */	blr 
+.endfn outputSpawnPosition__5BTekiFR8Vector3f
 
-.global spawnTeki__5BTekiFi
-spawnTeki__5BTekiFi:
+.fn spawnTeki__5BTekiFi, global
 /* 80146740 001436A0  7C 08 02 A6 */	mflr r0
 /* 80146744 001436A4  90 01 00 04 */	stw r0, 4(r1)
 /* 80146748 001436A8  94 21 FF 40 */	stwu r1, -0xc0(r1)
@@ -2970,9 +2969,9 @@ spawnTeki__5BTekiFi:
 /* 80146984 001438E4  38 21 00 C0 */	addi r1, r1, 0xc0
 /* 80146988 001438E8  7C 08 03 A6 */	mtlr r0
 /* 8014698C 001438EC  4E 80 00 20 */	blr 
+.endfn spawnTeki__5BTekiFi
 
-.global getPersonalityF__5BTekiFi
-getPersonalityF__5BTekiFi:
+.fn getPersonalityF__5BTekiFi, weak
 /* 80146990 001438F0  80 63 02 C8 */	lwz r3, 0x2c8(r3)
 /* 80146994 001438F4  54 80 10 3A */	slwi r0, r4, 2
 /* 80146998 001438F8  80 63 00 34 */	lwz r3, 0x34(r3)
@@ -2980,9 +2979,9 @@ getPersonalityF__5BTekiFi:
 /* 801469A0 00143900  80 63 00 00 */	lwz r3, 0(r3)
 /* 801469A4 00143904  7C 23 04 2E */	lfsx f1, r3, r0
 /* 801469A8 00143908  4E 80 00 20 */	blr 
+.endfn getPersonalityF__5BTekiFi
 
-.global getParameterF__5BTekiFi
-getParameterF__5BTekiFi:
+.fn getParameterF__5BTekiFi, weak
 /* 801469AC 0014390C  80 63 02 C4 */	lwz r3, 0x2c4(r3)
 /* 801469B0 00143910  54 80 10 3A */	slwi r0, r4, 2
 /* 801469B4 00143914  80 63 00 84 */	lwz r3, 0x84(r3)
@@ -2990,9 +2989,9 @@ getParameterF__5BTekiFi:
 /* 801469BC 0014391C  80 63 00 00 */	lwz r3, 0(r3)
 /* 801469C0 00143920  7C 23 04 2E */	lfsx f1, r3, r0
 /* 801469C4 00143924  4E 80 00 20 */	blr 
+.endfn getParameterF__5BTekiFi
 
-.global cos__6NMathFFf
-cos__6NMathFFf:
+.fn cos__6NMathFFf, weak
 /* 801469C8 00143928  7C 08 02 A6 */	mflr r0
 /* 801469CC 0014392C  90 01 00 04 */	stw r0, 4(r1)
 /* 801469D0 00143930  94 21 FF F8 */	stwu r1, -8(r1)
@@ -3001,9 +3000,9 @@ cos__6NMathFFf:
 /* 801469DC 0014393C  38 21 00 08 */	addi r1, r1, 8
 /* 801469E0 00143940  7C 08 03 A6 */	mtlr r0
 /* 801469E4 00143944  4E 80 00 20 */	blr 
+.endfn cos__6NMathFFf
 
-.global sin__6NMathFFf
-sin__6NMathFFf:
+.fn sin__6NMathFFf, weak
 /* 801469E8 00143948  7C 08 02 A6 */	mflr r0
 /* 801469EC 0014394C  90 01 00 04 */	stw r0, 4(r1)
 /* 801469F0 00143950  94 21 FF F8 */	stwu r1, -8(r1)
@@ -3012,18 +3011,18 @@ sin__6NMathFFf:
 /* 801469FC 0014395C  38 21 00 08 */	addi r1, r1, 8
 /* 80146A00 00143960  7C 08 03 A6 */	mtlr r0
 /* 80146A04 00143964  4E 80 00 20 */	blr 
+.endfn sin__6NMathFFf
 
-.global getDirection__5BTekiFv
-getDirection__5BTekiFv:
+.fn getDirection__5BTekiFv, weak
 /* 80146A08 00143968  C0 23 00 A0 */	lfs f1, 0xa0(r3)
 /* 80146A0C 0014396C  4E 80 00 20 */	blr 
+.endfn getDirection__5BTekiFv
 
-.global shootBall__5BTekiFR8Creature
-shootBall__5BTekiFR8Creature:
+.fn shootBall__5BTekiFR8Creature, global
 /* 80146A10 00143970  4E 80 00 20 */	blr 
+.endfn shootBall__5BTekiFR8Creature
 
-.global dump__5BTekiFv
-dump__5BTekiFv:
+.fn dump__5BTekiFv, global
 /* 80146A14 00143974  7C 08 02 A6 */	mflr r0
 /* 80146A18 00143978  90 01 00 04 */	stw r0, 4(r1)
 /* 80146A1C 0014397C  94 21 FF A8 */	stwu r1, -0x58(r1)
@@ -3069,9 +3068,9 @@ dump__5BTekiFv:
 /* 80146ABC 00143A1C  38 21 00 58 */	addi r1, r1, 0x58
 /* 80146AC0 00143A20  7C 08 03 A6 */	mtlr r0
 /* 80146AC4 00143A24  4E 80 00 20 */	blr 
+.endfn dump__5BTekiFv
 
-.global nearestAngleTarget__5BTekiFP8Creature
-nearestAngleTarget__5BTekiFP8Creature:
+.fn nearestAngleTarget__5BTekiFP8Creature, global
 /* 80146AC8 00143A28  7C 08 02 A6 */	mflr r0
 /* 80146ACC 00143A2C  90 01 00 04 */	stw r0, 4(r1)
 /* 80146AD0 00143A30  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -3137,9 +3136,9 @@ nearestAngleTarget__5BTekiFP8Creature:
 /* 80146BA4 00143B04  38 21 00 28 */	addi r1, r1, 0x28
 /* 80146BA8 00143B08  7C 08 03 A6 */	mtlr r0
 /* 80146BAC 00143B0C  4E 80 00 20 */	blr 
+.endfn nearestAngleTarget__5BTekiFP8Creature
 
-.global cullableCenter__5BTekiFR8Creaturef
-cullableCenter__5BTekiFR8Creaturef:
+.fn cullableCenter__5BTekiFR8Creaturef, global
 /* 80146BB0 00143B10  7C 08 02 A6 */	mflr r0
 /* 80146BB4 00143B14  90 01 00 04 */	stw r0, 4(r1)
 /* 80146BB8 00143B18  94 21 FF F8 */	stwu r1, -8(r1)
@@ -3148,9 +3147,9 @@ cullableCenter__5BTekiFR8Creaturef:
 /* 80146BC4 00143B24  38 21 00 08 */	addi r1, r1, 8
 /* 80146BC8 00143B28  7C 08 03 A6 */	mtlr r0
 /* 80146BCC 00143B2C  4E 80 00 20 */	blr 
+.endfn cullableCenter__5BTekiFR8Creaturef
 
-.global cullableSphere__5BTekiFR8Creaturef
-cullableSphere__5BTekiFR8Creaturef:
+.fn cullableSphere__5BTekiFR8Creaturef, global
 /* 80146BD0 00143B30  7C 08 02 A6 */	mflr r0
 /* 80146BD4 00143B34  90 01 00 04 */	stw r0, 4(r1)
 /* 80146BD8 00143B38  94 21 FF D0 */	stwu r1, -0x30(r1)
@@ -3185,9 +3184,9 @@ cullableSphere__5BTekiFR8Creaturef:
 /* 80146C4C 00143BAC  38 21 00 30 */	addi r1, r1, 0x30
 /* 80146C50 00143BB0  7C 08 03 A6 */	mtlr r0
 /* 80146C54 00143BB4  4E 80 00 20 */	blr 
+.endfn cullableSphere__5BTekiFR8Creaturef
 
-.global inSectorPosition__5BTekiFR8Vector3fff
-inSectorPosition__5BTekiFR8Vector3fff:
+.fn inSectorPosition__5BTekiFR8Vector3fff, global
 /* 80146C58 00143BB8  7C 08 02 A6 */	mflr r0
 /* 80146C5C 00143BBC  90 01 00 04 */	stw r0, 4(r1)
 /* 80146C60 00143BC0  94 21 FF B8 */	stwu r1, -0x48(r1)
@@ -3238,9 +3237,9 @@ inSectorPosition__5BTekiFR8Vector3fff:
 /* 80146D08 00143C68  38 21 00 48 */	addi r1, r1, 0x48
 /* 80146D0C 00143C6C  7C 08 03 A6 */	mtlr r0
 /* 80146D10 00143C70  4E 80 00 20 */	blr 
+.endfn inSectorPosition__5BTekiFR8Vector3fff
 
-.global visibleCreature__5BTekiFR8Creature
-visibleCreature__5BTekiFR8Creature:
+.fn visibleCreature__5BTekiFR8Creature, global
 /* 80146D14 00143C74  7C 08 02 A6 */	mflr r0
 /* 80146D18 00143C78  3C A0 80 2B */	lis r5, __vt__9Condition@ha
 /* 80146D1C 00143C7C  90 01 00 04 */	stw r0, 4(r1)
@@ -3348,9 +3347,9 @@ visibleCreature__5BTekiFR8Creature:
 /* 80146E98 00143DF8  38 21 00 D0 */	addi r1, r1, 0xd0
 /* 80146E9C 00143DFC  7C 08 03 A6 */	mtlr r0
 /* 80146EA0 00143E00  4E 80 00 20 */	blr 
+.endfn visibleCreature__5BTekiFR8Creature
 
-.global separateCreature__5BTekiFR8Creature
-separateCreature__5BTekiFR8Creature:
+.fn separateCreature__5BTekiFR8Creature, global
 /* 80146EA4 00143E04  7C 08 02 A6 */	mflr r0
 /* 80146EA8 00143E08  3C A0 80 2B */	lis r5, __vt__9Condition@ha
 /* 80146EAC 00143E0C  90 01 00 04 */	stw r0, 4(r1)
@@ -3441,9 +3440,9 @@ separateCreature__5BTekiFR8Creature:
 /* 80146FEC 00143F4C  38 21 00 70 */	addi r1, r1, 0x70
 /* 80146FF0 00143F50  7C 08 03 A6 */	mtlr r0
 /* 80146FF4 00143F54  4E 80 00 20 */	blr 
+.endfn separateCreature__5BTekiFR8Creature
 
-.global contactCreature__5BTekiFR8Creature
-contactCreature__5BTekiFR8Creature:
+.fn contactCreature__5BTekiFR8Creature, global
 /* 80146FF8 00143F58  7C 08 02 A6 */	mflr r0
 /* 80146FFC 00143F5C  3C A0 80 2B */	lis r5, __vt__9Condition@ha
 /* 80147000 00143F60  90 01 00 04 */	stw r0, 4(r1)
@@ -3534,9 +3533,9 @@ contactCreature__5BTekiFR8Creature:
 /* 80147140 001440A0  38 21 00 60 */	addi r1, r1, 0x60
 /* 80147144 001440A4  7C 08 03 A6 */	mtlr r0
 /* 80147148 001440A8  4E 80 00 20 */	blr 
+.endfn contactCreature__5BTekiFR8Creature
 
-.global attackableCreature__5BTekiFR8Creature
-attackableCreature__5BTekiFR8Creature:
+.fn attackableCreature__5BTekiFR8Creature, global
 /* 8014714C 001440AC  7C 08 02 A6 */	mflr r0
 /* 80147150 001440B0  90 01 00 04 */	stw r0, 4(r1)
 /* 80147154 001440B4  94 21 FF 78 */	stwu r1, -0x88(r1)
@@ -3655,9 +3654,9 @@ attackableCreature__5BTekiFR8Creature:
 /* 801472F4 00144254  38 21 00 88 */	addi r1, r1, 0x88
 /* 801472F8 00144258  7C 08 03 A6 */	mtlr r0
 /* 801472FC 0014425C  4E 80 00 20 */	blr 
+.endfn attackableCreature__5BTekiFR8Creature
 
-.global calcTargetAngle__5BTekiFR8Vector3f
-calcTargetAngle__5BTekiFR8Vector3f:
+.fn calcTargetAngle__5BTekiFR8Vector3f, global
 /* 80147300 00144260  7C 08 02 A6 */	mflr r0
 /* 80147304 00144264  90 01 00 04 */	stw r0, 4(r1)
 /* 80147308 00144268  94 21 FF A8 */	stwu r1, -0x58(r1)
@@ -3724,9 +3723,9 @@ calcTargetAngle__5BTekiFR8Vector3f:
 /* 801473E4 00144344  38 21 00 58 */	addi r1, r1, 0x58
 /* 801473E8 00144348  7C 08 03 A6 */	mtlr r0
 /* 801473EC 0014434C  4E 80 00 20 */	blr 
+.endfn calcTargetAngle__5BTekiFR8Vector3f
 
-.global moveToward__5BTekiFR8Vector3ff
-moveToward__5BTekiFR8Vector3ff:
+.fn moveToward__5BTekiFR8Vector3ff, global
 /* 801473F0 00144350  7C 08 02 A6 */	mflr r0
 /* 801473F4 00144354  90 01 00 04 */	stw r0, 4(r1)
 /* 801473F8 00144358  94 21 FF 70 */	stwu r1, -0x90(r1)
@@ -3851,9 +3850,9 @@ moveToward__5BTekiFR8Vector3ff:
 /* 801475C0 00144520  38 21 00 90 */	addi r1, r1, 0x90
 /* 801475C4 00144524  7C 08 03 A6 */	mtlr r0
 /* 801475C8 00144528  4E 80 00 20 */	blr 
+.endfn moveToward__5BTekiFR8Vector3ff
 
-.global turnToward__5BTekiFff
-turnToward__5BTekiFff:
+.fn turnToward__5BTekiFff, global
 /* 801475CC 0014452C  C0 A3 00 A0 */	lfs f5, 0xa0(r3)
 /* 801475D0 00144530  C0 02 A7 50 */	lfs f0, lbl_803EA950@sda21(r2)
 /* 801475D4 00144534  C0 82 A7 68 */	lfs f4, lbl_803EA968@sda21(r2)
@@ -3912,9 +3911,9 @@ turnToward__5BTekiFff:
 .L_8014768C:
 /* 8014768C 001445EC  7C 03 03 78 */	mr r3, r0
 /* 80147690 001445F0  4E 80 00 20 */	blr 
+.endfn turnToward__5BTekiFff
 
-.global rotateTeki__5BTekiFf
-rotateTeki__5BTekiFf:
+.fn rotateTeki__5BTekiFf, global
 /* 80147694 001445F4  C0 83 00 A0 */	lfs f4, 0xa0(r3)
 /* 80147698 001445F8  C0 02 A7 50 */	lfs f0, lbl_803EA950@sda21(r2)
 /* 8014769C 001445FC  C0 62 A7 68 */	lfs f3, lbl_803EA968@sda21(r2)
@@ -3936,9 +3935,9 @@ rotateTeki__5BTekiFf:
 /* 801476D4 00144634  EC 04 00 2A */	fadds f0, f4, f0
 /* 801476D8 00144638  D0 03 00 A0 */	stfs f0, 0xa0(r3)
 /* 801476DC 0014463C  4E 80 00 20 */	blr 
+.endfn rotateTeki__5BTekiFf
 
-.global getClosestNaviPiki__5BTekiFR9ConditionPf
-getClosestNaviPiki__5BTekiFR9ConditionPf:
+.fn getClosestNaviPiki__5BTekiFR9ConditionPf, global
 /* 801476E0 00144640  7C 08 02 A6 */	mflr r0
 /* 801476E4 00144644  90 01 00 04 */	stw r0, 4(r1)
 /* 801476E8 00144648  94 21 FF 30 */	stwu r1, -0xd0(r1)
@@ -4094,9 +4093,9 @@ getClosestNaviPiki__5BTekiFR9ConditionPf:
 /* 80147928 00144888  38 21 00 D0 */	addi r1, r1, 0xd0
 /* 8014792C 0014488C  7C 08 03 A6 */	mtlr r0
 /* 80147930 00144890  4E 80 00 20 */	blr 
+.endfn getClosestNaviPiki__5BTekiFR9ConditionPf
 
-.global attackTarget__5BTekiFR8CreatureffR9Condition
-attackTarget__5BTekiFR8CreatureffR9Condition:
+.fn attackTarget__5BTekiFR8CreatureffR9Condition, global
 /* 80147934 00144894  7C 08 02 A6 */	mflr r0
 /* 80147938 00144898  90 01 00 04 */	stw r0, 4(r1)
 /* 8014793C 0014489C  94 21 FF B0 */	stwu r1, -0x50(r1)
@@ -4155,9 +4154,9 @@ attackTarget__5BTekiFR8CreatureffR9Condition:
 /* 80147A04 00144964  38 21 00 50 */	addi r1, r1, 0x50
 /* 80147A08 00144968  7C 08 03 A6 */	mtlr r0
 /* 80147A0C 0014496C  4E 80 00 20 */	blr 
+.endfn attackTarget__5BTekiFR8CreatureffR9Condition
 
-.global outputHitCenter__5BTekiFR8Vector3f
-outputHitCenter__5BTekiFR8Vector3f:
+.fn outputHitCenter__5BTekiFR8Vector3f, global
 /* 80147A10 00144970  7C 08 02 A6 */	mflr r0
 /* 80147A14 00144974  90 01 00 04 */	stw r0, 4(r1)
 /* 80147A18 00144978  94 21 FF 88 */	stwu r1, -0x78(r1)
@@ -4224,9 +4223,9 @@ outputHitCenter__5BTekiFR8Vector3f:
 /* 80147B0C 00144A6C  38 21 00 78 */	addi r1, r1, 0x78
 /* 80147B10 00144A70  7C 08 03 A6 */	mtlr r0
 /* 80147B14 00144A74  4E 80 00 20 */	blr 
+.endfn outputHitCenter__5BTekiFR8Vector3f
 
-.global interactNaviPiki__5BTekiFR11InteractionR9Condition
-interactNaviPiki__5BTekiFR11InteractionR9Condition:
+.fn interactNaviPiki__5BTekiFR11InteractionR9Condition, global
 /* 80147B18 00144A78  7C 08 02 A6 */	mflr r0
 /* 80147B1C 00144A7C  90 01 00 04 */	stw r0, 4(r1)
 /* 80147B20 00144A80  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -4259,9 +4258,9 @@ interactNaviPiki__5BTekiFR11InteractionR9Condition:
 /* 80147B88 00144AE8  38 21 00 28 */	addi r1, r1, 0x28
 /* 80147B8C 00144AEC  7C 08 03 A6 */	mtlr r0
 /* 80147B90 00144AF0  4E 80 00 20 */	blr 
+.endfn interactNaviPiki__5BTekiFR11InteractionR9Condition
 
-.global interactNavi__5BTekiFR11InteractionR9Condition
-interactNavi__5BTekiFR11InteractionR9Condition:
+.fn interactNavi__5BTekiFR11InteractionR9Condition, global
 /* 80147B94 00144AF4  7C 08 02 A6 */	mflr r0
 /* 80147B98 00144AF8  90 01 00 04 */	stw r0, 4(r1)
 /* 80147B9C 00144AFC  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -4299,9 +4298,9 @@ interactNavi__5BTekiFR11InteractionR9Condition:
 /* 80147C18 00144B78  38 21 00 28 */	addi r1, r1, 0x28
 /* 80147C1C 00144B7C  7C 08 03 A6 */	mtlr r0
 /* 80147C20 00144B80  4E 80 00 20 */	blr 
+.endfn interactNavi__5BTekiFR11InteractionR9Condition
 
-.global interactPiki__5BTekiFR11InteractionR9Condition
-interactPiki__5BTekiFR11InteractionR9Condition:
+.fn interactPiki__5BTekiFR11InteractionR9Condition, global
 /* 80147C24 00144B84  7C 08 02 A6 */	mflr r0
 /* 80147C28 00144B88  90 01 00 04 */	stw r0, 4(r1)
 /* 80147C2C 00144B8C  94 21 FF B8 */	stwu r1, -0x48(r1)
@@ -4395,9 +4394,9 @@ interactPiki__5BTekiFR11InteractionR9Condition:
 /* 80147D68 00144CC8  38 21 00 48 */	addi r1, r1, 0x48
 /* 80147D6C 00144CCC  7C 08 03 A6 */	mtlr r0
 /* 80147D70 00144CD0  4E 80 00 20 */	blr 
+.endfn interactPiki__5BTekiFR11InteractionR9Condition
 
-.global flick__5BTekiFv
-flick__5BTekiFv:
+.fn flick__5BTekiFv, global
 /* 80147D74 00144CD4  7C 08 02 A6 */	mflr r0
 /* 80147D78 00144CD8  90 01 00 04 */	stw r0, 4(r1)
 /* 80147D7C 00144CDC  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -4411,9 +4410,9 @@ flick__5BTekiFv:
 /* 80147D9C 00144CFC  38 21 00 18 */	addi r1, r1, 0x18
 /* 80147DA0 00144D00  7C 08 03 A6 */	mtlr r0
 /* 80147DA4 00144D04  4E 80 00 20 */	blr 
+.endfn flick__5BTekiFv
 
-.global flick__5BTekiFR13InteractFlickR13InteractFlick
-flick__5BTekiFR13InteractFlickR13InteractFlick:
+.fn flick__5BTekiFR13InteractFlickR13InteractFlick, global
 /* 80147DA8 00144D08  7C 08 02 A6 */	mflr r0
 /* 80147DAC 00144D0C  90 01 00 04 */	stw r0, 4(r1)
 /* 80147DB0 00144D10  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -4431,9 +4430,9 @@ flick__5BTekiFR13InteractFlickR13InteractFlick:
 /* 80147DE0 00144D40  38 21 00 20 */	addi r1, r1, 0x20
 /* 80147DE4 00144D44  7C 08 03 A6 */	mtlr r0
 /* 80147DE8 00144D48  4E 80 00 20 */	blr 
+.endfn flick__5BTekiFR13InteractFlickR13InteractFlick
 
-.global flickUpper__5BTekiFv
-flickUpper__5BTekiFv:
+.fn flickUpper__5BTekiFv, global
 /* 80147DEC 00144D4C  7C 08 02 A6 */	mflr r0
 /* 80147DF0 00144D50  3C C0 80 2B */	lis r6, __vt__11Interaction@ha
 /* 80147DF4 00144D54  90 01 00 04 */	stw r0, 4(r1)
@@ -4460,9 +4459,9 @@ flickUpper__5BTekiFv:
 /* 80147E48 00144DA8  38 21 00 58 */	addi r1, r1, 0x58
 /* 80147E4C 00144DAC  7C 08 03 A6 */	mtlr r0
 /* 80147E50 00144DB0  4E 80 00 20 */	blr 
+.endfn flickUpper__5BTekiFv
 
-.global flickUpper__5BTekiFR13InteractFlick
-flickUpper__5BTekiFR13InteractFlick:
+.fn flickUpper__5BTekiFR13InteractFlick, global
 /* 80147E54 00144DB4  7C 08 02 A6 */	mflr r0
 /* 80147E58 00144DB8  90 01 00 04 */	stw r0, 4(r1)
 /* 80147E5C 00144DBC  94 21 FF 68 */	stwu r1, -0x98(r1)
@@ -4579,9 +4578,9 @@ flickUpper__5BTekiFR13InteractFlick:
 /* 80147FF4 00144F54  38 21 00 98 */	addi r1, r1, 0x98
 /* 80147FF8 00144F58  7C 08 03 A6 */	mtlr r0
 /* 80147FFC 00144F5C  4E 80 00 20 */	blr 
+.endfn flickUpper__5BTekiFR13InteractFlick
 
-.global flickLower__5BTekiFv
-flickLower__5BTekiFv:
+.fn flickLower__5BTekiFv, global
 /* 80148000 00144F60  7C 08 02 A6 */	mflr r0
 /* 80148004 00144F64  3C C0 80 2B */	lis r6, __vt__11Interaction@ha
 /* 80148008 00144F68  90 01 00 04 */	stw r0, 4(r1)
@@ -4608,9 +4607,9 @@ flickLower__5BTekiFv:
 /* 8014805C 00144FBC  38 21 00 80 */	addi r1, r1, 0x80
 /* 80148060 00144FC0  7C 08 03 A6 */	mtlr r0
 /* 80148064 00144FC4  4E 80 00 20 */	blr 
+.endfn flickLower__5BTekiFv
 
-.global flickLower__5BTekiFR13InteractFlick
-flickLower__5BTekiFR13InteractFlick:
+.fn flickLower__5BTekiFR13InteractFlick, global
 /* 80148068 00144FC8  7C 08 02 A6 */	mflr r0
 /* 8014806C 00144FCC  90 01 00 04 */	stw r0, 4(r1)
 /* 80148070 00144FD0  94 21 FF 08 */	stwu r1, -0xf8(r1)
@@ -4782,9 +4781,9 @@ flickLower__5BTekiFR13InteractFlick:
 /* 801482E0 00145240  38 21 00 F8 */	addi r1, r1, 0xf8
 /* 801482E4 00145244  7C 08 03 A6 */	mtlr r0
 /* 801482E8 00145248  4E 80 00 20 */	blr 
+.endfn flickLower__5BTekiFR13InteractFlick
 
-.global checkNaviPiki__5BTekiFR9Condition
-checkNaviPiki__5BTekiFR9Condition:
+.fn checkNaviPiki__5BTekiFR9Condition, global
 /* 801482EC 0014524C  7C 08 02 A6 */	mflr r0
 /* 801482F0 00145250  90 01 00 04 */	stw r0, 4(r1)
 /* 801482F4 00145254  94 21 FF C8 */	stwu r1, -0x38(r1)
@@ -4888,9 +4887,9 @@ checkNaviPiki__5BTekiFR9Condition:
 /* 80148454 001453B4  38 21 00 38 */	addi r1, r1, 0x38
 /* 80148458 001453B8  7C 08 03 A6 */	mtlr r0
 /* 8014845C 001453BC  4E 80 00 20 */	blr 
+.endfn checkNaviPiki__5BTekiFR9Condition
 
-.global countPikis__5BTekiFR9Condition
-countPikis__5BTekiFR9Condition:
+.fn countPikis__5BTekiFR9Condition, global
 /* 80148460 001453C0  7C 08 02 A6 */	mflr r0
 /* 80148464 001453C4  90 01 00 04 */	stw r0, 4(r1)
 /* 80148468 001453C8  94 21 FF C8 */	stwu r1, -0x38(r1)
@@ -4981,9 +4980,9 @@ countPikis__5BTekiFR9Condition:
 /* 8014859C 001454FC  38 21 00 38 */	addi r1, r1, 0x38
 /* 801485A0 00145500  7C 08 03 A6 */	mtlr r0
 /* 801485A4 00145504  4E 80 00 20 */	blr 
+.endfn countPikis__5BTekiFR9Condition
 
-.global getFlickDamageCount__5BTekiFi
-getFlickDamageCount__5BTekiFi:
+.fn getFlickDamageCount__5BTekiFi, global
 /* 801485A8 00145508  80 63 02 C4 */	lwz r3, 0x2c4(r3)
 /* 801485AC 0014550C  80 63 00 84 */	lwz r3, 0x84(r3)
 /* 801485B0 00145510  80 63 00 00 */	lwz r3, 0(r3)
@@ -5008,9 +5007,9 @@ getFlickDamageCount__5BTekiFi:
 .L_801485F4:
 /* 801485F4 00145554  80 63 00 40 */	lwz r3, 0x40(r3)
 /* 801485F8 00145558  4E 80 00 20 */	blr 
+.endfn getFlickDamageCount__5BTekiFi
 
-.global eventPerformed__5BTekiFR9TekiEvent
-eventPerformed__5BTekiFR9TekiEvent:
+.fn eventPerformed__5BTekiFR9TekiEvent, global
 /* 801485FC 0014555C  7C 08 02 A6 */	mflr r0
 /* 80148600 00145560  90 01 00 04 */	stw r0, 4(r1)
 /* 80148604 00145564  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -5027,9 +5026,9 @@ eventPerformed__5BTekiFR9TekiEvent:
 /* 80148630 00145590  38 21 00 18 */	addi r1, r1, 0x18
 /* 80148634 00145594  7C 08 03 A6 */	mtlr r0
 /* 80148638 00145598  4E 80 00 20 */	blr 
+.endfn eventPerformed__5BTekiFR9TekiEvent
 
-.global collisionCallback__5BTekiFR9CollEvent
-collisionCallback__5BTekiFR9CollEvent:
+.fn collisionCallback__5BTekiFR9CollEvent, global
 /* 8014863C 0014559C  7C 08 02 A6 */	mflr r0
 /* 80148640 001455A0  90 01 00 04 */	stw r0, 4(r1)
 /* 80148644 001455A4  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -5069,9 +5068,9 @@ collisionCallback__5BTekiFR9CollEvent:
 /* 801486C8 00145628  38 21 00 28 */	addi r1, r1, 0x28
 /* 801486CC 0014562C  7C 08 03 A6 */	mtlr r0
 /* 801486D0 00145630  4E 80 00 20 */	blr 
+.endfn collisionCallback__5BTekiFR9CollEvent
 
-.global ignoreAtari__5BTekiFP8Creature
-ignoreAtari__5BTekiFP8Creature:
+.fn ignoreAtari__5BTekiFP8Creature, global
 /* 801486D4 00145634  80 04 01 84 */	lwz r0, 0x184(r4)
 /* 801486D8 00145638  7C 00 18 40 */	cmplw r0, r3
 /* 801486DC 0014563C  40 82 00 0C */	bne .L_801486E8
@@ -5080,9 +5079,9 @@ ignoreAtari__5BTekiFP8Creature:
 .L_801486E8:
 /* 801486E8 00145648  38 60 00 00 */	li r3, 0
 /* 801486EC 0014564C  4E 80 00 20 */	blr 
+.endfn ignoreAtari__5BTekiFP8Creature
 
-.global bounceCallback__5BTekiFv
-bounceCallback__5BTekiFv:
+.fn bounceCallback__5BTekiFv, global
 /* 801486F0 00145650  7C 08 02 A6 */	mflr r0
 /* 801486F4 00145654  38 80 00 00 */	li r4, 0
 /* 801486F8 00145658  90 01 00 04 */	stw r0, 4(r1)
@@ -5103,9 +5102,9 @@ bounceCallback__5BTekiFv:
 /* 80148734 00145694  38 21 00 20 */	addi r1, r1, 0x20
 /* 80148738 00145698  7C 08 03 A6 */	mtlr r0
 /* 8014873C 0014569C  4E 80 00 20 */	blr 
+.endfn bounceCallback__5BTekiFv
 
-.global wallCallback__5BTekiFR5PlaneP13DynCollObject
-wallCallback__5BTekiFR5PlaneP13DynCollObject:
+.fn wallCallback__5BTekiFR5PlaneP13DynCollObject, global
 /* 80148740 001456A0  7C 08 02 A6 */	mflr r0
 /* 80148744 001456A4  38 80 00 02 */	li r4, 2
 /* 80148748 001456A8  90 01 00 04 */	stw r0, 4(r1)
@@ -5126,9 +5125,9 @@ wallCallback__5BTekiFR5PlaneP13DynCollObject:
 /* 80148784 001456E4  38 21 00 28 */	addi r1, r1, 0x28
 /* 80148788 001456E8  7C 08 03 A6 */	mtlr r0
 /* 8014878C 001456EC  4E 80 00 20 */	blr 
+.endfn wallCallback__5BTekiFR5PlaneP13DynCollObject
 
-.global interact__5BTekiFR18TekiInteractionKey
-interact__5BTekiFR18TekiInteractionKey:
+.fn interact__5BTekiFR18TekiInteractionKey, global
 /* 80148790 001456F0  7C 08 02 A6 */	mflr r0
 /* 80148794 001456F4  90 01 00 04 */	stw r0, 4(r1)
 /* 80148798 001456F8  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -5149,9 +5148,9 @@ interact__5BTekiFR18TekiInteractionKey:
 /* 801487D4 00145734  38 21 00 18 */	addi r1, r1, 0x18
 /* 801487D8 00145738  7C 08 03 A6 */	mtlr r0
 /* 801487DC 0014573C  4E 80 00 20 */	blr 
+.endfn interact__5BTekiFR18TekiInteractionKey
 
-.global interactDefault__5BTekiFR18TekiInteractionKey
-interactDefault__5BTekiFR18TekiInteractionKey:
+.fn interactDefault__5BTekiFR18TekiInteractionKey, global
 /* 801487E0 00145740  7C 08 02 A6 */	mflr r0
 /* 801487E4 00145744  90 01 00 04 */	stw r0, 4(r1)
 /* 801487E8 00145748  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -5242,15 +5241,15 @@ interactDefault__5BTekiFR18TekiInteractionKey:
 /* 8014891C 0014587C  38 21 00 20 */	addi r1, r1, 0x20
 /* 80148920 00145880  7C 08 03 A6 */	mtlr r0
 /* 80148924 00145884  4E 80 00 20 */	blr 
+.endfn interactDefault__5BTekiFR18TekiInteractionKey
 
-.global getGravity__5BTekiFv
-getGravity__5BTekiFv:
+.fn getGravity__5BTekiFv, global
 /* 80148928 00145888  80 6D 2F 80 */	lwz r3, _instance__10AIConstant@sda21(r13)
 /* 8014892C 0014588C  C0 23 00 30 */	lfs f1, 0x30(r3)
 /* 80148930 00145890  4E 80 00 20 */	blr 
+.endfn getGravity__5BTekiFv
 
-.global getStrategy__5BTekiFv
-getStrategy__5BTekiFv:
+.fn getStrategy__5BTekiFv, global
 /* 80148934 00145894  7C 08 02 A6 */	mflr r0
 /* 80148938 00145898  7C 64 1B 78 */	mr r4, r3
 /* 8014893C 0014589C  90 01 00 04 */	stw r0, 4(r1)
@@ -5262,9 +5261,9 @@ getStrategy__5BTekiFv:
 /* 80148954 001458B4  38 21 00 08 */	addi r1, r1, 8
 /* 80148958 001458B8  7C 08 03 A6 */	mtlr r0
 /* 8014895C 001458BC  4E 80 00 20 */	blr 
+.endfn getStrategy__5BTekiFv
 
-.global getSeaLevel__5BTekiFv
-getSeaLevel__5BTekiFv:
+.fn getSeaLevel__5BTekiFv, global
 /* 80148960 001458C0  7C 08 02 A6 */	mflr r0
 /* 80148964 001458C4  38 A3 00 94 */	addi r5, r3, 0x94
 /* 80148968 001458C8  90 01 00 04 */	stw r0, 4(r1)
@@ -5278,9 +5277,9 @@ getSeaLevel__5BTekiFv:
 /* 80148988 001458E8  38 21 00 08 */	addi r1, r1, 8
 /* 8014898C 001458EC  7C 08 03 A6 */	mtlr r0
 /* 80148990 001458F0  4E 80 00 20 */	blr 
+.endfn getSeaLevel__5BTekiFv
 
-.global getYFromSeaLevel__5BTekiFv
-getYFromSeaLevel__5BTekiFv:
+.fn getYFromSeaLevel__5BTekiFv, global
 /* 80148994 001458F4  7C 08 02 A6 */	mflr r0
 /* 80148998 001458F8  38 80 00 01 */	li r4, 1
 /* 8014899C 001458FC  90 01 00 04 */	stw r0, 4(r1)
@@ -5298,9 +5297,9 @@ getYFromSeaLevel__5BTekiFv:
 /* 801489CC 0014592C  38 21 00 28 */	addi r1, r1, 0x28
 /* 801489D0 00145930  7C 08 03 A6 */	mtlr r0
 /* 801489D4 00145934  4E 80 00 20 */	blr 
+.endfn getYFromSeaLevel__5BTekiFv
 
-.global makePositionRoute__5BTekiFR8Vector3fR8Vector3fb
-makePositionRoute__5BTekiFR8Vector3fR8Vector3fb:
+.fn makePositionRoute__5BTekiFR8Vector3fR8Vector3fb, global
 /* 801489D8 00145938  7C 08 02 A6 */	mflr r0
 /* 801489DC 0014593C  90 01 00 04 */	stw r0, 4(r1)
 /* 801489E0 00145940  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -5330,9 +5329,9 @@ makePositionRoute__5BTekiFR8Vector3fR8Vector3fb:
 /* 80148A40 001459A0  38 21 00 28 */	addi r1, r1, 0x28
 /* 80148A44 001459A4  7C 08 03 A6 */	mtlr r0
 /* 80148A48 001459A8  4E 80 00 20 */	blr 
+.endfn makePositionRoute__5BTekiFR8Vector3fR8Vector3fb
 
-.global makeWayPointRoute__5BTekiFiib
-makeWayPointRoute__5BTekiFiib:
+.fn makeWayPointRoute__5BTekiFiib, global
 /* 80148A4C 001459AC  7C 08 02 A6 */	mflr r0
 /* 80148A50 001459B0  38 E0 00 00 */	li r7, 0
 /* 80148A54 001459B4  90 01 00 04 */	stw r0, 4(r1)
@@ -5373,9 +5372,9 @@ makeWayPointRoute__5BTekiFiib:
 /* 80148AD8 00145A38  38 21 00 30 */	addi r1, r1, 0x30
 /* 80148ADC 00145A3C  7C 08 03 A6 */	mtlr r0
 /* 80148AE0 00145A40  4E 80 00 20 */	blr 
+.endfn makeWayPointRoute__5BTekiFiib
 
-.global getTargetNearestWayPoint__5BTekiFR8Vector3f
-getTargetNearestWayPoint__5BTekiFR8Vector3f:
+.fn getTargetNearestWayPoint__5BTekiFR8Vector3f, global
 /* 80148AE4 00145A44  7C 08 02 A6 */	mflr r0
 /* 80148AE8 00145A48  7C 66 1B 78 */	mr r6, r3
 /* 80148AEC 00145A4C  90 01 00 04 */	stw r0, 4(r1)
@@ -5389,9 +5388,9 @@ getTargetNearestWayPoint__5BTekiFR8Vector3f:
 /* 80148B0C 00145A6C  38 21 00 08 */	addi r1, r1, 8
 /* 80148B10 00145A70  7C 08 03 A6 */	mtlr r0
 /* 80148B14 00145A74  4E 80 00 20 */	blr 
+.endfn getTargetNearestWayPoint__5BTekiFR8Vector3f
 
-.global getNearestWayPoint__5BTekiFv
-getNearestWayPoint__5BTekiFv:
+.fn getNearestWayPoint__5BTekiFv, global
 /* 80148B18 00145A78  7C 08 02 A6 */	mflr r0
 /* 80148B1C 00145A7C  7C 64 1B 78 */	mr r4, r3
 /* 80148B20 00145A80  90 01 00 04 */	stw r0, 4(r1)
@@ -5405,9 +5404,9 @@ getNearestWayPoint__5BTekiFv:
 /* 80148B40 00145AA0  38 21 00 08 */	addi r1, r1, 8
 /* 80148B44 00145AA4  7C 08 03 A6 */	mtlr r0
 /* 80148B48 00145AA8  4E 80 00 20 */	blr 
+.endfn getNearestWayPoint__5BTekiFv
 
-.global getWayPoint__5BTekiFi
-getWayPoint__5BTekiFi:
+.fn getWayPoint__5BTekiFi, global
 /* 80148B4C 00145AAC  7C 08 02 A6 */	mflr r0
 /* 80148B50 00145AB0  7C 66 1B 78 */	mr r6, r3
 /* 80148B54 00145AB4  90 01 00 04 */	stw r0, 4(r1)
@@ -5420,9 +5419,9 @@ getWayPoint__5BTekiFi:
 /* 80148B70 00145AD0  38 21 00 08 */	addi r1, r1, 8
 /* 80148B74 00145AD4  7C 08 03 A6 */	mtlr r0
 /* 80148B78 00145AD8  4E 80 00 20 */	blr 
+.endfn getWayPoint__5BTekiFi
 
-.global getRouteWayPoint__5BTekiFi
-getRouteWayPoint__5BTekiFi:
+.fn getRouteWayPoint__5BTekiFi, global
 /* 80148B7C 00145ADC  2C 04 00 00 */	cmpwi r4, 0
 /* 80148B80 00145AE0  41 80 00 10 */	blt .L_80148B90
 /* 80148B84 00145AE4  80 03 03 48 */	lwz r0, 0x348(r3)
@@ -5436,9 +5435,9 @@ getRouteWayPoint__5BTekiFi:
 /* 80148B9C 00145AFC  54 80 10 3A */	slwi r0, r4, 2
 /* 80148BA0 00145B00  7C 63 00 2E */	lwzx r3, r3, r0
 /* 80148BA4 00145B04  4E 80 00 20 */	blr 
+.endfn getRouteWayPoint__5BTekiFi
 
-.global updateLifeGauge__5BTekiFv
-updateLifeGauge__5BTekiFv:
+.fn updateLifeGauge__5BTekiFv, global
 /* 80148BA8 00145B08  7C 08 02 A6 */	mflr r0
 /* 80148BAC 00145B0C  7C 65 1B 78 */	mr r5, r3
 /* 80148BB0 00145B10  90 01 00 04 */	stw r0, 4(r1)
@@ -5455,9 +5454,9 @@ updateLifeGauge__5BTekiFv:
 /* 80148BDC 00145B3C  38 21 00 08 */	addi r1, r1, 8
 /* 80148BE0 00145B40  7C 08 03 A6 */	mtlr r0
 /* 80148BE4 00145B44  4E 80 00 20 */	blr 
+.endfn updateLifeGauge__5BTekiFv
 
-.global refresh__5BTekiFR8Graphics
-refresh__5BTekiFR8Graphics:
+.fn refresh__5BTekiFR8Graphics, global
 /* 80148BE8 00145B48  7C 08 02 A6 */	mflr r0
 /* 80148BEC 00145B4C  90 01 00 04 */	stw r0, 4(r1)
 /* 80148BF0 00145B50  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -5486,9 +5485,9 @@ refresh__5BTekiFR8Graphics:
 /* 80148C48 00145BA8  38 21 00 18 */	addi r1, r1, 0x18
 /* 80148C4C 00145BAC  7C 08 03 A6 */	mtlr r0
 /* 80148C50 00145BB0  4E 80 00 20 */	blr 
+.endfn refresh__5BTekiFR8Graphics
 
-.global drawDefault__5BTekiFR8Graphics
-drawDefault__5BTekiFR8Graphics:
+.fn drawDefault__5BTekiFR8Graphics, global
 /* 80148C54 00145BB4  7C 08 02 A6 */	mflr r0
 /* 80148C58 00145BB8  90 01 00 04 */	stw r0, 4(r1)
 /* 80148C5C 00145BBC  94 21 FF C8 */	stwu r1, -0x38(r1)
@@ -5588,9 +5587,9 @@ drawDefault__5BTekiFR8Graphics:
 /* 80148DBC 00145D1C  38 21 00 38 */	addi r1, r1, 0x38
 /* 80148DC0 00145D20  7C 08 03 A6 */	mtlr r0
 /* 80148DC4 00145D24  4E 80 00 20 */	blr 
+.endfn drawDefault__5BTekiFR8Graphics
 
-.global drawTekiShape__5BTekiFR8Graphics
-drawTekiShape__5BTekiFR8Graphics:
+.fn drawTekiShape__5BTekiFR8Graphics, global
 /* 80148DC8 00145D28  7C 08 02 A6 */	mflr r0
 /* 80148DCC 00145D2C  90 01 00 04 */	stw r0, 4(r1)
 /* 80148DD0 00145D30  94 21 FF 10 */	stwu r1, -0xf0(r1)
@@ -5740,9 +5739,9 @@ drawTekiShape__5BTekiFR8Graphics:
 /* 80148FF8 00145F58  38 21 00 F0 */	addi r1, r1, 0xf0
 /* 80148FFC 00145F5C  7C 08 03 A6 */	mtlr r0
 /* 80149000 00145F60  4E 80 00 20 */	blr 
+.endfn drawTekiShape__5BTekiFR8Graphics
 
-.global drawTekiDebugInfo__5BTekiFR8Graphics
-drawTekiDebugInfo__5BTekiFR8Graphics:
+.fn drawTekiDebugInfo__5BTekiFR8Graphics, global
 /* 80149004 00145F64  7C 08 02 A6 */	mflr r0
 /* 80149008 00145F68  90 01 00 04 */	stw r0, 4(r1)
 /* 8014900C 00145F6C  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -5788,9 +5787,9 @@ drawTekiDebugInfo__5BTekiFR8Graphics:
 /* 801490A8 00146008  38 21 00 20 */	addi r1, r1, 0x20
 /* 801490AC 0014600C  7C 08 03 A6 */	mtlr r0
 /* 801490B0 00146010  4E 80 00 20 */	blr 
+.endfn drawTekiDebugInfo__5BTekiFR8Graphics
 
-.global drawTekiDebugInfoDefault__5BTekiFR8Graphics
-drawTekiDebugInfoDefault__5BTekiFR8Graphics:
+.fn drawTekiDebugInfoDefault__5BTekiFR8Graphics, global
 /* 801490B4 00146014  7C 08 02 A6 */	mflr r0
 /* 801490B8 00146018  90 01 00 04 */	stw r0, 4(r1)
 /* 801490BC 0014601C  94 21 FE E8 */	stwu r1, -0x118(r1)
@@ -5967,9 +5966,9 @@ drawTekiDebugInfoDefault__5BTekiFR8Graphics:
 /* 80149368 001462C8  38 21 01 18 */	addi r1, r1, 0x118
 /* 8014936C 001462CC  7C 08 03 A6 */	mtlr r0
 /* 80149370 001462D0  4E 80 00 20 */	blr 
+.endfn drawTekiDebugInfoDefault__5BTekiFR8Graphics
 
-.global drawRange__5BTekiFR8GraphicsR8Vector3ffR6Colour
-drawRange__5BTekiFR8GraphicsR8Vector3ffR6Colour:
+.fn drawRange__5BTekiFR8GraphicsR8Vector3ffR6Colour, global
 /* 80149374 001462D4  7C 08 02 A6 */	mflr r0
 /* 80149378 001462D8  90 01 00 04 */	stw r0, 4(r1)
 /* 8014937C 001462DC  94 21 FF 28 */	stwu r1, -0xd8(r1)
@@ -6032,9 +6031,9 @@ drawRange__5BTekiFR8GraphicsR8Vector3ffR6Colour:
 /* 80149460 001463C0  38 21 00 D8 */	addi r1, r1, 0xd8
 /* 80149464 001463C4  7C 08 03 A6 */	mtlr r0
 /* 80149468 001463C8  4E 80 00 20 */	blr 
+.endfn drawRange__5BTekiFR8GraphicsR8Vector3ffR6Colour
 
-.global refresh2d__5BTekiFR8Graphics
-refresh2d__5BTekiFR8Graphics:
+.fn refresh2d__5BTekiFR8Graphics, global
 /* 8014946C 001463CC  7C 08 02 A6 */	mflr r0
 /* 80149470 001463D0  90 01 00 04 */	stw r0, 4(r1)
 /* 80149474 001463D4  94 21 FF B0 */	stwu r1, -0x50(r1)
@@ -6098,9 +6097,9 @@ refresh2d__5BTekiFR8Graphics:
 /* 80149554 001464B4  38 21 00 50 */	addi r1, r1, 0x50
 /* 80149558 001464B8  7C 08 03 A6 */	mtlr r0
 /* 8014955C 001464BC  4E 80 00 20 */	blr 
+.endfn refresh2d__5BTekiFR8Graphics
 
-.global getFreeSlot__5BTekiFv
-getFreeSlot__5BTekiFv:
+.fn getFreeSlot__5BTekiFv, global
 /* 80149560 001464C0  7C 08 02 A6 */	mflr r0
 /* 80149564 001464C4  3C 80 73 6C */	lis r4, 0x736C6F74@ha
 /* 80149568 001464C8  90 01 00 04 */	stw r0, 4(r1)
@@ -6139,9 +6138,9 @@ getFreeSlot__5BTekiFv:
 /* 801495DC 0014653C  38 21 00 28 */	addi r1, r1, 0x28
 /* 801495E0 00146540  7C 08 03 A6 */	mtlr r0
 /* 801495E4 00146544  4E 80 00 20 */	blr 
+.endfn getFreeSlot__5BTekiFv
 
-.global isFreeCollPart__5BTekiFP8CollPart
-isFreeCollPart__5BTekiFP8CollPart:
+.fn isFreeCollPart__5BTekiFP8CollPart, global
 /* 801495E8 00146548  7C 08 02 A6 */	mflr r0
 /* 801495EC 0014654C  90 01 00 04 */	stw r0, 4(r1)
 /* 801495F0 00146550  94 21 FF B0 */	stwu r1, -0x50(r1)
@@ -6232,9 +6231,9 @@ isFreeCollPart__5BTekiFP8CollPart:
 /* 8014971C 0014667C  38 21 00 50 */	addi r1, r1, 0x50
 /* 80149720 00146680  7C 08 03 A6 */	mtlr r0
 /* 80149724 00146684  4E 80 00 20 */	blr 
+.endfn isFreeCollPart__5BTekiFP8CollPart
 
-.global playTableSound__5BTekiFi
-playTableSound__5BTekiFi:
+.fn playTableSound__5BTekiFi, global
 /* 80149728 00146688  7C 08 02 A6 */	mflr r0
 /* 8014972C 0014668C  90 01 00 04 */	stw r0, 4(r1)
 /* 80149730 00146690  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -6268,9 +6267,9 @@ playTableSound__5BTekiFi:
 /* 8014979C 001466FC  38 21 00 20 */	addi r1, r1, 0x20
 /* 801497A0 00146700  7C 08 03 A6 */	mtlr r0
 /* 801497A4 00146704  4E 80 00 20 */	blr 
+.endfn playTableSound__5BTekiFi
 
-.global playSound__5BTekiFi
-playSound__5BTekiFi:
+.fn playSound__5BTekiFi, global
 /* 801497A8 00146708  7C 08 02 A6 */	mflr r0
 /* 801497AC 0014670C  90 01 00 04 */	stw r0, 4(r1)
 /* 801497B0 00146710  94 21 FF F8 */	stwu r1, -8(r1)
@@ -6280,9 +6279,9 @@ playSound__5BTekiFi:
 /* 801497C0 00146720  38 21 00 08 */	addi r1, r1, 8
 /* 801497C4 00146724  7C 08 03 A6 */	mtlr r0
 /* 801497C8 00146728  4E 80 00 20 */	blr 
+.endfn playSound__5BTekiFi
 
-.global stopSound__5BTekiFi
-stopSound__5BTekiFi:
+.fn stopSound__5BTekiFi, global
 /* 801497CC 0014672C  7C 08 02 A6 */	mflr r0
 /* 801497D0 00146730  90 01 00 04 */	stw r0, 4(r1)
 /* 801497D4 00146734  94 21 FF F8 */	stwu r1, -8(r1)
@@ -6292,9 +6291,9 @@ stopSound__5BTekiFi:
 /* 801497E4 00146744  38 21 00 08 */	addi r1, r1, 8
 /* 801497E8 00146748  7C 08 03 A6 */	mtlr r0
 /* 801497EC 0014674C  4E 80 00 20 */	blr 
+.endfn stopSound__5BTekiFi
 
-.global createTekiEffect__5BTekiFi
-createTekiEffect__5BTekiFi:
+.fn createTekiEffect__5BTekiFi, global
 /* 801497F0 00146750  7C 08 02 A6 */	mflr r0
 /* 801497F4 00146754  90 01 00 04 */	stw r0, 4(r1)
 /* 801497F8 00146758  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -6317,9 +6316,9 @@ createTekiEffect__5BTekiFi:
 /* 8014983C 0014679C  38 21 00 18 */	addi r1, r1, 0x18
 /* 80149840 001467A0  7C 08 03 A6 */	mtlr r0
 /* 80149844 001467A4  4E 80 00 20 */	blr 
+.endfn createTekiEffect__5BTekiFi
 
-.global outputWorldAnimationPosition__5BTekiFR8Vector3fiR8Matrix4f
-outputWorldAnimationPosition__5BTekiFR8Vector3fiR8Matrix4f:
+.fn outputWorldAnimationPosition__5BTekiFR8Vector3fiR8Matrix4f, global
 /* 80149848 001467A8  7C 08 02 A6 */	mflr r0
 /* 8014984C 001467AC  90 01 00 04 */	stw r0, 4(r1)
 /* 80149850 001467B0  94 21 FF 58 */	stwu r1, -0xa8(r1)
@@ -6362,9 +6361,9 @@ outputWorldAnimationPosition__5BTekiFR8Vector3fiR8Matrix4f:
 /* 801498E4 00146844  38 21 00 A8 */	addi r1, r1, 0xa8
 /* 801498E8 00146848  7C 08 03 A6 */	mtlr r0
 /* 801498EC 0014684C  4E 80 00 20 */	blr 
+.endfn outputWorldAnimationPosition__5BTekiFR8Vector3fiR8Matrix4f
 
-.global getPositionMapCode__5BTekiFR8Vector3f
-getPositionMapCode__5BTekiFR8Vector3f:
+.fn getPositionMapCode__5BTekiFR8Vector3f, global
 /* 801498F0 00146850  7C 08 02 A6 */	mflr r0
 /* 801498F4 00146854  90 01 00 04 */	stw r0, 4(r1)
 /* 801498F8 00146858  94 21 FF F8 */	stwu r1, -8(r1)
@@ -6384,9 +6383,9 @@ getPositionMapCode__5BTekiFR8Vector3f:
 /* 80149928 00146888  38 21 00 08 */	addi r1, r1, 8
 /* 8014992C 0014688C  7C 08 03 A6 */	mtlr r0
 /* 80149930 00146890  4E 80 00 20 */	blr 
+.endfn getPositionMapCode__5BTekiFR8Vector3f
 
-.global getPositionMapCode__5BTekiFv
-getPositionMapCode__5BTekiFv:
+.fn getPositionMapCode__5BTekiFv, global
 /* 80149934 00146894  7C 08 02 A6 */	mflr r0
 /* 80149938 00146898  38 A3 00 94 */	addi r5, r3, 0x94
 /* 8014993C 0014689C  90 01 00 04 */	stw r0, 4(r1)
@@ -6407,9 +6406,9 @@ getPositionMapCode__5BTekiFv:
 /* 80149970 001468D0  38 21 00 08 */	addi r1, r1, 8
 /* 80149974 001468D4  7C 08 03 A6 */	mtlr r0
 /* 80149978 001468D8  4E 80 00 20 */	blr 
+.endfn getPositionMapCode__5BTekiFv
 
-.global inWaterTeki__5BTekiFv
-inWaterTeki__5BTekiFv:
+.fn inWaterTeki__5BTekiFv, global
 /* 8014997C 001468DC  7C 08 02 A6 */	mflr r0
 /* 80149980 001468E0  38 A3 00 94 */	addi r5, r3, 0x94
 /* 80149984 001468E4  90 01 00 04 */	stw r0, 4(r1)
@@ -6437,9 +6436,9 @@ inWaterTeki__5BTekiFv:
 /* 801499CC 0014692C  38 21 00 08 */	addi r1, r1, 8
 /* 801499D0 00146930  7C 08 03 A6 */	mtlr r0
 /* 801499D4 00146934  4E 80 00 20 */	blr 
+.endfn inWaterTeki__5BTekiFv
 
-.global moveNestPosition__5BTekiFv
-moveNestPosition__5BTekiFv:
+.fn moveNestPosition__5BTekiFv, global
 /* 801499D8 00146938  80 A3 02 C8 */	lwz r5, 0x2c8(r3)
 /* 801499DC 0014693C  80 85 00 10 */	lwz r4, 0x10(r5)
 /* 801499E0 00146940  80 05 00 14 */	lwz r0, 0x14(r5)
@@ -6448,9 +6447,9 @@ moveNestPosition__5BTekiFv:
 /* 801499EC 0014694C  80 05 00 18 */	lwz r0, 0x18(r5)
 /* 801499F0 00146950  90 03 00 9C */	stw r0, 0x9c(r3)
 /* 801499F4 00146954  4E 80 00 20 */	blr 
+.endfn moveNestPosition__5BTekiFv
 
-.global startParticleGenerator__5BTekiFi
-startParticleGenerator__5BTekiFi:
+.fn startParticleGenerator__5BTekiFi, global
 /* 801499F8 00146958  80 63 03 D8 */	lwz r3, 0x3d8(r3)
 /* 801499FC 0014695C  54 80 10 3A */	slwi r0, r4, 2
 /* 80149A00 00146960  7C 63 00 2E */	lwzx r3, r3, r0
@@ -6460,9 +6459,9 @@ startParticleGenerator__5BTekiFi:
 /* 80149A10 00146970  54 00 07 76 */	rlwinm r0, r0, 0, 0x1d, 0x1b
 /* 80149A14 00146974  90 03 00 80 */	stw r0, 0x80(r3)
 /* 80149A18 00146978  4E 80 00 20 */	blr 
+.endfn startParticleGenerator__5BTekiFi
 
-.global stopParticleGenerator__5BTekiFi
-stopParticleGenerator__5BTekiFi:
+.fn stopParticleGenerator__5BTekiFi, global
 /* 80149A1C 0014697C  80 63 03 D8 */	lwz r3, 0x3d8(r3)
 /* 80149A20 00146980  54 80 10 3A */	slwi r0, r4, 2
 /* 80149A24 00146984  7C 63 00 2E */	lwzx r3, r3, r0
@@ -6472,9 +6471,9 @@ stopParticleGenerator__5BTekiFi:
 /* 80149A34 00146994  60 00 00 08 */	ori r0, r0, 8
 /* 80149A38 00146998  90 03 00 80 */	stw r0, 0x80(r3)
 /* 80149A3C 0014699C  4E 80 00 20 */	blr 
+.endfn stopParticleGenerator__5BTekiFi
 
-.global setParticleGeneratorPosition__5BTekiFiR8Vector3f
-setParticleGeneratorPosition__5BTekiFiR8Vector3f:
+.fn setParticleGeneratorPosition__5BTekiFiR8Vector3f, global
 /* 80149A40 001469A0  80 63 03 D8 */	lwz r3, 0x3d8(r3)
 /* 80149A44 001469A4  54 80 10 3A */	slwi r0, r4, 2
 /* 80149A48 001469A8  7C 83 00 2E */	lwzx r4, r3, r0
@@ -6487,9 +6486,9 @@ setParticleGeneratorPosition__5BTekiFiR8Vector3f:
 /* 80149A64 001469C4  80 05 00 08 */	lwz r0, 8(r5)
 /* 80149A68 001469C8  90 04 00 14 */	stw r0, 0x14(r4)
 /* 80149A6C 001469CC  4E 80 00 20 */	blr 
+.endfn setParticleGeneratorPosition__5BTekiFiR8Vector3f
 
-.global setParticleGeneratorDirection__5BTekiFiR8Vector3f
-setParticleGeneratorDirection__5BTekiFiR8Vector3f:
+.fn setParticleGeneratorDirection__5BTekiFiR8Vector3f, global
 /* 80149A70 001469D0  80 63 03 D8 */	lwz r3, 0x3d8(r3)
 /* 80149A74 001469D4  54 80 10 3A */	slwi r0, r4, 2
 /* 80149A78 001469D8  7C 83 00 2E */	lwzx r4, r3, r0
@@ -6502,9 +6501,9 @@ setParticleGeneratorDirection__5BTekiFiR8Vector3f:
 /* 80149A94 001469F4  80 05 00 08 */	lwz r0, 8(r5)
 /* 80149A98 001469F8  90 04 00 A8 */	stw r0, 0xa8(r4)
 /* 80149A9C 001469FC  4E 80 00 20 */	blr 
+.endfn setParticleGeneratorDirection__5BTekiFiR8Vector3f
 
-.global calcCollisionDistance__5BTekiFR8Creature
-calcCollisionDistance__5BTekiFR8Creature:
+.fn calcCollisionDistance__5BTekiFR8Creature, global
 /* 80149AA0 00146A00  7C 08 02 A6 */	mflr r0
 /* 80149AA4 00146A04  90 01 00 04 */	stw r0, 4(r1)
 /* 80149AA8 00146A08  94 21 FF A8 */	stwu r1, -0x58(r1)
@@ -6561,9 +6560,9 @@ calcCollisionDistance__5BTekiFR8Creature:
 /* 80149B74 00146AD4  38 21 00 58 */	addi r1, r1, 0x58
 /* 80149B78 00146AD8  7C 08 03 A6 */	mtlr r0
 /* 80149B7C 00146ADC  4E 80 00 20 */	blr 
+.endfn calcCollisionDistance__5BTekiFR8Creature
 
-.global getCollisionSize__5BTekiFv
-getCollisionSize__5BTekiFv:
+.fn getCollisionSize__5BTekiFv, global
 /* 80149B80 00146AE0  7C 08 02 A6 */	mflr r0
 /* 80149B84 00146AE4  90 01 00 04 */	stw r0, 4(r1)
 /* 80149B88 00146AE8  94 21 FF F8 */	stwu r1, -8(r1)
@@ -6575,6 +6574,7 @@ getCollisionSize__5BTekiFv:
 /* 80149BA0 00146B00  38 21 00 08 */	addi r1, r1, 8
 /* 80149BA4 00146B04  7C 08 03 A6 */	mtlr r0
 /* 80149BA8 00146B08  4E 80 00 20 */	blr 
+.endfn getCollisionSize__5BTekiFv
 
 .fn "@1108@4@animationKeyUpdated__5BTekiFR16PaniAnimKeyEvent", weak
 /* 80149BAC 00146B0C  39 60 00 04 */	li r11, 4
@@ -6617,122 +6617,97 @@ getCollisionSize__5BTekiFv:
 .endobj lbl_802CCF64
 .skip 0xC # compiler padding
 .balign 4
-lbl_802CCF84:
+.obj lbl_802CCF84, local
 	.asciz "TekiAndCondition"
+.endobj lbl_802CCF84
 .balign 4
-lbl_802CCF98:
+.obj lbl_802CCF98, local
 	.4byte __RTTI__9Condition
 	.4byte 0
 	.4byte __RTTI__13TekiCondition
 	.4byte 0
 	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
+.endobj lbl_802CCF98
 .balign 4
-lbl_802CCFB8:
+.skip 0xC # compiler padding
+.balign 4
+.obj lbl_802CCFB8, local
 	.asciz "Interaction"
+.endobj lbl_802CCFB8
 .balign 4
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
+.skip 0x44 # compiler padding
 .balign 4
-lbl_802CD008:
+.obj lbl_802CD008, local
 	.asciz "Parm<float>"
+.endobj lbl_802CD008
 .balign 4
-lbl_802CD014:
+.obj lbl_802CD014, local
 	.asciz "BaseParm"
+.endobj lbl_802CD014
 .balign 4
-lbl_802CD020:
+.obj lbl_802CD020, local
 	.4byte __RTTI__8BaseParm
 	.4byte 0
 	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
+.endobj lbl_802CD020
 .balign 4
-lbl_802CD040:
+.skip 0x14 # compiler padding
+.balign 4
+.obj lbl_802CD040, local
 	.asciz "CreatureProp"
+.endobj lbl_802CD040
 .balign 4
-	.4byte 0
-	.4byte 0
-	.4byte 0
+.skip 0xC # compiler padding
 .balign 4
-lbl_802CD05C:
+.obj lbl_802CD05C, local
 	.asciz "NVector3fIOClass"
+.endobj lbl_802CD05C
 .balign 4
-lbl_802CD070:
+.obj lbl_802CD070, local
 	.asciz "NVector3fIO"
+.endobj lbl_802CD070
 .balign 4
-lbl_802CD07C:
+.obj lbl_802CD07C, local
 	.4byte __RTTI__11NVector3fIO
 	.4byte 0
 	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
+.endobj lbl_802CD07C
 .balign 4
-lbl_802CD0A8:
+.skip 0x20 # compiler padding
+.balign 4
+.obj lbl_802CD0A8, local
 	.asciz "PelletView"
+.endobj lbl_802CD0A8
 .balign 4
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
+.skip 0x34 # compiler padding
 .balign 4
-lbl_802CD0E8:
+.obj lbl_802CD0E8, local
 	.asciz "PaniAnimKeyListener"
+.endobj lbl_802CD0E8
 .balign 4
-	.4byte 0
-	.4byte 0
-	.4byte 0
+.skip 0xC # compiler padding
 .balign 4
-lbl_802CD108:
+.obj lbl_802CD108, local
 	.asciz "EventTalker"
+.endobj lbl_802CD108
 .balign 4
-lbl_802CD114:
+.obj lbl_802CD114, local
 	.asciz "RefCountable"
+.endobj lbl_802CD114
 .balign 4
-lbl_802CD124:
+.obj lbl_802CD124, local
 	.asciz "Creature"
+.endobj lbl_802CD124
 .balign 4
-lbl_802CD130:
+.obj lbl_802CD130, local
 	.4byte __RTTI__11EventTalker
 	.4byte 0x8
 	.4byte __RTTI__12RefCountable
 	.4byte 0
 	.4byte 0
-lbl_802CD144:
+.endobj lbl_802CD130
+.balign 4
+.obj lbl_802CD144, local
 	.4byte __RTTI__10PelletView
 	.4byte 0x2b8
 	.4byte __RTTI__19PaniAnimKeyListener
@@ -6744,8 +6719,9 @@ lbl_802CD144:
 	.4byte __RTTI__8Creature
 	.4byte 0
 	.4byte 0
-.global __vt__5BTeki
-__vt__5BTeki:
+.endobj lbl_802CD144
+.balign 4
+.obj __vt__5BTeki, global
 	.4byte __RTTI__5BTeki
 	.4byte 0
 	.4byte addCntCallback__12RefCountableFv
@@ -6874,6 +6850,7 @@ __vt__5BTeki:
 	.4byte __RTTI__5BTeki
 	.4byte 0xfffffbac
 	.4byte "@1108@4@animationKeyUpdated__5BTekiFR16PaniAnimKeyEvent"
+.endobj __vt__5BTeki
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
@@ -6909,165 +6886,235 @@ __vt__5BTeki:
 	.4byte 0x00000002
 .endobj TEKI_OPTION_SHADOW_VISIBLE__5BTeki
 .balign 4
-.global TEKI_OPTION_LIFE_GAUGE_VISIBLE__5BTeki
-TEKI_OPTION_LIFE_GAUGE_VISIBLE__5BTeki:
+.obj TEKI_OPTION_LIFE_GAUGE_VISIBLE__5BTeki, global
 	.4byte 0x00000004
-.global TEKI_OPTION_ATARI__5BTeki
-TEKI_OPTION_ATARI__5BTeki:
+.endobj TEKI_OPTION_LIFE_GAUGE_VISIBLE__5BTeki
+.balign 4
+.obj TEKI_OPTION_ATARI__5BTeki, global
 	.4byte 0x00000008
-.global TEKI_OPTION_ALIVE__5BTeki
-TEKI_OPTION_ALIVE__5BTeki:
+.endobj TEKI_OPTION_ATARI__5BTeki
+.balign 4
+.obj TEKI_OPTION_ALIVE__5BTeki, global
 	.4byte 0x00000010
-.global TEKI_OPTION_ORGANIC__5BTeki
-TEKI_OPTION_ORGANIC__5BTeki:
+.endobj TEKI_OPTION_ALIVE__5BTeki
+.balign 4
+.obj TEKI_OPTION_ORGANIC__5BTeki, global
 	.4byte 0x00000020
-.global TEKI_OPTION_MANUAL_ANIMATION__5BTeki
-TEKI_OPTION_MANUAL_ANIMATION__5BTeki:
+.endobj TEKI_OPTION_ORGANIC__5BTeki
+.balign 4
+.obj TEKI_OPTION_MANUAL_ANIMATION__5BTeki, global
 	.4byte 0x00000080
-.global TEKI_OPTION_GRAVITATABLE__5BTeki
-TEKI_OPTION_GRAVITATABLE__5BTeki:
+.endobj TEKI_OPTION_MANUAL_ANIMATION__5BTeki
+.balign 4
+.obj TEKI_OPTION_GRAVITATABLE__5BTeki, global
 	.4byte 0x00000100
-.global TEKI_OPTION_INVINCIBLE__5BTeki
-TEKI_OPTION_INVINCIBLE__5BTeki:
+.endobj TEKI_OPTION_GRAVITATABLE__5BTeki
+.balign 4
+.obj TEKI_OPTION_INVINCIBLE__5BTeki, global
 	.4byte 0x00000200
-.global TEKI_OPTION_PRESSED__5BTeki
-TEKI_OPTION_PRESSED__5BTeki:
+.endobj TEKI_OPTION_INVINCIBLE__5BTeki
+.balign 4
+.obj TEKI_OPTION_PRESSED__5BTeki, global
 	.4byte 0x00000400
-.global TEKI_OPTION_DRAWED__5BTeki
-TEKI_OPTION_DRAWED__5BTeki:
+.endobj TEKI_OPTION_PRESSED__5BTeki
+.balign 4
+.obj TEKI_OPTION_DRAWED__5BTeki, global
 	.4byte 0x00002000
-.global TEKI_OPTION_SHAPE_VISIBLE__5BTeki
-TEKI_OPTION_SHAPE_VISIBLE__5BTeki:
+.endobj TEKI_OPTION_DRAWED__5BTeki
+.balign 4
+.obj TEKI_OPTION_SHAPE_VISIBLE__5BTeki, global
 	.4byte 0x00004000
-.global TEKI_OPTION_DAMAGE_COUNTABLE__5BTeki
-TEKI_OPTION_DAMAGE_COUNTABLE__5BTeki:
+.endobj TEKI_OPTION_SHAPE_VISIBLE__5BTeki
+.balign 4
+.obj TEKI_OPTION_DAMAGE_COUNTABLE__5BTeki, global
 	.4byte 0x00008000
-.global ANIMATION_KEY_OPTION_FINISHED__5BTeki
-ANIMATION_KEY_OPTION_FINISHED__5BTeki:
+.endobj TEKI_OPTION_DAMAGE_COUNTABLE__5BTeki
+.balign 4
+.obj ANIMATION_KEY_OPTION_FINISHED__5BTeki, global
 	.4byte 0x00000001
-.global ANIMATION_KEY_OPTION_ACTION_0__5BTeki
-ANIMATION_KEY_OPTION_ACTION_0__5BTeki:
+.endobj ANIMATION_KEY_OPTION_FINISHED__5BTeki
+.balign 4
+.obj ANIMATION_KEY_OPTION_ACTION_0__5BTeki, global
 	.4byte 0x00000002
-.global ANIMATION_KEY_OPTION_ACTION_1__5BTeki
-ANIMATION_KEY_OPTION_ACTION_1__5BTeki:
+.endobj ANIMATION_KEY_OPTION_ACTION_0__5BTeki
+.balign 4
+.obj ANIMATION_KEY_OPTION_ACTION_1__5BTeki, global
 	.4byte 0x00000004
-.global ANIMATION_KEY_OPTION_ACTION_2__5BTeki
-ANIMATION_KEY_OPTION_ACTION_2__5BTeki:
+.endobj ANIMATION_KEY_OPTION_ACTION_1__5BTeki
+.balign 4
+.obj ANIMATION_KEY_OPTION_ACTION_2__5BTeki, global
 	.4byte 0x00000008
-.global ANIMATION_KEY_OPTION_LOOPSTART__5BTeki
-ANIMATION_KEY_OPTION_LOOPSTART__5BTeki:
+.endobj ANIMATION_KEY_OPTION_ACTION_2__5BTeki
+.balign 4
+.obj ANIMATION_KEY_OPTION_LOOPSTART__5BTeki, global
 	.4byte 0x00000020
-.global ANIMATION_KEY_OPTION_LOOPEND__5BTeki
-ANIMATION_KEY_OPTION_LOOPEND__5BTeki:
+.endobj ANIMATION_KEY_OPTION_LOOPSTART__5BTeki
+.balign 4
+.obj ANIMATION_KEY_OPTION_LOOPEND__5BTeki, global
 	.4byte 0x00000040
+.endobj ANIMATION_KEY_OPTION_LOOPEND__5BTeki
 .balign 4
-lbl_803E4398:
+.obj lbl_803E4398, local
 	.asciz "s00"
+.endobj lbl_803E4398
 .balign 4
-lbl_803E439C:
+.obj lbl_803E439C, local
 	.asciz "s01"
+.endobj lbl_803E439C
 .balign 4
-lbl_803E43A0:
+.obj lbl_803E43A0, local
 	.asciz "s02"
+.endobj lbl_803E43A0
 .balign 4
-lbl_803E43A4:
+.obj lbl_803E43A4, local
 	.asciz "s03"
+.endobj lbl_803E43A4
 .balign 4
-lbl_803E43A8:
+.obj lbl_803E43A8, local
 	.asciz "s04"
+.endobj lbl_803E43A8
 .balign 4
-lbl_803E43AC:
+.obj lbl_803E43AC, local
 	.float 0.0
-lbl_803E43B0:
+.endobj lbl_803E43AC
+.obj lbl_803E43B0, local
 	.float 0.0
-lbl_803E43B4:
+.endobj lbl_803E43B0
+.obj lbl_803E43B4, local
 	.float 0.0
-lbl_803E43B8:
+.endobj lbl_803E43B4
+.obj lbl_803E43B8, local
 	.float 0.0
-lbl_803E43BC:
+.endobj lbl_803E43B8
+.obj lbl_803E43BC, local
 	.float 0.0
-lbl_803E43C0:
+.endobj lbl_803E43BC
+.obj lbl_803E43C0, local
 	.float 0.0
-lbl_803E43C4:
+.endobj lbl_803E43C0
+.obj lbl_803E43C4, local
 	.float 0.0
-lbl_803E43C8:
+.endobj lbl_803E43C4
+.obj lbl_803E43C8, local
 	.float 0.0
-lbl_803E43CC:
+.endobj lbl_803E43C8
+.obj lbl_803E43CC, local
 	.float 0.0
-lbl_803E43D0:
+.endobj lbl_803E43CC
+.obj lbl_803E43D0, local
 	.float 0.0
-lbl_803E43D4:
+.endobj lbl_803E43D0
+.obj lbl_803E43D4, local
 	.float 1.0
-lbl_803E43D8:
+.endobj lbl_803E43D4
+.obj lbl_803E43D8, local
 	.float 0.0
-lbl_803E43DC:
+.endobj lbl_803E43D8
+.obj lbl_803E43DC, local
 	.float 1.2
-lbl_803E43E0:
+.endobj lbl_803E43DC
+.obj lbl_803E43E0, local
 	.float 0.2
-lbl_803E43E4:
+.endobj lbl_803E43E0
+.obj lbl_803E43E4, local
 	.float 1.2
-lbl_803E43E8:
+.endobj lbl_803E43E4
+.obj lbl_803E43E8, local
 	.float 0.0
-lbl_803E43EC:
+.endobj lbl_803E43E8
+.obj lbl_803E43EC, local
 	.float 0.0
-lbl_803E43F0:
+.endobj lbl_803E43EC
+.obj lbl_803E43F0, local
 	.float 0.0
-lbl_803E43F4:
+.endobj lbl_803E43F0
+.obj lbl_803E43F4, local
 	.float 1.0
-lbl_803E43F8:
+.endobj lbl_803E43F4
+.obj lbl_803E43F8, local
 	.float 0.0
-lbl_803E43FC:
+.endobj lbl_803E43F8
+.obj lbl_803E43FC, local
 	.float 1.0
-lbl_803E4400:
+.endobj lbl_803E43FC
+.obj lbl_803E4400, local
 	.float 1.0
-lbl_803E4404:
+.endobj lbl_803E4400
+.obj lbl_803E4404, local
 	.float 1.0
-lbl_803E4408:
+.endobj lbl_803E4404
+.obj lbl_803E4408, local
 	.float 0.0
-lbl_803E440C:
+.endobj lbl_803E4408
+.obj lbl_803E440C, local
 	.float 0.0
-lbl_803E4410:
+.endobj lbl_803E440C
+.obj lbl_803E4410, local
 	.float 0.0
-lbl_803E4414:
+.endobj lbl_803E4410
+.obj lbl_803E4414, local
 	.float 0.0
-lbl_803E4418:
+.endobj lbl_803E4414
+.obj lbl_803E4418, local
 	.float 0.0
-lbl_803E441C:
+.endobj lbl_803E4418
+.obj lbl_803E441C, local
 	.float 0.0
-__RTTI__9Condition:
+.endobj lbl_803E441C
+.balign 4
+.obj __RTTI__9Condition, local
 	.4byte lbl_802CCF3C
 	.4byte 0
-__RTTI__13TekiCondition:
+.endobj __RTTI__9Condition
+.balign 4
+.obj __RTTI__13TekiCondition, local
 	.4byte lbl_802CCF48
 	.4byte lbl_802CCF58
-__RTTI__8BaseParm:
+.endobj __RTTI__13TekiCondition
+.balign 4
+.obj __RTTI__8BaseParm, local
 	.4byte lbl_802CD014
 	.4byte 0
-__RTTI__11NVector3fIO:
+.endobj __RTTI__8BaseParm
+.balign 4
+.obj __RTTI__11NVector3fIO, local
 	.4byte lbl_802CD070
 	.4byte 0
-__RTTI__10PelletView:
+.endobj __RTTI__11NVector3fIO
+.balign 4
+.obj __RTTI__10PelletView, local
 	.4byte lbl_802CD0A8
 	.4byte 0
-__RTTI__19PaniAnimKeyListener:
+.endobj __RTTI__10PelletView
+.balign 4
+.obj __RTTI__19PaniAnimKeyListener, local
 	.4byte lbl_802CD0E8
 	.4byte 0
+.endobj __RTTI__19PaniAnimKeyListener
 .balign 4
-lbl_803E4450:
+.obj lbl_803E4450, local
 	.asciz "BTeki"
+.endobj lbl_803E4450
 .balign 4
-__RTTI__11EventTalker:
+.obj __RTTI__11EventTalker, local
 	.4byte lbl_802CD108
 	.4byte 0
-__RTTI__12RefCountable:
+.endobj __RTTI__11EventTalker
+.balign 4
+.obj __RTTI__12RefCountable, local
 	.4byte lbl_802CD114
 	.4byte 0
-__RTTI__8Creature:
+.endobj __RTTI__12RefCountable
+.balign 4
+.obj __RTTI__8Creature, local
 	.4byte lbl_802CD124
 	.4byte lbl_802CD130
-__RTTI__5BTeki:
+.endobj __RTTI__8Creature
+.balign 4
+.obj __RTTI__5BTeki, local
 	.4byte lbl_803E4450
 	.4byte lbl_802CD144
+.endobj __RTTI__5BTeki
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8

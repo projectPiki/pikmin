@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global init__Q23zen14DrawCMtitleObjFP9P2DScreen
-init__Q23zen14DrawCMtitleObjFP9P2DScreen:
+.fn init__Q23zen14DrawCMtitleObjFP9P2DScreen, global
 /* 801ED480 001EA3E0  7C 08 02 A6 */	mflr r0
 /* 801ED484 001EA3E4  38 A0 00 01 */	li r5, 1
 /* 801ED488 001EA3E8  90 01 00 04 */	stw r0, 4(r1)
@@ -40,7 +39,7 @@ init__Q23zen14DrawCMtitleObjFP9P2DScreen:
 /* 801ED50C 001EA46C  B0 09 00 BA */	sth r0, 0xba(r9)
 /* 801ED510 001EA470  38 A0 00 01 */	li r5, 1
 /* 801ED514 001EA474  81 1F 00 00 */	lwz r8, 0(r31)
-/* 801ED518 001EA478  C8 42 C1 50 */	lfd f2, "@679"@sda21(r2)
+/* 801ED518 001EA478  C8 42 C1 50 */	lfd f2, lbl_803EC350@sda21(r2)
 /* 801ED51C 001EA47C  A8 08 00 18 */	lha r0, 0x18(r8)
 /* 801ED520 001EA480  A9 08 00 1A */	lha r8, 0x1a(r8)
 /* 801ED524 001EA484  6C 00 80 00 */	xoris r0, r0, 0x8000
@@ -89,9 +88,9 @@ init__Q23zen14DrawCMtitleObjFP9P2DScreen:
 /* 801ED5CC 001EA52C  38 21 00 70 */	addi r1, r1, 0x70
 /* 801ED5D0 001EA530  7C 08 03 A6 */	mtlr r0
 /* 801ED5D4 001EA534  4E 80 00 20 */	blr 
+.endfn init__Q23zen14DrawCMtitleObjFP9P2DScreen
 
-.global update__Q23zen14DrawCMtitleObjFv
-update__Q23zen14DrawCMtitleObjFv:
+.fn update__Q23zen14DrawCMtitleObjFv, global
 /* 801ED5D8 001EA538  7C 08 02 A6 */	mflr r0
 /* 801ED5DC 001EA53C  39 83 00 14 */	addi r12, r3, 0x14
 /* 801ED5E0 001EA540  90 01 00 04 */	stw r0, 4(r1)
@@ -104,9 +103,9 @@ update__Q23zen14DrawCMtitleObjFv:
 /* 801ED5FC 001EA55C  38 21 00 08 */	addi r1, r1, 8
 /* 801ED600 001EA560  7C 08 03 A6 */	mtlr r0
 /* 801ED604 001EA564  4E 80 00 20 */	blr 
+.endfn update__Q23zen14DrawCMtitleObjFv
 
-.global wait__Q23zen14DrawCMtitleObjFf
-wait__Q23zen14DrawCMtitleObjFf:
+.fn wait__Q23zen14DrawCMtitleObjFf, global
 /* 801ED608 001EA568  C0 02 C1 58 */	lfs f0, lbl_803EC358@sda21(r2)
 /* 801ED60C 001EA56C  3C 80 80 2E */	lis r4, lbl_802E6DA4@ha
 /* 801ED610 001EA570  38 00 00 01 */	li r0, 1
@@ -126,9 +125,9 @@ wait__Q23zen14DrawCMtitleObjFf:
 /* 801ED648 001EA5A8  D0 03 00 C4 */	stfs f0, 0xc4(r3)
 /* 801ED64C 001EA5AC  D0 03 00 C8 */	stfs f0, 0xc8(r3)
 /* 801ED650 001EA5B0  4E 80 00 20 */	blr 
+.endfn wait__Q23zen14DrawCMtitleObjFf
 
-.global appear__Q23zen14DrawCMtitleObjFf
-appear__Q23zen14DrawCMtitleObjFf:
+.fn appear__Q23zen14DrawCMtitleObjFf, global
 /* 801ED654 001EA5B4  C0 02 C1 58 */	lfs f0, lbl_803EC358@sda21(r2)
 /* 801ED658 001EA5B8  3C 80 80 2E */	lis r4, lbl_802E6DB0@ha
 /* 801ED65C 001EA5BC  38 00 00 00 */	li r0, 0
@@ -148,14 +147,14 @@ appear__Q23zen14DrawCMtitleObjFf:
 /* 801ED694 001EA5F4  D0 03 00 C4 */	stfs f0, 0xc4(r3)
 /* 801ED698 001EA5F8  D0 03 00 C8 */	stfs f0, 0xc8(r3)
 /* 801ED69C 001EA5FC  4E 80 00 20 */	blr 
+.endfn appear__Q23zen14DrawCMtitleObjFf
 
-.global modeSleep__Q23zen14DrawCMtitleObjFv
-modeSleep__Q23zen14DrawCMtitleObjFv:
+.fn modeSleep__Q23zen14DrawCMtitleObjFv, global
 /* 801ED6A0 001EA600  38 60 00 00 */	li r3, 0
 /* 801ED6A4 001EA604  4E 80 00 20 */	blr 
+.endfn modeSleep__Q23zen14DrawCMtitleObjFv
 
-.global modeAppear__Q23zen14DrawCMtitleObjFv
-modeAppear__Q23zen14DrawCMtitleObjFv:
+.fn modeAppear__Q23zen14DrawCMtitleObjFv, global
 /* 801ED6A8 001EA608  7C 08 02 A6 */	mflr r0
 /* 801ED6AC 001EA60C  90 01 00 04 */	stw r0, 4(r1)
 /* 801ED6B0 001EA610  94 21 FF D0 */	stwu r1, -0x30(r1)
@@ -232,9 +231,9 @@ modeAppear__Q23zen14DrawCMtitleObjFv:
 /* 801ED7BC 001EA71C  38 21 00 30 */	addi r1, r1, 0x30
 /* 801ED7C0 001EA720  7C 08 03 A6 */	mtlr r0
 /* 801ED7C4 001EA724  4E 80 00 20 */	blr 
+.endfn modeAppear__Q23zen14DrawCMtitleObjFv
 
-.global modeWait__Q23zen14DrawCMtitleObjFv
-modeWait__Q23zen14DrawCMtitleObjFv:
+.fn modeWait__Q23zen14DrawCMtitleObjFv, global
 /* 801ED7C8 001EA728  7C 08 02 A6 */	mflr r0
 /* 801ED7CC 001EA72C  90 01 00 04 */	stw r0, 4(r1)
 /* 801ED7D0 001EA730  94 21 FF C8 */	stwu r1, -0x38(r1)
@@ -296,62 +295,64 @@ modeWait__Q23zen14DrawCMtitleObjFv:
 /* 801ED8A0 001EA800  38 21 00 38 */	addi r1, r1, 0x38
 /* 801ED8A4 001EA804  7C 08 03 A6 */	mtlr r0
 /* 801ED8A8 001EA808  4E 80 00 20 */	blr 
+.endfn modeWait__Q23zen14DrawCMtitleObjFv
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-.global lbl_802E6D98
-lbl_802E6D98:
+.obj lbl_802E6D98, local
 	.4byte 0x00000000
 	.4byte 0xFFFFFFFF
 	.4byte modeSleep__Q23zen14DrawCMtitleObjFv
-.global lbl_802E6DA4
-lbl_802E6DA4:
+.endobj lbl_802E6D98
+.balign 4
+.obj lbl_802E6DA4, local
 	.4byte 0x00000000
 	.4byte 0xFFFFFFFF
 	.4byte modeWait__Q23zen14DrawCMtitleObjFv
-.global lbl_802E6DB0
-lbl_802E6DB0:
+.endobj lbl_802E6DA4
+.balign 4
+.obj lbl_802E6DB0, local
 	.4byte 0x00000000
 	.4byte 0xFFFFFFFF
 	.4byte modeAppear__Q23zen14DrawCMtitleObjFv
+.endobj lbl_802E6DB0
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-.global lbl_803E75B8
-lbl_803E75B8:
-	.4byte 0x00000000
+.obj lbl_803E75B8, local
+	.float 0.0
+.endobj lbl_803E75B8
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-.global lbl_803EC348
 lbl_803EC348:
-	.4byte 0x40400000
-	.4byte 0x00000000
-.global "@679"
-"@679":
-	.4byte 0x43300000
-	.4byte 0x80000000
-.global lbl_803EC358
-lbl_803EC358:
-	.4byte 0x00000000
-.global lbl_803EC35C
-lbl_803EC35C:
-	.4byte 0x3F800000
-.global lbl_803EC360
-lbl_803EC360:
-	.4byte 0x40000000
-.global lbl_803EC364
-lbl_803EC364:
-	.4byte 0x3F000000
-.global lbl_803EC368
-lbl_803EC368:
-	.4byte 0xC4F00000
-.global lbl_803EC36C
-lbl_803EC36C:
-	.4byte 0x45200000
-.global lbl_803EC370
-lbl_803EC370:
-	.4byte 0x3FC90FDB
-.global lbl_803EC374
-lbl_803EC374:
-	.4byte 0xC3F00000
+	.float 3.0
+.balign 8
+.obj lbl_803EC350, local
+	.8byte 0x4330000080000000
+.endobj lbl_803EC350
+.balign 4
+.obj lbl_803EC358, local
+	.float 0.0
+.endobj lbl_803EC358
+.obj lbl_803EC35C, local
+	.float 1.0
+.endobj lbl_803EC35C
+.obj lbl_803EC360, local
+	.float 2.0
+.endobj lbl_803EC360
+.obj lbl_803EC364, local
+	.float 0.5
+.endobj lbl_803EC364
+.obj lbl_803EC368, local
+	.float -1920.0
+.endobj lbl_803EC368
+.obj lbl_803EC36C, local
+	.float 2560.0
+.endobj lbl_803EC36C
+.obj lbl_803EC370, local # pi/2
+	.float 1.5707964
+.endobj lbl_803EC370
+.obj lbl_803EC374, local
+	.float -480.0
+.endobj lbl_803EC374

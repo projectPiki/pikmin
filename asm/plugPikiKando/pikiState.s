@@ -10834,40 +10834,52 @@ freeAI__15PikiNormalStateFv:
 
 .section .rodata, "a"  # 0x80221FE0 - 0x80222DC0
 .balign 8
-lbl_802224D8:
+.obj lbl_802224D8, local
 	.4byte 0x00000007
 	.float 0.33
 	.4byte 0x00000008
 	.float 0.33
 	.4byte 0x00000009
 	.float 0.33
-lbl_802224F0:
+.endobj lbl_802224D8
+.balign 4
+.obj lbl_802224F0, local
 	.4byte 0x00000051
 	.float 0.5
 	.4byte 0x00000048
 	.float 0.5
-lbl_80222500:
+.endobj lbl_802224F0
+.balign 4
+.obj lbl_80222500, local
 	.4byte 0x00000051
 	.float 0.33
 	.4byte 0x00000015
 	.float 0.33
 	.4byte 0x0000004B
 	.float 0.33
-lbl_80222518:
+.endobj lbl_80222500
+.balign 4
+.obj lbl_80222518, local
 	.4byte 0x000000F1
 	.4byte 0x000000F2
 	.4byte 0x000000F3
-lbl_80222524:
+.endobj lbl_80222518
+.balign 4
+.obj lbl_80222524, local
 	.4byte 0x00000055
 	.float 0.5
 	.4byte 0x00000041
 	.float 0.5
-lbl_80222534:
+.endobj lbl_80222524
+.balign 4
+.obj lbl_80222534, local
 	.4byte 0x00000049
 	.float 0.5
 	.4byte 0x00000041
 	.float 0.5
-lbl_80222544:
+.endobj lbl_80222534
+.balign 4
+.obj lbl_80222544, local
 	.4byte 0x00000015
 	.float 0.2
 	.4byte 0x00000051
@@ -10878,12 +10890,15 @@ lbl_80222544:
 	.float 0.2
 	.4byte 0x00000048
 	.float 0.2
-lbl_8022256C:
+.endobj lbl_80222544
+.balign 4
+.obj lbl_8022256C, local
 	.4byte 0x000000F1
 	.4byte 0x000000F2
 	.4byte 0x000000F3
 	.4byte 0x000000F6
 	.4byte 0x000000FE
+.endobj lbl_8022256C
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
@@ -10940,26 +10955,26 @@ lbl_802B8D90:
 .balign 4
 lbl_802B8DA0:
 	.4byte "__RTTI__15Receiver<4Piki>"
-	.4byte 0x00000000
-	.4byte 0x00000000
+	.4byte 0
+	.4byte 0
 .balign 4
 lbl_802B8DAC:
 	.asciz "PikiState"
 .balign 4
 lbl_802B8DB8:
 	.4byte "__RTTI__15Receiver<4Piki>"
-	.4byte 0x00000000
+	.4byte 0
 	.4byte "__RTTI__13AState<4Piki>"
-	.4byte 0x00000000
-	.4byte 0x00000000
+	.4byte 0
+	.4byte 0
 lbl_802B8DCC:
 	.4byte "__RTTI__15Receiver<4Piki>"
-	.4byte 0x00000000
+	.4byte 0
 	.4byte "__RTTI__13AState<4Piki>"
-	.4byte 0x00000000
+	.4byte 0
 	.4byte __RTTI__9PikiState
-	.4byte 0x00000000
-	.4byte 0x00000000
+	.4byte 0
+	.4byte 0
 .global __vt__16PikiEmotionState
 __vt__16PikiEmotionState:
 	.4byte __RTTI__16PikiEmotionState
@@ -12400,6 +12415,7 @@ __vt__16PikiStateMachine:
 	.4byte "exec__19StateMachine<4Piki>FP4Piki"
 	.4byte "procMsg__19StateMachine<4Piki>FP4PikiP3Msg"
 	.4byte transit__16PikiStateMachineFP4Pikii
+.balign 4
 lbl_802BA2F4:
 	.4byte ("procMsg__15Receiver<4Piki>FP4PikiP3Msg"+0x30)
 	.4byte ("procMsg__15Receiver<4Piki>FP4PikiP3Msg"+0x58)
@@ -12415,604 +12431,900 @@ lbl_802BA2F4:
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-lbl_803E0D40:
+.obj lbl_803E0D40, local
 	.asciz "LOOKAT"
+.endobj lbl_803E0D40
 .balign 4
-lbl_803E0D48:
+.obj lbl_803E0D48, local
 	.float 0.0
-lbl_803E0D4C:
+.endobj lbl_803E0D48
+.obj lbl_803E0D4C, local
 	.float 0.0
-lbl_803E0D50:
+.endobj lbl_803E0D4C
+.obj lbl_803E0D50, local
 	.float 0.0
-lbl_803E0D54:
+.endobj lbl_803E0D50
+.obj lbl_803E0D54, local
 	.float 0.0
-lbl_803E0D58:
+.endobj lbl_803E0D54
+.obj lbl_803E0D58, local
 	.float 0.0
+.endobj lbl_803E0D58
 .balign 4
-lbl_803E0D5C:
+.obj lbl_803E0D5C, local
 	.asciz "NORMAL"
+.endobj lbl_803E0D5C
 .balign 4
-lbl_803E0D64:
+.obj lbl_803E0D64, local
 	.asciz "ABSORB"
+.endobj lbl_803E0D64
 .balign 4
-lbl_803E0D6C:
+.obj lbl_803E0D6C, local
 	.float 0.0
-lbl_803E0D70:
+.endobj lbl_803E0D6C
+.obj lbl_803E0D70, local
 	.float 0.0
-lbl_803E0D74:
+.endobj lbl_803E0D70
+.obj lbl_803E0D74, local
 	.float 0.0
+.endobj lbl_803E0D74
 .balign 4
-lbl_803E0D78:
+.obj lbl_803E0D78, local
 	.asciz "DROWN"
+.endobj lbl_803E0D78
 .balign 4
-lbl_803E0D80:
+.obj lbl_803E0D80, local
 	.float 0.0
-lbl_803E0D84:
+.endobj lbl_803E0D80
+.obj lbl_803E0D84, local
 	.float 0.0
-lbl_803E0D88:
+.endobj lbl_803E0D84
+.obj lbl_803E0D88, local
 	.float 0.0
-lbl_803E0D8C:
+.endobj lbl_803E0D88
+.obj lbl_803E0D8C, local
 	.float 0.0
-lbl_803E0D90:
+.endobj lbl_803E0D8C
+.obj lbl_803E0D90, local
 	.float 0.0
-lbl_803E0D94:
+.endobj lbl_803E0D90
+.obj lbl_803E0D94, local
 	.float 0.0
-lbl_803E0D98:
+.endobj lbl_803E0D94
+.obj lbl_803E0D98, local
 	.float 0.0
-lbl_803E0D9C:
+.endobj lbl_803E0D98
+.obj lbl_803E0D9C, local
 	.float 0.0
-lbl_803E0DA0:
+.endobj lbl_803E0D9C
+.obj lbl_803E0DA0, local
 	.float 0.0
-lbl_803E0DA4:
+.endobj lbl_803E0DA0
+.obj lbl_803E0DA4, local
 	.float 0.0
-lbl_803E0DA8:
+.endobj lbl_803E0DA4
+.obj lbl_803E0DA8, local
 	.float 0.0
-lbl_803E0DAC:
+.endobj lbl_803E0DA8
+.obj lbl_803E0DAC, local
 	.float 0.0
-lbl_803E0DB0:
+.endobj lbl_803E0DAC
+.obj lbl_803E0DB0, local
 	.float 0.0
+.endobj lbl_803E0DB0
 .balign 4
-lbl_803E0DB4:
+.obj lbl_803E0DB4, local
 	.asciz "KINOKO"
+.endobj lbl_803E0DB4
 .balign 4
-lbl_803E0DBC:
+.obj lbl_803E0DBC, local
 	.float 0.0
-lbl_803E0DC0:
+.endobj lbl_803E0DBC
+.obj lbl_803E0DC0, local
 	.float 0.0
-lbl_803E0DC4:
+.endobj lbl_803E0DC0
+.obj lbl_803E0DC4, local
 	.float 0.0
-lbl_803E0DC8:
+.endobj lbl_803E0DC4
+.obj lbl_803E0DC8, local
 	.float 0.0
-lbl_803E0DCC:
+.endobj lbl_803E0DC8
+.obj lbl_803E0DCC, local
 	.float 0.0
-lbl_803E0DD0:
+.endobj lbl_803E0DCC
+.obj lbl_803E0DD0, local
 	.float 0.0
-lbl_803E0DD4:
+.endobj lbl_803E0DD0
+.obj lbl_803E0DD4, local
 	.float 0.0
-lbl_803E0DD8:
+.endobj lbl_803E0DD4
+.obj lbl_803E0DD8, local
 	.float 0.0
-lbl_803E0DDC:
+.endobj lbl_803E0DD8
+.obj lbl_803E0DDC, local
 	.float 0.0
-lbl_803E0DE0:
+.endobj lbl_803E0DDC
+.obj lbl_803E0DE0, local
 	.float 0.0
-lbl_803E0DE4:
+.endobj lbl_803E0DE0
+.obj lbl_803E0DE4, local
 	.float 0.0
-lbl_803E0DE8:
+.endobj lbl_803E0DE4
+.obj lbl_803E0DE8, local
 	.float 0.01
-lbl_803E0DEC:
+.endobj lbl_803E0DE8
+.obj lbl_803E0DEC, local
 	.float 0.99
-lbl_803E0DF0:
+.endobj lbl_803E0DEC
+.obj lbl_803E0DF0, local
 	.float 0.4
-lbl_803E0DF4:
+.endobj lbl_803E0DF0
+.obj lbl_803E0DF4, local
 	.float 0.5
-lbl_803E0DF8:
+.endobj lbl_803E0DF4
+.obj lbl_803E0DF8, local
 	.float 0.1
+.endobj lbl_803E0DF8
 .balign 4
-lbl_803E0DFC:
+.obj lbl_803E0DFC, local
 	.asciz "BUBBLE"
+.endobj lbl_803E0DFC
 .balign 4
-lbl_803E0E04:
+.obj lbl_803E0E04, local
 	.asciz "FIRED"
+.endobj lbl_803E0E04
 .balign 4
-lbl_803E0E0C:
+.obj lbl_803E0E0C, local
 	.asciz "BULLET"
+.endobj lbl_803E0E0C
 .balign 4
-lbl_803E0E14:
+.obj lbl_803E0E14, local
 	.asciz "FLICK"
+.endobj lbl_803E0E14
 .balign 4
-lbl_803E0E1C:
+.obj lbl_803E0E1C, local
 	.float 0.0
-lbl_803E0E20:
+.endobj lbl_803E0E1C
+.obj lbl_803E0E20, local
 	.float 0.0
-lbl_803E0E24:
+.endobj lbl_803E0E20
+.obj lbl_803E0E24, local
 	.float 0.0
-lbl_803E0E28:
+.endobj lbl_803E0E24
+.obj lbl_803E0E28, local
 	.float 0.0
-lbl_803E0E2C:
+.endobj lbl_803E0E28
+.obj lbl_803E0E2C, local
 	.float 0.0
-lbl_803E0E30:
+.endobj lbl_803E0E2C
+.obj lbl_803E0E30, local
 	.float 0.0
-lbl_803E0E34:
+.endobj lbl_803E0E30
+.obj lbl_803E0E34, local
 	.float 0.0
-lbl_803E0E38:
+.endobj lbl_803E0E34
+.obj lbl_803E0E38, local
 	.float 1.0
-lbl_803E0E3C:
+.endobj lbl_803E0E38
+.obj lbl_803E0E3C, local
 	.float 0.0
+.endobj lbl_803E0E3C
 .balign 4
-lbl_803E0E40:
+.obj lbl_803E0E40, local
 	.asciz "FLOWN"
+.endobj lbl_803E0E40
 .balign 4
-lbl_803E0E48:
+.obj lbl_803E0E48, local
 	.float 0.0
-lbl_803E0E4C:
+.endobj lbl_803E0E48
+.obj lbl_803E0E4C, local
 	.float 0.0
-lbl_803E0E50:
+.endobj lbl_803E0E4C
+.obj lbl_803E0E50, local
 	.float 0.0
-lbl_803E0E54:
+.endobj lbl_803E0E50
+.obj lbl_803E0E54, local
 	.float 0.0
-lbl_803E0E58:
+.endobj lbl_803E0E54
+.obj lbl_803E0E58, local
 	.float 0.0
-lbl_803E0E5C:
+.endobj lbl_803E0E58
+.obj lbl_803E0E5C, local
 	.float 0.0
-lbl_803E0E60:
+.endobj lbl_803E0E5C
+.obj lbl_803E0E60, local
 	.float 0.0
-lbl_803E0E64:
+.endobj lbl_803E0E60
+.obj lbl_803E0E64, local
 	.float 1.0
-lbl_803E0E68:
+.endobj lbl_803E0E64
+.obj lbl_803E0E68, local
 	.float 0.0
-lbl_803E0E6C:
+.endobj lbl_803E0E68
+.obj lbl_803E0E6C, local
 	.float 540.0
+.endobj lbl_803E0E6C
 .balign 4
-lbl_803E0E70:
+.obj lbl_803E0E70, local
 	.asciz "FALL"
+.endobj lbl_803E0E70
 .balign 4
-lbl_803E0E78:
+.obj lbl_803E0E78, local
 	.asciz "CLIFF"
+.endobj lbl_803E0E78
 .balign 4
-lbl_803E0E80:
+.obj lbl_803E0E80, local
 	.float 0.0
-lbl_803E0E84:
+.endobj lbl_803E0E80
+.obj lbl_803E0E84, local
 	.float 0.0
-lbl_803E0E88:
+.endobj lbl_803E0E84
+.obj lbl_803E0E88, local
 	.float 0.0
-lbl_803E0E8C:
+.endobj lbl_803E0E88
+.obj lbl_803E0E8C, local
 	.float 0.0
+.endobj lbl_803E0E8C
 .balign 4
-lbl_803E0E90:
+.obj lbl_803E0E90, local
 	.asciz "GOHANG"
+.endobj lbl_803E0E90
 .balign 4
-lbl_803E0E98:
+.obj lbl_803E0E98, local
 	.asciz "HANGED"
+.endobj lbl_803E0E98
 .balign 4
-lbl_803E0EA0:
+.obj lbl_803E0EA0, local
 	.float 0.0
-lbl_803E0EA4:
+.endobj lbl_803E0EA0
+.obj lbl_803E0EA4, local
 	.float 0.0
-lbl_803E0EA8:
+.endobj lbl_803E0EA4
+.obj lbl_803E0EA8, local
 	.float 0.0
-lbl_803E0EAC:
+.endobj lbl_803E0EA8
+.obj lbl_803E0EAC, local
 	.float 0.0
-lbl_803E0EB0:
+.endobj lbl_803E0EAC
+.obj lbl_803E0EB0, local
 	.float 0.0
-lbl_803E0EB4:
+.endobj lbl_803E0EB0
+.obj lbl_803E0EB4, local
 	.float 0.0
-lbl_803E0EB8:
+.endobj lbl_803E0EB4
+.obj lbl_803E0EB8, local
 	.float 0.0
-lbl_803E0EBC:
+.endobj lbl_803E0EB8
+.obj lbl_803E0EBC, local
 	.float 0.0
-lbl_803E0EC0:
+.endobj lbl_803E0EBC
+.obj lbl_803E0EC0, local
 	.float 0.0
-lbl_803E0EC4:
+.endobj lbl_803E0EC0
+.obj lbl_803E0EC4, local
 	.float 0.0
-lbl_803E0EC8:
+.endobj lbl_803E0EC4
+.obj lbl_803E0EC8, local
 	.float 0.0
-lbl_803E0ECC:
+.endobj lbl_803E0EC8
+.obj lbl_803E0ECC, local
 	.float 0.0
+.endobj lbl_803E0ECC
 .balign 4
-lbl_803E0ED0:
+.obj lbl_803E0ED0, local
 	.asciz "EMIT"
+.endobj lbl_803E0ED0
 .balign 4
-lbl_803E0ED8:
+.obj lbl_803E0ED8, local
 	.float 0.0
-lbl_803E0EDC:
+.endobj lbl_803E0ED8
+.obj lbl_803E0EDC, local
 	.float 0.0
-lbl_803E0EE0:
+.endobj lbl_803E0EDC
+.obj lbl_803E0EE0, local
 	.float 0.0
-lbl_803E0EE4:
+.endobj lbl_803E0EE0
+.obj lbl_803E0EE4, local
 	.float 0.0
-lbl_803E0EE8:
+.endobj lbl_803E0EE4
+.obj lbl_803E0EE8, local
 	.float 0.0
-lbl_803E0EEC:
+.endobj lbl_803E0EE8
+.obj lbl_803E0EEC, local
 	.float 0.0
+.endobj lbl_803E0EEC
 .balign 4
-lbl_803E0EF0:
+.obj lbl_803E0EF0, local
 	.asciz "FLYING"
+.endobj lbl_803E0EF0
 .balign 4
-lbl_803E0EF8:
+.obj lbl_803E0EF8, local
 	.asciz "GROW"
+.endobj lbl_803E0EF8
 .balign 4
-lbl_803E0F00:
+.obj lbl_803E0F00, local
 	.float 0.0
-lbl_803E0F04:
+.endobj lbl_803E0F00
+.obj lbl_803E0F04, local
 	.float 0.0
-lbl_803E0F08:
+.endobj lbl_803E0F04
+.obj lbl_803E0F08, local
 	.float 0.0
-lbl_803E0F0C:
+.endobj lbl_803E0F08
+.obj lbl_803E0F0C, local
 	.float 0.0
-lbl_803E0F10:
+.endobj lbl_803E0F0C
+.obj lbl_803E0F10, local
 	.float 0.0
-lbl_803E0F14:
+.endobj lbl_803E0F10
+.obj lbl_803E0F14, local
 	.float 0.0
+.endobj lbl_803E0F14
 .balign 4
-lbl_803E0F18:
+.obj lbl_803E0F18, local
 	.asciz "GROWUP"
+.endobj lbl_803E0F18
 .balign 4
-lbl_803E0F20:
+.obj lbl_803E0F20, local
 	.float 0.0
-lbl_803E0F24:
+.endobj lbl_803E0F20
+.obj lbl_803E0F24, local
 	.float 0.0
-lbl_803E0F28:
+.endobj lbl_803E0F24
+.obj lbl_803E0F28, local
 	.float 0.0
-lbl_803E0F2C:
+.endobj lbl_803E0F28
+.obj lbl_803E0F2C, local
 	.float 0.0
-lbl_803E0F30:
+.endobj lbl_803E0F2C
+.obj lbl_803E0F30, local
 	.float 0.0
-lbl_803E0F34:
+.endobj lbl_803E0F30
+.obj lbl_803E0F34, local
 	.float 0.0
+.endobj lbl_803E0F34
 .balign 4
-lbl_803E0F38:
+.obj lbl_803E0F38, local
 	.asciz "WAVE"
+.endobj lbl_803E0F38
 .balign 4
-lbl_803E0F40:
+.obj lbl_803E0F40, local
 	.asciz "PUSH"
+.endobj lbl_803E0F40
 .balign 4
-lbl_803E0F48:
+.obj lbl_803E0F48, local
 	.float 0.0
+.endobj lbl_803E0F48
 .balign 4
-lbl_803E0F4C:
+.obj lbl_803E0F4C, local
 	.asciz "BURY"
+.endobj lbl_803E0F4C
 .balign 4
-lbl_803E0F54:
+.obj lbl_803E0F54, local
 	.float 540.0
-lbl_803E0F58:
+.endobj lbl_803E0F54
+.obj lbl_803E0F58, local
 	.float 0.0
-lbl_803E0F5C:
+.endobj lbl_803E0F58
+.obj lbl_803E0F5C, local
 	.float 0.0
-lbl_803E0F60:
+.endobj lbl_803E0F5C
+.obj lbl_803E0F60, local
 	.float 0.0
-lbl_803E0F64:
+.endobj lbl_803E0F60
+.obj lbl_803E0F64, local
 	.float 0.0
-lbl_803E0F68:
+.endobj lbl_803E0F64
+.obj lbl_803E0F68, local
 	.float 0.0
-lbl_803E0F6C:
+.endobj lbl_803E0F68
+.obj lbl_803E0F6C, local
 	.float 0.0
-lbl_803E0F70:
+.endobj lbl_803E0F6C
+.obj lbl_803E0F70, local
 	.float 0.0
-lbl_803E0F74:
+.endobj lbl_803E0F70
+.obj lbl_803E0F74, local
 	.float 0.0
-lbl_803E0F78:
+.endobj lbl_803E0F74
+.obj lbl_803E0F78, local
 	.float 0.0
-lbl_803E0F7C:
+.endobj lbl_803E0F78
+.obj lbl_803E0F7C, local
 	.float 0.0
-lbl_803E0F80:
+.endobj lbl_803E0F7C
+.obj lbl_803E0F80, local
 	.float 0.0
-lbl_803E0F84:
+.endobj lbl_803E0F80
+.obj lbl_803E0F84, local
 	.float 0.0
+.endobj lbl_803E0F84
 .balign 4
-lbl_803E0F88:
+.obj lbl_803E0F88, local
 	.asciz "NUKARE"
+.endobj lbl_803E0F88
 .balign 4
-lbl_803E0F90:
+.obj lbl_803E0F90, local
 	.float 0.0
-lbl_803E0F94:
+.endobj lbl_803E0F90
+.obj lbl_803E0F94, local
 	.float 0.0
-lbl_803E0F98:
+.endobj lbl_803E0F94
+.obj lbl_803E0F98, local
 	.float 0.0
-lbl_803E0F9C:
+.endobj lbl_803E0F98
+.obj lbl_803E0F9C, local
 	.float 0.0
-lbl_803E0FA0:
+.endobj lbl_803E0F9C
+.obj lbl_803E0FA0, local
 	.float 0.0
-lbl_803E0FA4:
+.endobj lbl_803E0FA0
+.obj lbl_803E0FA4, local
 	.float 0.0
-lbl_803E0FA8:
+.endobj lbl_803E0FA4
+.obj lbl_803E0FA8, local
 	.float 0.0
-lbl_803E0FAC:
+.endobj lbl_803E0FA8
+.obj lbl_803E0FAC, local
 	.float 0.0
-lbl_803E0FB0:
+.endobj lbl_803E0FAC
+.obj lbl_803E0FB0, local
 	.float 0.0
-lbl_803E0FB4:
+.endobj lbl_803E0FB0
+.obj lbl_803E0FB4, local
 	.float 0.0
-lbl_803E0FB8:
+.endobj lbl_803E0FB4
+.obj lbl_803E0FB8, local
 	.float 0.0
-lbl_803E0FBC:
+.endobj lbl_803E0FB8
+.obj lbl_803E0FBC, local
 	.float 0.0
-lbl_803E0FC0:
+.endobj lbl_803E0FBC
+.obj lbl_803E0FC0, local
 	.float 0.0
-lbl_803E0FC4:
+.endobj lbl_803E0FC0
+.obj lbl_803E0FC4, local
 	.float 0.0
-lbl_803E0FC8:
+.endobj lbl_803E0FC4
+.obj lbl_803E0FC8, local
 	.float 0.0
-lbl_803E0FCC:
+.endobj lbl_803E0FC8
+.obj lbl_803E0FCC, local
 	.float 0.0
-lbl_803E0FD0:
+.endobj lbl_803E0FCC
+.obj lbl_803E0FD0, local
 	.float 0.0
-lbl_803E0FD4:
+.endobj lbl_803E0FD0
+.obj lbl_803E0FD4, local
 	.float 0.0
+.endobj lbl_803E0FD4
 .balign 4
-lbl_803E0FD8:
+.obj lbl_803E0FD8, local
 	.asciz "PRESSED"
+.endobj lbl_803E0FD8
 .balign 4
-lbl_803E0FE0:
+.obj lbl_803E0FE0, local
 	.float 0.01
-lbl_803E0FE4:
+.endobj lbl_803E0FE0
+.obj lbl_803E0FE4, local
 	.float 0.0
-lbl_803E0FE8:
+.endobj lbl_803E0FE4
+.obj lbl_803E0FE8, local
 	.float 0.0
-lbl_803E0FEC:
+.endobj lbl_803E0FE8
+.obj lbl_803E0FEC, local
 	.float 0.0
-lbl_803E0FF0:
+.endobj lbl_803E0FEC
+.obj lbl_803E0FF0, local
 	.float 0.0
-lbl_803E0FF4:
+.endobj lbl_803E0FF0
+.obj lbl_803E0FF4, local
 	.float 0.0
-lbl_803E0FF8:
+.endobj lbl_803E0FF4
+.obj lbl_803E0FF8, local
 	.float 0.0
+.endobj lbl_803E0FF8
 .balign 4
-lbl_803E0FFC:
+.obj lbl_803E0FFC, local
 	.asciz "DYING"
+.endobj lbl_803E0FFC
 .balign 4
-lbl_803E1004:
+.obj lbl_803E1004, local
 	.float 0.0
-lbl_803E1008:
+.endobj lbl_803E1004
+.obj lbl_803E1008, local
 	.float 0.0
-lbl_803E100C:
+.endobj lbl_803E1008
+.obj lbl_803E100C, local
 	.float 0.0
-lbl_803E1010:
+.endobj lbl_803E100C
+.obj lbl_803E1010, local
 	.float 0.0
-lbl_803E1014:
+.endobj lbl_803E1010
+.obj lbl_803E1014, local
 	.float 0.0
-lbl_803E1018:
+.endobj lbl_803E1014
+.obj lbl_803E1018, local
 	.float 0.0
+.endobj lbl_803E1018
 .balign 4
-lbl_803E101C:
+.obj lbl_803E101C, local
 	.asciz "DEAD"
+.endobj lbl_803E101C
 .balign 4
-lbl_803E1024:
+.obj lbl_803E1024, local
 	.float 0.0
-lbl_803E1028:
+.endobj lbl_803E1024
+.obj lbl_803E1028, local
 	.float 0.0
-lbl_803E102C:
+.endobj lbl_803E1028
+.obj lbl_803E102C, local
 	.float 0.0
-lbl_803E1030:
+.endobj lbl_803E102C
+.obj lbl_803E1030, local
 	.float 0.0
-lbl_803E1034:
+.endobj lbl_803E1030
+.obj lbl_803E1034, local
 	.float 0.0
-lbl_803E1038:
+.endobj lbl_803E1034
+.obj lbl_803E1038, local
 	.float 0.0
-lbl_803E103C:
+.endobj lbl_803E1038
+.obj lbl_803E103C, local
 	.float 0.0
-lbl_803E1040:
+.endobj lbl_803E103C
+.obj lbl_803E1040, local
 	.float 0.0
-lbl_803E1044:
+.endobj lbl_803E1040
+.obj lbl_803E1044, local
 	.float 0.0
+.endobj lbl_803E1044
 .balign 4
-lbl_803E1048:
+.obj lbl_803E1048, local
 	.asciz "EMOTION"
+.endobj lbl_803E1048
 .balign 4
-lbl_803E1050:
+.obj lbl_803E1050, local
 	.float 0.0
-lbl_803E1054:
+.endobj lbl_803E1050
+.obj lbl_803E1054, local
 	.float 0.0
-lbl_803E1058:
+.endobj lbl_803E1054
+.obj lbl_803E1058, local
 	.float 0.0
-"__RTTI__15Receiver<4Piki>":
+.endobj lbl_803E1058
+.balign 4
+.obj "__RTTI__15Receiver<4Piki>", local
 	.4byte lbl_802B8D80
 	.4byte 0
-"__RTTI__13AState<4Piki>":
+.endobj "__RTTI__15Receiver<4Piki>"
+.balign 4
+.obj "__RTTI__13AState<4Piki>", local
 	.4byte lbl_802B8D90
 	.4byte lbl_802B8DA0
-__RTTI__9PikiState:
+.endobj "__RTTI__13AState<4Piki>"
+.balign 4
+.obj __RTTI__9PikiState, local
 	.4byte lbl_802B8DAC
 	.4byte lbl_802B8DB8
-__RTTI__16PikiEmotionState:
+.endobj __RTTI__9PikiState
+.balign 4
+.obj __RTTI__16PikiEmotionState, local
 	.4byte lbl_802B8D6C
 	.4byte lbl_802B8DCC
-__RTTI__13PikiDeadState:
+.endobj __RTTI__16PikiEmotionState
+.balign 4
+.obj __RTTI__13PikiDeadState, local
 	.4byte lbl_802B8E54
 	.4byte lbl_802B8E64
-__RTTI__14PikiDyingState:
+.endobj __RTTI__13PikiDeadState
+.balign 4
+.obj __RTTI__14PikiDyingState, local
 	.4byte lbl_802B8EEC
 	.4byte lbl_802B8EFC
-__RTTI__16PikiPressedState:
+.endobj __RTTI__14PikiDyingState
+.balign 4
+.obj __RTTI__16PikiPressedState, local
 	.4byte lbl_802B8F84
 	.4byte lbl_802B8F98
-__RTTI__17PikiAutoNukiState:
+.endobj __RTTI__16PikiPressedState
+.balign 4
+.obj __RTTI__17PikiAutoNukiState, local
 	.4byte lbl_802B9020
 	.4byte lbl_802B9034
-__RTTI__15PikiNukareState:
+.endobj __RTTI__17PikiAutoNukiState
+.balign 4
+.obj __RTTI__15PikiNukareState, local
 	.4byte lbl_802B90BC
 	.4byte lbl_802B90CC
-__RTTI__19PikiNukareWaitState:
+.endobj __RTTI__15PikiNukareState
+.balign 4
+.obj __RTTI__19PikiNukareWaitState, local
 	.4byte lbl_802B9154
 	.4byte lbl_802B9168
-__RTTI__13PikiBuryState:
+.endobj __RTTI__19PikiNukareWaitState
+.balign 4
+.obj __RTTI__13PikiBuryState, local
 	.4byte lbl_802B91F0
 	.4byte lbl_802B9200
-__RTTI__17PikiPushPikiState:
+.endobj __RTTI__13PikiBuryState
+.balign 4
+.obj __RTTI__17PikiPushPikiState, local
 	.4byte lbl_802B9288
 	.4byte lbl_802B929C
-__RTTI__13PikiPushState:
+.endobj __RTTI__17PikiPushPikiState
+.balign 4
+.obj __RTTI__13PikiPushState, local
 	.4byte lbl_802B9324
 	.4byte lbl_802B9334
-__RTTI__13PikiWaveState:
+.endobj __RTTI__13PikiPushState
+.balign 4
+.obj __RTTI__13PikiWaveState, local
 	.4byte lbl_802B93BC
 	.4byte lbl_802B93CC
-__RTTI__15PikiGrowupState:
+.endobj __RTTI__13PikiWaveState
+.balign 4
+.obj __RTTI__15PikiGrowupState, local
 	.4byte lbl_802B9454
 	.4byte lbl_802B9464
-__RTTI__21PikiKinokoChangeState:
+.endobj __RTTI__15PikiGrowupState
+.balign 4
+.obj __RTTI__21PikiKinokoChangeState, local
 	.4byte lbl_802B94EC
 	.4byte lbl_802B9504
-__RTTI__13PikiGrowState:
+.endobj __RTTI__21PikiKinokoChangeState
+.balign 4
+.obj __RTTI__13PikiGrowState, local
 	.4byte lbl_802B958C
 	.4byte lbl_802B959C
-__RTTI__15PikiFlyingState:
+.endobj __RTTI__13PikiGrowState
+.balign 4
+.obj __RTTI__15PikiFlyingState, local
 	.4byte lbl_802B9624
 	.4byte lbl_802B9634
-__RTTI__13PikiEmitState:
+.endobj __RTTI__15PikiFlyingState
+.balign 4
+.obj __RTTI__13PikiEmitState, local
 	.4byte lbl_802B96BC
 	.4byte lbl_802B96CC
-__RTTI__20PikiWaterHangedState:
+.endobj __RTTI__13PikiEmitState
+.balign 4
+.obj __RTTI__20PikiWaterHangedState, local
 	.4byte lbl_802B9754
 	.4byte lbl_802B976C
-__RTTI__15PikiHangedState:
+.endobj __RTTI__20PikiWaterHangedState
+.balign 4
+.obj __RTTI__15PikiHangedState, local
 	.4byte lbl_802B97F4
 	.4byte lbl_802B9804
-__RTTI__15PikiGoHangState:
+.endobj __RTTI__15PikiHangedState
+.balign 4
+.obj __RTTI__15PikiGoHangState, local
 	.4byte lbl_802B988C
 	.4byte lbl_802B989C
-__RTTI__14PikiCliffState:
+.endobj __RTTI__15PikiGoHangState
+.balign 4
+.obj __RTTI__14PikiCliffState, local
 	.4byte lbl_802B9924
 	.4byte lbl_802B9934
-__RTTI__13PikiFallState:
+.endobj __RTTI__14PikiCliffState
+.balign 4
+.obj __RTTI__13PikiFallState, local
 	.4byte lbl_802B99BC
 	.4byte lbl_802B99CC
-__RTTI__17PikiFallMeckState:
+.endobj __RTTI__13PikiFallState
+.balign 4
+.obj __RTTI__17PikiFallMeckState, local
 	.4byte lbl_802B9A54
 	.4byte lbl_802B9A68
-__RTTI__14PikiFlownState:
+.endobj __RTTI__17PikiFallMeckState
+.balign 4
+.obj __RTTI__14PikiFlownState, local
 	.4byte lbl_802B9AF0
 	.4byte lbl_802B9B00
-__RTTI__14PikiFlickState:
+.endobj __RTTI__14PikiFlownState
+.balign 4
+.obj __RTTI__14PikiFlickState, local
 	.4byte lbl_802B9B88
 	.4byte lbl_802B9B98
-__RTTI__15PikiBulletState:
+.endobj __RTTI__14PikiFlickState
+.balign 4
+.obj __RTTI__15PikiBulletState, local
 	.4byte lbl_802B9C20
 	.4byte lbl_802B9C30
-__RTTI__18PikiSwallowedState:
+.endobj __RTTI__15PikiBulletState
+.balign 4
+.obj __RTTI__18PikiSwallowedState, local
 	.4byte lbl_802B9CB8
 	.4byte lbl_802B9CCC
-__RTTI__14PikiFiredState:
+.endobj __RTTI__18PikiSwallowedState
+.balign 4
+.obj __RTTI__14PikiFiredState, local
 	.4byte lbl_802B9D54
 	.4byte lbl_802B9D64
-__RTTI__15PikiBubbleState:
+.endobj __RTTI__14PikiFiredState
+.balign 4
+.obj __RTTI__15PikiBubbleState, local
 	.4byte lbl_802B9DEC
 	.4byte lbl_802B9DFC
-__RTTI__15PikiKinokoState:
+.endobj __RTTI__15PikiBubbleState
+.balign 4
+.obj __RTTI__15PikiKinokoState, local
 	.4byte lbl_802B9E84
 	.4byte lbl_802B9E94
-__RTTI__14PikiDrownState:
+.endobj __RTTI__15PikiKinokoState
+.balign 4
+.obj __RTTI__14PikiDrownState, local
 	.4byte lbl_802B9F54
 	.4byte lbl_802B9F64
-__RTTI__15PikiAbsorbState:
+.endobj __RTTI__14PikiDrownState
+.balign 4
+.obj __RTTI__15PikiAbsorbState, local
 	.4byte lbl_802B9FEC
 	.4byte lbl_802B9FFC
-__RTTI__15PikiNormalState:
+.endobj __RTTI__15PikiAbsorbState
+.balign 4
+.obj __RTTI__15PikiNormalState, local
 	.4byte lbl_802BA084
 	.4byte lbl_802BA094
-__RTTI__15PikiLookAtState:
+.endobj __RTTI__15PikiNormalState
+.balign 4
+.obj __RTTI__15PikiLookAtState, local
 	.4byte lbl_802BA11C
 	.4byte lbl_802BA12C
-"__RTTI__19StateMachine<4Piki>":
+.endobj __RTTI__15PikiLookAtState
+.balign 4
+.obj "__RTTI__19StateMachine<4Piki>", local
 	.4byte lbl_802BA2BC
 	.4byte 0
-__RTTI__16PikiStateMachine:
+.endobj "__RTTI__19StateMachine<4Piki>"
+.balign 4
+.obj __RTTI__16PikiStateMachine, local
 	.4byte lbl_802BA2A8
 	.4byte lbl_802BA2D0
+.endobj __RTTI__16PikiStateMachine
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803E9918:
+.obj lbl_803E9918, local
 	.float 1.0
-lbl_803E991C:
+.endobj lbl_803E9918
+.obj lbl_803E991C, local
 	.float 32767.0
-lbl_803E9920:
+.endobj lbl_803E991C
+.obj lbl_803E9920, local
 	.float 0.3
+.endobj lbl_803E9920
 .balign 8
-lbl_803E9928:
-	.4byte 0x43300000
-	.4byte 0x80000000
-lbl_803E9930:
+.obj lbl_803E9928, local
+	.8byte 0x4330000080000000
+.endobj lbl_803E9928
+.obj lbl_803E9930, local
 	.float 0.0
-lbl_803E9934:
+.endobj lbl_803E9930
+.obj lbl_803E9934, local
 	.float 0.1
-lbl_803E9938:
+.endobj lbl_803E9934
+.obj lbl_803E9938, local # pi
 	.float 3.1415927
-lbl_803E993C:
+.endobj lbl_803E9938
+.obj lbl_803E993C, local
 	.float 7.0
-lbl_803E9940:
+.endobj lbl_803E993C
+.obj lbl_803E9940, local
 	.float 2.0
-lbl_803E9944:
+.endobj lbl_803E9940
+.obj lbl_803E9944, local
 	.float 20.0
-lbl_803E9948:
+.endobj lbl_803E9944
+.obj lbl_803E9948, local
 	.float 80.0
-lbl_803E994C:
+.endobj lbl_803E9948
+.obj lbl_803E994C, local
 	.float 0.5
-lbl_803E9950:
+.endobj lbl_803E994C
+.obj lbl_803E9950, local
 	.float 15.0
+.endobj lbl_803E9950
 .balign 8
-lbl_803E9958:
+.obj lbl_803E9958, local
 	.double 0.5
-lbl_803E9960:
+.endobj lbl_803E9958
+.balign 8
+.obj lbl_803E9960, local
 	.double 3.0
-lbl_803E9968:
+.endobj lbl_803E9960
+.balign 4
+.obj lbl_803E9968, local
 	.float 1.5
-lbl_803E996C:
+.endobj lbl_803E9968
+.obj lbl_803E996C, local
 	.float -1.0
-lbl_803E9970:
+.endobj lbl_803E996C
+.obj lbl_803E9970, local
 	.float 0.2
-lbl_803E9974:
+.endobj lbl_803E9970
+.obj lbl_803E9974, local
 	.float 50.0
-lbl_803E9978:
+.endobj lbl_803E9974
+.obj lbl_803E9978, local
 	.float 100.0
-lbl_803E997C:
+.endobj lbl_803E9978
+.obj lbl_803E997C, local
 	.float 45.0
-lbl_803E9980:
+.endobj lbl_803E997C
+.obj lbl_803E9980, local
 	.float 180.0
-lbl_803E9984:
+.endobj lbl_803E9980
+.obj lbl_803E9984, local
 	.float 0.99
-lbl_803E9988:
+.endobj lbl_803E9984
+.obj lbl_803E9988, local
 	.float 300.0
-lbl_803E998C:
+.endobj lbl_803E9988
+.obj lbl_803E998C, local
 	.float 0.9
-lbl_803E9990:
+.endobj lbl_803E998C
+.obj lbl_803E9990, local
 	.float 0.25
-lbl_803E9994:
+.endobj lbl_803E9990
+.obj lbl_803E9994, local
 	.float 220.0
-lbl_803E9998:
+.endobj lbl_803E9994
+.obj lbl_803E9998, local
 	.float 5.0
-lbl_803E999C:
+.endobj lbl_803E9998
+.obj lbl_803E999C, local
 	.float -0.2
-lbl_803E99A0:
+.endobj lbl_803E999C
+.obj lbl_803E99A0, local
 	.float 3.0
-lbl_803E99A4:
+.endobj lbl_803E99A0
+.obj lbl_803E99A4, local
 	.float 30.0
-lbl_803E99A8:
+.endobj lbl_803E99A4
+.obj lbl_803E99A8, local
 	.float 0.8
-lbl_803E99AC:
+.endobj lbl_803E99A8
+.obj lbl_803E99AC, local
 	.float 0.15
-lbl_803E99B0:
+.endobj lbl_803E99AC
+.obj lbl_803E99B0, local
 	.float 0.075
-lbl_803E99B4:
+.endobj lbl_803E99B0
+.obj lbl_803E99B4, local
 	.float 0.42
-lbl_803E99B8:
+.endobj lbl_803E99B4
+.obj lbl_803E99B8, local
 	.float 0.01
-lbl_803E99BC:
+.endobj lbl_803E99B8
+.obj lbl_803E99BC, local
 	.float 140.0
-lbl_803E99C0:
+.endobj lbl_803E99BC
+.obj lbl_803E99C0, local
 	.float 0.4
-lbl_803E99C4:
+.endobj lbl_803E99C0
+.obj lbl_803E99C4, local
 	.4byte 0x0000002C
-lbl_803E99C8:
+.endobj lbl_803E99C4
+.obj lbl_803E99C8, local # yes, this is a 4byte
 	.4byte 0x3F800000
-lbl_803E99CC:
+.endobj lbl_803E99C8
+.obj lbl_803E99CC, local
 	.float 8.0
-lbl_803E99D0:
+.endobj lbl_803E99CC
+.obj lbl_803E99D0, local
 	.4byte 0x000000F1
-lbl_803E99D4:
+.endobj lbl_803E99D0
+.obj lbl_803E99D4, local
 	.4byte 0x000000F7
-lbl_803E99D8:
+.endobj lbl_803E99D4
+.obj lbl_803E99D8, local
 	.4byte 0x000000EF
-lbl_803E99DC:
+.endobj lbl_803E99D8
+.obj lbl_803E99DC, local
 	.4byte 0x000000F4
-lbl_803E99E0:
+.endobj lbl_803E99DC
+.obj lbl_803E99E0, local
 	.float 0.9999
+.endobj lbl_803E99E0

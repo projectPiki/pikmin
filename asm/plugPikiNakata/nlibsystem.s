@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global __ct__5NNodeFi
-__ct__5NNodeFi:
+.fn __ct__5NNodeFi, global
 /* 8011E0F8 0011B058  7C 08 02 A6 */	mflr r0
 /* 8011E0FC 0011B05C  90 01 00 04 */	stw r0, 4(r1)
 /* 8011E100 0011B060  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -58,9 +57,9 @@ __ct__5NNodeFi:
 /* 8011E1B8 0011B118  38 21 00 28 */	addi r1, r1, 0x28
 /* 8011E1BC 0011B11C  7C 08 03 A6 */	mtlr r0
 /* 8011E1C0 0011B120  4E 80 00 20 */	blr 
+.endfn __ct__5NNodeFi
 
-.global setChild__5NNodeFiP5NNode
-setChild__5NNodeFiP5NNode:
+.fn setChild__5NNodeFiP5NNode, global
 /* 8011E1C4 0011B124  7C 08 02 A6 */	mflr r0
 /* 8011E1C8 0011B128  90 01 00 04 */	stw r0, 4(r1)
 /* 8011E1CC 0011B12C  94 21 FF F8 */	stwu r1, -8(r1)
@@ -76,9 +75,9 @@ setChild__5NNodeFiP5NNode:
 /* 8011E1F0 0011B150  38 21 00 08 */	addi r1, r1, 8
 /* 8011E1F4 0011B154  7C 08 03 A6 */	mtlr r0
 /* 8011E1F8 0011B158  4E 80 00 20 */	blr 
+.endfn setChild__5NNodeFiP5NNode
 
-.global "set__14NArray<5NNode>FiP5NNode"
-"set__14NArray<5NNode>FiP5NNode":
+.fn "set__14NArray<5NNode>FiP5NNode", weak
 /* 8011E1FC 0011B15C  2C 04 00 00 */	cmpwi r4, 0
 /* 8011E200 0011B160  4D 80 00 20 */	bltlr 
 /* 8011E204 0011B164  80 C3 00 04 */	lwz r6, 4(r3)
@@ -94,9 +93,9 @@ setChild__5NNodeFiP5NNode:
 /* 8011E22C 0011B18C  4C 81 00 20 */	blelr 
 /* 8011E230 0011B190  90 83 00 08 */	stw r4, 8(r3)
 /* 8011E234 0011B194  4E 80 00 20 */	blr 
+.endfn "set__14NArray<5NNode>FiP5NNode"
 
-.global addChild__5NNodeFP5NNode
-addChild__5NNodeFP5NNode:
+.fn addChild__5NNodeFP5NNode, global
 /* 8011E238 0011B198  7C 08 02 A6 */	mflr r0
 /* 8011E23C 0011B19C  90 01 00 04 */	stw r0, 4(r1)
 /* 8011E240 0011B1A0  94 21 FF F8 */	stwu r1, -8(r1)
@@ -112,9 +111,9 @@ addChild__5NNodeFP5NNode:
 /* 8011E264 0011B1C4  38 21 00 08 */	addi r1, r1, 8
 /* 8011E268 0011B1C8  7C 08 03 A6 */	mtlr r0
 /* 8011E26C 0011B1CC  4E 80 00 20 */	blr 
+.endfn addChild__5NNodeFP5NNode
 
-.global "add__14NArray<5NNode>FP5NNode"
-"add__14NArray<5NNode>FP5NNode":
+.fn "add__14NArray<5NNode>FP5NNode", weak
 /* 8011E270 0011B1D0  80 A3 00 08 */	lwz r5, 8(r3)
 /* 8011E274 0011B1D4  80 03 00 04 */	lwz r0, 4(r3)
 /* 8011E278 0011B1D8  7C 05 00 00 */	cmpw r5, r0
@@ -130,9 +129,9 @@ addChild__5NNodeFP5NNode:
 /* 8011E29C 0011B1FC  7C 63 02 14 */	add r3, r3, r0
 /* 8011E2A0 0011B200  90 83 FF FC */	stw r4, -4(r3)
 /* 8011E2A4 0011B204  4E 80 00 20 */	blr 
+.endfn "add__14NArray<5NNode>FP5NNode"
 
-.global addChild__5NNodeFiP5NNode
-addChild__5NNodeFiP5NNode:
+.fn addChild__5NNodeFiP5NNode, global
 /* 8011E2A8 0011B208  7C 08 02 A6 */	mflr r0
 /* 8011E2AC 0011B20C  90 01 00 04 */	stw r0, 4(r1)
 /* 8011E2B0 0011B210  94 21 FF F8 */	stwu r1, -8(r1)
@@ -148,9 +147,9 @@ addChild__5NNodeFiP5NNode:
 /* 8011E2D4 0011B234  38 21 00 08 */	addi r1, r1, 8
 /* 8011E2D8 0011B238  7C 08 03 A6 */	mtlr r0
 /* 8011E2DC 0011B23C  4E 80 00 20 */	blr 
+.endfn addChild__5NNodeFiP5NNode
 
-.global "add__14NArray<5NNode>FiP5NNode"
-"add__14NArray<5NNode>FiP5NNode":
+.fn "add__14NArray<5NNode>FiP5NNode", weak
 /* 8011E2E0 0011B240  7C 08 02 A6 */	mflr r0
 /* 8011E2E4 0011B244  90 01 00 04 */	stw r0, 4(r1)
 /* 8011E2E8 0011B248  94 21 FF F8 */	stwu r1, -8(r1)
@@ -173,9 +172,9 @@ addChild__5NNodeFiP5NNode:
 /* 8011E324 0011B284  38 21 00 08 */	addi r1, r1, 8
 /* 8011E328 0011B288  7C 08 03 A6 */	mtlr r0
 /* 8011E32C 0011B28C  4E 80 00 20 */	blr 
+.endfn "add__14NArray<5NNode>FiP5NNode"
 
-.global "insert__14NArray<5NNode>FiP5NNode"
-"insert__14NArray<5NNode>FiP5NNode":
+.fn "insert__14NArray<5NNode>FiP5NNode", weak
 /* 8011E330 0011B290  80 E3 00 08 */	lwz r7, 8(r3)
 /* 8011E334 0011B294  7C 04 38 00 */	cmpw r4, r7
 /* 8011E338 0011B298  4C 80 00 20 */	bgelr 
@@ -249,9 +248,9 @@ addChild__5NNodeFiP5NNode:
 /* 8011E438 0011B398  38 04 00 01 */	addi r0, r4, 1
 /* 8011E43C 0011B39C  90 03 00 08 */	stw r0, 8(r3)
 /* 8011E440 0011B3A0  4E 80 00 20 */	blr 
+.endfn "insert__14NArray<5NNode>FiP5NNode"
 
-.global getChild__5NNodeFi
-getChild__5NNodeFi:
+.fn getChild__5NNodeFi, global
 /* 8011E444 0011B3A4  7C 08 02 A6 */	mflr r0
 /* 8011E448 0011B3A8  90 01 00 04 */	stw r0, 4(r1)
 /* 8011E44C 0011B3AC  94 21 FF F8 */	stwu r1, -8(r1)
@@ -270,9 +269,9 @@ getChild__5NNodeFi:
 /* 8011E478 0011B3D8  38 21 00 08 */	addi r1, r1, 8
 /* 8011E47C 0011B3DC  7C 08 03 A6 */	mtlr r0
 /* 8011E480 0011B3E0  4E 80 00 20 */	blr 
+.endfn getChild__5NNodeFi
 
-.global "get__14NArray<5NNode>Fi"
-"get__14NArray<5NNode>Fi":
+.fn "get__14NArray<5NNode>Fi", weak
 /* 8011E484 0011B3E4  2C 04 00 00 */	cmpwi r4, 0
 /* 8011E488 0011B3E8  41 80 00 14 */	blt .L_8011E49C
 /* 8011E48C 0011B3EC  80 A3 00 04 */	lwz r5, 4(r3)
@@ -287,9 +286,9 @@ getChild__5NNodeFi:
 /* 8011E4A8 0011B408  54 80 10 3A */	slwi r0, r4, 2
 /* 8011E4AC 0011B40C  7C 63 00 2E */	lwzx r3, r3, r0
 /* 8011E4B0 0011B410  4E 80 00 20 */	blr 
+.endfn "get__14NArray<5NNode>Fi"
 
-.global removeChild__5NNodeFP5NNode
-removeChild__5NNodeFP5NNode:
+.fn removeChild__5NNodeFP5NNode, global
 /* 8011E4B4 0011B414  7C 08 02 A6 */	mflr r0
 /* 8011E4B8 0011B418  90 01 00 04 */	stw r0, 4(r1)
 /* 8011E4BC 0011B41C  94 21 FF F8 */	stwu r1, -8(r1)
@@ -305,9 +304,9 @@ removeChild__5NNodeFP5NNode:
 /* 8011E4E0 0011B440  38 21 00 08 */	addi r1, r1, 8
 /* 8011E4E4 0011B444  7C 08 03 A6 */	mtlr r0
 /* 8011E4E8 0011B448  4E 80 00 20 */	blr 
+.endfn removeChild__5NNodeFP5NNode
 
-.global "remove__14NArray<5NNode>FP5NNode"
-"remove__14NArray<5NNode>FP5NNode":
+.fn "remove__14NArray<5NNode>FP5NNode", weak
 /* 8011E4EC 0011B44C  7C 08 02 A6 */	mflr r0
 /* 8011E4F0 0011B450  90 01 00 04 */	stw r0, 4(r1)
 /* 8011E4F4 0011B454  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -328,9 +327,9 @@ removeChild__5NNodeFP5NNode:
 /* 8011E530 0011B490  38 21 00 18 */	addi r1, r1, 0x18
 /* 8011E534 0011B494  7C 08 03 A6 */	mtlr r0
 /* 8011E538 0011B498  4E 80 00 20 */	blr 
+.endfn "remove__14NArray<5NNode>FP5NNode"
 
-.global "remove__14NArray<5NNode>Fi"
-"remove__14NArray<5NNode>Fi":
+.fn "remove__14NArray<5NNode>Fi", weak
 /* 8011E53C 0011B49C  2C 04 00 00 */	cmpwi r4, 0
 /* 8011E540 0011B4A0  4D 80 00 20 */	bltlr 
 /* 8011E544 0011B4A4  80 A3 00 08 */	lwz r5, 8(r3)
@@ -353,9 +352,9 @@ removeChild__5NNodeFP5NNode:
 /* 8011E580 0011B4E0  41 80 FF DC */	blt .L_8011E55C
 /* 8011E584 0011B4E4  90 03 00 08 */	stw r0, 8(r3)
 /* 8011E588 0011B4E8  4E 80 00 20 */	blr 
+.endfn "remove__14NArray<5NNode>Fi"
 
-.global "indexOf__14NArray<5NNode>FP5NNode"
-"indexOf__14NArray<5NNode>FP5NNode":
+.fn "indexOf__14NArray<5NNode>FP5NNode", weak
 /* 8011E58C 0011B4EC  7C 08 02 A6 */	mflr r0
 /* 8011E590 0011B4F0  38 A0 00 00 */	li r5, 0
 /* 8011E594 0011B4F4  90 01 00 04 */	stw r0, 4(r1)
@@ -368,9 +367,9 @@ removeChild__5NNodeFP5NNode:
 /* 8011E5B0 0011B510  38 21 00 08 */	addi r1, r1, 8
 /* 8011E5B4 0011B514  7C 08 03 A6 */	mtlr r0
 /* 8011E5B8 0011B518  4E 80 00 20 */	blr 
+.endfn "indexOf__14NArray<5NNode>FP5NNode"
 
-.global "indexOf__14NArray<5NNode>FP5NNodei"
-"indexOf__14NArray<5NNode>FP5NNodei":
+.fn "indexOf__14NArray<5NNode>FP5NNodei", weak
 /* 8011E5BC 0011B51C  28 04 00 00 */	cmplwi r4, 0
 /* 8011E5C0 0011B520  40 82 00 0C */	bne .L_8011E5CC
 /* 8011E5C4 0011B524  38 60 FF FF */	li r3, -1
@@ -396,9 +395,9 @@ removeChild__5NNodeFP5NNode:
 .L_8011E608:
 /* 8011E608 0011B568  38 60 FF FF */	li r3, -1
 /* 8011E60C 0011B56C  4E 80 00 20 */	blr 
+.endfn "indexOf__14NArray<5NNode>FP5NNodei"
 
-.global removeChild__5NNodeFi
-removeChild__5NNodeFi:
+.fn removeChild__5NNodeFi, global
 /* 8011E610 0011B570  7C 08 02 A6 */	mflr r0
 /* 8011E614 0011B574  90 01 00 04 */	stw r0, 4(r1)
 /* 8011E618 0011B578  94 21 FF F8 */	stwu r1, -8(r1)
@@ -414,9 +413,9 @@ removeChild__5NNodeFi:
 /* 8011E63C 0011B59C  38 21 00 08 */	addi r1, r1, 8
 /* 8011E640 0011B5A0  7C 08 03 A6 */	mtlr r0
 /* 8011E644 0011B5A4  4E 80 00 20 */	blr 
+.endfn removeChild__5NNodeFi
 
-.global removeAllChildren__5NNodeFv
-removeAllChildren__5NNodeFv:
+.fn removeAllChildren__5NNodeFv, global
 /* 8011E648 0011B5A8  7C 08 02 A6 */	mflr r0
 /* 8011E64C 0011B5AC  90 01 00 04 */	stw r0, 4(r1)
 /* 8011E650 0011B5B0  94 21 FF F8 */	stwu r1, -8(r1)
@@ -432,9 +431,9 @@ removeAllChildren__5NNodeFv:
 /* 8011E674 0011B5D4  38 21 00 08 */	addi r1, r1, 8
 /* 8011E678 0011B5D8  7C 08 03 A6 */	mtlr r0
 /* 8011E67C 0011B5DC  4E 80 00 20 */	blr 
+.endfn removeAllChildren__5NNodeFv
 
-.global "removeAll__14NArray<5NNode>Fv"
-"removeAll__14NArray<5NNode>Fv":
+.fn "removeAll__14NArray<5NNode>Fv", weak
 /* 8011E680 0011B5E0  7C 08 02 A6 */	mflr r0
 /* 8011E684 0011B5E4  38 80 00 00 */	li r4, 0
 /* 8011E688 0011B5E8  90 01 00 04 */	stw r0, 4(r1)
@@ -448,9 +447,9 @@ removeAllChildren__5NNodeFv:
 /* 8011E6A8 0011B608  38 21 00 08 */	addi r1, r1, 8
 /* 8011E6AC 0011B60C  7C 08 03 A6 */	mtlr r0
 /* 8011E6B0 0011B610  4E 80 00 20 */	blr 
+.endfn "removeAll__14NArray<5NNode>Fv"
 
-.global "remove__14NArray<5NNode>Fii"
-"remove__14NArray<5NNode>Fii":
+.fn "remove__14NArray<5NNode>Fii", weak
 /* 8011E6B4 0011B614  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 8011E6B8 0011B618  2C 05 00 00 */	cmpwi r5, 0
 /* 8011E6BC 0011B61C  38 C0 00 00 */	li r6, 0
@@ -536,9 +535,9 @@ removeAllChildren__5NNodeFv:
 /* 8011E7E4 0011B744  83 E1 00 1C */	lwz r31, 0x1c(r1)
 /* 8011E7E8 0011B748  38 21 00 20 */	addi r1, r1, 0x20
 /* 8011E7EC 0011B74C  4E 80 00 20 */	blr 
+.endfn "remove__14NArray<5NNode>Fii"
 
-.global release__5NHeapFv
-release__5NHeapFv:
+.fn release__5NHeapFv, global
 /* 8011E7F0 0011B750  7C 08 02 A6 */	mflr r0
 /* 8011E7F4 0011B754  90 01 00 04 */	stw r0, 4(r1)
 /* 8011E7F8 0011B758  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -573,9 +572,9 @@ release__5NHeapFv:
 /* 8011E860 0011B7C0  38 21 00 20 */	addi r1, r1, 0x20
 /* 8011E864 0011B7C4  7C 08 03 A6 */	mtlr r0
 /* 8011E868 0011B7C8  4E 80 00 20 */	blr 
+.endfn release__5NHeapFv
 
-.global "get__14NArray<5NHeap>Fi"
-"get__14NArray<5NHeap>Fi":
+.fn "get__14NArray<5NHeap>Fi", weak
 /* 8011E86C 0011B7CC  2C 04 00 00 */	cmpwi r4, 0
 /* 8011E870 0011B7D0  41 80 00 14 */	blt .L_8011E884
 /* 8011E874 0011B7D4  80 A3 00 04 */	lwz r5, 4(r3)
@@ -590,14 +589,14 @@ release__5NHeapFv:
 /* 8011E890 0011B7F0  54 80 10 3A */	slwi r0, r4, 2
 /* 8011E894 0011B7F4  7C 63 00 2E */	lwzx r3, r3, r0
 /* 8011E898 0011B7F8  4E 80 00 20 */	blr 
+.endfn "get__14NArray<5NHeap>Fi"
 
-.global initSystem__7NSystemFP6System
-initSystem__7NSystemFP6System:
+.fn initSystem__7NSystemFP6System, global
 /* 8011E89C 0011B7FC  90 6D 31 50 */	stw r3, system__7NSystem@sda21(r13)
 /* 8011E8A0 0011B800  4E 80 00 20 */	blr 
+.endfn initSystem__7NSystemFP6System
 
-.global randomInt__7NSystemFi
-randomInt__7NSystemFi:
+.fn randomInt__7NSystemFi, global
 /* 8011E8A4 0011B804  7C 08 02 A6 */	mflr r0
 /* 8011E8A8 0011B808  90 01 00 04 */	stw r0, 4(r1)
 /* 8011E8AC 0011B80C  94 21 FF C0 */	stwu r1, -0x40(r1)
@@ -636,9 +635,9 @@ randomInt__7NSystemFi:
 /* 8011E92C 0011B88C  38 21 00 40 */	addi r1, r1, 0x40
 /* 8011E930 0011B890  7C 08 03 A6 */	mtlr r0
 /* 8011E934 0011B894  4E 80 00 20 */	blr 
+.endfn randomInt__7NSystemFi
 
-.global getFreeHeap__7NSystemFv
-getFreeHeap__7NSystemFv:
+.fn getFreeHeap__7NSystemFv, global
 /* 8011E938 0011B898  7C 08 02 A6 */	mflr r0
 /* 8011E93C 0011B89C  38 80 00 02 */	li r4, 2
 /* 8011E940 0011B8A0  90 01 00 04 */	stw r0, 4(r1)
@@ -652,9 +651,9 @@ getFreeHeap__7NSystemFv:
 /* 8011E960 0011B8C0  38 21 00 08 */	addi r1, r1, 8
 /* 8011E964 0011B8C4  7C 08 03 A6 */	mtlr r0
 /* 8011E968 0011B8C8  4E 80 00 20 */	blr 
+.endfn getFreeHeap__7NSystemFv
 
-.global addHeap__5NHeapFP5NHeap
-addHeap__5NHeapFP5NHeap:
+.fn addHeap__5NHeapFP5NHeap, weak
 /* 8011E96C 0011B8CC  7C 08 02 A6 */	mflr r0
 /* 8011E970 0011B8D0  90 01 00 04 */	stw r0, 4(r1)
 /* 8011E974 0011B8D4  94 21 FF F8 */	stwu r1, -8(r1)
@@ -667,9 +666,9 @@ addHeap__5NHeapFP5NHeap:
 /* 8011E990 0011B8F0  38 21 00 08 */	addi r1, r1, 8
 /* 8011E994 0011B8F4  7C 08 03 A6 */	mtlr r0
 /* 8011E998 0011B8F8  4E 80 00 20 */	blr 
+.endfn addHeap__5NHeapFP5NHeap
 
-.global "add__14NArray<5NHeap>FP5NHeap"
-"add__14NArray<5NHeap>FP5NHeap":
+.fn "add__14NArray<5NHeap>FP5NHeap", weak
 /* 8011E99C 0011B8FC  80 A3 00 08 */	lwz r5, 8(r3)
 /* 8011E9A0 0011B900  80 03 00 04 */	lwz r0, 4(r3)
 /* 8011E9A4 0011B904  7C 05 00 00 */	cmpw r5, r0
@@ -685,9 +684,9 @@ addHeap__5NHeapFP5NHeap:
 /* 8011E9C8 0011B928  7C 63 02 14 */	add r3, r3, r0
 /* 8011E9CC 0011B92C  90 83 FF FC */	stw r4, -4(r3)
 /* 8011E9D0 0011B930  4E 80 00 20 */	blr 
+.endfn "add__14NArray<5NHeap>FP5NHeap"
 
-.global "contains__14NArray<5NNode>FP5NNode"
-"contains__14NArray<5NNode>FP5NNode":
+.fn "contains__14NArray<5NNode>FP5NNode", weak
 /* 8011E9D4 0011B934  7C 08 02 A6 */	mflr r0
 /* 8011E9D8 0011B938  38 A0 00 00 */	li r5, 0
 /* 8011E9DC 0011B93C  90 01 00 04 */	stw r0, 4(r1)
@@ -705,9 +704,9 @@ addHeap__5NHeapFP5NHeap:
 /* 8011EA0C 0011B96C  38 21 00 08 */	addi r1, r1, 8
 /* 8011EA10 0011B970  7C 08 03 A6 */	mtlr r0
 /* 8011EA14 0011B974  4E 80 00 20 */	blr 
+.endfn "contains__14NArray<5NNode>FP5NNode"
 
-.global "indexOf__14NArray<5NHeap>FP5NHeapi"
-"indexOf__14NArray<5NHeap>FP5NHeapi":
+.fn "indexOf__14NArray<5NHeap>FP5NHeapi", weak
 /* 8011EA18 0011B978  28 04 00 00 */	cmplwi r4, 0
 /* 8011EA1C 0011B97C  40 82 00 0C */	bne .L_8011EA28
 /* 8011EA20 0011B980  38 60 FF FF */	li r3, -1
@@ -733,9 +732,9 @@ addHeap__5NHeapFP5NHeap:
 .L_8011EA64:
 /* 8011EA64 0011B9C4  38 60 FF FF */	li r3, -1
 /* 8011EA68 0011B9C8  4E 80 00 20 */	blr 
+.endfn "indexOf__14NArray<5NHeap>FP5NHeapi"
 
-.global "set__14NArray<5NHeap>FiP5NHeap"
-"set__14NArray<5NHeap>FiP5NHeap":
+.fn "set__14NArray<5NHeap>FiP5NHeap", weak
 /* 8011EA6C 0011B9CC  2C 04 00 00 */	cmpwi r4, 0
 /* 8011EA70 0011B9D0  4D 80 00 20 */	bltlr 
 /* 8011EA74 0011B9D4  80 C3 00 04 */	lwz r6, 4(r3)
@@ -751,9 +750,9 @@ addHeap__5NHeapFP5NHeap:
 /* 8011EA9C 0011B9FC  4C 81 00 20 */	blelr 
 /* 8011EAA0 0011BA00  90 83 00 08 */	stw r4, 8(r3)
 /* 8011EAA4 0011BA04  4E 80 00 20 */	blr 
+.endfn "set__14NArray<5NHeap>FiP5NHeap"
 
-.global "remove__14NArray<5NHeap>Fii"
-"remove__14NArray<5NHeap>Fii":
+.fn "remove__14NArray<5NHeap>Fii", weak
 /* 8011EAA8 0011BA08  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 8011EAAC 0011BA0C  2C 05 00 00 */	cmpwi r5, 0
 /* 8011EAB0 0011BA10  38 C0 00 00 */	li r6, 0
@@ -839,9 +838,9 @@ addHeap__5NHeapFP5NHeap:
 /* 8011EBD8 0011BB38  83 E1 00 1C */	lwz r31, 0x1c(r1)
 /* 8011EBDC 0011BB3C  38 21 00 20 */	addi r1, r1, 0x20
 /* 8011EBE0 0011BB40  4E 80 00 20 */	blr 
+.endfn "remove__14NArray<5NHeap>Fii"
 
-.global "remove__14NArray<5NHeap>Fi"
-"remove__14NArray<5NHeap>Fi":
+.fn "remove__14NArray<5NHeap>Fi", weak
 /* 8011EBE4 0011BB44  2C 04 00 00 */	cmpwi r4, 0
 /* 8011EBE8 0011BB48  4D 80 00 20 */	bltlr 
 /* 8011EBEC 0011BB4C  80 A3 00 08 */	lwz r5, 8(r3)
@@ -864,9 +863,9 @@ addHeap__5NHeapFP5NHeap:
 /* 8011EC28 0011BB88  41 80 FF DC */	blt .L_8011EC04
 /* 8011EC2C 0011BB8C  90 03 00 08 */	stw r0, 8(r3)
 /* 8011EC30 0011BB90  4E 80 00 20 */	blr 
+.endfn "remove__14NArray<5NHeap>Fi"
 
-.global "insert__14NArray<5NHeap>FiP5NHeap"
-"insert__14NArray<5NHeap>FiP5NHeap":
+.fn "insert__14NArray<5NHeap>FiP5NHeap", weak
 /* 8011EC34 0011BB94  80 E3 00 08 */	lwz r7, 8(r3)
 /* 8011EC38 0011BB98  7C 04 38 00 */	cmpw r4, r7
 /* 8011EC3C 0011BB9C  4C 80 00 20 */	bgelr 
@@ -940,9 +939,9 @@ addHeap__5NHeapFP5NHeap:
 /* 8011ED3C 0011BC9C  38 04 00 01 */	addi r0, r4, 1
 /* 8011ED40 0011BCA0  90 03 00 08 */	stw r0, 8(r3)
 /* 8011ED44 0011BCA4  4E 80 00 20 */	blr 
+.endfn "insert__14NArray<5NHeap>FiP5NHeap"
 
-.global "firstElement__14NArray<5NHeap>Fv"
-"firstElement__14NArray<5NHeap>Fv":
+.fn "firstElement__14NArray<5NHeap>Fv", weak
 /* 8011ED48 0011BCA8  7C 08 02 A6 */	mflr r0
 /* 8011ED4C 0011BCAC  38 80 00 00 */	li r4, 0
 /* 8011ED50 0011BCB0  90 01 00 04 */	stw r0, 4(r1)
@@ -955,9 +954,9 @@ addHeap__5NHeapFP5NHeap:
 /* 8011ED6C 0011BCCC  38 21 00 08 */	addi r1, r1, 8
 /* 8011ED70 0011BCD0  7C 08 03 A6 */	mtlr r0
 /* 8011ED74 0011BCD4  4E 80 00 20 */	blr 
+.endfn "firstElement__14NArray<5NHeap>Fv"
 
-.global "lastElement__14NArray<5NHeap>Fv"
-"lastElement__14NArray<5NHeap>Fv":
+.fn "lastElement__14NArray<5NHeap>Fv", weak
 /* 8011ED78 0011BCD8  7C 08 02 A6 */	mflr r0
 /* 8011ED7C 0011BCDC  90 01 00 04 */	stw r0, 4(r1)
 /* 8011ED80 0011BCE0  94 21 FF F8 */	stwu r1, -8(r1)
@@ -971,9 +970,9 @@ addHeap__5NHeapFP5NHeap:
 /* 8011EDA0 0011BD00  38 21 00 08 */	addi r1, r1, 8
 /* 8011EDA4 0011BD04  7C 08 03 A6 */	mtlr r0
 /* 8011EDA8 0011BD08  4E 80 00 20 */	blr 
+.endfn "lastElement__14NArray<5NHeap>Fv"
 
-.global "firstElement__14NArray<5NNode>Fv"
-"firstElement__14NArray<5NNode>Fv":
+.fn "firstElement__14NArray<5NNode>Fv", weak
 /* 8011EDAC 0011BD0C  7C 08 02 A6 */	mflr r0
 /* 8011EDB0 0011BD10  38 80 00 00 */	li r4, 0
 /* 8011EDB4 0011BD14  90 01 00 04 */	stw r0, 4(r1)
@@ -986,9 +985,9 @@ addHeap__5NHeapFP5NHeap:
 /* 8011EDD0 0011BD30  38 21 00 08 */	addi r1, r1, 8
 /* 8011EDD4 0011BD34  7C 08 03 A6 */	mtlr r0
 /* 8011EDD8 0011BD38  4E 80 00 20 */	blr 
+.endfn "firstElement__14NArray<5NNode>Fv"
 
-.global "lastElement__14NArray<5NNode>Fv"
-"lastElement__14NArray<5NNode>Fv":
+.fn "lastElement__14NArray<5NNode>Fv", weak
 /* 8011EDDC 0011BD3C  7C 08 02 A6 */	mflr r0
 /* 8011EDE0 0011BD40  90 01 00 04 */	stw r0, 4(r1)
 /* 8011EDE4 0011BD44  94 21 FF F8 */	stwu r1, -8(r1)
@@ -1002,9 +1001,9 @@ addHeap__5NHeapFP5NHeap:
 /* 8011EE04 0011BD64  38 21 00 08 */	addi r1, r1, 8
 /* 8011EE08 0011BD68  7C 08 03 A6 */	mtlr r0
 /* 8011EE0C 0011BD6C  4E 80 00 20 */	blr 
+.endfn "lastElement__14NArray<5NNode>Fv"
 
-.global "remove__14NArray<5NHeap>FP5NHeap"
-"remove__14NArray<5NHeap>FP5NHeap":
+.fn "remove__14NArray<5NHeap>FP5NHeap", weak
 /* 8011EE10 0011BD70  7C 08 02 A6 */	mflr r0
 /* 8011EE14 0011BD74  90 01 00 04 */	stw r0, 4(r1)
 /* 8011EE18 0011BD78  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -1025,9 +1024,9 @@ addHeap__5NHeapFP5NHeap:
 /* 8011EE54 0011BDB4  38 21 00 18 */	addi r1, r1, 0x18
 /* 8011EE58 0011BDB8  7C 08 03 A6 */	mtlr r0
 /* 8011EE5C 0011BDBC  4E 80 00 20 */	blr 
+.endfn "remove__14NArray<5NHeap>FP5NHeap"
 
-.global "removeAll__14NArray<5NHeap>Fv"
-"removeAll__14NArray<5NHeap>Fv":
+.fn "removeAll__14NArray<5NHeap>Fv", weak
 /* 8011EE60 0011BDC0  7C 08 02 A6 */	mflr r0
 /* 8011EE64 0011BDC4  38 80 00 00 */	li r4, 0
 /* 8011EE68 0011BDC8  90 01 00 04 */	stw r0, 4(r1)
@@ -1041,9 +1040,9 @@ addHeap__5NHeapFP5NHeap:
 /* 8011EE88 0011BDE8  38 21 00 08 */	addi r1, r1, 8
 /* 8011EE8C 0011BDEC  7C 08 03 A6 */	mtlr r0
 /* 8011EE90 0011BDF0  4E 80 00 20 */	blr 
+.endfn "removeAll__14NArray<5NHeap>Fv"
 
-.global "add__14NArray<5NHeap>FiP5NHeap"
-"add__14NArray<5NHeap>FiP5NHeap":
+.fn "add__14NArray<5NHeap>FiP5NHeap", weak
 /* 8011EE94 0011BDF4  7C 08 02 A6 */	mflr r0
 /* 8011EE98 0011BDF8  90 01 00 04 */	stw r0, 4(r1)
 /* 8011EE9C 0011BDFC  94 21 FF F8 */	stwu r1, -8(r1)
@@ -1066,9 +1065,9 @@ addHeap__5NHeapFP5NHeap:
 /* 8011EED8 0011BE38  38 21 00 08 */	addi r1, r1, 8
 /* 8011EEDC 0011BE3C  7C 08 03 A6 */	mtlr r0
 /* 8011EEE0 0011BE40  4E 80 00 20 */	blr 
+.endfn "add__14NArray<5NHeap>FiP5NHeap"
 
-.global "indexOf__14NArray<5NHeap>FP5NHeap"
-"indexOf__14NArray<5NHeap>FP5NHeap":
+.fn "indexOf__14NArray<5NHeap>FP5NHeap", weak
 /* 8011EEE4 0011BE44  7C 08 02 A6 */	mflr r0
 /* 8011EEE8 0011BE48  38 A0 00 00 */	li r5, 0
 /* 8011EEEC 0011BE4C  90 01 00 04 */	stw r0, 4(r1)
@@ -1081,9 +1080,9 @@ addHeap__5NHeapFP5NHeap:
 /* 8011EF08 0011BE68  38 21 00 08 */	addi r1, r1, 8
 /* 8011EF0C 0011BE6C  7C 08 03 A6 */	mtlr r0
 /* 8011EF10 0011BE70  4E 80 00 20 */	blr 
+.endfn "indexOf__14NArray<5NHeap>FP5NHeap"
 
-.global "contains__14NArray<5NHeap>FP5NHeap"
-"contains__14NArray<5NHeap>FP5NHeap":
+.fn "contains__14NArray<5NHeap>FP5NHeap", weak
 /* 8011EF14 0011BE74  7C 08 02 A6 */	mflr r0
 /* 8011EF18 0011BE78  38 A0 00 00 */	li r5, 0
 /* 8011EF1C 0011BE7C  90 01 00 04 */	stw r0, 4(r1)
@@ -1101,43 +1100,30 @@ addHeap__5NHeapFP5NHeap:
 /* 8011EF4C 0011BEAC  38 21 00 08 */	addi r1, r1, 8
 /* 8011EF50 0011BEB0  7C 08 03 A6 */	mtlr r0
 /* 8011EF54 0011BEB4  4E 80 00 20 */	blr 
-
-.global __ct__14PaniMotionInfoFi
-__ct__14PaniMotionInfoFi:
-/* 8011EF58 0011BEB8  7C 08 02 A6 */	mflr r0
-/* 8011EF5C 0011BEBC  38 A0 00 00 */	li r5, 0
-/* 8011EF60 0011BEC0  90 01 00 04 */	stw r0, 4(r1)
-/* 8011EF64 0011BEC4  94 21 FF E8 */	stwu r1, -0x18(r1)
-/* 8011EF68 0011BEC8  93 E1 00 14 */	stw r31, 0x14(r1)
-/* 8011EF6C 0011BECC  3B E3 00 00 */	addi r31, r3, 0
-/* 8011EF70 0011BED0  48 00 00 4D */	bl init__14PaniMotionInfoFiP19PaniAnimKeyListener
-/* 8011EF74 0011BED4  7F E3 FB 78 */	mr r3, r31
-/* 8011EF78 0011BED8  80 01 00 1C */	lwz r0, 0x1c(r1)
-/* 8011EF7C 0011BEDC  83 E1 00 14 */	lwz r31, 0x14(r1)
-/* 8011EF80 0011BEE0  38 21 00 18 */	addi r1, r1, 0x18
-/* 8011EF84 0011BEE4  7C 08 03 A6 */	mtlr r0
-/* 8011EF88 0011BEE8  4E 80 00 20 */	blr 
+.endfn "contains__14NArray<5NHeap>FP5NHeap"
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802C4B98:
+.obj lbl_802C4B98, local
 	.asciz "nlibsystem.cpp"
+.endobj lbl_802C4B98
 .balign 4
-lbl_802C4BA8:
+.obj lbl_802C4BA8, local
 	.asciz "nlibsystem"
+.endobj lbl_802C4BA8
 .balign 4
-.global __vt__5NHeap
-__vt__5NHeap:
+.obj __vt__5NHeap, global
 	.4byte __RTTI__5NHeap
 	.4byte 0
 	.4byte release__5NHeapFv
 	.4byte addHeap__5NHeapFP5NHeap
+.endobj __vt__5NHeap
 .balign 4
-lbl_802C4BC4:
+.obj lbl_802C4BC4, local
 	.asciz "NArray<NHeap>"
+.endobj lbl_802C4BC4
 .balign 4
-.global "__vt__14NArray<5NHeap>"
-"__vt__14NArray<5NHeap>":
+.obj "__vt__14NArray<5NHeap>", weak
 	.4byte "__RTTI__14NArray<5NHeap>"
 	.4byte 0
 	.4byte "contains__14NArray<5NHeap>FP5NHeap"
@@ -1154,8 +1140,9 @@ lbl_802C4BC4:
 	.4byte "get__14NArray<5NHeap>Fi"
 	.4byte "firstElement__14NArray<5NHeap>Fv"
 	.4byte "lastElement__14NArray<5NHeap>Fv"
-.global __vt__5NNode
-__vt__5NNode:
+.endobj "__vt__14NArray<5NHeap>"
+.balign 4
+.obj __vt__5NNode, global
 	.4byte __RTTI__5NNode
 	.4byte 0
 	.4byte setChild__5NNodeFiP5NNode
@@ -1164,12 +1151,13 @@ __vt__5NNode:
 	.4byte removeChild__5NNodeFP5NNode
 	.4byte removeChild__5NNodeFi
 	.4byte removeAllChildren__5NNodeFv
+.endobj __vt__5NNode
 .balign 4
-lbl_802C4C34:
+.obj lbl_802C4C34, local
 	.asciz "NArray<NNode>"
+.endobj lbl_802C4C34
 .balign 4
-.global "__vt__14NArray<5NNode>"
-"__vt__14NArray<5NNode>":
+.obj "__vt__14NArray<5NNode>", weak
 	.4byte "__RTTI__14NArray<5NNode>"
 	.4byte 0
 	.4byte "contains__14NArray<5NNode>FP5NNode"
@@ -1186,41 +1174,53 @@ lbl_802C4C34:
 	.4byte "get__14NArray<5NNode>Fi"
 	.4byte "firstElement__14NArray<5NNode>Fv"
 	.4byte "lastElement__14NArray<5NNode>Fv"
+.endobj "__vt__14NArray<5NNode>"
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-lbl_803E3080:
+.obj lbl_803E3080, local
 	.asciz "NHeap"
+.endobj lbl_803E3080
 .balign 4
-__RTTI__5NHeap:
+.obj __RTTI__5NHeap, local
 	.4byte lbl_803E3080
 	.4byte 0
-"__RTTI__14NArray<5NHeap>":
+.endobj __RTTI__5NHeap
+.balign 4
+.obj "__RTTI__14NArray<5NHeap>", local
 	.4byte lbl_802C4BC4
 	.4byte 0
+.endobj "__RTTI__14NArray<5NHeap>"
 .balign 4
-lbl_803E3098:
+.obj lbl_803E3098, local
 	.asciz "NNode"
+.endobj lbl_803E3098
 .balign 4
-__RTTI__5NNode:
+.obj __RTTI__5NNode, local
 	.4byte lbl_803E3098
 	.4byte 0
-"__RTTI__14NArray<5NNode>":
+.endobj __RTTI__5NNode
+.balign 4
+.obj "__RTTI__14NArray<5NNode>", local
 	.4byte lbl_802C4C34
 	.4byte 0
+.endobj "__RTTI__14NArray<5NNode>"
 
 .section .sbss, "wa"
 .balign 8
-.global system__7NSystem
-system__7NSystem:
+.obj system__7NSystem, global
 	.skip 0x4
+.endobj system__7NSystem
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803EA260:
+.obj lbl_803EA260, local
 	.float 1.0
-lbl_803EA264:
+.endobj lbl_803EA260
+.obj lbl_803EA264, local
 	.float 32767.0
-lbl_803EA268:
-	.4byte 0x43300000
-	.4byte 0x80000000
+.endobj lbl_803EA264
+.balign 8
+.obj lbl_803EA268, local
+	.8byte 0x4330000080000000
+.endobj lbl_803EA268

@@ -2558,6 +2558,7 @@ lbl_802D634C:
 	.4byte 0x00000000
 	.4byte 0xFFFFFFFF
 	.4byte menuCloseMenu__4MenuFR4Menu
+.balign 4
 lbl_802D6358:
 	.4byte 0x00000000
 	.4byte 0xFFFFFFFF
@@ -2575,34 +2576,39 @@ lbl_802D6398:
 lbl_802D63A8:
 	.asciz "bigFont.bti"
 .balign 4
-lbl_802D63B4:
+lbl_802D63B4: # Shift-JIS
 	.4byte 0x83748340
 	.4byte 0x83438369
 	.4byte 0x838B838A
 	.4byte 0x8355838B
 	.4byte 0x83670000
-lbl_802D63C8:
+.balign 4
+lbl_802D63C8: # Shift-JIS
 	.4byte 0x83498376
 	.4byte 0x83568387
 	.4byte 0x8393835A
 	.4byte 0x815B8375
 	.4byte 0x00000000
-lbl_802D63DC:
+.balign 4
+lbl_802D63DC: # Shift-JIS
 	.4byte 0x835A815B
 	.4byte 0x83758381
 	.4byte 0x8362835A
 	.4byte 0x815B8357
 	.4byte 0x00000000
-lbl_802D63F0:
+.balign 4
+lbl_802D63F0: # Shift-JIS
 	.4byte 0x82748265
 	.4byte 0x826E8370
 	.4byte 0x815B8363
 	.4byte 0x00000000
-lbl_802D6400:
+.balign 4
+lbl_802D6400: # Shift-JIS
 	.4byte 0x836E8343
 	.4byte 0x83588352
 	.4byte 0x83410000
-lbl_802D640C:
+.balign 4
+lbl_802D640C: # Shift-JIS
 	.4byte 0x83608383
 	.4byte 0x838C8393
 	.4byte 0x83578382
@@ -2612,12 +2618,14 @@ lbl_802D640C:
 	.4byte 0x835A838C
 	.4byte 0x834E8367
 	.4byte 0x00000000
-lbl_802D6430:
+.balign 4
+lbl_802D6430: # Shift-JIS
 	.4byte 0x838F815B
 	.4byte 0x838B8368
 	.4byte 0x837D8362
 	.4byte 0x83760000
-lbl_802D6440:
+.balign 4
+lbl_802D6440: # Shift-JIS
 	.4byte 0x838F815B
 	.4byte 0x838B8368
 	.4byte 0x837D8362
@@ -2626,30 +2634,35 @@ lbl_802D6440:
 	.4byte 0x8381836A
 	.4byte 0x8385815B
 	.4byte 0x00000000
-lbl_802D6460:
+.balign 4
+lbl_802D6460: # Shift-JIS
 	.4byte 0x8373834E
 	.4byte 0x837E8393
 	.4byte 0x8F6F82B5
 	.4byte 0x93FC82EA
 	.4byte 0x00000000
-lbl_802D6474:
+.balign 4
+lbl_802D6474: # Shift-JIS
 	.4byte 0x8351815B
 	.4byte 0x83808349
 	.4byte 0x815B836F
 	.4byte 0x815B0000
-lbl_802D6484:
+.balign 4
+lbl_802D6484: # Shift-JIS
 	.4byte 0x834A8345
 	.4byte 0x83938367
 	.4byte 0x835F8345
 	.4byte 0x83930000
-lbl_802D6494:
+.balign 4
+lbl_802D6494: # Shift-JIS
 	.4byte 0x8376838D
 	.4byte 0x834F838C
 	.4byte 0x83628356
 	.4byte 0x83758382
 	.4byte 0x815B8368
 	.4byte 0x00000000
-lbl_802D64AC:
+.balign 4
+lbl_802D64AC: # Shift-JIS
 	.4byte 0x8351815B
 	.4byte 0x83808FEE
 	.4byte 0x95F10000
@@ -2666,7 +2679,7 @@ lbl_802D64DC:
 lbl_802D64F4:
 	.asciz "screen/blo/progre.blo"
 .balign 4
-lbl_802D650C:
+lbl_802D650C: # Shift-JIS
 	.4byte 0x83608383
 	.4byte 0x838C8393
 	.4byte 0x83578382
@@ -2680,8 +2693,8 @@ lbl_802D6528:
 .balign 4
 lbl_802D6534:
 	.4byte __RTTI__5ANode
-	.4byte 0x00000000
-	.4byte 0x00000000
+	.4byte 0
+	.4byte 0
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x00000000
@@ -2698,8 +2711,8 @@ lbl_802D6574:
 .balign 4
 lbl_802D6584:
 	.4byte __RTTI__Q23zen7zenList
-	.4byte 0x00000000
-	.4byte 0x00000000
+	.4byte 0
+	.4byte 0
 .global __vt__Q23zen17particleGenerator
 __vt__Q23zen17particleGenerator:
 	.4byte __RTTI__Q23zen17particleGenerator
@@ -3067,151 +3080,227 @@ __vt__22GameCourseClearSection:
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-lbl_803E5B80:
-	.4byte 0x43480000
-lbl_803E5B84:
-	.4byte 0x43480000
-lbl_803E5B88:
-	.4byte 0x43480000
-lbl_803E5B8C:
-	.4byte 0x00000000
-lbl_803E5B90:
-	.4byte 0x00000000
-lbl_803E5B94:
-	.4byte 0x00000000
-lbl_803E5B98:
-	.4byte 0x00000000
-lbl_803E5B9C:
-	.4byte 0x00000000
-lbl_803E5BA0:
-	.4byte 0x00000000
+.obj lbl_803E5B80, local
+	.float 200.0
+.endobj lbl_803E5B80
+.obj lbl_803E5B84, local
+	.float 200.0
+.endobj lbl_803E5B84
+.obj lbl_803E5B88, local
+	.float 200.0
+.endobj lbl_803E5B88
+.obj lbl_803E5B8C, local
+	.float 0.0
+.endobj lbl_803E5B8C
+.obj lbl_803E5B90, local
+	.float 0.0
+.endobj lbl_803E5B90
+.obj lbl_803E5B94, local
+	.float 0.0
+.endobj lbl_803E5B94
+.obj lbl_803E5B98, local
+	.float 0.0
+.endobj lbl_803E5B98
+.obj lbl_803E5B9C, local
+	.float 0.0
+.endobj lbl_803E5B9C
+.obj lbl_803E5BA0, local
+	.float 0.0
+.endobj lbl_803E5BA0
 .balign 4
-lbl_803E5BA4:
+.obj lbl_803E5BA4, local
 	.asciz "<Node>"
+.endobj lbl_803E5BA4
 .balign 4
-lbl_803E5BAC:
+.obj lbl_803E5BAC, local
 	.asciz "p00"
+.endobj lbl_803E5BAC
 .balign 4
-lbl_803E5BB0:
+.obj lbl_803E5BB0, local
 	.asciz "i00"
+.endobj lbl_803E5BB0
 .balign 4
-lbl_803E5BB4:
+.obj lbl_803E5BB4, local
 	.asciz "Quit"
+.endobj lbl_803E5BB4
 .balign 4
-lbl_803E5BBC:
+.obj lbl_803E5BBC, local
 	.asciz "ANode"
+.endobj lbl_803E5BBC
 .balign 4
-__RTTI__5ANode:
+.obj __RTTI__5ANode, local
 	.4byte lbl_803E5BBC
-	.4byte 0x00000000
-__RTTI__8CoreNode:
+	.4byte 0
+.endobj __RTTI__5ANode
+.balign 4
+.obj __RTTI__8CoreNode, local
 	.4byte lbl_802D6528
 	.4byte lbl_802D6534
-__RTTI__Q23zen7zenList:
+.endobj __RTTI__8CoreNode
+.balign 4
+.obj __RTTI__Q23zen7zenList, local
 	.4byte lbl_802D6574
 	.4byte 0
-__RTTI__Q23zen17particleGenerator:
+.endobj __RTTI__Q23zen7zenList
+.balign 4
+.obj __RTTI__Q23zen17particleGenerator, local
 	.4byte lbl_802D655C
 	.4byte lbl_802D6584
-__RTTI__12GameModeBase:
+.endobj __RTTI__Q23zen17particleGenerator
+.balign 4
+.obj __RTTI__12GameModeBase, local
 	.4byte lbl_802D65B0
 	.4byte 0
-__RTTI__12CMresultMode:
+.endobj __RTTI__12GameModeBase
+.balign 4
+.obj __RTTI__12CMresultMode, local
 	.4byte lbl_802D65A0
 	.4byte lbl_802D65C0
-__RTTI__11HurryUpMode:
+.endobj __RTTI__12CMresultMode
+.balign 4
+.obj __RTTI__11HurryUpMode, local
 	.4byte lbl_802D65DC
 	.4byte lbl_802D65E8
-__RTTI__12GameInfoMode:
+.endobj __RTTI__11HurryUpMode
+.balign 4
+.obj __RTTI__12GameInfoMode, local
 	.4byte lbl_802D6604
 	.4byte lbl_802D6614
-__RTTI__15ProgressiveMode:
+.endobj __RTTI__12GameInfoMode
+.balign 4
+.obj __RTTI__15ProgressiveMode, local
 	.4byte lbl_802D6630
 	.4byte lbl_802D6640
-__RTTI__13CountDownMode:
+.endobj __RTTI__15ProgressiveMode
+.balign 4
+.obj __RTTI__13CountDownMode, local
 	.4byte lbl_802D665C
 	.4byte lbl_802D666C
-__RTTI__12GameOverMode:
+.endobj __RTTI__13CountDownMode
+.balign 4
+.obj __RTTI__12GameOverMode, local
 	.4byte lbl_802D6688
 	.4byte lbl_802D6698
-__RTTI__13ContainerMode:
+.endobj __RTTI__12GameOverMode
+.balign 4
+.obj __RTTI__13ContainerMode, local
 	.4byte lbl_802D66B4
 	.4byte lbl_802D66C4
-__RTTI__11WMPauseMode:
+.endobj __RTTI__13ContainerMode
+.balign 4
+.obj __RTTI__11WMPauseMode, local
 	.4byte lbl_802D66E0
 	.4byte lbl_802D66EC
-__RTTI__12WorldMapMode:
+.endobj __RTTI__11WMPauseMode
+.balign 4
+.obj __RTTI__12WorldMapMode, local
 	.4byte lbl_802D6708
 	.4byte lbl_802D6718
-__RTTI__18CMcourseSelectMode:
+.endobj __RTTI__12WorldMapMode
+.balign 4
+.obj __RTTI__18CMcourseSelectMode, local
 	.4byte lbl_802D6734
 	.4byte lbl_802D6748
-__RTTI__11HiScoreMode:
+.endobj __RTTI__18CMcourseSelectMode
+.balign 4
+.obj __RTTI__11HiScoreMode, local
 	.4byte lbl_802D6764
 	.4byte lbl_802D6770
-__RTTI__12UfoPartsMode:
+.endobj __RTTI__11HiScoreMode
+.balign 4
+.obj __RTTI__12UfoPartsMode, local
 	.4byte lbl_802D678C
 	.4byte lbl_802D679C
-__RTTI__11SaveMesMode:
+.endobj __RTTI__12UfoPartsMode
+.balign 4
+.obj __RTTI__11SaveMesMode, local
 	.4byte lbl_802D67B8
 	.4byte lbl_802D67C4
-__RTTI__15SaveFailureMode:
+.endobj __RTTI__11SaveMesMode
+.balign 4
+.obj __RTTI__15SaveFailureMode, local
 	.4byte lbl_802D67E0
 	.4byte lbl_802D67F0
-__RTTI__15FinalResultMode:
+.endobj __RTTI__15SaveFailureMode
+.balign 4
+.obj __RTTI__15FinalResultMode, local
 	.4byte lbl_802D680C
 	.4byte lbl_802D681C
-"__RTTI__18IDelegate1<R4Menu>":
+.endobj __RTTI__15FinalResultMode
+.balign 4
+.obj "__RTTI__18IDelegate1<R4Menu>", local
 	.4byte lbl_802D6874
 	.4byte 0
-"__RTTI__41Delegate1<21GameCourseClearScreen,R4Menu>":
+.endobj "__RTTI__18IDelegate1<R4Menu>"
+.balign 4
+.obj "__RTTI__41Delegate1<21GameCourseClearScreen,R4Menu>", local
 	.4byte lbl_802D6848
 	.4byte lbl_802D6888
-__RTTI__8BaseParm:
+.endobj "__RTTI__41Delegate1<21GameCourseClearScreen,R4Menu>"
+.balign 4
+.obj __RTTI__8BaseParm, local
 	.4byte lbl_802D68F8
 	.4byte 0
+.endobj __RTTI__8BaseParm
 .balign 4
-lbl_803E5C7C:
+.obj lbl_803E5C7C, local
 	.asciz "Node"
+.endobj lbl_803E5C7C
 .balign 4
-__RTTI__4Node:
+.obj __RTTI__4Node, local
 	.4byte lbl_803E5C7C
 	.4byte lbl_802D6950
-__RTTI__21GameCourseClearScreen:
+.endobj __RTTI__4Node
+.balign 4
+.obj __RTTI__21GameCourseClearScreen, local
 	.4byte lbl_802D6380
 	.4byte lbl_802D6964
+.endobj __RTTI__21GameCourseClearScreen
 .balign 4
-lbl_803E5C94:
+.obj lbl_803E5C94, local
 	.asciz "Section"
+.endobj lbl_803E5C94
 .balign 4
-__RTTI__7Section:
+.obj __RTTI__7Section, local
 	.4byte lbl_803E5C94
 	.4byte lbl_802D69B0
-__RTTI__22GameCourseClearSection:
+.endobj __RTTI__7Section
+.balign 4
+.obj __RTTI__22GameCourseClearSection, local
 	.4byte lbl_802D6334
 	.4byte lbl_802D69CC
+.endobj __RTTI__22GameCourseClearSection
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803EB528:
-	.4byte 0x00000000
-lbl_803EB52C:
-	.4byte 0x40400000
-lbl_803EB530:
-	.4byte 0x43960000
-lbl_803EB534:
-	.4byte 0x3F800000
-lbl_803EB538:
-	.4byte 0x42200000
-lbl_803EB53C:
-	.4byte 0x3F000000
-lbl_803EB540:
-	.4byte 0x42700000
-lbl_803EB544:
-	.4byte 0x3A83126F
-lbl_803EB548:
-	.4byte 0x459C4000
+.obj lbl_803EB528, local
+	.float 0.0
+.endobj lbl_803EB528
+.obj lbl_803EB52C, local
+	.float 3.0
+.endobj lbl_803EB52C
+.obj lbl_803EB530, local
+	.float 300.0
+.endobj lbl_803EB530
+.obj lbl_803EB534, local
+	.float 1.0
+.endobj lbl_803EB534
+.obj lbl_803EB538, local
+	.float 40.0
+.endobj lbl_803EB538
+.obj lbl_803EB53C, local
+	.float 0.5
+.endobj lbl_803EB53C
+.obj lbl_803EB540, local
+	.float 60.0
+.endobj lbl_803EB540
+.obj lbl_803EB544, local
+	.float 0.001
+.endobj lbl_803EB544
+.obj lbl_803EB548, local
+	.float 5000.0
+.endobj lbl_803EB548
 .balign 8
-lbl_803EB550:
-	.4byte 0x43300000
-	.4byte 0x80000000
+.obj lbl_803EB550, local
+	.8byte 0x4330000080000000
+.endobj lbl_803EB550

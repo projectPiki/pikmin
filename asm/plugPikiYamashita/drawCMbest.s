@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global modeWait__Q23zen13DrawCMBpicObjFv
-modeWait__Q23zen13DrawCMBpicObjFv:
+.fn modeWait__Q23zen13DrawCMBpicObjFv, weak
 /* 801EE2E8 001EB248  7C 08 02 A6 */	mflr r0
 /* 801EE2EC 001EB24C  90 01 00 04 */	stw r0, 4(r1)
 /* 801EE2F0 001EB250  94 21 FF 88 */	stwu r1, -0x78(r1)
@@ -20,7 +19,7 @@ modeWait__Q23zen13DrawCMBpicObjFv:
 /* 801EE324 001EB284  D0 1F 00 04 */	stfs f0, 4(r31)
 /* 801EE328 001EB288  48 02 9D 49 */	bl rand
 /* 801EE32C 001EB28C  6C 60 80 00 */	xoris r0, r3, 0x8000
-/* 801EE330 001EB290  C8 82 C1 B8 */	lfd f4, "@705"@sda21(r2)
+/* 801EE330 001EB290  C8 82 C1 B8 */	lfd f4, lbl_803EC3B8@sda21(r2)
 /* 801EE334 001EB294  90 01 00 6C */	stw r0, 0x6c(r1)
 /* 801EE338 001EB298  3C 00 43 30 */	lis r0, 0x4330
 /* 801EE33C 001EB29C  C0 62 C1 9C */	lfs f3, lbl_803EC39C@sda21(r2)
@@ -81,9 +80,9 @@ modeWait__Q23zen13DrawCMBpicObjFv:
 /* 801EE40C 001EB36C  38 21 00 78 */	addi r1, r1, 0x78
 /* 801EE410 001EB370  7C 08 03 A6 */	mtlr r0
 /* 801EE414 001EB374  4E 80 00 20 */	blr 
+.endfn modeWait__Q23zen13DrawCMBpicObjFv
 
-.global modeAppear__Q23zen13DrawCMBpicObjFv
-modeAppear__Q23zen13DrawCMBpicObjFv:
+.fn modeAppear__Q23zen13DrawCMBpicObjFv, weak
 /* 801EE418 001EB378  80 8D 2D EC */	lwz r4, gsys@sda21(r13)
 /* 801EE41C 001EB37C  3C A0 80 2E */	lis r5, lbl_802E6E18@ha
 /* 801EE420 001EB380  C0 23 00 04 */	lfs f1, 4(r3)
@@ -150,14 +149,14 @@ modeAppear__Q23zen13DrawCMBpicObjFv:
 .L_801EE504:
 /* 801EE504 001EB464  38 60 00 00 */	li r3, 0
 /* 801EE508 001EB468  4E 80 00 20 */	blr 
+.endfn modeAppear__Q23zen13DrawCMBpicObjFv
 
-.global modeSleep__Q23zen13DrawCMBpicObjFv
-modeSleep__Q23zen13DrawCMBpicObjFv:
+.fn modeSleep__Q23zen13DrawCMBpicObjFv, weak
 /* 801EE50C 001EB46C  38 60 00 00 */	li r3, 0
 /* 801EE510 001EB470  4E 80 00 20 */	blr 
+.endfn modeSleep__Q23zen13DrawCMBpicObjFv
 
-.global init__Q23zen10DrawCMbestFP9P2DScreen
-init__Q23zen10DrawCMbestFP9P2DScreen:
+.fn init__Q23zen10DrawCMbestFP9P2DScreen, global
 /* 801EE514 001EB474  7C 08 02 A6 */	mflr r0
 /* 801EE518 001EB478  38 A0 00 00 */	li r5, 0
 /* 801EE51C 001EB47C  90 01 00 04 */	stw r0, 4(r1)
@@ -300,9 +299,9 @@ init__Q23zen10DrawCMbestFP9P2DScreen:
 /* 801EE72C 001EB68C  38 21 00 70 */	addi r1, r1, 0x70
 /* 801EE730 001EB690  7C 08 03 A6 */	mtlr r0
 /* 801EE734 001EB694  4E 80 00 20 */	blr 
+.endfn init__Q23zen10DrawCMbestFP9P2DScreen
 
-.global __ct__Q23zen13DrawCMBpicObjFv
-__ct__Q23zen13DrawCMBpicObjFv:
+.fn __ct__Q23zen13DrawCMBpicObjFv, weak
 /* 801EE738 001EB698  38 C0 00 00 */	li r6, 0
 /* 801EE73C 001EB69C  90 C3 00 00 */	stw r6, 0(r3)
 /* 801EE740 001EB6A0  3C 80 80 22 */	lis r4, __ptmf_null@ha
@@ -319,9 +318,9 @@ __ct__Q23zen13DrawCMBpicObjFv:
 /* 801EE76C 001EB6CC  90 C3 00 18 */	stw r6, 0x18(r3)
 /* 801EE770 001EB6D0  D0 03 00 1C */	stfs f0, 0x1c(r3)
 /* 801EE774 001EB6D4  4E 80 00 20 */	blr 
+.endfn __ct__Q23zen13DrawCMBpicObjFv
 
-.global sleep__Q23zen10DrawCMbestFv
-sleep__Q23zen10DrawCMbestFv:
+.fn sleep__Q23zen10DrawCMbestFv, global
 /* 801EE778 001EB6D8  7C 08 02 A6 */	mflr r0
 /* 801EE77C 001EB6DC  38 80 00 00 */	li r4, 0
 /* 801EE780 001EB6E0  90 01 00 04 */	stw r0, 4(r1)
@@ -331,9 +330,9 @@ sleep__Q23zen10DrawCMbestFv:
 /* 801EE790 001EB6F0  38 21 00 08 */	addi r1, r1, 8
 /* 801EE794 001EB6F4  7C 08 03 A6 */	mtlr r0
 /* 801EE798 001EB6F8  4E 80 00 20 */	blr 
+.endfn sleep__Q23zen10DrawCMbestFv
 
-.global update__Q23zen10DrawCMbestFv
-update__Q23zen10DrawCMbestFv:
+.fn update__Q23zen10DrawCMbestFv, global
 /* 801EE79C 001EB6FC  7C 08 02 A6 */	mflr r0
 /* 801EE7A0 001EB700  90 01 00 04 */	stw r0, 4(r1)
 /* 801EE7A4 001EB704  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -367,9 +366,9 @@ update__Q23zen10DrawCMbestFv:
 /* 801EE80C 001EB76C  38 21 00 20 */	addi r1, r1, 0x20
 /* 801EE810 001EB770  7C 08 03 A6 */	mtlr r0
 /* 801EE814 001EB774  4E 80 00 20 */	blr 
+.endfn update__Q23zen10DrawCMbestFv
 
-.global appear__Q23zen10DrawCMbestFv
-appear__Q23zen10DrawCMbestFv:
+.fn appear__Q23zen10DrawCMbestFv, global
 /* 801EE818 001EB778  7C 08 02 A6 */	mflr r0
 /* 801EE81C 001EB77C  38 80 00 01 */	li r4, 1
 /* 801EE820 001EB780  90 01 00 04 */	stw r0, 4(r1)
@@ -379,9 +378,9 @@ appear__Q23zen10DrawCMbestFv:
 /* 801EE830 001EB790  38 21 00 08 */	addi r1, r1, 8
 /* 801EE834 001EB794  7C 08 03 A6 */	mtlr r0
 /* 801EE838 001EB798  4E 80 00 20 */	blr 
+.endfn appear__Q23zen10DrawCMbestFv
 
-.global wait__Q23zen10DrawCMbestFv
-wait__Q23zen10DrawCMbestFv:
+.fn wait__Q23zen10DrawCMbestFv, global
 /* 801EE83C 001EB79C  7C 08 02 A6 */	mflr r0
 /* 801EE840 001EB7A0  38 80 00 02 */	li r4, 2
 /* 801EE844 001EB7A4  90 01 00 04 */	stw r0, 4(r1)
@@ -391,19 +390,19 @@ wait__Q23zen10DrawCMbestFv:
 /* 801EE854 001EB7B4  38 21 00 08 */	addi r1, r1, 8
 /* 801EE858 001EB7B8  7C 08 03 A6 */	mtlr r0
 /* 801EE85C 001EB7BC  4E 80 00 20 */	blr 
+.endfn wait__Q23zen10DrawCMbestFv
 
-.global modeSleep__Q23zen10DrawCMbestFv
-modeSleep__Q23zen10DrawCMbestFv:
+.fn modeSleep__Q23zen10DrawCMbestFv, global
 /* 801EE860 001EB7C0  38 60 00 00 */	li r3, 0
 /* 801EE864 001EB7C4  4E 80 00 20 */	blr 
+.endfn modeSleep__Q23zen10DrawCMbestFv
 
-.global modeWait__Q23zen10DrawCMbestFv
-modeWait__Q23zen10DrawCMbestFv:
+.fn modeWait__Q23zen10DrawCMbestFv, global
 /* 801EE868 001EB7C8  38 60 00 00 */	li r3, 0
 /* 801EE86C 001EB7CC  4E 80 00 20 */	blr 
+.endfn modeWait__Q23zen10DrawCMbestFv
 
-.global modeAppear__Q23zen10DrawCMbestFv
-modeAppear__Q23zen10DrawCMbestFv:
+.fn modeAppear__Q23zen10DrawCMbestFv, global
 /* 801EE870 001EB7D0  80 83 00 0C */	lwz r4, 0xc(r3)
 /* 801EE874 001EB7D4  38 A0 00 00 */	li r5, 0
 /* 801EE878 001EB7D8  2C 04 00 00 */	cmpwi r4, 0
@@ -431,9 +430,9 @@ modeAppear__Q23zen10DrawCMbestFv:
 /* 801EE8C0 001EB820  4E 80 00 20 */	blr 
 /* 801EE8C4 001EB824  4B FF FF E4 */	b .L_801EE8A8
 /* 801EE8C8 001EB828  4E 80 00 20 */	blr 
+.endfn modeAppear__Q23zen10DrawCMbestFv
 
-.global setMode__Q23zen10DrawCMbestFQ33zen10DrawCMbest8modeFlag
-setMode__Q23zen10DrawCMbestFQ33zen10DrawCMbest8modeFlag:
+.fn setMode__Q23zen10DrawCMbestFQ33zen10DrawCMbest8modeFlag, global
 /* 801EE8CC 001EB82C  7C 08 02 A6 */	mflr r0
 /* 801EE8D0 001EB830  90 01 00 04 */	stw r0, 4(r1)
 /* 801EE8D4 001EB834  94 21 FF B0 */	stwu r1, -0x50(r1)
@@ -493,7 +492,7 @@ setMode__Q23zen10DrawCMbestFQ33zen10DrawCMbest8modeFlag:
 /* 801EE998 001EB8F8  50 80 3E 30 */	rlwimi r0, r4, 7, 0x18, 0x18
 /* 801EE99C 001EB8FC  98 03 00 0C */	stb r0, 0xc(r3)
 /* 801EE9A0 001EB900  C3 E2 C1 C4 */	lfs f31, lbl_803EC3C4@sda21(r2)
-/* 801EE9A4 001EB904  CB C2 C1 B8 */	lfd f30, "@705"@sda21(r2)
+/* 801EE9A4 001EB904  CB C2 C1 B8 */	lfd f30, lbl_803EC3B8@sda21(r2)
 /* 801EE9A8 001EB908  48 00 00 44 */	b .L_801EE9EC
 .L_801EE9AC:
 /* 801EE9AC 001EB90C  80 1F 00 08 */	lwz r0, 8(r31)
@@ -533,7 +532,7 @@ setMode__Q23zen10DrawCMbestFQ33zen10DrawCMbest8modeFlag:
 /* 801EEA2C 001EB98C  50 80 3E 30 */	rlwimi r0, r4, 7, 0x18, 0x18
 /* 801EEA30 001EB990  98 03 00 0C */	stb r0, 0xc(r3)
 /* 801EEA34 001EB994  C3 C2 C1 C4 */	lfs f30, lbl_803EC3C4@sda21(r2)
-/* 801EEA38 001EB998  CB E2 C1 B8 */	lfd f31, "@705"@sda21(r2)
+/* 801EEA38 001EB998  CB E2 C1 B8 */	lfd f31, lbl_803EC3B8@sda21(r2)
 /* 801EEA3C 001EB99C  48 00 00 3C */	b .L_801EEA78
 .L_801EEA40:
 /* 801EEA40 001EB9A0  80 1F 00 08 */	lwz r0, 8(r31)
@@ -562,9 +561,9 @@ setMode__Q23zen10DrawCMbestFQ33zen10DrawCMbest8modeFlag:
 /* 801EEA94 001EB9F4  38 21 00 50 */	addi r1, r1, 0x50
 /* 801EEA98 001EB9F8  7C 08 03 A6 */	mtlr r0
 /* 801EEA9C 001EB9FC  4E 80 00 20 */	blr 
+.endfn setMode__Q23zen10DrawCMbestFQ33zen10DrawCMbest8modeFlag
 
-.global setMode__Q23zen13DrawCMBpicObjFQ33zen13DrawCMBpicObj8modeFlag
-setMode__Q23zen13DrawCMBpicObjFQ33zen13DrawCMBpicObj8modeFlag:
+.fn setMode__Q23zen13DrawCMBpicObjFQ33zen13DrawCMBpicObj8modeFlag, weak
 /* 801EEAA0 001EBA00  90 83 00 18 */	stw r4, 0x18(r3)
 /* 801EEAA4 001EBA04  3C 80 80 2E */	lis r4, lbl_802E6E18@ha
 /* 801EEAA8 001EBA08  38 A4 6E 18 */	addi r5, r4, lbl_802E6E18@l
@@ -619,79 +618,97 @@ setMode__Q23zen13DrawCMBpicObjFQ33zen13DrawCMBpicObj8modeFlag:
 /* 801EEB5C 001EBABC  80 05 00 3C */	lwz r0, 0x3c(r5)
 /* 801EEB60 001EBAC0  90 03 00 14 */	stw r0, 0x14(r3)
 /* 801EEB64 001EBAC4  4E 80 00 20 */	blr 
+.endfn setMode__Q23zen13DrawCMBpicObjFQ33zen13DrawCMBpicObj8modeFlag
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-.global lbl_802E6E18
-lbl_802E6E18:
-	.4byte 0x64726177
-	.4byte 0x434D6265
-	.4byte 0x73742E63
-	.4byte 0x70700000
-	.4byte 0x64726177
-	.4byte 0x434D6265
-	.4byte 0x73740000
+.obj lbl_802E6E18, local
+	.asciz "drawCMbest.cpp"
+.endobj lbl_802E6E18
+.balign 4
+.obj lbl_802E6E28, local
+	.asciz "drawCMbest"
+.endobj lbl_802E6E28
+.balign 4
+.obj lbl_802E6E34, local
 	.4byte 0x00000000
 	.4byte 0xFFFFFFFF
 	.4byte modeSleep__Q23zen13DrawCMBpicObjFv
+.endobj lbl_802E6E34
+.balign 4
+.obj lbl_802E6E40, local
 	.4byte 0x00000000
 	.4byte 0xFFFFFFFF
 	.4byte modeAppear__Q23zen13DrawCMBpicObjFv
+.endobj lbl_802E6E40
+.balign 4
+.obj lbl_802E6E4C, local
 	.4byte 0x00000000
 	.4byte 0xFFFFFFFF
 	.4byte modeWait__Q23zen13DrawCMBpicObjFv
-.global lbl_802E6E58
-lbl_802E6E58:
+.endobj lbl_802E6E4C
+.balign 4
+.obj lbl_802E6E58, local
 	.4byte 0x00000000
 	.4byte 0xFFFFFFFF
 	.4byte modeSleep__Q23zen13DrawCMBpicObjFv
+.endobj lbl_802E6E58
+.balign 4
+.obj lbl_802E6E64, local
 	.4byte 0x00000000
 	.4byte 0xFFFFFFFF
 	.4byte modeSleep__Q23zen10DrawCMbestFv
+.endobj lbl_802E6E64
+.balign 4
+.obj lbl_802E6E70, local
 	.4byte 0x00000000
 	.4byte 0xFFFFFFFF
 	.4byte modeWait__Q23zen10DrawCMbestFv
+.endobj lbl_802E6E70
+.balign 4
+.obj lbl_802E6E7C, local
 	.4byte 0x00000000
 	.4byte 0xFFFFFFFF
 	.4byte modeAppear__Q23zen10DrawCMbestFv
+.endobj lbl_802E6E7C
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-lbl_803E75E8:
-	.4byte 0x625F2530
-	.4byte 0x32640000
+.obj lbl_803E75E8, local
+	.asciz "b_%02d"
+.endobj lbl_803E75E8
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-.global lbl_803EC398
-lbl_803EC398:
-	.4byte 0x3D4CCCCD
-.global lbl_803EC39C
-lbl_803EC39C:
-	.4byte 0x46FFFE00
-.global lbl_803EC3A0
-lbl_803EC3A0:
-	.4byte 0x3CA3D70A
-.global lbl_803EC3A4
-lbl_803EC3A4:
-	.4byte 0x3F800000
-.global lbl_803EC3A8
-lbl_803EC3A8:
-	.4byte 0x3F733333
-.global lbl_803EC3AC
-lbl_803EC3AC:
-	.4byte 0x00000000
-.global lbl_803EC3B0
-lbl_803EC3B0:
-	.4byte 0x40000000
-	.4byte 0x00000000
-.global "@705"
-"@705":
-	.4byte 0x43300000
-	.4byte 0x80000000
-.global lbl_803EC3C0
-lbl_803EC3C0:
-	.4byte 0x40800000
-.global lbl_803EC3C4
-lbl_803EC3C4:
-	.4byte 0x3E800000
+.obj lbl_803EC398, local
+	.float 0.05
+.endobj lbl_803EC398
+.obj lbl_803EC39C, local
+	.float 32767.0
+.endobj lbl_803EC39C
+.obj lbl_803EC3A0, local
+	.float 0.02
+.endobj lbl_803EC3A0
+.obj lbl_803EC3A4, local
+	.float 1.0
+.endobj lbl_803EC3A4
+.obj lbl_803EC3A8, local
+	.float 0.95
+.endobj lbl_803EC3A8
+.obj lbl_803EC3AC, local
+	.float 0.0
+.endobj lbl_803EC3AC
+.obj lbl_803EC3B0, local
+	.float 2.0
+.endobj lbl_803EC3B0
+.balign 8
+.obj lbl_803EC3B8, local
+	.8byte 0x4330000080000000
+.endobj lbl_803EC3B8
+.balign 4
+.obj lbl_803EC3C0, local
+	.float 4.0
+.endobj lbl_803EC3C0
+.obj lbl_803EC3C4, local
+	.float 0.25
+.endobj lbl_803EC3C4

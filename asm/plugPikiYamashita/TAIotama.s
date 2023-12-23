@@ -1758,14 +1758,15 @@ lbl_802E6760:
 lbl_802E6770:
 	.asciz "TAIotama"
 .balign 4
-lbl_802E677C:
+lbl_802E677C: # Shift-JIS
 	.4byte 0x83458347
 	.4byte 0x83438367
 	.4byte 0x8DC5925A
 	.4byte 0x8E9E8AD4
 	.4byte 0x81699562
 	.4byte 0x816A0000
-lbl_802E6794:
+.balign 4
+lbl_802E6794: # Shift-JIS
 	.4byte 0x83458347
 	.4byte 0x83438367
 	.4byte 0x8DC592B7
@@ -1773,26 +1774,37 @@ lbl_802E6794:
 	.4byte 0x81699562
 	.4byte 0x816A0000
 .balign 4
+lbl_802E67AC:
 	.asciz "tekis/otama/motion/dead.dca"
 .balign 4
+lbl_802E67C8:
 	.asciz "tekis/otama/motion/damage.dca"
 .balign 4
+lbl_802E67E8:
 	.asciz "tekis/otama/motion/wait1.dca"
 .balign 4
+lbl_802E6808:
 	.asciz "tekis/otama/motion/wait2.dca"
 .balign 4
+lbl_802E6828:
 	.asciz "tekis/otama/motion/waitact1.dck"
 .balign 4
+lbl_802E6848:
 	.asciz "tekis/otama/motion/waitact2.dca"
 .balign 4
+lbl_802E6868:
 	.asciz "tekis/otama/motion/move1.dck"
 .balign 4
+lbl_802E6888:
 	.asciz "tekis/otama/motion/move2.dck"
 .balign 4
+lbl_802E68A8:
 	.asciz "tekis/otama/motion/attack.dca"
 .balign 4
+lbl_802E68C8:
 	.asciz "tekis/otama/motion/type1.dck"
 .balign 4
+lbl_802E68E8:
 	.asciz "tekis/otama/motion/type2.dca"
 .balign 4
 lbl_802E6908:
@@ -1803,8 +1815,9 @@ lbl_802E691C:
 .balign 4
 lbl_802E692C:
 	.4byte __RTTI__12TAIanimation
-	.4byte 0x00000000
-	.4byte 0x00000000
+	.4byte 0
+	.4byte 0
+.balign 4
 .global __vt__17TAIotamaAnimation
 __vt__17TAIotamaAnimation:
 	.4byte __RTTI__17TAIotamaAnimation
@@ -1824,12 +1837,14 @@ lbl_802E6978:
 	.4byte __RTTI__9TaiAction
 	.4byte 0
 	.4byte 0
+.balign 4
 lbl_802E6984:
 	.4byte __RTTI__9TaiAction
 	.4byte 0
 	.4byte __RTTI__17TAIAreserveMotion
 	.4byte 0
 	.4byte 0
+.balign 4
 .global __vt__16TAIArunAwayOtama
 __vt__16TAIArunAwayOtama:
 	.4byte __RTTI__16TAIArunAwayOtama
@@ -1868,6 +1883,7 @@ lbl_802E6A20:
 	.4byte __RTTI__17TAIAreserveMotion
 	.4byte 0
 	.4byte 0
+.balign 4
 lbl_802E6A34:
 	.4byte __RTTI__9TaiAction
 	.4byte 0
@@ -1876,6 +1892,7 @@ lbl_802E6A34:
 	.4byte __RTTI__25TAIAflickingReserveMotion
 	.4byte 0
 	.4byte 0
+.balign 4
 .global __vt__15TAIAappealOtama
 __vt__15TAIAappealOtama:
 	.4byte __RTTI__15TAIAappealOtama
@@ -1898,12 +1915,14 @@ lbl_802E6AA8:
 	.4byte __RTTI__9TaiAction
 	.4byte 0
 	.4byte 0
+.balign 4
 lbl_802E6AB4:
 	.4byte __RTTI__9TaiAction
 	.4byte 0
 	.4byte __RTTI__30TAIAsetTargetPointCircleRandom
 	.4byte 0
 	.4byte 0
+.balign 4
 .global __vt__18TAIAsetTargetOtama
 __vt__18TAIAsetTargetOtama:
 	.4byte __RTTI__18TAIAsetTargetOtama
@@ -1923,6 +1942,7 @@ lbl_802E6AF4:
 	.4byte __RTTI__17TAIAreserveMotion
 	.4byte 0
 	.4byte 0
+.balign 4
 .global __vt__13TAIAwaitOtama
 __vt__13TAIAwaitOtama:
 	.4byte __RTTI__13TAIAwaitOtama
@@ -1953,12 +1973,14 @@ lbl_802E6B70:
 	.4byte __RTTI__12TekiStrategy
 	.4byte 0
 	.4byte 0
+.balign 4
 lbl_802E6B7C:
 	.4byte __RTTI__12TekiStrategy
 	.4byte 0
 	.4byte __RTTI__11YaiStrategy
 	.4byte 0
 	.4byte 0
+.balign 4
 .global __vt__16TAIotamaStrategy
 __vt__16TAIotamaStrategy:
 	.4byte __RTTI__16TAIotamaStrategy
@@ -1982,6 +2004,7 @@ lbl_802E6BD8:
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte 0
+.balign 4
 lbl_802E6BE4:
 	.4byte __RTTI__5ANode
 	.4byte 0
@@ -2000,6 +2023,7 @@ lbl_802E6C08:
 	.4byte __RTTI__4Node
 	.4byte 0
 	.4byte 0
+.balign 4
 lbl_802E6C24:
 	.4byte __RTTI__5ANode
 	.4byte 0
@@ -2010,6 +2034,7 @@ lbl_802E6C24:
 	.4byte __RTTI__14TekiParameters
 	.4byte 0
 	.4byte 0
+.balign 4
 .global __vt__18TAIotamaParameters
 __vt__18TAIotamaParameters:
 	.4byte __RTTI__18TAIotamaParameters

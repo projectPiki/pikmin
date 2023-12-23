@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global "init__Q23zen17particleGeneratorFPUcP7TextureP7TextureR8Vector3fPQ23zen18particleMdlManagerPQ23zen37CallBack1<PQ23zen17particleGenerator>PQ23zen58CallBack2<PQ23zen17particleGenerator,PQ23zen11particleMdl>"
-"init__Q23zen17particleGeneratorFPUcP7TextureP7TextureR8Vector3fPQ23zen18particleMdlManagerPQ23zen37CallBack1<PQ23zen17particleGenerator>PQ23zen58CallBack2<PQ23zen17particleGenerator,PQ23zen11particleMdl>":
+.fn "init__Q23zen17particleGeneratorFPUcP7TextureP7TextureR8Vector3fPQ23zen18particleMdlManagerPQ23zen37CallBack1<PQ23zen17particleGenerator>PQ23zen58CallBack2<PQ23zen17particleGenerator,PQ23zen11particleMdl>", global
 /* 8019CD0C 00199C6C  7C 08 02 A6 */	mflr r0
 /* 8019CD10 00199C70  90 01 00 04 */	stw r0, 4(r1)
 /* 8019CD14 00199C74  94 21 FF 90 */	stwu r1, -0x70(r1)
@@ -160,9 +159,9 @@
 /* 8019CF4C 00199EAC  38 21 00 70 */	addi r1, r1, 0x70
 /* 8019CF50 00199EB0  7C 08 03 A6 */	mtlr r0
 /* 8019CF54 00199EB4  4E 80 00 20 */	blr 
+.endfn "init__Q23zen17particleGeneratorFPUcP7TextureP7TextureR8Vector3fPQ23zen18particleMdlManagerPQ23zen37CallBack1<PQ23zen17particleGenerator>PQ23zen58CallBack2<PQ23zen17particleGenerator,PQ23zen11particleMdl>"
 
-.global update__Q23zen17particleGeneratorFf
-update__Q23zen17particleGeneratorFf:
+.fn update__Q23zen17particleGeneratorFf, global
 /* 8019CF58 00199EB8  7C 08 02 A6 */	mflr r0
 /* 8019CF5C 00199EBC  90 01 00 04 */	stw r0, 4(r1)
 /* 8019CF60 00199EC0  94 21 FF C8 */	stwu r1, -0x38(r1)
@@ -253,9 +252,9 @@ update__Q23zen17particleGeneratorFf:
 /* 8019D0A0 0019A000  38 21 00 38 */	addi r1, r1, 0x38
 /* 8019D0A4 0019A004  7C 08 03 A6 */	mtlr r0
 /* 8019D0A8 0019A008  4E 80 00 20 */	blr 
+.endfn update__Q23zen17particleGeneratorFf
 
-.global draw__Q23zen17particleGeneratorFR8Graphics
-draw__Q23zen17particleGeneratorFR8Graphics:
+.fn draw__Q23zen17particleGeneratorFR8Graphics, global
 /* 8019D0AC 0019A00C  7C 08 02 A6 */	mflr r0
 /* 8019D0B0 0019A010  90 01 00 04 */	stw r0, 4(r1)
 /* 8019D0B4 0019A014  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -353,9 +352,9 @@ draw__Q23zen17particleGeneratorFR8Graphics:
 /* 8019D218 0019A178  38 21 00 20 */	addi r1, r1, 0x20
 /* 8019D21C 0019A17C  7C 08 03 A6 */	mtlr r0
 /* 8019D220 0019A180  4E 80 00 20 */	blr 
+.endfn draw__Q23zen17particleGeneratorFR8Graphics
 
-.global pmSetDDF__Q23zen17particleGeneratorFPUc
-pmSetDDF__Q23zen17particleGeneratorFPUc:
+.fn pmSetDDF__Q23zen17particleGeneratorFPUc, global
 /* 8019D224 0019A184  7C 08 02 A6 */	mflr r0
 /* 8019D228 0019A188  28 04 00 00 */	cmplwi r4, 0
 /* 8019D22C 0019A18C  90 01 00 04 */	stw r0, 4(r1)
@@ -1134,9 +1133,9 @@ pmSetDDF__Q23zen17particleGeneratorFPUc:
 /* 8019DD70 0019ACD0  38 21 05 10 */	addi r1, r1, 0x510
 /* 8019DD74 0019ACD4  7C 08 03 A6 */	mtlr r0
 /* 8019DD78 0019ACD8  4E 80 00 20 */	blr 
+.endfn pmSetDDF__Q23zen17particleGeneratorFPUc
 
-.global SetPtclsLife__Q23zen17particleGeneratorFv
-SetPtclsLife__Q23zen17particleGeneratorFv:
+.fn SetPtclsLife__Q23zen17particleGeneratorFv, global
 /* 8019DD7C 0019ACDC  7C 08 02 A6 */	mflr r0
 /* 8019DD80 0019ACE0  90 01 00 04 */	stw r0, 4(r1)
 /* 8019DD84 0019ACE4  94 21 FF 70 */	stwu r1, -0x90(r1)
@@ -1341,9 +1340,9 @@ SetPtclsLife__Q23zen17particleGeneratorFv:
 /* 8019E068 0019AFC8  38 21 00 90 */	addi r1, r1, 0x90
 /* 8019E06C 0019AFCC  7C 08 03 A6 */	mtlr r0
 /* 8019E070 0019AFD0  4E 80 00 20 */	blr 
+.endfn SetPtclsLife__Q23zen17particleGeneratorFv
 
-.global PtclsGen__Q23zen17particleGeneratorFPQ23zen11particleMdl
-PtclsGen__Q23zen17particleGeneratorFPQ23zen11particleMdl:
+.fn PtclsGen__Q23zen17particleGeneratorFPQ23zen11particleMdl, global
 /* 8019E074 0019AFD4  7C 08 02 A6 */	mflr r0
 /* 8019E078 0019AFD8  90 01 00 04 */	stw r0, 4(r1)
 /* 8019E07C 0019AFDC  94 21 FD 70 */	stwu r1, -0x290(r1)
@@ -2338,9 +2337,9 @@ PtclsGen__Q23zen17particleGeneratorFPQ23zen11particleMdl:
 /* 8019EF68 0019BEC8  38 21 02 90 */	addi r1, r1, 0x290
 /* 8019EF6C 0019BECC  7C 08 03 A6 */	mtlr r0
 /* 8019EF70 0019BED0  4E 80 00 20 */	blr 
+.endfn PtclsGen__Q23zen17particleGeneratorFPQ23zen11particleMdl
 
-.global pmCalcAccel__Q23zen17particleGeneratorFPQ23zen11particleMdl
-pmCalcAccel__Q23zen17particleGeneratorFPQ23zen11particleMdl:
+.fn pmCalcAccel__Q23zen17particleGeneratorFPQ23zen11particleMdl, global
 /* 8019EF74 0019BED4  7C 08 02 A6 */	mflr r0
 /* 8019EF78 0019BED8  90 01 00 04 */	stw r0, 4(r1)
 /* 8019EF7C 0019BEDC  94 21 FF 30 */	stwu r1, -0xd0(r1)
@@ -2826,9 +2825,9 @@ pmCalcAccel__Q23zen17particleGeneratorFPQ23zen11particleMdl:
 /* 8019F6BC 0019C61C  38 21 00 D0 */	addi r1, r1, 0xd0
 /* 8019F6C0 0019C620  7C 08 03 A6 */	mtlr r0
 /* 8019F6C4 0019C624  4E 80 00 20 */	blr 
+.endfn pmCalcAccel__Q23zen17particleGeneratorFPQ23zen11particleMdl
 
-.global UpdatePtclsStatus__Q23zen17particleGeneratorFf
-UpdatePtclsStatus__Q23zen17particleGeneratorFf:
+.fn UpdatePtclsStatus__Q23zen17particleGeneratorFf, global
 /* 8019F6C8 0019C628  7C 08 02 A6 */	mflr r0
 /* 8019F6CC 0019C62C  90 01 00 04 */	stw r0, 4(r1)
 /* 8019F6D0 0019C630  94 21 FE F0 */	stwu r1, -0x110(r1)
@@ -3251,9 +3250,9 @@ UpdatePtclsStatus__Q23zen17particleGeneratorFf:
 /* 8019FD04 0019CC64  38 21 01 10 */	addi r1, r1, 0x110
 /* 8019FD08 0019CC68  7C 08 03 A6 */	mtlr r0
 /* 8019FD0C 0019CC6C  4E 80 00 20 */	blr 
+.endfn UpdatePtclsStatus__Q23zen17particleGeneratorFf
 
-.global ClearPtclsStatus__Q23zen17particleGeneratorFP7TextureP7Texture
-ClearPtclsStatus__Q23zen17particleGeneratorFP7TextureP7Texture:
+.fn ClearPtclsStatus__Q23zen17particleGeneratorFP7TextureP7Texture, global
 /* 8019FD10 0019CC70  90 83 00 58 */	stw r4, 0x58(r3)
 /* 8019FD14 0019CC74  38 E0 00 00 */	li r7, 0
 /* 8019FD18 0019CC78  38 C0 00 05 */	li r6, 5
@@ -3367,9 +3366,9 @@ ClearPtclsStatus__Q23zen17particleGeneratorFP7TextureP7Texture:
 /* 8019FEC8 0019CE28  C0 0D 10 FC */	lfs f0, lbl_803E5E1C@sda21(r13)
 /* 8019FECC 0019CE2C  D0 03 01 E4 */	stfs f0, 0x1e4(r3)
 /* 8019FED0 0019CE30  4E 80 00 20 */	blr 
+.endfn ClearPtclsStatus__Q23zen17particleGeneratorFP7TextureP7Texture
 
-.global drawPtclBillboard__Q23zen17particleGeneratorFR8Graphics
-drawPtclBillboard__Q23zen17particleGeneratorFR8Graphics:
+.fn drawPtclBillboard__Q23zen17particleGeneratorFR8Graphics, global
 /* 8019FED4 0019CE34  7C 08 02 A6 */	mflr r0
 /* 8019FED8 0019CE38  38 A0 00 00 */	li r5, 0
 /* 8019FEDC 0019CE3C  90 01 00 04 */	stw r0, 4(r1)
@@ -3494,9 +3493,9 @@ drawPtclBillboard__Q23zen17particleGeneratorFR8Graphics:
 /* 801A00A4 0019D004  38 21 00 80 */	addi r1, r1, 0x80
 /* 801A00A8 0019D008  7C 08 03 A6 */	mtlr r0
 /* 801A00AC 0019D00C  4E 80 00 20 */	blr 
+.endfn drawPtclBillboard__Q23zen17particleGeneratorFR8Graphics
 
-.global drawPtclOriented__Q23zen17particleGeneratorFR8Graphics
-drawPtclOriented__Q23zen17particleGeneratorFR8Graphics:
+.fn drawPtclOriented__Q23zen17particleGeneratorFR8Graphics, global
 /* 801A00B0 0019D010  7C 08 02 A6 */	mflr r0
 /* 801A00B4 0019D014  90 01 00 04 */	stw r0, 4(r1)
 /* 801A00B8 0019D018  94 21 FE 10 */	stwu r1, -0x1f0(r1)
@@ -3939,9 +3938,9 @@ drawPtclOriented__Q23zen17particleGeneratorFR8Graphics:
 /* 801A074C 0019D6AC  38 21 01 F0 */	addi r1, r1, 0x1f0
 /* 801A0750 0019D6B0  7C 08 03 A6 */	mtlr r0
 /* 801A0754 0019D6B4  4E 80 00 20 */	blr 
+.endfn drawPtclOriented__Q23zen17particleGeneratorFR8Graphics
 
-.global RotAxisX__Q23zen17particleGeneratorFRA3_A4_fRfRf
-RotAxisX__Q23zen17particleGeneratorFRA3_A4_fRfRf:
+.fn RotAxisX__Q23zen17particleGeneratorFRA3_A4_fRfRf, global
 /* 801A0758 0019D6B8  C0 06 00 00 */	lfs f0, 0(r6)
 /* 801A075C 0019D6BC  D0 04 00 28 */	stfs f0, 0x28(r4)
 /* 801A0760 0019D6C0  D0 04 00 14 */	stfs f0, 0x14(r4)
@@ -3957,9 +3956,9 @@ RotAxisX__Q23zen17particleGeneratorFRA3_A4_fRfRf:
 /* 801A0788 0019D6E8  C0 02 B3 B0 */	lfs f0, lbl_803EB5B0@sda21(r2)
 /* 801A078C 0019D6EC  D0 04 00 00 */	stfs f0, 0(r4)
 /* 801A0790 0019D6F0  4E 80 00 20 */	blr 
+.endfn RotAxisX__Q23zen17particleGeneratorFRA3_A4_fRfRf
 
-.global RotAxisY__Q23zen17particleGeneratorFRA3_A4_fRfRf
-RotAxisY__Q23zen17particleGeneratorFRA3_A4_fRfRf:
+.fn RotAxisY__Q23zen17particleGeneratorFRA3_A4_fRfRf, global
 /* 801A0794 0019D6F4  C0 06 00 00 */	lfs f0, 0(r6)
 /* 801A0798 0019D6F8  D0 04 00 28 */	stfs f0, 0x28(r4)
 /* 801A079C 0019D6FC  D0 04 00 00 */	stfs f0, 0(r4)
@@ -3975,9 +3974,9 @@ RotAxisY__Q23zen17particleGeneratorFRA3_A4_fRfRf:
 /* 801A07C4 0019D724  C0 02 B3 B0 */	lfs f0, lbl_803EB5B0@sda21(r2)
 /* 801A07C8 0019D728  D0 04 00 14 */	stfs f0, 0x14(r4)
 /* 801A07CC 0019D72C  4E 80 00 20 */	blr 
+.endfn RotAxisY__Q23zen17particleGeneratorFRA3_A4_fRfRf
 
-.global RotAxisZ__Q23zen17particleGeneratorFRA3_A4_fRfRf
-RotAxisZ__Q23zen17particleGeneratorFRA3_A4_fRfRf:
+.fn RotAxisZ__Q23zen17particleGeneratorFRA3_A4_fRfRf, global
 /* 801A07D0 0019D730  C0 06 00 00 */	lfs f0, 0(r6)
 /* 801A07D4 0019D734  D0 04 00 14 */	stfs f0, 0x14(r4)
 /* 801A07D8 0019D738  D0 04 00 00 */	stfs f0, 0(r4)
@@ -3993,9 +3992,9 @@ RotAxisZ__Q23zen17particleGeneratorFRA3_A4_fRfRf:
 /* 801A0800 0019D760  C0 02 B3 B0 */	lfs f0, lbl_803EB5B0@sda21(r2)
 /* 801A0804 0019D764  D0 04 00 28 */	stfs f0, 0x28(r4)
 /* 801A0808 0019D768  4E 80 00 20 */	blr 
+.endfn RotAxisZ__Q23zen17particleGeneratorFRA3_A4_fRfRf
 
-.global RotAxisXY__Q23zen17particleGeneratorFRA3_A4_fRfRf
-RotAxisXY__Q23zen17particleGeneratorFRA3_A4_fRfRf:
+.fn RotAxisXY__Q23zen17particleGeneratorFRA3_A4_fRfRf, global
 /* 801A080C 0019D76C  C0 06 00 00 */	lfs f0, 0(r6)
 /* 801A0810 0019D770  D0 04 00 14 */	stfs f0, 0x14(r4)
 /* 801A0814 0019D774  D0 04 00 00 */	stfs f0, 0(r4)
@@ -4017,9 +4016,9 @@ RotAxisXY__Q23zen17particleGeneratorFRA3_A4_fRfRf:
 /* 801A0854 0019D7B4  C0 02 B3 90 */	lfs f0, lbl_803EB590@sda21(r2)
 /* 801A0858 0019D7B8  D0 04 00 10 */	stfs f0, 0x10(r4)
 /* 801A085C 0019D7BC  4E 80 00 20 */	blr 
+.endfn RotAxisXY__Q23zen17particleGeneratorFRA3_A4_fRfRf
 
-.global RotAxisXZ__Q23zen17particleGeneratorFRA3_A4_fRfRf
-RotAxisXZ__Q23zen17particleGeneratorFRA3_A4_fRfRf:
+.fn RotAxisXZ__Q23zen17particleGeneratorFRA3_A4_fRfRf, global
 /* 801A0860 0019D7C0  C0 06 00 00 */	lfs f0, 0(r6)
 /* 801A0864 0019D7C4  D0 04 00 28 */	stfs f0, 0x28(r4)
 /* 801A0868 0019D7C8  D0 04 00 00 */	stfs f0, 0(r4)
@@ -4043,9 +4042,9 @@ RotAxisXZ__Q23zen17particleGeneratorFRA3_A4_fRfRf:
 /* 801A08B0 0019D810  C0 02 B3 90 */	lfs f0, lbl_803EB590@sda21(r2)
 /* 801A08B4 0019D814  D0 04 00 20 */	stfs f0, 0x20(r4)
 /* 801A08B8 0019D818  4E 80 00 20 */	blr 
+.endfn RotAxisXZ__Q23zen17particleGeneratorFRA3_A4_fRfRf
 
-.global RotAxisYZ__Q23zen17particleGeneratorFRA3_A4_fRfRf
-RotAxisYZ__Q23zen17particleGeneratorFRA3_A4_fRfRf:
+.fn RotAxisYZ__Q23zen17particleGeneratorFRA3_A4_fRfRf, global
 /* 801A08BC 0019D81C  C0 06 00 00 */	lfs f0, 0(r6)
 /* 801A08C0 0019D820  D0 04 00 28 */	stfs f0, 0x28(r4)
 /* 801A08C4 0019D824  D0 04 00 14 */	stfs f0, 0x14(r4)
@@ -4069,9 +4068,9 @@ RotAxisYZ__Q23zen17particleGeneratorFRA3_A4_fRfRf:
 /* 801A090C 0019D86C  C0 02 B3 90 */	lfs f0, lbl_803EB590@sda21(r2)
 /* 801A0910 0019D870  D0 04 00 24 */	stfs f0, 0x24(r4)
 /* 801A0914 0019D874  4E 80 00 20 */	blr 
+.endfn RotAxisYZ__Q23zen17particleGeneratorFRA3_A4_fRfRf
 
-.global RotAxisXYZ__Q23zen17particleGeneratorFRA3_A4_fRfRf
-RotAxisXYZ__Q23zen17particleGeneratorFRA3_A4_fRfRf:
+.fn RotAxisXYZ__Q23zen17particleGeneratorFRA3_A4_fRfRf, global
 /* 801A0918 0019D878  C0 06 00 00 */	lfs f0, 0(r6)
 /* 801A091C 0019D87C  EC 00 00 32 */	fmuls f0, f0, f0
 /* 801A0920 0019D880  D0 04 00 28 */	stfs f0, 0x28(r4)
@@ -4107,9 +4106,9 @@ RotAxisXYZ__Q23zen17particleGeneratorFRA3_A4_fRfRf:
 /* 801A0998 0019D8F8  EC 01 00 32 */	fmuls f0, f1, f0
 /* 801A099C 0019D8FC  D0 04 00 20 */	stfs f0, 0x20(r4)
 /* 801A09A0 0019D900  4E 80 00 20 */	blr 
+.endfn RotAxisXYZ__Q23zen17particleGeneratorFRA3_A4_fRfRf
 
-.global updatePtclChildren__Q23zen17particleGeneratorFf
-updatePtclChildren__Q23zen17particleGeneratorFf:
+.fn updatePtclChildren__Q23zen17particleGeneratorFf, global
 /* 801A09A4 0019D904  7C 08 02 A6 */	mflr r0
 /* 801A09A8 0019D908  90 01 00 04 */	stw r0, 4(r1)
 /* 801A09AC 0019D90C  94 21 FF A8 */	stwu r1, -0x58(r1)
@@ -4186,9 +4185,9 @@ updatePtclChildren__Q23zen17particleGeneratorFf:
 /* 801A0AA8 0019DA08  38 21 00 58 */	addi r1, r1, 0x58
 /* 801A0AAC 0019DA0C  7C 08 03 A6 */	mtlr r0
 /* 801A0AB0 0019DA10  4E 80 00 20 */	blr 
+.endfn updatePtclChildren__Q23zen17particleGeneratorFf
 
-.global drawPtclChildren__Q23zen17particleGeneratorFR8Graphics
-drawPtclChildren__Q23zen17particleGeneratorFR8Graphics:
+.fn drawPtclChildren__Q23zen17particleGeneratorFR8Graphics, global
 /* 801A0AB4 0019DA14  7C 08 02 A6 */	mflr r0
 /* 801A0AB8 0019DA18  38 A0 00 00 */	li r5, 0
 /* 801A0ABC 0019DA1C  90 01 00 04 */	stw r0, 4(r1)
@@ -4274,9 +4273,9 @@ drawPtclChildren__Q23zen17particleGeneratorFR8Graphics:
 /* 801A0BF0 0019DB50  38 21 00 50 */	addi r1, r1, 0x50
 /* 801A0BF4 0019DB54  7C 08 03 A6 */	mtlr r0
 /* 801A0BF8 0019DB58  4E 80 00 20 */	blr 
+.endfn drawPtclChildren__Q23zen17particleGeneratorFR8Graphics
 
-.global forceFinish__Q23zen17particleGeneratorFv
-forceFinish__Q23zen17particleGeneratorFv:
+.fn forceFinish__Q23zen17particleGeneratorFv, global
 /* 801A0BFC 0019DB5C  7C 08 02 A6 */	mflr r0
 /* 801A0C00 0019DB60  90 01 00 04 */	stw r0, 4(r1)
 /* 801A0C04 0019DB64  94 21 FF C8 */	stwu r1, -0x38(r1)
@@ -4332,9 +4331,9 @@ forceFinish__Q23zen17particleGeneratorFv:
 /* 801A0CBC 0019DC1C  38 21 00 38 */	addi r1, r1, 0x38
 /* 801A0CC0 0019DC20  7C 08 03 A6 */	mtlr r0
 /* 801A0CC4 0019DC24  4E 80 00 20 */	blr 
+.endfn forceFinish__Q23zen17particleGeneratorFv
 
-.global "finish__Q23zen17particleGeneratorFPQ23zen37CallBack1<PQ23zen17particleGenerator>PQ23zen58CallBack2<PQ23zen17particleGenerator,PQ23zen11particleMdl>"
-"finish__Q23zen17particleGeneratorFPQ23zen37CallBack1<PQ23zen17particleGenerator>PQ23zen58CallBack2<PQ23zen17particleGenerator,PQ23zen11particleMdl>":
+.fn "finish__Q23zen17particleGeneratorFPQ23zen37CallBack1<PQ23zen17particleGenerator>PQ23zen58CallBack2<PQ23zen17particleGenerator,PQ23zen11particleMdl>", global
 /* 801A0CC8 0019DC28  80 03 01 D4 */	lwz r0, 0x1d4(r3)
 /* 801A0CCC 0019DC2C  7C 00 20 40 */	cmplw r0, r4
 /* 801A0CD0 0019DC30  40 82 00 24 */	bne .L_801A0CF4
@@ -4349,9 +4348,9 @@ forceFinish__Q23zen17particleGeneratorFv:
 .L_801A0CF4:
 /* 801A0CF4 0019DC54  38 60 00 00 */	li r3, 0
 /* 801A0CF8 0019DC58  4E 80 00 20 */	blr 
+.endfn "finish__Q23zen17particleGeneratorFPQ23zen37CallBack1<PQ23zen17particleGenerator>PQ23zen58CallBack2<PQ23zen17particleGenerator,PQ23zen11particleMdl>"
 
-.global "forceFinish__Q23zen17particleGeneratorFPQ23zen37CallBack1<PQ23zen17particleGenerator>PQ23zen58CallBack2<PQ23zen17particleGenerator,PQ23zen11particleMdl>"
-"forceFinish__Q23zen17particleGeneratorFPQ23zen37CallBack1<PQ23zen17particleGenerator>PQ23zen58CallBack2<PQ23zen17particleGenerator,PQ23zen11particleMdl>":
+.fn "forceFinish__Q23zen17particleGeneratorFPQ23zen37CallBack1<PQ23zen17particleGenerator>PQ23zen58CallBack2<PQ23zen17particleGenerator,PQ23zen11particleMdl>", global
 /* 801A0CFC 0019DC5C  7C 08 02 A6 */	mflr r0
 /* 801A0D00 0019DC60  90 01 00 04 */	stw r0, 4(r1)
 /* 801A0D04 0019DC64  94 21 FF C0 */	stwu r1, -0x40(r1)
@@ -4418,9 +4417,9 @@ forceFinish__Q23zen17particleGeneratorFv:
 /* 801A0DE0 0019DD40  38 21 00 40 */	addi r1, r1, 0x40
 /* 801A0DE4 0019DD44  7C 08 03 A6 */	mtlr r0
 /* 801A0DE8 0019DD48  4E 80 00 20 */	blr 
+.endfn "forceFinish__Q23zen17particleGeneratorFPQ23zen37CallBack1<PQ23zen17particleGenerator>PQ23zen58CallBack2<PQ23zen17particleGenerator,PQ23zen11particleMdl>"
 
-.global pmGetParticle__Q23zen17particleGeneratorFv
-pmGetParticle__Q23zen17particleGeneratorFv:
+.fn pmGetParticle__Q23zen17particleGeneratorFv, global
 /* 801A0DEC 0019DD4C  7C 08 02 A6 */	mflr r0
 /* 801A0DF0 0019DD50  90 01 00 04 */	stw r0, 4(r1)
 /* 801A0DF4 0019DD54  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -4450,9 +4449,9 @@ pmGetParticle__Q23zen17particleGeneratorFv:
 /* 801A0E50 0019DDB0  38 21 00 18 */	addi r1, r1, 0x18
 /* 801A0E54 0019DDB4  7C 08 03 A6 */	mtlr r0
 /* 801A0E58 0019DDB8  4E 80 00 20 */	blr 
+.endfn pmGetParticle__Q23zen17particleGeneratorFv
 
-.global get__Q23zen14zenListManagerFv
-get__Q23zen14zenListManagerFv:
+.fn get__Q23zen14zenListManagerFv, weak
 /* 801A0E5C 0019DDBC  7C 08 02 A6 */	mflr r0
 /* 801A0E60 0019DDC0  90 01 00 04 */	stw r0, 4(r1)
 /* 801A0E64 0019DDC4  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -4475,9 +4474,9 @@ get__Q23zen14zenListManagerFv:
 /* 801A0EA4 0019DE04  38 21 00 18 */	addi r1, r1, 0x18
 /* 801A0EA8 0019DE08  7C 08 03 A6 */	mtlr r0
 /* 801A0EAC 0019DE0C  4E 80 00 20 */	blr 
+.endfn get__Q23zen14zenListManagerFv
 
-.global pmGetParticleChild__Q23zen17particleGeneratorFv
-pmGetParticleChild__Q23zen17particleGeneratorFv:
+.fn pmGetParticleChild__Q23zen17particleGeneratorFv, global
 /* 801A0EB0 0019DE10  7C 08 02 A6 */	mflr r0
 /* 801A0EB4 0019DE14  90 01 00 04 */	stw r0, 4(r1)
 /* 801A0EB8 0019DE18  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -4508,16 +4507,19 @@ pmGetParticleChild__Q23zen17particleGeneratorFv:
 /* 801A0F18 0019DE78  38 21 00 18 */	addi r1, r1, 0x18
 /* 801A0F1C 0019DE7C  7C 08 03 A6 */	mtlr r0
 /* 801A0F20 0019DE80  4E 80 00 20 */	blr 
+.endfn pmGetParticleChild__Q23zen17particleGeneratorFv
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802DA620:
+.obj lbl_802DA620, local
 	.asciz "particleGenerator.cpp"
+.endobj lbl_802DA620
 .balign 4
+.obj lbl_802DA638, local
 	.asciz "particleGenerator"
+.endobj lbl_802DA638
 .balign 32
-.global lpsPos
-lpsPos:
+.obj lpsPos, local
 	.4byte 0xFFE70019
 	.4byte 0x00000019
 	.4byte 0x00190000
@@ -4530,43 +4532,63 @@ lpsPos:
 	.4byte 0x0000FFE7
 	.4byte 0x00190000
 	.4byte 0xFFE7FFE7
-lbl_802DA690:
+.endobj lpsPos
+.balign 4
+.obj lbl_802DA690, local
 	.4byte 0x00000000
 	.4byte 0xFFFFFFFF
 	.4byte drawPtclBillboard__Q23zen17particleGeneratorFR8Graphics
-lbl_802DA69C:
+.endobj lbl_802DA690
+.balign 4
+.obj lbl_802DA69C, local
 	.4byte 0x00000000
 	.4byte 0xFFFFFFFF
 	.4byte drawPtclOriented__Q23zen17particleGeneratorFR8Graphics
-lbl_802DA6A8:
+.endobj lbl_802DA69C
+.balign 4
+.obj lbl_802DA6A8, local
 	.4byte 0x00000000
 	.4byte 0xFFFFFFFF
 	.4byte RotAxisY__Q23zen17particleGeneratorFRA3_A4_fRfRf
-lbl_802DA6B4:
+.endobj lbl_802DA6A8
+.balign 4
+.obj lbl_802DA6B4, local
 	.4byte 0x00000000
 	.4byte 0xFFFFFFFF
 	.4byte RotAxisX__Q23zen17particleGeneratorFRA3_A4_fRfRf
-lbl_802DA6C0:
+.endobj lbl_802DA6B4
+.balign 4
+.obj lbl_802DA6C0, local
 	.4byte 0x00000000
 	.4byte 0xFFFFFFFF
 	.4byte RotAxisZ__Q23zen17particleGeneratorFRA3_A4_fRfRf
-lbl_802DA6CC:
+.endobj lbl_802DA6C0
+.balign 4
+.obj lbl_802DA6CC, local
 	.4byte 0x00000000
 	.4byte 0xFFFFFFFF
 	.4byte RotAxisXY__Q23zen17particleGeneratorFRA3_A4_fRfRf
-lbl_802DA6D8:
+.endobj lbl_802DA6CC
+.balign 4
+.obj lbl_802DA6D8, local
 	.4byte 0x00000000
 	.4byte 0xFFFFFFFF
 	.4byte RotAxisXZ__Q23zen17particleGeneratorFRA3_A4_fRfRf
-lbl_802DA6E4:
+.endobj lbl_802DA6D8
+.balign 4
+.obj lbl_802DA6E4, local
 	.4byte 0x00000000
 	.4byte 0xFFFFFFFF
 	.4byte RotAxisYZ__Q23zen17particleGeneratorFRA3_A4_fRfRf
-lbl_802DA6F0:
+.endobj lbl_802DA6E4
+.balign 4
+.obj lbl_802DA6F0, local
 	.4byte 0x00000000
 	.4byte 0xFFFFFFFF
 	.4byte RotAxisXYZ__Q23zen17particleGeneratorFRA3_A4_fRfRf
-lbl_802DA6FC:
+.endobj lbl_802DA6F0
+.balign 4
+.obj lbl_802DA6FC, local
 	.4byte .L_8019CE30
 	.4byte .L_8019CE4C
 	.4byte .L_8019CE68
@@ -4574,58 +4596,79 @@ lbl_802DA6FC:
 	.4byte .L_8019CEA0
 	.4byte .L_8019CEBC
 	.4byte .L_8019CED8
+.endobj lbl_802DA6FC
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 32
-.global lpsCoord
-lpsCoord:
+.obj lpsCoord, local
 	.4byte 0x00000100
 	.4byte 0x01010001
-lbl_803E5E08:
-	.4byte 0x00000000
-lbl_803E5E0C:
-	.4byte 0x00000000
-lbl_803E5E10:
-	.4byte 0x00000000
-lbl_803E5E14:
-	.4byte 0x00000000
-lbl_803E5E18:
-	.4byte 0x3F800000
-lbl_803E5E1C:
-	.4byte 0x00000000
+.endobj lpsCoord
+.balign 4
+.obj lbl_803E5E08, local
+	.float 0.0
+.endobj lbl_803E5E08
+.obj lbl_803E5E0C, local
+	.float 0.0
+.endobj lbl_803E5E0C
+.obj lbl_803E5E10, local
+	.float 0.0
+.endobj lbl_803E5E10
+.obj lbl_803E5E14, local
+	.float 0.0
+.endobj lbl_803E5E14
+.obj lbl_803E5E18, local
+	.float 1.0
+.endobj lbl_803E5E18
+.obj lbl_803E5E1C, local
+	.float 0.0
+.endobj lbl_803E5E1C
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803EB590:
-	.4byte 0x00000000
-lbl_803EB594:
-	.4byte 0x40C90FDB
-lbl_803EB598:
-	.4byte 0x46FFFE00
+.obj lbl_803EB590, local
+	.float 0.0
+.endobj lbl_803EB590
+.obj lbl_803EB594, local # tau
+	.float 6.2831855
+.endobj lbl_803EB594
+.obj lbl_803EB598, local
+	.float 32767.0
+.endobj lbl_803EB598
 .balign 8
-lbl_803EB5A0:
-	.4byte 0x3FE00000
-	.4byte 0x00000000
-lbl_803EB5A8:
-	.4byte 0x40080000
-	.4byte 0x00000000
-lbl_803EB5B0:
-	.4byte 0x3F800000
+.obj lbl_803EB5A0, local
+	.double 0.5
+.endobj lbl_803EB5A0
 .balign 8
-lbl_803EB5B8:
-	.4byte 0x43300000
-	.4byte 0x80000000
-lbl_803EB5C0:
-	.4byte 0x40000000
+.obj lbl_803EB5A8, local
+	.double 3.0
+.endobj lbl_803EB5A8
+.balign 4
+.obj lbl_803EB5B0, local
+	.float 1.0
+.endobj lbl_803EB5B0
 .balign 8
-lbl_803EB5C8:
-	.4byte 0x43300000
-	.4byte 0x00000000
-lbl_803EB5D0:
-	.4byte 0x3F000000
-lbl_803EB5D4:
-	.4byte 0x40400000
-lbl_803EB5D8:
-	.4byte 0x3F7D70A4
-lbl_803EB5DC:
-	.4byte 0x41C80000
+.obj lbl_803EB5B8, local
+	.8byte 0x4330000080000000
+.endobj lbl_803EB5B8
+.balign 4
+.obj lbl_803EB5C0, local
+	.float 2.0
+.endobj lbl_803EB5C0
+.balign 8
+.obj lbl_803EB5C8, local
+	.8byte 0x4330000000000000
+.endobj lbl_803EB5C8
+.balign 4
+.obj lbl_803EB5D0, local
+	.float 0.5
+.endobj lbl_803EB5D0
+.obj lbl_803EB5D4, local
+	.float 3.0
+.endobj lbl_803EB5D4
+.obj lbl_803EB5D8, local
+	.float 0.99
+.endobj lbl_803EB5D8
+.obj lbl_803EB5DC, local
+	.float 25.0
+.endobj lbl_803EB5DC

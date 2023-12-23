@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global __ct__11DynParticleFv
-__ct__11DynParticleFv:
+.fn __ct__11DynParticleFv, global
 /* 80092808 0008F768  3C 80 80 22 */	lis r4, __vt__5ANode@ha
 /* 8009280C 0008F76C  38 04 73 8C */	addi r0, r4, __vt__5ANode@l
 /* 80092810 0008F770  3C 80 80 22 */	lis r4, __vt__8CoreNode@ha
@@ -56,24 +55,24 @@ __ct__11DynParticleFv:
 /* 800928D4 0008F834  C0 02 8B 98 */	lfs f0, lbl_803E8D98@sda21(r2)
 /* 800928D8 0008F838  D0 03 00 90 */	stfs f0, 0x90(r3)
 /* 800928DC 0008F83C  4E 80 00 20 */	blr 
+.endfn __ct__11DynParticleFv
 
-.global getSize__11DynParticleFv
-getSize__11DynParticleFv:
+.fn getSize__11DynParticleFv, global
 /* 800928E0 0008F840  C0 22 8B 9C */	lfs f1, lbl_803E8D9C@sda21(r2)
 /* 800928E4 0008F844  C0 03 00 90 */	lfs f0, 0x90(r3)
 /* 800928E8 0008F848  EC 21 00 32 */	fmuls f1, f1, f0
 /* 800928EC 0008F84C  4E 80 00 20 */	blr 
+.endfn getSize__11DynParticleFv
 
-.global refresh__11DynParticleFR8Graphics
-refresh__11DynParticleFR8Graphics:
+.fn refresh__11DynParticleFR8Graphics, global
 /* 800928F0 0008F850  4E 80 00 20 */	blr 
+.endfn refresh__11DynParticleFR8Graphics
 
-.global doKill__11DynParticleFv
-doKill__11DynParticleFv:
+.fn doKill__11DynParticleFv, global
 /* 800928F4 0008F854  4E 80 00 20 */	blr 
+.endfn doKill__11DynParticleFv
 
-.global __ct__15DynParticleHeapFi
-__ct__15DynParticleHeapFi:
+.fn __ct__15DynParticleHeapFi, global
 /* 800928F8 0008F858  7C 08 02 A6 */	mflr r0
 /* 800928FC 0008F85C  90 01 00 04 */	stw r0, 4(r1)
 /* 80092900 0008F860  94 21 FF 78 */	stwu r1, -0x88(r1)
@@ -202,9 +201,9 @@ __ct__15DynParticleHeapFi:
 /* 80092AE0 0008FA40  38 21 00 88 */	addi r1, r1, 0x88
 /* 80092AE4 0008FA44  7C 08 03 A6 */	mtlr r0
 /* 80092AE8 0008FA48  4E 80 00 20 */	blr 
+.endfn __ct__15DynParticleHeapFi
 
-.global __ct__11DynCreatureFv
-__ct__11DynCreatureFv:
+.fn __ct__11DynCreatureFv, global
 /* 80092AEC 0008FA4C  7C 08 02 A6 */	mflr r0
 /* 80092AF0 0008FA50  38 80 00 00 */	li r4, 0
 /* 80092AF4 0008FA54  90 01 00 04 */	stw r0, 4(r1)
@@ -266,9 +265,9 @@ __ct__11DynCreatureFv:
 /* 80092BD4 0008FB34  38 21 00 18 */	addi r1, r1, 0x18
 /* 80092BD8 0008FB38  7C 08 03 A6 */	mtlr r0
 /* 80092BDC 0008FB3C  4E 80 00 20 */	blr 
+.endfn __ct__11DynCreatureFv
 
-.global enablePickOffset__11DynCreatureFf
-enablePickOffset__11DynCreatureFf:
+.fn enablePickOffset__11DynCreatureFf, global
 /* 80092BE0 0008FB40  80 03 00 C8 */	lwz r0, 0xc8(r3)
 /* 80092BE4 0008FB44  FC 00 08 50 */	fneg f0, f1
 /* 80092BE8 0008FB48  60 00 01 00 */	ori r0, r0, 0x100
@@ -276,18 +275,18 @@ enablePickOffset__11DynCreatureFf:
 /* 80092BF0 0008FB50  D0 23 00 D0 */	stfs f1, 0xd0(r3)
 /* 80092BF4 0008FB54  D0 03 02 D0 */	stfs f0, 0x2d0(r3)
 /* 80092BF8 0008FB58  4E 80 00 20 */	blr 
+.endfn enablePickOffset__11DynCreatureFf
 
-.global disablePickOffset__11DynCreatureFv
-disablePickOffset__11DynCreatureFv:
+.fn disablePickOffset__11DynCreatureFv, global
 /* 80092BFC 0008FB5C  80 03 00 C8 */	lwz r0, 0xc8(r3)
 /* 80092C00 0008FB60  54 00 06 2C */	rlwinm r0, r0, 0, 0x18, 0x16
 /* 80092C04 0008FB64  90 03 00 C8 */	stw r0, 0xc8(r3)
 /* 80092C08 0008FB68  C0 02 8B 90 */	lfs f0, lbl_803E8D90@sda21(r2)
 /* 80092C0C 0008FB6C  D0 03 02 D0 */	stfs f0, 0x2d0(r3)
 /* 80092C10 0008FB70  4E 80 00 20 */	blr 
+.endfn disablePickOffset__11DynCreatureFv
 
-.global addParticle__11DynCreatureFfR8Vector3f
-addParticle__11DynCreatureFfR8Vector3f:
+.fn addParticle__11DynCreatureFfR8Vector3f, global
 /* 80092C14 0008FB74  7C 08 02 A6 */	mflr r0
 /* 80092C18 0008FB78  90 01 00 04 */	stw r0, 4(r1)
 /* 80092C1C 0008FB7C  94 21 FF C8 */	stwu r1, -0x38(r1)
@@ -358,9 +357,9 @@ addParticle__11DynCreatureFfR8Vector3f:
 /* 80092D08 0008FC68  38 21 00 38 */	addi r1, r1, 0x38
 /* 80092D0C 0008FC6C  7C 08 03 A6 */	mtlr r0
 /* 80092D10 0008FC70  4E 80 00 20 */	blr 
+.endfn addParticle__11DynCreatureFfR8Vector3f
 
-.global releaseAllParticles__11DynCreatureFv
-releaseAllParticles__11DynCreatureFv:
+.fn releaseAllParticles__11DynCreatureFv, global
 /* 80092D14 0008FC74  7C 08 02 A6 */	mflr r0
 /* 80092D18 0008FC78  90 01 00 04 */	stw r0, 4(r1)
 /* 80092D1C 0008FC7C  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -389,9 +388,9 @@ releaseAllParticles__11DynCreatureFv:
 /* 80092D70 0008FCD0  38 21 00 28 */	addi r1, r1, 0x28
 /* 80092D74 0008FCD4  7C 08 03 A6 */	mtlr r0
 /* 80092D78 0008FCD8  4E 80 00 20 */	blr 
+.endfn releaseAllParticles__11DynCreatureFv
 
-.global initialiseSystem__11DynCreatureFv
-initialiseSystem__11DynCreatureFv:
+.fn initialiseSystem__11DynCreatureFv, global
 /* 80092D7C 0008FCDC  7C 08 02 A6 */	mflr r0
 /* 80092D80 0008FCE0  90 01 00 04 */	stw r0, 4(r1)
 /* 80092D84 0008FCE4  94 21 FF 58 */	stwu r1, -0xa8(r1)
@@ -495,9 +494,9 @@ initialiseSystem__11DynCreatureFv:
 /* 80092EFC 0008FE5C  38 21 00 A8 */	addi r1, r1, 0xa8
 /* 80092F00 0008FE60  7C 08 03 A6 */	mtlr r0
 /* 80092F04 0008FE64  4E 80 00 20 */	blr 
+.endfn initialiseSystem__11DynCreatureFv
 
-.global update__11DynCreatureFv
-update__11DynCreatureFv:
+.fn update__11DynCreatureFv, global
 /* 80092F08 0008FE68  7C 08 02 A6 */	mflr r0
 /* 80092F0C 0008FE6C  90 01 00 04 */	stw r0, 4(r1)
 /* 80092F10 0008FE70  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -513,9 +512,9 @@ update__11DynCreatureFv:
 /* 80092F38 0008FE98  38 21 00 20 */	addi r1, r1, 0x20
 /* 80092F3C 0008FE9C  7C 08 03 A6 */	mtlr r0
 /* 80092F40 0008FEA0  4E 80 00 20 */	blr 
+.endfn update__11DynCreatureFv
 
-.global simulate__11DynCreatureFf
-simulate__11DynCreatureFf:
+.fn simulate__11DynCreatureFf, global
 /* 80092F44 0008FEA4  7C 08 02 A6 */	mflr r0
 /* 80092F48 0008FEA8  90 01 00 04 */	stw r0, 4(r1)
 /* 80092F4C 0008FEAC  38 00 00 00 */	li r0, 0
@@ -1262,9 +1261,9 @@ simulate__11DynCreatureFf:
 /* 80093A9C 000909FC  38 21 04 A8 */	addi r1, r1, 0x4a8
 /* 80093AA0 00090A00  7C 08 03 A6 */	mtlr r0
 /* 80093AA4 00090A04  4E 80 00 20 */	blr 
+.endfn simulate__11DynCreatureFf
 
-.global createInvInertiaTensor__11DynCreatureFv
-createInvInertiaTensor__11DynCreatureFv:
+.fn createInvInertiaTensor__11DynCreatureFv, global
 /* 80093AA8 00090A08  7C 08 02 A6 */	mflr r0
 /* 80093AAC 00090A0C  90 01 00 04 */	stw r0, 4(r1)
 /* 80093AB0 00090A10  94 21 FF 68 */	stwu r1, -0x98(r1)
@@ -1375,9 +1374,9 @@ createInvInertiaTensor__11DynCreatureFv:
 /* 80093C4C 00090BAC  38 21 00 98 */	addi r1, r1, 0x98
 /* 80093C50 00090BB0  7C 08 03 A6 */	mtlr r0
 /* 80093C54 00090BB4  4E 80 00 20 */	blr 
+.endfn createInvInertiaTensor__11DynCreatureFv
 
-.global refresh__11DynCreatureFR8Graphics
-refresh__11DynCreatureFR8Graphics:
+.fn refresh__11DynCreatureFR8Graphics, global
 /* 80093C58 00090BB8  7C 08 02 A6 */	mflr r0
 /* 80093C5C 00090BBC  90 01 00 04 */	stw r0, 4(r1)
 /* 80093C60 00090BC0  94 21 FE B8 */	stwu r1, -0x148(r1)
@@ -1553,9 +1552,9 @@ refresh__11DynCreatureFR8Graphics:
 /* 80093F00 00090E60  38 21 01 48 */	addi r1, r1, 0x148
 /* 80093F04 00090E64  7C 08 03 A6 */	mtlr r0
 /* 80093F08 00090E68  4E 80 00 20 */	blr 
+.endfn refresh__11DynCreatureFR8Graphics
 
-.global doKill__11DynCreatureFv
-doKill__11DynCreatureFv:
+.fn doKill__11DynCreatureFv, global
 /* 80093F0C 00090E6C  7C 08 02 A6 */	mflr r0
 /* 80093F10 00090E70  90 01 00 04 */	stw r0, 4(r1)
 /* 80093F14 00090E74  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -1584,9 +1583,9 @@ doKill__11DynCreatureFv:
 /* 80093F68 00090EC8  38 21 00 28 */	addi r1, r1, 0x28
 /* 80093F6C 00090ECC  7C 08 03 A6 */	mtlr r0
 /* 80093F70 00090ED0  4E 80 00 20 */	blr 
+.endfn doKill__11DynCreatureFv
 
-.global read__12CreaturePropFR18RandomAccessStream
-read__12CreaturePropFR18RandomAccessStream:
+.fn read__12CreaturePropFR18RandomAccessStream, weak
 /* 80093F74 00090ED4  7C 08 02 A6 */	mflr r0
 /* 80093F78 00090ED8  90 01 00 04 */	stw r0, 4(r1)
 /* 80093F7C 00090EDC  94 21 FF F8 */	stwu r1, -8(r1)
@@ -1595,60 +1594,73 @@ read__12CreaturePropFR18RandomAccessStream:
 /* 80093F88 00090EE8  38 21 00 08 */	addi r1, r1, 8
 /* 80093F8C 00090EEC  7C 08 03 A6 */	mtlr r0
 /* 80093F90 00090EF0  4E 80 00 20 */	blr 
+.endfn read__12CreaturePropFR18RandomAccessStream
 
-.global isFree__11DynParticleFv
-isFree__11DynParticleFv:
+.fn isFree__11DynParticleFv, weak
 /* 80093F94 00090EF4  80 03 00 48 */	lwz r0, 0x48(r3)
 /* 80093F98 00090EF8  7C 00 00 D0 */	neg r0, r0
 /* 80093F9C 00090EFC  7C 00 00 34 */	cntlzw r0, r0
 /* 80093FA0 00090F00  54 03 D9 7E */	srwi r3, r0, 5
 /* 80093FA4 00090F04  4E 80 00 20 */	blr 
+.endfn isFree__11DynParticleFv
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802AF730:
+.obj lbl_802AF730, local
 	.asciz "dynCreature.cpp"
+.endobj lbl_802AF730
 .balign 4
-lbl_802AF740:
+.obj lbl_802AF740, local
 	.asciz "CoreNode"
+.endobj lbl_802AF740
 .balign 4
-lbl_802AF74C:
+.obj lbl_802AF74C, local
 	.asciz "particle"
+.endobj lbl_802AF74C
 .balign 4
-lbl_802AF758:
+.obj lbl_802AF758, local
 	.asciz "freeParticles"
+.endobj lbl_802AF758
 .balign 4
-lbl_802AF768:
+.obj lbl_802AF768, local
 	.asciz "useParticles"
+.endobj lbl_802AF768
 .balign 4
-lbl_802AF778:
+.obj lbl_802AF778, local
 	.asciz "DynCreature"
+.endobj lbl_802AF778
 .balign 4
-lbl_802AF784:
+.obj lbl_802AF784, local
 	.asciz "EventTalker"
+.endobj lbl_802AF784
 .balign 4
-lbl_802AF790:
+.obj lbl_802AF790, local
 	.asciz "RefCountable"
+.endobj lbl_802AF790
 .balign 4
-lbl_802AF7A0:
+.obj lbl_802AF7A0, local
 	.asciz "Creature"
+.endobj lbl_802AF7A0
 .balign 4
-lbl_802AF7AC:
+.obj lbl_802AF7AC, local
 	.4byte __RTTI__11EventTalker
 	.4byte 0x00000008
 	.4byte __RTTI__12RefCountable
-	.4byte 0x00000000
-	.4byte 0x00000000
-lbl_802AF7C0:
+	.4byte 0
+	.4byte 0
+.endobj lbl_802AF7AC
+.balign 4
+.obj lbl_802AF7C0, local
 	.4byte __RTTI__11EventTalker
 	.4byte 0x00000008
 	.4byte __RTTI__12RefCountable
-	.4byte 0x00000000
+	.4byte 0
 	.4byte __RTTI__8Creature
-	.4byte 0x00000000
-	.4byte 0x00000000
-.global __vt__11DynCreature
-__vt__11DynCreature:
+	.4byte 0
+	.4byte 0
+.endobj lbl_802AF7C0
+.balign 4
+.obj __vt__11DynCreature, global
 	.4byte __RTTI__11DynCreature
 	.4byte 0
 	.4byte addCntCallback__12RefCountableFv
@@ -1718,47 +1730,53 @@ __vt__11DynCreature:
 	.4byte doAnimation__8CreatureFv
 	.4byte doKill__11DynCreatureFv
 	.4byte exitCourse__8CreatureFv
+.endobj __vt__11DynCreature
 .balign 4
-lbl_802AF8F0:
+.obj lbl_802AF8F0, local
 	.asciz "Parm<float>"
+.endobj lbl_802AF8F0
 .balign 4
-lbl_802AF8FC:
+.obj lbl_802AF8FC, local
 	.asciz "BaseParm"
+.endobj lbl_802AF8FC
 .balign 4
-lbl_802AF908:
+.obj lbl_802AF908, local
 	.4byte __RTTI__8BaseParm
 	.4byte 0
 	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
+.endobj lbl_802AF908
 .balign 4
-lbl_802AF928:
+.skip 0x14 # compiler padding
+.balign 4
+.obj lbl_802AF928, local
 	.asciz "CreatureProp"
+.endobj lbl_802AF928
 .balign 4
-.global __vt__12CreatureProp
-__vt__12CreatureProp:
+.obj __vt__12CreatureProp, weak
 	.4byte __RTTI__12CreatureProp
 	.4byte 0
 	.4byte read__12CreaturePropFR18RandomAccessStream
+.endobj __vt__12CreatureProp
 .balign 4
-lbl_802AF944:
+.obj lbl_802AF944, local
 	.asciz "DynParticle"
+.endobj lbl_802AF944
 .balign 4
-lbl_802AF950:
+.obj lbl_802AF950, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte 0
-lbl_802AF95C:
+.endobj lbl_802AF950
+.balign 4
+.obj lbl_802AF95C, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte __RTTI__8CoreNode
 	.4byte 0
 	.4byte 0
-.global __vt__11DynParticle
-__vt__11DynParticle:
+.endobj lbl_802AF95C
+.balign 4
+.obj __vt__11DynParticle, global
 	.4byte __RTTI__11DynParticle
 	.4byte 0
 	.4byte getAgeNodeType__5ANodeFv
@@ -1767,188 +1785,268 @@ __vt__11DynParticle:
 	.4byte getSize__11DynParticleFv
 	.4byte refresh__11DynParticleFR8Graphics
 	.4byte doKill__11DynParticleFv
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
+.endobj __vt__11DynParticle
+.balign 4
+.skip 0x20 # compiler padding
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-lbl_803DF1F0:
+.obj lbl_803DF1F0, local
 	.float 0.0
-lbl_803DF1F4:
+.endobj lbl_803DF1F0
+.obj lbl_803DF1F4, local
 	.float 0.0
-lbl_803DF1F8:
+.endobj lbl_803DF1F4
+.obj lbl_803DF1F8, local
 	.float 0.0
+.endobj lbl_803DF1F8
 .balign 4
-lbl_803DF1FC:
+.obj lbl_803DF1FC, local
 	.asciz "s00"
+.endobj lbl_803DF1FC
 .balign 4
-lbl_803DF200:
+.obj lbl_803DF200, local
 	.asciz "s01"
+.endobj lbl_803DF200
 .balign 4
-lbl_803DF204:
+.obj lbl_803DF204, local
 	.asciz "s02"
+.endobj lbl_803DF204
 .balign 4
-lbl_803DF208:
+.obj lbl_803DF208, local
 	.asciz "s03"
+.endobj lbl_803DF208
 .balign 4
-lbl_803DF20C:
+.obj lbl_803DF20C, local
 	.asciz "s04"
+.endobj lbl_803DF20C
 .balign 4
-lbl_803DF210:
+.obj lbl_803DF210, local
 	.float 0.0
-lbl_803DF214:
+.endobj lbl_803DF210
+.obj lbl_803DF214, local
 	.float 0.0
-lbl_803DF218:
+.endobj lbl_803DF214
+.obj lbl_803DF218, local
 	.float 0.0
-lbl_803DF21C:
+.endobj lbl_803DF218
+.obj lbl_803DF21C, local
 	.float 0.0
-lbl_803DF220:
+.endobj lbl_803DF21C
+.obj lbl_803DF220, local
 	.float 0.0
-lbl_803DF224:
+.endobj lbl_803DF220
+.obj lbl_803DF224, local
 	.float 0.0
-lbl_803DF228:
+.endobj lbl_803DF224
+.obj lbl_803DF228, local
 	.float 0.0
-lbl_803DF22C:
+.endobj lbl_803DF228
+.obj lbl_803DF22C, local
 	.float 0.0
-lbl_803DF230:
+.endobj lbl_803DF22C
+.obj lbl_803DF230, local
 	.float 0.0
-lbl_803DF234:
+.endobj lbl_803DF230
+.obj lbl_803DF234, local
 	.float 0.0
-lbl_803DF238:
+.endobj lbl_803DF234
+.obj lbl_803DF238, local
 	.float 0.0
-lbl_803DF23C:
+.endobj lbl_803DF238
+.obj lbl_803DF23C, local
 	.float 0.0
-lbl_803DF240:
+.endobj lbl_803DF23C
+.obj lbl_803DF240, local
 	.float 0.0
-lbl_803DF244:
+.endobj lbl_803DF240
+.obj lbl_803DF244, local
 	.float 0.0
-lbl_803DF248:
+.endobj lbl_803DF244
+.obj lbl_803DF248, local
 	.float 0.0
-lbl_803DF24C:
+.endobj lbl_803DF248
+.obj lbl_803DF24C, local
 	.float 0.0
-lbl_803DF250:
+.endobj lbl_803DF24C
+.obj lbl_803DF250, local
 	.float 0.0
-lbl_803DF254:
+.endobj lbl_803DF250
+.obj lbl_803DF254, local
 	.float 0.0
-lbl_803DF258:
+.endobj lbl_803DF254
+.obj lbl_803DF258, local
 	.float 0.0
-lbl_803DF25C:
+.endobj lbl_803DF258
+.obj lbl_803DF25C, local
 	.float 0.0
-lbl_803DF260:
+.endobj lbl_803DF25C
+.obj lbl_803DF260, local
 	.float 0.0
-lbl_803DF264:
+.endobj lbl_803DF260
+.obj lbl_803DF264, local
 	.float 1.0
-lbl_803DF268:
+.endobj lbl_803DF264
+.obj lbl_803DF268, local
 	.float 1.0
-lbl_803DF26C:
+.endobj lbl_803DF268
+.obj lbl_803DF26C, local
 	.float 1.0
-lbl_803DF270:
+.endobj lbl_803DF26C
+.obj lbl_803DF270, local
 	.float 0.0
-lbl_803DF274:
+.endobj lbl_803DF270
+.obj lbl_803DF274, local
 	.float 1.0
-lbl_803DF278:
+.endobj lbl_803DF274
+.obj lbl_803DF278, local
 	.float 0.0
-lbl_803DF27C:
+.endobj lbl_803DF278
+.obj lbl_803DF27C, local
 	.float 0.0
-lbl_803DF280:
+.endobj lbl_803DF27C
+.obj lbl_803DF280, local
 	.float 1.0
-lbl_803DF284:
+.endobj lbl_803DF280
+.obj lbl_803DF284, local
 	.float 0.0
-lbl_803DF288:
+.endobj lbl_803DF284
+.obj lbl_803DF288, local
 	.float -0.3
-lbl_803DF28C:
+.endobj lbl_803DF288
+.obj lbl_803DF28C, local
 	.float 1.0
-lbl_803DF290:
+.endobj lbl_803DF28C
+.obj lbl_803DF290, local
 	.float 1.0
-lbl_803DF294:
+.endobj lbl_803DF290
+.obj lbl_803DF294, local
 	.float 1.0
-lbl_803DF298:
+.endobj lbl_803DF294
+.obj lbl_803DF298, local
 	.float 0.0
-lbl_803DF29C:
+.endobj lbl_803DF298
+.obj lbl_803DF29C, local
 	.float 0.0
-lbl_803DF2A0:
+.endobj lbl_803DF29C
+.obj lbl_803DF2A0, local
 	.float 0.0
-__RTTI__11EventTalker:
+.endobj lbl_803DF2A0
+.balign 4
+.obj __RTTI__11EventTalker, local
 	.4byte lbl_802AF784
 	.4byte 0
-__RTTI__12RefCountable:
+.endobj __RTTI__11EventTalker
+.balign 4
+.obj __RTTI__12RefCountable, local
 	.4byte lbl_802AF790
 	.4byte 0
-__RTTI__8Creature:
+.endobj __RTTI__12RefCountable
+.balign 4
+.obj __RTTI__8Creature, local
 	.4byte lbl_802AF7A0
 	.4byte lbl_802AF7AC
-__RTTI__11DynCreature:
+.endobj __RTTI__8Creature
+.balign 4
+.obj __RTTI__11DynCreature, local
 	.4byte lbl_802AF778
 	.4byte lbl_802AF7C0
-__RTTI__8BaseParm:
+.endobj __RTTI__11DynCreature
+.balign 4
+.obj __RTTI__8BaseParm, local
 	.4byte lbl_802AF8FC
 	.4byte 0
-__RTTI__12CreatureProp:
+.endobj __RTTI__8BaseParm
+.balign 4
+.obj __RTTI__12CreatureProp, local
 	.4byte lbl_802AF928
 	.4byte 0
+.endobj __RTTI__12CreatureProp
 .balign 4
-lbl_803DF2D4:
+.obj lbl_803DF2D4, local
 	.asciz "ANode"
+.endobj lbl_803DF2D4
 .balign 4
-__RTTI__5ANode:
+.obj __RTTI__5ANode, local
 	.4byte lbl_803DF2D4
 	.4byte 0
-__RTTI__8CoreNode:
+.endobj __RTTI__5ANode
+.balign 4
+.obj __RTTI__8CoreNode, local
 	.4byte lbl_802AF740
 	.4byte lbl_802AF950
-__RTTI__11DynParticle:
+.endobj __RTTI__8CoreNode
+.balign 4
+.obj __RTTI__11DynParticle, local
 	.4byte lbl_802AF944
 	.4byte lbl_802AF95C
+.endobj __RTTI__11DynParticle
 
 .section .sbss, "wa"
 .balign 8
-.global particleHeap
-particleHeap:
+.obj particleHeap, global
 	.skip 4
+.endobj particleHeap
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803E8D90:
+.obj lbl_803E8D90, local
 	.float 0.0
-lbl_803E8D94:
+.endobj lbl_803E8D90
+.obj lbl_803E8D94, local
 	.float 100.0
-lbl_803E8D98:
+.endobj lbl_803E8D94
+.obj lbl_803E8D98, local
 	.float 0.01
-lbl_803E8D9C:
+.endobj lbl_803E8D98
+.obj lbl_803E8D9C, local
 	.float 3.0
-lbl_803E8DA0:
+.endobj lbl_803E8D9C
+.obj lbl_803E8DA0, local
 	.float 0.5
-lbl_803E8DA4:
+.endobj lbl_803E8DA0
+.obj lbl_803E8DA4, local
 	.float 0.25
-lbl_803E8DA8:
+.endobj lbl_803E8DA4
+.obj lbl_803E8DA8, local
 	.float 0.1
-lbl_803E8DAC:
+.endobj lbl_803E8DA8
+.obj lbl_803E8DAC, local
 	.float 0.3
-lbl_803E8DB0:
+.endobj lbl_803E8DAC
+.obj lbl_803E8DB0, local
 	.float 1.0
-lbl_803E8DB4:
+.endobj lbl_803E8DB0
+.obj lbl_803E8DB4, local
 	.float -60.0
-lbl_803E8DB8:
+.endobj lbl_803E8DB4
+.obj lbl_803E8DB8, local
 	.float 1.4
-lbl_803E8DBC:
+.endobj lbl_803E8DB8
+.obj lbl_803E8DBC, local
 	.float 0.001
-lbl_803E8DC0:
+.endobj lbl_803E8DBC
+.obj lbl_803E8DC0, local
 	.float 10.0
-lbl_803E8DC4:
+.endobj lbl_803E8DC0
+.obj lbl_803E8DC4, local
 	.float 30.0
-lbl_803E8DC8:
+.endobj lbl_803E8DC4
+.balign 8
+.obj lbl_803E8DC8, local
 	.double 0.5
-lbl_803E8DD0:
+.endobj lbl_803E8DC8
+.balign 8
+.obj lbl_803E8DD0, local
 	.double 3.0
-lbl_803E8DD8:
+.endobj lbl_803E8DD0
+.balign 4
+.obj lbl_803E8DD8, local
 	.float 10000.0
-lbl_803E8DDC:
+.endobj lbl_803E8DD8
+.obj lbl_803E8DDC, local
 	.float 2.0
-lbl_803E8DE0:
+.endobj lbl_803E8DDC
+.obj lbl_803E8DE0, local
 	.float 4.0
+.endobj lbl_803E8DE0

@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global __ct__12PaniTestNodeFv
-__ct__12PaniTestNodeFv:
+.fn __ct__12PaniTestNodeFv, global
 /* 8011FEF8 0011CE58  7C 08 02 A6 */	mflr r0
 /* 8011FEFC 0011CE5C  3C 80 80 22 */	lis r4, __vt__5ANode@ha
 /* 8011FF00 0011CE60  90 01 00 04 */	stw r0, 4(r1)
@@ -358,9 +357,9 @@ __ct__12PaniTestNodeFv:
 /* 80120440 0011D3A0  38 21 00 50 */	addi r1, r1, 0x50
 /* 80120444 0011D3A4  7C 08 03 A6 */	mtlr r0
 /* 80120448 0011D3A8  4E 80 00 20 */	blr 
+.endfn __ct__12PaniTestNodeFv
 
-.global setTestMode__12PaniTestNodeFi
-setTestMode__12PaniTestNodeFi:
+.fn setTestMode__12PaniTestNodeFi, global
 /* 8012044C 0011D3AC  7C 08 02 A6 */	mflr r0
 /* 80120450 0011D3B0  90 01 00 04 */	stw r0, 4(r1)
 /* 80120454 0011D3B4  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -397,9 +396,9 @@ setTestMode__12PaniTestNodeFi:
 /* 801204C4 0011D424  38 21 00 18 */	addi r1, r1, 0x18
 /* 801204C8 0011D428  7C 08 03 A6 */	mtlr r0
 /* 801204CC 0011D42C  4E 80 00 20 */	blr 
+.endfn setTestMode__12PaniTestNodeFi
 
-.global update__12PaniTestNodeFv
-update__12PaniTestNodeFv:
+.fn update__12PaniTestNodeFv, global
 /* 801204D0 0011D430  7C 08 02 A6 */	mflr r0
 /* 801204D4 0011D434  90 01 00 04 */	stw r0, 4(r1)
 /* 801204D8 0011D438  94 21 FF 58 */	stwu r1, -0xa8(r1)
@@ -720,9 +719,9 @@ update__12PaniTestNodeFv:
 /* 80120950 0011D8B0  38 21 00 A8 */	addi r1, r1, 0xa8
 /* 80120954 0011D8B4  7C 08 03 A6 */	mtlr r0
 /* 80120958 0011D8B8  4E 80 00 20 */	blr 
+.endfn update__12PaniTestNodeFv
 
-.global updatePikis__12PaniTestNodeFv
-updatePikis__12PaniTestNodeFv:
+.fn updatePikis__12PaniTestNodeFv, global
 /* 8012095C 0011D8BC  7C 08 02 A6 */	mflr r0
 /* 80120960 0011D8C0  90 01 00 04 */	stw r0, 4(r1)
 /* 80120964 0011D8C4  94 21 FF 68 */	stwu r1, -0x98(r1)
@@ -912,9 +911,9 @@ updatePikis__12PaniTestNodeFv:
 /* 80120C04 0011DB64  38 21 00 98 */	addi r1, r1, 0x98
 /* 80120C08 0011DB68  7C 08 03 A6 */	mtlr r0
 /* 80120C0C 0011DB6C  4E 80 00 20 */	blr 
+.endfn updatePikis__12PaniTestNodeFv
 
-.global updateTekis__12PaniTestNodeFv
-updateTekis__12PaniTestNodeFv:
+.fn updateTekis__12PaniTestNodeFv, global
 /* 80120C10 0011DB70  7C 08 02 A6 */	mflr r0
 /* 80120C14 0011DB74  90 01 00 04 */	stw r0, 4(r1)
 /* 80120C18 0011DB78  94 21 FF A8 */	stwu r1, -0x58(r1)
@@ -1032,9 +1031,9 @@ updateTekis__12PaniTestNodeFv:
 /* 80120DC0 0011DD20  38 21 00 58 */	addi r1, r1, 0x58
 /* 80120DC4 0011DD24  7C 08 03 A6 */	mtlr r0
 /* 80120DC8 0011DD28  4E 80 00 20 */	blr 
+.endfn updateTekis__12PaniTestNodeFv
 
-.global animationKeyUpdated__12PaniTestNodeFR16PaniAnimKeyEvent
-animationKeyUpdated__12PaniTestNodeFR16PaniAnimKeyEvent:
+.fn animationKeyUpdated__12PaniTestNodeFR16PaniAnimKeyEvent, global
 /* 80120DCC 0011DD2C  7C 08 02 A6 */	mflr r0
 /* 80120DD0 0011DD30  90 01 00 04 */	stw r0, 4(r1)
 /* 80120DD4 0011DD34  94 21 FF F8 */	stwu r1, -8(r1)
@@ -1064,9 +1063,9 @@ animationKeyUpdated__12PaniTestNodeFR16PaniAnimKeyEvent:
 /* 80120E2C 0011DD8C  38 21 00 08 */	addi r1, r1, 8
 /* 80120E30 0011DD90  7C 08 03 A6 */	mtlr r0
 /* 80120E34 0011DD94  4E 80 00 20 */	blr 
+.endfn animationKeyUpdated__12PaniTestNodeFR16PaniAnimKeyEvent
 
-.global draw__12PaniTestNodeFR8Graphics
-draw__12PaniTestNodeFR8Graphics:
+.fn draw__12PaniTestNodeFR8Graphics, global
 /* 80120E38 0011DD98  7C 08 02 A6 */	mflr r0
 /* 80120E3C 0011DD9C  3C A0 80 2C */	lis r5, lbl_802C4E48@ha
 /* 80120E40 0011DDA0  90 01 00 04 */	stw r0, 4(r1)
@@ -1499,9 +1498,9 @@ draw__12PaniTestNodeFR8Graphics:
 /* 801214B0 0011E410  38 21 01 C8 */	addi r1, r1, 0x1c8
 /* 801214B4 0011E414  7C 08 03 A6 */	mtlr r0
 /* 801214B8 0011E418  4E 80 00 20 */	blr 
+.endfn draw__12PaniTestNodeFR8Graphics
 
-.global drawPiki__12PaniTestNodeFP8ViewPikiR8Graphics
-drawPiki__12PaniTestNodeFP8ViewPikiR8Graphics:
+.fn drawPiki__12PaniTestNodeFP8ViewPikiR8Graphics, global
 /* 801214BC 0011E41C  7C 08 02 A6 */	mflr r0
 /* 801214C0 0011E420  7C 83 23 78 */	mr r3, r4
 /* 801214C4 0011E424  90 01 00 04 */	stw r0, 4(r1)
@@ -1515,9 +1514,9 @@ drawPiki__12PaniTestNodeFP8ViewPikiR8Graphics:
 /* 801214E4 0011E444  38 21 00 08 */	addi r1, r1, 8
 /* 801214E8 0011E448  7C 08 03 A6 */	mtlr r0
 /* 801214EC 0011E44C  4E 80 00 20 */	blr 
+.endfn drawPiki__12PaniTestNodeFP8ViewPikiR8Graphics
 
-.global drawTeki__12PaniTestNodeFP4TekiR8Graphics
-drawTeki__12PaniTestNodeFP4TekiR8Graphics:
+.fn drawTeki__12PaniTestNodeFP4TekiR8Graphics, global
 /* 801214F0 0011E450  7C 08 02 A6 */	mflr r0
 /* 801214F4 0011E454  7C 83 23 78 */	mr r3, r4
 /* 801214F8 0011E458  90 01 00 04 */	stw r0, 4(r1)
@@ -1531,9 +1530,9 @@ drawTeki__12PaniTestNodeFP4TekiR8Graphics:
 /* 80121518 0011E478  38 21 00 08 */	addi r1, r1, 8
 /* 8012151C 0011E47C  7C 08 03 A6 */	mtlr r0
 /* 80121520 0011E480  4E 80 00 20 */	blr 
+.endfn drawTeki__12PaniTestNodeFP4TekiR8Graphics
 
-.global init__15PaniTestSectionFv
-init__15PaniTestSectionFv:
+.fn init__15PaniTestSectionFv, global
 /* 80121524 0011E484  7C 08 02 A6 */	mflr r0
 /* 80121528 0011E488  3C 80 80 2C */	lis r4, lbl_802C4F10@ha
 /* 8012152C 0011E48C  90 01 00 04 */	stw r0, 4(r1)
@@ -1567,66 +1566,86 @@ init__15PaniTestSectionFv:
 /* 80121590 0011E4F0  38 21 00 18 */	addi r1, r1, 0x18
 /* 80121594 0011E4F4  7C 08 03 A6 */	mtlr r0
 /* 80121598 0011E4F8  4E 80 00 20 */	blr 
+.endfn init__15PaniTestSectionFv
 
-"@32@animationKeyUpdated__12PaniTestNodeFR16PaniAnimKeyEvent":
+.fn "@32@animationKeyUpdated__12PaniTestNodeFR16PaniAnimKeyEvent", weak
 /* 8012159C 0011E4FC  38 63 FF E0 */	addi r3, r3, -32
 /* 801215A0 0011E500  4B FF F8 2C */	b animationKeyUpdated__12PaniTestNodeFR16PaniAnimKeyEvent
+.endfn "@32@animationKeyUpdated__12PaniTestNodeFR16PaniAnimKeyEvent"
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802C4E48:
+.obj lbl_802C4E48, local
 	.asciz "panitestsection.cpp"
+.endobj lbl_802C4E48
 .balign 4
-lbl_802C4E5C:
+.obj lbl_802C4E5C, local
 	.asciz "panitestsection"
+.endobj lbl_802C4E5C
 .balign 4
-lbl_802C4E6C:
+.obj lbl_802C4E6C, local
 	.asciz "PaniTestNode"
+.endobj lbl_802C4E6C
 .balign 4
-lbl_802C4E7C:
+.obj lbl_802C4E7C, local
 	.asciz "<Controller>"
+.endobj lbl_802C4E7C
 .balign 4
-lbl_802C4E8C:
+.obj lbl_802C4E8C, local
 	.asciz "effects/shadow.txe"
+.endobj lbl_802C4E8C
 .balign 4
-lbl_802C4EA0:
+.obj lbl_802C4EA0, local
 	.asciz "courses/test/animtest.mod"
+.endobj lbl_802C4EA0
 .balign 4
-lbl_802C4EBC:
+.obj lbl_802C4EBC, local
 	.asciz "consFont.bti"
+.endobj lbl_802C4EBC
 .balign 4
-lbl_802C4ECC:
+.obj lbl_802C4ECC, local
 	.asciz "VerticalDegree:%d"
+.endobj lbl_802C4ECC
 .balign 4
-lbl_802C4EE0:
+.obj lbl_802C4EE0, local
 	.asciz "Speed:%3.1f"
+.endobj lbl_802C4EE0
 .balign 4
-lbl_802C4EEC:
+.obj lbl_802C4EEC, local
 	.asciz "Motion:%d:%s"
+.endobj lbl_802C4EEC
 .balign 4
-lbl_802C4EFC:
+.obj lbl_802C4EFC, local
 	.asciz "Counter:%4.1f/%d"
+.endobj lbl_802C4EFC
 .balign 4
-lbl_802C4F10:
+.obj lbl_802C4F10, local
 	.asciz "<PaniTestSection>"
+.endobj lbl_802C4F10
 .balign 4
-lbl_802C4F24:
+.obj lbl_802C4F24, local
 	.asciz "PaniTestSection"
+.endobj lbl_802C4F24
 .balign 4
-lbl_802C4F34:
+.obj lbl_802C4F34, local
 	.asciz "CoreNode"
+.endobj lbl_802C4F34
 .balign 4
-lbl_802C4F40:
+.obj lbl_802C4F40, local
 	.4byte __RTTI__5ANode
-	.4byte 0x00000000
-	.4byte 0x00000000
-lbl_802C4F4C:
+	.4byte 0
+	.4byte 0
+.endobj lbl_802C4F40
+.balign 4
+.obj lbl_802C4F4C, local
 	.4byte __RTTI__5ANode
 	.4byte 0x00000000
 	.4byte __RTTI__8CoreNode
 	.4byte 0x00000000
 	.4byte 0x00000000
-lbl_802C4F60:
+.endobj lbl_802C4F4C
+.balign 4
+.obj lbl_802C4F60, local
 	.4byte __RTTI__5ANode
 	.4byte 0x00000000
 	.4byte __RTTI__8CoreNode
@@ -1634,7 +1653,9 @@ lbl_802C4F60:
 	.4byte __RTTI__4Node
 	.4byte 0x00000000
 	.4byte 0x00000000
-lbl_802C4F7C:
+.endobj lbl_802C4F60
+.balign 4
+.obj lbl_802C4F7C, local
 	.4byte __RTTI__5ANode
 	.4byte 0x00000000
 	.4byte __RTTI__8CoreNode
@@ -1644,8 +1665,9 @@ lbl_802C4F7C:
 	.4byte __RTTI__7Section
 	.4byte 0x00000000
 	.4byte 0x00000000
-.global __vt__15PaniTestSection
-__vt__15PaniTestSection:
+.endobj lbl_802C4F7C
+.balign 4
+.obj __vt__15PaniTestSection, global
 	.4byte __RTTI__15PaniTestSection
 	.4byte 0
 	.4byte getAgeNodeType__5ANodeFv
@@ -1659,11 +1681,13 @@ __vt__15PaniTestSection:
 	.4byte concat__4NodeFR8Matrix4f
 	.4byte getModelMatrix__4NodeFv
 	.4byte init__15PaniTestSectionFv
+.endobj __vt__15PaniTestSection
 .balign 4
-lbl_802C4FD4:
+.obj lbl_802C4FD4, local
 	.asciz "PaniAnimKeyListener"
+.endobj lbl_802C4FD4
 .balign 4
-lbl_802C4FE8:
+.obj lbl_802C4FE8, local
 	.4byte __RTTI__19PaniAnimKeyListener
 	.4byte 0x20
 	.4byte __RTTI__5ANode
@@ -1673,8 +1697,9 @@ lbl_802C4FE8:
 	.4byte __RTTI__4Node
 	.4byte 0
 	.4byte 0
-.global __vt__12PaniTestNode
-__vt__12PaniTestNode:
+.endobj lbl_802C4FE8
+.balign 4
+.obj __vt__12PaniTestNode, global
 	.4byte __RTTI__12PaniTestNode
 	.4byte 0
 	.4byte getAgeNodeType__5ANodeFv
@@ -1691,133 +1716,176 @@ __vt__12PaniTestNode:
 	.4byte 0xFFFFFFE0
 	.4byte "@32@animationKeyUpdated__12PaniTestNodeFR16PaniAnimKeyEvent"
 	.4byte animationKeyUpdated__12PaniTestNodeFR16PaniAnimKeyEvent
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
+.endobj __vt__12PaniTestNode
+.skip 0x2C # compiler padding
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-lbl_803E3140:
+.obj lbl_803E3140, local
 	.float 0.0
-lbl_803E3144:
+.endobj lbl_803E3140
+.obj lbl_803E3144, local
 	.float 500.0
-lbl_803E3148:
+.endobj lbl_803E3144
+.obj lbl_803E3148, local
 	.float 0.0
-lbl_803E314C:
+.endobj lbl_803E3148
+.obj lbl_803E314C, local
 	.float 1.0
-lbl_803E3150:
+.endobj lbl_803E314C
+.obj lbl_803E3150, local
 	.float 1.0
-lbl_803E3154:
+.endobj lbl_803E3150
+.obj lbl_803E3154, local
 	.float 1.0
-lbl_803E3158:
+.endobj lbl_803E3154
+.obj lbl_803E3158, local
 	.float 0.0
-lbl_803E315C:
+.endobj lbl_803E3158
+.obj lbl_803E315C, local
 	.float 0.0
-lbl_803E3160:
+.endobj lbl_803E315C
+.obj lbl_803E3160, local
 	.float 0.0
-lbl_803E3164:
+.endobj lbl_803E3160
+.obj lbl_803E3164, local
 	.float 0.0
-lbl_803E3168:
+.endobj lbl_803E3164
+.obj lbl_803E3168, local
 	.float 0.0
-lbl_803E316C:
+.endobj lbl_803E3168
+.obj lbl_803E316C, local
 	.float 0.0
-lbl_803E3170:
+.endobj lbl_803E316C
+.obj lbl_803E3170, local
 	.float 0.0
-lbl_803E3174:
+.endobj lbl_803E3170
+.obj lbl_803E3174, local
 	.float 0.0
-lbl_803E3178:
+.endobj lbl_803E3174
+.obj lbl_803E3178, local
 	.float 0.0
-lbl_803E317C:
+.endobj lbl_803E3178
+.obj lbl_803E317C, local
 	.float 0.0
-lbl_803E3180:
+.endobj lbl_803E317C
+.obj lbl_803E3180, local
 	.float 0.0
-lbl_803E3184:
+.endobj lbl_803E3180
+.obj lbl_803E3184, local
 	.float 0.0
+.endobj lbl_803E3184
 .balign 4
-lbl_803E3188:
+.obj lbl_803E3188, local
 	.asciz "<Node>"
+.endobj lbl_803E3188
 .balign 4
-lbl_803E3190:
+.obj lbl_803E3190, local
 	.asciz "pikiMgr"
+.endobj lbl_803E3190
 .balign 4
-lbl_803E3198:
+.obj lbl_803E3198, local
 	.asciz "tekiMgr"
+.endobj lbl_803E3198
 .balign 4
-lbl_803E31A0:
+.obj lbl_803E31A0, local
 	.float 0.0
-lbl_803E31A4:
+.endobj lbl_803E31A0
+.obj lbl_803E31A4, local
 	.float 0.0
-lbl_803E31A8:
+.endobj lbl_803E31A4
+.obj lbl_803E31A8, local
 	.float 0.0
-lbl_803E31AC:
-	.4byte 0x00000000
+.endobj lbl_803E31A8
 .balign 4
-lbl_803E31B0:
+.obj lbl_803E31AC, local
+	.byte 0
+.endobj lbl_803E31AC
+.balign 4
+.obj lbl_803E31B0, local
 	.asciz "Name:%s"
+.endobj lbl_803E31B0
 .balign 4
-lbl_803E31B8:
+.obj lbl_803E31B8, local
 	.asciz "ANode"
+.endobj lbl_803E31B8
 .balign 4
-__RTTI__5ANode:
+.obj __RTTI__5ANode, local
 	.4byte lbl_803E31B8
 	.4byte 0
-__RTTI__8CoreNode:
+.endobj __RTTI__5ANode
+.balign 4
+.obj __RTTI__8CoreNode, local
 	.4byte lbl_802C4F34
 	.4byte lbl_802C4F40
+.endobj __RTTI__8CoreNode
 .balign 4
-lbl_803E31D0:
+.obj lbl_803E31D0, local
 	.asciz "Node"
+.endobj lbl_803E31D0
 .balign 4
-__RTTI__4Node:
+.obj __RTTI__4Node, local
 	.4byte lbl_803E31D0
 	.4byte lbl_802C4F4C
+.endobj __RTTI__4Node
 .balign 4
-lbl_803E31E0:
+.obj lbl_803E31E0, local
 	.asciz "Section"
+.endobj lbl_803E31E0
 .balign 4
-__RTTI__7Section:
+.obj __RTTI__7Section, local
 	.4byte lbl_803E31E0
 	.4byte lbl_802C4F60
-__RTTI__15PaniTestSection:
+.endobj __RTTI__7Section
+.balign 4
+.obj __RTTI__15PaniTestSection, local
 	.4byte lbl_802C4F24
 	.4byte lbl_802C4F7C
-__RTTI__19PaniAnimKeyListener:
+.endobj __RTTI__15PaniTestSection
+.balign 4
+.obj __RTTI__19PaniAnimKeyListener, local
 	.4byte lbl_802C4FD4
 	.4byte 0
-__RTTI__12PaniTestNode:
+.endobj __RTTI__19PaniAnimKeyListener
+.balign 4
+.obj __RTTI__12PaniTestNode, local
 	.4byte lbl_802C4E6C
 	.4byte lbl_802C4FE8
+.endobj __RTTI__12PaniTestNode
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803EA288:
+.obj lbl_803EA288, local
 	.float 500.0
-lbl_803EA28C:
+.endobj lbl_803EA288
+.obj lbl_803EA28C, local
 	.float 300.0
-lbl_803EA290:
+.endobj lbl_803EA28C
+.obj lbl_803EA290, local
 	.float 0.0
-lbl_803EA294:
+.endobj lbl_803EA290
+.obj lbl_803EA294, local
 	.float 1.0
-lbl_803EA298:
+.endobj lbl_803EA294
+.obj lbl_803EA298, local
 	.float 3.0
-lbl_803EA29C:
+.endobj lbl_803EA298
+.obj lbl_803EA29C, local
 	.float 30.0
-lbl_803EA2A0:
+.endobj lbl_803EA29C
+.obj lbl_803EA2A0, local
 	.float 0.2
-lbl_803EA2A4:
+.endobj lbl_803EA2A0
+.obj lbl_803EA2A4, local
 	.float 60.0
-lbl_803EA2A8:
+.endobj lbl_803EA2A4
+.obj lbl_803EA2A8, local
 	.float 1000.0
-lbl_803EA2AC:
+.endobj lbl_803EA2A8
+.obj lbl_803EA2AC, local
 	.float 750.0
-lbl_803EA2B0:
-	.4byte 0x43300000
-	.4byte 0x80000000
+.endobj lbl_803EA2AC
+.balign 8
+.obj lbl_803EA2B0, local
+	.8byte 0x4330000080000000
+.endobj lbl_803EA2B0

@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global init__Q23zen12DrawMenuTextFbR6ColourR6Colour
-init__Q23zen12DrawMenuTextFbR6ColourR6Colour:
+.fn init__Q23zen12DrawMenuTextFbR6ColourR6Colour, global
 /* 801C277C 001BF6DC  54 80 06 3F */	clrlwi. r0, r4, 0x18
 /* 801C2780 001BF6E0  41 82 00 48 */	beq .L_801C27C8
 /* 801C2784 001BF6E4  C0 02 B9 70 */	lfs f0, lbl_803EBB70@sda21(r2)
@@ -47,9 +46,9 @@ init__Q23zen12DrawMenuTextFbR6ColourR6Colour:
 /* 801C281C 001BF77C  38 00 00 40 */	li r0, 0x40
 /* 801C2820 001BF780  98 03 00 FB */	stb r0, 0xfb(r3)
 /* 801C2824 001BF784  4E 80 00 20 */	blr 
+.endfn init__Q23zen12DrawMenuTextFbR6ColourR6Colour
 
-.global setPane__Q23zen12DrawMenuTextFP7P2DPaneP7P2DPane
-setPane__Q23zen12DrawMenuTextFP7P2DPaneP7P2DPane:
+.fn setPane__Q23zen12DrawMenuTextFP7P2DPaneP7P2DPane, global
 /* 801C2828 001BF788  94 21 FF 78 */	stwu r1, -0x88(r1)
 /* 801C282C 001BF78C  A0 04 00 08 */	lhz r0, 8(r4)
 /* 801C2830 001BF790  28 00 00 13 */	cmplwi r0, 0x13
@@ -113,9 +112,9 @@ setPane__Q23zen12DrawMenuTextFP7P2DPaneP7P2DPane:
 .L_801C2914:
 /* 801C2914 001BF874  38 21 00 88 */	addi r1, r1, 0x88
 /* 801C2918 001BF878  4E 80 00 20 */	blr 
+.endfn setPane__Q23zen12DrawMenuTextFP7P2DPaneP7P2DPane
 
-.global update__Q23zen12DrawMenuTextFbR6ColourR6Colour
-update__Q23zen12DrawMenuTextFbR6ColourR6Colour:
+.fn update__Q23zen12DrawMenuTextFbR6ColourR6Colour, global
 /* 801C291C 001BF87C  94 21 FF 38 */	stwu r1, -0xc8(r1)
 /* 801C2920 001BF880  88 03 00 14 */	lbz r0, 0x14(r3)
 /* 801C2924 001BF884  28 00 00 00 */	cmplwi r0, 0
@@ -504,9 +503,9 @@ update__Q23zen12DrawMenuTextFbR6ColourR6Colour:
 .L_801C2ED8:
 /* 801C2ED8 001BFE38  38 21 00 C8 */	addi r1, r1, 0xc8
 /* 801C2EDC 001BFE3C  4E 80 00 20 */	blr 
+.endfn update__Q23zen12DrawMenuTextFbR6ColourR6Colour
 
-.global setPane__Q23zen13DrawMenuTitleFP9P2DScreenP7P2DPaneUl
-setPane__Q23zen13DrawMenuTitleFP9P2DScreenP7P2DPaneUl:
+.fn setPane__Q23zen13DrawMenuTitleFP9P2DScreenP7P2DPaneUl, global
 /* 801C2EE0 001BFE40  7C 08 02 A6 */	mflr r0
 /* 801C2EE4 001BFE44  90 01 00 04 */	stw r0, 4(r1)
 /* 801C2EE8 001BFE48  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -542,27 +541,27 @@ setPane__Q23zen13DrawMenuTitleFP9P2DScreenP7P2DPaneUl:
 /* 801C2F5C 001BFEBC  38 21 00 28 */	addi r1, r1, 0x28
 /* 801C2F60 001BFEC0  7C 08 03 A6 */	mtlr r0
 /* 801C2F64 001BFEC4  4E 80 00 20 */	blr 
+.endfn setPane__Q23zen13DrawMenuTitleFP9P2DScreenP7P2DPaneUl
 
-.global start__Q23zen13DrawMenuTitleFv
-start__Q23zen13DrawMenuTitleFv:
+.fn start__Q23zen13DrawMenuTitleFv, global
 /* 801C2F68 001BFEC8  38 00 00 01 */	li r0, 1
 /* 801C2F6C 001BFECC  90 03 00 00 */	stw r0, 0(r3)
 /* 801C2F70 001BFED0  4E 80 00 20 */	blr 
+.endfn start__Q23zen13DrawMenuTitleFv
 
-.global wait__Q23zen13DrawMenuTitleFv
-wait__Q23zen13DrawMenuTitleFv:
+.fn wait__Q23zen13DrawMenuTitleFv, global
 /* 801C2F74 001BFED4  38 00 00 00 */	li r0, 0
 /* 801C2F78 001BFED8  90 03 00 00 */	stw r0, 0(r3)
 /* 801C2F7C 001BFEDC  4E 80 00 20 */	blr 
+.endfn wait__Q23zen13DrawMenuTitleFv
 
-.global end__Q23zen13DrawMenuTitleFv
-end__Q23zen13DrawMenuTitleFv:
+.fn end__Q23zen13DrawMenuTitleFv, global
 /* 801C2F80 001BFEE0  38 00 00 03 */	li r0, 3
 /* 801C2F84 001BFEE4  90 03 00 00 */	stw r0, 0(r3)
 /* 801C2F88 001BFEE8  4E 80 00 20 */	blr 
+.endfn end__Q23zen13DrawMenuTitleFv
 
-.global update__Q23zen13DrawMenuTitleFf
-update__Q23zen13DrawMenuTitleFf:
+.fn update__Q23zen13DrawMenuTitleFf, global
 /* 801C2F8C 001BFEEC  7C 08 02 A6 */	mflr r0
 /* 801C2F90 001BFEF0  90 01 00 04 */	stw r0, 4(r1)
 /* 801C2F94 001BFEF4  94 21 FF B8 */	stwu r1, -0x48(r1)
@@ -663,9 +662,9 @@ update__Q23zen13DrawMenuTitleFf:
 /* 801C30F0 001C0050  38 21 00 48 */	addi r1, r1, 0x48
 /* 801C30F4 001C0054  7C 08 03 A6 */	mtlr r0
 /* 801C30F8 001C0058  4E 80 00 20 */	blr 
+.endfn update__Q23zen13DrawMenuTitleFf
 
-.global __ct__Q23zen8DrawMenuFPcbb
-__ct__Q23zen8DrawMenuFPcbb:
+.fn __ct__Q23zen8DrawMenuFPcbb, global
 /* 801C30FC 001C005C  7C 08 02 A6 */	mflr r0
 /* 801C3100 001C0060  7C C7 33 78 */	mr r7, r6
 /* 801C3104 001C0064  90 01 00 04 */	stw r0, 4(r1)
@@ -1391,9 +1390,9 @@ __ct__Q23zen8DrawMenuFPcbb:
 /* 801C3BEC 001C0B4C  38 21 02 38 */	addi r1, r1, 0x238
 /* 801C3BF0 001C0B50  7C 08 03 A6 */	mtlr r0
 /* 801C3BF4 001C0B54  4E 80 00 20 */	blr 
+.endfn __ct__Q23zen8DrawMenuFPcbb
 
-.global __dt__Q23zen12DrawMenuItemFv
-__dt__Q23zen12DrawMenuItemFv:
+.fn __dt__Q23zen12DrawMenuItemFv, weak
 /* 801C3BF8 001C0B58  7C 08 02 A6 */	mflr r0
 /* 801C3BFC 001C0B5C  90 01 00 04 */	stw r0, 4(r1)
 /* 801C3C00 001C0B60  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -1416,9 +1415,9 @@ __dt__Q23zen12DrawMenuItemFv:
 /* 801C3C40 001C0BA0  38 21 00 18 */	addi r1, r1, 0x18
 /* 801C3C44 001C0BA4  7C 08 03 A6 */	mtlr r0
 /* 801C3C48 001C0BA8  4E 80 00 20 */	blr 
+.endfn __dt__Q23zen12DrawMenuItemFv
 
-.global __ct__Q23zen12DrawMenuItemFv
-__ct__Q23zen12DrawMenuItemFv:
+.fn __ct__Q23zen12DrawMenuItemFv, weak
 /* 801C3C4C 001C0BAC  7C 08 02 A6 */	mflr r0
 /* 801C3C50 001C0BB0  90 01 00 04 */	stw r0, 4(r1)
 /* 801C3C54 001C0BB4  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -1447,9 +1446,9 @@ __ct__Q23zen12DrawMenuItemFv:
 /* 801C3CAC 001C0C0C  38 21 00 18 */	addi r1, r1, 0x18
 /* 801C3CB0 001C0C10  7C 08 03 A6 */	mtlr r0
 /* 801C3CB4 001C0C14  4E 80 00 20 */	blr 
+.endfn __ct__Q23zen12DrawMenuItemFv
 
-.global start__Q23zen8DrawMenuFi
-start__Q23zen8DrawMenuFi:
+.fn start__Q23zen8DrawMenuFi, global
 /* 801C3CB8 001C0C18  7C 08 02 A6 */	mflr r0
 /* 801C3CBC 001C0C1C  2C 04 00 00 */	cmpwi r4, 0
 /* 801C3CC0 001C0C20  90 01 00 04 */	stw r0, 4(r1)
@@ -1684,9 +1683,9 @@ start__Q23zen8DrawMenuFi:
 /* 801C4048 001C0FA8  38 21 01 C8 */	addi r1, r1, 0x1c8
 /* 801C404C 001C0FAC  7C 08 03 A6 */	mtlr r0
 /* 801C4050 001C0FB0  4E 80 00 20 */	blr 
+.endfn start__Q23zen8DrawMenuFi
 
-.global updateMenuPanes__Q23zen8DrawMenuFv
-updateMenuPanes__Q23zen8DrawMenuFv:
+.fn updateMenuPanes__Q23zen8DrawMenuFv, global
 /* 801C4054 001C0FB4  7C 08 02 A6 */	mflr r0
 /* 801C4058 001C0FB8  90 01 00 04 */	stw r0, 4(r1)
 /* 801C405C 001C0FBC  94 21 FF 10 */	stwu r1, -0xf0(r1)
@@ -1927,9 +1926,9 @@ updateMenuPanes__Q23zen8DrawMenuFv:
 /* 801C43D4 001C1334  38 21 00 F0 */	addi r1, r1, 0xf0
 /* 801C43D8 001C1338  7C 08 03 A6 */	mtlr r0
 /* 801C43DC 001C133C  4E 80 00 20 */	blr 
+.endfn updateMenuPanes__Q23zen8DrawMenuFv
 
-.global updateSelectMenuNo__Q23zen8DrawMenuFP10Controller
-updateSelectMenuNo__Q23zen8DrawMenuFP10Controller:
+.fn updateSelectMenuNo__Q23zen8DrawMenuFP10Controller, global
 /* 801C43E0 001C1340  80 E4 00 28 */	lwz r7, 0x28(r4)
 /* 801C43E4 001C1344  80 03 01 10 */	lwz r0, 0x110(r3)
 /* 801C43E8 001C1348  54 E4 03 18 */	rlwinm r4, r7, 0, 0xc, 0xc
@@ -1997,9 +1996,9 @@ updateSelectMenuNo__Q23zen8DrawMenuFP10Controller:
 /* 801C44C8 001C1428  28 00 00 00 */	cmplwi r0, 0
 /* 801C44CC 001C142C  41 82 FF 84 */	beq .L_801C4450
 /* 801C44D0 001C1430  4E 80 00 20 */	blr 
+.endfn updateSelectMenuNo__Q23zen8DrawMenuFP10Controller
 
-.global update__Q23zen8DrawMenuFP10Controller
-update__Q23zen8DrawMenuFP10Controller:
+.fn update__Q23zen8DrawMenuFP10Controller, global
 /* 801C44D4 001C1434  7C 08 02 A6 */	mflr r0
 /* 801C44D8 001C1438  90 01 00 04 */	stw r0, 4(r1)
 /* 801C44DC 001C143C  94 21 FF 10 */	stwu r1, -0xf0(r1)
@@ -2272,9 +2271,9 @@ update__Q23zen8DrawMenuFP10Controller:
 /* 801C48D4 001C1834  38 21 00 F0 */	addi r1, r1, 0xf0
 /* 801C48D8 001C1838  7C 08 03 A6 */	mtlr r0
 /* 801C48DC 001C183C  4E 80 00 20 */	blr 
+.endfn update__Q23zen8DrawMenuFP10Controller
 
-.global draw__Q23zen8DrawMenuFR8Graphics
-draw__Q23zen8DrawMenuFR8Graphics:
+.fn draw__Q23zen8DrawMenuFR8Graphics, global
 /* 801C48E0 001C1840  7C 08 02 A6 */	mflr r0
 /* 801C48E4 001C1844  90 01 00 04 */	stw r0, 4(r1)
 /* 801C48E8 001C1848  94 21 FF F8 */	stwu r1, -8(r1)
@@ -2287,9 +2286,9 @@ draw__Q23zen8DrawMenuFR8Graphics:
 /* 801C4900 001C1860  38 21 00 08 */	addi r1, r1, 8
 /* 801C4904 001C1864  7C 08 03 A6 */	mtlr r0
 /* 801C4908 001C1868  4E 80 00 20 */	blr 
+.endfn draw__Q23zen8DrawMenuFR8Graphics
 
-.global setMenuItemActiveSw__Q23zen8DrawMenuFib
-setMenuItemActiveSw__Q23zen8DrawMenuFib:
+.fn setMenuItemActiveSw__Q23zen8DrawMenuFib, global
 /* 801C490C 001C186C  2C 04 00 00 */	cmpwi r4, 0
 /* 801C4910 001C1870  4D 80 00 20 */	bltlr 
 /* 801C4914 001C1874  80 03 01 14 */	lwz r0, 0x114(r3)
@@ -2302,9 +2301,9 @@ setMenuItemActiveSw__Q23zen8DrawMenuFib:
 /* 801C492C 001C188C  7C 63 00 2E */	lwzx r3, r3, r0
 /* 801C4930 001C1890  98 A3 00 14 */	stb r5, 0x14(r3)
 /* 801C4934 001C1894  4E 80 00 20 */	blr 
+.endfn setMenuItemActiveSw__Q23zen8DrawMenuFib
 
-.global setCancelSelectMenuNo__Q23zen8DrawMenuFi
-setCancelSelectMenuNo__Q23zen8DrawMenuFi:
+.fn setCancelSelectMenuNo__Q23zen8DrawMenuFi, global
 /* 801C4938 001C1898  2C 04 00 00 */	cmpwi r4, 0
 /* 801C493C 001C189C  40 80 00 10 */	bge .L_801C494C
 /* 801C4940 001C18A0  38 00 FF FF */	li r0, -1
@@ -2316,92 +2315,124 @@ setCancelSelectMenuNo__Q23zen8DrawMenuFi:
 /* 801C4954 001C18B4  4C 80 00 20 */	bgelr 
 /* 801C4958 001C18B8  90 83 01 D0 */	stw r4, 0x1d0(r3)
 /* 801C495C 001C18BC  4E 80 00 20 */	blr 
+.endfn setCancelSelectMenuNo__Q23zen8DrawMenuFi
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802E1720:
+.obj lbl_802E1720, local
 	.asciz "drawMenu.cpp"
+.endobj lbl_802E1720
 .balign 4
-lbl_802E1730:
+.obj lbl_802E1730, local
 	.asciz "drawMenu"
+.endobj lbl_802E1730
 .balign 4
-lbl_802E173C:
+.obj lbl_802E173C, local
 	.asciz "zen::DrawMenu"
+.endobj lbl_802E173C
 .balign 4
-lbl_802E174C:
+.obj lbl_802E174C, local
 	.asciz "zen::DrawScreen"
+.endobj lbl_802E174C
 .balign 4
-lbl_802E175C:
+.obj lbl_802E175C, local
 	.4byte __RTTI__Q23zen10DrawScreen
 	.4byte 0
 	.4byte 0
-.global __vt__Q23zen8DrawMenu
-__vt__Q23zen8DrawMenu:
+.endobj lbl_802E175C
+.balign 4
+.obj __vt__Q23zen8DrawMenu, weak
 	.4byte __RTTI__Q23zen8DrawMenu
 	.4byte 0
 	.4byte update__Q23zen10DrawScreenFv
 	.4byte draw__Q23zen10DrawScreenFv
+.endobj __vt__Q23zen8DrawMenu
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-lbl_803E6888:
+.obj lbl_803E6888, local
 	.float 1.0
-lbl_803E688C:
+.endobj lbl_803E6888
+.obj lbl_803E688C, local
 	.float 1.0
-lbl_803E6890:
+.endobj lbl_803E688C
+.balign 4
+.obj lbl_803E6890, local
 	.asciz "he%02d"
+.endobj lbl_803E6890
 .balign 4
-lbl_803E6898:
+.obj lbl_803E6898, local
 	.asciz "hm%02d"
+.endobj lbl_803E6898
 .balign 4
-lbl_803E68A0:
+.obj lbl_803E68A0, local
 	.asciz "i%02dl"
+.endobj lbl_803E68A0
 .balign 4
-lbl_803E68A8:
+.obj lbl_803E68A8, local
 	.asciz "i%02dr"
+.endobj lbl_803E68A8
 .balign 4
-lbl_803E68B0:
+.obj lbl_803E68B0, local
 	.asciz "z%02dl"
+.endobj lbl_803E68B0
 .balign 4
-lbl_803E68B8:
+.obj lbl_803E68B8, local
 	.asciz "z%02dr"
+.endobj lbl_803E68B8
 .balign 4
-__RTTI__Q23zen10DrawScreen:
+.obj __RTTI__Q23zen10DrawScreen, local
 	.4byte lbl_802E174C
 	.4byte 0
-__RTTI__Q23zen8DrawMenu:
+.endobj __RTTI__Q23zen10DrawScreen
+.balign 4
+.obj __RTTI__Q23zen8DrawMenu, local
 	.4byte lbl_802E173C
 	.4byte lbl_802E175C
+.endobj __RTTI__Q23zen8DrawMenu
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803EBB70:
+.obj lbl_803EBB70, local
 	.float 0.5
-lbl_803EBB74:
+.endobj lbl_803EBB70
+.obj lbl_803EBB74, local
 	.float 0.0
-lbl_803EBB78:
+.endobj lbl_803EBB74
+.obj lbl_803EBB78, local
 	.float 1.0
+.endobj lbl_803EBB78
 .balign 8
-lbl_803EBB80:
-	.4byte 0x43300000
-	.4byte 0x00000000
-lbl_803EBB88:
-	.4byte 0x3FC90FDB
-lbl_803EBB8C:
+.obj lbl_803EBB80, local
+	.8byte 0x4330000000000000
+.endobj lbl_803EBB80
+.balign 4
+.obj lbl_803EBB88, local # pi/2
+	.float 1.5707964
+.endobj lbl_803EBB88
+.obj lbl_803EBB8C, local
 	.float 3.0
-lbl_803EBB90:
-	.4byte 0x3F266666
-lbl_803EBB94:
-	.4byte 0x3EB33333
-lbl_803EBB98:
-	.4byte 0x42C80000
-	.4byte 0x00000000
-lbl_803EBBA0:
-	.4byte 0x43300000
-	.4byte 0x80000000
-lbl_803EBBA8:
+.endobj lbl_803EBB8C
+.obj lbl_803EBB90, local
+	.float 0.65
+.endobj lbl_803EBB90
+.obj lbl_803EBB94, local
+	.float 0.35
+.endobj lbl_803EBB94
+.obj lbl_803EBB98, local
+	.float 100.0
+.endobj lbl_803EBB98
+.balign 8
+.obj lbl_803EBBA0, local
+	.8byte 0x4330000080000000
+.endobj lbl_803EBBA0
+.balign 4
+.obj lbl_803EBBA8, local
 	.float 2.0
-lbl_803EBBAC:
-	.4byte 0x4096CBE4
-lbl_803EBBB0:
-	.4byte 0x3DCCCCCD
+.endobj lbl_803EBBA8
+.obj lbl_803EBBAC, local
+	.float 4.712389
+.endobj lbl_803EBBAC
+.obj lbl_803EBBB0, local
+	.float 0.1
+.endobj lbl_803EBBB0

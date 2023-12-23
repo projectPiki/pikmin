@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global modeAppear__Q23zen12DrawCMCSmenuFP10Controller
-modeAppear__Q23zen12DrawCMCSmenuFP10Controller:
+.fn modeAppear__Q23zen12DrawCMCSmenuFP10Controller, weak
 /* 801EC478 001E93D8  7C 08 02 A6 */	mflr r0
 /* 801EC47C 001E93DC  90 01 00 04 */	stw r0, 4(r1)
 /* 801EC480 001E93E0  94 21 FF 90 */	stwu r1, -0x70(r1)
@@ -124,9 +123,9 @@ modeAppear__Q23zen12DrawCMCSmenuFP10Controller:
 /* 801EC624 001E9584  38 21 00 70 */	addi r1, r1, 0x70
 /* 801EC628 001E9588  7C 08 03 A6 */	mtlr r0
 /* 801EC62C 001E958C  4E 80 00 20 */	blr 
+.endfn modeAppear__Q23zen12DrawCMCSmenuFP10Controller
 
-.global setModeFunc__Q23zen12DrawCMCSmenuFi
-setModeFunc__Q23zen12DrawCMCSmenuFi:
+.fn setModeFunc__Q23zen12DrawCMCSmenuFi, weak
 /* 801EC630 001E9590  7C 08 02 A6 */	mflr r0
 /* 801EC634 001E9594  90 01 00 04 */	stw r0, 4(r1)
 /* 801EC638 001E9598  94 21 FF 08 */	stwu r1, -0xf8(r1)
@@ -311,9 +310,9 @@ setModeFunc__Q23zen12DrawCMCSmenuFi:
 /* 801EC8CC 001E982C  38 21 00 F8 */	addi r1, r1, 0xf8
 /* 801EC8D0 001E9830  7C 08 03 A6 */	mtlr r0
 /* 801EC8D4 001E9834  4E 80 00 20 */	blr 
+.endfn setModeFunc__Q23zen12DrawCMCSmenuFi
 
-.global __ct__Q23zen18DrawCMcourseSelectFv
-__ct__Q23zen18DrawCMcourseSelectFv:
+.fn __ct__Q23zen18DrawCMcourseSelectFv, global
 /* 801EC8D8 001E9838  7C 08 02 A6 */	mflr r0
 /* 801EC8DC 001E983C  38 E0 00 00 */	li r7, 0
 /* 801EC8E0 001E9840  90 01 00 04 */	stw r0, 4(r1)
@@ -554,9 +553,9 @@ __ct__Q23zen18DrawCMcourseSelectFv:
 /* 801ECC70 001E9BD0  38 21 00 A8 */	addi r1, r1, 0xa8
 /* 801ECC74 001E9BD4  7C 08 03 A6 */	mtlr r0
 /* 801ECC78 001E9BD8  4E 80 00 20 */	blr 
+.endfn __ct__Q23zen18DrawCMcourseSelectFv
 
-.global __ct__Q33zen12DrawCMCSmenu13MenuExpansionFv
-__ct__Q33zen12DrawCMCSmenu13MenuExpansionFv:
+.fn __ct__Q33zen12DrawCMCSmenu13MenuExpansionFv, weak
 /* 801ECC7C 001E9BDC  C0 22 C1 24 */	lfs f1, lbl_803EC324@sda21(r2)
 /* 801ECC80 001E9BE0  38 00 00 00 */	li r0, 0
 /* 801ECC84 001E9BE4  D0 23 00 18 */	stfs f1, 0x18(r3)
@@ -591,9 +590,9 @@ __ct__Q33zen12DrawCMCSmenu13MenuExpansionFv:
 /* 801ECCF8 001E9C58  D0 23 00 04 */	stfs f1, 4(r3)
 /* 801ECCFC 001E9C5C  90 03 00 00 */	stw r0, 0(r3)
 /* 801ECD00 001E9C60  4E 80 00 20 */	blr 
+.endfn __ct__Q33zen12DrawCMCSmenu13MenuExpansionFv
 
-.global start__Q23zen18DrawCMcourseSelectFv
-start__Q23zen18DrawCMcourseSelectFv:
+.fn start__Q23zen18DrawCMcourseSelectFv, global
 /* 801ECD04 001E9C64  7C 08 02 A6 */	mflr r0
 /* 801ECD08 001E9C68  38 80 00 01 */	li r4, 1
 /* 801ECD0C 001E9C6C  90 01 00 04 */	stw r0, 4(r1)
@@ -759,9 +758,9 @@ start__Q23zen18DrawCMcourseSelectFv:
 /* 801ECF8C 001E9EEC  38 21 00 98 */	addi r1, r1, 0x98
 /* 801ECF90 001E9EF0  7C 08 03 A6 */	mtlr r0
 /* 801ECF94 001E9EF4  4E 80 00 20 */	blr 
+.endfn start__Q23zen18DrawCMcourseSelectFv
 
-.global setBestScore__Q23zen18DrawCMcourseSelectFv
-setBestScore__Q23zen18DrawCMcourseSelectFv:
+.fn setBestScore__Q23zen18DrawCMcourseSelectFv, global
 /* 801ECF98 001E9EF8  7C 08 02 A6 */	mflr r0
 /* 801ECF9C 001E9EFC  90 01 00 04 */	stw r0, 4(r1)
 /* 801ECFA0 001E9F00  94 21 FF B8 */	stwu r1, -0x48(r1)
@@ -795,9 +794,9 @@ setBestScore__Q23zen18DrawCMcourseSelectFv:
 /* 801ED00C 001E9F6C  38 21 00 48 */	addi r1, r1, 0x48
 /* 801ED010 001E9F70  7C 08 03 A6 */	mtlr r0
 /* 801ED014 001E9F74  4E 80 00 20 */	blr 
+.endfn setBestScore__Q23zen18DrawCMcourseSelectFv
 
-.global update__Q23zen18DrawCMcourseSelectFP10Controller
-update__Q23zen18DrawCMcourseSelectFP10Controller:
+.fn update__Q23zen18DrawCMcourseSelectFP10Controller, global
 /* 801ED018 001E9F78  7C 08 02 A6 */	mflr r0
 /* 801ED01C 001E9F7C  90 01 00 04 */	stw r0, 4(r1)
 /* 801ED020 001E9F80  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -874,9 +873,9 @@ update__Q23zen18DrawCMcourseSelectFP10Controller:
 /* 801ED128 001EA088  38 21 00 20 */	addi r1, r1, 0x20
 /* 801ED12C 001EA08C  7C 08 03 A6 */	mtlr r0
 /* 801ED130 001EA090  4E 80 00 20 */	blr 
+.endfn update__Q23zen18DrawCMcourseSelectFP10Controller
 
-.global start__Q23zen12DrawCMCSmenuFv
-start__Q23zen12DrawCMCSmenuFv:
+.fn start__Q23zen12DrawCMCSmenuFv, weak
 /* 801ED134 001EA094  7C 08 02 A6 */	mflr r0
 /* 801ED138 001EA098  90 01 00 04 */	stw r0, 4(r1)
 /* 801ED13C 001EA09C  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -894,9 +893,9 @@ start__Q23zen12DrawCMCSmenuFv:
 /* 801ED16C 001EA0CC  38 21 00 18 */	addi r1, r1, 0x18
 /* 801ED170 001EA0D0  7C 08 03 A6 */	mtlr r0
 /* 801ED174 001EA0D4  4E 80 00 20 */	blr 
+.endfn start__Q23zen12DrawCMCSmenuFv
 
-.global draw__Q23zen18DrawCMcourseSelectFR8Graphics
-draw__Q23zen18DrawCMcourseSelectFR8Graphics:
+.fn draw__Q23zen18DrawCMcourseSelectFR8Graphics, global
 /* 801ED178 001EA0D8  7C 08 02 A6 */	mflr r0
 /* 801ED17C 001EA0DC  90 01 00 04 */	stw r0, 4(r1)
 /* 801ED180 001EA0E0  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -933,14 +932,14 @@ draw__Q23zen18DrawCMcourseSelectFR8Graphics:
 /* 801ED1FC 001EA15C  38 21 00 18 */	addi r1, r1, 0x18
 /* 801ED200 001EA160  7C 08 03 A6 */	mtlr r0
 /* 801ED204 001EA164  4E 80 00 20 */	blr 
+.endfn draw__Q23zen18DrawCMcourseSelectFR8Graphics
 
-.global getReturnStatusFlag__Q23zen18DrawCMcourseSelectFv
-getReturnStatusFlag__Q23zen18DrawCMcourseSelectFv:
+.fn getReturnStatusFlag__Q23zen18DrawCMcourseSelectFv, global
 /* 801ED208 001EA168  80 63 00 0C */	lwz r3, 0xc(r3)
 /* 801ED20C 001EA16C  4E 80 00 20 */	blr 
+.endfn getReturnStatusFlag__Q23zen18DrawCMcourseSelectFv
 
-.global modeOperation__Q23zen18DrawCMcourseSelectFP10Controller
-modeOperation__Q23zen18DrawCMcourseSelectFP10Controller:
+.fn modeOperation__Q23zen18DrawCMcourseSelectFP10Controller, global
 /* 801ED210 001EA170  7C 08 02 A6 */	mflr r0
 /* 801ED214 001EA174  90 01 00 04 */	stw r0, 4(r1)
 /* 801ED218 001EA178  94 21 FF 98 */	stwu r1, -0x68(r1)
@@ -1011,9 +1010,9 @@ modeOperation__Q23zen18DrawCMcourseSelectFP10Controller:
 /* 801ED304 001EA264  38 21 00 68 */	addi r1, r1, 0x68
 /* 801ED308 001EA268  7C 08 03 A6 */	mtlr r0
 /* 801ED30C 001EA26C  4E 80 00 20 */	blr 
+.endfn modeOperation__Q23zen18DrawCMcourseSelectFP10Controller
 
-.global update__Q23zen12DrawCMCSmenuFP10Controller
-update__Q23zen12DrawCMCSmenuFP10Controller:
+.fn update__Q23zen12DrawCMCSmenuFP10Controller, weak
 /* 801ED310 001EA270  7C 08 02 A6 */	mflr r0
 /* 801ED314 001EA274  90 01 00 04 */	stw r0, 4(r1)
 /* 801ED318 001EA278  94 21 FF 98 */	stwu r1, -0x68(r1)
@@ -1113,53 +1112,72 @@ update__Q23zen12DrawCMCSmenuFP10Controller:
 /* 801ED46C 001EA3CC  38 21 00 68 */	addi r1, r1, 0x68
 /* 801ED470 001EA3D0  7C 08 03 A6 */	mtlr r0
 /* 801ED474 001EA3D4  4E 80 00 20 */	blr 
+.endfn update__Q23zen12DrawCMCSmenuFP10Controller
 
-.global modeDefault__Q23zen12DrawMenuBaseFP10Controller
-modeDefault__Q23zen12DrawMenuBaseFP10Controller:
+.fn modeDefault__Q23zen12DrawMenuBaseFP10Controller, weak
 /* 801ED478 001EA3D8  38 60 00 00 */	li r3, 0
 /* 801ED47C 001EA3DC  4E 80 00 20 */	blr 
+.endfn modeDefault__Q23zen12DrawMenuBaseFP10Controller
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802E6C78:
+.obj lbl_802E6C78, local
 	.asciz "drawCMcourseSelect.cpp"
+.endobj lbl_802E6C78
 .balign 4
+.obj lbl_802E6C90, local
 	.asciz "drawCMcourseSelect"
+.endobj lbl_802E6C90
 .balign 4
-lbl_802E6CA4:
+.obj lbl_802E6CA4, local
 	.4byte 0x00000000
 	.4byte 0xFFFFFFFF
 	.4byte modeAppear__Q23zen12DrawCMCSmenuFP10Controller
+.endobj lbl_802E6CA4
 .balign 4
+.obj lbl_802E6CB0, local
 	.asciz "screen/blo/cha_sel.blo"
+.endobj lbl_802E6CB0
 .balign 4
+.obj lbl_802E6CC8, local
 	.asciz "screen/blo/cha_rank.blo"
+.endobj lbl_802E6CC8
 .balign 4
+.obj lbl_802E6CE0, local
 	.asciz "screen/blo/cha_best.blo"
+.endobj lbl_802E6CE0
 .balign 4
+.obj lbl_802E6CF8, local
 	.asciz "screen/blo/cha_map.blo"
+.endobj lbl_802E6CF8
 .balign 4
-lbl_802E6C10:
+.obj lbl_802E6C10, local
 	.asciz "zen::DrawCMCSmenu"
+.endobj lbl_802E6C10
 .balign 4
-lbl_802E6C24:
+.obj lbl_802E6C24, local
 	.asciz "zen::DrawScreen"
+.endobj lbl_802E6C24
 .balign 4
-lbl_802E6C34:
+.obj lbl_802E6C34, local
 	.asciz "zen::DrawMenuBase"
+.endobj lbl_802E6C34
 .balign 4
-lbl_802E6C48:
+.obj lbl_802E6C48, local
 	.4byte __RTTI__Q23zen10DrawScreen
-	.4byte 0x00000000
-	.4byte 0x00000000
-lbl_802E6C54:
+	.4byte 0
+	.4byte 0
+.endobj lbl_802E6C48
+.balign 4
+.obj lbl_802E6C54, local
 	.4byte __RTTI__Q23zen10DrawScreen
-	.4byte 0x00000000
+	.4byte 0
 	.4byte __RTTI__Q23zen12DrawMenuBase
-	.4byte 0x00000000
-	.4byte 0x00000000
-.global __vt__Q23zen12DrawCMCSmenu
-__vt__Q23zen12DrawCMCSmenu:
+	.4byte 0
+	.4byte 0
+.endobj lbl_802E6C54
+.balign 4
+.obj __vt__Q23zen12DrawCMCSmenu, weak
 	.4byte __RTTI__Q23zen12DrawCMCSmenu
 	.4byte 0
 	.4byte update__Q23zen10DrawScreenFv
@@ -1171,110 +1189,161 @@ __vt__Q23zen12DrawCMCSmenu:
 	.4byte modeSleep__Q23zen12DrawMenuBaseFP10Controller
 	.4byte modeOperation__Q23zen12DrawMenuBaseFP10Controller
 	.4byte setModeFunc__Q23zen12DrawCMCSmenuFi
+.endobj __vt__Q23zen12DrawCMCSmenu
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-lbl_803E7508:
-	.4byte 0x00000000
-lbl_803E750C:
-	.4byte 0x00000000
-lbl_803E7510:
-	.4byte 0x00000000
-lbl_803E7514:
-	.4byte 0x00000000
-lbl_803E7518:
-	.4byte 0x00000000
-lbl_803E751C:
-	.4byte 0x00000000
-lbl_803E7520:
-	.4byte 0x00000000
-lbl_803E7524:
-	.4byte 0x00000000
-lbl_803E7528:
-	.4byte 0x00000000
-lbl_803E752C:
-	.4byte 0x00000000
-lbl_803E7530:
-	.4byte 0x00000000
-lbl_803E7534:
-	.4byte 0x00000000
+.obj lbl_803E7508, local
+	.float 0.0
+.endobj lbl_803E7508
+.obj lbl_803E750C, local
+	.float 0.0
+.endobj lbl_803E750C
+.obj lbl_803E7510, local
+	.float 0.0
+.endobj lbl_803E7510
+.obj lbl_803E7514, local
+	.float 0.0
+.endobj lbl_803E7514
+.obj lbl_803E7518, local
+	.float 0.0
+.endobj lbl_803E7518
+.obj lbl_803E751C, local
+	.float 0.0
+.endobj lbl_803E751C
+.obj lbl_803E7520, local
+	.float 0.0
+.endobj lbl_803E7520
+.obj lbl_803E7524, local
+	.float 0.0
+.endobj lbl_803E7524
+.obj lbl_803E7528, local
+	.float 0.0
+.endobj lbl_803E7528
+.obj lbl_803E752C, local
+	.float 0.0
+.endobj lbl_803E752C
+.obj lbl_803E7530, local
+	.float 0.0
+.endobj lbl_803E7530
+.obj lbl_803E7534, local
+	.float 0.0
+.endobj lbl_803E7534
 .balign 4
-lbl_803E7538:
+.obj lbl_803E7538, local
 	.asciz "p_m%d"
+.endobj lbl_803E7538
 .balign 4
-lbl_803E7540:
-	.4byte 0x43A00000
-lbl_803E7544:
-	.4byte 0x43700000
-lbl_803E7548:
-	.4byte 0x00000000
-lbl_803E754C:
-	.4byte 0x43A00000
-lbl_803E7550:
-	.4byte 0x43700000
-lbl_803E7554:
-	.4byte 0x00000000
-lbl_803E7558:
-	.4byte 0x43A00000
-lbl_803E755C:
-	.4byte 0x43700000
-lbl_803E7560:
-	.4byte 0x00000000
-lbl_803E7564:
-	.4byte 0x43A00000
-lbl_803E7568:
-	.4byte 0x43700000
-lbl_803E756C:
-	.4byte 0x00000000
-lbl_803E7570:
-	.4byte 0x43A00000
-lbl_803E7574:
-	.4byte 0x43700000
-lbl_803E7578:
-	.4byte 0x00000000
-lbl_803E757C:
-	.4byte 0x43A00000
-lbl_803E7580:
-	.4byte 0x43700000
-lbl_803E7584:
-	.4byte 0x00000000
-lbl_803E7588:
-	.4byte 0x43A00000
-lbl_803E758C:
-	.4byte 0x43700000
-lbl_803E7590:
-	.4byte 0x00000000
-lbl_803E7594:
-	.4byte 0x43A00000
-lbl_803E7598:
-	.4byte 0x43700000
-lbl_803E759C:
-	.4byte 0x00000000
-__RTTI__Q23zen10DrawScreen:
+.obj lbl_803E7540, local
+	.float 320.0
+.endobj lbl_803E7540
+.obj lbl_803E7544, local
+	.float 240.0
+.endobj lbl_803E7544
+.obj lbl_803E7548, local
+	.float 0.0
+.endobj lbl_803E7548
+.obj lbl_803E754C, local
+	.float 320.0
+.endobj lbl_803E754C
+.obj lbl_803E7550, local
+	.float 240.0
+.endobj lbl_803E7550
+.obj lbl_803E7554, local
+	.float 0.0
+.endobj lbl_803E7554
+.obj lbl_803E7558, local
+	.float 320.0
+.endobj lbl_803E7558
+.obj lbl_803E755C, local
+	.float 240.0
+.endobj lbl_803E755C
+.obj lbl_803E7560, local
+	.float 0.0
+.endobj lbl_803E7560
+.obj lbl_803E7564, local
+	.float 320.0
+.endobj lbl_803E7564
+.obj lbl_803E7568, local
+	.float 240.0
+.endobj lbl_803E7568
+.obj lbl_803E756C, local
+	.float 0.0
+.endobj lbl_803E756C
+.obj lbl_803E7570, local
+	.float 320.0
+.endobj lbl_803E7570
+.obj lbl_803E7574, local
+	.float 240.0
+.endobj lbl_803E7574
+.obj lbl_803E7578, local
+	.float 0.0
+.endobj lbl_803E7578
+.obj lbl_803E757C, local
+	.float 320.0
+.endobj lbl_803E757C
+.obj lbl_803E7580, local
+	.float 240.0
+.endobj lbl_803E7580
+.obj lbl_803E7584, local
+	.float 0.0
+.endobj lbl_803E7584
+.obj lbl_803E7588, local
+	.float 320.0
+.endobj lbl_803E7588
+.obj lbl_803E758C, local
+	.float 240.0
+.endobj lbl_803E758C
+.obj lbl_803E7590, local
+	.float 0.0
+.endobj lbl_803E7590
+.obj lbl_803E7594, local
+	.float 320.0
+.endobj lbl_803E7594
+.obj lbl_803E7598, local
+	.float 240.0
+.endobj lbl_803E7598
+.obj lbl_803E759C, local
+	.float 0.0
+.endobj lbl_803E759C
+.balign 4
+.obj __RTTI__Q23zen10DrawScreen, local
 	.4byte lbl_802E6C24
 	.4byte 0
-__RTTI__Q23zen12DrawMenuBase:
+.endobj __RTTI__Q23zen10DrawScreen
+.balign 4
+.obj __RTTI__Q23zen12DrawMenuBase, local
 	.4byte lbl_802E6C34
 	.4byte lbl_802E6C48
-__RTTI__Q23zen12DrawCMCSmenu:
+.endobj __RTTI__Q23zen12DrawMenuBase
+.balign 4
+.obj __RTTI__Q23zen12DrawCMCSmenu, local
 	.4byte lbl_802E6C10
 	.4byte lbl_802E6C54
+.endobj __RTTI__Q23zen12DrawCMCSmenu
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803EC320:
-	.4byte 0x3F800000
-lbl_803EC324:
-	.4byte 0x00000000
-lbl_803EC328:
-	.4byte 0x3FC90FDB
-lbl_803EC32C:
-	.4byte 0x3F000000
-lbl_803EC330:
-	.4byte 0x44200000
+.obj lbl_803EC320, local
+	.float 1.0
+.endobj lbl_803EC320
+.obj lbl_803EC324, local
+	.float 0.0
+.endobj lbl_803EC324
+.obj lbl_803EC328, local # pi/2
+	.float 1.5707964
+.endobj lbl_803EC328
+.obj lbl_803EC32C, local
+	.float 0.5
+.endobj lbl_803EC32C
+.obj lbl_803EC330, local
+	.float 640.0
+.endobj lbl_803EC330
 .balign 8
-lbl_803EC338:
-	.4byte 0x43300000
-	.4byte 0x80000000
-lbl_803EC340:
-	.4byte 0x40200000
+.obj lbl_803EC338, local
+	.8byte 0x4330000080000000
+.endobj lbl_803EC338
+.balign 4
+.obj lbl_803EC340, local
+	.float 2.5
+.endobj lbl_803EC340

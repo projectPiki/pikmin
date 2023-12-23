@@ -1273,8 +1273,8 @@ lbl_802E3A78:
 .balign 4
 lbl_802E3A88:
 	.4byte __RTTI__12TAIanimation
-	.4byte 0x00000000
-	.4byte 0x00000000
+	.4byte 0
+	.4byte 0
 .global __vt__18TAItamagoAnimation
 __vt__18TAItamagoAnimation:
 	.4byte __RTTI__18TAItamagoAnimation
@@ -1535,52 +1535,76 @@ __RTTI__19TAItamagoParameters:
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803EBE38:
-	.4byte 0x00000000
-lbl_803EBE3C:
-	.4byte 0x44960000
-lbl_803EBE40:
-	.4byte 0x41200000
-lbl_803EBE44:
-	.4byte 0x41300000
-lbl_803EBE48:
-	.4byte 0x42C80000
-lbl_803EBE4C:
-	.4byte 0x3F800000
-lbl_803EBE50:
-	.4byte 0x44898000
-lbl_803EBE54:
-	.4byte 0x41A00000
-lbl_803EBE58:
-	.4byte 0x42F00000
-lbl_803EBE5C:
-	.4byte 0x3F7EADAF
-lbl_803EBE60:
-	.4byte 0x43480000
-lbl_803EBE64:
-	.4byte 0x43340000
-lbl_803EBE68:
-	.4byte 0x41F00000
-lbl_803EBE6C:
-	.4byte 0x41100000
-lbl_803EBE70:
-	.4byte 0x40A00000
-lbl_803EBE74:
-	.4byte 0x43160000
-lbl_803EBE78:
-	.4byte 0x3E99999A
-lbl_803EBE7C:
-	.4byte 0x3E4CCCCD
-lbl_803EBE80:
-	.4byte 0x428C0000
-lbl_803EBE84:
-	.4byte 0x42480000
-lbl_803EBE88:
-	.4byte 0x42700000
-lbl_803EBE8C:
-	.4byte 0x420C0000
-lbl_803EBE90:
-	.4byte 0x46FFFE00
+.obj lbl_803EBE38, local
+	.float 0.0
+.endobj lbl_803EBE38
+.obj lbl_803EBE3C, local
+	.float 1200.0
+.endobj lbl_803EBE3C
+.obj lbl_803EBE40, local
+	.float 10.0
+.endobj lbl_803EBE40
+.obj lbl_803EBE44, local
+	.float 11.0
+.endobj lbl_803EBE44
+.obj lbl_803EBE48, local
+	.float 100.0
+.endobj lbl_803EBE48
+.obj lbl_803EBE4C, local
+	.float 1.0
+.endobj lbl_803EBE4C
+.obj lbl_803EBE50, local
+	.float 1100.0
+.endobj lbl_803EBE50
+.obj lbl_803EBE54, local
+	.float 20.0
+.endobj lbl_803EBE54
+.obj lbl_803EBE58, local
+	.float 120.0
+.endobj lbl_803EBE58
+.obj lbl_803EBE5C, local
+	.float 0.9948377
+.endobj lbl_803EBE5C
+.obj lbl_803EBE60, local
+	.float 200.0
+.endobj lbl_803EBE60
+.obj lbl_803EBE64, local
+	.float 180.0
+.endobj lbl_803EBE64
+.obj lbl_803EBE68, local
+	.float 30.0
+.endobj lbl_803EBE68
+.obj lbl_803EBE6C, local
+	.float 9.0
+.endobj lbl_803EBE6C
+.obj lbl_803EBE70, local
+	.float 5.0
+.endobj lbl_803EBE70
+.obj lbl_803EBE74, local
+	.float 150.0
+.endobj lbl_803EBE74
+.obj lbl_803EBE78, local
+	.float 0.3
+.endobj lbl_803EBE78
+.obj lbl_803EBE7C, local
+	.float 0.2
+.endobj lbl_803EBE7C
+.obj lbl_803EBE80, local
+	.float 70.0
+.endobj lbl_803EBE80
+.obj lbl_803EBE84, local
+	.float 50.0
+.endobj lbl_803EBE84
+.obj lbl_803EBE88, local
+	.float 60.0
+.endobj lbl_803EBE88
+.obj lbl_803EBE8C, local
+	.float 35.0
+.endobj lbl_803EBE8C
+.obj lbl_803EBE90, local
+	.float 32767.0
+.endobj lbl_803EBE90
 .balign 8
-lbl_803EBE98:
+.obj lbl_803EBE98, local
 	.8byte 0x4330000080000000
+.endobj lbl_803EBE98

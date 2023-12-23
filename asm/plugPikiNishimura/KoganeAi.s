@@ -2027,11 +2027,12 @@ invoke__23KoganeGenRippleCallBackFPQ23zen17particleGenerator:
 
 .section .rodata, "a"  # 0x80221FE0 - 0x80222DC0
 .balign 8
-lbl_80222748:
+.obj lbl_80222748, local
 	.4byte 0x00000000
 	.4byte 0x00000002
 	.4byte 0x00000002
 	.4byte 0x00000001
+.endobj lbl_80222748
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8

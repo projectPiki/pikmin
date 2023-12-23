@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global clearCounts__6AIPerfFv
-clearCounts__6AIPerfFv:
+.fn clearCounts__6AIPerfFv, global
 /* 800849E8 00081948  38 00 00 00 */	li r0, 0
 /* 800849EC 0008194C  90 0D 2F D4 */	stw r0, drawshapeCullCnt__6AIPerf@sda21(r13)
 /* 800849F0 00081950  90 0D 2F D0 */	stw r0, outsideViewCnt__6AIPerf@sda21(r13)
@@ -13,9 +12,9 @@ clearCounts__6AIPerfFv:
 /* 80084A08 00081968  90 0D 2F B8 */	stw r0, searchCullCnt__6AIPerf@sda21(r13)
 /* 80084A0C 0008196C  90 0D 2F B4 */	stw r0, searchCnt__6AIPerf@sda21(r13)
 /* 80084A10 00081970  4E 80 00 20 */	blr 
+.endfn clearCounts__6AIPerfFv
 
-.global addMenu__6AIPerfFP4Menu
-addMenu__6AIPerfFP4Menu:
+.fn addMenu__6AIPerfFP4Menu, global
 /* 80084A14 00081974  7C 08 02 A6 */	mflr r0
 /* 80084A18 00081978  3C A0 80 2B */	lis r5, lbl_802AE920@ha
 /* 80084A1C 0008197C  90 01 00 04 */	stw r0, 4(r1)
@@ -832,9 +831,9 @@ addMenu__6AIPerfFP4Menu:
 /* 80085628 00082588  38 21 01 28 */	addi r1, r1, 0x128
 /* 8008562C 0008258C  7C 08 03 A6 */	mtlr r0
 /* 80085630 00082590  4E 80 00 20 */	blr 
+.endfn addMenu__6AIPerfFP4Menu
 
-.global toggleMoveType__6AIPerfFR4Menu
-toggleMoveType__6AIPerfFR4Menu:
+.fn toggleMoveType__6AIPerfFR4Menu, global
 /* 80085634 00082594  7C 08 02 A6 */	mflr r0
 /* 80085638 00082598  3C 60 80 22 */	lis r3, lbl_802223EC@ha
 /* 8008563C 0008259C  90 01 00 04 */	stw r0, 4(r1)
@@ -869,9 +868,9 @@ toggleMoveType__6AIPerfFR4Menu:
 /* 800856B0 00082610  38 21 00 20 */	addi r1, r1, 0x20
 /* 800856B4 00082614  7C 08 03 A6 */	mtlr r0
 /* 800856B8 00082618  4E 80 00 20 */	blr 
+.endfn toggleMoveType__6AIPerfFR4Menu
 
-.global toggleGeneratorMode__6AIPerfFR4Menu
-toggleGeneratorMode__6AIPerfFR4Menu:
+.fn toggleGeneratorMode__6AIPerfFR4Menu, global
 /* 800856BC 0008261C  7C 08 02 A6 */	mflr r0
 /* 800856C0 00082620  90 01 00 04 */	stw r0, 4(r1)
 /* 800856C4 00082624  94 21 FF F8 */	stwu r1, -8(r1)
@@ -906,9 +905,9 @@ toggleGeneratorMode__6AIPerfFR4Menu:
 /* 80085728 00082688  38 21 00 08 */	addi r1, r1, 8
 /* 8008572C 0008268C  7C 08 03 A6 */	mtlr r0
 /* 80085730 00082690  4E 80 00 20 */	blr 
+.endfn toggleGeneratorMode__6AIPerfFR4Menu
 
-.global toggleBridge__6AIPerfFR4Menu
-toggleBridge__6AIPerfFR4Menu:
+.fn toggleBridge__6AIPerfFR4Menu, global
 /* 80085734 00082694  7C 08 02 A6 */	mflr r0
 /* 80085738 00082698  90 01 00 04 */	stw r0, 4(r1)
 /* 8008573C 0008269C  94 21 FF F8 */	stwu r1, -8(r1)
@@ -943,9 +942,9 @@ toggleBridge__6AIPerfFR4Menu:
 /* 800857A0 00082700  38 21 00 08 */	addi r1, r1, 8
 /* 800857A4 00082704  7C 08 03 A6 */	mtlr r0
 /* 800857A8 00082708  4E 80 00 20 */	blr 
+.endfn toggleBridge__6AIPerfFR4Menu
 
-.global toggleShowRoute__6AIPerfFR4Menu
-toggleShowRoute__6AIPerfFR4Menu:
+.fn toggleShowRoute__6AIPerfFR4Menu, global
 /* 800857AC 0008270C  7C 08 02 A6 */	mflr r0
 /* 800857B0 00082710  90 01 00 04 */	stw r0, 4(r1)
 /* 800857B4 00082714  94 21 FF F8 */	stwu r1, -8(r1)
@@ -980,9 +979,9 @@ toggleShowRoute__6AIPerfFR4Menu:
 /* 80085818 00082778  38 21 00 08 */	addi r1, r1, 8
 /* 8008581C 0008277C  7C 08 03 A6 */	mtlr r0
 /* 80085820 00082780  4E 80 00 20 */	blr 
+.endfn toggleShowRoute__6AIPerfFR4Menu
 
-.global toggleKando__6AIPerfFR4Menu
-toggleKando__6AIPerfFR4Menu:
+.fn toggleKando__6AIPerfFR4Menu, global
 /* 80085824 00082784  7C 08 02 A6 */	mflr r0
 /* 80085828 00082788  90 01 00 04 */	stw r0, 4(r1)
 /* 8008582C 0008278C  94 21 FF F8 */	stwu r1, -8(r1)
@@ -1017,9 +1016,9 @@ toggleKando__6AIPerfFR4Menu:
 /* 80085890 000827F0  38 21 00 08 */	addi r1, r1, 8
 /* 80085894 000827F4  7C 08 03 A6 */	mtlr r0
 /* 80085898 000827F8  4E 80 00 20 */	blr 
+.endfn toggleKando__6AIPerfFR4Menu
 
-.global toggleLOD__6AIPerfFR4Menu
-toggleLOD__6AIPerfFR4Menu:
+.fn toggleLOD__6AIPerfFR4Menu, global
 /* 8008589C 000827FC  7C 08 02 A6 */	mflr r0
 /* 800858A0 00082800  90 01 00 04 */	stw r0, 4(r1)
 /* 800858A4 00082804  94 21 FF F8 */	stwu r1, -8(r1)
@@ -1054,9 +1053,9 @@ toggleLOD__6AIPerfFR4Menu:
 /* 80085908 00082868  38 21 00 08 */	addi r1, r1, 8
 /* 8008590C 0008286C  7C 08 03 A6 */	mtlr r0
 /* 80085910 00082870  4E 80 00 20 */	blr 
+.endfn toggleLOD__6AIPerfFR4Menu
 
-.global toggleColls__6AIPerfFR4Menu
-toggleColls__6AIPerfFR4Menu:
+.fn toggleColls__6AIPerfFR4Menu, global
 /* 80085914 00082874  7C 08 02 A6 */	mflr r0
 /* 80085918 00082878  90 01 00 04 */	stw r0, 4(r1)
 /* 8008591C 0008287C  94 21 FF F8 */	stwu r1, -8(r1)
@@ -1091,9 +1090,9 @@ toggleColls__6AIPerfFR4Menu:
 /* 80085980 000828E0  38 21 00 08 */	addi r1, r1, 8
 /* 80085984 000828E4  7C 08 03 A6 */	mtlr r0
 /* 80085988 000828E8  4E 80 00 20 */	blr 
+.endfn toggleColls__6AIPerfFR4Menu
 
-.global toggleASync__6AIPerfFR4Menu
-toggleASync__6AIPerfFR4Menu:
+.fn toggleASync__6AIPerfFR4Menu, global
 /* 8008598C 000828EC  7C 08 02 A6 */	mflr r0
 /* 80085990 000828F0  90 01 00 04 */	stw r0, 4(r1)
 /* 80085994 000828F4  94 21 FF F8 */	stwu r1, -8(r1)
@@ -1128,9 +1127,9 @@ toggleASync__6AIPerfFR4Menu:
 /* 800859F8 00082958  38 21 00 08 */	addi r1, r1, 8
 /* 800859FC 0008295C  7C 08 03 A6 */	mtlr r0
 /* 80085A00 00082960  4E 80 00 20 */	blr 
+.endfn toggleASync__6AIPerfFR4Menu
 
-.global toggleInsQuick__6AIPerfFR4Menu
-toggleInsQuick__6AIPerfFR4Menu:
+.fn toggleInsQuick__6AIPerfFR4Menu, global
 /* 80085A04 00082964  7C 08 02 A6 */	mflr r0
 /* 80085A08 00082968  90 01 00 04 */	stw r0, 4(r1)
 /* 80085A0C 0008296C  94 21 FF F8 */	stwu r1, -8(r1)
@@ -1165,9 +1164,9 @@ toggleInsQuick__6AIPerfFR4Menu:
 /* 80085A70 000829D0  38 21 00 08 */	addi r1, r1, 8
 /* 80085A74 000829D4  7C 08 03 A6 */	mtlr r0
 /* 80085A78 000829D8  4E 80 00 20 */	blr 
+.endfn toggleInsQuick__6AIPerfFR4Menu
 
-.global toggleSoundDebug__6AIPerfFR4Menu
-toggleSoundDebug__6AIPerfFR4Menu:
+.fn toggleSoundDebug__6AIPerfFR4Menu, global
 /* 80085A7C 000829DC  7C 08 02 A6 */	mflr r0
 /* 80085A80 000829E0  90 01 00 04 */	stw r0, 4(r1)
 /* 80085A84 000829E4  94 21 FF F8 */	stwu r1, -8(r1)
@@ -1202,9 +1201,9 @@ toggleSoundDebug__6AIPerfFR4Menu:
 /* 80085AE8 00082A48  38 21 00 08 */	addi r1, r1, 8
 /* 80085AEC 00082A4C  7C 08 03 A6 */	mtlr r0
 /* 80085AF0 00082A50  4E 80 00 20 */	blr 
+.endfn toggleSoundDebug__6AIPerfFR4Menu
 
-.global toggleCollSort__6AIPerfFR4Menu
-toggleCollSort__6AIPerfFR4Menu:
+.fn toggleCollSort__6AIPerfFR4Menu, global
 /* 80085AF4 00082A54  7C 08 02 A6 */	mflr r0
 /* 80085AF8 00082A58  90 01 00 04 */	stw r0, 4(r1)
 /* 80085AFC 00082A5C  94 21 FF F8 */	stwu r1, -8(r1)
@@ -1239,9 +1238,9 @@ toggleCollSort__6AIPerfFR4Menu:
 /* 80085B60 00082AC0  38 21 00 08 */	addi r1, r1, 8
 /* 80085B64 00082AC4  7C 08 03 A6 */	mtlr r0
 /* 80085B68 00082AC8  4E 80 00 20 */	blr 
+.endfn toggleCollSort__6AIPerfFR4Menu
 
-.global incOptLevel__6AIPerfFR4Menu
-incOptLevel__6AIPerfFR4Menu:
+.fn incOptLevel__6AIPerfFR4Menu, global
 /* 80085B6C 00082ACC  7C 08 02 A6 */	mflr r0
 /* 80085B70 00082AD0  90 01 00 04 */	stw r0, 4(r1)
 /* 80085B74 00082AD4  94 21 FF F8 */	stwu r1, -8(r1)
@@ -1262,9 +1261,9 @@ incOptLevel__6AIPerfFR4Menu:
 /* 80085BAC 00082B0C  38 21 00 08 */	addi r1, r1, 8
 /* 80085BB0 00082B10  7C 08 03 A6 */	mtlr r0
 /* 80085BB4 00082B14  4E 80 00 20 */	blr 
+.endfn incOptLevel__6AIPerfFR4Menu
 
-.global decOptLevel__6AIPerfFR4Menu
-decOptLevel__6AIPerfFR4Menu:
+.fn decOptLevel__6AIPerfFR4Menu, global
 /* 80085BB8 00082B18  7C 08 02 A6 */	mflr r0
 /* 80085BBC 00082B1C  90 01 00 04 */	stw r0, 4(r1)
 /* 80085BC0 00082B20  94 21 FF F8 */	stwu r1, -8(r1)
@@ -1285,9 +1284,9 @@ decOptLevel__6AIPerfFR4Menu:
 /* 80085BF8 00082B58  38 21 00 08 */	addi r1, r1, 8
 /* 80085BFC 00082B5C  7C 08 03 A6 */	mtlr r0
 /* 80085C00 00082B60  4E 80 00 20 */	blr 
+.endfn decOptLevel__6AIPerfFR4Menu
 
-.global incUfoLevel__6AIPerfFR4Menu
-incUfoLevel__6AIPerfFR4Menu:
+.fn incUfoLevel__6AIPerfFR4Menu, global
 /* 80085C04 00082B64  7C 08 02 A6 */	mflr r0
 /* 80085C08 00082B68  90 01 00 04 */	stw r0, 4(r1)
 /* 80085C0C 00082B6C  94 21 FF D0 */	stwu r1, -0x30(r1)
@@ -1384,9 +1383,9 @@ incUfoLevel__6AIPerfFR4Menu:
 /* 80085D58 00082CB8  38 21 00 30 */	addi r1, r1, 0x30
 /* 80085D5C 00082CBC  7C 08 03 A6 */	mtlr r0
 /* 80085D60 00082CC0  4E 80 00 20 */	blr 
+.endfn incUfoLevel__6AIPerfFR4Menu
 
-.global decUfoLevel__6AIPerfFR4Menu
-decUfoLevel__6AIPerfFR4Menu:
+.fn decUfoLevel__6AIPerfFR4Menu, global
 /* 80085D64 00082CC4  7C 08 02 A6 */	mflr r0
 /* 80085D68 00082CC8  3C 60 80 2B */	lis r3, lbl_802AED40@ha
 /* 80085D6C 00082CCC  90 01 00 04 */	stw r0, 4(r1)
@@ -1401,9 +1400,9 @@ decUfoLevel__6AIPerfFR4Menu:
 /* 80085D90 00082CF0  38 21 00 08 */	addi r1, r1, 8
 /* 80085D94 00082CF4  7C 08 03 A6 */	mtlr r0
 /* 80085D98 00082CF8  4E 80 00 20 */	blr 
+.endfn decUfoLevel__6AIPerfFR4Menu
 
-.global collectPikis__6AIPerfFR4Menu
-collectPikis__6AIPerfFR4Menu:
+.fn collectPikis__6AIPerfFR4Menu, global
 /* 80085D9C 00082CFC  7C 08 02 A6 */	mflr r0
 /* 80085DA0 00082D00  90 01 00 04 */	stw r0, 4(r1)
 /* 80085DA4 00082D04  94 21 FF B8 */	stwu r1, -0x48(r1)
@@ -1504,9 +1503,9 @@ collectPikis__6AIPerfFR4Menu:
 /* 80085F00 00082E60  38 21 00 48 */	addi r1, r1, 0x48
 /* 80085F04 00082E64  7C 08 03 A6 */	mtlr r0
 /* 80085F08 00082E68  4E 80 00 20 */	blr 
+.endfn collectPikis__6AIPerfFR4Menu
 
-.global fullfillPiki__6AIPerfFR4Menu
-fullfillPiki__6AIPerfFR4Menu:
+.fn fullfillPiki__6AIPerfFR4Menu, global
 /* 80085F0C 00082E6C  7C 08 02 A6 */	mflr r0
 /* 80085F10 00082E70  3C 80 80 3D */	lis r4, pikiInfMgr@ha
 /* 80085F14 00082E74  90 01 00 04 */	stw r0, 4(r1)
@@ -1556,9 +1555,9 @@ fullfillPiki__6AIPerfFR4Menu:
 /* 80085FB8 00082F18  38 21 00 30 */	addi r1, r1, 0x30
 /* 80085FBC 00082F1C  7C 08 03 A6 */	mtlr r0
 /* 80085FC0 00082F20  4E 80 00 20 */	blr 
+.endfn fullfillPiki__6AIPerfFR4Menu
 
-.global flowerPiki__6AIPerfFR4Menu
-flowerPiki__6AIPerfFR4Menu:
+.fn flowerPiki__6AIPerfFR4Menu, global
 /* 80085FC4 00082F24  7C 08 02 A6 */	mflr r0
 /* 80085FC8 00082F28  90 01 00 04 */	stw r0, 4(r1)
 /* 80085FCC 00082F2C  94 21 FF D0 */	stwu r1, -0x30(r1)
@@ -1635,9 +1634,9 @@ flowerPiki__6AIPerfFR4Menu:
 /* 800860CC 0008302C  38 21 00 30 */	addi r1, r1, 0x30
 /* 800860D0 00083030  7C 08 03 A6 */	mtlr r0
 /* 800860D4 00083034  4E 80 00 20 */	blr 
+.endfn flowerPiki__6AIPerfFR4Menu
 
-.global breakSluice__6AIPerfFR4Menu
-breakSluice__6AIPerfFR4Menu:
+.fn breakSluice__6AIPerfFR4Menu, global
 /* 800860D8 00083038  7C 08 02 A6 */	mflr r0
 /* 800860DC 0008303C  90 01 00 04 */	stw r0, 4(r1)
 /* 800860E0 00083040  94 21 FF 78 */	stwu r1, -0x88(r1)
@@ -1893,14 +1892,14 @@ breakSluice__6AIPerfFR4Menu:
 /* 80086464 000833C4  38 21 00 88 */	addi r1, r1, 0x88
 /* 80086468 000833C8  7C 08 03 A6 */	mtlr r0
 /* 8008646C 000833CC  4E 80 00 20 */	blr 
+.endfn breakSluice__6AIPerfFR4Menu
 
-.global isBridge__10WorkObjectFv
-isBridge__10WorkObjectFv:
+.fn isBridge__10WorkObjectFv, weak
 /* 80086470 000833D0  38 60 00 00 */	li r3, 0
 /* 80086474 000833D4  4E 80 00 20 */	blr 
+.endfn isBridge__10WorkObjectFv
 
-.global "invoke__25Delegate1<6AIPerf,R4Menu>FR4Menu"
-"invoke__25Delegate1<6AIPerf,R4Menu>FR4Menu":
+.fn "invoke__25Delegate1<6AIPerf,R4Menu>FR4Menu", weak
 /* 80086478 000833D8  7C 08 02 A6 */	mflr r0
 /* 8008647C 000833DC  7C 65 1B 78 */	mr r5, r3
 /* 80086480 000833E0  90 01 00 04 */	stw r0, 4(r1)
@@ -1913,6 +1912,7 @@ isBridge__10WorkObjectFv:
 /* 8008649C 000833FC  38 21 00 08 */	addi r1, r1, 8
 /* 800864A0 00083400  7C 08 03 A6 */	mtlr r0
 /* 800864A4 00083404  4E 80 00 20 */	blr 
+.endfn "invoke__25Delegate1<6AIPerf,R4Menu>FR4Menu"
 
 .section .rodata, "a"  # 0x80221FE0 - 0x80222DC0
 .balign 8
@@ -1930,23 +1930,28 @@ isBridge__10WorkObjectFv:
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802AE920:
+.obj lbl_802AE920, local
 	.asciz "aiPerf.cpp"
+.endobj lbl_802AE920
 .balign 4
-lbl_802AE92C:
+.obj lbl_802AE92C, local
 	.asciz "[grid off]"
+.endobj lbl_802AE92C
 .balign 4
-lbl_802AE938:
+.obj lbl_802AE938, local
 	.asciz "[grid xyz]"
+.endobj lbl_802AE938
 .balign 4
-lbl_802AE944:
+.obj lbl_802AE944, local
 	.asciz "[grid xz]"
+.endobj lbl_802AE944
 .balign 4
-.global gridStrings
-gridStrings:
+.obj gridStrings, global
 	.4byte lbl_802AE92C
 	.4byte lbl_802AE938
 	.4byte lbl_802AE944
+.endobj gridStrings
+.balign 4
 .obj lbl_802AE95C, local
 	.4byte 0x00000000
 	.4byte 0xFFFFFFFF
@@ -2067,125 +2072,163 @@ gridStrings:
 	.4byte fullfillPiki__6AIPerfFR4Menu
 .endobj lbl_802AEA40
 .balign 4
-lbl_802AEA4C:
+.obj lbl_802AEA4C, local
 	.asciz "Bridge Opt [on]"
+.endobj lbl_802AEA4C
 .balign 4
-lbl_802AEA5C:
+.obj lbl_802AEA5C, local
 	.asciz "Bridge opt [off]"
+.endobj lbl_802AEA5C
 .balign 4
-lbl_802AEA70:
+.obj lbl_802AEA70, local
 	.asciz "Route Debug [on]"
+.endobj lbl_802AEA70
 .balign 4
-lbl_802AEA84:
+.obj lbl_802AEA84, local
 	.asciz "Route Debug [off]"
+.endobj lbl_802AEA84
 .balign 4
-lbl_802AEA98:
+.obj lbl_802AEA98, local
 	.asciz "Opt Level %d"
+.endobj lbl_802AEA98
 .balign 4
-lbl_802AEAA8:
+.obj lbl_802AEAA8, local
 	.asciz "[use Coll Sort]"
+.endobj lbl_802AEAA8
 .balign 4
-lbl_802AEAB8:
+.obj lbl_802AEAB8, local
 	.asciz "[ignore Coll Sort]"
+.endobj lbl_802AEAB8
 .balign 4
-lbl_802AEACC:
+.obj lbl_802AEACC, local
 	.asciz "Kando Debug [on]"
+.endobj lbl_802AEACC
 .balign 4
-lbl_802AEAE0:
+.obj lbl_802AEAE0, local
 	.asciz "Kando Debug [off]"
+.endobj lbl_802AEAE0
 .balign 4
-lbl_802AEAF4:
+.obj lbl_802AEAF4, local
 	.asciz "Sound Debug [on]"
+.endobj lbl_802AEAF4
 .balign 4
-lbl_802AEB08:
+.obj lbl_802AEB08, local
 	.asciz "Sound Debug [off]"
+.endobj lbl_802AEB08
 .balign 4
-lbl_802AEB1C:
+.obj lbl_802AEB1C, local
 	.asciz "Generator Mode"
+.endobj lbl_802AEB1C
 .balign 4
-lbl_802AEB2C:
+.obj lbl_802AEB2C, local
 	.asciz "Game Mode"
+.endobj lbl_802AEB2C
 .balign 4
-lbl_802AEB38:
+.obj lbl_802AEB38, local
 	.asciz "LOD [on]"
+.endobj lbl_802AEB38
 .balign 4
-lbl_802AEB44:
+.obj lbl_802AEB44, local
 	.asciz "LOD [off]"
+.endobj lbl_802AEB44
 .balign 4
-lbl_802AEB50:
+.obj lbl_802AEB50, local
 	.asciz "Colls [on]"
+.endobj lbl_802AEB50
 .balign 4
-lbl_802AEB5C:
+.obj lbl_802AEB5C, local
 	.asciz "Colls [off]"
+.endobj lbl_802AEB5C
 .balign 4
-lbl_802AEB68:
+.obj lbl_802AEB68, local
 	.asciz "ASYNC [on]"
+.endobj lbl_802AEB68
 .balign 4
-lbl_802AEB74:
+.obj lbl_802AEB74, local
 	.asciz "ASYNC [off]"
+.endobj lbl_802AEB74
 .balign 4
-lbl_802AEB80:
+.obj lbl_802AEB80, local
 	.asciz "Ins [Fast]"
+.endobj lbl_802AEB80
 .balign 4
-lbl_802AEB8C:
+.obj lbl_802AEB8C, local
 	.asciz "Ins [Slow]"
+.endobj lbl_802AEB8C
 .balign 4
-lbl_802AEB98:
+.obj lbl_802AEB98, local
 	.asciz "UFO LEVEL %d"
+.endobj lbl_802AEB98
 .balign 4
-lbl_802AEBA8:
+.obj lbl_802AEBA8, local
 	.asciz "Flower Pikis"
+.endobj lbl_802AEBA8
 .balign 4
-lbl_802AEBB8:
+.obj lbl_802AEBB8, local
 	.asciz "Break sluice"
+.endobj lbl_802AEBB8
 .balign 4
-lbl_802AEBC8:
+.obj lbl_802AEBC8, local
 	.asciz "COLLECT PIKIS"
+.endobj lbl_802AEBC8
 .balign 4
-lbl_802AEBD8:
+.obj lbl_802AEBD8, local
 	.asciz "FULLFILL PIKI"
+.endobj lbl_802AEBD8
 .balign 4
-lbl_802AEBE8:
+.obj lbl_802AEBE8, local
 	.asciz "Bridge Opt [off]"
+.endobj lbl_802AEBE8
 .balign 4
-lbl_802AEBFC:
+.obj lbl_802AEBFC, local
 	.asciz "AI GRID [on]"
+.endobj lbl_802AEBFC
 .balign 4
-lbl_802AEC0C:
+.obj lbl_802AEC0C, local
 	.asciz "AI GRID [off]"
+.endobj lbl_802AEC0C
 .balign 4
-lbl_802AEC1C:
+.obj lbl_802AEC1C, local
 	.asciz "KandoDebug [off]"
+.endobj lbl_802AEC1C
 .balign 4
-lbl_802AEC30:
+.obj lbl_802AEC30, local
 	.asciz "updateMgr [on]"
+.endobj lbl_802AEC30
 .balign 4
-lbl_802AEC40:
+.obj lbl_802AEC40, local
 	.asciz "updateMgr [off]"
+.endobj lbl_802AEC40
 .balign 4
-lbl_802AEC50:
+.obj lbl_802AEC50, local
 	.asciz "pikiMabiki [on]"
+.endobj lbl_802AEC50
 .balign 4
-lbl_802AEC60:
+.obj lbl_802AEC60, local
 	.asciz "pikiMabiki [off]"
+.endobj lbl_802AEC60
 .balign 4
-lbl_802AEC74:
+.obj lbl_802AEC74, local
 	.asciz "psOptimise [on]"
+.endobj lbl_802AEC74
 .balign 4
-lbl_802AEC84:
+.obj lbl_802AEC84, local
 	.asciz "psOptimise [off]"
+.endobj lbl_802AEC84
 .balign 4
-lbl_802AEC98:
+.obj lbl_802AEC98, local
 	.asciz "[it-cull on]"
+.endobj lbl_802AEC98
 .balign 4
-lbl_802AECA8:
+.obj lbl_802AECA8, local
 	.asciz "[it-cull off]"
+.endobj lbl_802AECA8
 .balign 4
-lbl_802AECB8:
+.obj lbl_802AECB8, local
 	.asciz "grid shift %d"
+.endobj lbl_802AECB8
 .balign 4
-.global ufoParts
-ufoParts:
+.obj ufoParts, global
 	.ascii "ust5"
 	.ascii "ust1"
 	.ascii "ust2"
@@ -2216,188 +2259,204 @@ ufoParts:
 	.ascii "un12"
 	.ascii "un13"
 	.ascii "un14"
+.endobj ufoParts
 .balign 4
-lbl_802AED40:
+.obj lbl_802AED40, local
 	.asciz "UFO Level %d"
+.endobj lbl_802AED40
 .balign 4
-lbl_802AED50:
+.obj lbl_802AED50, local
 	.asciz "[upd srchbuff]"
+.endobj lbl_802AED50
 .balign 4
-lbl_802AED60:
+.obj lbl_802AED60, local
 	.asciz "[don't upd srchbuff]"
+.endobj lbl_802AED60
 .balign 4
-lbl_802AED78:
+.obj lbl_802AED78, local
 	.asciz "Interaction"
+.endobj lbl_802AED78
 .balign 4
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
+.skip 0x2C # compiler padding
 .balign 4
-lbl_802AEDB0:
+.obj lbl_802AEDB0, local
 	.asciz "Delegate1<AIPerf, Menu &>"
+.endobj lbl_802AEDB0
 .balign 4
-lbl_802AEDCC:
+.obj lbl_802AEDCC, local
 	.asciz "IDelegate1<Menu &>"
+.endobj lbl_802AEDCC
 .balign 4
-lbl_802AEDE0:
+.obj lbl_802AEDE0, local
 	.4byte "__RTTI__18IDelegate1<R4Menu>"
-	.4byte 0x00000000
-	.4byte 0x00000000
-.global "__vt__25Delegate1<6AIPerf,R4Menu>"
-"__vt__25Delegate1<6AIPerf,R4Menu>":
+	.4byte 0
+	.4byte 0
+.endobj lbl_802AEDE0
+.balign 4
+.obj "__vt__25Delegate1<6AIPerf,R4Menu>", weak
 	.4byte "__RTTI__25Delegate1<6AIPerf,R4Menu>"
 	.4byte 0
 	.4byte "invoke__25Delegate1<6AIPerf,R4Menu>FR4Menu"
+.endobj "__vt__25Delegate1<6AIPerf,R4Menu>"
 .balign 4
-lbl_802AEDF8:
+.obj lbl_802AEDF8, local
 	.asciz "Delegate1<Menu, Menu &>"
+.endobj lbl_802AEDF8
 .balign 4
-lbl_802AEE10:
+.obj lbl_802AEE10, local
 	.4byte "__RTTI__18IDelegate1<R4Menu>"
 	.4byte 0
 	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
+.endobj lbl_802AEE10
+.balign 4
+.skip 0x1C # compiler padding
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-.global useLOD__6AIPerf
-useLOD__6AIPerf:
+.obj useLOD__6AIPerf, global
 	.byte 1
-.global showColls__6AIPerf
-showColls__6AIPerf:
+.endobj useLOD__6AIPerf
+.obj showColls__6AIPerf, global
 	.byte 1
-.global useCollSort__6AIPerf
-useCollSort__6AIPerf:
+.endobj showColls__6AIPerf
+.obj useCollSort__6AIPerf, global
 	.byte 1
-.global bridgeFast__6AIPerf
-bridgeFast__6AIPerf:
+.endobj useCollSort__6AIPerf
+.obj bridgeFast__6AIPerf, global
 	.byte 1
-.global useASync__6AIPerf
-useASync__6AIPerf:
+.endobj bridgeFast__6AIPerf
+.obj useASync__6AIPerf, global
 	.byte 1
+.endobj useASync__6AIPerf
 .balign 4
-.global useGrid__6AIPerf
-useGrid__6AIPerf:
+.obj useGrid__6AIPerf, global
 	.4byte 2
-.global gridShift__6AIPerf
-gridShift__6AIPerf:
+.endobj useGrid__6AIPerf
+.balign 4
+.obj gridShift__6AIPerf, global
 	.4byte 4
-.global aiGrid__6AIPerf
-aiGrid__6AIPerf:
+.endobj gridShift__6AIPerf
+.obj aiGrid__6AIPerf, global
 	.byte 1
-.global insQuick__6AIPerf
-insQuick__6AIPerf:
+.endobj aiGrid__6AIPerf
+.obj insQuick__6AIPerf, global
 	.byte 1
-.global iteratorCull__6AIPerf
-iteratorCull__6AIPerf:
+.endobj insQuick__6AIPerf
+.obj iteratorCull__6AIPerf, global
 	.byte 1
-.global pikiMabiki__6AIPerf
-pikiMabiki__6AIPerf:
+.endobj iteratorCull__6AIPerf
+.obj pikiMabiki__6AIPerf, global
 	.byte 1
-.global optLevel__6AIPerf
-optLevel__6AIPerf:
+.endobj pikiMabiki__6AIPerf
+.balign 4
+.obj optLevel__6AIPerf, global
 	.4byte 2
+.endobj optLevel__6AIPerf
 .balign 4
-lbl_803DEE20:
+.obj lbl_803DEE20, local
 	.asciz "stop"
+.endobj lbl_803DEE20
 .balign 4
-lbl_803DEE28:
+.obj lbl_803DEE28, local
 	.asciz "no stop"
+.endobj lbl_803DEE28
 .balign 4
-lbl_803DEE30:
+.obj lbl_803DEE30, local
 	.asciz "slip"
+.endobj lbl_803DEE30
 .balign 4
-lbl_803DEE38:
+.obj lbl_803DEE38, local
 	.asciz "%s"
+.endobj lbl_803DEE38
 .balign 4
-"__RTTI__18IDelegate1<R4Menu>":
+.obj "__RTTI__18IDelegate1<R4Menu>", local
 	.4byte lbl_802AEDCC
 	.4byte 0
-"__RTTI__25Delegate1<6AIPerf,R4Menu>":
+.endobj "__RTTI__18IDelegate1<R4Menu>"
+.balign 4
+.obj "__RTTI__25Delegate1<6AIPerf,R4Menu>", local
 	.4byte lbl_802AEDB0
 	.4byte lbl_802AEDE0
+.endobj "__RTTI__25Delegate1<6AIPerf,R4Menu>"
 
 .section .sbss, "wa"
 .balign 8
-.global showRoute__6AIPerf
-showRoute__6AIPerf:
+.obj showRoute__6AIPerf, global
 	.skip 1
-.global generatorMode__6AIPerf
-generatorMode__6AIPerf:
+.endobj showRoute__6AIPerf
+.obj generatorMode__6AIPerf, global
 	.skip 1
+.endobj generatorMode__6AIPerf
 .balign 4
-.global moveType__6AIPerf
-moveType__6AIPerf:
+.obj moveType__6AIPerf, global
 	.skip 4
-.global kandoOnly__6AIPerf
-kandoOnly__6AIPerf:
+.endobj moveType__6AIPerf
+.obj kandoOnly__6AIPerf, global
 	.skip 1
-.global soundDebug__6AIPerf
-soundDebug__6AIPerf:
+.endobj kandoOnly__6AIPerf
+.obj soundDebug__6AIPerf, global
 	.skip 1
-.global updateSearchBuffer__6AIPerf
-updateSearchBuffer__6AIPerf:
+.endobj soundDebug__6AIPerf
+.obj updateSearchBuffer__6AIPerf, global
 	.skip 1
-.global loopOptimise__6AIPerf
-loopOptimise__6AIPerf:
+.endobj updateSearchBuffer__6AIPerf
+.obj loopOptimise__6AIPerf, global
 	.skip 1
-.global useUpdateMgr__6AIPerf
-useUpdateMgr__6AIPerf:
+.endobj loopOptimise__6AIPerf
+.obj useUpdateMgr__6AIPerf, global
 	.skip 1
+.endobj useUpdateMgr__6AIPerf
 .balign 4
-.global ufoLevel__6AIPerf
-ufoLevel__6AIPerf:
+.obj ufoLevel__6AIPerf, global
 	.skip 4
-.global searchCnt__6AIPerf
-searchCnt__6AIPerf:
+.endobj ufoLevel__6AIPerf
+.balign 4
+.obj searchCnt__6AIPerf, global
 	.skip 4
-.global searchCullCnt__6AIPerf
-searchCullCnt__6AIPerf:
+.endobj searchCnt__6AIPerf
+.balign 4
+.obj searchCullCnt__6AIPerf, global
 	.skip 4
-.global searchInsertCnt__6AIPerf
-searchInsertCnt__6AIPerf:
+.endobj searchCullCnt__6AIPerf
+.balign 4
+.obj searchInsertCnt__6AIPerf, global
 	.skip 4
-.global collisionCnt__6AIPerf
-collisionCnt__6AIPerf:
+.endobj searchInsertCnt__6AIPerf
+.balign 4
+.obj collisionCnt__6AIPerf, global
 	.skip 4
-.global iteratorCullCnt__6AIPerf
-iteratorCullCnt__6AIPerf:
+.endobj collisionCnt__6AIPerf
+.balign 4
+.obj iteratorCullCnt__6AIPerf, global
 	.skip 4
-.global aiCullCnt__6AIPerf
-aiCullCnt__6AIPerf:
+.endobj iteratorCullCnt__6AIPerf
+.balign 4
+.obj aiCullCnt__6AIPerf, global
 	.skip 4
-.global viewCullCnt__6AIPerf
-viewCullCnt__6AIPerf:
+.endobj aiCullCnt__6AIPerf
+.balign 4
+.obj viewCullCnt__6AIPerf, global
 	.skip 4
-.global outsideViewCnt__6AIPerf
-outsideViewCnt__6AIPerf:
+.endobj viewCullCnt__6AIPerf
+.balign 4
+.obj outsideViewCnt__6AIPerf, global
 	.skip 4
-.global drawshapeCullCnt__6AIPerf
-drawshapeCullCnt__6AIPerf:
+.endobj outsideViewCnt__6AIPerf
+.balign 4
+.obj drawshapeCullCnt__6AIPerf, global
 	.skip 4
+.endobj drawshapeCullCnt__6AIPerf
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
 .obj lbl_803E8C30, local
 	.float 30.0
 .endobj lbl_803E8C30
+.balign 4
 .obj lbl_803E8C34, local
 	.float 1000.0
 .endobj lbl_803E8C34
+.balign 4
 .obj lbl_803E8C38, local
 	.float 12800.0
 .endobj lbl_803E8C38

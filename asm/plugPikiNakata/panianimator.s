@@ -1,7 +1,22 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global __ct__14PaniMotionInfoFiP19PaniAnimKeyListener
-__ct__14PaniMotionInfoFiP19PaniAnimKeyListener:
+.fn __ct__14PaniMotionInfoFi, global
+/* 8011EF58 0011BEB8  7C 08 02 A6 */	mflr r0
+/* 8011EF5C 0011BEBC  38 A0 00 00 */	li r5, 0
+/* 8011EF60 0011BEC0  90 01 00 04 */	stw r0, 4(r1)
+/* 8011EF64 0011BEC4  94 21 FF E8 */	stwu r1, -0x18(r1)
+/* 8011EF68 0011BEC8  93 E1 00 14 */	stw r31, 0x14(r1)
+/* 8011EF6C 0011BECC  3B E3 00 00 */	addi r31, r3, 0
+/* 8011EF70 0011BED0  48 00 00 4D */	bl init__14PaniMotionInfoFiP19PaniAnimKeyListener
+/* 8011EF74 0011BED4  7F E3 FB 78 */	mr r3, r31
+/* 8011EF78 0011BED8  80 01 00 1C */	lwz r0, 0x1c(r1)
+/* 8011EF7C 0011BEDC  83 E1 00 14 */	lwz r31, 0x14(r1)
+/* 8011EF80 0011BEE0  38 21 00 18 */	addi r1, r1, 0x18
+/* 8011EF84 0011BEE4  7C 08 03 A6 */	mtlr r0
+/* 8011EF88 0011BEE8  4E 80 00 20 */	blr 
+.endfn __ct__14PaniMotionInfoFi
+
+.fn __ct__14PaniMotionInfoFiP19PaniAnimKeyListener, global
 /* 8011EF8C 0011BEEC  7C 08 02 A6 */	mflr r0
 /* 8011EF90 0011BEF0  90 01 00 04 */	stw r0, 4(r1)
 /* 8011EF94 0011BEF4  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -14,15 +29,15 @@ __ct__14PaniMotionInfoFiP19PaniAnimKeyListener:
 /* 8011EFB0 0011BF10  38 21 00 20 */	addi r1, r1, 0x20
 /* 8011EFB4 0011BF14  7C 08 03 A6 */	mtlr r0
 /* 8011EFB8 0011BF18  4E 80 00 20 */	blr 
+.endfn __ct__14PaniMotionInfoFiP19PaniAnimKeyListener
 
-.global init__14PaniMotionInfoFiP19PaniAnimKeyListener
-init__14PaniMotionInfoFiP19PaniAnimKeyListener:
+.fn init__14PaniMotionInfoFiP19PaniAnimKeyListener, global
 /* 8011EFBC 0011BF1C  90 83 00 00 */	stw r4, 0(r3)
 /* 8011EFC0 0011BF20  90 A3 00 04 */	stw r5, 4(r3)
 /* 8011EFC4 0011BF24  4E 80 00 20 */	blr 
+.endfn init__14PaniMotionInfoFiP19PaniAnimKeyListener
 
-.global __ct__10PaniMotionFi
-__ct__10PaniMotionFi:
+.fn __ct__10PaniMotionFi, global
 /* 8011EFC8 0011BF28  7C 08 02 A6 */	mflr r0
 /* 8011EFCC 0011BF2C  38 A0 00 01 */	li r5, 1
 /* 8011EFD0 0011BF30  90 01 00 04 */	stw r0, 4(r1)
@@ -36,15 +51,15 @@ __ct__10PaniMotionFi:
 /* 8011EFF0 0011BF50  38 21 00 18 */	addi r1, r1, 0x18
 /* 8011EFF4 0011BF54  7C 08 03 A6 */	mtlr r0
 /* 8011EFF8 0011BF58  4E 80 00 20 */	blr 
+.endfn __ct__10PaniMotionFi
 
-.global init__10PaniMotionFii
-init__10PaniMotionFii:
+.fn init__10PaniMotionFii, global
 /* 8011EFFC 0011BF5C  90 83 00 00 */	stw r4, 0(r3)
 /* 8011F000 0011BF60  90 A3 00 04 */	stw r5, 4(r3)
 /* 8011F004 0011BF64  4E 80 00 20 */	blr 
+.endfn init__10PaniMotionFii
 
-.global __ct__15PaniMotionTableFi
-__ct__15PaniMotionTableFi:
+.fn __ct__15PaniMotionTableFi, global
 /* 8011F008 0011BF68  7C 08 02 A6 */	mflr r0
 /* 8011F00C 0011BF6C  90 01 00 04 */	stw r0, 4(r1)
 /* 8011F010 0011BF70  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -74,9 +89,9 @@ __ct__15PaniMotionTableFi:
 /* 8011F068 0011BFC8  38 21 00 20 */	addi r1, r1, 0x20
 /* 8011F06C 0011BFCC  7C 08 03 A6 */	mtlr r0
 /* 8011F070 0011BFD0  4E 80 00 20 */	blr 
+.endfn __ct__15PaniMotionTableFi
 
-.global __ct__14PaniSoundTableFi
-__ct__14PaniSoundTableFi:
+.fn __ct__14PaniSoundTableFi, global
 /* 8011F074 0011BFD4  7C 08 02 A6 */	mflr r0
 /* 8011F078 0011BFD8  90 01 00 04 */	stw r0, 4(r1)
 /* 8011F07C 0011BFDC  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -106,9 +121,9 @@ __ct__14PaniSoundTableFi:
 /* 8011F0D4 0011C034  38 21 00 20 */	addi r1, r1, 0x20
 /* 8011F0D8 0011C038  7C 08 03 A6 */	mtlr r0
 /* 8011F0DC 0011C03C  4E 80 00 20 */	blr 
+.endfn __ct__14PaniSoundTableFi
 
-.global __ct__12PaniAnimatorFv
-__ct__12PaniAnimatorFv:
+.fn __ct__12PaniAnimatorFv, global
 /* 8011F0E0 0011C040  3C 80 80 2A */	lis r4, __vt__8Animator@ha
 /* 8011F0E4 0011C044  38 04 5F FC */	addi r0, r4, __vt__8Animator@l
 /* 8011F0E8 0011C048  3C 80 80 2C */	lis r4, __vt__12PaniAnimator@ha
@@ -126,9 +141,9 @@ __ct__12PaniAnimatorFv:
 /* 8011F118 0011C078  C0 02 A0 70 */	lfs f0, lbl_803EA270@sda21(r2)
 /* 8011F11C 0011C07C  D0 03 00 2C */	stfs f0, 0x2c(r3)
 /* 8011F120 0011C080  4E 80 00 20 */	blr 
+.endfn __ct__12PaniAnimatorFv
 
-.global init__12PaniAnimatorFP11AnimContextP7AnimMgrP15PaniMotionTable
-init__12PaniAnimatorFP11AnimContextP7AnimMgrP15PaniMotionTable:
+.fn init__12PaniAnimatorFP11AnimContextP7AnimMgrP15PaniMotionTable, global
 /* 8011F124 0011C084  7C 08 02 A6 */	mflr r0
 /* 8011F128 0011C088  90 01 00 04 */	stw r0, 4(r1)
 /* 8011F12C 0011C08C  38 00 00 00 */	li r0, 0
@@ -157,14 +172,14 @@ init__12PaniAnimatorFP11AnimContextP7AnimMgrP15PaniMotionTable:
 /* 8011F184 0011C0E4  38 21 00 20 */	addi r1, r1, 0x20
 /* 8011F188 0011C0E8  7C 08 03 A6 */	mtlr r0
 /* 8011F18C 0011C0EC  4E 80 00 20 */	blr 
+.endfn init__12PaniAnimatorFP11AnimContextP7AnimMgrP15PaniMotionTable
 
-.global changeContext__12PaniAnimatorFP11AnimContext
-changeContext__12PaniAnimatorFP11AnimContext:
+.fn changeContext__12PaniAnimatorFP11AnimContext, global
 /* 8011F190 0011C0F0  90 83 00 04 */	stw r4, 4(r3)
 /* 8011F194 0011C0F4  4E 80 00 20 */	blr 
+.endfn changeContext__12PaniAnimatorFP11AnimContext
 
-.global updateContext__12PaniAnimatorFv
-updateContext__12PaniAnimatorFv:
+.fn updateContext__12PaniAnimatorFv, global
 /* 8011F198 0011C0F8  80 83 00 28 */	lwz r4, 0x28(r3)
 /* 8011F19C 0011C0FC  28 04 00 00 */	cmplwi r4, 0
 /* 8011F1A0 0011C100  4D 82 00 20 */	beqlr 
@@ -175,9 +190,9 @@ updateContext__12PaniAnimatorFv:
 /* 8011F1B4 0011C114  80 63 00 04 */	lwz r3, 4(r3)
 /* 8011F1B8 0011C118  D0 03 00 04 */	stfs f0, 4(r3)
 /* 8011F1BC 0011C11C  4E 80 00 20 */	blr 
+.endfn updateContext__12PaniAnimatorFv
 
-.global startMotion__12PaniAnimatorFR14PaniMotionInfo
-startMotion__12PaniAnimatorFR14PaniMotionInfo:
+.fn startMotion__12PaniAnimatorFR14PaniMotionInfo, global
 /* 8011F1C0 0011C120  7C 08 02 A6 */	mflr r0
 /* 8011F1C4 0011C124  90 01 00 04 */	stw r0, 4(r1)
 /* 8011F1C8 0011C128  94 21 FF F8 */	stwu r1, -8(r1)
@@ -207,9 +222,9 @@ startMotion__12PaniAnimatorFR14PaniMotionInfo:
 /* 8011F224 0011C184  38 21 00 08 */	addi r1, r1, 8
 /* 8011F228 0011C188  7C 08 03 A6 */	mtlr r0
 /* 8011F22C 0011C18C  4E 80 00 20 */	blr 
+.endfn startMotion__12PaniAnimatorFR14PaniMotionInfo
 
-.global finishMotion__12PaniAnimatorFR14PaniMotionInfo
-finishMotion__12PaniAnimatorFR14PaniMotionInfo:
+.fn finishMotion__12PaniAnimatorFR14PaniMotionInfo, global
 /* 8011F230 0011C190  7C 08 02 A6 */	mflr r0
 /* 8011F234 0011C194  90 01 00 04 */	stw r0, 4(r1)
 /* 8011F238 0011C198  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -258,9 +273,9 @@ finishMotion__12PaniAnimatorFR14PaniMotionInfo:
 /* 8011F2D4 0011C234  38 21 00 20 */	addi r1, r1, 0x20
 /* 8011F2D8 0011C238  7C 08 03 A6 */	mtlr r0
 /* 8011F2DC 0011C23C  4E 80 00 20 */	blr 
+.endfn finishMotion__12PaniAnimatorFR14PaniMotionInfo
 
-.global animate__12PaniAnimatorFf
-animate__12PaniAnimatorFf:
+.fn animate__12PaniAnimatorFf, global
 /* 8011F2E0 0011C240  7C 08 02 A6 */	mflr r0
 /* 8011F2E4 0011C244  90 01 00 04 */	stw r0, 4(r1)
 /* 8011F2E8 0011C248  94 21 FF B0 */	stwu r1, -0x50(r1)
@@ -330,9 +345,9 @@ animate__12PaniAnimatorFf:
 /* 8011F3E0 0011C340  38 21 00 50 */	addi r1, r1, 0x50
 /* 8011F3E4 0011C344  7C 08 03 A6 */	mtlr r0
 /* 8011F3E8 0011C348  4E 80 00 20 */	blr 
+.endfn animate__12PaniAnimatorFf
 
-.global checkConstantKeys__12PaniAnimatorFv
-checkConstantKeys__12PaniAnimatorFv:
+.fn checkConstantKeys__12PaniAnimatorFv, global
 /* 8011F3EC 0011C34C  7C 08 02 A6 */	mflr r0
 /* 8011F3F0 0011C350  90 01 00 04 */	stw r0, 4(r1)
 /* 8011F3F4 0011C354  94 21 FF D0 */	stwu r1, -0x30(r1)
@@ -390,9 +405,9 @@ checkConstantKeys__12PaniAnimatorFv:
 /* 8011F4B0 0011C410  38 21 00 30 */	addi r1, r1, 0x30
 /* 8011F4B4 0011C414  7C 08 03 A6 */	mtlr r0
 /* 8011F4B8 0011C418  4E 80 00 20 */	blr 
+.endfn checkConstantKeys__12PaniAnimatorFv
 
-.global checkConstantKey__12PaniAnimatorFi
-checkConstantKey__12PaniAnimatorFi:
+.fn checkConstantKey__12PaniAnimatorFi, global
 /* 8011F4BC 0011C41C  7C 08 02 A6 */	mflr r0
 /* 8011F4C0 0011C420  90 01 00 04 */	stw r0, 4(r1)
 /* 8011F4C4 0011C424  94 21 FF A0 */	stwu r1, -0x60(r1)
@@ -510,9 +525,9 @@ checkConstantKey__12PaniAnimatorFi:
 /* 8011F670 0011C5D0  38 21 00 60 */	addi r1, r1, 0x60
 /* 8011F674 0011C5D4  7C 08 03 A6 */	mtlr r0
 /* 8011F678 0011C5D8  4E 80 00 20 */	blr 
+.endfn checkConstantKey__12PaniAnimatorFi
 
-.global checkEventKeys__12PaniAnimatorFff
-checkEventKeys__12PaniAnimatorFff:
+.fn checkEventKeys__12PaniAnimatorFff, global
 /* 8011F67C 0011C5DC  7C 08 02 A6 */	mflr r0
 /* 8011F680 0011C5E0  90 01 00 04 */	stw r0, 4(r1)
 /* 8011F684 0011C5E4  94 21 FF A0 */	stwu r1, -0x60(r1)
@@ -592,9 +607,9 @@ checkEventKeys__12PaniAnimatorFff:
 /* 8011F794 0011C6F4  38 21 00 60 */	addi r1, r1, 0x60
 /* 8011F798 0011C6F8  7C 08 03 A6 */	mtlr r0
 /* 8011F79C 0011C6FC  4E 80 00 20 */	blr 
+.endfn checkEventKeys__12PaniAnimatorFff
 
-.global finishAnimation__12PaniAnimatorFv
-finishAnimation__12PaniAnimatorFv:
+.fn finishAnimation__12PaniAnimatorFv, global
 /* 8011F7A0 0011C700  7C 08 02 A6 */	mflr r0
 /* 8011F7A4 0011C704  38 A0 FF FF */	li r5, -1
 /* 8011F7A8 0011C708  90 01 00 04 */	stw r0, 4(r1)
@@ -617,9 +632,9 @@ finishAnimation__12PaniAnimatorFv:
 /* 8011F7E8 0011C748  38 21 00 18 */	addi r1, r1, 0x18
 /* 8011F7EC 0011C74C  7C 08 03 A6 */	mtlr r0
 /* 8011F7F0 0011C750  4E 80 00 20 */	blr 
+.endfn finishAnimation__12PaniAnimatorFv
 
-.global getKeyValueByKeyType__12PaniAnimatorFi
-getKeyValueByKeyType__12PaniAnimatorFi:
+.fn getKeyValueByKeyType__12PaniAnimatorFi, global
 /* 8011F7F4 0011C754  7C 08 02 A6 */	mflr r0
 /* 8011F7F8 0011C758  90 01 00 04 */	stw r0, 4(r1)
 /* 8011F7FC 0011C75C  94 21 FF D0 */	stwu r1, -0x30(r1)
@@ -667,54 +682,66 @@ getKeyValueByKeyType__12PaniAnimatorFi:
 /* 8011F894 0011C7F4  38 21 00 30 */	addi r1, r1, 0x30
 /* 8011F898 0011C7F8  7C 08 03 A6 */	mtlr r0
 /* 8011F89C 0011C7FC  4E 80 00 20 */	blr 
+.endfn getKeyValueByKeyType__12PaniAnimatorFi
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802C4C88:
+.obj lbl_802C4C88, local
 	.asciz "panianimator.cpp"
+.endobj lbl_802C4C88
 .balign 4
-lbl_802C4C9C:
+.obj lbl_802C4C9C, local
 	.asciz "panianimator"
+.endobj lbl_802C4C9C
 .balign 4
-lbl_802C4CAC:
+.obj lbl_802C4CAC, local
 	.asciz "loop start"
+.endobj lbl_802C4CAC
 .balign 4
-lbl_802C4CB8:
+.obj lbl_802C4CB8, local
 	.asciz "loop end"
+.endobj lbl_802C4CB8
 .balign 4
-lbl_802C4CC4:
+.obj lbl_802C4CC4, local
 	.asciz "action 0"
+.endobj lbl_802C4CC4
 .balign 4
-lbl_802C4CD0:
+.obj lbl_802C4CD0, local
 	.asciz "action 1"
+.endobj lbl_802C4CD0
 .balign 4
-lbl_802C4CDC:
+.obj lbl_802C4CDC, local
 	.asciz "action 2"
+.endobj lbl_802C4CDC
 .balign 4
-lbl_802C4CE8:
+.obj lbl_802C4CE8, local
 	.asciz "action 3"
+.endobj lbl_802C4CE8
 .balign 4
-.global keyNames__12PaniAnimator
-keyNames__12PaniAnimator:
+.obj keyNames__12PaniAnimator, global
 	.4byte lbl_802C4CAC
 	.4byte lbl_802C4CB8
 	.4byte lbl_802C4CC4
 	.4byte lbl_802C4CD0
 	.4byte lbl_802C4CDC
 	.4byte lbl_802C4CE8
+.endobj keyNames__12PaniAnimator
 .balign 4
-lbl_802C4D0C:
+.obj lbl_802C4D0C, local
 	.asciz "PaniAnimator"
+.endobj lbl_802C4D0C
 .balign 4
-lbl_802C4D1C:
+.obj lbl_802C4D1C, local
 	.asciz "Animator"
+.endobj lbl_802C4D1C
 .balign 4
-lbl_802C4D28:
+.obj lbl_802C4D28, local
 	.4byte __RTTI__8Animator
 	.4byte 0
 	.4byte 0
-.global __vt__12PaniAnimator
-__vt__12PaniAnimator:
+.endobj lbl_802C4D28
+.balign 4
+.obj __vt__12PaniAnimator, global
 	.4byte __RTTI__12PaniAnimator
 	.4byte 0
 	.4byte changeContext__12PaniAnimatorFP11AnimContext
@@ -722,21 +749,26 @@ __vt__12PaniAnimator:
 	.4byte finishOneShot__8AnimatorFv
 	.4byte finishLoop__8AnimatorFv
 	.4byte updateContext__12PaniAnimatorFv
+.endobj __vt__12PaniAnimator
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-__RTTI__8Animator:
+.obj __RTTI__8Animator, local
 	.4byte lbl_802C4D1C
 	.4byte 0
-__RTTI__12PaniAnimator:
+.endobj __RTTI__8Animator
+.balign 4
+.obj __RTTI__12PaniAnimator, local
 	.4byte lbl_802C4D0C
 	.4byte lbl_802C4D28
+.endobj __RTTI__12PaniAnimator
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803EA270:
+.obj lbl_803EA270, local
 	.float 0.0
+.endobj lbl_803EA270
 .balign 8
-lbl_803EA278:
-	.4byte 0x43300000
-	.4byte 0x80000000
+.obj lbl_803EA278, local
+	.8byte 0x4330000080000000
+.endobj lbl_803EA278

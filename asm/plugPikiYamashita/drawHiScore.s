@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global __ct__Q23zen11DrawHiScoreFv
-__ct__Q23zen11DrawHiScoreFv:
+.fn __ct__Q23zen11DrawHiScoreFv, global
 /* 801F0A80 001ED9E0  7C 08 02 A6 */	mflr r0
 /* 801F0A84 001ED9E4  90 01 00 04 */	stw r0, 4(r1)
 /* 801F0A88 001ED9E8  94 21 FF 90 */	stwu r1, -0x70(r1)
@@ -257,9 +256,9 @@ __ct__Q23zen11DrawHiScoreFv:
 /* 801F0E4C 001EDDAC  38 21 00 70 */	addi r1, r1, 0x70
 /* 801F0E50 001EDDB0  7C 08 03 A6 */	mtlr r0
 /* 801F0E54 001EDDB4  4E 80 00 20 */	blr 
+.endfn __ct__Q23zen11DrawHiScoreFv
 
-.global update__Q23zen11DrawHiScoreFP10Controller
-update__Q23zen11DrawHiScoreFP10Controller:
+.fn update__Q23zen11DrawHiScoreFP10Controller, global
 /* 801F0E58 001EDDB8  7C 08 02 A6 */	mflr r0
 /* 801F0E5C 001EDDBC  90 01 00 04 */	stw r0, 4(r1)
 /* 801F0E60 001EDDC0  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -340,9 +339,9 @@ update__Q23zen11DrawHiScoreFP10Controller:
 /* 801F0F78 001EDED8  38 21 00 28 */	addi r1, r1, 0x28
 /* 801F0F7C 001EDEDC  7C 08 03 A6 */	mtlr r0
 /* 801F0F80 001EDEE0  4E 80 00 20 */	blr 
+.endfn update__Q23zen11DrawHiScoreFP10Controller
 
-.global draw__Q23zen11DrawHiScoreFR8Graphics
-draw__Q23zen11DrawHiScoreFR8Graphics:
+.fn draw__Q23zen11DrawHiScoreFR8Graphics, global
 /* 801F0F84 001EDEE4  7C 08 02 A6 */	mflr r0
 /* 801F0F88 001EDEE8  90 01 00 04 */	stw r0, 4(r1)
 /* 801F0F8C 001EDEEC  94 21 FF 78 */	stwu r1, -0x88(r1)
@@ -461,9 +460,9 @@ draw__Q23zen11DrawHiScoreFR8Graphics:
 /* 801F1128 001EE088  38 21 00 88 */	addi r1, r1, 0x88
 /* 801F112C 001EE08C  7C 08 03 A6 */	mtlr r0
 /* 801F1130 001EE090  4E 80 00 20 */	blr 
+.endfn draw__Q23zen11DrawHiScoreFR8Graphics
 
-.global start__Q23zen11DrawHiScoreFv
-start__Q23zen11DrawHiScoreFv:
+.fn start__Q23zen11DrawHiScoreFv, global
 /* 801F1134 001EE094  7C 08 02 A6 */	mflr r0
 /* 801F1138 001EE098  90 01 00 04 */	stw r0, 4(r1)
 /* 801F113C 001EE09C  38 00 00 01 */	li r0, 1
@@ -497,9 +496,9 @@ start__Q23zen11DrawHiScoreFv:
 /* 801F11AC 001EE10C  38 21 00 20 */	addi r1, r1, 0x20
 /* 801F11B0 001EE110  7C 08 03 A6 */	mtlr r0
 /* 801F11B4 001EE114  4E 80 00 20 */	blr 
+.endfn start__Q23zen11DrawHiScoreFv
 
-.global rewriteNumber__Q23zen11DrawHiScoreFP9P2DScreenUliib
-rewriteNumber__Q23zen11DrawHiScoreFP9P2DScreenUliib:
+.fn rewriteNumber__Q23zen11DrawHiScoreFP9P2DScreenUliib, global
 /* 801F11B8 001EE118  7C 08 02 A6 */	mflr r0
 /* 801F11BC 001EE11C  7C 83 23 78 */	mr r3, r4
 /* 801F11C0 001EE120  90 01 00 04 */	stw r0, 4(r1)
@@ -718,50 +717,46 @@ rewriteNumber__Q23zen11DrawHiScoreFP9P2DScreenUliib:
 /* 801F14E8 001EE448  38 21 00 68 */	addi r1, r1, 0x68
 /* 801F14EC 001EE44C  7C 08 03 A6 */	mtlr r0
 /* 801F14F0 001EE450  4E 80 00 20 */	blr 
+.endfn rewriteNumber__Q23zen11DrawHiScoreFP9P2DScreenUliib
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-.global lbl_802E7130
-lbl_802E7130:
-	.4byte 0x73637265
-	.4byte 0x656E2F62
-	.4byte 0x6C6F2F63
-	.4byte 0x68615F68
-	.4byte 0x692E626C
-	.4byte 0x6F000000
+.obj lbl_802E7130, local
+	.asciz "screen/blo/cha_hi.blo"
+.endobj lbl_802E7130
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-.global lbl_803E7688
-lbl_803E7688:
-	.4byte 0x705F2530
-	.4byte 0x32640000
-.global lbl_803E7690
-lbl_803E7690:
-	.4byte 0x645F2530
-	.4byte 0x32640000
-.global lbl_803E7698
-lbl_803E7698:
-	.4byte 0x6C702530
-	.4byte 0x32640000
-.global lbl_803E76A0
-lbl_803E76A0:
-	.4byte 0x64702530
-	.4byte 0x32640000
-.global lbl_803E76A8
-lbl_803E76A8:
-	.4byte 0x706D5F25
-	.4byte 0x64000000
-.global lbl_803E76B0
-lbl_803E76B0:
-	.4byte 0x25645F25
-	.4byte 0x30326400
+.obj lbl_803E7688, local
+	.asciz "p_%02d"
+.endobj lbl_803E7688
+.balign 4
+.obj lbl_803E7690, local
+	.asciz "d_%02d"
+.endobj lbl_803E7690
+.balign 4
+.obj lbl_803E7698, local
+	.asciz "lp%02d"
+.endobj lbl_803E7698
+.balign 4
+.obj lbl_803E76A0, local
+	.asciz "dp%02d"
+.endobj lbl_803E76A0
+.balign 4
+.obj lbl_803E76A8, local
+	.asciz "pm_%d"
+.endobj lbl_803E76A8
+.balign 4
+.obj lbl_803E76B0, local
+	.asciz "%d_%02d"
+.endobj lbl_803E76B0
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-.global lbl_803EC410
-lbl_803EC410:
-	.4byte 0x3F000000
-.global lbl_803EC414
-lbl_803EC414:
-	.4byte 0x3E800000
+.obj lbl_803EC410, local
+	.float 0.5
+.endobj lbl_803EC410
+.balign 4
+.obj lbl_803EC414, local
+	.float 0.25
+.endobj lbl_803EC414

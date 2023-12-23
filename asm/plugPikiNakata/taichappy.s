@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global __ct__19TaiChappySoundTableFv
-__ct__19TaiChappySoundTableFv:
+.fn __ct__19TaiChappySoundTableFv, global
 /* 80128520 00125480  7C 08 02 A6 */	mflr r0
 /* 80128524 00125484  38 80 00 08 */	li r4, 8
 /* 80128528 00125488  90 01 00 04 */	stw r0, 4(r1)
@@ -38,9 +37,9 @@ __ct__19TaiChappySoundTableFv:
 /* 80128598 001254F8  38 21 00 20 */	addi r1, r1, 0x20
 /* 8012859C 001254FC  7C 08 03 A6 */	mtlr r0
 /* 801285A0 00125500  4E 80 00 20 */	blr 
+.endfn __ct__19TaiChappySoundTableFv
 
-.global __ct__19TaiChappyParametersFv
-__ct__19TaiChappyParametersFv:
+.fn __ct__19TaiChappyParametersFv, global
 /* 801285A4 00125504  7C 08 02 A6 */	mflr r0
 /* 801285A8 00125508  3C 80 80 2C */	lis r4, lbl_802C6B70@ha
 /* 801285AC 0012550C  90 01 00 04 */	stw r0, 4(r1)
@@ -274,9 +273,9 @@ __ct__19TaiChappyParametersFv:
 /* 8012893C 0012589C  38 21 00 E0 */	addi r1, r1, 0xe0
 /* 80128940 001258A0  7C 08 03 A6 */	mtlr r0
 /* 80128944 001258A4  4E 80 00 20 */	blr 
+.endfn __ct__19TaiChappyParametersFv
 
-.global __ct__24TaiBlackChappyParametersFv
-__ct__24TaiBlackChappyParametersFv:
+.fn __ct__24TaiBlackChappyParametersFv, global
 /* 80128948 001258A8  7C 08 02 A6 */	mflr r0
 /* 8012894C 001258AC  3C 80 80 2C */	lis r4, lbl_802C6B70@ha
 /* 80128950 001258B0  90 01 00 04 */	stw r0, 4(r1)
@@ -509,9 +508,9 @@ __ct__24TaiBlackChappyParametersFv:
 /* 80128CDC 00125C3C  38 21 00 E0 */	addi r1, r1, 0xe0
 /* 80128CE0 00125C40  7C 08 03 A6 */	mtlr r0
 /* 80128CE4 00125C44  4E 80 00 20 */	blr 
+.endfn __ct__24TaiBlackChappyParametersFv
 
-.global __ct__20TaiCatfishSoundTableFv
-__ct__20TaiCatfishSoundTableFv:
+.fn __ct__20TaiCatfishSoundTableFv, global
 /* 80128CE8 00125C48  7C 08 02 A6 */	mflr r0
 /* 80128CEC 00125C4C  38 80 00 03 */	li r4, 3
 /* 80128CF0 00125C50  90 01 00 04 */	stw r0, 4(r1)
@@ -548,9 +547,9 @@ __ct__20TaiCatfishSoundTableFv:
 /* 80128D60 00125CC0  38 21 00 20 */	addi r1, r1, 0x20
 /* 80128D64 00125CC4  7C 08 03 A6 */	mtlr r0
 /* 80128D68 00125CC8  4E 80 00 20 */	blr 
+.endfn __ct__20TaiCatfishSoundTableFv
 
-.global __ct__20TaiCatfishParametersFv
-__ct__20TaiCatfishParametersFv:
+.fn __ct__20TaiCatfishParametersFv, global
 /* 80128D6C 00125CCC  7C 08 02 A6 */	mflr r0
 /* 80128D70 00125CD0  3C 80 80 2C */	lis r4, lbl_802C6B70@ha
 /* 80128D74 00125CD4  90 01 00 04 */	stw r0, 4(r1)
@@ -782,9 +781,9 @@ __ct__20TaiCatfishParametersFv:
 /* 801290FC 0012605C  38 21 00 E0 */	addi r1, r1, 0xe0
 /* 80129100 00126060  7C 08 03 A6 */	mtlr r0
 /* 80129104 00126064  4E 80 00 20 */	blr 
+.endfn __ct__20TaiCatfishParametersFv
 
-.global __ct__17TaiChappyStrategyFP14TekiParameters
-__ct__17TaiChappyStrategyFP14TekiParameters:
+.fn __ct__17TaiChappyStrategyFP14TekiParameters, global
 /* 80129108 00126068  7C 08 02 A6 */	mflr r0
 /* 8012910C 0012606C  38 A0 00 0F */	li r5, 0xf
 /* 80129110 00126070  90 01 00 04 */	stw r0, 4(r1)
@@ -2220,9 +2219,9 @@ __ct__17TaiChappyStrategyFP14TekiParameters:
 /* 8012A668 001275C8  38 21 02 20 */	addi r1, r1, 0x220
 /* 8012A66C 001275CC  7C 08 03 A6 */	mtlr r0
 /* 8012A670 001275D0  4E 80 00 20 */	blr 
+.endfn __ct__17TaiChappyStrategyFP14TekiParameters
 
-.global act__18TaiChappyCryActionFR4Teki
-act__18TaiChappyCryActionFR4Teki:
+.fn act__18TaiChappyCryActionFR4Teki, global
 /* 8012A674 001275D4  7C 08 02 A6 */	mflr r0
 /* 8012A678 001275D8  3C A0 80 2B */	lis r5, __vt__9Condition@ha
 /* 8012A67C 001275DC  90 01 00 04 */	stw r0, 4(r1)
@@ -2307,9 +2306,9 @@ act__18TaiChappyCryActionFR4Teki:
 /* 8012A7B0 00127710  38 21 01 28 */	addi r1, r1, 0x128
 /* 8012A7B4 00127714  7C 08 03 A6 */	mtlr r0
 /* 8012A7B8 00127718  4E 80 00 20 */	blr 
+.endfn act__18TaiChappyCryActionFR4Teki
 
-.global actByEvent__22TaiChappySmashedActionFR9TekiEvent
-actByEvent__22TaiChappySmashedActionFR9TekiEvent:
+.fn actByEvent__22TaiChappySmashedActionFR9TekiEvent, global
 /* 8012A7BC 0012771C  7C 08 02 A6 */	mflr r0
 /* 8012A7C0 00127720  90 01 00 04 */	stw r0, 4(r1)
 /* 8012A7C4 00127724  94 21 FF F8 */	stwu r1, -8(r1)
@@ -2330,9 +2329,9 @@ actByEvent__22TaiChappySmashedActionFR9TekiEvent:
 /* 8012A7F8 00127758  38 21 00 08 */	addi r1, r1, 8
 /* 8012A7FC 0012775C  7C 08 03 A6 */	mtlr r0
 /* 8012A800 00127760  4E 80 00 20 */	blr 
+.endfn actByEvent__22TaiChappySmashedActionFR9TekiEvent
 
-.global __ct__24TaiChappyLegEffectActionFf
-__ct__24TaiChappyLegEffectActionFf:
+.fn __ct__24TaiChappyLegEffectActionFf, global
 /* 8012A804 00127764  7C 08 02 A6 */	mflr r0
 /* 8012A808 00127768  3C A0 6C 6C */	lis r5, 0x6C6C6567@ha
 /* 8012A80C 0012776C  90 01 00 04 */	stw r0, 4(r1)
@@ -2355,9 +2354,9 @@ __ct__24TaiChappyLegEffectActionFf:
 /* 8012A850 001277B0  38 21 00 18 */	addi r1, r1, 0x18
 /* 8012A854 001277B4  7C 08 03 A6 */	mtlr r0
 /* 8012A858 001277B8  4E 80 00 20 */	blr 
+.endfn __ct__24TaiChappyLegEffectActionFf
 
-.global setType__24TaiChappyLegEffectActionFR8Vector3fii
-setType__24TaiChappyLegEffectActionFR8Vector3fii:
+.fn setType__24TaiChappyLegEffectActionFR8Vector3fii, global
 /* 8012A85C 001277BC  7C 08 02 A6 */	mflr r0
 /* 8012A860 001277C0  90 01 00 04 */	stw r0, 4(r1)
 /* 8012A864 001277C4  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -2397,9 +2396,9 @@ setType__24TaiChappyLegEffectActionFR8Vector3fii:
 /* 8012A8E0 00127840  38 21 00 28 */	addi r1, r1, 0x28
 /* 8012A8E4 00127844  7C 08 03 A6 */	mtlr r0
 /* 8012A8E8 00127848  4E 80 00 20 */	blr 
+.endfn setType__24TaiChappyLegEffectActionFR8Vector3fii
 
-.global satisfy__15TekiOrConditionFP8Creature
-satisfy__15TekiOrConditionFP8Creature:
+.fn satisfy__15TekiOrConditionFP8Creature, weak
 /* 8012A8EC 0012784C  7C 08 02 A6 */	mflr r0
 /* 8012A8F0 00127850  90 01 00 04 */	stw r0, 4(r1)
 /* 8012A8F4 00127854  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -2434,14 +2433,14 @@ satisfy__15TekiOrConditionFP8Creature:
 /* 8012A964 001278C4  38 21 00 20 */	addi r1, r1, 0x20
 /* 8012A968 001278C8  7C 08 03 A6 */	mtlr r0
 /* 8012A96C 001278CC  4E 80 00 20 */	blr 
+.endfn satisfy__15TekiOrConditionFP8Creature
 
-.global act__13TaiOnceActionFR4Teki
-act__13TaiOnceActionFR4Teki:
+.fn act__13TaiOnceActionFR4Teki, weak
 /* 8012A970 001278D0  38 60 00 01 */	li r3, 1
 /* 8012A974 001278D4  4E 80 00 20 */	blr 
+.endfn act__13TaiOnceActionFR4Teki
 
-.global start__12TaiAndActionFR4Teki
-start__12TaiAndActionFR4Teki:
+.fn start__12TaiAndActionFR4Teki, weak
 /* 8012A978 001278D8  7C 08 02 A6 */	mflr r0
 /* 8012A97C 001278DC  90 01 00 04 */	stw r0, 4(r1)
 /* 8012A980 001278E0  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -2466,9 +2465,9 @@ start__12TaiAndActionFR4Teki:
 /* 8012A9CC 0012792C  38 21 00 18 */	addi r1, r1, 0x18
 /* 8012A9D0 00127930  7C 08 03 A6 */	mtlr r0
 /* 8012A9D4 00127934  4E 80 00 20 */	blr 
+.endfn start__12TaiAndActionFR4Teki
 
-.global finish__12TaiAndActionFR4Teki
-finish__12TaiAndActionFR4Teki:
+.fn finish__12TaiAndActionFR4Teki, weak
 /* 8012A9D8 00127938  7C 08 02 A6 */	mflr r0
 /* 8012A9DC 0012793C  90 01 00 04 */	stw r0, 4(r1)
 /* 8012A9E0 00127940  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -2493,9 +2492,9 @@ finish__12TaiAndActionFR4Teki:
 /* 8012AA2C 0012798C  38 21 00 18 */	addi r1, r1, 0x18
 /* 8012AA30 00127990  7C 08 03 A6 */	mtlr r0
 /* 8012AA34 00127994  4E 80 00 20 */	blr 
+.endfn finish__12TaiAndActionFR4Teki
 
-.global act__12TaiAndActionFR4Teki
-act__12TaiAndActionFR4Teki:
+.fn act__12TaiAndActionFR4Teki, weak
 /* 8012AA38 00127998  7C 08 02 A6 */	mflr r0
 /* 8012AA3C 0012799C  90 01 00 04 */	stw r0, 4(r1)
 /* 8012AA40 001279A0  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -2531,51 +2530,65 @@ act__12TaiAndActionFR4Teki:
 /* 8012AAB4 00127A14  38 21 00 20 */	addi r1, r1, 0x20
 /* 8012AAB8 00127A18  7C 08 03 A6 */	mtlr r0
 /* 8012AABC 00127A1C  4E 80 00 20 */	blr 
+.endfn act__12TaiAndActionFR4Teki
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802C6B70:
+.obj lbl_802C6B70, local
 	.asciz "taichappy.cpp"
+.endobj lbl_802C6B70
 .balign 4
-lbl_802C6B80:
+.obj lbl_802C6B80, local
 	.asciz "taichappy"
+.endobj lbl_802C6B80
 .balign 4
-lbl_802C6B8C:
+.obj lbl_802C6B8C, local
 	.asciz "SMASH_TYPE"
+.endobj lbl_802C6B8C
 .balign 4
-lbl_802C6B98:
+.obj lbl_802C6B98, local
 	.asciz "PRESSED_PERIOD"
+.endobj lbl_802C6B98
 .balign 4
-lbl_802C6BA8:
+.obj lbl_802C6BA8, local
 	.asciz "CRYING_PERIOD"
+.endobj lbl_802C6BA8
 .balign 4
-lbl_802C6BB8:
+.obj lbl_802C6BB8, local
 	.asciz "SMASH_DAMAGE"
+.endobj lbl_802C6BB8
 .balign 4
-lbl_802C6BC8:
+.obj lbl_802C6BC8, local
 	.asciz "TaiChappyLegEffectAction"
+.endobj lbl_802C6BC8
 .balign 4
-lbl_802C6BE4:
+.obj lbl_802C6BE4, local
 	.asciz "TaiAction"
+.endobj lbl_802C6BE4
 .balign 4
-lbl_802C6BF0:
+.obj lbl_802C6BF0, local
 	.asciz "TAIAeffCloudOfDust"
+.endobj lbl_802C6BF0
 .balign 4
-lbl_802C6C04:
+.obj lbl_802C6C04, local
 	.4byte __RTTI__9TaiAction
 	.4byte 0
 	.4byte 0
+.endobj lbl_802C6C04
 .balign 4
-lbl_802C6C10:
+.obj lbl_802C6C10, local
 	.asciz "TaiJointEffectAction"
+.endobj lbl_802C6C10
 .balign 4
-lbl_802C6C28:
+.obj lbl_802C6C28, local
 	.4byte __RTTI__9TaiAction
 	.4byte 0
 	.4byte __RTTI__18TAIAeffCloudOfDust
 	.4byte 0
 	.4byte 0
-lbl_802C6C3C:
+.endobj lbl_802C6C28
+.balign 4
+.obj lbl_802C6C3C, local
 	.4byte __RTTI__9TaiAction
 	.4byte 0
 	.4byte __RTTI__18TAIAeffCloudOfDust
@@ -2583,8 +2596,9 @@ lbl_802C6C3C:
 	.4byte __RTTI__20TaiJointEffectAction
 	.4byte 0
 	.4byte 0
-.global __vt__24TaiChappyLegEffectAction
-__vt__24TaiChappyLegEffectAction:
+.endobj lbl_802C6C3C
+.balign 4
+.obj __vt__24TaiChappyLegEffectAction, global
 	.4byte __RTTI__24TaiChappyLegEffectAction
 	.4byte 0
 	.4byte start__18TAIAeffCloudOfDustFR4Teki
@@ -2593,25 +2607,31 @@ __vt__24TaiChappyLegEffectAction:
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
 	.4byte setType__24TaiChappyLegEffectActionFR8Vector3fii
+.endobj __vt__24TaiChappyLegEffectAction
 .balign 4
-lbl_802C6C78:
+.obj lbl_802C6C78, local
 	.asciz "TaiChappySmashedAction"
+.endobj lbl_802C6C78
 .balign 4
-lbl_802C6C90:
+.obj lbl_802C6C90, local
 	.asciz "TaiSmashedAction"
+.endobj lbl_802C6C90
 .balign 4
-lbl_802C6CA4:
+.obj lbl_802C6CA4, local
 	.4byte __RTTI__9TaiAction
 	.4byte 0
 	.4byte 0
-lbl_802C6CB0:
+.endobj lbl_802C6CA4
+.balign 4
+.obj lbl_802C6CB0, local
 	.4byte __RTTI__9TaiAction
 	.4byte 0
 	.4byte __RTTI__16TaiSmashedAction
 	.4byte 0
 	.4byte 0
-.global __vt__22TaiChappySmashedAction
-__vt__22TaiChappySmashedAction:
+.endobj lbl_802C6CB0
+.balign 4
+.obj __vt__22TaiChappySmashedAction, global
 	.4byte __RTTI__22TaiChappySmashedAction
 	.4byte 0
 	.4byte start__9TaiActionFR4Teki
@@ -2619,60 +2639,67 @@ __vt__22TaiChappySmashedAction:
 	.4byte act__9TaiActionFR4Teki
 	.4byte actByEvent__22TaiChappySmashedActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
+.endobj __vt__22TaiChappySmashedAction
 .balign 4
-lbl_802C6CE0:
+.obj lbl_802C6CE0, local
 	.asciz "TekiAndCondition"
+.endobj lbl_802C6CE0
 .balign 4
-lbl_802C6CF4:
+.obj lbl_802C6CF4, local
 	.asciz "Condition"
+.endobj lbl_802C6CF4
 .balign 4
-lbl_802C6D00:
+.obj lbl_802C6D00, local
 	.asciz "TekiCondition"
+.endobj lbl_802C6D00
 .balign 4
-lbl_802C6D10:
+.obj lbl_802C6D10, local
 	.4byte __RTTI__9Condition
 	.4byte 0
 	.4byte 0
-lbl_802C6D1C:
+.endobj lbl_802C6D10
+.balign 4
+.obj lbl_802C6D1C, local
 	.4byte __RTTI__9Condition
 	.4byte 0
 	.4byte __RTTI__13TekiCondition
 	.4byte 0
 	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
+.endobj lbl_802C6D1C
 .balign 4
-lbl_802C6D3C:
+.skip 0xC # compiler padding
+.balign 4
+.obj lbl_802C6D3C, local
 	.asciz "TekiOrCondition"
+.endobj lbl_802C6D3C
 .balign 4
-lbl_802C6D4C:
+.obj lbl_802C6D4C, local
 	.4byte __RTTI__9Condition
 	.4byte 0
 	.4byte __RTTI__13TekiCondition
 	.4byte 0
 	.4byte 0
-.global __vt__15TekiOrCondition
-__vt__15TekiOrCondition:
+.endobj lbl_802C6D4C
+.balign 4
+.obj __vt__15TekiOrCondition, weak
 	.4byte __RTTI__15TekiOrCondition
 	.4byte 0
 	.4byte satisfy__15TekiOrConditionFP8Creature
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
+.endobj __vt__15TekiOrCondition
 .balign 4
-lbl_802C6D84:
+.skip 0x18 # compiler padding
+.balign 4
+.obj lbl_802C6D84, local
 	.asciz "TaiChappyCryAction"
+.endobj lbl_802C6D84
 .balign 4
-lbl_802C6D98:
+.obj lbl_802C6D98, local
 	.4byte __RTTI__9TaiAction
 	.4byte 0
 	.4byte 0
-.global __vt__18TaiChappyCryAction
-__vt__18TaiChappyCryAction:
+.endobj lbl_802C6D98
+.balign 4
+.obj __vt__18TaiChappyCryAction, global
 	.4byte __RTTI__18TaiChappyCryAction
 	.4byte 0
 	.4byte start__9TaiActionFR4Teki
@@ -2680,16 +2707,19 @@ __vt__18TaiChappyCryAction:
 	.4byte act__18TaiChappyCryActionFR4Teki
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
+.endobj __vt__18TaiChappyCryAction
 .balign 4
-lbl_802C6DC0:
+.obj lbl_802C6DC0, local
 	.asciz "TaiOnceAction"
+.endobj lbl_802C6DC0
 .balign 4
-lbl_802C6DD0:
+.obj lbl_802C6DD0, local
 	.4byte __RTTI__9TaiAction
 	.4byte 0
 	.4byte 0
-.global __vt__13TaiOnceAction
-__vt__13TaiOnceAction:
+.endobj lbl_802C6DD0
+.balign 4
+.obj __vt__13TaiOnceAction, weak
 	.4byte __RTTI__13TaiOnceAction
 	.4byte 0
 	.4byte start__9TaiActionFR4Teki
@@ -2697,16 +2727,19 @@ __vt__13TaiOnceAction:
 	.4byte act__13TaiOnceActionFR4Teki
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
+.endobj __vt__13TaiOnceAction
 .balign 4
-lbl_802C6DF8:
+.obj lbl_802C6DF8, local
 	.asciz "TaiAndAction"
+.endobj lbl_802C6DF8
 .balign 4
-lbl_802C6E08:
+.obj lbl_802C6E08, local
 	.4byte __RTTI__9TaiAction
 	.4byte 0
 	.4byte 0
-.global __vt__12TaiAndAction
-__vt__12TaiAndAction:
+.endobj lbl_802C6E08
+.balign 4
+.obj __vt__12TaiAndAction, weak
 	.4byte __RTTI__12TaiAndAction
 	.4byte 0
 	.4byte start__12TaiAndActionFR4Teki
@@ -2714,35 +2747,37 @@ __vt__12TaiAndAction:
 	.4byte act__12TaiAndActionFR4Teki
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
+.endobj __vt__12TaiAndAction
 .balign 4
-lbl_802C6E4C:
+.skip 0x1C # compiler padding
+.balign 4
+.obj lbl_802C6E4C, local
 	.asciz "TaiChappyStrategy"
+.endobj lbl_802C6E4C
 .balign 4
-lbl_802C6E60:
+.obj lbl_802C6E60, local
 	.asciz "TekiStrategy"
+.endobj lbl_802C6E60
 .balign 4
-lbl_802C6E70:
+.obj lbl_802C6E70, local
 	.asciz "TaiStrategy"
+.endobj lbl_802C6E70
 .balign 4
-lbl_802C6E7C:
+.obj lbl_802C6E7C, local
 	.4byte __RTTI__12TekiStrategy
 	.4byte 0
 	.4byte 0
-lbl_802C6E88:
+.endobj lbl_802C6E7C
+.balign 4
+.obj lbl_802C6E88, local
 	.4byte __RTTI__12TekiStrategy
 	.4byte 0
 	.4byte __RTTI__11TaiStrategy
 	.4byte 0
 	.4byte 0
-.global __vt__17TaiChappyStrategy
-__vt__17TaiChappyStrategy:
+.endobj lbl_802C6E88
+.balign 4
+.obj __vt__17TaiChappyStrategy, weak
 	.4byte __RTTI__17TaiChappyStrategy
 	.4byte 0
 	.4byte start__11TaiStrategyFR4Teki
@@ -2753,28 +2788,35 @@ __vt__17TaiChappyStrategy:
 	.4byte drawDebugInfo__12TekiStrategyFR4TekiR8Graphics
 	.4byte interact__12TekiStrategyFR4TekiR18TekiInteractionKey
 	.4byte spawnCorpseParts__12TekiStrategyFR4Teki
+.endobj __vt__17TaiChappyStrategy
 .balign 4
-lbl_802C6EC4:
+.obj lbl_802C6EC4, local
 	.asciz "TaiCatfishParameters"
+.endobj lbl_802C6EC4
 .balign 4
-lbl_802C6EDC:
+.obj lbl_802C6EDC, local
 	.asciz "CoreNode"
+.endobj lbl_802C6EDC
 .balign 4
-lbl_802C6EE8:
+.obj lbl_802C6EE8, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte 0
-lbl_802C6EF4:
+.endobj lbl_802C6EE8
+.balign 4
+.obj lbl_802C6EF4, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte __RTTI__8CoreNode
 	.4byte 0
 	.4byte 0
+.endobj lbl_802C6EF4
 .balign 4
-lbl_802C6F08:
+.obj lbl_802C6F08, local
 	.asciz "TekiParameters"
+.endobj lbl_802C6F08
 .balign 4
-lbl_802C6F18:
+.obj lbl_802C6F18, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte __RTTI__8CoreNode
@@ -2782,7 +2824,9 @@ lbl_802C6F18:
 	.4byte __RTTI__4Node
 	.4byte 0
 	.4byte 0
-lbl_802C6F34:
+.endobj lbl_802C6F18
+.balign 4
+.obj lbl_802C6F34, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte __RTTI__8CoreNode
@@ -2792,8 +2836,9 @@ lbl_802C6F34:
 	.4byte __RTTI__14TekiParameters
 	.4byte 0
 	.4byte 0
-.global __vt__20TaiCatfishParameters
-__vt__20TaiCatfishParameters:
+.endobj lbl_802C6F34
+.balign 4
+.obj __vt__20TaiCatfishParameters, weak
 	.4byte __RTTI__20TaiCatfishParameters
 	.4byte 0
 	.4byte getAgeNodeType__5ANodeFv
@@ -2806,11 +2851,13 @@ __vt__20TaiCatfishParameters:
 	.4byte concat__4NodeFR3SRT
 	.4byte concat__4NodeFR8Matrix4f
 	.4byte getModelMatrix__4NodeFv
+.endobj __vt__20TaiCatfishParameters
 .balign 4
-lbl_802C6F88:
+.obj lbl_802C6F88, local
 	.asciz "TaiBlackChappyParameters"
+.endobj lbl_802C6F88
 .balign 4
-lbl_802C6FA4:
+.obj lbl_802C6FA4, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte __RTTI__8CoreNode
@@ -2820,8 +2867,9 @@ lbl_802C6FA4:
 	.4byte __RTTI__14TekiParameters
 	.4byte 0
 	.4byte 0
-.global __vt__24TaiBlackChappyParameters
-__vt__24TaiBlackChappyParameters:
+.endobj lbl_802C6FA4
+.balign 4
+.obj __vt__24TaiBlackChappyParameters, weak
 	.4byte __RTTI__24TaiBlackChappyParameters
 	.4byte 0
 	.4byte getAgeNodeType__5ANodeFv
@@ -2834,11 +2882,13 @@ __vt__24TaiBlackChappyParameters:
 	.4byte concat__4NodeFR3SRT
 	.4byte concat__4NodeFR8Matrix4f
 	.4byte getModelMatrix__4NodeFv
+.endobj __vt__24TaiBlackChappyParameters
 .balign 4
-lbl_802C6FF8:
+.obj lbl_802C6FF8, local
 	.asciz "TaiChappyParameters"
+.endobj lbl_802C6FF8
 .balign 4
-lbl_802C700C:
+.obj lbl_802C700C, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte __RTTI__8CoreNode
@@ -2848,8 +2898,9 @@ lbl_802C700C:
 	.4byte __RTTI__14TekiParameters
 	.4byte 0
 	.4byte 0
-.global __vt__19TaiChappyParameters
-__vt__19TaiChappyParameters:
+.endobj lbl_802C700C
+.balign 4
+.obj __vt__19TaiChappyParameters, weak
 	.4byte __RTTI__19TaiChappyParameters
 	.4byte 0
 	.4byte getAgeNodeType__5ANodeFv
@@ -2862,145 +2913,220 @@ __vt__19TaiChappyParameters:
 	.4byte concat__4NodeFR3SRT
 	.4byte concat__4NodeFR8Matrix4f
 	.4byte getModelMatrix__4NodeFv
+.endobj __vt__19TaiChappyParameters
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-__RTTI__9TaiAction:
+.obj __RTTI__9TaiAction, local
 	.4byte lbl_802C6BE4
 	.4byte 0
-__RTTI__18TAIAeffCloudOfDust:
+.endobj __RTTI__9TaiAction
+.balign 4
+.obj __RTTI__18TAIAeffCloudOfDust, local
 	.4byte lbl_802C6BF0
 	.4byte lbl_802C6C04
-__RTTI__20TaiJointEffectAction:
+.endobj __RTTI__18TAIAeffCloudOfDust
+.balign 4
+.obj __RTTI__20TaiJointEffectAction, local
 	.4byte lbl_802C6C10
 	.4byte lbl_802C6C28
-__RTTI__24TaiChappyLegEffectAction:
+.endobj __RTTI__20TaiJointEffectAction
+.balign 4
+.obj __RTTI__24TaiChappyLegEffectAction, local
 	.4byte lbl_802C6BC8
 	.4byte lbl_802C6C3C
-__RTTI__16TaiSmashedAction:
+.endobj __RTTI__24TaiChappyLegEffectAction
+.balign 4
+.obj __RTTI__16TaiSmashedAction, local
 	.4byte lbl_802C6C90
 	.4byte lbl_802C6CA4
-__RTTI__22TaiChappySmashedAction:
+.endobj __RTTI__16TaiSmashedAction
+.balign 4
+.obj __RTTI__22TaiChappySmashedAction, local
 	.4byte lbl_802C6C78
 	.4byte lbl_802C6CB0
-__RTTI__9Condition:
+.endobj __RTTI__22TaiChappySmashedAction
+.balign 4
+.obj __RTTI__9Condition, local
 	.4byte lbl_802C6CF4
 	.4byte 0
-__RTTI__13TekiCondition:
+.endobj __RTTI__9Condition
+.balign 4
+.obj __RTTI__13TekiCondition, local
 	.4byte lbl_802C6D00
 	.4byte lbl_802C6D10
-__RTTI__15TekiOrCondition:
+.endobj __RTTI__13TekiCondition
+.balign 4
+.obj __RTTI__15TekiOrCondition, local
 	.4byte lbl_802C6D3C
 	.4byte lbl_802C6D4C
-__RTTI__18TaiChappyCryAction:
+.endobj __RTTI__15TekiOrCondition
+.balign 4
+.obj __RTTI__18TaiChappyCryAction, local
 	.4byte lbl_802C6D84
 	.4byte lbl_802C6D98
-__RTTI__13TaiOnceAction:
+.endobj __RTTI__18TaiChappyCryAction
+.balign 4
+.obj __RTTI__13TaiOnceAction, local
 	.4byte lbl_802C6DC0
 	.4byte lbl_802C6DD0
-__RTTI__12TaiAndAction:
+.endobj __RTTI__13TaiOnceAction
+.balign 4
+.obj __RTTI__12TaiAndAction, local
 	.4byte lbl_802C6DF8
 	.4byte lbl_802C6E08
-__RTTI__12TekiStrategy:
+.endobj __RTTI__12TaiAndAction
+.balign 4
+.obj __RTTI__12TekiStrategy, local
 	.4byte lbl_802C6E60
 	.4byte 0
-__RTTI__11TaiStrategy:
+.endobj __RTTI__12TekiStrategy
+.balign 4
+.obj __RTTI__11TaiStrategy, local
 	.4byte lbl_802C6E70
 	.4byte lbl_802C6E7C
-__RTTI__17TaiChappyStrategy:
+.endobj __RTTI__11TaiStrategy
+.balign 4
+.obj __RTTI__17TaiChappyStrategy, local
 	.4byte lbl_802C6E4C
 	.4byte lbl_802C6E88
+.endobj __RTTI__17TaiChappyStrategy
 .balign 4
-lbl_803E3588:
+.obj lbl_803E3588, local
 	.asciz "ANode"
+.endobj lbl_803E3588
 .balign 4
-__RTTI__5ANode:
+.obj __RTTI__5ANode, local
 	.4byte lbl_803E3588
 	.4byte 0
-__RTTI__8CoreNode:
+.endobj __RTTI__5ANode
+.balign 4
+.obj __RTTI__8CoreNode, local
 	.4byte lbl_802C6EDC
 	.4byte lbl_802C6EE8
+.endobj __RTTI__8CoreNode
 .balign 4
-lbl_803E35A0:
+.obj lbl_803E35A0, local
 	.asciz "Node"
+.endobj lbl_803E35A0
 .balign 4
-__RTTI__4Node:
+.obj __RTTI__4Node, local
 	.4byte lbl_803E35A0
 	.4byte lbl_802C6EF4
-__RTTI__14TekiParameters:
+.endobj __RTTI__4Node
+.balign 4
+.obj __RTTI__14TekiParameters, local
 	.4byte lbl_802C6F08
 	.4byte lbl_802C6F18
-__RTTI__20TaiCatfishParameters:
+.endobj __RTTI__14TekiParameters
+.balign 4
+.obj __RTTI__20TaiCatfishParameters, local
 	.4byte lbl_802C6EC4
 	.4byte lbl_802C6F34
-__RTTI__24TaiBlackChappyParameters:
+.endobj __RTTI__20TaiCatfishParameters
+.balign 4
+.obj __RTTI__24TaiBlackChappyParameters, local
 	.4byte lbl_802C6F88
 	.4byte lbl_802C6FA4
-__RTTI__19TaiChappyParameters:
+.endobj __RTTI__24TaiBlackChappyParameters
+.balign 4
+.obj __RTTI__19TaiChappyParameters, local
 	.4byte lbl_802C6FF8
 	.4byte lbl_802C700C
+.endobj __RTTI__19TaiChappyParameters
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803EA420:
+.obj lbl_803EA420, local
 	.float 0.0
-lbl_803EA424:
+.endobj lbl_803EA420
+.obj lbl_803EA424, local
 	.float 10.0
-lbl_803EA428:
+.endobj lbl_803EA424
+.obj lbl_803EA428, local
 	.float 30.0
-lbl_803EA42C:
+.endobj lbl_803EA428
+.obj lbl_803EA42C, local
 	.float 10000.0
-lbl_803EA430:
+.endobj lbl_803EA42C
+.obj lbl_803EA430, local
 	.float 100.0
-lbl_803EA434:
+.endobj lbl_803EA430
+.obj lbl_803EA434, local
 	.float 1.0
-lbl_803EA438:
+.endobj lbl_803EA434
+.obj lbl_803EA438, local
 	.float 50.0
-lbl_803EA43C:
+.endobj lbl_803EA438
+.obj lbl_803EA43C, local
 	.float 1.8
-lbl_803EA440:
+.endobj lbl_803EA43C
+.obj lbl_803EA440, local
 	.float 95.0
-lbl_803EA444:
+.endobj lbl_803EA440
+.obj lbl_803EA444, local
 	.float 360.0
-lbl_803EA448:
+.endobj lbl_803EA444
+.obj lbl_803EA448, local
 	.float 18.0
-lbl_803EA44C:
+.endobj lbl_803EA448
+.obj lbl_803EA44C, local
 	.float 40.0
-lbl_803EA450:
+.endobj lbl_803EA44C
+.obj lbl_803EA450, local
 	.float 15.0
-lbl_803EA454:
+.endobj lbl_803EA450
+.obj lbl_803EA454, local
 	.float 20.0
-lbl_803EA458:
+.endobj lbl_803EA454
+.obj lbl_803EA458, local
 	.float 500.0
-lbl_803EA45C:
+.endobj lbl_803EA458
+.obj lbl_803EA45C, local
 	.float 80.0
-lbl_803EA460:
+.endobj lbl_803EA45C
+.obj lbl_803EA460, local
 	.float 25.0
-lbl_803EA464:
+.endobj lbl_803EA460
+.obj lbl_803EA464, local
 	.float 2.0
-lbl_803EA468:
+.endobj lbl_803EA464
+.obj lbl_803EA468, local
 	.float 300.0
-lbl_803EA46C:
+.endobj lbl_803EA468
+.obj lbl_803EA46C, local
 	.float 0.3
-lbl_803EA470:
+.endobj lbl_803EA46C
+.obj lbl_803EA470, local
 	.float 0.2
-lbl_803EA474:
+.endobj lbl_803EA470
+.obj lbl_803EA474, local
 	.float 60.0
-lbl_803EA478:
+.endobj lbl_803EA474
+.obj lbl_803EA478, local
 	.float 400.0
-lbl_803EA47C:
+.endobj lbl_803EA478
+.obj lbl_803EA47C, local
 	.float 16.0
-lbl_803EA480:
+.endobj lbl_803EA47C
+.obj lbl_803EA480, local
 	.float 3.0
-lbl_803EA484:
+.endobj lbl_803EA480
+.obj lbl_803EA484, local
 	.float 1000.0
-lbl_803EA488:
+.endobj lbl_803EA484
+.obj lbl_803EA488, local
 	.float 200.0
-lbl_803EA48C:
+.endobj lbl_803EA488
+.obj lbl_803EA48C, local
 	.float 0.7
-lbl_803EA490:
+.endobj lbl_803EA48C
+.obj lbl_803EA490, local
 	.float 35.0
-lbl_803EA494:
+.endobj lbl_803EA490
+.obj lbl_803EA494, local
 	.float 4.0
-lbl_803EA498:
+.endobj lbl_803EA494
+.obj lbl_803EA498, local
 	.float -0.5
+.endobj lbl_803EA498

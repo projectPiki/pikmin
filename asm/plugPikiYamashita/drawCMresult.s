@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global __ct__Q23zen12DrawCMresultFv
-__ct__Q23zen12DrawCMresultFv:
+.fn __ct__Q23zen12DrawCMresultFv, global
 /* 801EEB68 001EBAC8  7C 08 02 A6 */	mflr r0
 /* 801EEB6C 001EBACC  38 E0 00 00 */	li r7, 0
 /* 801EEB70 001EBAD0  90 01 00 04 */	stw r0, 4(r1)
@@ -688,9 +687,9 @@ __ct__Q23zen12DrawCMresultFv:
 /* 801EF5B0 001EC510  38 21 01 20 */	addi r1, r1, 0x120
 /* 801EF5B4 001EC514  7C 08 03 A6 */	mtlr r0
 /* 801EF5B8 001EC518  4E 80 00 20 */	blr 
+.endfn __ct__Q23zen12DrawCMresultFv
 
-.global update__Q23zen12DrawCMresultFP10Controller
-update__Q23zen12DrawCMresultFP10Controller:
+.fn update__Q23zen12DrawCMresultFP10Controller, global
 /* 801EF5BC 001EC51C  7C 08 02 A6 */	mflr r0
 /* 801EF5C0 001EC520  90 01 00 04 */	stw r0, 4(r1)
 /* 801EF5C4 001EC524  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -744,9 +743,9 @@ update__Q23zen12DrawCMresultFP10Controller:
 /* 801EF67C 001EC5DC  38 21 00 18 */	addi r1, r1, 0x18
 /* 801EF680 001EC5E0  7C 08 03 A6 */	mtlr r0
 /* 801EF684 001EC5E4  4E 80 00 20 */	blr 
+.endfn update__Q23zen12DrawCMresultFP10Controller
 
-.global update__Q23zen17DrawCMresultAlphaFv
-update__Q23zen17DrawCMresultAlphaFv:
+.fn update__Q23zen17DrawCMresultAlphaFv, weak
 /* 801EF688 001EC5E8  80 03 00 04 */	lwz r0, 4(r3)
 /* 801EF68C 001EC5EC  2C 00 00 02 */	cmpwi r0, 2
 /* 801EF690 001EC5F0  41 82 00 2C */	beq .L_801EF6BC
@@ -770,9 +769,9 @@ update__Q23zen17DrawCMresultAlphaFv:
 .L_801EF6D0:
 /* 801EF6D0 001EC630  38 60 00 00 */	li r3, 0
 /* 801EF6D4 001EC634  4E 80 00 20 */	blr 
+.endfn update__Q23zen17DrawCMresultAlphaFv
 
-.global draw__Q23zen12DrawCMresultFR8Graphics
-draw__Q23zen12DrawCMresultFR8Graphics:
+.fn draw__Q23zen12DrawCMresultFR8Graphics, global
 /* 801EF6D8 001EC638  7C 08 02 A6 */	mflr r0
 /* 801EF6DC 001EC63C  90 01 00 04 */	stw r0, 4(r1)
 /* 801EF6E0 001EC640  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -811,9 +810,9 @@ draw__Q23zen12DrawCMresultFR8Graphics:
 /* 801EF764 001EC6C4  38 21 00 18 */	addi r1, r1, 0x18
 /* 801EF768 001EC6C8  7C 08 03 A6 */	mtlr r0
 /* 801EF76C 001EC6CC  4E 80 00 20 */	blr 
+.endfn draw__Q23zen12DrawCMresultFR8Graphics
 
-.global start__Q23zen12DrawCMresultFRC17GameChalQuickInfo
-start__Q23zen12DrawCMresultFRC17GameChalQuickInfo:
+.fn start__Q23zen12DrawCMresultFRC17GameChalQuickInfo, global
 /* 801EF770 001EC6D0  7C 08 02 A6 */	mflr r0
 /* 801EF774 001EC6D4  90 01 00 04 */	stw r0, 4(r1)
 /* 801EF778 001EC6D8  94 21 FF C8 */	stwu r1, -0x38(r1)
@@ -910,9 +909,9 @@ start__Q23zen12DrawCMresultFRC17GameChalQuickInfo:
 /* 801EF8D4 001EC834  38 21 00 38 */	addi r1, r1, 0x38
 /* 801EF8D8 001EC838  7C 08 03 A6 */	mtlr r0
 /* 801EF8DC 001EC83C  4E 80 00 20 */	blr 
+.endfn start__Q23zen12DrawCMresultFRC17GameChalQuickInfo
 
-.global makeResident__Q23zen12DrawCMresultFv
-makeResident__Q23zen12DrawCMresultFv:
+.fn makeResident__Q23zen12DrawCMresultFv, global
 /* 801EF8E0 001EC840  7C 08 02 A6 */	mflr r0
 /* 801EF8E4 001EC844  90 01 00 04 */	stw r0, 4(r1)
 /* 801EF8E8 001EC848  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -963,9 +962,9 @@ makeResident__Q23zen12DrawCMresultFv:
 /* 801EF990 001EC8F0  38 21 00 20 */	addi r1, r1, 0x20
 /* 801EF994 001EC8F4  7C 08 03 A6 */	mtlr r0
 /* 801EF998 001EC8F8  4E 80 00 20 */	blr 
+.endfn makeResident__Q23zen12DrawCMresultFv
 
-.global setMode__Q23zen12DrawCMresultFQ33zen12DrawCMresult8modeFlag
-setMode__Q23zen12DrawCMresultFQ33zen12DrawCMresult8modeFlag:
+.fn setMode__Q23zen12DrawCMresultFQ33zen12DrawCMresult8modeFlag, global
 /* 801EF99C 001EC8FC  7C 08 02 A6 */	mflr r0
 /* 801EF9A0 001EC900  90 01 00 04 */	stw r0, 4(r1)
 /* 801EF9A4 001EC904  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -1066,14 +1065,14 @@ setMode__Q23zen12DrawCMresultFQ33zen12DrawCMresult8modeFlag:
 /* 801EFAFC 001ECA5C  38 21 00 20 */	addi r1, r1, 0x20
 /* 801EFB00 001ECA60  7C 08 03 A6 */	mtlr r0
 /* 801EFB04 001ECA64  4E 80 00 20 */	blr 
+.endfn setMode__Q23zen12DrawCMresultFQ33zen12DrawCMresult8modeFlag
 
-.global modeSleep__Q23zen12DrawCMresultFP10Controller
-modeSleep__Q23zen12DrawCMresultFP10Controller:
+.fn modeSleep__Q23zen12DrawCMresultFP10Controller, global
 /* 801EFB08 001ECA68  38 60 00 00 */	li r3, 0
 /* 801EFB0C 001ECA6C  4E 80 00 20 */	blr 
+.endfn modeSleep__Q23zen12DrawCMresultFP10Controller
 
-.global modeWaitAppear__Q23zen12DrawCMresultFP10Controller
-modeWaitAppear__Q23zen12DrawCMresultFP10Controller:
+.fn modeWaitAppear__Q23zen12DrawCMresultFP10Controller, global
 /* 801EFB10 001ECA70  7C 08 02 A6 */	mflr r0
 /* 801EFB14 001ECA74  90 01 00 04 */	stw r0, 4(r1)
 /* 801EFB18 001ECA78  94 21 FF F8 */	stwu r1, -8(r1)
@@ -1094,9 +1093,9 @@ modeWaitAppear__Q23zen12DrawCMresultFP10Controller:
 /* 801EFB50 001ECAB0  38 21 00 08 */	addi r1, r1, 8
 /* 801EFB54 001ECAB4  7C 08 03 A6 */	mtlr r0
 /* 801EFB58 001ECAB8  4E 80 00 20 */	blr 
+.endfn modeWaitAppear__Q23zen12DrawCMresultFP10Controller
 
-.global modeAppear__Q23zen12DrawCMresultFP10Controller
-modeAppear__Q23zen12DrawCMresultFP10Controller:
+.fn modeAppear__Q23zen12DrawCMresultFP10Controller, global
 /* 801EFB5C 001ECABC  7C 08 02 A6 */	mflr r0
 /* 801EFB60 001ECAC0  90 01 00 04 */	stw r0, 4(r1)
 /* 801EFB64 001ECAC4  94 21 FF B8 */	stwu r1, -0x48(r1)
@@ -1155,9 +1154,9 @@ modeAppear__Q23zen12DrawCMresultFP10Controller:
 /* 801EFC28 001ECB88  38 21 00 48 */	addi r1, r1, 0x48
 /* 801EFC2C 001ECB8C  7C 08 03 A6 */	mtlr r0
 /* 801EFC30 001ECB90  4E 80 00 20 */	blr 
+.endfn modeAppear__Q23zen12DrawCMresultFP10Controller
 
-.global modeOperation__Q23zen12DrawCMresultFP10Controller
-modeOperation__Q23zen12DrawCMresultFP10Controller:
+.fn modeOperation__Q23zen12DrawCMresultFP10Controller, global
 /* 801EFC34 001ECB94  7C 08 02 A6 */	mflr r0
 /* 801EFC38 001ECB98  90 01 00 04 */	stw r0, 4(r1)
 /* 801EFC3C 001ECB9C  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -1226,9 +1225,9 @@ modeOperation__Q23zen12DrawCMresultFP10Controller:
 /* 801EFD24 001ECC84  38 21 00 28 */	addi r1, r1, 0x28
 /* 801EFD28 001ECC88  7C 08 03 A6 */	mtlr r0
 /* 801EFD2C 001ECC8C  4E 80 00 20 */	blr 
+.endfn modeOperation__Q23zen12DrawCMresultFP10Controller
 
-.global modeSave__Q23zen12DrawCMresultFP10Controller
-modeSave__Q23zen12DrawCMresultFP10Controller:
+.fn modeSave__Q23zen12DrawCMresultFP10Controller, global
 /* 801EFD30 001ECC90  7C 08 02 A6 */	mflr r0
 /* 801EFD34 001ECC94  90 01 00 04 */	stw r0, 4(r1)
 /* 801EFD38 001ECC98  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -1276,9 +1275,9 @@ modeSave__Q23zen12DrawCMresultFP10Controller:
 /* 801EFDC8 001ECD28  38 21 00 28 */	addi r1, r1, 0x28
 /* 801EFDCC 001ECD2C  7C 08 03 A6 */	mtlr r0
 /* 801EFDD0 001ECD30  4E 80 00 20 */	blr 
+.endfn modeSave__Q23zen12DrawCMresultFP10Controller
 
-.global createRankInEffect__Q23zen12DrawCMresultFv
-createRankInEffect__Q23zen12DrawCMresultFv:
+.fn createRankInEffect__Q23zen12DrawCMresultFv, global
 /* 801EFDD4 001ECD34  7C 08 02 A6 */	mflr r0
 /* 801EFDD8 001ECD38  90 01 00 04 */	stw r0, 4(r1)
 /* 801EFDDC 001ECD3C  94 21 FE B0 */	stwu r1, -0x150(r1)
@@ -1502,87 +1501,131 @@ createRankInEffect__Q23zen12DrawCMresultFv:
 /* 801F0140 001ED0A0  38 21 01 50 */	addi r1, r1, 0x150
 /* 801F0144 001ED0A4  7C 08 03 A6 */	mtlr r0
 /* 801F0148 001ED0A8  4E 80 00 20 */	blr 
+.endfn createRankInEffect__Q23zen12DrawCMresultFv
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802E6E88:
+.obj lbl_802E6E88, local
 	.asciz "drawCMresult.cpp"
+.endobj lbl_802E6E88
 .balign 4
+.obj lbl_802E6E9C, local
 	.asciz "drawCMresult"
+.endobj lbl_802E6E9C
 .balign 4
+.obj lbl_802E6EAC, local
 	.asciz "screen/blo/cha_re.blo"
+.endobj lbl_802E6EAC
 .balign 4
+.obj lbl_802E6EC4, local
 	.asciz "screen/blo/cha_rank.blo"
+.endobj lbl_802E6EC4
 .balign 4
+.obj lbl_802E6EDC, local
 	.asciz "screen/blo/cha_best.blo"
+.endobj lbl_802E6EDC
 .balign 4
+.obj lbl_802E6EF4, local
 	.4byte 0x00000000
 	.4byte 0xFFFFFFFF
 	.4byte modeSleep__Q23zen12DrawCMresultFP10Controller
+.endobj lbl_802E6EF4
+.balign 4
+.obj lbl_802E6F00, local
 	.4byte 0x00000000
 	.4byte 0xFFFFFFFF
 	.4byte modeWaitAppear__Q23zen12DrawCMresultFP10Controller
+.endobj lbl_802E6F00
+.balign 4
+.obj lbl_802E6F0C, local
 	.4byte 0x00000000
 	.4byte 0xFFFFFFFF
 	.4byte modeAppear__Q23zen12DrawCMresultFP10Controller
+.endobj lbl_802E6F0C
+.balign 4
+.obj lbl_802E6F18, local
 	.4byte 0x00000000
 	.4byte 0xFFFFFFFF
 	.4byte modeOperation__Q23zen12DrawCMresultFP10Controller
+.endobj lbl_802E6F18
+.balign 4
+.obj lbl_802E6F24, local
 	.4byte 0x00000000
 	.4byte 0xFFFFFFFF
 	.4byte modeSave__Q23zen12DrawCMresultFP10Controller
+.endobj lbl_802E6F24
+.balign 4
+.obj lbl_802E6F30, local
 	.4byte 0x00000000
 	.4byte 0xFFFFFFFF
 	.4byte modeOperation__Q23zen12DrawCMresultFP10Controller
+.endobj lbl_802E6F30
 .balign 4
-lbl_802E6F3C:
+.obj lbl_802E6F3C, local
 	.asciz "zen::DrawCMresultGraph"
+.endobj lbl_802E6F3C
 .balign 4
-lbl_802E6F54:
+.obj lbl_802E6F54, local
 	.asciz "zen::DrawCMresultAlpha"
+.endobj lbl_802E6F54
 .balign 4
-lbl_802E6F6C:
+.obj lbl_802E6F6C, local
 	.4byte __RTTI__Q23zen17DrawCMresultAlpha
-	.4byte 0x00000000
-	.4byte 0x00000000
-.global __vt__Q23zen17DrawCMresultGraph
-__vt__Q23zen17DrawCMresultGraph:
+	.4byte 0
+	.4byte 0
+.endobj lbl_802E6F6C
+.balign 4
+.obj __vt__Q23zen17DrawCMresultGraph, weak
 	.4byte __RTTI__Q23zen17DrawCMresultGraph
 	.4byte 0
 	.4byte update__Q23zen17DrawCMresultAlphaFv
-.global __vt__Q23zen17DrawCMresultAlpha
-__vt__Q23zen17DrawCMresultAlpha:
+.endobj __vt__Q23zen17DrawCMresultGraph
+.balign 4
+.obj __vt__Q23zen17DrawCMresultAlpha, weak
 	.4byte __RTTI__Q23zen17DrawCMresultAlpha
 	.4byte 0
 	.4byte update__Q23zen17DrawCMresultAlphaFv
+.endobj __vt__Q23zen17DrawCMresultAlpha
 .balign 4
+.obj lbl_802E6F90, local
 	.asciz "zen::NumberPicCallBack<int>"
+.endobj lbl_802E6F90
 .balign 4
-lbl_802E6FAC:
+.obj lbl_802E6FAC, local
 	.asciz "zen::NumberTex"
+.endobj lbl_802E6FAC
 .balign 4
-lbl_802E6FBC:
+.obj lbl_802E6FBC, local
 	.asciz "zen::FigureTex<int>"
-lbl_802E6FD0:
+.endobj lbl_802E6FBC
+.balign 4
+.obj lbl_802E6FD0, local
 	.4byte __RTTI__Q23zen9NumberTex
 	.4byte 0
 	.4byte 0
+.endobj lbl_802E6FD0
 .balign 4
-lbl_802E6FDC:
+.obj lbl_802E6FDC, local
 	.asciz "P2DPaneCallBackBase"
+.endobj lbl_802E6FDC
 .balign 4
-lbl_802E6FF0:
+.obj lbl_802E6FF0, local
 	.asciz "zen::CallBack1<P2DPane *>"
+.endobj lbl_802E6FF0
 .balign 4
-lbl_802E700C:
+.obj lbl_802E700C, local
 	.asciz "P2DPaneCallBack"
+.endobj lbl_802E700C
 .balign 4
-lbl_802E701C:
+.obj lbl_802E701C, local
 	.4byte __RTTI__19P2DPaneCallBackBase
 	.4byte 0x4
 	.4byte "__RTTI__Q23zen20CallBack1<P7P2DPane>"
 	.4byte 0
 	.4byte 0
+.endobj lbl_802E701C
+.balign 4
+.obj lbl_802E7030, local
 	.4byte __RTTI__Q23zen9NumberTex
 	.4byte 0x4
 	.4byte "__RTTI__Q23zen12FigureTex<i>"
@@ -1594,76 +1637,92 @@ lbl_802E701C:
 	.4byte __RTTI__15P2DPaneCallBack
 	.4byte 0
 	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
+.endobj lbl_802E7030
+.balign 4
+.skip 0x2C # compiler padding
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-.balign 4
-lbl_803E75F0:
+.obj lbl_803E75F0, local
 	.asciz "p_m%d"
+.endobj lbl_803E75F0
 .balign 4
-lbl_803E75F8:
-	.4byte 0x00000000
-lbl_803E75FC:
-	.4byte 0x00000000
-lbl_803E7600:
-	.4byte 0x00000000
-lbl_803E7604:
-	.4byte 0x00000000
-lbl_803E7608:
-	.4byte 0x00000000
+.obj lbl_803E75F8, local
+	.float 0.0
+.endobj lbl_803E75F8
+.obj lbl_803E75FC, local
+	.float 0.0
+.endobj lbl_803E75FC
+.obj lbl_803E7600, local
+	.float 0.0
+.endobj lbl_803E7600
+.obj lbl_803E7604, local
+	.float 0.0
+.endobj lbl_803E7604
+.obj lbl_803E7608, local
+	.float 0.0
+.endobj lbl_803E7608
 .balign 4
-lbl_803E760C:
+.obj lbl_803E760C, local
 	.asciz "m%d_w"
+.endobj lbl_803E760C
 .balign 4
-__RTTI__Q23zen17DrawCMresultAlpha:
+.obj __RTTI__Q23zen17DrawCMresultAlpha, local
 	.4byte lbl_802E6F54
 	.4byte 0
-__RTTI__Q23zen17DrawCMresultGraph:
+.endobj __RTTI__Q23zen17DrawCMresultAlpha
+.balign 4
+.obj __RTTI__Q23zen17DrawCMresultGraph, local
 	.4byte lbl_802E6F3C
 	.4byte lbl_802E6F6C
-__RTTI__Q23zen9NumberTex:
+.endobj __RTTI__Q23zen17DrawCMresultGraph
+.balign 4
+.obj __RTTI__Q23zen9NumberTex, local
 	.4byte lbl_802E6FAC
 	.4byte 0
-"__RTTI__Q23zen12FigureTex<i>":
+.endobj __RTTI__Q23zen9NumberTex
+.balign 4
+.obj "__RTTI__Q23zen12FigureTex<i>", local
 	.4byte lbl_802E6FBC
 	.4byte lbl_802E6FD0
-__RTTI__19P2DPaneCallBackBase:
+.endobj "__RTTI__Q23zen12FigureTex<i>"
+.balign 4
+.obj __RTTI__19P2DPaneCallBackBase, local
 	.4byte lbl_802E6FDC
 	.4byte 0
-"__RTTI__Q23zen20CallBack1<P7P2DPane>":
+.endobj __RTTI__19P2DPaneCallBackBase
+.balign 4
+.obj "__RTTI__Q23zen20CallBack1<P7P2DPane>", local
 	.4byte lbl_802E6FF0
 	.4byte 0
-__RTTI__15P2DPaneCallBack:
+.endobj "__RTTI__Q23zen20CallBack1<P7P2DPane>"
+.balign 4
+.obj __RTTI__15P2DPaneCallBack, local
 	.4byte lbl_802E700C
 	.4byte lbl_802E701C
-	.4byte 0
+.endobj __RTTI__15P2DPaneCallBack
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803EC3C8:
-	.4byte 0x00000000
-lbl_803EC3CC:
-	.4byte 0x3F800000
-lbl_803EC3D0:
-	.4byte 0x3DCCCCCD
-lbl_803EC3D4:
-	.4byte 0x3FC90FDB
-lbl_803EC3D8:
-	.4byte 0xC3F00000
-lbl_803EC3DC:
-	.4byte 0x3F000000
+.obj lbl_803EC3C8, local
+	.float 0.0
+.endobj lbl_803EC3C8
+.obj lbl_803EC3CC, local
+	.float 1.0
+.endobj lbl_803EC3CC
+.obj lbl_803EC3D0, local
+	.float 0.1
+.endobj lbl_803EC3D0
+.obj lbl_803EC3D4, local # pi/2
+	.float 1.5707964
+.endobj lbl_803EC3D4
+.obj lbl_803EC3D8, local
+	.float -480.0
+.endobj lbl_803EC3D8
+.obj lbl_803EC3DC, local
+	.float 0.5
+.endobj lbl_803EC3DC
 .balign 8
-lbl_803EC3E0:
-	.4byte 0x43300000
-	.4byte 0x80000000
+.obj lbl_803EC3E0, local
+	.8byte 0x4330000080000000
+.endobj lbl_803EC3E0

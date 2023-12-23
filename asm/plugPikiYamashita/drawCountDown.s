@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global __ct__Q23zen13DrawCountDownFv
-__ct__Q23zen13DrawCountDownFv:
+.fn __ct__Q23zen13DrawCountDownFv, global
 /* 801E7AB0 001E4A10  7C 08 02 A6 */	mflr r0
 /* 801E7AB4 001E4A14  90 01 00 04 */	stw r0, 4(r1)
 /* 801E7AB8 001E4A18  94 21 FF 90 */	stwu r1, -0x70(r1)
@@ -132,16 +131,16 @@ __ct__Q23zen13DrawCountDownFv:
 /* 801E7C9C 001E4BFC  38 21 00 70 */	addi r1, r1, 0x70
 /* 801E7CA0 001E4C00  7C 08 03 A6 */	mtlr r0
 /* 801E7CA4 001E4C04  4E 80 00 20 */	blr 
+.endfn __ct__Q23zen13DrawCountDownFv
 
-.global setRate__Q23zen13DrawCountDownFfff
-setRate__Q23zen13DrawCountDownFfff:
+.fn setRate__Q23zen13DrawCountDownFfff, global
 /* 801E7CA8 001E4C08  D0 23 00 18 */	stfs f1, 0x18(r3)
 /* 801E7CAC 001E4C0C  D0 43 00 1C */	stfs f2, 0x1c(r3)
 /* 801E7CB0 001E4C10  D0 63 00 20 */	stfs f3, 0x20(r3)
 /* 801E7CB4 001E4C14  4E 80 00 20 */	blr 
+.endfn setRate__Q23zen13DrawCountDownFfff
 
-.global init__Q23zen13DrawCountDownFffPf
-init__Q23zen13DrawCountDownFffPf:
+.fn init__Q23zen13DrawCountDownFffPf, global
 /* 801E7CB8 001E4C18  90 83 00 30 */	stw r4, 0x30(r3)
 /* 801E7CBC 001E4C1C  38 00 00 00 */	li r0, 0
 /* 801E7CC0 001E4C20  38 C0 00 7F */	li r6, 0x7f
@@ -252,9 +251,9 @@ init__Q23zen13DrawCountDownFffPf:
 /* 801E7E54 001E4DB4  54 86 10 3A */	slwi r6, r4, 2
 /* 801E7E58 001E4DB8  4B FF FF A4 */	b .L_801E7DFC
 /* 801E7E5C 001E4DBC  4E 80 00 20 */	blr 
+.endfn init__Q23zen13DrawCountDownFffPf
 
-.global update__Q23zen13DrawCountDownFv
-update__Q23zen13DrawCountDownFv:
+.fn update__Q23zen13DrawCountDownFv, global
 /* 801E7E60 001E4DC0  7C 08 02 A6 */	mflr r0
 /* 801E7E64 001E4DC4  90 01 00 04 */	stw r0, 4(r1)
 /* 801E7E68 001E4DC8  94 21 FE A0 */	stwu r1, -0x160(r1)
@@ -285,7 +284,7 @@ update__Q23zen13DrawCountDownFv:
 /* 801E7EC4 001E4E24  C0 A2 BF 74 */	lfs f5, lbl_803EC174@sda21(r2)
 /* 801E7EC8 001E4E28  EC 03 10 28 */	fsubs f0, f3, f2
 /* 801E7ECC 001E4E2C  3C 60 43 30 */	lis r3, 0x4330
-/* 801E7ED0 001E4E30  C8 82 BF 98 */	lfd f4, "@1104"@sda21(r2)
+/* 801E7ED0 001E4E30  C8 82 BF 98 */	lfd f4, lbl_803EC198@sda21(r2)
 /* 801E7ED4 001E4E34  EC C1 00 24 */	fdivs f6, f1, f0
 /* 801E7ED8 001E4E38  C0 22 BF 7C */	lfs f1, lbl_803EC17C@sda21(r2)
 /* 801E7EDC 001E4E3C  C0 42 BF 78 */	lfs f2, lbl_803EC178@sda21(r2)
@@ -398,7 +397,7 @@ update__Q23zen13DrawCountDownFv:
 /* 801E806C 001E4FCC  3C 00 43 30 */	lis r0, 0x4330
 /* 801E8070 001E4FD0  C0 02 BF 8C */	lfs f0, lbl_803EC18C@sda21(r2)
 /* 801E8074 001E4FD4  90 61 01 2C */	stw r3, 0x12c(r1)
-/* 801E8078 001E4FD8  C8 82 BF A0 */	lfd f4, "@1106"@sda21(r2)
+/* 801E8078 001E4FD8  C8 82 BF A0 */	lfd f4, lbl_803EC1A0@sda21(r2)
 /* 801E807C 001E4FDC  EC 00 08 28 */	fsubs f0, f0, f1
 /* 801E8080 001E4FE0  90 01 01 28 */	stw r0, 0x128(r1)
 /* 801E8084 001E4FE4  C0 42 BF 90 */	lfs f2, lbl_803EC190@sda21(r2)
@@ -430,7 +429,7 @@ update__Q23zen13DrawCountDownFv:
 /* 801E80E4 001E5044  88 7D 00 27 */	lbz r3, 0x27(r29)
 /* 801E80E8 001E5048  88 9D 00 2B */	lbz r4, 0x2b(r29)
 /* 801E80EC 001E504C  90 61 01 3C */	stw r3, 0x13c(r1)
-/* 801E80F0 001E5050  C8 A2 BF A0 */	lfd f5, "@1106"@sda21(r2)
+/* 801E80F0 001E5050  C8 A2 BF A0 */	lfd f5, lbl_803EC1A0@sda21(r2)
 /* 801E80F4 001E5054  90 81 01 34 */	stw r4, 0x134(r1)
 /* 801E80F8 001E5058  C0 42 BF 90 */	lfs f2, lbl_803EC190@sda21(r2)
 /* 801E80FC 001E505C  90 01 01 30 */	stw r0, 0x130(r1)
@@ -479,7 +478,7 @@ update__Q23zen13DrawCountDownFv:
 /* 801E81A0 001E5100  88 DD 00 2A */	lbz r6, 0x2a(r29)
 /* 801E81A4 001E5104  3C 00 43 30 */	lis r0, 0x4330
 /* 801E81A8 001E5108  90 A1 01 3C */	stw r5, 0x13c(r1)
-/* 801E81AC 001E510C  C8 A2 BF A0 */	lfd f5, "@1106"@sda21(r2)
+/* 801E81AC 001E510C  C8 A2 BF A0 */	lfd f5, lbl_803EC1A0@sda21(r2)
 /* 801E81B0 001E5110  90 C1 01 34 */	stw r6, 0x134(r1)
 /* 801E81B4 001E5114  C0 42 BF 90 */	lfs f2, lbl_803EC190@sda21(r2)
 /* 801E81B8 001E5118  90 01 01 30 */	stw r0, 0x130(r1)
@@ -531,7 +530,7 @@ update__Q23zen13DrawCountDownFv:
 /* 801E8268 001E51C8  88 FD 00 29 */	lbz r7, 0x29(r29)
 /* 801E826C 001E51CC  3C 00 43 30 */	lis r0, 0x4330
 /* 801E8270 001E51D0  90 C1 01 3C */	stw r6, 0x13c(r1)
-/* 801E8274 001E51D4  C8 A2 BF A0 */	lfd f5, "@1106"@sda21(r2)
+/* 801E8274 001E51D4  C8 A2 BF A0 */	lfd f5, lbl_803EC1A0@sda21(r2)
 /* 801E8278 001E51D8  90 E1 01 34 */	stw r7, 0x134(r1)
 /* 801E827C 001E51DC  C0 42 BF 90 */	lfs f2, lbl_803EC190@sda21(r2)
 /* 801E8280 001E51E0  90 01 01 30 */	stw r0, 0x130(r1)
@@ -598,7 +597,7 @@ update__Q23zen13DrawCountDownFv:
 .L_801E836C:
 /* 801E836C 001E52CC  88 7D 00 24 */	lbz r3, 0x24(r29)
 /* 801E8370 001E52D0  3C 00 43 30 */	lis r0, 0x4330
-/* 801E8374 001E52D4  C8 62 BF A0 */	lfd f3, "@1106"@sda21(r2)
+/* 801E8374 001E52D4  C8 62 BF A0 */	lfd f3, lbl_803EC1A0@sda21(r2)
 /* 801E8378 001E52D8  90 61 01 2C */	stw r3, 0x12c(r1)
 /* 801E837C 001E52DC  C0 02 BF 90 */	lfs f0, lbl_803EC190@sda21(r2)
 /* 801E8380 001E52E0  90 01 01 28 */	stw r0, 0x128(r1)
@@ -638,7 +637,7 @@ update__Q23zen13DrawCountDownFv:
 /* 801E83F8 001E5358  EC 1E 00 28 */	fsubs f0, f30, f0
 /* 801E83FC 001E535C  88 7D 00 24 */	lbz r3, 0x24(r29)
 /* 801E8400 001E5360  3C 00 43 30 */	lis r0, 0x4330
-/* 801E8404 001E5364  C8 82 BF A0 */	lfd f4, "@1106"@sda21(r2)
+/* 801E8404 001E5364  C8 82 BF A0 */	lfd f4, lbl_803EC1A0@sda21(r2)
 /* 801E8408 001E5368  90 61 01 2C */	stw r3, 0x12c(r1)
 /* 801E840C 001E536C  EC 00 10 24 */	fdivs f0, f0, f2
 /* 801E8410 001E5370  90 01 01 28 */	stw r0, 0x128(r1)
@@ -675,7 +674,7 @@ update__Q23zen13DrawCountDownFv:
 /* 801E8484 001E53E4  88 7D 00 27 */	lbz r3, 0x27(r29)
 /* 801E8488 001E53E8  88 9D 00 2B */	lbz r4, 0x2b(r29)
 /* 801E848C 001E53EC  90 61 01 3C */	stw r3, 0x13c(r1)
-/* 801E8490 001E53F0  C8 A2 BF A0 */	lfd f5, "@1106"@sda21(r2)
+/* 801E8490 001E53F0  C8 A2 BF A0 */	lfd f5, lbl_803EC1A0@sda21(r2)
 /* 801E8494 001E53F4  90 81 01 34 */	stw r4, 0x134(r1)
 /* 801E8498 001E53F8  C0 42 BF 90 */	lfs f2, lbl_803EC190@sda21(r2)
 /* 801E849C 001E53FC  90 01 01 30 */	stw r0, 0x130(r1)
@@ -722,7 +721,7 @@ update__Q23zen13DrawCountDownFv:
 /* 801E8538 001E5498  88 DD 00 2A */	lbz r6, 0x2a(r29)
 /* 801E853C 001E549C  3C 00 43 30 */	lis r0, 0x4330
 /* 801E8540 001E54A0  90 A1 01 3C */	stw r5, 0x13c(r1)
-/* 801E8544 001E54A4  C8 A2 BF A0 */	lfd f5, "@1106"@sda21(r2)
+/* 801E8544 001E54A4  C8 A2 BF A0 */	lfd f5, lbl_803EC1A0@sda21(r2)
 /* 801E8548 001E54A8  90 C1 01 34 */	stw r6, 0x134(r1)
 /* 801E854C 001E54AC  C0 42 BF 90 */	lfs f2, lbl_803EC190@sda21(r2)
 /* 801E8550 001E54B0  90 01 01 30 */	stw r0, 0x130(r1)
@@ -774,7 +773,7 @@ update__Q23zen13DrawCountDownFv:
 /* 801E8600 001E5560  88 FD 00 29 */	lbz r7, 0x29(r29)
 /* 801E8604 001E5564  3C 00 43 30 */	lis r0, 0x4330
 /* 801E8608 001E5568  90 C1 01 3C */	stw r6, 0x13c(r1)
-/* 801E860C 001E556C  C8 A2 BF A0 */	lfd f5, "@1106"@sda21(r2)
+/* 801E860C 001E556C  C8 A2 BF A0 */	lfd f5, lbl_803EC1A0@sda21(r2)
 /* 801E8610 001E5570  90 E1 01 34 */	stw r7, 0x134(r1)
 /* 801E8614 001E5574  C0 42 BF 90 */	lfs f2, lbl_803EC190@sda21(r2)
 /* 801E8618 001E5578  90 01 01 30 */	stw r0, 0x130(r1)
@@ -838,7 +837,7 @@ update__Q23zen13DrawCountDownFv:
 /* 801E86F8 001E5658  3C 00 43 30 */	lis r0, 0x4330
 /* 801E86FC 001E565C  C0 22 BF 8C */	lfs f1, lbl_803EC18C@sda21(r2)
 /* 801E8700 001E5660  90 61 01 2C */	stw r3, 0x12c(r1)
-/* 801E8704 001E5664  C8 62 BF A0 */	lfd f3, "@1106"@sda21(r2)
+/* 801E8704 001E5664  C8 62 BF A0 */	lfd f3, lbl_803EC1A0@sda21(r2)
 /* 801E8708 001E5668  EC 21 00 28 */	fsubs f1, f1, f0
 /* 801E870C 001E566C  90 01 01 28 */	stw r0, 0x128(r1)
 /* 801E8710 001E5670  C0 02 BF 90 */	lfs f0, lbl_803EC190@sda21(r2)
@@ -964,9 +963,9 @@ update__Q23zen13DrawCountDownFv:
 /* 801E88C4 001E5824  38 21 01 60 */	addi r1, r1, 0x160
 /* 801E88C8 001E5828  7C 08 03 A6 */	mtlr r0
 /* 801E88CC 001E582C  4E 80 00 20 */	blr 
+.endfn update__Q23zen13DrawCountDownFv
 
-.global draw__Q23zen13DrawCountDownFR8Graphics
-draw__Q23zen13DrawCountDownFR8Graphics:
+.fn draw__Q23zen13DrawCountDownFR8Graphics, global
 /* 801E88D0 001E5830  7C 08 02 A6 */	mflr r0
 /* 801E88D4 001E5834  90 01 00 04 */	stw r0, 4(r1)
 /* 801E88D8 001E5838  94 21 FF F8 */	stwu r1, -8(r1)
@@ -979,67 +978,69 @@ draw__Q23zen13DrawCountDownFR8Graphics:
 /* 801E88F4 001E5854  38 21 00 08 */	addi r1, r1, 8
 /* 801E88F8 001E5858  7C 08 03 A6 */	mtlr r0
 /* 801E88FC 001E585C  4E 80 00 20 */	blr 
+.endfn draw__Q23zen13DrawCountDownFR8Graphics
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-.global lbl_802E5A38
-lbl_802E5A38:
+.obj lbl_802E5A38, local
 	.asciz "screen/blo/count.blo"
+.endobj lbl_802E5A38
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-lbl_803E73A0: # this string is used in __ct__Q23zen13DrawCountDownFv
+.obj lbl_803E73A0, local # this string is used in __ct__Q23zen13DrawCountDownFv
 	.asciz "cd%02d"
+.endobj lbl_803E73A0
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-.global lbl_803EC160
-lbl_803EC160:
-	.4byte 0x41900000
-.global lbl_803EC164
-lbl_803EC164:
-	.4byte 0x41980000
-.global lbl_803EC168
-lbl_803EC168:
-	.4byte 0x3F4CCCCD
-.global lbl_803EC16C
-lbl_803EC16C:
-	.4byte 0x3D75C28F
-.global lbl_803EC170
-lbl_803EC170:
-	.4byte 0x3D23D70A
-.global lbl_803EC174
-lbl_803EC174:
-	.4byte 0x3DBA2E8C
-.global lbl_803EC178
-lbl_803EC178:
-	.4byte 0x3F333333
-.global lbl_803EC17C
-lbl_803EC17C:
-	.4byte 0x3DCCCCCD
-.global lbl_803EC180
-lbl_803EC180:
-	.4byte 0x40490FDB
-.global lbl_803EC184
-lbl_803EC184:
-	.4byte 0x42B40000
-.global lbl_803EC188
-lbl_803EC188:
-	.4byte 0x43340000
-.global lbl_803EC18C
-lbl_803EC18C:
-	.4byte 0x3F800000
-.global lbl_803EC190
-lbl_803EC190:
-	.4byte 0x00000000
-.global lbl_803EC194
-lbl_803EC194:
-	.4byte 0x3F000000
-.global "@1104"
-"@1104":
-	.4byte 0x43300000
-	.4byte 0x80000000
-.global "@1106"
-"@1106":
-	.4byte 0x43300000
-	.4byte 0x00000000
+.obj lbl_803EC160, local
+	.float 18.0
+.endobj lbl_803EC160
+.obj lbl_803EC164, local
+	.float 19.0
+.endobj lbl_803EC164
+.obj lbl_803EC168, local
+	.float 0.8
+.endobj lbl_803EC168
+.obj lbl_803EC16C, local
+	.float 0.06
+.endobj lbl_803EC16C
+.obj lbl_803EC170, local
+	.float 0.04
+.endobj lbl_803EC170
+.obj lbl_803EC174, local
+	.float 0.09090909
+.endobj lbl_803EC174
+.obj lbl_803EC178, local
+	.float 0.7
+.endobj lbl_803EC178
+.obj lbl_803EC17C, local
+	.float 0.1
+.endobj lbl_803EC17C
+.obj lbl_803EC180, local # pi
+	.float 3.1415927
+.endobj lbl_803EC180
+.obj lbl_803EC184, local
+	.float 90.0
+.endobj lbl_803EC184
+.obj lbl_803EC188, local
+	.float 180.0
+.endobj lbl_803EC188
+.obj lbl_803EC18C, local
+	.float 1.0
+.endobj lbl_803EC18C
+.obj lbl_803EC190, local
+	.float 0.0
+.endobj lbl_803EC190
+.obj lbl_803EC194, local
+	.float 0.5
+.endobj lbl_803EC194
+.balign 8
+.obj lbl_803EC198, local
+	.8byte 0x4330000080000000
+.endobj lbl_803EC198
+.balign 8
+.obj lbl_803EC1A0, local
+	.8byte 0x4330000000000000
+.endobj lbl_803EC1A0

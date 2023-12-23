@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global start__14TaiTimerActionFR4Teki
-start__14TaiTimerActionFR4Teki:
+.fn start__14TaiTimerActionFR4Teki, global
 /* 801436D0 00140630  7C 08 02 A6 */	mflr r0
 /* 801436D4 00140634  90 01 00 04 */	stw r0, 4(r1)
 /* 801436D8 00140638  94 21 FF F8 */	stwu r1, -8(r1)
@@ -10,9 +9,9 @@ start__14TaiTimerActionFR4Teki:
 /* 801436E4 00140644  38 21 00 08 */	addi r1, r1, 8
 /* 801436E8 00140648  7C 08 03 A6 */	mtlr r0
 /* 801436EC 0014064C  4E 80 00 20 */	blr 
+.endfn start__14TaiTimerActionFR4Teki
 
-.global act__14TaiTimerActionFR4Teki
-act__14TaiTimerActionFR4Teki:
+.fn act__14TaiTimerActionFR4Teki, global
 /* 801436F0 00140650  80 03 00 08 */	lwz r0, 8(r3)
 /* 801436F4 00140654  C0 02 A7 08 */	lfs f0, lbl_803EA908@sda21(r2)
 /* 801436F8 00140658  54 00 10 3A */	slwi r0, r0, 2
@@ -23,9 +22,9 @@ act__14TaiTimerActionFR4Teki:
 /* 8014370C 0014066C  7C 00 00 26 */	mfcr r0
 /* 80143710 00140670  54 03 1F FE */	rlwinm r3, r0, 3, 0x1f, 0x1f
 /* 80143714 00140674  4E 80 00 20 */	blr 
+.endfn act__14TaiTimerActionFR4Teki
 
-.global resetTimer__14TaiTimerActionFR4Teki
-resetTimer__14TaiTimerActionFR4Teki:
+.fn resetTimer__14TaiTimerActionFR4Teki, global
 /* 80143718 00140678  7C 08 02 A6 */	mflr r0
 /* 8014371C 0014067C  90 01 00 04 */	stw r0, 4(r1)
 /* 80143720 00140680  94 21 FF C0 */	stwu r1, -0x40(r1)
@@ -68,9 +67,9 @@ resetTimer__14TaiTimerActionFR4Teki:
 /* 801437B4 00140714  38 21 00 40 */	addi r1, r1, 0x40
 /* 801437B8 00140718  7C 08 03 A6 */	mtlr r0
 /* 801437BC 0014071C  4E 80 00 20 */	blr 
+.endfn resetTimer__14TaiTimerActionFR4Teki
 
-.global start__19TaiResetTimerActionFR4Teki
-start__19TaiResetTimerActionFR4Teki:
+.fn start__19TaiResetTimerActionFR4Teki, global
 /* 801437C0 00140720  7C 08 02 A6 */	mflr r0
 /* 801437C4 00140724  90 01 00 04 */	stw r0, 4(r1)
 /* 801437C8 00140728  94 21 FF F8 */	stwu r1, -8(r1)
@@ -79,9 +78,9 @@ start__19TaiResetTimerActionFR4Teki:
 /* 801437D4 00140734  38 21 00 08 */	addi r1, r1, 8
 /* 801437D8 00140738  7C 08 03 A6 */	mtlr r0
 /* 801437DC 0014073C  4E 80 00 20 */	blr 
+.endfn start__19TaiResetTimerActionFR4Teki
 
-.global resetTimer__19TaiResetTimerActionFR4Teki
-resetTimer__19TaiResetTimerActionFR4Teki:
+.fn resetTimer__19TaiResetTimerActionFR4Teki, global
 /* 801437E0 00140740  7C 08 02 A6 */	mflr r0
 /* 801437E4 00140744  90 01 00 04 */	stw r0, 4(r1)
 /* 801437E8 00140748  94 21 FF C0 */	stwu r1, -0x40(r1)
@@ -124,9 +123,9 @@ resetTimer__19TaiResetTimerActionFR4Teki:
 /* 8014387C 001407DC  38 21 00 40 */	addi r1, r1, 0x40
 /* 80143880 001407E0  7C 08 03 A6 */	mtlr r0
 /* 80143884 001407E4  4E 80 00 20 */	blr 
+.endfn resetTimer__19TaiResetTimerActionFR4Teki
 
-.global act__21TaiTimerElapsedActionFR4Teki
-act__21TaiTimerElapsedActionFR4Teki:
+.fn act__21TaiTimerElapsedActionFR4Teki, global
 /* 80143888 001407E8  80 03 00 08 */	lwz r0, 8(r3)
 /* 8014388C 001407EC  C0 02 A7 08 */	lfs f0, lbl_803EA908@sda21(r2)
 /* 80143890 001407F0  54 00 10 3A */	slwi r0, r0, 2
@@ -137,9 +136,9 @@ act__21TaiTimerElapsedActionFR4Teki:
 /* 801438A4 00140804  7C 00 00 26 */	mfcr r0
 /* 801438A8 00140808  54 03 1F FE */	rlwinm r3, r0, 3, 0x1f, 0x1f
 /* 801438AC 0014080C  4E 80 00 20 */	blr 
+.endfn act__21TaiTimerElapsedActionFR4Teki
 
-.global start__22TaiStartingTimerActionFR4Teki
-start__22TaiStartingTimerActionFR4Teki:
+.fn start__22TaiStartingTimerActionFR4Teki, global
 /* 801438B0 00140810  7C 08 02 A6 */	mflr r0
 /* 801438B4 00140814  90 01 00 04 */	stw r0, 4(r1)
 /* 801438B8 00140818  94 21 FF D0 */	stwu r1, -0x30(r1)
@@ -173,9 +172,9 @@ start__22TaiStartingTimerActionFR4Teki:
 /* 80143928 00140888  38 21 00 30 */	addi r1, r1, 0x30
 /* 8014392C 0014088C  7C 08 03 A6 */	mtlr r0
 /* 80143930 00140890  4E 80 00 20 */	blr 
+.endfn start__22TaiStartingTimerActionFR4Teki
 
-.global getRand__9StdSystemFf
-getRand__9StdSystemFf:
+.fn getRand__9StdSystemFf, weak
 /* 80143934 00140894  7C 08 02 A6 */	mflr r0
 /* 80143938 00140898  90 01 00 04 */	stw r0, 4(r1)
 /* 8014393C 0014089C  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -197,9 +196,9 @@ getRand__9StdSystemFf:
 /* 8014397C 001408DC  38 21 00 20 */	addi r1, r1, 0x20
 /* 80143980 001408E0  7C 08 03 A6 */	mtlr r0
 /* 80143984 001408E4  4E 80 00 20 */	blr 
+.endfn getRand__9StdSystemFf
 
-.global act__22TaiStartingTimerActionFR4Teki
-act__22TaiStartingTimerActionFR4Teki:
+.fn act__22TaiStartingTimerActionFR4Teki, global
 /* 80143988 001408E8  7C 08 02 A6 */	mflr r0
 /* 8014398C 001408EC  90 01 00 04 */	stw r0, 4(r1)
 /* 80143990 001408F0  94 21 FF A8 */	stwu r1, -0x58(r1)
@@ -272,36 +271,45 @@ act__22TaiStartingTimerActionFR4Teki:
 /* 80143A90 001409F0  38 21 00 58 */	addi r1, r1, 0x58
 /* 80143A94 001409F4  7C 08 03 A6 */	mtlr r0
 /* 80143A98 001409F8  4E 80 00 20 */	blr 
+.endfn act__22TaiStartingTimerActionFR4Teki
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802CC918:
+.obj lbl_802CC918, local
 	.asciz "taitimeractions.cpp"
+.endobj lbl_802CC918
 .balign 4
-lbl_802CC92C:
+.obj lbl_802CC92C, local
 	.asciz "taitimeractions"
+.endobj lbl_802CC92C
 .balign 4
-lbl_802CC93C:
+.obj lbl_802CC93C, local
 	.asciz "TaiStartingTimerAction"
+.endobj lbl_802CC93C
 .balign 4
-lbl_802CC954:
+.obj lbl_802CC954, local
 	.asciz "TaiAction"
+.endobj lbl_802CC954
 .balign 4
-lbl_802CC960:
+.obj lbl_802CC960, local
 	.asciz "TaiTimerAction"
+.endobj lbl_802CC960
 .balign 4
-lbl_802CC970:
+.obj lbl_802CC970, local
 	.4byte __RTTI__9TaiAction
 	.4byte 0
 	.4byte 0
-lbl_802CC97C:
+.endobj lbl_802CC970
+.balign 4
+.obj lbl_802CC97C, local
 	.4byte __RTTI__9TaiAction
 	.4byte 0
 	.4byte __RTTI__14TaiTimerAction
 	.4byte 0
 	.4byte 0
-.global __vt__22TaiStartingTimerAction
-__vt__22TaiStartingTimerAction:
+.endobj lbl_802CC97C
+.balign 4
+.obj __vt__22TaiStartingTimerAction, global
 	.4byte __RTTI__22TaiStartingTimerAction
 	.4byte 0
 	.4byte start__22TaiStartingTimerActionFR4Teki
@@ -309,16 +317,19 @@ __vt__22TaiStartingTimerAction:
 	.4byte act__22TaiStartingTimerActionFR4Teki
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
+.endobj __vt__22TaiStartingTimerAction
 .balign 4
-lbl_802CC9AC:
+.obj lbl_802CC9AC, local
 	.asciz "TaiTimerElapsedAction"
+.endobj lbl_802CC9AC
 .balign 4
-lbl_802CC9C4:
+.obj lbl_802CC9C4, local
 	.4byte __RTTI__9TaiAction
 	.4byte 0
 	.4byte 0
-.global __vt__21TaiTimerElapsedAction
-__vt__21TaiTimerElapsedAction:
+.endobj lbl_802CC9C4
+.balign 4
+.obj __vt__21TaiTimerElapsedAction, global
 	.4byte __RTTI__21TaiTimerElapsedAction
 	.4byte 0
 	.4byte start__9TaiActionFR4Teki
@@ -326,16 +337,19 @@ __vt__21TaiTimerElapsedAction:
 	.4byte act__21TaiTimerElapsedActionFR4Teki
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
+.endobj __vt__21TaiTimerElapsedAction
 .balign 4
-lbl_802CC9EC:
+.obj lbl_802CC9EC, local
 	.asciz "TaiResetTimerAction"
+.endobj lbl_802CC9EC
 .balign 4
-lbl_802CCA00:
+.obj lbl_802CCA00, local
 	.4byte __RTTI__9TaiAction
 	.4byte 0
 	.4byte 0
-.global __vt__19TaiResetTimerAction
-__vt__19TaiResetTimerAction:
+.endobj lbl_802CCA00
+.balign 4
+.obj __vt__19TaiResetTimerAction, global
 	.4byte __RTTI__19TaiResetTimerAction
 	.4byte 0
 	.4byte start__19TaiResetTimerActionFR4Teki
@@ -343,8 +357,9 @@ __vt__19TaiResetTimerAction:
 	.4byte act__9TaiActionFR4Teki
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
-.global __vt__14TaiTimerAction
-__vt__14TaiTimerAction:
+.endobj __vt__19TaiResetTimerAction
+.balign 4
+.obj __vt__14TaiTimerAction, global
 	.4byte __RTTI__14TaiTimerAction
 	.4byte 0
 	.4byte start__14TaiTimerActionFR4Teki
@@ -352,38 +367,53 @@ __vt__14TaiTimerAction:
 	.4byte act__14TaiTimerActionFR4Teki
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
+.endobj __vt__14TaiTimerAction
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-__RTTI__9TaiAction:
+.obj __RTTI__9TaiAction, local
 	.4byte lbl_802CC954
 	.4byte 0
-__RTTI__14TaiTimerAction:
+.endobj __RTTI__9TaiAction
+.balign 4
+.obj __RTTI__14TaiTimerAction, local
 	.4byte lbl_802CC960
 	.4byte lbl_802CC970
-__RTTI__22TaiStartingTimerAction:
+.endobj __RTTI__14TaiTimerAction
+.balign 4
+.obj __RTTI__22TaiStartingTimerAction, local
 	.4byte lbl_802CC93C
 	.4byte lbl_802CC97C
-__RTTI__21TaiTimerElapsedAction:
+.endobj __RTTI__22TaiStartingTimerAction
+.balign 4
+.obj __RTTI__21TaiTimerElapsedAction, local
 	.4byte lbl_802CC9AC
 	.4byte lbl_802CC9C4
-__RTTI__19TaiResetTimerAction:
+.endobj __RTTI__21TaiTimerElapsedAction
+.balign 4
+.obj __RTTI__19TaiResetTimerAction, local
 	.4byte lbl_802CC9EC
 	.4byte lbl_802CCA00
+.endobj __RTTI__19TaiResetTimerAction
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803EA908:
+.obj lbl_803EA908, local
 	.float 0.0
-lbl_803EA90C:
+.endobj lbl_803EA908
+.obj lbl_803EA90C, local
 	.float 1.0
-lbl_803EA910:
+.endobj lbl_803EA90C
+.obj lbl_803EA910, local
 	.float 32767.0
-lbl_803EA914:
+.endobj lbl_803EA910
+.obj lbl_803EA914, local
 	.float 2.0
-lbl_803EA918:
+.endobj lbl_803EA914
+.obj lbl_803EA918, local
 	.float 0.5
+.endobj lbl_803EA918
 .balign 8
-lbl_803EA920:
-	.4byte 0x43300000
-	.4byte 0x80000000
+.obj lbl_803EA920, local
+	.8byte 0x4330000080000000
+.endobj lbl_803EA920

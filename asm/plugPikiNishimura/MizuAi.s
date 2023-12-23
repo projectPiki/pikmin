@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global __ct__6MizuAiFP4Mizu
-__ct__6MizuAiFP4Mizu:
+.fn __ct__6MizuAiFP4Mizu, global
 /* 8017B858 001787B8  7C 08 02 A6 */	mflr r0
 /* 8017B85C 001787BC  3C A0 80 2B */	lis r5, __vt__19PaniAnimKeyListener@ha
 /* 8017B860 001787C0  90 01 00 04 */	stw r0, 4(r1)
@@ -35,9 +34,9 @@ __ct__6MizuAiFP4Mizu:
 /* 8017B8CC 0017882C  38 21 00 18 */	addi r1, r1, 0x18
 /* 8017B8D0 00178830  7C 08 03 A6 */	mtlr r0
 /* 8017B8D4 00178834  4E 80 00 20 */	blr 
+.endfn __ct__6MizuAiFP4Mizu
 
-.global initMizu__6MizuAiFP4Mizu
-initMizu__6MizuAiFP4Mizu:
+.fn initMizu__6MizuAiFP4Mizu, global
 /* 8017B8D8 00178838  7C 08 02 A6 */	mflr r0
 /* 8017B8DC 0017883C  38 C0 00 00 */	li r6, 0
 /* 8017B8E0 00178840  90 01 00 04 */	stw r0, 4(r1)
@@ -84,9 +83,9 @@ initMizu__6MizuAiFP4Mizu:
 /* 8017B984 001788E4  38 21 00 30 */	addi r1, r1, 0x30
 /* 8017B988 001788E8  7C 08 03 A6 */	mtlr r0
 /* 8017B98C 001788EC  4E 80 00 20 */	blr 
+.endfn initMizu__6MizuAiFP4Mizu
 
-.global initGeyzer__6MizuAiFP4Mizu
-initGeyzer__6MizuAiFP4Mizu:
+.fn initGeyzer__6MizuAiFP4Mizu, global
 /* 8017B990 001788F0  7C 08 02 A6 */	mflr r0
 /* 8017B994 001788F4  38 C0 00 00 */	li r6, 0
 /* 8017B998 001788F8  90 01 00 04 */	stw r0, 4(r1)
@@ -133,13 +132,13 @@ initGeyzer__6MizuAiFP4Mizu:
 /* 8017BA3C 0017899C  38 21 00 30 */	addi r1, r1, 0x30
 /* 8017BA40 001789A0  7C 08 03 A6 */	mtlr r0
 /* 8017BA44 001789A4  4E 80 00 20 */	blr 
+.endfn initGeyzer__6MizuAiFP4Mizu
 
-.global animationKeyUpdated__6MizuAiFR16PaniAnimKeyEvent
-animationKeyUpdated__6MizuAiFR16PaniAnimKeyEvent:
+.fn animationKeyUpdated__6MizuAiFR16PaniAnimKeyEvent, global
 /* 8017BA48 001789A8  4E 80 00 20 */	blr 
+.endfn animationKeyUpdated__6MizuAiFR16PaniAnimKeyEvent
 
-.global killCallBackEffect__6MizuAiFb
-killCallBackEffect__6MizuAiFb:
+.fn killCallBackEffect__6MizuAiFb, global
 /* 8017BA4C 001789AC  7C 08 02 A6 */	mflr r0
 /* 8017BA50 001789B0  90 01 00 04 */	stw r0, 4(r1)
 /* 8017BA54 001789B4  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -173,9 +172,9 @@ killCallBackEffect__6MizuAiFb:
 /* 8017BABC 00178A1C  38 21 00 18 */	addi r1, r1, 0x18
 /* 8017BAC0 00178A20  7C 08 03 A6 */	mtlr r0
 /* 8017BAC4 00178A24  4E 80 00 20 */	blr 
+.endfn killCallBackEffect__6MizuAiFb
 
-.global initWait__6MizuAiFi
-initWait__6MizuAiFi:
+.fn initWait__6MizuAiFi, global
 /* 8017BAC8 00178A28  7C 08 02 A6 */	mflr r0
 /* 8017BACC 00178A2C  90 01 00 04 */	stw r0, 4(r1)
 /* 8017BAD0 00178A30  94 21 FF C0 */	stwu r1, -0x40(r1)
@@ -225,9 +224,9 @@ initWait__6MizuAiFi:
 /* 8017BB78 00178AD8  38 21 00 40 */	addi r1, r1, 0x40
 /* 8017BB7C 00178ADC  7C 08 03 A6 */	mtlr r0
 /* 8017BB80 00178AE0  4E 80 00 20 */	blr 
+.endfn initWait__6MizuAiFi
 
-.global initReady__6MizuAiFi
-initReady__6MizuAiFi:
+.fn initReady__6MizuAiFi, global
 /* 8017BB84 00178AE4  7C 08 02 A6 */	mflr r0
 /* 8017BB88 00178AE8  90 01 00 04 */	stw r0, 4(r1)
 /* 8017BB8C 00178AEC  94 21 FF C0 */	stwu r1, -0x40(r1)
@@ -283,9 +282,9 @@ initReady__6MizuAiFi:
 /* 8017BC48 00178BA8  38 21 00 40 */	addi r1, r1, 0x40
 /* 8017BC4C 00178BAC  7C 08 03 A6 */	mtlr r0
 /* 8017BC50 00178BB0  4E 80 00 20 */	blr 
+.endfn initReady__6MizuAiFi
 
-.global initJet__6MizuAiFi
-initJet__6MizuAiFi:
+.fn initJet__6MizuAiFi, global
 /* 8017BC54 00178BB4  7C 08 02 A6 */	mflr r0
 /* 8017BC58 00178BB8  90 01 00 04 */	stw r0, 4(r1)
 /* 8017BC5C 00178BBC  94 21 FF 40 */	stwu r1, -0xc0(r1)
@@ -445,9 +444,9 @@ initJet__6MizuAiFi:
 /* 8017BEB4 00178E14  38 21 00 C0 */	addi r1, r1, 0xc0
 /* 8017BEB8 00178E18  7C 08 03 A6 */	mtlr r0
 /* 8017BEBC 00178E1C  4E 80 00 20 */	blr 
+.endfn initJet__6MizuAiFi
 
-.global update__6MizuAiFv
-update__6MizuAiFv:
+.fn update__6MizuAiFv, global
 /* 8017BEC0 00178E20  7C 08 02 A6 */	mflr r0
 /* 8017BEC4 00178E24  90 01 00 04 */	stw r0, 4(r1)
 /* 8017BEC8 00178E28  94 21 FF 20 */	stwu r1, -0xe0(r1)
@@ -686,9 +685,9 @@ update__6MizuAiFv:
 /* 8017C20C 0017916C  38 21 00 E0 */	addi r1, r1, 0xe0
 /* 8017C210 00179170  7C 08 03 A6 */	mtlr r0
 /* 8017C214 00179174  4E 80 00 20 */	blr 
+.endfn update__6MizuAiFv
 
-.global invoke__25MizuGenSpringPuffCallBackFPQ23zen17particleGenerator
-invoke__25MizuGenSpringPuffCallBackFPQ23zen17particleGenerator:
+.fn invoke__25MizuGenSpringPuffCallBackFPQ23zen17particleGenerator, weak
 /* 8017C218 00179178  94 21 FF C0 */	stwu r1, -0x40(r1)
 /* 8017C21C 0017917C  80 A3 00 04 */	lwz r5, 4(r3)
 /* 8017C220 00179180  28 05 00 00 */	cmplwi r5, 0
@@ -740,99 +739,114 @@ invoke__25MizuGenSpringPuffCallBackFPQ23zen17particleGenerator:
 /* 8017C2BC 0017921C  38 60 00 01 */	li r3, 1
 /* 8017C2C0 00179220  38 21 00 40 */	addi r1, r1, 0x40
 /* 8017C2C4 00179224  4E 80 00 20 */	blr 
+.endfn invoke__25MizuGenSpringPuffCallBackFPQ23zen17particleGenerator
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802D1850:
+.obj lbl_802D1850, local
 	.asciz "MizuAi.cpp"
+.endobj lbl_802D1850
 .balign 4
-lbl_802D185C:
+.obj lbl_802D185C, local
 	.asciz "Interaction"
+.endobj lbl_802D185C
 .balign 4
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
+.skip 0x2C # compiler padding
 .balign 4
-lbl_802D1894:
+.obj lbl_802D1894, local
 	.asciz "PaniAnimKeyListener"
+.endobj lbl_802D1894
 .balign 4
-lbl_802D18A8:
+.obj lbl_802D18A8, local
 	.4byte __RTTI__19PaniAnimKeyListener
 	.4byte 0
 	.4byte 0
-.global __vt__6MizuAi
-__vt__6MizuAi:
+.endobj lbl_802D18A8
+.balign 4
+.obj __vt__6MizuAi, global
 	.4byte __RTTI__6MizuAi
 	.4byte 0
 	.4byte animationKeyUpdated__6MizuAiFR16PaniAnimKeyEvent
+.endobj __vt__6MizuAi
 .balign 4
-lbl_802D18C0:
+.obj lbl_802D18C0, local
 	.asciz "MizuGenSpringPuffCallBack"
+.endobj lbl_802D18C0
 .balign 4
-lbl_802D18DC:
+.obj lbl_802D18DC, local
 	.asciz "zen::CallBack1<zen::particleGenerator *>"
+.endobj lbl_802D18DC
 .balign 4
-lbl_802D1908:
+.obj lbl_802D1908, local
 	.4byte "__RTTI__Q23zen37CallBack1<PQ23zen17particleGenerator>"
 	.4byte 0
 	.4byte 0
-.global __vt__25MizuGenSpringPuffCallBack
-__vt__25MizuGenSpringPuffCallBack:
+.endobj lbl_802D1908
+.balign 4
+.obj __vt__25MizuGenSpringPuffCallBack, weak
 	.4byte __RTTI__25MizuGenSpringPuffCallBack
 	.4byte 0
 	.4byte invoke__25MizuGenSpringPuffCallBackFPQ23zen17particleGenerator
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
+.endobj __vt__25MizuGenSpringPuffCallBack
+.balign 4
+.skip 0x18 # compiler padding
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-lbl_803E5578:
+.obj lbl_803E5578, local
 	.asciz "MizuAi"
+.endobj lbl_803E5578
 .balign 4
-lbl_803E5580:
+.obj lbl_803E5580, local
 	.float 0.0
-lbl_803E5584:
+.endobj lbl_803E5580
+.obj lbl_803E5584, local
 	.float 1.0
-lbl_803E5588:
+.endobj lbl_803E5584
+.obj lbl_803E5588, local
 	.float 0.0
-lbl_803E558C:
+.endobj lbl_803E5588
+.obj lbl_803E558C, local
 	.float 0.0
-__RTTI__19PaniAnimKeyListener:
+.endobj lbl_803E558C
+.balign 4
+.obj __RTTI__19PaniAnimKeyListener, local
 	.4byte lbl_802D1894
-	.4byte 0x00000000
-__RTTI__6MizuAi:
+	.4byte 0
+.endobj __RTTI__19PaniAnimKeyListener
+.balign 4
+.obj __RTTI__6MizuAi, local
 	.4byte lbl_803E5578
 	.4byte lbl_802D18A8
-"__RTTI__Q23zen37CallBack1<PQ23zen17particleGenerator>":
+.endobj __RTTI__6MizuAi
+.balign 4
+.obj "__RTTI__Q23zen37CallBack1<PQ23zen17particleGenerator>", local
 	.4byte lbl_802D18DC
 	.4byte 0
-__RTTI__25MizuGenSpringPuffCallBack:
+.endobj "__RTTI__Q23zen37CallBack1<PQ23zen17particleGenerator>"
+.balign 4
+.obj __RTTI__25MizuGenSpringPuffCallBack, local
 	.4byte lbl_802D18C0
 	.4byte lbl_802D1908
+.endobj __RTTI__25MizuGenSpringPuffCallBack
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803EB0A0:
+.obj lbl_803EB0A0, local
 	.float 30.0
-lbl_803EB0A4:
+.endobj lbl_803EB0A0
+.obj lbl_803EB0A4, local
 	.float 4.0
-lbl_803EB0A8:
+.endobj lbl_803EB0A4
+.obj lbl_803EB0A8, local
 	.float 0.0
-lbl_803EB0AC:
+.endobj lbl_803EB0A8
+.obj lbl_803EB0AC, local
 	.float 7.5
-lbl_803EB0B0:
+.endobj lbl_803EB0AC
+.obj lbl_803EB0B0, local
 	.float 10.0
-lbl_803EB0B4:
+.endobj lbl_803EB0B0
+.obj lbl_803EB0B4, local
 	.float 3.0
+.endobj lbl_803EB0B4
