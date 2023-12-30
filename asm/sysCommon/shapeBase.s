@@ -14012,7 +14012,7 @@ lbl_constructor:
 .obj lbl_803E8518, local
 	.float 0.5
 .endobj lbl_803E8518
-.obj lbl_803E851C, local
+.obj lbl_803E851C, local # 1 * 2^-10
 	.float 9.765625E-4
 .endobj lbl_803E851C
 .obj lbl_803E8520, local

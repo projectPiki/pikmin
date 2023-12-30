@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global actPiki__12InteractBombFP4Piki
-actPiki__12InteractBombFP4Piki:
+.fn actPiki__12InteractBombFP4Piki, global
 /* 8007B7C8 00078728  7C 08 02 A6 */	mflr r0
 /* 8007B7CC 0007872C  90 01 00 04 */	stw r0, 4(r1)
 /* 8007B7D0 00078730  94 21 FF 90 */	stwu r1, -0x70(r1)
@@ -113,9 +112,9 @@ actPiki__12InteractBombFP4Piki:
 /* 8007B95C 000788BC  38 21 00 70 */	addi r1, r1, 0x70
 /* 8007B960 000788C0  7C 08 03 A6 */	mtlr r0
 /* 8007B964 000788C4  4E 80 00 20 */	blr 
+.endfn actPiki__12InteractBombFP4Piki
 
-.global actPiki__12InteractBuryFP4Piki
-actPiki__12InteractBuryFP4Piki:
+.fn actPiki__12InteractBuryFP4Piki, global
 /* 8007B968 000788C8  7C 08 02 A6 */	mflr r0
 /* 8007B96C 000788CC  90 01 00 04 */	stw r0, 4(r1)
 /* 8007B970 000788D0  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -169,9 +168,9 @@ actPiki__12InteractBuryFP4Piki:
 /* 8007BA1C 0007897C  38 21 00 18 */	addi r1, r1, 0x18
 /* 8007BA20 00078980  7C 08 03 A6 */	mtlr r0
 /* 8007BA24 00078984  4E 80 00 20 */	blr 
+.endfn actPiki__12InteractBuryFP4Piki
 
-.global actPiki__17InteractThrowAwayFP4Piki
-actPiki__17InteractThrowAwayFP4Piki:
+.fn actPiki__17InteractThrowAwayFP4Piki, global
 /* 8007BA28 00078988  7C 08 02 A6 */	mflr r0
 /* 8007BA2C 0007898C  90 01 00 04 */	stw r0, 4(r1)
 /* 8007BA30 00078990  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -201,9 +200,9 @@ actPiki__17InteractThrowAwayFP4Piki:
 /* 8007BA88 000789E8  38 21 00 18 */	addi r1, r1, 0x18
 /* 8007BA8C 000789EC  7C 08 03 A6 */	mtlr r0
 /* 8007BA90 000789F0  4E 80 00 20 */	blr 
+.endfn actPiki__17InteractThrowAwayFP4Piki
 
-.global actPiki__19InteractChangeColorFP4Piki
-actPiki__19InteractChangeColorFP4Piki:
+.fn actPiki__19InteractChangeColorFP4Piki, global
 /* 8007BA94 000789F4  7C 08 02 A6 */	mflr r0
 /* 8007BA98 000789F8  90 01 00 04 */	stw r0, 4(r1)
 /* 8007BA9C 000789FC  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -238,13 +237,13 @@ actPiki__19InteractChangeColorFP4Piki:
 /* 8007BB08 00078A68  38 21 00 18 */	addi r1, r1, 0x18
 /* 8007BB0C 00078A6C  7C 08 03 A6 */	mtlr r0
 /* 8007BB10 00078A70  4E 80 00 20 */	blr 
+.endfn actPiki__19InteractChangeColorFP4Piki
 
-.global changeShape__4PikiFi
-changeShape__4PikiFi:
+.fn changeShape__4PikiFi, weak
 /* 8007BB14 00078A74  4E 80 00 20 */	blr 
+.endfn changeShape__4PikiFi
 
-.global actPiki__19InteractChangeHappaFP4Piki
-actPiki__19InteractChangeHappaFP4Piki:
+.fn actPiki__19InteractChangeHappaFP4Piki, global
 /* 8007BB18 00078A78  7C 08 02 A6 */	mflr r0
 /* 8007BB1C 00078A7C  90 01 00 04 */	stw r0, 4(r1)
 /* 8007BB20 00078A80  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -276,13 +275,13 @@ actPiki__19InteractChangeHappaFP4Piki:
 /* 8007BB80 00078AE0  38 21 00 18 */	addi r1, r1, 0x18
 /* 8007BB84 00078AE4  7C 08 03 A6 */	mtlr r0
 /* 8007BB88 00078AE8  4E 80 00 20 */	blr 
+.endfn actPiki__19InteractChangeHappaFP4Piki
 
-.global setFlower__4PikiFi
-setFlower__4PikiFi:
+.fn setFlower__4PikiFi, weak
 /* 8007BB8C 00078AEC  4E 80 00 20 */	blr 
+.endfn setFlower__4PikiFi
 
-.global actPiki__13InteractSporeFP4Piki
-actPiki__13InteractSporeFP4Piki:
+.fn actPiki__13InteractSporeFP4Piki, global
 /* 8007BB90 00078AF0  7C 08 02 A6 */	mflr r0
 /* 8007BB94 00078AF4  90 01 00 04 */	stw r0, 4(r1)
 /* 8007BB98 00078AF8  94 21 FF D0 */	stwu r1, -0x30(r1)
@@ -359,9 +358,9 @@ actPiki__13InteractSporeFP4Piki:
 /* 8007BCA4 00078C04  38 21 00 30 */	addi r1, r1, 0x30
 /* 8007BCA8 00078C08  7C 08 03 A6 */	mtlr r0
 /* 8007BCAC 00078C0C  4E 80 00 20 */	blr 
+.endfn actPiki__13InteractSporeFP4Piki
 
-.global actPiki__14InteractBubbleFP4Piki
-actPiki__14InteractBubbleFP4Piki:
+.fn actPiki__14InteractBubbleFP4Piki, global
 /* 8007BCB0 00078C10  7C 08 02 A6 */	mflr r0
 /* 8007BCB4 00078C14  90 01 00 04 */	stw r0, 4(r1)
 /* 8007BCB8 00078C18  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -412,9 +411,9 @@ actPiki__14InteractBubbleFP4Piki:
 /* 8007BD58 00078CB8  38 21 00 18 */	addi r1, r1, 0x18
 /* 8007BD5C 00078CBC  7C 08 03 A6 */	mtlr r0
 /* 8007BD60 00078CC0  4E 80 00 20 */	blr 
+.endfn actPiki__14InteractBubbleFP4Piki
 
-.global actPiki__12InteractFireFP4Piki
-actPiki__12InteractFireFP4Piki:
+.fn actPiki__12InteractFireFP4Piki, global
 /* 8007BD64 00078CC4  7C 08 02 A6 */	mflr r0
 /* 8007BD68 00078CC8  90 01 00 04 */	stw r0, 4(r1)
 /* 8007BD6C 00078CCC  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -449,14 +448,14 @@ actPiki__12InteractFireFP4Piki:
 /* 8007BDD4 00078D34  38 21 00 18 */	addi r1, r1, 0x18
 /* 8007BDD8 00078D38  7C 08 03 A6 */	mtlr r0
 /* 8007BDDC 00078D3C  4E 80 00 20 */	blr 
+.endfn actPiki__12InteractFireFP4Piki
 
-.global actCommon__12InteractWindFP8Creature
-actCommon__12InteractWindFP8Creature:
+.fn actCommon__12InteractWindFP8Creature, global
 /* 8007BDE0 00078D40  38 60 00 01 */	li r3, 1
 /* 8007BDE4 00078D44  4E 80 00 20 */	blr 
+.endfn actCommon__12InteractWindFP8Creature
 
-.global actPiki__12InteractWindFP4Piki
-actPiki__12InteractWindFP4Piki:
+.fn actPiki__12InteractWindFP4Piki, global
 /* 8007BDE8 00078D48  7C 08 02 A6 */	mflr r0
 /* 8007BDEC 00078D4C  90 01 00 04 */	stw r0, 4(r1)
 /* 8007BDF0 00078D50  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -530,9 +529,9 @@ actPiki__12InteractWindFP4Piki:
 /* 8007BEE4 00078E44  38 21 00 18 */	addi r1, r1, 0x18
 /* 8007BEE8 00078E48  7C 08 03 A6 */	mtlr r0
 /* 8007BEEC 00078E4C  4E 80 00 20 */	blr 
+.endfn actPiki__12InteractWindFP4Piki
 
-.global actCommon__13InteractFlickFP8Creature
-actCommon__13InteractFlickFP8Creature:
+.fn actCommon__13InteractFlickFP8Creature, global
 /* 8007BEF0 00078E50  7C 08 02 A6 */	mflr r0
 /* 8007BEF4 00078E54  90 01 00 04 */	stw r0, 4(r1)
 /* 8007BEF8 00078E58  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -558,9 +557,9 @@ actCommon__13InteractFlickFP8Creature:
 /* 8007BF40 00078EA0  38 21 00 20 */	addi r1, r1, 0x20
 /* 8007BF44 00078EA4  7C 08 03 A6 */	mtlr r0
 /* 8007BF48 00078EA8  4E 80 00 20 */	blr 
+.endfn actCommon__13InteractFlickFP8Creature
 
-.global actPiki__13InteractFlickFP4Piki
-actPiki__13InteractFlickFP4Piki:
+.fn actPiki__13InteractFlickFP4Piki, global
 /* 8007BF4C 00078EAC  7C 08 02 A6 */	mflr r0
 /* 8007BF50 00078EB0  90 01 00 04 */	stw r0, 4(r1)
 /* 8007BF54 00078EB4  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -625,14 +624,14 @@ actPiki__13InteractFlickFP4Piki:
 /* 8007C02C 00078F8C  38 21 00 20 */	addi r1, r1, 0x20
 /* 8007C030 00078F90  7C 08 03 A6 */	mtlr r0
 /* 8007C034 00078F94  4E 80 00 20 */	blr 
+.endfn actPiki__13InteractFlickFP4Piki
 
-.global actCommon__19InteractSlimeAttackFP8Creature
-actCommon__19InteractSlimeAttackFP8Creature:
+.fn actCommon__19InteractSlimeAttackFP8Creature, global
 /* 8007C038 00078F98  38 60 00 01 */	li r3, 1
 /* 8007C03C 00078F9C  4E 80 00 20 */	blr 
+.endfn actCommon__19InteractSlimeAttackFP8Creature
 
-.global getDamagePortion__14InteractAttackFv
-getDamagePortion__14InteractAttackFv:
+.fn getDamagePortion__14InteractAttackFv, global
 /* 8007C040 00078FA0  7C 08 02 A6 */	mflr r0
 /* 8007C044 00078FA4  90 01 00 04 */	stw r0, 4(r1)
 /* 8007C048 00078FA8  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -743,9 +742,9 @@ getDamagePortion__14InteractAttackFv:
 /* 8007C1C0 00079120  38 21 00 20 */	addi r1, r1, 0x20
 /* 8007C1C4 00079124  7C 08 03 A6 */	mtlr r0
 /* 8007C1C8 00079128  4E 80 00 20 */	blr 
+.endfn getDamagePortion__14InteractAttackFv
 
-.global actCommon__14InteractAttackFP8Creature
-actCommon__14InteractAttackFP8Creature:
+.fn actCommon__14InteractAttackFP8Creature, global
 /* 8007C1CC 0007912C  7C 08 02 A6 */	mflr r0
 /* 8007C1D0 00079130  7C 83 23 78 */	mr r3, r4
 /* 8007C1D4 00079134  90 01 00 04 */	stw r0, 4(r1)
@@ -765,14 +764,14 @@ actCommon__14InteractAttackFP8Creature:
 /* 8007C204 00079164  38 21 00 08 */	addi r1, r1, 8
 /* 8007C208 00079168  7C 08 03 A6 */	mtlr r0
 /* 8007C20C 0007916C  4E 80 00 20 */	blr 
+.endfn actCommon__14InteractAttackFP8Creature
 
-.global isVisible__8CreatureFv
-isVisible__8CreatureFv:
+.fn isVisible__8CreatureFv, weak
 /* 8007C210 00079170  38 60 00 01 */	li r3, 1
 /* 8007C214 00079174  4E 80 00 20 */	blr 
+.endfn isVisible__8CreatureFv
 
-.global actPiki__14InteractAttackFP4Piki
-actPiki__14InteractAttackFP4Piki:
+.fn actPiki__14InteractAttackFP4Piki, global
 /* 8007C218 00079178  7C 08 02 A6 */	mflr r0
 /* 8007C21C 0007917C  90 01 00 04 */	stw r0, 4(r1)
 /* 8007C220 00079180  94 21 FF C8 */	stwu r1, -0x38(r1)
@@ -879,14 +878,14 @@ actPiki__14InteractAttackFP4Piki:
 /* 8007C394 000792F4  38 21 00 38 */	addi r1, r1, 0x38
 /* 8007C398 000792F8  7C 08 03 A6 */	mtlr r0
 /* 8007C39C 000792FC  4E 80 00 20 */	blr 
+.endfn actPiki__14InteractAttackFP4Piki
 
-.global actCommon__15InteractSwallowFP8Creature
-actCommon__15InteractSwallowFP8Creature:
+.fn actCommon__15InteractSwallowFP8Creature, global
 /* 8007C3A0 00079300  38 60 00 01 */	li r3, 1
 /* 8007C3A4 00079304  4E 80 00 20 */	blr 
+.endfn actCommon__15InteractSwallowFP8Creature
 
-.global actPiki__15InteractSwallowFP4Piki
-actPiki__15InteractSwallowFP4Piki:
+.fn actPiki__15InteractSwallowFP4Piki, global
 /* 8007C3A8 00079308  7C 08 02 A6 */	mflr r0
 /* 8007C3AC 0007930C  90 01 00 04 */	stw r0, 4(r1)
 /* 8007C3B0 00079310  94 21 FF 88 */	stwu r1, -0x78(r1)
@@ -1093,14 +1092,14 @@ actPiki__15InteractSwallowFP4Piki:
 /* 8007C68C 000795EC  38 21 00 78 */	addi r1, r1, 0x78
 /* 8007C690 000795F0  7C 08 03 A6 */	mtlr r0
 /* 8007C694 000795F4  4E 80 00 20 */	blr 
+.endfn actPiki__15InteractSwallowFP4Piki
 
-.global satisfy__9ConditionFP8Creature
-satisfy__9ConditionFP8Creature:
+.fn satisfy__9ConditionFP8Creature, weak
 /* 8007C698 000795F8  38 60 00 01 */	li r3, 1
 /* 8007C69C 000795FC  4E 80 00 20 */	blr 
+.endfn satisfy__9ConditionFP8Creature
 
-.global actPiki__12InteractKillFP4Piki
-actPiki__12InteractKillFP4Piki:
+.fn actPiki__12InteractKillFP4Piki, global
 /* 8007C6A0 00079600  7C 08 02 A6 */	mflr r0
 /* 8007C6A4 00079604  90 01 00 04 */	stw r0, 4(r1)
 /* 8007C6A8 00079608  94 21 FF F8 */	stwu r1, -8(r1)
@@ -1121,9 +1120,9 @@ actPiki__12InteractKillFP4Piki:
 /* 8007C6DC 0007963C  38 21 00 08 */	addi r1, r1, 8
 /* 8007C6E0 00079640  7C 08 03 A6 */	mtlr r0
 /* 8007C6E4 00079644  4E 80 00 20 */	blr 
+.endfn actPiki__12InteractKillFP4Piki
 
-.global actNavi__12InteractKillFP4Navi
-actNavi__12InteractKillFP4Navi:
+.fn actNavi__12InteractKillFP4Navi, global
 /* 8007C6E8 00079648  7C 08 02 A6 */	mflr r0
 /* 8007C6EC 0007964C  38 64 00 00 */	addi r3, r4, 0
 /* 8007C6F0 00079650  90 01 00 04 */	stw r0, 4(r1)
@@ -1135,9 +1134,9 @@ actNavi__12InteractKillFP4Navi:
 /* 8007C708 00079668  38 21 00 08 */	addi r1, r1, 8
 /* 8007C70C 0007966C  7C 08 03 A6 */	mtlr r0
 /* 8007C710 00079670  4E 80 00 20 */	blr 
+.endfn actNavi__12InteractKillFP4Navi
 
-.global actPiki__13InteractPressFP4Piki
-actPiki__13InteractPressFP4Piki:
+.fn actPiki__13InteractPressFP4Piki, global
 /* 8007C714 00079674  7C 08 02 A6 */	mflr r0
 /* 8007C718 00079678  90 01 00 04 */	stw r0, 4(r1)
 /* 8007C71C 0007967C  94 21 FF C0 */	stwu r1, -0x40(r1)
@@ -1219,77 +1218,83 @@ actPiki__13InteractPressFP4Piki:
 /* 8007C840 000797A0  38 21 00 40 */	addi r1, r1, 0x40
 /* 8007C844 000797A4  7C 08 03 A6 */	mtlr r0
 /* 8007C848 000797A8  4E 80 00 20 */	blr 
+.endfn actPiki__13InteractPressFP4Piki
 
-.global actTeki__13InteractFluteFP4Teki
-actTeki__13InteractFluteFP4Teki:
+.fn actTeki__13InteractFluteFP4Teki, global
 /* 8007C84C 000797AC  38 60 00 01 */	li r3, 1
 /* 8007C850 000797B0  4E 80 00 20 */	blr 
+.endfn actTeki__13InteractFluteFP4Teki
 
-.global actCommon__11InteractionFP8Creature
-actCommon__11InteractionFP8Creature:
+.fn actCommon__11InteractionFP8Creature, weak
 /* 8007C854 000797B4  38 60 00 01 */	li r3, 1
 /* 8007C858 000797B8  4E 80 00 20 */	blr 
+.endfn actCommon__11InteractionFP8Creature
 
-.global actPiki__11InteractionFP4Piki
-actPiki__11InteractionFP4Piki:
+.fn actPiki__11InteractionFP4Piki, weak
 /* 8007C85C 000797BC  38 60 00 01 */	li r3, 1
 /* 8007C860 000797C0  4E 80 00 20 */	blr 
+.endfn actPiki__11InteractionFP4Piki
 
-.global actNavi__11InteractionFP4Navi
-actNavi__11InteractionFP4Navi:
+.fn actNavi__11InteractionFP4Navi, weak
 /* 8007C864 000797C4  38 60 00 01 */	li r3, 1
 /* 8007C868 000797C8  4E 80 00 20 */	blr 
+.endfn actNavi__11InteractionFP4Navi
 
-.global actBoss__11InteractionFP4Boss
-actBoss__11InteractionFP4Boss:
+.fn actBoss__11InteractionFP4Boss, weak
 /* 8007C86C 000797CC  38 60 00 01 */	li r3, 1
 /* 8007C870 000797D0  4E 80 00 20 */	blr 
+.endfn actBoss__11InteractionFP4Boss
 
-.global actPellet__11InteractionFP6Pellet
-actPellet__11InteractionFP6Pellet:
+.fn actPellet__11InteractionFP6Pellet, weak
 /* 8007C874 000797D4  38 60 00 01 */	li r3, 1
 /* 8007C878 000797D8  4E 80 00 20 */	blr 
+.endfn actPellet__11InteractionFP6Pellet
 
-.global actHinderRock__11InteractionFP10HinderRock
-actHinderRock__11InteractionFP10HinderRock:
+.fn actHinderRock__11InteractionFP10HinderRock, weak
 /* 8007C87C 000797DC  38 60 00 01 */	li r3, 1
 /* 8007C880 000797E0  4E 80 00 20 */	blr 
+.endfn actHinderRock__11InteractionFP10HinderRock
 
-.global actBridge__11InteractionFP6Bridge
-actBridge__11InteractionFP6Bridge:
+.fn actBridge__11InteractionFP6Bridge, weak
 /* 8007C884 000797E4  38 60 00 01 */	li r3, 1
 /* 8007C888 000797E8  4E 80 00 20 */	blr 
+.endfn actBridge__11InteractionFP6Bridge
 
-.global actItem__11InteractionFP12ItemCreature
-actItem__11InteractionFP12ItemCreature:
+.fn actItem__11InteractionFP12ItemCreature, weak
 /* 8007C88C 000797EC  38 60 00 01 */	li r3, 1
 /* 8007C890 000797F0  4E 80 00 20 */	blr 
+.endfn actItem__11InteractionFP12ItemCreature
 
-.global actTeki__11InteractionFP4Teki
-actTeki__11InteractionFP4Teki:
+.fn actTeki__11InteractionFP4Teki, weak
 /* 8007C894 000797F4  38 60 00 01 */	li r3, 1
 /* 8007C898 000797F8  4E 80 00 20 */	blr 
+.endfn actTeki__11InteractionFP4Teki
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802ACC98:
+.obj lbl_802ACC98, local
 	.asciz "interactBattle.cpp"
+.endobj lbl_802ACC98
 .balign 4
-lbl_802ACCAC:
+.obj lbl_802ACCAC, local
 	.asciz "interactBattle"
+.endobj lbl_802ACCAC
 .balign 4
-lbl_802ACCBC:
+.obj lbl_802ACCBC, local
 	.asciz "InteractFlute"
+.endobj lbl_802ACCBC
 .balign 4
-lbl_802ACCCC:
+.obj lbl_802ACCCC, local
 	.asciz "Interaction"
+.endobj lbl_802ACCCC
 .balign 4
-lbl_802ACCD8:
+.obj lbl_802ACCD8, local
 	.4byte __RTTI__11Interaction
 	.4byte 0
 	.4byte 0
-.global __vt__13InteractFlute
-__vt__13InteractFlute:
+.endobj lbl_802ACCD8
+.balign 4
+.obj __vt__13InteractFlute, global
 	.4byte __RTTI__13InteractFlute
 	.4byte 0
 	.4byte actCommon__11InteractionFP8Creature
@@ -1301,16 +1306,19 @@ __vt__13InteractFlute:
 	.4byte actHinderRock__11InteractionFP10HinderRock
 	.4byte actBridge__11InteractionFP6Bridge
 	.4byte actItem__11InteractionFP12ItemCreature
+.endobj __vt__13InteractFlute
 .balign 4
-lbl_802ACD10:
+.obj lbl_802ACD10, local
 	.asciz "InteractPress"
+.endobj lbl_802ACD10
 .balign 4
-lbl_802ACD20:
+.obj lbl_802ACD20, local
 	.4byte __RTTI__11Interaction
 	.4byte 0
 	.4byte 0
-.global __vt__13InteractPress
-__vt__13InteractPress:
+.endobj lbl_802ACD20
+.balign 4
+.obj __vt__13InteractPress, global
 	.4byte __RTTI__13InteractPress
 	.4byte 0
 	.4byte actCommon__11InteractionFP8Creature
@@ -1322,16 +1330,19 @@ __vt__13InteractPress:
 	.4byte actHinderRock__11InteractionFP10HinderRock
 	.4byte actBridge__11InteractionFP6Bridge
 	.4byte actItem__11InteractionFP12ItemCreature
+.endobj __vt__13InteractPress
 .balign 4
-lbl_802ACD58:
+.obj lbl_802ACD58, local
 	.asciz "InteractKill"
+.endobj lbl_802ACD58
 .balign 4
-lbl_802ACD68:
+.obj lbl_802ACD68, local
 	.4byte __RTTI__11Interaction
 	.4byte 0
 	.4byte 0
-.global __vt__12InteractKill
-__vt__12InteractKill:
+.endobj lbl_802ACD68
+.balign 4
+.obj __vt__12InteractKill, global
 	.4byte __RTTI__12InteractKill
 	.4byte 0
 	.4byte actCommon__11InteractionFP8Creature
@@ -1343,16 +1354,19 @@ __vt__12InteractKill:
 	.4byte actHinderRock__11InteractionFP10HinderRock
 	.4byte actBridge__11InteractionFP6Bridge
 	.4byte actItem__11InteractionFP12ItemCreature
+.endobj __vt__12InteractKill
 .balign 4
-lbl_802ACDA0:
+.obj lbl_802ACDA0, local
 	.asciz "InteractSwallow"
+.endobj lbl_802ACDA0
 .balign 4
-lbl_802ACDB0:
+.obj lbl_802ACDB0, local
 	.4byte __RTTI__11Interaction
 	.4byte 0
 	.4byte 0
-.global __vt__15InteractSwallow
-__vt__15InteractSwallow:
+.endobj lbl_802ACDB0
+.balign 4
+.obj __vt__15InteractSwallow, global
 	.4byte __RTTI__15InteractSwallow
 	.4byte 0
 	.4byte actCommon__15InteractSwallowFP8Creature
@@ -1364,16 +1378,19 @@ __vt__15InteractSwallow:
 	.4byte actHinderRock__11InteractionFP10HinderRock
 	.4byte actBridge__11InteractionFP6Bridge
 	.4byte actItem__15InteractSwallowFP12ItemCreature
+.endobj __vt__15InteractSwallow
 .balign 4
-lbl_802ACDE8:
+.obj lbl_802ACDE8, local
 	.asciz "InteractAttack"
+.endobj lbl_802ACDE8
 .balign 4
-lbl_802ACDF8:
+.obj lbl_802ACDF8, local
 	.4byte __RTTI__11Interaction
 	.4byte 0
 	.4byte 0
-.global __vt__14InteractAttack
-__vt__14InteractAttack:
+.endobj lbl_802ACDF8
+.balign 4
+.obj __vt__14InteractAttack, global
 	.4byte __RTTI__14InteractAttack
 	.4byte 0
 	.4byte actCommon__14InteractAttackFP8Creature
@@ -1385,15 +1402,19 @@ __vt__14InteractAttack:
 	.4byte actHinderRock__11InteractionFP10HinderRock
 	.4byte actBridge__11InteractionFP6Bridge
 	.4byte actItem__14InteractAttackFP12ItemCreature
-lbl_802ACE30:
-	.asciz "InteractSlimeAttack"
+.endobj __vt__14InteractAttack
 .balign 4
-lbl_802ACE44:
+.obj lbl_802ACE30, local
+	.asciz "InteractSlimeAttack"
+.endobj lbl_802ACE30
+.balign 4
+.obj lbl_802ACE44, local
 	.4byte __RTTI__11Interaction
 	.4byte 0
 	.4byte 0
-.global __vt__19InteractSlimeAttack
-__vt__19InteractSlimeAttack:
+.endobj lbl_802ACE44
+.balign 4
+.obj __vt__19InteractSlimeAttack, global
 	.4byte __RTTI__19InteractSlimeAttack
 	.4byte 0
 	.4byte actCommon__19InteractSlimeAttackFP8Creature
@@ -1405,16 +1426,19 @@ __vt__19InteractSlimeAttack:
 	.4byte actHinderRock__11InteractionFP10HinderRock
 	.4byte actBridge__11InteractionFP6Bridge
 	.4byte actItem__11InteractionFP12ItemCreature
+.endobj __vt__19InteractSlimeAttack
 .balign 4
-lbl_802ACE7C:
+.obj lbl_802ACE7C, local
 	.asciz "InteractFlick"
+.endobj lbl_802ACE7C
 .balign 4
-lbl_802ACE8C:
+.obj lbl_802ACE8C, local
 	.4byte __RTTI__11Interaction
 	.4byte 0
 	.4byte 0
-.global __vt__13InteractFlick
-__vt__13InteractFlick:
+.endobj lbl_802ACE8C
+.balign 4
+.obj __vt__13InteractFlick, global
 	.4byte __RTTI__13InteractFlick
 	.4byte 0
 	.4byte actCommon__13InteractFlickFP8Creature
@@ -1426,16 +1450,19 @@ __vt__13InteractFlick:
 	.4byte actHinderRock__11InteractionFP10HinderRock
 	.4byte actBridge__11InteractionFP6Bridge
 	.4byte actItem__13InteractFlickFP12ItemCreature
+.endobj __vt__13InteractFlick
 .balign 4
-lbl_802ACEC4:
+.obj lbl_802ACEC4, local
 	.asciz "InteractWind"
+.endobj lbl_802ACEC4
 .balign 4
-lbl_802ACED4:
+.obj lbl_802ACED4, local
 	.4byte __RTTI__11Interaction
 	.4byte 0
 	.4byte 0
-.global __vt__12InteractWind
-__vt__12InteractWind:
+.endobj lbl_802ACED4
+.balign 4
+.obj __vt__12InteractWind, global
 	.4byte __RTTI__12InteractWind
 	.4byte 0
 	.4byte actCommon__12InteractWindFP8Creature
@@ -1447,16 +1474,19 @@ __vt__12InteractWind:
 	.4byte actHinderRock__11InteractionFP10HinderRock
 	.4byte actBridge__11InteractionFP6Bridge
 	.4byte actItem__11InteractionFP12ItemCreature
+.endobj __vt__12InteractWind
 .balign 4
-lbl_802ACF0C:
+.obj lbl_802ACF0C, local
 	.asciz "InteractFire"
+.endobj lbl_802ACF0C
 .balign 4
-lbl_802ACF1C:
+.obj lbl_802ACF1C, local
 	.4byte __RTTI__11Interaction
 	.4byte 0
 	.4byte 0
-.global __vt__12InteractFire
-__vt__12InteractFire:
+.endobj lbl_802ACF1C
+.balign 4
+.obj __vt__12InteractFire, global
 	.4byte __RTTI__12InteractFire
 	.4byte 0
 	.4byte actCommon__11InteractionFP8Creature
@@ -1468,16 +1498,19 @@ __vt__12InteractFire:
 	.4byte actHinderRock__11InteractionFP10HinderRock
 	.4byte actBridge__11InteractionFP6Bridge
 	.4byte actItem__11InteractionFP12ItemCreature
+.endobj __vt__12InteractFire
 .balign 4
-lbl_802ACF54:
+.obj lbl_802ACF54, local
 	.asciz "InteractBubble"
+.endobj lbl_802ACF54
 .balign 4
-lbl_802ACF64:
+.obj lbl_802ACF64, local
 	.4byte __RTTI__11Interaction
 	.4byte 0
 	.4byte 0
-.global __vt__14InteractBubble
-__vt__14InteractBubble:
+.endobj lbl_802ACF64
+.balign 4
+.obj __vt__14InteractBubble, global
 	.4byte __RTTI__14InteractBubble
 	.4byte 0
 	.4byte actCommon__11InteractionFP8Creature
@@ -1489,8 +1522,9 @@ __vt__14InteractBubble:
 	.4byte actHinderRock__11InteractionFP10HinderRock
 	.4byte actBridge__11InteractionFP6Bridge
 	.4byte actItem__11InteractionFP12ItemCreature
-.global __vt__11Interaction
-__vt__11Interaction:
+.endobj __vt__14InteractBubble
+.balign 4
+.obj __vt__11Interaction, weak
 	.4byte __RTTI__11Interaction
 	.4byte 0
 	.4byte actCommon__11InteractionFP8Creature
@@ -1502,16 +1536,19 @@ __vt__11Interaction:
 	.4byte actHinderRock__11InteractionFP10HinderRock
 	.4byte actBridge__11InteractionFP6Bridge
 	.4byte actItem__11InteractionFP12ItemCreature
+.endobj __vt__11Interaction
 .balign 4
-lbl_802ACFC8:
+.obj lbl_802ACFC8, local
 	.asciz "InteractSpore"
+.endobj lbl_802ACFC8
 .balign 4
-lbl_802ACFD8:
+.obj lbl_802ACFD8, local
 	.4byte __RTTI__11Interaction
 	.4byte 0
 	.4byte 0
-.global __vt__13InteractSpore
-__vt__13InteractSpore:
+.endobj lbl_802ACFD8
+.balign 4
+.obj __vt__13InteractSpore, global
 	.4byte __RTTI__13InteractSpore
 	.4byte 0
 	.4byte actCommon__11InteractionFP8Creature
@@ -1523,16 +1560,19 @@ __vt__13InteractSpore:
 	.4byte actHinderRock__11InteractionFP10HinderRock
 	.4byte actBridge__11InteractionFP6Bridge
 	.4byte actItem__11InteractionFP12ItemCreature
+.endobj __vt__13InteractSpore
 .balign 4
-lbl_802AD010:
+.obj lbl_802AD010, local
 	.asciz "InteractChangeHappa"
+.endobj lbl_802AD010
 .balign 4
-lbl_802AD024:
+.obj lbl_802AD024, local
 	.4byte __RTTI__11Interaction
 	.4byte 0
 	.4byte 0
-.global __vt__19InteractChangeHappa
-__vt__19InteractChangeHappa:
+.endobj lbl_802AD024
+.balign 4
+.obj __vt__19InteractChangeHappa, global
 	.4byte __RTTI__19InteractChangeHappa
 	.4byte 0
 	.4byte actCommon__11InteractionFP8Creature
@@ -1544,16 +1584,19 @@ __vt__19InteractChangeHappa:
 	.4byte actHinderRock__11InteractionFP10HinderRock
 	.4byte actBridge__11InteractionFP6Bridge
 	.4byte actItem__11InteractionFP12ItemCreature
+.endobj __vt__19InteractChangeHappa
 .balign 4
-lbl_802AD05C:
+.obj lbl_802AD05C, local
 	.asciz "InteractChangeColor"
+.endobj lbl_802AD05C
 .balign 4
-lbl_802AD070:
+.obj lbl_802AD070, local
 	.4byte __RTTI__11Interaction
 	.4byte 0
 	.4byte 0
-.global __vt__19InteractChangeColor
-__vt__19InteractChangeColor:
+.endobj lbl_802AD070
+.balign 4
+.obj __vt__19InteractChangeColor, global
 	.4byte __RTTI__19InteractChangeColor
 	.4byte 0
 	.4byte actCommon__11InteractionFP8Creature
@@ -1565,16 +1608,19 @@ __vt__19InteractChangeColor:
 	.4byte actHinderRock__11InteractionFP10HinderRock
 	.4byte actBridge__11InteractionFP6Bridge
 	.4byte actItem__11InteractionFP12ItemCreature
+.endobj __vt__19InteractChangeColor
 .balign 4
-lbl_802AD0A8:
+.obj lbl_802AD0A8, local
 	.asciz "InteractThrowAway"
+.endobj lbl_802AD0A8
 .balign 4
-lbl_802AD0BC:
+.obj lbl_802AD0BC, local
 	.4byte __RTTI__11Interaction
 	.4byte 0
 	.4byte 0
-.global __vt__17InteractThrowAway
-__vt__17InteractThrowAway:
+.endobj lbl_802AD0BC
+.balign 4
+.obj __vt__17InteractThrowAway, global
 	.4byte __RTTI__17InteractThrowAway
 	.4byte 0
 	.4byte actCommon__11InteractionFP8Creature
@@ -1586,16 +1632,19 @@ __vt__17InteractThrowAway:
 	.4byte actHinderRock__11InteractionFP10HinderRock
 	.4byte actBridge__11InteractionFP6Bridge
 	.4byte actItem__11InteractionFP12ItemCreature
+.endobj __vt__17InteractThrowAway
 .balign 4
-lbl_802AD0F4:
+.obj lbl_802AD0F4, local
 	.asciz "InteractBury"
+.endobj lbl_802AD0F4
 .balign 4
-lbl_802AD104:
+.obj lbl_802AD104, local
 	.4byte __RTTI__11Interaction
 	.4byte 0
 	.4byte 0
-.global __vt__12InteractBury
-__vt__12InteractBury:
+.endobj lbl_802AD104
+.balign 4
+.obj __vt__12InteractBury, global
 	.4byte __RTTI__12InteractBury
 	.4byte 0
 	.4byte actCommon__11InteractionFP8Creature
@@ -1607,77 +1656,120 @@ __vt__12InteractBury:
 	.4byte actHinderRock__11InteractionFP10HinderRock
 	.4byte actBridge__11InteractionFP6Bridge
 	.4byte actItem__11InteractionFP12ItemCreature
+.endobj __vt__12InteractBury
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-lbl_803DE930:
+.obj lbl_803DE930, local
 	.float 0.0
-lbl_803DE934:
+.endobj lbl_803DE930
+.obj lbl_803DE934, local
 	.float 0.0
-lbl_803DE938:
+.endobj lbl_803DE934
+.obj lbl_803DE938, local
 	.float 0.0
-lbl_803DE93C:
+.endobj lbl_803DE938
+.obj lbl_803DE93C, local
 	.float 0.0
-lbl_803DE940:
+.endobj lbl_803DE93C
+.obj lbl_803DE940, local
 	.float 0.0
-lbl_803DE944:
+.endobj lbl_803DE940
+.obj lbl_803DE944, local
 	.float 0.0
-__RTTI__11Interaction:
+.endobj lbl_803DE944
+.balign 4
+.obj __RTTI__11Interaction, local
 	.4byte lbl_802ACCCC
 	.4byte 0
-__RTTI__13InteractFlute:
+.endobj __RTTI__11Interaction
+.balign 4
+.obj __RTTI__13InteractFlute, local
 	.4byte lbl_802ACCBC
 	.4byte lbl_802ACCD8
-__RTTI__13InteractPress:
+.endobj __RTTI__13InteractFlute
+.balign 4
+.obj __RTTI__13InteractPress, local
 	.4byte lbl_802ACD10
 	.4byte lbl_802ACD20
-__RTTI__12InteractKill:
+.endobj __RTTI__13InteractPress
+.balign 4
+.obj __RTTI__12InteractKill, local
 	.4byte lbl_802ACD58
 	.4byte lbl_802ACD68
-__RTTI__15InteractSwallow:
+.endobj __RTTI__12InteractKill
+.balign 4
+.obj __RTTI__15InteractSwallow, local
 	.4byte lbl_802ACDA0
 	.4byte lbl_802ACDB0
-__RTTI__14InteractAttack:
+.endobj __RTTI__15InteractSwallow
+.balign 4
+.obj __RTTI__14InteractAttack, local
 	.4byte lbl_802ACDE8
 	.4byte lbl_802ACDF8
-__RTTI__19InteractSlimeAttack:
+.endobj __RTTI__14InteractAttack
+.balign 4
+.obj __RTTI__19InteractSlimeAttack, local
 	.4byte lbl_802ACE30
 	.4byte lbl_802ACE44
-__RTTI__13InteractFlick:
+.endobj __RTTI__19InteractSlimeAttack
+.balign 4
+.obj __RTTI__13InteractFlick, local
 	.4byte lbl_802ACE7C
 	.4byte lbl_802ACE8C
-__RTTI__12InteractWind:
+.endobj __RTTI__13InteractFlick
+.balign 4
+.obj __RTTI__12InteractWind, local
 	.4byte lbl_802ACEC4
 	.4byte lbl_802ACED4
-__RTTI__12InteractFire:
+.endobj __RTTI__12InteractWind
+.balign 4
+.obj __RTTI__12InteractFire, local
 	.4byte lbl_802ACF0C
 	.4byte lbl_802ACF1C
-__RTTI__14InteractBubble:
+.endobj __RTTI__12InteractFire
+.balign 4
+.obj __RTTI__14InteractBubble, local
 	.4byte lbl_802ACF54
 	.4byte lbl_802ACF64
-__RTTI__13InteractSpore:
+.endobj __RTTI__14InteractBubble
+.balign 4
+.obj __RTTI__13InteractSpore, local
 	.4byte lbl_802ACFC8
 	.4byte lbl_802ACFD8
-__RTTI__19InteractChangeHappa:
+.endobj __RTTI__13InteractSpore
+.balign 4
+.obj __RTTI__19InteractChangeHappa, local
 	.4byte lbl_802AD010
 	.4byte lbl_802AD024
-__RTTI__19InteractChangeColor:
+.endobj __RTTI__19InteractChangeHappa
+.balign 4
+.obj __RTTI__19InteractChangeColor, local
 	.4byte lbl_802AD05C
 	.4byte lbl_802AD070
-__RTTI__17InteractThrowAway:
+.endobj __RTTI__19InteractChangeColor
+.balign 4
+.obj __RTTI__17InteractThrowAway, local
 	.4byte lbl_802AD0A8
 	.4byte lbl_802AD0BC
-__RTTI__12InteractBury:
+.endobj __RTTI__17InteractThrowAway
+.balign 4
+.obj __RTTI__12InteractBury, local
 	.4byte lbl_802AD0F4
 	.4byte lbl_802AD104
+.endobj __RTTI__12InteractBury
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803E8B48:
+.obj lbl_803E8B48, local
 	.float 0.0
-lbl_803E8B4C:
+.endobj lbl_803E8B48
+.obj lbl_803E8B4C, local
 	.float 180.0
-lbl_803E8B50:
+.endobj lbl_803E8B4C
+.obj lbl_803E8B50, local
 	.float 1.0
-lbl_803E8B54:
+.endobj lbl_803E8B50
+.obj lbl_803E8B54, local
 	.float -10.0
+.endobj lbl_803E8B54

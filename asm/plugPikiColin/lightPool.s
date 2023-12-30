@@ -562,7 +562,7 @@
 	.float 10.0
 .endobj lbl_803DE780
 .obj lbl_803DE784, local
-	.float 1.0E-5
+	.float 0.00001
 .endobj lbl_803DE784
 .obj lbl_803DE788, local
 	.float 0.0

@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global read__15ParaParametersIFR6Stream
-read__15ParaParametersIFR6Stream:
+.fn read__15ParaParametersIFR6Stream, global
 /* 801215A4 0011E504  7C 08 02 A6 */	mflr r0
 /* 801215A8 0011E508  90 01 00 04 */	stw r0, 4(r1)
 /* 801215AC 0011E50C  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -36,9 +35,9 @@ read__15ParaParametersIFR6Stream:
 /* 80121618 0011E578  38 21 00 20 */	addi r1, r1, 0x20
 /* 8012161C 0011E57C  7C 08 03 A6 */	mtlr r0
 /* 80121620 0011E580  4E 80 00 20 */	blr 
+.endfn read__15ParaParametersIFR6Stream
 
-.global write__15ParaParametersIFR6Stream
-write__15ParaParametersIFR6Stream:
+.fn write__15ParaParametersIFR6Stream, global
 /* 80121624 0011E584  7C 08 02 A6 */	mflr r0
 /* 80121628 0011E588  90 01 00 04 */	stw r0, 4(r1)
 /* 8012162C 0011E58C  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -73,9 +72,9 @@ write__15ParaParametersIFR6Stream:
 /* 80121698 0011E5F8  38 21 00 20 */	addi r1, r1, 0x20
 /* 8012169C 0011E5FC  7C 08 03 A6 */	mtlr r0
 /* 801216A0 0011E600  4E 80 00 20 */	blr 
+.endfn write__15ParaParametersIFR6Stream
 
-.global print__15ParaParametersIFv
-print__15ParaParametersIFv:
+.fn print__15ParaParametersIFv, global
 /* 801216A4 0011E604  80 A3 00 04 */	lwz r5, 4(r3)
 /* 801216A8 0011E608  38 C0 00 00 */	li r6, 0
 /* 801216AC 0011E60C  2C 05 00 00 */	cmpwi r5, 0
@@ -101,9 +100,9 @@ print__15ParaParametersIFv:
 /* 801216F0 0011E650  4E 80 00 20 */	blr 
 /* 801216F4 0011E654  4B FF FF E8 */	b .L_801216DC
 /* 801216F8 0011E658  4E 80 00 20 */	blr 
+.endfn print__15ParaParametersIFv
 
-.global read__15ParaParametersFFR6Stream
-read__15ParaParametersFFR6Stream:
+.fn read__15ParaParametersFFR6Stream, global
 /* 801216FC 0011E65C  7C 08 02 A6 */	mflr r0
 /* 80121700 0011E660  90 01 00 04 */	stw r0, 4(r1)
 /* 80121704 0011E664  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -138,9 +137,9 @@ read__15ParaParametersFFR6Stream:
 /* 80121770 0011E6D0  38 21 00 20 */	addi r1, r1, 0x20
 /* 80121774 0011E6D4  7C 08 03 A6 */	mtlr r0
 /* 80121778 0011E6D8  4E 80 00 20 */	blr 
+.endfn read__15ParaParametersFFR6Stream
 
-.global write__15ParaParametersFFR6Stream
-write__15ParaParametersFFR6Stream:
+.fn write__15ParaParametersFFR6Stream, global
 /* 8012177C 0011E6DC  7C 08 02 A6 */	mflr r0
 /* 80121780 0011E6E0  90 01 00 04 */	stw r0, 4(r1)
 /* 80121784 0011E6E4  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -175,9 +174,9 @@ write__15ParaParametersFFR6Stream:
 /* 801217F0 0011E750  38 21 00 20 */	addi r1, r1, 0x20
 /* 801217F4 0011E754  7C 08 03 A6 */	mtlr r0
 /* 801217F8 0011E758  4E 80 00 20 */	blr 
+.endfn write__15ParaParametersFFR6Stream
 
-.global print__15ParaParametersFFv
-print__15ParaParametersFFv:
+.fn print__15ParaParametersFFv, global
 /* 801217FC 0011E75C  80 A3 00 04 */	lwz r5, 4(r3)
 /* 80121800 0011E760  38 C0 00 00 */	li r6, 0
 /* 80121804 0011E764  2C 05 00 00 */	cmpwi r5, 0
@@ -203,9 +202,9 @@ print__15ParaParametersFFv:
 /* 80121848 0011E7A8  4E 80 00 20 */	blr 
 /* 8012184C 0011E7AC  4B FF FF E8 */	b .L_80121834
 /* 80121850 0011E7B0  4E 80 00 20 */	blr 
+.endfn print__15ParaParametersFFv
 
-.global __ct__19ParaMultiParametersFiP18ParaParameterInfoIiP18ParaParameterInfoF
-__ct__19ParaMultiParametersFiP18ParaParameterInfoIiP18ParaParameterInfoF:
+.fn __ct__19ParaMultiParametersFiP18ParaParameterInfoIiP18ParaParameterInfoF, global
 /* 80121854 0011E7B4  7C 08 02 A6 */	mflr r0
 /* 80121858 0011E7B8  3D 00 80 2C */	lis r8, __vt__19ParaMultiParameters@ha
 /* 8012185C 0011E7BC  90 01 00 04 */	stw r0, 4(r1)
@@ -250,9 +249,9 @@ __ct__19ParaMultiParametersFiP18ParaParameterInfoIiP18ParaParameterInfoF:
 /* 801218F0 0011E850  38 21 00 38 */	addi r1, r1, 0x38
 /* 801218F4 0011E854  7C 08 03 A6 */	mtlr r0
 /* 801218F8 0011E858  4E 80 00 20 */	blr 
+.endfn __ct__19ParaMultiParametersFiP18ParaParameterInfoIiP18ParaParameterInfoF
 
-.global "__ct__17ParaParameters<f>FiP20ParaParameterInfo<f>"
-"__ct__17ParaParameters<f>FiP20ParaParameterInfo<f>":
+.fn "__ct__17ParaParameters<f>FiP20ParaParameterInfo<f>", weak
 /* 801218FC 0011E85C  7C 08 02 A6 */	mflr r0
 /* 80121900 0011E860  3C C0 80 2C */	lis r6, "__vt__17ParaParameters<f>"@ha
 /* 80121904 0011E864  90 01 00 04 */	stw r0, 4(r1)
@@ -293,9 +292,9 @@ __ct__19ParaMultiParametersFiP18ParaParameterInfoIiP18ParaParameterInfoF:
 /* 80121980 0011E8E0  38 21 00 20 */	addi r1, r1, 0x20
 /* 80121984 0011E8E4  7C 08 03 A6 */	mtlr r0
 /* 80121988 0011E8E8  4E 80 00 20 */	blr 
+.endfn "__ct__17ParaParameters<f>FiP20ParaParameterInfo<f>"
 
-.global "__ct__17ParaParameters<i>FiP20ParaParameterInfo<i>"
-"__ct__17ParaParameters<i>FiP20ParaParameterInfo<i>":
+.fn "__ct__17ParaParameters<i>FiP20ParaParameterInfo<i>", weak
 /* 8012198C 0011E8EC  7C 08 02 A6 */	mflr r0
 /* 80121990 0011E8F0  3C C0 80 2C */	lis r6, "__vt__17ParaParameters<i>"@ha
 /* 80121994 0011E8F4  90 01 00 04 */	stw r0, 4(r1)
@@ -336,9 +335,9 @@ __ct__19ParaMultiParametersFiP18ParaParameterInfoIiP18ParaParameterInfoF:
 /* 80121A10 0011E970  38 21 00 20 */	addi r1, r1, 0x20
 /* 80121A14 0011E974  7C 08 03 A6 */	mtlr r0
 /* 80121A18 0011E978  4E 80 00 20 */	blr 
+.endfn "__ct__17ParaParameters<i>FiP20ParaParameterInfo<i>"
 
-.global input__19ParaMultiParametersFR19ParaMultiParameters
-input__19ParaMultiParametersFR19ParaMultiParameters:
+.fn input__19ParaMultiParametersFR19ParaMultiParameters, global
 /* 80121A1C 0011E97C  38 E0 00 00 */	li r7, 0
 /* 80121A20 0011E980  81 24 00 00 */	lwz r9, 0(r4)
 /* 80121A24 0011E984  81 03 00 00 */	lwz r8, 0(r3)
@@ -372,9 +371,9 @@ input__19ParaMultiParametersFR19ParaMultiParameters:
 /* 80121A84 0011E9E4  7C 05 00 00 */	cmpw r5, r0
 /* 80121A88 0011E9E8  41 80 FF E0 */	blt .L_80121A68
 /* 80121A8C 0011E9EC  4E 80 00 20 */	blr 
+.endfn input__19ParaMultiParametersFR19ParaMultiParameters
 
-.global read__19ParaMultiParametersFR6Stream
-read__19ParaMultiParametersFR6Stream:
+.fn read__19ParaMultiParametersFR6Stream, global
 /* 80121A90 0011E9F0  7C 08 02 A6 */	mflr r0
 /* 80121A94 0011E9F4  90 01 00 04 */	stw r0, 4(r1)
 /* 80121A98 0011E9F8  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -399,9 +398,9 @@ read__19ParaMultiParametersFR6Stream:
 /* 80121AE4 0011EA44  38 21 00 18 */	addi r1, r1, 0x18
 /* 80121AE8 0011EA48  7C 08 03 A6 */	mtlr r0
 /* 80121AEC 0011EA4C  4E 80 00 20 */	blr 
+.endfn read__19ParaMultiParametersFR6Stream
 
-.global write__19ParaMultiParametersFR6Stream
-write__19ParaMultiParametersFR6Stream:
+.fn write__19ParaMultiParametersFR6Stream, global
 /* 80121AF0 0011EA50  7C 08 02 A6 */	mflr r0
 /* 80121AF4 0011EA54  90 01 00 04 */	stw r0, 4(r1)
 /* 80121AF8 0011EA58  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -426,9 +425,9 @@ write__19ParaMultiParametersFR6Stream:
 /* 80121B44 0011EAA4  38 21 00 18 */	addi r1, r1, 0x18
 /* 80121B48 0011EAA8  7C 08 03 A6 */	mtlr r0
 /* 80121B4C 0011EAAC  4E 80 00 20 */	blr 
+.endfn write__19ParaMultiParametersFR6Stream
 
-.global print__19ParaMultiParametersFv
-print__19ParaMultiParametersFv:
+.fn print__19ParaMultiParametersFv, global
 /* 80121B50 0011EAB0  7C 08 02 A6 */	mflr r0
 /* 80121B54 0011EAB4  90 01 00 04 */	stw r0, 4(r1)
 /* 80121B58 0011EAB8  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -449,119 +448,143 @@ print__19ParaMultiParametersFv:
 /* 80121B94 0011EAF4  38 21 00 18 */	addi r1, r1, 0x18
 /* 80121B98 0011EAF8  7C 08 03 A6 */	mtlr r0
 /* 80121B9C 0011EAFC  4E 80 00 20 */	blr 
+.endfn print__19ParaMultiParametersFv
 
-.global "read__17ParaParameters<f>FR6Stream"
-"read__17ParaParameters<f>FR6Stream":
+.fn "read__17ParaParameters<f>FR6Stream", weak
 /* 80121BA0 0011EB00  4E 80 00 20 */	blr 
+.endfn "read__17ParaParameters<f>FR6Stream"
 
-.global "write__17ParaParameters<f>FR6Stream"
-"write__17ParaParameters<f>FR6Stream":
+.fn "write__17ParaParameters<f>FR6Stream", weak
 /* 80121BA4 0011EB04  4E 80 00 20 */	blr 
+.endfn "write__17ParaParameters<f>FR6Stream"
 
-.global "print__17ParaParameters<f>Fv"
-"print__17ParaParameters<f>Fv":
+.fn "print__17ParaParameters<f>Fv", weak
 /* 80121BA8 0011EB08  4E 80 00 20 */	blr 
+.endfn "print__17ParaParameters<f>Fv"
 
-.global "read__17ParaParameters<i>FR6Stream"
-"read__17ParaParameters<i>FR6Stream":
+.fn "read__17ParaParameters<i>FR6Stream", weak
 /* 80121BAC 0011EB0C  4E 80 00 20 */	blr 
+.endfn "read__17ParaParameters<i>FR6Stream"
 
-.global "write__17ParaParameters<i>FR6Stream"
-"write__17ParaParameters<i>FR6Stream":
+.fn "write__17ParaParameters<i>FR6Stream", weak
 /* 80121BB0 0011EB10  4E 80 00 20 */	blr 
+.endfn "write__17ParaParameters<i>FR6Stream"
 
-.global "print__17ParaParameters<i>Fv"
-"print__17ParaParameters<i>Fv":
+.fn "print__17ParaParameters<i>Fv", weak
 /* 80121BB4 0011EB14  4E 80 00 20 */	blr 
+.endfn "print__17ParaParameters<i>Fv"
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802C5078:
+.obj lbl_802C5078, local
 	.asciz "paraparameters.cpp"
+.endobj lbl_802C5078
 .balign 4
-lbl_802C508C:
+.obj lbl_802C508C, local
 	.asciz "paraparameters"
+.endobj lbl_802C508C
 .balign 4
-lbl_802C509C:
+.obj lbl_802C509C, local
 	.asciz "ParaMultiParameters"
+.endobj lbl_802C509C
 .balign 4
-.global __vt__19ParaMultiParameters
-__vt__19ParaMultiParameters:
+.obj __vt__19ParaMultiParameters, global
 	.4byte __RTTI__19ParaMultiParameters
 	.4byte 0
 	.4byte read__19ParaMultiParametersFR6Stream
 	.4byte write__19ParaMultiParametersFR6Stream
 	.4byte print__19ParaMultiParametersFv
+.endobj __vt__19ParaMultiParameters
 .balign 4
-lbl_802C50C4:
+.obj lbl_802C50C4, local
 	.asciz "ParaParametersF"
+.endobj lbl_802C50C4
 .balign 4
-lbl_802C50D4:
+.obj lbl_802C50D4, local
 	.asciz "ParaParameters<float>"
+.endobj lbl_802C50D4
 .balign 4
-lbl_802C50EC:
+.obj lbl_802C50EC, local
 	.4byte "__RTTI__17ParaParameters<f>"
 	.4byte 0
 	.4byte 0
-.global __vt__15ParaParametersF
-__vt__15ParaParametersF:
+.endobj lbl_802C50EC
+.balign 4
+.obj __vt__15ParaParametersF, global
 	.4byte __RTTI__15ParaParametersF
 	.4byte 0
 	.4byte read__15ParaParametersFFR6Stream
 	.4byte write__15ParaParametersFFR6Stream
 	.4byte print__15ParaParametersFFv
-.global "__vt__17ParaParameters<f>"
-"__vt__17ParaParameters<f>":
+.endobj __vt__15ParaParametersF
+.balign 4
+.obj "__vt__17ParaParameters<f>", weak
 	.4byte "__RTTI__17ParaParameters<f>"
 	.4byte 0
 	.4byte "read__17ParaParameters<f>FR6Stream"
 	.4byte "write__17ParaParameters<f>FR6Stream"
 	.4byte "print__17ParaParameters<f>Fv"
+.endobj "__vt__17ParaParameters<f>"
 .balign 4
-lbl_802C5120:
+.obj lbl_802C5120, local
 	.asciz "ParaParametersI"
+.endobj lbl_802C5120
 .balign 4
-lbl_802C5130:
+.obj lbl_802C5130, local
 	.asciz "ParaParameters<int>"
+.endobj lbl_802C5130
 .balign 4
-lbl_802C5144:
+.obj lbl_802C5144, local
 	.4byte "__RTTI__17ParaParameters<i>"
 	.4byte 0
 	.4byte 0
-.global __vt__15ParaParametersI
-__vt__15ParaParametersI:
+.endobj lbl_802C5144
+.balign 4
+.obj __vt__15ParaParametersI, global
 	.4byte __RTTI__15ParaParametersI
 	.4byte 0
 	.4byte read__15ParaParametersIFR6Stream
 	.4byte write__15ParaParametersIFR6Stream
 	.4byte print__15ParaParametersIFv
-.global "__vt__17ParaParameters<i>"
-"__vt__17ParaParameters<i>":
+.endobj __vt__15ParaParametersI
+.balign 4
+.obj "__vt__17ParaParameters<i>", weak
 	.4byte "__RTTI__17ParaParameters<i>"
 	.4byte 0
 	.4byte "read__17ParaParameters<i>FR6Stream"
 	.4byte "write__17ParaParameters<i>FR6Stream"
 	.4byte "print__17ParaParameters<i>Fv"
+.endobj "__vt__17ParaParameters<i>"
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-__RTTI__19ParaMultiParameters:
+.obj __RTTI__19ParaMultiParameters, local
 	.4byte lbl_802C509C
 	.4byte 0
-"__RTTI__17ParaParameters<f>":
+.endobj __RTTI__19ParaMultiParameters
+.balign 4
+.obj "__RTTI__17ParaParameters<f>", local
 	.4byte lbl_802C50D4
 	.4byte 0
-__RTTI__15ParaParametersF:
+.endobj "__RTTI__17ParaParameters<f>"
+.balign 4
+.obj __RTTI__15ParaParametersF, local
 	.4byte lbl_802C50C4
 	.4byte lbl_802C50EC
-"__RTTI__17ParaParameters<i>":
+.endobj __RTTI__15ParaParametersF
+.balign 4
+.obj "__RTTI__17ParaParameters<i>", local
 	.4byte lbl_802C5130
 	.4byte 0
-__RTTI__15ParaParametersI:
+.endobj "__RTTI__17ParaParameters<i>"
+.balign 4
+.obj __RTTI__15ParaParametersI, local
 	.4byte lbl_802C5120
 	.4byte lbl_802C5144
+.endobj __RTTI__15ParaParametersI
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803EA2B8:
+.obj lbl_803EA2B8, local
 	.float 0.0
+.endobj lbl_803EA2B8

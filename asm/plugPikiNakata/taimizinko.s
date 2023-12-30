@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global __ct__20TaiMizigenParametersFv
-__ct__20TaiMizigenParametersFv:
+.fn __ct__20TaiMizigenParametersFv, global
 /* 80131F64 0012EEC4  7C 08 02 A6 */	mflr r0
 /* 80131F68 0012EEC8  38 80 00 14 */	li r4, 0x14
 /* 80131F6C 0012EECC  90 01 00 04 */	stw r0, 4(r1)
@@ -46,9 +45,9 @@ __ct__20TaiMizigenParametersFv:
 /* 80132008 0012EF68  38 21 00 30 */	addi r1, r1, 0x30
 /* 8013200C 0012EF6C  7C 08 03 A6 */	mtlr r0
 /* 80132010 0012EF70  4E 80 00 20 */	blr 
+.endfn __ct__20TaiMizigenParametersFv
 
-.global __ct__18TaiMizigenStrategyFP14TekiParameters
-__ct__18TaiMizigenStrategyFP14TekiParameters:
+.fn __ct__18TaiMizigenStrategyFP14TekiParameters, global
 /* 80132014 0012EF74  7C 08 02 A6 */	mflr r0
 /* 80132018 0012EF78  38 A0 00 00 */	li r5, 0
 /* 8013201C 0012EF7C  90 01 00 04 */	stw r0, 4(r1)
@@ -149,9 +148,9 @@ __ct__18TaiMizigenStrategyFP14TekiParameters:
 /* 80132184 0012F0E4  38 21 00 50 */	addi r1, r1, 0x50
 /* 80132188 0012F0E8  7C 08 03 A6 */	mtlr r0
 /* 8013218C 0012F0EC  4E 80 00 20 */	blr 
+.endfn __ct__18TaiMizigenStrategyFP14TekiParameters
 
-.global start__18TaiMizigenStrategyFR4Teki
-start__18TaiMizigenStrategyFR4Teki:
+.fn start__18TaiMizigenStrategyFR4Teki, global
 /* 80132190 0012F0F0  7C 08 02 A6 */	mflr r0
 /* 80132194 0012F0F4  90 01 00 04 */	stw r0, 4(r1)
 /* 80132198 0012F0F8  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -187,9 +186,9 @@ start__18TaiMizigenStrategyFR4Teki:
 /* 80132210 0012F170  38 21 00 18 */	addi r1, r1, 0x18
 /* 80132214 0012F174  7C 08 03 A6 */	mtlr r0
 /* 80132218 0012F178  4E 80 00 20 */	blr 
+.endfn start__18TaiMizigenStrategyFR4Teki
 
-.global start__26TaiMizigenGeneratingActionFR4Teki
-start__26TaiMizigenGeneratingActionFR4Teki:
+.fn start__26TaiMizigenGeneratingActionFR4Teki, global
 /* 8013221C 0012F17C  7C 08 02 A6 */	mflr r0
 /* 80132220 0012F180  90 01 00 04 */	stw r0, 4(r1)
 /* 80132224 0012F184  94 21 FF 30 */	stwu r1, -0xd0(r1)
@@ -281,14 +280,14 @@ start__26TaiMizigenGeneratingActionFR4Teki:
 /* 80132374 0012F2D4  38 21 00 D0 */	addi r1, r1, 0xd0
 /* 80132378 0012F2D8  7C 08 03 A6 */	mtlr r0
 /* 8013237C 0012F2DC  4E 80 00 20 */	blr 
+.endfn start__26TaiMizigenGeneratingActionFR4Teki
 
-.global act__26TaiMizigenGeneratingActionFR4Teki
-act__26TaiMizigenGeneratingActionFR4Teki:
+.fn act__26TaiMizigenGeneratingActionFR4Teki, global
 /* 80132380 0012F2E0  38 60 00 01 */	li r3, 1
 /* 80132384 0012F2E4  4E 80 00 20 */	blr 
+.endfn act__26TaiMizigenGeneratingActionFR4Teki
 
-.global act__28TaiMizigenNaviApprouchActionFR4Teki
-act__28TaiMizigenNaviApprouchActionFR4Teki:
+.fn act__28TaiMizigenNaviApprouchActionFR4Teki, global
 /* 80132388 0012F2E8  7C 08 02 A6 */	mflr r0
 /* 8013238C 0012F2EC  90 01 00 04 */	stw r0, 4(r1)
 /* 80132390 0012F2F0  94 21 FF 58 */	stwu r1, -0xa8(r1)
@@ -338,9 +337,9 @@ act__28TaiMizigenNaviApprouchActionFR4Teki:
 /* 80132434 0012F394  38 21 00 A8 */	addi r1, r1, 0xa8
 /* 80132438 0012F398  7C 08 03 A6 */	mtlr r0
 /* 8013243C 0012F39C  4E 80 00 20 */	blr 
+.endfn act__28TaiMizigenNaviApprouchActionFR4Teki
 
-.global __ct__20TaiMizinkoParametersFv
-__ct__20TaiMizinkoParametersFv:
+.fn __ct__20TaiMizinkoParametersFv, global
 /* 80132440 0012F3A0  7C 08 02 A6 */	mflr r0
 /* 80132444 0012F3A4  3C 80 80 2D */	lis r4, lbl_802C8C58@ha
 /* 80132448 0012F3A8  90 01 00 04 */	stw r0, 4(r1)
@@ -565,9 +564,9 @@ __ct__20TaiMizinkoParametersFv:
 /* 801327B4 0012F714  38 21 00 80 */	addi r1, r1, 0x80
 /* 801327B8 0012F718  7C 08 03 A6 */	mtlr r0
 /* 801327BC 0012F71C  4E 80 00 20 */	blr 
+.endfn __ct__20TaiMizinkoParametersFv
 
-.global __ct__20TaiMizinkoSoundTableFv
-__ct__20TaiMizinkoSoundTableFv:
+.fn __ct__20TaiMizinkoSoundTableFv, global
 /* 801327C0 0012F720  7C 08 02 A6 */	mflr r0
 /* 801327C4 0012F724  38 80 00 04 */	li r4, 4
 /* 801327C8 0012F728  90 01 00 04 */	stw r0, 4(r1)
@@ -604,9 +603,9 @@ __ct__20TaiMizinkoSoundTableFv:
 /* 80132838 0012F798  38 21 00 20 */	addi r1, r1, 0x20
 /* 8013283C 0012F79C  7C 08 03 A6 */	mtlr r0
 /* 80132840 0012F7A0  4E 80 00 20 */	blr 
+.endfn __ct__20TaiMizinkoSoundTableFv
 
-.global __ct__18TaiMizinkoStrategyFP14TekiParameters
-__ct__18TaiMizinkoStrategyFP14TekiParameters:
+.fn __ct__18TaiMizinkoStrategyFP14TekiParameters, global
 /* 80132844 0012F7A4  7C 08 02 A6 */	mflr r0
 /* 80132848 0012F7A8  38 A0 00 00 */	li r5, 0
 /* 8013284C 0012F7AC  90 01 00 04 */	stw r0, 4(r1)
@@ -1193,9 +1192,9 @@ __ct__18TaiMizinkoStrategyFP14TekiParameters:
 /* 801330EC 0013004C  38 21 01 68 */	addi r1, r1, 0x168
 /* 801330F0 00130050  7C 08 03 A6 */	mtlr r0
 /* 801330F4 00130054  4E 80 00 20 */	blr 
+.endfn __ct__18TaiMizinkoStrategyFP14TekiParameters
 
-.global start__18TaiMizinkoStrategyFR4Teki
-start__18TaiMizinkoStrategyFR4Teki:
+.fn start__18TaiMizinkoStrategyFR4Teki, global
 /* 801330F8 00130058  7C 08 02 A6 */	mflr r0
 /* 801330FC 0013005C  38 C0 00 00 */	li r6, 0
 /* 80133100 00130060  90 01 00 04 */	stw r0, 4(r1)
@@ -1238,9 +1237,9 @@ start__18TaiMizinkoStrategyFR4Teki:
 /* 80133194 001300F4  38 21 00 28 */	addi r1, r1, 0x28
 /* 80133198 001300F8  7C 08 03 A6 */	mtlr r0
 /* 8013319C 001300FC  4E 80 00 20 */	blr 
+.endfn start__18TaiMizinkoStrategyFR4Teki
 
-.global draw__18TaiMizinkoStrategyFR4TekiR8Graphics
-draw__18TaiMizinkoStrategyFR4TekiR8Graphics:
+.fn draw__18TaiMizinkoStrategyFR4TekiR8Graphics, global
 /* 801331A0 00130100  7C 08 02 A6 */	mflr r0
 /* 801331A4 00130104  90 01 00 04 */	stw r0, 4(r1)
 /* 801331A8 00130108  94 21 FF 88 */	stwu r1, -0x78(r1)
@@ -1313,17 +1312,17 @@ draw__18TaiMizinkoStrategyFR4TekiR8Graphics:
 /* 801332A0 00130200  38 21 00 78 */	addi r1, r1, 0x78
 /* 801332A4 00130204  7C 08 03 A6 */	mtlr r0
 /* 801332A8 00130208  4E 80 00 20 */	blr 
+.endfn draw__18TaiMizinkoStrategyFR4TekiR8Graphics
 
-.global hasWater__18TaiMizinkoStrategyFR4Teki
-hasWater__18TaiMizinkoStrategyFR4Teki:
+.fn hasWater__18TaiMizinkoStrategyFR4Teki, global
 /* 801332AC 0013020C  80 04 04 20 */	lwz r0, 0x420(r4)
 /* 801332B0 00130210  7C 00 00 D0 */	neg r0, r0
 /* 801332B4 00130214  7C 00 00 34 */	cntlzw r0, r0
 /* 801332B8 00130218  54 03 D9 7E */	srwi r3, r0, 5
 /* 801332BC 0013021C  4E 80 00 20 */	blr 
+.endfn hasWater__18TaiMizinkoStrategyFR4Teki
 
-.global act__24TaiMizinkoCryTimerActionFR4Teki
-act__24TaiMizinkoCryTimerActionFR4Teki:
+.fn act__24TaiMizinkoCryTimerActionFR4Teki, global
 /* 801332C0 00130220  7C 08 02 A6 */	mflr r0
 /* 801332C4 00130224  90 01 00 04 */	stw r0, 4(r1)
 /* 801332C8 00130228  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -1356,9 +1355,9 @@ act__24TaiMizinkoCryTimerActionFR4Teki:
 /* 80133330 00130290  38 21 00 20 */	addi r1, r1, 0x20
 /* 80133334 00130294  7C 08 03 A6 */	mtlr r0
 /* 80133338 00130298  4E 80 00 20 */	blr 
+.endfn act__24TaiMizinkoCryTimerActionFR4Teki
 
-.global start__27TaiMizinkoMovingTimerActionFR4Teki
-start__27TaiMizinkoMovingTimerActionFR4Teki:
+.fn start__27TaiMizinkoMovingTimerActionFR4Teki, global
 /* 8013333C 0013029C  7C 08 02 A6 */	mflr r0
 /* 80133340 001302A0  90 01 00 04 */	stw r0, 4(r1)
 /* 80133344 001302A4  94 21 FF F8 */	stwu r1, -8(r1)
@@ -1379,9 +1378,9 @@ start__27TaiMizinkoMovingTimerActionFR4Teki:
 /* 80133380 001302E0  38 21 00 08 */	addi r1, r1, 8
 /* 80133384 001302E4  7C 08 03 A6 */	mtlr r0
 /* 80133388 001302E8  4E 80 00 20 */	blr 
+.endfn start__27TaiMizinkoMovingTimerActionFR4Teki
 
-.global act__22TaiMizinkoFadingActionFR4Teki
-act__22TaiMizinkoFadingActionFR4Teki:
+.fn act__22TaiMizinkoFadingActionFR4Teki, global
 /* 8013338C 001302EC  80 A4 02 C4 */	lwz r5, 0x2c4(r4)
 /* 80133390 001302F0  80 64 02 C8 */	lwz r3, 0x2c8(r4)
 /* 80133394 001302F4  80 A5 00 84 */	lwz r5, 0x84(r5)
@@ -1419,9 +1418,9 @@ act__22TaiMizinkoFadingActionFR4Teki:
 /* 80133408 00130368  80 84 00 00 */	lwz r4, 0(r4)
 /* 8013340C 0013036C  D0 04 00 00 */	stfs f0, 0(r4)
 /* 80133410 00130370  4E 80 00 20 */	blr 
+.endfn act__22TaiMizinkoFadingActionFR4Teki
 
-.global start__21TaiMizinkoGoingActionFR4Teki
-start__21TaiMizinkoGoingActionFR4Teki:
+.fn start__21TaiMizinkoGoingActionFR4Teki, global
 /* 80133414 00130374  7C 08 02 A6 */	mflr r0
 /* 80133418 00130378  38 AD EC D8 */	addi r5, r13, lbl_803E39F8@sda21
 /* 8013341C 0013037C  90 01 00 04 */	stw r0, 4(r1)
@@ -1664,9 +1663,9 @@ start__21TaiMizinkoGoingActionFR4Teki:
 /* 801337CC 0013072C  38 21 02 68 */	addi r1, r1, 0x268
 /* 801337D0 00130730  7C 08 03 A6 */	mtlr r0
 /* 801337D4 00130734  4E 80 00 20 */	blr 
+.endfn start__21TaiMizinkoGoingActionFR4Teki
 
-.global start__22TaiMizinkoComingActionFR4Teki
-start__22TaiMizinkoComingActionFR4Teki:
+.fn start__22TaiMizinkoComingActionFR4Teki, global
 /* 801337D8 00130738  7C 08 02 A6 */	mflr r0
 /* 801337DC 0013073C  38 AD EC D8 */	addi r5, r13, lbl_803E39F8@sda21
 /* 801337E0 00130740  90 01 00 04 */	stw r0, 4(r1)
@@ -1996,9 +1995,9 @@ start__22TaiMizinkoComingActionFR4Teki:
 /* 80133CE8 00130C48  38 21 02 B0 */	addi r1, r1, 0x2b0
 /* 80133CEC 00130C4C  7C 08 03 A6 */	mtlr r0
 /* 80133CF0 00130C50  4E 80 00 20 */	blr 
+.endfn start__22TaiMizinkoComingActionFR4Teki
 
-.global act__25TaiMizinkoDropWaterActionFR4Teki
-act__25TaiMizinkoDropWaterActionFR4Teki:
+.fn act__25TaiMizinkoDropWaterActionFR4Teki, global
 /* 80133CF4 00130C54  7C 08 02 A6 */	mflr r0
 /* 80133CF8 00130C58  90 01 00 04 */	stw r0, 4(r1)
 /* 80133CFC 00130C5C  94 21 FF A8 */	stwu r1, -0x58(r1)
@@ -2068,9 +2067,9 @@ act__25TaiMizinkoDropWaterActionFR4Teki:
 /* 80133DEC 00130D4C  38 21 00 58 */	addi r1, r1, 0x58
 /* 80133DF0 00130D50  7C 08 03 A6 */	mtlr r0
 /* 80133DF4 00130D54  4E 80 00 20 */	blr 
+.endfn act__25TaiMizinkoDropWaterActionFR4Teki
 
-.global start__23TaiMizinkoWaitingActionFR4Teki
-start__23TaiMizinkoWaitingActionFR4Teki:
+.fn start__23TaiMizinkoWaitingActionFR4Teki, global
 /* 80133DF8 00130D58  7C 08 02 A6 */	mflr r0
 /* 80133DFC 00130D5C  38 AD EC D8 */	addi r5, r13, lbl_803E39F8@sda21
 /* 80133E00 00130D60  90 01 00 04 */	stw r0, 4(r1)
@@ -2113,9 +2112,9 @@ start__23TaiMizinkoWaitingActionFR4Teki:
 /* 80133E94 00130DF4  38 21 00 30 */	addi r1, r1, 0x30
 /* 80133E98 00130DF8  7C 08 03 A6 */	mtlr r0
 /* 80133E9C 00130DFC  4E 80 00 20 */	blr 
+.endfn start__23TaiMizinkoWaitingActionFR4Teki
 
-.global start__26TaiMizinkoFlyingAwayActionFR4Teki
-start__26TaiMizinkoFlyingAwayActionFR4Teki:
+.fn start__26TaiMizinkoFlyingAwayActionFR4Teki, global
 /* 80133EA0 00130E00  7C 08 02 A6 */	mflr r0
 /* 80133EA4 00130E04  38 AD EC D8 */	addi r5, r13, lbl_803E39F8@sda21
 /* 80133EA8 00130E08  90 01 00 04 */	stw r0, 4(r1)
@@ -2210,69 +2209,89 @@ start__26TaiMizinkoFlyingAwayActionFR4Teki:
 /* 8013400C 00130F6C  38 21 00 A0 */	addi r1, r1, 0xa0
 /* 80134010 00130F70  7C 08 03 A6 */	mtlr r0
 /* 80134014 00130F74  4E 80 00 20 */	blr 
+.endfn start__26TaiMizinkoFlyingAwayActionFR4Teki
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802C8C58:
+.obj lbl_802C8C58, local
 	.asciz "taimizinko.cpp"
+.endobj lbl_802C8C58
 .balign 4
-lbl_802C8C68:
+.obj lbl_802C8C68, local
 	.asciz "taimizinko"
+.endobj lbl_802C8C68
 .balign 4
-lbl_802C8C74:
+.obj lbl_802C8C74, local
 	.asciz "DROP_DISTANCE"
+.endobj lbl_802C8C74
 .balign 4
-lbl_802C8C84:
+.obj lbl_802C8C84, local
 	.asciz "PATH_DISTANCE"
+.endobj lbl_802C8C84
 .balign 4
-lbl_802C8C94:
+.obj lbl_802C8C94, local
 	.asciz "FLYING_AWAY_VELOCITY"
+.endobj lbl_802C8C94
 .balign 4
-lbl_802C8CAC:
+.obj lbl_802C8CAC, local
 	.asciz "FLYING_AWAY_ACCELERATION"
+.endobj lbl_802C8CAC
 .balign 4
-lbl_802C8CC8:
+.obj lbl_802C8CC8, local
 	.asciz "FADE_PERIOD"
+.endobj lbl_802C8CC8
 .balign 4
-lbl_802C8CD4:
+.obj lbl_802C8CD4, local
 	.asciz "HIDING_PERIOD"
+.endobj lbl_802C8CD4
 .balign 4
-lbl_802C8CE4:
+.obj lbl_802C8CE4, local
 	.asciz "HIDING_PERIOD_RANDOM_RATE"
+.endobj lbl_802C8CE4
 .balign 4
-lbl_802C8D00:
+.obj lbl_802C8D00, local
 	.asciz "FLIGHT_HEIGHT_RANDOM_RATE"
+.endobj lbl_802C8D00
 .balign 4
-lbl_802C8D1C:
+.obj lbl_802C8D1C, local
 	.asciz "FLIGHT_AMPLITUDE"
+.endobj lbl_802C8D1C
 .balign 4
-lbl_802C8D30:
+.obj lbl_802C8D30, local
 	.asciz "FLIGHT_AMPLITUDE_RANDOM_RATE"
+.endobj lbl_802C8D30
 .balign 4
-lbl_802C8D50:
+.obj lbl_802C8D50, local
 	.asciz "ANGULAR_VELOCITY"
+.endobj lbl_802C8D50
 .balign 4
-lbl_802C8D64:
+.obj lbl_802C8D64, local
 	.asciz "ANGULAR_VELOCITY_RANDOM_RATE"
+.endobj lbl_802C8D64
 .balign 4
-lbl_802C8D84:
+.obj lbl_802C8D84, local
 	.asciz "CRY_PERIOD"
+.endobj lbl_802C8D84
 .balign 4
-lbl_802C8D90:
+.obj lbl_802C8D90, local
 	.asciz "CRY_PERIOD_RANDOM_RATE"
+.endobj lbl_802C8D90
 .balign 4
-lbl_802C8DA8:
+.obj lbl_802C8DA8, local
 	.asciz "TaiMizinkoFlyingAwayAction"
+.endobj lbl_802C8DA8
 .balign 4
-lbl_802C8DC4:
+.obj lbl_802C8DC4, local
 	.asciz "TaiAction"
+.endobj lbl_802C8DC4
 .balign 4
-lbl_802C8DD0:
+.obj lbl_802C8DD0, local
 	.4byte __RTTI__9TaiAction
 	.4byte 0
 	.4byte 0
-.global __vt__26TaiMizinkoFlyingAwayAction
-__vt__26TaiMizinkoFlyingAwayAction:
+.endobj lbl_802C8DD0
+.balign 4
+.obj __vt__26TaiMizinkoFlyingAwayAction, global
 	.4byte __RTTI__26TaiMizinkoFlyingAwayAction
 	.4byte 0
 	.4byte start__26TaiMizinkoFlyingAwayActionFR4Teki
@@ -2280,16 +2299,19 @@ __vt__26TaiMizinkoFlyingAwayAction:
 	.4byte act__9TaiActionFR4Teki
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
+.endobj __vt__26TaiMizinkoFlyingAwayAction
 .balign 4
-lbl_802C8DF8:
+.obj lbl_802C8DF8, local
 	.asciz "TaiMizinkoWaitingAction"
+.endobj lbl_802C8DF8
 .balign 4
-lbl_802C8E10:
+.obj lbl_802C8E10, local
 	.4byte __RTTI__9TaiAction
 	.4byte 0
 	.4byte 0
-.global __vt__23TaiMizinkoWaitingAction
-__vt__23TaiMizinkoWaitingAction:
+.endobj lbl_802C8E10
+.balign 4
+.obj __vt__23TaiMizinkoWaitingAction, global
 	.4byte __RTTI__23TaiMizinkoWaitingAction
 	.4byte 0
 	.4byte start__23TaiMizinkoWaitingActionFR4Teki
@@ -2297,16 +2319,19 @@ __vt__23TaiMizinkoWaitingAction:
 	.4byte act__9TaiActionFR4Teki
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
+.endobj __vt__23TaiMizinkoWaitingAction
 .balign 4
-lbl_802C8E38:
+.obj lbl_802C8E38, local
 	.asciz "TaiMizinkoDropWaterAction"
+.endobj lbl_802C8E38
 .balign 4
-lbl_802C8E54:
+.obj lbl_802C8E54, local
 	.4byte __RTTI__9TaiAction
 	.4byte 0
 	.4byte 0
-.global __vt__25TaiMizinkoDropWaterAction
-__vt__25TaiMizinkoDropWaterAction:
+.endobj lbl_802C8E54
+.balign 4
+.obj __vt__25TaiMizinkoDropWaterAction, global
 	.4byte __RTTI__25TaiMizinkoDropWaterAction
 	.4byte 0
 	.4byte start__9TaiActionFR4Teki
@@ -2314,16 +2339,19 @@ __vt__25TaiMizinkoDropWaterAction:
 	.4byte act__25TaiMizinkoDropWaterActionFR4Teki
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
+.endobj __vt__25TaiMizinkoDropWaterAction
 .balign 4
-lbl_802C8E7C:
+.obj lbl_802C8E7C, local
 	.asciz "TaiMizinkoComingAction"
+.endobj lbl_802C8E7C
 .balign 4
-lbl_802C8E94:
+.obj lbl_802C8E94, local
 	.4byte __RTTI__9TaiAction
 	.4byte 0
 	.4byte 0
-.global __vt__22TaiMizinkoComingAction
-__vt__22TaiMizinkoComingAction:
+.endobj lbl_802C8E94
+.balign 4
+.obj __vt__22TaiMizinkoComingAction, global
 	.4byte __RTTI__22TaiMizinkoComingAction
 	.4byte 0
 	.4byte start__22TaiMizinkoComingActionFR4Teki
@@ -2331,16 +2359,19 @@ __vt__22TaiMizinkoComingAction:
 	.4byte act__9TaiActionFR4Teki
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
+.endobj __vt__22TaiMizinkoComingAction
 .balign 4
-lbl_802C8EBC:
+.obj lbl_802C8EBC, local
 	.asciz "TaiMizinkoGoingAction"
+.endobj lbl_802C8EBC
 .balign 4
-lbl_802C8ED4:
+.obj lbl_802C8ED4, local
 	.4byte __RTTI__9TaiAction
 	.4byte 0
 	.4byte 0
-.global __vt__21TaiMizinkoGoingAction
-__vt__21TaiMizinkoGoingAction:
+.endobj lbl_802C8ED4
+.balign 4
+.obj __vt__21TaiMizinkoGoingAction, global
 	.4byte __RTTI__21TaiMizinkoGoingAction
 	.4byte 0
 	.4byte start__21TaiMizinkoGoingActionFR4Teki
@@ -2348,16 +2379,19 @@ __vt__21TaiMizinkoGoingAction:
 	.4byte act__9TaiActionFR4Teki
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
+.endobj __vt__21TaiMizinkoGoingAction
 .balign 4
-lbl_802C8EFC:
+.obj lbl_802C8EFC, local
 	.asciz "TaiMizinkoFadingAction"
+.endobj lbl_802C8EFC
 .balign 4
-lbl_802C8F14:
+.obj lbl_802C8F14, local
 	.4byte __RTTI__9TaiAction
 	.4byte 0
 	.4byte 0
-.global __vt__22TaiMizinkoFadingAction
-__vt__22TaiMizinkoFadingAction:
+.endobj lbl_802C8F14
+.balign 4
+.obj __vt__22TaiMizinkoFadingAction, global
 	.4byte __RTTI__22TaiMizinkoFadingAction
 	.4byte 0
 	.4byte start__9TaiActionFR4Teki
@@ -2365,25 +2399,31 @@ __vt__22TaiMizinkoFadingAction:
 	.4byte act__22TaiMizinkoFadingActionFR4Teki
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
+.endobj __vt__22TaiMizinkoFadingAction
 .balign 4
-lbl_802C8F3C:
+.obj lbl_802C8F3C, local
 	.asciz "TaiMizinkoMovingTimerAction"
+.endobj lbl_802C8F3C
 .balign 4
-lbl_802C8F58:
+.obj lbl_802C8F58, local
 	.asciz "TaiTimerAction"
+.endobj lbl_802C8F58
 .balign 4
-lbl_802C8F68:
+.obj lbl_802C8F68, local
 	.4byte __RTTI__9TaiAction
 	.4byte 0
 	.4byte 0
-lbl_802C8F74:
+.endobj lbl_802C8F68
+.balign 4
+.obj lbl_802C8F74, local
 	.4byte __RTTI__9TaiAction
 	.4byte 0
 	.4byte __RTTI__14TaiTimerAction
 	.4byte 0
 	.4byte 0
-.global __vt__27TaiMizinkoMovingTimerAction
-__vt__27TaiMizinkoMovingTimerAction:
+.endobj lbl_802C8F74
+.balign 4
+.obj __vt__27TaiMizinkoMovingTimerAction, global
 	.4byte __RTTI__27TaiMizinkoMovingTimerAction
 	.4byte 0
 	.4byte start__27TaiMizinkoMovingTimerActionFR4Teki
@@ -2391,18 +2431,21 @@ __vt__27TaiMizinkoMovingTimerAction:
 	.4byte act__14TaiTimerActionFR4Teki
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
+.endobj __vt__27TaiMizinkoMovingTimerAction
 .balign 4
-lbl_802C8FA4:
+.obj lbl_802C8FA4, local
 	.asciz "TaiMizinkoCryTimerAction"
+.endobj lbl_802C8FA4
 .balign 4
-lbl_802C8FC0:
+.obj lbl_802C8FC0, local
 	.4byte __RTTI__9TaiAction
 	.4byte 0
 	.4byte __RTTI__14TaiTimerAction
 	.4byte 0
 	.4byte 0
-.global __vt__24TaiMizinkoCryTimerAction
-__vt__24TaiMizinkoCryTimerAction:
+.endobj lbl_802C8FC0
+.balign 4
+.obj __vt__24TaiMizinkoCryTimerAction, global
 	.4byte __RTTI__24TaiMizinkoCryTimerAction
 	.4byte 0
 	.4byte start__14TaiTimerActionFR4Teki
@@ -2410,28 +2453,35 @@ __vt__24TaiMizinkoCryTimerAction:
 	.4byte act__24TaiMizinkoCryTimerActionFR4Teki
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
+.endobj __vt__24TaiMizinkoCryTimerAction
 .balign 4
-lbl_802C8FF0:
+.obj lbl_802C8FF0, local
 	.asciz "TaiMizinkoStrategy"
+.endobj lbl_802C8FF0
 .balign 4
-lbl_802C9004:
+.obj lbl_802C9004, local
 	.asciz "TekiStrategy"
+.endobj lbl_802C9004
 .balign 4
-lbl_802C9014:
+.obj lbl_802C9014, local
 	.asciz "TaiStrategy"
+.endobj lbl_802C9014
 .balign 4
-lbl_802C9020:
+.obj lbl_802C9020, local
 	.4byte __RTTI__12TekiStrategy
 	.4byte 0
 	.4byte 0
-lbl_802C902C:
+.endobj lbl_802C9020
+.balign 4
+.obj lbl_802C902C, local
 	.4byte __RTTI__12TekiStrategy
 	.4byte 0
 	.4byte __RTTI__11TaiStrategy
 	.4byte 0
 	.4byte 0
-.global __vt__18TaiMizinkoStrategy
-__vt__18TaiMizinkoStrategy:
+.endobj lbl_802C902C
+.balign 4
+.obj __vt__18TaiMizinkoStrategy, global
 	.4byte __RTTI__18TaiMizinkoStrategy
 	.4byte 0
 	.4byte start__18TaiMizinkoStrategyFR4Teki
@@ -2442,28 +2492,35 @@ __vt__18TaiMizinkoStrategy:
 	.4byte drawDebugInfo__12TekiStrategyFR4TekiR8Graphics
 	.4byte interact__12TekiStrategyFR4TekiR18TekiInteractionKey
 	.4byte spawnCorpseParts__12TekiStrategyFR4Teki
+.endobj __vt__18TaiMizinkoStrategy
 .balign 4
-lbl_802C9068:
+.obj lbl_802C9068, local
 	.asciz "TaiMizinkoParameters"
+.endobj lbl_802C9068
 .balign 4
-lbl_802C9080:
+.obj lbl_802C9080, local
 	.asciz "CoreNode"
+.endobj lbl_802C9080
 .balign 4
-lbl_802C908C:
+.obj lbl_802C908C, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte 0
-lbl_802C9098:
+.endobj lbl_802C908C
+.balign 4
+.obj lbl_802C9098, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte __RTTI__8CoreNode
 	.4byte 0
 	.4byte 0
+.endobj lbl_802C9098
 .balign 4
-lbl_802C90AC:
+.obj lbl_802C90AC, local
 	.asciz "TekiParameters"
+.endobj lbl_802C90AC
 .balign 4
-lbl_802C90BC:
+.obj lbl_802C90BC, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte __RTTI__8CoreNode
@@ -2471,7 +2528,9 @@ lbl_802C90BC:
 	.4byte __RTTI__4Node
 	.4byte 0
 	.4byte 0
-lbl_802C90D8:
+.endobj lbl_802C90BC
+.balign 4
+.obj lbl_802C90D8, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte __RTTI__8CoreNode
@@ -2481,8 +2540,9 @@ lbl_802C90D8:
 	.4byte __RTTI__14TekiParameters
 	.4byte 0
 	.4byte 0
-.global __vt__20TaiMizinkoParameters
-__vt__20TaiMizinkoParameters:
+.endobj lbl_802C90D8
+.balign 4
+.obj __vt__20TaiMizinkoParameters, weak
 	.4byte __RTTI__20TaiMizinkoParameters
 	.4byte 0
 	.4byte getAgeNodeType__5ANodeFv
@@ -2495,16 +2555,19 @@ __vt__20TaiMizinkoParameters:
 	.4byte concat__4NodeFR3SRT
 	.4byte concat__4NodeFR8Matrix4f
 	.4byte getModelMatrix__4NodeFv
+.endobj __vt__20TaiMizinkoParameters
 .balign 4
-lbl_802C912C:
+.obj lbl_802C912C, local
 	.asciz "TaiMizigenNaviApprouchAction"
+.endobj lbl_802C912C
 .balign 4
-lbl_802C914C:
+.obj lbl_802C914C, local
 	.4byte __RTTI__9TaiAction
 	.4byte 0
 	.4byte 0
-.global __vt__28TaiMizigenNaviApprouchAction
-__vt__28TaiMizigenNaviApprouchAction:
+.endobj lbl_802C914C
+.balign 4
+.obj __vt__28TaiMizigenNaviApprouchAction, global
 	.4byte __RTTI__28TaiMizigenNaviApprouchAction
 	.4byte 0
 	.4byte start__9TaiActionFR4Teki
@@ -2512,16 +2575,19 @@ __vt__28TaiMizigenNaviApprouchAction:
 	.4byte act__28TaiMizigenNaviApprouchActionFR4Teki
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
+.endobj __vt__28TaiMizigenNaviApprouchAction
 .balign 4
-lbl_802C9174:
+.obj lbl_802C9174, local
 	.asciz "TaiMizigenGeneratingAction"
+.endobj lbl_802C9174
 .balign 4
-lbl_802C9190:
+.obj lbl_802C9190, local
 	.4byte __RTTI__9TaiAction
 	.4byte 0
 	.4byte 0
-.global __vt__26TaiMizigenGeneratingAction
-__vt__26TaiMizigenGeneratingAction:
+.endobj lbl_802C9190
+.balign 4
+.obj __vt__26TaiMizigenGeneratingAction, global
 	.4byte __RTTI__26TaiMizigenGeneratingAction
 	.4byte 0
 	.4byte start__26TaiMizigenGeneratingActionFR4Teki
@@ -2529,18 +2595,21 @@ __vt__26TaiMizigenGeneratingAction:
 	.4byte act__26TaiMizigenGeneratingActionFR4Teki
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
+.endobj __vt__26TaiMizigenGeneratingAction
 .balign 4
-lbl_802C91B8:
+.obj lbl_802C91B8, local
 	.asciz "TaiMizigenStrategy"
+.endobj lbl_802C91B8
 .balign 4
-lbl_802C91CC:
+.obj lbl_802C91CC, local
 	.4byte __RTTI__12TekiStrategy
 	.4byte 0
 	.4byte __RTTI__11TaiStrategy
 	.4byte 0
 	.4byte 0
-.global __vt__18TaiMizigenStrategy
-__vt__18TaiMizigenStrategy:
+.endobj lbl_802C91CC
+.balign 4
+.obj __vt__18TaiMizigenStrategy, global
 	.4byte __RTTI__18TaiMizigenStrategy
 	.4byte 0
 	.4byte start__18TaiMizigenStrategyFR4Teki
@@ -2551,18 +2620,15 @@ __vt__18TaiMizigenStrategy:
 	.4byte drawDebugInfo__12TekiStrategyFR4TekiR8Graphics
 	.4byte interact__12TekiStrategyFR4TekiR18TekiInteractionKey
 	.4byte spawnCorpseParts__12TekiStrategyFR4Teki
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
+.endobj __vt__18TaiMizigenStrategy
 .balign 4
-lbl_802C9224:
+.skip 0x1C # compiler padding
+.balign 4
+.obj lbl_802C9224, local
 	.asciz "TaiMizigenParameters"
+.endobj lbl_802C9224
 .balign 4
-lbl_802C923C:
+.obj lbl_802C923C, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte __RTTI__8CoreNode
@@ -2572,8 +2638,9 @@ lbl_802C923C:
 	.4byte __RTTI__14TekiParameters
 	.4byte 0
 	.4byte 0
-.global __vt__20TaiMizigenParameters
-__vt__20TaiMizigenParameters:
+.endobj lbl_802C923C
+.balign 4
+.obj __vt__20TaiMizigenParameters, weak
 	.4byte __RTTI__20TaiMizigenParameters
 	.4byte 0
 	.4byte getAgeNodeType__5ANodeFv
@@ -2586,157 +2653,237 @@ __vt__20TaiMizigenParameters:
 	.4byte concat__4NodeFR3SRT
 	.4byte concat__4NodeFR8Matrix4f
 	.4byte getModelMatrix__4NodeFv
+.endobj __vt__20TaiMizigenParameters
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-lbl_803E39E8:
-	.4byte 0x00000000
-lbl_803E39EC:
-	.4byte 0x00000000
-lbl_803E39F0:
-	.4byte 0x00000000
-lbl_803E39F4:
-	.4byte 0x00000000
-lbl_803E39F8:
-	.4byte 0x00000000
-lbl_803E39FC:
-	.4byte 0x00000000
-lbl_803E3A00:
+.obj lbl_803E39E8, local
+	.4byte 0
+.endobj lbl_803E39E8
+.obj lbl_803E39EC, local
+	.4byte 0
+.endobj lbl_803E39EC
+.obj lbl_803E39F0, local
+	.4byte 0
+.endobj lbl_803E39F0
+.obj lbl_803E39F4, local
+	.4byte 0
+.endobj lbl_803E39F4
+.obj lbl_803E39F8, local
+	.4byte 0
+.endobj lbl_803E39F8
+.obj lbl_803E39FC, local
+	.4byte 0
+.endobj lbl_803E39FC
+.obj lbl_803E3A00, local
 	.float 0.0
-lbl_803E3A04:
+.endobj lbl_803E3A00
+.obj lbl_803E3A04, local
 	.float 0.0
-lbl_803E3A08:
+.endobj lbl_803E3A04
+.obj lbl_803E3A08, local
 	.float 0.0
-lbl_803E3A0C:
+.endobj lbl_803E3A08
+.obj lbl_803E3A0C, local
 	.float 0.0
-lbl_803E3A10:
+.endobj lbl_803E3A0C
+.obj lbl_803E3A10, local
 	.float 1.0
-lbl_803E3A14:
+.endobj lbl_803E3A10
+.obj lbl_803E3A14, local
 	.float 0.0
-lbl_803E3A18:
+.endobj lbl_803E3A14
+.obj lbl_803E3A18, local
 	.float 0.0
-lbl_803E3A1C:
+.endobj lbl_803E3A18
+.obj lbl_803E3A1C, local
 	.float 1.0
-lbl_803E3A20:
+.endobj lbl_803E3A1C
+.obj lbl_803E3A20, local
 	.float 0.0
-lbl_803E3A24:
+.endobj lbl_803E3A20
+.obj lbl_803E3A24, local
 	.float 0.0
-__RTTI__9TaiAction:
+.endobj lbl_803E3A24
+.balign 4
+.obj __RTTI__9TaiAction, local
 	.4byte lbl_802C8DC4
 	.4byte 0
-__RTTI__26TaiMizinkoFlyingAwayAction:
+.endobj __RTTI__9TaiAction
+.balign 4
+.obj __RTTI__26TaiMizinkoFlyingAwayAction, local
 	.4byte lbl_802C8DA8
 	.4byte lbl_802C8DD0
-__RTTI__23TaiMizinkoWaitingAction:
+.endobj __RTTI__26TaiMizinkoFlyingAwayAction
+.balign 4
+.obj __RTTI__23TaiMizinkoWaitingAction, local
 	.4byte lbl_802C8DF8
 	.4byte lbl_802C8E10
-__RTTI__25TaiMizinkoDropWaterAction:
+.endobj __RTTI__23TaiMizinkoWaitingAction
+.balign 4
+.obj __RTTI__25TaiMizinkoDropWaterAction, local
 	.4byte lbl_802C8E38
 	.4byte lbl_802C8E54
-__RTTI__22TaiMizinkoComingAction:
+.endobj __RTTI__25TaiMizinkoDropWaterAction
+.balign 4
+.obj __RTTI__22TaiMizinkoComingAction, local
 	.4byte lbl_802C8E7C
 	.4byte lbl_802C8E94
-__RTTI__21TaiMizinkoGoingAction:
+.endobj __RTTI__22TaiMizinkoComingAction
+.balign 4
+.obj __RTTI__21TaiMizinkoGoingAction, local
 	.4byte lbl_802C8EBC
 	.4byte lbl_802C8ED4
-__RTTI__22TaiMizinkoFadingAction:
+.endobj __RTTI__21TaiMizinkoGoingAction
+.balign 4
+.obj __RTTI__22TaiMizinkoFadingAction, local
 	.4byte lbl_802C8EFC
 	.4byte lbl_802C8F14
-__RTTI__14TaiTimerAction:
+.endobj __RTTI__22TaiMizinkoFadingAction
+.balign 4
+.obj __RTTI__14TaiTimerAction, local
 	.4byte lbl_802C8F58
 	.4byte lbl_802C8F68
-__RTTI__27TaiMizinkoMovingTimerAction:
+.endobj __RTTI__14TaiTimerAction
+.balign 4
+.obj __RTTI__27TaiMizinkoMovingTimerAction, local
 	.4byte lbl_802C8F3C
 	.4byte lbl_802C8F74
-__RTTI__24TaiMizinkoCryTimerAction:
+.endobj __RTTI__27TaiMizinkoMovingTimerAction
+.balign 4
+.obj __RTTI__24TaiMizinkoCryTimerAction, local
 	.4byte lbl_802C8FA4
 	.4byte lbl_802C8FC0
-__RTTI__12TekiStrategy:
+.endobj __RTTI__24TaiMizinkoCryTimerAction
+.balign 4
+.obj __RTTI__12TekiStrategy, local
 	.4byte lbl_802C9004
 	.4byte 0
-__RTTI__11TaiStrategy:
+.endobj __RTTI__12TekiStrategy
+.balign 4
+.obj __RTTI__11TaiStrategy, local
 	.4byte lbl_802C9014
 	.4byte lbl_802C9020
-__RTTI__18TaiMizinkoStrategy:
+.endobj __RTTI__11TaiStrategy
+.balign 4
+.obj __RTTI__18TaiMizinkoStrategy, local
 	.4byte lbl_802C8FF0
 	.4byte lbl_802C902C
+.endobj __RTTI__18TaiMizinkoStrategy
 .balign 4
-lbl_803E3A90:
+.obj lbl_803E3A90, local
 	.asciz "ANode"
+.endobj lbl_803E3A90
 .balign 4
-__RTTI__5ANode:
+.obj __RTTI__5ANode, local
 	.4byte lbl_803E3A90
 	.4byte 0
-__RTTI__8CoreNode:
+.endobj __RTTI__5ANode
+.balign 4
+.obj __RTTI__8CoreNode, local
 	.4byte lbl_802C9080
 	.4byte lbl_802C908C
+.endobj __RTTI__8CoreNode
 .balign 4
-lbl_803E3AA8:
+.obj lbl_803E3AA8, local
 	.asciz "Node"
+.endobj lbl_803E3AA8
 .balign 4
-__RTTI__4Node:
+.obj __RTTI__4Node, local
 	.4byte lbl_803E3AA8
 	.4byte lbl_802C9098
-__RTTI__14TekiParameters:
+.endobj __RTTI__4Node
+.balign 4
+.obj __RTTI__14TekiParameters, local
 	.4byte lbl_802C90AC
 	.4byte lbl_802C90BC
-__RTTI__20TaiMizinkoParameters:
+.endobj __RTTI__14TekiParameters
+.balign 4
+.obj __RTTI__20TaiMizinkoParameters, local
 	.4byte lbl_802C9068
 	.4byte lbl_802C90D8
-__RTTI__28TaiMizigenNaviApprouchAction:
+.endobj __RTTI__20TaiMizinkoParameters
+.balign 4
+.obj __RTTI__28TaiMizigenNaviApprouchAction, local
 	.4byte lbl_802C912C
 	.4byte lbl_802C914C
-__RTTI__26TaiMizigenGeneratingAction:
+.endobj __RTTI__28TaiMizigenNaviApprouchAction
+.balign 4
+.obj __RTTI__26TaiMizigenGeneratingAction, local
 	.4byte lbl_802C9174
 	.4byte lbl_802C9190
-__RTTI__18TaiMizigenStrategy:
+.endobj __RTTI__26TaiMizigenGeneratingAction
+.balign 4
+.obj __RTTI__18TaiMizigenStrategy, local
 	.4byte lbl_802C91B8
 	.4byte lbl_802C91CC
-__RTTI__20TaiMizigenParameters:
+.endobj __RTTI__18TaiMizigenStrategy
+.balign 4
+.obj __RTTI__20TaiMizigenParameters, local
 	.4byte lbl_802C9224
 	.4byte lbl_802C923C
+.endobj __RTTI__20TaiMizigenParameters
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803EA5E8:
+.obj lbl_803EA5E8, local
 	.float 50.0
-lbl_803EA5EC:
+.endobj lbl_803EA5E8
+.obj lbl_803EA5EC, local
 	.float 10.0
-lbl_803EA5F0:
+.endobj lbl_803EA5EC
+.obj lbl_803EA5F0, local
 	.float 0.0
-lbl_803EA5F4:
+.endobj lbl_803EA5F0
+.obj lbl_803EA5F4, local
 	.float 0.5
-lbl_803EA5F8:
+.endobj lbl_803EA5F4
+.obj lbl_803EA5F8, local
 	.float 1.0
-lbl_803EA5FC:
+.endobj lbl_803EA5F8
+.obj lbl_803EA5FC, local
 	.float 100.0
-lbl_803EA600:
+.endobj lbl_803EA5FC
+.obj lbl_803EA600, local
 	.float 1000.0
-lbl_803EA604:
+.endobj lbl_803EA600
+.obj lbl_803EA604, local
 	.float 30.0
-lbl_803EA608:
+.endobj lbl_803EA604
+.obj lbl_803EA608, local
 	.float 60.0
-lbl_803EA60C:
+.endobj lbl_803EA608
+.obj lbl_803EA60C, local
 	.float 20.0
-lbl_803EA610:
+.endobj lbl_803EA60C
+.obj lbl_803EA610, local
 	.float 90.0
-lbl_803EA614:
+.endobj lbl_803EA610
+.obj lbl_803EA614, local
 	.float 5.0
-lbl_803EA618:
+.endobj lbl_803EA614
+.obj lbl_803EA618, local
 	.float 40.0
-lbl_803EA61C:
+.endobj lbl_803EA618
+.obj lbl_803EA61C, local
 	.float 200.0
-lbl_803EA620:
+.endobj lbl_803EA61C
+.obj lbl_803EA620, local
 	.float 0.2
-lbl_803EA624:
+.endobj lbl_803EA620
+.obj lbl_803EA624, local
 	.float 0.25
-lbl_803EA628:
+.endobj lbl_803EA624
+.obj lbl_803EA628, local
 	.float 0.3
-lbl_803EA62C:
+.endobj lbl_803EA628
+.obj lbl_803EA62C, local
 	.float 32767.0
-lbl_803EA630:
+.endobj lbl_803EA62C
+.obj lbl_803EA630, local
 	.float 2.0
+.endobj lbl_803EA630
 .balign 8
-lbl_803EA638:
-	.4byte 0x43300000
-	.4byte 0x80000000
+.obj lbl_803EA638, local
+	.8byte 0x4330000080000000
+.endobj lbl_803EA638

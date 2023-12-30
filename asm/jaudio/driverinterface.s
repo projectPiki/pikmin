@@ -1798,7 +1798,7 @@
 	.4byte .L_8000A0BC
 	.4byte .L_8000A0C4
 	.4byte .L_8000A0CC
-.endfn lbl_80224954
+.endobj lbl_80224954
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8

@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global start__15TaiMotionActionFR4Teki
-start__15TaiMotionActionFR4Teki:
+.fn start__15TaiMotionActionFR4Teki, global
 /* 80134018 00130F78  7C 08 02 A6 */	mflr r0
 /* 8013401C 00130F7C  38 A3 00 00 */	addi r5, r3, 0
 /* 80134020 00130F80  90 01 00 04 */	stw r0, 4(r1)
@@ -16,9 +15,9 @@ start__15TaiMotionActionFR4Teki:
 /* 80134044 00130FA4  38 21 00 08 */	addi r1, r1, 8
 /* 80134048 00130FA8  7C 08 03 A6 */	mtlr r0
 /* 8013404C 00130FAC  4E 80 00 20 */	blr 
+.endfn start__15TaiMotionActionFR4Teki
 
-.global act__15TaiMotionActionFR4Teki
-act__15TaiMotionActionFR4Teki:
+.fn act__15TaiMotionActionFR4Teki, global
 /* 80134050 00130FB0  80 64 02 CC */	lwz r3, 0x2cc(r4)
 /* 80134054 00130FB4  80 03 00 38 */	lwz r0, 0x38(r3)
 /* 80134058 00130FB8  2C 00 00 00 */	cmpwi r0, 0
@@ -28,9 +27,9 @@ act__15TaiMotionActionFR4Teki:
 .L_80134068:
 /* 80134068 00130FC8  38 60 00 00 */	li r3, 0
 /* 8013406C 00130FCC  4E 80 00 20 */	blr 
+.endfn act__15TaiMotionActionFR4Teki
 
-.global start__25TaiContinuousMotionActionFR4Teki
-start__25TaiContinuousMotionActionFR4Teki:
+.fn start__25TaiContinuousMotionActionFR4Teki, global
 /* 80134070 00130FD0  7C 08 02 A6 */	mflr r0
 /* 80134074 00130FD4  90 01 00 04 */	stw r0, 4(r1)
 /* 80134078 00130FD8  94 21 FF C8 */	stwu r1, -0x38(r1)
@@ -100,9 +99,9 @@ start__25TaiContinuousMotionActionFR4Teki:
 /* 80134160 001310C0  38 21 00 38 */	addi r1, r1, 0x38
 /* 80134164 001310C4  7C 08 03 A6 */	mtlr r0
 /* 80134168 001310C8  4E 80 00 20 */	blr 
+.endfn start__25TaiContinuousMotionActionFR4Teki
 
-.global act__25TaiContinuousMotionActionFR4Teki
-act__25TaiContinuousMotionActionFR4Teki:
+.fn act__25TaiContinuousMotionActionFR4Teki, global
 /* 8013416C 001310CC  7C 08 02 A6 */	mflr r0
 /* 80134170 001310D0  90 01 00 04 */	stw r0, 4(r1)
 /* 80134174 001310D4  94 21 FF F8 */	stwu r1, -8(r1)
@@ -136,9 +135,9 @@ act__25TaiContinuousMotionActionFR4Teki:
 /* 801341D4 00131134  38 21 00 08 */	addi r1, r1, 8
 /* 801341D8 00131138  7C 08 03 A6 */	mtlr r0
 /* 801341DC 0013113C  4E 80 00 20 */	blr 
+.endfn act__25TaiContinuousMotionActionFR4Teki
 
-.global motionStarted__25TaiContinuousMotionActionFR4Teki
-motionStarted__25TaiContinuousMotionActionFR4Teki:
+.fn motionStarted__25TaiContinuousMotionActionFR4Teki, global
 /* 801341E0 00131140  80 84 02 CC */	lwz r4, 0x2cc(r4)
 /* 801341E4 00131144  80 03 00 08 */	lwz r0, 8(r3)
 /* 801341E8 00131148  80 64 00 44 */	lwz r3, 0x44(r4)
@@ -149,9 +148,9 @@ motionStarted__25TaiContinuousMotionActionFR4Teki:
 .L_801341FC:
 /* 801341FC 0013115C  38 60 00 00 */	li r3, 0
 /* 80134200 00131160  4E 80 00 20 */	blr 
+.endfn motionStarted__25TaiContinuousMotionActionFR4Teki
 
-.global start__21TaiFinishMotionActionFR4Teki
-start__21TaiFinishMotionActionFR4Teki:
+.fn start__21TaiFinishMotionActionFR4Teki, global
 /* 80134204 00131164  7C 08 02 A6 */	mflr r0
 /* 80134208 00131168  90 01 00 04 */	stw r0, 4(r1)
 /* 8013420C 0013116C  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -172,9 +171,9 @@ start__21TaiFinishMotionActionFR4Teki:
 /* 80134244 001311A4  38 21 00 20 */	addi r1, r1, 0x20
 /* 80134248 001311A8  7C 08 03 A6 */	mtlr r0
 /* 8013424C 001311AC  4E 80 00 20 */	blr 
+.endfn start__21TaiFinishMotionActionFR4Teki
 
-.global act__21TaiAnimationKeyActionFR4Teki
-act__21TaiAnimationKeyActionFR4Teki:
+.fn act__21TaiAnimationKeyActionFR4Teki, global
 /* 80134250 001311B0  80 84 04 14 */	lwz r4, 0x414(r4)
 /* 80134254 001311B4  80 03 00 08 */	lwz r0, 8(r3)
 /* 80134258 001311B8  7C 80 00 39 */	and. r0, r4, r0
@@ -184,15 +183,15 @@ act__21TaiAnimationKeyActionFR4Teki:
 .L_80134268:
 /* 80134268 001311C8  38 60 00 00 */	li r3, 0
 /* 8013426C 001311CC  4E 80 00 20 */	blr 
+.endfn act__21TaiAnimationKeyActionFR4Teki
 
-.global start__18TaiCountLoopActionFR4Teki
-start__18TaiCountLoopActionFR4Teki:
+.fn start__18TaiCountLoopActionFR4Teki, global
 /* 80134270 001311D0  38 00 00 00 */	li r0, 0
 /* 80134274 001311D4  90 04 03 B0 */	stw r0, 0x3b0(r4)
 /* 80134278 001311D8  4E 80 00 20 */	blr 
+.endfn start__18TaiCountLoopActionFR4Teki
 
-.global act__18TaiCountLoopActionFR4Teki
-act__18TaiCountLoopActionFR4Teki:
+.fn act__18TaiCountLoopActionFR4Teki, global
 /* 8013427C 001311DC  80 A4 04 14 */	lwz r5, 0x414(r4)
 /* 80134280 001311E0  80 0D F6 74 */	lwz r0, ANIMATION_KEY_OPTION_LOOPEND__5BTeki@sda21(r13)
 /* 80134284 001311E4  7C A0 00 39 */	and. r0, r5, r0
@@ -209,9 +208,9 @@ act__18TaiCountLoopActionFR4Teki:
 .L_801342B0:
 /* 801342B0 00131210  38 60 00 00 */	li r3, 0
 /* 801342B4 00131214  4E 80 00 20 */	blr 
+.endfn act__18TaiCountLoopActionFR4Teki
 
-.global start__21TaiSwitchMotionActionFR4Teki
-start__21TaiSwitchMotionActionFR4Teki:
+.fn start__21TaiSwitchMotionActionFR4Teki, global
 /* 801342B8 00131218  7C 08 02 A6 */	mflr r0
 /* 801342BC 0013121C  90 01 00 04 */	stw r0, 4(r1)
 /* 801342C0 00131220  94 21 FF D0 */	stwu r1, -0x30(r1)
@@ -235,9 +234,9 @@ start__21TaiSwitchMotionActionFR4Teki:
 /* 80134308 00131268  38 21 00 30 */	addi r1, r1, 0x30
 /* 8013430C 0013126C  7C 08 03 A6 */	mtlr r0
 /* 80134310 00131270  4E 80 00 20 */	blr 
+.endfn start__21TaiSwitchMotionActionFR4Teki
 
-.global act__27TaiOutsideKeyStopMoveActionFR4Teki
-act__27TaiOutsideKeyStopMoveActionFR4Teki:
+.fn act__27TaiOutsideKeyStopMoveActionFR4Teki, global
 /* 80134314 00131274  7C 08 02 A6 */	mflr r0
 /* 80134318 00131278  90 01 00 04 */	stw r0, 4(r1)
 /* 8013431C 0013127C  94 21 FF B0 */	stwu r1, -0x50(r1)
@@ -293,13 +292,13 @@ act__27TaiOutsideKeyStopMoveActionFR4Teki:
 /* 801343DC 0013133C  38 21 00 50 */	addi r1, r1, 0x50
 /* 801343E0 00131340  7C 08 03 A6 */	mtlr r0
 /* 801343E4 00131344  4E 80 00 20 */	blr 
+.endfn act__27TaiOutsideKeyStopMoveActionFR4Teki
 
-.global start__21TaiStoppingMoveActionFR4Teki
-start__21TaiStoppingMoveActionFR4Teki:
+.fn start__21TaiStoppingMoveActionFR4Teki, global
 /* 801343E8 00131348  4E 80 00 20 */	blr 
+.endfn start__21TaiStoppingMoveActionFR4Teki
 
-.global act__21TaiStoppingMoveActionFR4Teki
-act__21TaiStoppingMoveActionFR4Teki:
+.fn act__21TaiStoppingMoveActionFR4Teki, global
 /* 801343EC 0013134C  7C 08 02 A6 */	mflr r0
 /* 801343F0 00131350  90 01 00 04 */	stw r0, 4(r1)
 /* 801343F4 00131354  94 21 FF F8 */	stwu r1, -8(r1)
@@ -327,13 +326,13 @@ act__21TaiStoppingMoveActionFR4Teki:
 /* 80134444 001313A4  38 21 00 08 */	addi r1, r1, 8
 /* 80134448 001313A8  7C 08 03 A6 */	mtlr r0
 /* 8013444C 001313AC  4E 80 00 20 */	blr 
+.endfn act__21TaiStoppingMoveActionFR4Teki
 
-.global finish__21TaiStoppingMoveActionFR4Teki
-finish__21TaiStoppingMoveActionFR4Teki:
+.fn finish__21TaiStoppingMoveActionFR4Teki, global
 /* 80134450 001313B0  4E 80 00 20 */	blr 
+.endfn finish__21TaiStoppingMoveActionFR4Teki
 
-.global start__27TaiFinishStoppingMoveActionFR4Teki
-start__27TaiFinishStoppingMoveActionFR4Teki:
+.fn start__27TaiFinishStoppingMoveActionFR4Teki, global
 /* 80134454 001313B4  7C 08 02 A6 */	mflr r0
 /* 80134458 001313B8  7C 83 23 78 */	mr r3, r4
 /* 8013445C 001313BC  90 01 00 04 */	stw r0, 4(r1)
@@ -343,9 +342,9 @@ start__27TaiFinishStoppingMoveActionFR4Teki:
 /* 8013446C 001313CC  38 21 00 08 */	addi r1, r1, 8
 /* 80134470 001313D0  7C 08 03 A6 */	mtlr r0
 /* 80134474 001313D4  4E 80 00 20 */	blr 
+.endfn start__27TaiFinishStoppingMoveActionFR4Teki
 
-.global start__23TaiSetFrameMotionActionFR4Teki
-start__23TaiSetFrameMotionActionFR4Teki:
+.fn start__23TaiSetFrameMotionActionFR4Teki, global
 /* 80134478 001313D8  7C 08 02 A6 */	mflr r0
 /* 8013447C 001313DC  90 01 00 04 */	stw r0, 4(r1)
 /* 80134480 001313E0  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -361,9 +360,9 @@ start__23TaiSetFrameMotionActionFR4Teki:
 /* 801344A8 00131408  38 21 00 20 */	addi r1, r1, 0x20
 /* 801344AC 0013140C  7C 08 03 A6 */	mtlr r0
 /* 801344B0 00131410  4E 80 00 20 */	blr 
+.endfn start__23TaiSetFrameMotionActionFR4Teki
 
-.global start__34TaiRandomSetAnimationCounterActionFR4Teki
-start__34TaiRandomSetAnimationCounterActionFR4Teki:
+.fn start__34TaiRandomSetAnimationCounterActionFR4Teki, global
 /* 801344B4 00131414  7C 08 02 A6 */	mflr r0
 /* 801344B8 00131418  90 01 00 04 */	stw r0, 4(r1)
 /* 801344BC 0013141C  94 21 FF B8 */	stwu r1, -0x48(r1)
@@ -407,27 +406,33 @@ start__34TaiRandomSetAnimationCounterActionFR4Teki:
 /* 80134554 001314B4  38 21 00 48 */	addi r1, r1, 0x48
 /* 80134558 001314B8  7C 08 03 A6 */	mtlr r0
 /* 8013455C 001314BC  4E 80 00 20 */	blr 
+.endfn start__34TaiRandomSetAnimationCounterActionFR4Teki
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802C9290:
+.obj lbl_802C9290, local
 	.asciz "taimotionactions.cpp"
+.endobj lbl_802C9290
 .balign 4
-lbl_802C92A8:
+.obj lbl_802C92A8, local
 	.asciz "taimotionactions"
+.endobj lbl_802C92A8
 .balign 4
-lbl_802C92BC:
+.obj lbl_802C92BC, local
 	.asciz "TaiRandomSetAnimationCounterAction"
+.endobj lbl_802C92BC
 .balign 4
-lbl_802C92E0:
+.obj lbl_802C92E0, local
 	.asciz "TaiAction"
+.endobj lbl_802C92E0
 .balign 4
-lbl_802C92EC:
+.obj lbl_802C92EC, local
 	.4byte __RTTI__9TaiAction
 	.4byte 0
 	.4byte 0
-.global __vt__34TaiRandomSetAnimationCounterAction
-__vt__34TaiRandomSetAnimationCounterAction:
+.endobj lbl_802C92EC
+.balign 4
+.obj __vt__34TaiRandomSetAnimationCounterAction, global
 	.4byte __RTTI__34TaiRandomSetAnimationCounterAction
 	.4byte 0
 	.4byte start__34TaiRandomSetAnimationCounterActionFR4Teki
@@ -435,16 +440,19 @@ __vt__34TaiRandomSetAnimationCounterAction:
 	.4byte act__9TaiActionFR4Teki
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
+.endobj __vt__34TaiRandomSetAnimationCounterAction
 .balign 4
-lbl_802C9314:
+.obj lbl_802C9314, local
 	.asciz "TaiSetFrameMotionAction"
+.endobj lbl_802C9314
 .balign 4
-lbl_802C932C:
+.obj lbl_802C932C, local
 	.4byte __RTTI__9TaiAction
 	.4byte 0
 	.4byte 0
-.global __vt__23TaiSetFrameMotionAction
-__vt__23TaiSetFrameMotionAction:
+.endobj lbl_802C932C
+.balign 4
+.obj __vt__23TaiSetFrameMotionAction, global
 	.4byte __RTTI__23TaiSetFrameMotionAction
 	.4byte 0
 	.4byte start__23TaiSetFrameMotionActionFR4Teki
@@ -452,16 +460,19 @@ __vt__23TaiSetFrameMotionAction:
 	.4byte act__9TaiActionFR4Teki
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
+.endobj __vt__23TaiSetFrameMotionAction
 .balign 4
-lbl_802C9354:
+.obj lbl_802C9354, local
 	.asciz "TaiFinishStoppingMoveAction"
+.endobj lbl_802C9354
 .balign 4
-lbl_802C9370:
+.obj lbl_802C9370, local
 	.4byte __RTTI__9TaiAction
 	.4byte 0
 	.4byte 0
-.global __vt__27TaiFinishStoppingMoveAction
-__vt__27TaiFinishStoppingMoveAction:
+.endobj lbl_802C9370
+.balign 4
+.obj __vt__27TaiFinishStoppingMoveAction, global
 	.4byte __RTTI__27TaiFinishStoppingMoveAction
 	.4byte 0
 	.4byte start__27TaiFinishStoppingMoveActionFR4Teki
@@ -469,16 +480,19 @@ __vt__27TaiFinishStoppingMoveAction:
 	.4byte act__9TaiActionFR4Teki
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
+.endobj __vt__27TaiFinishStoppingMoveAction
 .balign 4
-lbl_802C9398:
+.obj lbl_802C9398, local
 	.asciz "TaiStoppingMoveAction"
+.endobj lbl_802C9398
 .balign 4
-lbl_802C93B0:
+.obj lbl_802C93B0, local
 	.4byte __RTTI__9TaiAction
 	.4byte 0
 	.4byte 0
-.global __vt__21TaiStoppingMoveAction
-__vt__21TaiStoppingMoveAction:
+.endobj lbl_802C93B0
+.balign 4
+.obj __vt__21TaiStoppingMoveAction, global
 	.4byte __RTTI__21TaiStoppingMoveAction
 	.4byte 0
 	.4byte start__21TaiStoppingMoveActionFR4Teki
@@ -486,16 +500,19 @@ __vt__21TaiStoppingMoveAction:
 	.4byte act__21TaiStoppingMoveActionFR4Teki
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
+.endobj __vt__21TaiStoppingMoveAction
 .balign 4
-lbl_802C93D8:
+.obj lbl_802C93D8, local
 	.asciz "TaiOutsideKeyStopMoveAction"
+.endobj lbl_802C93D8
 .balign 4
-lbl_802C93F4:
+.obj lbl_802C93F4, local
 	.4byte __RTTI__9TaiAction
 	.4byte 0
 	.4byte 0
-.global __vt__27TaiOutsideKeyStopMoveAction
-__vt__27TaiOutsideKeyStopMoveAction:
+.endobj lbl_802C93F4
+.balign 4
+.obj __vt__27TaiOutsideKeyStopMoveAction, global
 	.4byte __RTTI__27TaiOutsideKeyStopMoveAction
 	.4byte 0
 	.4byte start__9TaiActionFR4Teki
@@ -503,25 +520,31 @@ __vt__27TaiOutsideKeyStopMoveAction:
 	.4byte act__27TaiOutsideKeyStopMoveActionFR4Teki
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
+.endobj __vt__27TaiOutsideKeyStopMoveAction
 .balign 4
-lbl_802C941C:
+.obj lbl_802C941C, local
 	.asciz "TaiSwitchMotionAction"
+.endobj lbl_802C941C
 .balign 4
-lbl_802C9434:
+.obj lbl_802C9434, local
 	.asciz "TaiMotionAction"
+.endobj lbl_802C9434
 .balign 4
-lbl_802C9444:
+.obj lbl_802C9444, local
 	.4byte __RTTI__9TaiAction
 	.4byte 0
 	.4byte 0
-lbl_802C9450:
+.endobj lbl_802C9444
+.balign 4
+.obj lbl_802C9450, local
 	.4byte __RTTI__9TaiAction
 	.4byte 0
 	.4byte __RTTI__15TaiMotionAction
 	.4byte 0
 	.4byte 0
-.global __vt__21TaiSwitchMotionAction
-__vt__21TaiSwitchMotionAction:
+.endobj lbl_802C9450
+.balign 4
+.obj __vt__21TaiSwitchMotionAction, global
 	.4byte __RTTI__21TaiSwitchMotionAction
 	.4byte 0
 	.4byte start__21TaiSwitchMotionActionFR4Teki
@@ -529,16 +552,19 @@ __vt__21TaiSwitchMotionAction:
 	.4byte act__15TaiMotionActionFR4Teki
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
+.endobj __vt__21TaiSwitchMotionAction
 .balign 4
-lbl_802C9480:
+.obj lbl_802C9480, local
 	.asciz "TaiCountLoopAction"
+.endobj lbl_802C9480
 .balign 4
-lbl_802C9494:
+.obj lbl_802C9494, local
 	.4byte __RTTI__9TaiAction
 	.4byte 0
 	.4byte 0
-.global __vt__18TaiCountLoopAction
-__vt__18TaiCountLoopAction:
+.endobj lbl_802C9494
+.balign 4
+.obj __vt__18TaiCountLoopAction, global
 	.4byte __RTTI__18TaiCountLoopAction
 	.4byte 0
 	.4byte start__18TaiCountLoopActionFR4Teki
@@ -546,16 +572,19 @@ __vt__18TaiCountLoopAction:
 	.4byte act__18TaiCountLoopActionFR4Teki
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
+.endobj __vt__18TaiCountLoopAction
 .balign 4
-lbl_802C94BC:
+.obj lbl_802C94BC, local
 	.asciz "TaiAnimationKeyAction"
+.endobj lbl_802C94BC
 .balign 4
-lbl_802C94D4:
+.obj lbl_802C94D4, local
 	.4byte __RTTI__9TaiAction
 	.4byte 0
 	.4byte 0
-.global __vt__21TaiAnimationKeyAction
-__vt__21TaiAnimationKeyAction:
+.endobj lbl_802C94D4
+.balign 4
+.obj __vt__21TaiAnimationKeyAction, global
 	.4byte __RTTI__21TaiAnimationKeyAction
 	.4byte 0
 	.4byte start__9TaiActionFR4Teki
@@ -563,18 +592,21 @@ __vt__21TaiAnimationKeyAction:
 	.4byte act__21TaiAnimationKeyActionFR4Teki
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
+.endobj __vt__21TaiAnimationKeyAction
 .balign 4
-lbl_802C94FC:
+.obj lbl_802C94FC, local
 	.asciz "TaiFinishMotionAction"
+.endobj lbl_802C94FC
 .balign 4
-lbl_802C9514:
+.obj lbl_802C9514, local
 	.4byte __RTTI__9TaiAction
 	.4byte 0
 	.4byte __RTTI__15TaiMotionAction
 	.4byte 0
 	.4byte 0
-.global __vt__21TaiFinishMotionAction
-__vt__21TaiFinishMotionAction:
+.endobj lbl_802C9514
+.balign 4
+.obj __vt__21TaiFinishMotionAction, global
 	.4byte __RTTI__21TaiFinishMotionAction
 	.4byte 0
 	.4byte start__21TaiFinishMotionActionFR4Teki
@@ -582,18 +614,21 @@ __vt__21TaiFinishMotionAction:
 	.4byte act__15TaiMotionActionFR4Teki
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
+.endobj __vt__21TaiFinishMotionAction
 .balign 4
-lbl_802C9544:
+.obj lbl_802C9544, local
 	.asciz "TaiContinuousMotionAction"
+.endobj lbl_802C9544
 .balign 4
-lbl_802C9560:
+.obj lbl_802C9560, local
 	.4byte __RTTI__9TaiAction
 	.4byte 0
 	.4byte __RTTI__15TaiMotionAction
 	.4byte 0
 	.4byte 0
-.global __vt__25TaiContinuousMotionAction
-__vt__25TaiContinuousMotionAction:
+.endobj lbl_802C9560
+.balign 4
+.obj __vt__25TaiContinuousMotionAction, global
 	.4byte __RTTI__25TaiContinuousMotionAction
 	.4byte 0
 	.4byte start__25TaiContinuousMotionActionFR4Teki
@@ -602,8 +637,9 @@ __vt__25TaiContinuousMotionAction:
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
 	.4byte motionStarted__25TaiContinuousMotionActionFR4Teki
-.global __vt__15TaiMotionAction
-__vt__15TaiMotionAction:
+.endobj __vt__25TaiContinuousMotionAction
+.balign 4
+.obj __vt__15TaiMotionAction, global
 	.4byte __RTTI__15TaiMotionAction
 	.4byte 0
 	.4byte start__15TaiMotionActionFR4Teki
@@ -611,64 +647,99 @@ __vt__15TaiMotionAction:
 	.4byte act__15TaiMotionActionFR4Teki
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
+.endobj __vt__15TaiMotionAction
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-lbl_803E3AE8:
+.obj lbl_803E3AE8, local
 	.4byte 0x00000000
-lbl_803E3AEC:
+.endobj lbl_803E3AE8
+.obj lbl_803E3AEC, local
 	.4byte 0x00000000
-lbl_803E3AF0:
+.endobj lbl_803E3AEC
+.obj lbl_803E3AF0, local
 	.4byte 0x00000000
-lbl_803E3AF4:
+.endobj lbl_803E3AF0
+.obj lbl_803E3AF4, local
 	.4byte 0x00000000
-lbl_803E3AF8:
+.endobj lbl_803E3AF4
+.obj lbl_803E3AF8, local
 	.4byte 0x00000000
-lbl_803E3AFC:
+.endobj lbl_803E3AF8
+.obj lbl_803E3AFC, local
 	.4byte 0x00000000
-__RTTI__9TaiAction:
+.endobj lbl_803E3AFC
+.balign 4
+.obj __RTTI__9TaiAction, local
 	.4byte lbl_802C92E0
 	.4byte 0
-__RTTI__34TaiRandomSetAnimationCounterAction:
+.endobj __RTTI__9TaiAction
+.balign 4
+.obj __RTTI__34TaiRandomSetAnimationCounterAction, local
 	.4byte lbl_802C92BC
 	.4byte lbl_802C92EC
-__RTTI__23TaiSetFrameMotionAction:
+.endobj __RTTI__34TaiRandomSetAnimationCounterAction
+.balign 4
+.obj __RTTI__23TaiSetFrameMotionAction, local
 	.4byte lbl_802C9314
 	.4byte lbl_802C932C
-__RTTI__27TaiFinishStoppingMoveAction:
+.endobj __RTTI__23TaiSetFrameMotionAction
+.balign 4
+.obj __RTTI__27TaiFinishStoppingMoveAction, local
 	.4byte lbl_802C9354
 	.4byte lbl_802C9370
-__RTTI__21TaiStoppingMoveAction:
+.endobj __RTTI__27TaiFinishStoppingMoveAction
+.balign 4
+.obj __RTTI__21TaiStoppingMoveAction, local
 	.4byte lbl_802C9398
 	.4byte lbl_802C93B0
-__RTTI__27TaiOutsideKeyStopMoveAction:
+.endobj __RTTI__21TaiStoppingMoveAction
+.balign 4
+.obj __RTTI__27TaiOutsideKeyStopMoveAction, local
 	.4byte lbl_802C93D8
 	.4byte lbl_802C93F4
-__RTTI__15TaiMotionAction:
+.endobj __RTTI__27TaiOutsideKeyStopMoveAction
+.balign 4
+.obj __RTTI__15TaiMotionAction, local
 	.4byte lbl_802C9434
 	.4byte lbl_802C9444
-__RTTI__21TaiSwitchMotionAction:
+.endobj __RTTI__15TaiMotionAction
+.balign 4
+.obj __RTTI__21TaiSwitchMotionAction, local
 	.4byte lbl_802C941C
 	.4byte lbl_802C9450
-__RTTI__18TaiCountLoopAction:
+.endobj __RTTI__21TaiSwitchMotionAction
+.balign 4
+.obj __RTTI__18TaiCountLoopAction, local
 	.4byte lbl_802C9480
 	.4byte lbl_802C9494
-__RTTI__21TaiAnimationKeyAction:
+.endobj __RTTI__18TaiCountLoopAction
+.balign 4
+.obj __RTTI__21TaiAnimationKeyAction, local
 	.4byte lbl_802C94BC
 	.4byte lbl_802C94D4
-__RTTI__21TaiFinishMotionAction:
+.endobj __RTTI__21TaiAnimationKeyAction
+.balign 4
+.obj __RTTI__21TaiFinishMotionAction, local
 	.4byte lbl_802C94FC
 	.4byte lbl_802C9514
-__RTTI__25TaiContinuousMotionAction:
+.endobj __RTTI__21TaiFinishMotionAction
+.balign 4
+.obj __RTTI__25TaiContinuousMotionAction, local
 	.4byte lbl_802C9544
 	.4byte lbl_802C9560
+.endobj __RTTI__25TaiContinuousMotionAction
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803EA640:
+.obj lbl_803EA640, local
 	.float 1.0
-lbl_803EA644:
+.endobj lbl_803EA640
+.balign 4
+.obj lbl_803EA644, local
 	.float 32767.0
-lbl_803EA648:
-	.4byte 0x43300000
-	.4byte 0x80000000
+.endobj lbl_803EA644
+.balign 8
+.obj lbl_803EA648, local
+	.8byte 0x4330000080000000
+.endobj lbl_803EA648

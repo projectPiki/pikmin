@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global isEnding__11PlayerStateFv
-isEnding__11PlayerStateFv:
+.fn isEnding__11PlayerStateFv, global
 /* 8007F3B8 0007C318  7C 08 02 A6 */	mflr r0
 /* 8007F3BC 0007C31C  90 01 00 04 */	stw r0, 4(r1)
 /* 8007F3C0 0007C320  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -27,9 +26,9 @@ isEnding__11PlayerStateFv:
 /* 8007F404 0007C364  38 21 00 18 */	addi r1, r1, 0x18
 /* 8007F408 0007C368  7C 08 03 A6 */	mtlr r0
 /* 8007F40C 0007C36C  4E 80 00 20 */	blr 
+.endfn isEnding__11PlayerStateFv
 
-.global existUfoParts__11PlayerStateFUl
-existUfoParts__11PlayerStateFUl:
+.fn existUfoParts__11PlayerStateFUl, global
 /* 8007F410 0007C370  7C 08 02 A6 */	mflr r0
 /* 8007F414 0007C374  90 01 00 04 */	stw r0, 4(r1)
 /* 8007F418 0007C378  94 21 FF C8 */	stwu r1, -0x38(r1)
@@ -145,9 +144,9 @@ existUfoParts__11PlayerStateFUl:
 /* 8007F5A0 0007C500  38 21 00 38 */	addi r1, r1, 0x38
 /* 8007F5A4 0007C504  7C 08 03 A6 */	mtlr r0
 /* 8007F5A8 0007C508  4E 80 00 20 */	blr 
+.endfn existUfoParts__11PlayerStateFUl
 
-.global initGame__11PlayerStateFv
-initGame__11PlayerStateFv:
+.fn initGame__11PlayerStateFv, global
 /* 8007F5AC 0007C50C  7C 08 02 A6 */	mflr r0
 /* 8007F5B0 0007C510  38 C0 00 00 */	li r6, 0
 /* 8007F5B4 0007C514  90 01 00 04 */	stw r0, 4(r1)
@@ -270,9 +269,9 @@ initGame__11PlayerStateFv:
 /* 8007F76C 0007C6CC  38 21 00 28 */	addi r1, r1, 0x28
 /* 8007F770 0007C6D0  7C 08 03 A6 */	mtlr r0
 /* 8007F774 0007C6D4  4E 80 00 20 */	blr 
+.endfn initGame__11PlayerStateFv
 
-.global __ct__11PlayerStateFv
-__ct__11PlayerStateFv:
+.fn __ct__11PlayerStateFv, global
 /* 8007F778 0007C6D8  7C 08 02 A6 */	mflr r0
 /* 8007F77C 0007C6DC  90 01 00 04 */	stw r0, 4(r1)
 /* 8007F780 0007C6E0  94 21 FF B8 */	stwu r1, -0x48(r1)
@@ -489,9 +488,9 @@ __ct__11PlayerStateFv:
 /* 8007FA9C 0007C9FC  38 21 00 48 */	addi r1, r1, 0x48
 /* 8007FAA0 0007CA00  7C 08 03 A6 */	mtlr r0
 /* 8007FAA4 0007CA04  4E 80 00 20 */	blr 
+.endfn __ct__11PlayerStateFv
 
-.global set__Q29TimeGraph7PikiNumFii
-set__Q29TimeGraph7PikiNumFii:
+.fn set__Q29TimeGraph7PikiNumFii, weak
 /* 8007FAA8 0007CA08  2C 04 00 00 */	cmpwi r4, 0
 /* 8007FAAC 0007CA0C  41 80 00 18 */	blt .L_8007FAC4
 /* 8007FAB0 0007CA10  2C 04 00 02 */	cmpwi r4, 2
@@ -504,9 +503,9 @@ set__Q29TimeGraph7PikiNumFii:
 /* 8007FAC8 0007CA28  90 A3 00 04 */	stw r5, 4(r3)
 /* 8007FACC 0007CA2C  90 A3 00 00 */	stw r5, 0(r3)
 /* 8007FAD0 0007CA30  4E 80 00 20 */	blr 
+.endfn set__Q29TimeGraph7PikiNumFii
 
-.global __ct__Q211PlayerState8UfoPartsFv
-__ct__Q211PlayerState8UfoPartsFv:
+.fn __ct__Q211PlayerState8UfoPartsFv, weak
 /* 8007FAD4 0007CA34  7C 08 02 A6 */	mflr r0
 /* 8007FAD8 0007CA38  3C 80 80 2B */	lis r4, __vt__19PaniAnimKeyListener@ha
 /* 8007FADC 0007CA3C  90 01 00 04 */	stw r0, 4(r1)
@@ -535,9 +534,9 @@ __ct__Q211PlayerState8UfoPartsFv:
 /* 8007FB38 0007CA98  38 21 00 18 */	addi r1, r1, 0x18
 /* 8007FB3C 0007CA9C  7C 08 03 A6 */	mtlr r0
 /* 8007FB40 0007CAA0  4E 80 00 20 */	blr 
+.endfn __ct__Q211PlayerState8UfoPartsFv
 
-.global courseOpen__11PlayerStateFi
-courseOpen__11PlayerStateFi:
+.fn courseOpen__11PlayerStateFi, global
 /* 8007FB44 0007CAA4  2C 04 00 00 */	cmpwi r4, 0
 /* 8007FB48 0007CAA8  41 80 00 34 */	blt .L_8007FB7C
 /* 8007FB4C 0007CAAC  2C 04 00 05 */	cmpwi r4, 5
@@ -555,9 +554,9 @@ courseOpen__11PlayerStateFi:
 .L_8007FB7C:
 /* 8007FB7C 0007CADC  38 60 00 00 */	li r3, 0
 /* 8007FB80 0007CAE0  4E 80 00 20 */	blr 
+.endfn courseOpen__11PlayerStateFi
 
-.global happyEndable__11PlayerStateFv
-happyEndable__11PlayerStateFv:
+.fn happyEndable__11PlayerStateFv, global
 /* 8007FB84 0007CAE4  80 A3 01 80 */	lwz r5, 0x180(r3)
 /* 8007FB88 0007CAE8  38 00 00 19 */	li r0, 0x19
 /* 8007FB8C 0007CAEC  54 04 0F FE */	srwi r4, r0, 0x1f
@@ -565,9 +564,9 @@ happyEndable__11PlayerStateFv:
 /* 8007FB94 0007CAF4  7C 00 28 10 */	subfc r0, r0, r5
 /* 8007FB98 0007CAF8  7C 63 21 14 */	adde r3, r3, r4
 /* 8007FB9C 0007CAFC  4E 80 00 20 */	blr 
+.endfn happyEndable__11PlayerStateFv
 
-.global setChallengeMode__11PlayerStateFv
-setChallengeMode__11PlayerStateFv:
+.fn setChallengeMode__11PlayerStateFv, global
 /* 8007FBA0 0007CB00  7C 08 02 A6 */	mflr r0
 /* 8007FBA4 0007CB04  90 01 00 04 */	stw r0, 4(r1)
 /* 8007FBA8 0007CB08  38 00 00 01 */	li r0, 1
@@ -598,20 +597,20 @@ setChallengeMode__11PlayerStateFv:
 /* 8007FC08 0007CB68  38 21 00 18 */	addi r1, r1, 0x18
 /* 8007FC0C 0007CB6C  7C 08 03 A6 */	mtlr r0
 /* 8007FC10 0007CB70  4E 80 00 20 */	blr 
+.endfn setChallengeMode__11PlayerStateFv
 
-.global getPartsGetCount__11PlayerStateFi
-getPartsGetCount__11PlayerStateFi:
+.fn getPartsGetCount__11PlayerStateFi, global
 /* 8007FC14 0007CB74  7C 63 22 14 */	add r3, r3, r4
 /* 8007FC18 0007CB78  88 63 01 87 */	lbz r3, 0x187(r3)
 /* 8007FC1C 0007CB7C  4E 80 00 20 */	blr 
+.endfn getPartsGetCount__11PlayerStateFi
 
-.global getCardUfoPartsCount__11PlayerStateFv
-getCardUfoPartsCount__11PlayerStateFv:
+.fn getCardUfoPartsCount__11PlayerStateFv, global
 /* 8007FC20 0007CB80  80 63 01 7C */	lwz r3, 0x17c(r3)
 /* 8007FC24 0007CB84  4E 80 00 20 */	blr 
+.endfn getCardUfoPartsCount__11PlayerStateFv
 
-.global getTotalPikiCount__11PlayerStateFi
-getTotalPikiCount__11PlayerStateFi:
+.fn getTotalPikiCount__11PlayerStateFi, global
 /* 8007FC28 0007CB88  7C 08 02 A6 */	mflr r0
 /* 8007FC2C 0007CB8C  3C 60 80 3D */	lis r3, pikiInfMgr@ha
 /* 8007FC30 0007CB90  90 01 00 04 */	stw r0, 4(r1)
@@ -646,9 +645,9 @@ getTotalPikiCount__11PlayerStateFi:
 /* 8007FCA0 0007CC00  38 21 00 30 */	addi r1, r1, 0x30
 /* 8007FCA4 0007CC04  7C 08 03 A6 */	mtlr r0
 /* 8007FCA8 0007CC08  4E 80 00 20 */	blr 
+.endfn getTotalPikiCount__11PlayerStateFi
 
-.global saveCard__11PlayerStateFR18RandomAccessStream
-saveCard__11PlayerStateFR18RandomAccessStream:
+.fn saveCard__11PlayerStateFR18RandomAccessStream, global
 /* 8007FCAC 0007CC0C  7C 08 02 A6 */	mflr r0
 /* 8007FCB0 0007CC10  90 01 00 04 */	stw r0, 4(r1)
 /* 8007FCB4 0007CC14  38 00 00 00 */	li r0, 0
@@ -912,9 +911,9 @@ saveCard__11PlayerStateFR18RandomAccessStream:
 /* 8008009C 0007CFFC  38 21 00 38 */	addi r1, r1, 0x38
 /* 800800A0 0007D000  7C 08 03 A6 */	mtlr r0
 /* 800800A4 0007D004  4E 80 00 20 */	blr 
+.endfn saveCard__11PlayerStateFR18RandomAccessStream
 
-.global loadCard__11PlayerStateFR18RandomAccessStream
-loadCard__11PlayerStateFR18RandomAccessStream:
+.fn loadCard__11PlayerStateFR18RandomAccessStream, global
 /* 800800A8 0007D008  7C 08 02 A6 */	mflr r0
 /* 800800AC 0007D00C  90 01 00 04 */	stw r0, 4(r1)
 /* 800800B0 0007D010  94 21 FF C0 */	stwu r1, -0x40(r1)
@@ -1166,9 +1165,9 @@ loadCard__11PlayerStateFR18RandomAccessStream:
 /* 80080468 0007D3C8  38 21 00 40 */	addi r1, r1, 0x40
 /* 8008046C 0007D3CC  7C 08 03 A6 */	mtlr r0
 /* 80080470 0007D3D0  4E 80 00 20 */	blr 
+.endfn loadCard__11PlayerStateFR18RandomAccessStream
 
-.global isTutorial__11PlayerStateFv
-isTutorial__11PlayerStateFv:
+.fn isTutorial__11PlayerStateFv, global
 /* 80080474 0007D3D4  3C 80 80 3A */	lis r4, flowCont@ha
 /* 80080478 0007D3D8  38 84 DB 20 */	addi r4, r4, flowCont@l
 /* 8008047C 0007D3DC  80 84 00 A8 */	lwz r4, 0xa8(r4)
@@ -1188,9 +1187,9 @@ isTutorial__11PlayerStateFv:
 .L_800804B0:
 /* 800804B0 0007D410  88 63 01 85 */	lbz r3, 0x185(r3)
 /* 800804B4 0007D414  4E 80 00 20 */	blr 
+.endfn isTutorial__11PlayerStateFv
 
-.global isGameCourse__11PlayerStateFv
-isGameCourse__11PlayerStateFv:
+.fn isGameCourse__11PlayerStateFv, global
 /* 800804B8 0007D418  3C 60 80 3A */	lis r3, flowCont@ha
 /* 800804BC 0007D41C  38 63 DB 20 */	addi r3, r3, flowCont@l
 /* 800804C0 0007D420  80 83 00 A8 */	lwz r4, 0xa8(r3)
@@ -1202,9 +1201,9 @@ isGameCourse__11PlayerStateFv:
 /* 800804D8 0007D438  4C 80 00 20 */	bgelr 
 /* 800804DC 0007D43C  38 60 00 01 */	li r3, 1
 /* 800804E0 0007D440  4E 80 00 20 */	blr 
+.endfn isGameCourse__11PlayerStateFv
 
-.global checkLimitGenFlag__11PlayerStateFi
-checkLimitGenFlag__11PlayerStateFi:
+.fn checkLimitGenFlag__11PlayerStateFi, global
 /* 800804E4 0007D444  7C 08 02 A6 */	mflr r0
 /* 800804E8 0007D448  3C A0 80 3A */	lis r5, flowCont@ha
 /* 800804EC 0007D44C  90 01 00 04 */	stw r0, 4(r1)
@@ -1234,9 +1233,9 @@ checkLimitGenFlag__11PlayerStateFi:
 /* 80080540 0007D4A0  38 21 00 08 */	addi r1, r1, 8
 /* 80080544 0007D4A4  7C 08 03 A6 */	mtlr r0
 /* 80080548 0007D4A8  4E 80 00 20 */	blr 
+.endfn checkLimitGenFlag__11PlayerStateFi
 
-.global setLimitGenFlag__11PlayerStateFi
-setLimitGenFlag__11PlayerStateFi:
+.fn setLimitGenFlag__11PlayerStateFi, global
 /* 8008054C 0007D4AC  7C 08 02 A6 */	mflr r0
 /* 80080550 0007D4B0  3C A0 80 3A */	lis r5, flowCont@ha
 /* 80080554 0007D4B4  90 01 00 04 */	stw r0, 4(r1)
@@ -1271,9 +1270,9 @@ setLimitGenFlag__11PlayerStateFi:
 /* 800805C0 0007D520  38 21 00 20 */	addi r1, r1, 0x20
 /* 800805C4 0007D524  7C 08 03 A6 */	mtlr r0
 /* 800805C8 0007D528  4E 80 00 20 */	blr 
+.endfn setLimitGenFlag__11PlayerStateFi
 
-.global displayPikiCount__11PlayerStateFi
-displayPikiCount__11PlayerStateFi:
+.fn displayPikiCount__11PlayerStateFi, global
 /* 800805CC 0007D52C  38 A0 00 01 */	li r5, 1
 /* 800805D0 0007D530  88 03 01 AC */	lbz r0, 0x1ac(r3)
 /* 800805D4 0007D534  7C A3 20 30 */	slw r3, r5, r4
@@ -1282,18 +1281,18 @@ displayPikiCount__11PlayerStateFi:
 /* 800805E0 0007D540  30 03 FF FF */	addic r0, r3, -1
 /* 800805E4 0007D544  7C 60 19 10 */	subfe r3, r0, r3
 /* 800805E8 0007D548  4E 80 00 20 */	blr 
+.endfn displayPikiCount__11PlayerStateFi
 
-.global setDisplayPikiCount__11PlayerStateFi
-setDisplayPikiCount__11PlayerStateFi:
+.fn setDisplayPikiCount__11PlayerStateFi, global
 /* 800805EC 0007D54C  38 00 00 01 */	li r0, 1
 /* 800805F0 0007D550  88 A3 01 AC */	lbz r5, 0x1ac(r3)
 /* 800805F4 0007D554  7C 00 20 30 */	slw r0, r0, r4
 /* 800805F8 0007D558  7C A0 03 78 */	or r0, r5, r0
 /* 800805FC 0007D55C  98 03 01 AC */	stb r0, 0x1ac(r3)
 /* 80080600 0007D560  4E 80 00 20 */	blr 
+.endfn setDisplayPikiCount__11PlayerStateFi
 
-.global hasUfoParts__11PlayerStateFUl
-hasUfoParts__11PlayerStateFUl:
+.fn hasUfoParts__11PlayerStateFUl, global
 /* 80080604 0007D564  80 03 01 74 */	lwz r0, 0x174(r3)
 /* 80080608 0007D568  38 E0 00 00 */	li r7, 0
 /* 8008060C 0007D56C  38 A0 00 00 */	li r5, 0
@@ -1320,9 +1319,9 @@ hasUfoParts__11PlayerStateFUl:
 .L_80080658:
 /* 80080658 0007D5B8  38 60 00 00 */	li r3, 0
 /* 8008065C 0007D5BC  4E 80 00 20 */	blr 
+.endfn hasUfoParts__11PlayerStateFUl
 
-.global update__11PlayerStateFv
-update__11PlayerStateFv:
+.fn update__11PlayerStateFv, global
 /* 80080660 0007D5C0  7C 08 02 A6 */	mflr r0
 /* 80080664 0007D5C4  90 01 00 04 */	stw r0, 4(r1)
 /* 80080668 0007D5C8  94 21 FF C8 */	stwu r1, -0x38(r1)
@@ -1383,9 +1382,9 @@ update__11PlayerStateFv:
 /* 80080738 0007D698  38 21 00 38 */	addi r1, r1, 0x38
 /* 8008073C 0007D69C  7C 08 03 A6 */	mtlr r0
 /* 80080740 0007D6A0  4E 80 00 20 */	blr 
+.endfn update__11PlayerStateFv
 
-.global initCourse__11PlayerStateFv
-initCourse__11PlayerStateFv:
+.fn initCourse__11PlayerStateFv, global
 /* 80080744 0007D6A4  7C 08 02 A6 */	mflr r0
 /* 80080748 0007D6A8  38 80 00 08 */	li r4, 8
 /* 8008074C 0007D6AC  90 01 00 04 */	stw r0, 4(r1)
@@ -1501,9 +1500,9 @@ initCourse__11PlayerStateFv:
 /* 800808E8 0007D848  38 21 00 28 */	addi r1, r1, 0x28
 /* 800808EC 0007D84C  7C 08 03 A6 */	mtlr r0
 /* 800808F0 0007D850  4E 80 00 20 */	blr 
+.endfn initCourse__11PlayerStateFv
 
-.global exitCourse__11PlayerStateFv
-exitCourse__11PlayerStateFv:
+.fn exitCourse__11PlayerStateFv, global
 /* 800808F4 0007D854  7C 08 02 A6 */	mflr r0
 /* 800808F8 0007D858  38 A0 00 00 */	li r5, 0
 /* 800808FC 0007D85C  90 01 00 04 */	stw r0, 4(r1)
@@ -1561,9 +1560,9 @@ exitCourse__11PlayerStateFv:
 /* 800809B8 0007D918  38 21 00 28 */	addi r1, r1, 0x28
 /* 800809BC 0007D91C  7C 08 03 A6 */	mtlr r0
 /* 800809C0 0007D920  4E 80 00 20 */	blr 
+.endfn exitCourse__11PlayerStateFv
 
-.global setNavi__11PlayerStateFb
-setNavi__11PlayerStateFb:
+.fn setNavi__11PlayerStateFb, global
 /* 800809C4 0007D924  7C 08 02 A6 */	mflr r0
 /* 800809C8 0007D928  90 01 00 04 */	stw r0, 4(r1)
 /* 800809CC 0007D92C  54 80 06 3F */	clrlwi. r0, r4, 0x18
@@ -1603,14 +1602,14 @@ setNavi__11PlayerStateFb:
 /* 80080A4C 0007D9AC  38 21 00 28 */	addi r1, r1, 0x28
 /* 80080A50 0007D9B0  7C 08 03 A6 */	mtlr r0
 /* 80080A54 0007D9B4  4E 80 00 20 */	blr 
+.endfn setNavi__11PlayerStateFb
 
-.global getFinalDeadPikis__11PlayerStateFv
-getFinalDeadPikis__11PlayerStateFv:
+.fn getFinalDeadPikis__11PlayerStateFv, global
 /* 80080A58 0007D9B8  80 63 01 A0 */	lwz r3, 0x1a0(r3)
 /* 80080A5C 0007D9BC  4E 80 00 20 */	blr 
+.endfn getFinalDeadPikis__11PlayerStateFv
 
-.global updateFinalResult__11PlayerStateFv
-updateFinalResult__11PlayerStateFv:
+.fn updateFinalResult__11PlayerStateFv, global
 /* 80080A60 0007D9C0  7C 08 02 A6 */	mflr r0
 /* 80080A64 0007D9C4  3C 80 80 3D */	lis r4, deadPikis__8GameStat@ha
 /* 80080A68 0007D9C8  90 01 00 04 */	stw r0, 4(r1)
@@ -1697,22 +1696,22 @@ updateFinalResult__11PlayerStateFv:
 /* 80080BA4 0007DB04  38 21 00 58 */	addi r1, r1, 0x58
 /* 80080BA8 0007DB08  7C 08 03 A6 */	mtlr r0
 /* 80080BAC 0007DB0C  4E 80 00 20 */	blr 
+.endfn updateFinalResult__11PlayerStateFv
 
-.global getCurrDay__11PlayerStateFv
-getCurrDay__11PlayerStateFv:
+.fn getCurrDay__11PlayerStateFv, global
 /* 80080BB0 0007DB10  3C 60 80 3A */	lis r3, gameflow@ha
 /* 80080BB4 0007DB14  38 63 D7 B8 */	addi r3, r3, gameflow@l
 /* 80080BB8 0007DB18  80 63 02 FC */	lwz r3, 0x2fc(r3)
 /* 80080BBC 0007DB1C  38 63 FF FF */	addi r3, r3, -1
 /* 80080BC0 0007DB20  4E 80 00 20 */	blr 
+.endfn getCurrDay__11PlayerStateFv
 
-.global getTotalDays__11PlayerStateFv
-getTotalDays__11PlayerStateFv:
+.fn getTotalDays__11PlayerStateFv, global
 /* 80080BC4 0007DB24  38 60 00 1E */	li r3, 0x1e
 /* 80080BC8 0007DB28  4E 80 00 20 */	blr 
+.endfn getTotalDays__11PlayerStateFv
 
-.global getStartHour__11PlayerStateFv
-getStartHour__11PlayerStateFv:
+.fn getStartHour__11PlayerStateFv, global
 /* 80080BCC 0007DB2C  3C 60 80 3A */	lis r3, gameflow@ha
 /* 80080BD0 0007DB30  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 80080BD4 0007DB34  38 63 D7 B8 */	addi r3, r3, gameflow@l
@@ -1723,9 +1722,9 @@ getStartHour__11PlayerStateFv:
 /* 80080BE8 0007DB48  80 61 00 1C */	lwz r3, 0x1c(r1)
 /* 80080BEC 0007DB4C  38 21 00 20 */	addi r1, r1, 0x20
 /* 80080BF0 0007DB50  4E 80 00 20 */	blr 
+.endfn getStartHour__11PlayerStateFv
 
-.global getEndHour__11PlayerStateFv
-getEndHour__11PlayerStateFv:
+.fn getEndHour__11PlayerStateFv, global
 /* 80080BF4 0007DB54  3C 60 80 3A */	lis r3, gameflow@ha
 /* 80080BF8 0007DB58  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 80080BFC 0007DB5C  38 63 D7 B8 */	addi r3, r3, gameflow@l
@@ -1736,9 +1735,9 @@ getEndHour__11PlayerStateFv:
 /* 80080C10 0007DB70  80 61 00 1C */	lwz r3, 0x1c(r1)
 /* 80080C14 0007DB74  38 21 00 20 */	addi r1, r1, 0x20
 /* 80080C18 0007DB78  4E 80 00 20 */	blr 
+.endfn getEndHour__11PlayerStateFv
 
-.global getPikiHourCount__11PlayerStateFii
-getPikiHourCount__11PlayerStateFii:
+.fn getPikiHourCount__11PlayerStateFii, global
 /* 80080C1C 0007DB7C  A0 C3 01 8C */	lhz r6, 0x18c(r3)
 /* 80080C20 0007DB80  54 80 04 3E */	clrlwi r0, r4, 0x10
 /* 80080C24 0007DB84  2C 05 00 00 */	cmpwi r5, 0
@@ -1759,19 +1758,19 @@ getPikiHourCount__11PlayerStateFii:
 /* 80080C5C 0007DBBC  7C 60 1A 14 */	add r3, r0, r3
 /* 80080C60 0007DBC0  7C 64 1A 14 */	add r3, r4, r3
 /* 80080C64 0007DBC4  4E 80 00 20 */	blr 
+.endfn getPikiHourCount__11PlayerStateFii
 
-.global getTotalParts__11PlayerStateFv
-getTotalParts__11PlayerStateFv:
+.fn getTotalParts__11PlayerStateFv, global
 /* 80080C68 0007DBC8  80 63 01 74 */	lwz r3, 0x174(r3)
 /* 80080C6C 0007DBCC  4E 80 00 20 */	blr 
+.endfn getTotalParts__11PlayerStateFv
 
-.global getCurrParts__11PlayerStateFv
-getCurrParts__11PlayerStateFv:
+.fn getCurrParts__11PlayerStateFv, global
 /* 80080C70 0007DBD0  80 63 01 7C */	lwz r3, 0x17c(r3)
 /* 80080C74 0007DBD4  4E 80 00 20 */	blr 
+.endfn getCurrParts__11PlayerStateFv
 
-.global isUfoBroken__11PlayerStateFv
-isUfoBroken__11PlayerStateFv:
+.fn isUfoBroken__11PlayerStateFv, global
 /* 80080C78 0007DBD8  88 03 01 B6 */	lbz r0, 0x1b6(r3)
 /* 80080C7C 0007DBDC  28 00 00 00 */	cmplwi r0, 0
 /* 80080C80 0007DBE0  41 82 00 0C */	beq .L_80080C8C
@@ -1795,9 +1794,9 @@ isUfoBroken__11PlayerStateFv:
 .L_80080CC0:
 /* 80080CC0 0007DC20  38 60 00 00 */	li r3, 0
 /* 80080CC4 0007DC24  4E 80 00 20 */	blr 
+.endfn isUfoBroken__11PlayerStateFv
 
-.global registerUfoParts__11PlayerStateFiUlUl
-registerUfoParts__11PlayerStateFiUlUl:
+.fn registerUfoParts__11PlayerStateFiUlUl, global
 /* 80080CC8 0007DC28  7C 08 02 A6 */	mflr r0
 /* 80080CCC 0007DC2C  90 01 00 04 */	stw r0, 4(r1)
 /* 80080CD0 0007DC30  94 21 FF B8 */	stwu r1, -0x48(r1)
@@ -1849,9 +1848,9 @@ registerUfoParts__11PlayerStateFiUlUl:
 /* 80080D80 0007DCE0  38 21 00 48 */	addi r1, r1, 0x48
 /* 80080D84 0007DCE4  7C 08 03 A6 */	mtlr r0
 /* 80080D88 0007DCE8  4E 80 00 20 */	blr 
+.endfn registerUfoParts__11PlayerStateFiUlUl
 
-.global initAnim__Q211PlayerState8UfoPartsFP17PelletShapeObject
-initAnim__Q211PlayerState8UfoPartsFP17PelletShapeObject:
+.fn initAnim__Q211PlayerState8UfoPartsFP17PelletShapeObject, global
 /* 80080D8C 0007DCEC  7C 08 02 A6 */	mflr r0
 /* 80080D90 0007DCF0  28 04 00 00 */	cmplwi r4, 0
 /* 80080D94 0007DCF4  90 01 00 04 */	stw r0, 4(r1)
@@ -1882,9 +1881,9 @@ initAnim__Q211PlayerState8UfoPartsFP17PelletShapeObject:
 /* 80080DF4 0007DD54  38 21 00 20 */	addi r1, r1, 0x20
 /* 80080DF8 0007DD58  7C 08 03 A6 */	mtlr r0
 /* 80080DFC 0007DD5C  4E 80 00 20 */	blr 
+.endfn initAnim__Q211PlayerState8UfoPartsFP17PelletShapeObject
 
-.global animationKeyUpdated__Q211PlayerState8UfoPartsFR16PaniAnimKeyEvent
-animationKeyUpdated__Q211PlayerState8UfoPartsFR16PaniAnimKeyEvent:
+.fn animationKeyUpdated__Q211PlayerState8UfoPartsFR16PaniAnimKeyEvent, global
 /* 80080E00 0007DD60  7C 08 02 A6 */	mflr r0
 /* 80080E04 0007DD64  90 01 00 04 */	stw r0, 4(r1)
 /* 80080E08 0007DD68  94 21 FF B0 */	stwu r1, -0x50(r1)
@@ -2023,9 +2022,9 @@ animationKeyUpdated__Q211PlayerState8UfoPartsFR16PaniAnimKeyEvent:
 /* 80080FE4 0007DF44  38 21 00 50 */	addi r1, r1, 0x50
 /* 80080FE8 0007DF48  7C 08 03 A6 */	mtlr r0
 /* 80080FEC 0007DF4C  4E 80 00 20 */	blr 
+.endfn animationKeyUpdated__Q211PlayerState8UfoPartsFR16PaniAnimKeyEvent
 
-.global ufoAssignStart__11PlayerStateFv
-ufoAssignStart__11PlayerStateFv:
+.fn ufoAssignStart__11PlayerStateFv, global
 /* 80080FF0 0007DF50  7C 08 02 A6 */	mflr r0
 /* 80080FF4 0007DF54  90 01 00 04 */	stw r0, 4(r1)
 /* 80080FF8 0007DF58  94 21 FF C8 */	stwu r1, -0x38(r1)
@@ -2083,9 +2082,9 @@ ufoAssignStart__11PlayerStateFv:
 /* 800810B4 0007E014  38 21 00 38 */	addi r1, r1, 0x38
 /* 800810B8 0007E018  7C 08 03 A6 */	mtlr r0
 /* 800810BC 0007E01C  4E 80 00 20 */	blr 
+.endfn ufoAssignStart__11PlayerStateFv
 
-.global startSpecialMotions__11PlayerStateFv
-startSpecialMotions__11PlayerStateFv:
+.fn startSpecialMotions__11PlayerStateFv, global
 /* 800810C0 0007E020  7C 08 02 A6 */	mflr r0
 /* 800810C4 0007E024  3C 80 75 73 */	lis r4, 0x75737431@ha
 /* 800810C8 0007E028  90 01 00 04 */	stw r0, 4(r1)
@@ -2119,9 +2118,9 @@ startSpecialMotions__11PlayerStateFv:
 /* 80081138 0007E098  38 21 00 18 */	addi r1, r1, 0x18
 /* 8008113C 0007E09C  7C 08 03 A6 */	mtlr r0
 /* 80081140 0007E0A0  4E 80 00 20 */	blr 
+.endfn startSpecialMotions__11PlayerStateFv
 
-.global startAfterMotions__11PlayerStateFv
-startAfterMotions__11PlayerStateFv:
+.fn startAfterMotions__11PlayerStateFv, global
 /* 80081144 0007E0A4  7C 08 02 A6 */	mflr r0
 /* 80081148 0007E0A8  90 01 00 04 */	stw r0, 4(r1)
 /* 8008114C 0007E0AC  94 21 FF B8 */	stwu r1, -0x48(r1)
@@ -2176,9 +2175,9 @@ startAfterMotions__11PlayerStateFv:
 /* 80081200 0007E160  38 21 00 48 */	addi r1, r1, 0x48
 /* 80081204 0007E164  7C 08 03 A6 */	mtlr r0
 /* 80081208 0007E168  4E 80 00 20 */	blr 
+.endfn startAfterMotions__11PlayerStateFv
 
-.global startUfoPartsMotion__11PlayerStateFUlib
-startUfoPartsMotion__11PlayerStateFUlib:
+.fn startUfoPartsMotion__11PlayerStateFUlib, global
 /* 8008120C 0007E16C  7C 08 02 A6 */	mflr r0
 /* 80081210 0007E170  90 01 00 04 */	stw r0, 4(r1)
 /* 80081214 0007E174  94 21 FF A8 */	stwu r1, -0x58(r1)
@@ -2251,9 +2250,9 @@ startUfoPartsMotion__11PlayerStateFUlib:
 /* 8008130C 0007E26C  38 21 00 58 */	addi r1, r1, 0x58
 /* 80081310 0007E270  7C 08 03 A6 */	mtlr r0
 /* 80081314 0007E274  4E 80 00 20 */	blr 
+.endfn startUfoPartsMotion__11PlayerStateFUlib
 
-.global getUfoParts__11PlayerStateFUlb
-getUfoParts__11PlayerStateFUlb:
+.fn getUfoParts__11PlayerStateFUlb, global
 /* 80081318 0007E278  7C 08 02 A6 */	mflr r0
 /* 8008131C 0007E27C  90 01 00 04 */	stw r0, 4(r1)
 /* 80081320 0007E280  94 21 FF 60 */	stwu r1, -0xa0(r1)
@@ -2569,9 +2568,9 @@ getUfoParts__11PlayerStateFUlb:
 /* 80081764 0007E6C4  38 21 00 A0 */	addi r1, r1, 0xa0
 /* 80081768 0007E6C8  7C 08 03 A6 */	mtlr r0
 /* 8008176C 0007E6CC  4E 80 00 20 */	blr 
+.endfn getUfoParts__11PlayerStateFUlb
 
-.global getNextPowerupNumber__11PlayerStateFv
-getNextPowerupNumber__11PlayerStateFv:
+.fn getNextPowerupNumber__11PlayerStateFv, global
 /* 80081770 0007E6D0  94 21 FF B0 */	stwu r1, -0x50(r1)
 /* 80081774 0007E6D4  38 00 00 01 */	li r0, 1
 /* 80081778 0007E6D8  90 01 00 38 */	stw r0, 0x38(r1)
@@ -2594,9 +2593,9 @@ getNextPowerupNumber__11PlayerStateFv:
 /* 800817BC 0007E71C  7C 63 00 50 */	subf r3, r3, r0
 /* 800817C0 0007E720  38 21 00 50 */	addi r1, r1, 0x50
 /* 800817C4 0007E724  4E 80 00 20 */	blr 
+.endfn getNextPowerupNumber__11PlayerStateFv
 
-.global preloadHenkaMovie__11PlayerStateFv
-preloadHenkaMovie__11PlayerStateFv:
+.fn preloadHenkaMovie__11PlayerStateFv, global
 /* 800817C8 0007E728  7C 08 02 A6 */	mflr r0
 /* 800817CC 0007E72C  90 01 00 04 */	stw r0, 4(r1)
 /* 800817D0 0007E730  94 21 FF C0 */	stwu r1, -0x40(r1)
@@ -2667,9 +2666,9 @@ preloadHenkaMovie__11PlayerStateFv:
 /* 800818BC 0007E81C  38 21 00 40 */	addi r1, r1, 0x40
 /* 800818C0 0007E820  7C 08 03 A6 */	mtlr r0
 /* 800818C4 0007E824  4E 80 00 20 */	blr 
+.endfn preloadHenkaMovie__11PlayerStateFv
 
-.global findUfoParts__11PlayerStateFUl
-findUfoParts__11PlayerStateFUl:
+.fn findUfoParts__11PlayerStateFUl, global
 /* 800818C8 0007E828  80 03 01 70 */	lwz r0, 0x170(r3)
 /* 800818CC 0007E82C  38 E0 00 00 */	li r7, 0
 /* 800818D0 0007E830  38 A0 00 00 */	li r5, 0
@@ -2692,9 +2691,9 @@ findUfoParts__11PlayerStateFUl:
 .L_8008190C:
 /* 8008190C 0007E86C  38 60 00 00 */	li r3, 0
 /* 80081910 0007E870  4E 80 00 20 */	blr 
+.endfn findUfoParts__11PlayerStateFUl
 
-.global renderParts__11PlayerStateFR8GraphicsP5Shape
-renderParts__11PlayerStateFR8GraphicsP5Shape:
+.fn renderParts__11PlayerStateFR8GraphicsP5Shape, global
 /* 80081914 0007E874  7C 08 02 A6 */	mflr r0
 /* 80081918 0007E878  3C C0 80 22 */	lis r6, lbl_802223B4@ha
 /* 8008191C 0007E87C  90 01 00 04 */	stw r0, 4(r1)
@@ -2892,33 +2891,38 @@ renderParts__11PlayerStateFR8GraphicsP5Shape:
 /* 80081C04 0007EB64  38 21 01 60 */	addi r1, r1, 0x160
 /* 80081C08 0007EB68  7C 08 03 A6 */	mtlr r0
 /* 80081C0C 0007EB6C  4E 80 00 20 */	blr 
+.endfn renderParts__11PlayerStateFR8GraphicsP5Shape
 
 .section .rodata, "a"  # 0x80221FE0 - 0x80222DC0
 .balign 8
-lbl_802223A0:
+.obj lbl_802223A0, local
 	.4byte 17
 	.4byte 18
 	.4byte 19
 	.4byte 25
 	.4byte 26
-lbl_802223B4:
+.endobj lbl_802223A0
+.balign 4
+.obj lbl_802223B4, local
 	.4byte lbl_803DEBE8
 	.4byte lbl_803DEBF0
 	.4byte lbl_803DEBF8
 	.4byte lbl_803DEC00
 	.4byte lbl_803DEC08
 	.4byte lbl_803DEC10
+.endobj lbl_802223B4
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802ADD78:
+.obj lbl_802ADD78, local
 	.asciz "playerState.cpp"
+.endobj lbl_802ADD78
 .balign 4
-lbl_802ADD88:
+.obj lbl_802ADD88, local
 	.asciz "PlayerState"
+.endobj lbl_802ADD88
 .balign 4
-.global partsInfo
-partsInfo:
+.obj partsInfo, global
 	.ascii "ust1"
 	.4byte 0x01000000
 	.ascii "ust2"
@@ -2929,113 +2933,152 @@ partsInfo:
 	.4byte 0x01000000
 	.ascii "ust5"
 	.4byte 0x01000000
+.endobj partsInfo
 .balign 4
-lbl_802ADDBC: # Shift-JIS
+.obj lbl_802ADDBC, local # Shift-JIS
 	.4byte 0x8379838C
 	.4byte 0x83628367
 	.4byte 0x837D836C
 	.4byte 0x815B8357
 	.4byte 0x83830000
+.endobj lbl_802ADDBC
 .balign 4
-lbl_802ADDD0:
+.obj lbl_802ADDD0, local
 	.asciz "PlayerState::UfoParts"
+.endobj lbl_802ADDD0
 .balign 4
-lbl_802ADDE8:
+.obj lbl_802ADDE8, local
 	.asciz "PaniAnimKeyListener"
+.endobj lbl_802ADDE8
 .balign 4
-lbl_802ADDFC:
+.obj lbl_802ADDFC, local
 	.4byte __RTTI__19PaniAnimKeyListener
-	.4byte 0x00000000
-	.4byte 0x00000000
-.global __vt__Q211PlayerState8UfoParts
-__vt__Q211PlayerState8UfoParts:
+	.4byte 0
+	.4byte 0
+.endobj lbl_802ADDFC
+.balign 4
+.obj __vt__Q211PlayerState8UfoParts, global
 	.4byte __RTTI__Q211PlayerState8UfoParts
 	.4byte 0
 	.4byte animationKeyUpdated__Q211PlayerState8UfoPartsFR16PaniAnimKeyEvent
-	.4byte 0
-	.4byte 0
-	.4byte 0
+.endobj __vt__Q211PlayerState8UfoParts
+.balign 4
+.skip 0xC # compiler padding
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-.global totalUfoParts__11PlayerState
-totalUfoParts__11PlayerState:
+.obj totalUfoParts__11PlayerState, global
 	.4byte 30
-lbl_803DEBDC:
-	.float 0.0
-lbl_803DEBE0:
-	.float 0.0
-lbl_803DEBE4:
-	.float 0.0
+.endobj totalUfoParts__11PlayerState
 .balign 4
-lbl_803DEBE8:
+.obj lbl_803DEBDC, local
+	.float 0.0
+.endobj lbl_803DEBDC
+.balign 4
+.obj lbl_803DEBE0, local
+	.float 0.0
+.endobj lbl_803DEBE0
+.balign 4
+.obj lbl_803DEBE4, local
+	.float 0.0
+.endobj lbl_803DEBE4
+.balign 4
+.obj lbl_803DEBE8, local
 	.asciz "carry"
+.endobj lbl_803DEBE8
 .balign 4
-lbl_803DEBF0:
+.obj lbl_803DEBF0, local
 	.asciz "assign"
+.endobj lbl_803DEBF0
 .balign 4
-lbl_803DEBF8:
+.obj lbl_803DEBF8, local
 	.asciz "after"
+.endobj lbl_803DEBF8
 .balign 4
-lbl_803DEC00:
+.obj lbl_803DEC00, local
 	.asciz "piston"
+.endobj lbl_803DEC00
 .balign 4
-lbl_803DEC08:
+.obj lbl_803DEC08, local
 	.asciz "special"
+.endobj lbl_803DEC08
 .balign 4
-lbl_803DEC10:
+.obj lbl_803DEC10, local
 	.asciz "6"
+.endobj lbl_803DEC10
 .balign 4
-lbl_803DEC14:
+.obj lbl_803DEC14, local
 	.float 0.0
-lbl_803DEC18:
+.endobj lbl_803DEC14
+.obj lbl_803DEC18, local
 	.float 0.0
-lbl_803DEC1C:
+.endobj lbl_803DEC18
+.obj lbl_803DEC1C, local
 	.float 0.0
-lbl_803DEC20:
+.endobj lbl_803DEC1C
+.obj lbl_803DEC20, local
 	.float 1.0
-lbl_803DEC24:
+.endobj lbl_803DEC20
+.obj lbl_803DEC24, local
 	.float 1.0
-lbl_803DEC28:
+.endobj lbl_803DEC24
+.obj lbl_803DEC28, local
 	.float 1.0
-lbl_803DEC2C:
+.endobj lbl_803DEC28
+.obj lbl_803DEC2C, local
 	.float 0.0
-lbl_803DEC30:
+.endobj lbl_803DEC2C
+.obj lbl_803DEC30, local # pi
 	.float 3.1415927
-lbl_803DEC34:
+.endobj lbl_803DEC30
+.obj lbl_803DEC34, local
 	.float 0.0
-lbl_803DEC38:
+.endobj lbl_803DEC34
+.obj lbl_803DEC38, local
 	.float 0.0
-lbl_803DEC3C:
+.endobj lbl_803DEC38
+.obj lbl_803DEC3C, local
 	.float -10.0
-lbl_803DEC40:
+.endobj lbl_803DEC3C
+.obj lbl_803DEC40, local
 	.float 0.0
-lbl_803DEC44:
+.endobj lbl_803DEC40
+.obj lbl_803DEC44, local
 	.float 2.0
-lbl_803DEC48:
+.endobj lbl_803DEC44
+.obj lbl_803DEC48, local
 	.float 0.0
-lbl_803DEC4C:
+.endobj lbl_803DEC48
+.obj lbl_803DEC4C, local
 	.float 0.0
-__RTTI__19PaniAnimKeyListener:
+.endobj lbl_803DEC4C
+.balign 4
+.obj __RTTI__19PaniAnimKeyListener, local
 	.4byte lbl_802ADDE8
 	.4byte 0
-__RTTI__Q211PlayerState8UfoParts:
+.endobj __RTTI__19PaniAnimKeyListener
+.balign 4
+.obj __RTTI__Q211PlayerState8UfoParts, local
 	.4byte lbl_802ADDD0
 	.4byte lbl_802ADDFC
+.endobj __RTTI__Q211PlayerState8UfoParts
 
 .section .sbss, "wa"
 .balign 8
-.global preloadUFO
-preloadUFO:
+.obj preloadUFO, global
 	.skip 1
+.endobj preloadUFO
 .balign 4
-.global playerState
-playerState:
+.obj playerState, global
 	.skip 4
+.endobj playerState
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803E8BE0:
+.obj lbl_803E8BE0, local
 	.float 0.0
-lbl_803E8BE4:
+.endobj lbl_803E8BE0
+.balign 4
+.obj lbl_803E8BE4, local
 	.float 30.0
+.endobj lbl_803E8BE4

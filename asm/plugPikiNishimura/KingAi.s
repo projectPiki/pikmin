@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global __ct__6KingAiFP4King
-__ct__6KingAiFP4King:
+.fn __ct__6KingAiFP4King, global
 /* 8016C2B0 00169210  3C A0 80 2B */	lis r5, __vt__19PaniAnimKeyListener@ha
 /* 8016C2B4 00169214  38 05 DB 94 */	addi r0, r5, __vt__19PaniAnimKeyListener@l
 /* 8016C2B8 00169218  3C A0 80 2D */	lis r5, __vt__6KingAi@ha
@@ -20,9 +19,9 @@ __ct__6KingAiFP4King:
 /* 8016C2EC 0016924C  D0 03 00 44 */	stfs f0, 0x44(r3)
 /* 8016C2F0 00169250  90 83 00 04 */	stw r4, 4(r3)
 /* 8016C2F4 00169254  4E 80 00 20 */	blr 
+.endfn __ct__6KingAiFP4King
 
-.global initAI__6KingAiFP4King
-initAI__6KingAiFP4King:
+.fn initAI__6KingAiFP4King, global
 /* 8016C2F8 00169258  7C 08 02 A6 */	mflr r0
 /* 8016C2FC 0016925C  90 01 00 04 */	stw r0, 4(r1)
 /* 8016C300 00169260  38 00 00 10 */	li r0, 0x10
@@ -90,9 +89,9 @@ initAI__6KingAiFP4King:
 /* 8016C3F8 00169358  38 21 00 40 */	addi r1, r1, 0x40
 /* 8016C3FC 0016935C  7C 08 03 A6 */	mtlr r0
 /* 8016C400 00169360  4E 80 00 20 */	blr 
+.endfn initAI__6KingAiFP4King
 
-.global animationKeyUpdated__6KingAiFR16PaniAnimKeyEvent
-animationKeyUpdated__6KingAiFR16PaniAnimKeyEvent:
+.fn animationKeyUpdated__6KingAiFR16PaniAnimKeyEvent, global
 /* 8016C404 00169364  7C 08 02 A6 */	mflr r0
 /* 8016C408 00169368  90 01 00 04 */	stw r0, 4(r1)
 /* 8016C40C 0016936C  94 21 FF F8 */	stwu r1, -8(r1)
@@ -132,9 +131,9 @@ animationKeyUpdated__6KingAiFR16PaniAnimKeyEvent:
 /* 8016C474 001693D4  38 21 00 08 */	addi r1, r1, 8
 /* 8016C478 001693D8  7C 08 03 A6 */	mtlr r0
 /* 8016C47C 001693DC  4E 80 00 20 */	blr 
+.endfn animationKeyUpdated__6KingAiFR16PaniAnimKeyEvent
 
-.global keyAction0__6KingAiFv
-keyAction0__6KingAiFv:
+.fn keyAction0__6KingAiFv, global
 /* 8016C480 001693E0  7C 08 02 A6 */	mflr r0
 /* 8016C484 001693E4  90 01 00 04 */	stw r0, 4(r1)
 /* 8016C488 001693E8  94 21 FF D0 */	stwu r1, -0x30(r1)
@@ -261,9 +260,9 @@ keyAction0__6KingAiFv:
 /* 8016C644 001695A4  38 21 00 30 */	addi r1, r1, 0x30
 /* 8016C648 001695A8  7C 08 03 A6 */	mtlr r0
 /* 8016C64C 001695AC  4E 80 00 20 */	blr 
+.endfn keyAction0__6KingAiFv
 
-.global keyAction1__6KingAiFv
-keyAction1__6KingAiFv:
+.fn keyAction1__6KingAiFv, global
 /* 8016C650 001695B0  7C 08 02 A6 */	mflr r0
 /* 8016C654 001695B4  90 01 00 04 */	stw r0, 4(r1)
 /* 8016C658 001695B8  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -327,9 +326,9 @@ keyAction1__6KingAiFv:
 /* 8016C728 00169688  38 21 00 18 */	addi r1, r1, 0x18
 /* 8016C72C 0016968C  7C 08 03 A6 */	mtlr r0
 /* 8016C730 00169690  4E 80 00 20 */	blr 
+.endfn keyAction1__6KingAiFv
 
-.global keyAction2__6KingAiFv
-keyAction2__6KingAiFv:
+.fn keyAction2__6KingAiFv, global
 /* 8016C734 00169694  7C 08 02 A6 */	mflr r0
 /* 8016C738 00169698  90 01 00 04 */	stw r0, 4(r1)
 /* 8016C73C 0016969C  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -352,17 +351,17 @@ keyAction2__6KingAiFv:
 /* 8016C778 001696D8  38 21 00 20 */	addi r1, r1, 0x20
 /* 8016C77C 001696DC  7C 08 03 A6 */	mtlr r0
 /* 8016C780 001696E0  4E 80 00 20 */	blr 
+.endfn keyAction2__6KingAiFv
 
-.global keyLoopEnd__6KingAiFv
-keyLoopEnd__6KingAiFv:
+.fn keyLoopEnd__6KingAiFv, global
 /* 8016C784 001696E4  80 83 00 04 */	lwz r4, 4(r3)
 /* 8016C788 001696E8  80 64 02 EC */	lwz r3, 0x2ec(r4)
 /* 8016C78C 001696EC  38 03 00 01 */	addi r0, r3, 1
 /* 8016C790 001696F0  90 04 02 EC */	stw r0, 0x2ec(r4)
 /* 8016C794 001696F4  4E 80 00 20 */	blr 
+.endfn keyLoopEnd__6KingAiFv
 
-.global keyFinished__6KingAiFv
-keyFinished__6KingAiFv:
+.fn keyFinished__6KingAiFv, global
 /* 8016C798 001696F8  7C 08 02 A6 */	mflr r0
 /* 8016C79C 001696FC  90 01 00 04 */	stw r0, 4(r1)
 /* 8016C7A0 00169700  38 00 00 01 */	li r0, 1
@@ -402,9 +401,9 @@ keyFinished__6KingAiFv:
 /* 8016C81C 0016977C  38 21 00 20 */	addi r1, r1, 0x20
 /* 8016C820 00169780  7C 08 03 A6 */	mtlr r0
 /* 8016C824 00169784  4E 80 00 20 */	blr 
+.endfn keyFinished__6KingAiFv
 
-.global playSound__6KingAiFi
-playSound__6KingAiFi:
+.fn playSound__6KingAiFi, global
 /* 8016C828 00169788  7C 08 02 A6 */	mflr r0
 /* 8016C82C 0016978C  90 01 00 04 */	stw r0, 4(r1)
 /* 8016C830 00169790  94 21 FF F8 */	stwu r1, -8(r1)
@@ -423,9 +422,9 @@ playSound__6KingAiFi:
 /* 8016C860 001697C0  38 21 00 08 */	addi r1, r1, 8
 /* 8016C864 001697C4  7C 08 03 A6 */	mtlr r0
 /* 8016C868 001697C8  4E 80 00 20 */	blr 
+.endfn playSound__6KingAiFi
 
-.global createEffect__6KingAiFi
-createEffect__6KingAiFi:
+.fn createEffect__6KingAiFi, global
 /* 8016C86C 001697CC  7C 08 02 A6 */	mflr r0
 /* 8016C870 001697D0  90 01 00 04 */	stw r0, 4(r1)
 /* 8016C874 001697D4  94 21 FF F8 */	stwu r1, -8(r1)
@@ -444,9 +443,9 @@ createEffect__6KingAiFi:
 /* 8016C8A0 00169800  38 21 00 08 */	addi r1, r1, 8
 /* 8016C8A4 00169804  7C 08 03 A6 */	mtlr r0
 /* 8016C8A8 00169808  4E 80 00 20 */	blr 
+.endfn createEffect__6KingAiFi
 
-.global calcDamageScale__6KingAiFv
-calcDamageScale__6KingAiFv:
+.fn calcDamageScale__6KingAiFv, global
 /* 8016C8AC 0016980C  7C 08 02 A6 */	mflr r0
 /* 8016C8B0 00169810  90 01 00 04 */	stw r0, 4(r1)
 /* 8016C8B4 00169814  94 21 FF 70 */	stwu r1, -0x90(r1)
@@ -537,25 +536,25 @@ calcDamageScale__6KingAiFv:
 /* 8016C9F4 00169954  38 21 00 90 */	addi r1, r1, 0x90
 /* 8016C9F8 00169958  7C 08 03 A6 */	mtlr r0
 /* 8016C9FC 0016995C  4E 80 00 20 */	blr 
+.endfn calcDamageScale__6KingAiFv
 
-.global startSpreadSaliva__6KingAiFv
-startSpreadSaliva__6KingAiFv:
+.fn startSpreadSaliva__6KingAiFv, global
 /* 8016CA00 00169960  80 63 00 04 */	lwz r3, 4(r3)
 /* 8016CA04 00169964  38 00 00 01 */	li r0, 1
 /* 8016CA08 00169968  80 63 03 C0 */	lwz r3, 0x3c0(r3)
 /* 8016CA0C 0016996C  98 03 00 06 */	stb r0, 6(r3)
 /* 8016CA10 00169970  4E 80 00 20 */	blr 
+.endfn startSpreadSaliva__6KingAiFv
 
-.global endSpreadSaliva__6KingAiFv
-endSpreadSaliva__6KingAiFv:
+.fn endSpreadSaliva__6KingAiFv, global
 /* 8016CA14 00169974  80 63 00 04 */	lwz r3, 4(r3)
 /* 8016CA18 00169978  38 00 00 00 */	li r0, 0
 /* 8016CA1C 0016997C  80 63 03 C0 */	lwz r3, 0x3c0(r3)
 /* 8016CA20 00169980  98 03 00 06 */	stb r0, 6(r3)
 /* 8016CA24 00169984  4E 80 00 20 */	blr 
+.endfn endSpreadSaliva__6KingAiFv
 
-.global fallBackSide__6KingAiFv
-fallBackSide__6KingAiFv:
+.fn fallBackSide__6KingAiFv, global
 /* 8016CA28 00169988  7C 08 02 A6 */	mflr r0
 /* 8016CA2C 0016998C  90 01 00 04 */	stw r0, 4(r1)
 /* 8016CA30 00169990  94 21 FE F0 */	stwu r1, -0x110(r1)
@@ -860,9 +859,9 @@ fallBackSide__6KingAiFv:
 /* 8016CE9C 00169DFC  38 21 01 10 */	addi r1, r1, 0x110
 /* 8016CEA0 00169E00  7C 08 03 A6 */	mtlr r0
 /* 8016CEA4 00169E04  4E 80 00 20 */	blr 
+.endfn fallBackSide__6KingAiFv
 
-.global pikiStickToKingMouth__6KingAiFv
-pikiStickToKingMouth__6KingAiFv:
+.fn pikiStickToKingMouth__6KingAiFv, global
 /* 8016CEA8 00169E08  7C 08 02 A6 */	mflr r0
 /* 8016CEAC 00169E0C  90 01 00 04 */	stw r0, 4(r1)
 /* 8016CEB0 00169E10  94 21 FE D8 */	stwu r1, -0x128(r1)
@@ -1162,9 +1161,9 @@ pikiStickToKingMouth__6KingAiFv:
 /* 8016D2FC 0016A25C  38 21 01 28 */	addi r1, r1, 0x128
 /* 8016D300 0016A260  7C 08 03 A6 */	mtlr r0
 /* 8016D304 0016A264  4E 80 00 20 */	blr 
+.endfn pikiStickToKingMouth__6KingAiFv
 
-.global tongueBombExplosion__6KingAiFv
-tongueBombExplosion__6KingAiFv:
+.fn tongueBombExplosion__6KingAiFv, global
 /* 8016D308 0016A268  7C 08 02 A6 */	mflr r0
 /* 8016D30C 0016A26C  90 01 00 04 */	stw r0, 4(r1)
 /* 8016D310 0016A270  94 21 FF 60 */	stwu r1, -0xa0(r1)
@@ -1350,9 +1349,9 @@ tongueBombExplosion__6KingAiFv:
 /* 8016D5A4 0016A504  38 21 00 A0 */	addi r1, r1, 0xa0
 /* 8016D5A8 0016A508  7C 08 03 A6 */	mtlr r0
 /* 8016D5AC 0016A50C  4E 80 00 20 */	blr 
+.endfn tongueBombExplosion__6KingAiFv
 
-.global killStickToMouthPiki__6KingAiFv
-killStickToMouthPiki__6KingAiFv:
+.fn killStickToMouthPiki__6KingAiFv, global
 /* 8016D5B0 0016A510  7C 08 02 A6 */	mflr r0
 /* 8016D5B4 0016A514  90 01 00 04 */	stw r0, 4(r1)
 /* 8016D5B8 0016A518  38 00 00 00 */	li r0, 0
@@ -1364,9 +1363,9 @@ killStickToMouthPiki__6KingAiFv:
 /* 8016D5D0 0016A530  38 21 00 08 */	addi r1, r1, 8
 /* 8016D5D4 0016A534  7C 08 03 A6 */	mtlr r0
 /* 8016D5D8 0016A538  4E 80 00 20 */	blr 
+.endfn killStickToMouthPiki__6KingAiFv
 
-.global tongueAttackNavi__6KingAiFv
-tongueAttackNavi__6KingAiFv:
+.fn tongueAttackNavi__6KingAiFv, global
 /* 8016D5DC 0016A53C  7C 08 02 A6 */	mflr r0
 /* 8016D5E0 0016A540  90 01 00 04 */	stw r0, 4(r1)
 /* 8016D5E4 0016A544  94 21 FF 58 */	stwu r1, -0xa8(r1)
@@ -1545,9 +1544,9 @@ tongueAttackNavi__6KingAiFv:
 /* 8016D860 0016A7C0  38 21 00 A8 */	addi r1, r1, 0xa8
 /* 8016D864 0016A7C4  7C 08 03 A6 */	mtlr r0
 /* 8016D868 0016A7C8  4E 80 00 20 */	blr 
+.endfn tongueAttackNavi__6KingAiFv
 
-.global dispelNaviPiki__6KingAiFv
-dispelNaviPiki__6KingAiFv:
+.fn dispelNaviPiki__6KingAiFv, global
 /* 8016D86C 0016A7CC  7C 08 02 A6 */	mflr r0
 /* 8016D870 0016A7D0  90 01 00 04 */	stw r0, 4(r1)
 /* 8016D874 0016A7D4  94 21 FE 80 */	stwu r1, -0x180(r1)
@@ -1866,9 +1865,9 @@ dispelNaviPiki__6KingAiFv:
 /* 8016DD18 0016AC78  38 21 01 80 */	addi r1, r1, 0x180
 /* 8016DD1C 0016AC7C  7C 08 03 A6 */	mtlr r0
 /* 8016DD20 0016AC80  4E 80 00 20 */	blr 
+.endfn dispelNaviPiki__6KingAiFv
 
-.global setDamageLoopCounter__6KingAiFiiiiii
-setDamageLoopCounter__6KingAiFiiiiii:
+.fn setDamageLoopCounter__6KingAiFiiiiii, global
 /* 8016DD24 0016AC84  7C 04 30 00 */	cmpw r4, r6
 /* 8016DD28 0016AC88  94 21 FF 88 */	stwu r1, -0x78(r1)
 /* 8016DD2C 0016AC8C  41 80 00 0C */	blt .L_8016DD38
@@ -1948,9 +1947,9 @@ setDamageLoopCounter__6KingAiFiiiiii:
 .L_8016DE3C:
 /* 8016DE3C 0016AD9C  38 21 00 78 */	addi r1, r1, 0x78
 /* 8016DE40 0016ADA0  4E 80 00 20 */	blr 
+.endfn setDamageLoopCounter__6KingAiFiiiiii
 
-.global setEatDamageLoopCounter__6KingAiFv
-setEatDamageLoopCounter__6KingAiFv:
+.fn setEatDamageLoopCounter__6KingAiFv, global
 /* 8016DE44 0016ADA4  7C 08 02 A6 */	mflr r0
 /* 8016DE48 0016ADA8  90 01 00 04 */	stw r0, 4(r1)
 /* 8016DE4C 0016ADAC  94 21 FF 20 */	stwu r1, -0xe0(r1)
@@ -2127,9 +2126,9 @@ setEatDamageLoopCounter__6KingAiFv:
 /* 8016E0BC 0016B01C  38 21 00 E0 */	addi r1, r1, 0xe0
 /* 8016E0C0 0016B020  7C 08 03 A6 */	mtlr r0
 /* 8016E0C4 0016B024  4E 80 00 20 */	blr 
+.endfn setEatDamageLoopCounter__6KingAiFv
 
-.global setAttackPriority__6KingAiFv
-setAttackPriority__6KingAiFv:
+.fn setAttackPriority__6KingAiFv, global
 /* 8016E0C8 0016B028  7C 08 02 A6 */	mflr r0
 /* 8016E0CC 0016B02C  90 01 00 04 */	stw r0, 4(r1)
 /* 8016E0D0 0016B030  38 00 00 01 */	li r0, 1
@@ -2204,9 +2203,9 @@ setAttackPriority__6KingAiFv:
 /* 8016E1D4 0016B134  38 21 00 80 */	addi r1, r1, 0x80
 /* 8016E1D8 0016B138  7C 08 03 A6 */	mtlr r0
 /* 8016E1DC 0016B13C  4E 80 00 20 */	blr 
+.endfn setAttackPriority__6KingAiFv
 
-.global inJumpAngle__6KingAiFP8Creature
-inJumpAngle__6KingAiFP8Creature:
+.fn inJumpAngle__6KingAiFP8Creature, global
 /* 8016E1E0 0016B140  7C 08 02 A6 */	mflr r0
 /* 8016E1E4 0016B144  90 01 00 04 */	stw r0, 4(r1)
 /* 8016E1E8 0016B148  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -2263,9 +2262,9 @@ inJumpAngle__6KingAiFP8Creature:
 /* 8016E2A0 0016B200  38 21 00 28 */	addi r1, r1, 0x28
 /* 8016E2A4 0016B204  7C 08 03 A6 */	mtlr r0
 /* 8016E2A8 0016B208  4E 80 00 20 */	blr 
+.endfn inJumpAngle__6KingAiFP8Creature
 
-.global calcNearerDirection__7NsMathFFff
-calcNearerDirection__7NsMathFFff:
+.fn calcNearerDirection__7NsMathFFff, weak
 /* 8016E2AC 0016B20C  FC 02 08 40 */	fcmpo cr0, f2, f1
 /* 8016E2B0 0016B210  4C 41 13 82 */	cror 2, 1, 2
 /* 8016E2B4 0016B214  40 82 00 20 */	bne .L_8016E2D4
@@ -2286,9 +2285,9 @@ calcNearerDirection__7NsMathFFff:
 .L_8016E2EC:
 /* 8016E2EC 0016B24C  FC 20 10 90 */	fmr f1, f2
 /* 8016E2F0 0016B250  4E 80 00 20 */	blr 
+.endfn calcNearerDirection__7NsMathFFff
 
-.global inTurnAngleTransit__6KingAiFv
-inTurnAngleTransit__6KingAiFv:
+.fn inTurnAngleTransit__6KingAiFv, global
 /* 8016E2F4 0016B254  7C 08 02 A6 */	mflr r0
 /* 8016E2F8 0016B258  90 01 00 04 */	stw r0, 4(r1)
 /* 8016E2FC 0016B25C  94 21 FF D0 */	stwu r1, -0x30(r1)
@@ -2345,9 +2344,9 @@ inTurnAngleTransit__6KingAiFv:
 /* 8016E3B4 0016B314  38 21 00 30 */	addi r1, r1, 0x30
 /* 8016E3B8 0016B318  7C 08 03 A6 */	mtlr r0
 /* 8016E3BC 0016B31C  4E 80 00 20 */	blr 
+.endfn inTurnAngleTransit__6KingAiFv
 
-.global chaseNaviTransit__6KingAiFv
-chaseNaviTransit__6KingAiFv:
+.fn chaseNaviTransit__6KingAiFv, global
 /* 8016E3C0 0016B320  7C 08 02 A6 */	mflr r0
 /* 8016E3C4 0016B324  90 01 00 04 */	stw r0, 4(r1)
 /* 8016E3C8 0016B328  94 21 FF 28 */	stwu r1, -0xd8(r1)
@@ -2551,9 +2550,9 @@ chaseNaviTransit__6KingAiFv:
 /* 8016E6B4 0016B614  38 21 00 D8 */	addi r1, r1, 0xd8
 /* 8016E6B8 0016B618  7C 08 03 A6 */	mtlr r0
 /* 8016E6BC 0016B61C  4E 80 00 20 */	blr 
+.endfn chaseNaviTransit__6KingAiFv
 
-.global chasePikiTransit__6KingAiFv
-chasePikiTransit__6KingAiFv:
+.fn chasePikiTransit__6KingAiFv, global
 /* 8016E6C0 0016B620  7C 08 02 A6 */	mflr r0
 /* 8016E6C4 0016B624  90 01 00 04 */	stw r0, 4(r1)
 /* 8016E6C8 0016B628  94 21 FF 20 */	stwu r1, -0xe0(r1)
@@ -2760,9 +2759,9 @@ chasePikiTransit__6KingAiFv:
 /* 8016E9C0 0016B920  38 21 00 E0 */	addi r1, r1, 0xe0
 /* 8016E9C4 0016B924  7C 08 03 A6 */	mtlr r0
 /* 8016E9C8 0016B928  4E 80 00 20 */	blr 
+.endfn chasePikiTransit__6KingAiFv
 
-.global attackTransit__6KingAiFv
-attackTransit__6KingAiFv:
+.fn attackTransit__6KingAiFv, global
 /* 8016E9CC 0016B92C  7C 08 02 A6 */	mflr r0
 /* 8016E9D0 0016B930  90 01 00 04 */	stw r0, 4(r1)
 /* 8016E9D4 0016B934  94 21 FF 40 */	stwu r1, -0xc0(r1)
@@ -3037,9 +3036,9 @@ attackTransit__6KingAiFv:
 /* 8016EDA0 0016BD00  38 21 00 C0 */	addi r1, r1, 0xc0
 /* 8016EDA4 0016BD04  7C 08 03 A6 */	mtlr r0
 /* 8016EDA8 0016BD08  4E 80 00 20 */	blr 
+.endfn attackTransit__6KingAiFv
 
-.global jumpAttackTransit__6KingAiFv
-jumpAttackTransit__6KingAiFv:
+.fn jumpAttackTransit__6KingAiFv, global
 /* 8016EDAC 0016BD0C  7C 08 02 A6 */	mflr r0
 /* 8016EDB0 0016BD10  90 01 00 04 */	stw r0, 4(r1)
 /* 8016EDB4 0016BD14  94 21 FF 38 */	stwu r1, -0xc8(r1)
@@ -3340,9 +3339,9 @@ jumpAttackTransit__6KingAiFv:
 /* 8016F1E8 0016C148  38 21 00 C8 */	addi r1, r1, 0xc8
 /* 8016F1EC 0016C14C  7C 08 03 A6 */	mtlr r0
 /* 8016F1F0 0016C150  4E 80 00 20 */	blr 
+.endfn jumpAttackTransit__6KingAiFv
 
-.global eatThrowPikiTransit__6KingAiFv
-eatThrowPikiTransit__6KingAiFv:
+.fn eatThrowPikiTransit__6KingAiFv, global
 /* 8016F1F4 0016C154  7C 08 02 A6 */	mflr r0
 /* 8016F1F8 0016C158  90 01 00 04 */	stw r0, 4(r1)
 /* 8016F1FC 0016C15C  94 21 FF 40 */	stwu r1, -0xc0(r1)
@@ -3526,9 +3525,9 @@ eatThrowPikiTransit__6KingAiFv:
 /* 8016F4A0 0016C400  38 21 00 C0 */	addi r1, r1, 0xc0
 /* 8016F4A4 0016C404  7C 08 03 A6 */	mtlr r0
 /* 8016F4A8 0016C408  4E 80 00 20 */	blr 
+.endfn eatThrowPikiTransit__6KingAiFv
 
-.global targetLostTransit__6KingAiFv
-targetLostTransit__6KingAiFv:
+.fn targetLostTransit__6KingAiFv, global
 /* 8016F4AC 0016C40C  7C 08 02 A6 */	mflr r0
 /* 8016F4B0 0016C410  90 01 00 04 */	stw r0, 4(r1)
 /* 8016F4B4 0016C414  94 21 FF 90 */	stwu r1, -0x70(r1)
@@ -3635,9 +3634,9 @@ targetLostTransit__6KingAiFv:
 /* 8016F630 0016C590  38 21 00 70 */	addi r1, r1, 0x70
 /* 8016F634 0016C594  7C 08 03 A6 */	mtlr r0
 /* 8016F638 0016C598  4E 80 00 20 */	blr 
+.endfn targetLostTransit__6KingAiFv
 
-.global appearTransit__6KingAiFv
-appearTransit__6KingAiFv:
+.fn appearTransit__6KingAiFv, global
 /* 8016F63C 0016C59C  7C 08 02 A6 */	mflr r0
 /* 8016F640 0016C5A0  90 01 00 04 */	stw r0, 4(r1)
 /* 8016F644 0016C5A4  94 21 FF 28 */	stwu r1, -0xd8(r1)
@@ -3914,9 +3913,9 @@ appearTransit__6KingAiFv:
 /* 8016FA3C 0016C99C  38 21 00 D8 */	addi r1, r1, 0xd8
 /* 8016FA40 0016C9A0  7C 08 03 A6 */	mtlr r0
 /* 8016FA44 0016C9A4  4E 80 00 20 */	blr 
+.endfn appearTransit__6KingAiFv
 
-.global initDie__6KingAiFi
-initDie__6KingAiFi:
+.fn initDie__6KingAiFi, global
 /* 8016FA48 0016C9A8  7C 08 02 A6 */	mflr r0
 /* 8016FA4C 0016C9AC  90 01 00 04 */	stw r0, 4(r1)
 /* 8016FA50 0016C9B0  38 00 00 00 */	li r0, 0
@@ -4000,9 +3999,9 @@ initDie__6KingAiFi:
 /* 8016FB88 0016CAE8  38 21 00 38 */	addi r1, r1, 0x38
 /* 8016FB8C 0016CAEC  7C 08 03 A6 */	mtlr r0
 /* 8016FB90 0016CAF0  4E 80 00 20 */	blr 
+.endfn initDie__6KingAiFi
 
-.global initAppear__6KingAiFi
-initAppear__6KingAiFi:
+.fn initAppear__6KingAiFi, global
 /* 8016FB94 0016CAF4  7C 08 02 A6 */	mflr r0
 /* 8016FB98 0016CAF8  38 A0 00 00 */	li r5, 0
 /* 8016FB9C 0016CAFC  90 01 00 04 */	stw r0, 4(r1)
@@ -4095,9 +4094,9 @@ initAppear__6KingAiFi:
 /* 8016FCF4 0016CC54  38 21 00 38 */	addi r1, r1, 0x38
 /* 8016FCF8 0016CC58  7C 08 03 A6 */	mtlr r0
 /* 8016FCFC 0016CC5C  4E 80 00 20 */	blr 
+.endfn initAppear__6KingAiFi
 
-.global update__6KingAiFv
-update__6KingAiFv:
+.fn update__6KingAiFv, global
 /* 8016FD00 0016CC60  7C 08 02 A6 */	mflr r0
 /* 8016FD04 0016CC64  90 01 00 04 */	stw r0, 4(r1)
 /* 8016FD08 0016CC68  94 21 F5 40 */	stwu r1, -0xac0(r1)
@@ -7393,11 +7392,11 @@ update__6KingAiFv:
 /* 80172D78 0016FCD8  38 21 0A C0 */	addi r1, r1, 0xac0
 /* 80172D7C 0016FCDC  7C 08 03 A6 */	mtlr r0
 /* 80172D80 0016FCE0  4E 80 00 20 */	blr 
+.endfn update__6KingAiFv
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-.global kingSE
-kingSE:
+.obj kingSE, local
 	.4byte 0x0000004D
 	.4byte 0x0000004E
 	.4byte 0x0000004F
@@ -7412,11 +7411,13 @@ kingSE:
 	.4byte 0x00000058
 	.4byte 0x00000059
 	.4byte 0x0000005A
+.endobj kingSE
 .balign 4
-lbl_802D0408:
+.obj lbl_802D0408, local
 	.asciz "KingAi.cpp"
+.endobj lbl_802D0408
 .balign 4
-lbl_802D0414:
+.obj lbl_802D0414, local
 	.4byte .L_8016C454
 	.4byte .L_8016C434
 	.4byte .L_8016C43C
@@ -7426,7 +7427,9 @@ lbl_802D0414:
 	.4byte .L_8016C44C
 	.4byte .L_8016C45C
 	.4byte .L_8016C468
-lbl_802D0438:
+.endobj lbl_802D0414
+.balign 4
+.obj lbl_802D0438, local
 	.4byte .L_8016C4BC
 	.4byte .L_8016C4C8
 	.4byte .L_8016C4E0
@@ -7443,7 +7446,9 @@ lbl_802D0438:
 	.4byte .L_8016C5A4
 	.4byte .L_8016C63C
 	.4byte .L_8016C600
-lbl_802D0478:
+.endobj lbl_802D0438
+.balign 4
+.obj lbl_802D0478, local
 	.4byte .L_8016FE3C
 	.4byte .L_8016FE48
 	.4byte .L_8016FF50
@@ -7461,105 +7466,131 @@ lbl_802D0478:
 	.4byte .L_801728EC
 	.4byte .L_80172C10
 	.4byte .L_80172CE4
+.endobj lbl_802D0478
 .balign 4
-lbl_802D04BC:
+.obj lbl_802D04BC, local
 	.asciz "Interaction"
+.endobj lbl_802D04BC
 .balign 4
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
+.skip 0x2C # compiler padding
 .balign 4
-lbl_802D04F4:
+.obj lbl_802D04F4, local
 	.asciz "PaniAnimKeyListener"
+.endobj lbl_802D04F4
 .balign 4
-lbl_802D0508:
+.obj lbl_802D0508, local
 	.4byte __RTTI__19PaniAnimKeyListener
-	.4byte 0x00000000
-	.4byte 0x00000000
-.global __vt__6KingAi
-__vt__6KingAi:
+	.4byte 0
+	.4byte 0
+.endobj lbl_802D0508
+.balign 4
+.obj __vt__6KingAi, global
 	.4byte __RTTI__6KingAi
 	.4byte 0
 	.4byte animationKeyUpdated__6KingAiFR16PaniAnimKeyEvent
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
+.endobj __vt__6KingAi
+.balign 4
+.skip 0x10 # compiler padding
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-lbl_803E5010:
+.obj lbl_803E5010, local
 	.asciz "KingAi"
+.endobj lbl_803E5010
 .balign 4
-lbl_803E5018:
+.obj lbl_803E5018, local
 	.float 0.0
-lbl_803E501C:
+.endobj lbl_803E5018
+.obj lbl_803E501C, local
 	.float 0.0
-lbl_803E5020:
+.endobj lbl_803E501C
+.obj lbl_803E5020, local
 	.float 0.0
-__RTTI__19PaniAnimKeyListener:
+.endobj lbl_803E5020
+.balign 4
+.obj __RTTI__19PaniAnimKeyListener, local
 	.4byte lbl_802D04F4
-	.4byte 0x00000000
-__RTTI__6KingAi:
+	.4byte 0
+.endobj __RTTI__19PaniAnimKeyListener
+.balign 4
+.obj __RTTI__6KingAi, local
 	.4byte lbl_803E5010
 	.4byte lbl_802D0508
+.endobj __RTTI__6KingAi
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803EAE70:
-	.4byte 0x00000000
-lbl_803EAE74:
-	.4byte 0x41F00000
-lbl_803EAE78:
-	.4byte 0x40490FDB
-lbl_803EAE7C:
-	.4byte 0x43B40000
-lbl_803EAE80:
-	.4byte 0x43960000
-lbl_803EAE84:
-	.4byte 0x40C90FDB
-lbl_803EAE88:
+.obj lbl_803EAE70, local
+	.float 0.0
+.endobj lbl_803EAE70
+.obj lbl_803EAE74, local
+	.float 30.0
+.endobj lbl_803EAE74
+.obj lbl_803EAE78, local # pi
+	.float 3.1415927
+.endobj lbl_803EAE78
+.obj lbl_803EAE7C, local
+	.float 360.0
+.endobj lbl_803EAE7C
+.obj lbl_803EAE80, local
+	.float 300.0
+.endobj lbl_803EAE80
+.obj lbl_803EAE84, local # tau
+	.float 6.2831855
+.endobj lbl_803EAE84
+.obj lbl_803EAE88, local
 	.float 1.0
-lbl_803EAE8C:
-	.4byte 0x43FA0000
-lbl_803EAE90:
-	.4byte 0x46FFFE00
-lbl_803EAE94:
-	.4byte 0x3F7FFFEF
-lbl_803EAE98:
-	.4byte 0x43300000
-	.4byte 0x80000000
-lbl_803EAEA0:
-	.4byte 0x42C80000
-lbl_803EAEA4:
-	.4byte 0xC47A0000
-lbl_803EAEA8:
-	.4byte 0x40000000
-lbl_803EAEAC:
-	.4byte 0x3F000000
-lbl_803EAEB0:
-	.4byte 0x3F490FDB
-lbl_803EAEB4:
-	.4byte 0x46480000
-lbl_803EAEB8:
-	.4byte 0x41700000
-lbl_803EAEBC:
-	.4byte 0x40400000
-lbl_803EAEC0:
-	.4byte 0x40C00000
-lbl_803EAEC4:
-	.4byte 0x41200000
-lbl_803EAEC8:
-	.4byte 0x42240000
-lbl_803EAECC:
-	.4byte 0x429E0000
-lbl_803EAED0:
-	.4byte 0x42180000
+.endobj lbl_803EAE88
+.obj lbl_803EAE8C, local
+	.float 500.0
+.endobj lbl_803EAE8C
+.obj lbl_803EAE90, local
+	.float 32767.0
+.endobj lbl_803EAE90
+.obj lbl_803EAE94, local
+	.float 0.999999
+.endobj lbl_803EAE94
+.balign 8
+.obj lbl_803EAE98, local
+	.8byte 0x4330000080000000
+.endobj lbl_803EAE98
+.balign 4
+.obj lbl_803EAEA0, local
+	.float 100.0
+.endobj lbl_803EAEA0
+.obj lbl_803EAEA4, local
+	.float -1000.0
+.endobj lbl_803EAEA4
+.obj lbl_803EAEA8, local
+	.float 2.0
+.endobj lbl_803EAEA8
+.obj lbl_803EAEAC, local
+	.float 0.5
+.endobj lbl_803EAEAC
+.obj lbl_803EAEB0, local # 45 degrees in radians
+	.float 0.7853982
+.endobj lbl_803EAEB0
+.obj lbl_803EAEB4, local
+	.float 12800.0
+.endobj lbl_803EAEB4
+.obj lbl_803EAEB8, local
+	.float 15.0
+.endobj lbl_803EAEB8
+.obj lbl_803EAEBC, local
+	.float 3.0
+.endobj lbl_803EAEBC
+.obj lbl_803EAEC0, local
+	.float 6.0
+.endobj lbl_803EAEC0
+.obj lbl_803EAEC4, local
+	.float 10.0
+.endobj lbl_803EAEC4
+.obj lbl_803EAEC8, local
+	.float 41.0
+.endobj lbl_803EAEC8
+.obj lbl_803EAECC, local
+	.float 79.0
+.endobj lbl_803EAECC
+.obj lbl_803EAED0, local
+	.float 38.0
+.endobj lbl_803EAED0

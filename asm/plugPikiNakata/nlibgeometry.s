@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global __ct__12NAxisAngle4fFR9NVector3ff
-__ct__12NAxisAngle4fFR9NVector3ff:
+.fn __ct__12NAxisAngle4fFR9NVector3ff, global
 /* 8011BC80 00118BE0  7C 08 02 A6 */	mflr r0
 /* 8011BC84 00118BE4  90 01 00 04 */	stw r0, 4(r1)
 /* 8011BC88 00118BE8  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -24,9 +23,9 @@ __ct__12NAxisAngle4fFR9NVector3ff:
 /* 8011BCCC 00118C2C  38 21 00 28 */	addi r1, r1, 0x28
 /* 8011BCD0 00118C30  7C 08 03 A6 */	mtlr r0
 /* 8011BCD4 00118C34  4E 80 00 20 */	blr 
+.endfn __ct__12NAxisAngle4fFR9NVector3ff
 
-.global construct__12NAxisAngle4fFR9NVector3ff
-construct__12NAxisAngle4fFR9NVector3ff:
+.fn construct__12NAxisAngle4fFR9NVector3ff, global
 /* 8011BCD8 00118C38  C0 04 00 00 */	lfs f0, 0(r4)
 /* 8011BCDC 00118C3C  D0 03 00 00 */	stfs f0, 0(r3)
 /* 8011BCE0 00118C40  C0 04 00 04 */	lfs f0, 4(r4)
@@ -35,9 +34,9 @@ construct__12NAxisAngle4fFR9NVector3ff:
 /* 8011BCEC 00118C4C  D0 03 00 08 */	stfs f0, 8(r3)
 /* 8011BCF0 00118C50  D0 23 00 0C */	stfs f1, 0xc(r3)
 /* 8011BCF4 00118C54  4E 80 00 20 */	blr 
+.endfn construct__12NAxisAngle4fFR9NVector3ff
 
-.global __ct__9NMatrix4fFv
-__ct__9NMatrix4fFv:
+.fn __ct__9NMatrix4fFv, global
 /* 8011BCF8 00118C58  7C 08 02 A6 */	mflr r0
 /* 8011BCFC 00118C5C  90 01 00 04 */	stw r0, 4(r1)
 /* 8011BD00 00118C60  94 21 FF 88 */	stwu r1, -0x78(r1)
@@ -70,9 +69,9 @@ __ct__9NMatrix4fFv:
 /* 8011BD6C 00118CCC  38 21 00 78 */	addi r1, r1, 0x78
 /* 8011BD70 00118CD0  7C 08 03 A6 */	mtlr r0
 /* 8011BD74 00118CD4  4E 80 00 20 */	blr 
+.endfn __ct__9NMatrix4fFv
 
-.global construct__9NMatrix4fFR8Matrix4f
-construct__9NMatrix4fFR8Matrix4f:
+.fn construct__9NMatrix4fFR8Matrix4f, global
 /* 8011BD78 00118CD8  7C 08 02 A6 */	mflr r0
 /* 8011BD7C 00118CDC  90 01 00 04 */	stw r0, 4(r1)
 /* 8011BD80 00118CE0  94 21 FF F8 */	stwu r1, -8(r1)
@@ -81,9 +80,9 @@ construct__9NMatrix4fFR8Matrix4f:
 /* 8011BD8C 00118CEC  38 21 00 08 */	addi r1, r1, 8
 /* 8011BD90 00118CF0  7C 08 03 A6 */	mtlr r0
 /* 8011BD94 00118CF4  4E 80 00 20 */	blr 
+.endfn construct__9NMatrix4fFR8Matrix4f
 
-.global __ct__9NMatrix4fFffffffffffffffff
-__ct__9NMatrix4fFffffffffffffffff:
+.fn __ct__9NMatrix4fFffffffffffffffff, global
 /* 8011BD98 00118CF8  7C 08 02 A6 */	mflr r0
 /* 8011BD9C 00118CFC  90 01 00 04 */	stw r0, 4(r1)
 /* 8011BDA0 00118D00  94 21 FF A8 */	stwu r1, -0x58(r1)
@@ -112,9 +111,9 @@ __ct__9NMatrix4fFffffffffffffffff:
 /* 8011BDFC 00118D5C  38 21 00 58 */	addi r1, r1, 0x58
 /* 8011BE00 00118D60  7C 08 03 A6 */	mtlr r0
 /* 8011BE04 00118D64  4E 80 00 20 */	blr 
+.endfn __ct__9NMatrix4fFffffffffffffffff
 
-.global input__9NMatrix4fFR8Matrix4f
-input__9NMatrix4fFR8Matrix4f:
+.fn input__9NMatrix4fFR8Matrix4f, global
 /* 8011BE08 00118D68  C0 04 00 00 */	lfs f0, 0(r4)
 /* 8011BE0C 00118D6C  38 A4 00 10 */	addi r5, r4, 0x10
 /* 8011BE10 00118D70  38 C3 00 10 */	addi r6, r3, 0x10
@@ -151,9 +150,9 @@ input__9NMatrix4fFR8Matrix4f:
 /* 8011BE8C 00118DEC  C0 05 00 0C */	lfs f0, 0xc(r5)
 /* 8011BE90 00118DF0  D0 06 00 0C */	stfs f0, 0xc(r6)
 /* 8011BE94 00118DF4  4E 80 00 20 */	blr 
+.endfn input__9NMatrix4fFR8Matrix4f
 
-.global set__9NMatrix4fFffffffffffffffff
-set__9NMatrix4fFffffffffffffffff:
+.fn set__9NMatrix4fFffffffffffffffff, global
 /* 8011BE98 00118DF8  94 21 FF D0 */	stwu r1, -0x30(r1)
 /* 8011BE9C 00118DFC  D0 23 00 00 */	stfs f1, 0(r3)
 /* 8011BEA0 00118E00  C1 61 00 38 */	lfs f11, 0x38(r1)
@@ -181,9 +180,9 @@ set__9NMatrix4fFffffffffffffffff:
 /* 8011BEF8 00118E58  D0 03 00 3C */	stfs f0, 0x3c(r3)
 /* 8011BEFC 00118E5C  38 21 00 30 */	addi r1, r1, 0x30
 /* 8011BF00 00118E60  4E 80 00 20 */	blr 
+.endfn set__9NMatrix4fFffffffffffffffff
 
-.global outputCol__9NMatrix4fFiR8Vector3f
-outputCol__9NMatrix4fFiR8Vector3f:
+.fn outputCol__9NMatrix4fFiR8Vector3f, global
 /* 8011BF04 00118E64  54 80 10 3A */	slwi r0, r4, 2
 /* 8011BF08 00118E68  7C 03 04 2E */	lfsx f0, r3, r0
 /* 8011BF0C 00118E6C  7C 63 02 14 */	add r3, r3, r0
@@ -193,9 +192,9 @@ outputCol__9NMatrix4fFiR8Vector3f:
 /* 8011BF1C 00118E7C  C0 03 00 20 */	lfs f0, 0x20(r3)
 /* 8011BF20 00118E80  D0 05 00 08 */	stfs f0, 8(r5)
 /* 8011BF24 00118E84  4E 80 00 20 */	blr 
+.endfn outputCol__9NMatrix4fFiR8Vector3f
 
-.global makeIdentRow__9NMatrix4fFi
-makeIdentRow__9NMatrix4fFi:
+.fn makeIdentRow__9NMatrix4fFi, global
 /* 8011BF28 00118E88  C0 02 A0 10 */	lfs f0, lbl_803EA210@sda21(r2)
 /* 8011BF2C 00118E8C  54 80 20 36 */	slwi r0, r4, 4
 /* 8011BF30 00118E90  7C 83 02 14 */	add r4, r3, r0
@@ -205,9 +204,9 @@ makeIdentRow__9NMatrix4fFi:
 /* 8011BF40 00118EA0  C0 02 A0 14 */	lfs f0, lbl_803EA214@sda21(r2)
 /* 8011BF44 00118EA4  D0 04 00 0C */	stfs f0, 0xc(r4)
 /* 8011BF48 00118EA8  4E 80 00 20 */	blr 
+.endfn makeIdentRow__9NMatrix4fFi
 
-.global __ct__12NOrientationFR8Vector3f
-__ct__12NOrientationFR8Vector3f:
+.fn __ct__12NOrientationFR8Vector3f, global
 /* 8011BF4C 00118EAC  7C 08 02 A6 */	mflr r0
 /* 8011BF50 00118EB0  90 01 00 04 */	stw r0, 4(r1)
 /* 8011BF54 00118EB4  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -228,9 +227,9 @@ __ct__12NOrientationFR8Vector3f:
 /* 8011BF90 00118EF0  38 21 00 18 */	addi r1, r1, 0x18
 /* 8011BF94 00118EF4  7C 08 03 A6 */	mtlr r0
 /* 8011BF98 00118EF8  4E 80 00 20 */	blr 
+.endfn __ct__12NOrientationFR8Vector3f
 
-.global construct__12NOrientationFR8Vector3f
-construct__12NOrientationFR8Vector3f:
+.fn construct__12NOrientationFR8Vector3f, global
 /* 8011BF9C 00118EFC  7C 08 02 A6 */	mflr r0
 /* 8011BFA0 00118F00  90 01 00 04 */	stw r0, 4(r1)
 /* 8011BFA4 00118F04  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -261,9 +260,9 @@ construct__12NOrientationFR8Vector3f:
 /* 8011C008 00118F68  38 21 00 28 */	addi r1, r1, 0x28
 /* 8011C00C 00118F6C  7C 08 03 A6 */	mtlr r0
 /* 8011C010 00118F70  4E 80 00 20 */	blr 
+.endfn construct__12NOrientationFR8Vector3f
 
-.global normalize__12NOrientationFv
-normalize__12NOrientationFv:
+.fn normalize__12NOrientationFv, global
 /* 8011C014 00118F74  7C 08 02 A6 */	mflr r0
 /* 8011C018 00118F78  90 01 00 04 */	stw r0, 4(r1)
 /* 8011C01C 00118F7C  94 21 FF 80 */	stwu r1, -0x80(r1)
@@ -318,9 +317,9 @@ normalize__12NOrientationFv:
 /* 8011C0DC 0011903C  38 21 00 80 */	addi r1, r1, 0x80
 /* 8011C0E0 00119040  7C 08 03 A6 */	mtlr r0
 /* 8011C0E4 00119044  4E 80 00 20 */	blr 
+.endfn normalize__12NOrientationFv
 
-.global outputLeft__12NOrientationFR9NVector3f
-outputLeft__12NOrientationFR9NVector3f:
+.fn outputLeft__12NOrientationFR9NVector3f, global
 /* 8011C0E8 00119048  C0 23 00 04 */	lfs f1, 4(r3)
 /* 8011C0EC 0011904C  C0 C3 00 14 */	lfs f6, 0x14(r3)
 /* 8011C0F0 00119050  C0 43 00 0C */	lfs f2, 0xc(r3)
@@ -340,9 +339,9 @@ outputLeft__12NOrientationFR9NVector3f:
 /* 8011C128 00119088  D0 44 00 04 */	stfs f2, 4(r4)
 /* 8011C12C 0011908C  D0 24 00 08 */	stfs f1, 8(r4)
 /* 8011C130 00119090  4E 80 00 20 */	blr 
+.endfn outputLeft__12NOrientationFR9NVector3f
 
-.global makeUp__12NOrientationFv
-makeUp__12NOrientationFv:
+.fn makeUp__12NOrientationFv, global
 /* 8011C134 00119094  7C 08 02 A6 */	mflr r0
 /* 8011C138 00119098  90 01 00 04 */	stw r0, 4(r1)
 /* 8011C13C 0011909C  94 21 FF 20 */	stwu r1, -0xe0(r1)
@@ -495,9 +494,9 @@ makeUp__12NOrientationFv:
 /* 8011C37C 001192DC  38 21 00 E0 */	addi r1, r1, 0xe0
 /* 8011C380 001192E0  7C 08 03 A6 */	mtlr r0
 /* 8011C384 001192E4  4E 80 00 20 */	blr 
+.endfn makeUp__12NOrientationFv
 
-.global input__8Vector3fFR8Vector3f
-input__8Vector3fFR8Vector3f:
+.fn input__8Vector3fFR8Vector3f, weak
 /* 8011C388 001192E8  C0 04 00 00 */	lfs f0, 0(r4)
 /* 8011C38C 001192EC  D0 03 00 00 */	stfs f0, 0(r3)
 /* 8011C390 001192F0  C0 04 00 04 */	lfs f0, 4(r4)
@@ -505,9 +504,9 @@ input__8Vector3fFR8Vector3f:
 /* 8011C398 001192F8  C0 04 00 08 */	lfs f0, 8(r4)
 /* 8011C39C 001192FC  D0 03 00 08 */	stfs f0, 8(r3)
 /* 8011C3A0 00119300  4E 80 00 20 */	blr 
+.endfn input__8Vector3fFR8Vector3f
 
-.global __ct__8NPolar3fFv
-__ct__8NPolar3fFv:
+.fn __ct__8NPolar3fFv, global
 /* 8011C3A4 00119304  7C 08 02 A6 */	mflr r0
 /* 8011C3A8 00119308  90 01 00 04 */	stw r0, 4(r1)
 /* 8011C3AC 0011930C  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -523,9 +522,9 @@ __ct__8NPolar3fFv:
 /* 8011C3D4 00119334  38 21 00 18 */	addi r1, r1, 0x18
 /* 8011C3D8 00119338  7C 08 03 A6 */	mtlr r0
 /* 8011C3DC 0011933C  4E 80 00 20 */	blr 
+.endfn __ct__8NPolar3fFv
 
-.global __ct__8NPolar3fFR8Vector3f
-__ct__8NPolar3fFR8Vector3f:
+.fn __ct__8NPolar3fFR8Vector3f, global
 /* 8011C3E0 00119340  7C 08 02 A6 */	mflr r0
 /* 8011C3E4 00119344  90 01 00 04 */	stw r0, 4(r1)
 /* 8011C3E8 00119348  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -538,9 +537,9 @@ __ct__8NPolar3fFR8Vector3f:
 /* 8011C404 00119364  38 21 00 18 */	addi r1, r1, 0x18
 /* 8011C408 00119368  7C 08 03 A6 */	mtlr r0
 /* 8011C40C 0011936C  4E 80 00 20 */	blr 
+.endfn __ct__8NPolar3fFR8Vector3f
 
-.global construct__8NPolar3fFR8Vector3f
-construct__8NPolar3fFR8Vector3f:
+.fn construct__8NPolar3fFR8Vector3f, global
 /* 8011C410 00119370  7C 08 02 A6 */	mflr r0
 /* 8011C414 00119374  90 01 00 04 */	stw r0, 4(r1)
 /* 8011C418 00119378  94 21 FF F8 */	stwu r1, -8(r1)
@@ -549,16 +548,16 @@ construct__8NPolar3fFR8Vector3f:
 /* 8011C424 00119384  38 21 00 08 */	addi r1, r1, 8
 /* 8011C428 00119388  7C 08 03 A6 */	mtlr r0
 /* 8011C42C 0011938C  4E 80 00 20 */	blr 
+.endfn construct__8NPolar3fFR8Vector3f
 
-.global set__8NPolar3fFfff
-set__8NPolar3fFfff:
+.fn set__8NPolar3fFfff, global
 /* 8011C430 00119390  D0 23 00 00 */	stfs f1, 0(r3)
 /* 8011C434 00119394  D0 43 00 04 */	stfs f2, 4(r3)
 /* 8011C438 00119398  D0 63 00 08 */	stfs f3, 8(r3)
 /* 8011C43C 0011939C  4E 80 00 20 */	blr 
+.endfn set__8NPolar3fFfff
 
-.global input__8NPolar3fFR8Vector3f
-input__8NPolar3fFR8Vector3f:
+.fn input__8NPolar3fFR8Vector3f, global
 /* 8011C440 001193A0  7C 08 02 A6 */	mflr r0
 /* 8011C444 001193A4  90 01 00 04 */	stw r0, 4(r1)
 /* 8011C448 001193A8  94 21 FF D0 */	stwu r1, -0x30(r1)
@@ -601,9 +600,9 @@ input__8NPolar3fFR8Vector3f:
 /* 8011C4DC 0011943C  38 21 00 30 */	addi r1, r1, 0x30
 /* 8011C4E0 00119440  7C 08 03 A6 */	mtlr r0
 /* 8011C4E4 00119444  4E 80 00 20 */	blr 
+.endfn input__8NPolar3fFR8Vector3f
 
-.global output__8NPolar3fFR8Vector3f
-output__8NPolar3fFR8Vector3f:
+.fn output__8NPolar3fFR8Vector3f, global
 /* 8011C4E8 00119448  7C 08 02 A6 */	mflr r0
 /* 8011C4EC 0011944C  90 01 00 04 */	stw r0, 4(r1)
 /* 8011C4F0 00119450  94 21 FF A8 */	stwu r1, -0x58(r1)
@@ -645,9 +644,9 @@ output__8NPolar3fFR8Vector3f:
 /* 8011C580 001194E0  38 21 00 58 */	addi r1, r1, 0x58
 /* 8011C584 001194E4  7C 08 03 A6 */	mtlr r0
 /* 8011C588 001194E8  4E 80 00 20 */	blr 
+.endfn output__8NPolar3fFR8Vector3f
 
-.global readData__10NPosture2DFR6Stream
-readData__10NPosture2DFR6Stream:
+.fn readData__10NPosture2DFR6Stream, global
 /* 8011C58C 001194EC  7C 08 02 A6 */	mflr r0
 /* 8011C590 001194F0  90 01 00 04 */	stw r0, 4(r1)
 /* 8011C594 001194F4  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -685,9 +684,9 @@ readData__10NPosture2DFR6Stream:
 /* 8011C614 00119574  38 21 00 18 */	addi r1, r1, 0x18
 /* 8011C618 00119578  7C 08 03 A6 */	mtlr r0
 /* 8011C61C 0011957C  4E 80 00 20 */	blr 
+.endfn readData__10NPosture2DFR6Stream
 
-.global __ct__10NPosture3DFv
-__ct__10NPosture3DFv:
+.fn __ct__10NPosture3DFv, global
 /* 8011C620 00119580  7C 08 02 A6 */	mflr r0
 /* 8011C624 00119584  3C 80 80 2C */	lis r4, __vt__10NPosture3D@ha
 /* 8011C628 00119588  90 01 00 04 */	stw r0, 4(r1)
@@ -728,9 +727,9 @@ __ct__10NPosture3DFv:
 /* 8011C6B4 00119614  38 21 00 30 */	addi r1, r1, 0x30
 /* 8011C6B8 00119618  7C 08 03 A6 */	mtlr r0
 /* 8011C6BC 0011961C  4E 80 00 20 */	blr 
+.endfn __ct__10NPosture3DFv
 
-.global __ct__10NPosture3DFR8Vector3fR8Vector3f
-__ct__10NPosture3DFR8Vector3fR8Vector3f:
+.fn __ct__10NPosture3DFR8Vector3fR8Vector3f, global
 /* 8011C6C0 00119620  7C 08 02 A6 */	mflr r0
 /* 8011C6C4 00119624  3C C0 80 2C */	lis r6, __vt__10NPosture3D@ha
 /* 8011C6C8 00119628  90 01 00 04 */	stw r0, 4(r1)
@@ -759,9 +758,9 @@ __ct__10NPosture3DFR8Vector3fR8Vector3f:
 /* 8011C724 00119684  38 21 00 28 */	addi r1, r1, 0x28
 /* 8011C728 00119688  7C 08 03 A6 */	mtlr r0
 /* 8011C72C 0011968C  4E 80 00 20 */	blr 
+.endfn __ct__10NPosture3DFR8Vector3fR8Vector3f
 
-.global construct__10NPosture3DFR8Vector3fR8Vector3f
-construct__10NPosture3DFR8Vector3fR8Vector3f:
+.fn construct__10NPosture3DFR8Vector3fR8Vector3f, global
 /* 8011C730 00119690  C0 04 00 00 */	lfs f0, 0(r4)
 /* 8011C734 00119694  D0 03 00 04 */	stfs f0, 4(r3)
 /* 8011C738 00119698  C0 04 00 04 */	lfs f0, 4(r4)
@@ -775,9 +774,9 @@ construct__10NPosture3DFR8Vector3fR8Vector3f:
 /* 8011C758 001196B8  C0 05 00 08 */	lfs f0, 8(r5)
 /* 8011C75C 001196BC  D0 03 00 18 */	stfs f0, 0x18(r3)
 /* 8011C760 001196C0  4E 80 00 20 */	blr 
+.endfn construct__10NPosture3DFR8Vector3fR8Vector3f
 
-.global normalize__10NPosture3DFv
-normalize__10NPosture3DFv:
+.fn normalize__10NPosture3DFv, global
 /* 8011C764 001196C4  7C 08 02 A6 */	mflr r0
 /* 8011C768 001196C8  90 01 00 04 */	stw r0, 4(r1)
 /* 8011C76C 001196CC  94 21 FF D0 */	stwu r1, -0x30(r1)
@@ -834,9 +833,9 @@ normalize__10NPosture3DFv:
 /* 8011C82C 0011978C  38 21 00 30 */	addi r1, r1, 0x30
 /* 8011C830 00119790  7C 08 03 A6 */	mtlr r0
 /* 8011C834 00119794  4E 80 00 20 */	blr 
+.endfn normalize__10NPosture3DFv
 
-.global outputRelative__10NPosture3DFR9NVector3f
-outputRelative__10NPosture3DFR9NVector3f:
+.fn outputRelative__10NPosture3DFR9NVector3f, global
 /* 8011C838 00119798  C0 23 00 10 */	lfs f1, 0x10(r3)
 /* 8011C83C 0011979C  C0 03 00 04 */	lfs f0, 4(r3)
 /* 8011C840 001197A0  C0 63 00 14 */	lfs f3, 0x14(r3)
@@ -850,9 +849,9 @@ outputRelative__10NPosture3DFR9NVector3f:
 /* 8011C860 001197C0  D0 44 00 04 */	stfs f2, 4(r4)
 /* 8011C864 001197C4  D0 04 00 08 */	stfs f0, 8(r4)
 /* 8011C868 001197C8  4E 80 00 20 */	blr 
+.endfn outputRelative__10NPosture3DFR9NVector3f
 
-.global translate__10NPosture3DFR8Vector3f
-translate__10NPosture3DFR8Vector3f:
+.fn translate__10NPosture3DFR8Vector3f, global
 /* 8011C86C 001197CC  C0 23 00 04 */	lfs f1, 4(r3)
 /* 8011C870 001197D0  C0 04 00 00 */	lfs f0, 0(r4)
 /* 8011C874 001197D4  EC 01 00 2A */	fadds f0, f1, f0
@@ -878,9 +877,9 @@ translate__10NPosture3DFR8Vector3f:
 /* 8011C8C4 00119824  EC 01 00 2A */	fadds f0, f1, f0
 /* 8011C8C8 00119828  D0 03 00 18 */	stfs f0, 0x18(r3)
 /* 8011C8CC 0011982C  4E 80 00 20 */	blr 
+.endfn translate__10NPosture3DFR8Vector3f
 
-.global readData__10NPosture3DFR6Stream
-readData__10NPosture3DFR6Stream:
+.fn readData__10NPosture3DFR6Stream, global
 /* 8011C8D0 00119830  7C 08 02 A6 */	mflr r0
 /* 8011C8D4 00119834  90 01 00 04 */	stw r0, 4(r1)
 /* 8011C8D8 00119838  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -930,9 +929,9 @@ readData__10NPosture3DFR6Stream:
 /* 8011C988 001198E8  38 21 00 18 */	addi r1, r1, 0x18
 /* 8011C98C 001198EC  7C 08 03 A6 */	mtlr r0
 /* 8011C990 001198F0  4E 80 00 20 */	blr 
+.endfn readData__10NPosture3DFR6Stream
 
-.global setDimension__8LUMatrixFi
-setDimension__8LUMatrixFi:
+.fn setDimension__8LUMatrixFi, global
 /* 8011C994 001198F4  7C 08 02 A6 */	mflr r0
 /* 8011C998 001198F8  90 01 00 04 */	stw r0, 4(r1)
 /* 8011C99C 001198FC  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -958,14 +957,14 @@ setDimension__8LUMatrixFi:
 /* 8011C9EC 0011994C  38 21 00 18 */	addi r1, r1, 0x18
 /* 8011C9F0 00119950  7C 08 03 A6 */	mtlr r0
 /* 8011C9F4 00119954  4E 80 00 20 */	blr 
+.endfn setDimension__8LUMatrixFi
 
-.global setDimension__14NSpecialMatrixFi
-setDimension__14NSpecialMatrixFi:
+.fn setDimension__14NSpecialMatrixFi, weak
 /* 8011C9F8 00119958  90 83 00 04 */	stw r4, 4(r3)
 /* 8011C9FC 0011995C  4E 80 00 20 */	blr 
+.endfn setDimension__14NSpecialMatrixFi
 
-.global __ct__12NTransform3DFv
-__ct__12NTransform3DFv:
+.fn __ct__12NTransform3DFv, global
 /* 8011CA00 00119960  7C 08 02 A6 */	mflr r0
 /* 8011CA04 00119964  90 01 00 04 */	stw r0, 4(r1)
 /* 8011CA08 00119968  94 21 FF 88 */	stwu r1, -0x78(r1)
@@ -998,9 +997,9 @@ __ct__12NTransform3DFv:
 /* 8011CA74 001199D4  38 21 00 78 */	addi r1, r1, 0x78
 /* 8011CA78 001199D8  7C 08 03 A6 */	mtlr r0
 /* 8011CA7C 001199DC  4E 80 00 20 */	blr 
+.endfn __ct__12NTransform3DFv
 
-.global "copyArray44__8NMath<f>FPA4_fPA4_f"
-"copyArray44__8NMath<f>FPA4_fPA4_f":
+.fn "copyArray44__8NMath<f>FPA4_fPA4_f", weak
 /* 8011CA80 001199E0  C0 04 00 00 */	lfs f0, 0(r4)
 /* 8011CA84 001199E4  38 C3 00 10 */	addi r6, r3, 0x10
 /* 8011CA88 001199E8  D0 03 00 00 */	stfs f0, 0(r3)
@@ -1035,9 +1034,9 @@ __ct__12NTransform3DFv:
 /* 8011CAFC 00119A5C  C0 04 00 3C */	lfs f0, 0x3c(r4)
 /* 8011CB00 00119A60  D0 06 00 1C */	stfs f0, 0x1c(r6)
 /* 8011CB04 00119A64  4E 80 00 20 */	blr 
+.endfn "copyArray44__8NMath<f>FPA4_fPA4_f"
 
-.global rotate__12NTransform3DFR8Vector3f
-rotate__12NTransform3DFR8Vector3f:
+.fn rotate__12NTransform3DFR8Vector3f, global
 /* 8011CB08 00119A68  7C 08 02 A6 */	mflr r0
 /* 8011CB0C 00119A6C  90 01 00 04 */	stw r0, 4(r1)
 /* 8011CB10 00119A70  94 21 FD E0 */	stwu r1, -0x220(r1)
@@ -1141,9 +1140,9 @@ rotate__12NTransform3DFR8Vector3f:
 /* 8011CC98 00119BF8  38 21 02 20 */	addi r1, r1, 0x220
 /* 8011CC9C 00119BFC  7C 08 03 A6 */	mtlr r0
 /* 8011CCA0 00119C00  4E 80 00 20 */	blr 
+.endfn rotate__12NTransform3DFR8Vector3f
 
-.global transform__12NTransform3DFR8Vector3f
-transform__12NTransform3DFR8Vector3f:
+.fn transform__12NTransform3DFR8Vector3f, global
 /* 8011CCA4 00119C04  7C 08 02 A6 */	mflr r0
 /* 8011CCA8 00119C08  90 01 00 04 */	stw r0, 4(r1)
 /* 8011CCAC 00119C0C  38 03 00 00 */	addi r0, r3, 0
@@ -1155,9 +1154,9 @@ transform__12NTransform3DFR8Vector3f:
 /* 8011CCC4 00119C24  38 21 00 08 */	addi r1, r1, 8
 /* 8011CCC8 00119C28  7C 08 03 A6 */	mtlr r0
 /* 8011CCCC 00119C2C  4E 80 00 20 */	blr 
+.endfn transform__12NTransform3DFR8Vector3f
 
-.global inputAxisAngle__12NTransform3DFR12NAxisAngle4f
-inputAxisAngle__12NTransform3DFR12NAxisAngle4f:
+.fn inputAxisAngle__12NTransform3DFR12NAxisAngle4f, global
 /* 8011CCD0 00119C30  7C 08 02 A6 */	mflr r0
 /* 8011CCD4 00119C34  90 01 00 04 */	stw r0, 4(r1)
 /* 8011CCD8 00119C38  94 21 FF F8 */	stwu r1, -8(r1)
@@ -1167,9 +1166,9 @@ inputAxisAngle__12NTransform3DFR12NAxisAngle4f:
 /* 8011CCE8 00119C48  38 21 00 08 */	addi r1, r1, 8
 /* 8011CCEC 00119C4C  7C 08 03 A6 */	mtlr r0
 /* 8011CCF0 00119C50  4E 80 00 20 */	blr 
+.endfn inputAxisAngle__12NTransform3DFR12NAxisAngle4f
 
-.global outputRotation__12NTransform3DFR8Matrix4f
-outputRotation__12NTransform3DFR8Matrix4f:
+.fn outputRotation__12NTransform3DFR8Matrix4f, global
 /* 8011CCF4 00119C54  7C 08 02 A6 */	mflr r0
 /* 8011CCF8 00119C58  90 01 00 04 */	stw r0, 4(r1)
 /* 8011CCFC 00119C5C  94 21 FF D0 */	stwu r1, -0x30(r1)
@@ -1221,16 +1220,16 @@ outputRotation__12NTransform3DFR8Matrix4f:
 /* 8011CDB4 00119D14  38 21 00 30 */	addi r1, r1, 0x30
 /* 8011CDB8 00119D18  7C 08 03 A6 */	mtlr r0
 /* 8011CDBC 00119D1C  4E 80 00 20 */	blr 
+.endfn outputRotation__12NTransform3DFR8Matrix4f
 
-.global __ct__7NVectorFv
-__ct__7NVectorFv:
+.fn __ct__7NVectorFv, global
 /* 8011CDC0 00119D20  38 00 00 00 */	li r0, 0
 /* 8011CDC4 00119D24  90 03 00 00 */	stw r0, 0(r3)
 /* 8011CDC8 00119D28  90 03 00 04 */	stw r0, 4(r3)
 /* 8011CDCC 00119D2C  4E 80 00 20 */	blr 
+.endfn __ct__7NVectorFv
 
-.global construct__7NVectorFPfi
-construct__7NVectorFPfi:
+.fn construct__7NVectorFPfi, global
 /* 8011CDD0 00119D30  7C 08 02 A6 */	mflr r0
 /* 8011CDD4 00119D34  90 01 00 04 */	stw r0, 4(r1)
 /* 8011CDD8 00119D38  94 21 FF F8 */	stwu r1, -8(r1)
@@ -1241,9 +1240,9 @@ construct__7NVectorFPfi:
 /* 8011CDEC 00119D4C  38 21 00 08 */	addi r1, r1, 8
 /* 8011CDF0 00119D50  7C 08 03 A6 */	mtlr r0
 /* 8011CDF4 00119D54  4E 80 00 20 */	blr 
+.endfn construct__7NVectorFPfi
 
-.global makeZero__7NVectorFv
-makeZero__7NVectorFv:
+.fn makeZero__7NVectorFv, global
 /* 8011CDF8 00119D58  C0 02 A0 10 */	lfs f0, lbl_803EA210@sda21(r2)
 /* 8011CDFC 00119D5C  38 C0 00 00 */	li r6, 0
 /* 8011CE00 00119D60  38 A0 00 00 */	li r5, 0
@@ -1258,9 +1257,9 @@ makeZero__7NVectorFv:
 /* 8011CE1C 00119D7C  7C 06 00 00 */	cmpw r6, r0
 /* 8011CE20 00119D80  41 80 FF E8 */	blt .L_8011CE08
 /* 8011CE24 00119D84  4E 80 00 20 */	blr 
+.endfn makeZero__7NVectorFv
 
-.global printlnVector3f__9NVector3fFR8Vector3f
-printlnVector3f__9NVector3fFR8Vector3f:
+.fn printlnVector3f__9NVector3fFR8Vector3f, global
 /* 8011CE28 00119D88  7C 08 02 A6 */	mflr r0
 /* 8011CE2C 00119D8C  38 83 00 00 */	addi r4, r3, 0
 /* 8011CE30 00119D90  90 01 00 04 */	stw r0, 4(r1)
@@ -1272,9 +1271,9 @@ printlnVector3f__9NVector3fFR8Vector3f:
 /* 8011CE48 00119DA8  38 21 00 18 */	addi r1, r1, 0x18
 /* 8011CE4C 00119DAC  7C 08 03 A6 */	mtlr r0
 /* 8011CE50 00119DB0  4E 80 00 20 */	blr 
+.endfn printlnVector3f__9NVector3fFR8Vector3f
 
-.global __ct__9NVector3fFv
-__ct__9NVector3fFv:
+.fn __ct__9NVector3fFv, global
 /* 8011CE54 00119DB4  C0 02 A0 10 */	lfs f0, lbl_803EA210@sda21(r2)
 /* 8011CE58 00119DB8  D0 03 00 08 */	stfs f0, 8(r3)
 /* 8011CE5C 00119DBC  D0 03 00 04 */	stfs f0, 4(r3)
@@ -1286,9 +1285,9 @@ __ct__9NVector3fFv:
 /* 8011CE74 00119DD4  C0 0D E2 D0 */	lfs f0, lbl_803E2FF0@sda21(r13)
 /* 8011CE78 00119DD8  D0 03 00 08 */	stfs f0, 8(r3)
 /* 8011CE7C 00119DDC  4E 80 00 20 */	blr 
+.endfn __ct__9NVector3fFv
 
-.global __ct__9NVector3fFR8Vector3f
-__ct__9NVector3fFR8Vector3f:
+.fn __ct__9NVector3fFR8Vector3f, global
 /* 8011CE80 00119DE0  7C 08 02 A6 */	mflr r0
 /* 8011CE84 00119DE4  90 01 00 04 */	stw r0, 4(r1)
 /* 8011CE88 00119DE8  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -1305,9 +1304,9 @@ __ct__9NVector3fFR8Vector3f:
 /* 8011CEB4 00119E14  38 21 00 18 */	addi r1, r1, 0x18
 /* 8011CEB8 00119E18  7C 08 03 A6 */	mtlr r0
 /* 8011CEBC 00119E1C  4E 80 00 20 */	blr 
+.endfn __ct__9NVector3fFR8Vector3f
 
-.global construct__9NVector3fFR8Vector3f
-construct__9NVector3fFR8Vector3f:
+.fn construct__9NVector3fFR8Vector3f, global
 /* 8011CEC0 00119E20  C0 04 00 00 */	lfs f0, 0(r4)
 /* 8011CEC4 00119E24  D0 03 00 00 */	stfs f0, 0(r3)
 /* 8011CEC8 00119E28  C0 04 00 04 */	lfs f0, 4(r4)
@@ -1315,9 +1314,9 @@ construct__9NVector3fFR8Vector3f:
 /* 8011CED0 00119E30  C0 04 00 08 */	lfs f0, 8(r4)
 /* 8011CED4 00119E34  D0 03 00 08 */	stfs f0, 8(r3)
 /* 8011CED8 00119E38  4E 80 00 20 */	blr 
+.endfn construct__9NVector3fFR8Vector3f
 
-.global __ct__9NVector3fFfff
-__ct__9NVector3fFfff:
+.fn __ct__9NVector3fFfff, global
 /* 8011CEDC 00119E3C  7C 08 02 A6 */	mflr r0
 /* 8011CEE0 00119E40  90 01 00 04 */	stw r0, 4(r1)
 /* 8011CEE4 00119E44  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -1334,16 +1333,16 @@ __ct__9NVector3fFfff:
 /* 8011CF10 00119E70  38 21 00 20 */	addi r1, r1, 0x20
 /* 8011CF14 00119E74  7C 08 03 A6 */	mtlr r0
 /* 8011CF18 00119E78  4E 80 00 20 */	blr 
+.endfn __ct__9NVector3fFfff
 
-.global construct__9NVector3fFfff
-construct__9NVector3fFfff:
+.fn construct__9NVector3fFfff, global
 /* 8011CF1C 00119E7C  D0 23 00 00 */	stfs f1, 0(r3)
 /* 8011CF20 00119E80  D0 43 00 04 */	stfs f2, 4(r3)
 /* 8011CF24 00119E84  D0 63 00 08 */	stfs f3, 8(r3)
 /* 8011CF28 00119E88  4E 80 00 20 */	blr 
+.endfn construct__9NVector3fFfff
 
-.global __ct__9NVector3fFR8Vector3fR8Vector3f
-__ct__9NVector3fFR8Vector3fR8Vector3f:
+.fn __ct__9NVector3fFR8Vector3fR8Vector3f, global
 /* 8011CF2C 00119E8C  7C 08 02 A6 */	mflr r0
 /* 8011CF30 00119E90  90 01 00 04 */	stw r0, 4(r1)
 /* 8011CF34 00119E94  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -1360,9 +1359,9 @@ __ct__9NVector3fFR8Vector3fR8Vector3f:
 /* 8011CF60 00119EC0  38 21 00 20 */	addi r1, r1, 0x20
 /* 8011CF64 00119EC4  7C 08 03 A6 */	mtlr r0
 /* 8011CF68 00119EC8  4E 80 00 20 */	blr 
+.endfn __ct__9NVector3fFR8Vector3fR8Vector3f
 
-.global construct__9NVector3fFR8Vector3fR8Vector3f
-construct__9NVector3fFR8Vector3fR8Vector3f:
+.fn construct__9NVector3fFR8Vector3fR8Vector3f, global
 /* 8011CF6C 00119ECC  C0 25 00 00 */	lfs f1, 0(r5)
 /* 8011CF70 00119ED0  C0 04 00 00 */	lfs f0, 0(r4)
 /* 8011CF74 00119ED4  C0 65 00 04 */	lfs f3, 4(r5)
@@ -1376,9 +1375,9 @@ construct__9NVector3fFR8Vector3fR8Vector3f:
 /* 8011CF94 00119EF4  D0 43 00 04 */	stfs f2, 4(r3)
 /* 8011CF98 00119EF8  D0 03 00 08 */	stfs f0, 8(r3)
 /* 8011CF9C 00119EFC  4E 80 00 20 */	blr 
+.endfn construct__9NVector3fFR8Vector3fR8Vector3f
 
-.global isParallel__9NVector3fFR8Vector3f
-isParallel__9NVector3fFR8Vector3f:
+.fn isParallel__9NVector3fFR8Vector3f, global
 /* 8011CFA0 00119F00  C0 63 00 00 */	lfs f3, 0(r3)
 /* 8011CFA4 00119F04  C0 44 00 00 */	lfs f2, 0(r4)
 /* 8011CFA8 00119F08  C0 23 00 04 */	lfs f1, 4(r3)
@@ -1412,13 +1411,13 @@ isParallel__9NVector3fFR8Vector3f:
 /* 8011D008 00119F68  7C 00 00 26 */	mfcr r0
 /* 8011D00C 00119F6C  54 03 1F FE */	rlwinm r3, r0, 3, 0x1f, 0x1f
 /* 8011D010 00119F70  4E 80 00 20 */	blr 
+.endfn isParallel__9NVector3fFR8Vector3f
 
-.global println__9NVector3fFv
-println__9NVector3fFv:
+.fn println__9NVector3fFv, global
 /* 8011D014 00119F74  4E 80 00 20 */	blr 
+.endfn println__9NVector3fFv
 
-.global normalizeCheck__9NVector3fFv
-normalizeCheck__9NVector3fFv:
+.fn normalizeCheck__9NVector3fFv, global
 /* 8011D018 00119F78  94 21 FF E8 */	stwu r1, -0x18(r1)
 /* 8011D01C 00119F7C  C0 23 00 00 */	lfs f1, 0(r3)
 /* 8011D020 00119F80  C0 03 00 04 */	lfs f0, 4(r3)
@@ -1482,9 +1481,9 @@ normalizeCheck__9NVector3fFv:
 .L_8011D0F8:
 /* 8011D0F8 0011A058  38 21 00 18 */	addi r1, r1, 0x18
 /* 8011D0FC 0011A05C  4E 80 00 20 */	blr 
+.endfn normalizeCheck__9NVector3fFv
 
-.global normalize__9NVector3fFv
-normalize__9NVector3fFv:
+.fn normalize__9NVector3fFv, global
 /* 8011D100 0011A060  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 8011D104 0011A064  C0 23 00 00 */	lfs f1, 0(r3)
 /* 8011D108 0011A068  C0 03 00 04 */	lfs f0, 4(r3)
@@ -1544,15 +1543,15 @@ normalize__9NVector3fFv:
 .L_8011D1D4:
 /* 8011D1D4 0011A134  38 21 00 20 */	addi r1, r1, 0x20
 /* 8011D1D8 0011A138  4E 80 00 20 */	blr 
+.endfn normalize__9NVector3fFv
 
-.global reset__6NAlphaFv
-reset__6NAlphaFv:
+.fn reset__6NAlphaFv, global
 /* 8011D1DC 0011A13C  C0 03 00 08 */	lfs f0, 8(r3)
 /* 8011D1E0 0011A140  D0 03 00 04 */	stfs f0, 4(r3)
 /* 8011D1E4 0011A144  4E 80 00 20 */	blr 
+.endfn reset__6NAlphaFv
 
-.global getValue__6NAlphaFf
-getValue__6NAlphaFf:
+.fn getValue__6NAlphaFf, global
 /* 8011D1E8 0011A148  7C 08 02 A6 */	mflr r0
 /* 8011D1EC 0011A14C  90 01 00 04 */	stw r0, 4(r1)
 /* 8011D1F0 0011A150  94 21 FF F8 */	stwu r1, -8(r1)
@@ -1666,9 +1665,9 @@ getValue__6NAlphaFf:
 /* 8011D374 0011A2D4  38 21 00 08 */	addi r1, r1, 8
 /* 8011D378 0011A2D8  7C 08 03 A6 */	mtlr r0
 /* 8011D37C 0011A2DC  4E 80 00 20 */	blr 
+.endfn getValue__6NAlphaFf
 
-.global readData__6NAlphaFR6Stream
-readData__6NAlphaFR6Stream:
+.fn readData__6NAlphaFR6Stream, global
 /* 8011D380 0011A2E0  7C 08 02 A6 */	mflr r0
 /* 8011D384 0011A2E4  90 01 00 04 */	stw r0, 4(r1)
 /* 8011D388 0011A2E8  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -1700,132 +1699,175 @@ readData__6NAlphaFR6Stream:
 /* 8011D3F0 0011A350  38 21 00 18 */	addi r1, r1, 0x18
 /* 8011D3F4 0011A354  7C 08 03 A6 */	mtlr r0
 /* 8011D3F8 0011A358  4E 80 00 20 */	blr 
+.endfn readData__6NAlphaFR6Stream
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802C4268:
+.obj lbl_802C4268, local
 	.asciz "nlibgeometry.cpp"
+.endobj lbl_802C4268
 .balign 4
-lbl_802C427C:
+.obj lbl_802C427C, local
 	.asciz "nlibgeometry"
+.endobj lbl_802C427C
 .balign 4
-.global __vt__6NAlpha
-__vt__6NAlpha:
+.obj __vt__6NAlpha, global
 	.4byte __RTTI__6NAlpha
 	.4byte 0
 	.4byte readData__6NAlphaFR6Stream
+.endobj __vt__6NAlpha
 .balign 4
-lbl_802C4298:
+.obj lbl_802C4298, local
 	.asciz "LUMatrix"
+.endobj lbl_802C4298
 .balign 4
-lbl_802C42A4:
+.obj lbl_802C42A4, local
 	.asciz "NSpecialMatrix"
+.endobj lbl_802C42A4
 .balign 4
-lbl_802C42B4:
+.obj lbl_802C42B4, local
 	.4byte __RTTI__14NSpecialMatrix
 	.4byte 0
 	.4byte 0
-.global __vt__8LUMatrix
-__vt__8LUMatrix:
+.endobj lbl_802C42B4
+.balign 4
+.obj __vt__8LUMatrix, global
 	.4byte __RTTI__8LUMatrix
 	.4byte 0
 	.4byte setDimension__8LUMatrixFi
+.endobj __vt__8LUMatrix
 .balign 4
-lbl_802C42CC:
+.obj lbl_802C42CC, local
 	.asciz "NUpperMatrix"
+.endobj lbl_802C42CC
 .balign 4
-lbl_802C42DC:
+.obj lbl_802C42DC, local
 	.4byte __RTTI__14NSpecialMatrix
 	.4byte 0
 	.4byte 0
-.global __vt__12NUpperMatrix
-__vt__12NUpperMatrix:
+.endobj lbl_802C42DC
+.balign 4
+.obj __vt__12NUpperMatrix, weak
 	.4byte __RTTI__12NUpperMatrix
 	.4byte 0
 	.4byte setDimension__14NSpecialMatrixFi
+.endobj __vt__12NUpperMatrix
 .balign 4
-lbl_802C42F4:
+.obj lbl_802C42F4, local
 	.asciz "NLowerMatrix"
+.endobj lbl_802C42F4
 .balign 4
-lbl_802C4304:
+.obj lbl_802C4304, local
 	.4byte __RTTI__14NSpecialMatrix
 	.4byte 0
 	.4byte 0
-.global __vt__12NLowerMatrix
-__vt__12NLowerMatrix:
+.endobj lbl_802C4304
+.balign 4
+.obj __vt__12NLowerMatrix, weak
 	.4byte __RTTI__12NLowerMatrix
 	.4byte 0
 	.4byte setDimension__14NSpecialMatrixFi
-.global __vt__14NSpecialMatrix
-__vt__14NSpecialMatrix:
+.endobj __vt__12NLowerMatrix
+.balign 4
+.obj __vt__14NSpecialMatrix, weak
 	.4byte __RTTI__14NSpecialMatrix
 	.4byte 0
 	.4byte setDimension__14NSpecialMatrixFi
+.endobj __vt__14NSpecialMatrix
 .balign 4
-lbl_802C4328:
+.obj lbl_802C4328, local
 	.asciz "NPosture3D"
+.endobj lbl_802C4328
 .balign 4
-.global __vt__10NPosture3D
-__vt__10NPosture3D:
+.obj __vt__10NPosture3D, global
 	.4byte __RTTI__10NPosture3D
 	.4byte 0
 	.4byte readData__10NPosture3DFR6Stream
+.endobj __vt__10NPosture3D
 .balign 4
-lbl_802C4340:
+.obj lbl_802C4340, local
 	.asciz "NPosture2D"
+.endobj lbl_802C4340
 .balign 4
-.global __vt__10NPosture2D
-__vt__10NPosture2D:
+.obj __vt__10NPosture2D, global
 	.4byte __RTTI__10NPosture2D
 	.4byte 0
 	.4byte readData__10NPosture2DFR6Stream
+.endobj __vt__10NPosture2D
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-lbl_803E2FE8:
+.obj lbl_803E2FE8, local
 	.float 0.0
-lbl_803E2FEC:
+.endobj lbl_803E2FE8
+.obj lbl_803E2FEC, local
 	.float 0.0
-lbl_803E2FF0:
+.endobj lbl_803E2FEC
+.obj lbl_803E2FF0, local
 	.float 0.0
+.endobj lbl_803E2FF0
 .balign 4
-lbl_803E2FF4:
+.obj lbl_803E2FF4, local
 	.asciz "NAlpha"
+.endobj lbl_803E2FF4
 .balign 4
-__RTTI__6NAlpha:
+.obj __RTTI__6NAlpha, local
 	.4byte lbl_803E2FF4
 	.4byte 0
-__RTTI__14NSpecialMatrix:
+.endobj __RTTI__6NAlpha
+.balign 4
+.obj __RTTI__14NSpecialMatrix, local
 	.4byte lbl_802C42A4
 	.4byte 0
-__RTTI__8LUMatrix:
+.endobj __RTTI__14NSpecialMatrix
+.balign 4
+.obj __RTTI__8LUMatrix, local
 	.4byte lbl_802C4298
 	.4byte lbl_802C42B4
-__RTTI__12NUpperMatrix:
+.endobj __RTTI__8LUMatrix
+.balign 4
+.obj __RTTI__12NUpperMatrix, local
 	.4byte lbl_802C42CC
 	.4byte lbl_802C42DC
-__RTTI__12NLowerMatrix:
+.endobj __RTTI__12NUpperMatrix
+.balign 4
+.obj __RTTI__12NLowerMatrix, local
 	.4byte lbl_802C42F4
 	.4byte lbl_802C4304
-__RTTI__10NPosture3D:
+.endobj __RTTI__12NLowerMatrix
+.balign 4
+.obj __RTTI__10NPosture3D, local
 	.4byte lbl_802C4328
 	.4byte 0
-__RTTI__10NPosture2D:
+.endobj __RTTI__10NPosture3D
+.balign 4
+.obj __RTTI__10NPosture2D, local
 	.4byte lbl_802C4340
 	.4byte 0
+.endobj __RTTI__10NPosture2D
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803EA210:
+.obj lbl_803EA210, local
 	.float 0.0
-lbl_803EA214:
+.endobj lbl_803EA210
+.balign 4
+.obj lbl_803EA214, local
 	.float 1.0
-lbl_803EA218:
+.endobj lbl_803EA214
+.balign 4
+.obj lbl_803EA218, local
 	.float 0.5
+.endobj lbl_803EA218
 .balign 8
-lbl_803EA220:
+.obj lbl_803EA220, local
 	.double 0.5
-lbl_803EA228:
+.endobj lbl_803EA220
+.balign 8
+.obj lbl_803EA228, local
 	.double 3.0
-lbl_803EA230:
+.endobj lbl_803EA228
+.balign 4
+.obj lbl_803EA230, local
 	.float 2.0
+.endobj lbl_803EA230

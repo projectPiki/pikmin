@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global __ct__17TaiPalmSoundTableFv
-__ct__17TaiPalmSoundTableFv:
+.fn __ct__17TaiPalmSoundTableFv, global
 /* 8013DAB4 0013AA14  7C 08 02 A6 */	mflr r0
 /* 8013DAB8 0013AA18  38 80 00 05 */	li r4, 5
 /* 8013DABC 0013AA1C  90 01 00 04 */	stw r0, 4(r1)
@@ -38,9 +37,9 @@ __ct__17TaiPalmSoundTableFv:
 /* 8013DB2C 0013AA8C  38 21 00 20 */	addi r1, r1, 0x20
 /* 8013DB30 0013AA90  7C 08 03 A6 */	mtlr r0
 /* 8013DB34 0013AA94  4E 80 00 20 */	blr 
+.endfn __ct__17TaiPalmSoundTableFv
 
-.global __ct__17TaiPalmParametersFv
-__ct__17TaiPalmParametersFv:
+.fn __ct__17TaiPalmParametersFv, global
 /* 8013DB38 0013AA98  7C 08 02 A6 */	mflr r0
 /* 8013DB3C 0013AA9C  3C 80 80 2D */	lis r4, lbl_802CB198@ha
 /* 8013DB40 0013AAA0  90 01 00 04 */	stw r0, 4(r1)
@@ -166,9 +165,9 @@ __ct__17TaiPalmParametersFv:
 /* 8013DD20 0013AC80  38 21 00 70 */	addi r1, r1, 0x70
 /* 8013DD24 0013AC84  7C 08 03 A6 */	mtlr r0
 /* 8013DD28 0013AC88  4E 80 00 20 */	blr 
+.endfn __ct__17TaiPalmParametersFv
 
-.global __ct__15TaiPalmStrategyFP14TekiParameters
-__ct__15TaiPalmStrategyFP14TekiParameters:
+.fn __ct__15TaiPalmStrategyFP14TekiParameters, global
 /* 8013DD2C 0013AC8C  7C 08 02 A6 */	mflr r0
 /* 8013DD30 0013AC90  38 A0 00 03 */	li r5, 3
 /* 8013DD34 0013AC94  90 01 00 04 */	stw r0, 4(r1)
@@ -501,9 +500,9 @@ __ct__15TaiPalmStrategyFP14TekiParameters:
 /* 8013E210 0013B170  38 21 00 C0 */	addi r1, r1, 0xc0
 /* 8013E214 0013B174  7C 08 03 A6 */	mtlr r0
 /* 8013E218 0013B178  4E 80 00 20 */	blr 
+.endfn __ct__15TaiPalmStrategyFP14TekiParameters
 
-.global start__15TaiPalmStrategyFR4Teki
-start__15TaiPalmStrategyFR4Teki:
+.fn start__15TaiPalmStrategyFR4Teki, global
 /* 8013E21C 0013B17C  7C 08 02 A6 */	mflr r0
 /* 8013E220 0013B180  90 01 00 04 */	stw r0, 4(r1)
 /* 8013E224 0013B184  94 21 FD E8 */	stwu r1, -0x218(r1)
@@ -681,9 +680,9 @@ start__15TaiPalmStrategyFR4Teki:
 /* 8013E4C4 0013B424  38 21 02 18 */	addi r1, r1, 0x218
 /* 8013E4C8 0013B428  7C 08 03 A6 */	mtlr r0
 /* 8013E4CC 0013B42C  4E 80 00 20 */	blr 
+.endfn start__15TaiPalmStrategyFR4Teki
 
-.global draw__15TaiPalmStrategyFR4TekiR8Graphics
-draw__15TaiPalmStrategyFR4TekiR8Graphics:
+.fn draw__15TaiPalmStrategyFR4TekiR8Graphics, global
 /* 8013E4D0 0013B430  7C 08 02 A6 */	mflr r0
 /* 8013E4D4 0013B434  90 01 00 04 */	stw r0, 4(r1)
 /* 8013E4D8 0013B438  94 21 FF F8 */	stwu r1, -8(r1)
@@ -698,9 +697,9 @@ draw__15TaiPalmStrategyFR4TekiR8Graphics:
 /* 8013E4FC 0013B45C  38 21 00 08 */	addi r1, r1, 8
 /* 8013E500 0013B460  7C 08 03 A6 */	mtlr r0
 /* 8013E504 0013B464  4E 80 00 20 */	blr 
+.endfn draw__15TaiPalmStrategyFR4TekiR8Graphics
 
-.global createEffect__15TaiPalmStrategyFR4Tekii
-createEffect__15TaiPalmStrategyFR4Tekii:
+.fn createEffect__15TaiPalmStrategyFR4Tekii, global
 /* 8013E508 0013B468  7C 08 02 A6 */	mflr r0
 /* 8013E50C 0013B46C  90 01 00 04 */	stw r0, 4(r1)
 /* 8013E510 0013B470  94 21 FF 98 */	stwu r1, -0x68(r1)
@@ -787,9 +786,9 @@ createEffect__15TaiPalmStrategyFR4Tekii:
 /* 8013E644 0013B5A4  38 21 00 68 */	addi r1, r1, 0x68
 /* 8013E648 0013B5A8  7C 08 03 A6 */	mtlr r0
 /* 8013E64C 0013B5AC  4E 80 00 20 */	blr 
+.endfn createEffect__15TaiPalmStrategyFR4Tekii
 
-.global translateMotionIndex__15TaiPalmStrategyFR4Tekii
-translateMotionIndex__15TaiPalmStrategyFR4Tekii:
+.fn translateMotionIndex__15TaiPalmStrategyFR4Tekii, global
 /* 8013E650 0013B5B0  94 21 FF B0 */	stwu r1, -0x50(r1)
 /* 8013E654 0013B5B4  80 64 02 C8 */	lwz r3, 0x2c8(r4)
 /* 8013E658 0013B5B8  80 63 00 34 */	lwz r3, 0x34(r3)
@@ -866,9 +865,9 @@ translateMotionIndex__15TaiPalmStrategyFR4Tekii:
 .L_8013E748:
 /* 8013E748 0013B6A8  38 21 00 50 */	addi r1, r1, 0x50
 /* 8013E74C 0013B6AC  4E 80 00 20 */	blr 
+.endfn translateMotionIndex__15TaiPalmStrategyFR4Tekii
 
-.global start__19TaiPalmMotionActionFR4Teki
-start__19TaiPalmMotionActionFR4Teki:
+.fn start__19TaiPalmMotionActionFR4Teki, global
 /* 8013E750 0013B6B0  7C 08 02 A6 */	mflr r0
 /* 8013E754 0013B6B4  90 01 00 04 */	stw r0, 4(r1)
 /* 8013E758 0013B6B8  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -894,9 +893,9 @@ start__19TaiPalmMotionActionFR4Teki:
 /* 8013E7A8 0013B708  38 21 00 18 */	addi r1, r1, 0x18
 /* 8013E7AC 0013B70C  7C 08 03 A6 */	mtlr r0
 /* 8013E7B0 0013B710  4E 80 00 20 */	blr 
+.endfn start__19TaiPalmMotionActionFR4Teki
 
-.global start__18TaiPalmDyingActionFR4Teki
-start__18TaiPalmDyingActionFR4Teki:
+.fn start__18TaiPalmDyingActionFR4Teki, global
 /* 8013E7B4 0013B714  7C 08 02 A6 */	mflr r0
 /* 8013E7B8 0013B718  90 01 00 04 */	stw r0, 4(r1)
 /* 8013E7BC 0013B71C  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -930,9 +929,9 @@ start__18TaiPalmDyingActionFR4Teki:
 /* 8013E82C 0013B78C  38 21 00 18 */	addi r1, r1, 0x18
 /* 8013E830 0013B790  7C 08 03 A6 */	mtlr r0
 /* 8013E834 0013B794  4E 80 00 20 */	blr 
+.endfn start__18TaiPalmDyingActionFR4Teki
 
-.global act__18TaiPalmDyingActionFR4Teki
-act__18TaiPalmDyingActionFR4Teki:
+.fn act__18TaiPalmDyingActionFR4Teki, global
 /* 8013E838 0013B798  7C 08 02 A6 */	mflr r0
 /* 8013E83C 0013B79C  90 01 00 04 */	stw r0, 4(r1)
 /* 8013E840 0013B7A0  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -959,9 +958,9 @@ act__18TaiPalmDyingActionFR4Teki:
 /* 8013E88C 0013B7EC  38 21 00 20 */	addi r1, r1, 0x20
 /* 8013E890 0013B7F0  7C 08 03 A6 */	mtlr r0
 /* 8013E894 0013B7F4  4E 80 00 20 */	blr 
+.endfn act__18TaiPalmDyingActionFR4Teki
 
-.global start__21TaiPalmDamagingActionFR4Teki
-start__21TaiPalmDamagingActionFR4Teki:
+.fn start__21TaiPalmDamagingActionFR4Teki, global
 /* 8013E898 0013B7F8  7C 08 02 A6 */	mflr r0
 /* 8013E89C 0013B7FC  90 01 00 04 */	stw r0, 4(r1)
 /* 8013E8A0 0013B800  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -992,9 +991,9 @@ start__21TaiPalmDamagingActionFR4Teki:
 /* 8013E904 0013B864  38 21 00 18 */	addi r1, r1, 0x18
 /* 8013E908 0013B868  7C 08 03 A6 */	mtlr r0
 /* 8013E90C 0013B86C  4E 80 00 20 */	blr 
+.endfn start__21TaiPalmDamagingActionFR4Teki
 
-.global start__20TaiPalmGrowingActionFR4Teki
-start__20TaiPalmGrowingActionFR4Teki:
+.fn start__20TaiPalmGrowingActionFR4Teki, global
 /* 8013E910 0013B870  94 21 FF 98 */	stwu r1, -0x68(r1)
 /* 8013E914 0013B874  3C 00 43 30 */	lis r0, 0x4330
 /* 8013E918 0013B878  80 64 02 C8 */	lwz r3, 0x2c8(r4)
@@ -1016,9 +1015,9 @@ start__20TaiPalmGrowingActionFR4Teki:
 /* 8013E958 0013B8B8  D0 04 00 00 */	stfs f0, 0(r4)
 /* 8013E95C 0013B8BC  38 21 00 68 */	addi r1, r1, 0x68
 /* 8013E960 0013B8C0  4E 80 00 20 */	blr 
+.endfn start__20TaiPalmGrowingActionFR4Teki
 
-.global act__17TaiPalmGrowActionFR4Teki
-act__17TaiPalmGrowActionFR4Teki:
+.fn act__17TaiPalmGrowActionFR4Teki, global
 /* 8013E964 0013B8C4  94 21 FF B0 */	stwu r1, -0x50(r1)
 /* 8013E968 0013B8C8  80 A4 02 C8 */	lwz r5, 0x2c8(r4)
 /* 8013E96C 0013B8CC  80 A5 00 34 */	lwz r5, 0x34(r5)
@@ -1048,9 +1047,9 @@ act__17TaiPalmGrowActionFR4Teki:
 .L_8013E9C4:
 /* 8013E9C4 0013B924  38 21 00 50 */	addi r1, r1, 0x50
 /* 8013E9C8 0013B928  4E 80 00 20 */	blr 
+.endfn act__17TaiPalmGrowActionFR4Teki
 
-.global act__25TaiPalmFlowerDamageActionFR4Teki
-act__25TaiPalmFlowerDamageActionFR4Teki:
+.fn act__25TaiPalmFlowerDamageActionFR4Teki, global
 /* 8013E9CC 0013B92C  C0 24 03 3C */	lfs f1, 0x33c(r4)
 /* 8013E9D0 0013B930  C0 02 A5 D8 */	lfs f0, lbl_803EA7D8@sda21(r2)
 /* 8013E9D4 0013B934  FC 01 00 40 */	fcmpo cr0, f1, f0
@@ -1067,9 +1066,9 @@ act__25TaiPalmFlowerDamageActionFR4Teki:
 .L_8013E9FC:
 /* 8013E9FC 0013B95C  38 60 00 00 */	li r3, 0
 /* 8013EA00 0013B960  4E 80 00 20 */	blr 
+.endfn act__25TaiPalmFlowerDamageActionFR4Teki
 
-.global act__22TaiPalmSunflowerActionFR4Teki
-act__22TaiPalmSunflowerActionFR4Teki:
+.fn act__22TaiPalmSunflowerActionFR4Teki, global
 /* 8013EA04 0013B964  7C 08 02 A6 */	mflr r0
 /* 8013EA08 0013B968  7C 83 23 78 */	mr r3, r4
 /* 8013EA0C 0013B96C  90 01 00 04 */	stw r0, 4(r1)
@@ -1083,9 +1082,9 @@ act__22TaiPalmSunflowerActionFR4Teki:
 /* 8013EA2C 0013B98C  38 21 00 08 */	addi r1, r1, 8
 /* 8013EA30 0013B990  7C 08 03 A6 */	mtlr r0
 /* 8013EA34 0013B994  4E 80 00 20 */	blr 
+.endfn act__22TaiPalmSunflowerActionFR4Teki
 
-.global start__26TaiPalmSettingPelletActionFR4Teki
-start__26TaiPalmSettingPelletActionFR4Teki:
+.fn start__26TaiPalmSettingPelletActionFR4Teki, global
 /* 8013EA38 0013B998  94 21 FF A8 */	stwu r1, -0x58(r1)
 /* 8013EA3C 0013B99C  80 04 03 BC */	lwz r0, 0x3bc(r4)
 /* 8013EA40 0013B9A0  80 64 02 C8 */	lwz r3, 0x2c8(r4)
@@ -1112,13 +1111,13 @@ start__26TaiPalmSettingPelletActionFR4Teki:
 .L_8013EA94:
 /* 8013EA94 0013B9F4  38 21 00 58 */	addi r1, r1, 0x58
 /* 8013EA98 0013B9F8  4E 80 00 20 */	blr 
+.endfn start__26TaiPalmSettingPelletActionFR4Teki
 
-.global start__26TaiPalmChangingColorActionFR4Teki
-start__26TaiPalmChangingColorActionFR4Teki:
+.fn start__26TaiPalmChangingColorActionFR4Teki, global
 /* 8013EA9C 0013B9FC  4E 80 00 20 */	blr 
+.endfn start__26TaiPalmChangingColorActionFR4Teki
 
-.global act__26TaiPalmChangingColorActionFR4Teki
-act__26TaiPalmChangingColorActionFR4Teki:
+.fn act__26TaiPalmChangingColorActionFR4Teki, global
 /* 8013EAA0 0013BA00  7C 08 02 A6 */	mflr r0
 /* 8013EAA4 0013BA04  90 01 00 04 */	stw r0, 4(r1)
 /* 8013EAA8 0013BA08  94 21 FF F8 */	stwu r1, -8(r1)
@@ -1159,9 +1158,9 @@ act__26TaiPalmChangingColorActionFR4Teki:
 /* 8013EB24 0013BA84  38 21 00 08 */	addi r1, r1, 8
 /* 8013EB28 0013BA88  7C 08 03 A6 */	mtlr r0
 /* 8013EB2C 0013BA8C  4E 80 00 20 */	blr 
+.endfn act__26TaiPalmChangingColorActionFR4Teki
 
-.global resetTimer__26TaiPalmChangingColorActionFR4Teki
-resetTimer__26TaiPalmChangingColorActionFR4Teki:
+.fn resetTimer__26TaiPalmChangingColorActionFR4Teki, global
 /* 8013EB30 0013BA90  7C 08 02 A6 */	mflr r0
 /* 8013EB34 0013BA94  90 01 00 04 */	stw r0, 4(r1)
 /* 8013EB38 0013BA98  94 21 FF C0 */	stwu r1, -0x40(r1)
@@ -1204,33 +1203,41 @@ resetTimer__26TaiPalmChangingColorActionFR4Teki:
 /* 8013EBCC 0013BB2C  38 21 00 40 */	addi r1, r1, 0x40
 /* 8013EBD0 0013BB30  7C 08 03 A6 */	mtlr r0
 /* 8013EBD4 0013BB34  4E 80 00 20 */	blr 
+.endfn resetTimer__26TaiPalmChangingColorActionFR4Teki
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802CB198:
+.obj lbl_802CB198, local
 	.asciz "taipalm.cpp"
+.endobj lbl_802CB198
 .balign 4
-lbl_802CB1A4:
+.obj lbl_802CB1A4, local
 	.asciz "CHANGING_COLOR_PERIOD"
+.endobj lbl_802CB1A4
 .balign 4
-lbl_802CB1BC:
+.obj lbl_802CB1BC, local
 	.asciz "CHANGING_COLOR_PERIOD_RANDOM_RATE"
+.endobj lbl_802CB1BC
 .balign 4
-lbl_802CB1E0:
+.obj lbl_802CB1E0, local
 	.asciz "GROWING_PERIOD"
+.endobj lbl_802CB1E0
 .balign 4
-lbl_802CB1F0:
+.obj lbl_802CB1F0, local
 	.asciz "TaiPalmChangingColorAction"
+.endobj lbl_802CB1F0
 .balign 4
-lbl_802CB20C:
+.obj lbl_802CB20C, local
 	.asciz "TaiAction"
+.endobj lbl_802CB20C
 .balign 4
-lbl_802CB218:
+.obj lbl_802CB218, local
 	.4byte __RTTI__9TaiAction
 	.4byte 0
 	.4byte 0
-.global __vt__26TaiPalmChangingColorAction
-__vt__26TaiPalmChangingColorAction:
+.endobj lbl_802CB218
+.balign 4
+.obj __vt__26TaiPalmChangingColorAction, global
 	.4byte __RTTI__26TaiPalmChangingColorAction
 	.4byte 0
 	.4byte start__26TaiPalmChangingColorActionFR4Teki
@@ -1238,16 +1245,19 @@ __vt__26TaiPalmChangingColorAction:
 	.4byte act__26TaiPalmChangingColorActionFR4Teki
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
+.endobj __vt__26TaiPalmChangingColorAction
 .balign 4
-lbl_802CB240:
+.obj lbl_802CB240, local
 	.asciz "TaiPalmSettingPelletAction"
+.endobj lbl_802CB240
 .balign 4
-lbl_802CB25C:
+.obj lbl_802CB25C, local
 	.4byte __RTTI__9TaiAction
 	.4byte 0
 	.4byte 0
-.global __vt__26TaiPalmSettingPelletAction
-__vt__26TaiPalmSettingPelletAction:
+.endobj lbl_802CB25C
+.balign 4
+.obj __vt__26TaiPalmSettingPelletAction, global
 	.4byte __RTTI__26TaiPalmSettingPelletAction
 	.4byte 0
 	.4byte start__26TaiPalmSettingPelletActionFR4Teki
@@ -1255,16 +1265,19 @@ __vt__26TaiPalmSettingPelletAction:
 	.4byte act__9TaiActionFR4Teki
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
+.endobj __vt__26TaiPalmSettingPelletAction
 .balign 4
-lbl_802CB284:
+.obj lbl_802CB284, local
 	.asciz "TaiPalmSunflowerAction"
+.endobj lbl_802CB284
 .balign 4
-lbl_802CB29C:
+.obj lbl_802CB29C, local
 	.4byte __RTTI__9TaiAction
 	.4byte 0
 	.4byte 0
-.global __vt__22TaiPalmSunflowerAction
-__vt__22TaiPalmSunflowerAction:
+.endobj lbl_802CB29C
+.balign 4
+.obj __vt__22TaiPalmSunflowerAction, global
 	.4byte __RTTI__22TaiPalmSunflowerAction
 	.4byte 0
 	.4byte start__9TaiActionFR4Teki
@@ -1272,16 +1285,19 @@ __vt__22TaiPalmSunflowerAction:
 	.4byte act__22TaiPalmSunflowerActionFR4Teki
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
+.endobj __vt__22TaiPalmSunflowerAction
 .balign 4
-lbl_802CB2C4:
+.obj lbl_802CB2C4, local
 	.asciz "TaiPalmFlowerDamageAction"
+.endobj lbl_802CB2C4
 .balign 4
-lbl_802CB2E0:
+.obj lbl_802CB2E0, local
 	.4byte __RTTI__9TaiAction
 	.4byte 0
 	.4byte 0
-.global __vt__25TaiPalmFlowerDamageAction
-__vt__25TaiPalmFlowerDamageAction:
+.endobj lbl_802CB2E0
+.balign 4
+.obj __vt__25TaiPalmFlowerDamageAction, global
 	.4byte __RTTI__25TaiPalmFlowerDamageAction
 	.4byte 0
 	.4byte start__9TaiActionFR4Teki
@@ -1289,16 +1305,19 @@ __vt__25TaiPalmFlowerDamageAction:
 	.4byte act__25TaiPalmFlowerDamageActionFR4Teki
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
+.endobj __vt__25TaiPalmFlowerDamageAction
 .balign 4
-lbl_802CB308:
+.obj lbl_802CB308, local
 	.asciz "TaiPalmGrowAction"
+.endobj lbl_802CB308
 .balign 4
-lbl_802CB31C:
+.obj lbl_802CB31C, local
 	.4byte __RTTI__9TaiAction
 	.4byte 0
 	.4byte 0
-.global __vt__17TaiPalmGrowAction
-__vt__17TaiPalmGrowAction:
+.endobj lbl_802CB31C
+.balign 4
+.obj __vt__17TaiPalmGrowAction, global
 	.4byte __RTTI__17TaiPalmGrowAction
 	.4byte 0
 	.4byte start__9TaiActionFR4Teki
@@ -1306,16 +1325,19 @@ __vt__17TaiPalmGrowAction:
 	.4byte act__17TaiPalmGrowActionFR4Teki
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
+.endobj __vt__17TaiPalmGrowAction
 .balign 4
-lbl_802CB344:
+.obj lbl_802CB344, local
 	.asciz "TaiPalmGrowingAction"
+.endobj lbl_802CB344
 .balign 4
-lbl_802CB35C:
+.obj lbl_802CB35C, local
 	.4byte __RTTI__9TaiAction
 	.4byte 0
 	.4byte 0
-.global __vt__20TaiPalmGrowingAction
-__vt__20TaiPalmGrowingAction:
+.endobj lbl_802CB35C
+.balign 4
+.obj __vt__20TaiPalmGrowingAction, global
 	.4byte __RTTI__20TaiPalmGrowingAction
 	.4byte 0
 	.4byte start__20TaiPalmGrowingActionFR4Teki
@@ -1323,28 +1345,35 @@ __vt__20TaiPalmGrowingAction:
 	.4byte act__9TaiActionFR4Teki
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
+.endobj __vt__20TaiPalmGrowingAction
 .balign 4
-lbl_802CB384:
+.obj lbl_802CB384, local
 	.asciz "TaiPalmDamagingAction"
+.endobj lbl_802CB384
 .balign 4
-lbl_802CB39C:
+.obj lbl_802CB39C, local
 	.asciz "TaiMotionAction"
+.endobj lbl_802CB39C
 .balign 4
-lbl_802CB3AC:
+.obj lbl_802CB3AC, local
 	.4byte __RTTI__9TaiAction
 	.4byte 0
 	.4byte 0
+.endobj lbl_802CB3AC
 .balign 4
-lbl_802CB3B8:
+.obj lbl_802CB3B8, local
 	.asciz "TaiDamagingAction"
+.endobj lbl_802CB3B8
 .balign 4
-lbl_802CB3CC:
+.obj lbl_802CB3CC, local
 	.4byte __RTTI__9TaiAction
 	.4byte 0
 	.4byte __RTTI__15TaiMotionAction
 	.4byte 0
 	.4byte 0
-lbl_802CB3E0:
+.endobj lbl_802CB3CC
+.balign 4
+.obj lbl_802CB3E0, local
 	.4byte __RTTI__9TaiAction
 	.4byte 0
 	.4byte __RTTI__15TaiMotionAction
@@ -1352,8 +1381,9 @@ lbl_802CB3E0:
 	.4byte __RTTI__17TaiDamagingAction
 	.4byte 0
 	.4byte 0
-.global __vt__21TaiPalmDamagingAction
-__vt__21TaiPalmDamagingAction:
+.endobj lbl_802CB3E0
+.balign 4
+.obj __vt__21TaiPalmDamagingAction, global
 	.4byte __RTTI__21TaiPalmDamagingAction
 	.4byte 0
 	.4byte start__21TaiPalmDamagingActionFR4Teki
@@ -1361,20 +1391,25 @@ __vt__21TaiPalmDamagingAction:
 	.4byte act__17TaiDamagingActionFR4Teki
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
+.endobj __vt__21TaiPalmDamagingAction
 .balign 4
-lbl_802CB418:
+.obj lbl_802CB418, local
 	.asciz "TaiPalmDyingAction"
+.endobj lbl_802CB418
 .balign 4
-lbl_802CB42C:
+.obj lbl_802CB42C, local
 	.asciz "TaiDyingAction"
+.endobj lbl_802CB42C
 .balign 4
-lbl_802CB43C:
+.obj lbl_802CB43C, local
 	.4byte __RTTI__9TaiAction
 	.4byte 0
 	.4byte __RTTI__15TaiMotionAction
 	.4byte 0
 	.4byte 0
-lbl_802CB450:
+.endobj lbl_802CB43C
+.balign 4
+.obj lbl_802CB450, local
 	.4byte __RTTI__9TaiAction
 	.4byte 0
 	.4byte __RTTI__15TaiMotionAction
@@ -1382,8 +1417,9 @@ lbl_802CB450:
 	.4byte __RTTI__14TaiDyingAction
 	.4byte 0
 	.4byte 0
-.global __vt__18TaiPalmDyingAction
-__vt__18TaiPalmDyingAction:
+.endobj lbl_802CB450
+.balign 4
+.obj __vt__18TaiPalmDyingAction, global
 	.4byte __RTTI__18TaiPalmDyingAction
 	.4byte 0
 	.4byte start__18TaiPalmDyingActionFR4Teki
@@ -1391,18 +1427,21 @@ __vt__18TaiPalmDyingAction:
 	.4byte act__18TaiPalmDyingActionFR4Teki
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
+.endobj __vt__18TaiPalmDyingAction
 .balign 4
-lbl_802CB488:
+.obj lbl_802CB488, local
 	.asciz "TaiPalmMotionAction"
+.endobj lbl_802CB488
 .balign 4
-lbl_802CB49C:
+.obj lbl_802CB49C, local
 	.4byte __RTTI__9TaiAction
 	.4byte 0
 	.4byte __RTTI__15TaiMotionAction
 	.4byte 0
 	.4byte 0
-.global __vt__19TaiPalmMotionAction
-__vt__19TaiPalmMotionAction:
+.endobj lbl_802CB49C
+.balign 4
+.obj __vt__19TaiPalmMotionAction, global
 	.4byte __RTTI__19TaiPalmMotionAction
 	.4byte 0
 	.4byte start__19TaiPalmMotionActionFR4Teki
@@ -1410,70 +1449,77 @@ __vt__19TaiPalmMotionAction:
 	.4byte act__15TaiMotionActionFR4Teki
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
+.endobj __vt__19TaiPalmMotionAction
 .balign 4
-lbl_802CB4CC:
+.obj lbl_802CB4CC, local
 	.asciz "TekiNotCondition"
+.endobj lbl_802CB4CC
 .balign 4
-lbl_802CB4E0:
+.obj lbl_802CB4E0, local
 	.asciz "Condition"
+.endobj lbl_802CB4E0
 .balign 4
-lbl_802CB4EC:
+.obj lbl_802CB4EC, local
 	.asciz "TekiCondition"
+.endobj lbl_802CB4EC
 .balign 4
-lbl_802CB4FC:
+.obj lbl_802CB4FC, local
 	.4byte __RTTI__9Condition
 	.4byte 0
 	.4byte 0
-lbl_802CB508:
+.endobj lbl_802CB4FC
+.balign 4
+.obj lbl_802CB508, local
 	.4byte __RTTI__9Condition
 	.4byte 0
 	.4byte __RTTI__13TekiCondition
 	.4byte 0
 	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
+.endobj lbl_802CB508
 .balign 4
-lbl_802CB528:
+.skip 0xC # compiler padding
+.balign 4
+.obj lbl_802CB528, local
 	.asciz "TekiAndCondition"
+.endobj lbl_802CB528
 .balign 4
-lbl_802CB53C:
+.obj lbl_802CB53C, local
 	.4byte __RTTI__9Condition
 	.4byte 0
 	.4byte __RTTI__13TekiCondition
 	.4byte 0
 	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
+.endobj lbl_802CB53C
 .balign 4
-lbl_802CB574:
+.skip 0x24 # compiler padding
+.balign 4
+.obj lbl_802CB574, local
 	.asciz "TaiPalmStrategy"
+.endobj lbl_802CB574
 .balign 4
-lbl_802CB584:
+.obj lbl_802CB584, local
 	.asciz "TekiStrategy"
+.endobj lbl_802CB584
 .balign 4
-lbl_802CB594:
+.obj lbl_802CB594, local
 	.asciz "TaiStrategy"
+.endobj lbl_802CB594
 .balign 4
-lbl_802CB5A0:
+.obj lbl_802CB5A0, local
 	.4byte __RTTI__12TekiStrategy
 	.4byte 0
 	.4byte 0
-lbl_802CB5AC:
+.endobj lbl_802CB5A0
+.balign 4
+.obj lbl_802CB5AC, local
 	.4byte __RTTI__12TekiStrategy
 	.4byte 0
 	.4byte __RTTI__11TaiStrategy
 	.4byte 0
 	.4byte 0
-.global __vt__15TaiPalmStrategy
-__vt__15TaiPalmStrategy:
+.endobj lbl_802CB5AC
+.balign 4
+.obj __vt__15TaiPalmStrategy, global
 	.4byte __RTTI__15TaiPalmStrategy
 	.4byte 0
 	.4byte start__15TaiPalmStrategyFR4Teki
@@ -1484,35 +1530,37 @@ __vt__15TaiPalmStrategy:
 	.4byte drawDebugInfo__12TekiStrategyFR4TekiR8Graphics
 	.4byte interact__12TekiStrategyFR4TekiR18TekiInteractionKey
 	.4byte spawnCorpseParts__12TekiStrategyFR4Teki
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
+.endobj __vt__15TaiPalmStrategy
 .balign 4
-lbl_802CB604:
+.skip 0x1C # compiler padding
+.balign 4
+.obj lbl_802CB604, local
 	.asciz "TaiPalmParameters"
+.endobj lbl_802CB604
 .balign 4
-lbl_802CB618:
+.obj lbl_802CB618, local
 	.asciz "CoreNode"
+.endobj lbl_802CB618
 .balign 4
-lbl_802CB624:
+.obj lbl_802CB624, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte 0
-lbl_802CB630:
+.endobj lbl_802CB624
+.balign 4
+.obj lbl_802CB630, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte __RTTI__8CoreNode
 	.4byte 0
 	.4byte 0
+.endobj lbl_802CB630
 .balign 4
-lbl_802CB644:
+.obj lbl_802CB644, local
 	.asciz "TekiParameters"
+.endobj lbl_802CB644
 .balign 4
-lbl_802CB654:
+.obj lbl_802CB654, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte __RTTI__8CoreNode
@@ -1520,7 +1568,9 @@ lbl_802CB654:
 	.4byte __RTTI__4Node
 	.4byte 0
 	.4byte 0
-lbl_802CB670:
+.endobj lbl_802CB654
+.balign 4
+.obj lbl_802CB670, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte __RTTI__8CoreNode
@@ -1530,8 +1580,9 @@ lbl_802CB670:
 	.4byte __RTTI__14TekiParameters
 	.4byte 0
 	.4byte 0
-.global __vt__17TaiPalmParameters
-__vt__17TaiPalmParameters:
+.endobj lbl_802CB670
+.balign 4
+.obj __vt__17TaiPalmParameters, weak
 	.4byte __RTTI__17TaiPalmParameters
 	.4byte 0
 	.4byte getAgeNodeType__5ANodeFv
@@ -1544,128 +1595,198 @@ __vt__17TaiPalmParameters:
 	.4byte concat__4NodeFR3SRT
 	.4byte concat__4NodeFR8Matrix4f
 	.4byte getModelMatrix__4NodeFv
+.endobj __vt__17TaiPalmParameters
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-lbl_803E3F10:
+.obj lbl_803E3F10, local
 	.float 0.0
-lbl_803E3F14:
+.endobj lbl_803E3F10
+.balign 4
+.obj lbl_803E3F14, local
 	.float 0.0
-lbl_803E3F18:
+.endobj lbl_803E3F14
+.balign 4
+.obj lbl_803E3F18, local
 	.float 0.0
-lbl_803E3F1C:
+.endobj lbl_803E3F18
+.balign 4
+.obj lbl_803E3F1C, local
 	.float 1.0
-__RTTI__9TaiAction:
+.endobj lbl_803E3F1C
+.balign 4
+.obj __RTTI__9TaiAction, local
 	.4byte lbl_802CB20C
 	.4byte 0
-__RTTI__26TaiPalmChangingColorAction:
+.endobj __RTTI__9TaiAction
+.balign 4
+.obj __RTTI__26TaiPalmChangingColorAction, local
 	.4byte lbl_802CB1F0
 	.4byte lbl_802CB218
-__RTTI__26TaiPalmSettingPelletAction:
+.endobj __RTTI__26TaiPalmChangingColorAction
+.balign 4
+.obj __RTTI__26TaiPalmSettingPelletAction, local
 	.4byte lbl_802CB240
 	.4byte lbl_802CB25C
-__RTTI__22TaiPalmSunflowerAction:
+.endobj __RTTI__26TaiPalmSettingPelletAction
+.balign 4
+.obj __RTTI__22TaiPalmSunflowerAction, local
 	.4byte lbl_802CB284
 	.4byte lbl_802CB29C
-__RTTI__25TaiPalmFlowerDamageAction:
+.endobj __RTTI__22TaiPalmSunflowerAction
+.balign 4
+.obj __RTTI__25TaiPalmFlowerDamageAction, local
 	.4byte lbl_802CB2C4
 	.4byte lbl_802CB2E0
-__RTTI__17TaiPalmGrowAction:
+.endobj __RTTI__25TaiPalmFlowerDamageAction
+.balign 4
+.obj __RTTI__17TaiPalmGrowAction, local
 	.4byte lbl_802CB308
 	.4byte lbl_802CB31C
-__RTTI__20TaiPalmGrowingAction:
+.endobj __RTTI__17TaiPalmGrowAction
+.balign 4
+.obj __RTTI__20TaiPalmGrowingAction, local
 	.4byte lbl_802CB344
 	.4byte lbl_802CB35C
-__RTTI__15TaiMotionAction:
+.endobj __RTTI__20TaiPalmGrowingAction
+.balign 4
+.obj __RTTI__15TaiMotionAction, local
 	.4byte lbl_802CB39C
 	.4byte lbl_802CB3AC
-__RTTI__17TaiDamagingAction:
+.endobj __RTTI__15TaiMotionAction
+.balign 4
+.obj __RTTI__17TaiDamagingAction, local
 	.4byte lbl_802CB3B8
 	.4byte lbl_802CB3CC
-__RTTI__21TaiPalmDamagingAction:
+.endobj __RTTI__17TaiDamagingAction
+.balign 4
+.obj __RTTI__21TaiPalmDamagingAction, local
 	.4byte lbl_802CB384
 	.4byte lbl_802CB3E0
-__RTTI__14TaiDyingAction:
+.endobj __RTTI__21TaiPalmDamagingAction
+.balign 4
+.obj __RTTI__14TaiDyingAction, local
 	.4byte lbl_802CB42C
 	.4byte lbl_802CB43C
-__RTTI__18TaiPalmDyingAction:
+.endobj __RTTI__14TaiDyingAction
+.balign 4
+.obj __RTTI__18TaiPalmDyingAction, local
 	.4byte lbl_802CB418
 	.4byte lbl_802CB450
-__RTTI__19TaiPalmMotionAction:
+.endobj __RTTI__18TaiPalmDyingAction
+.balign 4
+.obj __RTTI__19TaiPalmMotionAction, local
 	.4byte lbl_802CB488
 	.4byte lbl_802CB49C
-__RTTI__9Condition:
+.endobj __RTTI__19TaiPalmMotionAction
+.balign 4
+.obj __RTTI__9Condition, local
 	.4byte lbl_802CB4E0
 	.4byte 0
-__RTTI__13TekiCondition:
+.endobj __RTTI__9Condition
+.balign 4
+.obj __RTTI__13TekiCondition, local
 	.4byte lbl_802CB4EC
 	.4byte lbl_802CB4FC
-__RTTI__12TekiStrategy:
+.endobj __RTTI__13TekiCondition
+.balign 4
+.obj __RTTI__12TekiStrategy, local
 	.4byte lbl_802CB584
 	.4byte 0
-__RTTI__11TaiStrategy:
+.endobj __RTTI__12TekiStrategy
+.balign 4
+.obj __RTTI__11TaiStrategy, local
 	.4byte lbl_802CB594
 	.4byte lbl_802CB5A0
-__RTTI__15TaiPalmStrategy:
+.endobj __RTTI__11TaiStrategy
+.balign 4
+.obj __RTTI__15TaiPalmStrategy, local
 	.4byte lbl_802CB574
 	.4byte lbl_802CB5AC
+.endobj __RTTI__15TaiPalmStrategy
 .balign 4
-lbl_803E3FB0:
+.obj lbl_803E3FB0, local
 	.asciz "ANode"
+.endobj lbl_803E3FB0
 .balign 4
-__RTTI__5ANode:
+.obj __RTTI__5ANode, local
 	.4byte lbl_803E3FB0
 	.4byte 0
-__RTTI__8CoreNode:
+.endobj __RTTI__5ANode
+.balign 4
+.obj __RTTI__8CoreNode, local
 	.4byte lbl_802CB618
 	.4byte lbl_802CB624
+.endobj __RTTI__8CoreNode
 .balign 4
-lbl_803E3FC8:
+.obj lbl_803E3FC8, local
 	.asciz "Node"
+.endobj lbl_803E3FC8
 .balign 4
-__RTTI__4Node:
+.obj __RTTI__4Node, local
 	.4byte lbl_803E3FC8
 	.4byte lbl_802CB630
-__RTTI__14TekiParameters:
+.endobj __RTTI__4Node
+.balign 4
+.obj __RTTI__14TekiParameters, local
 	.4byte lbl_802CB644
 	.4byte lbl_802CB654
-__RTTI__17TaiPalmParameters:
+.endobj __RTTI__14TekiParameters
+.balign 4
+.obj __RTTI__17TaiPalmParameters, local
 	.4byte lbl_802CB604
 	.4byte lbl_802CB670
+.endobj __RTTI__17TaiPalmParameters
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803EA7D8:
+.obj lbl_803EA7D8, local
 	.float 0.0
-lbl_803EA7DC:
+.endobj lbl_803EA7D8
+.obj lbl_803EA7DC, local
 	.float 3600.0
-lbl_803EA7E0:
+.endobj lbl_803EA7DC
+.obj lbl_803EA7E0, local
 	.float 1.0
-lbl_803EA7E4:
+.endobj lbl_803EA7E0
+.obj lbl_803EA7E4, local
 	.float 50.0
-lbl_803EA7E8:
+.endobj lbl_803EA7E4
+.obj lbl_803EA7E8, local
 	.float -1.0
-lbl_803EA7EC:
+.endobj lbl_803EA7E8
+.obj lbl_803EA7EC, local
 	.float 0.3
-lbl_803EA7F0:
+.endobj lbl_803EA7EC
+.obj lbl_803EA7F0, local
 	.float 0.2
-lbl_803EA7F4:
+.endobj lbl_803EA7F0
+.obj lbl_803EA7F4, local
 	.float 100.0
-lbl_803EA7F8:
+.endobj lbl_803EA7F4
+.obj lbl_803EA7F8, local
 	.float 25.0
-lbl_803EA7FC:
+.endobj lbl_803EA7F8
+.obj lbl_803EA7FC, local
 	.float 10.0
-lbl_803EA800:
+.endobj lbl_803EA7FC
+.obj lbl_803EA800, local
 	.float 200.0
-lbl_803EA804:
+.endobj lbl_803EA800
+.obj lbl_803EA804, local
 	.float 16.0
-lbl_803EA808:
+.endobj lbl_803EA804
+.obj lbl_803EA808, local
 	.float 2.0
+.endobj lbl_803EA808
 .balign 8
-lbl_803EA810:
-	.4byte 0x43300000
-	.4byte 0x80000000
-lbl_803EA818:
+.obj lbl_803EA810, local
+	.8byte 0x4330000080000000
+.endobj lbl_803EA810
+.balign 4
+.obj lbl_803EA818, local
 	.float 32767.0
-lbl_803EA81C:
+.endobj lbl_803EA818
+.obj lbl_803EA81C, local
 	.float 0.5
+.endobj lbl_803EA81C

@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global "setDororoEffect__9@unnamed@FR4Teki"
-"setDororoEffect__9@unnamed@FR4Teki":
+.fn "setDororoEffect__9@unnamed@FR4Teki", local
 /* 801D0FBC 001CDF1C  7C 08 02 A6 */	mflr r0
 /* 801D0FC0 001CDF20  3C 80 6C 65 */	lis r4, 0x6C657965@ha
 /* 801D0FC4 001CDF24  90 01 00 04 */	stw r0, 4(r1)
@@ -133,9 +132,9 @@
 /* 801D1194 001CE0F4  38 21 00 38 */	addi r1, r1, 0x38
 /* 801D1198 001CE0F8  7C 08 03 A6 */	mtlr r0
 /* 801D119C 001CE0FC  4E 80 00 20 */	blr 
+.endfn "setDororoEffect__9@unnamed@FR4Teki"
 
-.global __ct__19TAIdororoSoundTableFv
-__ct__19TAIdororoSoundTableFv:
+.fn __ct__19TAIdororoSoundTableFv, global
 /* 801D11A0 001CE100  7C 08 02 A6 */	mflr r0
 /* 801D11A4 001CE104  38 80 00 06 */	li r4, 6
 /* 801D11A8 001CE108  90 01 00 04 */	stw r0, 4(r1)
@@ -172,9 +171,9 @@ __ct__19TAIdororoSoundTableFv:
 /* 801D1218 001CE178  38 21 00 20 */	addi r1, r1, 0x20
 /* 801D121C 001CE17C  7C 08 03 A6 */	mtlr r0
 /* 801D1220 001CE180  4E 80 00 20 */	blr 
+.endfn __ct__19TAIdororoSoundTableFv
 
-.global __ct__19TAIdororoParametersFv
-__ct__19TAIdororoParametersFv:
+.fn __ct__19TAIdororoParametersFv, global
 /* 801D1224 001CE184  7C 08 02 A6 */	mflr r0
 /* 801D1228 001CE188  3C 80 80 2E */	lis r4, lbl_802E3D60@ha
 /* 801D122C 001CE18C  90 01 00 04 */	stw r0, 4(r1)
@@ -415,9 +414,9 @@ __ct__19TAIdororoParametersFv:
 /* 801D15D8 001CE538  38 21 00 D0 */	addi r1, r1, 0xd0
 /* 801D15DC 001CE53C  7C 08 03 A6 */	mtlr r0
 /* 801D15E0 001CE540  4E 80 00 20 */	blr 
+.endfn __ct__19TAIdororoParametersFv
 
-.global __ct__17TAIdororoStrategyFv
-__ct__17TAIdororoStrategyFv:
+.fn __ct__17TAIdororoStrategyFv, global
 /* 801D15E4 001CE544  7C 08 02 A6 */	mflr r0
 /* 801D15E8 001CE548  38 80 00 0C */	li r4, 0xc
 /* 801D15EC 001CE54C  90 01 00 04 */	stw r0, 4(r1)
@@ -1143,9 +1142,9 @@ __ct__17TAIdororoStrategyFv:
 /* 801D20A8 001CF008  38 21 00 C8 */	addi r1, r1, 0xc8
 /* 801D20AC 001CF00C  7C 08 03 A6 */	mtlr r0
 /* 801D20B0 001CF010  4E 80 00 20 */	blr 
+.endfn __ct__17TAIdororoStrategyFv
 
-.global act__17TAIdororoStrategyFR4Teki
-act__17TAIdororoStrategyFR4Teki:
+.fn act__17TAIdororoStrategyFR4Teki, global
 /* 801D20B4 001CF014  7C 08 02 A6 */	mflr r0
 /* 801D20B8 001CF018  90 01 00 04 */	stw r0, 4(r1)
 /* 801D20BC 001CF01C  94 21 FE 88 */	stwu r1, -0x178(r1)
@@ -1393,9 +1392,9 @@ act__17TAIdororoStrategyFR4Teki:
 /* 801D2470 001CF3D0  38 21 01 78 */	addi r1, r1, 0x178
 /* 801D2474 001CF3D4  7C 08 03 A6 */	mtlr r0
 /* 801D2478 001CF3D8  4E 80 00 20 */	blr 
+.endfn act__17TAIdororoStrategyFR4Teki
 
-.global draw__17TAIdororoStrategyFR4TekiR8Graphics
-draw__17TAIdororoStrategyFR4TekiR8Graphics:
+.fn draw__17TAIdororoStrategyFR4TekiR8Graphics, global
 /* 801D247C 001CF3DC  7C 08 02 A6 */	mflr r0
 /* 801D2480 001CF3E0  90 01 00 04 */	stw r0, 4(r1)
 /* 801D2484 001CF3E4  94 21 FF F8 */	stwu r1, -8(r1)
@@ -1404,9 +1403,9 @@ draw__17TAIdororoStrategyFR4TekiR8Graphics:
 /* 801D2490 001CF3F0  38 21 00 08 */	addi r1, r1, 8
 /* 801D2494 001CF3F4  7C 08 03 A6 */	mtlr r0
 /* 801D2498 001CF3F8  4E 80 00 20 */	blr 
+.endfn draw__17TAIdororoStrategyFR4TekiR8Graphics
 
-.global createEffect__17TAIdororoStrategyFR4Tekii
-createEffect__17TAIdororoStrategyFR4Tekii:
+.fn createEffect__17TAIdororoStrategyFR4Tekii, global
 /* 801D249C 001CF3FC  7C 08 02 A6 */	mflr r0
 /* 801D24A0 001CF400  90 01 00 04 */	stw r0, 4(r1)
 /* 801D24A4 001CF404  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -1456,9 +1455,9 @@ createEffect__17TAIdororoStrategyFR4Tekii:
 /* 801D2540 001CF4A0  38 21 00 28 */	addi r1, r1, 0x28
 /* 801D2544 001CF4A4  7C 08 03 A6 */	mtlr r0
 /* 801D2548 001CF4A8  4E 80 00 20 */	blr 
+.endfn createEffect__17TAIdororoStrategyFR4Tekii
 
-.global createCloudOfDust__17TAIdororoStrategyFR4TekiP8CollPart
-createCloudOfDust__17TAIdororoStrategyFR4TekiP8CollPart:
+.fn createCloudOfDust__17TAIdororoStrategyFR4TekiP8CollPart, global
 /* 801D254C 001CF4AC  7C 08 02 A6 */	mflr r0
 /* 801D2550 001CF4B0  90 01 00 04 */	stw r0, 4(r1)
 /* 801D2554 001CF4B4  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -1544,9 +1543,9 @@ createCloudOfDust__17TAIdororoStrategyFR4TekiP8CollPart:
 /* 801D2688 001CF5E8  38 21 00 28 */	addi r1, r1, 0x28
 /* 801D268C 001CF5EC  7C 08 03 A6 */	mtlr r0
 /* 801D2690 001CF5F0  4E 80 00 20 */	blr 
+.endfn createCloudOfDust__17TAIdororoStrategyFR4TekiP8CollPart
 
-.global start__17TAIdororoStrategyFR4Teki
-start__17TAIdororoStrategyFR4Teki:
+.fn start__17TAIdororoStrategyFR4Teki, global
 /* 801D2694 001CF5F4  7C 08 02 A6 */	mflr r0
 /* 801D2698 001CF5F8  90 01 00 04 */	stw r0, 4(r1)
 /* 801D269C 001CF5FC  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -1583,9 +1582,9 @@ start__17TAIdororoStrategyFR4Teki:
 /* 801D2714 001CF674  38 21 00 28 */	addi r1, r1, 0x28
 /* 801D2718 001CF678  7C 08 03 A6 */	mtlr r0
 /* 801D271C 001CF67C  4E 80 00 20 */	blr 
+.endfn start__17TAIdororoStrategyFR4Teki
 
-.global makeDefaultAnimations__18TAIdororoAnimationFv
-makeDefaultAnimations__18TAIdororoAnimationFv:
+.fn makeDefaultAnimations__18TAIdororoAnimationFv, global
 /* 801D2720 001CF680  7C 08 02 A6 */	mflr r0
 /* 801D2724 001CF684  90 01 00 04 */	stw r0, 4(r1)
 /* 801D2728 001CF688  94 21 FF 28 */	stwu r1, -0xd8(r1)
@@ -2050,18 +2049,18 @@ makeDefaultAnimations__18TAIdororoAnimationFv:
 /* 801D2E10 001CFD70  38 21 00 D8 */	addi r1, r1, 0xd8
 /* 801D2E14 001CFD74  7C 08 03 A6 */	mtlr r0
 /* 801D2E18 001CFD78  4E 80 00 20 */	blr 
+.endfn makeDefaultAnimations__18TAIdororoAnimationFv
 
-.global start__17TAIAgravityDororoFR4Teki
-start__17TAIAgravityDororoFR4Teki:
+.fn start__17TAIAgravityDororoFR4Teki, weak
 /* 801D2E1C 001CFD7C  80 6D 2D EC */	lwz r3, gsys@sda21(r13)
 /* 801D2E20 001CFD80  C0 22 BD 04 */	lfs f1, lbl_803EBF04@sda21(r2)
 /* 801D2E24 001CFD84  C0 03 02 8C */	lfs f0, 0x28c(r3)
 /* 801D2E28 001CFD88  EC 01 00 32 */	fmuls f0, f1, f0
 /* 801D2E2C 001CFD8C  D0 04 04 C0 */	stfs f0, 0x4c0(r4)
 /* 801D2E30 001CFD90  4E 80 00 20 */	blr 
+.endfn start__17TAIAgravityDororoFR4Teki
 
-.global act__17TAIAgravityDororoFR4Teki
-act__17TAIAgravityDororoFR4Teki:
+.fn act__17TAIAgravityDororoFR4Teki, weak
 /* 801D2E34 001CFD94  7C 08 02 A6 */	mflr r0
 /* 801D2E38 001CFD98  90 01 00 04 */	stw r0, 4(r1)
 /* 801D2E3C 001CFD9C  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -2088,9 +2087,9 @@ act__17TAIAgravityDororoFR4Teki:
 /* 801D2E88 001CFDE8  38 21 00 20 */	addi r1, r1, 0x20
 /* 801D2E8C 001CFDEC  7C 08 03 A6 */	mtlr r0
 /* 801D2E90 001CFDF0  4E 80 00 20 */	blr 
+.endfn act__17TAIAgravityDororoFR4Teki
 
-.global act__19TAIAcheckBarkDororoFR4Teki
-act__19TAIAcheckBarkDororoFR4Teki:
+.fn act__19TAIAcheckBarkDororoFR4Teki, weak
 /* 801D2E94 001CFDF4  7C 08 02 A6 */	mflr r0
 /* 801D2E98 001CFDF8  90 01 00 04 */	stw r0, 4(r1)
 /* 801D2E9C 001CFDFC  94 21 FF 38 */	stwu r1, -0xc8(r1)
@@ -2217,9 +2216,9 @@ act__19TAIAcheckBarkDororoFR4Teki:
 /* 801D305C 001CFFBC  38 21 00 C8 */	addi r1, r1, 0xc8
 /* 801D3060 001CFFC0  7C 08 03 A6 */	mtlr r0
 /* 801D3064 001CFFC4  4E 80 00 20 */	blr 
+.endfn act__19TAIAcheckBarkDororoFR4Teki
 
-.global start__14TAIAbarkDororoFR4Teki
-start__14TAIAbarkDororoFR4Teki:
+.fn start__14TAIAbarkDororoFR4Teki, weak
 /* 801D3068 001CFFC8  7C 08 02 A6 */	mflr r0
 /* 801D306C 001CFFCC  90 01 00 04 */	stw r0, 4(r1)
 /* 801D3070 001CFFD0  94 21 FF F8 */	stwu r1, -8(r1)
@@ -2228,9 +2227,9 @@ start__14TAIAbarkDororoFR4Teki:
 /* 801D307C 001CFFDC  38 21 00 08 */	addi r1, r1, 8
 /* 801D3080 001CFFE0  7C 08 03 A6 */	mtlr r0
 /* 801D3084 001CFFE4  4E 80 00 20 */	blr 
+.endfn start__14TAIAbarkDororoFR4Teki
 
-.global act__14TAIAbarkDororoFR4Teki
-act__14TAIAbarkDororoFR4Teki:
+.fn act__14TAIAbarkDororoFR4Teki, weak
 /* 801D3088 001CFFE8  7C 08 02 A6 */	mflr r0
 /* 801D308C 001CFFEC  90 01 00 04 */	stw r0, 4(r1)
 /* 801D3090 001CFFF0  94 21 FF 18 */	stwu r1, -0xe8(r1)
@@ -2479,9 +2478,9 @@ act__14TAIAbarkDororoFR4Teki:
 /* 801D340C 001D036C  38 21 00 E8 */	addi r1, r1, 0xe8
 /* 801D3410 001D0370  7C 08 03 A6 */	mtlr r0
 /* 801D3414 001D0374  4E 80 00 20 */	blr 
+.endfn act__14TAIAbarkDororoFR4Teki
 
-.global start__24TAIAtransformationDororoFR4Teki
-start__24TAIAtransformationDororoFR4Teki:
+.fn start__24TAIAtransformationDororoFR4Teki, weak
 /* 801D3418 001D0378  7C 08 02 A6 */	mflr r0
 /* 801D341C 001D037C  90 01 00 04 */	stw r0, 4(r1)
 /* 801D3420 001D0380  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -2509,9 +2508,9 @@ start__24TAIAtransformationDororoFR4Teki:
 /* 801D3478 001D03D8  38 21 00 18 */	addi r1, r1, 0x18
 /* 801D347C 001D03DC  7C 08 03 A6 */	mtlr r0
 /* 801D3480 001D03E0  4E 80 00 20 */	blr 
+.endfn start__24TAIAtransformationDororoFR4Teki
 
-.global act__24TAIAtransformationDororoFR4Teki
-act__24TAIAtransformationDororoFR4Teki:
+.fn act__24TAIAtransformationDororoFR4Teki, weak
 /* 801D3484 001D03E4  7C 08 02 A6 */	mflr r0
 /* 801D3488 001D03E8  90 01 00 04 */	stw r0, 4(r1)
 /* 801D348C 001D03EC  94 21 FF 78 */	stwu r1, -0x88(r1)
@@ -2689,9 +2688,9 @@ act__24TAIAtransformationDororoFR4Teki:
 /* 801D3710 001D0670  38 21 00 88 */	addi r1, r1, 0x88
 /* 801D3714 001D0674  7C 08 03 A6 */	mtlr r0
 /* 801D3718 001D0678  4E 80 00 20 */	blr 
+.endfn act__24TAIAtransformationDororoFR4Teki
 
-.global start__15TAIAbirthDororoFR4Teki
-start__15TAIAbirthDororoFR4Teki:
+.fn start__15TAIAbirthDororoFR4Teki, weak
 /* 801D371C 001D067C  7C 08 02 A6 */	mflr r0
 /* 801D3720 001D0680  90 01 00 04 */	stw r0, 4(r1)
 /* 801D3724 001D0684  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -2712,9 +2711,9 @@ start__15TAIAbirthDororoFR4Teki:
 /* 801D375C 001D06BC  38 21 00 20 */	addi r1, r1, 0x20
 /* 801D3760 001D06C0  7C 08 03 A6 */	mtlr r0
 /* 801D3764 001D06C4  4E 80 00 20 */	blr 
+.endfn start__15TAIAbirthDororoFR4Teki
 
-.global act__15TAIAbirthDororoFR4Teki
-act__15TAIAbirthDororoFR4Teki:
+.fn act__15TAIAbirthDororoFR4Teki, weak
 /* 801D3768 001D06C8  7C 08 02 A6 */	mflr r0
 /* 801D376C 001D06CC  90 01 00 04 */	stw r0, 4(r1)
 /* 801D3770 001D06D0  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -2769,9 +2768,9 @@ act__15TAIAbirthDororoFR4Teki:
 /* 801D382C 001D078C  38 21 00 20 */	addi r1, r1, 0x20
 /* 801D3830 001D0790  7C 08 03 A6 */	mtlr r0
 /* 801D3834 001D0794  4E 80 00 20 */	blr 
+.endfn act__15TAIAbirthDororoFR4Teki
 
-.global act__16TAIAgoTargetPikiFR4Teki
-act__16TAIAgoTargetPikiFR4Teki:
+.fn act__16TAIAgoTargetPikiFR4Teki, weak
 /* 801D3838 001D0798  7C 08 02 A6 */	mflr r0
 /* 801D383C 001D079C  90 01 00 04 */	stw r0, 4(r1)
 /* 801D3840 001D07A0  94 21 FF 80 */	stwu r1, -0x80(r1)
@@ -2850,14 +2849,14 @@ act__16TAIAgoTargetPikiFR4Teki:
 /* 801D3954 001D08B4  38 21 00 80 */	addi r1, r1, 0x80
 /* 801D3958 001D08B8  7C 08 03 A6 */	mtlr r0
 /* 801D395C 001D08BC  4E 80 00 20 */	blr 
+.endfn act__16TAIAgoTargetPikiFR4Teki
 
-.global checkArrival__16TAIAgoTargetPikiFR4Teki
-checkArrival__16TAIAgoTargetPikiFR4Teki:
+.fn checkArrival__16TAIAgoTargetPikiFR4Teki, weak
 /* 801D3960 001D08C0  38 60 00 00 */	li r3, 0
 /* 801D3964 001D08C4  4E 80 00 20 */	blr 
+.endfn checkArrival__16TAIAgoTargetPikiFR4Teki
 
-.global start__14TAIAwaitDororoFR4Teki
-start__14TAIAwaitDororoFR4Teki:
+.fn start__14TAIAwaitDororoFR4Teki, weak
 /* 801D3968 001D08C8  7C 08 02 A6 */	mflr r0
 /* 801D396C 001D08CC  90 01 00 04 */	stw r0, 4(r1)
 /* 801D3970 001D08D0  94 21 FF 98 */	stwu r1, -0x68(r1)
@@ -2895,14 +2894,14 @@ start__14TAIAwaitDororoFR4Teki:
 /* 801D39F0 001D0950  38 21 00 68 */	addi r1, r1, 0x68
 /* 801D39F4 001D0954  7C 08 03 A6 */	mtlr r0
 /* 801D39F8 001D0958  4E 80 00 20 */	blr 
+.endfn start__14TAIAwaitDororoFR4Teki
 
-.global getWaitCounterMax__14TAIAwaitDororoFR4Teki
-getWaitCounterMax__14TAIAwaitDororoFR4Teki:
+.fn getWaitCounterMax__14TAIAwaitDororoFR4Teki, weak
 /* 801D39FC 001D095C  C0 24 04 7C */	lfs f1, 0x47c(r4)
 /* 801D3A00 001D0960  4E 80 00 20 */	blr 
+.endfn getWaitCounterMax__14TAIAwaitDororoFR4Teki
 
-.global start__18TAIAflickingDororoFR4Teki
-start__18TAIAflickingDororoFR4Teki:
+.fn start__18TAIAflickingDororoFR4Teki, weak
 /* 801D3A04 001D0964  7C 08 02 A6 */	mflr r0
 /* 801D3A08 001D0968  90 01 00 04 */	stw r0, 4(r1)
 /* 801D3A0C 001D096C  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -2923,9 +2922,9 @@ start__18TAIAflickingDororoFR4Teki:
 /* 801D3A44 001D09A4  38 21 00 18 */	addi r1, r1, 0x18
 /* 801D3A48 001D09A8  7C 08 03 A6 */	mtlr r0
 /* 801D3A4C 001D09AC  4E 80 00 20 */	blr 
+.endfn start__18TAIAflickingDororoFR4Teki
 
-.global act__18TAIAflickingDororoFR4Teki
-act__18TAIAflickingDororoFR4Teki:
+.fn act__18TAIAflickingDororoFR4Teki, weak
 /* 801D3A50 001D09B0  7C 08 02 A6 */	mflr r0
 /* 801D3A54 001D09B4  90 01 00 04 */	stw r0, 4(r1)
 /* 801D3A58 001D09B8  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -2950,9 +2949,9 @@ act__18TAIAflickingDororoFR4Teki:
 /* 801D3AA0 001D0A00  38 21 00 18 */	addi r1, r1, 0x18
 /* 801D3AA4 001D0A04  7C 08 03 A6 */	mtlr r0
 /* 801D3AA8 001D0A08  4E 80 00 20 */	blr 
+.endfn act__18TAIAflickingDororoFR4Teki
 
-.global getWalkVelocity__20TAIAgoGoalPathDororoFR4Teki
-getWalkVelocity__20TAIAgoGoalPathDororoFR4Teki:
+.fn getWalkVelocity__20TAIAgoGoalPathDororoFR4Teki, weak
 /* 801D3AAC 001D0A0C  7C 08 02 A6 */	mflr r0
 /* 801D3AB0 001D0A10  3C 60 80 2B */	lis r3, __vt__9Condition@ha
 /* 801D3AB4 001D0A14  90 01 00 04 */	stw r0, 4(r1)
@@ -3000,9 +2999,9 @@ getWalkVelocity__20TAIAgoGoalPathDororoFR4Teki:
 /* 801D3B58 001D0AB8  38 21 00 A8 */	addi r1, r1, 0xa8
 /* 801D3B5C 001D0ABC  7C 08 03 A6 */	mtlr r0
 /* 801D3B60 001D0AC0  4E 80 00 20 */	blr 
+.endfn getWalkVelocity__20TAIAgoGoalPathDororoFR4Teki
 
-.global act__17TAIAkillTouchPikiFR4Teki
-act__17TAIAkillTouchPikiFR4Teki:
+.fn act__17TAIAkillTouchPikiFR4Teki, weak
 /* 801D3B64 001D0AC4  7C 08 02 A6 */	mflr r0
 /* 801D3B68 001D0AC8  3C 60 63 65 */	lis r3, 0x63656E74@ha
 /* 801D3B6C 001D0ACC  90 01 00 04 */	stw r0, 4(r1)
@@ -3579,9 +3578,9 @@ act__17TAIAkillTouchPikiFR4Teki:
 /* 801D43D4 001D1334  38 21 02 38 */	addi r1, r1, 0x238
 /* 801D43D8 001D1338  7C 08 03 A6 */	mtlr r0
 /* 801D43DC 001D133C  4E 80 00 20 */	blr 
+.endfn act__17TAIAkillTouchPikiFR4Teki
 
-.global start__15TAIAdyingDororoFR4Teki
-start__15TAIAdyingDororoFR4Teki:
+.fn start__15TAIAdyingDororoFR4Teki, weak
 /* 801D43E0 001D1340  7C 08 02 A6 */	mflr r0
 /* 801D43E4 001D1344  90 01 00 04 */	stw r0, 4(r1)
 /* 801D43E8 001D1348  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -3693,9 +3692,9 @@ start__15TAIAdyingDororoFR4Teki:
 /* 801D4564 001D14C4  38 21 00 28 */	addi r1, r1, 0x28
 /* 801D4568 001D14C8  7C 08 03 A6 */	mtlr r0
 /* 801D456C 001D14CC  4E 80 00 20 */	blr 
+.endfn start__15TAIAdyingDororoFR4Teki
 
-.global act__15TAIAdyingDororoFR4Teki
-act__15TAIAdyingDororoFR4Teki:
+.fn act__15TAIAdyingDororoFR4Teki, weak
 /* 801D4570 001D14D0  7C 08 02 A6 */	mflr r0
 /* 801D4574 001D14D4  90 01 00 04 */	stw r0, 4(r1)
 /* 801D4578 001D14D8  94 21 FF B0 */	stwu r1, -0x50(r1)
@@ -3850,9 +3849,9 @@ act__15TAIAdyingDororoFR4Teki:
 /* 801D4790 001D16F0  38 21 00 50 */	addi r1, r1, 0x50
 /* 801D4794 001D16F4  7C 08 03 A6 */	mtlr r0
 /* 801D4798 001D16F8  4E 80 00 20 */	blr 
+.endfn act__15TAIAdyingDororoFR4Teki
 
-.global start__14TAIAinitDororoFR4Teki
-start__14TAIAinitDororoFR4Teki:
+.fn start__14TAIAinitDororoFR4Teki, weak
 /* 801D479C 001D16FC  7C 08 02 A6 */	mflr r0
 /* 801D47A0 001D1700  3C 60 74 65 */	lis r3, 0x74657374@ha
 /* 801D47A4 001D1704  90 01 00 04 */	stw r0, 4(r1)
@@ -3876,31 +3875,38 @@ start__14TAIAinitDororoFR4Teki:
 /* 801D47EC 001D174C  38 21 00 18 */	addi r1, r1, 0x18
 /* 801D47F0 001D1750  7C 08 03 A6 */	mtlr r0
 /* 801D47F4 001D1754  4E 80 00 20 */	blr 
+.endfn start__14TAIAinitDororoFR4Teki
 
-.global act__14TAIAinitDororoFR4Teki
-act__14TAIAinitDororoFR4Teki:
+.fn act__14TAIAinitDororoFR4Teki, weak
 /* 801D47F8 001D1758  38 60 00 01 */	li r3, 1
 /* 801D47FC 001D175C  4E 80 00 20 */	blr 
+.endfn act__14TAIAinitDororoFR4Teki
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802E3D60:
+.obj lbl_802E3D60, local
 	.asciz "TAIdororo.cpp"
+.endobj lbl_802E3D60
 .balign 4
-lbl_802E3D70:
+.obj lbl_802E3D70, local
 	.asciz "TAIdororo"
+.endobj lbl_802E3D70
 .balign 4
-lbl_802E3D7C:
+.obj lbl_802E3D7C, local # Shift-JIS
 	.4byte 0x8DC5925A
 	.4byte 0x8EF596BD
 	.4byte 0x81699562
 	.4byte 0x816A0000
-lbl_802E3D8C:
+.endobj lbl_802E3D7C
+.balign 4
+.obj lbl_802E3D8C, local # Shift-JIS
 	.4byte 0x8EF596BD
 	.4byte 0x97909094
 	.4byte 0x81699562
 	.4byte 0x816A0000
-lbl_802E3D9C:
+.endobj lbl_802E3D8C
+.balign 4
+.obj lbl_802E3D9C, local # Shift-JIS
 	.4byte 0x95E082AD
 	.4byte 0x91AC9378
 	.4byte 0x82F09278
@@ -3908,96 +3914,126 @@ lbl_802E3D9C:
 	.4byte 0x82E98DC5
 	.4byte 0x91E58373
 	.4byte 0x834C9094
-	.4byte 0x00000000
-lbl_802E3DBC:
+	.byte 0
+.endobj lbl_802E3D9C
+.balign 4
+.obj lbl_802E3DBC, local # Shift-JIS
 	.4byte 0x95E082AD
 	.4byte 0x91AC9378
 	.4byte 0x82AA9278
 	.4byte 0x82AD82C8
 	.4byte 0x82E98DC5
 	.4byte 0x91E58193
-	.4byte 0x00000000
-lbl_802E3DD8:
+	.byte 0
+.endobj lbl_802E3DBC
+.balign 4
+.obj lbl_802E3DD8, local # Shift-JIS
 	.4byte 0x83458347
 	.4byte 0x83438367
 	.4byte 0x81699562
 	.4byte 0x816A0000
-lbl_802E3DE8:
+.endobj lbl_802E3DD8
+.balign 4
+.obj lbl_802E3DE8, local # Shift-JIS
 	.4byte 0x8373834E
 	.4byte 0x837E8393
 	.4byte 0x82F08E45
 	.4byte 0x82B78DC5
 	.4byte 0x91E59094
-	.4byte 0x00000000
-lbl_802E3E00:
+	.byte 0
+.endobj lbl_802E3DE8
+.balign 4
+.obj lbl_802E3E00, local
 	.asciz "tekis/dororo/motion/dead.dca"
+.endobj lbl_802E3E00
 .balign 4
-lbl_802E3E20:
+.obj lbl_802E3E20, local
 	.asciz "tekis/dororo/motion/damage.dca"
+.endobj lbl_802E3E20
 .balign 4
-lbl_802E3E40:
+.obj lbl_802E3E40, local
 	.asciz "tekis/dororo/motion/wait1.dca"
+.endobj lbl_802E3E40
 .balign 4
-lbl_802E3E60:
+.obj lbl_802E3E60, local
 	.asciz "tekis/dororo/motion/wait2.dca"
+.endobj lbl_802E3E60
 .balign 4
-lbl_802E3E80:
+.obj lbl_802E3E80, local
 	.asciz "tekis/dororo/motion/waitact1.dck"
+.endobj lbl_802E3E80
 .balign 4
-lbl_802E3EA4:
+.obj lbl_802E3EA4, local
 	.asciz "tekis/dororo/motion/waitact2.dca"
+.endobj lbl_802E3EA4
 .balign 4
-lbl_802E3EC8:
+.obj lbl_802E3EC8, local
 	.asciz "tekis/dororo/motion/move1.dck"
+.endobj lbl_802E3EC8
 .balign 4
-lbl_802E3EE8:
+.obj lbl_802E3EE8, local
 	.asciz "tekis/dororo/motion/move2.dck"
+.endobj lbl_802E3EE8
 .balign 4
-lbl_802E3F08:
+.obj lbl_802E3F08, local
 	.asciz "tekis/dororo/motion/attack.dca"
+.endobj lbl_802E3F08
 .balign 4
-lbl_802E3F28:
+.obj lbl_802E3F28, local
 	.asciz "tekis/dororo/motion/type1.dck"
+.endobj lbl_802E3F28
 .balign 4
-lbl_802E3F48:
+.obj lbl_802E3F48, local
 	.asciz "tekis/dororo/motion/type2.dca"
+.endobj lbl_802E3F48
 .balign 4
-lbl_802E3F68:
+.obj lbl_802E3F68, local
 	.asciz "TAIdororoAnimation"
+.endobj lbl_802E3F68
 .balign 4
-lbl_802E3F7C:
+.obj lbl_802E3F7C, local
 	.asciz "TAIanimation"
+.endobj lbl_802E3F7C
 .balign 4
-lbl_802E3F8C:
+.obj lbl_802E3F8C, local
 	.4byte __RTTI__12TAIanimation
-	.4byte 0x00000000
-	.4byte 0x00000000
-.global __vt__18TAIdororoAnimation
-__vt__18TAIdororoAnimation:
+	.4byte 0
+	.4byte 0
+.endobj lbl_802E3F8C
+.balign 4
+.obj __vt__18TAIdororoAnimation, global
 	.4byte __RTTI__18TAIdororoAnimation
 	.4byte 0
 	.4byte makeDefaultAnimations__18TAIdororoAnimationFv
-lbl_802E3FA4:
+.endobj __vt__18TAIdororoAnimation
+.balign 4
+.obj lbl_802E3FA4, local
 	.asciz "TAIdororoStrategy"
+.endobj lbl_802E3FA4
 .balign 4
-lbl_802E3FB8:
+.obj lbl_802E3FB8, local
 	.asciz "TekiStrategy"
+.endobj lbl_802E3FB8
 .balign 4
-lbl_802E3FC8:
+.obj lbl_802E3FC8, local
 	.asciz "YaiStrategy"
+.endobj lbl_802E3FC8
 .balign 4
-lbl_802E3FD4:
+.obj lbl_802E3FD4, local
 	.4byte __RTTI__12TekiStrategy
 	.4byte 0
 	.4byte 0
-lbl_802E3FE0:
+.endobj lbl_802E3FD4
+.balign 4
+.obj lbl_802E3FE0, local
 	.4byte __RTTI__12TekiStrategy
 	.4byte 0
 	.4byte __RTTI__11YaiStrategy
 	.4byte 0
 	.4byte 0
-.global __vt__17TAIdororoStrategy
-__vt__17TAIdororoStrategy:
+.endobj lbl_802E3FE0
+.balign 4
+.obj __vt__17TAIdororoStrategy, global
 	.4byte __RTTI__17TAIdororoStrategy
 	.4byte 0
 	.4byte start__17TAIdororoStrategyFR4Teki
@@ -4008,18 +4044,23 @@ __vt__17TAIdororoStrategy:
 	.4byte drawDebugInfo__12TekiStrategyFR4TekiR8Graphics
 	.4byte interact__12TekiStrategyFR4TekiR18TekiInteractionKey
 	.4byte spawnCorpseParts__12TekiStrategyFR4Teki
-lbl_802E401C:
+.endobj __vt__17TAIdororoStrategy
+.balign 4
+.obj lbl_802E401C, local
 	.asciz "TAIAgravityDororo"
+.endobj lbl_802E401C
 .balign 4
-lbl_802E4030:
+.obj lbl_802E4030, local
 	.asciz "TaiAction"
+.endobj lbl_802E4030
 .balign 4
-lbl_802E403C:
+.obj lbl_802E403C, local
 	.4byte __RTTI__9TaiAction
 	.4byte 0
 	.4byte 0
-.global __vt__17TAIAgravityDororo
-__vt__17TAIAgravityDororo:
+.endobj lbl_802E403C
+.balign 4
+.obj __vt__17TAIAgravityDororo, weak
 	.4byte __RTTI__17TAIAgravityDororo
 	.4byte 0
 	.4byte start__17TAIAgravityDororoFR4Teki
@@ -4027,15 +4068,19 @@ __vt__17TAIAgravityDororo:
 	.4byte act__17TAIAgravityDororoFR4Teki
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
-lbl_802E4064:
-	.asciz "TAIAcheckBarkDororo"
+.endobj __vt__17TAIAgravityDororo
 .balign 4
-lbl_802E4078:
+.obj lbl_802E4064, local
+	.asciz "TAIAcheckBarkDororo"
+.endobj lbl_802E4064
+.balign 4
+.obj lbl_802E4078, local
 	.4byte __RTTI__9TaiAction
 	.4byte 0
 	.4byte 0
-.global __vt__19TAIAcheckBarkDororo
-__vt__19TAIAcheckBarkDororo:
+.endobj lbl_802E4078
+.balign 4
+.obj __vt__19TAIAcheckBarkDororo, weak
 	.4byte __RTTI__19TAIAcheckBarkDororo
 	.4byte 0
 	.4byte start__9TaiActionFR4Teki
@@ -4043,26 +4088,35 @@ __vt__19TAIAcheckBarkDororo:
 	.4byte act__19TAIAcheckBarkDororoFR4Teki
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
-lbl_802E40A0:
+.endobj __vt__19TAIAcheckBarkDororo
+.balign 4
+.obj lbl_802E40A0, local
 	.asciz "TAIAbarkDororo"
+.endobj lbl_802E40A0
 .balign 4
-lbl_802E40B0:
+.obj lbl_802E40B0, local
 	.asciz "TAIAreserveMotion"
+.endobj lbl_802E40B0
 .balign 4
-lbl_802E40C4:
+.obj lbl_802E40C4, local
 	.4byte __RTTI__9TaiAction
 	.4byte 0
 	.4byte 0
-lbl_802E40D0:
-	.asciz "TAIAmotionLoop"
+.endobj lbl_802E40C4
 .balign 4
-lbl_802E40E0:
+.obj lbl_802E40D0, local
+	.asciz "TAIAmotionLoop"
+.endobj lbl_802E40D0
+.balign 4
+.obj lbl_802E40E0, local
 	.4byte __RTTI__9TaiAction
 	.4byte 0
 	.4byte __RTTI__17TAIAreserveMotion
 	.4byte 0
 	.4byte 0
-lbl_802E40F4:
+.endobj lbl_802E40E0
+.balign 4
+.obj lbl_802E40F4, local
 	.4byte __RTTI__9TaiAction
 	.4byte 0
 	.4byte __RTTI__17TAIAreserveMotion
@@ -4070,8 +4124,9 @@ lbl_802E40F4:
 	.4byte __RTTI__14TAIAmotionLoop
 	.4byte 0
 	.4byte 0
-.global __vt__14TAIAbarkDororo
-__vt__14TAIAbarkDororo:
+.endobj lbl_802E40F4
+.balign 4
+.obj __vt__14TAIAbarkDororo, weak
 	.4byte __RTTI__14TAIAbarkDororo
 	.4byte 0
 	.4byte start__14TAIAbarkDororoFR4Teki
@@ -4080,31 +4135,27 @@ __vt__14TAIAbarkDororo:
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
 	.4byte getFrameMax__14TAIAmotionLoopFR4Teki
-lbl_802E4130:
+.endobj __vt__14TAIAbarkDororo
+.balign 4
+.obj lbl_802E4130, local
 	.asciz "Interaction"
+.endobj lbl_802E4130
 .balign 4
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-lbl_802E4168:
+.skip 0x2C # compiler padding
+.balign 4
+.obj lbl_802E4168, local
 	.asciz "TAIAtransformationDororo"
+.endobj lbl_802E4168
 .balign 4
-lbl_802E4184:
+.obj lbl_802E4184, local
 	.4byte __RTTI__9TaiAction
 	.4byte 0
 	.4byte __RTTI__17TAIAreserveMotion
 	.4byte 0
 	.4byte 0
-.global __vt__24TAIAtransformationDororo
-__vt__24TAIAtransformationDororo:
+.endobj lbl_802E4184
+.balign 4
+.obj __vt__24TAIAtransformationDororo, weak
 	.4byte __RTTI__24TAIAtransformationDororo
 	.4byte 0
 	.4byte start__24TAIAtransformationDororoFR4Teki
@@ -4112,17 +4163,21 @@ __vt__24TAIAtransformationDororo:
 	.4byte act__24TAIAtransformationDororoFR4Teki
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
-lbl_802E41B4:
-	.asciz "TAIAbirthDororo"
+.endobj __vt__24TAIAtransformationDororo
 .balign 4
-lbl_802E41C4:
+.obj lbl_802E41B4, local
+	.asciz "TAIAbirthDororo"
+.endobj lbl_802E41B4
+.balign 4
+.obj lbl_802E41C4, local
 	.4byte __RTTI__9TaiAction
 	.4byte 0
 	.4byte __RTTI__17TAIAreserveMotion
 	.4byte 0
 	.4byte 0
-.global __vt__15TAIAbirthDororo
-__vt__15TAIAbirthDororo:
+.endobj lbl_802E41C4
+.balign 4
+.obj __vt__15TAIAbirthDororo, weak
 	.4byte __RTTI__15TAIAbirthDororo
 	.4byte 0
 	.4byte start__15TAIAbirthDororoFR4Teki
@@ -4130,19 +4185,25 @@ __vt__15TAIAbirthDororo:
 	.4byte act__15TAIAbirthDororoFR4Teki
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
-lbl_802E41F4:
+.endobj __vt__15TAIAbirthDororo
+.balign 4
+.obj lbl_802E41F4, local
 	.asciz "TAIAgoTargetPiki"
+.endobj lbl_802E41F4
 .balign 4
-lbl_802E4208:
+.obj lbl_802E4208, local
 	.asciz "TAIAgoTargetPriorityFaceDir"
+.endobj lbl_802E4208
 .balign 4
-lbl_802E4224:
+.obj lbl_802E4224, local
 	.4byte __RTTI__9TaiAction
 	.4byte 0
 	.4byte __RTTI__17TAIAreserveMotion
 	.4byte 0
 	.4byte 0
-lbl_802E4238:
+.endobj lbl_802E4224
+.balign 4
+.obj lbl_802E4238, local
 	.4byte __RTTI__9TaiAction
 	.4byte 0
 	.4byte __RTTI__17TAIAreserveMotion
@@ -4150,8 +4211,9 @@ lbl_802E4238:
 	.4byte __RTTI__27TAIAgoTargetPriorityFaceDir
 	.4byte 0
 	.4byte 0
-.global __vt__16TAIAgoTargetPiki
-__vt__16TAIAgoTargetPiki:
+.endobj lbl_802E4238
+.balign 4
+.obj __vt__16TAIAgoTargetPiki, weak
 	.4byte __RTTI__16TAIAgoTargetPiki
 	.4byte 0
 	.4byte start__27TAIAgoTargetPriorityFaceDirFR4Teki
@@ -4161,33 +4223,37 @@ __vt__16TAIAgoTargetPiki:
 	.4byte hasNextState__9TaiActionFv
 	.4byte checkArrival__16TAIAgoTargetPikiFR4Teki
 	.4byte getWalkVelocity__27TAIAgoTargetPriorityFaceDirFR4Teki
-lbl_802E4278:
-	.asciz "TAIAnoReaction"
+.endobj __vt__16TAIAgoTargetPiki
 .balign 4
-lbl_802E4288:
+.obj lbl_802E4278, local
+	.asciz "TAIAnoReaction"
+.endobj lbl_802E4278
+.balign 4
+.obj lbl_802E4288, local
 	.4byte __RTTI__9TaiAction
 	.4byte 0
 	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-lbl_802E42B0:
+.endobj lbl_802E4288
+.balign 4
+.skip 0x1C # compiler padding
+.balign 4
+.obj lbl_802E42B0, local
 	.asciz "TAIAwaitDororo"
+.endobj lbl_802E42B0
 .balign 4
-lbl_802E42C0:
+.obj lbl_802E42C0, local
 	.asciz "TAIAwait"
+.endobj lbl_802E42C0
 .balign 4
-lbl_802E42CC:
+.obj lbl_802E42CC, local
 	.4byte __RTTI__9TaiAction
 	.4byte 0
 	.4byte __RTTI__17TAIAreserveMotion
 	.4byte 0
 	.4byte 0
-lbl_802E42E0:
+.endobj lbl_802E42CC
+.balign 4
+.obj lbl_802E42E0, local
 	.4byte __RTTI__9TaiAction
 	.4byte 0
 	.4byte __RTTI__17TAIAreserveMotion
@@ -4195,8 +4261,9 @@ lbl_802E42E0:
 	.4byte __RTTI__8TAIAwait
 	.4byte 0
 	.4byte 0
-.global __vt__14TAIAwaitDororo
-__vt__14TAIAwaitDororo:
+.endobj lbl_802E42E0
+.balign 4
+.obj __vt__14TAIAwaitDororo, weak
 	.4byte __RTTI__14TAIAwaitDororo
 	.4byte 0
 	.4byte start__14TAIAwaitDororoFR4Teki
@@ -4205,26 +4272,35 @@ __vt__14TAIAwaitDororo:
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
 	.4byte getWaitCounterMax__14TAIAwaitDororoFR4Teki
-lbl_802E431C:
+.endobj __vt__14TAIAwaitDororo
+.balign 4
+.obj lbl_802E431C, local
 	.asciz "TAIAflickingDororo"
+.endobj lbl_802E431C
 .balign 4
-lbl_802E4330:
+.obj lbl_802E4330, local
 	.asciz "TAIAmotion"
+.endobj lbl_802E4330
 .balign 4
-lbl_802E433C:
+.obj lbl_802E433C, local
 	.4byte __RTTI__9TaiAction
 	.4byte 0
 	.4byte 0
-lbl_802E4348:
-	.asciz "TAIAflicking"
+.endobj lbl_802E433C
 .balign 4
-lbl_802E4358:
+.obj lbl_802E4348, local
+	.asciz "TAIAflicking"
+.endobj lbl_802E4348
+.balign 4
+.obj lbl_802E4358, local
 	.4byte __RTTI__9TaiAction
 	.4byte 0
 	.4byte __RTTI__10TAIAmotion
 	.4byte 0
 	.4byte 0
-lbl_802E436C:
+.endobj lbl_802E4358
+.balign 4
+.obj lbl_802E436C, local
 	.4byte __RTTI__9TaiAction
 	.4byte 0
 	.4byte __RTTI__10TAIAmotion
@@ -4232,8 +4308,9 @@ lbl_802E436C:
 	.4byte __RTTI__12TAIAflicking
 	.4byte 0
 	.4byte 0
-.global __vt__18TAIAflickingDororo
-__vt__18TAIAflickingDororo:
+.endobj lbl_802E436C
+.balign 4
+.obj __vt__18TAIAflickingDororo, weak
 	.4byte __RTTI__18TAIAflickingDororo
 	.4byte 0
 	.4byte start__18TAIAflickingDororoFR4Teki
@@ -4243,13 +4320,17 @@ __vt__18TAIAflickingDororo:
 	.4byte hasNextState__9TaiActionFv
 	.4byte flick__12TAIAflickingFR4Teki
 	.4byte getFlickDirection__12TAIAflickingFR4Teki
-lbl_802E43AC:
+.endobj __vt__18TAIAflickingDororo
+.balign 4
+.obj lbl_802E43AC, local
 	.asciz "TAIAgoGoalPathDororo"
+.endobj lbl_802E43AC
 .balign 4
-lbl_802E43C4:
+.obj lbl_802E43C4, local
 	.asciz "TAIAgoGoalPath"
+.endobj lbl_802E43C4
 .balign 4
-lbl_802E43D4:
+.obj lbl_802E43D4, local
 	.4byte __RTTI__9TaiAction
 	.4byte 0
 	.4byte __RTTI__17TAIAreserveMotion
@@ -4257,7 +4338,9 @@ lbl_802E43D4:
 	.4byte __RTTI__27TAIAgoTargetPriorityFaceDir
 	.4byte 0
 	.4byte 0
-lbl_802E43F0:
+.endobj lbl_802E43D4
+.balign 4
+.obj lbl_802E43F0, local
 	.4byte __RTTI__9TaiAction
 	.4byte 0
 	.4byte __RTTI__17TAIAreserveMotion
@@ -4267,8 +4350,9 @@ lbl_802E43F0:
 	.4byte __RTTI__14TAIAgoGoalPath
 	.4byte 0
 	.4byte 0
-.global __vt__20TAIAgoGoalPathDororo
-__vt__20TAIAgoGoalPathDororo:
+.endobj lbl_802E43F0
+.balign 4
+.obj __vt__20TAIAgoGoalPathDororo, weak
 	.4byte __RTTI__20TAIAgoGoalPathDororo
 	.4byte 0
 	.4byte start__14TAIAgoGoalPathFR4Teki
@@ -4278,31 +4362,35 @@ __vt__20TAIAgoGoalPathDororo:
 	.4byte hasNextState__9TaiActionFv
 	.4byte checkArrival__14TAIAgoGoalPathFR4Teki
 	.4byte getWalkVelocity__20TAIAgoGoalPathDororoFR4Teki
-lbl_802E4438:
+.endobj __vt__20TAIAgoGoalPathDororo
+.balign 4
+.obj lbl_802E4438, local
 	.asciz "TekiCondition"
+.endobj lbl_802E4438
 .balign 4
-lbl_802E4448:
+.obj lbl_802E4448, local
 	.asciz "Condition"
+.endobj lbl_802E4448
 .balign 4
-lbl_802E4454:
+.obj lbl_802E4454, local
 	.4byte __RTTI__9Condition
 	.4byte 0
 	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-lbl_802E4478:
-	.asciz "TAIAkillTouchPiki"
+.endobj lbl_802E4454
 .balign 4
-lbl_802E448C:
+.skip 0x18 # compiler padding
+.balign 4
+.obj lbl_802E4478, local
+	.asciz "TAIAkillTouchPiki"
+.endobj lbl_802E4478
+.balign 4
+.obj lbl_802E448C, local
 	.4byte __RTTI__9TaiAction
 	.4byte 0
 	.4byte 0
-.global __vt__17TAIAkillTouchPiki
-__vt__17TAIAkillTouchPiki:
+.endobj lbl_802E448C
+.balign 4
+.obj __vt__17TAIAkillTouchPiki, weak
 	.4byte __RTTI__17TAIAkillTouchPiki
 	.4byte 0
 	.4byte start__9TaiActionFR4Teki
@@ -4310,19 +4398,25 @@ __vt__17TAIAkillTouchPiki:
 	.4byte act__17TAIAkillTouchPikiFR4Teki
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
-lbl_802E44B4:
+.endobj __vt__17TAIAkillTouchPiki
+.balign 4
+.obj lbl_802E44B4, local
 	.asciz "TAIAdyingDororo"
+.endobj lbl_802E44B4
 .balign 4
-lbl_802E44C4:
+.obj lbl_802E44C4, local
 	.asciz "TAIAdying"
+.endobj lbl_802E44C4
 .balign 4
-lbl_802E44D0:
+.obj lbl_802E44D0, local
 	.4byte __RTTI__9TaiAction
 	.4byte 0
 	.4byte __RTTI__10TAIAmotion
 	.4byte 0
 	.4byte 0
-lbl_802E44E4:
+.endobj lbl_802E44D0
+.balign 4
+.obj lbl_802E44E4, local
 	.4byte __RTTI__9TaiAction
 	.4byte 0
 	.4byte __RTTI__10TAIAmotion
@@ -4330,8 +4424,9 @@ lbl_802E44E4:
 	.4byte __RTTI__9TAIAdying
 	.4byte 0
 	.4byte 0
-.global __vt__15TAIAdyingDororo
-__vt__15TAIAdyingDororo:
+.endobj lbl_802E44E4
+.balign 4
+.obj __vt__15TAIAdyingDororo, weak
 	.4byte __RTTI__15TAIAdyingDororo
 	.4byte 0
 	.4byte start__15TAIAdyingDororoFR4Teki
@@ -4339,15 +4434,19 @@ __vt__15TAIAdyingDororo:
 	.4byte act__15TAIAdyingDororoFR4Teki
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
-lbl_802E451C:
-	.asciz "TAIAinitDororo"
+.endobj __vt__15TAIAdyingDororo
 .balign 4
-lbl_802E452C:
+.obj lbl_802E451C, local
+	.asciz "TAIAinitDororo"
+.endobj lbl_802E451C
+.balign 4
+.obj lbl_802E452C, local
 	.4byte __RTTI__9TaiAction
 	.4byte 0
 	.4byte 0
-.global __vt__14TAIAinitDororo
-__vt__14TAIAinitDororo:
+.endobj lbl_802E452C
+.balign 4
+.obj __vt__14TAIAinitDororo, weak
 	.4byte __RTTI__14TAIAinitDororo
 	.4byte 0
 	.4byte start__14TAIAinitDororoFR4Teki
@@ -4355,33 +4454,36 @@ __vt__14TAIAinitDororo:
 	.4byte act__14TAIAinitDororoFR4Teki
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-lbl_802E4570:
+.endobj __vt__14TAIAinitDororo
+.balign 4
+.skip 0x1C # compiler padding
+.balign 4
+.obj lbl_802E4570, local
 	.asciz "TAIdororoParameters"
+.endobj lbl_802E4570
 .balign 4
-lbl_802E4584:
+.obj lbl_802E4584, local
 	.asciz "CoreNode"
+.endobj lbl_802E4584
 .balign 4
-lbl_802E4590:
+.obj lbl_802E4590, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte 0
-lbl_802E459C:
+.endobj lbl_802E4590
+.balign 4
+.obj lbl_802E459C, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte __RTTI__8CoreNode
 	.4byte 0
 	.4byte 0
+.endobj lbl_802E459C
+.balign 4
 lbl_802E45B0:
 	.asciz "TekiParameters"
 .balign 4
-lbl_802E45C0:
+.obj lbl_802E45C0, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte __RTTI__8CoreNode
@@ -4389,7 +4491,9 @@ lbl_802E45C0:
 	.4byte __RTTI__4Node
 	.4byte 0
 	.4byte 0
-lbl_802E45DC:
+.endobj lbl_802E45C0
+.balign 4
+.obj lbl_802E45DC, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte __RTTI__8CoreNode
@@ -4399,8 +4503,9 @@ lbl_802E45DC:
 	.4byte __RTTI__14TekiParameters
 	.4byte 0
 	.4byte 0
-.global __vt__19TAIdororoParameters
-__vt__19TAIdororoParameters:
+.endobj lbl_802E45DC
+.balign 4
+.obj __vt__19TAIdororoParameters, weak
 	.4byte __RTTI__19TAIdororoParameters
 	.4byte 0
 	.4byte getAgeNodeType__5ANodeFv
@@ -4413,201 +4518,310 @@ __vt__19TAIdororoParameters:
 	.4byte concat__4NodeFR3SRT
 	.4byte concat__4NodeFR8Matrix4f
 	.4byte getModelMatrix__4NodeFv
+.endobj __vt__19TAIdororoParameters
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-lbl_803E6E28:
-	.4byte 0x00000000
-lbl_803E6E2C:
-	.4byte 0x00000000
-lbl_803E6E30:
-	.4byte 0x00000000
-lbl_803E6E34:
-	.4byte 0x00000000
-lbl_803E6E38:
-	.4byte 0x00000000
-lbl_803E6E3C:
-	.4byte 0x00000000
-lbl_803E6E40:
-	.4byte 0x00000000
-lbl_803E6E44:
-	.4byte 0x3D0F5C29
-lbl_803E6E48:
-	.4byte 0x3D0F5C29
-lbl_803E6E4C:
-	.4byte 0x3C8F5C29
-lbl_803E6E50:
-	.4byte 0x3C23D70A
-lbl_803E6E54:
-	.4byte 0xC1800000
-__RTTI__12TAIanimation:
+.obj lbl_803E6E28, local
+	.4byte 0
+.endobj lbl_803E6E28
+.balign 4
+.obj lbl_803E6E2C, local
+	.float 0.0
+.endobj lbl_803E6E2C
+.obj lbl_803E6E30, local
+	.float 0.0
+.endobj lbl_803E6E30
+.obj lbl_803E6E34, local
+	.float 0.0
+.endobj lbl_803E6E34
+.obj lbl_803E6E38, local
+	.float 0.0
+.endobj lbl_803E6E38
+.obj lbl_803E6E3C, local
+	.float 0.0
+.endobj lbl_803E6E3C
+.obj lbl_803E6E40, local
+	.float 0.0
+.endobj lbl_803E6E40
+.obj lbl_803E6E44, local
+	.float 0.035
+.endobj lbl_803E6E44
+.obj lbl_803E6E48, local
+	.float 0.035
+.endobj lbl_803E6E48
+.obj lbl_803E6E4C, local
+	.float 0.0175
+.endobj lbl_803E6E4C
+.obj lbl_803E6E50, local
+	.float 0.01
+.endobj lbl_803E6E50
+.obj lbl_803E6E54, local
+	.float -16.0
+.endobj lbl_803E6E54
+.balign 4
+.obj __RTTI__12TAIanimation, local
 	.4byte lbl_802E3F7C
-	.4byte 0x00000000
-__RTTI__18TAIdororoAnimation:
+	.4byte 0
+.endobj __RTTI__12TAIanimation
+.balign 4
+.obj __RTTI__18TAIdororoAnimation, local
 	.4byte lbl_802E3F68
 	.4byte lbl_802E3F8C
-__RTTI__12TekiStrategy:
+.endobj __RTTI__18TAIdororoAnimation
+.balign 4
+.obj __RTTI__12TekiStrategy, local
 	.4byte lbl_802E3FB8
 	.4byte 0
-__RTTI__11YaiStrategy:
+.endobj __RTTI__12TekiStrategy
+.balign 4
+.obj __RTTI__11YaiStrategy, local
 	.4byte lbl_802E3FC8
 	.4byte lbl_802E3FD4
-__RTTI__17TAIdororoStrategy:
+.endobj __RTTI__11YaiStrategy
+.balign 4
+.obj __RTTI__17TAIdororoStrategy, local
 	.4byte lbl_802E3FA4
 	.4byte lbl_802E3FE0
-__RTTI__9TaiAction:
+.endobj __RTTI__17TAIdororoStrategy
+.balign 4
+.obj __RTTI__9TaiAction, local
 	.4byte lbl_802E4030
 	.4byte 0
-__RTTI__17TAIAgravityDororo:
+.endobj __RTTI__9TaiAction
+.balign 4
+.obj __RTTI__17TAIAgravityDororo, local
 	.4byte lbl_802E401C
 	.4byte lbl_802E403C
-__RTTI__19TAIAcheckBarkDororo:
+.endobj __RTTI__17TAIAgravityDororo
+.balign 4
+.obj __RTTI__19TAIAcheckBarkDororo, local
 	.4byte lbl_802E4064
 	.4byte lbl_802E4078
-__RTTI__17TAIAreserveMotion:
+.endobj __RTTI__19TAIAcheckBarkDororo
+.balign 4
+.obj __RTTI__17TAIAreserveMotion, local
 	.4byte lbl_802E40B0
 	.4byte lbl_802E40C4
-__RTTI__14TAIAmotionLoop:
+.endobj __RTTI__17TAIAreserveMotion
+.balign 4
+.obj __RTTI__14TAIAmotionLoop, local
 	.4byte lbl_802E40D0
 	.4byte lbl_802E40E0
-__RTTI__14TAIAbarkDororo:
+.endobj __RTTI__14TAIAmotionLoop
+.balign 4
+.obj __RTTI__14TAIAbarkDororo, local
 	.4byte lbl_802E40A0
 	.4byte lbl_802E40F4
-__RTTI__24TAIAtransformationDororo:
+.endobj __RTTI__14TAIAbarkDororo
+.balign 4
+.obj __RTTI__24TAIAtransformationDororo, local
 	.4byte lbl_802E4168
 	.4byte lbl_802E4184
-__RTTI__15TAIAbirthDororo:
+.endobj __RTTI__24TAIAtransformationDororo
+.balign 4
+.obj __RTTI__15TAIAbirthDororo, local
 	.4byte lbl_802E41B4
 	.4byte lbl_802E41C4
-__RTTI__27TAIAgoTargetPriorityFaceDir:
+.endobj __RTTI__15TAIAbirthDororo
+.balign 4
+.obj __RTTI__27TAIAgoTargetPriorityFaceDir, local
 	.4byte lbl_802E4208
 	.4byte lbl_802E4224
-__RTTI__16TAIAgoTargetPiki:
+.endobj __RTTI__27TAIAgoTargetPriorityFaceDir
+.balign 4
+.obj __RTTI__16TAIAgoTargetPiki, local
 	.4byte lbl_802E41F4
 	.4byte lbl_802E4238
-__RTTI__8TAIAwait:
+.endobj __RTTI__16TAIAgoTargetPiki
+.balign 4
+.obj __RTTI__8TAIAwait, local
 	.4byte lbl_802E42C0
 	.4byte lbl_802E42CC
-__RTTI__14TAIAwaitDororo:
+.endobj __RTTI__8TAIAwait
+.balign 4
+.obj __RTTI__14TAIAwaitDororo, local
 	.4byte lbl_802E42B0
 	.4byte lbl_802E42E0
-__RTTI__10TAIAmotion:
+.endobj __RTTI__14TAIAwaitDororo
+.balign 4
+.obj __RTTI__10TAIAmotion, local
 	.4byte lbl_802E4330
 	.4byte lbl_802E433C
-__RTTI__12TAIAflicking:
+.endobj __RTTI__10TAIAmotion
+.balign 4
+.obj __RTTI__12TAIAflicking, local
 	.4byte lbl_802E4348
 	.4byte lbl_802E4358
-__RTTI__18TAIAflickingDororo:
+.endobj __RTTI__12TAIAflicking
+.balign 4
+.obj __RTTI__18TAIAflickingDororo, local
 	.4byte lbl_802E431C
 	.4byte lbl_802E436C
-__RTTI__14TAIAgoGoalPath:
+.endobj __RTTI__18TAIAflickingDororo
+.balign 4
+.obj __RTTI__14TAIAgoGoalPath, local
 	.4byte lbl_802E43C4
 	.4byte lbl_802E43D4
-__RTTI__20TAIAgoGoalPathDororo:
+.endobj __RTTI__14TAIAgoGoalPath
+.balign 4
+.obj __RTTI__20TAIAgoGoalPathDororo, local
 	.4byte lbl_802E43AC
 	.4byte lbl_802E43F0
-__RTTI__9Condition:
+.endobj __RTTI__20TAIAgoGoalPathDororo
+.balign 4
+.obj __RTTI__9Condition, local
 	.4byte lbl_802E4448
 	.4byte 0
-__RTTI__17TAIAkillTouchPiki:
+.endobj __RTTI__9Condition
+.balign 4
+.obj __RTTI__17TAIAkillTouchPiki, local
 	.4byte lbl_802E4478
 	.4byte lbl_802E448C
-__RTTI__9TAIAdying:
+.endobj __RTTI__17TAIAkillTouchPiki
+.balign 4
+.obj __RTTI__9TAIAdying, local
 	.4byte lbl_802E44C4
 	.4byte lbl_802E44D0
-__RTTI__15TAIAdyingDororo:
+.endobj __RTTI__9TAIAdying
+.balign 4
+.obj __RTTI__15TAIAdyingDororo, local
 	.4byte lbl_802E44B4
 	.4byte lbl_802E44E4
-__RTTI__14TAIAinitDororo:
+.endobj __RTTI__15TAIAdyingDororo
+.balign 4
+.obj __RTTI__14TAIAinitDororo, local
 	.4byte lbl_802E451C
 	.4byte lbl_802E452C
+.endobj __RTTI__14TAIAinitDororo
 .balign 4
-lbl_803E6F30:
+.obj lbl_803E6F30, local
 	.asciz "ANode"
+.endobj lbl_803E6F30
 .balign 4
-__RTTI__5ANode:
+.obj __RTTI__5ANode, local
 	.4byte lbl_803E6F30
 	.4byte 0
-__RTTI__8CoreNode:
+.endobj __RTTI__5ANode
+.balign 4
+.obj __RTTI__8CoreNode, local
 	.4byte lbl_802E4584
 	.4byte lbl_802E4590
+.endobj __RTTI__8CoreNode
 .balign 4
-lbl_803E6F48:
+.obj lbl_803E6F48, local
 	.asciz "Node"
+.endobj lbl_803E6F48
 .balign 4
-__RTTI__4Node:
+.obj __RTTI__4Node, local
 	.4byte lbl_803E6F48
 	.4byte lbl_802E459C
-__RTTI__14TekiParameters:
+.endobj __RTTI__4Node
+.balign 4
+.obj __RTTI__14TekiParameters, local
 	.4byte lbl_802E45B0
 	.4byte lbl_802E45C0
-__RTTI__19TAIdororoParameters:
+.endobj __RTTI__14TekiParameters
+.balign 4
+.obj __RTTI__19TAIdororoParameters, local
 	.4byte lbl_802E4570
 	.4byte lbl_802E45DC
+.endobj __RTTI__19TAIdororoParameters
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803EBEA0:
-	.4byte 0x00000000
-lbl_803EBEA4:
-	.4byte 0x44960000
-lbl_803EBEA8:
-	.4byte 0x42C80000
-lbl_803EBEAC:
-	.4byte 0x3F800000
-lbl_803EBEB0:
-	.4byte 0x41F00000
-lbl_803EBEB4:
-	.4byte 0x43700000
-lbl_803EBEB8:
-	.4byte 0x41A00000
-lbl_803EBEBC:
-	.4byte 0x3F000000
-lbl_803EBEC0:
-	.4byte 0x40400000
-lbl_803EBEC4:
-	.4byte 0x48F42400
-lbl_803EBEC8:
-	.4byte 0x42F00000
-lbl_803EBECC:
-	.4byte 0x3E860A92
-lbl_803EBED0:
-	.4byte 0x43960000
-lbl_803EBED4:
-	.4byte 0x43870000
-lbl_803EBED8:
-	.4byte 0x42200000
-lbl_803EBEDC:
-	.4byte 0x41100000
-lbl_803EBEE0:
-	.4byte 0x40A00000
-lbl_803EBEE4:
-	.4byte 0x3E99999A
-lbl_803EBEE8:
-	.4byte 0x3D4CCCCD
-lbl_803EBEEC:
-	.4byte 0x42480000
-lbl_803EBEF0:
-	.4byte 0x3C23D70A
-lbl_803EBEF4:
-	.4byte 0x42340000
-lbl_803EBEF8:
-	.4byte 0x42700000
-lbl_803EBEFC:
-	.4byte 0xBDCCCCCD
-lbl_803EBF00:
-	.4byte 0x40000000
-lbl_803EBF04:
-	.4byte 0x3F7AE148
-lbl_803EBF08:
-	.4byte 0x40800000
-lbl_803EBF0C:
-	.4byte 0x46FFFE00
+.obj lbl_803EBEA0, local
+	.float 0.0
+.endobj lbl_803EBEA0
+.obj lbl_803EBEA4, local
+	.float 1200.0
+.endobj lbl_803EBEA4
+.obj lbl_803EBEA8, local
+	.float 100.0
+.endobj lbl_803EBEA8
+.obj lbl_803EBEAC, local
+	.float 1.0
+.endobj lbl_803EBEAC
+.obj lbl_803EBEB0, local
+	.float 30.0
+.endobj lbl_803EBEB0
+.obj lbl_803EBEB4, local
+	.float 240.0
+.endobj lbl_803EBEB4
+.obj lbl_803EBEB8, local
+	.float 20.0
+.endobj lbl_803EBEB8
+.obj lbl_803EBEBC, local
+	.float 0.5
+.endobj lbl_803EBEBC
+.obj lbl_803EBEC0, local
+	.float 3.0
+.endobj lbl_803EBEC0
+.obj lbl_803EBEC4, local
+	.float 500000.0
+.endobj lbl_803EBEC4
+.obj lbl_803EBEC8, local
+	.float 120.0
+.endobj lbl_803EBEC8
+.obj lbl_803EBECC, local
+	.float 0.2617994
+.endobj lbl_803EBECC
+.obj lbl_803EBED0, local
+	.float 300.0
+.endobj lbl_803EBED0
+.obj lbl_803EBED4, local
+	.float 270.0
+.endobj lbl_803EBED4
+.obj lbl_803EBED8, local
+	.float 40.0
+.endobj lbl_803EBED8
+.obj lbl_803EBEDC, local
+	.float 9.0
+.endobj lbl_803EBEDC
+.obj lbl_803EBEE0, local
+	.float 5.0
+.endobj lbl_803EBEE0
+.obj lbl_803EBEE4, local
+	.float 0.3
+.endobj lbl_803EBEE4
+.obj lbl_803EBEE8, local
+	.float 0.05
+.endobj lbl_803EBEE8
+.obj lbl_803EBEEC, local
+	.float 50.0
+.endobj lbl_803EBEEC
+.obj lbl_803EBEF0, local
+	.float 0.01
+.endobj lbl_803EBEF0
+.obj lbl_803EBEF4, local
+	.float 45.0
+.endobj lbl_803EBEF4
+.obj lbl_803EBEF8, local
+	.float 60.0
+.endobj lbl_803EBEF8
+.obj lbl_803EBEFC, local
+	.float -0.1
+.endobj lbl_803EBEFC
+.obj lbl_803EBF00, local
+	.float 2.0
+.endobj lbl_803EBF00
+.obj lbl_803EBF04, local
+	.float 0.98
+.endobj lbl_803EBF04
+.obj lbl_803EBF08, local
+	.float 4.0
+.endobj lbl_803EBF08
+.obj lbl_803EBF0C, local
+	.float 32767.0
+.endobj lbl_803EBF0C
 .balign 8
-lbl_803EBF10:
-	.4byte 0x43300000
-	.4byte 0x80000000
-lbl_803EBF18:
-	.4byte 0x3FC00000
-lbl_803EBF1C:
-	.4byte 0x42800000
+.obj lbl_803EBF10, local
+	.8byte 0x4330000080000000
+.endobj lbl_803EBF10
+.balign 4
+.obj lbl_803EBF18, local
+	.float 1.5
+.endobj lbl_803EBF18
+.obj lbl_803EBF1C, local
+	.float 64.0
+.endobj lbl_803EBF1C

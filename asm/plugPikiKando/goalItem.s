@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global insideSafeArea__8GoalItemFR8Vector3f
-insideSafeArea__8GoalItemFR8Vector3f:
+.fn insideSafeArea__8GoalItemFR8Vector3f, global
 /* 800EA714 000E7674  C0 64 00 08 */	lfs f3, 8(r4)
 /* 800EA718 000E7678  C0 03 00 9C */	lfs f0, 0x9c(r3)
 /* 800EA71C 000E767C  C0 44 00 00 */	lfs f2, 0(r4)
@@ -19,9 +18,9 @@ insideSafeArea__8GoalItemFR8Vector3f:
 .L_800EA74C:
 /* 800EA74C 000E76AC  38 60 00 01 */	li r3, 1
 /* 800EA750 000E76B0  4E 80 00 20 */	blr 
+.endfn insideSafeArea__8GoalItemFR8Vector3f
 
-.global playEffect__8GoalItemFi
-playEffect__8GoalItemFi:
+.fn playEffect__8GoalItemFi, global
 /* 800EA754 000E76B4  7C 08 02 A6 */	mflr r0
 /* 800EA758 000E76B8  90 01 00 04 */	stw r0, 4(r1)
 /* 800EA75C 000E76BC  94 21 FF 30 */	stwu r1, -0xd0(r1)
@@ -522,9 +521,9 @@ playEffect__8GoalItemFi:
 /* 800EAEA8 000E7E08  38 21 00 D0 */	addi r1, r1, 0xd0
 /* 800EAEAC 000E7E0C  7C 08 03 A6 */	mtlr r0
 /* 800EAEB0 000E7E10  4E 80 00 20 */	blr 
+.endfn playEffect__8GoalItemFi
 
-.global setFlowEffect__8GoalItemFb
-setFlowEffect__8GoalItemFb:
+.fn setFlowEffect__8GoalItemFb, global
 /* 800EAEB4 000E7E14  7C 08 02 A6 */	mflr r0
 /* 800EAEB8 000E7E18  90 01 00 04 */	stw r0, 4(r1)
 /* 800EAEBC 000E7E1C  54 80 06 3F */	clrlwi. r0, r4, 0x18
@@ -572,9 +571,9 @@ setFlowEffect__8GoalItemFb:
 /* 800EAF5C 000E7EBC  38 21 00 20 */	addi r1, r1, 0x20
 /* 800EAF60 000E7EC0  7C 08 03 A6 */	mtlr r0
 /* 800EAF64 000E7EC4  4E 80 00 20 */	blr 
+.endfn setFlowEffect__8GoalItemFb
 
-.global setSpotActive__8GoalItemFb
-setSpotActive__8GoalItemFb:
+.fn setSpotActive__8GoalItemFb, global
 /* 800EAF68 000E7EC8  7C 08 02 A6 */	mflr r0
 /* 800EAF6C 000E7ECC  90 01 00 04 */	stw r0, 4(r1)
 /* 800EAF70 000E7ED0  94 21 FF C8 */	stwu r1, -0x38(r1)
@@ -674,9 +673,9 @@ setSpotActive__8GoalItemFb:
 /* 800EB0D4 000E8034  38 21 00 38 */	addi r1, r1, 0x38
 /* 800EB0D8 000E8038  7C 08 03 A6 */	mtlr r0
 /* 800EB0DC 000E803C  4E 80 00 20 */	blr 
+.endfn setSpotActive__8GoalItemFb
 
-.global invoke__8GoalItemFPQ23zen17particleGeneratorPQ23zen11particleMdl
-invoke__8GoalItemFPQ23zen17particleGeneratorPQ23zen11particleMdl:
+.fn invoke__8GoalItemFPQ23zen17particleGeneratorPQ23zen11particleMdl, global
 /* 800EB0E0 000E8040  7C 08 02 A6 */	mflr r0
 /* 800EB0E4 000E8044  90 01 00 04 */	stw r0, 4(r1)
 /* 800EB0E8 000E8048  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -700,14 +699,14 @@ invoke__8GoalItemFPQ23zen17particleGeneratorPQ23zen11particleMdl:
 /* 800EB12C 000E808C  38 21 00 20 */	addi r1, r1, 0x20
 /* 800EB130 000E8090  7C 08 03 A6 */	mtlr r0
 /* 800EB134 000E8094  4E 80 00 20 */	blr 
+.endfn invoke__8GoalItemFPQ23zen17particleGeneratorPQ23zen11particleMdl
 
-.global setFlightLight__8GoalItemFb
-setFlightLight__8GoalItemFb:
+.fn setFlightLight__8GoalItemFb, global
 /* 800EB138 000E8098  98 83 03 EC */	stb r4, 0x3ec(r3)
 /* 800EB13C 000E809C  4E 80 00 20 */	blr 
+.endfn setFlightLight__8GoalItemFb
 
-.global getSuckPos__8GoalItemFv
-getSuckPos__8GoalItemFv:
+.fn getSuckPos__8GoalItemFv, global
 /* 800EB140 000E80A0  C0 44 00 98 */	lfs f2, 0x98(r4)
 /* 800EB144 000E80A4  C0 22 9A 60 */	lfs f1, lbl_803E9C60@sda21(r2)
 /* 800EB148 000E80A8  C0 64 00 9C */	lfs f3, 0x9c(r4)
@@ -717,9 +716,9 @@ getSuckPos__8GoalItemFv:
 /* 800EB158 000E80B8  D0 43 00 04 */	stfs f2, 4(r3)
 /* 800EB15C 000E80BC  D0 63 00 08 */	stfs f3, 8(r3)
 /* 800EB160 000E80C0  4E 80 00 20 */	blr 
+.endfn getSuckPos__8GoalItemFv
 
-.global suckMe__8GoalItemFP6Pellet
-suckMe__8GoalItemFP6Pellet:
+.fn suckMe__8GoalItemFP6Pellet, global
 /* 800EB164 000E80C4  7C 08 02 A6 */	mflr r0
 /* 800EB168 000E80C8  90 01 00 04 */	stw r0, 4(r1)
 /* 800EB16C 000E80CC  94 21 FF C8 */	stwu r1, -0x38(r1)
@@ -785,9 +784,9 @@ suckMe__8GoalItemFP6Pellet:
 /* 800EB24C 000E81AC  38 21 00 38 */	addi r1, r1, 0x38
 /* 800EB250 000E81B0  7C 08 03 A6 */	mtlr r0
 /* 800EB254 000E81B4  4E 80 00 20 */	blr 
+.endfn suckMe__8GoalItemFP6Pellet
 
-.global enterGoal__8GoalItemFP4Piki
-enterGoal__8GoalItemFP4Piki:
+.fn enterGoal__8GoalItemFP4Piki, global
 /* 800EB258 000E81B8  7C 08 02 A6 */	mflr r0
 /* 800EB25C 000E81BC  38 A0 00 D2 */	li r5, 0xd2
 /* 800EB260 000E81C0  90 01 00 04 */	stw r0, 4(r1)
@@ -838,9 +837,9 @@ enterGoal__8GoalItemFP4Piki:
 /* 800EB310 000E8270  38 21 00 28 */	addi r1, r1, 0x28
 /* 800EB314 000E8274  7C 08 03 A6 */	mtlr r0
 /* 800EB318 000E8278  4E 80 00 20 */	blr 
+.endfn enterGoal__8GoalItemFP4Piki
 
-.global exitPikis__8GoalItemFi
-exitPikis__8GoalItemFi:
+.fn exitPikis__8GoalItemFi, global
 /* 800EB31C 000E827C  38 00 00 01 */	li r0, 1
 /* 800EB320 000E8280  98 03 04 10 */	stb r0, 0x410(r3)
 /* 800EB324 000E8284  80 03 04 14 */	lwz r0, 0x414(r3)
@@ -849,9 +848,9 @@ exitPikis__8GoalItemFi:
 /* 800EB330 000E8290  C0 02 9A 3C */	lfs f0, lbl_803E9C3C@sda21(r2)
 /* 800EB334 000E8294  D0 03 04 18 */	stfs f0, 0x418(r3)
 /* 800EB338 000E8298  4E 80 00 20 */	blr 
+.endfn exitPikis__8GoalItemFi
 
-.global exitPiki__8GoalItemFv
-exitPiki__8GoalItemFv:
+.fn exitPiki__8GoalItemFv, global
 /* 800EB33C 000E829C  7C 08 02 A6 */	mflr r0
 /* 800EB340 000E82A0  90 01 00 04 */	stw r0, 4(r1)
 /* 800EB344 000E82A4  94 21 FF C0 */	stwu r1, -0x40(r1)
@@ -1018,14 +1017,14 @@ exitPiki__8GoalItemFv:
 /* 800EB5AC 000E850C  38 21 00 40 */	addi r1, r1, 0x40
 /* 800EB5B0 000E8510  7C 08 03 A6 */	mtlr r0
 /* 800EB5B4 000E8514  4E 80 00 20 */	blr 
+.endfn exitPiki__8GoalItemFv
 
-.global needShadow__8GoalItemFv
-needShadow__8GoalItemFv:
+.fn needShadow__8GoalItemFv, global
 /* 800EB5B8 000E8518  38 60 00 00 */	li r3, 0
 /* 800EB5BC 000E851C  4E 80 00 20 */	blr 
+.endfn needShadow__8GoalItemFv
 
-.global __ct__8GoalItemFP12CreaturePropP15ItemShapeObjectP15ItemShapeObjectP15ItemShapeObjectP8SimpleAI
-__ct__8GoalItemFP12CreaturePropP15ItemShapeObjectP15ItemShapeObjectP15ItemShapeObjectP8SimpleAI:
+.fn __ct__8GoalItemFP12CreaturePropP15ItemShapeObjectP15ItemShapeObjectP15ItemShapeObjectP8SimpleAI, global
 /* 800EB5C0 000E8520  7C 08 02 A6 */	mflr r0
 /* 800EB5C4 000E8524  90 01 00 04 */	stw r0, 4(r1)
 /* 800EB5C8 000E8528  94 21 FF C8 */	stwu r1, -0x38(r1)
@@ -1095,9 +1094,9 @@ __ct__8GoalItemFP12CreaturePropP15ItemShapeObjectP15ItemShapeObjectP15ItemShapeO
 /* 800EB6C4 000E8624  38 21 00 38 */	addi r1, r1, 0x38
 /* 800EB6C8 000E8628  7C 08 03 A6 */	mtlr r0
 /* 800EB6CC 000E862C  4E 80 00 20 */	blr 
+.endfn __ct__8GoalItemFP12CreaturePropP15ItemShapeObjectP15ItemShapeObjectP15ItemShapeObjectP8SimpleAI
 
-.global ignoreAtari__8GoalItemFP8Creature
-ignoreAtari__8GoalItemFP8Creature:
+.fn ignoreAtari__8GoalItemFP8Creature, global
 /* 800EB6D0 000E8630  80 04 00 6C */	lwz r0, 0x6c(r4)
 /* 800EB6D4 000E8634  2C 00 00 0C */	cmpwi r0, 0xc
 /* 800EB6D8 000E8638  40 82 00 0C */	bne .L_800EB6E4
@@ -1106,9 +1105,9 @@ ignoreAtari__8GoalItemFP8Creature:
 .L_800EB6E4:
 /* 800EB6E4 000E8644  38 60 00 00 */	li r3, 0
 /* 800EB6E8 000E8648  4E 80 00 20 */	blr 
+.endfn ignoreAtari__8GoalItemFP8Creature
 
-.global setColorType__8GoalItemFi
-setColorType__8GoalItemFi:
+.fn setColorType__8GoalItemFi, global
 /* 800EB6EC 000E864C  7C 08 02 A6 */	mflr r0
 /* 800EB6F0 000E8650  38 A0 00 00 */	li r5, 0
 /* 800EB6F4 000E8654  90 01 00 04 */	stw r0, 4(r1)
@@ -1126,9 +1125,9 @@ setColorType__8GoalItemFi:
 /* 800EB724 000E8684  38 21 00 08 */	addi r1, r1, 8
 /* 800EB728 000E8688  7C 08 03 A6 */	mtlr r0
 /* 800EB72C 000E868C  4E 80 00 20 */	blr 
+.endfn setColorType__8GoalItemFi
 
-.global startTakeoff__8GoalItemFv
-startTakeoff__8GoalItemFv:
+.fn startTakeoff__8GoalItemFv, global
 /* 800EB730 000E8690  7C 08 02 A6 */	mflr r0
 /* 800EB734 000E8694  90 01 00 04 */	stw r0, 4(r1)
 /* 800EB738 000E8698  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -1162,9 +1161,9 @@ startTakeoff__8GoalItemFv:
 /* 800EB7A0 000E8700  38 21 00 18 */	addi r1, r1, 0x18
 /* 800EB7A4 000E8704  7C 08 03 A6 */	mtlr r0
 /* 800EB7A8 000E8708  4E 80 00 20 */	blr 
+.endfn startTakeoff__8GoalItemFv
 
-.global startLand__8GoalItemFv
-startLand__8GoalItemFv:
+.fn startLand__8GoalItemFv, global
 /* 800EB7AC 000E870C  7C 08 02 A6 */	mflr r0
 /* 800EB7B0 000E8710  90 01 00 04 */	stw r0, 4(r1)
 /* 800EB7B4 000E8714  38 00 00 00 */	li r0, 0
@@ -1231,9 +1230,9 @@ startLand__8GoalItemFv:
 /* 800EB8A4 000E8804  38 21 00 28 */	addi r1, r1, 0x28
 /* 800EB8A8 000E8808  7C 08 03 A6 */	mtlr r0
 /* 800EB8AC 000E880C  4E 80 00 20 */	blr 
+.endfn startLand__8GoalItemFv
 
-.global startConeShrink__8GoalItemFv
-startConeShrink__8GoalItemFv:
+.fn startConeShrink__8GoalItemFv, global
 /* 800EB8B0 000E8810  38 00 00 01 */	li r0, 1
 /* 800EB8B4 000E8814  98 03 03 F6 */	stb r0, 0x3f6(r3)
 /* 800EB8B8 000E8818  C0 02 9A 68 */	lfs f0, lbl_803E9C68@sda21(r2)
@@ -1246,17 +1245,17 @@ startConeShrink__8GoalItemFv:
 /* 800EB8D4 000E8834  80 05 00 1C */	lwz r0, 0x1c(r5)
 /* 800EB8D8 000E8838  90 03 04 04 */	stw r0, 0x404(r3)
 /* 800EB8DC 000E883C  4E 80 00 20 */	blr 
+.endfn startConeShrink__8GoalItemFv
 
-.global startConeEmit__8GoalItemFv
-startConeEmit__8GoalItemFv:
+.fn startConeEmit__8GoalItemFv, global
 /* 800EB8E0 000E8840  38 00 00 01 */	li r0, 1
 /* 800EB8E4 000E8844  98 03 04 08 */	stb r0, 0x408(r3)
 /* 800EB8E8 000E8848  C0 02 9A 3C */	lfs f0, lbl_803E9C3C@sda21(r2)
 /* 800EB8EC 000E884C  D0 03 03 F8 */	stfs f0, 0x3f8(r3)
 /* 800EB8F0 000E8850  4E 80 00 20 */	blr 
+.endfn startConeEmit__8GoalItemFv
 
-.global startAI__8GoalItemFi
-startAI__8GoalItemFi:
+.fn startAI__8GoalItemFi, global
 /* 800EB8F4 000E8854  7C 08 02 A6 */	mflr r0
 /* 800EB8F8 000E8858  38 80 00 00 */	li r4, 0
 /* 800EB8FC 000E885C  90 01 00 04 */	stw r0, 4(r1)
@@ -1556,9 +1555,9 @@ startAI__8GoalItemFi:
 /* 800EBD7C 000E8CDC  38 21 00 D0 */	addi r1, r1, 0xd0
 /* 800EBD80 000E8CE0  7C 08 03 A6 */	mtlr r0
 /* 800EBD84 000E8CE4  4E 80 00 20 */	blr 
+.endfn startAI__8GoalItemFi
 
-.global startBoot__8GoalItemFv
-startBoot__8GoalItemFv:
+.fn startBoot__8GoalItemFv, global
 /* 800EBD88 000E8CE8  7C 08 02 A6 */	mflr r0
 /* 800EBD8C 000E8CEC  90 01 00 04 */	stw r0, 4(r1)
 /* 800EBD90 000E8CF0  38 00 00 03 */	li r0, 3
@@ -1588,9 +1587,9 @@ startBoot__8GoalItemFv:
 /* 800EBDF0 000E8D50  38 21 00 20 */	addi r1, r1, 0x20
 /* 800EBDF4 000E8D54  7C 08 03 A6 */	mtlr r0
 /* 800EBDF8 000E8D58  4E 80 00 20 */	blr 
+.endfn startBoot__8GoalItemFv
 
-.global emitPiki__8GoalItemFv
-emitPiki__8GoalItemFv:
+.fn emitPiki__8GoalItemFv, global
 /* 800EBDFC 000E8D5C  7C 08 02 A6 */	mflr r0
 /* 800EBE00 000E8D60  7C 64 1B 78 */	mr r4, r3
 /* 800EBE04 000E8D64  90 01 00 04 */	stw r0, 4(r1)
@@ -1602,19 +1601,19 @@ emitPiki__8GoalItemFv:
 /* 800EBE1C 000E8D7C  38 21 00 08 */	addi r1, r1, 8
 /* 800EBE20 000E8D80  7C 08 03 A6 */	mtlr r0
 /* 800EBE24 000E8D84  4E 80 00 20 */	blr 
+.endfn emitPiki__8GoalItemFv
 
-.global getSize__8GoalItemFv
-getSize__8GoalItemFv:
+.fn getSize__8GoalItemFv, global
 /* 800EBE28 000E8D88  C0 22 9A 80 */	lfs f1, lbl_803E9C80@sda21(r2)
 /* 800EBE2C 000E8D8C  4E 80 00 20 */	blr 
+.endfn getSize__8GoalItemFv
 
-.global getiMass__8GoalItemFv
-getiMass__8GoalItemFv:
+.fn getiMass__8GoalItemFv, global
 /* 800EBE30 000E8D90  C0 22 9A 3C */	lfs f1, lbl_803E9C3C@sda21(r2)
 /* 800EBE34 000E8D94  4E 80 00 20 */	blr 
+.endfn getiMass__8GoalItemFv
 
-.global update__8GoalItemFv
-update__8GoalItemFv:
+.fn update__8GoalItemFv, global
 /* 800EBE38 000E8D98  7C 08 02 A6 */	mflr r0
 /* 800EBE3C 000E8D9C  90 01 00 04 */	stw r0, 4(r1)
 /* 800EBE40 000E8DA0  94 21 FF 88 */	stwu r1, -0x78(r1)
@@ -1802,9 +1801,9 @@ update__8GoalItemFv:
 /* 800EC100 000E9060  38 21 00 78 */	addi r1, r1, 0x78
 /* 800EC104 000E9064  7C 08 03 A6 */	mtlr r0
 /* 800EC108 000E9068  4E 80 00 20 */	blr 
+.endfn update__8GoalItemFv
 
-.global refresh__8GoalItemFR8Graphics
-refresh__8GoalItemFR8Graphics:
+.fn refresh__8GoalItemFR8Graphics, global
 /* 800EC10C 000E906C  7C 08 02 A6 */	mflr r0
 /* 800EC110 000E9070  3C A0 80 3A */	lis r5, gameflow@ha
 /* 800EC114 000E9074  90 01 00 04 */	stw r0, 4(r1)
@@ -2036,9 +2035,9 @@ refresh__8GoalItemFR8Graphics:
 /* 800EC478 000E93D8  38 21 01 00 */	addi r1, r1, 0x100
 /* 800EC47C 000E93DC  7C 08 03 A6 */	mtlr r0
 /* 800EC480 000E93E0  4E 80 00 20 */	blr 
+.endfn refresh__8GoalItemFR8Graphics
 
-.global getGoalPos__8GoalItemFv
-getGoalPos__8GoalItemFv:
+.fn getGoalPos__8GoalItemFv, weak
 /* 800EC484 000E93E4  C0 04 00 94 */	lfs f0, 0x94(r4)
 /* 800EC488 000E93E8  D0 03 00 00 */	stfs f0, 0(r3)
 /* 800EC48C 000E93EC  C0 04 00 98 */	lfs f0, 0x98(r4)
@@ -2046,90 +2045,108 @@ getGoalPos__8GoalItemFv:
 /* 800EC494 000E93F4  C0 04 00 9C */	lfs f0, 0x9c(r4)
 /* 800EC498 000E93F8  D0 03 00 08 */	stfs f0, 8(r3)
 /* 800EC49C 000E93FC  4E 80 00 20 */	blr 
+.endfn getGoalPos__8GoalItemFv
 
-.global getGoalPosRadius__8GoalItemFv
-getGoalPosRadius__8GoalItemFv:
+.fn getGoalPosRadius__8GoalItemFv, weak
 /* 800EC4A0 000E9400  C0 22 9A 90 */	lfs f1, lbl_803E9C90@sda21(r2)
 /* 800EC4A4 000E9404  4E 80 00 20 */	blr 
+.endfn getGoalPosRadius__8GoalItemFv
 
-.global getRouteIndex__8GoalItemFv
-getRouteIndex__8GoalItemFv:
+.fn getRouteIndex__8GoalItemFv, weak
 /* 800EC4A8 000E9408  A8 63 04 2A */	lha r3, 0x42a(r3)
 /* 800EC4AC 000E940C  4E 80 00 20 */	blr 
+.endfn getRouteIndex__8GoalItemFv
 
-.global isVisible__8GoalItemFv
-isVisible__8GoalItemFv:
+.fn isVisible__8GoalItemFv, weak
 /* 800EC4B0 000E9410  38 60 00 01 */	li r3, 1
 /* 800EC4B4 000E9414  4E 80 00 20 */	blr 
+.endfn isVisible__8GoalItemFv
 
-.global isAlive__8GoalItemFv
-isAlive__8GoalItemFv:
+.fn isAlive__8GoalItemFv, weak
 /* 800EC4B8 000E9418  38 60 00 01 */	li r3, 1
 /* 800EC4BC 000E941C  4E 80 00 20 */	blr 
+.endfn isAlive__8GoalItemFv
 
-"@968@invoke__8GoalItemFPQ23zen17particleGeneratorPQ23zen11particleMdl":
+.fn "@968@invoke__8GoalItemFPQ23zen17particleGeneratorPQ23zen11particleMdl", weak
 /* 800EC4C0 000E9420  38 63 FC 38 */	addi r3, r3, -968
 /* 800EC4C4 000E9424  4B FF EC 1C */	b invoke__8GoalItemFPQ23zen17particleGeneratorPQ23zen11particleMdl
+.endfn "@968@invoke__8GoalItemFPQ23zen17particleGeneratorPQ23zen11particleMdl"
 
 .section .rodata, "a"  # 0x80221FE0 - 0x80222DC0
 .balign 8
-lbl_80222640:
+.obj lbl_80222640, local
 	.4byte 0x00000002
 	.4byte 0x00000001
 	.4byte 0x00000000
-lbl_8022264C:
+.endobj lbl_80222640
+.balign 4
+.obj lbl_8022264C, local
 	.4byte 0x000000D0
 	.4byte 0x000000CF
 	.4byte 0x000000CE
-lbl_80222658:
+.endobj lbl_8022264C
+.balign 4
+.obj lbl_80222658, local
 	.4byte 0x000000CD
 	.4byte 0x000000CC
 	.4byte 0x000000CB
+.endobj lbl_80222658
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802BC858:
+.obj lbl_802BC858, local
 	.asciz "goalItem.cpp"
+.endobj lbl_802BC858
 .balign 4
-lbl_802BC868:
+.obj lbl_802BC868, local
 	.asciz "goalItem"
+.endobj lbl_802BC868
 .balign 4
-leg_ids:
+.obj leg_ids, local
 	.ascii "leg1"
 	.ascii "leg2"
 	.ascii "leg3"
+.endobj leg_ids
 .balign 4
-lbl_802BC880:
+.obj lbl_802BC880, local
 	.asciz "zen::CallBack2<zen::particleGenerator *, zen::particleMdl *>"
+.endobj lbl_802BC880
 .balign 4
-.skip 0xC
+.skip 0xC # compiler padding
 .balign 4
-lbl_802BC8CC:
+.obj lbl_802BC8CC, local
 	.asciz "Suckable"
+.endobj lbl_802BC8CC
 .balign 4
-lbl_802BC8D8:
+.obj lbl_802BC8D8, local
 	.asciz "PaniAnimKeyListener"
+.endobj lbl_802BC8D8
 .balign 4
-lbl_802BC8EC:
+.obj lbl_802BC8EC, local
 	.asciz "EventTalker"
+.endobj lbl_802BC8EC
 .balign 4
-lbl_802BC8F8:
+.obj lbl_802BC8F8, local
 	.asciz "RefCountable"
+.endobj lbl_802BC8F8
 .balign 4
-lbl_802BC908:
+.obj lbl_802BC908, local
 	.asciz "Creature"
+.endobj lbl_802BC908
 .balign 4
-lbl_802BC914:
+.obj lbl_802BC914, local
 	.4byte __RTTI__11EventTalker
 	.4byte 0x00000008
 	.4byte __RTTI__12RefCountable
 	.4byte 0x00000000
 	.4byte 0x00000000
+.endobj lbl_802BC914
 .balign 4
-lbl_802BC928:
+.obj lbl_802BC928, local
 	.asciz "AICreature"
+.endobj lbl_802BC928
 .balign 4
-lbl_802BC934:
+.obj lbl_802BC934, local
 	.4byte __RTTI__19PaniAnimKeyListener
 	.4byte 0x000002B8
 	.4byte __RTTI__11EventTalker
@@ -2139,11 +2156,13 @@ lbl_802BC934:
 	.4byte __RTTI__8Creature
 	.4byte 0x00000000
 	.4byte 0x00000000
+.endobj lbl_802BC934
 .balign 4
-lbl_802BC958:
+.obj lbl_802BC958, local
 	.asciz "ItemCreature"
+.endobj lbl_802BC958
 .balign 4
-lbl_802BC968:
+.obj lbl_802BC968, local
 	.4byte __RTTI__19PaniAnimKeyListener
 	.4byte 0x000002B8
 	.4byte __RTTI__11EventTalker
@@ -2155,7 +2174,9 @@ lbl_802BC968:
 	.4byte __RTTI__10AICreature
 	.4byte 0x00000000
 	.4byte 0x00000000
-lbl_802BC994:
+.endobj lbl_802BC968
+.balign 4
+.obj lbl_802BC994, local
 	.4byte __RTTI__19PaniAnimKeyListener
 	.4byte 0x000002B8
 	.4byte __RTTI__11EventTalker
@@ -2169,6 +2190,9 @@ lbl_802BC994:
 	.4byte __RTTI__12ItemCreature
 	.4byte 0x00000000
 	.4byte 0x00000000
+.endobj lbl_802BC994
+.balign 4
+# ?????????????? due to ...data.0?
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x00000000
@@ -2239,7 +2263,7 @@ lbl_802BC994:
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x00000000
-	.4byte 0xFFFFFD48
+	.4byte 0xFFFFFD48 # ??? is this a poorly removed vtable?
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte 0x00000000
@@ -2263,10 +2287,11 @@ lbl_802BC994:
 	.4byte 0x00000000
 	.4byte 0x00000000
 .balign 4
-lbl_802BCB3C:
+.obj lbl_802BCB3C, local
 	.asciz "GoalItem"
+.endobj lbl_802BCB3C
 .balign 4
-lbl_802BCB48:
+.obj lbl_802BCB48, local
 	.4byte "__RTTI__Q23zen58CallBack2<PQ23zen17particleGenerator,PQ23zen11particleMdl>"
 	.4byte 0x000003C8
 	.4byte __RTTI__19PaniAnimKeyListener
@@ -2284,8 +2309,9 @@ lbl_802BCB48:
 	.4byte __RTTI__8Suckable
 	.4byte 0x00000000
 	.4byte 0x00000000
-.global __vt__8GoalItem
-__vt__8GoalItem:
+.endobj lbl_802BCB48
+.balign 4
+.obj __vt__8GoalItem, global
 	.4byte __RTTI__8GoalItem
 	.4byte 0
 	.4byte addCntCallback__12RefCountableFv
@@ -2383,131 +2409,195 @@ __vt__8GoalItem:
 	.4byte 0xFFFFFC38
 	.4byte "@968@invoke__8GoalItemFPQ23zen17particleGeneratorPQ23zen11particleMdl"
 	.4byte invoke__8GoalItemFPQ23zen17particleGeneratorPQ23zen11particleMdl
+.endobj __vt__8GoalItem
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-lbl_803E1870:
+.obj lbl_803E1870, local
 	.float 1.0
-lbl_803E1874:
+.endobj lbl_803E1870
+.obj lbl_803E1874, local
 	.float 1.0
-lbl_803E1878:
+.endobj lbl_803E1874
+.obj lbl_803E1878, local
 	.float 1.0
-lbl_803E187C:
+.endobj lbl_803E1878
+.obj lbl_803E187C, local
 	.float 0.0
-lbl_803E1880:
+.endobj lbl_803E187C
+.obj lbl_803E1880, local
 	.float 0.0
-lbl_803E1884:
+.endobj lbl_803E1880
+.obj lbl_803E1884, local
 	.float 0.0
-lbl_803E1888:
+.endobj lbl_803E1884
+.obj lbl_803E1888, local
 	.float -1.0
-lbl_803E188C:
+.endobj lbl_803E1888
+.obj lbl_803E188C, local
 	.float 0.0
-lbl_803E1890:
+.endobj lbl_803E188C
+.obj lbl_803E1890, local
 	.float 1.0
-lbl_803E1894:
+.endobj lbl_803E1890
+.obj lbl_803E1894, local
 	.float 0.0
-lbl_803E1898:
+.endobj lbl_803E1894
+.obj lbl_803E1898, local
 	.float 0.0
-lbl_803E189C:
+.endobj lbl_803E1898
+.obj lbl_803E189C, local
 	.float 1.0
-lbl_803E18A0:
+.endobj lbl_803E189C
+.obj lbl_803E18A0, local
 	.float 0.0
-lbl_803E18A4:
+.endobj lbl_803E18A0
+.obj lbl_803E18A4, local
 	.float 1.0
-lbl_803E18A8:
+.endobj lbl_803E18A4
+.obj lbl_803E18A8, local
 	.float 1.0
-lbl_803E18AC:
+.endobj lbl_803E18A8
+.obj lbl_803E18AC, local
 	.float 1.0
-lbl_803E18B0:
+.endobj lbl_803E18AC
+.obj lbl_803E18B0, local
 	.float 0.0
-lbl_803E18B4:
+.endobj lbl_803E18B0
+.obj lbl_803E18B4, local
 	.float 0.0
-lbl_803E18B8:
+.endobj lbl_803E18B4
+.obj lbl_803E18B8, local
 	.float 0.0
-lbl_803E18BC:
+.endobj lbl_803E18B8
+.obj lbl_803E18BC, local
 	.float 0.0
-lbl_803E18C0:
+.endobj lbl_803E18BC
+.obj lbl_803E18C0, local
 	.float 0.0
-lbl_803E18C4:
+.endobj lbl_803E18C0
+.obj lbl_803E18C4, local
 	.float 0.0
-lbl_803E18C8:
+.endobj lbl_803E18C4
+.obj lbl_803E18C8, local
 	.float 0.0
-lbl_803E18CC:
+.endobj lbl_803E18C8
+.obj lbl_803E18CC, local
 	.float 0.0
-lbl_803E18D0:
+.endobj lbl_803E18CC
+.obj lbl_803E18D0, local
 	.float 0.0
-"__RTTI__Q23zen58CallBack2<PQ23zen17particleGenerator,PQ23zen11particleMdl>":
+.endobj lbl_803E18D0
+.balign 4
+.obj "__RTTI__Q23zen58CallBack2<PQ23zen17particleGenerator,PQ23zen11particleMdl>", local
 	.4byte lbl_802BC880
 	.4byte 0
-__RTTI__19PaniAnimKeyListener:
+.endobj "__RTTI__Q23zen58CallBack2<PQ23zen17particleGenerator,PQ23zen11particleMdl>"
+.balign 4
+.obj __RTTI__19PaniAnimKeyListener, local
 	.4byte lbl_802BC8D8
 	.4byte 0
-__RTTI__11EventTalker:
+.endobj __RTTI__19PaniAnimKeyListener
+.balign 4
+.obj __RTTI__11EventTalker, local
 	.4byte lbl_802BC8EC
 	.4byte 0
-__RTTI__12RefCountable:
+.endobj __RTTI__11EventTalker
+.balign 4
+.obj __RTTI__12RefCountable, local
 	.4byte lbl_802BC8F8
 	.4byte 0
-__RTTI__8Creature:
+.endobj __RTTI__12RefCountable
+.balign 4
+.obj __RTTI__8Creature, local
 	.4byte lbl_802BC908
 	.4byte lbl_802BC914
-__RTTI__10AICreature:
+.endobj __RTTI__8Creature
+.balign 4
+.obj __RTTI__10AICreature, local
 	.4byte lbl_802BC928
 	.4byte lbl_802BC934
-__RTTI__12ItemCreature:
+.endobj __RTTI__10AICreature
+.balign 4
+.obj __RTTI__12ItemCreature, local
 	.4byte lbl_802BC958
 	.4byte lbl_802BC968
-__RTTI__8Suckable:
+.endobj __RTTI__12ItemCreature
+.balign 4
+.obj __RTTI__8Suckable, local
 	.4byte lbl_802BC8CC
 	.4byte lbl_802BC994
-__RTTI__8GoalItem:
+.endobj __RTTI__8Suckable
+.balign 4
+.obj __RTTI__8GoalItem, local
 	.4byte lbl_802BCB3C
 	.4byte lbl_802BCB48
+.endobj __RTTI__8GoalItem
 
 .section .sbss, "wa"
 .balign 8
-.global demoHideFlag__8GoalItem
-demoHideFlag__8GoalItem:
+.obj demoHideFlag__8GoalItem, global
 	.skip 0x1
+.endobj demoHideFlag__8GoalItem
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803E9C38:
+.obj lbl_803E9C38, local
 	.float 2500.0
-lbl_803E9C3C:
+.endobj lbl_803E9C38
+.obj lbl_803E9C3C, local
 	.float 0.0
-lbl_803E9C40:
+.endobj lbl_803E9C3C
+.obj lbl_803E9C40, local
 	.float 1.0
-lbl_803E9C44:
+.endobj lbl_803E9C40
+.obj lbl_803E9C44, local
 	.float 32767.0
-lbl_803E9C48:
+.endobj lbl_803E9C44
+.obj lbl_803E9C48, local
 	.float 0.999999
-lbl_803E9C4C:
+.endobj lbl_803E9C48
+.obj lbl_803E9C4C, local
 	.float 3.0
-lbl_803E9C50:
+.endobj lbl_803E9C4C
+.obj lbl_803E9C50, local
 	.float 20.0
+.endobj lbl_803E9C50
 .balign 8
-lbl_803E9C58:
-	.4byte 0x43300000
-	.4byte 0x80000000
-lbl_803E9C60:
+.obj lbl_803E9C58, local
+	.8byte 0x4330000080000000
+.endobj lbl_803E9C58
+.balign 4
+.obj lbl_803E9C60, local
 	.float 74.0
-lbl_803E9C64:
+.endobj lbl_803E9C60
+.obj lbl_803E9C64, local
 	.float 30.0
-lbl_803E9C68:
+.endobj lbl_803E9C64
+.obj lbl_803E9C68, local
 	.float 0.8
+.endobj lbl_803E9C68
 .balign 8
-lbl_803E9C70:
+.obj lbl_803E9C70, local
 	.double 0.5
-lbl_803E9C78:
+.endobj lbl_803E9C70
+.balign 8
+.obj lbl_803E9C78, local
 	.double 3.0
-lbl_803E9C80:
+.endobj lbl_803E9C78
+.balign 4
+.obj lbl_803E9C80, local
 	.float 10.0
-lbl_803E9C84:
+.endobj lbl_803E9C80
+.obj lbl_803E9C84, local
 	.float 0.2
-lbl_803E9C88:
+.endobj lbl_803E9C84
+.obj lbl_803E9C88, local
 	.float 0.1
-lbl_803E9C8C:
+.endobj lbl_803E9C88
+.obj lbl_803E9C8C, local
 	.float 200.0
-lbl_803E9C90:
+.endobj lbl_803E9C8C
+.obj lbl_803E9C90, local
 	.float 75.0
+.endobj lbl_803E9C90

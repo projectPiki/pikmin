@@ -10919,6 +10919,7 @@
 .obj controllerLen, local
 	.skip 0x4
 .endobj controllerLen
+.balign 4
 .obj ang$5655, local
 	.skip 0x4
 .endobj ang$5655
@@ -10945,6 +10946,7 @@
 .obj lbl_803E9E70, local
 	.double 3.0
 .endobj lbl_803E9E70
+.balign 4
 .obj lbl_803E9E78, local
 	.float 1.0
 .endobj lbl_803E9E78
@@ -11050,12 +11052,15 @@
 .obj lbl_803E9F00, local
 	.float 300.0
 .endobj lbl_803E9F00
+.balign 4
 .obj lbl_803E9F04, local
 	.4byte 0
 .endobj lbl_803E9F04
+.balign 4
 .obj lbl_803E9F08, local
 	.4byte 1
 .endobj lbl_803E9F08
+.balign 4
 .obj lbl_803E9F0C, local
 	.float 32767.0
 .endobj lbl_803E9F0C
@@ -11066,6 +11071,7 @@
 .obj lbl_803E9F18, local
 	.8byte 0x4330000080000000
 .endobj lbl_803E9F18
+.balign 4
 .obj lbl_803E9F20, local
 	.float 20.0
 .endobj lbl_803E9F20
@@ -11111,7 +11117,7 @@
 .obj lbl_803E9F58, local
 	.float 0.05
 .endobj lbl_803E9F58
-.obj lbl_803E9F5C, local
+.obj lbl_803E9F5C, local # 2pi/3
 	.float 2.0943952
 .endobj lbl_803E9F5C
 .obj lbl_803E9F60, local
@@ -11126,7 +11132,7 @@
 .obj lbl_803E9F6C, local
 	.float 0.6
 .endobj lbl_803E9F6C
-.obj lbl_803E9F70, local
+.obj lbl_803E9F70, local # pi
 	.float 3.1415927
 .endobj lbl_803E9F70
 .obj lbl_803E9F74, local
@@ -11138,7 +11144,7 @@
 .obj lbl_803E9F7C, local
 	.float 0.03
 .endobj lbl_803E9F7C
-.obj lbl_803E9F80, local
+.obj lbl_803E9F80, local # tau
 	.float 6.2831855
 .endobj lbl_803E9F80
 .obj lbl_803E9F84, local
@@ -11147,7 +11153,7 @@
 .obj lbl_803E9F88, local
 	.float 0.15707964
 .endobj lbl_803E9F88
-.obj lbl_803E9F8C, local
+.obj lbl_803E9F8C, local # 4pi/3
 	.float 4.1887903
 .endobj lbl_803E9F8C
 .obj lbl_803E9F90, local # pi/3

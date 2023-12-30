@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global __ct__11SlimeEffectFv
-__ct__11SlimeEffectFv:
+.fn __ct__11SlimeEffectFv, global
 /* 80113164 001100C4  3C 80 80 2B */	lis r4, "__vt__Q23zen37CallBack1<PQ23zen17particleGenerator>"@ha
 /* 80113168 001100C8  38 04 06 00 */	addi r0, r4, "__vt__Q23zen37CallBack1<PQ23zen17particleGenerator>"@l
 /* 8011316C 001100CC  3C 80 80 2B */	lis r4, "__vt__Q23zen58CallBack2<PQ23zen17particleGenerator,PQ23zen11particleMdl>"@ha
@@ -28,9 +27,9 @@ __ct__11SlimeEffectFv:
 /* 801131C0 00110120  90 83 00 08 */	stw r4, 8(r3)
 /* 801131C4 00110124  90 03 00 0C */	stw r0, 0xc(r3)
 /* 801131C8 00110128  4E 80 00 20 */	blr 
+.endfn __ct__11SlimeEffectFv
 
-.global stop__11SlimeEffectFv
-stop__11SlimeEffectFv:
+.fn stop__11SlimeEffectFv, global
 /* 801131CC 0011012C  80 63 00 0C */	lwz r3, 0xc(r3)
 /* 801131D0 00110130  28 03 00 00 */	cmplwi r3, 0
 /* 801131D4 00110134  4D 82 00 20 */	beqlr 
@@ -38,9 +37,9 @@ stop__11SlimeEffectFv:
 /* 801131DC 0011013C  54 00 07 34 */	rlwinm r0, r0, 0, 0x1c, 0x1a
 /* 801131E0 00110140  90 03 00 80 */	stw r0, 0x80(r3)
 /* 801131E4 00110144  4E 80 00 20 */	blr 
+.endfn stop__11SlimeEffectFv
 
-.global restart__11SlimeEffectFv
-restart__11SlimeEffectFv:
+.fn restart__11SlimeEffectFv, global
 /* 801131E8 00110148  80 63 00 0C */	lwz r3, 0xc(r3)
 /* 801131EC 0011014C  28 03 00 00 */	cmplwi r3, 0
 /* 801131F0 00110150  4D 82 00 20 */	beqlr 
@@ -48,9 +47,9 @@ restart__11SlimeEffectFv:
 /* 801131F8 00110158  60 00 00 10 */	ori r0, r0, 0x10
 /* 801131FC 0011015C  90 03 00 80 */	stw r0, 0x80(r3)
 /* 80113200 00110160  4E 80 00 20 */	blr 
+.endfn restart__11SlimeEffectFv
 
-.global emit__11SlimeEffectFR10EffectParm
-emit__11SlimeEffectFR10EffectParm:
+.fn emit__11SlimeEffectFR10EffectParm, global
 /* 80113204 00110164  7C 08 02 A6 */	mflr r0
 /* 80113208 00110168  90 01 00 04 */	stw r0, 4(r1)
 /* 8011320C 0011016C  94 21 FF D0 */	stwu r1, -0x30(r1)
@@ -89,9 +88,9 @@ emit__11SlimeEffectFR10EffectParm:
 /* 80113288 001101E8  38 21 00 30 */	addi r1, r1, 0x30
 /* 8011328C 001101EC  7C 08 03 A6 */	mtlr r0
 /* 80113290 001101F0  4E 80 00 20 */	blr 
+.endfn emit__11SlimeEffectFR10EffectParm
 
-.global invoke__11SlimeEffectFPQ23zen17particleGeneratorPQ23zen11particleMdl
-invoke__11SlimeEffectFPQ23zen17particleGeneratorPQ23zen11particleMdl:
+.fn invoke__11SlimeEffectFPQ23zen17particleGeneratorPQ23zen11particleMdl, global
 /* 80113294 001101F4  94 21 FF A8 */	stwu r1, -0x58(r1)
 /* 80113298 001101F8  80 03 00 0C */	lwz r0, 0xc(r3)
 /* 8011329C 001101FC  28 00 00 00 */	cmplwi r0, 0
@@ -132,9 +131,9 @@ invoke__11SlimeEffectFPQ23zen17particleGeneratorPQ23zen11particleMdl:
 /* 80113324 00110284  38 60 00 01 */	li r3, 1
 /* 80113328 00110288  38 21 00 58 */	addi r1, r1, 0x58
 /* 8011332C 0011028C  4E 80 00 20 */	blr 
+.endfn invoke__11SlimeEffectFPQ23zen17particleGeneratorPQ23zen11particleMdl
 
-.global kill__11SlimeEffectFv
-kill__11SlimeEffectFv:
+.fn kill__11SlimeEffectFv, global
 /* 80113330 00110290  7C 08 02 A6 */	mflr r0
 /* 80113334 00110294  90 01 00 04 */	stw r0, 4(r1)
 /* 80113338 00110298  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -155,9 +154,9 @@ kill__11SlimeEffectFv:
 /* 80113370 001102D0  38 21 00 18 */	addi r1, r1, 0x18
 /* 80113374 001102D4  7C 08 03 A6 */	mtlr r0
 /* 80113378 001102D8  4E 80 00 20 */	blr 
+.endfn kill__11SlimeEffectFv
 
-.global __ct__11UtEffectMgrFv
-__ct__11UtEffectMgrFv:
+.fn __ct__11UtEffectMgrFv, global
 /* 8011337C 001102DC  7C 08 02 A6 */	mflr r0
 /* 80113380 001102E0  90 01 00 04 */	stw r0, 4(r1)
 /* 80113384 001102E4  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -1168,16 +1167,16 @@ __ct__11UtEffectMgrFv:
 /* 801142C4 00111224  38 21 00 20 */	addi r1, r1, 0x20
 /* 801142C8 00111228  7C 08 03 A6 */	mtlr r0
 /* 801142CC 0011122C  4E 80 00 20 */	blr 
+.endfn __ct__11UtEffectMgrFv
 
-.global registerEffect__11UtEffectMgrFiP7KEffect
-registerEffect__11UtEffectMgrFiP7KEffect:
+.fn registerEffect__11UtEffectMgrFiP7KEffect, global
 /* 801142D0 00111230  80 6D 31 14 */	lwz r3, effects__11UtEffectMgr@sda21(r13)
 /* 801142D4 00111234  54 80 10 3A */	slwi r0, r4, 2
 /* 801142D8 00111238  7C A3 01 2E */	stwx r5, r3, r0
 /* 801142DC 0011123C  4E 80 00 20 */	blr 
+.endfn registerEffect__11UtEffectMgrFiP7KEffect
 
-.global cast__11UtEffectMgrFiR10EffectParm
-cast__11UtEffectMgrFiR10EffectParm:
+.fn cast__11UtEffectMgrFiR10EffectParm, global
 /* 801142E0 00111240  7C 08 02 A6 */	mflr r0
 /* 801142E4 00111244  90 01 00 04 */	stw r0, 4(r1)
 /* 801142E8 00111248  54 60 10 3A */	slwi r0, r3, 2
@@ -1196,9 +1195,9 @@ cast__11UtEffectMgrFiR10EffectParm:
 /* 80114318 00111278  38 21 00 08 */	addi r1, r1, 8
 /* 8011431C 0011127C  7C 08 03 A6 */	mtlr r0
 /* 80114320 00111280  4E 80 00 20 */	blr 
+.endfn cast__11UtEffectMgrFiR10EffectParm
 
-.global kill__11UtEffectMgrFi
-kill__11UtEffectMgrFi:
+.fn kill__11UtEffectMgrFi, global
 /* 80114324 00111284  7C 08 02 A6 */	mflr r0
 /* 80114328 00111288  90 01 00 04 */	stw r0, 4(r1)
 /* 8011432C 0011128C  54 60 10 3A */	slwi r0, r3, 2
@@ -1217,9 +1216,9 @@ kill__11UtEffectMgrFi:
 /* 8011435C 001112BC  38 21 00 08 */	addi r1, r1, 8
 /* 80114360 001112C0  7C 08 03 A6 */	mtlr r0
 /* 80114364 001112C4  4E 80 00 20 */	blr 
+.endfn kill__11UtEffectMgrFi
 
-.global __ct__15PermanentEffectFv
-__ct__15PermanentEffectFv:
+.fn __ct__15PermanentEffectFv, global
 /* 80114368 001112C8  C0 02 9F 50 */	lfs f0, lbl_803EA150@sda21(r2)
 /* 8011436C 001112CC  38 00 00 00 */	li r0, 0
 /* 80114370 001112D0  D0 03 00 08 */	stfs f0, 8(r3)
@@ -1233,9 +1232,9 @@ __ct__15PermanentEffectFv:
 /* 80114390 001112F0  C0 0D DB 78 */	lfs f0, lbl_803E2898@sda21(r13)
 /* 80114394 001112F4  D0 03 00 08 */	stfs f0, 8(r3)
 /* 80114398 001112F8  4E 80 00 20 */	blr 
+.endfn __ct__15PermanentEffectFv
 
-.global init__15PermanentEffectFR8Vector3fi
-init__15PermanentEffectFR8Vector3fi:
+.fn init__15PermanentEffectFR8Vector3fi, global
 /* 8011439C 001112FC  7C 08 02 A6 */	mflr r0
 /* 801143A0 00111300  39 05 00 00 */	addi r8, r5, 0
 /* 801143A4 00111304  90 01 00 04 */	stw r0, 4(r1)
@@ -1272,9 +1271,9 @@ init__15PermanentEffectFR8Vector3fi:
 /* 8011441C 0011137C  38 21 00 28 */	addi r1, r1, 0x28
 /* 80114420 00111380  7C 08 03 A6 */	mtlr r0
 /* 80114424 00111384  4E 80 00 20 */	blr 
+.endfn init__15PermanentEffectFR8Vector3fi
 
-.global updatePos__15PermanentEffectFR8Vector3f
-updatePos__15PermanentEffectFR8Vector3f:
+.fn updatePos__15PermanentEffectFR8Vector3f, global
 /* 80114428 00111388  80 A4 00 00 */	lwz r5, 0(r4)
 /* 8011442C 0011138C  80 04 00 04 */	lwz r0, 4(r4)
 /* 80114430 00111390  90 A3 00 00 */	stw r5, 0(r3)
@@ -1288,9 +1287,9 @@ updatePos__15PermanentEffectFR8Vector3f:
 /* 80114450 001113B0  54 00 00 3C */	rlwinm r0, r0, 0, 0, 0x1e
 /* 80114454 001113B4  90 03 00 80 */	stw r0, 0x80(r3)
 /* 80114458 001113B8  4E 80 00 20 */	blr 
+.endfn updatePos__15PermanentEffectFR8Vector3f
 
-.global changeEffect__15PermanentEffectFi
-changeEffect__15PermanentEffectFi:
+.fn changeEffect__15PermanentEffectFi, global
 /* 8011445C 001113BC  7C 08 02 A6 */	mflr r0
 /* 80114460 001113C0  90 01 00 04 */	stw r0, 4(r1)
 /* 80114464 001113C4  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -1325,9 +1324,9 @@ changeEffect__15PermanentEffectFi:
 /* 801144D0 00111430  38 21 00 20 */	addi r1, r1, 0x20
 /* 801144D4 00111434  7C 08 03 A6 */	mtlr r0
 /* 801144D8 00111438  4E 80 00 20 */	blr 
+.endfn changeEffect__15PermanentEffectFi
 
-.global stop__15PermanentEffectFv
-stop__15PermanentEffectFv:
+.fn stop__15PermanentEffectFv, global
 /* 801144DC 0011143C  80 63 00 0C */	lwz r3, 0xc(r3)
 /* 801144E0 00111440  28 03 00 00 */	cmplwi r3, 0
 /* 801144E4 00111444  4D 82 00 20 */	beqlr 
@@ -1335,9 +1334,9 @@ stop__15PermanentEffectFv:
 /* 801144EC 0011144C  54 00 07 34 */	rlwinm r0, r0, 0, 0x1c, 0x1a
 /* 801144F0 00111450  90 03 00 80 */	stw r0, 0x80(r3)
 /* 801144F4 00111454  4E 80 00 20 */	blr 
+.endfn stop__15PermanentEffectFv
 
-.global restart__15PermanentEffectFv
-restart__15PermanentEffectFv:
+.fn restart__15PermanentEffectFv, global
 /* 801144F8 00111458  80 63 00 0C */	lwz r3, 0xc(r3)
 /* 801144FC 0011145C  28 03 00 00 */	cmplwi r3, 0
 /* 80114500 00111460  4D 82 00 20 */	beqlr 
@@ -1345,9 +1344,9 @@ restart__15PermanentEffectFv:
 /* 80114508 00111468  60 00 00 10 */	ori r0, r0, 0x10
 /* 8011450C 0011146C  90 03 00 80 */	stw r0, 0x80(r3)
 /* 80114510 00111470  4E 80 00 20 */	blr 
+.endfn restart__15PermanentEffectFv
 
-.global kill__15PermanentEffectFv
-kill__15PermanentEffectFv:
+.fn kill__15PermanentEffectFv, global
 /* 80114514 00111474  7C 08 02 A6 */	mflr r0
 /* 80114518 00111478  90 01 00 04 */	stw r0, 4(r1)
 /* 8011451C 0011147C  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -1368,9 +1367,9 @@ kill__15PermanentEffectFv:
 /* 80114554 001114B4  38 21 00 18 */	addi r1, r1, 0x18
 /* 80114558 001114B8  7C 08 03 A6 */	mtlr r0
 /* 8011455C 001114BC  4E 80 00 20 */	blr 
+.endfn kill__15PermanentEffectFv
 
-.global emit__15FreeLightEffectFR10EffectParm
-emit__15FreeLightEffectFR10EffectParm:
+.fn emit__15FreeLightEffectFR10EffectParm, global
 /* 80114560 001114C0  7C 08 02 A6 */	mflr r0
 /* 80114564 001114C4  90 01 00 04 */	stw r0, 4(r1)
 /* 80114568 001114C8  94 21 FF D0 */	stwu r1, -0x30(r1)
@@ -1404,9 +1403,9 @@ emit__15FreeLightEffectFR10EffectParm:
 /* 801145D4 00111534  38 21 00 30 */	addi r1, r1, 0x30
 /* 801145D8 00111538  7C 08 03 A6 */	mtlr r0
 /* 801145DC 0011153C  4E 80 00 20 */	blr 
+.endfn emit__15FreeLightEffectFR10EffectParm
 
-.global stop__15FreeLightEffectFv
-stop__15FreeLightEffectFv:
+.fn stop__15FreeLightEffectFv, global
 /* 801145E0 00111540  80 63 00 10 */	lwz r3, 0x10(r3)
 /* 801145E4 00111544  28 03 00 00 */	cmplwi r3, 0
 /* 801145E8 00111548  4D 82 00 20 */	beqlr 
@@ -1414,9 +1413,9 @@ stop__15FreeLightEffectFv:
 /* 801145F0 00111550  54 00 07 34 */	rlwinm r0, r0, 0, 0x1c, 0x1a
 /* 801145F4 00111554  90 03 00 80 */	stw r0, 0x80(r3)
 /* 801145F8 00111558  4E 80 00 20 */	blr 
+.endfn stop__15FreeLightEffectFv
 
-.global restart__15FreeLightEffectFv
-restart__15FreeLightEffectFv:
+.fn restart__15FreeLightEffectFv, global
 /* 801145FC 0011155C  80 63 00 10 */	lwz r3, 0x10(r3)
 /* 80114600 00111560  28 03 00 00 */	cmplwi r3, 0
 /* 80114604 00111564  4D 82 00 20 */	beqlr 
@@ -1424,9 +1423,9 @@ restart__15FreeLightEffectFv:
 /* 8011460C 0011156C  60 00 00 10 */	ori r0, r0, 0x10
 /* 80114610 00111570  90 03 00 80 */	stw r0, 0x80(r3)
 /* 80114614 00111574  4E 80 00 20 */	blr 
+.endfn restart__15FreeLightEffectFv
 
-.global setScale__15FreeLightEffectFf
-setScale__15FreeLightEffectFf:
+.fn setScale__15FreeLightEffectFf, global
 /* 80114618 00111578  80 83 00 10 */	lwz r4, 0x10(r3)
 /* 8011461C 0011157C  28 04 00 00 */	cmplwi r4, 0
 /* 80114620 00111580  4D 82 00 20 */	beqlr 
@@ -1434,9 +1433,9 @@ setScale__15FreeLightEffectFf:
 /* 80114628 00111588  EC 01 00 32 */	fmuls f0, f1, f0
 /* 8011462C 0011158C  D0 04 00 F0 */	stfs f0, 0xf0(r4)
 /* 80114630 00111590  4E 80 00 20 */	blr 
+.endfn setScale__15FreeLightEffectFf
 
-.global kill__15FreeLightEffectFv
-kill__15FreeLightEffectFv:
+.fn kill__15FreeLightEffectFv, global
 /* 80114634 00111594  7C 08 02 A6 */	mflr r0
 /* 80114638 00111598  90 01 00 04 */	stw r0, 4(r1)
 /* 8011463C 0011159C  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -1457,9 +1456,9 @@ kill__15FreeLightEffectFv:
 /* 80114674 001115D4  38 21 00 18 */	addi r1, r1, 0x18
 /* 80114678 001115D8  7C 08 03 A6 */	mtlr r0
 /* 8011467C 001115DC  4E 80 00 20 */	blr 
+.endfn kill__15FreeLightEffectFv
 
-.global emit__12RippleEffectFR10EffectParm
-emit__12RippleEffectFR10EffectParm:
+.fn emit__12RippleEffectFR10EffectParm, global
 /* 80114680 001115E0  7C 08 02 A6 */	mflr r0
 /* 80114684 001115E4  90 01 00 04 */	stw r0, 4(r1)
 /* 80114688 001115E8  94 21 FF 90 */	stwu r1, -0x70(r1)
@@ -1539,9 +1538,9 @@ emit__12RippleEffectFR10EffectParm:
 /* 801147A8 00111708  38 21 00 70 */	addi r1, r1, 0x70
 /* 801147AC 0011170C  7C 08 03 A6 */	mtlr r0
 /* 801147B0 00111710  4E 80 00 20 */	blr 
+.endfn emit__12RippleEffectFR10EffectParm
 
-.global kill__12RippleEffectFv
-kill__12RippleEffectFv:
+.fn kill__12RippleEffectFv, global
 /* 801147B4 00111714  7C 08 02 A6 */	mflr r0
 /* 801147B8 00111718  90 01 00 04 */	stw r0, 4(r1)
 /* 801147BC 0011171C  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -1582,9 +1581,9 @@ kill__12RippleEffectFv:
 /* 8011483C 0011179C  38 21 00 18 */	addi r1, r1, 0x18
 /* 80114840 001117A0  7C 08 03 A6 */	mtlr r0
 /* 80114844 001117A4  4E 80 00 20 */	blr 
+.endfn kill__12RippleEffectFv
 
-.global stop__12RippleEffectFv
-stop__12RippleEffectFv:
+.fn stop__12RippleEffectFv, global
 /* 80114848 001117A8  80 83 00 10 */	lwz r4, 0x10(r3)
 /* 8011484C 001117AC  28 04 00 00 */	cmplwi r4, 0
 /* 80114850 001117B0  41 82 00 10 */	beq .L_80114860
@@ -1599,9 +1598,9 @@ stop__12RippleEffectFv:
 /* 80114870 001117D0  54 00 07 34 */	rlwinm r0, r0, 0, 0x1c, 0x1a
 /* 80114874 001117D4  90 03 00 80 */	stw r0, 0x80(r3)
 /* 80114878 001117D8  4E 80 00 20 */	blr 
+.endfn stop__12RippleEffectFv
 
-.global restart__12RippleEffectFv
-restart__12RippleEffectFv:
+.fn restart__12RippleEffectFv, global
 /* 8011487C 001117DC  80 83 00 10 */	lwz r4, 0x10(r3)
 /* 80114880 001117E0  28 04 00 00 */	cmplwi r4, 0
 /* 80114884 001117E4  41 82 00 10 */	beq .L_80114894
@@ -1616,9 +1615,9 @@ restart__12RippleEffectFv:
 /* 801148A4 00111804  60 00 00 10 */	ori r0, r0, 0x10
 /* 801148A8 00111808  90 03 00 80 */	stw r0, 0x80(r3)
 /* 801148AC 0011180C  4E 80 00 20 */	blr 
+.endfn restart__12RippleEffectFv
 
-.global stop__10BurnEffectFv
-stop__10BurnEffectFv:
+.fn stop__10BurnEffectFv, global
 /* 801148B0 00111810  80 63 00 10 */	lwz r3, 0x10(r3)
 /* 801148B4 00111814  28 03 00 00 */	cmplwi r3, 0
 /* 801148B8 00111818  4D 82 00 20 */	beqlr 
@@ -1626,9 +1625,9 @@ stop__10BurnEffectFv:
 /* 801148C0 00111820  54 00 07 34 */	rlwinm r0, r0, 0, 0x1c, 0x1a
 /* 801148C4 00111824  90 03 00 80 */	stw r0, 0x80(r3)
 /* 801148C8 00111828  4E 80 00 20 */	blr 
+.endfn stop__10BurnEffectFv
 
-.global restart__10BurnEffectFv
-restart__10BurnEffectFv:
+.fn restart__10BurnEffectFv, global
 /* 801148CC 0011182C  80 63 00 10 */	lwz r3, 0x10(r3)
 /* 801148D0 00111830  28 03 00 00 */	cmplwi r3, 0
 /* 801148D4 00111834  4D 82 00 20 */	beqlr 
@@ -1636,9 +1635,9 @@ restart__10BurnEffectFv:
 /* 801148DC 0011183C  60 00 00 10 */	ori r0, r0, 0x10
 /* 801148E0 00111840  90 03 00 80 */	stw r0, 0x80(r3)
 /* 801148E4 00111844  4E 80 00 20 */	blr 
+.endfn restart__10BurnEffectFv
 
-.global emit__10BurnEffectFR10EffectParm
-emit__10BurnEffectFR10EffectParm:
+.fn emit__10BurnEffectFR10EffectParm, global
 /* 801148E8 00111848  7C 08 02 A6 */	mflr r0
 /* 801148EC 0011184C  90 01 00 04 */	stw r0, 4(r1)
 /* 801148F0 00111850  94 21 FF 80 */	stwu r1, -0x80(r1)
@@ -1724,9 +1723,9 @@ emit__10BurnEffectFR10EffectParm:
 /* 80114A28 00111988  38 21 00 80 */	addi r1, r1, 0x80
 /* 80114A2C 0011198C  7C 08 03 A6 */	mtlr r0
 /* 80114A30 00111990  4E 80 00 20 */	blr 
+.endfn emit__10BurnEffectFR10EffectParm
 
-.global kill__10BurnEffectFv
-kill__10BurnEffectFv:
+.fn kill__10BurnEffectFv, global
 /* 80114A34 00111994  7C 08 02 A6 */	mflr r0
 /* 80114A38 00111998  90 01 00 04 */	stw r0, 4(r1)
 /* 80114A3C 0011199C  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -1757,14 +1756,14 @@ kill__10BurnEffectFv:
 /* 80114A98 001119F8  38 21 00 18 */	addi r1, r1, 0x18
 /* 80114A9C 001119FC  7C 08 03 A6 */	mtlr r0
 /* 80114AA0 00111A00  4E 80 00 20 */	blr 
+.endfn kill__10BurnEffectFv
 
-.global invoke__10BurnEffectFPQ23zen17particleGenerator
-invoke__10BurnEffectFPQ23zen17particleGenerator:
+.fn invoke__10BurnEffectFPQ23zen17particleGenerator, global
 /* 80114AA4 00111A04  38 60 00 01 */	li r3, 1
 /* 80114AA8 00111A08  4E 80 00 20 */	blr 
+.endfn invoke__10BurnEffectFPQ23zen17particleGenerator
 
-.global emit__16UfoSuikomiEffectFR10EffectParm
-emit__16UfoSuikomiEffectFR10EffectParm:
+.fn emit__16UfoSuikomiEffectFR10EffectParm, weak
 /* 80114AAC 00111A0C  7C 08 02 A6 */	mflr r0
 /* 80114AB0 00111A10  90 01 00 04 */	stw r0, 4(r1)
 /* 80114AB4 00111A14  94 21 FF 40 */	stwu r1, -0xc0(r1)
@@ -1881,9 +1880,9 @@ emit__16UfoSuikomiEffectFR10EffectParm:
 /* 80114C64 00111BC4  38 21 00 C0 */	addi r1, r1, 0xc0
 /* 80114C68 00111BC8  7C 08 03 A6 */	mtlr r0
 /* 80114C6C 00111BCC  4E 80 00 20 */	blr 
+.endfn emit__16UfoSuikomiEffectFR10EffectParm
 
-.global getGPos__Q23zen17particleGeneratorFv
-getGPos__Q23zen17particleGeneratorFv:
+.fn getGPos__Q23zen17particleGeneratorFv, weak
 /* 80114C70 00111BD0  80 03 00 18 */	lwz r0, 0x18(r3)
 /* 80114C74 00111BD4  28 00 00 00 */	cmplwi r0, 0
 /* 80114C78 00111BD8  41 82 00 0C */	beq .L_80114C84
@@ -1892,9 +1891,9 @@ getGPos__Q23zen17particleGeneratorFv:
 .L_80114C84:
 /* 80114C84 00111BE4  38 63 00 0C */	addi r3, r3, 0xc
 /* 80114C88 00111BE8  4E 80 00 20 */	blr 
+.endfn getGPos__Q23zen17particleGeneratorFv
 
-.global kill__16UfoSuikomiEffectFv
-kill__16UfoSuikomiEffectFv:
+.fn kill__16UfoSuikomiEffectFv, weak
 /* 80114C8C 00111BEC  7C 08 02 A6 */	mflr r0
 /* 80114C90 00111BF0  90 01 00 04 */	stw r0, 4(r1)
 /* 80114C94 00111BF4  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -1915,9 +1914,9 @@ kill__16UfoSuikomiEffectFv:
 /* 80114CCC 00111C2C  38 21 00 18 */	addi r1, r1, 0x18
 /* 80114CD0 00111C30  7C 08 03 A6 */	mtlr r0
 /* 80114CD4 00111C34  4E 80 00 20 */	blr 
+.endfn kill__16UfoSuikomiEffectFv
 
-.global emit__15WhistleTemplateFR10EffectParm
-emit__15WhistleTemplateFR10EffectParm:
+.fn emit__15WhistleTemplateFR10EffectParm, weak
 /* 80114CD8 00111C38  7C 08 02 A6 */	mflr r0
 /* 80114CDC 00111C3C  90 01 00 04 */	stw r0, 4(r1)
 /* 80114CE0 00111C40  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -1978,9 +1977,9 @@ emit__15WhistleTemplateFR10EffectParm:
 /* 80114DAC 00111D0C  38 21 00 20 */	addi r1, r1, 0x20
 /* 80114DB0 00111D10  7C 08 03 A6 */	mtlr r0
 /* 80114DB4 00111D14  4E 80 00 20 */	blr 
+.endfn emit__15WhistleTemplateFR10EffectParm
 
-.global kill__15WhistleTemplateFv
-kill__15WhistleTemplateFv:
+.fn kill__15WhistleTemplateFv, weak
 /* 80114DB8 00111D18  7C 08 02 A6 */	mflr r0
 /* 80114DBC 00111D1C  90 01 00 04 */	stw r0, 4(r1)
 /* 80114DC0 00111D20  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -2011,9 +2010,9 @@ kill__15WhistleTemplateFv:
 /* 80114E1C 00111D7C  38 21 00 18 */	addi r1, r1, 0x18
 /* 80114E20 00111D80  7C 08 03 A6 */	mtlr r0
 /* 80114E24 00111D84  4E 80 00 20 */	blr 
+.endfn kill__15WhistleTemplateFv
 
-.global invoke__15WhistleTemplateFPQ23zen17particleGeneratorPQ23zen11particleMdl
-invoke__15WhistleTemplateFPQ23zen17particleGeneratorPQ23zen11particleMdl:
+.fn invoke__15WhistleTemplateFPQ23zen17particleGeneratorPQ23zen11particleMdl, weak
 /* 80114E28 00111D88  7C 08 02 A6 */	mflr r0
 /* 80114E2C 00111D8C  7C 66 1B 78 */	mr r6, r3
 /* 80114E30 00111D90  90 01 00 04 */	stw r0, 4(r1)
@@ -2237,9 +2236,9 @@ invoke__15WhistleTemplateFPQ23zen17particleGeneratorPQ23zen11particleMdl:
 /* 80115168 001120C8  38 21 01 30 */	addi r1, r1, 0x130
 /* 8011516C 001120CC  7C 08 03 A6 */	mtlr r0
 /* 80115170 001120D0  4E 80 00 20 */	blr 
+.endfn invoke__15WhistleTemplateFPQ23zen17particleGeneratorPQ23zen11particleMdl
 
-.global emit__15BombEffectLightFR10EffectParm
-emit__15BombEffectLightFR10EffectParm:
+.fn emit__15BombEffectLightFR10EffectParm, weak
 /* 80115174 001120D4  7C 08 02 A6 */	mflr r0
 /* 80115178 001120D8  38 C0 00 00 */	li r6, 0
 /* 8011517C 001120DC  90 01 00 04 */	stw r0, 4(r1)
@@ -2295,13 +2294,13 @@ emit__15BombEffectLightFR10EffectParm:
 /* 80115240 001121A0  38 21 00 28 */	addi r1, r1, 0x28
 /* 80115244 001121A4  7C 08 03 A6 */	mtlr r0
 /* 80115248 001121A8  4E 80 00 20 */	blr 
+.endfn emit__15BombEffectLightFR10EffectParm
 
-.global kill__15BombEffectLightFv
-kill__15BombEffectLightFv:
+.fn kill__15BombEffectLightFv, weak
 /* 8011524C 001121AC  4E 80 00 20 */	blr 
+.endfn kill__15BombEffectLightFv
 
-.global emit__10BombEffectFR10EffectParm
-emit__10BombEffectFR10EffectParm:
+.fn emit__10BombEffectFR10EffectParm, weak
 /* 80115250 001121B0  7C 08 02 A6 */	mflr r0
 /* 80115254 001121B4  38 C0 00 00 */	li r6, 0
 /* 80115258 001121B8  90 01 00 04 */	stw r0, 4(r1)
@@ -2363,13 +2362,13 @@ emit__10BombEffectFR10EffectParm:
 /* 80115334 00112294  38 21 00 28 */	addi r1, r1, 0x28
 /* 80115338 00112298  7C 08 03 A6 */	mtlr r0
 /* 8011533C 0011229C  4E 80 00 20 */	blr 
+.endfn emit__10BombEffectFR10EffectParm
 
-.global kill__10BombEffectFv
-kill__10BombEffectFv:
+.fn kill__10BombEffectFv, weak
 /* 80115340 001122A0  4E 80 00 20 */	blr 
+.endfn kill__10BombEffectFv
 
-.global emit__12SimpleEffectFR10EffectParm
-emit__12SimpleEffectFR10EffectParm:
+.fn emit__12SimpleEffectFR10EffectParm, weak
 /* 80115344 001122A4  7C 08 02 A6 */	mflr r0
 /* 80115348 001122A8  7C 85 23 78 */	mr r5, r4
 /* 8011534C 001122AC  90 01 00 04 */	stw r0, 4(r1)
@@ -2387,9 +2386,9 @@ emit__12SimpleEffectFR10EffectParm:
 /* 8011537C 001122DC  38 21 00 18 */	addi r1, r1, 0x18
 /* 80115380 001122E0  7C 08 03 A6 */	mtlr r0
 /* 80115384 001122E4  4E 80 00 20 */	blr 
+.endfn emit__12SimpleEffectFR10EffectParm
 
-.global kill__12SimpleEffectFv
-kill__12SimpleEffectFv:
+.fn kill__12SimpleEffectFv, weak
 /* 80115388 001122E8  7C 08 02 A6 */	mflr r0
 /* 8011538C 001122EC  90 01 00 04 */	stw r0, 4(r1)
 /* 80115390 001122F0  94 21 FF F8 */	stwu r1, -8(r1)
@@ -2405,14 +2404,14 @@ kill__12SimpleEffectFv:
 /* 801153B4 00112314  38 21 00 08 */	addi r1, r1, 8
 /* 801153B8 00112318  7C 08 03 A6 */	mtlr r0
 /* 801153BC 0011231C  4E 80 00 20 */	blr 
+.endfn kill__12SimpleEffectFv
 
-.global invoke__7NaviFueFPQ23zen17particleGenerator
-invoke__7NaviFueFPQ23zen17particleGenerator:
+.fn invoke__7NaviFueFPQ23zen17particleGenerator, weak
 /* 801153C0 00112320  38 60 00 01 */	li r3, 1
 /* 801153C4 00112324  4E 80 00 20 */	blr 
+.endfn invoke__7NaviFueFPQ23zen17particleGenerator
 
-.global emit__7NaviFueFR10EffectParm
-emit__7NaviFueFR10EffectParm:
+.fn emit__7NaviFueFR10EffectParm, weak
 /* 801153C8 00112328  7C 08 02 A6 */	mflr r0
 /* 801153CC 0011232C  90 01 00 04 */	stw r0, 4(r1)
 /* 801153D0 00112330  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -2465,9 +2464,9 @@ emit__7NaviFueFR10EffectParm:
 /* 8011547C 001123DC  38 21 00 28 */	addi r1, r1, 0x28
 /* 80115480 001123E0  7C 08 03 A6 */	mtlr r0
 /* 80115484 001123E4  4E 80 00 20 */	blr 
+.endfn emit__7NaviFueFR10EffectParm
 
-.global kill__7NaviFueFv
-kill__7NaviFueFv:
+.fn kill__7NaviFueFv, weak
 /* 80115488 001123E8  7C 08 02 A6 */	mflr r0
 /* 8011548C 001123EC  90 01 00 04 */	stw r0, 4(r1)
 /* 80115490 001123F0  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -2517,9 +2516,9 @@ kill__7NaviFueFv:
 /* 80115530 00112490  38 21 00 28 */	addi r1, r1, 0x28
 /* 80115534 00112494  7C 08 03 A6 */	mtlr r0
 /* 80115538 00112498  4E 80 00 20 */	blr 
+.endfn kill__7NaviFueFv
 
-.global emit__15SmokeTreeEffectFR10EffectParm
-emit__15SmokeTreeEffectFR10EffectParm:
+.fn emit__15SmokeTreeEffectFR10EffectParm, weak
 /* 8011553C 0011249C  7C 08 02 A6 */	mflr r0
 /* 80115540 001124A0  38 A4 00 00 */	addi r5, r4, 0
 /* 80115544 001124A4  90 01 00 04 */	stw r0, 4(r1)
@@ -2533,9 +2532,9 @@ emit__15SmokeTreeEffectFR10EffectParm:
 /* 80115564 001124C4  38 21 00 08 */	addi r1, r1, 8
 /* 80115568 001124C8  7C 08 03 A6 */	mtlr r0
 /* 8011556C 001124CC  4E 80 00 20 */	blr 
+.endfn emit__15SmokeTreeEffectFR10EffectParm
 
-.global emit__15SmokeRockEffectFR10EffectParm
-emit__15SmokeRockEffectFR10EffectParm:
+.fn emit__15SmokeRockEffectFR10EffectParm, weak
 /* 80115570 001124D0  7C 08 02 A6 */	mflr r0
 /* 80115574 001124D4  38 A4 00 00 */	addi r5, r4, 0
 /* 80115578 001124D8  90 01 00 04 */	stw r0, 4(r1)
@@ -2549,9 +2548,9 @@ emit__15SmokeRockEffectFR10EffectParm:
 /* 80115598 001124F8  38 21 00 08 */	addi r1, r1, 8
 /* 8011559C 001124FC  7C 08 03 A6 */	mtlr r0
 /* 801155A0 00112500  4E 80 00 20 */	blr 
+.endfn emit__15SmokeRockEffectFR10EffectParm
 
-.global emit__16SmokeGrassEffectFR10EffectParm
-emit__16SmokeGrassEffectFR10EffectParm:
+.fn emit__16SmokeGrassEffectFR10EffectParm, weak
 /* 801155A4 00112504  7C 08 02 A6 */	mflr r0
 /* 801155A8 00112508  38 A4 00 00 */	addi r5, r4, 0
 /* 801155AC 0011250C  90 01 00 04 */	stw r0, 4(r1)
@@ -2565,9 +2564,9 @@ emit__16SmokeGrassEffectFR10EffectParm:
 /* 801155CC 0011252C  38 21 00 08 */	addi r1, r1, 8
 /* 801155D0 00112530  7C 08 03 A6 */	mtlr r0
 /* 801155D4 00112534  4E 80 00 20 */	blr 
+.endfn emit__16SmokeGrassEffectFR10EffectParm
 
-.global emit__15SmokeSoilEffectFR10EffectParm
-emit__15SmokeSoilEffectFR10EffectParm:
+.fn emit__15SmokeSoilEffectFR10EffectParm, weak
 /* 801155D8 00112538  7C 08 02 A6 */	mflr r0
 /* 801155DC 0011253C  38 A4 00 00 */	addi r5, r4, 0
 /* 801155E0 00112540  90 01 00 04 */	stw r0, 4(r1)
@@ -2581,9 +2580,9 @@ emit__15SmokeSoilEffectFR10EffectParm:
 /* 80115600 00112560  38 21 00 08 */	addi r1, r1, 8
 /* 80115604 00112564  7C 08 03 A6 */	mtlr r0
 /* 80115608 00112568  4E 80 00 20 */	blr 
+.endfn emit__15SmokeSoilEffectFR10EffectParm
 
-.global emit__11NaviWhistleFR10EffectParm
-emit__11NaviWhistleFR10EffectParm:
+.fn emit__11NaviWhistleFR10EffectParm, weak
 /* 8011560C 0011256C  7C 08 02 A6 */	mflr r0
 /* 80115610 00112570  90 01 00 04 */	stw r0, 4(r1)
 /* 80115614 00112574  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -2652,9 +2651,9 @@ emit__11NaviWhistleFR10EffectParm:
 /* 801156FC 0011265C  38 21 00 28 */	addi r1, r1, 0x28
 /* 80115700 00112660  7C 08 03 A6 */	mtlr r0
 /* 80115704 00112664  4E 80 00 20 */	blr 
+.endfn emit__11NaviWhistleFR10EffectParm
 
-.global kill__11NaviWhistleFv
-kill__11NaviWhistleFv:
+.fn kill__11NaviWhistleFv, weak
 /* 80115708 00112668  7C 08 02 A6 */	mflr r0
 /* 8011570C 0011266C  90 01 00 04 */	stw r0, 4(r1)
 /* 80115710 00112670  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -2695,9 +2694,9 @@ kill__11NaviWhistleFv:
 /* 80115790 001126F0  38 21 00 18 */	addi r1, r1, 0x18
 /* 80115794 001126F4  7C 08 03 A6 */	mtlr r0
 /* 80115798 001126F8  4E 80 00 20 */	blr 
+.endfn kill__11NaviWhistleFv
 
-.global invoke__11NaviWhistleFPQ23zen17particleGeneratorPQ23zen11particleMdl
-invoke__11NaviWhistleFPQ23zen17particleGeneratorPQ23zen11particleMdl:
+.fn invoke__11NaviWhistleFPQ23zen17particleGeneratorPQ23zen11particleMdl, weak
 /* 8011579C 001126FC  7C 08 02 A6 */	mflr r0
 /* 801157A0 00112700  3C C0 43 30 */	lis r6, 0x4330
 /* 801157A4 00112704  90 01 00 04 */	stw r0, 4(r1)
@@ -2928,9 +2927,9 @@ invoke__11NaviWhistleFPQ23zen17particleGeneratorPQ23zen11particleMdl:
 /* 80115AF4 00112A54  38 21 01 38 */	addi r1, r1, 0x138
 /* 80115AF8 00112A58  7C 08 03 A6 */	mtlr r0
 /* 80115AFC 00112A5C  4E 80 00 20 */	blr 
+.endfn invoke__11NaviWhistleFPQ23zen17particleGeneratorPQ23zen11particleMdl
 
-.global invoke__10GoalEffectFPQ23zen17particleGenerator
-invoke__10GoalEffectFPQ23zen17particleGenerator:
+.fn invoke__10GoalEffectFPQ23zen17particleGenerator, weak
 /* 80115B00 00112A60  A8 04 00 90 */	lha r0, 0x90(r4)
 /* 80115B04 00112A64  2C 00 00 32 */	cmpwi r0, 0x32
 /* 80115B08 00112A68  41 80 00 28 */	blt .L_80115B30
@@ -2946,9 +2945,9 @@ invoke__10GoalEffectFPQ23zen17particleGenerator:
 .L_80115B30:
 /* 80115B30 00112A90  38 60 00 01 */	li r3, 1
 /* 80115B34 00112A94  4E 80 00 20 */	blr 
+.endfn invoke__10GoalEffectFPQ23zen17particleGenerator
 
-.global emit__10GoalEffectFR10EffectParm
-emit__10GoalEffectFR10EffectParm:
+.fn emit__10GoalEffectFR10EffectParm, weak
 /* 80115B38 00112A98  7C 08 02 A6 */	mflr r0
 /* 80115B3C 00112A9C  7C 66 1B 79 */	or. r6, r3, r3
 /* 80115B40 00112AA0  90 01 00 04 */	stw r0, 4(r1)
@@ -2965,6 +2964,7 @@ emit__10GoalEffectFR10EffectParm:
 /* 80115B68 00112AC8  38 21 00 08 */	addi r1, r1, 8
 /* 80115B6C 00112ACC  7C 08 03 A6 */	mtlr r0
 /* 80115B70 00112AD0  4E 80 00 20 */	blr 
+.endfn emit__10GoalEffectFR10EffectParm
 
 .fn "@4@invoke__11SlimeEffectFPQ23zen17particleGeneratorPQ23zen11particleMdl", weak
 /* 80115B74 00112AD4  38 63 FF FC */	addi r3, r3, -4
@@ -3085,7 +3085,7 @@ emit__10GoalEffectFR10EffectParm:
 	.asciz "FreeLightEffect"
 .endobj lbl_802C269C
 .balign 4
-lbl_802C26AC:
+.obj lbl_802C26AC, local
 	.4byte "__RTTI__Q23zen31CallBack1<PQ23zen11particleMdl>"
 	.4byte 0x8
 	.4byte "__RTTI__Q23zen58CallBack2<PQ23zen17particleGenerator,PQ23zen11particleMdl>"
@@ -3095,8 +3095,9 @@ lbl_802C26AC:
 	.4byte __RTTI__7KEffect
 	.4byte 0
 	.4byte 0
-.global __vt__15FreeLightEffect
-__vt__15FreeLightEffect:
+.endobj lbl_802C26AC
+.balign 4
+.obj __vt__15FreeLightEffect, global
 	.4byte __RTTI__15FreeLightEffect
 	.4byte 0
 	.4byte invoke__7KEffectFPQ23zen17particleGenerator
@@ -3112,11 +3113,13 @@ __vt__15FreeLightEffect:
 	.4byte kill__15FreeLightEffectFv
 	.4byte stop__15FreeLightEffectFv
 	.4byte restart__15FreeLightEffectFv
+.endobj __vt__15FreeLightEffect
 .balign 4
-lbl_802C270C:
+.obj lbl_802C270C, local
 	.asciz "UfoSuikomiEffect"
+.endobj lbl_802C270C
 .balign 4
-lbl_802C2720:
+.obj lbl_802C2720, local
 	.4byte "__RTTI__Q23zen31CallBack1<PQ23zen11particleMdl>"
 	.4byte 0x8
 	.4byte "__RTTI__Q23zen58CallBack2<PQ23zen17particleGenerator,PQ23zen11particleMdl>"
@@ -3126,8 +3129,9 @@ lbl_802C2720:
 	.4byte __RTTI__7KEffect
 	.4byte 0
 	.4byte 0
-.global __vt__16UfoSuikomiEffect
-__vt__16UfoSuikomiEffect:
+.endobj lbl_802C2720
+.balign 4
+.obj __vt__16UfoSuikomiEffect, weak
 	.4byte __RTTI__16UfoSuikomiEffect
 	.4byte 0
 	.4byte invoke__7KEffectFPQ23zen17particleGenerator
@@ -3143,14 +3147,17 @@ __vt__16UfoSuikomiEffect:
 	.4byte kill__16UfoSuikomiEffectFv
 	.4byte stop__7KEffectFv
 	.4byte restart__7KEffectFv
+.endobj __vt__16UfoSuikomiEffect
 .balign 4
-lbl_802C2780:
+.obj lbl_802C2780, local
 	.asciz "UfoSuckEffect"
+.endobj lbl_802C2780
 .balign 4
-lbl_802C2790:
+.obj lbl_802C2790, local
 	.asciz "WhistleTemplate"
+.endobj lbl_802C2790
 .balign 4
-lbl_802C27A0:
+.obj lbl_802C27A0, local
 	.4byte "__RTTI__Q23zen31CallBack1<PQ23zen11particleMdl>"
 	.4byte 0x8
 	.4byte "__RTTI__Q23zen58CallBack2<PQ23zen17particleGenerator,PQ23zen11particleMdl>"
@@ -3160,7 +3167,9 @@ lbl_802C27A0:
 	.4byte __RTTI__7KEffect
 	.4byte 0
 	.4byte 0
-lbl_802C27C4:
+.endobj lbl_802C27A0
+.balign 4
+.obj lbl_802C27C4, local
 	.4byte "__RTTI__Q23zen31CallBack1<PQ23zen11particleMdl>"
 	.4byte 0x8
 	.4byte "__RTTI__Q23zen58CallBack2<PQ23zen17particleGenerator,PQ23zen11particleMdl>"
@@ -3172,8 +3181,9 @@ lbl_802C27C4:
 	.4byte __RTTI__15WhistleTemplate
 	.4byte 0
 	.4byte 0
-.global __vt__13UfoSuckEffect
-__vt__13UfoSuckEffect:
+.endobj lbl_802C27C4
+.balign 4
+.obj __vt__13UfoSuckEffect, weak
 	.4byte __RTTI__13UfoSuckEffect
 	.4byte 0
 	.4byte invoke__7KEffectFPQ23zen17particleGenerator
@@ -3189,8 +3199,9 @@ __vt__13UfoSuckEffect:
 	.4byte kill__15WhistleTemplateFv
 	.4byte stop__7KEffectFv
 	.4byte restart__7KEffectFv
-.global __vt__15WhistleTemplate
-__vt__15WhistleTemplate:
+.endobj __vt__13UfoSuckEffect
+.balign 4
+.obj __vt__15WhistleTemplate, weak
 	.4byte __RTTI__15WhistleTemplate
 	.4byte 0
 	.4byte invoke__7KEffectFPQ23zen17particleGenerator
@@ -3206,11 +3217,13 @@ __vt__15WhistleTemplate:
 	.4byte kill__15WhistleTemplateFv
 	.4byte stop__7KEffectFv
 	.4byte restart__7KEffectFv
+.endobj __vt__15WhistleTemplate
 .balign 4
-lbl_802C2868:
+.obj lbl_802C2868, local
 	.asciz "BombEffectLight"
+.endobj lbl_802C2868
 .balign 4
-lbl_802C2878:
+.obj lbl_802C2878, local
 	.4byte "__RTTI__Q23zen31CallBack1<PQ23zen11particleMdl>"
 	.4byte 0x8
 	.4byte "__RTTI__Q23zen58CallBack2<PQ23zen17particleGenerator,PQ23zen11particleMdl>"
@@ -3220,8 +3233,9 @@ lbl_802C2878:
 	.4byte __RTTI__7KEffect
 	.4byte 0
 	.4byte 0
-.global __vt__15BombEffectLight
-__vt__15BombEffectLight:
+.endobj lbl_802C2878
+.balign 4
+.obj __vt__15BombEffectLight, weak
 	.4byte __RTTI__15BombEffectLight
 	.4byte 0
 	.4byte invoke__7KEffectFPQ23zen17particleGenerator
@@ -3237,11 +3251,13 @@ __vt__15BombEffectLight:
 	.4byte kill__15BombEffectLightFv
 	.4byte stop__7KEffectFv
 	.4byte restart__7KEffectFv
+.endobj __vt__15BombEffectLight
 .balign 4
-lbl_802C28D8:
+.obj lbl_802C28D8, local
 	.asciz "BombEffect"
+.endobj lbl_802C28D8
 .balign 4
-lbl_802C28E4:
+.obj lbl_802C28E4, local
 	.4byte "__RTTI__Q23zen31CallBack1<PQ23zen11particleMdl>"
 	.4byte 0x8
 	.4byte "__RTTI__Q23zen58CallBack2<PQ23zen17particleGenerator,PQ23zen11particleMdl>"
@@ -3251,8 +3267,9 @@ lbl_802C28E4:
 	.4byte __RTTI__7KEffect
 	.4byte 0
 	.4byte 0
-.global __vt__10BombEffect
-__vt__10BombEffect:
+.endobj lbl_802C28E4
+.balign 4
+.obj __vt__10BombEffect, weak
 	.4byte __RTTI__10BombEffect
 	.4byte 0
 	.4byte invoke__7KEffectFPQ23zen17particleGenerator
@@ -3268,11 +3285,13 @@ __vt__10BombEffect:
 	.4byte kill__10BombEffectFv
 	.4byte stop__7KEffectFv
 	.4byte restart__7KEffectFv
+.endobj __vt__10BombEffect
 .balign 4
-lbl_802C2944:
+.obj lbl_802C2944, local
 	.asciz "SimpleEffect"
+.endobj lbl_802C2944
 .balign 4
-lbl_802C2954:
+.obj lbl_802C2954, local
 	.4byte "__RTTI__Q23zen31CallBack1<PQ23zen11particleMdl>"
 	.4byte 0x8
 	.4byte "__RTTI__Q23zen58CallBack2<PQ23zen17particleGenerator,PQ23zen11particleMdl>"
@@ -3282,8 +3301,9 @@ lbl_802C2954:
 	.4byte __RTTI__7KEffect
 	.4byte 0
 	.4byte 0
-.global __vt__12SimpleEffect
-__vt__12SimpleEffect:
+.endobj lbl_802C2954
+.balign 4
+.obj __vt__12SimpleEffect, weak
 	.4byte __RTTI__12SimpleEffect
 	.4byte 0
 	.4byte invoke__7KEffectFPQ23zen17particleGenerator
@@ -3299,7 +3319,9 @@ __vt__12SimpleEffect:
 	.4byte kill__12SimpleEffectFv
 	.4byte stop__7KEffectFv
 	.4byte restart__7KEffectFv
-lbl_802C29B4:
+.endobj __vt__12SimpleEffect
+.balign 4
+.obj lbl_802C29B4, local
 	.4byte "__RTTI__Q23zen31CallBack1<PQ23zen11particleMdl>"
 	.4byte 0x8
 	.4byte "__RTTI__Q23zen58CallBack2<PQ23zen17particleGenerator,PQ23zen11particleMdl>"
@@ -3309,8 +3331,9 @@ lbl_802C29B4:
 	.4byte __RTTI__7KEffect
 	.4byte 0
 	.4byte 0
-.global __vt__7NaviFue
-__vt__7NaviFue:
+.endobj lbl_802C29B4
+.balign 4
+.obj __vt__7NaviFue, weak
 	.4byte __RTTI__7NaviFue
 	.4byte 0
 	.4byte invoke__7NaviFueFPQ23zen17particleGenerator
@@ -3326,11 +3349,13 @@ __vt__7NaviFue:
 	.4byte kill__7NaviFueFv
 	.4byte stop__7KEffectFv
 	.4byte restart__7KEffectFv
+.endobj __vt__7NaviFue
 .balign 4
-lbl_802C2A14:
+.obj lbl_802C2A14, local
 	.asciz "SmokeTreeEffect"
+.endobj lbl_802C2A14
 .balign 4
-lbl_802C2A24:
+.obj lbl_802C2A24, local
 	.4byte "__RTTI__Q23zen31CallBack1<PQ23zen11particleMdl>"
 	.4byte 0x8
 	.4byte "__RTTI__Q23zen58CallBack2<PQ23zen17particleGenerator,PQ23zen11particleMdl>"
@@ -3340,8 +3365,9 @@ lbl_802C2A24:
 	.4byte __RTTI__7KEffect
 	.4byte 0
 	.4byte 0
-.global __vt__15SmokeTreeEffect
-__vt__15SmokeTreeEffect:
+.endobj lbl_802C2A24
+.balign 4
+.obj __vt__15SmokeTreeEffect, weak
 	.4byte __RTTI__15SmokeTreeEffect
 	.4byte 0
 	.4byte invoke__7KEffectFPQ23zen17particleGenerator
@@ -3357,11 +3383,13 @@ __vt__15SmokeTreeEffect:
 	.4byte kill__7KEffectFv
 	.4byte stop__7KEffectFv
 	.4byte restart__7KEffectFv
+.endobj __vt__15SmokeTreeEffect
 .balign 4
-lbl_802C2A84:
+.obj lbl_802C2A84, local
 	.asciz "SmokeRockEffect"
+.endobj lbl_802C2A84
 .balign 4
-lbl_802C2A94:
+.obj lbl_802C2A94, local
 	.4byte "__RTTI__Q23zen31CallBack1<PQ23zen11particleMdl>"
 	.4byte 0x8
 	.4byte "__RTTI__Q23zen58CallBack2<PQ23zen17particleGenerator,PQ23zen11particleMdl>"
@@ -3371,8 +3399,9 @@ lbl_802C2A94:
 	.4byte __RTTI__7KEffect
 	.4byte 0
 	.4byte 0
-.global __vt__15SmokeRockEffect
-__vt__15SmokeRockEffect:
+.endobj lbl_802C2A94
+.balign 4
+.obj __vt__15SmokeRockEffect, weak
 	.4byte __RTTI__15SmokeRockEffect
 	.4byte 0
 	.4byte invoke__7KEffectFPQ23zen17particleGenerator
@@ -3388,11 +3417,13 @@ __vt__15SmokeRockEffect:
 	.4byte kill__7KEffectFv
 	.4byte stop__7KEffectFv
 	.4byte restart__7KEffectFv
+.endobj __vt__15SmokeRockEffect
 .balign 4
-lbl_802C2AF4:
+.obj lbl_802C2AF4, local
 	.asciz "SmokeGrassEffect"
+.endobj lbl_802C2AF4
 .balign 4
-lbl_802C2B08:
+.obj lbl_802C2B08, local
 	.4byte "__RTTI__Q23zen31CallBack1<PQ23zen11particleMdl>"
 	.4byte 0x8
 	.4byte "__RTTI__Q23zen58CallBack2<PQ23zen17particleGenerator,PQ23zen11particleMdl>"
@@ -3402,8 +3433,9 @@ lbl_802C2B08:
 	.4byte __RTTI__7KEffect
 	.4byte 0
 	.4byte 0
-.global __vt__16SmokeGrassEffect
-__vt__16SmokeGrassEffect:
+.endobj lbl_802C2B08
+.balign 4
+.obj __vt__16SmokeGrassEffect, weak
 	.4byte __RTTI__16SmokeGrassEffect
 	.4byte 0
 	.4byte invoke__7KEffectFPQ23zen17particleGenerator
@@ -3419,11 +3451,13 @@ __vt__16SmokeGrassEffect:
 	.4byte kill__7KEffectFv
 	.4byte stop__7KEffectFv
 	.4byte restart__7KEffectFv
+.endobj __vt__16SmokeGrassEffect
 .balign 4
-lbl_802C2B68:
+.obj lbl_802C2B68, local
 	.asciz "SmokeSoilEffect"
+.endobj lbl_802C2B68
 .balign 4
-lbl_802C2B78:
+.obj lbl_802C2B78, local
 	.4byte "__RTTI__Q23zen31CallBack1<PQ23zen11particleMdl>"
 	.4byte 0x8
 	.4byte "__RTTI__Q23zen58CallBack2<PQ23zen17particleGenerator,PQ23zen11particleMdl>"
@@ -3433,8 +3467,9 @@ lbl_802C2B78:
 	.4byte __RTTI__7KEffect
 	.4byte 0
 	.4byte 0
-.global __vt__15SmokeSoilEffect
-__vt__15SmokeSoilEffect:
+.endobj lbl_802C2B78
+.balign 4
+.obj __vt__15SmokeSoilEffect, weak
 	.4byte __RTTI__15SmokeSoilEffect
 	.4byte 0
 	.4byte invoke__7KEffectFPQ23zen17particleGenerator
@@ -3450,11 +3485,13 @@ __vt__15SmokeSoilEffect:
 	.4byte kill__7KEffectFv
 	.4byte stop__7KEffectFv
 	.4byte restart__7KEffectFv
+.endobj __vt__15SmokeSoilEffect
 .balign 4
-lbl_802C2BD8:
+.obj lbl_802C2BD8, local
 	.asciz "NaviWhistle"
+.endobj lbl_802C2BD8
 .balign 4
-lbl_802C2BE4:
+.obj lbl_802C2BE4, local
 	.4byte "__RTTI__Q23zen31CallBack1<PQ23zen11particleMdl>"
 	.4byte 0x8
 	.4byte "__RTTI__Q23zen58CallBack2<PQ23zen17particleGenerator,PQ23zen11particleMdl>"
@@ -3464,8 +3501,9 @@ lbl_802C2BE4:
 	.4byte __RTTI__7KEffect
 	.4byte 0
 	.4byte 0
-.global __vt__11NaviWhistle
-__vt__11NaviWhistle:
+.endobj lbl_802C2BE4
+.balign 4
+.obj __vt__11NaviWhistle, weak
 	.4byte __RTTI__11NaviWhistle
 	.4byte 0
 	.4byte invoke__7KEffectFPQ23zen17particleGenerator
@@ -3481,11 +3519,13 @@ __vt__11NaviWhistle:
 	.4byte kill__11NaviWhistleFv
 	.4byte stop__7KEffectFv
 	.4byte restart__7KEffectFv
+.endobj __vt__11NaviWhistle
 .balign 4
-lbl_802C2C44:
+.obj lbl_802C2C44, local
 	.asciz "GoalEffect"
+.endobj lbl_802C2C44
 .balign 4
-lbl_802C2C50:
+.obj lbl_802C2C50, local
 	.4byte "__RTTI__Q23zen31CallBack1<PQ23zen11particleMdl>"
 	.4byte 0x8
 	.4byte "__RTTI__Q23zen58CallBack2<PQ23zen17particleGenerator,PQ23zen11particleMdl>"
@@ -3495,8 +3535,9 @@ lbl_802C2C50:
 	.4byte __RTTI__7KEffect
 	.4byte 0
 	.4byte 0
-.global __vt__10GoalEffect
-__vt__10GoalEffect:
+.endobj lbl_802C2C50
+.balign 4
+.obj __vt__10GoalEffect, weak
 	.4byte __RTTI__10GoalEffect
 	.4byte 0
 	.4byte invoke__10GoalEffectFPQ23zen17particleGenerator
@@ -3512,11 +3553,13 @@ __vt__10GoalEffect:
 	.4byte kill__7KEffectFv
 	.4byte stop__7KEffectFv
 	.4byte restart__7KEffectFv
+.endobj __vt__10GoalEffect
 .balign 4
-lbl_802C2CB0:
+.obj lbl_802C2CB0, local
 	.asciz "SlimeEffect"
+.endobj lbl_802C2CB0
 .balign 4
-lbl_802C2CBC:
+.obj lbl_802C2CBC, local
 	.4byte "__RTTI__Q23zen31CallBack1<PQ23zen11particleMdl>"
 	.4byte 0x8
 	.4byte "__RTTI__Q23zen58CallBack2<PQ23zen17particleGenerator,PQ23zen11particleMdl>"
@@ -3526,8 +3569,9 @@ lbl_802C2CBC:
 	.4byte __RTTI__7KEffect
 	.4byte 0
 	.4byte 0
-.global __vt__11SlimeEffect
-__vt__11SlimeEffect:
+.endobj lbl_802C2CBC
+.balign 4
+.obj __vt__11SlimeEffect, global
 	.4byte __RTTI__11SlimeEffect
 	.4byte 0
 	.4byte invoke__7KEffectFPQ23zen17particleGenerator
@@ -3543,6 +3587,7 @@ __vt__11SlimeEffect:
 	.4byte kill__11SlimeEffectFv
 	.4byte stop__11SlimeEffectFv
 	.4byte restart__11SlimeEffectFv
+.endobj __vt__11SlimeEffect
 .balign 4
 # This doesn't show in the map. What the hell is this?!
 # Looks like remnants of a virtual table containing thunks.

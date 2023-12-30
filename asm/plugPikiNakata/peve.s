@@ -1,14 +1,13 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global __ct__13PeveConditionFv
-__ct__13PeveConditionFv:
+.fn __ct__13PeveConditionFv, global
 /* 80125540 001224A0  3C 80 80 2C */	lis r4, __vt__13PeveCondition@ha
 /* 80125544 001224A4  38 04 5E 24 */	addi r0, r4, __vt__13PeveCondition@l
 /* 80125548 001224A8  90 03 00 00 */	stw r0, 0(r3)
 /* 8012554C 001224AC  4E 80 00 20 */	blr 
+.endfn __ct__13PeveConditionFv
 
-.global __ct__9PeveEventFi
-__ct__9PeveEventFi:
+.fn __ct__9PeveEventFi, global
 /* 80125550 001224B0  7C 08 02 A6 */	mflr r0
 /* 80125554 001224B4  90 01 00 04 */	stw r0, 4(r1)
 /* 80125558 001224B8  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -27,9 +26,9 @@ __ct__9PeveEventFi:
 /* 8012558C 001224EC  38 21 00 18 */	addi r1, r1, 0x18
 /* 80125590 001224F0  7C 08 03 A6 */	mtlr r0
 /* 80125594 001224F4  4E 80 00 20 */	blr 
+.endfn __ct__9PeveEventFi
 
-.global reset__17PeveParallelEventFv
-reset__17PeveParallelEventFv:
+.fn reset__17PeveParallelEventFv, global
 /* 80125598 001224F8  7C 08 02 A6 */	mflr r0
 /* 8012559C 001224FC  90 01 00 04 */	stw r0, 4(r1)
 /* 801255A0 00122500  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -66,9 +65,9 @@ reset__17PeveParallelEventFv:
 /* 80125610 00122570  38 21 00 20 */	addi r1, r1, 0x20
 /* 80125614 00122574  7C 08 03 A6 */	mtlr r0
 /* 80125618 00122578  4E 80 00 20 */	blr 
+.endfn reset__17PeveParallelEventFv
 
-.global update__17PeveParallelEventFv
-update__17PeveParallelEventFv:
+.fn update__17PeveParallelEventFv, global
 /* 8012561C 0012257C  7C 08 02 A6 */	mflr r0
 /* 80125620 00122580  90 01 00 04 */	stw r0, 4(r1)
 /* 80125624 00122584  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -105,9 +104,9 @@ update__17PeveParallelEventFv:
 /* 80125694 001225F4  38 21 00 20 */	addi r1, r1, 0x20
 /* 80125698 001225F8  7C 08 03 A6 */	mtlr r0
 /* 8012569C 001225FC  4E 80 00 20 */	blr 
+.endfn update__17PeveParallelEventFv
 
-.global isFinished__17PeveParallelEventFv
-isFinished__17PeveParallelEventFv:
+.fn isFinished__17PeveParallelEventFv, global
 /* 801256A0 00122600  7C 08 02 A6 */	mflr r0
 /* 801256A4 00122604  90 01 00 04 */	stw r0, 4(r1)
 /* 801256A8 00122608  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -143,9 +142,9 @@ isFinished__17PeveParallelEventFv:
 /* 80125710 00122670  38 21 00 20 */	addi r1, r1, 0x20
 /* 80125714 00122674  7C 08 03 A6 */	mtlr r0
 /* 80125718 00122678  4E 80 00 20 */	blr 
+.endfn isFinished__17PeveParallelEventFv
 
-.global __ct__15PeveSerialEventFi
-__ct__15PeveSerialEventFi:
+.fn __ct__15PeveSerialEventFi, global
 /* 8012571C 0012267C  7C 08 02 A6 */	mflr r0
 /* 80125720 00122680  90 01 00 04 */	stw r0, 4(r1)
 /* 80125724 00122684  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -167,9 +166,9 @@ __ct__15PeveSerialEventFi:
 /* 80125764 001226C4  38 21 00 18 */	addi r1, r1, 0x18
 /* 80125768 001226C8  7C 08 03 A6 */	mtlr r0
 /* 8012576C 001226CC  4E 80 00 20 */	blr 
+.endfn __ct__15PeveSerialEventFi
 
-.global reset__15PeveSerialEventFv
-reset__15PeveSerialEventFv:
+.fn reset__15PeveSerialEventFv, global
 /* 80125770 001226D0  7C 08 02 A6 */	mflr r0
 /* 80125774 001226D4  90 01 00 04 */	stw r0, 4(r1)
 /* 80125778 001226D8  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -197,9 +196,9 @@ reset__15PeveSerialEventFv:
 /* 801257CC 0012272C  38 21 00 20 */	addi r1, r1, 0x20
 /* 801257D0 00122730  7C 08 03 A6 */	mtlr r0
 /* 801257D4 00122734  4E 80 00 20 */	blr 
+.endfn reset__15PeveSerialEventFv
 
-.global update__15PeveSerialEventFv
-update__15PeveSerialEventFv:
+.fn update__15PeveSerialEventFv, global
 /* 801257D8 00122738  7C 08 02 A6 */	mflr r0
 /* 801257DC 0012273C  90 01 00 04 */	stw r0, 4(r1)
 /* 801257E0 00122740  94 21 FF D0 */	stwu r1, -0x30(r1)
@@ -255,9 +254,9 @@ update__15PeveSerialEventFv:
 /* 80125898 001227F8  38 21 00 30 */	addi r1, r1, 0x30
 /* 8012589C 001227FC  7C 08 03 A6 */	mtlr r0
 /* 801258A0 00122800  4E 80 00 20 */	blr 
+.endfn update__15PeveSerialEventFv
 
-.global isFinished__15PeveSerialEventFv
-isFinished__15PeveSerialEventFv:
+.fn isFinished__15PeveSerialEventFv, global
 /* 801258A4 00122804  7C 08 02 A6 */	mflr r0
 /* 801258A8 00122808  90 01 00 04 */	stw r0, 4(r1)
 /* 801258AC 0012280C  94 21 FF F8 */	stwu r1, -8(r1)
@@ -292,9 +291,9 @@ isFinished__15PeveSerialEventFv:
 /* 8012590C 0012286C  38 21 00 08 */	addi r1, r1, 8
 /* 80125910 00122870  7C 08 03 A6 */	mtlr r0
 /* 80125914 00122874  4E 80 00 20 */	blr 
+.endfn isFinished__15PeveSerialEventFv
 
-.global __ct__19PeveCameraPostureIOFv
-__ct__19PeveCameraPostureIOFv:
+.fn __ct__19PeveCameraPostureIOFv, global
 /* 80125918 00122878  7C 08 02 A6 */	mflr r0
 /* 8012591C 0012287C  3C 80 80 2C */	lis r4, __vt__12NPosture3DIO@ha
 /* 80125920 00122880  90 01 00 04 */	stw r0, 4(r1)
@@ -315,14 +314,14 @@ __ct__19PeveCameraPostureIOFv:
 /* 8012595C 001228BC  38 21 00 18 */	addi r1, r1, 0x18
 /* 80125960 001228C0  7C 08 03 A6 */	mtlr r0
 /* 80125964 001228C4  4E 80 00 20 */	blr 
+.endfn __ct__19PeveCameraPostureIOFv
 
-.global construct__19PeveCameraPostureIOFP10PcamCamera
-construct__19PeveCameraPostureIOFP10PcamCamera:
+.fn construct__19PeveCameraPostureIOFP10PcamCamera, global
 /* 80125968 001228C8  90 83 00 04 */	stw r4, 4(r3)
 /* 8012596C 001228CC  4E 80 00 20 */	blr 
+.endfn construct__19PeveCameraPostureIOFP10PcamCamera
 
-.global __ct__19PeveClampVector3fIOFv
-__ct__19PeveClampVector3fIOFv:
+.fn __ct__19PeveClampVector3fIOFv, global
 /* 80125970 001228D0  7C 08 02 A6 */	mflr r0
 /* 80125974 001228D4  3C 80 80 2C */	lis r4, __vt__11NVector3fIO@ha
 /* 80125978 001228D8  90 01 00 04 */	stw r0, 4(r1)
@@ -347,15 +346,15 @@ __ct__19PeveClampVector3fIOFv:
 /* 801259C4 00122924  38 21 00 18 */	addi r1, r1, 0x18
 /* 801259C8 00122928  7C 08 03 A6 */	mtlr r0
 /* 801259CC 0012292C  4E 80 00 20 */	blr 
+.endfn __ct__19PeveClampVector3fIOFv
 
-.global construct__19PeveClampVector3fIOFv
-construct__19PeveClampVector3fIOFv:
+.fn construct__19PeveClampVector3fIOFv, global
 /* 801259D0 00122930  C0 02 A1 E8 */	lfs f0, lbl_803EA3E8@sda21(r2)
 /* 801259D4 00122934  D0 03 00 10 */	stfs f0, 0x10(r3)
 /* 801259D8 00122938  4E 80 00 20 */	blr 
+.endfn construct__19PeveClampVector3fIOFv
 
-.global input__19PeveClampVector3fIOFR9NVector3f
-input__19PeveClampVector3fIOFR9NVector3f:
+.fn input__19PeveClampVector3fIOFR9NVector3f, global
 /* 801259DC 0012293C  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 801259E0 00122940  C0 04 00 00 */	lfs f0, 0(r4)
 /* 801259E4 00122944  D0 03 00 04 */	stfs f0, 4(r3)
@@ -413,9 +412,9 @@ input__19PeveClampVector3fIOFR9NVector3f:
 .L_80125AB0:
 /* 80125AB0 00122A10  38 21 00 20 */	addi r1, r1, 0x20
 /* 80125AB4 00122A14  4E 80 00 20 */	blr 
+.endfn input__19PeveClampVector3fIOFR9NVector3f
 
-.global output__16NVector3fIOClassFR9NVector3f
-output__16NVector3fIOClassFR9NVector3f:
+.fn output__16NVector3fIOClassFR9NVector3f, weak
 /* 80125AB8 00122A18  C0 03 00 04 */	lfs f0, 4(r3)
 /* 80125ABC 00122A1C  D0 04 00 00 */	stfs f0, 0(r4)
 /* 80125AC0 00122A20  C0 03 00 08 */	lfs f0, 8(r3)
@@ -423,9 +422,9 @@ output__16NVector3fIOClassFR9NVector3f:
 /* 80125AC8 00122A28  C0 03 00 0C */	lfs f0, 0xc(r3)
 /* 80125ACC 00122A2C  D0 04 00 08 */	stfs f0, 8(r4)
 /* 80125AD0 00122A30  4E 80 00 20 */	blr 
+.endfn output__16NVector3fIOClassFR9NVector3f
 
-.global input__16NVector3fIOClassFR9NVector3f
-input__16NVector3fIOClassFR9NVector3f:
+.fn input__16NVector3fIOClassFR9NVector3f, weak
 /* 80125AD4 00122A34  C0 04 00 00 */	lfs f0, 0(r4)
 /* 80125AD8 00122A38  D0 03 00 04 */	stfs f0, 4(r3)
 /* 80125ADC 00122A3C  C0 04 00 04 */	lfs f0, 4(r4)
@@ -433,9 +432,9 @@ input__16NVector3fIOClassFR9NVector3f:
 /* 80125AE4 00122A44  C0 04 00 08 */	lfs f0, 8(r4)
 /* 80125AE8 00122A48  D0 03 00 0C */	stfs f0, 0xc(r3)
 /* 80125AEC 00122A4C  4E 80 00 20 */	blr 
+.endfn input__16NVector3fIOClassFR9NVector3f
 
-.global input__22PeveCreaturePositionIOFR9NVector3f
-input__22PeveCreaturePositionIOFR9NVector3f:
+.fn input__22PeveCreaturePositionIOFR9NVector3f, weak
 /* 80125AF0 00122A50  80 A3 00 04 */	lwz r5, 4(r3)
 /* 80125AF4 00122A54  80 64 00 00 */	lwz r3, 0(r4)
 /* 80125AF8 00122A58  80 04 00 04 */	lwz r0, 4(r4)
@@ -444,9 +443,9 @@ input__22PeveCreaturePositionIOFR9NVector3f:
 /* 80125B04 00122A64  80 04 00 08 */	lwz r0, 8(r4)
 /* 80125B08 00122A68  90 05 00 9C */	stw r0, 0x9c(r5)
 /* 80125B0C 00122A6C  4E 80 00 20 */	blr 
+.endfn input__22PeveCreaturePositionIOFR9NVector3f
 
-.global output__22PeveCreaturePositionIOFR9NVector3f
-output__22PeveCreaturePositionIOFR9NVector3f:
+.fn output__22PeveCreaturePositionIOFR9NVector3f, weak
 /* 80125B10 00122A70  80 A3 00 04 */	lwz r5, 4(r3)
 /* 80125B14 00122A74  80 65 00 94 */	lwz r3, 0x94(r5)
 /* 80125B18 00122A78  80 05 00 98 */	lwz r0, 0x98(r5)
@@ -455,9 +454,9 @@ output__22PeveCreaturePositionIOFR9NVector3f:
 /* 80125B24 00122A84  80 05 00 9C */	lwz r0, 0x9c(r5)
 /* 80125B28 00122A88  90 04 00 08 */	stw r0, 8(r4)
 /* 80125B2C 00122A8C  4E 80 00 20 */	blr 
+.endfn output__22PeveCreaturePositionIOFR9NVector3f
 
-.global input__19PeveCameraPostureIOFR10NPosture3D
-input__19PeveCameraPostureIOFR10NPosture3D:
+.fn input__19PeveCameraPostureIOFR10NPosture3D, weak
 /* 80125B30 00122A90  7C 08 02 A6 */	mflr r0
 /* 80125B34 00122A94  90 01 00 04 */	stw r0, 4(r1)
 /* 80125B38 00122A98  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -481,9 +480,9 @@ input__19PeveCameraPostureIOFR10NPosture3D:
 /* 80125B80 00122AE0  38 21 00 20 */	addi r1, r1, 0x20
 /* 80125B84 00122AE4  7C 08 03 A6 */	mtlr r0
 /* 80125B88 00122AE8  4E 80 00 20 */	blr 
+.endfn input__19PeveCameraPostureIOFR10NPosture3D
 
-.global output__19PeveCameraPostureIOFR10NPosture3D
-output__19PeveCameraPostureIOFR10NPosture3D:
+.fn output__19PeveCameraPostureIOFR10NPosture3D, weak
 /* 80125B8C 00122AEC  7C 08 02 A6 */	mflr r0
 /* 80125B90 00122AF0  90 01 00 04 */	stw r0, 4(r1)
 /* 80125B94 00122AF4  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -507,9 +506,9 @@ output__19PeveCameraPostureIOFR10NPosture3D:
 /* 80125BDC 00122B3C  38 21 00 18 */	addi r1, r1, 0x18
 /* 80125BE0 00122B40  7C 08 03 A6 */	mtlr r0
 /* 80125BE4 00122B44  4E 80 00 20 */	blr 
+.endfn output__19PeveCameraPostureIOFR10NPosture3D
 
-.global input__22PeveCameraWatchpointIOFR9NVector3f
-input__22PeveCameraWatchpointIOFR9NVector3f:
+.fn input__22PeveCameraWatchpointIOFR9NVector3f, weak
 /* 80125BE8 00122B48  80 63 00 04 */	lwz r3, 4(r3)
 /* 80125BEC 00122B4C  C0 04 00 00 */	lfs f0, 0(r4)
 /* 80125BF0 00122B50  D0 03 00 14 */	stfs f0, 0x14(r3)
@@ -518,9 +517,9 @@ input__22PeveCameraWatchpointIOFR9NVector3f:
 /* 80125BFC 00122B5C  C0 04 00 08 */	lfs f0, 8(r4)
 /* 80125C00 00122B60  D0 03 00 1C */	stfs f0, 0x1c(r3)
 /* 80125C04 00122B64  4E 80 00 20 */	blr 
+.endfn input__22PeveCameraWatchpointIOFR9NVector3f
 
-.global output__22PeveCameraWatchpointIOFR9NVector3f
-output__22PeveCameraWatchpointIOFR9NVector3f:
+.fn output__22PeveCameraWatchpointIOFR9NVector3f, weak
 /* 80125C08 00122B68  80 63 00 04 */	lwz r3, 4(r3)
 /* 80125C0C 00122B6C  C4 03 00 14 */	lfsu f0, 0x14(r3)
 /* 80125C10 00122B70  D0 04 00 00 */	stfs f0, 0(r4)
@@ -529,9 +528,9 @@ output__22PeveCameraWatchpointIOFR9NVector3f:
 /* 80125C1C 00122B7C  C0 03 00 08 */	lfs f0, 8(r3)
 /* 80125C20 00122B80  D0 04 00 08 */	stfs f0, 8(r4)
 /* 80125C24 00122B84  4E 80 00 20 */	blr 
+.endfn output__22PeveCameraWatchpointIOFR9NVector3f
 
-.global input__21PeveCameraViewpointIOFR9NVector3f
-input__21PeveCameraViewpointIOFR9NVector3f:
+.fn input__21PeveCameraViewpointIOFR9NVector3f, weak
 /* 80125C28 00122B88  80 63 00 04 */	lwz r3, 4(r3)
 /* 80125C2C 00122B8C  C0 04 00 00 */	lfs f0, 0(r4)
 /* 80125C30 00122B90  D0 03 00 08 */	stfs f0, 8(r3)
@@ -540,9 +539,9 @@ input__21PeveCameraViewpointIOFR9NVector3f:
 /* 80125C3C 00122B9C  C0 04 00 08 */	lfs f0, 8(r4)
 /* 80125C40 00122BA0  D0 03 00 10 */	stfs f0, 0x10(r3)
 /* 80125C44 00122BA4  4E 80 00 20 */	blr 
+.endfn input__21PeveCameraViewpointIOFR9NVector3f
 
-.global output__21PeveCameraViewpointIOFR9NVector3f
-output__21PeveCameraViewpointIOFR9NVector3f:
+.fn output__21PeveCameraViewpointIOFR9NVector3f, weak
 /* 80125C48 00122BA8  80 63 00 04 */	lwz r3, 4(r3)
 /* 80125C4C 00122BAC  C4 03 00 08 */	lfsu f0, 8(r3)
 /* 80125C50 00122BB0  D0 04 00 00 */	stfs f0, 0(r4)
@@ -551,133 +550,163 @@ output__21PeveCameraViewpointIOFR9NVector3f:
 /* 80125C5C 00122BBC  C0 03 00 08 */	lfs f0, 8(r3)
 /* 80125C60 00122BC0  D0 04 00 08 */	stfs f0, 8(r4)
 /* 80125C64 00122BC4  4E 80 00 20 */	blr 
+.endfn output__21PeveCameraViewpointIOFR9NVector3f
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802C5B80:
+.obj lbl_802C5B80, local
 	.asciz "peve.cpp"
+.endobj lbl_802C5B80
 .balign 4
-lbl_802C5B8C:
+.obj lbl_802C5B8C, local
 	.asciz "PeveClampVector3fIO"
+.endobj lbl_802C5B8C
 .balign 4
-lbl_802C5BA0:
+.obj lbl_802C5BA0, local
 	.asciz "NVector3fIO"
+.endobj lbl_802C5BA0
 .balign 4
-lbl_802C5BAC:
+.obj lbl_802C5BAC, local
 	.asciz "NVector3fIOClass"
+.endobj lbl_802C5BAC
 .balign 4
-lbl_802C5BC0:
+.obj lbl_802C5BC0, local
 	.4byte __RTTI__11NVector3fIO
 	.4byte 0
 	.4byte 0
-lbl_802C5BCC:
+.endobj lbl_802C5BC0
+.balign 4
+.obj lbl_802C5BCC, local
 	.4byte __RTTI__11NVector3fIO
 	.4byte 0
 	.4byte __RTTI__16NVector3fIOClass
 	.4byte 0
 	.4byte 0
-.global __vt__19PeveClampVector3fIO
-__vt__19PeveClampVector3fIO:
+.endobj lbl_802C5BCC
+.balign 4
+.obj __vt__19PeveClampVector3fIO, global
 	.4byte __RTTI__19PeveClampVector3fIO
 	.4byte 0
 	.4byte input__19PeveClampVector3fIOFR9NVector3f
 	.4byte output__16NVector3fIOClassFR9NVector3f
-.global __vt__16NVector3fIOClass
-__vt__16NVector3fIOClass:
+.endobj __vt__19PeveClampVector3fIO
+.balign 4
+.obj __vt__16NVector3fIOClass, weak
 	.4byte __RTTI__16NVector3fIOClass
 	.4byte 0
 	.4byte input__16NVector3fIOClassFR9NVector3f
 	.4byte output__16NVector3fIOClassFR9NVector3f
+.endobj __vt__16NVector3fIOClass
 .balign 4
-lbl_802C5C00:
+.obj lbl_802C5C00, local
 	.asciz "PeveCreaturePositionIO"
+.endobj lbl_802C5C00
 .balign 4
-lbl_802C5C18:
+.obj lbl_802C5C18, local
 	.4byte __RTTI__11NVector3fIO
 	.4byte 0
 	.4byte 0
-.global __vt__22PeveCreaturePositionIO
-__vt__22PeveCreaturePositionIO:
+.endobj lbl_802C5C18
+.balign 4
+.obj __vt__22PeveCreaturePositionIO, weak
 	.4byte __RTTI__22PeveCreaturePositionIO
 	.4byte 0
 	.4byte input__22PeveCreaturePositionIOFR9NVector3f
 	.4byte output__22PeveCreaturePositionIOFR9NVector3f
+.endobj __vt__22PeveCreaturePositionIO
 .balign 4
-lbl_802C5C34:
+.obj lbl_802C5C34, local
 	.asciz "PeveCameraPostureIO"
+.endobj lbl_802C5C34
 .balign 4
-lbl_802C5C48:
+.obj lbl_802C5C48, local
 	.asciz "NPosture3DIO"
+.endobj lbl_802C5C48
 .balign 4
-lbl_802C5C58:
+.obj lbl_802C5C58, local
 	.4byte __RTTI__12NPosture3DIO
 	.4byte 0
 	.4byte 0
-.global __vt__19PeveCameraPostureIO
-__vt__19PeveCameraPostureIO:
+.endobj lbl_802C5C58
+.balign 4
+.obj __vt__19PeveCameraPostureIO, weak
 	.4byte __RTTI__19PeveCameraPostureIO
 	.4byte 0
 	.4byte input__19PeveCameraPostureIOFR10NPosture3D
 	.4byte output__19PeveCameraPostureIOFR10NPosture3D
-.global __vt__12NPosture3DIO
-__vt__12NPosture3DIO:
+.endobj __vt__19PeveCameraPostureIO
+.balign 4
+.obj __vt__12NPosture3DIO, weak
 	.4byte __RTTI__12NPosture3DIO
 	.4byte 0
 	.4byte 0
 	.4byte 0
+.endobj __vt__12NPosture3DIO
 .balign 4
-lbl_802C5C84:
+.obj lbl_802C5C84, local
 	.asciz "PeveCameraWatchpointIO"
+.endobj lbl_802C5C84
 .balign 4
-lbl_802C5C9C:
+.obj lbl_802C5C9C, local
 	.4byte __RTTI__11NVector3fIO
 	.4byte 0
 	.4byte 0
-.global __vt__22PeveCameraWatchpointIO
-__vt__22PeveCameraWatchpointIO:
+.endobj lbl_802C5C9C
+.balign 4
+.obj __vt__22PeveCameraWatchpointIO, weak
 	.4byte __RTTI__22PeveCameraWatchpointIO
 	.4byte 0
 	.4byte input__22PeveCameraWatchpointIOFR9NVector3f
 	.4byte output__22PeveCameraWatchpointIOFR9NVector3f
+.endobj __vt__22PeveCameraWatchpointIO
 .balign 4
-lbl_802C5CB8:
+.obj lbl_802C5CB8, local
 	.asciz "PeveCameraViewpointIO"
+.endobj lbl_802C5CB8
 .balign 4
-lbl_802C5CD0:
+.obj lbl_802C5CD0, local
 	.4byte __RTTI__11NVector3fIO
 	.4byte 0
 	.4byte 0
-.global __vt__21PeveCameraViewpointIO
-__vt__21PeveCameraViewpointIO:
+.endobj lbl_802C5CD0
+.balign 4
+.obj __vt__21PeveCameraViewpointIO, weak
 	.4byte __RTTI__21PeveCameraViewpointIO
 	.4byte 0
 	.4byte input__21PeveCameraViewpointIOFR9NVector3f
 	.4byte output__21PeveCameraViewpointIOFR9NVector3f
-.global __vt__11NVector3fIO
-__vt__11NVector3fIO:
+.endobj __vt__21PeveCameraViewpointIO
+.balign 4
+.obj __vt__11NVector3fIO, weak
 	.4byte __RTTI__11NVector3fIO
 	.4byte 0
 	.4byte 0
 	.4byte 0
+.endobj __vt__11NVector3fIO
 .balign 4
-lbl_802C5CFC:
+.obj lbl_802C5CFC, local
 	.asciz "PeveSerialEvent"
+.endobj lbl_802C5CFC
 .balign 4
-lbl_802C5D0C:
+.obj lbl_802C5D0C, local
 	.asciz "PeveEvent"
+.endobj lbl_802C5D0C
 .balign 4
-lbl_802C5D18:
+.obj lbl_802C5D18, local
 	.4byte __RTTI__5NNode
 	.4byte 0
 	.4byte 0
-lbl_802C5D24:
+.endobj lbl_802C5D18
+.balign 4
+.obj lbl_802C5D24, local
 	.4byte __RTTI__5NNode
 	.4byte 0
 	.4byte __RTTI__9PeveEvent
 	.4byte 0
 	.4byte 0
-.global __vt__15PeveSerialEvent
-__vt__15PeveSerialEvent:
+.endobj lbl_802C5D24
+.balign 4
+.obj __vt__15PeveSerialEvent, global
 	.4byte __RTTI__15PeveSerialEvent
 	.4byte 0
 	.4byte setChild__5NNodeFiP5NNode
@@ -693,18 +722,21 @@ __vt__15PeveSerialEvent:
 	.4byte setEventOption__9PeveEventFi
 	.4byte clearEventOption__9PeveEventFi
 	.4byte setEventOptions__9PeveEventFi
+.endobj __vt__15PeveSerialEvent
 .balign 4
-lbl_802C5D74:
+.obj lbl_802C5D74, local
 	.asciz "PeveParallelEvent"
+.endobj lbl_802C5D74
 .balign 4
-lbl_802C5D88:
+.obj lbl_802C5D88, local
 	.4byte __RTTI__5NNode
 	.4byte 0
 	.4byte __RTTI__9PeveEvent
 	.4byte 0
 	.4byte 0
-.global __vt__17PeveParallelEvent
-__vt__17PeveParallelEvent:
+.endobj lbl_802C5D88
+.balign 4
+.obj __vt__17PeveParallelEvent, global
 	.4byte __RTTI__17PeveParallelEvent
 	.4byte 0
 	.4byte setChild__5NNodeFiP5NNode
@@ -720,8 +752,9 @@ __vt__17PeveParallelEvent:
 	.4byte setEventOption__9PeveEventFi
 	.4byte clearEventOption__9PeveEventFi
 	.4byte setEventOptions__9PeveEventFi
-.global __vt__9PeveEvent
-__vt__9PeveEvent:
+.endobj __vt__17PeveParallelEvent
+.balign 4
+.obj __vt__9PeveEvent, weak
 	.4byte __RTTI__9PeveEvent
 	.4byte 0
 	.4byte setChild__5NNodeFiP5NNode
@@ -737,71 +770,105 @@ __vt__9PeveEvent:
 	.4byte setEventOption__9PeveEventFi
 	.4byte clearEventOption__9PeveEventFi
 	.4byte setEventOptions__9PeveEventFi
+.endobj __vt__9PeveEvent
 .balign 4
-lbl_802C5E14:
+.obj lbl_802C5E14, local
 	.asciz "PeveCondition"
+.endobj lbl_802C5E14
 .balign 4
-.global __vt__13PeveCondition
-__vt__13PeveCondition:
+.obj __vt__13PeveCondition, weak
 	.4byte __RTTI__13PeveCondition
 	.4byte 0
 	.4byte 0
 	.4byte reset__13PeveConditionFv
 	.4byte update__13PeveConditionFv
+.endobj __vt__13PeveCondition
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-__RTTI__11NVector3fIO:
+.obj __RTTI__11NVector3fIO, local
 	.4byte lbl_802C5BA0
 	.4byte 0
-__RTTI__16NVector3fIOClass:
+.endobj __RTTI__11NVector3fIO
+.balign 4
+.obj __RTTI__16NVector3fIOClass, local
 	.4byte lbl_802C5BAC
 	.4byte lbl_802C5BC0
-__RTTI__19PeveClampVector3fIO:
+.endobj __RTTI__16NVector3fIOClass
+.balign 4
+.obj __RTTI__19PeveClampVector3fIO, local
 	.4byte lbl_802C5B8C
 	.4byte lbl_802C5BCC
-__RTTI__22PeveCreaturePositionIO:
+.endobj __RTTI__19PeveClampVector3fIO
+.balign 4
+.obj __RTTI__22PeveCreaturePositionIO, local
 	.4byte lbl_802C5C00
 	.4byte lbl_802C5C18
-__RTTI__12NPosture3DIO:
+.endobj __RTTI__22PeveCreaturePositionIO
+.balign 4
+.obj __RTTI__12NPosture3DIO, local
 	.4byte lbl_802C5C48
 	.4byte 0
-__RTTI__19PeveCameraPostureIO:
+.endobj __RTTI__12NPosture3DIO
+.balign 4
+.obj __RTTI__19PeveCameraPostureIO, local
 	.4byte lbl_802C5C34
 	.4byte lbl_802C5C58
-__RTTI__22PeveCameraWatchpointIO:
+.endobj __RTTI__19PeveCameraPostureIO
+.balign 4
+.obj __RTTI__22PeveCameraWatchpointIO, local
 	.4byte lbl_802C5C84
 	.4byte lbl_802C5C9C
-__RTTI__21PeveCameraViewpointIO:
+.endobj __RTTI__22PeveCameraWatchpointIO
+.balign 4
+.obj __RTTI__21PeveCameraViewpointIO, local
 	.4byte lbl_802C5CB8
 	.4byte lbl_802C5CD0
+.endobj __RTTI__21PeveCameraViewpointIO
 .balign 4
-lbl_803E3350:
+.obj lbl_803E3350, local
 	.asciz "NNode"
+.endobj lbl_803E3350
 .balign 4
-__RTTI__5NNode:
+.obj __RTTI__5NNode, local
 	.4byte lbl_803E3350
 	.4byte 0
-__RTTI__9PeveEvent:
+.endobj __RTTI__5NNode
+.balign 4
+.obj __RTTI__9PeveEvent, local
 	.4byte lbl_802C5D0C
 	.4byte lbl_802C5D18
-__RTTI__15PeveSerialEvent:
+.endobj __RTTI__9PeveEvent
+.balign 4
+.obj __RTTI__15PeveSerialEvent, local
 	.4byte lbl_802C5CFC
 	.4byte lbl_802C5D24
-__RTTI__17PeveParallelEvent:
+.endobj __RTTI__15PeveSerialEvent
+.balign 4
+.obj __RTTI__17PeveParallelEvent, local
 	.4byte lbl_802C5D74
 	.4byte lbl_802C5D88
-__RTTI__13PeveCondition:
+.endobj __RTTI__17PeveParallelEvent
+.balign 4
+.obj __RTTI__13PeveCondition, local
 	.4byte lbl_802C5E14
 	.4byte 0
+.endobj __RTTI__13PeveCondition
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803EA3E8:
+.obj lbl_803EA3E8, local
 	.float 1.0
-lbl_803EA3EC:
+.endobj lbl_803EA3E8
+.balign 4
+.obj lbl_803EA3EC, local
 	.float 0.0
-lbl_803EA3F0:
+.endobj lbl_803EA3EC
+.balign 8
+.obj lbl_803EA3F0, local
 	.double 0.5
-lbl_803EA3F8:
+.endobj lbl_803EA3F0
+.balign 8
+.obj lbl_803EA3F8, local
 	.double 3.0
+.endobj lbl_803EA3F8

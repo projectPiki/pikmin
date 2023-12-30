@@ -1,15 +1,14 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global __ct__Q210PathFinder6BufferFv
-__ct__Q210PathFinder6BufferFv:
+.fn __ct__Q210PathFinder6BufferFv, weak
 /* 8009F5E4 0009C544  38 00 00 FF */	li r0, 0xff
 /* 8009F5E8 0009C548  98 03 00 04 */	stb r0, 4(r3)
 /* 8009F5EC 0009C54C  38 00 FF FF */	li r0, -1
 /* 8009F5F0 0009C550  90 03 00 00 */	stw r0, 0(r3)
 /* 8009F5F4 0009C554  4E 80 00 20 */	blr 
+.endfn __ct__Q210PathFinder6BufferFv
 
-.global findASync__10PathFinderFPQ210PathFinder6Bufferiib
-findASync__10PathFinderFPQ210PathFinder6Bufferiib:
+.fn findASync__10PathFinderFPQ210PathFinder6Bufferiib, global
 /* 8009F5F8 0009C558  81 03 00 10 */	lwz r8, 0x10(r3)
 /* 8009F5FC 0009C55C  80 03 00 14 */	lwz r0, 0x14(r3)
 /* 8009F600 0009C560  7C 08 00 00 */	cmpw r8, r0
@@ -58,9 +57,9 @@ findASync__10PathFinderFPQ210PathFinder6Bufferiib:
 .L_8009F6A4:
 /* 8009F6A4 0009C604  7D 63 5B 78 */	mr r3, r11
 /* 8009F6A8 0009C608  4E 80 00 20 */	blr 
+.endfn findASync__10PathFinderFPQ210PathFinder6Bufferiib
 
-.global checkASync__10PathFinderFUl
-checkASync__10PathFinderFUl:
+.fn checkASync__10PathFinderFUl, global
 /* 8009F6AC 0009C60C  80 03 00 10 */	lwz r0, 0x10(r3)
 /* 8009F6B0 0009C610  38 C0 00 00 */	li r6, 0
 /* 8009F6B4 0009C614  38 E6 00 00 */	addi r7, r6, 0
@@ -102,9 +101,9 @@ checkASync__10PathFinderFUl:
 .L_8009F72C:
 /* 8009F72C 0009C68C  38 60 FF FF */	li r3, -1
 /* 8009F730 0009C690  4E 80 00 20 */	blr 
+.endfn checkASync__10PathFinderFUl
 
-.global releaseHandle__10PathFinderFUl
-releaseHandle__10PathFinderFUl:
+.fn releaseHandle__10PathFinderFUl, global
 /* 8009F734 0009C694  80 03 00 10 */	lwz r0, 0x10(r3)
 /* 8009F738 0009C698  38 C0 00 00 */	li r6, 0
 /* 8009F73C 0009C69C  38 E6 00 00 */	addi r7, r6, 0
@@ -165,9 +164,9 @@ releaseHandle__10PathFinderFUl:
 /* 8009F800 0009C760  7C 06 00 00 */	cmpw r6, r0
 /* 8009F804 0009C764  41 80 FF 8C */	blt .L_8009F790
 /* 8009F808 0009C768  4E 80 00 20 */	blr 
+.endfn releaseHandle__10PathFinderFUl
 
-.global updateClient__10PathFinderFRQ210PathFinder6Clienti
-updateClient__10PathFinderFRQ210PathFinder6Clienti:
+.fn updateClient__10PathFinderFRQ210PathFinder6Clienti, global
 /* 8009F80C 0009C76C  7C 08 02 A6 */	mflr r0
 /* 8009F810 0009C770  90 01 00 04 */	stw r0, 4(r1)
 /* 8009F814 0009C774  94 21 FF D0 */	stwu r1, -0x30(r1)
@@ -392,9 +391,9 @@ updateClient__10PathFinderFRQ210PathFinder6Clienti:
 /* 8009FB40 0009CAA0  38 21 00 30 */	addi r1, r1, 0x30
 /* 8009FB44 0009CAA4  7C 08 03 A6 */	mtlr r0
 /* 8009FB48 0009CAA8  4E 80 00 20 */	blr 
+.endfn updateClient__10PathFinderFRQ210PathFinder6Clienti
 
-.global findSync__10PathFinderFPP8WayPointiiib
-findSync__10PathFinderFPP8WayPointiiib:
+.fn findSync__10PathFinderFPP8WayPointiiib, global
 /* 8009FB4C 0009CAAC  7C 08 02 A6 */	mflr r0
 /* 8009FB50 0009CAB0  90 01 00 04 */	stw r0, 4(r1)
 /* 8009FB54 0009CAB4  94 21 FF C8 */	stwu r1, -0x38(r1)
@@ -431,9 +430,9 @@ findSync__10PathFinderFPP8WayPointiiib:
 /* 8009FBC4 0009CB24  38 21 00 38 */	addi r1, r1, 0x38
 /* 8009FBC8 0009CB28  7C 08 03 A6 */	mtlr r0
 /* 8009FBCC 0009CB2C  4E 80 00 20 */	blr 
+.endfn findSync__10PathFinderFPP8WayPointiiib
 
-.global findSync__10PathFinderFPQ210PathFinder6Bufferiib
-findSync__10PathFinderFPQ210PathFinder6Bufferiib:
+.fn findSync__10PathFinderFPQ210PathFinder6Bufferiib, global
 /* 8009FBD0 0009CB30  7C 08 02 A6 */	mflr r0
 /* 8009FBD4 0009CB34  90 01 00 04 */	stw r0, 4(r1)
 /* 8009FBD8 0009CB38  94 21 FF A8 */	stwu r1, -0x58(r1)
@@ -593,17 +592,17 @@ findSync__10PathFinderFPQ210PathFinder6Bufferiib:
 /* 8009FDF4 0009CD54  38 21 00 58 */	addi r1, r1, 0x58
 /* 8009FDF8 0009CD58  7C 08 03 A6 */	mtlr r0
 /* 8009FDFC 0009CD5C  4E 80 00 20 */	blr 
+.endfn findSync__10PathFinderFPQ210PathFinder6Bufferiib
 
-.global getWayPoint__10PathFinderFi
-getWayPoint__10PathFinderFi:
+.fn getWayPoint__10PathFinderFi, global
 /* 8009FE00 0009CD60  80 63 00 00 */	lwz r3, 0(r3)
 /* 8009FE04 0009CD64  1C 04 00 C4 */	mulli r0, r4, 0xc4
 /* 8009FE08 0009CD68  80 63 00 00 */	lwz r3, 0(r3)
 /* 8009FE0C 0009CD6C  7C 63 02 14 */	add r3, r3, r0
 /* 8009FE10 0009CD70  4E 80 00 20 */	blr 
+.endfn getWayPoint__10PathFinderFi
 
-.global selectWay__10PathFinderFRQ210PathFinder6BufferiPQ210PathFinder6Bufferib
-selectWay__10PathFinderFRQ210PathFinder6BufferiPQ210PathFinder6Bufferib:
+.fn selectWay__10PathFinderFRQ210PathFinder6BufferiPQ210PathFinder6Bufferib, global
 /* 8009FE14 0009CD74  7C 08 02 A6 */	mflr r0
 /* 8009FE18 0009CD78  90 01 00 04 */	stw r0, 4(r1)
 /* 8009FE1C 0009CD7C  94 21 FE D0 */	stwu r1, -0x130(r1)
@@ -745,9 +744,9 @@ selectWay__10PathFinderFRQ210PathFinder6BufferiPQ210PathFinder6Bufferib:
 /* 800A0004 0009CF64  38 21 01 30 */	addi r1, r1, 0x130
 /* 800A0008 0009CF68  7C 08 03 A6 */	mtlr r0
 /* 800A000C 0009CF6C  4E 80 00 20 */	blr 
+.endfn selectWay__10PathFinderFRQ210PathFinder6BufferiPQ210PathFinder6Bufferib
 
-.global getPathFinder__8RouteMgrFUl
-getPathFinder__8RouteMgrFUl:
+.fn getPathFinder__8RouteMgrFUl, global
 /* 800A0010 0009CF70  7C 08 02 A6 */	mflr r0
 /* 800A0014 0009CF74  90 01 00 04 */	stw r0, 4(r1)
 /* 800A0018 0009CF78  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -768,9 +767,9 @@ getPathFinder__8RouteMgrFUl:
 /* 800A004C 0009CFAC  38 21 00 18 */	addi r1, r1, 0x18
 /* 800A0050 0009CFB0  7C 08 03 A6 */	mtlr r0
 /* 800A0054 0009CFB4  4E 80 00 20 */	blr 
+.endfn getPathFinder__8RouteMgrFUl
 
-.global update__8RouteMgrFv
-update__8RouteMgrFv:
+.fn update__8RouteMgrFv, global
 /* 800A0058 0009CFB8  7C 08 02 A6 */	mflr r0
 /* 800A005C 0009CFBC  3C 80 74 65 */	lis r4, 0x74657374@ha
 /* 800A0060 0009CFC0  90 01 00 04 */	stw r0, 4(r1)
@@ -820,9 +819,9 @@ update__8RouteMgrFv:
 /* 800A00FC 0009D05C  38 21 00 28 */	addi r1, r1, 0x28
 /* 800A0100 0009D060  7C 08 03 A6 */	mtlr r0
 /* 800A0104 0009D064  4E 80 00 20 */	blr 
+.endfn update__8RouteMgrFv
 
-.global getNumWayPoints__8RouteMgrFUl
-getNumWayPoints__8RouteMgrFUl:
+.fn getNumWayPoints__8RouteMgrFUl, global
 /* 800A0108 0009D068  7C 08 02 A6 */	mflr r0
 /* 800A010C 0009D06C  90 01 00 04 */	stw r0, 4(r1)
 /* 800A0110 0009D070  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -844,9 +843,9 @@ getNumWayPoints__8RouteMgrFUl:
 /* 800A0148 0009D0A8  38 21 00 18 */	addi r1, r1, 0x18
 /* 800A014C 0009D0AC  7C 08 03 A6 */	mtlr r0
 /* 800A0150 0009D0B0  4E 80 00 20 */	blr 
+.endfn getNumWayPoints__8RouteMgrFUl
 
-.global getSafePosition__8RouteMgrFUlR8Vector3f
-getSafePosition__8RouteMgrFUlR8Vector3f:
+.fn getSafePosition__8RouteMgrFUlR8Vector3f, global
 /* 800A0154 0009D0B4  7C 08 02 A6 */	mflr r0
 /* 800A0158 0009D0B8  90 01 00 04 */	stw r0, 4(r1)
 /* 800A015C 0009D0BC  94 21 FE 70 */	stwu r1, -0x190(r1)
@@ -1093,9 +1092,9 @@ getSafePosition__8RouteMgrFUlR8Vector3f:
 /* 800A0500 0009D460  38 21 01 90 */	addi r1, r1, 0x190
 /* 800A0504 0009D464  7C 08 03 A6 */	mtlr r0
 /* 800A0508 0009D468  4E 80 00 20 */	blr 
+.endfn getSafePosition__8RouteMgrFUlR8Vector3f
 
-.global findNearestEdge__8RouteMgrFPP8WayPointPP8WayPointUlR8Vector3fbbb
-findNearestEdge__8RouteMgrFPP8WayPointPP8WayPointUlR8Vector3fbbb:
+.fn findNearestEdge__8RouteMgrFPP8WayPointPP8WayPointUlR8Vector3fbbb, global
 /* 800A050C 0009D46C  7C 08 02 A6 */	mflr r0
 /* 800A0510 0009D470  90 01 00 04 */	stw r0, 4(r1)
 /* 800A0514 0009D474  94 21 FE 38 */	stwu r1, -0x1c8(r1)
@@ -1401,9 +1400,9 @@ findNearestEdge__8RouteMgrFPP8WayPointPP8WayPointUlR8Vector3fbbb:
 /* 800A0974 0009D8D4  38 21 01 C8 */	addi r1, r1, 0x1c8
 /* 800A0978 0009D8D8  7C 08 03 A6 */	mtlr r0
 /* 800A097C 0009D8DC  4E 80 00 20 */	blr 
+.endfn findNearestEdge__8RouteMgrFPP8WayPointPP8WayPointUlR8Vector3fbbb
 
-.global findNearestEdgeAvoidOff__8RouteMgrFPP8WayPointPP8WayPointUlR8Vector3fbbb
-findNearestEdgeAvoidOff__8RouteMgrFPP8WayPointPP8WayPointUlR8Vector3fbbb:
+.fn findNearestEdgeAvoidOff__8RouteMgrFPP8WayPointPP8WayPointUlR8Vector3fbbb, global
 /* 800A0980 0009D8E0  7C 08 02 A6 */	mflr r0
 /* 800A0984 0009D8E4  90 01 00 04 */	stw r0, 4(r1)
 /* 800A0988 0009D8E8  94 21 FE 08 */	stwu r1, -0x1f8(r1)
@@ -1923,9 +1922,9 @@ findNearestEdgeAvoidOff__8RouteMgrFPP8WayPointPP8WayPointUlR8Vector3fbbb:
 /* 800A10DC 0009E03C  38 21 01 F8 */	addi r1, r1, 0x1f8
 /* 800A10E0 0009E040  7C 08 03 A6 */	mtlr r0
 /* 800A10E4 0009E044  4E 80 00 20 */	blr 
+.endfn findNearestEdgeAvoidOff__8RouteMgrFPP8WayPointPP8WayPointUlR8Vector3fbbb
 
-.global findNearestWayPoint__8RouteMgrFUlR8Vector3fb
-findNearestWayPoint__8RouteMgrFUlR8Vector3fb:
+.fn findNearestWayPoint__8RouteMgrFUlR8Vector3fb, global
 /* 800A10E8 0009E048  7C 08 02 A6 */	mflr r0
 /* 800A10EC 0009E04C  90 01 00 04 */	stw r0, 4(r1)
 /* 800A10F0 0009E050  94 21 FF B0 */	stwu r1, -0x50(r1)
@@ -2024,9 +2023,9 @@ findNearestWayPoint__8RouteMgrFUlR8Vector3fb:
 /* 800A1248 0009E1A8  38 21 00 50 */	addi r1, r1, 0x50
 /* 800A124C 0009E1AC  7C 08 03 A6 */	mtlr r0
 /* 800A1250 0009E1B0  4E 80 00 20 */	blr 
+.endfn findNearestWayPoint__8RouteMgrFUlR8Vector3fb
 
-.global findNearestOffWayPoint__8RouteMgrFUlR8Vector3fb
-findNearestOffWayPoint__8RouteMgrFUlR8Vector3fb:
+.fn findNearestOffWayPoint__8RouteMgrFUlR8Vector3fb, global
 /* 800A1254 0009E1B4  7C 08 02 A6 */	mflr r0
 /* 800A1258 0009E1B8  90 01 00 04 */	stw r0, 4(r1)
 /* 800A125C 0009E1BC  94 21 FF B0 */	stwu r1, -0x50(r1)
@@ -2125,9 +2124,9 @@ findNearestOffWayPoint__8RouteMgrFUlR8Vector3fb:
 /* 800A13B4 0009E314  38 21 00 50 */	addi r1, r1, 0x50
 /* 800A13B8 0009E318  7C 08 03 A6 */	mtlr r0
 /* 800A13BC 0009E31C  4E 80 00 20 */	blr 
+.endfn findNearestOffWayPoint__8RouteMgrFUlR8Vector3fb
 
-.global createOffPlane__8RouteMgrFUlR5PlaneP8WayPoint
-createOffPlane__8RouteMgrFUlR5PlaneP8WayPoint:
+.fn createOffPlane__8RouteMgrFUlR5PlaneP8WayPoint, global
 /* 800A13C0 0009E320  7C 08 02 A6 */	mflr r0
 /* 800A13C4 0009E324  90 01 00 04 */	stw r0, 4(r1)
 /* 800A13C8 0009E328  94 21 FF A0 */	stwu r1, -0x60(r1)
@@ -2228,9 +2227,9 @@ createOffPlane__8RouteMgrFUlR5PlaneP8WayPoint:
 /* 800A1530 0009E490  38 21 00 60 */	addi r1, r1, 0x60
 /* 800A1534 0009E494  7C 08 03 A6 */	mtlr r0
 /* 800A1538 0009E498  4E 80 00 20 */	blr 
+.endfn createOffPlane__8RouteMgrFUlR5PlaneP8WayPoint
 
-.global findNearestWayPointAll__8RouteMgrFUlR8Vector3f
-findNearestWayPointAll__8RouteMgrFUlR8Vector3f:
+.fn findNearestWayPointAll__8RouteMgrFUlR8Vector3f, global
 /* 800A153C 0009E49C  7C 08 02 A6 */	mflr r0
 /* 800A1540 0009E4A0  90 01 00 04 */	stw r0, 4(r1)
 /* 800A1544 0009E4A4  94 21 FF C0 */	stwu r1, -0x40(r1)
@@ -2316,9 +2315,9 @@ findNearestWayPointAll__8RouteMgrFUlR8Vector3f:
 /* 800A166C 0009E5CC  38 21 00 40 */	addi r1, r1, 0x40
 /* 800A1670 0009E5D0  7C 08 03 A6 */	mtlr r0
 /* 800A1674 0009E5D4  4E 80 00 20 */	blr 
+.endfn findNearestWayPointAll__8RouteMgrFUlR8Vector3f
 
-.global getWayPoint__8RouteMgrFUli
-getWayPoint__8RouteMgrFUli:
+.fn getWayPoint__8RouteMgrFUli, global
 /* 800A1678 0009E5D8  7C 08 02 A6 */	mflr r0
 /* 800A167C 0009E5DC  90 01 00 04 */	stw r0, 4(r1)
 /* 800A1680 0009E5E0  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -2344,9 +2343,9 @@ getWayPoint__8RouteMgrFUli:
 /* 800A16C8 0009E628  38 21 00 20 */	addi r1, r1, 0x20
 /* 800A16CC 0009E62C  7C 08 03 A6 */	mtlr r0
 /* 800A16D0 0009E630  4E 80 00 20 */	blr 
+.endfn getWayPoint__8RouteMgrFUli
 
-.global __ct__8RouteMgrFv
-__ct__8RouteMgrFv:
+.fn __ct__8RouteMgrFv, global
 /* 800A16D4 0009E634  7C 08 02 A6 */	mflr r0
 /* 800A16D8 0009E638  3C 80 80 22 */	lis r4, __vt__5ANode@ha
 /* 800A16DC 0009E63C  90 01 00 04 */	stw r0, 4(r1)
@@ -2386,17 +2385,17 @@ __ct__8RouteMgrFv:
 /* 800A1764 0009E6C4  38 21 00 18 */	addi r1, r1, 0x18
 /* 800A1768 0009E6C8  7C 08 03 A6 */	mtlr r0
 /* 800A176C 0009E6CC  4E 80 00 20 */	blr 
+.endfn __ct__8RouteMgrFv
 
-.global setFlag__8WayPointFb
-setFlag__8WayPointFb:
+.fn setFlag__8WayPointFb, global
 /* 800A1770 0009E6D0  98 83 00 38 */	stb r4, 0x38(r3)
 /* 800A1774 0009E6D4  54 80 06 3E */	clrlwi r0, r4, 0x18
 /* 800A1778 0009E6D8  80 63 00 3C */	lwz r3, 0x3c(r3)
 /* 800A177C 0009E6DC  90 03 00 34 */	stw r0, 0x34(r3)
 /* 800A1780 0009E6E0  4E 80 00 20 */	blr 
+.endfn setFlag__8WayPointFb
 
-.global construct__8RouteMgrFP6MapMgr
-construct__8RouteMgrFP6MapMgr:
+.fn construct__8RouteMgrFP6MapMgr, global
 /* 800A1784 0009E6E4  7C 08 02 A6 */	mflr r0
 /* 800A1788 0009E6E8  90 01 00 04 */	stw r0, 4(r1)
 /* 800A178C 0009E6EC  94 21 FF 78 */	stwu r1, -0x88(r1)
@@ -2564,17 +2563,17 @@ construct__8RouteMgrFP6MapMgr:
 /* 800A19EC 0009E94C  38 21 00 88 */	addi r1, r1, 0x88
 /* 800A19F0 0009E950  7C 08 03 A6 */	mtlr r0
 /* 800A19F4 0009E954  4E 80 00 20 */	blr 
+.endfn construct__8RouteMgrFP6MapMgr
 
-.global __ct__8WayPointFv
-__ct__8WayPointFv:
+.fn __ct__8WayPointFv, weak
 /* 800A19F8 0009E958  C0 02 8D 34 */	lfs f0, lbl_803E8F34@sda21(r2)
 /* 800A19FC 0009E95C  D0 03 00 08 */	stfs f0, 8(r3)
 /* 800A1A00 0009E960  D0 03 00 04 */	stfs f0, 4(r3)
 /* 800A1A04 0009E964  D0 03 00 00 */	stfs f0, 0(r3)
 /* 800A1A08 0009E968  4E 80 00 20 */	blr 
+.endfn __ct__8WayPointFv
 
-.global initLinks__8RouteMgrFv
-initLinks__8RouteMgrFv:
+.fn initLinks__8RouteMgrFv, global
 /* 800A1A0C 0009E96C  7C 08 02 A6 */	mflr r0
 /* 800A1A10 0009E970  3C 80 74 65 */	lis r4, 0x74657374@ha
 /* 800A1A14 0009E974  90 01 00 04 */	stw r0, 4(r1)
@@ -2662,9 +2661,9 @@ initLinks__8RouteMgrFv:
 /* 800A1B34 0009EA94  38 21 00 28 */	addi r1, r1, 0x28
 /* 800A1B38 0009EA98  7C 08 03 A6 */	mtlr r0
 /* 800A1B3C 0009EA9C  4E 80 00 20 */	blr 
+.endfn initLinks__8RouteMgrFv
 
-.global id2idx__8RouteMgrFUl
-id2idx__8RouteMgrFUl:
+.fn id2idx__8RouteMgrFUl, global
 /* 800A1B40 0009EAA0  80 A3 00 2C */	lwz r5, 0x2c(r3)
 /* 800A1B44 0009EAA4  28 05 00 00 */	cmplwi r5, 0
 /* 800A1B48 0009EAA8  40 82 00 0C */	bne .L_800A1B54
@@ -2686,9 +2685,9 @@ id2idx__8RouteMgrFUl:
 .L_800A1B80:
 /* 800A1B80 0009EAE0  38 60 FF FF */	li r3, -1
 /* 800A1B84 0009EAE4  4E 80 00 20 */	blr 
+.endfn id2idx__8RouteMgrFUl
 
-.global getColinIndex__8RouteMgrFP10RouteGroupP10RoutePoint
-getColinIndex__8RouteMgrFP10RouteGroupP10RoutePoint:
+.fn getColinIndex__8RouteMgrFP10RouteGroupP10RoutePoint, global
 /* 800A1B88 0009EAE8  80 84 00 78 */	lwz r4, 0x78(r4)
 /* 800A1B8C 0009EAEC  38 60 00 00 */	li r3, 0
 /* 800A1B90 0009EAF0  48 00 00 14 */	b .L_800A1BA4
@@ -2702,9 +2701,9 @@ getColinIndex__8RouteMgrFP10RouteGroupP10RoutePoint:
 /* 800A1BA8 0009EB08  40 82 FF EC */	bne .L_800A1B94
 /* 800A1BAC 0009EB0C  38 60 FF FF */	li r3, -1
 /* 800A1BB0 0009EB10  4E 80 00 20 */	blr 
+.endfn getColinIndex__8RouteMgrFP10RouteGroupP10RoutePoint
 
-.global resetLinkInfos__8WayPointFv
-resetLinkInfos__8WayPointFv:
+.fn resetLinkInfos__8WayPointFv, global
 /* 800A1BB4 0009EB14  38 00 FF FE */	li r0, -2
 /* 800A1BB8 0009EB18  90 03 00 44 */	stw r0, 0x44(r3)
 /* 800A1BBC 0009EB1C  38 83 00 44 */	addi r4, r3, 0x44
@@ -2741,9 +2740,9 @@ resetLinkInfos__8WayPointFv:
 /* 800A1C38 0009EB98  90 03 00 AC */	stw r0, 0xac(r3)
 /* 800A1C3C 0009EB9C  90 03 00 B0 */	stw r0, 0xb0(r3)
 /* 800A1C40 0009EBA0  4E 80 00 20 */	blr 
+.endfn resetLinkInfos__8WayPointFv
 
-.global initLinkInfos__8WayPointFv
-initLinkInfos__8WayPointFv:
+.fn initLinkInfos__8WayPointFv, global
 /* 800A1C44 0009EBA4  7C 08 02 A6 */	mflr r0
 /* 800A1C48 0009EBA8  90 01 00 04 */	stw r0, 4(r1)
 /* 800A1C4C 0009EBAC  94 21 FF 20 */	stwu r1, -0xe0(r1)
@@ -3015,9 +3014,9 @@ initLinkInfos__8WayPointFv:
 /* 800A1FF4 0009EF54  38 21 00 E0 */	addi r1, r1, 0xe0
 /* 800A1FF8 0009EF58  7C 08 03 A6 */	mtlr r0
 /* 800A1FFC 0009EF5C  4E 80 00 20 */	blr 
+.endfn initLinkInfos__8WayPointFv
 
-.global findSyncOnyon__10PathFinderFR8Vector3fPQ210PathFinder6Bufferiib
-findSyncOnyon__10PathFinderFR8Vector3fPQ210PathFinder6Bufferiib:
+.fn findSyncOnyon__10PathFinderFR8Vector3fPQ210PathFinder6Bufferiib, global
 /* 800A2000 0009EF60  7C 08 02 A6 */	mflr r0
 /* 800A2004 0009EF64  90 01 00 04 */	stw r0, 4(r1)
 /* 800A2008 0009EF68  94 21 FE 68 */	stwu r1, -0x198(r1)
@@ -3403,9 +3402,9 @@ findSyncOnyon__10PathFinderFR8Vector3fPQ210PathFinder6Bufferiib:
 /* 800A2574 0009F4D4  38 21 01 98 */	addi r1, r1, 0x198
 /* 800A2578 0009F4D8  7C 08 03 A6 */	mtlr r0
 /* 800A257C 0009F4DC  4E 80 00 20 */	blr 
+.endfn findSyncOnyon__10PathFinderFR8Vector3fPQ210PathFinder6Bufferiib
 
-.global selectWayOnyon__10PathFinderFiiRQ210PathFinder6BufferiPQ210PathFinder6Bufferib
-selectWayOnyon__10PathFinderFiiRQ210PathFinder6BufferiPQ210PathFinder6Bufferib:
+.fn selectWayOnyon__10PathFinderFiiRQ210PathFinder6BufferiPQ210PathFinder6Bufferib, global
 /* 800A2580 0009F4E0  94 21 FE 98 */	stwu r1, -0x168(r1)
 /* 800A2584 0009F4E4  39 60 00 00 */	li r11, 0
 /* 800A2588 0009F4E8  39 8B 00 00 */	addi r12, r11, 0
@@ -3573,9 +3572,9 @@ selectWayOnyon__10PathFinderFiiRQ210PathFinder6BufferiPQ210PathFinder6Bufferib:
 /* 800A27D8 0009F738  BA C1 01 40 */	lmw r22, 0x140(r1)
 /* 800A27DC 0009F73C  38 21 01 68 */	addi r1, r1, 0x168
 /* 800A27E0 0009F740  4E 80 00 20 */	blr 
+.endfn selectWayOnyon__10PathFinderFiiRQ210PathFinder6BufferiPQ210PathFinder6Bufferib
 
-.global selectSecondBestWayOnyon__10PathFinderFR8Vector3fRiiRQ210PathFinder6BufferiPQ210PathFinder6Bufferib
-selectSecondBestWayOnyon__10PathFinderFR8Vector3fRiiRQ210PathFinder6BufferiPQ210PathFinder6Bufferib:
+.fn selectSecondBestWayOnyon__10PathFinderFR8Vector3fRiiRQ210PathFinder6BufferiPQ210PathFinder6Bufferib, global
 /* 800A27E4 0009F744  7C 08 02 A6 */	mflr r0
 /* 800A27E8 0009F748  39 60 00 00 */	li r11, 0
 /* 800A27EC 0009F74C  90 01 00 04 */	stw r0, 4(r1)
@@ -3927,9 +3926,9 @@ selectSecondBestWayOnyon__10PathFinderFR8Vector3fRiiRQ210PathFinder6BufferiPQ210
 /* 800A2D04 0009FC64  38 21 01 F8 */	addi r1, r1, 0x1f8
 /* 800A2D08 0009FC68  7C 08 03 A6 */	mtlr r0
 /* 800A2D0C 0009FC6C  4E 80 00 20 */	blr 
+.endfn selectSecondBestWayOnyon__10PathFinderFR8Vector3fRiiRQ210PathFinder6BufferiPQ210PathFinder6Bufferib
 
-.global refresh__8RouteMgrFR8Graphics
-refresh__8RouteMgrFR8Graphics:
+.fn refresh__8RouteMgrFR8Graphics, global
 /* 800A2D10 0009FC70  7C 08 02 A6 */	mflr r0
 /* 800A2D14 0009FC74  38 A0 00 01 */	li r5, 1
 /* 800A2D18 0009FC78  90 01 00 04 */	stw r0, 4(r1)
@@ -4014,9 +4013,9 @@ refresh__8RouteMgrFR8Graphics:
 /* 800A2E38 0009FD98  38 21 00 30 */	addi r1, r1, 0x30
 /* 800A2E3C 0009FD9C  7C 08 03 A6 */	mtlr r0
 /* 800A2E40 0009FDA0  4E 80 00 20 */	blr 
+.endfn refresh__8RouteMgrFR8Graphics
 
-.global drawBattenPoleSpec__FR8GraphicsR8Vector3ffPcR6Colour
-drawBattenPoleSpec__FR8GraphicsR8Vector3ffPcR6Colour:
+.fn drawBattenPoleSpec__FR8GraphicsR8Vector3ffPcR6Colour, local
 /* 800A2E44 0009FDA4  7C 08 02 A6 */	mflr r0
 /* 800A2E48 0009FDA8  90 01 00 04 */	stw r0, 4(r1)
 /* 800A2E4C 0009FDAC  94 21 FF A0 */	stwu r1, -0x60(r1)
@@ -4155,9 +4154,9 @@ drawBattenPoleSpec__FR8GraphicsR8Vector3ffPcR6Colour:
 /* 800A305C 0009FFBC  38 21 00 60 */	addi r1, r1, 0x60
 /* 800A3060 0009FFC0  7C 08 03 A6 */	mtlr r0
 /* 800A3064 0009FFC4  4E 80 00 20 */	blr 
+.endfn drawBattenPoleSpec__FR8GraphicsR8Vector3ffPcR6Colour
 
-.global refresh__8WayPointFR8Graphics
-refresh__8WayPointFR8Graphics:
+.fn refresh__8WayPointFR8Graphics, global
 /* 800A3068 0009FFC8  7C 08 02 A6 */	mflr r0
 /* 800A306C 0009FFCC  90 01 00 04 */	stw r0, 4(r1)
 /* 800A3070 0009FFD0  4C C6 31 82 */	crclr 6
@@ -4405,40 +4404,43 @@ refresh__8WayPointFR8Graphics:
 /* 800A341C 000A037C  38 21 01 70 */	addi r1, r1, 0x170
 /* 800A3420 000A0380  7C 08 03 A6 */	mtlr r0
 /* 800A3424 000A0384  4E 80 00 20 */	blr 
+.endfn refresh__8WayPointFR8Graphics
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802B1AB0:
+.obj lbl_802B1AB0, local
 	.asciz "routeMgr.cpp"
+.endobj lbl_802B1AB0
 .balign 4
-lbl_802B1AC0:
+.obj lbl_802B1AC0, local
 	.asciz "routeMgr"
+.endobj lbl_802B1AC0
 .balign 4
-lbl_802B1ACC:
+.obj lbl_802B1ACC, local
 	.asciz "CoreNode"
+.endobj lbl_802B1ACC
 .balign 4
-lbl_802B1AD8:
+.obj lbl_802B1AD8, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
+.endobj lbl_802B1AD8
 .balign 4
-lbl_802B1B00:
+.skip 0x1C # compiler padding
+.balign 4
+.obj lbl_802B1B00, local
 	.asciz "RouteMgr"
+.endobj lbl_802B1B00
 .balign 4
-lbl_802B1B0C:
+.obj lbl_802B1B0C, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte __RTTI__8CoreNode
 	.4byte 0
 	.4byte 0
-lbl_802B1B20:
+.endobj lbl_802B1B0C
+.balign 4
+.obj lbl_802B1B20, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte __RTTI__8CoreNode
@@ -4446,8 +4448,9 @@ lbl_802B1B20:
 	.4byte __RTTI__4Node
 	.4byte 0
 	.4byte 0
-.global __vt__8RouteMgr
-__vt__8RouteMgr:
+.endobj lbl_802B1B20
+.balign 4
+.obj __vt__8RouteMgr, global
 	.4byte __RTTI__8RouteMgr
 	.4byte 0
 	.4byte getAgeNodeType__5ANodeFv
@@ -4460,76 +4463,102 @@ __vt__8RouteMgr:
 	.4byte concat__4NodeFR3SRT
 	.4byte concat__4NodeFR8Matrix4f
 	.4byte getModelMatrix__4NodeFv
+.endobj __vt__8RouteMgr
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-.global avoidWayPointIndex__10PathFinder
-avoidWayPointIndex__10PathFinder:
+.obj avoidWayPointIndex__10PathFinder, global
 	.4byte 0xFFFFFFFF
+.endobj avoidWayPointIndex__10PathFinder
 .balign 4
-lbl_803DF95C:
+.obj lbl_803DF95C, local
 	.asciz "<Node>"
+.endobj lbl_803DF95C
 .balign 4
-lbl_803DF964:
+.obj lbl_803DF964, local
 	.asciz "%d"
+.endobj lbl_803DF964
 .balign 4
-lbl_803DF968:
+.obj lbl_803DF968, local
 	.asciz "%d:%d"
+.endobj lbl_803DF968
 .balign 4
-lbl_803DF970:
+.obj lbl_803DF970, local
 	.asciz "ANode"
+.endobj lbl_803DF970
 .balign 4
-__RTTI__5ANode:
+.obj __RTTI__5ANode, local
 	.4byte lbl_803DF970
 	.4byte 0
-__RTTI__8CoreNode:
+.endobj __RTTI__5ANode
+.balign 4
+.obj __RTTI__8CoreNode, local
 	.4byte lbl_802B1ACC
 	.4byte lbl_802B1AD8
+.endobj __RTTI__8CoreNode
 .balign 4
-lbl_803DF988:
+.obj lbl_803DF988, local
 	.asciz "Node"
+.endobj lbl_803DF988
 .balign 4
-__RTTI__4Node:
+.obj __RTTI__4Node, local
 	.4byte lbl_803DF988
 	.4byte lbl_802B1B0C
-__RTTI__8RouteMgr:
+.endobj __RTTI__4Node
+.balign 4
+.obj __RTTI__8RouteMgr, local
 	.4byte lbl_802B1B00
 	.4byte lbl_802B1B20
+.endobj __RTTI__8RouteMgr
 
 .section .sbss, "wa"
 .balign 8
-.global mode__10PathFinder
-mode__10PathFinder:
+.obj mode__10PathFinder, global
 	.skip 0x2
+.endobj mode__10PathFinder
 .balign 4
-.global routeMgr
-routeMgr:
+.obj routeMgr, global
 	.skip 0x4
+.endobj routeMgr
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803E8F30:
+.obj lbl_803E8F30, local
 	.float 128000.0
-lbl_803E8F34:
+.endobj lbl_803E8F30
+.obj lbl_803E8F34, local
 	.float 0.0
-lbl_803E8F38:
+.endobj lbl_803E8F34
+.obj lbl_803E8F38, local
 	.float 1.0
+.endobj lbl_803E8F38
 .balign 8
-lbl_803E8F40:
+.obj lbl_803E8F40, local
 	.double 0.5
-lbl_803E8F48:
+.endobj lbl_803E8F40
+.balign 8
+.obj lbl_803E8F48, local
 	.double 3.0
-lbl_803E8F50:
+.endobj lbl_803E8F48
+.balign 4
+.obj lbl_803E8F50, local
 	.float 200.0
-lbl_803E8F54:
+.endobj lbl_803E8F50
+.obj lbl_803E8F54, local
 	.float 8.0
-lbl_803E8F58:
+.endobj lbl_803E8F54
+.obj lbl_803E8F58, local
 	.float 10.0
-lbl_803E8F5C:
+.endobj lbl_803E8F58
+.obj lbl_803E8F5C, local
 	.float 75.0
-lbl_803E8F60:
+.endobj lbl_803E8F5C
+.obj lbl_803E8F60, local
 	.float 30.0
-lbl_803E8F64:
+.endobj lbl_803E8F60
+.obj lbl_803E8F64, local
 	.float 0.2
-lbl_803E8F68:
+.endobj lbl_803E8F64
+.obj lbl_803E8F68, local
 	.float 7.0
+.endobj lbl_803E8F68

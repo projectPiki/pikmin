@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global __ct__5PlantFv
-__ct__5PlantFv:
+.fn __ct__5PlantFv, global
 /* 80119D3C 00116C9C  7C 08 02 A6 */	mflr r0
 /* 80119D40 00116CA0  38 80 00 00 */	li r4, 0
 /* 80119D44 00116CA4  90 01 00 04 */	stw r0, 4(r1)
@@ -53,9 +52,9 @@ __ct__5PlantFv:
 /* 80119DF8 00116D58  38 21 00 18 */	addi r1, r1, 0x18
 /* 80119DFC 00116D5C  7C 08 03 A6 */	mtlr r0
 /* 80119E00 00116D60  4E 80 00 20 */	blr 
+.endfn __ct__5PlantFv
 
-.global startMotion__5PlantFi
-startMotion__5PlantFi:
+.fn startMotion__5PlantFi, global
 /* 80119E04 00116D64  7C 08 02 A6 */	mflr r0
 /* 80119E08 00116D68  90 01 00 04 */	stw r0, 4(r1)
 /* 80119E0C 00116D6C  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -75,9 +74,9 @@ startMotion__5PlantFi:
 /* 80119E40 00116DA0  38 21 00 20 */	addi r1, r1, 0x20
 /* 80119E44 00116DA4  7C 08 03 A6 */	mtlr r0
 /* 80119E48 00116DA8  4E 80 00 20 */	blr 
+.endfn startMotion__5PlantFi
 
-.global startAI__5PlantFi
-startAI__5PlantFi:
+.fn startAI__5PlantFi, global
 /* 80119E4C 00116DAC  7C 08 02 A6 */	mflr r0
 /* 80119E50 00116DB0  38 80 00 00 */	li r4, 0
 /* 80119E54 00116DB4  90 01 00 04 */	stw r0, 4(r1)
@@ -125,9 +124,9 @@ startAI__5PlantFi:
 /* 80119EF8 00116E58  38 21 00 20 */	addi r1, r1, 0x20
 /* 80119EFC 00116E5C  7C 08 03 A6 */	mtlr r0
 /* 80119F00 00116E60  4E 80 00 20 */	blr 
+.endfn startAI__5PlantFi
 
-.global doAnimation__5PlantFv
-doAnimation__5PlantFv:
+.fn doAnimation__5PlantFv, global
 /* 80119F04 00116E64  7C 08 02 A6 */	mflr r0
 /* 80119F08 00116E68  38 83 00 00 */	addi r4, r3, 0
 /* 80119F0C 00116E6C  90 01 00 04 */	stw r0, 4(r1)
@@ -142,9 +141,9 @@ doAnimation__5PlantFv:
 /* 80119F30 00116E90  38 21 00 08 */	addi r1, r1, 8
 /* 80119F34 00116E94  7C 08 03 A6 */	mtlr r0
 /* 80119F38 00116E98  4E 80 00 20 */	blr 
+.endfn doAnimation__5PlantFv
 
-.global update__5PlantFv
-update__5PlantFv:
+.fn update__5PlantFv, global
 /* 80119F3C 00116E9C  7C 08 02 A6 */	mflr r0
 /* 80119F40 00116EA0  90 01 00 04 */	stw r0, 4(r1)
 /* 80119F44 00116EA4  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -188,9 +187,9 @@ update__5PlantFv:
 /* 80119FD4 00116F34  38 21 00 18 */	addi r1, r1, 0x18
 /* 80119FD8 00116F38  7C 08 03 A6 */	mtlr r0
 /* 80119FDC 00116F3C  4E 80 00 20 */	blr 
+.endfn update__5PlantFv
 
-.global refresh__5PlantFR8Graphics
-refresh__5PlantFR8Graphics:
+.fn refresh__5PlantFR8Graphics, global
 /* 80119FE0 00116F40  7C 08 02 A6 */	mflr r0
 /* 80119FE4 00116F44  90 01 00 04 */	stw r0, 4(r1)
 /* 80119FE8 00116F48  94 21 FF 58 */	stwu r1, -0xa8(r1)
@@ -439,13 +438,13 @@ refresh__5PlantFR8Graphics:
 /* 8011A394 001172F4  38 21 00 A8 */	addi r1, r1, 0xa8
 /* 8011A398 001172F8  7C 08 03 A6 */	mtlr r0
 /* 8011A39C 001172FC  4E 80 00 20 */	blr 
+.endfn refresh__5PlantFR8Graphics
 
-.global doKill__5PlantFv
-doKill__5PlantFv:
+.fn doKill__5PlantFv, global
 /* 8011A3A0 00117300  4E 80 00 20 */	blr 
+.endfn doKill__5PlantFv
 
-.global satisfy__Q27PlantAI12OpponentMoveFP10AICreature
-satisfy__Q27PlantAI12OpponentMoveFP10AICreature:
+.fn satisfy__Q27PlantAI12OpponentMoveFP10AICreature, global
 /* 8011A3A4 00117304  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 8011A3A8 00117308  80 64 02 BC */	lwz r3, 0x2bc(r4)
 /* 8011A3AC 0011730C  C0 02 9F C8 */	lfs f0, lbl_803EA1C8@sda21(r2)
@@ -492,9 +491,9 @@ satisfy__Q27PlantAI12OpponentMoveFP10AICreature:
 .L_8011A448:
 /* 8011A448 001173A8  38 21 00 20 */	addi r1, r1, 0x20
 /* 8011A44C 001173AC  4E 80 00 20 */	blr 
+.endfn satisfy__Q27PlantAI12OpponentMoveFP10AICreature
 
-.global act__Q27PlantAI8WaitInitFP10AICreature
-act__Q27PlantAI8WaitInitFP10AICreature:
+.fn act__Q27PlantAI8WaitInitFP10AICreature, global
 /* 8011A450 001173B0  7C 08 02 A6 */	mflr r0
 /* 8011A454 001173B4  90 01 00 04 */	stw r0, 4(r1)
 /* 8011A458 001173B8  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -534,9 +533,9 @@ act__Q27PlantAI8WaitInitFP10AICreature:
 /* 8011A4D8 00117438  38 21 00 20 */	addi r1, r1, 0x20
 /* 8011A4DC 0011743C  7C 08 03 A6 */	mtlr r0
 /* 8011A4E0 00117440  4E 80 00 20 */	blr 
+.endfn act__Q27PlantAI8WaitInitFP10AICreature
 
-.global act__Q27PlantAI9TouchInitFP10AICreature
-act__Q27PlantAI9TouchInitFP10AICreature:
+.fn act__Q27PlantAI9TouchInitFP10AICreature, global
 /* 8011A4E4 00117444  7C 08 02 A6 */	mflr r0
 /* 8011A4E8 00117448  90 01 00 04 */	stw r0, 4(r1)
 /* 8011A4EC 0011744C  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -564,9 +563,9 @@ act__Q27PlantAI9TouchInitFP10AICreature:
 /* 8011A53C 0011749C  38 21 00 20 */	addi r1, r1, 0x20
 /* 8011A540 001174A0  7C 08 03 A6 */	mtlr r0
 /* 8011A544 001174A4  4E 80 00 20 */	blr 
+.endfn act__Q27PlantAI9TouchInitFP10AICreature
 
-.global __ct__8PlantMgrFP6MapMgr
-__ct__8PlantMgrFP6MapMgr:
+.fn __ct__8PlantMgrFP6MapMgr, global
 /* 8011A548 001174A8  7C 08 02 A6 */	mflr r0
 /* 8011A54C 001174AC  3C A0 80 2C */	lis r5, lbl_802C38A8@ha
 /* 8011A550 001174B0  90 01 00 04 */	stw r0, 4(r1)
@@ -865,9 +864,9 @@ __ct__8PlantMgrFP6MapMgr:
 /* 8011A9B4 00117914  38 21 00 A0 */	addi r1, r1, 0xa0
 /* 8011A9B8 00117918  7C 08 03 A6 */	mtlr r0
 /* 8011A9BC 0011791C  4E 80 00 20 */	blr 
+.endfn __ct__8PlantMgrFP6MapMgr
 
-.global initialise__8PlantMgrFv
-initialise__8PlantMgrFv:
+.fn initialise__8PlantMgrFv, global
 /* 8011A9C0 00117920  7C 08 02 A6 */	mflr r0
 /* 8011A9C4 00117924  3C 80 80 2C */	lis r4, plantNames@ha
 /* 8011A9C8 00117928  90 01 00 04 */	stw r0, 4(r1)
@@ -930,9 +929,9 @@ initialise__8PlantMgrFv:
 /* 8011AAA0 00117A00  38 21 03 30 */	addi r1, r1, 0x330
 /* 8011AAA4 00117A04  7C 08 03 A6 */	mtlr r0
 /* 8011AAA8 00117A08  4E 80 00 20 */	blr 
+.endfn initialise__8PlantMgrFv
 
-.global createObject__8PlantMgrFv
-createObject__8PlantMgrFv:
+.fn createObject__8PlantMgrFv, global
 /* 8011AAAC 00117A0C  7C 08 02 A6 */	mflr r0
 /* 8011AAB0 00117A10  38 60 03 98 */	li r3, 0x398
 /* 8011AAB4 00117A14  90 01 00 04 */	stw r0, 4(r1)
@@ -989,9 +988,9 @@ createObject__8PlantMgrFv:
 /* 8011AB78 00117AD8  38 21 00 18 */	addi r1, r1, 0x18
 /* 8011AB7C 00117ADC  7C 08 03 A6 */	mtlr r0
 /* 8011AB80 00117AE0  4E 80 00 20 */	blr 
+.endfn createObject__8PlantMgrFv
 
-.global usePlantType__8PlantMgrFi
-usePlantType__8PlantMgrFi:
+.fn usePlantType__8PlantMgrFi, global
 /* 8011AB84 00117AE4  80 63 00 5C */	lwz r3, 0x5c(r3)
 /* 8011AB88 00117AE8  48 00 00 1C */	b .L_8011ABA4
 .L_8011AB8C:
@@ -1007,9 +1006,9 @@ usePlantType__8PlantMgrFi:
 /* 8011ABA8 00117B08  40 82 FF E4 */	bne .L_8011AB8C
 /* 8011ABAC 00117B0C  38 60 00 00 */	li r3, 0
 /* 8011ABB0 00117B10  4E 80 00 20 */	blr 
+.endfn usePlantType__8PlantMgrFi
 
-.global __ct__16PlantShapeObjectFP5ShapePcPc
-__ct__16PlantShapeObjectFP5ShapePcPc:
+.fn __ct__16PlantShapeObjectFP5ShapePcPc, global
 /* 8011ABB4 00117B14  7C 08 02 A6 */	mflr r0
 /* 8011ABB8 00117B18  3C E0 80 23 */	lis r7, __vt__11AnimContext@ha
 /* 8011ABBC 00117B1C  90 01 00 04 */	stw r0, 4(r1)
@@ -1084,9 +1083,9 @@ __ct__16PlantShapeObjectFP5ShapePcPc:
 /* 8011ACC0 00117C20  38 21 00 A8 */	addi r1, r1, 0xa8
 /* 8011ACC4 00117C24  7C 08 03 A6 */	mtlr r0
 /* 8011ACC8 00117C28  4E 80 00 20 */	blr 
+.endfn __ct__16PlantShapeObjectFP5ShapePcPc
 
-.global makeObjectPlant__Fv
-makeObjectPlant__Fv:
+.fn makeObjectPlant__Fv, local
 /* 8011ACCC 00117C2C  7C 08 02 A6 */	mflr r0
 /* 8011ACD0 00117C30  38 60 00 1C */	li r3, 0x1c
 /* 8011ACD4 00117C34  90 01 00 04 */	stw r0, 4(r1)
@@ -1118,9 +1117,9 @@ makeObjectPlant__Fv:
 /* 8011AD38 00117C98  38 21 00 10 */	addi r1, r1, 0x10
 /* 8011AD3C 00117C9C  7C 08 03 A6 */	mtlr r0
 /* 8011AD40 00117CA0  4E 80 00 20 */	blr 
+.endfn makeObjectPlant__Fv
 
-.global initialise__14GenObjectPlantFv
-initialise__14GenObjectPlantFv:
+.fn initialise__14GenObjectPlantFv, global
 /* 8011AD44 00117CA4  80 ED 30 74 */	lwz r7, factory__16GenObjectFactory@sda21(r13)
 /* 8011AD48 00117CA8  80 A7 00 00 */	lwz r5, 0(r7)
 /* 8011AD4C 00117CAC  80 07 00 04 */	lwz r0, 4(r7)
@@ -1156,9 +1155,9 @@ initialise__14GenObjectPlantFv:
 /* 8011ADC4 00117D24  38 03 00 01 */	addi r0, r3, 1
 /* 8011ADC8 00117D28  90 07 00 00 */	stw r0, 0(r7)
 /* 8011ADCC 00117D2C  4E 80 00 20 */	blr 
+.endfn initialise__14GenObjectPlantFv
 
-.global doRead__14GenObjectPlantFR18RandomAccessStream
-doRead__14GenObjectPlantFR18RandomAccessStream:
+.fn doRead__14GenObjectPlantFR18RandomAccessStream, global
 /* 8011ADD0 00117D30  7C 08 02 A6 */	mflr r0
 /* 8011ADD4 00117D34  90 01 00 04 */	stw r0, 4(r1)
 /* 8011ADD8 00117D38  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -1175,9 +1174,9 @@ doRead__14GenObjectPlantFR18RandomAccessStream:
 /* 8011AE04 00117D64  38 21 00 18 */	addi r1, r1, 0x18
 /* 8011AE08 00117D68  7C 08 03 A6 */	mtlr r0
 /* 8011AE0C 00117D6C  4E 80 00 20 */	blr 
+.endfn doRead__14GenObjectPlantFR18RandomAccessStream
 
-.global updateUseList__14GenObjectPlantFP9Generatori
-updateUseList__14GenObjectPlantFP9Generatori:
+.fn updateUseList__14GenObjectPlantFP9Generatori, global
 /* 8011AE10 00117D70  7C 08 02 A6 */	mflr r0
 /* 8011AE14 00117D74  90 01 00 04 */	stw r0, 4(r1)
 /* 8011AE18 00117D78  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -1235,9 +1234,9 @@ updateUseList__14GenObjectPlantFP9Generatori:
 /* 8011AED0 00117E30  38 21 00 28 */	addi r1, r1, 0x28
 /* 8011AED4 00117E34  7C 08 03 A6 */	mtlr r0
 /* 8011AED8 00117E38  4E 80 00 20 */	blr 
+.endfn updateUseList__14GenObjectPlantFP9Generatori
 
-.global birth__14GenObjectPlantFR9BirthInfo
-birth__14GenObjectPlantFR9BirthInfo:
+.fn birth__14GenObjectPlantFR9BirthInfo, global
 /* 8011AEDC 00117E3C  7C 08 02 A6 */	mflr r0
 /* 8011AEE0 00117E40  90 01 00 04 */	stw r0, 4(r1)
 /* 8011AEE4 00117E44  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -1341,9 +1340,9 @@ birth__14GenObjectPlantFR9BirthInfo:
 /* 8011B060 00117FC0  38 21 00 28 */	addi r1, r1, 0x28
 /* 8011B064 00117FC4  7C 08 03 A6 */	mtlr r0
 /* 8011B068 00117FC8  4E 80 00 20 */	blr 
+.endfn birth__14GenObjectPlantFR9BirthInfo
 
-.global render__14GenObjectPlantFR8GraphicsP9Generator
-render__14GenObjectPlantFR8GraphicsP9Generator:
+.fn render__14GenObjectPlantFR8GraphicsP9Generator, global
 /* 8011B06C 00117FCC  80 8D 31 40 */	lwz r4, plantMgr@sda21(r13)
 /* 8011B070 00117FD0  80 A3 00 18 */	lwz r5, 0x18(r3)
 /* 8011B074 00117FD4  80 64 00 5C */	lwz r3, 0x5c(r4)
@@ -1357,9 +1356,9 @@ render__14GenObjectPlantFR8GraphicsP9Generator:
 /* 8011B08C 00117FEC  28 03 00 00 */	cmplwi r3, 0
 /* 8011B090 00117FF0  40 82 FF EC */	bne .L_8011B07C
 /* 8011B094 00117FF4  4E 80 00 20 */	blr 
+.endfn render__14GenObjectPlantFR8GraphicsP9Generator
 
-.global __dt__8PlantMgrFv
-__dt__8PlantMgrFv:
+.fn __dt__8PlantMgrFv, weak
 /* 8011B098 00117FF8  7C 08 02 A6 */	mflr r0
 /* 8011B09C 00117FFC  90 01 00 04 */	stw r0, 4(r1)
 /* 8011B0A0 00118000  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -1395,58 +1394,66 @@ __dt__8PlantMgrFv:
 /* 8011B110 00118070  38 21 00 18 */	addi r1, r1, 0x18
 /* 8011B114 00118074  7C 08 03 A6 */	mtlr r0
 /* 8011B118 00118078  4E 80 00 20 */	blr 
+.endfn __dt__8PlantMgrFv
 
-.global getiMass__5PlantFv
-getiMass__5PlantFv:
+.fn getiMass__5PlantFv, weak
 /* 8011B11C 0011807C  C0 22 9F C8 */	lfs f1, lbl_803EA1C8@sda21(r2)
 /* 8011B120 00118080  4E 80 00 20 */	blr 
+.endfn getiMass__5PlantFv
 
-.global isAlive__5PlantFv
-isAlive__5PlantFv:
+.fn isAlive__5PlantFv, weak
 /* 8011B124 00118084  88 03 03 0C */	lbz r0, 0x30c(r3)
 /* 8011B128 00118088  7C 00 00 34 */	cntlzw r0, r0
 /* 8011B12C 0011808C  54 03 D9 7E */	srwi r3, r0, 5
 /* 8011B130 00118090  4E 80 00 20 */	blr 
+.endfn isAlive__5PlantFv
 
-.global setMotionSpeed__5PlantFf
-setMotionSpeed__5PlantFf:
+.fn setMotionSpeed__5PlantFf, weak
 /* 8011B134 00118094  D0 23 03 08 */	stfs f1, 0x308(r3)
 /* 8011B138 00118098  4E 80 00 20 */	blr 
+.endfn setMotionSpeed__5PlantFf
 
-.global stopMotion__5PlantFv
-stopMotion__5PlantFv:
+.fn stopMotion__5PlantFv, weak
 /* 8011B13C 0011809C  C0 02 9F C8 */	lfs f0, lbl_803EA1C8@sda21(r2)
 /* 8011B140 001180A0  D0 03 03 08 */	stfs f0, 0x308(r3)
 /* 8011B144 001180A4  4E 80 00 20 */	blr 
+.endfn stopMotion__5PlantFv
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802C38A8:
+.obj lbl_802C38A8, local
 	.asciz "plantMgr.cpp"
+.endobj lbl_802C38A8
 .balign 4
-lbl_802C38B8:
+.obj lbl_802C38B8, local
 	.asciz "plantMgr"
+.endobj lbl_802C38B8
 .balign 4
-lbl_802C38C4:
+.obj lbl_802C38C4, local
 	.asciz "CoreNode"
+.endobj lbl_802C38C4
 .balign 4
-lbl_802C38D0:
+.obj lbl_802C38D0, local
 	.asciz "usageNode"
+.endobj lbl_802C38D0
 .balign 4
-lbl_802C38DC:
+.obj lbl_802C38DC, local
 	.asciz "mizukusa"
+.endobj lbl_802C38DC
 .balign 4
-lbl_802C38E8:
+.obj lbl_802C38E8, local
 	.asciz "wakame_l"
+.endobj lbl_802C38E8
 .balign 4
-lbl_802C38F4:
+.obj lbl_802C38F4, local
 	.asciz "wakame_s"
+.endobj lbl_802C38F4
 .balign 4
-lbl_802C3900:
+.obj lbl_802C3900, local
 	.asciz "kinokolt"
+.endobj lbl_802C3900
 .balign 4
-.global plantNames
-plantNames:
+.obj plantNames, local
 	.4byte lbl_803E2E1C
 	.4byte lbl_803E2E24
 	.4byte lbl_803E2E2C
@@ -1459,43 +1466,55 @@ plantNames:
 	.4byte lbl_802C38F4
 	.4byte lbl_802C3900
 	.4byte lbl_803E2E50
+.endobj plantNames
 .balign 4
-lbl_802C393C:
+.obj lbl_802C393C, local
 	.asciz "objects/plants/%s.mod"
+.endobj lbl_802C393C
 .balign 4
-lbl_802C3954:
+.obj lbl_802C3954, local
 	.asciz "objects/plants/%s"
+.endobj lbl_802C3954
 .balign 4
-lbl_802C3968:
+.obj lbl_802C3968, local
 	.asciz "object type"
+.endobj lbl_802C3968
 .balign 4
-lbl_802C3974:
+.obj lbl_802C3974, local
 	.asciz "create Plant"
+.endobj lbl_802C3974
 .balign 4
-lbl_802C3984:
+.obj lbl_802C3984, local
 	.asciz "Generate PLANT"
+.endobj lbl_802C3984
 .balign 4
-lbl_802C3994:
+.obj lbl_802C3994, local
 	.asciz "GenObjectPlant"
+.endobj lbl_802C3994
 .balign 4
-lbl_802C39A4:
+.obj lbl_802C39A4, local
 	.asciz "Parameters"
+.endobj lbl_802C39A4
 .balign 4
-lbl_802C39B0:
+.obj lbl_802C39B0, local
 	.4byte __RTTI__10Parameters
 	.4byte 0
 	.4byte 0
+.endobj lbl_802C39B0
 .balign 4
-lbl_802C39BC:
+.obj lbl_802C39BC, local
 	.asciz "GenObject"
+.endobj lbl_802C39BC
 .balign 4
-lbl_802C39C8:
+.obj lbl_802C39C8, local
 	.4byte __RTTI__10Parameters
 	.4byte 0
 	.4byte __RTTI__7GenBase
 	.4byte 0
 	.4byte 0
-lbl_802C39DC:
+.endobj lbl_802C39C8
+.balign 4
+.obj lbl_802C39DC, local
 	.4byte __RTTI__10Parameters
 	.4byte 0
 	.4byte __RTTI__7GenBase
@@ -1503,8 +1522,9 @@ lbl_802C39DC:
 	.4byte __RTTI__9GenObject
 	.4byte 0
 	.4byte 0
-.global __vt__14GenObjectPlant
-__vt__14GenObjectPlant:
+.endobj lbl_802C39DC
+.balign 4
+.obj __vt__14GenObjectPlant, global
 	.4byte __RTTI__14GenObjectPlant
 	.4byte 0
 	.4byte doWrite__7GenBaseFR18RandomAccessStream
@@ -1519,28 +1539,35 @@ __vt__14GenObjectPlant:
 	.4byte update__9GenObjectFP9Generator
 	.4byte render__14GenObjectPlantFR8GraphicsP9Generator
 	.4byte birth__14GenObjectPlantFR9BirthInfo
+.endobj __vt__14GenObjectPlant
 .balign 4
-lbl_802C3A30:
+.obj lbl_802C3A30, local
 	.asciz "PlantMgr"
+.endobj lbl_802C3A30
 .balign 4
-lbl_802C3A3C:
+.obj lbl_802C3A3C, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte 0
-lbl_802C3A48:
+.endobj lbl_802C3A3C
+.balign 4
+.obj lbl_802C3A48, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte __RTTI__8CoreNode
 	.4byte 0
 	.4byte 0
+.endobj lbl_802C3A48
 .balign 4
-lbl_802C3A5C:
+.obj lbl_802C3A5C, local
 	.asciz "Traversable"
+.endobj lbl_802C3A5C
 .balign 4
-lbl_802C3A68:
+.obj lbl_802C3A68, local
 	.asciz "ObjectMgr"
+.endobj lbl_802C3A68
 .balign 4
-lbl_802C3A74:
+.obj lbl_802C3A74, local
 	.4byte __RTTI__5ANode
 	.4byte 0x8
 	.4byte __RTTI__8CoreNode
@@ -1550,11 +1577,13 @@ lbl_802C3A74:
 	.4byte __RTTI__11Traversable
 	.4byte 0
 	.4byte 0
+.endobj lbl_802C3A74
 .balign 4
-lbl_802C3A98:
+.obj lbl_802C3A98, local
 	.asciz "CreatureNodeMgr"
+.endobj lbl_802C3A98
 .balign 4
-lbl_802C3AA8:
+.obj lbl_802C3AA8, local
 	.4byte __RTTI__5ANode
 	.4byte 0x8
 	.4byte __RTTI__8CoreNode
@@ -1566,7 +1595,9 @@ lbl_802C3AA8:
 	.4byte __RTTI__9ObjectMgr
 	.4byte 0
 	.4byte 0
-lbl_802C3AD4:
+.endobj lbl_802C3AA8
+.balign 4
+.obj lbl_802C3AD4, local
 	.4byte __RTTI__5ANode
 	.4byte 0x8
 	.4byte __RTTI__8CoreNode
@@ -1580,8 +1611,9 @@ lbl_802C3AD4:
 	.4byte __RTTI__15CreatureNodeMgr
 	.4byte 0
 	.4byte 0
-.global __vt__8PlantMgr
-__vt__8PlantMgr:
+.endobj lbl_802C3AD4
+.balign 4
+.obj __vt__8PlantMgr, global
 	.4byte __RTTI__8PlantMgr
 	.4byte 0
 	.4byte getCreature__15CreatureNodeMgrFi
@@ -1613,108 +1645,116 @@ __vt__8PlantMgr:
 	.4byte search__9ObjectMgrFP9ObjectMgr
 	.4byte killAll__9ObjectMgrFv
 	.4byte createObject__8PlantMgrFv
+.endobj __vt__8PlantMgr
 .balign 4
-lbl_802C3B84:
+.obj lbl_802C3B84, local
 	.asciz "Parm<float>"
+.endobj lbl_802C3B84
 .balign 4
-lbl_802C3B90:
+.obj lbl_802C3B90, local
 	.asciz "BaseParm"
+.endobj lbl_802C3B90
 .balign 4
-lbl_802C3B9C:
+.obj lbl_802C3B9C, local
 	.4byte __RTTI__8BaseParm
 	.4byte 0
 	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
+.endobj lbl_802C3B9C
 .balign 4
-lbl_802C3BBC:
+.skip 0x14 # compiler padding
+.balign 4
+.obj lbl_802C3BBC, local
 	.asciz "CreatureProp"
+.endobj lbl_802C3BBC
 .balign 4
-	.4byte 0
-	.4byte 0
-	.4byte 0
+.skip 0xC # compiler padding
 .balign 4
-lbl_802C3BD8:
+.obj lbl_802C3BD8, local
 	.asciz "PlantMgr::UseNode"
+.endobj lbl_802C3BD8
 .balign 4
-lbl_802C3BEC:
+.obj lbl_802C3BEC, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte __RTTI__8CoreNode
 	.4byte 0
 	.4byte 0
-.global __vt__Q28PlantMgr7UseNode
-__vt__Q28PlantMgr7UseNode:
+.endobj lbl_802C3BEC
+.balign 4
+.obj __vt__Q28PlantMgr7UseNode, weak
 	.4byte __RTTI__Q28PlantMgr7UseNode
 	.4byte 0
 	.4byte getAgeNodeType__5ANodeFv
 	.4byte read__8CoreNodeFR18RandomAccessStream
+.endobj __vt__Q28PlantMgr7UseNode
 .balign 4
-lbl_802C3C10:
+.obj lbl_802C3C10, local
 	.asciz "CreatureNode"
+.endobj lbl_802C3C10
 .balign 4
-lbl_802C3C20:
+.obj lbl_802C3C20, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte __RTTI__8CoreNode
 	.4byte 0
 	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
+.endobj lbl_802C3C20
 .balign 4
-lbl_802C3C5C:
+.skip 0x28 # compiler padding
+.balign 4
+.obj lbl_802C3C5C, local
 	.asciz "PlantAI::TouchInit"
+.endobj lbl_802C3C5C
 .balign 4
-lbl_802C3C70:
+.obj lbl_802C3C70, local
 	.asciz "SAIAction"
+.endobj lbl_802C3C70
 .balign 4
-lbl_802C3C7C:
+.obj lbl_802C3C7C, local
 	.4byte __RTTI__9SAIAction
 	.4byte 0
 	.4byte 0
-.global __vt__Q27PlantAI9TouchInit
-__vt__Q27PlantAI9TouchInit:
+.endobj lbl_802C3C7C
+.balign 4
+.obj __vt__Q27PlantAI9TouchInit, global
 	.4byte __RTTI__Q27PlantAI9TouchInit
 	.4byte 0
 	.4byte act__Q27PlantAI9TouchInitFP10AICreature
+.endobj __vt__Q27PlantAI9TouchInit
 .balign 4
-lbl_802C3C94:
+.obj lbl_802C3C94, local
 	.asciz "PlantAI::WaitInit"
+.endobj lbl_802C3C94
 .balign 4
-lbl_802C3CA8:
+.obj lbl_802C3CA8, local
 	.4byte __RTTI__9SAIAction
 	.4byte 0
 	.4byte 0
-.global __vt__Q27PlantAI8WaitInit
-__vt__Q27PlantAI8WaitInit:
+.endobj lbl_802C3CA8
+.balign 4
+.obj __vt__Q27PlantAI8WaitInit, global
 	.4byte __RTTI__Q27PlantAI8WaitInit
 	.4byte 0
 	.4byte act__Q27PlantAI8WaitInitFP10AICreature
+.endobj __vt__Q27PlantAI8WaitInit
 .balign 4
-lbl_802C3CC0:
+.obj lbl_802C3CC0, local
 	.asciz "PlantAI::OpponentMove"
+.endobj lbl_802C3CC0
 .balign 4
-lbl_802C3CD8:
+.obj lbl_802C3CD8, local
 	.asciz "SAICondition"
+.endobj lbl_802C3CD8
 .balign 4
-lbl_802C3CE8:
+.obj lbl_802C3CE8, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte __RTTI__8CoreNode
 	.4byte 0
 	.4byte 0
-lbl_802C3CFC:
+.endobj lbl_802C3CE8
+.balign 4
+.obj lbl_802C3CFC, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte __RTTI__8CoreNode
@@ -1722,77 +1762,78 @@ lbl_802C3CFC:
 	.4byte __RTTI__12SAICondition
 	.4byte 0
 	.4byte 0
-.global __vt__Q27PlantAI12OpponentMove
-__vt__Q27PlantAI12OpponentMove:
+.endobj lbl_802C3CFC
+.balign 4
+.obj __vt__Q27PlantAI12OpponentMove, global
 	.4byte __RTTI__Q27PlantAI12OpponentMove
 	.4byte 0
 	.4byte getAgeNodeType__5ANodeFv
 	.4byte read__8CoreNodeFR18RandomAccessStream
 	.4byte satisfy__Q27PlantAI12OpponentMoveFP10AICreature
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
+.endobj __vt__Q27PlantAI12OpponentMove
 .balign 4
-lbl_802C3D68:
+.skip 0x3C # compiler padding
+.balign 4
+.obj lbl_802C3D68, local
 	.asciz "StateMachine<AICreature>"
+.endobj lbl_802C3D68
 .balign 4
-lbl_802C3D84:
+.obj lbl_802C3D84, local
 	.asciz "SimpleAI"
+.endobj lbl_802C3D84
 .balign 4
-lbl_802C3D90:
+.obj lbl_802C3D90, local
 	.4byte "__RTTI__26StateMachine<10AICreature>"
 	.4byte 0
 	.4byte 0
-lbl_802C3D9C:
+.endobj lbl_802C3D90
+.balign 4
+.obj lbl_802C3D9C, local
 	.4byte "__RTTI__26StateMachine<10AICreature>"
 	.4byte 0
 	.4byte __RTTI__8SimpleAI
 	.4byte 0
 	.4byte 0
-.global __vt__7PlantAI
-__vt__7PlantAI:
+.endobj lbl_802C3D9C
+.balign 4
+.obj __vt__7PlantAI, weak
 	.4byte __RTTI__7PlantAI
 	.4byte 0
 	.4byte "init__26StateMachine<10AICreature>FP10AICreature"
 	.4byte exec__8SimpleAIFP10AICreature
 	.4byte procMsg__8SimpleAIFP10AICreatureP3Msg
 	.4byte "transit__26StateMachine<10AICreature>FP10AICreaturei"
+.endobj __vt__7PlantAI
 .balign 4
-lbl_802C3DC8:
+.obj lbl_802C3DC8, local
 	.asciz "PaniAnimKeyListener"
+.endobj lbl_802C3DC8
 .balign 4
-lbl_802C3DDC:
+.obj lbl_802C3DDC, local
 	.asciz "EventTalker"
+.endobj lbl_802C3DDC
 .balign 4
-lbl_802C3DE8:
+.obj lbl_802C3DE8, local
 	.asciz "RefCountable"
+.endobj lbl_802C3DE8
 .balign 4
-lbl_802C3DF8:
+.obj lbl_802C3DF8, local
 	.asciz "Creature"
+.endobj lbl_802C3DF8
 .balign 4
-lbl_802C3E04:
+.obj lbl_802C3E04, local
 	.4byte __RTTI__11EventTalker
 	.4byte 0x8
 	.4byte __RTTI__12RefCountable
 	.4byte 0
 	.4byte 0
+.endobj lbl_802C3E04
 .balign 4
-lbl_802C3E18:
+.obj lbl_802C3E18, local
 	.asciz "AICreature"
+.endobj lbl_802C3E18
 .balign 4
-lbl_802C3E24:
+.obj lbl_802C3E24, local
 	.4byte __RTTI__19PaniAnimKeyListener
 	.4byte 0x2B8
 	.4byte __RTTI__11EventTalker
@@ -1802,7 +1843,9 @@ lbl_802C3E24:
 	.4byte __RTTI__8Creature
 	.4byte 0
 	.4byte 0
-lbl_802C3E48:
+.endobj lbl_802C3E24
+.balign 4
+.obj lbl_802C3E48, local
 	.4byte __RTTI__19PaniAnimKeyListener
 	.4byte 0x2B8
 	.4byte __RTTI__11EventTalker
@@ -1814,8 +1857,9 @@ lbl_802C3E48:
 	.4byte __RTTI__10AICreature
 	.4byte 0
 	.4byte 0
-.global __vt__5Plant
-__vt__5Plant:
+.endobj lbl_802C3E48
+.balign 4
+.obj __vt__5Plant, global
 	.4byte __RTTI__5Plant
 	.4byte 0
 	.4byte addCntCallback__12RefCountableFv
@@ -1902,190 +1946,274 @@ __vt__5Plant:
 	.4byte setMotionSpeed__5PlantFf
 	.4byte stopMotion__5PlantFv
 	.4byte animationKeyUpdated__10AICreatureFR16PaniAnimKeyEvent
+.endobj __vt__5Plant
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-lbl_803E2DF8:
+.obj lbl_803E2DF8, local
 	.asciz "<Node>"
+.endobj lbl_803E2DF8
 .balign 4
-lbl_803E2E00:
+.obj lbl_803E2E00, local
 	.asciz "cnode"
+.endobj lbl_803E2E00
 .balign 4
-lbl_803E2E08:
+.obj lbl_803E2E08, local
 	.asciz "s00"
+.endobj lbl_803E2E08
 .balign 4
-lbl_803E2E0C:
+.obj lbl_803E2E0C, local
 	.asciz "s01"
+.endobj lbl_803E2E0C
 .balign 4
-lbl_803E2E10:
+.obj lbl_803E2E10, local
 	.asciz "s02"
+.endobj lbl_803E2E10
 .balign 4
-lbl_803E2E14:
+.obj lbl_803E2E14, local
 	.asciz "s03"
+.endobj lbl_803E2E14
 .balign 4
-lbl_803E2E18:
+.obj lbl_803E2E18, local
 	.asciz "s04"
+.endobj lbl_803E2E18
 .balign 4
-lbl_803E2E1C:
+.obj lbl_803E2E1C, local
 	.asciz "clover"
+.endobj lbl_803E2E1C
 .balign 4
-lbl_803E2E24:
+.obj lbl_803E2E24, local
 	.asciz "chidome"
+.endobj lbl_803E2E24
 .balign 4
-lbl_803E2E2C:
+.obj lbl_803E2E2C, local
 	.asciz "hutaba"
+.endobj lbl_803E2E2C
 .balign 4
-lbl_803E2E34:
+.obj lbl_803E2E34, local
 	.asciz "ine"
+.endobj lbl_803E2E34
 .balign 4
-lbl_803E2E38:
+.obj lbl_803E2E38, local
 	.asciz "tanpopo"
+.endobj lbl_803E2E38
 .balign 4
-lbl_803E2E40:
+.obj lbl_803E2E40, local
 	.asciz "ooinu_l"
+.endobj lbl_803E2E40
 .balign 4
-lbl_803E2E48:
+.obj lbl_803E2E48, local
 	.asciz "ooinu_s"
+.endobj lbl_803E2E48
 .balign 4
-lbl_803E2E50:
+.obj lbl_803E2E50, local
 	.asciz "hae"
+.endobj lbl_803E2E50
 .balign 4
-lbl_803E2E54:
+.obj lbl_803E2E54, local
 	.asciz "%s"
+.endobj lbl_803E2E54
 .balign 4
-lbl_803E2E58:
+.obj lbl_803E2E58, local
 	.asciz "%s.bin"
+.endobj lbl_803E2E58
 .balign 4
-__RTTI__10Parameters:
+.obj __RTTI__10Parameters, local
 	.4byte lbl_802C39A4
 	.4byte 0
+.endobj __RTTI__10Parameters
 .balign 4
-lbl_803E2E68:
+.obj lbl_803E2E68, local
 	.asciz "GenBase"
+.endobj lbl_803E2E68
 .balign 4
-__RTTI__7GenBase:
+.obj __RTTI__7GenBase, local
 	.4byte lbl_803E2E68
 	.4byte lbl_802C39B0
-__RTTI__9GenObject:
+.endobj __RTTI__7GenBase
+.balign 4
+.obj __RTTI__9GenObject, local
 	.4byte lbl_802C39BC
 	.4byte lbl_802C39C8
-__RTTI__14GenObjectPlant:
+.endobj __RTTI__9GenObject
+.balign 4
+.obj __RTTI__14GenObjectPlant, local
 	.4byte lbl_802C3994
 	.4byte lbl_802C39DC
+.endobj __RTTI__14GenObjectPlant
 .balign 4
-lbl_803E2E88:
+.obj lbl_803E2E88, local
 	.asciz "ANode"
+.endobj lbl_803E2E88
 .balign 4
-__RTTI__5ANode:
+.obj __RTTI__5ANode, local
 	.4byte lbl_803E2E88
 	.4byte 0
-__RTTI__8CoreNode:
+.endobj __RTTI__5ANode
+.balign 4
+.obj __RTTI__8CoreNode, local
 	.4byte lbl_802C38C4
 	.4byte lbl_802C3A3C
+.endobj __RTTI__8CoreNode
 .balign 4
-lbl_803E2EA0:
+.obj lbl_803E2EA0, local
 	.asciz "Node"
+.endobj lbl_803E2EA0
 .balign 4
-__RTTI__4Node:
+.obj __RTTI__4Node, local
 	.4byte lbl_803E2EA0
 	.4byte lbl_802C3A48
-__RTTI__11Traversable:
+.endobj __RTTI__4Node
+.balign 4
+.obj __RTTI__11Traversable, local
 	.4byte lbl_802C3A5C
 	.4byte 0
-__RTTI__9ObjectMgr:
+.endobj __RTTI__11Traversable
+.balign 4
+.obj __RTTI__9ObjectMgr, local
 	.4byte lbl_802C3A68
 	.4byte lbl_802C3A74
-__RTTI__15CreatureNodeMgr:
+.endobj __RTTI__9ObjectMgr
+.balign 4
+.obj __RTTI__15CreatureNodeMgr, local
 	.4byte lbl_802C3A98
 	.4byte lbl_802C3AA8
-__RTTI__8PlantMgr:
+.endobj __RTTI__15CreatureNodeMgr
+.balign 4
+.obj __RTTI__8PlantMgr, local
 	.4byte lbl_802C3A30
 	.4byte lbl_802C3AD4
-__RTTI__8BaseParm:
+.endobj __RTTI__8PlantMgr
+.balign 4
+.obj __RTTI__8BaseParm, local
 	.4byte lbl_802C3B90
 	.4byte 0
-__RTTI__Q28PlantMgr7UseNode:
+.endobj __RTTI__8BaseParm
+.balign 4
+.obj __RTTI__Q28PlantMgr7UseNode, local
 	.4byte lbl_802C3BD8
 	.4byte lbl_802C3BEC
-__RTTI__9SAIAction:
+.endobj __RTTI__Q28PlantMgr7UseNode
+.balign 4
+.obj __RTTI__9SAIAction, local
 	.4byte lbl_802C3C70
 	.4byte 0
-__RTTI__Q27PlantAI9TouchInit:
+.endobj __RTTI__9SAIAction
+.balign 4
+.obj __RTTI__Q27PlantAI9TouchInit, local
 	.4byte lbl_802C3C5C
 	.4byte lbl_802C3C7C
-__RTTI__Q27PlantAI8WaitInit:
+.endobj __RTTI__Q27PlantAI9TouchInit
+.balign 4
+.obj __RTTI__Q27PlantAI8WaitInit, local
 	.4byte lbl_802C3C94
 	.4byte lbl_802C3CA8
-__RTTI__12SAICondition:
+.endobj __RTTI__Q27PlantAI8WaitInit
+.balign 4
+.obj __RTTI__12SAICondition, local
 	.4byte lbl_802C3CD8
 	.4byte lbl_802C3CE8
-__RTTI__Q27PlantAI12OpponentMove:
+.endobj __RTTI__12SAICondition
+.balign 4
+.obj __RTTI__Q27PlantAI12OpponentMove, local
 	.4byte lbl_802C3CC0
 	.4byte lbl_802C3CFC
+.endobj __RTTI__Q27PlantAI12OpponentMove
 .balign 4
-lbl_803E2F08:
+.obj lbl_803E2F08, local
 	.asciz "PlantAI"
+.endobj lbl_803E2F08
 .balign 4
-"__RTTI__26StateMachine<10AICreature>":
+.obj "__RTTI__26StateMachine<10AICreature>", local
 	.4byte lbl_802C3D68
 	.4byte 0
-__RTTI__8SimpleAI:
+.endobj "__RTTI__26StateMachine<10AICreature>"
+.balign 4
+.obj __RTTI__8SimpleAI, local
 	.4byte lbl_802C3D84
 	.4byte lbl_802C3D90
-__RTTI__7PlantAI:
+.endobj __RTTI__8SimpleAI
+.balign 4
+.obj __RTTI__7PlantAI, local
 	.4byte lbl_803E2F08
 	.4byte lbl_802C3D9C
+.endobj __RTTI__7PlantAI
 .balign 4
-lbl_803E2F28:
+.obj lbl_803E2F28, local
 	.asciz "Plant"
+.endobj lbl_803E2F28
 .balign 4
-__RTTI__19PaniAnimKeyListener:
+.obj __RTTI__19PaniAnimKeyListener, local
 	.4byte lbl_802C3DC8
 	.4byte 0
-__RTTI__11EventTalker:
+.endobj __RTTI__19PaniAnimKeyListener
+.balign 4
+.obj __RTTI__11EventTalker, local
 	.4byte lbl_802C3DDC
 	.4byte 0
-__RTTI__12RefCountable:
+.endobj __RTTI__11EventTalker
+.balign 4
+.obj __RTTI__12RefCountable, local
 	.4byte lbl_802C3DE8
 	.4byte 0
-__RTTI__8Creature:
+.endobj __RTTI__12RefCountable
+.balign 4
+.obj __RTTI__8Creature, local
 	.4byte lbl_802C3DF8
 	.4byte lbl_802C3E04
-__RTTI__10AICreature:
+.endobj __RTTI__8Creature
+.balign 4
+.obj __RTTI__10AICreature, local
 	.4byte lbl_802C3E18
 	.4byte lbl_802C3E24
-__RTTI__5Plant:
+.endobj __RTTI__10AICreature
+.balign 4
+.obj __RTTI__5Plant, local
 	.4byte lbl_803E2F28
 	.4byte lbl_802C3E48
+.endobj __RTTI__5Plant
 
 .section .sbss, "wa"
 .balign 8
-.global plantMgr
-plantMgr:
+.obj plantMgr, global
 	.skip 0x4
+.endobj plantMgr
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803EA1C8:
+.obj lbl_803EA1C8, local
 	.float 0.0
-lbl_803EA1CC:
+.endobj lbl_803EA1C8
+.obj lbl_803EA1CC, local
 	.float 30.0
-lbl_803EA1D0:
+.endobj lbl_803EA1CC
+.obj lbl_803EA1D0, local
 	.float 2.0
+.endobj lbl_803EA1D0
 .balign 8
-lbl_803EA1D8:
+.obj lbl_803EA1D8, local
 	.double 0.5
-lbl_803EA1E0:
+.endobj lbl_803EA1D8
+.balign 8
+.obj lbl_803EA1E0, local
 	.double 3.0
-lbl_803EA1E8:
+.endobj lbl_803EA1E0
+.balign 4
+.obj lbl_803EA1E8, local
 	.float 40.0
-lbl_803EA1EC:
+.endobj lbl_803EA1E8
+.obj lbl_803EA1EC, local
 	.float 0.5
-lbl_803EA1F0:
+.endobj lbl_803EA1EC
+.obj lbl_803EA1F0, local
 	.float 0.25
-lbl_803EA1F4:
+.endobj lbl_803EA1F0
+.obj lbl_803EA1F4, local
 	.float 0.1
-lbl_803EA1F8:
+.endobj lbl_803EA1F4
+.obj lbl_803EA1F8, local
 	.float 0.3
-lbl_803EA1FC:
+.endobj lbl_803EA1F8
+.obj lbl_803EA1FC, local
 	.float 1.0
+.endobj lbl_803EA1FC

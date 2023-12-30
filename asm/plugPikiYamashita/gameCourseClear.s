@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global menuQuitGame__21GameCourseClearScreenFR4Menu
-menuQuitGame__21GameCourseClearScreenFR4Menu:
+.fn menuQuitGame__21GameCourseClearScreenFR4Menu, weak
 /* 80199414 00196374  7C 08 02 A6 */	mflr r0
 /* 80199418 00196378  90 01 00 04 */	stw r0, 4(r1)
 /* 8019941C 0019637C  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -26,9 +25,9 @@ menuQuitGame__21GameCourseClearScreenFR4Menu:
 /* 80199468 001963C8  38 21 00 18 */	addi r1, r1, 0x18
 /* 8019946C 001963CC  7C 08 03 A6 */	mtlr r0
 /* 80199470 001963D0  4E 80 00 20 */	blr 
+.endfn menuQuitGame__21GameCourseClearScreenFR4Menu
 
-.global __ct__22GameCourseClearSectionFv
-__ct__22GameCourseClearSectionFv:
+.fn __ct__22GameCourseClearSectionFv, global
 /* 80199474 001963D4  7C 08 02 A6 */	mflr r0
 /* 80199478 001963D8  3C 80 80 2D */	lis r4, lbl_802D6320@ha
 /* 8019947C 001963DC  90 01 00 04 */	stw r0, 4(r1)
@@ -916,9 +915,9 @@ __ct__22GameCourseClearSectionFv:
 /* 8019A1A0 00197100  38 21 00 E8 */	addi r1, r1, 0xe8
 /* 8019A1A4 00197104  7C 08 03 A6 */	mtlr r0
 /* 8019A1A8 00197108  4E 80 00 20 */	blr 
+.endfn __ct__22GameCourseClearSectionFv
 
-.global __ct__12CMresultModeFv
-__ct__12CMresultModeFv:
+.fn __ct__12CMresultModeFv, weak
 /* 8019A1AC 0019710C  7C 08 02 A6 */	mflr r0
 /* 8019A1B0 00197110  3C 80 80 2D */	lis r4, __vt__12GameModeBase@ha
 /* 8019A1B4 00197114  90 01 00 04 */	stw r0, 4(r1)
@@ -962,9 +961,9 @@ __ct__12CMresultModeFv:
 /* 8019A24C 001971AC  38 21 00 18 */	addi r1, r1, 0x18
 /* 8019A250 001971B0  7C 08 03 A6 */	mtlr r0
 /* 8019A254 001971B4  4E 80 00 20 */	blr 
+.endfn __ct__12CMresultModeFv
 
-.global __ct__11GameModeMgrFi
-__ct__11GameModeMgrFi:
+.fn __ct__11GameModeMgrFi, weak
 /* 8019A258 001971B8  7C 08 02 A6 */	mflr r0
 /* 8019A25C 001971BC  90 01 00 04 */	stw r0, 4(r1)
 /* 8019A260 001971C0  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -997,9 +996,9 @@ __ct__11GameModeMgrFi:
 /* 8019A2C4 00197224  38 21 00 20 */	addi r1, r1, 0x20
 /* 8019A2C8 00197228  7C 08 03 A6 */	mtlr r0
 /* 8019A2CC 0019722C  4E 80 00 20 */	blr 
+.endfn __ct__11GameModeMgrFi
 
-.global __ct__Q23zen17particleGeneratorFv
-__ct__Q23zen17particleGeneratorFv:
+.fn __ct__Q23zen17particleGeneratorFv, weak
 /* 8019A2D0 00197230  7C 08 02 A6 */	mflr r0
 /* 8019A2D4 00197234  3C 80 80 2D */	lis r4, __vt__Q23zen7zenList@ha
 /* 8019A2D8 00197238  90 01 00 04 */	stw r0, 4(r1)
@@ -1098,9 +1097,9 @@ __ct__Q23zen17particleGeneratorFv:
 /* 8019A44C 001973AC  38 21 00 18 */	addi r1, r1, 0x18
 /* 8019A450 001973B0  7C 08 03 A6 */	mtlr r0
 /* 8019A454 001973B4  4E 80 00 20 */	blr 
+.endfn __ct__Q23zen17particleGeneratorFv
 
-.global __ct__Q23zen14zenListManagerFv
-__ct__Q23zen14zenListManagerFv:
+.fn __ct__Q23zen14zenListManagerFv, weak
 /* 8019A458 001973B8  3C 80 80 2D */	lis r4, __vt__Q23zen7zenList@ha
 /* 8019A45C 001973BC  38 04 68 DC */	addi r0, r4, __vt__Q23zen7zenList@l
 /* 8019A460 001973C0  90 03 00 04 */	stw r0, 4(r3)
@@ -1113,9 +1112,9 @@ __ct__Q23zen14zenListManagerFv:
 /* 8019A47C 001973DC  80 83 00 00 */	lwz r4, 0(r3)
 /* 8019A480 001973E0  90 A4 00 04 */	stw r5, 4(r4)
 /* 8019A484 001973E4  4E 80 00 20 */	blr 
+.endfn __ct__Q23zen14zenListManagerFv
 
-.global remove__Q23zen17particleGeneratorFv
-remove__Q23zen17particleGeneratorFv:
+.fn remove__Q23zen17particleGeneratorFv, weak
 /* 8019A488 001973E8  7C 08 02 A6 */	mflr r0
 /* 8019A48C 001973EC  38 80 00 00 */	li r4, 0
 /* 8019A490 001973F0  90 01 00 04 */	stw r0, 4(r1)
@@ -1132,9 +1131,9 @@ remove__Q23zen17particleGeneratorFv:
 /* 8019A4BC 0019741C  38 21 00 08 */	addi r1, r1, 8
 /* 8019A4C0 00197420  7C 08 03 A6 */	mtlr r0
 /* 8019A4C4 00197424  4E 80 00 20 */	blr 
+.endfn remove__Q23zen17particleGeneratorFv
 
-.global update__12CMresultModeFP10Controller
-update__12CMresultModeFP10Controller:
+.fn update__12CMresultModeFP10Controller, weak
 /* 8019A4C8 00197428  7C 08 02 A6 */	mflr r0
 /* 8019A4CC 0019742C  90 01 00 04 */	stw r0, 4(r1)
 /* 8019A4D0 00197430  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -1170,9 +1169,9 @@ update__12CMresultModeFP10Controller:
 /* 8019A540 001974A0  38 21 00 28 */	addi r1, r1, 0x28
 /* 8019A544 001974A4  7C 08 03 A6 */	mtlr r0
 /* 8019A548 001974A8  4E 80 00 20 */	blr 
+.endfn update__12CMresultModeFP10Controller
 
-.global draw__12CMresultModeFR8Graphics
-draw__12CMresultModeFR8Graphics:
+.fn draw__12CMresultModeFR8Graphics, weak
 /* 8019A54C 001974AC  7C 08 02 A6 */	mflr r0
 /* 8019A550 001974B0  38 63 00 0C */	addi r3, r3, 0xc
 /* 8019A554 001974B4  90 01 00 04 */	stw r0, 4(r1)
@@ -1182,9 +1181,9 @@ draw__12CMresultModeFR8Graphics:
 /* 8019A564 001974C4  38 21 00 08 */	addi r1, r1, 8
 /* 8019A568 001974C8  7C 08 03 A6 */	mtlr r0
 /* 8019A56C 001974CC  4E 80 00 20 */	blr 
+.endfn draw__12CMresultModeFR8Graphics
 
-.global update__11HurryUpModeFP10Controller
-update__11HurryUpModeFP10Controller:
+.fn update__11HurryUpModeFP10Controller, weak
 /* 8019A570 001974D0  7C 08 02 A6 */	mflr r0
 /* 8019A574 001974D4  90 01 00 04 */	stw r0, 4(r1)
 /* 8019A578 001974D8  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -1219,9 +1218,9 @@ update__11HurryUpModeFP10Controller:
 /* 8019A5E4 00197544  38 21 00 28 */	addi r1, r1, 0x28
 /* 8019A5E8 00197548  7C 08 03 A6 */	mtlr r0
 /* 8019A5EC 0019754C  4E 80 00 20 */	blr 
+.endfn update__11HurryUpModeFP10Controller
 
-.global draw__11HurryUpModeFR8Graphics
-draw__11HurryUpModeFR8Graphics:
+.fn draw__11HurryUpModeFR8Graphics, weak
 /* 8019A5F0 00197550  7C 08 02 A6 */	mflr r0
 /* 8019A5F4 00197554  38 63 00 0C */	addi r3, r3, 0xc
 /* 8019A5F8 00197558  90 01 00 04 */	stw r0, 4(r1)
@@ -1231,9 +1230,9 @@ draw__11HurryUpModeFR8Graphics:
 /* 8019A608 00197568  38 21 00 08 */	addi r1, r1, 8
 /* 8019A60C 0019756C  7C 08 03 A6 */	mtlr r0
 /* 8019A610 00197570  4E 80 00 20 */	blr 
+.endfn draw__11HurryUpModeFR8Graphics
 
-.global update__12GameInfoModeFP10Controller
-update__12GameInfoModeFP10Controller:
+.fn update__12GameInfoModeFP10Controller, weak
 /* 8019A614 00197574  7C 08 02 A6 */	mflr r0
 /* 8019A618 00197578  90 01 00 04 */	stw r0, 4(r1)
 /* 8019A61C 0019757C  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -1285,9 +1284,9 @@ update__12GameInfoModeFP10Controller:
 /* 8019A6C8 00197628  38 21 00 28 */	addi r1, r1, 0x28
 /* 8019A6CC 0019762C  7C 08 03 A6 */	mtlr r0
 /* 8019A6D0 00197630  4E 80 00 20 */	blr 
+.endfn update__12GameInfoModeFP10Controller
 
-.global draw__12GameInfoModeFR8Graphics
-draw__12GameInfoModeFR8Graphics:
+.fn draw__12GameInfoModeFR8Graphics, weak
 /* 8019A6D4 00197634  7C 08 02 A6 */	mflr r0
 /* 8019A6D8 00197638  38 63 00 0C */	addi r3, r3, 0xc
 /* 8019A6DC 0019763C  90 01 00 04 */	stw r0, 4(r1)
@@ -1297,9 +1296,9 @@ draw__12GameInfoModeFR8Graphics:
 /* 8019A6EC 0019764C  38 21 00 08 */	addi r1, r1, 8
 /* 8019A6F0 00197650  7C 08 03 A6 */	mtlr r0
 /* 8019A6F4 00197654  4E 80 00 20 */	blr 
+.endfn draw__12GameInfoModeFR8Graphics
 
-.global update__15ProgressiveModeFP10Controller
-update__15ProgressiveModeFP10Controller:
+.fn update__15ProgressiveModeFP10Controller, weak
 /* 8019A6F8 00197658  7C 08 02 A6 */	mflr r0
 /* 8019A6FC 0019765C  90 01 00 04 */	stw r0, 4(r1)
 /* 8019A700 00197660  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -1334,9 +1333,9 @@ update__15ProgressiveModeFP10Controller:
 /* 8019A76C 001976CC  38 21 00 28 */	addi r1, r1, 0x28
 /* 8019A770 001976D0  7C 08 03 A6 */	mtlr r0
 /* 8019A774 001976D4  4E 80 00 20 */	blr 
+.endfn update__15ProgressiveModeFP10Controller
 
-.global draw__15ProgressiveModeFR8Graphics
-draw__15ProgressiveModeFR8Graphics:
+.fn draw__15ProgressiveModeFR8Graphics, weak
 /* 8019A778 001976D8  7C 08 02 A6 */	mflr r0
 /* 8019A77C 001976DC  38 63 00 0C */	addi r3, r3, 0xc
 /* 8019A780 001976E0  90 01 00 04 */	stw r0, 4(r1)
@@ -1346,9 +1345,9 @@ draw__15ProgressiveModeFR8Graphics:
 /* 8019A790 001976F0  38 21 00 08 */	addi r1, r1, 8
 /* 8019A794 001976F4  7C 08 03 A6 */	mtlr r0
 /* 8019A798 001976F8  4E 80 00 20 */	blr 
+.endfn draw__15ProgressiveModeFR8Graphics
 
-.global update__13CountDownModeFP10Controller
-update__13CountDownModeFP10Controller:
+.fn update__13CountDownModeFP10Controller, weak
 /* 8019A79C 001976FC  7C 08 02 A6 */	mflr r0
 /* 8019A7A0 00197700  90 01 00 04 */	stw r0, 4(r1)
 /* 8019A7A4 00197704  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -1412,9 +1411,9 @@ update__13CountDownModeFP10Controller:
 /* 8019A874 001977D4  38 21 00 28 */	addi r1, r1, 0x28
 /* 8019A878 001977D8  7C 08 03 A6 */	mtlr r0
 /* 8019A87C 001977DC  4E 80 00 20 */	blr 
+.endfn update__13CountDownModeFP10Controller
 
-.global draw__13CountDownModeFR8Graphics
-draw__13CountDownModeFR8Graphics:
+.fn draw__13CountDownModeFR8Graphics, weak
 /* 8019A880 001977E0  7C 08 02 A6 */	mflr r0
 /* 8019A884 001977E4  38 63 00 10 */	addi r3, r3, 0x10
 /* 8019A888 001977E8  90 01 00 04 */	stw r0, 4(r1)
@@ -1424,9 +1423,9 @@ draw__13CountDownModeFR8Graphics:
 /* 8019A898 001977F8  38 21 00 08 */	addi r1, r1, 8
 /* 8019A89C 001977FC  7C 08 03 A6 */	mtlr r0
 /* 8019A8A0 00197800  4E 80 00 20 */	blr 
+.endfn draw__13CountDownModeFR8Graphics
 
-.global update__12GameOverModeFP10Controller
-update__12GameOverModeFP10Controller:
+.fn update__12GameOverModeFP10Controller, weak
 /* 8019A8A4 00197804  7C 08 02 A6 */	mflr r0
 /* 8019A8A8 00197808  90 01 00 04 */	stw r0, 4(r1)
 /* 8019A8AC 0019780C  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -1485,9 +1484,9 @@ update__12GameOverModeFP10Controller:
 /* 8019A96C 001978CC  38 21 00 28 */	addi r1, r1, 0x28
 /* 8019A970 001978D0  7C 08 03 A6 */	mtlr r0
 /* 8019A974 001978D4  4E 80 00 20 */	blr 
+.endfn update__12GameOverModeFP10Controller
 
-.global draw__12GameOverModeFR8Graphics
-draw__12GameOverModeFR8Graphics:
+.fn draw__12GameOverModeFR8Graphics, weak
 /* 8019A978 001978D8  7C 08 02 A6 */	mflr r0
 /* 8019A97C 001978DC  38 63 00 10 */	addi r3, r3, 0x10
 /* 8019A980 001978E0  90 01 00 04 */	stw r0, 4(r1)
@@ -1497,9 +1496,9 @@ draw__12GameOverModeFR8Graphics:
 /* 8019A990 001978F0  38 21 00 08 */	addi r1, r1, 8
 /* 8019A994 001978F4  7C 08 03 A6 */	mtlr r0
 /* 8019A998 001978F8  4E 80 00 20 */	blr 
+.endfn draw__12GameOverModeFR8Graphics
 
-.global update__13ContainerModeFP10Controller
-update__13ContainerModeFP10Controller:
+.fn update__13ContainerModeFP10Controller, weak
 /* 8019A99C 001978FC  7C 08 02 A6 */	mflr r0
 /* 8019A9A0 00197900  90 01 00 04 */	stw r0, 4(r1)
 /* 8019A9A4 00197904  94 21 FF D0 */	stwu r1, -0x30(r1)
@@ -1583,9 +1582,9 @@ update__13ContainerModeFP10Controller:
 /* 8019AAC0 00197A20  38 21 00 30 */	addi r1, r1, 0x30
 /* 8019AAC4 00197A24  7C 08 03 A6 */	mtlr r0
 /* 8019AAC8 00197A28  4E 80 00 20 */	blr 
+.endfn update__13ContainerModeFP10Controller
 
-.global draw__13ContainerModeFR8Graphics
-draw__13ContainerModeFR8Graphics:
+.fn draw__13ContainerModeFR8Graphics, weak
 /* 8019AACC 00197A2C  7C 08 02 A6 */	mflr r0
 /* 8019AAD0 00197A30  38 63 00 10 */	addi r3, r3, 0x10
 /* 8019AAD4 00197A34  90 01 00 04 */	stw r0, 4(r1)
@@ -1595,9 +1594,9 @@ draw__13ContainerModeFR8Graphics:
 /* 8019AAE4 00197A44  38 21 00 08 */	addi r1, r1, 8
 /* 8019AAE8 00197A48  7C 08 03 A6 */	mtlr r0
 /* 8019AAEC 00197A4C  4E 80 00 20 */	blr 
+.endfn draw__13ContainerModeFR8Graphics
 
-.global update__11WMPauseModeFP10Controller
-update__11WMPauseModeFP10Controller:
+.fn update__11WMPauseModeFP10Controller, weak
 /* 8019AAF0 00197A50  7C 08 02 A6 */	mflr r0
 /* 8019AAF4 00197A54  90 01 00 04 */	stw r0, 4(r1)
 /* 8019AAF8 00197A58  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -1632,9 +1631,9 @@ update__11WMPauseModeFP10Controller:
 /* 8019AB64 00197AC4  38 21 00 28 */	addi r1, r1, 0x28
 /* 8019AB68 00197AC8  7C 08 03 A6 */	mtlr r0
 /* 8019AB6C 00197ACC  4E 80 00 20 */	blr 
+.endfn update__11WMPauseModeFP10Controller
 
-.global draw__11WMPauseModeFR8Graphics
-draw__11WMPauseModeFR8Graphics:
+.fn draw__11WMPauseModeFR8Graphics, weak
 /* 8019AB70 00197AD0  7C 08 02 A6 */	mflr r0
 /* 8019AB74 00197AD4  38 63 00 0C */	addi r3, r3, 0xc
 /* 8019AB78 00197AD8  90 01 00 04 */	stw r0, 4(r1)
@@ -1644,9 +1643,9 @@ draw__11WMPauseModeFR8Graphics:
 /* 8019AB88 00197AE8  38 21 00 08 */	addi r1, r1, 8
 /* 8019AB8C 00197AEC  7C 08 03 A6 */	mtlr r0
 /* 8019AB90 00197AF0  4E 80 00 20 */	blr 
+.endfn draw__11WMPauseModeFR8Graphics
 
-.global update__12WorldMapModeFP10Controller
-update__12WorldMapModeFP10Controller:
+.fn update__12WorldMapModeFP10Controller, weak
 /* 8019AB94 00197AF4  7C 08 02 A6 */	mflr r0
 /* 8019AB98 00197AF8  90 01 00 04 */	stw r0, 4(r1)
 /* 8019AB9C 00197AFC  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -1683,9 +1682,9 @@ update__12WorldMapModeFP10Controller:
 /* 8019AC10 00197B70  38 21 00 28 */	addi r1, r1, 0x28
 /* 8019AC14 00197B74  7C 08 03 A6 */	mtlr r0
 /* 8019AC18 00197B78  4E 80 00 20 */	blr 
+.endfn update__12WorldMapModeFP10Controller
 
-.global draw__12WorldMapModeFR8Graphics
-draw__12WorldMapModeFR8Graphics:
+.fn draw__12WorldMapModeFR8Graphics, weak
 /* 8019AC1C 00197B7C  7C 08 02 A6 */	mflr r0
 /* 8019AC20 00197B80  38 63 00 0C */	addi r3, r3, 0xc
 /* 8019AC24 00197B84  90 01 00 04 */	stw r0, 4(r1)
@@ -1695,9 +1694,9 @@ draw__12WorldMapModeFR8Graphics:
 /* 8019AC34 00197B94  38 21 00 08 */	addi r1, r1, 8
 /* 8019AC38 00197B98  7C 08 03 A6 */	mtlr r0
 /* 8019AC3C 00197B9C  4E 80 00 20 */	blr 
+.endfn draw__12WorldMapModeFR8Graphics
 
-.global update__18CMcourseSelectModeFP10Controller
-update__18CMcourseSelectModeFP10Controller:
+.fn update__18CMcourseSelectModeFP10Controller, weak
 /* 8019AC40 00197BA0  7C 08 02 A6 */	mflr r0
 /* 8019AC44 00197BA4  90 01 00 04 */	stw r0, 4(r1)
 /* 8019AC48 00197BA8  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -1737,9 +1736,9 @@ update__18CMcourseSelectModeFP10Controller:
 /* 8019ACC4 00197C24  38 21 00 28 */	addi r1, r1, 0x28
 /* 8019ACC8 00197C28  7C 08 03 A6 */	mtlr r0
 /* 8019ACCC 00197C2C  4E 80 00 20 */	blr 
+.endfn update__18CMcourseSelectModeFP10Controller
 
-.global draw__18CMcourseSelectModeFR8Graphics
-draw__18CMcourseSelectModeFR8Graphics:
+.fn draw__18CMcourseSelectModeFR8Graphics, weak
 /* 8019ACD0 00197C30  7C 08 02 A6 */	mflr r0
 /* 8019ACD4 00197C34  38 63 00 0C */	addi r3, r3, 0xc
 /* 8019ACD8 00197C38  90 01 00 04 */	stw r0, 4(r1)
@@ -1749,9 +1748,9 @@ draw__18CMcourseSelectModeFR8Graphics:
 /* 8019ACE8 00197C48  38 21 00 08 */	addi r1, r1, 8
 /* 8019ACEC 00197C4C  7C 08 03 A6 */	mtlr r0
 /* 8019ACF0 00197C50  4E 80 00 20 */	blr 
+.endfn draw__18CMcourseSelectModeFR8Graphics
 
-.global update__11HiScoreModeFP10Controller
-update__11HiScoreModeFP10Controller:
+.fn update__11HiScoreModeFP10Controller, weak
 /* 8019ACF4 00197C54  7C 08 02 A6 */	mflr r0
 /* 8019ACF8 00197C58  90 01 00 04 */	stw r0, 4(r1)
 /* 8019ACFC 00197C5C  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -1786,9 +1785,9 @@ update__11HiScoreModeFP10Controller:
 /* 8019AD68 00197CC8  38 21 00 28 */	addi r1, r1, 0x28
 /* 8019AD6C 00197CCC  7C 08 03 A6 */	mtlr r0
 /* 8019AD70 00197CD0  4E 80 00 20 */	blr 
+.endfn update__11HiScoreModeFP10Controller
 
-.global draw__11HiScoreModeFR8Graphics
-draw__11HiScoreModeFR8Graphics:
+.fn draw__11HiScoreModeFR8Graphics, weak
 /* 8019AD74 00197CD4  7C 08 02 A6 */	mflr r0
 /* 8019AD78 00197CD8  38 63 00 0C */	addi r3, r3, 0xc
 /* 8019AD7C 00197CDC  90 01 00 04 */	stw r0, 4(r1)
@@ -1798,9 +1797,9 @@ draw__11HiScoreModeFR8Graphics:
 /* 8019AD8C 00197CEC  38 21 00 08 */	addi r1, r1, 8
 /* 8019AD90 00197CF0  7C 08 03 A6 */	mtlr r0
 /* 8019AD94 00197CF4  4E 80 00 20 */	blr 
+.endfn draw__11HiScoreModeFR8Graphics
 
-.global update__12UfoPartsModeFP10Controller
-update__12UfoPartsModeFP10Controller:
+.fn update__12UfoPartsModeFP10Controller, weak
 /* 8019AD98 00197CF8  7C 08 02 A6 */	mflr r0
 /* 8019AD9C 00197CFC  90 01 00 04 */	stw r0, 4(r1)
 /* 8019ADA0 00197D00  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -1835,9 +1834,9 @@ update__12UfoPartsModeFP10Controller:
 /* 8019AE0C 00197D6C  38 21 00 28 */	addi r1, r1, 0x28
 /* 8019AE10 00197D70  7C 08 03 A6 */	mtlr r0
 /* 8019AE14 00197D74  4E 80 00 20 */	blr 
+.endfn update__12UfoPartsModeFP10Controller
 
-.global draw__12UfoPartsModeFR8Graphics
-draw__12UfoPartsModeFR8Graphics:
+.fn draw__12UfoPartsModeFR8Graphics, weak
 /* 8019AE18 00197D78  7C 08 02 A6 */	mflr r0
 /* 8019AE1C 00197D7C  38 63 00 0C */	addi r3, r3, 0xc
 /* 8019AE20 00197D80  90 01 00 04 */	stw r0, 4(r1)
@@ -1847,9 +1846,9 @@ draw__12UfoPartsModeFR8Graphics:
 /* 8019AE30 00197D90  38 21 00 08 */	addi r1, r1, 8
 /* 8019AE34 00197D94  7C 08 03 A6 */	mtlr r0
 /* 8019AE38 00197D98  4E 80 00 20 */	blr 
+.endfn draw__12UfoPartsModeFR8Graphics
 
-.global update__11SaveMesModeFP10Controller
-update__11SaveMesModeFP10Controller:
+.fn update__11SaveMesModeFP10Controller, weak
 /* 8019AE3C 00197D9C  7C 08 02 A6 */	mflr r0
 /* 8019AE40 00197DA0  90 01 00 04 */	stw r0, 4(r1)
 /* 8019AE44 00197DA4  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -1899,9 +1898,9 @@ update__11SaveMesModeFP10Controller:
 /* 8019AEE0 00197E40  38 21 00 28 */	addi r1, r1, 0x28
 /* 8019AEE4 00197E44  7C 08 03 A6 */	mtlr r0
 /* 8019AEE8 00197E48  4E 80 00 20 */	blr 
+.endfn update__11SaveMesModeFP10Controller
 
-.global draw__11SaveMesModeFR8Graphics
-draw__11SaveMesModeFR8Graphics:
+.fn draw__11SaveMesModeFR8Graphics, weak
 /* 8019AEEC 00197E4C  7C 08 02 A6 */	mflr r0
 /* 8019AEF0 00197E50  38 63 00 0C */	addi r3, r3, 0xc
 /* 8019AEF4 00197E54  90 01 00 04 */	stw r0, 4(r1)
@@ -1911,9 +1910,9 @@ draw__11SaveMesModeFR8Graphics:
 /* 8019AF04 00197E64  38 21 00 08 */	addi r1, r1, 8
 /* 8019AF08 00197E68  7C 08 03 A6 */	mtlr r0
 /* 8019AF0C 00197E6C  4E 80 00 20 */	blr 
+.endfn draw__11SaveMesModeFR8Graphics
 
-.global update__15SaveFailureModeFP10Controller
-update__15SaveFailureModeFP10Controller:
+.fn update__15SaveFailureModeFP10Controller, weak
 /* 8019AF10 00197E70  7C 08 02 A6 */	mflr r0
 /* 8019AF14 00197E74  90 01 00 04 */	stw r0, 4(r1)
 /* 8019AF18 00197E78  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -1948,9 +1947,9 @@ update__15SaveFailureModeFP10Controller:
 /* 8019AF84 00197EE4  38 21 00 28 */	addi r1, r1, 0x28
 /* 8019AF88 00197EE8  7C 08 03 A6 */	mtlr r0
 /* 8019AF8C 00197EEC  4E 80 00 20 */	blr 
+.endfn update__15SaveFailureModeFP10Controller
 
-.global draw__15SaveFailureModeFR8Graphics
-draw__15SaveFailureModeFR8Graphics:
+.fn draw__15SaveFailureModeFR8Graphics, weak
 /* 8019AF90 00197EF0  7C 08 02 A6 */	mflr r0
 /* 8019AF94 00197EF4  38 63 00 0C */	addi r3, r3, 0xc
 /* 8019AF98 00197EF8  90 01 00 04 */	stw r0, 4(r1)
@@ -1960,9 +1959,9 @@ draw__15SaveFailureModeFR8Graphics:
 /* 8019AFA8 00197F08  38 21 00 08 */	addi r1, r1, 8
 /* 8019AFAC 00197F0C  7C 08 03 A6 */	mtlr r0
 /* 8019AFB0 00197F10  4E 80 00 20 */	blr 
+.endfn draw__15SaveFailureModeFR8Graphics
 
-.global update__15FinalResultModeFP10Controller
-update__15FinalResultModeFP10Controller:
+.fn update__15FinalResultModeFP10Controller, weak
 /* 8019AFB4 00197F14  7C 08 02 A6 */	mflr r0
 /* 8019AFB8 00197F18  90 01 00 04 */	stw r0, 4(r1)
 /* 8019AFBC 00197F1C  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -1997,9 +1996,9 @@ update__15FinalResultModeFP10Controller:
 /* 8019B028 00197F88  38 21 00 28 */	addi r1, r1, 0x28
 /* 8019B02C 00197F8C  7C 08 03 A6 */	mtlr r0
 /* 8019B030 00197F90  4E 80 00 20 */	blr 
+.endfn update__15FinalResultModeFP10Controller
 
-.global draw__15FinalResultModeFR8Graphics
-draw__15FinalResultModeFR8Graphics:
+.fn draw__15FinalResultModeFR8Graphics, weak
 /* 8019B034 00197F94  7C 08 02 A6 */	mflr r0
 /* 8019B038 00197F98  90 01 00 04 */	stw r0, 4(r1)
 /* 8019B03C 00197F9C  94 21 FF F8 */	stwu r1, -8(r1)
@@ -2009,9 +2008,9 @@ draw__15FinalResultModeFR8Graphics:
 /* 8019B04C 00197FAC  38 21 00 08 */	addi r1, r1, 8
 /* 8019B050 00197FB0  7C 08 03 A6 */	mtlr r0
 /* 8019B054 00197FB4  4E 80 00 20 */	blr 
+.endfn draw__15FinalResultModeFR8Graphics
 
-.global update__12GameModeBaseFP10Controller
-update__12GameModeBaseFP10Controller:
+.fn update__12GameModeBaseFP10Controller, weak
 /* 8019B058 00197FB8  7C 08 02 A6 */	mflr r0
 /* 8019B05C 00197FBC  38 A0 00 00 */	li r5, 0
 /* 8019B060 00197FC0  90 01 00 04 */	stw r0, 4(r1)
@@ -2029,13 +2028,13 @@ update__12GameModeBaseFP10Controller:
 /* 8019B08C 00197FEC  38 21 00 08 */	addi r1, r1, 8
 /* 8019B090 00197FF0  7C 08 03 A6 */	mtlr r0
 /* 8019B094 00197FF4  4E 80 00 20 */	blr 
+.endfn update__12GameModeBaseFP10Controller
 
-.global draw__12GameModeBaseFR8Graphics
-draw__12GameModeBaseFR8Graphics:
+.fn draw__12GameModeBaseFR8Graphics, weak
 /* 8019B098 00197FF8  4E 80 00 20 */	blr 
+.endfn draw__12GameModeBaseFR8Graphics
 
-.global update__21GameCourseClearScreenFv
-update__21GameCourseClearScreenFv:
+.fn update__21GameCourseClearScreenFv, weak
 /* 8019B09C 00197FFC  7C 08 02 A6 */	mflr r0
 /* 8019B0A0 00198000  90 01 00 04 */	stw r0, 4(r1)
 /* 8019B0A4 00198004  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -2127,9 +2126,9 @@ update__21GameCourseClearScreenFv:
 /* 8019B1E4 00198144  38 21 00 28 */	addi r1, r1, 0x28
 /* 8019B1E8 00198148  7C 08 03 A6 */	mtlr r0
 /* 8019B1EC 0019814C  4E 80 00 20 */	blr 
+.endfn update__21GameCourseClearScreenFv
 
-.global updateSelect__11GameModeMgrFP10Controller
-updateSelect__11GameModeMgrFP10Controller:
+.fn updateSelect__11GameModeMgrFP10Controller, weak
 /* 8019B1F0 00198150  7C 08 02 A6 */	mflr r0
 /* 8019B1F4 00198154  39 20 00 00 */	li r9, 0
 /* 8019B1F8 00198158  90 01 00 04 */	stw r0, 4(r1)
@@ -2175,9 +2174,9 @@ updateSelect__11GameModeMgrFP10Controller:
 /* 8019B28C 001981EC  38 21 00 08 */	addi r1, r1, 8
 /* 8019B290 001981F0  7C 08 03 A6 */	mtlr r0
 /* 8019B294 001981F4  4E 80 00 20 */	blr 
+.endfn updateSelect__11GameModeMgrFP10Controller
 
-.global draw__21GameCourseClearScreenFR8Graphics
-draw__21GameCourseClearScreenFR8Graphics:
+.fn draw__21GameCourseClearScreenFR8Graphics, weak
 /* 8019B298 001981F8  7C 08 02 A6 */	mflr r0
 /* 8019B29C 001981FC  90 01 00 04 */	stw r0, 4(r1)
 /* 8019B2A0 00198200  94 21 FB 98 */	stwu r1, -0x468(r1)
@@ -2396,9 +2395,9 @@ draw__21GameCourseClearScreenFR8Graphics:
 /* 8019B5E4 00198544  38 21 04 68 */	addi r1, r1, 0x468
 /* 8019B5E8 00198548  7C 08 03 A6 */	mtlr r0
 /* 8019B5EC 0019854C  4E 80 00 20 */	blr 
+.endfn draw__21GameCourseClearScreenFR8Graphics
 
-.global drawSelect__11GameModeMgrFR8GraphicsP4Font
-drawSelect__11GameModeMgrFR8GraphicsP4Font:
+.fn drawSelect__11GameModeMgrFR8GraphicsP4Font, weak
 /* 8019B5F0 00198550  7C 08 02 A6 */	mflr r0
 /* 8019B5F4 00198554  90 01 00 04 */	stw r0, 4(r1)
 /* 8019B5F8 00198558  94 21 FF 50 */	stwu r1, -0xb0(r1)
@@ -2514,9 +2513,9 @@ drawSelect__11GameModeMgrFR8GraphicsP4Font:
 /* 8019B7A0 00198700  38 21 00 B0 */	addi r1, r1, 0xb0
 /* 8019B7A4 00198704  7C 08 03 A6 */	mtlr r0
 /* 8019B7A8 00198708  4E 80 00 20 */	blr 
+.endfn drawSelect__11GameModeMgrFR8GraphicsP4Font
 
-.global read__21GameCourseClearScreenFR18RandomAccessStream
-read__21GameCourseClearScreenFR18RandomAccessStream:
+.fn read__21GameCourseClearScreenFR18RandomAccessStream, weak
 /* 8019B7AC 0019870C  7C 08 02 A6 */	mflr r0
 /* 8019B7B0 00198710  38 63 00 20 */	addi r3, r3, 0x20
 /* 8019B7B4 00198714  90 01 00 04 */	stw r0, 4(r1)
@@ -2526,13 +2525,13 @@ read__21GameCourseClearScreenFR18RandomAccessStream:
 /* 8019B7C4 00198724  38 21 00 08 */	addi r1, r1, 8
 /* 8019B7C8 00198728  7C 08 03 A6 */	mtlr r0
 /* 8019B7CC 0019872C  4E 80 00 20 */	blr 
+.endfn read__21GameCourseClearScreenFR18RandomAccessStream
 
-.global init__22GameCourseClearSectionFv
-init__22GameCourseClearSectionFv:
+.fn init__22GameCourseClearSectionFv, weak
 /* 8019B7D0 00198730  4E 80 00 20 */	blr 
+.endfn init__22GameCourseClearSectionFv
 
-.global "invoke__41Delegate1<21GameCourseClearScreen,R4Menu>FR4Menu"
-"invoke__41Delegate1<21GameCourseClearScreen,R4Menu>FR4Menu":
+.fn "invoke__41Delegate1<21GameCourseClearScreen,R4Menu>FR4Menu", weak
 /* 8019B7D4 00198734  7C 08 02 A6 */	mflr r0
 /* 8019B7D8 00198738  7C 65 1B 78 */	mr r5, r3
 /* 8019B7DC 0019873C  90 01 00 04 */	stw r0, 4(r1)
@@ -2545,70 +2544,84 @@ init__22GameCourseClearSectionFv:
 /* 8019B7F8 00198758  38 21 00 08 */	addi r1, r1, 8
 /* 8019B7FC 0019875C  7C 08 03 A6 */	mtlr r0
 /* 8019B800 00198760  4E 80 00 20 */	blr 
+.endfn "invoke__41Delegate1<21GameCourseClearScreen,R4Menu>FR4Menu"
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802D6320:
+.obj lbl_802D6320, local
 	.asciz "gameCourseClear.cpp"
+.endobj lbl_802D6320
 .balign 4
-lbl_802D6334:
+.obj lbl_802D6334, local
 	.asciz "GameCourseClearSection"
+.endobj lbl_802D6334
 .balign 4
-lbl_802D634C:
+.obj lbl_802D634C, local
 	.4byte 0x00000000
 	.4byte 0xFFFFFFFF
 	.4byte menuCloseMenu__4MenuFR4Menu
+.endobj lbl_802D634C
 .balign 4
-lbl_802D6358:
+.obj lbl_802D6358, local
 	.4byte 0x00000000
 	.4byte 0xFFFFFFFF
 	.4byte menuQuitGame__21GameCourseClearScreenFR4Menu
+.endobj lbl_802D6358
 .balign 4
-lbl_802D6364:
+.obj lbl_802D6364, local
 	.asciz "<GameCourseClearSection>"
+.endobj lbl_802D6364
 .balign 4
-lbl_802D6380:
+.obj lbl_802D6380, local
 	.asciz "GameCourseClearScreen"
+.endobj lbl_802D6380
 .balign 4
-lbl_802D6398:
+.obj lbl_802D6398, local
 	.asciz "<Controller>"
+.endobj lbl_802D6398
 .balign 4
-lbl_802D63A8:
+.obj lbl_802D63A8, local
 	.asciz "bigFont.bti"
+.endobj lbl_802D63A8
 .balign 4
-lbl_802D63B4: # Shift-JIS
+.obj lbl_802D63B4, local # Shift-JIS
 	.4byte 0x83748340
 	.4byte 0x83438369
 	.4byte 0x838B838A
 	.4byte 0x8355838B
 	.4byte 0x83670000
+.endobj lbl_802D63B4
 .balign 4
-lbl_802D63C8: # Shift-JIS
+.obj lbl_802D63C8, local # Shift-JIS
 	.4byte 0x83498376
 	.4byte 0x83568387
 	.4byte 0x8393835A
 	.4byte 0x815B8375
-	.4byte 0x00000000
+	.byte 0
+.endobj lbl_802D63C8
 .balign 4
-lbl_802D63DC: # Shift-JIS
+.obj lbl_802D63DC, local # Shift-JIS
 	.4byte 0x835A815B
 	.4byte 0x83758381
 	.4byte 0x8362835A
 	.4byte 0x815B8357
-	.4byte 0x00000000
+	.byte 0
+.endobj lbl_802D63DC
 .balign 4
-lbl_802D63F0: # Shift-JIS
+.obj lbl_802D63F0, local # Shift-JIS
 	.4byte 0x82748265
 	.4byte 0x826E8370
 	.4byte 0x815B8363
-	.4byte 0x00000000
+	.byte 0
+.endobj lbl_802D63F0
 .balign 4
-lbl_802D6400: # Shift-JIS
+.obj lbl_802D6400, local # Shift-JIS
 	.4byte 0x836E8343
 	.4byte 0x83588352
 	.4byte 0x83410000
+.endobj lbl_802D6400
 .balign 4
-lbl_802D640C: # Shift-JIS
+.obj lbl_802D640C, local # Shift-JIS
 	.4byte 0x83608383
 	.4byte 0x838C8393
 	.4byte 0x83578382
@@ -2617,15 +2630,17 @@ lbl_802D640C: # Shift-JIS
 	.4byte 0x815B8358
 	.4byte 0x835A838C
 	.4byte 0x834E8367
-	.4byte 0x00000000
+	.byte 0
+.endobj lbl_802D640C
 .balign 4
-lbl_802D6430: # Shift-JIS
+.obj lbl_802D6430, local # Shift-JIS
 	.4byte 0x838F815B
 	.4byte 0x838B8368
 	.4byte 0x837D8362
 	.4byte 0x83760000
+.endobj lbl_802D6430
 .balign 4
-lbl_802D6440: # Shift-JIS
+.obj lbl_802D6440, local # Shift-JIS
 	.4byte 0x838F815B
 	.4byte 0x838B8368
 	.4byte 0x837D8362
@@ -2633,53 +2648,63 @@ lbl_802D6440: # Shift-JIS
 	.4byte 0x815B8359
 	.4byte 0x8381836A
 	.4byte 0x8385815B
-	.4byte 0x00000000
+	.byte 0
+.endobj lbl_802D6440
 .balign 4
-lbl_802D6460: # Shift-JIS
+.obj lbl_802D6460, local # Shift-JIS
 	.4byte 0x8373834E
 	.4byte 0x837E8393
 	.4byte 0x8F6F82B5
 	.4byte 0x93FC82EA
-	.4byte 0x00000000
+	.byte 0
+.endobj lbl_802D6460
 .balign 4
-lbl_802D6474: # Shift-JIS
+.obj lbl_802D6474, local # Shift-JIS
 	.4byte 0x8351815B
 	.4byte 0x83808349
 	.4byte 0x815B836F
 	.4byte 0x815B0000
+.endobj lbl_802D6474
 .balign 4
-lbl_802D6484: # Shift-JIS
+.obj lbl_802D6484, local # Shift-JIS
 	.4byte 0x834A8345
 	.4byte 0x83938367
 	.4byte 0x835F8345
 	.4byte 0x83930000
+.endobj lbl_802D6484
 .balign 4
-lbl_802D6494: # Shift-JIS
+.obj lbl_802D6494, local # Shift-JIS
 	.4byte 0x8376838D
 	.4byte 0x834F838C
 	.4byte 0x83628356
 	.4byte 0x83758382
 	.4byte 0x815B8368
-	.4byte 0x00000000
+	.byte 0
+.endobj lbl_802D6494
 .balign 4
-lbl_802D64AC: # Shift-JIS
+.obj lbl_802D64AC, local # Shift-JIS
 	.4byte 0x8351815B
 	.4byte 0x83808FEE
 	.4byte 0x95F10000
+.endobj lbl_802D64AC
 .balign 4
-lbl_802D64B8:
+.obj lbl_802D64B8, local
 	.asciz "Hurry Up!"
+.endobj lbl_802D64B8
 .balign 4
-lbl_802D64C4:
+.obj lbl_802D64C4, local
 	.asciz "effects/pcr/pk_dead.pcr"
+.endobj lbl_802D64C4
 .balign 4
-lbl_802D64DC:
+.obj lbl_802D64DC, local
 	.asciz "effects/tex/soulf3.bti"
+.endobj lbl_802D64DC
 .balign 4
-lbl_802D64F4:
+.obj lbl_802D64F4, local
 	.asciz "screen/blo/progre.blo"
+.endobj lbl_802D64F4
 .balign 4
-lbl_802D650C: # Shift-JIS
+.obj lbl_802D650C, local # Shift-JIS
 	.4byte 0x83608383
 	.4byte 0x838C8393
 	.4byte 0x83578382
@@ -2687,329 +2712,383 @@ lbl_802D650C: # Shift-JIS
 	.4byte 0x8145838A
 	.4byte 0x8355838B
 	.4byte 0x83670000
+.endobj lbl_802D650C
 .balign 4
-lbl_802D6528:
+.obj lbl_802D6528, local
 	.asciz "CoreNode"
+.endobj lbl_802D6528
 .balign 4
-lbl_802D6534:
+.obj lbl_802D6534, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte 0
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
+.endobj lbl_802D6534
 .balign 4
-lbl_802D655C:
+.skip 0x1C # compiler padding
+.balign 4
+.obj lbl_802D655C, local
 	.asciz "zen::particleGenerator"
+.endobj lbl_802D655C
 .balign 4
-lbl_802D6574:
+.obj lbl_802D6574, local
 	.asciz "zen::zenList"
+.endobj lbl_802D6574
 .balign 4
-lbl_802D6584:
+.obj lbl_802D6584, local
 	.4byte __RTTI__Q23zen7zenList
 	.4byte 0
 	.4byte 0
-.global __vt__Q23zen17particleGenerator
-__vt__Q23zen17particleGenerator:
+.endobj lbl_802D6584
+.balign 4
+.obj __vt__Q23zen17particleGenerator, weak
 	.4byte __RTTI__Q23zen17particleGenerator
 	.4byte 0
 	.4byte insertAfter__Q23zen7zenListFPQ23zen7zenList
 	.4byte remove__Q23zen17particleGeneratorFv
+.endobj __vt__Q23zen17particleGenerator
 .balign 4
-lbl_802D65A0:
+.obj lbl_802D65A0, local
 	.asciz "CMresultMode"
+.endobj lbl_802D65A0
 .balign 4
-lbl_802D65B0:
+.obj lbl_802D65B0, local
 	.asciz "GameModeBase"
+.endobj lbl_802D65B0
 .balign 4
-lbl_802D65C0:
+.obj lbl_802D65C0, local
 	.4byte __RTTI__12GameModeBase
 	.4byte 0
 	.4byte 0
-.global __vt__12CMresultMode
-__vt__12CMresultMode:
+.endobj lbl_802D65C0
+.balign 4
+.obj __vt__12CMresultMode, weak
 	.4byte __RTTI__12CMresultMode
 	.4byte 0
 	.4byte update__12CMresultModeFP10Controller
 	.4byte draw__12CMresultModeFR8Graphics
+.endobj __vt__12CMresultMode
 .balign 4
-lbl_802D65DC:
+.obj lbl_802D65DC, local
 	.asciz "HurryUpMode"
+.endobj lbl_802D65DC
 .balign 4
-lbl_802D65E8:
+.obj lbl_802D65E8, local
 	.4byte __RTTI__12GameModeBase
 	.4byte 0
 	.4byte 0
-.global __vt__11HurryUpMode
-__vt__11HurryUpMode:
+.endobj lbl_802D65E8
+.balign 4
+.obj __vt__11HurryUpMode, weak
 	.4byte __RTTI__11HurryUpMode
 	.4byte 0
 	.4byte update__11HurryUpModeFP10Controller
 	.4byte draw__11HurryUpModeFR8Graphics
+.endobj __vt__11HurryUpMode
 .balign 4
-lbl_802D6604:
+.obj lbl_802D6604, local
 	.asciz "GameInfoMode"
+.endobj lbl_802D6604
 .balign 4
-lbl_802D6614:
+.obj lbl_802D6614, local
 	.4byte __RTTI__12GameModeBase
 	.4byte 0
 	.4byte 0
-.global __vt__12GameInfoMode
-__vt__12GameInfoMode:
+.endobj lbl_802D6614
+.balign 4
+.obj __vt__12GameInfoMode, weak
 	.4byte __RTTI__12GameInfoMode
 	.4byte 0
 	.4byte update__12GameInfoModeFP10Controller
 	.4byte draw__12GameInfoModeFR8Graphics
+.endobj __vt__12GameInfoMode
 .balign 4
-lbl_802D6630:
+.obj lbl_802D6630, local
 	.asciz "ProgressiveMode"
+.endobj lbl_802D6630
 .balign 4
-lbl_802D6640:
+.obj lbl_802D6640, local
 	.4byte __RTTI__12GameModeBase
 	.4byte 0
 	.4byte 0
-.global __vt__15ProgressiveMode
-__vt__15ProgressiveMode:
+.endobj lbl_802D6640
+.balign 4
+.obj __vt__15ProgressiveMode, weak
 	.4byte __RTTI__15ProgressiveMode
 	.4byte 0
 	.4byte update__15ProgressiveModeFP10Controller
 	.4byte draw__15ProgressiveModeFR8Graphics
+.endobj __vt__15ProgressiveMode
 .balign 4
-lbl_802D665C:
+.obj lbl_802D665C, local
 	.asciz "CountDownMode"
+.endobj lbl_802D665C
 .balign 4
-lbl_802D666C:
+.obj lbl_802D666C, local
 	.4byte __RTTI__12GameModeBase
 	.4byte 0
 	.4byte 0
-.global __vt__13CountDownMode
-__vt__13CountDownMode:
+.endobj lbl_802D666C
+.balign 4
+.obj __vt__13CountDownMode, weak
 	.4byte __RTTI__13CountDownMode
 	.4byte 0
 	.4byte update__13CountDownModeFP10Controller
 	.4byte draw__13CountDownModeFR8Graphics
+.endobj __vt__13CountDownMode
 .balign 4
-lbl_802D6688:
+.obj lbl_802D6688, local
 	.asciz "GameOverMode"
+.endobj lbl_802D6688
 .balign 4
-lbl_802D6698:
+.obj lbl_802D6698, local
 	.4byte __RTTI__12GameModeBase
 	.4byte 0
 	.4byte 0
-.global __vt__12GameOverMode
-__vt__12GameOverMode:
+.endobj lbl_802D6698
+.balign 4
+.obj __vt__12GameOverMode, weak
 	.4byte __RTTI__12GameOverMode
 	.4byte 0
 	.4byte update__12GameOverModeFP10Controller
 	.4byte draw__12GameOverModeFR8Graphics
+.endobj __vt__12GameOverMode
 .balign 4
-lbl_802D66B4:
+.obj lbl_802D66B4, local
 	.asciz "ContainerMode"
+.endobj lbl_802D66B4
 .balign 4
-lbl_802D66C4:
+.obj lbl_802D66C4, local
 	.4byte __RTTI__12GameModeBase
 	.4byte 0
 	.4byte 0
-.global __vt__13ContainerMode
-__vt__13ContainerMode:
+.endobj lbl_802D66C4
+.balign 4
+.obj __vt__13ContainerMode, weak
 	.4byte __RTTI__13ContainerMode
 	.4byte 0
 	.4byte update__13ContainerModeFP10Controller
 	.4byte draw__13ContainerModeFR8Graphics
+.endobj __vt__13ContainerMode
 .balign 4
-lbl_802D66E0:
+.obj lbl_802D66E0, local
 	.asciz "WMPauseMode"
+.endobj lbl_802D66E0
 .balign 4
-lbl_802D66EC:
+.obj lbl_802D66EC, local
 	.4byte __RTTI__12GameModeBase
 	.4byte 0
 	.4byte 0
-.global __vt__11WMPauseMode
-__vt__11WMPauseMode:
+.endobj lbl_802D66EC
+.balign 4
+.obj __vt__11WMPauseMode, weak
 	.4byte __RTTI__11WMPauseMode
 	.4byte 0
 	.4byte update__11WMPauseModeFP10Controller
 	.4byte draw__11WMPauseModeFR8Graphics
+.endobj __vt__11WMPauseMode
 .balign 4
-lbl_802D6708:
+.obj lbl_802D6708, local
 	.asciz "WorldMapMode"
+.endobj lbl_802D6708
 .balign 4
-lbl_802D6718:
+.obj lbl_802D6718, local
 	.4byte __RTTI__12GameModeBase
 	.4byte 0
 	.4byte 0
-.global __vt__12WorldMapMode
-__vt__12WorldMapMode:
+.endobj lbl_802D6718
+.balign 4
+.obj __vt__12WorldMapMode, weak
 	.4byte __RTTI__12WorldMapMode
 	.4byte 0
 	.4byte update__12WorldMapModeFP10Controller
 	.4byte draw__12WorldMapModeFR8Graphics
+.endobj __vt__12WorldMapMode
 .balign 4
-lbl_802D6734:
+.obj lbl_802D6734, local
 	.asciz "CMcourseSelectMode"
+.endobj lbl_802D6734
 .balign 4
-lbl_802D6748:
+.obj lbl_802D6748, local
 	.4byte __RTTI__12GameModeBase
 	.4byte 0
 	.4byte 0
-.global __vt__18CMcourseSelectMode
-__vt__18CMcourseSelectMode:
+.endobj lbl_802D6748
+.balign 4
+.obj __vt__18CMcourseSelectMode, weak
 	.4byte __RTTI__18CMcourseSelectMode
 	.4byte 0
 	.4byte update__18CMcourseSelectModeFP10Controller
 	.4byte draw__18CMcourseSelectModeFR8Graphics
+.endobj __vt__18CMcourseSelectMode
 .balign 4
-lbl_802D6764:
+.obj lbl_802D6764, local
 	.asciz "HiScoreMode"
+.endobj lbl_802D6764
 .balign 4
-lbl_802D6770:
+.obj lbl_802D6770, local
 	.4byte __RTTI__12GameModeBase
 	.4byte 0
 	.4byte 0
-.global __vt__11HiScoreMode
-__vt__11HiScoreMode:
+.endobj lbl_802D6770
+.balign 4
+.obj __vt__11HiScoreMode, weak
 	.4byte __RTTI__11HiScoreMode
 	.4byte 0
 	.4byte update__11HiScoreModeFP10Controller
 	.4byte draw__11HiScoreModeFR8Graphics
+.endobj __vt__11HiScoreMode
 .balign 4
-lbl_802D678C:
+.obj lbl_802D678C, local
 	.asciz "UfoPartsMode"
+.endobj lbl_802D678C
 .balign 4
-lbl_802D679C:
+.obj lbl_802D679C, local
 	.4byte __RTTI__12GameModeBase
 	.4byte 0
 	.4byte 0
-.global __vt__12UfoPartsMode
-__vt__12UfoPartsMode:
+.endobj lbl_802D679C
+.balign 4
+.obj __vt__12UfoPartsMode, weak
 	.4byte __RTTI__12UfoPartsMode
 	.4byte 0
 	.4byte update__12UfoPartsModeFP10Controller
 	.4byte draw__12UfoPartsModeFR8Graphics
+.endobj __vt__12UfoPartsMode
 .balign 4
-lbl_802D67B8:
+.obj lbl_802D67B8, local
 	.asciz "SaveMesMode"
+.endobj lbl_802D67B8
 .balign 4
-lbl_802D67C4:
+.obj lbl_802D67C4, local
 	.4byte __RTTI__12GameModeBase
 	.4byte 0
 	.4byte 0
-.global __vt__11SaveMesMode
-__vt__11SaveMesMode:
+.endobj lbl_802D67C4
+.balign 4
+.obj __vt__11SaveMesMode, weak
 	.4byte __RTTI__11SaveMesMode
 	.4byte 0
 	.4byte update__11SaveMesModeFP10Controller
 	.4byte draw__11SaveMesModeFR8Graphics
+.endobj __vt__11SaveMesMode
 .balign 4
-lbl_802D67E0:
+.obj lbl_802D67E0, local
 	.asciz "SaveFailureMode"
+.endobj lbl_802D67E0
 .balign 4
-lbl_802D67F0:
+.obj lbl_802D67F0, local
 	.4byte __RTTI__12GameModeBase
 	.4byte 0
 	.4byte 0
-.global __vt__15SaveFailureMode
-__vt__15SaveFailureMode:
+.endobj lbl_802D67F0
+.balign 4
+.obj __vt__15SaveFailureMode, weak
 	.4byte __RTTI__15SaveFailureMode
 	.4byte 0
 	.4byte update__15SaveFailureModeFP10Controller
 	.4byte draw__15SaveFailureModeFR8Graphics
+.endobj __vt__15SaveFailureMode
 .balign 4
-lbl_802D680C:
+.obj lbl_802D680C, local
 	.asciz "FinalResultMode"
+.endobj lbl_802D680C
 .balign 4
-lbl_802D681C:
+.obj lbl_802D681C, local
 	.4byte __RTTI__12GameModeBase
 	.4byte 0
 	.4byte 0
-.global __vt__15FinalResultMode
-__vt__15FinalResultMode:
+.endobj lbl_802D681C
+.balign 4
+.obj __vt__15FinalResultMode, weak
 	.4byte __RTTI__15FinalResultMode
 	.4byte 0
 	.4byte update__15FinalResultModeFP10Controller
 	.4byte draw__15FinalResultModeFR8Graphics
-.global __vt__12GameModeBase
-__vt__12GameModeBase:
+.endobj __vt__15FinalResultMode
+.balign 4
+.obj __vt__12GameModeBase, weak
 	.4byte __RTTI__12GameModeBase
 	.4byte 0
 	.4byte update__12GameModeBaseFP10Controller
 	.4byte draw__12GameModeBaseFR8Graphics
+.endobj __vt__12GameModeBase
 .balign 4
-lbl_802D6848:
+.obj lbl_802D6848, local
 	.asciz "Delegate1<GameCourseClearScreen, Menu &>"
+.endobj lbl_802D6848
 .balign 4
-lbl_802D6874:
+.obj lbl_802D6874, local
 	.asciz "IDelegate1<Menu &>"
+.endobj lbl_802D6874
 .balign 4
-lbl_802D6888:
+.obj lbl_802D6888, local
 	.4byte "__RTTI__18IDelegate1<R4Menu>"
 	.4byte 0
 	.4byte 0
-.global "__vt__41Delegate1<21GameCourseClearScreen,R4Menu>"
-"__vt__41Delegate1<21GameCourseClearScreen,R4Menu>":
+.endobj lbl_802D6888
+.balign 4
+.obj "__vt__41Delegate1<21GameCourseClearScreen,R4Menu>", weak
 	.4byte "__RTTI__41Delegate1<21GameCourseClearScreen,R4Menu>"
 	.4byte 0
 	.4byte "invoke__41Delegate1<21GameCourseClearScreen,R4Menu>FR4Menu"
+.endobj "__vt__41Delegate1<21GameCourseClearScreen,R4Menu>"
 .balign 4
-lbl_802D68A0:
+.obj lbl_802D68A0, local
 	.asciz "Delegate1<Menu, Menu &>"
+.endobj lbl_802D68A0
 .balign 4
-lbl_802D68B8:
+.obj lbl_802D68B8, local
 	.4byte "__RTTI__18IDelegate1<R4Menu>"
 	.4byte 0
 	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-.global __vt__Q23zen7zenList
-__vt__Q23zen7zenList:
+.endobj lbl_802D68B8
+.balign 4
+.skip 0x18 # compiler padding
+.balign 4
+.obj __vt__Q23zen7zenList, weak
 	.4byte __RTTI__Q23zen7zenList
 	.4byte 0
 	.4byte insertAfter__Q23zen7zenListFPQ23zen7zenList
 	.4byte remove__Q23zen7zenListFv
+.endobj __vt__Q23zen7zenList
 .balign 4
-lbl_802D68EC:
+.obj lbl_802D68EC, local
 	.asciz "Parm<int>"
+.endobj lbl_802D68EC
 .balign 4
-lbl_802D68F8:
+.obj lbl_802D68F8, local
 	.asciz "BaseParm"
+.endobj lbl_802D68F8
 .balign 4
-lbl_802D6904:
+.obj lbl_802D6904, local
 	.4byte __RTTI__8BaseParm
 	.4byte 0
 	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
+.endobj lbl_802D6904
 .balign 4
-lbl_802D6924:
+.skip 0x14 # compiler padding
+.balign 4
+.obj lbl_802D6924, local
 	.asciz "Parm<float>"
+.endobj lbl_802D6924
 .balign 4
-lbl_802D6930:
+.obj lbl_802D6930, local
 	.4byte __RTTI__8BaseParm
 	.4byte 0
 	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-lbl_802D6950:
+.endobj lbl_802D6930
+.balign 4
+.skip 0x14 # compiler padding
+.balign 4
+.obj lbl_802D6950, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte __RTTI__8CoreNode
 	.4byte 0
 	.4byte 0
-lbl_802D6964:
+.endobj lbl_802D6950
+.balign 4
+.obj lbl_802D6964, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte __RTTI__8CoreNode
@@ -3017,8 +3096,9 @@ lbl_802D6964:
 	.4byte __RTTI__4Node
 	.4byte 0
 	.4byte 0
-.global __vt__21GameCourseClearScreen
-__vt__21GameCourseClearScreen:
+.endobj lbl_802D6964
+.balign 4
+.obj __vt__21GameCourseClearScreen, weak
 	.4byte __RTTI__21GameCourseClearScreen
 	.4byte 0
 	.4byte getAgeNodeType__5ANodeFv
@@ -3031,7 +3111,9 @@ __vt__21GameCourseClearScreen:
 	.4byte concat__4NodeFR3SRT
 	.4byte concat__4NodeFR8Matrix4f
 	.4byte getModelMatrix__4NodeFv
-lbl_802D69B0:
+.endobj __vt__21GameCourseClearScreen
+.balign 4
+.obj lbl_802D69B0, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte __RTTI__8CoreNode
@@ -3039,7 +3121,9 @@ lbl_802D69B0:
 	.4byte __RTTI__4Node
 	.4byte 0
 	.4byte 0
-lbl_802D69CC:
+.endobj lbl_802D69B0
+.balign 4
+.obj lbl_802D69CC, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte __RTTI__8CoreNode
@@ -3049,8 +3133,9 @@ lbl_802D69CC:
 	.4byte __RTTI__7Section
 	.4byte 0
 	.4byte 0
-.global __vt__22GameCourseClearSection
-__vt__22GameCourseClearSection:
+.endobj lbl_802D69CC
+.balign 4
+.obj __vt__22GameCourseClearSection, weak
 	.4byte __RTTI__22GameCourseClearSection
 	.4byte 0
 	.4byte getAgeNodeType__5ANodeFv
@@ -3064,19 +3149,9 @@ __vt__22GameCourseClearSection:
 	.4byte concat__4NodeFR8Matrix4f
 	.4byte getModelMatrix__4NodeFv
 	.4byte init__22GameCourseClearSectionFv
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
+.endobj __vt__22GameCourseClearSection
+.balign 4
+.skip 0x34 # compiler padding
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8

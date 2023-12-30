@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global getCreature__7BossMgrFi
-getCreature__7BossMgrFi:
+.fn getCreature__7BossMgrFi, global
 /* 8014FD88 0014CCE8  38 00 00 02 */	li r0, 2
 /* 8014FD8C 0014CCEC  7C 09 03 A6 */	mtctr r0
 /* 8014FD90 0014CCF0  39 00 00 00 */	li r8, 0
@@ -112,19 +111,19 @@ getCreature__7BossMgrFi:
 /* 8014FEE8 0014CE48  42 00 FE B4 */	bdnz .L_8014FD9C
 /* 8014FEEC 0014CE4C  38 60 00 00 */	li r3, 0
 /* 8014FEF0 0014CE50  4E 80 00 20 */	blr 
+.endfn getCreature__7BossMgrFi
 
-.global getFirst__7BossMgrFv
-getFirst__7BossMgrFv:
+.fn getFirst__7BossMgrFv, global
 /* 8014FEF4 0014CE54  38 60 00 00 */	li r3, 0
 /* 8014FEF8 0014CE58  4E 80 00 20 */	blr 
+.endfn getFirst__7BossMgrFv
 
-.global getNext__7BossMgrFi
-getNext__7BossMgrFi:
+.fn getNext__7BossMgrFi, global
 /* 8014FEFC 0014CE5C  38 64 00 01 */	addi r3, r4, 1
 /* 8014FF00 0014CE60  4E 80 00 20 */	blr 
+.endfn getNext__7BossMgrFi
 
-.global isDone__7BossMgrFi
-isDone__7BossMgrFi:
+.fn isDone__7BossMgrFi, global
 /* 8014FF04 0014CE64  7C 08 02 A6 */	mflr r0
 /* 8014FF08 0014CE68  90 01 00 04 */	stw r0, 4(r1)
 /* 8014FF0C 0014CE6C  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -146,9 +145,9 @@ isDone__7BossMgrFi:
 /* 8014FF44 0014CEA4  38 21 00 18 */	addi r1, r1, 0x18
 /* 8014FF48 0014CEA8  7C 08 03 A6 */	mtlr r0
 /* 8014FF4C 0014CEAC  4E 80 00 20 */	blr 
+.endfn isDone__7BossMgrFi
 
-.global getSize__7BossMgrFv
-getSize__7BossMgrFv:
+.fn getSize__7BossMgrFv, global
 /* 8014FF50 0014CEB0  80 C3 00 30 */	lwz r6, 0x30(r3)
 /* 8014FF54 0014CEB4  38 E0 00 08 */	li r7, 8
 /* 8014FF58 0014CEB8  80 A6 00 00 */	lwz r5, 0(r6)
@@ -185,9 +184,9 @@ getSize__7BossMgrFv:
 /* 8014FFC4 0014CF24  54 E5 10 3A */	slwi r5, r7, 2
 /* 8014FFC8 0014CF28  4B FF FF D0 */	b .L_8014FF98
 /* 8014FFCC 0014CF2C  4E 80 00 20 */	blr 
+.endfn getSize__7BossMgrFv
 
-.global getMax__7BossMgrFv
-getMax__7BossMgrFv:
+.fn getMax__7BossMgrFv, global
 /* 8014FFD0 0014CF30  80 C3 00 34 */	lwz r6, 0x34(r3)
 /* 8014FFD4 0014CF34  38 E0 00 08 */	li r7, 8
 /* 8014FFD8 0014CF38  80 A6 00 00 */	lwz r5, 0(r6)
@@ -224,9 +223,9 @@ getMax__7BossMgrFv:
 /* 80150044 0014CFA4  54 E5 10 3A */	slwi r5, r7, 2
 /* 80150048 0014CFA8  4B FF FF D0 */	b .L_80150018
 /* 8015004C 0014CFAC  4E 80 00 20 */	blr 
+.endfn getMax__7BossMgrFv
 
-.global __ct__7BossMgrFv
-__ct__7BossMgrFv:
+.fn __ct__7BossMgrFv, global
 /* 80150050 0014CFB0  7C 08 02 A6 */	mflr r0
 /* 80150054 0014CFB4  38 8D FB C8 */	addi r4, r13, lbl_803E48E8@sda21
 /* 80150058 0014CFB8  90 01 00 04 */	stw r0, 4(r1)
@@ -422,9 +421,9 @@ __ct__7BossMgrFv:
 /* 80150338 0014D298  38 21 00 18 */	addi r1, r1, 0x18
 /* 8015033C 0014D29C  7C 08 03 A6 */	mtlr r0
 /* 80150340 0014D2A0  4E 80 00 20 */	blr 
+.endfn __ct__7BossMgrFv
 
-.global __ct__8BossNodeFv
-__ct__8BossNodeFv:
+.fn __ct__8BossNodeFv, weak
 /* 80150344 0014D2A4  3C 80 80 22 */	lis r4, __vt__5ANode@ha
 /* 80150348 0014D2A8  38 04 73 8C */	addi r0, r4, __vt__5ANode@l
 /* 8015034C 0014D2AC  3C 80 80 22 */	lis r4, __vt__8CoreNode@ha
@@ -442,18 +441,18 @@ __ct__8BossNodeFv:
 /* 8015037C 0014D2DC  90 A3 00 04 */	stw r5, 4(r3)
 /* 80150380 0014D2E0  90 03 00 00 */	stw r0, 0(r3)
 /* 80150384 0014D2E4  4E 80 00 20 */	blr 
+.endfn __ct__8BossNodeFv
 
-.global addUseCount__7BossMgrFii
-addUseCount__7BossMgrFii:
+.fn addUseCount__7BossMgrFii, global
 /* 80150388 0014D2E8  80 C3 00 40 */	lwz r6, 0x40(r3)
 /* 8015038C 0014D2EC  54 83 10 3A */	slwi r3, r4, 2
 /* 80150390 0014D2F0  7C 06 18 2E */	lwzx r0, r6, r3
 /* 80150394 0014D2F4  7C 00 2A 14 */	add r0, r0, r5
 /* 80150398 0014D2F8  7C 06 19 2E */	stwx r0, r6, r3
 /* 8015039C 0014D2FC  4E 80 00 20 */	blr 
+.endfn addUseCount__7BossMgrFii
 
-.global constructBoss__7BossMgrFv
-constructBoss__7BossMgrFv:
+.fn constructBoss__7BossMgrFv, global
 /* 801503A0 0014D300  7C 08 02 A6 */	mflr r0
 /* 801503A4 0014D304  90 01 00 04 */	stw r0, 4(r1)
 /* 801503A8 0014D308  38 00 00 01 */	li r0, 1
@@ -1115,9 +1114,9 @@ constructBoss__7BossMgrFv:
 /* 80150D60 0014DCC0  38 21 00 20 */	addi r1, r1, 0x20
 /* 80150D64 0014DCC4  7C 08 03 A6 */	mtlr r0
 /* 80150D68 0014DCC8  4E 80 00 20 */	blr 
+.endfn constructBoss__7BossMgrFv
 
-.global initSlime__7BossMgrFi
-initSlime__7BossMgrFi:
+.fn initSlime__7BossMgrFi, global
 /* 80150D6C 0014DCCC  7C 08 02 A6 */	mflr r0
 /* 80150D70 0014DCD0  3D 00 80 2D */	lis r8, lbl_802CEC30@ha
 /* 80150D74 0014DCD4  90 01 00 04 */	stw r0, 4(r1)
@@ -1236,9 +1235,9 @@ initSlime__7BossMgrFi:
 /* 80150F18 0014DE78  38 21 00 48 */	addi r1, r1, 0x48
 /* 80150F1C 0014DE7C  7C 08 03 A6 */	mtlr r0
 /* 80150F20 0014DE80  4E 80 00 20 */	blr 
+.endfn initSlime__7BossMgrFi
 
-.global init__7BossMgrFii
-init__7BossMgrFii:
+.fn init__7BossMgrFii, global
 /* 80150F24 0014DE84  7C 08 02 A6 */	mflr r0
 /* 80150F28 0014DE88  90 01 00 04 */	stw r0, 4(r1)
 /* 80150F2C 0014DE8C  94 21 FF 80 */	stwu r1, -0x80(r1)
@@ -1592,9 +1591,9 @@ init__7BossMgrFii:
 /* 801513D8 0014E338  38 21 00 80 */	addi r1, r1, 0x80
 /* 801513DC 0014E33C  7C 08 03 A6 */	mtlr r0
 /* 801513E0 0014E340  4E 80 00 20 */	blr 
+.endfn init__7BossMgrFii
 
-.global create__7BossMgrFiR9BirthInfoP13GenObjectBoss
-create__7BossMgrFiR9BirthInfoP13GenObjectBoss:
+.fn create__7BossMgrFiR9BirthInfoP13GenObjectBoss, global
 /* 801513E4 0014E344  7C 08 02 A6 */	mflr r0
 /* 801513E8 0014E348  28 04 00 09 */	cmplwi r4, 9
 /* 801513EC 0014E34C  90 01 00 04 */	stw r0, 4(r1)
@@ -2542,9 +2541,9 @@ create__7BossMgrFiR9BirthInfoP13GenObjectBoss:
 /* 8015218C 0014F0EC  38 21 00 A8 */	addi r1, r1, 0xa8
 /* 80152190 0014F0F0  7C 08 03 A6 */	mtlr r0
 /* 80152194 0014F0F4  4E 80 00 20 */	blr 
+.endfn create__7BossMgrFiR9BirthInfoP13GenObjectBoss
 
-.global kill__7BossMgrFP8Creature
-kill__7BossMgrFP8Creature:
+.fn kill__7BossMgrFP8Creature, global
 /* 80152198 0014F0F8  7C 08 02 A6 */	mflr r0
 /* 8015219C 0014F0FC  38 A0 00 00 */	li r5, 0
 /* 801521A0 0014F100  90 01 00 04 */	stw r0, 4(r1)
@@ -2598,9 +2597,9 @@ kill__7BossMgrFP8Creature:
 /* 8015224C 0014F1AC  38 21 00 20 */	addi r1, r1, 0x20
 /* 80152250 0014F1B0  7C 08 03 A6 */	mtlr r0
 /* 80152254 0014F1B4  4E 80 00 20 */	blr 
+.endfn kill__7BossMgrFP8Creature
 
-.global killAll__7BossMgrFv
-killAll__7BossMgrFv:
+.fn killAll__7BossMgrFv, global
 /* 80152258 0014F1B8  7C 08 02 A6 */	mflr r0
 /* 8015225C 0014F1BC  90 01 00 04 */	stw r0, 4(r1)
 /* 80152260 0014F1C0  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -2648,9 +2647,9 @@ killAll__7BossMgrFv:
 /* 801522FC 0014F25C  38 21 00 28 */	addi r1, r1, 0x28
 /* 80152300 0014F260  7C 08 03 A6 */	mtlr r0
 /* 80152304 0014F264  4E 80 00 20 */	blr 
+.endfn killAll__7BossMgrFv
 
-.global update__7BossMgrFv
-update__7BossMgrFv:
+.fn update__7BossMgrFv, global
 /* 80152308 0014F268  7C 08 02 A6 */	mflr r0
 /* 8015230C 0014F26C  90 01 00 04 */	stw r0, 4(r1)
 /* 80152310 0014F270  94 21 FF C8 */	stwu r1, -0x38(r1)
@@ -2729,9 +2728,9 @@ update__7BossMgrFv:
 /* 8015240C 0014F36C  38 21 00 38 */	addi r1, r1, 0x38
 /* 80152410 0014F370  7C 08 03 A6 */	mtlr r0
 /* 80152414 0014F374  4E 80 00 20 */	blr 
+.endfn update__7BossMgrFv
 
-.global refresh__7BossMgrFR8Graphics
-refresh__7BossMgrFR8Graphics:
+.fn refresh__7BossMgrFR8Graphics, global
 /* 80152418 0014F378  7C 08 02 A6 */	mflr r0
 /* 8015241C 0014F37C  90 01 00 04 */	stw r0, 4(r1)
 /* 80152420 0014F380  94 21 FF C0 */	stwu r1, -0x40(r1)
@@ -2829,9 +2828,9 @@ refresh__7BossMgrFR8Graphics:
 /* 80152564 0014F4C4  38 21 00 40 */	addi r1, r1, 0x40
 /* 80152568 0014F4C8  7C 08 03 A6 */	mtlr r0
 /* 8015256C 0014F4CC  4E 80 00 20 */	blr 
+.endfn refresh__7BossMgrFR8Graphics
 
-.global refresh2d__7BossMgrFR8Graphics
-refresh2d__7BossMgrFR8Graphics:
+.fn refresh2d__7BossMgrFR8Graphics, global
 /* 80152570 0014F4D0  7C 08 02 A6 */	mflr r0
 /* 80152574 0014F4D4  90 01 00 04 */	stw r0, 4(r1)
 /* 80152578 0014F4D8  94 21 FF D0 */	stwu r1, -0x30(r1)
@@ -2869,22 +2868,22 @@ refresh2d__7BossMgrFR8Graphics:
 /* 801525E8 0014F548  38 21 00 30 */	addi r1, r1, 0x30
 /* 801525EC 0014F54C  7C 08 03 A6 */	mtlr r0
 /* 801525F0 0014F550  4E 80 00 20 */	blr 
+.endfn refresh2d__7BossMgrFR8Graphics
 
-.global finalSetup__7BossMgrFv
-finalSetup__7BossMgrFv:
+.fn finalSetup__7BossMgrFv, global
 /* 801525F4 0014F554  38 00 00 01 */	li r0, 1
 /* 801525F8 0014F558  98 03 00 2C */	stb r0, 0x2c(r3)
 /* 801525FC 0014F55C  4E 80 00 20 */	blr 
+.endfn finalSetup__7BossMgrFv
 
-.global getBossShapeObject__7BossMgrFi
-getBossShapeObject__7BossMgrFi:
+.fn getBossShapeObject__7BossMgrFi, global
 /* 80152600 0014F560  80 63 00 48 */	lwz r3, 0x48(r3)
 /* 80152604 0014F564  54 80 10 3A */	slwi r0, r4, 2
 /* 80152608 0014F568  7C 63 00 2E */	lwzx r3, r3, r0
 /* 8015260C 0014F56C  4E 80 00 20 */	blr 
+.endfn getBossShapeObject__7BossMgrFi
 
-.global __dt__7BossMgrFv
-__dt__7BossMgrFv:
+.fn __dt__7BossMgrFv, weak
 /* 80152610 0014F570  7C 08 02 A6 */	mflr r0
 /* 80152614 0014F574  90 01 00 04 */	stw r0, 4(r1)
 /* 80152618 0014F578  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -2914,176 +2913,232 @@ __dt__7BossMgrFv:
 /* 80152670 0014F5D0  38 21 00 18 */	addi r1, r1, 0x18
 /* 80152674 0014F5D4  7C 08 03 A6 */	mtlr r0
 /* 80152678 0014F5D8  4E 80 00 20 */	blr 
+.endfn __dt__7BossMgrFv
 
-"@8@update__7BossMgrFv":
+.fn "@8@update__7BossMgrFv", weak
 /* 8015267C 0014F5DC  38 63 FF F8 */	addi r3, r3, -8
 /* 80152680 0014F5E0  4B FF FC 88 */	b update__7BossMgrFv
+.endfn "@8@update__7BossMgrFv"
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802CEC30:
+.obj lbl_802CEC30, local
 	.asciz "BossMgr.cpp"
+.endobj lbl_802CEC30
 .balign 4
-lbl_802CEC3C:
+.obj lbl_802CEC3C, local
 	.asciz "CoreNode"
+.endobj lbl_802CEC3C
 .balign 4
-lbl_802CEC48:
+.obj lbl_802CEC48, local
 	.asciz "spider shape"
+.endobj lbl_802CEC48
 .balign 4
-lbl_802CEC58:
+.obj lbl_802CEC58, local
 	.asciz "bosses/kumo/kumo.mod"
+.endobj lbl_802CEC58
 .balign 4
-lbl_802CEC70:
+.obj lbl_802CEC70, local
 	.asciz "spider anim"
+.endobj lbl_802CEC70
 .balign 4
-lbl_802CEC7C:
+.obj lbl_802CEC7C, local
 	.asciz "spider rest"
+.endobj lbl_802CEC7C
 .balign 4
-lbl_802CEC88:
+.obj lbl_802CEC88, local
 	.asciz "bosses/kumo/"
+.endobj lbl_802CEC88
 .balign 4
-lbl_802CEC98:
+.obj lbl_802CEC98, local
 	.asciz "parms.bin"
+.endobj lbl_802CEC98
 .balign 4
-lbl_802CECA4:
+.obj lbl_802CECA4, local
 	.asciz "snake shape"
+.endobj lbl_802CECA4
 .balign 4
-lbl_802CECB0:
+.obj lbl_802CECB0, local
 	.asciz "bosses/snake/snake.mod"
+.endobj lbl_802CECB0
 .balign 4
-lbl_802CECC8:
+.obj lbl_802CECC8, local
 	.asciz "snake anim"
+.endobj lbl_802CECC8
 .balign 4
-lbl_802CECD4:
+.obj lbl_802CECD4, local
 	.asciz "snake rest"
+.endobj lbl_802CECD4
 .balign 4
-lbl_802CECE0:
+.obj lbl_802CECE0, local
 	.asciz "bosses/snake/"
+.endobj lbl_802CECE0
 .balign 4
-lbl_802CECF0:
+.obj lbl_802CECF0, local
 	.asciz "slime shape"
+.endobj lbl_802CECF0
 .balign 4
-lbl_802CECFC:
+.obj lbl_802CECFC, local
 	.asciz "bosses/slime/slime.mod"
+.endobj lbl_802CECFC
 .balign 4
-lbl_802CED14:
+.obj lbl_802CED14, local
 	.asciz "slime anim"
+.endobj lbl_802CED14
 .balign 4
-lbl_802CED20:
+.obj lbl_802CED20, local
 	.asciz "slime rest"
+.endobj lbl_802CED20
 .balign 4
-lbl_802CED2C:
+.obj lbl_802CED2C, local
 	.asciz "bosses/slime/"
+.endobj lbl_802CED2C
 .balign 4
-lbl_802CED3C:
+.obj lbl_802CED3C, local
 	.asciz "nucleus shape"
+.endobj lbl_802CED3C
 .balign 4
-lbl_802CED4C:
+.obj lbl_802CED4C, local
 	.asciz "bosses/nucleus/nucleus.mod"
+.endobj lbl_802CED4C
 .balign 4
-lbl_802CED68:
+.obj lbl_802CED68, local
 	.asciz "nucleus anim"
+.endobj lbl_802CED68
 .balign 4
-lbl_802CED78:
+.obj lbl_802CED78, local
 	.asciz "nucleus rest"
+.endobj lbl_802CED78
 .balign 4
-lbl_802CED88:
+.obj lbl_802CED88, local
 	.asciz "bosses/nucleus/"
+.endobj lbl_802CED88
 .balign 4
-lbl_802CED98:
+.obj lbl_802CED98, local
 	.asciz "core nucleus shape"
+.endobj lbl_802CED98
 .balign 4
-lbl_802CEDAC:
+.obj lbl_802CEDAC, local
 	.asciz "bosses/core/core.mod"
+.endobj lbl_802CEDAC
 .balign 4
-lbl_802CEDC4:
+.obj lbl_802CEDC4, local
 	.asciz "core nucleus anim"
+.endobj lbl_802CEDC4
 .balign 4
-lbl_802CEDD8:
+.obj lbl_802CEDD8, local
 	.asciz "core nucleus rest"
+.endobj lbl_802CEDD8
 .balign 4
-lbl_802CEDEC:
+.obj lbl_802CEDEC, local
 	.asciz "bosses/core/"
+.endobj lbl_802CEDEC
 .balign 4
-lbl_802CEDFC:
+.obj lbl_802CEDFC, local
 	.asciz "king shape"
+.endobj lbl_802CEDFC
 .balign 4
-lbl_802CEE08:
+.obj lbl_802CEE08, local
 	.asciz "bosses/king/king.mod"
+.endobj lbl_802CEE08
 .balign 4
-lbl_802CEE20:
+.obj lbl_802CEE20, local
 	.asciz "king anim"
+.endobj lbl_802CEE20
 .balign 4
-lbl_802CEE2C:
+.obj lbl_802CEE2C, local
 	.asciz "king rest"
+.endobj lbl_802CEE2C
 .balign 4
-lbl_802CEE38:
+.obj lbl_802CEE38, local
 	.asciz "bosses/king/"
+.endobj lbl_802CEE38
 .balign 4
-lbl_802CEE48:
+.obj lbl_802CEE48, local
 	.asciz "kogane shape"
+.endobj lbl_802CEE48
 .balign 4
-lbl_802CEE58:
+.obj lbl_802CEE58, local
 	.asciz "bosses/kogane/kogane.mod"
+.endobj lbl_802CEE58
 .balign 4
-lbl_802CEE74:
+.obj lbl_802CEE74, local
 	.asciz "kogane anim"
+.endobj lbl_802CEE74
 .balign 4
-lbl_802CEE80:
+.obj lbl_802CEE80, local
 	.asciz "kogane rest"
+.endobj lbl_802CEE80
 .balign 4
-lbl_802CEE8C:
+.obj lbl_802CEE8C, local
 	.asciz "bosses/kogane/"
+.endobj lbl_802CEE8C
 .balign 4
-lbl_802CEE9C:
+.obj lbl_802CEE9C, local
 	.asciz "pom shape"
+.endobj lbl_802CEE9C
 .balign 4
-lbl_802CEEA8:
+.obj lbl_802CEEA8, local
 	.asciz "bosses/pom/pom.mod"
+.endobj lbl_802CEEA8
 .balign 4
-lbl_802CEEBC:
+.obj lbl_802CEEBC, local
 	.asciz "pom anim"
+.endobj lbl_802CEEBC
 .balign 4
-lbl_802CEEC8:
+.obj lbl_802CEEC8, local
 	.asciz "pom rest"
+.endobj lbl_802CEEC8
 .balign 4
-lbl_802CEED4:
+.obj lbl_802CEED4, local
 	.asciz "bosses/pom/"
+.endobj lbl_802CEED4
 .balign 4
-lbl_802CEEE0:
+.obj lbl_802CEEE0, local
 	.asciz "king back shape"
+.endobj lbl_802CEEE0
 .balign 4
-lbl_802CEEF0:
+.obj lbl_802CEEF0, local
 	.asciz "bosses/kingback/kingback.mod"
+.endobj lbl_802CEEF0
 .balign 4
-lbl_802CEF10:
+.obj lbl_802CEF10, local
 	.asciz "king back anim"
+.endobj lbl_802CEF10
 .balign 4
-lbl_802CEF20:
+.obj lbl_802CEF20, local
 	.asciz "kingback"
+.endobj lbl_802CEF20
 .balign 4
-lbl_802CEF2C:
+.obj lbl_802CEF2C, local
 	.asciz "king back rest"
+.endobj lbl_802CEF2C
 .balign 4
-lbl_802CEF3C:
+.obj lbl_802CEF3C, local
 	.asciz "bosses/kingback/"
+.endobj lbl_802CEF3C
 .balign 4
-lbl_802CEF50:
+.obj lbl_802CEF50, local
 	.asciz "mizu shape"
+.endobj lbl_802CEF50
 .balign 4
-lbl_802CEF5C:
+.obj lbl_802CEF5C, local
 	.asciz "bosses/mizu/mizu.mod"
+.endobj lbl_802CEF5C
 .balign 4
-lbl_802CEF74:
+.obj lbl_802CEF74, local
 	.asciz "mizu anim"
+.endobj lbl_802CEF74
 .balign 4
-lbl_802CEF80:
+.obj lbl_802CEF80, local
 	.asciz "mizu rest"
+.endobj lbl_802CEF80
 .balign 4
-lbl_802CEF8C:
+.obj lbl_802CEF8C, local
 	.asciz "bosses/mizu/"
+.endobj lbl_802CEF8C
 .balign 4
-lbl_802CEF9C:
+.obj lbl_802CEF9C, local
 	.4byte .L_80150F84
 	.4byte .L_80150FF8
 	.4byte .L_801510E8
@@ -3096,7 +3151,9 @@ lbl_802CEF9C:
 	.4byte .L_80151070
 	.4byte .L_801512D8
 	.4byte .L_80151350
-lbl_802CEFCC:
+.endobj lbl_802CEF9C
+.balign 4
+.obj lbl_802CEFCC, local
 	.4byte .L_80151430
 	.4byte .L_80151558
 	.4byte .L_801517BC
@@ -3107,54 +3164,54 @@ lbl_802CEFCC:
 	.4byte .L_80151684
 	.4byte .L_80151F38
 	.4byte .L_80152058
+.endobj lbl_802CEFCC
 .balign 4
-lbl_802CEFF4:
+.obj lbl_802CEFF4, local
 	.asciz "BossNode"
+.endobj lbl_802CEFF4
 .balign 4
-lbl_802CF000:
+.obj lbl_802CF000, local
 	.4byte __RTTI__5ANode
-	.4byte 0x00000000
-	.4byte 0x00000000
-lbl_802CF00C:
+	.4byte 0
+	.4byte 0
+.endobj lbl_802CF000
+.balign 4
+.obj lbl_802CF00C, local
 	.4byte __RTTI__5ANode
-	.4byte 0x00000000
+	.4byte 0
 	.4byte __RTTI__8CoreNode
-	.4byte 0x00000000
-	.4byte 0x00000000
-.global __vt__8BossNode
-__vt__8BossNode:
+	.4byte 0
+	.4byte 0
+.endobj lbl_802CF00C
+.balign 4
+.obj __vt__8BossNode, weak
 	.4byte __RTTI__8BossNode
 	.4byte 0
 	.4byte getAgeNodeType__5ANodeFv
 	.4byte read__8CoreNodeFR18RandomAccessStream
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
+.endobj __vt__8BossNode
 .balign 4
-lbl_802CF04C:
+.skip 0x1C # compiler padding
+.balign 4
+.obj lbl_802CF04C, local
 	.asciz "Traversable"
+.endobj lbl_802CF04C
 .balign 4
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-lbl_802CF070:
+.skip 0x18 # compiler padding
+.balign 4
+.obj lbl_802CF070, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte __RTTI__8CoreNode
 	.4byte 0
 	.4byte 0
+.endobj lbl_802CF070
 .balign 4
-lbl_802CF084:
+.obj lbl_802CF084, local
 	.asciz "ObjectMgr"
+.endobj lbl_802CF084
 .balign 4
-lbl_802CF090:
+.obj lbl_802CF090, local
 	.4byte __RTTI__5ANode
 	.4byte 0x8
 	.4byte __RTTI__8CoreNode
@@ -3164,7 +3221,9 @@ lbl_802CF090:
 	.4byte __RTTI__11Traversable
 	.4byte 0
 	.4byte 0
-lbl_802CF0B4:
+.endobj lbl_802CF090
+.balign 4
+.obj lbl_802CF0B4, local
 	.4byte __RTTI__5ANode
 	.4byte 0x8
 	.4byte __RTTI__8CoreNode
@@ -3176,8 +3235,9 @@ lbl_802CF0B4:
 	.4byte __RTTI__9ObjectMgr
 	.4byte 0
 	.4byte 0
-.global __vt__7BossMgr
-__vt__7BossMgr:
+.endobj lbl_802CF0B4
+.balign 4
+.obj __vt__7BossMgr, global
 	.4byte __RTTI__7BossMgr
 	.4byte 0
 	.4byte getCreature__7BossMgrFi
@@ -3208,73 +3268,99 @@ __vt__7BossMgr:
 	.4byte findClosest__9ObjectMgrFR8Vector3fP9Condition
 	.4byte search__9ObjectMgrFP9ObjectMgr
 	.4byte killAll__7BossMgrFv
+.endobj __vt__7BossMgr
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-lbl_803E48E0:
+.obj lbl_803E48E0, local
 	.asciz "BossMgr"
+.endobj lbl_803E48E0
 .balign 4
-lbl_803E48E8:
+.obj lbl_803E48E8, local
 	.asciz "<Node>"
+.endobj lbl_803E48E8
 .balign 4
-lbl_803E48F0:
+.obj lbl_803E48F0, local
 	.asciz "kumo"
+.endobj lbl_803E48F0
 .balign 4
-lbl_803E48F8:
+.obj lbl_803E48F8, local
 	.asciz "snake"
+.endobj lbl_803E48F8
 .balign 4
-lbl_803E4900:
+.obj lbl_803E4900, local
 	.asciz "slime"
+.endobj lbl_803E4900
 .balign 4
-lbl_803E4908:
+.obj lbl_803E4908, local
 	.asciz "nucleus"
+.endobj lbl_803E4908
 .balign 4
-lbl_803E4910:
+.obj lbl_803E4910, local
 	.asciz "core"
+.endobj lbl_803E4910
 .balign 4
-lbl_803E4918:
+.obj lbl_803E4918, local
 	.asciz "king"
+.endobj lbl_803E4918
 .balign 4
-lbl_803E4920:
+.obj lbl_803E4920, local
 	.asciz "kogane"
+.endobj lbl_803E4920
 .balign 4
-lbl_803E4928:
+.obj lbl_803E4928, local
 	.asciz "pom"
+.endobj lbl_803E4928
 .balign 4
-lbl_803E492C:
+.obj lbl_803E492C, local
 	.asciz "mizu"
+.endobj lbl_803E492C
 .balign 4
-lbl_803E4934:
+.obj lbl_803E4934, local
 	.asciz "ANode"
+.endobj lbl_803E4934
 .balign 4
-__RTTI__5ANode:
+.obj __RTTI__5ANode, local
 	.4byte lbl_803E4934
 	.4byte 0
-__RTTI__8CoreNode:
+.endobj __RTTI__5ANode
+.balign 4
+.obj __RTTI__8CoreNode, local
 	.4byte lbl_802CEC3C
 	.4byte lbl_802CF000
-__RTTI__8BossNode:
+.endobj __RTTI__8CoreNode
+.balign 4
+.obj __RTTI__8BossNode, local
 	.4byte lbl_802CEFF4
 	.4byte lbl_802CF00C
-__RTTI__11Traversable:
+.endobj __RTTI__8BossNode
+.balign 4
+.obj __RTTI__11Traversable, local
 	.4byte lbl_802CF04C
 	.4byte 0
+.endobj __RTTI__11Traversable
 .balign 4
-lbl_803E495C:
+.obj lbl_803E495C, local
 	.asciz "Node"
+.endobj lbl_803E495C
 .balign 4
-__RTTI__4Node:
+.obj __RTTI__4Node, local
 	.4byte lbl_803E495C
 	.4byte lbl_802CF070
-__RTTI__9ObjectMgr:
+.endobj __RTTI__4Node
+.balign 4
+.obj __RTTI__9ObjectMgr, local
 	.4byte lbl_802CF084
 	.4byte lbl_802CF090
-__RTTI__7BossMgr:
+.endobj __RTTI__9ObjectMgr
+.balign 4
+.obj __RTTI__7BossMgr, local
 	.4byte lbl_803E48E0
 	.4byte lbl_802CF0B4
+.endobj __RTTI__7BossMgr
 
 .section .sbss, "wa"
 .balign 8
-.global bossMgr
-bossMgr:
+.obj bossMgr, global
 	.skip 0x4
+.endobj bossMgr

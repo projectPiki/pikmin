@@ -9660,7 +9660,7 @@ lbl_constructor:
 	.float 0.0
 .endobj lbl_803DE188
 .obj lbl_803DE18C, local
-	.float 1.0E-5
+	.float 0.00001
 .endobj lbl_803DE18C
 .obj lbl_803DE190, local
 	.float 0.0

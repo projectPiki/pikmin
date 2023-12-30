@@ -1,13 +1,12 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global initTekiMgr__7TekiMgrFv
-initTekiMgr__7TekiMgrFv:
+.fn initTekiMgr__7TekiMgrFv, global
 /* 8014A58C 001474EC  38 00 00 00 */	li r0, 0
 /* 8014A590 001474F0  90 0D 31 60 */	stw r0, tekiMgr@sda21(r13)
 /* 8014A594 001474F4  4E 80 00 20 */	blr 
+.endfn initTekiMgr__7TekiMgrFv
 
-.global __ct__7TekiMgrFv
-__ct__7TekiMgrFv:
+.fn __ct__7TekiMgrFv, global
 /* 8014A598 001474F8  7C 08 02 A6 */	mflr r0
 /* 8014A59C 001474FC  90 01 00 04 */	stw r0, 4(r1)
 /* 8014A5A0 00147500  94 21 FF 30 */	stwu r1, -0xd0(r1)
@@ -210,9 +209,9 @@ __ct__7TekiMgrFv:
 /* 8014A88C 001477EC  38 21 00 D0 */	addi r1, r1, 0xd0
 /* 8014A890 001477F0  7C 08 03 A6 */	mtlr r0
 /* 8014A894 001477F4  4E 80 00 20 */	blr 
+.endfn __ct__7TekiMgrFv
 
-.global startStage__7TekiMgrFv
-startStage__7TekiMgrFv:
+.fn startStage__7TekiMgrFv, global
 /* 8014A898 001477F8  7C 08 02 A6 */	mflr r0
 /* 8014A89C 001477FC  3C 80 80 2D */	lis r4, lbl_802CDA18@ha
 /* 8014A8A0 00147800  90 01 00 04 */	stw r0, 4(r1)
@@ -340,9 +339,9 @@ startStage__7TekiMgrFv:
 /* 8014AA7C 001479DC  38 21 01 70 */	addi r1, r1, 0x170
 /* 8014AA80 001479E0  7C 08 03 A6 */	mtlr r0
 /* 8014AA84 001479E4  4E 80 00 20 */	blr 
+.endfn startStage__7TekiMgrFv
 
-.global update__7TekiMgrFv
-update__7TekiMgrFv:
+.fn update__7TekiMgrFv, global
 /* 8014AA88 001479E8  7C 08 02 A6 */	mflr r0
 /* 8014AA8C 001479EC  90 01 00 04 */	stw r0, 4(r1)
 /* 8014AA90 001479F0  94 21 FF F8 */	stwu r1, -8(r1)
@@ -351,9 +350,9 @@ update__7TekiMgrFv:
 /* 8014AA9C 001479FC  38 21 00 08 */	addi r1, r1, 8
 /* 8014AAA0 00147A00  7C 08 03 A6 */	mtlr r0
 /* 8014AAA4 00147A04  4E 80 00 20 */	blr 
+.endfn update__7TekiMgrFv
 
-.global refresh__7TekiMgrFR8Graphics
-refresh__7TekiMgrFR8Graphics:
+.fn refresh__7TekiMgrFR8Graphics, global
 /* 8014AAA8 00147A08  7C 08 02 A6 */	mflr r0
 /* 8014AAAC 00147A0C  90 01 00 04 */	stw r0, 4(r1)
 /* 8014AAB0 00147A10  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -398,9 +397,9 @@ refresh__7TekiMgrFR8Graphics:
 /* 8014AB40 00147AA0  38 21 00 28 */	addi r1, r1, 0x28
 /* 8014AB44 00147AA4  7C 08 03 A6 */	mtlr r0
 /* 8014AB48 00147AA8  4E 80 00 20 */	blr 
+.endfn refresh__7TekiMgrFR8Graphics
 
-.global newTeki__7TekiMgrFi
-newTeki__7TekiMgrFi:
+.fn newTeki__7TekiMgrFi, global
 /* 8014AB4C 00147AAC  7C 08 02 A6 */	mflr r0
 /* 8014AB50 00147AB0  90 01 00 04 */	stw r0, 4(r1)
 /* 8014AB54 00147AB4  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -436,9 +435,9 @@ newTeki__7TekiMgrFi:
 /* 8014ABBC 00147B1C  38 21 00 18 */	addi r1, r1, 0x18
 /* 8014ABC0 00147B20  7C 08 03 A6 */	mtlr r0
 /* 8014ABC4 00147B24  4E 80 00 20 */	blr 
+.endfn newTeki__7TekiMgrFi
 
-.global reset__7TekiMgrFv
-reset__7TekiMgrFv:
+.fn reset__7TekiMgrFv, global
 /* 8014ABC8 00147B28  7C 08 02 A6 */	mflr r0
 /* 8014ABCC 00147B2C  90 01 00 04 */	stw r0, 4(r1)
 /* 8014ABD0 00147B30  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -513,9 +512,9 @@ reset__7TekiMgrFv:
 /* 8014ACC8 00147C28  38 21 00 28 */	addi r1, r1, 0x28
 /* 8014ACCC 00147C2C  7C 08 03 A6 */	mtlr r0
 /* 8014ACD0 00147C30  4E 80 00 20 */	blr 
+.endfn reset__7TekiMgrFv
 
-.global createObject__7TekiMgrFv
-createObject__7TekiMgrFv:
+.fn createObject__7TekiMgrFv, global
 /* 8014ACD4 00147C34  7C 08 02 A6 */	mflr r0
 /* 8014ACD8 00147C38  38 60 05 40 */	li r3, 0x540
 /* 8014ACDC 00147C3C  90 01 00 04 */	stw r0, 4(r1)
@@ -534,38 +533,38 @@ createObject__7TekiMgrFv:
 /* 8014AD0C 00147C6C  38 21 00 18 */	addi r1, r1, 0x18
 /* 8014AD10 00147C70  7C 08 03 A6 */	mtlr r0
 /* 8014AD14 00147C74  4E 80 00 20 */	blr 
+.endfn createObject__7TekiMgrFv
 
-.global getStrategy__7TekiMgrFi
-getStrategy__7TekiMgrFi:
+.fn getStrategy__7TekiMgrFi, global
 /* 8014AD18 00147C78  80 63 00 3C */	lwz r3, 0x3c(r3)
 /* 8014AD1C 00147C7C  54 80 10 3A */	slwi r0, r4, 2
 /* 8014AD20 00147C80  80 63 00 04 */	lwz r3, 4(r3)
 /* 8014AD24 00147C84  7C 63 00 2E */	lwzx r3, r3, r0
 /* 8014AD28 00147C88  4E 80 00 20 */	blr 
+.endfn getStrategy__7TekiMgrFi
 
-.global getTekiParameters__7TekiMgrFi
-getTekiParameters__7TekiMgrFi:
+.fn getTekiParameters__7TekiMgrFi, global
 /* 8014AD2C 00147C8C  54 80 10 3A */	slwi r0, r4, 2
 /* 8014AD30 00147C90  7C 63 02 14 */	add r3, r3, r0
 /* 8014AD34 00147C94  80 63 00 4C */	lwz r3, 0x4c(r3)
 /* 8014AD38 00147C98  4E 80 00 20 */	blr 
+.endfn getTekiParameters__7TekiMgrFi
 
-.global getTekiShapeObject__7TekiMgrFi
-getTekiShapeObject__7TekiMgrFi:
+.fn getTekiShapeObject__7TekiMgrFi, global
 /* 8014AD3C 00147C9C  54 80 10 3A */	slwi r0, r4, 2
 /* 8014AD40 00147CA0  7C 63 02 14 */	add r3, r3, r0
 /* 8014AD44 00147CA4  80 63 00 D8 */	lwz r3, 0xd8(r3)
 /* 8014AD48 00147CA8  4E 80 00 20 */	blr 
+.endfn getTekiShapeObject__7TekiMgrFi
 
-.global getSoundTable__7TekiMgrFi
-getSoundTable__7TekiMgrFi:
+.fn getSoundTable__7TekiMgrFi, global
 /* 8014AD4C 00147CAC  80 63 00 44 */	lwz r3, 0x44(r3)
 /* 8014AD50 00147CB0  54 80 10 3A */	slwi r0, r4, 2
 /* 8014AD54 00147CB4  7C 63 00 2E */	lwzx r3, r3, r0
 /* 8014AD58 00147CB8  4E 80 00 20 */	blr 
+.endfn getSoundTable__7TekiMgrFi
 
-.global refresh2d__7TekiMgrFR8Graphics
-refresh2d__7TekiMgrFR8Graphics:
+.fn refresh2d__7TekiMgrFR8Graphics, global
 /* 8014AD5C 00147CBC  7C 08 02 A6 */	mflr r0
 /* 8014AD60 00147CC0  90 01 00 04 */	stw r0, 4(r1)
 /* 8014AD64 00147CC4  94 21 FF C8 */	stwu r1, -0x38(r1)
@@ -644,9 +643,9 @@ refresh2d__7TekiMgrFR8Graphics:
 /* 8014AE6C 00147DCC  38 21 00 38 */	addi r1, r1, 0x38
 /* 8014AE70 00147DD0  7C 08 03 A6 */	mtlr r0
 /* 8014AE74 00147DD4  4E 80 00 20 */	blr 
+.endfn refresh2d__7TekiMgrFR8Graphics
 
-.global setUsingTypeTable__7TekiMgrFb
-setUsingTypeTable__7TekiMgrFb:
+.fn setUsingTypeTable__7TekiMgrFb, global
 /* 8014AE78 00147DD8  98 83 01 64 */	stb r4, 0x164(r3)
 /* 8014AE7C 00147DDC  38 C0 00 20 */	li r6, 0x20
 /* 8014AE80 00147DE0  20 06 00 23 */	subfic r0, r6, 0x23
@@ -690,9 +689,9 @@ setUsingTypeTable__7TekiMgrFb:
 /* 8014AF14 00147E74  38 C6 00 01 */	addi r6, r6, 1
 /* 8014AF18 00147E78  42 00 FF F4 */	bdnz .L_8014AF0C
 /* 8014AF1C 00147E7C  4E 80 00 20 */	blr 
+.endfn setUsingTypeTable__7TekiMgrFb
 
-.global setVisibleTypeTable__7TekiMgrFb
-setVisibleTypeTable__7TekiMgrFb:
+.fn setVisibleTypeTable__7TekiMgrFb, global
 /* 8014AF20 00147E80  98 83 01 8C */	stb r4, 0x18c(r3)
 /* 8014AF24 00147E84  38 C0 00 20 */	li r6, 0x20
 /* 8014AF28 00147E88  20 06 00 23 */	subfic r0, r6, 0x23
@@ -736,15 +735,15 @@ setVisibleTypeTable__7TekiMgrFb:
 /* 8014AFBC 00147F1C  38 C6 00 01 */	addi r6, r6, 1
 /* 8014AFC0 00147F20  42 00 FF F4 */	bdnz .L_8014AFB4
 /* 8014AFC4 00147F24  4E 80 00 20 */	blr 
+.endfn setVisibleTypeTable__7TekiMgrFb
 
-.global setVisibleType__7TekiMgrFib
-setVisibleType__7TekiMgrFib:
+.fn setVisibleType__7TekiMgrFib, global
 /* 8014AFC8 00147F28  7C 63 22 14 */	add r3, r3, r4
 /* 8014AFCC 00147F2C  98 A3 01 8C */	stb r5, 0x18c(r3)
 /* 8014AFD0 00147F30  4E 80 00 20 */	blr 
+.endfn setVisibleType__7TekiMgrFib
 
-.global hasModel__7TekiMgrFi
-hasModel__7TekiMgrFi:
+.fn hasModel__7TekiMgrFi, global
 /* 8014AFD4 00147F34  2C 04 00 05 */	cmpwi r4, 5
 /* 8014AFD8 00147F38  38 60 00 01 */	li r3, 1
 /* 8014AFDC 00147F3C  38 A3 00 00 */	addi r5, r3, 0
@@ -777,9 +776,9 @@ hasModel__7TekiMgrFi:
 /* 8014B038 00147F98  7C 00 00 34 */	cntlzw r0, r0
 /* 8014B03C 00147F9C  54 03 D9 7E */	srwi r3, r0, 5
 /* 8014B040 00147FA0  4E 80 00 20 */	blr 
+.endfn hasModel__7TekiMgrFi
 
-.global getResultFlag__7TekiMgrFi
-getResultFlag__7TekiMgrFi:
+.fn getResultFlag__7TekiMgrFi, global
 /* 8014B044 00147FA4  2C 04 00 08 */	cmpwi r4, 8
 /* 8014B048 00147FA8  38 60 00 00 */	li r3, 0
 /* 8014B04C 00147FAC  40 82 00 0C */	bne .L_8014B058
@@ -805,9 +804,9 @@ getResultFlag__7TekiMgrFi:
 /* 8014B08C 00147FEC  4C 82 00 20 */	bnelr 
 /* 8014B090 00147FF0  38 60 00 2C */	li r3, 0x2c
 /* 8014B094 00147FF4  4E 80 00 20 */	blr 
+.endfn getResultFlag__7TekiMgrFi
 
-.global __dt__7TekiMgrFv
-__dt__7TekiMgrFv:
+.fn __dt__7TekiMgrFv, weak
 /* 8014B098 00147FF8  7C 08 02 A6 */	mflr r0
 /* 8014B09C 00147FFC  90 01 00 04 */	stw r0, 4(r1)
 /* 8014B0A0 00148000  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -843,27 +842,32 @@ __dt__7TekiMgrFv:
 /* 8014B110 00148070  38 21 00 18 */	addi r1, r1, 0x18
 /* 8014B114 00148074  7C 08 03 A6 */	mtlr r0
 /* 8014B118 00148078  4E 80 00 20 */	blr 
+.endfn __dt__7TekiMgrFv
 
-"@8@update__7TekiMgrFv":
+.fn "@8@update__7TekiMgrFv", weak
 /* 8014B11C 0014807C  38 63 FF F8 */	addi r3, r3, -8
 /* 8014B120 00148080  4B FF F9 68 */	b update__7TekiMgrFv
+.endfn "@8@update__7TekiMgrFv"
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802CDA18:
+.obj lbl_802CDA18, local
 	.asciz "tekimgr.cpp"
+.endobj lbl_802CDA18
 .balign 4
-lbl_802CDA24:
+.obj lbl_802CDA24, local
 	.asciz "kabekuiA"
+.endobj lbl_802CDA24
 .balign 4
-lbl_802CDA30:
+.obj lbl_802CDA30, local
 	.asciz "kabekuiB"
+.endobj lbl_802CDA30
 .balign 4
-lbl_802CDA3C:
+.obj lbl_802CDA3C, local
 	.asciz "kabekuiC"
+.endobj lbl_802CDA3C
 .balign 4
-.global typeNames__7TekiMgr
-typeNames__7TekiMgr:
+.obj typeNames__7TekiMgr, global
 	.4byte lbl_803E4558
 	.4byte lbl_803E4560
 	.4byte lbl_803E4568
@@ -899,8 +903,9 @@ typeNames__7TekiMgr:
 	.4byte lbl_803E463C
 	.4byte lbl_803E4644
 	.4byte lbl_803E464C
-.global typeIds__7TekiMgr
-typeIds__7TekiMgr:
+.endobj typeNames__7TekiMgr
+.balign 4
+.obj typeIds__7TekiMgr, global
 	.ascii "tkfr"
 	.ascii "tkig"
 	.ascii "tkiw"
@@ -936,87 +941,105 @@ typeIds__7TekiMgr:
 	.ascii "tksb"
 	.ascii "tkfw"
 	.ascii "tkn1"
+.endobj typeIds__7TekiMgr
 .balign 4
-lbl_802CDB60:
+.obj lbl_802CDB60, local
 	.asciz "tekipara/%s.bin"
+.endobj lbl_802CDB60
 .balign 4
-lbl_802CDB70:
+.obj lbl_802CDB70, local
 	.asciz "teki data"
+.endobj lbl_802CDB70
 .balign 4
-lbl_802CDB7C:
+.obj lbl_802CDB7C, local
 	.asciz "%s model data"
+.endobj lbl_802CDB7C
 .balign 4
-lbl_802CDB8C:
+.obj lbl_802CDB8C, local
 	.asciz "tekis/%s/%s.mod"
+.endobj lbl_802CDB8C
 .balign 4
-lbl_802CDB9C:
+.obj lbl_802CDB9C, local
 	.asciz "%s animation data"
+.endobj lbl_802CDB9C
 .balign 4
-lbl_802CDBB0:
+.obj lbl_802CDBB0, local
 	.asciz "tekikeys/%s.key"
+.endobj lbl_802CDBB0
 .balign 4
-lbl_802CDBC0:
+.obj lbl_802CDBC0, local
 	.asciz "CoreNode"
+.endobj lbl_802CDBC0
 .balign 4
-lbl_802CDBCC:
+.obj lbl_802CDBCC, local
 	.4byte __RTTI__5ANode
-	.4byte 0x00000000
-	.4byte 0x00000000
-lbl_802CDBD8:
+	.4byte 0
+	.4byte 0
+.endobj lbl_802CDBCC
+.balign 4
+.obj lbl_802CDBD8, local
 	.4byte __RTTI__5ANode
-	.4byte 0x00000000
+	.4byte 0
 	.4byte __RTTI__8CoreNode
-	.4byte 0x00000000
-	.4byte 0x00000000
+	.4byte 0
+	.4byte 0
+.endobj lbl_802CDBD8
 .balign 4
-lbl_802CDBEC:
+.obj lbl_802CDBEC, local
 	.asciz "Traversable"
+.endobj lbl_802CDBEC
 .balign 4
-lbl_802CDBF8:
+.obj lbl_802CDBF8, local
 	.asciz "ObjectMgr"
+.endobj lbl_802CDBF8
 .balign 4
-lbl_802CDC04:
+.obj lbl_802CDC04, local
 	.4byte __RTTI__5ANode
-	.4byte 0x00000008
+	.4byte 0x8
 	.4byte __RTTI__8CoreNode
-	.4byte 0x00000008
+	.4byte 0x8
 	.4byte __RTTI__4Node
-	.4byte 0x00000008
+	.4byte 0x8
 	.4byte __RTTI__11Traversable
-	.4byte 0x00000000
-	.4byte 0x00000000
+	.4byte 0
+	.4byte 0
+.endobj lbl_802CDC04
 .balign 4
-lbl_802CDC28:
+.obj lbl_802CDC28, local
 	.asciz "MonoObjectMgr"
+.endobj lbl_802CDC28
 .balign 4
-lbl_802CDC38:
+.obj lbl_802CDC38, local
 	.4byte __RTTI__5ANode
-	.4byte 0x00000008
+	.4byte 0x8
 	.4byte __RTTI__8CoreNode
-	.4byte 0x00000008
+	.4byte 0x8
 	.4byte __RTTI__4Node
-	.4byte 0x00000008
+	.4byte 0x8
 	.4byte __RTTI__11Traversable
-	.4byte 0x00000000
+	.4byte 0
 	.4byte __RTTI__9ObjectMgr
-	.4byte 0x00000000
-	.4byte 0x00000000
-lbl_802CDC64:
+	.4byte 0
+	.4byte 0
+.endobj lbl_802CDC38
+.balign 4
+.obj lbl_802CDC64, local
 	.4byte __RTTI__5ANode
-	.4byte 0x00000008
+	.4byte 0x8
 	.4byte __RTTI__8CoreNode
-	.4byte 0x00000008
+	.4byte 0x8
 	.4byte __RTTI__4Node
-	.4byte 0x00000008
+	.4byte 0x8
 	.4byte __RTTI__11Traversable
-	.4byte 0x00000000
+	.4byte 0
 	.4byte __RTTI__9ObjectMgr
-	.4byte 0x00000000
+	.4byte 0
 	.4byte __RTTI__13MonoObjectMgr
-	.4byte 0x00000000
-	.4byte 0x00000000
-.global __vt__7TekiMgr
-__vt__7TekiMgr:
+	.4byte 0
+	.4byte 0
+.endobj lbl_802CDC64
+.balign 4
+.obj __vt__7TekiMgr, global
 	.4byte __RTTI__7TekiMgr
 	.4byte 0
 	.4byte getCreature__13MonoObjectMgrFi
@@ -1050,148 +1073,199 @@ __vt__7TekiMgr:
 	.4byte birth__13MonoObjectMgrFv
 	.4byte kill__13MonoObjectMgrFP8Creature
 	.4byte createObject__7TekiMgrFv
+.endobj __vt__7TekiMgr
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-lbl_803E4550:
+.obj lbl_803E4550, local
 	.asciz "tekiMgr"
+.endobj lbl_803E4550
 .balign 4
-lbl_803E4558:
+.obj lbl_803E4558, local
 	.asciz "frog"
+.endobj lbl_803E4558
 .balign 4
-lbl_803E4560:
+.obj lbl_803E4560, local
 	.asciz "iwagen"
+.endobj lbl_803E4560
 .balign 4
-lbl_803E4568:
+.obj lbl_803E4568, local
 	.asciz "iwagon"
+.endobj lbl_803E4568
 .balign 4
-lbl_803E4570:
+.obj lbl_803E4570, local
 	.asciz "chappy"
+.endobj lbl_803E4570
 .balign 4
-lbl_803E4578:
+.obj lbl_803E4578, local
 	.asciz "swallow"
+.endobj lbl_803E4578
 .balign 4
-lbl_803E4580:
+.obj lbl_803E4580, local
 	.asciz "mizigen"
+.endobj lbl_803E4580
 .balign 4
-lbl_803E4588:
+.obj lbl_803E4588, local
 	.asciz "qurione"
+.endobj lbl_803E4588
 .balign 4
-lbl_803E4590:
+.obj lbl_803E4590, local
 	.asciz "palm"
+.endobj lbl_803E4590
 .balign 4
-lbl_803E4598:
+.obj lbl_803E4598, local
 	.asciz "collec"
+.endobj lbl_803E4598
 .balign 4
-lbl_803E45A0:
+.obj lbl_803E45A0, local
 	.asciz "kinoko"
+.endobj lbl_803E45A0
 .balign 4
-lbl_803E45A8:
+.obj lbl_803E45A8, local
 	.asciz "shell"
+.endobj lbl_803E45A8
 .balign 4
-lbl_803E45B0:
+.obj lbl_803E45B0, local
 	.asciz "napkid"
+.endobj lbl_803E45B0
 .balign 4
-lbl_803E45B8:
+.obj lbl_803E45B8, local
 	.asciz "hollec"
+.endobj lbl_803E45B8
 .balign 4
-lbl_803E45C0:
+.obj lbl_803E45C0, local
 	.asciz "pearl"
+.endobj lbl_803E45C0
 .balign 4
-lbl_803E45C8:
+.obj lbl_803E45C8, local
 	.asciz "rocpe"
+.endobj lbl_803E45C8
 .balign 4
-lbl_803E45D0:
+.obj lbl_803E45D0, local
 	.asciz "tank"
+.endobj lbl_803E45D0
 .balign 4
-lbl_803E45D8:
+.obj lbl_803E45D8, local
 	.asciz "mar"
+.endobj lbl_803E45D8
 .balign 4
-lbl_803E45DC:
+.obj lbl_803E45DC, local
 	.asciz "beatle"
+.endobj lbl_803E45DC
 .balign 4
-lbl_803E45E4:
+.obj lbl_803E45E4, local
 	.asciz "tamago"
+.endobj lbl_803E45E4
 .balign 4
-lbl_803E45EC:
+.obj lbl_803E45EC, local
 	.asciz "dororo"
+.endobj lbl_803E45EC
 .balign 4
-lbl_803E45F4:
+.obj lbl_803E45F4, local
 	.asciz "hibaA"
+.endobj lbl_803E45F4
 .balign 4
-lbl_803E45FC:
+.obj lbl_803E45FC, local
 	.asciz "miurin"
+.endobj lbl_803E45FC
 .balign 4
-lbl_803E4604:
+.obj lbl_803E4604, local
 	.asciz "otama"
+.endobj lbl_803E4604
 .balign 4
-lbl_803E460C:
+.obj lbl_803E460C, local
 	.asciz "usuba"
+.endobj lbl_803E460C
 .balign 4
-lbl_803E4614:
+.obj lbl_803E4614, local
 	.asciz "yamash3"
+.endobj lbl_803E4614
 .balign 4
-lbl_803E461C:
+.obj lbl_803E461C, local
 	.asciz "yamash4"
+.endobj lbl_803E461C
 .balign 4
-lbl_803E4624:
+.obj lbl_803E4624, local
 	.asciz "yamash5"
+.endobj lbl_803E4624
 .balign 4
-lbl_803E462C:
+.obj lbl_803E462C, local
 	.asciz "namazu"
+.endobj lbl_803E462C
 .balign 4
-lbl_803E4634:
+.obj lbl_803E4634, local
 	.asciz "chappb"
+.endobj lbl_803E4634
 .balign 4
-lbl_803E463C:
+.obj lbl_803E463C, local
 	.asciz "swallob"
+.endobj lbl_803E463C
 .balign 4
-lbl_803E4644:
+.obj lbl_803E4644, local
 	.asciz "frow"
+.endobj lbl_803E4644
 .balign 4
-lbl_803E464C:
+.obj lbl_803E464C, local
 	.asciz "nakata1"
+.endobj lbl_803E464C
 .balign 4
-lbl_803E4654:
+.obj lbl_803E4654, local
 	.asciz ""
+.endobj lbl_803E4654
 .balign 4
-lbl_803E4658:
+.obj lbl_803E4658, local
 	.asciz "tekis"
+.endobj lbl_803E4658
 .balign 4
-lbl_803E4660:
+.obj lbl_803E4660, local
 	.asciz "TekiMgr"
+.endobj lbl_803E4660
 .balign 4
-lbl_803E4668:
+.obj lbl_803E4668, local
 	.asciz "ANode"
+.endobj lbl_803E4668
 .balign 4
-__RTTI__5ANode:
+.obj __RTTI__5ANode, local
 	.4byte lbl_803E4668
-	.4byte 0x00000000
-__RTTI__8CoreNode:
+	.4byte 0
+.endobj __RTTI__5ANode
+.balign 4
+.obj __RTTI__8CoreNode, local
 	.4byte lbl_802CDBC0
 	.4byte lbl_802CDBCC
+.endobj __RTTI__8CoreNode
 .balign 4
-lbl_803E4680:
+.obj lbl_803E4680, local
 	.asciz "Node"
+.endobj lbl_803E4680
 .balign 4
-__RTTI__4Node:
+.obj __RTTI__4Node, local
 	.4byte lbl_803E4680
 	.4byte lbl_802CDBD8
-__RTTI__11Traversable:
+.endobj __RTTI__4Node
+.balign 4
+.obj __RTTI__11Traversable, local
 	.4byte lbl_802CDBEC
-	.4byte 0x00000000
-__RTTI__9ObjectMgr:
+	.4byte 0
+.endobj __RTTI__11Traversable
+.balign 4
+.obj __RTTI__9ObjectMgr, local
 	.4byte lbl_802CDBF8
 	.4byte lbl_802CDC04
-__RTTI__13MonoObjectMgr:
+.endobj __RTTI__9ObjectMgr
+.balign 4
+.obj __RTTI__13MonoObjectMgr, local
 	.4byte lbl_802CDC28
 	.4byte lbl_802CDC38
-__RTTI__7TekiMgr:
+.endobj __RTTI__13MonoObjectMgr
+.balign 4
+.obj __RTTI__7TekiMgr, local
 	.4byte lbl_803E4660
 	.4byte lbl_802CDC64
+.endobj __RTTI__7TekiMgr
 
 .section .sbss, "wa"
 .balign 8
-.global tekiMgr
-tekiMgr:
+.obj tekiMgr, global
 	.skip 0x4
+.endobj tekiMgr

@@ -384,12 +384,15 @@
 .obj lbl_803EB0B8, local
 	.float 1.0
 .endobj lbl_803EB0B8
+.balign 4
 .obj lbl_803EB0BC, local
 	.float 0.5
 .endobj lbl_803EB0BC
+.balign 4
 .obj lbl_803EB0C0, local
 	.float 2.0
 .endobj lbl_803EB0C0
+.balign 4
 .obj lbl_803EB0C4, local
 	.float 0.0
 .endobj lbl_803EB0C4
@@ -401,6 +404,7 @@
 .obj lbl_803EB0D0, local
 	.double 3.0
 .endobj lbl_803EB0D0
+.balign 4
 .obj lbl_803EB0D8, local
-	.float 1.0E-6
+	.float 0.000001
 .endobj lbl_803EB0D8

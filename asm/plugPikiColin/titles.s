@@ -2240,7 +2240,7 @@
 	.float 10.0
 .endobj lbl_803E88E8
 .obj lbl_803E88EC, local
-	.float 1.0E-5
+	.float 0.00001
 .endobj lbl_803E88EC
 .obj lbl_803E88F0, local
 	.float 40.0

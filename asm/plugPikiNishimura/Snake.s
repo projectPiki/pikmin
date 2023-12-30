@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global __ct__9SnakePropFv
-__ct__9SnakePropFv:
+.fn __ct__9SnakePropFv, global
 /* 8015A2C4 00157224  7C 08 02 A6 */	mflr r0
 /* 8015A2C8 00157228  90 01 00 04 */	stw r0, 4(r1)
 /* 8015A2CC 0015722C  94 21 FC E0 */	stwu r1, -0x320(r1)
@@ -574,9 +573,9 @@ __ct__9SnakePropFv:
 /* 8015ABA8 00157B08  38 21 03 20 */	addi r1, r1, 0x320
 /* 8015ABAC 00157B0C  7C 08 03 A6 */	mtlr r0
 /* 8015ABB0 00157B10  4E 80 00 20 */	blr 
+.endfn __ct__9SnakePropFv
 
-.global __ct__5SnakeFP12CreatureProp
-__ct__5SnakeFP12CreatureProp:
+.fn __ct__5SnakeFP12CreatureProp, global
 /* 8015ABB4 00157B14  7C 08 02 A6 */	mflr r0
 /* 8015ABB8 00157B18  90 01 00 04 */	stw r0, 4(r1)
 /* 8015ABBC 00157B1C  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -646,25 +645,25 @@ __ct__5SnakeFP12CreatureProp:
 /* 8015ACAC 00157C0C  38 21 00 18 */	addi r1, r1, 0x18
 /* 8015ACB0 00157C10  7C 08 03 A6 */	mtlr r0
 /* 8015ACB4 00157C14  4E 80 00 20 */	blr 
+.endfn __ct__5SnakeFP12CreatureProp
 
-.global setBossType__5SnakeFb
-setBossType__5SnakeFb:
+.fn setBossType__5SnakeFb, global
 /* 8015ACB8 00157C18  98 83 03 BC */	stb r4, 0x3bc(r3)
 /* 8015ACBC 00157C1C  4E 80 00 20 */	blr 
+.endfn setBossType__5SnakeFb
 
-.global getCentreSize__5SnakeFv
-getCentreSize__5SnakeFv:
+.fn getCentreSize__5SnakeFv, global
 /* 8015ACC0 00157C20  80 63 03 B8 */	lwz r3, 0x3b8(r3)
 /* 8015ACC4 00157C24  C0 23 00 20 */	lfs f1, 0x20(r3)
 /* 8015ACC8 00157C28  4E 80 00 20 */	blr 
+.endfn getCentreSize__5SnakeFv
 
-.global getiMass__5SnakeFv
-getiMass__5SnakeFv:
+.fn getiMass__5SnakeFv, global
 /* 8015ACCC 00157C2C  C0 22 AA 64 */	lfs f1, lbl_803EAC64@sda21(r2)
 /* 8015ACD0 00157C30  4E 80 00 20 */	blr 
+.endfn getiMass__5SnakeFv
 
-.global init__5SnakeFR8Vector3f
-init__5SnakeFR8Vector3f:
+.fn init__5SnakeFR8Vector3f, global
 /* 8015ACD4 00157C34  7C 08 02 A6 */	mflr r0
 /* 8015ACD8 00157C38  90 01 00 04 */	stw r0, 4(r1)
 /* 8015ACDC 00157C3C  38 00 00 01 */	li r0, 1
@@ -711,9 +710,9 @@ init__5SnakeFR8Vector3f:
 /* 8015AD80 00157CE0  38 21 00 18 */	addi r1, r1, 0x18
 /* 8015AD84 00157CE4  7C 08 03 A6 */	mtlr r0
 /* 8015AD88 00157CE8  4E 80 00 20 */	blr 
+.endfn init__5SnakeFR8Vector3f
 
-.global doKill__5SnakeFv
-doKill__5SnakeFv:
+.fn doKill__5SnakeFv, global
 /* 8015AD8C 00157CEC  7C 08 02 A6 */	mflr r0
 /* 8015AD90 00157CF0  38 80 00 00 */	li r4, 0
 /* 8015AD94 00157CF4  90 01 00 04 */	stw r0, 4(r1)
@@ -733,9 +732,9 @@ doKill__5SnakeFv:
 /* 8015ADCC 00157D2C  38 21 00 18 */	addi r1, r1, 0x18
 /* 8015ADD0 00157D30  7C 08 03 A6 */	mtlr r0
 /* 8015ADD4 00157D34  4E 80 00 20 */	blr 
+.endfn doKill__5SnakeFv
 
-.global exitCourse__5SnakeFv
-exitCourse__5SnakeFv:
+.fn exitCourse__5SnakeFv, global
 /* 8015ADD8 00157D38  7C 08 02 A6 */	mflr r0
 /* 8015ADDC 00157D3C  38 80 00 01 */	li r4, 1
 /* 8015ADE0 00157D40  90 01 00 04 */	stw r0, 4(r1)
@@ -746,9 +745,9 @@ exitCourse__5SnakeFv:
 /* 8015ADF4 00157D54  38 21 00 08 */	addi r1, r1, 8
 /* 8015ADF8 00157D58  7C 08 03 A6 */	mtlr r0
 /* 8015ADFC 00157D5C  4E 80 00 20 */	blr 
+.endfn exitCourse__5SnakeFv
 
-.global update__5SnakeFv
-update__5SnakeFv:
+.fn update__5SnakeFv, global
 /* 8015AE00 00157D60  7C 08 02 A6 */	mflr r0
 /* 8015AE04 00157D64  90 01 00 04 */	stw r0, 4(r1)
 /* 8015AE08 00157D68  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -774,9 +773,9 @@ update__5SnakeFv:
 /* 8015AE58 00157DB8  38 21 00 20 */	addi r1, r1, 0x20
 /* 8015AE5C 00157DBC  7C 08 03 A6 */	mtlr r0
 /* 8015AE60 00157DC0  4E 80 00 20 */	blr 
+.endfn update__5SnakeFv
 
-.global refresh__5SnakeFR8Graphics
-refresh__5SnakeFR8Graphics:
+.fn refresh__5SnakeFR8Graphics, global
 /* 8015AE64 00157DC4  7C 08 02 A6 */	mflr r0
 /* 8015AE68 00157DC8  90 01 00 04 */	stw r0, 4(r1)
 /* 8015AE6C 00157DCC  94 21 FF A8 */	stwu r1, -0x58(r1)
@@ -819,9 +818,9 @@ refresh__5SnakeFR8Graphics:
 /* 8015AF00 00157E60  38 21 00 58 */	addi r1, r1, 0x58
 /* 8015AF04 00157E64  7C 08 03 A6 */	mtlr r0
 /* 8015AF08 00157E68  4E 80 00 20 */	blr 
+.endfn refresh__5SnakeFR8Graphics
 
-.global drawShape__5SnakeFR8Graphics
-drawShape__5SnakeFR8Graphics:
+.fn drawShape__5SnakeFR8Graphics, global
 /* 8015AF0C 00157E6C  7C 08 02 A6 */	mflr r0
 /* 8015AF10 00157E70  90 01 00 04 */	stw r0, 4(r1)
 /* 8015AF14 00157E74  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -852,9 +851,9 @@ drawShape__5SnakeFR8Graphics:
 /* 8015AF78 00157ED8  38 21 00 18 */	addi r1, r1, 0x18
 /* 8015AF7C 00157EDC  7C 08 03 A6 */	mtlr r0
 /* 8015AF80 00157EE0  4E 80 00 20 */	blr 
+.endfn drawShape__5SnakeFR8Graphics
 
-.global refresh2d__5SnakeFR8Graphics
-refresh2d__5SnakeFR8Graphics:
+.fn refresh2d__5SnakeFR8Graphics, global
 /* 8015AF84 00157EE4  7C 08 02 A6 */	mflr r0
 /* 8015AF88 00157EE8  7C 66 1B 78 */	mr r6, r3
 /* 8015AF8C 00157EEC  90 01 00 04 */	stw r0, 4(r1)
@@ -884,9 +883,9 @@ refresh2d__5SnakeFR8Graphics:
 /* 8015AFEC 00157F4C  38 21 00 08 */	addi r1, r1, 8
 /* 8015AFF0 00157F50  7C 08 03 A6 */	mtlr r0
 /* 8015AFF4 00157F54  4E 80 00 20 */	blr 
+.endfn refresh2d__5SnakeFR8Graphics
 
-.global doAI__5SnakeFv
-doAI__5SnakeFv:
+.fn doAI__5SnakeFv, global
 /* 8015AFF8 00157F58  7C 08 02 A6 */	mflr r0
 /* 8015AFFC 00157F5C  90 01 00 04 */	stw r0, 4(r1)
 /* 8015B000 00157F60  94 21 FF F8 */	stwu r1, -8(r1)
@@ -896,9 +895,9 @@ doAI__5SnakeFv:
 /* 8015B010 00157F70  38 21 00 08 */	addi r1, r1, 8
 /* 8015B014 00157F74  7C 08 03 A6 */	mtlr r0
 /* 8015B018 00157F78  4E 80 00 20 */	blr 
+.endfn doAI__5SnakeFv
 
-.global doAnimation__5SnakeFv
-doAnimation__5SnakeFv:
+.fn doAnimation__5SnakeFv, global
 /* 8015B01C 00157F7C  7C 08 02 A6 */	mflr r0
 /* 8015B020 00157F80  90 01 00 04 */	stw r0, 4(r1)
 /* 8015B024 00157F84  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -921,9 +920,9 @@ doAnimation__5SnakeFv:
 /* 8015B064 00157FC4  38 21 00 18 */	addi r1, r1, 0x18
 /* 8015B068 00157FC8  7C 08 03 A6 */	mtlr r0
 /* 8015B06C 00157FCC  4E 80 00 20 */	blr 
+.endfn doAnimation__5SnakeFv
 
-.global getPos__Q25Snake18BoundSphereUpdaterFv
-getPos__Q25Snake18BoundSphereUpdaterFv:
+.fn getPos__Q25Snake18BoundSphereUpdaterFv, weak
 /* 8015B070 00157FD0  80 C4 00 1C */	lwz r6, 0x1c(r4)
 /* 8015B074 00157FD4  C0 42 AA 68 */	lfs f2, lbl_803EAC68@sda21(r2)
 /* 8015B078 00157FD8  80 A6 03 CC */	lwz r5, 0x3cc(r6)
@@ -953,9 +952,9 @@ getPos__Q25Snake18BoundSphereUpdaterFv:
 /* 8015B0D8 00158038  C0 04 00 2C */	lfs f0, 0x2c(r4)
 /* 8015B0DC 0015803C  D0 03 00 08 */	stfs f0, 8(r3)
 /* 8015B0E0 00158040  4E 80 00 20 */	blr 
+.endfn getPos__Q25Snake18BoundSphereUpdaterFv
 
-.global getSize__Q25Snake18BoundSphereUpdaterFv
-getSize__Q25Snake18BoundSphereUpdaterFv:
+.fn getSize__Q25Snake18BoundSphereUpdaterFv, weak
 /* 8015B0E4 00158044  7C 08 02 A6 */	mflr r0
 /* 8015B0E8 00158048  90 01 00 04 */	stw r0, 4(r1)
 /* 8015B0EC 0015804C  94 21 FF C0 */	stwu r1, -0x40(r1)
@@ -1001,9 +1000,9 @@ getSize__Q25Snake18BoundSphereUpdaterFv:
 /* 8015B18C 001580EC  38 21 00 40 */	addi r1, r1, 0x40
 /* 8015B190 001580F0  7C 08 03 A6 */	mtlr r0
 /* 8015B194 001580F4  4E 80 00 20 */	blr 
+.endfn getSize__Q25Snake18BoundSphereUpdaterFv
 
-.global read__9SnakePropFR18RandomAccessStream
-read__9SnakePropFR18RandomAccessStream:
+.fn read__9SnakePropFR18RandomAccessStream, weak
 /* 8015B198 001580F8  7C 08 02 A6 */	mflr r0
 /* 8015B19C 001580FC  90 01 00 04 */	stw r0, 4(r1)
 /* 8015B1A0 00158100  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -1024,54 +1023,66 @@ read__9SnakePropFR18RandomAccessStream:
 /* 8015B1DC 0015813C  38 21 00 18 */	addi r1, r1, 0x18
 /* 8015B1E0 00158140  7C 08 03 A6 */	mtlr r0
 /* 8015B1E4 00158144  4E 80 00 20 */	blr 
+.endfn read__9SnakePropFR18RandomAccessStream
 
-"@492@read__9SnakePropFR18RandomAccessStream":
+.fn "@492@read__9SnakePropFR18RandomAccessStream", weak
 /* 8015B1E8 00158148  38 63 FE 14 */	addi r3, r3, -492
 /* 8015B1EC 0015814C  4B FF FF AC */	b read__9SnakePropFR18RandomAccessStream
+.endfn "@492@read__9SnakePropFR18RandomAccessStream"
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802CF6A0:
+.obj lbl_802CF6A0, local
 	.asciz "Snake.cpp"
+.endobj lbl_802CF6A0
 .balign 4
-lbl_802CF6AC:
+.obj lbl_802CF6AC, local
 	.asciz "CoreNode"
+.endobj lbl_802CF6AC
 .balign 4
-lbl_802CF6B8:
+.obj lbl_802CF6B8, local
 	.asciz "EventTalker"
+.endobj lbl_802CF6B8
 .balign 4
-lbl_802CF6C4:
+.obj lbl_802CF6C4, local
 	.asciz "RefCountable"
+.endobj lbl_802CF6C4
 .balign 4
-lbl_802CF6D4:
+.obj lbl_802CF6D4, local
 	.asciz "Creature"
+.endobj lbl_802CF6D4
 .balign 4
-lbl_802CF6E0:
+.obj lbl_802CF6E0, local
 	.4byte __RTTI__11EventTalker
-	.4byte 0x00000008
+	.4byte 0x8
 	.4byte __RTTI__12RefCountable
-	.4byte 0x00000000
-	.4byte 0x00000000
-lbl_802CF6F4:
+	.4byte 0
+	.4byte 0
+.endobj lbl_802CF6E0
+.balign 4
+.obj lbl_802CF6F4, local
 	.4byte __RTTI__11EventTalker
-	.4byte 0x00000008
+	.4byte 0x8
 	.4byte __RTTI__12RefCountable
-	.4byte 0x00000000
+	.4byte 0
 	.4byte __RTTI__8Creature
-	.4byte 0x00000000
-	.4byte 0x00000000
-lbl_802CF710:
+	.4byte 0
+	.4byte 0
+.endobj lbl_802CF6F4
+.balign 4
+.obj lbl_802CF710, local
 	.4byte __RTTI__11EventTalker
-	.4byte 0x00000008
+	.4byte 0x8
 	.4byte __RTTI__12RefCountable
-	.4byte 0x00000000
+	.4byte 0
 	.4byte __RTTI__8Creature
-	.4byte 0x00000000
+	.4byte 0
 	.4byte __RTTI__4Boss
-	.4byte 0x00000000
-	.4byte 0x00000000
-.global __vt__5Snake
-__vt__5Snake:
+	.4byte 0
+	.4byte 0
+.endobj lbl_802CF710
+.balign 4
+.obj __vt__5Snake, global
 	.4byte __RTTI__5Snake
 	.4byte 0
 	.4byte addCntCallback__12RefCountableFv
@@ -1145,78 +1156,89 @@ __vt__5Snake:
 	.4byte attackDefaultPortion__4BossFv
 	.4byte bombDamageCounter__4BossFP8CollPart
 	.4byte drawShape__5SnakeFR8Graphics
+.endobj __vt__5Snake
 .balign 4
-lbl_802CF858:
+.obj lbl_802CF858, local
 	.asciz "Snake::BoundSphereUpdater"
+.endobj lbl_802CF858
 .balign 4
-lbl_802CF874:
+.obj lbl_802CF874, local
 	.asciz "CollPartUpdater"
+.endobj lbl_802CF874
 .balign 4
-lbl_802CF884:
+.obj lbl_802CF884, local
 	.4byte __RTTI__15CollPartUpdater
 	.4byte 0
 	.4byte 0
-.global __vt__Q25Snake18BoundSphereUpdater
-__vt__Q25Snake18BoundSphereUpdater:
+.endobj lbl_802CF884
+.balign 4
+.obj __vt__Q25Snake18BoundSphereUpdater, weak
 	.4byte __RTTI__Q25Snake18BoundSphereUpdater
 	.4byte 0
 	.4byte getPos__Q25Snake18BoundSphereUpdaterFv
 	.4byte getSize__Q25Snake18BoundSphereUpdaterFv
-.global __vt__15CollPartUpdater
-__vt__15CollPartUpdater:
+.endobj __vt__Q25Snake18BoundSphereUpdater
+.balign 4
+.obj __vt__15CollPartUpdater, weak
 	.4byte __RTTI__15CollPartUpdater
 	.4byte 0
 	.4byte 0
 	.4byte 0
+.endobj __vt__15CollPartUpdater
 .balign 4
-lbl_802CF8B0:
+.obj lbl_802CF8B0, local
 	.asciz "Parm<int>"
+.endobj lbl_802CF8B0
 .balign 4
-lbl_802CF8BC:
+.obj lbl_802CF8BC, local
 	.asciz "BaseParm"
+.endobj lbl_802CF8BC
 .balign 4
-lbl_802CF8C8:
+.obj lbl_802CF8C8, local
 	.4byte __RTTI__8BaseParm
 	.4byte 0
 	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
+.endobj lbl_802CF8C8
 .balign 4
-lbl_802CF8E8:
+.skip 0x14 # compiler padding
+.balign 4
+.obj lbl_802CF8E8, local
 	.asciz "Parm<float>"
+.endobj lbl_802CF8E8
 .balign 4
-lbl_802CF8F4:
+.obj lbl_802CF8F4, local
 	.4byte __RTTI__8BaseParm
 	.4byte 0
 	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
+.endobj lbl_802CF8F4
 .balign 4
-lbl_802CF914:
+.skip 0x14 # compiler padding
+.balign 4
+.obj lbl_802CF914, local
 	.asciz "SnakeProp"
+.endobj lbl_802CF914
 .balign 4
-lbl_802CF920:
+.obj lbl_802CF920, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte 0
+.endobj lbl_802CF920
 .balign 4
-lbl_802CF92C:
+.obj lbl_802CF92C, local
 	.asciz "CreatureProp"
+.endobj lbl_802CF92C
 .balign 4
-lbl_802CF93C:
+.obj lbl_802CF93C, local
 	.asciz "BossProp"
+.endobj lbl_802CF93C
 .balign 4
-lbl_802CF948:
+.obj lbl_802CF948, local
 	.4byte __RTTI__12CreatureProp
 	.4byte 0
 	.4byte 0
-lbl_802CF954:
+.endobj lbl_802CF948
+.balign 4
+.obj lbl_802CF954, local
 	.4byte __RTTI__5ANode
 	.4byte 0x1ec
 	.4byte __RTTI__8CoreNode
@@ -1226,8 +1248,9 @@ lbl_802CF954:
 	.4byte __RTTI__8BossProp
 	.4byte 0
 	.4byte 0
-.global __vt__9SnakeProp
-__vt__9SnakeProp:
+.endobj lbl_802CF954
+.balign 4
+.obj __vt__9SnakeProp, weak
 	.4byte __RTTI__9SnakeProp
 	.4byte 0
 	.4byte read__9SnakePropFR18RandomAccessStream
@@ -1235,270 +1258,370 @@ __vt__9SnakeProp:
 	.4byte 0xfffffe14
 	.4byte getAgeNodeType__5ANodeFv
 	.4byte "@492@read__9SnakePropFR18RandomAccessStream"
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
+.endobj __vt__9SnakeProp
+.balign 4
+.skip 0x1C # compiler padding
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-lbl_803E4B68:
+.obj lbl_803E4B68, local
 	.asciz "Snake"
+.endobj lbl_803E4B68
 .balign 4
-lbl_803E4B70:
+.obj lbl_803E4B70, local
 	.asciz "p00"
+.endobj lbl_803E4B70
 .balign 4
-lbl_803E4B74:
+.obj lbl_803E4B74, local
 	.asciz "p01"
+.endobj lbl_803E4B74
 .balign 4
-lbl_803E4B78:
+.obj lbl_803E4B78, local
 	.asciz "u00"
+.endobj lbl_803E4B78
 .balign 4
-lbl_803E4B7C:
+.obj lbl_803E4B7C, local
 	.asciz "u01"
+.endobj lbl_803E4B7C
 .balign 4
-lbl_803E4B80:
+.obj lbl_803E4B80, local
 	.asciz "u02"
+.endobj lbl_803E4B80
 .balign 4
-lbl_803E4B84:
+.obj lbl_803E4B84, local
 	.asciz "p10"
+.endobj lbl_803E4B84
 .balign 4
-lbl_803E4B88:
+.obj lbl_803E4B88, local
 	.asciz "p20"
+.endobj lbl_803E4B88
 .balign 4
-lbl_803E4B8C:
+.obj lbl_803E4B8C, local
 	.asciz "p21"
+.endobj lbl_803E4B8C
 .balign 4
-lbl_803E4B90:
+.obj lbl_803E4B90, local
 	.asciz "p22"
+.endobj lbl_803E4B90
 .balign 4
-lbl_803E4B94:
+.obj lbl_803E4B94, local
 	.asciz "p23"
+.endobj lbl_803E4B94
 .balign 4
-lbl_803E4B98:
+.obj lbl_803E4B98, local
 	.asciz "p24"
+.endobj lbl_803E4B98
 .balign 4
-lbl_803E4B9C:
+.obj lbl_803E4B9C, local
 	.asciz "p30"
+.endobj lbl_803E4B9C
 .balign 4
-lbl_803E4BA0:
+.obj lbl_803E4BA0, local
 	.asciz "p31"
+.endobj lbl_803E4BA0
 .balign 4
-lbl_803E4BA4:
+.obj lbl_803E4BA4, local
 	.asciz "p32"
+.endobj lbl_803E4BA4
 .balign 4
-lbl_803E4BA8:
+.obj lbl_803E4BA8, local
 	.asciz "p33"
+.endobj lbl_803E4BA8
 .balign 4
-lbl_803E4BAC:
+.obj lbl_803E4BAC, local
 	.asciz "p34"
+.endobj lbl_803E4BAC
 .balign 4
-lbl_803E4BB0:
+.obj lbl_803E4BB0, local
 	.asciz "p40"
+.endobj lbl_803E4BB0
 .balign 4
-lbl_803E4BB4:
+.obj lbl_803E4BB4, local
 	.asciz "p41"
+.endobj lbl_803E4BB4
 .balign 4
-lbl_803E4BB8:
+.obj lbl_803E4BB8, local
 	.asciz "p42"
+.endobj lbl_803E4BB8
 .balign 4
-lbl_803E4BBC:
+.obj lbl_803E4BBC, local
 	.asciz "p43"
+.endobj lbl_803E4BBC
 .balign 4
-lbl_803E4BC0:
+.obj lbl_803E4BC0, local
 	.asciz "p44"
+.endobj lbl_803E4BC0
 .balign 4
-lbl_803E4BC4:
+.obj lbl_803E4BC4, local
 	.asciz "p50"
+.endobj lbl_803E4BC4
 .balign 4
-lbl_803E4BC8:
+.obj lbl_803E4BC8, local
 	.asciz "p51"
+.endobj lbl_803E4BC8
 .balign 4
-lbl_803E4BCC:
+.obj lbl_803E4BCC, local
 	.asciz "p52"
+.endobj lbl_803E4BCC
 .balign 4
-lbl_803E4BD0:
+.obj lbl_803E4BD0, local
 	.asciz "p53"
+.endobj lbl_803E4BD0
 .balign 4
-lbl_803E4BD4:
+.obj lbl_803E4BD4, local
 	.asciz "p54"
+.endobj lbl_803E4BD4
 .balign 4
-lbl_803E4BD8:
+.obj lbl_803E4BD8, local
 	.asciz "p60"
+.endobj lbl_803E4BD8
 .balign 4
-lbl_803E4BDC:
+.obj lbl_803E4BDC, local
 	.asciz "p61"
+.endobj lbl_803E4BDC
 .balign 4
-lbl_803E4BE0:
+.obj lbl_803E4BE0, local
 	.asciz "p62"
+.endobj lbl_803E4BE0
 .balign 4
-lbl_803E4BE4:
+.obj lbl_803E4BE4, local
 	.asciz "p63"
+.endobj lbl_803E4BE4
 .balign 4
-lbl_803E4BE8:
+.obj lbl_803E4BE8, local
 	.asciz "p64"
+.endobj lbl_803E4BE8
 .balign 4
-lbl_803E4BEC:
+.obj lbl_803E4BEC, local
 	.asciz "t00"
+.endobj lbl_803E4BEC
 .balign 4
-lbl_803E4BF0:
+.obj lbl_803E4BF0, local
 	.asciz "t01"
+.endobj lbl_803E4BF0
 .balign 4
-lbl_803E4BF4:
+.obj lbl_803E4BF4, local
 	.asciz "t10"
+.endobj lbl_803E4BF4
 .balign 4
-lbl_803E4BF8:
+.obj lbl_803E4BF8, local
 	.asciz "q00"
+.endobj lbl_803E4BF8
 .balign 4
-lbl_803E4BFC:
+.obj lbl_803E4BFC, local
 	.asciz "q02"
+.endobj lbl_803E4BFC
 .balign 4
-lbl_803E4C00:
+.obj lbl_803E4C00, local
 	.asciz "s00"
+.endobj lbl_803E4C00
 .balign 4
-lbl_803E4C04:
+.obj lbl_803E4C04, local
 	.asciz "s01"
+.endobj lbl_803E4C04
 .balign 4
-lbl_803E4C08:
+.obj lbl_803E4C08, local
 	.asciz "s02"
+.endobj lbl_803E4C08
 .balign 4
-lbl_803E4C0C:
+.obj lbl_803E4C0C, local
 	.asciz "s03"
+.endobj lbl_803E4C0C
 .balign 4
-lbl_803E4C10:
+.obj lbl_803E4C10, local
 	.asciz "s04"
+.endobj lbl_803E4C10
 .balign 4
-lbl_803E4C14:
+.obj lbl_803E4C14, local
 	.asciz "s10"
+.endobj lbl_803E4C14
 .balign 4
-lbl_803E4C18:
+.obj lbl_803E4C18, local
 	.asciz "i10"
+.endobj lbl_803E4C18
 .balign 4
-lbl_803E4C1C:
+.obj lbl_803E4C1C, local
 	.asciz "i11"
+.endobj lbl_803E4C1C
 .balign 4
-lbl_803E4C20:
+.obj lbl_803E4C20, local
 	.asciz "i12"
+.endobj lbl_803E4C20
 .balign 4
-lbl_803E4C24:
+.obj lbl_803E4C24, local
 	.asciz "i13"
+.endobj lbl_803E4C24
 .balign 4
-lbl_803E4C28:
+.obj lbl_803E4C28, local
 	.asciz "i30"
+.endobj lbl_803E4C28
 .balign 4
-lbl_803E4C2C:
+.obj lbl_803E4C2C, local
 	.asciz "i31"
+.endobj lbl_803E4C2C
 .balign 4
-__RTTI__11EventTalker:
+.obj __RTTI__11EventTalker, local
 	.4byte lbl_802CF6B8
-	.4byte 0x00000000
-__RTTI__12RefCountable:
+	.4byte 0
+.endobj __RTTI__11EventTalker
+.balign 4
+.obj __RTTI__12RefCountable, local
 	.4byte lbl_802CF6C4
-	.4byte 0x00000000
-__RTTI__8Creature:
+	.4byte 0
+.endobj __RTTI__12RefCountable
+.balign 4
+.obj __RTTI__8Creature, local
 	.4byte lbl_802CF6D4
 	.4byte lbl_802CF6E0
+.endobj __RTTI__8Creature
 .balign 4
-lbl_803E4C48:
+.obj lbl_803E4C48, local
 	.asciz "Boss"
+.endobj lbl_803E4C48
 .balign 4
-__RTTI__4Boss:
+.obj __RTTI__4Boss, local
 	.4byte lbl_803E4C48
 	.4byte lbl_802CF6F4
-__RTTI__5Snake:
+.endobj __RTTI__4Boss
+.balign 4
+.obj __RTTI__5Snake, local
 	.4byte lbl_803E4B68
 	.4byte lbl_802CF710
-__RTTI__15CollPartUpdater:
+.endobj __RTTI__5Snake
+.balign 4
+.obj __RTTI__15CollPartUpdater, local
 	.4byte lbl_802CF874
 	.4byte 0
-__RTTI__Q25Snake18BoundSphereUpdater:
+.endobj __RTTI__15CollPartUpdater
+.balign 4
+.obj __RTTI__Q25Snake18BoundSphereUpdater, local
 	.4byte lbl_802CF858
 	.4byte lbl_802CF884
-__RTTI__8BaseParm:
+.endobj __RTTI__Q25Snake18BoundSphereUpdater
+.balign 4
+.obj __RTTI__8BaseParm, local
 	.4byte lbl_802CF8BC
 	.4byte 0
+.endobj __RTTI__8BaseParm
 .balign 4
-lbl_803E4C78:
+.obj lbl_803E4C78, local
 	.asciz "ANode"
+.endobj lbl_803E4C78
 .balign 4
-__RTTI__5ANode:
+.obj __RTTI__5ANode, local
 	.4byte lbl_803E4C78
 	.4byte 0
-__RTTI__8CoreNode:
+.endobj __RTTI__5ANode
+.balign 4
+.obj __RTTI__8CoreNode, local
 	.4byte lbl_802CF6AC
 	.4byte lbl_802CF920
-__RTTI__12CreatureProp:
+.endobj __RTTI__8CoreNode
+.balign 4
+.obj __RTTI__12CreatureProp, local
 	.4byte lbl_802CF92C
 	.4byte 0
-__RTTI__8BossProp:
+.endobj __RTTI__12CreatureProp
+.balign 4
+.obj __RTTI__8BossProp, local
 	.4byte lbl_802CF93C
 	.4byte lbl_802CF948
-__RTTI__9SnakeProp:
+.endobj __RTTI__8BossProp
+.balign 4
+.obj __RTTI__9SnakeProp, local
 	.4byte lbl_802CF914
 	.4byte lbl_802CF954
+.endobj __RTTI__9SnakeProp
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803EABF8:
+.obj lbl_803EABF8, local
 	.float 150.0
-lbl_803EABFC:
+.endobj lbl_803EABF8
+.obj lbl_803EABFC, local
 	.float 100.0
-lbl_803EAC00:
+.endobj lbl_803EABFC
+.obj lbl_803EAC00, local
 	.float 200.0
-lbl_803EAC04:
+.endobj lbl_803EAC00
+.obj lbl_803EAC04, local
 	.float 50.0
-lbl_803EAC08:
+.endobj lbl_803EAC04
+.obj lbl_803EAC08, local
 	.float 25.0
-lbl_803EAC0C:
+.endobj lbl_803EAC08
+.obj lbl_803EAC0C, local
 	.float 5.0
-lbl_803EAC10:
+.endobj lbl_803EAC0C
+.obj lbl_803EAC10, local
 	.float 80.0
-lbl_803EAC14:
+.endobj lbl_803EAC10
+.obj lbl_803EAC14, local
 	.float -15.0
-lbl_803EAC18:
+.endobj lbl_803EAC14
+.obj lbl_803EAC18, local
 	.float 15.0
-lbl_803EAC1C:
+.endobj lbl_803EAC18
+.obj lbl_803EAC1C, local
 	.float -20.0
-lbl_803EAC20:
+.endobj lbl_803EAC1C
+.obj lbl_803EAC20, local
 	.float 20.0
-lbl_803EAC24:
+.endobj lbl_803EAC20
+.obj lbl_803EAC24, local
 	.float 220.0
-lbl_803EAC28:
+.endobj lbl_803EAC24
+.obj lbl_803EAC28, local
 	.float -25.0
-lbl_803EAC2C:
+.endobj lbl_803EAC28
+.obj lbl_803EAC2C, local
 	.float 70.0
-lbl_803EAC30:
+.endobj lbl_803EAC2C
+.obj lbl_803EAC30, local
 	.float 120.0
-lbl_803EAC34:
+.endobj lbl_803EAC30
+.obj lbl_803EAC34, local
 	.float 30.0
-lbl_803EAC38:
+.endobj lbl_803EAC34
+.obj lbl_803EAC38, local
 	.float -100.0
-lbl_803EAC3C:
+.endobj lbl_803EAC38
+.obj lbl_803EAC3C, local
 	.float -30.0
-lbl_803EAC40:
+.endobj lbl_803EAC3C
+.obj lbl_803EAC40, local
 	.float 1.5
-lbl_803EAC44:
+.endobj lbl_803EAC40
+.obj lbl_803EAC44, local
 	.float 4.0
-lbl_803EAC48:
+.endobj lbl_803EAC44
+.obj lbl_803EAC48, local
 	.float 1.0
-lbl_803EAC4C:
+.endobj lbl_803EAC48
+.obj lbl_803EAC4C, local
 	.float 2.5
-lbl_803EAC50:
+.endobj lbl_803EAC4C
+.obj lbl_803EAC50, local
 	.float 0.0
-lbl_803EAC54:
+.endobj lbl_803EAC50
+.obj lbl_803EAC54, local
 	.float 10.0
-lbl_803EAC58:
+.endobj lbl_803EAC54
+.obj lbl_803EAC58, local
 	.float 0.75
-lbl_803EAC5C:
+.endobj lbl_803EAC58
+.obj lbl_803EAC5C, local
 	.float 0.1
-lbl_803EAC60:
+.endobj lbl_803EAC5C
+.obj lbl_803EAC60, local
 	.float 0.7
-lbl_803EAC64:
+.endobj lbl_803EAC60
+.obj lbl_803EAC64, local
 	.float 0.0001
-lbl_803EAC68:
+.endobj lbl_803EAC64
+.obj lbl_803EAC68, local
 	.float 0.5
-lbl_803EAC6C:
+.endobj lbl_803EAC68
+.obj lbl_803EAC6C, local
 	.float 55.0
+.endobj lbl_803EAC6C

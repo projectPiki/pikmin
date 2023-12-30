@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global __ct__8BossPropFv
-__ct__8BossPropFv:
+.fn __ct__8BossPropFv, global
 /* 8014D8CC 0014A82C  7C 08 02 A6 */	mflr r0
 /* 8014D8D0 0014A830  3C 80 80 2B */	lis r4, __vt__12CreatureProp@ha
 /* 8014D8D4 0014A834  90 01 00 04 */	stw r0, 4(r1)
@@ -365,9 +364,9 @@ __ct__8BossPropFv:
 /* 8014DE6C 0014ADCC  38 21 02 00 */	addi r1, r1, 0x200
 /* 8014DE70 0014ADD0  7C 08 03 A6 */	mtlr r0
 /* 8014DE74 0014ADD4  4E 80 00 20 */	blr 
+.endfn __ct__8BossPropFv
 
-.global __ct__4BossFP12CreatureProp
-__ct__4BossFP12CreatureProp:
+.fn __ct__4BossFP12CreatureProp, global
 /* 8014DE78 0014ADD8  7C 08 02 A6 */	mflr r0
 /* 8014DE7C 0014ADDC  90 01 00 04 */	stw r0, 4(r1)
 /* 8014DE80 0014ADE0  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -428,9 +427,9 @@ __ct__4BossFP12CreatureProp:
 /* 8014DF58 0014AEB8  38 21 00 28 */	addi r1, r1, 0x28
 /* 8014DF5C 0014AEBC  7C 08 03 A6 */	mtlr r0
 /* 8014DF60 0014AEC0  4E 80 00 20 */	blr 
+.endfn __ct__4BossFP12CreatureProp
 
-.global initBoss__4BossFR9BirthInfoi
-initBoss__4BossFR9BirthInfoi:
+.fn initBoss__4BossFR9BirthInfoi, global
 /* 8014DF64 0014AEC4  7C 08 02 A6 */	mflr r0
 /* 8014DF68 0014AEC8  90 01 00 04 */	stw r0, 4(r1)
 /* 8014DF6C 0014AECC  94 21 FF C0 */	stwu r1, -0x40(r1)
@@ -500,9 +499,9 @@ initBoss__4BossFR9BirthInfoi:
 /* 8014E06C 0014AFCC  38 21 00 40 */	addi r1, r1, 0x40
 /* 8014E070 0014AFD0  7C 08 03 A6 */	mtlr r0
 /* 8014E074 0014AFD4  4E 80 00 20 */	blr 
+.endfn initBoss__4BossFR9BirthInfoi
 
-.global calcFlickPiki__4BossFv
-calcFlickPiki__4BossFv:
+.fn calcFlickPiki__4BossFv, global
 /* 8014E078 0014AFD8  7C 08 02 A6 */	mflr r0
 /* 8014E07C 0014AFDC  3C 80 80 2B */	lis r4, __vt__9Condition@ha
 /* 8014E080 0014AFE0  90 01 00 04 */	stw r0, 4(r1)
@@ -541,9 +540,9 @@ calcFlickPiki__4BossFv:
 /* 8014E104 0014B064  38 21 00 50 */	addi r1, r1, 0x50
 /* 8014E108 0014B068  7C 08 03 A6 */	mtlr r0
 /* 8014E10C 0014B06C  4E 80 00 20 */	blr 
+.endfn calcFlickPiki__4BossFv
 
-.global createPellet__4BossFR8Vector3ffb
-createPellet__4BossFR8Vector3ffb:
+.fn createPellet__4BossFR8Vector3ffb, global
 /* 8014E110 0014B070  7C 08 02 A6 */	mflr r0
 /* 8014E114 0014B074  90 01 00 04 */	stw r0, 4(r1)
 /* 8014E118 0014B078  94 21 FF 48 */	stwu r1, -0xb8(r1)
@@ -719,9 +718,9 @@ createPellet__4BossFR8Vector3ffb:
 /* 8014E3A4 0014B304  38 21 00 B8 */	addi r1, r1, 0xb8
 /* 8014E3A8 0014B308  7C 08 03 A6 */	mtlr r0
 /* 8014E3AC 0014B30C  4E 80 00 20 */	blr 
+.endfn createPellet__4BossFR8Vector3ffb
 
-.global changeDirection__4BossFf
-changeDirection__4BossFf:
+.fn changeDirection__4BossFf, global
 /* 8014E3B0 0014B310  7C 08 02 A6 */	mflr r0
 /* 8014E3B4 0014B314  90 01 00 04 */	stw r0, 4(r1)
 /* 8014E3B8 0014B318  94 21 FF C8 */	stwu r1, -0x38(r1)
@@ -821,9 +820,9 @@ changeDirection__4BossFf:
 /* 8014E508 0014B468  38 21 00 38 */	addi r1, r1, 0x38
 /* 8014E50C 0014B46C  7C 08 03 A6 */	mtlr r0
 /* 8014E510 0014B470  4E 80 00 20 */	blr 
+.endfn changeDirection__4BossFf
 
-.global stopMovement__4BossFv
-stopMovement__4BossFv:
+.fn stopMovement__4BossFv, global
 /* 8014E514 0014B474  C0 0D FB 08 */	lfs f0, lbl_803E4828@sda21(r13)
 /* 8014E518 0014B478  D0 03 00 A4 */	stfs f0, 0xa4(r3)
 /* 8014E51C 0014B47C  C0 0D FB 0C */	lfs f0, lbl_803E482C@sda21(r13)
@@ -837,9 +836,9 @@ stopMovement__4BossFv:
 /* 8014E53C 0014B49C  C0 0D FB 1C */	lfs f0, lbl_803E483C@sda21(r13)
 /* 8014E540 0014B4A0  D0 03 00 78 */	stfs f0, 0x78(r3)
 /* 8014E544 0014B4A4  4E 80 00 20 */	blr 
+.endfn stopMovement__4BossFv
 
-.global calcBossDamage__4BossFv
-calcBossDamage__4BossFv:
+.fn calcBossDamage__4BossFv, global
 /* 8014E548 0014B4A8  7C 08 02 A6 */	mflr r0
 /* 8014E54C 0014B4AC  90 01 00 04 */	stw r0, 4(r1)
 /* 8014E550 0014B4B0  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -860,9 +859,9 @@ calcBossDamage__4BossFv:
 /* 8014E58C 0014B4EC  38 21 00 18 */	addi r1, r1, 0x18
 /* 8014E590 0014B4F0  7C 08 03 A6 */	mtlr r0
 /* 8014E594 0014B4F4  4E 80 00 20 */	blr 
+.endfn calcBossDamage__4BossFv
 
-.global makeTargetCreature__4BossFv
-makeTargetCreature__4BossFv:
+.fn makeTargetCreature__4BossFv, global
 /* 8014E598 0014B4F8  80 83 03 18 */	lwz r4, 0x318(r3)
 /* 8014E59C 0014B4FC  28 04 00 00 */	cmplwi r4, 0
 /* 8014E5A0 0014B500  4D 82 00 20 */	beqlr 
@@ -875,9 +874,9 @@ makeTargetCreature__4BossFv:
 /* 8014E5BC 0014B51C  C0 04 00 9C */	lfs f0, 0x9c(r4)
 /* 8014E5C0 0014B520  D0 03 03 14 */	stfs f0, 0x314(r3)
 /* 8014E5C4 0014B524  4E 80 00 20 */	blr 
+.endfn makeTargetCreature__4BossFv
 
-.global makeTargetRandom__4BossFf
-makeTargetRandom__4BossFf:
+.fn makeTargetRandom__4BossFf, global
 /* 8014E5C8 0014B528  7C 08 02 A6 */	mflr r0
 /* 8014E5CC 0014B52C  90 01 00 04 */	stw r0, 4(r1)
 /* 8014E5D0 0014B530  94 21 FF 80 */	stwu r1, -0x80(r1)
@@ -961,9 +960,9 @@ makeTargetRandom__4BossFf:
 /* 8014E700 0014B660  38 21 00 80 */	addi r1, r1, 0x80
 /* 8014E704 0014B664  7C 08 03 A6 */	mtlr r0
 /* 8014E708 0014B668  4E 80 00 20 */	blr 
+.endfn makeTargetRandom__4BossFf
 
-.global chaseNaviTransit__4BossFv
-chaseNaviTransit__4BossFv:
+.fn chaseNaviTransit__4BossFv, global
 /* 8014E70C 0014B66C  7C 08 02 A6 */	mflr r0
 /* 8014E710 0014B670  90 01 00 04 */	stw r0, 4(r1)
 /* 8014E714 0014B674  94 21 FF 48 */	stwu r1, -0xb8(r1)
@@ -1155,9 +1154,9 @@ chaseNaviTransit__4BossFv:
 /* 8014E9D0 0014B930  38 21 00 B8 */	addi r1, r1, 0xb8
 /* 8014E9D4 0014B934  7C 08 03 A6 */	mtlr r0
 /* 8014E9D8 0014B938  4E 80 00 20 */	blr 
+.endfn chaseNaviTransit__4BossFv
 
-.global chasePikiTransit__4BossFv
-chasePikiTransit__4BossFv:
+.fn chasePikiTransit__4BossFv, global
 /* 8014E9DC 0014B93C  7C 08 02 A6 */	mflr r0
 /* 8014E9E0 0014B940  90 01 00 04 */	stw r0, 4(r1)
 /* 8014E9E4 0014B944  94 21 FF 40 */	stwu r1, -0xc0(r1)
@@ -1352,9 +1351,9 @@ chasePikiTransit__4BossFv:
 /* 8014ECAC 0014BC0C  38 21 00 C0 */	addi r1, r1, 0xc0
 /* 8014ECB0 0014BC10  7C 08 03 A6 */	mtlr r0
 /* 8014ECB4 0014BC14  4E 80 00 20 */	blr 
+.endfn chasePikiTransit__4BossFv
 
-.global targetLostTransit__4BossFv
-targetLostTransit__4BossFv:
+.fn targetLostTransit__4BossFv, global
 /* 8014ECB8 0014BC18  7C 08 02 A6 */	mflr r0
 /* 8014ECBC 0014BC1C  90 01 00 04 */	stw r0, 4(r1)
 /* 8014ECC0 0014BC20  94 21 FF B0 */	stwu r1, -0x50(r1)
@@ -1446,9 +1445,9 @@ targetLostTransit__4BossFv:
 /* 8014EE04 0014BD64  38 21 00 50 */	addi r1, r1, 0x50
 /* 8014EE08 0014BD68  7C 08 03 A6 */	mtlr r0
 /* 8014EE0C 0014BD6C  4E 80 00 20 */	blr 
+.endfn targetLostTransit__4BossFv
 
-.global inSideWaitRangeTransit__4BossFv
-inSideWaitRangeTransit__4BossFv:
+.fn inSideWaitRangeTransit__4BossFv, global
 /* 8014EE10 0014BD70  7C 08 02 A6 */	mflr r0
 /* 8014EE14 0014BD74  90 01 00 04 */	stw r0, 4(r1)
 /* 8014EE18 0014BD78  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -1475,9 +1474,9 @@ inSideWaitRangeTransit__4BossFv:
 /* 8014EE64 0014BDC4  38 21 00 20 */	addi r1, r1, 0x20
 /* 8014EE68 0014BDC8  7C 08 03 A6 */	mtlr r0
 /* 8014EE6C 0014BDCC  4E 80 00 20 */	blr 
+.endfn inSideWaitRangeTransit__4BossFv
 
-.global outSideChaseRangeTransit__4BossFv
-outSideChaseRangeTransit__4BossFv:
+.fn outSideChaseRangeTransit__4BossFv, global
 /* 8014EE70 0014BDD0  7C 08 02 A6 */	mflr r0
 /* 8014EE74 0014BDD4  90 01 00 04 */	stw r0, 4(r1)
 /* 8014EE78 0014BDD8  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -1504,9 +1503,9 @@ outSideChaseRangeTransit__4BossFv:
 /* 8014EEC4 0014BE24  38 21 00 20 */	addi r1, r1, 0x20
 /* 8014EEC8 0014BE28  7C 08 03 A6 */	mtlr r0
 /* 8014EECC 0014BE2C  4E 80 00 20 */	blr 
+.endfn outSideChaseRangeTransit__4BossFv
 
-.global inSearchAngle__4BossFP8Creature
-inSearchAngle__4BossFP8Creature:
+.fn inSearchAngle__4BossFP8Creature, global
 /* 8014EED0 0014BE30  7C 08 02 A6 */	mflr r0
 /* 8014EED4 0014BE34  90 01 00 04 */	stw r0, 4(r1)
 /* 8014EED8 0014BE38  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -1561,9 +1560,9 @@ inSearchAngle__4BossFP8Creature:
 /* 8014EF88 0014BEE8  38 21 00 28 */	addi r1, r1, 0x28
 /* 8014EF8C 0014BEEC  7C 08 03 A6 */	mtlr r0
 /* 8014EF90 0014BEF0  4E 80 00 20 */	blr 
+.endfn inSearchAngle__4BossFP8Creature
 
-.global flickPikiTransit__4BossFv
-flickPikiTransit__4BossFv:
+.fn flickPikiTransit__4BossFv, global
 /* 8014EF94 0014BEF4  7C 08 02 A6 */	mflr r0
 /* 8014EF98 0014BEF8  90 01 00 04 */	stw r0, 4(r1)
 /* 8014EF9C 0014BEFC  94 21 FF 98 */	stwu r1, -0x68(r1)
@@ -1615,9 +1614,9 @@ flickPikiTransit__4BossFv:
 /* 8014F040 0014BFA0  38 21 00 68 */	addi r1, r1, 0x68
 /* 8014F044 0014BFA4  7C 08 03 A6 */	mtlr r0
 /* 8014F048 0014BFA8  4E 80 00 20 */	blr 
+.endfn flickPikiTransit__4BossFv
 
-.global getStickPikiCount__4BossFv
-getStickPikiCount__4BossFv:
+.fn getStickPikiCount__4BossFv, global
 /* 8014F04C 0014BFAC  7C 08 02 A6 */	mflr r0
 /* 8014F050 0014BFB0  38 83 00 00 */	addi r4, r3, 0
 /* 8014F054 0014BFB4  90 01 00 04 */	stw r0, 4(r1)
@@ -1629,9 +1628,9 @@ getStickPikiCount__4BossFv:
 /* 8014F06C 0014BFCC  38 21 00 20 */	addi r1, r1, 0x20
 /* 8014F070 0014BFD0  7C 08 03 A6 */	mtlr r0
 /* 8014F074 0014BFD4  4E 80 00 20 */	blr 
+.endfn getStickPikiCount__4BossFv
 
-.global getStickMouthPikiCount__4BossFv
-getStickMouthPikiCount__4BossFv:
+.fn getStickMouthPikiCount__4BossFv, global
 /* 8014F078 0014BFD8  7C 08 02 A6 */	mflr r0
 /* 8014F07C 0014BFDC  38 83 00 00 */	addi r4, r3, 0
 /* 8014F080 0014BFE0  90 01 00 04 */	stw r0, 4(r1)
@@ -1726,9 +1725,9 @@ getStickMouthPikiCount__4BossFv:
 /* 8014F1C4 0014C124  38 21 00 40 */	addi r1, r1, 0x40
 /* 8014F1C8 0014C128  7C 08 03 A6 */	mtlr r0
 /* 8014F1CC 0014C12C  4E 80 00 20 */	blr 
+.endfn getStickMouthPikiCount__4BossFv
 
-.global getStickNoMouthPikiCount__4BossFv
-getStickNoMouthPikiCount__4BossFv:
+.fn getStickNoMouthPikiCount__4BossFv, global
 /* 8014F1D0 0014C130  7C 08 02 A6 */	mflr r0
 /* 8014F1D4 0014C134  38 83 00 00 */	addi r4, r3, 0
 /* 8014F1D8 0014C138  90 01 00 04 */	stw r0, 4(r1)
@@ -1823,9 +1822,9 @@ getStickNoMouthPikiCount__4BossFv:
 /* 8014F31C 0014C27C  38 21 00 40 */	addi r1, r1, 0x40
 /* 8014F320 0014C280  7C 08 03 A6 */	mtlr r0
 /* 8014F324 0014C284  4E 80 00 20 */	blr 
+.endfn getStickNoMouthPikiCount__4BossFv
 
-.global killStickToMouthPiki__4BossFv
-killStickToMouthPiki__4BossFv:
+.fn killStickToMouthPiki__4BossFv, global
 /* 8014F328 0014C288  7C 08 02 A6 */	mflr r0
 /* 8014F32C 0014C28C  3C 80 80 2B */	lis r4, __vt__9Condition@ha
 /* 8014F330 0014C290  90 01 00 04 */	stw r0, 4(r1)
@@ -1844,9 +1843,9 @@ killStickToMouthPiki__4BossFv:
 /* 8014F364 0014C2C4  38 21 00 18 */	addi r1, r1, 0x18
 /* 8014F368 0014C2C8  7C 08 03 A6 */	mtlr r0
 /* 8014F36C 0014C2CC  4E 80 00 20 */	blr 
+.endfn killStickToMouthPiki__4BossFv
 
-.global getMapAttribute__4BossFR8Vector3f
-getMapAttribute__4BossFR8Vector3f:
+.fn getMapAttribute__4BossFR8Vector3f, global
 /* 8014F370 0014C2D0  7C 08 02 A6 */	mflr r0
 /* 8014F374 0014C2D4  90 01 00 04 */	stw r0, 4(r1)
 /* 8014F378 0014C2D8  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -1868,9 +1867,9 @@ getMapAttribute__4BossFR8Vector3f:
 /* 8014F3B4 0014C314  38 21 00 18 */	addi r1, r1, 0x18
 /* 8014F3B8 0014C318  7C 08 03 A6 */	mtlr r0
 /* 8014F3BC 0014C31C  4E 80 00 20 */	blr 
+.endfn getMapAttribute__4BossFR8Vector3f
 
-.global insideAndInSearch__4BossFv
-insideAndInSearch__4BossFv:
+.fn insideAndInSearch__4BossFv, global
 /* 8014F3C0 0014C320  7C 08 02 A6 */	mflr r0
 /* 8014F3C4 0014C324  90 01 00 04 */	stw r0, 4(r1)
 /* 8014F3C8 0014C328  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -1900,9 +1899,9 @@ insideAndInSearch__4BossFv:
 /* 8014F420 0014C380  38 21 00 28 */	addi r1, r1, 0x28
 /* 8014F424 0014C384  7C 08 03 A6 */	mtlr r0
 /* 8014F428 0014C388  4E 80 00 20 */	blr 
+.endfn insideAndInSearch__4BossFv
 
-.global updateBoss__4BossFv
-updateBoss__4BossFv:
+.fn updateBoss__4BossFv, global
 /* 8014F42C 0014C38C  7C 08 02 A6 */	mflr r0
 /* 8014F430 0014C390  90 01 00 04 */	stw r0, 4(r1)
 /* 8014F434 0014C394  94 21 FF B8 */	stwu r1, -0x48(r1)
@@ -1970,9 +1969,9 @@ updateBoss__4BossFv:
 /* 8014F520 0014C480  38 21 00 48 */	addi r1, r1, 0x48
 /* 8014F524 0014C484  7C 08 03 A6 */	mtlr r0
 /* 8014F528 0014C488  4E 80 00 20 */	blr 
+.endfn updateBoss__4BossFv
 
-.global refreshViewCulling__4BossFR8Graphics
-refreshViewCulling__4BossFR8Graphics:
+.fn refreshViewCulling__4BossFR8Graphics, global
 /* 8014F52C 0014C48C  7C 08 02 A6 */	mflr r0
 /* 8014F530 0014C490  90 01 00 04 */	stw r0, 4(r1)
 /* 8014F534 0014C494  94 21 FF C8 */	stwu r1, -0x38(r1)
@@ -2010,13 +2009,13 @@ refreshViewCulling__4BossFR8Graphics:
 /* 8014F5AC 0014C50C  38 21 00 38 */	addi r1, r1, 0x38
 /* 8014F5B0 0014C510  7C 08 03 A6 */	mtlr r0
 /* 8014F5B4 0014C514  4E 80 00 20 */	blr 
+.endfn refreshViewCulling__4BossFR8Graphics
 
-.global drawShape__4BossFR8Graphics
-drawShape__4BossFR8Graphics:
+.fn drawShape__4BossFR8Graphics, global
 /* 8014F5B8 0014C518  4E 80 00 20 */	blr 
+.endfn drawShape__4BossFR8Graphics
 
-.global refresh2d__4BossFR8Graphics
-refresh2d__4BossFR8Graphics:
+.fn refresh2d__4BossFR8Graphics, global
 /* 8014F5BC 0014C51C  7C 08 02 A6 */	mflr r0
 /* 8014F5C0 0014C520  7C 67 1B 78 */	mr r7, r3
 /* 8014F5C4 0014C524  90 01 00 04 */	stw r0, 4(r1)
@@ -2044,9 +2043,9 @@ refresh2d__4BossFR8Graphics:
 /* 8014F61C 0014C57C  38 21 00 08 */	addi r1, r1, 8
 /* 8014F620 0014C580  7C 08 03 A6 */	mtlr r0
 /* 8014F624 0014C584  4E 80 00 20 */	blr 
+.endfn refresh2d__4BossFR8Graphics
 
-.global wallCallback__4BossFR5PlaneP13DynCollObject
-wallCallback__4BossFR5PlaneP13DynCollObject:
+.fn wallCallback__4BossFR5PlaneP13DynCollObject, global
 /* 8014F628 0014C588  38 00 00 01 */	li r0, 1
 /* 8014F62C 0014C58C  98 03 02 BF */	stb r0, 0x2bf(r3)
 /* 8014F630 0014C590  80 C4 00 00 */	lwz r6, 0(r4)
@@ -2059,9 +2058,9 @@ wallCallback__4BossFR5PlaneP13DynCollObject:
 /* 8014F64C 0014C5AC  90 03 03 34 */	stw r0, 0x334(r3)
 /* 8014F650 0014C5B0  90 A3 03 38 */	stw r5, 0x338(r3)
 /* 8014F654 0014C5B4  4E 80 00 20 */	blr 
+.endfn wallCallback__4BossFR5PlaneP13DynCollObject
 
-.global actBoss__14InteractAttackFP4Boss
-actBoss__14InteractAttackFP4Boss:
+.fn actBoss__14InteractAttackFP4Boss, global
 /* 8014F658 0014C5B8  7C 08 02 A6 */	mflr r0
 /* 8014F65C 0014C5BC  90 01 00 04 */	stw r0, 4(r1)
 /* 8014F660 0014C5C0  94 21 FF C0 */	stwu r1, -0x40(r1)
@@ -2138,14 +2137,14 @@ actBoss__14InteractAttackFP4Boss:
 /* 8014F760 0014C6C0  38 21 00 40 */	addi r1, r1, 0x40
 /* 8014F764 0014C6C4  7C 08 03 A6 */	mtlr r0
 /* 8014F768 0014C6C8  4E 80 00 20 */	blr 
+.endfn actBoss__14InteractAttackFP4Boss
 
-.global attackDefaultPortion__4BossFv
-attackDefaultPortion__4BossFv:
+.fn attackDefaultPortion__4BossFv, weak
 /* 8014F76C 0014C6CC  38 60 00 00 */	li r3, 0
 /* 8014F770 0014C6D0  4E 80 00 20 */	blr 
+.endfn attackDefaultPortion__4BossFv
 
-.global actBoss__13InteractFlickFP4Boss
-actBoss__13InteractFlickFP4Boss:
+.fn actBoss__13InteractFlickFP4Boss, global
 /* 8014F774 0014C6D4  C0 24 02 C4 */	lfs f1, 0x2c4(r4)
 /* 8014F778 0014C6D8  C0 02 A8 24 */	lfs f0, lbl_803EAA24@sda21(r2)
 /* 8014F77C 0014C6DC  FC 01 00 40 */	fcmpo cr0, f1, f0
@@ -2162,9 +2161,9 @@ actBoss__13InteractFlickFP4Boss:
 .L_8014F7A8:
 /* 8014F7A8 0014C708  38 60 00 00 */	li r3, 0
 /* 8014F7AC 0014C70C  4E 80 00 20 */	blr 
+.endfn actBoss__13InteractFlickFP4Boss
 
-.global actBoss__12InteractBombFP4Boss
-actBoss__12InteractBombFP4Boss:
+.fn actBoss__12InteractBombFP4Boss, global
 /* 8014F7B0 0014C710  7C 08 02 A6 */	mflr r0
 /* 8014F7B4 0014C714  90 01 00 04 */	stw r0, 4(r1)
 /* 8014F7B8 0014C718  94 21 FF F8 */	stwu r1, -8(r1)
@@ -2201,13 +2200,13 @@ actBoss__12InteractBombFP4Boss:
 /* 8014F828 0014C788  38 21 00 08 */	addi r1, r1, 8
 /* 8014F82C 0014C78C  7C 08 03 A6 */	mtlr r0
 /* 8014F830 0014C790  4E 80 00 20 */	blr 
+.endfn actBoss__12InteractBombFP4Boss
 
-.global bombDamageCounter__4BossFP8CollPart
-bombDamageCounter__4BossFP8CollPart:
+.fn bombDamageCounter__4BossFP8CollPart, weak
 /* 8014F834 0014C794  4E 80 00 20 */	blr 
+.endfn bombDamageCounter__4BossFP8CollPart
 
-.global actBoss__17InteractHitEffectFP4Boss
-actBoss__17InteractHitEffectFP4Boss:
+.fn actBoss__17InteractHitEffectFP4Boss, global
 /* 8014F838 0014C798  7C 08 02 A6 */	mflr r0
 /* 8014F83C 0014C79C  90 01 00 04 */	stw r0, 4(r1)
 /* 8014F840 0014C7A0  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -2283,9 +2282,9 @@ actBoss__17InteractHitEffectFP4Boss:
 /* 8014F93C 0014C89C  38 21 00 18 */	addi r1, r1, 0x18
 /* 8014F940 0014C8A0  7C 08 03 A6 */	mtlr r0
 /* 8014F944 0014C8A4  4E 80 00 20 */	blr 
+.endfn actBoss__17InteractHitEffectFP4Boss
 
-.global stimulate__4BossFR11Interaction
-stimulate__4BossFR11Interaction:
+.fn stimulate__4BossFR11Interaction, global
 /* 8014F948 0014C8A8  7C 08 02 A6 */	mflr r0
 /* 8014F94C 0014C8AC  90 01 00 04 */	stw r0, 4(r1)
 /* 8014F950 0014C8B0  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -2314,39 +2313,39 @@ stimulate__4BossFR11Interaction:
 /* 8014F9A8 0014C908  38 21 00 18 */	addi r1, r1, 0x18
 /* 8014F9AC 0014C90C  7C 08 03 A6 */	mtlr r0
 /* 8014F9B0 0014C910  4E 80 00 20 */	blr 
+.endfn stimulate__4BossFR11Interaction
 
-.global isAlive__4BossFv
-isAlive__4BossFv:
+.fn isAlive__4BossFv, weak
 /* 8014F9B4 0014C914  88 63 02 B8 */	lbz r3, 0x2b8(r3)
 /* 8014F9B8 0014C918  4E 80 00 20 */	blr 
+.endfn isAlive__4BossFv
 
-.global isAtari__4BossFv
-isAtari__4BossFv:
+.fn isAtari__4BossFv, weak
 /* 8014F9BC 0014C91C  88 63 02 B9 */	lbz r3, 0x2b9(r3)
 /* 8014F9C0 0014C920  4E 80 00 20 */	blr 
+.endfn isAtari__4BossFv
 
-.global isVisible__4BossFv
-isVisible__4BossFv:
+.fn isVisible__4BossFv, weak
 /* 8014F9C4 0014C924  88 63 02 BA */	lbz r3, 0x2ba(r3)
 /* 8014F9C8 0014C928  4E 80 00 20 */	blr 
+.endfn isVisible__4BossFv
 
-.global isOrganic__4BossFv
-isOrganic__4BossFv:
+.fn isOrganic__4BossFv, weak
 /* 8014F9CC 0014C92C  88 63 02 BB */	lbz r3, 0x2bb(r3)
 /* 8014F9D0 0014C930  4E 80 00 20 */	blr 
+.endfn isOrganic__4BossFv
 
-.global isFixed__4BossFv
-isFixed__4BossFv:
+.fn isFixed__4BossFv, weak
 /* 8014F9D4 0014C934  38 60 00 01 */	li r3, 1
 /* 8014F9D8 0014C938  4E 80 00 20 */	blr 
+.endfn isFixed__4BossFv
 
-.global ignoreAtari__4BossFP8Creature
-ignoreAtari__4BossFP8Creature:
+.fn ignoreAtari__4BossFP8Creature, weak
 /* 8014F9DC 0014C93C  38 60 00 00 */	li r3, 0
 /* 8014F9E0 0014C940  4E 80 00 20 */	blr 
+.endfn ignoreAtari__4BossFP8Creature
 
-.global getCentre__4BossFv
-getCentre__4BossFv:
+.fn getCentre__4BossFv, weak
 /* 8014F9E4 0014C944  C0 04 00 94 */	lfs f0, 0x94(r4)
 /* 8014F9E8 0014C948  D0 03 00 00 */	stfs f0, 0(r3)
 /* 8014F9EC 0014C94C  C0 04 00 98 */	lfs f0, 0x98(r4)
@@ -2354,39 +2353,39 @@ getCentre__4BossFv:
 /* 8014F9F4 0014C954  C0 04 00 9C */	lfs f0, 0x9c(r4)
 /* 8014F9F8 0014C958  D0 03 00 08 */	stfs f0, 8(r3)
 /* 8014F9FC 0014C95C  4E 80 00 20 */	blr 
+.endfn getCentre__4BossFv
 
-.global needShadow__4BossFv
-needShadow__4BossFv:
+.fn needShadow__4BossFv, weak
 /* 8014FA00 0014C960  88 63 02 BE */	lbz r3, 0x2be(r3)
 /* 8014FA04 0014C964  4E 80 00 20 */	blr 
+.endfn needShadow__4BossFv
 
-.global getShadowSize__4BossFv
-getShadowSize__4BossFv:
+.fn getShadowSize__4BossFv, weak
 /* 8014FA08 0014C968  C0 23 02 E0 */	lfs f1, 0x2e0(r3)
 /* 8014FA0C 0014C96C  4E 80 00 20 */	blr 
+.endfn getShadowSize__4BossFv
 
-.global update__4BossFv
-update__4BossFv:
+.fn update__4BossFv, weak
 /* 8014FA10 0014C970  4E 80 00 20 */	blr 
+.endfn update__4BossFv
 
-.global refresh__4BossFR8Graphics
-refresh__4BossFR8Graphics:
+.fn refresh__4BossFR8Graphics, weak
 /* 8014FA14 0014C974  4E 80 00 20 */	blr 
+.endfn refresh__4BossFR8Graphics
 
-.global doKill__4BossFv
-doKill__4BossFv:
+.fn doKill__4BossFv, weak
 /* 8014FA18 0014C978  4E 80 00 20 */	blr 
+.endfn doKill__4BossFv
 
-.global exitCourse__4BossFv
-exitCourse__4BossFv:
+.fn exitCourse__4BossFv, weak
 /* 8014FA1C 0014C97C  4E 80 00 20 */	blr 
+.endfn exitCourse__4BossFv
 
-.global collisionCallback__4BossFR9CollEvent
-collisionCallback__4BossFR9CollEvent:
+.fn collisionCallback__4BossFR9CollEvent, weak
 /* 8014FA20 0014C980  4E 80 00 20 */	blr 
+.endfn collisionCallback__4BossFR9CollEvent
 
-.global read__8BossPropFR18RandomAccessStream
-read__8BossPropFR18RandomAccessStream:
+.fn read__8BossPropFR18RandomAccessStream, weak
 /* 8014FA24 0014C984  7C 08 02 A6 */	mflr r0
 /* 8014FA28 0014C988  90 01 00 04 */	stw r0, 4(r1)
 /* 8014FA2C 0014C98C  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -2404,13 +2403,15 @@ read__8BossPropFR18RandomAccessStream:
 /* 8014FA5C 0014C9BC  38 21 00 18 */	addi r1, r1, 0x18
 /* 8014FA60 0014C9C0  7C 08 03 A6 */	mtlr r0
 /* 8014FA64 0014C9C4  4E 80 00 20 */	blr 
+.endfn read__8BossPropFR18RandomAccessStream
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802CE7E0:
+.obj lbl_802CE7E0, local
 	.asciz "Boss.cpp"
+.endobj lbl_802CE7E0
 .balign 4
-lbl_802CE7EC:
+.obj lbl_802CE7EC, local
 	.4byte .L_8014F87C
 	.4byte .L_8014F92C
 	.4byte .L_8014F89C
@@ -2419,32 +2420,39 @@ lbl_802CE7EC:
 	.4byte .L_8014F92C
 	.4byte .L_8014F92C
 	.4byte .L_8014F90C
+.endobj lbl_802CE7EC
 .balign 4
-lbl_802CE80C:
+.obj lbl_802CE80C, local
 	.asciz "EventTalker"
+.endobj lbl_802CE80C
 .balign 4
-lbl_802CE818:
+.obj lbl_802CE818, local
 	.asciz "RefCountable"
+.endobj lbl_802CE818
 .balign 4
-lbl_802CE828:
+.obj lbl_802CE828, local
 	.asciz "Creature"
+.endobj lbl_802CE828
 .balign 4
-lbl_802CE834:
+.obj lbl_802CE834, local
 	.4byte __RTTI__11EventTalker
-	.4byte 0x00000008
+	.4byte 0x8
 	.4byte __RTTI__12RefCountable
-	.4byte 0x00000000
-	.4byte 0x00000000
-lbl_802CE848:
+	.4byte 0
+	.4byte 0
+.endobj lbl_802CE834
+.balign 4
+.obj lbl_802CE848, local
 	.4byte __RTTI__11EventTalker
-	.4byte 0x00000008
+	.4byte 0x8
 	.4byte __RTTI__12RefCountable
-	.4byte 0x00000000
+	.4byte 0
 	.4byte __RTTI__8Creature
-	.4byte 0x00000000
-	.4byte 0x00000000
-.global __vt__4Boss
-__vt__4Boss:
+	.4byte 0
+	.4byte 0
+.endobj lbl_802CE848
+.balign 4
+.obj __vt__4Boss, global
 	.4byte __RTTI__4Boss
 	.4byte 0
 	.4byte addCntCallback__12RefCountableFv
@@ -2518,259 +2526,327 @@ __vt__4Boss:
 	.4byte attackDefaultPortion__4BossFv
 	.4byte bombDamageCounter__4BossFP8CollPart
 	.4byte drawShape__4BossFR8Graphics
+.endobj __vt__4Boss
 .balign 4
-lbl_802CE988:
+.obj lbl_802CE988, local
 	.asciz "Condition"
+.endobj lbl_802CE988
 .balign 4
-	.4byte 0
-	.4byte 0
-	.4byte 0
+.skip 0xC # compiler padding
 .balign 4
-lbl_802CE9A0:
+.obj lbl_802CE9A0, local
 	.asciz "Interaction"
+.endobj lbl_802CE9A0
 .balign 4
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
+.skip 0x2C # compiler padding
 .balign 4
-lbl_802CE9D8:
+.obj lbl_802CE9D8, local
 	.asciz "Parm<int>"
+.endobj lbl_802CE9D8
 .balign 4
-lbl_802CE9E4:
+.obj lbl_802CE9E4, local
 	.asciz "BaseParm"
+.endobj lbl_802CE9E4
 .balign 4
-lbl_802CE9F0:
+.obj lbl_802CE9F0, local
 	.4byte __RTTI__8BaseParm
 	.4byte 0
 	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
+.endobj lbl_802CE9F0
 .balign 4
-lbl_802CEA10:
+.skip 0x14 # compiler padding
+.balign 4
+.obj lbl_802CEA10, local
 	.asciz "BossProp"
+.endobj lbl_802CEA10
 .balign 4
-lbl_802CEA1C:
+.obj lbl_802CEA1C, local
 	.asciz "CreatureProp"
+.endobj lbl_802CEA1C
 .balign 4
-lbl_802CEA2C:
+.obj lbl_802CEA2C, local
 	.4byte __RTTI__12CreatureProp
 	.4byte 0
 	.4byte 0
-.global __vt__8BossProp
-__vt__8BossProp:
+.endobj lbl_802CEA2C
+.balign 4
+.obj __vt__8BossProp, weak
 	.4byte __RTTI__8BossProp
 	.4byte 0
 	.4byte read__8BossPropFR18RandomAccessStream
+.endobj __vt__8BossProp
 .balign 4
-lbl_802CEA44:
+.obj lbl_802CEA44, local
 	.asciz "Parm<float>"
+.endobj lbl_802CEA44
 .balign 4
-lbl_802CEA50:
+.obj lbl_802CEA50, local
 	.4byte __RTTI__8BaseParm
 	.4byte 0
 	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
+.endobj lbl_802CEA50
+.balign 4
+.skip 0x24 # compiler padding
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-lbl_803E47A0:
+.obj lbl_803E47A0, local
 	.asciz "Boss"
+.endobj lbl_803E47A0
 .balign 4
-lbl_803E47A8:
+.obj lbl_803E47A8, local
 	.asciz "s00"
+.endobj lbl_803E47A8
 .balign 4
-lbl_803E47AC:
+.obj lbl_803E47AC, local
 	.asciz "s01"
+.endobj lbl_803E47AC
 .balign 4
-lbl_803E47B0:
+.obj lbl_803E47B0, local
 	.asciz "s02"
+.endobj lbl_803E47B0
 .balign 4
-lbl_803E47B4:
+.obj lbl_803E47B4, local
 	.asciz "s03"
+.endobj lbl_803E47B4
 .balign 4
-lbl_803E47B8:
+.obj lbl_803E47B8, local
 	.asciz "s04"
+.endobj lbl_803E47B8
 .balign 4
-lbl_803E47BC:
+.obj lbl_803E47BC, local
 	.asciz "b00"
+.endobj lbl_803E47BC
 .balign 4
-lbl_803E47C0:
+.obj lbl_803E47C0, local
 	.asciz "b01"
+.endobj lbl_803E47C0
 .balign 4
-lbl_803E47C4:
+.obj lbl_803E47C4, local
 	.asciz "b02"
+.endobj lbl_803E47C4
 .balign 4
-lbl_803E47C8:
+.obj lbl_803E47C8, local
 	.asciz "b03"
+.endobj lbl_803E47C8
 .balign 4
-lbl_803E47CC:
+.obj lbl_803E47CC, local
 	.asciz "b10"
+.endobj lbl_803E47CC
 .balign 4
-lbl_803E47D0:
+.obj lbl_803E47D0, local
 	.asciz "b13"
+.endobj lbl_803E47D0
 .balign 4
-lbl_803E47D4:
+.obj lbl_803E47D4, local
 	.asciz "b11"
+.endobj lbl_803E47D4
 .balign 4
-lbl_803E47D8:
+.obj lbl_803E47D8, local
 	.asciz "b14"
+.endobj lbl_803E47D8
 .balign 4
-lbl_803E47DC:
+.obj lbl_803E47DC, local
 	.asciz "b12"
+.endobj lbl_803E47DC
 .balign 4
-lbl_803E47E0:
+.obj lbl_803E47E0, local
 	.asciz "c00"
+.endobj lbl_803E47E0
 .balign 4
-lbl_803E47E4:
+.obj lbl_803E47E4, local
 	.asciz "c01"
+.endobj lbl_803E47E4
 .balign 4
-lbl_803E47E8:
+.obj lbl_803E47E8, local
 	.asciz "d00"
+.endobj lbl_803E47E8
 .balign 4
-lbl_803E47EC:
+.obj lbl_803E47EC, local
 	.asciz "d01"
+.endobj lbl_803E47EC
 .balign 4
-lbl_803E47F0:
+.obj lbl_803E47F0, local
 	.asciz "d02"
+.endobj lbl_803E47F0
 .balign 4
-lbl_803E47F4:
+.obj lbl_803E47F4, local
 	.asciz "p00"
+.endobj lbl_803E47F4
 .balign 4
-lbl_803E47F8:
+.obj lbl_803E47F8, local
 	.asciz "p01"
+.endobj lbl_803E47F8
 .balign 4
-lbl_803E47FC:
+.obj lbl_803E47FC, local
 	.asciz "i10"
+.endobj lbl_803E47FC
 .balign 4
-lbl_803E4800:
+.obj lbl_803E4800, local
 	.asciz "i00"
+.endobj lbl_803E4800
 .balign 4
-lbl_803E4804:
+.obj lbl_803E4804, local
 	.asciz "i01"
+.endobj lbl_803E4804
 .balign 4
-lbl_803E4808:
+.obj lbl_803E4808, local
 	.asciz "i02"
+.endobj lbl_803E4808
 .balign 4
-lbl_803E480C:
+.obj lbl_803E480C, local
 	.asciz "i03"
+.endobj lbl_803E480C
 .balign 4
-lbl_803E4810:
+.obj lbl_803E4810, local
 	.asciz "i04"
+.endobj lbl_803E4810
 .balign 4
-lbl_803E4814:
+.obj lbl_803E4814, local
 	.asciz "i05"
+.endobj lbl_803E4814
 .balign 4
-lbl_803E4818:
+.obj lbl_803E4818, local
 	.asciz "i06"
+.endobj lbl_803E4818
 .balign 4
-lbl_803E481C:
+.obj lbl_803E481C, local
 	.asciz "i90"
+.endobj lbl_803E481C
 .balign 4
-lbl_803E4820:
+.obj lbl_803E4820, local
 	.float 0.0
-lbl_803E4824:
+.endobj lbl_803E4820
+.obj lbl_803E4824, local
 	.float 0.0
-lbl_803E4828:
+.endobj lbl_803E4824
+.obj lbl_803E4828, local
 	.float 0.0
-lbl_803E482C:
+.endobj lbl_803E4828
+.obj lbl_803E482C, local
 	.float 0.0
-lbl_803E4830:
+.endobj lbl_803E482C
+.obj lbl_803E4830, local
 	.float 0.0
-lbl_803E4834:
+.endobj lbl_803E4830
+.obj lbl_803E4834, local
 	.float 0.0
-lbl_803E4838:
+.endobj lbl_803E4834
+.obj lbl_803E4838, local
 	.float 0.0
-lbl_803E483C:
+.endobj lbl_803E4838
+.obj lbl_803E483C, local
 	.float 0.0
-lbl_803E4840:
+.endobj lbl_803E483C
+.obj lbl_803E4840, local
 	.float 0.0
-__RTTI__11EventTalker:
+.endobj lbl_803E4840
+.balign 4
+.obj __RTTI__11EventTalker, local
 	.4byte lbl_802CE80C
-	.4byte 0x00000000
-__RTTI__12RefCountable:
+	.4byte 0
+.endobj __RTTI__11EventTalker
+.balign 4
+.obj __RTTI__12RefCountable, local
 	.4byte lbl_802CE818
-	.4byte 0x00000000
-__RTTI__8Creature:
+	.4byte 0
+.endobj __RTTI__12RefCountable
+.balign 4
+.obj __RTTI__8Creature, local
 	.4byte lbl_802CE828
 	.4byte lbl_802CE834
-__RTTI__4Boss:
+.endobj __RTTI__8Creature
+.balign 4
+.obj __RTTI__4Boss, local
 	.4byte lbl_803E47A0
 	.4byte lbl_802CE848
-__RTTI__8BaseParm:
+.endobj __RTTI__4Boss
+.balign 4
+.obj __RTTI__8BaseParm, local
 	.4byte lbl_802CE9E4
-	.4byte 0x00000000
-__RTTI__12CreatureProp:
+	.4byte 0
+.endobj __RTTI__8BaseParm
+.balign 4
+.obj __RTTI__12CreatureProp, local
 	.4byte lbl_802CEA1C
-	.4byte 0x00000000
-__RTTI__8BossProp:
+	.4byte 0
+.endobj __RTTI__12CreatureProp
+.balign 4
+.obj __RTTI__8BossProp, local
 	.4byte lbl_802CEA10
 	.4byte lbl_802CEA2C
+.endobj __RTTI__8BossProp
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803EAA00:
+.obj lbl_803EAA00, local
 	.float 0.5
-lbl_803EAA04:
-	.4byte 0x3E800000
-lbl_803EAA08:
-	.4byte 0x3DCCCCCD
-lbl_803EAA0C:
-	.4byte 0x3E99999A
-lbl_803EAA10:
-	.4byte 0x43480000
-lbl_803EAA14:
-	.4byte 0x42C80000
-lbl_803EAA18:
-	.4byte 0x43B40000
-lbl_803EAA1C:
-	.4byte 0x447A0000
-lbl_803EAA20:
+.endobj lbl_803EAA00
+.obj lbl_803EAA04, local
+	.float 0.25
+.endobj lbl_803EAA04
+.obj lbl_803EAA08, local
+	.float 0.1
+.endobj lbl_803EAA08
+.obj lbl_803EAA0C, local
+	.float 0.3
+.endobj lbl_803EAA0C
+.obj lbl_803EAA10, local
+	.float 200.0
+.endobj lbl_803EAA10
+.obj lbl_803EAA14, local
+	.float 100.0
+.endobj lbl_803EAA14
+.obj lbl_803EAA18, local
+	.float 360.0
+.endobj lbl_803EAA18
+.obj lbl_803EAA1C, local
+	.float 1000.0
+.endobj lbl_803EAA1C
+.obj lbl_803EAA20, local
 	.float 1.0
-lbl_803EAA24:
+.endobj lbl_803EAA20
+.obj lbl_803EAA24, local
 	.float 0.0
-lbl_803EAA28:
-	.4byte 0x459C4000
-lbl_803EAA2C:
-	.4byte 0x41F00000
-lbl_803EAA30:
-	.4byte 0x41200000
-lbl_803EAA34:
-	.4byte 0x40490FDB
-lbl_803EAA38:
-	.4byte 0xC47A0000
-lbl_803EAA3C:
-	.4byte 0x46FFFE00
-lbl_803EAA40:
-	.4byte 0x40C90FDB
-lbl_803EAA44:
-	.4byte 0x403FFFF3
-lbl_803EAA48:
-	.4byte 0x43300000
-	.4byte 0x80000000
-lbl_803EAA50:
-	.4byte 0x40A00000
-lbl_803EAA54:
-	.4byte 0x40C90FCE
-lbl_803EAA58:
-	.4byte 0x3F7FFFEF
-lbl_803EAA5C:
-	.4byte 0x46480000
+.endobj lbl_803EAA24
+.obj lbl_803EAA28, local
+	.float 5000.0
+.endobj lbl_803EAA28
+.obj lbl_803EAA2C, local
+	.float 30.0
+.endobj lbl_803EAA2C
+.obj lbl_803EAA30, local
+	.float 10.0
+.endobj lbl_803EAA30
+.obj lbl_803EAA34, local # pi
+	.float 3.1415927
+.endobj lbl_803EAA34
+.obj lbl_803EAA38, local
+	.float -1000.0
+.endobj lbl_803EAA38
+.obj lbl_803EAA3C, local
+	.float 32767.0
+.endobj lbl_803EAA3C
+.obj lbl_803EAA40, local # tau
+	.float 6.2831855
+.endobj lbl_803EAA40
+.obj lbl_803EAA44, local
+	.float 2.999997
+.endobj lbl_803EAA44
+.balign 8
+.obj lbl_803EAA48, local
+	.8byte 0x4330000080000000
+.endobj lbl_803EAA48
+.balign 4
+.obj lbl_803EAA50, local
+	.float 5.0
+.endobj lbl_803EAA50
+.obj lbl_803EAA54, local # really close to tau
+	.float 6.2831793
+.endobj lbl_803EAA54
+.obj lbl_803EAA58, local
+	.float 0.999999
+.endobj lbl_803EAA58
+.obj lbl_803EAA5C, local
+	.float 12800.0
+.endobj lbl_803EAA5C

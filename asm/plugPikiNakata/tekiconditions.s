@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global satisfy__22TekiPikiStateConditionFP8Creature
-satisfy__22TekiPikiStateConditionFP8Creature:
+.fn satisfy__22TekiPikiStateConditionFP8Creature, global
 /* 80149BC0 00146B20  7C 08 02 A6 */	mflr r0
 /* 80149BC4 00146B24  90 01 00 04 */	stw r0, 4(r1)
 /* 80149BC8 00146B28  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -25,9 +24,9 @@ satisfy__22TekiPikiStateConditionFP8Creature:
 /* 80149C08 00146B68  38 21 00 20 */	addi r1, r1, 0x20
 /* 80149C0C 00146B6C  7C 08 03 A6 */	mtlr r0
 /* 80149C10 00146B70  4E 80 00 20 */	blr 
+.endfn satisfy__22TekiPikiStateConditionFP8Creature
 
-.global satisfy__18TekiStateConditionFP8Creature
-satisfy__18TekiStateConditionFP8Creature:
+.fn satisfy__18TekiStateConditionFP8Creature, global
 /* 80149C14 00146B74  80 04 00 6C */	lwz r0, 0x6c(r4)
 /* 80149C18 00146B78  2C 00 00 37 */	cmpwi r0, 0x37
 /* 80149C1C 00146B7C  41 82 00 0C */	beq .L_80149C28
@@ -40,9 +39,9 @@ satisfy__18TekiStateConditionFP8Creature:
 /* 80149C34 00146B94  7C 00 00 34 */	cntlzw r0, r0
 /* 80149C38 00146B98  54 03 D9 7E */	srwi r3, r0, 5
 /* 80149C3C 00146B9C  4E 80 00 20 */	blr 
+.endfn satisfy__18TekiStateConditionFP8Creature
 
-.global satisfy__17TekiTypeConditionFP8Creature
-satisfy__17TekiTypeConditionFP8Creature:
+.fn satisfy__17TekiTypeConditionFP8Creature, global
 /* 80149C40 00146BA0  80 04 00 6C */	lwz r0, 0x6c(r4)
 /* 80149C44 00146BA4  2C 00 00 37 */	cmpwi r0, 0x37
 /* 80149C48 00146BA8  41 82 00 0C */	beq .L_80149C54
@@ -55,9 +54,9 @@ satisfy__17TekiTypeConditionFP8Creature:
 /* 80149C60 00146BC0  7C 00 00 34 */	cntlzw r0, r0
 /* 80149C64 00146BC4  54 03 D9 7E */	srwi r3, r0, 5
 /* 80149C68 00146BC8  4E 80 00 20 */	blr 
+.endfn satisfy__17TekiTypeConditionFP8Creature
 
-.global satisfy__17TekiFreeConditionFP8Creature
-satisfy__17TekiFreeConditionFP8Creature:
+.fn satisfy__17TekiFreeConditionFP8Creature, global
 /* 80149C6C 00146BCC  7C 08 02 A6 */	mflr r0
 /* 80149C70 00146BD0  7C 83 23 78 */	mr r3, r4
 /* 80149C74 00146BD4  90 01 00 04 */	stw r0, 4(r1)
@@ -70,17 +69,17 @@ satisfy__17TekiFreeConditionFP8Creature:
 /* 80149C90 00146BF0  38 21 00 08 */	addi r1, r1, 8
 /* 80149C94 00146BF4  7C 08 03 A6 */	mtlr r0
 /* 80149C98 00146BF8  4E 80 00 20 */	blr 
+.endfn satisfy__17TekiFreeConditionFP8Creature
 
-.global satisfy__17TekiNaviConditionFP8Creature
-satisfy__17TekiNaviConditionFP8Creature:
+.fn satisfy__17TekiNaviConditionFP8Creature, global
 /* 80149C9C 00146BFC  80 04 00 6C */	lwz r0, 0x6c(r4)
 /* 80149CA0 00146C00  20 00 00 36 */	subfic r0, r0, 0x36
 /* 80149CA4 00146C04  7C 00 00 34 */	cntlzw r0, r0
 /* 80149CA8 00146C08  54 03 D9 7E */	srwi r3, r0, 5
 /* 80149CAC 00146C0C  4E 80 00 20 */	blr 
+.endfn satisfy__17TekiNaviConditionFP8Creature
 
-.global satisfy__21TekiNaviPikiConditionFP8Creature
-satisfy__21TekiNaviPikiConditionFP8Creature:
+.fn satisfy__21TekiNaviPikiConditionFP8Creature, global
 /* 80149CB0 00146C10  80 04 00 6C */	lwz r0, 0x6c(r4)
 /* 80149CB4 00146C14  38 60 00 01 */	li r3, 1
 /* 80149CB8 00146C18  2C 00 00 36 */	cmpwi r0, 0x36
@@ -89,9 +88,9 @@ satisfy__21TekiNaviPikiConditionFP8Creature:
 /* 80149CC4 00146C24  4D 82 00 20 */	beqlr 
 /* 80149CC8 00146C28  38 60 00 00 */	li r3, 0
 /* 80149CCC 00146C2C  4E 80 00 20 */	blr 
+.endfn satisfy__21TekiNaviPikiConditionFP8Creature
 
-.global satisfy__19TekiPelletConditionFP8Creature
-satisfy__19TekiPelletConditionFP8Creature:
+.fn satisfy__19TekiPelletConditionFP8Creature, global
 /* 80149CD0 00146C30  7C 08 02 A6 */	mflr r0
 /* 80149CD4 00146C34  90 01 00 04 */	stw r0, 4(r1)
 /* 80149CD8 00146C38  94 21 FF F8 */	stwu r1, -8(r1)
@@ -101,9 +100,9 @@ satisfy__19TekiPelletConditionFP8Creature:
 /* 80149CE8 00146C48  38 21 00 08 */	addi r1, r1, 8
 /* 80149CEC 00146C4C  7C 08 03 A6 */	mtlr r0
 /* 80149CF0 00146C50  4E 80 00 20 */	blr 
+.endfn satisfy__19TekiPelletConditionFP8Creature
 
-.global satisfy__29TekiPositionDistanceConditionFP8Creature
-satisfy__29TekiPositionDistanceConditionFP8Creature:
+.fn satisfy__29TekiPositionDistanceConditionFP8Creature, global
 /* 80149CF4 00146C54  7C 08 02 A6 */	mflr r0
 /* 80149CF8 00146C58  90 01 00 04 */	stw r0, 4(r1)
 /* 80149CFC 00146C5C  94 21 FF B8 */	stwu r1, -0x48(r1)
@@ -146,9 +145,9 @@ satisfy__29TekiPositionDistanceConditionFP8Creature:
 /* 80149D90 00146CF0  38 21 00 48 */	addi r1, r1, 0x48
 /* 80149D94 00146CF4  7C 08 03 A6 */	mtlr r0
 /* 80149D98 00146CF8  4E 80 00 20 */	blr 
+.endfn satisfy__29TekiPositionDistanceConditionFP8Creature
 
-.global satisfy__35TekiPositionCircleDistanceConditionFP8Creature
-satisfy__35TekiPositionCircleDistanceConditionFP8Creature:
+.fn satisfy__35TekiPositionCircleDistanceConditionFP8Creature, global
 /* 80149D9C 00146CFC  7C 08 02 A6 */	mflr r0
 /* 80149DA0 00146D00  90 01 00 04 */	stw r0, 4(r1)
 /* 80149DA4 00146D04  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -177,9 +176,9 @@ satisfy__35TekiPositionCircleDistanceConditionFP8Creature:
 /* 80149E00 00146D60  38 21 00 18 */	addi r1, r1, 0x18
 /* 80149E04 00146D64  7C 08 03 A6 */	mtlr r0
 /* 80149E08 00146D68  4E 80 00 20 */	blr 
+.endfn satisfy__35TekiPositionCircleDistanceConditionFP8Creature
 
-.global satisfy__35TekiPositionSphereDistanceConditionFP8Creature
-satisfy__35TekiPositionSphereDistanceConditionFP8Creature:
+.fn satisfy__35TekiPositionSphereDistanceConditionFP8Creature, global
 /* 80149E0C 00146D6C  7C 08 02 A6 */	mflr r0
 /* 80149E10 00146D70  90 01 00 04 */	stw r0, 4(r1)
 /* 80149E14 00146D74  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -208,17 +207,17 @@ satisfy__35TekiPositionSphereDistanceConditionFP8Creature:
 /* 80149E70 00146DD0  38 21 00 18 */	addi r1, r1, 0x18
 /* 80149E74 00146DD4  7C 08 03 A6 */	mtlr r0
 /* 80149E78 00146DD8  4E 80 00 20 */	blr 
+.endfn satisfy__35TekiPositionSphereDistanceConditionFP8Creature
 
-.global satisfy__21TekiStickingConditionFP8Creature
-satisfy__21TekiStickingConditionFP8Creature:
+.fn satisfy__21TekiStickingConditionFP8Creature, global
 /* 80149E7C 00146DDC  80 04 01 84 */	lwz r0, 0x184(r4)
 /* 80149E80 00146DE0  7C 60 00 D0 */	neg r3, r0
 /* 80149E84 00146DE4  30 03 FF FF */	addic r0, r3, -1
 /* 80149E88 00146DE8  7C 60 19 10 */	subfe r3, r0, r3
 /* 80149E8C 00146DEC  4E 80 00 20 */	blr 
+.endfn satisfy__21TekiStickingConditionFP8Creature
 
-.global satisfy__24TekiRecognitionConditionFP8Creature
-satisfy__24TekiRecognitionConditionFP8Creature:
+.fn satisfy__24TekiRecognitionConditionFP8Creature, global
 /* 80149E90 00146DF0  7C 08 02 A6 */	mflr r0
 /* 80149E94 00146DF4  90 01 00 04 */	stw r0, 4(r1)
 /* 80149E98 00146DF8  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -263,17 +262,17 @@ satisfy__24TekiRecognitionConditionFP8Creature:
 /* 80149F2C 00146E8C  38 21 00 20 */	addi r1, r1, 0x20
 /* 80149F30 00146E90  7C 08 03 A6 */	mtlr r0
 /* 80149F34 00146E94  4E 80 00 20 */	blr 
+.endfn satisfy__24TekiRecognitionConditionFP8Creature
 
-.global satisfy__28TekiCreaturePointerConditionFP8Creature
-satisfy__28TekiCreaturePointerConditionFP8Creature:
+.fn satisfy__28TekiCreaturePointerConditionFP8Creature, global
 /* 80149F38 00146E98  80 03 00 04 */	lwz r0, 4(r3)
 /* 80149F3C 00146E9C  7C 00 20 50 */	subf r0, r0, r4
 /* 80149F40 00146EA0  7C 00 00 34 */	cntlzw r0, r0
 /* 80149F44 00146EA4  54 03 D9 7E */	srwi r3, r0, 5
 /* 80149F48 00146EA8  4E 80 00 20 */	blr 
+.endfn satisfy__28TekiCreaturePointerConditionFP8Creature
 
-.global satisfy__21TekiDistanceConditionFP8Creature
-satisfy__21TekiDistanceConditionFP8Creature:
+.fn satisfy__21TekiDistanceConditionFP8Creature, global
 /* 80149F4C 00146EAC  7C 08 02 A6 */	mflr r0
 /* 80149F50 00146EB0  90 01 00 04 */	stw r0, 4(r1)
 /* 80149F54 00146EB4  94 21 FF B0 */	stwu r1, -0x50(r1)
@@ -333,9 +332,9 @@ satisfy__21TekiDistanceConditionFP8Creature:
 /* 8014A024 00146F84  38 21 00 50 */	addi r1, r1, 0x50
 /* 8014A028 00146F88  7C 08 03 A6 */	mtlr r0
 /* 8014A02C 00146F8C  4E 80 00 20 */	blr 
+.endfn satisfy__21TekiDistanceConditionFP8Creature
 
-.global satisfy__27TekiSphereDistanceConditionFP8Creature
-satisfy__27TekiSphereDistanceConditionFP8Creature:
+.fn satisfy__27TekiSphereDistanceConditionFP8Creature, global
 /* 8014A030 00146F90  7C 08 02 A6 */	mflr r0
 /* 8014A034 00146F94  90 01 00 04 */	stw r0, 4(r1)
 /* 8014A038 00146F98  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -366,18 +365,18 @@ satisfy__27TekiSphereDistanceConditionFP8Creature:
 /* 8014A094 00146FF4  38 21 00 20 */	addi r1, r1, 0x20
 /* 8014A098 00146FF8  7C 08 03 A6 */	mtlr r0
 /* 8014A09C 00146FFC  4E 80 00 20 */	blr 
+.endfn satisfy__27TekiSphereDistanceConditionFP8Creature
 
-.global satisfy__20TekiStickerConditionFP8Creature
-satisfy__20TekiStickerConditionFP8Creature:
+.fn satisfy__20TekiStickerConditionFP8Creature, global
 /* 8014A0A0 00147000  80 84 01 84 */	lwz r4, 0x184(r4)
 /* 8014A0A4 00147004  80 03 00 04 */	lwz r0, 4(r3)
 /* 8014A0A8 00147008  7C 04 00 50 */	subf r0, r4, r0
 /* 8014A0AC 0014700C  7C 00 00 34 */	cntlzw r0, r0
 /* 8014A0B0 00147010  54 03 D9 7E */	srwi r3, r0, 5
 /* 8014A0B4 00147014  4E 80 00 20 */	blr 
+.endfn satisfy__20TekiStickerConditionFP8Creature
 
-.global satisfy__23TekiLowerRangeConditionFP8Creature
-satisfy__23TekiLowerRangeConditionFP8Creature:
+.fn satisfy__23TekiLowerRangeConditionFP8Creature, global
 /* 8014A0B8 00147018  7C 08 02 A6 */	mflr r0
 /* 8014A0BC 0014701C  90 01 00 04 */	stw r0, 4(r1)
 /* 8014A0C0 00147020  94 21 FF 68 */	stwu r1, -0x98(r1)
@@ -461,9 +460,9 @@ satisfy__23TekiLowerRangeConditionFP8Creature:
 /* 8014A1F0 00147150  38 21 00 98 */	addi r1, r1, 0x98
 /* 8014A1F4 00147154  7C 08 03 A6 */	mtlr r0
 /* 8014A1F8 00147158  4E 80 00 20 */	blr 
+.endfn satisfy__23TekiLowerRangeConditionFP8Creature
 
-.global satisfy__23TekiAttackableConditionFP8Creature
-satisfy__23TekiAttackableConditionFP8Creature:
+.fn satisfy__23TekiAttackableConditionFP8Creature, global
 /* 8014A1FC 0014715C  7C 08 02 A6 */	mflr r0
 /* 8014A200 00147160  90 01 00 04 */	stw r0, 4(r1)
 /* 8014A204 00147164  94 21 FF F8 */	stwu r1, -8(r1)
@@ -473,9 +472,9 @@ satisfy__23TekiAttackableConditionFP8Creature:
 /* 8014A214 00147174  38 21 00 08 */	addi r1, r1, 8
 /* 8014A218 00147178  7C 08 03 A6 */	mtlr r0
 /* 8014A21C 0014717C  4E 80 00 20 */	blr 
+.endfn satisfy__23TekiAttackableConditionFP8Creature
 
-.global satisfy__20TekiVisibleConditionFP8Creature
-satisfy__20TekiVisibleConditionFP8Creature:
+.fn satisfy__20TekiVisibleConditionFP8Creature, global
 /* 8014A220 00147180  7C 08 02 A6 */	mflr r0
 /* 8014A224 00147184  90 01 00 04 */	stw r0, 4(r1)
 /* 8014A228 00147188  94 21 FF F8 */	stwu r1, -8(r1)
@@ -485,9 +484,9 @@ satisfy__20TekiVisibleConditionFP8Creature:
 /* 8014A238 00147198  38 21 00 08 */	addi r1, r1, 8
 /* 8014A23C 0014719C  7C 08 03 A6 */	mtlr r0
 /* 8014A240 001471A0  4E 80 00 20 */	blr 
+.endfn satisfy__20TekiVisibleConditionFP8Creature
 
-.global satisfy__26TekiVisibleHeightConditionFP8Creature
-satisfy__26TekiVisibleHeightConditionFP8Creature:
+.fn satisfy__26TekiVisibleHeightConditionFP8Creature, global
 /* 8014A244 001471A4  80 A3 00 04 */	lwz r5, 4(r3)
 /* 8014A248 001471A8  C0 24 00 98 */	lfs f1, 0x98(r4)
 /* 8014A24C 001471AC  80 65 02 C4 */	lwz r3, 0x2c4(r5)
@@ -504,9 +503,9 @@ satisfy__26TekiVisibleHeightConditionFP8Creature:
 .L_8014A278:
 /* 8014A278 001471D8  38 60 00 01 */	li r3, 1
 /* 8014A27C 001471DC  4E 80 00 20 */	blr 
+.endfn satisfy__26TekiVisibleHeightConditionFP8Creature
 
-.global satisfy__18TekiLowerConditionFP8Creature
-satisfy__18TekiLowerConditionFP8Creature:
+.fn satisfy__18TekiLowerConditionFP8Creature, global
 /* 8014A280 001471E0  7C 08 02 A6 */	mflr r0
 /* 8014A284 001471E4  3C A0 80 2B */	lis r5, __vt__9Condition@ha
 /* 8014A288 001471E8  90 01 00 04 */	stw r0, 4(r1)
@@ -554,9 +553,9 @@ satisfy__18TekiLowerConditionFP8Creature:
 /* 8014A330 00147290  38 21 00 80 */	addi r1, r1, 0x80
 /* 8014A334 00147294  7C 08 03 A6 */	mtlr r0
 /* 8014A338 00147298  4E 80 00 20 */	blr 
+.endfn satisfy__18TekiLowerConditionFP8Creature
 
-.global satisfy__18TekiAngleConditionFP8Creature
-satisfy__18TekiAngleConditionFP8Creature:
+.fn satisfy__18TekiAngleConditionFP8Creature, global
 /* 8014A33C 0014729C  7C 08 02 A6 */	mflr r0
 /* 8014A340 001472A0  38 84 00 94 */	addi r4, r4, 0x94
 /* 8014A344 001472A4  90 01 00 04 */	stw r0, 4(r1)
@@ -582,465 +581,584 @@ satisfy__18TekiAngleConditionFP8Creature:
 /* 8014A38C 001472EC  38 21 00 28 */	addi r1, r1, 0x28
 /* 8014A390 001472F0  7C 08 03 A6 */	mtlr r0
 /* 8014A394 001472F4  4E 80 00 20 */	blr 
+.endfn satisfy__18TekiAngleConditionFP8Creature
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802CD370:
+.obj lbl_802CD370, local
 	.asciz "tekiconditions.cpp"
+.endobj lbl_802CD370
 .balign 4
-lbl_802CD384:
+.obj lbl_802CD384, local
 	.asciz "tekiconditions"
+.endobj lbl_802CD384
 .balign 4
-lbl_802CD394:
+.obj lbl_802CD394, local
 	.asciz "TekiAngleCondition"
+.endobj lbl_802CD394
 .balign 4
-lbl_802CD3A8:
+.obj lbl_802CD3A8, local
 	.asciz "Condition"
+.endobj lbl_802CD3A8
 .balign 4
-lbl_802CD3B4:
+.obj lbl_802CD3B4, local
 	.asciz "TekiCondition"
+.endobj lbl_802CD3B4
 .balign 4
-lbl_802CD3C4:
+.obj lbl_802CD3C4, local
 	.4byte __RTTI__9Condition
 	.4byte 0
 	.4byte 0
-lbl_802CD3D0:
+.endobj lbl_802CD3C4
+.balign 4
+.obj lbl_802CD3D0, local
 	.4byte __RTTI__9Condition
 	.4byte 0
 	.4byte __RTTI__13TekiCondition
 	.4byte 0
 	.4byte 0
-.global __vt__18TekiAngleCondition
-__vt__18TekiAngleCondition:
+.endobj lbl_802CD3D0
+.balign 4
+.obj __vt__18TekiAngleCondition, global
 	.4byte __RTTI__18TekiAngleCondition
 	.4byte 0
 	.4byte satisfy__18TekiAngleConditionFP8Creature
+.endobj __vt__18TekiAngleCondition
 .balign 4
-lbl_802CD3F0:
+.obj lbl_802CD3F0, local
 	.asciz "TekiAndCondition"
+.endobj lbl_802CD3F0
 .balign 4
-lbl_802CD404:
+.obj lbl_802CD404, local
 	.4byte __RTTI__9Condition
 	.4byte 0
 	.4byte __RTTI__13TekiCondition
 	.4byte 0
 	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
+.endobj lbl_802CD404
 .balign 4
-lbl_802CD424:
+.skip 0xC # compiler padding
+.balign 4
+.obj lbl_802CD424, local
 	.asciz "TekiNotCondition"
+.endobj lbl_802CD424
 .balign 4
-lbl_802CD438:
+.obj lbl_802CD438, local
 	.4byte __RTTI__9Condition
 	.4byte 0
 	.4byte __RTTI__13TekiCondition
 	.4byte 0
 	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
+.endobj lbl_802CD438
 .balign 4
-lbl_802CD470:
+.skip 0x24 # compiler padding
+.balign 4
+.obj lbl_802CD470, local
 	.asciz "TekiLowerCondition"
+.endobj lbl_802CD470
 .balign 4
-lbl_802CD484:
+.obj lbl_802CD484, local
 	.4byte __RTTI__9Condition
 	.4byte 0
 	.4byte __RTTI__13TekiCondition
 	.4byte 0
 	.4byte 0
-.global __vt__18TekiLowerCondition
-__vt__18TekiLowerCondition:
+.endobj lbl_802CD484
+.balign 4
+.obj __vt__18TekiLowerCondition, global
 	.4byte __RTTI__18TekiLowerCondition
 	.4byte 0
 	.4byte satisfy__18TekiLowerConditionFP8Creature
+.endobj __vt__18TekiLowerCondition
 .balign 4
-lbl_802CD4A4:
+.obj lbl_802CD4A4, local
 	.asciz "TekiVisibleHeightCondition"
+.endobj lbl_802CD4A4
 .balign 4
-lbl_802CD4C0:
+.obj lbl_802CD4C0, local
 	.4byte __RTTI__9Condition
 	.4byte 0
 	.4byte __RTTI__13TekiCondition
 	.4byte 0
 	.4byte 0
-.global __vt__26TekiVisibleHeightCondition
-__vt__26TekiVisibleHeightCondition:
+.endobj lbl_802CD4C0
+.balign 4
+.obj __vt__26TekiVisibleHeightCondition, global
 	.4byte __RTTI__26TekiVisibleHeightCondition
 	.4byte 0
 	.4byte satisfy__26TekiVisibleHeightConditionFP8Creature
+.endobj __vt__26TekiVisibleHeightCondition
 .balign 4
-lbl_802CD4E0:
+.obj lbl_802CD4E0, local
 	.asciz "TekiVisibleCondition"
+.endobj lbl_802CD4E0
 .balign 4
-lbl_802CD4F8:
+.obj lbl_802CD4F8, local
 	.4byte __RTTI__9Condition
 	.4byte 0
 	.4byte __RTTI__13TekiCondition
 	.4byte 0
 	.4byte 0
-.global __vt__20TekiVisibleCondition
-__vt__20TekiVisibleCondition:
+.endobj lbl_802CD4F8
+.balign 4
+.obj __vt__20TekiVisibleCondition, global
 	.4byte __RTTI__20TekiVisibleCondition
 	.4byte 0
 	.4byte satisfy__20TekiVisibleConditionFP8Creature
+.endobj __vt__20TekiVisibleCondition
 .balign 4
-lbl_802CD518:
+.obj lbl_802CD518, local
 	.asciz "TekiAttackableCondition"
+.endobj lbl_802CD518
 .balign 4
-lbl_802CD530:
+.obj lbl_802CD530, local
 	.4byte __RTTI__9Condition
 	.4byte 0
 	.4byte __RTTI__13TekiCondition
 	.4byte 0
 	.4byte 0
-.global __vt__23TekiAttackableCondition
-__vt__23TekiAttackableCondition:
+.endobj lbl_802CD530
+.balign 4
+.obj __vt__23TekiAttackableCondition, global
 	.4byte __RTTI__23TekiAttackableCondition
 	.4byte 0
 	.4byte satisfy__23TekiAttackableConditionFP8Creature
+.endobj __vt__23TekiAttackableCondition
 .balign 4
-lbl_802CD550:
+.obj lbl_802CD550, local
 	.asciz "TekiLowerRangeCondition"
+.endobj lbl_802CD550
 .balign 4
-lbl_802CD568:
+.obj lbl_802CD568, local
 	.4byte __RTTI__9Condition
 	.4byte 0
 	.4byte __RTTI__13TekiCondition
 	.4byte 0
 	.4byte 0
-.global __vt__23TekiLowerRangeCondition
-__vt__23TekiLowerRangeCondition:
+.endobj lbl_802CD568
+.balign 4
+.obj __vt__23TekiLowerRangeCondition, global
 	.4byte __RTTI__23TekiLowerRangeCondition
 	.4byte 0
 	.4byte satisfy__23TekiLowerRangeConditionFP8Creature
+.endobj __vt__23TekiLowerRangeCondition
 .balign 4
-lbl_802CD588:
+.obj lbl_802CD588, local
 	.asciz "TekiStickerCondition"
+.endobj lbl_802CD588
 .balign 4
-lbl_802CD5A0:
+.obj lbl_802CD5A0, local
 	.4byte __RTTI__9Condition
 	.4byte 0
 	.4byte __RTTI__13TekiCondition
 	.4byte 0
 	.4byte 0
-.global __vt__20TekiStickerCondition
-__vt__20TekiStickerCondition:
+.endobj lbl_802CD5A0
+.balign 4
+.obj __vt__20TekiStickerCondition, global
 	.4byte __RTTI__20TekiStickerCondition
 	.4byte 0
 	.4byte satisfy__20TekiStickerConditionFP8Creature
+.endobj __vt__20TekiStickerCondition
 .balign 4
-lbl_802CD5C0:
+.obj lbl_802CD5C0, local
 	.asciz "TekiSphereDistanceCondition"
+.endobj lbl_802CD5C0
 .balign 4
-lbl_802CD5DC:
+.obj lbl_802CD5DC, local
 	.4byte __RTTI__9Condition
 	.4byte 0
 	.4byte __RTTI__13TekiCondition
 	.4byte 0
 	.4byte 0
-.global __vt__27TekiSphereDistanceCondition
-__vt__27TekiSphereDistanceCondition:
+.endobj lbl_802CD5DC
+.balign 4
+.obj __vt__27TekiSphereDistanceCondition, global
 	.4byte __RTTI__27TekiSphereDistanceCondition
 	.4byte 0
 	.4byte satisfy__27TekiSphereDistanceConditionFP8Creature
+.endobj __vt__27TekiSphereDistanceCondition
 .balign 4
-lbl_802CD5FC:
+.obj lbl_802CD5FC, local
 	.asciz "TekiDistanceCondition"
+.endobj lbl_802CD5FC
 .balign 4
-lbl_802CD614:
+.obj lbl_802CD614, local
 	.4byte __RTTI__9Condition
 	.4byte 0
 	.4byte __RTTI__13TekiCondition
 	.4byte 0
 	.4byte 0
-.global __vt__21TekiDistanceCondition
-__vt__21TekiDistanceCondition:
+.endobj lbl_802CD614
+.balign 4
+.obj __vt__21TekiDistanceCondition, global
 	.4byte __RTTI__21TekiDistanceCondition
 	.4byte 0
 	.4byte satisfy__21TekiDistanceConditionFP8Creature
+.endobj __vt__21TekiDistanceCondition
 .balign 4
-lbl_802CD634:
+.obj lbl_802CD634, local
 	.asciz "TekiCreaturePointerCondition"
+.endobj lbl_802CD634
 .balign 4
-lbl_802CD654:
+.obj lbl_802CD654, local
 	.4byte __RTTI__9Condition
 	.4byte 0
 	.4byte __RTTI__13TekiCondition
 	.4byte 0
 	.4byte 0
-.global __vt__28TekiCreaturePointerCondition
-__vt__28TekiCreaturePointerCondition:
+.endobj lbl_802CD654
+.balign 4
+.obj __vt__28TekiCreaturePointerCondition, global
 	.4byte __RTTI__28TekiCreaturePointerCondition
 	.4byte 0
 	.4byte satisfy__28TekiCreaturePointerConditionFP8Creature
+.endobj __vt__28TekiCreaturePointerCondition
 .balign 4
-lbl_802CD674:
+.obj lbl_802CD674, local
 	.asciz "TekiRecognitionCondition"
+.endobj lbl_802CD674
 .balign 4
-lbl_802CD690:
+.obj lbl_802CD690, local
 	.4byte __RTTI__9Condition
 	.4byte 0
 	.4byte __RTTI__13TekiCondition
 	.4byte 0
 	.4byte 0
-.global __vt__24TekiRecognitionCondition
-__vt__24TekiRecognitionCondition:
+.endobj lbl_802CD690
+.balign 4
+.obj __vt__24TekiRecognitionCondition, global
 	.4byte __RTTI__24TekiRecognitionCondition
 	.4byte 0
 	.4byte satisfy__24TekiRecognitionConditionFP8Creature
+.endobj __vt__24TekiRecognitionCondition
 .balign 4
-lbl_802CD6B0:
+.obj lbl_802CD6B0, local
 	.asciz "TekiStickingCondition"
+.endobj lbl_802CD6B0
 .balign 4
-lbl_802CD6C8:
+.obj lbl_802CD6C8, local
 	.4byte __RTTI__9Condition
 	.4byte 0
 	.4byte __RTTI__13TekiCondition
 	.4byte 0
 	.4byte 0
-.global __vt__21TekiStickingCondition
-__vt__21TekiStickingCondition:
+.endobj lbl_802CD6C8
+.balign 4
+.obj __vt__21TekiStickingCondition, global
 	.4byte __RTTI__21TekiStickingCondition
 	.4byte 0
 	.4byte satisfy__21TekiStickingConditionFP8Creature
+.endobj __vt__21TekiStickingCondition
 .balign 4
-lbl_802CD6E8:
+.obj lbl_802CD6E8, local
 	.asciz "TekiPositionSphereDistanceCondition"
+.endobj lbl_802CD6E8
 .balign 4
-lbl_802CD70C:
+.obj lbl_802CD70C, local
 	.4byte __RTTI__9Condition
 	.4byte 0
 	.4byte __RTTI__13TekiCondition
 	.4byte 0
 	.4byte 0
-.global __vt__35TekiPositionSphereDistanceCondition
-__vt__35TekiPositionSphereDistanceCondition:
+.endobj lbl_802CD70C
+.balign 4
+.obj __vt__35TekiPositionSphereDistanceCondition, global
 	.4byte __RTTI__35TekiPositionSphereDistanceCondition
 	.4byte 0
 	.4byte satisfy__35TekiPositionSphereDistanceConditionFP8Creature
+.endobj __vt__35TekiPositionSphereDistanceCondition
 .balign 4
-lbl_802CD72C:
+.obj lbl_802CD72C, local
 	.asciz "TekiPositionCircleDistanceCondition"
+.endobj lbl_802CD72C
 .balign 4
-lbl_802CD750:
+.obj lbl_802CD750, local
 	.4byte __RTTI__9Condition
 	.4byte 0
 	.4byte __RTTI__13TekiCondition
 	.4byte 0
 	.4byte 0
-.global __vt__35TekiPositionCircleDistanceCondition
-__vt__35TekiPositionCircleDistanceCondition:
+.endobj lbl_802CD750
+.balign 4
+.obj __vt__35TekiPositionCircleDistanceCondition, global
 	.4byte __RTTI__35TekiPositionCircleDistanceCondition
 	.4byte 0
 	.4byte satisfy__35TekiPositionCircleDistanceConditionFP8Creature
+.endobj __vt__35TekiPositionCircleDistanceCondition
 .balign 4
-lbl_802CD770:
+.obj lbl_802CD770, local
 	.asciz "TekiPositionDistanceCondition"
+.endobj lbl_802CD770
 .balign 4
-lbl_802CD790:
+.obj lbl_802CD790, local
 	.4byte __RTTI__9Condition
 	.4byte 0
 	.4byte __RTTI__13TekiCondition
 	.4byte 0
 	.4byte 0
-.global __vt__29TekiPositionDistanceCondition
-__vt__29TekiPositionDistanceCondition:
+.endobj lbl_802CD790
+.balign 4
+.obj __vt__29TekiPositionDistanceCondition, global
 	.4byte __RTTI__29TekiPositionDistanceCondition
 	.4byte 0
 	.4byte satisfy__29TekiPositionDistanceConditionFP8Creature
+.endobj __vt__29TekiPositionDistanceCondition
 .balign 4
-lbl_802CD7B0:
+.obj lbl_802CD7B0, local
 	.asciz "TekiPelletCondition"
+.endobj lbl_802CD7B0
 .balign 4
-lbl_802CD7C4:
+.obj lbl_802CD7C4, local
 	.4byte __RTTI__9Condition
 	.4byte 0
 	.4byte __RTTI__13TekiCondition
 	.4byte 0
 	.4byte 0
-.global __vt__19TekiPelletCondition
-__vt__19TekiPelletCondition:
+.endobj lbl_802CD7C4
+.balign 4
+.obj __vt__19TekiPelletCondition, global
 	.4byte __RTTI__19TekiPelletCondition
 	.4byte 0
 	.4byte satisfy__19TekiPelletConditionFP8Creature
+.endobj __vt__19TekiPelletCondition
 .balign 4
-lbl_802CD7E4:
+.obj lbl_802CD7E4, local
 	.asciz "TekiNaviPikiCondition"
+.endobj lbl_802CD7E4
 .balign 4
-lbl_802CD7FC:
+.obj lbl_802CD7FC, local
 	.4byte __RTTI__9Condition
 	.4byte 0
 	.4byte __RTTI__13TekiCondition
 	.4byte 0
 	.4byte 0
-.global __vt__21TekiNaviPikiCondition
-__vt__21TekiNaviPikiCondition:
+.endobj lbl_802CD7FC
+.balign 4
+.obj __vt__21TekiNaviPikiCondition, global
 	.4byte __RTTI__21TekiNaviPikiCondition
 	.4byte 0
 	.4byte satisfy__21TekiNaviPikiConditionFP8Creature
+.endobj __vt__21TekiNaviPikiCondition
 .balign 4
-lbl_802CD81C:
+.obj lbl_802CD81C, local
 	.asciz "TekiNaviCondition"
+.endobj lbl_802CD81C
 .balign 4
-lbl_802CD830:
+.obj lbl_802CD830, local
 	.4byte __RTTI__9Condition
 	.4byte 0
 	.4byte __RTTI__13TekiCondition
 	.4byte 0
 	.4byte 0
-.global __vt__17TekiNaviCondition
-__vt__17TekiNaviCondition:
+.endobj lbl_802CD830
+.balign 4
+.obj __vt__17TekiNaviCondition, global
 	.4byte __RTTI__17TekiNaviCondition
 	.4byte 0
 	.4byte satisfy__17TekiNaviConditionFP8Creature
+.endobj __vt__17TekiNaviCondition
 .balign 4
-lbl_802CD850:
+.obj lbl_802CD850, local
 	.asciz "TekiFreeCondition"
+.endobj lbl_802CD850
 .balign 4
-lbl_802CD864:
+.obj lbl_802CD864, local
 	.4byte __RTTI__9Condition
 	.4byte 0
 	.4byte __RTTI__13TekiCondition
 	.4byte 0
 	.4byte 0
-.global __vt__17TekiFreeCondition
-__vt__17TekiFreeCondition:
+.endobj lbl_802CD864
+.balign 4
+.obj __vt__17TekiFreeCondition, global
 	.4byte __RTTI__17TekiFreeCondition
 	.4byte 0
 	.4byte satisfy__17TekiFreeConditionFP8Creature
+.endobj __vt__17TekiFreeCondition
 .balign 4
-lbl_802CD884:
+.obj lbl_802CD884, local
 	.asciz "TekiTypeCondition"
+.endobj lbl_802CD884
 .balign 4
-lbl_802CD898:
+.obj lbl_802CD898, local
 	.4byte __RTTI__9Condition
 	.4byte 0
 	.4byte __RTTI__13TekiCondition
 	.4byte 0
 	.4byte 0
-.global __vt__17TekiTypeCondition
-__vt__17TekiTypeCondition:
+.endobj lbl_802CD898
+.balign 4
+.obj __vt__17TekiTypeCondition, global
 	.4byte __RTTI__17TekiTypeCondition
 	.4byte 0
 	.4byte satisfy__17TekiTypeConditionFP8Creature
+.endobj __vt__17TekiTypeCondition
 .balign 4
-lbl_802CD8B8:
+.obj lbl_802CD8B8, local
 	.asciz "TekiStateCondition"
+.endobj lbl_802CD8B8
 .balign 4
-lbl_802CD8CC:
+.obj lbl_802CD8CC, local
 	.4byte __RTTI__9Condition
 	.4byte 0
 	.4byte __RTTI__13TekiCondition
 	.4byte 0
 	.4byte 0
-.global __vt__18TekiStateCondition
-__vt__18TekiStateCondition:
+.endobj lbl_802CD8CC
+.balign 4
+.obj __vt__18TekiStateCondition, global
 	.4byte __RTTI__18TekiStateCondition
 	.4byte 0
 	.4byte satisfy__18TekiStateConditionFP8Creature
+.endobj __vt__18TekiStateCondition
 .balign 4
-lbl_802CD8EC:
+.obj lbl_802CD8EC, local
 	.asciz "TekiPikiStateCondition"
+.endobj lbl_802CD8EC
 .balign 4
-lbl_802CD904:
+.obj lbl_802CD904, local
 	.4byte __RTTI__9Condition
 	.4byte 0
 	.4byte __RTTI__13TekiCondition
 	.4byte 0
 	.4byte 0
-.global __vt__22TekiPikiStateCondition
-__vt__22TekiPikiStateCondition:
+.endobj lbl_802CD904
+.balign 4
+.obj __vt__22TekiPikiStateCondition, global
 	.4byte __RTTI__22TekiPikiStateCondition
 	.4byte 0
 	.4byte satisfy__22TekiPikiStateConditionFP8Creature
+.endobj __vt__22TekiPikiStateCondition
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-__RTTI__9Condition:
+.obj __RTTI__9Condition, local
 	.4byte lbl_802CD3A8
 	.4byte 0
-__RTTI__13TekiCondition:
+.endobj __RTTI__9Condition
+.balign 4
+.obj __RTTI__13TekiCondition, local
 	.4byte lbl_802CD3B4
 	.4byte lbl_802CD3C4
-__RTTI__18TekiAngleCondition:
+.endobj __RTTI__13TekiCondition
+.balign 4
+.obj __RTTI__18TekiAngleCondition, local
 	.4byte lbl_802CD394
 	.4byte lbl_802CD3D0
-__RTTI__18TekiLowerCondition:
+.endobj __RTTI__18TekiAngleCondition
+.balign 4
+.obj __RTTI__18TekiLowerCondition, local
 	.4byte lbl_802CD470
 	.4byte lbl_802CD484
-__RTTI__26TekiVisibleHeightCondition:
+.endobj __RTTI__18TekiLowerCondition
+.balign 4
+.obj __RTTI__26TekiVisibleHeightCondition, local
 	.4byte lbl_802CD4A4
 	.4byte lbl_802CD4C0
-__RTTI__20TekiVisibleCondition:
+.endobj __RTTI__26TekiVisibleHeightCondition
+.balign 4
+.obj __RTTI__20TekiVisibleCondition, local
 	.4byte lbl_802CD4E0
 	.4byte lbl_802CD4F8
-__RTTI__23TekiAttackableCondition:
+.endobj __RTTI__20TekiVisibleCondition
+.balign 4
+.obj __RTTI__23TekiAttackableCondition, local
 	.4byte lbl_802CD518
 	.4byte lbl_802CD530
-__RTTI__23TekiLowerRangeCondition:
+.endobj __RTTI__23TekiAttackableCondition
+.balign 4
+.obj __RTTI__23TekiLowerRangeCondition, local
 	.4byte lbl_802CD550
 	.4byte lbl_802CD568
-__RTTI__20TekiStickerCondition:
+.endobj __RTTI__23TekiLowerRangeCondition
+.balign 4
+.obj __RTTI__20TekiStickerCondition, local
 	.4byte lbl_802CD588
 	.4byte lbl_802CD5A0
-__RTTI__27TekiSphereDistanceCondition:
+.endobj __RTTI__20TekiStickerCondition
+.balign 4
+.obj __RTTI__27TekiSphereDistanceCondition, local
 	.4byte lbl_802CD5C0
 	.4byte lbl_802CD5DC
-__RTTI__21TekiDistanceCondition:
+.endobj __RTTI__27TekiSphereDistanceCondition
+.balign 4
+.obj __RTTI__21TekiDistanceCondition, local
 	.4byte lbl_802CD5FC
 	.4byte lbl_802CD614
-__RTTI__28TekiCreaturePointerCondition:
+.endobj __RTTI__21TekiDistanceCondition
+.balign 4
+.obj __RTTI__28TekiCreaturePointerCondition, local
 	.4byte lbl_802CD634
 	.4byte lbl_802CD654
-__RTTI__24TekiRecognitionCondition:
+.endobj __RTTI__28TekiCreaturePointerCondition
+.balign 4
+.obj __RTTI__24TekiRecognitionCondition, local
 	.4byte lbl_802CD674
 	.4byte lbl_802CD690
-__RTTI__21TekiStickingCondition:
+.endobj __RTTI__24TekiRecognitionCondition
+.balign 4
+.obj __RTTI__21TekiStickingCondition, local
 	.4byte lbl_802CD6B0
 	.4byte lbl_802CD6C8
-__RTTI__35TekiPositionSphereDistanceCondition:
+.endobj __RTTI__21TekiStickingCondition
+.balign 4
+.obj __RTTI__35TekiPositionSphereDistanceCondition, local
 	.4byte lbl_802CD6E8
 	.4byte lbl_802CD70C
-__RTTI__35TekiPositionCircleDistanceCondition:
+.endobj __RTTI__35TekiPositionSphereDistanceCondition
+.balign 4
+.obj __RTTI__35TekiPositionCircleDistanceCondition, local
 	.4byte lbl_802CD72C
 	.4byte lbl_802CD750
-__RTTI__29TekiPositionDistanceCondition:
+.endobj __RTTI__35TekiPositionCircleDistanceCondition
+.balign 4
+.obj __RTTI__29TekiPositionDistanceCondition, local
 	.4byte lbl_802CD770
 	.4byte lbl_802CD790
-__RTTI__19TekiPelletCondition:
+.endobj __RTTI__29TekiPositionDistanceCondition
+.balign 4
+.obj __RTTI__19TekiPelletCondition, local
 	.4byte lbl_802CD7B0
 	.4byte lbl_802CD7C4
-__RTTI__21TekiNaviPikiCondition:
+.endobj __RTTI__19TekiPelletCondition
+.balign 4
+.obj __RTTI__21TekiNaviPikiCondition, local
 	.4byte lbl_802CD7E4
 	.4byte lbl_802CD7FC
-__RTTI__17TekiNaviCondition:
+.endobj __RTTI__21TekiNaviPikiCondition
+.balign 4
+.obj __RTTI__17TekiNaviCondition, local
 	.4byte lbl_802CD81C
 	.4byte lbl_802CD830
-__RTTI__17TekiFreeCondition:
+.endobj __RTTI__17TekiNaviCondition
+.balign 4
+.obj __RTTI__17TekiFreeCondition, local
 	.4byte lbl_802CD850
 	.4byte lbl_802CD864
-__RTTI__17TekiTypeCondition:
+.endobj __RTTI__17TekiFreeCondition
+.balign 4
+.obj __RTTI__17TekiTypeCondition, local
 	.4byte lbl_802CD884
 	.4byte lbl_802CD898
-__RTTI__18TekiStateCondition:
+.endobj __RTTI__17TekiTypeCondition
+.balign 4
+.obj __RTTI__18TekiStateCondition, local
 	.4byte lbl_802CD8B8
 	.4byte lbl_802CD8CC
-__RTTI__22TekiPikiStateCondition:
+.endobj __RTTI__18TekiStateCondition
+.balign 4
+.obj __RTTI__22TekiPikiStateCondition, local
 	.4byte lbl_802CD8EC
 	.4byte lbl_802CD904
+.endobj __RTTI__22TekiPikiStateCondition
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803EA998:
+.obj lbl_803EA998, local
 	.float 0.0
-lbl_803EA99C:
+.endobj lbl_803EA998
+.balign 4
+.obj lbl_803EA99C, local
 	.float 0.5
+.endobj lbl_803EA99C

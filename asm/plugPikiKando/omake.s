@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global __ct__15AttentionCameraFv
-__ct__15AttentionCameraFv:
+.fn __ct__15AttentionCameraFv, global
 /* 80078DB0 00075D10  7C 08 02 A6 */	mflr r0
 /* 80078DB4 00075D14  90 01 00 04 */	stw r0, 4(r1)
 /* 80078DB8 00075D18  38 00 00 04 */	li r0, 4
@@ -129,9 +128,9 @@ __ct__15AttentionCameraFv:
 /* 80078F8C 00075EEC  38 21 00 30 */	addi r1, r1, 0x30
 /* 80078F90 00075EF0  7C 08 03 A6 */	mtlr r0
 /* 80078F94 00075EF4  4E 80 00 20 */	blr 
+.endfn __ct__15AttentionCameraFv
 
-.global reset__10ClothFaderFv
-reset__10ClothFaderFv:
+.fn reset__10ClothFaderFv, weak
 /* 80078F98 00075EF8  7C 08 02 A6 */	mflr r0
 /* 80078F9C 00075EFC  38 C0 02 80 */	li r6, 0x280
 /* 80078FA0 00075F00  90 01 00 04 */	stw r0, 4(r1)
@@ -440,9 +439,9 @@ reset__10ClothFaderFv:
 /* 80079428 00076388  38 21 00 E0 */	addi r1, r1, 0xe0
 /* 8007942C 0007638C  7C 08 03 A6 */	mtlr r0
 /* 80079430 00076390  4E 80 00 20 */	blr 
+.endfn reset__10ClothFaderFv
 
-.global __ct__Q210ClothFader8ParticleFv
-__ct__Q210ClothFader8ParticleFv:
+.fn __ct__Q210ClothFader8ParticleFv, weak
 /* 80079434 00076394  C0 02 89 08 */	lfs f0, lbl_803E8B08@sda21(r2)
 /* 80079438 00076398  D0 03 00 08 */	stfs f0, 8(r3)
 /* 8007943C 0007639C  D0 03 00 04 */	stfs f0, 4(r3)
@@ -454,13 +453,13 @@ __ct__Q210ClothFader8ParticleFv:
 /* 80079454 000763B4  D0 03 00 1C */	stfs f0, 0x1c(r3)
 /* 80079458 000763B8  D0 03 00 18 */	stfs f0, 0x18(r3)
 /* 8007945C 000763BC  4E 80 00 20 */	blr 
+.endfn __ct__Q210ClothFader8ParticleFv
 
-.global initFadeOut__Q215AttentionCamera5FaderFv
-initFadeOut__Q215AttentionCamera5FaderFv:
+.fn initFadeOut__Q215AttentionCamera5FaderFv, weak
 /* 80079460 000763C0  4E 80 00 20 */	blr 
+.endfn initFadeOut__Q215AttentionCamera5FaderFv
 
-.global finish__15AttentionCameraFv
-finish__15AttentionCameraFv:
+.fn finish__15AttentionCameraFv, global
 /* 80079464 000763C4  7C 08 02 A6 */	mflr r0
 /* 80079468 000763C8  90 01 00 04 */	stw r0, 4(r1)
 /* 8007946C 000763CC  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -481,9 +480,9 @@ finish__15AttentionCameraFv:
 /* 800794A8 00076408  38 21 00 18 */	addi r1, r1, 0x18
 /* 800794AC 0007640C  7C 08 03 A6 */	mtlr r0
 /* 800794B0 00076410  4E 80 00 20 */	blr 
+.endfn finish__15AttentionCameraFv
 
-.global update__15AttentionCameraFv
-update__15AttentionCameraFv:
+.fn update__15AttentionCameraFv, global
 /* 800794B4 00076414  7C 08 02 A6 */	mflr r0
 /* 800794B8 00076418  90 01 00 04 */	stw r0, 4(r1)
 /* 800794BC 0007641C  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -549,23 +548,23 @@ update__15AttentionCameraFv:
 /* 80079598 000764F8  38 21 00 18 */	addi r1, r1, 0x18
 /* 8007959C 000764FC  7C 08 03 A6 */	mtlr r0
 /* 800795A0 00076500  4E 80 00 20 */	blr 
+.endfn update__15AttentionCameraFv
 
-.global updateFadeIn__Q215AttentionCamera5FaderFv
-updateFadeIn__Q215AttentionCamera5FaderFv:
+.fn updateFadeIn__Q215AttentionCamera5FaderFv, weak
 /* 800795A4 00076504  38 60 00 01 */	li r3, 1
 /* 800795A8 00076508  4E 80 00 20 */	blr 
+.endfn updateFadeIn__Q215AttentionCamera5FaderFv
 
-.global initFadeIn__Q215AttentionCamera5FaderFv
-initFadeIn__Q215AttentionCamera5FaderFv:
+.fn initFadeIn__Q215AttentionCamera5FaderFv, weak
 /* 800795AC 0007650C  4E 80 00 20 */	blr 
+.endfn initFadeIn__Q215AttentionCamera5FaderFv
 
-.global updateFadeOut__Q215AttentionCamera5FaderFv
-updateFadeOut__Q215AttentionCamera5FaderFv:
+.fn updateFadeOut__Q215AttentionCamera5FaderFv, weak
 /* 800795B0 00076510  38 60 00 01 */	li r3, 1
 /* 800795B4 00076514  4E 80 00 20 */	blr 
+.endfn updateFadeOut__Q215AttentionCamera5FaderFv
 
-.global refresh__15AttentionCameraFR8Graphics
-refresh__15AttentionCameraFR8Graphics:
+.fn refresh__15AttentionCameraFR8Graphics, global
 /* 800795B8 00076518  7C 08 02 A6 */	mflr r0
 /* 800795BC 0007651C  90 01 00 04 */	stw r0, 4(r1)
 /* 800795C0 00076520  94 21 FF F8 */	stwu r1, -8(r1)
@@ -591,17 +590,17 @@ refresh__15AttentionCameraFR8Graphics:
 /* 80079608 00076568  38 21 00 08 */	addi r1, r1, 8
 /* 8007960C 0007656C  7C 08 03 A6 */	mtlr r0
 /* 80079610 00076570  4E 80 00 20 */	blr 
+.endfn refresh__15AttentionCameraFR8Graphics
 
-.global drawFadeIn__Q215AttentionCamera5FaderFR8Graphics
-drawFadeIn__Q215AttentionCamera5FaderFR8Graphics:
+.fn drawFadeIn__Q215AttentionCamera5FaderFR8Graphics, weak
 /* 80079614 00076574  4E 80 00 20 */	blr 
+.endfn drawFadeIn__Q215AttentionCamera5FaderFR8Graphics
 
-.global drawFadeOut__Q215AttentionCamera5FaderFR8Graphics
-drawFadeOut__Q215AttentionCamera5FaderFR8Graphics:
+.fn drawFadeOut__Q215AttentionCamera5FaderFR8Graphics, weak
 /* 80079618 00076578  4E 80 00 20 */	blr 
+.endfn drawFadeOut__Q215AttentionCamera5FaderFR8Graphics
 
-.global initFadeIn__10ClothFaderFv
-initFadeIn__10ClothFaderFv:
+.fn initFadeIn__10ClothFaderFv, weak
 /* 8007961C 0007657C  7C 08 02 A6 */	mflr r0
 /* 80079620 00076580  38 E0 02 80 */	li r7, 0x280
 /* 80079624 00076584  90 01 00 04 */	stw r0, 4(r1)
@@ -773,9 +772,9 @@ initFadeIn__10ClothFaderFv:
 /* 80079898 000767F8  38 21 00 88 */	addi r1, r1, 0x88
 /* 8007989C 000767FC  7C 08 03 A6 */	mtlr r0
 /* 800798A0 00076800  4E 80 00 20 */	blr 
+.endfn initFadeIn__10ClothFaderFv
 
-.global makeSprings__10ClothFaderFv
-makeSprings__10ClothFaderFv:
+.fn makeSprings__10ClothFaderFv, weak
 /* 800798A4 00076804  94 21 FF B0 */	stwu r1, -0x50(r1)
 /* 800798A8 00076808  39 00 00 00 */	li r8, 0
 /* 800798AC 0007680C  38 C0 00 00 */	li r6, 0
@@ -1026,9 +1025,9 @@ makeSprings__10ClothFaderFv:
 /* 80079C60 00076BC0  83 C1 00 48 */	lwz r30, 0x48(r1)
 /* 80079C64 00076BC4  38 21 00 50 */	addi r1, r1, 0x50
 /* 80079C68 00076BC8  4E 80 00 20 */	blr 
+.endfn makeSprings__10ClothFaderFv
 
-.global initFadeOut__10ClothFaderFv
-initFadeOut__10ClothFaderFv:
+.fn initFadeOut__10ClothFaderFv, weak
 /* 80079C6C 00076BCC  7C 08 02 A6 */	mflr r0
 /* 80079C70 00076BD0  38 E0 02 80 */	li r7, 0x280
 /* 80079C74 00076BD4  90 01 00 04 */	stw r0, 4(r1)
@@ -1200,9 +1199,9 @@ initFadeOut__10ClothFaderFv:
 /* 80079EE8 00076E48  38 21 00 88 */	addi r1, r1, 0x88
 /* 80079EEC 00076E4C  7C 08 03 A6 */	mtlr r0
 /* 80079EF0 00076E50  4E 80 00 20 */	blr 
+.endfn initFadeOut__10ClothFaderFv
 
-.global updateFadeIn__10ClothFaderFv
-updateFadeIn__10ClothFaderFv:
+.fn updateFadeIn__10ClothFaderFv, weak
 /* 80079EF4 00076E54  7C 08 02 A6 */	mflr r0
 /* 80079EF8 00076E58  90 01 00 04 */	stw r0, 4(r1)
 /* 80079EFC 00076E5C  94 21 FE 08 */	stwu r1, -0x1f8(r1)
@@ -1472,9 +1471,9 @@ updateFadeIn__10ClothFaderFv:
 /* 8007A2F8 00077258  38 21 01 F8 */	addi r1, r1, 0x1f8
 /* 8007A2FC 0007725C  7C 08 03 A6 */	mtlr r0
 /* 8007A300 00077260  4E 80 00 20 */	blr 
+.endfn updateFadeIn__10ClothFaderFv
 
-.global updateFadeOut__10ClothFaderFv
-updateFadeOut__10ClothFaderFv:
+.fn updateFadeOut__10ClothFaderFv, weak
 /* 8007A304 00077264  7C 08 02 A6 */	mflr r0
 /* 8007A308 00077268  90 01 00 04 */	stw r0, 4(r1)
 /* 8007A30C 0007726C  94 21 FE 08 */	stwu r1, -0x1f8(r1)
@@ -1744,9 +1743,9 @@ updateFadeOut__10ClothFaderFv:
 /* 8007A708 00077668  38 21 01 F8 */	addi r1, r1, 0x1f8
 /* 8007A70C 0007766C  7C 08 03 A6 */	mtlr r0
 /* 8007A710 00077670  4E 80 00 20 */	blr 
+.endfn updateFadeOut__10ClothFaderFv
 
-.global drawFadeOut__10ClothFaderFR8Graphics
-drawFadeOut__10ClothFaderFR8Graphics:
+.fn drawFadeOut__10ClothFaderFR8Graphics, weak
 /* 8007A714 00077674  7C 08 02 A6 */	mflr r0
 /* 8007A718 00077678  90 01 00 04 */	stw r0, 4(r1)
 /* 8007A71C 0007767C  94 21 FE 98 */	stwu r1, -0x168(r1)
@@ -1957,9 +1956,9 @@ drawFadeOut__10ClothFaderFR8Graphics:
 /* 8007AA40 000779A0  38 21 01 68 */	addi r1, r1, 0x168
 /* 8007AA44 000779A4  7C 08 03 A6 */	mtlr r0
 /* 8007AA48 000779A8  4E 80 00 20 */	blr 
+.endfn drawFadeOut__10ClothFaderFR8Graphics
 
-.global drawFadeIn__10ClothFaderFR8Graphics
-drawFadeIn__10ClothFaderFR8Graphics:
+.fn drawFadeIn__10ClothFaderFR8Graphics, weak
 /* 8007AA4C 000779AC  7C 08 02 A6 */	mflr r0
 /* 8007AA50 000779B0  90 01 00 04 */	stw r0, 4(r1)
 /* 8007AA54 000779B4  94 21 FE 98 */	stwu r1, -0x168(r1)
@@ -2170,25 +2169,25 @@ drawFadeIn__10ClothFaderFR8Graphics:
 /* 8007AD78 00077CD8  38 21 01 68 */	addi r1, r1, 0x168
 /* 8007AD7C 00077CDC  7C 08 03 A6 */	mtlr r0
 /* 8007AD80 00077CE0  4E 80 00 20 */	blr 
+.endfn drawFadeIn__10ClothFaderFR8Graphics
 
-.global initFadeIn__11SimpleFaderFv
-initFadeIn__11SimpleFaderFv:
+.fn initFadeIn__11SimpleFaderFv, weak
 /* 8007AD84 00077CE4  C0 02 89 38 */	lfs f0, lbl_803E8B38@sda21(r2)
 /* 8007AD88 00077CE8  D0 03 00 0C */	stfs f0, 0xc(r3)
 /* 8007AD8C 00077CEC  C0 03 00 0C */	lfs f0, 0xc(r3)
 /* 8007AD90 00077CF0  D0 03 00 08 */	stfs f0, 8(r3)
 /* 8007AD94 00077CF4  4E 80 00 20 */	blr 
+.endfn initFadeIn__11SimpleFaderFv
 
-.global initFadeOut__11SimpleFaderFv
-initFadeOut__11SimpleFaderFv:
+.fn initFadeOut__11SimpleFaderFv, weak
 /* 8007AD98 00077CF8  C0 02 89 38 */	lfs f0, lbl_803E8B38@sda21(r2)
 /* 8007AD9C 00077CFC  D0 03 00 0C */	stfs f0, 0xc(r3)
 /* 8007ADA0 00077D00  C0 03 00 0C */	lfs f0, 0xc(r3)
 /* 8007ADA4 00077D04  D0 03 00 08 */	stfs f0, 8(r3)
 /* 8007ADA8 00077D08  4E 80 00 20 */	blr 
+.endfn initFadeOut__11SimpleFaderFv
 
-.global updateFadeIn__11SimpleFaderFv
-updateFadeIn__11SimpleFaderFv:
+.fn updateFadeIn__11SimpleFaderFv, weak
 /* 8007ADAC 00077D0C  80 8D 2D EC */	lwz r4, gsys@sda21(r13)
 /* 8007ADB0 00077D10  C0 23 00 08 */	lfs f1, 8(r3)
 /* 8007ADB4 00077D14  C0 04 02 8C */	lfs f0, 0x28c(r4)
@@ -2205,9 +2204,9 @@ updateFadeIn__11SimpleFaderFv:
 .L_8007ADE0:
 /* 8007ADE0 00077D40  38 60 00 00 */	li r3, 0
 /* 8007ADE4 00077D44  4E 80 00 20 */	blr 
+.endfn updateFadeIn__11SimpleFaderFv
 
-.global updateFadeOut__11SimpleFaderFv
-updateFadeOut__11SimpleFaderFv:
+.fn updateFadeOut__11SimpleFaderFv, weak
 /* 8007ADE8 00077D48  80 8D 2D EC */	lwz r4, gsys@sda21(r13)
 /* 8007ADEC 00077D4C  C0 23 00 08 */	lfs f1, 8(r3)
 /* 8007ADF0 00077D50  C0 04 02 8C */	lfs f0, 0x28c(r4)
@@ -2224,9 +2223,9 @@ updateFadeOut__11SimpleFaderFv:
 .L_8007AE1C:
 /* 8007AE1C 00077D7C  38 60 00 00 */	li r3, 0
 /* 8007AE20 00077D80  4E 80 00 20 */	blr 
+.endfn updateFadeOut__11SimpleFaderFv
 
-.global drawFadeOut__11SimpleFaderFR8Graphics
-drawFadeOut__11SimpleFaderFR8Graphics:
+.fn drawFadeOut__11SimpleFaderFR8Graphics, weak
 /* 8007AE24 00077D84  7C 08 02 A6 */	mflr r0
 /* 8007AE28 00077D88  38 A0 00 01 */	li r5, 1
 /* 8007AE2C 00077D8C  90 01 00 04 */	stw r0, 4(r1)
@@ -2325,9 +2324,9 @@ drawFadeOut__11SimpleFaderFR8Graphics:
 /* 8007AFA0 00077F00  38 21 00 60 */	addi r1, r1, 0x60
 /* 8007AFA4 00077F04  7C 08 03 A6 */	mtlr r0
 /* 8007AFA8 00077F08  4E 80 00 20 */	blr 
+.endfn drawFadeOut__11SimpleFaderFR8Graphics
 
-.global drawFadeIn__11SimpleFaderFR8Graphics
-drawFadeIn__11SimpleFaderFR8Graphics:
+.fn drawFadeIn__11SimpleFaderFR8Graphics, weak
 /* 8007AFAC 00077F0C  7C 08 02 A6 */	mflr r0
 /* 8007AFB0 00077F10  38 A0 00 01 */	li r5, 1
 /* 8007AFB4 00077F14  90 01 00 04 */	stw r0, 4(r1)
@@ -2424,17 +2423,17 @@ drawFadeIn__11SimpleFaderFR8Graphics:
 /* 8007B120 00078080  38 21 00 60 */	addi r1, r1, 0x60
 /* 8007B124 00078084  7C 08 03 A6 */	mtlr r0
 /* 8007B128 00078088  4E 80 00 20 */	blr 
+.endfn drawFadeIn__11SimpleFaderFR8Graphics
 
-.global initFadeIn__12DefaultFaderFv
-initFadeIn__12DefaultFaderFv:
+.fn initFadeIn__12DefaultFaderFv, weak
 /* 8007B12C 0007808C  C0 02 89 38 */	lfs f0, lbl_803E8B38@sda21(r2)
 /* 8007B130 00078090  D0 03 00 0C */	stfs f0, 0xc(r3)
 /* 8007B134 00078094  C0 03 00 0C */	lfs f0, 0xc(r3)
 /* 8007B138 00078098  D0 03 00 08 */	stfs f0, 8(r3)
 /* 8007B13C 0007809C  4E 80 00 20 */	blr 
+.endfn initFadeIn__12DefaultFaderFv
 
-.global updateFadeIn__12DefaultFaderFv
-updateFadeIn__12DefaultFaderFv:
+.fn updateFadeIn__12DefaultFaderFv, weak
 /* 8007B140 000780A0  80 8D 2D EC */	lwz r4, gsys@sda21(r13)
 /* 8007B144 000780A4  C0 23 00 08 */	lfs f1, 8(r3)
 /* 8007B148 000780A8  C0 04 02 8C */	lfs f0, 0x28c(r4)
@@ -2451,9 +2450,9 @@ updateFadeIn__12DefaultFaderFv:
 .L_8007B174:
 /* 8007B174 000780D4  38 60 00 00 */	li r3, 0
 /* 8007B178 000780D8  4E 80 00 20 */	blr 
+.endfn updateFadeIn__12DefaultFaderFv
 
-.global drawFadeOut__12DefaultFaderFR8Graphics
-drawFadeOut__12DefaultFaderFR8Graphics:
+.fn drawFadeOut__12DefaultFaderFR8Graphics, weak
 /* 8007B17C 000780DC  7C 08 02 A6 */	mflr r0
 /* 8007B180 000780E0  38 A0 00 01 */	li r5, 1
 /* 8007B184 000780E4  90 01 00 04 */	stw r0, 4(r1)
@@ -2570,17 +2569,17 @@ drawFadeOut__12DefaultFaderFR8Graphics:
 /* 8007B340 000782A0  38 21 00 78 */	addi r1, r1, 0x78
 /* 8007B344 000782A4  7C 08 03 A6 */	mtlr r0
 /* 8007B348 000782A8  4E 80 00 20 */	blr 
+.endfn drawFadeOut__12DefaultFaderFR8Graphics
 
-.global initFadeOut__12DefaultFaderFv
-initFadeOut__12DefaultFaderFv:
+.fn initFadeOut__12DefaultFaderFv, weak
 /* 8007B34C 000782AC  C0 02 89 38 */	lfs f0, lbl_803E8B38@sda21(r2)
 /* 8007B350 000782B0  D0 03 00 0C */	stfs f0, 0xc(r3)
 /* 8007B354 000782B4  C0 03 00 0C */	lfs f0, 0xc(r3)
 /* 8007B358 000782B8  D0 03 00 08 */	stfs f0, 8(r3)
 /* 8007B35C 000782BC  4E 80 00 20 */	blr 
+.endfn initFadeOut__12DefaultFaderFv
 
-.global updateFadeOut__12DefaultFaderFv
-updateFadeOut__12DefaultFaderFv:
+.fn updateFadeOut__12DefaultFaderFv, weak
 /* 8007B360 000782C0  80 8D 2D EC */	lwz r4, gsys@sda21(r13)
 /* 8007B364 000782C4  C0 23 00 08 */	lfs f1, 8(r3)
 /* 8007B368 000782C8  C0 04 02 8C */	lfs f0, 0x28c(r4)
@@ -2597,9 +2596,9 @@ updateFadeOut__12DefaultFaderFv:
 .L_8007B394:
 /* 8007B394 000782F4  38 60 00 00 */	li r3, 0
 /* 8007B398 000782F8  4E 80 00 20 */	blr 
+.endfn updateFadeOut__12DefaultFaderFv
 
-.global drawFadeIn__12DefaultFaderFR8Graphics
-drawFadeIn__12DefaultFaderFR8Graphics:
+.fn drawFadeIn__12DefaultFaderFR8Graphics, weak
 /* 8007B39C 000782FC  7C 08 02 A6 */	mflr r0
 /* 8007B3A0 00078300  38 A0 00 01 */	li r5, 1
 /* 8007B3A4 00078304  90 01 00 04 */	stw r0, 4(r1)
@@ -2714,27 +2713,33 @@ drawFadeIn__12DefaultFaderFR8Graphics:
 /* 8007B558 000784B8  38 21 00 78 */	addi r1, r1, 0x78
 /* 8007B55C 000784BC  7C 08 03 A6 */	mtlr r0
 /* 8007B560 000784C0  4E 80 00 20 */	blr 
+.endfn drawFadeIn__12DefaultFaderFR8Graphics
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802ACB08:
+.obj lbl_802ACB08, local
 	.asciz "omake.cpp"
+.endobj lbl_802ACB08
 .balign 4
-lbl_802ACB14:
+.obj lbl_802ACB14, local
 	.asciz "attentionCamera"
+.endobj lbl_802ACB14
 .balign 4
-lbl_802ACB24:
+.obj lbl_802ACB24, local
 	.asciz "ClothFader"
+.endobj lbl_802ACB24
 .balign 4
-lbl_802ACB30:
+.obj lbl_802ACB30, local
 	.asciz "AttentionCamera::Fader"
+.endobj lbl_802ACB30
 .balign 4
-lbl_802ACB48:
+.obj lbl_802ACB48, local
 	.4byte __RTTI__Q215AttentionCamera5Fader
 	.4byte 0
 	.4byte 0
-.global __vt__10ClothFader
-__vt__10ClothFader:
+.endobj lbl_802ACB48
+.balign 4
+.obj __vt__10ClothFader, weak
 	.4byte __RTTI__10ClothFader
 	.4byte 0
 	.4byte initFadeIn__10ClothFaderFv
@@ -2743,16 +2748,19 @@ __vt__10ClothFader:
 	.4byte initFadeOut__10ClothFaderFv
 	.4byte updateFadeOut__10ClothFaderFv
 	.4byte drawFadeOut__10ClothFaderFR8Graphics
+.endobj __vt__10ClothFader
 .balign 4
-lbl_802ACB74:
+.obj lbl_802ACB74, local
 	.asciz "SimpleFader"
+.endobj lbl_802ACB74
 .balign 4
-lbl_802ACB80:
+.obj lbl_802ACB80, local
 	.4byte __RTTI__Q215AttentionCamera5Fader
 	.4byte 0
 	.4byte 0
-.global __vt__11SimpleFader
-__vt__11SimpleFader:
+.endobj lbl_802ACB80
+.balign 4
+.obj __vt__11SimpleFader, weak
 	.4byte __RTTI__11SimpleFader
 	.4byte 0
 	.4byte initFadeIn__11SimpleFaderFv
@@ -2761,16 +2769,19 @@ __vt__11SimpleFader:
 	.4byte initFadeOut__11SimpleFaderFv
 	.4byte updateFadeOut__11SimpleFaderFv
 	.4byte drawFadeOut__11SimpleFaderFR8Graphics
+.endobj __vt__11SimpleFader
 .balign 4
-lbl_802ACBAC:
+.obj lbl_802ACBAC, local
 	.asciz "DefaultFader"
+.endobj lbl_802ACBAC
 .balign 4
-lbl_802ACBBC:
+.obj lbl_802ACBBC, local
 	.4byte __RTTI__Q215AttentionCamera5Fader
 	.4byte 0
 	.4byte 0
-.global __vt__12DefaultFader
-__vt__12DefaultFader:
+.endobj lbl_802ACBBC
+.balign 4
+.obj __vt__12DefaultFader, weak
 	.4byte __RTTI__12DefaultFader
 	.4byte 0
 	.4byte initFadeIn__12DefaultFaderFv
@@ -2779,8 +2790,9 @@ __vt__12DefaultFader:
 	.4byte initFadeOut__12DefaultFaderFv
 	.4byte updateFadeOut__12DefaultFaderFv
 	.4byte drawFadeOut__12DefaultFaderFR8Graphics
-.global __vt__Q215AttentionCamera5Fader
-__vt__Q215AttentionCamera5Fader:
+.endobj __vt__12DefaultFader
+.balign 4
+.obj __vt__Q215AttentionCamera5Fader, weak
 	.4byte __RTTI__Q215AttentionCamera5Fader
 	.4byte 0
 	.4byte initFadeIn__Q215AttentionCamera5FaderFv
@@ -2789,83 +2801,119 @@ __vt__Q215AttentionCamera5Fader:
 	.4byte initFadeOut__Q215AttentionCamera5FaderFv
 	.4byte updateFadeOut__Q215AttentionCamera5FaderFv
 	.4byte drawFadeOut__Q215AttentionCamera5FaderFR8Graphics
+.endobj __vt__Q215AttentionCamera5Fader
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-lbl_803DE8B0:
+.obj lbl_803DE8B0, local
 	.float 0.0
-lbl_803DE8B4:
+.endobj lbl_803DE8B0
+.obj lbl_803DE8B4, local
 	.float 400.0
-lbl_803DE8B8:
+.endobj lbl_803DE8B4
+.obj lbl_803DE8B8, local
 	.float 0.0
-lbl_803DE8BC:
+.endobj lbl_803DE8B8
+.obj lbl_803DE8BC, local
 	.float 0.0
-lbl_803DE8C0:
+.endobj lbl_803DE8BC
+.obj lbl_803DE8C0, local
 	.float 0.0
-lbl_803DE8C4:
+.endobj lbl_803DE8C0
+.obj lbl_803DE8C4, local
 	.float 0.0
-lbl_803DE8C8:
+.endobj lbl_803DE8C4
+.obj lbl_803DE8C8, local
 	.float 0.0
-lbl_803DE8CC:
+.endobj lbl_803DE8C8
+.obj lbl_803DE8CC, local
 	.float 0.0
-__RTTI__Q215AttentionCamera5Fader:
+.endobj lbl_803DE8CC
+.balign 4
+.obj __RTTI__Q215AttentionCamera5Fader, local
 	.4byte lbl_802ACB30
 	.4byte 0
-__RTTI__10ClothFader:
+.endobj __RTTI__Q215AttentionCamera5Fader
+.balign 4
+.obj __RTTI__10ClothFader, local
 	.4byte lbl_802ACB24
 	.4byte lbl_802ACB48
-__RTTI__11SimpleFader:
+.endobj __RTTI__10ClothFader
+.balign 4
+.obj __RTTI__11SimpleFader, local
 	.4byte lbl_802ACB74
 	.4byte lbl_802ACB80
-__RTTI__12DefaultFader:
+.endobj __RTTI__11SimpleFader
+.balign 4
+.obj __RTTI__12DefaultFader, local
 	.4byte lbl_802ACBAC
 	.4byte lbl_802ACBBC
+.endobj __RTTI__12DefaultFader
 
 .section .sbss, "wa"
 .balign 8
-.global attentionCamera
-attentionCamera:
+.obj attentionCamera, global
 	.skip 4
+.endobj attentionCamera
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803E8AF0:
+.obj lbl_803E8AF0, local
 	.float 1.0
-lbl_803E8AF4:
+.endobj lbl_803E8AF0
+.obj lbl_803E8AF4, local
 	.float 32767.0
-lbl_803E8AF8:
+.endobj lbl_803E8AF4
+.obj lbl_803E8AF8, local
 	.float 2.0
-lbl_803E8AFC:
+.endobj lbl_803E8AF8
+.obj lbl_803E8AFC, local
 	.float 8.0
+.endobj lbl_803E8AFC
 .balign 8
-lbl_803E8B00:
-	.4byte 0x43300000
-	.4byte 0x80000000
-lbl_803E8B08:
+.obj lbl_803E8B00, local
+	.8byte 0x4330000080000000
+.endobj lbl_803E8B00
+.balign 4
+.obj lbl_803E8B08, local
 	.float 0.0
+.endobj lbl_803E8B08
 .balign 8
-lbl_803E8B10:
+.obj lbl_803E8B10, local
 	.double 0.5
+.endobj lbl_803E8B10
 .balign 8
-lbl_803E8B18:
+.obj lbl_803E8B18, local
 	.double 3.0
-lbl_803E8B20:
+.endobj lbl_803E8B18
+.balign 4
+.obj lbl_803E8B20, local
 	.float 600.0
-lbl_803E8B24:
+.endobj lbl_803E8B20
+.obj lbl_803E8B24, local
 	.float 400.0
-lbl_803E8B28:
+.endobj lbl_803E8B24
+.obj lbl_803E8B28, local
 	.float 1.5
-lbl_803E8B2C:
+.endobj lbl_803E8B28
+.obj lbl_803E8B2C, local
 	.float 10.0
-lbl_803E8B30:
+.endobj lbl_803E8B2C
+.obj lbl_803E8B30, local
 	.float 640.0
-lbl_803E8B34:
+.endobj lbl_803E8B30
+.obj lbl_803E8B34, local
 	.float 480.0
-lbl_803E8B38:
+.endobj lbl_803E8B34
+.obj lbl_803E8B38, local
 	.float 0.5
-lbl_803E8B3C:
+.endobj lbl_803E8B38
+.obj lbl_803E8B3C, local
 	.float 255.0
-lbl_803E8B40:
+.endobj lbl_803E8B3C
+.obj lbl_803E8B40, local
 	.float 320.0
-lbl_803E8B44:
+.endobj lbl_803E8B40
+.obj lbl_803E8B44, local
 	.float 240.0
+.endobj lbl_803E8B44

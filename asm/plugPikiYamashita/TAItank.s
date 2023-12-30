@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global __ct__17TAItankSoundTableFv
-__ct__17TAItankSoundTableFv:
+.fn __ct__17TAItankSoundTableFv, global
 /* 801A35D0 001A0530  7C 08 02 A6 */	mflr r0
 /* 801A35D4 001A0534  38 80 00 07 */	li r4, 7
 /* 801A35D8 001A0538  90 01 00 04 */	stw r0, 4(r1)
@@ -38,9 +37,9 @@ __ct__17TAItankSoundTableFv:
 /* 801A3648 001A05A8  38 21 00 20 */	addi r1, r1, 0x20
 /* 801A364C 001A05AC  7C 08 03 A6 */	mtlr r0
 /* 801A3650 001A05B0  4E 80 00 20 */	blr 
+.endfn __ct__17TAItankSoundTableFv
 
-.global __ct__17TAItankParametersFv
-__ct__17TAItankParametersFv:
+.fn __ct__17TAItankParametersFv, global
 /* 801A3654 001A05B4  7C 08 02 A6 */	mflr r0
 /* 801A3658 001A05B8  3C 80 80 2E */	lis r4, lbl_802DDC70@ha
 /* 801A365C 001A05BC  90 01 00 04 */	stw r0, 4(r1)
@@ -258,9 +257,9 @@ __ct__17TAItankParametersFv:
 /* 801A39AC 001A090C  38 21 00 D0 */	addi r1, r1, 0xd0
 /* 801A39B0 001A0910  7C 08 03 A6 */	mtlr r0
 /* 801A39B4 001A0914  4E 80 00 20 */	blr 
+.endfn __ct__17TAItankParametersFv
 
-.global __ct__15TAItankStrategyFv
-__ct__15TAItankStrategyFv:
+.fn __ct__15TAItankStrategyFv, global
 /* 801A39B8 001A0918  7C 08 02 A6 */	mflr r0
 /* 801A39BC 001A091C  38 80 00 0C */	li r4, 0xc
 /* 801A39C0 001A0920  90 01 00 04 */	stw r0, 4(r1)
@@ -1072,9 +1071,9 @@ __ct__15TAItankStrategyFv:
 /* 801A45C0 001A1520  38 21 00 E8 */	addi r1, r1, 0xe8
 /* 801A45C4 001A1524  7C 08 03 A6 */	mtlr r0
 /* 801A45C8 001A1528  4E 80 00 20 */	blr 
+.endfn __ct__15TAItankStrategyFv
 
-.global act__15TAItankStrategyFR4Teki
-act__15TAItankStrategyFR4Teki:
+.fn act__15TAItankStrategyFR4Teki, global
 /* 801A45CC 001A152C  7C 08 02 A6 */	mflr r0
 /* 801A45D0 001A1530  90 01 00 04 */	stw r0, 4(r1)
 /* 801A45D4 001A1534  94 21 FF C0 */	stwu r1, -0x40(r1)
@@ -1151,9 +1150,9 @@ act__15TAItankStrategyFR4Teki:
 /* 801A46E0 001A1640  38 21 00 40 */	addi r1, r1, 0x40
 /* 801A46E4 001A1644  7C 08 03 A6 */	mtlr r0
 /* 801A46E8 001A1648  4E 80 00 20 */	blr 
+.endfn act__15TAItankStrategyFR4Teki
 
-.global interact__15TAItankStrategyFR4TekiR18TekiInteractionKey
-interact__15TAItankStrategyFR4TekiR18TekiInteractionKey:
+.fn interact__15TAItankStrategyFR4TekiR18TekiInteractionKey, global
 /* 801A46EC 001A164C  7C 08 02 A6 */	mflr r0
 /* 801A46F0 001A1650  90 01 00 04 */	stw r0, 4(r1)
 /* 801A46F4 001A1654  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -1209,9 +1208,9 @@ interact__15TAItankStrategyFR4TekiR18TekiInteractionKey:
 /* 801A47A4 001A1704  38 21 00 28 */	addi r1, r1, 0x28
 /* 801A47A8 001A1708  7C 08 03 A6 */	mtlr r0
 /* 801A47AC 001A170C  4E 80 00 20 */	blr 
+.endfn interact__15TAItankStrategyFR4TekiR18TekiInteractionKey
 
-.global makeDefaultAnimations__16TAItankAnimationFv
-makeDefaultAnimations__16TAItankAnimationFv:
+.fn makeDefaultAnimations__16TAItankAnimationFv, global
 /* 801A47B0 001A1710  7C 08 02 A6 */	mflr r0
 /* 801A47B4 001A1714  90 01 00 04 */	stw r0, 4(r1)
 /* 801A47B8 001A1718  94 21 FF 28 */	stwu r1, -0xd8(r1)
@@ -1676,25 +1675,25 @@ makeDefaultAnimations__16TAItankAnimationFv:
 /* 801A4EA0 001A1E00  38 21 00 D8 */	addi r1, r1, 0xd8
 /* 801A4EA4 001A1E04  7C 08 03 A6 */	mtlr r0
 /* 801A4EA8 001A1E08  4E 80 00 20 */	blr 
+.endfn makeDefaultAnimations__16TAItankAnimationFv
 
-.global act__14TAIAnoReactionFR4Teki
-act__14TAIAnoReactionFR4Teki:
+.fn act__14TAIAnoReactionFR4Teki, weak
 /* 801A4EAC 001A1E0C  38 60 00 01 */	li r3, 1
 /* 801A4EB0 001A1E10  4E 80 00 20 */	blr 
+.endfn act__14TAIAnoReactionFR4Teki
 
-.global start__12TAIAinitTankFR4Teki
-start__12TAIAinitTankFR4Teki:
+.fn start__12TAIAinitTankFR4Teki, weak
 /* 801A4EB4 001A1E14  C0 02 B4 BC */	lfs f0, lbl_803EB6BC@sda21(r2)
 /* 801A4EB8 001A1E18  D0 04 02 70 */	stfs f0, 0x270(r4)
 /* 801A4EBC 001A1E1C  4E 80 00 20 */	blr 
+.endfn start__12TAIAinitTankFR4Teki
 
-.global act__12TAIAinitTankFR4Teki
-act__12TAIAinitTankFR4Teki:
+.fn act__12TAIAinitTankFR4Teki, weak
 /* 801A4EC0 001A1E20  38 60 00 01 */	li r3, 1
 /* 801A4EC4 001A1E24  4E 80 00 20 */	blr 
+.endfn act__12TAIAinitTankFR4Teki
 
-.global act__20TAIAoutsideTerritoryFR4Teki
-act__20TAIAoutsideTerritoryFR4Teki:
+.fn act__20TAIAoutsideTerritoryFR4Teki, weak
 /* 801A4EC8 001A1E28  7C 08 02 A6 */	mflr r0
 /* 801A4ECC 001A1E2C  39 04 00 94 */	addi r8, r4, 0x94
 /* 801A4ED0 001A1E30  90 01 00 04 */	stw r0, 4(r1)
@@ -1745,16 +1744,16 @@ act__20TAIAoutsideTerritoryFR4Teki:
 /* 801A4F84 001A1EE4  38 21 00 70 */	addi r1, r1, 0x70
 /* 801A4F88 001A1EE8  7C 08 03 A6 */	mtlr r0
 /* 801A4F8C 001A1EEC  4E 80 00 20 */	blr 
+.endfn act__20TAIAoutsideTerritoryFR4Teki
 
-.global getFlickDirection__16TAIAflickingTankFR4Teki
-getFlickDirection__16TAIAflickingTankFR4Teki:
+.fn getFlickDirection__16TAIAflickingTankFR4Teki, weak
 /* 801A4F90 001A1EF0  C0 22 B4 D0 */	lfs f1, lbl_803EB6D0@sda21(r2)
 /* 801A4F94 001A1EF4  C0 04 00 A0 */	lfs f0, 0xa0(r4)
 /* 801A4F98 001A1EF8  EC 21 00 2A */	fadds f1, f1, f0
 /* 801A4F9C 001A1EFC  4E 80 00 20 */	blr 
+.endfn getFlickDirection__16TAIAflickingTankFR4Teki
 
-.global start__18TAIAfireBreathTankFR4Teki
-start__18TAIAfireBreathTankFR4Teki:
+.fn start__18TAIAfireBreathTankFR4Teki, weak
 /* 801A4FA0 001A1F00  7C 08 02 A6 */	mflr r0
 /* 801A4FA4 001A1F04  90 01 00 04 */	stw r0, 4(r1)
 /* 801A4FA8 001A1F08  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -1775,27 +1774,27 @@ start__18TAIAfireBreathTankFR4Teki:
 /* 801A4FE0 001A1F40  38 21 00 18 */	addi r1, r1, 0x18
 /* 801A4FE4 001A1F44  7C 08 03 A6 */	mtlr r0
 /* 801A4FE8 001A1F48  4E 80 00 20 */	blr 
+.endfn start__18TAIAfireBreathTankFR4Teki
 
-.global getPreviousAnimSpeed__18TAIAfireBreathTankFR4Teki
-getPreviousAnimSpeed__18TAIAfireBreathTankFR4Teki:
+.fn getPreviousAnimSpeed__18TAIAfireBreathTankFR4Teki, weak
 /* 801A4FEC 001A1F4C  80 64 02 C4 */	lwz r3, 0x2c4(r4)
 /* 801A4FF0 001A1F50  80 63 00 84 */	lwz r3, 0x84(r3)
 /* 801A4FF4 001A1F54  80 63 00 04 */	lwz r3, 4(r3)
 /* 801A4FF8 001A1F58  80 63 00 00 */	lwz r3, 0(r3)
 /* 801A4FFC 001A1F5C  C0 23 00 CC */	lfs f1, 0xcc(r3)
 /* 801A5000 001A1F60  4E 80 00 20 */	blr 
+.endfn getPreviousAnimSpeed__18TAIAfireBreathTankFR4Teki
 
-.global getAttackAnimSpeed__18TAIAfireBreathTankFR4Teki
-getAttackAnimSpeed__18TAIAfireBreathTankFR4Teki:
+.fn getAttackAnimSpeed__18TAIAfireBreathTankFR4Teki, weak
 /* 801A5004 001A1F64  80 64 02 C4 */	lwz r3, 0x2c4(r4)
 /* 801A5008 001A1F68  80 63 00 84 */	lwz r3, 0x84(r3)
 /* 801A500C 001A1F6C  80 63 00 04 */	lwz r3, 4(r3)
 /* 801A5010 001A1F70  80 63 00 00 */	lwz r3, 0(r3)
 /* 801A5014 001A1F74  C0 23 00 CC */	lfs f1, 0xcc(r3)
 /* 801A5018 001A1F78  4E 80 00 20 */	blr 
+.endfn getAttackAnimSpeed__18TAIAfireBreathTankFR4Teki
 
-.global invoke__10FireEffectFR4Teki
-invoke__10FireEffectFR4Teki:
+.fn invoke__10FireEffectFR4Teki, weak
 /* 801A501C 001A1F7C  7C 08 02 A6 */	mflr r0
 /* 801A5020 001A1F80  90 01 00 04 */	stw r0, 4(r1)
 /* 801A5024 001A1F84  94 21 FF 20 */	stwu r1, -0xe0(r1)
@@ -1960,9 +1959,9 @@ invoke__10FireEffectFR4Teki:
 /* 801A5298 001A21F8  38 21 00 E0 */	addi r1, r1, 0xe0
 /* 801A529C 001A21FC  7C 08 03 A6 */	mtlr r0
 /* 801A52A0 001A2200  4E 80 00 20 */	blr 
+.endfn invoke__10FireEffectFR4Teki
 
-.global act__16TAIAstepBackTankFR4Teki
-act__16TAIAstepBackTankFR4Teki:
+.fn act__16TAIAstepBackTankFR4Teki, weak
 /* 801A52A4 001A2204  7C 08 02 A6 */	mflr r0
 /* 801A52A8 001A2208  90 01 00 04 */	stw r0, 4(r1)
 /* 801A52AC 001A220C  94 21 FF F8 */	stwu r1, -8(r1)
@@ -1971,18 +1970,18 @@ act__16TAIAstepBackTankFR4Teki:
 /* 801A52B8 001A2218  38 21 00 08 */	addi r1, r1, 8
 /* 801A52BC 001A221C  7C 08 03 A6 */	mtlr r0
 /* 801A52C0 001A2220  4E 80 00 20 */	blr 
+.endfn act__16TAIAstepBackTankFR4Teki
 
-.global getVelocity__16TAIAstepBackTankFR4Teki
-getVelocity__16TAIAstepBackTankFR4Teki:
+.fn getVelocity__16TAIAstepBackTankFR4Teki, weak
 /* 801A52C4 001A2224  80 64 02 C4 */	lwz r3, 0x2c4(r4)
 /* 801A52C8 001A2228  80 63 00 84 */	lwz r3, 0x84(r3)
 /* 801A52CC 001A222C  80 63 00 04 */	lwz r3, 4(r3)
 /* 801A52D0 001A2230  80 63 00 00 */	lwz r3, 0(r3)
 /* 801A52D4 001A2234  C0 23 00 D0 */	lfs f1, 0xd0(r3)
 /* 801A52D8 001A2238  4E 80 00 20 */	blr 
+.endfn getVelocity__16TAIAstepBackTankFR4Teki
 
-.global setTargetPosition__28TAIAoutsideOptionalRangeTankFR4Teki
-setTargetPosition__28TAIAoutsideOptionalRangeTankFR4Teki:
+.fn setTargetPosition__28TAIAoutsideOptionalRangeTankFR4Teki, weak
 /* 801A52DC 001A223C  7C 08 02 A6 */	mflr r0
 /* 801A52E0 001A2240  90 01 00 04 */	stw r0, 4(r1)
 /* 801A52E4 001A2244  94 21 FF F8 */	stwu r1, -8(r1)
@@ -1991,18 +1990,18 @@ setTargetPosition__28TAIAoutsideOptionalRangeTankFR4Teki:
 /* 801A52F0 001A2250  38 21 00 08 */	addi r1, r1, 8
 /* 801A52F4 001A2254  7C 08 03 A6 */	mtlr r0
 /* 801A52F8 001A2258  4E 80 00 20 */	blr 
+.endfn setTargetPosition__28TAIAoutsideOptionalRangeTankFR4Teki
 
-.global getOptionalRange__28TAIAoutsideOptionalRangeTankFR4Teki
-getOptionalRange__28TAIAoutsideOptionalRangeTankFR4Teki:
+.fn getOptionalRange__28TAIAoutsideOptionalRangeTankFR4Teki, weak
 /* 801A52FC 001A225C  80 64 02 C4 */	lwz r3, 0x2c4(r4)
 /* 801A5300 001A2260  80 63 00 84 */	lwz r3, 0x84(r3)
 /* 801A5304 001A2264  80 63 00 04 */	lwz r3, 4(r3)
 /* 801A5308 001A2268  80 63 00 00 */	lwz r3, 0(r3)
 /* 801A530C 001A226C  C0 23 00 C8 */	lfs f1, 0xc8(r3)
 /* 801A5310 001A2270  4E 80 00 20 */	blr 
+.endfn getOptionalRange__28TAIAoutsideOptionalRangeTankFR4Teki
 
-.global judge__25TAIAattackableAngleTargetFR4Teki
-judge__25TAIAattackableAngleTargetFR4Teki:
+.fn judge__25TAIAattackableAngleTargetFR4Teki, weak
 /* 801A5314 001A2274  7C 08 02 A6 */	mflr r0
 /* 801A5318 001A2278  90 01 00 04 */	stw r0, 4(r1)
 /* 801A531C 001A227C  94 21 FF F8 */	stwu r1, -8(r1)
@@ -2011,9 +2010,9 @@ judge__25TAIAattackableAngleTargetFR4Teki:
 /* 801A5328 001A2288  38 21 00 08 */	addi r1, r1, 8
 /* 801A532C 001A228C  7C 08 03 A6 */	mtlr r0
 /* 801A5330 001A2290  4E 80 00 20 */	blr 
+.endfn judge__25TAIAattackableAngleTargetFR4Teki
 
-.global act__14TAIApatrolTankFR4Teki
-act__14TAIApatrolTankFR4Teki:
+.fn act__14TAIApatrolTankFR4Teki, weak
 /* 801A5334 001A2294  7C 08 02 A6 */	mflr r0
 /* 801A5338 001A2298  90 01 00 04 */	stw r0, 4(r1)
 /* 801A533C 001A229C  94 21 FF F8 */	stwu r1, -8(r1)
@@ -2022,24 +2021,25 @@ act__14TAIApatrolTankFR4Teki:
 /* 801A5348 001A22A8  38 21 00 08 */	addi r1, r1, 8
 /* 801A534C 001A22AC  7C 08 03 A6 */	mtlr r0
 /* 801A5350 001A22B0  4E 80 00 20 */	blr 
+.endfn act__14TAIApatrolTankFR4Teki
 
-.global getTimeout__14TAIApatrolTankFR4Teki
-getTimeout__14TAIApatrolTankFR4Teki:
+.fn getTimeout__14TAIApatrolTankFR4Teki, weak
 /* 801A5354 001A22B4  80 64 02 C4 */	lwz r3, 0x2c4(r4)
 /* 801A5358 001A22B8  80 63 00 84 */	lwz r3, 0x84(r3)
 /* 801A535C 001A22BC  80 63 00 04 */	lwz r3, 4(r3)
 /* 801A5360 001A22C0  80 63 00 00 */	lwz r3, 0(r3)
 /* 801A5364 001A22C4  C0 23 00 D4 */	lfs f1, 0xd4(r3)
 /* 801A5368 001A22C8  4E 80 00 20 */	blr 
+.endfn getTimeout__14TAIApatrolTankFR4Teki
 
-.global getTurnVelocity__16TAIAturnToTargetFR4Teki
-getTurnVelocity__16TAIAturnToTargetFR4Teki:
+.fn getTurnVelocity__16TAIAturnToTargetFR4Teki, weak
 /* 801A536C 001A22CC  80 64 02 C4 */	lwz r3, 0x2c4(r4)
 /* 801A5370 001A22D0  80 63 00 84 */	lwz r3, 0x84(r3)
 /* 801A5374 001A22D4  80 63 00 04 */	lwz r3, 4(r3)
 /* 801A5378 001A22D8  80 63 00 00 */	lwz r3, 0(r3)
 /* 801A537C 001A22DC  C0 23 00 14 */	lfs f1, 0x14(r3)
 /* 801A5380 001A22E0  4E 80 00 20 */	blr 
+.endfn getTurnVelocity__16TAIAturnToTargetFR4Teki
 
 .fn __sinit_TAItank_cpp, local
 /* 801A5384 001A22E4  3C 60 80 2E */	lis r3, __vt__32TAIeffectAttackEventCallBackTank@ha
@@ -2048,8 +2048,7 @@ getTurnVelocity__16TAIAturnToTargetFR4Teki:
 /* 801A5390 001A22F0  4E 80 00 20 */	blr 
 .endfn __sinit_TAItank_cpp
 
-.global hitCreature__32TAIeffectAttackEventCallBackTankFP20TAIeffectAttackParamP8Creature
-hitCreature__32TAIeffectAttackEventCallBackTankFP20TAIeffectAttackParamP8Creature:
+.fn hitCreature__32TAIeffectAttackEventCallBackTankFP20TAIeffectAttackParamP8Creature, weak
 /* 801A5394 001A22F4  7C 08 02 A6 */	mflr r0
 /* 801A5398 001A22F8  3C C0 80 2B */	lis r6, __vt__11Interaction@ha
 /* 801A539C 001A22FC  90 01 00 04 */	stw r0, 4(r1)
@@ -2077,9 +2076,9 @@ hitCreature__32TAIeffectAttackEventCallBackTankFP20TAIeffectAttackParamP8Creatur
 /* 801A53F4 001A2354  38 21 00 30 */	addi r1, r1, 0x30
 /* 801A53F8 001A2358  7C 08 03 A6 */	mtlr r0
 /* 801A53FC 001A235C  4E 80 00 20 */	blr 
+.endfn hitCreature__32TAIeffectAttackEventCallBackTankFP20TAIeffectAttackParamP8Creature
 
-.global hitMap__32TAIeffectAttackEventCallBackTankFP20TAIeffectAttackParam
-hitMap__32TAIeffectAttackEventCallBackTankFP20TAIeffectAttackParam:
+.fn hitMap__32TAIeffectAttackEventCallBackTankFP20TAIeffectAttackParam, weak
 /* 801A5400 001A2360  7C 08 02 A6 */	mflr r0
 /* 801A5404 001A2364  38 E0 00 00 */	li r7, 0
 /* 801A5408 001A2368  90 01 00 04 */	stw r0, 4(r1)
@@ -2168,9 +2167,9 @@ hitMap__32TAIeffectAttackEventCallBackTankFP20TAIeffectAttackParam:
 /* 801A5548 001A24A8  38 21 00 68 */	addi r1, r1, 0x68
 /* 801A554C 001A24AC  7C 08 03 A6 */	mtlr r0
 /* 801A5550 001A24B0  4E 80 00 20 */	blr 
+.endfn hitMap__32TAIeffectAttackEventCallBackTankFP20TAIeffectAttackParam
 
-.global playEventSound__32TAIeffectAttackEventCallBackTankFPQ23zen17particleGeneratorP20TAIeffectAttackParam
-playEventSound__32TAIeffectAttackEventCallBackTankFPQ23zen17particleGeneratorP20TAIeffectAttackParam:
+.fn playEventSound__32TAIeffectAttackEventCallBackTankFPQ23zen17particleGeneratorP20TAIeffectAttackParam, weak
 /* 801A5554 001A24B4  7C 08 02 A6 */	mflr r0
 /* 801A5558 001A24B8  90 01 00 04 */	stw r0, 4(r1)
 /* 801A555C 001A24BC  94 21 FF F8 */	stwu r1, -8(r1)
@@ -2190,9 +2189,9 @@ playEventSound__32TAIeffectAttackEventCallBackTankFPQ23zen17particleGeneratorP20
 /* 801A5590 001A24F0  38 21 00 08 */	addi r1, r1, 8
 /* 801A5594 001A24F4  7C 08 03 A6 */	mtlr r0
 /* 801A5598 001A24F8  4E 80 00 20 */	blr 
+.endfn playEventSound__32TAIeffectAttackEventCallBackTankFPQ23zen17particleGeneratorP20TAIeffectAttackParam
 
-.global ptclHitMap__32TAIeffectAttackEventCallBackTankFPQ23zen17particleGeneratorP20TAIeffectAttackParam
-ptclHitMap__32TAIeffectAttackEventCallBackTankFPQ23zen17particleGeneratorP20TAIeffectAttackParam:
+.fn ptclHitMap__32TAIeffectAttackEventCallBackTankFPQ23zen17particleGeneratorP20TAIeffectAttackParam, weak
 /* 801A559C 001A24FC  7C 08 02 A6 */	mflr r0
 /* 801A55A0 001A2500  90 01 00 04 */	stw r0, 4(r1)
 /* 801A55A4 001A2504  94 21 FF 38 */	stwu r1, -0xc8(r1)
@@ -2318,6 +2317,7 @@ ptclHitMap__32TAIeffectAttackEventCallBackTankFPQ23zen17particleGeneratorP20TAIe
 /* 801A5768 001A26C8  38 21 00 C8 */	addi r1, r1, 0xc8
 /* 801A576C 001A26CC  7C 08 03 A6 */	mtlr r0
 /* 801A5770 001A26D0  4E 80 00 20 */	blr 
+.endfn ptclHitMap__32TAIeffectAttackEventCallBackTankFPQ23zen17particleGeneratorP20TAIeffectAttackParam
 
 .section .ctors, "wa"  # 0x80221F60 - 0x80221FC0
 lbl_constructor:
@@ -2325,101 +2325,132 @@ lbl_constructor:
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802DDC70:
+.obj lbl_802DDC70, local
 	.asciz "TAItank.cpp"
+.endobj lbl_802DDC70
 .balign 4
-lbl_802DDC7C:
+.obj lbl_802DDC7C, local # Shift-JIS
 	.4byte 0x898A8D55
 	.4byte 0x8C828E9E
 	.4byte 0x97A382EA
 	.4byte 0x82E98B97
 	.4byte 0x97A30000
-lbl_802DDC90:
+.endobj lbl_802DDC7C
+.balign 4
+.obj lbl_802DDC90, local # Shift-JIS
 	.4byte 0x898A8D55
 	.4byte 0x8C8282CC
 	.4byte 0x8341836A
 	.4byte 0x838191AC
 	.4byte 0x93780000
-lbl_802DDCA4:
+.endobj lbl_802DDC90
+.balign 4
+.obj lbl_802DDCA4, local # Shift-JIS
 	.4byte 0x8CE391DE
 	.4byte 0x82E891AC
 	.4byte 0x93780000
-lbl_802DDCB0:
+.endobj lbl_802DDCA4
+.balign 4
+.obj lbl_802DDCB0, local # Shift-JIS
 	.4byte 0x83708367
 	.4byte 0x838D815B
 	.4byte 0x838B835E
 	.4byte 0x83438380
 	.4byte 0x83418345
 	.4byte 0x83670000
-lbl_802DDCC8:
+.endobj lbl_802DDCB0
+.balign 4
+.obj lbl_802DDCC8, local
 	.asciz "tekis/tank/motion/dead.dca"
+.endobj lbl_802DDCC8
 .balign 4
-lbl_802DDCE4:
+.obj lbl_802DDCE4, local
 	.asciz "tekis/tank/motion/damage.dca"
+.endobj lbl_802DDCE4
 .balign 4
-lbl_802DDD04:
+.obj lbl_802DDD04, local
 	.asciz "tekis/tank/motion/wait1.dca"
+.endobj lbl_802DDD04
 .balign 4
-lbl_802DDD20:
+.obj lbl_802DDD20, local
 	.asciz "tekis/tank/motion/wait2.dca"
+.endobj lbl_802DDD20
 .balign 4
-lbl_802DDD3C:
+.obj lbl_802DDD3C, local
 	.asciz "tekis/tank/motion/waitact1.dck"
+.endobj lbl_802DDD3C
 .balign 4
-lbl_802DDD5C:
+.obj lbl_802DDD5C, local
 	.asciz "tekis/tank/motion/waitact2.dca"
+.endobj lbl_802DDD5C
 .balign 4
-lbl_802DDD7C:
+.obj lbl_802DDD7C, local
 	.asciz "tekis/tank/motion/move1.dck"
+.endobj lbl_802DDD7C
 .balign 4
-lbl_802DDD98:
+.obj lbl_802DDD98, local
 	.asciz "tekis/tank/motion/move2.dck"
+.endobj lbl_802DDD98
 .balign 4
-lbl_802DDDB4:
+.obj lbl_802DDDB4, local
 	.asciz "tekis/tank/motion/attack.dca"
+.endobj lbl_802DDDB4
 .balign 4
-lbl_802DDDD4:
+.obj lbl_802DDDD4, local
 	.asciz "tekis/tank/motion/type1.dck"
+.endobj lbl_802DDDD4
 .balign 4
-lbl_802DDDF0:
+.obj lbl_802DDDF0, local
 	.asciz "tekis/tank/motion/type2.dca"
+.endobj lbl_802DDDF0
 .balign 4
-lbl_802DDE0C:
+.obj lbl_802DDE0C, local
 	.asciz "TAItankAnimation"
+.endobj lbl_802DDE0C
 .balign 4
-lbl_802DDE20:
+.obj lbl_802DDE20, local
 	.asciz "TAIanimation"
+.endobj lbl_802DDE20
 .balign 4
-lbl_802DDE30:
+.obj lbl_802DDE30, local
 	.4byte __RTTI__12TAIanimation
-	.4byte 0x00000000
-	.4byte 0x00000000
-.global __vt__16TAItankAnimation
-__vt__16TAItankAnimation:
+	.4byte 0
+	.4byte 0
+.endobj lbl_802DDE30
+.balign 4
+.obj __vt__16TAItankAnimation, global
 	.4byte __RTTI__16TAItankAnimation
 	.4byte 0
 	.4byte makeDefaultAnimations__16TAItankAnimationFv
-lbl_802DDE48:
+.endobj __vt__16TAItankAnimation
+.balign 4
+.obj lbl_802DDE48, local
 	.asciz "TAItankStrategy"
+.endobj lbl_802DDE48
 .balign 4
-lbl_802DDE58:
+.obj lbl_802DDE58, local
 	.asciz "TekiStrategy"
+.endobj lbl_802DDE58
 .balign 4
-lbl_802DDE68:
+.obj lbl_802DDE68, local
 	.asciz "YaiStrategy"
+.endobj lbl_802DDE68
 .balign 4
-lbl_802DDE74:
+.obj lbl_802DDE74, local
 	.4byte __RTTI__12TekiStrategy
 	.4byte 0
 	.4byte 0
-lbl_802DDE80:
+.endobj lbl_802DDE74
+.balign 4
+.obj lbl_802DDE80, local
 	.4byte __RTTI__12TekiStrategy
 	.4byte 0
 	.4byte __RTTI__11YaiStrategy
 	.4byte 0
 	.4byte 0
-.global __vt__15TAItankStrategy
-__vt__15TAItankStrategy:
+.endobj lbl_802DDE80
+.balign 4
+.obj __vt__15TAItankStrategy, global
 	.4byte __RTTI__15TAItankStrategy
 	.4byte 0
 	.4byte start__11YaiStrategyFR4Teki
@@ -2430,18 +2461,23 @@ __vt__15TAItankStrategy:
 	.4byte drawDebugInfo__12TekiStrategyFR4TekiR8Graphics
 	.4byte interact__15TAItankStrategyFR4TekiR18TekiInteractionKey
 	.4byte spawnCorpseParts__12TekiStrategyFR4Teki
-lbl_802DDEBC:
+.endobj __vt__15TAItankStrategy
+.balign 4
+.obj lbl_802DDEBC, local
 	.asciz "TAIAnoReaction"
+.endobj lbl_802DDEBC
 .balign 4
-lbl_802DDECC:
+.obj lbl_802DDECC, local
 	.asciz "TaiAction"
+.endobj lbl_802DDECC
 .balign 4
-lbl_802DDED8:
+.obj lbl_802DDED8, local
 	.4byte __RTTI__9TaiAction
 	.4byte 0
 	.4byte 0
-.global __vt__14TAIAnoReaction
-__vt__14TAIAnoReaction:
+.endobj lbl_802DDED8
+.balign 4
+.obj __vt__14TAIAnoReaction, weak
 	.4byte __RTTI__14TAIAnoReaction
 	.4byte 0
 	.4byte start__9TaiActionFR4Teki
@@ -2449,15 +2485,19 @@ __vt__14TAIAnoReaction:
 	.4byte act__14TAIAnoReactionFR4Teki
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
-lbl_802DDF00:
-	.asciz "TAIAinitTank"
+.endobj __vt__14TAIAnoReaction
 .balign 4
-lbl_802DDF10:
+.obj lbl_802DDF00, local
+	.asciz "TAIAinitTank"
+.endobj lbl_802DDF00
+.balign 4
+.obj lbl_802DDF10, local
 	.4byte __RTTI__9TaiAction
 	.4byte 0
 	.4byte 0
-.global __vt__12TAIAinitTank
-__vt__12TAIAinitTank:
+.endobj lbl_802DDF10
+.balign 4
+.obj __vt__12TAIAinitTank, weak
 	.4byte __RTTI__12TAIAinitTank
 	.4byte 0
 	.4byte start__12TAIAinitTankFR4Teki
@@ -2465,15 +2505,19 @@ __vt__12TAIAinitTank:
 	.4byte act__12TAIAinitTankFR4Teki
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
-lbl_802DDF38:
-	.asciz "TAIAoutsideTerritory"
+.endobj __vt__12TAIAinitTank
 .balign 4
-lbl_802DDF50:
+.obj lbl_802DDF38, local
+	.asciz "TAIAoutsideTerritory"
+.endobj lbl_802DDF38
+.balign 4
+.obj lbl_802DDF50, local
 	.4byte __RTTI__9TaiAction
 	.4byte 0
 	.4byte 0
-.global __vt__20TAIAoutsideTerritory
-__vt__20TAIAoutsideTerritory:
+.endobj lbl_802DDF50
+.balign 4
+.obj __vt__20TAIAoutsideTerritory, weak
 	.4byte __RTTI__20TAIAoutsideTerritory
 	.4byte 0
 	.4byte start__9TaiActionFR4Teki
@@ -2481,26 +2525,35 @@ __vt__20TAIAoutsideTerritory:
 	.4byte act__20TAIAoutsideTerritoryFR4Teki
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
-lbl_802DDF78:
+.endobj __vt__20TAIAoutsideTerritory
+.balign 4
+.obj lbl_802DDF78, local
 	.asciz "TAIAflickingTank"
+.endobj lbl_802DDF78
 .balign 4
-lbl_802DDF8C:
+.obj lbl_802DDF8C, local
 	.asciz "TAIAmotion"
+.endobj lbl_802DDF8C
 .balign 4
-lbl_802DDF98:
+.obj lbl_802DDF98, local
 	.4byte __RTTI__9TaiAction
 	.4byte 0
 	.4byte 0
-lbl_802DDFA4:
-	.asciz "TAIAflicking"
+.endobj lbl_802DDF98
 .balign 4
-lbl_802DDFB4:
+.obj lbl_802DDFA4, local
+	.asciz "TAIAflicking"
+.endobj lbl_802DDFA4
+.balign 4
+.obj lbl_802DDFB4, local
 	.4byte __RTTI__9TaiAction
 	.4byte 0
 	.4byte __RTTI__10TAIAmotion
 	.4byte 0
 	.4byte 0
-lbl_802DDFC8:
+.endobj lbl_802DDFB4
+.balign 4
+.obj lbl_802DDFC8, local
 	.4byte __RTTI__9TaiAction
 	.4byte 0
 	.4byte __RTTI__10TAIAmotion
@@ -2508,8 +2561,9 @@ lbl_802DDFC8:
 	.4byte __RTTI__12TAIAflicking
 	.4byte 0
 	.4byte 0
-.global __vt__16TAIAflickingTank
-__vt__16TAIAflickingTank:
+.endobj lbl_802DDFC8
+.balign 4
+.obj __vt__16TAIAflickingTank, weak
 	.4byte __RTTI__16TAIAflickingTank
 	.4byte 0
 	.4byte start__12TAIAflickingFR4Teki
@@ -2519,26 +2573,35 @@ __vt__16TAIAflickingTank:
 	.4byte hasNextState__9TaiActionFv
 	.4byte flick__12TAIAflickingFR4Teki
 	.4byte getFlickDirection__16TAIAflickingTankFR4Teki
-lbl_802DE008:
+.endobj __vt__16TAIAflickingTank
+.balign 4
+.obj lbl_802DE008, local
 	.asciz "TAIAfireBreathTank"
+.endobj lbl_802DE008
 .balign 4
-lbl_802DE01C:
+.obj lbl_802DE01C, local
 	.asciz "TAIAreserveMotion"
+.endobj lbl_802DE01C
 .balign 4
-lbl_802DE030:
+.obj lbl_802DE030, local
 	.4byte __RTTI__9TaiAction
 	.4byte 0
 	.4byte 0
-lbl_802DE03C:
-	.asciz "TAIAfireBreath"
+.endobj lbl_802DE030
 .balign 4
-lbl_802DE04C:
+.obj lbl_802DE03C, local
+	.asciz "TAIAfireBreath"
+.endobj lbl_802DE03C
+.balign 4
+.obj lbl_802DE04C, local
 	.4byte __RTTI__9TaiAction
 	.4byte 0
 	.4byte __RTTI__17TAIAreserveMotion
 	.4byte 0
 	.4byte 0
-lbl_802DE060:
+.endobj lbl_802DE04C
+.balign 4
+.obj lbl_802DE060, local
 	.4byte __RTTI__9TaiAction
 	.4byte 0
 	.4byte __RTTI__17TAIAreserveMotion
@@ -2546,8 +2609,9 @@ lbl_802DE060:
 	.4byte __RTTI__14TAIAfireBreath
 	.4byte 0
 	.4byte 0
-.global __vt__18TAIAfireBreathTank
-__vt__18TAIAfireBreathTank:
+.endobj lbl_802DE060
+.balign 4
+.obj __vt__18TAIAfireBreathTank, weak
 	.4byte __RTTI__18TAIAfireBreathTank
 	.4byte 0
 	.4byte start__18TAIAfireBreathTankFR4Teki
@@ -2557,39 +2621,51 @@ __vt__18TAIAfireBreathTank:
 	.4byte hasNextState__9TaiActionFv
 	.4byte getPreviousAnimSpeed__18TAIAfireBreathTankFR4Teki
 	.4byte getAttackAnimSpeed__18TAIAfireBreathTankFR4Teki
-lbl_802DE0A0:
+.endobj __vt__18TAIAfireBreathTank
+.balign 4
+.obj lbl_802DE0A0, local
 	.asciz "FireEffect"
+.endobj lbl_802DE0A0
 .balign 4
-lbl_802DE0AC:
+.obj lbl_802DE0AC, local
 	.asciz "zen::CallBack1<Teki &>"
+.endobj lbl_802DE0AC
 .balign 4
-lbl_802DE0C4:
+.obj lbl_802DE0C4, local
 	.4byte "__RTTI__Q23zen17CallBack1<R4Teki>"
 	.4byte 0
 	.4byte 0
-.global __vt__10FireEffect
-__vt__10FireEffect:
+.endobj lbl_802DE0C4
+.balign 4
+.obj __vt__10FireEffect, weak
 	.4byte __RTTI__10FireEffect
 	.4byte 0
 	.4byte invoke__10FireEffectFR4Teki
-.global "__vt__Q23zen17CallBack1<R4Teki>"
-"__vt__Q23zen17CallBack1<R4Teki>":
+.endobj __vt__10FireEffect
+.balign 4
+.obj "__vt__Q23zen17CallBack1<R4Teki>", weak
 	.4byte "__RTTI__Q23zen17CallBack1<R4Teki>"
 	.4byte 0
 	.4byte 0
-lbl_802DE0E8:
+.endobj "__vt__Q23zen17CallBack1<R4Teki>"
+.balign 4
+.obj lbl_802DE0E8, local
 	.asciz "TAIAstepBackTank"
+.endobj lbl_802DE0E8
 .balign 4
-lbl_802DE0FC:
+.obj lbl_802DE0FC, local
 	.asciz "TAIAstepBack"
+.endobj lbl_802DE0FC
 .balign 4
-lbl_802DE10C:
+.obj lbl_802DE10C, local
 	.4byte __RTTI__9TaiAction
 	.4byte 0
 	.4byte __RTTI__17TAIAreserveMotion
 	.4byte 0
 	.4byte 0
-lbl_802DE120:
+.endobj lbl_802DE10C
+.balign 4
+.obj lbl_802DE120, local
 	.4byte __RTTI__9TaiAction
 	.4byte 0
 	.4byte __RTTI__17TAIAreserveMotion
@@ -2597,8 +2673,9 @@ lbl_802DE120:
 	.4byte __RTTI__12TAIAstepBack
 	.4byte 0
 	.4byte 0
-.global __vt__16TAIAstepBackTank
-__vt__16TAIAstepBackTank:
+.endobj lbl_802DE120
+.balign 4
+.obj __vt__16TAIAstepBackTank, weak
 	.4byte __RTTI__16TAIAstepBackTank
 	.4byte 0
 	.4byte start__12TAIAstepBackFR4Teki
@@ -2607,26 +2684,35 @@ __vt__16TAIAstepBackTank:
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
 	.4byte getVelocity__16TAIAstepBackTankFR4Teki
-lbl_802DE15C:
+.endobj __vt__16TAIAstepBackTank
+.balign 4
+.obj lbl_802DE15C, local
 	.asciz "TAIAoutsideOptionalRangeTank"
+.endobj lbl_802DE15C
 .balign 4
-lbl_802DE17C:
+.obj lbl_802DE17C, local
 	.asciz "TAIAjudgeOptionalRange"
+.endobj lbl_802DE17C
 .balign 4
-lbl_802DE194:
+.obj lbl_802DE194, local
 	.4byte __RTTI__9TaiAction
 	.4byte 0
 	.4byte 0
-lbl_802DE1A0:
-	.asciz "TAIAoutsideOptionalRange"
+.endobj lbl_802DE194
 .balign 4
-lbl_802DE1BC:
+.obj lbl_802DE1A0, local
+	.asciz "TAIAoutsideOptionalRange"
+.endobj lbl_802DE1A0
+.balign 4
+.obj lbl_802DE1BC, local
 	.4byte __RTTI__9TaiAction
 	.4byte 0
 	.4byte __RTTI__22TAIAjudgeOptionalRange
 	.4byte 0
 	.4byte 0
-lbl_802DE1D0:
+.endobj lbl_802DE1BC
+.balign 4
+.obj lbl_802DE1D0, local
 	.4byte __RTTI__9TaiAction
 	.4byte 0
 	.4byte __RTTI__22TAIAjudgeOptionalRange
@@ -2634,8 +2720,9 @@ lbl_802DE1D0:
 	.4byte __RTTI__24TAIAoutsideOptionalRange
 	.4byte 0
 	.4byte 0
-.global __vt__28TAIAoutsideOptionalRangeTank
-__vt__28TAIAoutsideOptionalRangeTank:
+.endobj lbl_802DE1D0
+.balign 4
+.obj __vt__28TAIAoutsideOptionalRangeTank, weak
 	.4byte __RTTI__28TAIAoutsideOptionalRangeTank
 	.4byte 0
 	.4byte start__9TaiActionFR4Teki
@@ -2646,24 +2733,31 @@ __vt__28TAIAoutsideOptionalRangeTank:
 	.4byte setTargetPosition__28TAIAoutsideOptionalRangeTankFR4Teki
 	.4byte getOptionalRange__28TAIAoutsideOptionalRangeTankFR4Teki
 	.4byte judgement__24TAIAoutsideOptionalRangeFR4Teki
-lbl_802DE214:
+.endobj __vt__28TAIAoutsideOptionalRangeTank
+.balign 4
+.obj lbl_802DE214, local
 	.asciz "TAIAattackableAngleTarget"
+.endobj lbl_802DE214
 .balign 4
-lbl_802DE230:
+.obj lbl_802DE230, local
 	.asciz "TAIAattackableTarget"
+.endobj lbl_802DE230
 .balign 4
-lbl_802DE248:
+.obj lbl_802DE248, local
 	.4byte __RTTI__9TaiAction
 	.4byte 0
 	.4byte 0
-lbl_802DE254:
+.endobj lbl_802DE248
+.balign 4
+.obj lbl_802DE254, local
 	.4byte __RTTI__9TaiAction
 	.4byte 0
 	.4byte __RTTI__20TAIAattackableTarget
 	.4byte 0
 	.4byte 0
-.global __vt__25TAIAattackableAngleTarget
-__vt__25TAIAattackableAngleTarget:
+.endobj lbl_802DE254
+.balign 4
+.obj __vt__25TAIAattackableAngleTarget, weak
 	.4byte __RTTI__25TAIAattackableAngleTarget
 	.4byte 0
 	.4byte start__9TaiActionFR4Teki
@@ -2672,22 +2766,29 @@ __vt__25TAIAattackableAngleTarget:
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
 	.4byte judge__25TAIAattackableAngleTargetFR4Teki
-lbl_802DE288:
+.endobj __vt__25TAIAattackableAngleTarget
+.balign 4
+.obj lbl_802DE288, local
 	.asciz "TAIApatrolTank"
+.endobj lbl_802DE288
 .balign 4
-lbl_802DE298:
+.obj lbl_802DE298, local
 	.asciz "TAIAturnToTarget"
+.endobj lbl_802DE298
 .balign 4
-lbl_802DE2AC:
+.obj lbl_802DE2AC, local
 	.4byte __RTTI__9TaiAction
 	.4byte 0
 	.4byte __RTTI__17TAIAreserveMotion
 	.4byte 0
 	.4byte 0
-lbl_802DE2C0:
-	.asciz "TAIApatrol"
+.endobj lbl_802DE2AC
 .balign 4
-lbl_802DE2CC:
+.obj lbl_802DE2C0, local
+	.asciz "TAIApatrol"
+.endobj lbl_802DE2C0
+.balign 4
+.obj lbl_802DE2CC, local
 	.4byte __RTTI__9TaiAction
 	.4byte 0
 	.4byte __RTTI__17TAIAreserveMotion
@@ -2695,7 +2796,9 @@ lbl_802DE2CC:
 	.4byte __RTTI__16TAIAturnToTarget
 	.4byte 0
 	.4byte 0
-lbl_802DE2E8:
+.endobj lbl_802DE2CC
+.balign 4
+.obj lbl_802DE2E8, local
 	.4byte __RTTI__9TaiAction
 	.4byte 0
 	.4byte __RTTI__17TAIAreserveMotion
@@ -2705,8 +2808,9 @@ lbl_802DE2E8:
 	.4byte __RTTI__10TAIApatrol
 	.4byte 0
 	.4byte 0
-.global __vt__14TAIApatrolTank
-__vt__14TAIApatrolTank:
+.endobj lbl_802DE2E8
+.balign 4
+.obj __vt__14TAIApatrolTank, weak
 	.4byte __RTTI__14TAIApatrolTank
 	.4byte 0
 	.4byte start__10TAIApatrolFR4Teki
@@ -2716,33 +2820,37 @@ __vt__14TAIApatrolTank:
 	.4byte hasNextState__9TaiActionFv
 	.4byte getTurnVelocity__16TAIAturnToTargetFR4Teki
 	.4byte getTimeout__14TAIApatrolTankFR4Teki
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-lbl_802DE34C:
+.endobj __vt__14TAIApatrolTank
+.balign 4
+.skip 0x1C # compiler padding
+.balign 4
+.obj lbl_802DE34C, local
 	.asciz "TAItankParameters"
+.endobj lbl_802DE34C
 .balign 4
-lbl_802DE360:
+.obj lbl_802DE360, local
 	.asciz "CoreNode"
+.endobj lbl_802DE360
 .balign 4
-lbl_802DE36C:
+.obj lbl_802DE36C, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte 0
-lbl_802DE378:
+.endobj lbl_802DE36C
+.balign 4
+.obj lbl_802DE378, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte __RTTI__8CoreNode
 	.4byte 0
 	.4byte 0
-lbl_802DE38C:
-	.asciz "TekiParameters"
+.endobj lbl_802DE378
 .balign 4
-lbl_802DE39C:
+.obj lbl_802DE38C, local
+	.asciz "TekiParameters"
+.endobj lbl_802DE38C
+.balign 4
+.obj lbl_802DE39C, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte __RTTI__8CoreNode
@@ -2750,7 +2858,9 @@ lbl_802DE39C:
 	.4byte __RTTI__4Node
 	.4byte 0
 	.4byte 0
-lbl_802DE3B8:
+.endobj lbl_802DE39C
+.balign 4
+.obj lbl_802DE3B8, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte __RTTI__8CoreNode
@@ -2760,8 +2870,9 @@ lbl_802DE3B8:
 	.4byte __RTTI__14TekiParameters
 	.4byte 0
 	.4byte 0
-.global __vt__17TAItankParameters
-__vt__17TAItankParameters:
+.endobj lbl_802DE3B8
+.balign 4
+.obj __vt__17TAItankParameters, weak
 	.4byte __RTTI__17TAItankParameters
 	.4byte 0
 	.4byte getAgeNodeType__5ANodeFv
@@ -2774,18 +2885,23 @@ __vt__17TAItankParameters:
 	.4byte concat__4NodeFR3SRT
 	.4byte concat__4NodeFR8Matrix4f
 	.4byte getModelMatrix__4NodeFv
-lbl_802DE40C:
+.endobj __vt__17TAItankParameters
+.balign 4
+.obj lbl_802DE40C, local
 	.asciz "TAIeffectAttackEventCallBackTank"
+.endobj lbl_802DE40C
 .balign 4
-lbl_802DE430:
+.obj lbl_802DE430, local
 	.asciz "TAIeffectAttackEventCallBack"
+.endobj lbl_802DE430
 .balign 4
-lbl_802DE450:
+.obj lbl_802DE450, local
 	.4byte __RTTI__28TAIeffectAttackEventCallBack
 	.4byte 0
 	.4byte 0
-.global __vt__32TAIeffectAttackEventCallBackTank
-__vt__32TAIeffectAttackEventCallBackTank:
+.endobj lbl_802DE450
+.balign 4
+.obj __vt__32TAIeffectAttackEventCallBackTank, weak
 	.4byte __RTTI__32TAIeffectAttackEventCallBackTank
 	.4byte 0
 	.4byte hitCreature__32TAIeffectAttackEventCallBackTankFP20TAIeffectAttackParamP8Creature
@@ -2795,239 +2911,338 @@ __vt__32TAIeffectAttackEventCallBackTank:
 	.4byte playEventSound__32TAIeffectAttackEventCallBackTankFPQ23zen17particleGeneratorP20TAIeffectAttackParam
 	.4byte ptclHitMap__32TAIeffectAttackEventCallBackTankFPQ23zen17particleGeneratorP20TAIeffectAttackParam
 	.4byte hitCheckCulling__28TAIeffectAttackEventCallBackFPQ23zen17particleGeneratorP20TAIeffectAttackParamP8Creature
-lbl_802DE480:
-	.asciz "Interaction"
+.endobj __vt__32TAIeffectAttackEventCallBackTank
 .balign 4
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
+.obj lbl_802DE480, local
+	.asciz "Interaction"
+.endobj lbl_802DE480
+.balign 4
+.skip 0x54 # compiler padding
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-lbl_803E5F20:
-	.4byte 0x00000000
-lbl_803E5F24:
-	.4byte 0xC1700000
-lbl_803E5F28:
-	.4byte 0x41200000
-lbl_803E5F2C:
-	.4byte 0x41F00000
-lbl_803E5F30:
-	.4byte 0x00000000
-lbl_803E5F34:
-	.4byte 0x00000000
-lbl_803E5F38:
-	.4byte 0x3F000000
-lbl_803E5F3C:
-	.4byte 0x3F000000
-lbl_803E5F40:
-	.4byte 0x00000000
-lbl_803E5F44:
-	.4byte 0xBF000000
-lbl_803E5F48:
-	.4byte 0xBF000000
-lbl_803E5F4C:
-	.4byte 0x00000000
-lbl_803E5F50:
-	.4byte 0xBF000000
-lbl_803E5F54:
-	.4byte 0x00000000
-__RTTI__12TAIanimation:
+.obj lbl_803E5F20, local
+	.float 0.0
+.endobj lbl_803E5F20
+.obj lbl_803E5F24, local
+	.float -15.0
+.endobj lbl_803E5F24
+.obj lbl_803E5F28, local
+	.float 10.0
+.endobj lbl_803E5F28
+.obj lbl_803E5F2C, local
+	.float 30.0
+.endobj lbl_803E5F2C
+.obj lbl_803E5F30, local
+	.float 0.0
+.endobj lbl_803E5F30
+.obj lbl_803E5F34, local
+	.float 0.0
+.endobj lbl_803E5F34
+.obj lbl_803E5F38, local
+	.float 0.5
+.endobj lbl_803E5F38
+.obj lbl_803E5F3C, local
+	.float 0.5
+.endobj lbl_803E5F3C
+.obj lbl_803E5F40, local
+	.float 0.0
+.endobj lbl_803E5F40
+.obj lbl_803E5F44, local
+	.float -0.5
+.endobj lbl_803E5F44
+.obj lbl_803E5F48, local
+	.float -0.5
+.endobj lbl_803E5F48
+.obj lbl_803E5F4C, local
+	.float 0.0
+.endobj lbl_803E5F4C
+.obj lbl_803E5F50, local
+	.float -0.5
+.endobj lbl_803E5F50
+.obj lbl_803E5F54, local
+	.float 0.0
+.endobj lbl_803E5F54
+.balign 4
+.obj __RTTI__12TAIanimation, local
 	.4byte lbl_802DDE20
-	.4byte 0x00000000
-__RTTI__16TAItankAnimation:
+	.4byte 0
+.endobj __RTTI__12TAIanimation
+.balign 4
+.obj __RTTI__16TAItankAnimation, local
 	.4byte lbl_802DDE0C
 	.4byte lbl_802DDE30
-__RTTI__12TekiStrategy:
+.endobj __RTTI__16TAItankAnimation
+.balign 4
+.obj __RTTI__12TekiStrategy, local
 	.4byte lbl_802DDE58
 	.4byte 0
-__RTTI__11YaiStrategy:
+.endobj __RTTI__12TekiStrategy
+.balign 4
+.obj __RTTI__11YaiStrategy, local
 	.4byte lbl_802DDE68
 	.4byte lbl_802DDE74
-__RTTI__15TAItankStrategy:
+.endobj __RTTI__11YaiStrategy
+.balign 4
+.obj __RTTI__15TAItankStrategy, local
 	.4byte lbl_802DDE48
 	.4byte lbl_802DDE80
-__RTTI__9TaiAction:
+.endobj __RTTI__15TAItankStrategy
+.balign 4
+.obj __RTTI__9TaiAction, local
 	.4byte lbl_802DDECC
 	.4byte 0
-__RTTI__14TAIAnoReaction:
+.endobj __RTTI__9TaiAction
+.balign 4
+.obj __RTTI__14TAIAnoReaction, local
 	.4byte lbl_802DDEBC
 	.4byte lbl_802DDED8
-__RTTI__12TAIAinitTank:
+.endobj __RTTI__14TAIAnoReaction
+.balign 4
+.obj __RTTI__12TAIAinitTank, local
 	.4byte lbl_802DDF00
 	.4byte lbl_802DDF10
-__RTTI__20TAIAoutsideTerritory:
+.endobj __RTTI__12TAIAinitTank
+.balign 4
+.obj __RTTI__20TAIAoutsideTerritory, local
 	.4byte lbl_802DDF38
 	.4byte lbl_802DDF50
-__RTTI__10TAIAmotion:
+.endobj __RTTI__20TAIAoutsideTerritory
+.balign 4
+.obj __RTTI__10TAIAmotion, local
 	.4byte lbl_802DDF8C
 	.4byte lbl_802DDF98
-__RTTI__12TAIAflicking:
+.endobj __RTTI__10TAIAmotion
+.balign 4
+.obj __RTTI__12TAIAflicking, local
 	.4byte lbl_802DDFA4
 	.4byte lbl_802DDFB4
-__RTTI__16TAIAflickingTank:
+.endobj __RTTI__12TAIAflicking
+.balign 4
+.obj __RTTI__16TAIAflickingTank, local
 	.4byte lbl_802DDF78
 	.4byte lbl_802DDFC8
-__RTTI__17TAIAreserveMotion:
+.endobj __RTTI__16TAIAflickingTank
+.balign 4
+.obj __RTTI__17TAIAreserveMotion, local
 	.4byte lbl_802DE01C
 	.4byte lbl_802DE030
-__RTTI__14TAIAfireBreath:
+.endobj __RTTI__17TAIAreserveMotion
+.balign 4
+.obj __RTTI__14TAIAfireBreath, local
 	.4byte lbl_802DE03C
 	.4byte lbl_802DE04C
-__RTTI__18TAIAfireBreathTank:
+.endobj __RTTI__14TAIAfireBreath
+.balign 4
+.obj __RTTI__18TAIAfireBreathTank, local
 	.4byte lbl_802DE008
 	.4byte lbl_802DE060
-"__RTTI__Q23zen17CallBack1<R4Teki>":
+.endobj __RTTI__18TAIAfireBreathTank
+.balign 4
+.obj "__RTTI__Q23zen17CallBack1<R4Teki>", local
 	.4byte lbl_802DE0AC
 	.4byte 0
-__RTTI__10FireEffect:
+.endobj "__RTTI__Q23zen17CallBack1<R4Teki>"
+.balign 4
+.obj __RTTI__10FireEffect, local
 	.4byte lbl_802DE0A0
 	.4byte lbl_802DE0C4
-__RTTI__12TAIAstepBack:
+.endobj __RTTI__10FireEffect
+.balign 4
+.obj __RTTI__12TAIAstepBack, local
 	.4byte lbl_802DE0FC
 	.4byte lbl_802DE10C
-__RTTI__16TAIAstepBackTank:
+.endobj __RTTI__12TAIAstepBack
+.balign 4
+.obj __RTTI__16TAIAstepBackTank, local
 	.4byte lbl_802DE0E8
 	.4byte lbl_802DE120
-__RTTI__22TAIAjudgeOptionalRange:
+.endobj __RTTI__16TAIAstepBackTank
+.balign 4
+.obj __RTTI__22TAIAjudgeOptionalRange, local
 	.4byte lbl_802DE17C
 	.4byte lbl_802DE194
-__RTTI__24TAIAoutsideOptionalRange:
+.endobj __RTTI__22TAIAjudgeOptionalRange
+.balign 4
+.obj __RTTI__24TAIAoutsideOptionalRange, local
 	.4byte lbl_802DE1A0
 	.4byte lbl_802DE1BC
-__RTTI__28TAIAoutsideOptionalRangeTank:
+.endobj __RTTI__24TAIAoutsideOptionalRange
+.balign 4
+.obj __RTTI__28TAIAoutsideOptionalRangeTank, local
 	.4byte lbl_802DE15C
 	.4byte lbl_802DE1D0
-__RTTI__20TAIAattackableTarget:
+.endobj __RTTI__28TAIAoutsideOptionalRangeTank
+.balign 4
+.obj __RTTI__20TAIAattackableTarget, local
 	.4byte lbl_802DE230
 	.4byte lbl_802DE248
-__RTTI__25TAIAattackableAngleTarget:
+.endobj __RTTI__20TAIAattackableTarget
+.balign 4
+.obj __RTTI__25TAIAattackableAngleTarget, local
 	.4byte lbl_802DE214
 	.4byte lbl_802DE254
-__RTTI__16TAIAturnToTarget:
+.endobj __RTTI__25TAIAattackableAngleTarget
+.balign 4
+.obj __RTTI__16TAIAturnToTarget, local
 	.4byte lbl_802DE298
 	.4byte lbl_802DE2AC
-__RTTI__10TAIApatrol:
+.endobj __RTTI__16TAIAturnToTarget
+.balign 4
+.obj __RTTI__10TAIApatrol, local
 	.4byte lbl_802DE2C0
 	.4byte lbl_802DE2CC
-__RTTI__14TAIApatrolTank:
+.endobj __RTTI__10TAIApatrol
+.balign 4
+.obj __RTTI__14TAIApatrolTank, local
 	.4byte lbl_802DE288
 	.4byte lbl_802DE2E8
-lbl_803E6030:
-	.asciz "ANode"
+.endobj __RTTI__14TAIApatrolTank
 .balign 4
-__RTTI__5ANode:
+.obj lbl_803E6030, local
+	.asciz "ANode"
+.endobj lbl_803E6030
+.balign 4
+.obj __RTTI__5ANode, local
 	.4byte lbl_803E6030
 	.4byte 0
-__RTTI__8CoreNode:
+.endobj __RTTI__5ANode
+.balign 4
+.obj __RTTI__8CoreNode, local
 	.4byte lbl_802DE360
 	.4byte lbl_802DE36C
-lbl_803E6048:
-	.asciz "Node"
+.endobj __RTTI__8CoreNode
 .balign 4
-__RTTI__4Node:
+.obj lbl_803E6048, local
+	.asciz "Node"
+.endobj lbl_803E6048
+.balign 4
+.obj __RTTI__4Node, local
 	.4byte lbl_803E6048
 	.4byte lbl_802DE378
-__RTTI__14TekiParameters:
+.endobj __RTTI__4Node
+.balign 4
+.obj __RTTI__14TekiParameters, local
 	.4byte lbl_802DE38C
 	.4byte lbl_802DE39C
-__RTTI__17TAItankParameters:
+.endobj __RTTI__14TekiParameters
+.balign 4
+.obj __RTTI__17TAItankParameters, local
 	.4byte lbl_802DE34C
 	.4byte lbl_802DE3B8
-__RTTI__28TAIeffectAttackEventCallBack:
+.endobj __RTTI__17TAItankParameters
+.balign 4
+.obj __RTTI__28TAIeffectAttackEventCallBack, local
 	.4byte lbl_802DE430
 	.4byte 0
-__RTTI__32TAIeffectAttackEventCallBackTank:
+.endobj __RTTI__28TAIeffectAttackEventCallBack
+.balign 4
+.obj __RTTI__32TAIeffectAttackEventCallBackTank, local
 	.4byte lbl_802DE40C
 	.4byte lbl_802DE450
+.endobj __RTTI__32TAIeffectAttackEventCallBackTank
 
 .section .sbss, "wa"
 .balign 8
-.global eventCallBackFire__10FireEffect
-eventCallBackFire__10FireEffect:
+.obj eventCallBackFire__10FireEffect, global
 	.skip 0x4
+.endobj eventCallBackFire__10FireEffect
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803EB658:
-	.4byte 0x00000000
-lbl_803EB65C:
-	.4byte 0x447A0000
-lbl_803EB660:
-	.4byte 0x43960000
-lbl_803EB664:
-	.4byte 0x42C80000
-lbl_803EB668:
-	.4byte 0x42480000
-lbl_803EB66C:
-	.4byte 0x40A00000
-lbl_803EB670:
-	.4byte 0x3FA66666
-lbl_803EB674:
-	.4byte 0x42200000
-lbl_803EB678:
-	.4byte 0x42F00000
-lbl_803EB67C:
-	.4byte 0x3EB2B8C3
-lbl_803EB680:
-	.4byte 0x43480000
-lbl_803EB684:
-	.4byte 0x43870000
-lbl_803EB688:
-	.4byte 0x41F00000
-lbl_803EB68C:
-	.4byte 0x41100000
-lbl_803EB690:
-	.4byte 0x43160000
-lbl_803EB694:
-	.4byte 0x3E99999A
-lbl_803EB698:
-	.4byte 0x3E4CCCCD
-lbl_803EB69C:
-	.4byte 0x3F800000
-lbl_803EB6A0:
-	.4byte 0x43FA0000
-lbl_803EB6A4:
-	.4byte 0x3C23D70A
-lbl_803EB6A8:
-	.4byte 0x41A00000
-lbl_803EB6AC:
-	.4byte 0x42700000
-lbl_803EB6B0:
-	.4byte 0x41900000
-lbl_803EB6B4:
-	.4byte 0x3F000000
-lbl_803EB6B8:
-	.4byte 0xBF000000
-lbl_803EB6BC:
-	.4byte 0x42400000
-lbl_803EB6C0:
-	.4byte 0x3FE00000
-	.4byte 0x00000000
-lbl_803EB6C8:
-	.4byte 0x40080000
-	.4byte 0x00000000
-lbl_803EB6D0:
-	.4byte 0x40490FDB
-lbl_803EB6D4:
-	.4byte 0x41200000
-lbl_803EB6D8:
-	.4byte 0x3E800000
+.obj lbl_803EB658, local
+	.float 0.0
+.endobj lbl_803EB658
+.obj lbl_803EB65C, local
+	.float 1000.0
+.endobj lbl_803EB65C
+.obj lbl_803EB660, local
+	.float 300.0
+.endobj lbl_803EB660
+.obj lbl_803EB664, local
+	.float 100.0
+.endobj lbl_803EB664
+.obj lbl_803EB668, local
+	.float 50.0
+.endobj lbl_803EB668
+.obj lbl_803EB66C, local
+	.float 5.0
+.endobj lbl_803EB66C
+.obj lbl_803EB670, local
+	.float 1.3
+.endobj lbl_803EB670
+.obj lbl_803EB674, local
+	.float 40.0
+.endobj lbl_803EB674
+.obj lbl_803EB678, local
+	.float 120.0
+.endobj lbl_803EB678
+.obj lbl_803EB67C, local
+	.float 0.34906587
+.endobj lbl_803EB67C
+.obj lbl_803EB680, local
+	.float 200.0
+.endobj lbl_803EB680
+.obj lbl_803EB684, local
+	.float 270.0
+.endobj lbl_803EB684
+.obj lbl_803EB688, local
+	.float 30.0
+.endobj lbl_803EB688
+.obj lbl_803EB68C, local
+	.float 9.0
+.endobj lbl_803EB68C
+.obj lbl_803EB690, local
+	.float 150.0
+.endobj lbl_803EB690
+.obj lbl_803EB694, local
+	.float 0.3
+.endobj lbl_803EB694
+.obj lbl_803EB698, local
+	.float 0.2
+.endobj lbl_803EB698
+.obj lbl_803EB69C, local
+	.float 1.0
+.endobj lbl_803EB69C
+.obj lbl_803EB6A0, local
+	.float 500.0
+.endobj lbl_803EB6A0
+.obj lbl_803EB6A4, local
+	.float 0.01
+.endobj lbl_803EB6A4
+.obj lbl_803EB6A8, local
+	.float 20.0
+.endobj lbl_803EB6A8
+.obj lbl_803EB6AC, local
+	.float 60.0
+.endobj lbl_803EB6AC
+.obj lbl_803EB6B0, local
+	.float 18.0
+.endobj lbl_803EB6B0
+.obj lbl_803EB6B4, local
+	.float 0.5
+.endobj lbl_803EB6B4
+.obj lbl_803EB6B8, local
+	.float -0.5
+.endobj lbl_803EB6B8
+.obj lbl_803EB6BC, local
+	.float 48.0
+.endobj lbl_803EB6BC
+.balign 8
+.obj lbl_803EB6C0, local
+	.double 0.5
+.endobj lbl_803EB6C0
+.balign 8
+.obj lbl_803EB6C8, local
+	.double 3.0
+.endobj lbl_803EB6C8
+.balign 4
+.obj lbl_803EB6D0, local # pi
+	.float 3.1415927
+.endobj lbl_803EB6D0
+.obj lbl_803EB6D4, local
+	.float 10.0
+.endobj lbl_803EB6D4
+.obj lbl_803EB6D8, local
+	.float 0.25
+.endobj lbl_803EB6D8

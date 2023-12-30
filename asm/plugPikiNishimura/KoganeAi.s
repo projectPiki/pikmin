@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global createWaterEffect__8KoganeAiFv
-createWaterEffect__8KoganeAiFv:
+.fn createWaterEffect__8KoganeAiFv, global
 /* 80176104 00173064  7C 08 02 A6 */	mflr r0
 /* 80176108 00173068  38 80 00 0F */	li r4, 0xf
 /* 8017610C 0017306C  90 01 00 04 */	stw r0, 4(r1)
@@ -112,9 +111,9 @@ createWaterEffect__8KoganeAiFv:
 /* 801762A4 00173204  38 21 00 70 */	addi r1, r1, 0x70
 /* 801762A8 00173208  7C 08 03 A6 */	mtlr r0
 /* 801762AC 0017320C  4E 80 00 20 */	blr 
+.endfn createWaterEffect__8KoganeAiFv
 
-.global killCallBackEffect__8KoganeAiFb
-killCallBackEffect__8KoganeAiFb:
+.fn killCallBackEffect__8KoganeAiFb, global
 /* 801762B0 00173210  7C 08 02 A6 */	mflr r0
 /* 801762B4 00173214  38 C4 00 00 */	addi r6, r4, 0
 /* 801762B8 00173218  90 01 00 04 */	stw r0, 4(r1)
@@ -129,9 +128,9 @@ killCallBackEffect__8KoganeAiFb:
 /* 801762DC 0017323C  38 21 00 08 */	addi r1, r1, 8
 /* 801762E0 00173240  7C 08 03 A6 */	mtlr r0
 /* 801762E4 00173244  4E 80 00 20 */	blr 
+.endfn killCallBackEffect__8KoganeAiFb
 
-.global __ct__8KoganeAiFP6Kogane
-__ct__8KoganeAiFP6Kogane:
+.fn __ct__8KoganeAiFP6Kogane, global
 /* 801762E8 00173248  7C 08 02 A6 */	mflr r0
 /* 801762EC 0017324C  3C A0 80 2B */	lis r5, __vt__19PaniAnimKeyListener@ha
 /* 801762F0 00173250  90 01 00 04 */	stw r0, 4(r1)
@@ -162,9 +161,9 @@ __ct__8KoganeAiFP6Kogane:
 /* 80176350 001732B0  38 21 00 18 */	addi r1, r1, 0x18
 /* 80176354 001732B4  7C 08 03 A6 */	mtlr r0
 /* 80176358 001732B8  4E 80 00 20 */	blr 
+.endfn __ct__8KoganeAiFP6Kogane
 
-.global initAI__8KoganeAiFP6Kogane
-initAI__8KoganeAiFP6Kogane:
+.fn initAI__8KoganeAiFP6Kogane, global
 /* 8017635C 001732BC  7C 08 02 A6 */	mflr r0
 /* 80176360 001732C0  90 01 00 04 */	stw r0, 4(r1)
 /* 80176364 001732C4  38 00 00 01 */	li r0, 1
@@ -235,9 +234,9 @@ initAI__8KoganeAiFP6Kogane:
 /* 80176460 001733C0  38 21 00 70 */	addi r1, r1, 0x70
 /* 80176464 001733C4  7C 08 03 A6 */	mtlr r0
 /* 80176468 001733C8  4E 80 00 20 */	blr 
+.endfn initAI__8KoganeAiFP6Kogane
 
-.global animationKeyUpdated__8KoganeAiFR16PaniAnimKeyEvent
-animationKeyUpdated__8KoganeAiFR16PaniAnimKeyEvent:
+.fn animationKeyUpdated__8KoganeAiFR16PaniAnimKeyEvent, global
 /* 8017646C 001733CC  7C 08 02 A6 */	mflr r0
 /* 80176470 001733D0  90 01 00 04 */	stw r0, 4(r1)
 /* 80176474 001733D4  94 21 FF F8 */	stwu r1, -8(r1)
@@ -276,9 +275,9 @@ animationKeyUpdated__8KoganeAiFR16PaniAnimKeyEvent:
 /* 801764DC 0017343C  38 21 00 08 */	addi r1, r1, 8
 /* 801764E0 00173440  7C 08 03 A6 */	mtlr r0
 /* 801764E4 00173444  4E 80 00 20 */	blr 
+.endfn animationKeyUpdated__8KoganeAiFR16PaniAnimKeyEvent
 
-.global keyAction0__8KoganeAiFv
-keyAction0__8KoganeAiFv:
+.fn keyAction0__8KoganeAiFv, global
 /* 801764E8 00173448  7C 08 02 A6 */	mflr r0
 /* 801764EC 0017344C  90 01 00 04 */	stw r0, 4(r1)
 /* 801764F0 00173450  94 21 FF F8 */	stwu r1, -8(r1)
@@ -304,9 +303,9 @@ keyAction0__8KoganeAiFv:
 /* 80176538 00173498  38 21 00 08 */	addi r1, r1, 8
 /* 8017653C 0017349C  7C 08 03 A6 */	mtlr r0
 /* 80176540 001734A0  4E 80 00 20 */	blr 
+.endfn keyAction0__8KoganeAiFv
 
-.global keyAction1__8KoganeAiFv
-keyAction1__8KoganeAiFv:
+.fn keyAction1__8KoganeAiFv, global
 /* 80176544 001734A4  7C 08 02 A6 */	mflr r0
 /* 80176548 001734A8  90 01 00 04 */	stw r0, 4(r1)
 /* 8017654C 001734AC  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -351,17 +350,17 @@ keyAction1__8KoganeAiFv:
 /* 801765E0 00173540  38 21 00 20 */	addi r1, r1, 0x20
 /* 801765E4 00173544  7C 08 03 A6 */	mtlr r0
 /* 801765E8 00173548  4E 80 00 20 */	blr 
+.endfn keyAction1__8KoganeAiFv
 
-.global keyLoopEnd__8KoganeAiFv
-keyLoopEnd__8KoganeAiFv:
+.fn keyLoopEnd__8KoganeAiFv, global
 /* 801765EC 0017354C  80 83 00 0C */	lwz r4, 0xc(r3)
 /* 801765F0 00173550  80 64 02 EC */	lwz r3, 0x2ec(r4)
 /* 801765F4 00173554  38 03 00 01 */	addi r0, r3, 1
 /* 801765F8 00173558  90 04 02 EC */	stw r0, 0x2ec(r4)
 /* 801765FC 0017355C  4E 80 00 20 */	blr 
+.endfn keyLoopEnd__8KoganeAiFv
 
-.global keyFinished__8KoganeAiFv
-keyFinished__8KoganeAiFv:
+.fn keyFinished__8KoganeAiFv, global
 /* 80176600 00173560  80 83 00 0C */	lwz r4, 0xc(r3)
 /* 80176604 00173564  38 00 00 01 */	li r0, 1
 /* 80176608 00173568  98 04 02 BD */	stb r0, 0x2bd(r4)
@@ -372,9 +371,9 @@ keyFinished__8KoganeAiFv:
 /* 8017661C 0017357C  38 00 00 00 */	li r0, 0
 /* 80176620 00173580  98 03 03 B9 */	stb r0, 0x3b9(r3)
 /* 80176624 00173584  4E 80 00 20 */	blr 
+.endfn keyFinished__8KoganeAiFv
 
-.global playSound__8KoganeAiFi
-playSound__8KoganeAiFi:
+.fn playSound__8KoganeAiFi, global
 /* 80176628 00173588  7C 08 02 A6 */	mflr r0
 /* 8017662C 0017358C  90 01 00 04 */	stw r0, 4(r1)
 /* 80176630 00173590  94 21 FF F8 */	stwu r1, -8(r1)
@@ -391,9 +390,9 @@ playSound__8KoganeAiFi:
 /* 80176658 001735B8  38 21 00 08 */	addi r1, r1, 8
 /* 8017665C 001735BC  7C 08 03 A6 */	mtlr r0
 /* 80176660 001735C0  4E 80 00 20 */	blr 
+.endfn playSound__8KoganeAiFi
 
-.global setMapAttribute__8KoganeAiFv
-setMapAttribute__8KoganeAiFv:
+.fn setMapAttribute__8KoganeAiFv, global
 /* 80176664 001735C4  7C 08 02 A6 */	mflr r0
 /* 80176668 001735C8  90 01 00 04 */	stw r0, 4(r1)
 /* 8017666C 001735CC  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -458,9 +457,9 @@ setMapAttribute__8KoganeAiFv:
 /* 80176734 00173694  38 21 00 18 */	addi r1, r1, 0x18
 /* 80176738 00173698  7C 08 03 A6 */	mtlr r0
 /* 8017673C 0017369C  4E 80 00 20 */	blr 
+.endfn setMapAttribute__8KoganeAiFv
 
-.global setNewTargetPosition__8KoganeAiFv
-setNewTargetPosition__8KoganeAiFv:
+.fn setNewTargetPosition__8KoganeAiFv, global
 /* 80176740 001736A0  7C 08 02 A6 */	mflr r0
 /* 80176744 001736A4  90 01 00 04 */	stw r0, 4(r1)
 /* 80176748 001736A8  94 21 FF 38 */	stwu r1, -0xc8(r1)
@@ -589,9 +588,9 @@ setNewTargetPosition__8KoganeAiFv:
 /* 8017691C 0017387C  38 21 00 C8 */	addi r1, r1, 0xc8
 /* 80176920 00173880  7C 08 03 A6 */	mtlr r0
 /* 80176924 00173884  4E 80 00 20 */	blr 
+.endfn setNewTargetPosition__8KoganeAiFv
 
-.global setRouteTargetPosition__8KoganeAiFv
-setRouteTargetPosition__8KoganeAiFv:
+.fn setRouteTargetPosition__8KoganeAiFv, global
 /* 80176928 00173888  7C 08 02 A6 */	mflr r0
 /* 8017692C 0017388C  3C 80 74 65 */	lis r4, 0x74657374@ha
 /* 80176930 00173890  90 01 00 04 */	stw r0, 4(r1)
@@ -737,9 +736,9 @@ setRouteTargetPosition__8KoganeAiFv:
 /* 80176B48 00173AA8  38 21 00 E0 */	addi r1, r1, 0xe0
 /* 80176B4C 00173AAC  7C 08 03 A6 */	mtlr r0
 /* 80176B50 00173AB0  4E 80 00 20 */	blr 
+.endfn setRouteTargetPosition__8KoganeAiFv
 
-.global birthItemPellet__8KoganeAiFi
-birthItemPellet__8KoganeAiFi:
+.fn birthItemPellet__8KoganeAiFi, global
 /* 80176B54 00173AB4  7C 08 02 A6 */	mflr r0
 /* 80176B58 00173AB8  90 01 00 04 */	stw r0, 4(r1)
 /* 80176B5C 00173ABC  94 21 FF A0 */	stwu r1, -0x60(r1)
@@ -849,9 +848,9 @@ birthItemPellet__8KoganeAiFi:
 /* 80176CF0 00173C50  38 21 00 60 */	addi r1, r1, 0x60
 /* 80176CF4 00173C54  7C 08 03 A6 */	mtlr r0
 /* 80176CF8 00173C58  4E 80 00 20 */	blr 
+.endfn birthItemPellet__8KoganeAiFi
 
-.global birthItemWater__8KoganeAiFif
-birthItemWater__8KoganeAiFif:
+.fn birthItemWater__8KoganeAiFif, global
 /* 80176CFC 00173C5C  7C 08 02 A6 */	mflr r0
 /* 80176D00 00173C60  90 01 00 04 */	stw r0, 4(r1)
 /* 80176D04 00173C64  94 21 FF 78 */	stwu r1, -0x88(r1)
@@ -978,9 +977,9 @@ birthItemWater__8KoganeAiFif:
 /* 80176ED0 00173E30  38 21 00 88 */	addi r1, r1, 0x88
 /* 80176ED4 00173E34  7C 08 03 A6 */	mtlr r0
 /* 80176ED8 00173E38  4E 80 00 20 */	blr 
+.endfn birthItemWater__8KoganeAiFif
 
-.global createPellet__8KoganeAiFv
-createPellet__8KoganeAiFv:
+.fn createPellet__8KoganeAiFv, global
 /* 80176EDC 00173E3C  7C 08 02 A6 */	mflr r0
 /* 80176EE0 00173E40  90 01 00 04 */	stw r0, 4(r1)
 /* 80176EE4 00173E44  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -1035,9 +1034,9 @@ createPellet__8KoganeAiFv:
 /* 80176F94 00173EF4  38 21 00 20 */	addi r1, r1, 0x20
 /* 80176F98 00173EF8  7C 08 03 A6 */	mtlr r0
 /* 80176F9C 00173EFC  4E 80 00 20 */	blr 
+.endfn createPellet__8KoganeAiFv
 
-.global appearTransit__8KoganeAiFv
-appearTransit__8KoganeAiFv:
+.fn appearTransit__8KoganeAiFv, global
 /* 80176FA0 00173F00  7C 08 02 A6 */	mflr r0
 /* 80176FA4 00173F04  90 01 00 04 */	stw r0, 4(r1)
 /* 80176FA8 00173F08  94 21 FF 78 */	stwu r1, -0x88(r1)
@@ -1292,9 +1291,9 @@ appearTransit__8KoganeAiFv:
 /* 80177334 00174294  38 21 00 88 */	addi r1, r1, 0x88
 /* 80177338 00174298  7C 08 03 A6 */	mtlr r0
 /* 8017733C 0017429C  4E 80 00 20 */	blr 
+.endfn appearTransit__8KoganeAiFv
 
-.global initCreate__8KoganeAiFi
-initCreate__8KoganeAiFi:
+.fn initCreate__8KoganeAiFi, global
 /* 80177340 001742A0  7C 08 02 A6 */	mflr r0
 /* 80177344 001742A4  90 01 00 04 */	stw r0, 4(r1)
 /* 80177348 001742A8  38 00 00 00 */	li r0, 0
@@ -1416,9 +1415,9 @@ initCreate__8KoganeAiFi:
 /* 80177508 00174468  38 21 00 80 */	addi r1, r1, 0x80
 /* 8017750C 0017446C  7C 08 03 A6 */	mtlr r0
 /* 80177510 00174470  4E 80 00 20 */	blr 
+.endfn initCreate__8KoganeAiFi
 
-.global update__8KoganeAiFv
-update__8KoganeAiFv:
+.fn update__8KoganeAiFv, global
 /* 80177514 00174474  7C 08 02 A6 */	mflr r0
 /* 80177518 00174478  90 01 00 04 */	stw r0, 4(r1)
 /* 8017751C 0017447C  94 21 FD C8 */	stwu r1, -0x238(r1)
@@ -2010,9 +2009,9 @@ update__8KoganeAiFv:
 /* 80177DAC 00174D0C  38 21 02 38 */	addi r1, r1, 0x238
 /* 80177DB0 00174D10  7C 08 03 A6 */	mtlr r0
 /* 80177DB4 00174D14  4E 80 00 20 */	blr 
+.endfn update__8KoganeAiFv
 
-.global invoke__23KoganeGenRippleCallBackFPQ23zen17particleGenerator
-invoke__23KoganeGenRippleCallBackFPQ23zen17particleGenerator:
+.fn invoke__23KoganeGenRippleCallBackFPQ23zen17particleGenerator, weak
 /* 80177DB8 00174D18  80 63 00 04 */	lwz r3, 4(r3)
 /* 80177DBC 00174D1C  80 63 03 BC */	lwz r3, 0x3bc(r3)
 /* 80177DC0 00174D20  88 03 00 04 */	lbz r0, 4(r3)
@@ -2024,6 +2023,7 @@ invoke__23KoganeGenRippleCallBackFPQ23zen17particleGenerator:
 .L_80177DD8:
 /* 80177DD8 00174D38  38 60 00 01 */	li r3, 1
 /* 80177DDC 00174D3C  4E 80 00 20 */	blr 
+.endfn invoke__23KoganeGenRippleCallBackFPQ23zen17particleGenerator
 
 .section .rodata, "a"  # 0x80221FE0 - 0x80222DC0
 .balign 8
@@ -2036,13 +2036,15 @@ invoke__23KoganeGenRippleCallBackFPQ23zen17particleGenerator:
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802D09A0:
+.obj lbl_802D09A0, local
 	.asciz "KoganeAi.cpp"
+.endobj lbl_802D09A0
 .balign 4
-lbl_802D09B0:
+.obj lbl_802D09B0, local
 	.asciz "KoganeAi"
+.endobj lbl_802D09B0
 .balign 4
-lbl_802D09BC:
+.obj lbl_802D09BC, local
 	.4byte .L_801766AC
 	.4byte .L_801766B8
 	.4byte .L_801766C4
@@ -2050,162 +2052,228 @@ lbl_802D09BC:
 	.4byte .L_801766DC
 	.4byte .L_801766E8
 	.4byte .L_80176710
+.endobj lbl_802D09BC
 .balign 4
-lbl_802D09D8:
+.obj lbl_802D09D8, local
 	.asciz "PaniAnimKeyListener"
+.endobj lbl_802D09D8
 .balign 4
-lbl_802D09EC:
+.obj lbl_802D09EC, local
 	.4byte __RTTI__19PaniAnimKeyListener
-	.4byte 0x00000000
-	.4byte 0x00000000
-.global __vt__8KoganeAi
-__vt__8KoganeAi:
+	.4byte 0
+	.4byte 0
+.endobj lbl_802D09EC
+.balign 4
+.obj __vt__8KoganeAi, global
 	.4byte __RTTI__8KoganeAi
 	.4byte 0
 	.4byte animationKeyUpdated__8KoganeAiFR16PaniAnimKeyEvent
+.endobj __vt__8KoganeAi
 .balign 4
-lbl_802D0A04:
+.obj lbl_802D0A04, local
 	.asciz "KoganeGenRippleCallBack"
+.endobj lbl_802D0A04
 .balign 4
-lbl_802D0A1C:
+.obj lbl_802D0A1C, local
 	.asciz "zen::CallBack1<zen::particleGenerator *>"
+.endobj lbl_802D0A1C
 .balign 4
-lbl_802D0A48:
+.obj lbl_802D0A48, local
 	.4byte "__RTTI__Q23zen37CallBack1<PQ23zen17particleGenerator>"
 	.4byte 0
 	.4byte 0
-.global __vt__23KoganeGenRippleCallBack
-__vt__23KoganeGenRippleCallBack:
+.endobj lbl_802D0A48
+.balign 4
+.obj __vt__23KoganeGenRippleCallBack, weak
 	.4byte __RTTI__23KoganeGenRippleCallBack
 	.4byte 0
 	.4byte invoke__23KoganeGenRippleCallBackFPQ23zen17particleGenerator
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
+.endobj __vt__23KoganeGenRippleCallBack
+.balign 4
+.skip 0x18 # compiler padding
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-koganeSE:
+.obj koganeSE, local
 	.4byte 0x00000076
 	.4byte 0x00000077
-lbl_803E5220:
-	.4byte 0x00000000
-lbl_803E5224:
-	.4byte 0x00000000
-lbl_803E5228:
-	.4byte 0x00000000
-lbl_803E522C:
-	.4byte 0x00000000
-lbl_803E5230:
-	.4byte 0x3F800000
-lbl_803E5234:
-	.4byte 0x00000000
-lbl_803E5238:
-	.4byte 0x00000000
-lbl_803E523C:
-	.4byte 0x00000000
-lbl_803E5240:
-	.4byte 0x00000000
-lbl_803E5244:
-	.4byte 0x00000000
-lbl_803E5248:
-	.4byte 0x3F800000
-lbl_803E524C:
-	.4byte 0x00000000
-lbl_803E5250:
-	.4byte 0x00000000
-lbl_803E5254:
-	.4byte 0x00000000
-lbl_803E5258:
-	.4byte 0x00000000
-lbl_803E525C:
-	.4byte 0x00000000
-lbl_803E5260:
-	.4byte 0x3F800000
-lbl_803E5264:
-	.4byte 0x00000000
-lbl_803E5268:
-	.4byte 0x00000000
-lbl_803E526C:
-	.4byte 0x00000000
-lbl_803E5270:
-	.4byte 0x00000000
-lbl_803E5274:
-	.4byte 0x00000000
-lbl_803E5278:
-	.4byte 0x00000000
-lbl_803E527C:
-	.4byte 0x00000000
-lbl_803E5280:
-	.4byte 0x00000000
-lbl_803E5284:
-	.4byte 0x00000000
-lbl_803E5288:
-	.4byte 0x00000000
-lbl_803E528C:
-	.4byte 0x00000000
-lbl_803E5290:
-	.4byte 0x00000000
-lbl_803E5294:
-	.4byte 0x43960000
-lbl_803E5298:
-	.4byte 0x43480000
-lbl_803E529C:
-	.4byte 0x00000000
-lbl_803E52A0:
-	.4byte 0x00000000
-__RTTI__19PaniAnimKeyListener:
+.endobj koganeSE
+.balign 4
+.obj lbl_803E5220, local
+	.float 0.0
+.endobj lbl_803E5220
+.obj lbl_803E5224, local
+	.float 0.0
+.endobj lbl_803E5224
+.obj lbl_803E5228, local
+	.float 0.0
+.endobj lbl_803E5228
+.obj lbl_803E522C, local
+	.float 0.0
+.endobj lbl_803E522C
+.obj lbl_803E5230, local
+	.float 1.0
+.endobj lbl_803E5230
+.obj lbl_803E5234, local
+	.float 0.0
+.endobj lbl_803E5234
+.obj lbl_803E5238, local
+	.float 0.0
+.endobj lbl_803E5238
+.obj lbl_803E523C, local
+	.float 0.0
+.endobj lbl_803E523C
+.obj lbl_803E5240, local
+	.float 0.0
+.endobj lbl_803E5240
+.obj lbl_803E5244, local
+	.float 0.0
+.endobj lbl_803E5244
+.obj lbl_803E5248, local
+	.float 1.0
+.endobj lbl_803E5248
+.obj lbl_803E524C, local
+	.float 0.0
+.endobj lbl_803E524C
+.obj lbl_803E5250, local
+	.float 0.0
+.endobj lbl_803E5250
+.obj lbl_803E5254, local
+	.float 0.0
+.endobj lbl_803E5254
+.obj lbl_803E5258, local
+	.float 0.0
+.endobj lbl_803E5258
+.obj lbl_803E525C, local
+	.float 0.0
+.endobj lbl_803E525C
+.obj lbl_803E5260, local
+	.float 1.0
+.endobj lbl_803E5260
+.obj lbl_803E5264, local
+	.float 0.0
+.endobj lbl_803E5264
+.obj lbl_803E5268, local
+	.float 0.0
+.endobj lbl_803E5268
+.obj lbl_803E526C, local
+	.float 0.0
+.endobj lbl_803E526C
+.obj lbl_803E5270, local
+	.float 0.0
+.endobj lbl_803E5270
+.obj lbl_803E5274, local
+	.float 0.0
+.endobj lbl_803E5274
+.obj lbl_803E5278, local
+	.float 0.0
+.endobj lbl_803E5278
+.obj lbl_803E527C, local
+	.float 0.0
+.endobj lbl_803E527C
+.obj lbl_803E5280, local
+	.float 0.0
+.endobj lbl_803E5280
+.obj lbl_803E5284, local
+	.float 0.0
+.endobj lbl_803E5284
+.obj lbl_803E5288, local
+	.float 0.0
+.endobj lbl_803E5288
+.obj lbl_803E528C, local
+	.float 0.0
+.endobj lbl_803E528C
+.obj lbl_803E5290, local
+	.float 0.0
+.endobj lbl_803E5290
+.obj lbl_803E5294, local
+	.float 300.0
+.endobj lbl_803E5294
+.obj lbl_803E5298, local
+	.float 200.0
+.endobj lbl_803E5298
+.obj lbl_803E529C, local
+	.float 0.0
+.endobj lbl_803E529C
+.obj lbl_803E52A0, local
+	.float 0.0
+.endobj lbl_803E52A0
+.balign 4
+.obj __RTTI__19PaniAnimKeyListener, local
 	.4byte lbl_802D09D8
-	.4byte 0x00000000
-__RTTI__8KoganeAi:
+	.4byte 0
+.endobj __RTTI__19PaniAnimKeyListener
+.balign 4
+.obj __RTTI__8KoganeAi, local
 	.4byte lbl_802D09B0
 	.4byte lbl_802D09EC
-"__RTTI__Q23zen37CallBack1<PQ23zen17particleGenerator>":
+.endobj __RTTI__8KoganeAi
+.balign 4
+.obj "__RTTI__Q23zen37CallBack1<PQ23zen17particleGenerator>", local
 	.4byte lbl_802D0A1C
 	.4byte 0
-__RTTI__23KoganeGenRippleCallBack:
+.endobj "__RTTI__Q23zen37CallBack1<PQ23zen17particleGenerator>"
+.balign 4
+.obj __RTTI__23KoganeGenRippleCallBack, local
 	.4byte lbl_802D0A04
 	.4byte lbl_802D0A48
+.endobj __RTTI__23KoganeGenRippleCallBack
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803EAF60:
+.obj lbl_803EAF60, local
 	.float 0.0
-lbl_803EAF64:
+.endobj lbl_803EAF60
+.obj lbl_803EAF64, local
 	.float 1.0
-lbl_803EAF68:
-	.4byte 0x46FFFE00
-lbl_803EAF6C:
-	.4byte 0x3F7FFFEF
-lbl_803EAF70:
-	.4byte 0x43300000
-	.4byte 0x80000000
-lbl_803EAF78:
-	.4byte 0x3C0EFA35
-lbl_803EAF7C:
+.endobj lbl_803EAF64
+.obj lbl_803EAF68, local
+	.float 32767.0
+.endobj lbl_803EAF68
+.obj lbl_803EAF6C, local
+	.float 0.999999
+.endobj lbl_803EAF6C
+.balign 8
+.obj lbl_803EAF70, local
+	.8byte 0x4330000080000000
+.endobj lbl_803EAF70
+.balign 4
+.obj lbl_803EAF78, local
+	.float 0.008726646
+.endobj lbl_803EAF78
+.obj lbl_803EAF7C, local
 	.float 0.5
-lbl_803EAF80:
+.endobj lbl_803EAF7C
+.obj lbl_803EAF80, local
 	.float 20.0
-lbl_803EAF84:
-	.4byte 0x403FFFF3
-lbl_803EAF88:
-	.4byte 0x42C80000
-lbl_803EAF8C:
-	.4byte 0x40490FDB
-lbl_803EAF90:
-	.4byte 0x42480000
-lbl_803EAF94:
-	.4byte 0x3ECCCCCD
-lbl_803EAF98:
-	.4byte 0x41200000
-lbl_803EAF9C:
+.endobj lbl_803EAF80
+.obj lbl_803EAF84, local
+	.float 2.999997
+.endobj lbl_803EAF84
+.obj lbl_803EAF88, local
+	.float 100.0
+.endobj lbl_803EAF88
+.obj lbl_803EAF8C, local # pi
+	.float 3.1415927
+.endobj lbl_803EAF8C
+.obj lbl_803EAF90, local
+	.float 50.0
+.endobj lbl_803EAF90
+.obj lbl_803EAF94, local
+	.float 0.4
+.endobj lbl_803EAF94
+.obj lbl_803EAF98, local
+	.float 10.0
+.endobj lbl_803EAF98
+.obj lbl_803EAF9C, local
 	.float 30.0
-lbl_803EAFA0:
-	.4byte 0x40A00000
-lbl_803EAFA4:
-	.4byte 0x3FC90FDB
-lbl_803EAFA8:
-	.4byte 0x3F733333
+.endobj lbl_803EAF9C
+.obj lbl_803EAFA0, local
+	.float 5.0
+.endobj lbl_803EAFA0
+.obj lbl_803EAFA4, local # pi/2
+	.float 1.5707964
+.endobj lbl_803EAFA4
+.obj lbl_803EAFA8, local
+	.float 0.95
+.endobj lbl_803EAFA8

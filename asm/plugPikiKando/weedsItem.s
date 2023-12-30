@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global workable__7RockGenFv
-workable__7RockGenFv:
+.fn workable__7RockGenFv, global
 /* 800E467C 000E15DC  80 83 03 C8 */	lwz r4, 0x3c8(r3)
 /* 800E4680 000E15E0  38 60 00 05 */	li r3, 5
 /* 800E4684 000E15E4  7C 60 22 38 */	eqv r0, r3, r4
@@ -10,27 +9,27 @@ workable__7RockGenFv:
 /* 800E4690 000E15F0  7C 60 01 94 */	addze r3, r0
 /* 800E4694 000E15F4  54 63 07 FE */	clrlwi r3, r3, 0x1f
 /* 800E4698 000E15F8  4E 80 00 20 */	blr 
+.endfn workable__7RockGenFv
 
-.global startWork__7RockGenFv
-startWork__7RockGenFv:
+.fn startWork__7RockGenFv, global
 /* 800E469C 000E15FC  80 83 03 C8 */	lwz r4, 0x3c8(r3)
 /* 800E46A0 000E1600  2C 04 00 05 */	cmpwi r4, 5
 /* 800E46A4 000E1604  4C 80 00 20 */	bgelr 
 /* 800E46A8 000E1608  38 04 00 01 */	addi r0, r4, 1
 /* 800E46AC 000E160C  90 03 03 C8 */	stw r0, 0x3c8(r3)
 /* 800E46B0 000E1610  4E 80 00 20 */	blr 
+.endfn startWork__7RockGenFv
 
-.global finishWork__7RockGenFv
-finishWork__7RockGenFv:
+.fn finishWork__7RockGenFv, global
 /* 800E46B4 000E1614  80 83 03 C8 */	lwz r4, 0x3c8(r3)
 /* 800E46B8 000E1618  2C 04 00 00 */	cmpwi r4, 0
 /* 800E46BC 000E161C  4C 81 00 20 */	blelr 
 /* 800E46C0 000E1620  38 04 FF FF */	addi r0, r4, -1
 /* 800E46C4 000E1624  90 03 03 C8 */	stw r0, 0x3c8(r3)
 /* 800E46C8 000E1628  4E 80 00 20 */	blr 
+.endfn finishWork__7RockGenFv
 
-.global workable__8GrassGenFv
-workable__8GrassGenFv:
+.fn workable__8GrassGenFv, global
 /* 800E46CC 000E162C  80 83 03 C8 */	lwz r4, 0x3c8(r3)
 /* 800E46D0 000E1630  38 60 00 05 */	li r3, 5
 /* 800E46D4 000E1634  7C 60 22 38 */	eqv r0, r3, r4
@@ -39,27 +38,27 @@ workable__8GrassGenFv:
 /* 800E46E0 000E1640  7C 60 01 94 */	addze r3, r0
 /* 800E46E4 000E1644  54 63 07 FE */	clrlwi r3, r3, 0x1f
 /* 800E46E8 000E1648  4E 80 00 20 */	blr 
+.endfn workable__8GrassGenFv
 
-.global startWork__8GrassGenFv
-startWork__8GrassGenFv:
+.fn startWork__8GrassGenFv, global
 /* 800E46EC 000E164C  80 83 03 C8 */	lwz r4, 0x3c8(r3)
 /* 800E46F0 000E1650  2C 04 00 05 */	cmpwi r4, 5
 /* 800E46F4 000E1654  4C 80 00 20 */	bgelr 
 /* 800E46F8 000E1658  38 04 00 01 */	addi r0, r4, 1
 /* 800E46FC 000E165C  90 03 03 C8 */	stw r0, 0x3c8(r3)
 /* 800E4700 000E1660  4E 80 00 20 */	blr 
+.endfn startWork__8GrassGenFv
 
-.global finishWork__8GrassGenFv
-finishWork__8GrassGenFv:
+.fn finishWork__8GrassGenFv, global
 /* 800E4704 000E1664  80 83 03 C8 */	lwz r4, 0x3c8(r3)
 /* 800E4708 000E1668  2C 04 00 00 */	cmpwi r4, 0
 /* 800E470C 000E166C  4C 81 00 20 */	blelr 
 /* 800E4710 000E1670  38 04 FF FF */	addi r0, r4, -1
 /* 800E4714 000E1674  90 03 03 C8 */	stw r0, 0x3c8(r3)
 /* 800E4718 000E1678  4E 80 00 20 */	blr 
+.endfn finishWork__8GrassGenFv
 
-.global resolve__7RockGenFv
-resolve__7RockGenFv:
+.fn resolve__7RockGenFv, global
 /* 800E471C 000E167C  7C 08 02 A6 */	mflr r0
 /* 800E4720 000E1680  90 01 00 04 */	stw r0, 4(r1)
 /* 800E4724 000E1684  94 21 FF 08 */	stwu r1, -0xf8(r1)
@@ -219,9 +218,9 @@ resolve__7RockGenFv:
 /* 800E496C 000E18CC  38 21 00 F8 */	addi r1, r1, 0xf8
 /* 800E4970 000E18D0  7C 08 03 A6 */	mtlr r0
 /* 800E4974 000E18D4  4E 80 00 20 */	blr 
+.endfn resolve__7RockGenFv
 
-.global resolve__8GrassGenFv
-resolve__8GrassGenFv:
+.fn resolve__8GrassGenFv, global
 /* 800E4978 000E18D8  7C 08 02 A6 */	mflr r0
 /* 800E497C 000E18DC  90 01 00 04 */	stw r0, 4(r1)
 /* 800E4980 000E18E0  94 21 FF 08 */	stwu r1, -0xf8(r1)
@@ -381,9 +380,9 @@ resolve__8GrassGenFv:
 /* 800E4BC8 000E1B28  38 21 00 F8 */	addi r1, r1, 0xf8
 /* 800E4BCC 000E1B2C  7C 08 03 A6 */	mtlr r0
 /* 800E4BD0 000E1B30  4E 80 00 20 */	blr 
+.endfn resolve__8GrassGenFv
 
-.global __ct__7RockGenFP5ShapeP12CreatureProp
-__ct__7RockGenFP5ShapeP12CreatureProp:
+.fn __ct__7RockGenFP5ShapeP12CreatureProp, global
 /* 800E4BD4 000E1B34  7C 08 02 A6 */	mflr r0
 /* 800E4BD8 000E1B38  38 80 00 21 */	li r4, 0x21
 /* 800E4BDC 000E1B3C  90 01 00 04 */	stw r0, 4(r1)
@@ -425,9 +424,9 @@ __ct__7RockGenFP5ShapeP12CreatureProp:
 /* 800E4C68 000E1BC8  38 21 00 20 */	addi r1, r1, 0x20
 /* 800E4C6C 000E1BCC  7C 08 03 A6 */	mtlr r0
 /* 800E4C70 000E1BD0  4E 80 00 20 */	blr 
+.endfn __ct__7RockGenFP5ShapeP12CreatureProp
 
-.global create__7RockGenFifi
-create__7RockGenFifi:
+.fn create__7RockGenFifi, global
 /* 800E4C74 000E1BD4  7C 08 02 A6 */	mflr r0
 /* 800E4C78 000E1BD8  90 01 00 04 */	stw r0, 4(r1)
 /* 800E4C7C 000E1BDC  94 21 FF 10 */	stwu r1, -0xf0(r1)
@@ -591,24 +590,24 @@ create__7RockGenFifi:
 /* 800E4EEC 000E1E4C  38 21 00 F0 */	addi r1, r1, 0xf0
 /* 800E4EF0 000E1E50  7C 08 03 A6 */	mtlr r0
 /* 800E4EF4 000E1E54  4E 80 00 20 */	blr 
+.endfn create__7RockGenFifi
 
-.global __ct__6PebbleFv
-__ct__6PebbleFv:
+.fn __ct__6PebbleFv, weak
 /* 800E4EF8 000E1E58  C0 02 99 10 */	lfs f0, lbl_803E9B10@sda21(r2)
 /* 800E4EFC 000E1E5C  D0 03 00 08 */	stfs f0, 8(r3)
 /* 800E4F00 000E1E60  D0 03 00 04 */	stfs f0, 4(r3)
 /* 800E4F04 000E1E64  D0 03 00 00 */	stfs f0, 0(r3)
 /* 800E4F08 000E1E68  4E 80 00 20 */	blr 
+.endfn __ct__6PebbleFv
 
-.global setSizeAndNum__7RockGenFfi
-setSizeAndNum__7RockGenFfi:
+.fn setSizeAndNum__7RockGenFfi, global
 /* 800E4F0C 000E1E6C  B0 83 03 D4 */	sth r4, 0x3d4(r3)
 /* 800E4F10 000E1E70  B0 83 03 D6 */	sth r4, 0x3d6(r3)
 /* 800E4F14 000E1E74  D0 23 03 E4 */	stfs f1, 0x3e4(r3)
 /* 800E4F18 000E1E78  4E 80 00 20 */	blr 
+.endfn setSizeAndNum__7RockGenFfi
 
-.global startAI__7RockGenFi
-startAI__7RockGenFi:
+.fn startAI__7RockGenFi, global
 /* 800E4F1C 000E1E7C  7C 08 02 A6 */	mflr r0
 /* 800E4F20 000E1E80  38 A0 00 00 */	li r5, 0
 /* 800E4F24 000E1E84  90 01 00 04 */	stw r0, 4(r1)
@@ -632,16 +631,16 @@ startAI__7RockGenFi:
 /* 800E4F6C 000E1ECC  38 21 00 18 */	addi r1, r1, 0x18
 /* 800E4F70 000E1ED0  7C 08 03 A6 */	mtlr r0
 /* 800E4F74 000E1ED4  4E 80 00 20 */	blr 
+.endfn startAI__7RockGenFi
 
-.global killPebble__7RockGenFv
-killPebble__7RockGenFv:
+.fn killPebble__7RockGenFv, global
 /* 800E4F78 000E1ED8  A0 83 03 D4 */	lhz r4, 0x3d4(r3)
 /* 800E4F7C 000E1EDC  38 04 FF FF */	addi r0, r4, -1
 /* 800E4F80 000E1EE0  B0 03 03 D4 */	sth r0, 0x3d4(r3)
 /* 800E4F84 000E1EE4  4E 80 00 20 */	blr 
+.endfn killPebble__7RockGenFv
 
-.global doSave__7RockGenFR18RandomAccessStream
-doSave__7RockGenFR18RandomAccessStream:
+.fn doSave__7RockGenFR18RandomAccessStream, global
 /* 800E4F88 000E1EE8  7C 08 02 A6 */	mflr r0
 /* 800E4F8C 000E1EEC  38 A3 00 00 */	addi r5, r3, 0
 /* 800E4F90 000E1EF0  90 01 00 04 */	stw r0, 4(r1)
@@ -657,9 +656,9 @@ doSave__7RockGenFR18RandomAccessStream:
 /* 800E4FB8 000E1F18  38 21 00 08 */	addi r1, r1, 8
 /* 800E4FBC 000E1F1C  7C 08 03 A6 */	mtlr r0
 /* 800E4FC0 000E1F20  4E 80 00 20 */	blr 
+.endfn doSave__7RockGenFR18RandomAccessStream
 
-.global doLoad__7RockGenFR18RandomAccessStream
-doLoad__7RockGenFR18RandomAccessStream:
+.fn doLoad__7RockGenFR18RandomAccessStream, global
 /* 800E4FC4 000E1F24  7C 08 02 A6 */	mflr r0
 /* 800E4FC8 000E1F28  90 01 00 04 */	stw r0, 4(r1)
 /* 800E4FCC 000E1F2C  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -694,9 +693,9 @@ doLoad__7RockGenFR18RandomAccessStream:
 /* 800E5038 000E1F98  38 21 00 20 */	addi r1, r1, 0x20
 /* 800E503C 000E1F9C  7C 08 03 A6 */	mtlr r0
 /* 800E5040 000E1FA0  4E 80 00 20 */	blr 
+.endfn doLoad__7RockGenFR18RandomAccessStream
 
-.global update__7RockGenFv
-update__7RockGenFv:
+.fn update__7RockGenFv, global
 /* 800E5044 000E1FA4  7C 08 02 A6 */	mflr r0
 /* 800E5048 000E1FA8  90 01 00 04 */	stw r0, 4(r1)
 /* 800E504C 000E1FAC  94 21 FF F8 */	stwu r1, -8(r1)
@@ -709,9 +708,9 @@ update__7RockGenFv:
 /* 800E5064 000E1FC4  38 21 00 08 */	addi r1, r1, 8
 /* 800E5068 000E1FC8  7C 08 03 A6 */	mtlr r0
 /* 800E506C 000E1FCC  4E 80 00 20 */	blr 
+.endfn update__7RockGenFv
 
-.global refresh__7RockGenFR8Graphics
-refresh__7RockGenFR8Graphics:
+.fn refresh__7RockGenFR8Graphics, global
 /* 800E5070 000E1FD0  7C 08 02 A6 */	mflr r0
 /* 800E5074 000E1FD4  90 01 00 04 */	stw r0, 4(r1)
 /* 800E5078 000E1FD8  94 21 FF 00 */	stwu r1, -0x100(r1)
@@ -816,14 +815,14 @@ refresh__7RockGenFR8Graphics:
 /* 800E51F4 000E2154  38 21 01 00 */	addi r1, r1, 0x100
 /* 800E51F8 000E2158  7C 08 03 A6 */	mtlr r0
 /* 800E51FC 000E215C  4E 80 00 20 */	blr 
+.endfn refresh__7RockGenFR8Graphics
 
-.global getSize__7RockGenFv
-getSize__7RockGenFv:
+.fn getSize__7RockGenFv, weak
 /* 800E5200 000E2160  C0 23 03 E4 */	lfs f1, 0x3e4(r3)
 /* 800E5204 000E2164  4E 80 00 20 */	blr 
+.endfn getSize__7RockGenFv
 
-.global getRandomPebble__7RockGenFv
-getRandomPebble__7RockGenFv:
+.fn getRandomPebble__7RockGenFv, global
 /* 800E5208 000E2168  7C 08 02 A6 */	mflr r0
 /* 800E520C 000E216C  90 01 00 04 */	stw r0, 4(r1)
 /* 800E5210 000E2170  94 21 FF D0 */	stwu r1, -0x30(r1)
@@ -886,9 +885,9 @@ getRandomPebble__7RockGenFv:
 /* 800E52DC 000E223C  38 21 00 30 */	addi r1, r1, 0x30
 /* 800E52E0 000E2240  7C 08 03 A6 */	mtlr r0
 /* 800E52E4 000E2244  4E 80 00 20 */	blr 
+.endfn getRandomPebble__7RockGenFv
 
-.global __ct__8GrassGenFP5ShapeP12CreatureProp
-__ct__8GrassGenFP5ShapeP12CreatureProp:
+.fn __ct__8GrassGenFP5ShapeP12CreatureProp, global
 /* 800E52E8 000E2248  7C 08 02 A6 */	mflr r0
 /* 800E52EC 000E224C  38 80 00 22 */	li r4, 0x22
 /* 800E52F0 000E2250  90 01 00 04 */	stw r0, 4(r1)
@@ -930,9 +929,9 @@ __ct__8GrassGenFP5ShapeP12CreatureProp:
 /* 800E537C 000E22DC  38 21 00 20 */	addi r1, r1, 0x20
 /* 800E5380 000E22E0  7C 08 03 A6 */	mtlr r0
 /* 800E5384 000E22E4  4E 80 00 20 */	blr 
+.endfn __ct__8GrassGenFP5ShapeP12CreatureProp
 
-.global create__8GrassGenFifi
-create__8GrassGenFifi:
+.fn create__8GrassGenFifi, global
 /* 800E5388 000E22E8  7C 08 02 A6 */	mflr r0
 /* 800E538C 000E22EC  90 01 00 04 */	stw r0, 4(r1)
 /* 800E5390 000E22F0  94 21 FF 30 */	stwu r1, -0xd0(r1)
@@ -1080,24 +1079,24 @@ create__8GrassGenFifi:
 /* 800E55C0 000E2520  38 21 00 D0 */	addi r1, r1, 0xd0
 /* 800E55C4 000E2524  7C 08 03 A6 */	mtlr r0
 /* 800E55C8 000E2528  4E 80 00 20 */	blr 
+.endfn create__8GrassGenFifi
 
-.global __ct__5GrassFv
-__ct__5GrassFv:
+.fn __ct__5GrassFv, weak
 /* 800E55CC 000E252C  C0 02 99 10 */	lfs f0, lbl_803E9B10@sda21(r2)
 /* 800E55D0 000E2530  D0 03 00 08 */	stfs f0, 8(r3)
 /* 800E55D4 000E2534  D0 03 00 04 */	stfs f0, 4(r3)
 /* 800E55D8 000E2538  D0 03 00 00 */	stfs f0, 0(r3)
 /* 800E55DC 000E253C  4E 80 00 20 */	blr 
+.endfn __ct__5GrassFv
 
-.global setSizeAndNum__8GrassGenFfi
-setSizeAndNum__8GrassGenFfi:
+.fn setSizeAndNum__8GrassGenFfi, global
 /* 800E55E0 000E2540  B0 83 03 D0 */	sth r4, 0x3d0(r3)
 /* 800E55E4 000E2544  B0 83 03 D2 */	sth r4, 0x3d2(r3)
 /* 800E55E8 000E2548  D0 23 03 E0 */	stfs f1, 0x3e0(r3)
 /* 800E55EC 000E254C  4E 80 00 20 */	blr 
+.endfn setSizeAndNum__8GrassGenFfi
 
-.global startAI__8GrassGenFi
-startAI__8GrassGenFi:
+.fn startAI__8GrassGenFi, global
 /* 800E55F0 000E2550  7C 08 02 A6 */	mflr r0
 /* 800E55F4 000E2554  38 A0 00 00 */	li r5, 0
 /* 800E55F8 000E2558  90 01 00 04 */	stw r0, 4(r1)
@@ -1121,9 +1120,9 @@ startAI__8GrassGenFi:
 /* 800E5640 000E25A0  38 21 00 18 */	addi r1, r1, 0x18
 /* 800E5644 000E25A4  7C 08 03 A6 */	mtlr r0
 /* 800E5648 000E25A8  4E 80 00 20 */	blr 
+.endfn startAI__8GrassGenFi
 
-.global update__8GrassGenFv
-update__8GrassGenFv:
+.fn update__8GrassGenFv, global
 /* 800E564C 000E25AC  7C 08 02 A6 */	mflr r0
 /* 800E5650 000E25B0  90 01 00 04 */	stw r0, 4(r1)
 /* 800E5654 000E25B4  94 21 FF F8 */	stwu r1, -8(r1)
@@ -1136,9 +1135,9 @@ update__8GrassGenFv:
 /* 800E566C 000E25CC  38 21 00 08 */	addi r1, r1, 8
 /* 800E5670 000E25D0  7C 08 03 A6 */	mtlr r0
 /* 800E5674 000E25D4  4E 80 00 20 */	blr 
+.endfn update__8GrassGenFv
 
-.global refresh__8GrassGenFR8Graphics
-refresh__8GrassGenFR8Graphics:
+.fn refresh__8GrassGenFR8Graphics, global
 /* 800E5678 000E25D8  7C 08 02 A6 */	mflr r0
 /* 800E567C 000E25DC  90 01 00 04 */	stw r0, 4(r1)
 /* 800E5680 000E25E0  94 21 FF 00 */	stwu r1, -0x100(r1)
@@ -1243,14 +1242,14 @@ refresh__8GrassGenFR8Graphics:
 /* 800E57FC 000E275C  38 21 01 00 */	addi r1, r1, 0x100
 /* 800E5800 000E2760  7C 08 03 A6 */	mtlr r0
 /* 800E5804 000E2764  4E 80 00 20 */	blr 
+.endfn refresh__8GrassGenFR8Graphics
 
-.global getSize__8GrassGenFv
-getSize__8GrassGenFv:
+.fn getSize__8GrassGenFv, weak
 /* 800E5808 000E2768  C0 23 03 E0 */	lfs f1, 0x3e0(r3)
 /* 800E580C 000E276C  4E 80 00 20 */	blr 
+.endfn getSize__8GrassGenFv
 
-.global getRandomGrass__8GrassGenFv
-getRandomGrass__8GrassGenFv:
+.fn getRandomGrass__8GrassGenFv, global
 /* 800E5810 000E2770  7C 08 02 A6 */	mflr r0
 /* 800E5814 000E2774  90 01 00 04 */	stw r0, 4(r1)
 /* 800E5818 000E2778  94 21 FF D0 */	stwu r1, -0x30(r1)
@@ -1313,17 +1312,17 @@ getRandomGrass__8GrassGenFv:
 /* 800E58E4 000E2844  38 21 00 30 */	addi r1, r1, 0x30
 /* 800E58E8 000E2848  7C 08 03 A6 */	mtlr r0
 /* 800E58EC 000E284C  4E 80 00 20 */	blr 
+.endfn getRandomGrass__8GrassGenFv
 
-.global update__8WeedsGenFv
-update__8WeedsGenFv:
+.fn update__8WeedsGenFv, global
 /* 800E58F0 000E2850  4E 80 00 20 */	blr 
+.endfn update__8WeedsGenFv
 
-.global refresh__8WeedsGenFR8Graphics
-refresh__8WeedsGenFR8Graphics:
+.fn refresh__8WeedsGenFR8Graphics, global
 /* 800E58F4 000E2854  4E 80 00 20 */	blr 
+.endfn refresh__8WeedsGenFR8Graphics
 
-.global startAI__8WeedsGenFi
-startAI__8WeedsGenFi:
+.fn startAI__8WeedsGenFi, global
 /* 800E58F8 000E2858  7C 08 02 A6 */	mflr r0
 /* 800E58FC 000E285C  90 01 00 04 */	stw r0, 4(r1)
 /* 800E5900 000E2860  94 21 FF 78 */	stwu r1, -0x88(r1)
@@ -1442,9 +1441,9 @@ startAI__8WeedsGenFi:
 /* 800E5AB8 000E2A18  38 21 00 88 */	addi r1, r1, 0x88
 /* 800E5ABC 000E2A1C  7C 08 03 A6 */	mtlr r0
 /* 800E5AC0 000E2A20  4E 80 00 20 */	blr 
+.endfn startAI__8WeedsGenFi
 
-.global startAI__4WeedFi
-startAI__4WeedFi:
+.fn startAI__4WeedFi, global
 /* 800E5AC4 000E2A24  C0 0D C7 D4 */	lfs f0, lbl_803E14F4@sda21(r13)
 /* 800E5AC8 000E2A28  38 00 00 00 */	li r0, 0
 /* 800E5ACC 000E2A2C  D0 03 00 7C */	stfs f0, 0x7c(r3)
@@ -1454,9 +1453,9 @@ startAI__4WeedFi:
 /* 800E5ADC 000E2A3C  D0 03 00 84 */	stfs f0, 0x84(r3)
 /* 800E5AE0 000E2A40  B0 03 03 C8 */	sth r0, 0x3c8(r3)
 /* 800E5AE4 000E2A44  4E 80 00 20 */	blr 
+.endfn startAI__4WeedFi
 
-.global interactPullout__4WeedFP8Creature
-interactPullout__4WeedFP8Creature:
+.fn interactPullout__4WeedFP8Creature, global
 /* 800E5AE8 000E2A48  7C 08 02 A6 */	mflr r0
 /* 800E5AEC 000E2A4C  90 01 00 04 */	stw r0, 4(r1)
 /* 800E5AF0 000E2A50  94 21 FF C0 */	stwu r1, -0x40(r1)
@@ -1510,9 +1509,9 @@ interactPullout__4WeedFP8Creature:
 /* 800E5BA8 000E2B08  38 21 00 40 */	addi r1, r1, 0x40
 /* 800E5BAC 000E2B0C  7C 08 03 A6 */	mtlr r0
 /* 800E5BB0 000E2B10  4E 80 00 20 */	blr 
+.endfn interactPullout__4WeedFP8Creature
 
-.global update__4WeedFv
-update__4WeedFv:
+.fn update__4WeedFv, global
 /* 800E5BB4 000E2B14  7C 08 02 A6 */	mflr r0
 /* 800E5BB8 000E2B18  90 01 00 04 */	stw r0, 4(r1)
 /* 800E5BBC 000E2B1C  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -1554,9 +1553,9 @@ update__4WeedFv:
 /* 800E5C44 000E2BA4  38 21 00 20 */	addi r1, r1, 0x20
 /* 800E5C48 000E2BA8  7C 08 03 A6 */	mtlr r0
 /* 800E5C4C 000E2BAC  4E 80 00 20 */	blr 
+.endfn update__4WeedFv
 
-.global refresh__4WeedFR8Graphics
-refresh__4WeedFR8Graphics:
+.fn refresh__4WeedFR8Graphics, global
 /* 800E5C50 000E2BB0  7C 08 02 A6 */	mflr r0
 /* 800E5C54 000E2BB4  90 01 00 04 */	stw r0, 4(r1)
 /* 800E5C58 000E2BB8  94 21 FF A8 */	stwu r1, -0x58(r1)
@@ -1625,138 +1624,151 @@ refresh__4WeedFR8Graphics:
 /* 800E5D4C 000E2CAC  38 21 00 58 */	addi r1, r1, 0x58
 /* 800E5D50 000E2CB0  7C 08 03 A6 */	mtlr r0
 /* 800E5D54 000E2CB4  4E 80 00 20 */	blr 
+.endfn refresh__4WeedFR8Graphics
 
-.global isVisible__4WeedFv
-isVisible__4WeedFv:
+.fn isVisible__4WeedFv, global
 /* 800E5D58 000E2CB8  A0 03 03 C8 */	lhz r0, 0x3c8(r3)
 /* 800E5D5C 000E2CBC  7C 00 00 D0 */	neg r0, r0
 /* 800E5D60 000E2CC0  7C 00 00 34 */	cntlzw r0, r0
 /* 800E5D64 000E2CC4  54 03 D9 7E */	srwi r3, r0, 5
 /* 800E5D68 000E2CC8  4E 80 00 20 */	blr 
+.endfn isVisible__4WeedFv
 
-.global isAlive__4WeedFv
-isAlive__4WeedFv:
+.fn isAlive__4WeedFv, global
 /* 800E5D6C 000E2CCC  38 60 00 01 */	li r3, 1
 /* 800E5D70 000E2CD0  4E 80 00 20 */	blr 
+.endfn isAlive__4WeedFv
 
-.global isAtari__4WeedFv
-isAtari__4WeedFv:
+.fn isAtari__4WeedFv, global
 /* 800E5D74 000E2CD4  A0 03 03 C8 */	lhz r0, 0x3c8(r3)
 /* 800E5D78 000E2CD8  7C 00 00 D0 */	neg r0, r0
 /* 800E5D7C 000E2CDC  7C 00 00 34 */	cntlzw r0, r0
 /* 800E5D80 000E2CE0  54 03 D9 7E */	srwi r3, r0, 5
 /* 800E5D84 000E2CE4  4E 80 00 20 */	blr 
+.endfn isAtari__4WeedFv
 
-.global needFlick__4WeedFP8Creature
-needFlick__4WeedFP8Creature:
+.fn needFlick__4WeedFP8Creature, weak
 /* 800E5D88 000E2CE8  38 60 00 00 */	li r3, 0
 /* 800E5D8C 000E2CEC  4E 80 00 20 */	blr 
+.endfn needFlick__4WeedFP8Creature
 
-.global isAlive__8GrassGenFv
-isAlive__8GrassGenFv:
+.fn isAlive__8GrassGenFv, weak
 /* 800E5D90 000E2CF0  A0 03 03 D0 */	lhz r0, 0x3d0(r3)
 /* 800E5D94 000E2CF4  7C 60 00 D0 */	neg r3, r0
 /* 800E5D98 000E2CF8  30 03 FF FF */	addic r0, r3, -1
 /* 800E5D9C 000E2CFC  7C 60 19 10 */	subfe r3, r0, r3
 /* 800E5DA0 000E2D00  4E 80 00 20 */	blr 
+.endfn isAlive__8GrassGenFv
 
-.global isVisible__8GrassGenFv
-isVisible__8GrassGenFv:
+.fn isVisible__8GrassGenFv, weak
 /* 800E5DA4 000E2D04  38 60 00 01 */	li r3, 1
 /* 800E5DA8 000E2D08  4E 80 00 20 */	blr 
+.endfn isVisible__8GrassGenFv
 
-.global needFlick__8GrassGenFP8Creature
-needFlick__8GrassGenFP8Creature:
+.fn needFlick__8GrassGenFP8Creature, weak
 /* 800E5DAC 000E2D0C  38 60 00 00 */	li r3, 0
 /* 800E5DB0 000E2D10  4E 80 00 20 */	blr 
+.endfn needFlick__8GrassGenFP8Creature
 
-.global isAlive__7RockGenFv
-isAlive__7RockGenFv:
+.fn isAlive__7RockGenFv, weak
 /* 800E5DB4 000E2D14  A0 03 03 D4 */	lhz r0, 0x3d4(r3)
 /* 800E5DB8 000E2D18  7C 60 00 D0 */	neg r3, r0
 /* 800E5DBC 000E2D1C  30 03 FF FF */	addic r0, r3, -1
 /* 800E5DC0 000E2D20  7C 60 19 10 */	subfe r3, r0, r3
 /* 800E5DC4 000E2D24  4E 80 00 20 */	blr 
+.endfn isAlive__7RockGenFv
 
-.global isVisible__7RockGenFv
-isVisible__7RockGenFv:
+.fn isVisible__7RockGenFv, weak
 /* 800E5DC8 000E2D28  38 60 00 01 */	li r3, 1
 /* 800E5DCC 000E2D2C  4E 80 00 20 */	blr 
+.endfn isVisible__7RockGenFv
 
-.global needFlick__7RockGenFP8Creature
-needFlick__7RockGenFP8Creature:
+.fn needFlick__7RockGenFP8Creature, weak
 /* 800E5DD0 000E2D30  38 60 00 00 */	li r3, 0
 /* 800E5DD4 000E2D34  4E 80 00 20 */	blr 
+.endfn needFlick__7RockGenFP8Creature
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802BB240:
+.obj lbl_802BB240, local
 	.asciz "weedsItem.cpp"
+.endobj lbl_802BB240
 .balign 4
-lbl_802BB250:
+.obj lbl_802BB250, local
 	.asciz "PaniAnimKeyListener"
+.endobj lbl_802BB250
 .balign 4
-lbl_802BB264:
+.obj lbl_802BB264, local
 	.asciz "EventTalker"
+.endobj lbl_802BB264
 .balign 4
-lbl_802BB270:
+.obj lbl_802BB270, local
 	.asciz "RefCountable"
+.endobj lbl_802BB270
 .balign 4
-lbl_802BB280:
+.obj lbl_802BB280, local
 	.asciz "Creature"
+.endobj lbl_802BB280
 .balign 4
-lbl_802BB28C:
+.obj lbl_802BB28C, local
 	.4byte __RTTI__11EventTalker
-	.4byte 0x00000008
+	.4byte 0x8
 	.4byte __RTTI__12RefCountable
-	.4byte 0x00000000
-	.4byte 0x00000000
+	.4byte 0
+	.4byte 0
+.endobj lbl_802BB28C
 .balign 4
-lbl_802BB2A0:
+.obj lbl_802BB2A0, local
 	.asciz "AICreature"
+.endobj lbl_802BB2A0
 .balign 4
-lbl_802BB2AC:
+.obj lbl_802BB2AC, local
 	.4byte __RTTI__19PaniAnimKeyListener
-	.4byte 0x000002B8
+	.4byte 0x2B8
 	.4byte __RTTI__11EventTalker
-	.4byte 0x00000008
+	.4byte 0x8
 	.4byte __RTTI__12RefCountable
-	.4byte 0x00000000
+	.4byte 0
 	.4byte __RTTI__8Creature
-	.4byte 0x00000000
-	.4byte 0x00000000
+	.4byte 0
+	.4byte 0
+.endobj lbl_802BB2AC
 .balign 4
-lbl_802BB2D0:
+.obj lbl_802BB2D0, local
 	.asciz "ItemCreature"
+.endobj lbl_802BB2D0
 .balign 4
-lbl_802BB2E0:
+.obj lbl_802BB2E0, local
 	.4byte __RTTI__19PaniAnimKeyListener
-	.4byte 0x000002B8
+	.4byte 0x2B8
 	.4byte __RTTI__11EventTalker
-	.4byte 0x00000008
+	.4byte 0x8
 	.4byte __RTTI__12RefCountable
-	.4byte 0x00000000
+	.4byte 0
 	.4byte __RTTI__8Creature
-	.4byte 0x00000000
+	.4byte 0
 	.4byte __RTTI__10AICreature
-	.4byte 0x00000000
-	.4byte 0x00000000
-lbl_802BB30C:
+	.4byte 0
+	.4byte 0
+.endobj lbl_802BB2E0
+.balign 4
+.obj lbl_802BB30C, local
 	.4byte __RTTI__19PaniAnimKeyListener
-	.4byte 0x000002B8
+	.4byte 0x2B8
 	.4byte __RTTI__11EventTalker
-	.4byte 0x00000008
+	.4byte 0x8
 	.4byte __RTTI__12RefCountable
-	.4byte 0x00000000
+	.4byte 0
 	.4byte __RTTI__8Creature
-	.4byte 0x00000000
+	.4byte 0
 	.4byte __RTTI__10AICreature
-	.4byte 0x00000000
+	.4byte 0
 	.4byte __RTTI__12ItemCreature
-	.4byte 0x00000000
-	.4byte 0x00000000
-.global __vt__4Weed
-__vt__4Weed:
+	.4byte 0
+	.4byte 0
+.endobj lbl_802BB30C
+.balign 4
+.obj __vt__4Weed, global
 	.4byte __RTTI__4Weed
 	.4byte 0
 	.4byte addCntCallback__12RefCountableFv
@@ -1844,11 +1856,13 @@ __vt__4Weed:
 	.4byte stopMotion__12ItemCreatureFv
 	.4byte animationKeyUpdated__10AICreatureFR16PaniAnimKeyEvent
 	.4byte finalSetup__12ItemCreatureFv
+.endobj __vt__4Weed
 .balign 4
-lbl_802BB49C:
+.obj lbl_802BB49C, local
 	.asciz "WeedsGen"
+.endobj lbl_802BB49C
 .balign 4
-lbl_802BB4A8:
+.obj lbl_802BB4A8, local
 	.4byte __RTTI__19PaniAnimKeyListener
 	.4byte 0x2B8
 	.4byte __RTTI__11EventTalker
@@ -1862,8 +1876,9 @@ lbl_802BB4A8:
 	.4byte __RTTI__12ItemCreature
 	.4byte 0
 	.4byte 0
-.global __vt__8WeedsGen
-__vt__8WeedsGen:
+.endobj lbl_802BB4A8
+.balign 4
+.obj __vt__8WeedsGen, global
 	.4byte __RTTI__8WeedsGen
 	.4byte 0
 	.4byte addCntCallback__12RefCountableFv
@@ -1951,11 +1966,13 @@ __vt__8WeedsGen:
 	.4byte stopMotion__12ItemCreatureFv
 	.4byte animationKeyUpdated__10AICreatureFR16PaniAnimKeyEvent
 	.4byte finalSetup__12ItemCreatureFv
+.endobj __vt__8WeedsGen
 .balign 4
-lbl_802BB638:
+.obj lbl_802BB638, local
 	.asciz "GrassGen"
+.endobj lbl_802BB638
 .balign 4
-lbl_802BB644:
+.obj lbl_802BB644, local
 	.4byte __RTTI__19PaniAnimKeyListener
 	.4byte 0x2B8
 	.4byte __RTTI__11EventTalker
@@ -1969,8 +1986,9 @@ lbl_802BB644:
 	.4byte __RTTI__12ItemCreature
 	.4byte 0
 	.4byte 0
-.global __vt__8GrassGen
-__vt__8GrassGen:
+.endobj lbl_802BB644
+.balign 4
+.obj __vt__8GrassGen, global
 	.4byte __RTTI__8GrassGen
 	.4byte 0
 	.4byte addCntCallback__12RefCountableFv
@@ -2058,7 +2076,9 @@ __vt__8GrassGen:
 	.4byte stopMotion__12ItemCreatureFv
 	.4byte animationKeyUpdated__10AICreatureFR16PaniAnimKeyEvent
 	.4byte finalSetup__12ItemCreatureFv
-lbl_802BB7D4:
+.endobj __vt__8GrassGen
+.balign 4
+.obj lbl_802BB7D4, local
 	.4byte __RTTI__19PaniAnimKeyListener
 	.4byte 0x2B8
 	.4byte __RTTI__11EventTalker
@@ -2072,8 +2092,9 @@ lbl_802BB7D4:
 	.4byte __RTTI__12ItemCreature
 	.4byte 0
 	.4byte 0
-.global __vt__7RockGen
-__vt__7RockGen:
+.endobj lbl_802BB7D4
+.balign 4
+.obj __vt__7RockGen, global
 	.4byte __RTTI__7RockGen
 	.4byte 0
 	.4byte addCntCallback__12RefCountableFv
@@ -2161,126 +2182,186 @@ __vt__7RockGen:
 	.4byte stopMotion__12ItemCreatureFv
 	.4byte animationKeyUpdated__10AICreatureFR16PaniAnimKeyEvent
 	.4byte finalSetup__12ItemCreatureFv
+.endobj __vt__7RockGen
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-lbl_803E14B8:
+.obj lbl_803E14B8, local
 	.float 15.0
-lbl_803E14BC:
+.endobj lbl_803E14B8
+.obj lbl_803E14BC, local
 	.float 15.0
-lbl_803E14C0:
+.endobj lbl_803E14BC
+.obj lbl_803E14C0, local
 	.float 0.0
-lbl_803E14C4:
+.endobj lbl_803E14C0
+.obj lbl_803E14C4, local
 	.float 1.0
-lbl_803E14C8:
+.endobj lbl_803E14C4
+.obj lbl_803E14C8, local
 	.float 1.0
-lbl_803E14CC:
+.endobj lbl_803E14C8
+.obj lbl_803E14CC, local
 	.float 1.0
-lbl_803E14D0:
+.endobj lbl_803E14CC
+.obj lbl_803E14D0, local
 	.float 0.0
-lbl_803E14D4:
+.endobj lbl_803E14D0
+.obj lbl_803E14D4, local
 	.float 0.0
-lbl_803E14D8:
+.endobj lbl_803E14D4
+.obj lbl_803E14D8, local
 	.float 0.0
-lbl_803E14DC:
+.endobj lbl_803E14D8
+.obj lbl_803E14DC, local
 	.float 1.0
-lbl_803E14E0:
+.endobj lbl_803E14DC
+.obj lbl_803E14E0, local
 	.float 1.0
-lbl_803E14E4:
+.endobj lbl_803E14E0
+.obj lbl_803E14E4, local
 	.float 1.0
-lbl_803E14E8:
+.endobj lbl_803E14E4
+.obj lbl_803E14E8, local
 	.float 0.0
-lbl_803E14EC:
+.endobj lbl_803E14E8
+.obj lbl_803E14EC, local
 	.float 0.0
-lbl_803E14F0:
+.endobj lbl_803E14EC
+.obj lbl_803E14F0, local
 	.float 0.0
-lbl_803E14F4:
+.endobj lbl_803E14F0
+.obj lbl_803E14F4, local
 	.float 0.1
-lbl_803E14F8:
+.endobj lbl_803E14F4
+.obj lbl_803E14F8, local
 	.float 0.1
-lbl_803E14FC:
+.endobj lbl_803E14F8
+.obj lbl_803E14FC, local
 	.float 0.1
-lbl_803E1500:
+.endobj lbl_803E14FC
+.obj lbl_803E1500, local
 	.float 370.0
+.endobj lbl_803E1500
 .balign 4
-lbl_803E1504:
+.obj lbl_803E1504, local
 	.asciz "Weed"
+.endobj lbl_803E1504
 .balign 4
-__RTTI__19PaniAnimKeyListener:
+.obj __RTTI__19PaniAnimKeyListener, local
 	.4byte lbl_802BB250
 	.4byte 0
-__RTTI__11EventTalker:
+.endobj __RTTI__19PaniAnimKeyListener
+.balign 4
+.obj __RTTI__11EventTalker, local
 	.4byte lbl_802BB264
 	.4byte 0
-__RTTI__12RefCountable:
+.endobj __RTTI__11EventTalker
+.balign 4
+.obj __RTTI__12RefCountable, local
 	.4byte lbl_802BB270
 	.4byte 0
-__RTTI__8Creature:
+.endobj __RTTI__12RefCountable
+.balign 4
+.obj __RTTI__8Creature, local
 	.4byte lbl_802BB280
 	.4byte lbl_802BB28C
-__RTTI__10AICreature:
+.endobj __RTTI__8Creature
+.balign 4
+.obj __RTTI__10AICreature, local
 	.4byte lbl_802BB2A0
 	.4byte lbl_802BB2AC
-__RTTI__12ItemCreature:
+.endobj __RTTI__10AICreature
+.balign 4
+.obj __RTTI__12ItemCreature, local
 	.4byte lbl_802BB2D0
 	.4byte lbl_802BB2E0
-__RTTI__4Weed:
+.endobj __RTTI__12ItemCreature
+.balign 4
+.obj __RTTI__4Weed, local
 	.4byte lbl_803E1504
 	.4byte lbl_802BB30C
-__RTTI__8WeedsGen:
+.endobj __RTTI__4Weed
+.balign 4
+.obj __RTTI__8WeedsGen, local
 	.4byte lbl_802BB49C
 	.4byte lbl_802BB4A8
-__RTTI__8GrassGen:
+.endobj __RTTI__8WeedsGen
+.balign 4
+.obj __RTTI__8GrassGen, local
 	.4byte lbl_802BB638
 	.4byte lbl_802BB644
+.endobj __RTTI__8GrassGen
 .balign 4
-lbl_803E1554:
+.obj lbl_803E1554, local
 	.asciz "RockGen"
+.endobj lbl_803E1554
 .balign 4
-__RTTI__7RockGen:
+.obj __RTTI__7RockGen, local
 	.4byte lbl_803E1554
 	.4byte lbl_802BB7D4
+.endobj __RTTI__7RockGen
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803E9B10:
+.obj lbl_803E9B10, local
 	.float 0.0
+.endobj lbl_803E9B10
 .balign 8
-lbl_803E9B18:
+.obj lbl_803E9B18, local
 	.double 0.5
-lbl_803E9B20:
+.endobj lbl_803E9B18
+.balign 8
+.obj lbl_803E9B20, local
 	.double 3.0
-lbl_803E9B28:
+.endobj lbl_803E9B20
+.balign 4
+.obj lbl_803E9B28, local
 	.float 30.0
-lbl_803E9B2C:
+.endobj lbl_803E9B28
+.obj lbl_803E9B2C, local
 	.float 1.0
-lbl_803E9B30:
+.endobj lbl_803E9B2C
+.obj lbl_803E9B30, local
 	.float 32767.0
-lbl_803E9B34:
+.endobj lbl_803E9B30
+.obj lbl_803E9B34, local # tau
 	.float 6.2831855
-lbl_803E9B38:
+.endobj lbl_803E9B34
+.obj lbl_803E9B38, local
 	.float 0.99999
-lbl_803E9B3C:
+.endobj lbl_803E9B38
+.obj lbl_803E9B3C, local
 	.float 255.0
-lbl_803E9B40:
+.endobj lbl_803E9B3C
+.obj lbl_803E9B40, local
 	.float 3.0
+.endobj lbl_803E9B40
 .balign 8
-lbl_803E9B48:
-	.4byte 0x43300000
-	.4byte 0x80000000
-lbl_803E9B50:
+.obj lbl_803E9B48, local
+	.8byte 0x4330000080000000
+.endobj lbl_803E9B48
+.balign 4
+.obj lbl_803E9B50, local
 	.float 4.0
-lbl_803E9B54:
+.endobj lbl_803E9B50
+.obj lbl_803E9B54, local
 	.float 2.0
-lbl_803E9B58:
+.endobj lbl_803E9B54
+.obj lbl_803E9B58, local # pi
 	.float 3.1415927
+.endobj lbl_803E9B58
 .balign 8
-lbl_803E9B60:
-	.4byte 0x43300000
-	.4byte 0x00000000
-lbl_803E9B68:
+.obj lbl_803E9B60, local
+	.8byte 0x4330000000000000
+.endobj lbl_803E9B60
+.balign 4
+.obj lbl_803E9B68, local
 	.float 50.0
-lbl_803E9B6C:
+.endobj lbl_803E9B68
+.obj lbl_803E9B6C, local
 	.float 20.0
-lbl_803E9B70:
+.endobj lbl_803E9B6C
+.obj lbl_803E9B70, local
 	.float 0.1
+.endobj lbl_803E9B70

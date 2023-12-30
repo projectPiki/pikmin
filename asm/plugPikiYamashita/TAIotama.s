@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global __ct__18TAIotamaSoundTableFv
-__ct__18TAIotamaSoundTableFv:
+.fn __ct__18TAIotamaSoundTableFv, global
 /* 801EAA70 001E79D0  7C 08 02 A6 */	mflr r0
 /* 801EAA74 001E79D4  38 80 00 03 */	li r4, 3
 /* 801EAA78 001E79D8  90 01 00 04 */	stw r0, 4(r1)
@@ -38,9 +37,9 @@ __ct__18TAIotamaSoundTableFv:
 /* 801EAAE8 001E7A48  38 21 00 20 */	addi r1, r1, 0x20
 /* 801EAAEC 001E7A4C  7C 08 03 A6 */	mtlr r0
 /* 801EAAF0 001E7A50  4E 80 00 20 */	blr 
+.endfn __ct__18TAIotamaSoundTableFv
 
-.global __ct__18TAIotamaParametersFv
-__ct__18TAIotamaParametersFv:
+.fn __ct__18TAIotamaParametersFv, global
 /* 801EAAF4 001E7A54  7C 08 02 A6 */	mflr r0
 /* 801EAAF8 001E7A58  38 80 00 14 */	li r4, 0x14
 /* 801EAAFC 001E7A5C  90 01 00 04 */	stw r0, 4(r1)
@@ -248,9 +247,9 @@ __ct__18TAIotamaParametersFv:
 /* 801EAE24 001E7D84  38 21 00 D8 */	addi r1, r1, 0xd8
 /* 801EAE28 001E7D88  7C 08 03 A6 */	mtlr r0
 /* 801EAE2C 001E7D8C  4E 80 00 20 */	blr 
+.endfn __ct__18TAIotamaParametersFv
 
-.global __ct__16TAIotamaStrategyFv
-__ct__16TAIotamaStrategyFv:
+.fn __ct__16TAIotamaStrategyFv, global
 /* 801EAE30 001E7D90  7C 08 02 A6 */	mflr r0
 /* 801EAE34 001E7D94  38 80 00 07 */	li r4, 7
 /* 801EAE38 001E7D98  90 01 00 04 */	stw r0, 4(r1)
@@ -602,9 +601,9 @@ __ct__16TAIotamaStrategyFv:
 /* 801EB354 001E82B4  38 21 00 78 */	addi r1, r1, 0x78
 /* 801EB358 001E82B8  7C 08 03 A6 */	mtlr r0
 /* 801EB35C 001E82BC  4E 80 00 20 */	blr 
+.endfn __ct__16TAIotamaStrategyFv
 
-.global makeDefaultAnimations__17TAIotamaAnimationFv
-makeDefaultAnimations__17TAIotamaAnimationFv:
+.fn makeDefaultAnimations__17TAIotamaAnimationFv, global
 /* 801EB360 001E82C0  7C 08 02 A6 */	mflr r0
 /* 801EB364 001E82C4  90 01 00 04 */	stw r0, 4(r1)
 /* 801EB368 001E82C8  94 21 FF 28 */	stwu r1, -0xd8(r1)
@@ -1069,9 +1068,9 @@ makeDefaultAnimations__17TAIotamaAnimationFv:
 /* 801EBA50 001E89B0  38 21 00 D8 */	addi r1, r1, 0xd8
 /* 801EBA54 001E89B4  7C 08 03 A6 */	mtlr r0
 /* 801EBA58 001E89B8  4E 80 00 20 */	blr 
+.endfn makeDefaultAnimations__17TAIotamaAnimationFv
 
-.global start__16TAIArunAwayOtamaFR4Teki
-start__16TAIArunAwayOtamaFR4Teki:
+.fn start__16TAIArunAwayOtamaFR4Teki, weak
 /* 801EBA5C 001E89BC  7C 08 02 A6 */	mflr r0
 /* 801EBA60 001E89C0  90 01 00 04 */	stw r0, 4(r1)
 /* 801EBA64 001E89C4  94 21 FE F0 */	stwu r1, -0x110(r1)
@@ -1299,9 +1298,9 @@ start__16TAIArunAwayOtamaFR4Teki:
 /* 801EBDD4 001E8D34  38 21 01 10 */	addi r1, r1, 0x110
 /* 801EBDD8 001E8D38  7C 08 03 A6 */	mtlr r0
 /* 801EBDDC 001E8D3C  4E 80 00 20 */	blr 
+.endfn start__16TAIArunAwayOtamaFR4Teki
 
-.global act__16TAIArunAwayOtamaFR4Teki
-act__16TAIArunAwayOtamaFR4Teki:
+.fn act__16TAIArunAwayOtamaFR4Teki, weak
 /* 801EBDE0 001E8D40  7C 08 02 A6 */	mflr r0
 /* 801EBDE4 001E8D44  90 01 00 04 */	stw r0, 4(r1)
 /* 801EBDE8 001E8D48  94 21 FE D0 */	stwu r1, -0x130(r1)
@@ -1552,9 +1551,9 @@ act__16TAIArunAwayOtamaFR4Teki:
 /* 801EC1A8 001E9108  38 21 01 30 */	addi r1, r1, 0x130
 /* 801EC1AC 001E910C  7C 08 03 A6 */	mtlr r0
 /* 801EC1B0 001E9110  4E 80 00 20 */	blr 
+.endfn act__16TAIArunAwayOtamaFR4Teki
 
-.global flick__15TAIAappealOtamaFR4Teki
-flick__15TAIAappealOtamaFR4Teki:
+.fn flick__15TAIAappealOtamaFR4Teki, weak
 /* 801EC1B4 001E9114  7C 08 02 A6 */	mflr r0
 /* 801EC1B8 001E9118  90 01 00 04 */	stw r0, 4(r1)
 /* 801EC1BC 001E911C  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -1593,9 +1592,9 @@ flick__15TAIAappealOtamaFR4Teki:
 /* 801EC238 001E9198  38 21 00 18 */	addi r1, r1, 0x18
 /* 801EC23C 001E919C  7C 08 03 A6 */	mtlr r0
 /* 801EC240 001E91A0  4E 80 00 20 */	blr 
+.endfn flick__15TAIAappealOtamaFR4Teki
 
-.global act__18TAIAsetTargetOtamaFR4Teki
-act__18TAIAsetTargetOtamaFR4Teki:
+.fn act__18TAIAsetTargetOtamaFR4Teki, weak
 /* 801EC244 001E91A4  7C 08 02 A6 */	mflr r0
 /* 801EC248 001E91A8  90 01 00 04 */	stw r0, 4(r1)
 /* 801EC24C 001E91AC  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -1635,9 +1634,9 @@ act__18TAIAsetTargetOtamaFR4Teki:
 /* 801EC2CC 001E922C  38 21 00 28 */	addi r1, r1, 0x28
 /* 801EC2D0 001E9230  7C 08 03 A6 */	mtlr r0
 /* 801EC2D4 001E9234  4E 80 00 20 */	blr 
+.endfn act__18TAIAsetTargetOtamaFR4Teki
 
-.global start__13TAIAwaitOtamaFR4Teki
-start__13TAIAwaitOtamaFR4Teki:
+.fn start__13TAIAwaitOtamaFR4Teki, weak
 /* 801EC2D8 001E9238  7C 08 02 A6 */	mflr r0
 /* 801EC2DC 001E923C  90 01 00 04 */	stw r0, 4(r1)
 /* 801EC2E0 001E9240  94 21 FF 80 */	stwu r1, -0x80(r1)
@@ -1686,9 +1685,9 @@ start__13TAIAwaitOtamaFR4Teki:
 /* 801EC38C 001E92EC  38 21 00 80 */	addi r1, r1, 0x80
 /* 801EC390 001E92F0  7C 08 03 A6 */	mtlr r0
 /* 801EC394 001E92F4  4E 80 00 20 */	blr 
+.endfn start__13TAIAwaitOtamaFR4Teki
 
-.global act__13TAIAwaitOtamaFR4Teki
-act__13TAIAwaitOtamaFR4Teki:
+.fn act__13TAIAwaitOtamaFR4Teki, weak
 /* 801EC398 001E92F8  7C 08 02 A6 */	mflr r0
 /* 801EC39C 001E92FC  90 01 00 04 */	stw r0, 4(r1)
 /* 801EC3A0 001E9300  94 21 FF C0 */	stwu r1, -0x40(r1)
@@ -1749,104 +1748,127 @@ act__13TAIAwaitOtamaFR4Teki:
 /* 801EC46C 001E93CC  38 21 00 40 */	addi r1, r1, 0x40
 /* 801EC470 001E93D0  7C 08 03 A6 */	mtlr r0
 /* 801EC474 001E93D4  4E 80 00 20 */	blr 
+.endfn act__13TAIAwaitOtamaFR4Teki
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802E6760:
+.obj lbl_802E6760, local
 	.asciz "TAIotama.cpp"
+.endobj lbl_802E6760
 .balign 4
-lbl_802E6770:
+.obj lbl_802E6770, local
 	.asciz "TAIotama"
+.endobj lbl_802E6770
 .balign 4
-lbl_802E677C: # Shift-JIS
+.obj lbl_802E677C, local # Shift-JIS
 	.4byte 0x83458347
 	.4byte 0x83438367
 	.4byte 0x8DC5925A
 	.4byte 0x8E9E8AD4
 	.4byte 0x81699562
 	.4byte 0x816A0000
+.endobj lbl_802E677C
 .balign 4
-lbl_802E6794: # Shift-JIS
+.obj lbl_802E6794, local # Shift-JIS
 	.4byte 0x83458347
 	.4byte 0x83438367
 	.4byte 0x8DC592B7
 	.4byte 0x8E9E8AD4
 	.4byte 0x81699562
 	.4byte 0x816A0000
+.endobj lbl_802E6794
 .balign 4
-lbl_802E67AC:
+.obj lbl_802E67AC, local
 	.asciz "tekis/otama/motion/dead.dca"
+.endobj lbl_802E67AC
 .balign 4
-lbl_802E67C8:
+.obj lbl_802E67C8, local
 	.asciz "tekis/otama/motion/damage.dca"
+.endobj lbl_802E67C8
 .balign 4
-lbl_802E67E8:
+.obj lbl_802E67E8, local
 	.asciz "tekis/otama/motion/wait1.dca"
+.endobj lbl_802E67E8
 .balign 4
-lbl_802E6808:
+.obj lbl_802E6808, local
 	.asciz "tekis/otama/motion/wait2.dca"
+.endobj lbl_802E6808
 .balign 4
-lbl_802E6828:
+.obj lbl_802E6828, local
 	.asciz "tekis/otama/motion/waitact1.dck"
+.endobj lbl_802E6828
 .balign 4
-lbl_802E6848:
+.obj lbl_802E6848, local
 	.asciz "tekis/otama/motion/waitact2.dca"
+.endobj lbl_802E6848
 .balign 4
-lbl_802E6868:
+.obj lbl_802E6868, local
 	.asciz "tekis/otama/motion/move1.dck"
+.endobj lbl_802E6868
 .balign 4
-lbl_802E6888:
+.obj lbl_802E6888, local
 	.asciz "tekis/otama/motion/move2.dck"
+.endobj lbl_802E6888
 .balign 4
-lbl_802E68A8:
+.obj lbl_802E68A8, local
 	.asciz "tekis/otama/motion/attack.dca"
+.endobj lbl_802E68A8
 .balign 4
-lbl_802E68C8:
+.obj lbl_802E68C8, local
 	.asciz "tekis/otama/motion/type1.dck"
+.endobj lbl_802E68C8
 .balign 4
-lbl_802E68E8:
+.obj lbl_802E68E8, local
 	.asciz "tekis/otama/motion/type2.dca"
+.endobj lbl_802E68E8
 .balign 4
-lbl_802E6908:
+.obj lbl_802E6908, local
 	.asciz "TAIotamaAnimation"
+.endobj lbl_802E6908
 .balign 4
-lbl_802E691C:
+.obj lbl_802E691C, local
 	.asciz "TAIanimation"
+.endobj lbl_802E691C
 .balign 4
-lbl_802E692C:
+.obj lbl_802E692C, local
 	.4byte __RTTI__12TAIanimation
 	.4byte 0
 	.4byte 0
+.endobj lbl_802E692C
 .balign 4
-.global __vt__17TAIotamaAnimation
-__vt__17TAIotamaAnimation:
+.obj __vt__17TAIotamaAnimation, global
 	.4byte __RTTI__17TAIotamaAnimation
 	.4byte 0
 	.4byte makeDefaultAnimations__17TAIotamaAnimationFv
+.endobj __vt__17TAIotamaAnimation
 .balign 4
-lbl_802E6944:
+.obj lbl_802E6944, local
 	.asciz "TAIArunAwayOtama"
+.endobj lbl_802E6944
 .balign 4
-lbl_802E6958:
+.obj lbl_802E6958, local
 	.asciz "TaiAction"
+.endobj lbl_802E6958
 .balign 4
-lbl_802E6964:
+.obj lbl_802E6964, local
 	.asciz "TAIAreserveMotion"
+.endobj lbl_802E6964
 .balign 4
-lbl_802E6978:
+.obj lbl_802E6978, local
 	.4byte __RTTI__9TaiAction
 	.4byte 0
 	.4byte 0
+.endobj lbl_802E6978
 .balign 4
-lbl_802E6984:
+.obj lbl_802E6984, local
 	.4byte __RTTI__9TaiAction
 	.4byte 0
 	.4byte __RTTI__17TAIAreserveMotion
 	.4byte 0
 	.4byte 0
+.endobj lbl_802E6984
 .balign 4
-.global __vt__16TAIArunAwayOtama
-__vt__16TAIArunAwayOtama:
+.obj __vt__16TAIArunAwayOtama, weak
 	.4byte __RTTI__16TAIArunAwayOtama
 	.4byte 0
 	.4byte start__16TAIArunAwayOtamaFR4Teki
@@ -1854,37 +1876,37 @@ __vt__16TAIArunAwayOtama:
 	.4byte act__16TAIArunAwayOtamaFR4Teki
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
+.endobj __vt__16TAIArunAwayOtama
 .balign 4
-lbl_802E69B4:
+.obj lbl_802E69B4, local
 	.asciz "TAIAtimerReaction"
+.endobj lbl_802E69B4
 .balign 4
-lbl_802E69C8:
+.obj lbl_802E69C8, local
 	.4byte __RTTI__9TaiAction
 	.4byte 0
 	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
+.endobj lbl_802E69C8
 .balign 4
-lbl_802E69F4:
+.skip 0x20 # compiler padding
+.balign 4
+.obj lbl_802E69F4, local
 	.asciz "TAIAappealOtama"
+.endobj lbl_802E69F4
 .balign 4
-lbl_802E6A04:
+.obj lbl_802E6A04, local
 	.asciz "TAIAflickingReserveMotion"
+.endobj lbl_802E6A04
 .balign 4
-lbl_802E6A20:
+.obj lbl_802E6A20, local
 	.4byte __RTTI__9TaiAction
 	.4byte 0
 	.4byte __RTTI__17TAIAreserveMotion
 	.4byte 0
 	.4byte 0
+.endobj lbl_802E6A20
 .balign 4
-lbl_802E6A34:
+.obj lbl_802E6A34, local
 	.4byte __RTTI__9TaiAction
 	.4byte 0
 	.4byte __RTTI__17TAIAreserveMotion
@@ -1892,9 +1914,9 @@ lbl_802E6A34:
 	.4byte __RTTI__25TAIAflickingReserveMotion
 	.4byte 0
 	.4byte 0
+.endobj lbl_802E6A34
 .balign 4
-.global __vt__15TAIAappealOtama
-__vt__15TAIAappealOtama:
+.obj __vt__15TAIAappealOtama, weak
 	.4byte __RTTI__15TAIAappealOtama
 	.4byte 0
 	.4byte start__25TAIAflickingReserveMotionFR4Teki
@@ -1904,27 +1926,31 @@ __vt__15TAIAappealOtama:
 	.4byte hasNextState__9TaiActionFv
 	.4byte flick__15TAIAappealOtamaFR4Teki
 	.4byte getFlickDirection__25TAIAflickingReserveMotionFR4Teki
+.endobj __vt__15TAIAappealOtama
 .balign 4
-lbl_802E6A74:
+.obj lbl_802E6A74, local
 	.asciz "TAIAsetTargetOtama"
+.endobj lbl_802E6A74
 .balign 4
-lbl_802E6A88:
+.obj lbl_802E6A88, local
 	.asciz "TAIAsetTargetPointCircleRandom"
+.endobj lbl_802E6A88
 .balign 4
-lbl_802E6AA8:
+.obj lbl_802E6AA8, local
 	.4byte __RTTI__9TaiAction
 	.4byte 0
 	.4byte 0
+.endobj lbl_802E6AA8
 .balign 4
-lbl_802E6AB4:
+.obj lbl_802E6AB4, local
 	.4byte __RTTI__9TaiAction
 	.4byte 0
 	.4byte __RTTI__30TAIAsetTargetPointCircleRandom
 	.4byte 0
 	.4byte 0
+.endobj lbl_802E6AB4
 .balign 4
-.global __vt__18TAIAsetTargetOtama
-__vt__18TAIAsetTargetOtama:
+.obj __vt__18TAIAsetTargetOtama, weak
 	.4byte __RTTI__18TAIAsetTargetOtama
 	.4byte 0
 	.4byte start__30TAIAsetTargetPointCircleRandomFR4Teki
@@ -1932,19 +1958,21 @@ __vt__18TAIAsetTargetOtama:
 	.4byte act__18TAIAsetTargetOtamaFR4Teki
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
+.endobj __vt__18TAIAsetTargetOtama
 .balign 4
-lbl_802E6AE4:
+.obj lbl_802E6AE4, local
 	.asciz "TAIAwaitOtama"
+.endobj lbl_802E6AE4
 .balign 4
-lbl_802E6AF4:
+.obj lbl_802E6AF4, local
 	.4byte __RTTI__9TaiAction
 	.4byte 0
 	.4byte __RTTI__17TAIAreserveMotion
 	.4byte 0
 	.4byte 0
+.endobj lbl_802E6AF4
 .balign 4
-.global __vt__13TAIAwaitOtama
-__vt__13TAIAwaitOtama:
+.obj __vt__13TAIAwaitOtama, weak
 	.4byte __RTTI__13TAIAwaitOtama
 	.4byte 0
 	.4byte start__13TAIAwaitOtamaFR4Teki
@@ -1952,37 +1980,37 @@ __vt__13TAIAwaitOtama:
 	.4byte act__13TAIAwaitOtamaFR4Teki
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
+.endobj __vt__13TAIAwaitOtama
 .balign 4
-lbl_802E6B40:
+.skip 0x1C # compiler padding
+.balign 4
+.obj lbl_802E6B40, local
 	.asciz "TAIotamaStrategy"
+.endobj lbl_802E6B40
 .balign 4
-lbl_802E6B54:
+.obj lbl_802E6B54, local
 	.asciz "TekiStrategy"
+.endobj lbl_802E6B54
 .balign 4
-lbl_802E6B64:
+.obj lbl_802E6B64, local
 	.asciz "YaiStrategy"
+.endobj lbl_802E6B64
 .balign 4
-lbl_802E6B70:
+.obj lbl_802E6B70, local
 	.4byte __RTTI__12TekiStrategy
 	.4byte 0
 	.4byte 0
+.endobj lbl_802E6B70
 .balign 4
-lbl_802E6B7C:
+.obj lbl_802E6B7C, local
 	.4byte __RTTI__12TekiStrategy
 	.4byte 0
 	.4byte __RTTI__11YaiStrategy
 	.4byte 0
 	.4byte 0
+.endobj lbl_802E6B7C
 .balign 4
-.global __vt__16TAIotamaStrategy
-__vt__16TAIotamaStrategy:
+.obj __vt__16TAIotamaStrategy, weak
 	.4byte __RTTI__16TAIotamaStrategy
 	.4byte 0
 	.4byte start__11YaiStrategyFR4Teki
@@ -1993,29 +2021,35 @@ __vt__16TAIotamaStrategy:
 	.4byte drawDebugInfo__12TekiStrategyFR4TekiR8Graphics
 	.4byte interact__12TekiStrategyFR4TekiR18TekiInteractionKey
 	.4byte spawnCorpseParts__12TekiStrategyFR4Teki
+.endobj __vt__16TAIotamaStrategy
 .balign 4
-lbl_802E6BB8:
+.obj lbl_802E6BB8, local
 	.asciz "TAIotamaParameters"
+.endobj lbl_802E6BB8
 .balign 4
-lbl_802E6BCC:
+.obj lbl_802E6BCC, local
 	.asciz "CoreNode"
+.endobj lbl_802E6BCC
 .balign 4
-lbl_802E6BD8:
+.obj lbl_802E6BD8, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte 0
+.endobj lbl_802E6BD8
 .balign 4
-lbl_802E6BE4:
+.obj lbl_802E6BE4, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte __RTTI__8CoreNode
 	.4byte 0
 	.4byte 0
+.endobj lbl_802E6BE4
 .balign 4
-lbl_802E6BF8:
+.obj lbl_802E6BF8, local
 	.asciz "TekiParameters"
+.endobj lbl_802E6BF8
 .balign 4
-lbl_802E6C08:
+.obj lbl_802E6C08, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte __RTTI__8CoreNode
@@ -2023,8 +2057,9 @@ lbl_802E6C08:
 	.4byte __RTTI__4Node
 	.4byte 0
 	.4byte 0
+.endobj lbl_802E6C08
 .balign 4
-lbl_802E6C24:
+.obj lbl_802E6C24, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte __RTTI__8CoreNode
@@ -2034,9 +2069,9 @@ lbl_802E6C24:
 	.4byte __RTTI__14TekiParameters
 	.4byte 0
 	.4byte 0
+.endobj lbl_802E6C24
 .balign 4
-.global __vt__18TAIotamaParameters
-__vt__18TAIotamaParameters:
+.obj __vt__18TAIotamaParameters, weak
 	.4byte __RTTI__18TAIotamaParameters
 	.4byte 0
 	.4byte getAgeNodeType__5ANodeFv
@@ -2049,129 +2084,193 @@ __vt__18TAIotamaParameters:
 	.4byte concat__4NodeFR3SRT
 	.4byte concat__4NodeFR8Matrix4f
 	.4byte getModelMatrix__4NodeFv
+.endobj __vt__18TAIotamaParameters
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-__RTTI__12TAIanimation:
+.obj __RTTI__12TAIanimation, local
 	.4byte lbl_802E691C
 	.4byte 0
-__RTTI__17TAIotamaAnimation:
+.endobj __RTTI__12TAIanimation
+.balign 4
+.obj __RTTI__17TAIotamaAnimation, local
 	.4byte lbl_802E6908
 	.4byte lbl_802E692C
-__RTTI__9TaiAction:
+.endobj __RTTI__17TAIotamaAnimation
+.balign 4
+.obj __RTTI__9TaiAction, local
 	.4byte lbl_802E6958
 	.4byte 0
-__RTTI__17TAIAreserveMotion:
+.endobj __RTTI__9TaiAction
+.balign 4
+.obj __RTTI__17TAIAreserveMotion, local
 	.4byte lbl_802E6964
 	.4byte lbl_802E6978
-__RTTI__16TAIArunAwayOtama:
+.endobj __RTTI__17TAIAreserveMotion
+.balign 4
+.obj __RTTI__16TAIArunAwayOtama, local
 	.4byte lbl_802E6944
 	.4byte lbl_802E6984
-__RTTI__25TAIAflickingReserveMotion:
+.endobj __RTTI__16TAIArunAwayOtama
+.balign 4
+.obj __RTTI__25TAIAflickingReserveMotion, local
 	.4byte lbl_802E6A04
 	.4byte lbl_802E6A20
-__RTTI__15TAIAappealOtama:
+.endobj __RTTI__25TAIAflickingReserveMotion
+.balign 4
+.obj __RTTI__15TAIAappealOtama, local
 	.4byte lbl_802E69F4
 	.4byte lbl_802E6A34
-__RTTI__30TAIAsetTargetPointCircleRandom:
+.endobj __RTTI__15TAIAappealOtama
+.balign 4
+.obj __RTTI__30TAIAsetTargetPointCircleRandom, local
 	.4byte lbl_802E6A88
 	.4byte lbl_802E6AA8
-__RTTI__18TAIAsetTargetOtama:
+.endobj __RTTI__30TAIAsetTargetPointCircleRandom
+.balign 4
+.obj __RTTI__18TAIAsetTargetOtama, local
 	.4byte lbl_802E6A74
 	.4byte lbl_802E6AB4
-__RTTI__13TAIAwaitOtama:
+.endobj __RTTI__18TAIAsetTargetOtama
+.balign 4
+.obj __RTTI__13TAIAwaitOtama, local
 	.4byte lbl_802E6AE4
 	.4byte lbl_802E6AF4
-__RTTI__12TekiStrategy:
+.endobj __RTTI__13TAIAwaitOtama
+.balign 4
+.obj __RTTI__12TekiStrategy, local
 	.4byte lbl_802E6B54
 	.4byte 0
-__RTTI__11YaiStrategy:
+.endobj __RTTI__12TekiStrategy
+.balign 4
+.obj __RTTI__11YaiStrategy, local
 	.4byte lbl_802E6B64
 	.4byte lbl_802E6B70
-__RTTI__16TAIotamaStrategy:
+.endobj __RTTI__11YaiStrategy
+.balign 4
+.obj __RTTI__16TAIotamaStrategy, local
 	.4byte lbl_802E6B40
 	.4byte lbl_802E6B7C
+.endobj __RTTI__16TAIotamaStrategy
 .balign 4
-lbl_803E74D0:
+.obj lbl_803E74D0, local
 	.asciz "ANode"
+.endobj lbl_803E74D0
 .balign 4
-__RTTI__5ANode:
+.obj __RTTI__5ANode, local
 	.4byte lbl_803E74D0
 	.4byte 0
-__RTTI__8CoreNode:
+.endobj __RTTI__5ANode
+.balign 4
+.obj __RTTI__8CoreNode, local
 	.4byte lbl_802E6BCC
 	.4byte lbl_802E6BD8
+.endobj __RTTI__8CoreNode
 .balign 4
-lbl_803E74E8:
+.obj lbl_803E74E8, local
 	.asciz "Node"
+.endobj lbl_803E74E8
 .balign 4
-__RTTI__4Node:
+.obj __RTTI__4Node, local
 	.4byte lbl_803E74E8
 	.4byte lbl_802E6BE4
-__RTTI__14TekiParameters:
+.endobj __RTTI__4Node
+.balign 4
+.obj __RTTI__14TekiParameters, local
 	.4byte lbl_802E6BF8
 	.4byte lbl_802E6C08
-__RTTI__18TAIotamaParameters:
+.endobj __RTTI__14TekiParameters
+.balign 4
+.obj __RTTI__18TAIotamaParameters, local
 	.4byte lbl_802E6BB8
 	.4byte lbl_802E6C24
+.endobj __RTTI__18TAIotamaParameters
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803EC2A8:
-	.4byte 0x00000000
-lbl_803EC2AC:
-	.4byte 0x44960000
-lbl_803EC2B0:
-	.4byte 0x3F800000
-lbl_803EC2B4:
-	.4byte 0x40A00000
-lbl_803EC2B8:
-	.4byte 0x41200000
-lbl_803EC2BC:
-	.4byte 0x42C80000
-lbl_803EC2C0:
-	.4byte 0x42480000
-lbl_803EC2C4:
-	.4byte 0x428C0000
-lbl_803EC2C8:
-	.4byte 0x43340000
-lbl_803EC2CC:
-	.4byte 0x405F66F3
-lbl_803EC2D0:
-	.4byte 0x43480000
-lbl_803EC2D4:
-	.4byte 0x43B40000
-lbl_803EC2D8:
-	.4byte 0x42200000
-lbl_803EC2DC:
-	.4byte 0x41F00000
-lbl_803EC2E0:
-	.4byte 0x41100000
-lbl_803EC2E4:
-	.4byte 0x437A0000
-lbl_803EC2E8:
-	.4byte 0x42A00000
-lbl_803EC2EC:
-	.4byte 0x3E99999A
-lbl_803EC2F0:
-	.4byte 0x3E4CCCCD
-lbl_803EC2F4:
-	.4byte 0x3A83126F
-lbl_803EC2F8:
-	.4byte 0x41A00000
-lbl_803EC2FC:
-	.4byte 0x41700000
-lbl_803EC300:
-	.4byte 0x42700000
-lbl_803EC304:
-	.4byte 0x40400000
-lbl_803EC308:
-	.4byte 0x46FFFE00
+.obj lbl_803EC2A8, local
+	.float 0.0
+.endobj lbl_803EC2A8
+.obj lbl_803EC2AC, local
+	.float 1200.0
+.endobj lbl_803EC2AC
+.obj lbl_803EC2B0, local
+	.float 1.0
+.endobj lbl_803EC2B0
+.obj lbl_803EC2B4, local
+	.float 5.0
+.endobj lbl_803EC2B4
+.obj lbl_803EC2B8, local
+	.float 10.0
+.endobj lbl_803EC2B8
+.obj lbl_803EC2BC, local
+	.float 100.0
+.endobj lbl_803EC2BC
+.obj lbl_803EC2C0, local
+	.float 50.0
+.endobj lbl_803EC2C0
+.obj lbl_803EC2C4, local
+	.float 70.0
+.endobj lbl_803EC2C4
+.obj lbl_803EC2C8, local
+	.float 180.0
+.endobj lbl_803EC2C8
+.obj lbl_803EC2CC, local # 10pi/9
+	.float 3.4906585
+.endobj lbl_803EC2CC
+.obj lbl_803EC2D0, local
+	.float 200.0
+.endobj lbl_803EC2D0
+.obj lbl_803EC2D4, local
+	.float 360.0
+.endobj lbl_803EC2D4
+.obj lbl_803EC2D8, local
+	.float 40.0
+.endobj lbl_803EC2D8
+.obj lbl_803EC2DC, local
+	.float 30.0
+.endobj lbl_803EC2DC
+.obj lbl_803EC2E0, local
+	.float 9.0
+.endobj lbl_803EC2E0
+.obj lbl_803EC2E4, local
+	.float 250.0
+.endobj lbl_803EC2E4
+.obj lbl_803EC2E8, local
+	.float 80.0
+.endobj lbl_803EC2E8
+.obj lbl_803EC2EC, local
+	.float 0.3
+.endobj lbl_803EC2EC
+.obj lbl_803EC2F0, local
+	.float 0.2
+.endobj lbl_803EC2F0
+.obj lbl_803EC2F4, local
+	.float 0.001
+.endobj lbl_803EC2F4
+.obj lbl_803EC2F8, local
+	.float 20.0
+.endobj lbl_803EC2F8
+.obj lbl_803EC2FC, local
+	.float 15.0
+.endobj lbl_803EC2FC
+.obj lbl_803EC300, local
+	.float 60.0
+.endobj lbl_803EC300
+.obj lbl_803EC304, local
+	.float 3.0
+.endobj lbl_803EC304
+.obj lbl_803EC308, local
+	.float 32767.0
+.endobj lbl_803EC308
 .balign 8
-lbl_803EC310:
-	.4byte 0x43300000
-	.4byte 0x80000000
-lbl_803EC318:
-	.4byte 0x3F733333
-lbl_803EC31C:
-	.4byte 0x3DCCCCCD
+.obj lbl_803EC310, local
+	.8byte 0x4330000080000000
+.endobj lbl_803EC310
+.balign 4
+.obj lbl_803EC318, local
+	.float 0.95
+.endobj lbl_803EC318
+.obj lbl_803EC31C, local
+	.float 0.1
+.endobj lbl_803EC31C

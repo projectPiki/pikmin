@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global __ct__22PcamLongVibrationEventFP10PcamCamera
-__ct__22PcamLongVibrationEventFP10PcamCamera:
+.fn __ct__22PcamLongVibrationEventFP10PcamCamera, global
 /* 801241A8 00121108  7C 08 02 A6 */	mflr r0
 /* 801241AC 0012110C  90 01 00 04 */	stw r0, 4(r1)
 /* 801241B0 00121110  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -55,9 +54,9 @@ __ct__22PcamLongVibrationEventFP10PcamCamera:
 /* 80124268 001211C8  38 21 00 18 */	addi r1, r1, 0x18
 /* 8012426C 001211CC  7C 08 03 A6 */	mtlr r0
 /* 80124270 001211D0  4E 80 00 20 */	blr 
+.endfn __ct__22PcamLongVibrationEventFP10PcamCamera
 
-.global makePcamLongVibrationEvent__22PcamLongVibrationEventFffff
-makePcamLongVibrationEvent__22PcamLongVibrationEventFffff:
+.fn makePcamLongVibrationEvent__22PcamLongVibrationEventFffff, global
 /* 80124274 001211D4  7C 08 02 A6 */	mflr r0
 /* 80124278 001211D8  90 01 00 04 */	stw r0, 4(r1)
 /* 8012427C 001211DC  94 21 FF 88 */	stwu r1, -0x78(r1)
@@ -112,9 +111,9 @@ makePcamLongVibrationEvent__22PcamLongVibrationEventFffff:
 /* 80124340 001212A0  38 21 00 78 */	addi r1, r1, 0x78
 /* 80124344 001212A4  7C 08 03 A6 */	mtlr r0
 /* 80124348 001212A8  4E 80 00 20 */	blr 
+.endfn makePcamLongVibrationEvent__22PcamLongVibrationEventFffff
 
-.global __ct__18PcamVibrationEventFP10PcamCamera
-__ct__18PcamVibrationEventFP10PcamCamera:
+.fn __ct__18PcamVibrationEventFP10PcamCamera, global
 /* 8012434C 001212AC  7C 08 02 A6 */	mflr r0
 /* 80124350 001212B0  90 01 00 04 */	stw r0, 4(r1)
 /* 80124354 001212B4  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -145,9 +144,9 @@ __ct__18PcamVibrationEventFP10PcamCamera:
 /* 801243B8 00121318  38 21 00 18 */	addi r1, r1, 0x18
 /* 801243BC 0012131C  7C 08 03 A6 */	mtlr r0
 /* 801243C0 00121320  4E 80 00 20 */	blr 
+.endfn __ct__18PcamVibrationEventFP10PcamCamera
 
-.global makePcamVibrationEvent__18PcamVibrationEventFv
-makePcamVibrationEvent__18PcamVibrationEventFv:
+.fn makePcamVibrationEvent__18PcamVibrationEventFv, global
 /* 801243C4 00121324  7C 08 02 A6 */	mflr r0
 /* 801243C8 00121328  90 01 00 04 */	stw r0, 4(r1)
 /* 801243CC 0012132C  94 21 FF B8 */	stwu r1, -0x48(r1)
@@ -181,9 +180,9 @@ makePcamVibrationEvent__18PcamVibrationEventFv:
 /* 8012443C 0012139C  38 21 00 48 */	addi r1, r1, 0x48
 /* 80124440 001213A0  7C 08 03 A6 */	mtlr r0
 /* 80124444 001213A4  4E 80 00 20 */	blr 
+.endfn makePcamVibrationEvent__18PcamVibrationEventFv
 
-.global __ct__15PcamDamageEventFP10PcamCamera
-__ct__15PcamDamageEventFP10PcamCamera:
+.fn __ct__15PcamDamageEventFP10PcamCamera, global
 /* 80124448 001213A8  7C 08 02 A6 */	mflr r0
 /* 8012444C 001213AC  90 01 00 04 */	stw r0, 4(r1)
 /* 80124450 001213B0  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -214,9 +213,9 @@ __ct__15PcamDamageEventFP10PcamCamera:
 /* 801244B4 00121414  38 21 00 18 */	addi r1, r1, 0x18
 /* 801244B8 00121418  7C 08 03 A6 */	mtlr r0
 /* 801244BC 0012141C  4E 80 00 20 */	blr 
+.endfn __ct__15PcamDamageEventFP10PcamCamera
 
-.global makePcamDamageEvent__15PcamDamageEventFv
-makePcamDamageEvent__15PcamDamageEventFv:
+.fn makePcamDamageEvent__15PcamDamageEventFv, global
 /* 801244C0 00121420  7C 08 02 A6 */	mflr r0
 /* 801244C4 00121424  90 01 00 04 */	stw r0, 4(r1)
 /* 801244C8 00121428  94 21 FF D0 */	stwu r1, -0x30(r1)
@@ -245,9 +244,9 @@ makePcamDamageEvent__15PcamDamageEventFv:
 /* 80124524 00121484  38 21 00 30 */	addi r1, r1, 0x30
 /* 80124528 00121488  7C 08 03 A6 */	mtlr r0
 /* 8012452C 0012148C  4E 80 00 20 */	blr 
+.endfn makePcamDamageEvent__15PcamDamageEventFv
 
-.global update__19PcamRandomMoveEventFv
-update__19PcamRandomMoveEventFv:
+.fn update__19PcamRandomMoveEventFv, global
 /* 80124530 00121490  7C 08 02 A6 */	mflr r0
 /* 80124534 00121494  90 01 00 04 */	stw r0, 4(r1)
 /* 80124538 00121498  94 21 FF 50 */	stwu r1, -0xb0(r1)
@@ -413,9 +412,9 @@ update__19PcamRandomMoveEventFv:
 /* 801247B4 00121714  38 21 00 B0 */	addi r1, r1, 0xb0
 /* 801247B8 00121718  7C 08 03 A6 */	mtlr r0
 /* 801247BC 0012171C  4E 80 00 20 */	blr 
+.endfn update__19PcamRandomMoveEventFv
 
-.global __ct__22PcamSideVibrationEventFP10PcamCamera
-__ct__22PcamSideVibrationEventFP10PcamCamera:
+.fn __ct__22PcamSideVibrationEventFP10PcamCamera, global
 /* 801247C0 00121720  7C 08 02 A6 */	mflr r0
 /* 801247C4 00121724  90 01 00 04 */	stw r0, 4(r1)
 /* 801247C8 00121728  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -465,9 +464,9 @@ __ct__22PcamSideVibrationEventFP10PcamCamera:
 /* 80124878 001217D8  38 21 00 18 */	addi r1, r1, 0x18
 /* 8012487C 001217DC  7C 08 03 A6 */	mtlr r0
 /* 80124880 001217E0  4E 80 00 20 */	blr 
+.endfn __ct__22PcamSideVibrationEventFP10PcamCamera
 
-.global makePcamSideVibrationEvent__22PcamSideVibrationEventFv
-makePcamSideVibrationEvent__22PcamSideVibrationEventFv:
+.fn makePcamSideVibrationEvent__22PcamSideVibrationEventFv, global
 /* 80124884 001217E4  7C 08 02 A6 */	mflr r0
 /* 80124888 001217E8  90 01 00 04 */	stw r0, 4(r1)
 /* 8012488C 001217EC  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -496,9 +495,9 @@ makePcamSideVibrationEvent__22PcamSideVibrationEventFv:
 /* 801248E8 00121848  38 21 00 18 */	addi r1, r1, 0x18
 /* 801248EC 0012184C  7C 08 03 A6 */	mtlr r0
 /* 801248F0 00121850  4E 80 00 20 */	blr 
+.endfn makePcamSideVibrationEvent__22PcamSideVibrationEventFv
 
-.global update__22PcamSideVibrationEventFv
-update__22PcamSideVibrationEventFv:
+.fn update__22PcamSideVibrationEventFv, global
 /* 801248F4 00121854  7C 08 02 A6 */	mflr r0
 /* 801248F8 00121858  90 01 00 04 */	stw r0, 4(r1)
 /* 801248FC 0012185C  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -538,59 +537,67 @@ update__22PcamSideVibrationEventFv:
 /* 80124980 001218E0  38 21 00 28 */	addi r1, r1, 0x28
 /* 80124984 001218E4  7C 08 03 A6 */	mtlr r0
 /* 80124988 001218E8  4E 80 00 20 */	blr 
+.endfn update__22PcamSideVibrationEventFv
 
-.global finish__22PcamSideVibrationEventFv
-finish__22PcamSideVibrationEventFv:
+.fn finish__22PcamSideVibrationEventFv, global
 /* 8012498C 001218EC  C0 02 A1 20 */	lfs f0, lbl_803EA320@sda21(r2)
 /* 80124990 001218F0  80 63 00 28 */	lwz r3, 0x28(r3)
 /* 80124994 001218F4  D0 03 00 00 */	stfs f0, 0(r3)
 /* 80124998 001218F8  4E 80 00 20 */	blr 
+.endfn finish__22PcamSideVibrationEventFv
 
-.global setEventOption__9PeveEventFi
-setEventOption__9PeveEventFi:
+.fn setEventOption__9PeveEventFi, weak
 /* 8012499C 001218FC  80 03 00 0C */	lwz r0, 0xc(r3)
 /* 801249A0 00121900  7C 00 23 78 */	or r0, r0, r4
 /* 801249A4 00121904  90 03 00 0C */	stw r0, 0xc(r3)
 /* 801249A8 00121908  4E 80 00 20 */	blr 
+.endfn setEventOption__9PeveEventFi
 
-.global clearEventOption__9PeveEventFi
-clearEventOption__9PeveEventFi:
+.fn clearEventOption__9PeveEventFi, weak
 /* 801249AC 0012190C  80 03 00 0C */	lwz r0, 0xc(r3)
 /* 801249B0 00121910  7C 00 20 78 */	andc r0, r0, r4
 /* 801249B4 00121914  90 03 00 0C */	stw r0, 0xc(r3)
 /* 801249B8 00121918  4E 80 00 20 */	blr 
+.endfn clearEventOption__9PeveEventFi
 
-.global setEventOptions__9PeveEventFi
-setEventOptions__9PeveEventFi:
+.fn setEventOptions__9PeveEventFi, weak
 /* 801249BC 0012191C  90 83 00 0C */	stw r4, 0xc(r3)
 /* 801249C0 00121920  4E 80 00 20 */	blr 
+.endfn setEventOptions__9PeveEventFi
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802C5320:
+.obj lbl_802C5320, local
 	.asciz "pcammotionevents.cpp"
+.endobj lbl_802C5320
 .balign 4
-lbl_802C5338:
+.obj lbl_802C5338, local
 	.asciz "pcammotionevents"
+.endobj lbl_802C5338
 .balign 4
-lbl_802C534C:
+.obj lbl_802C534C, local
 	.asciz "PcamSideVibrationEvent"
+.endobj lbl_802C534C
 .balign 4
-lbl_802C5364:
+.obj lbl_802C5364, local
 	.asciz "PeveEvent"
+.endobj lbl_802C5364
 .balign 4
-lbl_802C5370:
+.obj lbl_802C5370, local
 	.4byte __RTTI__5NNode
 	.4byte 0
 	.4byte 0
-lbl_802C537C:
+.endobj lbl_802C5370
+.balign 4
+.obj lbl_802C537C, local
 	.4byte __RTTI__5NNode
 	.4byte 0
 	.4byte __RTTI__9PeveEvent
 	.4byte 0
 	.4byte 0
-.global __vt__22PcamSideVibrationEvent
-__vt__22PcamSideVibrationEvent:
+.endobj lbl_802C537C
+.balign 4
+.obj __vt__22PcamSideVibrationEvent, global
 	.4byte __RTTI__22PcamSideVibrationEvent
 	.4byte 0
 	.4byte setChild__5NNodeFiP5NNode
@@ -606,25 +613,27 @@ __vt__22PcamSideVibrationEvent:
 	.4byte setEventOption__9PeveEventFi
 	.4byte clearEventOption__9PeveEventFi
 	.4byte setEventOptions__9PeveEventFi
+.endobj __vt__22PcamSideVibrationEvent
 .balign 4
-lbl_802C53CC:
+.obj lbl_802C53CC, local
 	.asciz "NFunction"
+.endobj lbl_802C53CC
 .balign 4
-	.4byte 0
-	.4byte 0
-	.4byte 0
+.skip 0xC # compiler padding
 .balign 4
-lbl_802C53E4:
+.obj lbl_802C53E4, local
 	.asciz "PcamRandomMoveEvent"
+.endobj lbl_802C53E4
 .balign 4
-lbl_802C53F8:
+.obj lbl_802C53F8, local
 	.4byte __RTTI__5NNode
 	.4byte 0
 	.4byte __RTTI__9PeveEvent
 	.4byte 0
 	.4byte 0
-.global __vt__19PcamRandomMoveEvent
-__vt__19PcamRandomMoveEvent:
+.endobj lbl_802C53F8
+.balign 4
+.obj __vt__19PcamRandomMoveEvent, global
 	.4byte __RTTI__19PcamRandomMoveEvent
 	.4byte 0
 	.4byte setChild__5NNodeFiP5NNode
@@ -640,20 +649,25 @@ __vt__19PcamRandomMoveEvent:
 	.4byte setEventOption__9PeveEventFi
 	.4byte clearEventOption__9PeveEventFi
 	.4byte setEventOptions__9PeveEventFi
+.endobj __vt__19PcamRandomMoveEvent
 .balign 4
-lbl_802C5448:
+.obj lbl_802C5448, local
 	.asciz "PcamDamageEvent"
+.endobj lbl_802C5448
 .balign 4
-lbl_802C5458:
+.obj lbl_802C5458, local
 	.asciz "PeveVibrationEvent"
+.endobj lbl_802C5458
 .balign 4
-lbl_802C546C:
+.obj lbl_802C546C, local
 	.4byte __RTTI__5NNode
 	.4byte 0
 	.4byte __RTTI__9PeveEvent
 	.4byte 0
 	.4byte 0
-lbl_802C5480:
+.endobj lbl_802C546C
+.balign 4
+.obj lbl_802C5480, local
 	.4byte __RTTI__5NNode
 	.4byte 0
 	.4byte __RTTI__9PeveEvent
@@ -661,8 +675,9 @@ lbl_802C5480:
 	.4byte __RTTI__18PeveVibrationEvent
 	.4byte 0
 	.4byte 0
-.global __vt__15PcamDamageEvent
-__vt__15PcamDamageEvent:
+.endobj lbl_802C5480
+.balign 4
+.obj __vt__15PcamDamageEvent, weak
 	.4byte __RTTI__15PcamDamageEvent
 	.4byte 0
 	.4byte setChild__5NNodeFiP5NNode
@@ -678,11 +693,13 @@ __vt__15PcamDamageEvent:
 	.4byte setEventOption__9PeveEventFi
 	.4byte clearEventOption__9PeveEventFi
 	.4byte setEventOptions__9PeveEventFi
+.endobj __vt__15PcamDamageEvent
 .balign 4
-lbl_802C54D8:
+.obj lbl_802C54D8, local
 	.asciz "PcamVibrationEvent"
+.endobj lbl_802C54D8
 .balign 4
-lbl_802C54EC:
+.obj lbl_802C54EC, local
 	.4byte __RTTI__5NNode
 	.4byte 0
 	.4byte __RTTI__9PeveEvent
@@ -690,8 +707,9 @@ lbl_802C54EC:
 	.4byte __RTTI__18PeveVibrationEvent
 	.4byte 0
 	.4byte 0
-.global __vt__18PcamVibrationEvent
-__vt__18PcamVibrationEvent:
+.endobj lbl_802C54EC
+.balign 4
+.obj __vt__18PcamVibrationEvent, weak
 	.4byte __RTTI__18PcamVibrationEvent
 	.4byte 0
 	.4byte setChild__5NNodeFiP5NNode
@@ -707,20 +725,25 @@ __vt__18PcamVibrationEvent:
 	.4byte setEventOption__9PeveEventFi
 	.4byte clearEventOption__9PeveEventFi
 	.4byte setEventOptions__9PeveEventFi
+.endobj __vt__18PcamVibrationEvent
 .balign 4
-lbl_802C5544:
+.obj lbl_802C5544, local
 	.asciz "PcamLongVibrationEvent"
+.endobj lbl_802C5544
 .balign 4
-lbl_802C555C:
+.obj lbl_802C555C, local
 	.asciz "PeveSerialEvent"
+.endobj lbl_802C555C
 .balign 4
-lbl_802C556C:
+.obj lbl_802C556C, local
 	.4byte __RTTI__5NNode
 	.4byte 0
 	.4byte __RTTI__9PeveEvent
 	.4byte 0
 	.4byte 0
-lbl_802C5580:
+.endobj lbl_802C556C
+.balign 4
+.obj lbl_802C5580, local
 	.4byte __RTTI__5NNode
 	.4byte 0
 	.4byte __RTTI__9PeveEvent
@@ -728,8 +751,9 @@ lbl_802C5580:
 	.4byte __RTTI__15PeveSerialEvent
 	.4byte 0
 	.4byte 0
-.global __vt__22PcamLongVibrationEvent
-__vt__22PcamLongVibrationEvent:
+.endobj lbl_802C5580
+.balign 4
+.obj __vt__22PcamLongVibrationEvent, weak
 	.4byte __RTTI__22PcamLongVibrationEvent
 	.4byte 0
 	.4byte setChild__5NNodeFiP5NNode
@@ -745,62 +769,93 @@ __vt__22PcamLongVibrationEvent:
 	.4byte setEventOption__9PeveEventFi
 	.4byte clearEventOption__9PeveEventFi
 	.4byte setEventOptions__9PeveEventFi
+.endobj __vt__22PcamLongVibrationEvent
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-lbl_803E3288:
+.obj lbl_803E3288, local
 	.asciz "NNode"
+.endobj lbl_803E3288
 .balign 4
-__RTTI__5NNode:
+.obj __RTTI__5NNode, local
 	.4byte lbl_803E3288
 	.4byte 0
-__RTTI__9PeveEvent:
+.endobj __RTTI__5NNode
+.balign 4
+.obj __RTTI__9PeveEvent, local
 	.4byte lbl_802C5364
 	.4byte lbl_802C5370
-__RTTI__22PcamSideVibrationEvent:
+.endobj __RTTI__9PeveEvent
+.balign 4
+.obj __RTTI__22PcamSideVibrationEvent, local
 	.4byte lbl_802C534C
 	.4byte lbl_802C537C
-__RTTI__19PcamRandomMoveEvent:
+.endobj __RTTI__22PcamSideVibrationEvent
+.balign 4
+.obj __RTTI__19PcamRandomMoveEvent, local
 	.4byte lbl_802C53E4
 	.4byte lbl_802C53F8
-__RTTI__18PeveVibrationEvent:
+.endobj __RTTI__19PcamRandomMoveEvent
+.balign 4
+.obj __RTTI__18PeveVibrationEvent, local
 	.4byte lbl_802C5458
 	.4byte lbl_802C546C
-__RTTI__15PcamDamageEvent:
+.endobj __RTTI__18PeveVibrationEvent
+.balign 4
+.obj __RTTI__15PcamDamageEvent, local
 	.4byte lbl_802C5448
 	.4byte lbl_802C5480
-__RTTI__18PcamVibrationEvent:
+.endobj __RTTI__15PcamDamageEvent
+.balign 4
+.obj __RTTI__18PcamVibrationEvent, local
 	.4byte lbl_802C54D8
 	.4byte lbl_802C54EC
-__RTTI__15PeveSerialEvent:
+.endobj __RTTI__18PcamVibrationEvent
+.balign 4
+.obj __RTTI__15PeveSerialEvent, local
 	.4byte lbl_802C555C
 	.4byte lbl_802C556C
-__RTTI__22PcamLongVibrationEvent:
+.endobj __RTTI__15PeveSerialEvent
+.balign 4
+.obj __RTTI__22PcamLongVibrationEvent, local
 	.4byte lbl_802C5544
 	.4byte lbl_802C5580
+.endobj __RTTI__22PcamLongVibrationEvent
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803EA320:
+.obj lbl_803EA320, local
 	.float 0.0
-lbl_803EA324:
+.endobj lbl_803EA320
+.obj lbl_803EA324, local
 	.float 0.8
-lbl_803EA328:
+.endobj lbl_803EA324
+.obj lbl_803EA328, local
 	.float 0.2
-lbl_803EA32C:
+.endobj lbl_803EA328
+.obj lbl_803EA32C, local
 	.float 16.0
-lbl_803EA330:
+.endobj lbl_803EA32C
+.obj lbl_803EA330, local
 	.float 1.0
-lbl_803EA334:
+.endobj lbl_803EA330
+.obj lbl_803EA334, local
 	.float 32767.0
-lbl_803EA338:
+.endobj lbl_803EA334
+.obj lbl_803EA338, local
 	.float -1.0
-lbl_803EA33C:
+.endobj lbl_803EA338
+.obj lbl_803EA33C, local
 	.float 2.0
-lbl_803EA340:
-	.4byte 0x43300000
-	.4byte 0x80000000
-lbl_803EA348:
+.endobj lbl_803EA33C
+.balign 8
+.obj lbl_803EA340, local
+	.8byte 0x4330000080000000
+.endobj lbl_803EA340
+.balign 4
+.obj lbl_803EA348, local
 	.float 0.6
-lbl_803EA34C:
+.endobj lbl_803EA348
+.obj lbl_803EA34C, local
 	.float 0.125
+.endobj lbl_803EA34C

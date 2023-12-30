@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global setSeedFlashEffect__8KingBodyFv
-setSeedFlashEffect__8KingBodyFv:
+.fn setSeedFlashEffect__8KingBodyFv, global
 /* 80172D84 0016FCE4  7C 08 02 A6 */	mflr r0
 /* 80172D88 0016FCE8  90 01 00 04 */	stw r0, 4(r1)
 /* 80172D8C 0016FCEC  94 21 FF D0 */	stwu r1, -0x30(r1)
@@ -59,9 +58,9 @@ setSeedFlashEffect__8KingBodyFv:
 /* 80172E54 0016FDB4  38 21 00 30 */	addi r1, r1, 0x30
 /* 80172E58 0016FDB8  7C 08 03 A6 */	mtlr r0
 /* 80172E5C 0016FDBC  4E 80 00 20 */	blr 
+.endfn setSeedFlashEffect__8KingBodyFv
 
-.global setEatBombEffect__8KingBodyFv
-setEatBombEffect__8KingBodyFv:
+.fn setEatBombEffect__8KingBodyFv, global
 /* 80172E60 0016FDC0  7C 08 02 A6 */	mflr r0
 /* 80172E64 0016FDC4  90 01 00 04 */	stw r0, 4(r1)
 /* 80172E68 0016FDC8  94 21 FF 68 */	stwu r1, -0x98(r1)
@@ -215,9 +214,9 @@ setEatBombEffect__8KingBodyFv:
 /* 801730A0 00170000  38 21 00 98 */	addi r1, r1, 0x98
 /* 801730A4 00170004  7C 08 03 A6 */	mtlr r0
 /* 801730A8 00170008  4E 80 00 20 */	blr 
+.endfn setEatBombEffect__8KingBodyFv
 
-.global createWaterEffect__8KingBodyFi
-createWaterEffect__8KingBodyFi:
+.fn createWaterEffect__8KingBodyFi, global
 /* 801730AC 0017000C  7C 08 02 A6 */	mflr r0
 /* 801730B0 00170010  38 C0 00 00 */	li r6, 0
 /* 801730B4 00170014  90 01 00 04 */	stw r0, 4(r1)
@@ -353,9 +352,9 @@ createWaterEffect__8KingBodyFi:
 /* 801732B0 00170210  38 21 00 88 */	addi r1, r1, 0x88
 /* 801732B4 00170214  7C 08 03 A6 */	mtlr r0
 /* 801732B8 00170218  4E 80 00 20 */	blr 
+.endfn createWaterEffect__8KingBodyFi
 
-.global createUfoParts__8KingBodyFv
-createUfoParts__8KingBodyFv:
+.fn createUfoParts__8KingBodyFv, global
 /* 801732BC 0017021C  7C 08 02 A6 */	mflr r0
 /* 801732C0 00170220  38 A0 00 00 */	li r5, 0
 /* 801732C4 00170224  90 01 00 04 */	stw r0, 4(r1)
@@ -507,9 +506,9 @@ createUfoParts__8KingBodyFv:
 /* 80173500 00170460  38 21 00 60 */	addi r1, r1, 0x60
 /* 80173504 00170464  7C 08 03 A6 */	mtlr r0
 /* 80173508 00170468  4E 80 00 20 */	blr 
+.endfn createUfoParts__8KingBodyFv
 
-.global killCallBackEffect__8KingBodyFb
-killCallBackEffect__8KingBodyFb:
+.fn killCallBackEffect__8KingBodyFb, global
 /* 8017350C 0017046C  7C 08 02 A6 */	mflr r0
 /* 80173510 00170470  90 01 00 04 */	stw r0, 4(r1)
 /* 80173514 00170474  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -567,9 +566,9 @@ killCallBackEffect__8KingBodyFb:
 /* 801735DC 0017053C  38 21 00 20 */	addi r1, r1, 0x20
 /* 801735E0 00170540  7C 08 03 A6 */	mtlr r0
 /* 801735E4 00170544  4E 80 00 20 */	blr 
+.endfn killCallBackEffect__8KingBodyFb
 
-.global __ct__8KingBodyFP4King
-__ct__8KingBodyFP4King:
+.fn __ct__8KingBodyFP4King, global
 /* 801735E8 00170548  7C 08 02 A6 */	mflr r0
 /* 801735EC 0017054C  3C 80 80 03 */	lis r4, __ct__8Vector3fFv@ha
 /* 801735F0 00170550  90 01 00 04 */	stw r0, 4(r1)
@@ -717,9 +716,9 @@ __ct__8KingBodyFP4King:
 /* 80173818 00170778  38 21 00 18 */	addi r1, r1, 0x18
 /* 8017381C 0017077C  7C 08 03 A6 */	mtlr r0
 /* 80173820 00170780  4E 80 00 20 */	blr 
+.endfn __ct__8KingBodyFP4King
 
-.global __ct__21KingGenRippleCallBackFv
-__ct__21KingGenRippleCallBackFv:
+.fn __ct__21KingGenRippleCallBackFv, weak
 /* 80173824 00170784  3C 80 80 2B */	lis r4, "__vt__Q23zen37CallBack1<PQ23zen17particleGenerator>"@ha
 /* 80173828 00170788  38 04 06 00 */	addi r0, r4, "__vt__Q23zen37CallBack1<PQ23zen17particleGenerator>"@l
 /* 8017382C 0017078C  3C 80 80 2D */	lis r4, __vt__21KingGenRippleCallBack@ha
@@ -727,9 +726,9 @@ __ct__21KingGenRippleCallBackFv:
 /* 80173834 00170794  38 04 05 CC */	addi r0, r4, __vt__21KingGenRippleCallBack@l
 /* 80173838 00170798  90 03 00 00 */	stw r0, 0(r3)
 /* 8017383C 0017079C  4E 80 00 20 */	blr 
+.endfn __ct__21KingGenRippleCallBackFv
 
-.global __ct__21KingGenSalivaCallBackFv
-__ct__21KingGenSalivaCallBackFv:
+.fn __ct__21KingGenSalivaCallBackFv, weak
 /* 80173840 001707A0  3C 80 80 2B */	lis r4, "__vt__Q23zen37CallBack1<PQ23zen17particleGenerator>"@ha
 /* 80173844 001707A4  38 04 06 00 */	addi r0, r4, "__vt__Q23zen37CallBack1<PQ23zen17particleGenerator>"@l
 /* 80173848 001707A8  3C 80 80 2D */	lis r4, __vt__21KingGenSalivaCallBack@ha
@@ -737,9 +736,9 @@ __ct__21KingGenSalivaCallBackFv:
 /* 80173850 001707B0  38 04 05 9C */	addi r0, r4, __vt__21KingGenSalivaCallBack@l
 /* 80173854 001707B4  90 03 00 00 */	stw r0, 0(r3)
 /* 80173858 001707B8  4E 80 00 20 */	blr 
+.endfn __ct__21KingGenSalivaCallBackFv
 
-.global init__8KingBodyFP4King
-init__8KingBodyFP4King:
+.fn init__8KingBodyFP4King, global
 /* 8017385C 001707BC  7C 08 02 A6 */	mflr r0
 /* 80173860 001707C0  38 E0 00 00 */	li r7, 0
 /* 80173864 001707C4  90 01 00 04 */	stw r0, 4(r1)
@@ -884,9 +883,9 @@ init__8KingBodyFP4King:
 /* 80173A8C 001709EC  38 21 00 68 */	addi r1, r1, 0x68
 /* 80173A90 001709F0  7C 08 03 A6 */	mtlr r0
 /* 80173A94 001709F4  4E 80 00 20 */	blr 
+.endfn init__8KingBodyFP4King
 
-.global initBlending__8KingBodyFf
-initBlending__8KingBodyFf:
+.fn initBlending__8KingBodyFf, global
 /* 80173A98 001709F8  C0 43 00 1C */	lfs f2, 0x1c(r3)
 /* 80173A9C 001709FC  C0 02 AC E0 */	lfs f0, lbl_803EAEE0@sda21(r2)
 /* 80173AA0 00170A00  FC 02 00 40 */	fcmpo cr0, f2, f0
@@ -898,9 +897,9 @@ initBlending__8KingBodyFf:
 /* 80173AB4 00170A14  D0 03 00 1C */	stfs f0, 0x1c(r3)
 /* 80173AB8 00170A18  D0 23 00 18 */	stfs f1, 0x18(r3)
 /* 80173ABC 00170A1C  4E 80 00 20 */	blr 
+.endfn initBlending__8KingBodyFf
 
-.global setVelocityFromPosition__8KingBodyFv
-setVelocityFromPosition__8KingBodyFv:
+.fn setVelocityFromPosition__8KingBodyFv, global
 /* 80173AC0 00170A20  7C 08 02 A6 */	mflr r0
 /* 80173AC4 00170A24  90 01 00 04 */	stw r0, 4(r1)
 /* 80173AC8 00170A28  94 21 FF 40 */	stwu r1, -0xc0(r1)
@@ -1027,9 +1026,9 @@ setVelocityFromPosition__8KingBodyFv:
 /* 80173C94 00170BF4  38 21 00 C0 */	addi r1, r1, 0xc0
 /* 80173C98 00170BF8  7C 08 03 A6 */	mtlr r0
 /* 80173C9C 00170BFC  4E 80 00 20 */	blr 
+.endfn setVelocityFromPosition__8KingBodyFv
 
-.global emitOnGroundEffect__8KingBodyFv
-emitOnGroundEffect__8KingBodyFv:
+.fn emitOnGroundEffect__8KingBodyFv, global
 /* 80173CA0 00170C00  7C 08 02 A6 */	mflr r0
 /* 80173CA4 00170C04  90 01 00 04 */	stw r0, 4(r1)
 /* 80173CA8 00170C08  94 21 FF B0 */	stwu r1, -0x50(r1)
@@ -1115,9 +1114,9 @@ emitOnGroundEffect__8KingBodyFv:
 /* 80173DD4 00170D34  38 21 00 50 */	addi r1, r1, 0x50
 /* 80173DD8 00170D38  7C 08 03 A6 */	mtlr r0
 /* 80173DDC 00170D3C  4E 80 00 20 */	blr 
+.endfn emitOnGroundEffect__8KingBodyFv
 
-.global update__8KingBodyFv
-update__8KingBodyFv:
+.fn update__8KingBodyFv, global
 /* 80173DE0 00170D40  7C 08 02 A6 */	mflr r0
 /* 80173DE4 00170D44  90 01 00 04 */	stw r0, 4(r1)
 /* 80173DE8 00170D48  94 21 FF B0 */	stwu r1, -0x50(r1)
@@ -1227,9 +1226,9 @@ update__8KingBodyFv:
 /* 80173F6C 00170ECC  38 21 00 50 */	addi r1, r1, 0x50
 /* 80173F70 00170ED0  7C 08 03 A6 */	mtlr r0
 /* 80173F74 00170ED4  4E 80 00 20 */	blr 
+.endfn update__8KingBodyFv
 
-.global makeBlending__8KingBodyFP8Matrix4f
-makeBlending__8KingBodyFP8Matrix4f:
+.fn makeBlending__8KingBodyFP8Matrix4f, global
 /* 80173F78 00170ED8  7C 08 02 A6 */	mflr r0
 /* 80173F7C 00170EDC  90 01 00 04 */	stw r0, 4(r1)
 /* 80173F80 00170EE0  94 21 FB D8 */	stwu r1, -0x428(r1)
@@ -1594,9 +1593,9 @@ makeBlending__8KingBodyFP8Matrix4f:
 /* 801744E4 00171444  38 21 04 28 */	addi r1, r1, 0x428
 /* 801744E8 00171448  7C 08 03 A6 */	mtlr r0
 /* 801744EC 0017144C  4E 80 00 20 */	blr 
+.endfn makeBlending__8KingBodyFP8Matrix4f
 
-.global copyJointPosition__8KingBodyFP8Matrix4f
-copyJointPosition__8KingBodyFP8Matrix4f:
+.fn copyJointPosition__8KingBodyFP8Matrix4f, global
 /* 801744F0 00171450  7C 08 02 A6 */	mflr r0
 /* 801744F4 00171454  90 01 00 04 */	stw r0, 4(r1)
 /* 801744F8 00171458  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -1738,9 +1737,9 @@ copyJointPosition__8KingBodyFP8Matrix4f:
 /* 80174714 00171674  38 21 00 20 */	addi r1, r1, 0x20
 /* 80174718 00171678  7C 08 03 A6 */	mtlr r0
 /* 8017471C 0017167C  4E 80 00 20 */	blr 
+.endfn copyJointPosition__8KingBodyFP8Matrix4f
 
-.global refresh__8KingBodyFP15BossShapeObjectR8Graphics
-refresh__8KingBodyFP15BossShapeObjectR8Graphics:
+.fn refresh__8KingBodyFP15BossShapeObjectR8Graphics, global
 /* 80174720 00171680  7C 08 02 A6 */	mflr r0
 /* 80174724 00171684  3C C0 80 04 */	lis r6, __ct__8Matrix4fFv@ha
 /* 80174728 00171688  90 01 00 04 */	stw r0, 4(r1)
@@ -2550,9 +2549,9 @@ refresh__8KingBodyFP15BossShapeObjectR8Graphics:
 /* 80175380 001722E0  38 21 11 48 */	addi r1, r1, 0x1148
 /* 80175384 001722E4  7C 08 03 A6 */	mtlr r0
 /* 80175388 001722E8  4E 80 00 20 */	blr 
+.endfn refresh__8KingBodyFP15BossShapeObjectR8Graphics
 
-.global invoke__21KingGenSalivaCallBackFPQ23zen17particleGenerator
-invoke__21KingGenSalivaCallBackFPQ23zen17particleGenerator:
+.fn invoke__21KingGenSalivaCallBackFPQ23zen17particleGenerator, weak
 /* 8017538C 001722EC  7C 08 02 A6 */	mflr r0
 /* 80175390 001722F0  90 01 00 04 */	stw r0, 4(r1)
 /* 80175394 001722F4  94 21 FF 80 */	stwu r1, -0x80(r1)
@@ -2660,9 +2659,9 @@ invoke__21KingGenSalivaCallBackFPQ23zen17particleGenerator:
 /* 8017551C 0017247C  38 21 00 80 */	addi r1, r1, 0x80
 /* 80175520 00172480  7C 08 03 A6 */	mtlr r0
 /* 80175524 00172484  4E 80 00 20 */	blr 
+.endfn invoke__21KingGenSalivaCallBackFPQ23zen17particleGenerator
 
-.global invoke__21KingGenRippleCallBackFPQ23zen17particleGenerator
-invoke__21KingGenRippleCallBackFPQ23zen17particleGenerator:
+.fn invoke__21KingGenRippleCallBackFPQ23zen17particleGenerator, weak
 /* 80175528 00172488  94 21 FF E0 */	stwu r1, -0x20(r1)
 /* 8017552C 0017248C  80 A3 00 0C */	lwz r5, 0xc(r3)
 /* 80175530 00172490  C0 05 00 00 */	lfs f0, 0(r5)
@@ -2697,9 +2696,9 @@ invoke__21KingGenRippleCallBackFPQ23zen17particleGenerator:
 /* 8017559C 001724FC  38 60 00 01 */	li r3, 1
 /* 801755A0 00172500  38 21 00 20 */	addi r1, r1, 0x20
 /* 801755A4 00172504  4E 80 00 20 */	blr 
+.endfn invoke__21KingGenRippleCallBackFPQ23zen17particleGenerator
 
-.global invoke__32KingGenSpitPartsParticleCallBackFPQ23zen17particleGeneratorPQ23zen11particleMdl
-invoke__32KingGenSpitPartsParticleCallBackFPQ23zen17particleGeneratorPQ23zen11particleMdl:
+.fn invoke__32KingGenSpitPartsParticleCallBackFPQ23zen17particleGeneratorPQ23zen11particleMdl, weak
 /* 801755A8 00172508  7C 08 02 A6 */	mflr r0
 /* 801755AC 0017250C  90 01 00 04 */	stw r0, 4(r1)
 /* 801755B0 00172510  94 21 FF A0 */	stwu r1, -0x60(r1)
@@ -2808,9 +2807,9 @@ invoke__32KingGenSpitPartsParticleCallBackFPQ23zen17particleGeneratorPQ23zen11pa
 /* 80175748 001726A8  38 21 00 60 */	addi r1, r1, 0x60
 /* 8017574C 001726AC  7C 08 03 A6 */	mtlr r0
 /* 80175750 001726B0  4E 80 00 20 */	blr 
+.endfn invoke__32KingGenSpitPartsParticleCallBackFPQ23zen17particleGeneratorPQ23zen11particleMdl
 
-.global insertAfter__Q23zen7zenListFPQ23zen7zenList
-insertAfter__Q23zen7zenListFPQ23zen7zenList:
+.fn insertAfter__Q23zen7zenListFPQ23zen7zenList, weak
 /* 80175754 001726B4  80 03 00 08 */	lwz r0, 8(r3)
 /* 80175758 001726B8  90 04 00 08 */	stw r0, 8(r4)
 /* 8017575C 001726BC  90 64 00 04 */	stw r3, 4(r4)
@@ -2818,9 +2817,9 @@ insertAfter__Q23zen7zenListFPQ23zen7zenList:
 /* 80175764 001726C4  90 85 00 04 */	stw r4, 4(r5)
 /* 80175768 001726C8  90 83 00 08 */	stw r4, 8(r3)
 /* 8017576C 001726CC  4E 80 00 20 */	blr 
+.endfn insertAfter__Q23zen7zenListFPQ23zen7zenList
 
-.global remove__Q23zen7zenListFv
-remove__Q23zen7zenListFv:
+.fn remove__Q23zen7zenListFv, weak
 /* 80175770 001726D0  80 03 00 04 */	lwz r0, 4(r3)
 /* 80175774 001726D4  80 83 00 08 */	lwz r4, 8(r3)
 /* 80175778 001726D8  90 04 00 04 */	stw r0, 4(r4)
@@ -2828,9 +2827,9 @@ remove__Q23zen7zenListFv:
 /* 80175780 001726E0  80 63 00 04 */	lwz r3, 4(r3)
 /* 80175784 001726E4  90 03 00 08 */	stw r0, 8(r3)
 /* 80175788 001726E8  4E 80 00 20 */	blr 
+.endfn remove__Q23zen7zenListFv
 
-.global invoke__25KingGenDamageStarCallBackFPQ23zen17particleGenerator
-invoke__25KingGenDamageStarCallBackFPQ23zen17particleGenerator:
+.fn invoke__25KingGenDamageStarCallBackFPQ23zen17particleGenerator, weak
 /* 8017578C 001726EC  80 63 00 04 */	lwz r3, 4(r3)
 /* 80175790 001726F0  80 03 02 E4 */	lwz r0, 0x2e4(r3)
 /* 80175794 001726F4  2C 00 00 01 */	cmpwi r0, 1
@@ -2843,9 +2842,9 @@ invoke__25KingGenDamageStarCallBackFPQ23zen17particleGenerator:
 .L_801757B0:
 /* 801757B0 00172710  38 60 00 01 */	li r3, 1
 /* 801757B4 00172714  4E 80 00 20 */	blr 
+.endfn invoke__25KingGenDamageStarCallBackFPQ23zen17particleGenerator
 
-.global invoke__29KingGenSalivaParticleCallBackFPQ23zen17particleGeneratorPQ23zen11particleMdl
-invoke__29KingGenSalivaParticleCallBackFPQ23zen17particleGeneratorPQ23zen11particleMdl:
+.fn invoke__29KingGenSalivaParticleCallBackFPQ23zen17particleGeneratorPQ23zen11particleMdl, weak
 /* 801757B8 00172718  7C 08 02 A6 */	mflr r0
 /* 801757BC 0017271C  90 01 00 04 */	stw r0, 4(r1)
 /* 801757C0 00172720  94 21 FF A0 */	stwu r1, -0x60(r1)
@@ -2976,9 +2975,9 @@ invoke__29KingGenSalivaParticleCallBackFPQ23zen17particleGeneratorPQ23zen11parti
 /* 801759AC 0017290C  38 21 00 60 */	addi r1, r1, 0x60
 /* 801759B0 00172910  7C 08 03 A6 */	mtlr r0
 /* 801759B4 00172914  4E 80 00 20 */	blr 
+.endfn invoke__29KingGenSalivaParticleCallBackFPQ23zen17particleGeneratorPQ23zen11particleMdl
 
-.global invoke__27KingGenSpreadSalivaCallBackFPQ23zen17particleGenerator
-invoke__27KingGenSpreadSalivaCallBackFPQ23zen17particleGenerator:
+.fn invoke__27KingGenSpreadSalivaCallBackFPQ23zen17particleGenerator, weak
 /* 801759B8 00172918  80 A3 00 04 */	lwz r5, 4(r3)
 /* 801759BC 0017291C  80 C5 03 C0 */	lwz r6, 0x3c0(r5)
 /* 801759C0 00172920  80 A6 00 60 */	lwz r5, 0x60(r6)
@@ -3012,281 +3011,393 @@ invoke__27KingGenSpreadSalivaCallBackFPQ23zen17particleGenerator:
 .L_80175A28:
 /* 80175A28 00172988  38 60 00 01 */	li r3, 1
 /* 80175A2C 0017298C  4E 80 00 20 */	blr 
+.endfn invoke__27KingGenSpreadSalivaCallBackFPQ23zen17particleGenerator
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802D0530:
+.obj lbl_802D0530, local
 	.asciz "KingBody.cpp"
+.endobj lbl_802D0530
 .balign 4
-lbl_802D0540:
+.obj lbl_802D0540, local
 	.asciz "KingBody"
+.endobj lbl_802D0540
 .balign 4
-lbl_802D054C:
+.obj lbl_802D054C, local
 	.asciz "KingGenSalivaCallBack"
+.endobj lbl_802D054C
 .balign 4
-lbl_802D0564:
+.obj lbl_802D0564, local
 	.asciz "zen::CallBack1<zen::particleGenerator *>"
+.endobj lbl_802D0564
 .balign 4
-lbl_802D0590:
+.obj lbl_802D0590, local
 	.4byte "__RTTI__Q23zen37CallBack1<PQ23zen17particleGenerator>"
 	.4byte 0
 	.4byte 0
-.global __vt__21KingGenSalivaCallBack
-__vt__21KingGenSalivaCallBack:
+.endobj lbl_802D0590
+.balign 4
+.obj __vt__21KingGenSalivaCallBack, weak
 	.4byte __RTTI__21KingGenSalivaCallBack
 	.4byte 0
 	.4byte invoke__21KingGenSalivaCallBackFPQ23zen17particleGenerator
+.endobj __vt__21KingGenSalivaCallBack
 .balign 4
-lbl_802D05A8:
+.obj lbl_802D05A8, local
 	.asciz "KingGenRippleCallBack"
+.endobj lbl_802D05A8
 .balign 4
-lbl_802D05C0:
+.obj lbl_802D05C0, local
 	.4byte "__RTTI__Q23zen37CallBack1<PQ23zen17particleGenerator>"
 	.4byte 0
 	.4byte 0
-.global __vt__21KingGenRippleCallBack
-__vt__21KingGenRippleCallBack:
+.endobj lbl_802D05C0
+.balign 4
+.obj __vt__21KingGenRippleCallBack, weak
 	.4byte __RTTI__21KingGenRippleCallBack
 	.4byte 0
 	.4byte invoke__21KingGenRippleCallBackFPQ23zen17particleGenerator
+.endobj __vt__21KingGenRippleCallBack
 .balign 4
-lbl_802D05D8:
+.obj lbl_802D05D8, local
 	.asciz "KingGenSpitPartsParticleCallBack"
+.endobj lbl_802D05D8
 .balign 4
-lbl_802D05FC:
+.obj lbl_802D05FC, local
 	.asciz "zen::CallBack2<zen::particleGenerator *, zen::particleMdl *>"
+.endobj lbl_802D05FC
 .balign 4
-lbl_802D063C:
+.obj lbl_802D063C, local
 	.4byte "__RTTI__Q23zen58CallBack2<PQ23zen17particleGenerator,PQ23zen11particleMdl>"
 	.4byte 0
 	.4byte 0
-.global __vt__32KingGenSpitPartsParticleCallBack
-__vt__32KingGenSpitPartsParticleCallBack:
+.endobj lbl_802D063C
+.balign 4
+.obj __vt__32KingGenSpitPartsParticleCallBack, weak
 	.4byte __RTTI__32KingGenSpitPartsParticleCallBack
 	.4byte 0
 	.4byte invoke__32KingGenSpitPartsParticleCallBackFPQ23zen17particleGeneratorPQ23zen11particleMdl
+.endobj __vt__32KingGenSpitPartsParticleCallBack
 .balign 4
-lbl_802D0654:
+.obj lbl_802D0654, local
 	.asciz "KingGenDamageStarCallBack"
+.endobj lbl_802D0654
 .balign 4
-lbl_802D0670:
+.obj lbl_802D0670, local
 	.4byte "__RTTI__Q23zen37CallBack1<PQ23zen17particleGenerator>"
 	.4byte 0
 	.4byte 0
-.global __vt__25KingGenDamageStarCallBack
-__vt__25KingGenDamageStarCallBack:
+.endobj lbl_802D0670
+.balign 4
+.obj __vt__25KingGenDamageStarCallBack, weak
 	.4byte __RTTI__25KingGenDamageStarCallBack
 	.4byte 0
 	.4byte invoke__25KingGenDamageStarCallBackFPQ23zen17particleGenerator
+.endobj __vt__25KingGenDamageStarCallBack
 .balign 4
-lbl_802D0688:
+.obj lbl_802D0688, local
 	.asciz "KingGenSalivaParticleCallBack"
+.endobj lbl_802D0688
 .balign 4
-lbl_802D06A8:
+.obj lbl_802D06A8, local
 	.4byte "__RTTI__Q23zen58CallBack2<PQ23zen17particleGenerator,PQ23zen11particleMdl>"
 	.4byte 0
 	.4byte 0
-.global __vt__29KingGenSalivaParticleCallBack
-__vt__29KingGenSalivaParticleCallBack:
+.endobj lbl_802D06A8
+.balign 4
+.obj __vt__29KingGenSalivaParticleCallBack, weak
 	.4byte __RTTI__29KingGenSalivaParticleCallBack
 	.4byte 0
 	.4byte invoke__29KingGenSalivaParticleCallBackFPQ23zen17particleGeneratorPQ23zen11particleMdl
-	.4byte 0
-	.4byte 0
-	.4byte 0
+.endobj __vt__29KingGenSalivaParticleCallBack
 .balign 4
-lbl_802D06CC:
+.skip 0xC # compiler padding
+.balign 4
+.obj lbl_802D06CC, local
 	.asciz "KingGenSpreadSalivaCallBack"
+.endobj lbl_802D06CC
 .balign 4
-lbl_802D06E8:
+.obj lbl_802D06E8, local
 	.4byte "__RTTI__Q23zen37CallBack1<PQ23zen17particleGenerator>"
 	.4byte 0
 	.4byte 0
-.global __vt__27KingGenSpreadSalivaCallBack
-__vt__27KingGenSpreadSalivaCallBack:
+.endobj lbl_802D06E8
+.balign 4
+.obj __vt__27KingGenSpreadSalivaCallBack, weak
 	.4byte __RTTI__27KingGenSpreadSalivaCallBack
 	.4byte 0
 	.4byte invoke__27KingGenSpreadSalivaCallBackFPQ23zen17particleGenerator
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
+.endobj __vt__27KingGenSpreadSalivaCallBack
+.balign 4
+.skip 0x10 # compiler padding
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-lbl_803E5038:
+.obj lbl_803E5038, local
 	.float 0.0
-lbl_803E503C:
+.endobj lbl_803E5038
+.obj lbl_803E503C, local
 	.float 0.0
-lbl_803E5040:
+.endobj lbl_803E503C
+.obj lbl_803E5040, local
 	.float 0.0
-lbl_803E5044:
+.endobj lbl_803E5040
+.obj lbl_803E5044, local
 	.float 0.0
-lbl_803E5048:
+.endobj lbl_803E5044
+.obj lbl_803E5048, local
 	.float 0.0
-lbl_803E504C:
+.endobj lbl_803E5048
+.obj lbl_803E504C, local
 	.float 0.0
-lbl_803E5050:
+.endobj lbl_803E504C
+.obj lbl_803E5050, local
 	.float 0.0
-lbl_803E5054:
+.endobj lbl_803E5050
+.obj lbl_803E5054, local
 	.float 0.0
-lbl_803E5058:
+.endobj lbl_803E5054
+.obj lbl_803E5058, local
 	.float 0.0
-lbl_803E505C:
+.endobj lbl_803E5058
+.obj lbl_803E505C, local
 	.float 0.0
-lbl_803E5060:
+.endobj lbl_803E505C
+.obj lbl_803E5060, local
 	.float 0.0
-lbl_803E5064:
+.endobj lbl_803E5060
+.obj lbl_803E5064, local
 	.float 0.0
-lbl_803E5068:
+.endobj lbl_803E5064
+.obj lbl_803E5068, local
 	.float 0.0
-lbl_803E506C:
+.endobj lbl_803E5068
+.obj lbl_803E506C, local
 	.float 0.0
-lbl_803E5070:
+.endobj lbl_803E506C
+.obj lbl_803E5070, local
 	.float 0.0
-lbl_803E5074:
+.endobj lbl_803E5070
+.obj lbl_803E5074, local
 	.float 0.0
-lbl_803E5078:
+.endobj lbl_803E5074
+.obj lbl_803E5078, local
 	.float 50.0
-lbl_803E507C:
+.endobj lbl_803E5078
+.obj lbl_803E507C, local
 	.float 0.0
-lbl_803E5080:
+.endobj lbl_803E507C
+.obj lbl_803E5080, local
 	.float 0.0
-lbl_803E5084:
+.endobj lbl_803E5080
+.obj lbl_803E5084, local
 	.float 0.0
-lbl_803E5088:
+.endobj lbl_803E5084
+.obj lbl_803E5088, local
 	.float 0.0
-lbl_803E508C:
+.endobj lbl_803E5088
+.obj lbl_803E508C, local
 	.float 1.0
-lbl_803E5090:
+.endobj lbl_803E508C
+.obj lbl_803E5090, local
 	.float 0.0
-lbl_803E5094:
+.endobj lbl_803E5090
+.obj lbl_803E5094, local
 	.float 0.0
-lbl_803E5098:
+.endobj lbl_803E5094
+.obj lbl_803E5098, local
 	.float 0.0
-lbl_803E509C:
+.endobj lbl_803E5098
+.obj lbl_803E509C, local
 	.float 0.0
-lbl_803E50A0:
+.endobj lbl_803E509C
+.obj lbl_803E50A0, local
 	.float 0.0
-lbl_803E50A4:
+.endobj lbl_803E50A0
+.obj lbl_803E50A4, local
 	.float 1.0
-lbl_803E50A8:
+.endobj lbl_803E50A4
+.obj lbl_803E50A8, local
 	.float 0.0
-lbl_803E50AC:
+.endobj lbl_803E50A8
+.obj lbl_803E50AC, local
 	.float 0.0
-lbl_803E50B0:
+.endobj lbl_803E50AC
+.obj lbl_803E50B0, local
 	.float 0.0
-lbl_803E50B4:
+.endobj lbl_803E50B0
+.obj lbl_803E50B4, local
 	.float 0.0
-lbl_803E50B8:
+.endobj lbl_803E50B4
+.obj lbl_803E50B8, local
 	.float 0.0
-lbl_803E50BC:
+.endobj lbl_803E50B8
+.obj lbl_803E50BC, local
 	.float 1.0
-lbl_803E50C0:
+.endobj lbl_803E50BC
+.obj lbl_803E50C0, local
 	.float 0.0
-lbl_803E50C4:
+.endobj lbl_803E50C0
+.obj lbl_803E50C4, local
 	.float 0.0
-lbl_803E50C8:
+.endobj lbl_803E50C4
+.obj lbl_803E50C8, local
 	.float 0.0
-lbl_803E50CC:
+.endobj lbl_803E50C8
+.obj lbl_803E50CC, local
 	.float 0.0
-lbl_803E50D0:
+.endobj lbl_803E50CC
+.obj lbl_803E50D0, local
 	.float 0.0
-lbl_803E50D4:
+.endobj lbl_803E50D0
+.obj lbl_803E50D4, local
 	.float 0.0
-lbl_803E50D8:
+.endobj lbl_803E50D4
+.obj lbl_803E50D8, local
 	.float 0.0
-lbl_803E50DC:
+.endobj lbl_803E50D8
+.obj lbl_803E50DC, local
 	.float 0.0
-lbl_803E50E0:
+.endobj lbl_803E50DC
+.obj lbl_803E50E0, local
 	.float 0.0
-lbl_803E50E4:
+.endobj lbl_803E50E0
+.obj lbl_803E50E4, local
 	.float 0.0
-lbl_803E50E8:
+.endobj lbl_803E50E4
+.obj lbl_803E50E8, local
 	.float 0.0
-lbl_803E50EC:
+.endobj lbl_803E50E8
+.obj lbl_803E50EC, local
 	.float 0.0
-lbl_803E50F0:
+.endobj lbl_803E50EC
+.obj lbl_803E50F0, local
 	.float 0.0
-lbl_803E50F4:
+.endobj lbl_803E50F0
+.obj lbl_803E50F4, local
 	.float 0.0
-lbl_803E50F8:
+.endobj lbl_803E50F4
+.obj lbl_803E50F8, local
 	.float 0.0
-lbl_803E50FC:
+.endobj lbl_803E50F8
+.obj lbl_803E50FC, local
 	.float 0.0
-lbl_803E5100:
+.endobj lbl_803E50FC
+.obj lbl_803E5100, local
 	.float 0.0
-lbl_803E5104:
+.endobj lbl_803E5100
+.obj lbl_803E5104, local
 	.float 0.0
-lbl_803E5108:
+.endobj lbl_803E5104
+.obj lbl_803E5108, local
 	.float 0.0
-lbl_803E510C:
+.endobj lbl_803E5108
+.obj lbl_803E510C, local
 	.float 0.0
-lbl_803E5110:
+.endobj lbl_803E510C
+.obj lbl_803E5110, local
 	.float 0.0
-lbl_803E5114:
+.endobj lbl_803E5110
+.obj lbl_803E5114, local
 	.float 0.0
-lbl_803E5118:
+.endobj lbl_803E5114
+.obj lbl_803E5118, local
 	.float 0.0
-lbl_803E511C:
+.endobj lbl_803E5118
+.obj lbl_803E511C, local
 	.float 0.0
-lbl_803E5120:
+.endobj lbl_803E511C
+.obj lbl_803E5120, local
 	.float 0.0
-"__RTTI__Q23zen37CallBack1<PQ23zen17particleGenerator>":
+.endobj lbl_803E5120
+.balign 4
+.obj "__RTTI__Q23zen37CallBack1<PQ23zen17particleGenerator>", local
 	.4byte lbl_802D0564
 	.4byte 0
-__RTTI__21KingGenSalivaCallBack:
+.endobj "__RTTI__Q23zen37CallBack1<PQ23zen17particleGenerator>"
+.balign 4
+.obj __RTTI__21KingGenSalivaCallBack, local
 	.4byte lbl_802D054C
 	.4byte lbl_802D0590
-__RTTI__21KingGenRippleCallBack:
+.endobj __RTTI__21KingGenSalivaCallBack
+.balign 4
+.obj __RTTI__21KingGenRippleCallBack, local
 	.4byte lbl_802D05A8
 	.4byte lbl_802D05C0
-"__RTTI__Q23zen58CallBack2<PQ23zen17particleGenerator,PQ23zen11particleMdl>":
+.endobj __RTTI__21KingGenRippleCallBack
+.balign 4
+.obj "__RTTI__Q23zen58CallBack2<PQ23zen17particleGenerator,PQ23zen11particleMdl>", local
 	.4byte lbl_802D05FC
 	.4byte 0
-__RTTI__32KingGenSpitPartsParticleCallBack:
+.endobj "__RTTI__Q23zen58CallBack2<PQ23zen17particleGenerator,PQ23zen11particleMdl>"
+.balign 4
+.obj __RTTI__32KingGenSpitPartsParticleCallBack, local
 	.4byte lbl_802D05D8
 	.4byte lbl_802D063C
-__RTTI__25KingGenDamageStarCallBack:
+.endobj __RTTI__32KingGenSpitPartsParticleCallBack
+.balign 4
+.obj __RTTI__25KingGenDamageStarCallBack, local
 	.4byte lbl_802D0654
 	.4byte lbl_802D0670
-__RTTI__29KingGenSalivaParticleCallBack:
+.endobj __RTTI__25KingGenDamageStarCallBack
+.balign 4
+.obj __RTTI__29KingGenSalivaParticleCallBack, local
 	.4byte lbl_802D0688
 	.4byte lbl_802D06A8
-__RTTI__27KingGenSpreadSalivaCallBack:
+.endobj __RTTI__29KingGenSalivaParticleCallBack
+.balign 4
+.obj __RTTI__27KingGenSpreadSalivaCallBack, local
 	.4byte lbl_802D06CC
 	.4byte lbl_802D06E8
+.endobj __RTTI__27KingGenSpreadSalivaCallBack
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803EAED8:
+.obj lbl_803EAED8, local
 	.float 2.0
-lbl_803EAEDC:
+.endobj lbl_803EAED8
+.obj lbl_803EAEDC, local
 	.float 80.0
-lbl_803EAEE0:
+.endobj lbl_803EAEDC
+.obj lbl_803EAEE0, local
 	.float 0.0
-lbl_803EAEE4:
+.endobj lbl_803EAEE0
+.obj lbl_803EAEE4, local
 	.float 250.0
-lbl_803EAEE8:
+.endobj lbl_803EAEE4
+.obj lbl_803EAEE8, local
 	.float -0.5
+.endobj lbl_803EAEE8
 .balign 8
-lbl_803EAEF0:
+.obj lbl_803EAEF0, local
 	.double 0.5
-lbl_803EAEF8:
+.endobj lbl_803EAEF0
+.balign 8
+.obj lbl_803EAEF8, local
 	.double 3.0
-lbl_803EAF00:
-	.4byte 0x3727C5AC
-lbl_803EAF04:
+.endobj lbl_803EAEF8
+.balign 4
+.obj lbl_803EAF00, local
+	.float 0.00001
+.endobj lbl_803EAF00
+.obj lbl_803EAF04, local
 	.float 1.0
-lbl_803EAF08:
+.endobj lbl_803EAF04
+.obj lbl_803EAF08, local
 	.float 3.75
-lbl_803EAF0C:
+.endobj lbl_803EAF08
+.obj lbl_803EAF0C, local
 	.float 10.0
-lbl_803EAF10:
+.endobj lbl_803EAF0C
+.obj lbl_803EAF10, local
 	.float 5.0
-lbl_803EAF14:
+.endobj lbl_803EAF10
+.obj lbl_803EAF14, local
 	.float -1.0
-lbl_803EAF18:
+.endobj lbl_803EAF14
+.obj lbl_803EAF18, local
 	.float 0.5
-lbl_803EAF1C:
+.endobj lbl_803EAF18
+.obj lbl_803EAF1C, local
 	.float 0.01
+.endobj lbl_803EAF1C

@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global __ct__7GenBaseFUlPcPc
-__ct__7GenBaseFUlPcPc:
+.fn __ct__7GenBaseFUlPcPc, global
 /* 800DACB4 000D7C14  38 00 00 00 */	li r0, 0
 /* 800DACB8 000D7C18  3C E0 80 2C */	lis r7, __vt__7GenBase@ha
 /* 800DACBC 000D7C1C  90 03 00 00 */	stw r0, 0(r3)
@@ -14,15 +13,15 @@ __ct__7GenBaseFUlPcPc:
 /* 800DACD8 000D7C38  90 C3 00 14 */	stw r6, 0x14(r3)
 /* 800DACDC 000D7C3C  90 03 00 0C */	stw r0, 0xc(r3)
 /* 800DACE0 000D7C40  4E 80 00 20 */	blr 
+.endfn __ct__7GenBaseFUlPcPc
 
-.global getLatestVersion__7GenBaseFv
-getLatestVersion__7GenBaseFv:
+.fn getLatestVersion__7GenBaseFv, weak
 /* 800DACE4 000D7C44  3C 60 75 64 */	lis r3, 0x75646566@ha
 /* 800DACE8 000D7C48  38 63 65 66 */	addi r3, r3, 0x75646566@l
 /* 800DACEC 000D7C4C  4E 80 00 20 */	blr 
+.endfn getLatestVersion__7GenBaseFv
 
-.global ramSaveParameters__7GenBaseFR18RandomAccessStream
-ramSaveParameters__7GenBaseFR18RandomAccessStream:
+.fn ramSaveParameters__7GenBaseFR18RandomAccessStream, global
 /* 800DACF0 000D7C50  7C 08 02 A6 */	mflr r0
 /* 800DACF4 000D7C54  90 01 00 04 */	stw r0, 4(r1)
 /* 800DACF8 000D7C58  94 21 FF F8 */	stwu r1, -8(r1)
@@ -31,9 +30,9 @@ ramSaveParameters__7GenBaseFR18RandomAccessStream:
 /* 800DAD04 000D7C64  38 21 00 08 */	addi r1, r1, 8
 /* 800DAD08 000D7C68  7C 08 03 A6 */	mtlr r0
 /* 800DAD0C 000D7C6C  4E 80 00 20 */	blr 
+.endfn ramSaveParameters__7GenBaseFR18RandomAccessStream
 
-.global ramLoadParameters__7GenBaseFR18RandomAccessStream
-ramLoadParameters__7GenBaseFR18RandomAccessStream:
+.fn ramLoadParameters__7GenBaseFR18RandomAccessStream, global
 /* 800DAD10 000D7C70  7C 08 02 A6 */	mflr r0
 /* 800DAD14 000D7C74  90 01 00 04 */	stw r0, 4(r1)
 /* 800DAD18 000D7C78  94 21 FF F8 */	stwu r1, -8(r1)
@@ -42,13 +41,13 @@ ramLoadParameters__7GenBaseFR18RandomAccessStream:
 /* 800DAD24 000D7C84  38 21 00 08 */	addi r1, r1, 8
 /* 800DAD28 000D7C88  7C 08 03 A6 */	mtlr r0
 /* 800DAD2C 000D7C8C  4E 80 00 20 */	blr 
+.endfn ramLoadParameters__7GenBaseFR18RandomAccessStream
 
-.global doRead__7GenBaseFR18RandomAccessStream
-doRead__7GenBaseFR18RandomAccessStream:
+.fn doRead__7GenBaseFR18RandomAccessStream, weak
 /* 800DAD30 000D7C90  4E 80 00 20 */	blr 
+.endfn doRead__7GenBaseFR18RandomAccessStream
 
-.global makeObjectPiki__Fv
-makeObjectPiki__Fv:
+.fn makeObjectPiki__Fv, local
 /* 800DAD34 000D7C94  7C 08 02 A6 */	mflr r0
 /* 800DAD38 000D7C98  38 60 00 38 */	li r3, 0x38
 /* 800DAD3C 000D7C9C  90 01 00 04 */	stw r0, 4(r1)
@@ -113,9 +112,9 @@ makeObjectPiki__Fv:
 /* 800DAE24 000D7D84  38 21 00 38 */	addi r1, r1, 0x38
 /* 800DAE28 000D7D88  7C 08 03 A6 */	mtlr r0
 /* 800DAE2C 000D7D8C  4E 80 00 20 */	blr 
+.endfn makeObjectPiki__Fv
 
-.global getLatestVersion__9GenObjectFv
-getLatestVersion__9GenObjectFv:
+.fn getLatestVersion__9GenObjectFv, global
 /* 800DAE30 000D7D90  80 ED 30 74 */	lwz r7, factory__16GenObjectFactory@sda21(r13)
 /* 800DAE34 000D7D94  38 80 00 00 */	li r4, 0
 /* 800DAE38 000D7D98  80 63 00 08 */	lwz r3, 8(r3)
@@ -138,9 +137,9 @@ getLatestVersion__9GenObjectFv:
 /* 800DAE74 000D7DD4  38 84 00 01 */	addi r4, r4, 1
 /* 800DAE78 000D7DD8  42 00 FF D8 */	bdnz .L_800DAE50
 /* 800DAE7C 000D7DDC  4E 80 00 20 */	blr 
+.endfn getLatestVersion__9GenObjectFv
 
-.global makeTypeOne__Fv
-makeTypeOne__Fv:
+.fn makeTypeOne__Fv, local
 /* 800DAE80 000D7DE0  7C 08 02 A6 */	mflr r0
 /* 800DAE84 000D7DE4  38 60 00 68 */	li r3, 0x68
 /* 800DAE88 000D7DE8  90 01 00 04 */	stw r0, 4(r1)
@@ -237,9 +236,9 @@ makeTypeOne__Fv:
 /* 800DAFF0 000D7F50  38 21 00 68 */	addi r1, r1, 0x68
 /* 800DAFF4 000D7F54  7C 08 03 A6 */	mtlr r0
 /* 800DAFF8 000D7F58  4E 80 00 20 */	blr 
+.endfn makeTypeOne__Fv
 
-.global makeTypeAtOnce__Fv
-makeTypeAtOnce__Fv:
+.fn makeTypeAtOnce__Fv, local
 /* 800DAFFC 000D7F5C  7C 08 02 A6 */	mflr r0
 /* 800DB000 000D7F60  38 60 00 48 */	li r3, 0x48
 /* 800DB004 000D7F64  90 01 00 04 */	stw r0, 4(r1)
@@ -317,9 +316,9 @@ makeTypeAtOnce__Fv:
 /* 800DB120 000D8080  38 21 00 48 */	addi r1, r1, 0x48
 /* 800DB124 000D8084  7C 08 03 A6 */	mtlr r0
 /* 800DB128 000D8088  4E 80 00 20 */	blr 
+.endfn makeTypeAtOnce__Fv
 
-.global makeTypeInitRand__Fv
-makeTypeInitRand__Fv:
+.fn makeTypeInitRand__Fv, local
 /* 800DB12C 000D808C  7C 08 02 A6 */	mflr r0
 /* 800DB130 000D8090  38 60 00 58 */	li r3, 0x58
 /* 800DB134 000D8094  90 01 00 04 */	stw r0, 4(r1)
@@ -408,9 +407,9 @@ makeTypeInitRand__Fv:
 /* 800DB27C 000D81DC  38 21 00 58 */	addi r1, r1, 0x58
 /* 800DB280 000D81E0  7C 08 03 A6 */	mtlr r0
 /* 800DB284 000D81E4  4E 80 00 20 */	blr 
+.endfn makeTypeInitRand__Fv
 
-.global getLatestVersion__7GenTypeFv
-getLatestVersion__7GenTypeFv:
+.fn getLatestVersion__7GenTypeFv, global
 /* 800DB288 000D81E8  80 ED 30 78 */	lwz r7, factory__14GenTypeFactory@sda21(r13)
 /* 800DB28C 000D81EC  38 80 00 00 */	li r4, 0
 /* 800DB290 000D81F0  80 63 00 08 */	lwz r3, 8(r3)
@@ -433,9 +432,9 @@ getLatestVersion__7GenTypeFv:
 /* 800DB2CC 000D822C  38 84 00 01 */	addi r4, r4, 1
 /* 800DB2D0 000D8230  42 00 FF D8 */	bdnz .L_800DB2A8
 /* 800DB2D4 000D8234  4E 80 00 20 */	blr 
+.endfn getLatestVersion__7GenTypeFv
 
-.global ramSaveParameters__7GenTypeFR18RandomAccessStream
-ramSaveParameters__7GenTypeFR18RandomAccessStream:
+.fn ramSaveParameters__7GenTypeFR18RandomAccessStream, global
 /* 800DB2D8 000D8238  7C 08 02 A6 */	mflr r0
 /* 800DB2DC 000D823C  90 01 00 04 */	stw r0, 4(r1)
 /* 800DB2E0 000D8240  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -463,9 +462,9 @@ ramSaveParameters__7GenTypeFR18RandomAccessStream:
 /* 800DB338 000D8298  38 21 00 18 */	addi r1, r1, 0x18
 /* 800DB33C 000D829C  7C 08 03 A6 */	mtlr r0
 /* 800DB340 000D82A0  4E 80 00 20 */	blr 
+.endfn ramSaveParameters__7GenTypeFR18RandomAccessStream
 
-.global ramLoadParameters__7GenTypeFR18RandomAccessStream
-ramLoadParameters__7GenTypeFR18RandomAccessStream:
+.fn ramLoadParameters__7GenTypeFR18RandomAccessStream, global
 /* 800DB344 000D82A4  7C 08 02 A6 */	mflr r0
 /* 800DB348 000D82A8  90 01 00 04 */	stw r0, 4(r1)
 /* 800DB34C 000D82AC  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -493,9 +492,9 @@ ramLoadParameters__7GenTypeFR18RandomAccessStream:
 /* 800DB3A4 000D8304  38 21 00 20 */	addi r1, r1, 0x20
 /* 800DB3A8 000D8308  7C 08 03 A6 */	mtlr r0
 /* 800DB3AC 000D830C  4E 80 00 20 */	blr 
+.endfn ramLoadParameters__7GenTypeFR18RandomAccessStream
 
-.global ramSaveParameters__10GenTypeOneFR18RandomAccessStream
-ramSaveParameters__10GenTypeOneFR18RandomAccessStream:
+.fn ramSaveParameters__10GenTypeOneFR18RandomAccessStream, global
 /* 800DB3B0 000D8310  7C 08 02 A6 */	mflr r0
 /* 800DB3B4 000D8314  90 01 00 04 */	stw r0, 4(r1)
 /* 800DB3B8 000D8318  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -544,9 +543,9 @@ ramSaveParameters__10GenTypeOneFR18RandomAccessStream:
 /* 800DB464 000D83C4  38 21 00 18 */	addi r1, r1, 0x18
 /* 800DB468 000D83C8  7C 08 03 A6 */	mtlr r0
 /* 800DB46C 000D83CC  4E 80 00 20 */	blr 
+.endfn ramSaveParameters__10GenTypeOneFR18RandomAccessStream
 
-.global ramLoadParameters__10GenTypeOneFR18RandomAccessStream
-ramLoadParameters__10GenTypeOneFR18RandomAccessStream:
+.fn ramLoadParameters__10GenTypeOneFR18RandomAccessStream, global
 /* 800DB470 000D83D0  7C 08 02 A6 */	mflr r0
 /* 800DB474 000D83D4  90 01 00 04 */	stw r0, 4(r1)
 /* 800DB478 000D83D8  94 21 FF D0 */	stwu r1, -0x30(r1)
@@ -595,9 +594,9 @@ ramLoadParameters__10GenTypeOneFR18RandomAccessStream:
 /* 800DB524 000D8484  38 21 00 30 */	addi r1, r1, 0x30
 /* 800DB528 000D8488  7C 08 03 A6 */	mtlr r0
 /* 800DB52C 000D848C  4E 80 00 20 */	blr 
+.endfn ramLoadParameters__10GenTypeOneFR18RandomAccessStream
 
-.global ramSaveParameters__13GenTypeAtOnceFR18RandomAccessStream
-ramSaveParameters__13GenTypeAtOnceFR18RandomAccessStream:
+.fn ramSaveParameters__13GenTypeAtOnceFR18RandomAccessStream, global
 /* 800DB530 000D8490  7C 08 02 A6 */	mflr r0
 /* 800DB534 000D8494  90 01 00 04 */	stw r0, 4(r1)
 /* 800DB538 000D8498  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -632,9 +631,9 @@ ramSaveParameters__13GenTypeAtOnceFR18RandomAccessStream:
 /* 800DB5AC 000D850C  38 21 00 18 */	addi r1, r1, 0x18
 /* 800DB5B0 000D8510  7C 08 03 A6 */	mtlr r0
 /* 800DB5B4 000D8514  4E 80 00 20 */	blr 
+.endfn ramSaveParameters__13GenTypeAtOnceFR18RandomAccessStream
 
-.global ramLoadParameters__13GenTypeAtOnceFR18RandomAccessStream
-ramLoadParameters__13GenTypeAtOnceFR18RandomAccessStream:
+.fn ramLoadParameters__13GenTypeAtOnceFR18RandomAccessStream, global
 /* 800DB5B8 000D8518  7C 08 02 A6 */	mflr r0
 /* 800DB5BC 000D851C  90 01 00 04 */	stw r0, 4(r1)
 /* 800DB5C0 000D8520  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -669,9 +668,9 @@ ramLoadParameters__13GenTypeAtOnceFR18RandomAccessStream:
 /* 800DB634 000D8594  38 21 00 28 */	addi r1, r1, 0x28
 /* 800DB638 000D8598  7C 08 03 A6 */	mtlr r0
 /* 800DB63C 000D859C  4E 80 00 20 */	blr 
+.endfn ramLoadParameters__13GenTypeAtOnceFR18RandomAccessStream
 
-.global ramSaveParameters__15GenTypeInitRandFR18RandomAccessStream
-ramSaveParameters__15GenTypeInitRandFR18RandomAccessStream:
+.fn ramSaveParameters__15GenTypeInitRandFR18RandomAccessStream, global
 /* 800DB640 000D85A0  7C 08 02 A6 */	mflr r0
 /* 800DB644 000D85A4  90 01 00 04 */	stw r0, 4(r1)
 /* 800DB648 000D85A8  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -713,9 +712,9 @@ ramSaveParameters__15GenTypeInitRandFR18RandomAccessStream:
 /* 800DB6D8 000D8638  38 21 00 18 */	addi r1, r1, 0x18
 /* 800DB6DC 000D863C  7C 08 03 A6 */	mtlr r0
 /* 800DB6E0 000D8640  4E 80 00 20 */	blr 
+.endfn ramSaveParameters__15GenTypeInitRandFR18RandomAccessStream
 
-.global ramLoadParameters__15GenTypeInitRandFR18RandomAccessStream
-ramLoadParameters__15GenTypeInitRandFR18RandomAccessStream:
+.fn ramLoadParameters__15GenTypeInitRandFR18RandomAccessStream, global
 /* 800DB6E4 000D8644  7C 08 02 A6 */	mflr r0
 /* 800DB6E8 000D8648  90 01 00 04 */	stw r0, 4(r1)
 /* 800DB6EC 000D864C  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -757,9 +756,9 @@ ramLoadParameters__15GenTypeInitRandFR18RandomAccessStream:
 /* 800DB77C 000D86DC  38 21 00 28 */	addi r1, r1, 0x28
 /* 800DB780 000D86E0  7C 08 03 A6 */	mtlr r0
 /* 800DB784 000D86E4  4E 80 00 20 */	blr 
+.endfn ramLoadParameters__15GenTypeInitRandFR18RandomAccessStream
 
-.global doWrite__7GenAreaFR18RandomAccessStream
-doWrite__7GenAreaFR18RandomAccessStream:
+.fn doWrite__7GenAreaFR18RandomAccessStream, global
 /* 800DB788 000D86E8  7C 08 02 A6 */	mflr r0
 /* 800DB78C 000D86EC  90 01 00 04 */	stw r0, 4(r1)
 /* 800DB790 000D86F0  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -791,9 +790,9 @@ doWrite__7GenAreaFR18RandomAccessStream:
 /* 800DB7F8 000D8758  38 21 00 18 */	addi r1, r1, 0x18
 /* 800DB7FC 000D875C  7C 08 03 A6 */	mtlr r0
 /* 800DB800 000D8760  4E 80 00 20 */	blr 
+.endfn doWrite__7GenAreaFR18RandomAccessStream
 
-.global doRead__7GenAreaFR18RandomAccessStream
-doRead__7GenAreaFR18RandomAccessStream:
+.fn doRead__7GenAreaFR18RandomAccessStream, global
 /* 800DB804 000D8764  7C 08 02 A6 */	mflr r0
 /* 800DB808 000D8768  90 01 00 04 */	stw r0, 4(r1)
 /* 800DB80C 000D876C  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -825,9 +824,9 @@ doRead__7GenAreaFR18RandomAccessStream:
 /* 800DB874 000D87D4  38 21 00 18 */	addi r1, r1, 0x18
 /* 800DB878 000D87D8  7C 08 03 A6 */	mtlr r0
 /* 800DB87C 000D87DC  4E 80 00 20 */	blr 
+.endfn doRead__7GenAreaFR18RandomAccessStream
 
-.global makeCircleArea__Fv
-makeCircleArea__Fv:
+.fn makeCircleArea__Fv, local
 /* 800DB880 000D87E0  7C 08 02 A6 */	mflr r0
 /* 800DB884 000D87E4  38 60 00 34 */	li r3, 0x34
 /* 800DB888 000D87E8  90 01 00 04 */	stw r0, 4(r1)
@@ -883,9 +882,9 @@ makeCircleArea__Fv:
 /* 800DB94C 000D88AC  38 21 00 20 */	addi r1, r1, 0x20
 /* 800DB950 000D88B0  7C 08 03 A6 */	mtlr r0
 /* 800DB954 000D88B4  4E 80 00 20 */	blr 
+.endfn makeCircleArea__Fv
 
-.global makePointArea__Fv
-makePointArea__Fv:
+.fn makePointArea__Fv, local
 /* 800DB958 000D88B8  7C 08 02 A6 */	mflr r0
 /* 800DB95C 000D88BC  38 60 00 24 */	li r3, 0x24
 /* 800DB960 000D88C0  90 01 00 04 */	stw r0, 4(r1)
@@ -925,9 +924,9 @@ makePointArea__Fv:
 /* 800DB9E4 000D8944  38 21 00 08 */	addi r1, r1, 8
 /* 800DB9E8 000D8948  7C 08 03 A6 */	mtlr r0
 /* 800DB9EC 000D894C  4E 80 00 20 */	blr 
+.endfn makePointArea__Fv
 
-.global getLatestVersion__7GenAreaFv
-getLatestVersion__7GenAreaFv:
+.fn getLatestVersion__7GenAreaFv, global
 /* 800DB9F0 000D8950  80 ED 30 7C */	lwz r7, factory__14GenAreaFactory@sda21(r13)
 /* 800DB9F4 000D8954  38 80 00 00 */	li r4, 0
 /* 800DB9F8 000D8958  80 63 00 08 */	lwz r3, 8(r3)
@@ -950,9 +949,9 @@ getLatestVersion__7GenAreaFv:
 /* 800DBA34 000D8994  38 84 00 01 */	addi r4, r4, 1
 /* 800DBA38 000D8998  42 00 FF D8 */	bdnz .L_800DBA10
 /* 800DBA3C 000D899C  4E 80 00 20 */	blr 
+.endfn getLatestVersion__7GenAreaFv
 
-.global ramSaveParameters__13GenAreaCircleFR18RandomAccessStream
-ramSaveParameters__13GenAreaCircleFR18RandomAccessStream:
+.fn ramSaveParameters__13GenAreaCircleFR18RandomAccessStream, global
 /* 800DBA40 000D89A0  7C 08 02 A6 */	mflr r0
 /* 800DBA44 000D89A4  90 01 00 04 */	stw r0, 4(r1)
 /* 800DBA48 000D89A8  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -969,9 +968,9 @@ ramSaveParameters__13GenAreaCircleFR18RandomAccessStream:
 /* 800DBA74 000D89D4  38 21 00 18 */	addi r1, r1, 0x18
 /* 800DBA78 000D89D8  7C 08 03 A6 */	mtlr r0
 /* 800DBA7C 000D89DC  4E 80 00 20 */	blr 
+.endfn ramSaveParameters__13GenAreaCircleFR18RandomAccessStream
 
-.global ramLoadParameters__13GenAreaCircleFR18RandomAccessStream
-ramLoadParameters__13GenAreaCircleFR18RandomAccessStream:
+.fn ramLoadParameters__13GenAreaCircleFR18RandomAccessStream, global
 /* 800DBA80 000D89E0  7C 08 02 A6 */	mflr r0
 /* 800DBA84 000D89E4  90 01 00 04 */	stw r0, 4(r1)
 /* 800DBA88 000D89E8  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -996,9 +995,9 @@ ramLoadParameters__13GenAreaCircleFR18RandomAccessStream:
 /* 800DBAD4 000D8A34  38 21 00 28 */	addi r1, r1, 0x28
 /* 800DBAD8 000D8A38  7C 08 03 A6 */	mtlr r0
 /* 800DBADC 000D8A3C  4E 80 00 20 */	blr 
+.endfn ramLoadParameters__13GenAreaCircleFR18RandomAccessStream
 
-.global __ct__9GeneratorFv
-__ct__9GeneratorFv:
+.fn __ct__9GeneratorFv, global
 /* 800DBAE0 000D8A40  7C 08 02 A6 */	mflr r0
 /* 800DBAE4 000D8A44  3C 80 80 22 */	lis r4, __vt__5ANode@ha
 /* 800DBAE8 000D8A48  90 01 00 04 */	stw r0, 4(r1)
@@ -1091,9 +1090,9 @@ __ct__9GeneratorFv:
 /* 800DBC44 000D8BA4  38 21 00 18 */	addi r1, r1, 0x18
 /* 800DBC48 000D8BA8  7C 08 03 A6 */	mtlr r0
 /* 800DBC4C 000D8BAC  4E 80 00 20 */	blr 
+.endfn __ct__9GeneratorFv
 
-.global __ct__9GeneratorFi
-__ct__9GeneratorFi:
+.fn __ct__9GeneratorFi, global
 /* 800DBC50 000D8BB0  7C 08 02 A6 */	mflr r0
 /* 800DBC54 000D8BB4  3C 80 80 22 */	lis r4, __vt__5ANode@ha
 /* 800DBC58 000D8BB8  90 01 00 04 */	stw r0, 4(r1)
@@ -1179,9 +1178,9 @@ __ct__9GeneratorFi:
 /* 800DBD98 000D8CF8  38 21 00 18 */	addi r1, r1, 0x18
 /* 800DBD9C 000D8CFC  7C 08 03 A6 */	mtlr r0
 /* 800DBDA0 000D8D00  4E 80 00 20 */	blr 
+.endfn __ct__9GeneratorFi
 
-.global isExpired__9GeneratorFv
-isExpired__9GeneratorFv:
+.fn isExpired__9GeneratorFv, global
 /* 800DBDA4 000D8D04  80 83 00 94 */	lwz r4, 0x94(r3)
 /* 800DBDA8 000D8D08  2C 04 FF FF */	cmpwi r4, -1
 /* 800DBDAC 000D8D0C  40 82 00 0C */	bne .L_800DBDB8
@@ -1198,9 +1197,9 @@ isExpired__9GeneratorFv:
 .L_800DBDD4:
 /* 800DBDD4 000D8D34  38 60 00 00 */	li r3, 0
 /* 800DBDD8 000D8D38  4E 80 00 20 */	blr 
+.endfn isExpired__9GeneratorFv
 
-.global loadCreature__9GeneratorFR18RandomAccessStream
-loadCreature__9GeneratorFR18RandomAccessStream:
+.fn loadCreature__9GeneratorFR18RandomAccessStream, global
 /* 800DBDDC 000D8D3C  7C 08 02 A6 */	mflr r0
 /* 800DBDE0 000D8D40  90 01 00 04 */	stw r0, 4(r1)
 /* 800DBDE4 000D8D44  94 21 FF B0 */	stwu r1, -0x50(r1)
@@ -1269,9 +1268,9 @@ loadCreature__9GeneratorFR18RandomAccessStream:
 /* 800DBED4 000D8E34  38 21 00 50 */	addi r1, r1, 0x50
 /* 800DBED8 000D8E38  7C 08 03 A6 */	mtlr r0
 /* 800DBEDC 000D8E3C  4E 80 00 20 */	blr 
+.endfn loadCreature__9GeneratorFR18RandomAccessStream
 
-.global saveCreature__9GeneratorFR18RandomAccessStream
-saveCreature__9GeneratorFR18RandomAccessStream:
+.fn saveCreature__9GeneratorFR18RandomAccessStream, global
 /* 800DBEE0 000D8E40  7C 08 02 A6 */	mflr r0
 /* 800DBEE4 000D8E44  90 01 00 04 */	stw r0, 4(r1)
 /* 800DBEE8 000D8E48  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -1304,9 +1303,9 @@ saveCreature__9GeneratorFR18RandomAccessStream:
 /* 800DBF4C 000D8EAC  38 21 00 18 */	addi r1, r1, 0x18
 /* 800DBF50 000D8EB0  7C 08 03 A6 */	mtlr r0
 /* 800DBF54 000D8EB4  4E 80 00 20 */	blr 
+.endfn saveCreature__9GeneratorFR18RandomAccessStream
 
-.global init__9GeneratorFv
-init__9GeneratorFv:
+.fn init__9GeneratorFv, global
 /* 800DBF58 000D8EB8  7C 08 02 A6 */	mflr r0
 /* 800DBF5C 000D8EBC  90 01 00 04 */	stw r0, 4(r1)
 /* 800DBF60 000D8EC0  94 21 FF B0 */	stwu r1, -0x50(r1)
@@ -1464,17 +1463,17 @@ init__9GeneratorFv:
 /* 800DC188 000D90E8  38 21 00 50 */	addi r1, r1, 0x50
 /* 800DC18C 000D90EC  7C 08 03 A6 */	mtlr r0
 /* 800DC190 000D90F0  4E 80 00 20 */	blr 
+.endfn init__9GeneratorFv
 
-.global init__7GenTypeFP9Generator
-init__7GenTypeFP9Generator:
+.fn init__7GenTypeFP9Generator, weak
 /* 800DC194 000D90F4  4E 80 00 20 */	blr 
+.endfn init__7GenTypeFP9Generator
 
-.global init__7GenAreaFP9Generator
-init__7GenAreaFP9Generator:
+.fn init__7GenAreaFP9Generator, weak
 /* 800DC198 000D90F8  4E 80 00 20 */	blr 
+.endfn init__7GenAreaFP9Generator
 
-.global informDeath__9GeneratorFP8Creature
-informDeath__9GeneratorFP8Creature:
+.fn informDeath__9GeneratorFP8Creature, global
 /* 800DC19C 000D90FC  7C 08 02 A6 */	mflr r0
 /* 800DC1A0 000D9100  90 01 00 04 */	stw r0, 4(r1)
 /* 800DC1A4 000D9104  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -1512,13 +1511,13 @@ informDeath__9GeneratorFP8Creature:
 /* 800DC218 000D9178  38 21 00 20 */	addi r1, r1, 0x20
 /* 800DC21C 000D917C  7C 08 03 A6 */	mtlr r0
 /* 800DC220 000D9180  4E 80 00 20 */	blr 
+.endfn informDeath__9GeneratorFP8Creature
 
-.global update__9GeneratorFv
-update__9GeneratorFv:
+.fn update__9GeneratorFv, global
 /* 800DC224 000D9184  4E 80 00 20 */	blr 
+.endfn update__9GeneratorFv
 
-.global render__9GeneratorFR8Graphics
-render__9GeneratorFR8Graphics:
+.fn render__9GeneratorFR8Graphics, global
 /* 800DC228 000D9188  7C 08 02 A6 */	mflr r0
 /* 800DC22C 000D918C  90 01 00 04 */	stw r0, 4(r1)
 /* 800DC230 000D9190  94 21 FF 20 */	stwu r1, -0xe0(r1)
@@ -1629,17 +1628,17 @@ render__9GeneratorFR8Graphics:
 /* 800DC3C8 000D9328  38 21 00 E0 */	addi r1, r1, 0xe0
 /* 800DC3CC 000D932C  7C 08 03 A6 */	mtlr r0
 /* 800DC3D0 000D9330  4E 80 00 20 */	blr 
+.endfn render__9GeneratorFR8Graphics
 
-.global render__7GenTypeFR8GraphicsP9Generator
-render__7GenTypeFR8GraphicsP9Generator:
+.fn render__7GenTypeFR8GraphicsP9Generator, weak
 /* 800DC3D4 000D9334  4E 80 00 20 */	blr 
+.endfn render__7GenTypeFR8GraphicsP9Generator
 
-.global render__7GenAreaFR8GraphicsP9Generator
-render__7GenAreaFR8GraphicsP9Generator:
+.fn render__7GenAreaFR8GraphicsP9Generator, weak
 /* 800DC3D8 000D9338  4E 80 00 20 */	blr 
+.endfn render__7GenAreaFR8GraphicsP9Generator
 
-.global read__9GeneratorFR18RandomAccessStream
-read__9GeneratorFR18RandomAccessStream:
+.fn read__9GeneratorFR18RandomAccessStream, global
 /* 800DC3DC 000D933C  7C 08 02 A6 */	mflr r0
 /* 800DC3E0 000D9340  90 01 00 04 */	stw r0, 4(r1)
 /* 800DC3E4 000D9344  94 21 FF 18 */	stwu r1, -0xe8(r1)
@@ -2121,9 +2120,9 @@ read__9GeneratorFR18RandomAccessStream:
 /* 800DCB04 000D9A64  38 21 00 E8 */	addi r1, r1, 0xe8
 /* 800DCB08 000D9A68  7C 08 03 A6 */	mtlr r0
 /* 800DCB0C 000D9A6C  4E 80 00 20 */	blr 
+.endfn read__9GeneratorFR18RandomAccessStream
 
-.global "create__17Factory<7GenType>FUl"
-"create__17Factory<7GenType>FUl":
+.fn "create__17Factory<7GenType>FUl", weak
 /* 800DCB10 000D9A70  7C 08 02 A6 */	mflr r0
 /* 800DCB14 000D9A74  38 E0 00 00 */	li r7, 0
 /* 800DCB18 000D9A78  90 01 00 04 */	stw r0, 4(r1)
@@ -2155,9 +2154,9 @@ read__9GeneratorFR18RandomAccessStream:
 /* 800DCB70 000D9AD0  38 21 00 08 */	addi r1, r1, 8
 /* 800DCB74 000D9AD4  7C 08 03 A6 */	mtlr r0
 /* 800DCB78 000D9AD8  4E 80 00 20 */	blr 
+.endfn "create__17Factory<7GenType>FUl"
 
-.global "create__17Factory<7GenArea>FUl"
-"create__17Factory<7GenArea>FUl":
+.fn "create__17Factory<7GenArea>FUl", weak
 /* 800DCB7C 000D9ADC  7C 08 02 A6 */	mflr r0
 /* 800DCB80 000D9AE0  38 E0 00 00 */	li r7, 0
 /* 800DCB84 000D9AE4  90 01 00 04 */	stw r0, 4(r1)
@@ -2189,9 +2188,9 @@ read__9GeneratorFR18RandomAccessStream:
 /* 800DCBDC 000D9B3C  38 21 00 08 */	addi r1, r1, 8
 /* 800DCBE0 000D9B40  7C 08 03 A6 */	mtlr r0
 /* 800DCBE4 000D9B44  4E 80 00 20 */	blr 
+.endfn "create__17Factory<7GenArea>FUl"
 
-.global "create__19Factory<9GenObject>FUl"
-"create__19Factory<9GenObject>FUl":
+.fn "create__19Factory<9GenObject>FUl", weak
 /* 800DCBE8 000D9B48  7C 08 02 A6 */	mflr r0
 /* 800DCBEC 000D9B4C  38 E0 00 00 */	li r7, 0
 /* 800DCBF0 000D9B50  90 01 00 04 */	stw r0, 4(r1)
@@ -2223,9 +2222,9 @@ read__9GeneratorFR18RandomAccessStream:
 /* 800DCC48 000D9BA8  38 21 00 08 */	addi r1, r1, 8
 /* 800DCC4C 000D9BAC  7C 08 03 A6 */	mtlr r0
 /* 800DCC50 000D9BB0  4E 80 00 20 */	blr 
+.endfn "create__19Factory<9GenObject>FUl"
 
-.global write__9GeneratorFR18RandomAccessStream
-write__9GeneratorFR18RandomAccessStream:
+.fn write__9GeneratorFR18RandomAccessStream, global
 /* 800DCC54 000D9BB4  7C 08 02 A6 */	mflr r0
 /* 800DCC58 000D9BB8  90 01 00 04 */	stw r0, 4(r1)
 /* 800DCC5C 000D9BBC  94 21 FF 68 */	stwu r1, -0x98(r1)
@@ -2716,9 +2715,9 @@ write__9GeneratorFR18RandomAccessStream:
 /* 800DD3A8 000DA308  38 21 00 98 */	addi r1, r1, 0x98
 /* 800DD3AC 000DA30C  7C 08 03 A6 */	mtlr r0
 /* 800DD3B0 000DA310  4E 80 00 20 */	blr 
+.endfn write__9GeneratorFR18RandomAccessStream
 
-.global __ct__12GeneratorMgrFv
-__ct__12GeneratorMgrFv:
+.fn __ct__12GeneratorMgrFv, global
 /* 800DD3B4 000DA314  7C 08 02 A6 */	mflr r0
 /* 800DD3B8 000DA318  3C 80 80 22 */	lis r4, __vt__5ANode@ha
 /* 800DD3BC 000DA31C  90 01 00 04 */	stw r0, 4(r1)
@@ -3055,9 +3054,9 @@ __ct__12GeneratorMgrFv:
 /* 800DD8BC 000DA81C  38 21 00 40 */	addi r1, r1, 0x40
 /* 800DD8C0 000DA820  7C 08 03 A6 */	mtlr r0
 /* 800DD8C4 000DA824  4E 80 00 20 */	blr 
+.endfn __ct__12GeneratorMgrFv
 
-.global init__12GeneratorMgrFv
-init__12GeneratorMgrFv:
+.fn init__12GeneratorMgrFv, global
 /* 800DD8C8 000DA828  7C 08 02 A6 */	mflr r0
 /* 800DD8CC 000DA82C  90 01 00 04 */	stw r0, 4(r1)
 /* 800DD8D0 000DA830  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -3076,9 +3075,9 @@ init__12GeneratorMgrFv:
 /* 800DD8FC 000DA85C  38 21 00 18 */	addi r1, r1, 0x18
 /* 800DD900 000DA860  7C 08 03 A6 */	mtlr r0
 /* 800DD904 000DA864  4E 80 00 20 */	blr 
+.endfn init__12GeneratorMgrFv
 
-.global setDayLimit__12GeneratorMgrFi
-setDayLimit__12GeneratorMgrFi:
+.fn setDayLimit__12GeneratorMgrFi, global
 /* 800DD908 000DA868  80 63 00 20 */	lwz r3, 0x20(r3)
 /* 800DD90C 000DA86C  48 00 00 0C */	b .L_800DD918
 .L_800DD910:
@@ -3088,9 +3087,9 @@ setDayLimit__12GeneratorMgrFi:
 /* 800DD918 000DA878  28 03 00 00 */	cmplwi r3, 0
 /* 800DD91C 000DA87C  40 82 FF F4 */	bne .L_800DD910
 /* 800DD920 000DA880  4E 80 00 20 */	blr 
+.endfn setDayLimit__12GeneratorMgrFi
 
-.global updateUseList__12GeneratorMgrFv
-updateUseList__12GeneratorMgrFv:
+.fn updateUseList__12GeneratorMgrFv, global
 /* 800DD924 000DA884  7C 08 02 A6 */	mflr r0
 /* 800DD928 000DA888  3C 80 80 3A */	lis r4, gameflow@ha
 /* 800DD92C 000DA88C  90 01 00 04 */	stw r0, 4(r1)
@@ -3137,9 +3136,9 @@ updateUseList__12GeneratorMgrFv:
 /* 800DD9B8 000DA918  38 21 00 18 */	addi r1, r1, 0x18
 /* 800DD9BC 000DA91C  7C 08 03 A6 */	mtlr r0
 /* 800DD9C0 000DA920  4E 80 00 20 */	blr 
+.endfn updateUseList__12GeneratorMgrFv
 
-.global update__12GeneratorMgrFv
-update__12GeneratorMgrFv:
+.fn update__12GeneratorMgrFv, global
 /* 800DD9C4 000DA924  7C 08 02 A6 */	mflr r0
 /* 800DD9C8 000DA928  90 01 00 04 */	stw r0, 4(r1)
 /* 800DD9CC 000DA92C  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -3161,9 +3160,9 @@ update__12GeneratorMgrFv:
 /* 800DDA04 000DA964  38 21 00 18 */	addi r1, r1, 0x18
 /* 800DDA08 000DA968  7C 08 03 A6 */	mtlr r0
 /* 800DDA0C 000DA96C  4E 80 00 20 */	blr 
+.endfn update__12GeneratorMgrFv
 
-.global render__12GeneratorMgrFR8Graphics
-render__12GeneratorMgrFR8Graphics:
+.fn render__12GeneratorMgrFR8Graphics, global
 /* 800DDA10 000DA970  7C 08 02 A6 */	mflr r0
 /* 800DDA14 000DA974  90 01 00 04 */	stw r0, 4(r1)
 /* 800DDA18 000DA978  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -3189,9 +3188,9 @@ render__12GeneratorMgrFR8Graphics:
 /* 800DDA60 000DA9C0  38 21 00 18 */	addi r1, r1, 0x18
 /* 800DDA64 000DA9C4  7C 08 03 A6 */	mtlr r0
 /* 800DDA68 000DA9C8  4E 80 00 20 */	blr 
+.endfn render__12GeneratorMgrFR8Graphics
 
-.global read__12GeneratorMgrFR18RandomAccessStreamb
-read__12GeneratorMgrFR18RandomAccessStreamb:
+.fn read__12GeneratorMgrFR18RandomAccessStreamb, global
 /* 800DDA6C 000DA9CC  7C 08 02 A6 */	mflr r0
 /* 800DDA70 000DA9D0  90 01 00 04 */	stw r0, 4(r1)
 /* 800DDA74 000DA9D4  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -3361,9 +3360,9 @@ read__12GeneratorMgrFR18RandomAccessStreamb:
 /* 800DDCD4 000DAC34  38 21 00 28 */	addi r1, r1, 0x28
 /* 800DDCD8 000DAC38  7C 08 03 A6 */	mtlr r0
 /* 800DDCDC 000DAC3C  4E 80 00 20 */	blr 
+.endfn read__12GeneratorMgrFR18RandomAccessStreamb
 
-.global ramSaveParameters__13GenObjectPikiFR18RandomAccessStream
-ramSaveParameters__13GenObjectPikiFR18RandomAccessStream:
+.fn ramSaveParameters__13GenObjectPikiFR18RandomAccessStream, global
 /* 800DDCE0 000DAC40  7C 08 02 A6 */	mflr r0
 /* 800DDCE4 000DAC44  90 01 00 04 */	stw r0, 4(r1)
 /* 800DDCE8 000DAC48  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -3391,9 +3390,9 @@ ramSaveParameters__13GenObjectPikiFR18RandomAccessStream:
 /* 800DDD40 000DACA0  38 21 00 18 */	addi r1, r1, 0x18
 /* 800DDD44 000DACA4  7C 08 03 A6 */	mtlr r0
 /* 800DDD48 000DACA8  4E 80 00 20 */	blr 
+.endfn ramSaveParameters__13GenObjectPikiFR18RandomAccessStream
 
-.global ramLoadParameters__13GenObjectPikiFR18RandomAccessStream
-ramLoadParameters__13GenObjectPikiFR18RandomAccessStream:
+.fn ramLoadParameters__13GenObjectPikiFR18RandomAccessStream, global
 /* 800DDD4C 000DACAC  7C 08 02 A6 */	mflr r0
 /* 800DDD50 000DACB0  90 01 00 04 */	stw r0, 4(r1)
 /* 800DDD54 000DACB4  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -3421,9 +3420,9 @@ ramLoadParameters__13GenObjectPikiFR18RandomAccessStream:
 /* 800DDDAC 000DAD0C  38 21 00 20 */	addi r1, r1, 0x20
 /* 800DDDB0 000DAD10  7C 08 03 A6 */	mtlr r0
 /* 800DDDB4 000DAD14  4E 80 00 20 */	blr 
+.endfn ramLoadParameters__13GenObjectPikiFR18RandomAccessStream
 
-.global birth__13GenObjectPikiFR9BirthInfo
-birth__13GenObjectPikiFR9BirthInfo:
+.fn birth__13GenObjectPikiFR9BirthInfo, global
 /* 800DDDB8 000DAD18  7C 08 02 A6 */	mflr r0
 /* 800DDDBC 000DAD1C  90 01 00 04 */	stw r0, 4(r1)
 /* 800DDDC0 000DAD20  94 21 FF B8 */	stwu r1, -0x48(r1)
@@ -3562,9 +3561,9 @@ birth__13GenObjectPikiFR9BirthInfo:
 /* 800DDFC0 000DAF20  38 21 00 48 */	addi r1, r1, 0x48
 /* 800DDFC4 000DAF24  7C 08 03 A6 */	mtlr r0
 /* 800DDFC8 000DAF28  4E 80 00 20 */	blr 
+.endfn birth__13GenObjectPikiFR9BirthInfo
 
-.global init__10GenTypeOneFP9Generator
-init__10GenTypeOneFP9Generator:
+.fn init__10GenTypeOneFP9Generator, global
 /* 800DDFCC 000DAF2C  7C 08 02 A6 */	mflr r0
 /* 800DDFD0 000DAF30  90 01 00 04 */	stw r0, 4(r1)
 /* 800DDFD4 000DAF34  94 21 FF C0 */	stwu r1, -0x40(r1)
@@ -3607,9 +3606,9 @@ init__10GenTypeOneFP9Generator:
 /* 800DE064 000DAFC4  38 21 00 40 */	addi r1, r1, 0x40
 /* 800DE068 000DAFC8  7C 08 03 A6 */	mtlr r0
 /* 800DE06C 000DAFCC  4E 80 00 20 */	blr 
+.endfn init__10GenTypeOneFP9Generator
 
-.global setBirthInfo__10GenTypeOneFR9BirthInfoP9Generator
-setBirthInfo__10GenTypeOneFR9BirthInfoP9Generator:
+.fn setBirthInfo__10GenTypeOneFR9BirthInfoP9Generator, global
 /* 800DE070 000DAFD0  7C 08 02 A6 */	mflr r0
 /* 800DE074 000DAFD4  90 01 00 04 */	stw r0, 4(r1)
 /* 800DE078 000DAFD8  94 21 FF 48 */	stwu r1, -0xb8(r1)
@@ -3722,9 +3721,9 @@ setBirthInfo__10GenTypeOneFR9BirthInfoP9Generator:
 /* 800DE21C 000DB17C  38 21 00 B8 */	addi r1, r1, 0xb8
 /* 800DE220 000DB180  7C 08 03 A6 */	mtlr r0
 /* 800DE224 000DB184  4E 80 00 20 */	blr 
+.endfn setBirthInfo__10GenTypeOneFR9BirthInfoP9Generator
 
-.global render__10GenTypeOneFR8GraphicsP9Generator
-render__10GenTypeOneFR8GraphicsP9Generator:
+.fn render__10GenTypeOneFR8GraphicsP9Generator, global
 /* 800DE228 000DB188  7C 08 02 A6 */	mflr r0
 /* 800DE22C 000DB18C  3D 00 43 30 */	lis r8, 0x4330
 /* 800DE230 000DB190  90 01 00 04 */	stw r0, 4(r1)
@@ -3815,14 +3814,14 @@ render__10GenTypeOneFR8GraphicsP9Generator:
 /* 800DE384 000DB2E4  38 21 01 20 */	addi r1, r1, 0x120
 /* 800DE388 000DB2E8  7C 08 03 A6 */	mtlr r0
 /* 800DE38C 000DB2EC  4E 80 00 20 */	blr 
+.endfn render__10GenTypeOneFR8GraphicsP9Generator
 
-.global getMaxCount__13GenTypeAtOnceFv
-getMaxCount__13GenTypeAtOnceFv:
+.fn getMaxCount__13GenTypeAtOnceFv, global
 /* 800DE390 000DB2F0  80 63 00 44 */	lwz r3, 0x44(r3)
 /* 800DE394 000DB2F4  4E 80 00 20 */	blr 
+.endfn getMaxCount__13GenTypeAtOnceFv
 
-.global init__13GenTypeAtOnceFP9Generator
-init__13GenTypeAtOnceFP9Generator:
+.fn init__13GenTypeAtOnceFP9Generator, global
 /* 800DE398 000DB2F8  7C 08 02 A6 */	mflr r0
 /* 800DE39C 000DB2FC  90 01 00 04 */	stw r0, 4(r1)
 /* 800DE3A0 000DB300  94 21 FF A8 */	stwu r1, -0x58(r1)
@@ -3883,9 +3882,9 @@ init__13GenTypeAtOnceFP9Generator:
 /* 800DE470 000DB3D0  38 21 00 58 */	addi r1, r1, 0x58
 /* 800DE474 000DB3D4  7C 08 03 A6 */	mtlr r0
 /* 800DE478 000DB3D8  4E 80 00 20 */	blr 
+.endfn init__13GenTypeAtOnceFP9Generator
 
-.global setBirthInfo__13GenTypeAtOnceFR9BirthInfoP9Generator
-setBirthInfo__13GenTypeAtOnceFR9BirthInfoP9Generator:
+.fn setBirthInfo__13GenTypeAtOnceFR9BirthInfoP9Generator, global
 /* 800DE47C 000DB3DC  7C 08 02 A6 */	mflr r0
 /* 800DE480 000DB3E0  90 01 00 04 */	stw r0, 4(r1)
 /* 800DE484 000DB3E4  94 21 FF A0 */	stwu r1, -0x60(r1)
@@ -3966,14 +3965,14 @@ setBirthInfo__13GenTypeAtOnceFR9BirthInfoP9Generator:
 /* 800DE5A8 000DB508  38 21 00 60 */	addi r1, r1, 0x60
 /* 800DE5AC 000DB50C  7C 08 03 A6 */	mtlr r0
 /* 800DE5B0 000DB510  4E 80 00 20 */	blr 
+.endfn setBirthInfo__13GenTypeAtOnceFR9BirthInfoP9Generator
 
-.global getMaxCount__15GenTypeInitRandFv
-getMaxCount__15GenTypeInitRandFv:
+.fn getMaxCount__15GenTypeInitRandFv, global
 /* 800DE5B4 000DB514  80 63 00 54 */	lwz r3, 0x54(r3)
 /* 800DE5B8 000DB518  4E 80 00 20 */	blr 
+.endfn getMaxCount__15GenTypeInitRandFv
 
-.global init__15GenTypeInitRandFP9Generator
-init__15GenTypeInitRandFP9Generator:
+.fn init__15GenTypeInitRandFP9Generator, global
 /* 800DE5BC 000DB51C  7C 08 02 A6 */	mflr r0
 /* 800DE5C0 000DB520  90 01 00 04 */	stw r0, 4(r1)
 /* 800DE5C4 000DB524  94 21 FF 88 */	stwu r1, -0x78(r1)
@@ -4058,9 +4057,9 @@ init__15GenTypeInitRandFP9Generator:
 /* 800DE6F4 000DB654  38 21 00 78 */	addi r1, r1, 0x78
 /* 800DE6F8 000DB658  7C 08 03 A6 */	mtlr r0
 /* 800DE6FC 000DB65C  4E 80 00 20 */	blr 
+.endfn init__15GenTypeInitRandFP9Generator
 
-.global setBirthInfo__15GenTypeInitRandFR9BirthInfoP9Generator
-setBirthInfo__15GenTypeInitRandFR9BirthInfoP9Generator:
+.fn setBirthInfo__15GenTypeInitRandFR9BirthInfoP9Generator, global
 /* 800DE700 000DB660  7C 08 02 A6 */	mflr r0
 /* 800DE704 000DB664  90 01 00 04 */	stw r0, 4(r1)
 /* 800DE708 000DB668  94 21 FF A0 */	stwu r1, -0x60(r1)
@@ -4141,9 +4140,9 @@ setBirthInfo__15GenTypeInitRandFR9BirthInfoP9Generator:
 /* 800DE82C 000DB78C  38 21 00 60 */	addi r1, r1, 0x60
 /* 800DE830 000DB790  7C 08 03 A6 */	mtlr r0
 /* 800DE834 000DB794  4E 80 00 20 */	blr 
+.endfn setBirthInfo__15GenTypeInitRandFR9BirthInfoP9Generator
 
-.global getPos__12GenAreaPointFP9Generator
-getPos__12GenAreaPointFP9Generator:
+.fn getPos__12GenAreaPointFP9Generator, global
 /* 800DE838 000DB798  7C 08 02 A6 */	mflr r0
 /* 800DE83C 000DB79C  90 01 00 04 */	stw r0, 4(r1)
 /* 800DE840 000DB7A0  94 21 FF B0 */	stwu r1, -0x50(r1)
@@ -4178,13 +4177,13 @@ getPos__12GenAreaPointFP9Generator:
 /* 800DE8B4 000DB814  38 21 00 50 */	addi r1, r1, 0x50
 /* 800DE8B8 000DB818  7C 08 03 A6 */	mtlr r0
 /* 800DE8BC 000DB81C  4E 80 00 20 */	blr 
+.endfn getPos__12GenAreaPointFP9Generator
 
-.global render__12GenAreaPointFR8GraphicsP9Generator
-render__12GenAreaPointFR8GraphicsP9Generator:
+.fn render__12GenAreaPointFR8GraphicsP9Generator, global
 /* 800DE8C0 000DB820  4E 80 00 20 */	blr 
+.endfn render__12GenAreaPointFR8GraphicsP9Generator
 
-.global getPos__13GenAreaCircleFP9Generator
-getPos__13GenAreaCircleFP9Generator:
+.fn getPos__13GenAreaCircleFP9Generator, global
 /* 800DE8C4 000DB824  7C 08 02 A6 */	mflr r0
 /* 800DE8C8 000DB828  90 01 00 04 */	stw r0, 4(r1)
 /* 800DE8CC 000DB82C  94 21 FF 38 */	stwu r1, -0xc8(r1)
@@ -4290,9 +4289,9 @@ getPos__13GenAreaCircleFP9Generator:
 /* 800DEA5C 000DB9BC  38 21 00 C8 */	addi r1, r1, 0xc8
 /* 800DEA60 000DB9C0  7C 08 03 A6 */	mtlr r0
 /* 800DEA64 000DB9C4  4E 80 00 20 */	blr 
+.endfn getPos__13GenAreaCircleFP9Generator
 
-.global render__13GenAreaCircleFR8GraphicsP9Generator
-render__13GenAreaCircleFR8GraphicsP9Generator:
+.fn render__13GenAreaCircleFR8GraphicsP9Generator, global
 /* 800DEA68 000DB9C8  7C 08 02 A6 */	mflr r0
 /* 800DEA6C 000DB9CC  90 01 00 04 */	stw r0, 4(r1)
 /* 800DEA70 000DB9D0  94 21 FF 18 */	stwu r1, -0xe8(r1)
@@ -4369,9 +4368,9 @@ render__13GenAreaCircleFR8GraphicsP9Generator:
 /* 800DEB8C 000DBAEC  38 21 00 E8 */	addi r1, r1, 0xe8
 /* 800DEB90 000DBAF0  7C 08 03 A6 */	mtlr r0
 /* 800DEB94 000DBAF4  4E 80 00 20 */	blr 
+.endfn render__13GenAreaCircleFR8GraphicsP9Generator
 
-.global __ct__13GeneratorListFv
-__ct__13GeneratorListFv:
+.fn __ct__13GeneratorListFv, global
 /* 800DEB98 000DBAF8  7C 08 02 A6 */	mflr r0
 /* 800DEB9C 000DBAFC  90 01 00 04 */	stw r0, 4(r1)
 /* 800DEBA0 000DBB00  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -4395,9 +4394,9 @@ __ct__13GeneratorListFv:
 /* 800DEBE4 000DBB44  38 21 00 18 */	addi r1, r1, 0x18
 /* 800DEBE8 000DBB48  7C 08 03 A6 */	mtlr r0
 /* 800DEBEC 000DBB4C  4E 80 00 20 */	blr 
+.endfn __ct__13GeneratorListFv
 
-.global findGenerator__13GeneratorListFi
-findGenerator__13GeneratorListFi:
+.fn findGenerator__13GeneratorListFi, global
 /* 800DEBF0 000DBB50  80 63 00 00 */	lwz r3, 0(r3)
 /* 800DEBF4 000DBB54  80 63 00 10 */	lwz r3, 0x10(r3)
 /* 800DEBF8 000DBB58  48 00 00 20 */	b .L_800DEC18
@@ -4415,9 +4414,9 @@ findGenerator__13GeneratorListFi:
 /* 800DEC1C 000DBB7C  40 82 FF E0 */	bne .L_800DEBFC
 /* 800DEC20 000DBB80  38 60 00 00 */	li r3, 0
 /* 800DEC24 000DBB84  4E 80 00 20 */	blr 
+.endfn findGenerator__13GeneratorListFi
 
-.global createRamGenerators__13GeneratorListFv
-createRamGenerators__13GeneratorListFv:
+.fn createRamGenerators__13GeneratorListFv, global
 /* 800DEC28 000DBB88  7C 08 02 A6 */	mflr r0
 /* 800DEC2C 000DBB8C  90 01 00 04 */	stw r0, 4(r1)
 /* 800DEC30 000DBB90  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -4449,9 +4448,9 @@ createRamGenerators__13GeneratorListFv:
 /* 800DEC8C 000DBBEC  38 21 00 20 */	addi r1, r1, 0x20
 /* 800DEC90 000DBBF0  7C 08 03 A6 */	mtlr r0
 /* 800DEC94 000DBBF4  4E 80 00 20 */	blr 
+.endfn createRamGenerators__13GeneratorListFv
 
-.global updateUseList__13GeneratorListFv
-updateUseList__13GeneratorListFv:
+.fn updateUseList__13GeneratorListFv, global
 /* 800DEC98 000DBBF8  7C 08 02 A6 */	mflr r0
 /* 800DEC9C 000DBBFC  90 01 00 04 */	stw r0, 4(r1)
 /* 800DECA0 000DBC00  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -4502,128 +4501,157 @@ updateUseList__13GeneratorListFv:
 /* 800DED3C 000DBC9C  38 21 00 18 */	addi r1, r1, 0x18
 /* 800DED40 000DBCA0  7C 08 03 A6 */	mtlr r0
 /* 800DED44 000DBCA4  4E 80 00 20 */	blr 
+.endfn updateUseList__13GeneratorListFv
 
-.global getRadius__13GenAreaCircleFv
-getRadius__13GenAreaCircleFv:
+.fn getRadius__13GenAreaCircleFv, weak
 /* 800DED48 000DBCA8  C0 23 00 30 */	lfs f1, 0x30(r3)
 /* 800DED4C 000DBCAC  4E 80 00 20 */	blr 
+.endfn getRadius__13GenAreaCircleFv
 
-.global update__7GenAreaFP9Generator
-update__7GenAreaFP9Generator:
+.fn update__7GenAreaFP9Generator, weak
 /* 800DED50 000DBCB0  4E 80 00 20 */	blr 
+.endfn update__7GenAreaFP9Generator
 
-.global getRadius__7GenAreaFv
-getRadius__7GenAreaFv:
+.fn getRadius__7GenAreaFv, weak
 /* 800DED54 000DBCB4  C0 22 98 70 */	lfs f1, lbl_803E9A70@sda21(r2)
 /* 800DED58 000DBCB8  4E 80 00 20 */	blr 
+.endfn getRadius__7GenAreaFv
 
-.global update__7GenTypeFP9Generator
-update__7GenTypeFP9Generator:
+.fn update__7GenTypeFP9Generator, weak
 /* 800DED5C 000DBCBC  4E 80 00 20 */	blr 
+.endfn update__7GenTypeFP9Generator
 
-.global getMaxCount__10GenTypeOneFv
-getMaxCount__10GenTypeOneFv:
+.fn getMaxCount__10GenTypeOneFv, weak
 /* 800DED60 000DBCC0  38 60 00 01 */	li r3, 1
 /* 800DED64 000DBCC4  4E 80 00 20 */	blr 
+.endfn getMaxCount__10GenTypeOneFv
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802BA620:
+.obj lbl_802BA620, local
 	.asciz "generator.cpp"
+.endobj lbl_802BA620
 .balign 4
-lbl_802BA630:
+.obj lbl_802BA630, local
 	.asciz "generator"
+.endobj lbl_802BA630
 .balign 4
-lbl_802BA63C:
+.obj lbl_802BA63C, local
 	.asciz "object type"
+.endobj lbl_802BA63C
 .balign 4
-lbl_802BA648:
+.obj lbl_802BA648, local
 	.asciz "create PIKI"
+.endobj lbl_802BA648
 .balign 4
-lbl_802BA654:
+.obj lbl_802BA654, local
 	.asciz "time type"
+.endobj lbl_802BA654
 .balign 4
-lbl_802BA660:
+.obj lbl_802BA660, local # Shift-JIS
 	.4byte 0x825082C2
 	.4byte 0x82BE82AF
 	.4byte 0x82A482DE
-	.4byte 0x00000000
-lbl_802BA670:
+	.byte 0
+.endobj lbl_802BA660
+.balign 4
+.obj lbl_802BA670, local # Shift-JIS
 	.4byte 0x8DC58F89
 	.4byte 0x82A982E7
 	.4byte 0x91539594
 	.4byte 0x90B682DE
-	.4byte 0x00000000
-lbl_802BA684:
+	.byte 0
+.endobj lbl_802BA670
+.balign 4
+.obj lbl_802BA684, local # Shift-JIS
 	.4byte 0x8DC58F89
 	.4byte 0x82A982E7
 	.4byte 0x90B682DE
 	.4byte 0x81698389
 	.4byte 0x8393835F
 	.4byte 0x8380816A
-	.4byte 0x00000000
-lbl_802BA6A0:
+	.byte 0
+.endobj lbl_802BA684
+.balign 4
+.obj lbl_802BA6A0, local # Shift-JIS
 	.4byte 0x825082C2
 	.4byte 0x82BE82AF
-	.4byte 0x00000000
-lbl_802BA6AC:
+	.byte 0
+.endobj lbl_802BA6A0
+.balign 4
+.obj lbl_802BA6AC, local # Shift-JIS
 	.4byte 0x88EA92E8
 	.4byte 0x90948DC5
 	.4byte 0x8F8982A9
 	.4byte 0x82E70000
-lbl_802BA6BC:
+.endobj lbl_802BA6AC
+.balign 4
+.obj lbl_802BA6BC, local # Shift-JIS
 	.4byte 0x83898393
 	.4byte 0x835F8380
 	.4byte 0x82C58DC5
 	.4byte 0x8F8982A9
 	.4byte 0x82E70000
+.endobj lbl_802BA6BC
 .balign 4
-lbl_802BA6D0:
+.obj lbl_802BA6D0, local
 	.asciz "area type"
+.endobj lbl_802BA6D0
 .balign 4
-lbl_802BA6DC:
+.obj lbl_802BA6DC, local
 	.asciz "inside circle"
+.endobj lbl_802BA6DC
 .balign 4
-lbl_802BA6EC:
+.obj lbl_802BA6EC, local
 	.asciz "at a point"
+.endobj lbl_802BA6EC
 .balign 4
-lbl_802BA6F8:
+.obj lbl_802BA6F8, local
 	.asciz "distribute in a circle"
+.endobj lbl_802BA6F8
 .balign 4
-.global coStrings
-coStrings:
+.obj coStrings, global
 	.4byte lbl_803E12FC
 	.4byte lbl_803E1304
+.endobj coStrings
 .balign 4
-lbl_802BA718:
+.obj lbl_802BA718, local
 	.asciz "GeneratorMgr"
+.endobj lbl_802BA718
 .balign 4
-lbl_802BA728:
+.obj lbl_802BA728, local
 	.asciz "GenAreaCircle"
+.endobj lbl_802BA728
 .balign 4
-lbl_802BA738:
+.obj lbl_802BA738, local
 	.asciz "Parameters"
+.endobj lbl_802BA738
 .balign 4
-lbl_802BA744:
+.obj lbl_802BA744, local
 	.4byte __RTTI__10Parameters
-	.4byte 0x00000000
-	.4byte 0x00000000
-lbl_802BA750:
+	.4byte 0
+	.4byte 0
+.endobj lbl_802BA744
+.balign 4
+.obj lbl_802BA750, local
 	.4byte __RTTI__10Parameters
-	.4byte 0x00000000
+	.4byte 0
 	.4byte __RTTI__7GenBase
-	.4byte 0x00000000
-	.4byte 0x00000000
-lbl_802BA764:
+	.4byte 0
+	.4byte 0
+.endobj lbl_802BA750
+.balign 4
+.obj lbl_802BA764, local
 	.4byte __RTTI__10Parameters
-	.4byte 0x00000000
+	.4byte 0
 	.4byte __RTTI__7GenBase
-	.4byte 0x00000000
+	.4byte 0
 	.4byte __RTTI__7GenArea
-	.4byte 0x00000000
-	.4byte 0x00000000
-.global __vt__13GenAreaCircle
-__vt__13GenAreaCircle:
+	.4byte 0
+	.4byte 0
+.endobj lbl_802BA764
+.balign 4
+.obj __vt__13GenAreaCircle, global
 	.4byte __RTTI__13GenAreaCircle
 	.4byte 0
 	.4byte doWrite__7GenAreaFR18RandomAccessStream
@@ -4638,11 +4666,13 @@ __vt__13GenAreaCircle:
 	.4byte render__13GenAreaCircleFR8GraphicsP9Generator
 	.4byte getPos__13GenAreaCircleFP9Generator
 	.4byte getRadius__13GenAreaCircleFv
+.endobj __vt__13GenAreaCircle
 .balign 4
-lbl_802BA7B8:
+.obj lbl_802BA7B8, local
 	.asciz "GenAreaPoint"
+.endobj lbl_802BA7B8
 .balign 4
-lbl_802BA7C8:
+.obj lbl_802BA7C8, local
 	.4byte __RTTI__10Parameters
 	.4byte 0
 	.4byte __RTTI__7GenBase
@@ -4650,8 +4680,9 @@ lbl_802BA7C8:
 	.4byte __RTTI__7GenArea
 	.4byte 0
 	.4byte 0
-.global __vt__12GenAreaPoint
-__vt__12GenAreaPoint:
+.endobj lbl_802BA7C8
+.balign 4
+.obj __vt__12GenAreaPoint, global
 	.4byte __RTTI__12GenAreaPoint
 	.4byte 0
 	.4byte doWrite__7GenAreaFR18RandomAccessStream
@@ -4666,17 +4697,21 @@ __vt__12GenAreaPoint:
 	.4byte render__12GenAreaPointFR8GraphicsP9Generator
 	.4byte getPos__12GenAreaPointFP9Generator
 	.4byte getRadius__7GenAreaFv
+.endobj __vt__12GenAreaPoint
 .balign 4
-lbl_802BA81C:
+.obj lbl_802BA81C, local
 	.asciz "GenTypeInitRand"
+.endobj lbl_802BA81C
 .balign 4
-lbl_802BA82C:
+.obj lbl_802BA82C, local
 	.4byte __RTTI__10Parameters
 	.4byte 0
 	.4byte __RTTI__7GenBase
 	.4byte 0
 	.4byte 0
-lbl_802BA840:
+.endobj lbl_802BA82C
+.balign 4
+.obj lbl_802BA840, local
 	.4byte __RTTI__10Parameters
 	.4byte 0
 	.4byte __RTTI__7GenBase
@@ -4684,8 +4719,9 @@ lbl_802BA840:
 	.4byte __RTTI__7GenType
 	.4byte 0
 	.4byte 0
-.global __vt__15GenTypeInitRand
-__vt__15GenTypeInitRand:
+.endobj lbl_802BA840
+.balign 4
+.obj __vt__15GenTypeInitRand, global
 	.4byte __RTTI__15GenTypeInitRand
 	.4byte 0
 	.4byte doWrite__7GenBaseFR18RandomAccessStream
@@ -4700,11 +4736,13 @@ __vt__15GenTypeInitRand:
 	.4byte render__7GenTypeFR8GraphicsP9Generator
 	.4byte setBirthInfo__15GenTypeInitRandFR9BirthInfoP9Generator
 	.4byte getMaxCount__15GenTypeInitRandFv
+.endobj __vt__15GenTypeInitRand
 .balign 4
-lbl_802BA894:
+.obj lbl_802BA894, local
 	.asciz "GenTypeAtOnce"
+.endobj lbl_802BA894
 .balign 4
-lbl_802BA8A4:
+.obj lbl_802BA8A4, local
 	.4byte __RTTI__10Parameters
 	.4byte 0
 	.4byte __RTTI__7GenBase
@@ -4712,8 +4750,9 @@ lbl_802BA8A4:
 	.4byte __RTTI__7GenType
 	.4byte 0
 	.4byte 0
-.global __vt__13GenTypeAtOnce
-__vt__13GenTypeAtOnce:
+.endobj lbl_802BA8A4
+.balign 4
+.obj __vt__13GenTypeAtOnce, global
 	.4byte __RTTI__13GenTypeAtOnce
 	.4byte 0
 	.4byte doWrite__7GenBaseFR18RandomAccessStream
@@ -4728,11 +4767,13 @@ __vt__13GenTypeAtOnce:
 	.4byte render__7GenTypeFR8GraphicsP9Generator
 	.4byte setBirthInfo__13GenTypeAtOnceFR9BirthInfoP9Generator
 	.4byte getMaxCount__13GenTypeAtOnceFv
+.endobj __vt__13GenTypeAtOnce
 .balign 4
-lbl_802BA8F8:
+.obj lbl_802BA8F8, local
 	.asciz "GenTypeOne"
+.endobj lbl_802BA8F8
 .balign 4
-lbl_802BA904:
+.obj lbl_802BA904, local
 	.4byte __RTTI__10Parameters
 	.4byte 0
 	.4byte __RTTI__7GenBase
@@ -4740,8 +4781,9 @@ lbl_802BA904:
 	.4byte __RTTI__7GenType
 	.4byte 0
 	.4byte 0
-.global __vt__10GenTypeOne
-__vt__10GenTypeOne:
+.endobj lbl_802BA904
+.balign 4
+.obj __vt__10GenTypeOne, global
 	.4byte __RTTI__10GenTypeOne
 	.4byte 0
 	.4byte doWrite__7GenBaseFR18RandomAccessStream
@@ -4756,20 +4798,25 @@ __vt__10GenTypeOne:
 	.4byte render__10GenTypeOneFR8GraphicsP9Generator
 	.4byte setBirthInfo__10GenTypeOneFR9BirthInfoP9Generator
 	.4byte getMaxCount__10GenTypeOneFv
+.endobj __vt__10GenTypeOne
 .balign 4
-lbl_802BA958:
+.obj lbl_802BA958, local
 	.asciz "GenObjectPiki"
+.endobj lbl_802BA958
 .balign 4
-lbl_802BA968:
+.obj lbl_802BA968, local
 	.asciz "GenObject"
+.endobj lbl_802BA968
 .balign 4
-lbl_802BA974:
+.obj lbl_802BA974, local
 	.4byte __RTTI__10Parameters
 	.4byte 0
 	.4byte __RTTI__7GenBase
 	.4byte 0
 	.4byte 0
-lbl_802BA988:
+.endobj lbl_802BA974
+.balign 4
+.obj lbl_802BA988, local
 	.4byte __RTTI__10Parameters
 	.4byte 0
 	.4byte __RTTI__7GenBase
@@ -4777,8 +4824,9 @@ lbl_802BA988:
 	.4byte __RTTI__9GenObject
 	.4byte 0
 	.4byte 0
-.global __vt__13GenObjectPiki
-__vt__13GenObjectPiki:
+.endobj lbl_802BA988
+.balign 4
+.obj __vt__13GenObjectPiki, global
 	.4byte __RTTI__13GenObjectPiki
 	.4byte 0
 	.4byte doWrite__7GenBaseFR18RandomAccessStream
@@ -4793,21 +4841,27 @@ __vt__13GenObjectPiki:
 	.4byte update__9GenObjectFP9Generator
 	.4byte render__9GenObjectFR8GraphicsP9Generator
 	.4byte birth__13GenObjectPikiFR9BirthInfo
+.endobj __vt__13GenObjectPiki
 .balign 4
-lbl_802BA9DC:
+.obj lbl_802BA9DC, local
 	.asciz "CoreNode"
+.endobj lbl_802BA9DC
 .balign 4
-lbl_802BA9E8:
+.obj lbl_802BA9E8, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte 0
-lbl_802BA9F4:
+.endobj lbl_802BA9E8
+.balign 4
+.obj lbl_802BA9F4, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte __RTTI__8CoreNode
 	.4byte 0
 	.4byte 0
-lbl_802BAA08:
+.endobj lbl_802BA9F4
+.balign 4
+.obj lbl_802BAA08, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte __RTTI__8CoreNode
@@ -4815,8 +4869,9 @@ lbl_802BAA08:
 	.4byte __RTTI__4Node
 	.4byte 0
 	.4byte 0
-.global __vt__12GeneratorMgr
-__vt__12GeneratorMgr:
+.endobj lbl_802BAA08
+.balign 4
+.obj __vt__12GeneratorMgr, global
 	.4byte __RTTI__12GeneratorMgr
 	.4byte 0
 	.4byte getAgeNodeType__5ANodeFv
@@ -4829,11 +4884,13 @@ __vt__12GeneratorMgr:
 	.4byte concat__4NodeFR3SRT
 	.4byte concat__4NodeFR8Matrix4f
 	.4byte getModelMatrix__4NodeFv
+.endobj __vt__12GeneratorMgr
 .balign 4
-lbl_802BAA54:
+.obj lbl_802BAA54, local
 	.asciz "Generator"
+.endobj lbl_802BAA54
 .balign 4
-lbl_802BAA60:
+.obj lbl_802BAA60, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte __RTTI__8CoreNode
@@ -4841,8 +4898,9 @@ lbl_802BAA60:
 	.4byte __RTTI__4Node
 	.4byte 0
 	.4byte 0
-.global __vt__9Generator
-__vt__9Generator:
+.endobj lbl_802BAA60
+.balign 4
+.obj __vt__9Generator, global
 	.4byte __RTTI__9Generator
 	.4byte 0
 	.4byte getAgeNodeType__5ANodeFv
@@ -4855,15 +4913,11 @@ __vt__9Generator:
 	.4byte concat__4NodeFR3SRT
 	.4byte concat__4NodeFR8Matrix4f
 	.4byte getModelMatrix__4NodeFv
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-.global __vt__7GenArea
-__vt__7GenArea:
+.endobj __vt__9Generator
+.balign 4
+.skip 0x1C # compiler padding
+.balign 4
+.obj __vt__7GenArea, global
 	.4byte __RTTI__7GenArea
 	.4byte 0
 	.4byte doWrite__7GenAreaFR18RandomAccessStream
@@ -4878,24 +4932,25 @@ __vt__7GenArea:
 	.4byte render__7GenAreaFR8GraphicsP9Generator
 	.4byte 0
 	.4byte getRadius__7GenAreaFv
+.endobj __vt__7GenArea
 .balign 4
-lbl_802BAB00:
+.obj lbl_802BAB00, local
 	.asciz "Parm<float>"
+.endobj lbl_802BAB00
 .balign 4
-lbl_802BAB0C:
+.obj lbl_802BAB0C, local
 	.asciz "BaseParm"
+.endobj lbl_802BAB0C
 .balign 4
-lbl_802BAB18:
+.obj lbl_802BAB18, local
 	.4byte __RTTI__8BaseParm
 	.4byte 0
 	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-.global __vt__7GenType
-__vt__7GenType:
+.endobj lbl_802BAB18
+.balign 4
+.skip 0x14 # compiler padding
+.balign 4
+.obj __vt__7GenType, global
 	.4byte __RTTI__7GenType
 	.4byte 0
 	.4byte doWrite__7GenBaseFR18RandomAccessStream
@@ -4910,8 +4965,9 @@ __vt__7GenType:
 	.4byte render__7GenTypeFR8GraphicsP9Generator
 	.4byte 0
 	.4byte 0
-.global __vt__9GenObject
-__vt__9GenObject:
+.endobj __vt__7GenType
+.balign 4
+.obj __vt__9GenObject, global
 	.4byte __RTTI__9GenObject
 	.4byte 0
 	.4byte doWrite__7GenBaseFR18RandomAccessStream
@@ -4926,21 +4982,21 @@ __vt__9GenObject:
 	.4byte update__9GenObjectFP9Generator
 	.4byte render__9GenObjectFR8GraphicsP9Generator
 	.4byte 0
+.endobj __vt__9GenObject
 .balign 4
-lbl_802BABA8:
+.obj lbl_802BABA8, local
 	.asciz "Parm<int>"
+.endobj lbl_802BABA8
 .balign 4
-lbl_802BABB4:
+.obj lbl_802BABB4, local
 	.4byte __RTTI__8BaseParm
 	.4byte 0
 	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-.global __vt__7GenBase
-__vt__7GenBase:
+.endobj lbl_802BABB4
+.balign 4
+.skip 0x14 # compiler padding
+.balign 4
+.obj __vt__7GenBase, global
 	.4byte __RTTI__7GenBase
 	.4byte 0
 	.4byte doWrite__7GenBaseFR18RandomAccessStream
@@ -4950,224 +5006,319 @@ __vt__7GenBase:
 	.4byte update__7GenBaseFv
 	.4byte render__7GenBaseFR8Graphics
 	.4byte getLatestVersion__7GenBaseFv
+.endobj __vt__7GenBase
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-lbl_803E12B0:
+.obj lbl_803E12B0, local
 	.asciz "p00"
+.endobj lbl_803E12B0
 .balign 4
-lbl_803E12B4:
+.obj lbl_803E12B4, local
 	.asciz "p01"
+.endobj lbl_803E12B4
 .balign 4
-lbl_803E12B8:
+.obj lbl_803E12B8, local
 	.asciz "b00"
+.endobj lbl_803E12B8
 .balign 4
-lbl_803E12BC:
+.obj lbl_803E12BC, local
 	.asciz "b01"
+.endobj lbl_803E12BC
 .balign 4
-lbl_803E12C0:
+.obj lbl_803E12C0, local
 	.asciz "p02"
+.endobj lbl_803E12C0
 .balign 4
-lbl_803E12C4:
+.obj lbl_803E12C4, local
 	.float 0.0
-lbl_803E12C8:
+.endobj lbl_803E12C4
+.obj lbl_803E12C8, local
 	.float 0.0
-lbl_803E12CC:
+.endobj lbl_803E12C8
+.obj lbl_803E12CC, local
 	.float 0.0
+.endobj lbl_803E12CC
 .balign 4
-lbl_803E12D0:
+.obj lbl_803E12D0, local
 	.asciz "<Node>"
+.endobj lbl_803E12D0
 .balign 4
-lbl_803E12D8:
+.obj lbl_803E12D8, local
 	.asciz "unset"
+.endobj lbl_803E12D8
 .balign 4
-lbl_803E12E0:
+.obj lbl_803E12E0, local
 	.asciz ""
+.endobj lbl_803E12E0
 .balign 4
-lbl_803E12E4:
+.obj lbl_803E12E4, local
 	.float 0.0
-lbl_803E12E8:
+.endobj lbl_803E12E4
+.obj lbl_803E12E8, local
 	.float 0.0
-lbl_803E12EC:
+.endobj lbl_803E12E8
+.obj lbl_803E12EC, local
 	.float 0.0
-lbl_803E12F0:
+.endobj lbl_803E12EC
+.obj lbl_803E12F0, local
 	.float 0.0
-lbl_803E12F4:
+.endobj lbl_803E12F0
+.obj lbl_803E12F4, local
 	.float 0.0
-lbl_803E12F8:
+.endobj lbl_803E12F4
+.obj lbl_803E12F8, local
 	.float 0.0
-lbl_803E12FC:
+.endobj lbl_803E12F8
+.balign 4
+.obj lbl_803E12FC, local # Shift-JIS
 	.4byte 0x82C882B5
-	.4byte 0x00000000
-lbl_803E1304:
+	.byte 0
+.endobj lbl_803E12FC
+.balign 4
+.obj lbl_803E1304, local # Shift-JIS
 	.4byte 0x8FED82C9
-	.4byte 0x00000000
-lbl_803E130C:
-	.float 0.0
-lbl_803E1310:
-	.float 0.0
-lbl_803E1314:
-	.float 0.0
-lbl_803E1318:
-	.float 0.0
-lbl_803E131C:
-	.float 0.0
-lbl_803E1320:
-	.float 0.0
+	.byte 0
+.endobj lbl_803E1304
 .balign 4
-lbl_803E1324:
+.obj lbl_803E130C, local
+	.float 0.0
+.endobj lbl_803E130C
+.obj lbl_803E1310, local
+	.float 0.0
+.endobj lbl_803E1310
+.obj lbl_803E1314, local
+	.float 0.0
+.endobj lbl_803E1314
+.obj lbl_803E1318, local
+	.float 0.0
+.endobj lbl_803E1318
+.obj lbl_803E131C, local
+	.float 0.0
+.endobj lbl_803E131C
+.obj lbl_803E1320, local
+	.float 0.0
+.endobj lbl_803E1320
+.balign 4
+.obj lbl_803E1324, local
 	.asciz "genMgr"
+.endobj lbl_803E1324
 .balign 4
-lbl_803E132C:
+.obj lbl_803E132C, local
 	.float 0.0
-lbl_803E1330:
+.endobj lbl_803E132C
+.obj lbl_803E1330, local
 	.float 0.0
-lbl_803E1334:
+.endobj lbl_803E1330
+.obj lbl_803E1334, local
 	.float 0.0
-lbl_803E1338:
+.endobj lbl_803E1334
+.obj lbl_803E1338, local
 	.float 0.0
-lbl_803E133C:
+.endobj lbl_803E1338
+.obj lbl_803E133C, local
 	.float 0.0
-lbl_803E1340:
+.endobj lbl_803E133C
+.obj lbl_803E1340, local
 	.float 0.0
-lbl_803E1344:
+.endobj lbl_803E1340
+.obj lbl_803E1344, local
 	.float 0.0
-lbl_803E1348:
+.endobj lbl_803E1344
+.obj lbl_803E1348, local
 	.float 1.0
-lbl_803E134C:
+.endobj lbl_803E1348
+.obj lbl_803E134C, local
 	.float 0.0
-lbl_803E1350:
+.endobj lbl_803E134C
+.obj lbl_803E1350, local
 	.float 0.0
-lbl_803E1354:
+.endobj lbl_803E1350
+.obj lbl_803E1354, local
 	.float 0.0
-__RTTI__10Parameters:
+.endobj lbl_803E1354
+.balign 4
+.obj __RTTI__10Parameters, local
 	.4byte lbl_802BA738
 	.4byte 0
+.endobj __RTTI__10Parameters
 .balign 4
-lbl_803E1360:
+.obj lbl_803E1360, local
 	.asciz "GenBase"
+.endobj lbl_803E1360
 .balign 4
-__RTTI__7GenBase:
+.obj __RTTI__7GenBase, local
 	.4byte lbl_803E1360
 	.4byte lbl_802BA744
+.endobj __RTTI__7GenBase
 .balign 4
-lbl_803E1370:
+.obj lbl_803E1370, local
 	.asciz "GenArea"
+.endobj lbl_803E1370
 .balign 4
-__RTTI__7GenArea:
+.obj __RTTI__7GenArea, local
 	.4byte lbl_803E1370
 	.4byte lbl_802BA750
-__RTTI__13GenAreaCircle:
+.endobj __RTTI__7GenArea
+.balign 4
+.obj __RTTI__13GenAreaCircle, local
 	.4byte lbl_802BA728
 	.4byte lbl_802BA764
-__RTTI__12GenAreaPoint:
+.endobj __RTTI__13GenAreaCircle
+.balign 4
+.obj __RTTI__12GenAreaPoint, local
 	.4byte lbl_802BA7B8
 	.4byte lbl_802BA7C8
+.endobj __RTTI__12GenAreaPoint
 .balign 4
-lbl_803E1390:
+.obj lbl_803E1390, local
 	.asciz "GenType"
+.endobj lbl_803E1390
 .balign 4
-__RTTI__7GenType:
+.obj __RTTI__7GenType, local
 	.4byte lbl_803E1390
 	.4byte lbl_802BA82C
-__RTTI__15GenTypeInitRand:
+.endobj __RTTI__7GenType
+.balign 4
+.obj __RTTI__15GenTypeInitRand, local
 	.4byte lbl_802BA81C
 	.4byte lbl_802BA840
-__RTTI__13GenTypeAtOnce:
+.endobj __RTTI__15GenTypeInitRand
+.balign 4
+.obj __RTTI__13GenTypeAtOnce, local
 	.4byte lbl_802BA894
 	.4byte lbl_802BA8A4
-__RTTI__10GenTypeOne:
+.endobj __RTTI__13GenTypeAtOnce
+.balign 4
+.obj __RTTI__10GenTypeOne, local
 	.4byte lbl_802BA8F8
 	.4byte lbl_802BA904
-__RTTI__9GenObject:
+.endobj __RTTI__10GenTypeOne
+.balign 4
+.obj __RTTI__9GenObject, local
 	.4byte lbl_802BA968
 	.4byte lbl_802BA974
-__RTTI__13GenObjectPiki:
+.endobj __RTTI__9GenObject
+.balign 4
+.obj __RTTI__13GenObjectPiki, local
 	.4byte lbl_802BA958
 	.4byte lbl_802BA988
+.endobj __RTTI__13GenObjectPiki
 .balign 4
-lbl_803E13C8:
+.obj lbl_803E13C8, local
 	.asciz "ANode"
+.endobj lbl_803E13C8
 .balign 4
-__RTTI__5ANode:
+.obj __RTTI__5ANode, local
 	.4byte lbl_803E13C8
 	.4byte 0
-__RTTI__8CoreNode:
+.endobj __RTTI__5ANode
+.balign 4
+.obj __RTTI__8CoreNode, local
 	.4byte lbl_802BA9DC
 	.4byte lbl_802BA9E8
+.endobj __RTTI__8CoreNode
 .balign 4
-lbl_803E13E0:
+.obj lbl_803E13E0, local
 	.asciz "Node"
+.endobj lbl_803E13E0
 .balign 4
-__RTTI__4Node:
+.obj __RTTI__4Node, local
 	.4byte lbl_803E13E0
 	.4byte lbl_802BA9F4
-__RTTI__12GeneratorMgr:
+.endobj __RTTI__4Node
+.balign 4
+.obj __RTTI__12GeneratorMgr, local
 	.4byte lbl_802BA718
 	.4byte lbl_802BAA08
-__RTTI__9Generator:
+.endobj __RTTI__12GeneratorMgr
+.balign 4
+.obj __RTTI__9Generator, local
 	.4byte lbl_802BAA54
 	.4byte lbl_802BAA60
-__RTTI__8BaseParm:
+.endobj __RTTI__9Generator
+.balign 4
+.obj __RTTI__8BaseParm, local
 	.4byte lbl_802BAB0C
 	.4byte 0
+.endobj __RTTI__8BaseParm
 
 .section .sbss, "wa"
 .balign 8
-.global ramMode__9Generator
-ramMode__9Generator:
+.obj ramMode__9Generator, global
 	.skip 0x1
+.endobj ramMode__9Generator
 .balign 4
-.global factory__16GenObjectFactory
-factory__16GenObjectFactory:
+.obj factory__16GenObjectFactory, global
 	.skip 0x4
-.global factory__14GenTypeFactory
-factory__14GenTypeFactory:
+.endobj factory__16GenObjectFactory
+.balign 4
+.obj factory__14GenTypeFactory, global
 	.skip 0x4
-.global factory__14GenAreaFactory
-factory__14GenAreaFactory:
+.endobj factory__14GenTypeFactory
+.balign 4
+.obj factory__14GenAreaFactory, global
 	.skip 0x4
-.global generatorMgr
-generatorMgr:
+.endobj factory__14GenAreaFactory
+.balign 4
+.obj generatorMgr, global
 	.skip 0x4
-.global plantGeneratorMgr
-plantGeneratorMgr:
+.endobj generatorMgr
+.balign 4
+.obj plantGeneratorMgr, global
 	.skip 0x4
-.global dailyGeneratorMgr
-dailyGeneratorMgr:
+.endobj plantGeneratorMgr
+.balign 4
+.obj dailyGeneratorMgr, global
 	.skip 0x4
-.global onceGeneratorMgr
-onceGeneratorMgr:
+.endobj dailyGeneratorMgr
+.balign 4
+.obj onceGeneratorMgr, global
 	.skip 0x4
-.global limitGeneratorMgr
-limitGeneratorMgr:
+.endobj onceGeneratorMgr
+.balign 4
+.obj limitGeneratorMgr, global
 	.skip 0x4
-.global generatorList
-generatorList:
+.endobj limitGeneratorMgr
+.balign 4
+.obj generatorList, global
 	.skip 0x4
+.endobj generatorList
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803E9A70:
+.obj lbl_803E9A70, local
 	.float 0.0
-lbl_803E9A74:
+.endobj lbl_803E9A70
+.obj lbl_803E9A74, local
 	.float 50.0
-lbl_803E9A78:
-	.4byte 0x43300000
-	.4byte 0x80000000
-lbl_803E9A80:
+.endobj lbl_803E9A74
+.balign 8
+.obj lbl_803E9A78, local
+	.8byte 0x4330000080000000
+.endobj lbl_803E9A78
+.balign 4
+.obj lbl_803E9A80, local
 	.float 0.5
-lbl_803E9A84:
+.endobj lbl_803E9A80
+.obj lbl_803E9A84, local # pi
 	.float 3.1415927
-lbl_803E9A88:
+.endobj lbl_803E9A84
+.obj lbl_803E9A88, local
 	.float 180.0
-lbl_803E9A8C:
+.endobj lbl_803E9A88
+.obj lbl_803E9A8C, local
 	.float 1.0
-lbl_803E9A90:
+.endobj lbl_803E9A8C
+.obj lbl_803E9A90, local
 	.float 32767.0
-lbl_803E9A94:
+.endobj lbl_803E9A90
+.obj lbl_803E9A94, local
 	.float 3.0
-lbl_803E9A98:
+.endobj lbl_803E9A94
+.obj lbl_803E9A98, local
 	.float 2.0
-lbl_803E9A9C:
+.endobj lbl_803E9A98
+.obj lbl_803E9A9C, local
 	.float 100.0
+.endobj lbl_803E9A9C

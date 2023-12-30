@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global __ct__19TAItamagoSoundTableFv
-__ct__19TAItamagoSoundTableFv:
+.fn __ct__19TAItamagoSoundTableFv, global
 /* 801CFE0C 001CCD6C  7C 08 02 A6 */	mflr r0
 /* 801CFE10 001CCD70  38 80 00 01 */	li r4, 1
 /* 801CFE14 001CCD74  90 01 00 04 */	stw r0, 4(r1)
@@ -38,9 +37,9 @@ __ct__19TAItamagoSoundTableFv:
 /* 801CFE84 001CCDE4  38 21 00 20 */	addi r1, r1, 0x20
 /* 801CFE88 001CCDE8  7C 08 03 A6 */	mtlr r0
 /* 801CFE8C 001CCDEC  4E 80 00 20 */	blr 
+.endfn __ct__19TAItamagoSoundTableFv
 
-.global __ct__19TAItamagoParametersFv
-__ct__19TAItamagoParametersFv:
+.fn __ct__19TAItamagoParametersFv, global
 /* 801CFE90 001CCDF0  7C 08 02 A6 */	mflr r0
 /* 801CFE94 001CCDF4  38 80 00 14 */	li r4, 0x14
 /* 801CFE98 001CCDF8  90 01 00 04 */	stw r0, 4(r1)
@@ -230,9 +229,9 @@ __ct__19TAItamagoParametersFv:
 /* 801D0178 001CD0D8  38 21 00 C0 */	addi r1, r1, 0xc0
 /* 801D017C 001CD0DC  7C 08 03 A6 */	mtlr r0
 /* 801D0180 001CD0E0  4E 80 00 20 */	blr 
+.endfn __ct__19TAItamagoParametersFv
 
-.global __ct__17TAItamagoStrategyFv
-__ct__17TAItamagoStrategyFv:
+.fn __ct__17TAItamagoStrategyFv, global
 /* 801D0184 001CD0E4  7C 08 02 A6 */	mflr r0
 /* 801D0188 001CD0E8  38 80 00 04 */	li r4, 4
 /* 801D018C 001CD0EC  90 01 00 04 */	stw r0, 4(r1)
@@ -427,9 +426,9 @@ __ct__17TAItamagoStrategyFv:
 /* 801D0454 001CD3B4  38 21 00 58 */	addi r1, r1, 0x58
 /* 801D0458 001CD3B8  7C 08 03 A6 */	mtlr r0
 /* 801D045C 001CD3BC  4E 80 00 20 */	blr 
+.endfn __ct__17TAItamagoStrategyFv
 
-.global makeDefaultAnimations__18TAItamagoAnimationFv
-makeDefaultAnimations__18TAItamagoAnimationFv:
+.fn makeDefaultAnimations__18TAItamagoAnimationFv, global
 /* 801D0460 001CD3C0  7C 08 02 A6 */	mflr r0
 /* 801D0464 001CD3C4  90 01 00 04 */	stw r0, 4(r1)
 /* 801D0468 001CD3C8  94 21 FF 28 */	stwu r1, -0xd8(r1)
@@ -894,9 +893,9 @@ makeDefaultAnimations__18TAItamagoAnimationFv:
 /* 801D0B50 001CDAB0  38 21 00 D8 */	addi r1, r1, 0xd8
 /* 801D0B54 001CDAB4  7C 08 03 A6 */	mtlr r0
 /* 801D0B58 001CDAB8  4E 80 00 20 */	blr 
+.endfn makeDefaultAnimations__18TAItamagoAnimationFv
 
-.global act__20TAIAcountStartTamagoFR4Teki
-act__20TAIAcountStartTamagoFR4Teki:
+.fn act__20TAIAcountStartTamagoFR4Teki, weak
 /* 801D0B5C 001CDABC  7C 08 02 A6 */	mflr r0
 /* 801D0B60 001CDAC0  7C 83 23 78 */	mr r3, r4
 /* 801D0B64 001CDAC4  90 01 00 04 */	stw r0, 4(r1)
@@ -906,9 +905,9 @@ act__20TAIAcountStartTamagoFR4Teki:
 /* 801D0B74 001CDAD4  38 21 00 08 */	addi r1, r1, 8
 /* 801D0B78 001CDAD8  7C 08 03 A6 */	mtlr r0
 /* 801D0B7C 001CDADC  4E 80 00 20 */	blr 
+.endfn act__20TAIAcountStartTamagoFR4Teki
 
-.global start__9TAIAhatchFR4Teki
-start__9TAIAhatchFR4Teki:
+.fn start__9TAIAhatchFR4Teki, weak
 /* 801D0B80 001CDAE0  7C 08 02 A6 */	mflr r0
 /* 801D0B84 001CDAE4  90 01 00 04 */	stw r0, 4(r1)
 /* 801D0B88 001CDAE8  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -928,9 +927,9 @@ start__9TAIAhatchFR4Teki:
 /* 801D0BC0 001CDB20  38 21 00 18 */	addi r1, r1, 0x18
 /* 801D0BC4 001CDB24  7C 08 03 A6 */	mtlr r0
 /* 801D0BC8 001CDB28  4E 80 00 20 */	blr 
+.endfn start__9TAIAhatchFR4Teki
 
-.global act__9TAIAhatchFR4Teki
-act__9TAIAhatchFR4Teki:
+.fn act__9TAIAhatchFR4Teki, weak
 /* 801D0BCC 001CDB2C  7C 08 02 A6 */	mflr r0
 /* 801D0BD0 001CDB30  90 01 00 04 */	stw r0, 4(r1)
 /* 801D0BD4 001CDB34  94 21 FF C0 */	stwu r1, -0x40(r1)
@@ -1026,16 +1025,16 @@ act__9TAIAhatchFR4Teki:
 /* 801D0D34 001CDC94  38 21 00 40 */	addi r1, r1, 0x40
 /* 801D0D38 001CDC98  7C 08 03 A6 */	mtlr r0
 /* 801D0D3C 001CDC9C  4E 80 00 20 */	blr 
+.endfn act__9TAIAhatchFR4Teki
 
-.global "get__17ParaParameters<i>Fi"
-"get__17ParaParameters<i>Fi":
+.fn "get__17ParaParameters<i>Fi", weak
 /* 801D0D40 001CDCA0  80 63 00 00 */	lwz r3, 0(r3)
 /* 801D0D44 001CDCA4  54 80 10 3A */	slwi r0, r4, 2
 /* 801D0D48 001CDCA8  7C 63 00 2E */	lwzx r3, r3, r0
 /* 801D0D4C 001CDCAC  4E 80 00 20 */	blr 
+.endfn "get__17ParaParameters<i>Fi"
 
-.global start__23TAIAtimerReactionTamagoFR4Teki
-start__23TAIAtimerReactionTamagoFR4Teki:
+.fn start__23TAIAtimerReactionTamagoFR4Teki, weak
 /* 801D0D50 001CDCB0  7C 08 02 A6 */	mflr r0
 /* 801D0D54 001CDCB4  90 01 00 04 */	stw r0, 4(r1)
 /* 801D0D58 001CDCB8  94 21 FF 80 */	stwu r1, -0x80(r1)
@@ -1083,9 +1082,9 @@ start__23TAIAtimerReactionTamagoFR4Teki:
 /* 801D0E00 001CDD60  38 21 00 80 */	addi r1, r1, 0x80
 /* 801D0E04 001CDD64  7C 08 03 A6 */	mtlr r0
 /* 801D0E08 001CDD68  4E 80 00 20 */	blr 
+.endfn start__23TAIAtimerReactionTamagoFR4Teki
 
-.global act__23TAIAtimerReactionTamagoFR4Teki
-act__23TAIAtimerReactionTamagoFR4Teki:
+.fn act__23TAIAtimerReactionTamagoFR4Teki, weak
 /* 801D0E0C 001CDD6C  7C 08 02 A6 */	mflr r0
 /* 801D0E10 001CDD70  90 01 00 04 */	stw r0, 4(r1)
 /* 801D0E14 001CDD74  94 21 FF D0 */	stwu r1, -0x30(r1)
@@ -1111,14 +1110,14 @@ act__23TAIAtimerReactionTamagoFR4Teki:
 /* 801D0E5C 001CDDBC  38 21 00 30 */	addi r1, r1, 0x30
 /* 801D0E60 001CDDC0  7C 08 03 A6 */	mtlr r0
 /* 801D0E64 001CDDC4  4E 80 00 20 */	blr 
+.endfn act__23TAIAtimerReactionTamagoFR4Teki
 
-.global getFrameMax__23TAIAtimerReactionTamagoFR4Teki
-getFrameMax__23TAIAtimerReactionTamagoFR4Teki:
+.fn getFrameMax__23TAIAtimerReactionTamagoFR4Teki, weak
 /* 801D0E68 001CDDC8  C0 24 04 7C */	lfs f1, 0x47c(r4)
 /* 801D0E6C 001CDDCC  4E 80 00 20 */	blr 
+.endfn getFrameMax__23TAIAtimerReactionTamagoFR4Teki
 
-.global start__15TAIAdyingTamagoFR4Teki
-start__15TAIAdyingTamagoFR4Teki:
+.fn start__15TAIAdyingTamagoFR4Teki, weak
 /* 801D0E70 001CDDD0  7C 08 02 A6 */	mflr r0
 /* 801D0E74 001CDDD4  90 01 00 04 */	stw r0, 4(r1)
 /* 801D0E78 001CDDD8  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -1144,9 +1143,9 @@ start__15TAIAdyingTamagoFR4Teki:
 /* 801D0EC8 001CDE28  38 21 00 18 */	addi r1, r1, 0x18
 /* 801D0ECC 001CDE2C  7C 08 03 A6 */	mtlr r0
 /* 801D0ED0 001CDE30  4E 80 00 20 */	blr 
+.endfn start__15TAIAdyingTamagoFR4Teki
 
-.global act__15TAIAdyingTamagoFR4Teki
-act__15TAIAdyingTamagoFR4Teki:
+.fn act__15TAIAdyingTamagoFR4Teki, weak
 /* 801D0ED4 001CDE34  7C 08 02 A6 */	mflr r0
 /* 801D0ED8 001CDE38  90 01 00 04 */	stw r0, 4(r1)
 /* 801D0EDC 001CDE3C  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -1207,92 +1206,115 @@ act__15TAIAdyingTamagoFR4Teki:
 /* 801D0FB0 001CDF10  38 21 00 28 */	addi r1, r1, 0x28
 /* 801D0FB4 001CDF14  7C 08 03 A6 */	mtlr r0
 /* 801D0FB8 001CDF18  4E 80 00 20 */	blr 
+.endfn act__15TAIAdyingTamagoFR4Teki
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802E38B0:
+.obj lbl_802E38B0, local
 	.asciz "TAItamago.cpp"
+.endobj lbl_802E38B0
 .balign 4
-lbl_802E38C0:
+.obj lbl_802E38C0, local
 	.asciz "TAItamago"
+.endobj lbl_802E38C0
 .balign 4
-lbl_802E38CC: # Shift-JIS
+.obj lbl_802E38CC, local # Shift-JIS
 	.4byte 0x894889BB
 	.4byte 0x82CC8DC5
 	.4byte 0x925A8E9E
 	.4byte 0x8AD48169
 	.4byte 0x9562816A
 	.byte 0x00
+.endobj lbl_802E38CC
 .balign 4
-lbl_802E38E4: # Shift-JIS
+.obj lbl_802E38E4, local # Shift-JIS
 	.4byte 0x894889BB
 	.4byte 0x82CC8DC5
 	.4byte 0x92B78E9E
 	.4byte 0x8AD48169
 	.4byte 0x9562816A
 	.byte 0x00
+.endobj lbl_802E38E4
 .balign 4
-lbl_802E38FC:
+.obj lbl_802E38FC, local
 	.asciz "tekis/tamago/motion/dead.dca"
+.endobj lbl_802E38FC
 .balign 4
-lbl_802E391C:
+.obj lbl_802E391C, local
 	.asciz "tekis/tamago/motion/damage.dca"
+.endobj lbl_802E391C
 .balign 4
-lbl_802E393C:
+.obj lbl_802E393C, local
 	.asciz "tekis/tamago/motion/wait1.dca"
+.endobj lbl_802E393C
 .balign 4
-lbl_802E395C:
+.obj lbl_802E395C, local
 	.asciz "tekis/tamago/motion/wait2.dca"
+.endobj lbl_802E395C
 .balign 4
-lbl_802E397C:
+.obj lbl_802E397C, local
 	.asciz "tekis/tamago/motion/waitact1.dck"
+.endobj lbl_802E397C
 .balign 4
-lbl_802E39A0:
+.obj lbl_802E39A0, local
 	.asciz "tekis/tamago/motion/waitact2.dca"
+.endobj lbl_802E39A0
 .balign 4
-lbl_802E39C4:
+.obj lbl_802E39C4, local
 	.asciz "tekis/tamago/motion/move1.dck"
+.endobj lbl_802E39C4
 .balign 4
-lbl_802E39E4:
+.obj lbl_802E39E4, local
 	.asciz "tekis/tamago/motion/move2.dck"
+.endobj lbl_802E39E4
 .balign 4
-lbl_802E3A04:
+.obj lbl_802E3A04, local
 	.asciz "tekis/tamago/motion/attack.dca"
+.endobj lbl_802E3A04
 .balign 4
-lbl_802E3A24:
+.obj lbl_802E3A24, local
 	.asciz "tekis/tamago/motion/type1.dck"
+.endobj lbl_802E3A24
 .balign 4
-lbl_802E3A44:
+.obj lbl_802E3A44, local
 	.asciz "tekis/tamago/motion/type2.dca"
+.endobj lbl_802E3A44
 .balign 4
-lbl_802E3A64:
+.obj lbl_802E3A64, local
 	.asciz "TAItamagoAnimation"
+.endobj lbl_802E3A64
 .balign 4
-lbl_802E3A78:
+.obj lbl_802E3A78, local
 	.asciz "TAIanimation"
+.endobj lbl_802E3A78
 .balign 4
-lbl_802E3A88:
+.obj lbl_802E3A88, local
 	.4byte __RTTI__12TAIanimation
 	.4byte 0
 	.4byte 0
-.global __vt__18TAItamagoAnimation
-__vt__18TAItamagoAnimation:
+.endobj lbl_802E3A88
+.balign 4
+.obj __vt__18TAItamagoAnimation, global
 	.4byte __RTTI__18TAItamagoAnimation
 	.4byte 0
 	.4byte makeDefaultAnimations__18TAItamagoAnimationFv
+.endobj __vt__18TAItamagoAnimation
 .balign 4
-lbl_802E3AA0:
+.obj lbl_802E3AA0, local
 	.asciz "TAIAcountStartTamago"
+.endobj lbl_802E3AA0
 .balign 4
-lbl_802E3AB8:
+.obj lbl_802E3AB8, local
 	.asciz "TaiAction"
+.endobj lbl_802E3AB8
 .balign 4
-lbl_802E3AC4:
+.obj lbl_802E3AC4, local
 	.4byte __RTTI__9TaiAction
 	.4byte 0
 	.4byte 0
-.global __vt__20TAIAcountStartTamago
-__vt__20TAIAcountStartTamago:
+.endobj lbl_802E3AC4
+.balign 4
+.obj __vt__20TAIAcountStartTamago, weak
 	.4byte __RTTI__20TAIAcountStartTamago
 	.4byte 0
 	.4byte start__9TaiActionFR4Teki
@@ -1300,25 +1322,31 @@ __vt__20TAIAcountStartTamago:
 	.4byte act__20TAIAcountStartTamagoFR4Teki
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
+.endobj __vt__20TAIAcountStartTamago
 .balign 4
-lbl_802E3AEC:
+.obj lbl_802E3AEC, local
 	.asciz "TAIAhatch"
+.endobj lbl_802E3AEC
 .balign 4
-lbl_802E3AF8:
+.obj lbl_802E3AF8, local
 	.asciz "TAIAmotion"
+.endobj lbl_802E3AF8
 .balign 4
-lbl_802E3B04:
+.obj lbl_802E3B04, local
 	.4byte __RTTI__9TaiAction
 	.4byte 0
 	.4byte 0
-lbl_802E3B10:
+.endobj lbl_802E3B04
+.balign 4
+.obj lbl_802E3B10, local
 	.4byte __RTTI__9TaiAction
 	.4byte 0
 	.4byte __RTTI__10TAIAmotion
 	.4byte 0
 	.4byte 0
-.global __vt__9TAIAhatch
-__vt__9TAIAhatch:
+.endobj lbl_802E3B10
+.balign 4
+.obj __vt__9TAIAhatch, weak
 	.4byte __RTTI__9TAIAhatch
 	.4byte 0
 	.4byte start__9TAIAhatchFR4Teki
@@ -1326,25 +1354,31 @@ __vt__9TAIAhatch:
 	.4byte act__9TAIAhatchFR4Teki
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
+.endobj __vt__9TAIAhatch
 .balign 4
-lbl_802E3B40:
+.obj lbl_802E3B40, local
 	.asciz "TAIAtimerReactionTamago"
+.endobj lbl_802E3B40
 .balign 4
-lbl_802E3B58:
+.obj lbl_802E3B58, local
 	.asciz "TAIAtimerReaction"
+.endobj lbl_802E3B58
 .balign 4
-lbl_802E3B6C:
+.obj lbl_802E3B6C, local
 	.4byte __RTTI__9TaiAction
 	.4byte 0
 	.4byte 0
-lbl_802E3B78:
+.endobj lbl_802E3B6C
+.balign 4
+.obj lbl_802E3B78, local
 	.4byte __RTTI__9TaiAction
 	.4byte 0
 	.4byte __RTTI__17TAIAtimerReaction
 	.4byte 0
 	.4byte 0
-.global __vt__23TAIAtimerReactionTamago
-__vt__23TAIAtimerReactionTamago:
+.endobj lbl_802E3B78
+.balign 4
+.obj __vt__23TAIAtimerReactionTamago, weak
 	.4byte __RTTI__23TAIAtimerReactionTamago
 	.4byte 0
 	.4byte start__23TAIAtimerReactionTamagoFR4Teki
@@ -1353,25 +1387,23 @@ __vt__23TAIAtimerReactionTamago:
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
 	.4byte getFrameMax__23TAIAtimerReactionTamagoFR4Teki
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-lbl_802E3BCC:
-	.asciz "TAIAdyingTamago"
+.endobj __vt__23TAIAtimerReactionTamago
 .balign 4
-lbl_802E3BDC:
+.skip 0x20 # compiler padding
+.balign 4
+.obj lbl_802E3BCC, local
+	.asciz "TAIAdyingTamago"
+.endobj lbl_802E3BCC
+.balign 4
+.obj lbl_802E3BDC, local
 	.4byte __RTTI__9TaiAction
 	.4byte 0
 	.4byte __RTTI__10TAIAmotion
 	.4byte 0
 	.4byte 0
-.global __vt__15TAIAdyingTamago
-__vt__15TAIAdyingTamago:
+.endobj lbl_802E3BDC
+.balign 4
+.obj __vt__15TAIAdyingTamago, weak
 	.4byte __RTTI__15TAIAdyingTamago
 	.4byte 0
 	.4byte start__15TAIAdyingTamagoFR4Teki
@@ -1379,35 +1411,37 @@ __vt__15TAIAdyingTamago:
 	.4byte act__15TAIAdyingTamagoFR4Teki
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
+.endobj __vt__15TAIAdyingTamago
 .balign 4
-lbl_802E3C28:
+.skip 0x1C # compiler padding
+.balign 4
+.obj lbl_802E3C28, local
 	.asciz "TAItamagoStrategy"
+.endobj lbl_802E3C28
 .balign 4
-lbl_802E3C3C:
+.obj lbl_802E3C3C, local
 	.asciz "TekiStrategy"
+.endobj lbl_802E3C3C
 .balign 4
-lbl_802E3C4C:
+.obj lbl_802E3C4C, local
 	.asciz "YaiStrategy"
+.endobj lbl_802E3C4C
 .balign 4
-lbl_802E3C58:
+.obj lbl_802E3C58, local
 	.4byte __RTTI__12TekiStrategy
 	.4byte 0
 	.4byte 0
-lbl_802E3C64:
+.endobj lbl_802E3C58
+.balign 4
+.obj lbl_802E3C64, local
 	.4byte __RTTI__12TekiStrategy
 	.4byte 0
 	.4byte __RTTI__11YaiStrategy
 	.4byte 0
 	.4byte 0
-.global __vt__17TAItamagoStrategy
-__vt__17TAItamagoStrategy:
+.endobj lbl_802E3C64
+.balign 4
+.obj __vt__17TAItamagoStrategy, weak
 	.4byte __RTTI__17TAItamagoStrategy
 	.4byte 0
 	.4byte start__11YaiStrategyFR4Teki
@@ -1418,27 +1452,35 @@ __vt__17TAItamagoStrategy:
 	.4byte drawDebugInfo__12TekiStrategyFR4TekiR8Graphics
 	.4byte interact__12TekiStrategyFR4TekiR18TekiInteractionKey
 	.4byte spawnCorpseParts__12TekiStrategyFR4Teki
+.endobj __vt__17TAItamagoStrategy
 .balign 4
-lbl_802E3CA0:
+.obj lbl_802E3CA0, local
 	.asciz "TAItamagoParameters"
+.endobj lbl_802E3CA0
 .balign 4
-lbl_802E3CB4:
+.obj lbl_802E3CB4, local
 	.asciz "CoreNode"
+.endobj lbl_802E3CB4
 .balign 4
-lbl_802E3CC0:
+.obj lbl_802E3CC0, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte 0
-lbl_802E3CCC:
+.endobj lbl_802E3CC0
+.balign 4
+.obj lbl_802E3CCC, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte __RTTI__8CoreNode
 	.4byte 0
 	.4byte 0
-lbl_802E3CE0:
-	.asciz "TekiParameters"
+.endobj lbl_802E3CCC
 .balign 4
-lbl_802E3CF0:
+.obj lbl_802E3CE0, local
+	.asciz "TekiParameters"
+.endobj lbl_802E3CE0
+.balign 4
+.obj lbl_802E3CF0, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte __RTTI__8CoreNode
@@ -1446,7 +1488,9 @@ lbl_802E3CF0:
 	.4byte __RTTI__4Node
 	.4byte 0
 	.4byte 0
-lbl_802E3D0C:
+.endobj lbl_802E3CF0
+.balign 4
+.obj lbl_802E3D0C, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte __RTTI__8CoreNode
@@ -1456,8 +1500,9 @@ lbl_802E3D0C:
 	.4byte __RTTI__14TekiParameters
 	.4byte 0
 	.4byte 0
-.global __vt__19TAItamagoParameters
-__vt__19TAItamagoParameters:
+.endobj lbl_802E3D0C
+.balign 4
+.obj __vt__19TAItamagoParameters, weak
 	.4byte __RTTI__19TAItamagoParameters
 	.4byte 0
 	.4byte getAgeNodeType__5ANodeFv
@@ -1470,68 +1515,102 @@ __vt__19TAItamagoParameters:
 	.4byte concat__4NodeFR3SRT
 	.4byte concat__4NodeFR8Matrix4f
 	.4byte getModelMatrix__4NodeFv
+.endobj __vt__19TAItamagoParameters
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-__RTTI__12TAIanimation:
+.obj __RTTI__12TAIanimation, local
 	.4byte lbl_802E3A78
 	.4byte 0
-__RTTI__18TAItamagoAnimation:
+.endobj __RTTI__12TAIanimation
+.balign 4
+.obj __RTTI__18TAItamagoAnimation, local
 	.4byte lbl_802E3A64
 	.4byte lbl_802E3A88
-__RTTI__9TaiAction:
+.endobj __RTTI__18TAItamagoAnimation
+.balign 4
+.obj __RTTI__9TaiAction, local
 	.4byte lbl_802E3AB8
 	.4byte 0
-__RTTI__20TAIAcountStartTamago:
+.endobj __RTTI__9TaiAction
+.balign 4
+.obj __RTTI__20TAIAcountStartTamago, local
 	.4byte lbl_802E3AA0
 	.4byte lbl_802E3AC4
-__RTTI__10TAIAmotion:
+.endobj __RTTI__20TAIAcountStartTamago
+.balign 4
+.obj __RTTI__10TAIAmotion, local
 	.4byte lbl_802E3AF8
 	.4byte lbl_802E3B04
-__RTTI__9TAIAhatch:
+.endobj __RTTI__10TAIAmotion
+.balign 4
+.obj __RTTI__9TAIAhatch, local
 	.4byte lbl_802E3AEC
 	.4byte lbl_802E3B10
-__RTTI__17TAIAtimerReaction:
+.endobj __RTTI__9TAIAhatch
+.balign 4
+.obj __RTTI__17TAIAtimerReaction, local
 	.4byte lbl_802E3B58
 	.4byte lbl_802E3B6C
-__RTTI__23TAIAtimerReactionTamago:
+.endobj __RTTI__17TAIAtimerReaction
+.balign 4
+.obj __RTTI__23TAIAtimerReactionTamago, local
 	.4byte lbl_802E3B40
 	.4byte lbl_802E3B78
-__RTTI__15TAIAdyingTamago:
+.endobj __RTTI__23TAIAtimerReactionTamago
+.balign 4
+.obj __RTTI__15TAIAdyingTamago, local
 	.4byte lbl_802E3BCC
 	.4byte lbl_802E3BDC
-__RTTI__12TekiStrategy:
+.endobj __RTTI__15TAIAdyingTamago
+.balign 4
+.obj __RTTI__12TekiStrategy, local
 	.4byte lbl_802E3C3C
 	.4byte 0
-__RTTI__11YaiStrategy:
+.endobj __RTTI__12TekiStrategy
+.balign 4
+.obj __RTTI__11YaiStrategy, local
 	.4byte lbl_802E3C4C
 	.4byte lbl_802E3C58
-__RTTI__17TAItamagoStrategy:
+.endobj __RTTI__11YaiStrategy
+.balign 4
+.obj __RTTI__17TAItamagoStrategy, local
 	.4byte lbl_802E3C28
 	.4byte lbl_802E3C64
+.endobj __RTTI__17TAItamagoStrategy
 .balign 4
-lbl_803E6DF0:
+.obj lbl_803E6DF0, local
 	.asciz "ANode"
+.endobj lbl_803E6DF0
 .balign 4
-__RTTI__5ANode:
+.obj __RTTI__5ANode, local
 	.4byte lbl_803E6DF0
 	.4byte 0
-__RTTI__8CoreNode:
+.endobj __RTTI__5ANode
+.balign 4
+.obj __RTTI__8CoreNode, local
 	.4byte lbl_802E3CB4
 	.4byte lbl_802E3CC0
+.endobj __RTTI__8CoreNode
 .balign 4
-lbl_803E6E08:
+.obj lbl_803E6E08, local
 	.asciz "Node"
+.endobj lbl_803E6E08
 .balign 4
-__RTTI__4Node:
+.obj __RTTI__4Node, local
 	.4byte lbl_803E6E08
 	.4byte lbl_802E3CCC
-__RTTI__14TekiParameters:
+.endobj __RTTI__4Node
+.balign 4
+.obj __RTTI__14TekiParameters, local
 	.4byte lbl_802E3CE0
 	.4byte lbl_802E3CF0
-__RTTI__19TAItamagoParameters:
+.endobj __RTTI__14TekiParameters
+.balign 4
+.obj __RTTI__19TAItamagoParameters, local
 	.4byte lbl_802E3CA0
 	.4byte lbl_802E3D0C
+.endobj __RTTI__19TAItamagoParameters
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8

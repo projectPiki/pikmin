@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global __ct__7SnakeAiFP5Snake
-__ct__7SnakeAiFP5Snake:
+.fn __ct__7SnakeAiFP5Snake, global
 /* 8015B1F0 00158150  7C 08 02 A6 */	mflr r0
 /* 8015B1F4 00158154  3C A0 80 2B */	lis r5, __vt__19PaniAnimKeyListener@ha
 /* 8015B1F8 00158158  90 01 00 04 */	stw r0, 4(r1)
@@ -54,9 +53,9 @@ __ct__7SnakeAiFP5Snake:
 /* 8015B2B4 00158214  38 21 00 18 */	addi r1, r1, 0x18
 /* 8015B2B8 00158218  7C 08 03 A6 */	mtlr r0
 /* 8015B2BC 0015821C  4E 80 00 20 */	blr 
+.endfn __ct__7SnakeAiFP5Snake
 
-.global initAI__7SnakeAiFP5Snake
-initAI__7SnakeAiFP5Snake:
+.fn initAI__7SnakeAiFP5Snake, global
 /* 8015B2C0 00158220  7C 08 02 A6 */	mflr r0
 /* 8015B2C4 00158224  90 01 00 04 */	stw r0, 4(r1)
 /* 8015B2C8 00158228  38 00 00 08 */	li r0, 8
@@ -96,9 +95,9 @@ initAI__7SnakeAiFP5Snake:
 /* 8015B350 001582B0  38 21 00 28 */	addi r1, r1, 0x28
 /* 8015B354 001582B4  7C 08 03 A6 */	mtlr r0
 /* 8015B358 001582B8  4E 80 00 20 */	blr 
+.endfn initAI__7SnakeAiFP5Snake
 
-.global animationKeyUpdated__7SnakeAiFR16PaniAnimKeyEvent
-animationKeyUpdated__7SnakeAiFR16PaniAnimKeyEvent:
+.fn animationKeyUpdated__7SnakeAiFR16PaniAnimKeyEvent, global
 /* 8015B35C 001582BC  7C 08 02 A6 */	mflr r0
 /* 8015B360 001582C0  90 01 00 04 */	stw r0, 4(r1)
 /* 8015B364 001582C4  94 21 FF F8 */	stwu r1, -8(r1)
@@ -137,9 +136,9 @@ animationKeyUpdated__7SnakeAiFR16PaniAnimKeyEvent:
 /* 8015B3CC 0015832C  38 21 00 08 */	addi r1, r1, 8
 /* 8015B3D0 00158330  7C 08 03 A6 */	mtlr r0
 /* 8015B3D4 00158334  4E 80 00 20 */	blr 
+.endfn animationKeyUpdated__7SnakeAiFR16PaniAnimKeyEvent
 
-.global keyAction0__7SnakeAiFv
-keyAction0__7SnakeAiFv:
+.fn keyAction0__7SnakeAiFv, global
 /* 8015B3D8 00158338  7C 08 02 A6 */	mflr r0
 /* 8015B3DC 0015833C  90 01 00 04 */	stw r0, 4(r1)
 /* 8015B3E0 00158340  94 21 FF D0 */	stwu r1, -0x30(r1)
@@ -211,9 +210,9 @@ keyAction0__7SnakeAiFv:
 /* 8015B4D4 00158434  38 21 00 30 */	addi r1, r1, 0x30
 /* 8015B4D8 00158438  7C 08 03 A6 */	mtlr r0
 /* 8015B4DC 0015843C  4E 80 00 20 */	blr 
+.endfn keyAction0__7SnakeAiFv
 
-.global keyAction1__7SnakeAiFv
-keyAction1__7SnakeAiFv:
+.fn keyAction1__7SnakeAiFv, global
 /* 8015B4E0 00158440  7C 08 02 A6 */	mflr r0
 /* 8015B4E4 00158444  90 01 00 04 */	stw r0, 4(r1)
 /* 8015B4E8 00158448  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -245,9 +244,9 @@ keyAction1__7SnakeAiFv:
 /* 8015B54C 001584AC  38 21 00 20 */	addi r1, r1, 0x20
 /* 8015B550 001584B0  7C 08 03 A6 */	mtlr r0
 /* 8015B554 001584B4  4E 80 00 20 */	blr 
+.endfn keyAction1__7SnakeAiFv
 
-.global keyLoopEnd__7SnakeAiFv
-keyLoopEnd__7SnakeAiFv:
+.fn keyLoopEnd__7SnakeAiFv, global
 /* 8015B558 001584B8  7C 08 02 A6 */	mflr r0
 /* 8015B55C 001584BC  90 01 00 04 */	stw r0, 4(r1)
 /* 8015B560 001584C0  94 21 FF C8 */	stwu r1, -0x38(r1)
@@ -292,16 +291,16 @@ keyLoopEnd__7SnakeAiFv:
 /* 8015B5F8 00158558  38 21 00 38 */	addi r1, r1, 0x38
 /* 8015B5FC 0015855C  7C 08 03 A6 */	mtlr r0
 /* 8015B600 00158560  4E 80 00 20 */	blr 
+.endfn keyLoopEnd__7SnakeAiFv
 
-.global keyFinished__7SnakeAiFv
-keyFinished__7SnakeAiFv:
+.fn keyFinished__7SnakeAiFv, global
 /* 8015B604 00158564  80 63 00 4C */	lwz r3, 0x4c(r3)
 /* 8015B608 00158568  38 00 00 01 */	li r0, 1
 /* 8015B60C 0015856C  98 03 02 BD */	stb r0, 0x2bd(r3)
 /* 8015B610 00158570  4E 80 00 20 */	blr 
+.endfn keyFinished__7SnakeAiFv
 
-.global playSound__7SnakeAiFi
-playSound__7SnakeAiFi:
+.fn playSound__7SnakeAiFi, global
 /* 8015B614 00158574  7C 08 02 A6 */	mflr r0
 /* 8015B618 00158578  90 01 00 04 */	stw r0, 4(r1)
 /* 8015B61C 0015857C  94 21 FF F8 */	stwu r1, -8(r1)
@@ -320,9 +319,9 @@ playSound__7SnakeAiFi:
 /* 8015B64C 001585AC  38 21 00 08 */	addi r1, r1, 8
 /* 8015B650 001585B0  7C 08 03 A6 */	mtlr r0
 /* 8015B654 001585B4  4E 80 00 20 */	blr 
+.endfn playSound__7SnakeAiFi
 
-.global traceTargetPosition__7SnakeAiFv
-traceTargetPosition__7SnakeAiFv:
+.fn traceTargetPosition__7SnakeAiFv, global
 /* 8015B658 001585B8  7C 08 02 A6 */	mflr r0
 /* 8015B65C 001585BC  90 01 00 04 */	stw r0, 4(r1)
 /* 8015B660 001585C0  38 00 00 00 */	li r0, 0
@@ -393,9 +392,9 @@ traceTargetPosition__7SnakeAiFv:
 /* 8015B750 001586B0  38 21 00 60 */	addi r1, r1, 0x60
 /* 8015B754 001586B4  7C 08 03 A6 */	mtlr r0
 /* 8015B758 001586B8  4E 80 00 20 */	blr 
+.endfn traceTargetPosition__7SnakeAiFv
 
-.global setAttackPosition__7SnakeAiFv
-setAttackPosition__7SnakeAiFv:
+.fn setAttackPosition__7SnakeAiFv, global
 /* 8015B75C 001586BC  7C 08 02 A6 */	mflr r0
 /* 8015B760 001586C0  90 01 00 04 */	stw r0, 4(r1)
 /* 8015B764 001586C4  94 21 FB A0 */	stwu r1, -0x460(r1)
@@ -944,9 +943,9 @@ setAttackPosition__7SnakeAiFv:
 /* 8015BFD8 00158F38  38 21 04 60 */	addi r1, r1, 0x460
 /* 8015BFDC 00158F3C  7C 08 03 A6 */	mtlr r0
 /* 8015BFE0 00158F40  4E 80 00 20 */	blr 
+.endfn setAttackPosition__7SnakeAiFv
 
-.global checkAttackTarget__7SnakeAiFv
-checkAttackTarget__7SnakeAiFv:
+.fn checkAttackTarget__7SnakeAiFv, global
 /* 8015BFE4 00158F44  7C 08 02 A6 */	mflr r0
 /* 8015BFE8 00158F48  90 01 00 04 */	stw r0, 4(r1)
 /* 8015BFEC 00158F4C  94 21 FF C8 */	stwu r1, -0x38(r1)
@@ -1028,9 +1027,9 @@ checkAttackTarget__7SnakeAiFv:
 /* 8015C108 00159068  38 21 00 38 */	addi r1, r1, 0x38
 /* 8015C10C 0015906C  7C 08 03 A6 */	mtlr r0
 /* 8015C110 00159070  4E 80 00 20 */	blr 
+.endfn checkAttackTarget__7SnakeAiFv
 
-.global naviNudge__7SnakeAiFv
-naviNudge__7SnakeAiFv:
+.fn naviNudge__7SnakeAiFv, global
 /* 8015C114 00159074  7C 08 02 A6 */	mflr r0
 /* 8015C118 00159078  3C A0 80 2B */	lis r5, __vt__11Interaction@ha
 /* 8015C11C 0015907C  90 01 00 04 */	stw r0, 4(r1)
@@ -1059,9 +1058,9 @@ naviNudge__7SnakeAiFv:
 /* 8015C178 001590D8  38 21 00 38 */	addi r1, r1, 0x38
 /* 8015C17C 001590DC  7C 08 03 A6 */	mtlr r0
 /* 8015C180 001590E0  4E 80 00 20 */	blr 
+.endfn naviNudge__7SnakeAiFv
 
-.global pikiStickMouth__7SnakeAiFv
-pikiStickMouth__7SnakeAiFv:
+.fn pikiStickMouth__7SnakeAiFv, global
 /* 8015C184 001590E4  7C 08 02 A6 */	mflr r0
 /* 8015C188 001590E8  90 01 00 04 */	stw r0, 4(r1)
 /* 8015C18C 001590EC  94 21 FF A8 */	stwu r1, -0x58(r1)
@@ -1155,9 +1154,9 @@ pikiStickMouth__7SnakeAiFv:
 /* 8015C2DC 0015923C  38 21 00 58 */	addi r1, r1, 0x58
 /* 8015C2E0 00159240  7C 08 03 A6 */	mtlr r0
 /* 8015C2E4 00159244  4E 80 00 20 */	blr 
+.endfn pikiStickMouth__7SnakeAiFv
 
-.global eatStickToMouthPiki__7SnakeAiFv
-eatStickToMouthPiki__7SnakeAiFv:
+.fn eatStickToMouthPiki__7SnakeAiFv, global
 /* 8015C2E8 00159248  7C 08 02 A6 */	mflr r0
 /* 8015C2EC 0015924C  90 01 00 04 */	stw r0, 4(r1)
 /* 8015C2F0 00159250  38 00 00 00 */	li r0, 0
@@ -1170,9 +1169,9 @@ eatStickToMouthPiki__7SnakeAiFv:
 /* 8015C30C 0015926C  38 21 00 08 */	addi r1, r1, 8
 /* 8015C310 00159270  7C 08 03 A6 */	mtlr r0
 /* 8015C314 00159274  4E 80 00 20 */	blr 
+.endfn eatStickToMouthPiki__7SnakeAiFv
 
-.global nearNaviInAttackArea__7SnakeAiFPP8CreaturePfi
-nearNaviInAttackArea__7SnakeAiFPP8CreaturePfi:
+.fn nearNaviInAttackArea__7SnakeAiFPP8CreaturePfi, global
 /* 8015C318 00159278  7C 08 02 A6 */	mflr r0
 /* 8015C31C 0015927C  90 01 00 04 */	stw r0, 4(r1)
 /* 8015C320 00159280  94 21 FF 90 */	stwu r1, -0x70(r1)
@@ -1349,9 +1348,9 @@ nearNaviInAttackArea__7SnakeAiFPP8CreaturePfi:
 /* 8015C5A4 00159504  38 21 00 70 */	addi r1, r1, 0x70
 /* 8015C5A8 00159508  7C 08 03 A6 */	mtlr r0
 /* 8015C5AC 0015950C  4E 80 00 20 */	blr 
+.endfn nearNaviInAttackArea__7SnakeAiFPP8CreaturePfi
 
-.global nearPikiInAttackArea__7SnakeAiFPP8CreaturePfi
-nearPikiInAttackArea__7SnakeAiFPP8CreaturePfi:
+.fn nearPikiInAttackArea__7SnakeAiFPP8CreaturePfi, global
 /* 8015C5B0 00159510  7C 08 02 A6 */	mflr r0
 /* 8015C5B4 00159514  90 01 00 04 */	stw r0, 4(r1)
 /* 8015C5B8 00159518  94 21 FF 90 */	stwu r1, -0x70(r1)
@@ -1528,9 +1527,9 @@ nearPikiInAttackArea__7SnakeAiFPP8CreaturePfi:
 /* 8015C83C 0015979C  38 21 00 70 */	addi r1, r1, 0x70
 /* 8015C840 001597A0  7C 08 03 A6 */	mtlr r0
 /* 8015C844 001597A4  4E 80 00 20 */	blr 
+.endfn nearPikiInAttackArea__7SnakeAiFPP8CreaturePfi
 
-.global naviInAttackArea__7SnakeAiFi
-naviInAttackArea__7SnakeAiFi:
+.fn naviInAttackArea__7SnakeAiFi, global
 /* 8015C848 001597A8  7C 08 02 A6 */	mflr r0
 /* 8015C84C 001597AC  90 01 00 04 */	stw r0, 4(r1)
 /* 8015C850 001597B0  94 21 FF A8 */	stwu r1, -0x58(r1)
@@ -1695,9 +1694,9 @@ naviInAttackArea__7SnakeAiFi:
 /* 8015CA98 001599F8  38 21 00 58 */	addi r1, r1, 0x58
 /* 8015CA9C 001599FC  7C 08 03 A6 */	mtlr r0
 /* 8015CAA0 00159A00  4E 80 00 20 */	blr 
+.endfn naviInAttackArea__7SnakeAiFi
 
-.global pikiInAttackArea__7SnakeAiFi
-pikiInAttackArea__7SnakeAiFi:
+.fn pikiInAttackArea__7SnakeAiFi, global
 /* 8015CAA4 00159A04  7C 08 02 A6 */	mflr r0
 /* 8015CAA8 00159A08  90 01 00 04 */	stw r0, 4(r1)
 /* 8015CAAC 00159A0C  94 21 FF A8 */	stwu r1, -0x58(r1)
@@ -1862,9 +1861,9 @@ pikiInAttackArea__7SnakeAiFi:
 /* 8015CCF4 00159C54  38 21 00 58 */	addi r1, r1, 0x58
 /* 8015CCF8 00159C58  7C 08 03 A6 */	mtlr r0
 /* 8015CCFC 00159C5C  4E 80 00 20 */	blr 
+.endfn pikiInAttackArea__7SnakeAiFi
 
-.global appearType01__7SnakeAiFv
-appearType01__7SnakeAiFv:
+.fn appearType01__7SnakeAiFv, global
 /* 8015CD00 00159C60  7C 08 02 A6 */	mflr r0
 /* 8015CD04 00159C64  90 01 00 04 */	stw r0, 4(r1)
 /* 8015CD08 00159C68  94 21 FF 28 */	stwu r1, -0xd8(r1)
@@ -2143,9 +2142,9 @@ appearType01__7SnakeAiFv:
 /* 8015D108 0015A068  38 21 00 D8 */	addi r1, r1, 0xd8
 /* 8015D10C 0015A06C  7C 08 03 A6 */	mtlr r0
 /* 8015D110 0015A070  4E 80 00 20 */	blr 
+.endfn appearType01__7SnakeAiFv
 
-.global appearType02__7SnakeAiFv
-appearType02__7SnakeAiFv:
+.fn appearType02__7SnakeAiFv, global
 /* 8015D114 0015A074  7C 08 02 A6 */	mflr r0
 /* 8015D118 0015A078  90 01 00 04 */	stw r0, 4(r1)
 /* 8015D11C 0015A07C  94 21 FE E8 */	stwu r1, -0x118(r1)
@@ -2485,9 +2484,9 @@ appearType02__7SnakeAiFv:
 /* 8015D5E0 0015A540  38 21 01 18 */	addi r1, r1, 0x118
 /* 8015D5E4 0015A544  7C 08 03 A6 */	mtlr r0
 /* 8015D5E8 0015A548  4E 80 00 20 */	blr 
+.endfn appearType02__7SnakeAiFv
 
-.global chaseNaviTransit__7SnakeAiFv
-chaseNaviTransit__7SnakeAiFv:
+.fn chaseNaviTransit__7SnakeAiFv, global
 /* 8015D5EC 0015A54C  7C 08 02 A6 */	mflr r0
 /* 8015D5F0 0015A550  90 01 00 04 */	stw r0, 4(r1)
 /* 8015D5F4 0015A554  94 21 FE D0 */	stwu r1, -0x130(r1)
@@ -2721,9 +2720,9 @@ chaseNaviTransit__7SnakeAiFv:
 /* 8015D958 0015A8B8  38 21 01 30 */	addi r1, r1, 0x130
 /* 8015D95C 0015A8BC  7C 08 03 A6 */	mtlr r0
 /* 8015D960 0015A8C0  4E 80 00 20 */	blr 
+.endfn chaseNaviTransit__7SnakeAiFv
 
-.global chasePikiTransit__7SnakeAiFv
-chasePikiTransit__7SnakeAiFv:
+.fn chasePikiTransit__7SnakeAiFv, global
 /* 8015D964 0015A8C4  7C 08 02 A6 */	mflr r0
 /* 8015D968 0015A8C8  90 01 00 04 */	stw r0, 4(r1)
 /* 8015D96C 0015A8CC  94 21 FE C8 */	stwu r1, -0x138(r1)
@@ -2961,9 +2960,9 @@ chasePikiTransit__7SnakeAiFv:
 /* 8015DCE0 0015AC40  38 21 01 38 */	addi r1, r1, 0x138
 /* 8015DCE4 0015AC44  7C 08 03 A6 */	mtlr r0
 /* 8015DCE8 0015AC48  4E 80 00 20 */	blr 
+.endfn chasePikiTransit__7SnakeAiFv
 
-.global targetLostTransit__7SnakeAiFv
-targetLostTransit__7SnakeAiFv:
+.fn targetLostTransit__7SnakeAiFv, global
 /* 8015DCEC 0015AC4C  7C 08 02 A6 */	mflr r0
 /* 8015DCF0 0015AC50  90 01 00 04 */	stw r0, 4(r1)
 /* 8015DCF4 0015AC54  94 21 FF 60 */	stwu r1, -0xa0(r1)
@@ -3100,9 +3099,9 @@ targetLostTransit__7SnakeAiFv:
 /* 8015DEE8 0015AE48  38 21 00 A0 */	addi r1, r1, 0xa0
 /* 8015DEEC 0015AE4C  7C 08 03 A6 */	mtlr r0
 /* 8015DEF0 0015AE50  4E 80 00 20 */	blr 
+.endfn targetLostTransit__7SnakeAiFv
 
-.global attackTransit__7SnakeAiFi
-attackTransit__7SnakeAiFi:
+.fn attackTransit__7SnakeAiFi, global
 /* 8015DEF4 0015AE54  7C 08 02 A6 */	mflr r0
 /* 8015DEF8 0015AE58  90 01 00 04 */	stw r0, 4(r1)
 /* 8015DEFC 0015AE5C  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -3123,9 +3122,9 @@ attackTransit__7SnakeAiFi:
 /* 8015DF34 0015AE94  38 21 00 18 */	addi r1, r1, 0x18
 /* 8015DF38 0015AE98  7C 08 03 A6 */	mtlr r0
 /* 8015DF3C 0015AE9C  4E 80 00 20 */	blr 
+.endfn attackTransit__7SnakeAiFi
 
-.global collPartMaxTransit__7SnakeAiFv
-collPartMaxTransit__7SnakeAiFv:
+.fn collPartMaxTransit__7SnakeAiFv, global
 /* 8015DF40 0015AEA0  80 83 00 0C */	lwz r4, 0xc(r3)
 /* 8015DF44 0015AEA4  80 03 00 10 */	lwz r0, 0x10(r3)
 /* 8015DF48 0015AEA8  7C 04 00 00 */	cmpw r4, r0
@@ -3135,9 +3134,9 @@ collPartMaxTransit__7SnakeAiFv:
 .L_8015DF58:
 /* 8015DF58 0015AEB8  38 60 00 01 */	li r3, 1
 /* 8015DF5C 0015AEBC  4E 80 00 20 */	blr 
+.endfn collPartMaxTransit__7SnakeAiFv
 
-.global initAttack__7SnakeAiFif
-initAttack__7SnakeAiFif:
+.fn initAttack__7SnakeAiFif, global
 /* 8015DF60 0015AEC0  7C 08 02 A6 */	mflr r0
 /* 8015DF64 0015AEC4  38 A0 00 00 */	li r5, 0
 /* 8015DF68 0015AEC8  90 01 00 04 */	stw r0, 4(r1)
@@ -3245,9 +3244,9 @@ initAttack__7SnakeAiFif:
 /* 8015E0E0 0015B040  38 21 00 60 */	addi r1, r1, 0x60
 /* 8015E0E4 0015B044  7C 08 03 A6 */	mtlr r0
 /* 8015E0E8 0015B048  4E 80 00 20 */	blr 
+.endfn initAttack__7SnakeAiFif
 
-.global initAppear__7SnakeAiFi
-initAppear__7SnakeAiFi:
+.fn initAppear__7SnakeAiFi, global
 /* 8015E0EC 0015B04C  7C 08 02 A6 */	mflr r0
 /* 8015E0F0 0015B050  90 01 00 04 */	stw r0, 4(r1)
 /* 8015E0F4 0015B054  94 21 FD F8 */	stwu r1, -0x208(r1)
@@ -3627,14 +3626,14 @@ initAppear__7SnakeAiFi:
 /* 8015E6A8 0015B608  38 21 02 08 */	addi r1, r1, 0x208
 /* 8015E6AC 0015B60C  7C 08 03 A6 */	mtlr r0
 /* 8015E6B0 0015B610  4E 80 00 20 */	blr 
+.endfn initAppear__7SnakeAiFi
 
-.global "__cl__7Parm<f>Fv"
-"__cl__7Parm<f>Fv":
+.fn "__cl__7Parm<f>Fv", weak
 /* 8015E6B4 0015B614  38 63 00 0C */	addi r3, r3, 0xc
 /* 8015E6B8 0015B618  4E 80 00 20 */	blr 
+.endfn "__cl__7Parm<f>Fv"
 
-.global struggleState__7SnakeAiFv
-struggleState__7SnakeAiFv:
+.fn struggleState__7SnakeAiFv, global
 /* 8015E6BC 0015B61C  7C 08 02 A6 */	mflr r0
 /* 8015E6C0 0015B620  90 01 00 04 */	stw r0, 4(r1)
 /* 8015E6C4 0015B624  94 21 FE F8 */	stwu r1, -0x108(r1)
@@ -3750,9 +3749,9 @@ struggleState__7SnakeAiFv:
 /* 8015E860 0015B7C0  38 21 01 08 */	addi r1, r1, 0x108
 /* 8015E864 0015B7C4  7C 08 03 A6 */	mtlr r0
 /* 8015E868 0015B7C8  4E 80 00 20 */	blr 
+.endfn struggleState__7SnakeAiFv
 
-.global update__7SnakeAiFv
-update__7SnakeAiFv:
+.fn update__7SnakeAiFv, global
 /* 8015E86C 0015B7CC  7C 08 02 A6 */	mflr r0
 /* 8015E870 0015B7D0  90 01 00 04 */	stw r0, 4(r1)
 /* 8015E874 0015B7D4  94 21 FC 58 */	stwu r1, -0x3a8(r1)
@@ -5099,20 +5098,21 @@ update__7SnakeAiFv:
 /* 8015FC9C 0015CBFC  38 21 03 A8 */	addi r1, r1, 0x3a8
 /* 8015FCA0 0015CC00  7C 08 03 A6 */	mtlr r0
 /* 8015FCA4 0015CC04  4E 80 00 20 */	blr 
+.endfn update__7SnakeAiFv
 
 .section .rodata, "a"  # 0x80221FE0 - 0x80222DC0
 .balign 8
-lbl_802226F0:
+.obj lbl_802226F0, local
 	.float 32.0
 	.float 32.0
 	.float 32.0
 	.float 28.0
 	.float 28.0
+.endobj lbl_802226F0
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-.global snakeSE
-snakeSE:
+.obj snakeSE, local
 	.4byte 0x00000028
 	.4byte 0x00000034
 	.4byte 0x00000035
@@ -5122,11 +5122,13 @@ snakeSE:
 	.4byte 0x00000039
 	.4byte 0x00000058
 	.4byte 0x0000003B
+.endobj snakeSE
 .balign 4
-lbl_802CF9D4:
+.obj lbl_802CF9D4, local
 	.asciz "SnakeAi.cpp"
+.endobj lbl_802CF9D4
 .balign 4
-lbl_802CF9E0:
+.obj lbl_802CF9E0, local
 	.4byte .L_8015E8F8
 	.4byte .L_8015E9F0
 	.4byte .L_8015EBE0
@@ -5137,88 +5139,107 @@ lbl_802CF9E0:
 	.4byte .L_8015F9E8
 	.4byte .L_8015FB40
 	.4byte .L_8015FBB8
+.endobj lbl_802CF9E0
 .balign 4
-lbl_802CFA08:
+.obj lbl_802CFA08, local
 	.asciz "Interaction"
+.endobj lbl_802CFA08
 .balign 4
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
+.skip 0x2C # compiler padding
 .balign 4
-lbl_802CFA40:
+.obj lbl_802CFA40, local
 	.asciz "PaniAnimKeyListener"
+.endobj lbl_802CFA40
 .balign 4
-lbl_802CFA54:
+.obj lbl_802CFA54, local
 	.4byte __RTTI__19PaniAnimKeyListener
-	.4byte 0x00000000
-	.4byte 0x00000000
-.global __vt__7SnakeAi
-__vt__7SnakeAi:
+	.4byte 0
+	.4byte 0
+.endobj lbl_802CFA54
+.balign 4
+.obj __vt__7SnakeAi, global
 	.4byte __RTTI__7SnakeAi
 	.4byte 0
 	.4byte animationKeyUpdated__7SnakeAiFR16PaniAnimKeyEvent
-	.4byte 0
-	.4byte 0
-	.4byte 0
+.endobj __vt__7SnakeAi
+.balign 4
+.skip 0xC # compiler padding
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-lbl_803E4CA8:
+.obj lbl_803E4CA8, local
 	.asciz "SnakeAi"
+.endobj lbl_803E4CA8
 .balign 4
-lbl_803E4CB0:
+.obj lbl_803E4CB0, local
 	.float 0.0
-lbl_803E4CB4:
+.endobj lbl_803E4CB0
+.obj lbl_803E4CB4, local
 	.float 0.0
-lbl_803E4CB8:
+.endobj lbl_803E4CB4
+.obj lbl_803E4CB8, local
 	.float 0.0
-lbl_803E4CBC:
+.endobj lbl_803E4CB8
+.obj lbl_803E4CBC, local
 	.float 1.0
-lbl_803E4CC0:
+.endobj lbl_803E4CBC
+.obj lbl_803E4CC0, local
 	.float 0.0
-__RTTI__19PaniAnimKeyListener:
+.endobj lbl_803E4CC0
+.balign 4
+.obj __RTTI__19PaniAnimKeyListener, local
 	.4byte lbl_802CFA40
-	.4byte 0x00000000
-__RTTI__7SnakeAi:
+	.4byte 0
+.endobj __RTTI__19PaniAnimKeyListener
+.balign 4
+.obj __RTTI__7SnakeAi, local
 	.4byte lbl_803E4CA8
 	.4byte lbl_802CFA54
+.endobj __RTTI__7SnakeAi
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803EAC70:
+.obj lbl_803EAC70, local
 	.float 0.0
-lbl_803EAC74:
+.endobj lbl_803EAC70
+.obj lbl_803EAC74, local
 	.float 1.0
-lbl_803EAC78:
+.endobj lbl_803EAC74
+.obj lbl_803EAC78, local
 	.float 32767.0
-lbl_803EAC7C:
-	.4byte 0x40C90FCE
-lbl_803EAC80:
-	.4byte 0x43300000
-	.4byte 0x80000000
-lbl_803EAC88:
+.endobj lbl_803EAC78
+.obj lbl_803EAC7C, local # really close to tau
+	.float 6.2831793
+.endobj lbl_803EAC7C
+.balign 8
+.obj lbl_803EAC80, local
+	.8byte 0x4330000080000000
+.endobj lbl_803EAC80
+.balign 4
+.obj lbl_803EAC88, local
 	.float 3.0
-lbl_803EAC8C:
+.endobj lbl_803EAC88
+.obj lbl_803EAC8C, local
 	.float 5.0
-lbl_803EAC90:
+.endobj lbl_803EAC8C
+.obj lbl_803EAC90, local
 	.float 0.5
-lbl_803EAC94:
+.endobj lbl_803EAC90
+.obj lbl_803EAC94, local
 	.float 12800.0
-lbl_803EAC98:
-	.4byte 0x3F7FFFEF
-lbl_803EAC9C:
-	.4byte 0x3FC90FDB
-lbl_803EACA0:
+.endobj lbl_803EAC94
+.obj lbl_803EAC98, local
+	.float 0.999999
+.endobj lbl_803EAC98
+.obj lbl_803EAC9C, local # pi/2
+	.float 1.5707964
+.endobj lbl_803EAC9C
+.obj lbl_803EACA0, local
 	.float 2.0
-lbl_803EACA4:
+.endobj lbl_803EACA0
+.obj lbl_803EACA4, local
 	.float 30.0
-lbl_803EACA8:
+.endobj lbl_803EACA4
+.obj lbl_803EACA8, local
 	.float 300.0
+.endobj lbl_803EACA8

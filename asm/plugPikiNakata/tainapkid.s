@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global __ct__19TaiNapkidSoundTableFv
-__ct__19TaiNapkidSoundTableFv:
+.fn __ct__19TaiNapkidSoundTableFv, global
 /* 80135C20 00132B80  7C 08 02 A6 */	mflr r0
 /* 80135C24 00132B84  38 80 00 04 */	li r4, 4
 /* 80135C28 00132B88  90 01 00 04 */	stw r0, 4(r1)
@@ -38,9 +37,9 @@ __ct__19TaiNapkidSoundTableFv:
 /* 80135C98 00132BF8  38 21 00 20 */	addi r1, r1, 0x20
 /* 80135C9C 00132BFC  7C 08 03 A6 */	mtlr r0
 /* 80135CA0 00132C00  4E 80 00 20 */	blr 
+.endfn __ct__19TaiNapkidSoundTableFv
 
-.global __ct__19TaiNapkidParametersFv
-__ct__19TaiNapkidParametersFv:
+.fn __ct__19TaiNapkidParametersFv, global
 /* 80135CA4 00132C04  7C 08 02 A6 */	mflr r0
 /* 80135CA8 00132C08  3C 80 80 2D */	lis r4, lbl_802C9F20@ha
 /* 80135CAC 00132C0C  90 01 00 04 */	stw r0, 4(r1)
@@ -386,9 +385,9 @@ __ct__19TaiNapkidParametersFv:
 /* 801361FC 0013315C  38 21 01 10 */	addi r1, r1, 0x110
 /* 80136200 00133160  7C 08 03 A6 */	mtlr r0
 /* 80136204 00133164  4E 80 00 20 */	blr 
+.endfn __ct__19TaiNapkidParametersFv
 
-.global __ct__17TaiNapkidStrategyFP14TekiParameters
-__ct__17TaiNapkidStrategyFP14TekiParameters:
+.fn __ct__17TaiNapkidStrategyFP14TekiParameters, global
 /* 80136208 00133168  7C 08 02 A6 */	mflr r0
 /* 8013620C 0013316C  38 A0 00 01 */	li r5, 1
 /* 80136210 00133170  90 01 00 04 */	stw r0, 4(r1)
@@ -2724,9 +2723,9 @@ __ct__17TaiNapkidStrategyFP14TekiParameters:
 /* 801384C0 00135420  38 21 03 C8 */	addi r1, r1, 0x3c8
 /* 801384C4 00135424  7C 08 03 A6 */	mtlr r0
 /* 801384C8 00135428  4E 80 00 20 */	blr 
+.endfn __ct__17TaiNapkidStrategyFP14TekiParameters
 
-.global start__17TaiNapkidStrategyFR4Teki
-start__17TaiNapkidStrategyFR4Teki:
+.fn start__17TaiNapkidStrategyFR4Teki, global
 /* 801384CC 0013542C  7C 08 02 A6 */	mflr r0
 /* 801384D0 00135430  38 C0 00 00 */	li r6, 0
 /* 801384D4 00135434  90 01 00 04 */	stw r0, 4(r1)
@@ -2760,9 +2759,9 @@ start__17TaiNapkidStrategyFR4Teki:
 /* 80138544 001354A4  38 21 00 28 */	addi r1, r1, 0x28
 /* 80138548 001354A8  7C 08 03 A6 */	mtlr r0
 /* 8013854C 001354AC  4E 80 00 20 */	blr 
+.endfn start__17TaiNapkidStrategyFR4Teki
 
-.global draw__17TaiNapkidStrategyFR4TekiR8Graphics
-draw__17TaiNapkidStrategyFR4TekiR8Graphics:
+.fn draw__17TaiNapkidStrategyFR4TekiR8Graphics, global
 /* 80138550 001354B0  7C 08 02 A6 */	mflr r0
 /* 80138554 001354B4  90 01 00 04 */	stw r0, 4(r1)
 /* 80138558 001354B8  94 21 FF B0 */	stwu r1, -0x50(r1)
@@ -2811,9 +2810,9 @@ draw__17TaiNapkidStrategyFR4TekiR8Graphics:
 /* 80138600 00135560  38 21 00 50 */	addi r1, r1, 0x50
 /* 80138604 00135564  7C 08 03 A6 */	mtlr r0
 /* 80138608 00135568  4E 80 00 20 */	blr 
+.endfn draw__17TaiNapkidStrategyFR4TekiR8Graphics
 
-.global drawDebugInfo__17TaiNapkidStrategyFR4TekiR8Graphics
-drawDebugInfo__17TaiNapkidStrategyFR4TekiR8Graphics:
+.fn drawDebugInfo__17TaiNapkidStrategyFR4TekiR8Graphics, global
 /* 8013860C 0013556C  7C 08 02 A6 */	mflr r0
 /* 80138610 00135570  90 01 00 04 */	stw r0, 4(r1)
 /* 80138614 00135574  94 21 FE F0 */	stwu r1, -0x110(r1)
@@ -2963,9 +2962,9 @@ drawDebugInfo__17TaiNapkidStrategyFR4TekiR8Graphics:
 /* 80138850 001357B0  38 21 01 10 */	addi r1, r1, 0x110
 /* 80138854 001357B4  7C 08 03 A6 */	mtlr r0
 /* 80138858 001357B8  4E 80 00 20 */	blr 
+.endfn drawDebugInfo__17TaiNapkidStrategyFR4TekiR8Graphics
 
-.global satisfy__29TekiNapkidTargetPikiConditionFP8Creature
-satisfy__29TekiNapkidTargetPikiConditionFP8Creature:
+.fn satisfy__29TekiNapkidTargetPikiConditionFP8Creature, global
 /* 8013885C 001357BC  7C 08 02 A6 */	mflr r0
 /* 80138860 001357C0  90 01 00 04 */	stw r0, 4(r1)
 /* 80138864 001357C4  94 21 FF C8 */	stwu r1, -0x38(r1)
@@ -3018,9 +3017,9 @@ satisfy__29TekiNapkidTargetPikiConditionFP8Creature:
 /* 8013890C 0013586C  38 21 00 38 */	addi r1, r1, 0x38
 /* 80138910 00135870  7C 08 03 A6 */	mtlr r0
 /* 80138914 00135874  4E 80 00 20 */	blr 
+.endfn satisfy__29TekiNapkidTargetPikiConditionFP8Creature
 
-.global satisfy__29TekiNapkidShortRangeConditionFP8Creature
-satisfy__29TekiNapkidShortRangeConditionFP8Creature:
+.fn satisfy__29TekiNapkidShortRangeConditionFP8Creature, global
 /* 80138918 00135878  7C 08 02 A6 */	mflr r0
 /* 8013891C 0013587C  90 01 00 04 */	stw r0, 4(r1)
 /* 80138920 00135880  94 21 FF C8 */	stwu r1, -0x38(r1)
@@ -3065,9 +3064,9 @@ satisfy__29TekiNapkidShortRangeConditionFP8Creature:
 /* 801389AC 0013590C  38 21 00 38 */	addi r1, r1, 0x38
 /* 801389B0 00135910  7C 08 03 A6 */	mtlr r0
 /* 801389B4 00135914  4E 80 00 20 */	blr 
+.endfn satisfy__29TekiNapkidShortRangeConditionFP8Creature
 
-.global start__29TaiNapkidWanderingRouteActionFR4Teki
-start__29TaiNapkidWanderingRouteActionFR4Teki:
+.fn start__29TaiNapkidWanderingRouteActionFR4Teki, global
 /* 801389B8 00135918  7C 08 02 A6 */	mflr r0
 /* 801389BC 0013591C  90 01 00 04 */	stw r0, 4(r1)
 /* 801389C0 00135920  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -3089,9 +3088,9 @@ start__29TaiNapkidWanderingRouteActionFR4Teki:
 /* 80138A00 00135960  38 21 00 18 */	addi r1, r1, 0x18
 /* 80138A04 00135964  7C 08 03 A6 */	mtlr r0
 /* 80138A08 00135968  4E 80 00 20 */	blr 
+.endfn start__29TaiNapkidWanderingRouteActionFR4Teki
 
-.global act__29TaiNapkidWanderingRouteActionFR4Teki
-act__29TaiNapkidWanderingRouteActionFR4Teki:
+.fn act__29TaiNapkidWanderingRouteActionFR4Teki, global
 /* 80138A0C 0013596C  7C 08 02 A6 */	mflr r0
 /* 80138A10 00135970  90 01 00 04 */	stw r0, 4(r1)
 /* 80138A14 00135974  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -3139,9 +3138,9 @@ act__29TaiNapkidWanderingRouteActionFR4Teki:
 /* 80138AAC 00135A0C  38 21 00 18 */	addi r1, r1, 0x18
 /* 80138AB0 00135A10  7C 08 03 A6 */	mtlr r0
 /* 80138AB4 00135A14  4E 80 00 20 */	blr 
+.endfn act__29TaiNapkidWanderingRouteActionFR4Teki
 
-.global makeTargetPosition__29TaiNapkidWanderingRouteActionFR4Teki
-makeTargetPosition__29TaiNapkidWanderingRouteActionFR4Teki:
+.fn makeTargetPosition__29TaiNapkidWanderingRouteActionFR4Teki, global
 /* 80138AB8 00135A18  7C 08 02 A6 */	mflr r0
 /* 80138ABC 00135A1C  90 01 00 04 */	stw r0, 4(r1)
 /* 80138AC0 00135A20  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -3189,9 +3188,9 @@ makeTargetPosition__29TaiNapkidWanderingRouteActionFR4Teki:
 /* 80138B54 00135AB4  38 21 00 18 */	addi r1, r1, 0x18
 /* 80138B58 00135AB8  7C 08 03 A6 */	mtlr r0
 /* 80138B5C 00135ABC  4E 80 00 20 */	blr 
+.endfn makeTargetPosition__29TaiNapkidWanderingRouteActionFR4Teki
 
-.global act__25TaiNapkidTargetPikiActionFR4Teki
-act__25TaiNapkidTargetPikiActionFR4Teki:
+.fn act__25TaiNapkidTargetPikiActionFR4Teki, global
 /* 80138B60 00135AC0  7C 08 02 A6 */	mflr r0
 /* 80138B64 00135AC4  3C A0 80 2B */	lis r5, __vt__9Condition@ha
 /* 80138B68 00135AC8  90 01 00 04 */	stw r0, 4(r1)
@@ -3242,9 +3241,9 @@ act__25TaiNapkidTargetPikiActionFR4Teki:
 /* 80138C0C 00135B6C  38 21 00 28 */	addi r1, r1, 0x28
 /* 80138C10 00135B70  7C 08 03 A6 */	mtlr r0
 /* 80138C14 00135B74  4E 80 00 20 */	blr 
+.endfn act__25TaiNapkidTargetPikiActionFR4Teki
 
-.global act__23TaiNapkidPikiLostActionFR4Teki
-act__23TaiNapkidPikiLostActionFR4Teki:
+.fn act__23TaiNapkidPikiLostActionFR4Teki, global
 /* 80138C18 00135B78  7C 08 02 A6 */	mflr r0
 /* 80138C1C 00135B7C  90 01 00 04 */	stw r0, 4(r1)
 /* 80138C20 00135B80  94 21 FF C0 */	stwu r1, -0x40(r1)
@@ -3291,9 +3290,9 @@ act__23TaiNapkidPikiLostActionFR4Teki:
 /* 80138CB4 00135C14  38 21 00 40 */	addi r1, r1, 0x40
 /* 80138CB8 00135C18  7C 08 03 A6 */	mtlr r0
 /* 80138CBC 00135C1C  4E 80 00 20 */	blr 
+.endfn act__23TaiNapkidPikiLostActionFR4Teki
 
-.global act__25TaiNapkidShortRangeActionFR4Teki
-act__25TaiNapkidShortRangeActionFR4Teki:
+.fn act__25TaiNapkidShortRangeActionFR4Teki, global
 /* 80138CC0 00135C20  7C 08 02 A6 */	mflr r0
 /* 80138CC4 00135C24  90 01 00 04 */	stw r0, 4(r1)
 /* 80138CC8 00135C28  94 21 FF C8 */	stwu r1, -0x38(r1)
@@ -3331,9 +3330,9 @@ act__25TaiNapkidShortRangeActionFR4Teki:
 /* 80138D3C 00135C9C  38 21 00 38 */	addi r1, r1, 0x38
 /* 80138D40 00135CA0  7C 08 03 A6 */	mtlr r0
 /* 80138D44 00135CA4  4E 80 00 20 */	blr 
+.endfn act__25TaiNapkidShortRangeActionFR4Teki
 
-.global start__29TaiNapkidStraightFlyingActionFR4Teki
-start__29TaiNapkidStraightFlyingActionFR4Teki:
+.fn start__29TaiNapkidStraightFlyingActionFR4Teki, global
 /* 80138D48 00135CA8  7C 08 02 A6 */	mflr r0
 /* 80138D4C 00135CAC  90 01 00 04 */	stw r0, 4(r1)
 /* 80138D50 00135CB0  94 21 FF C0 */	stwu r1, -0x40(r1)
@@ -3376,9 +3375,9 @@ start__29TaiNapkidStraightFlyingActionFR4Teki:
 /* 80138DE4 00135D44  38 21 00 40 */	addi r1, r1, 0x40
 /* 80138DE8 00135D48  7C 08 03 A6 */	mtlr r0
 /* 80138DEC 00135D4C  4E 80 00 20 */	blr 
+.endfn start__29TaiNapkidStraightFlyingActionFR4Teki
 
-.global act__29TaiNapkidStraightFlyingActionFR4Teki
-act__29TaiNapkidStraightFlyingActionFR4Teki:
+.fn act__29TaiNapkidStraightFlyingActionFR4Teki, global
 /* 80138DF0 00135D50  7C 08 02 A6 */	mflr r0
 /* 80138DF4 00135D54  90 01 00 04 */	stw r0, 4(r1)
 /* 80138DF8 00135D58  94 21 FF B0 */	stwu r1, -0x50(r1)
@@ -3420,9 +3419,9 @@ act__29TaiNapkidStraightFlyingActionFR4Teki:
 /* 80138E7C 00135DDC  38 21 00 50 */	addi r1, r1, 0x50
 /* 80138E80 00135DE0  7C 08 03 A6 */	mtlr r0
 /* 80138E84 00135DE4  4E 80 00 20 */	blr 
+.endfn act__29TaiNapkidStraightFlyingActionFR4Teki
 
-.global start__23TaiNapkidCirclingActionFR4Teki
-start__23TaiNapkidCirclingActionFR4Teki:
+.fn start__23TaiNapkidCirclingActionFR4Teki, global
 /* 80138E88 00135DE8  7C 08 02 A6 */	mflr r0
 /* 80138E8C 00135DEC  90 01 00 04 */	stw r0, 4(r1)
 /* 80138E90 00135DF0  94 21 FE F8 */	stwu r1, -0x108(r1)
@@ -3593,18 +3592,18 @@ start__23TaiNapkidCirclingActionFR4Teki:
 /* 80139118 00136078  38 21 01 08 */	addi r1, r1, 0x108
 /* 8013911C 0013607C  7C 08 03 A6 */	mtlr r0
 /* 80139120 00136080  4E 80 00 20 */	blr 
+.endfn start__23TaiNapkidCirclingActionFR4Teki
 
-.global finish__23TaiNapkidCirclingActionFR4Teki
-finish__23TaiNapkidCirclingActionFR4Teki:
+.fn finish__23TaiNapkidCirclingActionFR4Teki, global
 /* 80139124 00136084  80 04 00 C8 */	lwz r0, 0xc8(r4)
 /* 80139128 00136088  54 00 05 EA */	rlwinm r0, r0, 0, 0x17, 0x15
 /* 8013912C 0013608C  90 04 00 C8 */	stw r0, 0xc8(r4)
 /* 80139130 00136090  C0 02 A4 68 */	lfs f0, lbl_803EA668@sda21(r2)
 /* 80139134 00136094  D0 04 03 A4 */	stfs f0, 0x3a4(r4)
 /* 80139138 00136098  4E 80 00 20 */	blr 
+.endfn finish__23TaiNapkidCirclingActionFR4Teki
 
-.global act__23TaiNapkidCirclingActionFR4Teki
-act__23TaiNapkidCirclingActionFR4Teki:
+.fn act__23TaiNapkidCirclingActionFR4Teki, global
 /* 8013913C 0013609C  7C 08 02 A6 */	mflr r0
 /* 80139140 001360A0  90 01 00 04 */	stw r0, 4(r1)
 /* 80139144 001360A4  94 21 FF 98 */	stwu r1, -0x68(r1)
@@ -3680,9 +3679,9 @@ act__23TaiNapkidCirclingActionFR4Teki:
 /* 80139254 001361B4  38 21 00 68 */	addi r1, r1, 0x68
 /* 80139258 001361B8  7C 08 03 A6 */	mtlr r0
 /* 8013925C 001361BC  4E 80 00 20 */	blr 
+.endfn act__23TaiNapkidCirclingActionFR4Teki
 
-.global act__21TaiNapkidFlyingActionFR4Teki
-act__21TaiNapkidFlyingActionFR4Teki:
+.fn act__21TaiNapkidFlyingActionFR4Teki, global
 /* 80139260 001361C0  7C 08 02 A6 */	mflr r0
 /* 80139264 001361C4  90 01 00 04 */	stw r0, 4(r1)
 /* 80139268 001361C8  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -3707,9 +3706,9 @@ act__21TaiNapkidFlyingActionFR4Teki:
 /* 801392B4 00136214  38 21 00 20 */	addi r1, r1, 0x20
 /* 801392B8 00136218  7C 08 03 A6 */	mtlr r0
 /* 801392BC 0013621C  4E 80 00 20 */	blr 
+.endfn act__21TaiNapkidFlyingActionFR4Teki
 
-.global act__24TaiNapkidAscendingActionFR4Teki
-act__24TaiNapkidAscendingActionFR4Teki:
+.fn act__24TaiNapkidAscendingActionFR4Teki, global
 /* 801392C0 00136220  80 AD 31 50 */	lwz r5, system__7NSystem@sda21(r13)
 /* 801392C4 00136224  C0 23 00 08 */	lfs f1, 8(r3)
 /* 801392C8 00136228  38 60 00 00 */	li r3, 0
@@ -3719,9 +3718,9 @@ act__24TaiNapkidAscendingActionFR4Teki:
 /* 801392D8 00136238  EC 02 00 2A */	fadds f0, f2, f0
 /* 801392DC 0013623C  D0 04 00 98 */	stfs f0, 0x98(r4)
 /* 801392E0 00136240  4E 80 00 20 */	blr 
+.endfn act__24TaiNapkidAscendingActionFR4Teki
 
-.global act__27TaiNapkidApproachPikiActionFR4Teki
-act__27TaiNapkidApproachPikiActionFR4Teki:
+.fn act__27TaiNapkidApproachPikiActionFR4Teki, global
 /* 801392E4 00136244  7C 08 02 A6 */	mflr r0
 /* 801392E8 00136248  90 01 00 04 */	stw r0, 4(r1)
 /* 801392EC 0013624C  94 21 FF F8 */	stwu r1, -8(r1)
@@ -3752,9 +3751,9 @@ act__27TaiNapkidApproachPikiActionFR4Teki:
 /* 80139344 001362A4  38 21 00 08 */	addi r1, r1, 8
 /* 80139348 001362A8  7C 08 03 A6 */	mtlr r0
 /* 8013934C 001362AC  4E 80 00 20 */	blr 
+.endfn act__27TaiNapkidApproachPikiActionFR4Teki
 
-.global act__23TaiNapkidCatchingActionFR4Teki
-act__23TaiNapkidCatchingActionFR4Teki:
+.fn act__23TaiNapkidCatchingActionFR4Teki, global
 /* 80139350 001362B0  7C 08 02 A6 */	mflr r0
 /* 80139354 001362B4  90 01 00 04 */	stw r0, 4(r1)
 /* 80139358 001362B8  94 21 FE 40 */	stwu r1, -0x1c0(r1)
@@ -3985,9 +3984,9 @@ act__23TaiNapkidCatchingActionFR4Teki:
 /* 801396A8 00136608  38 21 01 C0 */	addi r1, r1, 0x1c0
 /* 801396AC 0013660C  7C 08 03 A6 */	mtlr r0
 /* 801396B0 00136610  4E 80 00 20 */	blr 
+.endfn act__23TaiNapkidCatchingActionFR4Teki
 
-.global start__30TaiNapkidCatchDescendingActionFR4Teki
-start__30TaiNapkidCatchDescendingActionFR4Teki:
+.fn start__30TaiNapkidCatchDescendingActionFR4Teki, global
 /* 801396B4 00136614  7C 08 02 A6 */	mflr r0
 /* 801396B8 00136618  38 AD EF 88 */	addi r5, r13, lbl_803E3CA8@sda21
 /* 801396BC 0013661C  90 01 00 04 */	stw r0, 4(r1)
@@ -4083,9 +4082,9 @@ start__30TaiNapkidCatchDescendingActionFR4Teki:
 /* 80139824 00136784  38 21 00 70 */	addi r1, r1, 0x70
 /* 80139828 00136788  7C 08 03 A6 */	mtlr r0
 /* 8013982C 0013678C  4E 80 00 20 */	blr 
+.endfn start__30TaiNapkidCatchDescendingActionFR4Teki
 
-.global act__27TaiNapkidCatchTracingActionFR4Teki
-act__27TaiNapkidCatchTracingActionFR4Teki:
+.fn act__27TaiNapkidCatchTracingActionFR4Teki, global
 /* 80139830 00136790  7C 08 02 A6 */	mflr r0
 /* 80139834 00136794  90 01 00 04 */	stw r0, 4(r1)
 /* 80139838 00136798  94 21 FF 20 */	stwu r1, -0xe0(r1)
@@ -4270,9 +4269,9 @@ act__27TaiNapkidCatchTracingActionFR4Teki:
 /* 80139AF0 00136A50  38 21 00 E0 */	addi r1, r1, 0xe0
 /* 80139AF4 00136A54  7C 08 03 A6 */	mtlr r0
 /* 80139AF8 00136A58  4E 80 00 20 */	blr 
+.endfn act__27TaiNapkidCatchTracingActionFR4Teki
 
-.global start__26TaiNapkidCatchFlyingActionFR4Teki
-start__26TaiNapkidCatchFlyingActionFR4Teki:
+.fn start__26TaiNapkidCatchFlyingActionFR4Teki, global
 /* 80139AFC 00136A5C  7C 08 02 A6 */	mflr r0
 /* 80139B00 00136A60  90 01 00 04 */	stw r0, 4(r1)
 /* 80139B04 00136A64  94 21 FF C0 */	stwu r1, -0x40(r1)
@@ -4330,9 +4329,9 @@ start__26TaiNapkidCatchFlyingActionFR4Teki:
 /* 80139BD4 00136B34  38 21 00 40 */	addi r1, r1, 0x40
 /* 80139BD8 00136B38  7C 08 03 A6 */	mtlr r0
 /* 80139BDC 00136B3C  4E 80 00 20 */	blr 
+.endfn start__26TaiNapkidCatchFlyingActionFR4Teki
 
-.global start__29TaiNapkidCatchAscendingActionFR4Teki
-start__29TaiNapkidCatchAscendingActionFR4Teki:
+.fn start__29TaiNapkidCatchAscendingActionFR4Teki, global
 /* 80139BE0 00136B40  7C 08 02 A6 */	mflr r0
 /* 80139BE4 00136B44  90 01 00 04 */	stw r0, 4(r1)
 /* 80139BE8 00136B48  94 21 FF C0 */	stwu r1, -0x40(r1)
@@ -4390,9 +4389,9 @@ start__29TaiNapkidCatchAscendingActionFR4Teki:
 /* 80139CB8 00136C18  38 21 00 40 */	addi r1, r1, 0x40
 /* 80139CBC 00136C1C  7C 08 03 A6 */	mtlr r0
 /* 80139CC0 00136C20  4E 80 00 20 */	blr 
+.endfn start__29TaiNapkidCatchAscendingActionFR4Teki
 
-.global start__33TaiNapkidTakingOffAscendingActionFR4Teki
-start__33TaiNapkidTakingOffAscendingActionFR4Teki:
+.fn start__33TaiNapkidTakingOffAscendingActionFR4Teki, global
 /* 80139CC4 00136C24  7C 08 02 A6 */	mflr r0
 /* 80139CC8 00136C28  90 01 00 04 */	stw r0, 4(r1)
 /* 80139CCC 00136C2C  94 21 FF 68 */	stwu r1, -0x98(r1)
@@ -4495,9 +4494,9 @@ start__33TaiNapkidTakingOffAscendingActionFR4Teki:
 /* 80139E50 00136DB0  38 21 00 98 */	addi r1, r1, 0x98
 /* 80139E54 00136DB4  7C 08 03 A6 */	mtlr r0
 /* 80139E58 00136DB8  4E 80 00 20 */	blr 
+.endfn start__33TaiNapkidTakingOffAscendingActionFR4Teki
 
-.global start__30TaiNapkidRisingAscendingActionFR4Teki
-start__30TaiNapkidRisingAscendingActionFR4Teki:
+.fn start__30TaiNapkidRisingAscendingActionFR4Teki, global
 /* 80139E5C 00136DBC  7C 08 02 A6 */	mflr r0
 /* 80139E60 00136DC0  90 01 00 04 */	stw r0, 4(r1)
 /* 80139E64 00136DC4  94 21 FF A8 */	stwu r1, -0x58(r1)
@@ -4573,9 +4572,9 @@ start__30TaiNapkidRisingAscendingActionFR4Teki:
 /* 80139F7C 00136EDC  38 21 00 58 */	addi r1, r1, 0x58
 /* 80139F80 00136EE0  7C 08 03 A6 */	mtlr r0
 /* 80139F84 00136EE4  4E 80 00 20 */	blr 
+.endfn start__30TaiNapkidRisingAscendingActionFR4Teki
 
-.global act__27TaiNapkidThrowingPikiActionFR4Teki
-act__27TaiNapkidThrowingPikiActionFR4Teki:
+.fn act__27TaiNapkidThrowingPikiActionFR4Teki, global
 /* 80139F88 00136EE8  7C 08 02 A6 */	mflr r0
 /* 80139F8C 00136EEC  90 01 00 04 */	stw r0, 4(r1)
 /* 80139F90 00136EF0  94 21 FF 58 */	stwu r1, -0xa8(r1)
@@ -4703,9 +4702,9 @@ act__27TaiNapkidThrowingPikiActionFR4Teki:
 /* 8013A150 001370B0  38 21 00 A8 */	addi r1, r1, 0xa8
 /* 8013A154 001370B4  7C 08 03 A6 */	mtlr r0
 /* 8013A158 001370B8  4E 80 00 20 */	blr 
+.endfn act__27TaiNapkidThrowingPikiActionFR4Teki
 
-.global act__20TaiNapkidFlickActionFR4Teki
-act__20TaiNapkidFlickActionFR4Teki:
+.fn act__20TaiNapkidFlickActionFR4Teki, global
 /* 8013A15C 001370BC  7C 08 02 A6 */	mflr r0
 /* 8013A160 001370C0  90 01 00 04 */	stw r0, 4(r1)
 /* 8013A164 001370C4  94 21 FF 88 */	stwu r1, -0x78(r1)
@@ -4757,9 +4756,9 @@ act__20TaiNapkidFlickActionFR4Teki:
 /* 8013A214 00137174  38 21 00 78 */	addi r1, r1, 0x78
 /* 8013A218 00137178  7C 08 03 A6 */	mtlr r0
 /* 8013A21C 0013717C  4E 80 00 20 */	blr 
+.endfn act__20TaiNapkidFlickActionFR4Teki
 
-.global start__22TaiNapkidFallingActionFR4Teki
-start__22TaiNapkidFallingActionFR4Teki:
+.fn start__22TaiNapkidFallingActionFR4Teki, global
 /* 8013A220 00137180  7C 08 02 A6 */	mflr r0
 /* 8013A224 00137184  90 01 00 04 */	stw r0, 4(r1)
 /* 8013A228 00137188  94 21 FF 98 */	stwu r1, -0x68(r1)
@@ -4875,22 +4874,22 @@ start__22TaiNapkidFallingActionFR4Teki:
 /* 8013A3BC 0013731C  38 21 00 68 */	addi r1, r1, 0x68
 /* 8013A3C0 00137320  7C 08 03 A6 */	mtlr r0
 /* 8013A3C4 00137324  4E 80 00 20 */	blr 
+.endfn start__22TaiNapkidFallingActionFR4Teki
 
-.global act__22TaiNapkidFallingActionFR4Teki
-act__22TaiNapkidFallingActionFR4Teki:
+.fn act__22TaiNapkidFallingActionFR4Teki, global
 /* 8013A3C8 00137328  38 60 00 00 */	li r3, 0
 /* 8013A3CC 0013732C  4E 80 00 20 */	blr 
+.endfn act__22TaiNapkidFallingActionFR4Teki
 
-.global start__27TaiNapkidShockFallingActionFR4Teki
-start__27TaiNapkidShockFallingActionFR4Teki:
+.fn start__27TaiNapkidShockFallingActionFR4Teki, global
 /* 8013A3D0 00137330  C0 24 00 98 */	lfs f1, 0x98(r4)
 /* 8013A3D4 00137334  C0 02 A4 78 */	lfs f0, lbl_803EA678@sda21(r2)
 /* 8013A3D8 00137338  EC 01 00 2A */	fadds f0, f1, f0
 /* 8013A3DC 0013733C  D0 04 00 98 */	stfs f0, 0x98(r4)
 /* 8013A3E0 00137340  4E 80 00 20 */	blr 
+.endfn start__27TaiNapkidShockFallingActionFR4Teki
 
-.global start__33TaiNapkidFallingWaterEffectActionFR4Teki
-start__33TaiNapkidFallingWaterEffectActionFR4Teki:
+.fn start__33TaiNapkidFallingWaterEffectActionFR4Teki, global
 /* 8013A3E4 00137344  7C 08 02 A6 */	mflr r0
 /* 8013A3E8 00137348  90 01 00 04 */	stw r0, 4(r1)
 /* 8013A3EC 0013734C  94 21 FF D0 */	stwu r1, -0x30(r1)
@@ -4947,9 +4946,9 @@ start__33TaiNapkidFallingWaterEffectActionFR4Teki:
 /* 8013A4B0 00137410  38 21 00 30 */	addi r1, r1, 0x30
 /* 8013A4B4 00137414  7C 08 03 A6 */	mtlr r0
 /* 8013A4B8 00137418  4E 80 00 20 */	blr 
+.endfn start__33TaiNapkidFallingWaterEffectActionFR4Teki
 
-.global start__33TaiNapkidStartDroppingWaterActionFR4Teki
-start__33TaiNapkidStartDroppingWaterActionFR4Teki:
+.fn start__33TaiNapkidStartDroppingWaterActionFR4Teki, global
 /* 8013A4BC 0013741C  7C 08 02 A6 */	mflr r0
 /* 8013A4C0 00137420  90 01 00 04 */	stw r0, 4(r1)
 /* 8013A4C4 00137424  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -4968,69 +4967,89 @@ start__33TaiNapkidStartDroppingWaterActionFR4Teki:
 /* 8013A4F4 00137454  38 21 00 18 */	addi r1, r1, 0x18
 /* 8013A4F8 00137458  7C 08 03 A6 */	mtlr r0
 /* 8013A4FC 0013745C  4E 80 00 20 */	blr 
+.endfn start__33TaiNapkidStartDroppingWaterActionFR4Teki
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802C9F20:
+.obj lbl_802C9F20, local
 	.asciz "tainapkid.cpp"
+.endobj lbl_802C9F20
 .balign 4
-lbl_802C9F30:
+.obj lbl_802C9F30, local
 	.asciz "tainapkid"
+.endobj lbl_802C9F30
 .balign 4
-lbl_802C9F3C:
+.obj lbl_802C9F3C, local
 	.asciz "STRUGGLE_LOOP_COUNT"
+.endobj lbl_802C9F3C
 .balign 4
-lbl_802C9F50:
+.obj lbl_802C9F50, local
 	.asciz "CARRYING_VELOCITY"
+.endobj lbl_802C9F50
 .balign 4
-lbl_802C9F64:
+.obj lbl_802C9F64, local
 	.asciz "CARRYING_FLIGHT_HEIGHT"
+.endobj lbl_802C9F64
 .balign 4
-lbl_802C9F7C:
+.obj lbl_802C9F7C, local
 	.asciz "TAKING_OFF_FLIGHT_HEIGHT"
+.endobj lbl_802C9F7C
 .balign 4
-lbl_802C9F98:
+.obj lbl_802C9F98, local
 	.asciz "WANDERING_HOVER_PERIOD"
+.endobj lbl_802C9F98
 .balign 4
-lbl_802C9FB0:
+.obj lbl_802C9FB0, local
 	.asciz "WANDERING_HOVER_PROBABILITY"
+.endobj lbl_802C9FB0
 .balign 4
-lbl_802C9FCC:
+.obj lbl_802C9FCC, local
 	.asciz "HOVERING_WANDER_PERIOD"
+.endobj lbl_802C9FCC
 .balign 4
-lbl_802C9FE4:
+.obj lbl_802C9FE4, local
 	.asciz "HOVERING_WANDER_PROBABILITY"
+.endobj lbl_802C9FE4
 .balign 4
-lbl_802CA000:
+.obj lbl_802CA000, local
 	.asciz "HOVERING_WASH_PERIOD"
+.endobj lbl_802CA000
 .balign 4
-lbl_802CA018:
+.obj lbl_802CA018, local
 	.asciz "HOVERING_WASH_PROBABILITY"
+.endobj lbl_802CA018
 .balign 4
-lbl_802CA034:
+.obj lbl_802CA034, local
 	.asciz "WASHING_WANDER_PERIOD"
+.endobj lbl_802CA034
 .balign 4
-lbl_802CA04C:
+.obj lbl_802CA04C, local
 	.asciz "WASHING_WANDER_PROBABILITY"
+.endobj lbl_802CA04C
 .balign 4
-lbl_802CA068:
+.obj lbl_802CA068, local
 	.asciz "THROW_PERIOD"
+.endobj lbl_802CA068
 .balign 4
-lbl_802CA078:
+.obj lbl_802CA078, local
 	.asciz "THROW_VELOCITY"
+.endobj lbl_802CA078
 .balign 4
-lbl_802CA088:
+.obj lbl_802CA088, local
 	.asciz "TaiNapkidStartDroppingWaterAction"
+.endobj lbl_802CA088
 .balign 4
-lbl_802CA0AC:
+.obj lbl_802CA0AC, local
 	.asciz "TaiAction"
+.endobj lbl_802CA0AC
 .balign 4
-lbl_802CA0B8:
+.obj lbl_802CA0B8, local
 	.4byte __RTTI__9TaiAction
-	.4byte 0x00000000
-	.4byte 0x00000000
-.global __vt__33TaiNapkidStartDroppingWaterAction
-__vt__33TaiNapkidStartDroppingWaterAction:
+	.4byte 0
+	.4byte 0
+.endobj lbl_802CA0B8
+.balign 4
+.obj __vt__33TaiNapkidStartDroppingWaterAction, global
 	.4byte __RTTI__33TaiNapkidStartDroppingWaterAction
 	.4byte 0
 	.4byte start__33TaiNapkidStartDroppingWaterActionFR4Teki
@@ -5038,16 +5057,19 @@ __vt__33TaiNapkidStartDroppingWaterAction:
 	.4byte act__9TaiActionFR4Teki
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
+.endobj __vt__33TaiNapkidStartDroppingWaterAction
 .balign 4
-lbl_802CA0E0:
+.obj lbl_802CA0E0, local
 	.asciz "TaiNapkidFallingWaterEffectAction"
+.endobj lbl_802CA0E0
 .balign 4
-lbl_802CA104:
+.obj lbl_802CA104, local
 	.4byte __RTTI__9TaiAction
 	.4byte 0
 	.4byte 0
-.global __vt__33TaiNapkidFallingWaterEffectAction
-__vt__33TaiNapkidFallingWaterEffectAction:
+.endobj lbl_802CA104
+.balign 4
+.obj __vt__33TaiNapkidFallingWaterEffectAction, global
 	.4byte __RTTI__33TaiNapkidFallingWaterEffectAction
 	.4byte 0
 	.4byte start__33TaiNapkidFallingWaterEffectActionFR4Teki
@@ -5055,16 +5077,19 @@ __vt__33TaiNapkidFallingWaterEffectAction:
 	.4byte act__9TaiActionFR4Teki
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
+.endobj __vt__33TaiNapkidFallingWaterEffectAction
 .balign 4
-lbl_802CA12C:
+.obj lbl_802CA12C, local
 	.asciz "TaiNapkidShockFallingAction"
+.endobj lbl_802CA12C
 .balign 4
-lbl_802CA148:
+.obj lbl_802CA148, local
 	.4byte __RTTI__9TaiAction
 	.4byte 0
 	.4byte 0
-.global __vt__27TaiNapkidShockFallingAction
-__vt__27TaiNapkidShockFallingAction:
+.endobj lbl_802CA148
+.balign 4
+.obj __vt__27TaiNapkidShockFallingAction, global
 	.4byte __RTTI__27TaiNapkidShockFallingAction
 	.4byte 0
 	.4byte start__27TaiNapkidShockFallingActionFR4Teki
@@ -5072,16 +5097,19 @@ __vt__27TaiNapkidShockFallingAction:
 	.4byte act__9TaiActionFR4Teki
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
+.endobj __vt__27TaiNapkidShockFallingAction
 .balign 4
-lbl_802CA170:
+.obj lbl_802CA170, local
 	.asciz "TaiNapkidFallingAction"
+.endobj lbl_802CA170
 .balign 4
-lbl_802CA188:
+.obj lbl_802CA188, local
 	.4byte __RTTI__9TaiAction
 	.4byte 0
 	.4byte 0
-.global __vt__22TaiNapkidFallingAction
-__vt__22TaiNapkidFallingAction:
+.endobj lbl_802CA188
+.balign 4
+.obj __vt__22TaiNapkidFallingAction, global
 	.4byte __RTTI__22TaiNapkidFallingAction
 	.4byte 0
 	.4byte start__22TaiNapkidFallingActionFR4Teki
@@ -5089,16 +5117,19 @@ __vt__22TaiNapkidFallingAction:
 	.4byte act__22TaiNapkidFallingActionFR4Teki
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
+.endobj __vt__22TaiNapkidFallingAction
 .balign 4
-lbl_802CA1B0:
+.obj lbl_802CA1B0, local
 	.asciz "TaiNapkidFlickAction"
+.endobj lbl_802CA1B0
 .balign 4
-lbl_802CA1C8:
+.obj lbl_802CA1C8, local
 	.4byte __RTTI__9TaiAction
 	.4byte 0
 	.4byte 0
-.global __vt__20TaiNapkidFlickAction
-__vt__20TaiNapkidFlickAction:
+.endobj lbl_802CA1C8
+.balign 4
+.obj __vt__20TaiNapkidFlickAction, global
 	.4byte __RTTI__20TaiNapkidFlickAction
 	.4byte 0
 	.4byte start__9TaiActionFR4Teki
@@ -5106,16 +5137,19 @@ __vt__20TaiNapkidFlickAction:
 	.4byte act__20TaiNapkidFlickActionFR4Teki
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
+.endobj __vt__20TaiNapkidFlickAction
 .balign 4
-lbl_802CA1F0:
+.obj lbl_802CA1F0, local
 	.asciz "TaiNapkidThrowingPikiAction"
+.endobj lbl_802CA1F0
 .balign 4
-lbl_802CA20C:
+.obj lbl_802CA20C, local
 	.4byte __RTTI__9TaiAction
 	.4byte 0
 	.4byte 0
-.global __vt__27TaiNapkidThrowingPikiAction
-__vt__27TaiNapkidThrowingPikiAction:
+.endobj lbl_802CA20C
+.balign 4
+.obj __vt__27TaiNapkidThrowingPikiAction, global
 	.4byte __RTTI__27TaiNapkidThrowingPikiAction
 	.4byte 0
 	.4byte start__9TaiActionFR4Teki
@@ -5123,16 +5157,19 @@ __vt__27TaiNapkidThrowingPikiAction:
 	.4byte act__27TaiNapkidThrowingPikiActionFR4Teki
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
+.endobj __vt__27TaiNapkidThrowingPikiAction
 .balign 4
-lbl_802CA234:
+.obj lbl_802CA234, local
 	.asciz "TaiNapkidRisingAscendingAction"
+.endobj lbl_802CA234
 .balign 4
-lbl_802CA254:
+.obj lbl_802CA254, local
 	.4byte __RTTI__9TaiAction
 	.4byte 0
 	.4byte 0
-.global __vt__30TaiNapkidRisingAscendingAction
-__vt__30TaiNapkidRisingAscendingAction:
+.endobj lbl_802CA254
+.balign 4
+.obj __vt__30TaiNapkidRisingAscendingAction, global
 	.4byte __RTTI__30TaiNapkidRisingAscendingAction
 	.4byte 0
 	.4byte start__30TaiNapkidRisingAscendingActionFR4Teki
@@ -5140,16 +5177,19 @@ __vt__30TaiNapkidRisingAscendingAction:
 	.4byte act__9TaiActionFR4Teki
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
+.endobj __vt__30TaiNapkidRisingAscendingAction
 .balign 4
-lbl_802CA27C:
+.obj lbl_802CA27C, local
 	.asciz "TaiNapkidTakingOffAscendingAction"
+.endobj lbl_802CA27C
 .balign 4
-lbl_802CA2A0:
+.obj lbl_802CA2A0, local
 	.4byte __RTTI__9TaiAction
 	.4byte 0
 	.4byte 0
-.global __vt__33TaiNapkidTakingOffAscendingAction
-__vt__33TaiNapkidTakingOffAscendingAction:
+.endobj lbl_802CA2A0
+.balign 4
+.obj __vt__33TaiNapkidTakingOffAscendingAction, global
 	.4byte __RTTI__33TaiNapkidTakingOffAscendingAction
 	.4byte 0
 	.4byte start__33TaiNapkidTakingOffAscendingActionFR4Teki
@@ -5157,16 +5197,19 @@ __vt__33TaiNapkidTakingOffAscendingAction:
 	.4byte act__9TaiActionFR4Teki
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
+.endobj __vt__33TaiNapkidTakingOffAscendingAction
 .balign 4
-lbl_802CA2C8:
+.obj lbl_802CA2C8, local
 	.asciz "TaiNapkidCatchAscendingAction"
+.endobj lbl_802CA2C8
 .balign 4
-lbl_802CA2E8:
+.obj lbl_802CA2E8, local
 	.4byte __RTTI__9TaiAction
 	.4byte 0
 	.4byte 0
-.global __vt__29TaiNapkidCatchAscendingAction
-__vt__29TaiNapkidCatchAscendingAction:
+.endobj lbl_802CA2E8
+.balign 4
+.obj __vt__29TaiNapkidCatchAscendingAction, global
 	.4byte __RTTI__29TaiNapkidCatchAscendingAction
 	.4byte 0
 	.4byte start__29TaiNapkidCatchAscendingActionFR4Teki
@@ -5174,16 +5217,19 @@ __vt__29TaiNapkidCatchAscendingAction:
 	.4byte act__9TaiActionFR4Teki
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
+.endobj __vt__29TaiNapkidCatchAscendingAction
 .balign 4
-lbl_802CA310:
+.obj lbl_802CA310, local
 	.asciz "TaiNapkidCatchFlyingAction"
+.endobj lbl_802CA310
 .balign 4
-lbl_802CA32C:
+.obj lbl_802CA32C, local
 	.4byte __RTTI__9TaiAction
 	.4byte 0
 	.4byte 0
-.global __vt__26TaiNapkidCatchFlyingAction
-__vt__26TaiNapkidCatchFlyingAction:
+.endobj lbl_802CA32C
+.balign 4
+.obj __vt__26TaiNapkidCatchFlyingAction, global
 	.4byte __RTTI__26TaiNapkidCatchFlyingAction
 	.4byte 0
 	.4byte start__26TaiNapkidCatchFlyingActionFR4Teki
@@ -5191,16 +5237,19 @@ __vt__26TaiNapkidCatchFlyingAction:
 	.4byte act__9TaiActionFR4Teki
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
+.endobj __vt__26TaiNapkidCatchFlyingAction
 .balign 4
-lbl_802CA354:
+.obj lbl_802CA354, local
 	.asciz "TaiNapkidCatchTracingAction"
+.endobj lbl_802CA354
 .balign 4
-lbl_802CA370:
+.obj lbl_802CA370, local
 	.4byte __RTTI__9TaiAction
 	.4byte 0
 	.4byte 0
-.global __vt__27TaiNapkidCatchTracingAction
-__vt__27TaiNapkidCatchTracingAction:
+.endobj lbl_802CA370
+.balign 4
+.obj __vt__27TaiNapkidCatchTracingAction, global
 	.4byte __RTTI__27TaiNapkidCatchTracingAction
 	.4byte 0
 	.4byte start__9TaiActionFR4Teki
@@ -5208,16 +5257,19 @@ __vt__27TaiNapkidCatchTracingAction:
 	.4byte act__27TaiNapkidCatchTracingActionFR4Teki
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
+.endobj __vt__27TaiNapkidCatchTracingAction
 .balign 4
-lbl_802CA398:
+.obj lbl_802CA398, local
 	.asciz "TaiNapkidCatchDescendingAction"
+.endobj lbl_802CA398
 .balign 4
-lbl_802CA3B8:
+.obj lbl_802CA3B8, local
 	.4byte __RTTI__9TaiAction
 	.4byte 0
 	.4byte 0
-.global __vt__30TaiNapkidCatchDescendingAction
-__vt__30TaiNapkidCatchDescendingAction:
+.endobj lbl_802CA3B8
+.balign 4
+.obj __vt__30TaiNapkidCatchDescendingAction, global
 	.4byte __RTTI__30TaiNapkidCatchDescendingAction
 	.4byte 0
 	.4byte start__30TaiNapkidCatchDescendingActionFR4Teki
@@ -5225,67 +5277,67 @@ __vt__30TaiNapkidCatchDescendingAction:
 	.4byte act__9TaiActionFR4Teki
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
+.endobj __vt__30TaiNapkidCatchDescendingAction
 .balign 4
-lbl_802CA3E0:
+.obj lbl_802CA3E0, local
 	.asciz "Interaction"
+.endobj lbl_802CA3E0
 .balign 4
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
+.skip 0x2C # compiler padding
 .balign 4
-lbl_802CA418:
+.obj lbl_802CA418, local
 	.asciz "TekiAndCondition"
+.endobj lbl_802CA418
 .balign 4
-lbl_802CA42C:
+.obj lbl_802CA42C, local
 	.asciz "Condition"
+.endobj lbl_802CA42C
 .balign 4
-lbl_802CA438:
+.obj lbl_802CA438, local
 	.asciz "TekiCondition"
+.endobj lbl_802CA438
 .balign 4
-lbl_802CA448:
+.obj lbl_802CA448, local
 	.4byte __RTTI__9Condition
 	.4byte 0
 	.4byte 0
-lbl_802CA454:
+.endobj lbl_802CA448
+.balign 4
+.obj lbl_802CA454, local
 	.4byte __RTTI__9Condition
 	.4byte 0
 	.4byte __RTTI__13TekiCondition
 	.4byte 0
 	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
+.endobj lbl_802CA454
 .balign 4
-lbl_802CA474:
+.skip 0xC # compiler padding
+.balign 4
+.obj lbl_802CA474, local
 	.asciz "TekiNotCondition"
+.endobj lbl_802CA474
 .balign 4
-lbl_802CA488:
+.obj lbl_802CA488, local
 	.4byte __RTTI__9Condition
 	.4byte 0
 	.4byte __RTTI__13TekiCondition
 	.4byte 0
 	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
+.endobj lbl_802CA488
 .balign 4
-lbl_802CA4A8:
+.skip 0xC # compiler padding
+.balign 4
+.obj lbl_802CA4A8, local
 	.asciz "TaiNapkidCatchingAction"
+.endobj lbl_802CA4A8
 .balign 4
-lbl_802CA4C0:
+.obj lbl_802CA4C0, local
 	.4byte __RTTI__9TaiAction
 	.4byte 0
 	.4byte 0
-.global __vt__23TaiNapkidCatchingAction
-__vt__23TaiNapkidCatchingAction:
+.endobj lbl_802CA4C0
+.balign 4
+.obj __vt__23TaiNapkidCatchingAction, global
 	.4byte __RTTI__23TaiNapkidCatchingAction
 	.4byte 0
 	.4byte start__9TaiActionFR4Teki
@@ -5293,16 +5345,19 @@ __vt__23TaiNapkidCatchingAction:
 	.4byte act__23TaiNapkidCatchingActionFR4Teki
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
+.endobj __vt__23TaiNapkidCatchingAction
 .balign 4
-lbl_802CA4E8:
+.obj lbl_802CA4E8, local
 	.asciz "TaiNapkidApproachPikiAction"
+.endobj lbl_802CA4E8
 .balign 4
-lbl_802CA504:
+.obj lbl_802CA504, local
 	.4byte __RTTI__9TaiAction
 	.4byte 0
 	.4byte 0
-.global __vt__27TaiNapkidApproachPikiAction
-__vt__27TaiNapkidApproachPikiAction:
+.endobj lbl_802CA504
+.balign 4
+.obj __vt__27TaiNapkidApproachPikiAction, global
 	.4byte __RTTI__27TaiNapkidApproachPikiAction
 	.4byte 0
 	.4byte start__9TaiActionFR4Teki
@@ -5310,16 +5365,19 @@ __vt__27TaiNapkidApproachPikiAction:
 	.4byte act__27TaiNapkidApproachPikiActionFR4Teki
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
+.endobj __vt__27TaiNapkidApproachPikiAction
 .balign 4
-lbl_802CA52C:
+.obj lbl_802CA52C, local
 	.asciz "TaiNapkidAscendingAction"
+.endobj lbl_802CA52C
 .balign 4
-lbl_802CA548:
+.obj lbl_802CA548, local
 	.4byte __RTTI__9TaiAction
 	.4byte 0
 	.4byte 0
-.global __vt__24TaiNapkidAscendingAction
-__vt__24TaiNapkidAscendingAction:
+.endobj lbl_802CA548
+.balign 4
+.obj __vt__24TaiNapkidAscendingAction, global
 	.4byte __RTTI__24TaiNapkidAscendingAction
 	.4byte 0
 	.4byte start__9TaiActionFR4Teki
@@ -5327,16 +5385,19 @@ __vt__24TaiNapkidAscendingAction:
 	.4byte act__24TaiNapkidAscendingActionFR4Teki
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
+.endobj __vt__24TaiNapkidAscendingAction
 .balign 4
-lbl_802CA570:
+.obj lbl_802CA570, local
 	.asciz "TaiNapkidFlyingAction"
+.endobj lbl_802CA570
 .balign 4
-lbl_802CA588:
+.obj lbl_802CA588, local
 	.4byte __RTTI__9TaiAction
 	.4byte 0
 	.4byte 0
-.global __vt__21TaiNapkidFlyingAction
-__vt__21TaiNapkidFlyingAction:
+.endobj lbl_802CA588
+.balign 4
+.obj __vt__21TaiNapkidFlyingAction, global
 	.4byte __RTTI__21TaiNapkidFlyingAction
 	.4byte 0
 	.4byte start__9TaiActionFR4Teki
@@ -5344,16 +5405,19 @@ __vt__21TaiNapkidFlyingAction:
 	.4byte act__21TaiNapkidFlyingActionFR4Teki
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
+.endobj __vt__21TaiNapkidFlyingAction
 .balign 4
-lbl_802CA5B0:
+.obj lbl_802CA5B0, local
 	.asciz "TaiNapkidCirclingAction"
+.endobj lbl_802CA5B0
 .balign 4
-lbl_802CA5C8:
+.obj lbl_802CA5C8, local
 	.4byte __RTTI__9TaiAction
 	.4byte 0
 	.4byte 0
-.global __vt__23TaiNapkidCirclingAction
-__vt__23TaiNapkidCirclingAction:
+.endobj lbl_802CA5C8
+.balign 4
+.obj __vt__23TaiNapkidCirclingAction, global
 	.4byte __RTTI__23TaiNapkidCirclingAction
 	.4byte 0
 	.4byte start__23TaiNapkidCirclingActionFR4Teki
@@ -5361,16 +5425,19 @@ __vt__23TaiNapkidCirclingAction:
 	.4byte act__23TaiNapkidCirclingActionFR4Teki
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
+.endobj __vt__23TaiNapkidCirclingAction
 .balign 4
-lbl_802CA5F0:
+.obj lbl_802CA5F0, local
 	.asciz "TaiNapkidStraightFlyingAction"
+.endobj lbl_802CA5F0
 .balign 4
-lbl_802CA610:
+.obj lbl_802CA610, local
 	.4byte __RTTI__9TaiAction
 	.4byte 0
 	.4byte 0
-.global __vt__29TaiNapkidStraightFlyingAction
-__vt__29TaiNapkidStraightFlyingAction:
+.endobj lbl_802CA610
+.balign 4
+.obj __vt__29TaiNapkidStraightFlyingAction, global
 	.4byte __RTTI__29TaiNapkidStraightFlyingAction
 	.4byte 0
 	.4byte start__29TaiNapkidStraightFlyingActionFR4Teki
@@ -5378,16 +5445,19 @@ __vt__29TaiNapkidStraightFlyingAction:
 	.4byte act__29TaiNapkidStraightFlyingActionFR4Teki
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
+.endobj __vt__29TaiNapkidStraightFlyingAction
 .balign 4
-lbl_802CA638:
+.obj lbl_802CA638, local
 	.asciz "TaiNapkidShortRangeAction"
+.endobj lbl_802CA638
 .balign 4
-lbl_802CA654:
+.obj lbl_802CA654, local
 	.4byte __RTTI__9TaiAction
 	.4byte 0
 	.4byte 0
-.global __vt__25TaiNapkidShortRangeAction
-__vt__25TaiNapkidShortRangeAction:
+.endobj lbl_802CA654
+.balign 4
+.obj __vt__25TaiNapkidShortRangeAction, global
 	.4byte __RTTI__25TaiNapkidShortRangeAction
 	.4byte 0
 	.4byte start__9TaiActionFR4Teki
@@ -5395,16 +5465,19 @@ __vt__25TaiNapkidShortRangeAction:
 	.4byte act__25TaiNapkidShortRangeActionFR4Teki
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
+.endobj __vt__25TaiNapkidShortRangeAction
 .balign 4
-lbl_802CA67C:
+.obj lbl_802CA67C, local
 	.asciz "TaiNapkidPikiLostAction"
+.endobj lbl_802CA67C
 .balign 4
-lbl_802CA694:
+.obj lbl_802CA694, local
 	.4byte __RTTI__9TaiAction
 	.4byte 0
 	.4byte 0
-.global __vt__23TaiNapkidPikiLostAction
-__vt__23TaiNapkidPikiLostAction:
+.endobj lbl_802CA694
+.balign 4
+.obj __vt__23TaiNapkidPikiLostAction, global
 	.4byte __RTTI__23TaiNapkidPikiLostAction
 	.4byte 0
 	.4byte start__9TaiActionFR4Teki
@@ -5412,16 +5485,19 @@ __vt__23TaiNapkidPikiLostAction:
 	.4byte act__23TaiNapkidPikiLostActionFR4Teki
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
+.endobj __vt__23TaiNapkidPikiLostAction
 .balign 4
-lbl_802CA6BC:
+.obj lbl_802CA6BC, local
 	.asciz "TaiNapkidTargetPikiAction"
+.endobj lbl_802CA6BC
 .balign 4
-lbl_802CA6D8:
+.obj lbl_802CA6D8, local
 	.4byte __RTTI__9TaiAction
 	.4byte 0
 	.4byte 0
-.global __vt__25TaiNapkidTargetPikiAction
-__vt__25TaiNapkidTargetPikiAction:
+.endobj lbl_802CA6D8
+.balign 4
+.obj __vt__25TaiNapkidTargetPikiAction, global
 	.4byte __RTTI__25TaiNapkidTargetPikiAction
 	.4byte 0
 	.4byte start__9TaiActionFR4Teki
@@ -5429,28 +5505,35 @@ __vt__25TaiNapkidTargetPikiAction:
 	.4byte act__25TaiNapkidTargetPikiActionFR4Teki
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
+.endobj __vt__25TaiNapkidTargetPikiAction
 .balign 4
-lbl_802CA700:
+.obj lbl_802CA700, local
 	.asciz "TaiNapkidWanderingRouteAction"
+.endobj lbl_802CA700
 .balign 4
-lbl_802CA720:
+.obj lbl_802CA720, local
 	.asciz "TaiMotionAction"
+.endobj lbl_802CA720
 .balign 4
-lbl_802CA730:
+.obj lbl_802CA730, local
 	.4byte __RTTI__9TaiAction
 	.4byte 0
 	.4byte 0
+.endobj lbl_802CA730
 .balign 4
-lbl_802CA73C:
+.obj lbl_802CA73C, local
 	.asciz "TaiContinuousMotionAction"
+.endobj lbl_802CA73C
 .balign 4
-lbl_802CA758:
+.obj lbl_802CA758, local
 	.4byte __RTTI__9TaiAction
 	.4byte 0
 	.4byte __RTTI__15TaiMotionAction
 	.4byte 0
 	.4byte 0
-lbl_802CA76C:
+.endobj lbl_802CA758
+.balign 4
+.obj lbl_802CA76C, local
 	.4byte __RTTI__9TaiAction
 	.4byte 0
 	.4byte __RTTI__15TaiMotionAction
@@ -5458,8 +5541,9 @@ lbl_802CA76C:
 	.4byte __RTTI__25TaiContinuousMotionAction
 	.4byte 0
 	.4byte 0
-.global __vt__29TaiNapkidWanderingRouteAction
-__vt__29TaiNapkidWanderingRouteAction:
+.endobj lbl_802CA76C
+.balign 4
+.obj __vt__29TaiNapkidWanderingRouteAction, global
 	.4byte __RTTI__29TaiNapkidWanderingRouteAction
 	.4byte 0
 	.4byte start__29TaiNapkidWanderingRouteActionFR4Teki
@@ -5468,64 +5552,73 @@ __vt__29TaiNapkidWanderingRouteAction:
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
 	.4byte motionStarted__25TaiContinuousMotionActionFR4Teki
+.endobj __vt__29TaiNapkidWanderingRouteAction
 .balign 4
-lbl_802CA7A8:
+.obj lbl_802CA7A8, local
 	.asciz "TekiNapkidShortRangeCondition"
+.endobj lbl_802CA7A8
 .balign 4
-lbl_802CA7C8:
+.obj lbl_802CA7C8, local
 	.4byte __RTTI__9Condition
 	.4byte 0
 	.4byte __RTTI__13TekiCondition
 	.4byte 0
 	.4byte 0
-.global __vt__29TekiNapkidShortRangeCondition
-__vt__29TekiNapkidShortRangeCondition:
+.endobj lbl_802CA7C8
+.balign 4
+.obj __vt__29TekiNapkidShortRangeCondition, global
 	.4byte __RTTI__29TekiNapkidShortRangeCondition
 	.4byte 0
 	.4byte satisfy__29TekiNapkidShortRangeConditionFP8Creature
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
+.endobj __vt__29TekiNapkidShortRangeCondition
 .balign 4
-lbl_802CA800:
+.skip 0x18 # compiler padding
+.balign 4
+.obj lbl_802CA800, local
 	.asciz "TekiNapkidTargetPikiCondition"
+.endobj lbl_802CA800
 .balign 4
-lbl_802CA820:
+.obj lbl_802CA820, local
 	.4byte __RTTI__9Condition
 	.4byte 0
 	.4byte __RTTI__13TekiCondition
 	.4byte 0
 	.4byte 0
-.global __vt__29TekiNapkidTargetPikiCondition
-__vt__29TekiNapkidTargetPikiCondition:
+.endobj lbl_802CA820
+.balign 4
+.obj __vt__29TekiNapkidTargetPikiCondition, global
 	.4byte __RTTI__29TekiNapkidTargetPikiCondition
 	.4byte 0
 	.4byte satisfy__29TekiNapkidTargetPikiConditionFP8Creature
+.endobj __vt__29TekiNapkidTargetPikiCondition
 .balign 4
-lbl_802CA840:
+.obj lbl_802CA840, local
 	.asciz "TaiNapkidStrategy"
+.endobj lbl_802CA840
 .balign 4
-lbl_802CA854:
+.obj lbl_802CA854, local
 	.asciz "TekiStrategy"
+.endobj lbl_802CA854
 .balign 4
-lbl_802CA864:
+.obj lbl_802CA864, local
 	.asciz "TaiStrategy"
+.endobj lbl_802CA864
 .balign 4
-lbl_802CA870:
+.obj lbl_802CA870, local
 	.4byte __RTTI__12TekiStrategy
 	.4byte 0
 	.4byte 0
-lbl_802CA87C:
+.endobj lbl_802CA870
+.balign 4
+.obj lbl_802CA87C, local
 	.4byte __RTTI__12TekiStrategy
 	.4byte 0
 	.4byte __RTTI__11TaiStrategy
 	.4byte 0
 	.4byte 0
-.global __vt__17TaiNapkidStrategy
-__vt__17TaiNapkidStrategy:
+.endobj lbl_802CA87C
+.balign 4
+.obj __vt__17TaiNapkidStrategy, global
 	.4byte __RTTI__17TaiNapkidStrategy
 	.4byte 0
 	.4byte start__17TaiNapkidStrategyFR4Teki
@@ -5536,65 +5629,59 @@ __vt__17TaiNapkidStrategy:
 	.4byte drawDebugInfo__17TaiNapkidStrategyFR4TekiR8Graphics
 	.4byte interact__12TekiStrategyFR4TekiR18TekiInteractionKey
 	.4byte spawnCorpseParts__12TekiStrategyFR4Teki
+.endobj __vt__17TaiNapkidStrategy
 .balign 4
-lbl_802CA8B8:
+.obj lbl_802CA8B8, local
 	.asciz "TaiNotAction"
+.endobj lbl_802CA8B8
 .balign 4
-lbl_802CA8C8:
+.obj lbl_802CA8C8, local
 	.4byte __RTTI__9TaiAction
 	.4byte 0
 	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
+.endobj lbl_802CA8C8
 .balign 4
-lbl_802CA8F0:
+.skip 0x1C # compiler padding
+.balign 4
+.obj lbl_802CA8F0, local
 	.asciz "TaiOnceAction"
+.endobj lbl_802CA8F0
 .balign 4
-lbl_802CA900:
+.obj lbl_802CA900, local
 	.4byte __RTTI__9TaiAction
 	.4byte 0
 	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
+.endobj lbl_802CA900
 .balign 4
-lbl_802CA944:
+.skip 0x38 # compiler padding
+.balign 4
+.obj lbl_802CA944, local
 	.asciz "TaiNapkidParameters"
+.endobj lbl_802CA944
 .balign 4
-lbl_802CA958:
+.obj lbl_802CA958, local
 	.asciz "CoreNode"
+.endobj lbl_802CA958
 .balign 4
-lbl_802CA964:
+.obj lbl_802CA964, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte 0
-lbl_802CA970:
+.endobj lbl_802CA964
+.balign 4
+.obj lbl_802CA970, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte __RTTI__8CoreNode
 	.4byte 0
 	.4byte 0
+.endobj lbl_802CA970
 .balign 4
-lbl_802CA984:
+.obj lbl_802CA984, local
 	.asciz "TekiParameters"
+.endobj lbl_802CA984
 .balign 4
-lbl_802CA994:
+.obj lbl_802CA994, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte __RTTI__8CoreNode
@@ -5602,7 +5689,9 @@ lbl_802CA994:
 	.4byte __RTTI__4Node
 	.4byte 0
 	.4byte 0
-lbl_802CA9B0:
+.endobj lbl_802CA994
+.balign 4
+.obj lbl_802CA9B0, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte __RTTI__8CoreNode
@@ -5612,8 +5701,9 @@ lbl_802CA9B0:
 	.4byte __RTTI__14TekiParameters
 	.4byte 0
 	.4byte 0
-.global __vt__19TaiNapkidParameters
-__vt__19TaiNapkidParameters:
+.endobj lbl_802CA9B0
+.balign 4
+.obj __vt__19TaiNapkidParameters, weak
 	.4byte __RTTI__19TaiNapkidParameters
 	.4byte 0
 	.4byte getAgeNodeType__5ANodeFv
@@ -5626,238 +5716,367 @@ __vt__19TaiNapkidParameters:
 	.4byte concat__4NodeFR3SRT
 	.4byte concat__4NodeFR8Matrix4f
 	.4byte getModelMatrix__4NodeFv
+.endobj __vt__19TaiNapkidParameters
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-lbl_803E3C98:
+.obj lbl_803E3C98, local
 	.4byte 0x00000000
-lbl_803E3C9C:
+.endobj lbl_803E3C98
+.obj lbl_803E3C9C, local
 	.4byte 0x00000000
-lbl_803E3CA0:
+.endobj lbl_803E3C9C
+.obj lbl_803E3CA0, local
 	.4byte 0x00000000
-lbl_803E3CA4:
+.endobj lbl_803E3CA0
+.obj lbl_803E3CA4, local
 	.4byte 0x00000000
-lbl_803E3CA8:
+.endobj lbl_803E3CA4
+.obj lbl_803E3CA8, local
 	.4byte 0x00000000
-lbl_803E3CAC:
+.endobj lbl_803E3CA8
+.obj lbl_803E3CAC, local
 	.4byte 0x00000000
-lbl_803E3CB0:
+.endobj lbl_803E3CAC
+.obj lbl_803E3CB0, local
 	.float 0.0
-lbl_803E3CB4:
+.endobj lbl_803E3CB0
+.obj lbl_803E3CB4, local
 	.float 0.0
-lbl_803E3CB8:
+.endobj lbl_803E3CB4
+.obj lbl_803E3CB8, local
 	.float 0.0
-lbl_803E3CBC:
+.endobj lbl_803E3CB8
+.obj lbl_803E3CBC, local
 	.float 0.0
-__RTTI__9TaiAction:
+.endobj lbl_803E3CBC
+.balign 4
+.obj __RTTI__9TaiAction, local
 	.4byte lbl_802CA0AC
 	.4byte 0
-__RTTI__33TaiNapkidStartDroppingWaterAction:
+.endobj __RTTI__9TaiAction
+.balign 4
+.obj __RTTI__33TaiNapkidStartDroppingWaterAction, local
 	.4byte lbl_802CA088
 	.4byte lbl_802CA0B8
-__RTTI__33TaiNapkidFallingWaterEffectAction:
+.endobj __RTTI__33TaiNapkidStartDroppingWaterAction
+.balign 4
+.obj __RTTI__33TaiNapkidFallingWaterEffectAction, local
 	.4byte lbl_802CA0E0
 	.4byte lbl_802CA104
-__RTTI__27TaiNapkidShockFallingAction:
+.endobj __RTTI__33TaiNapkidFallingWaterEffectAction
+.balign 4
+.obj __RTTI__27TaiNapkidShockFallingAction, local
 	.4byte lbl_802CA12C
 	.4byte lbl_802CA148
-__RTTI__22TaiNapkidFallingAction:
+.endobj __RTTI__27TaiNapkidShockFallingAction
+.balign 4
+.obj __RTTI__22TaiNapkidFallingAction, local
 	.4byte lbl_802CA170
 	.4byte lbl_802CA188
-__RTTI__20TaiNapkidFlickAction:
+.endobj __RTTI__22TaiNapkidFallingAction
+.balign 4
+.obj __RTTI__20TaiNapkidFlickAction, local
 	.4byte lbl_802CA1B0
 	.4byte lbl_802CA1C8
-__RTTI__27TaiNapkidThrowingPikiAction:
+.endobj __RTTI__20TaiNapkidFlickAction
+.balign 4
+.obj __RTTI__27TaiNapkidThrowingPikiAction, local
 	.4byte lbl_802CA1F0
 	.4byte lbl_802CA20C
-__RTTI__30TaiNapkidRisingAscendingAction:
+.endobj __RTTI__27TaiNapkidThrowingPikiAction
+.balign 4
+.obj __RTTI__30TaiNapkidRisingAscendingAction, local
 	.4byte lbl_802CA234
 	.4byte lbl_802CA254
-__RTTI__33TaiNapkidTakingOffAscendingAction:
+.endobj __RTTI__30TaiNapkidRisingAscendingAction
+.balign 4
+.obj __RTTI__33TaiNapkidTakingOffAscendingAction, local
 	.4byte lbl_802CA27C
 	.4byte lbl_802CA2A0
-__RTTI__29TaiNapkidCatchAscendingAction:
+.endobj __RTTI__33TaiNapkidTakingOffAscendingAction
+.balign 4
+.obj __RTTI__29TaiNapkidCatchAscendingAction, local
 	.4byte lbl_802CA2C8
 	.4byte lbl_802CA2E8
-__RTTI__26TaiNapkidCatchFlyingAction:
+.endobj __RTTI__29TaiNapkidCatchAscendingAction
+.balign 4
+.obj __RTTI__26TaiNapkidCatchFlyingAction, local
 	.4byte lbl_802CA310
 	.4byte lbl_802CA32C
-__RTTI__27TaiNapkidCatchTracingAction:
+.endobj __RTTI__26TaiNapkidCatchFlyingAction
+.balign 4
+.obj __RTTI__27TaiNapkidCatchTracingAction, local
 	.4byte lbl_802CA354
 	.4byte lbl_802CA370
-__RTTI__30TaiNapkidCatchDescendingAction:
+.endobj __RTTI__27TaiNapkidCatchTracingAction
+.balign 4
+.obj __RTTI__30TaiNapkidCatchDescendingAction, local
 	.4byte lbl_802CA398
 	.4byte lbl_802CA3B8
-__RTTI__9Condition:
+.endobj __RTTI__30TaiNapkidCatchDescendingAction
+.balign 4
+.obj __RTTI__9Condition, local
 	.4byte lbl_802CA42C
 	.4byte 0
-__RTTI__13TekiCondition:
+.endobj __RTTI__9Condition
+.balign 4
+.obj __RTTI__13TekiCondition, local
 	.4byte lbl_802CA438
 	.4byte lbl_802CA448
-__RTTI__23TaiNapkidCatchingAction:
+.endobj __RTTI__13TekiCondition
+.balign 4
+.obj __RTTI__23TaiNapkidCatchingAction, local
 	.4byte lbl_802CA4A8
 	.4byte lbl_802CA4C0
-__RTTI__27TaiNapkidApproachPikiAction:
+.endobj __RTTI__23TaiNapkidCatchingAction
+.balign 4
+.obj __RTTI__27TaiNapkidApproachPikiAction, local
 	.4byte lbl_802CA4E8
 	.4byte lbl_802CA504
-__RTTI__24TaiNapkidAscendingAction:
+.endobj __RTTI__27TaiNapkidApproachPikiAction
+.balign 4
+.obj __RTTI__24TaiNapkidAscendingAction, local
 	.4byte lbl_802CA52C
 	.4byte lbl_802CA548
-__RTTI__21TaiNapkidFlyingAction:
+.endobj __RTTI__24TaiNapkidAscendingAction
+.balign 4
+.obj __RTTI__21TaiNapkidFlyingAction, local
 	.4byte lbl_802CA570
 	.4byte lbl_802CA588
-__RTTI__23TaiNapkidCirclingAction:
+.endobj __RTTI__21TaiNapkidFlyingAction
+.balign 4
+.obj __RTTI__23TaiNapkidCirclingAction, local
 	.4byte lbl_802CA5B0
 	.4byte lbl_802CA5C8
-__RTTI__29TaiNapkidStraightFlyingAction:
+.endobj __RTTI__23TaiNapkidCirclingAction
+.balign 4
+.obj __RTTI__29TaiNapkidStraightFlyingAction, local
 	.4byte lbl_802CA5F0
 	.4byte lbl_802CA610
-__RTTI__25TaiNapkidShortRangeAction:
+.endobj __RTTI__29TaiNapkidStraightFlyingAction
+.balign 4
+.obj __RTTI__25TaiNapkidShortRangeAction, local
 	.4byte lbl_802CA638
 	.4byte lbl_802CA654
-__RTTI__23TaiNapkidPikiLostAction:
+.endobj __RTTI__25TaiNapkidShortRangeAction
+.balign 4
+.obj __RTTI__23TaiNapkidPikiLostAction, local
 	.4byte lbl_802CA67C
 	.4byte lbl_802CA694
-__RTTI__25TaiNapkidTargetPikiAction:
+.endobj __RTTI__23TaiNapkidPikiLostAction
+.balign 4
+.obj __RTTI__25TaiNapkidTargetPikiAction, local
 	.4byte lbl_802CA6BC
 	.4byte lbl_802CA6D8
-__RTTI__15TaiMotionAction:
+.endobj __RTTI__25TaiNapkidTargetPikiAction
+.balign 4
+.obj __RTTI__15TaiMotionAction, local
 	.4byte lbl_802CA720
 	.4byte lbl_802CA730
-__RTTI__25TaiContinuousMotionAction:
+.endobj __RTTI__15TaiMotionAction
+.balign 4
+.obj __RTTI__25TaiContinuousMotionAction, local
 	.4byte lbl_802CA73C
 	.4byte lbl_802CA758
-__RTTI__29TaiNapkidWanderingRouteAction:
+.endobj __RTTI__25TaiContinuousMotionAction
+.balign 4
+.obj __RTTI__29TaiNapkidWanderingRouteAction, local
 	.4byte lbl_802CA700
 	.4byte lbl_802CA76C
-__RTTI__29TekiNapkidShortRangeCondition:
+.endobj __RTTI__29TaiNapkidWanderingRouteAction
+.balign 4
+.obj __RTTI__29TekiNapkidShortRangeCondition, local
 	.4byte lbl_802CA7A8
 	.4byte lbl_802CA7C8
-__RTTI__29TekiNapkidTargetPikiCondition:
+.endobj __RTTI__29TekiNapkidShortRangeCondition
+.balign 4
+.obj __RTTI__29TekiNapkidTargetPikiCondition, local
 	.4byte lbl_802CA800
 	.4byte lbl_802CA820
-__RTTI__12TekiStrategy:
+.endobj __RTTI__29TekiNapkidTargetPikiCondition
+.balign 4
+.obj __RTTI__12TekiStrategy, local
 	.4byte lbl_802CA854
 	.4byte 0
-__RTTI__11TaiStrategy:
+.endobj __RTTI__12TekiStrategy
+.balign 4
+.obj __RTTI__11TaiStrategy, local
 	.4byte lbl_802CA864
 	.4byte lbl_802CA870
-__RTTI__17TaiNapkidStrategy:
+.endobj __RTTI__11TaiStrategy
+.balign 4
+.obj __RTTI__17TaiNapkidStrategy, local
 	.4byte lbl_802CA840
 	.4byte lbl_802CA87C
+.endobj __RTTI__17TaiNapkidStrategy
 .balign 4
-lbl_803E3DC0:
+.obj lbl_803E3DC0, local
 	.asciz "ANode"
+.endobj lbl_803E3DC0
 .balign 4
-__RTTI__5ANode:
+.obj __RTTI__5ANode, local
 	.4byte lbl_803E3DC0
 	.4byte 0
-__RTTI__8CoreNode:
+.endobj __RTTI__5ANode
+.balign 4
+.obj __RTTI__8CoreNode, local
 	.4byte lbl_802CA958
 	.4byte lbl_802CA964
+.endobj __RTTI__8CoreNode
 .balign 4
-lbl_803E3DD8:
+.obj lbl_803E3DD8, local
 	.asciz "Node"
+.endobj lbl_803E3DD8
 .balign 4
-__RTTI__4Node:
+.obj __RTTI__4Node, local
 	.4byte lbl_803E3DD8
 	.4byte lbl_802CA970
-__RTTI__14TekiParameters:
+.endobj __RTTI__4Node
+.balign 4
+.obj __RTTI__14TekiParameters, local
 	.4byte lbl_802CA984
 	.4byte lbl_802CA994
-__RTTI__19TaiNapkidParameters:
+.endobj __RTTI__14TekiParameters
+.balign 4
+.obj __RTTI__19TaiNapkidParameters, local
 	.4byte lbl_802CA944
 	.4byte lbl_802CA9B0
+.endobj __RTTI__19TaiNapkidParameters
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803EA668:
+.obj lbl_803EA668, local
 	.float 0.0
-lbl_803EA66C:
+.endobj lbl_803EA668
+.obj lbl_803EA66C, local
 	.float 200.0
-lbl_803EA670:
+.endobj lbl_803EA66C
+.obj lbl_803EA670, local
 	.float 60.0
-lbl_803EA674:
+.endobj lbl_803EA670
+.obj lbl_803EA674, local
 	.float 1.0
-lbl_803EA678:
+.endobj lbl_803EA674
+.obj lbl_803EA678, local
 	.float 10.0
-lbl_803EA67C:
+.endobj lbl_803EA678
+.obj lbl_803EA67C, local
 	.float 1000.0
-lbl_803EA680:
+.endobj lbl_803EA67C
+.obj lbl_803EA680, local
 	.float 2000.0
-lbl_803EA684:
+.endobj lbl_803EA680
+.obj lbl_803EA684, local
 	.float 100.0
-lbl_803EA688:
+.endobj lbl_803EA684
+.obj lbl_803EA688, local
 	.float 420.0
-lbl_803EA68C:
+.endobj lbl_803EA688
+.obj lbl_803EA68C, local
 	.float 180.0
-lbl_803EA690:
+.endobj lbl_803EA68C
+.obj lbl_803EA690, local
 	.float 3.0
-lbl_803EA694:
+.endobj lbl_803EA690
+.obj lbl_803EA694, local
 	.float 12.0
-lbl_803EA698:
+.endobj lbl_803EA694
+.obj lbl_803EA698, local
 	.float 15.0
-lbl_803EA69C:
+.endobj lbl_803EA698
+.obj lbl_803EA69C, local
 	.float 20.0
-lbl_803EA6A0:
+.endobj lbl_803EA69C
+.obj lbl_803EA6A0, local
 	.float 500.0
-lbl_803EA6A4:
+.endobj lbl_803EA6A0
+.obj lbl_803EA6A4, local
 	.float 30.0
-lbl_803EA6A8:
+.endobj lbl_803EA6A4
+.obj lbl_803EA6A8, local
 	.float 50.0
-lbl_803EA6AC:
+.endobj lbl_803EA6A8
+.obj lbl_803EA6AC, local
 	.float 2.0
-lbl_803EA6B0:
+.endobj lbl_803EA6AC
+.obj lbl_803EA6B0, local
 	.float 17.0
-lbl_803EA6B4:
+.endobj lbl_803EA6B0
+.obj lbl_803EA6B4, local
 	.float 0.3
-lbl_803EA6B8:
+.endobj lbl_803EA6B4
+.obj lbl_803EA6B8, local
 	.float 0.2
-lbl_803EA6BC:
+.endobj lbl_803EA6B8
+.obj lbl_803EA6BC, local
 	.float 85.0
-lbl_803EA6C0:
+.endobj lbl_803EA6BC
+.obj lbl_803EA6C0, local
 	.float 400.0
-lbl_803EA6C4:
+.endobj lbl_803EA6C0
+.obj lbl_803EA6C4, local
 	.float 16.0
-lbl_803EA6C8:
+.endobj lbl_803EA6C4
+.obj lbl_803EA6C8, local
 	.float 90.0
-lbl_803EA6CC:
+.endobj lbl_803EA6C8
+.obj lbl_803EA6CC, local
 	.float 0.5
-lbl_803EA6D0:
+.endobj lbl_803EA6CC
+.obj lbl_803EA6D0, local
 	.float 0.7
-lbl_803EA6D4:
+.endobj lbl_803EA6D0
+.obj lbl_803EA6D4, local
 	.float 4.0
-lbl_803EA6D8:
+.endobj lbl_803EA6D4
+.obj lbl_803EA6D8, local
 	.float 160.0
-lbl_803EA6DC:
+.endobj lbl_803EA6D8
+.obj lbl_803EA6DC, local
 	.float 5.0
-lbl_803EA6E0:
+.endobj lbl_803EA6DC
+.obj lbl_803EA6E0, local
 	.float 150.0
-lbl_803EA6E4:
+.endobj lbl_803EA6E0
+.obj lbl_803EA6E4, local
 	.float 8.0
-lbl_803EA6E8:
+.endobj lbl_803EA6E4
+.obj lbl_803EA6E8, local
 	.float 130.0
-lbl_803EA6EC:
+.endobj lbl_803EA6E8
+.obj lbl_803EA6EC, local
 	.float 0.25
-lbl_803EA6F0:
+.endobj lbl_803EA6EC
+.obj lbl_803EA6F0, local
 	.float 0.15
-lbl_803EA6F4:
+.endobj lbl_803EA6F0
+.obj lbl_803EA6F4, local
 	.float -240.0
-lbl_803EA6F8:
+.endobj lbl_803EA6F4
+.obj lbl_803EA6F8, local
 	.float -320.0
-lbl_803EA6FC:
+.endobj lbl_803EA6F8
+.obj lbl_803EA6FC, local
 	.float 0.1
-lbl_803EA700:
+.endobj lbl_803EA6FC
+.obj lbl_803EA700, local
 	.float 300.0
-lbl_803EA704:
+.endobj lbl_803EA700
+.obj lbl_803EA704, local
 	.float 270.0
-lbl_803EA708:
+.endobj lbl_803EA704
+.obj lbl_803EA708, local
 	.float -300.0
+.endobj lbl_803EA708
 .balign 8
-lbl_803EA710:
-	.4byte 0x43300000
-	.4byte 0x80000000
-lbl_803EA718:
+.obj lbl_803EA710, local
+	.8byte 0x4330000080000000
+.endobj lbl_803EA710
+.balign 4
+.obj lbl_803EA718, local
 	.float 32767.0
-lbl_803EA71C:
+.endobj lbl_803EA718
+.obj lbl_803EA71C, local
 	.float -20.0
+.endobj lbl_803EA71C

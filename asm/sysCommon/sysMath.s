@@ -7010,7 +7010,7 @@
 	.float 0.0
 .endobj lbl_803DD308
 .obj gs_fTolerance, global
-	.float 1.0E-5
+	.float 0.00001
 .endobj gs_fTolerance
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
@@ -7044,11 +7044,12 @@
 .endobj lbl_803E85C8
 .balign 8
 .obj lbl_803E85D0, local
-	.double 1.0E-6
+	.double 0.000001
 .endobj lbl_803E85D0
-.obj lbl_803E85D8, local #tau
+.balign 4
+.obj lbl_803E85D8, local # tau
 	.float 6.2831855
 .endobj lbl_803E85D8
-.obj lbl_803E85DC, local #pi
+.obj lbl_803E85DC, local # pi
 	.float 3.1415927
 .endobj lbl_803E85DC

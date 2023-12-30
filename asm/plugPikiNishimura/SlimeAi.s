@@ -1,12 +1,11 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global __ct__7SlimeAiFP5Slime
-__ct__7SlimeAiFP5Slime:
+.fn __ct__7SlimeAiFP5Slime, global
 /* 80164B80 00161AE0  90 83 00 20 */	stw r4, 0x20(r3)
 /* 80164B84 00161AE4  4E 80 00 20 */	blr 
+.endfn __ct__7SlimeAiFP5Slime
 
-.global init__7SlimeAiFP5Slime
-init__7SlimeAiFP5Slime:
+.fn init__7SlimeAiFP5Slime, global
 /* 80164B88 00161AE8  7C 08 02 A6 */	mflr r0
 /* 80164B8C 00161AEC  90 01 00 04 */	stw r0, 4(r1)
 /* 80164B90 00161AF0  38 00 00 07 */	li r0, 7
@@ -49,17 +48,17 @@ init__7SlimeAiFP5Slime:
 /* 80164C24 00161B84  38 21 00 40 */	addi r1, r1, 0x40
 /* 80164C28 00161B88  7C 08 03 A6 */	mtlr r0
 /* 80164C2C 00161B8C  4E 80 00 20 */	blr 
+.endfn init__7SlimeAiFP5Slime
 
-.global addDamagePoint__7SlimeAiFf
-addDamagePoint__7SlimeAiFf:
+.fn addDamagePoint__7SlimeAiFf, global
 /* 80164C30 00161B90  80 63 00 20 */	lwz r3, 0x20(r3)
 /* 80164C34 00161B94  C0 03 02 C0 */	lfs f0, 0x2c0(r3)
 /* 80164C38 00161B98  EC 00 08 2A */	fadds f0, f0, f1
 /* 80164C3C 00161B9C  D0 03 02 C0 */	stfs f0, 0x2c0(r3)
 /* 80164C40 00161BA0  4E 80 00 20 */	blr 
+.endfn addDamagePoint__7SlimeAiFf
 
-.global calcBubblePiki__7SlimeAiFv
-calcBubblePiki__7SlimeAiFv:
+.fn calcBubblePiki__7SlimeAiFv, global
 /* 80164C44 00161BA4  7C 08 02 A6 */	mflr r0
 /* 80164C48 00161BA8  90 01 00 04 */	stw r0, 4(r1)
 /* 80164C4C 00161BAC  94 21 FF 70 */	stwu r1, -0x90(r1)
@@ -272,9 +271,9 @@ calcBubblePiki__7SlimeAiFv:
 /* 80164F48 00161EA8  38 21 00 90 */	addi r1, r1, 0x90
 /* 80164F4C 00161EAC  7C 08 03 A6 */	mtlr r0
 /* 80164F50 00161EB0  4E 80 00 20 */	blr 
+.endfn calcBubblePiki__7SlimeAiFv
 
-.global calcStickersRatio__7SlimeAiFv
-calcStickersRatio__7SlimeAiFv:
+.fn calcStickersRatio__7SlimeAiFv, global
 /* 80164F54 00161EB4  94 21 FF B8 */	stwu r1, -0x48(r1)
 /* 80164F58 00161EB8  C0 02 AB 58 */	lfs f0, lbl_803EAD58@sda21(r2)
 /* 80164F5C 00161EBC  D0 03 00 14 */	stfs f0, 0x14(r3)
@@ -325,9 +324,9 @@ calcStickersRatio__7SlimeAiFv:
 /* 8016500C 00161F6C  D0 03 00 1C */	stfs f0, 0x1c(r3)
 /* 80165010 00161F70  38 21 00 48 */	addi r1, r1, 0x48
 /* 80165014 00161F74  4E 80 00 20 */	blr 
+.endfn calcStickersRatio__7SlimeAiFv
 
-.global playExpandingSound__7SlimeAiFv
-playExpandingSound__7SlimeAiFv:
+.fn playExpandingSound__7SlimeAiFv, global
 /* 80165018 00161F78  7C 08 02 A6 */	mflr r0
 /* 8016501C 00161F7C  90 01 00 04 */	stw r0, 4(r1)
 /* 80165020 00161F80  94 21 FF B8 */	stwu r1, -0x48(r1)
@@ -422,9 +421,9 @@ playExpandingSound__7SlimeAiFv:
 /* 80165170 001620D0  38 21 00 48 */	addi r1, r1, 0x48
 /* 80165174 001620D4  7C 08 03 A6 */	mtlr r0
 /* 80165178 001620D8  4E 80 00 20 */	blr 
+.endfn playExpandingSound__7SlimeAiFv
 
-.global calcCollisionCheck__7SlimeAiFv
-calcCollisionCheck__7SlimeAiFv:
+.fn calcCollisionCheck__7SlimeAiFv, global
 /* 8016517C 001620DC  7C 08 02 A6 */	mflr r0
 /* 80165180 001620E0  90 01 00 04 */	stw r0, 4(r1)
 /* 80165184 001620E4  94 21 FE 78 */	stwu r1, -0x188(r1)
@@ -634,9 +633,9 @@ calcCollisionCheck__7SlimeAiFv:
 /* 801654AC 0016240C  38 21 01 88 */	addi r1, r1, 0x188
 /* 801654B0 00162410  7C 08 03 A6 */	mtlr r0
 /* 801654B4 00162414  4E 80 00 20 */	blr 
+.endfn calcCollisionCheck__7SlimeAiFv
 
-.global setLeaderNearerTarget__7SlimeAiFv
-setLeaderNearerTarget__7SlimeAiFv:
+.fn setLeaderNearerTarget__7SlimeAiFv, global
 /* 801654B8 00162418  7C 08 02 A6 */	mflr r0
 /* 801654BC 0016241C  90 01 00 04 */	stw r0, 4(r1)
 /* 801654C0 00162420  94 21 FF C0 */	stwu r1, -0x40(r1)
@@ -696,9 +695,9 @@ setLeaderNearerTarget__7SlimeAiFv:
 /* 80165594 001624F4  38 21 00 40 */	addi r1, r1, 0x40
 /* 80165598 001624F8  7C 08 03 A6 */	mtlr r0
 /* 8016559C 001624FC  4E 80 00 20 */	blr 
+.endfn setLeaderNearerTarget__7SlimeAiFv
 
-.global moveFlagCheck__7SlimeAiFv
-moveFlagCheck__7SlimeAiFv:
+.fn moveFlagCheck__7SlimeAiFv, global
 /* 801655A0 00162500  7C 08 02 A6 */	mflr r0
 /* 801655A4 00162504  90 01 00 04 */	stw r0, 4(r1)
 /* 801655A8 00162508  94 21 FF B8 */	stwu r1, -0x48(r1)
@@ -771,9 +770,9 @@ moveFlagCheck__7SlimeAiFv:
 /* 801656AC 0016260C  38 21 00 48 */	addi r1, r1, 0x48
 /* 801656B0 00162610  7C 08 03 A6 */	mtlr r0
 /* 801656B4 00162614  4E 80 00 20 */	blr 
+.endfn moveFlagCheck__7SlimeAiFv
 
-.global makeFollowerVelocity__7SlimeAiFv
-makeFollowerVelocity__7SlimeAiFv:
+.fn makeFollowerVelocity__7SlimeAiFv, global
 /* 801656B8 00162618  7C 08 02 A6 */	mflr r0
 /* 801656BC 0016261C  90 01 00 04 */	stw r0, 4(r1)
 /* 801656C0 00162620  94 21 FF C8 */	stwu r1, -0x38(r1)
@@ -858,9 +857,9 @@ makeFollowerVelocity__7SlimeAiFv:
 /* 801657F0 00162750  38 21 00 38 */	addi r1, r1, 0x38
 /* 801657F4 00162754  7C 08 03 A6 */	mtlr r0
 /* 801657F8 00162758  4E 80 00 20 */	blr 
+.endfn makeFollowerVelocity__7SlimeAiFv
 
-.global makeLeaderVelocity__7SlimeAiFv
-makeLeaderVelocity__7SlimeAiFv:
+.fn makeLeaderVelocity__7SlimeAiFv, global
 /* 801657FC 0016275C  7C 08 02 A6 */	mflr r0
 /* 80165800 00162760  90 01 00 04 */	stw r0, 4(r1)
 /* 80165804 00162764  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -937,9 +936,9 @@ makeLeaderVelocity__7SlimeAiFv:
 /* 80165914 00162874  38 21 00 20 */	addi r1, r1, 0x20
 /* 80165918 00162878  7C 08 03 A6 */	mtlr r0
 /* 8016591C 0016287C  4E 80 00 20 */	blr 
+.endfn makeLeaderVelocity__7SlimeAiFv
 
-.global setMidPointVelocity__7SlimeAiFv
-setMidPointVelocity__7SlimeAiFv:
+.fn setMidPointVelocity__7SlimeAiFv, global
 /* 80165920 00162880  39 20 00 01 */	li r9, 1
 /* 80165924 00162884  38 E0 00 04 */	li r7, 4
 /* 80165928 00162888  48 00 00 C8 */	b .L_801659F0
@@ -1000,9 +999,9 @@ setMidPointVelocity__7SlimeAiFv:
 /* 801659FC 0016295C  7C 09 00 00 */	cmpw r9, r0
 /* 80165A00 00162960  41 80 FF 2C */	blt .L_8016592C
 /* 80165A04 00162964  4E 80 00 20 */	blr 
+.endfn setMidPointVelocity__7SlimeAiFv
 
-.global calcContractDamage__7SlimeAiFv
-calcContractDamage__7SlimeAiFv:
+.fn calcContractDamage__7SlimeAiFv, global
 /* 80165A08 00162968  7C 08 02 A6 */	mflr r0
 /* 80165A0C 0016296C  90 01 00 04 */	stw r0, 4(r1)
 /* 80165A10 00162970  94 21 FF 88 */	stwu r1, -0x78(r1)
@@ -1071,9 +1070,9 @@ calcContractDamage__7SlimeAiFv:
 /* 80165B00 00162A60  38 21 00 78 */	addi r1, r1, 0x78
 /* 80165B04 00162A64  7C 08 03 A6 */	mtlr r0
 /* 80165B08 00162A68  4E 80 00 20 */	blr 
+.endfn calcContractDamage__7SlimeAiFv
 
-.global contractCoreFlickPiki__7SlimeAiFv
-contractCoreFlickPiki__7SlimeAiFv:
+.fn contractCoreFlickPiki__7SlimeAiFv, global
 /* 80165B0C 00162A6C  7C 08 02 A6 */	mflr r0
 /* 80165B10 00162A70  90 01 00 04 */	stw r0, 4(r1)
 /* 80165B14 00162A74  94 21 FF 50 */	stwu r1, -0xb0(r1)
@@ -1242,9 +1241,9 @@ contractCoreFlickPiki__7SlimeAiFv:
 /* 80165D80 00162CE0  38 21 00 B0 */	addi r1, r1, 0xb0
 /* 80165D84 00162CE4  7C 08 03 A6 */	mtlr r0
 /* 80165D88 00162CE8  4E 80 00 20 */	blr 
+.endfn contractCoreFlickPiki__7SlimeAiFv
 
-.global contractSubFlickPiki__7SlimeAiFv
-contractSubFlickPiki__7SlimeAiFv:
+.fn contractSubFlickPiki__7SlimeAiFv, global
 /* 80165D8C 00162CEC  7C 08 02 A6 */	mflr r0
 /* 80165D90 00162CF0  90 01 00 04 */	stw r0, 4(r1)
 /* 80165D94 00162CF4  94 21 FF 50 */	stwu r1, -0xb0(r1)
@@ -1413,9 +1412,9 @@ contractSubFlickPiki__7SlimeAiFv:
 /* 80166000 00162F60  38 21 00 B0 */	addi r1, r1, 0xb0
 /* 80166004 00162F64  7C 08 03 A6 */	mtlr r0
 /* 80166008 00162F68  4E 80 00 20 */	blr 
+.endfn contractSubFlickPiki__7SlimeAiFv
 
-.global inCaseOfContract__7SlimeAiFv
-inCaseOfContract__7SlimeAiFv:
+.fn inCaseOfContract__7SlimeAiFv, global
 /* 8016600C 00162F6C  7C 08 02 A6 */	mflr r0
 /* 80166010 00162F70  90 01 00 04 */	stw r0, 4(r1)
 /* 80166014 00162F74  94 21 FF A8 */	stwu r1, -0x58(r1)
@@ -1587,9 +1586,9 @@ inCaseOfContract__7SlimeAiFv:
 /* 8016629C 001631FC  38 21 00 58 */	addi r1, r1, 0x58
 /* 801662A0 00163200  7C 08 03 A6 */	mtlr r0
 /* 801662A4 00163204  4E 80 00 20 */	blr 
+.endfn inCaseOfContract__7SlimeAiFv
 
-.global makeTargetRandom__7SlimeAiFv
-makeTargetRandom__7SlimeAiFv:
+.fn makeTargetRandom__7SlimeAiFv, global
 /* 801662A8 00163208  7C 08 02 A6 */	mflr r0
 /* 801662AC 0016320C  90 01 00 04 */	stw r0, 4(r1)
 /* 801662B0 00163210  94 21 FF 70 */	stwu r1, -0x90(r1)
@@ -1683,9 +1682,9 @@ makeTargetRandom__7SlimeAiFv:
 /* 80166408 00163368  38 21 00 90 */	addi r1, r1, 0x90
 /* 8016640C 0016336C  7C 08 03 A6 */	mtlr r0
 /* 80166410 00163370  4E 80 00 20 */	blr 
+.endfn makeTargetRandom__7SlimeAiFv
 
-.global chaseNaviTransit__7SlimeAiFv
-chaseNaviTransit__7SlimeAiFv:
+.fn chaseNaviTransit__7SlimeAiFv, global
 /* 80166414 00163374  7C 08 02 A6 */	mflr r0
 /* 80166418 00163378  90 01 00 04 */	stw r0, 4(r1)
 /* 8016641C 0016337C  94 21 FF 10 */	stwu r1, -0xf0(r1)
@@ -1891,9 +1890,9 @@ chaseNaviTransit__7SlimeAiFv:
 /* 80166710 00163670  38 21 00 F0 */	addi r1, r1, 0xf0
 /* 80166714 00163674  7C 08 03 A6 */	mtlr r0
 /* 80166718 00163678  4E 80 00 20 */	blr 
+.endfn chaseNaviTransit__7SlimeAiFv
 
-.global chasePikiTransit__7SlimeAiFv
-chasePikiTransit__7SlimeAiFv:
+.fn chasePikiTransit__7SlimeAiFv, global
 /* 8016671C 0016367C  7C 08 02 A6 */	mflr r0
 /* 80166720 00163680  90 01 00 04 */	stw r0, 4(r1)
 /* 80166724 00163684  94 21 FF 10 */	stwu r1, -0xf0(r1)
@@ -2100,9 +2099,9 @@ chasePikiTransit__7SlimeAiFv:
 /* 80166A1C 0016397C  38 21 00 F0 */	addi r1, r1, 0xf0
 /* 80166A20 00163980  7C 08 03 A6 */	mtlr r0
 /* 80166A24 00163984  4E 80 00 20 */	blr 
+.endfn chasePikiTransit__7SlimeAiFv
 
-.global targetLostTransit__7SlimeAiFv
-targetLostTransit__7SlimeAiFv:
+.fn targetLostTransit__7SlimeAiFv, global
 /* 80166A28 00163988  7C 08 02 A6 */	mflr r0
 /* 80166A2C 0016398C  90 01 00 04 */	stw r0, 4(r1)
 /* 80166A30 00163990  94 21 FF 90 */	stwu r1, -0x70(r1)
@@ -2210,9 +2209,9 @@ targetLostTransit__7SlimeAiFv:
 /* 80166BB4 00163B14  38 21 00 70 */	addi r1, r1, 0x70
 /* 80166BB8 00163B18  7C 08 03 A6 */	mtlr r0
 /* 80166BBC 00163B1C  4E 80 00 20 */	blr 
+.endfn targetLostTransit__7SlimeAiFv
 
-.global appearTransit__7SlimeAiFv
-appearTransit__7SlimeAiFv:
+.fn appearTransit__7SlimeAiFv, global
 /* 80166BC0 00163B20  7C 08 02 A6 */	mflr r0
 /* 80166BC4 00163B24  90 01 00 04 */	stw r0, 4(r1)
 /* 80166BC8 00163B28  94 21 FF 88 */	stwu r1, -0x78(r1)
@@ -2415,9 +2414,9 @@ appearTransit__7SlimeAiFv:
 /* 80166E98 00163DF8  38 21 00 78 */	addi r1, r1, 0x78
 /* 80166E9C 00163DFC  7C 08 03 A6 */	mtlr r0
 /* 80166EA0 00163E00  4E 80 00 20 */	blr 
+.endfn appearTransit__7SlimeAiFv
 
-.global initDie__7SlimeAiFi
-initDie__7SlimeAiFi:
+.fn initDie__7SlimeAiFi, global
 /* 80166EA4 00163E04  7C 08 02 A6 */	mflr r0
 /* 80166EA8 00163E08  90 01 00 04 */	stw r0, 4(r1)
 /* 80166EAC 00163E0C  38 00 00 00 */	li r0, 0
@@ -2760,9 +2759,9 @@ initDie__7SlimeAiFi:
 /* 801673D4 00164334  38 21 02 08 */	addi r1, r1, 0x208
 /* 801673D8 00164338  7C 08 03 A6 */	mtlr r0
 /* 801673DC 0016433C  4E 80 00 20 */	blr 
+.endfn initDie__7SlimeAiFi
 
-.global appearState__7SlimeAiFv
-appearState__7SlimeAiFv:
+.fn appearState__7SlimeAiFv, global
 /* 801673E0 00164340  7C 08 02 A6 */	mflr r0
 /* 801673E4 00164344  90 01 00 04 */	stw r0, 4(r1)
 /* 801673E8 00164348  94 21 FE B0 */	stwu r1, -0x150(r1)
@@ -3065,9 +3064,9 @@ appearState__7SlimeAiFv:
 /* 80167868 001647C8  38 21 01 50 */	addi r1, r1, 0x150
 /* 8016786C 001647CC  7C 08 03 A6 */	mtlr r0
 /* 80167870 001647D0  4E 80 00 20 */	blr 
+.endfn appearState__7SlimeAiFv
 
-.global update__7SlimeAiFv
-update__7SlimeAiFv:
+.fn update__7SlimeAiFv, global
 /* 80167874 001647D4  7C 08 02 A6 */	mflr r0
 /* 80167878 001647D8  90 01 00 04 */	stw r0, 4(r1)
 /* 8016787C 001647DC  94 21 F4 58 */	stwu r1, -0xba8(r1)
@@ -6064,9 +6063,9 @@ update__7SlimeAiFv:
 /* 8016A5F0 00167550  38 21 0B A8 */	addi r1, r1, 0xba8
 /* 8016A5F4 00167554  7C 08 03 A6 */	mtlr r0
 /* 8016A5F8 00167558  4E 80 00 20 */	blr 
+.endfn update__7SlimeAiFv
 
-.global __pl__FRC8Vector3fRC8Vector3f
-__pl__FRC8Vector3fRC8Vector3f:
+.fn __pl__FRC8Vector3fRC8Vector3f, weak
 /* 8016A5FC 0016755C  C0 24 00 00 */	lfs f1, 0(r4)
 /* 8016A600 00167560  C0 05 00 00 */	lfs f0, 0(r5)
 /* 8016A604 00167564  C0 64 00 04 */	lfs f3, 4(r4)
@@ -6080,10 +6079,11 @@ __pl__FRC8Vector3fRC8Vector3f:
 /* 8016A624 00167584  D0 43 00 04 */	stfs f2, 4(r3)
 /* 8016A628 00167588  D0 03 00 08 */	stfs f0, 8(r3)
 /* 8016A62C 0016758C  4E 80 00 20 */	blr 
+.endfn __pl__FRC8Vector3fRC8Vector3f
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802CFEF0:
+.obj lbl_802CFEF0, local
 	.4byte .L_80167C3C
 	.4byte .L_80168038
 	.4byte .L_801685D8
@@ -6094,109 +6094,159 @@ lbl_802CFEF0:
 	.4byte .L_8016A1CC
 	.4byte .L_8016A32C
 	.4byte .L_8016A37C
+.endobj lbl_802CFEF0
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-lbl_803E4E48:
-	.4byte 0x3F2AACDA
-lbl_803E4E4C:
-	.4byte 0x3EAAA64C
-lbl_803E4E50:
-	.4byte 0x3EAAA64C
-lbl_803E4E54:
-	.4byte 0x3F2AACDA
-lbl_803E4E58:
+.obj lbl_803E4E48, local
+	.float 0.6667
+.endobj lbl_803E4E48
+.obj lbl_803E4E4C, local
+	.float 0.3333
+.endobj lbl_803E4E4C
+.obj lbl_803E4E50, local
+	.float 0.3333
+.endobj lbl_803E4E50
+.obj lbl_803E4E54, local
+	.float 0.6667
+.endobj lbl_803E4E54
+.obj lbl_803E4E58, local
 	.float 0.5
-lbl_803E4E5C:
+.endobj lbl_803E4E58
+.obj lbl_803E4E5C, local
 	.float 0.5
-lbl_803E4E60:
+.endobj lbl_803E4E5C
+.obj lbl_803E4E60, local
 	.float 0.5
-lbl_803E4E64:
+.endobj lbl_803E4E60
+.obj lbl_803E4E64, local
 	.float 0.5
-lbl_803E4E68:
+.endobj lbl_803E4E64
+.obj lbl_803E4E68, local
 	.float 0.0
-lbl_803E4E6C:
+.endobj lbl_803E4E68
+.obj lbl_803E4E6C, local
 	.float 0.0
-lbl_803E4E70:
+.endobj lbl_803E4E6C
+.obj lbl_803E4E70, local
 	.float 0.0
-lbl_803E4E74:
+.endobj lbl_803E4E70
+.obj lbl_803E4E74, local
 	.float 0.0
-lbl_803E4E78:
+.endobj lbl_803E4E74
+.obj lbl_803E4E78, local
 	.float 0.0
-lbl_803E4E7C:
+.endobj lbl_803E4E78
+.obj lbl_803E4E7C, local
 	.float 0.0
-lbl_803E4E80:
+.endobj lbl_803E4E7C
+.obj lbl_803E4E80, local
 	.float 0.5
-lbl_803E4E84:
+.endobj lbl_803E4E80
+.obj lbl_803E4E84, local
 	.float 0.5
-lbl_803E4E88:
+.endobj lbl_803E4E84
+.obj lbl_803E4E88, local
 	.float 0.5
-lbl_803E4E8C:
+.endobj lbl_803E4E88
+.obj lbl_803E4E8C, local
 	.float 0.5
-lbl_803E4E90:
+.endobj lbl_803E4E8C
+.obj lbl_803E4E90, local
 	.float 0.0
+.endobj lbl_803E4E90
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803EAD58:
-	.4byte 0x00000000
-lbl_803EAD5C:
-	.4byte 0x43480000
-lbl_803EAD60:
-	.4byte 0x3F800000
+.obj lbl_803EAD58, local
+	.float 0.0
+.endobj lbl_803EAD58
+.obj lbl_803EAD5C, local
+	.float 200.0
+.endobj lbl_803EAD5C
+.obj lbl_803EAD60, local
+	.float 1.0
+.endobj lbl_803EAD60
 .balign 8
-lbl_803EAD68:
-	.4byte 0x43300000
-	.4byte 0x80000000
-lbl_803EAD70:
-	.4byte 0x3F4CCCCD
-lbl_803EAD74:
-	.4byte 0x3F000000
-lbl_803EAD78:
-	.4byte 0x3F333333
-lbl_803EAD7C:
-	.4byte 0x41F00000
-lbl_803EAD80:
-	.4byte 0xC47A0000
-lbl_803EAD84:
-	.4byte 0x41700000
-lbl_803EAD88:
-	.4byte 0x40A00000
-lbl_803EAD8C:
-	.4byte 0x42C80000
-lbl_803EAD90:
-	.4byte 0x41200000
-lbl_803EAD94:
-	.4byte 0x46FFFE00
-lbl_803EAD98:
-	.4byte 0x40C90FCE
-lbl_803EAD9C:
-	.4byte 0x46480000
-lbl_803EADA0:
-	.4byte 0x40000000
-lbl_803EADA4:
-	.4byte 0x47FA0000
-lbl_803EADA8:
-	.4byte 0x43960000
-lbl_803EADAC:
-	.4byte 0x3FA00000
-lbl_803EADB0:
-	.4byte 0x3D4CCCCD
-lbl_803EADB4:
-	.4byte 0xBDCCCCCD
-lbl_803EADB8:
-	.4byte 0x3E4CCCCD
-lbl_803EADBC:
-	.4byte 0x3EF0A3D7
-lbl_803EADC0:
-	.4byte 0x3F7851EC
-lbl_803EADC4:
-	.4byte 0x40800000
-lbl_803EADC8:
-	.4byte 0x3ECCCCCD
-lbl_803EADCC:
-	.4byte 0x3F666666
-lbl_803EADD0:
-	.4byte 0x3EB33333
-lbl_803EADD4:
-	.4byte 0x40400000
+.obj lbl_803EAD68, local
+	.8byte 0x4330000080000000
+.endobj lbl_803EAD68
+.balign 4
+.obj lbl_803EAD70, local
+	.float 0.8
+.endobj lbl_803EAD70
+.obj lbl_803EAD74, local
+	.float 0.5
+.endobj lbl_803EAD74
+.obj lbl_803EAD78, local
+	.float 0.7
+.endobj lbl_803EAD78
+.obj lbl_803EAD7C, local
+	.float 30.0
+.endobj lbl_803EAD7C
+.obj lbl_803EAD80, local
+	.float -1000.0
+.endobj lbl_803EAD80
+.obj lbl_803EAD84, local
+	.float 15.0
+.endobj lbl_803EAD84
+.obj lbl_803EAD88, local
+	.float 5.0
+.endobj lbl_803EAD88
+.obj lbl_803EAD8C, local
+	.float 100.0
+.endobj lbl_803EAD8C
+.obj lbl_803EAD90, local
+	.float 10.0
+.endobj lbl_803EAD90
+.obj lbl_803EAD94, local
+	.float 32767.0
+.endobj lbl_803EAD94
+.obj lbl_803EAD98, local # pretty close to tau
+	.float 6.2831793
+.endobj lbl_803EAD98
+.obj lbl_803EAD9C, local
+	.float 12800.0
+.endobj lbl_803EAD9C
+.obj lbl_803EADA0, local
+	.float 2.0
+.endobj lbl_803EADA0
+.obj lbl_803EADA4, local
+	.float 128000.0
+.endobj lbl_803EADA4
+.obj lbl_803EADA8, local
+	.float 300.0
+.endobj lbl_803EADA8
+.obj lbl_803EADAC, local
+	.float 1.25
+.endobj lbl_803EADAC
+.obj lbl_803EADB0, local
+	.float 0.05
+.endobj lbl_803EADB0
+.obj lbl_803EADB4, local
+	.float -0.1
+.endobj lbl_803EADB4
+.obj lbl_803EADB8, local
+	.float 0.2
+.endobj lbl_803EADB8
+.obj lbl_803EADBC, local
+	.float 0.47
+.endobj lbl_803EADBC
+.obj lbl_803EADC0, local
+	.float 0.97
+.endobj lbl_803EADC0
+.obj lbl_803EADC4, local
+	.float 4.0
+.endobj lbl_803EADC4
+.obj lbl_803EADC8, local
+	.float 0.4
+.endobj lbl_803EADC8
+.obj lbl_803EADCC, local
+	.float 0.9
+.endobj lbl_803EADCC
+.obj lbl_803EADD0, local
+	.float 0.35
+.endobj lbl_803EADD0
+.obj lbl_803EADD4, local
+	.float 3.0
+.endobj lbl_803EADD4

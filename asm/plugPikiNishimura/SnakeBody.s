@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global setBodyOnGroundEffect__9SnakeBodyFv
-setBodyOnGroundEffect__9SnakeBodyFv:
+.fn setBodyOnGroundEffect__9SnakeBodyFv, global
 /* 8015FCA8 0015CC08  7C 08 02 A6 */	mflr r0
 /* 8015FCAC 0015CC0C  38 80 00 80 */	li r4, 0x80
 /* 8015FCB0 0015CC10  90 01 00 04 */	stw r0, 4(r1)
@@ -143,9 +142,9 @@ setBodyOnGroundEffect__9SnakeBodyFv:
 /* 8015FEBC 0015CE1C  38 21 00 78 */	addi r1, r1, 0x78
 /* 8015FEC0 0015CE20  7C 08 03 A6 */	mtlr r0
 /* 8015FEC4 0015CE24  4E 80 00 20 */	blr 
+.endfn setBodyOnGroundEffect__9SnakeBodyFv
 
-.global killCallBackEffect__9SnakeBodyFb
-killCallBackEffect__9SnakeBodyFb:
+.fn killCallBackEffect__9SnakeBodyFb, global
 /* 8015FEC8 0015CE28  7C 08 02 A6 */	mflr r0
 /* 8015FECC 0015CE2C  38 A0 00 00 */	li r5, 0
 /* 8015FED0 0015CE30  90 01 00 04 */	stw r0, 4(r1)
@@ -172,9 +171,9 @@ killCallBackEffect__9SnakeBodyFb:
 /* 8015FF24 0015CE84  38 21 00 18 */	addi r1, r1, 0x18
 /* 8015FF28 0015CE88  7C 08 03 A6 */	mtlr r0
 /* 8015FF2C 0015CE8C  4E 80 00 20 */	blr 
+.endfn killCallBackEffect__9SnakeBodyFb
 
-.global __ct__9SnakeBodyFP5Snake
-__ct__9SnakeBodyFP5Snake:
+.fn __ct__9SnakeBodyFP5Snake, global
 /* 8015FF30 0015CE90  7C 08 02 A6 */	mflr r0
 /* 8015FF34 0015CE94  38 A0 00 00 */	li r5, 0
 /* 8015FF38 0015CE98  90 01 00 04 */	stw r0, 4(r1)
@@ -263,9 +262,9 @@ __ct__9SnakeBodyFP5Snake:
 /* 8016007C 0015CFDC  38 21 00 20 */	addi r1, r1, 0x20
 /* 80160080 0015CFE0  7C 08 03 A6 */	mtlr r0
 /* 80160084 0015CFE4  4E 80 00 20 */	blr 
+.endfn __ct__9SnakeBodyFP5Snake
 
-.global init__9SnakeBodyFR8Vector3fP5Snake
-init__9SnakeBodyFR8Vector3fP5Snake:
+.fn init__9SnakeBodyFR8Vector3fP5Snake, global
 /* 80160088 0015CFE8  90 A3 00 00 */	stw r5, 0(r3)
 /* 8016008C 0015CFEC  38 A0 00 00 */	li r5, 0
 /* 80160090 0015CFF0  38 00 00 07 */	li r0, 7
@@ -305,9 +304,9 @@ init__9SnakeBodyFR8Vector3fP5Snake:
 /* 80160118 0015D078  D0 03 00 4C */	stfs f0, 0x4c(r3)
 /* 8016011C 0015D07C  90 03 00 08 */	stw r0, 8(r3)
 /* 80160120 0015D080  4E 80 00 20 */	blr 
+.endfn init__9SnakeBodyFR8Vector3fP5Snake
 
-.global initBlending__9SnakeBodyFf
-initBlending__9SnakeBodyFf:
+.fn initBlending__9SnakeBodyFf, global
 /* 80160124 0015D084  C0 43 00 0C */	lfs f2, 0xc(r3)
 /* 80160128 0015D088  C0 02 AA B4 */	lfs f0, lbl_803EACB4@sda21(r2)
 /* 8016012C 0015D08C  FC 02 00 40 */	fcmpo cr0, f2, f0
@@ -319,9 +318,9 @@ initBlending__9SnakeBodyFf:
 /* 80160140 0015D0A0  D0 03 00 0C */	stfs f0, 0xc(r3)
 /* 80160144 0015D0A4  D0 23 00 10 */	stfs f1, 0x10(r3)
 /* 80160148 0015D0A8  4E 80 00 20 */	blr 
+.endfn initBlending__9SnakeBodyFf
 
-.global makeTurnVelocity__9SnakeBodyFv
-makeTurnVelocity__9SnakeBodyFv:
+.fn makeTurnVelocity__9SnakeBodyFv, global
 /* 8016014C 0015D0AC  7C 08 02 A6 */	mflr r0
 /* 80160150 0015D0B0  90 01 00 04 */	stw r0, 4(r1)
 /* 80160154 0015D0B4  94 21 FE 60 */	stwu r1, -0x1a0(r1)
@@ -525,9 +524,9 @@ makeTurnVelocity__9SnakeBodyFv:
 /* 80160458 0015D3B8  38 21 01 A0 */	addi r1, r1, 0x1a0
 /* 8016045C 0015D3BC  7C 08 03 A6 */	mtlr r0
 /* 80160460 0015D3C0  4E 80 00 20 */	blr 
+.endfn makeTurnVelocity__9SnakeBodyFv
 
-.global makeResultPosition__9SnakeBodyFv
-makeResultPosition__9SnakeBodyFv:
+.fn makeResultPosition__9SnakeBodyFv, global
 /* 80160464 0015D3C4  7C 08 02 A6 */	mflr r0
 /* 80160468 0015D3C8  90 01 00 04 */	stw r0, 4(r1)
 /* 8016046C 0015D3CC  94 21 FE D0 */	stwu r1, -0x130(r1)
@@ -722,9 +721,9 @@ makeResultPosition__9SnakeBodyFv:
 /* 8016074C 0015D6AC  38 21 01 30 */	addi r1, r1, 0x130
 /* 80160750 0015D6B0  7C 08 03 A6 */	mtlr r0
 /* 80160754 0015D6B4  4E 80 00 20 */	blr 
+.endfn makeResultPosition__9SnakeBodyFv
 
-.global makeVectorMatrix__9SnakeBodyFv
-makeVectorMatrix__9SnakeBodyFv:
+.fn makeVectorMatrix__9SnakeBodyFv, global
 /* 80160758 0015D6B8  7C 08 02 A6 */	mflr r0
 /* 8016075C 0015D6BC  90 01 00 04 */	stw r0, 4(r1)
 /* 80160760 0015D6C0  94 21 FF B0 */	stwu r1, -0x50(r1)
@@ -951,9 +950,9 @@ makeVectorMatrix__9SnakeBodyFv:
 /* 80160AB4 0015DA14  38 21 00 50 */	addi r1, r1, 0x50
 /* 80160AB8 0015DA18  7C 08 03 A6 */	mtlr r0
 /* 80160ABC 0015DA1C  4E 80 00 20 */	blr 
+.endfn makeVectorMatrix__9SnakeBodyFv
 
-.global createDeadHeadEffect__9SnakeBodyFv
-createDeadHeadEffect__9SnakeBodyFv:
+.fn createDeadHeadEffect__9SnakeBodyFv, global
 /* 80160AC0 0015DA20  7C 08 02 A6 */	mflr r0
 /* 80160AC4 0015DA24  90 01 00 04 */	stw r0, 4(r1)
 /* 80160AC8 0015DA28  94 21 FF A0 */	stwu r1, -0x60(r1)
@@ -1109,9 +1108,9 @@ createDeadHeadEffect__9SnakeBodyFv:
 /* 80160D08 0015DC68  38 21 00 60 */	addi r1, r1, 0x60
 /* 80160D0C 0015DC6C  7C 08 03 A6 */	mtlr r0
 /* 80160D10 0015DC70  4E 80 00 20 */	blr 
+.endfn createDeadHeadEffect__9SnakeBodyFv
 
-.global createDeadBodyEffect__9SnakeBodyFv
-createDeadBodyEffect__9SnakeBodyFv:
+.fn createDeadBodyEffect__9SnakeBodyFv, global
 /* 80160D14 0015DC74  7C 08 02 A6 */	mflr r0
 /* 80160D18 0015DC78  38 80 00 01 */	li r4, 1
 /* 80160D1C 0015DC7C  90 01 00 04 */	stw r0, 4(r1)
@@ -1263,9 +1262,9 @@ createDeadBodyEffect__9SnakeBodyFv:
 /* 80160F4C 0015DEAC  38 21 00 50 */	addi r1, r1, 0x50
 /* 80160F50 0015DEB0  7C 08 03 A6 */	mtlr r0
 /* 80160F54 0015DEB4  4E 80 00 20 */	blr 
+.endfn createDeadBodyEffect__9SnakeBodyFv
 
-.global makeDeadPattern01__9SnakeBodyFv
-makeDeadPattern01__9SnakeBodyFv:
+.fn makeDeadPattern01__9SnakeBodyFv, global
 /* 80160F58 0015DEB8  7C 08 02 A6 */	mflr r0
 /* 80160F5C 0015DEBC  90 01 00 04 */	stw r0, 4(r1)
 /* 80160F60 0015DEC0  38 00 00 01 */	li r0, 1
@@ -1376,9 +1375,9 @@ makeDeadPattern01__9SnakeBodyFv:
 /* 801610DC 0015E03C  38 21 00 98 */	addi r1, r1, 0x98
 /* 801610E0 0015E040  7C 08 03 A6 */	mtlr r0
 /* 801610E4 0015E044  4E 80 00 20 */	blr 
+.endfn makeDeadPattern01__9SnakeBodyFv
 
-.global update__9SnakeBodyFv
-update__9SnakeBodyFv:
+.fn update__9SnakeBodyFv, global
 /* 801610E8 0015E048  7C 08 02 A6 */	mflr r0
 /* 801610EC 0015E04C  90 01 00 04 */	stw r0, 4(r1)
 /* 801610F0 0015E050  94 21 FF 48 */	stwu r1, -0xb8(r1)
@@ -1662,9 +1661,9 @@ update__9SnakeBodyFv:
 /* 8016152C 0015E48C  38 21 00 B8 */	addi r1, r1, 0xb8
 /* 80161530 0015E490  7C 08 03 A6 */	mtlr r0
 /* 80161534 0015E494  4E 80 00 20 */	blr 
+.endfn update__9SnakeBodyFv
 
-.global makeBodySize__9SnakeBodyFv
-makeBodySize__9SnakeBodyFv:
+.fn makeBodySize__9SnakeBodyFv, global
 /* 80161538 0015E498  7C 08 02 A6 */	mflr r0
 /* 8016153C 0015E49C  90 01 00 04 */	stw r0, 4(r1)
 /* 80161540 0015E4A0  94 21 FF 48 */	stwu r1, -0xb8(r1)
@@ -1793,9 +1792,9 @@ makeBodySize__9SnakeBodyFv:
 /* 80161724 0015E684  38 21 00 B8 */	addi r1, r1, 0xb8
 /* 80161728 0015E688  7C 08 03 A6 */	mtlr r0
 /* 8016172C 0015E68C  4E 80 00 20 */	blr 
+.endfn makeBodySize__9SnakeBodyFv
 
-.global makeHeadPosition__9SnakeBodyFv
-makeHeadPosition__9SnakeBodyFv:
+.fn makeHeadPosition__9SnakeBodyFv, global
 /* 80161730 0015E690  94 21 FF 48 */	stwu r1, -0xb8(r1)
 /* 80161734 0015E694  80 A3 00 00 */	lwz r5, 0(r3)
 /* 80161738 0015E698  80 05 02 E4 */	lwz r0, 0x2e4(r5)
@@ -1902,9 +1901,9 @@ makeHeadPosition__9SnakeBodyFv:
 .L_801618C0:
 /* 801618C0 0015E820  38 21 00 B8 */	addi r1, r1, 0xb8
 /* 801618C4 0015E824  4E 80 00 20 */	blr 
+.endfn makeHeadPosition__9SnakeBodyFv
 
-.global makeBodyMatrix__9SnakeBodyFv
-makeBodyMatrix__9SnakeBodyFv:
+.fn makeBodyMatrix__9SnakeBodyFv, global
 /* 801618C8 0015E828  7C 08 02 A6 */	mflr r0
 /* 801618CC 0015E82C  90 01 00 04 */	stw r0, 4(r1)
 /* 801618D0 0015E830  94 21 FE D0 */	stwu r1, -0x130(r1)
@@ -2100,9 +2099,9 @@ makeBodyMatrix__9SnakeBodyFv:
 /* 80161BB0 0015EB10  38 21 01 30 */	addi r1, r1, 0x130
 /* 80161BB4 0015EB14  7C 08 03 A6 */	mtlr r0
 /* 80161BB8 0015EB18  4E 80 00 20 */	blr 
+.endfn makeBodyMatrix__9SnakeBodyFv
 
-.global makeAnimMatrix__9SnakeBodyFv
-makeAnimMatrix__9SnakeBodyFv:
+.fn makeAnimMatrix__9SnakeBodyFv, global
 /* 80161BBC 0015EB1C  7C 08 02 A6 */	mflr r0
 /* 80161BC0 0015EB20  90 01 00 04 */	stw r0, 4(r1)
 /* 80161BC4 0015EB24  94 21 FE 18 */	stwu r1, -0x1e8(r1)
@@ -2349,9 +2348,9 @@ makeAnimMatrix__9SnakeBodyFv:
 /* 80161F68 0015EEC8  38 21 01 E8 */	addi r1, r1, 0x1e8
 /* 80161F6C 0015EECC  7C 08 03 A6 */	mtlr r0
 /* 80161F70 0015EED0  4E 80 00 20 */	blr 
+.endfn makeAnimMatrix__9SnakeBodyFv
 
-.global caseOfMatrix__9SnakeBodyFP8Matrix4f
-caseOfMatrix__9SnakeBodyFP8Matrix4f:
+.fn caseOfMatrix__9SnakeBodyFP8Matrix4f, global
 /* 80161F74 0015EED4  80 A3 00 00 */	lwz r5, 0(r3)
 /* 80161F78 0015EED8  80 05 02 E4 */	lwz r0, 0x2e4(r5)
 /* 80161F7C 0015EEDC  2C 00 00 02 */	cmpwi r0, 2
@@ -2683,9 +2682,9 @@ caseOfMatrix__9SnakeBodyFP8Matrix4f:
 /* 8016248C 0015F3EC  90 A4 01 F8 */	stw r5, 0x1f8(r4)
 /* 80162490 0015F3F0  90 04 01 FC */	stw r0, 0x1fc(r4)
 /* 80162494 0015F3F4  4E 80 00 20 */	blr 
+.endfn caseOfMatrix__9SnakeBodyFP8Matrix4f
 
-.global makeBlending__9SnakeBodyFP8Matrix4f
-makeBlending__9SnakeBodyFP8Matrix4f:
+.fn makeBlending__9SnakeBodyFP8Matrix4f, global
 /* 80162498 0015F3F8  7C 08 02 A6 */	mflr r0
 /* 8016249C 0015F3FC  90 01 00 04 */	stw r0, 4(r1)
 /* 801624A0 0015F400  94 21 FF 18 */	stwu r1, -0xe8(r1)
@@ -3036,9 +3035,9 @@ makeBlending__9SnakeBodyFP8Matrix4f:
 /* 801629CC 0015F92C  38 21 00 E8 */	addi r1, r1, 0xe8
 /* 801629D0 0015F930  7C 08 03 A6 */	mtlr r0
 /* 801629D4 0015F934  4E 80 00 20 */	blr 
+.endfn makeBlending__9SnakeBodyFP8Matrix4f
 
-.global setDeadPattern01__9SnakeBodyFP8Matrix4f
-setDeadPattern01__9SnakeBodyFP8Matrix4f:
+.fn setDeadPattern01__9SnakeBodyFP8Matrix4f, global
 /* 801629D8 0015F938  38 00 00 08 */	li r0, 8
 /* 801629DC 0015F93C  7C 09 03 A6 */	mtctr r0
 /* 801629E0 0015F940  38 A0 00 00 */	li r5, 0
@@ -3108,9 +3107,9 @@ setDeadPattern01__9SnakeBodyFP8Matrix4f:
 /* 80162AD8 0015FA38  38 A5 00 01 */	addi r5, r5, 1
 /* 80162ADC 0015FA3C  42 00 FF 08 */	bdnz .L_801629E4
 /* 80162AE0 0015FA40  4E 80 00 20 */	blr 
+.endfn setDeadPattern01__9SnakeBodyFP8Matrix4f
 
-.global returnJoint__9SnakeBodyFP15BossShapeObjectR8GraphicsP8Matrix4f
-returnJoint__9SnakeBodyFP15BossShapeObjectR8GraphicsP8Matrix4f:
+.fn returnJoint__9SnakeBodyFP15BossShapeObjectR8GraphicsP8Matrix4f, global
 /* 80162AE4 0015FA44  7C 08 02 A6 */	mflr r0
 /* 80162AE8 0015FA48  90 01 00 04 */	stw r0, 4(r1)
 /* 80162AEC 0015FA4C  94 21 FE 90 */	stwu r1, -0x170(r1)
@@ -3234,9 +3233,9 @@ returnJoint__9SnakeBodyFP15BossShapeObjectR8GraphicsP8Matrix4f:
 /* 80162CB8 0015FC18  38 21 01 70 */	addi r1, r1, 0x170
 /* 80162CBC 0015FC1C  7C 08 03 A6 */	mtlr r0
 /* 80162CC0 0015FC20  4E 80 00 20 */	blr 
+.endfn returnJoint__9SnakeBodyFP15BossShapeObjectR8GraphicsP8Matrix4f
 
-.global refresh__9SnakeBodyFP15BossShapeObjectR8Graphics
-refresh__9SnakeBodyFP15BossShapeObjectR8Graphics:
+.fn refresh__9SnakeBodyFP15BossShapeObjectR8Graphics, global
 /* 80162CC4 0015FC24  7C 08 02 A6 */	mflr r0
 /* 80162CC8 0015FC28  90 01 00 04 */	stw r0, 4(r1)
 /* 80162CCC 0015FC2C  94 21 FD 20 */	stwu r1, -0x2e0(r1)
@@ -3863,9 +3862,9 @@ refresh__9SnakeBodyFP15BossShapeObjectR8Graphics:
 /* 80163670 001605D0  38 21 02 E0 */	addi r1, r1, 0x2e0
 /* 80163674 001605D4  7C 08 03 A6 */	mtlr r0
 /* 80163678 001605D8  4E 80 00 20 */	blr 
+.endfn refresh__9SnakeBodyFP15BossShapeObjectR8Graphics
 
-.global invoke__26SnakeGenBodyRotateCallBackFPQ23zen17particleGenerator
-invoke__26SnakeGenBodyRotateCallBackFPQ23zen17particleGenerator:
+.fn invoke__26SnakeGenBodyRotateCallBackFPQ23zen17particleGenerator, weak
 /* 8016367C 001605DC  80 A3 00 04 */	lwz r5, 4(r3)
 /* 80163680 001605E0  80 A5 03 C8 */	lwz r5, 0x3c8(r5)
 /* 80163684 001605E4  88 05 00 04 */	lbz r0, 4(r5)
@@ -3895,9 +3894,9 @@ invoke__26SnakeGenBodyRotateCallBackFPQ23zen17particleGenerator:
 .L_801636D8:
 /* 801636D8 00160638  38 60 00 01 */	li r3, 1
 /* 801636DC 0016063C  4E 80 00 20 */	blr 
+.endfn invoke__26SnakeGenBodyRotateCallBackFPQ23zen17particleGenerator
 
-.global invoke__28SnakeGenBodyOnGroundCallBackFPQ23zen17particleGenerator
-invoke__28SnakeGenBodyOnGroundCallBackFPQ23zen17particleGenerator:
+.fn invoke__28SnakeGenBodyOnGroundCallBackFPQ23zen17particleGenerator, weak
 /* 801636E0 00160640  80 63 00 04 */	lwz r3, 4(r3)
 /* 801636E4 00160644  C0 02 AA B4 */	lfs f0, lbl_803EACB4@sda21(r2)
 /* 801636E8 00160648  C0 23 02 C4 */	lfs f1, 0x2c4(r3)
@@ -3913,10 +3912,11 @@ invoke__28SnakeGenBodyOnGroundCallBackFPQ23zen17particleGenerator:
 .L_8016370C:
 /* 8016370C 0016066C  38 60 00 01 */	li r3, 1
 /* 80163710 00160670  4E 80 00 20 */	blr 
+.endfn invoke__28SnakeGenBodyOnGroundCallBackFPQ23zen17particleGenerator
 
 .section .rodata, "a"  # 0x80221FE0 - 0x80222DC0
 .balign 8
-lbl_80222708:
+.obj lbl_80222708, local
 	.float 32.0
 	.float 36.0
 	.float 49.0
@@ -3932,115 +3932,159 @@ lbl_80222708:
 	.float 28.0
 	.float 33.0
 	.float 49.0
+.endobj lbl_80222708
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802CFA78:
+.obj lbl_802CFA78, local
 	.asciz "SnakeBody.cpp"
+.endobj lbl_802CFA78
 .balign 4
-lbl_802CFA88:
+.obj lbl_802CFA88, local
 	.asciz "SnakeBody"
+.endobj lbl_802CFA88
 .balign 4
-lbl_802CFA94:
+.obj lbl_802CFA94, local
 	.asciz "SnakeGenBodyRotateCallBack"
+.endobj lbl_802CFA94
 .balign 4
-lbl_802CFAB0:
+.obj lbl_802CFAB0, local
 	.asciz "zen::CallBack1<zen::particleGenerator *>"
+.endobj lbl_802CFAB0
 .balign 4
-lbl_802CFADC:
+.obj lbl_802CFADC, local
 	.4byte "__RTTI__Q23zen37CallBack1<PQ23zen17particleGenerator>"
 	.4byte 0
 	.4byte 0
-.global __vt__26SnakeGenBodyRotateCallBack
-__vt__26SnakeGenBodyRotateCallBack:
+.endobj lbl_802CFADC
+.balign
+.obj __vt__26SnakeGenBodyRotateCallBack, weak
 	.4byte __RTTI__26SnakeGenBodyRotateCallBack
 	.4byte 0
 	.4byte invoke__26SnakeGenBodyRotateCallBackFPQ23zen17particleGenerator
+.endobj __vt__26SnakeGenBodyRotateCallBack
 .balign 4
-lbl_802CFAF4:
+.obj lbl_802CFAF4, local
 	.asciz "SnakeGenBodyOnGroundCallBack"
+.endobj lbl_802CFAF4
 .balign 4
-lbl_802CFB14:
+.obj lbl_802CFB14, local
 	.4byte "__RTTI__Q23zen37CallBack1<PQ23zen17particleGenerator>"
 	.4byte 0
 	.4byte 0
-.global __vt__28SnakeGenBodyOnGroundCallBack
-__vt__28SnakeGenBodyOnGroundCallBack:
+.endobj lbl_802CFB14
+.balign 4
+.obj __vt__28SnakeGenBodyOnGroundCallBack, weak
 	.4byte __RTTI__28SnakeGenBodyOnGroundCallBack
 	.4byte 0
 	.4byte invoke__28SnakeGenBodyOnGroundCallBackFPQ23zen17particleGenerator
-	.4byte 0
-	.4byte 0
-	.4byte 0
+.endobj __vt__28SnakeGenBodyOnGroundCallBack
+.balign 4
+.skip 0xC # compiler padding
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-lbl_803E4CD8:
+.obj lbl_803E4CD8, local
 	.float 0.0
-lbl_803E4CDC:
+.endobj lbl_803E4CD8
+.obj lbl_803E4CDC, local
 	.float 1.0
-lbl_803E4CE0:
+.endobj lbl_803E4CDC
+.obj lbl_803E4CE0, local
 	.float 0.0
-lbl_803E4CE4:
+.endobj lbl_803E4CE0
+.obj lbl_803E4CE4, local
 	.float 0.0
-lbl_803E4CE8:
+.endobj lbl_803E4CE4
+.obj lbl_803E4CE8, local
 	.float 1.0
-lbl_803E4CEC:
+.endobj lbl_803E4CE8
+.obj lbl_803E4CEC, local
 	.float 0.0
-lbl_803E4CF0:
+.endobj lbl_803E4CEC
+.obj lbl_803E4CF0, local
 	.float 0.0
-lbl_803E4CF4:
+.endobj lbl_803E4CF0
+.obj lbl_803E4CF4, local
 	.float 1.0
-lbl_803E4CF8:
+.endobj lbl_803E4CF4
+.obj lbl_803E4CF8, local
 	.float 0.0
-lbl_803E4CFC:
+.endobj lbl_803E4CF8
+.obj lbl_803E4CFC, local
 	.float 3.0
-lbl_803E4D00:
+.endobj lbl_803E4CFC
+.obj lbl_803E4D00, local
 	.float 0.0
-lbl_803E4D04:
+.endobj lbl_803E4D00
+.obj lbl_803E4D04, local
 	.float 100.0
-lbl_803E4D08:
+.endobj lbl_803E4D04
+.obj lbl_803E4D08, local
 	.float 0.0
-lbl_803E4D0C:
+.endobj lbl_803E4D08
+.obj lbl_803E4D0C, local
 	.float 1.0
-lbl_803E4D10:
+.endobj lbl_803E4D0C
+.obj lbl_803E4D10, local
 	.float 1.0
-lbl_803E4D14:
+.endobj lbl_803E4D10
+.obj lbl_803E4D14, local
 	.float 1.0
-"__RTTI__Q23zen37CallBack1<PQ23zen17particleGenerator>":
+.endobj lbl_803E4D14
+.balign 4
+.obj "__RTTI__Q23zen37CallBack1<PQ23zen17particleGenerator>", local
 	.4byte lbl_802CFAB0
-	.4byte 0x00000000
-__RTTI__26SnakeGenBodyRotateCallBack:
+	.4byte 0
+.endobj "__RTTI__Q23zen37CallBack1<PQ23zen17particleGenerator>"
+.balign 4
+.obj __RTTI__26SnakeGenBodyRotateCallBack, local
 	.4byte lbl_802CFA94
 	.4byte lbl_802CFADC
-__RTTI__28SnakeGenBodyOnGroundCallBack:
+.endobj __RTTI__26SnakeGenBodyRotateCallBack
+.balign 4
+.obj __RTTI__28SnakeGenBodyOnGroundCallBack, local
 	.4byte lbl_802CFAF4
 	.4byte lbl_802CFB14
+.endobj __RTTI__28SnakeGenBodyOnGroundCallBack
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803EACB0:
+.obj lbl_803EACB0, local
 	.float 3.0
-lbl_803EACB4:
+.endobj lbl_803EACB0
+.obj lbl_803EACB4, local
 	.float 0.0
-lbl_803EACB8:
+.endobj lbl_803EACB4
+.obj lbl_803EACB8, local
 	.float 1.0
-lbl_803EACBC:
-	.4byte 0x3727C5AC
-lbl_803EACC0:
+.endobj lbl_803EACB8
+.obj lbl_803EACBC, local
+	.float 0.00001
+.endobj lbl_803EACBC
+.obj lbl_803EACC0, local
 	.float 10.0
-lbl_803EACC4:
+.endobj lbl_803EACC0
+.obj lbl_803EACC4, local
 	.float 0.5
-lbl_803EACC8:
+.endobj lbl_803EACC4
+.obj lbl_803EACC8, local
 	.float 32767.0
-lbl_803EACCC:
-	.4byte 0x403FFFF3
-lbl_803EACD0:
-	.4byte 0x43300000
-	.4byte 0x80000000
-lbl_803EACD8:
+.endobj lbl_803EACC8
+.obj lbl_803EACCC, local
+	.float 2.999997
+.endobj lbl_803EACCC
+.balign 8
+.obj lbl_803EACD0, local
+	.8byte 0x4330000080000000
+.endobj lbl_803EACD0
+.balign 4
+.obj lbl_803EACD8, local
 	.float 30.0
-lbl_803EACDC:
+.endobj lbl_803EACD8
+.obj lbl_803EACDC, local
 	.float 60.0
-lbl_803EACE0:
+.endobj lbl_803EACDC
+.obj lbl_803EACE0, local
 	.float 70.0
+.endobj lbl_803EACE0

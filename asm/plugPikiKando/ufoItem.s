@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global insideSafeArea__7UfoItemFR8Vector3f
-insideSafeArea__7UfoItemFR8Vector3f:
+.fn insideSafeArea__7UfoItemFR8Vector3f, global
 /* 800E7018 000E3F78  7C 08 02 A6 */	mflr r0
 /* 800E701C 000E3F7C  90 01 00 04 */	stw r0, 4(r1)
 /* 800E7020 000E3F80  94 21 FF 88 */	stwu r1, -0x78(r1)
@@ -50,9 +49,9 @@ insideSafeArea__7UfoItemFR8Vector3f:
 /* 800E70C0 000E4020  38 21 00 78 */	addi r1, r1, 0x78
 /* 800E70C4 000E4024  7C 08 03 A6 */	mtlr r0
 /* 800E70C8 000E4028  4E 80 00 20 */	blr 
+.endfn insideSafeArea__7UfoItemFR8Vector3f
 
-.global setSpotTurn__7UfoItemFb
-setSpotTurn__7UfoItemFb:
+.fn setSpotTurn__7UfoItemFb, global
 /* 800E70CC 000E402C  7C 08 02 A6 */	mflr r0
 /* 800E70D0 000E4030  90 01 00 04 */	stw r0, 4(r1)
 /* 800E70D4 000E4034  94 21 FF C8 */	stwu r1, -0x38(r1)
@@ -130,9 +129,9 @@ setSpotTurn__7UfoItemFb:
 /* 800E71E4 000E4144  38 21 00 38 */	addi r1, r1, 0x38
 /* 800E71E8 000E4148  7C 08 03 A6 */	mtlr r0
 /* 800E71EC 000E414C  4E 80 00 20 */	blr 
+.endfn setSpotTurn__7UfoItemFb
 
-.global setSpotActive__7UfoItemFb
-setSpotActive__7UfoItemFb:
+.fn setSpotActive__7UfoItemFb, global
 /* 800E71F0 000E4150  7C 08 02 A6 */	mflr r0
 /* 800E71F4 000E4154  90 01 00 04 */	stw r0, 4(r1)
 /* 800E71F8 000E4158  94 21 FF A8 */	stwu r1, -0x58(r1)
@@ -221,9 +220,9 @@ setSpotActive__7UfoItemFb:
 /* 800E7330 000E4290  38 21 00 58 */	addi r1, r1, 0x58
 /* 800E7334 000E4294  7C 08 03 A6 */	mtlr r0
 /* 800E7338 000E4298  4E 80 00 20 */	blr 
+.endfn setSpotActive__7UfoItemFb
 
-.global setTroubleEffect__7UfoItemFb
-setTroubleEffect__7UfoItemFb:
+.fn setTroubleEffect__7UfoItemFb, global
 /* 800E733C 000E429C  7C 08 02 A6 */	mflr r0
 /* 800E7340 000E42A0  90 01 00 04 */	stw r0, 4(r1)
 /* 800E7344 000E42A4  54 80 06 3F */	clrlwi. r0, r4, 0x18
@@ -274,9 +273,9 @@ setTroubleEffect__7UfoItemFb:
 /* 800E73E8 000E4348  38 21 00 20 */	addi r1, r1, 0x20
 /* 800E73EC 000E434C  7C 08 03 A6 */	mtlr r0
 /* 800E73F0 000E4350  4E 80 00 20 */	blr 
+.endfn setTroubleEffect__7UfoItemFb
 
-.global startTroubleEffectOne__7UfoItemFi
-startTroubleEffectOne__7UfoItemFi:
+.fn startTroubleEffectOne__7UfoItemFi, global
 /* 800E73F4 000E4354  7C 08 02 A6 */	mflr r0
 /* 800E73F8 000E4358  3C A0 80 22 */	lis r5, lbl_802225A4@ha
 /* 800E73FC 000E435C  90 01 00 04 */	stw r0, 4(r1)
@@ -331,9 +330,9 @@ startTroubleEffectOne__7UfoItemFi:
 /* 800E74BC 000E441C  38 21 00 40 */	addi r1, r1, 0x40
 /* 800E74C0 000E4420  7C 08 03 A6 */	mtlr r0
 /* 800E74C4 000E4424  4E 80 00 20 */	blr 
+.endfn startTroubleEffectOne__7UfoItemFi
 
-.global updateTroubleEffect__7UfoItemFv
-updateTroubleEffect__7UfoItemFv:
+.fn updateTroubleEffect__7UfoItemFv, global
 /* 800E74C8 000E4428  7C 08 02 A6 */	mflr r0
 /* 800E74CC 000E442C  90 01 00 04 */	stw r0, 4(r1)
 /* 800E74D0 000E4430  94 21 FF 88 */	stwu r1, -0x78(r1)
@@ -487,9 +486,9 @@ updateTroubleEffect__7UfoItemFv:
 /* 800E7708 000E4668  38 21 00 78 */	addi r1, r1, 0x78
 /* 800E770C 000E466C  7C 08 03 A6 */	mtlr r0
 /* 800E7710 000E4670  4E 80 00 20 */	blr 
+.endfn updateTroubleEffect__7UfoItemFv
 
-.global startConeEffect__7UfoItemFi
-startConeEffect__7UfoItemFi:
+.fn startConeEffect__7UfoItemFi, global
 /* 800E7714 000E4674  7C 08 02 A6 */	mflr r0
 /* 800E7718 000E4678  90 01 00 04 */	stw r0, 4(r1)
 /* 800E771C 000E467C  94 21 FF 80 */	stwu r1, -0x80(r1)
@@ -566,9 +565,9 @@ startConeEffect__7UfoItemFi:
 /* 800E7834 000E4794  38 21 00 80 */	addi r1, r1, 0x80
 /* 800E7838 000E4798  7C 08 03 A6 */	mtlr r0
 /* 800E783C 000E479C  4E 80 00 20 */	blr 
+.endfn startConeEffect__7UfoItemFi
 
-.global finishConeEffect__7UfoItemFv
-finishConeEffect__7UfoItemFv:
+.fn finishConeEffect__7UfoItemFv, global
 /* 800E7840 000E47A0  7C 08 02 A6 */	mflr r0
 /* 800E7844 000E47A4  90 01 00 04 */	stw r0, 4(r1)
 /* 800E7848 000E47A8  94 21 FF F8 */	stwu r1, -8(r1)
@@ -578,9 +577,9 @@ finishConeEffect__7UfoItemFv:
 /* 800E7858 000E47B8  38 21 00 08 */	addi r1, r1, 8
 /* 800E785C 000E47BC  7C 08 03 A6 */	mtlr r0
 /* 800E7860 000E47C0  4E 80 00 20 */	blr 
+.endfn finishConeEffect__7UfoItemFv
 
-.global startLevelFlag__7UfoItemFi
-startLevelFlag__7UfoItemFi:
+.fn startLevelFlag__7UfoItemFi, global
 /* 800E7864 000E47C4  7C 08 02 A6 */	mflr r0
 /* 800E7868 000E47C8  90 01 00 04 */	stw r0, 4(r1)
 /* 800E786C 000E47CC  94 21 FF B8 */	stwu r1, -0x48(r1)
@@ -669,9 +668,9 @@ startLevelFlag__7UfoItemFi:
 /* 800E79B0 000E4910  38 21 00 48 */	addi r1, r1, 0x48
 /* 800E79B4 000E4914  7C 08 03 A6 */	mtlr r0
 /* 800E79B8 000E4918  4E 80 00 20 */	blr 
+.endfn startLevelFlag__7UfoItemFi
 
-.global lightLevelFlag__7UfoItemFi
-lightLevelFlag__7UfoItemFi:
+.fn lightLevelFlag__7UfoItemFi, global
 /* 800E79BC 000E491C  7C 08 02 A6 */	mflr r0
 /* 800E79C0 000E4920  90 01 00 04 */	stw r0, 4(r1)
 /* 800E79C4 000E4924  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -704,9 +703,9 @@ lightLevelFlag__7UfoItemFi:
 /* 800E7A28 000E4988  38 21 00 28 */	addi r1, r1, 0x28
 /* 800E7A2C 000E498C  7C 08 03 A6 */	mtlr r0
 /* 800E7A30 000E4990  4E 80 00 20 */	blr 
+.endfn lightLevelFlag__7UfoItemFi
 
-.global setJetEffect__7UfoItemFib
-setJetEffect__7UfoItemFib:
+.fn setJetEffect__7UfoItemFib, global
 /* 800E7A34 000E4994  7C 08 02 A6 */	mflr r0
 /* 800E7A38 000E4998  2C 04 00 00 */	cmpwi r4, 0
 /* 800E7A3C 000E499C  90 01 00 04 */	stw r0, 4(r1)
@@ -952,9 +951,9 @@ setJetEffect__7UfoItemFib:
 /* 800E7DB8 000E4D18  38 21 00 A0 */	addi r1, r1, 0xa0
 /* 800E7DBC 000E4D1C  7C 08 03 A6 */	mtlr r0
 /* 800E7DC0 000E4D20  4E 80 00 20 */	blr 
+.endfn setJetEffect__7UfoItemFib
 
-.global __ct__Q27UfoItem13LightAnimatorFv
-__ct__Q27UfoItem13LightAnimatorFv:
+.fn __ct__Q27UfoItem13LightAnimatorFv, global
 /* 800E7DC4 000E4D24  38 00 00 00 */	li r0, 0
 /* 800E7DC8 000E4D28  90 03 00 00 */	stw r0, 0(r3)
 /* 800E7DCC 000E4D2C  C0 02 99 C8 */	lfs f0, lbl_803E9BC8@sda21(r2)
@@ -962,9 +961,9 @@ __ct__Q27UfoItem13LightAnimatorFv:
 /* 800E7DD4 000E4D34  D0 03 00 04 */	stfs f0, 4(r3)
 /* 800E7DD8 000E4D38  B0 03 00 0C */	sth r0, 0xc(r3)
 /* 800E7DDC 000E4D3C  4E 80 00 20 */	blr 
+.endfn __ct__Q27UfoItem13LightAnimatorFv
 
-.global start__Q27UfoItem13LightAnimatorFi
-start__Q27UfoItem13LightAnimatorFi:
+.fn start__Q27UfoItem13LightAnimatorFi, global
 /* 800E7DE0 000E4D40  94 21 FF E8 */	stwu r1, -0x18(r1)
 /* 800E7DE4 000E4D44  2C 04 00 00 */	cmpwi r4, 0
 /* 800E7DE8 000E4D48  B0 83 00 0C */	sth r4, 0xc(r3)
@@ -989,9 +988,9 @@ start__Q27UfoItem13LightAnimatorFi:
 /* 800E7E2C 000E4D8C  D0 03 00 08 */	stfs f0, 8(r3)
 /* 800E7E30 000E4D90  38 21 00 18 */	addi r1, r1, 0x18
 /* 800E7E34 000E4D94  4E 80 00 20 */	blr 
+.endfn start__Q27UfoItem13LightAnimatorFi
 
-.global getGoalPos__7UfoItemFv
-getGoalPos__7UfoItemFv:
+.fn getGoalPos__7UfoItemFv, global
 /* 800E7E38 000E4D98  7C 08 02 A6 */	mflr r0
 /* 800E7E3C 000E4D9C  90 01 00 04 */	stw r0, 4(r1)
 /* 800E7E40 000E4DA0  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -1017,9 +1016,9 @@ getGoalPos__7UfoItemFv:
 /* 800E7E90 000E4DF0  38 21 00 20 */	addi r1, r1, 0x20
 /* 800E7E94 000E4DF4  7C 08 03 A6 */	mtlr r0
 /* 800E7E98 000E4DF8  4E 80 00 20 */	blr 
+.endfn getGoalPos__7UfoItemFv
 
-.global getGoalPosRadius__7UfoItemFv
-getGoalPosRadius__7UfoItemFv:
+.fn getGoalPosRadius__7UfoItemFv, global
 /* 800E7E9C 000E4DFC  7C 08 02 A6 */	mflr r0
 /* 800E7EA0 000E4E00  90 01 00 04 */	stw r0, 4(r1)
 /* 800E7EA4 000E4E04  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -1037,9 +1036,9 @@ getGoalPosRadius__7UfoItemFv:
 /* 800E7ED4 000E4E34  38 21 00 18 */	addi r1, r1, 0x18
 /* 800E7ED8 000E4E38  7C 08 03 A6 */	mtlr r0
 /* 800E7EDC 000E4E3C  4E 80 00 20 */	blr 
+.endfn getGoalPosRadius__7UfoItemFv
 
-.global getSuckPos__7UfoItemFv
-getSuckPos__7UfoItemFv:
+.fn getSuckPos__7UfoItemFv, global
 /* 800E7EE0 000E4E40  7C 08 02 A6 */	mflr r0
 /* 800E7EE4 000E4E44  90 01 00 04 */	stw r0, 4(r1)
 /* 800E7EE8 000E4E48  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -1074,9 +1073,9 @@ getSuckPos__7UfoItemFv:
 /* 800E7F58 000E4EB8  38 21 00 28 */	addi r1, r1, 0x28
 /* 800E7F5C 000E4EBC  7C 08 03 A6 */	mtlr r0
 /* 800E7F60 000E4EC0  4E 80 00 20 */	blr 
+.endfn getSuckPos__7UfoItemFv
 
-.global suckMe__7UfoItemFP6Pellet
-suckMe__7UfoItemFP6Pellet:
+.fn suckMe__7UfoItemFP6Pellet, global
 /* 800E7F64 000E4EC4  7C 08 02 A6 */	mflr r0
 /* 800E7F68 000E4EC8  90 01 00 04 */	stw r0, 4(r1)
 /* 800E7F6C 000E4ECC  94 21 FF D0 */	stwu r1, -0x30(r1)
@@ -1128,9 +1127,9 @@ suckMe__7UfoItemFP6Pellet:
 /* 800E8014 000E4F74  38 21 00 30 */	addi r1, r1, 0x30
 /* 800E8018 000E4F78  7C 08 03 A6 */	mtlr r0
 /* 800E801C 000E4F7C  4E 80 00 20 */	blr 
+.endfn suckMe__7UfoItemFP6Pellet
 
-.global startYozora__7UfoItemFv
-startYozora__7UfoItemFv:
+.fn startYozora__7UfoItemFv, global
 /* 800E8020 000E4F80  7C 08 02 A6 */	mflr r0
 /* 800E8024 000E4F84  38 80 00 01 */	li r4, 1
 /* 800E8028 000E4F88  90 01 00 04 */	stw r0, 4(r1)
@@ -1174,9 +1173,9 @@ startYozora__7UfoItemFv:
 /* 800E80C0 000E5020  38 21 00 38 */	addi r1, r1, 0x38
 /* 800E80C4 000E5024  7C 08 03 A6 */	mtlr r0
 /* 800E80C8 000E5028  4E 80 00 20 */	blr 
+.endfn startYozora__7UfoItemFv
 
-.global startGalaxy__7UfoItemFv
-startGalaxy__7UfoItemFv:
+.fn startGalaxy__7UfoItemFv, global
 /* 800E80CC 000E502C  7C 08 02 A6 */	mflr r0
 /* 800E80D0 000E5030  38 80 00 01 */	li r4, 1
 /* 800E80D4 000E5034  90 01 00 04 */	stw r0, 4(r1)
@@ -1220,9 +1219,9 @@ startGalaxy__7UfoItemFv:
 /* 800E816C 000E50CC  38 21 00 38 */	addi r1, r1, 0x38
 /* 800E8170 000E50D0  7C 08 03 A6 */	mtlr r0
 /* 800E8174 000E50D4  4E 80 00 20 */	blr 
+.endfn startGalaxy__7UfoItemFv
 
-.global finishSuck__7UfoItemFP6Pellet
-finishSuck__7UfoItemFP6Pellet:
+.fn finishSuck__7UfoItemFP6Pellet, global
 /* 800E8178 000E50D8  7C 08 02 A6 */	mflr r0
 /* 800E817C 000E50DC  90 01 00 04 */	stw r0, 4(r1)
 /* 800E8180 000E50E0  94 21 FF B0 */	stwu r1, -0x50(r1)
@@ -1302,9 +1301,9 @@ finishSuck__7UfoItemFP6Pellet:
 /* 800E829C 000E51FC  38 21 00 50 */	addi r1, r1, 0x50
 /* 800E82A0 000E5200  7C 08 03 A6 */	mtlr r0
 /* 800E82A4 000E5204  4E 80 00 20 */	blr 
+.endfn finishSuck__7UfoItemFP6Pellet
 
-.global animationKeyUpdated__7UfoItemFR16PaniAnimKeyEvent
-animationKeyUpdated__7UfoItemFR16PaniAnimKeyEvent:
+.fn animationKeyUpdated__7UfoItemFR16PaniAnimKeyEvent, global
 /* 800E82A8 000E5208  7C 08 02 A6 */	mflr r0
 /* 800E82AC 000E520C  90 01 00 04 */	stw r0, 4(r1)
 /* 800E82B0 000E5210  94 21 FF B8 */	stwu r1, -0x48(r1)
@@ -1608,14 +1607,14 @@ animationKeyUpdated__7UfoItemFR16PaniAnimKeyEvent:
 /* 800E86F0 000E5650  38 21 00 48 */	addi r1, r1, 0x48
 /* 800E86F4 000E5654  7C 08 03 A6 */	mtlr r0
 /* 800E86F8 000E5658  4E 80 00 20 */	blr 
+.endfn animationKeyUpdated__7UfoItemFR16PaniAnimKeyEvent
 
-.global needShadow__7UfoItemFv
-needShadow__7UfoItemFv:
+.fn needShadow__7UfoItemFv, global
 /* 800E86FC 000E565C  38 60 00 00 */	li r3, 0
 /* 800E8700 000E5660  4E 80 00 20 */	blr 
+.endfn needShadow__7UfoItemFv
 
-.global __ct__7UfoItemFP12CreaturePropP14UfoShapeObject
-__ct__7UfoItemFP12CreaturePropP14UfoShapeObject:
+.fn __ct__7UfoItemFP12CreaturePropP14UfoShapeObject, global
 /* 800E8704 000E5664  7C 08 02 A6 */	mflr r0
 /* 800E8708 000E5668  38 C0 00 00 */	li r6, 0
 /* 800E870C 000E566C  90 01 00 04 */	stw r0, 4(r1)
@@ -1741,22 +1740,22 @@ __ct__7UfoItemFP12CreaturePropP14UfoShapeObject:
 /* 800E88EC 000E584C  38 21 00 28 */	addi r1, r1, 0x28
 /* 800E88F0 000E5850  7C 08 03 A6 */	mtlr r0
 /* 800E88F4 000E5854  4E 80 00 20 */	blr 
+.endfn __ct__7UfoItemFP12CreaturePropP14UfoShapeObject
 
-.global __ct__Q27UfoItem4SpotFv
-__ct__Q27UfoItem4SpotFv:
+.fn __ct__Q27UfoItem4SpotFv, weak
 /* 800E88F8 000E5858  C0 02 99 C8 */	lfs f0, lbl_803E9BC8@sda21(r2)
 /* 800E88FC 000E585C  D0 03 00 08 */	stfs f0, 8(r3)
 /* 800E8900 000E5860  D0 03 00 04 */	stfs f0, 4(r3)
 /* 800E8904 000E5864  D0 03 00 00 */	stfs f0, 0(r3)
 /* 800E8908 000E5868  4E 80 00 20 */	blr 
+.endfn __ct__Q27UfoItem4SpotFv
 
-.global ignoreAtari__7UfoItemFP8Creature
-ignoreAtari__7UfoItemFP8Creature:
+.fn ignoreAtari__7UfoItemFP8Creature, global
 /* 800E890C 000E586C  38 60 00 00 */	li r3, 0
 /* 800E8910 000E5870  4E 80 00 20 */	blr 
+.endfn ignoreAtari__7UfoItemFP8Creature
 
-.global startTakeoff__7UfoItemFv
-startTakeoff__7UfoItemFv:
+.fn startTakeoff__7UfoItemFv, global
 /* 800E8914 000E5874  7C 08 02 A6 */	mflr r0
 /* 800E8918 000E5878  3C 80 80 22 */	lis r4, lbl_8022262C@ha
 /* 800E891C 000E587C  90 01 00 04 */	stw r0, 4(r1)
@@ -1807,9 +1806,9 @@ startTakeoff__7UfoItemFv:
 /* 800E89C8 000E5928  38 21 00 30 */	addi r1, r1, 0x30
 /* 800E89CC 000E592C  7C 08 03 A6 */	mtlr r0
 /* 800E89D0 000E5930  4E 80 00 20 */	blr 
+.endfn startTakeoff__7UfoItemFv
 
-.global startAI__7UfoItemFi
-startAI__7UfoItemFi:
+.fn startAI__7UfoItemFi, global
 /* 800E89D4 000E5934  7C 08 02 A6 */	mflr r0
 /* 800E89D8 000E5938  90 01 00 04 */	stw r0, 4(r1)
 /* 800E89DC 000E593C  38 00 00 00 */	li r0, 0
@@ -1992,19 +1991,19 @@ startAI__7UfoItemFi:
 /* 800E8C84 000E5BE4  38 21 00 40 */	addi r1, r1, 0x40
 /* 800E8C88 000E5BE8  7C 08 03 A6 */	mtlr r0
 /* 800E8C8C 000E5BEC  4E 80 00 20 */	blr 
+.endfn startAI__7UfoItemFi
 
-.global getSize__7UfoItemFv
-getSize__7UfoItemFv:
+.fn getSize__7UfoItemFv, global
 /* 800E8C90 000E5BF0  C0 22 99 FC */	lfs f1, lbl_803E9BFC@sda21(r2)
 /* 800E8C94 000E5BF4  4E 80 00 20 */	blr 
+.endfn getSize__7UfoItemFv
 
-.global getiMass__7UfoItemFv
-getiMass__7UfoItemFv:
+.fn getiMass__7UfoItemFv, global
 /* 800E8C98 000E5BF8  C0 22 99 C8 */	lfs f1, lbl_803E9BC8@sda21(r2)
 /* 800E8C9C 000E5BFC  4E 80 00 20 */	blr 
+.endfn getiMass__7UfoItemFv
 
-.global accessible__7UfoItemFv
-accessible__7UfoItemFv:
+.fn accessible__7UfoItemFv, global
 /* 800E8CA0 000E5C00  7C 08 02 A6 */	mflr r0
 /* 800E8CA4 000E5C04  38 80 00 00 */	li r4, 0
 /* 800E8CA8 000E5C08  90 01 00 04 */	stw r0, 4(r1)
@@ -2053,9 +2052,9 @@ accessible__7UfoItemFv:
 /* 800E8D44 000E5CA4  38 21 00 28 */	addi r1, r1, 0x28
 /* 800E8D48 000E5CA8  7C 08 03 A6 */	mtlr r0
 /* 800E8D4C 000E5CAC  4E 80 00 20 */	blr 
+.endfn accessible__7UfoItemFv
 
-.global startAccess__7UfoItemFv
-startAccess__7UfoItemFv:
+.fn startAccess__7UfoItemFv, global
 /* 800E8D50 000E5CB0  7C 08 02 A6 */	mflr r0
 /* 800E8D54 000E5CB4  90 01 00 04 */	stw r0, 4(r1)
 /* 800E8D58 000E5CB8  38 00 00 01 */	li r0, 1
@@ -2150,9 +2149,9 @@ startAccess__7UfoItemFv:
 /* 800E8EB4 000E5E14  38 21 00 80 */	addi r1, r1, 0x80
 /* 800E8EB8 000E5E18  7C 08 03 A6 */	mtlr r0
 /* 800E8EBC 000E5E1C  4E 80 00 20 */	blr 
+.endfn startAccess__7UfoItemFv
 
-.global finishAccess__7UfoItemFv
-finishAccess__7UfoItemFv:
+.fn finishAccess__7UfoItemFv, global
 /* 800E8EC0 000E5E20  7C 08 02 A6 */	mflr r0
 /* 800E8EC4 000E5E24  90 01 00 04 */	stw r0, 4(r1)
 /* 800E8EC8 000E5E28  38 00 00 00 */	li r0, 0
@@ -2171,9 +2170,9 @@ finishAccess__7UfoItemFv:
 /* 800E8EFC 000E5E5C  38 21 00 18 */	addi r1, r1, 0x18
 /* 800E8F00 000E5E60  7C 08 03 A6 */	mtlr r0
 /* 800E8F04 000E5E64  4E 80 00 20 */	blr 
+.endfn finishAccess__7UfoItemFv
 
-.global update__7UfoItemFv
-update__7UfoItemFv:
+.fn update__7UfoItemFv, global
 /* 800E8F08 000E5E68  7C 08 02 A6 */	mflr r0
 /* 800E8F0C 000E5E6C  90 01 00 04 */	stw r0, 4(r1)
 /* 800E8F10 000E5E70  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -2201,9 +2200,9 @@ update__7UfoItemFv:
 /* 800E8F68 000E5EC8  38 21 00 18 */	addi r1, r1, 0x18
 /* 800E8F6C 000E5ECC  7C 08 03 A6 */	mtlr r0
 /* 800E8F70 000E5ED0  4E 80 00 20 */	blr 
+.endfn update__7UfoItemFv
 
-.global setPca1Effect__7UfoItemFb
-setPca1Effect__7UfoItemFb:
+.fn setPca1Effect__7UfoItemFb, global
 /* 800E8F74 000E5ED4  7C 08 02 A6 */	mflr r0
 /* 800E8F78 000E5ED8  90 01 00 04 */	stw r0, 4(r1)
 /* 800E8F7C 000E5EDC  54 80 06 3F */	clrlwi. r0, r4, 0x18
@@ -2275,9 +2274,9 @@ setPca1Effect__7UfoItemFb:
 /* 800E9080 000E5FE0  38 21 00 40 */	addi r1, r1, 0x40
 /* 800E9084 000E5FE4  7C 08 03 A6 */	mtlr r0
 /* 800E9088 000E5FE8  4E 80 00 20 */	blr 
+.endfn setPca1Effect__7UfoItemFb
 
-.global setPca2Effect__7UfoItemFb
-setPca2Effect__7UfoItemFb:
+.fn setPca2Effect__7UfoItemFb, global
 /* 800E908C 000E5FEC  7C 08 02 A6 */	mflr r0
 /* 800E9090 000E5FF0  90 01 00 04 */	stw r0, 4(r1)
 /* 800E9094 000E5FF4  54 80 06 3F */	clrlwi. r0, r4, 0x18
@@ -2349,9 +2348,9 @@ setPca2Effect__7UfoItemFb:
 /* 800E9198 000E60F8  38 21 00 40 */	addi r1, r1, 0x40
 /* 800E919C 000E60FC  7C 08 03 A6 */	mtlr r0
 /* 800E91A0 000E6100  4E 80 00 20 */	blr 
+.endfn setPca2Effect__7UfoItemFb
 
-.global refresh__7UfoItemFR8Graphics
-refresh__7UfoItemFR8Graphics:
+.fn refresh__7UfoItemFR8Graphics, global
 /* 800E91A4 000E6104  7C 08 02 A6 */	mflr r0
 /* 800E91A8 000E6108  90 01 00 04 */	stw r0, 4(r1)
 /* 800E91AC 000E610C  94 21 FF 98 */	stwu r1, -0x68(r1)
@@ -2411,9 +2410,9 @@ refresh__7UfoItemFR8Graphics:
 /* 800E927C 000E61DC  38 21 00 68 */	addi r1, r1, 0x68
 /* 800E9280 000E61E0  7C 08 03 A6 */	mtlr r0
 /* 800E9284 000E61E4  4E 80 00 20 */	blr 
+.endfn refresh__7UfoItemFR8Graphics
 
-.global demoDraw__7UfoItemFR8GraphicsP8Matrix4f
-demoDraw__7UfoItemFR8GraphicsP8Matrix4f:
+.fn demoDraw__7UfoItemFR8GraphicsP8Matrix4f, global
 /* 800E9288 000E61E8  7C 08 02 A6 */	mflr r0
 /* 800E928C 000E61EC  90 01 00 04 */	stw r0, 4(r1)
 /* 800E9290 000E61F0  94 21 FF 18 */	stwu r1, -0xe8(r1)
@@ -2747,97 +2746,115 @@ demoDraw__7UfoItemFR8GraphicsP8Matrix4f:
 /* 800E9780 000E66E0  38 21 00 E8 */	addi r1, r1, 0xe8
 /* 800E9784 000E66E4  7C 08 03 A6 */	mtlr r0
 /* 800E9788 000E66E8  4E 80 00 20 */	blr 
+.endfn demoDraw__7UfoItemFR8GraphicsP8Matrix4f
 
-.global getRouteIndex__7UfoItemFv
-getRouteIndex__7UfoItemFv:
+.fn getRouteIndex__7UfoItemFv, weak
 /* 800E978C 000E66EC  80 63 05 58 */	lwz r3, 0x558(r3)
 /* 800E9790 000E66F0  4E 80 00 20 */	blr 
+.endfn getRouteIndex__7UfoItemFv
 
-.global isVisible__7UfoItemFv
-isVisible__7UfoItemFv:
+.fn isVisible__7UfoItemFv, weak
 /* 800E9794 000E66F4  38 60 00 01 */	li r3, 1
 /* 800E9798 000E66F8  4E 80 00 20 */	blr 
+.endfn isVisible__7UfoItemFv
 
-.global isAlive__7UfoItemFv
-isAlive__7UfoItemFv:
+.fn isAlive__7UfoItemFv, weak
 /* 800E979C 000E66FC  38 60 00 01 */	li r3, 1
 /* 800E97A0 000E6700  4E 80 00 20 */	blr 
+.endfn isAlive__7UfoItemFv
 
-"@696@animationKeyUpdated__7UfoItemFR16PaniAnimKeyEvent":
+.fn "@696@animationKeyUpdated__7UfoItemFR16PaniAnimKeyEvent", weak
 /* 800E97A4 000E6704  38 63 FD 48 */	addi r3, r3, -696
 /* 800E97A8 000E6708  4B FF EB 00 */	b animationKeyUpdated__7UfoItemFR16PaniAnimKeyEvent
+.endfn "@696@animationKeyUpdated__7UfoItemFR16PaniAnimKeyEvent"
 
 .section .rodata, "a"  # 0x80221FE0 - 0x80222DC0
 .balign 8
-lbl_80222598:
+.obj lbl_80222598, local
 	.4byte 0x000000CD
 	.4byte 0x000000CC
 	.4byte 0x000000CB
-lbl_802225A4:
+.endobj lbl_80222598
+.balign 4
+.obj lbl_802225A4, local
 	.4byte 0x00000109
 	.4byte 0x0000010A
 	.4byte 0x0000010B
 	.4byte 0x0000010B
 	.4byte 0x0000010B
 	.4byte 0x0000010C
-lbl_802225BC:
+.endobj lbl_802225A4
+.balign 4
+.obj lbl_802225BC, local
 	.4byte 0x00000001
 	.4byte 0x00000001
 	.4byte 0x00000002
 	.4byte 0x00000002
 	.4byte 0x00000003
 	.4byte 0x00000003
-lbl_802225D4:
+.endobj lbl_802225BC
+.balign 4
+.obj lbl_802225D4, local
 	.ascii "eng1"
 	.ascii "eng2"
 	.ascii "eng3"
 	.ascii "eng4"
-lbl_802225E4:
+.endobj lbl_802225D4
+.balign 4
+.obj lbl_802225E4, local
 	.4byte 0x00000001
 	.4byte 0x00000001
 	.4byte 0x00000002
 	.4byte 0x00000002
 	.4byte 0x00000003
 	.4byte 0x00000003
-lbl_802225FC:
+.endobj lbl_802225E4
+.balign 4
+.obj lbl_802225FC, local
 	.4byte 0x00000001
 	.4byte 0x00000001
 	.4byte 0x00000002
 	.4byte 0x00000002
 	.4byte 0x00000003
 	.4byte 0x00000003
-lbl_80222614:
+.endobj lbl_802225FC
+.balign 4
+.obj lbl_80222614, local
 	.4byte 0x00000001
 	.4byte 0x00000001
 	.4byte 0x00000002
 	.4byte 0x00000002
 	.4byte 0x00000003
 	.4byte 0x00000003
-lbl_8022262C:
+.endobj lbl_80222614
+.balign 4
+.obj lbl_8022262C, local
 	.4byte 0x0000000B
 	.4byte 0x0000000B
 	.4byte 0x0000000C
 	.4byte 0x0000000D
 	.4byte 0x0000000D
+.endobj lbl_8022262C
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802BBFE0:
+.obj lbl_802BBFE0, local
 	.asciz "ufoItem.cpp"
+.endobj lbl_802BBFE0
 .balign 4
-.global trKeys
-trKeys:
-	.4byte 0
+.obj trKeys, global
+	.float 0.0
+	.float 13.0
+	.float 50.0
+.endobj trKeys
 .balign 4
-	.asciz "AP"
-.balign 4
-	.asciz "BH"
-.balign 4
-leg_ids:
+.obj leg_ids, local
 	.ascii "leg1"
 	.ascii "leg2"
 	.ascii "leg3"
-effects:
+.endobj leg_ids
+.balign 4
+.obj effects, local
 	.4byte 0x0000013F
 	.4byte 0x0000013E
 	.4byte 0x0000013D
@@ -2870,74 +2887,87 @@ effects:
 	.4byte 0x0000013A
 	.4byte 0x00000139
 	.4byte 0x00000138
+.endobj effects
 .balign 4
-lbl_802BC084:
+.obj lbl_802BC084, local
 	.asciz "Suckable"
+.endobj lbl_802BC084
 .balign 4
-lbl_802BC090:
+.obj lbl_802BC090, local
 	.asciz "PaniAnimKeyListener"
+.endobj lbl_802BC090
 .balign 4
-lbl_802BC0A4:
+.obj lbl_802BC0A4, local
 	.asciz "EventTalker"
+.endobj lbl_802BC0A4
 .balign 4
-lbl_802BC0B0:
+.obj lbl_802BC0B0, local
 	.asciz "RefCountable"
+.endobj lbl_802BC0B0
 .balign 4
-lbl_802BC0C0:
+.obj lbl_802BC0C0, local
 	.asciz "Creature"
+.endobj lbl_802BC0C0
 .balign 4
-lbl_802BC0CC:
+.obj lbl_802BC0CC, local
 	.4byte __RTTI__11EventTalker
-	.4byte 0x00000008
+	.4byte 0x8
 	.4byte __RTTI__12RefCountable
-	.4byte 0x00000000
-	.4byte 0x00000000
+	.4byte 0
+	.4byte 0
+.endobj lbl_802BC0CC
 .balign 4
-lbl_802BC0E0:
+.obj lbl_802BC0E0, local
 	.asciz "AICreature"
+.endobj lbl_802BC0E0
 .balign 4
-lbl_802BC0EC:
+.obj lbl_802BC0EC, local
 	.4byte __RTTI__19PaniAnimKeyListener
-	.4byte 0x000002B8
+	.4byte 0x2B8
 	.4byte __RTTI__11EventTalker
-	.4byte 0x00000008
+	.4byte 0x8
 	.4byte __RTTI__12RefCountable
-	.4byte 0x00000000
+	.4byte 0
 	.4byte __RTTI__8Creature
-	.4byte 0x00000000
-	.4byte 0x00000000
+	.4byte 0
+	.4byte 0
+.endobj lbl_802BC0EC
 .balign 4
-lbl_802BC110:
+.obj lbl_802BC110, local
 	.asciz "ItemCreature"
+.endobj lbl_802BC110
 .balign 4
-lbl_802BC120:
+.obj lbl_802BC120, local
 	.4byte __RTTI__19PaniAnimKeyListener
-	.4byte 0x000002B8
+	.4byte 0x2B8
 	.4byte __RTTI__11EventTalker
-	.4byte 0x00000008
+	.4byte 0x8
 	.4byte __RTTI__12RefCountable
-	.4byte 0x00000000
+	.4byte 0
 	.4byte __RTTI__8Creature
-	.4byte 0x00000000
+	.4byte 0
 	.4byte __RTTI__10AICreature
-	.4byte 0x00000000
-	.4byte 0x00000000
-lbl_802BC14C:
+	.4byte 0
+	.4byte 0
+.endobj lbl_802BC120
+.balign 4
+.obj lbl_802BC14C, local
 	.4byte __RTTI__19PaniAnimKeyListener
-	.4byte 0x000002B8
+	.4byte 0x2B8
 	.4byte __RTTI__11EventTalker
-	.4byte 0x00000008
+	.4byte 0x8
 	.4byte __RTTI__12RefCountable
-	.4byte 0x00000000
+	.4byte 0
 	.4byte __RTTI__8Creature
-	.4byte 0x00000000
+	.4byte 0
 	.4byte __RTTI__10AICreature
-	.4byte 0x00000000
+	.4byte 0
 	.4byte __RTTI__12ItemCreature
-	.4byte 0x00000000
-	.4byte 0x00000000
-.global __vt__8Suckable
-__vt__8Suckable:
+	.4byte 0
+	.4byte 0
+.endobj lbl_802BC14C
+.balign 4
+.obj __vt__8Suckable, weak
 	.4byte __RTTI__8Suckable
 	.4byte 0
 	.4byte addCntCallback__12RefCountableFv
@@ -3031,7 +3061,9 @@ __vt__8Suckable:
 	.4byte 0
 	.4byte finishSuck__8SuckableFP6Pellet
 	.4byte 0
-lbl_802BC2F4:
+.endobj __vt__8Suckable
+.balign 4
+.obj lbl_802BC2F4, local
 	.4byte __RTTI__19PaniAnimKeyListener
 	.4byte 0x2B8
 	.4byte __RTTI__11EventTalker
@@ -3047,8 +3079,9 @@ lbl_802BC2F4:
 	.4byte __RTTI__8Suckable
 	.4byte 0
 	.4byte 0
-.global __vt__7UfoItem
-__vt__7UfoItem:
+.endobj lbl_802BC2F4
+.balign 4
+.obj __vt__7UfoItem, global
 	.4byte __RTTI__7UfoItem
 	.4byte 0
 	.4byte addCntCallback__12RefCountableFv
@@ -3142,201 +3175,300 @@ __vt__7UfoItem:
 	.4byte suckMe__7UfoItemFP6Pellet
 	.4byte finishSuck__7UfoItemFP6Pellet
 	.4byte getRouteIndex__7UfoItemFv
+.endobj __vt__7UfoItem
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-numKeys:
+.obj numKeys, local
 	.4byte 3
-lbl_803E167C:
+.endobj numKeys
+.balign 4
+.obj lbl_803E167C, local
 	.float 0.0
-lbl_803E1680:
+.endobj lbl_803E167C
+.obj lbl_803E1680, local
 	.float 0.0
-lbl_803E1684:
+.endobj lbl_803E1680
+.obj lbl_803E1684, local
 	.float 1.0
-lbl_803E1688:
+.endobj lbl_803E1684
+.obj lbl_803E1688, local
 	.float 0.0
-lbl_803E168C:
+.endobj lbl_803E1688
+.obj lbl_803E168C, local
 	.float 0.0
-lbl_803E1690:
+.endobj lbl_803E168C
+.obj lbl_803E1690, local
 	.float 1.0
-lbl_803E1694:
+.endobj lbl_803E1690
+.obj lbl_803E1694, local
 	.float 0.0
-lbl_803E1698:
+.endobj lbl_803E1694
+.obj lbl_803E1698, local
 	.float 0.0
-lbl_803E169C:
+.endobj lbl_803E1698
+.obj lbl_803E169C, local
 	.float 1.0
-lbl_803E16A0:
+.endobj lbl_803E169C
+.obj lbl_803E16A0, local
 	.float 1.0
-lbl_803E16A4:
+.endobj lbl_803E16A0
+.obj lbl_803E16A4, local
 	.float 0.0
-lbl_803E16A8:
+.endobj lbl_803E16A4
+.obj lbl_803E16A8, local
 	.float 0.0
-lbl_803E16AC:
+.endobj lbl_803E16A8
+.obj lbl_803E16AC, local
 	.float 1.0
-lbl_803E16B0:
+.endobj lbl_803E16AC
+.obj lbl_803E16B0, local
 	.float 0.0
-lbl_803E16B4:
+.endobj lbl_803E16B0
+.obj lbl_803E16B4, local
 	.float 0.0
-lbl_803E16B8:
+.endobj lbl_803E16B4
+.obj lbl_803E16B8, local
 	.float 0.0
-lbl_803E16BC:
+.endobj lbl_803E16B8
+.obj lbl_803E16BC, local
 	.float 1.0
-lbl_803E16C0:
+.endobj lbl_803E16BC
+.obj lbl_803E16C0, local
 	.float 0.0
-lbl_803E16C4:
+.endobj lbl_803E16C0
+.obj lbl_803E16C4, local
 	.float 0.0
-lbl_803E16C8:
+.endobj lbl_803E16C4
+.obj lbl_803E16C8, local
 	.float 1.0
-lbl_803E16CC:
+.endobj lbl_803E16C8
+.obj lbl_803E16CC, local
 	.float 1.0
-lbl_803E16D0:
+.endobj lbl_803E16CC
+.obj lbl_803E16D0, local
 	.float 1.0
-lbl_803E16D4:
+.endobj lbl_803E16D0
+.obj lbl_803E16D4, local
 	.float 0.0
-lbl_803E16D8:
+.endobj lbl_803E16D4
+.obj lbl_803E16D8, local
 	.float 0.0
-lbl_803E16DC:
+.endobj lbl_803E16D8
+.obj lbl_803E16DC, local
 	.float 0.0
-lbl_803E16E0:
+.endobj lbl_803E16DC
+.obj lbl_803E16E0, local
 	.float 1.0
-lbl_803E16E4:
+.endobj lbl_803E16E0
+.obj lbl_803E16E4, local
 	.float 0.0
-lbl_803E16E8:
+.endobj lbl_803E16E4
+.obj lbl_803E16E8, local
 	.float 0.0
-lbl_803E16EC:
+.endobj lbl_803E16E8
+.obj lbl_803E16EC, local
 	.float 0.0
-lbl_803E16F0:
+.endobj lbl_803E16EC
+.obj lbl_803E16F0, local
 	.float 1.0
-lbl_803E16F4:
+.endobj lbl_803E16F0
+.obj lbl_803E16F4, local
 	.float 0.0
-lbl_803E16F8:
+.endobj lbl_803E16F4
+.obj lbl_803E16F8, local
 	.float 0.0
-lbl_803E16FC:
+.endobj lbl_803E16F8
+.obj lbl_803E16FC, local
 	.float 1.0
-lbl_803E1700:
+.endobj lbl_803E16FC
+.obj lbl_803E1700, local
 	.float 0.0
-lbl_803E1704:
+.endobj lbl_803E1700
+.obj lbl_803E1704, local
 	.float -1.0
-lbl_803E1708:
+.endobj lbl_803E1704
+.obj lbl_803E1708, local
 	.float 0.0
-lbl_803E170C:
+.endobj lbl_803E1708
+.obj lbl_803E170C, local
 	.float 0.0
-lbl_803E1710:
+.endobj lbl_803E170C
+.obj lbl_803E1710, local
 	.float 0.0
-lbl_803E1714:
+.endobj lbl_803E1710
+.obj lbl_803E1714, local
 	.float 1.0
-lbl_803E1718:
+.endobj lbl_803E1714
+.obj lbl_803E1718, local
 	.float 0.0
-lbl_803E171C:
+.endobj lbl_803E1718
+.obj lbl_803E171C, local
 	.float 0.0
-lbl_803E1720:
+.endobj lbl_803E171C
+.obj lbl_803E1720, local
 	.float 1.0
-lbl_803E1724:
+.endobj lbl_803E1720
+.obj lbl_803E1724, local
 	.float 0.0
-lbl_803E1728:
+.endobj lbl_803E1724
+.obj lbl_803E1728, local
 	.float 0.0
-lbl_803E172C:
+.endobj lbl_803E1728
+.obj lbl_803E172C, local
 	.float 14.0
-lbl_803E1730:
+.endobj lbl_803E172C
+.obj lbl_803E1730, local
 	.float 0.0
-lbl_803E1734:
+.endobj lbl_803E1730
+.obj lbl_803E1734, local
 	.float 0.0
-lbl_803E1738:
+.endobj lbl_803E1734
+.obj lbl_803E1738, local
 	.float 14.0
-lbl_803E173C:
+.endobj lbl_803E1738
+.obj lbl_803E173C, local
 	.float 0.0
-lbl_803E1740:
+.endobj lbl_803E173C
+.obj lbl_803E1740, local
 	.float 13.1
-lbl_803E1744:
+.endobj lbl_803E1740
+.obj lbl_803E1744, local
 	.float -98.4
-lbl_803E1748:
+.endobj lbl_803E1744
+.obj lbl_803E1748, local
 	.float -2.0
-lbl_803E174C:
+.endobj lbl_803E1748
+.obj lbl_803E174C, local
 	.float -9.2
-lbl_803E1750:
+.endobj lbl_803E174C
+.obj lbl_803E1750, local
 	.float -68.1
-lbl_803E1754:
+.endobj lbl_803E1750
+.obj lbl_803E1754, local
 	.float 28.6
-lbl_803E1758:
+.endobj lbl_803E1754
+.obj lbl_803E1758, local
 	.float -22.2
-lbl_803E175C:
+.endobj lbl_803E1758
+.obj lbl_803E175C, local
 	.float 4.9
-lbl_803E1760:
+.endobj lbl_803E175C
+.obj lbl_803E1760, local
 	.float -25.0
-lbl_803E1764:
+.endobj lbl_803E1760
+.obj lbl_803E1764, local
 	.float 0.0
-lbl_803E1768:
+.endobj lbl_803E1764
+.obj lbl_803E1768, local
 	.float -93.0
-lbl_803E176C:
+.endobj lbl_803E1768
+.obj lbl_803E176C, local
 	.float 0.0
-lbl_803E1770:
+.endobj lbl_803E176C
+.obj lbl_803E1770, local
 	.float 0.0
-__RTTI__19PaniAnimKeyListener:
+.endobj lbl_803E1770
+.balign 4
+.obj __RTTI__19PaniAnimKeyListener, local
 	.4byte lbl_802BC090
 	.4byte 0
-__RTTI__11EventTalker:
+.endobj __RTTI__19PaniAnimKeyListener
+.balign 4
+.obj __RTTI__11EventTalker, local
 	.4byte lbl_802BC0A4
 	.4byte 0
-__RTTI__12RefCountable:
+.endobj __RTTI__11EventTalker
+.balign 4
+.obj __RTTI__12RefCountable, local
 	.4byte lbl_802BC0B0
 	.4byte 0
-__RTTI__8Creature:
+.endobj __RTTI__12RefCountable
+.balign 4
+.obj __RTTI__8Creature, local
 	.4byte lbl_802BC0C0
 	.4byte lbl_802BC0CC
-__RTTI__10AICreature:
+.endobj __RTTI__8Creature
+.balign 4
+.obj __RTTI__10AICreature, local
 	.4byte lbl_802BC0E0
 	.4byte lbl_802BC0EC
-__RTTI__12ItemCreature:
+.endobj __RTTI__10AICreature
+.balign 4
+.obj __RTTI__12ItemCreature, local
 	.4byte lbl_802BC110
 	.4byte lbl_802BC120
-__RTTI__8Suckable:
+.endobj __RTTI__12ItemCreature
+.balign 4
+.obj __RTTI__8Suckable, local
 	.4byte lbl_802BC084
 	.4byte lbl_802BC14C
+.endobj __RTTI__8Suckable
 .balign 4
-lbl_803E17AC:
+.obj lbl_803E17AC, local
 	.asciz "UfoItem"
+.endobj lbl_803E17AC
 .balign 4
-__RTTI__7UfoItem:
+.obj __RTTI__7UfoItem, local
 	.4byte lbl_803E17AC
 	.4byte lbl_802BC2F4
+.endobj __RTTI__7UfoItem
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803E9BC0:
+.obj lbl_803E9BC0, local
 	.float 8100.0
-lbl_803E9BC4:
+.endobj lbl_803E9BC0
+.obj lbl_803E9BC4, local
 	.float 4900.0
-lbl_803E9BC8:
+.endobj lbl_803E9BC4
+.obj lbl_803E9BC8, local
 	.float 0.0
-lbl_803E9BCC:
+.endobj lbl_803E9BC8
+.obj lbl_803E9BCC, local
 	.float 30.0
-lbl_803E9BD0:
+.endobj lbl_803E9BCC
+.obj lbl_803E9BD0, local
 	.float 80.0
-lbl_803E9BD4:
+.endobj lbl_803E9BD0
+.obj lbl_803E9BD4, local
 	.float 1.0
-lbl_803E9BD8:
+.endobj lbl_803E9BD4
+.obj lbl_803E9BD8, local
 	.float 60.0
-lbl_803E9BDC:
+.endobj lbl_803E9BD8
+.obj lbl_803E9BDC, local
 	.float 20.0
-lbl_803E9BE0:
+.endobj lbl_803E9BDC
+.obj lbl_803E9BE0, local
 	.float 19.0
+.endobj lbl_803E9BE0
 .balign 8
-lbl_803E9BE8:
-	.4byte 0x43300000
-	.4byte 0x80000000
-lbl_803E9BF0:
+.obj lbl_803E9BE8, local
+	.8byte 0x4330000080000000
+.endobj lbl_803E9BE8
+.balign 4
+.obj lbl_803E9BF0, local
 	.float 9.0
-lbl_803E9BF4:
-	.4byte 0x40060A92
-lbl_803E9BF8:
-	.4byte 0x40860A92
-lbl_803E9BFC:
+.endobj lbl_803E9BF0
+.obj lbl_803E9BF4, local # 2pi/3
+	.float 2.0943952
+.endobj lbl_803E9BF4
+.obj lbl_803E9BF8, local # 4pi/3
+	.float 4.1887903
+.endobj lbl_803E9BF8
+.obj lbl_803E9BFC, local
 	.float 10.0
-lbl_803E9C00:
+.endobj lbl_803E9BFC
+.obj lbl_803E9C00, local
 	.float 0.2
-lbl_803E9C04:
+.endobj lbl_803E9C00
+.obj lbl_803E9C04, local
 	.float 200.0
-lbl_803E9C08:
-	.4byte 0x4216CBE4
-lbl_803E9C0C:
-	.4byte 0x40C90FDB
+.endobj lbl_803E9C04
+.obj lbl_803E9C08, local # 12pi
+	.float 37.699112
+.endobj lbl_803E9C08
+.obj lbl_803E9C0C, local # tau
+	.float 6.2831855
+.endobj lbl_803E9C0C

@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global __ct__14GeneratorCacheFv
-__ct__14GeneratorCacheFv:
+.fn __ct__14GeneratorCacheFv, global
 /* 800DED68 000DBCC8  7C 08 02 A6 */	mflr r0
 /* 800DED6C 000DBCCC  3C 80 80 22 */	lis r4, __vt__5ANode@ha
 /* 800DED70 000DBCD0  90 01 00 04 */	stw r0, 4(r1)
@@ -79,18 +78,18 @@ __ct__14GeneratorCacheFv:
 /* 800DEE8C 000DBDEC  38 21 00 30 */	addi r1, r1, 0x30
 /* 800DEE90 000DBDF0  7C 08 03 A6 */	mtlr r0
 /* 800DEE94 000DBDF4  4E 80 00 20 */	blr 
+.endfn __ct__14GeneratorCacheFv
 
-.global init__14GeneratorCacheFPUci
-init__14GeneratorCacheFPUci:
+.fn init__14GeneratorCacheFPUci, global
 /* 800DEE98 000DBDF8  90 83 00 70 */	stw r4, 0x70(r3)
 /* 800DEE9C 000DBDFC  38 00 00 00 */	li r0, 0
 /* 800DEEA0 000DBE00  90 A3 00 74 */	stw r5, 0x74(r3)
 /* 800DEEA4 000DBE04  90 03 00 78 */	stw r0, 0x78(r3)
 /* 800DEEA8 000DBE08  90 A3 00 7C */	stw r5, 0x7c(r3)
 /* 800DEEAC 000DBE0C  4E 80 00 20 */	blr 
+.endfn init__14GeneratorCacheFPUci
 
-.global initGame__14GeneratorCacheFv
-initGame__14GeneratorCacheFv:
+.fn initGame__14GeneratorCacheFv, global
 /* 800DEEB0 000DBE10  7C 08 02 A6 */	mflr r0
 /* 800DEEB4 000DBE14  90 01 00 04 */	stw r0, 4(r1)
 /* 800DEEB8 000DBE18  38 00 00 00 */	li r0, 0
@@ -141,9 +140,9 @@ initGame__14GeneratorCacheFv:
 /* 800DEF5C 000DBEBC  38 21 00 20 */	addi r1, r1, 0x20
 /* 800DEF60 000DBEC0  7C 08 03 A6 */	mtlr r0
 /* 800DEF64 000DBEC4  4E 80 00 20 */	blr 
+.endfn initGame__14GeneratorCacheFv
 
-.global addOne__14GeneratorCacheFUl
-addOne__14GeneratorCacheFUl:
+.fn addOne__14GeneratorCacheFUl, global
 /* 800DEF68 000DBEC8  7C 08 02 A6 */	mflr r0
 /* 800DEF6C 000DBECC  90 01 00 04 */	stw r0, 4(r1)
 /* 800DEF70 000DBED0  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -207,9 +206,9 @@ addOne__14GeneratorCacheFUl:
 /* 800DF050 000DBFB0  38 21 00 20 */	addi r1, r1, 0x20
 /* 800DF054 000DBFB4  7C 08 03 A6 */	mtlr r0
 /* 800DF058 000DBFB8  4E 80 00 20 */	blr 
+.endfn addOne__14GeneratorCacheFUl
 
-.global saveCard__14GeneratorCacheFR18RandomAccessStream
-saveCard__14GeneratorCacheFR18RandomAccessStream:
+.fn saveCard__14GeneratorCacheFR18RandomAccessStream, global
 /* 800DF05C 000DBFBC  7C 08 02 A6 */	mflr r0
 /* 800DF060 000DBFC0  90 01 00 04 */	stw r0, 4(r1)
 /* 800DF064 000DBFC4  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -291,9 +290,9 @@ saveCard__14GeneratorCacheFR18RandomAccessStream:
 /* 800DF184 000DC0E4  38 21 00 20 */	addi r1, r1, 0x20
 /* 800DF188 000DC0E8  7C 08 03 A6 */	mtlr r0
 /* 800DF18C 000DC0EC  4E 80 00 20 */	blr 
+.endfn saveCard__14GeneratorCacheFR18RandomAccessStream
 
-.global loadCard__14GeneratorCacheFR18RandomAccessStream
-loadCard__14GeneratorCacheFR18RandomAccessStream:
+.fn loadCard__14GeneratorCacheFR18RandomAccessStream, global
 /* 800DF190 000DC0F0  7C 08 02 A6 */	mflr r0
 /* 800DF194 000DC0F4  90 01 00 04 */	stw r0, 4(r1)
 /* 800DF198 000DC0F8  94 21 FF A0 */	stwu r1, -0x60(r1)
@@ -452,9 +451,9 @@ loadCard__14GeneratorCacheFR18RandomAccessStream:
 /* 800DF3C0 000DC320  38 21 00 60 */	addi r1, r1, 0x60
 /* 800DF3C4 000DC324  7C 08 03 A6 */	mtlr r0
 /* 800DF3C8 000DC328  4E 80 00 20 */	blr 
+.endfn loadCard__14GeneratorCacheFR18RandomAccessStream
 
-.global saveCard__Q214GeneratorCache5CacheFR18RandomAccessStream
-saveCard__Q214GeneratorCache5CacheFR18RandomAccessStream:
+.fn saveCard__Q214GeneratorCache5CacheFR18RandomAccessStream, global
 /* 800DF3CC 000DC32C  7C 08 02 A6 */	mflr r0
 /* 800DF3D0 000DC330  90 01 00 04 */	stw r0, 4(r1)
 /* 800DF3D4 000DC334  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -522,9 +521,9 @@ saveCard__Q214GeneratorCache5CacheFR18RandomAccessStream:
 /* 800DF4CC 000DC42C  38 21 00 18 */	addi r1, r1, 0x18
 /* 800DF4D0 000DC430  7C 08 03 A6 */	mtlr r0
 /* 800DF4D4 000DC434  4E 80 00 20 */	blr 
+.endfn saveCard__Q214GeneratorCache5CacheFR18RandomAccessStream
 
-.global loadCard__Q214GeneratorCache5CacheFR18RandomAccessStream
-loadCard__Q214GeneratorCache5CacheFR18RandomAccessStream:
+.fn loadCard__Q214GeneratorCache5CacheFR18RandomAccessStream, global
 /* 800DF4D8 000DC438  7C 08 02 A6 */	mflr r0
 /* 800DF4DC 000DC43C  90 01 00 04 */	stw r0, 4(r1)
 /* 800DF4E0 000DC440  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -592,9 +591,9 @@ loadCard__Q214GeneratorCache5CacheFR18RandomAccessStream:
 /* 800DF5D8 000DC538  38 21 00 18 */	addi r1, r1, 0x18
 /* 800DF5DC 000DC53C  7C 08 03 A6 */	mtlr r0
 /* 800DF5E0 000DC540  4E 80 00 20 */	blr 
+.endfn loadCard__Q214GeneratorCache5CacheFR18RandomAccessStream
 
-.global findCache__14GeneratorCacheFRQ214GeneratorCache5CacheUl
-findCache__14GeneratorCacheFRQ214GeneratorCache5CacheUl:
+.fn findCache__14GeneratorCacheFRQ214GeneratorCache5CacheUl, global
 /* 800DF5E4 000DC544  80 64 00 10 */	lwz r3, 0x10(r4)
 /* 800DF5E8 000DC548  48 00 00 14 */	b .L_800DF5FC
 .L_800DF5EC:
@@ -607,9 +606,9 @@ findCache__14GeneratorCacheFRQ214GeneratorCache5CacheUl:
 /* 800DF600 000DC560  40 82 FF EC */	bne .L_800DF5EC
 /* 800DF604 000DC564  38 60 00 00 */	li r3, 0
 /* 800DF608 000DC568  4E 80 00 20 */	blr 
+.endfn findCache__14GeneratorCacheFRQ214GeneratorCache5CacheUl
 
-.global preload__14GeneratorCacheFUl
-preload__14GeneratorCacheFUl:
+.fn preload__14GeneratorCacheFUl, global
 /* 800DF60C 000DC56C  7C 08 02 A6 */	mflr r0
 /* 800DF610 000DC570  38 A0 00 08 */	li r5, 8
 /* 800DF614 000DC574  90 01 00 04 */	stw r0, 4(r1)
@@ -710,9 +709,9 @@ preload__14GeneratorCacheFUl:
 /* 800DF760 000DC6C0  38 21 00 50 */	addi r1, r1, 0x50
 /* 800DF764 000DC6C4  7C 08 03 A6 */	mtlr r0
 /* 800DF768 000DC6C8  4E 80 00 20 */	blr 
+.endfn preload__14GeneratorCacheFUl
 
-.global hasUfoParts__14GeneratorCacheFUlUl
-hasUfoParts__14GeneratorCacheFUlUl:
+.fn hasUfoParts__14GeneratorCacheFUlUl, global
 /* 800DF76C 000DC6CC  7C 08 02 A6 */	mflr r0
 /* 800DF770 000DC6D0  90 01 00 04 */	stw r0, 4(r1)
 /* 800DF774 000DC6D4  94 21 FF B8 */	stwu r1, -0x48(r1)
@@ -796,9 +795,9 @@ hasUfoParts__14GeneratorCacheFUlUl:
 /* 800DF888 000DC7E8  38 21 00 48 */	addi r1, r1, 0x48
 /* 800DF88C 000DC7EC  7C 08 03 A6 */	mtlr r0
 /* 800DF890 000DC7F0  4E 80 00 20 */	blr 
+.endfn hasUfoParts__14GeneratorCacheFUlUl
 
-.global load__14GeneratorCacheFUl
-load__14GeneratorCacheFUl:
+.fn load__14GeneratorCacheFUl, global
 /* 800DF894 000DC7F4  7C 08 02 A6 */	mflr r0
 /* 800DF898 000DC7F8  90 01 00 04 */	stw r0, 4(r1)
 /* 800DF89C 000DC7FC  94 21 FF C0 */	stwu r1, -0x40(r1)
@@ -913,9 +912,9 @@ load__14GeneratorCacheFUl:
 /* 800DFA24 000DC984  38 21 00 40 */	addi r1, r1, 0x40
 /* 800DFA28 000DC988  7C 08 03 A6 */	mtlr r0
 /* 800DFA2C 000DC98C  4E 80 00 20 */	blr 
+.endfn load__14GeneratorCacheFUl
 
-.global beginSave__14GeneratorCacheFUl
-beginSave__14GeneratorCacheFUl:
+.fn beginSave__14GeneratorCacheFUl, global
 /* 800DFA30 000DC990  80 A3 00 48 */	lwz r5, 0x48(r3)
 /* 800DFA34 000DC994  48 00 00 18 */	b .L_800DFA4C
 .L_800DFA38:
@@ -961,9 +960,9 @@ beginSave__14GeneratorCacheFUl:
 /* 800DFAB4 000DCA14  90 06 00 34 */	stw r0, 0x34(r6)
 /* 800DFAB8 000DCA18  90 83 00 80 */	stw r4, 0x80(r3)
 /* 800DFABC 000DCA1C  4E 80 00 20 */	blr 
+.endfn beginSave__14GeneratorCacheFUl
 
-.global endSave__14GeneratorCacheFv
-endSave__14GeneratorCacheFv:
+.fn endSave__14GeneratorCacheFv, global
 /* 800DFAC0 000DCA20  7C 08 02 A6 */	mflr r0
 /* 800DFAC4 000DCA24  90 01 00 04 */	stw r0, 4(r1)
 /* 800DFAC8 000DCA28  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -1000,9 +999,9 @@ endSave__14GeneratorCacheFv:
 /* 800DFB34 000DCA94  38 21 00 18 */	addi r1, r1, 0x18
 /* 800DFB38 000DCA98  7C 08 03 A6 */	mtlr r0
 /* 800DFB3C 000DCA9C  4E 80 00 20 */	blr 
+.endfn endSave__14GeneratorCacheFv
 
-.global saveGenerator__14GeneratorCacheFP9Generator
-saveGenerator__14GeneratorCacheFP9Generator:
+.fn saveGenerator__14GeneratorCacheFP9Generator, global
 /* 800DFB40 000DCAA0  7C 08 02 A6 */	mflr r0
 /* 800DFB44 000DCAA4  7C 85 23 78 */	mr r5, r4
 /* 800DFB48 000DCAA8  90 01 00 04 */	stw r0, 4(r1)
@@ -1099,9 +1098,9 @@ saveGenerator__14GeneratorCacheFP9Generator:
 /* 800DFC94 000DCBF4  38 21 00 48 */	addi r1, r1, 0x48
 /* 800DFC98 000DCBF8  7C 08 03 A6 */	mtlr r0
 /* 800DFC9C 000DCBFC  4E 80 00 20 */	blr 
+.endfn saveGenerator__14GeneratorCacheFP9Generator
 
-.global prepareUfoParts__14GeneratorCacheFPQ214GeneratorCache5Cache
-prepareUfoParts__14GeneratorCacheFPQ214GeneratorCache5Cache:
+.fn prepareUfoParts__14GeneratorCacheFPQ214GeneratorCache5Cache, global
 /* 800DFCA0 000DCC00  7C 08 02 A6 */	mflr r0
 /* 800DFCA4 000DCC04  90 01 00 04 */	stw r0, 4(r1)
 /* 800DFCA8 000DCC08  94 21 FF B8 */	stwu r1, -0x48(r1)
@@ -1174,9 +1173,9 @@ prepareUfoParts__14GeneratorCacheFPQ214GeneratorCache5Cache:
 /* 800DFDAC 000DCD0C  38 21 00 48 */	addi r1, r1, 0x48
 /* 800DFDB0 000DCD10  7C 08 03 A6 */	mtlr r0
 /* 800DFDB4 000DCD14  4E 80 00 20 */	blr 
+.endfn prepareUfoParts__14GeneratorCacheFPQ214GeneratorCache5Cache
 
-.global loadUfoParts__14GeneratorCacheFPQ214GeneratorCache5Cache
-loadUfoParts__14GeneratorCacheFPQ214GeneratorCache5Cache:
+.fn loadUfoParts__14GeneratorCacheFPQ214GeneratorCache5Cache, global
 /* 800DFDB8 000DCD18  7C 08 02 A6 */	mflr r0
 /* 800DFDBC 000DCD1C  90 01 00 04 */	stw r0, 4(r1)
 /* 800DFDC0 000DCD20  94 21 FF C8 */	stwu r1, -0x38(r1)
@@ -1250,9 +1249,9 @@ loadUfoParts__14GeneratorCacheFPQ214GeneratorCache5Cache:
 /* 800DFEC8 000DCE28  38 21 00 38 */	addi r1, r1, 0x38
 /* 800DFECC 000DCE2C  7C 08 03 A6 */	mtlr r0
 /* 800DFED0 000DCE30  4E 80 00 20 */	blr 
+.endfn loadUfoParts__14GeneratorCacheFPQ214GeneratorCache5Cache
 
-.global saveUfoParts__14GeneratorCacheFP6Pellet
-saveUfoParts__14GeneratorCacheFP6Pellet:
+.fn saveUfoParts__14GeneratorCacheFP6Pellet, global
 /* 800DFED4 000DCE34  7C 08 02 A6 */	mflr r0
 /* 800DFED8 000DCE38  90 01 00 04 */	stw r0, 4(r1)
 /* 800DFEDC 000DCE3C  94 21 FF C0 */	stwu r1, -0x40(r1)
@@ -1332,9 +1331,9 @@ saveUfoParts__14GeneratorCacheFP6Pellet:
 /* 800DFFEC 000DCF4C  38 21 00 40 */	addi r1, r1, 0x40
 /* 800DFFF0 000DCF50  7C 08 03 A6 */	mtlr r0
 /* 800DFFF4 000DCF54  4E 80 00 20 */	blr 
+.endfn saveUfoParts__14GeneratorCacheFP6Pellet
 
-.global saveGeneratorCreature__14GeneratorCacheFP9Generator
-saveGeneratorCreature__14GeneratorCacheFP9Generator:
+.fn saveGeneratorCreature__14GeneratorCacheFP9Generator, global
 /* 800DFFF8 000DCF58  7C 08 02 A6 */	mflr r0
 /* 800DFFFC 000DCF5C  90 01 00 04 */	stw r0, 4(r1)
 /* 800E0000 000DCF60  94 21 FF B8 */	stwu r1, -0x48(r1)
@@ -1433,9 +1432,9 @@ saveGeneratorCreature__14GeneratorCacheFP9Generator:
 /* 800E0154 000DD0B4  38 21 00 48 */	addi r1, r1, 0x48
 /* 800E0158 000DD0B8  7C 08 03 A6 */	mtlr r0
 /* 800E015C 000DD0BC  4E 80 00 20 */	blr 
+.endfn saveGeneratorCreature__14GeneratorCacheFP9Generator
 
-.global dump__14GeneratorCacheFv
-dump__14GeneratorCacheFv:
+.fn dump__14GeneratorCacheFv, global
 /* 800E0160 000DD0C0  94 21 FF E8 */	stwu r1, -0x18(r1)
 /* 800E0164 000DD0C4  3C 00 43 30 */	lis r0, 0x4330
 /* 800E0168 000DD0C8  80 A3 00 10 */	lwz r5, 0x10(r3)
@@ -1463,9 +1462,9 @@ dump__14GeneratorCacheFv:
 /* 800E01B0 000DD110  40 82 FF EC */	bne .L_800E019C
 /* 800E01B4 000DD114  38 21 00 18 */	addi r1, r1, 0x18
 /* 800E01B8 000DD118  4E 80 00 20 */	blr 
+.endfn dump__14GeneratorCacheFv
 
-.global assertValid__14GeneratorCacheFv
-assertValid__14GeneratorCacheFv:
+.fn assertValid__14GeneratorCacheFv, global
 /* 800E01BC 000DD11C  7C 08 02 A6 */	mflr r0
 /* 800E01C0 000DD120  90 01 00 04 */	stw r0, 4(r1)
 /* 800E01C4 000DD124  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -1496,152 +1495,124 @@ assertValid__14GeneratorCacheFv:
 /* 800E021C 000DD17C  38 21 00 20 */	addi r1, r1, 0x20
 /* 800E0220 000DD180  7C 08 03 A6 */	mtlr r0
 /* 800E0224 000DD184  4E 80 00 20 */	blr 
+.endfn assertValid__14GeneratorCacheFv
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802BABF8:
+.obj lbl_802BABF8, local
 	.asciz "generatorCache.cpp"
+.endobj lbl_802BABF8
 .balign 4
-lbl_802BAC0C:
+.obj lbl_802BAC0C, local
 	.asciz "GeneratorCache"
+.endobj lbl_802BAC0C
 .balign 4
-lbl_802BAC1C:
+.obj lbl_802BAC1C, local
 	.asciz "CoreNode"
+.endobj lbl_802BAC1C
 .balign 4
-lbl_802BAC28:
+.obj lbl_802BAC28, local
 	.asciz "RamStream"
+.endobj lbl_802BAC28
 .balign 4
-lbl_802BAC34:
+.obj lbl_802BAC34, local
 	.asciz "RandomAccessStream"
+.endobj lbl_802BAC34
 .balign 4
-lbl_802BAC48:
+.obj lbl_802BAC48, local
 	.4byte __RTTI__6Stream
-	.4byte 0x00000000
-	.4byte 0x00000000
-lbl_802BAC54:
+	.4byte 0
+	.4byte 0
+.endobj lbl_802BAC48
+.balign 4
+.obj lbl_802BAC54, local
 	.4byte __RTTI__6Stream
-	.4byte 0x00000000
+	.4byte 0
 	.4byte __RTTI__18RandomAccessStream
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
-	.4byte 0x00000000
+	.4byte 0
+	.4byte 0
+.endobj lbl_802BAC54
 .balign 4
-lbl_802BAD34:
+.skip 0xCC # compiler padding
+.balign 4
+.obj lbl_802BAD34, local
 	.asciz "GeneratorCache::Cache"
+.endobj lbl_802BAD34
 .balign 4
-lbl_802BAD4C:
+.obj lbl_802BAD4C, local
 	.4byte __RTTI__5ANode
-	.4byte 0x00000000
-	.4byte 0x00000000
-lbl_802BAD58:
+	.4byte 0
+	.4byte 0
+.endobj lbl_802BAD4C
+.balign 4
+.obj lbl_802BAD58, local
 	.4byte __RTTI__5ANode
-	.4byte 0x00000000
+	.4byte 0
 	.4byte __RTTI__8CoreNode
-	.4byte 0x00000000
-	.4byte 0x00000000
-.global __vt__Q214GeneratorCache5Cache
-__vt__Q214GeneratorCache5Cache:
+	.4byte 0
+	.4byte 0
+.endobj lbl_802BAD58
+.balign 4
+.obj __vt__Q214GeneratorCache5Cache, weak
 	.4byte __RTTI__Q214GeneratorCache5Cache
 	.4byte 0
 	.4byte getAgeNodeType__5ANodeFv
 	.4byte read__8CoreNodeFR18RandomAccessStream
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
+.endobj __vt__Q214GeneratorCache5Cache
+.balign 4
+.skip 0x1C # compiler padding
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-lbl_803E1408:
+.obj lbl_803E1408, local
 	.asciz ""
+.endobj lbl_803E1408
 .balign 4
-lbl_803E140C:
+.obj lbl_803E140C, local
 	.asciz "Stream"
+.endobj lbl_803E140C
 .balign 4
-__RTTI__6Stream:
+.obj __RTTI__6Stream, local
 	.4byte lbl_803E140C
 	.4byte 0
-__RTTI__18RandomAccessStream:
+.endobj __RTTI__6Stream
+.balign 4
+.obj __RTTI__18RandomAccessStream, local
 	.4byte lbl_802BAC34
 	.4byte lbl_802BAC48
+.endobj __RTTI__18RandomAccessStream
 .balign 4
-lbl_803E1424:
+.obj lbl_803E1424, local
 	.asciz "ANode"
+.endobj lbl_803E1424
 .balign 4
-__RTTI__5ANode:
+.obj __RTTI__5ANode, local
 	.4byte lbl_803E1424
 	.4byte 0
-__RTTI__8CoreNode:
+.endobj __RTTI__5ANode
+.balign 4
+.obj __RTTI__8CoreNode, local
 	.4byte lbl_802BAC1C
 	.4byte lbl_802BAD4C
-__RTTI__Q214GeneratorCache5Cache:
+.endobj __RTTI__8CoreNode
+.balign 4
+.obj __RTTI__Q214GeneratorCache5Cache, local
 	.4byte lbl_802BAD34
 	.4byte lbl_802BAD58
+.endobj __RTTI__Q214GeneratorCache5Cache
 
 .section .sbss, "wa"
 .balign 8
-.global generatorCache
-generatorCache:
+.obj generatorCache, global
 	.skip 0x4
+.endobj generatorCache
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803E9AA0:
-	.4byte 0x3A800000
+.obj lbl_803E9AA0, local # 1 * 2^-10
+	.float 9.765625E-4
+.endobj lbl_803E9AA0
 .balign 8
-lbl_803E9AA8:
-	.4byte 0x43300000
-	.4byte 0x00000000
+.obj lbl_803E9AA8, local
+	.8byte 0x4330000000000000
+.endobj lbl_803E9AA8

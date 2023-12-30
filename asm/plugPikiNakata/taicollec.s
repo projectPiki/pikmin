@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global __ct__19TaiCollecSoundTableFv
-__ct__19TaiCollecSoundTableFv:
+.fn __ct__19TaiCollecSoundTableFv, global
 /* 8012AAC0 00127A20  7C 08 02 A6 */	mflr r0
 /* 8012AAC4 00127A24  38 80 00 08 */	li r4, 8
 /* 8012AAC8 00127A28  90 01 00 04 */	stw r0, 4(r1)
@@ -38,9 +37,9 @@ __ct__19TaiCollecSoundTableFv:
 /* 8012AB38 00127A98  38 21 00 20 */	addi r1, r1, 0x20
 /* 8012AB3C 00127A9C  7C 08 03 A6 */	mtlr r0
 /* 8012AB40 00127AA0  4E 80 00 20 */	blr 
+.endfn __ct__19TaiCollecSoundTableFv
 
-.global __ct__19TaiCollecParametersFv
-__ct__19TaiCollecParametersFv:
+.fn __ct__19TaiCollecParametersFv, global
 /* 8012AB44 00127AA4  7C 08 02 A6 */	mflr r0
 /* 8012AB48 00127AA8  3C 80 80 2C */	lis r4, lbl_802C7060@ha
 /* 8012AB4C 00127AAC  90 01 00 04 */	stw r0, 4(r1)
@@ -330,9 +329,9 @@ __ct__19TaiCollecParametersFv:
 /* 8012AFBC 00127F1C  38 21 00 E0 */	addi r1, r1, 0xe0
 /* 8012AFC0 00127F20  7C 08 03 A6 */	mtlr r0
 /* 8012AFC4 00127F24  4E 80 00 20 */	blr 
+.endfn __ct__19TaiCollecParametersFv
 
-.global __ct__17TaiCollecStrategyFP14TekiParameters
-__ct__17TaiCollecStrategyFP14TekiParameters:
+.fn __ct__17TaiCollecStrategyFP14TekiParameters, global
 /* 8012AFC8 00127F28  7C 08 02 A6 */	mflr r0
 /* 8012AFCC 00127F2C  38 A0 00 03 */	li r5, 3
 /* 8012AFD0 00127F30  90 01 00 04 */	stw r0, 4(r1)
@@ -1920,9 +1919,9 @@ __ct__17TaiCollecStrategyFP14TekiParameters:
 /* 8012C758 001296B8  38 21 02 80 */	addi r1, r1, 0x280
 /* 8012C75C 001296BC  7C 08 03 A6 */	mtlr r0
 /* 8012C760 001296C0  4E 80 00 20 */	blr 
+.endfn __ct__17TaiCollecStrategyFP14TekiParameters
 
-.global start__17TaiCollecStrategyFR4Teki
-start__17TaiCollecStrategyFR4Teki:
+.fn start__17TaiCollecStrategyFR4Teki, global
 /* 8012C764 001296C4  7C 08 02 A6 */	mflr r0
 /* 8012C768 001296C8  38 C0 00 00 */	li r6, 0
 /* 8012C76C 001296CC  90 01 00 04 */	stw r0, 4(r1)
@@ -2013,9 +2012,9 @@ start__17TaiCollecStrategyFR4Teki:
 /* 8012C8C0 00129820  38 21 00 48 */	addi r1, r1, 0x48
 /* 8012C8C4 00129824  7C 08 03 A6 */	mtlr r0
 /* 8012C8C8 00129828  4E 80 00 20 */	blr 
+.endfn start__17TaiCollecStrategyFR4Teki
 
-.global draw__17TaiCollecStrategyFR4TekiR8Graphics
-draw__17TaiCollecStrategyFR4TekiR8Graphics:
+.fn draw__17TaiCollecStrategyFR4TekiR8Graphics, global
 /* 8012C8CC 0012982C  7C 08 02 A6 */	mflr r0
 /* 8012C8D0 00129830  90 01 00 04 */	stw r0, 4(r1)
 /* 8012C8D4 00129834  94 21 FF D0 */	stwu r1, -0x30(r1)
@@ -2088,9 +2087,9 @@ draw__17TaiCollecStrategyFR4TekiR8Graphics:
 /* 8012C9D0 00129930  38 21 00 30 */	addi r1, r1, 0x30
 /* 8012C9D4 00129934  7C 08 03 A6 */	mtlr r0
 /* 8012C9D8 00129938  4E 80 00 20 */	blr 
+.endfn draw__17TaiCollecStrategyFR4TekiR8Graphics
 
-.global satisfy__31TekiCollecTargetPelletConditionFP8Creature
-satisfy__31TekiCollecTargetPelletConditionFP8Creature:
+.fn satisfy__31TekiCollecTargetPelletConditionFP8Creature, global
 /* 8012C9DC 0012993C  7C 08 02 A6 */	mflr r0
 /* 8012C9E0 00129940  90 01 00 04 */	stw r0, 4(r1)
 /* 8012C9E4 00129944  94 21 FF 90 */	stwu r1, -0x70(r1)
@@ -2232,9 +2231,9 @@ satisfy__31TekiCollecTargetPelletConditionFP8Creature:
 /* 8012CBC0 00129B20  38 21 00 70 */	addi r1, r1, 0x70
 /* 8012CBC4 00129B24  7C 08 03 A6 */	mtlr r0
 /* 8012CBC8 00129B28  4E 80 00 20 */	blr 
+.endfn satisfy__31TekiCollecTargetPelletConditionFP8Creature
 
-.global start__25TaiCollecImpassableActionFR4Teki
-start__25TaiCollecImpassableActionFR4Teki:
+.fn start__25TaiCollecImpassableActionFR4Teki, global
 /* 8012CBCC 00129B2C  7C 08 02 A6 */	mflr r0
 /* 8012CBD0 00129B30  90 01 00 04 */	stw r0, 4(r1)
 /* 8012CBD4 00129B34  94 21 FF F8 */	stwu r1, -8(r1)
@@ -2253,9 +2252,9 @@ start__25TaiCollecImpassableActionFR4Teki:
 /* 8012CC00 00129B60  38 21 00 08 */	addi r1, r1, 8
 /* 8012CC04 00129B64  7C 08 03 A6 */	mtlr r0
 /* 8012CC08 00129B68  4E 80 00 20 */	blr 
+.endfn start__25TaiCollecImpassableActionFR4Teki
 
-.global act__25TaiCollecImpassableActionFR4Teki
-act__25TaiCollecImpassableActionFR4Teki:
+.fn act__25TaiCollecImpassableActionFR4Teki, global
 /* 8012CC0C 00129B6C  7C 08 02 A6 */	mflr r0
 /* 8012CC10 00129B70  90 01 00 04 */	stw r0, 4(r1)
 /* 8012CC14 00129B74  94 21 FF B8 */	stwu r1, -0x48(r1)
@@ -2302,9 +2301,9 @@ act__25TaiCollecImpassableActionFR4Teki:
 /* 8012CCAC 00129C0C  38 21 00 48 */	addi r1, r1, 0x48
 /* 8012CCB0 00129C10  7C 08 03 A6 */	mtlr r0
 /* 8012CCB4 00129C14  4E 80 00 20 */	blr 
+.endfn act__25TaiCollecImpassableActionFR4Teki
 
-.global resetPosition__25TaiCollecImpassableActionFR4Teki
-resetPosition__25TaiCollecImpassableActionFR4Teki:
+.fn resetPosition__25TaiCollecImpassableActionFR4Teki, global
 /* 8012CCB8 00129C18  C0 04 00 94 */	lfs f0, 0x94(r4)
 /* 8012CCBC 00129C1C  D0 04 03 88 */	stfs f0, 0x388(r4)
 /* 8012CCC0 00129C20  C0 04 00 98 */	lfs f0, 0x98(r4)
@@ -2317,9 +2316,9 @@ resetPosition__25TaiCollecImpassableActionFR4Teki:
 /* 8012CCDC 00129C3C  7C 64 02 14 */	add r3, r4, r0
 /* 8012CCE0 00129C40  D0 03 03 C4 */	stfs f0, 0x3c4(r3)
 /* 8012CCE4 00129C44  4E 80 00 20 */	blr 
+.endfn resetPosition__25TaiCollecImpassableActionFR4Teki
 
-.global act__28TaiCollecLetGoOfPelletActionFR4Teki
-act__28TaiCollecLetGoOfPelletActionFR4Teki:
+.fn act__28TaiCollecLetGoOfPelletActionFR4Teki, global
 /* 8012CCE8 00129C48  7C 08 02 A6 */	mflr r0
 /* 8012CCEC 00129C4C  90 01 00 04 */	stw r0, 4(r1)
 /* 8012CCF0 00129C50  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -2351,9 +2350,9 @@ act__28TaiCollecLetGoOfPelletActionFR4Teki:
 /* 8012CD4C 00129CAC  38 21 00 28 */	addi r1, r1, 0x28
 /* 8012CD50 00129CB0  7C 08 03 A6 */	mtlr r0
 /* 8012CD54 00129CB4  4E 80 00 20 */	blr 
+.endfn act__28TaiCollecLetGoOfPelletActionFR4Teki
 
-.global actByEvent__28TaiCollecLetGoOfPelletActionFR9TekiEvent
-actByEvent__28TaiCollecLetGoOfPelletActionFR9TekiEvent:
+.fn actByEvent__28TaiCollecLetGoOfPelletActionFR9TekiEvent, global
 /* 8012CD58 00129CB8  7C 08 02 A6 */	mflr r0
 /* 8012CD5C 00129CBC  90 01 00 04 */	stw r0, 4(r1)
 /* 8012CD60 00129CC0  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -2386,9 +2385,9 @@ actByEvent__28TaiCollecLetGoOfPelletActionFR9TekiEvent:
 /* 8012CDC0 00129D20  38 21 00 28 */	addi r1, r1, 0x28
 /* 8012CDC4 00129D24  7C 08 03 A6 */	mtlr r0
 /* 8012CDC8 00129D28  4E 80 00 20 */	blr 
+.endfn actByEvent__28TaiCollecLetGoOfPelletActionFR9TekiEvent
 
-.global act__27TaiCollecTargetPelletActionFR4Teki
-act__27TaiCollecTargetPelletActionFR4Teki:
+.fn act__27TaiCollecTargetPelletActionFR4Teki, global
 /* 8012CDCC 00129D2C  7C 08 02 A6 */	mflr r0
 /* 8012CDD0 00129D30  3D 00 80 2C */	lis r8, __vt__31TekiCollecTargetPelletCondition@ha
 /* 8012CDD4 00129D34  90 01 00 04 */	stw r0, 4(r1)
@@ -2479,9 +2478,9 @@ act__27TaiCollecTargetPelletActionFR4Teki:
 /* 8012CF18 00129E78  38 21 01 30 */	addi r1, r1, 0x130
 /* 8012CF1C 00129E7C  7C 08 03 A6 */	mtlr r0
 /* 8012CF20 00129E80  4E 80 00 20 */	blr 
+.endfn act__27TaiCollecTargetPelletActionFR4Teki
 
-.global act__38TaiCollecVisibleHeightPelletLostActionFR4Teki
-act__38TaiCollecVisibleHeightPelletLostActionFR4Teki:
+.fn act__38TaiCollecVisibleHeightPelletLostActionFR4Teki, global
 /* 8012CF24 00129E84  7C 08 02 A6 */	mflr r0
 /* 8012CF28 00129E88  90 01 00 04 */	stw r0, 4(r1)
 /* 8012CF2C 00129E8C  94 21 FF C0 */	stwu r1, -0x40(r1)
@@ -2544,9 +2543,9 @@ act__38TaiCollecVisibleHeightPelletLostActionFR4Teki:
 /* 8012CFF8 00129F58  38 21 00 40 */	addi r1, r1, 0x40
 /* 8012CFFC 00129F5C  7C 08 03 A6 */	mtlr r0
 /* 8012D000 00129F60  4E 80 00 20 */	blr 
+.endfn act__38TaiCollecVisibleHeightPelletLostActionFR4Teki
 
-.global act__43TaiCollecVisibleHeightPelletLostTimerActionFR4Teki
-act__43TaiCollecVisibleHeightPelletLostTimerActionFR4Teki:
+.fn act__43TaiCollecVisibleHeightPelletLostTimerActionFR4Teki, global
 /* 8012D004 00129F64  7C 08 02 A6 */	mflr r0
 /* 8012D008 00129F68  90 01 00 04 */	stw r0, 4(r1)
 /* 8012D00C 00129F6C  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -2573,9 +2572,9 @@ act__43TaiCollecVisibleHeightPelletLostTimerActionFR4Teki:
 /* 8012D05C 00129FBC  38 21 00 20 */	addi r1, r1, 0x20
 /* 8012D060 00129FC0  7C 08 03 A6 */	mtlr r0
 /* 8012D064 00129FC4  4E 80 00 20 */	blr 
+.endfn act__43TaiCollecVisibleHeightPelletLostTimerActionFR4Teki
 
-.global act__25TaiCollecPelletLostActionFR4Teki
-act__25TaiCollecPelletLostActionFR4Teki:
+.fn act__25TaiCollecPelletLostActionFR4Teki, global
 /* 8012D068 00129FC8  7C 08 02 A6 */	mflr r0
 /* 8012D06C 00129FCC  90 01 00 04 */	stw r0, 4(r1)
 /* 8012D070 00129FD0  94 21 FF 50 */	stwu r1, -0xb0(r1)
@@ -2643,9 +2642,9 @@ act__25TaiCollecPelletLostActionFR4Teki:
 /* 8012D158 0012A0B8  38 21 00 B0 */	addi r1, r1, 0xb0
 /* 8012D15C 0012A0BC  7C 08 03 A6 */	mtlr r0
 /* 8012D160 0012A0C0  4E 80 00 20 */	blr 
+.endfn act__25TaiCollecPelletLostActionFR4Teki
 
-.global act__32TaiCollecPelletDisappearedActionFR4Teki
-act__32TaiCollecPelletDisappearedActionFR4Teki:
+.fn act__32TaiCollecPelletDisappearedActionFR4Teki, global
 /* 8012D164 0012A0C4  7C 08 02 A6 */	mflr r0
 /* 8012D168 0012A0C8  90 01 00 04 */	stw r0, 4(r1)
 /* 8012D16C 0012A0CC  94 21 FF B0 */	stwu r1, -0x50(r1)
@@ -2697,9 +2696,9 @@ act__32TaiCollecPelletDisappearedActionFR4Teki:
 /* 8012D214 0012A174  38 21 00 50 */	addi r1, r1, 0x50
 /* 8012D218 0012A178  7C 08 03 A6 */	mtlr r0
 /* 8012D21C 0012A17C  4E 80 00 20 */	blr 
+.endfn act__32TaiCollecPelletDisappearedActionFR4Teki
 
-.global act__25TaiCollecHoldPelletActionFR4Teki
-act__25TaiCollecHoldPelletActionFR4Teki:
+.fn act__25TaiCollecHoldPelletActionFR4Teki, global
 /* 8012D220 0012A180  7C 08 02 A6 */	mflr r0
 /* 8012D224 0012A184  90 01 00 04 */	stw r0, 4(r1)
 /* 8012D228 0012A188  94 21 FF D0 */	stwu r1, -0x30(r1)
@@ -2776,9 +2775,9 @@ act__25TaiCollecHoldPelletActionFR4Teki:
 /* 8012D324 0012A284  38 21 00 30 */	addi r1, r1, 0x30
 /* 8012D328 0012A288  7C 08 03 A6 */	mtlr r0
 /* 8012D32C 0012A28C  4E 80 00 20 */	blr 
+.endfn act__25TaiCollecHoldPelletActionFR4Teki
 
-.global start__23TaiCollecCatchingActionFR4Teki
-start__23TaiCollecCatchingActionFR4Teki:
+.fn start__23TaiCollecCatchingActionFR4Teki, global
 /* 8012D330 0012A290  7C 08 02 A6 */	mflr r0
 /* 8012D334 0012A294  90 01 00 04 */	stw r0, 4(r1)
 /* 8012D338 0012A298  94 21 FF D0 */	stwu r1, -0x30(r1)
@@ -2799,9 +2798,9 @@ start__23TaiCollecCatchingActionFR4Teki:
 /* 8012D374 0012A2D4  38 21 00 30 */	addi r1, r1, 0x30
 /* 8012D378 0012A2D8  7C 08 03 A6 */	mtlr r0
 /* 8012D37C 0012A2DC  4E 80 00 20 */	blr 
+.endfn start__23TaiCollecCatchingActionFR4Teki
 
-.global finish__23TaiCollecCatchingActionFR4Teki
-finish__23TaiCollecCatchingActionFR4Teki:
+.fn finish__23TaiCollecCatchingActionFR4Teki, global
 /* 8012D380 0012A2E0  7C 08 02 A6 */	mflr r0
 /* 8012D384 0012A2E4  7C 83 23 78 */	mr r3, r4
 /* 8012D388 0012A2E8  90 01 00 04 */	stw r0, 4(r1)
@@ -2815,9 +2814,9 @@ finish__23TaiCollecCatchingActionFR4Teki:
 /* 8012D3A8 0012A308  38 21 00 08 */	addi r1, r1, 8
 /* 8012D3AC 0012A30C  7C 08 03 A6 */	mtlr r0
 /* 8012D3B0 0012A310  4E 80 00 20 */	blr 
+.endfn finish__23TaiCollecCatchingActionFR4Teki
 
-.global start__23TaiCollecCarryingActionFR4Teki
-start__23TaiCollecCarryingActionFR4Teki:
+.fn start__23TaiCollecCarryingActionFR4Teki, global
 /* 8012D3B4 0012A314  7C 08 02 A6 */	mflr r0
 /* 8012D3B8 0012A318  7C 83 23 78 */	mr r3, r4
 /* 8012D3BC 0012A31C  90 01 00 04 */	stw r0, 4(r1)
@@ -2831,9 +2830,9 @@ start__23TaiCollecCarryingActionFR4Teki:
 /* 8012D3DC 0012A33C  38 21 00 08 */	addi r1, r1, 8
 /* 8012D3E0 0012A340  7C 08 03 A6 */	mtlr r0
 /* 8012D3E4 0012A344  4E 80 00 20 */	blr 
+.endfn start__23TaiCollecCarryingActionFR4Teki
 
-.global finish__23TaiCollecCarryingActionFR4Teki
-finish__23TaiCollecCarryingActionFR4Teki:
+.fn finish__23TaiCollecCarryingActionFR4Teki, global
 /* 8012D3E8 0012A348  7C 08 02 A6 */	mflr r0
 /* 8012D3EC 0012A34C  7C 83 23 78 */	mr r3, r4
 /* 8012D3F0 0012A350  90 01 00 04 */	stw r0, 4(r1)
@@ -2847,9 +2846,9 @@ finish__23TaiCollecCarryingActionFR4Teki:
 /* 8012D410 0012A370  38 21 00 08 */	addi r1, r1, 8
 /* 8012D414 0012A374  7C 08 03 A6 */	mtlr r0
 /* 8012D418 0012A378  4E 80 00 20 */	blr 
+.endfn finish__23TaiCollecCarryingActionFR4Teki
 
-.global act__23TaiCollecCarryingActionFR4Teki
-act__23TaiCollecCarryingActionFR4Teki:
+.fn act__23TaiCollecCarryingActionFR4Teki, global
 /* 8012D41C 0012A37C  7C 08 02 A6 */	mflr r0
 /* 8012D420 0012A380  90 01 00 04 */	stw r0, 4(r1)
 /* 8012D424 0012A384  94 21 FF 90 */	stwu r1, -0x70(r1)
@@ -2898,9 +2897,9 @@ act__23TaiCollecCarryingActionFR4Teki:
 /* 8012D4C8 0012A428  38 21 00 70 */	addi r1, r1, 0x70
 /* 8012D4CC 0012A42C  7C 08 03 A6 */	mtlr r0
 /* 8012D4D0 0012A430  4E 80 00 20 */	blr 
+.endfn act__23TaiCollecCarryingActionFR4Teki
 
-.global start__27TaiCollecBeingDraggedActionFR4Teki
-start__27TaiCollecBeingDraggedActionFR4Teki:
+.fn start__27TaiCollecBeingDraggedActionFR4Teki, global
 /* 8012D4D4 0012A434  7C 08 02 A6 */	mflr r0
 /* 8012D4D8 0012A438  38 64 00 00 */	addi r3, r4, 0
 /* 8012D4DC 0012A43C  90 01 00 04 */	stw r0, 4(r1)
@@ -2911,9 +2910,9 @@ start__27TaiCollecBeingDraggedActionFR4Teki:
 /* 8012D4F0 0012A450  38 21 00 08 */	addi r1, r1, 8
 /* 8012D4F4 0012A454  7C 08 03 A6 */	mtlr r0
 /* 8012D4F8 0012A458  4E 80 00 20 */	blr 
+.endfn start__27TaiCollecBeingDraggedActionFR4Teki
 
-.global finish__27TaiCollecBeingDraggedActionFR4Teki
-finish__27TaiCollecBeingDraggedActionFR4Teki:
+.fn finish__27TaiCollecBeingDraggedActionFR4Teki, global
 /* 8012D4FC 0012A45C  7C 08 02 A6 */	mflr r0
 /* 8012D500 0012A460  38 64 00 00 */	addi r3, r4, 0
 /* 8012D504 0012A464  90 01 00 04 */	stw r0, 4(r1)
@@ -2924,9 +2923,9 @@ finish__27TaiCollecBeingDraggedActionFR4Teki:
 /* 8012D518 0012A478  38 21 00 08 */	addi r1, r1, 8
 /* 8012D51C 0012A47C  7C 08 03 A6 */	mtlr r0
 /* 8012D520 0012A480  4E 80 00 20 */	blr 
+.endfn finish__27TaiCollecBeingDraggedActionFR4Teki
 
-.global act__26TaiCollecWinCarryingActionFR4Teki
-act__26TaiCollecWinCarryingActionFR4Teki:
+.fn act__26TaiCollecWinCarryingActionFR4Teki, global
 /* 8012D524 0012A484  7C 08 02 A6 */	mflr r0
 /* 8012D528 0012A488  90 01 00 04 */	stw r0, 4(r1)
 /* 8012D52C 0012A48C  94 21 FF 98 */	stwu r1, -0x68(r1)
@@ -2970,9 +2969,9 @@ act__26TaiCollecWinCarryingActionFR4Teki:
 /* 8012D5B8 0012A518  38 21 00 68 */	addi r1, r1, 0x68
 /* 8012D5BC 0012A51C  7C 08 03 A6 */	mtlr r0
 /* 8012D5C0 0012A520  4E 80 00 20 */	blr 
+.endfn act__26TaiCollecWinCarryingActionFR4Teki
 
-.global act__29TaiCollecDefeatCarryingActionFR4Teki
-act__29TaiCollecDefeatCarryingActionFR4Teki:
+.fn act__29TaiCollecDefeatCarryingActionFR4Teki, global
 /* 8012D5C4 0012A524  7C 08 02 A6 */	mflr r0
 /* 8012D5C8 0012A528  90 01 00 04 */	stw r0, 4(r1)
 /* 8012D5CC 0012A52C  94 21 FF 98 */	stwu r1, -0x68(r1)
@@ -3016,9 +3015,9 @@ act__29TaiCollecDefeatCarryingActionFR4Teki:
 /* 8012D658 0012A5B8  38 21 00 68 */	addi r1, r1, 0x68
 /* 8012D65C 0012A5BC  7C 08 03 A6 */	mtlr r0
 /* 8012D660 0012A5C0  4E 80 00 20 */	blr 
+.endfn act__29TaiCollecDefeatCarryingActionFR4Teki
 
-.global act__18TaiCollecPutActionFR4Teki
-act__18TaiCollecPutActionFR4Teki:
+.fn act__18TaiCollecPutActionFR4Teki, global
 /* 8012D664 0012A5C4  7C 08 02 A6 */	mflr r0
 /* 8012D668 0012A5C8  90 01 00 04 */	stw r0, 4(r1)
 /* 8012D66C 0012A5CC  94 21 FF 40 */	stwu r1, -0xc0(r1)
@@ -3109,9 +3108,9 @@ act__18TaiCollecPutActionFR4Teki:
 /* 8012D7B4 0012A714  38 21 00 C0 */	addi r1, r1, 0xc0
 /* 8012D7B8 0012A718  7C 08 03 A6 */	mtlr r0
 /* 8012D7BC 0012A71C  4E 80 00 20 */	blr 
+.endfn act__18TaiCollecPutActionFR4Teki
 
-.global start__28TaiCollecPuttingPelletActionFR4Teki
-start__28TaiCollecPuttingPelletActionFR4Teki:
+.fn start__28TaiCollecPuttingPelletActionFR4Teki, global
 /* 8012D7C0 0012A720  7C 08 02 A6 */	mflr r0
 /* 8012D7C4 0012A724  90 01 00 04 */	stw r0, 4(r1)
 /* 8012D7C8 0012A728  94 21 FF B0 */	stwu r1, -0x50(r1)
@@ -3169,9 +3168,9 @@ start__28TaiCollecPuttingPelletActionFR4Teki:
 /* 8012D894 0012A7F4  38 21 00 50 */	addi r1, r1, 0x50
 /* 8012D898 0012A7F8  7C 08 03 A6 */	mtlr r0
 /* 8012D89C 0012A7FC  4E 80 00 20 */	blr 
+.endfn start__28TaiCollecPuttingPelletActionFR4Teki
 
-.global finish__28TaiCollecPuttingPelletActionFR4Teki
-finish__28TaiCollecPuttingPelletActionFR4Teki:
+.fn finish__28TaiCollecPuttingPelletActionFR4Teki, global
 /* 8012D8A0 0012A800  7C 08 02 A6 */	mflr r0
 /* 8012D8A4 0012A804  90 01 00 04 */	stw r0, 4(r1)
 /* 8012D8A8 0012A808  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -3188,9 +3187,9 @@ finish__28TaiCollecPuttingPelletActionFR4Teki:
 /* 8012D8D4 0012A834  38 21 00 18 */	addi r1, r1, 0x18
 /* 8012D8D8 0012A838  7C 08 03 A6 */	mtlr r0
 /* 8012D8DC 0012A83C  4E 80 00 20 */	blr 
+.endfn finish__28TaiCollecPuttingPelletActionFR4Teki
 
-.global act__28TaiCollecPuttingPelletActionFR4Teki
-act__28TaiCollecPuttingPelletActionFR4Teki:
+.fn act__28TaiCollecPuttingPelletActionFR4Teki, global
 /* 8012D8E0 0012A840  7C 08 02 A6 */	mflr r0
 /* 8012D8E4 0012A844  90 01 00 04 */	stw r0, 4(r1)
 /* 8012D8E8 0012A848  94 21 FF B8 */	stwu r1, -0x48(r1)
@@ -3242,9 +3241,9 @@ act__28TaiCollecPuttingPelletActionFR4Teki:
 /* 8012D990 0012A8F0  38 21 00 48 */	addi r1, r1, 0x48
 /* 8012D994 0012A8F4  7C 08 03 A6 */	mtlr r0
 /* 8012D998 0012A8F8  4E 80 00 20 */	blr 
+.endfn act__28TaiCollecPuttingPelletActionFR4Teki
 
-.global start__29TaiCollecCarryingToNestActionFR4Teki
-start__29TaiCollecCarryingToNestActionFR4Teki:
+.fn start__29TaiCollecCarryingToNestActionFR4Teki, global
 /* 8012D99C 0012A8FC  7C 08 02 A6 */	mflr r0
 /* 8012D9A0 0012A900  90 01 00 04 */	stw r0, 4(r1)
 /* 8012D9A4 0012A904  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -3262,9 +3261,9 @@ start__29TaiCollecCarryingToNestActionFR4Teki:
 /* 8012D9D4 0012A934  38 21 00 18 */	addi r1, r1, 0x18
 /* 8012D9D8 0012A938  7C 08 03 A6 */	mtlr r0
 /* 8012D9DC 0012A93C  4E 80 00 20 */	blr 
+.endfn start__29TaiCollecCarryingToNestActionFR4Teki
 
-.global act__29TaiCollecCarryingToNestActionFR4Teki
-act__29TaiCollecCarryingToNestActionFR4Teki:
+.fn act__29TaiCollecCarryingToNestActionFR4Teki, global
 /* 8012D9E0 0012A940  7C 08 02 A6 */	mflr r0
 /* 8012D9E4 0012A944  90 01 00 04 */	stw r0, 4(r1)
 /* 8012D9E8 0012A948  94 21 FF 40 */	stwu r1, -0xc0(r1)
@@ -3407,9 +3406,9 @@ act__29TaiCollecCarryingToNestActionFR4Teki:
 /* 8012DBE8 0012AB48  38 21 00 C0 */	addi r1, r1, 0xc0
 /* 8012DBEC 0012AB4C  7C 08 03 A6 */	mtlr r0
 /* 8012DBF0 0012AB50  4E 80 00 20 */	blr 
+.endfn act__29TaiCollecCarryingToNestActionFR4Teki
 
-.global makePositionRoute__29TaiCollecCarryingToNestActionFR4Teki
-makePositionRoute__29TaiCollecCarryingToNestActionFR4Teki:
+.fn makePositionRoute__29TaiCollecCarryingToNestActionFR4Teki, global
 /* 8012DBF4 0012AB54  7C 08 02 A6 */	mflr r0
 /* 8012DBF8 0012AB58  90 01 00 04 */	stw r0, 4(r1)
 /* 8012DBFC 0012AB5C  94 21 FF C8 */	stwu r1, -0x38(r1)
@@ -3432,9 +3431,9 @@ makePositionRoute__29TaiCollecCarryingToNestActionFR4Teki:
 /* 8012DC3C 0012AB9C  38 21 00 38 */	addi r1, r1, 0x38
 /* 8012DC40 0012ABA0  7C 08 03 A6 */	mtlr r0
 /* 8012DC44 0012ABA4  4E 80 00 20 */	blr 
+.endfn makePositionRoute__29TaiCollecCarryingToNestActionFR4Teki
 
-.global act__30TaiCollecRouteImpassableActionFR4Teki
-act__30TaiCollecRouteImpassableActionFR4Teki:
+.fn act__30TaiCollecRouteImpassableActionFR4Teki, global
 /* 8012DC48 0012ABA8  7C 08 02 A6 */	mflr r0
 /* 8012DC4C 0012ABAC  90 01 00 04 */	stw r0, 4(r1)
 /* 8012DC50 0012ABB0  94 21 FF F8 */	stwu r1, -8(r1)
@@ -3481,17 +3480,17 @@ act__30TaiCollecRouteImpassableActionFR4Teki:
 /* 8012DCDC 0012AC3C  38 21 00 08 */	addi r1, r1, 8
 /* 8012DCE0 0012AC40  7C 08 03 A6 */	mtlr r0
 /* 8012DCE4 0012AC44  4E 80 00 20 */	blr 
+.endfn act__30TaiCollecRouteImpassableActionFR4Teki
 
-.global start__25TaiCollecRoundCarryActionFR4Teki
-start__25TaiCollecRoundCarryActionFR4Teki:
+.fn start__25TaiCollecRoundCarryActionFR4Teki, global
 /* 8012DCE8 0012AC48  C0 2D E3 5C */	lfs f1, pi__6NMathF@sda21(r13)
 /* 8012DCEC 0012AC4C  C0 04 00 A0 */	lfs f0, 0xa0(r4)
 /* 8012DCF0 0012AC50  EC 01 00 2A */	fadds f0, f1, f0
 /* 8012DCF4 0012AC54  D0 04 03 94 */	stfs f0, 0x394(r4)
 /* 8012DCF8 0012AC58  4E 80 00 20 */	blr 
+.endfn start__25TaiCollecRoundCarryActionFR4Teki
 
-.global act__25TaiCollecRoundCarryActionFR4Teki
-act__25TaiCollecRoundCarryActionFR4Teki:
+.fn act__25TaiCollecRoundCarryActionFR4Teki, global
 /* 8012DCFC 0012AC5C  7C 08 02 A6 */	mflr r0
 /* 8012DD00 0012AC60  90 01 00 04 */	stw r0, 4(r1)
 /* 8012DD04 0012AC64  94 21 FF 60 */	stwu r1, -0xa0(r1)
@@ -3550,9 +3549,9 @@ act__25TaiCollecRoundCarryActionFR4Teki:
 /* 8012DDD8 0012AD38  38 21 00 A0 */	addi r1, r1, 0xa0
 /* 8012DDDC 0012AD3C  7C 08 03 A6 */	mtlr r0
 /* 8012DDE0 0012AD40  4E 80 00 20 */	blr 
+.endfn act__25TaiCollecRoundCarryActionFR4Teki
 
-.global act__39TaiCollecPelletStartContainerizedActionFR4Teki
-act__39TaiCollecPelletStartContainerizedActionFR4Teki:
+.fn act__39TaiCollecPelletStartContainerizedActionFR4Teki, global
 /* 8012DDE4 0012AD44  7C 08 02 A6 */	mflr r0
 /* 8012DDE8 0012AD48  90 01 00 04 */	stw r0, 4(r1)
 /* 8012DDEC 0012AD4C  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -3581,9 +3580,9 @@ act__39TaiCollecPelletStartContainerizedActionFR4Teki:
 /* 8012DE3C 0012AD9C  38 21 00 28 */	addi r1, r1, 0x28
 /* 8012DE40 0012ADA0  7C 08 03 A6 */	mtlr r0
 /* 8012DE44 0012ADA4  4E 80 00 20 */	blr 
+.endfn act__39TaiCollecPelletStartContainerizedActionFR4Teki
 
-.global act__40TaiCollecPelletFinishContainerizedActionFR4Teki
-act__40TaiCollecPelletFinishContainerizedActionFR4Teki:
+.fn act__40TaiCollecPelletFinishContainerizedActionFR4Teki, global
 /* 8012DE48 0012ADA8  7C 08 02 A6 */	mflr r0
 /* 8012DE4C 0012ADAC  90 01 00 04 */	stw r0, 4(r1)
 /* 8012DE50 0012ADB0  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -3609,9 +3608,9 @@ act__40TaiCollecPelletFinishContainerizedActionFR4Teki:
 /* 8012DE94 0012ADF4  38 21 00 28 */	addi r1, r1, 0x28
 /* 8012DE98 0012ADF8  7C 08 03 A6 */	mtlr r0
 /* 8012DE9C 0012ADFC  4E 80 00 20 */	blr 
+.endfn act__40TaiCollecPelletFinishContainerizedActionFR4Teki
 
-.global act__26TaiCollecDeadFallingActionFR4Teki
-act__26TaiCollecDeadFallingActionFR4Teki:
+.fn act__26TaiCollecDeadFallingActionFR4Teki, global
 /* 8012DEA0 0012AE00  7C 08 02 A6 */	mflr r0
 /* 8012DEA4 0012AE04  90 01 00 04 */	stw r0, 4(r1)
 /* 8012DEA8 0012AE08  94 21 FF B8 */	stwu r1, -0x48(r1)
@@ -3645,9 +3644,9 @@ act__26TaiCollecDeadFallingActionFR4Teki:
 /* 8012DF0C 0012AE6C  38 21 00 48 */	addi r1, r1, 0x48
 /* 8012DF10 0012AE70  7C 08 03 A6 */	mtlr r0
 /* 8012DF14 0012AE74  4E 80 00 20 */	blr 
+.endfn act__26TaiCollecDeadFallingActionFR4Teki
 
-.global act__22TaiCollecFallingActionFR4Teki
-act__22TaiCollecFallingActionFR4Teki:
+.fn act__22TaiCollecFallingActionFR4Teki, global
 /* 8012DF18 0012AE78  7C 08 02 A6 */	mflr r0
 /* 8012DF1C 0012AE7C  90 01 00 04 */	stw r0, 4(r1)
 /* 8012DF20 0012AE80  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -3670,9 +3669,9 @@ act__22TaiCollecFallingActionFR4Teki:
 /* 8012DF5C 0012AEBC  38 21 00 20 */	addi r1, r1, 0x20
 /* 8012DF60 0012AEC0  7C 08 03 A6 */	mtlr r0
 /* 8012DF64 0012AEC4  4E 80 00 20 */	blr 
+.endfn act__22TaiCollecFallingActionFR4Teki
 
-.global act__21TaiCollecGetOutActionFR4Teki
-act__21TaiCollecGetOutActionFR4Teki:
+.fn act__21TaiCollecGetOutActionFR4Teki, global
 /* 8012DF68 0012AEC8  7C 08 02 A6 */	mflr r0
 /* 8012DF6C 0012AECC  90 01 00 04 */	stw r0, 4(r1)
 /* 8012DF70 0012AED0  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -3701,9 +3700,9 @@ act__21TaiCollecGetOutActionFR4Teki:
 /* 8012DFC8 0012AF28  38 21 00 20 */	addi r1, r1, 0x20
 /* 8012DFCC 0012AF2C  7C 08 03 A6 */	mtlr r0
 /* 8012DFD0 0012AF30  4E 80 00 20 */	blr 
+.endfn act__21TaiCollecGetOutActionFR4Teki
 
-.global __ct__24TaiCollecLegEffectActionFf
-__ct__24TaiCollecLegEffectActionFf:
+.fn __ct__24TaiCollecLegEffectActionFf, global
 /* 8012DFD4 0012AF34  7C 08 02 A6 */	mflr r0
 /* 8012DFD8 0012AF38  3C A0 6C 6C */	lis r5, 0x6C6C6567@ha
 /* 8012DFDC 0012AF3C  90 01 00 04 */	stw r0, 4(r1)
@@ -3726,9 +3725,9 @@ __ct__24TaiCollecLegEffectActionFf:
 /* 8012E020 0012AF80  38 21 00 18 */	addi r1, r1, 0x18
 /* 8012E024 0012AF84  7C 08 03 A6 */	mtlr r0
 /* 8012E028 0012AF88  4E 80 00 20 */	blr 
+.endfn __ct__24TaiCollecLegEffectActionFf
 
-.global setType__24TaiCollecLegEffectActionFR8Vector3fii
-setType__24TaiCollecLegEffectActionFR8Vector3fii:
+.fn setType__24TaiCollecLegEffectActionFR8Vector3fii, global
 /* 8012E02C 0012AF8C  7C 08 02 A6 */	mflr r0
 /* 8012E030 0012AF90  90 01 00 04 */	stw r0, 4(r1)
 /* 8012E034 0012AF94  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -3768,9 +3767,9 @@ setType__24TaiCollecLegEffectActionFR8Vector3fii:
 /* 8012E0B0 0012B010  38 21 00 28 */	addi r1, r1, 0x28
 /* 8012E0B4 0012B014  7C 08 03 A6 */	mtlr r0
 /* 8012E0B8 0012B018  4E 80 00 20 */	blr 
+.endfn setType__24TaiCollecLegEffectActionFR8Vector3fii
 
-.global __ct__19TaiHollecParametersFv
-__ct__19TaiHollecParametersFv:
+.fn __ct__19TaiHollecParametersFv, global
 /* 8012E0BC 0012B01C  7C 08 02 A6 */	mflr r0
 /* 8012E0C0 0012B020  38 80 00 14 */	li r4, 0x14
 /* 8012E0C4 0012B024  90 01 00 04 */	stw r0, 4(r1)
@@ -3805,9 +3804,9 @@ __ct__19TaiHollecParametersFv:
 /* 8012E138 0012B098  38 21 00 28 */	addi r1, r1, 0x28
 /* 8012E13C 0012B09C  7C 08 03 A6 */	mtlr r0
 /* 8012E140 0012B0A0  4E 80 00 20 */	blr 
+.endfn __ct__19TaiHollecParametersFv
 
-.global __ct__17TaiHollecStrategyFP14TekiParameters
-__ct__17TaiHollecStrategyFP14TekiParameters:
+.fn __ct__17TaiHollecStrategyFP14TekiParameters, global
 /* 8012E144 0012B0A4  7C 08 02 A6 */	mflr r0
 /* 8012E148 0012B0A8  38 80 00 01 */	li r4, 1
 /* 8012E14C 0012B0AC  90 01 00 04 */	stw r0, 4(r1)
@@ -3859,9 +3858,9 @@ __ct__17TaiHollecStrategyFP14TekiParameters:
 /* 8012E1FC 0012B15C  38 21 00 28 */	addi r1, r1, 0x28
 /* 8012E200 0012B160  7C 08 03 A6 */	mtlr r0
 /* 8012E204 0012B164  4E 80 00 20 */	blr 
+.endfn __ct__17TaiHollecStrategyFP14TekiParameters
 
-.global draw__17TaiHollecStrategyFR4TekiR8Graphics
-draw__17TaiHollecStrategyFR4TekiR8Graphics:
+.fn draw__17TaiHollecStrategyFR4TekiR8Graphics, global
 /* 8012E208 0012B168  7C 08 02 A6 */	mflr r0
 /* 8012E20C 0012B16C  90 01 00 04 */	stw r0, 4(r1)
 /* 8012E210 0012B170  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -3884,9 +3883,9 @@ draw__17TaiHollecStrategyFR4TekiR8Graphics:
 /* 8012E254 0012B1B4  38 21 00 28 */	addi r1, r1, 0x28
 /* 8012E258 0012B1B8  7C 08 03 A6 */	mtlr r0
 /* 8012E25C 0012B1BC  4E 80 00 20 */	blr 
+.endfn draw__17TaiHollecStrategyFR4TekiR8Graphics
 
-.global start__17TaiHollecStrategyFR4Teki
-start__17TaiHollecStrategyFR4Teki:
+.fn start__17TaiHollecStrategyFR4Teki, global
 /* 8012E260 0012B1C0  7C 08 02 A6 */	mflr r0
 /* 8012E264 0012B1C4  90 01 00 04 */	stw r0, 4(r1)
 /* 8012E268 0012B1C8  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -3922,9 +3921,9 @@ start__17TaiHollecStrategyFR4Teki:
 /* 8012E2E0 0012B240  38 21 00 18 */	addi r1, r1, 0x18
 /* 8012E2E4 0012B244  7C 08 03 A6 */	mtlr r0
 /* 8012E2E8 0012B248  4E 80 00 20 */	blr 
+.endfn start__17TaiHollecStrategyFR4Teki
 
-.global start__19TaiDependenceActionFR4Teki
-start__19TaiDependenceActionFR4Teki:
+.fn start__19TaiDependenceActionFR4Teki, weak
 /* 8012E2EC 0012B24C  7C 08 02 A6 */	mflr r0
 /* 8012E2F0 0012B250  90 01 00 04 */	stw r0, 4(r1)
 /* 8012E2F4 0012B254  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -3949,9 +3948,9 @@ start__19TaiDependenceActionFR4Teki:
 /* 8012E340 0012B2A0  38 21 00 18 */	addi r1, r1, 0x18
 /* 8012E344 0012B2A4  7C 08 03 A6 */	mtlr r0
 /* 8012E348 0012B2A8  4E 80 00 20 */	blr 
+.endfn start__19TaiDependenceActionFR4Teki
 
-.global finish__19TaiDependenceActionFR4Teki
-finish__19TaiDependenceActionFR4Teki:
+.fn finish__19TaiDependenceActionFR4Teki, weak
 /* 8012E34C 0012B2AC  7C 08 02 A6 */	mflr r0
 /* 8012E350 0012B2B0  90 01 00 04 */	stw r0, 4(r1)
 /* 8012E354 0012B2B4  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -3976,9 +3975,9 @@ finish__19TaiDependenceActionFR4Teki:
 /* 8012E3A0 0012B300  38 21 00 18 */	addi r1, r1, 0x18
 /* 8012E3A4 0012B304  7C 08 03 A6 */	mtlr r0
 /* 8012E3A8 0012B308  4E 80 00 20 */	blr 
+.endfn finish__19TaiDependenceActionFR4Teki
 
-.global act__19TaiDependenceActionFR4Teki
-act__19TaiDependenceActionFR4Teki:
+.fn act__19TaiDependenceActionFR4Teki, weak
 /* 8012E3AC 0012B30C  7C 08 02 A6 */	mflr r0
 /* 8012E3B0 0012B310  90 01 00 04 */	stw r0, 4(r1)
 /* 8012E3B4 0012B314  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -4009,9 +4008,9 @@ act__19TaiDependenceActionFR4Teki:
 /* 8012E410 0012B370  38 21 00 18 */	addi r1, r1, 0x18
 /* 8012E414 0012B374  7C 08 03 A6 */	mtlr r0
 /* 8012E418 0012B378  4E 80 00 20 */	blr 
+.endfn act__19TaiDependenceActionFR4Teki
 
-.global actByEvent__19TaiDependenceActionFR9TekiEvent
-actByEvent__19TaiDependenceActionFR9TekiEvent:
+.fn actByEvent__19TaiDependenceActionFR9TekiEvent, weak
 /* 8012E41C 0012B37C  7C 08 02 A6 */	mflr r0
 /* 8012E420 0012B380  90 01 00 04 */	stw r0, 4(r1)
 /* 8012E424 0012B384  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -4042,69 +4041,89 @@ actByEvent__19TaiDependenceActionFR9TekiEvent:
 /* 8012E480 0012B3E0  38 21 00 18 */	addi r1, r1, 0x18
 /* 8012E484 0012B3E4  7C 08 03 A6 */	mtlr r0
 /* 8012E488 0012B3E8  4E 80 00 20 */	blr 
+.endfn actByEvent__19TaiDependenceActionFR9TekiEvent
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802C7060:
+.obj lbl_802C7060, local
 	.asciz "taicollec.cpp"
+.endobj lbl_802C7060
 .balign 4
-lbl_802C7070:
+.obj lbl_802C7070, local
 	.asciz "taicollec"
+.endobj lbl_802C7070
 .balign 4
-lbl_802C707C:
+.obj lbl_802C707C, local
 	.asciz "CARRY_POWER"
+.endobj lbl_802C707C
 .balign 4
-lbl_802C7088:
+.obj lbl_802C7088, local
 	.asciz "BOUNCING_DAMAGE"
+.endobj lbl_802C7088
 .balign 4
-lbl_802C7098:
+.obj lbl_802C7098, local
 	.asciz "PRESSED_DAMAGE"
+.endobj lbl_802C7098
 .balign 4
-lbl_802C70A8:
+.obj lbl_802C70A8, local
 	.asciz "GOING_UNDERGROUND_DISTANCE"
+.endobj lbl_802C70A8
 .balign 4
-lbl_802C70C4:
+.obj lbl_802C70C4, local
 	.asciz "UNDERGROUND_PERIOD"
+.endobj lbl_802C70C4
 .balign 4
-lbl_802C70D8:
+.obj lbl_802C70D8, local
 	.asciz "UNDERGROUND_PERIOD_RANDOM_RATE"
+.endobj lbl_802C70D8
 .balign 4
-lbl_802C70F8:
+.obj lbl_802C70F8, local
 	.asciz "FALLING_ROTATION_VELOCITY"
+.endobj lbl_802C70F8
 .balign 4
-lbl_802C7114:
+.obj lbl_802C7114, local
 	.asciz "DANGER_LIFE"
+.endobj lbl_802C7114
 .balign 4
-lbl_802C7120:
+.obj lbl_802C7120, local
 	.asciz "RUNNING_AWAY_PERIOD"
+.endobj lbl_802C7120
 .balign 4
-lbl_802C7134:
+.obj lbl_802C7134, local
 	.asciz "IMPASSABLE_PERIOD"
+.endobj lbl_802C7134
 .balign 4
-lbl_802C7148:
+.obj lbl_802C7148, local
 	.asciz "IMPASSABLE_DISTANCE"
+.endobj lbl_802C7148
 .balign 4
-lbl_802C715C:
+.obj lbl_802C715C, local
 	.asciz "TaiHollecStrategy"
+.endobj lbl_802C715C
 .balign 4
-lbl_802C7170:
+.obj lbl_802C7170, local
 	.asciz "TekiStrategy"
+.endobj lbl_802C7170
 .balign 4
-lbl_802C7180:
+.obj lbl_802C7180, local
 	.asciz "TaiStrategy"
+.endobj lbl_802C7180
 .balign 4
-lbl_802C718C:
+.obj lbl_802C718C, local
 	.4byte __RTTI__12TekiStrategy
 	.4byte 0
 	.4byte 0
-lbl_802C7198:
+.endobj lbl_802C718C
+.balign 4
+.obj lbl_802C7198, local
 	.4byte __RTTI__12TekiStrategy
 	.4byte 0
 	.4byte __RTTI__11TaiStrategy
 	.4byte 0
 	.4byte 0
-.global __vt__17TaiHollecStrategy
-__vt__17TaiHollecStrategy:
+.endobj lbl_802C7198
+.balign 4
+.obj __vt__17TaiHollecStrategy, global
 	.4byte __RTTI__17TaiHollecStrategy
 	.4byte 0
 	.4byte start__17TaiHollecStrategyFR4Teki
@@ -4115,28 +4134,35 @@ __vt__17TaiHollecStrategy:
 	.4byte drawDebugInfo__12TekiStrategyFR4TekiR8Graphics
 	.4byte interact__12TekiStrategyFR4TekiR18TekiInteractionKey
 	.4byte spawnCorpseParts__12TekiStrategyFR4Teki
+.endobj __vt__17TaiHollecStrategy
 .balign 4
-lbl_802C71D4:
+.obj lbl_802C71D4, local
 	.asciz "TaiHollecParameters"
+.endobj lbl_802C71D4
 .balign 4
-lbl_802C71E8:
+.obj lbl_802C71E8, local
 	.asciz "CoreNode"
+.endobj lbl_802C71E8
 .balign 4
-lbl_802C71F4:
+.obj lbl_802C71F4, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte 0
-lbl_802C7200:
+.endobj lbl_802C71F4
+.balign 4
+.obj lbl_802C7200, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte __RTTI__8CoreNode
 	.4byte 0
 	.4byte 0
+.endobj lbl_802C7200
 .balign 4
-lbl_802C7214:
+.obj lbl_802C7214, local
 	.asciz "TekiParameters"
+.endobj lbl_802C7214
 .balign 4
-lbl_802C7224:
+.obj lbl_802C7224, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte __RTTI__8CoreNode
@@ -4144,7 +4170,9 @@ lbl_802C7224:
 	.4byte __RTTI__4Node
 	.4byte 0
 	.4byte 0
-lbl_802C7240:
+.endobj lbl_802C7224
+.balign 4
+.obj lbl_802C7240, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte __RTTI__8CoreNode
@@ -4154,8 +4182,9 @@ lbl_802C7240:
 	.4byte __RTTI__14TekiParameters
 	.4byte 0
 	.4byte 0
-.global __vt__19TaiHollecParameters
-__vt__19TaiHollecParameters:
+.endobj lbl_802C7240
+.balign 4
+.obj __vt__19TaiHollecParameters, weak
 	.4byte __RTTI__19TaiHollecParameters
 	.4byte 0
 	.4byte getAgeNodeType__5ANodeFv
@@ -4168,31 +4197,39 @@ __vt__19TaiHollecParameters:
 	.4byte concat__4NodeFR3SRT
 	.4byte concat__4NodeFR8Matrix4f
 	.4byte getModelMatrix__4NodeFv
+.endobj __vt__19TaiHollecParameters
 .balign 4
-lbl_802C7294:
+.obj lbl_802C7294, local
 	.asciz "TaiCollecLegEffectAction"
+.endobj lbl_802C7294
 .balign 4
-lbl_802C72B0:
+.obj lbl_802C72B0, local
 	.asciz "TaiAction"
+.endobj lbl_802C72B0
 .balign 4
-lbl_802C72BC:
+.obj lbl_802C72BC, local
 	.asciz "TAIAeffCloudOfDust"
+.endobj lbl_802C72BC
 .balign 4
-lbl_802C72D0:
+.obj lbl_802C72D0, local
 	.4byte __RTTI__9TaiAction
 	.4byte 0
 	.4byte 0
+.endobj lbl_802C72D0
 .balign 4
-lbl_802C72DC:
+.obj lbl_802C72DC, local
 	.asciz "TaiJointEffectAction"
+.endobj lbl_802C72DC
 .balign 4
-lbl_802C72F4:
+.obj lbl_802C72F4, local
 	.4byte __RTTI__9TaiAction
 	.4byte 0
 	.4byte __RTTI__18TAIAeffCloudOfDust
 	.4byte 0
 	.4byte 0
-lbl_802C7308:
+.endobj lbl_802C72F4
+.balign 4
+.obj lbl_802C7308, local
 	.4byte __RTTI__9TaiAction
 	.4byte 0
 	.4byte __RTTI__18TAIAeffCloudOfDust
@@ -4200,8 +4237,9 @@ lbl_802C7308:
 	.4byte __RTTI__20TaiJointEffectAction
 	.4byte 0
 	.4byte 0
-.global __vt__24TaiCollecLegEffectAction
-__vt__24TaiCollecLegEffectAction:
+.endobj lbl_802C7308
+.balign 4
+.obj __vt__24TaiCollecLegEffectAction, global
 	.4byte __RTTI__24TaiCollecLegEffectAction
 	.4byte 0
 	.4byte start__18TAIAeffCloudOfDustFR4Teki
@@ -4210,16 +4248,19 @@ __vt__24TaiCollecLegEffectAction:
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
 	.4byte setType__24TaiCollecLegEffectActionFR8Vector3fii
+.endobj __vt__24TaiCollecLegEffectAction
 .balign 4
-lbl_802C7344:
+.obj lbl_802C7344, local
 	.asciz "TaiCollecGetOutAction"
+.endobj lbl_802C7344
 .balign 4
-lbl_802C735C:
+.obj lbl_802C735C, local
 	.4byte __RTTI__9TaiAction
 	.4byte 0
 	.4byte 0
-.global __vt__21TaiCollecGetOutAction
-__vt__21TaiCollecGetOutAction:
+.endobj lbl_802C735C
+.balign 4
+.obj __vt__21TaiCollecGetOutAction, global
 	.4byte __RTTI__21TaiCollecGetOutAction
 	.4byte 0
 	.4byte start__9TaiActionFR4Teki
@@ -4227,16 +4268,19 @@ __vt__21TaiCollecGetOutAction:
 	.4byte act__21TaiCollecGetOutActionFR4Teki
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
+.endobj __vt__21TaiCollecGetOutAction
 .balign 4
-lbl_802C7384:
+.obj lbl_802C7384, local
 	.asciz "TaiCollecFallingAction"
+.endobj lbl_802C7384
 .balign 4
-lbl_802C739C:
+.obj lbl_802C739C, local
 	.4byte __RTTI__9TaiAction
 	.4byte 0
 	.4byte 0
-.global __vt__22TaiCollecFallingAction
-__vt__22TaiCollecFallingAction:
+.endobj lbl_802C739C
+.balign 4
+.obj __vt__22TaiCollecFallingAction, global
 	.4byte __RTTI__22TaiCollecFallingAction
 	.4byte 0
 	.4byte start__9TaiActionFR4Teki
@@ -4244,16 +4288,19 @@ __vt__22TaiCollecFallingAction:
 	.4byte act__22TaiCollecFallingActionFR4Teki
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
+.endobj __vt__22TaiCollecFallingAction
 .balign 4
-lbl_802C73C4:
+.obj lbl_802C73C4, local
 	.asciz "TaiCollecDeadFallingAction"
+.endobj lbl_802C73C4
 .balign 4
-lbl_802C73E0:
+.obj lbl_802C73E0, local
 	.4byte __RTTI__9TaiAction
 	.4byte 0
 	.4byte 0
-.global __vt__26TaiCollecDeadFallingAction
-__vt__26TaiCollecDeadFallingAction:
+.endobj lbl_802C73E0
+.balign 4
+.obj __vt__26TaiCollecDeadFallingAction, global
 	.4byte __RTTI__26TaiCollecDeadFallingAction
 	.4byte 0
 	.4byte start__9TaiActionFR4Teki
@@ -4261,16 +4308,19 @@ __vt__26TaiCollecDeadFallingAction:
 	.4byte act__26TaiCollecDeadFallingActionFR4Teki
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
+.endobj __vt__26TaiCollecDeadFallingAction
 .balign 4
-lbl_802C7408:
+.obj lbl_802C7408, local
 	.asciz "TaiCollecPelletFinishContainerizedAction"
+.endobj lbl_802C7408
 .balign 4
-lbl_802C7434:
+.obj lbl_802C7434, local
 	.4byte __RTTI__9TaiAction
 	.4byte 0
 	.4byte 0
-.global __vt__40TaiCollecPelletFinishContainerizedAction
-__vt__40TaiCollecPelletFinishContainerizedAction:
+.endobj lbl_802C7434
+.balign 4
+.obj __vt__40TaiCollecPelletFinishContainerizedAction, global
 	.4byte __RTTI__40TaiCollecPelletFinishContainerizedAction
 	.4byte 0
 	.4byte start__9TaiActionFR4Teki
@@ -4278,16 +4328,19 @@ __vt__40TaiCollecPelletFinishContainerizedAction:
 	.4byte act__40TaiCollecPelletFinishContainerizedActionFR4Teki
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
+.endobj __vt__40TaiCollecPelletFinishContainerizedAction
 .balign 4
-lbl_802C745C:
+.obj lbl_802C745C, local
 	.asciz "TaiCollecPelletStartContainerizedAction"
+.endobj lbl_802C745C
 .balign 4
-lbl_802C7484:
+.obj lbl_802C7484, local
 	.4byte __RTTI__9TaiAction
 	.4byte 0
 	.4byte 0
-.global __vt__39TaiCollecPelletStartContainerizedAction
-__vt__39TaiCollecPelletStartContainerizedAction:
+.endobj lbl_802C7484
+.balign 4
+.obj __vt__39TaiCollecPelletStartContainerizedAction, global
 	.4byte __RTTI__39TaiCollecPelletStartContainerizedAction
 	.4byte 0
 	.4byte start__9TaiActionFR4Teki
@@ -4295,16 +4348,19 @@ __vt__39TaiCollecPelletStartContainerizedAction:
 	.4byte act__39TaiCollecPelletStartContainerizedActionFR4Teki
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
+.endobj __vt__39TaiCollecPelletStartContainerizedAction
 .balign 4
-lbl_802C74AC:
+.obj lbl_802C74AC, local
 	.asciz "TaiCollecRoundCarryAction"
+.endobj lbl_802C74AC
 .balign 4
-lbl_802C74C8:
+.obj lbl_802C74C8, local
 	.4byte __RTTI__9TaiAction
 	.4byte 0
 	.4byte 0
-.global __vt__25TaiCollecRoundCarryAction
-__vt__25TaiCollecRoundCarryAction:
+.endobj lbl_802C74C8
+.balign 4
+.obj __vt__25TaiCollecRoundCarryAction, global
 	.4byte __RTTI__25TaiCollecRoundCarryAction
 	.4byte 0
 	.4byte start__25TaiCollecRoundCarryActionFR4Teki
@@ -4312,16 +4368,19 @@ __vt__25TaiCollecRoundCarryAction:
 	.4byte act__25TaiCollecRoundCarryActionFR4Teki
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
+.endobj __vt__25TaiCollecRoundCarryAction
 .balign 4
-lbl_802C74F0:
+.obj lbl_802C74F0, local
 	.asciz "TaiCollecRouteImpassableAction"
+.endobj lbl_802C74F0
 .balign 4
-lbl_802C7510:
+.obj lbl_802C7510, local
 	.4byte __RTTI__9TaiAction
 	.4byte 0
 	.4byte 0
-.global __vt__30TaiCollecRouteImpassableAction
-__vt__30TaiCollecRouteImpassableAction:
+.endobj lbl_802C7510
+.balign 4
+.obj __vt__30TaiCollecRouteImpassableAction, global
 	.4byte __RTTI__30TaiCollecRouteImpassableAction
 	.4byte 0
 	.4byte start__9TaiActionFR4Teki
@@ -4329,28 +4388,35 @@ __vt__30TaiCollecRouteImpassableAction:
 	.4byte act__30TaiCollecRouteImpassableActionFR4Teki
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
+.endobj __vt__30TaiCollecRouteImpassableAction
 .balign 4
-lbl_802C7538:
+.obj lbl_802C7538, local
 	.asciz "TaiCollecCarryingToNestAction"
+.endobj lbl_802C7538
 .balign 4
-lbl_802C7558:
+.obj lbl_802C7558, local
 	.asciz "TaiMotionAction"
+.endobj lbl_802C7558
 .balign 4
-lbl_802C7568:
+.obj lbl_802C7568, local
 	.4byte __RTTI__9TaiAction
 	.4byte 0
 	.4byte 0
+.endobj lbl_802C7568
 .balign 4
-lbl_802C7574:
+.obj lbl_802C7574, local
 	.asciz "TaiContinuousMotionAction"
+.endobj lbl_802C7574
 .balign 4
-lbl_802C7590:
+.obj lbl_802C7590, local
 	.4byte __RTTI__9TaiAction
 	.4byte 0
 	.4byte __RTTI__15TaiMotionAction
 	.4byte 0
 	.4byte 0
-lbl_802C75A4:
+.endobj lbl_802C7590
+.balign 4
+.obj lbl_802C75A4, local
 	.4byte __RTTI__9TaiAction
 	.4byte 0
 	.4byte __RTTI__15TaiMotionAction
@@ -4358,8 +4424,9 @@ lbl_802C75A4:
 	.4byte __RTTI__25TaiContinuousMotionAction
 	.4byte 0
 	.4byte 0
-.global __vt__29TaiCollecCarryingToNestAction
-__vt__29TaiCollecCarryingToNestAction:
+.endobj lbl_802C75A4
+.balign 4
+.obj __vt__29TaiCollecCarryingToNestAction, global
 	.4byte __RTTI__29TaiCollecCarryingToNestAction
 	.4byte 0
 	.4byte start__29TaiCollecCarryingToNestActionFR4Teki
@@ -4368,31 +4435,25 @@ __vt__29TaiCollecCarryingToNestAction:
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
 	.4byte motionStarted__25TaiContinuousMotionActionFR4Teki
+.endobj __vt__29TaiCollecCarryingToNestAction
 .balign 4
-lbl_802C75E0:
+.obj lbl_802C75E0, local
 	.asciz "Interaction"
+.endobj lbl_802C75E0
 .balign 4
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
+.skip 0x2C # compiler padding
 .balign 4
-lbl_802C7618:
+.obj lbl_802C7618, local
 	.asciz "TaiCollecPuttingPelletAction"
+.endobj lbl_802C7618
 .balign 4
-lbl_802C7638:
+.obj lbl_802C7638, local
 	.4byte __RTTI__9TaiAction
 	.4byte 0
 	.4byte 0
-.global __vt__28TaiCollecPuttingPelletAction
-__vt__28TaiCollecPuttingPelletAction:
+.endobj lbl_802C7638
+.balign 4
+.obj __vt__28TaiCollecPuttingPelletAction, global
 	.4byte __RTTI__28TaiCollecPuttingPelletAction
 	.4byte 0
 	.4byte start__28TaiCollecPuttingPelletActionFR4Teki
@@ -4400,16 +4461,19 @@ __vt__28TaiCollecPuttingPelletAction:
 	.4byte act__28TaiCollecPuttingPelletActionFR4Teki
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
+.endobj __vt__28TaiCollecPuttingPelletAction
 .balign 4
-lbl_802C7660:
+.obj lbl_802C7660, local
 	.asciz "TaiCollecPutAction"
+.endobj lbl_802C7660
 .balign 4
-lbl_802C7674:
+.obj lbl_802C7674, local
 	.4byte __RTTI__9TaiAction
 	.4byte 0
 	.4byte 0
-.global __vt__18TaiCollecPutAction
-__vt__18TaiCollecPutAction:
+.endobj lbl_802C7674
+.balign 4
+.obj __vt__18TaiCollecPutAction, global
 	.4byte __RTTI__18TaiCollecPutAction
 	.4byte 0
 	.4byte start__9TaiActionFR4Teki
@@ -4417,16 +4481,19 @@ __vt__18TaiCollecPutAction:
 	.4byte act__18TaiCollecPutActionFR4Teki
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
+.endobj __vt__18TaiCollecPutAction
 .balign 4
-lbl_802C769C:
+.obj lbl_802C769C, local
 	.asciz "TaiCollecDefeatCarryingAction"
+.endobj lbl_802C769C
 .balign 4
-lbl_802C76BC:
+.obj lbl_802C76BC, local
 	.4byte __RTTI__9TaiAction
 	.4byte 0
 	.4byte 0
-.global __vt__29TaiCollecDefeatCarryingAction
-__vt__29TaiCollecDefeatCarryingAction:
+.endobj lbl_802C76BC
+.balign 4
+.obj __vt__29TaiCollecDefeatCarryingAction, global
 	.4byte __RTTI__29TaiCollecDefeatCarryingAction
 	.4byte 0
 	.4byte start__9TaiActionFR4Teki
@@ -4434,16 +4501,19 @@ __vt__29TaiCollecDefeatCarryingAction:
 	.4byte act__29TaiCollecDefeatCarryingActionFR4Teki
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
+.endobj __vt__29TaiCollecDefeatCarryingAction
 .balign 4
-lbl_802C76E4:
+.obj lbl_802C76E4, local
 	.asciz "TaiCollecWinCarryingAction"
+.endobj lbl_802C76E4
 .balign 4
-lbl_802C7700:
+.obj lbl_802C7700, local
 	.4byte __RTTI__9TaiAction
 	.4byte 0
 	.4byte 0
-.global __vt__26TaiCollecWinCarryingAction
-__vt__26TaiCollecWinCarryingAction:
+.endobj lbl_802C7700
+.balign 4
+.obj __vt__26TaiCollecWinCarryingAction, global
 	.4byte __RTTI__26TaiCollecWinCarryingAction
 	.4byte 0
 	.4byte start__9TaiActionFR4Teki
@@ -4451,16 +4521,19 @@ __vt__26TaiCollecWinCarryingAction:
 	.4byte act__26TaiCollecWinCarryingActionFR4Teki
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
+.endobj __vt__26TaiCollecWinCarryingAction
 .balign 4
-lbl_802C7728:
+.obj lbl_802C7728, local
 	.asciz "TaiCollecBeingDraggedAction"
+.endobj lbl_802C7728
 .balign 4
-lbl_802C7744:
+.obj lbl_802C7744, local
 	.4byte __RTTI__9TaiAction
 	.4byte 0
 	.4byte 0
-.global __vt__27TaiCollecBeingDraggedAction
-__vt__27TaiCollecBeingDraggedAction:
+.endobj lbl_802C7744
+.balign 4
+.obj __vt__27TaiCollecBeingDraggedAction, global
 	.4byte __RTTI__27TaiCollecBeingDraggedAction
 	.4byte 0
 	.4byte start__27TaiCollecBeingDraggedActionFR4Teki
@@ -4468,16 +4541,19 @@ __vt__27TaiCollecBeingDraggedAction:
 	.4byte act__9TaiActionFR4Teki
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
+.endobj __vt__27TaiCollecBeingDraggedAction
 .balign 4
-lbl_802C776C:
+.obj lbl_802C776C, local
 	.asciz "TaiCollecCarryingAction"
+.endobj lbl_802C776C
 .balign 4
-lbl_802C7784:
+.obj lbl_802C7784, local
 	.4byte __RTTI__9TaiAction
 	.4byte 0
 	.4byte 0
-.global __vt__23TaiCollecCarryingAction
-__vt__23TaiCollecCarryingAction:
+.endobj lbl_802C7784
+.balign 4
+.obj __vt__23TaiCollecCarryingAction, global
 	.4byte __RTTI__23TaiCollecCarryingAction
 	.4byte 0
 	.4byte start__23TaiCollecCarryingActionFR4Teki
@@ -4485,16 +4561,19 @@ __vt__23TaiCollecCarryingAction:
 	.4byte act__23TaiCollecCarryingActionFR4Teki
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
+.endobj __vt__23TaiCollecCarryingAction
 .balign 4
-lbl_802C77AC:
+.obj lbl_802C77AC, local
 	.asciz "TaiCollecCatchingAction"
+.endobj lbl_802C77AC
 .balign 4
-lbl_802C77C4:
+.obj lbl_802C77C4, local
 	.4byte __RTTI__9TaiAction
 	.4byte 0
 	.4byte 0
-.global __vt__23TaiCollecCatchingAction
-__vt__23TaiCollecCatchingAction:
+.endobj lbl_802C77C4
+.balign 4
+.obj __vt__23TaiCollecCatchingAction, global
 	.4byte __RTTI__23TaiCollecCatchingAction
 	.4byte 0
 	.4byte start__23TaiCollecCatchingActionFR4Teki
@@ -4502,16 +4581,19 @@ __vt__23TaiCollecCatchingAction:
 	.4byte act__9TaiActionFR4Teki
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
+.endobj __vt__23TaiCollecCatchingAction
 .balign 4
-lbl_802C77EC:
+.obj lbl_802C77EC, local
 	.asciz "TaiCollecHoldPelletAction"
+.endobj lbl_802C77EC
 .balign 4
-lbl_802C7808:
+.obj lbl_802C7808, local
 	.4byte __RTTI__9TaiAction
 	.4byte 0
 	.4byte 0
-.global __vt__25TaiCollecHoldPelletAction
-__vt__25TaiCollecHoldPelletAction:
+.endobj lbl_802C7808
+.balign 4
+.obj __vt__25TaiCollecHoldPelletAction, global
 	.4byte __RTTI__25TaiCollecHoldPelletAction
 	.4byte 0
 	.4byte start__9TaiActionFR4Teki
@@ -4519,16 +4601,19 @@ __vt__25TaiCollecHoldPelletAction:
 	.4byte act__25TaiCollecHoldPelletActionFR4Teki
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
+.endobj __vt__25TaiCollecHoldPelletAction
 .balign 4
-lbl_802C7830:
+.obj lbl_802C7830, local
 	.asciz "TaiCollecPelletDisappearedAction"
+.endobj lbl_802C7830
 .balign 4
-lbl_802C7854:
+.obj lbl_802C7854, local
 	.4byte __RTTI__9TaiAction
 	.4byte 0
 	.4byte 0
-.global __vt__32TaiCollecPelletDisappearedAction
-__vt__32TaiCollecPelletDisappearedAction:
+.endobj lbl_802C7854
+.balign 4
+.obj __vt__32TaiCollecPelletDisappearedAction, global
 	.4byte __RTTI__32TaiCollecPelletDisappearedAction
 	.4byte 0
 	.4byte start__9TaiActionFR4Teki
@@ -4536,16 +4621,19 @@ __vt__32TaiCollecPelletDisappearedAction:
 	.4byte act__32TaiCollecPelletDisappearedActionFR4Teki
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
+.endobj __vt__32TaiCollecPelletDisappearedAction
 .balign 4
-lbl_802C787C:
+.obj lbl_802C787C, local
 	.asciz "TaiCollecPelletLostAction"
+.endobj lbl_802C787C
 .balign 4
-lbl_802C7898:
+.obj lbl_802C7898, local
 	.4byte __RTTI__9TaiAction
 	.4byte 0
 	.4byte 0
-.global __vt__25TaiCollecPelletLostAction
-__vt__25TaiCollecPelletLostAction:
+.endobj lbl_802C7898
+.balign 4
+.obj __vt__25TaiCollecPelletLostAction, global
 	.4byte __RTTI__25TaiCollecPelletLostAction
 	.4byte 0
 	.4byte start__9TaiActionFR4Teki
@@ -4553,25 +4641,31 @@ __vt__25TaiCollecPelletLostAction:
 	.4byte act__25TaiCollecPelletLostActionFR4Teki
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
+.endobj __vt__25TaiCollecPelletLostAction
 .balign 4
-lbl_802C78C0:
+.obj lbl_802C78C0, local
 	.asciz "TaiCollecVisibleHeightPelletLostTimerAction"
+.endobj lbl_802C78C0
 .balign 4
-lbl_802C78EC:
+.obj lbl_802C78EC, local
 	.asciz "TaiTimerAction"
+.endobj lbl_802C78EC
 .balign 4
-lbl_802C78FC:
+.obj lbl_802C78FC, local
 	.4byte __RTTI__9TaiAction
 	.4byte 0
 	.4byte 0
-lbl_802C7908:
+.endobj lbl_802C78FC
+.balign 4
+.obj lbl_802C7908, local
 	.4byte __RTTI__9TaiAction
 	.4byte 0
 	.4byte __RTTI__14TaiTimerAction
 	.4byte 0
 	.4byte 0
-.global __vt__43TaiCollecVisibleHeightPelletLostTimerAction
-__vt__43TaiCollecVisibleHeightPelletLostTimerAction:
+.endobj lbl_802C7908
+.balign 4
+.obj __vt__43TaiCollecVisibleHeightPelletLostTimerAction, global
 	.4byte __RTTI__43TaiCollecVisibleHeightPelletLostTimerAction
 	.4byte 0
 	.4byte start__14TaiTimerActionFR4Teki
@@ -4579,16 +4673,19 @@ __vt__43TaiCollecVisibleHeightPelletLostTimerAction:
 	.4byte act__43TaiCollecVisibleHeightPelletLostTimerActionFR4Teki
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
+.endobj __vt__43TaiCollecVisibleHeightPelletLostTimerAction
 .balign 4
-lbl_802C7938:
+.obj lbl_802C7938, local
 	.asciz "TaiCollecVisibleHeightPelletLostAction"
+.endobj lbl_802C7938
 .balign 4
-lbl_802C7960:
+.obj lbl_802C7960, local
 	.4byte __RTTI__9TaiAction
 	.4byte 0
 	.4byte 0
-.global __vt__38TaiCollecVisibleHeightPelletLostAction
-__vt__38TaiCollecVisibleHeightPelletLostAction:
+.endobj lbl_802C7960
+.balign 4
+.obj __vt__38TaiCollecVisibleHeightPelletLostAction, global
 	.4byte __RTTI__38TaiCollecVisibleHeightPelletLostAction
 	.4byte 0
 	.4byte start__9TaiActionFR4Teki
@@ -4596,58 +4693,61 @@ __vt__38TaiCollecVisibleHeightPelletLostAction:
 	.4byte act__38TaiCollecVisibleHeightPelletLostActionFR4Teki
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
+.endobj __vt__38TaiCollecVisibleHeightPelletLostAction
 .balign 4
-lbl_802C7988:
+.obj lbl_802C7988, local
 	.asciz "TekiAndCondition"
+.endobj lbl_802C7988
 .balign 4
-lbl_802C799C:
+.obj lbl_802C799C, local
 	.asciz "Condition"
+.endobj lbl_802C799C
 .balign 4
-lbl_802C79A8:
+.obj lbl_802C79A8, local
 	.asciz "TekiCondition"
+.endobj lbl_802C79A8
 .balign 4
-lbl_802C79B8:
+.obj lbl_802C79B8, local
 	.4byte __RTTI__9Condition
 	.4byte 0
 	.4byte 0
-lbl_802C79C4:
+.endobj lbl_802C79B8
+.balign 4
+.obj lbl_802C79C4, local
 	.4byte __RTTI__9Condition
 	.4byte 0
 	.4byte __RTTI__13TekiCondition
 	.4byte 0
 	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
+.endobj lbl_802C79C4
 .balign 4
-lbl_802C79E4:
+.skip 0xC # compiler padding
+.balign 4
+.obj lbl_802C79E4, local
 	.asciz "TekiNotCondition"
+.endobj lbl_802C79E4
 .balign 4
-lbl_802C79F8:
+.obj lbl_802C79F8, local
 	.4byte __RTTI__9Condition
 	.4byte 0
 	.4byte __RTTI__13TekiCondition
 	.4byte 0
 	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
+.endobj lbl_802C79F8
 .balign 4
-lbl_802C7A30:
+.skip 0x24 # compiler padding
+.balign 4
+.obj lbl_802C7A30, local
 	.asciz "TaiCollecTargetPelletAction"
+.endobj lbl_802C7A30
 .balign 4
-lbl_802C7A4C:
+.obj lbl_802C7A4C, local
 	.4byte __RTTI__9TaiAction
 	.4byte 0
 	.4byte 0
-.global __vt__27TaiCollecTargetPelletAction
-__vt__27TaiCollecTargetPelletAction:
+.endobj lbl_802C7A4C
+.balign 4
+.obj __vt__27TaiCollecTargetPelletAction, global
 	.4byte __RTTI__27TaiCollecTargetPelletAction
 	.4byte 0
 	.4byte start__9TaiActionFR4Teki
@@ -4655,16 +4755,19 @@ __vt__27TaiCollecTargetPelletAction:
 	.4byte act__27TaiCollecTargetPelletActionFR4Teki
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
+.endobj __vt__27TaiCollecTargetPelletAction
 .balign 4
-lbl_802C7A74:
+.obj lbl_802C7A74, local
 	.asciz "TaiCollecLetGoOfPelletAction"
+.endobj lbl_802C7A74
 .balign 4
-lbl_802C7A94:
+.obj lbl_802C7A94, local
 	.4byte __RTTI__9TaiAction
 	.4byte 0
 	.4byte 0
-.global __vt__28TaiCollecLetGoOfPelletAction
-__vt__28TaiCollecLetGoOfPelletAction:
+.endobj lbl_802C7A94
+.balign 4
+.obj __vt__28TaiCollecLetGoOfPelletAction, global
 	.4byte __RTTI__28TaiCollecLetGoOfPelletAction
 	.4byte 0
 	.4byte start__9TaiActionFR4Teki
@@ -4672,16 +4775,19 @@ __vt__28TaiCollecLetGoOfPelletAction:
 	.4byte act__28TaiCollecLetGoOfPelletActionFR4Teki
 	.4byte actByEvent__28TaiCollecLetGoOfPelletActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
+.endobj __vt__28TaiCollecLetGoOfPelletAction
 .balign 4
-lbl_802C7ABC:
+.obj lbl_802C7ABC, local
 	.asciz "TaiCollecImpassableAction"
+.endobj lbl_802C7ABC
 .balign 4
-lbl_802C7AD8:
+.obj lbl_802C7AD8, local
 	.4byte __RTTI__9TaiAction
 	.4byte 0
 	.4byte 0
-.global __vt__25TaiCollecImpassableAction
-__vt__25TaiCollecImpassableAction:
+.endobj lbl_802C7AD8
+.balign 4
+.obj __vt__25TaiCollecImpassableAction, global
 	.4byte __RTTI__25TaiCollecImpassableAction
 	.4byte 0
 	.4byte start__25TaiCollecImpassableActionFR4Teki
@@ -4689,33 +4795,39 @@ __vt__25TaiCollecImpassableAction:
 	.4byte act__25TaiCollecImpassableActionFR4Teki
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
+.endobj __vt__25TaiCollecImpassableAction
 .balign 4
-lbl_802C7B00:
+.obj lbl_802C7B00, local
 	.asciz "TekiCollecTargetPelletCondition"
+.endobj lbl_802C7B00
 .balign 4
-lbl_802C7B20:
+.obj lbl_802C7B20, local
 	.4byte __RTTI__9Condition
 	.4byte 0
 	.4byte __RTTI__13TekiCondition
 	.4byte 0
 	.4byte 0
-.global __vt__31TekiCollecTargetPelletCondition
-__vt__31TekiCollecTargetPelletCondition:
+.endobj lbl_802C7B20
+.balign 4
+.obj __vt__31TekiCollecTargetPelletCondition, global
 	.4byte __RTTI__31TekiCollecTargetPelletCondition
 	.4byte 0
 	.4byte satisfy__31TekiCollecTargetPelletConditionFP8Creature
+.endobj __vt__31TekiCollecTargetPelletCondition
 .balign 4
-lbl_802C7B40:
+.obj lbl_802C7B40, local
 	.asciz "TaiCollecStrategy"
+.endobj lbl_802C7B40
 .balign 4
-lbl_802C7B54:
+.obj lbl_802C7B54, local
 	.4byte __RTTI__12TekiStrategy
 	.4byte 0
 	.4byte __RTTI__11TaiStrategy
 	.4byte 0
 	.4byte 0
-.global __vt__17TaiCollecStrategy
-__vt__17TaiCollecStrategy:
+.endobj lbl_802C7B54
+.balign 4
+.obj __vt__17TaiCollecStrategy, global
 	.4byte __RTTI__17TaiCollecStrategy
 	.4byte 0
 	.4byte start__17TaiCollecStrategyFR4Teki
@@ -4726,16 +4838,19 @@ __vt__17TaiCollecStrategy:
 	.4byte drawDebugInfo__12TekiStrategyFR4TekiR8Graphics
 	.4byte interact__12TekiStrategyFR4TekiR18TekiInteractionKey
 	.4byte spawnCorpseParts__12TekiStrategyFR4Teki
+.endobj __vt__17TaiCollecStrategy
 .balign 4
-lbl_802C7B90:
+.obj lbl_802C7B90, local
 	.asciz "TaiDependenceAction"
+.endobj lbl_802C7B90
 .balign 4
-lbl_802C7BA4:
+.obj lbl_802C7BA4, local
 	.4byte __RTTI__9TaiAction
 	.4byte 0
 	.4byte 0
-.global __vt__19TaiDependenceAction
-__vt__19TaiDependenceAction:
+.endobj lbl_802C7BA4
+.balign 4
+.obj __vt__19TaiDependenceAction, weak
 	.4byte __RTTI__19TaiDependenceAction
 	.4byte 0
 	.4byte start__19TaiDependenceActionFR4Teki
@@ -4743,18 +4858,15 @@ __vt__19TaiDependenceAction:
 	.4byte act__19TaiDependenceActionFR4Teki
 	.4byte actByEvent__19TaiDependenceActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
+.endobj __vt__19TaiDependenceAction
 .balign 4
-lbl_802C7BE8:
+.skip 0x1C # compiler padding
+.balign 4
+.obj lbl_802C7BE8, local
 	.asciz "TaiCollecParameters"
+.endobj lbl_802C7BE8
 .balign 4
-lbl_802C7BFC:
+.obj lbl_802C7BFC, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte __RTTI__8CoreNode
@@ -4764,8 +4876,9 @@ lbl_802C7BFC:
 	.4byte __RTTI__14TekiParameters
 	.4byte 0
 	.4byte 0
-.global __vt__19TaiCollecParameters
-__vt__19TaiCollecParameters:
+.endobj lbl_802C7BFC
+.balign 4
+.obj __vt__19TaiCollecParameters, weak
 	.4byte __RTTI__19TaiCollecParameters
 	.4byte 0
 	.4byte getAgeNodeType__5ANodeFv
@@ -4778,229 +4891,358 @@ __vt__19TaiCollecParameters:
 	.4byte concat__4NodeFR3SRT
 	.4byte concat__4NodeFR8Matrix4f
 	.4byte getModelMatrix__4NodeFv
+.endobj __vt__19TaiCollecParameters
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-lbl_803E35D0:
+.obj lbl_803E35D0, local
 	.float 0.0
-lbl_803E35D4:
+.endobj lbl_803E35D0
+.obj lbl_803E35D4, local
 	.float 0.0
-lbl_803E35D8:
+.endobj lbl_803E35D4
+.obj lbl_803E35D8, local
 	.float 0.0
-lbl_803E35DC:
+.endobj lbl_803E35D8
+.obj lbl_803E35DC, local
 	.float 0.0
-lbl_803E35E0:
+.endobj lbl_803E35DC
+.obj lbl_803E35E0, local
 	.float 0.0
-lbl_803E35E4:
+.endobj lbl_803E35E0
+.obj lbl_803E35E4, local
 	.float 0.0
-lbl_803E35E8:
+.endobj lbl_803E35E4
+.obj lbl_803E35E8, local
 	.float 0.0
-lbl_803E35EC:
+.endobj lbl_803E35E8
+.obj lbl_803E35EC, local
 	.float 0.0
-lbl_803E35F0:
+.endobj lbl_803E35EC
+.obj lbl_803E35F0, local
 	.float 0.0
-lbl_803E35F4:
+.endobj lbl_803E35F0
+.obj lbl_803E35F4, local
 	.float 0.0
-lbl_803E35F8:
+.endobj lbl_803E35F4
+.obj lbl_803E35F8, local
 	.float 0.0
-lbl_803E35FC:
+.endobj lbl_803E35F8
+.obj lbl_803E35FC, local
 	.float 0.0
-lbl_803E3600:
+.endobj lbl_803E35FC
+.obj lbl_803E3600, local
 	.float 0.0
-__RTTI__12TekiStrategy:
+.endobj lbl_803E3600
+.balign 4
+.obj __RTTI__12TekiStrategy, local
 	.4byte lbl_802C7170
 	.4byte 0
-__RTTI__11TaiStrategy:
+.endobj __RTTI__12TekiStrategy
+.balign 4
+.obj __RTTI__11TaiStrategy, local
 	.4byte lbl_802C7180
 	.4byte lbl_802C718C
-__RTTI__17TaiHollecStrategy:
+.endobj __RTTI__11TaiStrategy
+.balign 4
+.obj __RTTI__17TaiHollecStrategy, local
 	.4byte lbl_802C715C
 	.4byte lbl_802C7198
+.endobj __RTTI__17TaiHollecStrategy
 .balign 4
-lbl_803E361C:
+.obj lbl_803E361C, local
 	.asciz "ANode"
+.endobj lbl_803E361C
 .balign 4
-__RTTI__5ANode:
+.obj __RTTI__5ANode, local
 	.4byte lbl_803E361C
 	.4byte 0
-__RTTI__8CoreNode:
+.endobj __RTTI__5ANode
+.balign 4
+.obj __RTTI__8CoreNode, local
 	.4byte lbl_802C71E8
 	.4byte lbl_802C71F4
+.endobj __RTTI__8CoreNode
 .balign 4
-lbl_803E3634:
+.obj lbl_803E3634, local
 	.asciz "Node"
+.endobj lbl_803E3634
 .balign 4
-__RTTI__4Node:
+.obj __RTTI__4Node, local
 	.4byte lbl_803E3634
 	.4byte lbl_802C7200
-__RTTI__14TekiParameters:
+.endobj __RTTI__4Node
+.balign 4
+.obj __RTTI__14TekiParameters, local
 	.4byte lbl_802C7214
 	.4byte lbl_802C7224
-__RTTI__19TaiHollecParameters:
+.endobj __RTTI__14TekiParameters
+.balign 4
+.obj __RTTI__19TaiHollecParameters, local
 	.4byte lbl_802C71D4
 	.4byte lbl_802C7240
-__RTTI__9TaiAction:
+.endobj __RTTI__19TaiHollecParameters
+.balign 4
+.obj __RTTI__9TaiAction, local
 	.4byte lbl_802C72B0
 	.4byte 0
-__RTTI__18TAIAeffCloudOfDust:
+.endobj __RTTI__9TaiAction
+.balign 4
+.obj __RTTI__18TAIAeffCloudOfDust, local
 	.4byte lbl_802C72BC
 	.4byte lbl_802C72D0
-__RTTI__20TaiJointEffectAction:
+.endobj __RTTI__18TAIAeffCloudOfDust
+.balign 4
+.obj __RTTI__20TaiJointEffectAction, local
 	.4byte lbl_802C72DC
 	.4byte lbl_802C72F4
-__RTTI__24TaiCollecLegEffectAction:
+.endobj __RTTI__20TaiJointEffectAction
+.balign 4
+.obj __RTTI__24TaiCollecLegEffectAction, local
 	.4byte lbl_802C7294
 	.4byte lbl_802C7308
-__RTTI__21TaiCollecGetOutAction:
+.endobj __RTTI__24TaiCollecLegEffectAction
+.balign 4
+.obj __RTTI__21TaiCollecGetOutAction, local
 	.4byte lbl_802C7344
 	.4byte lbl_802C735C
-__RTTI__22TaiCollecFallingAction:
+.endobj __RTTI__21TaiCollecGetOutAction
+.balign 4
+.obj __RTTI__22TaiCollecFallingAction, local
 	.4byte lbl_802C7384
 	.4byte lbl_802C739C
-__RTTI__26TaiCollecDeadFallingAction:
+.endobj __RTTI__22TaiCollecFallingAction
+.balign 4
+.obj __RTTI__26TaiCollecDeadFallingAction, local
 	.4byte lbl_802C73C4
 	.4byte lbl_802C73E0
-__RTTI__40TaiCollecPelletFinishContainerizedAction:
+.endobj __RTTI__26TaiCollecDeadFallingAction
+.balign 4
+.obj __RTTI__40TaiCollecPelletFinishContainerizedAction, local
 	.4byte lbl_802C7408
 	.4byte lbl_802C7434
-__RTTI__39TaiCollecPelletStartContainerizedAction:
+.endobj __RTTI__40TaiCollecPelletFinishContainerizedAction
+.balign 4
+.obj __RTTI__39TaiCollecPelletStartContainerizedAction, local
 	.4byte lbl_802C745C
 	.4byte lbl_802C7484
-__RTTI__25TaiCollecRoundCarryAction:
+.endobj __RTTI__39TaiCollecPelletStartContainerizedAction
+.balign 4
+.obj __RTTI__25TaiCollecRoundCarryAction, local
 	.4byte lbl_802C74AC
 	.4byte lbl_802C74C8
-__RTTI__30TaiCollecRouteImpassableAction:
+.endobj __RTTI__25TaiCollecRoundCarryAction
+.balign 4
+.obj __RTTI__30TaiCollecRouteImpassableAction, local
 	.4byte lbl_802C74F0
 	.4byte lbl_802C7510
-__RTTI__15TaiMotionAction:
+.endobj __RTTI__30TaiCollecRouteImpassableAction
+.balign 4
+.obj __RTTI__15TaiMotionAction, local
 	.4byte lbl_802C7558
 	.4byte lbl_802C7568
-__RTTI__25TaiContinuousMotionAction:
+.endobj __RTTI__15TaiMotionAction
+.balign 4
+.obj __RTTI__25TaiContinuousMotionAction, local
 	.4byte lbl_802C7574
 	.4byte lbl_802C7590
-__RTTI__29TaiCollecCarryingToNestAction:
+.endobj __RTTI__25TaiContinuousMotionAction
+.balign 4
+.obj __RTTI__29TaiCollecCarryingToNestAction, local
 	.4byte lbl_802C7538
 	.4byte lbl_802C75A4
-__RTTI__28TaiCollecPuttingPelletAction:
+.endobj __RTTI__29TaiCollecCarryingToNestAction
+.balign 4
+.obj __RTTI__28TaiCollecPuttingPelletAction, local
 	.4byte lbl_802C7618
 	.4byte lbl_802C7638
-__RTTI__18TaiCollecPutAction:
+.endobj __RTTI__28TaiCollecPuttingPelletAction
+.balign 4
+.obj __RTTI__18TaiCollecPutAction, local
 	.4byte lbl_802C7660
 	.4byte lbl_802C7674
-__RTTI__29TaiCollecDefeatCarryingAction:
+.endobj __RTTI__18TaiCollecPutAction
+.balign 4
+.obj __RTTI__29TaiCollecDefeatCarryingAction, local
 	.4byte lbl_802C769C
 	.4byte lbl_802C76BC
-__RTTI__26TaiCollecWinCarryingAction:
+.endobj __RTTI__29TaiCollecDefeatCarryingAction
+.balign 4
+.obj __RTTI__26TaiCollecWinCarryingAction, local
 	.4byte lbl_802C76E4
 	.4byte lbl_802C7700
-__RTTI__27TaiCollecBeingDraggedAction:
+.endobj __RTTI__26TaiCollecWinCarryingAction
+.balign 4
+.obj __RTTI__27TaiCollecBeingDraggedAction, local
 	.4byte lbl_802C7728
 	.4byte lbl_802C7744
-__RTTI__23TaiCollecCarryingAction:
+.endobj __RTTI__27TaiCollecBeingDraggedAction
+.balign 4
+.obj __RTTI__23TaiCollecCarryingAction, local
 	.4byte lbl_802C776C
 	.4byte lbl_802C7784
-__RTTI__23TaiCollecCatchingAction:
+.endobj __RTTI__23TaiCollecCarryingAction
+.balign 4
+.obj __RTTI__23TaiCollecCatchingAction, local
 	.4byte lbl_802C77AC
 	.4byte lbl_802C77C4
-__RTTI__25TaiCollecHoldPelletAction:
+.endobj __RTTI__23TaiCollecCatchingAction
+.balign 4
+.obj __RTTI__25TaiCollecHoldPelletAction, local
 	.4byte lbl_802C77EC
 	.4byte lbl_802C7808
-__RTTI__32TaiCollecPelletDisappearedAction:
+.endobj __RTTI__25TaiCollecHoldPelletAction
+.balign 4
+.obj __RTTI__32TaiCollecPelletDisappearedAction, local
 	.4byte lbl_802C7830
 	.4byte lbl_802C7854
-__RTTI__25TaiCollecPelletLostAction:
+.endobj __RTTI__32TaiCollecPelletDisappearedAction
+.balign 4
+.obj __RTTI__25TaiCollecPelletLostAction, local
 	.4byte lbl_802C787C
 	.4byte lbl_802C7898
-__RTTI__14TaiTimerAction:
+.endobj __RTTI__25TaiCollecPelletLostAction
+.balign 4
+.obj __RTTI__14TaiTimerAction, local
 	.4byte lbl_802C78EC
 	.4byte lbl_802C78FC
-__RTTI__43TaiCollecVisibleHeightPelletLostTimerAction:
+.endobj __RTTI__14TaiTimerAction
+.balign 4
+.obj __RTTI__43TaiCollecVisibleHeightPelletLostTimerAction, local
 	.4byte lbl_802C78C0
 	.4byte lbl_802C7908
-__RTTI__38TaiCollecVisibleHeightPelletLostAction:
+.endobj __RTTI__43TaiCollecVisibleHeightPelletLostTimerAction
+.balign 4
+.obj __RTTI__38TaiCollecVisibleHeightPelletLostAction, local
 	.4byte lbl_802C7938
 	.4byte lbl_802C7960
-__RTTI__9Condition:
+.endobj __RTTI__38TaiCollecVisibleHeightPelletLostAction
+.balign 4
+.obj __RTTI__9Condition, local
 	.4byte lbl_802C799C
 	.4byte 0
-__RTTI__13TekiCondition:
+.endobj __RTTI__9Condition
+.balign 4
+.obj __RTTI__13TekiCondition, local
 	.4byte lbl_802C79A8
 	.4byte lbl_802C79B8
-__RTTI__27TaiCollecTargetPelletAction:
+.endobj __RTTI__13TekiCondition
+.balign 4
+.obj __RTTI__27TaiCollecTargetPelletAction, local
 	.4byte lbl_802C7A30
 	.4byte lbl_802C7A4C
-__RTTI__28TaiCollecLetGoOfPelletAction:
+.endobj __RTTI__27TaiCollecTargetPelletAction
+.balign 4
+.obj __RTTI__28TaiCollecLetGoOfPelletAction, local
 	.4byte lbl_802C7A74
 	.4byte lbl_802C7A94
-__RTTI__25TaiCollecImpassableAction:
+.endobj __RTTI__28TaiCollecLetGoOfPelletAction
+.balign 4
+.obj __RTTI__25TaiCollecImpassableAction, local
 	.4byte lbl_802C7ABC
 	.4byte lbl_802C7AD8
-__RTTI__31TekiCollecTargetPelletCondition:
+.endobj __RTTI__25TaiCollecImpassableAction
+.balign 4
+.obj __RTTI__31TekiCollecTargetPelletCondition, local
 	.4byte lbl_802C7B00
 	.4byte lbl_802C7B20
-__RTTI__17TaiCollecStrategy:
+.endobj __RTTI__31TekiCollecTargetPelletCondition
+.balign 4
+.obj __RTTI__17TaiCollecStrategy, local
 	.4byte lbl_802C7B40
 	.4byte lbl_802C7B54
-__RTTI__19TaiDependenceAction:
+.endobj __RTTI__17TaiCollecStrategy
+.balign 4
+.obj __RTTI__19TaiDependenceAction, local
 	.4byte lbl_802C7B90
 	.4byte lbl_802C7BA4
-__RTTI__19TaiCollecParameters:
+.endobj __RTTI__19TaiDependenceAction
+.balign 4
+.obj __RTTI__19TaiCollecParameters, local
 	.4byte lbl_802C7BE8
 	.4byte lbl_802C7BFC
+.endobj __RTTI__19TaiCollecParameters
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803EA4A0:
+.obj lbl_803EA4A0, local
 	.float 0.0
-lbl_803EA4A4:
+.endobj lbl_803EA4A0
+.obj lbl_803EA4A4, local
 	.float 10000.0
-lbl_803EA4A8:
+.endobj lbl_803EA4A4
+.obj lbl_803EA4A8, local
 	.float 100.0
-lbl_803EA4AC:
+.endobj lbl_803EA4A8
+.obj lbl_803EA4AC, local
 	.float 30.0
-lbl_803EA4B0:
+.endobj lbl_803EA4AC
+.obj lbl_803EA4B0, local
 	.float 1.0
-lbl_803EA4B4:
+.endobj lbl_803EA4B0
+.obj lbl_803EA4B4, local
 	.float 10.0
-lbl_803EA4B8:
+.endobj lbl_803EA4B4
+.obj lbl_803EA4B8, local
 	.float 1000.0
-lbl_803EA4BC:
+.endobj lbl_803EA4B8
+.obj lbl_803EA4BC, local
 	.float 5000.0
-lbl_803EA4C0:
+.endobj lbl_803EA4BC
+.obj lbl_803EA4C0, local
 	.float 70.0
-lbl_803EA4C4:
+.endobj lbl_803EA4C0
+.obj lbl_803EA4C4, local
 	.float 85.0
-lbl_803EA4C8:
+.endobj lbl_803EA4C4
+.obj lbl_803EA4C8, local
 	.float 500.0
-lbl_803EA4CC:
+.endobj lbl_803EA4C8
+.obj lbl_803EA4CC, local
 	.float 360.0
-lbl_803EA4D0:
+.endobj lbl_803EA4CC
+.obj lbl_803EA4D0, local
 	.float 2.5
-lbl_803EA4D4:
+.endobj lbl_803EA4D0
+.obj lbl_803EA4D4, local
 	.float 15.0
-lbl_803EA4D8:
+.endobj lbl_803EA4D4
+.obj lbl_803EA4D8, local
 	.float 0.3
-lbl_803EA4DC:
+.endobj lbl_803EA4D8
+.obj lbl_803EA4DC, local
 	.float 0.2
-lbl_803EA4E0:
+.endobj lbl_803EA4DC
+.obj lbl_803EA4E0, local
 	.float 60.0
-lbl_803EA4E4:
+.endobj lbl_803EA4E0
+.obj lbl_803EA4E4, local
 	.float 50.0
-lbl_803EA4E8:
+.endobj lbl_803EA4E4
+.obj lbl_803EA4E8, local
 	.float 400.0
-lbl_803EA4EC:
+.endobj lbl_803EA4E8
+.obj lbl_803EA4EC, local
 	.float 32.0
-lbl_803EA4F0:
+.endobj lbl_803EA4EC
+.obj lbl_803EA4F0, local
 	.float 4000.0
-lbl_803EA4F4:
+.endobj lbl_803EA4F0
+.obj lbl_803EA4F4, local
 	.float 6.0
-lbl_803EA4F8:
+.endobj lbl_803EA4F4
+.obj lbl_803EA4F8, local
 	.float 3.0
-lbl_803EA4FC:
+.endobj lbl_803EA4F8
+.obj lbl_803EA4FC, local
 	.float 4.0
-lbl_803EA500:
+.endobj lbl_803EA4FC
+.obj lbl_803EA500, local
 	.float 8.0
-lbl_803EA504:
+.endobj lbl_803EA500
+.obj lbl_803EA504, local
 	.float -0.5
-lbl_803EA508:
+.endobj lbl_803EA504
+.obj lbl_803EA508, local
 	.float 1.2
+.endobj lbl_803EA508

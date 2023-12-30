@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global actByEvent__22TAIAhitCheckFlyingPikiFR9TekiEvent
-actByEvent__22TAIAhitCheckFlyingPikiFR9TekiEvent:
+.fn actByEvent__22TAIAhitCheckFlyingPikiFR9TekiEvent, global
 /* 801A8490 001A53F0  7C 08 02 A6 */	mflr r0
 /* 801A8494 001A53F4  90 01 00 04 */	stw r0, 4(r1)
 /* 801A8498 001A53F8  94 21 FF F8 */	stwu r1, -8(r1)
@@ -24,9 +23,9 @@ actByEvent__22TAIAhitCheckFlyingPikiFR9TekiEvent:
 /* 801A84D4 001A5434  38 21 00 08 */	addi r1, r1, 8
 /* 801A84D8 001A5438  7C 08 03 A6 */	mtlr r0
 /* 801A84DC 001A543C  4E 80 00 20 */	blr 
+.endfn actByEvent__22TAIAhitCheckFlyingPikiFR9TekiEvent
 
-.global act__13TAIAdeadCheckFR4Teki
-act__13TAIAdeadCheckFR4Teki:
+.fn act__13TAIAdeadCheckFR4Teki, global
 /* 801A84E0 001A5440  C0 24 00 58 */	lfs f1, 0x58(r4)
 /* 801A84E4 001A5444  C0 02 B5 88 */	lfs f0, lbl_803EB788@sda21(r2)
 /* 801A84E8 001A5448  FC 01 00 40 */	fcmpo cr0, f1, f0
@@ -34,9 +33,9 @@ act__13TAIAdeadCheckFR4Teki:
 /* 801A84F0 001A5450  7C 00 00 26 */	mfcr r0
 /* 801A84F4 001A5454  54 03 1F FE */	rlwinm r3, r0, 3, 0x1f, 0x1f
 /* 801A84F8 001A5458  4E 80 00 20 */	blr 
+.endfn act__13TAIAdeadCheckFR4Teki
 
-.global start__7TAIAdieFR4Teki
-start__7TAIAdieFR4Teki:
+.fn start__7TAIAdieFR4Teki, global
 /* 801A84FC 001A545C  7C 08 02 A6 */	mflr r0
 /* 801A8500 001A5460  7C 83 23 78 */	mr r3, r4
 /* 801A8504 001A5464  90 01 00 04 */	stw r0, 4(r1)
@@ -49,9 +48,9 @@ start__7TAIAdieFR4Teki:
 /* 801A8520 001A5480  38 21 00 08 */	addi r1, r1, 8
 /* 801A8524 001A5484  7C 08 03 A6 */	mtlr r0
 /* 801A8528 001A5488  4E 80 00 20 */	blr 
+.endfn start__7TAIAdieFR4Teki
 
-.global start__9TAIAdyingFR4Teki
-start__9TAIAdyingFR4Teki:
+.fn start__9TAIAdyingFR4Teki, global
 /* 801A852C 001A548C  7C 08 02 A6 */	mflr r0
 /* 801A8530 001A5490  90 01 00 04 */	stw r0, 4(r1)
 /* 801A8534 001A5494  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -118,9 +117,9 @@ start__9TAIAdyingFR4Teki:
 /* 801A8618 001A5578  38 21 00 18 */	addi r1, r1, 0x18
 /* 801A861C 001A557C  7C 08 03 A6 */	mtlr r0
 /* 801A8620 001A5580  4E 80 00 20 */	blr 
+.endfn start__9TAIAdyingFR4Teki
 
-.global act__9TAIAdyingFR4Teki
-act__9TAIAdyingFR4Teki:
+.fn act__9TAIAdyingFR4Teki, global
 /* 801A8624 001A5584  7C 08 02 A6 */	mflr r0
 /* 801A8628 001A5588  90 01 00 04 */	stw r0, 4(r1)
 /* 801A862C 001A558C  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -171,9 +170,9 @@ act__9TAIAdyingFR4Teki:
 /* 801A86C4 001A5624  38 21 00 20 */	addi r1, r1, 0x20
 /* 801A86C8 001A5628  7C 08 03 A6 */	mtlr r0
 /* 801A86CC 001A562C  4E 80 00 20 */	blr 
+.endfn act__9TAIAdyingFR4Teki
 
-.global start__16TAIAdyingKabekuiFR4Teki
-start__16TAIAdyingKabekuiFR4Teki:
+.fn start__16TAIAdyingKabekuiFR4Teki, global
 /* 801A86D0 001A5630  7C 08 02 A6 */	mflr r0
 /* 801A86D4 001A5634  90 01 00 04 */	stw r0, 4(r1)
 /* 801A86D8 001A5638  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -191,9 +190,9 @@ start__16TAIAdyingKabekuiFR4Teki:
 /* 801A8708 001A5668  38 21 00 18 */	addi r1, r1, 0x18
 /* 801A870C 001A566C  7C 08 03 A6 */	mtlr r0
 /* 801A8710 001A5670  4E 80 00 20 */	blr 
+.endfn start__16TAIAdyingKabekuiFR4Teki
 
-.global act__16TAIAdyingKabekuiFR4Teki
-act__16TAIAdyingKabekuiFR4Teki:
+.fn act__16TAIAdyingKabekuiFR4Teki, global
 /* 801A8714 001A5674  7C 08 02 A6 */	mflr r0
 /* 801A8718 001A5678  90 01 00 04 */	stw r0, 4(r1)
 /* 801A871C 001A567C  94 21 FF B8 */	stwu r1, -0x48(r1)
@@ -285,9 +284,9 @@ act__16TAIAdyingKabekuiFR4Teki:
 /* 801A884C 001A57AC  38 21 00 48 */	addi r1, r1, 0x48
 /* 801A8850 001A57B0  7C 08 03 A6 */	mtlr r0
 /* 801A8854 001A57B4  4E 80 00 20 */	blr 
+.endfn act__16TAIAdyingKabekuiFR4Teki
 
-.global start__21TAIAdyingCrushKabekuiFR4Teki
-start__21TAIAdyingCrushKabekuiFR4Teki:
+.fn start__21TAIAdyingCrushKabekuiFR4Teki, global
 /* 801A8858 001A57B8  7C 08 02 A6 */	mflr r0
 /* 801A885C 001A57BC  90 01 00 04 */	stw r0, 4(r1)
 /* 801A8860 001A57C0  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -305,9 +304,9 @@ start__21TAIAdyingCrushKabekuiFR4Teki:
 /* 801A8890 001A57F0  38 21 00 18 */	addi r1, r1, 0x18
 /* 801A8894 001A57F4  7C 08 03 A6 */	mtlr r0
 /* 801A8898 001A57F8  4E 80 00 20 */	blr 
+.endfn start__21TAIAdyingCrushKabekuiFR4Teki
 
-.global act__10TAIAdamageFR4Teki
-act__10TAIAdamageFR4Teki:
+.fn act__10TAIAdamageFR4Teki, global
 /* 801A889C 001A57FC  7C 08 02 A6 */	mflr r0
 /* 801A88A0 001A5800  90 01 00 04 */	stw r0, 4(r1)
 /* 801A88A4 001A5804  94 21 FF A0 */	stwu r1, -0x60(r1)
@@ -368,14 +367,14 @@ act__10TAIAdamageFR4Teki:
 /* 801A8970 001A58D0  38 21 00 60 */	addi r1, r1, 0x60
 /* 801A8974 001A58D4  7C 08 03 A6 */	mtlr r0
 /* 801A8978 001A58D8  4E 80 00 20 */	blr 
+.endfn act__10TAIAdamageFR4Teki
 
-.global judgeDamage__10TAIAdamageFR4Teki
-judgeDamage__10TAIAdamageFR4Teki:
+.fn judgeDamage__10TAIAdamageFR4Teki, weak
 /* 801A897C 001A58DC  38 60 00 01 */	li r3, 1
 /* 801A8980 001A58E0  4E 80 00 20 */	blr 
+.endfn judgeDamage__10TAIAdamageFR4Teki
 
-.global act__11TAIAinWaterFR4Teki
-act__11TAIAinWaterFR4Teki:
+.fn act__11TAIAinWaterFR4Teki, global
 /* 801A8984 001A58E4  7C 08 02 A6 */	mflr r0
 /* 801A8988 001A58E8  90 01 00 04 */	stw r0, 4(r1)
 /* 801A898C 001A58EC  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -395,9 +394,9 @@ act__11TAIAinWaterFR4Teki:
 /* 801A89C0 001A5920  38 21 00 18 */	addi r1, r1, 0x18
 /* 801A89C4 001A5924  7C 08 03 A6 */	mtlr r0
 /* 801A89C8 001A5928  4E 80 00 20 */	blr 
+.endfn act__11TAIAinWaterFR4Teki
 
-.global actByEvent__11TAIAinWaterFR9TekiEvent
-actByEvent__11TAIAinWaterFR9TekiEvent:
+.fn actByEvent__11TAIAinWaterFR9TekiEvent, global
 /* 801A89CC 001A592C  7C 08 02 A6 */	mflr r0
 /* 801A89D0 001A5930  90 01 00 04 */	stw r0, 4(r1)
 /* 801A89D4 001A5934  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -425,9 +424,9 @@ actByEvent__11TAIAinWaterFR9TekiEvent:
 /* 801A8A28 001A5988  38 21 00 18 */	addi r1, r1, 0x18
 /* 801A8A2C 001A598C  7C 08 03 A6 */	mtlr r0
 /* 801A8A30 001A5990  4E 80 00 20 */	blr 
+.endfn actByEvent__11TAIAinWaterFR9TekiEvent
 
-.global act__17TAIAinWaterDamageFR4Teki
-act__17TAIAinWaterDamageFR4Teki:
+.fn act__17TAIAinWaterDamageFR4Teki, global
 /* 801A8A34 001A5994  7C 08 02 A6 */	mflr r0
 /* 801A8A38 001A5998  90 01 00 04 */	stw r0, 4(r1)
 /* 801A8A3C 001A599C  94 21 FF C8 */	stwu r1, -0x38(r1)
@@ -499,9 +498,9 @@ act__17TAIAinWaterDamageFR4Teki:
 /* 801A8B28 001A5A88  38 21 00 38 */	addi r1, r1, 0x38
 /* 801A8B2C 001A5A8C  7C 08 03 A6 */	mtlr r0
 /* 801A8B30 001A5A90  4E 80 00 20 */	blr 
+.endfn act__17TAIAinWaterDamageFR4Teki
 
-.global actByEvent__17TAIAinWaterDamageFR9TekiEvent
-actByEvent__17TAIAinWaterDamageFR9TekiEvent:
+.fn actByEvent__17TAIAinWaterDamageFR9TekiEvent, global
 /* 801A8B34 001A5A94  7C 08 02 A6 */	mflr r0
 /* 801A8B38 001A5A98  90 01 00 04 */	stw r0, 4(r1)
 /* 801A8B3C 001A5A9C  94 21 FF B8 */	stwu r1, -0x48(r1)
@@ -546,9 +545,9 @@ actByEvent__17TAIAinWaterDamageFR9TekiEvent:
 /* 801A8BD0 001A5B30  38 21 00 48 */	addi r1, r1, 0x48
 /* 801A8BD4 001A5B34  7C 08 03 A6 */	mtlr r0
 /* 801A8BD8 001A5B38  4E 80 00 20 */	blr 
+.endfn actByEvent__17TAIAinWaterDamageFR9TekiEvent
 
-.global createEffect__17TAIAinWaterDamageFR4Teki
-createEffect__17TAIAinWaterDamageFR4Teki:
+.fn createEffect__17TAIAinWaterDamageFR4Teki, global
 /* 801A8BDC 001A5B3C  7C 08 02 A6 */	mflr r0
 /* 801A8BE0 001A5B40  38 C0 00 00 */	li r6, 0
 /* 801A8BE4 001A5B44  90 01 00 04 */	stw r0, 4(r1)
@@ -569,36 +568,45 @@ createEffect__17TAIAinWaterDamageFR4Teki:
 /* 801A8C20 001A5B80  38 21 00 18 */	addi r1, r1, 0x18
 /* 801A8C24 001A5B84  7C 08 03 A6 */	mtlr r0
 /* 801A8C28 001A5B88  4E 80 00 20 */	blr 
+.endfn createEffect__17TAIAinWaterDamageFR4Teki
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802DF130:
+.obj lbl_802DF130, local
 	.asciz "TAIAreaction.cpp"
+.endobj lbl_802DF130
 .balign 4
-lbl_802DF144:
+.obj lbl_802DF144, local
 	.asciz "TAIAreaction"
+.endobj lbl_802DF144
 .balign 4
-lbl_802DF154:
+.obj lbl_802DF154, local
 	.asciz "TAIAinWaterDamage"
+.endobj lbl_802DF154
 .balign 4
-lbl_802DF168:
+.obj lbl_802DF168, local
 	.asciz "TaiAction"
+.endobj lbl_802DF168
 .balign 4
-lbl_802DF174:
+.obj lbl_802DF174, local
 	.asciz "TAIAinWater"
+.endobj lbl_802DF174
 .balign 4
-lbl_802DF180:
+.obj lbl_802DF180, local
 	.4byte __RTTI__9TaiAction
 	.4byte 0
 	.4byte 0
-lbl_802DF18C:
+.endobj lbl_802DF180
+.balign 4
+.obj lbl_802DF18C, local
 	.4byte __RTTI__9TaiAction
 	.4byte 0
 	.4byte __RTTI__11TAIAinWater
 	.4byte 0
 	.4byte 0
-.global __vt__17TAIAinWaterDamage
-__vt__17TAIAinWaterDamage:
+.endobj lbl_802DF18C
+.balign 4
+.obj __vt__17TAIAinWaterDamage, global
 	.4byte __RTTI__17TAIAinWaterDamage
 	.4byte 0
 	.4byte start__9TaiActionFR4Teki
@@ -606,8 +614,9 @@ __vt__17TAIAinWaterDamage:
 	.4byte act__17TAIAinWaterDamageFR4Teki
 	.4byte actByEvent__17TAIAinWaterDamageFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
-.global __vt__11TAIAinWater
-__vt__11TAIAinWater:
+.endobj __vt__17TAIAinWaterDamage
+.balign 4
+.obj __vt__11TAIAinWater, global
 	.4byte __RTTI__11TAIAinWater
 	.4byte 0
 	.4byte start__9TaiActionFR4Teki
@@ -615,15 +624,19 @@ __vt__11TAIAinWater:
 	.4byte act__11TAIAinWaterFR4Teki
 	.4byte actByEvent__11TAIAinWaterFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
-lbl_802DF1D8:
-	.asciz "TAIAdamage"
+.endobj __vt__11TAIAinWater
 .balign 4
-lbl_802DF1E4:
+.obj lbl_802DF1D8, local
+	.asciz "TAIAdamage"
+.endobj lbl_802DF1D8
+.balign 4
+.obj lbl_802DF1E4, local
 	.4byte __RTTI__9TaiAction
 	.4byte 0
 	.4byte 0
-.global __vt__10TAIAdamage
-__vt__10TAIAdamage:
+.endobj lbl_802DF1E4
+.balign 4
+.obj __vt__10TAIAdamage, global
 	.4byte __RTTI__10TAIAdamage
 	.4byte 0
 	.4byte start__9TaiActionFR4Teki
@@ -632,29 +645,39 @@ __vt__10TAIAdamage:
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
 	.4byte judgeDamage__10TAIAdamageFR4Teki
-lbl_802DF210:
+.endobj __vt__10TAIAdamage
+.balign 4
+.obj lbl_802DF210, local
 	.asciz "TAIAdyingCrushKabekui"
+.endobj lbl_802DF210
 .balign 4
-lbl_802DF228:
+.obj lbl_802DF228, local
 	.asciz "TAIAmotion"
+.endobj lbl_802DF228
 .balign 4
-lbl_802DF234:
+.obj lbl_802DF234, local
 	.4byte __RTTI__9TaiAction
 	.4byte 0
 	.4byte 0
-lbl_802DF240:
-	.asciz "TAIAdying"
+.endobj lbl_802DF234
 .balign 4
-lbl_802DF24C:
+.obj lbl_802DF240, local
+	.asciz "TAIAdying"
+.endobj lbl_802DF240
+.balign 4
+.obj lbl_802DF24C, local
 	.4byte __RTTI__9TaiAction
 	.4byte 0
 	.4byte __RTTI__10TAIAmotion
 	.4byte 0
 	.4byte 0
-lbl_802DF260:
-	.asciz "TAIAdyingKabekui"
+.endobj lbl_802DF24C
 .balign 4
-lbl_802DF274:
+.obj lbl_802DF260, local
+	.asciz "TAIAdyingKabekui"
+.endobj lbl_802DF260
+.balign 4
+.obj lbl_802DF274, local
 	.4byte __RTTI__9TaiAction
 	.4byte 0
 	.4byte __RTTI__10TAIAmotion
@@ -662,7 +685,9 @@ lbl_802DF274:
 	.4byte __RTTI__9TAIAdying
 	.4byte 0
 	.4byte 0
-lbl_802DF290:
+.endobj lbl_802DF274
+.balign 4
+.obj lbl_802DF290, local
 	.4byte __RTTI__9TaiAction
 	.4byte 0
 	.4byte __RTTI__10TAIAmotion
@@ -672,8 +697,9 @@ lbl_802DF290:
 	.4byte __RTTI__16TAIAdyingKabekui
 	.4byte 0
 	.4byte 0
-.global __vt__21TAIAdyingCrushKabekui
-__vt__21TAIAdyingCrushKabekui:
+.endobj lbl_802DF290
+.balign 4
+.obj __vt__21TAIAdyingCrushKabekui, global
 	.4byte __RTTI__21TAIAdyingCrushKabekui
 	.4byte 0
 	.4byte start__21TAIAdyingCrushKabekuiFR4Teki
@@ -681,8 +707,9 @@ __vt__21TAIAdyingCrushKabekui:
 	.4byte act__16TAIAdyingKabekuiFR4Teki
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
-.global __vt__16TAIAdyingKabekui
-__vt__16TAIAdyingKabekui:
+.endobj __vt__21TAIAdyingCrushKabekui
+.balign 4
+.obj __vt__16TAIAdyingKabekui, global
 	.4byte __RTTI__16TAIAdyingKabekui
 	.4byte 0
 	.4byte start__16TAIAdyingKabekuiFR4Teki
@@ -690,8 +717,9 @@ __vt__16TAIAdyingKabekui:
 	.4byte act__16TAIAdyingKabekuiFR4Teki
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
-.global __vt__9TAIAdying
-__vt__9TAIAdying:
+.endobj __vt__16TAIAdyingKabekui
+.balign 4
+.obj __vt__9TAIAdying, global
 	.4byte __RTTI__9TAIAdying
 	.4byte 0
 	.4byte start__9TAIAdyingFR4Teki
@@ -699,12 +727,15 @@ __vt__9TAIAdying:
 	.4byte act__9TAIAdyingFR4Teki
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
-lbl_802DF308:
+.endobj __vt__9TAIAdying
+.balign 4
+.obj lbl_802DF308, local
 	.4byte __RTTI__9TaiAction
 	.4byte 0
 	.4byte 0
-.global __vt__7TAIAdie
-__vt__7TAIAdie:
+.endobj lbl_802DF308
+.balign 4
+.obj __vt__7TAIAdie, global
 	.4byte __RTTI__7TAIAdie
 	.4byte 0
 	.4byte start__7TAIAdieFR4Teki
@@ -712,15 +743,19 @@ __vt__7TAIAdie:
 	.4byte act__9TaiActionFR4Teki
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
-lbl_802DF330:
-	.asciz "TAIAdeadCheck"
+.endobj __vt__7TAIAdie
 .balign 4
-lbl_802DF340:
+.obj lbl_802DF330, local
+	.asciz "TAIAdeadCheck"
+.endobj lbl_802DF330
+.balign 4
+.obj lbl_802DF340, local
 	.4byte __RTTI__9TaiAction
 	.4byte 0
 	.4byte 0
-.global __vt__13TAIAdeadCheck
-__vt__13TAIAdeadCheck:
+.endobj lbl_802DF340
+.balign 4
+.obj __vt__13TAIAdeadCheck, global
 	.4byte __RTTI__13TAIAdeadCheck
 	.4byte 0
 	.4byte start__9TaiActionFR4Teki
@@ -728,15 +763,19 @@ __vt__13TAIAdeadCheck:
 	.4byte act__13TAIAdeadCheckFR4Teki
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
-lbl_802DF368:
-	.asciz "TAIAhitCheckFlyingPiki"
+.endobj __vt__13TAIAdeadCheck
 .balign 4
-lbl_802DF380:
+.obj lbl_802DF368, local
+	.asciz "TAIAhitCheckFlyingPiki"
+.endobj lbl_802DF368
+.balign 4
+.obj lbl_802DF380, local
 	.4byte __RTTI__9TaiAction
 	.4byte 0
 	.4byte 0
-.global __vt__22TAIAhitCheckFlyingPiki
-__vt__22TAIAhitCheckFlyingPiki:
+.endobj lbl_802DF380
+.balign 4
+.obj __vt__22TAIAhitCheckFlyingPiki, global
 	.4byte __RTTI__22TAIAhitCheckFlyingPiki
 	.4byte 0
 	.4byte start__9TaiActionFR4Teki
@@ -744,51 +783,79 @@ __vt__22TAIAhitCheckFlyingPiki:
 	.4byte act__9TaiActionFR4Teki
 	.4byte actByEvent__22TAIAhitCheckFlyingPikiFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
+.endobj __vt__22TAIAhitCheckFlyingPiki
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-__RTTI__9TaiAction:
+.obj __RTTI__9TaiAction, local
 	.4byte lbl_802DF168
 	.4byte 0
-__RTTI__11TAIAinWater:
+.endobj __RTTI__9TaiAction
+.balign 4
+.obj __RTTI__11TAIAinWater, local
 	.4byte lbl_802DF174
 	.4byte lbl_802DF180
-__RTTI__17TAIAinWaterDamage:
+.endobj __RTTI__11TAIAinWater
+.balign 4
+.obj __RTTI__17TAIAinWaterDamage, local
 	.4byte lbl_802DF154
 	.4byte lbl_802DF18C
-__RTTI__10TAIAdamage:
+.endobj __RTTI__17TAIAinWaterDamage
+.balign 4
+.obj __RTTI__10TAIAdamage, local
 	.4byte lbl_802DF1D8
 	.4byte lbl_802DF1E4
-__RTTI__10TAIAmotion:
+.endobj __RTTI__10TAIAdamage
+.balign 4
+.obj __RTTI__10TAIAmotion, local
 	.4byte lbl_802DF228
 	.4byte lbl_802DF234
-__RTTI__9TAIAdying:
+.endobj __RTTI__10TAIAmotion
+.balign 4
+.obj __RTTI__9TAIAdying, local
 	.4byte lbl_802DF240
 	.4byte lbl_802DF24C
-__RTTI__16TAIAdyingKabekui:
+.endobj __RTTI__9TAIAdying
+.balign 4
+.obj __RTTI__16TAIAdyingKabekui, local
 	.4byte lbl_802DF260
 	.4byte lbl_802DF274
-__RTTI__21TAIAdyingCrushKabekui:
+.endobj __RTTI__16TAIAdyingKabekui
+.balign 4
+.obj __RTTI__21TAIAdyingCrushKabekui, local
 	.4byte lbl_802DF210
 	.4byte lbl_802DF290
-lbl_803E6260:
-	.asciz "TAIAdie"
+.endobj __RTTI__21TAIAdyingCrushKabekui
 .balign 4
-__RTTI__7TAIAdie:
+.obj lbl_803E6260, local
+	.asciz "TAIAdie"
+.endobj lbl_803E6260
+.balign 4
+.obj __RTTI__7TAIAdie, local
 	.4byte lbl_803E6260
 	.4byte lbl_802DF308
-__RTTI__13TAIAdeadCheck:
+.endobj __RTTI__7TAIAdie
+.balign 4
+.obj __RTTI__13TAIAdeadCheck, local
 	.4byte lbl_802DF330
 	.4byte lbl_802DF340
-__RTTI__22TAIAhitCheckFlyingPiki:
+.endobj __RTTI__13TAIAdeadCheck
+.balign 4
+.obj __RTTI__22TAIAhitCheckFlyingPiki, local
 	.4byte lbl_802DF368
 	.4byte lbl_802DF380
+.endobj __RTTI__22TAIAhitCheckFlyingPiki
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803EB788:
-	.4byte 0x00000000
-lbl_803EB78C:
-	.4byte 0x3F800000
-lbl_803EB790:
-	.4byte 0xC0000000
+.obj lbl_803EB788, local
+	.float 0.0
+.endobj lbl_803EB788
+.balign 4
+.obj lbl_803EB78C, local
+	.float 1.0
+.endobj lbl_803EB78C
+.balign 4
+.obj lbl_803EB790, local
+	.float -2.0
+.endobj lbl_803EB790

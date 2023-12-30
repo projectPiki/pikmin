@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global __ct__15TaiSerialActionFii
-__ct__15TaiSerialActionFii:
+.fn __ct__15TaiSerialActionFii, global
 /* 80126E04 00123D64  7C 08 02 A6 */	mflr r0
 /* 80126E08 00123D68  3C C0 80 2C */	lis r6, __vt__9TaiAction@ha
 /* 80126E0C 00123D6C  90 01 00 04 */	stw r0, 4(r1)
@@ -25,9 +24,9 @@ __ct__15TaiSerialActionFii:
 /* 80126E54 00123DB4  38 21 00 20 */	addi r1, r1, 0x20
 /* 80126E58 00123DB8  7C 08 03 A6 */	mtlr r0
 /* 80126E5C 00123DBC  4E 80 00 20 */	blr 
+.endfn __ct__15TaiSerialActionFii
 
-.global start__15TaiSerialActionFR4Teki
-start__15TaiSerialActionFR4Teki:
+.fn start__15TaiSerialActionFR4Teki, global
 /* 80126E60 00123DC0  7C 08 02 A6 */	mflr r0
 /* 80126E64 00123DC4  90 01 00 04 */	stw r0, 4(r1)
 /* 80126E68 00123DC8  38 00 00 00 */	li r0, 0
@@ -45,13 +44,13 @@ start__15TaiSerialActionFR4Teki:
 /* 80126E98 00123DF8  38 21 00 08 */	addi r1, r1, 8
 /* 80126E9C 00123DFC  7C 08 03 A6 */	mtlr r0
 /* 80126EA0 00123E00  4E 80 00 20 */	blr 
+.endfn start__15TaiSerialActionFR4Teki
 
-.global start__9TaiActionFR4Teki
-start__9TaiActionFR4Teki:
+.fn start__9TaiActionFR4Teki, weak
 /* 80126EA4 00123E04  4E 80 00 20 */	blr 
+.endfn start__9TaiActionFR4Teki
 
-.global finish__15TaiSerialActionFR4Teki
-finish__15TaiSerialActionFR4Teki:
+.fn finish__15TaiSerialActionFR4Teki, global
 /* 80126EA8 00123E08  7C 08 02 A6 */	mflr r0
 /* 80126EAC 00123E0C  90 01 00 04 */	stw r0, 4(r1)
 /* 80126EB0 00123E10  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -86,13 +85,13 @@ finish__15TaiSerialActionFR4Teki:
 /* 80126F1C 00123E7C  38 21 00 20 */	addi r1, r1, 0x20
 /* 80126F20 00123E80  7C 08 03 A6 */	mtlr r0
 /* 80126F24 00123E84  4E 80 00 20 */	blr 
+.endfn finish__15TaiSerialActionFR4Teki
 
-.global finish__9TaiActionFR4Teki
-finish__9TaiActionFR4Teki:
+.fn finish__9TaiActionFR4Teki, weak
 /* 80126F28 00123E88  4E 80 00 20 */	blr 
+.endfn finish__9TaiActionFR4Teki
 
-.global act__15TaiSerialActionFR4Teki
-act__15TaiSerialActionFR4Teki:
+.fn act__15TaiSerialActionFR4Teki, global
 /* 80126F2C 00123E8C  7C 08 02 A6 */	mflr r0
 /* 80126F30 00123E90  90 01 00 04 */	stw r0, 4(r1)
 /* 80126F34 00123E94  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -138,14 +137,14 @@ act__15TaiSerialActionFR4Teki:
 /* 80126FC8 00123F28  38 21 00 18 */	addi r1, r1, 0x18
 /* 80126FCC 00123F2C  7C 08 03 A6 */	mtlr r0
 /* 80126FD0 00123F30  4E 80 00 20 */	blr 
+.endfn act__15TaiSerialActionFR4Teki
 
-.global act__9TaiActionFR4Teki
-act__9TaiActionFR4Teki:
+.fn act__9TaiActionFR4Teki, weak
 /* 80126FD4 00123F34  38 60 00 00 */	li r3, 0
 /* 80126FD8 00123F38  4E 80 00 20 */	blr 
+.endfn act__9TaiActionFR4Teki
 
-.global actByEvent__15TaiSerialActionFR9TekiEvent
-actByEvent__15TaiSerialActionFR9TekiEvent:
+.fn actByEvent__15TaiSerialActionFR9TekiEvent, global
 /* 80126FDC 00123F3C  7C 08 02 A6 */	mflr r0
 /* 80126FE0 00123F40  90 01 00 04 */	stw r0, 4(r1)
 /* 80126FE4 00123F44  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -194,14 +193,14 @@ actByEvent__15TaiSerialActionFR9TekiEvent:
 /* 80127084 00123FE4  38 21 00 20 */	addi r1, r1, 0x20
 /* 80127088 00123FE8  7C 08 03 A6 */	mtlr r0
 /* 8012708C 00123FEC  4E 80 00 20 */	blr 
+.endfn actByEvent__15TaiSerialActionFR9TekiEvent
 
-.global actByEvent__9TaiActionFR9TekiEvent
-actByEvent__9TaiActionFR9TekiEvent:
+.fn actByEvent__9TaiActionFR9TekiEvent, weak
 /* 80127090 00123FF0  38 60 00 00 */	li r3, 0
 /* 80127094 00123FF4  4E 80 00 20 */	blr 
+.endfn actByEvent__9TaiActionFR9TekiEvent
 
-.global __ct__8TaiStateFi
-__ct__8TaiStateFi:
+.fn __ct__8TaiStateFi, global
 /* 80127098 00123FF8  7C 08 02 A6 */	mflr r0
 /* 8012709C 00123FFC  3C A0 80 2C */	lis r5, __vt__8TaiState@ha
 /* 801270A0 00124000  90 01 00 04 */	stw r0, 4(r1)
@@ -221,9 +220,9 @@ __ct__8TaiStateFi:
 /* 801270D8 00124038  38 21 00 20 */	addi r1, r1, 0x20
 /* 801270DC 0012403C  7C 08 03 A6 */	mtlr r0
 /* 801270E0 00124040  4E 80 00 20 */	blr 
+.endfn __ct__8TaiStateFi
 
-.global start__8TaiStateFR4Teki
-start__8TaiStateFR4Teki:
+.fn start__8TaiStateFR4Teki, global
 /* 801270E4 00124044  7C 08 02 A6 */	mflr r0
 /* 801270E8 00124048  90 01 00 04 */	stw r0, 4(r1)
 /* 801270EC 0012404C  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -258,9 +257,9 @@ start__8TaiStateFR4Teki:
 /* 80127158 001240B8  38 21 00 20 */	addi r1, r1, 0x20
 /* 8012715C 001240BC  7C 08 03 A6 */	mtlr r0
 /* 80127160 001240C0  4E 80 00 20 */	blr 
+.endfn start__8TaiStateFR4Teki
 
-.global finish__8TaiStateFR4Teki
-finish__8TaiStateFR4Teki:
+.fn finish__8TaiStateFR4Teki, global
 /* 80127164 001240C4  7C 08 02 A6 */	mflr r0
 /* 80127168 001240C8  90 01 00 04 */	stw r0, 4(r1)
 /* 8012716C 001240CC  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -295,9 +294,9 @@ finish__8TaiStateFR4Teki:
 /* 801271D8 00124138  38 21 00 20 */	addi r1, r1, 0x20
 /* 801271DC 0012413C  7C 08 03 A6 */	mtlr r0
 /* 801271E0 00124140  4E 80 00 20 */	blr 
+.endfn finish__8TaiStateFR4Teki
 
-.global act__8TaiStateFR4Teki
-act__8TaiStateFR4Teki:
+.fn act__8TaiStateFR4Teki, global
 /* 801271E4 00124144  7C 08 02 A6 */	mflr r0
 /* 801271E8 00124148  90 01 00 04 */	stw r0, 4(r1)
 /* 801271EC 0012414C  94 21 FF C8 */	stwu r1, -0x38(r1)
@@ -363,9 +362,9 @@ act__8TaiStateFR4Teki:
 /* 801272C4 00124224  38 21 00 38 */	addi r1, r1, 0x38
 /* 801272C8 00124228  7C 08 03 A6 */	mtlr r0
 /* 801272CC 0012422C  4E 80 00 20 */	blr 
+.endfn act__8TaiStateFR4Teki
 
-.global hasNextState__9TaiActionFv
-hasNextState__9TaiActionFv:
+.fn hasNextState__9TaiActionFv, weak
 /* 801272D0 00124230  80 03 00 00 */	lwz r0, 0(r3)
 /* 801272D4 00124234  38 60 00 01 */	li r3, 1
 /* 801272D8 00124238  2C 00 00 00 */	cmpwi r0, 0
@@ -374,9 +373,9 @@ hasNextState__9TaiActionFv:
 /* 801272E4 00124244  4D 82 00 20 */	beqlr 
 /* 801272E8 00124248  38 60 00 00 */	li r3, 0
 /* 801272EC 0012424C  4E 80 00 20 */	blr 
+.endfn hasNextState__9TaiActionFv
 
-.global eventPerformed__8TaiStateFR9TekiEvent
-eventPerformed__8TaiStateFR9TekiEvent:
+.fn eventPerformed__8TaiStateFR9TekiEvent, global
 /* 801272F0 00124250  7C 08 02 A6 */	mflr r0
 /* 801272F4 00124254  90 01 00 04 */	stw r0, 4(r1)
 /* 801272F8 00124258  94 21 FF C8 */	stwu r1, -0x38(r1)
@@ -444,9 +443,9 @@ eventPerformed__8TaiStateFR9TekiEvent:
 /* 801273D8 00124338  38 21 00 38 */	addi r1, r1, 0x38
 /* 801273DC 0012433C  7C 08 03 A6 */	mtlr r0
 /* 801273E0 00124340  4E 80 00 20 */	blr 
+.endfn eventPerformed__8TaiStateFR9TekiEvent
 
-.global __ct__11TaiStrategyFii
-__ct__11TaiStrategyFii:
+.fn __ct__11TaiStrategyFii, global
 /* 801273E4 00124344  7C 08 02 A6 */	mflr r0
 /* 801273E8 00124348  90 01 00 04 */	stw r0, 4(r1)
 /* 801273EC 0012434C  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -472,9 +471,9 @@ __ct__11TaiStrategyFii:
 /* 8012743C 0012439C  38 21 00 28 */	addi r1, r1, 0x28
 /* 80127440 001243A0  7C 08 03 A6 */	mtlr r0
 /* 80127444 001243A4  4E 80 00 20 */	blr 
+.endfn __ct__11TaiStrategyFii
 
-.global init__11TaiStrategyFii
-init__11TaiStrategyFii:
+.fn init__11TaiStrategyFii, global
 /* 80127448 001243A8  7C 08 02 A6 */	mflr r0
 /* 8012744C 001243AC  90 01 00 04 */	stw r0, 4(r1)
 /* 80127450 001243B0  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -494,17 +493,17 @@ init__11TaiStrategyFii:
 /* 80127488 001243E8  38 21 00 20 */	addi r1, r1, 0x20
 /* 8012748C 001243EC  7C 08 03 A6 */	mtlr r0
 /* 80127490 001243F0  4E 80 00 20 */	blr 
+.endfn init__11TaiStrategyFii
 
-.global start__11TaiStrategyFR4Teki
-start__11TaiStrategyFR4Teki:
+.fn start__11TaiStrategyFR4Teki, global
 /* 80127494 001243F4  80 63 00 0C */	lwz r3, 0xc(r3)
 /* 80127498 001243F8  38 00 00 01 */	li r0, 1
 /* 8012749C 001243FC  90 64 03 24 */	stw r3, 0x324(r4)
 /* 801274A0 00124400  98 04 03 28 */	stb r0, 0x328(r4)
 /* 801274A4 00124404  4E 80 00 20 */	blr 
+.endfn start__11TaiStrategyFR4Teki
 
-.global act__11TaiStrategyFR4Teki
-act__11TaiStrategyFR4Teki:
+.fn act__11TaiStrategyFR4Teki, global
 /* 801274A8 00124408  7C 08 02 A6 */	mflr r0
 /* 801274AC 0012440C  90 01 00 04 */	stw r0, 4(r1)
 /* 801274B0 00124410  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -558,9 +557,9 @@ act__11TaiStrategyFR4Teki:
 /* 80127568 001244C8  38 21 00 20 */	addi r1, r1, 0x20
 /* 8012756C 001244CC  7C 08 03 A6 */	mtlr r0
 /* 80127570 001244D0  4E 80 00 20 */	blr 
+.endfn act__11TaiStrategyFR4Teki
 
-.global eventPerformed__11TaiStrategyFR9TekiEvent
-eventPerformed__11TaiStrategyFR9TekiEvent:
+.fn eventPerformed__11TaiStrategyFR9TekiEvent, global
 /* 80127574 001244D4  7C 08 02 A6 */	mflr r0
 /* 80127578 001244D8  90 01 00 04 */	stw r0, 4(r1)
 /* 8012757C 001244DC  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -598,21 +597,25 @@ eventPerformed__11TaiStrategyFR9TekiEvent:
 /* 801275F8 00124558  38 21 00 20 */	addi r1, r1, 0x20
 /* 801275FC 0012455C  7C 08 03 A6 */	mtlr r0
 /* 80127600 00124560  4E 80 00 20 */	blr 
+.endfn eventPerformed__11TaiStrategyFR9TekiEvent
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802C6568:
+.obj lbl_802C6568, local
 	.asciz "TaiStrategy"
+.endobj lbl_802C6568
 .balign 4
-lbl_802C6574:
+.obj lbl_802C6574, local
 	.asciz "TekiStrategy"
+.endobj lbl_802C6574
 .balign 4
-lbl_802C6584:
+.obj lbl_802C6584, local
 	.4byte __RTTI__12TekiStrategy
 	.4byte 0
 	.4byte 0
-.global __vt__11TaiStrategy
-__vt__11TaiStrategy:
+.endobj lbl_802C6584
+.balign 4
+.obj __vt__11TaiStrategy, global
 	.4byte __RTTI__11TaiStrategy
 	.4byte 0
 	.4byte start__11TaiStrategyFR4Teki
@@ -623,31 +626,36 @@ __vt__11TaiStrategy:
 	.4byte drawDebugInfo__12TekiStrategyFR4TekiR8Graphics
 	.4byte interact__12TekiStrategyFR4TekiR18TekiInteractionKey
 	.4byte spawnCorpseParts__12TekiStrategyFR4Teki
+.endobj __vt__11TaiStrategy
 .balign 4
-lbl_802C65B8:
+.obj lbl_802C65B8, local
 	.asciz "TaiState"
+.endobj lbl_802C65B8
 .balign 4
-.global __vt__8TaiState
-__vt__8TaiState:
+.obj __vt__8TaiState, global
 	.4byte __RTTI__8TaiState
 	.4byte 0
 	.4byte start__8TaiStateFR4Teki
 	.4byte finish__8TaiStateFR4Teki
 	.4byte act__8TaiStateFR4Teki
 	.4byte eventPerformed__8TaiStateFR9TekiEvent
+.endobj __vt__8TaiState
 .balign 4
-lbl_802C65DC:
+.obj lbl_802C65DC, local
 	.asciz "TaiSerialAction"
+.endobj lbl_802C65DC
 .balign 4
-lbl_802C65EC:
+.obj lbl_802C65EC, local
 	.asciz "TaiAction"
+.endobj lbl_802C65EC
 .balign 4
-lbl_802C65F8:
+.obj lbl_802C65F8, local
 	.4byte __RTTI__9TaiAction
 	.4byte 0
 	.4byte 0
-.global __vt__15TaiSerialAction
-__vt__15TaiSerialAction:
+.endobj lbl_802C65F8
+.balign 4
+.obj __vt__15TaiSerialAction, global
 	.4byte __RTTI__15TaiSerialAction
 	.4byte 0
 	.4byte start__15TaiSerialActionFR4Teki
@@ -655,8 +663,9 @@ __vt__15TaiSerialAction:
 	.4byte act__15TaiSerialActionFR4Teki
 	.4byte actByEvent__15TaiSerialActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
-.global __vt__9TaiAction
-__vt__9TaiAction:
+.endobj __vt__15TaiSerialAction
+.balign 4
+.obj __vt__9TaiAction, weak
 	.4byte __RTTI__9TaiAction
 	.4byte 0
 	.4byte start__9TaiActionFR4Teki
@@ -664,21 +673,31 @@ __vt__9TaiAction:
 	.4byte act__9TaiActionFR4Teki
 	.4byte actByEvent__9TaiActionFR9TekiEvent
 	.4byte hasNextState__9TaiActionFv
+.endobj __vt__9TaiAction
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-__RTTI__12TekiStrategy:
+.obj __RTTI__12TekiStrategy, local
 	.4byte lbl_802C6574
 	.4byte 0
-__RTTI__11TaiStrategy:
+.endobj __RTTI__12TekiStrategy
+.balign 4
+.obj __RTTI__11TaiStrategy, local
 	.4byte lbl_802C6568
 	.4byte lbl_802C6584
-__RTTI__8TaiState:
+.endobj __RTTI__11TaiStrategy
+.balign 4
+.obj __RTTI__8TaiState, local
 	.4byte lbl_802C65B8
 	.4byte 0
-__RTTI__9TaiAction:
+.endobj __RTTI__8TaiState
+.balign 4
+.obj __RTTI__9TaiAction, local
 	.4byte lbl_802C65EC
 	.4byte 0
-__RTTI__15TaiSerialAction:
+.endobj __RTTI__9TaiAction
+.balign 4
+.obj __RTTI__15TaiSerialAction, local
 	.4byte lbl_802C65DC
 	.4byte lbl_802C65F8
+.endobj __RTTI__15TaiSerialAction

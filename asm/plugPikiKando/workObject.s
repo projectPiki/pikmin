@@ -1,23 +1,22 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global beginPush__10HinderRockFv
-beginPush__10HinderRockFv:
+.fn beginPush__10HinderRockFv, global
 /* 8009B104 00098064  A0 83 03 C8 */	lhz r4, 0x3c8(r3)
 /* 8009B108 00098068  38 04 00 01 */	addi r0, r4, 1
 /* 8009B10C 0009806C  B0 03 03 C8 */	sth r0, 0x3c8(r3)
 /* 8009B110 00098070  4E 80 00 20 */	blr 
+.endfn beginPush__10HinderRockFv
 
-.global endPush__10HinderRockFv
-endPush__10HinderRockFv:
+.fn endPush__10HinderRockFv, global
 /* 8009B114 00098074  A0 83 03 C8 */	lhz r4, 0x3c8(r3)
 /* 8009B118 00098078  28 04 00 00 */	cmplwi r4, 0
 /* 8009B11C 0009807C  4D 82 00 20 */	beqlr 
 /* 8009B120 00098080  38 04 FF FF */	addi r0, r4, -1
 /* 8009B124 00098084  B0 03 03 C8 */	sth r0, 0x3c8(r3)
 /* 8009B128 00098088  4E 80 00 20 */	blr 
+.endfn endPush__10HinderRockFv
 
-.global finalSetup__13WorkObjectMgrFv
-finalSetup__13WorkObjectMgrFv:
+.fn finalSetup__13WorkObjectMgrFv, global
 /* 8009B12C 0009808C  7C 08 02 A6 */	mflr r0
 /* 8009B130 00098090  90 01 00 04 */	stw r0, 4(r1)
 /* 8009B134 00098094  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -92,13 +91,13 @@ finalSetup__13WorkObjectMgrFv:
 /* 8009B22C 0009818C  38 21 00 28 */	addi r1, r1, 0x28
 /* 8009B230 00098190  7C 08 03 A6 */	mtlr r0
 /* 8009B234 00098194  4E 80 00 20 */	blr 
+.endfn finalSetup__13WorkObjectMgrFv
 
-.global finalSetup__10WorkObjectFv
-finalSetup__10WorkObjectFv:
+.fn finalSetup__10WorkObjectFv, weak
 /* 8009B238 00098198  4E 80 00 20 */	blr 
+.endfn finalSetup__10WorkObjectFv
 
-.global doKill__10WorkObjectFv
-doKill__10WorkObjectFv:
+.fn doKill__10WorkObjectFv, global
 /* 8009B23C 0009819C  7C 08 02 A6 */	mflr r0
 /* 8009B240 000981A0  38 63 01 E0 */	addi r3, r3, 0x1e0
 /* 8009B244 000981A4  90 01 00 04 */	stw r0, 4(r1)
@@ -108,9 +107,9 @@ doKill__10WorkObjectFv:
 /* 8009B254 000981B4  38 21 00 08 */	addi r1, r1, 8
 /* 8009B258 000981B8  7C 08 03 A6 */	mtlr r0
 /* 8009B25C 000981BC  4E 80 00 20 */	blr 
+.endfn doKill__10WorkObjectFv
 
-.global __ct__13WorkObjectMgrFv
-__ct__13WorkObjectMgrFv:
+.fn __ct__13WorkObjectMgrFv, global
 /* 8009B260 000981C0  7C 08 02 A6 */	mflr r0
 /* 8009B264 000981C4  38 8D AA A4 */	addi r4, r13, lbl_803DF7C4@sda21
 /* 8009B268 000981C8  90 01 00 04 */	stw r0, 4(r1)
@@ -179,9 +178,9 @@ __ct__13WorkObjectMgrFv:
 /* 8009B364 000982C4  38 21 00 20 */	addi r1, r1, 0x20
 /* 8009B368 000982C8  7C 08 03 A6 */	mtlr r0
 /* 8009B36C 000982CC  4E 80 00 20 */	blr 
+.endfn __ct__13WorkObjectMgrFv
 
-.global __dt__9ObjectMgrFv
-__dt__9ObjectMgrFv:
+.fn __dt__9ObjectMgrFv, weak
 /* 8009B370 000982D0  7C 08 02 A6 */	mflr r0
 /* 8009B374 000982D4  90 01 00 04 */	stw r0, 4(r1)
 /* 8009B378 000982D8  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -204,9 +203,9 @@ __dt__9ObjectMgrFv:
 /* 8009B3B8 00098318  38 21 00 18 */	addi r1, r1, 0x18
 /* 8009B3BC 0009831C  7C 08 03 A6 */	mtlr r0
 /* 8009B3C0 00098320  4E 80 00 20 */	blr 
+.endfn __dt__9ObjectMgrFv
 
-.global loadShapes__13WorkObjectMgrFv
-loadShapes__13WorkObjectMgrFv:
+.fn loadShapes__13WorkObjectMgrFv, global
 /* 8009B3C4 00098324  7C 08 02 A6 */	mflr r0
 /* 8009B3C8 00098328  3C A0 80 2B */	lis r5, files@ha
 /* 8009B3CC 0009832C  90 01 00 04 */	stw r0, 4(r1)
@@ -247,9 +246,9 @@ loadShapes__13WorkObjectMgrFv:
 /* 8009B44C 000983AC  38 21 00 28 */	addi r1, r1, 0x28
 /* 8009B450 000983B0  7C 08 03 A6 */	mtlr r0
 /* 8009B454 000983B4  4E 80 00 20 */	blr 
+.endfn loadShapes__13WorkObjectMgrFv
 
-.global birth__13WorkObjectMgrFii
-birth__13WorkObjectMgrFii:
+.fn birth__13WorkObjectMgrFii, global
 /* 8009B458 000983B8  7C 08 02 A6 */	mflr r0
 /* 8009B45C 000983BC  2C 04 00 01 */	cmpwi r4, 1
 /* 8009B460 000983C0  90 01 00 04 */	stw r0, 4(r1)
@@ -332,9 +331,9 @@ birth__13WorkObjectMgrFii:
 /* 8009B578 000984D8  38 21 00 30 */	addi r1, r1, 0x30
 /* 8009B57C 000984DC  7C 08 03 A6 */	mtlr r0
 /* 8009B580 000984E0  4E 80 00 20 */	blr 
+.endfn birth__13WorkObjectMgrFii
 
-.global getCreature__13WorkObjectMgrFi
-getCreature__13WorkObjectMgrFi:
+.fn getCreature__13WorkObjectMgrFi, global
 /* 8009B584 000984E4  2C 04 00 00 */	cmpwi r4, 0
 /* 8009B588 000984E8  80 A3 00 38 */	lwz r5, 0x38(r3)
 /* 8009B58C 000984EC  38 C0 00 00 */	li r6, 0
@@ -374,19 +373,19 @@ getCreature__13WorkObjectMgrFi:
 .L_8009B604:
 /* 8009B604 00098564  80 65 00 14 */	lwz r3, 0x14(r5)
 /* 8009B608 00098568  4E 80 00 20 */	blr 
+.endfn getCreature__13WorkObjectMgrFi
 
-.global getFirst__13WorkObjectMgrFv
-getFirst__13WorkObjectMgrFv:
+.fn getFirst__13WorkObjectMgrFv, global
 /* 8009B60C 0009856C  38 60 00 00 */	li r3, 0
 /* 8009B610 00098570  4E 80 00 20 */	blr 
+.endfn getFirst__13WorkObjectMgrFv
 
-.global getNext__13WorkObjectMgrFi
-getNext__13WorkObjectMgrFi:
+.fn getNext__13WorkObjectMgrFi, global
 /* 8009B614 00098574  38 64 00 01 */	addi r3, r4, 1
 /* 8009B618 00098578  4E 80 00 20 */	blr 
+.endfn getNext__13WorkObjectMgrFi
 
-.global isDone__13WorkObjectMgrFi
-isDone__13WorkObjectMgrFi:
+.fn isDone__13WorkObjectMgrFi, global
 /* 8009B61C 0009857C  7C 08 02 A6 */	mflr r0
 /* 8009B620 00098580  38 63 00 28 */	addi r3, r3, 0x28
 /* 8009B624 00098584  90 01 00 04 */	stw r0, 4(r1)
@@ -406,9 +405,9 @@ isDone__13WorkObjectMgrFi:
 /* 8009B654 000985B4  38 21 00 18 */	addi r1, r1, 0x18
 /* 8009B658 000985B8  7C 08 03 A6 */	mtlr r0
 /* 8009B65C 000985BC  4E 80 00 20 */	blr 
+.endfn isDone__13WorkObjectMgrFi
 
-.global getSize__13WorkObjectMgrFv
-getSize__13WorkObjectMgrFv:
+.fn getSize__13WorkObjectMgrFv, global
 /* 8009B660 000985C0  7C 08 02 A6 */	mflr r0
 /* 8009B664 000985C4  38 63 00 28 */	addi r3, r3, 0x28
 /* 8009B668 000985C8  90 01 00 04 */	stw r0, 4(r1)
@@ -418,9 +417,9 @@ getSize__13WorkObjectMgrFv:
 /* 8009B678 000985D8  38 21 00 08 */	addi r1, r1, 8
 /* 8009B67C 000985DC  7C 08 03 A6 */	mtlr r0
 /* 8009B680 000985E0  4E 80 00 20 */	blr 
+.endfn getSize__13WorkObjectMgrFv
 
-.global ramSaveParameters__19GenObjectWorkObjectFR18RandomAccessStream
-ramSaveParameters__19GenObjectWorkObjectFR18RandomAccessStream:
+.fn ramSaveParameters__19GenObjectWorkObjectFR18RandomAccessStream, global
 /* 8009B684 000985E4  7C 08 02 A6 */	mflr r0
 /* 8009B688 000985E8  90 01 00 04 */	stw r0, 4(r1)
 /* 8009B68C 000985EC  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -461,9 +460,9 @@ ramSaveParameters__19GenObjectWorkObjectFR18RandomAccessStream:
 /* 8009B718 00098678  38 21 00 18 */	addi r1, r1, 0x18
 /* 8009B71C 0009867C  7C 08 03 A6 */	mtlr r0
 /* 8009B720 00098680  4E 80 00 20 */	blr 
+.endfn ramSaveParameters__19GenObjectWorkObjectFR18RandomAccessStream
 
-.global ramLoadParameters__19GenObjectWorkObjectFR18RandomAccessStream
-ramLoadParameters__19GenObjectWorkObjectFR18RandomAccessStream:
+.fn ramLoadParameters__19GenObjectWorkObjectFR18RandomAccessStream, global
 /* 8009B724 00098684  7C 08 02 A6 */	mflr r0
 /* 8009B728 00098688  90 01 00 04 */	stw r0, 4(r1)
 /* 8009B72C 0009868C  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -504,9 +503,9 @@ ramLoadParameters__19GenObjectWorkObjectFR18RandomAccessStream:
 /* 8009B7B8 00098718  38 21 00 28 */	addi r1, r1, 0x28
 /* 8009B7BC 0009871C  7C 08 03 A6 */	mtlr r0
 /* 8009B7C0 00098720  4E 80 00 20 */	blr 
+.endfn ramLoadParameters__19GenObjectWorkObjectFR18RandomAccessStream
 
-.global makeObjectWorkObject__Fv
-makeObjectWorkObject__Fv:
+.fn makeObjectWorkObject__Fv, local
 /* 8009B7C4 00098724  7C 08 02 A6 */	mflr r0
 /* 8009B7C8 00098728  38 60 00 6C */	li r3, 0x6c
 /* 8009B7CC 0009872C  90 01 00 04 */	stw r0, 4(r1)
@@ -599,9 +598,9 @@ makeObjectWorkObject__Fv:
 /* 8009B924 00098884  38 21 00 58 */	addi r1, r1, 0x58
 /* 8009B928 00098888  7C 08 03 A6 */	mtlr r0
 /* 8009B92C 0009888C  4E 80 00 20 */	blr 
+.endfn makeObjectWorkObject__Fv
 
-.global initialise__19GenObjectWorkObjectFv
-initialise__19GenObjectWorkObjectFv:
+.fn initialise__19GenObjectWorkObjectFv, global
 /* 8009B930 00098890  80 ED 30 74 */	lwz r7, factory__16GenObjectFactory@sda21(r13)
 /* 8009B934 00098894  80 A7 00 00 */	lwz r5, 0(r7)
 /* 8009B938 00098898  80 07 00 04 */	lwz r0, 4(r7)
@@ -637,9 +636,9 @@ initialise__19GenObjectWorkObjectFv:
 /* 8009B9B0 00098910  38 03 00 01 */	addi r0, r3, 1
 /* 8009B9B4 00098914  90 07 00 00 */	stw r0, 0(r7)
 /* 8009B9B8 00098918  4E 80 00 20 */	blr 
+.endfn initialise__19GenObjectWorkObjectFv
 
-.global doRead__19GenObjectWorkObjectFR18RandomAccessStream
-doRead__19GenObjectWorkObjectFR18RandomAccessStream:
+.fn doRead__19GenObjectWorkObjectFR18RandomAccessStream, global
 /* 8009B9BC 0009891C  7C 08 02 A6 */	mflr r0
 /* 8009B9C0 00098920  90 01 00 04 */	stw r0, 4(r1)
 /* 8009B9C4 00098924  94 21 FE E0 */	stwu r1, -0x120(r1)
@@ -783,9 +782,9 @@ doRead__19GenObjectWorkObjectFR18RandomAccessStream:
 /* 8009BBBC 00098B1C  38 21 01 20 */	addi r1, r1, 0x120
 /* 8009BBC0 00098B20  7C 08 03 A6 */	mtlr r0
 /* 8009BBC4 00098B24  4E 80 00 20 */	blr 
+.endfn doRead__19GenObjectWorkObjectFR18RandomAccessStream
 
-.global doWrite__19GenObjectWorkObjectFR18RandomAccessStream
-doWrite__19GenObjectWorkObjectFR18RandomAccessStream:
+.fn doWrite__19GenObjectWorkObjectFR18RandomAccessStream, global
 /* 8009BBC8 00098B28  7C 08 02 A6 */	mflr r0
 /* 8009BBCC 00098B2C  90 01 00 04 */	stw r0, 4(r1)
 /* 8009BBD0 00098B30  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -905,9 +904,9 @@ doWrite__19GenObjectWorkObjectFR18RandomAccessStream:
 /* 8009BD70 00098CD0  38 21 00 18 */	addi r1, r1, 0x18
 /* 8009BD74 00098CD4  7C 08 03 A6 */	mtlr r0
 /* 8009BD78 00098CD8  4E 80 00 20 */	blr 
+.endfn doWrite__19GenObjectWorkObjectFR18RandomAccessStream
 
-.global updateUseList__19GenObjectWorkObjectFP9Generatori
-updateUseList__19GenObjectWorkObjectFP9Generatori:
+.fn updateUseList__19GenObjectWorkObjectFP9Generatori, global
 /* 8009BD7C 00098CDC  80 83 00 5C */	lwz r4, 0x5c(r3)
 /* 8009BD80 00098CE0  2C 04 FF FF */	cmpwi r4, -1
 /* 8009BD84 00098CE4  4D 82 00 20 */	beqlr 
@@ -916,9 +915,9 @@ updateUseList__19GenObjectWorkObjectFP9Generatori:
 /* 8009BD90 00098CF0  80 63 00 44 */	lwz r3, 0x44(r3)
 /* 8009BD94 00098CF4  7C 03 21 AE */	stbx r0, r3, r4
 /* 8009BD98 00098CF8  4E 80 00 20 */	blr 
+.endfn updateUseList__19GenObjectWorkObjectFP9Generatori
 
-.global birth__19GenObjectWorkObjectFR9BirthInfo
-birth__19GenObjectWorkObjectFR9BirthInfo:
+.fn birth__19GenObjectWorkObjectFR9BirthInfo, global
 /* 8009BD9C 00098CFC  7C 08 02 A6 */	mflr r0
 /* 8009BDA0 00098D00  90 01 00 04 */	stw r0, 4(r1)
 /* 8009BDA4 00098D04  94 21 FF A8 */	stwu r1, -0x58(r1)
@@ -1019,9 +1018,9 @@ birth__19GenObjectWorkObjectFR9BirthInfo:
 /* 8009BF10 00098E70  38 21 00 58 */	addi r1, r1, 0x58
 /* 8009BF14 00098E74  7C 08 03 A6 */	mtlr r0
 /* 8009BF18 00098E78  4E 80 00 20 */	blr 
+.endfn birth__19GenObjectWorkObjectFR9BirthInfo
 
-.global __ct__10HinderRockFP5Shape
-__ct__10HinderRockFP5Shape:
+.fn __ct__10HinderRockFP5Shape, global
 /* 8009BF1C 00098E7C  7C 08 02 A6 */	mflr r0
 /* 8009BF20 00098E80  38 A0 00 00 */	li r5, 0
 /* 8009BF24 00098E84  90 01 00 04 */	stw r0, 4(r1)
@@ -1119,9 +1118,9 @@ __ct__10HinderRockFP5Shape:
 /* 8009C088 00098FE8  38 21 00 20 */	addi r1, r1, 0x20
 /* 8009C08C 00098FEC  7C 08 03 A6 */	mtlr r0
 /* 8009C090 00098FF0  4E 80 00 20 */	blr 
+.endfn __ct__10HinderRockFP5Shape
 
-.global insideSafeArea__10HinderRockFR8Vector3f
-insideSafeArea__10HinderRockFR8Vector3f:
+.fn insideSafeArea__10HinderRockFR8Vector3f, global
 /* 8009C094 00098FF4  7C 08 02 A6 */	mflr r0
 /* 8009C098 00098FF8  90 01 00 04 */	stw r0, 4(r1)
 /* 8009C09C 00098FFC  94 21 FF C0 */	stwu r1, -0x40(r1)
@@ -1153,9 +1152,9 @@ insideSafeArea__10HinderRockFR8Vector3f:
 /* 8009C0FC 0009905C  38 21 00 40 */	addi r1, r1, 0x40
 /* 8009C100 00099060  7C 08 03 A6 */	mtlr r0
 /* 8009C104 00099064  4E 80 00 20 */	blr 
+.endfn insideSafeArea__10HinderRockFR8Vector3f
 
-.global doLoad__10HinderRockFR18RandomAccessStream
-doLoad__10HinderRockFR18RandomAccessStream:
+.fn doLoad__10HinderRockFR18RandomAccessStream, global
 /* 8009C108 00099068  7C 08 02 A6 */	mflr r0
 /* 8009C10C 0009906C  90 01 00 04 */	stw r0, 4(r1)
 /* 8009C110 00099070  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -1248,9 +1247,9 @@ doLoad__10HinderRockFR18RandomAccessStream:
 /* 8009C260 000991C0  38 21 00 28 */	addi r1, r1, 0x28
 /* 8009C264 000991C4  7C 08 03 A6 */	mtlr r0
 /* 8009C268 000991C8  4E 80 00 20 */	blr 
+.endfn doLoad__10HinderRockFR18RandomAccessStream
 
-.global doSave__10HinderRockFR18RandomAccessStream
-doSave__10HinderRockFR18RandomAccessStream:
+.fn doSave__10HinderRockFR18RandomAccessStream, global
 /* 8009C26C 000991CC  7C 08 02 A6 */	mflr r0
 /* 8009C270 000991D0  90 01 00 04 */	stw r0, 4(r1)
 /* 8009C274 000991D4  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -1267,22 +1266,22 @@ doSave__10HinderRockFR18RandomAccessStream:
 /* 8009C2A0 00099200  38 21 00 18 */	addi r1, r1, 0x18
 /* 8009C2A4 00099204  7C 08 03 A6 */	mtlr r0
 /* 8009C2A8 00099208  4E 80 00 20 */	blr 
+.endfn doSave__10HinderRockFR18RandomAccessStream
 
-.global getCentreSize__10HinderRockFv
-getCentreSize__10HinderRockFv:
+.fn getCentreSize__10HinderRockFv, global
 /* 8009C2AC 0009920C  C0 23 04 30 */	lfs f1, 0x430(r3)
 /* 8009C2B0 00099210  4E 80 00 20 */	blr 
+.endfn getCentreSize__10HinderRockFv
 
-.global isFinished__10HinderRockFv
-isFinished__10HinderRockFv:
+.fn isFinished__10HinderRockFv, global
 /* 8009C2B4 00099214  88 03 04 3C */	lbz r0, 0x43c(r3)
 /* 8009C2B8 00099218  20 00 00 02 */	subfic r0, r0, 2
 /* 8009C2BC 0009921C  7C 00 00 34 */	cntlzw r0, r0
 /* 8009C2C0 00099220  54 03 D9 7E */	srwi r3, r0, 5
 /* 8009C2C4 00099224  4E 80 00 20 */	blr 
+.endfn isFinished__10HinderRockFv
 
-.global getZVector__10HinderRockFv
-getZVector__10HinderRockFv:
+.fn getZVector__10HinderRockFv, global
 /* 8009C2C8 00099228  7C 08 02 A6 */	mflr r0
 /* 8009C2CC 0009922C  38 A0 00 00 */	li r5, 0
 /* 8009C2D0 00099230  90 01 00 04 */	stw r0, 4(r1)
@@ -1334,9 +1333,9 @@ getZVector__10HinderRockFv:
 /* 8009C384 000992E4  38 21 00 B0 */	addi r1, r1, 0xb0
 /* 8009C388 000992E8  7C 08 03 A6 */	mtlr r0
 /* 8009C38C 000992EC  4E 80 00 20 */	blr 
+.endfn getZVector__10HinderRockFv
 
-.global getXVector__10HinderRockFv
-getXVector__10HinderRockFv:
+.fn getXVector__10HinderRockFv, global
 /* 8009C390 000992F0  7C 08 02 A6 */	mflr r0
 /* 8009C394 000992F4  38 A0 00 00 */	li r5, 0
 /* 8009C398 000992F8  90 01 00 04 */	stw r0, 4(r1)
@@ -1388,9 +1387,9 @@ getXVector__10HinderRockFv:
 /* 8009C44C 000993AC  38 21 00 B0 */	addi r1, r1, 0xb0
 /* 8009C450 000993B0  7C 08 03 A6 */	mtlr r0
 /* 8009C454 000993B4  4E 80 00 20 */	blr 
+.endfn getXVector__10HinderRockFv
 
-.global getPlaneFlag__10HinderRockFR8Vector3f
-getPlaneFlag__10HinderRockFR8Vector3f:
+.fn getPlaneFlag__10HinderRockFR8Vector3f, global
 /* 8009C458 000993B8  C0 63 03 CC */	lfs f3, 0x3cc(r3)
 /* 8009C45C 000993BC  38 00 00 00 */	li r0, 0
 /* 8009C460 000993C0  C0 24 00 00 */	lfs f1, 0(r4)
@@ -1457,9 +1456,9 @@ getPlaneFlag__10HinderRockFR8Vector3f:
 .L_8009C548:
 /* 8009C548 000994A8  7C 03 03 78 */	mr r3, r0
 /* 8009C54C 000994AC  4E 80 00 20 */	blr 
+.endfn getPlaneFlag__10HinderRockFR8Vector3f
 
-.global updatePlanes__10HinderRockFv
-updatePlanes__10HinderRockFv:
+.fn updatePlanes__10HinderRockFv, global
 /* 8009C550 000994B0  7C 08 02 A6 */	mflr r0
 /* 8009C554 000994B4  38 A0 00 00 */	li r5, 0
 /* 8009C558 000994B8  90 01 00 04 */	stw r0, 4(r1)
@@ -1696,9 +1695,9 @@ updatePlanes__10HinderRockFv:
 /* 8009C8EC 0009984C  38 21 01 B0 */	addi r1, r1, 0x1b0
 /* 8009C8F0 00099850  7C 08 03 A6 */	mtlr r0
 /* 8009C8F4 00099854  4E 80 00 20 */	blr 
+.endfn updatePlanes__10HinderRockFv
 
-.global getVertex__10HinderRockFi
-getVertex__10HinderRockFi:
+.fn getVertex__10HinderRockFi, global
 /* 8009C8F8 00099858  7C 08 02 A6 */	mflr r0
 /* 8009C8FC 0009985C  2C 05 00 02 */	cmpwi r5, 2
 /* 8009C900 00099860  90 01 00 04 */	stw r0, 4(r1)
@@ -1745,9 +1744,9 @@ getVertex__10HinderRockFi:
 /* 8009C98C 000998EC  38 21 00 28 */	addi r1, r1, 0x28
 /* 8009C990 000998F0  7C 08 03 A6 */	mtlr r0
 /* 8009C994 000998F4  4E 80 00 20 */	blr 
+.endfn getVertex__10HinderRockFi
 
-.global stimulate__10HinderRockFR11Interaction
-stimulate__10HinderRockFR11Interaction:
+.fn stimulate__10HinderRockFR11Interaction, global
 /* 8009C998 000998F8  7C 08 02 A6 */	mflr r0
 /* 8009C99C 000998FC  90 01 00 04 */	stw r0, 4(r1)
 /* 8009C9A0 00099900  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -1779,18 +1778,18 @@ stimulate__10HinderRockFR11Interaction:
 /* 8009CA00 00099960  38 21 00 18 */	addi r1, r1, 0x18
 /* 8009CA04 00099964  7C 08 03 A6 */	mtlr r0
 /* 8009CA08 00099968  4E 80 00 20 */	blr 
+.endfn stimulate__10HinderRockFR11Interaction
 
-.global actHinderRock__12InteractPushFP10HinderRock
-actHinderRock__12InteractPushFP10HinderRock:
+.fn actHinderRock__12InteractPushFP10HinderRock, global
 /* 8009CA0C 0009996C  80 03 00 08 */	lwz r0, 8(r3)
 /* 8009CA10 00099970  38 60 00 01 */	li r3, 1
 /* 8009CA14 00099974  80 A4 04 18 */	lwz r5, 0x418(r4)
 /* 8009CA18 00099978  7C 05 02 14 */	add r0, r5, r0
 /* 8009CA1C 0009997C  90 04 04 18 */	stw r0, 0x418(r4)
 /* 8009CA20 00099980  4E 80 00 20 */	blr 
+.endfn actHinderRock__12InteractPushFP10HinderRock
 
-.global refresh__10HinderRockFR8Graphics
-refresh__10HinderRockFR8Graphics:
+.fn refresh__10HinderRockFR8Graphics, global
 /* 8009CA24 00099984  7C 08 02 A6 */	mflr r0
 /* 8009CA28 00099988  90 01 00 04 */	stw r0, 4(r1)
 /* 8009CA2C 0009998C  94 21 FF A8 */	stwu r1, -0x58(r1)
@@ -1839,9 +1838,9 @@ refresh__10HinderRockFR8Graphics:
 /* 8009CAD8 00099A38  38 21 00 58 */	addi r1, r1, 0x58
 /* 8009CADC 00099A3C  7C 08 03 A6 */	mtlr r0
 /* 8009CAE0 00099A40  4E 80 00 20 */	blr 
+.endfn refresh__10HinderRockFR8Graphics
 
-.global workable__10HinderRockFR8Vector3f
-workable__10HinderRockFR8Vector3f:
+.fn workable__10HinderRockFR8Vector3f, global
 /* 8009CAE4 00099A44  C0 63 03 CC */	lfs f3, 0x3cc(r3)
 /* 8009CAE8 00099A48  38 00 00 00 */	li r0, 0
 /* 8009CAEC 00099A4C  C0 24 00 00 */	lfs f1, 0(r4)
@@ -1918,9 +1917,9 @@ workable__10HinderRockFR8Vector3f:
 .L_8009CBF8:
 /* 8009CBF8 00099B58  38 60 00 01 */	li r3, 1
 /* 8009CBFC 00099B5C  4E 80 00 20 */	blr 
+.endfn workable__10HinderRockFR8Vector3f
 
-.global update__10HinderRockFv
-update__10HinderRockFv:
+.fn update__10HinderRockFv, global
 /* 8009CC00 00099B60  7C 08 02 A6 */	mflr r0
 /* 8009CC04 00099B64  90 01 00 04 */	stw r0, 4(r1)
 /* 8009CC08 00099B68  94 21 FE 28 */	stwu r1, -0x1d8(r1)
@@ -2473,9 +2472,9 @@ update__10HinderRockFv:
 /* 8009D424 0009A384  38 21 01 D8 */	addi r1, r1, 0x1d8
 /* 8009D428 0009A388  7C 08 03 A6 */	mtlr r0
 /* 8009D42C 0009A38C  4E 80 00 20 */	blr 
+.endfn update__10HinderRockFv
 
-.global startAI__10HinderRockFi
-startAI__10HinderRockFi:
+.fn startAI__10HinderRockFi, global
 /* 8009D430 0009A390  7C 08 02 A6 */	mflr r0
 /* 8009D434 0009A394  38 A0 00 00 */	li r5, 0
 /* 8009D438 0009A398  90 01 00 04 */	stw r0, 4(r1)
@@ -2578,9 +2577,9 @@ startAI__10HinderRockFi:
 /* 8009D5BC 0009A51C  38 21 00 58 */	addi r1, r1, 0x58
 /* 8009D5C0 0009A520  7C 08 03 A6 */	mtlr r0
 /* 8009D5C4 0009A524  4E 80 00 20 */	blr 
+.endfn startAI__10HinderRockFi
 
-.global workable__6BridgeFR8Vector3f
-workable__6BridgeFR8Vector3f:
+.fn workable__6BridgeFR8Vector3f, global
 /* 8009D5C8 0009A528  7C 08 02 A6 */	mflr r0
 /* 8009D5CC 0009A52C  90 01 00 04 */	stw r0, 4(r1)
 /* 8009D5D0 0009A530  94 21 FF D0 */	stwu r1, -0x30(r1)
@@ -2673,9 +2672,9 @@ workable__6BridgeFR8Vector3f:
 /* 8009D710 0009A670  38 21 00 30 */	addi r1, r1, 0x30
 /* 8009D714 0009A674  7C 08 03 A6 */	mtlr r0
 /* 8009D718 0009A678  4E 80 00 20 */	blr 
+.endfn workable__6BridgeFR8Vector3f
 
-.global __ct__6BridgeFP5Shapeb
-__ct__6BridgeFP5Shapeb:
+.fn __ct__6BridgeFP5Shapeb, global
 /* 8009D71C 0009A67C  7C 08 02 A6 */	mflr r0
 /* 8009D720 0009A680  38 C0 00 00 */	li r6, 0
 /* 8009D724 0009A684  90 01 00 04 */	stw r0, 4(r1)
@@ -2861,9 +2860,9 @@ __ct__6BridgeFP5Shapeb:
 /* 8009D9D4 0009A934  38 21 00 30 */	addi r1, r1, 0x30
 /* 8009D9D8 0009A938  7C 08 03 A6 */	mtlr r0
 /* 8009D9DC 0009A93C  4E 80 00 20 */	blr 
+.endfn __ct__6BridgeFP5Shapeb
 
-.global stimulate__6BridgeFR11Interaction
-stimulate__6BridgeFR11Interaction:
+.fn stimulate__6BridgeFR11Interaction, global
 /* 8009D9E0 0009A940  7C 08 02 A6 */	mflr r0
 /* 8009D9E4 0009A944  90 01 00 04 */	stw r0, 4(r1)
 /* 8009D9E8 0009A948  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -2895,9 +2894,9 @@ stimulate__6BridgeFR11Interaction:
 /* 8009DA48 0009A9A8  38 21 00 18 */	addi r1, r1, 0x18
 /* 8009DA4C 0009A9AC  7C 08 03 A6 */	mtlr r0
 /* 8009DA50 0009A9B0  4E 80 00 20 */	blr 
+.endfn stimulate__6BridgeFR11Interaction
 
-.global refresh__6BridgeFR8Graphics
-refresh__6BridgeFR8Graphics:
+.fn refresh__6BridgeFR8Graphics, global
 /* 8009DA54 0009A9B4  7C 08 02 A6 */	mflr r0
 /* 8009DA58 0009A9B8  90 01 00 04 */	stw r0, 4(r1)
 /* 8009DA5C 0009A9BC  94 21 FF A8 */	stwu r1, -0x58(r1)
@@ -2957,9 +2956,9 @@ refresh__6BridgeFR8Graphics:
 /* 8009DB2C 0009AA8C  38 21 00 58 */	addi r1, r1, 0x58
 /* 8009DB30 0009AA90  7C 08 03 A6 */	mtlr r0
 /* 8009DB34 0009AA94  4E 80 00 20 */	blr 
+.endfn refresh__6BridgeFR8Graphics
 
-.global update__6BridgeFv
-update__6BridgeFv:
+.fn update__6BridgeFv, global
 /* 8009DB38 0009AA98  7C 08 02 A6 */	mflr r0
 /* 8009DB3C 0009AA9C  90 01 00 04 */	stw r0, 4(r1)
 /* 8009DB40 0009AAA0  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -3018,9 +3017,9 @@ update__6BridgeFv:
 /* 8009DC0C 0009AB6C  38 21 00 18 */	addi r1, r1, 0x18
 /* 8009DC10 0009AB70  7C 08 03 A6 */	mtlr r0
 /* 8009DC14 0009AB74  4E 80 00 20 */	blr 
+.endfn update__6BridgeFv
 
-.global startAI__6BridgeFi
-startAI__6BridgeFi:
+.fn startAI__6BridgeFi, global
 /* 8009DC18 0009AB78  7C 08 02 A6 */	mflr r0
 /* 8009DC1C 0009AB7C  90 01 00 04 */	stw r0, 4(r1)
 /* 8009DC20 0009AB80  38 00 00 03 */	li r0, 3
@@ -3222,9 +3221,9 @@ startAI__6BridgeFi:
 /* 8009DF0C 0009AE6C  38 21 00 58 */	addi r1, r1, 0x58
 /* 8009DF10 0009AE70  7C 08 03 A6 */	mtlr r0
 /* 8009DF14 0009AE74  4E 80 00 20 */	blr 
+.endfn startAI__6BridgeFi
 
-.global doLoad__6BridgeFR18RandomAccessStream
-doLoad__6BridgeFR18RandomAccessStream:
+.fn doLoad__6BridgeFR18RandomAccessStream, global
 /* 8009DF18 0009AE78  7C 08 02 A6 */	mflr r0
 /* 8009DF1C 0009AE7C  90 01 00 04 */	stw r0, 4(r1)
 /* 8009DF20 0009AE80  94 21 FF 70 */	stwu r1, -0x90(r1)
@@ -3330,9 +3329,9 @@ doLoad__6BridgeFR18RandomAccessStream:
 /* 8009E098 0009AFF8  38 21 00 90 */	addi r1, r1, 0x90
 /* 8009E09C 0009AFFC  7C 08 03 A6 */	mtlr r0
 /* 8009E0A0 0009B000  4E 80 00 20 */	blr 
+.endfn doLoad__6BridgeFR18RandomAccessStream
 
-.global doSave__6BridgeFR18RandomAccessStream
-doSave__6BridgeFR18RandomAccessStream:
+.fn doSave__6BridgeFR18RandomAccessStream, global
 /* 8009E0A4 0009B004  7C 08 02 A6 */	mflr r0
 /* 8009E0A8 0009B008  90 01 00 04 */	stw r0, 4(r1)
 /* 8009E0AC 0009B00C  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -3367,9 +3366,9 @@ doSave__6BridgeFR18RandomAccessStream:
 /* 8009E118 0009B078  38 21 00 20 */	addi r1, r1, 0x20
 /* 8009E11C 0009B07C  7C 08 03 A6 */	mtlr r0
 /* 8009E120 0009B080  4E 80 00 20 */	blr 
+.endfn doSave__6BridgeFR18RandomAccessStream
 
-.global insideSafeArea__6BridgeFR8Vector3f
-insideSafeArea__6BridgeFR8Vector3f:
+.fn insideSafeArea__6BridgeFR8Vector3f, global
 /* 8009E124 0009B084  7C 08 02 A6 */	mflr r0
 /* 8009E128 0009B088  90 01 00 04 */	stw r0, 4(r1)
 /* 8009E12C 0009B08C  94 21 FF 80 */	stwu r1, -0x80(r1)
@@ -3416,9 +3415,9 @@ insideSafeArea__6BridgeFR8Vector3f:
 /* 8009E1C8 0009B128  38 21 00 80 */	addi r1, r1, 0x80
 /* 8009E1CC 0009B12C  7C 08 03 A6 */	mtlr r0
 /* 8009E1D0 0009B130  4E 80 00 20 */	blr 
+.endfn insideSafeArea__6BridgeFR8Vector3f
 
-.global isFinished__6BridgeFv
-isFinished__6BridgeFv:
+.fn isFinished__6BridgeFv, global
 /* 8009E1D4 0009B134  7C 08 02 A6 */	mflr r0
 /* 8009E1D8 0009B138  90 01 00 04 */	stw r0, 4(r1)
 /* 8009E1DC 0009B13C  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -3449,9 +3448,9 @@ isFinished__6BridgeFv:
 /* 8009E230 0009B190  38 21 00 18 */	addi r1, r1, 0x18
 /* 8009E234 0009B194  7C 08 03 A6 */	mtlr r0
 /* 8009E238 0009B198  4E 80 00 20 */	blr 
+.endfn isFinished__6BridgeFv
 
-.global getFirstUnfinishedStage__6BridgeFv
-getFirstUnfinishedStage__6BridgeFv:
+.fn getFirstUnfinishedStage__6BridgeFv, global
 /* 8009E23C 0009B19C  7C 08 02 A6 */	mflr r0
 /* 8009E240 0009B1A0  90 01 00 04 */	stw r0, 4(r1)
 /* 8009E244 0009B1A4  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -3482,9 +3481,9 @@ getFirstUnfinishedStage__6BridgeFv:
 /* 8009E298 0009B1F8  38 21 00 18 */	addi r1, r1, 0x18
 /* 8009E29C 0009B1FC  7C 08 03 A6 */	mtlr r0
 /* 8009E2A0 0009B200  4E 80 00 20 */	blr 
+.endfn getFirstUnfinishedStage__6BridgeFv
 
-.global getFirstFinishedStage__6BridgeFv
-getFirstFinishedStage__6BridgeFv:
+.fn getFirstFinishedStage__6BridgeFv, global
 /* 8009E2A4 0009B204  7C 08 02 A6 */	mflr r0
 /* 8009E2A8 0009B208  90 01 00 04 */	stw r0, 4(r1)
 /* 8009E2AC 0009B20C  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -3515,9 +3514,9 @@ getFirstFinishedStage__6BridgeFv:
 /* 8009E300 0009B260  38 21 00 18 */	addi r1, r1, 0x18
 /* 8009E304 0009B264  7C 08 03 A6 */	mtlr r0
 /* 8009E308 0009B268  4E 80 00 20 */	blr 
+.endfn getFirstFinishedStage__6BridgeFv
 
-.global getJointIndex__6BridgeFi
-getJointIndex__6BridgeFi:
+.fn getJointIndex__6BridgeFi, global
 /* 8009E30C 0009B26C  7C 08 02 A6 */	mflr r0
 /* 8009E310 0009B270  90 01 00 04 */	stw r0, 4(r1)
 /* 8009E314 0009B274  94 21 FF F8 */	stwu r1, -8(r1)
@@ -3536,9 +3535,9 @@ getJointIndex__6BridgeFi:
 /* 8009E340 0009B2A0  38 21 00 08 */	addi r1, r1, 8
 /* 8009E344 0009B2A4  7C 08 03 A6 */	mtlr r0
 /* 8009E348 0009B2A8  4E 80 00 20 */	blr 
+.endfn getJointIndex__6BridgeFi
 
-.global isStageFinished__6BridgeFi
-isStageFinished__6BridgeFi:
+.fn isStageFinished__6BridgeFi, global
 /* 8009E34C 0009B2AC  7C 08 02 A6 */	mflr r0
 /* 8009E350 0009B2B0  90 01 00 04 */	stw r0, 4(r1)
 /* 8009E354 0009B2B4  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -3584,9 +3583,9 @@ isStageFinished__6BridgeFi:
 /* 8009E3DC 0009B33C  38 21 00 20 */	addi r1, r1, 0x20
 /* 8009E3E0 0009B340  7C 08 03 A6 */	mtlr r0
 /* 8009E3E4 0009B344  4E 80 00 20 */	blr 
+.endfn isStageFinished__6BridgeFi
 
-.global flatten__6BridgeFv
-flatten__6BridgeFv:
+.fn flatten__6BridgeFv, global
 /* 8009E3E8 0009B348  7C 08 02 A6 */	mflr r0
 /* 8009E3EC 0009B34C  90 01 00 04 */	stw r0, 4(r1)
 /* 8009E3F0 0009B350  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -3631,9 +3630,9 @@ flatten__6BridgeFv:
 /* 8009E480 0009B3E0  38 21 00 20 */	addi r1, r1, 0x20
 /* 8009E484 0009B3E4  7C 08 03 A6 */	mtlr r0
 /* 8009E488 0009B3E8  4E 80 00 20 */	blr 
+.endfn flatten__6BridgeFv
 
-.global dump__6BridgeFv
-dump__6BridgeFv:
+.fn dump__6BridgeFv, global
 /* 8009E48C 0009B3EC  94 21 FF D0 */	stwu r1, -0x30(r1)
 /* 8009E490 0009B3F0  38 A0 00 00 */	li r5, 0
 /* 8009E494 0009B3F4  80 C3 04 04 */	lwz r6, 0x404(r3)
@@ -3712,9 +3711,9 @@ dump__6BridgeFv:
 .L_8009E5AC:
 /* 8009E5AC 0009B50C  38 21 00 30 */	addi r1, r1, 0x30
 /* 8009E5B0 0009B510  4E 80 00 20 */	blr 
+.endfn dump__6BridgeFv
 
-.global setStageFinished__6BridgeFib
-setStageFinished__6BridgeFib:
+.fn setStageFinished__6BridgeFib, global
 /* 8009E5B4 0009B514  7C 08 02 A6 */	mflr r0
 /* 8009E5B8 0009B518  90 01 00 04 */	stw r0, 4(r1)
 /* 8009E5BC 0009B51C  94 21 FF 70 */	stwu r1, -0x90(r1)
@@ -3965,9 +3964,9 @@ setStageFinished__6BridgeFib:
 /* 8009E93C 0009B89C  38 21 00 90 */	addi r1, r1, 0x90
 /* 8009E940 0009B8A0  7C 08 03 A6 */	mtlr r0
 /* 8009E944 0009B8A4  4E 80 00 20 */	blr 
+.endfn setStageFinished__6BridgeFib
 
-.global getStagePos__6BridgeFi
-getStagePos__6BridgeFi:
+.fn getStagePos__6BridgeFi, global
 /* 8009E948 0009B8A8  7C 08 02 A6 */	mflr r0
 /* 8009E94C 0009B8AC  90 01 00 04 */	stw r0, 4(r1)
 /* 8009E950 0009B8B0  94 21 FF 80 */	stwu r1, -0x80(r1)
@@ -4020,9 +4019,9 @@ getStagePos__6BridgeFi:
 /* 8009EA04 0009B964  38 21 00 80 */	addi r1, r1, 0x80
 /* 8009EA08 0009B968  7C 08 03 A6 */	mtlr r0
 /* 8009EA0C 0009B96C  4E 80 00 20 */	blr 
+.endfn getStagePos__6BridgeFi
 
-.global getStageZ__6BridgeFi
-getStageZ__6BridgeFi:
+.fn getStageZ__6BridgeFi, global
 /* 8009EA10 0009B970  94 21 FF E8 */	stwu r1, -0x18(r1)
 /* 8009EA14 0009B974  2C 04 00 00 */	cmpwi r4, 0
 /* 8009EA18 0009B978  C0 22 8D 20 */	lfs f1, lbl_803E8F20@sda21(r2)
@@ -4049,9 +4048,9 @@ getStageZ__6BridgeFi:
 /* 8009EA68 0009B9C8  EC 21 00 28 */	fsubs f1, f1, f0
 /* 8009EA6C 0009B9CC  38 21 00 18 */	addi r1, r1, 0x18
 /* 8009EA70 0009B9D0  4E 80 00 20 */	blr 
+.endfn getStageZ__6BridgeFi
 
-.global getBridgePos__6BridgeFR8Vector3fRfRf
-getBridgePos__6BridgeFR8Vector3fRfRf:
+.fn getBridgePos__6BridgeFR8Vector3fRfRf, global
 /* 8009EA74 0009B9D4  7C 08 02 A6 */	mflr r0
 /* 8009EA78 0009B9D8  90 01 00 04 */	stw r0, 4(r1)
 /* 8009EA7C 0009B9DC  94 21 FF 60 */	stwu r1, -0xa0(r1)
@@ -4110,9 +4109,9 @@ getBridgePos__6BridgeFR8Vector3fRfRf:
 /* 8009EB50 0009BAB0  38 21 00 A0 */	addi r1, r1, 0xa0
 /* 8009EB54 0009BAB4  7C 08 03 A6 */	mtlr r0
 /* 8009EB58 0009BAB8  4E 80 00 20 */	blr 
+.endfn getBridgePos__6BridgeFR8Vector3fRfRf
 
-.global getBridgeZVec__6BridgeFv
-getBridgeZVec__6BridgeFv:
+.fn getBridgeZVec__6BridgeFv, global
 /* 8009EB5C 0009BABC  7C 08 02 A6 */	mflr r0
 /* 8009EB60 0009BAC0  90 01 00 04 */	stw r0, 4(r1)
 /* 8009EB64 0009BAC4  94 21 FF B8 */	stwu r1, -0x48(r1)
@@ -4137,9 +4136,9 @@ getBridgeZVec__6BridgeFv:
 /* 8009EBB0 0009BB10  38 21 00 48 */	addi r1, r1, 0x48
 /* 8009EBB4 0009BB14  7C 08 03 A6 */	mtlr r0
 /* 8009EBB8 0009BB18  4E 80 00 20 */	blr 
+.endfn getBridgeZVec__6BridgeFv
 
-.global getBridgeXVec__6BridgeFv
-getBridgeXVec__6BridgeFv:
+.fn getBridgeXVec__6BridgeFv, global
 /* 8009EBBC 0009BB1C  7C 08 02 A6 */	mflr r0
 /* 8009EBC0 0009BB20  90 01 00 04 */	stw r0, 4(r1)
 /* 8009EBC4 0009BB24  94 21 FF B8 */	stwu r1, -0x48(r1)
@@ -4164,9 +4163,9 @@ getBridgeXVec__6BridgeFv:
 /* 8009EC10 0009BB70  38 21 00 48 */	addi r1, r1, 0x48
 /* 8009EC14 0009BB74  7C 08 03 A6 */	mtlr r0
 /* 8009EC18 0009BB78  4E 80 00 20 */	blr 
+.endfn getBridgeXVec__6BridgeFv
 
-.global getStartPos__6BridgeFv
-getStartPos__6BridgeFv:
+.fn getStartPos__6BridgeFv, global
 /* 8009EC1C 0009BB7C  7C 08 02 A6 */	mflr r0
 /* 8009EC20 0009BB80  90 01 00 04 */	stw r0, 4(r1)
 /* 8009EC24 0009BB84  94 21 FF 78 */	stwu r1, -0x88(r1)
@@ -4230,19 +4229,19 @@ getStartPos__6BridgeFv:
 /* 8009ED0C 0009BC6C  38 21 00 88 */	addi r1, r1, 0x88
 /* 8009ED10 0009BC70  7C 08 03 A6 */	mtlr r0
 /* 8009ED14 0009BC74  4E 80 00 20 */	blr 
+.endfn getStartPos__6BridgeFv
 
-.global getStageDepth__6BridgeFv
-getStageDepth__6BridgeFv:
+.fn getStageDepth__6BridgeFv, global
 /* 8009ED18 0009BC78  C0 22 8D 24 */	lfs f1, lbl_803E8F24@sda21(r2)
 /* 8009ED1C 0009BC7C  4E 80 00 20 */	blr 
+.endfn getStageDepth__6BridgeFv
 
-.global getStageWidth__6BridgeFv
-getStageWidth__6BridgeFv:
+.fn getStageWidth__6BridgeFv, global
 /* 8009ED20 0009BC80  C0 22 8D 28 */	lfs f1, lbl_803E8F28@sda21(r2)
 /* 8009ED24 0009BC84  4E 80 00 20 */	blr 
+.endfn getStageWidth__6BridgeFv
 
-.global startStageFinished__6BridgeFib
-startStageFinished__6BridgeFib:
+.fn startStageFinished__6BridgeFib, global
 /* 8009ED28 0009BC88  7C 08 02 A6 */	mflr r0
 /* 8009ED2C 0009BC8C  3C C0 80 2B */	lis r6, lbl_802B0E88@ha
 /* 8009ED30 0009BC90  90 01 00 04 */	stw r0, 4(r1)
@@ -4517,9 +4516,9 @@ startStageFinished__6BridgeFib:
 /* 8009F140 0009C0A0  38 21 01 28 */	addi r1, r1, 0x128
 /* 8009F144 0009C0A4  7C 08 03 A6 */	mtlr r0
 /* 8009F148 0009C0A8  4E 80 00 20 */	blr 
+.endfn startStageFinished__6BridgeFib
 
-.global actBridge__13InteractBuildFP6Bridge
-actBridge__13InteractBuildFP6Bridge:
+.fn actBridge__13InteractBuildFP6Bridge, global
 /* 8009F14C 0009C0AC  7C 08 02 A6 */	mflr r0
 /* 8009F150 0009C0B0  90 01 00 04 */	stw r0, 4(r1)
 /* 8009F154 0009C0B4  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -4561,9 +4560,9 @@ actBridge__13InteractBuildFP6Bridge:
 /* 8009F1E0 0009C140  38 21 00 20 */	addi r1, r1, 0x20
 /* 8009F1E4 0009C144  7C 08 03 A6 */	mtlr r0
 /* 8009F1E8 0009C148  4E 80 00 20 */	blr 
+.endfn actBridge__13InteractBuildFP6Bridge
 
-.global actBridge__13InteractBreakFP6Bridge
-actBridge__13InteractBreakFP6Bridge:
+.fn actBridge__13InteractBreakFP6Bridge, global
 /* 8009F1EC 0009C14C  7C 08 02 A6 */	mflr r0
 /* 8009F1F0 0009C150  90 01 00 04 */	stw r0, 4(r1)
 /* 8009F1F4 0009C154  94 21 FF 20 */	stwu r1, -0xe0(r1)
@@ -4763,9 +4762,9 @@ actBridge__13InteractBreakFP6Bridge:
 /* 8009F4C8 0009C428  38 21 00 E0 */	addi r1, r1, 0xe0
 /* 8009F4CC 0009C42C  7C 08 03 A6 */	mtlr r0
 /* 8009F4D0 0009C430  4E 80 00 20 */	blr 
+.endfn actBridge__13InteractBreakFP6Bridge
 
-.global __ml__FRC8Vector3fRCf
-__ml__FRC8Vector3fRCf:
+.fn __ml__FRC8Vector3fRCf, weak
 /* 8009F4D4 0009C434  C0 65 00 00 */	lfs f3, 0(r5)
 /* 8009F4D8 0009C438  C0 04 00 00 */	lfs f0, 0(r4)
 /* 8009F4DC 0009C43C  C0 24 00 04 */	lfs f1, 4(r4)
@@ -4777,61 +4776,61 @@ __ml__FRC8Vector3fRCf:
 /* 8009F4F4 0009C454  D0 23 00 04 */	stfs f1, 4(r3)
 /* 8009F4F8 0009C458  D0 43 00 08 */	stfs f2, 8(r3)
 /* 8009F4FC 0009C45C  4E 80 00 20 */	blr 
+.endfn __ml__FRC8Vector3fRCf
 
-.global isBridge__6BridgeFv
-isBridge__6BridgeFv:
+.fn isBridge__6BridgeFv, weak
 /* 8009F500 0009C460  38 60 00 01 */	li r3, 1
 /* 8009F504 0009C464  4E 80 00 20 */	blr 
+.endfn isBridge__6BridgeFv
 
-.global alwaysUpdatePlatform__6BridgeFv
-alwaysUpdatePlatform__6BridgeFv:
+.fn alwaysUpdatePlatform__6BridgeFv, weak
 /* 8009F508 0009C468  88 03 04 24 */	lbz r0, 0x424(r3)
 /* 8009F50C 0009C46C  7C 60 00 D0 */	neg r3, r0
 /* 8009F510 0009C470  30 03 FF FF */	addic r0, r3, -1
 /* 8009F514 0009C474  7C 60 19 10 */	subfe r3, r0, r3
 /* 8009F518 0009C478  4E 80 00 20 */	blr 
+.endfn alwaysUpdatePlatform__6BridgeFv
 
-.global finalSetup__6BridgeFv
-finalSetup__6BridgeFv:
+.fn finalSetup__6BridgeFv, weak
 /* 8009F51C 0009C47C  38 00 00 03 */	li r0, 3
 /* 8009F520 0009C480  98 03 04 24 */	stb r0, 0x424(r3)
 /* 8009F524 0009C484  4E 80 00 20 */	blr 
+.endfn finalSetup__6BridgeFv
 
-.global isVisible__10WorkObjectFv
-isVisible__10WorkObjectFv:
+.fn isVisible__10WorkObjectFv, weak
 /* 8009F528 0009C488  38 60 00 01 */	li r3, 1
 /* 8009F52C 0009C48C  4E 80 00 20 */	blr 
+.endfn isVisible__10WorkObjectFv
 
-.global isAlive__10WorkObjectFv
-isAlive__10WorkObjectFv:
+.fn isAlive__10WorkObjectFv, weak
 /* 8009F530 0009C490  38 60 00 01 */	li r3, 1
 /* 8009F534 0009C494  4E 80 00 20 */	blr 
+.endfn isAlive__10WorkObjectFv
 
-.global isHinderRock__10WorkObjectFv
-isHinderRock__10WorkObjectFv:
+.fn isHinderRock__10WorkObjectFv, weak
 /* 8009F538 0009C498  38 60 00 00 */	li r3, 0
 /* 8009F53C 0009C49C  4E 80 00 20 */	blr 
+.endfn isHinderRock__10WorkObjectFv
 
-.global getHeight__12ItemCreatureFv
-getHeight__12ItemCreatureFv:
+.fn getHeight__12ItemCreatureFv, weak
 /* 8009F540 0009C4A0  C0 22 8C D4 */	lfs f1, lbl_803E8ED4@sda21(r2)
 /* 8009F544 0009C4A4  4E 80 00 20 */	blr 
+.endfn getHeight__12ItemCreatureFv
 
-.global isHinderRock__10HinderRockFv
-isHinderRock__10HinderRockFv:
+.fn isHinderRock__10HinderRockFv, weak
 /* 8009F548 0009C4A8  38 60 00 01 */	li r3, 1
 /* 8009F54C 0009C4AC  4E 80 00 20 */	blr 
+.endfn isHinderRock__10HinderRockFv
 
-.global update__13DynBuildShapeFv
-update__13DynBuildShapeFv:
+.fn update__13DynBuildShapeFv, weak
 /* 8009F550 0009C4B0  4E 80 00 20 */	blr 
+.endfn update__13DynBuildShapeFv
 
-.global refresh__13DynBuildShapeFR8Graphics
-refresh__13DynBuildShapeFR8Graphics:
+.fn refresh__13DynBuildShapeFR8Graphics, weak
 /* 8009F554 0009C4B4  4E 80 00 20 */	blr 
+.endfn refresh__13DynBuildShapeFR8Graphics
 
-.global __dt__13WorkObjectMgrFv
-__dt__13WorkObjectMgrFv:
+.fn __dt__13WorkObjectMgrFv, weak
 /* 8009F558 0009C4B8  7C 08 02 A6 */	mflr r0
 /* 8009F55C 0009C4BC  90 01 00 04 */	stw r0, 4(r1)
 /* 8009F560 0009C4C0  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -4861,86 +4860,100 @@ __dt__13WorkObjectMgrFv:
 /* 8009F5B8 0009C518  38 21 00 18 */	addi r1, r1, 0x18
 /* 8009F5BC 0009C51C  7C 08 03 A6 */	mtlr r0
 /* 8009F5C0 0009C520  4E 80 00 20 */	blr 
+.endfn __dt__13WorkObjectMgrFv
 
-.global getMax__13WorkObjectMgrFv
-getMax__13WorkObjectMgrFv:
+.fn getMax__13WorkObjectMgrFv, weak
 /* 8009F5C4 0009C524  3C 60 00 01 */	lis r3, 1
 /* 8009F5C8 0009C528  4E 80 00 20 */	blr 
+.endfn getMax__13WorkObjectMgrFv
 
-.global isFinished__10WorkObjectFv
-isFinished__10WorkObjectFv:
+.fn isFinished__10WorkObjectFv, weak
 /* 8009F5CC 0009C52C  38 60 00 00 */	li r3, 0
 /* 8009F5D0 0009C530  4E 80 00 20 */	blr 
+.endfn isFinished__10WorkObjectFv
 
-.global workable__10WorkObjectFR8Vector3f
-workable__10WorkObjectFR8Vector3f:
+.fn workable__10WorkObjectFR8Vector3f, weak
 /* 8009F5D4 0009C534  38 60 00 01 */	li r3, 1
 /* 8009F5D8 0009C538  4E 80 00 20 */	blr 
+.endfn workable__10WorkObjectFR8Vector3f
 
-.global "@8@update__9ObjectMgrFv"
-"@8@update__9ObjectMgrFv":
+.fn "@8@update__9ObjectMgrFv", weak
 /* 8009F5DC 0009C53C  38 63 FF F8 */	addi r3, r3, -8
 /* 8009F5E0 0009C540  48 04 0E 78 */	b update__9ObjectMgrFv
+.endfn "@8@update__9ObjectMgrFv"
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802B0E88:
+.obj lbl_802B0E88, local
 	.asciz "workObject.cpp"
+.endobj lbl_802B0E88
 .balign 4
-lbl_802B0E98:
+.obj lbl_802B0E98, local
 	.asciz "workObject"
+.endobj lbl_802B0E98
 .balign 4
-bridgeFirstPos:
+.obj bridgeFirstPos, local
 	.float 42.5
 	.float 12.5
 	.float 12.5
 	.float 0.0
 	.float 42.5
-bridgeFirstY:
+.endobj bridgeFirstPos
+.balign 4
+.obj bridgeFirstY, local
 	.float 10.0
 	.float 0.0
 	.float 0.0
 	.float 0.0
 	.float 10.0
-bridgeGrad:
+.endobj bridgeFirstY
+.balign 4
+.obj bridgeGrad, local
 	.float 0.0
 	.float 8.0
 	.float -8.0
 	.float 0.0
 	.float 0.0
+.endobj bridgeGrad
 .balign 4
-lbl_802B0EE0:
+.obj lbl_802B0EE0, local
 	.asciz "bridge test"
+.endobj lbl_802B0EE0
 .balign 4
-lbl_802B0EEC:
+.obj lbl_802B0EEC, local
 	.asciz "move stone"
+.endobj lbl_802B0EEC
 .balign 4
-.global info
-info:
+.obj info, global
 	.4byte 0
 	.4byte lbl_802B0EE0
 	.4byte 1
 	.4byte lbl_802B0EEC
 	.4byte 2
 	.4byte lbl_803DF7B8
+.endobj info
 .balign 4
-lbl_802B0F10:
+.obj lbl_802B0F10, local
 	.asciz "bridge 4"
+.endobj lbl_802B0F10
 .balign 4
-lbl_802B0F1C:
+.obj lbl_802B0F1C, local
 	.asciz "slope up 4"
+.endobj lbl_802B0F1C
 .balign 4
-lbl_802B0F28:
+.obj lbl_802B0F28, local
 	.asciz "slope down 4"
+.endobj lbl_802B0F28
 .balign 4
-lbl_802B0F38:
+.obj lbl_802B0F38, local
 	.asciz "stone 10"
+.endobj lbl_802B0F38
 .balign 4
-lbl_802B0F44:
+.obj lbl_802B0F44, local
 	.asciz "bridge 13"
+.endobj lbl_802B0F44
 .balign 4
-.global shpInfo
-shpInfo:
+.obj shpInfo, global
 	.4byte 0
 	.4byte lbl_802B0F10
 	.4byte 1
@@ -4953,61 +4966,76 @@ shpInfo:
 	.4byte lbl_802B0F44
 	.4byte 5
 	.4byte lbl_803DF7BC
+.endobj shpInfo
 .balign 4
-lbl_802B0F80:
+.obj lbl_802B0F80, local
 	.asciz "objects/bridge/brd_test.mod"
+.endobj lbl_802B0F80
 .balign 4
-lbl_802B0F9C:
+.obj lbl_802B0F9C, local
 	.asciz "objects/bridge/slp_u_4.mod"
+.endobj lbl_802B0F9C
 .balign 4
-lbl_802B0FB8:
+.obj lbl_802B0FB8, local
 	.asciz "objects/bridge/slp_d_4.mod"
+.endobj lbl_802B0FB8
 .balign 4
-lbl_802B0FD4:
+.obj lbl_802B0FD4, local
 	.asciz "objects/hinderrock/cube10.mod"
+.endobj lbl_802B0FD4
 .balign 4
-lbl_802B0FF4:
+.obj lbl_802B0FF4, local
 	.asciz "objects/bridge/brd_long.mod"
+.endobj lbl_802B0FF4
 .balign 4
-files:
+.obj files, local
 	.4byte lbl_802B0F80
 	.4byte lbl_802B0F9C
 	.4byte lbl_802B0FB8
 	.4byte lbl_802B0FD4
 	.4byte lbl_802B0FF4
+.endobj files
 .balign 4
-lbl_802B1024:
+.obj lbl_802B1024, local
 	.asciz "CoreNode"
+.endobj lbl_802B1024
 .balign 4
-lbl_802B1030:
+.obj lbl_802B1030, local
 	.asciz "object type"
+.endobj lbl_802B1030
 .balign 4
-lbl_802B103C:
+.obj lbl_802B103C, local # Shift-JIS
 	.4byte 0x8E648E96
 	.4byte 0x83498375
 	.4byte 0x83578346
 	.4byte 0x834E8367
-	.4byte 0x00000000
-lbl_802B1050:
+	.byte 0
+.endobj lbl_802B103C
+.balign 4
+.obj lbl_802B1050, local # Shift-JIS
 	.4byte 0x8E648E96
 	.4byte 0x83498375
 	.4byte 0x83578346
 	.4byte 0x834E8367
 	.4byte 0x82F094AD
 	.4byte 0x90B60000
+.endobj lbl_802B1050
 .balign 4
-lbl_802B1068:
+.obj lbl_802B1068, local
 	.asciz "InteractBreak"
+.endobj lbl_802B1068
 .balign 4
-lbl_802B1078:
+.obj lbl_802B1078, local
 	.asciz "Interaction"
+.endobj lbl_802B1078
 .balign 4
-lbl_802B1084:
+.obj lbl_802B1084, local
 	.4byte __RTTI__11Interaction
 	.4byte 0
 	.4byte 0
-.global __vt__13InteractBreak
-__vt__13InteractBreak:
+.endobj lbl_802B1084
+.balign 4
+.obj __vt__13InteractBreak, global
 	.4byte __RTTI__13InteractBreak
 	.4byte 0
 	.4byte actCommon__11InteractionFP8Creature
@@ -5019,16 +5047,19 @@ __vt__13InteractBreak:
 	.4byte actHinderRock__11InteractionFP10HinderRock
 	.4byte actBridge__13InteractBreakFP6Bridge
 	.4byte actItem__11InteractionFP12ItemCreature
+.endobj __vt__13InteractBreak
 .balign 4
-lbl_802B10BC:
+.obj lbl_802B10BC, local
 	.asciz "InteractBuild"
+.endobj lbl_802B10BC
 .balign 4
-lbl_802B10CC:
+.obj lbl_802B10CC, local
 	.4byte __RTTI__11Interaction
 	.4byte 0
 	.4byte 0
-.global __vt__13InteractBuild
-__vt__13InteractBuild:
+.endobj lbl_802B10CC
+.balign 4
+.obj __vt__13InteractBuild, global
 	.4byte __RTTI__13InteractBuild
 	.4byte 0
 	.4byte actCommon__11InteractionFP8Creature
@@ -5040,30 +5071,37 @@ __vt__13InteractBuild:
 	.4byte actHinderRock__11InteractionFP10HinderRock
 	.4byte actBridge__13InteractBuildFP6Bridge
 	.4byte actItem__13InteractBuildFP12ItemCreature
+.endobj __vt__13InteractBuild
 .balign 4
-lbl_802B1104:
+.obj lbl_802B1104, local
 	.asciz "PaniAnimKeyListener"
+.endobj lbl_802B1104
 .balign 4
-lbl_802B1118:
+.obj lbl_802B1118, local
 	.asciz "EventTalker"
+.endobj lbl_802B1118
 .balign 4
-lbl_802B1124:
+.obj lbl_802B1124, local
 	.asciz "RefCountable"
+.endobj lbl_802B1124
 .balign 4
-lbl_802B1134:
+.obj lbl_802B1134, local
 	.asciz "Creature"
+.endobj lbl_802B1134
 .balign 4
-lbl_802B1140:
+.obj lbl_802B1140, local
 	.4byte __RTTI__11EventTalker
 	.4byte 0x8
 	.4byte __RTTI__12RefCountable
 	.4byte 0
 	.4byte 0
+.endobj lbl_802B1140
 .balign 4
-lbl_802B1154:
+.obj lbl_802B1154, local
 	.asciz "AICreature"
+.endobj lbl_802B1154
 .balign 4
-lbl_802B1160:
+.obj lbl_802B1160, local
 	.4byte __RTTI__19PaniAnimKeyListener
 	.4byte 0x2B8
 	.4byte __RTTI__11EventTalker
@@ -5073,11 +5111,13 @@ lbl_802B1160:
 	.4byte __RTTI__8Creature
 	.4byte 0
 	.4byte 0
+.endobj lbl_802B1160
 .balign 4
-lbl_802B1184:
+.obj lbl_802B1184, local
 	.asciz "ItemCreature"
+.endobj lbl_802B1184
 .balign 4
-lbl_802B1194:
+.obj lbl_802B1194, local
 	.4byte __RTTI__19PaniAnimKeyListener
 	.4byte 0x2B8
 	.4byte __RTTI__11EventTalker
@@ -5089,11 +5129,13 @@ lbl_802B1194:
 	.4byte __RTTI__10AICreature
 	.4byte 0
 	.4byte 0
+.endobj lbl_802B1194
 .balign 4
-lbl_802B11C0:
+.obj lbl_802B11C0, local
 	.asciz "WorkObject"
+.endobj lbl_802B11C0
 .balign 4
-lbl_802B11CC:
+.obj lbl_802B11CC, local
 	.4byte __RTTI__19PaniAnimKeyListener
 	.4byte 0x2B8
 	.4byte __RTTI__11EventTalker
@@ -5107,7 +5149,9 @@ lbl_802B11CC:
 	.4byte __RTTI__12ItemCreature
 	.4byte 0
 	.4byte 0
-lbl_802B1200:
+.endobj lbl_802B11CC
+.balign 4
+.obj lbl_802B1200, local
 	.4byte __RTTI__19PaniAnimKeyListener
 	.4byte 0x2B8
 	.4byte __RTTI__11EventTalker
@@ -5123,8 +5167,9 @@ lbl_802B1200:
 	.4byte __RTTI__10WorkObject
 	.4byte 0
 	.4byte 0
-.global __vt__6Bridge
-__vt__6Bridge:
+.endobj lbl_802B1200
+.balign 4
+.obj __vt__6Bridge, global
 	.4byte __RTTI__6Bridge
 	.4byte 0
 	.4byte addCntCallback__12RefCountableFv
@@ -5216,16 +5261,19 @@ __vt__6Bridge:
 	.4byte isHinderRock__10WorkObjectFv
 	.4byte isFinished__6BridgeFv
 	.4byte workable__6BridgeFR8Vector3f
+.endobj __vt__6Bridge
 .balign 4
-lbl_802B13A8:
+.obj lbl_802B13A8, local
 	.asciz "InteractPush"
+.endobj lbl_802B13A8
 .balign 4
-lbl_802B13B8:
+.obj lbl_802B13B8, local
 	.4byte __RTTI__11Interaction
 	.4byte 0
 	.4byte 0
-.global __vt__12InteractPush
-__vt__12InteractPush:
+.endobj lbl_802B13B8
+.balign 4
+.obj __vt__12InteractPush, global
 	.4byte __RTTI__12InteractPush
 	.4byte 0
 	.4byte actCommon__11InteractionFP8Creature
@@ -5237,11 +5285,13 @@ __vt__12InteractPush:
 	.4byte actHinderRock__12InteractPushFP10HinderRock
 	.4byte actBridge__11InteractionFP6Bridge
 	.4byte actItem__11InteractionFP12ItemCreature
+.endobj __vt__12InteractPush
 .balign 4
-lbl_802B13F0:
+.obj lbl_802B13F0, local
 	.asciz "HinderRock"
+.endobj lbl_802B13F0
 .balign 4
-lbl_802B13FC:
+.obj lbl_802B13FC, local
 	.4byte __RTTI__19PaniAnimKeyListener
 	.4byte 0x2B8
 	.4byte __RTTI__11EventTalker
@@ -5257,8 +5307,9 @@ lbl_802B13FC:
 	.4byte __RTTI__10WorkObject
 	.4byte 0
 	.4byte 0
-.global __vt__10HinderRock
-__vt__10HinderRock:
+.endobj lbl_802B13FC
+.balign 4
+.obj __vt__10HinderRock, global
 	.4byte __RTTI__10HinderRock
 	.4byte 0
 	.4byte addCntCallback__12RefCountableFv
@@ -5350,21 +5401,27 @@ __vt__10HinderRock:
 	.4byte isHinderRock__10HinderRockFv
 	.4byte isFinished__10HinderRockFv
 	.4byte workable__10HinderRockFR8Vector3f
+.endobj __vt__10HinderRock
 .balign 4
-lbl_802B15A4:
+.obj lbl_802B15A4, local
 	.asciz "DynCollObject"
+.endobj lbl_802B15A4
 .balign 4
-lbl_802B15B4:
+.obj lbl_802B15B4, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte 0
-lbl_802B15C0:
+.endobj lbl_802B15B4
+.balign 4
+.obj lbl_802B15C0, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte __RTTI__8CoreNode
 	.4byte 0
 	.4byte 0
-lbl_802B15D4:
+.endobj lbl_802B15C0
+.balign 4
+.obj lbl_802B15D4, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte __RTTI__8CoreNode
@@ -5372,30 +5429,19 @@ lbl_802B15D4:
 	.4byte __RTTI__4Node
 	.4byte 0
 	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
+.endobj lbl_802B15D4
 .balign 4
-lbl_802B1630:
+.skip 0x40 # compiler padding
+.balign 4
+.obj lbl_802B1630, local
 	.asciz "DynBuildShape"
+.endobj lbl_802B1630
 .balign 4
-lbl_802B1640:
+.obj lbl_802B1640, local
 	.asciz "DynCollShape"
+.endobj lbl_802B1640
 .balign 4
-lbl_802B1650:
+.obj lbl_802B1650, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte __RTTI__8CoreNode
@@ -5405,7 +5451,9 @@ lbl_802B1650:
 	.4byte __RTTI__13DynCollObject
 	.4byte 0
 	.4byte 0
-lbl_802B1674:
+.endobj lbl_802B1650
+.balign 4
+.obj lbl_802B1674, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte __RTTI__8CoreNode
@@ -5417,8 +5465,9 @@ lbl_802B1674:
 	.4byte __RTTI__12DynCollShape
 	.4byte 0
 	.4byte 0
-.global __vt__13DynBuildShape
-__vt__13DynBuildShape:
+.endobj lbl_802B1674
+.balign 4
+.obj __vt__13DynBuildShape, weak
 	.4byte __RTTI__13DynBuildShape
 	.4byte 0
 	.4byte getAgeNodeType__5ANodeFv
@@ -5437,28 +5486,35 @@ __vt__13DynBuildShape:
 	.4byte getShape__12DynCollShapeFv
 	.4byte jointVisible__12DynCollShapeFii
 	.4byte refresh__13DynBuildShapeFR8Graphics
+.endobj __vt__13DynBuildShape
 .balign 4
-lbl_802B16E8:
+.obj lbl_802B16E8, local
 	.asciz "GenObjectWorkObject"
+.endobj lbl_802B16E8
 .balign 4
-lbl_802B16FC:
+.obj lbl_802B16FC, local
 	.asciz "Parameters"
+.endobj lbl_802B16FC
 .balign 4
-lbl_802B1708:
+.obj lbl_802B1708, local
 	.4byte __RTTI__10Parameters
 	.4byte 0
 	.4byte 0
+.endobj lbl_802B1708
 .balign 4
-lbl_802B1714:
+.obj lbl_802B1714, local
 	.asciz "GenObject"
+.endobj lbl_802B1714
 .balign 4
-lbl_802B1720:
+.obj lbl_802B1720, local
 	.4byte __RTTI__10Parameters
 	.4byte 0
 	.4byte __RTTI__7GenBase
 	.4byte 0
 	.4byte 0
-lbl_802B1734:
+.endobj lbl_802B1720
+.balign 4
+.obj lbl_802B1734, local
 	.4byte __RTTI__10Parameters
 	.4byte 0
 	.4byte __RTTI__7GenBase
@@ -5466,8 +5522,9 @@ lbl_802B1734:
 	.4byte __RTTI__9GenObject
 	.4byte 0
 	.4byte 0
-.global __vt__19GenObjectWorkObject
-__vt__19GenObjectWorkObject:
+.endobj lbl_802B1734
+.balign 4
+.obj __vt__19GenObjectWorkObject, global
 	.4byte __RTTI__19GenObjectWorkObject
 	.4byte 0
 	.4byte doWrite__19GenObjectWorkObjectFR18RandomAccessStream
@@ -5482,46 +5539,49 @@ __vt__19GenObjectWorkObject:
 	.4byte update__9GenObjectFP9Generator
 	.4byte render__9GenObjectFR8GraphicsP9Generator
 	.4byte birth__19GenObjectWorkObjectFR9BirthInfo
+.endobj __vt__19GenObjectWorkObject
 .balign 4
-lbl_802B1788:
+.obj lbl_802B1788, local
 	.asciz "Parm<float>"
+.endobj lbl_802B1788
 .balign 4
-lbl_802B1794:
+.obj lbl_802B1794, local
 	.asciz "BaseParm"
+.endobj lbl_802B1794
 .balign 4
-lbl_802B17A0:
+.obj lbl_802B17A0, local
 	.4byte __RTTI__8BaseParm
 	.4byte 0
 	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
+.endobj lbl_802B17A0
 .balign 4
-lbl_802B17C0:
+.skip 0x14 # compiler padding
+.balign 4
+.obj lbl_802B17C0, local
 	.asciz "Parm<int>"
+.endobj lbl_802B17C0
 .balign 4
-lbl_802B17CC:
+.obj lbl_802B17CC, local
 	.4byte __RTTI__8BaseParm
 	.4byte 0
 	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
+.endobj lbl_802B17CC
 .balign 4
-lbl_802B17EC:
+.skip 0x14 # compiler padding
+.balign 4
+.obj lbl_802B17EC, local
 	.asciz "WorkObjectMgr"
+.endobj lbl_802B17EC
 .balign 4
-lbl_802B17FC:
+.obj lbl_802B17FC, local
 	.asciz "Traversable"
+.endobj lbl_802B17FC
 .balign 4
-lbl_802B1808:
+.obj lbl_802B1808, local
 	.asciz "ObjectMgr"
+.endobj lbl_802B1808
 .balign 4
-lbl_802B1814:
+.obj lbl_802B1814, local
 	.4byte __RTTI__5ANode
 	.4byte 0x8
 	.4byte __RTTI__8CoreNode
@@ -5531,7 +5591,9 @@ lbl_802B1814:
 	.4byte __RTTI__11Traversable
 	.4byte 0
 	.4byte 0
-lbl_802B1838:
+.endobj lbl_802B1814
+.balign 4
+.obj lbl_802B1838, local
 	.4byte __RTTI__5ANode
 	.4byte 0x8
 	.4byte __RTTI__8CoreNode
@@ -5543,8 +5605,9 @@ lbl_802B1838:
 	.4byte __RTTI__9ObjectMgr
 	.4byte 0
 	.4byte 0
-.global __vt__13WorkObjectMgr
-__vt__13WorkObjectMgr:
+.endobj lbl_802B1838
+.balign 4
+.obj __vt__13WorkObjectMgr, global
 	.4byte __RTTI__13WorkObjectMgr
 	.4byte 0
 	.4byte getCreature__13WorkObjectMgrFi
@@ -5575,37 +5638,30 @@ __vt__13WorkObjectMgr:
 	.4byte findClosest__9ObjectMgrFR8Vector3fP9Condition
 	.4byte search__9ObjectMgrFP9ObjectMgr
 	.4byte killAll__9ObjectMgrFv
+.endobj __vt__13WorkObjectMgr
 .balign 4
-lbl_802B18DC:
+.obj lbl_802B18DC, local
 	.asciz "WorkObjectNode"
+.endobj lbl_802B18DC
 .balign 4
-lbl_802B18EC:
+.obj lbl_802B18EC, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte __RTTI__8CoreNode
 	.4byte 0
 	.4byte 0
-.global __vt__14WorkObjectNode
-__vt__14WorkObjectNode:
+.endobj lbl_802B18EC
+.balign 4
+.obj __vt__14WorkObjectNode, weak
 	.4byte __RTTI__14WorkObjectNode
 	.4byte 0
 	.4byte getAgeNodeType__5ANodeFv
 	.4byte read__8CoreNodeFR18RandomAccessStream
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-.global __vt__10WorkObject
-__vt__10WorkObject:
+.endobj __vt__14WorkObjectNode
+.balign 4
+.skip 0x34 # compiler padding
+.balign 4
+.obj __vt__10WorkObject, global
 	.4byte __RTTI__10WorkObject
 	.4byte 0
 	.4byte addCntCallback__12RefCountableFv
@@ -5697,242 +5753,357 @@ __vt__10WorkObject:
 	.4byte isHinderRock__10WorkObjectFv
 	.4byte isFinished__10WorkObjectFv
 	.4byte workable__10WorkObjectFR8Vector3f
+.endobj __vt__10WorkObject
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-lbl_803DF7B8:
+.obj lbl_803DF7B8, local
 	.asciz "..."
+.endobj lbl_803DF7B8
 .balign 4
-lbl_803DF7BC:
+.obj lbl_803DF7BC, local
 	.asciz "meck"
+.endobj lbl_803DF7BC
 .balign 4
-lbl_803DF7C4:
+.obj lbl_803DF7C4, local
 	.asciz "<Node>"
+.endobj lbl_803DF7C4
 .balign 4
-lbl_803DF7CC:
+.obj lbl_803DF7CC, local
 	.asciz "wo"
+.endobj lbl_803DF7CC
 .balign 4
-lbl_803DF7D0:
+.obj lbl_803DF7D0, local
 	.float 0.0
-lbl_803DF7D4:
+.endobj lbl_803DF7D0
+.obj lbl_803DF7D4, local
 	.float 0.0
-lbl_803DF7D8:
+.endobj lbl_803DF7D4
+.obj lbl_803DF7D8, local
 	.float 0.0
+.endobj lbl_803DF7D8
 .balign 4
-lbl_803DF7DC:
+.obj lbl_803DF7DC, local
 	.asciz "p00"
+.endobj lbl_803DF7DC
 .balign 4
-lbl_803DF7E0:
+.obj lbl_803DF7E0, local
 	.asciz "p01"
+.endobj lbl_803DF7E0
 .balign 4
-lbl_803DF7E4:
+.obj lbl_803DF7E4, local
 	.asciz "p02"
+.endobj lbl_803DF7E4
 .balign 4
-lbl_803DF7E8:
+.obj lbl_803DF7E8, local
 	.asciz "p03"
+.endobj lbl_803DF7E8
 .balign 4
-lbl_803DF7EC:
+.obj lbl_803DF7EC, local
 	.float 1.0
-lbl_803DF7F0:
+.endobj lbl_803DF7EC
+.obj lbl_803DF7F0, local
 	.float 1.0
-lbl_803DF7F4:
+.endobj lbl_803DF7F0
+.obj lbl_803DF7F4, local
 	.float 1.0
-lbl_803DF7F8:
+.endobj lbl_803DF7F4
+.obj lbl_803DF7F8, local
 	.float -1.0
-lbl_803DF7FC:
+.endobj lbl_803DF7F8
+.obj lbl_803DF7FC, local
 	.float -1.0
-lbl_803DF800:
+.endobj lbl_803DF7FC
+.obj lbl_803DF800, local
 	.float 0.5
-lbl_803DF804:
+.endobj lbl_803DF800
+.obj lbl_803DF804, local
 	.float 0.096
-lbl_803DF808:
+.endobj lbl_803DF804
+.obj lbl_803DF808, local
 	.float 0.096
-lbl_803DF80C:
+.endobj lbl_803DF808
+.obj lbl_803DF80C, local
 	.float 1.0
-lbl_803DF810:
+.endobj lbl_803DF80C
+.obj lbl_803DF810, local
 	.float 1.0
-lbl_803DF814:
+.endobj lbl_803DF810
+.obj lbl_803DF814, local
 	.float 1.0
-lbl_803DF818:
+.endobj lbl_803DF814
+.obj lbl_803DF818, local
 	.float 0.0
-lbl_803DF81C:
+.endobj lbl_803DF818
+.obj lbl_803DF81C, local
 	.float 0.0
-lbl_803DF820:
+.endobj lbl_803DF81C
+.obj lbl_803DF820, local
 	.float 1.0
-lbl_803DF824:
+.endobj lbl_803DF820
+.obj lbl_803DF824, local
 	.float 1.0
-lbl_803DF828:
+.endobj lbl_803DF824
+.obj lbl_803DF828, local
 	.float 1.0
-lbl_803DF82C:
+.endobj lbl_803DF828
+.obj lbl_803DF82C, local
 	.float 1.0
-lbl_803DF830:
+.endobj lbl_803DF82C
+.obj lbl_803DF830, local
 	.float 1.0
-lbl_803DF834:
+.endobj lbl_803DF830
+.obj lbl_803DF834, local
 	.float 1.0
-lbl_803DF838:
+.endobj lbl_803DF834
+.obj lbl_803DF838, local
 	.float 5.0
-lbl_803DF83C:
+.endobj lbl_803DF838
+.obj lbl_803DF83C, local
 	.float 5.0
-lbl_803DF840:
+.endobj lbl_803DF83C
+.obj lbl_803DF840, local
 	.float 0.0
-lbl_803DF844:
+.endobj lbl_803DF840
+.obj lbl_803DF844, local
 	.float 0.0
-lbl_803DF848:
+.endobj lbl_803DF844
+.obj lbl_803DF848, local
 	.float 20.0
-lbl_803DF84C:
+.endobj lbl_803DF848
+.obj lbl_803DF84C, local
 	.float 20.0
-lbl_803DF850:
+.endobj lbl_803DF84C
+.obj lbl_803DF850, local
 	.float 5.0
-__RTTI__11Interaction:
+.endobj lbl_803DF850
+.balign 4
+.obj __RTTI__11Interaction, local
 	.4byte lbl_802B1078
 	.4byte 0
-__RTTI__13InteractBreak:
+.endobj __RTTI__11Interaction
+.balign 4
+.obj __RTTI__13InteractBreak, local
 	.4byte lbl_802B1068
 	.4byte lbl_802B1084
-__RTTI__13InteractBuild:
+.endobj __RTTI__13InteractBreak
+.balign 4
+.obj __RTTI__13InteractBuild, local
 	.4byte lbl_802B10BC
 	.4byte lbl_802B10CC
+.endobj __RTTI__13InteractBuild
 .balign 4
-lbl_803DF86C:
+.obj lbl_803DF86C, local
 	.asciz "Bridge"
+.endobj lbl_803DF86C
 .balign 4
-__RTTI__19PaniAnimKeyListener:
+.obj __RTTI__19PaniAnimKeyListener, local
 	.4byte lbl_802B1104
 	.4byte 0
-__RTTI__11EventTalker:
+.endobj __RTTI__19PaniAnimKeyListener
+.balign 4
+.obj __RTTI__11EventTalker, local
 	.4byte lbl_802B1118
 	.4byte 0
-__RTTI__12RefCountable:
+.endobj __RTTI__11EventTalker
+.balign 4
+.obj __RTTI__12RefCountable, local
 	.4byte lbl_802B1124
 	.4byte 0
-__RTTI__8Creature:
+.endobj __RTTI__12RefCountable
+.balign 4
+.obj __RTTI__8Creature, local
 	.4byte lbl_802B1134
 	.4byte lbl_802B1140
-__RTTI__10AICreature:
+.endobj __RTTI__8Creature
+.balign 4
+.obj __RTTI__10AICreature, local
 	.4byte lbl_802B1154
 	.4byte lbl_802B1160
-__RTTI__12ItemCreature:
+.endobj __RTTI__10AICreature
+.balign 4
+.obj __RTTI__12ItemCreature, local
 	.4byte lbl_802B1184
 	.4byte lbl_802B1194
-__RTTI__10WorkObject:
+.endobj __RTTI__12ItemCreature
+.balign 4
+.obj __RTTI__10WorkObject, local
 	.4byte lbl_802B11C0
 	.4byte lbl_802B11CC
-__RTTI__6Bridge:
+.endobj __RTTI__10WorkObject
+.balign 4
+.obj __RTTI__6Bridge, local
 	.4byte lbl_803DF86C
 	.4byte lbl_802B1200
-__RTTI__12InteractPush:
+.endobj __RTTI__6Bridge
+.balign 4
+.obj __RTTI__12InteractPush, local
 	.4byte lbl_802B13A8
 	.4byte lbl_802B13B8
-__RTTI__10HinderRock:
+.endobj __RTTI__12InteractPush
+.balign 4
+.obj __RTTI__10HinderRock, local
 	.4byte lbl_802B13F0
 	.4byte lbl_802B13FC
+.endobj __RTTI__10HinderRock
 .balign 4
-lbl_803DF8C4:
+.obj lbl_803DF8C4, local
 	.asciz "ANode"
+.endobj lbl_803DF8C4
 .balign 4
-__RTTI__5ANode:
+.obj __RTTI__5ANode, local
 	.4byte lbl_803DF8C4
 	.4byte 0
-__RTTI__8CoreNode:
+.endobj __RTTI__5ANode
+.balign 4
+.obj __RTTI__8CoreNode, local
 	.4byte lbl_802B1024
 	.4byte lbl_802B15B4
+.endobj __RTTI__8CoreNode
 .balign 4
-lbl_803DF8DC:
+.obj lbl_803DF8DC, local
 	.asciz "Node"
+.endobj lbl_803DF8DC
 .balign 4
-__RTTI__4Node:
+.obj __RTTI__4Node, local
 	.4byte lbl_803DF8DC
 	.4byte lbl_802B15C0
-__RTTI__13DynCollObject:
+.endobj __RTTI__4Node
+.balign 4
+.obj __RTTI__13DynCollObject, local
 	.4byte lbl_802B15A4
 	.4byte lbl_802B15D4
-__RTTI__12DynCollShape:
+.endobj __RTTI__13DynCollObject
+.balign 4
+.obj __RTTI__12DynCollShape, local
 	.4byte lbl_802B1640
 	.4byte lbl_802B1650
-__RTTI__13DynBuildShape:
+.endobj __RTTI__12DynCollShape
+.balign 4
+.obj __RTTI__13DynBuildShape, local
 	.4byte lbl_802B1630
 	.4byte lbl_802B1674
-__RTTI__10Parameters:
+.endobj __RTTI__13DynBuildShape
+.balign 4
+.obj __RTTI__10Parameters, local
 	.4byte lbl_802B16FC
 	.4byte 0
+.endobj __RTTI__10Parameters
 .balign 4
-lbl_803DF90C:
+.obj lbl_803DF90C, local
 	.asciz "GenBase"
+.endobj lbl_803DF90C
 .balign 4
-__RTTI__7GenBase:
+.obj __RTTI__7GenBase, local
 	.4byte lbl_803DF90C
 	.4byte lbl_802B1708
-__RTTI__9GenObject:
+.endobj __RTTI__7GenBase
+.balign 4
+.obj __RTTI__9GenObject, local
 	.4byte lbl_802B1714
 	.4byte lbl_802B1720
-__RTTI__19GenObjectWorkObject:
+.endobj __RTTI__9GenObject
+.balign 4
+.obj __RTTI__19GenObjectWorkObject, local
 	.4byte lbl_802B16E8
 	.4byte lbl_802B1734
-__RTTI__8BaseParm:
+.endobj __RTTI__19GenObjectWorkObject
+.balign 4
+.obj __RTTI__8BaseParm, local
 	.4byte lbl_802B1794
 	.4byte 0
-__RTTI__11Traversable:
+.endobj __RTTI__8BaseParm
+.balign 4
+.obj __RTTI__11Traversable, local
 	.4byte lbl_802B17FC
 	.4byte 0
-__RTTI__9ObjectMgr:
+.endobj __RTTI__11Traversable
+.balign 4
+.obj __RTTI__9ObjectMgr, local
 	.4byte lbl_802B1808
 	.4byte lbl_802B1814
-__RTTI__13WorkObjectMgr:
+.endobj __RTTI__9ObjectMgr
+.balign 4
+.obj __RTTI__13WorkObjectMgr, local
 	.4byte lbl_802B17EC
 	.4byte lbl_802B1838
-__RTTI__14WorkObjectNode:
+.endobj __RTTI__13WorkObjectMgr
+.balign 4
+.obj __RTTI__14WorkObjectNode, local
 	.4byte lbl_802B18DC
 	.4byte lbl_802B18EC
+.endobj __RTTI__14WorkObjectNode
 
 .section .sbss, "wa"
 .balign 8
-.global workObjectMgr
-workObjectMgr:
+.obj workObjectMgr, global
 	.skip 0x4
+.endobj workObjectMgr
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803E8ED0:
+.obj lbl_803E8ED0, local
 	.float 30.0
-lbl_803E8ED4:
+.endobj lbl_803E8ED0
+.obj lbl_803E8ED4, local
 	.float 0.0
+.endobj lbl_803E8ED4
 .balign 8
-lbl_803E8ED8:
-	.4byte 0x43300000
-	.4byte 0x80000000
-lbl_803E8EE0:
+.obj lbl_803E8ED8, local
+	.8byte 0x4330000080000000
+.endobj lbl_803E8ED8
+.balign 4
+.obj lbl_803E8EE0, local
 	.float 1.0
-lbl_803E8EE4:
+.endobj lbl_803E8EE0
+.obj lbl_803E8EE4, local
 	.float 120.0
+.endobj lbl_803E8EE4
 .balign 8
-lbl_803E8EE8:
+.obj lbl_803E8EE8, local
 	.double 0.5
+.endobj lbl_803E8EE8
 .balign 8
-lbl_803E8EF0:
+.obj lbl_803E8EF0, local
 	.double 3.0
-lbl_803E8EF8:
+.endobj lbl_803E8EF0
+.balign 4
+.obj lbl_803E8EF8, local
 	.float 40.0
-lbl_803E8EFC:
+.endobj lbl_803E8EF8
+.obj lbl_803E8EFC, local
 	.float 4.0
-lbl_803E8F00:
+.endobj lbl_803E8EFC
+.obj lbl_803E8F00, local
 	.float 0.5
-lbl_803E8F04:
+.endobj lbl_803E8F00
+.obj lbl_803E8F04, local
 	.float 32767.0
-lbl_803E8F08:
+.endobj lbl_803E8F04
+.obj lbl_803E8F08, local
 	.float 0.2
-lbl_803E8F0C:
+.endobj lbl_803E8F08
+.obj lbl_803E8F0C, local
 	.float 0.1
-lbl_803E8F10:
+.endobj lbl_803E8F0C
+.obj lbl_803E8F10, local
 	.float 10.0
-lbl_803E8F14:
+.endobj lbl_803E8F10
+.obj lbl_803E8F14, local
 	.float -100.0
-lbl_803E8F18:
+.endobj lbl_803E8F14
+.obj lbl_803E8F18, local
 	.float 0.7
-lbl_803E8F1C:
+.endobj lbl_803E8F18
+.obj lbl_803E8F1C, local
 	.float 100.0
-lbl_803E8F20:
+.endobj lbl_803E8F1C
+.obj lbl_803E8F20, local
 	.float -20.0
-lbl_803E8F24:
+.endobj lbl_803E8F20
+.obj lbl_803E8F24, local
 	.float 20.0
-lbl_803E8F28:
+.endobj lbl_803E8F24
+.obj lbl_803E8F28, local
 	.float 150.0
+.endobj lbl_803E8F28

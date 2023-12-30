@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global interactStickers__8CreatureFP8CreatureR11InteractionP9Condition
-interactStickers__8CreatureFP8CreatureR11InteractionP9Condition:
+.fn interactStickers__8CreatureFP8CreatureR11InteractionP9Condition, global
 /* 8008F9C4 0008C924  7C 08 02 A6 */	mflr r0
 /* 8008F9C8 0008C928  90 01 00 04 */	stw r0, 4(r1)
 /* 8008F9CC 0008C92C  94 21 FF A8 */	stwu r1, -0x58(r1)
@@ -99,9 +98,9 @@ interactStickers__8CreatureFP8CreatureR11InteractionP9Condition:
 /* 8008FB18 0008CA78  38 21 00 58 */	addi r1, r1, 0x58
 /* 8008FB1C 0008CA7C  7C 08 03 A6 */	mtlr r0
 /* 8008FB20 0008CA80  4E 80 00 20 */	blr 
+.endfn interactStickers__8CreatureFP8CreatureR11InteractionP9Condition
 
-.global killStickers__8CreatureFP8CreatureP9Conditioni
-killStickers__8CreatureFP8CreatureP9Conditioni:
+.fn killStickers__8CreatureFP8CreatureP9Conditioni, global
 /* 8008FB24 0008CA84  7C 08 02 A6 */	mflr r0
 /* 8008FB28 0008CA88  3C 60 80 2B */	lis r3, __vt__11Interaction@ha
 /* 8008FB2C 0008CA8C  90 01 00 04 */	stw r0, 4(r1)
@@ -204,9 +203,9 @@ killStickers__8CreatureFP8CreatureP9Conditioni:
 /* 8008FC8C 0008CBEC  38 21 00 48 */	addi r1, r1, 0x48
 /* 8008FC90 0008CBF0  7C 08 03 A6 */	mtlr r0
 /* 8008FC94 0008CBF4  4E 80 00 20 */	blr 
+.endfn killStickers__8CreatureFP8CreatureP9Conditioni
 
-.global next__8IteratorFv
-next__8IteratorFv:
+.fn next__8IteratorFv, weak
 /* 8008FC98 0008CBF8  7C 08 02 A6 */	mflr r0
 /* 8008FC9C 0008CBFC  90 01 00 04 */	stw r0, 4(r1)
 /* 8008FCA0 0008CC00  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -287,9 +286,9 @@ next__8IteratorFv:
 /* 8008FDB0 0008CD10  38 21 00 18 */	addi r1, r1, 0x18
 /* 8008FDB4 0008CD14  7C 08 03 A6 */	mtlr r0
 /* 8008FDB8 0008CD18  4E 80 00 20 */	blr 
+.endfn next__8IteratorFv
 
-.global first__8IteratorFv
-first__8IteratorFv:
+.fn first__8IteratorFv, weak
 /* 8008FDBC 0008CD1C  7C 08 02 A6 */	mflr r0
 /* 8008FDC0 0008CD20  90 01 00 04 */	stw r0, 4(r1)
 /* 8008FDC4 0008CD24  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -368,9 +367,9 @@ first__8IteratorFv:
 /* 8008FECC 0008CE2C  38 21 00 18 */	addi r1, r1, 0x18
 /* 8008FED0 0008CE30  7C 08 03 A6 */	mtlr r0
 /* 8008FED4 0008CE34  4E 80 00 20 */	blr 
+.endfn first__8IteratorFv
 
-.global startClimb__8CreatureFv
-startClimb__8CreatureFv:
+.fn startClimb__8CreatureFv, global
 /* 8008FED8 0008CE38  7C 08 02 A6 */	mflr r0
 /* 8008FEDC 0008CE3C  90 01 00 04 */	stw r0, 4(r1)
 /* 8008FEE0 0008CE40  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -399,16 +398,16 @@ startClimb__8CreatureFv:
 /* 8008FF34 0008CE94  38 21 00 18 */	addi r1, r1, 0x18
 /* 8008FF38 0008CE98  7C 08 03 A6 */	mtlr r0
 /* 8008FF3C 0008CE9C  4E 80 00 20 */	blr 
+.endfn startClimb__8CreatureFv
 
-.global endClimb__8CreatureFv
-endClimb__8CreatureFv:
+.fn endClimb__8CreatureFv, global
 /* 8008FF40 0008CEA0  80 03 00 C8 */	lwz r0, 0xc8(r3)
 /* 8008FF44 0008CEA4  54 00 04 E2 */	rlwinm r0, r0, 0, 0x13, 0x11
 /* 8008FF48 0008CEA8  90 03 00 C8 */	stw r0, 0xc8(r3)
 /* 8008FF4C 0008CEAC  4E 80 00 20 */	blr 
+.endfn endClimb__8CreatureFv
 
-.global isStickToPlatform__8CreatureFv
-isStickToPlatform__8CreatureFv:
+.fn isStickToPlatform__8CreatureFv, global
 /* 8008FF50 0008CEB0  80 03 01 84 */	lwz r0, 0x184(r3)
 /* 8008FF54 0008CEB4  28 00 00 00 */	cmplwi r0, 0
 /* 8008FF58 0008CEB8  41 82 00 38 */	beq .L_8008FF90
@@ -430,9 +429,9 @@ isStickToPlatform__8CreatureFv:
 .L_8008FF90:
 /* 8008FF90 0008CEF0  38 60 00 00 */	li r3, 0
 /* 8008FF94 0008CEF4  4E 80 00 20 */	blr 
+.endfn isStickToPlatform__8CreatureFv
 
-.global startStickMouth__8CreatureFP8CreatureP8CollPart
-startStickMouth__8CreatureFP8CreatureP8CollPart:
+.fn startStickMouth__8CreatureFP8CreatureP8CollPart, global
 /* 8008FF98 0008CEF8  7C 08 02 A6 */	mflr r0
 /* 8008FF9C 0008CEFC  90 01 00 04 */	stw r0, 4(r1)
 /* 8008FFA0 0008CF00  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -468,9 +467,9 @@ startStickMouth__8CreatureFP8CreatureP8CollPart:
 /* 80090010 0008CF70  38 21 00 28 */	addi r1, r1, 0x28
 /* 80090014 0008CF74  7C 08 03 A6 */	mtlr r0
 /* 80090018 0008CF78  4E 80 00 20 */	blr 
+.endfn startStickMouth__8CreatureFP8CreatureP8CollPart
 
-.global endStickMouth__8CreatureFv
-endStickMouth__8CreatureFv:
+.fn endStickMouth__8CreatureFv, global
 /* 8009001C 0008CF7C  7C 08 02 A6 */	mflr r0
 /* 80090020 0008CF80  90 01 00 04 */	stw r0, 4(r1)
 /* 80090024 0008CF84  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -487,9 +486,9 @@ endStickMouth__8CreatureFv:
 /* 80090050 0008CFB0  38 21 00 18 */	addi r1, r1, 0x18
 /* 80090054 0008CFB4  7C 08 03 A6 */	mtlr r0
 /* 80090058 0008CFB8  4E 80 00 20 */	blr 
+.endfn endStickMouth__8CreatureFv
 
-.global startStickObjectSphere__8CreatureFP8CreatureP8CollPartf
-startStickObjectSphere__8CreatureFP8CreatureP8CollPartf:
+.fn startStickObjectSphere__8CreatureFP8CreatureP8CollPartf, global
 /* 8009005C 0008CFBC  7C 08 02 A6 */	mflr r0
 /* 80090060 0008CFC0  90 01 00 04 */	stw r0, 4(r1)
 /* 80090064 0008CFC4  94 21 FE 58 */	stwu r1, -0x1a8(r1)
@@ -692,9 +691,9 @@ startStickObjectSphere__8CreatureFP8CreatureP8CollPartf:
 /* 80090360 0008D2C0  38 21 01 A8 */	addi r1, r1, 0x1a8
 /* 80090364 0008D2C4  7C 08 03 A6 */	mtlr r0
 /* 80090368 0008D2C8  4E 80 00 20 */	blr 
+.endfn startStickObjectSphere__8CreatureFP8CreatureP8CollPartf
 
-.global startStickObjectTube__8CreatureFP8CreatureP8CollPart
-startStickObjectTube__8CreatureFP8CreatureP8CollPart:
+.fn startStickObjectTube__8CreatureFP8CreatureP8CollPart, global
 /* 8009036C 0008D2CC  7C 08 02 A6 */	mflr r0
 /* 80090370 0008D2D0  90 01 00 04 */	stw r0, 4(r1)
 /* 80090374 0008D2D4  94 21 FF 08 */	stwu r1, -0xf8(r1)
@@ -912,9 +911,9 @@ startStickObjectTube__8CreatureFP8CreatureP8CollPart:
 /* 800906AC 0008D60C  38 21 00 F8 */	addi r1, r1, 0xf8
 /* 800906B0 0008D610  7C 08 03 A6 */	mtlr r0
 /* 800906B4 0008D614  4E 80 00 20 */	blr 
+.endfn startStickObjectTube__8CreatureFP8CreatureP8CollPart
 
-.global startStickObject__8CreatureFP8CreatureP8CollPartif
-startStickObject__8CreatureFP8CreatureP8CollPartif:
+.fn startStickObject__8CreatureFP8CreatureP8CollPartif, global
 /* 800906B8 0008D618  7C 08 02 A6 */	mflr r0
 /* 800906BC 0008D61C  90 01 00 04 */	stw r0, 4(r1)
 /* 800906C0 0008D620  38 00 00 00 */	li r0, 0
@@ -1037,9 +1036,9 @@ startStickObject__8CreatureFP8CreatureP8CollPartif:
 /* 8009086C 0008D7CC  38 21 00 48 */	addi r1, r1, 0x48
 /* 80090870 0008D7D0  7C 08 03 A6 */	mtlr r0
 /* 80090874 0008D7D4  4E 80 00 20 */	blr 
+.endfn startStickObject__8CreatureFP8CreatureP8CollPartif
 
-.global endStickObject__8CreatureFv
-endStickObject__8CreatureFv:
+.fn endStickObject__8CreatureFv, global
 /* 80090878 0008D7D8  7C 08 02 A6 */	mflr r0
 /* 8009087C 0008D7DC  90 01 00 04 */	stw r0, 4(r1)
 /* 80090880 0008D7E0  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -1068,9 +1067,9 @@ endStickObject__8CreatureFv:
 /* 800908D8 0008D838  38 21 00 18 */	addi r1, r1, 0x18
 /* 800908DC 0008D83C  7C 08 03 A6 */	mtlr r0
 /* 800908E0 0008D840  4E 80 00 20 */	blr 
+.endfn endStickObject__8CreatureFv
 
-.global startStick__8CreatureFP8CreatureP8CollPart
-startStick__8CreatureFP8CreatureP8CollPart:
+.fn startStick__8CreatureFP8CreatureP8CollPart, global
 /* 800908E4 0008D844  7C 08 02 A6 */	mflr r0
 /* 800908E8 0008D848  90 01 00 04 */	stw r0, 4(r1)
 /* 800908EC 0008D84C  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -1139,9 +1138,9 @@ startStick__8CreatureFP8CreatureP8CollPart:
 /* 800909D0 0008D930  38 21 00 28 */	addi r1, r1, 0x28
 /* 800909D4 0008D934  7C 08 03 A6 */	mtlr r0
 /* 800909D8 0008D938  4E 80 00 20 */	blr 
+.endfn startStick__8CreatureFP8CreatureP8CollPart
 
-.global endStick__8CreatureFv
-endStick__8CreatureFv:
+.fn endStick__8CreatureFv, global
 /* 800909DC 0008D93C  7C 08 02 A6 */	mflr r0
 /* 800909E0 0008D940  90 01 00 04 */	stw r0, 4(r1)
 /* 800909E4 0008D944  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -1206,9 +1205,9 @@ endStick__8CreatureFv:
 /* 80090ABC 0008DA1C  38 21 00 18 */	addi r1, r1, 0x18
 /* 80090AC0 0008DA20  7C 08 03 A6 */	mtlr r0
 /* 80090AC4 0008DA24  4E 80 00 20 */	blr 
+.endfn endStick__8CreatureFv
 
-.global startRope__8CreatureFP12RopeCreaturef
-startRope__8CreatureFP12RopeCreaturef:
+.fn startRope__8CreatureFP12RopeCreaturef, global
 /* 80090AC8 0008DA28  7C 08 02 A6 */	mflr r0
 /* 80090ACC 0008DA2C  90 01 00 04 */	stw r0, 4(r1)
 /* 80090AD0 0008DA30  94 21 FF B0 */	stwu r1, -0x50(r1)
@@ -1288,9 +1287,9 @@ startRope__8CreatureFP12RopeCreaturef:
 /* 80090BE0 0008DB40  38 21 00 50 */	addi r1, r1, 0x50
 /* 80090BE4 0008DB44  7C 08 03 A6 */	mtlr r0
 /* 80090BE8 0008DB48  4E 80 00 20 */	blr 
+.endfn startRope__8CreatureFP12RopeCreaturef
 
-.global endRope__8CreatureFv
-endRope__8CreatureFv:
+.fn endRope__8CreatureFv, global
 /* 80090BEC 0008DB4C  80 A3 01 58 */	lwz r5, 0x158(r3)
 /* 80090BF0 0008DB50  28 05 00 00 */	cmplwi r5, 0
 /* 80090BF4 0008DB54  4D 82 00 20 */	beqlr 
@@ -1332,9 +1331,9 @@ endRope__8CreatureFv:
 /* 80090C78 0008DBD8  90 03 01 64 */	stw r0, 0x164(r3)
 /* 80090C7C 0008DBDC  90 03 01 60 */	stw r0, 0x160(r3)
 /* 80090C80 0008DBE0  4E 80 00 20 */	blr 
+.endfn endRope__8CreatureFv
 
-.global __ct__8StickersFP8Creature
-__ct__8StickersFP8Creature:
+.fn __ct__8StickersFP8Creature, global
 /* 80090C84 0008DBE4  7C 08 02 A6 */	mflr r0
 /* 80090C88 0008DBE8  3C A0 80 2B */	lis r5, __vt__11Traversable@ha
 /* 80090C8C 0008DBEC  90 01 00 04 */	stw r0, 4(r1)
@@ -1357,9 +1356,9 @@ __ct__8StickersFP8Creature:
 /* 80090CD0 0008DC30  38 21 00 18 */	addi r1, r1, 0x18
 /* 80090CD4 0008DC34  7C 08 03 A6 */	mtlr r0
 /* 80090CD8 0008DC38  4E 80 00 20 */	blr 
+.endfn __ct__8StickersFP8Creature
 
-.global calcNum__8StickersFv
-calcNum__8StickersFv:
+.fn calcNum__8StickersFv, global
 /* 80090CDC 0008DC3C  38 00 00 00 */	li r0, 0
 /* 80090CE0 0008DC40  90 03 00 08 */	stw r0, 8(r3)
 /* 80090CE4 0008DC44  80 83 00 0C */	lwz r4, 0xc(r3)
@@ -1374,9 +1373,9 @@ calcNum__8StickersFv:
 /* 80090D00 0008DC60  28 05 00 00 */	cmplwi r5, 0
 /* 80090D04 0008DC64  40 82 FF EC */	bne .L_80090CF0
 /* 80090D08 0008DC68  4E 80 00 20 */	blr 
+.endfn calcNum__8StickersFv
 
-.global getCreature__8StickersFi
-getCreature__8StickersFi:
+.fn getCreature__8StickersFi, global
 /* 80090D0C 0008DC6C  80 E3 00 08 */	lwz r7, 8(r3)
 /* 80090D10 0008DC70  38 00 00 00 */	li r0, 0
 /* 80090D14 0008DC74  90 03 00 08 */	stw r0, 8(r3)
@@ -1435,19 +1434,19 @@ getCreature__8StickersFi:
 /* 80090DCC 0008DD2C  4C 82 00 20 */	bnelr 
 /* 80090DD0 0008DD30  38 60 00 00 */	li r3, 0
 /* 80090DD4 0008DD34  4E 80 00 20 */	blr 
+.endfn getCreature__8StickersFi
 
-.global getFirst__8StickersFv
-getFirst__8StickersFv:
+.fn getFirst__8StickersFv, global
 /* 80090DD8 0008DD38  38 60 00 00 */	li r3, 0
 /* 80090DDC 0008DD3C  4E 80 00 20 */	blr 
+.endfn getFirst__8StickersFv
 
-.global getNext__8StickersFi
-getNext__8StickersFi:
+.fn getNext__8StickersFi, global
 /* 80090DE0 0008DD40  38 64 00 01 */	addi r3, r4, 1
 /* 80090DE4 0008DD44  4E 80 00 20 */	blr 
+.endfn getNext__8StickersFi
 
-.global isDone__8StickersFi
-isDone__8StickersFi:
+.fn isDone__8StickersFi, global
 /* 80090DE8 0008DD48  80 03 00 08 */	lwz r0, 8(r3)
 /* 80090DEC 0008DD4C  7C 04 00 00 */	cmpw r4, r0
 /* 80090DF0 0008DD50  41 80 00 0C */	blt .L_80090DFC
@@ -1456,9 +1455,9 @@ isDone__8StickersFi:
 .L_80090DFC:
 /* 80090DFC 0008DD5C  38 60 00 00 */	li r3, 0
 /* 80090E00 0008DD60  4E 80 00 20 */	blr 
+.endfn isDone__8StickersFi
 
-.global updateStickPlatform__8CreatureFv
-updateStickPlatform__8CreatureFv:
+.fn updateStickPlatform__8CreatureFv, global
 /* 80090E04 0008DD64  7C 08 02 A6 */	mflr r0
 /* 80090E08 0008DD68  90 01 00 04 */	stw r0, 4(r1)
 /* 80090E0C 0008DD6C  94 21 FF 30 */	stwu r1, -0xd0(r1)
@@ -1612,9 +1611,9 @@ updateStickPlatform__8CreatureFv:
 /* 8009104C 0008DFAC  38 21 00 D0 */	addi r1, r1, 0xd0
 /* 80091050 0008DFB0  7C 08 03 A6 */	mtlr r0
 /* 80091054 0008DFB4  4E 80 00 20 */	blr 
+.endfn updateStickPlatform__8CreatureFv
 
-.global updateStickNonPlatform__8CreatureFv
-updateStickNonPlatform__8CreatureFv:
+.fn updateStickNonPlatform__8CreatureFv, global
 /* 80091058 0008DFB8  7C 08 02 A6 */	mflr r0
 /* 8009105C 0008DFBC  90 01 00 04 */	stw r0, 4(r1)
 /* 80091060 0008DFC0  94 21 FF C8 */	stwu r1, -0x38(r1)
@@ -1669,9 +1668,9 @@ updateStickNonPlatform__8CreatureFv:
 /* 80091108 0008E068  38 21 00 38 */	addi r1, r1, 0x38
 /* 8009110C 0008E06C  7C 08 03 A6 */	mtlr r0
 /* 80091110 0008E070  4E 80 00 20 */	blr 
+.endfn updateStickNonPlatform__8CreatureFv
 
-.global updateStickSphere__8CreatureFv
-updateStickSphere__8CreatureFv:
+.fn updateStickSphere__8CreatureFv, global
 /* 80091114 0008E074  7C 08 02 A6 */	mflr r0
 /* 80091118 0008E078  90 01 00 04 */	stw r0, 4(r1)
 /* 8009111C 0008E07C  94 21 FF 20 */	stwu r1, -0xe0(r1)
@@ -1799,9 +1798,9 @@ updateStickSphere__8CreatureFv:
 /* 800912F4 0008E254  38 21 00 E0 */	addi r1, r1, 0xe0
 /* 800912F8 0008E258  7C 08 03 A6 */	mtlr r0
 /* 800912FC 0008E25C  4E 80 00 20 */	blr 
+.endfn updateStickSphere__8CreatureFv
 
-.global updateStickPellet__8CreatureFv
-updateStickPellet__8CreatureFv:
+.fn updateStickPellet__8CreatureFv, global
 /* 80091300 0008E260  7C 08 02 A6 */	mflr r0
 /* 80091304 0008E264  90 01 00 04 */	stw r0, 4(r1)
 /* 80091308 0008E268  94 21 FE E0 */	stwu r1, -0x120(r1)
@@ -2024,9 +2023,9 @@ updateStickPellet__8CreatureFv:
 /* 80091654 0008E5B4  38 21 01 20 */	addi r1, r1, 0x120
 /* 80091658 0008E5B8  7C 08 03 A6 */	mtlr r0
 /* 8009165C 0008E5BC  4E 80 00 20 */	blr 
+.endfn updateStickPellet__8CreatureFv
 
-.global updateStickTube__8CreatureFv
-updateStickTube__8CreatureFv:
+.fn updateStickTube__8CreatureFv, global
 /* 80091660 0008E5C0  7C 08 02 A6 */	mflr r0
 /* 80091664 0008E5C4  90 01 00 04 */	stw r0, 4(r1)
 /* 80091668 0008E5C8  94 21 FE D0 */	stwu r1, -0x130(r1)
@@ -2272,9 +2271,9 @@ updateStickTube__8CreatureFv:
 /* 80091A10 0008E970  38 21 01 30 */	addi r1, r1, 0x130
 /* 80091A14 0008E974  7C 08 03 A6 */	mtlr r0
 /* 80091A18 0008E978  4E 80 00 20 */	blr 
+.endfn updateStickTube__8CreatureFv
 
-.global updateStickRope__8CreatureFv
-updateStickRope__8CreatureFv:
+.fn updateStickRope__8CreatureFv, global
 /* 80091A1C 0008E97C  7C 08 02 A6 */	mflr r0
 /* 80091A20 0008E980  90 01 00 04 */	stw r0, 4(r1)
 /* 80091A24 0008E984  94 21 FD A0 */	stwu r1, -0x260(r1)
@@ -2580,147 +2579,179 @@ updateStickRope__8CreatureFv:
 /* 80091EB4 0008EE14  38 21 02 60 */	addi r1, r1, 0x260
 /* 80091EB8 0008EE18  7C 08 03 A6 */	mtlr r0
 /* 80091EBC 0008EE1C  4E 80 00 20 */	blr 
+.endfn updateStickRope__8CreatureFv
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802AF328:
+.obj lbl_802AF328, local
 	.asciz "creatureStick.cpp"
+.endobj lbl_802AF328
 .balign 4
-lbl_802AF33C:
+.obj lbl_802AF33C, local
 	.asciz "CreatureStick"
+.endobj lbl_802AF33C
 .balign 4
-lbl_802AF34C:
+.obj lbl_802AF34C, local
 	.asciz "TEKIPLAT"
+.endobj lbl_802AF34C
 .balign 4
-.global _standType
-_standType:
+.obj _standType, global
 	.4byte lbl_803DF0EC
 	.4byte lbl_802AF34C
 	.4byte lbl_803DF0F4
 	.4byte lbl_803DF0FC
+.endobj _standType
 .balign 4
-lbl_802AF368:
+.obj lbl_802AF368, local
 	.asciz "no fulc obj%d"
+.endobj lbl_802AF368
 .balign 4
-lbl_802AF378:
+.obj lbl_802AF378, local
 	.asciz "Stickers"
+.endobj lbl_802AF378
 .balign 4
-lbl_802AF384:
+.obj lbl_802AF384, local
 	.asciz "Traversable"
+.endobj lbl_802AF384
 .balign 4
-lbl_802AF390:
+.obj lbl_802AF390, local
 	.4byte __RTTI__11Traversable
 	.4byte 0
 	.4byte 0
-.global __vt__8Stickers
-__vt__8Stickers:
+.endobj lbl_802AF390
+.balign 4
+.obj __vt__8Stickers, global
 	.4byte __RTTI__8Stickers
 	.4byte 0
 	.4byte getCreature__8StickersFi
 	.4byte getFirst__8StickersFv
 	.4byte getNext__8StickersFi
 	.4byte isDone__8StickersFi
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
+.endobj __vt__8Stickers
 .balign 4
-lbl_802AF3CC:
+.skip 0x18 # compiler padding
+.balign 4
+.obj lbl_802AF3CC, local
 	.asciz "Interaction"
+.endobj lbl_802AF3CC
 .balign 4
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
+.skip 0x30 # compiler padding
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-lbl_803DF0E8:
+.obj lbl_803DF0E8, local
 	.float -1.0
+.endobj lbl_803DF0E8
 .balign 4
-lbl_803DF0EC:
+.obj lbl_803DF0EC, local
 	.asciz "GROUND"
+.endobj lbl_803DF0EC
 .balign 4
-lbl_803DF0F4:
+.obj lbl_803DF0F4, local
 	.asciz "PLAT"
+.endobj lbl_803DF0F4
 .balign 4
-lbl_803DF0FC:
+.obj lbl_803DF0FC, local
 	.asciz "AIR"
+.endobj lbl_803DF0FC
 .balign 4
-lbl_803DF100:
+.obj lbl_803DF100, local
 	.float -1.0
-lbl_803DF104:
+.endobj lbl_803DF100
+.obj lbl_803DF104, local
 	.float 0.0
-lbl_803DF108:
+.endobj lbl_803DF104
+.obj lbl_803DF108, local
 	.float 0.0
-lbl_803DF10C:
+.endobj lbl_803DF108
+.obj lbl_803DF10C, local
 	.float 0.0
-lbl_803DF110:
+.endobj lbl_803DF10C
+.obj lbl_803DF110, local
 	.float 0.0
-lbl_803DF114:
+.endobj lbl_803DF110
+.obj lbl_803DF114, local
 	.float 0.0
-lbl_803DF118:
+.endobj lbl_803DF114
+.obj lbl_803DF118, local
 	.float 0.0
-lbl_803DF11C:
+.endobj lbl_803DF118
+.obj lbl_803DF11C, local
 	.float 0.0
-lbl_803DF120:
+.endobj lbl_803DF11C
+.obj lbl_803DF120, local
 	.float 0.0
-lbl_803DF124:
+.endobj lbl_803DF120
+.obj lbl_803DF124, local
 	.float 0.0
-lbl_803DF128:
+.endobj lbl_803DF124
+.obj lbl_803DF128, local
 	.float 0.0
-lbl_803DF12C:
+.endobj lbl_803DF128
+.obj lbl_803DF12C, local
 	.float 0.0
-lbl_803DF130:
+.endobj lbl_803DF12C
+.obj lbl_803DF130, local
 	.float 0.0
-lbl_803DF134:
+.endobj lbl_803DF130
+.obj lbl_803DF134, local
 	.float 0.0
-lbl_803DF138:
+.endobj lbl_803DF134
+.obj lbl_803DF138, local
 	.float 0.0
-lbl_803DF13C:
+.endobj lbl_803DF138
+.obj lbl_803DF13C, local
 	.float 0.0
-lbl_803DF140:
+.endobj lbl_803DF13C
+.obj lbl_803DF140, local
 	.float 0.0
-lbl_803DF144:
+.endobj lbl_803DF140
+.obj lbl_803DF144, local
 	.float 0.0
-lbl_803DF148:
+.endobj lbl_803DF144
+.obj lbl_803DF148, local
 	.float -1.0
-lbl_803DF14C:
+.endobj lbl_803DF148
+.obj lbl_803DF14C, local
 	.float 0.0
-lbl_803DF150:
+.endobj lbl_803DF14C
+.obj lbl_803DF150, local
 	.float -1.0
-__RTTI__11Traversable:
+.endobj lbl_803DF150
+.balign 4
+.obj __RTTI__11Traversable, local
 	.4byte lbl_802AF384
 	.4byte 0
-__RTTI__8Stickers:
+.endobj __RTTI__11Traversable
+.balign 4
+.obj __RTTI__8Stickers, local
 	.4byte lbl_802AF378
 	.4byte lbl_802AF390
+.endobj __RTTI__8Stickers
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803E8D38:
+.obj lbl_803E8D38, local
 	.float 0.0
+.endobj lbl_803E8D38
 .balign 8
-lbl_803E8D40:
+.obj lbl_803E8D40, local
 	.double 0.5
+.endobj lbl_803E8D40
 .balign 8
-lbl_803E8D48:
+.obj lbl_803E8D48, local
 	.double 3.0
-lbl_803E8D50:
+.endobj lbl_803E8D48
+.balign 4
+.obj lbl_803E8D50, local
 	.float 1.0
-lbl_803E8D54:
+.endobj lbl_803E8D50
+.obj lbl_803E8D54, local
 	.float 2.0
-lbl_803E8D58:
+.endobj lbl_803E8D54
+.obj lbl_803E8D58, local
 	.float 0.5
-lbl_803E8D5C:
+.endobj lbl_803E8D58
+.obj lbl_803E8D5C, local
 	.float 100.0
+.endobj lbl_803E8D5C

@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global stickUpdate__9ObjectMgrFv
-stickUpdate__9ObjectMgrFv:
+.fn stickUpdate__9ObjectMgrFv, global
 /* 800E0228 000DD188  7C 08 02 A6 */	mflr r0
 /* 800E022C 000DD18C  90 01 00 04 */	stw r0, 4(r1)
 /* 800E0230 000DD190  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -76,9 +75,9 @@ stickUpdate__9ObjectMgrFv:
 /* 800E0328 000DD288  38 21 00 28 */	addi r1, r1, 0x28
 /* 800E032C 000DD28C  7C 08 03 A6 */	mtlr r0
 /* 800E0330 000DD290  4E 80 00 20 */	blr 
+.endfn stickUpdate__9ObjectMgrFv
 
-.global invalidateSearch__9ObjectMgrFv
-invalidateSearch__9ObjectMgrFv:
+.fn invalidateSearch__9ObjectMgrFv, global
 /* 800E0334 000DD294  7C 08 02 A6 */	mflr r0
 /* 800E0338 000DD298  90 01 00 04 */	stw r0, 4(r1)
 /* 800E033C 000DD29C  94 21 FF D0 */	stwu r1, -0x30(r1)
@@ -160,9 +159,9 @@ invalidateSearch__9ObjectMgrFv:
 /* 800E044C 000DD3AC  38 21 00 30 */	addi r1, r1, 0x30
 /* 800E0450 000DD3B0  7C 08 03 A6 */	mtlr r0
 /* 800E0454 000DD3B4  4E 80 00 20 */	blr 
+.endfn invalidateSearch__9ObjectMgrFv
 
-.global update__9ObjectMgrFv
-update__9ObjectMgrFv:
+.fn update__9ObjectMgrFv, global
 /* 800E0458 000DD3B8  7C 08 02 A6 */	mflr r0
 /* 800E045C 000DD3BC  90 01 00 04 */	stw r0, 4(r1)
 /* 800E0460 000DD3C0  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -237,13 +236,13 @@ update__9ObjectMgrFv:
 /* 800E0558 000DD4B8  38 21 00 28 */	addi r1, r1, 0x28
 /* 800E055C 000DD4BC  7C 08 03 A6 */	mtlr r0
 /* 800E0560 000DD4C0  4E 80 00 20 */	blr 
+.endfn update__9ObjectMgrFv
 
-.global store__9ObjectMgrFv
-store__9ObjectMgrFv:
+.fn store__9ObjectMgrFv, global
 /* 800E0564 000DD4C4  4E 80 00 20 */	blr 
+.endfn store__9ObjectMgrFv
 
-.global killAll__9ObjectMgrFv
-killAll__9ObjectMgrFv:
+.fn killAll__9ObjectMgrFv, global
 /* 800E0568 000DD4C8  7C 08 02 A6 */	mflr r0
 /* 800E056C 000DD4CC  90 01 00 04 */	stw r0, 4(r1)
 /* 800E0570 000DD4D0  94 21 FF D0 */	stwu r1, -0x30(r1)
@@ -413,9 +412,9 @@ killAll__9ObjectMgrFv:
 /* 800E07C0 000DD720  38 21 00 30 */	addi r1, r1, 0x30
 /* 800E07C4 000DD724  7C 08 03 A6 */	mtlr r0
 /* 800E07C8 000DD728  4E 80 00 20 */	blr 
+.endfn killAll__9ObjectMgrFv
 
-.global postUpdate__9ObjectMgrFif
-postUpdate__9ObjectMgrFif:
+.fn postUpdate__9ObjectMgrFif, global
 /* 800E07CC 000DD72C  7C 08 02 A6 */	mflr r0
 /* 800E07D0 000DD730  90 01 00 04 */	stw r0, 4(r1)
 /* 800E07D4 000DD734  94 21 FF C0 */	stwu r1, -0x40(r1)
@@ -515,9 +514,9 @@ postUpdate__9ObjectMgrFif:
 /* 800E092C 000DD88C  38 21 00 40 */	addi r1, r1, 0x40
 /* 800E0930 000DD890  7C 08 03 A6 */	mtlr r0
 /* 800E0934 000DD894  4E 80 00 20 */	blr 
+.endfn postUpdate__9ObjectMgrFif
 
-.global refresh__9ObjectMgrFR8Graphics
-refresh__9ObjectMgrFR8Graphics:
+.fn refresh__9ObjectMgrFR8Graphics, global
 /* 800E0938 000DD898  7C 08 02 A6 */	mflr r0
 /* 800E093C 000DD89C  90 01 00 04 */	stw r0, 4(r1)
 /* 800E0940 000DD8A0  94 21 FF C8 */	stwu r1, -0x38(r1)
@@ -596,9 +595,9 @@ refresh__9ObjectMgrFR8Graphics:
 /* 800E0A48 000DD9A8  38 21 00 38 */	addi r1, r1, 0x38
 /* 800E0A4C 000DD9AC  7C 08 03 A6 */	mtlr r0
 /* 800E0A50 000DD9B0  4E 80 00 20 */	blr 
+.endfn refresh__9ObjectMgrFR8Graphics
 
-.global findClosest__9ObjectMgrFR8Vector3fP9Condition
-findClosest__9ObjectMgrFR8Vector3fP9Condition:
+.fn findClosest__9ObjectMgrFR8Vector3fP9Condition, global
 /* 800E0A54 000DD9B4  7C 08 02 A6 */	mflr r0
 /* 800E0A58 000DD9B8  90 01 00 04 */	stw r0, 4(r1)
 /* 800E0A5C 000DD9BC  94 21 FF 38 */	stwu r1, -0xc8(r1)
@@ -761,9 +760,9 @@ findClosest__9ObjectMgrFR8Vector3fP9Condition:
 /* 800E0CA4 000DDC04  38 21 00 C8 */	addi r1, r1, 0xc8
 /* 800E0CA8 000DDC08  7C 08 03 A6 */	mtlr r0
 /* 800E0CAC 000DDC0C  4E 80 00 20 */	blr 
+.endfn findClosest__9ObjectMgrFR8Vector3fP9Condition
 
-.global findClosest__9ObjectMgrFR8Vector3ffP9Condition
-findClosest__9ObjectMgrFR8Vector3ffP9Condition:
+.fn findClosest__9ObjectMgrFR8Vector3ffP9Condition, global
 /* 800E0CB0 000DDC10  7C 08 02 A6 */	mflr r0
 /* 800E0CB4 000DDC14  90 01 00 04 */	stw r0, 4(r1)
 /* 800E0CB8 000DDC18  94 21 FF 30 */	stwu r1, -0xd0(r1)
@@ -932,9 +931,9 @@ findClosest__9ObjectMgrFR8Vector3ffP9Condition:
 /* 800E0F18 000DDE78  38 21 00 D0 */	addi r1, r1, 0xd0
 /* 800E0F1C 000DDE7C  7C 08 03 A6 */	mtlr r0
 /* 800E0F20 000DDE80  4E 80 00 20 */	blr 
+.endfn findClosest__9ObjectMgrFR8Vector3ffP9Condition
 
-.global drawShadow__9ObjectMgrFR8GraphicsP7Texture
-drawShadow__9ObjectMgrFR8GraphicsP7Texture:
+.fn drawShadow__9ObjectMgrFR8GraphicsP7Texture, global
 /* 800E0F24 000DDE84  7C 08 02 A6 */	mflr r0
 /* 800E0F28 000DDE88  90 01 00 04 */	stw r0, 4(r1)
 /* 800E0F2C 000DDE8C  94 21 FF C8 */	stwu r1, -0x38(r1)
@@ -1017,9 +1016,9 @@ drawShadow__9ObjectMgrFR8GraphicsP7Texture:
 /* 800E1040 000DDFA0  38 21 00 38 */	addi r1, r1, 0x38
 /* 800E1044 000DDFA4  7C 08 03 A6 */	mtlr r0
 /* 800E1048 000DDFA8  4E 80 00 20 */	blr 
+.endfn drawShadow__9ObjectMgrFR8GraphicsP7Texture
 
-.global __ct__13MonoObjectMgrFv
-__ct__13MonoObjectMgrFv:
+.fn __ct__13MonoObjectMgrFv, global
 /* 800E104C 000DDFAC  7C 08 02 A6 */	mflr r0
 /* 800E1050 000DDFB0  3C 80 80 2B */	lis r4, __vt__11Traversable@ha
 /* 800E1054 000DDFB4  90 01 00 04 */	stw r0, 4(r1)
@@ -1061,9 +1060,9 @@ __ct__13MonoObjectMgrFv:
 /* 800E10E4 000DE044  38 21 00 18 */	addi r1, r1, 0x18
 /* 800E10E8 000DE048  7C 08 03 A6 */	mtlr r0
 /* 800E10EC 000DE04C  4E 80 00 20 */	blr 
+.endfn __ct__13MonoObjectMgrFv
 
-.global create__13MonoObjectMgrFi
-create__13MonoObjectMgrFi:
+.fn create__13MonoObjectMgrFi, global
 /* 800E10F0 000DE050  7C 08 02 A6 */	mflr r0
 /* 800E10F4 000DE054  90 01 00 04 */	stw r0, 4(r1)
 /* 800E10F8 000DE058  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -1111,9 +1110,9 @@ create__13MonoObjectMgrFi:
 /* 800E1198 000DE0F8  38 21 00 28 */	addi r1, r1, 0x28
 /* 800E119C 000DE0FC  7C 08 03 A6 */	mtlr r0
 /* 800E11A0 000DE100  4E 80 00 20 */	blr 
+.endfn create__13MonoObjectMgrFi
 
-.global postUpdate__13MonoObjectMgrFif
-postUpdate__13MonoObjectMgrFif:
+.fn postUpdate__13MonoObjectMgrFif, global
 /* 800E11A4 000DE104  7C 08 02 A6 */	mflr r0
 /* 800E11A8 000DE108  90 01 00 04 */	stw r0, 4(r1)
 /* 800E11AC 000DE10C  94 21 FF C8 */	stwu r1, -0x38(r1)
@@ -1163,9 +1162,9 @@ postUpdate__13MonoObjectMgrFif:
 /* 800E1250 000DE1B0  38 21 00 38 */	addi r1, r1, 0x38
 /* 800E1254 000DE1B4  7C 08 03 A6 */	mtlr r0
 /* 800E1258 000DE1B8  4E 80 00 20 */	blr 
+.endfn postUpdate__13MonoObjectMgrFif
 
-.global drawShadow__13MonoObjectMgrFR8GraphicsP7Texture
-drawShadow__13MonoObjectMgrFR8GraphicsP7Texture:
+.fn drawShadow__13MonoObjectMgrFR8GraphicsP7Texture, global
 /* 800E125C 000DE1BC  7C 08 02 A6 */	mflr r0
 /* 800E1260 000DE1C0  90 01 00 04 */	stw r0, 4(r1)
 /* 800E1264 000DE1C4  94 21 FF D0 */	stwu r1, -0x30(r1)
@@ -1208,9 +1207,9 @@ drawShadow__13MonoObjectMgrFR8GraphicsP7Texture:
 /* 800E12EC 000DE24C  38 21 00 30 */	addi r1, r1, 0x30
 /* 800E12F0 000DE250  7C 08 03 A6 */	mtlr r0
 /* 800E12F4 000DE254  4E 80 00 20 */	blr 
+.endfn drawShadow__13MonoObjectMgrFR8GraphicsP7Texture
 
-.global refresh__13MonoObjectMgrFR8Graphics
-refresh__13MonoObjectMgrFR8Graphics:
+.fn refresh__13MonoObjectMgrFR8Graphics, global
 /* 800E12F8 000DE258  7C 08 02 A6 */	mflr r0
 /* 800E12FC 000DE25C  90 01 00 04 */	stw r0, 4(r1)
 /* 800E1300 000DE260  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -1250,9 +1249,9 @@ refresh__13MonoObjectMgrFR8Graphics:
 /* 800E137C 000DE2DC  38 21 00 20 */	addi r1, r1, 0x20
 /* 800E1380 000DE2E0  7C 08 03 A6 */	mtlr r0
 /* 800E1384 000DE2E4  4E 80 00 20 */	blr 
+.endfn refresh__13MonoObjectMgrFR8Graphics
 
-.global update__13MonoObjectMgrFv
-update__13MonoObjectMgrFv:
+.fn update__13MonoObjectMgrFv, global
 /* 800E1388 000DE2E8  7C 08 02 A6 */	mflr r0
 /* 800E138C 000DE2EC  90 01 00 04 */	stw r0, 4(r1)
 /* 800E1390 000DE2F0  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -1317,9 +1316,9 @@ update__13MonoObjectMgrFv:
 /* 800E1468 000DE3C8  38 21 00 28 */	addi r1, r1, 0x28
 /* 800E146C 000DE3CC  7C 08 03 A6 */	mtlr r0
 /* 800E1470 000DE3D0  4E 80 00 20 */	blr 
+.endfn update__13MonoObjectMgrFv
 
-.global birth__13MonoObjectMgrFv
-birth__13MonoObjectMgrFv:
+.fn birth__13MonoObjectMgrFv, global
 /* 800E1474 000DE3D4  80 03 00 30 */	lwz r0, 0x30(r3)
 /* 800E1478 000DE3D8  80 83 00 2C */	lwz r4, 0x2c(r3)
 /* 800E147C 000DE3DC  7C 00 20 00 */	cmpw r0, r4
@@ -1371,9 +1370,9 @@ birth__13MonoObjectMgrFv:
 /* 800E1514 000DE474  80 63 00 28 */	lwz r3, 0x28(r3)
 /* 800E1518 000DE478  7C 63 28 2E */	lwzx r3, r3, r5
 /* 800E151C 000DE47C  4E 80 00 20 */	blr 
+.endfn birth__13MonoObjectMgrFv
 
-.global kill__13MonoObjectMgrFP8Creature
-kill__13MonoObjectMgrFP8Creature:
+.fn kill__13MonoObjectMgrFP8Creature, global
 /* 800E1520 000DE480  80 03 00 2C */	lwz r0, 0x2c(r3)
 /* 800E1524 000DE484  38 C0 00 00 */	li r6, 0
 /* 800E1528 000DE488  38 E6 00 00 */	addi r7, r6, 0
@@ -1412,9 +1411,9 @@ kill__13MonoObjectMgrFP8Creature:
 /* 800E1598 000DE4F8  80 63 00 34 */	lwz r3, 0x34(r3)
 /* 800E159C 000DE4FC  7C 83 01 2E */	stwx r4, r3, r0
 /* 800E15A0 000DE500  4E 80 00 20 */	blr 
+.endfn kill__13MonoObjectMgrFP8Creature
 
-.global getCreature__13MonoObjectMgrFi
-getCreature__13MonoObjectMgrFi:
+.fn getCreature__13MonoObjectMgrFi, global
 /* 800E15A4 000DE504  2C 04 00 00 */	cmpwi r4, 0
 /* 800E15A8 000DE508  41 80 00 24 */	blt .L_800E15CC
 /* 800E15AC 000DE50C  80 03 00 2C */	lwz r0, 0x2c(r3)
@@ -1432,9 +1431,9 @@ getCreature__13MonoObjectMgrFi:
 /* 800E15D4 000DE534  80 63 00 28 */	lwz r3, 0x28(r3)
 /* 800E15D8 000DE538  7C 63 20 2E */	lwzx r3, r3, r4
 /* 800E15DC 000DE53C  4E 80 00 20 */	blr 
+.endfn getCreature__13MonoObjectMgrFi
 
-.global getFirst__13MonoObjectMgrFv
-getFirst__13MonoObjectMgrFv:
+.fn getFirst__13MonoObjectMgrFv, global
 /* 800E15E0 000DE540  80 C3 00 2C */	lwz r6, 0x2c(r3)
 /* 800E15E4 000DE544  38 E0 FF FF */	li r7, -1
 /* 800E15E8 000DE548  39 00 00 00 */	li r8, 0
@@ -1461,9 +1460,9 @@ getFirst__13MonoObjectMgrFv:
 .L_800E1630:
 /* 800E1630 000DE590  7C E3 3B 78 */	mr r3, r7
 /* 800E1634 000DE594  4E 80 00 20 */	blr 
+.endfn getFirst__13MonoObjectMgrFv
 
-.global getNext__13MonoObjectMgrFi
-getNext__13MonoObjectMgrFi:
+.fn getNext__13MonoObjectMgrFi, global
 /* 800E1638 000DE598  80 C3 00 2C */	lwz r6, 0x2c(r3)
 /* 800E163C 000DE59C  39 04 00 01 */	addi r8, r4, 1
 /* 800E1640 000DE5A0  55 05 10 3A */	slwi r5, r8, 2
@@ -1491,9 +1490,9 @@ getNext__13MonoObjectMgrFi:
 .L_800E168C:
 /* 800E168C 000DE5EC  7C E3 3B 78 */	mr r3, r7
 /* 800E1690 000DE5F0  4E 80 00 20 */	blr 
+.endfn getNext__13MonoObjectMgrFi
 
-.global isDone__13MonoObjectMgrFi
-isDone__13MonoObjectMgrFi:
+.fn isDone__13MonoObjectMgrFi, global
 /* 800E1694 000DE5F4  80 03 00 2C */	lwz r0, 0x2c(r3)
 /* 800E1698 000DE5F8  7C 04 00 00 */	cmpw r4, r0
 /* 800E169C 000DE5FC  41 80 00 0C */	blt .L_800E16A8
@@ -1502,9 +1501,9 @@ isDone__13MonoObjectMgrFi:
 .L_800E16A8:
 /* 800E16A8 000DE608  38 60 00 00 */	li r3, 0
 /* 800E16AC 000DE60C  4E 80 00 20 */	blr 
+.endfn isDone__13MonoObjectMgrFi
 
-.global search__13MonoObjectMgrFP9ObjectMgr
-search__13MonoObjectMgrFP9ObjectMgr:
+.fn search__13MonoObjectMgrFP9ObjectMgr, global
 /* 800E16B0 000DE610  7C 08 02 A6 */	mflr r0
 /* 800E16B4 000DE614  90 01 00 04 */	stw r0, 4(r1)
 /* 800E16B8 000DE618  94 21 FF A0 */	stwu r1, -0x60(r1)
@@ -1756,9 +1755,9 @@ search__13MonoObjectMgrFP9ObjectMgr:
 /* 800E1A2C 000DE98C  38 21 00 60 */	addi r1, r1, 0x60
 /* 800E1A30 000DE990  7C 08 03 A6 */	mtlr r0
 /* 800E1A34 000DE994  4E 80 00 20 */	blr 
+.endfn search__13MonoObjectMgrFP9ObjectMgr
 
-.global searchSelf__13MonoObjectMgrFv
-searchSelf__13MonoObjectMgrFv:
+.fn searchSelf__13MonoObjectMgrFv, global
 /* 800E1A38 000DE998  7C 08 02 A6 */	mflr r0
 /* 800E1A3C 000DE99C  90 01 00 04 */	stw r0, 4(r1)
 /* 800E1A40 000DE9A0  94 21 FF A8 */	stwu r1, -0x58(r1)
@@ -1974,9 +1973,9 @@ searchSelf__13MonoObjectMgrFv:
 /* 800E1D38 000DEC98  38 21 00 58 */	addi r1, r1, 0x58
 /* 800E1D3C 000DEC9C  7C 08 03 A6 */	mtlr r0
 /* 800E1D40 000DECA0  4E 80 00 20 */	blr 
+.endfn searchSelf__13MonoObjectMgrFv
 
-.global __ct__13PolyObjectMgrFi
-__ct__13PolyObjectMgrFi:
+.fn __ct__13PolyObjectMgrFi, global
 /* 800E1D44 000DECA4  7C 08 02 A6 */	mflr r0
 /* 800E1D48 000DECA8  90 01 00 04 */	stw r0, 4(r1)
 /* 800E1D4C 000DECAC  94 21 FF B0 */	stwu r1, -0x50(r1)
@@ -2135,9 +2134,9 @@ __ct__13PolyObjectMgrFi:
 /* 800E1F98 000DEEF8  38 21 00 50 */	addi r1, r1, 0x50
 /* 800E1F9C 000DEEFC  7C 08 03 A6 */	mtlr r0
 /* 800E1FA0 000DEF00  4E 80 00 20 */	blr 
+.endfn __ct__13PolyObjectMgrFi
 
-.global create__13PolyObjectMgrFi
-create__13PolyObjectMgrFi:
+.fn create__13PolyObjectMgrFi, global
 /* 800E1FA4 000DEF04  7C 08 02 A6 */	mflr r0
 /* 800E1FA8 000DEF08  90 01 00 04 */	stw r0, 4(r1)
 /* 800E1FAC 000DEF0C  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -2171,9 +2170,9 @@ create__13PolyObjectMgrFi:
 /* 800E2014 000DEF74  38 21 00 20 */	addi r1, r1, 0x20
 /* 800E2018 000DEF78  7C 08 03 A6 */	mtlr r0
 /* 800E201C 000DEF7C  4E 80 00 20 */	blr 
+.endfn create__13PolyObjectMgrFi
 
-.global update__13PolyObjectMgrFv
-update__13PolyObjectMgrFv:
+.fn update__13PolyObjectMgrFv, global
 /* 800E2020 000DEF80  7C 08 02 A6 */	mflr r0
 /* 800E2024 000DEF84  90 01 00 04 */	stw r0, 4(r1)
 /* 800E2028 000DEF88  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -2245,9 +2244,9 @@ update__13PolyObjectMgrFv:
 /* 800E211C 000DF07C  38 21 00 20 */	addi r1, r1, 0x20
 /* 800E2120 000DF080  7C 08 03 A6 */	mtlr r0
 /* 800E2124 000DF084  4E 80 00 20 */	blr 
+.endfn update__13PolyObjectMgrFv
 
-.global postUpdate__13PolyObjectMgrFif
-postUpdate__13PolyObjectMgrFif:
+.fn postUpdate__13PolyObjectMgrFif, global
 /* 800E2128 000DF088  7C 08 02 A6 */	mflr r0
 /* 800E212C 000DF08C  90 01 00 04 */	stw r0, 4(r1)
 /* 800E2130 000DF090  94 21 FF D0 */	stwu r1, -0x30(r1)
@@ -2294,9 +2293,9 @@ postUpdate__13PolyObjectMgrFif:
 /* 800E21C8 000DF128  38 21 00 30 */	addi r1, r1, 0x30
 /* 800E21CC 000DF12C  7C 08 03 A6 */	mtlr r0
 /* 800E21D0 000DF130  4E 80 00 20 */	blr 
+.endfn postUpdate__13PolyObjectMgrFif
 
-.global refresh__13PolyObjectMgrFR8Graphics
-refresh__13PolyObjectMgrFR8Graphics:
+.fn refresh__13PolyObjectMgrFR8Graphics, global
 /* 800E21D4 000DF134  7C 08 02 A6 */	mflr r0
 /* 800E21D8 000DF138  90 01 00 04 */	stw r0, 4(r1)
 /* 800E21DC 000DF13C  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -2339,9 +2338,9 @@ refresh__13PolyObjectMgrFR8Graphics:
 /* 800E2264 000DF1C4  38 21 00 20 */	addi r1, r1, 0x20
 /* 800E2268 000DF1C8  7C 08 03 A6 */	mtlr r0
 /* 800E226C 000DF1CC  4E 80 00 20 */	blr 
+.endfn refresh__13PolyObjectMgrFR8Graphics
 
-.global drawShadow__13PolyObjectMgrFR8GraphicsP7Texture
-drawShadow__13PolyObjectMgrFR8GraphicsP7Texture:
+.fn drawShadow__13PolyObjectMgrFR8GraphicsP7Texture, global
 /* 800E2270 000DF1D0  7C 08 02 A6 */	mflr r0
 /* 800E2274 000DF1D4  90 01 00 04 */	stw r0, 4(r1)
 /* 800E2278 000DF1D8  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -2387,13 +2386,13 @@ drawShadow__13PolyObjectMgrFR8GraphicsP7Texture:
 /* 800E230C 000DF26C  38 21 00 28 */	addi r1, r1, 0x28
 /* 800E2310 000DF270  7C 08 03 A6 */	mtlr r0
 /* 800E2314 000DF274  4E 80 00 20 */	blr 
+.endfn drawShadow__13PolyObjectMgrFR8GraphicsP7Texture
 
-.global beginRegister__13PolyObjectMgrFv
-beginRegister__13PolyObjectMgrFv:
+.fn beginRegister__13PolyObjectMgrFv, global
 /* 800E2318 000DF278  4E 80 00 20 */	blr 
+.endfn beginRegister__13PolyObjectMgrFv
 
-.global registerClass__13PolyObjectMgrFiP8Creaturei
-registerClass__13PolyObjectMgrFiP8Creaturei:
+.fn registerClass__13PolyObjectMgrFiP8Creaturei, global
 /* 800E231C 000DF27C  80 03 00 40 */	lwz r0, 0x40(r3)
 /* 800E2320 000DF280  39 00 00 00 */	li r8, 0
 /* 800E2324 000DF284  2C 00 00 00 */	cmpwi r0, 0
@@ -2431,9 +2430,9 @@ registerClass__13PolyObjectMgrFiP8Creaturei:
 /* 800E2398 000DF2F8  38 04 00 01 */	addi r0, r4, 1
 /* 800E239C 000DF2FC  90 03 00 44 */	stw r0, 0x44(r3)
 /* 800E23A0 000DF300  4E 80 00 20 */	blr 
+.endfn registerClass__13PolyObjectMgrFiP8Creaturei
 
-.global endRegister__13PolyObjectMgrFv
-endRegister__13PolyObjectMgrFv:
+.fn endRegister__13PolyObjectMgrFv, global
 /* 800E23A4 000DF304  7C 08 02 A6 */	mflr r0
 /* 800E23A8 000DF308  90 01 00 04 */	stw r0, 4(r1)
 /* 800E23AC 000DF30C  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -2462,17 +2461,17 @@ endRegister__13PolyObjectMgrFv:
 /* 800E2400 000DF360  38 21 00 18 */	addi r1, r1, 0x18
 /* 800E2404 000DF364  7C 08 03 A6 */	mtlr r0
 /* 800E2408 000DF368  4E 80 00 20 */	blr 
+.endfn endRegister__13PolyObjectMgrFv
 
-.global get__13PolyObjectMgrFi
-get__13PolyObjectMgrFi:
+.fn get__13PolyObjectMgrFi, global
 /* 800E240C 000DF36C  80 03 00 28 */	lwz r0, 0x28(r3)
 /* 800E2410 000DF370  80 63 00 38 */	lwz r3, 0x38(r3)
 /* 800E2414 000DF374  7C 00 21 D6 */	mullw r0, r0, r4
 /* 800E2418 000DF378  7C 63 02 14 */	add r3, r3, r0
 /* 800E241C 000DF37C  4E 80 00 20 */	blr 
+.endfn get__13PolyObjectMgrFi
 
-.global birth__13PolyObjectMgrFi
-birth__13PolyObjectMgrFi:
+.fn birth__13PolyObjectMgrFi, global
 /* 800E2420 000DF380  80 03 00 30 */	lwz r0, 0x30(r3)
 /* 800E2424 000DF384  81 03 00 2C */	lwz r8, 0x2c(r3)
 /* 800E2428 000DF388  7C 00 40 00 */	cmpw r0, r8
@@ -2557,9 +2556,9 @@ birth__13PolyObjectMgrFi:
 /* 800E2530 000DF490  90 03 00 30 */	stw r0, 0x30(r3)
 /* 800E2534 000DF494  7C C3 33 78 */	mr r3, r6
 /* 800E2538 000DF498  4E 80 00 20 */	blr 
+.endfn birth__13PolyObjectMgrFi
 
-.global kill__13PolyObjectMgrFP8Creature
-kill__13PolyObjectMgrFP8Creature:
+.fn kill__13PolyObjectMgrFP8Creature, global
 /* 800E253C 000DF49C  80 03 00 2C */	lwz r0, 0x2c(r3)
 /* 800E2540 000DF4A0  38 E0 FF FF */	li r7, -1
 /* 800E2544 000DF4A4  38 C0 00 00 */	li r6, 0
@@ -2596,9 +2595,9 @@ kill__13PolyObjectMgrFP8Creature:
 /* 800E25B0 000DF510  38 80 FF FE */	li r4, -2
 /* 800E25B4 000DF514  7C 83 01 2E */	stwx r4, r3, r0
 /* 800E25B8 000DF518  4E 80 00 20 */	blr 
+.endfn kill__13PolyObjectMgrFP8Creature
 
-.global getCreature__13PolyObjectMgrFi
-getCreature__13PolyObjectMgrFi:
+.fn getCreature__13PolyObjectMgrFi, global
 /* 800E25BC 000DF51C  2C 04 00 00 */	cmpwi r4, 0
 /* 800E25C0 000DF520  41 80 00 24 */	blt .L_800E25E4
 /* 800E25C4 000DF524  80 03 00 2C */	lwz r0, 0x2c(r3)
@@ -2618,9 +2617,9 @@ getCreature__13PolyObjectMgrFi:
 /* 800E25F4 000DF554  7C 00 21 D6 */	mullw r0, r0, r4
 /* 800E25F8 000DF558  7C 63 02 14 */	add r3, r3, r0
 /* 800E25FC 000DF55C  4E 80 00 20 */	blr 
+.endfn getCreature__13PolyObjectMgrFi
 
-.global getFirst__13PolyObjectMgrFv
-getFirst__13PolyObjectMgrFv:
+.fn getFirst__13PolyObjectMgrFv, global
 /* 800E2600 000DF560  80 C3 00 2C */	lwz r6, 0x2c(r3)
 /* 800E2604 000DF564  38 E0 FF FF */	li r7, -1
 /* 800E2608 000DF568  39 00 00 00 */	li r8, 0
@@ -2647,9 +2646,9 @@ getFirst__13PolyObjectMgrFv:
 .L_800E2650:
 /* 800E2650 000DF5B0  7C E3 3B 78 */	mr r3, r7
 /* 800E2654 000DF5B4  4E 80 00 20 */	blr 
+.endfn getFirst__13PolyObjectMgrFv
 
-.global getNext__13PolyObjectMgrFi
-getNext__13PolyObjectMgrFi:
+.fn getNext__13PolyObjectMgrFi, global
 /* 800E2658 000DF5B8  80 C3 00 2C */	lwz r6, 0x2c(r3)
 /* 800E265C 000DF5BC  39 04 00 01 */	addi r8, r4, 1
 /* 800E2660 000DF5C0  55 05 10 3A */	slwi r5, r8, 2
@@ -2677,9 +2676,9 @@ getNext__13PolyObjectMgrFi:
 .L_800E26AC:
 /* 800E26AC 000DF60C  7C E3 3B 78 */	mr r3, r7
 /* 800E26B0 000DF610  4E 80 00 20 */	blr 
+.endfn getNext__13PolyObjectMgrFi
 
-.global isDone__13PolyObjectMgrFi
-isDone__13PolyObjectMgrFi:
+.fn isDone__13PolyObjectMgrFi, global
 /* 800E26B4 000DF614  80 03 00 2C */	lwz r0, 0x2c(r3)
 /* 800E26B8 000DF618  7C 04 00 00 */	cmpw r4, r0
 /* 800E26BC 000DF61C  41 80 00 0C */	blt .L_800E26C8
@@ -2688,9 +2687,9 @@ isDone__13PolyObjectMgrFi:
 .L_800E26C8:
 /* 800E26C8 000DF628  38 60 00 00 */	li r3, 0
 /* 800E26CC 000DF62C  4E 80 00 20 */	blr 
+.endfn isDone__13PolyObjectMgrFi
 
-.global search__13PolyObjectMgrFP9ObjectMgr
-search__13PolyObjectMgrFP9ObjectMgr:
+.fn search__13PolyObjectMgrFP9ObjectMgr, global
 /* 800E26D0 000DF630  7C 08 02 A6 */	mflr r0
 /* 800E26D4 000DF634  7C 04 18 40 */	cmplw r4, r3
 /* 800E26D8 000DF638  90 01 00 04 */	stw r0, 4(r1)
@@ -2702,9 +2701,9 @@ search__13PolyObjectMgrFP9ObjectMgr:
 /* 800E26EC 000DF64C  38 21 00 08 */	addi r1, r1, 8
 /* 800E26F0 000DF650  7C 08 03 A6 */	mtlr r0
 /* 800E26F4 000DF654  4E 80 00 20 */	blr 
+.endfn search__13PolyObjectMgrFP9ObjectMgr
 
-.global searchSelf__13PolyObjectMgrFv
-searchSelf__13PolyObjectMgrFv:
+.fn searchSelf__13PolyObjectMgrFv, global
 /* 800E26F8 000DF658  7C 08 02 A6 */	mflr r0
 /* 800E26FC 000DF65C  90 01 00 04 */	stw r0, 4(r1)
 /* 800E2700 000DF660  94 21 FF B0 */	stwu r1, -0x50(r1)
@@ -2898,9 +2897,9 @@ searchSelf__13PolyObjectMgrFv:
 /* 800E29AC 000DF90C  38 21 00 50 */	addi r1, r1, 0x50
 /* 800E29B0 000DF910  7C 08 03 A6 */	mtlr r0
 /* 800E29B4 000DF914  4E 80 00 20 */	blr 
+.endfn searchSelf__13PolyObjectMgrFv
 
-.global search__9ObjectMgrFP9ObjectMgr
-search__9ObjectMgrFP9ObjectMgr:
+.fn search__9ObjectMgrFP9ObjectMgr, global
 /* 800E29B8 000DF918  7C 08 02 A6 */	mflr r0
 /* 800E29BC 000DF91C  90 01 00 04 */	stw r0, 4(r1)
 /* 800E29C0 000DF920  94 21 FF 90 */	stwu r1, -0x70(r1)
@@ -3184,9 +3183,9 @@ search__9ObjectMgrFP9ObjectMgr:
 /* 800E2DB0 000DFD10  38 21 00 70 */	addi r1, r1, 0x70
 /* 800E2DB4 000DFD14  7C 08 03 A6 */	mtlr r0
 /* 800E2DB8 000DFD18  4E 80 00 20 */	blr 
+.endfn search__9ObjectMgrFP9ObjectMgr
 
-.global getCreature__15CreatureNodeMgrFi
-getCreature__15CreatureNodeMgrFi:
+.fn getCreature__15CreatureNodeMgrFi, global
 /* 800E2DBC 000DFD1C  2C 04 00 00 */	cmpwi r4, 0
 /* 800E2DC0 000DFD20  80 A3 00 38 */	lwz r5, 0x38(r3)
 /* 800E2DC4 000DFD24  38 C0 00 00 */	li r6, 0
@@ -3226,19 +3225,19 @@ getCreature__15CreatureNodeMgrFi:
 .L_800E2E3C:
 /* 800E2E3C 000DFD9C  80 65 00 14 */	lwz r3, 0x14(r5)
 /* 800E2E40 000DFDA0  4E 80 00 20 */	blr 
+.endfn getCreature__15CreatureNodeMgrFi
 
-.global getFirst__15CreatureNodeMgrFv
-getFirst__15CreatureNodeMgrFv:
+.fn getFirst__15CreatureNodeMgrFv, global
 /* 800E2E44 000DFDA4  38 60 00 00 */	li r3, 0
 /* 800E2E48 000DFDA8  4E 80 00 20 */	blr 
+.endfn getFirst__15CreatureNodeMgrFv
 
-.global getNext__15CreatureNodeMgrFi
-getNext__15CreatureNodeMgrFi:
+.fn getNext__15CreatureNodeMgrFi, global
 /* 800E2E4C 000DFDAC  38 64 00 01 */	addi r3, r4, 1
 /* 800E2E50 000DFDB0  4E 80 00 20 */	blr 
+.endfn getNext__15CreatureNodeMgrFi
 
-.global isDone__15CreatureNodeMgrFi
-isDone__15CreatureNodeMgrFi:
+.fn isDone__15CreatureNodeMgrFi, global
 /* 800E2E54 000DFDB4  7C 08 02 A6 */	mflr r0
 /* 800E2E58 000DFDB8  38 63 00 28 */	addi r3, r3, 0x28
 /* 800E2E5C 000DFDBC  90 01 00 04 */	stw r0, 4(r1)
@@ -3258,9 +3257,9 @@ isDone__15CreatureNodeMgrFi:
 /* 800E2E8C 000DFDEC  38 21 00 18 */	addi r1, r1, 0x18
 /* 800E2E90 000DFDF0  7C 08 03 A6 */	mtlr r0
 /* 800E2E94 000DFDF4  4E 80 00 20 */	blr 
+.endfn isDone__15CreatureNodeMgrFi
 
-.global getSize__15CreatureNodeMgrFv
-getSize__15CreatureNodeMgrFv:
+.fn getSize__15CreatureNodeMgrFv, global
 /* 800E2E98 000DFDF8  7C 08 02 A6 */	mflr r0
 /* 800E2E9C 000DFDFC  38 63 00 28 */	addi r3, r3, 0x28
 /* 800E2EA0 000DFE00  90 01 00 04 */	stw r0, 4(r1)
@@ -3270,9 +3269,9 @@ getSize__15CreatureNodeMgrFv:
 /* 800E2EB0 000DFE10  38 21 00 08 */	addi r1, r1, 8
 /* 800E2EB4 000DFE14  7C 08 03 A6 */	mtlr r0
 /* 800E2EB8 000DFE18  4E 80 00 20 */	blr 
+.endfn getSize__15CreatureNodeMgrFv
 
-.global __dt__15CreatureNodeMgrFv
-__dt__15CreatureNodeMgrFv:
+.fn __dt__15CreatureNodeMgrFv, weak
 /* 800E2EBC 000DFE1C  7C 08 02 A6 */	mflr r0
 /* 800E2EC0 000DFE20  90 01 00 04 */	stw r0, 4(r1)
 /* 800E2EC4 000DFE24  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -3302,14 +3301,14 @@ __dt__15CreatureNodeMgrFv:
 /* 800E2F1C 000DFE7C  38 21 00 18 */	addi r1, r1, 0x18
 /* 800E2F20 000DFE80  7C 08 03 A6 */	mtlr r0
 /* 800E2F24 000DFE84  4E 80 00 20 */	blr 
+.endfn __dt__15CreatureNodeMgrFv
 
-.global getMax__15CreatureNodeMgrFv
-getMax__15CreatureNodeMgrFv:
+.fn getMax__15CreatureNodeMgrFv, weak
 /* 800E2F28 000DFE88  3C 60 00 01 */	lis r3, 1
 /* 800E2F2C 000DFE8C  4E 80 00 20 */	blr 
+.endfn getMax__15CreatureNodeMgrFv
 
-.global __dt__13PolyObjectMgrFv
-__dt__13PolyObjectMgrFv:
+.fn __dt__13PolyObjectMgrFv, weak
 /* 800E2F30 000DFE90  7C 08 02 A6 */	mflr r0
 /* 800E2F34 000DFE94  90 01 00 04 */	stw r0, 4(r1)
 /* 800E2F38 000DFE98  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -3339,53 +3338,64 @@ __dt__13PolyObjectMgrFv:
 /* 800E2F90 000DFEF0  38 21 00 18 */	addi r1, r1, 0x18
 /* 800E2F94 000DFEF4  7C 08 03 A6 */	mtlr r0
 /* 800E2F98 000DFEF8  4E 80 00 20 */	blr 
+.endfn __dt__13PolyObjectMgrFv
 
-.global getSize__13PolyObjectMgrFv
-getSize__13PolyObjectMgrFv:
+.fn getSize__13PolyObjectMgrFv, weak
 /* 800E2F9C 000DFEFC  80 63 00 30 */	lwz r3, 0x30(r3)
 /* 800E2FA0 000DFF00  4E 80 00 20 */	blr 
+.endfn getSize__13PolyObjectMgrFv
 
-.global getMax__13PolyObjectMgrFv
-getMax__13PolyObjectMgrFv:
+.fn getMax__13PolyObjectMgrFv, weak
 /* 800E2FA4 000DFF04  80 63 00 2C */	lwz r3, 0x2c(r3)
 /* 800E2FA8 000DFF08  4E 80 00 20 */	blr 
+.endfn getMax__13PolyObjectMgrFv
 
-"@8@update__13PolyObjectMgrFv":
+.fn "@8@update__13PolyObjectMgrFv", weak
 /* 800E2FAC 000DFF0C  38 63 FF F8 */	addi r3, r3, -8
 /* 800E2FB0 000DFF10  4B FF F0 70 */	b update__13PolyObjectMgrFv
+.endfn "@8@update__13PolyObjectMgrFv"
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802BAD98:
+.obj lbl_802BAD98, local
 	.asciz "objectMgr.cpp"
+.endobj lbl_802BAD98
 .balign 4
-lbl_802BADA8:
+.obj lbl_802BADA8, local
 	.asciz "objectMgr"
+.endobj lbl_802BADA8
 .balign 4
-lbl_802BADB4:
+.obj lbl_802BADB4, local
 	.asciz "CreatureNodeMgr"
+.endobj lbl_802BADB4
 .balign 4
-lbl_802BADC4:
+.obj lbl_802BADC4, local
 	.asciz "CoreNode"
+.endobj lbl_802BADC4
 .balign 4
-lbl_802BADD0:
+.obj lbl_802BADD0, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte 0
-lbl_802BADDC:
+.endobj lbl_802BADD0
+.balign 4
+.obj lbl_802BADDC, local
 	.4byte __RTTI__5ANode
 	.4byte 0
 	.4byte __RTTI__8CoreNode
 	.4byte 0
 	.4byte 0
+.endobj lbl_802BADDC
 .balign 4
-lbl_802BADF0:
+.obj lbl_802BADF0, local
 	.asciz "Traversable"
+.endobj lbl_802BADF0
 .balign 4
-lbl_802BADFC:
+.obj lbl_802BADFC, local
 	.asciz "ObjectMgr"
+.endobj lbl_802BADFC
 .balign 4
-lbl_802BAE08:
+.obj lbl_802BAE08, local
 	.4byte __RTTI__5ANode
 	.4byte 0x8
 	.4byte __RTTI__8CoreNode
@@ -3395,7 +3405,9 @@ lbl_802BAE08:
 	.4byte __RTTI__11Traversable
 	.4byte 0
 	.4byte 0
-lbl_802BAE2C:
+.endobj lbl_802BAE08
+.balign 4
+.obj lbl_802BAE2C, local
 	.4byte __RTTI__5ANode
 	.4byte 0x8
 	.4byte __RTTI__8CoreNode
@@ -3407,8 +3419,9 @@ lbl_802BAE2C:
 	.4byte __RTTI__9ObjectMgr
 	.4byte 0
 	.4byte 0
-.global __vt__15CreatureNodeMgr
-__vt__15CreatureNodeMgr:
+.endobj lbl_802BAE2C
+.balign 4
+.obj __vt__15CreatureNodeMgr, global
 	.4byte __RTTI__15CreatureNodeMgr
 	.4byte 0
 	.4byte getCreature__15CreatureNodeMgrFi
@@ -3439,11 +3452,13 @@ __vt__15CreatureNodeMgr:
 	.4byte findClosest__9ObjectMgrFR8Vector3fP9Condition
 	.4byte search__9ObjectMgrFP9ObjectMgr
 	.4byte killAll__9ObjectMgrFv
+.endobj __vt__15CreatureNodeMgr
 .balign 4
-lbl_802BAED0:
+.obj lbl_802BAED0, local
 	.asciz "PolyObjectMgr"
+.endobj lbl_802BAED0
 .balign 4
-lbl_802BAEE0:
+.obj lbl_802BAEE0, local
 	.4byte __RTTI__5ANode
 	.4byte 0x8
 	.4byte __RTTI__8CoreNode
@@ -3455,8 +3470,9 @@ lbl_802BAEE0:
 	.4byte __RTTI__9ObjectMgr
 	.4byte 0
 	.4byte 0
-.global __vt__13PolyObjectMgr
-__vt__13PolyObjectMgr:
+.endobj lbl_802BAEE0
+.balign 4
+.obj __vt__13PolyObjectMgr, global
 	.4byte __RTTI__13PolyObjectMgr
 	.4byte 0
 	.4byte getCreature__13PolyObjectMgrFi
@@ -3489,11 +3505,13 @@ __vt__13PolyObjectMgr:
 	.4byte killAll__9ObjectMgrFv
 	.4byte birth__13PolyObjectMgrFi
 	.4byte kill__13PolyObjectMgrFP8Creature
+.endobj __vt__13PolyObjectMgr
 .balign 4
-lbl_802BAF8C:
+.obj lbl_802BAF8C, local
 	.asciz "MonoObjectMgr"
+.endobj lbl_802BAF8C
 .balign 4
-lbl_802BAF9C:
+.obj lbl_802BAF9C, local
 	.4byte __RTTI__5ANode
 	.4byte 0x8
 	.4byte __RTTI__8CoreNode
@@ -3505,8 +3523,9 @@ lbl_802BAF9C:
 	.4byte __RTTI__9ObjectMgr
 	.4byte 0
 	.4byte 0
-.global __vt__13MonoObjectMgr
-__vt__13MonoObjectMgr:
+.endobj lbl_802BAF9C
+.balign 4
+.obj __vt__13MonoObjectMgr, global
 	.4byte __RTTI__13MonoObjectMgr
 	.4byte 0
 	.4byte getCreature__13MonoObjectMgrFi
@@ -3540,21 +3559,11 @@ __vt__13MonoObjectMgr:
 	.4byte birth__13MonoObjectMgrFv
 	.4byte kill__13MonoObjectMgrFP8Creature
 	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-.global __vt__9ObjectMgr
-__vt__9ObjectMgr:
+.endobj __vt__13MonoObjectMgr
+.balign 4
+.skip 0x34 # compiler padding
+.balign 4
+.obj __vt__9ObjectMgr, global
 	.4byte __RTTI__9ObjectMgr
 	.4byte 0
 	.4byte 0
@@ -3585,53 +3594,80 @@ __vt__9ObjectMgr:
 	.4byte findClosest__9ObjectMgrFR8Vector3fP9Condition
 	.4byte search__9ObjectMgrFP9ObjectMgr
 	.4byte killAll__9ObjectMgrFv
+.endobj __vt__9ObjectMgr
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-lbl_803E1448:
+.obj lbl_803E1448, local
 	.asciz "<Node>"
+.endobj lbl_803E1448
 .balign 4
-lbl_803E1450:
+.obj lbl_803E1450, local
 	.asciz "ANode"
+.endobj lbl_803E1450
 .balign 4
-__RTTI__5ANode:
+.obj __RTTI__5ANode, local
 	.4byte lbl_803E1450
 	.4byte 0
-__RTTI__8CoreNode:
+.endobj __RTTI__5ANode
+.balign 4
+.obj __RTTI__8CoreNode, local
 	.4byte lbl_802BADC4
 	.4byte lbl_802BADD0
+.endobj __RTTI__8CoreNode
 .balign 4
-lbl_803E1468:
+.obj lbl_803E1468, local
 	.asciz "Node"
+.endobj lbl_803E1468
 .balign 4
-__RTTI__4Node:
+.obj __RTTI__4Node, local
 	.4byte lbl_803E1468
 	.4byte lbl_802BADDC
-__RTTI__11Traversable:
+.endobj __RTTI__4Node
+.balign 4
+.obj __RTTI__11Traversable, local
 	.4byte lbl_802BADF0
 	.4byte 0
-__RTTI__9ObjectMgr:
+.endobj __RTTI__11Traversable
+.balign 4
+.obj __RTTI__9ObjectMgr, local
 	.4byte lbl_802BADFC
 	.4byte lbl_802BAE08
-__RTTI__15CreatureNodeMgr:
+.endobj __RTTI__9ObjectMgr
+.balign 4
+.obj __RTTI__15CreatureNodeMgr, local
 	.4byte lbl_802BADB4
 	.4byte lbl_802BAE2C
-__RTTI__13PolyObjectMgr:
+.endobj __RTTI__15CreatureNodeMgr
+.balign 4
+.obj __RTTI__13PolyObjectMgr, local
 	.4byte lbl_802BAED0
 	.4byte lbl_802BAEE0
-__RTTI__13MonoObjectMgr:
+.endobj __RTTI__13PolyObjectMgr
+.balign 4
+.obj __RTTI__13MonoObjectMgr, local
 	.4byte lbl_802BAF8C
 	.4byte lbl_802BAF9C
+.endobj __RTTI__13MonoObjectMgr
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803E9AB0:
+.obj lbl_803E9AB0, local
 	.float 0.0
-lbl_803E9AB4:
+.endobj lbl_803E9AB0
+.balign 4
+.obj lbl_803E9AB4, local
 	.float 12800.0
-lbl_803E9AB8:
+.endobj lbl_803E9AB4
+.balign 8
+.obj lbl_803E9AB8, local
 	.double 0.5
-lbl_803E9AC0:
+.endobj lbl_803E9AB8
+.balign 8
+.obj lbl_803E9AC0, local
 	.double 3.0
-lbl_803E9AC8:
+.endobj lbl_803E9AC0
+.balign 4
+.obj lbl_803E9AC8, local
 	.float 300.0
+.endobj lbl_803E9AC8

@@ -14381,7 +14381,7 @@
 .endobj lbl_803EC0E0
 .balign 4
 .obj lbl_803EC0E8, local
-	.float 1.0E-6
+	.float 0.000001
 .endobj lbl_803EC0E8
 .obj lbl_803EC0EC, local
 	.float 300.0

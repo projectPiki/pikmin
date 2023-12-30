@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global __ct__21PeveAccelerationEventFv
-__ct__21PeveAccelerationEventFv:
+.fn __ct__21PeveAccelerationEventFv, global
 /* 80125F04 00122E64  7C 08 02 A6 */	mflr r0
 /* 80125F08 00122E68  38 80 00 00 */	li r4, 0
 /* 80125F0C 00122E6C  90 01 00 04 */	stw r0, 4(r1)
@@ -18,17 +17,17 @@ __ct__21PeveAccelerationEventFv:
 /* 80125F38 00122E98  38 21 00 18 */	addi r1, r1, 0x18
 /* 80125F3C 00122E9C  7C 08 03 A6 */	mtlr r0
 /* 80125F40 00122EA0  4E 80 00 20 */	blr 
+.endfn __ct__21PeveAccelerationEventFv
 
-.global makeAccelerationEvent__21PeveAccelerationEventFP13PeveConditionP11NVector3fIOP11NVector3fIOP11NVector3fIO
-makeAccelerationEvent__21PeveAccelerationEventFP13PeveConditionP11NVector3fIOP11NVector3fIOP11NVector3fIO:
+.fn makeAccelerationEvent__21PeveAccelerationEventFP13PeveConditionP11NVector3fIOP11NVector3fIOP11NVector3fIO, global
 /* 80125F44 00122EA4  90 83 00 08 */	stw r4, 8(r3)
 /* 80125F48 00122EA8  90 A3 00 10 */	stw r5, 0x10(r3)
 /* 80125F4C 00122EAC  90 C3 00 14 */	stw r6, 0x14(r3)
 /* 80125F50 00122EB0  90 E3 00 18 */	stw r7, 0x18(r3)
 /* 80125F54 00122EB4  4E 80 00 20 */	blr 
+.endfn makeAccelerationEvent__21PeveAccelerationEventFP13PeveConditionP11NVector3fIOP11NVector3fIOP11NVector3fIO
 
-.global update__21PeveAccelerationEventFv
-update__21PeveAccelerationEventFv:
+.fn update__21PeveAccelerationEventFv, global
 /* 80125F58 00122EB8  7C 08 02 A6 */	mflr r0
 /* 80125F5C 00122EBC  90 01 00 04 */	stw r0, 4(r1)
 /* 80125F60 00122EC0  94 21 FF 98 */	stwu r1, -0x68(r1)
@@ -125,9 +124,9 @@ update__21PeveAccelerationEventFv:
 /* 801260C8 00123028  38 21 00 68 */	addi r1, r1, 0x68
 /* 801260CC 0012302C  7C 08 03 A6 */	mtlr r0
 /* 801260D0 00123030  4E 80 00 20 */	blr 
+.endfn update__21PeveAccelerationEventFv
 
-.global __ct__17PeveParabolaEventFv
-__ct__17PeveParabolaEventFv:
+.fn __ct__17PeveParabolaEventFv, global
 /* 801260D4 00123034  7C 08 02 A6 */	mflr r0
 /* 801260D8 00123038  38 80 00 00 */	li r4, 0
 /* 801260DC 0012303C  90 01 00 04 */	stw r0, 4(r1)
@@ -157,9 +156,9 @@ __ct__17PeveParabolaEventFv:
 /* 8012613C 0012309C  38 21 00 18 */	addi r1, r1, 0x18
 /* 80126140 001230A0  7C 08 03 A6 */	mtlr r0
 /* 80126144 001230A4  4E 80 00 20 */	blr 
+.endfn __ct__17PeveParabolaEventFv
 
-.global makeParabolaEvent__17PeveParabolaEventFP13PeveConditionP11NVector3fIOR9NVector3fff
-makeParabolaEvent__17PeveParabolaEventFP13PeveConditionP11NVector3fIOR9NVector3fff:
+.fn makeParabolaEvent__17PeveParabolaEventFP13PeveConditionP11NVector3fIOR9NVector3fff, global
 /* 80126148 001230A8  7C 08 02 A6 */	mflr r0
 /* 8012614C 001230AC  90 01 00 04 */	stw r0, 4(r1)
 /* 80126150 001230B0  94 21 FF B8 */	stwu r1, -0x48(r1)
@@ -204,9 +203,9 @@ makeParabolaEvent__17PeveParabolaEventFP13PeveConditionP11NVector3fIOR9NVector3f
 /* 801261EC 0012314C  38 21 00 48 */	addi r1, r1, 0x48
 /* 801261F0 00123150  7C 08 03 A6 */	mtlr r0
 /* 801261F4 00123154  4E 80 00 20 */	blr 
+.endfn makeParabolaEvent__17PeveParabolaEventFP13PeveConditionP11NVector3fIOR9NVector3fff
 
-.global makeHorizontalSinWaveEvent__26PeveHorizontalSinWaveEventFP13PeveConditionP11NVector3fIO9NVector3fffff
-makeHorizontalSinWaveEvent__26PeveHorizontalSinWaveEventFP13PeveConditionP11NVector3fIO9NVector3fffff:
+.fn makeHorizontalSinWaveEvent__26PeveHorizontalSinWaveEventFP13PeveConditionP11NVector3fIO9NVector3fffff, global
 /* 801261F8 00123158  90 83 00 08 */	stw r4, 8(r3)
 /* 801261FC 0012315C  90 A3 00 10 */	stw r5, 0x10(r3)
 /* 80126200 00123160  C0 06 00 00 */	lfs f0, 0(r6)
@@ -220,9 +219,9 @@ makeHorizontalSinWaveEvent__26PeveHorizontalSinWaveEventFP13PeveConditionP11NVec
 /* 80126220 00123180  D0 63 00 28 */	stfs f3, 0x28(r3)
 /* 80126224 00123184  D0 83 00 2C */	stfs f4, 0x2c(r3)
 /* 80126228 00123188  4E 80 00 20 */	blr 
+.endfn makeHorizontalSinWaveEvent__26PeveHorizontalSinWaveEventFP13PeveConditionP11NVector3fIO9NVector3fffff
 
-.global reset__26PeveHorizontalSinWaveEventFv
-reset__26PeveHorizontalSinWaveEventFv:
+.fn reset__26PeveHorizontalSinWaveEventFv, global
 /* 8012622C 0012318C  7C 08 02 A6 */	mflr r0
 /* 80126230 00123190  90 01 00 04 */	stw r0, 4(r1)
 /* 80126234 00123194  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -243,9 +242,9 @@ reset__26PeveHorizontalSinWaveEventFv:
 /* 8012626C 001231CC  38 21 00 18 */	addi r1, r1, 0x18
 /* 80126270 001231D0  7C 08 03 A6 */	mtlr r0
 /* 80126274 001231D4  4E 80 00 20 */	blr 
+.endfn reset__26PeveHorizontalSinWaveEventFv
 
-.global update__26PeveHorizontalSinWaveEventFv
-update__26PeveHorizontalSinWaveEventFv:
+.fn update__26PeveHorizontalSinWaveEventFv, global
 /* 80126278 001231D8  7C 08 02 A6 */	mflr r0
 /* 8012627C 001231DC  90 01 00 04 */	stw r0, 4(r1)
 /* 80126280 001231E0  94 21 FF 98 */	stwu r1, -0x68(r1)
@@ -317,9 +316,9 @@ update__26PeveHorizontalSinWaveEventFv:
 /* 80126384 001232E4  38 21 00 68 */	addi r1, r1, 0x68
 /* 80126388 001232E8  7C 08 03 A6 */	mtlr r0
 /* 8012638C 001232EC  4E 80 00 20 */	blr 
+.endfn update__26PeveHorizontalSinWaveEventFv
 
-.global __ct__19PeveCircleMoveEventFv
-__ct__19PeveCircleMoveEventFv:
+.fn __ct__19PeveCircleMoveEventFv, global
 /* 80126390 001232F0  7C 08 02 A6 */	mflr r0
 /* 80126394 001232F4  38 80 00 00 */	li r4, 0
 /* 80126398 001232F8  90 01 00 04 */	stw r0, 4(r1)
@@ -343,9 +342,9 @@ __ct__19PeveCircleMoveEventFv:
 /* 801263E0 00123340  38 21 00 18 */	addi r1, r1, 0x18
 /* 801263E4 00123344  7C 08 03 A6 */	mtlr r0
 /* 801263E8 00123348  4E 80 00 20 */	blr 
+.endfn __ct__19PeveCircleMoveEventFv
 
-.global makeCircleMoveEvent__19PeveCircleMoveEventFfP11NVector3fIOP11NVector3fIOffff
-makeCircleMoveEvent__19PeveCircleMoveEventFfP11NVector3fIOP11NVector3fIOffff:
+.fn makeCircleMoveEvent__19PeveCircleMoveEventFfP11NVector3fIOP11NVector3fIOffff, global
 /* 801263EC 0012334C  D0 23 00 1C */	stfs f1, 0x1c(r3)
 /* 801263F0 00123350  38 03 00 14 */	addi r0, r3, 0x14
 /* 801263F4 00123354  90 03 00 08 */	stw r0, 8(r3)
@@ -356,9 +355,9 @@ makeCircleMoveEvent__19PeveCircleMoveEventFfP11NVector3fIOP11NVector3fIOffff:
 /* 80126408 00123368  D0 83 00 30 */	stfs f4, 0x30(r3)
 /* 8012640C 0012336C  D0 A3 00 34 */	stfs f5, 0x34(r3)
 /* 80126410 00123370  4E 80 00 20 */	blr 
+.endfn makeCircleMoveEvent__19PeveCircleMoveEventFfP11NVector3fIOP11NVector3fIOffff
 
-.global reset__19PeveCircleMoveEventFv
-reset__19PeveCircleMoveEventFv:
+.fn reset__19PeveCircleMoveEventFv, global
 /* 80126414 00123374  7C 08 02 A6 */	mflr r0
 /* 80126418 00123378  90 01 00 04 */	stw r0, 4(r1)
 /* 8012641C 0012337C  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -380,9 +379,9 @@ reset__19PeveCircleMoveEventFv:
 /* 80126458 001233B8  38 21 00 18 */	addi r1, r1, 0x18
 /* 8012645C 001233BC  7C 08 03 A6 */	mtlr r0
 /* 80126460 001233C0  4E 80 00 20 */	blr 
+.endfn reset__19PeveCircleMoveEventFv
 
-.global update__19PeveCircleMoveEventFv
-update__19PeveCircleMoveEventFv:
+.fn update__19PeveCircleMoveEventFv, global
 /* 80126464 001233C4  7C 08 02 A6 */	mflr r0
 /* 80126468 001233C8  90 01 00 04 */	stw r0, 4(r1)
 /* 8012646C 001233CC  94 21 FF C0 */	stwu r1, -0x40(r1)
@@ -461,9 +460,9 @@ update__19PeveCircleMoveEventFv:
 /* 8012658C 001234EC  38 21 00 40 */	addi r1, r1, 0x40
 /* 80126590 001234F0  7C 08 03 A6 */	mtlr r0
 /* 80126594 001234F4  4E 80 00 20 */	blr 
+.endfn update__19PeveCircleMoveEventFv
 
-.global outputPosition__19PeveCircleMoveEventFR8Vector3f
-outputPosition__19PeveCircleMoveEventFR8Vector3f:
+.fn outputPosition__19PeveCircleMoveEventFR8Vector3f, global
 /* 80126598 001234F8  7C 08 02 A6 */	mflr r0
 /* 8012659C 001234FC  90 01 00 04 */	stw r0, 4(r1)
 /* 801265A0 00123500  94 21 FF C0 */	stwu r1, -0x40(r1)
@@ -507,9 +506,9 @@ outputPosition__19PeveCircleMoveEventFR8Vector3f:
 /* 80126638 00123598  38 21 00 40 */	addi r1, r1, 0x40
 /* 8012663C 0012359C  7C 08 03 A6 */	mtlr r0
 /* 80126640 001235A0  4E 80 00 20 */	blr 
+.endfn outputPosition__19PeveCircleMoveEventFR8Vector3f
 
-.global calcAngle__19PeveCircleMoveEventFv
-calcAngle__19PeveCircleMoveEventFv:
+.fn calcAngle__19PeveCircleMoveEventFv, global
 /* 80126644 001235A4  7C 08 02 A6 */	mflr r0
 /* 80126648 001235A8  90 01 00 04 */	stw r0, 4(r1)
 /* 8012664C 001235AC  94 21 FF C8 */	stwu r1, -0x38(r1)
@@ -543,15 +542,15 @@ calcAngle__19PeveCircleMoveEventFv:
 /* 801266BC 0012361C  38 21 00 38 */	addi r1, r1, 0x38
 /* 801266C0 00123620  7C 08 03 A6 */	mtlr r0
 /* 801266C4 00123624  4E 80 00 20 */	blr 
+.endfn calcAngle__19PeveCircleMoveEventFv
 
-.global reset__22PeveFunctionCurveEventFv
-reset__22PeveFunctionCurveEventFv:
+.fn reset__22PeveFunctionCurveEventFv, global
 /* 801266C8 00123628  C0 03 00 1C */	lfs f0, 0x1c(r3)
 /* 801266CC 0012362C  D0 03 00 10 */	stfs f0, 0x10(r3)
 /* 801266D0 00123630  4E 80 00 20 */	blr 
+.endfn reset__22PeveFunctionCurveEventFv
 
-.global update__22PeveFunctionCurveEventFv
-update__22PeveFunctionCurveEventFv:
+.fn update__22PeveFunctionCurveEventFv, global
 /* 801266D4 00123634  7C 08 02 A6 */	mflr r0
 /* 801266D8 00123638  90 01 00 04 */	stw r0, 4(r1)
 /* 801266DC 0012363C  94 21 FF D0 */	stwu r1, -0x30(r1)
@@ -603,9 +602,9 @@ update__22PeveFunctionCurveEventFv:
 /* 80126788 001236E8  38 21 00 30 */	addi r1, r1, 0x30
 /* 8012678C 001236EC  7C 08 03 A6 */	mtlr r0
 /* 80126790 001236F0  4E 80 00 20 */	blr 
+.endfn update__22PeveFunctionCurveEventFv
 
-.global update__23PeveHomingPositionEventFv
-update__23PeveHomingPositionEventFv:
+.fn update__23PeveHomingPositionEventFv, global
 /* 80126794 001236F4  7C 08 02 A6 */	mflr r0
 /* 80126798 001236F8  90 01 00 04 */	stw r0, 4(r1)
 /* 8012679C 001236FC  94 21 FF C0 */	stwu r1, -0x40(r1)
@@ -680,9 +679,9 @@ update__23PeveHomingPositionEventFv:
 /* 801268AC 0012380C  38 21 00 40 */	addi r1, r1, 0x40
 /* 801268B0 00123810  7C 08 03 A6 */	mtlr r0
 /* 801268B4 00123814  4E 80 00 20 */	blr 
+.endfn update__23PeveHomingPositionEventFv
 
-.global reset__22PeveInterpolationEventFv
-reset__22PeveInterpolationEventFv:
+.fn reset__22PeveInterpolationEventFv, global
 /* 801268B8 00123818  7C 08 02 A6 */	mflr r0
 /* 801268BC 0012381C  90 01 00 04 */	stw r0, 4(r1)
 /* 801268C0 00123820  94 21 FF B8 */	stwu r1, -0x48(r1)
@@ -747,9 +746,9 @@ reset__22PeveInterpolationEventFv:
 /* 80126998 001238F8  38 21 00 48 */	addi r1, r1, 0x48
 /* 8012699C 001238FC  7C 08 03 A6 */	mtlr r0
 /* 801269A0 00123900  4E 80 00 20 */	blr 
+.endfn reset__22PeveInterpolationEventFv
 
-.global update__22PeveInterpolationEventFv
-update__22PeveInterpolationEventFv:
+.fn update__22PeveInterpolationEventFv, global
 /* 801269A4 00123904  7C 08 02 A6 */	mflr r0
 /* 801269A8 00123908  90 01 00 04 */	stw r0, 4(r1)
 /* 801269AC 0012390C  94 21 FF 70 */	stwu r1, -0x90(r1)
@@ -852,9 +851,9 @@ update__22PeveInterpolationEventFv:
 /* 80126B14 00123A74  38 21 00 90 */	addi r1, r1, 0x90
 /* 80126B18 00123A78  7C 08 03 A6 */	mtlr r0
 /* 80126B1C 00123A7C  4E 80 00 20 */	blr 
+.endfn update__22PeveInterpolationEventFv
 
-.global reset__13PeveMoveEventFv
-reset__13PeveMoveEventFv:
+.fn reset__13PeveMoveEventFv, global
 /* 80126B20 00123A80  7C 08 02 A6 */	mflr r0
 /* 80126B24 00123A84  90 01 00 04 */	stw r0, 4(r1)
 /* 80126B28 00123A88  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -879,9 +878,9 @@ reset__13PeveMoveEventFv:
 /* 80126B70 00123AD0  38 21 00 18 */	addi r1, r1, 0x18
 /* 80126B74 00123AD4  7C 08 03 A6 */	mtlr r0
 /* 80126B78 00123AD8  4E 80 00 20 */	blr 
+.endfn reset__13PeveMoveEventFv
 
-.global __ct__18PeveVibrationEventFv
-__ct__18PeveVibrationEventFv:
+.fn __ct__18PeveVibrationEventFv, global
 /* 80126B7C 00123ADC  7C 08 02 A6 */	mflr r0
 /* 80126B80 00123AE0  38 80 00 00 */	li r4, 0
 /* 80126B84 00123AE4  90 01 00 04 */	stw r0, 4(r1)
@@ -921,9 +920,9 @@ __ct__18PeveVibrationEventFv:
 /* 80126C0C 00123B6C  38 21 00 18 */	addi r1, r1, 0x18
 /* 80126C10 00123B70  7C 08 03 A6 */	mtlr r0
 /* 80126C14 00123B74  4E 80 00 20 */	blr 
+.endfn __ct__18PeveVibrationEventFv
 
-.global makeVibrationEvent__18PeveVibrationEventFfP12NPosture3DIOR9NVector3ffff
-makeVibrationEvent__18PeveVibrationEventFfP12NPosture3DIOR9NVector3ffff:
+.fn makeVibrationEvent__18PeveVibrationEventFfP12NPosture3DIOR9NVector3ffff, global
 /* 80126C18 00123B78  7C 08 02 A6 */	mflr r0
 /* 80126C1C 00123B7C  90 01 00 04 */	stw r0, 4(r1)
 /* 80126C20 00123B80  94 21 FF C0 */	stwu r1, -0x40(r1)
@@ -958,9 +957,9 @@ makeVibrationEvent__18PeveVibrationEventFfP12NPosture3DIOR9NVector3ffff:
 /* 80126C94 00123BF4  38 21 00 40 */	addi r1, r1, 0x40
 /* 80126C98 00123BF8  7C 08 03 A6 */	mtlr r0
 /* 80126C9C 00123BFC  4E 80 00 20 */	blr 
+.endfn makeVibrationEvent__18PeveVibrationEventFfP12NPosture3DIOR9NVector3ffff
 
-.global update__18PeveVibrationEventFv
-update__18PeveVibrationEventFv:
+.fn update__18PeveVibrationEventFv, global
 /* 80126CA0 00123C00  7C 08 02 A6 */	mflr r0
 /* 80126CA4 00123C04  90 01 00 04 */	stw r0, 4(r1)
 /* 80126CA8 00123C08  94 21 FF B0 */	stwu r1, -0x50(r1)
@@ -1026,9 +1025,9 @@ update__18PeveVibrationEventFv:
 /* 80126D94 00123CF4  38 21 00 50 */	addi r1, r1, 0x50
 /* 80126D98 00123CF8  7C 08 03 A6 */	mtlr r0
 /* 80126D9C 00123CFC  4E 80 00 20 */	blr 
+.endfn update__18PeveVibrationEventFv
 
-.global isFinished__22PeveInterpolationEventFv
-isFinished__22PeveInterpolationEventFv:
+.fn isFinished__22PeveInterpolationEventFv, weak
 /* 80126DA0 00123D00  C0 23 00 20 */	lfs f1, 0x20(r3)
 /* 80126DA4 00123D04  C0 03 00 24 */	lfs f0, 0x24(r3)
 /* 80126DA8 00123D08  C0 43 00 1C */	lfs f2, 0x1c(r3)
@@ -1038,70 +1037,78 @@ isFinished__22PeveInterpolationEventFv:
 /* 80126DB8 00123D18  7C 00 00 26 */	mfcr r0
 /* 80126DBC 00123D1C  54 03 1F FE */	rlwinm r3, r0, 3, 0x1f, 0x1f
 /* 80126DC0 00123D20  4E 80 00 20 */	blr 
+.endfn isFinished__22PeveInterpolationEventFv
 
-.global setStartTime__22PeveInterpolationEventFf
-setStartTime__22PeveInterpolationEventFf:
+.fn setStartTime__22PeveInterpolationEventFf, weak
 /* 80126DC4 00123D24  D0 23 00 20 */	stfs f1, 0x20(r3)
 /* 80126DC8 00123D28  4E 80 00 20 */	blr 
+.endfn setStartTime__22PeveInterpolationEventFf
 
-.global getStartTime__22PeveInterpolationEventFv
-getStartTime__22PeveInterpolationEventFv:
+.fn getStartTime__22PeveInterpolationEventFv, weak
 /* 80126DCC 00123D2C  C0 23 00 20 */	lfs f1, 0x20(r3)
 /* 80126DD0 00123D30  4E 80 00 20 */	blr 
+.endfn getStartTime__22PeveInterpolationEventFv
 
-.global setPeriod__22PeveInterpolationEventFf
-setPeriod__22PeveInterpolationEventFf:
+.fn setPeriod__22PeveInterpolationEventFf, weak
 /* 80126DD4 00123D34  D0 23 00 24 */	stfs f1, 0x24(r3)
 /* 80126DD8 00123D38  4E 80 00 20 */	blr 
+.endfn setPeriod__22PeveInterpolationEventFf
 
-.global getPeriod__22PeveInterpolationEventFv
-getPeriod__22PeveInterpolationEventFv:
+.fn getPeriod__22PeveInterpolationEventFv, weak
 /* 80126DDC 00123D3C  C0 23 00 24 */	lfs f1, 0x24(r3)
 /* 80126DE0 00123D40  4E 80 00 20 */	blr 
+.endfn getPeriod__22PeveInterpolationEventFv
 
-.global setTime__22PeveInterpolationEventFf
-setTime__22PeveInterpolationEventFf:
+.fn setTime__22PeveInterpolationEventFf, weak
 /* 80126DE4 00123D44  D0 23 00 1C */	stfs f1, 0x1c(r3)
 /* 80126DE8 00123D48  4E 80 00 20 */	blr 
+.endfn setTime__22PeveInterpolationEventFf
 
-.global getTime__22PeveInterpolationEventFv
-getTime__22PeveInterpolationEventFv:
+.fn getTime__22PeveInterpolationEventFv, weak
 /* 80126DEC 00123D4C  C0 23 00 1C */	lfs f1, 0x1c(r3)
 /* 80126DF0 00123D50  4E 80 00 20 */	blr 
+.endfn getTime__22PeveInterpolationEventFv
 
-.global getEndTime__22PeveInterpolationEventFv
-getEndTime__22PeveInterpolationEventFv:
+.fn getEndTime__22PeveInterpolationEventFv, weak
 /* 80126DF4 00123D54  C0 23 00 20 */	lfs f1, 0x20(r3)
 /* 80126DF8 00123D58  C0 03 00 24 */	lfs f0, 0x24(r3)
 /* 80126DFC 00123D5C  EC 21 00 2A */	fadds f1, f1, f0
 /* 80126E00 00123D60  4E 80 00 20 */	blr 
+.endfn getEndTime__22PeveInterpolationEventFv
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802C5F98:
+.obj lbl_802C5F98, local
 	.asciz "pevemotionevents.cpp"
+.endobj lbl_802C5F98
 .balign 4
-lbl_802C5FB0:
+.obj lbl_802C5FB0, local
 	.asciz "pevemotionevents"
+.endobj lbl_802C5FB0
 .balign 4
-lbl_802C5FC4:
+.obj lbl_802C5FC4, local
 	.asciz "PeveVibrationEvent"
+.endobj lbl_802C5FC4
 .balign 4
-lbl_802C5FD8:
+.obj lbl_802C5FD8, local
 	.asciz "PeveEvent"
+.endobj lbl_802C5FD8
 .balign 4
-lbl_802C5FE4:
+.obj lbl_802C5FE4, local
 	.4byte __RTTI__5NNode
 	.4byte 0
 	.4byte 0
-lbl_802C5FF0:
+.endobj lbl_802C5FE4
+.balign 4
+.obj lbl_802C5FF0, local
 	.4byte __RTTI__5NNode
 	.4byte 0
 	.4byte __RTTI__9PeveEvent
 	.4byte 0
 	.4byte 0
-.global __vt__18PeveVibrationEvent
-__vt__18PeveVibrationEvent:
+.endobj lbl_802C5FF0
+.balign 4
+.obj __vt__18PeveVibrationEvent, global
 	.4byte __RTTI__18PeveVibrationEvent
 	.4byte 0
 	.4byte setChild__5NNodeFiP5NNode
@@ -1117,25 +1124,27 @@ __vt__18PeveVibrationEvent:
 	.4byte setEventOption__9PeveEventFi
 	.4byte clearEventOption__9PeveEventFi
 	.4byte setEventOptions__9PeveEventFi
+.endobj __vt__18PeveVibrationEvent
 .balign 4
-lbl_802C6040:
+.obj lbl_802C6040, local
 	.asciz "NFunction"
+.endobj lbl_802C6040
 .balign 4
-	.4byte 0
-	.4byte 0
-	.4byte 0
+.skip 0xC # compiler padding
 .balign 4
-lbl_802C6058:
+.obj lbl_802C6058, local
 	.asciz "PeveMoveEvent"
+.endobj lbl_802C6058
 .balign 4
-lbl_802C6068:
+.obj lbl_802C6068, local
 	.4byte __RTTI__5NNode
 	.4byte 0
 	.4byte __RTTI__9PeveEvent
 	.4byte 0
 	.4byte 0
-.global __vt__13PeveMoveEvent
-__vt__13PeveMoveEvent:
+.endobj lbl_802C6068
+.balign 4
+.obj __vt__13PeveMoveEvent, global
 	.4byte __RTTI__13PeveMoveEvent
 	.4byte 0
 	.4byte setChild__5NNodeFiP5NNode
@@ -1151,18 +1160,21 @@ __vt__13PeveMoveEvent:
 	.4byte setEventOption__9PeveEventFi
 	.4byte clearEventOption__9PeveEventFi
 	.4byte setEventOptions__9PeveEventFi
+.endobj __vt__13PeveMoveEvent
 .balign 4
-lbl_802C60B8:
+.obj lbl_802C60B8, local
 	.asciz "PeveInterpolationEvent"
+.endobj lbl_802C60B8
 .balign 4
-lbl_802C60D0:
+.obj lbl_802C60D0, local
 	.4byte __RTTI__5NNode
 	.4byte 0
 	.4byte __RTTI__9PeveEvent
 	.4byte 0
 	.4byte 0
-.global __vt__22PeveInterpolationEvent
-__vt__22PeveInterpolationEvent:
+.endobj lbl_802C60D0
+.balign 4
+.obj __vt__22PeveInterpolationEvent, global
 	.4byte __RTTI__22PeveInterpolationEvent
 	.4byte 0
 	.4byte setChild__5NNodeFiP5NNode
@@ -1185,20 +1197,25 @@ __vt__22PeveInterpolationEvent:
 	.4byte setTime__22PeveInterpolationEventFf
 	.4byte getTime__22PeveInterpolationEventFv
 	.4byte getEndTime__22PeveInterpolationEventFv
+.endobj __vt__22PeveInterpolationEvent
 .balign 4
-lbl_802C613C:
+.obj lbl_802C613C, local
 	.asciz "PeveHomingPostureEvent"
+.endobj lbl_802C613C
 .balign 4
-lbl_802C6154:
+.obj lbl_802C6154, local
 	.asciz "PeveParallelEvent"
+.endobj lbl_802C6154
 .balign 4
-lbl_802C6168:
+.obj lbl_802C6168, local
 	.4byte __RTTI__5NNode
 	.4byte 0
 	.4byte __RTTI__9PeveEvent
 	.4byte 0
 	.4byte 0
-lbl_802C617C:
+.endobj lbl_802C6168
+.balign 4
+.obj lbl_802C617C, local
 	.4byte __RTTI__5NNode
 	.4byte 0
 	.4byte __RTTI__9PeveEvent
@@ -1206,8 +1223,9 @@ lbl_802C617C:
 	.4byte __RTTI__17PeveParallelEvent
 	.4byte 0
 	.4byte 0
-.global __vt__22PeveHomingPostureEvent
-__vt__22PeveHomingPostureEvent:
+.endobj lbl_802C617C
+.balign 4
+.obj __vt__22PeveHomingPostureEvent, weak
 	.4byte __RTTI__22PeveHomingPostureEvent
 	.4byte 0
 	.4byte setChild__5NNodeFiP5NNode
@@ -1223,18 +1241,21 @@ __vt__22PeveHomingPostureEvent:
 	.4byte setEventOption__9PeveEventFi
 	.4byte clearEventOption__9PeveEventFi
 	.4byte setEventOptions__9PeveEventFi
+.endobj __vt__22PeveHomingPostureEvent
 .balign 4
-lbl_802C61D4:
+.obj lbl_802C61D4, local
 	.asciz "PeveHomingPositionEvent"
+.endobj lbl_802C61D4
 .balign 4
-lbl_802C61EC:
+.obj lbl_802C61EC, local
 	.4byte __RTTI__5NNode
 	.4byte 0
 	.4byte __RTTI__9PeveEvent
 	.4byte 0
 	.4byte 0
-.global __vt__23PeveHomingPositionEvent
-__vt__23PeveHomingPositionEvent:
+.endobj lbl_802C61EC
+.balign 4
+.obj __vt__23PeveHomingPositionEvent, global
 	.4byte __RTTI__23PeveHomingPositionEvent
 	.4byte 0
 	.4byte setChild__5NNodeFiP5NNode
@@ -1250,18 +1271,21 @@ __vt__23PeveHomingPositionEvent:
 	.4byte setEventOption__9PeveEventFi
 	.4byte clearEventOption__9PeveEventFi
 	.4byte setEventOptions__9PeveEventFi
+.endobj __vt__23PeveHomingPositionEvent
 .balign 4
-lbl_802C623C:
+.obj lbl_802C623C, local
 	.asciz "PeveFunctionCurveEvent"
+.endobj lbl_802C623C
 .balign 4
-lbl_802C6254:
+.obj lbl_802C6254, local
 	.4byte __RTTI__5NNode
 	.4byte 0
 	.4byte __RTTI__9PeveEvent
 	.4byte 0
 	.4byte 0
-.global __vt__22PeveFunctionCurveEvent
-__vt__22PeveFunctionCurveEvent:
+.endobj lbl_802C6254
+.balign 4
+.obj __vt__22PeveFunctionCurveEvent, global
 	.4byte __RTTI__22PeveFunctionCurveEvent
 	.4byte 0
 	.4byte setChild__5NNodeFiP5NNode
@@ -1277,11 +1301,13 @@ __vt__22PeveFunctionCurveEvent:
 	.4byte setEventOption__9PeveEventFi
 	.4byte clearEventOption__9PeveEventFi
 	.4byte setEventOptions__9PeveEventFi
+.endobj __vt__22PeveFunctionCurveEvent
 .balign 4
-lbl_802C62A4:
+.obj lbl_802C62A4, local
 	.asciz "PeveCircleMoveWatchEvent"
+.endobj lbl_802C62A4
 .balign 4
-lbl_802C62C0:
+.obj lbl_802C62C0, local
 	.4byte __RTTI__5NNode
 	.4byte 0
 	.4byte __RTTI__9PeveEvent
@@ -1289,8 +1315,9 @@ lbl_802C62C0:
 	.4byte __RTTI__17PeveParallelEvent
 	.4byte 0
 	.4byte 0
-.global __vt__24PeveCircleMoveWatchEvent
-__vt__24PeveCircleMoveWatchEvent:
+.endobj lbl_802C62C0
+.balign 4
+.obj __vt__24PeveCircleMoveWatchEvent, weak
 	.4byte __RTTI__24PeveCircleMoveWatchEvent
 	.4byte 0
 	.4byte setChild__5NNodeFiP5NNode
@@ -1306,18 +1333,21 @@ __vt__24PeveCircleMoveWatchEvent:
 	.4byte setEventOption__9PeveEventFi
 	.4byte clearEventOption__9PeveEventFi
 	.4byte setEventOptions__9PeveEventFi
+.endobj __vt__24PeveCircleMoveWatchEvent
 .balign 4
-lbl_802C6318:
+.obj lbl_802C6318, local
 	.asciz "PeveCircleMoveEvent"
+.endobj lbl_802C6318
 .balign 4
-lbl_802C632C:
+.obj lbl_802C632C, local
 	.4byte __RTTI__5NNode
 	.4byte 0
 	.4byte __RTTI__9PeveEvent
 	.4byte 0
 	.4byte 0
-.global __vt__19PeveCircleMoveEvent
-__vt__19PeveCircleMoveEvent:
+.endobj lbl_802C632C
+.balign 4
+.obj __vt__19PeveCircleMoveEvent, global
 	.4byte __RTTI__19PeveCircleMoveEvent
 	.4byte 0
 	.4byte setChild__5NNodeFiP5NNode
@@ -1333,18 +1363,21 @@ __vt__19PeveCircleMoveEvent:
 	.4byte setEventOption__9PeveEventFi
 	.4byte clearEventOption__9PeveEventFi
 	.4byte setEventOptions__9PeveEventFi
+.endobj __vt__19PeveCircleMoveEvent
 .balign 4
-lbl_802C637C:
+.obj lbl_802C637C, local
 	.asciz "PeveHorizontalSinWaveEvent"
+.endobj lbl_802C637C
 .balign 4
-lbl_802C6398:
+.obj lbl_802C6398, local
 	.4byte __RTTI__5NNode
 	.4byte 0
 	.4byte __RTTI__9PeveEvent
 	.4byte 0
 	.4byte 0
-.global __vt__26PeveHorizontalSinWaveEvent
-__vt__26PeveHorizontalSinWaveEvent:
+.endobj lbl_802C6398
+.balign 4
+.obj __vt__26PeveHorizontalSinWaveEvent, global
 	.4byte __RTTI__26PeveHorizontalSinWaveEvent
 	.4byte 0
 	.4byte setChild__5NNodeFiP5NNode
@@ -1360,39 +1393,41 @@ __vt__26PeveHorizontalSinWaveEvent:
 	.4byte setEventOption__9PeveEventFi
 	.4byte clearEventOption__9PeveEventFi
 	.4byte setEventOptions__9PeveEventFi
+.endobj __vt__26PeveHorizontalSinWaveEvent
 .balign 4
-lbl_802C63E8:
+.obj lbl_802C63E8, local
 	.asciz "NVector3fIOClass"
+.endobj lbl_802C63E8
 .balign 4
-lbl_802C63FC:
+.obj lbl_802C63FC, local
 	.asciz "NVector3fIO"
+.endobj lbl_802C63FC
 .balign 4
-lbl_802C6408:
+.obj lbl_802C6408, local
 	.4byte __RTTI__11NVector3fIO
 	.4byte 0
 	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
+.endobj lbl_802C6408
 .balign 4
-lbl_802C6434:
+.skip 0x20 # compiler padding
+.balign 4
+.obj lbl_802C6434, local
 	.asciz "PeveParabolaEvent"
+.endobj lbl_802C6434
 .balign 4
-lbl_802C6448:
+.obj lbl_802C6448, local
 	.asciz "PeveAccelerationEvent"
+.endobj lbl_802C6448
 .balign 4
-lbl_802C6460:
+.obj lbl_802C6460, local
 	.4byte __RTTI__5NNode
 	.4byte 0
 	.4byte __RTTI__9PeveEvent
 	.4byte 0
 	.4byte 0
-lbl_802C6474:
+.endobj lbl_802C6460
+.balign 4
+.obj lbl_802C6474, local
 	.4byte __RTTI__5NNode
 	.4byte 0
 	.4byte __RTTI__9PeveEvent
@@ -1400,8 +1435,9 @@ lbl_802C6474:
 	.4byte __RTTI__21PeveAccelerationEvent
 	.4byte 0
 	.4byte 0
-.global __vt__17PeveParabolaEvent
-__vt__17PeveParabolaEvent:
+.endobj lbl_802C6474
+.balign 4
+.obj __vt__17PeveParabolaEvent, weak
 	.4byte __RTTI__17PeveParabolaEvent
 	.4byte 0
 	.4byte setChild__5NNodeFiP5NNode
@@ -1417,8 +1453,9 @@ __vt__17PeveParabolaEvent:
 	.4byte setEventOption__9PeveEventFi
 	.4byte clearEventOption__9PeveEventFi
 	.4byte setEventOptions__9PeveEventFi
-.global __vt__21PeveAccelerationEvent
-__vt__21PeveAccelerationEvent:
+.endobj __vt__17PeveParabolaEvent
+.balign 4
+.obj __vt__21PeveAccelerationEvent, global
 	.4byte __RTTI__21PeveAccelerationEvent
 	.4byte 0
 	.4byte setChild__5NNodeFiP5NNode
@@ -1434,18 +1471,21 @@ __vt__21PeveAccelerationEvent:
 	.4byte setEventOption__9PeveEventFi
 	.4byte clearEventOption__9PeveEventFi
 	.4byte setEventOptions__9PeveEventFi
+.endobj __vt__21PeveAccelerationEvent
 .balign 4
-lbl_802C6508:
+.obj lbl_802C6508, local
 	.asciz "PeveWaitEvent"
+.endobj lbl_802C6508
 .balign 4
-lbl_802C6518:
+.obj lbl_802C6518, local
 	.4byte __RTTI__5NNode
 	.4byte 0
 	.4byte __RTTI__9PeveEvent
 	.4byte 0
 	.4byte 0
-.global __vt__13PeveWaitEvent
-__vt__13PeveWaitEvent:
+.endobj lbl_802C6518
+.balign 4
+.obj __vt__13PeveWaitEvent, weak
 	.4byte __RTTI__13PeveWaitEvent
 	.4byte 0
 	.4byte setChild__5NNodeFiP5NNode
@@ -1461,64 +1501,100 @@ __vt__13PeveWaitEvent:
 	.4byte setEventOption__9PeveEventFi
 	.4byte clearEventOption__9PeveEventFi
 	.4byte setEventOptions__9PeveEventFi
+.endobj __vt__13PeveWaitEvent
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-lbl_803E33B0:
+.obj lbl_803E33B0, local
 	.asciz "NNode"
+.endobj lbl_803E33B0
 .balign 4
-__RTTI__5NNode:
+.obj __RTTI__5NNode, local
 	.4byte lbl_803E33B0
 	.4byte 0
-__RTTI__9PeveEvent:
+.endobj __RTTI__5NNode
+.balign 4
+.obj __RTTI__9PeveEvent, local
 	.4byte lbl_802C5FD8
 	.4byte lbl_802C5FE4
-__RTTI__18PeveVibrationEvent:
+.endobj __RTTI__9PeveEvent
+.balign 4
+.obj __RTTI__18PeveVibrationEvent, local
 	.4byte lbl_802C5FC4
 	.4byte lbl_802C5FF0
-__RTTI__13PeveMoveEvent:
+.endobj __RTTI__18PeveVibrationEvent
+.balign 4
+.obj __RTTI__13PeveMoveEvent, local
 	.4byte lbl_802C6058
 	.4byte lbl_802C6068
-__RTTI__22PeveInterpolationEvent:
+.endobj __RTTI__13PeveMoveEvent
+.balign 4
+.obj __RTTI__22PeveInterpolationEvent, local
 	.4byte lbl_802C60B8
 	.4byte lbl_802C60D0
-__RTTI__17PeveParallelEvent:
+.endobj __RTTI__22PeveInterpolationEvent
+.balign 4
+.obj __RTTI__17PeveParallelEvent, local
 	.4byte lbl_802C6154
 	.4byte lbl_802C6168
-__RTTI__22PeveHomingPostureEvent:
+.endobj __RTTI__17PeveParallelEvent
+.balign 4
+.obj __RTTI__22PeveHomingPostureEvent, local
 	.4byte lbl_802C613C
 	.4byte lbl_802C617C
-__RTTI__23PeveHomingPositionEvent:
+.endobj __RTTI__22PeveHomingPostureEvent
+.balign 4
+.obj __RTTI__23PeveHomingPositionEvent, local
 	.4byte lbl_802C61D4
 	.4byte lbl_802C61EC
-__RTTI__22PeveFunctionCurveEvent:
+.endobj __RTTI__23PeveHomingPositionEvent
+.balign 4
+.obj __RTTI__22PeveFunctionCurveEvent, local
 	.4byte lbl_802C623C
 	.4byte lbl_802C6254
-__RTTI__24PeveCircleMoveWatchEvent:
+.endobj __RTTI__22PeveFunctionCurveEvent
+.balign 4
+.obj __RTTI__24PeveCircleMoveWatchEvent, local
 	.4byte lbl_802C62A4
 	.4byte lbl_802C62C0
-__RTTI__19PeveCircleMoveEvent:
+.endobj __RTTI__24PeveCircleMoveWatchEvent
+.balign 4
+.obj __RTTI__19PeveCircleMoveEvent, local
 	.4byte lbl_802C6318
 	.4byte lbl_802C632C
-__RTTI__26PeveHorizontalSinWaveEvent:
+.endobj __RTTI__19PeveCircleMoveEvent
+.balign 4
+.obj __RTTI__26PeveHorizontalSinWaveEvent, local
 	.4byte lbl_802C637C
 	.4byte lbl_802C6398
-__RTTI__11NVector3fIO:
+.endobj __RTTI__26PeveHorizontalSinWaveEvent
+.balign 4
+.obj __RTTI__11NVector3fIO, local
 	.4byte lbl_802C63FC
 	.4byte 0
-__RTTI__21PeveAccelerationEvent:
+.endobj __RTTI__11NVector3fIO
+.balign 4
+.obj __RTTI__21PeveAccelerationEvent, local
 	.4byte lbl_802C6448
 	.4byte lbl_802C6460
-__RTTI__17PeveParabolaEvent:
+.endobj __RTTI__21PeveAccelerationEvent
+.balign 4
+.obj __RTTI__17PeveParabolaEvent, local
 	.4byte lbl_802C6434
 	.4byte lbl_802C6474
-__RTTI__13PeveWaitEvent:
+.endobj __RTTI__17PeveParabolaEvent
+.balign 4
+.obj __RTTI__13PeveWaitEvent, local
 	.4byte lbl_802C6508
 	.4byte lbl_802C6518
+.endobj __RTTI__13PeveWaitEvent
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803EA408:
+.obj lbl_803EA408, local
 	.float 1.0
-lbl_803EA40C:
+.endobj lbl_803EA408
+.balign 4
+.obj lbl_803EA40C, local
 	.float 0.0
+.endobj lbl_803EA40C

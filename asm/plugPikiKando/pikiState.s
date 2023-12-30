@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global init__16PikiStateMachineFP4Piki
-init__16PikiStateMachineFP4Piki:
+.fn init__16PikiStateMachineFP4Piki, global
 /* 800CF0E8 000CC048  7C 08 02 A6 */	mflr r0
 /* 800CF0EC 000CC04C  3C 80 80 2C */	lis r4, lbl_802B8CDC@ha
 /* 800CF0F0 000CC050  90 01 00 04 */	stw r0, 4(r1)
@@ -1457,9 +1456,9 @@ init__16PikiStateMachineFP4Piki:
 /* 800D0504 000CD464  38 21 01 B0 */	addi r1, r1, 0x1b0
 /* 800D0508 000CD468  7C 08 03 A6 */	mtlr r0
 /* 800D050C 000CD46C  4E 80 00 20 */	blr 
+.endfn init__16PikiStateMachineFP4Piki
 
-.global dump__9PikiStateFv
-dump__9PikiStateFv:
+.fn dump__9PikiStateFv, global
 /* 800D0510 000CD470  7C 08 02 A6 */	mflr r0
 /* 800D0514 000CD474  90 01 00 04 */	stw r0, 4(r1)
 /* 800D0518 000CD478  94 21 FF F8 */	stwu r1, -8(r1)
@@ -1471,13 +1470,13 @@ dump__9PikiStateFv:
 /* 800D0530 000CD490  38 21 00 08 */	addi r1, r1, 8
 /* 800D0534 000CD494  7C 08 03 A6 */	mtlr r0
 /* 800D0538 000CD498  4E 80 00 20 */	blr 
+.endfn dump__9PikiStateFv
 
-.global doDump__9PikiStateFv
-doDump__9PikiStateFv:
+.fn doDump__9PikiStateFv, weak
 /* 800D053C 000CD49C  4E 80 00 20 */	blr 
+.endfn doDump__9PikiStateFv
 
-.global transit__16PikiStateMachineFP4Pikii
-transit__16PikiStateMachineFP4Pikii:
+.fn transit__16PikiStateMachineFP4Pikii, global
 /* 800D0540 000CD4A0  7C 08 02 A6 */	mflr r0
 /* 800D0544 000CD4A4  90 01 00 04 */	stw r0, 4(r1)
 /* 800D0548 000CD4A8  94 21 FF A0 */	stwu r1, -0x60(r1)
@@ -1541,9 +1540,9 @@ transit__16PikiStateMachineFP4Pikii:
 /* 800D0614 000CD574  38 21 00 60 */	addi r1, r1, 0x60
 /* 800D0618 000CD578  7C 08 03 A6 */	mtlr r0
 /* 800D061C 000CD57C  4E 80 00 20 */	blr 
+.endfn transit__16PikiStateMachineFP4Pikii
 
-.global transit__9PikiStateFP4Pikii
-transit__9PikiStateFP4Pikii:
+.fn transit__9PikiStateFP4Pikii, global
 /* 800D0620 000CD580  7C 08 02 A6 */	mflr r0
 /* 800D0624 000CD584  90 01 00 04 */	stw r0, 4(r1)
 /* 800D0628 000CD588  94 21 FF F8 */	stwu r1, -8(r1)
@@ -1556,9 +1555,9 @@ transit__9PikiStateFP4Pikii:
 /* 800D0644 000CD5A4  38 21 00 08 */	addi r1, r1, 8
 /* 800D0648 000CD5A8  7C 08 03 A6 */	mtlr r0
 /* 800D064C 000CD5AC  4E 80 00 20 */	blr 
+.endfn transit__9PikiStateFP4Pikii
 
-.global __ct__15PikiLookAtStateFv
-__ct__15PikiLookAtStateFv:
+.fn __ct__15PikiLookAtStateFv, global
 /* 800D0650 000CD5B0  3C 80 80 2C */	lis r4, "__vt__15Receiver<4Piki>"@ha
 /* 800D0654 000CD5B4  38 04 81 F8 */	addi r0, r4, "__vt__15Receiver<4Piki>"@l
 /* 800D0658 000CD5B8  3C 80 80 2C */	lis r4, "__vt__13AState<4Piki>"@ha
@@ -1578,9 +1577,9 @@ __ct__15PikiLookAtStateFv:
 /* 800D0690 000CD5F0  90 A3 00 0C */	stw r5, 0xc(r3)
 /* 800D0694 000CD5F4  90 03 00 00 */	stw r0, 0(r3)
 /* 800D0698 000CD5F8  4E 80 00 20 */	blr 
+.endfn __ct__15PikiLookAtStateFv
 
-.global init__15PikiLookAtStateFP4Piki
-init__15PikiLookAtStateFP4Piki:
+.fn init__15PikiLookAtStateFP4Piki, global
 /* 800D069C 000CD5FC  7C 08 02 A6 */	mflr r0
 /* 800D06A0 000CD600  90 01 00 04 */	stw r0, 4(r1)
 /* 800D06A4 000CD604  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -1621,9 +1620,9 @@ init__15PikiLookAtStateFP4Piki:
 /* 800D0730 000CD690  38 21 00 28 */	addi r1, r1, 0x28
 /* 800D0734 000CD694  7C 08 03 A6 */	mtlr r0
 /* 800D0738 000CD698  4E 80 00 20 */	blr 
+.endfn init__15PikiLookAtStateFP4Piki
 
-.global exec__15PikiLookAtStateFP4Piki
-exec__15PikiLookAtStateFP4Piki:
+.fn exec__15PikiLookAtStateFP4Piki, global
 /* 800D073C 000CD69C  7C 08 02 A6 */	mflr r0
 /* 800D0740 000CD6A0  90 01 00 04 */	stw r0, 4(r1)
 /* 800D0744 000CD6A4  94 21 FF 80 */	stwu r1, -0x80(r1)
@@ -1762,9 +1761,9 @@ exec__15PikiLookAtStateFP4Piki:
 /* 800D093C 000CD89C  38 21 00 80 */	addi r1, r1, 0x80
 /* 800D0940 000CD8A0  7C 08 03 A6 */	mtlr r0
 /* 800D0944 000CD8A4  4E 80 00 20 */	blr 
+.endfn exec__15PikiLookAtStateFP4Piki
 
-.global cleanup__15PikiLookAtStateFP4Piki
-cleanup__15PikiLookAtStateFP4Piki:
+.fn cleanup__15PikiLookAtStateFP4Piki, global
 /* 800D0948 000CD8A8  7C 08 02 A6 */	mflr r0
 /* 800D094C 000CD8AC  38 64 00 00 */	addi r3, r4, 0
 /* 800D0950 000CD8B0  90 01 00 04 */	stw r0, 4(r1)
@@ -1776,9 +1775,9 @@ cleanup__15PikiLookAtStateFP4Piki:
 /* 800D0968 000CD8C8  38 21 00 08 */	addi r1, r1, 8
 /* 800D096C 000CD8CC  7C 08 03 A6 */	mtlr r0
 /* 800D0970 000CD8D0  4E 80 00 20 */	blr 
+.endfn cleanup__15PikiLookAtStateFP4Piki
 
-.global procAnimMsg__15PikiLookAtStateFP4PikiP7MsgAnim
-procAnimMsg__15PikiLookAtStateFP4PikiP7MsgAnim:
+.fn procAnimMsg__15PikiLookAtStateFP4PikiP7MsgAnim, global
 /* 800D0974 000CD8D4  7C 08 02 A6 */	mflr r0
 /* 800D0978 000CD8D8  90 01 00 04 */	stw r0, 4(r1)
 /* 800D097C 000CD8DC  94 21 FF B0 */	stwu r1, -0x50(r1)
@@ -1829,9 +1828,9 @@ procAnimMsg__15PikiLookAtStateFP4PikiP7MsgAnim:
 /* 800D0A1C 000CD97C  38 21 00 50 */	addi r1, r1, 0x50
 /* 800D0A20 000CD980  7C 08 03 A6 */	mtlr r0
 /* 800D0A24 000CD984  4E 80 00 20 */	blr 
+.endfn procAnimMsg__15PikiLookAtStateFP4PikiP7MsgAnim
 
-.global __ct__15PikiNormalStateFv
-__ct__15PikiNormalStateFv:
+.fn __ct__15PikiNormalStateFv, global
 /* 800D0A28 000CD988  3C 80 80 2C */	lis r4, "__vt__15Receiver<4Piki>"@ha
 /* 800D0A2C 000CD98C  38 04 81 F8 */	addi r0, r4, "__vt__15Receiver<4Piki>"@l
 /* 800D0A30 000CD990  3C 80 80 2C */	lis r4, "__vt__13AState<4Piki>"@ha
@@ -1850,9 +1849,9 @@ __ct__15PikiNormalStateFv:
 /* 800D0A64 000CD9C4  90 A3 00 0C */	stw r5, 0xc(r3)
 /* 800D0A68 000CD9C8  90 03 00 00 */	stw r0, 0(r3)
 /* 800D0A6C 000CD9CC  4E 80 00 20 */	blr 
+.endfn __ct__15PikiNormalStateFv
 
-.global init__15PikiNormalStateFP4Piki
-init__15PikiNormalStateFP4Piki:
+.fn init__15PikiNormalStateFP4Piki, global
 /* 800D0A70 000CD9D0  7C 08 02 A6 */	mflr r0
 /* 800D0A74 000CD9D4  90 01 00 04 */	stw r0, 4(r1)
 /* 800D0A78 000CD9D8  94 21 FF C0 */	stwu r1, -0x40(r1)
@@ -1887,9 +1886,9 @@ init__15PikiNormalStateFP4Piki:
 /* 800D0AEC 000CDA4C  38 21 00 40 */	addi r1, r1, 0x40
 /* 800D0AF0 000CDA50  7C 08 03 A6 */	mtlr r0
 /* 800D0AF4 000CDA54  4E 80 00 20 */	blr 
+.endfn init__15PikiNormalStateFP4Piki
 
-.global restart__15PikiNormalStateFP4Piki
-restart__15PikiNormalStateFP4Piki:
+.fn restart__15PikiNormalStateFP4Piki, global
 /* 800D0AF8 000CDA58  7C 08 02 A6 */	mflr r0
 /* 800D0AFC 000CDA5C  90 01 00 04 */	stw r0, 4(r1)
 /* 800D0B00 000CDA60  94 21 FF F8 */	stwu r1, -8(r1)
@@ -1901,9 +1900,9 @@ restart__15PikiNormalStateFP4Piki:
 /* 800D0B18 000CDA78  38 21 00 08 */	addi r1, r1, 8
 /* 800D0B1C 000CDA7C  7C 08 03 A6 */	mtlr r0
 /* 800D0B20 000CDA80  4E 80 00 20 */	blr 
+.endfn restart__15PikiNormalStateFP4Piki
 
-.global exec__15PikiNormalStateFP4Piki
-exec__15PikiNormalStateFP4Piki:
+.fn exec__15PikiNormalStateFP4Piki, global
 /* 800D0B24 000CDA84  7C 08 02 A6 */	mflr r0
 /* 800D0B28 000CDA88  90 01 00 04 */	stw r0, 4(r1)
 /* 800D0B2C 000CDA8C  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -1932,25 +1931,25 @@ exec__15PikiNormalStateFP4Piki:
 /* 800D0B84 000CDAE4  38 21 00 18 */	addi r1, r1, 0x18
 /* 800D0B88 000CDAE8  7C 08 03 A6 */	mtlr r0
 /* 800D0B8C 000CDAEC  4E 80 00 20 */	blr 
+.endfn exec__15PikiNormalStateFP4Piki
 
-.global cleanup__15PikiNormalStateFP4Piki
-cleanup__15PikiNormalStateFP4Piki:
+.fn cleanup__15PikiNormalStateFP4Piki, global
 /* 800D0B90 000CDAF0  4E 80 00 20 */	blr 
+.endfn cleanup__15PikiNormalStateFP4Piki
 
-.global procWallMsg__15PikiNormalStateFP4PikiP7MsgWall
-procWallMsg__15PikiNormalStateFP4PikiP7MsgWall:
+.fn procWallMsg__15PikiNormalStateFP4PikiP7MsgWall, global
 /* 800D0B94 000CDAF4  4E 80 00 20 */	blr 
+.endfn procWallMsg__15PikiNormalStateFP4PikiP7MsgWall
 
-.global procOffWallMsg__15PikiNormalStateFP4PikiP10MsgOffWall
-procOffWallMsg__15PikiNormalStateFP4PikiP10MsgOffWall:
+.fn procOffWallMsg__15PikiNormalStateFP4PikiP10MsgOffWall, global
 /* 800D0B98 000CDAF8  38 00 00 00 */	li r0, 0
 /* 800D0B9C 000CDAFC  90 03 00 10 */	stw r0, 0x10(r3)
 /* 800D0BA0 000CDB00  C0 02 97 30 */	lfs f0, lbl_803E9930@sda21(r2)
 /* 800D0BA4 000CDB04  D0 03 00 14 */	stfs f0, 0x14(r3)
 /* 800D0BA8 000CDB08  4E 80 00 20 */	blr 
+.endfn procOffWallMsg__15PikiNormalStateFP4PikiP10MsgOffWall
 
-.global procCollideMsg__15PikiNormalStateFP4PikiP10MsgCollide
-procCollideMsg__15PikiNormalStateFP4PikiP10MsgCollide:
+.fn procCollideMsg__15PikiNormalStateFP4PikiP10MsgCollide, global
 /* 800D0BAC 000CDB0C  7C 08 02 A6 */	mflr r0
 /* 800D0BB0 000CDB10  90 01 00 04 */	stw r0, 4(r1)
 /* 800D0BB4 000CDB14  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -2015,9 +2014,9 @@ procCollideMsg__15PikiNormalStateFP4PikiP10MsgCollide:
 /* 800D0C94 000CDBF4  38 21 00 28 */	addi r1, r1, 0x28
 /* 800D0C98 000CDBF8  7C 08 03 A6 */	mtlr r0
 /* 800D0C9C 000CDBFC  4E 80 00 20 */	blr 
+.endfn procCollideMsg__15PikiNormalStateFP4PikiP10MsgCollide
 
-.global __ct__15PikiAbsorbStateFv
-__ct__15PikiAbsorbStateFv:
+.fn __ct__15PikiAbsorbStateFv, global
 /* 800D0CA0 000CDC00  3C 80 80 2C */	lis r4, "__vt__15Receiver<4Piki>"@ha
 /* 800D0CA4 000CDC04  38 04 81 F8 */	addi r0, r4, "__vt__15Receiver<4Piki>"@l
 /* 800D0CA8 000CDC08  3C 80 80 2C */	lis r4, "__vt__13AState<4Piki>"@ha
@@ -2037,9 +2036,9 @@ __ct__15PikiAbsorbStateFv:
 /* 800D0CE0 000CDC40  90 A3 00 0C */	stw r5, 0xc(r3)
 /* 800D0CE4 000CDC44  90 03 00 00 */	stw r0, 0(r3)
 /* 800D0CE8 000CDC48  4E 80 00 20 */	blr 
+.endfn __ct__15PikiAbsorbStateFv
 
-.global init__15PikiAbsorbStateFP4Piki
-init__15PikiAbsorbStateFP4Piki:
+.fn init__15PikiAbsorbStateFP4Piki, global
 /* 800D0CEC 000CDC4C  7C 08 02 A6 */	mflr r0
 /* 800D0CF0 000CDC50  90 01 00 04 */	stw r0, 4(r1)
 /* 800D0CF4 000CDC54  94 21 FF D0 */	stwu r1, -0x30(r1)
@@ -2082,9 +2081,9 @@ init__15PikiAbsorbStateFP4Piki:
 /* 800D0D84 000CDCE4  38 21 00 30 */	addi r1, r1, 0x30
 /* 800D0D88 000CDCE8  7C 08 03 A6 */	mtlr r0
 /* 800D0D8C 000CDCEC  4E 80 00 20 */	blr 
+.endfn init__15PikiAbsorbStateFP4Piki
 
-.global exec__15PikiAbsorbStateFP4Piki
-exec__15PikiAbsorbStateFP4Piki:
+.fn exec__15PikiAbsorbStateFP4Piki, global
 /* 800D0D90 000CDCF0  7C 08 02 A6 */	mflr r0
 /* 800D0D94 000CDCF4  90 01 00 04 */	stw r0, 4(r1)
 /* 800D0D98 000CDCF8  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -2147,9 +2146,9 @@ exec__15PikiAbsorbStateFP4Piki:
 /* 800D0E6C 000CDDCC  38 21 00 20 */	addi r1, r1, 0x20
 /* 800D0E70 000CDDD0  7C 08 03 A6 */	mtlr r0
 /* 800D0E74 000CDDD4  4E 80 00 20 */	blr 
+.endfn exec__15PikiAbsorbStateFP4Piki
 
-.global procAnimMsg__15PikiAbsorbStateFP4PikiP7MsgAnim
-procAnimMsg__15PikiAbsorbStateFP4PikiP7MsgAnim:
+.fn procAnimMsg__15PikiAbsorbStateFP4PikiP7MsgAnim, global
 /* 800D0E78 000CDDD8  7C 08 02 A6 */	mflr r0
 /* 800D0E7C 000CDDDC  90 01 00 04 */	stw r0, 4(r1)
 /* 800D0E80 000CDDE0  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -2226,13 +2225,13 @@ procAnimMsg__15PikiAbsorbStateFP4PikiP7MsgAnim:
 /* 800D0F7C 000CDEDC  38 21 00 20 */	addi r1, r1, 0x20
 /* 800D0F80 000CDEE0  7C 08 03 A6 */	mtlr r0
 /* 800D0F84 000CDEE4  4E 80 00 20 */	blr 
+.endfn procAnimMsg__15PikiAbsorbStateFP4PikiP7MsgAnim
 
-.global cleanup__15PikiAbsorbStateFP4Piki
-cleanup__15PikiAbsorbStateFP4Piki:
+.fn cleanup__15PikiAbsorbStateFP4Piki, global
 /* 800D0F88 000CDEE8  4E 80 00 20 */	blr 
+.endfn cleanup__15PikiAbsorbStateFP4Piki
 
-.global __ct__14PikiDrownStateFv
-__ct__14PikiDrownStateFv:
+.fn __ct__14PikiDrownStateFv, global
 /* 800D0F8C 000CDEEC  3C 80 80 2C */	lis r4, "__vt__15Receiver<4Piki>"@ha
 /* 800D0F90 000CDEF0  38 04 81 F8 */	addi r0, r4, "__vt__15Receiver<4Piki>"@l
 /* 800D0F94 000CDEF4  3C 80 80 2C */	lis r4, "__vt__13AState<4Piki>"@ha
@@ -2256,9 +2255,9 @@ __ct__14PikiDrownStateFv:
 /* 800D0FDC 000CDF3C  D0 03 00 20 */	stfs f0, 0x20(r3)
 /* 800D0FE0 000CDF40  D0 03 00 1C */	stfs f0, 0x1c(r3)
 /* 800D0FE4 000CDF44  4E 80 00 20 */	blr 
+.endfn __ct__14PikiDrownStateFv
 
-.global init__14PikiDrownStateFP4Piki
-init__14PikiDrownStateFP4Piki:
+.fn init__14PikiDrownStateFP4Piki, global
 /* 800D0FE8 000CDF48  7C 08 02 A6 */	mflr r0
 /* 800D0FEC 000CDF4C  90 01 00 04 */	stw r0, 4(r1)
 /* 800D0FF0 000CDF50  94 21 FF 80 */	stwu r1, -0x80(r1)
@@ -2395,9 +2394,9 @@ init__14PikiDrownStateFP4Piki:
 /* 800D11E4 000CE144  38 21 00 80 */	addi r1, r1, 0x80
 /* 800D11E8 000CE148  7C 08 03 A6 */	mtlr r0
 /* 800D11EC 000CE14C  4E 80 00 20 */	blr 
+.endfn init__14PikiDrownStateFP4Piki
 
-.global exec__14PikiDrownStateFP4Piki
-exec__14PikiDrownStateFP4Piki:
+.fn exec__14PikiDrownStateFP4Piki, global
 /* 800D11F0 000CE150  7C 08 02 A6 */	mflr r0
 /* 800D11F4 000CE154  90 01 00 04 */	stw r0, 4(r1)
 /* 800D11F8 000CE158  94 21 FE 48 */	stwu r1, -0x1b8(r1)
@@ -2658,13 +2657,13 @@ exec__14PikiDrownStateFP4Piki:
 /* 800D15C0 000CE520  38 21 01 B8 */	addi r1, r1, 0x1b8
 /* 800D15C4 000CE524  7C 08 03 A6 */	mtlr r0
 /* 800D15C8 000CE528  4E 80 00 20 */	blr 
+.endfn exec__14PikiDrownStateFP4Piki
 
-.global cleanup__14PikiDrownStateFP4Piki
-cleanup__14PikiDrownStateFP4Piki:
+.fn cleanup__14PikiDrownStateFP4Piki, global
 /* 800D15CC 000CE52C  4E 80 00 20 */	blr 
+.endfn cleanup__14PikiDrownStateFP4Piki
 
-.global procAnimMsg__14PikiDrownStateFP4PikiP7MsgAnim
-procAnimMsg__14PikiDrownStateFP4PikiP7MsgAnim:
+.fn procAnimMsg__14PikiDrownStateFP4PikiP7MsgAnim, global
 /* 800D15D0 000CE530  7C 08 02 A6 */	mflr r0
 /* 800D15D4 000CE534  90 01 00 04 */	stw r0, 4(r1)
 /* 800D15D8 000CE538  94 21 FF A8 */	stwu r1, -0x58(r1)
@@ -2780,9 +2779,9 @@ procAnimMsg__14PikiDrownStateFP4PikiP7MsgAnim:
 /* 800D1770 000CE6D0  38 21 00 58 */	addi r1, r1, 0x58
 /* 800D1774 000CE6D4  7C 08 03 A6 */	mtlr r0
 /* 800D1778 000CE6D8  4E 80 00 20 */	blr 
+.endfn procAnimMsg__14PikiDrownStateFP4PikiP7MsgAnim
 
-.global __ct__15PikiKinokoStateFv
-__ct__15PikiKinokoStateFv:
+.fn __ct__15PikiKinokoStateFv, global
 /* 800D177C 000CE6DC  3C 80 80 2C */	lis r4, "__vt__15Receiver<4Piki>"@ha
 /* 800D1780 000CE6E0  38 04 81 F8 */	addi r0, r4, "__vt__15Receiver<4Piki>"@l
 /* 800D1784 000CE6E4  3C 80 80 2C */	lis r4, "__vt__13AState<4Piki>"@ha
@@ -2806,9 +2805,9 @@ __ct__15PikiKinokoStateFv:
 /* 800D17CC 000CE72C  D0 03 00 1C */	stfs f0, 0x1c(r3)
 /* 800D17D0 000CE730  D0 03 00 18 */	stfs f0, 0x18(r3)
 /* 800D17D4 000CE734  4E 80 00 20 */	blr 
+.endfn __ct__15PikiKinokoStateFv
 
-.global init__15PikiKinokoStateFP4Piki
-init__15PikiKinokoStateFP4Piki:
+.fn init__15PikiKinokoStateFP4Piki, global
 /* 800D17D8 000CE738  7C 08 02 A6 */	mflr r0
 /* 800D17DC 000CE73C  90 01 00 04 */	stw r0, 4(r1)
 /* 800D17E0 000CE740  94 21 FF D0 */	stwu r1, -0x30(r1)
@@ -2850,9 +2849,9 @@ init__15PikiKinokoStateFP4Piki:
 /* 800D1870 000CE7D0  38 21 00 30 */	addi r1, r1, 0x30
 /* 800D1874 000CE7D4  7C 08 03 A6 */	mtlr r0
 /* 800D1878 000CE7D8  4E 80 00 20 */	blr 
+.endfn init__15PikiKinokoStateFP4Piki
 
-.global initWalk__15PikiKinokoStateFP4Piki
-initWalk__15PikiKinokoStateFP4Piki:
+.fn initWalk__15PikiKinokoStateFP4Piki, global
 /* 800D187C 000CE7DC  7C 08 02 A6 */	mflr r0
 /* 800D1880 000CE7E0  90 01 00 04 */	stw r0, 4(r1)
 /* 800D1884 000CE7E4  94 21 FF 48 */	stwu r1, -0xb8(r1)
@@ -3010,9 +3009,9 @@ initWalk__15PikiKinokoStateFP4Piki:
 /* 800D1AD8 000CEA38  38 21 00 B8 */	addi r1, r1, 0xb8
 /* 800D1ADC 000CEA3C  7C 08 03 A6 */	mtlr r0
 /* 800D1AE0 000CEA40  4E 80 00 20 */	blr 
+.endfn initWalk__15PikiKinokoStateFP4Piki
 
-.global exec__15PikiKinokoStateFP4Piki
-exec__15PikiKinokoStateFP4Piki:
+.fn exec__15PikiKinokoStateFP4Piki, global
 /* 800D1AE4 000CEA44  7C 08 02 A6 */	mflr r0
 /* 800D1AE8 000CEA48  90 01 00 04 */	stw r0, 4(r1)
 /* 800D1AEC 000CEA4C  94 21 FF F8 */	stwu r1, -8(r1)
@@ -3033,13 +3032,13 @@ exec__15PikiKinokoStateFP4Piki:
 /* 800D1B1C 000CEA7C  38 21 00 08 */	addi r1, r1, 8
 /* 800D1B20 000CEA80  7C 08 03 A6 */	mtlr r0
 /* 800D1B24 000CEA84  4E 80 00 20 */	blr 
+.endfn exec__15PikiKinokoStateFP4Piki
 
-.global exeAttack__15PikiKinokoStateFP4Piki
-exeAttack__15PikiKinokoStateFP4Piki:
+.fn exeAttack__15PikiKinokoStateFP4Piki, global
 /* 800D1B28 000CEA88  4E 80 00 20 */	blr 
+.endfn exeAttack__15PikiKinokoStateFP4Piki
 
-.global exeBoid__15PikiKinokoStateFP4Piki
-exeBoid__15PikiKinokoStateFP4Piki:
+.fn exeBoid__15PikiKinokoStateFP4Piki, global
 /* 800D1B2C 000CEA8C  7C 08 02 A6 */	mflr r0
 /* 800D1B30 000CEA90  90 01 00 04 */	stw r0, 4(r1)
 /* 800D1B34 000CEA94  94 21 FD 28 */	stwu r1, -0x2d8(r1)
@@ -3556,9 +3555,9 @@ exeBoid__15PikiKinokoStateFP4Piki:
 /* 800D22D8 000CF238  38 21 02 D8 */	addi r1, r1, 0x2d8
 /* 800D22DC 000CF23C  7C 08 03 A6 */	mtlr r0
 /* 800D22E0 000CF240  4E 80 00 20 */	blr 
+.endfn exeBoid__15PikiKinokoStateFP4Piki
 
-.global cleanup__15PikiKinokoStateFP4Piki
-cleanup__15PikiKinokoStateFP4Piki:
+.fn cleanup__15PikiKinokoStateFP4Piki, global
 /* 800D22E4 000CF244  7C 08 02 A6 */	mflr r0
 /* 800D22E8 000CF248  7C 83 23 78 */	mr r3, r4
 /* 800D22EC 000CF24C  90 01 00 04 */	stw r0, 4(r1)
@@ -3568,9 +3567,9 @@ cleanup__15PikiKinokoStateFP4Piki:
 /* 800D22FC 000CF25C  38 21 00 08 */	addi r1, r1, 8
 /* 800D2300 000CF260  7C 08 03 A6 */	mtlr r0
 /* 800D2304 000CF264  4E 80 00 20 */	blr 
+.endfn cleanup__15PikiKinokoStateFP4Piki
 
-.global __ct__15PikiBubbleStateFv
-__ct__15PikiBubbleStateFv:
+.fn __ct__15PikiBubbleStateFv, global
 /* 800D2308 000CF268  3C 80 80 2C */	lis r4, "__vt__15Receiver<4Piki>"@ha
 /* 800D230C 000CF26C  38 04 81 F8 */	addi r0, r4, "__vt__15Receiver<4Piki>"@l
 /* 800D2310 000CF270  3C 80 80 2C */	lis r4, "__vt__13AState<4Piki>"@ha
@@ -3590,9 +3589,9 @@ __ct__15PikiBubbleStateFv:
 /* 800D2348 000CF2A8  90 A3 00 0C */	stw r5, 0xc(r3)
 /* 800D234C 000CF2AC  90 03 00 00 */	stw r0, 0(r3)
 /* 800D2350 000CF2B0  4E 80 00 20 */	blr 
+.endfn __ct__15PikiBubbleStateFv
 
-.global init__15PikiBubbleStateFP4Piki
-init__15PikiBubbleStateFP4Piki:
+.fn init__15PikiBubbleStateFP4Piki, global
 /* 800D2354 000CF2B4  7C 08 02 A6 */	mflr r0
 /* 800D2358 000CF2B8  90 01 00 04 */	stw r0, 4(r1)
 /* 800D235C 000CF2BC  94 21 FF 88 */	stwu r1, -0x78(r1)
@@ -3668,9 +3667,9 @@ init__15PikiBubbleStateFP4Piki:
 /* 800D2474 000CF3D4  38 21 00 78 */	addi r1, r1, 0x78
 /* 800D2478 000CF3D8  7C 08 03 A6 */	mtlr r0
 /* 800D247C 000CF3DC  4E 80 00 20 */	blr 
+.endfn init__15PikiBubbleStateFP4Piki
 
-.global exec__15PikiBubbleStateFP4Piki
-exec__15PikiBubbleStateFP4Piki:
+.fn exec__15PikiBubbleStateFP4Piki, global
 /* 800D2480 000CF3E0  7C 08 02 A6 */	mflr r0
 /* 800D2484 000CF3E4  90 01 00 04 */	stw r0, 4(r1)
 /* 800D2488 000CF3E8  94 21 FF B8 */	stwu r1, -0x48(r1)
@@ -3758,9 +3757,9 @@ exec__15PikiBubbleStateFP4Piki:
 /* 800D25C8 000CF528  38 21 00 48 */	addi r1, r1, 0x48
 /* 800D25CC 000CF52C  7C 08 03 A6 */	mtlr r0
 /* 800D25D0 000CF530  4E 80 00 20 */	blr 
+.endfn exec__15PikiBubbleStateFP4Piki
 
-.global cleanup__15PikiBubbleStateFP4Piki
-cleanup__15PikiBubbleStateFP4Piki:
+.fn cleanup__15PikiBubbleStateFP4Piki, global
 /* 800D25D4 000CF534  7C 08 02 A6 */	mflr r0
 /* 800D25D8 000CF538  90 01 00 04 */	stw r0, 4(r1)
 /* 800D25DC 000CF53C  94 21 FF D0 */	stwu r1, -0x30(r1)
@@ -3793,9 +3792,9 @@ cleanup__15PikiBubbleStateFP4Piki:
 /* 800D2648 000CF5A8  38 21 00 30 */	addi r1, r1, 0x30
 /* 800D264C 000CF5AC  7C 08 03 A6 */	mtlr r0
 /* 800D2650 000CF5B0  4E 80 00 20 */	blr 
+.endfn cleanup__15PikiBubbleStateFP4Piki
 
-.global __ct__14PikiFiredStateFv
-__ct__14PikiFiredStateFv:
+.fn __ct__14PikiFiredStateFv, global
 /* 800D2654 000CF5B4  3C 80 80 2C */	lis r4, "__vt__15Receiver<4Piki>"@ha
 /* 800D2658 000CF5B8  38 04 81 F8 */	addi r0, r4, "__vt__15Receiver<4Piki>"@l
 /* 800D265C 000CF5BC  3C 80 80 2C */	lis r4, "__vt__13AState<4Piki>"@ha
@@ -3815,9 +3814,9 @@ __ct__14PikiFiredStateFv:
 /* 800D2694 000CF5F4  90 A3 00 0C */	stw r5, 0xc(r3)
 /* 800D2698 000CF5F8  90 03 00 00 */	stw r0, 0(r3)
 /* 800D269C 000CF5FC  4E 80 00 20 */	blr 
+.endfn __ct__14PikiFiredStateFv
 
-.global init__14PikiFiredStateFP4Piki
-init__14PikiFiredStateFP4Piki:
+.fn init__14PikiFiredStateFP4Piki, global
 /* 800D26A0 000CF600  7C 08 02 A6 */	mflr r0
 /* 800D26A4 000CF604  90 01 00 04 */	stw r0, 4(r1)
 /* 800D26A8 000CF608  94 21 FF B8 */	stwu r1, -0x48(r1)
@@ -3875,9 +3874,9 @@ init__14PikiFiredStateFP4Piki:
 /* 800D2778 000CF6D8  38 21 00 48 */	addi r1, r1, 0x48
 /* 800D277C 000CF6DC  7C 08 03 A6 */	mtlr r0
 /* 800D2780 000CF6E0  4E 80 00 20 */	blr 
+.endfn init__14PikiFiredStateFP4Piki
 
-.global exec__14PikiFiredStateFP4Piki
-exec__14PikiFiredStateFP4Piki:
+.fn exec__14PikiFiredStateFP4Piki, global
 /* 800D2784 000CF6E4  7C 08 02 A6 */	mflr r0
 /* 800D2788 000CF6E8  90 01 00 04 */	stw r0, 4(r1)
 /* 800D278C 000CF6EC  94 21 FF B8 */	stwu r1, -0x48(r1)
@@ -3965,13 +3964,13 @@ exec__14PikiFiredStateFP4Piki:
 /* 800D28CC 000CF82C  38 21 00 48 */	addi r1, r1, 0x48
 /* 800D28D0 000CF830  7C 08 03 A6 */	mtlr r0
 /* 800D28D4 000CF834  4E 80 00 20 */	blr 
+.endfn exec__14PikiFiredStateFP4Piki
 
-.global cleanup__14PikiFiredStateFP4Piki
-cleanup__14PikiFiredStateFP4Piki:
+.fn cleanup__14PikiFiredStateFP4Piki, global
 /* 800D28D8 000CF838  4E 80 00 20 */	blr 
+.endfn cleanup__14PikiFiredStateFP4Piki
 
-.global __ct__18PikiSwallowedStateFv
-__ct__18PikiSwallowedStateFv:
+.fn __ct__18PikiSwallowedStateFv, global
 /* 800D28DC 000CF83C  3C 80 80 2C */	lis r4, "__vt__15Receiver<4Piki>"@ha
 /* 800D28E0 000CF840  38 04 81 F8 */	addi r0, r4, "__vt__15Receiver<4Piki>"@l
 /* 800D28E4 000CF844  3C 80 80 2C */	lis r4, "__vt__13AState<4Piki>"@ha
@@ -3992,16 +3991,16 @@ __ct__18PikiSwallowedStateFv:
 /* 800D2920 000CF880  90 A3 00 0C */	stw r5, 0xc(r3)
 /* 800D2924 000CF884  90 03 00 00 */	stw r0, 0(r3)
 /* 800D2928 000CF888  4E 80 00 20 */	blr 
+.endfn __ct__18PikiSwallowedStateFv
 
-.global init__18PikiSwallowedStateFP4Piki
-init__18PikiSwallowedStateFP4Piki:
+.fn init__18PikiSwallowedStateFP4Piki, global
 /* 800D292C 000CF88C  80 04 00 C8 */	lwz r0, 0xc8(r4)
 /* 800D2930 000CF890  60 00 08 00 */	ori r0, r0, 0x800
 /* 800D2934 000CF894  90 04 00 C8 */	stw r0, 0xc8(r4)
 /* 800D2938 000CF898  4E 80 00 20 */	blr 
+.endfn init__18PikiSwallowedStateFP4Piki
 
-.global exec__18PikiSwallowedStateFP4Piki
-exec__18PikiSwallowedStateFP4Piki:
+.fn exec__18PikiSwallowedStateFP4Piki, global
 /* 800D293C 000CF89C  7C 08 02 A6 */	mflr r0
 /* 800D2940 000CF8A0  90 01 00 04 */	stw r0, 4(r1)
 /* 800D2944 000CF8A4  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -4070,18 +4069,18 @@ exec__18PikiSwallowedStateFP4Piki:
 /* 800D2A34 000CF994  38 21 00 20 */	addi r1, r1, 0x20
 /* 800D2A38 000CF998  7C 08 03 A6 */	mtlr r0
 /* 800D2A3C 000CF99C  4E 80 00 20 */	blr 
+.endfn exec__18PikiSwallowedStateFP4Piki
 
-.global cleanup__18PikiSwallowedStateFP4Piki
-cleanup__18PikiSwallowedStateFP4Piki:
+.fn cleanup__18PikiSwallowedStateFP4Piki, global
 /* 800D2A40 000CF9A0  38 00 00 00 */	li r0, 0
 /* 800D2A44 000CF9A4  90 04 04 A4 */	stw r0, 0x4a4(r4)
 /* 800D2A48 000CF9A8  80 04 00 C8 */	lwz r0, 0xc8(r4)
 /* 800D2A4C 000CF9AC  54 00 05 66 */	rlwinm r0, r0, 0, 0x15, 0x13
 /* 800D2A50 000CF9B0  90 04 00 C8 */	stw r0, 0xc8(r4)
 /* 800D2A54 000CF9B4  4E 80 00 20 */	blr 
+.endfn cleanup__18PikiSwallowedStateFP4Piki
 
-.global __ct__15PikiBulletStateFv
-__ct__15PikiBulletStateFv:
+.fn __ct__15PikiBulletStateFv, global
 /* 800D2A58 000CF9B8  3C 80 80 2C */	lis r4, "__vt__15Receiver<4Piki>"@ha
 /* 800D2A5C 000CF9BC  38 04 81 F8 */	addi r0, r4, "__vt__15Receiver<4Piki>"@l
 /* 800D2A60 000CF9C0  3C 80 80 2C */	lis r4, "__vt__13AState<4Piki>"@ha
@@ -4101,9 +4100,9 @@ __ct__15PikiBulletStateFv:
 /* 800D2A98 000CF9F8  90 A3 00 0C */	stw r5, 0xc(r3)
 /* 800D2A9C 000CF9FC  90 03 00 00 */	stw r0, 0(r3)
 /* 800D2AA0 000CFA00  4E 80 00 20 */	blr 
+.endfn __ct__15PikiBulletStateFv
 
-.global init__15PikiBulletStateFP4Piki
-init__15PikiBulletStateFP4Piki:
+.fn init__15PikiBulletStateFP4Piki, global
 /* 800D2AA4 000CFA04  7C 08 02 A6 */	mflr r0
 /* 800D2AA8 000CFA08  90 01 00 04 */	stw r0, 4(r1)
 /* 800D2AAC 000CFA0C  94 21 FF D0 */	stwu r1, -0x30(r1)
@@ -4132,9 +4131,9 @@ init__15PikiBulletStateFP4Piki:
 /* 800D2B08 000CFA68  38 21 00 30 */	addi r1, r1, 0x30
 /* 800D2B0C 000CFA6C  7C 08 03 A6 */	mtlr r0
 /* 800D2B10 000CFA70  4E 80 00 20 */	blr 
+.endfn init__15PikiBulletStateFP4Piki
 
-.global exec__15PikiBulletStateFP4Piki
-exec__15PikiBulletStateFP4Piki:
+.fn exec__15PikiBulletStateFP4Piki, global
 /* 800D2B14 000CFA74  7C 08 02 A6 */	mflr r0
 /* 800D2B18 000CFA78  90 01 00 04 */	stw r0, 4(r1)
 /* 800D2B1C 000CFA7C  94 21 FF 18 */	stwu r1, -0xe8(r1)
@@ -4400,9 +4399,9 @@ exec__15PikiBulletStateFP4Piki:
 /* 800D2EF8 000CFE58  38 21 00 E8 */	addi r1, r1, 0xe8
 /* 800D2EFC 000CFE5C  7C 08 03 A6 */	mtlr r0
 /* 800D2F00 000CFE60  4E 80 00 20 */	blr 
+.endfn exec__15PikiBulletStateFP4Piki
 
-.global procWallMsg__15PikiBulletStateFP4PikiP7MsgWall
-procWallMsg__15PikiBulletStateFP4PikiP7MsgWall:
+.fn procWallMsg__15PikiBulletStateFP4PikiP7MsgWall, global
 /* 800D2F04 000CFE64  7C 08 02 A6 */	mflr r0
 /* 800D2F08 000CFE68  90 01 00 04 */	stw r0, 4(r1)
 /* 800D2F0C 000CFE6C  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -4427,13 +4426,13 @@ procWallMsg__15PikiBulletStateFP4PikiP7MsgWall:
 /* 800D2F58 000CFEB8  38 21 00 20 */	addi r1, r1, 0x20
 /* 800D2F5C 000CFEBC  7C 08 03 A6 */	mtlr r0
 /* 800D2F60 000CFEC0  4E 80 00 20 */	blr 
+.endfn procWallMsg__15PikiBulletStateFP4PikiP7MsgWall
 
-.global cleanup__15PikiBulletStateFP4Piki
-cleanup__15PikiBulletStateFP4Piki:
+.fn cleanup__15PikiBulletStateFP4Piki, global
 /* 800D2F64 000CFEC4  4E 80 00 20 */	blr 
+.endfn cleanup__15PikiBulletStateFP4Piki
 
-.global __ct__14PikiFlickStateFv
-__ct__14PikiFlickStateFv:
+.fn __ct__14PikiFlickStateFv, global
 /* 800D2F68 000CFEC8  3C 80 80 2C */	lis r4, "__vt__15Receiver<4Piki>"@ha
 /* 800D2F6C 000CFECC  38 04 81 F8 */	addi r0, r4, "__vt__15Receiver<4Piki>"@l
 /* 800D2F70 000CFED0  3C 80 80 2C */	lis r4, "__vt__13AState<4Piki>"@ha
@@ -4453,9 +4452,9 @@ __ct__14PikiFlickStateFv:
 /* 800D2FA8 000CFF08  90 A3 00 0C */	stw r5, 0xc(r3)
 /* 800D2FAC 000CFF0C  90 03 00 00 */	stw r0, 0(r3)
 /* 800D2FB0 000CFF10  4E 80 00 20 */	blr 
+.endfn __ct__14PikiFlickStateFv
 
-.global init__14PikiFlickStateFP4Piki
-init__14PikiFlickStateFP4Piki:
+.fn init__14PikiFlickStateFP4Piki, global
 /* 800D2FB4 000CFF14  7C 08 02 A6 */	mflr r0
 /* 800D2FB8 000CFF18  90 01 00 04 */	stw r0, 4(r1)
 /* 800D2FBC 000CFF1C  38 00 00 00 */	li r0, 0
@@ -4547,9 +4546,9 @@ init__14PikiFlickStateFP4Piki:
 /* 800D3110 000D0070  38 21 00 58 */	addi r1, r1, 0x58
 /* 800D3114 000D0074  7C 08 03 A6 */	mtlr r0
 /* 800D3118 000D0078  4E 80 00 20 */	blr 
+.endfn init__14PikiFlickStateFP4Piki
 
-.global exec__14PikiFlickStateFP4Piki
-exec__14PikiFlickStateFP4Piki:
+.fn exec__14PikiFlickStateFP4Piki, global
 /* 800D311C 000D007C  7C 08 02 A6 */	mflr r0
 /* 800D3120 000D0080  90 01 00 04 */	stw r0, 4(r1)
 /* 800D3124 000D0084  94 21 FF A8 */	stwu r1, -0x58(r1)
@@ -4660,9 +4659,9 @@ exec__14PikiFlickStateFP4Piki:
 /* 800D32B0 000D0210  38 21 00 58 */	addi r1, r1, 0x58
 /* 800D32B4 000D0214  7C 08 03 A6 */	mtlr r0
 /* 800D32B8 000D0218  4E 80 00 20 */	blr 
+.endfn exec__14PikiFlickStateFP4Piki
 
-.global procAnimMsg__14PikiFlickStateFP4PikiP7MsgAnim
-procAnimMsg__14PikiFlickStateFP4PikiP7MsgAnim:
+.fn procAnimMsg__14PikiFlickStateFP4PikiP7MsgAnim, global
 /* 800D32BC 000D021C  7C 08 02 A6 */	mflr r0
 /* 800D32C0 000D0220  90 01 00 04 */	stw r0, 4(r1)
 /* 800D32C4 000D0224  94 21 FF 88 */	stwu r1, -0x78(r1)
@@ -4836,9 +4835,9 @@ procAnimMsg__14PikiFlickStateFP4PikiP7MsgAnim:
 /* 800D3544 000D04A4  38 21 00 78 */	addi r1, r1, 0x78
 /* 800D3548 000D04A8  7C 08 03 A6 */	mtlr r0
 /* 800D354C 000D04AC  4E 80 00 20 */	blr 
+.endfn procAnimMsg__14PikiFlickStateFP4PikiP7MsgAnim
 
-.global cleanup__14PikiFlickStateFP4Piki
-cleanup__14PikiFlickStateFP4Piki:
+.fn cleanup__14PikiFlickStateFP4Piki, global
 /* 800D3550 000D04B0  7C 08 02 A6 */	mflr r0
 /* 800D3554 000D04B4  90 01 00 04 */	stw r0, 4(r1)
 /* 800D3558 000D04B8  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -4904,9 +4903,9 @@ cleanup__14PikiFlickStateFP4Piki:
 /* 800D363C 000D059C  38 21 00 20 */	addi r1, r1, 0x20
 /* 800D3640 000D05A0  7C 08 03 A6 */	mtlr r0
 /* 800D3644 000D05A4  4E 80 00 20 */	blr 
+.endfn cleanup__14PikiFlickStateFP4Piki
 
-.global __ct__14PikiFlownStateFv
-__ct__14PikiFlownStateFv:
+.fn __ct__14PikiFlownStateFv, global
 /* 800D3648 000D05A8  3C 80 80 2C */	lis r4, "__vt__15Receiver<4Piki>"@ha
 /* 800D364C 000D05AC  38 04 81 F8 */	addi r0, r4, "__vt__15Receiver<4Piki>"@l
 /* 800D3650 000D05B0  3C 80 80 2C */	lis r4, "__vt__13AState<4Piki>"@ha
@@ -4926,9 +4925,9 @@ __ct__14PikiFlownStateFv:
 /* 800D3688 000D05E8  90 A3 00 0C */	stw r5, 0xc(r3)
 /* 800D368C 000D05EC  90 03 00 00 */	stw r0, 0(r3)
 /* 800D3690 000D05F0  4E 80 00 20 */	blr 
+.endfn __ct__14PikiFlownStateFv
 
-.global init__14PikiFlownStateFP4Piki
-init__14PikiFlownStateFP4Piki:
+.fn init__14PikiFlownStateFP4Piki, global
 /* 800D3694 000D05F4  7C 08 02 A6 */	mflr r0
 /* 800D3698 000D05F8  90 01 00 04 */	stw r0, 4(r1)
 /* 800D369C 000D05FC  38 00 00 00 */	li r0, 0
@@ -5003,9 +5002,9 @@ init__14PikiFlownStateFP4Piki:
 /* 800D37AC 000D070C  38 21 00 48 */	addi r1, r1, 0x48
 /* 800D37B0 000D0710  7C 08 03 A6 */	mtlr r0
 /* 800D37B4 000D0714  4E 80 00 20 */	blr 
+.endfn init__14PikiFlownStateFP4Piki
 
-.global procBounceMsg__14PikiFlownStateFP4PikiP9MsgBounce
-procBounceMsg__14PikiFlownStateFP4PikiP9MsgBounce:
+.fn procBounceMsg__14PikiFlownStateFP4PikiP9MsgBounce, global
 /* 800D37B8 000D0718  7C 08 02 A6 */	mflr r0
 /* 800D37BC 000D071C  90 01 00 04 */	stw r0, 4(r1)
 /* 800D37C0 000D0720  94 21 FF C8 */	stwu r1, -0x38(r1)
@@ -5046,9 +5045,9 @@ procBounceMsg__14PikiFlownStateFP4PikiP9MsgBounce:
 /* 800D3844 000D07A4  38 21 00 38 */	addi r1, r1, 0x38
 /* 800D3848 000D07A8  7C 08 03 A6 */	mtlr r0
 /* 800D384C 000D07AC  4E 80 00 20 */	blr 
+.endfn procBounceMsg__14PikiFlownStateFP4PikiP9MsgBounce
 
-.global exec__14PikiFlownStateFP4Piki
-exec__14PikiFlownStateFP4Piki:
+.fn exec__14PikiFlownStateFP4Piki, global
 /* 800D3850 000D07B0  7C 08 02 A6 */	mflr r0
 /* 800D3854 000D07B4  90 01 00 04 */	stw r0, 4(r1)
 /* 800D3858 000D07B8  94 21 FF B0 */	stwu r1, -0x50(r1)
@@ -5147,9 +5146,9 @@ exec__14PikiFlownStateFP4Piki:
 /* 800D39B4 000D0914  38 21 00 50 */	addi r1, r1, 0x50
 /* 800D39B8 000D0918  7C 08 03 A6 */	mtlr r0
 /* 800D39BC 000D091C  4E 80 00 20 */	blr 
+.endfn exec__14PikiFlownStateFP4Piki
 
-.global procAnimMsg__14PikiFlownStateFP4PikiP7MsgAnim
-procAnimMsg__14PikiFlownStateFP4PikiP7MsgAnim:
+.fn procAnimMsg__14PikiFlownStateFP4PikiP7MsgAnim, global
 /* 800D39C0 000D0920  7C 08 02 A6 */	mflr r0
 /* 800D39C4 000D0924  90 01 00 04 */	stw r0, 4(r1)
 /* 800D39C8 000D0928  94 21 FF A0 */	stwu r1, -0x60(r1)
@@ -5296,9 +5295,9 @@ procAnimMsg__14PikiFlownStateFP4PikiP7MsgAnim:
 /* 800D3BE4 000D0B44  38 21 00 60 */	addi r1, r1, 0x60
 /* 800D3BE8 000D0B48  7C 08 03 A6 */	mtlr r0
 /* 800D3BEC 000D0B4C  4E 80 00 20 */	blr 
+.endfn procAnimMsg__14PikiFlownStateFP4PikiP7MsgAnim
 
-.global cleanup__14PikiFlownStateFP4Piki
-cleanup__14PikiFlownStateFP4Piki:
+.fn cleanup__14PikiFlownStateFP4Piki, global
 /* 800D3BF0 000D0B50  7C 08 02 A6 */	mflr r0
 /* 800D3BF4 000D0B54  90 01 00 04 */	stw r0, 4(r1)
 /* 800D3BF8 000D0B58  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -5341,9 +5340,9 @@ cleanup__14PikiFlownStateFP4Piki:
 /* 800D3C84 000D0BE4  38 21 00 20 */	addi r1, r1, 0x20
 /* 800D3C88 000D0BE8  7C 08 03 A6 */	mtlr r0
 /* 800D3C8C 000D0BEC  4E 80 00 20 */	blr 
+.endfn cleanup__14PikiFlownStateFP4Piki
 
-.global __ct__17PikiFallMeckStateFv
-__ct__17PikiFallMeckStateFv:
+.fn __ct__17PikiFallMeckStateFv, global
 /* 800D3C90 000D0BF0  3C 80 80 2C */	lis r4, "__vt__15Receiver<4Piki>"@ha
 /* 800D3C94 000D0BF4  38 04 81 F8 */	addi r0, r4, "__vt__15Receiver<4Piki>"@l
 /* 800D3C98 000D0BF8  3C 80 80 2C */	lis r4, "__vt__13AState<4Piki>"@ha
@@ -5364,9 +5363,9 @@ __ct__17PikiFallMeckStateFv:
 /* 800D3CD4 000D0C34  90 A3 00 0C */	stw r5, 0xc(r3)
 /* 800D3CD8 000D0C38  90 03 00 00 */	stw r0, 0(r3)
 /* 800D3CDC 000D0C3C  4E 80 00 20 */	blr 
+.endfn __ct__17PikiFallMeckStateFv
 
-.global init__17PikiFallMeckStateFP4Piki
-init__17PikiFallMeckStateFP4Piki:
+.fn init__17PikiFallMeckStateFP4Piki, global
 /* 800D3CE0 000D0C40  7C 08 02 A6 */	mflr r0
 /* 800D3CE4 000D0C44  90 01 00 04 */	stw r0, 4(r1)
 /* 800D3CE8 000D0C48  94 21 FF D0 */	stwu r1, -0x30(r1)
@@ -5401,13 +5400,13 @@ init__17PikiFallMeckStateFP4Piki:
 /* 800D3D58 000D0CB8  38 21 00 30 */	addi r1, r1, 0x30
 /* 800D3D5C 000D0CBC  7C 08 03 A6 */	mtlr r0
 /* 800D3D60 000D0CC0  4E 80 00 20 */	blr 
+.endfn init__17PikiFallMeckStateFP4Piki
 
-.global exec__17PikiFallMeckStateFP4Piki
-exec__17PikiFallMeckStateFP4Piki:
+.fn exec__17PikiFallMeckStateFP4Piki, global
 /* 800D3D64 000D0CC4  4E 80 00 20 */	blr 
+.endfn exec__17PikiFallMeckStateFP4Piki
 
-.global procBounceMsg__17PikiFallMeckStateFP4PikiP9MsgBounce
-procBounceMsg__17PikiFallMeckStateFP4PikiP9MsgBounce:
+.fn procBounceMsg__17PikiFallMeckStateFP4PikiP9MsgBounce, global
 /* 800D3D68 000D0CC8  7C 08 02 A6 */	mflr r0
 /* 800D3D6C 000D0CCC  90 01 00 04 */	stw r0, 4(r1)
 /* 800D3D70 000D0CD0  94 21 FF 98 */	stwu r1, -0x68(r1)
@@ -5573,13 +5572,13 @@ procBounceMsg__17PikiFallMeckStateFP4PikiP9MsgBounce:
 /* 800D3FE4 000D0F44  38 21 00 68 */	addi r1, r1, 0x68
 /* 800D3FE8 000D0F48  7C 08 03 A6 */	mtlr r0
 /* 800D3FEC 000D0F4C  4E 80 00 20 */	blr 
+.endfn procBounceMsg__17PikiFallMeckStateFP4PikiP9MsgBounce
 
-.global cleanup__17PikiFallMeckStateFP4Piki
-cleanup__17PikiFallMeckStateFP4Piki:
+.fn cleanup__17PikiFallMeckStateFP4Piki, global
 /* 800D3FF0 000D0F50  4E 80 00 20 */	blr 
+.endfn cleanup__17PikiFallMeckStateFP4Piki
 
-.global __ct__13PikiFallStateFv
-__ct__13PikiFallStateFv:
+.fn __ct__13PikiFallStateFv, global
 /* 800D3FF4 000D0F54  3C 80 80 2C */	lis r4, "__vt__15Receiver<4Piki>"@ha
 /* 800D3FF8 000D0F58  38 04 81 F8 */	addi r0, r4, "__vt__15Receiver<4Piki>"@l
 /* 800D3FFC 000D0F5C  3C 80 80 2C */	lis r4, "__vt__13AState<4Piki>"@ha
@@ -5599,9 +5598,9 @@ __ct__13PikiFallStateFv:
 /* 800D4034 000D0F94  90 A3 00 0C */	stw r5, 0xc(r3)
 /* 800D4038 000D0F98  90 03 00 00 */	stw r0, 0(r3)
 /* 800D403C 000D0F9C  4E 80 00 20 */	blr 
+.endfn __ct__13PikiFallStateFv
 
-.global init__13PikiFallStateFP4Piki
-init__13PikiFallStateFP4Piki:
+.fn init__13PikiFallStateFP4Piki, global
 /* 800D4040 000D0FA0  7C 08 02 A6 */	mflr r0
 /* 800D4044 000D0FA4  90 01 00 04 */	stw r0, 4(r1)
 /* 800D4048 000D0FA8  94 21 FF D0 */	stwu r1, -0x30(r1)
@@ -5637,13 +5636,13 @@ init__13PikiFallStateFP4Piki:
 /* 800D40BC 000D101C  38 21 00 30 */	addi r1, r1, 0x30
 /* 800D40C0 000D1020  7C 08 03 A6 */	mtlr r0
 /* 800D40C4 000D1024  4E 80 00 20 */	blr 
+.endfn init__13PikiFallStateFP4Piki
 
-.global exec__13PikiFallStateFP4Piki
-exec__13PikiFallStateFP4Piki:
+.fn exec__13PikiFallStateFP4Piki, global
 /* 800D40C8 000D1028  4E 80 00 20 */	blr 
+.endfn exec__13PikiFallStateFP4Piki
 
-.global procBounceMsg__13PikiFallStateFP4PikiP9MsgBounce
-procBounceMsg__13PikiFallStateFP4PikiP9MsgBounce:
+.fn procBounceMsg__13PikiFallStateFP4PikiP9MsgBounce, global
 /* 800D40CC 000D102C  7C 08 02 A6 */	mflr r0
 /* 800D40D0 000D1030  90 01 00 04 */	stw r0, 4(r1)
 /* 800D40D4 000D1034  38 00 00 01 */	li r0, 1
@@ -5676,9 +5675,9 @@ procBounceMsg__13PikiFallStateFP4PikiP9MsgBounce:
 /* 800D413C 000D109C  38 21 00 38 */	addi r1, r1, 0x38
 /* 800D4140 000D10A0  7C 08 03 A6 */	mtlr r0
 /* 800D4144 000D10A4  4E 80 00 20 */	blr 
+.endfn procBounceMsg__13PikiFallStateFP4PikiP9MsgBounce
 
-.global procAnimMsg__13PikiFallStateFP4PikiP7MsgAnim
-procAnimMsg__13PikiFallStateFP4PikiP7MsgAnim:
+.fn procAnimMsg__13PikiFallStateFP4PikiP7MsgAnim, global
 /* 800D4148 000D10A8  7C 08 02 A6 */	mflr r0
 /* 800D414C 000D10AC  90 01 00 04 */	stw r0, 4(r1)
 /* 800D4150 000D10B0  94 21 FF C8 */	stwu r1, -0x38(r1)
@@ -5736,13 +5735,13 @@ procAnimMsg__13PikiFallStateFP4PikiP7MsgAnim:
 /* 800D4210 000D1170  38 21 00 38 */	addi r1, r1, 0x38
 /* 800D4214 000D1174  7C 08 03 A6 */	mtlr r0
 /* 800D4218 000D1178  4E 80 00 20 */	blr 
+.endfn procAnimMsg__13PikiFallStateFP4PikiP7MsgAnim
 
-.global cleanup__13PikiFallStateFP4Piki
-cleanup__13PikiFallStateFP4Piki:
+.fn cleanup__13PikiFallStateFP4Piki, global
 /* 800D421C 000D117C  4E 80 00 20 */	blr 
+.endfn cleanup__13PikiFallStateFP4Piki
 
-.global __ct__14PikiCliffStateFv
-__ct__14PikiCliffStateFv:
+.fn __ct__14PikiCliffStateFv, global
 /* 800D4220 000D1180  3C 80 80 2C */	lis r4, "__vt__15Receiver<4Piki>"@ha
 /* 800D4224 000D1184  38 04 81 F8 */	addi r0, r4, "__vt__15Receiver<4Piki>"@l
 /* 800D4228 000D1188  3C 80 80 2C */	lis r4, "__vt__13AState<4Piki>"@ha
@@ -5766,9 +5765,9 @@ __ct__14PikiCliffStateFv:
 /* 800D4270 000D11D0  D0 03 00 20 */	stfs f0, 0x20(r3)
 /* 800D4274 000D11D4  D0 03 00 1C */	stfs f0, 0x1c(r3)
 /* 800D4278 000D11D8  4E 80 00 20 */	blr 
+.endfn __ct__14PikiCliffStateFv
 
-.global init__14PikiCliffStateFP4Piki
-init__14PikiCliffStateFP4Piki:
+.fn init__14PikiCliffStateFP4Piki, global
 /* 800D427C 000D11DC  7C 08 02 A6 */	mflr r0
 /* 800D4280 000D11E0  90 01 00 04 */	stw r0, 4(r1)
 /* 800D4284 000D11E4  94 21 FF B8 */	stwu r1, -0x48(r1)
@@ -5851,9 +5850,9 @@ init__14PikiCliffStateFP4Piki:
 /* 800D43A8 000D1308  38 21 00 48 */	addi r1, r1, 0x48
 /* 800D43AC 000D130C  7C 08 03 A6 */	mtlr r0
 /* 800D43B0 000D1310  4E 80 00 20 */	blr 
+.endfn init__14PikiCliffStateFP4Piki
 
-.global exec__14PikiCliffStateFP4Piki
-exec__14PikiCliffStateFP4Piki:
+.fn exec__14PikiCliffStateFP4Piki, global
 /* 800D43B4 000D1314  7C 08 02 A6 */	mflr r0
 /* 800D43B8 000D1318  90 01 00 04 */	stw r0, 4(r1)
 /* 800D43BC 000D131C  94 21 FF F8 */	stwu r1, -8(r1)
@@ -5870,9 +5869,9 @@ exec__14PikiCliffStateFP4Piki:
 /* 800D43E4 000D1344  38 21 00 08 */	addi r1, r1, 8
 /* 800D43E8 000D1348  7C 08 03 A6 */	mtlr r0
 /* 800D43EC 000D134C  4E 80 00 20 */	blr 
+.endfn exec__14PikiCliffStateFP4Piki
 
-.global nearEnough__14PikiCliffStateFP4Piki
-nearEnough__14PikiCliffStateFP4Piki:
+.fn nearEnough__14PikiCliffStateFP4Piki, global
 /* 800D43F0 000D1350  7C 08 02 A6 */	mflr r0
 /* 800D43F4 000D1354  90 01 00 04 */	stw r0, 4(r1)
 /* 800D43F8 000D1358  94 21 FF A0 */	stwu r1, -0x60(r1)
@@ -5983,9 +5982,9 @@ nearEnough__14PikiCliffStateFP4Piki:
 /* 800D4588 000D14E8  38 21 00 60 */	addi r1, r1, 0x60
 /* 800D458C 000D14EC  7C 08 03 A6 */	mtlr r0
 /* 800D4590 000D14F0  4E 80 00 20 */	blr 
+.endfn nearEnough__14PikiCliffStateFP4Piki
 
-.global procAnimMsg__14PikiCliffStateFP4PikiP7MsgAnim
-procAnimMsg__14PikiCliffStateFP4PikiP7MsgAnim:
+.fn procAnimMsg__14PikiCliffStateFP4PikiP7MsgAnim, global
 /* 800D4594 000D14F4  7C 08 02 A6 */	mflr r0
 /* 800D4598 000D14F8  90 01 00 04 */	stw r0, 4(r1)
 /* 800D459C 000D14FC  94 21 FF 60 */	stwu r1, -0xa0(r1)
@@ -6303,13 +6302,13 @@ procAnimMsg__14PikiCliffStateFP4PikiP7MsgAnim:
 /* 800D4A2C 000D198C  38 21 00 A0 */	addi r1, r1, 0xa0
 /* 800D4A30 000D1990  7C 08 03 A6 */	mtlr r0
 /* 800D4A34 000D1994  4E 80 00 20 */	blr 
+.endfn procAnimMsg__14PikiCliffStateFP4PikiP7MsgAnim
 
-.global cleanup__14PikiCliffStateFP4Piki
-cleanup__14PikiCliffStateFP4Piki:
+.fn cleanup__14PikiCliffStateFP4Piki, global
 /* 800D4A38 000D1998  4E 80 00 20 */	blr 
+.endfn cleanup__14PikiCliffStateFP4Piki
 
-.global __ct__15PikiGoHangStateFv
-__ct__15PikiGoHangStateFv:
+.fn __ct__15PikiGoHangStateFv, global
 /* 800D4A3C 000D199C  3C 80 80 2C */	lis r4, "__vt__15Receiver<4Piki>"@ha
 /* 800D4A40 000D19A0  38 04 81 F8 */	addi r0, r4, "__vt__15Receiver<4Piki>"@l
 /* 800D4A44 000D19A4  3C 80 80 2C */	lis r4, "__vt__13AState<4Piki>"@ha
@@ -6329,9 +6328,9 @@ __ct__15PikiGoHangStateFv:
 /* 800D4A7C 000D19DC  90 A3 00 0C */	stw r5, 0xc(r3)
 /* 800D4A80 000D19E0  90 03 00 00 */	stw r0, 0(r3)
 /* 800D4A84 000D19E4  4E 80 00 20 */	blr 
+.endfn __ct__15PikiGoHangStateFv
 
-.global init__15PikiGoHangStateFP4Piki
-init__15PikiGoHangStateFP4Piki:
+.fn init__15PikiGoHangStateFP4Piki, global
 /* 800D4A88 000D19E8  7C 08 02 A6 */	mflr r0
 /* 800D4A8C 000D19EC  90 01 00 04 */	stw r0, 4(r1)
 /* 800D4A90 000D19F0  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -6355,9 +6354,9 @@ init__15PikiGoHangStateFP4Piki:
 /* 800D4AD8 000D1A38  38 21 00 28 */	addi r1, r1, 0x28
 /* 800D4ADC 000D1A3C  7C 08 03 A6 */	mtlr r0
 /* 800D4AE0 000D1A40  4E 80 00 20 */	blr 
+.endfn init__15PikiGoHangStateFP4Piki
 
-.global exec__15PikiGoHangStateFP4Piki
-exec__15PikiGoHangStateFP4Piki:
+.fn exec__15PikiGoHangStateFP4Piki, global
 /* 800D4AE4 000D1A44  7C 08 02 A6 */	mflr r0
 /* 800D4AE8 000D1A48  90 01 00 04 */	stw r0, 4(r1)
 /* 800D4AEC 000D1A4C  94 21 FF 10 */	stwu r1, -0xf0(r1)
@@ -6454,13 +6453,13 @@ exec__15PikiGoHangStateFP4Piki:
 /* 800D4C4C 000D1BAC  38 21 00 F0 */	addi r1, r1, 0xf0
 /* 800D4C50 000D1BB0  7C 08 03 A6 */	mtlr r0
 /* 800D4C54 000D1BB4  4E 80 00 20 */	blr 
+.endfn exec__15PikiGoHangStateFP4Piki
 
-.global cleanup__15PikiGoHangStateFP4Piki
-cleanup__15PikiGoHangStateFP4Piki:
+.fn cleanup__15PikiGoHangStateFP4Piki, global
 /* 800D4C58 000D1BB8  4E 80 00 20 */	blr 
+.endfn cleanup__15PikiGoHangStateFP4Piki
 
-.global __ct__15PikiHangedStateFv
-__ct__15PikiHangedStateFv:
+.fn __ct__15PikiHangedStateFv, global
 /* 800D4C5C 000D1BBC  3C 80 80 2C */	lis r4, "__vt__15Receiver<4Piki>"@ha
 /* 800D4C60 000D1BC0  38 04 81 F8 */	addi r0, r4, "__vt__15Receiver<4Piki>"@l
 /* 800D4C64 000D1BC4  3C 80 80 2C */	lis r4, "__vt__13AState<4Piki>"@ha
@@ -6480,9 +6479,9 @@ __ct__15PikiHangedStateFv:
 /* 800D4C9C 000D1BFC  90 A3 00 0C */	stw r5, 0xc(r3)
 /* 800D4CA0 000D1C00  90 03 00 00 */	stw r0, 0(r3)
 /* 800D4CA4 000D1C04  4E 80 00 20 */	blr 
+.endfn __ct__15PikiHangedStateFv
 
-.global procAnimMsg__15PikiHangedStateFP4PikiP7MsgAnim
-procAnimMsg__15PikiHangedStateFP4PikiP7MsgAnim:
+.fn procAnimMsg__15PikiHangedStateFP4PikiP7MsgAnim, global
 /* 800D4CA8 000D1C08  7C 08 02 A6 */	mflr r0
 /* 800D4CAC 000D1C0C  90 01 00 04 */	stw r0, 4(r1)
 /* 800D4CB0 000D1C10  94 21 FF F8 */	stwu r1, -8(r1)
@@ -6499,9 +6498,9 @@ procAnimMsg__15PikiHangedStateFP4PikiP7MsgAnim:
 /* 800D4CD4 000D1C34  38 21 00 08 */	addi r1, r1, 8
 /* 800D4CD8 000D1C38  7C 08 03 A6 */	mtlr r0
 /* 800D4CDC 000D1C3C  4E 80 00 20 */	blr 
+.endfn procAnimMsg__15PikiHangedStateFP4PikiP7MsgAnim
 
-.global init__15PikiHangedStateFP4Piki
-init__15PikiHangedStateFP4Piki:
+.fn init__15PikiHangedStateFP4Piki, global
 /* 800D4CE0 000D1C40  7C 08 02 A6 */	mflr r0
 /* 800D4CE4 000D1C44  90 01 00 04 */	stw r0, 4(r1)
 /* 800D4CE8 000D1C48  94 21 FF D0 */	stwu r1, -0x30(r1)
@@ -6548,9 +6547,9 @@ init__15PikiHangedStateFP4Piki:
 /* 800D4D88 000D1CE8  38 21 00 30 */	addi r1, r1, 0x30
 /* 800D4D8C 000D1CEC  7C 08 03 A6 */	mtlr r0
 /* 800D4D90 000D1CF0  4E 80 00 20 */	blr 
+.endfn init__15PikiHangedStateFP4Piki
 
-.global exec__15PikiHangedStateFP4Piki
-exec__15PikiHangedStateFP4Piki:
+.fn exec__15PikiHangedStateFP4Piki, global
 /* 800D4D94 000D1CF4  7C 08 02 A6 */	mflr r0
 /* 800D4D98 000D1CF8  90 01 00 04 */	stw r0, 4(r1)
 /* 800D4D9C 000D1CFC  94 21 FF F8 */	stwu r1, -8(r1)
@@ -6569,9 +6568,9 @@ exec__15PikiHangedStateFP4Piki:
 /* 800D4DCC 000D1D2C  38 21 00 08 */	addi r1, r1, 8
 /* 800D4DD0 000D1D30  7C 08 03 A6 */	mtlr r0
 /* 800D4DD4 000D1D34  4E 80 00 20 */	blr 
+.endfn exec__15PikiHangedStateFP4Piki
 
-.global cleanup__15PikiHangedStateFP4Piki
-cleanup__15PikiHangedStateFP4Piki:
+.fn cleanup__15PikiHangedStateFP4Piki, global
 /* 800D4DD8 000D1D38  7C 08 02 A6 */	mflr r0
 /* 800D4DDC 000D1D3C  38 60 01 44 */	li r3, 0x144
 /* 800D4DE0 000D1D40  90 01 00 04 */	stw r0, 4(r1)
@@ -6581,9 +6580,9 @@ cleanup__15PikiHangedStateFP4Piki:
 /* 800D4DF0 000D1D50  38 21 00 08 */	addi r1, r1, 8
 /* 800D4DF4 000D1D54  7C 08 03 A6 */	mtlr r0
 /* 800D4DF8 000D1D58  4E 80 00 20 */	blr 
+.endfn cleanup__15PikiHangedStateFP4Piki
 
-.global __ct__20PikiWaterHangedStateFv
-__ct__20PikiWaterHangedStateFv:
+.fn __ct__20PikiWaterHangedStateFv, global
 /* 800D4DFC 000D1D5C  3C 80 80 2C */	lis r4, "__vt__15Receiver<4Piki>"@ha
 /* 800D4E00 000D1D60  38 04 81 F8 */	addi r0, r4, "__vt__15Receiver<4Piki>"@l
 /* 800D4E04 000D1D64  3C 80 80 2C */	lis r4, "__vt__13AState<4Piki>"@ha
@@ -6604,9 +6603,9 @@ __ct__20PikiWaterHangedStateFv:
 /* 800D4E40 000D1DA0  90 A3 00 0C */	stw r5, 0xc(r3)
 /* 800D4E44 000D1DA4  90 03 00 00 */	stw r0, 0(r3)
 /* 800D4E48 000D1DA8  4E 80 00 20 */	blr 
+.endfn __ct__20PikiWaterHangedStateFv
 
-.global procAnimMsg__20PikiWaterHangedStateFP4PikiP7MsgAnim
-procAnimMsg__20PikiWaterHangedStateFP4PikiP7MsgAnim:
+.fn procAnimMsg__20PikiWaterHangedStateFP4PikiP7MsgAnim, global
 /* 800D4E4C 000D1DAC  7C 08 02 A6 */	mflr r0
 /* 800D4E50 000D1DB0  90 01 00 04 */	stw r0, 4(r1)
 /* 800D4E54 000D1DB4  94 21 FF F8 */	stwu r1, -8(r1)
@@ -6623,9 +6622,9 @@ procAnimMsg__20PikiWaterHangedStateFP4PikiP7MsgAnim:
 /* 800D4E78 000D1DD8  38 21 00 08 */	addi r1, r1, 8
 /* 800D4E7C 000D1DDC  7C 08 03 A6 */	mtlr r0
 /* 800D4E80 000D1DE0  4E 80 00 20 */	blr 
+.endfn procAnimMsg__20PikiWaterHangedStateFP4PikiP7MsgAnim
 
-.global init__20PikiWaterHangedStateFP4Piki
-init__20PikiWaterHangedStateFP4Piki:
+.fn init__20PikiWaterHangedStateFP4Piki, global
 /* 800D4E84 000D1DE4  7C 08 02 A6 */	mflr r0
 /* 800D4E88 000D1DE8  90 01 00 04 */	stw r0, 4(r1)
 /* 800D4E8C 000D1DEC  94 21 FF D0 */	stwu r1, -0x30(r1)
@@ -6672,9 +6671,9 @@ init__20PikiWaterHangedStateFP4Piki:
 /* 800D4F2C 000D1E8C  38 21 00 30 */	addi r1, r1, 0x30
 /* 800D4F30 000D1E90  7C 08 03 A6 */	mtlr r0
 /* 800D4F34 000D1E94  4E 80 00 20 */	blr 
+.endfn init__20PikiWaterHangedStateFP4Piki
 
-.global exec__20PikiWaterHangedStateFP4Piki
-exec__20PikiWaterHangedStateFP4Piki:
+.fn exec__20PikiWaterHangedStateFP4Piki, global
 /* 800D4F38 000D1E98  7C 08 02 A6 */	mflr r0
 /* 800D4F3C 000D1E9C  90 01 00 04 */	stw r0, 4(r1)
 /* 800D4F40 000D1EA0  94 21 FF F8 */	stwu r1, -8(r1)
@@ -6693,9 +6692,9 @@ exec__20PikiWaterHangedStateFP4Piki:
 /* 800D4F70 000D1ED0  38 21 00 08 */	addi r1, r1, 8
 /* 800D4F74 000D1ED4  7C 08 03 A6 */	mtlr r0
 /* 800D4F78 000D1ED8  4E 80 00 20 */	blr 
+.endfn exec__20PikiWaterHangedStateFP4Piki
 
-.global cleanup__20PikiWaterHangedStateFP4Piki
-cleanup__20PikiWaterHangedStateFP4Piki:
+.fn cleanup__20PikiWaterHangedStateFP4Piki, global
 /* 800D4F7C 000D1EDC  7C 08 02 A6 */	mflr r0
 /* 800D4F80 000D1EE0  38 60 01 44 */	li r3, 0x144
 /* 800D4F84 000D1EE4  90 01 00 04 */	stw r0, 4(r1)
@@ -6705,9 +6704,9 @@ cleanup__20PikiWaterHangedStateFP4Piki:
 /* 800D4F94 000D1EF4  38 21 00 08 */	addi r1, r1, 8
 /* 800D4F98 000D1EF8  7C 08 03 A6 */	mtlr r0
 /* 800D4F9C 000D1EFC  4E 80 00 20 */	blr 
+.endfn cleanup__20PikiWaterHangedStateFP4Piki
 
-.global __ct__13PikiEmitStateFv
-__ct__13PikiEmitStateFv:
+.fn __ct__13PikiEmitStateFv, global
 /* 800D4FA0 000D1F00  3C 80 80 2C */	lis r4, "__vt__15Receiver<4Piki>"@ha
 /* 800D4FA4 000D1F04  38 04 81 F8 */	addi r0, r4, "__vt__15Receiver<4Piki>"@l
 /* 800D4FA8 000D1F08  3C 80 80 2C */	lis r4, "__vt__13AState<4Piki>"@ha
@@ -6727,9 +6726,9 @@ __ct__13PikiEmitStateFv:
 /* 800D4FE0 000D1F40  90 A3 00 0C */	stw r5, 0xc(r3)
 /* 800D4FE4 000D1F44  90 03 00 00 */	stw r0, 0(r3)
 /* 800D4FE8 000D1F48  4E 80 00 20 */	blr 
+.endfn __ct__13PikiEmitStateFv
 
-.global init__13PikiEmitStateFP4Piki
-init__13PikiEmitStateFP4Piki:
+.fn init__13PikiEmitStateFP4Piki, global
 /* 800D4FEC 000D1F4C  7C 08 02 A6 */	mflr r0
 /* 800D4FF0 000D1F50  90 01 00 04 */	stw r0, 4(r1)
 /* 800D4FF4 000D1F54  94 21 FF D0 */	stwu r1, -0x30(r1)
@@ -6772,9 +6771,9 @@ init__13PikiEmitStateFP4Piki:
 /* 800D5084 000D1FE4  38 21 00 30 */	addi r1, r1, 0x30
 /* 800D5088 000D1FE8  7C 08 03 A6 */	mtlr r0
 /* 800D508C 000D1FEC  4E 80 00 20 */	blr 
+.endfn init__13PikiEmitStateFP4Piki
 
-.global exec__13PikiEmitStateFP4Piki
-exec__13PikiEmitStateFP4Piki:
+.fn exec__13PikiEmitStateFP4Piki, global
 /* 800D5090 000D1FF0  88 03 00 10 */	lbz r0, 0x10(r3)
 /* 800D5094 000D1FF4  28 00 00 00 */	cmplwi r0, 0
 /* 800D5098 000D1FF8  4C 82 00 20 */	bnelr 
@@ -6791,16 +6790,16 @@ exec__13PikiEmitStateFP4Piki:
 /* 800D50C4 000D2024  C0 0D C1 CC */	lfs f0, lbl_803E0EEC@sda21(r13)
 /* 800D50C8 000D2028  D0 04 00 AC */	stfs f0, 0xac(r4)
 /* 800D50CC 000D202C  4E 80 00 20 */	blr 
+.endfn exec__13PikiEmitStateFP4Piki
 
-.global cleanup__13PikiEmitStateFP4Piki
-cleanup__13PikiEmitStateFP4Piki:
+.fn cleanup__13PikiEmitStateFP4Piki, global
 /* 800D50D0 000D2030  80 04 00 C8 */	lwz r0, 0xc8(r4)
 /* 800D50D4 000D2034  54 00 05 66 */	rlwinm r0, r0, 0, 0x15, 0x13
 /* 800D50D8 000D2038  90 04 00 C8 */	stw r0, 0xc8(r4)
 /* 800D50DC 000D203C  4E 80 00 20 */	blr 
+.endfn cleanup__13PikiEmitStateFP4Piki
 
-.global procBounceMsg__13PikiEmitStateFP4PikiP9MsgBounce
-procBounceMsg__13PikiEmitStateFP4PikiP9MsgBounce:
+.fn procBounceMsg__13PikiEmitStateFP4PikiP9MsgBounce, global
 /* 800D50E0 000D2040  7C 08 02 A6 */	mflr r0
 /* 800D50E4 000D2044  90 01 00 04 */	stw r0, 4(r1)
 /* 800D50E8 000D2048  94 21 FF C8 */	stwu r1, -0x38(r1)
@@ -6838,9 +6837,9 @@ procBounceMsg__13PikiEmitStateFP4PikiP9MsgBounce:
 /* 800D5160 000D20C0  38 21 00 38 */	addi r1, r1, 0x38
 /* 800D5164 000D20C4  7C 08 03 A6 */	mtlr r0
 /* 800D5168 000D20C8  4E 80 00 20 */	blr 
+.endfn procBounceMsg__13PikiEmitStateFP4PikiP9MsgBounce
 
-.global procAnimMsg__13PikiEmitStateFP4PikiP7MsgAnim
-procAnimMsg__13PikiEmitStateFP4PikiP7MsgAnim:
+.fn procAnimMsg__13PikiEmitStateFP4PikiP7MsgAnim, global
 /* 800D516C 000D20CC  7C 08 02 A6 */	mflr r0
 /* 800D5170 000D20D0  90 01 00 04 */	stw r0, 4(r1)
 /* 800D5174 000D20D4  94 21 FF C8 */	stwu r1, -0x38(r1)
@@ -6890,9 +6889,9 @@ procAnimMsg__13PikiEmitStateFP4PikiP7MsgAnim:
 /* 800D5214 000D2174  38 21 00 38 */	addi r1, r1, 0x38
 /* 800D5218 000D2178  7C 08 03 A6 */	mtlr r0
 /* 800D521C 000D217C  4E 80 00 20 */	blr 
+.endfn procAnimMsg__13PikiEmitStateFP4PikiP7MsgAnim
 
-.global __ct__15PikiFlyingStateFv
-__ct__15PikiFlyingStateFv:
+.fn __ct__15PikiFlyingStateFv, global
 /* 800D5220 000D2180  7C 08 02 A6 */	mflr r0
 /* 800D5224 000D2184  3C 80 80 2C */	lis r4, "__vt__15Receiver<4Piki>"@ha
 /* 800D5228 000D2188  90 01 00 04 */	stw r0, 4(r1)
@@ -6928,9 +6927,9 @@ __ct__15PikiFlyingStateFv:
 /* 800D52A0 000D2200  38 21 00 18 */	addi r1, r1, 0x18
 /* 800D52A4 000D2204  7C 08 03 A6 */	mtlr r0
 /* 800D52A8 000D2208  4E 80 00 20 */	blr 
+.endfn __ct__15PikiFlyingStateFv
 
-.global stopEffect__15PikiFlyingStateFv
-stopEffect__15PikiFlyingStateFv:
+.fn stopEffect__15PikiFlyingStateFv, global
 /* 800D52AC 000D220C  7C 08 02 A6 */	mflr r0
 /* 800D52B0 000D2210  38 63 00 10 */	addi r3, r3, 0x10
 /* 800D52B4 000D2214  90 01 00 04 */	stw r0, 4(r1)
@@ -6940,9 +6939,9 @@ stopEffect__15PikiFlyingStateFv:
 /* 800D52C4 000D2224  38 21 00 08 */	addi r1, r1, 8
 /* 800D52C8 000D2228  7C 08 03 A6 */	mtlr r0
 /* 800D52CC 000D222C  4E 80 00 20 */	blr 
+.endfn stopEffect__15PikiFlyingStateFv
 
-.global restartEffect__15PikiFlyingStateFv
-restartEffect__15PikiFlyingStateFv:
+.fn restartEffect__15PikiFlyingStateFv, global
 /* 800D52D0 000D2230  7C 08 02 A6 */	mflr r0
 /* 800D52D4 000D2234  38 63 00 10 */	addi r3, r3, 0x10
 /* 800D52D8 000D2238  90 01 00 04 */	stw r0, 4(r1)
@@ -6952,9 +6951,9 @@ restartEffect__15PikiFlyingStateFv:
 /* 800D52E8 000D2248  38 21 00 08 */	addi r1, r1, 8
 /* 800D52EC 000D224C  7C 08 03 A6 */	mtlr r0
 /* 800D52F0 000D2250  4E 80 00 20 */	blr 
+.endfn restartEffect__15PikiFlyingStateFv
 
-.global init__15PikiFlyingStateFP4Piki
-init__15PikiFlyingStateFP4Piki:
+.fn init__15PikiFlyingStateFP4Piki, global
 /* 800D52F4 000D2254  7C 08 02 A6 */	mflr r0
 /* 800D52F8 000D2258  90 01 00 04 */	stw r0, 4(r1)
 /* 800D52FC 000D225C  94 21 FF C8 */	stwu r1, -0x38(r1)
@@ -6999,9 +6998,9 @@ init__15PikiFlyingStateFP4Piki:
 /* 800D5398 000D22F8  38 21 00 38 */	addi r1, r1, 0x38
 /* 800D539C 000D22FC  7C 08 03 A6 */	mtlr r0
 /* 800D53A0 000D2300  4E 80 00 20 */	blr 
+.endfn init__15PikiFlyingStateFP4Piki
 
-.global exec__15PikiFlyingStateFP4Piki
-exec__15PikiFlyingStateFP4Piki:
+.fn exec__15PikiFlyingStateFP4Piki, global
 /* 800D53A4 000D2304  7C 08 02 A6 */	mflr r0
 /* 800D53A8 000D2308  90 01 00 04 */	stw r0, 4(r1)
 /* 800D53AC 000D230C  94 21 FE F0 */	stwu r1, -0x110(r1)
@@ -7255,9 +7254,9 @@ exec__15PikiFlyingStateFP4Piki:
 /* 800D5758 000D26B8  38 21 01 10 */	addi r1, r1, 0x110
 /* 800D575C 000D26BC  7C 08 03 A6 */	mtlr r0
 /* 800D5760 000D26C0  4E 80 00 20 */	blr 
+.endfn exec__15PikiFlyingStateFP4Piki
 
-.global cleanup__15PikiFlyingStateFP4Piki
-cleanup__15PikiFlyingStateFP4Piki:
+.fn cleanup__15PikiFlyingStateFP4Piki, global
 /* 800D5764 000D26C4  7C 08 02 A6 */	mflr r0
 /* 800D5768 000D26C8  38 63 00 10 */	addi r3, r3, 0x10
 /* 800D576C 000D26CC  90 01 00 04 */	stw r0, 4(r1)
@@ -7275,9 +7274,9 @@ cleanup__15PikiFlyingStateFP4Piki:
 /* 800D579C 000D26FC  38 21 00 18 */	addi r1, r1, 0x18
 /* 800D57A0 000D2700  7C 08 03 A6 */	mtlr r0
 /* 800D57A4 000D2704  4E 80 00 20 */	blr 
+.endfn cleanup__15PikiFlyingStateFP4Piki
 
-.global procCollideMsg__15PikiFlyingStateFP4PikiP10MsgCollide
-procCollideMsg__15PikiFlyingStateFP4PikiP10MsgCollide:
+.fn procCollideMsg__15PikiFlyingStateFP4PikiP10MsgCollide, global
 /* 800D57A8 000D2708  7C 08 02 A6 */	mflr r0
 /* 800D57AC 000D270C  90 01 00 04 */	stw r0, 4(r1)
 /* 800D57B0 000D2710  94 21 FE E0 */	stwu r1, -0x120(r1)
@@ -7743,13 +7742,13 @@ procCollideMsg__15PikiFlyingStateFP4PikiP10MsgCollide:
 /* 800D5E78 000D2DD8  38 21 01 20 */	addi r1, r1, 0x120
 /* 800D5E7C 000D2DDC  7C 08 03 A6 */	mtlr r0
 /* 800D5E80 000D2DE0  4E 80 00 20 */	blr 
+.endfn procCollideMsg__15PikiFlyingStateFP4PikiP10MsgCollide
 
-.global procStickMsg__15PikiFlyingStateFP4PikiP8MsgStick
-procStickMsg__15PikiFlyingStateFP4PikiP8MsgStick:
+.fn procStickMsg__15PikiFlyingStateFP4PikiP8MsgStick, global
 /* 800D5E84 000D2DE4  4E 80 00 20 */	blr 
+.endfn procStickMsg__15PikiFlyingStateFP4PikiP8MsgStick
 
-.global procBounceMsg__15PikiFlyingStateFP4PikiP9MsgBounce
-procBounceMsg__15PikiFlyingStateFP4PikiP9MsgBounce:
+.fn procBounceMsg__15PikiFlyingStateFP4PikiP9MsgBounce, global
 /* 800D5E88 000D2DE8  7C 08 02 A6 */	mflr r0
 /* 800D5E8C 000D2DEC  90 01 00 04 */	stw r0, 4(r1)
 /* 800D5E90 000D2DF0  94 21 FF B0 */	stwu r1, -0x50(r1)
@@ -7811,9 +7810,9 @@ procBounceMsg__15PikiFlyingStateFP4PikiP9MsgBounce:
 /* 800D5F64 000D2EC4  38 21 00 50 */	addi r1, r1, 0x50
 /* 800D5F68 000D2EC8  7C 08 03 A6 */	mtlr r0
 /* 800D5F6C 000D2ECC  4E 80 00 20 */	blr 
+.endfn procBounceMsg__15PikiFlyingStateFP4PikiP9MsgBounce
 
-.global __ct__13PikiGrowStateFv
-__ct__13PikiGrowStateFv:
+.fn __ct__13PikiGrowStateFv, global
 /* 800D5F70 000D2ED0  3C 80 80 2C */	lis r4, "__vt__15Receiver<4Piki>"@ha
 /* 800D5F74 000D2ED4  38 04 81 F8 */	addi r0, r4, "__vt__15Receiver<4Piki>"@l
 /* 800D5F78 000D2ED8  3C 80 80 2C */	lis r4, "__vt__13AState<4Piki>"@ha
@@ -7833,9 +7832,9 @@ __ct__13PikiGrowStateFv:
 /* 800D5FB0 000D2F10  90 A3 00 0C */	stw r5, 0xc(r3)
 /* 800D5FB4 000D2F14  90 03 00 00 */	stw r0, 0(r3)
 /* 800D5FB8 000D2F18  4E 80 00 20 */	blr 
+.endfn __ct__13PikiGrowStateFv
 
-.global init__13PikiGrowStateFP4Piki
-init__13PikiGrowStateFP4Piki:
+.fn init__13PikiGrowStateFP4Piki, global
 /* 800D5FBC 000D2F1C  7C 08 02 A6 */	mflr r0
 /* 800D5FC0 000D2F20  90 01 00 04 */	stw r0, 4(r1)
 /* 800D5FC4 000D2F24  94 21 FF D0 */	stwu r1, -0x30(r1)
@@ -7868,17 +7867,17 @@ init__13PikiGrowStateFP4Piki:
 /* 800D602C 000D2F8C  38 21 00 30 */	addi r1, r1, 0x30
 /* 800D6030 000D2F90  7C 08 03 A6 */	mtlr r0
 /* 800D6034 000D2F94  4E 80 00 20 */	blr 
+.endfn init__13PikiGrowStateFP4Piki
 
-.global exec__13PikiGrowStateFP4Piki
-exec__13PikiGrowStateFP4Piki:
+.fn exec__13PikiGrowStateFP4Piki, global
 /* 800D6038 000D2F98  4E 80 00 20 */	blr 
+.endfn exec__13PikiGrowStateFP4Piki
 
-.global cleanup__13PikiGrowStateFP4Piki
-cleanup__13PikiGrowStateFP4Piki:
+.fn cleanup__13PikiGrowStateFP4Piki, global
 /* 800D603C 000D2F9C  4E 80 00 20 */	blr 
+.endfn cleanup__13PikiGrowStateFP4Piki
 
-.global procAnimMsg__13PikiGrowStateFP4PikiP7MsgAnim
-procAnimMsg__13PikiGrowStateFP4PikiP7MsgAnim:
+.fn procAnimMsg__13PikiGrowStateFP4PikiP7MsgAnim, global
 /* 800D6040 000D2FA0  7C 08 02 A6 */	mflr r0
 /* 800D6044 000D2FA4  90 01 00 04 */	stw r0, 4(r1)
 /* 800D6048 000D2FA8  94 21 FF F8 */	stwu r1, -8(r1)
@@ -7898,9 +7897,9 @@ procAnimMsg__13PikiGrowStateFP4PikiP7MsgAnim:
 /* 800D6078 000D2FD8  38 21 00 08 */	addi r1, r1, 8
 /* 800D607C 000D2FDC  7C 08 03 A6 */	mtlr r0
 /* 800D6080 000D2FE0  4E 80 00 20 */	blr 
+.endfn procAnimMsg__13PikiGrowStateFP4PikiP7MsgAnim
 
-.global __ct__21PikiKinokoChangeStateFv
-__ct__21PikiKinokoChangeStateFv:
+.fn __ct__21PikiKinokoChangeStateFv, global
 /* 800D6084 000D2FE4  3C 80 80 2C */	lis r4, "__vt__15Receiver<4Piki>"@ha
 /* 800D6088 000D2FE8  38 04 81 F8 */	addi r0, r4, "__vt__15Receiver<4Piki>"@l
 /* 800D608C 000D2FEC  3C 80 80 2C */	lis r4, "__vt__13AState<4Piki>"@ha
@@ -7921,9 +7920,9 @@ __ct__21PikiKinokoChangeStateFv:
 /* 800D60C8 000D3028  90 A3 00 0C */	stw r5, 0xc(r3)
 /* 800D60CC 000D302C  90 03 00 00 */	stw r0, 0(r3)
 /* 800D60D0 000D3030  4E 80 00 20 */	blr 
+.endfn __ct__21PikiKinokoChangeStateFv
 
-.global init__21PikiKinokoChangeStateFP4Piki
-init__21PikiKinokoChangeStateFP4Piki:
+.fn init__21PikiKinokoChangeStateFP4Piki, global
 /* 800D60D4 000D3034  7C 08 02 A6 */	mflr r0
 /* 800D60D8 000D3038  90 01 00 04 */	stw r0, 4(r1)
 /* 800D60DC 000D303C  94 21 FF D0 */	stwu r1, -0x30(r1)
@@ -7970,9 +7969,9 @@ init__21PikiKinokoChangeStateFP4Piki:
 /* 800D6174 000D30D4  38 21 00 30 */	addi r1, r1, 0x30
 /* 800D6178 000D30D8  7C 08 03 A6 */	mtlr r0
 /* 800D617C 000D30DC  4E 80 00 20 */	blr 
+.endfn init__21PikiKinokoChangeStateFP4Piki
 
-.global restart__21PikiKinokoChangeStateFP4Piki
-restart__21PikiKinokoChangeStateFP4Piki:
+.fn restart__21PikiKinokoChangeStateFP4Piki, global
 /* 800D6180 000D30E0  7C 08 02 A6 */	mflr r0
 /* 800D6184 000D30E4  90 01 00 04 */	stw r0, 4(r1)
 /* 800D6188 000D30E8  94 21 FF F8 */	stwu r1, -8(r1)
@@ -7984,9 +7983,9 @@ restart__21PikiKinokoChangeStateFP4Piki:
 /* 800D61A0 000D3100  38 21 00 08 */	addi r1, r1, 8
 /* 800D61A4 000D3104  7C 08 03 A6 */	mtlr r0
 /* 800D61A8 000D3108  4E 80 00 20 */	blr 
+.endfn restart__21PikiKinokoChangeStateFP4Piki
 
-.global exec__21PikiKinokoChangeStateFP4Piki
-exec__21PikiKinokoChangeStateFP4Piki:
+.fn exec__21PikiKinokoChangeStateFP4Piki, global
 /* 800D61AC 000D310C  7C 08 02 A6 */	mflr r0
 /* 800D61B0 000D3110  90 01 00 04 */	stw r0, 4(r1)
 /* 800D61B4 000D3114  94 21 FF F8 */	stwu r1, -8(r1)
@@ -8019,13 +8018,13 @@ exec__21PikiKinokoChangeStateFP4Piki:
 /* 800D6218 000D3178  38 21 00 08 */	addi r1, r1, 8
 /* 800D621C 000D317C  7C 08 03 A6 */	mtlr r0
 /* 800D6220 000D3180  4E 80 00 20 */	blr 
+.endfn exec__21PikiKinokoChangeStateFP4Piki
 
-.global cleanup__21PikiKinokoChangeStateFP4Piki
-cleanup__21PikiKinokoChangeStateFP4Piki:
+.fn cleanup__21PikiKinokoChangeStateFP4Piki, global
 /* 800D6224 000D3184  4E 80 00 20 */	blr 
+.endfn cleanup__21PikiKinokoChangeStateFP4Piki
 
-.global procAnimMsg__21PikiKinokoChangeStateFP4PikiP7MsgAnim
-procAnimMsg__21PikiKinokoChangeStateFP4PikiP7MsgAnim:
+.fn procAnimMsg__21PikiKinokoChangeStateFP4PikiP7MsgAnim, global
 /* 800D6228 000D3188  7C 08 02 A6 */	mflr r0
 /* 800D622C 000D318C  90 01 00 04 */	stw r0, 4(r1)
 /* 800D6230 000D3190  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -8067,9 +8066,9 @@ procAnimMsg__21PikiKinokoChangeStateFP4PikiP7MsgAnim:
 /* 800D62B0 000D3210  38 21 00 20 */	addi r1, r1, 0x20
 /* 800D62B4 000D3214  7C 08 03 A6 */	mtlr r0
 /* 800D62B8 000D3218  4E 80 00 20 */	blr 
+.endfn procAnimMsg__21PikiKinokoChangeStateFP4PikiP7MsgAnim
 
-.global __ct__15PikiGrowupStateFv
-__ct__15PikiGrowupStateFv:
+.fn __ct__15PikiGrowupStateFv, global
 /* 800D62BC 000D321C  3C 80 80 2C */	lis r4, "__vt__15Receiver<4Piki>"@ha
 /* 800D62C0 000D3220  38 04 81 F8 */	addi r0, r4, "__vt__15Receiver<4Piki>"@l
 /* 800D62C4 000D3224  3C 80 80 2C */	lis r4, "__vt__13AState<4Piki>"@ha
@@ -8089,9 +8088,9 @@ __ct__15PikiGrowupStateFv:
 /* 800D62FC 000D325C  90 A3 00 0C */	stw r5, 0xc(r3)
 /* 800D6300 000D3260  90 03 00 00 */	stw r0, 0(r3)
 /* 800D6304 000D3264  4E 80 00 20 */	blr 
+.endfn __ct__15PikiGrowupStateFv
 
-.global init__15PikiGrowupStateFP4Piki
-init__15PikiGrowupStateFP4Piki:
+.fn init__15PikiGrowupStateFP4Piki, global
 /* 800D6308 000D3268  7C 08 02 A6 */	mflr r0
 /* 800D630C 000D326C  90 01 00 04 */	stw r0, 4(r1)
 /* 800D6310 000D3270  94 21 FF C0 */	stwu r1, -0x40(r1)
@@ -8146,9 +8145,9 @@ init__15PikiGrowupStateFP4Piki:
 /* 800D63C4 000D3324  38 21 00 40 */	addi r1, r1, 0x40
 /* 800D63C8 000D3328  7C 08 03 A6 */	mtlr r0
 /* 800D63CC 000D332C  4E 80 00 20 */	blr 
+.endfn init__15PikiGrowupStateFP4Piki
 
-.global exec__15PikiGrowupStateFP4Piki
-exec__15PikiGrowupStateFP4Piki:
+.fn exec__15PikiGrowupStateFP4Piki, global
 /* 800D63D0 000D3330  7C 08 02 A6 */	mflr r0
 /* 800D63D4 000D3334  90 01 00 04 */	stw r0, 4(r1)
 /* 800D63D8 000D3338  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -8188,13 +8187,13 @@ exec__15PikiGrowupStateFP4Piki:
 /* 800D645C 000D33BC  38 21 00 18 */	addi r1, r1, 0x18
 /* 800D6460 000D33C0  7C 08 03 A6 */	mtlr r0
 /* 800D6464 000D33C4  4E 80 00 20 */	blr 
+.endfn exec__15PikiGrowupStateFP4Piki
 
-.global cleanup__15PikiGrowupStateFP4Piki
-cleanup__15PikiGrowupStateFP4Piki:
+.fn cleanup__15PikiGrowupStateFP4Piki, global
 /* 800D6468 000D33C8  4E 80 00 20 */	blr 
+.endfn cleanup__15PikiGrowupStateFP4Piki
 
-.global procAnimMsg__15PikiGrowupStateFP4PikiP7MsgAnim
-procAnimMsg__15PikiGrowupStateFP4PikiP7MsgAnim:
+.fn procAnimMsg__15PikiGrowupStateFP4PikiP7MsgAnim, global
 /* 800D646C 000D33CC  7C 08 02 A6 */	mflr r0
 /* 800D6470 000D33D0  90 01 00 04 */	stw r0, 4(r1)
 /* 800D6474 000D33D4  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -8276,9 +8275,9 @@ procAnimMsg__15PikiGrowupStateFP4PikiP7MsgAnim:
 /* 800D6594 000D34F4  38 21 00 20 */	addi r1, r1, 0x20
 /* 800D6598 000D34F8  7C 08 03 A6 */	mtlr r0
 /* 800D659C 000D34FC  4E 80 00 20 */	blr 
+.endfn procAnimMsg__15PikiGrowupStateFP4PikiP7MsgAnim
 
-.global __ct__13PikiWaveStateFv
-__ct__13PikiWaveStateFv:
+.fn __ct__13PikiWaveStateFv, global
 /* 800D65A0 000D3500  3C 80 80 2C */	lis r4, "__vt__15Receiver<4Piki>"@ha
 /* 800D65A4 000D3504  38 04 81 F8 */	addi r0, r4, "__vt__15Receiver<4Piki>"@l
 /* 800D65A8 000D3508  3C 80 80 2C */	lis r4, "__vt__13AState<4Piki>"@ha
@@ -8298,21 +8297,21 @@ __ct__13PikiWaveStateFv:
 /* 800D65E0 000D3540  90 A3 00 0C */	stw r5, 0xc(r3)
 /* 800D65E4 000D3544  90 03 00 00 */	stw r0, 0(r3)
 /* 800D65E8 000D3548  4E 80 00 20 */	blr 
+.endfn __ct__13PikiWaveStateFv
 
-.global init__13PikiWaveStateFP4Piki
-init__13PikiWaveStateFP4Piki:
+.fn init__13PikiWaveStateFP4Piki, global
 /* 800D65EC 000D354C  4E 80 00 20 */	blr 
+.endfn init__13PikiWaveStateFP4Piki
 
-.global exec__13PikiWaveStateFP4Piki
-exec__13PikiWaveStateFP4Piki:
+.fn exec__13PikiWaveStateFP4Piki, global
 /* 800D65F0 000D3550  4E 80 00 20 */	blr 
+.endfn exec__13PikiWaveStateFP4Piki
 
-.global cleanup__13PikiWaveStateFP4Piki
-cleanup__13PikiWaveStateFP4Piki:
+.fn cleanup__13PikiWaveStateFP4Piki, global
 /* 800D65F4 000D3554  4E 80 00 20 */	blr 
+.endfn cleanup__13PikiWaveStateFP4Piki
 
-.global resume__13PikiWaveStateFP4Piki
-resume__13PikiWaveStateFP4Piki:
+.fn resume__13PikiWaveStateFP4Piki, global
 /* 800D65F8 000D3558  7C 08 02 A6 */	mflr r0
 /* 800D65FC 000D355C  38 A0 00 00 */	li r5, 0
 /* 800D6600 000D3560  90 01 00 04 */	stw r0, 4(r1)
@@ -8325,13 +8324,13 @@ resume__13PikiWaveStateFP4Piki:
 /* 800D661C 000D357C  38 21 00 08 */	addi r1, r1, 8
 /* 800D6620 000D3580  7C 08 03 A6 */	mtlr r0
 /* 800D6624 000D3584  4E 80 00 20 */	blr 
+.endfn resume__13PikiWaveStateFP4Piki
 
-.global restart__13PikiWaveStateFP4Piki
-restart__13PikiWaveStateFP4Piki:
+.fn restart__13PikiWaveStateFP4Piki, global
 /* 800D6628 000D3588  4E 80 00 20 */	blr 
+.endfn restart__13PikiWaveStateFP4Piki
 
-.global procAnimMsg__13PikiWaveStateFP4PikiP7MsgAnim
-procAnimMsg__13PikiWaveStateFP4PikiP7MsgAnim:
+.fn procAnimMsg__13PikiWaveStateFP4PikiP7MsgAnim, global
 /* 800D662C 000D358C  7C 08 02 A6 */	mflr r0
 /* 800D6630 000D3590  90 01 00 04 */	stw r0, 4(r1)
 /* 800D6634 000D3594  94 21 FF F8 */	stwu r1, -8(r1)
@@ -8352,9 +8351,9 @@ procAnimMsg__13PikiWaveStateFP4PikiP7MsgAnim:
 /* 800D6668 000D35C8  38 21 00 08 */	addi r1, r1, 8
 /* 800D666C 000D35CC  7C 08 03 A6 */	mtlr r0
 /* 800D6670 000D35D0  4E 80 00 20 */	blr 
+.endfn procAnimMsg__13PikiWaveStateFP4PikiP7MsgAnim
 
-.global __ct__13PikiPushStateFv
-__ct__13PikiPushStateFv:
+.fn __ct__13PikiPushStateFv, global
 /* 800D6674 000D35D4  3C 80 80 2C */	lis r4, "__vt__15Receiver<4Piki>"@ha
 /* 800D6678 000D35D8  38 04 81 F8 */	addi r0, r4, "__vt__15Receiver<4Piki>"@l
 /* 800D667C 000D35DC  3C 80 80 2C */	lis r4, "__vt__13AState<4Piki>"@ha
@@ -8374,9 +8373,9 @@ __ct__13PikiPushStateFv:
 /* 800D66B4 000D3614  90 A3 00 0C */	stw r5, 0xc(r3)
 /* 800D66B8 000D3618  90 03 00 00 */	stw r0, 0(r3)
 /* 800D66BC 000D361C  4E 80 00 20 */	blr 
+.endfn __ct__13PikiPushStateFv
 
-.global init__13PikiPushStateFP4Piki
-init__13PikiPushStateFP4Piki:
+.fn init__13PikiPushStateFP4Piki, global
 /* 800D66C0 000D3620  7C 08 02 A6 */	mflr r0
 /* 800D66C4 000D3624  90 01 00 04 */	stw r0, 4(r1)
 /* 800D66C8 000D3628  94 21 FF D0 */	stwu r1, -0x30(r1)
@@ -8412,9 +8411,9 @@ init__13PikiPushStateFP4Piki:
 /* 800D673C 000D369C  38 21 00 30 */	addi r1, r1, 0x30
 /* 800D6740 000D36A0  7C 08 03 A6 */	mtlr r0
 /* 800D6744 000D36A4  4E 80 00 20 */	blr 
+.endfn init__13PikiPushStateFP4Piki
 
-.global exec__13PikiPushStateFP4Piki
-exec__13PikiPushStateFP4Piki:
+.fn exec__13PikiPushStateFP4Piki, global
 /* 800D6748 000D36A8  7C 08 02 A6 */	mflr r0
 /* 800D674C 000D36AC  90 01 00 04 */	stw r0, 4(r1)
 /* 800D6750 000D36B0  94 21 FF 90 */	stwu r1, -0x70(r1)
@@ -8504,15 +8503,15 @@ exec__13PikiPushStateFP4Piki:
 /* 800D688C 000D37EC  38 21 00 70 */	addi r1, r1, 0x70
 /* 800D6890 000D37F0  7C 08 03 A6 */	mtlr r0
 /* 800D6894 000D37F4  4E 80 00 20 */	blr 
+.endfn exec__13PikiPushStateFP4Piki
 
-.global cleanup__13PikiPushStateFP4Piki
-cleanup__13PikiPushStateFP4Piki:
+.fn cleanup__13PikiPushStateFP4Piki, global
 /* 800D6898 000D37F8  38 00 00 00 */	li r0, 0
 /* 800D689C 000D37FC  90 04 04 E4 */	stw r0, 0x4e4(r4)
 /* 800D68A0 000D3800  4E 80 00 20 */	blr 
+.endfn cleanup__13PikiPushStateFP4Piki
 
-.global resume__13PikiPushStateFP4Piki
-resume__13PikiPushStateFP4Piki:
+.fn resume__13PikiPushStateFP4Piki, global
 /* 800D68A4 000D3804  7C 08 02 A6 */	mflr r0
 /* 800D68A8 000D3808  38 A0 00 00 */	li r5, 0
 /* 800D68AC 000D380C  90 01 00 04 */	stw r0, 4(r1)
@@ -8525,13 +8524,13 @@ resume__13PikiPushStateFP4Piki:
 /* 800D68C8 000D3828  38 21 00 08 */	addi r1, r1, 8
 /* 800D68CC 000D382C  7C 08 03 A6 */	mtlr r0
 /* 800D68D0 000D3830  4E 80 00 20 */	blr 
+.endfn resume__13PikiPushStateFP4Piki
 
-.global restart__13PikiPushStateFP4Piki
-restart__13PikiPushStateFP4Piki:
+.fn restart__13PikiPushStateFP4Piki, global
 /* 800D68D4 000D3834  4E 80 00 20 */	blr 
+.endfn restart__13PikiPushStateFP4Piki
 
-.global procOffWallMsg__13PikiPushStateFP4PikiP10MsgOffWall
-procOffWallMsg__13PikiPushStateFP4PikiP10MsgOffWall:
+.fn procOffWallMsg__13PikiPushStateFP4PikiP10MsgOffWall, global
 /* 800D68D8 000D3838  7C 08 02 A6 */	mflr r0
 /* 800D68DC 000D383C  28 04 00 00 */	cmplwi r4, 0
 /* 800D68E0 000D3840  90 01 00 04 */	stw r0, 4(r1)
@@ -8547,9 +8546,9 @@ procOffWallMsg__13PikiPushStateFP4PikiP10MsgOffWall:
 /* 800D6904 000D3864  38 21 00 08 */	addi r1, r1, 8
 /* 800D6908 000D3868  7C 08 03 A6 */	mtlr r0
 /* 800D690C 000D386C  4E 80 00 20 */	blr 
+.endfn procOffWallMsg__13PikiPushStateFP4PikiP10MsgOffWall
 
-.global procAnimMsg__13PikiPushStateFP4PikiP7MsgAnim
-procAnimMsg__13PikiPushStateFP4PikiP7MsgAnim:
+.fn procAnimMsg__13PikiPushStateFP4PikiP7MsgAnim, global
 /* 800D6910 000D3870  7C 08 02 A6 */	mflr r0
 /* 800D6914 000D3874  90 01 00 04 */	stw r0, 4(r1)
 /* 800D6918 000D3878  94 21 FF F8 */	stwu r1, -8(r1)
@@ -8583,9 +8582,9 @@ procAnimMsg__13PikiPushStateFP4PikiP7MsgAnim:
 /* 800D697C 000D38DC  38 21 00 08 */	addi r1, r1, 8
 /* 800D6980 000D38E0  7C 08 03 A6 */	mtlr r0
 /* 800D6984 000D38E4  4E 80 00 20 */	blr 
+.endfn procAnimMsg__13PikiPushStateFP4PikiP7MsgAnim
 
-.global __ct__17PikiPushPikiStateFv
-__ct__17PikiPushPikiStateFv:
+.fn __ct__17PikiPushPikiStateFv, global
 /* 800D6988 000D38E8  3C 80 80 2C */	lis r4, "__vt__15Receiver<4Piki>"@ha
 /* 800D698C 000D38EC  38 04 81 F8 */	addi r0, r4, "__vt__15Receiver<4Piki>"@l
 /* 800D6990 000D38F0  3C 80 80 2C */	lis r4, "__vt__13AState<4Piki>"@ha
@@ -8606,9 +8605,9 @@ __ct__17PikiPushPikiStateFv:
 /* 800D69CC 000D392C  90 A3 00 0C */	stw r5, 0xc(r3)
 /* 800D69D0 000D3930  90 03 00 00 */	stw r0, 0(r3)
 /* 800D69D4 000D3934  4E 80 00 20 */	blr 
+.endfn __ct__17PikiPushPikiStateFv
 
-.global init__17PikiPushPikiStateFP4Piki
-init__17PikiPushPikiStateFP4Piki:
+.fn init__17PikiPushPikiStateFP4Piki, global
 /* 800D69D8 000D3938  7C 08 02 A6 */	mflr r0
 /* 800D69DC 000D393C  90 01 00 04 */	stw r0, 4(r1)
 /* 800D69E0 000D3940  94 21 FF D0 */	stwu r1, -0x30(r1)
@@ -8646,9 +8645,9 @@ init__17PikiPushPikiStateFP4Piki:
 /* 800D6A5C 000D39BC  38 21 00 30 */	addi r1, r1, 0x30
 /* 800D6A60 000D39C0  7C 08 03 A6 */	mtlr r0
 /* 800D6A64 000D39C4  4E 80 00 20 */	blr 
+.endfn init__17PikiPushPikiStateFP4Piki
 
-.global exec__17PikiPushPikiStateFP4Piki
-exec__17PikiPushPikiStateFP4Piki:
+.fn exec__17PikiPushPikiStateFP4Piki, global
 /* 800D6A68 000D39C8  7C 08 02 A6 */	mflr r0
 /* 800D6A6C 000D39CC  90 01 00 04 */	stw r0, 4(r1)
 /* 800D6A70 000D39D0  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -8714,15 +8713,15 @@ exec__17PikiPushPikiStateFP4Piki:
 /* 800D6B50 000D3AB0  38 21 00 20 */	addi r1, r1, 0x20
 /* 800D6B54 000D3AB4  7C 08 03 A6 */	mtlr r0
 /* 800D6B58 000D3AB8  4E 80 00 20 */	blr 
+.endfn exec__17PikiPushPikiStateFP4Piki
 
-.global cleanup__17PikiPushPikiStateFP4Piki
-cleanup__17PikiPushPikiStateFP4Piki:
+.fn cleanup__17PikiPushPikiStateFP4Piki, global
 /* 800D6B5C 000D3ABC  38 00 00 00 */	li r0, 0
 /* 800D6B60 000D3AC0  90 04 04 DC */	stw r0, 0x4dc(r4)
 /* 800D6B64 000D3AC4  4E 80 00 20 */	blr 
+.endfn cleanup__17PikiPushPikiStateFP4Piki
 
-.global resume__17PikiPushPikiStateFP4Piki
-resume__17PikiPushPikiStateFP4Piki:
+.fn resume__17PikiPushPikiStateFP4Piki, global
 /* 800D6B68 000D3AC8  7C 08 02 A6 */	mflr r0
 /* 800D6B6C 000D3ACC  38 A0 00 00 */	li r5, 0
 /* 800D6B70 000D3AD0  90 01 00 04 */	stw r0, 4(r1)
@@ -8735,13 +8734,13 @@ resume__17PikiPushPikiStateFP4Piki:
 /* 800D6B8C 000D3AEC  38 21 00 08 */	addi r1, r1, 8
 /* 800D6B90 000D3AF0  7C 08 03 A6 */	mtlr r0
 /* 800D6B94 000D3AF4  4E 80 00 20 */	blr 
+.endfn resume__17PikiPushPikiStateFP4Piki
 
-.global restart__17PikiPushPikiStateFP4Piki
-restart__17PikiPushPikiStateFP4Piki:
+.fn restart__17PikiPushPikiStateFP4Piki, global
 /* 800D6B98 000D3AF8  4E 80 00 20 */	blr 
+.endfn restart__17PikiPushPikiStateFP4Piki
 
-.global procCollideMsg__17PikiPushPikiStateFP4PikiP10MsgCollide
-procCollideMsg__17PikiPushPikiStateFP4PikiP10MsgCollide:
+.fn procCollideMsg__17PikiPushPikiStateFP4PikiP10MsgCollide, global
 /* 800D6B9C 000D3AFC  7C 08 02 A6 */	mflr r0
 /* 800D6BA0 000D3B00  90 01 00 04 */	stw r0, 4(r1)
 /* 800D6BA4 000D3B04  94 21 FF C8 */	stwu r1, -0x38(r1)
@@ -8785,13 +8784,13 @@ procCollideMsg__17PikiPushPikiStateFP4PikiP10MsgCollide:
 /* 800D6C34 000D3B94  38 21 00 38 */	addi r1, r1, 0x38
 /* 800D6C38 000D3B98  7C 08 03 A6 */	mtlr r0
 /* 800D6C3C 000D3B9C  4E 80 00 20 */	blr 
+.endfn procCollideMsg__17PikiPushPikiStateFP4PikiP10MsgCollide
 
-.global procWallMsg__17PikiPushPikiStateFP4PikiP7MsgWall
-procWallMsg__17PikiPushPikiStateFP4PikiP7MsgWall:
+.fn procWallMsg__17PikiPushPikiStateFP4PikiP7MsgWall, global
 /* 800D6C40 000D3BA0  4E 80 00 20 */	blr 
+.endfn procWallMsg__17PikiPushPikiStateFP4PikiP7MsgWall
 
-.global procAnimMsg__17PikiPushPikiStateFP4PikiP7MsgAnim
-procAnimMsg__17PikiPushPikiStateFP4PikiP7MsgAnim:
+.fn procAnimMsg__17PikiPushPikiStateFP4PikiP7MsgAnim, global
 /* 800D6C44 000D3BA4  7C 08 02 A6 */	mflr r0
 /* 800D6C48 000D3BA8  90 01 00 04 */	stw r0, 4(r1)
 /* 800D6C4C 000D3BAC  94 21 FF B8 */	stwu r1, -0x48(r1)
@@ -8827,9 +8826,9 @@ procAnimMsg__17PikiPushPikiStateFP4PikiP7MsgAnim:
 /* 800D6CB8 000D3C18  38 21 00 48 */	addi r1, r1, 0x48
 /* 800D6CBC 000D3C1C  7C 08 03 A6 */	mtlr r0
 /* 800D6CC0 000D3C20  4E 80 00 20 */	blr 
+.endfn procAnimMsg__17PikiPushPikiStateFP4PikiP7MsgAnim
 
-.global __ct__13PikiBuryStateFv
-__ct__13PikiBuryStateFv:
+.fn __ct__13PikiBuryStateFv, global
 /* 800D6CC4 000D3C24  3C 80 80 2C */	lis r4, "__vt__15Receiver<4Piki>"@ha
 /* 800D6CC8 000D3C28  38 04 81 F8 */	addi r0, r4, "__vt__15Receiver<4Piki>"@l
 /* 800D6CCC 000D3C2C  3C 80 80 2C */	lis r4, "__vt__13AState<4Piki>"@ha
@@ -8849,13 +8848,13 @@ __ct__13PikiBuryStateFv:
 /* 800D6D04 000D3C64  90 A3 00 0C */	stw r5, 0xc(r3)
 /* 800D6D08 000D3C68  90 03 00 00 */	stw r0, 0(r3)
 /* 800D6D0C 000D3C6C  4E 80 00 20 */	blr 
+.endfn __ct__13PikiBuryStateFv
 
-.global init__13PikiBuryStateFP4Piki
-init__13PikiBuryStateFP4Piki:
+.fn init__13PikiBuryStateFP4Piki, global
 /* 800D6D10 000D3C70  4E 80 00 20 */	blr 
+.endfn init__13PikiBuryStateFP4Piki
 
-.global exec__13PikiBuryStateFP4Piki
-exec__13PikiBuryStateFP4Piki:
+.fn exec__13PikiBuryStateFP4Piki, global
 /* 800D6D14 000D3C74  7C 08 02 A6 */	mflr r0
 /* 800D6D18 000D3C78  90 01 00 04 */	stw r0, 4(r1)
 /* 800D6D1C 000D3C7C  38 00 00 01 */	li r0, 1
@@ -8987,13 +8986,13 @@ exec__13PikiBuryStateFP4Piki:
 /* 800D6F08 000D3E68  38 21 00 50 */	addi r1, r1, 0x50
 /* 800D6F0C 000D3E6C  7C 08 03 A6 */	mtlr r0
 /* 800D6F10 000D3E70  4E 80 00 20 */	blr 
+.endfn exec__13PikiBuryStateFP4Piki
 
-.global cleanup__13PikiBuryStateFP4Piki
-cleanup__13PikiBuryStateFP4Piki:
+.fn cleanup__13PikiBuryStateFP4Piki, global
 /* 800D6F14 000D3E74  4E 80 00 20 */	blr 
+.endfn cleanup__13PikiBuryStateFP4Piki
 
-.global __ct__19PikiNukareWaitStateFv
-__ct__19PikiNukareWaitStateFv:
+.fn __ct__19PikiNukareWaitStateFv, global
 /* 800D6F18 000D3E78  3C 80 80 2C */	lis r4, "__vt__15Receiver<4Piki>"@ha
 /* 800D6F1C 000D3E7C  38 04 81 F8 */	addi r0, r4, "__vt__15Receiver<4Piki>"@l
 /* 800D6F20 000D3E80  3C 80 80 2C */	lis r4, "__vt__13AState<4Piki>"@ha
@@ -9014,9 +9013,9 @@ __ct__19PikiNukareWaitStateFv:
 /* 800D6F5C 000D3EBC  90 A3 00 0C */	stw r5, 0xc(r3)
 /* 800D6F60 000D3EC0  90 03 00 00 */	stw r0, 0(r3)
 /* 800D6F64 000D3EC4  4E 80 00 20 */	blr 
+.endfn __ct__19PikiNukareWaitStateFv
 
-.global init__19PikiNukareWaitStateFP4Piki
-init__19PikiNukareWaitStateFP4Piki:
+.fn init__19PikiNukareWaitStateFP4Piki, global
 /* 800D6F68 000D3EC8  7C 08 02 A6 */	mflr r0
 /* 800D6F6C 000D3ECC  90 01 00 04 */	stw r0, 4(r1)
 /* 800D6F70 000D3ED0  94 21 FF D0 */	stwu r1, -0x30(r1)
@@ -9105,9 +9104,9 @@ init__19PikiNukareWaitStateFP4Piki:
 /* 800D70A8 000D4008  38 21 00 30 */	addi r1, r1, 0x30
 /* 800D70AC 000D400C  7C 08 03 A6 */	mtlr r0
 /* 800D70B0 000D4010  4E 80 00 20 */	blr 
+.endfn init__19PikiNukareWaitStateFP4Piki
 
-.global exec__19PikiNukareWaitStateFP4Piki
-exec__19PikiNukareWaitStateFP4Piki:
+.fn exec__19PikiNukareWaitStateFP4Piki, global
 /* 800D70B4 000D4014  7C 08 02 A6 */	mflr r0
 /* 800D70B8 000D4018  90 01 00 04 */	stw r0, 4(r1)
 /* 800D70BC 000D401C  94 21 FF D0 */	stwu r1, -0x30(r1)
@@ -9139,13 +9138,13 @@ exec__19PikiNukareWaitStateFP4Piki:
 /* 800D7120 000D4080  38 21 00 30 */	addi r1, r1, 0x30
 /* 800D7124 000D4084  7C 08 03 A6 */	mtlr r0
 /* 800D7128 000D4088  4E 80 00 20 */	blr 
+.endfn exec__19PikiNukareWaitStateFP4Piki
 
-.global cleanup__19PikiNukareWaitStateFP4Piki
-cleanup__19PikiNukareWaitStateFP4Piki:
+.fn cleanup__19PikiNukareWaitStateFP4Piki, global
 /* 800D712C 000D408C  4E 80 00 20 */	blr 
+.endfn cleanup__19PikiNukareWaitStateFP4Piki
 
-.global __ct__15PikiNukareStateFv
-__ct__15PikiNukareStateFv:
+.fn __ct__15PikiNukareStateFv, global
 /* 800D7130 000D4090  3C 80 80 2C */	lis r4, "__vt__15Receiver<4Piki>"@ha
 /* 800D7134 000D4094  38 04 81 F8 */	addi r0, r4, "__vt__15Receiver<4Piki>"@l
 /* 800D7138 000D4098  3C 80 80 2C */	lis r4, "__vt__13AState<4Piki>"@ha
@@ -9165,9 +9164,9 @@ __ct__15PikiNukareStateFv:
 /* 800D7170 000D40D0  90 A3 00 0C */	stw r5, 0xc(r3)
 /* 800D7174 000D40D4  90 03 00 00 */	stw r0, 0(r3)
 /* 800D7178 000D40D8  4E 80 00 20 */	blr 
+.endfn __ct__15PikiNukareStateFv
 
-.global init__15PikiNukareStateFP4Piki
-init__15PikiNukareStateFP4Piki:
+.fn init__15PikiNukareStateFP4Piki, global
 /* 800D717C 000D40DC  7C 08 02 A6 */	mflr r0
 /* 800D7180 000D40E0  90 01 00 04 */	stw r0, 4(r1)
 /* 800D7184 000D40E4  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -9211,13 +9210,13 @@ init__15PikiNukareStateFP4Piki:
 /* 800D721C 000D417C  38 21 00 18 */	addi r1, r1, 0x18
 /* 800D7220 000D4180  7C 08 03 A6 */	mtlr r0
 /* 800D7224 000D4184  4E 80 00 20 */	blr 
+.endfn init__15PikiNukareStateFP4Piki
 
-.global exec__15PikiNukareStateFP4Piki
-exec__15PikiNukareStateFP4Piki:
+.fn exec__15PikiNukareStateFP4Piki, global
 /* 800D7228 000D4188  4E 80 00 20 */	blr 
+.endfn exec__15PikiNukareStateFP4Piki
 
-.global cleanup__15PikiNukareStateFP4Piki
-cleanup__15PikiNukareStateFP4Piki:
+.fn cleanup__15PikiNukareStateFP4Piki, global
 /* 800D722C 000D418C  7C 08 02 A6 */	mflr r0
 /* 800D7230 000D4190  90 01 00 04 */	stw r0, 4(r1)
 /* 800D7234 000D4194  94 21 FF D0 */	stwu r1, -0x30(r1)
@@ -9375,9 +9374,9 @@ cleanup__15PikiNukareStateFP4Piki:
 /* 800D7484 000D43E4  38 21 00 30 */	addi r1, r1, 0x30
 /* 800D7488 000D43E8  7C 08 03 A6 */	mtlr r0
 /* 800D748C 000D43EC  4E 80 00 20 */	blr 
+.endfn cleanup__15PikiNukareStateFP4Piki
 
-.global procAnimMsg__15PikiNukareStateFP4PikiP7MsgAnim
-procAnimMsg__15PikiNukareStateFP4PikiP7MsgAnim:
+.fn procAnimMsg__15PikiNukareStateFP4PikiP7MsgAnim, global
 /* 800D7490 000D43F0  7C 08 02 A6 */	mflr r0
 /* 800D7494 000D43F4  90 01 00 04 */	stw r0, 4(r1)
 /* 800D7498 000D43F8  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -9483,9 +9482,9 @@ procAnimMsg__15PikiNukareStateFP4PikiP7MsgAnim:
 /* 800D7614 000D4574  38 21 00 28 */	addi r1, r1, 0x28
 /* 800D7618 000D4578  7C 08 03 A6 */	mtlr r0
 /* 800D761C 000D457C  4E 80 00 20 */	blr 
+.endfn procAnimMsg__15PikiNukareStateFP4PikiP7MsgAnim
 
-.global __ct__17PikiAutoNukiStateFv
-__ct__17PikiAutoNukiStateFv:
+.fn __ct__17PikiAutoNukiStateFv, global
 /* 800D7620 000D4580  3C 80 80 2C */	lis r4, "__vt__15Receiver<4Piki>"@ha
 /* 800D7624 000D4584  38 04 81 F8 */	addi r0, r4, "__vt__15Receiver<4Piki>"@l
 /* 800D7628 000D4588  3C 80 80 2C */	lis r4, "__vt__13AState<4Piki>"@ha
@@ -9506,9 +9505,9 @@ __ct__17PikiAutoNukiStateFv:
 /* 800D7664 000D45C4  90 A3 00 0C */	stw r5, 0xc(r3)
 /* 800D7668 000D45C8  90 03 00 00 */	stw r0, 0(r3)
 /* 800D766C 000D45CC  4E 80 00 20 */	blr 
+.endfn __ct__17PikiAutoNukiStateFv
 
-.global init__17PikiAutoNukiStateFP4Piki
-init__17PikiAutoNukiStateFP4Piki:
+.fn init__17PikiAutoNukiStateFP4Piki, global
 /* 800D7670 000D45D0  7C 08 02 A6 */	mflr r0
 /* 800D7674 000D45D4  90 01 00 04 */	stw r0, 4(r1)
 /* 800D7678 000D45D8  94 21 FF C0 */	stwu r1, -0x40(r1)
@@ -9565,9 +9564,9 @@ init__17PikiAutoNukiStateFP4Piki:
 /* 800D7740 000D46A0  38 21 00 40 */	addi r1, r1, 0x40
 /* 800D7744 000D46A4  7C 08 03 A6 */	mtlr r0
 /* 800D7748 000D46A8  4E 80 00 20 */	blr 
+.endfn init__17PikiAutoNukiStateFP4Piki
 
-.global exec__17PikiAutoNukiStateFP4Piki
-exec__17PikiAutoNukiStateFP4Piki:
+.fn exec__17PikiAutoNukiStateFP4Piki, global
 /* 800D774C 000D46AC  7C 08 02 A6 */	mflr r0
 /* 800D7750 000D46B0  90 01 00 04 */	stw r0, 4(r1)
 /* 800D7754 000D46B4  94 21 FF D0 */	stwu r1, -0x30(r1)
@@ -9599,13 +9598,13 @@ exec__17PikiAutoNukiStateFP4Piki:
 /* 800D77B8 000D4718  38 21 00 30 */	addi r1, r1, 0x30
 /* 800D77BC 000D471C  7C 08 03 A6 */	mtlr r0
 /* 800D77C0 000D4720  4E 80 00 20 */	blr 
+.endfn exec__17PikiAutoNukiStateFP4Piki
 
-.global cleanup__17PikiAutoNukiStateFP4Piki
-cleanup__17PikiAutoNukiStateFP4Piki:
+.fn cleanup__17PikiAutoNukiStateFP4Piki, global
 /* 800D77C4 000D4724  4E 80 00 20 */	blr 
+.endfn cleanup__17PikiAutoNukiStateFP4Piki
 
-.global procAnimMsg__17PikiAutoNukiStateFP4PikiP7MsgAnim
-procAnimMsg__17PikiAutoNukiStateFP4PikiP7MsgAnim:
+.fn procAnimMsg__17PikiAutoNukiStateFP4PikiP7MsgAnim, global
 /* 800D77C8 000D4728  7C 08 02 A6 */	mflr r0
 /* 800D77CC 000D472C  90 01 00 04 */	stw r0, 4(r1)
 /* 800D77D0 000D4730  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -9648,9 +9647,9 @@ procAnimMsg__17PikiAutoNukiStateFP4PikiP7MsgAnim:
 /* 800D7858 000D47B8  38 21 00 20 */	addi r1, r1, 0x20
 /* 800D785C 000D47BC  7C 08 03 A6 */	mtlr r0
 /* 800D7860 000D47C0  4E 80 00 20 */	blr 
+.endfn procAnimMsg__17PikiAutoNukiStateFP4PikiP7MsgAnim
 
-.global __ct__16PikiPressedStateFv
-__ct__16PikiPressedStateFv:
+.fn __ct__16PikiPressedStateFv, global
 /* 800D7864 000D47C4  3C 80 80 2C */	lis r4, "__vt__15Receiver<4Piki>"@ha
 /* 800D7868 000D47C8  38 04 81 F8 */	addi r0, r4, "__vt__15Receiver<4Piki>"@l
 /* 800D786C 000D47CC  3C 80 80 2C */	lis r4, "__vt__13AState<4Piki>"@ha
@@ -9670,9 +9669,9 @@ __ct__16PikiPressedStateFv:
 /* 800D78A4 000D4804  90 A3 00 0C */	stw r5, 0xc(r3)
 /* 800D78A8 000D4808  90 03 00 00 */	stw r0, 0(r3)
 /* 800D78AC 000D480C  4E 80 00 20 */	blr 
+.endfn __ct__16PikiPressedStateFv
 
-.global procCollideMsg__16PikiPressedStateFP4PikiP10MsgCollide
-procCollideMsg__16PikiPressedStateFP4PikiP10MsgCollide:
+.fn procCollideMsg__16PikiPressedStateFP4PikiP10MsgCollide, global
 /* 800D78B0 000D4810  80 85 00 04 */	lwz r4, 4(r5)
 /* 800D78B4 000D4814  80 04 00 6C */	lwz r0, 0x6c(r4)
 /* 800D78B8 000D4818  2C 00 00 37 */	cmpwi r0, 0x37
@@ -9682,9 +9681,9 @@ procCollideMsg__16PikiPressedStateFP4PikiP10MsgCollide:
 /* 800D78C8 000D4828  D0 03 00 10 */	stfs f0, 0x10(r3)
 /* 800D78CC 000D482C  98 03 00 14 */	stb r0, 0x14(r3)
 /* 800D78D0 000D4830  4E 80 00 20 */	blr 
+.endfn procCollideMsg__16PikiPressedStateFP4PikiP10MsgCollide
 
-.global init__16PikiPressedStateFP4Piki
-init__16PikiPressedStateFP4Piki:
+.fn init__16PikiPressedStateFP4Piki, global
 /* 800D78D4 000D4834  80 A4 02 24 */	lwz r5, 0x224(r4)
 /* 800D78D8 000D4838  38 00 00 01 */	li r0, 1
 /* 800D78DC 000D483C  C0 22 97 40 */	lfs f1, lbl_803E9940@sda21(r2)
@@ -9698,9 +9697,9 @@ init__16PikiPressedStateFP4Piki:
 /* 800D78FC 000D485C  D0 03 00 10 */	stfs f0, 0x10(r3)
 /* 800D7900 000D4860  98 03 00 14 */	stb r0, 0x14(r3)
 /* 800D7904 000D4864  4E 80 00 20 */	blr 
+.endfn init__16PikiPressedStateFP4Piki
 
-.global exec__16PikiPressedStateFP4Piki
-exec__16PikiPressedStateFP4Piki:
+.fn exec__16PikiPressedStateFP4Piki, global
 /* 800D7908 000D4868  7C 08 02 A6 */	mflr r0
 /* 800D790C 000D486C  90 01 00 04 */	stw r0, 4(r1)
 /* 800D7910 000D4870  94 21 FF B0 */	stwu r1, -0x50(r1)
@@ -9786,13 +9785,13 @@ exec__16PikiPressedStateFP4Piki:
 /* 800D7A3C 000D499C  38 21 00 50 */	addi r1, r1, 0x50
 /* 800D7A40 000D49A0  7C 08 03 A6 */	mtlr r0
 /* 800D7A44 000D49A4  4E 80 00 20 */	blr 
+.endfn exec__16PikiPressedStateFP4Piki
 
-.global cleanup__16PikiPressedStateFP4Piki
-cleanup__16PikiPressedStateFP4Piki:
+.fn cleanup__16PikiPressedStateFP4Piki, global
 /* 800D7A48 000D49A8  4E 80 00 20 */	blr 
+.endfn cleanup__16PikiPressedStateFP4Piki
 
-.global __ct__14PikiDyingStateFv
-__ct__14PikiDyingStateFv:
+.fn __ct__14PikiDyingStateFv, global
 /* 800D7A4C 000D49AC  3C 80 80 2C */	lis r4, "__vt__15Receiver<4Piki>"@ha
 /* 800D7A50 000D49B0  38 04 81 F8 */	addi r0, r4, "__vt__15Receiver<4Piki>"@l
 /* 800D7A54 000D49B4  3C 80 80 2C */	lis r4, "__vt__13AState<4Piki>"@ha
@@ -9812,9 +9811,9 @@ __ct__14PikiDyingStateFv:
 /* 800D7A8C 000D49EC  90 A3 00 0C */	stw r5, 0xc(r3)
 /* 800D7A90 000D49F0  90 03 00 00 */	stw r0, 0(r3)
 /* 800D7A94 000D49F4  4E 80 00 20 */	blr 
+.endfn __ct__14PikiDyingStateFv
 
-.global init__14PikiDyingStateFP4Piki
-init__14PikiDyingStateFP4Piki:
+.fn init__14PikiDyingStateFP4Piki, global
 /* 800D7A98 000D49F8  7C 08 02 A6 */	mflr r0
 /* 800D7A9C 000D49FC  90 01 00 04 */	stw r0, 4(r1)
 /* 800D7AA0 000D4A00  94 21 FF A8 */	stwu r1, -0x58(r1)
@@ -9888,9 +9887,9 @@ init__14PikiDyingStateFP4Piki:
 /* 800D7BA8 000D4B08  38 21 00 58 */	addi r1, r1, 0x58
 /* 800D7BAC 000D4B0C  7C 08 03 A6 */	mtlr r0
 /* 800D7BB0 000D4B10  4E 80 00 20 */	blr 
+.endfn init__14PikiDyingStateFP4Piki
 
-.global exec__14PikiDyingStateFP4Piki
-exec__14PikiDyingStateFP4Piki:
+.fn exec__14PikiDyingStateFP4Piki, global
 /* 800D7BB4 000D4B14  C0 0D C2 E4 */	lfs f0, lbl_803E1004@sda21(r13)
 /* 800D7BB8 000D4B18  D0 04 00 70 */	stfs f0, 0x70(r4)
 /* 800D7BBC 000D4B1C  C0 0D C2 E8 */	lfs f0, lbl_803E1008@sda21(r13)
@@ -9904,13 +9903,13 @@ exec__14PikiDyingStateFP4Piki:
 /* 800D7BDC 000D4B3C  C0 0D C2 F8 */	lfs f0, lbl_803E1018@sda21(r13)
 /* 800D7BE0 000D4B40  D0 04 00 AC */	stfs f0, 0xac(r4)
 /* 800D7BE4 000D4B44  4E 80 00 20 */	blr 
+.endfn exec__14PikiDyingStateFP4Piki
 
-.global cleanup__14PikiDyingStateFP4Piki
-cleanup__14PikiDyingStateFP4Piki:
+.fn cleanup__14PikiDyingStateFP4Piki, global
 /* 800D7BE8 000D4B48  4E 80 00 20 */	blr 
+.endfn cleanup__14PikiDyingStateFP4Piki
 
-.global procAnimMsg__14PikiDyingStateFP4PikiP7MsgAnim
-procAnimMsg__14PikiDyingStateFP4PikiP7MsgAnim:
+.fn procAnimMsg__14PikiDyingStateFP4PikiP7MsgAnim, global
 /* 800D7BEC 000D4B4C  7C 08 02 A6 */	mflr r0
 /* 800D7BF0 000D4B50  90 01 00 04 */	stw r0, 4(r1)
 /* 800D7BF4 000D4B54  94 21 FF E0 */	stwu r1, -0x20(r1)
@@ -9950,9 +9949,9 @@ procAnimMsg__14PikiDyingStateFP4PikiP7MsgAnim:
 /* 800D7C70 000D4BD0  38 21 00 20 */	addi r1, r1, 0x20
 /* 800D7C74 000D4BD4  7C 08 03 A6 */	mtlr r0
 /* 800D7C78 000D4BD8  4E 80 00 20 */	blr 
+.endfn procAnimMsg__14PikiDyingStateFP4PikiP7MsgAnim
 
-.global __ct__13PikiDeadStateFv
-__ct__13PikiDeadStateFv:
+.fn __ct__13PikiDeadStateFv, global
 /* 800D7C7C 000D4BDC  3C 80 80 2C */	lis r4, "__vt__15Receiver<4Piki>"@ha
 /* 800D7C80 000D4BE0  38 04 81 F8 */	addi r0, r4, "__vt__15Receiver<4Piki>"@l
 /* 800D7C84 000D4BE4  3C 80 80 2C */	lis r4, "__vt__13AState<4Piki>"@ha
@@ -9972,9 +9971,9 @@ __ct__13PikiDeadStateFv:
 /* 800D7CBC 000D4C1C  90 A3 00 0C */	stw r5, 0xc(r3)
 /* 800D7CC0 000D4C20  90 03 00 00 */	stw r0, 0(r3)
 /* 800D7CC4 000D4C24  4E 80 00 20 */	blr 
+.endfn __ct__13PikiDeadStateFv
 
-.global init__13PikiDeadStateFP4Piki
-init__13PikiDeadStateFP4Piki:
+.fn init__13PikiDeadStateFP4Piki, global
 /* 800D7CC8 000D4C28  7C 08 02 A6 */	mflr r0
 /* 800D7CCC 000D4C2C  7C 83 23 78 */	mr r3, r4
 /* 800D7CD0 000D4C30  90 01 00 04 */	stw r0, 4(r1)
@@ -9988,9 +9987,9 @@ init__13PikiDeadStateFP4Piki:
 /* 800D7CF0 000D4C50  38 21 00 08 */	addi r1, r1, 8
 /* 800D7CF4 000D4C54  7C 08 03 A6 */	mtlr r0
 /* 800D7CF8 000D4C58  4E 80 00 20 */	blr 
+.endfn init__13PikiDeadStateFP4Piki
 
-.global exec__13PikiDeadStateFP4Piki
-exec__13PikiDeadStateFP4Piki:
+.fn exec__13PikiDeadStateFP4Piki, global
 /* 800D7CFC 000D4C5C  7C 08 02 A6 */	mflr r0
 /* 800D7D00 000D4C60  90 01 00 04 */	stw r0, 4(r1)
 /* 800D7D04 000D4C64  94 21 FF F8 */	stwu r1, -8(r1)
@@ -10031,9 +10030,9 @@ exec__13PikiDeadStateFP4Piki:
 /* 800D7D8C 000D4CEC  38 21 00 08 */	addi r1, r1, 8
 /* 800D7D90 000D4CF0  7C 08 03 A6 */	mtlr r0
 /* 800D7D94 000D4CF4  4E 80 00 20 */	blr 
+.endfn exec__13PikiDeadStateFP4Piki
 
-.global cleanup__13PikiDeadStateFP4Piki
-cleanup__13PikiDeadStateFP4Piki:
+.fn cleanup__13PikiDeadStateFP4Piki, global
 /* 800D7D98 000D4CF8  C0 0D C3 1C */	lfs f0, lbl_803E103C@sda21(r13)
 /* 800D7D9C 000D4CFC  D0 04 00 7C */	stfs f0, 0x7c(r4)
 /* 800D7DA0 000D4D00  C0 0D C3 20 */	lfs f0, lbl_803E1040@sda21(r13)
@@ -10041,9 +10040,9 @@ cleanup__13PikiDeadStateFP4Piki:
 /* 800D7DA8 000D4D08  C0 0D C3 24 */	lfs f0, lbl_803E1044@sda21(r13)
 /* 800D7DAC 000D4D0C  D0 04 00 84 */	stfs f0, 0x84(r4)
 /* 800D7DB0 000D4D10  4E 80 00 20 */	blr 
+.endfn cleanup__13PikiDeadStateFP4Piki
 
-.global __ct__16PikiEmotionStateFv
-__ct__16PikiEmotionStateFv:
+.fn __ct__16PikiEmotionStateFv, global
 /* 800D7DB4 000D4D14  3C 80 80 2C */	lis r4, "__vt__15Receiver<4Piki>"@ha
 /* 800D7DB8 000D4D18  38 04 81 F8 */	addi r0, r4, "__vt__15Receiver<4Piki>"@l
 /* 800D7DBC 000D4D1C  3C 80 80 2C */	lis r4, "__vt__13AState<4Piki>"@ha
@@ -10068,9 +10067,9 @@ __ct__16PikiEmotionStateFv:
 /* 800D7E08 000D4D68  D0 03 00 10 */	stfs f0, 0x10(r3)
 /* 800D7E0C 000D4D6C  98 C3 00 1D */	stb r6, 0x1d(r3)
 /* 800D7E10 000D4D70  4E 80 00 20 */	blr 
+.endfn __ct__16PikiEmotionStateFv
 
-.global init__16PikiEmotionStateFP4Piki
-init__16PikiEmotionStateFP4Piki:
+.fn init__16PikiEmotionStateFP4Piki, global
 /* 800D7E14 000D4D74  7C 08 02 A6 */	mflr r0
 /* 800D7E18 000D4D78  90 01 00 04 */	stw r0, 4(r1)
 /* 800D7E1C 000D4D7C  38 00 00 00 */	li r0, 0
@@ -10582,13 +10581,13 @@ init__16PikiEmotionStateFP4Piki:
 /* 800D858C 000D54EC  38 21 01 90 */	addi r1, r1, 0x190
 /* 800D8590 000D54F0  7C 08 03 A6 */	mtlr r0
 /* 800D8594 000D54F4  4E 80 00 20 */	blr 
+.endfn init__16PikiEmotionStateFP4Piki
 
-.global doDump__16PikiEmotionStateFv
-doDump__16PikiEmotionStateFv:
+.fn doDump__16PikiEmotionStateFv, global
 /* 800D8598 000D54F8  4E 80 00 20 */	blr 
+.endfn doDump__16PikiEmotionStateFv
 
-.global exec__16PikiEmotionStateFP4Piki
-exec__16PikiEmotionStateFP4Piki:
+.fn exec__16PikiEmotionStateFP4Piki, global
 /* 800D859C 000D54FC  7C 08 02 A6 */	mflr r0
 /* 800D85A0 000D5500  90 01 00 04 */	stw r0, 4(r1)
 /* 800D85A4 000D5504  94 21 FF C8 */	stwu r1, -0x38(r1)
@@ -10706,9 +10705,9 @@ exec__16PikiEmotionStateFP4Piki:
 /* 800D8748 000D56A8  38 21 00 38 */	addi r1, r1, 0x38
 /* 800D874C 000D56AC  7C 08 03 A6 */	mtlr r0
 /* 800D8750 000D56B0  4E 80 00 20 */	blr 
+.endfn exec__16PikiEmotionStateFP4Piki
 
-.global cleanup__16PikiEmotionStateFP4Piki
-cleanup__16PikiEmotionStateFP4Piki:
+.fn cleanup__16PikiEmotionStateFP4Piki, global
 /* 800D8754 000D56B4  7C 08 02 A6 */	mflr r0
 /* 800D8758 000D56B8  38 64 00 00 */	addi r3, r4, 0
 /* 800D875C 000D56BC  90 01 00 04 */	stw r0, 4(r1)
@@ -10722,9 +10721,9 @@ cleanup__16PikiEmotionStateFP4Piki:
 /* 800D877C 000D56DC  38 21 00 08 */	addi r1, r1, 8
 /* 800D8780 000D56E0  7C 08 03 A6 */	mtlr r0
 /* 800D8784 000D56E4  4E 80 00 20 */	blr 
+.endfn cleanup__16PikiEmotionStateFP4Piki
 
-.global procAnimMsg__16PikiEmotionStateFP4PikiP7MsgAnim
-procAnimMsg__16PikiEmotionStateFP4PikiP7MsgAnim:
+.fn procAnimMsg__16PikiEmotionStateFP4PikiP7MsgAnim, global
 /* 800D8788 000D56E8  7C 08 02 A6 */	mflr r0
 /* 800D878C 000D56EC  90 01 00 04 */	stw r0, 4(r1)
 /* 800D8790 000D56F0  94 21 FF F8 */	stwu r1, -8(r1)
@@ -10761,64 +10760,64 @@ procAnimMsg__16PikiEmotionStateFP4PikiP7MsgAnim:
 /* 800D8800 000D5760  38 21 00 08 */	addi r1, r1, 8
 /* 800D8804 000D5764  7C 08 03 A6 */	mtlr r0
 /* 800D8808 000D5768  4E 80 00 20 */	blr 
+.endfn procAnimMsg__16PikiEmotionStateFP4PikiP7MsgAnim
 
-.global useLookUpdate__13PikiDeadStateFv
-useLookUpdate__13PikiDeadStateFv:
+.fn useLookUpdate__13PikiDeadStateFv, weak
 /* 800D880C 000D576C  38 60 00 00 */	li r3, 0
 /* 800D8810 000D5770  4E 80 00 20 */	blr 
+.endfn useLookUpdate__13PikiDeadStateFv
 
-.global useLookUpdate__14PikiDyingStateFv
-useLookUpdate__14PikiDyingStateFv:
+.fn useLookUpdate__14PikiDyingStateFv, weak
 /* 800D8814 000D5774  38 60 00 00 */	li r3, 0
 /* 800D8818 000D5778  4E 80 00 20 */	blr 
+.endfn useLookUpdate__14PikiDyingStateFv
 
-.global useLookUpdate__16PikiPressedStateFv
-useLookUpdate__16PikiPressedStateFv:
+.fn useLookUpdate__16PikiPressedStateFv, weak
 /* 800D881C 000D577C  38 60 00 00 */	li r3, 0
 /* 800D8820 000D5780  4E 80 00 20 */	blr 
+.endfn useLookUpdate__16PikiPressedStateFv
 
-.global useLookUpdate__17PikiAutoNukiStateFv
-useLookUpdate__17PikiAutoNukiStateFv:
+.fn useLookUpdate__17PikiAutoNukiStateFv, weak
 /* 800D8824 000D5784  38 60 00 00 */	li r3, 0
 /* 800D8828 000D5788  4E 80 00 20 */	blr 
+.endfn useLookUpdate__17PikiAutoNukiStateFv
 
-.global useLookUpdate__15PikiNukareStateFv
-useLookUpdate__15PikiNukareStateFv:
+.fn useLookUpdate__15PikiNukareStateFv, weak
 /* 800D882C 000D578C  38 60 00 00 */	li r3, 0
 /* 800D8830 000D5790  4E 80 00 20 */	blr 
+.endfn useLookUpdate__15PikiNukareStateFv
 
-.global useLookUpdate__19PikiNukareWaitStateFv
-useLookUpdate__19PikiNukareWaitStateFv:
+.fn useLookUpdate__19PikiNukareWaitStateFv, weak
 /* 800D8834 000D5794  38 60 00 00 */	li r3, 0
 /* 800D8838 000D5798  4E 80 00 20 */	blr 
+.endfn useLookUpdate__19PikiNukareWaitStateFv
 
-.global useLookUpdate__15PikiGrowupStateFv
-useLookUpdate__15PikiGrowupStateFv:
+.fn useLookUpdate__15PikiGrowupStateFv, weak
 /* 800D883C 000D579C  38 60 00 00 */	li r3, 0
 /* 800D8840 000D57A0  4E 80 00 20 */	blr 
+.endfn useLookUpdate__15PikiGrowupStateFv
 
-.global useLookUpdate__21PikiKinokoChangeStateFv
-useLookUpdate__21PikiKinokoChangeStateFv:
+.fn useLookUpdate__21PikiKinokoChangeStateFv, weak
 /* 800D8844 000D57A4  38 60 00 00 */	li r3, 0
 /* 800D8848 000D57A8  4E 80 00 20 */	blr 
+.endfn useLookUpdate__21PikiKinokoChangeStateFv
 
-.global useLookUpdate__13PikiGrowStateFv
-useLookUpdate__13PikiGrowStateFv:
+.fn useLookUpdate__13PikiGrowStateFv, weak
 /* 800D884C 000D57AC  38 60 00 00 */	li r3, 0
 /* 800D8850 000D57B0  4E 80 00 20 */	blr 
+.endfn useLookUpdate__13PikiGrowStateFv
 
-.global collideAI__15PikiNormalStateFv
-collideAI__15PikiNormalStateFv:
+.fn collideAI__15PikiNormalStateFv, weak
 /* 800D8854 000D57B4  38 60 00 01 */	li r3, 1
 /* 800D8858 000D57B8  4E 80 00 20 */	blr 
+.endfn collideAI__15PikiNormalStateFv
 
-.global freeAI__15PikiNormalStateFv
-freeAI__15PikiNormalStateFv:
+.fn freeAI__15PikiNormalStateFv, weak
 /* 800D885C 000D57BC  38 60 00 01 */	li r3, 1
 /* 800D8860 000D57C0  4E 80 00 20 */	blr 
+.endfn freeAI__15PikiNormalStateFv
 
-.global "transit__13AState<4Piki>FP4Pikii"
-"transit__13AState<4Piki>FP4Pikii":
+.fn "transit__13AState<4Piki>FP4Pikii", weak
 /* 800D8864 000D57C4  7C 08 02 A6 */	mflr r0
 /* 800D8868 000D57C8  90 01 00 04 */	stw r0, 4(r1)
 /* 800D886C 000D57CC  94 21 FF F8 */	stwu r1, -8(r1)
@@ -10831,6 +10830,7 @@ freeAI__15PikiNormalStateFv:
 /* 800D8888 000D57E8  38 21 00 08 */	addi r1, r1, 8
 /* 800D888C 000D57EC  7C 08 03 A6 */	mtlr r0
 /* 800D8890 000D57F0  4E 80 00 20 */	blr 
+.endfn "transit__13AState<4Piki>FP4Pikii"
 
 .section .rodata, "a"  # 0x80221FE0 - 0x80222DC0
 .balign 8
@@ -10902,37 +10902,47 @@ freeAI__15PikiNormalStateFv:
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802B8CC0:
+.obj lbl_802B8CC0, local
 	.asciz "pikiState.cpp"
+.endobj lbl_802B8CC0
 .balign 4
-lbl_802B8CD0:
+.obj lbl_802B8CD0, local
 	.asciz "pikiState"
+.endobj lbl_802B8CD0
 .balign 4
-lbl_802B8CDC:
+.obj lbl_802B8CDC, local
 	.asciz "pikistate"
+.endobj lbl_802B8CDC
 .balign 4
-lbl_802B8CE8:
+.obj lbl_802B8CE8, local
 	.asciz "SWALLOWED"
+.endobj lbl_802B8CE8
 .balign 4
-lbl_802B8CF4:
+.obj lbl_802B8CF4, local
 	.asciz "FALLMECK"
+.endobj lbl_802B8CF4
 .balign 4
-lbl_802B8D00:
+.obj lbl_802B8D00, local
 	.asciz "WATER_HANGED"
+.endobj lbl_802B8D00
 .balign 4
-lbl_802B8D10:
+.obj lbl_802B8D10, local
 	.asciz "KINOKO_CHANGE"
+.endobj lbl_802B8D10
 .balign 4
-lbl_802B8D20:
+.obj lbl_802B8D20, local
 	.asciz "PUSHPIKI"
+.endobj lbl_802B8D20
 .balign 4
-lbl_802B8D2C:
+.obj lbl_802B8D2C, local
 	.asciz "NUKARE_WAIT"
+.endobj lbl_802B8D2C
 .balign 4
-lbl_802B8D38:
+.obj lbl_802B8D38, local
 	.asciz "AUTONUKI"
+.endobj lbl_802B8D38
 .balign 4
-lbl_802B8D44:
+.obj lbl_802B8D44, local
 	.4byte .L_800D7F64
 	.4byte .L_800D8200
 	.4byte .L_800D8584
@@ -10943,31 +10953,39 @@ lbl_802B8D44:
 	.4byte .L_800D8078
 	.4byte .L_800D8104
 	.4byte .L_800D83BC
+.endobj lbl_802B8D44
 .balign 4
-lbl_802B8D6C:
+.obj lbl_802B8D6C, local
 	.asciz "PikiEmotionState"
+.endobj lbl_802B8D6C
 .balign 4
-lbl_802B8D80:
+.obj lbl_802B8D80, local
 	.asciz "Receiver<Piki>"
+.endobj lbl_802B8D80
 .balign 4
-lbl_802B8D90:
+.obj lbl_802B8D90, local
 	.asciz "AState<Piki>"
+.endobj lbl_802B8D90
 .balign 4
-lbl_802B8DA0:
+.obj lbl_802B8DA0, local
 	.4byte "__RTTI__15Receiver<4Piki>"
 	.4byte 0
 	.4byte 0
+.endobj lbl_802B8DA0
 .balign 4
-lbl_802B8DAC:
+.obj lbl_802B8DAC, local
 	.asciz "PikiState"
+.endobj lbl_802B8DAC
 .balign 4
-lbl_802B8DB8:
+.obj lbl_802B8DB8, local
 	.4byte "__RTTI__15Receiver<4Piki>"
 	.4byte 0
 	.4byte "__RTTI__13AState<4Piki>"
 	.4byte 0
 	.4byte 0
-lbl_802B8DCC:
+.endobj lbl_802B8DB8
+.balign 4
+.obj lbl_802B8DCC, local
 	.4byte "__RTTI__15Receiver<4Piki>"
 	.4byte 0
 	.4byte "__RTTI__13AState<4Piki>"
@@ -10975,8 +10993,9 @@ lbl_802B8DCC:
 	.4byte __RTTI__9PikiState
 	.4byte 0
 	.4byte 0
-.global __vt__16PikiEmotionState
-__vt__16PikiEmotionState:
+.endobj lbl_802B8DCC
+.balign 4
+.obj __vt__16PikiEmotionState, global
 	.4byte __RTTI__16PikiEmotionState
 	.4byte 0
 	.4byte "procMsg__15Receiver<4Piki>FP4PikiP3Msg"
@@ -11004,11 +11023,13 @@ __vt__16PikiEmotionState:
 	.4byte useLookUpdate__9PikiStateFv
 	.4byte collideAI__9PikiStateFv
 	.4byte freeAI__9PikiStateFv
+.endobj __vt__16PikiEmotionState
 .balign 4
-lbl_802B8E54:
+.obj lbl_802B8E54, local
 	.asciz "PikiDeadState"
+.endobj lbl_802B8E54
 .balign 4
-lbl_802B8E64:
+.obj lbl_802B8E64, local
 	.4byte "__RTTI__15Receiver<4Piki>"
 	.4byte 0
 	.4byte "__RTTI__13AState<4Piki>"
@@ -11016,8 +11037,9 @@ lbl_802B8E64:
 	.4byte __RTTI__9PikiState
 	.4byte 0
 	.4byte 0
-.global __vt__13PikiDeadState
-__vt__13PikiDeadState:
+.endobj lbl_802B8E64
+.balign 4
+.obj __vt__13PikiDeadState, global
 	.4byte __RTTI__13PikiDeadState
 	.4byte 0
 	.4byte "procMsg__15Receiver<4Piki>FP4PikiP3Msg"
@@ -11045,11 +11067,13 @@ __vt__13PikiDeadState:
 	.4byte useLookUpdate__13PikiDeadStateFv
 	.4byte collideAI__9PikiStateFv
 	.4byte freeAI__9PikiStateFv
+.endobj __vt__13PikiDeadState
 .balign 4
-lbl_802B8EEC:
+.obj lbl_802B8EEC, local
 	.asciz "PikiDyingState"
+.endobj lbl_802B8EEC
 .balign 4
-lbl_802B8EFC:
+.obj lbl_802B8EFC, local
 	.4byte "__RTTI__15Receiver<4Piki>"
 	.4byte 0
 	.4byte "__RTTI__13AState<4Piki>"
@@ -11057,8 +11081,9 @@ lbl_802B8EFC:
 	.4byte __RTTI__9PikiState
 	.4byte 0
 	.4byte 0
-.global __vt__14PikiDyingState
-__vt__14PikiDyingState:
+.endobj lbl_802B8EFC
+.balign 4
+.obj __vt__14PikiDyingState, global
 	.4byte __RTTI__14PikiDyingState
 	.4byte 0
 	.4byte "procMsg__15Receiver<4Piki>FP4PikiP3Msg"
@@ -11086,11 +11111,13 @@ __vt__14PikiDyingState:
 	.4byte useLookUpdate__14PikiDyingStateFv
 	.4byte collideAI__9PikiStateFv
 	.4byte freeAI__9PikiStateFv
+.endobj __vt__14PikiDyingState
 .balign 4
-lbl_802B8F84:
+.obj lbl_802B8F84, local
 	.asciz "PikiPressedState"
+.endobj lbl_802B8F84
 .balign 4
-lbl_802B8F98:
+.obj lbl_802B8F98, local
 	.4byte "__RTTI__15Receiver<4Piki>"
 	.4byte 0
 	.4byte "__RTTI__13AState<4Piki>"
@@ -11098,8 +11125,9 @@ lbl_802B8F98:
 	.4byte __RTTI__9PikiState
 	.4byte 0
 	.4byte 0
-.global __vt__16PikiPressedState
-__vt__16PikiPressedState:
+.endobj lbl_802B8F98
+.balign 4
+.obj __vt__16PikiPressedState, global
 	.4byte __RTTI__16PikiPressedState
 	.4byte 0
 	.4byte "procMsg__15Receiver<4Piki>FP4PikiP3Msg"
@@ -11127,11 +11155,13 @@ __vt__16PikiPressedState:
 	.4byte useLookUpdate__16PikiPressedStateFv
 	.4byte collideAI__9PikiStateFv
 	.4byte freeAI__9PikiStateFv
+.endobj __vt__16PikiPressedState
 .balign 4
-lbl_802B9020:
+.obj lbl_802B9020, local
 	.asciz "PikiAutoNukiState"
+.endobj lbl_802B9020
 .balign 4
-lbl_802B9034:
+.obj lbl_802B9034, local
 	.4byte "__RTTI__15Receiver<4Piki>"
 	.4byte 0
 	.4byte "__RTTI__13AState<4Piki>"
@@ -11139,8 +11169,9 @@ lbl_802B9034:
 	.4byte __RTTI__9PikiState
 	.4byte 0
 	.4byte 0
-.global __vt__17PikiAutoNukiState
-__vt__17PikiAutoNukiState:
+.endobj lbl_802B9034
+.balign 4
+.obj __vt__17PikiAutoNukiState, global
 	.4byte __RTTI__17PikiAutoNukiState
 	.4byte 0
 	.4byte "procMsg__15Receiver<4Piki>FP4PikiP3Msg"
@@ -11168,11 +11199,13 @@ __vt__17PikiAutoNukiState:
 	.4byte useLookUpdate__17PikiAutoNukiStateFv
 	.4byte collideAI__9PikiStateFv
 	.4byte freeAI__9PikiStateFv
+.endobj __vt__17PikiAutoNukiState
 .balign 4
-lbl_802B90BC:
+.obj lbl_802B90BC, local
 	.asciz "PikiNukareState"
+.endobj lbl_802B90BC
 .balign 4
-lbl_802B90CC:
+.obj lbl_802B90CC, local
 	.4byte "__RTTI__15Receiver<4Piki>"
 	.4byte 0
 	.4byte "__RTTI__13AState<4Piki>"
@@ -11180,8 +11213,9 @@ lbl_802B90CC:
 	.4byte __RTTI__9PikiState
 	.4byte 0
 	.4byte 0
-.global __vt__15PikiNukareState
-__vt__15PikiNukareState:
+.endobj lbl_802B90CC
+.balign 4
+.obj __vt__15PikiNukareState, global
 	.4byte __RTTI__15PikiNukareState
 	.4byte 0
 	.4byte "procMsg__15Receiver<4Piki>FP4PikiP3Msg"
@@ -11209,11 +11243,13 @@ __vt__15PikiNukareState:
 	.4byte useLookUpdate__15PikiNukareStateFv
 	.4byte collideAI__9PikiStateFv
 	.4byte freeAI__9PikiStateFv
+.endobj __vt__15PikiNukareState
 .balign 4
-lbl_802B9154:
+.obj lbl_802B9154, local
 	.asciz "PikiNukareWaitState"
+.endobj lbl_802B9154
 .balign 4
-lbl_802B9168:
+.obj lbl_802B9168, local
 	.4byte "__RTTI__15Receiver<4Piki>"
 	.4byte 0
 	.4byte "__RTTI__13AState<4Piki>"
@@ -11221,8 +11257,9 @@ lbl_802B9168:
 	.4byte __RTTI__9PikiState
 	.4byte 0
 	.4byte 0
-.global __vt__19PikiNukareWaitState
-__vt__19PikiNukareWaitState:
+.endobj lbl_802B9168
+.balign 4
+.obj __vt__19PikiNukareWaitState, global
 	.4byte __RTTI__19PikiNukareWaitState
 	.4byte 0
 	.4byte "procMsg__15Receiver<4Piki>FP4PikiP3Msg"
@@ -11250,11 +11287,13 @@ __vt__19PikiNukareWaitState:
 	.4byte useLookUpdate__19PikiNukareWaitStateFv
 	.4byte collideAI__9PikiStateFv
 	.4byte freeAI__9PikiStateFv
+.endobj __vt__19PikiNukareWaitState
 .balign 4
-lbl_802B91F0:
+.obj lbl_802B91F0, local
 	.asciz "PikiBuryState"
+.endobj lbl_802B91F0
 .balign 4
-lbl_802B9200:
+.obj lbl_802B9200, local
 	.4byte "__RTTI__15Receiver<4Piki>"
 	.4byte 0
 	.4byte "__RTTI__13AState<4Piki>"
@@ -11262,8 +11301,9 @@ lbl_802B9200:
 	.4byte __RTTI__9PikiState
 	.4byte 0
 	.4byte 0
-.global __vt__13PikiBuryState
-__vt__13PikiBuryState:
+.endobj lbl_802B9200
+.balign 4
+.obj __vt__13PikiBuryState, global
 	.4byte __RTTI__13PikiBuryState
 	.4byte 0
 	.4byte "procMsg__15Receiver<4Piki>FP4PikiP3Msg"
@@ -11291,11 +11331,13 @@ __vt__13PikiBuryState:
 	.4byte useLookUpdate__9PikiStateFv
 	.4byte collideAI__9PikiStateFv
 	.4byte freeAI__9PikiStateFv
+.endobj __vt__13PikiBuryState
 .balign 4
-lbl_802B9288:
+.obj lbl_802B9288, local
 	.asciz "PikiPushPikiState"
+.endobj lbl_802B9288
 .balign 4
-lbl_802B929C:
+.obj lbl_802B929C, local
 	.4byte "__RTTI__15Receiver<4Piki>"
 	.4byte 0
 	.4byte "__RTTI__13AState<4Piki>"
@@ -11303,8 +11345,9 @@ lbl_802B929C:
 	.4byte __RTTI__9PikiState
 	.4byte 0
 	.4byte 0
-.global __vt__17PikiPushPikiState
-__vt__17PikiPushPikiState:
+.endobj lbl_802B929C
+.balign 4
+.obj __vt__17PikiPushPikiState, global
 	.4byte __RTTI__17PikiPushPikiState
 	.4byte 0
 	.4byte "procMsg__15Receiver<4Piki>FP4PikiP3Msg"
@@ -11332,11 +11375,13 @@ __vt__17PikiPushPikiState:
 	.4byte useLookUpdate__9PikiStateFv
 	.4byte collideAI__9PikiStateFv
 	.4byte freeAI__9PikiStateFv
+.endobj __vt__17PikiPushPikiState
 .balign 4
-lbl_802B9324:
+.obj lbl_802B9324, local
 	.asciz "PikiPushState"
+.endobj lbl_802B9324
 .balign 4
-lbl_802B9334:
+.obj lbl_802B9334, local
 	.4byte "__RTTI__15Receiver<4Piki>"
 	.4byte 0
 	.4byte "__RTTI__13AState<4Piki>"
@@ -11344,8 +11389,9 @@ lbl_802B9334:
 	.4byte __RTTI__9PikiState
 	.4byte 0
 	.4byte 0
-.global __vt__13PikiPushState
-__vt__13PikiPushState:
+.endobj lbl_802B9334
+.balign 4
+.obj __vt__13PikiPushState, global
 	.4byte __RTTI__13PikiPushState
 	.4byte 0
 	.4byte "procMsg__15Receiver<4Piki>FP4PikiP3Msg"
@@ -11373,11 +11419,13 @@ __vt__13PikiPushState:
 	.4byte useLookUpdate__9PikiStateFv
 	.4byte collideAI__9PikiStateFv
 	.4byte freeAI__9PikiStateFv
+.endobj __vt__13PikiPushState
 .balign 4
-lbl_802B93BC:
+.obj lbl_802B93BC, local
 	.asciz "PikiWaveState"
+.endobj lbl_802B93BC
 .balign 4
-lbl_802B93CC:
+.obj lbl_802B93CC, local
 	.4byte "__RTTI__15Receiver<4Piki>"
 	.4byte 0
 	.4byte "__RTTI__13AState<4Piki>"
@@ -11385,8 +11433,9 @@ lbl_802B93CC:
 	.4byte __RTTI__9PikiState
 	.4byte 0
 	.4byte 0
-.global __vt__13PikiWaveState
-__vt__13PikiWaveState:
+.endobj lbl_802B93CC
+.balign 4
+.obj __vt__13PikiWaveState, global
 	.4byte __RTTI__13PikiWaveState
 	.4byte 0
 	.4byte "procMsg__15Receiver<4Piki>FP4PikiP3Msg"
@@ -11414,11 +11463,13 @@ __vt__13PikiWaveState:
 	.4byte useLookUpdate__9PikiStateFv
 	.4byte collideAI__9PikiStateFv
 	.4byte freeAI__9PikiStateFv
+.endobj __vt__13PikiWaveState
 .balign 4
-lbl_802B9454:
+.obj lbl_802B9454, local
 	.asciz "PikiGrowupState"
+.endobj lbl_802B9454
 .balign 4
-lbl_802B9464:
+.obj lbl_802B9464, local
 	.4byte "__RTTI__15Receiver<4Piki>"
 	.4byte 0
 	.4byte "__RTTI__13AState<4Piki>"
@@ -11426,8 +11477,9 @@ lbl_802B9464:
 	.4byte __RTTI__9PikiState
 	.4byte 0
 	.4byte 0
-.global __vt__15PikiGrowupState
-__vt__15PikiGrowupState:
+.endobj lbl_802B9464
+.balign 4
+.obj __vt__15PikiGrowupState, global
 	.4byte __RTTI__15PikiGrowupState
 	.4byte 0
 	.4byte "procMsg__15Receiver<4Piki>FP4PikiP3Msg"
@@ -11455,11 +11507,13 @@ __vt__15PikiGrowupState:
 	.4byte useLookUpdate__15PikiGrowupStateFv
 	.4byte collideAI__9PikiStateFv
 	.4byte freeAI__9PikiStateFv
+.endobj __vt__15PikiGrowupState
 .balign 4
-lbl_802B94EC:
+.obj lbl_802B94EC, local
 	.asciz "PikiKinokoChangeState"
+.endobj lbl_802B94EC
 .balign 4
-lbl_802B9504:
+.obj lbl_802B9504, local
 	.4byte "__RTTI__15Receiver<4Piki>"
 	.4byte 0
 	.4byte "__RTTI__13AState<4Piki>"
@@ -11467,8 +11521,9 @@ lbl_802B9504:
 	.4byte __RTTI__9PikiState
 	.4byte 0
 	.4byte 0
-.global __vt__21PikiKinokoChangeState
-__vt__21PikiKinokoChangeState:
+.endobj lbl_802B9504
+.balign 4
+.obj __vt__21PikiKinokoChangeState, global
 	.4byte __RTTI__21PikiKinokoChangeState
 	.4byte 0
 	.4byte "procMsg__15Receiver<4Piki>FP4PikiP3Msg"
@@ -11496,11 +11551,13 @@ __vt__21PikiKinokoChangeState:
 	.4byte useLookUpdate__21PikiKinokoChangeStateFv
 	.4byte collideAI__9PikiStateFv
 	.4byte freeAI__9PikiStateFv
+.endobj __vt__21PikiKinokoChangeState
 .balign 4
-lbl_802B958C:
+.obj lbl_802B958C, local
 	.asciz "PikiGrowState"
+.endobj lbl_802B958C
 .balign 4
-lbl_802B959C:
+.obj lbl_802B959C, local
 	.4byte "__RTTI__15Receiver<4Piki>"
 	.4byte 0
 	.4byte "__RTTI__13AState<4Piki>"
@@ -11508,8 +11565,9 @@ lbl_802B959C:
 	.4byte __RTTI__9PikiState
 	.4byte 0
 	.4byte 0
-.global __vt__13PikiGrowState
-__vt__13PikiGrowState:
+.endobj lbl_802B959C
+.balign 4
+.obj __vt__13PikiGrowState, global
 	.4byte __RTTI__13PikiGrowState
 	.4byte 0
 	.4byte "procMsg__15Receiver<4Piki>FP4PikiP3Msg"
@@ -11537,11 +11595,13 @@ __vt__13PikiGrowState:
 	.4byte useLookUpdate__13PikiGrowStateFv
 	.4byte collideAI__9PikiStateFv
 	.4byte freeAI__9PikiStateFv
+.endobj __vt__13PikiGrowState
 .balign 4
-lbl_802B9624:
+.obj lbl_802B9624, local
 	.asciz "PikiFlyingState"
+.endobj lbl_802B9624
 .balign 4
-lbl_802B9634:
+.obj lbl_802B9634, local
 	.4byte "__RTTI__15Receiver<4Piki>"
 	.4byte 0
 	.4byte "__RTTI__13AState<4Piki>"
@@ -11549,8 +11609,9 @@ lbl_802B9634:
 	.4byte __RTTI__9PikiState
 	.4byte 0
 	.4byte 0
-.global __vt__15PikiFlyingState
-__vt__15PikiFlyingState:
+.endobj lbl_802B9634
+.balign 4
+.obj __vt__15PikiFlyingState, global
 	.4byte __RTTI__15PikiFlyingState
 	.4byte 0
 	.4byte "procMsg__15Receiver<4Piki>FP4PikiP3Msg"
@@ -11578,11 +11639,13 @@ __vt__15PikiFlyingState:
 	.4byte useLookUpdate__9PikiStateFv
 	.4byte collideAI__9PikiStateFv
 	.4byte freeAI__9PikiStateFv
+.endobj __vt__15PikiFlyingState
 .balign 4
-lbl_802B96BC:
+.obj lbl_802B96BC, local
 	.asciz "PikiEmitState"
+.endobj lbl_802B96BC
 .balign 4
-lbl_802B96CC:
+.obj lbl_802B96CC, local
 	.4byte "__RTTI__15Receiver<4Piki>"
 	.4byte 0
 	.4byte "__RTTI__13AState<4Piki>"
@@ -11590,8 +11653,9 @@ lbl_802B96CC:
 	.4byte __RTTI__9PikiState
 	.4byte 0
 	.4byte 0
-.global __vt__13PikiEmitState
-__vt__13PikiEmitState:
+.endobj lbl_802B96CC
+.balign 4
+.obj __vt__13PikiEmitState, global
 	.4byte __RTTI__13PikiEmitState
 	.4byte 0
 	.4byte "procMsg__15Receiver<4Piki>FP4PikiP3Msg"
@@ -11619,11 +11683,13 @@ __vt__13PikiEmitState:
 	.4byte useLookUpdate__9PikiStateFv
 	.4byte collideAI__9PikiStateFv
 	.4byte freeAI__9PikiStateFv
+.endobj __vt__13PikiEmitState
 .balign 4
-lbl_802B9754:
+.obj lbl_802B9754, local
 	.asciz "PikiWaterHangedState"
+.endobj lbl_802B9754
 .balign 4
-lbl_802B976C:
+.obj lbl_802B976C, local
 	.4byte "__RTTI__15Receiver<4Piki>"
 	.4byte 0
 	.4byte "__RTTI__13AState<4Piki>"
@@ -11631,8 +11697,9 @@ lbl_802B976C:
 	.4byte __RTTI__9PikiState
 	.4byte 0
 	.4byte 0
-.global __vt__20PikiWaterHangedState
-__vt__20PikiWaterHangedState:
+.endobj lbl_802B976C
+.balign 4
+.obj __vt__20PikiWaterHangedState, global
 	.4byte __RTTI__20PikiWaterHangedState
 	.4byte 0
 	.4byte "procMsg__15Receiver<4Piki>FP4PikiP3Msg"
@@ -11660,11 +11727,13 @@ __vt__20PikiWaterHangedState:
 	.4byte useLookUpdate__9PikiStateFv
 	.4byte collideAI__9PikiStateFv
 	.4byte freeAI__9PikiStateFv
+.endobj __vt__20PikiWaterHangedState
 .balign 4
-lbl_802B97F4:
+.obj lbl_802B97F4, local
 	.asciz "PikiHangedState"
+.endobj lbl_802B97F4
 .balign 4
-lbl_802B9804:
+.obj lbl_802B9804, local
 	.4byte "__RTTI__15Receiver<4Piki>"
 	.4byte 0
 	.4byte "__RTTI__13AState<4Piki>"
@@ -11672,8 +11741,9 @@ lbl_802B9804:
 	.4byte __RTTI__9PikiState
 	.4byte 0
 	.4byte 0
-.global __vt__15PikiHangedState
-__vt__15PikiHangedState:
+.endobj lbl_802B9804
+.balign 4
+.obj __vt__15PikiHangedState, global
 	.4byte __RTTI__15PikiHangedState
 	.4byte 0
 	.4byte "procMsg__15Receiver<4Piki>FP4PikiP3Msg"
@@ -11701,11 +11771,13 @@ __vt__15PikiHangedState:
 	.4byte useLookUpdate__9PikiStateFv
 	.4byte collideAI__9PikiStateFv
 	.4byte freeAI__9PikiStateFv
+.endobj __vt__15PikiHangedState
 .balign 4
-lbl_802B988C:
+.obj lbl_802B988C, local
 	.asciz "PikiGoHangState"
+.endobj lbl_802B988C
 .balign 4
-lbl_802B989C:
+.obj lbl_802B989C, local
 	.4byte "__RTTI__15Receiver<4Piki>"
 	.4byte 0
 	.4byte "__RTTI__13AState<4Piki>"
@@ -11713,8 +11785,9 @@ lbl_802B989C:
 	.4byte __RTTI__9PikiState
 	.4byte 0
 	.4byte 0
-.global __vt__15PikiGoHangState
-__vt__15PikiGoHangState:
+.endobj lbl_802B989C
+.balign 4
+.obj __vt__15PikiGoHangState, global
 	.4byte __RTTI__15PikiGoHangState
 	.4byte 0
 	.4byte "procMsg__15Receiver<4Piki>FP4PikiP3Msg"
@@ -11742,11 +11815,13 @@ __vt__15PikiGoHangState:
 	.4byte useLookUpdate__9PikiStateFv
 	.4byte collideAI__9PikiStateFv
 	.4byte freeAI__9PikiStateFv
+.endobj __vt__15PikiGoHangState
 .balign 4
-lbl_802B9924:
+.obj lbl_802B9924, local
 	.asciz "PikiCliffState"
+.endobj lbl_802B9924
 .balign 4
-lbl_802B9934:
+.obj lbl_802B9934, local
 	.4byte "__RTTI__15Receiver<4Piki>"
 	.4byte 0
 	.4byte "__RTTI__13AState<4Piki>"
@@ -11754,8 +11829,9 @@ lbl_802B9934:
 	.4byte __RTTI__9PikiState
 	.4byte 0
 	.4byte 0
-.global __vt__14PikiCliffState
-__vt__14PikiCliffState:
+.endobj lbl_802B9934
+.balign 4
+.obj __vt__14PikiCliffState, global
 	.4byte __RTTI__14PikiCliffState
 	.4byte 0
 	.4byte "procMsg__15Receiver<4Piki>FP4PikiP3Msg"
@@ -11783,11 +11859,13 @@ __vt__14PikiCliffState:
 	.4byte useLookUpdate__9PikiStateFv
 	.4byte collideAI__9PikiStateFv
 	.4byte freeAI__9PikiStateFv
+.endobj __vt__14PikiCliffState
 .balign 4
-lbl_802B99BC:
+.obj lbl_802B99BC, local
 	.asciz "PikiFallState"
+.endobj lbl_802B99BC
 .balign 4
-lbl_802B99CC:
+.obj lbl_802B99CC, local
 	.4byte "__RTTI__15Receiver<4Piki>"
 	.4byte 0
 	.4byte "__RTTI__13AState<4Piki>"
@@ -11795,8 +11873,9 @@ lbl_802B99CC:
 	.4byte __RTTI__9PikiState
 	.4byte 0
 	.4byte 0
-.global __vt__13PikiFallState
-__vt__13PikiFallState:
+.endobj lbl_802B99CC
+.balign 4
+.obj __vt__13PikiFallState, global
 	.4byte __RTTI__13PikiFallState
 	.4byte 0
 	.4byte "procMsg__15Receiver<4Piki>FP4PikiP3Msg"
@@ -11824,11 +11903,13 @@ __vt__13PikiFallState:
 	.4byte useLookUpdate__9PikiStateFv
 	.4byte collideAI__9PikiStateFv
 	.4byte freeAI__9PikiStateFv
+.endobj __vt__13PikiFallState
 .balign 4
-lbl_802B9A54:
+.obj lbl_802B9A54, local
 	.asciz "PikiFallMeckState"
+.endobj lbl_802B9A54
 .balign 4
-lbl_802B9A68:
+.obj lbl_802B9A68, local
 	.4byte "__RTTI__15Receiver<4Piki>"
 	.4byte 0
 	.4byte "__RTTI__13AState<4Piki>"
@@ -11836,8 +11917,9 @@ lbl_802B9A68:
 	.4byte __RTTI__9PikiState
 	.4byte 0
 	.4byte 0
-.global __vt__17PikiFallMeckState
-__vt__17PikiFallMeckState:
+.endobj lbl_802B9A68
+.balign 4
+.obj __vt__17PikiFallMeckState, global
 	.4byte __RTTI__17PikiFallMeckState
 	.4byte 0
 	.4byte "procMsg__15Receiver<4Piki>FP4PikiP3Msg"
@@ -11865,11 +11947,13 @@ __vt__17PikiFallMeckState:
 	.4byte useLookUpdate__9PikiStateFv
 	.4byte collideAI__9PikiStateFv
 	.4byte freeAI__9PikiStateFv
+.endobj __vt__17PikiFallMeckState
 .balign 4
-lbl_802B9AF0:
+.obj lbl_802B9AF0, local
 	.asciz "PikiFlownState"
+.endobj lbl_802B9AF0
 .balign 4
-lbl_802B9B00:
+.obj lbl_802B9B00, local
 	.4byte "__RTTI__15Receiver<4Piki>"
 	.4byte 0
 	.4byte "__RTTI__13AState<4Piki>"
@@ -11877,8 +11961,9 @@ lbl_802B9B00:
 	.4byte __RTTI__9PikiState
 	.4byte 0
 	.4byte 0
-.global __vt__14PikiFlownState
-__vt__14PikiFlownState:
+.endobj lbl_802B9B00
+.balign 4
+.obj __vt__14PikiFlownState, global
 	.4byte __RTTI__14PikiFlownState
 	.4byte 0
 	.4byte "procMsg__15Receiver<4Piki>FP4PikiP3Msg"
@@ -11906,11 +11991,13 @@ __vt__14PikiFlownState:
 	.4byte useLookUpdate__9PikiStateFv
 	.4byte collideAI__9PikiStateFv
 	.4byte freeAI__9PikiStateFv
+.endobj __vt__14PikiFlownState
 .balign 4
-lbl_802B9B88:
+.obj lbl_802B9B88, local
 	.asciz "PikiFlickState"
+.endobj lbl_802B9B88
 .balign 4
-lbl_802B9B98:
+.obj lbl_802B9B98, local
 	.4byte "__RTTI__15Receiver<4Piki>"
 	.4byte 0
 	.4byte "__RTTI__13AState<4Piki>"
@@ -11918,8 +12005,9 @@ lbl_802B9B98:
 	.4byte __RTTI__9PikiState
 	.4byte 0
 	.4byte 0
-.global __vt__14PikiFlickState
-__vt__14PikiFlickState:
+.endobj lbl_802B9B98
+.balign 4
+.obj __vt__14PikiFlickState, global
 	.4byte __RTTI__14PikiFlickState
 	.4byte 0
 	.4byte "procMsg__15Receiver<4Piki>FP4PikiP3Msg"
@@ -11947,11 +12035,13 @@ __vt__14PikiFlickState:
 	.4byte useLookUpdate__9PikiStateFv
 	.4byte collideAI__9PikiStateFv
 	.4byte freeAI__9PikiStateFv
+.endobj __vt__14PikiFlickState
 .balign 4
-lbl_802B9C20:
+.obj lbl_802B9C20, local
 	.asciz "PikiBulletState"
+.endobj lbl_802B9C20
 .balign 4
-lbl_802B9C30:
+.obj lbl_802B9C30, local
 	.4byte "__RTTI__15Receiver<4Piki>"
 	.4byte 0
 	.4byte "__RTTI__13AState<4Piki>"
@@ -11959,8 +12049,9 @@ lbl_802B9C30:
 	.4byte __RTTI__9PikiState
 	.4byte 0
 	.4byte 0
-.global __vt__15PikiBulletState
-__vt__15PikiBulletState:
+.endobj lbl_802B9C30
+.balign 4
+.obj __vt__15PikiBulletState, global
 	.4byte __RTTI__15PikiBulletState
 	.4byte 0
 	.4byte "procMsg__15Receiver<4Piki>FP4PikiP3Msg"
@@ -11988,11 +12079,13 @@ __vt__15PikiBulletState:
 	.4byte useLookUpdate__9PikiStateFv
 	.4byte collideAI__9PikiStateFv
 	.4byte freeAI__9PikiStateFv
+.endobj __vt__15PikiBulletState
 .balign 4
-lbl_802B9CB8:
+.obj lbl_802B9CB8, local
 	.asciz "PikiSwallowedState"
+.endobj lbl_802B9CB8
 .balign 4
-lbl_802B9CCC:
+.obj lbl_802B9CCC, local
 	.4byte "__RTTI__15Receiver<4Piki>"
 	.4byte 0
 	.4byte "__RTTI__13AState<4Piki>"
@@ -12000,8 +12093,9 @@ lbl_802B9CCC:
 	.4byte __RTTI__9PikiState
 	.4byte 0
 	.4byte 0
-.global __vt__18PikiSwallowedState
-__vt__18PikiSwallowedState:
+.endobj lbl_802B9CCC
+.balign 4
+.obj __vt__18PikiSwallowedState, global
 	.4byte __RTTI__18PikiSwallowedState
 	.4byte 0
 	.4byte "procMsg__15Receiver<4Piki>FP4PikiP3Msg"
@@ -12029,11 +12123,13 @@ __vt__18PikiSwallowedState:
 	.4byte useLookUpdate__9PikiStateFv
 	.4byte collideAI__9PikiStateFv
 	.4byte freeAI__9PikiStateFv
+.endobj __vt__18PikiSwallowedState
 .balign 4
-lbl_802B9D54:
+.obj lbl_802B9D54, local
 	.asciz "PikiFiredState"
+.endobj lbl_802B9D54
 .balign 4
-lbl_802B9D64:
+.obj lbl_802B9D64, local
 	.4byte "__RTTI__15Receiver<4Piki>"
 	.4byte 0
 	.4byte "__RTTI__13AState<4Piki>"
@@ -12041,8 +12137,9 @@ lbl_802B9D64:
 	.4byte __RTTI__9PikiState
 	.4byte 0
 	.4byte 0
-.global __vt__14PikiFiredState
-__vt__14PikiFiredState:
+.endobj lbl_802B9D64
+.balign 4
+.obj __vt__14PikiFiredState, global
 	.4byte __RTTI__14PikiFiredState
 	.4byte 0
 	.4byte "procMsg__15Receiver<4Piki>FP4PikiP3Msg"
@@ -12070,11 +12167,13 @@ __vt__14PikiFiredState:
 	.4byte useLookUpdate__9PikiStateFv
 	.4byte collideAI__9PikiStateFv
 	.4byte freeAI__9PikiStateFv
+.endobj __vt__14PikiFiredState
 .balign 4
-lbl_802B9DEC:
+.obj lbl_802B9DEC, local
 	.asciz "PikiBubbleState"
+.endobj lbl_802B9DEC
 .balign 4
-lbl_802B9DFC:
+.obj lbl_802B9DFC, local
 	.4byte "__RTTI__15Receiver<4Piki>"
 	.4byte 0
 	.4byte "__RTTI__13AState<4Piki>"
@@ -12082,8 +12181,9 @@ lbl_802B9DFC:
 	.4byte __RTTI__9PikiState
 	.4byte 0
 	.4byte 0
-.global __vt__15PikiBubbleState
-__vt__15PikiBubbleState:
+.endobj lbl_802B9DFC
+.balign 4
+.obj __vt__15PikiBubbleState, global
 	.4byte __RTTI__15PikiBubbleState
 	.4byte 0
 	.4byte "procMsg__15Receiver<4Piki>FP4PikiP3Msg"
@@ -12111,11 +12211,13 @@ __vt__15PikiBubbleState:
 	.4byte useLookUpdate__9PikiStateFv
 	.4byte collideAI__9PikiStateFv
 	.4byte freeAI__9PikiStateFv
+.endobj __vt__15PikiBubbleState
 .balign 4
-lbl_802B9E84:
+.obj lbl_802B9E84, local
 	.asciz "PikiKinokoState"
+.endobj lbl_802B9E84
 .balign 4
-lbl_802B9E94:
+.obj lbl_802B9E94, local
 	.4byte "__RTTI__15Receiver<4Piki>"
 	.4byte 0
 	.4byte "__RTTI__13AState<4Piki>"
@@ -12123,8 +12225,9 @@ lbl_802B9E94:
 	.4byte __RTTI__9PikiState
 	.4byte 0
 	.4byte 0
-.global __vt__15PikiKinokoState
-__vt__15PikiKinokoState:
+.endobj lbl_802B9E94
+.balign 4
+.obj __vt__15PikiKinokoState, global
 	.4byte __RTTI__15PikiKinokoState
 	.4byte 0
 	.4byte "procMsg__15Receiver<4Piki>FP4PikiP3Msg"
@@ -12152,26 +12255,19 @@ __vt__15PikiKinokoState:
 	.4byte useLookUpdate__9PikiStateFv
 	.4byte collideAI__9PikiStateFv
 	.4byte freeAI__9PikiStateFv
+.endobj __vt__15PikiKinokoState
 .balign 4
-lbl_802B9F1C:
+.obj lbl_802B9F1C, local
 	.asciz "Interaction"
+.endobj lbl_802B9F1C
 .balign 4
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
+.skip 0x2C # compiler padding
 .balign 4
-lbl_802B9F54:
+.obj lbl_802B9F54, local
 	.asciz "PikiDrownState"
+.endobj lbl_802B9F54
 .balign 4
-lbl_802B9F64:
+.obj lbl_802B9F64, local
 	.4byte "__RTTI__15Receiver<4Piki>"
 	.4byte 0
 	.4byte "__RTTI__13AState<4Piki>"
@@ -12179,8 +12275,9 @@ lbl_802B9F64:
 	.4byte __RTTI__9PikiState
 	.4byte 0
 	.4byte 0
-.global __vt__14PikiDrownState
-__vt__14PikiDrownState:
+.endobj lbl_802B9F64
+.balign 4
+.obj __vt__14PikiDrownState, global
 	.4byte __RTTI__14PikiDrownState
 	.4byte 0
 	.4byte "procMsg__15Receiver<4Piki>FP4PikiP3Msg"
@@ -12208,11 +12305,13 @@ __vt__14PikiDrownState:
 	.4byte useLookUpdate__9PikiStateFv
 	.4byte collideAI__9PikiStateFv
 	.4byte freeAI__9PikiStateFv
+.endobj __vt__14PikiDrownState
 .balign 4
-lbl_802B9FEC:
+.obj lbl_802B9FEC, local
 	.asciz "PikiAbsorbState"
+.endobj lbl_802B9FEC
 .balign 4
-lbl_802B9FFC:
+.obj lbl_802B9FFC, local
 	.4byte "__RTTI__15Receiver<4Piki>"
 	.4byte 0
 	.4byte "__RTTI__13AState<4Piki>"
@@ -12220,8 +12319,9 @@ lbl_802B9FFC:
 	.4byte __RTTI__9PikiState
 	.4byte 0
 	.4byte 0
-.global __vt__15PikiAbsorbState
-__vt__15PikiAbsorbState:
+.endobj lbl_802B9FFC
+.balign 4
+.obj __vt__15PikiAbsorbState, global
 	.4byte __RTTI__15PikiAbsorbState
 	.4byte 0
 	.4byte "procMsg__15Receiver<4Piki>FP4PikiP3Msg"
@@ -12249,11 +12349,13 @@ __vt__15PikiAbsorbState:
 	.4byte useLookUpdate__9PikiStateFv
 	.4byte collideAI__9PikiStateFv
 	.4byte freeAI__9PikiStateFv
+.endobj __vt__15PikiAbsorbState
 .balign 4
-lbl_802BA084:
+.obj lbl_802BA084, local
 	.asciz "PikiNormalState"
+.endobj lbl_802BA084
 .balign 4
-lbl_802BA094:
+.obj lbl_802BA094, local
 	.4byte "__RTTI__15Receiver<4Piki>"
 	.4byte 0
 	.4byte "__RTTI__13AState<4Piki>"
@@ -12261,8 +12363,9 @@ lbl_802BA094:
 	.4byte __RTTI__9PikiState
 	.4byte 0
 	.4byte 0
-.global __vt__15PikiNormalState
-__vt__15PikiNormalState:
+.endobj lbl_802BA094
+.balign 4
+.obj __vt__15PikiNormalState, global
 	.4byte __RTTI__15PikiNormalState
 	.4byte 0
 	.4byte "procMsg__15Receiver<4Piki>FP4PikiP3Msg"
@@ -12290,11 +12393,13 @@ __vt__15PikiNormalState:
 	.4byte useLookUpdate__9PikiStateFv
 	.4byte collideAI__15PikiNormalStateFv
 	.4byte freeAI__15PikiNormalStateFv
+.endobj __vt__15PikiNormalState
 .balign 4
-lbl_802BA11C:
+.obj lbl_802BA11C, local
 	.asciz "PikiLookAtState"
+.endobj lbl_802BA11C
 .balign 4
-lbl_802BA12C:
+.obj lbl_802BA12C, local
 	.4byte "__RTTI__15Receiver<4Piki>"
 	.4byte 0
 	.4byte "__RTTI__13AState<4Piki>"
@@ -12302,8 +12407,9 @@ lbl_802BA12C:
 	.4byte __RTTI__9PikiState
 	.4byte 0
 	.4byte 0
-.global __vt__15PikiLookAtState
-__vt__15PikiLookAtState:
+.endobj lbl_802BA12C
+.balign 4
+.obj __vt__15PikiLookAtState, global
 	.4byte __RTTI__15PikiLookAtState
 	.4byte 0
 	.4byte "procMsg__15Receiver<4Piki>FP4PikiP3Msg"
@@ -12331,8 +12437,9 @@ __vt__15PikiLookAtState:
 	.4byte useLookUpdate__9PikiStateFv
 	.4byte collideAI__9PikiStateFv
 	.4byte freeAI__9PikiStateFv
-.global "__vt__13AState<4Piki>"
-"__vt__13AState<4Piki>":
+.endobj __vt__15PikiLookAtState
+.balign 4
+.obj "__vt__13AState<4Piki>", weak
 	.4byte "__RTTI__13AState<4Piki>"
 	.4byte 0
 	.4byte "procMsg__15Receiver<4Piki>FP4PikiP3Msg"
@@ -12353,22 +12460,11 @@ __vt__15PikiLookAtState:
 	.4byte "resume__13AState<4Piki>FP4Piki"
 	.4byte "restart__13AState<4Piki>FP4Piki"
 	.4byte "transit__13AState<4Piki>FP4Pikii"
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-	.4byte 0
-.global __vt__9PikiState
-__vt__9PikiState:
+.endobj "__vt__13AState<4Piki>"
+.balign 4
+.skip 0x38 # compiler padding
+.balign 4
+.obj __vt__9PikiState, global
 	.4byte __RTTI__9PikiState
 	.4byte 0
 	.4byte "procMsg__15Receiver<4Piki>FP4PikiP3Msg"
@@ -12396,27 +12492,32 @@ __vt__9PikiState:
 	.4byte useLookUpdate__9PikiStateFv
 	.4byte collideAI__9PikiStateFv
 	.4byte freeAI__9PikiStateFv
+.endobj __vt__9PikiState
 .balign 4
-lbl_802BA2A8:
+.obj lbl_802BA2A8, local
 	.asciz "PikiStateMachine"
+.endobj lbl_802BA2A8
 .balign 4
-lbl_802BA2BC:
+.obj lbl_802BA2BC, local
 	.asciz "StateMachine<Piki>"
+.endobj lbl_802BA2BC
 .balign 4
-lbl_802BA2D0:
+.obj lbl_802BA2D0, local
 	.4byte "__RTTI__19StateMachine<4Piki>"
 	.4byte 0
 	.4byte 0
-.global __vt__16PikiStateMachine
-__vt__16PikiStateMachine:
+.endobj lbl_802BA2D0
+.balign 4
+.obj __vt__16PikiStateMachine, global
 	.4byte __RTTI__16PikiStateMachine
 	.4byte 0
 	.4byte init__16PikiStateMachineFP4Piki
 	.4byte "exec__19StateMachine<4Piki>FP4Piki"
 	.4byte "procMsg__19StateMachine<4Piki>FP4PikiP3Msg"
 	.4byte transit__16PikiStateMachineFP4Pikii
+.endobj __vt__16PikiStateMachine
 .balign 4
-lbl_802BA2F4:
+.obj lbl_802BA2F4, local
 	.4byte ("procMsg__15Receiver<4Piki>FP4PikiP3Msg"+0x30)
 	.4byte ("procMsg__15Receiver<4Piki>FP4PikiP3Msg"+0x58)
 	.4byte ("procMsg__15Receiver<4Piki>FP4PikiP3Msg"+0x6C)
@@ -12428,6 +12529,7 @@ lbl_802BA2F4:
 	.4byte ("procMsg__15Receiver<4Piki>FP4PikiP3Msg"+0x44)
 	.4byte ("procMsg__15Receiver<4Piki>FP4PikiP3Msg"+0xF8)
 	.4byte ("procMsg__15Receiver<4Piki>FP4PikiP3Msg"+0xE4)
+.endobj lbl_802BA2F4
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8

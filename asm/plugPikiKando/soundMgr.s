@@ -1,7 +1,6 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
-.global __ct__9SeContextFv
-__ct__9SeContextFv:
+.fn __ct__9SeContextFv, global
 /* 800A3C5C 000A0BBC  C0 02 8D 98 */	lfs f0, lbl_803E8F98@sda21(r2)
 /* 800A3C60 000A0BC0  3C 80 00 01 */	lis r4, 0x0000FFFF@ha
 /* 800A3C64 000A0BC4  38 C0 FF FF */	li r6, -1
@@ -30,9 +29,9 @@ __ct__9SeContextFv:
 /* 800A3CC0 000A0C20  D0 03 00 24 */	stfs f0, 0x24(r3)
 /* 800A3CC4 000A0C24  90 A3 00 00 */	stw r5, 0(r3)
 /* 800A3CC8 000A0C28  4E 80 00 20 */	blr 
+.endfn __ct__9SeContextFv
 
-.global __ct__9SeContextFP8Creaturei
-__ct__9SeContextFP8Creaturei:
+.fn __ct__9SeContextFP8Creaturei, global
 /* 800A3CCC 000A0C2C  C0 02 8D 98 */	lfs f0, lbl_803E8F98@sda21(r2)
 /* 800A3CD0 000A0C30  38 C0 FF FF */	li r6, -1
 /* 800A3CD4 000A0C34  38 00 00 00 */	li r0, 0
@@ -59,9 +58,9 @@ __ct__9SeContextFP8Creaturei:
 /* 800A3D28 000A0C88  D0 03 00 24 */	stfs f0, 0x24(r3)
 /* 800A3D2C 000A0C8C  90 03 00 00 */	stw r0, 0(r3)
 /* 800A3D30 000A0C90  4E 80 00 20 */	blr 
+.endfn __ct__9SeContextFP8Creaturei
 
-.global setContext__9SeContextFP8Creaturei
-setContext__9SeContextFP8Creaturei:
+.fn setContext__9SeContextFP8Creaturei, global
 /* 800A3D34 000A0C94  7C 08 02 A6 */	mflr r0
 /* 800A3D38 000A0C98  90 01 00 04 */	stw r0, 4(r1)
 /* 800A3D3C 000A0C9C  94 21 FF D8 */	stwu r1, -0x28(r1)
@@ -102,9 +101,9 @@ setContext__9SeContextFP8Creaturei:
 /* 800A3DC4 000A0D24  38 21 00 28 */	addi r1, r1, 0x28
 /* 800A3DC8 000A0D28  7C 08 03 A6 */	mtlr r0
 /* 800A3DCC 000A0D2C  4E 80 00 20 */	blr 
+.endfn setContext__9SeContextFP8Creaturei
 
-.global playSound__9SeContextFi
-playSound__9SeContextFi:
+.fn playSound__9SeContextFi, global
 /* 800A3DD0 000A0D30  7C 08 02 A6 */	mflr r0
 /* 800A3DD4 000A0D34  90 01 00 04 */	stw r0, 4(r1)
 /* 800A3DD8 000A0D38  94 21 FF C8 */	stwu r1, -0x38(r1)
@@ -162,9 +161,9 @@ playSound__9SeContextFi:
 /* 800A3E98 000A0DF8  38 21 00 38 */	addi r1, r1, 0x38
 /* 800A3E9C 000A0DFC  7C 08 03 A6 */	mtlr r0
 /* 800A3EA0 000A0E00  4E 80 00 20 */	blr 
+.endfn playSound__9SeContextFi
 
-.global stopSound__9SeContextFi
-stopSound__9SeContextFi:
+.fn stopSound__9SeContextFi, global
 /* 800A3EA4 000A0E04  7C 08 02 A6 */	mflr r0
 /* 800A3EA8 000A0E08  90 01 00 04 */	stw r0, 4(r1)
 /* 800A3EAC 000A0E0C  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -184,9 +183,9 @@ stopSound__9SeContextFi:
 /* 800A3EE0 000A0E40  38 21 00 18 */	addi r1, r1, 0x18
 /* 800A3EE4 000A0E44  7C 08 03 A6 */	mtlr r0
 /* 800A3EE8 000A0E48  4E 80 00 20 */	blr 
+.endfn stopSound__9SeContextFi
 
-.global update__9SeContextFv
-update__9SeContextFv:
+.fn update__9SeContextFv, global
 /* 800A3EEC 000A0E4C  7C 08 02 A6 */	mflr r0
 /* 800A3EF0 000A0E50  90 01 00 04 */	stw r0, 4(r1)
 /* 800A3EF4 000A0E54  94 21 FF D0 */	stwu r1, -0x30(r1)
@@ -227,9 +226,9 @@ update__9SeContextFv:
 /* 800A3F74 000A0ED4  38 21 00 30 */	addi r1, r1, 0x30
 /* 800A3F78 000A0ED8  7C 08 03 A6 */	mtlr r0
 /* 800A3F7C 000A0EDC  4E 80 00 20 */	blr 
+.endfn update__9SeContextFv
 
-.global releaseEvent__9SeContextFv
-releaseEvent__9SeContextFv:
+.fn releaseEvent__9SeContextFv, global
 /* 800A3F80 000A0EE0  7C 08 02 A6 */	mflr r0
 /* 800A3F84 000A0EE4  90 01 00 04 */	stw r0, 4(r1)
 /* 800A3F88 000A0EE8  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -254,9 +253,9 @@ releaseEvent__9SeContextFv:
 /* 800A3FCC 000A0F2C  38 21 00 18 */	addi r1, r1, 0x18
 /* 800A3FD0 000A0F30  7C 08 03 A6 */	mtlr r0
 /* 800A3FD4 000A0F34  4E 80 00 20 */	blr 
+.endfn releaseEvent__9SeContextFv
 
-.global __ct__8SeSystemFv
-__ct__8SeSystemFv:
+.fn __ct__8SeSystemFv, global
 /* 800A3FD8 000A0F38  7C 08 02 A6 */	mflr r0
 /* 800A3FDC 000A0F3C  90 01 00 04 */	stw r0, 4(r1)
 /* 800A3FE0 000A0F40  38 00 00 00 */	li r0, 0
@@ -330,17 +329,17 @@ __ct__8SeSystemFv:
 /* 800A40EC 000A104C  38 21 00 30 */	addi r1, r1, 0x30
 /* 800A40F0 000A1050  7C 08 03 A6 */	mtlr r0
 /* 800A40F4 000A1054  4E 80 00 20 */	blr 
+.endfn __ct__8SeSystemFv
 
-.global __ct__Q28SeSystem5EventFv
-__ct__Q28SeSystem5EventFv:
+.fn __ct__Q28SeSystem5EventFv, weak
 /* 800A40F8 000A1058  38 00 FF FF */	li r0, -1
 /* 800A40FC 000A105C  90 03 00 00 */	stw r0, 0(r3)
 /* 800A4100 000A1060  38 00 00 00 */	li r0, 0
 /* 800A4104 000A1064  90 03 00 04 */	stw r0, 4(r3)
 /* 800A4108 000A1068  4E 80 00 20 */	blr 
+.endfn __ct__Q28SeSystem5EventFv
 
-.global initEvent__8SeSystemFv
-initEvent__8SeSystemFv:
+.fn initEvent__8SeSystemFv, global
 /* 800A410C 000A106C  7C 08 02 A6 */	mflr r0
 /* 800A4110 000A1070  90 01 00 04 */	stw r0, 4(r1)
 /* 800A4114 000A1074  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -373,9 +372,9 @@ initEvent__8SeSystemFv:
 /* 800A4178 000A10D8  38 21 00 18 */	addi r1, r1, 0x18
 /* 800A417C 000A10DC  7C 08 03 A6 */	mtlr r0
 /* 800A4180 000A10E0  4E 80 00 20 */	blr 
+.endfn initEvent__8SeSystemFv
 
-.global resetSystem__8SeSystemFv
-resetSystem__8SeSystemFv:
+.fn resetSystem__8SeSystemFv, global
 /* 800A4184 000A10E4  7C 08 02 A6 */	mflr r0
 /* 800A4188 000A10E8  90 01 00 04 */	stw r0, 4(r1)
 /* 800A418C 000A10EC  94 21 FF E8 */	stwu r1, -0x18(r1)
@@ -408,9 +407,9 @@ resetSystem__8SeSystemFv:
 /* 800A41F0 000A1150  38 21 00 18 */	addi r1, r1, 0x18
 /* 800A41F4 000A1154  7C 08 03 A6 */	mtlr r0
 /* 800A41F8 000A1158  4E 80 00 20 */	blr 
+.endfn resetSystem__8SeSystemFv
 
-.global createEvent__8SeSystemFP9SeContextiP8SVector_
-createEvent__8SeSystemFP9SeContextiP8SVector_:
+.fn createEvent__8SeSystemFP9SeContextiP8SVector_, global
 /* 800A41FC 000A115C  7C 08 02 A6 */	mflr r0
 /* 800A4200 000A1160  90 01 00 04 */	stw r0, 4(r1)
 /* 800A4204 000A1164  94 21 FF B8 */	stwu r1, -0x48(r1)
@@ -555,9 +554,9 @@ createEvent__8SeSystemFP9SeContextiP8SVector_:
 /* 800A43FC 000A135C  38 21 00 48 */	addi r1, r1, 0x48
 /* 800A4400 000A1360  7C 08 03 A6 */	mtlr r0
 /* 800A4404 000A1364  4E 80 00 20 */	blr 
+.endfn createEvent__8SeSystemFP9SeContextiP8SVector_
 
-.global playPikiSound__8SeSystemFiR8Vector3f
-playPikiSound__8SeSystemFiR8Vector3f:
+.fn playPikiSound__8SeSystemFiR8Vector3f, global
 /* 800A4408 000A1368  7C 08 02 A6 */	mflr r0
 /* 800A440C 000A136C  38 C5 00 00 */	addi r6, r5, 0
 /* 800A4410 000A1370  90 01 00 04 */	stw r0, 4(r1)
@@ -569,9 +568,9 @@ playPikiSound__8SeSystemFiR8Vector3f:
 /* 800A4428 000A1388  38 21 00 08 */	addi r1, r1, 8
 /* 800A442C 000A138C  7C 08 03 A6 */	mtlr r0
 /* 800A4430 000A1390  4E 80 00 20 */	blr 
+.endfn playPikiSound__8SeSystemFiR8Vector3f
 
-.global playSoundDirect__8SeSystemFiiR8Vector3f
-playSoundDirect__8SeSystemFiiR8Vector3f:
+.fn playSoundDirect__8SeSystemFiiR8Vector3f, global
 /* 800A4434 000A1394  7C 08 02 A6 */	mflr r0
 /* 800A4438 000A1398  90 01 00 04 */	stw r0, 4(r1)
 /* 800A443C 000A139C  94 21 FF 18 */	stwu r1, -0xe8(r1)
@@ -819,9 +818,9 @@ playSoundDirect__8SeSystemFiiR8Vector3f:
 /* 800A47BC 000A171C  38 21 00 E8 */	addi r1, r1, 0xe8
 /* 800A47C0 000A1720  7C 08 03 A6 */	mtlr r0
 /* 800A47C4 000A1724  4E 80 00 20 */	blr 
+.endfn playSoundDirect__8SeSystemFiiR8Vector3f
 
-.global destroyEvent__8SeSystemFP9SeContextl
-destroyEvent__8SeSystemFP9SeContextl:
+.fn destroyEvent__8SeSystemFP9SeContextl, global
 /* 800A47C8 000A1728  7C 08 02 A6 */	mflr r0
 /* 800A47CC 000A172C  90 01 00 04 */	stw r0, 4(r1)
 /* 800A47D0 000A1730  94 21 FF D0 */	stwu r1, -0x30(r1)
@@ -894,9 +893,9 @@ destroyEvent__8SeSystemFP9SeContextl:
 /* 800A48C4 000A1824  38 21 00 30 */	addi r1, r1, 0x30
 /* 800A48C8 000A1828  7C 08 03 A6 */	mtlr r0
 /* 800A48CC 000A182C  4E 80 00 20 */	blr 
+.endfn destroyEvent__8SeSystemFP9SeContextl
 
-.global getEvent__8SeSystemFP9SeContext
-getEvent__8SeSystemFP9SeContext:
+.fn getEvent__8SeSystemFP9SeContext, global
 /* 800A48D0 000A1830  80 03 00 68 */	lwz r0, 0x68(r3)
 /* 800A48D4 000A1834  38 E0 00 00 */	li r7, 0
 /* 800A48D8 000A1838  38 C0 00 00 */	li r6, 0
@@ -918,9 +917,9 @@ getEvent__8SeSystemFP9SeContext:
 .L_800A4910:
 /* 800A4910 000A1870  38 60 FF FF */	li r3, -1
 /* 800A4914 000A1874  4E 80 00 20 */	blr 
+.endfn getEvent__8SeSystemFP9SeContext
 
-.global draw3d__8SeSystemFR8Graphics
-draw3d__8SeSystemFR8Graphics:
+.fn draw3d__8SeSystemFR8Graphics, global
 /* 800A4918 000A1878  7C 08 02 A6 */	mflr r0
 /* 800A491C 000A187C  38 A0 00 01 */	li r5, 1
 /* 800A4920 000A1880  90 01 00 04 */	stw r0, 4(r1)
@@ -1036,9 +1035,9 @@ draw3d__8SeSystemFR8Graphics:
 /* 800A4AC4 000A1A24  38 21 01 48 */	addi r1, r1, 0x148
 /* 800A4AC8 000A1A28  7C 08 03 A6 */	mtlr r0
 /* 800A4ACC 000A1A2C  4E 80 00 20 */	blr 
+.endfn draw3d__8SeSystemFR8Graphics
 
-.global draw2d__8SeSystemFR8Graphics
-draw2d__8SeSystemFR8Graphics:
+.fn draw2d__8SeSystemFR8Graphics, global
 /* 800A4AD0 000A1A30  7C 08 02 A6 */	mflr r0
 /* 800A4AD4 000A1A34  3C A0 80 2B */	lis r5, lbl_802B1E10@ha
 /* 800A4AD8 000A1A38  90 01 00 04 */	stw r0, 4(r1)
@@ -1225,9 +1224,9 @@ draw2d__8SeSystemFR8Graphics:
 /* 800A4D94 000A1CF4  38 21 01 70 */	addi r1, r1, 0x170
 /* 800A4D98 000A1CF8  7C 08 03 A6 */	mtlr r0
 /* 800A4D9C 000A1CFC  4E 80 00 20 */	blr 
+.endfn draw2d__8SeSystemFR8Graphics
 
-.global dumpEvents__8SeSystemFv
-dumpEvents__8SeSystemFv:
+.fn dumpEvents__8SeSystemFv, global
 /* 800A4DA0 000A1D00  7C 08 02 A6 */	mflr r0
 /* 800A4DA4 000A1D04  90 01 00 04 */	stw r0, 4(r1)
 /* 800A4DA8 000A1D08  94 21 FF 58 */	stwu r1, -0xa8(r1)
@@ -1281,9 +1280,9 @@ dumpEvents__8SeSystemFv:
 /* 800A4E4C 000A1DAC  38 21 00 A8 */	addi r1, r1, 0xa8
 /* 800A4E50 000A1DB0  7C 08 03 A6 */	mtlr r0
 /* 800A4E54 000A1DB4  4E 80 00 20 */	blr 
+.endfn dumpEvents__8SeSystemFv
 
-.global update__8SeSystemFR8GraphicsR8Vector3f
-update__8SeSystemFR8GraphicsR8Vector3f:
+.fn update__8SeSystemFR8GraphicsR8Vector3f, global
 /* 800A4E58 000A1DB8  7C 08 02 A6 */	mflr r0
 /* 800A4E5C 000A1DBC  90 01 00 04 */	stw r0, 4(r1)
 /* 800A4E60 000A1DC0  94 21 FF 58 */	stwu r1, -0xa8(r1)
@@ -1519,14 +1518,14 @@ update__8SeSystemFR8GraphicsR8Vector3f:
 /* 800A51B4 000A2114  38 21 00 A8 */	addi r1, r1, 0xa8
 /* 800A51B8 000A2118  7C 08 03 A6 */	mtlr r0
 /* 800A51BC 000A211C  4E 80 00 20 */	blr 
+.endfn update__8SeSystemFR8GraphicsR8Vector3f
 
-.global isBossBgm__4BossFv
-isBossBgm__4BossFv:
+.fn isBossBgm__4BossFv, weak
 /* 800A51C0 000A2120  38 60 00 00 */	li r3, 0
 /* 800A51C4 000A2124  4E 80 00 20 */	blr 
+.endfn isBossBgm__4BossFv
 
-.global calcCameraPos__8SeSystemFR8Vector3fR8Vector3f
-calcCameraPos__8SeSystemFR8Vector3fR8Vector3f:
+.fn calcCameraPos__8SeSystemFR8Vector3fR8Vector3f, global
 /* 800A51C8 000A2128  7C 08 02 A6 */	mflr r0
 /* 800A51CC 000A212C  90 01 00 04 */	stw r0, 4(r1)
 /* 800A51D0 000A2130  94 21 FF B8 */	stwu r1, -0x48(r1)
@@ -1590,18 +1589,18 @@ calcCameraPos__8SeSystemFR8Vector3fR8Vector3f:
 /* 800A52B8 000A2218  38 21 00 48 */	addi r1, r1, 0x48
 /* 800A52BC 000A221C  7C 08 03 A6 */	mtlr r0
 /* 800A52C0 000A2220  4E 80 00 20 */	blr 
+.endfn calcCameraPos__8SeSystemFR8Vector3fR8Vector3f
 
-.global getJacID__8SeSystemFi
-getJacID__8SeSystemFi:
+.fn getJacID__8SeSystemFi, global
 /* 800A52C4 000A2224  1C 04 00 14 */	mulli r0, r4, 0x14
 /* 800A52C8 000A2228  3C 60 80 2B */	lis r3, soundTable@ha
 /* 800A52CC 000A222C  38 63 33 D4 */	addi r3, r3, soundTable@l
 /* 800A52D0 000A2230  7C 63 02 14 */	add r3, r3, r0
 /* 800A52D4 000A2234  80 63 00 04 */	lwz r3, 4(r3)
 /* 800A52D8 000A2238  4E 80 00 20 */	blr 
+.endfn getJacID__8SeSystemFi
 
-.global exitCourse__8SeSystemFv
-exitCourse__8SeSystemFv:
+.fn exitCourse__8SeSystemFv, global
 /* 800A52DC 000A223C  7C 08 02 A6 */	mflr r0
 /* 800A52E0 000A2240  90 01 00 04 */	stw r0, 4(r1)
 /* 800A52E4 000A2244  38 00 00 01 */	li r0, 1
@@ -1642,9 +1641,9 @@ exitCourse__8SeSystemFv:
 /* 800A5368 000A22C8  38 21 00 18 */	addi r1, r1, 0x18
 /* 800A536C 000A22CC  7C 08 03 A6 */	mtlr r0
 /* 800A5370 000A22D0  4E 80 00 20 */	blr 
+.endfn exitCourse__8SeSystemFv
 
-.global playSysSe__8SeSystemFi
-playSysSe__8SeSystemFi:
+.fn playSysSe__8SeSystemFi, global
 /* 800A5374 000A22D4  7C 08 02 A6 */	mflr r0
 /* 800A5378 000A22D8  90 01 00 04 */	stw r0, 4(r1)
 /* 800A537C 000A22DC  1C 03 00 14 */	mulli r0, r3, 0x14
@@ -1658,9 +1657,9 @@ playSysSe__8SeSystemFi:
 /* 800A539C 000A22FC  38 21 00 08 */	addi r1, r1, 8
 /* 800A53A0 000A2300  7C 08 03 A6 */	mtlr r0
 /* 800A53A4 000A2304  4E 80 00 20 */	blr 
+.endfn playSysSe__8SeSystemFi
 
-.global stopSysSe__8SeSystemFi
-stopSysSe__8SeSystemFi:
+.fn stopSysSe__8SeSystemFi, global
 /* 800A53A8 000A2308  7C 08 02 A6 */	mflr r0
 /* 800A53AC 000A230C  90 01 00 04 */	stw r0, 4(r1)
 /* 800A53B0 000A2310  1C 03 00 14 */	mulli r0, r3, 0x14
@@ -1674,9 +1673,9 @@ stopSysSe__8SeSystemFi:
 /* 800A53D0 000A2330  38 21 00 08 */	addi r1, r1, 8
 /* 800A53D4 000A2334  7C 08 03 A6 */	mtlr r0
 /* 800A53D8 000A2338  4E 80 00 20 */	blr 
+.endfn stopSysSe__8SeSystemFi
 
-.global playPlayerSe__8SeSystemFi
-playPlayerSe__8SeSystemFi:
+.fn playPlayerSe__8SeSystemFi, global
 /* 800A53DC 000A233C  7C 08 02 A6 */	mflr r0
 /* 800A53E0 000A2340  90 01 00 04 */	stw r0, 4(r1)
 /* 800A53E4 000A2344  1C 03 00 14 */	mulli r0, r3, 0x14
@@ -1690,9 +1689,9 @@ playPlayerSe__8SeSystemFi:
 /* 800A5404 000A2364  38 21 00 08 */	addi r1, r1, 8
 /* 800A5408 000A2368  7C 08 03 A6 */	mtlr r0
 /* 800A540C 000A236C  4E 80 00 20 */	blr 
+.endfn playPlayerSe__8SeSystemFi
 
-.global stopPlayerSe__8SeSystemFi
-stopPlayerSe__8SeSystemFi:
+.fn stopPlayerSe__8SeSystemFi, global
 /* 800A5410 000A2370  7C 08 02 A6 */	mflr r0
 /* 800A5414 000A2374  90 01 00 04 */	stw r0, 4(r1)
 /* 800A5418 000A2378  1C 03 00 14 */	mulli r0, r3, 0x14
@@ -1706,10 +1705,11 @@ stopPlayerSe__8SeSystemFi:
 /* 800A5438 000A2398  38 21 00 08 */	addi r1, r1, 8
 /* 800A543C 000A239C  7C 08 03 A6 */	mtlr r0
 /* 800A5440 000A23A0  4E 80 00 20 */	blr 
+.endfn stopPlayerSe__8SeSystemFi
 
 .section .rodata, "a"  # 0x80221FE0 - 0x80222DC0
 .balign 8
-lbl_80222418:
+.obj lbl_80222418, local
 	.4byte lbl_803DFB00
 	.4byte lbl_803DFB08
 	.4byte lbl_803DFB10
@@ -1719,988 +1719,1315 @@ lbl_80222418:
 	.4byte lbl_803DFB30
 	.4byte lbl_803DFB38
 	.4byte lbl_803DFB40
+.endobj lbl_80222418
 
 .section .data, "wa"  # 0x80222DC0 - 0x802E9640
 .balign 8
-lbl_802B1E10:
+.obj lbl_802B1E10, local
 	.asciz "soundMgr.cpp"
+.endobj lbl_802B1E10
 .balign 4
-lbl_802B1E20:
+.obj lbl_802B1E20, local
 	.asciz "soundMgr"
+.endobj lbl_802B1E20
 .balign 4
-lbl_802B1E2C:
+.obj lbl_802B1E2C, local
 	.asciz "SE_BATTLE_START"
+.endobj lbl_802B1E2C
 .balign 4
-lbl_802B1E3C:
+.obj lbl_802B1E3C, local
 	.asciz "SE_CHAPPY_WALK"
+.endobj lbl_802B1E3C
 .balign 4
-lbl_802B1E4C:
+.obj lbl_802B1E4C, local
 	.asciz "SE_CHAPPY_DIE"
+.endobj lbl_802B1E4C
 .balign 4
-lbl_802B1E5C:
+.obj lbl_802B1E5C, local
 	.asciz "SE_CHAPPY_SWING"
+.endobj lbl_802B1E5C
 .balign 4
-lbl_802B1E6C:
+.obj lbl_802B1E6C, local
 	.asciz "SE_CHAPPY_SLEEP"
+.endobj lbl_802B1E6C
 .balign 4
-lbl_802B1E7C:
+.obj lbl_802B1E7C, local
 	.asciz "SE_CHAPPY_BITE"
+.endobj lbl_802B1E7C
 .balign 4
-lbl_802B1E8C:
+.obj lbl_802B1E8C, local
 	.asciz "SE_CHAPPY_EAT"
+.endobj lbl_802B1E8C
 .balign 4
-lbl_802B1E9C:
+.obj lbl_802B1E9C, local
 	.asciz "SE_CHAPPY_DOWN"
+.endobj lbl_802B1E9C
 .balign 4
-lbl_802B1EAC:
+.obj lbl_802B1EAC, local
 	.asciz "SE_CHAPPY_FOOTDAMAGE"
+.endobj lbl_802B1EAC
 .balign 4
-lbl_802B1EC4:
+.obj lbl_802B1EC4, local
 	.asciz "SE_CHAPPY_BITE2"
+.endobj lbl_802B1EC4
 .balign 4
-lbl_802B1ED4:
+.obj lbl_802B1ED4, local
 	.asciz "SE_FLOG_WALK"
+.endobj lbl_802B1ED4
 .balign 4
-lbl_802B1EE4:
+.obj lbl_802B1EE4, local
 	.asciz "SE_FLOG_DIE"
+.endobj lbl_802B1EE4
 .balign 4
-lbl_802B1EF0:
+.obj lbl_802B1EF0, local
 	.asciz "SE_FLOG_FALL"
+.endobj lbl_802B1EF0
 .balign 4
-lbl_802B1F00:
+.obj lbl_802B1F00, local
 	.asciz "SE_FLOG_HIJUMP"
+.endobj lbl_802B1F00
 .balign 4
-lbl_802B1F10:
+.obj lbl_802B1F10, local
 	.asciz "SE_FLOG_JUMP"
+.endobj lbl_802B1F10
 .balign 4
-lbl_802B1F20:
+.obj lbl_802B1F20, local
 	.asciz "SE_FLOG_DOWN"
+.endobj lbl_802B1F20
 .balign 4
-lbl_802B1F30:
+.obj lbl_802B1F30, local
 	.asciz "SE_FLOG_LAND"
+.endobj lbl_802B1F30
 .balign 4
-lbl_802B1F40:
+.obj lbl_802B1F40, local
 	.asciz "SE_FLOG_VOICE"
+.endobj lbl_802B1F40
 .balign 4
-lbl_802B1F50:
+.obj lbl_802B1F50, local
 	.asciz "SE_FLOG_ATTACK"
+.endobj lbl_802B1F50
 .balign 4
-lbl_802B1F60:
+.obj lbl_802B1F60, local
 	.asciz "SE_FLOG_EAT"
+.endobj lbl_802B1F60
 .balign 4
-lbl_802B1F6C:
+.obj lbl_802B1F6C, local
 	.asciz "SE_FLOG_WATERJUMP"
+.endobj lbl_802B1F6C
 .balign 4
-lbl_802B1F80:
+.obj lbl_802B1F80, local
 	.asciz "SE_FLOG_WATERLAND"
+.endobj lbl_802B1F80
 .balign 4
-lbl_802B1F94:
+.obj lbl_802B1F94, local
 	.asciz "SE_PIKI_EATEN"
+.endobj lbl_802B1F94
 .balign 4
-lbl_802B1FA4:
+.obj lbl_802B1FA4, local
 	.asciz "SE_PIKI_ATTACK_VOICE"
+.endobj lbl_802B1FA4
 .balign 4
-lbl_802B1FBC:
+.obj lbl_802B1FBC, local
 	.asciz "SE_MISSHIT"
+.endobj lbl_802B1FBC
 .balign 4
-lbl_802B1FC8:
+.obj lbl_802B1FC8, local
 	.asciz "SE_PIKI_ATTACK_HIT"
+.endobj lbl_802B1FC8
 .balign 4
-lbl_802B1FDC:
+.obj lbl_802B1FDC, local
 	.asciz "SE_PIKI_DAMAGED"
+.endobj lbl_802B1FDC
 .balign 4
-lbl_802B1FEC:
+.obj lbl_802B1FEC, local
 	.asciz "SE_PIKI_PRESSED"
+.endobj lbl_802B1FEC
 .balign 4
-lbl_802B1FFC:
+.obj lbl_802B1FFC, local
 	.asciz "SE_WALL_HIT"
+.endobj lbl_802B1FFC
 .balign 4
-lbl_802B2008:
+.obj lbl_802B2008, local
 	.asciz "SE_SOFTWALL_HIT"
+.endobj lbl_802B2008
 .balign 4
-lbl_802B2018:
+.obj lbl_802B2018, local
 	.asciz "SE_WALL_DOWN"
+.endobj lbl_802B2018
 .balign 4
-lbl_802B2028:
+.obj lbl_802B2028, local
 	.asciz "SE_MINIC_WALK"
+.endobj lbl_802B2028
 .balign 4
-lbl_802B2038:
+.obj lbl_802B2038, local
 	.asciz "SE_MINIC_FOOTDAMAGE"
+.endobj lbl_802B2038
 .balign 4
-lbl_802B204C:
+.obj lbl_802B204C, local
 	.asciz "SE_MINIC_DIE"
+.endobj lbl_802B204C
 .balign 4
-lbl_802B205C:
+.obj lbl_802B205C, local
 	.asciz "SE_MINIC_SWING"
+.endobj lbl_802B205C
 .balign 4
-lbl_802B206C:
+.obj lbl_802B206C, local
 	.asciz "SE_MINIC_BITE"
+.endobj lbl_802B206C
 .balign 4
-lbl_802B207C:
+.obj lbl_802B207C, local
 	.asciz "SE_MINIC_EAT"
+.endobj lbl_802B207C
 .balign 4
-lbl_802B208C:
+.obj lbl_802B208C, local
 	.asciz "SE_MINIC_DOWN"
+.endobj lbl_802B208C
 .balign 4
-lbl_802B209C:
+.obj lbl_802B209C, local
 	.asciz "SE_MINIC_ALERT"
+.endobj lbl_802B209C
 .balign 4
-lbl_802B20AC:
+.obj lbl_802B20AC, local
 	.asciz "SE_SNAKE_APPEAR"
+.endobj lbl_802B20AC
 .balign 4
-lbl_802B20BC:
+.obj lbl_802B20BC, local
 	.asciz "SE_SPIDER_WALK"
+.endobj lbl_802B20BC
 .balign 4
-lbl_802B20CC:
+.obj lbl_802B20CC, local
 	.asciz "SE_SPIDER_LAND"
+.endobj lbl_802B20CC
 .balign 4
-lbl_802B20DC:
+.obj lbl_802B20DC, local
 	.asciz "SE_SPIDER_SWING"
+.endobj lbl_802B20DC
 .balign 4
-lbl_802B20EC:
+.obj lbl_802B20EC, local
 	.asciz "SE_SPIDER_DEAD"
+.endobj lbl_802B20EC
 .balign 4
-lbl_802B20FC:
+.obj lbl_802B20FC, local
 	.asciz "SE_SPIDER_BOMB"
+.endobj lbl_802B20FC
 .balign 4
-lbl_802B210C:
+.obj lbl_802B210C, local
 	.asciz "SE_FLOWER_DOWN"
+.endobj lbl_802B210C
 .balign 4
-lbl_802B211C:
+.obj lbl_802B211C, local
 	.asciz "SE_FLOWER_CONVULSION"
+.endobj lbl_802B211C
 .balign 4
-lbl_802B2134:
+.obj lbl_802B2134, local
 	.asciz "SE_FLOWER_GROW0"
+.endobj lbl_802B2134
 .balign 4
-lbl_802B2144:
+.obj lbl_802B2144, local
 	.asciz "SE_FLOWER_GROW1"
+.endobj lbl_802B2144
 .balign 4
-lbl_802B2154:
+.obj lbl_802B2154, local
 	.asciz "SE_FLOWER_GROW2"
+.endobj lbl_802B2154
 .balign 4
-lbl_802B2164:
+.obj lbl_802B2164, local
 	.asciz "SE_PIKI_DEAD"
+.endobj lbl_802B2164
 .balign 4
-lbl_802B2174:
+.obj lbl_802B2174, local
 	.asciz "SE_SNAKE_DIG"
+.endobj lbl_802B2174
 .balign 4
-lbl_802B2184:
+.obj lbl_802B2184, local
 	.asciz "SE_SNAKE_SHOUT"
+.endobj lbl_802B2184
 .balign 4
-lbl_802B2194:
+.obj lbl_802B2194, local
 	.asciz "SE_SNAKE_EAT"
+.endobj lbl_802B2194
 .balign 4
-lbl_802B21A4:
+.obj lbl_802B21A4, local
 	.asciz "SE_SNAKE_DRINK"
+.endobj lbl_802B21A4
 .balign 4
-lbl_802B21B4:
+.obj lbl_802B21B4, local
 	.asciz "SE_SNAKE_TURN"
+.endobj lbl_802B21B4
 .balign 4
-lbl_802B21C4:
+.obj lbl_802B21C4, local
 	.asciz "SE_SNAKE_MOGAKU"
+.endobj lbl_802B21C4
 .balign 4
-lbl_802B21D4:
+.obj lbl_802B21D4, local
 	.asciz "SE_SNAKE_DEAD1"
+.endobj lbl_802B21D4
 .balign 4
-lbl_802B21E4:
+.obj lbl_802B21E4, local
 	.asciz "SE_SNAKE_DEAD2"
+.endobj lbl_802B21E4
 .balign 4
-lbl_802B21F4:
+.obj lbl_802B21F4, local
 	.asciz "SE_TANK_FIRE"
+.endobj lbl_802B21F4
 .balign 4
-lbl_802B2204:
+.obj lbl_802B2204, local
 	.asciz "SE_TANK_BREATH"
+.endobj lbl_802B2204
 .balign 4
-lbl_802B2214:
+.obj lbl_802B2214, local
 	.asciz "SE_TANK_WALK"
+.endobj lbl_802B2214
 .balign 4
-lbl_802B2224:
+.obj lbl_802B2224, local
 	.asciz "SE_TANK_SWING"
+.endobj lbl_802B2224
 .balign 4
-lbl_802B2234:
+.obj lbl_802B2234, local
 	.asciz "SE_TANK_DAMAGE"
+.endobj lbl_802B2234
 .balign 4
-lbl_802B2244:
+.obj lbl_802B2244, local
 	.asciz "SE_TANK_DEAD1"
+.endobj lbl_802B2244
 .balign 4
-lbl_802B2254:
+.obj lbl_802B2254, local
 	.asciz "SE_TANK_DEAD2"
+.endobj lbl_802B2254
 .balign 4
-lbl_802B2264:
+.obj lbl_802B2264, local
 	.asciz "SE_MUSH_WALK"
+.endobj lbl_802B2264
 .balign 4
-lbl_802B2274:
+.obj lbl_802B2274, local
 	.asciz "SE_MUSH_FLIP"
+.endobj lbl_802B2274
 .balign 4
-lbl_802B2284:
+.obj lbl_802B2284, local
 	.asciz "SE_MUSH_TUMBLE"
+.endobj lbl_802B2284
 .balign 4
-lbl_802B2294:
+.obj lbl_802B2294, local
 	.asciz "SE_MUSH_GETUP"
+.endobj lbl_802B2294
 .balign 4
-lbl_802B22A4:
+.obj lbl_802B22A4, local
 	.asciz "SE_MUSH_LAND"
+.endobj lbl_802B22A4
 .balign 4
-lbl_802B22B4:
+.obj lbl_802B22B4, local
 	.asciz "SE_MUSH_TAME"
+.endobj lbl_802B22B4
 .balign 4
-lbl_802B22C4:
+.obj lbl_802B22C4, local
 	.asciz "SE_MUSH_SPORE"
+.endobj lbl_802B22C4
 .balign 4
-lbl_802B22D4:
+.obj lbl_802B22D4, local
 	.asciz "SE_MUSH_DAMAGE"
+.endobj lbl_802B22D4
 .balign 4
-lbl_802B22E4:
+.obj lbl_802B22E4, local
 	.asciz "SE_MUSH_DEAD1"
+.endobj lbl_802B22E4
 .balign 4
-lbl_802B22F4:
+.obj lbl_802B22F4, local
 	.asciz "SE_MUSH_DEAD2"
+.endobj lbl_802B22F4
 .balign 4
-lbl_802B2304:
+.obj lbl_802B2304, local
 	.asciz "SE_KING_WALK"
+.endobj lbl_802B2304
 .balign 4
-lbl_802B2314:
+.obj lbl_802B2314, local
 	.asciz "SE_KING_READY"
+.endobj lbl_802B2314
 .balign 4
-lbl_802B2324:
+.obj lbl_802B2324, local
 	.asciz "SE_KING_BERO1"
+.endobj lbl_802B2324
 .balign 4
-lbl_802B2334:
+.obj lbl_802B2334, local
 	.asciz "SE_KING_BERO2"
+.endobj lbl_802B2334
 .balign 4
-lbl_802B2344:
+.obj lbl_802B2344, local
 	.asciz "SE_KING_GEPPU"
+.endobj lbl_802B2344
 .balign 4
-lbl_802B2354:
+.obj lbl_802B2354, local
 	.asciz "SE_KING_DRINK"
+.endobj lbl_802B2354
 .balign 4
-lbl_802B2364:
+.obj lbl_802B2364, local
 	.asciz "SE_KING_EAT"
+.endobj lbl_802B2364
 .balign 4
-lbl_802B2370:
+.obj lbl_802B2370, local
 	.asciz "SE_KING_CHEEK"
+.endobj lbl_802B2370
 .balign 4
-lbl_802B2380:
+.obj lbl_802B2380, local
 	.asciz "SE_KING_NAME"
+.endobj lbl_802B2380
 .balign 4
-lbl_802B2390:
+.obj lbl_802B2390, local
 	.asciz "SE_KING_HIP"
+.endobj lbl_802B2390
 .balign 4
-lbl_802B239C:
+.obj lbl_802B239C, local
 	.asciz "SE_KING_DEAD1"
+.endobj lbl_802B239C
 .balign 4
-lbl_802B23AC:
+.obj lbl_802B23AC, local
 	.asciz "SE_KING_DEAD2"
+.endobj lbl_802B23AC
 .balign 4
-lbl_802B23BC:
+.obj lbl_802B23BC, local
 	.asciz "SE_KING_APPEAR"
+.endobj lbl_802B23BC
 .balign 4
-lbl_802B23CC:
+.obj lbl_802B23CC, local
 	.asciz "SE_KING_SINK"
+.endobj lbl_802B23CC
 .balign 4
-lbl_802B23DC:
+.obj lbl_802B23DC, local
 	.asciz "SE_KABUTO_BREATH"
+.endobj lbl_802B23DC
 .balign 4
-lbl_802B23F0:
+.obj lbl_802B23F0, local
 	.asciz "SE_KABUTO_TUMARI"
+.endobj lbl_802B23F0
 .balign 4
-lbl_802B2404:
+.obj lbl_802B2404, local
 	.asciz "SE_KABUTO_OPEN"
+.endobj lbl_802B2404
 .balign 4
-lbl_802B2414:
+.obj lbl_802B2414, local
 	.asciz "SE_KABUTO_SHOT"
+.endobj lbl_802B2414
 .balign 4
-lbl_802B2424:
+.obj lbl_802B2424, local
 	.asciz "SE_KABUTO_FLIP"
+.endobj lbl_802B2424
 .balign 4
-lbl_802B2434:
+.obj lbl_802B2434, local
 	.asciz "SE_KABUTO_WALK"
+.endobj lbl_802B2434
 .balign 4
-lbl_802B2444:
+.obj lbl_802B2444, local
 	.asciz "SE_KABUTO_COOLDOWN"
+.endobj lbl_802B2444
 .balign 4
-lbl_802B2458:
+.obj lbl_802B2458, local
 	.asciz "SE_KABUTO_OVERHEAT"
+.endobj lbl_802B2458
 .balign 4
-lbl_802B246C:
+.obj lbl_802B246C, local
 	.asciz "SE_KABUTO_DEAD"
+.endobj lbl_802B246C
 .balign 4
-lbl_802B247C:
+.obj lbl_802B247C, local
 	.asciz "SE_ROCK_ROLL"
+.endobj lbl_802B247C
 .balign 4
-lbl_802B248C:
+.obj lbl_802B248C, local
 	.asciz "SE_ROCK_BREAK"
+.endobj lbl_802B248C
 .balign 4
-lbl_802B249C:
+.obj lbl_802B249C, local
 	.asciz "SE_ROCK_GENERATOR"
+.endobj lbl_802B249C
 .balign 4
-lbl_802B24B0:
+.obj lbl_802B24B0, local
 	.asciz "SE_SHELL_CLOSE"
+.endobj lbl_802B24B0
 .balign 4
-lbl_802B24C0:
+.obj lbl_802B24C0, local
 	.asciz "SE_SHELL_READY"
+.endobj lbl_802B24C0
 .balign 4
-lbl_802B24D0:
+.obj lbl_802B24D0, local
 	.asciz "SE_SHELL_TRESURE"
+.endobj lbl_802B24D0
 .balign 4
-lbl_802B24E4:
+.obj lbl_802B24E4, local
 	.asciz "SE_SHELL_OPEN"
+.endobj lbl_802B24E4
 .balign 4
-lbl_802B24F4:
+.obj lbl_802B24F4, local
 	.asciz "SE_SHELL_EAT"
+.endobj lbl_802B24F4
 .balign 4
-lbl_802B2504:
+.obj lbl_802B2504, local
 	.asciz "SE_KINOKOPIKI_MORPH"
+.endobj lbl_802B2504
 .balign 4
-lbl_802B2518:
+.obj lbl_802B2518, local
 	.asciz "SE_KINOKOPIKI_DANCE"
+.endobj lbl_802B2518
 .balign 4
-lbl_802B252C:
+.obj lbl_802B252C, local
 	.asciz "SE_COLLEC_BREATH"
+.endobj lbl_802B252C
 .balign 4
-lbl_802B2540:
+.obj lbl_802B2540, local
 	.asciz "SE_COLLEC_PULL"
+.endobj lbl_802B2540
 .balign 4
-lbl_802B2550:
+.obj lbl_802B2550, local
 	.asciz "SE_COLLEC_WALK"
+.endobj lbl_802B2550
 .balign 4
-lbl_802B2560:
+.obj lbl_802B2560, local
 	.asciz "SE_COLLEC_SWING"
+.endobj lbl_802B2560
 .balign 4
-lbl_802B2570:
+.obj lbl_802B2570, local
 	.asciz "SE_COLLEC_DEAD"
+.endobj lbl_802B2570
 .balign 4
-lbl_802B2580:
+.obj lbl_802B2580, local
 	.asciz "SE_COLLEC_DOWN"
+.endobj lbl_802B2580
 .balign 4
-lbl_802B2590:
+.obj lbl_802B2590, local
 	.asciz "SE_COLLEC_CRY"
+.endobj lbl_802B2590
 .balign 4
-lbl_802B25A0:
+.obj lbl_802B25A0, local
 	.asciz "SE_COLLEC_DAMAGE"
+.endobj lbl_802B25A0
 .balign 4
-lbl_802B25B4:
+.obj lbl_802B25B4, local
 	.asciz "SE_KOGANE_WALK"
+.endobj lbl_802B25B4
 .balign 4
-lbl_802B25C4:
+.obj lbl_802B25C4, local
 	.asciz "SE_KOGANE_DAMAGE"
+.endobj lbl_802B25C4
 .balign 4
-lbl_802B25D8:
+.obj lbl_802B25D8, local
 	.asciz "SE_SARAI_HOVER"
+.endobj lbl_802B25D8
 .balign 4
-lbl_802B25E8:
+.obj lbl_802B25E8, local
 	.asciz "SE_SARAI_DAMAGE"
+.endobj lbl_802B25E8
 .balign 4
-lbl_802B25F8:
+.obj lbl_802B25F8, local
 	.asciz "SE_SARAI_ATTACK"
+.endobj lbl_802B25F8
 .balign 4
-lbl_802B2608:
+.obj lbl_802B2608, local
 	.asciz "SE_SARAI_DEAD"
+.endobj lbl_802B2608
 .balign 4
-lbl_802B2618:
+.obj lbl_802B2618, local
 	.asciz "SE_WALLEAT_WALK"
+.endobj lbl_802B2618
 .balign 4
-lbl_802B2628:
+.obj lbl_802B2628, local
 	.asciz "SE_WALLEAT_NIP"
+.endobj lbl_802B2628
 .balign 4
-lbl_802B2638:
+.obj lbl_802B2638, local
 	.asciz "SE_WALLEAT_EAT"
+.endobj lbl_802B2638
 .balign 4
-lbl_802B2648:
+.obj lbl_802B2648, local
 	.asciz "SE_WALLEAT_APPEAR"
+.endobj lbl_802B2648
 .balign 4
-lbl_802B265C:
+.obj lbl_802B265C, local
 	.asciz "SE_MAR_FLY"
+.endobj lbl_802B265C
 .balign 4
-lbl_802B2668:
+.obj lbl_802B2668, local
 	.asciz "SE_MAR_BREATH"
+.endobj lbl_802B2668
 .balign 4
-lbl_802B2678:
+.obj lbl_802B2678, local
 	.asciz "SE_MAR_WIND"
+.endobj lbl_802B2678
 .balign 4
-lbl_802B2684:
+.obj lbl_802B2684, local
 	.asciz "SE_MAR_DROP"
+.endobj lbl_802B2684
 .balign 4
-lbl_802B2690:
+.obj lbl_802B2690, local
 	.asciz "SE_MAR_DEAD1"
+.endobj lbl_802B2690
 .balign 4
-lbl_802B26A0:
+.obj lbl_802B26A0, local
 	.asciz "SE_MAR_DEAD2"
+.endobj lbl_802B26A0
 .balign 4
-lbl_802B26B0:
+.obj lbl_802B26B0, local
 	.asciz "SE_MIURIN_WALK"
+.endobj lbl_802B26B0
 .balign 4
-lbl_802B26C0:
+.obj lbl_802B26C0, local
 	.asciz "SE_MIURIN_PUNCH"
+.endobj lbl_802B26C0
 .balign 4
-lbl_802B26D0:
+.obj lbl_802B26D0, local
 	.asciz "SE_MIURIN_SING"
+.endobj lbl_802B26D0
 .balign 4
-lbl_802B26E0:
+.obj lbl_802B26E0, local
 	.asciz "SE_KURIONE_HIT"
+.endobj lbl_802B26E0
 .balign 4
-lbl_802B26F0:
+.obj lbl_802B26F0, local
 	.asciz "SE_KURIONE_ESCAPE"
+.endobj lbl_802B26F0
 .balign 4
-lbl_802B2704:
+.obj lbl_802B2704, local
 	.asciz "SE_KURIONE_WATER"
+.endobj lbl_802B2704
 .balign 4
-lbl_802B2718:
+.obj lbl_802B2718, local
 	.asciz "SE_KURIONE_FLYING"
+.endobj lbl_802B2718
 .balign 4
-lbl_802B272C:
+.obj lbl_802B272C, local
 	.asciz "SE_SLIME_WALK"
+.endobj lbl_802B272C
 .balign 4
-lbl_802B273C:
+.obj lbl_802B273C, local
 	.asciz "SE_SLIME_HIT_SMALL"
+.endobj lbl_802B273C
 .balign 4
-lbl_802B2750:
+.obj lbl_802B2750, local
 	.asciz "SE_SLIME_HIT_MID"
+.endobj lbl_802B2750
 .balign 4
-lbl_802B2764:
+.obj lbl_802B2764, local
 	.asciz "SE_SLIME_HIT_LARGE"
+.endobj lbl_802B2764
 .balign 4
-lbl_802B2778:
+.obj lbl_802B2778, local
 	.asciz "SE_SLIME_DEAD"
+.endobj lbl_802B2778
 .balign 4
-lbl_802B2788:
+.obj lbl_802B2788, local
 	.asciz "SE_SLIME_EXT1"
+.endobj lbl_802B2788
 .balign 4
-lbl_802B2798:
+.obj lbl_802B2798, local
 	.asciz "SE_SLIME_EXT2"
+.endobj lbl_802B2798
 .balign 4
-lbl_802B27A8:
+.obj lbl_802B27A8, local
 	.asciz "SE_SLIME_EXT3"
+.endobj lbl_802B27A8
 .balign 4
-lbl_802B27B8:
+.obj lbl_802B27B8, local
 	.asciz "SE_SLIME_DISAPPEAR"
+.endobj lbl_802B27B8
 .balign 4
-lbl_802B27CC:
+.obj lbl_802B27CC, local
 	.asciz "SE_DORORO_WALK"
+.endobj lbl_802B27CC
 .balign 4
-lbl_802B27DC:
+.obj lbl_802B27DC, local
 	.asciz "SE_DORORO_CRY"
+.endobj lbl_802B27DC
 .balign 4
-lbl_802B27EC:
+.obj lbl_802B27EC, local
 	.asciz "SE_DORORO_DEAD"
+.endobj lbl_802B27EC
 .balign 4
-lbl_802B27FC:
+.obj lbl_802B27FC, local
 	.asciz "SE_DORORO_SWING"
+.endobj lbl_802B27FC
 .balign 4
-lbl_802B280C:
+.obj lbl_802B280C, local
 	.asciz "SE_DORORO_EGG_CRASH"
+.endobj lbl_802B280C
 .balign 4
-lbl_802B2820:
+.obj lbl_802B2820, local
 	.asciz "SE_DORORO_CRASH"
+.endobj lbl_802B2820
 .balign 4
-lbl_802B2830:
+.obj lbl_802B2830, local
 	.asciz "SE_PONGASHI_THROWIN"
+.endobj lbl_802B2830
 .balign 4
-lbl_802B2844:
+.obj lbl_802B2844, local
 	.asciz "SE_PONGASHI_CLOSE"
+.endobj lbl_802B2844
 .balign 4
-lbl_802B2858:
+.obj lbl_802B2858, local
 	.asciz "SE_PONGASHI_EAT"
+.endobj lbl_802B2858
 .balign 4
-lbl_802B2868:
+.obj lbl_802B2868, local
 	.asciz "SE_PONGASHI_SHOT"
+.endobj lbl_802B2868
 .balign 4
-lbl_802B287C:
+.obj lbl_802B287C, local
 	.asciz "SE_PONGASHI_DEAD"
+.endobj lbl_802B287C
 .balign 4
-lbl_802B2890:
+.obj lbl_802B2890, local
 	.asciz "SE_PONGASHI_TOUCH"
+.endobj lbl_802B2890
 .balign 4
-lbl_802B28A4:
+.obj lbl_802B28A4, local
 	.asciz "SE_NAMAZU_WALK"
+.endobj lbl_802B28A4
 .balign 4
-lbl_802B28B4:
+.obj lbl_802B28B4, local
 	.asciz "SE_NAMAZU_EAT"
+.endobj lbl_802B28B4
 .balign 4
-lbl_802B28C4:
+.obj lbl_802B28C4, local
 	.asciz "SE_NAMAZU_DEAD"
+.endobj lbl_802B28C4
 .balign 4
-lbl_802B28D4:
+.obj lbl_802B28D4, local
 	.asciz "SE_OTAMA_JUMP"
+.endobj lbl_802B28D4
 .balign 4
-lbl_802B28E4:
+.obj lbl_802B28E4, local
 	.asciz "SE_OTAMA_DEAD"
+.endobj lbl_802B28E4
 .balign 4
-lbl_802B28F4:
+.obj lbl_802B28F4, local
 	.asciz "SE_OTAMA_WATERJUMP"
+.endobj lbl_802B28F4
 .balign 4
-lbl_802B2908:
+.obj lbl_802B2908, local
 	.asciz "SE_GEYSER_NORMAL"
+.endobj lbl_802B2908
 .balign 4
-lbl_802B291C:
+.obj lbl_802B291C, local
 	.asciz "SE_GEYSER_SPOUT"
+.endobj lbl_802B291C
 .balign 4
-lbl_802B292C:
+.obj lbl_802B292C, local
 	.asciz "SEB_SOFTWALL_HIT"
+.endobj lbl_802B292C
 .balign 4
-lbl_802B2940:
+.obj lbl_802B2940, local
 	.asciz "SEB_WALL_DOWN"
+.endobj lbl_802B2940
 .balign 4
-lbl_802B2950:
+.obj lbl_802B2950, local
 	.asciz "SEB_HARDESTWALL_HIT"
+.endobj lbl_802B2950
 .balign 4
-lbl_802B2964:
+.obj lbl_802B2964, local
 	.asciz "SEB_CONSTRUCTION"
+.endobj lbl_802B2964
 .balign 4
-lbl_802B2978:
+.obj lbl_802B2978, local
 	.asciz "SEB_BOXMOVE"
+.endobj lbl_802B2978
 .balign 4
-lbl_802B2984:
+.obj lbl_802B2984, local
 	.asciz "SEB_HARDWALL_HIT"
+.endobj lbl_802B2984
 .balign 4
-lbl_802B2998:
+.obj lbl_802B2998, local
 	.asciz "SEB_STONE_HIT"
+.endobj lbl_802B2998
 .balign 4
-lbl_802B29A8:
+.obj lbl_802B29A8, local
 	.asciz "SEB_STONE_BREAK"
+.endobj lbl_802B29A8
 .balign 4
-lbl_802B29B8:
+.obj lbl_802B29B8, local
 	.asciz "SEB_GRASS_PULL"
+.endobj lbl_802B29B8
 .balign 4
-lbl_802B29C8:
+.obj lbl_802B29C8, local
 	.asciz "SEB_BRIDGE_EXTEND"
+.endobj lbl_802B29C8
 .balign 4
-lbl_802B29DC:
+.obj lbl_802B29DC, local
 	.asciz "SEW_PIKI_WATERDROP"
+.endobj lbl_802B29DC
 .balign 4
-lbl_802B29F0:
+.obj lbl_802B29F0, local
 	.asciz "SEW_PIKI_DROWN"
+.endobj lbl_802B29F0
 .balign 4
-lbl_802B2A00:
+.obj lbl_802B2A00, local
 	.asciz "SEW_PIKI_DEAD"
+.endobj lbl_802B2A00
 .balign 4
-lbl_802B2A10:
+.obj lbl_802B2A10, local
 	.asciz "SEW_PIKI_SINK"
+.endobj lbl_802B2A10
 .balign 4
-lbl_802B2A20:
+.obj lbl_802B2A20, local
 	.asciz "SE_LIFT_TRY"
+.endobj lbl_802B2A20
 .balign 4
-lbl_802B2A2C:
+.obj lbl_802B2A2C, local
 	.asciz "SE_LIFT_MOVE"
+.endobj lbl_802B2A2C
 .balign 4
-lbl_802B2A3C:
+.obj lbl_802B2A3C, local
 	.asciz "SE_PIKI_LIFT"
+.endobj lbl_802B2A3C
 .balign 4
-lbl_802B2A4C:
+.obj lbl_802B2A4C, local
 	.asciz "SE_PELLET_BORN"
+.endobj lbl_802B2A4C
 .balign 4
-lbl_802B2A5C:
+.obj lbl_802B2A5C, local
 	.asciz "SE_PELLET_BOUND"
+.endobj lbl_802B2A5C
 .balign 4
-lbl_802B2A6C:
+.obj lbl_802B2A6C, local
 	.asciz "SE_UFOPARTS_BOUND"
+.endobj lbl_802B2A6C
 .balign 4
-lbl_802B2A80:
+.obj lbl_802B2A80, local
 	.asciz "SE_UFOPARTS_OTHER"
+.endobj lbl_802B2A80
 .balign 4
-lbl_802B2A94:
+.obj lbl_802B2A94, local
 	.asciz "SE_UFOPARTS_ENGINE"
+.endobj lbl_802B2A94
 .balign 4
-lbl_802B2AA8:
+.obj lbl_802B2AA8, local
 	.asciz "SE_UFOPARTS_GEAR"
+.endobj lbl_802B2AA8
 .balign 4
-lbl_802B2ABC:
+.obj lbl_802B2ABC, local
 	.asciz "SE_UFOPARTS_RADER"
+.endobj lbl_802B2ABC
 .balign 4
-lbl_802B2AD0:
+.obj lbl_802B2AD0, local
 	.asciz "SE_UFOPARTS_SPRING"
+.endobj lbl_802B2AD0
 .balign 4
-lbl_802B2AE4:
+.obj lbl_802B2AE4, local
 	.asciz "SE_UFOPARTS_BATTERY"
+.endobj lbl_802B2AE4
 .balign 4
-lbl_802B2AF8:
+.obj lbl_802B2AF8, local
 	.asciz "SE_UFOPARTS_ZENMAI"
+.endobj lbl_802B2AF8
 .balign 4
-lbl_802B2B0C:
+.obj lbl_802B2B0C, local
 	.asciz "SE_UFOPARTS_MONEYBOX"
+.endobj lbl_802B2B0C
 .balign 4
-lbl_802B2B24:
+.obj lbl_802B2B24, local
 	.asciz "SE_CONTAINER_PELLETIN"
+.endobj lbl_802B2B24
 .balign 4
-lbl_802B2B3C:
+.obj lbl_802B2B3C, local
 	.asciz "SE_CONTAINER_PIKIBORN"
+.endobj lbl_802B2B3C
 .balign 4
-lbl_802B2B54:
+.obj lbl_802B2B54, local
 	.asciz "SE_PIKI_GROW1"
+.endobj lbl_802B2B54
 .balign 4
-lbl_802B2B64:
+.obj lbl_802B2B64, local
 	.asciz "SE_PIKI_GROW2"
+.endobj lbl_802B2B64
 .balign 4
-lbl_802B2B74:
+.obj lbl_802B2B74, local
 	.asciz "SE_PIKI_GROW3"
+.endobj lbl_802B2B74
 .balign 4
-lbl_802B2B84:
+.obj lbl_802B2B84, local
 	.asciz "SE_PIKI_GROW4"
+.endobj lbl_802B2B84
 .balign 4
-lbl_802B2B94:
+.obj lbl_802B2B94, local
 	.asciz "SE_PIKI_GROW5"
+.endobj lbl_802B2B94
 .balign 4
-lbl_802B2BA4:
+.obj lbl_802B2BA4, local
 	.asciz "SE_PIKI_GOHOME"
+.endobj lbl_802B2BA4
 .balign 4
-lbl_802B2BB4:
+.obj lbl_802B2BB4, local
 	.asciz "SE_PIKI_OUTHOME"
+.endobj lbl_802B2BB4
 .balign 4
-lbl_802B2BC4:
+.obj lbl_802B2BC4, local
 	.asciz "SE_PIKI_GROW0"
+.endobj lbl_802B2BC4
 .balign 4
-lbl_802B2BD4:
+.obj lbl_802B2BD4, local
 	.asciz "SE_PIKI_GROW0_WATER"
+.endobj lbl_802B2BD4
 .balign 4
-lbl_802B2BE8:
+.obj lbl_802B2BE8, local
 	.asciz "SE_CONTAINER_PELLETIN2"
+.endobj lbl_802B2BE8
 .balign 4
-lbl_802B2C00:
+.obj lbl_802B2C00, local
 	.asciz "SE_CONTAINER_PIKI"
+.endobj lbl_802B2C00
 .balign 4
-lbl_802B2C14:
+.obj lbl_802B2C14, local
 	.asciz "SE_CONTAINER_HANABI"
+.endobj lbl_802B2C14
 .balign 4
-lbl_802B2C28:
+.obj lbl_802B2C28, local
 	.asciz "SE_CONTAINER_CLIMB"
+.endobj lbl_802B2C28
 .balign 4
-lbl_802B2C3C:
+.obj lbl_802B2C3C, local
 	.asciz "SE_UFO_PARTSIN"
+.endobj lbl_802B2C3C
 .balign 4
-lbl_802B2C4C:
+.obj lbl_802B2C4C, local
 	.asciz "SE_UFO_PARTSSET1"
+.endobj lbl_802B2C4C
 .balign 4
-lbl_802B2C60:
+.obj lbl_802B2C60, local
 	.asciz "SE_UFO_PARTSSET2"
+.endobj lbl_802B2C60
 .balign 4
-lbl_802B2C74:
+.obj lbl_802B2C74, local
 	.asciz "SE_UFO_PARTSSET3"
+.endobj lbl_802B2C74
 .balign 4
-lbl_802B2C88:
+.obj lbl_802B2C88, local
 	.asciz "SE_UFO_IDLING"
+.endobj lbl_802B2C88
 .balign 4
-lbl_802B2C98:
+.obj lbl_802B2C98, local
 	.asciz "SE_UFO_SPARK"
+.endobj lbl_802B2C98
 .balign 4
-lbl_802B2CA8:
+.obj lbl_802B2CA8, local
 	.asciz "SE_UFO_DESTROY"
+.endobj lbl_802B2CA8
 .balign 4
-lbl_802B2CB8:
+.obj lbl_802B2CB8, local
 	.asciz "SE_UFO_SATELLITE"
+.endobj lbl_802B2CB8
 .balign 4
-lbl_802B2CCC:
+.obj lbl_802B2CCC, local
 	.asciz "SE_UFO_LIGHT"
+.endobj lbl_802B2CCC
 .balign 4
-lbl_802B2CDC:
+.obj lbl_802B2CDC, local
 	.asciz "SE_UFO_ANTENNA"
+.endobj lbl_802B2CDC
 .balign 4
-lbl_802B2CEC:
+.obj lbl_802B2CEC, local
 	.asciz "SE_UFO_RADER"
+.endobj lbl_802B2CEC
 .balign 4
-lbl_802B2CFC:
+.obj lbl_802B2CFC, local
 	.asciz "SE_UFO_LIGHT2"
+.endobj lbl_802B2CFC
 .balign 4
-lbl_802B2D0C:
+.obj lbl_802B2D0C, local
 	.asciz "SE_UFO_ENGINE"
+.endobj lbl_802B2D0C
 .balign 4
-lbl_802B2D1C:
+.obj lbl_802B2D1C, local
 	.asciz "SEF_PIKI_KINOKO2"
+.endobj lbl_802B2D1C
 .balign 4
-lbl_802B2D30:
+.obj lbl_802B2D30, local
 	.asciz "SEF_PIKI_AKUBI"
+.endobj lbl_802B2D30
 .balign 4
-lbl_802B2D40:
+.obj lbl_802B2D40, local
 	.asciz "SEF_PIKI_BURUBURU"
+.endobj lbl_802B2D40
 .balign 4
-lbl_802B2D54:
+.obj lbl_802B2D54, local
 	.asciz "SEF_PIKI_CRASH"
+.endobj lbl_802B2D54
 .balign 4
-lbl_802B2D64:
+.obj lbl_802B2D64, local
 	.asciz "SEF_PIKI_DEAD1"
+.endobj lbl_802B2D64
 .balign 4
-lbl_802B2D74:
+.obj lbl_802B2D74, local
 	.asciz "SEF_PIKI_DEAD2"
+.endobj lbl_802B2D74
 .balign 4
-lbl_802B2D84:
+.obj lbl_802B2D84, local
 	.asciz "SEF_PIKI_DEAD3"
+.endobj lbl_802B2D84
 .balign 4
-lbl_802B2D94:
+.obj lbl_802B2D94, local
 	.asciz "SEF_PIKI_FALL"
+.endobj lbl_802B2D94
 .balign 4
-lbl_802B2DA4:
+.obj lbl_802B2DA4, local
 	.asciz "SEF_PIKI_GAKKARI"
+.endobj lbl_802B2DA4
 .balign 4
-lbl_802B2DB8:
+.obj lbl_802B2DB8, local
 	.asciz "SEF_PIKI_HANG"
+.endobj lbl_802B2DB8
 .balign 4
-lbl_802B2DC8:
+.obj lbl_802B2DC8, local
 	.asciz "SEF_PIKI_JUMP1"
+.endobj lbl_802B2DC8
 .balign 4
-lbl_802B2DD8:
+.obj lbl_802B2DD8, local
 	.asciz "SEF_PIKI_JUMP2"
+.endobj lbl_802B2DD8
 .balign 4
-lbl_802B2DE8:
+.obj lbl_802B2DE8, local
 	.asciz "SEF_PIKI_JUMP3"
+.endobj lbl_802B2DE8
 .balign 4
-lbl_802B2DF8:
+.obj lbl_802B2DF8, local
 	.asciz "SEF_PIKI_SNEEZE"
+.endobj lbl_802B2DF8
 .balign 4
-lbl_802B2E08:
+.obj lbl_802B2E08, local
 	.asciz "SEF_PIKI_SLEEP"
+.endobj lbl_802B2E08
 .balign 4
-lbl_802B2E18:
+.obj lbl_802B2E18, local
 	.asciz "SEF_PIKI_NOBI"
+.endobj lbl_802B2E18
 .balign 4
-lbl_802B2E28:
+.obj lbl_802B2E28, local
 	.asciz "SEF_PIKI_ANGRY1"
+.endobj lbl_802B2E28
 .balign 4
-lbl_802B2E38:
+.obj lbl_802B2E38, local
 	.asciz "SEF_PIKI_ANGRY2"
+.endobj lbl_802B2E38
 .balign 4
-lbl_802B2E48:
+.obj lbl_802B2E48, local
 	.asciz "SEF_PIKI_OTTOTTO"
+.endobj lbl_802B2E48
 .balign 4
-lbl_802B2E5C:
+.obj lbl_802B2E5C, local
 	.asciz "SEF_PIKI_SKIP"
+.endobj lbl_802B2E5C
 .balign 4
-lbl_802B2E6C:
+.obj lbl_802B2E6C, local
 	.asciz "SEF_PIKI_SLIP1"
+.endobj lbl_802B2E6C
 .balign 4
-lbl_802B2E7C:
+.obj lbl_802B2E7C, local
 	.asciz "SEF_PIKI_SLIP2"
+.endobj lbl_802B2E7C
 .balign 4
-lbl_802B2E8C:
+.obj lbl_802B2E8C, local
 	.asciz "SEF_PIKI_LAND"
+.endobj lbl_802B2E8C
 .balign 4
-lbl_802B2E9C:
+.obj lbl_802B2E9C, local
 	.asciz "SEF_PIKI_YATTA"
+.endobj lbl_802B2E9C
 .balign 4
-lbl_802B2EAC:
+.obj lbl_802B2EAC, local
 	.asciz "SEF_PIKI_BREAKUP"
+.endobj lbl_802B2EAC
 .balign 4
-lbl_802B2EC0:
+.obj lbl_802B2EC0, local
 	.asciz "SEF_PIKI_CALLED"
+.endobj lbl_802B2EC0
 .balign 4
-lbl_802B2ED0:
+.obj lbl_802B2ED0, local
 	.asciz "SEF_PIKI_FIND"
+.endobj lbl_802B2ED0
 .balign 4
-lbl_802B2EE0:
+.obj lbl_802B2EE0, local
 	.asciz "SEF_PIKI_FIRED"
+.endobj lbl_802B2EE0
 .balign 4
-lbl_802B2EF0:
+.obj lbl_802B2EF0, local
 	.asciz "SEF_PIKI_DRINK"
+.endobj lbl_802B2EF0
 .balign 4
-lbl_802B2F00:
+.obj lbl_802B2F00, local
 	.asciz "SEF_PIKI_WATERED"
+.endobj lbl_802B2F00
 .balign 4
-lbl_802B2F14:
+.obj lbl_802B2F14, local
 	.asciz "SEF_PIKI_ATTACK_VOICE"
+.endobj lbl_802B2F14
 .balign 4
-lbl_802B2F2C:
+.obj lbl_802B2F2C, local
 	.asciz "SEF_PIKI_MISSHIT"
+.endobj lbl_802B2F2C
 .balign 4
-lbl_802B2F40:
+.obj lbl_802B2F40, local
 	.asciz "SEF_PIKI_ATTACK_HIT"
+.endobj lbl_802B2F40
 .balign 4
-lbl_802B2F54:
+.obj lbl_802B2F54, local
 	.asciz "SEF_PIKI_DAMAGED"
+.endobj lbl_802B2F54
 .balign 4
-lbl_802B2F68:
+.obj lbl_802B2F68, local
 	.asciz "SEF_PIKI_GROW1"
+.endobj lbl_802B2F68
 .balign 4
-lbl_802B2F78:
+.obj lbl_802B2F78, local
 	.asciz "SEF_PIKI_GROW2"
+.endobj lbl_802B2F78
 .balign 4
-lbl_802B2F88:
+.obj lbl_802B2F88, local
 	.asciz "SEF_PIKI_GROW3"
+.endobj lbl_802B2F88
 .balign 4
-lbl_802B2F98:
+.obj lbl_802B2F98, local
 	.asciz "SEF_PIKI_GROW4"
+.endobj lbl_802B2F98
 .balign 4
-lbl_802B2FA8:
+.obj lbl_802B2FA8, local
 	.asciz "SEF_PIKI_GROW5"
+.endobj lbl_802B2FA8
 .balign 4
-lbl_802B2FB8:
+.obj lbl_802B2FB8, local
 	.asciz "SEF_PIKI_GROW0"
+.endobj lbl_802B2FB8
 .balign 4
-lbl_802B2FC8:
+.obj lbl_802B2FC8, local
 	.asciz "SEF_PIKI_GROW0_WATER"
+.endobj lbl_802B2FC8
 .balign 4
-lbl_802B2FE0:
+.obj lbl_802B2FE0, local
 	.asciz "SYSSE_ALLSTOP"
+.endobj lbl_802B2FE0
 .balign 4
-lbl_802B2FF0:
+.obj lbl_802B2FF0, local
 	.asciz "SYSSE_DECIDE1"
+.endobj lbl_802B2FF0
 .balign 4
-lbl_802B3000:
+.obj lbl_802B3000, local
 	.asciz "SYSSE_MOVE1"
+.endobj lbl_802B3000
 .balign 4
-lbl_802B300C:
+.obj lbl_802B300C, local
 	.asciz "SYSSE_PAUSE"
+.endobj lbl_802B300C
 .balign 4
-lbl_802B3018:
+.obj lbl_802B3018, local
 	.asciz "SYSSE_EVENING_ALERT"
+.endobj lbl_802B3018
 .balign 4
-lbl_802B302C:
+.obj lbl_802B302C, local
 	.asciz "SYSSE_COUNTDOWN"
+.endobj lbl_802B302C
 .balign 4
-lbl_802B303C:
+.obj lbl_802B303C, local
 	.asciz "SYSSE_CMENU_ON"
+.endobj lbl_802B303C
 .balign 4
-lbl_802B304C:
+.obj lbl_802B304C, local
 	.asciz "SYSSE_CMENU_OFF"
+.endobj lbl_802B304C
 .balign 4
-lbl_802B305C:
+.obj lbl_802B305C, local
 	.asciz "SYSSE_CMENU_SELECT"
+.endobj lbl_802B305C
 .balign 4
-lbl_802B3070:
+.obj lbl_802B3070, local
 	.asciz "SYSSE_CMENU_ERROR"
+.endobj lbl_802B3070
 .balign 4
-lbl_802B3084:
+.obj lbl_802B3084, local
 	.asciz "SYSSE_ORIMA_LIFEDIM"
+.endobj lbl_802B3084
 .balign 4
-lbl_802B3098:
+.obj lbl_802B3098, local
 	.asciz "SYSSE_WORK_FINISH"
+.endobj lbl_802B3098
 .balign 4
-lbl_802B30AC:
+.obj lbl_802B30AC, local
 	.asciz "SYSSE_VIEW_CHANGE"
+.endobj lbl_802B30AC
 .balign 4
-lbl_802B30C0:
+.obj lbl_802B30C0, local
 	.asciz "SYSSE_CANCEL"
+.endobj lbl_802B30C0
 .balign 4
-lbl_802B30D0:
+.obj lbl_802B30D0, local
 	.asciz "SYSSE_TYPEWRITER"
+.endobj lbl_802B30D0
 .balign 4
-lbl_802B30E4:
+.obj lbl_802B30E4, local
 	.asciz "SYSSE_UNPAUSE"
+.endobj lbl_802B30E4
 .balign 4
-lbl_802B30F4:
+.obj lbl_802B30F4, local
 	.asciz "SYSSE_CONTAINER_OK"
+.endobj lbl_802B30F4
 .balign 4
-lbl_802B3108:
+.obj lbl_802B3108, local
 	.asciz "SYSSE_JUNGLE"
+.endobj lbl_802B3108
 .balign 4
-lbl_802B3118:
+.obj lbl_802B3118, local
 	.asciz "SYSSE_PARTS_APPEAR"
+.endobj lbl_802B3118
 .balign 4
-lbl_802B312C:
+.obj lbl_802B312C, local
 	.asciz "SYSSE_SELECT_MOVE"
+.endobj lbl_802B312C
 .balign 4
-lbl_802B3140:
+.obj lbl_802B3140, local
 	.asciz "SYSSE_SELECT_DECIDE"
+.endobj lbl_802B3140
 .balign 4
-lbl_802B3154:
+.obj lbl_802B3154, local
 	.asciz "SYSSE_TIME_SIGNAL"
+.endobj lbl_802B3154
 .balign 4
-lbl_802B3168:
+.obj lbl_802B3168, local
 	.asciz "SYSSE_SELECT_COURSEOPEN"
+.endobj lbl_802B3168
 .balign 4
-lbl_802B3180:
+.obj lbl_802B3180, local
 	.asciz "SYSSE_MESSAGE_CLOSE"
+.endobj lbl_802B3180
 .balign 4
-lbl_802B3194:
+.obj lbl_802B3194, local
 	.asciz "SYSSE_CARDACCESS"
+.endobj lbl_802B3194
 .balign 4
-lbl_802B31A8:
+.obj lbl_802B31A8, local
 	.asciz "SYSSE_CARDOK"
+.endobj lbl_802B31A8
 .balign 4
-lbl_802B31B8:
+.obj lbl_802B31B8, local
 	.asciz "SYSSE_CARDERROR"
+.endobj lbl_802B31B8
 .balign 4
-lbl_802B31C8:
+.obj lbl_802B31C8, local
 	.asciz "SYSSE_TIME_SMALLSIGNAL"
+.endobj lbl_802B31C8
 .balign 4
-lbl_802B31E0:
+.obj lbl_802B31E0, local
 	.asciz "SYSSE_CHG_HISCORE"
+.endobj lbl_802B31E0
 .balign 4
-lbl_802B31F4:
+.obj lbl_802B31F4, local
 	.asciz "YMENU ON"
+.endobj lbl_802B31F4
 .balign 4
-lbl_802B3200:
+.obj lbl_802B3200, local
 	.asciz "YMENU OFF"
+.endobj lbl_802B3200
 .balign 4
-lbl_802B320C:
+.obj lbl_802B320C, local
 	.asciz "YMENU SELECT"
+.endobj lbl_802B320C
 .balign 4
-lbl_802B321C:
+.obj lbl_802B321C, local
 	.asciz "SYSSE_YMENU_ZOOMIN"
+.endobj lbl_802B321C
 .balign 4
-lbl_802B3230:
+.obj lbl_802B3230, local
 	.asciz "SYSSE_YMENU_ZOOMOUT"
+.endobj lbl_802B3230
 .balign 4
-lbl_802B3244:
+.obj lbl_802B3244, local
 	.asciz "SYSSE_YMENU_SCROLL"
+.endobj lbl_802B3244
 .balign 4
-lbl_802B3258:
+.obj lbl_802B3258, local
 	.asciz "Sound Config"
+.endobj lbl_802B3258
 .balign 4
-lbl_802B3268:
+.obj lbl_802B3268, local
 	.asciz "SE_ORIMA_TOUCHPLANTS"
+.endobj lbl_802B3268
 .balign 4
-lbl_802B3280:
+.obj lbl_802B3280, local
 	.asciz "SE_PIKI_PULLING"
+.endobj lbl_802B3280
 .balign 4
-lbl_802B3290:
+.obj lbl_802B3290, local
 	.asciz "SE_PIKI_PULLED2"
+.endobj lbl_802B3290
 .balign 4
-lbl_802B32A0:
+.obj lbl_802B32A0, local
 	.asciz "SE_PLAYER_PUNCH"
+.endobj lbl_802B32A0
 .balign 4
-lbl_802B32B0:
+.obj lbl_802B32B0, local
 	.asciz "SE_THROW"
+.endobj lbl_802B32B0
 .balign 4
-lbl_802B32BC:
+.obj lbl_802B32BC, local
 	.asciz "SE_BREAKUP"
+.endobj lbl_802B32BC
 .balign 4
-lbl_802B32C8:
+.obj lbl_802B32C8, local
 	.asciz "SE_GATHER"
+.endobj lbl_802B32C8
 .balign 4
-lbl_802B32D4:
+.obj lbl_802B32D4, local
 	.asciz "SE_MOVEOBJ"
+.endobj lbl_802B32D4
 .balign 4
-lbl_802B32E0:
+.obj lbl_802B32E0, local
 	.asciz "SE_DAMAGED"
+.endobj lbl_802B32E0
 .balign 4
-lbl_802B32EC:
+.obj lbl_802B32EC, local
 	.asciz "SE_FIRED"
+.endobj lbl_802B32EC
 .balign 4
-lbl_802B32F8:
+.obj lbl_802B32F8, local
 	.asciz "SE_PLAYER_DOWN"
+.endobj lbl_802B32F8
 .balign 4
-lbl_802B3308:
+.obj lbl_802B3308, local
 	.asciz "SE_PLAYER_TOUCHHONEY"
+.endobj lbl_802B3308
 .balign 4
-lbl_802B3320:
+.obj lbl_802B3320, local
 	.asciz "SE_THROWHIT"
+.endobj lbl_802B3320
 .balign 4
-lbl_802B332C:
+.obj lbl_802B332C, local
 	.asciz "SE_PIKI_FLY"
+.endobj lbl_802B332C
 .balign 4
-lbl_802B3338:
+.obj lbl_802B3338, local
 	.asciz "SE_BREAKUP_PIKI_VOICE"
+.endobj lbl_802B3338
 .balign 4
-lbl_802B3350:
+.obj lbl_802B3350, local
 	.asciz "SE_PIKI_FLYREADY"
+.endobj lbl_802B3350
 .balign 4
-lbl_802B3364:
+.obj lbl_802B3364, local
 	.asciz "SE_PIKI_CALLED"
+.endobj lbl_802B3364
 .balign 4
-lbl_802B3374:
+.obj lbl_802B3374, local
 	.asciz "SE_PIKI_FIND"
+.endobj lbl_802B3374
 .balign 4
-lbl_802B3384:
+.obj lbl_802B3384, local
 	.asciz "SE_PIKI_PULLED"
+.endobj lbl_802B3384
 .balign 4
-lbl_802B3394:
+.obj lbl_802B3394, local
 	.asciz "SE_PIKI_WATERDROP"
+.endobj lbl_802B3394
 .balign 4
-lbl_802B33A8:
+.obj lbl_802B33A8, local
 	.asciz "SE_PIKI_ATTACHENEMY"
+.endobj lbl_802B33A8
 .balign 4
-lbl_802B33BC:
+.obj lbl_802B33BC, local
 	.asciz "SE_KINOKOPIKI_ATTACK"
+.endobj lbl_802B33BC
 .balign 4
-soundTable:
+.obj soundTable, local
 	.4byte 0x00000000
 	.4byte 0x00000000
 	.4byte lbl_802B1E2C
@@ -4356,128 +4683,178 @@ soundTable:
 	.4byte lbl_802B33BC
 	.4byte 0x00000000
 	.4byte 0xFFFFFFFF
-lbl_802B4DB0:
+.endobj soundTable
+.balign 4
+.obj lbl_802B4DB0, local
 	.asciz "SE Constatns"
+.endobj lbl_802B4DB0
 .balign 4
-lbl_802B4DC0:
+.obj lbl_802B4DC0, local
 	.asciz "-- se events -- %d/%d (%.1f %.1f %.1f): clock %d"
+.endobj lbl_802B4DC0
 .balign 4
-lbl_802B4DF4:
+.obj lbl_802B4DF4, local
 	.asciz "(%d) : %s %d %s (%d)"
+.endobj lbl_802B4DF4
 .balign 4
-lbl_802B4E0C:
+.obj lbl_802B4E0C, local
 	.asciz "(%d) : handle %d , seContext = %x"
+.endobj lbl_802B4E0C
 
 .section .sdata, "wa"  # 0x803DCD20 - 0x803E7820
 .balign 8
-lbl_803DFA80:
+.obj lbl_803DFA80, local
 	.asciz "SE_BOMB"
+.endobj lbl_803DFA80
 .balign 4
-lbl_803DFA88:
+.obj lbl_803DFA88, local
 	.asciz "dummy 1"
+.endobj lbl_803DFA88
 .balign 4
-lbl_803DFA90:
+.obj lbl_803DFA90, local
 	.asciz "dummy 2"
+.endobj lbl_803DFA90
 .balign 4
-lbl_803DFA98:
+.obj lbl_803DFA98, local
 	.asciz "dummy 3"
+.endobj lbl_803DFA98
 .balign 4
-lbl_803DFAA0:
+.obj lbl_803DFAA0, local
 	.asciz "dummy 4"
+.endobj lbl_803DFAA0
 .balign 4
-lbl_803DFAA8:
+.obj lbl_803DFAA8, local
 	.asciz "dummy 5"
+.endobj lbl_803DFAA8
 .balign 4
-lbl_803DFAB0:
+.obj lbl_803DFAB0, local
 	.float 0.0
-lbl_803DFAB4:
+.endobj lbl_803DFAB0
+.obj lbl_803DFAB4, local
 	.float 0.0
-lbl_803DFAB8:
+.endobj lbl_803DFAB4
+.obj lbl_803DFAB8, local
 	.float 0.0
-lbl_803DFABC:
+.endobj lbl_803DFAB8
+.obj lbl_803DFABC, local
 	.float 0.0
-lbl_803DFAC0:
+.endobj lbl_803DFABC
+.obj lbl_803DFAC0, local
 	.float 0.0
-lbl_803DFAC4:
+.endobj lbl_803DFAC0
+.obj lbl_803DFAC4, local
 	.float 0.0
-lbl_803DFAC8:
+.endobj lbl_803DFAC4
+.obj lbl_803DFAC8, local
 	.float 0.0
-lbl_803DFACC:
+.endobj lbl_803DFAC8
+.obj lbl_803DFACC, local
 	.float 0.0
-lbl_803DFAD0:
+.endobj lbl_803DFACC
+.obj lbl_803DFAD0, local
 	.float 0.0
-lbl_803DFAD4:
+.endobj lbl_803DFAD0
+.obj lbl_803DFAD4, local
 	.float 0.0
-lbl_803DFAD8:
+.endobj lbl_803DFAD4
+.obj lbl_803DFAD8, local
 	.float 0.0
-lbl_803DFADC:
+.endobj lbl_803DFAD8
+.obj lbl_803DFADC, local
 	.float 0.0
-lbl_803DFAE0:
+.endobj lbl_803DFADC
+.obj lbl_803DFAE0, local
 	.float 0.0
-lbl_803DFAE4:
+.endobj lbl_803DFAE0
+.obj lbl_803DFAE4, local
 	.float 0.0
-lbl_803DFAE8:
+.endobj lbl_803DFAE4
+.obj lbl_803DFAE8, local
 	.float 0.0
-lbl_803DFAEC:
+.endobj lbl_803DFAE8
+.obj lbl_803DFAEC, local
 	.float 0.0
-lbl_803DFAF0:
+.endobj lbl_803DFAEC
+.obj lbl_803DFAF0, local
 	.float 0.0
-lbl_803DFAF4:
+.endobj lbl_803DFAF0
+.obj lbl_803DFAF4, local
 	.float 0.0
+.endobj lbl_803DFAF4
 .balign 4
-lbl_803DFAF8:
+.obj lbl_803DFAF8, local
 	.asciz "SE %d"
+.endobj lbl_803DFAF8
 .balign 4
-lbl_803DFB00:
+.obj lbl_803DFB00, local
 	.asciz "-----"
+.endobj lbl_803DFB00
 .balign 4
-lbl_803DFB08:
+.obj lbl_803DFB08, local
 	.asciz "battle"
+.endobj lbl_803DFB08
 .balign 4
-lbl_803DFB10:
+.obj lbl_803DFB10, local
 	.asciz "pellet"
+.endobj lbl_803DFB10
 .balign 4
-lbl_803DFB18:
+.obj lbl_803DFB18, local
 	.asciz "onyon"
+.endobj lbl_803DFB18
 .balign 4
-lbl_803DFB20:
+.obj lbl_803DFB20, local
 	.asciz "build"
+.endobj lbl_803DFB20
 .balign 4
-lbl_803DFB28:
+.obj lbl_803DFB28, local
 	.asciz "water"
+.endobj lbl_803DFB28
 .balign 4
-lbl_803DFB30:
+.obj lbl_803DFB30, local
 	.asciz "free"
+.endobj lbl_803DFB30
 .balign 4
-lbl_803DFB38:
+.obj lbl_803DFB38, local
 	.asciz "????"
+.endobj lbl_803DFB38
 .balign 4
-lbl_803DFB40:
+.obj lbl_803DFB40, local
 	.asciz "DAME"
+.endobj lbl_803DFB40
 .balign 4
-lbl_803DFB48:
+.obj lbl_803DFB48, local
 	.asciz "<pos>"
+.endobj lbl_803DFB48
 
 .section .sbss, "wa"
 .balign 8
-.global seSystem
-seSystem:
+.obj seSystem, global
 	.skip 0x4
+.endobj seSystem
 
 .section .sdata2, "a"  # 0x803E8200 - 0x803EC840
 .balign 8
-lbl_803E8F98:
+.obj lbl_803E8F98, local
 	.float 0.0
-lbl_803E8F9C:
+.endobj lbl_803E8F98
+.obj lbl_803E8F9C, local
 	.float 700.0
-lbl_803E8FA0:
+.endobj lbl_803E8F9C
+.obj lbl_803E8FA0, local
 	.float 200.0
+.endobj lbl_803E8FA0
 .balign 8
-lbl_803E8FA8:
+.obj lbl_803E8FA8, local
 	.double 0.5
-lbl_803E8FB0:
+.endobj lbl_803E8FA8
+.balign 8
+.obj lbl_803E8FB0, local
 	.double 3.0
-lbl_803E8FB8:
+.endobj lbl_803E8FB0
+.balign 4
+.obj lbl_803E8FB8, local
 	.float 50.0
-lbl_803E8FBC:
+.endobj lbl_803E8FB8
+.obj lbl_803E8FBC, local
 	.float 1.0
+.endobj lbl_803E8FBC
