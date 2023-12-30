@@ -849,8 +849,9 @@
 	.4byte lbl_803E2A68
 .endobj kindNames
 .balign 4
-lbl_802C309C:
+.obj lbl_802C309C, local
 	.asciz "object type"
+.endobj lbl_802C309C
 .balign 4
 .obj lbl_802C30A8, local # Shift-JIS
 	.4byte 0x837D8362

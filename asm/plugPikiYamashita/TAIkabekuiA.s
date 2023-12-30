@@ -1912,8 +1912,9 @@
 	.4byte 0
 .endobj lbl_802E2468
 .balign 4
-lbl_802E2474:
+.obj lbl_802E2474, local
 	.asciz "TAIAattackWorkObject"
+.endobj lbl_802E2474
 .balign 4
 .obj lbl_802E248C, local
 	.4byte __RTTI__9TaiAction

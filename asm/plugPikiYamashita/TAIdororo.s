@@ -4480,8 +4480,9 @@
 	.4byte 0
 .endobj lbl_802E459C
 .balign 4
-lbl_802E45B0:
+.obj lbl_802E45B0, local
 	.asciz "TekiParameters"
+.endobj lbl_802E45B0
 .balign 4
 .obj lbl_802E45C0, local
 	.4byte __RTTI__5ANode

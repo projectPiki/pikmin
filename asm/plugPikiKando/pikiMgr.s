@@ -1492,8 +1492,9 @@
 .balign 4
 .skip 0x14 # compiler padding
 .balign 4
-lbl_802B8C54:
+.obj lbl_802B8C54, local
 	.asciz "Parm<float>"
+.endobj lbl_802B8C54
 .balign 4
 .obj lbl_802B8C60, local
 	.4byte __RTTI__8BaseParm
