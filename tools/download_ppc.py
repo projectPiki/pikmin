@@ -39,8 +39,10 @@ def main() -> None:
         with zipfile.ZipFile(tmp_zip) as zip_file:
             zip_file.extractall(output)
 
-    st = os.stat(output)
-    os.chmod(output, st.st_mode | stat.S_IEXEC)
+    for filename in os.listdir(output):
+        f = os.path.join(output, filename)
+        st = os.stat(f)
+        os.chmod(f, st.st_mode | stat.S_IEXEC)
 
 
 if __name__ == "__main__":
