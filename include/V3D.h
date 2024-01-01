@@ -11,7 +11,7 @@ struct Vector3D_ {
 	f32 x, y, z;
 };
 
-double atanf2__Fff(float, float);
-double sqrtf2__Ff(float);
+double atanf2(float, float);
+double sqrtf2(float);
 
 #endif

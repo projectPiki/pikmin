@@ -1,5 +1,5 @@
 #include "types.h"
-
+extern "C" {
 /*
  * --INFO--
  * Address:	80005600
@@ -25,3 +25,4 @@ void Console_printf(void)
    // UNUSED FUNCTION
 }
 */
+}

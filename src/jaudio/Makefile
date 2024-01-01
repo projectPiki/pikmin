@@ -60,7 +60,7 @@ JAUDIO_FILES:=\
 	$(BUILD_DIR)/asm/jaudio/hplaybss2.o\
 	$(BUILD_DIR)/asm/jaudio/hvqm_play.o\
 
-$(JAUDIO_FILES): CFLAGS += -common off -func_align 32
+$(JAUDIO_FILES): CFLAGS += -common off -func_align 32 -lang c++
 $(JAUDIO_FILES): MWCC_VERSION := 1.2.5n
 
 DEPENDS += $(JAUDIO_FILES:.o=.d)

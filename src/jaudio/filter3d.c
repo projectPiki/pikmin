@@ -6,35 +6,11 @@
  * Address:	8001BB60
  * Size:	000034
  */
-// nonmatch by reason of epilogue lr restore scheduling
-// see https://decomp.me/scratch/TGRPu
-#ifdef NON_MATCHING
-float V3D_GetAngle__FP9Vector3D_(struct Vector3D_* input_vec)
+float V3D_GetAngle(struct Vector3D_* input_vec)
 {
-	float retval = (atanf2__Fff(input_vec->x, input_vec->y) + 3.141592);
+	float retval = (atanf2(input_vec->x, input_vec->y) + 3.141592);
 	return retval;
 }
-#else
-asm float V3D_GetAngle__FP9Vector3D_(struct Vector3D_*)
-{
-	// clang-format off
-	nofralloc
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  lfs       f1, 0x0(r3)
-	  lfs       f2, 0x4(r3)
-	  bl        atanf2__Fff
-	  lfd       f0, 3.141592
-	  lwz       r0, 0xC(r1)
-	  fadd      f1, f0, f1
-	  frsp      f1, f1
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-}
-#endif
-// clang-format on
 /*
  * --INFO--
  * Address:	........
@@ -60,9 +36,9 @@ void V3D_Minus(Vector3D_*, Vector3D_*, Vector3D_*)
  * Address:	8001BBA0
  * Size:	000040
  */
-double V3D_Abs__FP9Vector3D_(struct Vector3D_* input_vec)
+double V3D_Abs(struct Vector3D_* input_vec)
 {
-	return (sqrtf2__Ff((input_vec->x * input_vec->x) + (input_vec->y * input_vec->y) + (input_vec->z * input_vec->z)));
+	return (sqrtf2((input_vec->x * input_vec->x) + (input_vec->y * input_vec->y) + (input_vec->z * input_vec->z)));
 }
 
 /*

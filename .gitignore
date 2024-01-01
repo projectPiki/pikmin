@@ -35,3 +35,4 @@ tools/powerpc/
 .ninja_log
 objdiff.json
 __pycache__
+build.ninja

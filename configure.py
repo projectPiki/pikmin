@@ -10,7 +10,7 @@ LIBS = [
     },
     {
         "lib": "jaudio",
-        "cflags": "$cflags_pikmin -func_align 32",
+        "cflags": "$cflags_pikmin -func_align 32 -lang c++",
         "mw_version": "1.2.5n",
         "host": True,
         "objects": [
