@@ -30,3 +30,8 @@ Debug
 .vs
 ctx.c
 tools/dtk
+tools/powerpc/
+.ninja_deps
+.ninja_log
+objdiff.json
+__pycache__

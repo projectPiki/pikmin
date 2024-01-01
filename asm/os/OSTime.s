@@ -1,16 +1,16 @@
 .include "macros.inc"
 .section .text, "ax"  # 0x80005560 - 0x80221F60
 .fn OSGetTime, global
-/* 801FD3A0 001FA300  7C 6D 42 E6 */	mftbu r3
-/* 801FD3A4 001FA304  7C 8C 42 E6 */	mftb r4, 0x10c
-/* 801FD3A8 001FA308  7C AD 42 E6 */	mftbu r5
+/* 801FD3A0 001FA300  7C 6D 42 E6 */	.4byte 0x7C6D42E6 # mftbu r3
+/* 801FD3A4 001FA304  7C 8C 42 E6 */	.4byte 0x7C8C42E6 # mftb r4, 0x10c
+/* 801FD3A8 001FA308  7C AD 42 E6 */	.4byte 0x7CAD42E6 # mftbu r5
 /* 801FD3AC 001FA30C  7C 03 28 00 */	cmpw r3, r5
 /* 801FD3B0 001FA310  40 82 FF F0 */	bne OSGetTime
 /* 801FD3B4 001FA314  4E 80 00 20 */	blr 
 .endfn OSGetTime
 
 .fn OSGetTick, global
-/* 801FD3B8 001FA318  7C 6C 42 E6 */	mftb r3, 0x10c
+/* 801FD3B8 001FA318  7C 6C 42 E6 */	.4byte 0x7C6C42E6 # mftb r3, 0x10c
 /* 801FD3BC 001FA31C  4E 80 00 20 */	blr 
 .endfn OSGetTick
 

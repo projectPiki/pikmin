@@ -54,4 +54,14 @@ typedef unsigned long size_t;
 
 #define ATTRIBUTE_ALIGN(num) __attribute__((aligned(num)))
 
+#ifdef __MWERKS__
+#define WEAKFUNC        __declspec(weak)
+#define DECL_SECT(name) __declspec(section name)
+#define ASM             asm
+#else
+#define WEAKFUNC
+#define DECL_SECT(name)
+#define ASM
+#endif
+
 #endif

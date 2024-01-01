@@ -17,6 +17,7 @@
 -include src/vi/Makefile
 -include src/pad/Makefile
 -include src/ai/Makefile
+-include src/ar/Makefile
 -include src/dsp/Makefile
 -include src/card/Makefile
 -include src/hio/Makefile

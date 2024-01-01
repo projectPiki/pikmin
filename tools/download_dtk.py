@@ -1,9 +1,18 @@
 import argparse
 import urllib.request
+import sys
 import os
 import stat
 import platform
 from pathlib import Path
+
+if sys.platform == "cygwin":
+    sys.exit(
+        f"Cygwin/MSYS2 is not supported."
+        f"\nPlease use native Windows Python instead."
+        f"\nPlease run pacman -R python in msys2."
+        f"\n(Current path: {sys.executable})"
+    )
 
 REPO = "https://github.com/encounter/decomp-toolkit"
 

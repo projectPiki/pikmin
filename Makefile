@@ -5,7 +5,14 @@ ifneq ($(findstring MSYS,$(shell uname)),)
   WINDOWS := 1
 endif
 
+# If 0, tells the console to chill out. (Quiets the make process.)
 VERBOSE ?= 0
+
+# If MAPGENFLAG set to 1, tells LDFLAGS to generate a mapfile, which makes linking take several minutes.
+MAPGENFLAG ?= 0
+
+# Use the all-in-one updater after successful build? (Fails on non-windows platforms)
+USE_AOI ?= 0
 
 ifeq ($(VERBOSE),0)
   QUIET := @
@@ -16,8 +23,28 @@ endif
 #-------------------------------------------------------------------------------
 
 NAME := pikmin
-VERSION := usa.1
+VERSION ?= usa.1
 #VERSION := usa.0
+
+ifeq ($(VERSION), usa.1)
+    VERNUM = 2
+else ifeq ($(VERSION), usa.0)
+    VERNUM = 1
+else
+    VERNUM = 0
+endif
+
+# Use the all-in-one updater after successful build? (Fails on non-windows platforms)
+ifeq ($(USE_AOI), 1)
+  ifeq ($(WINDOWS), 1)
+  USE_AOI = 1
+  else
+  @echo "aoi.exe fails on non-windows platforms."
+  USE_AOI = 0
+  endif
+else
+USE_AOI = 0
+endif
 
 BUILD_DIR := build/$(NAME).$(VERSION)
 
@@ -26,20 +53,26 @@ S_FILES := $(wildcard asm/*.s)
 C_FILES := $(wildcard src/*.c)
 CPP_FILES := $(wildcard src/*.cpp)
 CPP_FILES += $(wildcard src/*.cp)
-LDSCRIPT := ldscript.lcf
+LDSCRIPT := $(BUILD_DIR)/ldscript.lcf
+AOI := aoi.exe
 
 # Outputs
 DOL     := $(BUILD_DIR)/main.dol
 ELF     := $(DOL:.dol=.elf)
 MAP     := $(BUILD_DIR)/build.map
 
+ifeq ($(MAPGENFLAG),1)
+  MAPGEN := -map $(MAP)
+endif
+
 include obj_files.mk
 
-O_FILES :=	$(SYSBOOTUP) $(JAUDIO) $(HVQM4DEC) $(SYSCOMMON) $(SYSDOLPHIN)\
-			$(COLIN) $(KANDO) $(NAKATA) $(NISHIMURA) $(OGAWA) $(YAMASHITA)\
-			$(BASE) $(OS) $(DB) $(MTX) $(DVD) $(VI) $(PAD) $(AI) $(AR) $(DSP)\
-			$(CARD) $(HIO) $(GX) $(RUNTIME) $(MSL_C) $(TRK_MINNOW_DOLPHIN)\
-			$(AMCEXI2) $(AMCNOTSTUB) $(ODEMUEXI2) $(ODENOTSTUB)
+O_FILES :=	$(SYSBOOTUP) $(JAUDIO) $(HVQM4DEC) $(SYS) $(PLUGPIKI) $(DOLPHIN)
+DEPENDS := $($(filter *.o,O_FILES):.o=.d)
+DEPENDS += $($(filter *.o,E_FILES):.o=.d)
+# If a specific .o file is passed as a target, also process its deps
+DEPENDS += $(MAKECMDGOALS:.o=.d)
+
 #-------------------------------------------------------------------------------
 # Tools
 #-------------------------------------------------------------------------------
@@ -47,18 +80,11 @@ O_FILES :=	$(SYSBOOTUP) $(JAUDIO) $(HVQM4DEC) $(SYSCOMMON) $(SYSDOLPHIN)\
 MWCC_VERSION := 1.2.5
 MWLD_VERSION := 1.2.5
 
-# Compiler versions and flags
-$(COLIN): MWCC_VERSION := 1.2.5n
-$(KANDO): MWCC_VERSION := 1.2.5n
-$(NAKATA): MWCC_VERSION := 1.2.5n
-$(NISHIMURA): MWCC_VERSION := 1.2.5n
-$(OGAWA): MWCC_VERSION := 1.2.5n
-$(YAMASHITA): MWCC_VERSION := 1.2.5n
-
 # Programs
+POWERPC ?= tools/powerpc
 ifeq ($(WINDOWS),1)
   WINE :=
-  AS      := $(DEVKITPPC)/bin/powerpc-eabi-as.exe
+  AS      := $(POWERPC)/powerpc-eabi-as.exe
   PYTHON  := python
 else
   WIBO   := $(shell command -v wibo 2> /dev/null)
@@ -67,7 +93,9 @@ else
   else
     WINE ?= wine
   endif
-  AS      := $(DEVKITPPC)/bin/powerpc-eabi-as
+  # Disable wine debug output for cleanliness
+  export WINEDEBUG ?= -all
+  AS      := $(POWERPC)/powerpc-eabi-as
   PYTHON  := python3
 endif
 COMPILERS ?= tools/mwcc_compiler
@@ -77,16 +105,34 @@ DTK     := tools/dtk
 ELF2DOL := $(DTK) elf2dol
 SHASUM  := $(DTK) shasum
 
+ifneq ($(WINDOWS),1)
+TRANSFORM_DEP := tools/transform-dep.py
+else
+TRANSFORM_DEP := tools/transform-win.py
+endif
+
 # Options
-INCLUDES := -i include/
+INCLUDES := -i include/ -i include/stl/
 ASM_INCLUDES := -I include/
 
-ASFLAGS := -mgekko $(ASM_INCLUDES)
-LDFLAGS := -map $(MAP) -fp hard -nodefaults
-CFLAGS   = -Cpp_exceptions off -O4,p -fp hard -proc gekko -nodefaults -RTTI on $(INCLUDES)
+ASFLAGS := -mgekko $(ASM_INCLUDES) --defsym version=$(VERNUM)
+ifeq ($(VERBOSE),1)
+# this set of LDFLAGS outputs warnings.
+LDFLAGS := $(MAPGEN) -fp hard -nodefaults
+endif
+ifeq ($(VERBOSE),0)
+# this set of LDFLAGS generates no warnings.
+LDFLAGS := $(MAPGEN) -fp hard -nodefaults -w off
+endif
+LIBRARY_LDFLAGS := -nodefaults -fp hard -proc gekko
+CFLAGS := -Cpp_exceptions off -O4,p -fp hard -proc gekko -nodefaults -RTTI on -common on -str noreadonly $(INCLUDES)
 
-$(JAUDIO): CFLAGS += -func_align 32
-$(MSL_C): CFLAGS += -fp_contract on
+ifeq ($(VERBOSE),0)
+# this set of ASFLAGS generates no warnings.
+ASFLAGS += -W
+# this set of CFLAGS generates no warnings.
+CFLAGS += -w off
+endif
 
 #-------------------------------------------------------------------------------
 # Recipes
@@ -103,14 +149,17 @@ ALL_DIRS := $(sort $(dir $(O_FILES)))
 # Make sure build directory exists before compiling anything
 DUMMY != mkdir -p $(ALL_DIRS)
 
-.PHONY: tools
+LDSCRIPT := ldscript.lcf
 
-# DOL creation makefile instructions
 $(DOL): $(ELF) | $(DTK)
-	@echo Converting $< to $@
 	$(QUIET) $(ELF2DOL) $< $@
 	$(QUIET) $(SHASUM) -c sha1/$(NAME).$(VERSION).sha1
+ifneq ($(findstring -map,$(LDFLAGS)),)
 	$(QUIET) $(PYTHON) tools/calcprogress.py $(DOL) $(MAP)
+endif
+ifeq ($(USE_AOI),1)
+	$(WINE) ./aoi.exe
+endif
 
 clean:
 	rm -f -d -r build
@@ -125,21 +174,56 @@ $(ELF): $(O_FILES) $(LDSCRIPT)
 	$(QUIET) @echo $(O_FILES) > build/o_files
 	$(QUIET) $(LD) $(LDFLAGS) -o $@ -lcf $(LDSCRIPT) @build/o_files
 
+%.d.unix: %.d $(TRANSFORM_DEP)
+	@echo Processing $<
+	$(QUIET) $(PYTHON) $(TRANSFORM_DEP) $< $@
+
+-include include_link.mk
+
+DEPENDS := $(DEPENDS:.d=.d.unix)
+ifneq ($(MAKECMDGOALS), clean)
+-include $(DEPENDS)
+endif
+
 $(BUILD_DIR)/%.o: %.s
 	@echo Assembling $<
+	$(QUIET) mkdir -p $(dir $@)
 	$(QUIET) $(AS) $(ASFLAGS) -o $@ $<
+
+# for files with capitalized .C extension
+$(BUILD_DIR)/%.o: %.C
+	@echo "Compiling " $<
+	$(QUIET) mkdir -p $(dir $@)
+	$(QUIET) $(CC) $(CFLAGS) -c -o $(dir $@) $<
 
 $(BUILD_DIR)/%.o: %.c
 	@echo "Compiling " $<
-	$(QUIET) $(CC) $(CFLAGS) -c -o $@ $<
+	$(QUIET) mkdir -p $(dir $@)
+	$(QUIET) $(CC) $(CFLAGS) -c -o $(dir $@) $<
 
 $(BUILD_DIR)/%.o: %.cp
 	@echo "Compiling " $<
-	$(QUIET) $(CC) $(CFLAGS) -c -o $@ $<
-	
+	$(QUIET) mkdir -p $(dir $@)
+	$(QUIET) $(CC) $(CFLAGS) -c -o $(dir $@) $<
+
 $(BUILD_DIR)/%.o: %.cpp
 	@echo "Compiling " $<
-	$(QUIET) $(CC) $(CFLAGS) -c -o $@ $<
+	$(QUIET) mkdir -p $(dir $@)
+	$(QUIET) $(CC) $(CFLAGS) -c -o $(dir $@) $<
+
+### Extremely lazy recipes for generating context ###
+# Example usage: make build/pikmin2.usa/src/plugProjectYamashitaU/farmMgr.h
+$(BUILD_DIR)/%.h: %.c
+	@echo "Compiling and generating context for " $<
+	$(QUIET) $(CC) $(CFLAGS) -E -c -o $@ $<
+
+$(BUILD_DIR)/%.h: %.cp
+	@echo "Compiling and generating context for " $<
+	$(QUIET) $(CC) $(CFLAGS) -E -c -o $@ $<
+
+$(BUILD_DIR)/%.h: %.cpp
+	@echo "Compiling and generating context for " $<
+	$(QUIET) $(CC) $(CFLAGS) -E -c -o $@ $<
 
 ### Debug Print ###
 
