@@ -22,8 +22,8 @@ char* strncpy(char* dst, const char* src, size_t n);
 #endif // ifdef __cplusplus
 
 struct String {
-	u32 m_length; // _00
-	u8* m_str;    // _04
+	u32 mLength; // _00
+	u8* mStr;    // _04
 
 	int getLength();
 };

@@ -7,10 +7,10 @@ struct Graphics;
 struct Font;
 
 struct Timers {
-	/*TimerInf* m_timers <-- instead of m_word0*/
-	u32 m_word0;
-	u32 m_frameCount;
-	u32 m_word8;
+	/*TimerInf* mTimers <-- instead of mWord0*/
+	u32 mWord0;
+	u32 mFrameCount;
+	u32 mWord8;
 
 	void reset();
 	void newFrame();

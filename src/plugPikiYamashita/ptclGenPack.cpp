@@ -5,15 +5,15 @@ namespace zen {
 struct particleGenerator {
 	u32 _00;
 	u8 filler[20];
-	Vector3f* m_vector_ptr; // _18
+	Vector3f* mVector_ptr; // _18
 	u8 filler2[100];
-	u32 m_pgen_flags; // _80
+	u32 mPgen_flags; // _80
 
 	void forceFinish();
 };
 class PtclGenPack {
-	u32 m_limit;                         // _00
-	particleGenerator** m_ptcl_gen_list; // _04
+	u32 mLimit;                         // _00
+	particleGenerator** mPtcl_gen_list; // _04
 
 	void setPtclGenPtr(u32, particleGenerator*);
 	void getPtclGenPtr(u32);
@@ -41,10 +41,10 @@ class PtclGenPack {
 namespace zen {
 void PtclGenPack::setPtclGenPtr(u32 param_1, particleGenerator* param_2)
 { // matching
-	if (param_1 >= m_limit) {
+	if (param_1 >= mLimit) {
 		return;
 	}
-	m_ptcl_gen_list[param_1] = param_2;
+	mPtcl_gen_list[param_1] = param_2;
 	return;
 };
 
@@ -78,10 +78,10 @@ void PtclGenPack::setEmitPosPtr(Vector3f* param_1) // matching
 	u32 i;
 	particleGenerator** particle_gen_list;
 
-	particle_gen_list = m_ptcl_gen_list;
-	for (i = 0; i < m_limit; i++, particle_gen_list++) {
+	particle_gen_list = mPtcl_gen_list;
+	for (i = 0; i < mLimit; i++, particle_gen_list++) {
 		if (particle_gen_list[0] != nullptr) {
-			(*particle_gen_list)->m_vector_ptr = param_1;
+			(*particle_gen_list)->mVector_ptr = param_1;
 		}
 	}
 	return;
@@ -118,11 +118,11 @@ void PtclGenPack::startGen() // matching
 	u32 i;
 	particleGenerator** particle_gen_list;
 
-	particle_gen_list = m_ptcl_gen_list;
-	for (i = 0; i < m_limit; i++, particle_gen_list++) {
+	particle_gen_list = mPtcl_gen_list;
+	for (i = 0; i < mLimit; i++, particle_gen_list++) {
 		pgen_ptr = particle_gen_list[0];
 		if (pgen_ptr != nullptr) {
-			pgen_ptr->m_pgen_flags &= 0xFFFFFFF7;
+			pgen_ptr->mPgen_flags &= 0xFFFFFFF7;
 		}
 	}
 	return;
@@ -139,11 +139,11 @@ void PtclGenPack::stopGen() // matching
 	u32 i;
 	particleGenerator** particle_gen_list;
 
-	particle_gen_list = m_ptcl_gen_list;
-	for (i = 0; i < m_limit; i++, particle_gen_list++) {
+	particle_gen_list = mPtcl_gen_list;
+	for (i = 0; i < mLimit; i++, particle_gen_list++) {
 		pgen_ptr = particle_gen_list[0];
 		if (pgen_ptr != nullptr) {
-			pgen_ptr->m_pgen_flags |= 8;
+			pgen_ptr->mPgen_flags |= 8;
 		}
 	}
 	return;
@@ -180,11 +180,11 @@ void PtclGenPack::finish() // matching
 	u32 i;
 	particleGenerator** particle_gen_list;
 
-	particle_gen_list = m_ptcl_gen_list;
-	for (i = 0; i < m_limit; i++, particle_gen_list++) {
+	particle_gen_list = mPtcl_gen_list;
+	for (i = 0; i < mLimit; i++, particle_gen_list++) {
 		pgen_ptr = particle_gen_list[0];
 		if (pgen_ptr != nullptr) {
-			pgen_ptr->m_pgen_flags |= 2;
+			pgen_ptr->mPgen_flags |= 2;
 			particle_gen_list[0] = nullptr;
 		}
 	}
@@ -199,9 +199,9 @@ void PtclGenPack::finish() // matching
 void PtclGenPack::forceFinish() // matches
 {
 	u32 i;
-	particleGenerator** ptcl_list = &m_ptcl_gen_list[0];
+	particleGenerator** ptcl_list = &mPtcl_gen_list[0];
 
-	for (i = 0; i < m_limit; i++, ptcl_list++) {
+	for (i = 0; i < mLimit; i++, ptcl_list++) {
 		if (!ptcl_list[0])
 			continue;
 
@@ -221,10 +221,10 @@ bool PtclGenPack::checkStopGen() // matching
 	u32 i;
 	particleGenerator** particle_gen_list;
 
-	particle_gen_list = m_ptcl_gen_list;
-	for (i = 0; i < m_limit; i++, particle_gen_list++) {
+	particle_gen_list = mPtcl_gen_list;
+	for (i = 0; i < mLimit; i++, particle_gen_list++) {
 		pgen_ptr = particle_gen_list[0];
-		if ((particle_gen_list[0] != nullptr) && (((*particle_gen_list)->m_pgen_flags & 8) == 0))
+		if ((particle_gen_list[0] != nullptr) && (((*particle_gen_list)->mPgen_flags & 8) == 0))
 			return false;
 	}
 	return true;

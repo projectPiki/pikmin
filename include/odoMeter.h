@@ -17,7 +17,7 @@ struct OdoMeter { // TODO: figure out what these actually are
 	inline void unknown1()
 	{
 		if (_04 > 0.0f) {
-			_04 -= gsys->m_28C;
+			_04 -= gsys->_28C;
 		}
 	}
 

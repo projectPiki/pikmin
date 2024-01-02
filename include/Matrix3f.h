@@ -4,7 +4,7 @@
 #include "types.h"
 
 struct Matrix3f {
-	float m_matrix[3][3];
+	float mMatrix[3][3];
 };
 
 #endif

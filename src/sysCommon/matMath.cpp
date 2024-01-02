@@ -43,22 +43,22 @@ Matrix4f::Matrix4f(float (*) [4])
  */
 void Matrix4f::makeIdentity()
 {
-	m_matrix[0][0] = lbl_803E85E0;
-	m_matrix[0][1] = lbl_803E85E4;
-	m_matrix[0][2] = lbl_803E85E4;
-	m_matrix[0][3] = lbl_803E85E4;
-	m_matrix[1][0] = lbl_803E85E4;
-	m_matrix[1][1] = lbl_803E85E0;
-	m_matrix[1][2] = lbl_803E85E4;
-	m_matrix[1][3] = lbl_803E85E4;
-	m_matrix[2][0] = lbl_803E85E4;
-	m_matrix[2][1] = lbl_803E85E4;
-	m_matrix[2][2] = lbl_803E85E0;
-	m_matrix[2][3] = lbl_803E85E4;
-	m_matrix[3][0] = lbl_803E85E4;
-	m_matrix[3][1] = lbl_803E85E4;
-	m_matrix[3][2] = lbl_803E85E4;
-	m_matrix[3][3] = lbl_803E85E0;
+	mMatrix[0][0] = lbl_803E85E0;
+	mMatrix[0][1] = lbl_803E85E4;
+	mMatrix[0][2] = lbl_803E85E4;
+	mMatrix[0][3] = lbl_803E85E4;
+	mMatrix[1][0] = lbl_803E85E4;
+	mMatrix[1][1] = lbl_803E85E0;
+	mMatrix[1][2] = lbl_803E85E4;
+	mMatrix[1][3] = lbl_803E85E4;
+	mMatrix[2][0] = lbl_803E85E4;
+	mMatrix[2][1] = lbl_803E85E4;
+	mMatrix[2][2] = lbl_803E85E0;
+	mMatrix[2][3] = lbl_803E85E4;
+	mMatrix[3][0] = lbl_803E85E4;
+	mMatrix[3][1] = lbl_803E85E4;
+	mMatrix[3][2] = lbl_803E85E4;
+	mMatrix[3][3] = lbl_803E85E0;
 	return;
 
 	/*

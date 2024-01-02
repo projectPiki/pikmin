@@ -11,7 +11,7 @@ struct System {
 	char filler0[0x24C - 0x0];
 	Graphics* mGfx;
 	char filler2[0x28C - 0x250];
-	float m_28C;
+	float _28C;
 	char filler1[0x334 - 0x290];
 	void Initialise();
 	static void* alloc(size_t);

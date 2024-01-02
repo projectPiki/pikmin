@@ -1,18 +1,18 @@
 #ifndef _TEKI_H
 #define _TEKI_H
 #include "types.h"
-class Creature {
-	s32 m_int;
+struct Creature {
+	s32 mInt;
 };
 
-class Teki {
-	s32 m_int;
+struct Teki {
+	s32 mInt;
 };
 
-class TekiEvent {
-	s32 m_int;               // _00
-	Teki* m_tekiptr;         // _04
-	Creature* m_creatureptr; // _08
+struct TekiEvent {
+	s32 mInt;               // _00
+	Teki* mTekiptr;         // _04
+	Creature* mCreatureptr; // _08
 
 	TekiEvent(int, Teki*);
 	TekiEvent(int, Teki*, Creature*);

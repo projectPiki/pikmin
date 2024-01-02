@@ -29,8 +29,8 @@
  */
 void Timers::reset()
 {
-	m_word0 = 0;
-	m_word8 = 0;
+	mWord0 = 0;
+	mWord8 = 0;
 }
 
 /*
@@ -38,7 +38,7 @@ void Timers::reset()
  * Address:	80040994
  * Size:	000010
  */
-void Timers::newFrame() { m_frameCount++; }
+void Timers::newFrame() { mFrameCount++; }
 
 /*
  * --INFO--

@@ -106,12 +106,12 @@ struct ControllerManager {
 
 struct System {
 	u8 data[0x27C];
-	ControllerManager* m_contManager;
+	ControllerManager* mContManager;
 };
 
 extern System* gsys;
 
-void Controller::update() { gsys->m_contManager->updateController(this); }
+void Controller::update() { gsys->mContManager->updateController(this); }
 
 /*
  * --INFO--

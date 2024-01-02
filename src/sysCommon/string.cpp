@@ -19,7 +19,7 @@
  */
 int String::getLength()
 {
-	u8* str = this->m_str;
+	u8* str = this->mStr;
 	int len = 0;
 	while (*(str++))
 		len++;
