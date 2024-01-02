@@ -1,4 +1,4 @@
-#include "types.h"
+#include "Action.h"
 
 /*
  * --INFO--
@@ -238,10 +238,10 @@ void ActAttack::init(Creature*)
  * Address:	........
  * Size:	000084
  */
-void ActAttack::startLost()
-{
-	// UNUSED FUNCTION
-}
+// void ActAttack::startLost()
+// {
+// 	// UNUSED FUNCTION
+// }
 
 /*
  * --INFO--

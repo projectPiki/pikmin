@@ -1,5 +1,5 @@
-#include "types.h"
-#include "gameApp.h"
+#include "App.h"
+#include "system.h"
 
 /*
  * --INFO--
@@ -26,4 +26,4 @@ static void _Print(char*, ...)
  * Address:	8004C908
  * Size:	000034
  */
-void GameApp::renderall() { draw(gsys->m_gfx); }
+void GameApp::renderall() { draw(*gsys->mGfx); }

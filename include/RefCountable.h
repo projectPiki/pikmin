@@ -3,16 +3,23 @@
 
 #include "types.h"
 
+/**
+ * @brief Basic struct for countable objects (creatures etc).
+ *
+ * @note Size: 0x8.
+ */
 struct RefCountable {
-	// vtable _00
 	RefCountable();
-	void clearCnt();
-	void addCnt();
-	void subCnt();
-	virtual void addCntCallback() {};
-	virtual void subCntCallback() {};
 
-	int m_count; // _04
+	virtual void addCntCallback() { } // _08 (weak)
+	virtual void subCntCallback() { } // _0C (weak)
+
+	void clearCnt(); // sets count to 0
+	void addCnt();   // adds one to count
+	void subCnt();   // subtracts one from count (with floor of 0)
+
+	// _00 = VTBL
+	int mCnt; // _04, count
 };
 
 #endif
