@@ -1,4 +1,6 @@
 #include "types.h"
+#include "Stream.h"
+#include "system.h"
 
 /*
  * --INFO--
@@ -25,8 +27,17 @@ void _Print(char*, ...)
  * Address:	80025500
  * Size:	000098
  */
-void BufferedInputStream::init(Stream*, u8*, int)
+void BufferedInputStream::init(Stream* stream, u8* buffer, int bufferSize)
 {
+	mPath             = StdSystem::stringDup(stream->mPath);
+	mBufferSize       = bufferSize;
+	mBuffer           = buffer ? buffer : new (0x20) u8[bufferSize];
+	mPosition         = 0;
+	mCurrentBufferPos = 0;
+	mRemainingBytes   = 0;
+	mStream           = stream;
+	fillBuffer();
+
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -79,8 +90,9 @@ void BufferedInputStream::init(Stream*, u8*, int)
  * Address:	80025598
  * Size:	0000C0
  */
-BufferedInputStream::BufferedInputStream(Stream*, u8*, int)
+BufferedInputStream::BufferedInputStream(Stream* stream, u8* buffer, int bufferSize)
 {
+	init(stream, buffer, bufferSize);
 	/*
 	.loc_0x0:
 	  mflr      r0
