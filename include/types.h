@@ -102,6 +102,11 @@ typedef unsigned long size_t;
 // Number of bytes in a kilobyte
 #define KILOBYTE_BYTECOUNT 1024
 
+#define BUMP_REGISTER(reg)  \
+	{                       \
+		asm { mr reg, reg } \
+	}
+
 #ifdef __MWERKS__
 #define WEAKFUNC        __declspec(weak)
 #define DECL_SECT(name) __declspec(section name)
