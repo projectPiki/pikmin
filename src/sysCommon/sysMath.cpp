@@ -1,4 +1,5 @@
 #include "types.h"
+#include "math.h"
 
 /*
  * --INFO--
@@ -1398,8 +1399,17 @@ void Quat::fromEuler(Vector3f&)
  * Address:	80038588
  * Size:	00002C
  */
-void roundAng(f32)
+float roundAng(float x)
 {
+	if (x < 0.0f) {
+		x += TAU;
+	}
+
+	if (x >= TAU) {
+		x -= TAU;
+	}
+
+	return x;
 	/*
 	.loc_0x0:
 	  lfs       f0, -0x7C60(r2)
@@ -1472,8 +1482,17 @@ void angDist(f32, f32)
  * Address:	80038628
  * Size:	000050
  */
-void qdist2(f32, f32, f32, f32)
+void qdist2(float, float, float, float)
 {
+	float differenceX         = point2X - point1X;
+	float absoluteDifferenceX = (differenceX < 0.0f) ? -differenceX : differenceX;
+
+	float differenceY         = point2Y - point1Y;
+	float absoluteDifferenceY = (differenceY < 0.0f) ? -differenceY : differenceY;
+
+	float minimumDifference = (absoluteDifferenceX <= absoluteDifferenceY) ? absoluteDifferenceX : absoluteDifferenceY;
+
+	return absoluteDifferenceX + absoluteDifferenceY - minimumDifference * 0.5f;
 	/*
 	.loc_0x0:
 	  fsubs     f3, f3, f1
@@ -1522,8 +1541,22 @@ void qdist3(f32, f32, f32, f32, f32, f32)
  * Address:	80038678
  * Size:	0001BC
  */
-void CollTriInfo::init(RoomInfo*, Vector3f*)
+void CollTriInfo::init(RoomInfo* info, Vector3f* pos)
 {
+	for (int i = 0; i < 3; ++i) {
+		Vector3f* pos1;
+		Vector3f* pos2;
+		pos2 = &pos[this->_04[(i + 1) % 3]];
+		pos1 = &pos[this->_04[i % 3]];
+
+		Vector3f tempVector;
+		tempVector.sub2(pos2, pos1);
+		tempVector.normalise();
+		tempVector.CP(&this->field_18);
+		this->field_28[i] = tempVector;
+		double dpResult   = tempVector.DP(pos2);
+		this->field_34[i] = dpResult;
+	}
 	/*
 	.loc_0x0:
 	  mflr      r0

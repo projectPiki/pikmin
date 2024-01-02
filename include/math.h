@@ -3,6 +3,19 @@
 
 #include "types.h"
 
+#define LONG_TAU   6.2831854820251465
+#define TAU        6.2831855f
+#define PI         3.1415927f
+#define HALF_PI    1.5707964f
+#define THIRD_PI   1.0471976f
+#define QUARTER_PI 0.7853982f
+
+#define SIN_2_5 0.43633234f
+#define M_SQRT3 1.73205f
+
+#define DEG2RAD        (1.0f / 180.0f)
+#define TORADIANS(val) (PI * (DEG2RAD * val))
+
 f64 __fabs(f64);
 f32 __fabsf(f32);
 f64 __fnabs(f64);
@@ -31,12 +44,14 @@ void __mtfsb0(int);
 void __mtfsb1(int);
 f64 __setflm(f64);
 
-inline f32 sqrtf(f32 x)
+static inline f32 sqrtf(f32 x)
 {
 	static const f64 _half  = .5;
 	static const f64 _three = 3.0;
+
 	vf32 y;
 	if (x > 0.0f) {
+
 		f64 guess = __frsqrte((f64)x);                            // returns an approximation to
 		guess     = _half * guess * (_three - guess * guess * x); // now have 12 sig bits
 		guess     = _half * guess * (_three - guess * guess * x); // now have 24 sig bits

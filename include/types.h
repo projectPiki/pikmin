@@ -1,6 +1,12 @@
 #ifndef _TYPES_H
 #define _TYPES_H
 
+// r2 is  803F0200
+// r13 is 803E4D20
+
+typedef int BOOL;
+typedef unsigned int uint;
+
 typedef signed char s8;
 typedef signed short s16;
 typedef signed long s32;
@@ -26,12 +32,12 @@ typedef volatile f32 vf32;
 typedef volatile f64 vf64;
 typedef volatile f128 vf128;
 
-typedef int BOOL;
+typedef u32 size_t;
+typedef u32 unknown;
 
-/* int<x>_t */
-typedef signed char int8_t;
-typedef short int16_t;
-typedef int int32_t;
+#ifndef __cplusplus
+typedef u16 wchar_t;
+#endif
 
 /* uint<x>_t */
 typedef unsigned char uint8_t;
@@ -49,12 +55,52 @@ typedef unsigned long size_t;
 #define NULL    ((void*)0)
 #define nullptr 0
 
-#define BUMP_REGISTER(reg)  \
-	{                       \
-		asm { mr reg, reg } \
+// Sets specific flag to 1
+#define SET_FLAG(x, val) (x |= (val))
+
+// Resets specific flag from (val) back to 0
+#define RESET_FLAG(x, val) (x &= ~(val))
+
+// Return 1 if flag is set, 0 if flag is not set
+#define IS_FLAG(x, val) (x & val)
+
+// Array size define
+#define ARRAY_SIZE(o) (sizeof((o)) / sizeof(*(o)))
+
+// Align X to the previous N bytes (N must be power of two)
+#define ALIGN_PREV(X, N) ((X) & ~((N)-1))
+
+// Align X to the next N bytes (N must be power of two)
+#define ALIGN_NEXT(X, N) ALIGN_PREV(((X) + (N)-1), N)
+
+// True if X is aligned to N bytes, else false
+#define IS_ALIGNED(X, N) ((X & ((N)-1)) == 0)
+
+// True if X is not aligned to N bytes, else false
+#define IS_NOT_ALIGNED(X, N) (((X) & ((N)-1)) != 0)
+
+// Align object to num bytes (num should be power of two)
+#define ATTRIBUTE_ALIGN(num) __attribute__((aligned(num)))
+
+// Checks if a flag is set in a bitfield
+#define IS_FLAG_SET(flags, bitsFromLSB) (((flags) >> (bitsFromLSB) & 1))
+
+#define ASSERT_HANG(cond) \
+	if (!(cond)) {        \
+		while (true) { }  \
 	}
 
-#define ATTRIBUTE_ALIGN(num) __attribute__((aligned(num)))
+// Get the maximum of two values
+#define MAX(a, b) (((a) > (b)) ? (a) : (b))
+
+// Get the minimum of two values
+#define MIN(a, b) (((a) < (b)) ? (a) : (b))
+
+// Rounds a float to a u8
+#define ROUND_F32_TO_U8(a) a >= 0.0f ? a + 0.5f : a - 0.5f
+
+// Number of bytes in a kilobyte
+#define KILOBYTE_BYTECOUNT 1024
 
 #ifdef __MWERKS__
 #define WEAKFUNC        __declspec(weak)
