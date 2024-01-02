@@ -1,8 +1,8 @@
 #ifndef _ODOMETER_H
 #define _ODOMETER_H
+
 #include "types.h"
 #include "Vector3f.h"
-#include "math.h"
 
 struct OdoMeter { // TODO: figure out what these actually are
 	float _00;    // _00

@@ -1,7 +1,6 @@
 #include "types.h"
 #include "system.h"
 #include "odoMeter.h"
-
 /*
  * --INFO--
  * Address:	........
@@ -45,7 +44,6 @@ void OdoMeter::start(float argA, float argB)
 	_08 = argB;
 	_00 = 0.0;
 }
-
 /*
  * --INFO--
  * Address:	800CD82C
@@ -54,17 +52,17 @@ void OdoMeter::start(float argA, float argB)
  */
 bool OdoMeter::moving(Vector3f& argA, Vector3f& argB)
 {
+	Vector3f vec;
 	float dummy[4]; // Match stack allocation
-
 	unknown1();
-
 	if (_00 < 100.0f) {
-		// THIS IS VECTOR3F::DISTANCE!!! WHAT THE FUUUUUUUUUU
-		Vector3f vec;
-		vec.sub2(argA, argB);
-		f32 distance = vec.length();
+		vec.y          = Vector3f_diffY(argA, argB);
+		vec.x          = Vector3f_diffX(argA, argB);
+		vec.z          = Vector3f_diffZ(argA, argB);
+		float distance = sqrtf(vec.x * vec.x + vec.y * vec.y + vec.z * vec.z);
 		_00 += distance;
+	
 	}
-
 	return unknown2();
+
 }

@@ -249,7 +249,7 @@ LIBS = [
             ["plugPikiKando/aiAction", False],
             ["plugPikiKando/pikiInf", False],
             ["plugPikiKando/piki", False],
-            ["plugPikiKando/odoMeter", False],
+            ["plugPikiKando/odoMeter", True],
             ["plugPikiKando/pikidoKill", False],
             ["plugPikiKando/pikiMgr", False],
             ["plugPikiKando/pikiState", False],
