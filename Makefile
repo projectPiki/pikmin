@@ -95,6 +95,7 @@ else
   endif
   # Disable wine debug output for cleanliness
   export WINEDEBUG ?= -all
+  AS      := $(POWERPC)/powerpc-eabi-as
   PYTHON  := python3
 endif
 COMPILERS ?= tools/mwcc_compiler
