@@ -47,7 +47,7 @@ struct PlugPikiApp : public BaseApp {
 
 	// _00 = VTBL
 	// TODO: members
-	u8 _04[0x54 - 0x4]; // _04, unknown
+	u8 _04[0x54 - 0x14]; // _04, unknown
 };
 
 #endif
