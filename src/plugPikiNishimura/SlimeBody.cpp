@@ -367,7 +367,7 @@ void SlimeBody::setSpherePosition()
  * Address:	........
  * Size:	000128
  */
-void SlimeBody::calcVertexScore(Vector3f*, Vector3f*, float*)
+void SlimeBody::calcVertexScore(Vector3f*, Vector3f*, f32*)
 {
 	// UNUSED FUNCTION
 }

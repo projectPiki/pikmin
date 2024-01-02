@@ -2476,7 +2476,7 @@ void TaiKinokoTerritoryRunningAwayAction::act(Teki&)
  * Address:	80131D54
  * Size:	000058
  */
-TaiKinokoLegEffectAction::TaiKinokoLegEffectAction(float)
+TaiKinokoLegEffectAction::TaiKinokoLegEffectAction(f32)
 {
 	/*
 	.loc_0x0:

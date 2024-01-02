@@ -694,7 +694,7 @@ void GmWinMgr::render(Graphics&)
  * Address:	........
  * Size:	000028
  */
-void GmWinMgr::getWindow(unsigned long)
+void GmWinMgr::getWindow(u32)
 {
 	// UNUSED FUNCTION
 }

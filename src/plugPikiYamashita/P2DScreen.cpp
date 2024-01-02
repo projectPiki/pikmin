@@ -334,7 +334,7 @@ void P2DScreen::makeHiearachyPanes(P2DPane*, RandomAccessStream*, bool, bool)
  * Address:	801B2ECC
  * Size:	000008
  */
-u32 P2DScreen::makeUserPane(unsigned short, P2DPane*, RandomAccessStream*) { return 0x0; }
+u32 P2DScreen::makeUserPane(u16, P2DPane*, RandomAccessStream*) { return 0x0; }
 
 /*
  * --INFO--
@@ -569,7 +569,7 @@ void P2DScreen::draw(int, int, const P2DGrafContext*)
  * Address:	801B31FC
  * Size:	000030
  */
-void P2DScreen::search(unsigned long, bool)
+void P2DScreen::search(u32, bool)
 {
 	/*
 	.loc_0x0:

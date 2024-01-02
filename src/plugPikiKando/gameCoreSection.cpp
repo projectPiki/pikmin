@@ -134,7 +134,7 @@ void GameCoreSection::updateTextDemo()
  * Address:	8010CF98
  * Size:	000464
  */
-void GameCoreSection::startMovie(unsigned long, bool)
+void GameCoreSection::startMovie(u32, bool)
 {
 	/*
 	.loc_0x0:
@@ -2554,7 +2554,7 @@ void ps_vec3f_sub(Vector3f&, Vector3f&)
  * Address:	........
  * Size:	000020
  */
-void ps_vec3f_multiply(Vector3f&, float&)
+void ps_vec3f_multiply(Vector3f&, f32&)
 {
 	// UNUSED FUNCTION
 }
@@ -2564,7 +2564,7 @@ void ps_vec3f_multiply(Vector3f&, float&)
  * Address:	........
  * Size:	000018
  */
-void asmTest(float, float)
+void asmTest(f32, f32)
 {
 	// UNUSED FUNCTION
 }

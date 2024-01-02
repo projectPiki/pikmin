@@ -338,7 +338,7 @@ void AtxCommandStream::checkCommands()
  * Address:	........
  * Size:	000170
  */
-void AtxFileStream::open(char*, unsigned long)
+void AtxFileStream::open(char*, u32)
 {
 	// UNUSED FUNCTION
 }

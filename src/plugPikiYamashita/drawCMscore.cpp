@@ -708,7 +708,7 @@ void zen::DrawCMscoreMgr::sleep()
  * Address:	801EE114
  * Size:	000114
  */
-void zen::DrawCMscoreMgr::appear(float)
+void zen::DrawCMscoreMgr::appear(f32)
 {
 	/*
 	.loc_0x0:

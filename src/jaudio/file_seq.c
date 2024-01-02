@@ -1,11 +1,11 @@
-
+#include "types.h"
 
 /*
  * --INFO--
  * Address:	8001B3E0
  * Size:	0000D0
  */
-void Jaf_InitSeqArchive2(char*, unsigned char*, unsigned char*)
+void Jaf_InitSeqArchive2(char*, u8*, u8*)
 {
 	/*
 	.loc_0x0:
@@ -77,7 +77,7 @@ void Jaf_InitSeqArchive2(char*, unsigned char*, unsigned char*)
  * Address:	8001B4C0
  * Size:	00003C
  */
-void Jaf_CheckSeqSize(unsigned long)
+void Jaf_CheckSeqSize(u32)
 {
 	/*
 	.loc_0x0:
@@ -108,7 +108,7 @@ void Jaf_CheckSeqSize(unsigned long)
  * Address:	8001B500
  * Size:	000088
  */
-void Jaf_LoadSeq(unsigned long, unsigned char*)
+void Jaf_LoadSeq(u32, u8*)
 {
 	/*
 	.loc_0x0:
@@ -160,7 +160,7 @@ void Jaf_LoadSeq(unsigned long, unsigned char*)
  * Address:	8001B5A0
  * Size:	00001C
  */
-void Jaf_ClearSeq(unsigned long)
+void Jaf_ClearSeq(u32)
 {
 	/*
 	.loc_0x0:
@@ -179,7 +179,7 @@ void Jaf_ClearSeq(unsigned long)
  * Address:	8001B5C0
  * Size:	000018
  */
-void Jaf_CheckSeq(unsigned long)
+void Jaf_CheckSeq(u32)
 {
 	/*
 	.loc_0x0:
@@ -197,7 +197,7 @@ void Jaf_CheckSeq(unsigned long)
  * Address:	8001B5E0
  * Size:	0000A0
  */
-void Jaf_ReadySeq(unsigned long, unsigned long)
+void Jaf_ReadySeq(u32, u32)
 {
 	/*
 	.loc_0x0:
@@ -257,7 +257,7 @@ void Jaf_ReadySeq(unsigned long, unsigned long)
  * Address:	8001B680
  * Size:	000038
  */
-void Jaf_PlaySeq(unsigned long)
+void Jaf_PlaySeq(u32)
 {
 	/*
 	.loc_0x0:
@@ -283,7 +283,7 @@ void Jaf_PlaySeq(unsigned long)
  * Address:	8001B6C0
  * Size:	000038
  */
-void Jaf_StartSeq(unsigned long, unsigned long)
+void Jaf_StartSeq(u32, u32)
 {
 	/*
 	.loc_0x0:
@@ -309,7 +309,7 @@ void Jaf_StartSeq(unsigned long, unsigned long)
  * Address:	8001B700
  * Size:	000070
  */
-void Jaf_StopSeq(unsigned long)
+void Jaf_StopSeq(u32)
 {
 	/*
 	.loc_0x0:
@@ -355,7 +355,7 @@ void Jaf_StopSeq(unsigned long)
  * Address:	........
  * Size:	000018
  */
-void Jaf_GetJamHandle(unsigned long)
+void Jaf_GetJamHandle(u32)
 {
 	// UNUSED FUNCTION
 }
@@ -365,7 +365,7 @@ void Jaf_GetJamHandle(unsigned long)
  * Address:	8001B780
  * Size:	000014
  */
-void Jaf_HandleToSeq(unsigned long)
+void Jaf_HandleToSeq(u32)
 {
 	/*
 	.loc_0x0:
@@ -382,7 +382,7 @@ void Jaf_HandleToSeq(unsigned long)
  * Address:	........
  * Size:	000058
  */
-void Jaf_LoadStartFinish(unsigned long)
+void Jaf_LoadStartFinish(u32)
 {
 	// UNUSED FUNCTION
 }
@@ -392,7 +392,7 @@ void Jaf_LoadStartFinish(unsigned long)
  * Address:	8001B7A0
  * Size:	000028
  */
-void Jaf_LoadFinish(unsigned long)
+void Jaf_LoadFinish(u32)
 {
 	/*
 	.loc_0x0:
@@ -414,7 +414,7 @@ void Jaf_LoadFinish(unsigned long)
  * Address:	8001B7E0
  * Size:	000124
  */
-void __LoadSeqA(unsigned long, unsigned long, unsigned char*, void (*)(unsigned long))
+void __LoadSeqA(u32, u32, u8*, void (*)(u32))
 {
 	/*
 	.loc_0x0:
@@ -515,7 +515,7 @@ void __LoadSeqA(unsigned long, unsigned long, unsigned char*, void (*)(unsigned 
  * Address:	........
  * Size:	000028
  */
-void Jaf_LoadStartSeqA(unsigned long, unsigned long, unsigned char*)
+void Jaf_LoadStartSeqA(u32, u32, u8*)
 {
 	// UNUSED FUNCTION
 }
@@ -525,7 +525,7 @@ void Jaf_LoadStartSeqA(unsigned long, unsigned long, unsigned char*)
  * Address:	8001B920
  * Size:	000034
  */
-void Jaf_LoadSeqA(unsigned long, unsigned char*)
+void Jaf_LoadSeqA(u32, u8*)
 {
 	/*
 	.loc_0x0:

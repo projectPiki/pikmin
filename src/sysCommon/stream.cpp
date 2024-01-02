@@ -263,7 +263,7 @@ void Stream::writeInt(int)
  * Address:	80025320
  * Size:	000038
  */
-void Stream::writeByte(unsigned char)
+void Stream::writeByte(u8)
 {
 	/*
 	.loc_0x0:
@@ -289,7 +289,7 @@ void Stream::writeByte(unsigned char)
  * Address:	80025358
  * Size:	000038
  */
-void Stream::writeShort(short)
+void Stream::writeShort(s16)
 {
 	/*
 	.loc_0x0:
@@ -315,7 +315,7 @@ void Stream::writeShort(short)
  * Address:	80025390
  * Size:	000038
  */
-void Stream::writeFloat(float)
+void Stream::writeFloat(f32)
 {
 	/*
 	.loc_0x0:

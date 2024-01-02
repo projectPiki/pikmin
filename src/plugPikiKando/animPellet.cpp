@@ -539,7 +539,7 @@ void PelletAnimator::finishMotion(PaniAnimKeyListener*)
  * Address:	80099AE8
  * Size:	00005C
  */
-void PelletAnimator::updateAnimation(float, float)
+void PelletAnimator::updateAnimation(f32, f32)
 {
 	/*
 	.loc_0x0:

@@ -25,7 +25,7 @@ void _Print(char*, ...)
  * Address:	........
  * Size:	0000A8
  */
-void SpiderLeg::setHalfDeadEffect(unsigned long, int, int)
+void SpiderLeg::setHalfDeadEffect(u32, int, int)
 {
 	// UNUSED FUNCTION
 }
@@ -35,7 +35,7 @@ void SpiderLeg::setHalfDeadEffect(unsigned long, int, int)
  * Address:	80155A08
  * Size:	000184
  */
-void SpiderLeg::setHalfDeadFallEffect(unsigned long)
+void SpiderLeg::setHalfDeadFallEffect(u32)
 {
 	/*
 	.loc_0x0:
@@ -152,7 +152,7 @@ void SpiderLeg::setHalfDeadFallEffect(unsigned long)
  * Address:	80155B8C
  * Size:	0001DC
  */
-void SpiderLeg::setDeadBombEffect(unsigned long)
+void SpiderLeg::setDeadBombEffect(u32)
 {
 	/*
 	.loc_0x0:
@@ -293,7 +293,7 @@ void SpiderLeg::setDeadBombEffect(unsigned long)
  * Address:	........
  * Size:	000094
  */
-void SpiderLeg::setSmallSparkEffect(unsigned long, int*)
+void SpiderLeg::setSmallSparkEffect(u32, int*)
 {
 	// UNUSED FUNCTION
 }
@@ -303,7 +303,7 @@ void SpiderLeg::setSmallSparkEffect(unsigned long, int*)
  * Address:	........
  * Size:	0000C8
  */
-void SpiderLeg::setPerishEffect(unsigned long, int)
+void SpiderLeg::setPerishEffect(u32, int)
 {
 	// UNUSED FUNCTION
 }

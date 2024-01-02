@@ -243,7 +243,7 @@ DGXGraphics::DGXGraphics(bool)
  * Address:	800477B0
  * Size:	000094
  */
-void DGXGraphics::setVerticalFilter(unsigned char*)
+void DGXGraphics::setVerticalFilter(u8*)
 {
 	/*
 	.loc_0x0:
@@ -292,7 +292,7 @@ void DGXGraphics::setVerticalFilter(unsigned char*)
  * Address:	80047844
  * Size:	000094
  */
-void DGXGraphics::getVerticalFilter(unsigned char*)
+void DGXGraphics::getVerticalFilter(u8*)
 {
 	/*
 	.loc_0x0:
@@ -470,7 +470,7 @@ void DGXGraphics::getDListRemainSize()
  * Address:	800479DC
  * Size:	00001C
  */
-void DGXGraphics::useDList(unsigned long)
+void DGXGraphics::useDList(u32)
 {
 	/*
 	.loc_0x0:
@@ -1137,7 +1137,7 @@ void DGXGraphics::waitPostRetrace()
  * Address:	80048208
  * Size:	000084
  */
-void DGXGraphics::retraceProc(unsigned long)
+void DGXGraphics::retraceProc(u32)
 {
 	/*
 	.loc_0x0:
@@ -1220,7 +1220,7 @@ void DGXGraphics::calcViewMatrix(Matrix4f&, Matrix4f&)
  * Address:	800482C0
  * Size:	000050
  */
-void DGXGraphics::setLineWidth(float)
+void DGXGraphics::setLineWidth(f32)
 {
 	/*
 	.loc_0x0:
@@ -1772,7 +1772,7 @@ void DGXGraphics::setLight(Light*, int)
  * Address:	80048998
  * Size:	000098
  */
-void DGXGraphics::setPerspective(float (*)[4], float, float, float, float, float)
+void DGXGraphics::setPerspective(f32 (*)[4], f32, f32, f32, f32, f32)
 {
 	/*
 	.loc_0x0:
@@ -1822,7 +1822,7 @@ void DGXGraphics::setPerspective(float (*)[4], float, float, float, float, float
  * Address:	80048A30
  * Size:	00019C
  */
-void DGXGraphics::setOrthogonal(float (*)[4], RectArea&)
+void DGXGraphics::setOrthogonal(f32 (*)[4], RectArea&)
 {
 	/*
 	.loc_0x0:
@@ -3846,7 +3846,7 @@ void DGXGraphics::setFog(bool)
  * Address:	8004A328
  * Size:	000040
  */
-void DGXGraphics::setFog(bool, Colour&, float, float, float)
+void DGXGraphics::setFog(bool, Colour&, f32, f32, f32)
 {
 	/*
 	.loc_0x0:
@@ -3874,7 +3874,7 @@ void DGXGraphics::setFog(bool, Colour&, float, float, float)
  * Address:	8004A368
  * Size:	000164
  */
-void DGXGraphics::setBlendMode(unsigned char, unsigned char, unsigned char)
+void DGXGraphics::setBlendMode(u8, u8, u8)
 {
 	/*
 	.loc_0x0:
@@ -4337,7 +4337,7 @@ void DGXGraphics::initParticle(bool)
  * Address:	8004A9BC
  * Size:	000328
  */
-void DGXGraphics::drawRotParticle(Camera&, Vector3f&, unsigned short, float)
+void DGXGraphics::drawRotParticle(Camera&, Vector3f&, u16, f32)
 {
 	/*
 	.loc_0x0:
@@ -4551,7 +4551,7 @@ void DGXGraphics::drawRotParticle(Camera&, Vector3f&, unsigned short, float)
  * Address:	8004ACE4
  * Size:	00027C
  */
-void DGXGraphics::drawParticle(Camera&, Vector3f&, float)
+void DGXGraphics::drawParticle(Camera&, Vector3f&, f32)
 {
 	/*
 	.loc_0x0:
@@ -6467,7 +6467,7 @@ void DGXGraphics::texturePrintf(Font*, int, int, char*, ...)
  * Address:	........
  * Size:	0001A0
  */
-void DGXGraphics::showCrash(unsigned short, OSContext*)
+void DGXGraphics::showCrash(u16, OSContext*)
 {
 	// UNUSED FUNCTION
 }
@@ -6665,7 +6665,7 @@ void Shape::optimize()
  * Address:	8004C8CC
  * Size:	000004
  */
-void DGXGraphics::setPointSize(float) { }
+void DGXGraphics::setPointSize(f32) { }
 
 /*
  * --INFO--

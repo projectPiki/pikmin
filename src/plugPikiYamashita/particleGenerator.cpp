@@ -25,7 +25,7 @@ void _Print(char*, ...)
  * Address:	8019CD0C
  * Size:	00024C
  */
-void zen::particleGenerator::init(unsigned char*, Texture*, Texture*, Vector3f&, zen::particleMdlManager*,
+void zen::particleGenerator::init(u8*, Texture*, Texture*, Vector3f&, zen::particleMdlManager*,
                                   zen::CallBack1<zen::particleGenerator*>*, zen::CallBack2<zen::particleGenerator*, zen::particleMdl*>*)
 {
 	/*
@@ -193,7 +193,7 @@ void zen::particleGenerator::init(unsigned char*, Texture*, Texture*, Vector3f&,
  * Address:	8019CF58
  * Size:	000154
  */
-void zen::particleGenerator::update(float)
+void zen::particleGenerator::update(f32)
 {
 	/*
 	.loc_0x0:
@@ -412,7 +412,7 @@ void zen::particleGenerator::draw(Graphics&)
  * Address:	8019D224
  * Size:	000B58
  */
-void zen::particleGenerator::pmSetDDF(unsigned char*)
+void zen::particleGenerator::pmSetDDF(u8*)
 {
 	/*
 	.loc_0x0:
@@ -1254,7 +1254,7 @@ void zen::particleGenerator::pmSetDDF(unsigned char*)
  * Address:	........
  * Size:	000074
  */
-void zen::particleGenerator::pmIntpManual(float*, float*)
+void zen::particleGenerator::pmIntpManual(f32*, f32*)
 {
 	// UNUSED FUNCTION
 }
@@ -1264,7 +1264,7 @@ void zen::particleGenerator::pmIntpManual(float*, float*)
  * Address:	........
  * Size:	0000A0
  */
-void zen::particleGenerator::pmIntpLinear(float*, float*)
+void zen::particleGenerator::pmIntpLinear(f32*, f32*)
 {
 	// UNUSED FUNCTION
 }
@@ -3059,7 +3059,7 @@ void zen::particleGenerator::pmCalcAccel(zen::particleMdl*)
  * Address:	8019F6C8
  * Size:	000648
  */
-void zen::particleGenerator::UpdatePtclsStatus(float)
+void zen::particleGenerator::UpdatePtclsStatus(f32)
 {
 	/*
 	.loc_0x0:
@@ -4249,7 +4249,7 @@ void zen::particleGenerator::drawPtclOriented(Graphics&)
  * Address:	801A0758
  * Size:	00003C
  */
-void zen::particleGenerator::RotAxisX(float (&)[3][4], float&, float&)
+void zen::particleGenerator::RotAxisX(f32 (&)[3][4], f32&, f32&)
 {
 	/*
 	.loc_0x0:
@@ -4276,7 +4276,7 @@ void zen::particleGenerator::RotAxisX(float (&)[3][4], float&, float&)
  * Address:	801A0794
  * Size:	00003C
  */
-void zen::particleGenerator::RotAxisY(float (&)[3][4], float&, float&)
+void zen::particleGenerator::RotAxisY(f32 (&)[3][4], f32&, f32&)
 {
 	/*
 	.loc_0x0:
@@ -4303,7 +4303,7 @@ void zen::particleGenerator::RotAxisY(float (&)[3][4], float&, float&)
  * Address:	801A07D0
  * Size:	00003C
  */
-void zen::particleGenerator::RotAxisZ(float (&)[3][4], float&, float&)
+void zen::particleGenerator::RotAxisZ(f32 (&)[3][4], f32&, f32&)
 {
 	/*
 	.loc_0x0:
@@ -4330,7 +4330,7 @@ void zen::particleGenerator::RotAxisZ(float (&)[3][4], float&, float&)
  * Address:	801A080C
  * Size:	000054
  */
-void zen::particleGenerator::RotAxisXY(float (&)[3][4], float&, float&)
+void zen::particleGenerator::RotAxisXY(f32 (&)[3][4], f32&, f32&)
 {
 	/*
 	.loc_0x0:
@@ -4363,7 +4363,7 @@ void zen::particleGenerator::RotAxisXY(float (&)[3][4], float&, float&)
  * Address:	801A0860
  * Size:	00005C
  */
-void zen::particleGenerator::RotAxisXZ(float (&)[3][4], float&, float&)
+void zen::particleGenerator::RotAxisXZ(f32 (&)[3][4], f32&, f32&)
 {
 	/*
 	.loc_0x0:
@@ -4398,7 +4398,7 @@ void zen::particleGenerator::RotAxisXZ(float (&)[3][4], float&, float&)
  * Address:	801A08BC
  * Size:	00005C
  */
-void zen::particleGenerator::RotAxisYZ(float (&)[3][4], float&, float&)
+void zen::particleGenerator::RotAxisYZ(f32 (&)[3][4], f32&, f32&)
 {
 	/*
 	.loc_0x0:
@@ -4433,7 +4433,7 @@ void zen::particleGenerator::RotAxisYZ(float (&)[3][4], float&, float&)
  * Address:	801A0918
  * Size:	00008C
  */
-void zen::particleGenerator::RotAxisXYZ(float (&)[3][4], float&, float&)
+void zen::particleGenerator::RotAxisXYZ(f32 (&)[3][4], f32&, f32&)
 {
 	/*
 	.loc_0x0:
@@ -4480,7 +4480,7 @@ void zen::particleGenerator::RotAxisXYZ(float (&)[3][4], float&, float&)
  * Address:	801A09A4
  * Size:	000110
  */
-void zen::particleGenerator::updatePtclChildren(float)
+void zen::particleGenerator::updatePtclChildren(f32)
 {
 	/*
 	.loc_0x0:

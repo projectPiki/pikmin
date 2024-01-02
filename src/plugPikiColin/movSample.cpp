@@ -25,7 +25,7 @@ void _Print(char*, ...)
  * Address:	80077EF0
  * Size:	0003F0
  */
-void convHVQM4TexY8UV8(int, int, unsigned char*, unsigned char*)
+void convHVQM4TexY8UV8(int, int, u8*, u8*)
 {
 	/*
 	.loc_0x0:

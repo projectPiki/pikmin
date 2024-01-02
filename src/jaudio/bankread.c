@@ -1,11 +1,11 @@
-
+#include "types.h"
 
 /*
  * --INFO--
  * Address:	8000BE00
  * Size:	000024
  */
-void PTconvert(void**, unsigned long)
+void PTconvert(void**, u32)
 {
 	/*
 	.loc_0x0:
@@ -28,7 +28,7 @@ void PTconvert(void**, unsigned long)
  * Address:	8000BE40
  * Size:	000270
  */
-void Bank_Test(unsigned char*)
+void Bank_Test(u8*)
 {
 	/*
 	.loc_0x0:
@@ -236,7 +236,7 @@ void Bank_Test(unsigned char*)
  * Address:	8000C0C0
  * Size:	000068
  */
-void __Bank_Regist_Inner(unsigned char*, unsigned long, unsigned long)
+void __Bank_Regist_Inner(u8*, u32, u32)
 {
 	/*
 	.loc_0x0:
@@ -278,7 +278,7 @@ void __Bank_Regist_Inner(unsigned char*, unsigned long, unsigned long)
  * Address:	8000C140
  * Size:	000024
  */
-void Bank_Regist(void*, unsigned long)
+void Bank_Regist(void*, u32)
 {
 	/*
 	.loc_0x0:
@@ -299,7 +299,7 @@ void Bank_Regist(void*, unsigned long)
  * Address:	........
  * Size:	000020
  */
-void Bank_Regist_Direct(void*, unsigned long, unsigned long)
+void Bank_Regist_Direct(void*, u32, u32)
 {
 	// UNUSED FUNCTION
 }
@@ -334,7 +334,7 @@ void Bank_Init()
  * Address:	8000C1C0
  * Size:	000028
  */
-void Bank_Get(unsigned long)
+void Bank_Get(u32)
 {
 	/*
 	.loc_0x0:

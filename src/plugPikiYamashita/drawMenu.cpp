@@ -161,7 +161,7 @@ void zen::DrawMenuText::setPane(P2DPane*, P2DPane*)
  * Address:	........
  * Size:	00006C
  */
-void zen::DrawMenuText::setScale(float, float)
+void zen::DrawMenuText::setScale(f32, f32)
 {
 	// UNUSED FUNCTION
 }
@@ -590,7 +590,7 @@ void zen::DrawMenuText::update(bool, Colour&, Colour&)
  * Address:	801C2EE0
  * Size:	000088
  */
-void zen::DrawMenuTitle::setPane(P2DScreen*, P2DPane*, unsigned long)
+void zen::DrawMenuTitle::setPane(P2DScreen*, P2DPane*, u32)
 {
 	/*
 	.loc_0x0:
@@ -681,7 +681,7 @@ void zen::DrawMenuTitle::end()
  * Address:	801C2F8C
  * Size:	000170
  */
-void zen::DrawMenuTitle::update(float)
+void zen::DrawMenuTitle::update(f32)
 {
 	/*
 	.loc_0x0:

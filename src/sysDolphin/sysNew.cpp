@@ -25,7 +25,7 @@ void _Print(char*, ...)
  * Address:	80047004
  * Size:	000164
  */
-void System::alloc(unsigned long)
+void System::alloc(u32)
 {
 	/*
 	.loc_0x0:
@@ -146,7 +146,7 @@ void System::alloc(unsigned long)
  * Address:	........
  * Size:	000044
  */
-void operator new(unsigned long, int)
+void operator new(u32, int)
 {
 	// UNUSED FUNCTION
 }
@@ -156,7 +156,7 @@ void operator new(unsigned long, int)
  * Address:	80047168
  * Size:	000044
  */
-void operator new[](unsigned long, int)
+void operator new[](u32, int)
 {
 	/*
 	.loc_0x0:

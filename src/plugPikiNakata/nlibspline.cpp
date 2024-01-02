@@ -66,7 +66,7 @@ void NArray<SplineKeyFrame>::get(int)
  * Address:	........
  * Size:	000030
  */
-void SplineInterpolator::interpolate(float, NPosture3D&, bool)
+void SplineInterpolator::interpolate(f32, NPosture3D&, bool)
 {
 	// UNUSED FUNCTION
 }
@@ -76,7 +76,7 @@ void SplineInterpolator::interpolate(float, NPosture3D&, bool)
  * Address:	8011DE6C
  * Size:	0000E0
  */
-void SplineInterpolator::interpolateNext(float, NPosture3D&)
+void SplineInterpolator::interpolateNext(f32, NPosture3D&)
 {
 	/*
 	.loc_0x0:
@@ -154,7 +154,7 @@ void SplineInterpolator::interpolateNext(float, NPosture3D&)
  * Address:	........
  * Size:	0000FC
  */
-void SplineInterpolator::interpolateDirect(float, NPosture3D&)
+void SplineInterpolator::interpolateDirect(f32, NPosture3D&)
 {
 	// UNUSED FUNCTION
 }
@@ -164,7 +164,7 @@ void SplineInterpolator::interpolateDirect(float, NPosture3D&)
  * Address:	8011DF4C
  * Size:	0000F0
  */
-void SplineInterpolator::outputPosture(float, NPosture3D&)
+void SplineInterpolator::outputPosture(f32, NPosture3D&)
 {
 	/*
 	.loc_0x0:
@@ -246,7 +246,7 @@ void NArray<SplineSegment>::get(int)
  * Address:	8011E03C
  * Size:	0000BC
  */
-void SplineInterpolator::searchSegmentIndex(float, int)
+void SplineInterpolator::searchSegmentIndex(f32, int)
 {
 	/*
 	.loc_0x0:
@@ -495,7 +495,7 @@ void SplineKeyFrame::outputPosture(NPosture3D&)
  * Address:	........
  * Size:	000070
  */
-void SplineKeyFrame::interpolate(SplineKeyFrame&, float, NPosture3D&)
+void SplineKeyFrame::interpolate(SplineKeyFrame&, f32, NPosture3D&)
 {
 	// UNUSED FUNCTION
 }
@@ -525,7 +525,7 @@ SplineSegment::SplineSegment()
  * Address:	........
  * Size:	0001EC
  */
-void SplineSegment::calcDistance(NVector3f&, float*)
+void SplineSegment::calcDistance(NVector3f&, f32*)
 {
 	// UNUSED FUNCTION
 }
@@ -545,7 +545,7 @@ SplineCurve::SplineCurve(int)
  * Address:	........
  * Size:	0003E8
  */
-void SplineCurve::makeCurve(float*, NVector3f**, int)
+void SplineCurve::makeCurve(f32*, NVector3f**, int)
 {
 	// UNUSED FUNCTION
 }
@@ -555,7 +555,7 @@ void SplineCurve::makeCurve(float*, NVector3f**, int)
  * Address:	........
  * Size:	000334
  */
-void SplineCurve::makeFunctions(int, float*, float*, NPolynomialFunction**)
+void SplineCurve::makeFunctions(int, f32*, f32*, NPolynomialFunction**)
 {
 	// UNUSED FUNCTION
 }

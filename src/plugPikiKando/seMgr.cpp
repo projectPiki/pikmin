@@ -133,7 +133,7 @@ SeMgr::SeMgr()
  * Address:	800A35A8
  * Size:	000028
  */
-void SeMgr::playNaviSound(long, long)
+void SeMgr::playNaviSound(s32, s32)
 {
 	/*
 	.loc_0x0:
@@ -197,7 +197,7 @@ void SeMgr::update() { }
  * Address:	........
  * Size:	000004
  */
-void SeMgr::play(unsigned long)
+void SeMgr::play(u32)
 {
 	// UNUSED FUNCTION
 }
@@ -207,7 +207,7 @@ void SeMgr::play(unsigned long)
  * Address:	........
  * Size:	000024
  */
-void SeMgr::stop(unsigned long)
+void SeMgr::stop(u32)
 {
 	// UNUSED FUNCTION
 }
@@ -217,7 +217,7 @@ void SeMgr::stop(unsigned long)
  * Address:	........
  * Size:	000004
  */
-void SeMgr::playBGM(unsigned long)
+void SeMgr::playBGM(u32)
 {
 	// UNUSED FUNCTION
 }

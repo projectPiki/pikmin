@@ -1,4 +1,4 @@
-
+#include "types.h"
 
 /*
  * --INFO--
@@ -15,7 +15,7 @@ void fdim(void)
  * Address:	8021B1E8
  * Size:	000080
  */
-void __fpclassifyd(double)
+void __fpclassifyd(f64)
 {
 	/*
 	.loc_0x0:

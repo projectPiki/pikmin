@@ -5,13 +5,13 @@
 #include "Vector3f.h"
 
 struct OdoMeter { // TODO: figure out what these actually are
-	float _00;    // _00
-	float _04;    // _04
-	float _08;    // _08
-	float _0C;    // _0C
+	f32 _00;      // _00
+	f32 _04;      // _04
+	f32 _08;      // _08
+	f32 _0C;      // _0C
 
 	OdoMeter();
-	void start(float argA, float argB);
+	void start(f32 argA, f32 argB);
 	bool moving(Vector3f& argA, Vector3f& argB);
 
 	inline void unknown1()

@@ -25,7 +25,7 @@ void _Print(char*, ...)
  * Address:	801A1E10
  * Size:	00009C
  */
-void zen::bBoardColourAnimData::set(unsigned char*)
+void zen::bBoardColourAnimData::set(u8*)
 {
 	/*
 	.loc_0x0:
@@ -84,7 +84,7 @@ void zen::bBoardColourAnimData::set(unsigned char*)
  * Address:	801A1EAC
  * Size:	0003C0
  */
-void zen::bBoardColourAnim::update(float, Colour*, Colour*)
+void zen::bBoardColourAnim::update(f32, Colour*, Colour*)
 {
 	/*
 	.loc_0x0:

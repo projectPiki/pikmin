@@ -25,7 +25,7 @@ void _Print(char*, ...)
  * Address:	80094B14
  * Size:	000044
  */
-void PelletMgr::getUfoIndexFromID(unsigned long)
+void PelletMgr::getUfoIndexFromID(u32)
 {
 	/*
 	.loc_0x0:
@@ -359,7 +359,7 @@ void PelletConfig::read(RandomAccessStream&)
  * Address:	80094F74
  * Size:	0001C8
  */
-void PelletView::becomePellet(unsigned long, Vector3f&, float)
+void PelletView::becomePellet(u32, Vector3f&, f32)
 {
 	/*
 	.loc_0x0:
@@ -667,7 +667,7 @@ Pellet::Pellet()
  * Address:	800953AC
  * Size:	00003C
  */
-void Pellet::isUfoPartsID(unsigned long)
+void Pellet::isUfoPartsID(u32)
 {
 	/*
 	.loc_0x0:
@@ -1481,7 +1481,7 @@ void AState<Pellet>::cleanup(Pellet*) { }
  * Address:	80095C3C
  * Size:	00016C
  */
-void Pellet::doCarry(Creature*, Vector3f&, unsigned short)
+void Pellet::doCarry(Creature*, Vector3f&, u16)
 {
 	/*
 	.loc_0x0:
@@ -1820,7 +1820,7 @@ void Pellet::getiMass()
  * Address:	80095FB0
  * Size:	0000E4
  */
-void Pellet::startStickTeki(Creature*, float)
+void Pellet::startStickTeki(Creature*, f32)
 {
 	/*
 	.loc_0x0:
@@ -2379,7 +2379,7 @@ void Pellet::getRandomFreeSlotIndex()
  * Address:	80096604
  * Size:	0001A0
  */
-void Pellet::getSlotLocalPos(int, float)
+void Pellet::getSlotLocalPos(int, f32)
 {
 	/*
 	.loc_0x0:
@@ -2511,7 +2511,7 @@ void Pellet::getSlotLocalPos(int, float)
  * Address:	800967A4
  * Size:	000078
  */
-void Pellet::getSlotGlobalPos(int, float)
+void Pellet::getSlotGlobalPos(int, f32)
 {
 	/*
 	.loc_0x0:
@@ -2732,7 +2732,7 @@ void Pellet::initPellet(PelletView*, PelletConfig*)
  * Address:	800969A8
  * Size:	000044
  */
-void Pellet::startCarryMotion(float)
+void Pellet::startCarryMotion(f32)
 {
 	/*
 	.loc_0x0:
@@ -2763,7 +2763,7 @@ void Pellet::startCarryMotion(float)
  * Address:	800969EC
  * Size:	000004
  */
-void PelletView::viewStartTrembleMotion(float) { }
+void PelletView::viewStartTrembleMotion(f32) { }
 
 /*
  * --INFO--
@@ -2780,7 +2780,7 @@ void Pellet::stopMotion()
  * Address:	800969F0
  * Size:	000004
  */
-void PelletView::viewSetMotionSpeed(float) { }
+void PelletView::viewSetMotionSpeed(f32) { }
 
 /*
  * --INFO--
@@ -3584,7 +3584,7 @@ void Pellet::refresh(Graphics&)
  * Address:	80097320
  * Size:	000088
  */
-void Pellet::postUpdate(int, float)
+void Pellet::postUpdate(int, f32)
 {
 	/*
 	.loc_0x0:
@@ -4986,7 +4986,7 @@ void InteractKill::actPellet(Pellet*)
  * Address:	80098478
  * Size:	000058
  */
-void PelletMgr::decomposeNumberPellet(unsigned long, int&, int&)
+void PelletMgr::decomposeNumberPellet(u32, int&, int&)
 {
 	/*
 	.loc_0x0:
@@ -5126,7 +5126,7 @@ void PelletMgr::newNumberPellet(int, int)
  * Address:	800985B0
  * Size:	000154
  */
-void PelletMgr::newPellet(unsigned long, PelletView*)
+void PelletMgr::newPellet(u32, PelletView*)
 {
 	/*
 	.loc_0x0:
@@ -5239,7 +5239,7 @@ void PelletMgr::newPellet(unsigned long, PelletView*)
  * Address:	80098704
  * Size:	000094
  */
-void PelletMgr::getShapeObject(unsigned long)
+void PelletMgr::getShapeObject(u32)
 {
 	/*
 	.loc_0x0:
@@ -5500,7 +5500,7 @@ PelletMgr::PelletMgr(MapMgr*)
  * Address:	80098A40
  * Size:	000058
  */
-void Parm<float>::Parm(Parameters*, float, float, float, ayuID, char*)
+void Parm<f32>::Parm(Parameters*, f32, f32, f32, ayuID, char*)
 {
 	/*
 	.loc_0x0:
@@ -5577,7 +5577,7 @@ MonoObjectMgr::~MonoObjectMgr()
  * Address:	........
  * Size:	000030
  */
-void PelletMgr::useShape(unsigned long)
+void PelletMgr::useShape(u32)
 {
 	// UNUSED FUNCTION
 }
@@ -5587,7 +5587,7 @@ void PelletMgr::useShape(unsigned long)
  * Address:	80098B04
  * Size:	0000F0
  */
-void PelletMgr::addUseList(unsigned long)
+void PelletMgr::addUseList(u32)
 {
 	/*
 	.loc_0x0:
@@ -5704,7 +5704,7 @@ void PelletMgr::initShapeInfos()
  * Address:	80098C48
  * Size:	000040
  */
-void PelletMgr::getConfigIndex(unsigned long)
+void PelletMgr::getConfigIndex(u32)
 {
 	/*
 	.loc_0x0:
@@ -5811,7 +5811,7 @@ void PelletMgr::getConfigIdAt(int)
  * Address:	80098D24
  * Size:	000038
  */
-void PelletMgr::getConfig(unsigned long)
+void PelletMgr::getConfig(u32)
 {
 	/*
 	.loc_0x0:

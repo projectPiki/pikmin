@@ -228,7 +228,7 @@ void Cylinder::get2dDist(Vector3f&)
  * Address:	80086FA0
  * Size:	0003C0
  */
-void Cylinder::collide(const Sphere&, Vector3f&, float&)
+void Cylinder::collide(const Sphere&, Vector3f&, f32&)
 {
 	/*
 	.loc_0x0:
@@ -494,7 +494,7 @@ void Cylinder::collide(const Sphere&, Vector3f&, float&)
  * Address:	80087360
  * Size:	00002C
  */
-void Tube::getYRatio(float)
+void Tube::getYRatio(f32)
 {
 	/*
 	.loc_0x0:
@@ -519,7 +519,7 @@ void Tube::getYRatio(float)
  * Address:	8008738C
  * Size:	00033C
  */
-void Tube::collide(const Sphere&, Vector3f&, float&)
+void Tube::collide(const Sphere&, Vector3f&, f32&)
 {
 	/*
 	.loc_0x0:
@@ -890,7 +890,7 @@ void Tube::getPosRatio(const Vector3f&)
  * Address:	........
  * Size:	000020
  */
-void Tube::getRatioRadius(float)
+void Tube::getRatioRadius(f32)
 {
 	// UNUSED FUNCTION
 }
@@ -900,7 +900,7 @@ void Tube::getRatioRadius(float)
  * Address:	80087890
  * Size:	000238
  */
-void Tube::getPosGradient(Vector3f&, float, Vector3f&, Vector3f&)
+void Tube::getPosGradient(Vector3f&, f32, Vector3f&, Vector3f&)
 {
 	/*
 	.loc_0x0:
@@ -1060,7 +1060,7 @@ void Tube::getPosGradient(Vector3f&, float, Vector3f&, Vector3f&)
  * Address:	80087AC8
  * Size:	0000F8
  */
-void Tube::setPos(float)
+void Tube::setPos(f32)
 {
 	/*
 	.loc_0x0:
@@ -1990,7 +1990,7 @@ void CollPart::collide(Creature*, Vector3f&)
  * Address:	........
  * Size:	000158
  */
-void CollPart::collide(Vector3f&, float, Vector3f&)
+void CollPart::collide(Vector3f&, f32, Vector3f&)
 {
 	// UNUSED FUNCTION
 }
@@ -2694,7 +2694,7 @@ void CollInfo::disableStick()
  * Address:	........
  * Size:	000048
  */
-void CollInfo::startUpdate(unsigned long)
+void CollInfo::startUpdate(u32)
 {
 	// UNUSED FUNCTION
 }
@@ -2714,7 +2714,7 @@ void CollInfo::startUpdateRec(int)
  * Address:	........
  * Size:	000048
  */
-void CollInfo::stopUpdate(unsigned long)
+void CollInfo::stopUpdate(u32)
 {
 	// UNUSED FUNCTION
 }
@@ -2734,7 +2734,7 @@ void CollInfo::stopUpdateRec(int)
  * Address:	80088D38
  * Size:	0001C0
  */
-void CollInfo::checkCollisionSpecial(Vector3f&, float, CndCollPart*)
+void CollInfo::checkCollisionSpecial(Vector3f&, f32, CndCollPart*)
 {
 	/*
 	.loc_0x0:
@@ -2881,7 +2881,7 @@ u32 CndCollPart::satisfy(CollPart*) { return 0x0; }
  * Address:	........
  * Size:	000008
  */
-void CollInfo::checkCollisionSpecialRec(int, Vector3f&, float, CndCollPart*)
+void CollInfo::checkCollisionSpecialRec(int, Vector3f&, f32, CndCollPart*)
 {
 	// UNUSED FUNCTION
 }
@@ -3370,7 +3370,7 @@ void CollInfo::checkCollisionRec(Creature*, int, Vector3f&)
  * Address:	8008954C
  * Size:	000028
  */
-void Vector3f::div(float)
+void Vector3f::div(f32)
 {
 	/*
 	.loc_0x0:
@@ -3545,7 +3545,7 @@ void CollInfo::getBoundingSphere()
  * Address:	80089710
  * Size:	000060
  */
-void CollInfo::getSphere(unsigned long)
+void CollInfo::getSphere(u32)
 {
 	/*
 	.loc_0x0:
@@ -3585,7 +3585,7 @@ void CollInfo::getSphere(unsigned long)
  * Address:	80089770
  * Size:	00017C
  */
-void CollInfo::getNearestCollPart(Vector3f&, unsigned long)
+void CollInfo::getNearestCollPart(Vector3f&, u32)
 {
 	/*
 	.loc_0x0:
@@ -3700,7 +3700,7 @@ void CollInfo::getNearestCollPart(Vector3f&, unsigned long)
  * Address:	800898EC
  * Size:	000130
  */
-void CollInfo::getRandomCollPart(unsigned long)
+void CollInfo::getRandomCollPart(u32)
 {
 	/*
 	.loc_0x0:
@@ -3934,7 +3934,7 @@ void CollInfo::hasInfo()
  * Address:	80089B64
  * Size:	0000A4
  */
-void CollInfo::initInfo(Shape*, CollPart*, unsigned long*)
+void CollInfo::initInfo(Shape*, CollPart*, u32*)
 {
 	/*
 	.loc_0x0:
@@ -4003,7 +4003,7 @@ void CollInfo::dumpInfo()
  * Address:	........
  * Size:	0000B0
  */
-void CollInfo::makeTubes(unsigned long, int)
+void CollInfo::makeTubes(u32, int)
 {
 	// UNUSED FUNCTION
 }
@@ -4013,7 +4013,7 @@ void CollInfo::makeTubes(unsigned long, int)
  * Address:	80089C08
  * Size:	0000B0
  */
-void CollInfo::makeTubesChild(unsigned long, int)
+void CollInfo::makeTubesChild(u32, int)
 {
 	/*
 	.loc_0x0:
@@ -4081,7 +4081,7 @@ void CollInfo::makeTubesChild(unsigned long, int)
  * Address:	80089CB8
  * Size:	000078
  */
-void CollInfo::setUpdater(unsigned long, CollPartUpdater*)
+void CollInfo::setUpdater(u32, CollPartUpdater*)
 {
 	/*
 	.loc_0x0:
@@ -4272,7 +4272,7 @@ void CollInfo::createPart(ObjCollInfo*, int, bool)
  * Address:	80089EEC
  * Size:	000044
  */
-void CollInfo::getId2Index(unsigned long)
+void CollInfo::getId2Index(u32)
 {
 	/*
 	.loc_0x0:

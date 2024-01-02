@@ -197,7 +197,7 @@ void P2DWindow::loadResource()
  * Address:	801B39D8
  * Size:	000258
  */
-P2DWindow::P2DWindow(P2DPane*, RandomAccessStream*, unsigned short)
+P2DWindow::P2DWindow(P2DPane*, RandomAccessStream*, u16)
 {
 	/*
 	.loc_0x0:
@@ -843,7 +843,7 @@ void P2DWindow::drawContents(const PUTRect&)
  * Address:	801B4250
  * Size:	000100
  */
-void P2DWindow::P2DWindowTexture::draw(int, int, int, int, unsigned short, unsigned short, unsigned short, unsigned short)
+void P2DWindow::P2DWindowTexture::draw(int, int, int, int, u16, u16, u16, u16)
 {
 	/*
 	.loc_0x0:

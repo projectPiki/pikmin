@@ -45,7 +45,7 @@ void PVWLightingInfo::read(RandomAccessStream&)
  * Address:	80025914
  * Size:	000120
  */
-void PVWPolygonColourInfo::animate(float*, Colour&)
+void PVWPolygonColourInfo::animate(f32*, Colour&)
 {
 	/*
 	.loc_0x0:
@@ -141,7 +141,7 @@ void PVWPolygonColourInfo::animate(float*, Colour&)
  * Address:	........
  * Size:	0000A0
  */
-void subExtract(float, AKeyInfo&, AKeyInfo&)
+void subExtract(f32, AKeyInfo&, AKeyInfo&)
 {
 	// UNUSED FUNCTION
 }
@@ -151,7 +151,7 @@ void subExtract(float, AKeyInfo&, AKeyInfo&)
  * Address:	80025A34
  * Size:	000498
  */
-void PVWColourAnimInfo::extract(float, Colour&)
+void PVWColourAnimInfo::extract(f32, Colour&)
 {
 	/*
 	.loc_0x0:
@@ -485,7 +485,7 @@ void PVWColourAnimInfo::extract(float, Colour&)
  * Address:	80025ECC
  * Size:	0001F8
  */
-void PVWAlphaAnimInfo::extract(float, Colour&)
+void PVWAlphaAnimInfo::extract(f32, Colour&)
 {
 	/*
 	.loc_0x0:
@@ -639,7 +639,7 @@ void PVWAlphaAnimInfo::extract(float, Colour&)
  * Address:	800260C4
  * Size:	0004A0
  */
-void PVWColourShortAnimInfo::extract(float, ShortColour&)
+void PVWColourShortAnimInfo::extract(f32, ShortColour&)
 {
 	/*
 	.loc_0x0:
@@ -975,7 +975,7 @@ void PVWColourShortAnimInfo::extract(float, ShortColour&)
  * Address:	80026564
  * Size:	000208
  */
-void PVWAlphaShortAnimInfo::extract(float, ShortColour&)
+void PVWAlphaShortAnimInfo::extract(f32, ShortColour&)
 {
 	/*
 	.loc_0x0:
@@ -1133,7 +1133,7 @@ void PVWAlphaShortAnimInfo::extract(float, ShortColour&)
  * Address:	8002676C
  * Size:	0003B0
  */
-void PVWTexAnimInfo::extract(float, Vector3f&)
+void PVWTexAnimInfo::extract(f32, Vector3f&)
 {
 	/*
 	.loc_0x0:
@@ -1393,7 +1393,7 @@ void PVWTexAnimInfo::extract(float, Vector3f&)
  * Address:	80026B1C
  * Size:	0002F8
  */
-void PVWTextureData::animate(float*, Matrix4f&)
+void PVWTextureData::animate(f32*, Matrix4f&)
 {
 	/*
 	.loc_0x0:
@@ -2176,7 +2176,7 @@ PVWTextureData::PVWTextureData()
  * Address:	800275B8
  * Size:	000120
  */
-void PVWTevColReg::animate(float*, ShortColour&)
+void PVWTevColReg::animate(f32*, ShortColour&)
 {
 	/*
 	.loc_0x0:
@@ -2303,7 +2303,7 @@ void Material::attach()
  * Address:	8002772C
  * Size:	000004
  */
-void Graphics::useDList(unsigned long) { }
+void Graphics::useDList(u32) { }
 
 /*
  * --INFO--
@@ -2993,7 +2993,7 @@ void Font::charToIndex(char)
  * Address:	80027FC0
  * Size:	000098
  */
-void searchKanjiCode(unsigned short)
+void searchKanjiCode(u16)
 {
 	/*
 	.loc_0x0:
@@ -3051,7 +3051,7 @@ void searchKanjiCode(unsigned short)
  * Address:	80028058
  * Size:	0000DC
  */
-void Font::charToIndex(unsigned short)
+void Font::charToIndex(u16)
 {
 	/*
 	.loc_0x0:
@@ -3214,7 +3214,7 @@ void Font::stringWidth(char*)
  * Address:	........
  * Size:	0003A0
  */
-void GfxInfo::createCollData(Vector3f*, float)
+void GfxInfo::createCollData(Vector3f*, f32)
 {
 	// UNUSED FUNCTION
 }
@@ -3734,7 +3734,7 @@ void Graphics::flushCachedShapes()
  * Address:	........
  * Size:	000018
  */
-void TexImg::convFormat(unsigned long)
+void TexImg::convFormat(u32)
 {
 	// UNUSED FUNCTION
 }
@@ -3744,7 +3744,7 @@ void TexImg::convFormat(unsigned long)
  * Address:	........
  * Size:	000018
  */
-void TexImg::formatName(unsigned long)
+void TexImg::formatName(u32)
 {
 	// UNUSED FUNCTION
 }
@@ -3905,7 +3905,7 @@ void TexImg::read(RandomAccessStream&)
  * Address:	80028938
  * Size:	000058
  */
-void TexImg::getTileSize(int, unsigned long&, unsigned long&)
+void TexImg::getTileSize(int, u32&, u32&)
 {
 	/*
 	.loc_0x0:
@@ -3947,7 +3947,7 @@ void TexImg::getTileSize(int, unsigned long&, unsigned long&)
  * Address:	........
  * Size:	00014C
  */
-void TexImg::readTexData(Texture*, RandomAccessStream&, unsigned char*)
+void TexImg::readTexData(Texture*, RandomAccessStream&, u8*)
 {
 	// UNUSED FUNCTION
 }
@@ -3967,7 +3967,7 @@ void TexImg::dumpBti(Texture*, char*, RandomAccessStream&, RandomAccessStream&)
  * Address:	80028990
  * Size:	0003EC
  */
-void TexImg::importBti(Texture*, RandomAccessStream&, unsigned char*)
+void TexImg::importBti(Texture*, RandomAccessStream&, u8*)
 {
 	/*
 	.loc_0x0:
@@ -4582,7 +4582,7 @@ void TexAttr::read(RandomAccessStream&)
  * Address:	800291B4
  * Size:	0002BC
  */
-void Graphics::drawCylinder(Vector3f&, Vector3f&, float, Matrix4f&)
+void Graphics::drawCylinder(Vector3f&, Vector3f&, f32, Matrix4f&)
 {
 	/*
 	.loc_0x0:
@@ -4775,7 +4775,7 @@ void Graphics::drawCylinder(Vector3f&, Vector3f&, float, Matrix4f&)
  * Address:	........
  * Size:	0001E8
  */
-void Graphics::drawCircle(Vector3f&, float, Matrix4f&)
+void Graphics::drawCircle(Vector3f&, f32, Matrix4f&)
 {
 	// UNUSED FUNCTION
 }
@@ -4785,7 +4785,7 @@ void Graphics::drawCircle(Vector3f&, float, Matrix4f&)
  * Address:	80029470
  * Size:	0001FC
  */
-void Graphics::drawSphere(Vector3f&, float, Matrix4f&)
+void Graphics::drawSphere(Vector3f&, f32, Matrix4f&)
 {
 	/*
 	.loc_0x0:
@@ -5038,7 +5038,7 @@ void Graphics::perspPrintf(Font*, Vector3f&, int, int, char*, ...)
  * Address:	800297DC
  * Size:	000114
  */
-void Graphics::calcLighting(float)
+void Graphics::calcLighting(f32)
 {
 	/*
 	.loc_0x0:
@@ -5136,7 +5136,7 @@ void Graphics::setAmbient() { }
  * Address:	........
  * Size:	0001D0
  */
-void Graphics::calcSphereLighting(Vector3f&, float)
+void Graphics::calcSphereLighting(Vector3f&, f32)
 {
 	// UNUSED FUNCTION
 }
@@ -5210,14 +5210,14 @@ void Graphics::videoReset() { }
  * Address:	80029974
  * Size:	000004
  */
-void Graphics::setVerticalFilter(unsigned char*) { }
+void Graphics::setVerticalFilter(u8*) { }
 
 /*
  * --INFO--
  * Address:	80029978
  * Size:	000004
  */
-void Graphics::getVerticalFilter(unsigned char*) { }
+void Graphics::getVerticalFilter(u8*) { }
 
 /*
  * --INFO--
@@ -5249,7 +5249,7 @@ void Graphics::setLightcam(LightCamera* a1)
  * Address:	80029994
  * Size:	000004
  */
-void Graphics::setBlendMode(unsigned char, unsigned char, unsigned char) { }
+void Graphics::setBlendMode(u8, u8, u8) { }
 
 /*
  * --INFO--

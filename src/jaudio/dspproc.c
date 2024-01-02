@@ -1,11 +1,11 @@
-
+#include "types.h"
 
 /*
  * --INFO--
  * Address:	800086C0
  * Size:	0000A8
  */
-void DSPSendCommands(unsigned long*, unsigned long)
+void DSPSendCommands(u32*, u32)
 {
 	/*
 	.loc_0x0:
@@ -143,7 +143,7 @@ void DSPWaitFinish()
  * Address:	........
  * Size:	000040
  */
-void Dswap(unsigned long, unsigned long, unsigned long)
+void Dswap(u32, u32, u32)
 {
 	// UNUSED FUNCTION
 }
@@ -153,7 +153,7 @@ void Dswap(unsigned long, unsigned long, unsigned long)
  * Address:	........
  * Size:	000048
  */
-void Dmix(unsigned long, unsigned long, unsigned long, short)
+void Dmix(u32, u32, u32, s16)
 {
 	// UNUSED FUNCTION
 }
@@ -163,7 +163,7 @@ void Dmix(unsigned long, unsigned long, unsigned long, short)
  * Address:	........
  * Size:	000040
  */
-void Dcopy(unsigned long, unsigned long, unsigned long)
+void Dcopy(u32, u32, u32)
 {
 	// UNUSED FUNCTION
 }
@@ -173,7 +173,7 @@ void Dcopy(unsigned long, unsigned long, unsigned long)
  * Address:	........
  * Size:	000044
  */
-void DloadBuffer1(unsigned long, unsigned long)
+void DloadBuffer1(u32, u32)
 {
 	// UNUSED FUNCTION
 }
@@ -183,7 +183,7 @@ void DloadBuffer1(unsigned long, unsigned long)
  * Address:	........
  * Size:	000040
  */
-void DloadBuffer(unsigned long, unsigned long, unsigned long)
+void DloadBuffer(u32, u32, u32)
 {
 	// UNUSED FUNCTION
 }
@@ -193,7 +193,7 @@ void DloadBuffer(unsigned long, unsigned long, unsigned long)
  * Address:	........
  * Size:	000044
  */
-void DsaveBuffer(unsigned short, unsigned long, unsigned long)
+void DsaveBuffer(u16, u32, u32)
 {
 	// UNUSED FUNCTION
 }
@@ -203,7 +203,7 @@ void DsaveBuffer(unsigned short, unsigned long, unsigned long)
  * Address:	........
  * Size:	000038
  */
-void DsetLoopState(unsigned long)
+void DsetLoopState(u32)
 {
 	// UNUSED FUNCTION
 }
@@ -213,7 +213,7 @@ void DsetLoopState(unsigned long)
  * Address:	........
  * Size:	00004C
  */
-void DadpcmDec(unsigned long, unsigned long, unsigned long, unsigned long)
+void DadpcmDec(u32, u32, u32, u32)
 {
 	// UNUSED FUNCTION
 }
@@ -223,7 +223,7 @@ void DadpcmDec(unsigned long, unsigned long, unsigned long, unsigned long)
  * Address:	........
  * Size:	00003C
  */
-void DloadFilter(unsigned long, unsigned long)
+void DloadFilter(u32, u32)
 {
 	// UNUSED FUNCTION
 }
@@ -233,7 +233,7 @@ void DloadFilter(unsigned long, unsigned long)
  * Address:	........
  * Size:	000040
  */
-void DcopyfromARAM(unsigned long, unsigned long, unsigned long)
+void DcopyfromARAM(u32, u32, u32)
 {
 	// UNUSED FUNCTION
 }
@@ -243,7 +243,7 @@ void DcopyfromARAM(unsigned long, unsigned long, unsigned long)
  * Address:	........
  * Size:	000044
  */
-void DoscStart(unsigned char, unsigned short, unsigned short)
+void DoscStart(u8, u16, u16)
 {
 	// UNUSED FUNCTION
 }
@@ -253,7 +253,7 @@ void DoscStart(unsigned char, unsigned short, unsigned short)
  * Address:	........
  * Size:	00003C
  */
-void DoscStop(unsigned char)
+void DoscStop(u8)
 {
 	// UNUSED FUNCTION
 }
@@ -263,7 +263,7 @@ void DoscStop(unsigned char)
  * Address:	........
  * Size:	000038
  */
-void DoscStore(unsigned long)
+void DoscStore(u32)
 {
 	// UNUSED FUNCTION
 }
@@ -273,7 +273,7 @@ void DoscStore(unsigned long)
  * Address:	........
  * Size:	00003C
  */
-void Dmixer(unsigned long, unsigned long)
+void Dmixer(u32, u32)
 {
 	// UNUSED FUNCTION
 }
@@ -293,7 +293,7 @@ void Dresampletest()
  * Address:	........
  * Size:	000038
  */
-void Dadpcmtest(unsigned long)
+void Dadpcmtest(u32)
 {
 	// UNUSED FUNCTION
 }
@@ -303,7 +303,7 @@ void Dadpcmtest(unsigned long)
  * Address:	80008840
  * Size:	000048
  */
-void DsetupTable(unsigned long, unsigned long, unsigned long, unsigned long, unsigned long)
+void DsetupTable(u32, u32, u32, u32, u32)
 {
 	/*
 	.loc_0x0:
@@ -333,7 +333,7 @@ void DsetupTable(unsigned long, unsigned long, unsigned long, unsigned long, uns
  * Address:	800088A0
  * Size:	000024
  */
-void DsetMixerLevel(float)
+void DsetMixerLevel(f32)
 {
 	/*
 	.loc_0x0:
@@ -354,7 +354,7 @@ void DsetMixerLevel(float)
  * Address:	800088E0
  * Size:	000048
  */
-void DsyncFrame(unsigned long, unsigned long, unsigned long)
+void DsyncFrame(u32, u32, u32)
 {
 	/*
 	.loc_0x0:
@@ -409,7 +409,7 @@ void DwaitFrame()
  * Address:	80008980
  * Size:	00003C
  */
-void DiplSec(unsigned long)
+void DiplSec(u32)
 {
 	/*
 	.loc_0x0:
@@ -436,7 +436,7 @@ void DiplSec(unsigned long)
  * Address:	800089C0
  * Size:	00003C
  */
-void DagbSec(unsigned long)
+void DagbSec(u32)
 {
 	/*
 	.loc_0x0:

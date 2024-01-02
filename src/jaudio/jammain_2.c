@@ -46,7 +46,7 @@ void Jam_OfsToAddr(void)
  * Address:	8000F460
  * Size:	000054
  */
-void __ByteReadOfs(seqp_*, unsigned long)
+void __ByteReadOfs(seqp_*, u32)
 {
 	/*
 	.loc_0x0:
@@ -87,7 +87,7 @@ void __ByteReadOfs(seqp_*, unsigned long)
  * Address:	8000F4C0
  * Size:	000050
  */
-void __WordReadOfs(seqp_*, unsigned long)
+void __WordReadOfs(seqp_*, u32)
 {
 	/*
 	.loc_0x0:
@@ -119,7 +119,7 @@ void __WordReadOfs(seqp_*, unsigned long)
  * Address:	8000F520
  * Size:	000068
  */
-void __24ReadOfs(seqp_*, unsigned long)
+void __24ReadOfs(seqp_*, u32)
 {
 	/*
 	.loc_0x0:
@@ -157,7 +157,7 @@ void __24ReadOfs(seqp_*, unsigned long)
  * Address:	8000F5A0
  * Size:	000050
  */
-void __LongReadOfs(seqp_*, unsigned long)
+void __LongReadOfs(seqp_*, u32)
 {
 	/*
 	.loc_0x0:
@@ -312,7 +312,7 @@ void __32Read(seqp_*)
  * Address:	8000F740
  * Size:	0000D0
  */
-void __ConditionCheck(seqp_*, unsigned char)
+void __ConditionCheck(seqp_*, u8)
 {
 	/*
 	.loc_0x0:
@@ -392,7 +392,7 @@ void __ConditionCheck(seqp_*, unsigned char)
  * Address:	8000F820
  * Size:	000090
  */
-void Jam_SEQtimeToDSPtime(seqp_*, long, unsigned char)
+void Jam_SEQtimeToDSPtime(seqp_*, s32, u8)
 {
 	/*
 	.loc_0x0:
@@ -444,7 +444,7 @@ void Jam_SEQtimeToDSPtime(seqp_*, long, unsigned char)
  * Address:	8000F8C0
  * Size:	000020
  */
-void Extend8to16(unsigned char)
+void Extend8to16(u8)
 {
 	/*
 	.loc_0x0:
@@ -466,7 +466,7 @@ void Extend8to16(unsigned char)
  * Address:	8000F8E0
  * Size:	0001A8
  */
-void Jam_WriteTimeParam(seqp_*, unsigned char)
+void Jam_WriteTimeParam(seqp_*, u8)
 {
 	/*
 	.loc_0x0:
@@ -671,7 +671,7 @@ void Jam_WriteRegDirect(void)
  * Address:	8000FB60
  * Size:	000098
  */
-void LoadTbl(seqp_*, unsigned long, unsigned long, unsigned long)
+void LoadTbl(seqp_*, u32, u32, u32)
 {
 	/*
 	.loc_0x0:
@@ -1344,7 +1344,7 @@ void Jam_WriteRegXY(void)
  * Address:	80010340
  * Size:	00003C
  */
-void __ExchangeRegisterValue(seqp_*, unsigned char)
+void __ExchangeRegisterValue(seqp_*, u8)
 {
 	/*
 	.loc_0x0:
@@ -1636,7 +1636,7 @@ void Jam_InitRegistTrack(void)
  * Address:	80010500
  * Size:	0000A8
  */
-void Jam_RegistTrack(seqp_*, unsigned long)
+void Jam_RegistTrack(seqp_*, u32)
 {
 	/*
 	.loc_0x0:
@@ -2261,7 +2261,7 @@ void Jam_SetTrackExtPanPower(void)
  * Address:	80010A80
  * Size:	00004C
  */
-void __PanCalc(float, float, float, unsigned char)
+void __PanCalc(f32, f32, f32, u8)
 {
 	/*
 	.loc_0x0:
@@ -5261,7 +5261,7 @@ void Cmd_Printf()
  * Address:	80012CC0
  * Size:	000130
  */
-void Cmd_Process(seqp_*, unsigned char, unsigned short)
+void Cmd_Process(seqp_*, u8, u16)
 {
 	/*
 	.loc_0x0:
@@ -5369,7 +5369,7 @@ void Cmd_Process(seqp_*, unsigned char, unsigned short)
  * Address:	80012E00
  * Size:	0000A8
  */
-void RegCmd_Process(seqp_*, int, unsigned long)
+void RegCmd_Process(seqp_*, int, u32)
 {
 	/*
 	.loc_0x0:

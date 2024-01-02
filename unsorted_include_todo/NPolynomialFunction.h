@@ -7,15 +7,14 @@
  * .4byte 0
  * .4byte getValue__19NPolynomialFunctionFf
  * .4byte println__19NPolynomialFunctionFv
-*/
+ */
 
 /**
  * @brief TODO
  */
 struct NPolynomialFunction {
-	virtual void getValue(float);  // _08
-	virtual void println();        // _0C
-
+	virtual void getValue(f32); // _08
+	virtual void println();     // _0C
 };
 
 #endif

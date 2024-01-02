@@ -655,7 +655,7 @@ void Creature::endStickMouth()
  * Address:	8009005C
  * Size:	000310
  */
-void Creature::startStickObjectSphere(Creature*, CollPart*, float)
+void Creature::startStickObjectSphere(Creature*, CollPart*, f32)
 {
 	/*
 	.loc_0x0:
@@ -1110,7 +1110,7 @@ void Creature::startStickObjectTube(Creature*, CollPart*)
  * Address:	........
  * Size:	00009C
  */
-void Creature::startStickObjectPellet(Pellet*, int, float)
+void Creature::startStickObjectPellet(Pellet*, int, f32)
 {
 	// UNUSED FUNCTION
 }
@@ -1120,7 +1120,7 @@ void Creature::startStickObjectPellet(Pellet*, int, float)
  * Address:	800906B8
  * Size:	0001C0
  */
-void Creature::startStickObject(Creature*, CollPart*, int, float)
+void Creature::startStickObject(Creature*, CollPart*, int, f32)
 {
 	/*
 	.loc_0x0:
@@ -1482,7 +1482,7 @@ void Creature::endStick()
  * Address:	80090AC8
  * Size:	000124
  */
-void Creature::startRope(RopeCreature*, float)
+void Creature::startRope(RopeCreature*, f32)
 {
 	/*
 	.loc_0x0:

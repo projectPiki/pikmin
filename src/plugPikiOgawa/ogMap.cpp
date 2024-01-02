@@ -25,7 +25,7 @@ void _Print(char*, ...)
  * Address:	80182DE0
  * Size:	0000D4
  */
-void zen::ogScrMapMgr::start(short)
+void zen::ogScrMapMgr::start(s16)
 {
 	/*
 	.loc_0x0:
@@ -436,7 +436,7 @@ void zen::ogScrMapMgr::update(Controller*)
  * Address:	8018331C
  * Size:	000060
  */
-void std::fmodf(float, float)
+void std::fmodf(f32, f32)
 {
 	/*
 	.loc_0x0:

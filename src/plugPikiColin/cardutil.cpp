@@ -95,7 +95,7 @@ void CardUtilSectorSize()
  * Address:	8004C93C
  * Size:	000104
  */
-void DoMount(long, void*)
+void DoMount(s32, void*)
 {
 	/*
 	.loc_0x0:
@@ -186,7 +186,7 @@ void DoMount(long, void*)
  * Address:	........
  * Size:	000064
  */
-void DoUnmount(long)
+void DoUnmount(s32)
 {
 	// UNUSED FUNCTION
 }
@@ -196,7 +196,7 @@ void DoUnmount(long)
  * Address:	........
  * Size:	000088
  */
-void DoFormat(long)
+void DoFormat(s32)
 {
 	// UNUSED FUNCTION
 }
@@ -206,7 +206,7 @@ void DoFormat(long)
  * Address:	8004CA40
  * Size:	0000FC
  */
-void DoErase(long, long)
+void DoErase(s32, s32)
 {
 	/*
 	.loc_0x0:
@@ -293,7 +293,7 @@ void DoErase(long, long)
  * Address:	8004CB3C
  * Size:	0005CC
  */
-void DoList(long, CardUtilDirent*)
+void DoList(s32, CardUtilDirent*)
 {
 	/*
 	.loc_0x0:
@@ -724,7 +724,7 @@ void DoList(long, CardUtilDirent*)
  * Address:	........
  * Size:	0000A0
  */
-void DoOpen(long, long, void*)
+void DoOpen(s32, s32, void*)
 {
 	// UNUSED FUNCTION
 }
@@ -734,7 +734,7 @@ void DoOpen(long, long, void*)
  * Address:	........
  * Size:	00008C
  */
-void DoWrite(long, long, void*, unsigned long, unsigned long)
+void DoWrite(s32, s32, void*, u32, u32)
 {
 	// UNUSED FUNCTION
 }
@@ -744,7 +744,7 @@ void DoWrite(long, long, void*, unsigned long, unsigned long)
  * Address:	8004D108
  * Size:	0005AC
  */
-void DoSave(long, CARDStat*, void*)
+void DoSave(s32, CARDStat*, void*)
 {
 	/*
 	.loc_0x0:
@@ -1173,7 +1173,7 @@ void DoSave(long, CARDStat*, void*)
  * Address:	8004D6B4
  * Size:	0000B0
  */
-void CardUtilCommand(long, long, long, void*, unsigned long, unsigned long)
+void CardUtilCommand(s32, s32, s32, void*, u32, u32)
 {
 	/*
 	.loc_0x0:
@@ -1251,7 +1251,7 @@ void CardUtilResultCode()
  * Address:	8004D774
  * Size:	000034
  */
-void CardUtilMount(long, void*)
+void CardUtilMount(s32, void*)
 {
 	/*
 	.loc_0x0:
@@ -1276,7 +1276,7 @@ void CardUtilMount(long, void*)
  * Address:	8004D7A8
  * Size:	000034
  */
-void CardUtilUnmount(long)
+void CardUtilUnmount(s32)
 {
 	/*
 	.loc_0x0:
@@ -1301,7 +1301,7 @@ void CardUtilUnmount(long)
  * Address:	........
  * Size:	000034
  */
-void CardUtilList(long, CardUtilDirent*)
+void CardUtilList(s32, CardUtilDirent*)
 {
 	// UNUSED FUNCTION
 }
@@ -1311,7 +1311,7 @@ void CardUtilList(long, CardUtilDirent*)
  * Address:	........
  * Size:	000034
  */
-void CardUtilFormat(long)
+void CardUtilFormat(s32)
 {
 	// UNUSED FUNCTION
 }
@@ -1372,7 +1372,7 @@ void CardUtilIdleWhileBusy()
  * Address:	8004D838
  * Size:	000034
  */
-void CardUtilErase(long, long)
+void CardUtilErase(s32, s32)
 {
 	/*
 	.loc_0x0:
@@ -1397,7 +1397,7 @@ void CardUtilErase(long, long)
  * Address:	8004D86C
  * Size:	000034
  */
-void CardUtilOpen(long, long, void*)
+void CardUtilOpen(s32, s32, void*)
 {
 	/*
 	.loc_0x0:
@@ -1422,7 +1422,7 @@ void CardUtilOpen(long, long, void*)
  * Address:	8004D8A0
  * Size:	000034
  */
-void CardUtilSave(long, CARDStat*, void*)
+void CardUtilSave(s32, CARDStat*, void*)
 {
 	/*
 	.loc_0x0:
@@ -1447,7 +1447,7 @@ void CardUtilSave(long, CARDStat*, void*)
  * Address:	8004D8D4
  * Size:	00003C
  */
-void CardUtilWrite(long, long, void*, unsigned long, unsigned long)
+void CardUtilWrite(s32, s32, void*, u32, u32)
 {
 	/*
 	.loc_0x0:
@@ -1661,7 +1661,7 @@ void CardUtilMain(void*)
  * Address:	8004DB6C
  * Size:	000094
  */
-void CardUtilInit(void*, unsigned long, long)
+void CardUtilInit(void*, u32, s32)
 {
 	/*
 	.loc_0x0:
@@ -1710,7 +1710,7 @@ void CardUtilInit(void*, unsigned long, long)
  * Address:	........
  * Size:	000238
  */
-void CardUtilDrawIcon(int, int, int, void*, void*, unsigned short, unsigned short, int)
+void CardUtilDrawIcon(int, int, int, void*, void*, u16, u16, int)
 {
 	// UNUSED FUNCTION
 }
@@ -1730,7 +1730,7 @@ void CardUtilDrawAnimatedIcon(CardUtilDirent*, int, int, int)
  * Address:	........
  * Size:	000050
  */
-void CardUtilGetProgress(long)
+void CardUtilGetProgress(s32)
 {
 	// UNUSED FUNCTION
 }

@@ -33,71 +33,70 @@
  * .4byte applyGroundForces__9RigidBodyFiP9CollGroup
  * .4byte touchCallback__10DynObjBodyFR5PlaneR8Vector3fR8Vector3f
  * .4byte applyVelocity__10DynObjBodyFR5PlaneR8Vector3fR8Vector3f
-*/
+ */
 
 struct ANode {
-	virtual void getAgeNodeType();  // _08 (weak)
+	virtual void getAgeNodeType(); // _08 (weak)
 };
 
 struct CoreNode {
-	virtual void _08() = 0;                   // _08
-	virtual void read(RandomAccessStream &);  // _0C (weak)
+	virtual void _08() = 0;                 // _08
+	virtual void read(RandomAccessStream&); // _0C (weak)
 };
 
 struct Node {
-	virtual void _08() = 0;           // _08
-	virtual void _0C() = 0;           // _0C
-	virtual void update();            // _10
-	virtual void draw(Graphics &);    // _14
-	virtual void render(Graphics &);  // _18
-	virtual void concat();            // _1C (weak)
-	virtual void concat(VQS &);       // _20 (weak)
-	virtual void concat(SRT &);       // _24 (weak)
-	virtual void concat(Matrix4f &);  // _28 (weak)
-	virtual void getModelMatrix();    // _2C (weak)
+	virtual void _08() = 0;         // _08
+	virtual void _0C() = 0;         // _0C
+	virtual void update();          // _10
+	virtual void draw(Graphics&);   // _14
+	virtual void render(Graphics&); // _18
+	virtual void concat();          // _1C (weak)
+	virtual void concat(VQS&);      // _20 (weak)
+	virtual void concat(SRT&);      // _24 (weak)
+	virtual void concat(Matrix4f&); // _28 (weak)
+	virtual void getModelMatrix();  // _2C (weak)
 };
 
 struct RigidBody {
-	virtual void _08() = 0;                                                   // _08
-	virtual void _0C() = 0;                                                   // _0C
-	virtual void _10() = 0;                                                   // _10
-	virtual void _14() = 0;                                                   // _14
-	virtual void render(Graphics &);                                          // _18
-	virtual void _1C() = 0;                                                   // _1C
-	virtual void _20() = 0;                                                   // _20
-	virtual void _24() = 0;                                                   // _24
-	virtual void _28() = 0;                                                   // _28
-	virtual void _2C() = 0;                                                   // _2C
-	virtual void initDimensions(float, float, float);                         // _30
-	virtual void computeForces(int, float);                                   // _34
-	virtual void integrate(int, int, float);                                  // _38
-	virtual void resolveCollisions(int, Collision &);                         // _3C
-	virtual void calculateVertices(int);                                      // _40
-	virtual void initCollisions(int);                                         // _44
-	virtual void checkForCollisions(int, CollState &);                        // _48
-	virtual void updateVecQuats(int, float);                                  // _4C
-	virtual void updateViewInfo(int, int);                                    // _50
-	virtual void applyBodyFriction(int, Vector3f &, Vector3f &, Vector3f &);  // _54
-	virtual void makeBodyQuat(Quat &);                                        // _58
-	virtual void initRender(int);                                             // _5C
-	virtual void shadrender(Graphics &, LightCamera *);                       // _60
-	virtual void getViewScale();                                              // _64
-	virtual void updateCont();                                                // _68
-	virtual void applyGroundForces(int, CollGroup *);                         // _6C
+	virtual void _08() = 0;                                               // _08
+	virtual void _0C() = 0;                                               // _0C
+	virtual void _10() = 0;                                               // _10
+	virtual void _14() = 0;                                               // _14
+	virtual void render(Graphics&);                                       // _18
+	virtual void _1C() = 0;                                               // _1C
+	virtual void _20() = 0;                                               // _20
+	virtual void _24() = 0;                                               // _24
+	virtual void _28() = 0;                                               // _28
+	virtual void _2C() = 0;                                               // _2C
+	virtual void initDimensions(f32, f32, f32);                           // _30
+	virtual void computeForces(int, f32);                                 // _34
+	virtual void integrate(int, int, f32);                                // _38
+	virtual void resolveCollisions(int, Collision&);                      // _3C
+	virtual void calculateVertices(int);                                  // _40
+	virtual void initCollisions(int);                                     // _44
+	virtual void checkForCollisions(int, CollState&);                     // _48
+	virtual void updateVecQuats(int, f32);                                // _4C
+	virtual void updateViewInfo(int, int);                                // _50
+	virtual void applyBodyFriction(int, Vector3f&, Vector3f&, Vector3f&); // _54
+	virtual void makeBodyQuat(Quat&);                                     // _58
+	virtual void initRender(int);                                         // _5C
+	virtual void shadrender(Graphics&, LightCamera*);                     // _60
+	virtual void getViewScale();                                          // _64
+	virtual void updateCont();                                            // _68
+	virtual void applyGroundForces(int, CollGroup*);                      // _6C
 };
 
 /**
  * @brief TODO
  */
 struct DynObjBody : public ANode, public CoreNode, public Node, public RigidBody {
-	virtual void render(Graphics &);                              // _18
-	virtual void initDimensions(float, float, float);             // _30
-	virtual void computeForces(int, float);                       // _34
-	virtual void integrate(int, int, float);                      // _38
-	virtual void initRender(int);                                 // _5C
-	virtual void touchCallback(Plane &, Vector3f &, Vector3f &);  // _70
-	virtual void applyVelocity(Plane &, Vector3f &, Vector3f &);  // _74
-
+	virtual void render(Graphics&);                           // _18
+	virtual void initDimensions(f32, f32, f32);               // _30
+	virtual void computeForces(int, f32);                     // _34
+	virtual void integrate(int, int, f32);                    // _38
+	virtual void initRender(int);                             // _5C
+	virtual void touchCallback(Plane&, Vector3f&, Vector3f&); // _70
+	virtual void applyVelocity(Plane&, Vector3f&, Vector3f&); // _74
 };
 
 #endif

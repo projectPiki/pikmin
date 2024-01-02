@@ -339,7 +339,7 @@ u32 ItemObject::needShadow() { return 0x0; }
  * Address:	800F7C0C
  * Size:	000004
  */
-void ItemObject::postUpdate(int, float) { }
+void ItemObject::postUpdate(int, f32) { }
 
 /*
  * --INFO--

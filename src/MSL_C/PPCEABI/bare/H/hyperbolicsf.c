@@ -1,4 +1,4 @@
-
+#include "types.h"
 
 /*
  * --INFO--
@@ -15,7 +15,7 @@ void tanhf(void)
  * Address:	8021B728
  * Size:	000008
  */
-double fabsf__Ff(float f1) { return __fabs(f1); }
+f64 fabsf__Ff(f32 f1) { return __fabs(f1); }
 
 /*
  * --INFO--

@@ -982,7 +982,7 @@ void PomAi::createPikiHead()
  * Address:	........
  * Size:	00006C
  */
-void PomAi::emitPomOpenEffect(unsigned long)
+void PomAi::emitPomOpenEffect(u32)
 {
 	// UNUSED FUNCTION
 }

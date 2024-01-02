@@ -1,11 +1,11 @@
-
+#include "types.h"
 
 /*
  * --INFO--
  * Address:	80008BE0
  * Size:	000038
  */
-void exnor_1st(unsigned long, unsigned long)
+void exnor_1st(u32, u32)
 {
 	/*
 	.loc_0x0:
@@ -33,7 +33,7 @@ void exnor_1st(unsigned long, unsigned long)
  * Address:	80008C20
  * Size:	000038
  */
-void exnor(unsigned long, unsigned long)
+void exnor(u32, u32)
 {
 	/*
 	.loc_0x0:
@@ -61,7 +61,7 @@ void exnor(unsigned long, unsigned long)
  * Address:	80008C60
  * Size:	00007C
  */
-void bitrev(unsigned long)
+void bitrev(u32)
 {
 	/*
 	.loc_0x0:
@@ -112,7 +112,7 @@ void bitrev(unsigned long)
  * Address:	80008CE0
  * Size:	00017C
  */
-void ReadArrayUnlock(long, unsigned long, void*, long, int)
+void ReadArrayUnlock(s32, u32, void*, s32, int)
 {
 	/*
 	.loc_0x0:

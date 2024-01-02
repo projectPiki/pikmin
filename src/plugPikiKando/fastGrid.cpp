@@ -46,7 +46,7 @@ FastGrid::FastGrid()
  * Address:	800940BC
  * Size:	000078
  */
-void FastGrid::initAIGrid(unsigned char)
+void FastGrid::initAIGrid(u8)
 {
 	/*
 	.loc_0x0:
@@ -365,7 +365,7 @@ void FastGrid::aiCullingLarge(int)
  * Address:	800943F0
  * Size:	000130
  */
-void FastGrid::doCulling(const FastGrid&, float)
+void FastGrid::doCulling(const FastGrid&, f32)
 {
 	/*
 	.loc_0x0:

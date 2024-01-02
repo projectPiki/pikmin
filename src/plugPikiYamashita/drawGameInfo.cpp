@@ -2394,7 +2394,7 @@ void PUTRect::getHeight() const
  * Address:	801B8544
  * Size:	00003C
  */
-void zen::FigureTex<short>::getNumber()
+void zen::FigureTex<s16>::getNumber()
 {
 	/*
 	.loc_0x0:
@@ -2882,7 +2882,7 @@ void zen::DrawGameInfo::lowerDisplayOff()
  * Address:	801B8AC4
  * Size:	00007C
  */
-void zen::DrawGameInfo::upperFrameIn(float, bool)
+void zen::DrawGameInfo::upperFrameIn(f32, bool)
 {
 	/*
 	.loc_0x0:
@@ -2927,7 +2927,7 @@ void zen::DrawGameInfo::upperFrameIn(float, bool)
  * Address:	801B8B40
  * Size:	000080
  */
-void zen::DrawGameInfo::upperFrameOut(float, bool)
+void zen::DrawGameInfo::upperFrameOut(f32, bool)
 {
 	/*
 	.loc_0x0:
@@ -2973,7 +2973,7 @@ void zen::DrawGameInfo::upperFrameOut(float, bool)
  * Address:	801B8BC0
  * Size:	0000B0
  */
-void zen::DrawGameInfo::lowerFrameIn(float, bool)
+void zen::DrawGameInfo::lowerFrameIn(f32, bool)
 {
 	/*
 	.loc_0x0:
@@ -3031,7 +3031,7 @@ void zen::DrawGameInfo::lowerFrameIn(float, bool)
  * Address:	801B8C70
  * Size:	0000B4
  */
-void zen::DrawGameInfo::lowerFrameOut(float, bool)
+void zen::DrawGameInfo::lowerFrameOut(f32, bool)
 {
 	/*
 	.loc_0x0:
@@ -4586,7 +4586,7 @@ void @unnamed @ ::PikiIconCallBack::invoke(P2DPane*)
  * Address:	801B9F00
  * Size:	0001F8
  */
-void zen::NumberPicCallBack<short>::invoke(P2DPane*)
+void zen::NumberPicCallBack<s16>::invoke(P2DPane*)
 {
 	/*
 	.loc_0x0:
@@ -4742,7 +4742,7 @@ void zen::NumberPicCallBack<short>::invoke(P2DPane*)
  * Address:	801BA0F8
  * Size:	00003C
  */
-void zen::FigureTex<short>::getNumber(short&)
+void zen::FigureTex<s16>::getNumber(s16&)
 {
 	/*
 	.loc_0x0:

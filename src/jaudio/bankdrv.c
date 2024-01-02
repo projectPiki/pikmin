@@ -1,11 +1,11 @@
-
+#include "types.h"
 
 /*
  * --INFO--
  * Address:	8000CFC0
  * Size:	000030
  */
-void Bank_InstChange(Bank_*, unsigned long)
+void Bank_InstChange(Bank_*, u32)
 {
 	/*
 	.loc_0x0:
@@ -33,7 +33,7 @@ void Bank_InstChange(Bank_*, unsigned long)
  * Address:	........
  * Size:	000030
  */
-void Bank_VoiceChange(Bank_*, unsigned long)
+void Bank_VoiceChange(Bank_*, u32)
 {
 	// UNUSED FUNCTION
 }
@@ -43,7 +43,7 @@ void Bank_VoiceChange(Bank_*, unsigned long)
  * Address:	8000D000
  * Size:	000030
  */
-void Bank_PercChange(Bank_*, unsigned long)
+void Bank_PercChange(Bank_*, u32)
 {
 	/*
 	.loc_0x0:
@@ -71,7 +71,7 @@ void Bank_PercChange(Bank_*, unsigned long)
  * Address:	8000D040
  * Size:	00005C
  */
-void Bank_GetInstKeymap(Inst_*, unsigned char)
+void Bank_GetInstKeymap(Inst_*, u8)
 {
 	/*
 	.loc_0x0:
@@ -114,7 +114,7 @@ void Bank_GetInstKeymap(Inst_*, unsigned char)
  * Address:	8000D0A0
  * Size:	000090
  */
-void Bank_GetInstVmap(Inst_*, unsigned char, unsigned char)
+void Bank_GetInstVmap(Inst_*, u8, u8)
 {
 	/*
 	.loc_0x0:
@@ -172,7 +172,7 @@ void Bank_GetInstVmap(Inst_*, unsigned char, unsigned char)
  * Address:	8000D140
  * Size:	000068
  */
-void Bank_GetPercVmap(Perc_*, unsigned char, unsigned char)
+void Bank_GetPercVmap(Perc_*, u8, u8)
 {
 	/*
 	.loc_0x0:
@@ -218,7 +218,7 @@ void Bank_GetPercVmap(Perc_*, unsigned char, unsigned char)
  * Address:	........
  * Size:	000010
  */
-void Bank_GetVoiceMap(Voice_*, unsigned short)
+void Bank_GetVoiceMap(Voice_*, u16)
 {
 	// UNUSED FUNCTION
 }
@@ -228,7 +228,7 @@ void Bank_GetVoiceMap(Voice_*, unsigned short)
  * Address:	8000D1C0
  * Size:	000104
  */
-void Bank_SenseToOfs(Sense_*, unsigned char)
+void Bank_SenseToOfs(Sense_*, u8)
 {
 	/*
 	.loc_0x0:

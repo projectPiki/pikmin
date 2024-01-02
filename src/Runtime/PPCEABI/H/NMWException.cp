@@ -1,4 +1,4 @@
-
+#include "types.h"
 
 /*
  * --INFO--
@@ -41,7 +41,7 @@ void __destroy_new_array(void)
   mtlr      r12
   addi      r3, r28, 0
   li        r4, -0x1
-  blrl      
+  blrl
   addi      r29, r29, 0x1
 
 .loc_0x58:
@@ -106,7 +106,7 @@ void __construct_array(void)
   mtlr      r12
   addi      r3, r31, 0
   li        r4, 0x1
-  blrl      
+  blrl
   lwz       r3, 0x2C(r1)
   add       r31, r31, r29
   addi      r0, r3, 0x1
@@ -135,7 +135,7 @@ void __construct_array(void)
   sub       r31, r31, r0
   mtlr      r12
   addi      r3, r31, 0
-  blrl      
+  blrl
   lwz       r3, 0x2C(r1)
   subi      r0, r3, 0x1
   stw       r0, 0x2C(r1)
@@ -195,7 +195,7 @@ void __partial_array_destructor::~__partial_array_destructor()
   sub       r31, r31, r0
   mtlr      r12
   addi      r3, r31, 0
-  blrl      
+  blrl
   lwz       r3, 0x10(r29)
   subi      r0, r3, 0x1
   stw       r0, 0x10(r29)
@@ -262,7 +262,7 @@ void __construct_new_array(void)
   mtlr      r12
   addi      r3, r31, 0
   li        r4, 0x1
-  blrl      
+  blrl
   lwz       r3, 0x2C(r1)
   add       r31, r31, r28
   addi      r0, r3, 0x1
@@ -291,7 +291,7 @@ void __construct_new_array(void)
   sub       r31, r31, r0
   mtlr      r12
   addi      r3, r31, 0
-  blrl      
+  blrl
   lwz       r3, 0x2C(r1)
   subi      r0, r3, 0x1
   stw       r0, 0x2C(r1)

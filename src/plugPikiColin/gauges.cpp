@@ -147,7 +147,7 @@ void GaugeInfo::update()
  * Address:	8005B8D0
  * Size:	000210
  */
-void GaugeInfo::showDigits(Vector3f, Colour&, int, float, float)
+void GaugeInfo::showDigits(Vector3f, Colour&, int, f32, f32)
 {
 	/*
 	.loc_0x0:
@@ -798,7 +798,7 @@ LifeGauge::LifeGauge()
  * Address:	8005C074
  * Size:	000030
  */
-void LifeGauge::updValue(float, float)
+void LifeGauge::updValue(f32, f32)
 {
 	/*
 	.loc_0x0:

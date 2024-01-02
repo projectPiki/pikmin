@@ -343,7 +343,7 @@ void PSUTree<P2DPane>::getFirstChild() const
  * Address:	801BF8D8
  * Size:	0000EC
  */
-void zen::P2DPaneLibrary::setFamilyAlpha(P2DPane*, unsigned char)
+void zen::P2DPaneLibrary::setFamilyAlpha(P2DPane*, u8)
 {
 	/*
 	.loc_0x0:
@@ -430,7 +430,7 @@ void zen::P2DPaneLibrary::setFamilyAlpha(P2DPane*, unsigned char)
  * Address:	801BF9C4
  * Size:	000030
  */
-void zen::P2DPaneLibrary::setAlpha(P2DPane*, unsigned char)
+void zen::P2DPaneLibrary::setAlpha(P2DPane*, u8)
 {
 	/*
 	.loc_0x0:
@@ -780,7 +780,7 @@ void zen::P2DPaneLibrary::printUseTexName(char*, IDelegate1<char*>*)
  * Address:	801BFCC4
  * Size:	000168
  */
-zen::BalloonPane::BalloonPane(P2DPane*, float)
+zen::BalloonPane::BalloonPane(P2DPane*, f32)
 {
 	/*
 	.loc_0x0:

@@ -81,122 +81,121 @@
  * .4byte changeShape__4PikiFi
  * .4byte setFlower__4PikiFi
  * .4byte setLeaves__4PikiFi
-*/
+ */
 
 struct Creature {
-	virtual void addCntCallback();                        // _08
-	virtual void subCntCallback();                        // _0C
-	virtual void insideSafeArea(Vector3f &);              // _10 (weak)
-	virtual void platAttachable();                        // _14
-	virtual void alwaysUpdatePlatform();                  // _18
-	virtual void doDoAI();                                // _1C
-	virtual void setRouteTracer(RouteTracer *);           // _20 (weak)
-	virtual void init();                                  // _24
-	virtual void init(Vector3f &);                        // _28
-	virtual void resetPosition(Vector3f &);               // _2C
-	virtual void initParam(int);                          // _30 (weak)
-	virtual void startAI(int);                            // _34 (weak)
-	virtual void getiMass();                              // _38
-	virtual void getSize();                               // _3C
-	virtual void getHeight();                             // _40 (weak)
-	virtual void getCylinderHeight();                     // _44 (weak)
-	virtual void doStore(CreatureInf *);                  // _48 (weak)
-	virtual void doRestore(CreatureInf *);                // _4C (weak)
-	virtual void doSave(RandomAccessStream &);            // _50 (weak)
-	virtual void doLoad(RandomAccessStream &);            // _54 (weak)
-	virtual void getCentre();                             // _58
-	virtual void getCentreSize();                         // _5C
-	virtual void getBoundingSphereCentre();               // _60
-	virtual void getBoundingSphereRadius();               // _64
-	virtual void getShadowPos();                          // _68
-	virtual void setCentre(Vector3f &);                   // _6C (weak)
-	virtual void getShadowSize();                         // _70
-	virtual void isVisible();                             // _74
-	virtual void isOrganic();                             // _78 (weak)
-	virtual void isTerrible();                            // _7C
-	virtual void isBuried();                              // _80
-	virtual void isAtari();                               // _84
-	virtual void isAlive();                               // _88
-	virtual void isFixed();                               // _8C
-	virtual void needShadow();                            // _90
-	virtual void needFlick(Creature *);                   // _94
-	virtual void ignoreAtari(Creature *);                 // _98
-	virtual void isFree();                                // _9C (weak)
-	virtual void stimulate(Interaction &);                // _A0
-	virtual void sendMsg(Msg *);                          // _A4
-	virtual void collisionCallback(CollEvent &);          // _A8
-	virtual void bounceCallback();                        // _AC
-	virtual void jumpCallback();                          // _B0
-	virtual void wallCallback(Plane &, DynCollObject *);  // _B4
-	virtual void offwallCallback(DynCollObject *);        // _B8
-	virtual void stickCallback(Creature *);               // _BC (weak)
-	virtual void offstickCallback(Creature *);            // _C0 (weak)
-	virtual void stickToCallback(Creature *);             // _C4
-	virtual void dump();                                  // _C8
-	virtual void startWaterEffect();                      // _CC (weak)
-	virtual void finishWaterEffect();                     // _D0 (weak)
-	virtual void isRopable();                             // _D4
-	virtual void mayIstick();                             // _D8
-	virtual void getFormationPri();                       // _DC
-	virtual void update();                                // _E0
-	virtual void postUpdate(int, float);                  // _E4
-	virtual void stickUpdate();                           // _E8
-	virtual void _EC() = 0;                               // _EC
-	virtual void refresh2d(Graphics &);                   // _F0 (weak)
-	virtual void renderAtari(Graphics &);                 // _F4
-	virtual void drawShadow(Graphics &);                  // _F8
-	virtual void demoDraw(Graphics &, Matrix4f *);        // _FC
-	virtual void getCatchPos(Creature *);                 // _100
-	virtual void doAI();                                  // _104
-	virtual void doAnimation();                           // _108
-	virtual void doKill();                                // _10C
-	virtual void exitCourse();                            // _110 (weak)
+	virtual void addCntCallback();                     // _08
+	virtual void subCntCallback();                     // _0C
+	virtual void insideSafeArea(Vector3f&);            // _10 (weak)
+	virtual void platAttachable();                     // _14
+	virtual void alwaysUpdatePlatform();               // _18
+	virtual void doDoAI();                             // _1C
+	virtual void setRouteTracer(RouteTracer*);         // _20 (weak)
+	virtual void init();                               // _24
+	virtual void init(Vector3f&);                      // _28
+	virtual void resetPosition(Vector3f&);             // _2C
+	virtual void initParam(int);                       // _30 (weak)
+	virtual void startAI(int);                         // _34 (weak)
+	virtual void getiMass();                           // _38
+	virtual void getSize();                            // _3C
+	virtual void getHeight();                          // _40 (weak)
+	virtual void getCylinderHeight();                  // _44 (weak)
+	virtual void doStore(CreatureInf*);                // _48 (weak)
+	virtual void doRestore(CreatureInf*);              // _4C (weak)
+	virtual void doSave(RandomAccessStream&);          // _50 (weak)
+	virtual void doLoad(RandomAccessStream&);          // _54 (weak)
+	virtual void getCentre();                          // _58
+	virtual void getCentreSize();                      // _5C
+	virtual void getBoundingSphereCentre();            // _60
+	virtual void getBoundingSphereRadius();            // _64
+	virtual void getShadowPos();                       // _68
+	virtual void setCentre(Vector3f&);                 // _6C (weak)
+	virtual void getShadowSize();                      // _70
+	virtual void isVisible();                          // _74
+	virtual void isOrganic();                          // _78 (weak)
+	virtual void isTerrible();                         // _7C
+	virtual void isBuried();                           // _80
+	virtual void isAtari();                            // _84
+	virtual void isAlive();                            // _88
+	virtual void isFixed();                            // _8C
+	virtual void needShadow();                         // _90
+	virtual void needFlick(Creature*);                 // _94
+	virtual void ignoreAtari(Creature*);               // _98
+	virtual void isFree();                             // _9C (weak)
+	virtual void stimulate(Interaction&);              // _A0
+	virtual void sendMsg(Msg*);                        // _A4
+	virtual void collisionCallback(CollEvent&);        // _A8
+	virtual void bounceCallback();                     // _AC
+	virtual void jumpCallback();                       // _B0
+	virtual void wallCallback(Plane&, DynCollObject*); // _B4
+	virtual void offwallCallback(DynCollObject*);      // _B8
+	virtual void stickCallback(Creature*);             // _BC (weak)
+	virtual void offstickCallback(Creature*);          // _C0 (weak)
+	virtual void stickToCallback(Creature*);           // _C4
+	virtual void dump();                               // _C8
+	virtual void startWaterEffect();                   // _CC (weak)
+	virtual void finishWaterEffect();                  // _D0 (weak)
+	virtual void isRopable();                          // _D4
+	virtual void mayIstick();                          // _D8
+	virtual void getFormationPri();                    // _DC
+	virtual void update();                             // _E0
+	virtual void postUpdate(int, f32);                 // _E4
+	virtual void stickUpdate();                        // _E8
+	virtual void _EC() = 0;                            // _EC
+	virtual void refresh2d(Graphics&);                 // _F0 (weak)
+	virtual void renderAtari(Graphics&);               // _F4
+	virtual void drawShadow(Graphics&);                // _F8
+	virtual void demoDraw(Graphics&, Matrix4f*);       // _FC
+	virtual void getCatchPos(Creature*);               // _100
+	virtual void doAI();                               // _104
+	virtual void doAnimation();                        // _108
+	virtual void doKill();                             // _10C
+	virtual void exitCourse();                         // _110 (weak)
 };
 
 /**
  * @brief TODO
  */
 struct Piki : public Creature {
-	virtual void addCntCallback();                        // _08
-	virtual void subCntCallback();                        // _0C
-	virtual void platAttachable();                        // _14
-	virtual void doDoAI();                                // _1C
-	virtual void resetPosition(Vector3f &);               // _2C
-	virtual void getiMass();                              // _38
-	virtual void getSize();                               // _3C
-	virtual void getShadowPos();                          // _68
-	virtual void isVisible();                             // _74
-	virtual void isBuried();                              // _80
-	virtual void isAtari();                               // _84
-	virtual void isAlive();                               // _88
-	virtual void isFixed();                               // _8C
-	virtual void needShadow();                            // _90
-	virtual void needFlick(Creature *);                   // _94
-	virtual void ignoreAtari(Creature *);                 // _98
-	virtual void stimulate(Interaction &);                // _A0
-	virtual void sendMsg(Msg *);                          // _A4
-	virtual void collisionCallback(CollEvent &);          // _A8
-	virtual void bounceCallback();                        // _AC
-	virtual void jumpCallback();                          // _B0
-	virtual void wallCallback(Plane &, DynCollObject *);  // _B4
-	virtual void offwallCallback(DynCollObject *);        // _B8
-	virtual void stickToCallback(Creature *);             // _C4
-	virtual void dump();                                  // _C8
-	virtual void isRopable();                             // _D4
-	virtual void mayIstick();                             // _D8
-	virtual void getFormationPri();                       // _DC
-	virtual void _EC() = 0;                               // _EC
-	virtual void getCatchPos(Creature *);                 // _100
-	virtual void doAI();                                  // _104
-	virtual void doAnimation();                           // _108
-	virtual void doKill();                                // _10C
-	virtual void _120() = 0;                              // _120
-	virtual void animationKeyUpdated(PaniAnimKeyEvent &); // _124
-	virtual void initBirth();                             // _128
-	virtual void changeShape(int);                        // _12C
-	virtual void setFlower(int);                          // _130
-	virtual void setLeaves(int);                          // _134
-
+	virtual void addCntCallback();                       // _08
+	virtual void subCntCallback();                       // _0C
+	virtual void platAttachable();                       // _14
+	virtual void doDoAI();                               // _1C
+	virtual void resetPosition(Vector3f&);               // _2C
+	virtual void getiMass();                             // _38
+	virtual void getSize();                              // _3C
+	virtual void getShadowPos();                         // _68
+	virtual void isVisible();                            // _74
+	virtual void isBuried();                             // _80
+	virtual void isAtari();                              // _84
+	virtual void isAlive();                              // _88
+	virtual void isFixed();                              // _8C
+	virtual void needShadow();                           // _90
+	virtual void needFlick(Creature*);                   // _94
+	virtual void ignoreAtari(Creature*);                 // _98
+	virtual void stimulate(Interaction&);                // _A0
+	virtual void sendMsg(Msg*);                          // _A4
+	virtual void collisionCallback(CollEvent&);          // _A8
+	virtual void bounceCallback();                       // _AC
+	virtual void jumpCallback();                         // _B0
+	virtual void wallCallback(Plane&, DynCollObject*);   // _B4
+	virtual void offwallCallback(DynCollObject*);        // _B8
+	virtual void stickToCallback(Creature*);             // _C4
+	virtual void dump();                                 // _C8
+	virtual void isRopable();                            // _D4
+	virtual void mayIstick();                            // _D8
+	virtual void getFormationPri();                      // _DC
+	virtual void _EC() = 0;                              // _EC
+	virtual void getCatchPos(Creature*);                 // _100
+	virtual void doAI();                                 // _104
+	virtual void doAnimation();                          // _108
+	virtual void doKill();                               // _10C
+	virtual void _120() = 0;                             // _120
+	virtual void animationKeyUpdated(PaniAnimKeyEvent&); // _124
+	virtual void initBirth();                            // _128
+	virtual void changeShape(int);                       // _12C
+	virtual void setFlower(int);                         // _130
+	virtual void setLeaves(int);                         // _134
 };
 
 #endif

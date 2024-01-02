@@ -25,7 +25,7 @@ void _Print(char*, ...)
  * Address:	80025500
  * Size:	000098
  */
-void BufferedInputStream::init(Stream*, unsigned char*, int)
+void BufferedInputStream::init(Stream*, u8*, int)
 {
 	/*
 	.loc_0x0:
@@ -79,7 +79,7 @@ void BufferedInputStream::init(Stream*, unsigned char*, int)
  * Address:	80025598
  * Size:	0000C0
  */
-BufferedInputStream::BufferedInputStream(Stream*, unsigned char*, int)
+BufferedInputStream::BufferedInputStream(Stream*, u8*, int)
 {
 	/*
 	.loc_0x0:

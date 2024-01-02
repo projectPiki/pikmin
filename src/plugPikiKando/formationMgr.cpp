@@ -783,7 +783,7 @@ void FormationMgr::setOffset(Vector3f&)
  * Address:	........
  * Size:	000008
  */
-void FormationMgr::setAngOffset(float)
+void FormationMgr::setAngOffset(f32)
 {
 	// UNUSED FUNCTION
 }

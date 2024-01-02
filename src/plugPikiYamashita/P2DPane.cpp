@@ -388,7 +388,7 @@ void PSUList<P2DPane>::~PSUList()
  * Address:	801B09CC
  * Size:	000168
  */
-P2DPane::P2DPane(P2DPane*, unsigned short, bool, unsigned long, const PUTRect&)
+P2DPane::P2DPane(P2DPane*, u16, bool, u32, const PUTRect&)
 {
 	/*
 	.loc_0x0:
@@ -494,7 +494,7 @@ P2DPane::P2DPane(P2DPane*, unsigned short, bool, unsigned long, const PUTRect&)
  * Address:	........
  * Size:	000158
  */
-P2DPane::P2DPane(unsigned long, const PUTRect&)
+P2DPane::P2DPane(u32, const PUTRect&)
 {
 	// UNUSED FUNCTION
 }
@@ -504,7 +504,7 @@ P2DPane::P2DPane(unsigned long, const PUTRect&)
  * Address:	........
  * Size:	000140
  */
-P2DPane::P2DPane(unsigned short, unsigned long, const PUTRect&)
+P2DPane::P2DPane(u16, u32, const PUTRect&)
 {
 	// UNUSED FUNCTION
 }
@@ -514,7 +514,7 @@ P2DPane::P2DPane(unsigned short, unsigned long, const PUTRect&)
  * Address:	801B0B34
  * Size:	000290
  */
-P2DPane::P2DPane(P2DPane*, RandomAccessStream*, unsigned short)
+P2DPane::P2DPane(P2DPane*, RandomAccessStream*, u16)
 {
 	/*
 	.loc_0x0:
@@ -1144,7 +1144,7 @@ void P2DPane::clip(const PUTRect&)
  * Address:	801B1394
  * Size:	0000A4
  */
-void P2DPane::search(unsigned long, bool)
+void P2DPane::search(u32, bool)
 {
 	/*
 	.loc_0x0:
@@ -1534,7 +1534,7 @@ void P2DPane::move(Vector3f&)
  * Address:	801B180C
  * Size:	000008
  */
-void P2DPane::moveZ(float)
+void P2DPane::moveZ(f32)
 {
 	/*
 	.loc_0x0:

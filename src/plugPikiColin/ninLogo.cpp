@@ -382,7 +382,7 @@ void NinLogoSetupSection::draw(Graphics&)
  * Address:	800616D4
  * Size:	0000EC
  */
-void NinLogoSetupSection::drawMenu(Graphics&, Menu*, float)
+void NinLogoSetupSection::drawMenu(Graphics&, Menu*, f32)
 {
 	/*
 	.loc_0x0:

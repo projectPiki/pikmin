@@ -233,7 +233,7 @@ void BitFlags::saveCard(RandomAccessStream&)
  * Address:	80116308
  * Size:	000054
  */
-void BitFlags::create(unsigned short, unsigned char*)
+void BitFlags::create(u16, u8*)
 {
 	/*
 	.loc_0x0:
@@ -296,7 +296,7 @@ void BitFlags::reset()
  * Address:	80116384
  * Size:	000030
  */
-void BitFlags::setFlag(unsigned short)
+void BitFlags::setFlag(u16)
 {
 	/*
 	.loc_0x0:
@@ -320,7 +320,7 @@ void BitFlags::setFlag(unsigned short)
  * Address:	........
  * Size:	000030
  */
-void BitFlags::resetFlag(unsigned short)
+void BitFlags::resetFlag(u16)
 {
 	// UNUSED FUNCTION
 }
@@ -330,7 +330,7 @@ void BitFlags::resetFlag(unsigned short)
  * Address:	801163B4
  * Size:	000038
  */
-void BitFlags::isFlag(unsigned short)
+void BitFlags::isFlag(u16)
 {
 	/*
 	.loc_0x0:
@@ -356,7 +356,7 @@ void BitFlags::isFlag(unsigned short)
  * Address:	801163EC
  * Size:	00000C
  */
-LoopChecker::LoopChecker(char*, float)
+LoopChecker::LoopChecker(char*, f32)
 {
 	/*
 	.loc_0x0:
@@ -393,7 +393,7 @@ void LoopChecker::update()
  * Address:	80116420
  * Size:	00016C
  */
-void drawBatten(Graphics&, Vector3f&, float)
+void drawBatten(Graphics&, Vector3f&, f32)
 {
 	/*
 	.loc_0x0:
@@ -496,7 +496,7 @@ void drawBatten(Graphics&, Vector3f&, float)
  * Address:	8011658C
  * Size:	000424
  */
-void drawBattenPole(Graphics&, Vector3f&, float, char*)
+void drawBattenPole(Graphics&, Vector3f&, f32, char*)
 {
 	/*
 	.loc_0x0:
@@ -775,7 +775,7 @@ void drawBattenPole(Graphics&, Vector3f&, float, char*)
  * Address:	801169B0
  * Size:	00026C
  */
-void drawArrow(Graphics&, Vector3f&, Vector3f&, float)
+void drawArrow(Graphics&, Vector3f&, Vector3f&, f32)
 {
 	/*
 	.loc_0x0:
@@ -1082,7 +1082,7 @@ void CRSplineDraw(Graphics&, int, Vector3f*)
  * Address:	80116E04
  * Size:	0003C0
  */
-void drawCube(Graphics&, Vector3f&, float)
+void drawCube(Graphics&, Vector3f&, f32)
 {
 	/*
 	.loc_0x0:

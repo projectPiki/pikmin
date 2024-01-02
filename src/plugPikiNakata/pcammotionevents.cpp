@@ -92,7 +92,7 @@ PcamLongVibrationEvent::PcamLongVibrationEvent(PcamCamera*)
  * Address:	80124274
  * Size:	0000D8
  */
-void PcamLongVibrationEvent::makePcamLongVibrationEvent(float, float, float, float)
+void PcamLongVibrationEvent::makePcamLongVibrationEvent(f32, f32, f32, f32)
 {
 	/*
 	.loc_0x0:

@@ -25,7 +25,7 @@ void _Print(char*, ...)
  * Address:	........
  * Size:	000150
  */
-void zen::simplePtclManager::create(Texture*, short, const Vector3f&, const Vector3f&, const Vector3f&, float, float, const Colour&,
+void zen::simplePtclManager::create(Texture*, s16, const Vector3f&, const Vector3f&, const Vector3f&, f32, f32, const Colour&,
                                     const Colour&, zen::CallBack1<zen::particleMdl*>*)
 {
 	// UNUSED FUNCTION
@@ -36,7 +36,7 @@ void zen::simplePtclManager::create(Texture*, short, const Vector3f&, const Vect
  * Address:	801A226C
  * Size:	0001E0
  */
-void zen::simplePtclManager::update(float)
+void zen::simplePtclManager::update(f32)
 {
 	/*
 	.loc_0x0:

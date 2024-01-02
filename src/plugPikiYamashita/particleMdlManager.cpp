@@ -25,7 +25,7 @@ void _Print(char*, ...)
  * Address:	801A17D4
  * Size:	000130
  */
-void zen::particleMdlManager::init(unsigned long, unsigned long)
+void zen::particleMdlManager::init(u32, u32)
 {
 	/*
 	.loc_0x0:
@@ -373,7 +373,7 @@ zen::particleMdl::particleMdl()
  * Address:	801A1BE4
  * Size:	000048
  */
-void zen::bBoardColourAnim::init(zen::bBoardColourAnimData*, short)
+void zen::bBoardColourAnim::init(zen::bBoardColourAnimData*, s16)
 {
 	/*
 	.loc_0x0:

@@ -1,11 +1,11 @@
-
+#include "types.h"
 
 /*
  * --INFO--
  * Address:	........
  * Size:	000064
  */
-void Jac_PlayStreamBGM(long, long, long)
+void Jac_PlayStreamBGM(s32, s32, s32)
 {
 	// UNUSED FUNCTION
 }
@@ -15,7 +15,7 @@ void Jac_PlayStreamBGM(long, long, long)
  * Address:	........
  * Size:	000040
  */
-void Jac_StopStreamBGM(long, long)
+void Jac_StopStreamBGM(s32, s32)
 {
 	// UNUSED FUNCTION
 }
@@ -25,7 +25,7 @@ void Jac_StopStreamBGM(long, long)
  * Address:	........
  * Size:	000038
  */
-void Jac_VolMoveStreamBGM(long, long)
+void Jac_VolMoveStreamBGM(s32, s32)
 {
 	// UNUSED FUNCTION
 }

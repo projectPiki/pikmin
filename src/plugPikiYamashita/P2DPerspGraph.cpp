@@ -35,7 +35,7 @@ P2DPerspGraph::P2DPerspGraph()
  * Address:	........
  * Size:	000084
  */
-P2DPerspGraph::P2DPerspGraph(const PUTRect&, float, float, float)
+P2DPerspGraph::P2DPerspGraph(const PUTRect&, f32, f32, f32)
 {
 	// UNUSED FUNCTION
 }
@@ -45,7 +45,7 @@ P2DPerspGraph::P2DPerspGraph(const PUTRect&, float, float, float)
  * Address:	801B0190
  * Size:	000084
  */
-P2DPerspGraph::P2DPerspGraph(int, int, int, int, float, float, float)
+P2DPerspGraph::P2DPerspGraph(int, int, int, int, f32, f32, f32)
 {
 	/*
 	.loc_0x0:
@@ -92,7 +92,7 @@ P2DPerspGraph::P2DPerspGraph(int, int, int, int, float, float, float)
  * Address:	801B0214
  * Size:	000060
  */
-void P2DPerspGraph::set(float, float, float)
+void P2DPerspGraph::set(f32, f32, f32)
 {
 	/*
 	.loc_0x0:
@@ -130,7 +130,7 @@ void P2DPerspGraph::set(float, float, float)
  * Address:	801B0274
  * Size:	00002C
  */
-void P2DPerspGraph::setFovy(float)
+void P2DPerspGraph::setFovy(f32)
 {
 	/*
 	.loc_0x0:
@@ -319,7 +319,7 @@ void P2DPerspGraph::setLookat()
  * Address:	........
  * Size:	000024
  */
-void P2DPerspGraph::setDistance(float)
+void P2DPerspGraph::setDistance(f32)
 {
 	// UNUSED FUNCTION
 }

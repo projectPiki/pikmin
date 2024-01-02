@@ -5,7 +5,7 @@
  * Address:	........
  * Size:	000098
  */
-void searchKanjiCode(unsigned short)
+void searchKanjiCode(u16)
 {
 	// UNUSED FUNCTION
 }
@@ -1125,7 +1125,7 @@ zen::ogScrMessageMgr::ogScrMessageMgr(char*)
  * Address:	........
  * Size:	000048
  */
-void zen::ogScrMessageMgr::setScreenAlpha(unsigned char)
+void zen::ogScrMessageMgr::setScreenAlpha(u8)
 {
 	// UNUSED FUNCTION
 }

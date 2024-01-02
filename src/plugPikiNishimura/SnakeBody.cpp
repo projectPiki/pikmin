@@ -374,7 +374,7 @@ void SnakeBody::init(Vector3f&, Snake*)
  * Address:	80160124
  * Size:	000028
  */
-void SnakeBody::initBlending(float)
+void SnakeBody::initBlending(f32)
 {
 	/*
 	.loc_0x0:

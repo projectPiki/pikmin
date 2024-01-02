@@ -10,7 +10,7 @@ static struct il_buf* buf = &interleavebuf;
  * Address:	8001DA80
  * Size:	000090
  */
-void Jac_SendStreamData(unsigned char*, unsigned long)
+void Jac_SendStreamData(u8*, u32)
 {
 	/*
 	.loc_0x0:
@@ -90,7 +90,7 @@ void Jac_GetStreamRemain()
  * Address:	8001DB60
  * Size:	0000C0
  */
-void Jac_GetStreamData(unsigned char*, unsigned long)
+void Jac_GetStreamData(u8*, u32)
 {
 	/*
 	.loc_0x0:

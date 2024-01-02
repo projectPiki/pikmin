@@ -1,11 +1,11 @@
-
+#include "types.h"
 
 /*
  * --INFO--
  * Address:	8000C860
  * Size:	0000A0
  */
-void UpdateWave(WaveArchive_*, Ctrl_*, unsigned long)
+void UpdateWave(WaveArchive_*, Ctrl_*, u32)
 {
 	/*
 	.loc_0x0:
@@ -182,7 +182,7 @@ void UpdateWave_Extern(WaveArchiveBank_*, CtrlGroup_*, Ctrl_*)
  * Address:	8000CA80
  * Size:	00009C
  */
-void Jac_SceneClose(WaveArchiveBank_*, CtrlGroup_*, unsigned long, int)
+void Jac_SceneClose(WaveArchiveBank_*, CtrlGroup_*, u32, int)
 {
 	/*
 	.loc_0x0:
@@ -239,7 +239,7 @@ void Jac_SceneClose(WaveArchiveBank_*, CtrlGroup_*, unsigned long, int)
  * Address:	8000CB20
  * Size:	00015C
  */
-void Jac_SceneSet(WaveArchiveBank_*, CtrlGroup_*, unsigned long, int)
+void Jac_SceneSet(WaveArchiveBank_*, CtrlGroup_*, u32, int)
 {
 	/*
 	.loc_0x0:
@@ -360,7 +360,7 @@ void Jac_SceneSet(WaveArchiveBank_*, CtrlGroup_*, unsigned long, int)
  * Address:	8000CC80
  * Size:	000044
  */
-void SearchWave(Ctrl_*, unsigned long)
+void SearchWave(Ctrl_*, u32)
 {
 	/*
 	.loc_0x0:
@@ -395,7 +395,7 @@ void SearchWave(Ctrl_*, unsigned long)
  * Address:	8000CCE0
  * Size:	00010C
  */
-void __GetSoundHandle(CtrlGroup_*, unsigned long, unsigned long)
+void __GetSoundHandle(CtrlGroup_*, u32, u32)
 {
 	/*
 	.loc_0x0:
@@ -486,7 +486,7 @@ void __GetSoundHandle(CtrlGroup_*, unsigned long, unsigned long)
  * Address:	8000CE00
  * Size:	000074
  */
-void GetSoundHandle(CtrlGroup_*, unsigned long)
+void GetSoundHandle(CtrlGroup_*, u32)
 {
 	/*
 	.loc_0x0:
@@ -535,7 +535,7 @@ void GetSoundHandle(CtrlGroup_*, unsigned long)
  * Address:	8000CE80
  * Size:	000018
  */
-void Jac_WsVirtualToPhysical(unsigned short)
+void Jac_WsVirtualToPhysical(u16)
 {
 	/*
 	.loc_0x0:
@@ -553,7 +553,7 @@ void Jac_WsVirtualToPhysical(unsigned short)
  * Address:	8000CEA0
  * Size:	000018
  */
-void Jac_BnkVirtualToPhysical(unsigned short)
+void Jac_BnkVirtualToPhysical(u16)
 {
 	/*
 	.loc_0x0:
@@ -571,7 +571,7 @@ void Jac_BnkVirtualToPhysical(unsigned short)
  * Address:	........
  * Size:	000040
  */
-void Jac_BnkPhysicalToVirtual(unsigned short)
+void Jac_BnkPhysicalToVirtual(u16)
 {
 	// UNUSED FUNCTION
 }
@@ -581,7 +581,7 @@ void Jac_BnkPhysicalToVirtual(unsigned short)
  * Address:	........
  * Size:	000040
  */
-void Jac_WsPhysicalToVirtual(unsigned short)
+void Jac_WsPhysicalToVirtual(u16)
 {
 	// UNUSED FUNCTION
 }
@@ -591,7 +591,7 @@ void Jac_WsPhysicalToVirtual(unsigned short)
  * Address:	8000CEC0
  * Size:	000050
  */
-void Jac_WsConnectTableSet(unsigned long, unsigned long)
+void Jac_WsConnectTableSet(u32, u32)
 {
 	/*
 	.loc_0x0:
@@ -625,7 +625,7 @@ void Jac_WsConnectTableSet(unsigned long, unsigned long)
  * Address:	8000CF20
  * Size:	000050
  */
-void Jac_BnkConnectTableSet(unsigned long, unsigned long)
+void Jac_BnkConnectTableSet(u32, u32)
 {
 	/*
 	.loc_0x0:

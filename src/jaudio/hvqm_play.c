@@ -1,4 +1,4 @@
-
+#include "types.h"
 
 /*
  * --INFO--
@@ -90,7 +90,7 @@ void __ReLoad()
  * Address:	8001DDA0
  * Size:	000074
  */
-void __LoadFin(unsigned long)
+void __LoadFin(u32)
 {
 	/*
 	.loc_0x0:
@@ -131,7 +131,7 @@ void __LoadFin(unsigned long)
  * Address:	8001DE20
  * Size:	000198
  */
-void __VirtualLoad(unsigned long, unsigned long, unsigned char*)
+void __VirtualLoad(u32, u32, u8*)
 {
 	/*
 	.loc_0x0:
@@ -263,7 +263,7 @@ void __VirtualLoad(unsigned long, unsigned long, unsigned char*)
  * Address:	8001DFC0
  * Size:	000050
  */
-void InitAudio1(StreamHeader_*, unsigned char*, unsigned long)
+void InitAudio1(StreamHeader_*, u8*, u32)
 {
 	/*
 	.loc_0x0:
@@ -1214,7 +1214,7 @@ void InitPic()
  * Address:	8001EAE0
  * Size:	000044
  */
-void CheckDraw(unsigned long)
+void CheckDraw(u32)
 {
 	/*
 	.loc_0x0:
@@ -1245,7 +1245,7 @@ void CheckDraw(unsigned long)
  * Address:	8001EB40
  * Size:	0000FC
  */
-void Decode1(unsigned char*, unsigned long, unsigned char)
+void Decode1(u8*, u32, u8)
 {
 	/*
 	.loc_0x0:

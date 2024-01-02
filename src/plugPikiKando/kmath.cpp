@@ -25,7 +25,7 @@ void _Print(char*, ...)
  * Address:	801126C4
  * Size:	00005C
  */
-void isNan(float)
+void isNan(f32)
 {
 	/*
 	.loc_0x0:
@@ -115,7 +115,7 @@ void makePostureMatrix(Vector3f&, Vector3f&, Vector3f&, Matrix4f&)
  * Address:	801127BC
  * Size:	0001B0
  */
-void calcImpulse(Vector3f&, float, Vector3f&, Matrix4f&, Vector3f&, Vector3f&)
+void calcImpulse(Vector3f&, f32, Vector3f&, Matrix4f&, Vector3f&, Vector3f&)
 {
 	/*
 	.loc_0x0:
@@ -235,7 +235,7 @@ void calcImpulse(Vector3f&, float, Vector3f&, Matrix4f&, Vector3f&, Vector3f&)
  * Address:	8011296C
  * Size:	0001C0
  */
-void CRSpline(float, Vector3f*)
+void CRSpline(f32, Vector3f*)
 {
 	/*
 	.loc_0x0:
@@ -359,7 +359,7 @@ void CRSpline(float, Vector3f*)
  * Address:	80112B2C
  * Size:	0001B8
  */
-void CRSplineTangent(float, Vector3f*)
+void CRSplineTangent(f32, Vector3f*)
 {
 	/*
 	.loc_0x0:
@@ -481,7 +481,7 @@ void CRSplineTangent(float, Vector3f*)
  * Address:	80112CE4
  * Size:	00022C
  */
-void getThrowVelocity(Vector3f&, float, Vector3f&, Vector3f&)
+void getThrowVelocity(Vector3f&, f32, Vector3f&, Vector3f&)
 {
 	/*
 	.loc_0x0:
@@ -636,7 +636,7 @@ void getThrowVelocity(Vector3f&, float, Vector3f&, Vector3f&)
  * Address:	80112F10
  * Size:	000254
  */
-void getCameraSafeAngle(Vector3f&, float, float)
+void getCameraSafeAngle(Vector3f&, f32, f32)
 {
 	/*
 	.loc_0x0:

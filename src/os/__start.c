@@ -26,7 +26,7 @@ _check_TRK:
     cmplwi r6, 0
     beq _goto_main
     lwz r7, OS_BI2_DEBUGFLAG_OFFSET(r6)
-	
+
 _check_debug_flag:
 	li r5, 0
 	cmplwi r7, 2
@@ -40,7 +40,7 @@ _goto_inittrk:
 	addi r6, r6, InitMetroTRK@l
 	mtlr r6
 	blrl
-	
+
 _goto_main:
 	lis r6, BOOTINFO2_ADDR@ha
 	addi r6, r6, BOOTINFO2_ADDR@l
@@ -100,7 +100,7 @@ __declspec(section ".init") extern __bss_init_info _bss_init_info[];
 
 // clang-format on
 
-inline static void __copy_rom_section(void* dst, const void* src, unsigned long size)
+inline static void __copy_rom_section(void* dst, const void* src, u32 size)
 {
 	if (size && (dst != src)) {
 		memcpy(dst, src, size);
@@ -108,7 +108,7 @@ inline static void __copy_rom_section(void* dst, const void* src, unsigned long 
 	}
 }
 
-inline static void __init_bss_section(void* dst, unsigned long size)
+inline static void __init_bss_section(void* dst, u32 size)
 {
 	if (size) {
 		memset(dst, 0, size);

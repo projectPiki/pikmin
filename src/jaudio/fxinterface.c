@@ -1,11 +1,11 @@
-
+#include "types.h"
 
 /*
  * --INFO--
  * Address:	8000BCC0
  * Size:	000138
  */
-void DFX_SetFxLine(unsigned char, short*, FxlineConfig_*)
+void DFX_SetFxLine(u8, s16*, FxlineConfig_*)
 {
 	/*
 	.loc_0x0:
@@ -107,7 +107,7 @@ void DFX_SetFxLine(unsigned char, short*, FxlineConfig_*)
  * Address:	........
  * Size:	0000E0
  */
-void DFX_ChangeFxLineParam(unsigned char, unsigned char, unsigned long)
+void DFX_ChangeFxLineParam(u8, u8, u32)
 {
 	// UNUSED FUNCTION
 }

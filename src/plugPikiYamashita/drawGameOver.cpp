@@ -404,7 +404,7 @@ zen::DrawGameOverLetter::DrawGameOverLetter()
  * Address:	801E8DCC
  * Size:	0000E8
  */
-void zen::DrawGameOver::start(zen::DrawGameOver::modeFlag, float)
+void zen::DrawGameOver::start(zen::DrawGameOver::modeFlag, f32)
 {
 	/*
 	.loc_0x0:

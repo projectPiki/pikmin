@@ -93,7 +93,7 @@ void SlimeAi::init(Slime*)
  * Address:	80164C30
  * Size:	000014
  */
-void SlimeAi::addDamagePoint(float)
+void SlimeAi::addDamagePoint(f32)
 {
 	/*
 	.loc_0x0:
@@ -2052,7 +2052,7 @@ void SlimeAi::makeTargetRandom()
  * Address:	........
  * Size:	00000C
  */
-void SlimeAi::setVelocity(float)
+void SlimeAi::setVelocity(f32)
 {
 	// UNUSED FUNCTION
 }

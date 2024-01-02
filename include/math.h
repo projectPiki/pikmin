@@ -1,19 +1,50 @@
 #ifndef _MATH_H
 #define _MATH_H
+
 #include "types.h"
-inline float sqrtf(float x)
+
+f64 __fabs(f64);
+f32 __fabsf(f32);
+f64 __fnabs(f64);
+f32 __fnabsf(f32);
+f64 __fmadd(f64, f64, f64);
+f64 __fmsub(f64, f64, f64);
+f64 __fnmadd(f64, f64, f64);
+f64 __fnmsub(f64, f64, f64);
+f32 __fmadds(f32, f32, f32);
+f32 __fmsubs(f32, f32, f32);
+f32 __fnmadds(f32, f32, f32);
+f32 __fnmsubs(f32, f32, f32);
+f64 __fsel(f64, f64, f64);
+f32 __fsels(f32, f32, f32);
+f64 __frsqrte(f64);
+f32 __fres(f32);
+f64 __fsqrt(f64);
+f32 __fsqrts(f32);
+s64 __fctid(f64);
+s64 __fctiw(f64);
+f64 __fcfid(s64);
+f64 __mffs(void);
+void __mtfsf(int, f64);
+void __mtfsfi(int, int);
+void __mtfsb0(int);
+void __mtfsb1(int);
+f64 __setflm(f64);
+
+inline f32 sqrtf(f32 x)
 {
-	static const double _half  = .5;
-	static const double _three = 3.0;
-	volatile float y;
+	static const f64 _half  = .5;
+	static const f64 _three = 3.0;
+	vf32 y;
 	if (x > 0.0f) {
-		double guess = __frsqrte((double)x);                         // returns an approximation to
-		guess        = _half * guess * (_three - guess * guess * x); // now have 12 sig bits
-		guess        = _half * guess * (_three - guess * guess * x); // now have 24 sig bits
-		guess        = _half * guess * (_three - guess * guess * x); // now have 32 sig bits
-		y            = (float)(x * guess);
+		f64 guess = __frsqrte((f64)x);                            // returns an approximation to
+		guess     = _half * guess * (_three - guess * guess * x); // now have 12 sig bits
+		guess     = _half * guess * (_three - guess * guess * x); // now have 24 sig bits
+		guess     = _half * guess * (_three - guess * guess * x); // now have 32 sig bits
+		y         = (f32)(x * guess);
 		return y;
 	}
 	return x;
 }
-#endif
+
+#endif // _MATH_H

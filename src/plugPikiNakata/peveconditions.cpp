@@ -97,7 +97,7 @@ PeveTimeCondition::PeveTimeCondition()
  * Address:	80125CB0
  * Size:	000010
  */
-void PeveTimeCondition::construct(float)
+void PeveTimeCondition::construct(f32)
 {
 	/*
 	.loc_0x0:
@@ -123,7 +123,7 @@ PeveDistanceCondition::PeveDistanceCondition()
  * Address:	........
  * Size:	000018
  */
-void PeveDistanceCondition::construct(float, NVector3fIO*, NVector3fIO*)
+void PeveDistanceCondition::construct(f32, NVector3fIO*, NVector3fIO*)
 {
 	// UNUSED FUNCTION
 }

@@ -1,11 +1,11 @@
-
+#include "types.h"
 
 /*
  * --INFO--
  * Address:	8000E9C0
  * Size:	000034
  */
-void ARAMFinish(unsigned long)
+void ARAMFinish(u32)
 {
 	/*
 	.loc_0x0:
@@ -30,7 +30,7 @@ void ARAMFinish(unsigned long)
  * Address:	8000EA00
  * Size:	0000E8
  */
-void ARAM_TO_ARAM_DMA(unsigned long, unsigned long, unsigned long)
+void ARAM_TO_ARAM_DMA(u32, u32, u32)
 {
 	/*
 	.loc_0x0:
@@ -108,7 +108,7 @@ void ARAM_TO_ARAM_DMA(unsigned long, unsigned long, unsigned long)
  * Address:	8000EB00
  * Size:	0000FC
  */
-void DRAM_TO_DRAM_DMA(unsigned long, unsigned long, unsigned long)
+void DRAM_TO_DRAM_DMA(u32, u32, u32)
 {
 	/*
 	.loc_0x0:
@@ -240,7 +240,7 @@ void Jac_InitHeap(jaheap_*)
  * Address:	8000EC60
  * Size:	000038
  */
-void Jac_SelfInitHeap(jaheap_*, unsigned long, unsigned long, unsigned long)
+void Jac_SelfInitHeap(jaheap_*, u32, u32, u32)
 {
 	/*
 	.loc_0x0:
@@ -266,7 +266,7 @@ void Jac_SelfInitHeap(jaheap_*, unsigned long, unsigned long, unsigned long)
  * Address:	8000ECA0
  * Size:	000100
  */
-void Jac_SelfAllocHeap(jaheap_*, jaheap_*, unsigned long, unsigned long)
+void Jac_SelfAllocHeap(jaheap_*, jaheap_*, u32, u32)
 {
 	/*
 	.loc_0x0:
@@ -394,7 +394,7 @@ void Jac_CutdownHeap(jaheap_*)
  * Address:	8000EDE0
  * Size:	00005C
  */
-void Jac_InitMotherHeap(jaheap_*, unsigned long, unsigned long, unsigned char)
+void Jac_InitMotherHeap(jaheap_*, u32, u32, u8)
 {
 	/*
 	.loc_0x0:
@@ -429,7 +429,7 @@ void Jac_InitMotherHeap(jaheap_*, unsigned long, unsigned long, unsigned char)
  * Address:	8000EE40
  * Size:	0001B4
  */
-void Jac_AllocHeap(jaheap_*, jaheap_*, unsigned long)
+void Jac_AllocHeap(jaheap_*, jaheap_*, u32)
 {
 	/*
 	.loc_0x0:
@@ -730,7 +730,7 @@ void Jac_DeleteHeap(jaheap_*)
  * Address:	8000F1C0
  * Size:	000064
  */
-void Jac_Move_Children(jaheap_*, long)
+void Jac_Move_Children(jaheap_*, s32)
 {
 	/*
 	.loc_0x0:
@@ -867,7 +867,7 @@ void Jac_CheckFreeHeap_Linear(jaheap_*)
  * Address:	8000F320
  * Size:	0000C4
  */
-void Jac_ShowHeap(jaheap_*, unsigned long)
+void Jac_ShowHeap(jaheap_*, u32)
 {
 	/*
 	.loc_0x0:

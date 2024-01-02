@@ -131,7 +131,7 @@ void CoreNode::getChildCount()
  * Address:	800406A0
  * Size:	00009C
  */
-void CoreNode::load(char*, char*, unsigned long)
+void CoreNode::load(char*, char*, u32)
 {
 	/*
 	.loc_0x0:

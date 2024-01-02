@@ -1,4 +1,4 @@
-
+#include "types.h"
 
 /*
  * --INFO--
@@ -219,7 +219,7 @@ void CheckHaltDSP(void)
  * Address:	800058C0
  * Size:	0000DC
  */
-void MixMonoTrack(short*, long, short* (*)(long))
+void MixMonoTrack(s16*, s32, s16* (*)(s32))
 {
 	/*
 	.loc_0x0:
@@ -298,7 +298,7 @@ void MixMonoTrack(short*, long, short* (*)(long))
  * Address:	800059A0
  * Size:	0000DC
  */
-void MixMonoTrackWide(short*, long, short* (*)(long))
+void MixMonoTrackWide(s16*, s32, s16* (*)(s32))
 {
 	/*
 	.loc_0x0:
@@ -377,7 +377,7 @@ void MixMonoTrackWide(short*, long, short* (*)(long))
  * Address:	80005A80
  * Size:	0000F8
  */
-void MixExtraTrack(short*, long, short* (*)(long))
+void MixExtraTrack(s16*, s32, s16* (*)(s32))
 {
 	/*
 	.loc_0x0:
@@ -465,7 +465,7 @@ void MixExtraTrack(short*, long, short* (*)(long))
  * Address:	80005B80
  * Size:	00008C
  */
-void MixInterleaveTrack(short*, long, short* (*)(long))
+void MixInterleaveTrack(s16*, s32, s16* (*)(s32))
 {
 	/*
 	.loc_0x0:

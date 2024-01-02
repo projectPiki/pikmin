@@ -55,7 +55,7 @@ void PlayState::openStage(int)
  * Address:	80053C9C
  * Size:	000040
  */
-void GamePrefs::setBgmVol(unsigned char)
+void GamePrefs::setBgmVol(u8)
 {
 	/*
 	.loc_0x0:
@@ -85,7 +85,7 @@ void GamePrefs::setBgmVol(unsigned char)
  * Address:	80053CDC
  * Size:	000040
  */
-void GamePrefs::setSfxVol(unsigned char)
+void GamePrefs::setSfxVol(u8)
 {
 	/*
 	.loc_0x0:

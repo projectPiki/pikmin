@@ -536,7 +536,7 @@ void ObjectMgr::killAll()
  * Address:	800E07CC
  * Size:	00016C
  */
-void ObjectMgr::postUpdate(int, float)
+void ObjectMgr::postUpdate(int, f32)
 {
 	/*
 	.loc_0x0:
@@ -937,7 +937,7 @@ void ObjectMgr::findClosest(Vector3f&, Condition*)
  * Address:	800E0CB0
  * Size:	000274
  */
-void ObjectMgr::findClosest(Vector3f&, float, Condition*)
+void ObjectMgr::findClosest(Vector3f&, f32, Condition*)
 {
 	/*
 	.loc_0x0:
@@ -1344,7 +1344,7 @@ void MonoObjectMgr::create(int)
  * Address:	800E11A4
  * Size:	0000B8
  */
-void MonoObjectMgr::postUpdate(int, float)
+void MonoObjectMgr::postUpdate(int, f32)
 {
 	/*
 	.loc_0x0:
@@ -2731,7 +2731,7 @@ void PolyObjectMgr::update()
  * Address:	800E2128
  * Size:	0000AC
  */
-void PolyObjectMgr::postUpdate(int, float)
+void PolyObjectMgr::postUpdate(int, f32)
 {
 	/*
 	.loc_0x0:

@@ -3655,7 +3655,7 @@ void zen::WorldMapMapImageMgr::init()
  * Address:	801DE3BC
  * Size:	000164
  */
-void zen::WorldMapWipe::init(P2DScreen*, unsigned long)
+void zen::WorldMapWipe::init(P2DScreen*, u32)
 {
 	/*
 	.loc_0x0:
@@ -3783,7 +3783,7 @@ zen::WorldMapWipe::WorldMapWipe()
  * Address:	801DE554
  * Size:	000188
  */
-void @unnamed @ ::WorldMapCoursePoint::setPane(P2DScreen*, unsigned long, unsigned long, unsigned long, P2DScreen*, unsigned long)
+void @unnamed @ ::WorldMapCoursePoint::setPane(P2DScreen*, u32, u32, u32, P2DScreen*, u32)
 {
 	/*
 	.loc_0x0:

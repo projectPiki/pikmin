@@ -22,7 +22,7 @@ struct TextColorCallBack : public P2DPaneCallBack {
 	virtual void invoke(P2DPane *);  // _08
 
 	TextColorCallBack(P2DPane *);
-	void setTargetColor(Colour &, Colour &, float);
+	void setTargetColor(Colour &, Colour &, f32);
 };
 } // namespace zen
 

@@ -55,7 +55,7 @@ void SmokeEmitter::emit(Vector3f&, Vector3f&)
  * Address:	........
  * Size:	00016C
  */
-void SmokeEmitter::update(float)
+void SmokeEmitter::update(f32)
 {
 	// UNUSED FUNCTION
 }
@@ -324,7 +324,7 @@ void EffectShape::update()
  * Address:	........
  * Size:	0000BC
  */
-void EffectShape::refresh(Graphics&, Matrix4f&, float*)
+void EffectShape::refresh(Graphics&, Matrix4f&, f32*)
 {
 	// UNUSED FUNCTION
 }
@@ -447,7 +447,7 @@ void EffShpInst::draw(Graphics&)
  * Address:	........
  * Size:	000124
  */
-EffectGeometryRegistration::EffectGeometryRegistration(char*, char*, float, unsigned char)
+EffectGeometryRegistration::EffectGeometryRegistration(char*, char*, f32, u8)
 {
 	// UNUSED FUNCTION
 }
@@ -1359,7 +1359,7 @@ void EffectMgr::create(EffectMgr::modelTypeTable, Vector3f&, Vector3f&, Vector3f
  * Address:	........
  * Size:	000060
  */
-void EffectMgr::create(EffectMgr::simpleTypeTable, Vector3f&, short, Vector3f&, Vector3f&, float, float, zen::CallBack1<zen::particleMdl*>*)
+void EffectMgr::create(EffectMgr::simpleTypeTable, Vector3f&, s16, Vector3f&, Vector3f&, f32, f32, zen::CallBack1<zen::particleMdl*>*)
 {
 	// UNUSED FUNCTION
 }

@@ -97,7 +97,7 @@ void TaiStopGenParticleGeneratorAction::start(Teki&)
  * Address:	8012E638
  * Size:	00008C
  */
-TaiJointEffectAction::TaiJointEffectAction(float, int, int, int, int, int)
+TaiJointEffectAction::TaiJointEffectAction(f32, int, int, int, int, int)
 {
 	/*
 	.loc_0x0:

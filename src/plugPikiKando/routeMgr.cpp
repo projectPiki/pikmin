@@ -52,7 +52,7 @@ PathFinder::Buffer::Buffer()
  * Address:	........
  * Size:	000048
  */
-void PathFinder::handle2idx(unsigned long)
+void PathFinder::handle2idx(u32)
 {
 	// UNUSED FUNCTION
 }
@@ -125,7 +125,7 @@ void PathFinder::findASync(PathFinder::Buffer*, int, int, bool)
  * Address:	8009F6AC
  * Size:	000088
  */
-void PathFinder::checkASync(unsigned long)
+void PathFinder::checkASync(u32)
 {
 	/*
 	.loc_0x0:
@@ -185,7 +185,7 @@ void PathFinder::checkASync(unsigned long)
  * Address:	8009F734
  * Size:	0000D8
  */
-void PathFinder::releaseHandle(unsigned long)
+void PathFinder::releaseHandle(u32)
 {
 	/*
 	.loc_0x0:
@@ -954,7 +954,7 @@ void PathFinder::selectWay(PathFinder::Buffer&, int, PathFinder::Buffer*, int, b
  * Address:	800A0010
  * Size:	000048
  */
-void RouteMgr::getPathFinder(unsigned long)
+void RouteMgr::getPathFinder(u32)
 {
 	/*
 	.loc_0x0:
@@ -1054,7 +1054,7 @@ void RouteMgr::update()
  * Address:	800A0108
  * Size:	00004C
  */
-void RouteMgr::getNumWayPoints(unsigned long)
+void RouteMgr::getNumWayPoints(u32)
 {
 	/*
 	.loc_0x0:
@@ -1089,7 +1089,7 @@ void RouteMgr::getNumWayPoints(unsigned long)
  * Address:	800A0154
  * Size:	0003B8
  */
-void RouteMgr::getSafePosition(unsigned long, Vector3f&)
+void RouteMgr::getSafePosition(u32, Vector3f&)
 {
 	/*
 	.loc_0x0:
@@ -1355,7 +1355,7 @@ void RouteMgr::getSafePosition(unsigned long, Vector3f&)
  * Address:	800A050C
  * Size:	000474
  */
-void RouteMgr::findNearestEdge(WayPoint**, WayPoint**, unsigned long, Vector3f&, bool, bool, bool)
+void RouteMgr::findNearestEdge(WayPoint**, WayPoint**, u32, Vector3f&, bool, bool, bool)
 {
 	/*
 	.loc_0x0:
@@ -1692,7 +1692,7 @@ void RouteMgr::findNearestEdge(WayPoint**, WayPoint**, unsigned long, Vector3f&,
  * Address:	800A0980
  * Size:	000768
  */
-void RouteMgr::findNearestEdgeAvoidOff(WayPoint**, WayPoint**, unsigned long, Vector3f&, bool, bool, bool)
+void RouteMgr::findNearestEdgeAvoidOff(WayPoint**, WayPoint**, u32, Vector3f&, bool, bool, bool)
 {
 	/*
 	.loc_0x0:
@@ -2268,7 +2268,7 @@ void RouteMgr::findNearestEdgeAvoidOff(WayPoint**, WayPoint**, unsigned long, Ve
  * Address:	800A10E8
  * Size:	00016C
  */
-void RouteMgr::findNearestWayPoint(unsigned long, Vector3f&, bool)
+void RouteMgr::findNearestWayPoint(u32, Vector3f&, bool)
 {
 	/*
 	.loc_0x0:
@@ -2385,7 +2385,7 @@ void RouteMgr::findNearestWayPoint(unsigned long, Vector3f&, bool)
  * Address:	800A1254
  * Size:	00016C
  */
-void RouteMgr::findNearestOffWayPoint(unsigned long, Vector3f&, bool)
+void RouteMgr::findNearestOffWayPoint(u32, Vector3f&, bool)
 {
 	/*
 	.loc_0x0:
@@ -2502,7 +2502,7 @@ void RouteMgr::findNearestOffWayPoint(unsigned long, Vector3f&, bool)
  * Address:	800A13C0
  * Size:	00017C
  */
-void RouteMgr::createOffPlane(unsigned long, Plane&, WayPoint*)
+void RouteMgr::createOffPlane(u32, Plane&, WayPoint*)
 {
 	/*
 	.loc_0x0:
@@ -2619,7 +2619,7 @@ void RouteMgr::createOffPlane(unsigned long, Plane&, WayPoint*)
  * Address:	........
  * Size:	000080
  */
-void RouteMgr::dump(unsigned long)
+void RouteMgr::dump(u32)
 {
 	// UNUSED FUNCTION
 }
@@ -2629,7 +2629,7 @@ void RouteMgr::dump(unsigned long)
  * Address:	800A153C
  * Size:	00013C
  */
-void RouteMgr::findNearestWayPointAll(unsigned long, Vector3f&)
+void RouteMgr::findNearestWayPointAll(u32, Vector3f&)
 {
 	/*
 	.loc_0x0:
@@ -2732,7 +2732,7 @@ void RouteMgr::findNearestWayPointAll(unsigned long, Vector3f&)
  * Address:	800A1678
  * Size:	00005C
  */
-void RouteMgr::getWayPoint(unsigned long, int)
+void RouteMgr::getWayPoint(u32, int)
 {
 	/*
 	.loc_0x0:
@@ -3156,7 +3156,7 @@ void RouteMgr::initLinks()
  * Address:	800A1B40
  * Size:	000048
  */
-void RouteMgr::id2idx(unsigned long)
+void RouteMgr::id2idx(u32)
 {
 	/*
 	.loc_0x0:
@@ -4823,7 +4823,7 @@ void RouteMgr::refresh(Graphics&)
  * Address:	800A2E44
  * Size:	000224
  */
-void drawBattenPoleSpec(Graphics&, Vector3f&, float, char*, Colour&)
+void drawBattenPoleSpec(Graphics&, Vector3f&, f32, char*, Colour&)
 {
 	/*
 	.loc_0x0:

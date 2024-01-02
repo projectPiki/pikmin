@@ -1373,7 +1373,7 @@ void ParseMapFile()
  * Address:	........
  * Size:	000040
  */
-void System::findAddress(unsigned long)
+void System::findAddress(u32)
 {
 	// UNUSED FUNCTION
 }
@@ -1544,7 +1544,7 @@ System::System()
  * Address:	........
  * Size:	0000BC
  */
-void sysErrorHandler(unsigned short, OSContext*, unsigned long, unsigned long)
+void sysErrorHandler(u16, OSContext*, u32, u32)
 {
 	// UNUSED FUNCTION
 }
@@ -2096,7 +2096,7 @@ void System::Initialise()
  * Address:	800461B4
  * Size:	000004
  */
-void System::sndPlaySe(unsigned long) { }
+void System::sndPlaySe(u32) { }
 
 /*
  * --INFO--
@@ -2414,7 +2414,7 @@ void LoadIdler::init() { }
  * Address:	80046554
  * Size:	000094
  */
-void System::startLoading(LoadIdler*, bool, unsigned long)
+void System::startLoading(LoadIdler*, bool, u32)
 {
 	/*
 	.loc_0x0:
@@ -2534,7 +2534,7 @@ void System::endLoading()
  * Address:	80046694
  * Size:	00004C
  */
-void doneDMA(unsigned long)
+void doneDMA(u32)
 {
 	/*
 	.loc_0x0:
@@ -2581,7 +2581,7 @@ void System::copyWaitUntilDone()
  * Address:	800466F0
  * Size:	000104
  */
-void System::copyRamToCache(unsigned long, unsigned long, unsigned long)
+void System::copyRamToCache(u32, u32, u32)
 {
 	/*
 	.loc_0x0:
@@ -2662,7 +2662,7 @@ void System::copyRamToCache(unsigned long, unsigned long, unsigned long)
  * Address:	800467F4
  * Size:	0000C4
  */
-void System::copyCacheToRam(unsigned long, unsigned long, unsigned long)
+void System::copyCacheToRam(u32, u32, u32)
 {
 	/*
 	.loc_0x0:
@@ -2723,7 +2723,7 @@ void System::copyCacheToRam(unsigned long, unsigned long, unsigned long)
  * Address:	800468B8
  * Size:	0000C0
  */
-void freeBuffer(unsigned long)
+void freeBuffer(u32)
 {
 	/*
 	.loc_0x0:

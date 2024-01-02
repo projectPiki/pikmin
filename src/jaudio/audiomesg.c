@@ -1,11 +1,11 @@
-
+#include "types.h"
 
 /*
  * --INFO--
  * Address:	80008160
  * Size:	000018
  */
-void Jac_InitMessageQueue(Jac_MessageQueue*, void**, long)
+void Jac_InitMessageQueue(Jac_MessageQueue*, void**, s32)
 {
 	/*
 	.loc_0x0:

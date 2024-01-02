@@ -25,7 +25,7 @@ void _Print(char*, ...)
  * Address:	........
  * Size:	000014
  */
-void MemoryCard::GetBlockSize(long)
+void MemoryCard::GetBlockSize(s32)
 {
 	// UNUSED FUNCTION
 }
@@ -125,7 +125,7 @@ void MemoryCard::getGameFileStream(int)
  * Address:	800738E0
  * Size:	00017C
  */
-void MemoryCard::calcChecksum(void*, unsigned long)
+void MemoryCard::calcChecksum(void*, u32)
 {
 	/*
 	.loc_0x0:

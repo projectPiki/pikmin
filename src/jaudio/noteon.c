@@ -1,11 +1,11 @@
-
+#include "types.h"
 
 /*
  * --INFO--
  * Address:	80013840
  * Size:	000394
  */
-void NoteON(seqp_*, long, long, long, long)
+void NoteON(seqp_*, s32, s32, s32, s32)
 {
 	/*
 	.loc_0x0:
@@ -290,7 +290,7 @@ void NoteON(seqp_*, long, long, long, long)
  * Address:	80013BE0
  * Size:	000090
  */
-void NoteOFF_R(seqp_*, unsigned char, unsigned short)
+void NoteOFF_R(seqp_*, u8, u16)
 {
 	/*
 	.loc_0x0:
@@ -346,7 +346,7 @@ void NoteOFF_R(seqp_*, unsigned char, unsigned short)
  * Address:	80013C80
  * Size:	000024
  */
-void NoteOFF(seqp_*, unsigned char)
+void NoteOFF(seqp_*, u8)
 {
 	/*
 	.loc_0x0:
@@ -367,7 +367,7 @@ void NoteOFF(seqp_*, unsigned char)
  * Address:	80013CC0
  * Size:	000058
  */
-void GateON(seqp_*, long, long, long, long)
+void GateON(seqp_*, s32, s32, s32, s32)
 {
 	/*
 	.loc_0x0:
@@ -407,7 +407,7 @@ void GateON(seqp_*, long, long, long, long)
  * Address:	........
  * Size:	000008
  */
-void ProgramChange(long)
+void ProgramChange(s32)
 {
 	// UNUSED FUNCTION
 }
@@ -417,7 +417,7 @@ void ProgramChange(long)
  * Address:	80013D20
  * Size:	000064
  */
-void CheckNoteStop(seqp_*, long)
+void CheckNoteStop(seqp_*, s32)
 {
 	/*
 	.loc_0x0:

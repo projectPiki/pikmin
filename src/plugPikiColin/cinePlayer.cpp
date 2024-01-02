@@ -2156,7 +2156,7 @@ void ActorInstance::initInstance()
  * Address:	80071468
  * Size:	000DCC
  */
-void ActorInstance::checkEventKeys(float, float, Vector3f&)
+void ActorInstance::checkEventKeys(f32, f32, Vector3f&)
 {
 	/*
 	.loc_0x0:
@@ -3077,7 +3077,7 @@ void ActorInstance::checkEventKeys(float, float, Vector3f&)
  * Address:	80072234
  * Size:	000F10
  */
-void ActorInstance::refresh(Matrix4f&, Graphics&, float*)
+void ActorInstance::refresh(Matrix4f&, Graphics&, f32*)
 {
 	/*
 	.loc_0x0:

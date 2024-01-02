@@ -127,7 +127,7 @@ void GameLoadIdler::draw(Graphics&)
  * Address:	800515C8
  * Size:	000254
  */
-void GameFlow::drawLoadLogo(Graphics&, bool, Texture*, float)
+void GameFlow::drawLoadLogo(Graphics&, bool, Texture*, f32)
 {
 	/*
 	.loc_0x0:
@@ -300,7 +300,7 @@ void GameFlow::drawLoadLogo(Graphics&, bool, Texture*, float)
  * Address:	........
  * Size:	000020
  */
-void WorldClock::setClockSpd(float)
+void WorldClock::setClockSpd(f32)
 {
 	// UNUSED FUNCTION
 }
@@ -310,7 +310,7 @@ void WorldClock::setClockSpd(float)
  * Address:	8005181C
  * Size:	0000A8
  */
-void WorldClock::setTime(float)
+void WorldClock::setTime(f32)
 {
 	/*
 	.loc_0x0:
@@ -364,7 +364,7 @@ void WorldClock::setTime(float)
  * Address:	........
  * Size:	000044
  */
-void WorldClock::reset(float)
+void WorldClock::reset(f32)
 {
 	// UNUSED FUNCTION
 }
@@ -374,7 +374,7 @@ void WorldClock::reset(float)
  * Address:	........
  * Size:	00006C
  */
-void WorldClock::age(float)
+void WorldClock::age(f32)
 {
 	// UNUSED FUNCTION
 }
@@ -384,7 +384,7 @@ void WorldClock::age(float)
  * Address:	800518C4
  * Size:	0000F8
  */
-void WorldClock::update(float)
+void WorldClock::update(f32)
 {
 	/*
 	.loc_0x0:

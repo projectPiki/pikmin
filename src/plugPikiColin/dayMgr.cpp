@@ -4538,7 +4538,7 @@ LightMenu::LightMenu(Light*, int*, Controller*, Font*, bool)
  * Address:	8006D560
  * Size:	000B30
  */
-FogMenu::FogMenu(Colour*, float*, float*, Controller*, Font*, bool)
+FogMenu::FogMenu(Colour*, f32*, f32*, Controller*, Font*, bool)
 {
 	/*
 	.loc_0x0:
@@ -5703,7 +5703,7 @@ void DayMgr::menuDecreaseTime(Menu&)
  * Address:	8006E55C
  * Size:	000A38
  */
-void DayMgr::refresh(Graphics&, float, int)
+void DayMgr::refresh(Graphics&, f32, int)
 {
 	/*
 	.loc_0x0:

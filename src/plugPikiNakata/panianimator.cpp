@@ -438,7 +438,7 @@ void PaniAnimator::finishMotion(PaniMotionInfo&)
  * Address:	8011F2E0
  * Size:	00010C
  */
-void PaniAnimator::animate(float)
+void PaniAnimator::animate(f32)
 {
 	/*
 	.loc_0x0:
@@ -733,7 +733,7 @@ void PaniAnimator::checkConstantKey(int)
  * Address:	8011F67C
  * Size:	000124
  */
-void PaniAnimator::checkEventKeys(float, float)
+void PaniAnimator::checkEventKeys(f32, f32)
 {
 	/*
 	.loc_0x0:

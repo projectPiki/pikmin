@@ -703,7 +703,7 @@ zen::ogRaderMgr::ogRaderMgr()
  * Address:	........
  * Size:	00003C
  */
-void zen::ogRaderMgr::setRaderScale(float)
+void zen::ogRaderMgr::setRaderScale(f32)
 {
 	// UNUSED FUNCTION
 }
@@ -713,7 +713,7 @@ void zen::ogRaderMgr::setRaderScale(float)
  * Address:	........
  * Size:	00004C
  */
-void zen::ogRaderMgr::chaseRaderScale(float)
+void zen::ogRaderMgr::chaseRaderScale(f32)
 {
 	// UNUSED FUNCTION
 }
@@ -723,7 +723,7 @@ void zen::ogRaderMgr::chaseRaderScale(float)
  * Address:	80185A10
  * Size:	00008C
  */
-void zen::ogRaderMgr::setRaderAngle(float)
+void zen::ogRaderMgr::setRaderAngle(f32)
 {
 	/*
 	.loc_0x0:
@@ -1786,7 +1786,7 @@ void zen::ogRaderMgr::startSub()
  * Address:	8018680C
  * Size:	000048
  */
-void P2DPane::rotate(P2DRotateAxis, float)
+void P2DPane::rotate(P2DRotateAxis, f32)
 {
 	/*
 	.loc_0x0:
@@ -2069,7 +2069,7 @@ void zen::ogRaderMgr::updateGame(Controller*)
  * Address:	80186B08
  * Size:	000100
  */
-void zen::ogRaderMgr::AreaScroll(float*, float*, float, float)
+void zen::ogRaderMgr::AreaScroll(f32*, f32*, f32, f32)
 {
 	/*
 	.loc_0x0:
@@ -2879,7 +2879,7 @@ void zen::ogRaderMgr::update(Controller*)
  * Address:	........
  * Size:	000098
  */
-void zen::ogRaderMgr::RotatePos(float*, float*)
+void zen::ogRaderMgr::RotatePos(f32*, f32*)
 {
 	// UNUSED FUNCTION
 }
@@ -2889,7 +2889,7 @@ void zen::ogRaderMgr::RotatePos(float*, float*)
  * Address:	........
  * Size:	00045C
  */
-void zen::ogRaderMgr::DrawCircle(unsigned char, unsigned char, unsigned char, unsigned char, float)
+void zen::ogRaderMgr::DrawCircle(u8, u8, u8, u8, f32)
 {
 	// UNUSED FUNCTION
 }

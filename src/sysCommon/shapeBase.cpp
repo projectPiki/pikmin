@@ -668,7 +668,7 @@ void Joint::render(Graphics&)
  * Address:	8002A70C
  * Size:	00004C
  */
-void AnimContext::animate(float)
+void AnimContext::animate(f32)
 {
 	/*
 	.loc_0x0:
@@ -701,7 +701,7 @@ void AnimContext::animate(float)
  * Address:	8002A758
  * Size:	0001C4
  */
-void extract(float, AnimParam&, DataChunk&)
+void extract(f32, AnimParam&, DataChunk&)
 {
 	/*
 	.loc_0x0:
@@ -887,7 +887,7 @@ CamDataInfo::CamDataInfo()
  * Address:	8002A998
  * Size:	000334
  */
-void CamDataInfo::update(float, Matrix4f&)
+void CamDataInfo::update(f32, Matrix4f&)
 {
 	/*
 	.loc_0x0:
@@ -1144,7 +1144,7 @@ void CamDataInfo::update(float, Matrix4f&)
  * Address:	8002ACCC
  * Size:	000264
  */
-void LightDataInfo::update(float)
+void LightDataInfo::update(f32)
 {
 	/*
 	.loc_0x0:
@@ -2296,7 +2296,7 @@ void SceneData::parse(CmdStream*)
  * Address:	8002BC7C
  * Size:	0000A0
  */
-void DataChunk::addData(float)
+void DataChunk::addData(f32)
 {
 	/*
 	.loc_0x0:
@@ -2538,7 +2538,7 @@ LightDataInfo::LightDataInfo()
  * Address:	8002BF4C
  * Size:	000370
  */
-void AnimData::extractSRT(SRT&, int, AnimDataInfo*, float)
+void AnimData::extractSRT(SRT&, int, AnimDataInfo*, f32)
 {
 	/*
 	.loc_0x0:
@@ -2812,7 +2812,7 @@ void AnimData::extractSRT(SRT&, int, AnimDataInfo*, float)
  * Address:	8002C2BC
  * Size:	000150
  */
-void AnimData::makeAnimSRT(int, Matrix4f*, Matrix4f*, AnimDataInfo*, float)
+void AnimData::makeAnimSRT(int, Matrix4f*, Matrix4f*, AnimDataInfo*, f32)
 {
 	/*
 	.loc_0x0:
@@ -5864,7 +5864,7 @@ void AnimDck::getAnimInfo(CmdStream*)
  * Address:	8002E9FC
  * Size:	000220
  */
-void AnimDck::extractSRT(SRT&, int, AnimDataInfo*, float)
+void AnimDck::extractSRT(SRT&, int, AnimDataInfo*, f32)
 {
 	/*
 	.loc_0x0:
@@ -6048,7 +6048,7 @@ void AnimDck::extractSRT(SRT&, int, AnimDataInfo*, float)
  * Address:	8002EC1C
  * Size:	0000CC
  */
-void AnimDck::makeAnimSRT(int, Matrix4f*, Matrix4f*, AnimDataInfo*, float)
+void AnimDck::makeAnimSRT(int, Matrix4f*, Matrix4f*, AnimDataInfo*, f32)
 {
 	/*
 	.loc_0x0:
@@ -6408,7 +6408,7 @@ void BaseShape::makeRouteGroup()
  * Address:	8002F09C
  * Size:	0000F4
  */
-void ShapeDynMaterials::animate(float*)
+void ShapeDynMaterials::animate(f32*)
 {
 	/*
 	.loc_0x0:
@@ -6858,7 +6858,7 @@ BaseShape::BaseShape()
  * Address:	8002F684
  * Size:	00016C
  */
-void BaseShape::countMaterials(Joint*, unsigned long)
+void BaseShape::countMaterials(Joint*, u32)
 {
 	/*
 	.loc_0x0:
@@ -6987,7 +6987,7 @@ void BaseShape::countMaterials(Joint*, unsigned long)
  * Address:	8002F7F0
  * Size:	0000C4
  */
-void BaseShape::recTraverseMaterials(Joint*, IDelegate2<Joint*, unsigned long>*)
+void BaseShape::recTraverseMaterials(Joint*, IDelegate2<Joint*, u32>*)
 {
 	/*
 	.loc_0x0:
@@ -8472,7 +8472,7 @@ TexAttr::TexAttr()
  * Address:	........
  * Size:	000064
  */
-void BaseShape::skipChunk(RandomAccessStream&, unsigned long)
+void BaseShape::skipChunk(RandomAccessStream&, u32)
 {
 	// UNUSED FUNCTION
 }
@@ -14194,7 +14194,7 @@ void AnimFrameCacher::cacheFrameSpace(int, AnimCacheInfo*)
  * Address:	80035314
  * Size:	0002E0
  */
-void BaseShape::updateAnim(Graphics&, Matrix4f&, float*)
+void BaseShape::updateAnim(Graphics&, Matrix4f&, f32*)
 {
 	/*
 	.loc_0x0:
@@ -14548,7 +14548,7 @@ void BaseShape::calcWeightedMatrices()
  * Address:	80035784
  * Size:	000140
  */
-void BaseShape::makeNormalIndexes(unsigned short*)
+void BaseShape::makeNormalIndexes(u16*)
 {
 	/*
 	.loc_0x0:
@@ -14884,7 +14884,7 @@ void AnimData::writeType(RandomAccessStream&) { }
  * Address:	80035A6C
  * Size:	000030
  */
-void Delegate2<BaseShape, Joint*, unsigned long>::invoke(Joint*, unsigned long)
+void Delegate2<BaseShape, Joint*, u32>::invoke(Joint*, u32)
 {
 	/*
 	.loc_0x0:

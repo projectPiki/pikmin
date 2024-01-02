@@ -35,7 +35,7 @@ PeveWaitEvent::PeveWaitEvent()
  * Address:	........
  * Size:	000010
  */
-void PeveWaitEvent::makeWaitEvent(float)
+void PeveWaitEvent::makeWaitEvent(f32)
 {
 	// UNUSED FUNCTION
 }
@@ -240,7 +240,7 @@ PeveParabolaEvent::PeveParabolaEvent()
  * Address:	80126148
  * Size:	0000B0
  */
-void PeveParabolaEvent::makeParabolaEvent(PeveCondition*, NVector3fIO*, NVector3f&, float, float)
+void PeveParabolaEvent::makeParabolaEvent(PeveCondition*, NVector3fIO*, NVector3f&, f32, f32)
 {
 	/*
 	.loc_0x0:
@@ -296,7 +296,7 @@ void PeveParabolaEvent::makeParabolaEvent(PeveCondition*, NVector3fIO*, NVector3
  * Address:	801261F8
  * Size:	000034
  */
-void PeveHorizontalSinWaveEvent::makeHorizontalSinWaveEvent(PeveCondition*, NVector3fIO*, NVector3f, float, float, float, float)
+void PeveHorizontalSinWaveEvent::makeHorizontalSinWaveEvent(PeveCondition*, NVector3fIO*, NVector3f, f32, f32, f32, f32)
 {
 	/*
 	.loc_0x0:
@@ -473,7 +473,7 @@ PeveCircleMoveEvent::PeveCircleMoveEvent()
  * Address:	801263EC
  * Size:	000028
  */
-void PeveCircleMoveEvent::makeCircleMoveEvent(float, NVector3fIO*, NVector3fIO*, float, float, float, float)
+void PeveCircleMoveEvent::makeCircleMoveEvent(f32, NVector3fIO*, NVector3fIO*, f32, f32, f32, f32)
 {
 	/*
 	.loc_0x0:
@@ -732,7 +732,7 @@ PeveCircleMoveWatchEvent::PeveCircleMoveWatchEvent()
  * Address:	........
  * Size:	000058
  */
-void PeveCircleMoveWatchEvent::makeCircleMoveWatchEvent(float, NVector3fIO*, NVector3fIO*, NVector3fIO*, float, float, float, float, float)
+void PeveCircleMoveWatchEvent::makeCircleMoveWatchEvent(f32, NVector3fIO*, NVector3fIO*, NVector3fIO*, f32, f32, f32, f32, f32)
 {
 	// UNUSED FUNCTION
 }
@@ -752,7 +752,7 @@ PeveFunctionCurveEvent::PeveFunctionCurveEvent()
  * Address:	........
  * Size:	00001C
  */
-void PeveFunctionCurveEvent::makeFunctionCurveEvent(PeveCondition*, NVector3fIO*, NFunction3D*, float, float, bool)
+void PeveFunctionCurveEvent::makeFunctionCurveEvent(PeveCondition*, NVector3fIO*, NFunction3D*, f32, f32, bool)
 {
 	// UNUSED FUNCTION
 }
@@ -853,7 +853,7 @@ PeveHomingPositionEvent::PeveHomingPositionEvent()
  * Address:	........
  * Size:	000014
  */
-void PeveHomingPositionEvent::makeHomingPositionEvent(PeveCondition*, NVector3fIO*, NVector3fIO*, float)
+void PeveHomingPositionEvent::makeHomingPositionEvent(PeveCondition*, NVector3fIO*, NVector3fIO*, f32)
 {
 	// UNUSED FUNCTION
 }
@@ -960,8 +960,8 @@ PeveHomingPostureEvent::PeveHomingPostureEvent()
  * Address:	........
  * Size:	00002C
  */
-void PeveHomingPostureEvent::makeHomingPostureEvent(PeveCondition*, NVector3fIO*, NVector3fIO*, float, PeveCondition*, NVector3fIO*,
-                                                    NVector3fIO*, float)
+void PeveHomingPostureEvent::makeHomingPostureEvent(PeveCondition*, NVector3fIO*, NVector3fIO*, f32, PeveCondition*, NVector3fIO*,
+                                                    NVector3fIO*, f32)
 {
 	// UNUSED FUNCTION
 }
@@ -1301,7 +1301,7 @@ PeveVibrationEvent::PeveVibrationEvent()
  * Address:	80126C18
  * Size:	000088
  */
-void PeveVibrationEvent::makeVibrationEvent(float, NPosture3DIO*, NVector3f&, float, float, float)
+void PeveVibrationEvent::makeVibrationEvent(f32, NPosture3DIO*, NVector3f&, f32, f32, f32)
 {
 	/*
 	.loc_0x0:
@@ -1446,7 +1446,7 @@ void PeveInterpolationEvent::isFinished()
  * Address:	80126DC4
  * Size:	000008
  */
-void PeveInterpolationEvent::setStartTime(float)
+void PeveInterpolationEvent::setStartTime(f32)
 {
 	/*
 	.loc_0x0:
@@ -1474,7 +1474,7 @@ void PeveInterpolationEvent::getStartTime()
  * Address:	80126DD4
  * Size:	000008
  */
-void PeveInterpolationEvent::setPeriod(float)
+void PeveInterpolationEvent::setPeriod(f32)
 {
 	/*
 	.loc_0x0:
@@ -1502,7 +1502,7 @@ void PeveInterpolationEvent::getPeriod()
  * Address:	80126DE4
  * Size:	000008
  */
-void PeveInterpolationEvent::setTime(float)
+void PeveInterpolationEvent::setTime(f32)
 {
 	/*
 	.loc_0x0:

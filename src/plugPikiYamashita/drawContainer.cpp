@@ -3676,7 +3676,7 @@ void zen::DrawContainer::start(zen::DrawContainer::containerType, int, int, int,
  * Address:	801BDA8C
  * Size:	000164
  */
-void zen::MessageMgr::setMessage(zen::MessageMgr::messageFlag, float)
+void zen::MessageMgr::setMessage(zen::MessageMgr::messageFlag, f32)
 {
 	/*
 	.loc_0x0:
@@ -5170,7 +5170,7 @@ void zen::DrawContainer::update(int&)
  * Address:	801BED74
  * Size:	0003C4
  */
-void zen::WindowPaneMgr::update(zen::WindowPaneMgr::modeFlag, float, float)
+void zen::WindowPaneMgr::update(zen::WindowPaneMgr::modeFlag, f32, f32)
 {
 	/*
 	.loc_0x0:

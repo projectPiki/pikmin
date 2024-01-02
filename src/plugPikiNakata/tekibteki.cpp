@@ -25,7 +25,7 @@ void _Print(char*, ...)
  * Address:	80143F5C
  * Size:	000064
  */
-void BTeki::viewStartTrembleMotion(float)
+void BTeki::viewStartTrembleMotion(f32)
 {
 	/*
 	.loc_0x0:
@@ -62,7 +62,7 @@ void BTeki::viewStartTrembleMotion(float)
  * Address:	80143FC0
  * Size:	000008
  */
-void BTeki::viewSetMotionSpeed(float)
+void BTeki::viewSetMotionSpeed(f32)
 {
 	/*
 	.loc_0x0:
@@ -365,7 +365,7 @@ void BTeki::isPellet(int)
  * Address:	8014422C
  * Size:	000050
  */
-void BTeki::calcCircleDistanceStatic(Vector3f&, float, Vector3f&, float)
+void BTeki::calcCircleDistanceStatic(Vector3f&, f32, Vector3f&, f32)
 {
 	/*
 	.loc_0x0:
@@ -414,7 +414,7 @@ void BTeki::alwaysUpdatePlatform()
  * Address:	80144290
  * Size:	0000A8
  */
-void BTeki::calcSphereDistanceStatic(Vector3f&, float, Vector3f&, float)
+void BTeki::calcSphereDistanceStatic(Vector3f&, f32, Vector3f&, f32)
 {
 	/*
 	.loc_0x0:
@@ -468,7 +468,7 @@ void BTeki::calcSphereDistanceStatic(Vector3f&, float, Vector3f&, float)
  * Address:	80144338
  * Size:	000238
  */
-void BTeki::moveTowardStatic(Vector3f&, Vector3f&, float, Vector3f&)
+void BTeki::moveTowardStatic(Vector3f&, Vector3f&, f32, Vector3f&)
 {
 	/*
 	.loc_0x0:
@@ -636,7 +636,7 @@ void BTeki::moveTowardStatic(Vector3f&, Vector3f&, float, Vector3f&)
  * Address:	80144570
  * Size:	000028
  */
-void BTeki::arrivedAt(float, float)
+void BTeki::arrivedAt(f32, f32)
 {
 	/*
 	.loc_0x0:
@@ -1595,7 +1595,7 @@ void BTeki::finishStoppingMove()
  * Address:	8014513C
  * Size:	0000A4
  */
-void BTeki::getVelocityAnimationSpeed(float)
+void BTeki::getVelocityAnimationSpeed(f32)
 {
 	/*
 	.loc_0x0:
@@ -2252,7 +2252,7 @@ void BTeki::exitCourse()
  * Address:	80145908
  * Size:	0000AC
  */
-void BTeki::gravitate(float)
+void BTeki::gravitate(f32)
 {
 	/*
 	.loc_0x0:
@@ -2531,7 +2531,7 @@ void BTeki::makeDamaged()
  * Address:	80145BF4
  * Size:	00004C
  */
-void BTeki::startDamageMotion(float, float)
+void BTeki::startDamageMotion(f32, f32)
 {
 	/*
 	.loc_0x0:
@@ -3320,7 +3320,7 @@ void BTeki::generateTeki(int)
  * Address:	........
  * Size:	000140
  */
-void BTeki::outputDirectionPosition(Vector3f&, float, float)
+void BTeki::outputDirectionPosition(Vector3f&, f32, f32)
 {
 	// UNUSED FUNCTION
 }
@@ -3646,7 +3646,7 @@ void BTeki::getParameterF(int)
  * Address:	801469C8
  * Size:	000020
  */
-void NMathF::cos(float)
+void NMathF::cos(f32)
 {
 	/*
 	.loc_0x0:
@@ -3666,7 +3666,7 @@ void NMathF::cos(float)
  * Address:	801469E8
  * Size:	000020
  */
-void NMathF::sin(float)
+void NMathF::sin(f32)
 {
 	/*
 	.loc_0x0:
@@ -3848,7 +3848,7 @@ void BTeki::nearestAngleTarget(Creature*)
  * Address:	80146BB0
  * Size:	000020
  */
-void BTeki::cullableCenter(Creature&, float)
+void BTeki::cullableCenter(Creature&, f32)
 {
 	/*
 	.loc_0x0:
@@ -3868,7 +3868,7 @@ void BTeki::cullableCenter(Creature&, float)
  * Address:	80146BD0
  * Size:	000088
  */
-void BTeki::cullableSphere(Creature&, float)
+void BTeki::cullableSphere(Creature&, f32)
 {
 	/*
 	.loc_0x0:
@@ -3914,7 +3914,7 @@ void BTeki::cullableSphere(Creature&, float)
  * Address:	80146C58
  * Size:	0000BC
  */
-void BTeki::inSectorPosition(Vector3f&, float, float)
+void BTeki::inSectorPosition(Vector3f&, f32, f32)
 {
 	/*
 	.loc_0x0:
@@ -4544,7 +4544,7 @@ void BTeki::calcTargetAngle(Vector3f&)
  * Address:	801473F0
  * Size:	0001DC
  */
-void BTeki::moveToward(Vector3f&, float)
+void BTeki::moveToward(Vector3f&, f32)
 {
 	/*
 	.loc_0x0:
@@ -4685,7 +4685,7 @@ void BTeki::moveToward(Vector3f&, float)
  * Address:	801475CC
  * Size:	0000C8
  */
-void BTeki::turnToward(float, float)
+void BTeki::turnToward(f32, f32)
 {
 	/*
 	.loc_0x0:
@@ -4763,7 +4763,7 @@ void BTeki::turnToward(float, float)
  * Address:	80147694
  * Size:	00004C
  */
-void BTeki::rotateTeki(float)
+void BTeki::rotateTeki(f32)
 {
 	/*
 	.loc_0x0:
@@ -4798,7 +4798,7 @@ void BTeki::rotateTeki(float)
  * Address:	........
  * Size:	000218
  */
-void BTeki::jumpTo(Vector3f&, float)
+void BTeki::jumpTo(Vector3f&, f32)
 {
 	// UNUSED FUNCTION
 }
@@ -4818,7 +4818,7 @@ void BTeki::insideDirection(Vector3f&)
  * Address:	801476E0
  * Size:	000254
  */
-void BTeki::getClosestNaviPiki(Condition&, float*)
+void BTeki::getClosestNaviPiki(Condition&, f32*)
 {
 	/*
 	.loc_0x0:
@@ -4991,7 +4991,7 @@ void BTeki::getClosestNaviPiki(Condition&, float*)
  * Address:	80147934
  * Size:	0000DC
  */
-void BTeki::attackTarget(Creature&, float, float, Condition&)
+void BTeki::attackTarget(Creature&, f32, f32, Condition&)
 {
 	/*
 	.loc_0x0:
@@ -7319,7 +7319,7 @@ void BTeki::drawTekiDebugInfoDefault(Graphics&)
  * Address:	80149374
  * Size:	0000F8
  */
-void BTeki::drawRange(Graphics&, Vector3f&, float, Colour&)
+void BTeki::drawRange(Graphics&, Vector3f&, f32, Colour&)
 {
 	/*
 	.loc_0x0:

@@ -344,7 +344,7 @@ void YTeki::getMapAttribute()
  * Address:	801A2AC8
  * Size:	000034
  */
-void YTeki::moveTowardPriorityFaceDir(Vector3f&, float)
+void YTeki::moveTowardPriorityFaceDir(Vector3f&, f32)
 {
 	/*
 	.loc_0x0:
@@ -371,7 +371,7 @@ void YTeki::moveTowardPriorityFaceDir(Vector3f&, float)
  * Address:	801A2AFC
  * Size:	000150
  */
-void YTeki::moveTowardPriorityFaceDir(Vector3f&, float, float)
+void YTeki::moveTowardPriorityFaceDir(Vector3f&, f32, f32)
 {
 	/*
 	.loc_0x0:
@@ -554,7 +554,7 @@ void YTeki::turnToTarget()
  * Address:	801A2D48
  * Size:	000114
  */
-void YTeki::flyingStay(float)
+void YTeki::flyingStay(f32)
 {
 	/*
 	.loc_0x0:

@@ -25,7 +25,7 @@ void _Print(char*, ...)
  * Address:	8008D954
  * Size:	000768
  */
-void Creature::respondColl(Creature*, float, CollPart*, CollPart*, const Vector3f&)
+void Creature::respondColl(Creature*, f32, CollPart*, CollPart*, const Vector3f&)
 {
 	/*
 	.loc_0x0:

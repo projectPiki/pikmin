@@ -3165,7 +3165,7 @@ void TaiSwallowNoticeAction::act(Teki&)
  * Address:	80141DC4
  * Size:	000058
  */
-TaiSwallowLegEffectAction::TaiSwallowLegEffectAction(float)
+TaiSwallowLegEffectAction::TaiSwallowLegEffectAction(f32)
 {
 	/*
 	.loc_0x0:
@@ -3266,7 +3266,7 @@ void TaiSwallowLegEffectAction::setType(Vector3f&, int, int)
  * Address:	80141EE0
  * Size:	000054
  */
-TaiSwallowMissAttackingEffectAction::TaiSwallowMissAttackingEffectAction(float)
+TaiSwallowMissAttackingEffectAction::TaiSwallowMissAttackingEffectAction(f32)
 {
 	/*
 	.loc_0x0:

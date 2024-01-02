@@ -722,7 +722,7 @@ void ViewPiki::setLeaves(int) { }
  * Address:	800D90A0
  * Size:	00017C
  */
-void ViewPiki::postUpdate(int, float)
+void ViewPiki::postUpdate(int, f32)
 {
 	/*
 	.loc_0x0:

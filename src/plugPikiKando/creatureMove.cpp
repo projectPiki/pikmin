@@ -25,7 +25,7 @@ void _Print(char*, ...)
  * Address:	8008E2CC
  * Size:	000200
  */
-void Creature::moveRotation(float)
+void Creature::moveRotation(f32)
 {
 	/*
 	.loc_0x0:
@@ -265,7 +265,7 @@ void Creature::moveAttach()
  * Address:	8008E5DC
  * Size:	000D60
  */
-void Creature::moveNew(float)
+void Creature::moveNew(f32)
 {
 	/*
 	.loc_0x0:
@@ -1215,7 +1215,7 @@ void Creature::moveNew(float)
  * Address:	........
  * Size:	0002E8
  */
-void Creature::checkForward(Vector3f&, float, float&)
+void Creature::checkForward(Vector3f&, f32, f32&)
 {
 	// UNUSED FUNCTION
 }
@@ -1329,7 +1329,7 @@ void Creature::renderCollTriInfo(Graphics&, CollTriInfo*, Colour&)
  * Address:	8008F43C
  * Size:	000588
  */
-void traceMove2(Creature*, MoveTrace&, float)
+void traceMove2(Creature*, MoveTrace&, f32)
 {
 	/*
 	.loc_0x0:

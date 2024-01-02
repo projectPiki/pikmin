@@ -166,7 +166,7 @@ void ItemMgr::getContainer(int)
  * Address:	800F2AF4
  * Size:	000144
  */
-void ItemMgr::getNearestContainer(Vector3f&, float)
+void ItemMgr::getNearestContainer(Vector3f&, f32)
 {
 	/*
 	.loc_0x0:
@@ -3805,7 +3805,7 @@ void ItemCreature::init(Vector3f&)
  * Address:	800F59E4
  * Size:	000008
  */
-void ItemCreature::setMotionSpeed(float)
+void ItemCreature::setMotionSpeed(f32)
 {
 	/*
 	.loc_0x0:
@@ -3952,7 +3952,7 @@ void ItemCreature::finishMotion()
  * Address:	800F5AC8
  * Size:	000058
  */
-void ItemCreature::startMotion(int, float)
+void ItemCreature::startMotion(int, f32)
 {
 	/*
 	.loc_0x0:
@@ -3988,7 +3988,7 @@ void ItemCreature::startMotion(int, float)
  * Address:	800F5B20
  * Size:	00005C
  */
-void ItemCreature::finishMotion(float)
+void ItemCreature::finishMotion(f32)
 {
 	/*
 	.loc_0x0:

@@ -60,7 +60,7 @@ void* OSInitAlloc(void*, void*, int);
 OSHeapHandle OSCreateHeap(void*, void*);
 OSHeapHandle OSSetCurrentHeap(OSHeapHandle);
 void* OSAllocFromHeap(OSHeapHandle, u32);
-long OSCheckHeap(OSHeapHandle);
+s32 OSCheckHeap(OSHeapHandle);
 void OSFreeToHeap(OSHeapHandle heap, void* ptr);
 
 #define OSAlloc(size) OSAllocFromHeap(__OSCurrHeap, (size))
@@ -207,7 +207,7 @@ OSPriority OSGetThreadPriority(OSThread* thread);
 void OSSleepThread(OSThreadQueue* queue);
 void OSWakeupThread(OSThreadQueue* queue);
 
-long OSCheckActiveThreads(void);
+s32 OSCheckActiveThreads(void);
 
 void OSInitMutex(OSMutexObject*);
 void OSLockMutex(OSMutexObject*);

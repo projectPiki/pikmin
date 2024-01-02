@@ -2,6 +2,7 @@
 #define _CTYPE_H
 
 #include "types.h"
+
 #ifdef __cplusplus
 extern "C" {
 #endif // ifdef __cplusplus
@@ -15,7 +16,7 @@ extern "C" {
 #define CTYPE_LOWER  0x40
 #define CTYPE_UPPER  0x80
 
-extern const unsigned char __ctype_map[256];
+extern const u8 __ctype_map[256];
 
 inline BOOL isdigit(int c) { return (__ctype_map[c & 0xFF] & CTYPE_XDIGIT) != 0; }
 
@@ -23,4 +24,4 @@ inline BOOL isdigit(int c) { return (__ctype_map[c & 0xFF] & CTYPE_XDIGIT) != 0;
 };
 #endif // ifdef __cplusplus
 
-#endif
+#endif // _CTYPE_H

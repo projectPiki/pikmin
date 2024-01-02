@@ -527,7 +527,7 @@ ClothFader::Particle::Particle()
  * Address:	........
  * Size:	000054
  */
-void AttentionCamera::start(unsigned long, Creature*, float, float)
+void AttentionCamera::start(u32, Creature*, f32, f32)
 {
 	// UNUSED FUNCTION
 }
@@ -732,7 +732,7 @@ void AttentionCamera::Fader::drawFadeOut(Graphics&) { }
  * Address:	........
  * Size:	000058
  */
-void AttentionCamera::setFader(unsigned long)
+void AttentionCamera::setFader(u32)
 {
 	// UNUSED FUNCTION
 }
@@ -752,7 +752,7 @@ void NoiseFunction::init(int)
  * Address:	........
  * Size:	00008C
  */
-void NoiseFunction::getValue(float)
+void NoiseFunction::getValue(f32)
 {
 	// UNUSED FUNCTION
 }
@@ -772,7 +772,7 @@ void TurbulenceFun::init(int, int)
  * Address:	........
  * Size:	000240
  */
-void TurbulenceFun::getValue(float)
+void TurbulenceFun::getValue(f32)
 {
 	// UNUSED FUNCTION
 }

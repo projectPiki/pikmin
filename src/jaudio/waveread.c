@@ -1,11 +1,11 @@
-
+#include "types.h"
 
 /*
  * --INFO--
  * Address:	8000C200
  * Size:	000038
  */
-void PTconvert(void**, unsigned long)
+void PTconvert(void**, u32)
 {
 	/*
 	.loc_0x0:
@@ -35,7 +35,7 @@ void PTconvert(void**, unsigned long)
  * Address:	8000C240
  * Size:	0002A0
  */
-void Wave_Test(unsigned char*)
+void Wave_Test(u8*)
 {
 	/*
 	.loc_0x0:
@@ -251,7 +251,7 @@ void Wave_Test(unsigned char*)
  * Address:	........
  * Size:	000030
  */
-void GetSound_Test(unsigned long)
+void GetSound_Test(u32)
 {
 	// UNUSED FUNCTION
 }
@@ -261,7 +261,7 @@ void GetSound_Test(unsigned long)
  * Address:	8000C4E0
  * Size:	000084
  */
-void Wavegroup_Regist(void*, unsigned long)
+void Wavegroup_Regist(void*, u32)
 {
 	/*
 	.loc_0x0:
@@ -335,7 +335,7 @@ void Wavegroup_Init()
  * Address:	8000C5C0
  * Size:	000064
  */
-void WaveidToWavegroup(unsigned long, unsigned long)
+void WaveidToWavegroup(u32, u32)
 {
 	/*
 	.loc_0x0:
@@ -380,7 +380,7 @@ void WaveidToWavegroup(unsigned long, unsigned long)
  * Address:	8000C640
  * Size:	00008C
  */
-void __WaveScene_Set(unsigned long, unsigned long, int)
+void __WaveScene_Set(u32, u32, int)
 {
 	/*
 	.loc_0x0:
@@ -435,7 +435,7 @@ void __WaveScene_Set(unsigned long, unsigned long, int)
  * Address:	8000C6E0
  * Size:	000024
  */
-void WaveScene_Set(unsigned long, unsigned long)
+void WaveScene_Set(u32, u32)
 {
 	/*
 	.loc_0x0:
@@ -456,7 +456,7 @@ void WaveScene_Set(unsigned long, unsigned long)
  * Address:	8000C720
  * Size:	000024
  */
-void WaveScene_Load(unsigned long, unsigned long)
+void WaveScene_Load(u32, u32)
 {
 	/*
 	.loc_0x0:
@@ -477,7 +477,7 @@ void WaveScene_Load(unsigned long, unsigned long)
  * Address:	8000C760
  * Size:	000074
  */
-void __WaveScene_Close(unsigned long, unsigned long, int)
+void __WaveScene_Close(u32, u32, int)
 {
 	/*
 	.loc_0x0:
@@ -520,7 +520,7 @@ void __WaveScene_Close(unsigned long, unsigned long, int)
  * Address:	8000C7E0
  * Size:	000024
  */
-void WaveScene_Close(unsigned long, unsigned long)
+void WaveScene_Close(u32, u32)
 {
 	/*
 	.loc_0x0:
@@ -541,7 +541,7 @@ void WaveScene_Close(unsigned long, unsigned long)
  * Address:	8000C820
  * Size:	000024
  */
-void WaveScene_Erase(unsigned long, unsigned long)
+void WaveScene_Erase(u32, u32)
 {
 	/*
 	.loc_0x0:

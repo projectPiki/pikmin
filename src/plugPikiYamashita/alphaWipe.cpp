@@ -305,7 +305,7 @@ void zen::AlphaWipe::draw(Graphics&)
  * Address:	801F1D10
  * Size:	000050
  */
-void zen::AlphaWipe::start(float, float, zen::AlphaWipe::typeFlag)
+void zen::AlphaWipe::start(f32, f32, zen::AlphaWipe::typeFlag)
 {
 	/*
 	.loc_0x0:

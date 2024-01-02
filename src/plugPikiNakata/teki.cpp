@@ -403,7 +403,7 @@ void BTeki::@696 @viewFinishMotion()
  * Address:	80143E28
  * Size:	000008
  */
-void BTeki::@696 @viewSetMotionSpeed(float)
+void BTeki::@696 @viewSetMotionSpeed(f32)
 {
 	/*
 	.loc_0x0:
@@ -417,7 +417,7 @@ void BTeki::@696 @viewSetMotionSpeed(float)
  * Address:	80143E30
  * Size:	000008
  */
-void BTeki::@696 @viewStartTrembleMotion(float)
+void BTeki::@696 @viewStartTrembleMotion(f32)
 {
 	/*
 	.loc_0x0:

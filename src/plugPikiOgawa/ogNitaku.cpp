@@ -294,7 +294,7 @@ zen::ogNitakuMgr::ogNitakuMgr(P2DScreen*, P2DTextBox*, P2DTextBox*, P2DTextBox*,
  * Address:	........
  * Size:	000088
  */
-void zen::ogNitakuMgr::MoveCursorYes(float)
+void zen::ogNitakuMgr::MoveCursorYes(f32)
 {
 	// UNUSED FUNCTION
 }
@@ -304,7 +304,7 @@ void zen::ogNitakuMgr::MoveCursorYes(float)
  * Address:	........
  * Size:	000088
  */
-void zen::ogNitakuMgr::MoveCursorNo(float)
+void zen::ogNitakuMgr::MoveCursorNo(f32)
 {
 	// UNUSED FUNCTION
 }
@@ -442,7 +442,7 @@ void zen::ogNitakuMgr::stop()
  * Address:	80196DB0
  * Size:	000054
  */
-void zen::ogNitakuMgr::cursorEnable(float)
+void zen::ogNitakuMgr::cursorEnable(f32)
 {
 	/*
 	.loc_0x0:
@@ -475,7 +475,7 @@ void zen::ogNitakuMgr::cursorEnable(float)
  * Address:	80196E04
  * Size:	000054
  */
-void zen::ogNitakuMgr::cursorDisable(float)
+void zen::ogNitakuMgr::cursorDisable(f32)
 {
 	/*
 	.loc_0x0:

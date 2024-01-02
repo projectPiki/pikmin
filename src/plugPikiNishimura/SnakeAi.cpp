@@ -1447,7 +1447,7 @@ void SnakeAi::eatStickToMouthPiki()
  * Address:	8015C318
  * Size:	000298
  */
-void SnakeAi::nearNaviInAttackArea(Creature**, float*, int)
+void SnakeAi::nearNaviInAttackArea(Creature**, f32*, int)
 {
 	/*
 	.loc_0x0:
@@ -1645,7 +1645,7 @@ void SnakeAi::nearNaviInAttackArea(Creature**, float*, int)
  * Address:	8015C5B0
  * Size:	000298
  */
-void SnakeAi::nearPikiInAttackArea(Creature**, float*, int)
+void SnakeAi::nearPikiInAttackArea(Creature**, f32*, int)
 {
 	/*
 	.loc_0x0:
@@ -3753,7 +3753,7 @@ void SnakeAi::initChase(int)
  * Address:	8015DF60
  * Size:	00018C
  */
-void SnakeAi::initAttack(int, float)
+void SnakeAi::initAttack(int, f32)
 {
 	/*
 	.loc_0x0:
@@ -4322,7 +4322,7 @@ void SnakeAi::initAppear(int)
  * Address:	8015E6B4
  * Size:	000008
  */
-void Parm<float>::operator()()
+void Parm<f32>::operator()()
 {
 	/*
 	.loc_0x0:

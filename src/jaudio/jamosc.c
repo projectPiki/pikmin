@@ -1,4 +1,4 @@
-
+#include "types.h"
 
 /*
  * --INFO--
@@ -69,7 +69,7 @@ void Osc_Update_Param(void)
  * Address:	80014D40
  * Size:	00003C
  */
-void Osc_Setup_Vibrato(seqp_*, unsigned char)
+void Osc_Setup_Vibrato(seqp_*, u8)
 {
 	/*
 	.loc_0x0:
@@ -98,7 +98,7 @@ void Osc_Setup_Vibrato(seqp_*, unsigned char)
  * Address:	80014D80
  * Size:	00003C
  */
-void Osc_Setup_Tremolo(seqp_*, unsigned char)
+void Osc_Setup_Tremolo(seqp_*, u8)
 {
 	/*
 	.loc_0x0:

@@ -270,7 +270,7 @@ void StdSystem::getAppMemory(char*)
  * Address:	8003F078
  * Size:	000090
  */
-void StdSystem::findGfxObject(char*, unsigned long)
+void StdSystem::findGfxObject(char*, u32)
 {
 	/*
 	.loc_0x0:
@@ -326,7 +326,7 @@ void StdSystem::findGfxObject(char*, unsigned long)
  * Address:	........
  * Size:	00009C
  */
-void StdSystem::findAnyGfxObject(char*, unsigned long)
+void StdSystem::findAnyGfxObject(char*, u32)
 {
 	// UNUSED FUNCTION
 }
@@ -997,7 +997,7 @@ void StdSystem::detachObjs()
  * Address:	8003F7B0
  * Size:	000048
  */
-void StdSystem::invalidateObjs(unsigned long, unsigned long)
+void StdSystem::invalidateObjs(u32, u32)
 {
 	/*
 	.loc_0x0:
@@ -1949,7 +1949,7 @@ void StdSystem::copyWaitUntilDone() { }
  * Address:	80040338
  * Size:	000008
  */
-u32 StdSystem::copyRamToCache(unsigned long, unsigned long, unsigned long) { return 0x0; }
+u32 StdSystem::copyRamToCache(u32, u32, u32) { return 0x0; }
 
 /*
  * --INFO--
@@ -2162,7 +2162,7 @@ void TextureCacher::cacheTexture(CacheTexture*)
  * Address:	80040558
  * Size:	000004
  */
-void StdSystem::copyCacheToRam(unsigned long, unsigned long, unsigned long) { }
+void StdSystem::copyCacheToRam(u32, u32, u32) { }
 
 /*
  * --INFO--
@@ -2190,7 +2190,7 @@ void StdSystem::parseArchiveDirectory(char*, char*) { }
  * Address:	80040568
  * Size:	000004
  */
-void StdSystem::startLoading(LoadIdler*, bool, unsigned long) { }
+void StdSystem::startLoading(LoadIdler*, bool, u32) { }
 
 /*
  * --INFO--

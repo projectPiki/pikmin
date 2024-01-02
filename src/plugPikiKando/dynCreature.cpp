@@ -367,7 +367,7 @@ DynCreature::DynCreature()
  * Address:	80092BE0
  * Size:	00001C
  */
-void DynCreature::enablePickOffset(float)
+void DynCreature::enablePickOffset(f32)
 {
 	/*
 	.loc_0x0:
@@ -404,7 +404,7 @@ void DynCreature::disablePickOffset()
  * Address:	80092C14
  * Size:	000100
  */
-void DynCreature::addParticle(float, Vector3f&)
+void DynCreature::addParticle(f32, Vector3f&)
 {
 	/*
 	.loc_0x0:
@@ -682,7 +682,7 @@ void DynCreature::update()
  * Address:	80092F44
  * Size:	000B64
  */
-void DynCreature::simulate(float)
+void DynCreature::simulate(f32)
 {
 	/*
 	.loc_0x0:
@@ -1457,7 +1457,7 @@ void DynCreature::simulate(float)
  * Address:	........
  * Size:	000254
  */
-void DynCreature::applyTorque(int, float)
+void DynCreature::applyTorque(int, f32)
 {
 	// UNUSED FUNCTION
 }
@@ -1832,7 +1832,7 @@ void DynCreature::doKill()
  * Address:	........
  * Size:	000928
  */
-void DynCreature::simulate2(float)
+void DynCreature::simulate2(f32)
 {
 	// UNUSED FUNCTION
 }

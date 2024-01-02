@@ -1219,7 +1219,7 @@ void Menu::MenuItem::checkEvents(Menu*, int)
  * Address:	8005E410
  * Size:	00060C
  */
-void Menu::draw(Graphics&, float)
+void Menu::draw(Graphics&, f32)
 {
 	/*
 	.loc_0x0:

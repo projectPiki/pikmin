@@ -1,4 +1,4 @@
-
+#include "types.h"
 
 /*
  * --INFO--
@@ -36,7 +36,7 @@ void tanf(void)
  * Address:	8021BB14
  * Size:	000020
  */
-void cos(float)
+void cos(f32)
 {
 	/*
 	.loc_0x0:
@@ -56,7 +56,7 @@ void cos(float)
  * Address:	8021BB34
  * Size:	000020
  */
-void sin(float)
+void sin(f32)
 {
 	/*
 	.loc_0x0:

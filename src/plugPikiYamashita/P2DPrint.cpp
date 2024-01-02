@@ -415,7 +415,7 @@ void P2DPrint::printReturn(const char*, int, int, P2DTextBoxHBinding, P2DTextBox
  * Address:	801B4DFC
  * Size:	0005C8
  */
-void P2DPrint::parse(const unsigned char*, int, int, unsigned short*, P2DPrint::TSize&, bool)
+void P2DPrint::parse(const u8*, int, int, u16*, P2DPrint::TSize&, bool)
 {
 	/*
 	.loc_0x0:
@@ -851,7 +851,7 @@ void P2DPrint::parse(const unsigned char*, int, int, unsigned short*, P2DPrint::
  * Address:	801B53C4
  * Size:	000624
  */
-void P2DPrint::doEscapeCode(const unsigned char**)
+void P2DPrint::doEscapeCode(const u8**)
 {
 	/*
 	.loc_0x0:
@@ -1439,7 +1439,7 @@ void P2DPrint::doCtrlCode(int)
  * Address:	801B5B5C
  * Size:	000108
  */
-void P2DPrint::getNumber(const unsigned char**, long, long, int)
+void P2DPrint::getNumber(const u8**, s32, s32, int)
 {
 	/*
 	.loc_0x0:

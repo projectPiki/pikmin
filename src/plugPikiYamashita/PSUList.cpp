@@ -297,7 +297,7 @@ void PSUPtrList::remove(PSUPtrLink*)
  * Address:	........
  * Size:	000088
  */
-void PSUPtrList::getNthLink(unsigned long) const
+void PSUPtrList::getNthLink(u32) const
 {
 	// UNUSED FUNCTION
 }

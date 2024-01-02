@@ -92,7 +92,7 @@ ActFree::ActFree(Piki*)
  * Address:	800BA6CC
  * Size:	0000D0
  */
-void ActFree::initBoid(Vector3f&, float)
+void ActFree::initBoid(Vector3f&, f32)
 {
 	/*
 	.loc_0x0:

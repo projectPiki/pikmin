@@ -1,8 +1,8 @@
 #include "types.h"
 #include "Vector3f.h"
 #include "Matrix4f.h"
-extern const float lbl_803E85E0;
-extern const float lbl_803E85E4;
+extern const f32 lbl_803E85E0;
+extern const f32 lbl_803E85E4;
 /*
  * --INFO--
  * Address:	........
@@ -31,7 +31,7 @@ void _Print(char *, ...)
  * Size:	000088
  */
 /*
-Matrix4f::Matrix4f(float (*) [4])
+Matrix4f::Matrix4f(f32 (*) [4])
 {
     // UNUSED FUNCTION
 }
@@ -91,7 +91,7 @@ void Matrix4f::makeIdentity()
  * Size:	0000D8
  */
 /*
-void Matrix4f::blend(Matrix4f &, float)
+void Matrix4f::blend(Matrix4f &, f32)
 {
     // UNUSED FUNCTION
 }
@@ -102,7 +102,7 @@ void Matrix4f::blend(Matrix4f &, float)
  * Size:	0001A4
  */
 /*
-void Matrix4f::makeOrtho(float, float, float, float, float, float, float)
+void Matrix4f::makeOrtho(f32, f32, f32, f32, f32, f32, f32)
 {
     // UNUSED FUNCTION
 }
@@ -113,7 +113,7 @@ void Matrix4f::makeOrtho(float, float, float, float, float, float, float)
  * Size:	0000CC
  */
 /*
-void Matrix4f::makePerspective(float, float, float, float)
+void Matrix4f::makePerspective(f32, f32, f32, f32)
 {
     // UNUSED FUNCTION
 }
@@ -123,7 +123,7 @@ void Matrix4f::makePerspective(float, float, float, float)
  * Address:	8003DE08
  * Size:	0000C0
  */
-// void Matrix4f::makeRotate(Vector3f &, float, float)
+// void Matrix4f::makeRotate(Vector3f &, f32, f32)
 //{
 /*
 .loc_0x0:
@@ -183,7 +183,7 @@ void Matrix4f::makePerspective(float, float, float, float)
  * Address:	8003DEC8
  * Size:	00006C
  */
-// void Matrix4f::makeRotate(Vector3f &, float)
+// void Matrix4f::makeRotate(Vector3f &, f32)
 //{
 /*
 .loc_0x0:
@@ -234,7 +234,7 @@ void Matrix4f::makeBallRotate(Vector3f &)
  * Size:	000078
  */
 /*
-void Matrix4f::rotate(Vector3f &, float)
+void Matrix4f::rotate(Vector3f &, f32)
 {
     // UNUSED FUNCTION
 }
@@ -245,7 +245,7 @@ void Matrix4f::rotate(Vector3f &, float)
  * Size:	000138
  */
 /*
-void Matrix4f::rotate(float, float, float)
+void Matrix4f::rotate(f32, f32, f32)
 {
     // UNUSED FUNCTION
 }
@@ -876,7 +876,7 @@ void Matrix4f::rotate(float, float, float)
  * Size:	000244
  */
 /*
-void Matrix4f::makeAligned(Vector3f &, float)
+void Matrix4f::makeAligned(Vector3f &, f32)
 {
     // UNUSED FUNCTION
 }
@@ -887,7 +887,7 @@ void Matrix4f::makeAligned(Vector3f &, float)
  * Size:	000100
  */
 /*
-void Matrix4f::rotateX(float)
+void Matrix4f::rotateX(f32)
 {
     // UNUSED FUNCTION
 }
@@ -898,7 +898,7 @@ void Matrix4f::rotateX(float)
  * Size:	000100
  */
 /*
-void Matrix4f::rotateY(float)
+void Matrix4f::rotateY(f32)
 {
     // UNUSED FUNCTION
 }
@@ -909,7 +909,7 @@ void Matrix4f::rotateY(float)
  * Size:	000100
  */
 /*
-void Matrix4f::rotateZ(float)
+void Matrix4f::rotateZ(f32)
 {
     // UNUSED FUNCTION
 }
@@ -920,7 +920,7 @@ void Matrix4f::rotateZ(float)
  * Size:	0000F4
  */
 /*
-void Matrix4f::translate(float, float, float)
+void Matrix4f::translate(f32, f32, f32)
 {
     // UNUSED FUNCTION
 }

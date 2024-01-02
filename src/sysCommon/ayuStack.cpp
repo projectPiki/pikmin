@@ -301,7 +301,7 @@ void AyuHeap::init(char*, int, void*, int)
  * Address:	8002497C
  * Size:	000068
  */
-AyuCache::AyuCache(unsigned long)
+AyuCache::AyuCache(u32)
 {
 	/*
 	.loc_0x0:
@@ -341,7 +341,7 @@ AyuCache::AyuCache(unsigned long)
  * Address:	800249E4
  * Size:	000198
  */
-void AyuCache::init(unsigned long, unsigned long)
+void AyuCache::init(u32, u32)
 {
 	/*
 	.loc_0x0:
@@ -477,7 +477,7 @@ void AyuCache::releaseIndex(int)
  * Address:	........
  * Size:	000020
  */
-void linkChunk(MemHead*, unsigned long, MemHead*)
+void linkChunk(MemHead*, u32, MemHead*)
 {
 	// UNUSED FUNCTION
 }
@@ -487,7 +487,7 @@ void linkChunk(MemHead*, unsigned long, MemHead*)
  * Address:	80024B7C
  * Size:	000120
  */
-void AyuCache::mallocL(unsigned long)
+void AyuCache::mallocL(u32)
 {
 	/*
 	.loc_0x0:
@@ -676,7 +676,7 @@ void AyuCache::cacheFree(void*)
  * Address:	........
  * Size:	00007C
  */
-void AyuCache::deleteIdAll(unsigned long)
+void AyuCache::deleteIdAll(u32)
 {
 	// UNUSED FUNCTION
 }

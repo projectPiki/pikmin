@@ -320,7 +320,7 @@ void zen::DrawOptionSave::start()
  * Address:	801F5824
  * Size:	000120
  */
-void zen::DrawOptionSave::setMode(unsigned long, Controller*)
+void zen::DrawOptionSave::setMode(u32, Controller*)
 {
 	/*
 	.loc_0x0:

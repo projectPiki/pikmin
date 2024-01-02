@@ -1,4 +1,4 @@
-
+#include "types.h"
 
 /*
  * --INFO--
@@ -15,7 +15,7 @@ void JV_InitHeader(char*)
  * Address:	8000E580
  * Size:	000138
  */
-void JV_InitHeader_M(char*, unsigned char*, unsigned char*)
+void JV_InitHeader_M(char*, u8*, u8*)
 {
 	/*
 	.loc_0x0:
@@ -194,7 +194,7 @@ void JV_GetLogicalHandle(char*)
  * Address:	........
  * Size:	000064
  */
-void JV_GetHandle(unsigned long)
+void JV_GetHandle(u32)
 {
 	// UNUSED FUNCTION
 }
@@ -204,7 +204,7 @@ void JV_GetHandle(unsigned long)
  * Address:	8000E740
  * Size:	000080
  */
-void JV_GetRealHandle(unsigned long)
+void JV_GetRealHandle(u32)
 {
 	/*
 	.loc_0x0:
@@ -258,7 +258,7 @@ void JV_GetRealHandle(unsigned long)
  * Address:	8000E7C0
  * Size:	000034
  */
-void JV_CheckSize(unsigned long)
+void JV_CheckSize(u32)
 {
 	/*
 	.loc_0x0:
@@ -287,7 +287,7 @@ void JV_CheckSize(unsigned long)
  * Address:	........
  * Size:	000004
  */
-void __JV_Callback(unsigned long)
+void __JV_Callback(u32)
 {
 	// UNUSED FUNCTION
 }
@@ -297,7 +297,7 @@ void __JV_Callback(unsigned long)
  * Address:	8000E800
  * Size:	0000D0
  */
-void JV_LoadFile(unsigned long, unsigned char*, unsigned long, unsigned long)
+void JV_LoadFile(u32, u8*, u32, u32)
 {
 	/*
 	.loc_0x0:
@@ -363,7 +363,7 @@ void JV_LoadFile(unsigned long, unsigned char*, unsigned long, unsigned long)
  * Address:	8000E8E0
  * Size:	0000E0
  */
-void JV_LoadFile_Async2(unsigned long, unsigned char*, unsigned long, unsigned long, void (*)(unsigned long), unsigned long)
+void JV_LoadFile_Async2(u32, u8*, u32, u32, void (*)(u32), u32)
 {
 	/*
 	.loc_0x0:
@@ -433,7 +433,7 @@ void JV_LoadFile_Async2(unsigned long, unsigned char*, unsigned long, unsigned l
  * Address:	........
  * Size:	00006C
  */
-void JV_GetMemoryFile(unsigned long)
+void JV_GetMemoryFile(u32)
 {
 	// UNUSED FUNCTION
 }

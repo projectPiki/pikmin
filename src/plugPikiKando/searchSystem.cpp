@@ -1253,7 +1253,7 @@ void SearchBuffer::invalidate()
  * Address:	800E3EF4
  * Size:	0001E8
  */
-void SearchBuffer::insertQuick(Creature*, float)
+void SearchBuffer::insertQuick(Creature*, f32)
 {
 	/*
 	.loc_0x0:
@@ -1417,7 +1417,7 @@ void SearchBuffer::insertQuick(Creature*, float)
  * Address:	800E40DC
  * Size:	000204
  */
-void SearchBuffer::insert(Creature*, float)
+void SearchBuffer::insert(Creature*, f32)
 {
 	/*
 	.loc_0x0:

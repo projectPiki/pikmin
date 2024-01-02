@@ -1,4 +1,4 @@
-
+#include "types.h"
 
 /*
  * --INFO--
@@ -253,7 +253,7 @@ void Jaq_HandleToSeq(void)
  * Address:	80014040
  * Size:	000368
  */
-void Init_Track(seqp_*, unsigned long, seqp_*)
+void Init_Track(seqp_*, u32, seqp_*)
 {
 	/*
 	.loc_0x0:

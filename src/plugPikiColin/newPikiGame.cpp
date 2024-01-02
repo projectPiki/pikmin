@@ -25,7 +25,7 @@ void _Print(char*, ...)
  * Address:	........
  * Size:	0000E4
  */
-void showFrame(bool, float)
+void showFrame(bool, f32)
 {
 	// UNUSED FUNCTION
 }
@@ -328,7 +328,7 @@ void deleteTutorialWindow()
  * Address:	........
  * Size:	0000A8
  */
-void handleTutorialWindow(unsigned long&, Controller*)
+void handleTutorialWindow(u32&, Controller*)
 {
 	// UNUSED FUNCTION
 }
@@ -600,7 +600,7 @@ void ModeState::postUpdate() { }
  * Address:	800571E4
  * Size:	000128
  */
-void IntroGameModeState::update(unsigned long&)
+void IntroGameModeState::update(u32&)
 {
 	/*
 	.loc_0x0:
@@ -698,7 +698,7 @@ void IntroGameModeState::update(unsigned long&)
  * Address:	8005730C
  * Size:	000640
  */
-void RunningModeState::update(unsigned long&)
+void RunningModeState::update(u32&)
 {
 	/*
 	.loc_0x0:
@@ -1394,7 +1394,7 @@ void RunningModeState::postRender(Graphics&)
  * Address:	80057C5C
  * Size:	000360
  */
-void MessageModeState::update(unsigned long&)
+void MessageModeState::update(u32&)
 {
 	/*
 	.loc_0x0:
@@ -1648,7 +1648,7 @@ void MessageModeState::update(unsigned long&)
  * Address:	80057FBC
  * Size:	000474
  */
-void DayOverModeState::update(unsigned long&)
+void DayOverModeState::update(u32&)
 {
 	/*
 	.loc_0x0:
@@ -4159,7 +4159,7 @@ GameMovieInterface::ComplexMessage::ComplexMessage()
  * Address:	8005A118
  * Size:	000004
  */
-void GameInterface::movie(int, int, Creature*, Vector3f*, Vector3f*, unsigned long, bool) { }
+void GameInterface::movie(int, int, Creature*, Vector3f*, Vector3f*, u32, bool) { }
 
 /*
  * --INFO--
@@ -4311,7 +4311,7 @@ void NewPikiGameSetupSection::update()
  * Address:	8005A2B0
  * Size:	00000C
  */
-void ModeState::update(unsigned long&)
+void ModeState::update(u32&)
 {
 	/*
 	.loc_0x0:
@@ -4966,7 +4966,7 @@ void GameMovieInterface::message(int, int)
  * Address:	8005AB3C
  * Size:	00011C
  */
-void GameMovieInterface::movie(int, int, Creature*, Vector3f*, Vector3f*, unsigned long, bool)
+void GameMovieInterface::movie(int, int, Creature*, Vector3f*, Vector3f*, u32, bool)
 {
 	/*
 	.loc_0x0:
@@ -5167,7 +5167,7 @@ void MessageModeState::postRender(Graphics&)
  * Address:	8005AD98
  * Size:	00000C
  */
-void QuittingGameModeState::update(unsigned long&)
+void QuittingGameModeState::update(u32&)
 {
 	/*
 	.loc_0x0:

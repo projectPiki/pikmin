@@ -4292,7 +4292,7 @@ void TaiCollecGetOutAction::act(Teki&)
  * Address:	8012DFD4
  * Size:	000058
  */
-TaiCollecLegEffectAction::TaiCollecLegEffectAction(float)
+TaiCollecLegEffectAction::TaiCollecLegEffectAction(f32)
 {
 	/*
 	.loc_0x0:

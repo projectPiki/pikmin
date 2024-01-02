@@ -1869,7 +1869,7 @@ void TitleSetupSection::draw(Graphics&)
  * Address:	80061134
  * Size:	0000EC
  */
-void TitleSetupSection::drawMenu(Graphics&, Menu*, float)
+void TitleSetupSection::drawMenu(Graphics&, Menu*, f32)
 {
 	/*
 	.loc_0x0:

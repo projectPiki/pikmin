@@ -350,7 +350,7 @@ void P2DFont::getWidth(int, int)
  * Address:	801B6030
  * Size:	000308
  */
-void P2DFont::drawChar(float, float, int, int, int)
+void P2DFont::drawChar(f32, f32, int, int, int)
 {
 	/*
 	.loc_0x0:

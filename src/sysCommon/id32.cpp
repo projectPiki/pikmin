@@ -40,7 +40,7 @@ ID32::ID32(u32 id) { setID(id); }
  * Address:	80043EC4
  * Size:	000024
  */
-void ID32::setID(unsigned long)
+void ID32::setID(u32)
 {
 	/*
 	.loc_0x0:
@@ -61,7 +61,7 @@ void ID32::setID(unsigned long)
  * Address:	80043EE8
  * Size:	0000A8
  */
-void ID32::match(unsigned long, char)
+void ID32::match(u32, char)
 {
 	/*
 	.loc_0x0:
@@ -169,7 +169,7 @@ void ID32::updateString()
  * Address:	........
  * Size:	000030
  */
-void ID32::operator=(unsigned long)
+void ID32::operator=(u32)
 {
 	// UNUSED FUNCTION
 }
@@ -179,7 +179,7 @@ void ID32::operator=(unsigned long)
  * Address:	80043FE0
  * Size:	000014
  */
-void ID32::operator==(unsigned long)
+void ID32::operator==(u32)
 {
 	/*
 	.loc_0x0:
@@ -196,7 +196,7 @@ void ID32::operator==(unsigned long)
  * Address:	80043FF4
  * Size:	000014
  */
-void ID32::operator!=(unsigned long)
+void ID32::operator!=(u32)
 {
 	/*
 	.loc_0x0:

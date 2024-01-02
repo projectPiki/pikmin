@@ -25,7 +25,7 @@ void _Print(char*, ...)
  * Address:	80084340
  * Size:	000010
  */
-void hioEnumCallback(long)
+void hioEnumCallback(s32)
 {
 	/*
 	.loc_0x0:
@@ -227,7 +227,7 @@ void KIO::readMailbox()
  * Address:	80084520
  * Size:	000038
  */
-void KIO::startWrite(int, unsigned char*, int)
+void KIO::startWrite(int, u8*, int)
 {
 	/*
 	.loc_0x0:
@@ -294,7 +294,7 @@ void KIO::writeHeader()
  * Address:	........
  * Size:	0000E4
  */
-void KIO::copyEfb(unsigned char*, unsigned short, unsigned short)
+void KIO::copyEfb(u8*, u16, u16)
 {
 	// UNUSED FUNCTION
 }
@@ -304,7 +304,7 @@ void KIO::copyEfb(unsigned char*, unsigned short, unsigned short)
  * Address:	800845BC
  * Size:	00001C
  */
-void KIOContext::set(int, unsigned char*, int)
+void KIOContext::set(int, u8*, int)
 {
 	/*
 	.loc_0x0:

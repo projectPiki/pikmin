@@ -97,7 +97,7 @@ zen::ogDrawScrMenu::ogDrawScrMenu()
  * Address:	........
  * Size:	000034
  */
-void zen::ChkAngle(float*)
+void zen::ChkAngle(f32*)
 {
 	// UNUSED FUNCTION
 }
@@ -107,7 +107,7 @@ void zen::ChkAngle(float*)
  * Address:	........
  * Size:	000048
  */
-void zen::ogDrawScrMenu::calcAngleSpeed(float)
+void zen::ogDrawScrMenu::calcAngleSpeed(f32)
 {
 	// UNUSED FUNCTION
 }
@@ -375,7 +375,7 @@ void zen::ogDrawScrMenu::update(Controller*, bool, bool)
  * Address:	801916A4
  * Size:	000040
  */
-void P2DPane::move(int, int, float)
+void P2DPane::move(int, int, f32)
 {
 	/*
 	.loc_0x0:

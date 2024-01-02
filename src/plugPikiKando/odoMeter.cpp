@@ -37,7 +37,7 @@ OdoMeter::OdoMeter()
  * Address:	800CD814
  * Size:	000018
  */
-void OdoMeter::start(float argA, float argB)
+void OdoMeter::start(f32 argA, f32 argB)
 {
 	_0C = argA;
 	_04 = argA;
@@ -53,7 +53,7 @@ void OdoMeter::start(float argA, float argB)
 bool OdoMeter::moving(Vector3f& argA, Vector3f& argB)
 {
 	Vector3f vec;
-	float dummy[4]; // Match stack allocation
+	f32 dummy[4]; // Match stack allocation
 	unknown1();
 	if (_00 < 100.0f) {
 #ifdef __DECOMP_NON_MATCHING
@@ -64,7 +64,7 @@ bool OdoMeter::moving(Vector3f& argA, Vector3f& argB)
 		vec.y          = Vector3f_diffY(argA, argB);
 		vec.x          = Vector3f_diffX(argA, argB);
 		vec.z          = Vector3f_diffZ(argA, argB);
-		float distance = sqrtf(vec.x * vec.x + vec.y * vec.y + vec.z * vec.z);
+		f32 distance = sqrtf(vec.x * vec.x + vec.y * vec.y + vec.z * vec.z);
 #endif
 		_00 += distance;
 	}

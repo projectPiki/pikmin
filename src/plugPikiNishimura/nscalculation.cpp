@@ -30,7 +30,7 @@ namespace NsCalculation {
  * Size:	0000C0
  * Aside from arg order and defines, identical to Pikmin 2's NsMathExp::calcLagrange
  */
-void calcLagrange(float p2, const Vector3f* p_vec, Vector3f& new_vec)
+void calcLagrange(f32 p2, const Vector3f* p_vec, Vector3f& new_vec)
 // calculates Lagrange, stores in new_vec
 {
 #define p2_sub1 (p2 - 1.0f)
@@ -172,7 +172,7 @@ void calcMatrix3f(const Vector3f&, const Vector3f&, const Vector3f&, Matrix3f&)
  * Address:	8017C524
  * Size:	0002F8
  */
-void calcJointPos(const Vector3f&, const Vector3f&, float, float, Vector3f&, Vector3f&)
+void calcJointPos(const Vector3f&, const Vector3f&, f32, f32, Vector3f&, Vector3f&)
 {
 	/*
 	.loc_0x0:

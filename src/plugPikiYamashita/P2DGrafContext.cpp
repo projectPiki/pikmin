@@ -407,7 +407,7 @@ void P2DGrafContext::setColor(Colour&, Colour&, Colour&, Colour&)
  * Address:	801AFC24
  * Size:	00002C
  */
-void P2DGrafContext::setLineWidth(unsigned char)
+void P2DGrafContext::setLineWidth(u8)
 {
 	/*
 	.loc_0x0:

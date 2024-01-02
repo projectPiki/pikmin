@@ -6,7 +6,7 @@
 struct Matrix4f {
 	void makeIdentity();
 
-	float mMatrix[4][4];
+	f32 mMatrix[4][4];
 };
 
 #endif

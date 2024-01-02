@@ -55,7 +55,7 @@ void GemItem::bounceCallback()
  * Address:	........
  * Size:	000108
  */
-GemItem::GemItem(CreatureProp*, int, Shape**, Shape**, Shape**, SimpleAI*, float, int, int)
+GemItem::GemItem(CreatureProp*, int, Shape**, Shape**, Shape**, SimpleAI*, f32, int, int)
 {
 	// UNUSED FUNCTION
 }
@@ -192,7 +192,7 @@ void GemItem::updateLiftup()
  * Address:	........
  * Size:	000098
  */
-void GemItem::startPick(float)
+void GemItem::startPick(f32)
 {
 	// UNUSED FUNCTION
 }

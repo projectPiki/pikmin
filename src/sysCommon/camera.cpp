@@ -35,7 +35,7 @@ void CullFrustum::vectorToWorldPlane(Vector3f&, CullingPlane&)
  * Address:	80041584
  * Size:	00006C
  */
-void CullFrustum::isPointVisible(Vector3f&, float)
+void CullFrustum::isPointVisible(Vector3f&, f32)
 {
 	/*
 	.loc_0x0:
@@ -1103,7 +1103,7 @@ void CullFrustum::draw(Graphics&)
  * Address:	800425AC
  * Size:	00046C
  */
-void CullFrustum::updateViewPlanes(float, float, float, float)
+void CullFrustum::updateViewPlanes(f32, f32, f32, f32)
 {
 	/*
 	.loc_0x0:
@@ -1591,7 +1591,7 @@ void CullFrustum::createInvVecs()
  * Address:	80042C54
  * Size:	000150
  */
-void CullFrustum::update(float, float, float, float)
+void CullFrustum::update(f32, f32, f32, f32)
 {
 	/*
 	.loc_0x0:

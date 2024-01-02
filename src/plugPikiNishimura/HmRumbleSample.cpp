@@ -34,7 +34,7 @@ void RumbleSample::simpleStop() { PADControlMotor(_08, 2); }
  * Address:	8017D6BC
  * Size:	000088
  */
-void RumbleSample::simpleStart(float param_1)
+void RumbleSample::simpleStart(f32 param_1)
 {
 	_00 = param_1;
 	_04 += _00;

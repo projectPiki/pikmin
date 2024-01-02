@@ -1,4 +1,4 @@
-
+#include "types.h"
 
 /*
  * --INFO--
@@ -15,7 +15,7 @@ void __ieee754_asin(void)
  * Address:	8021A710
  * Size:	000008
  */
-void fabs(double)
+void fabs(f64)
 {
 	/*
 	.loc_0x0:

@@ -1225,7 +1225,7 @@ void TAIAapproachTargetPriorityFaceDir::getVelocity(Teki&)
  * Address:	........
  * Size:	0000D0
  */
-void TAIAlookAround::setTargetDirection(Teki&, float)
+void TAIAlookAround::setTargetDirection(Teki&, f32)
 {
 	// UNUSED FUNCTION
 }

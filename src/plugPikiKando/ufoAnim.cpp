@@ -512,7 +512,7 @@ void UfoAnimator::startMotion(int, PaniMotionInfo*)
  * Address:	800E9D50
  * Size:	000010
  */
-void UfoAnimator::setMotionSpeed(int, float)
+void UfoAnimator::setMotionSpeed(int, f32)
 {
 	/*
 	.loc_0x0:

@@ -1,11 +1,11 @@
-
+#include "types.h"
 
 /*
  * --INFO--
  * Address:	........
  * Size:	000014
  */
-void GetDSPchannelHandle(unsigned long)
+void GetDSPchannelHandle(u32)
 {
 	// UNUSED FUNCTION
 }
@@ -53,7 +53,7 @@ void InitDSPchannel()
  * Address:	8000AD60
  * Size:	000114
  */
-void AllocDSPchannel(unsigned long, unsigned long)
+void AllocDSPchannel(u32, u32)
 {
 	/*
 	.loc_0x0:
@@ -148,7 +148,7 @@ void AllocDSPchannel(unsigned long, unsigned long)
  * Address:	8000AE80
  * Size:	0000DC
  */
-void DeAllocDSPchannel(dspch_*, unsigned long)
+void DeAllocDSPchannel(dspch_*, u32)
 {
 	/*
 	.loc_0x0:
@@ -441,7 +441,7 @@ void ForceStopDSPchannel(dspch_*)
  * Address:	8000B1E0
  * Size:	0000AC
  */
-void BreakLowerDSPchannel(unsigned char)
+void BreakLowerDSPchannel(u8)
 {
 	/*
 	.loc_0x0:
@@ -508,7 +508,7 @@ void BreakLowerDSPchannel(unsigned char)
  * Address:	8000B2A0
  * Size:	0000AC
  */
-void BreakLowerActiveDSPchannel(unsigned char)
+void BreakLowerActiveDSPchannel(u8)
 {
 	/*
 	.loc_0x0:

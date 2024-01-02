@@ -442,7 +442,7 @@ void RigidBody::applyCMForce(Vector3f&)
  * Address:	8004E11C
  * Size:	000D90
  */
-void RigidBody::integrate(int, int, float)
+void RigidBody::integrate(int, int, f32)
 {
 	/*
 	.loc_0x0:
@@ -2079,7 +2079,7 @@ void RigidBody::makeBodyQuat(Quat&) { }
  * Address:	8004F898
  * Size:	0001E8
  */
-void RigidBody::updateVecQuats(int, float)
+void RigidBody::updateVecQuats(int, f32)
 {
 	/*
 	.loc_0x0:
@@ -2383,7 +2383,7 @@ void DynSimulator::resetWorld()
  * Address:	8004FC7C
  * Size:	0001B4
  */
-void DynSimulator::doSimulation(float, float, Shape*)
+void DynSimulator::doSimulation(f32, f32, Shape*)
 {
 	/*
 	.loc_0x0:
@@ -2528,7 +2528,7 @@ void DynSimulator::doSimulation(float, float, Shape*)
  * Address:	8004FE30
  * Size:	000080
  */
-void RigidBody::computeForces(int, float)
+void RigidBody::computeForces(int, f32)
 {
 	/*
 	.loc_0x0:
@@ -2658,7 +2658,7 @@ void RigidBody::initCollisions(int)
  * Address:	........
  * Size:	000094
  */
-void DynSimulator::evolveSimulation(float, Shape*)
+void DynSimulator::evolveSimulation(f32, Shape*)
 {
 	// UNUSED FUNCTION
 }
@@ -2668,7 +2668,7 @@ void DynSimulator::evolveSimulation(float, Shape*)
  * Address:	........
  * Size:	000070
  */
-void DynSimulator::Integrate(float)
+void DynSimulator::Integrate(f32)
 {
 	// UNUSED FUNCTION
 }
@@ -2688,7 +2688,7 @@ void DynSimulator::CalculateVertices(int)
  * Address:	8004FF98
  * Size:	00006C
  */
-void DynSimulator::updateVecQuats(float)
+void DynSimulator::updateVecQuats(f32)
 {
 	/*
 	.loc_0x0:
@@ -2751,7 +2751,7 @@ void DynSimulator::ResolveCollisions(int)
  * Address:	80050004
  * Size:	000010
  */
-void RigidBody::initDimensions(float, float, float)
+void RigidBody::initDimensions(f32, f32, f32)
 {
 	/*
 	.loc_0x0:

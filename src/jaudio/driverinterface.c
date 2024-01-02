@@ -1,11 +1,11 @@
-
+#include "types.h"
 
 /*
  * --INFO--
  * Address:	80009400
  * Size:	000024
  */
-void Channel_SetMixerLevel(float)
+void Channel_SetMixerLevel(f32)
 {
 	/*
 	.loc_0x0:
@@ -216,7 +216,7 @@ void List_AddChannel(jc_**, jc_*)
  * Address:	800095C0
  * Size:	00009C
  */
-void FixAllocChannel(jcs_*, unsigned long)
+void FixAllocChannel(jcs_*, u32)
 {
 	/*
 	.loc_0x0:
@@ -476,7 +476,7 @@ void FixMoveChannelAll(jcs_*, jcs_*)
  * Address:	800098C0
  * Size:	000070
  */
-void PanCalc(const PanMatrix_*, const PanMatrix_*, unsigned char)
+void PanCalc(const PanMatrix_*, const PanMatrix_*, u8)
 {
 	/*
 	.loc_0x0:
@@ -1212,7 +1212,7 @@ void UpdateEffecterParam(jc_*)
  * Address:	8000A1C0
  * Size:	000068
  */
-void DoEffectOsc(jc_*, unsigned char, float)
+void DoEffectOsc(jc_*, u8, f32)
 {
 	/*
 	.loc_0x0:
@@ -1311,7 +1311,7 @@ void KillBrokenLogicalChannels(dspch_*)
  * Address:	8000A2E0
  * Size:	000384
  */
-void CommonCallbackLogicalChannel(dspch_*, unsigned long)
+void CommonCallbackLogicalChannel(dspch_*, u32)
 {
 	/*
 	.loc_0x0:
@@ -1954,7 +1954,7 @@ void Del_WaitDSPChannel(jc_*)
  * Address:	8000AA80
  * Size:	0000FC
  */
-void __Entry_WaitChannel(unsigned char)
+void __Entry_WaitChannel(u8)
 {
 	/*
 	.loc_0x0:

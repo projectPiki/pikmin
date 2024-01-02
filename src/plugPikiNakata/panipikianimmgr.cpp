@@ -306,7 +306,7 @@ void PaniPikiAnimMgr::finishMotion(PaniAnimKeyListener*)
  * Address:	8011FB44
  * Size:	0000C0
  */
-void PaniPikiAnimMgr::updateAnimation(float)
+void PaniPikiAnimMgr::updateAnimation(f32)
 {
 	/*
 	.loc_0x0:

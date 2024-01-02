@@ -85,7 +85,7 @@ void P2DTextBox::loadResource()
  * Address:	801B4534
  * Size:	00020C
  */
-P2DTextBox::P2DTextBox(P2DPane*, RandomAccessStream*, unsigned short)
+P2DTextBox::P2DTextBox(P2DPane*, RandomAccessStream*, u16)
 {
 	/*
 	.loc_0x0:

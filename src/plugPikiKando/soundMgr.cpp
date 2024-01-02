@@ -1062,7 +1062,7 @@ void SeSystem::playSoundDirect(int, int, Vector3f&)
  * Address:	800A47C8
  * Size:	000108
  */
-void SeSystem::destroyEvent(SeContext*, long)
+void SeSystem::destroyEvent(SeContext*, s32)
 {
 	/*
 	.loc_0x0:
@@ -1154,7 +1154,7 @@ void SeSystem::destroyEvent(SeContext*, long)
  * Address:	........
  * Size:	00005C
  */
-void SeSystem::getEvent(long)
+void SeSystem::getEvent(s32)
 {
 	// UNUSED FUNCTION
 }

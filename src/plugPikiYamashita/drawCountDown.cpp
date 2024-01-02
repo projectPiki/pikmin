@@ -173,7 +173,7 @@ zen::DrawCountDown::DrawCountDown()
  * Address:	801E7CA8
  * Size:	000010
  */
-void zen::DrawCountDown::setRate(float, float, float)
+void zen::DrawCountDown::setRate(f32, f32, f32)
 {
 	/*
 	.loc_0x0:
@@ -189,7 +189,7 @@ void zen::DrawCountDown::setRate(float, float, float)
  * Address:	801E7CB8
  * Size:	0001A8
  */
-void zen::DrawCountDown::init(float, float, float*)
+void zen::DrawCountDown::init(f32, f32, f32*)
 {
 	/*
 	.loc_0x0:

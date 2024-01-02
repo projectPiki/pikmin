@@ -377,7 +377,7 @@ ParaMultiParameters::ParaMultiParameters(int, ParaParameterInfoI*, int, ParaPara
  * Address:	801218FC
  * Size:	000090
  */
-void ParaParameters<float>::ParaParameters(int, ParaParameterInfo<float>*)
+void ParaParameters<f32>::ParaParameters(int, ParaParameterInfo<f32>*)
 {
 	/*
 	.loc_0x0:
@@ -642,21 +642,21 @@ void ParaMultiParameters::print()
  * Address:	80121BA0
  * Size:	000004
  */
-void ParaParameters<float>::read(Stream&) { }
+void ParaParameters<f32>::read(Stream&) { }
 
 /*
  * --INFO--
  * Address:	80121BA4
  * Size:	000004
  */
-void ParaParameters<float>::write(Stream&) { }
+void ParaParameters<f32>::write(Stream&) { }
 
 /*
  * --INFO--
  * Address:	80121BA8
  * Size:	000004
  */
-void ParaParameters<float>::print() { }
+void ParaParameters<f32>::print() { }
 
 /*
  * --INFO--

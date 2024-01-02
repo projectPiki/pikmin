@@ -316,7 +316,7 @@ void zen::SpectrumCursorMgr::update()
  * Address:	801DABA8
  * Size:	000070
  */
-void zen::SpectrumCursorMgr::move(float, float, float)
+void zen::SpectrumCursorMgr::move(f32, f32, f32)
 {
 	/*
 	.loc_0x0:
@@ -356,7 +356,7 @@ void zen::SpectrumCursorMgr::move(float, float, float)
  * Address:	801DAC18
  * Size:	000024
  */
-void zen::SpectrumCursorMgr::scale(float, float)
+void zen::SpectrumCursorMgr::scale(f32, f32)
 {
 	/*
 	.loc_0x0:
@@ -377,7 +377,7 @@ void zen::SpectrumCursorMgr::scale(float, float)
  * Address:	801DAC3C
  * Size:	000374
  */
-void zen::SpectrumCursorMgr::init(P2DScreen*, P2DPane*, unsigned long, float, float)
+void zen::SpectrumCursorMgr::init(P2DScreen*, P2DPane*, u32, f32, f32)
 {
 	/*
 	.loc_0x0:
@@ -628,7 +628,7 @@ void zen::SpectrumCursorMgr::init(P2DScreen*, P2DPane*, unsigned long, float, fl
  * Address:	801DAFB0
  * Size:	000108
  */
-void zen::SpectrumCursorMgr::initPos(float, float)
+void zen::SpectrumCursorMgr::initPos(f32, f32)
 {
 	/*
 	.loc_0x0:
@@ -718,7 +718,7 @@ void zen::SpectrumCursorMgr::initPos(float, float)
  * Address:	801DB0B8
  * Size:	00004C
  */
-void zen::SpectrumCursorMgr::initScale(float)
+void zen::SpectrumCursorMgr::initScale(f32)
 {
 	/*
 	.loc_0x0:
@@ -753,7 +753,7 @@ void zen::SpectrumCursorMgr::initScale(float)
  * Address:	801DB104
  * Size:	000048
  */
-void zen::SpectrumCursorMgr::makeTag(unsigned long, int)
+void zen::SpectrumCursorMgr::makeTag(u32, int)
 {
 	/*
 	.loc_0x0:

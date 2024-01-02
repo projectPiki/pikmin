@@ -1,9 +1,9 @@
-
+#include "types.h"
 
 /*
  * --INFO--
- * Address:	........
- * Size:	00003C
+ * Address: ........
+ * Size:    00003C
  */
 void C_MTXIdentity(void)
 {
@@ -12,8 +12,8 @@ void C_MTXIdentity(void)
 
 /*
  * --INFO--
- * Address:	801FDB94
- * Size:	00002C
+ * Address: 801FDB94
+ * Size:    00002C
  */
 void PSMTXIdentity(void)
 {
@@ -35,8 +35,8 @@ void PSMTXIdentity(void)
 
 /*
  * --INFO--
- * Address:	........
- * Size:	00006C
+ * Address: ........
+ * Size:    00006C
  */
 void C_MTXCopy(void)
 {
@@ -45,8 +45,8 @@ void C_MTXCopy(void)
 
 /*
  * --INFO--
- * Address:	........
- * Size:	000034
+ * Address: ........
+ * Size:    000034
  */
 void PSMTXCopy(void)
 {
@@ -55,8 +55,8 @@ void PSMTXCopy(void)
 
 /*
  * --INFO--
- * Address:	........
- * Size:	0002A8
+ * Address: ........
+ * Size:    0002A8
  */
 void C_MTXConcat(void)
 {
@@ -65,8 +65,8 @@ void C_MTXConcat(void)
 
 /*
  * --INFO--
- * Address:	801FDBC0
- * Size:	0000CC
+ * Address: 801FDBC0
+ * Size:    0000CC
  */
 void PSMTXConcat(void)
 {
@@ -128,8 +128,8 @@ void PSMTXConcat(void)
 
 /*
  * --INFO--
- * Address:	........
- * Size:	00009C
+ * Address: ........
+ * Size:    00009C
  */
 void C_MTXTranspose(void)
 {
@@ -138,8 +138,8 @@ void C_MTXTranspose(void)
 
 /*
  * --INFO--
- * Address:	801FDC8C
- * Size:	000050
+ * Address: 801FDC8C
+ * Size:    000050
  */
 void PSMTXTranspose(void)
 {
@@ -170,8 +170,8 @@ void PSMTXTranspose(void)
 
 /*
  * --INFO--
- * Address:	........
- * Size:	0002AC
+ * Address: ........
+ * Size:    0002AC
  */
 void C_MTXInverse(void)
 {
@@ -180,8 +180,8 @@ void C_MTXInverse(void)
 
 /*
  * --INFO--
- * Address:	801FDCDC
- * Size:	000104
+ * Address: 801FDCDC
+ * Size:    000104
  */
 void PSMTXInverse(void)
 {
@@ -259,8 +259,8 @@ void PSMTXInverse(void)
 
 /*
  * --INFO--
- * Address:	........
- * Size:	00021C
+ * Address: ........
+ * Size:    00021C
  */
 void C_MTXInvXpose(void)
 {
@@ -269,8 +269,8 @@ void C_MTXInvXpose(void)
 
 /*
  * --INFO--
- * Address:	........
- * Size:	0000D4
+ * Address: ........
+ * Size:    0000D4
  */
 void PSMTXInvXpose(void)
 {
@@ -279,8 +279,8 @@ void PSMTXInvXpose(void)
 
 /*
  * --INFO--
- * Address:	........
- * Size:	000070
+ * Address: ........
+ * Size:    000070
  */
 void MTXRotRad(void)
 {
@@ -289,8 +289,8 @@ void MTXRotRad(void)
 
 /*
  * --INFO--
- * Address:	........
- * Size:	000104
+ * Address: ........
+ * Size:    000104
  */
 void MTXRotTrig(void)
 {
@@ -299,8 +299,8 @@ void MTXRotTrig(void)
 
 /*
  * --INFO--
- * Address:	........
- * Size:	000118
+ * Address: ........
+ * Size:    000118
  */
 void MTXRotAxisRad(void)
 {
@@ -309,8 +309,8 @@ void MTXRotAxisRad(void)
 
 /*
  * --INFO--
- * Address:	801FDDE0
- * Size:	00003C
+ * Address: 801FDDE0
+ * Size:    00003C
  */
 void MTXTrans(void)
 {
@@ -336,8 +336,8 @@ void MTXTrans(void)
 
 /*
  * --INFO--
- * Address:	........
- * Size:	000078
+ * Address: ........
+ * Size:    000078
  */
 void MTXTransApply(void)
 {
@@ -346,8 +346,8 @@ void MTXTransApply(void)
 
 /*
  * --INFO--
- * Address:	801FDE1C
- * Size:	000038
+ * Address: 801FDE1C
+ * Size:    000038
  */
 void MTXScale(void)
 {
@@ -372,8 +372,8 @@ void MTXScale(void)
 
 /*
  * --INFO--
- * Address:	........
- * Size:	000094
+ * Address: ........
+ * Size:    000094
  */
 void MTXScaleApply(void)
 {
@@ -382,8 +382,8 @@ void MTXScaleApply(void)
 
 /*
  * --INFO--
- * Address:	........
- * Size:	0000F0
+ * Address: ........
+ * Size:    0000F0
  */
 void MTXQuat(void)
 {
@@ -392,8 +392,8 @@ void MTXQuat(void)
 
 /*
  * --INFO--
- * Address:	........
- * Size:	000100
+ * Address: ........
+ * Size:    000100
  */
 void MTXReflect(void)
 {
@@ -402,8 +402,8 @@ void MTXReflect(void)
 
 /*
  * --INFO--
- * Address:	........
- * Size:	00018C
+ * Address: ........
+ * Size:    00018C
  */
 void MTXLookAt(void)
 {
@@ -412,8 +412,8 @@ void MTXLookAt(void)
 
 /*
  * --INFO--
- * Address:	........
- * Size:	000094
+ * Address: ........
+ * Size:    000094
  */
 void MTXLightFrustum(void)
 {
@@ -422,8 +422,8 @@ void MTXLightFrustum(void)
 
 /*
  * --INFO--
- * Address:	801FDE54
- * Size:	0000CC
+ * Address: 801FDE54
+ * Size:    0000CC
  */
 void MTXLightPerspective(void)
 {
@@ -485,8 +485,8 @@ void MTXLightPerspective(void)
 
 /*
  * --INFO--
- * Address:	........
- * Size:	000088
+ * Address: ........
+ * Size:    000088
  */
 void MTXLightOrtho(void)
 {

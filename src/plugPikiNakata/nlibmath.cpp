@@ -25,7 +25,7 @@ void _Print(char*, ...)
  * Address:	........
  * Size:	00005C
  */
-void GetAtanTable(float, float)
+void GetAtanTable(f32, f32)
 {
 	// UNUSED FUNCTION
 }
@@ -35,7 +35,7 @@ void GetAtanTable(float, float)
  * Address:	8011DB48
  * Size:	0002C0
  */
-void atan(float, float)
+void atan(f32, f32)
 {
 	/*
 	.loc_0x0:
@@ -271,7 +271,7 @@ void atan(float, float)
  * Address:	........
  * Size:	000058
  */
-void NMathF::remainder(float, float)
+void NMathF::remainder(f32, f32)
 {
 	// UNUSED FUNCTION
 }
@@ -281,7 +281,7 @@ void NMathF::remainder(float, float)
  * Address:	8011DE08
  * Size:	000058
  */
-void NMathF::atan2(float, float)
+void NMathF::atan2(f32, f32)
 {
 	/*
 	.loc_0x0:

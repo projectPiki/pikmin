@@ -1,11 +1,11 @@
-
+#include "types.h"
 
 /*
  * --INFO--
  * Address:	8000DC20
  * Size:	000020
  */
-void sqrtf2(float)
+void sqrtf2(f32)
 {
 	/*
 	.loc_0x0:
@@ -27,7 +27,7 @@ void sqrtf2(float)
  * Address:	8000DC40
  * Size:	000064
  */
-void std::sqrtf(float)
+void std::sqrtf(f32)
 {
 	/*
 	.loc_0x0:
@@ -66,7 +66,7 @@ void std::sqrtf(float)
  * Address:	........
  * Size:	000020
  */
-void cosf2(float)
+void cosf2(f32)
 {
 	// UNUSED FUNCTION
 }
@@ -76,7 +76,7 @@ void cosf2(float)
  * Address:	8000DCC0
  * Size:	000024
  */
-void atanf2(float, float)
+void atanf2(f32, f32)
 {
 	/*
 	.loc_0x0:
@@ -97,7 +97,7 @@ void atanf2(float, float)
  * Address:	........
  * Size:	000020
  */
-void sinf2(float)
+void sinf2(f32)
 {
 	// UNUSED FUNCTION
 }
@@ -155,7 +155,7 @@ void Jac_InitSinTable()
  * Address:	8000DDA0
  * Size:	000034
  */
-void sinf3(float)
+void sinf3(f32)
 {
 	/*
 	.loc_0x0:

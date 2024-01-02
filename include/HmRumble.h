@@ -8,9 +8,9 @@ typedef class RumbleSample;
 extern "C" void PADControlMotor(int, int);
 
 class RumbleSample {
-	float _00; // _00
-	float _04; // _04
-	int _08;   // _08
+	f32 _00; // _00
+	f32 _04; // _04
+	int _08; // _08
 
 	RumbleSample(int);
 	void simpleStop();

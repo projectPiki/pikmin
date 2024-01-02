@@ -10,23 +10,22 @@
  * .4byte finishOneShot__8AnimatorFv
  * .4byte finishLoop__8AnimatorFv
  * .4byte updateContext__12PaniAnimatorFv
-*/
+ */
 
 struct Animator {
-	virtual void changeContext(AnimContext *);  // _08
-	virtual void animate(float);                // _0C
-	virtual void finishOneShot();               // _10
-	virtual void finishLoop();                  // _14
+	virtual void changeContext(AnimContext*); // _08
+	virtual void animate(f32);                // _0C
+	virtual void finishOneShot();             // _10
+	virtual void finishLoop();                // _14
 };
 
 /**
  * @brief TODO
  */
 struct PaniAnimator : public Animator {
-	virtual void changeContext(AnimContext *);  // _08
-	virtual void animate(float);                // _0C
-	virtual void updateContext();               // _18
-
+	virtual void changeContext(AnimContext*); // _08
+	virtual void animate(f32);                // _0C
+	virtual void updateContext();             // _18
 };
 
 #endif

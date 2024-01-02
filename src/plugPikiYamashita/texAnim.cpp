@@ -25,7 +25,7 @@ void _Print(char*, ...)
  * Address:	801C10A0
  * Size:	000024
  */
-void zen::TexAnim::setData(unsigned long, Texture*, float)
+void zen::TexAnim::setData(u32, Texture*, f32)
 {
 	/*
 	.loc_0x0:

@@ -342,7 +342,7 @@ void MoviePlayer::translateIndex(int, int)
  * Address:	80077160
  * Size:	00049C
  */
-void MoviePlayer::startMovie(int, int, Creature*, Vector3f*, Vector3f*, unsigned long, bool)
+void MoviePlayer::startMovie(int, int, Creature*, Vector3f*, Vector3f*, u32, bool)
 {
 	/*
 	.loc_0x0:

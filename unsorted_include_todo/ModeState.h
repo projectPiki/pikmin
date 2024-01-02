@@ -8,16 +8,15 @@
  * .4byte update__9ModeStateFRUl
  * .4byte postRender__9ModeStateFR8Graphics
  * .4byte postUpdate__9ModeStateFv
-*/
+ */
 
 /**
  * @brief TODO
  */
 struct ModeState {
-	virtual void update(unsigned long &);  // _08
-	virtual void postRender(Graphics &);   // _0C
-	virtual void postUpdate();             // _10
-
+	virtual void update(u32&);          // _08
+	virtual void postRender(Graphics&); // _0C
+	virtual void postUpdate();          // _10
 };
 
 #endif

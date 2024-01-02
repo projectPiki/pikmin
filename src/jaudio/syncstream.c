@@ -1,4 +1,4 @@
-
+#include "types.h"
 
 /*
  * --INFO--
@@ -31,7 +31,7 @@ void Stop_DirectPCM(dspch_*)
  * Address:	8001BC20
  * Size:	0000DC
  */
-void Play_DirectPCM(dspch_*, short*, unsigned short, unsigned long)
+void Play_DirectPCM(dspch_*, s16*, u16, u32)
 {
 	/*
 	.loc_0x0:
@@ -170,7 +170,7 @@ void __DVDReadAsyncRetry()
  * Address:	8001BD80
  * Size:	000048
  */
-void DVDReadAsyncPrio2(DVDFileInfo*, void*, long, long, void (*)(long, DVDFileInfo*), long)
+void DVDReadAsyncPrio2(DVDFileInfo*, void*, s32, s32, void (*)(s32, DVDFileInfo*), s32)
 {
 	/*
 	.loc_0x0:
@@ -200,7 +200,7 @@ void DVDReadAsyncPrio2(DVDFileInfo*, void*, long, long, void (*)(long, DVDFileIn
  * Address:	8001BDE0
  * Size:	00014C
  */
-void __LoadFin(long, DVDFileInfo*)
+void __LoadFin(s32, DVDFileInfo*)
 {
 	/*
 	.loc_0x0:
@@ -427,7 +427,7 @@ void LoadADPCM(StreamCtrl_*, int)
  * Address:	8001C0E0
  * Size:	000020
  */
-void BufContInit(BufControl_*, unsigned char, unsigned char, unsigned char, unsigned char, unsigned long, unsigned long, unsigned long)
+void BufContInit(BufControl_*, u8, u8, u8, u8, u32, u32, u32)
 {
 	/*
 	.loc_0x0:
@@ -1578,7 +1578,7 @@ void __DecodeADPCM(StreamCtrl_*)
  * Address:	8001CFC0
  * Size:	000024
  */
-void Clamp16(long)
+void Clamp16(s32)
 {
 	/*
 	.loc_0x0:

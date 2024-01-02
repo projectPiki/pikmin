@@ -183,7 +183,7 @@ P2DPicture::P2DPicture()
  * Address:	801B1A44
  * Size:	000134
  */
-P2DPicture::P2DPicture(P2DPane*, RandomAccessStream*, unsigned short)
+P2DPicture::P2DPicture(P2DPane*, RandomAccessStream*, u16)
 {
 	/*
 	.loc_0x0:
@@ -345,7 +345,7 @@ P2DPicture::P2DPicture(Texture*)
  * Address:	801B1C24
  * Size:	00009C
  */
-void P2DPicture::insert(Texture*, unsigned char, float)
+void P2DPicture::insert(Texture*, u8, f32)
 {
 	/*
 	.loc_0x0:
@@ -1056,7 +1056,7 @@ void P2DPicture::drawOut(const PUTRect&, const PUTRect&)
  * Address:	801B2458
  * Size:	000234
  */
-void P2DPicture::drawTexCoord(int, int, int, int, float, float, float, float, float, float, float, float, Matrix4f*)
+void P2DPicture::drawTexCoord(int, int, int, int, f32, f32, f32, f32, f32, f32, f32, f32, Matrix4f*)
 {
 	/*
 	.loc_0x0:
@@ -1567,7 +1567,7 @@ void P2DPicture::setTevMode()
  * Address:	801B2B3C
  * Size:	000014
  */
-void P2DPicture::swap(float&, float&)
+void P2DPicture::swap(f32&, f32&)
 {
 	/*
 	.loc_0x0:

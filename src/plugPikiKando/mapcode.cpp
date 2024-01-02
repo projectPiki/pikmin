@@ -2,7 +2,7 @@
 
 #define PI 3.14159265359
 
-extern "C" float sinf(float);
+extern "C" f32 sinf(f32);
 
 struct CollTriInfo {
 	char filler[24];

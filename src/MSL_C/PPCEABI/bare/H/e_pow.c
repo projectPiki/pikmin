@@ -1,8 +1,8 @@
 
 /*
  * --INFO--
- * Address:	8021A9B0
- * Size:	000818
+ * Address: 8021A9B0
+ * Size:    000818
  */
 
 //========================================================================
@@ -12,7 +12,7 @@
 //      Part of the standard mathematical function library
 //
 //========================================================================
-//####ECOSGPLCOPYRIGHTBEGIN####
+// ####ECOSGPLCOPYRIGHTBEGIN####
 // -------------------------------------------
 // This file is part of eCos, the Embedded Configurable Operating System.
 // Copyright (C) 1998, 1999, 2000, 2001, 2002 Red Hat, Inc.
@@ -43,9 +43,9 @@
 // Alternative licenses for eCos may be arranged by contacting Red Hat, Inc.
 // at http://sources.redhat.com/ecos/ecos-license/
 // -------------------------------------------
-//####ECOSGPLCOPYRIGHTEND####
+// ####ECOSGPLCOPYRIGHTEND####
 //========================================================================
-//#####DESCRIPTIONBEGIN####
+// #####DESCRIPTIONBEGIN####
 //
 // Author(s):     jlarmour
 // Contributors:
@@ -54,7 +54,7 @@
 // Description:
 // Usage:
 //
-//####DESCRIPTIONEND####
+// ####DESCRIPTIONEND####
 //
 //========================================================================
 
@@ -74,41 +74,41 @@
 
 /* __ieee754_pow(x,y) return x**y
  *
- *		      n
+ *            n
  * Method:  Let x =  2   * (1+f)
- *	1. Compute and return log2(x) in two pieces:
- *		log2(x) = w1 + w2,
- *	   where w1 has 53-24 = 29 bit trailing zeros.
- *	2. Perform y*log2(x) = n+y' by simulating muti-precision
- *	   arithmetic, where |y'|<=0.5.
- *	3. Return x**y = 2**n*exp(y'*log2)
+ *  1. Compute and return log2(x) in two pieces:
+ *      log2(x) = w1 + w2,
+ *     where w1 has 53-24 = 29 bit trailing zeros.
+ *  2. Perform y*log2(x) = n+y' by simulating muti-precision
+ *     arithmetic, where |y'|<=0.5.
+ *  3. Return x**y = 2**n*exp(y'*log2)
  *
  * Special cases:
- *	1.  (anything) ** 0  is 1
- *	2.  (anything) ** 1  is itself
- *	3.  (anything) ** NAN is NAN
- *	4.  NAN ** (anything except 0) is NAN
- *	5.  +-(|x| > 1) **  +INF is +INF
- *	6.  +-(|x| > 1) **  -INF is +0
- *	7.  +-(|x| < 1) **  +INF is +0
- *	8.  +-(|x| < 1) **  -INF is +INF
- *	9.  +-1         ** +-INF is NAN
- *	10. +0 ** (+anything except 0, NAN)               is +0
- *	11. -0 ** (+anything except 0, NAN, odd integer)  is +0
- *	12. +0 ** (-anything except 0, NAN)               is +INF
- *	13. -0 ** (-anything except 0, NAN, odd integer)  is +INF
- *	14. -0 ** (odd integer) = -( +0 ** (odd integer) )
- *	15. +INF ** (+anything except 0,NAN) is +INF
- *	16. +INF ** (-anything except 0,NAN) is +0
- *	17. -INF ** (anything)  = -0 ** (-anything)
- *	18. (-anything) ** (integer) is (-1)**(integer)*(+anything**integer)
- *	19. (-anything except 0 and inf) ** (non-integer) is NAN
+ *  1.  (anything) ** 0  is 1
+ *  2.  (anything) ** 1  is itself
+ *  3.  (anything) ** NAN is NAN
+ *  4.  NAN ** (anything except 0) is NAN
+ *  5.  +-(|x| > 1) **  +INF is +INF
+ *  6.  +-(|x| > 1) **  -INF is +0
+ *  7.  +-(|x| < 1) **  +INF is +0
+ *  8.  +-(|x| < 1) **  -INF is +INF
+ *  9.  +-1         ** +-INF is NAN
+ *  10. +0 ** (+anything except 0, NAN)               is +0
+ *  11. -0 ** (+anything except 0, NAN, odd integer)  is +0
+ *  12. +0 ** (-anything except 0, NAN)               is +INF
+ *  13. -0 ** (-anything except 0, NAN, odd integer)  is +INF
+ *  14. -0 ** (odd integer) = -( +0 ** (odd integer) )
+ *  15. +INF ** (+anything except 0,NAN) is +INF
+ *  16. +INF ** (-anything except 0,NAN) is +0
+ *  17. -INF ** (anything)  = -0 ** (-anything)
+ *  18. (-anything) ** (integer) is (-1)**(integer)*(+anything**integer)
+ *  19. (-anything except 0 and inf) ** (non-integer) is NAN
  *
  * Accuracy:
- *	pow(x,y) returns x**y nearly rounded. In particular
- *			pow(integer,integer)
- *	always returns the correct integer provided it is
- *	representable.
+ *  pow(x,y) returns x**y nearly rounded. In particular
+ *          pow(integer,integer)
+ *  always returns the correct integer provided it is
+ *  representable.
  *
  * Constants :
  * The hexadecimal values are the intended ones for the following
@@ -127,9 +127,9 @@
 #ifndef _DOUBLE_IS_32BITS
 
 #ifdef __STDC__
-static const double
+static const f64
 #else
-static double
+static f64
 #endif
 bp[] = { 1.0, 1.5, },
 dp_h[] = { 0.0, 5.84962487220764160156e-01, }, /* 0x3FE2B803, 0x40000000 */
@@ -137,7 +137,7 @@ dp_l[] = { 0.0, 1.35003920212974897128e-08, }, /* 0x3E4CFDEB, 0x43CFD006 */
 zero = 0.0,
 one = 1.0,
 two = 2.0,
-two53 = 9007199254740992.0,	/* 0x43400000, 0x00000000 */
+two53 = 9007199254740992.0, /* 0x43400000, 0x00000000 */
 huge = 1.0e300,
 tiny = 1.0e-300,
 /* poly coefs for (3/2)*(log(x)-2s-2/3*s**3 */
@@ -157,20 +157,21 @@ lg2_h = 6.93147182464599609375e-01, /* 0x3FE62E43, 0x00000000 */
 lg2_l = -1.90465429995776804525e-09, /* 0xBE205C61, 0x0CA86C39 */
 ovt = 8.0085662595372944372e-0017, /* -(1024-log2(ovfl+.5ulp)) */
 cp = 9.61796693925975554329e-01, /* 0x3FEEC709, 0xDC3A03FD =2/(3ln2) */
-cp_h = 9.61796700954437255859e-01, /* 0x3FEEC709, 0xE0000000 =(float)cp */
+cp_h = 9.61796700954437255859e-01, /* 0x3FEEC709, 0xE0000000 =(f32)cp */
 cp_l = -7.02846165095275826516e-09, /* 0xBE3E2FE0, 0x145B01F5 =tail of cp_h*/
 ivln2 = 1.44269504088896338700e+00, /* 0x3FF71547, 0x652B82FE =1/ln2 */
 ivln2_h = 1.44269502162933349609e+00, /* 0x3FF71547, 0x60000000 =24b 1/ln2*/
 ivln2_l = 1.92596299112661746887e-08; /* 0x3E54AE0B, 0xF85DDF44 =1/ln2 tail*/
 
 #ifdef __STDC__
-double __ieee754_pow(double x, double y)
+f64 __ieee754_pow(f64 x, f64 y)
 #else
-double __ieee754_pow(x, y) double x, y;
+f64 __ieee754_pow(x, y)
+f64 x, y;
 #endif
 {
-	double z, ax, z_h, z_l, p_h, p_l;
-	double y1, t1, t2, r, s, t, u, v, w;
+	f64 z, ax, z_h, z_l, p_h, p_l;
+	f64 y1, t1, t2, r, s, t, u, v, w;
 	int i, j, k, yisint, n;
 	int hx, hy, ix, iy;
 	u32 lx, ly;
@@ -191,9 +192,9 @@ double __ieee754_pow(x, y) double x, y;
 		return x + y;
 
 	/* determine if y is an odd int when x < 0
-	 * yisint = 0	... y is not an integer
-	 * yisint = 1	... y is an odd int
-	 * yisint = 2	... y is an even int
+	 * yisint = 0   ... y is not an integer
+	 * yisint = 1   ... y is an odd int
+	 * yisint = 2   ... y is an even int
 	 */
 	yisint = 0;
 	if (hx < 0) {
@@ -263,13 +264,13 @@ double __ieee754_pow(x, y) double x, y;
 	// take one:
 	if (((((s32)hx >> 31) + 1) | yisint) == 0) {
 		errno = 33;
-		return (double)__float_nan;
+		return (f64)__float_nan;
 	};
 
 	// closer?
-	/*	n = ((s32)hx >> 31) + 1;
+	/*  n = ((s32)hx >> 31) + 1;
 	if((n|yisint)==0){
-	    errno = 33; return (double) __float_nan;
+	    errno = 33; return (f64) __float_nan;
 	    };*/
 
 	/* |y| is huge */
@@ -295,7 +296,7 @@ double __ieee754_pow(x, y) double x, y;
 		__LO(t1) = 0;
 		t2       = v - (t1 - u);
 	} else {
-		double s2, s_h, s_l, t_h, t_l;
+		f64 s2, s_h, s_l, t_h, t_l;
 		n = 0;
 		/* take care subnormal number */
 		if (ix < 0x00100000) {
@@ -347,7 +348,7 @@ double __ieee754_pow(x, y) double x, y;
 		z_h       = cp_h * p_h; /* cp_h+cp_l = 2/(3*log2) */
 		z_l       = cp_l * p_h + p_l * cp + dp_l[k];
 		/* log2(ax) = (s+..)*2/(3*log2) = n + dp_h + z_h + z_l */
-		t        = (double)n;
+		t        = (f64)n;
 		t1       = (((z_h + z_l) + dp_h[k]) + t);
 		__LO(t1) = 0;
 		t2       = z_l - (((t1 - t) - dp_h[k]) - z_h);
@@ -419,7 +420,7 @@ double __ieee754_pow(x, y) double x, y;
 
 /*
  * --INFO--
- * Address:	8021B1C8
- * Size:	000020
+ * Address: 8021B1C8
+ * Size:    000020
  */
-double scalbn(double p1, int p2) { return ldexp(p1, p2); }
+f64 scalbn(f64 p1, int p2) { return ldexp(p1, p2); }

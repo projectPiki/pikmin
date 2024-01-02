@@ -2502,7 +2502,7 @@ void TaiChappySmashedAction::actByEvent(TekiEvent&)
  * Address:	8012A804
  * Size:	000058
  */
-TaiChappyLegEffectAction::TaiChappyLegEffectAction(float)
+TaiChappyLegEffectAction::TaiChappyLegEffectAction(f32)
 {
 	/*
 	.loc_0x0:

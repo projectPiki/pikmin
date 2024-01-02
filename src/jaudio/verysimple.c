@@ -439,7 +439,7 @@ void Jac_StopSystemSe(void)
  * Address:	........
  * Size:	000004
  */
-void Jac_PlaySe(unsigned long)
+void Jac_PlaySe(u32)
 {
 	// UNUSED FUNCTION
 }
@@ -488,7 +488,7 @@ void Jac_Archiver_Init() { }
  * Address:	80017040
  * Size:	0000AC
  */
-void TrackReceive(seqp_*, unsigned short)
+void TrackReceive(seqp_*, u16)
 {
 	/*
 	.loc_0x0:
@@ -608,7 +608,7 @@ void Jac_SetThreadPriority(void)
  * Address:	80017180
  * Size:	00000C
  */
-void __BootSoundOK(unsigned long)
+void __BootSoundOK(u32)
 {
 	/*
 	.loc_0x0:

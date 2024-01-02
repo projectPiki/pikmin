@@ -96,7 +96,7 @@ void ComplexCreature::doAI()
  * Address:	........
  * Size:	00009C
  */
-void ComplexCreature::postUpdate(int, float)
+void ComplexCreature::postUpdate(int, f32)
 {
 	// UNUSED FUNCTION
 }

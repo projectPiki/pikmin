@@ -1,4 +1,4 @@
-
+#include "types.h"
 
 /*
  * --INFO--
@@ -179,7 +179,7 @@ void CpubufProcess(DSPBUF_EVENTS)
  * Address:	........
  * Size:	000040
  */
-void MixCpu(long)
+void MixCpu(s32)
 {
 	// UNUSED FUNCTION
 }

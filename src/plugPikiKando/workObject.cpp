@@ -1895,7 +1895,7 @@ void HinderRock::getPlaneFlag(Vector3f&)
  * Address:	........
  * Size:	0000E8
  */
-void HinderRock::getTangentPos(float)
+void HinderRock::getTangentPos(f32)
 {
 	// UNUSED FUNCTION
 }
@@ -4880,7 +4880,7 @@ void Bridge::getStageZ(int)
  * Address:	8009EA74
  * Size:	0000E8
  */
-void Bridge::getBridgePos(Vector3f&, float&, float&)
+void Bridge::getBridgePos(Vector3f&, f32&, f32&)
 {
 	/*
 	.loc_0x0:
@@ -5702,7 +5702,7 @@ void InteractBreak::actBridge(Bridge*)
  * Address:	8009F4D4
  * Size:	00002C
  */
-void operator*(const Vector3f&, const float&)
+void operator*(const Vector3f&, const f32&)
 {
 	/*
 	.loc_0x0:

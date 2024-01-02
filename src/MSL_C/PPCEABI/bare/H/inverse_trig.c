@@ -1,4 +1,4 @@
-
+#include "types.h"
 
 /*
  * --INFO--
@@ -178,7 +178,7 @@ void asinf(void)
  * Address:	8021B924
  * Size:	000020
  */
-void atan(float)
+void atan(f32)
 {
 	/*
 	.loc_0x0:

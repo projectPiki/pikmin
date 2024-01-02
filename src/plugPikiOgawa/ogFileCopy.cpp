@@ -110,7 +110,7 @@ void zen::ogScrFileSelectMgr::setOperateMode_Copy()
  * Address:	........
  * Size:	00006C
  */
-void zen::ogScrFileSelectMgr::MoveCpyCursor(int, float)
+void zen::ogScrFileSelectMgr::MoveCpyCursor(int, f32)
 {
 	// UNUSED FUNCTION
 }

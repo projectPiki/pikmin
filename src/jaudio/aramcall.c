@@ -1,11 +1,11 @@
-
+#include "types.h"
 
 /*
  * --INFO--
  * Address:	........
  * Size:	000008
  */
-void Jac_RegisterARAMCallback(unsigned long (*)(char*, unsigned long, unsigned long, unsigned long*, jaheap_*))
+void Jac_RegisterARAMCallback(u32 (*)(char*, u32, u32, u32*, jaheap_*))
 {
 	// UNUSED FUNCTION
 }
@@ -15,7 +15,7 @@ void Jac_RegisterARAMCallback(unsigned long (*)(char*, unsigned long, unsigned l
  * Address:	8000D8A0
  * Size:	000064
  */
-void LoadAram(char*, unsigned long*, unsigned long)
+void LoadAram(char*, u32*, u32)
 {
 	/*
 	.loc_0x0:
@@ -56,7 +56,7 @@ void LoadAram(char*, unsigned long*, unsigned long)
  * Address:	8000D920
  * Size:	000068
  */
-void LoadAramSingle(char*, unsigned long, unsigned long, unsigned long*, unsigned long)
+void LoadAramSingle(char*, u32, u32, u32*, u32)
 {
 	/*
 	.loc_0x0:
@@ -207,7 +207,7 @@ void Init_AramMotherHeap()
  * Address:	8000DAA0
  * Size:	0000F8
  */
-void LoadAram_Default(char*, unsigned long, unsigned long, unsigned long*, jaheap_*)
+void LoadAram_Default(char*, u32, u32, u32*, jaheap_*)
 {
 	/*
 	.loc_0x0:
@@ -291,7 +291,7 @@ void LoadAram_Default(char*, unsigned long, unsigned long, unsigned long*, jahea
  * Address:	8000DBA0
  * Size:	000038
  */
-void LoadAram_All(char*, unsigned long*, jaheap_*)
+void LoadAram_All(char*, u32*, jaheap_*)
 {
 	/*
 	.loc_0x0:
@@ -317,7 +317,7 @@ void LoadAram_All(char*, unsigned long*, jaheap_*)
  * Address:	8000DBE0
  * Size:	000028
  */
-void LoadAram_One(char*, unsigned long, unsigned long, unsigned long*, jaheap_*)
+void LoadAram_One(char*, u32, u32, u32*, jaheap_*)
 {
 	/*
 	.loc_0x0:

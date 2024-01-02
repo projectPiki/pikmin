@@ -1,11 +1,11 @@
-
+#include "types.h"
 
 /*
  * --INFO--
  * Address:	80008A00
  * Size:	000070
  */
-void WriteTask(unsigned char, unsigned long, void*, void (*)(void*))
+void WriteTask(u8, u32, void*, void (*)(void*))
 {
 	/*
 	.loc_0x0:

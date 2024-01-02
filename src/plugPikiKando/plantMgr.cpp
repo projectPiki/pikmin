@@ -1761,7 +1761,7 @@ void Plant::isAlive()
  * Address:	8011B134
  * Size:	000008
  */
-void Plant::setMotionSpeed(float)
+void Plant::setMotionSpeed(f32)
 {
 	/*
 	.loc_0x0:

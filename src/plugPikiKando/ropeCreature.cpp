@@ -250,7 +250,7 @@ void RopeCreature::update()
  * Address:	80094978
  * Size:	0000B4
  */
-void RopeCreature::getRopePos(float)
+void RopeCreature::getRopePos(f32)
 {
 	/*
 	.loc_0x0:

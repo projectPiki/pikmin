@@ -320,7 +320,7 @@ void zen::ogScrDiaryMgr::draw(Graphics&)
  * Address:	8018F5B8
  * Size:	000294
  */
-void zen::ogScrDiaryMgr::start(short, short)
+void zen::ogScrDiaryMgr::start(s16, s16)
 {
 	/*
 	.loc_0x0:
@@ -517,7 +517,7 @@ void zen::ogScrDiaryMgr::start(short, short)
  * Address:	........
  * Size:	00009C
  */
-void zen::ogScrDiaryMgr::setDiarySpecialNumber(short)
+void zen::ogScrDiaryMgr::setDiarySpecialNumber(s16)
 {
 	// UNUSED FUNCTION
 }
@@ -861,7 +861,7 @@ void zen::ogDrawDiary::setOffset()
  * Address:	8018FBCC
  * Size:	000298
  */
-void zen::ogDrawDiary::open(float, float, short)
+void zen::ogDrawDiary::open(f32, f32, s16)
 {
 	/*
 	.loc_0x0:

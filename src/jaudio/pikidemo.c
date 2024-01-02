@@ -1,4 +1,4 @@
-
+#include "types.h"
 
 /*
  * --INFO--
@@ -161,7 +161,7 @@ void Jac_DemoWalkCheck()
  * Address:	8001A260
  * Size:	00007C
  */
-void Jac_DemoCheckEvent(unsigned char)
+void Jac_DemoCheckEvent(u8)
 {
 	/*
 	.loc_0x0:
@@ -212,7 +212,7 @@ void Jac_DemoCheckEvent(unsigned char)
  * Address:	8001A2E0
  * Size:	00016C
  */
-void DoSequence(unsigned long, unsigned long)
+void DoSequence(u32, u32)
 {
 	/*
 	.loc_0x0:
@@ -343,7 +343,7 @@ void DoSequence(unsigned long, unsigned long)
  * Address:	8001A460
  * Size:	000044
  */
-void Jac_PlayDemoSequenceDirect(unsigned long)
+void Jac_PlayDemoSequenceDirect(u32)
 {
 	/*
 	.loc_0x0:
@@ -1239,7 +1239,7 @@ void Jac_FinishDemo_NoErase()
  * Address:	8001AE80
  * Size:	000020
  */
-void __Loaded(unsigned long)
+void __Loaded(u32)
 {
 	/*
 	.loc_0x0:
@@ -1259,7 +1259,7 @@ void __Loaded(unsigned long)
  * Address:	8001AEA0
  * Size:	0001AC
  */
-void __Prepare_BGM(unsigned long)
+void __Prepare_BGM(u32)
 {
 	/*
 	.loc_0x0:

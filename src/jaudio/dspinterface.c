@@ -1,11 +1,11 @@
-
+#include "types.h"
 
 /*
  * --INFO--
  * Address:	8000B560
  * Size:	000018
  */
-void GetDspHandle(unsigned char)
+void GetDspHandle(u8)
 {
 	/*
 	.loc_0x0:
@@ -23,7 +23,7 @@ void GetDspHandle(unsigned char)
  * Address:	........
  * Size:	000034
  */
-void GetDspHandleNc(unsigned char)
+void GetDspHandleNc(u8)
 {
 	// UNUSED FUNCTION
 }
@@ -33,7 +33,7 @@ void GetDspHandleNc(unsigned char)
  * Address:	8000B580
  * Size:	000014
  */
-void GetFxHandle(unsigned char)
+void GetFxHandle(u8)
 {
 	/*
 	.loc_0x0:
@@ -50,7 +50,7 @@ void GetFxHandle(unsigned char)
  * Address:	........
  * Size:	000030
  */
-void GetFxHandleNc(unsigned char)
+void GetFxHandleNc(u8)
 {
 	// UNUSED FUNCTION
 }
@@ -60,7 +60,7 @@ void GetFxHandleNc(unsigned char)
  * Address:	8000B5A0
  * Size:	00002C
  */
-void DSP_SetPitch(unsigned char, unsigned short)
+void DSP_SetPitch(u8, u16)
 {
 	/*
 	.loc_0x0:
@@ -85,7 +85,7 @@ void DSP_SetPitch(unsigned char, unsigned short)
  * Address:	........
  * Size:	000050
  */
-void DSP_SetPitch_Indirect(unsigned char, float, float)
+void DSP_SetPitch_Indirect(u8, f32, f32)
 {
 	// UNUSED FUNCTION
 }
@@ -95,7 +95,7 @@ void DSP_SetPitch_Indirect(unsigned char, float, float)
  * Address:	8000B5E0
  * Size:	000020
  */
-void DSP_SetMixerInitDelayMax(unsigned char, unsigned char)
+void DSP_SetMixerInitDelayMax(u8, u8)
 {
 	/*
 	.loc_0x0:
@@ -115,7 +115,7 @@ void DSP_SetMixerInitDelayMax(unsigned char, unsigned char)
  * Address:	8000B600
  * Size:	00004C
  */
-void DSP_SetMixerInitVolume(unsigned char, unsigned char, short, unsigned char)
+void DSP_SetMixerInitVolume(u8, u8, s16, u8)
 {
 	/*
 	.loc_0x0:
@@ -146,7 +146,7 @@ void DSP_SetMixerInitVolume(unsigned char, unsigned char, short, unsigned char)
  * Address:	8000B660
  * Size:	000044
  */
-void DSP_SetMixerVolume(unsigned char, unsigned char, short, unsigned char)
+void DSP_SetMixerVolume(u8, u8, s16, u8)
 {
 	/*
 	.loc_0x0:
@@ -175,7 +175,7 @@ void DSP_SetMixerVolume(unsigned char, unsigned char, short, unsigned char)
  * Address:	8000B6C0
  * Size:	00002C
  */
-void DSP_SetOscInfo(unsigned char, unsigned long)
+void DSP_SetOscInfo(u8, u32)
 {
 	/*
 	.loc_0x0:
@@ -198,7 +198,7 @@ void DSP_SetOscInfo(unsigned char, unsigned long)
  * Address:	8000B700
  * Size:	000020
  */
-void DSP_SetPauseFlag(unsigned char, unsigned char)
+void DSP_SetPauseFlag(u8, u8)
 {
 	/*
 	.loc_0x0:
@@ -218,7 +218,7 @@ void DSP_SetPauseFlag(unsigned char, unsigned char)
  * Address:	8000B720
  * Size:	0000B0
  */
-void DSP_SetWaveInfo(unsigned char, Wave_*, unsigned long)
+void DSP_SetWaveInfo(u8, Wave_*, u32)
 {
 	/*
 	.loc_0x0:
@@ -280,7 +280,7 @@ void DSP_SetWaveInfo(unsigned char, Wave_*, unsigned long)
  * Address:	8000B7E0
  * Size:	000038
  */
-void DSP_SetBusConnect(unsigned char, unsigned char, unsigned char)
+void DSP_SetBusConnect(u8, u8, u8)
 {
 	/*
 	.loc_0x0:
@@ -306,7 +306,7 @@ void DSP_SetBusConnect(unsigned char, unsigned char, unsigned char)
  * Address:	8000B820
  * Size:	000020
  */
-void DSP_PlayStop(unsigned char)
+void DSP_PlayStop(u8)
 {
 	/*
 	.loc_0x0:
@@ -326,7 +326,7 @@ void DSP_PlayStop(unsigned char)
  * Address:	8000B840
  * Size:	000060
  */
-void DSP_AllocInit(unsigned char)
+void DSP_AllocInit(u8)
 {
 	/*
 	.loc_0x0:
@@ -362,7 +362,7 @@ void DSP_AllocInit(unsigned char)
  * Address:	8000B8A0
  * Size:	00007C
  */
-void DSP_PlayStart(unsigned char)
+void DSP_PlayStart(u8)
 {
 	/*
 	.loc_0x0:
@@ -409,7 +409,7 @@ void DSP_PlayStart(unsigned char)
  * Address:	8000B920
  * Size:	00001C
  */
-void DSP_SetDistFilter(unsigned char, short)
+void DSP_SetDistFilter(u8, s16)
 {
 	/*
 	.loc_0x0:
@@ -428,7 +428,7 @@ void DSP_SetDistFilter(unsigned char, short)
  * Address:	8000B940
  * Size:	000024
  */
-void DSP_SetFilterTable(short*, short*, unsigned long)
+void DSP_SetFilterTable(s16*, s16*, u32)
 {
 	/*
 	.loc_0x0:
@@ -451,7 +451,7 @@ void DSP_SetFilterTable(short*, short*, unsigned long)
  * Address:	8000B980
  * Size:	00003C
  */
-void DSP_SetIIRFilterParam(unsigned char, short*)
+void DSP_SetIIRFilterParam(u8, s16*)
 {
 	/*
 	.loc_0x0:
@@ -478,7 +478,7 @@ void DSP_SetIIRFilterParam(unsigned char, short*)
  * Address:	8000B9C0
  * Size:	00003C
  */
-void DSP_SetFIR8FilterParam(unsigned char, short*)
+void DSP_SetFIR8FilterParam(u8, s16*)
 {
 	/*
 	.loc_0x0:
@@ -505,7 +505,7 @@ void DSP_SetFIR8FilterParam(unsigned char, short*)
  * Address:	8000BA00
  * Size:	000054
  */
-void DSP_SetFilterMode(unsigned char, unsigned short)
+void DSP_SetFilterMode(u8, u16)
 {
 	/*
 	.loc_0x0:
@@ -542,7 +542,7 @@ void DSP_SetFilterMode(unsigned char, unsigned short)
  * Address:	8000BA60
  * Size:	000070
  */
-void DSP_InitFilter(unsigned char)
+void DSP_InitFilter(u8)
 {
 	/*
 	.loc_0x0:
@@ -613,7 +613,7 @@ void DSP_FlushBuffer()
  * Address:	8000BB20
  * Size:	000038
  */
-void DSP_FlushChannel(unsigned char)
+void DSP_FlushChannel(u8)
 {
 	/*
 	.loc_0x0:
@@ -639,7 +639,7 @@ void DSP_FlushChannel(unsigned char)
  * Address:	........
  * Size:	000038
  */
-void DSP_CacheChannel(unsigned char)
+void DSP_CacheChannel(u8)
 {
 	// UNUSED FUNCTION
 }

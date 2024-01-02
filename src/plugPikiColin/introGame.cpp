@@ -211,7 +211,7 @@ IntroGameSection::IntroGameSection()
  * Address:	8005B0B4
  * Size:	000080
  */
-void IntroModeState::update(unsigned long&)
+void IntroModeState::update(u32&)
 {
 	/*
 	.loc_0x0:
@@ -266,7 +266,7 @@ void IntroModeState::postRender(Graphics&) { }
  * Address:	8005B138
  * Size:	00000C
  */
-void QuittingModeState::update(unsigned long&)
+void QuittingModeState::update(u32&)
 {
 	/*
 	.loc_0x0:

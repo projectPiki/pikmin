@@ -1,4 +1,4 @@
-
+#include "types.h"
 
 /*
  * --INFO--
@@ -43,7 +43,7 @@ void GetCallStack()
  * Address:	80007440
  * Size:	00008C
  */
-void DVDReadMutex(DVDFileInfo*, void*, long, long, char*)
+void DVDReadMutex(DVDFileInfo*, void*, s32, s32, char*)
 {
 	/*
 	.loc_0x0:
@@ -177,7 +177,7 @@ void DVDT_ExtendPath(char*, char*)
  * Address:	........
  * Size:	00007C
  */
-void DVDT_AddTaskHigh(long (*)(void*), void*, unsigned long)
+void DVDT_AddTaskHigh(s32 (*)(void*), void*, u32)
 {
 	// UNUSED FUNCTION
 }
@@ -187,7 +187,7 @@ void DVDT_AddTaskHigh(long (*)(void*), void*, unsigned long)
  * Address:	800075C0
  * Size:	00007C
  */
-void DVDT_AddTask(long (*)(void*), void*, unsigned long)
+void DVDT_AddTask(s32 (*)(void*), void*, u32)
 {
 	/*
 	.loc_0x0:
@@ -311,7 +311,7 @@ void jac_dvdproc(void*)
  * Address:	80007720
  * Size:	000048
  */
-void __DoError(DVDCall_*, unsigned long)
+void __DoError(DVDCall_*, u32)
 {
 	/*
 	.loc_0x0:
@@ -345,7 +345,7 @@ void __DoError(DVDCall_*, unsigned long)
  * Address:	80007780
  * Size:	000044
  */
-void __DoFinish(DVDCall_*, unsigned long)
+void __DoFinish(DVDCall_*, u32)
 {
 	/*
 	.loc_0x0:
@@ -471,7 +471,7 @@ void DVDT_LoadtoDRAM_Main(void*)
  * Address:	80007900
  * Size:	000084
  */
-void DVDT_LoadtoDRAM(unsigned long, char*, unsigned long, unsigned long, unsigned long, unsigned long*, void (*)(unsigned long))
+void DVDT_LoadtoDRAM(u32, char*, u32, u32, u32, u32*, void (*)(u32))
 {
 	/*
 	.loc_0x0:
@@ -546,7 +546,7 @@ void __Alloc_DVDBuffer()
  * Address:	800079E0
  * Size:	000030
  */
-void __WriteBufferSize(unsigned char*, unsigned long, unsigned long)
+void __WriteBufferSize(u8*, u32, u32)
 {
 	/*
 	.loc_0x0:
@@ -602,7 +602,7 @@ void __UpdateBuffer()
  * Address:	80007A60
  * Size:	000058
  */
-void DVDT_SetBuffer(unsigned char*, unsigned long, unsigned long)
+void DVDT_SetBuffer(u8*, u32, u32)
 {
 	/*
 	.loc_0x0:
@@ -640,7 +640,7 @@ void DVDT_SetBuffer(unsigned char*, unsigned long, unsigned long)
  * Address:	80007AC0
  * Size:	0000BC
  */
-void DVDT_CloseBuffer(unsigned char*)
+void DVDT_CloseBuffer(u8*)
 {
 	/*
 	.loc_0x0:
@@ -709,7 +709,7 @@ void DVDT_CloseBuffer(unsigned char*)
  * Address:	........
  * Size:	000010
  */
-void DVDT_GetCurrentBuffer(unsigned char**)
+void DVDT_GetCurrentBuffer(u8**)
 {
 	// UNUSED FUNCTION
 }
@@ -719,7 +719,7 @@ void DVDT_GetCurrentBuffer(unsigned char**)
  * Address:	80007B80
  * Size:	000010
  */
-void ARAM_DMAfinish(unsigned long)
+void ARAM_DMAfinish(u32)
 {
 	/*
 	.loc_0x0:
@@ -908,7 +908,7 @@ void DVDT_LoadtoARAM_Main(void*)
  * Address:	80007DE0
  * Size:	000084
  */
-void DVDT_LoadtoARAM(unsigned long, char*, unsigned long, unsigned long, unsigned long, unsigned long*, void (*)(unsigned long))
+void DVDT_LoadtoARAM(u32, char*, u32, u32, u32, u32*, void (*)(u32))
 {
 	/*
 	.loc_0x0:
@@ -955,7 +955,7 @@ void DVDT_LoadtoARAM(unsigned long, char*, unsigned long, unsigned long, unsigne
  * Address:	........
  * Size:	000010
  */
-void ARAM_DMAfinish2(unsigned long)
+void ARAM_DMAfinish2(u32)
 {
 	// UNUSED FUNCTION
 }
@@ -985,7 +985,7 @@ void DVDT_DRAMtoARAM_Main(void*)
  * Address:	........
  * Size:	000060
  */
-void DVDT_ARAMtoDRAM(unsigned long, unsigned long, unsigned long, unsigned long, unsigned long*, void (*)(unsigned long))
+void DVDT_ARAMtoDRAM(u32, u32, u32, u32, u32*, void (*)(u32))
 {
 	// UNUSED FUNCTION
 }
@@ -995,7 +995,7 @@ void DVDT_ARAMtoDRAM(unsigned long, unsigned long, unsigned long, unsigned long,
  * Address:	........
  * Size:	000060
  */
-void DVDT_DRAMtoARAM(unsigned long, unsigned long, unsigned long, unsigned long, unsigned long*, void (*)(unsigned long))
+void DVDT_DRAMtoARAM(u32, u32, u32, u32, u32*, void (*)(u32))
 {
 	// UNUSED FUNCTION
 }
@@ -1049,7 +1049,7 @@ void DVDT_CheckFile(char*)
  * Address:	80007F00
  * Size:	000070
  */
-void DVDT_LoadFile(char*, unsigned char*)
+void DVDT_LoadFile(char*, u8*)
 {
 	/*
 	.loc_0x0:
@@ -1095,7 +1095,7 @@ void DVDT_LoadFile(char*, unsigned char*)
  * Address:	80007F80
  * Size:	000040
  */
-void DVDT_CheckPass(unsigned long, unsigned long*, void (*)(unsigned long))
+void DVDT_CheckPass(u32, u32*, void (*)(u32))
 {
 	/*
 	.loc_0x0:
@@ -1133,7 +1133,7 @@ void Jac_CheckFile(char*)
  * Address:	........
  * Size:	0000B4
  */
-void Jac_LoadFile(char*, unsigned char*)
+void Jac_LoadFile(char*, u8*)
 {
 	// UNUSED FUNCTION
 }
@@ -1163,7 +1163,7 @@ void DVDT_UnPause()
  * Address:	........
  * Size:	000008
  */
-void Jac_RegisterDVDErrorCallback(void (*)(char*, unsigned char*))
+void Jac_RegisterDVDErrorCallback(void (*)(char*, u8*))
 {
 	// UNUSED FUNCTION
 }

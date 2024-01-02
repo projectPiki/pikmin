@@ -6,14 +6,13 @@
  * .4byte __RTTI__18NVibrationFunction
  * .4byte 0
  * .4byte getValue__18NVibrationFunctionFf
-*/
+ */
 
 /**
  * @brief TODO
  */
 struct NVibrationFunction {
-	virtual void getValue(float);  // _08
-
+	virtual void getValue(f32); // _08
 };
 
 #endif

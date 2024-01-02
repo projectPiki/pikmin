@@ -266,7 +266,7 @@ void TaiStartingTimerAction::start(Teki&)
  * Address:	80143934
  * Size:	000054
  */
-void StdSystem::getRand(float)
+void StdSystem::getRand(f32)
 {
 	/*
 	.loc_0x0:

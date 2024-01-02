@@ -21,8 +21,10 @@ typedef volatile s64 vs64;
 
 typedef float f32;
 typedef double f64;
+typedef long double f128;
 typedef volatile f32 vf32;
 typedef volatile f64 vf64;
+typedef volatile f128 vf128;
 
 typedef int BOOL;
 
@@ -44,7 +46,7 @@ typedef unsigned long size_t;
 #define TRUE  1
 #define FALSE 0
 
-#define NULL ((void*)0)
+#define NULL    ((void*)0)
 #define nullptr 0
 
 #define BUMP_REGISTER(reg)  \
@@ -64,4 +66,4 @@ typedef unsigned long size_t;
 #define ASM
 #endif
 
-#endif
+#endif // _TYPES_H

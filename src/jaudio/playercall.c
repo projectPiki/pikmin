@@ -1,4 +1,4 @@
-
+#include "types.h"
 
 /*
  * --INFO--
@@ -30,7 +30,7 @@ void ResetPlayerCallback(void)
  * Address:	80007160
  * Size:	000050
  */
-void Jac_CheckPlayerCallback(long (*)(void*), void*)
+void Jac_CheckPlayerCallback(s32 (*)(void*), void*)
 {
 	/*
 	.loc_0x0:

@@ -1076,14 +1076,14 @@ void SAIState::cleanup(AICreature*)
  * Address:	8007DCE8
  * Size:	000004
  */
-void AICreature::startMotion(int, float) { }
+void AICreature::startMotion(int, f32) { }
 
 /*
  * --INFO--
  * Address:	8007DCEC
  * Size:	000004
  */
-void AICreature::finishMotion(float) { }
+void AICreature::finishMotion(f32) { }
 
 /*
  * --INFO--
@@ -1139,7 +1139,7 @@ void AICreature::getMotionSpeed()
  * Address:	8007DD0C
  * Size:	000004
  */
-void AICreature::setMotionSpeed(float) { }
+void AICreature::setMotionSpeed(f32) { }
 
 /*
  * --INFO--

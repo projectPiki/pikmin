@@ -76,7 +76,7 @@ void Navi::viewDraw(Graphics&, Matrix4f&)
  * Address:	800F8384
  * Size:	00005C
  */
-void Navi::viewStartTrembleMotion(float)
+void Navi::viewStartTrembleMotion(f32)
 {
 	/*
 	.loc_0x0:
@@ -3331,7 +3331,7 @@ void Navi::updateWalkAnimation()
  * Address:	800FACB4
  * Size:	000034
  */
-void Navi::postUpdate(int, float)
+void Navi::postUpdate(int, f32)
 {
 	/*
 	.loc_0x0:
@@ -3887,7 +3887,7 @@ void Navi::animationKeyUpdated(PaniAnimKeyEvent&)
  * Address:	800FB3DC
  * Size:	0007C4
  */
-void Navi::callPikis(float)
+void Navi::callPikis(f32)
 {
 	/*
 	.loc_0x0:
@@ -4476,7 +4476,7 @@ void Navi::callPikis(float)
  * Address:	800FBBA0
  * Size:	00037C
  */
-void Navi::callDebugs(float)
+void Navi::callDebugs(f32)
 {
 	/*
 	.loc_0x0:
@@ -9218,7 +9218,7 @@ void Receiver<Navi>::procBounceMsg(Navi*, MsgBounce*) { }
  * Address:	........
  * Size:	000004
  */
-void Navi::procDamage(float)
+void Navi::procDamage(f32)
 {
 	// UNUSED FUNCTION
 }
@@ -10617,7 +10617,7 @@ void Navi::swapMotion(PaniMotionInfo&, PaniMotionInfo&)
  * Address:	........
  * Size:	0002D4
  */
-void Navi::renderParabola(Graphics&, float, float)
+void Navi::renderParabola(Graphics&, f32, f32)
 {
 	// UNUSED FUNCTION
 }
@@ -11161,7 +11161,7 @@ void PelletView::viewInit() { }
  * Address:	801010B4
  * Size:	000004
  */
-void PelletView::viewStartExplodeMotion(float) { }
+void PelletView::viewStartExplodeMotion(f32) { }
 
 /*
  * --INFO--
@@ -11267,7 +11267,7 @@ void Navi::@700 @viewGetBottomRadius()
  * Address:	80101128
  * Size:	000008
  */
-void Navi::@700 @viewStartTrembleMotion(float)
+void Navi::@700 @viewStartTrembleMotion(f32)
 {
 	/*
 	.loc_0x0:

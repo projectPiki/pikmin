@@ -97,7 +97,7 @@ void ChannelMgr::reset()
  * Address:	8017C890
  * Size:	000060
  */
-void ChannelMgr::start(int, float*)
+void ChannelMgr::start(int, f32*)
 {
 	/*
 	.loc_0x0:
@@ -250,7 +250,7 @@ void ControlerMgr::reset()
  * Address:	8017C9EC
  * Size:	00009C
  */
-void ControlerMgr::start(int, float*)
+void ControlerMgr::start(int, f32*)
 {
 	/*
 	.loc_0x0:
@@ -567,7 +567,7 @@ void RumbleMgr::reset()
  * Address:	8017CD48
  * Size:	00008C
  */
-void RumbleMgr::start(int, int, float*)
+void RumbleMgr::start(int, int, f32*)
 {
 	/*
 	.loc_0x0:

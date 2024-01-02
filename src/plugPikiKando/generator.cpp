@@ -25,7 +25,7 @@ void _Print(char*, ...)
  * Address:	........
  * Size:	000088
  */
-void writeID(RandomAccessStream&, unsigned long)
+void writeID(RandomAccessStream&, u32)
 {
 	// UNUSED FUNCTION
 }
@@ -45,7 +45,7 @@ void readID(RandomAccessStream&)
  * Address:	........
  * Size:	000004
  */
-void printID(unsigned long)
+void printID(u32)
 {
 	// UNUSED FUNCTION
 }
@@ -55,7 +55,7 @@ void printID(unsigned long)
  * Address:	........
  * Size:	000028
  */
-void sprintID(char*, unsigned long)
+void sprintID(char*, u32)
 {
 	// UNUSED FUNCTION
 }
@@ -65,7 +65,7 @@ void sprintID(char*, unsigned long)
  * Address:	800DACB4
  * Size:	000030
  */
-GenBase::GenBase(unsigned long, char*, char*)
+GenBase::GenBase(u32, char*, char*)
 {
 	/*
 	.loc_0x0:
@@ -268,7 +268,7 @@ void makeObjectPiki()
  * Address:	........
  * Size:	000070
  */
-void GenObjectFactory::getProduct(unsigned long)
+void GenObjectFactory::getProduct(u32)
 {
 	// UNUSED FUNCTION
 }
@@ -624,7 +624,7 @@ void makeTypeInitRand()
  * Address:	........
  * Size:	000070
  */
-void GenTypeFactory::getProduct(unsigned long)
+void GenTypeFactory::getProduct(u32)
 {
 	// UNUSED FUNCTION
 }
@@ -1282,7 +1282,7 @@ void makePointArea()
  * Address:	........
  * Size:	000070
  */
-void GenAreaFactory::getProduct(unsigned long)
+void GenAreaFactory::getProduct(u32)
 {
 	// UNUSED FUNCTION
 }
@@ -2692,7 +2692,7 @@ void Generator::read(RandomAccessStream&)
  * Address:	800DCB10
  * Size:	00006C
  */
-void Factory<GenType>::create(unsigned long)
+void Factory<GenType>::create(u32)
 {
 	/*
 	.loc_0x0:
@@ -2739,7 +2739,7 @@ void Factory<GenType>::create(unsigned long)
  * Address:	800DCB7C
  * Size:	00006C
  */
-void Factory<GenArea>::create(unsigned long)
+void Factory<GenArea>::create(u32)
 {
 	/*
 	.loc_0x0:
@@ -2786,7 +2786,7 @@ void Factory<GenArea>::create(unsigned long)
  * Address:	800DCBE8
  * Size:	00006C
  */
-void Factory<GenObject>::create(unsigned long)
+void Factory<GenObject>::create(u32)
 {
 	/*
 	.loc_0x0:

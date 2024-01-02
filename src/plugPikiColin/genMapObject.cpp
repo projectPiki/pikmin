@@ -535,7 +535,7 @@ DynObjBody::DynObjBody()
  * Address:	8005D68C
  * Size:	00001C
  */
-void Vector3f::set(const float&, const float&, const float&)
+void Vector3f::set(const f32&, const f32&, const f32&)
 {
 	/*
 	.loc_0x0:
@@ -561,7 +561,7 @@ void DynObjBridge::applyGroundForces(int, CollGroup*) { }
  * Address:	8005D6AC
  * Size:	000034
  */
-void DynObjBody::initDimensions(float, float, float)
+void DynObjBody::initDimensions(f32, f32, f32)
 {
 	/*
 	.loc_0x0:

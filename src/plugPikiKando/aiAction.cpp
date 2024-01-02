@@ -2260,7 +2260,7 @@ void TopAction::ObjBore::getIndex(int)
  * Address:	........
  * Size:	000134
  */
-void TopAction::ObjBore::addBoredom(int, float)
+void TopAction::ObjBore::addBoredom(int, f32)
 {
 	// UNUSED FUNCTION
 }
@@ -2347,7 +2347,7 @@ void TopAction::Boredom::getBoredom(int, int)
  * Address:	........
  * Size:	0000C8
  */
-void TopAction::Boredom::addBoredom(int, int, float)
+void TopAction::Boredom::addBoredom(int, int, f32)
 {
 	// UNUSED FUNCTION
 }

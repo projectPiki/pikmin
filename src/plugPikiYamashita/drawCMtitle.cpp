@@ -149,7 +149,7 @@ void zen::DrawCMtitleObj::update()
  * Address:	801ED608
  * Size:	00004C
  */
-void zen::DrawCMtitleObj::wait(float)
+void zen::DrawCMtitleObj::wait(f32)
 {
 	/*
 	.loc_0x0:
@@ -180,7 +180,7 @@ void zen::DrawCMtitleObj::wait(float)
  * Address:	801ED654
  * Size:	00004C
  */
-void zen::DrawCMtitleObj::appear(float)
+void zen::DrawCMtitleObj::appear(f32)
 {
 	/*
 	.loc_0x0:

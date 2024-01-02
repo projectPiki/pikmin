@@ -1022,7 +1022,7 @@ void KingBody::init(King*)
  * Address:	80173A98
  * Size:	000028
  */
-void KingBody::initBlending(float)
+void KingBody::initBlending(f32)
 {
 	/*
 	.loc_0x0:

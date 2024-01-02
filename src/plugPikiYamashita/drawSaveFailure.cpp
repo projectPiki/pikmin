@@ -289,7 +289,7 @@ void zen::DrawSaveFailure::draw(Graphics&)
  * Address:	801F3880
  * Size:	000054
  */
-void zen::DrawSaveFailure::open(float)
+void zen::DrawSaveFailure::open(f32)
 {
 	/*
 	.loc_0x0:
@@ -384,7 +384,7 @@ void zen::DrawSaveFailure::setMode(zen::DrawSaveFailure::modeFlag)
  * Address:	801F396C
  * Size:	000034
  */
-void zen::DrawSaveFailure::calcFrame(float)
+void zen::DrawSaveFailure::calcFrame(f32)
 {
 	/*
 	.loc_0x0:

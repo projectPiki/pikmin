@@ -804,7 +804,7 @@ void ResultFlags::getFlag(int)
  * Address:	80083DD0
  * Size:	000090
  */
-void ResultFlags::setFlag(int, unsigned char)
+void ResultFlags::setFlag(int, u8)
 {
 	/*
 	.loc_0x0:

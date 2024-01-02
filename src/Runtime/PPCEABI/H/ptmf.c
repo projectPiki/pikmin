@@ -1,11 +1,13 @@
+#include "types.h"
+
 // presumably, ptmf = pointer to member function
 
 typedef struct PTMF {
-	long this_delta; // self-explanatory
-	long v_offset;   // vtable offset
+	s32 this_delta; // self-explanatory
+	s32 v_offset;   // vtable offset
 	union {
-		void* f_addr;   // function address
-		long ve_offset; // virtual function entry offset (of vtable)
+		void* f_addr;  // function address
+		s32 ve_offset; // virtual function entry offset (of vtable)
 	} f_data;
 } PTMF;
 
@@ -15,8 +17,8 @@ void __ptmf_scall(...);
 
 /*
  * --INFO--
- * Address:	........
- * Size:	000030
+ * Address: ........
+ * Size:    000030
  */
 void __ptmf_test(void)
 {
@@ -25,8 +27,8 @@ void __ptmf_test(void)
 
 /*
  * --INFO--
- * Address:	........
- * Size:	00003C
+ * Address: ........
+ * Size:    00003C
  */
 void __ptmf_cmpr(void)
 {
@@ -35,8 +37,8 @@ void __ptmf_cmpr(void)
 
 /*
  * --INFO--
- * Address:	........
- * Size:	000034
+ * Address: ........
+ * Size:    000034
  */
 void __ptmf_call(void)
 {
@@ -45,8 +47,8 @@ void __ptmf_call(void)
 
 /*
  * --INFO--
- * Address:	........
- * Size:	000034
+ * Address: ........
+ * Size:    000034
  */
 void __ptmf_call4(void)
 {
@@ -55,31 +57,31 @@ void __ptmf_call4(void)
 
 /*
  * --INFO--
- * Address:	80214D30
- * Size:	000028
+ * Address: 80214D30
+ * Size:    000028
  */
 // clang-format off
 asm void __ptmf_scall(...)
 {
 	nofralloc
-		lwz		r0, PTMF.this_delta(r12)
-		lwz		r11, PTMF.v_offset(r12)
-		lwz		r12, PTMF.f_data(r12)
-		add		r3, r3, r0
-		cmpwi	r11, 0
-		blt-	cr0, loc_0x20
-		lwzx	r12, r3, r12
-		lwzx	r12, r12, r11
+		lwz     r0, PTMF.this_delta(r12)
+		lwz     r11, PTMF.v_offset(r12)
+		lwz     r12, PTMF.f_data(r12)
+		add     r3, r3, r0
+		cmpwi   r11, 0
+		blt-    cr0, loc_0x20
+		lwzx    r12, r3, r12
+		lwzx    r12, r12, r11
 	loc_0x20:
-		mtctr	r12
+		mtctr   r12
 		bctr
 }
 // clang-format on
 
 /*
  * --INFO--
- * Address:	........
- * Size:	000028
+ * Address: ........
+ * Size:    000028
  */
 void __ptmf_scall4(void)
 {
@@ -88,8 +90,8 @@ void __ptmf_scall4(void)
 
 /*
  * --INFO--
- * Address:	........
- * Size:	000024
+ * Address: ........
+ * Size:    000024
  */
 void __ptmf_cast(void)
 {

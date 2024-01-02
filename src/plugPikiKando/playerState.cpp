@@ -41,7 +41,7 @@ TimeGraph::TimeGraph()
  * Address:	........
  * Size:	000054
  */
-void TimeGraph::create(unsigned short, unsigned short)
+void TimeGraph::create(u16, u16)
 {
 	// UNUSED FUNCTION
 }
@@ -61,7 +61,7 @@ void TimeGraph::init()
  * Address:	........
  * Size:	000044
  */
-void TimeGraph::set(unsigned short, int, int)
+void TimeGraph::set(u16, int, int)
 {
 	// UNUSED FUNCTION
 }
@@ -71,7 +71,7 @@ void TimeGraph::set(unsigned short, int, int)
  * Address:	........
  * Size:	00004C
  */
-void TimeGraph::get(unsigned short, int)
+void TimeGraph::get(u16, int)
 {
 	// UNUSED FUNCTION
 }
@@ -109,7 +109,7 @@ bool PlayerState::isEnding()
  * Address:	8007F410
  * Size:	00019C
  */
-void PlayerState::existUfoParts(unsigned long)
+void PlayerState::existUfoParts(u32)
 {
 	/*
 	.loc_0x0:
@@ -1644,7 +1644,7 @@ void PlayerState::init()
  * Address:	80080604
  * Size:	00005C
  */
-void PlayerState::hasUfoParts(unsigned long)
+void PlayerState::hasUfoParts(u32)
 {
 	/*
 	.loc_0x0:
@@ -2322,7 +2322,7 @@ void PlayerState::isUfoBroken()
  * Address:	80080CC8
  * Size:	0000C4
  */
-void PlayerState::registerUfoParts(int, unsigned long, unsigned long)
+void PlayerState::registerUfoParts(int, u32, u32)
 {
 	/*
 	.loc_0x0:
@@ -2815,7 +2815,7 @@ void PlayerState::startAfterMotions()
  * Address:	8008120C
  * Size:	00010C
  */
-void PlayerState::startUfoPartsMotion(unsigned long, int, bool)
+void PlayerState::startUfoPartsMotion(u32, int, bool)
 {
 	/*
 	.loc_0x0:
@@ -2904,7 +2904,7 @@ void PlayerState::startUfoPartsMotion(unsigned long, int, bool)
  * Address:	80081318
  * Size:	000458
  */
-void PlayerState::getUfoParts(unsigned long, bool)
+void PlayerState::getUfoParts(u32, bool)
 {
 	/*
 	.loc_0x0:
@@ -3390,7 +3390,7 @@ void PlayerState::preloadHenkaMovie()
  * Address:	........
  * Size:	000050
  */
-void PlayerState::lostUfoParts(unsigned long)
+void PlayerState::lostUfoParts(u32)
 {
 	// UNUSED FUNCTION
 }
@@ -3400,7 +3400,7 @@ void PlayerState::lostUfoParts(unsigned long)
  * Address:	800818C8
  * Size:	00004C
  */
-void PlayerState::findUfoParts(unsigned long)
+void PlayerState::findUfoParts(u32)
 {
 	/*
 	.loc_0x0:

@@ -1866,7 +1866,7 @@ void KingAi::tongueAttackNavi()
  * Address:	........
  * Size:	000080
  */
-void KingAi::setDispelParm(Creature*, float)
+void KingAi::setDispelParm(Creature*, f32)
 {
 	// UNUSED FUNCTION
 }
@@ -2533,7 +2533,7 @@ void KingAi::setBombDamageLoopCounter()
  * Address:	........
  * Size:	000010
  */
-void KingAi::setMoveVelocity(float)
+void KingAi::setMoveVelocity(f32)
 {
 	// UNUSED FUNCTION
 }
@@ -2756,7 +2756,7 @@ void KingAi::jumpAttackInArea(Creature*, Vector3f*)
  * Address:	8016E2AC
  * Size:	000048
  */
-void NsMathF::calcNearerDirection(float, float)
+void NsMathF::calcNearerDirection(f32, f32)
 {
 	/*
 	.loc_0x0:

@@ -182,7 +182,7 @@ CullingPlane::CullingPlane()
  * Address:	80029C5C
  * Size:	0000E4
  */
-void Light::setLightDistAttn(float, float, int)
+void Light::setLightDistAttn(f32, f32, int)
 {
 	/*
 	.loc_0x0:
@@ -269,7 +269,7 @@ void Light::setLightDistAttn(float, float, int)
  * Address:	80029D40
  * Size:	000188
  */
-void Light::setLightSpot(float, int)
+void Light::setLightSpot(f32, int)
 {
 	/*
 	.loc_0x0:

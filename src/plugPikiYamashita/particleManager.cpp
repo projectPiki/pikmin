@@ -25,7 +25,7 @@ void _Print(char*, ...)
  * Address:	801A1100
  * Size:	00013C
  */
-void zen::particleManager::init(unsigned long, unsigned long, unsigned long, float)
+void zen::particleManager::init(u32, u32, u32, f32)
 {
 	/*
 	.loc_0x0:
@@ -159,7 +159,7 @@ zen::particleGenerator::~particleGenerator()
  * Address:	801A1288
  * Size:	000074
  */
-void zen::particleManager::createGenerator(unsigned char*, Texture*, Texture*, Vector3f&, zen::CallBack1<zen::particleGenerator*>*,
+void zen::particleManager::createGenerator(u8*, Texture*, Texture*, Vector3f&, zen::CallBack1<zen::particleGenerator*>*,
                                            zen::CallBack2<zen::particleGenerator*, zen::particleMdl*>*)
 {
 	/*

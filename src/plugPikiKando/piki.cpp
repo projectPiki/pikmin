@@ -852,7 +852,7 @@ void Piki::initRouteTraceDynamic(Creature*)
  * Address:	800C6E5C
  * Size:	0001CC
  */
-void Piki::moveRouteTraceDynamic(float)
+void Piki::moveRouteTraceDynamic(f32)
 {
 	/*
 	.loc_0x0:
@@ -1341,7 +1341,7 @@ void Piki::initRouteTrace(Vector3f&, bool)
  * Address:	800C74E8
  * Size:	000700
  */
-void Piki::moveRouteTrace(float)
+void Piki::moveRouteTrace(f32)
 {
 	/*
 	.loc_0x0:
@@ -7253,7 +7253,7 @@ Piki::Piki(CreatureProp*)
  * Address:	........
  * Size:	000078
  */
-void Piki::setSpeed(float)
+void Piki::setSpeed(f32)
 {
 	// UNUSED FUNCTION
 }
@@ -7263,7 +7263,7 @@ void Piki::setSpeed(float)
  * Address:	800CBD64
  * Size:	000074
  */
-void Piki::getSpeed(float)
+void Piki::getSpeed(f32)
 {
 	/*
 	.loc_0x0:
@@ -7308,7 +7308,7 @@ void Piki::getSpeed(float)
  * Address:	800CBDD8
  * Size:	0000C4
  */
-void Piki::setSpeed(float, Vector3f&)
+void Piki::setSpeed(f32, Vector3f&)
 {
 	/*
 	.loc_0x0:
@@ -7373,7 +7373,7 @@ void Piki::setSpeed(float, Vector3f&)
  * Address:	800CBE9C
  * Size:	0000DC
  */
-void Piki::setSpeed(float, float)
+void Piki::setSpeed(f32, f32)
 {
 	/*
 	.loc_0x0:

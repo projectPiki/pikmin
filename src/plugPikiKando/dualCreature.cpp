@@ -291,7 +291,7 @@ void DualCreature::useSimpleDynamics()
  * Address:	80092120
  * Size:	0000C4
  */
-void DualCreature::rotateY(float)
+void DualCreature::rotateY(f32)
 {
 	/*
 	.loc_0x0:

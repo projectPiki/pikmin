@@ -1672,7 +1672,7 @@ void FreeLightEffect::restart()
  * Address:	80114618
  * Size:	00001C
  */
-void FreeLightEffect::setScale(float)
+void FreeLightEffect::setScale(f32)
 {
 	/*
 	.loc_0x0:

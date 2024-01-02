@@ -275,7 +275,7 @@ void Parm<Vector3f>::write(RandomAccessStream&)
  * Address:	8005EC70
  * Size:	000040
  */
-void Parm<float>::read(RandomAccessStream&)
+void Parm<f32>::read(RandomAccessStream&)
 {
 	/*
 	.loc_0x0:
@@ -303,7 +303,7 @@ void Parm<float>::read(RandomAccessStream&)
  * Address:	8005ECB0
  * Size:	000038
  */
-void Parm<float>::write(RandomAccessStream&)
+void Parm<f32>::write(RandomAccessStream&)
 {
 	/*
 	.loc_0x0:

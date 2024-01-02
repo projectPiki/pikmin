@@ -1,4 +1,4 @@
-
+#include "types.h"
 
 /*
  * --INFO--
@@ -170,7 +170,7 @@ void NeosSync()
  * Address:	80006440
  * Size:	000068
  */
-void __DspSync(short, OSContext*)
+void __DspSync(s16, OSContext*)
 {
 	/*
 	.loc_0x0:

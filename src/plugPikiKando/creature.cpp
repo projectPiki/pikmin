@@ -358,7 +358,7 @@ void Creature::disableStick()
  * Address:	8008A35C
  * Size:	000070
  */
-void Creature::getNearestCollPart(Vector3f&, unsigned long)
+void Creature::getNearestCollPart(Vector3f&, u32)
 {
 	/*
 	.loc_0x0:
@@ -402,7 +402,7 @@ void Creature::getNearestCollPart(Vector3f&, unsigned long)
  * Address:	8008A3CC
  * Size:	000060
  */
-void Creature::getRandomCollPart(unsigned long)
+void Creature::getRandomCollPart(u32)
 {
 	/*
 	.loc_0x0:
@@ -1072,7 +1072,7 @@ void Creature::turnTo(Vector3f&)
  * Address:	........
  * Size:	0000FC
  */
-void Creature::adjustDistance(Vector3f&, float)
+void Creature::adjustDistance(Vector3f&, f32)
 {
 	// UNUSED FUNCTION
 }
@@ -2113,7 +2113,7 @@ void Creature::update()
  * Address:	8008B788
  * Size:	0001F4
  */
-void Creature::postUpdate(int, float)
+void Creature::postUpdate(int, f32)
 {
 	/*
 	.loc_0x0:
@@ -2494,7 +2494,7 @@ void sphereDist(Creature*, Creature*)
  * Address:	8008BC3C
  * Size:	0006E8
  */
-void Creature::collisionCheck(float)
+void Creature::collisionCheck(f32)
 {
 	/*
 	.loc_0x0:
@@ -3300,7 +3300,7 @@ void recTraceShadowTris(Graphics&, Vector3f&, CollTriInfo*)
  * Address:	........
  * Size:	000098
  */
-void calcShadowTris(Graphics&, Vector3f&, float)
+void calcShadowTris(Graphics&, Vector3f&, f32)
 {
 	// UNUSED FUNCTION
 }
@@ -4567,7 +4567,7 @@ void Creature::renderAtari(Graphics&)
  * Address:	8008D890
  * Size:	000054
  */
-void roughCull(Creature*, Creature*, float)
+void roughCull(Creature*, Creature*, f32)
 {
 	/*
 	.loc_0x0:

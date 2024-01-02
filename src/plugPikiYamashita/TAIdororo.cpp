@@ -25,7 +25,7 @@ void _Print(char*, ...)
  * Address:	........
  * Size:	000030
  */
-void @unnamed @ ::getCollPartPtr(Teki&, unsigned long)
+void @unnamed @ ::getCollPartPtr(Teki&, u32)
 {
 	// UNUSED FUNCTION
 }

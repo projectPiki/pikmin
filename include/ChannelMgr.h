@@ -4,11 +4,11 @@
 typedef class ChannelMgr;
 
 class ChannelMgr {
-	float _00; // _00
-	float _04; // _04
-	float _08; // _08
-	s32 _0C;   // _0C
-	s32 _10;   // _10
+	f32 _00; // _00
+	f32 _04; // _04
+	f32 _08; // _08
+	s32 _0C; // _0C
+	s32 _10; // _10
 
 	ChannelMgr();
 };

@@ -196,7 +196,7 @@ void MapEntity::update()
  * Address:	80118694
  * Size:	0000D0
  */
-MapSlider::MapSlider(Shape*, int, int, float, float, float, int)
+MapSlider::MapSlider(Shape*, int, int, f32, f32, f32, int)
 {
 	/*
 	.loc_0x0:

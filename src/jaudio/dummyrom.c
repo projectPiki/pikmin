@@ -1,4 +1,4 @@
-
+#include "types.h"
 
 /*
  * --INFO--
@@ -15,7 +15,7 @@ void GetNeosRomTop()
  * Address:	........
  * Size:	000028
  */
-void mesg_finishcall(unsigned long)
+void mesg_finishcall(u32)
 {
 	// UNUSED FUNCTION
 }
@@ -25,7 +25,7 @@ void mesg_finishcall(unsigned long)
  * Address:	........
  * Size:	00005C
  */
-void ARAMStartDMAmesg(unsigned long, unsigned long, unsigned long, unsigned long, long, OSMesgQueue_s*)
+void ARAMStartDMAmesg(u32, u32, u32, u32, s32, OSMesgQueue_s*)
 {
 	// UNUSED FUNCTION
 }
@@ -35,7 +35,7 @@ void ARAMStartDMAmesg(unsigned long, unsigned long, unsigned long, unsigned long
  * Address:	........
  * Size:	00004C
  */
-void ARAMStartDMA(unsigned long, unsigned long, unsigned long, unsigned long, long, unsigned long*, void (*)())
+void ARAMStartDMA(u32, u32, u32, u32, s32, u32*, void (*)())
 {
 	// UNUSED FUNCTION
 }
@@ -45,7 +45,7 @@ void ARAMStartDMA(unsigned long, unsigned long, unsigned long, unsigned long, lo
  * Address:	800061A0
  * Size:	000008
  */
-void Jac_SetAudioARAMSize(unsigned long)
+void Jac_SetAudioARAMSize(u32)
 {
 	/*
 	.loc_0x0:
@@ -59,7 +59,7 @@ void Jac_SetAudioARAMSize(unsigned long)
  * Address:	........
  * Size:	000038
  */
-void ARAlloc2(unsigned long)
+void ARAlloc2(u32)
 {
 	// UNUSED FUNCTION
 }
@@ -69,7 +69,7 @@ void ARAlloc2(unsigned long)
  * Address:	800061C0
  * Size:	000058
  */
-void ARAllocFull(unsigned long*)
+void ARAllocFull(u32*)
 {
 	/*
 	.loc_0x0:
@@ -103,7 +103,7 @@ void ARAllocFull(unsigned long*)
  * Address:	80006220
  * Size:	000098
  */
-void Jac_InitARAM(unsigned long)
+void Jac_InitARAM(u32)
 {
 	/*
 	.loc_0x0:

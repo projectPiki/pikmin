@@ -25,7 +25,7 @@ void _Print(char*, ...)
  * Address:	........
  * Size:	000074
  */
-NPolynomialFunction::NPolynomialFunction(float*, int)
+NPolynomialFunction::NPolynomialFunction(f32*, int)
 {
 	// UNUSED FUNCTION
 }
@@ -35,7 +35,7 @@ NPolynomialFunction::NPolynomialFunction(float*, int)
  * Address:	8011B6E4
  * Size:	000028
  */
-void NPolynomialFunction::construct(float*, int)
+void NPolynomialFunction::construct(f32*, int)
 {
 	/*
 	.loc_0x0:
@@ -57,7 +57,7 @@ void NPolynomialFunction::construct(float*, int)
  * Address:	........
  * Size:	000074
  */
-NPolynomialFunction::NPolynomialFunction(float*, NPolynomialFunction&)
+NPolynomialFunction::NPolynomialFunction(f32*, NPolynomialFunction&)
 {
 	// UNUSED FUNCTION
 }
@@ -67,7 +67,7 @@ NPolynomialFunction::NPolynomialFunction(float*, NPolynomialFunction&)
  * Address:	........
  * Size:	000050
  */
-void NPolynomialFunction::construct(float*, NPolynomialFunction&)
+void NPolynomialFunction::construct(f32*, NPolynomialFunction&)
 {
 	// UNUSED FUNCTION
 }
@@ -87,7 +87,7 @@ void NPolynomialFunction::mul2(NPolynomialFunction&, NPolynomialFunction&)
  * Address:	8011B70C
  * Size:	000114
  */
-void NPolynomialFunction::getValue(float)
+void NPolynomialFunction::getValue(f32)
 {
 	/*
 	.loc_0x0:
@@ -228,7 +228,7 @@ void NPolynomialFunction::println()
  * Address:	........
  * Size:	000070
  */
-NLinearFunction::NLinearFunction(float*)
+NLinearFunction::NLinearFunction(f32*)
 {
 	// UNUSED FUNCTION
 }
@@ -238,7 +238,7 @@ NLinearFunction::NLinearFunction(float*)
  * Address:	........
  * Size:	000028
  */
-void NLinearFunction::construct(float*)
+void NLinearFunction::construct(f32*)
 {
 	// UNUSED FUNCTION
 }
@@ -248,7 +248,7 @@ void NLinearFunction::construct(float*)
  * Address:	........
  * Size:	000068
  */
-void NLinearFunction::makeLinearFunction(float, float, float, float)
+void NLinearFunction::makeLinearFunction(f32, f32, f32, f32)
 {
 	// UNUSED FUNCTION
 }
@@ -258,7 +258,7 @@ void NLinearFunction::makeLinearFunction(float, float, float, float)
  * Address:	8011B878
  * Size:	00007C
  */
-NClampLinearFunction::NClampLinearFunction(float*)
+NClampLinearFunction::NClampLinearFunction(f32*)
 {
 	/*
 	.loc_0x0:
@@ -303,7 +303,7 @@ NClampLinearFunction::NClampLinearFunction(float*)
  * Address:	8011B8F4
  * Size:	000028
  */
-void NClampLinearFunction::construct(float*)
+void NClampLinearFunction::construct(f32*)
 {
 	/*
 	.loc_0x0:
@@ -325,7 +325,7 @@ void NClampLinearFunction::construct(float*)
  * Address:	8011B91C
  * Size:	000090
  */
-void NClampLinearFunction::makeClampLinearFunction(float, float, float, float)
+void NClampLinearFunction::makeClampLinearFunction(f32, f32, f32, f32)
 {
 	/*
 	.loc_0x0:
@@ -389,7 +389,7 @@ void NClampLinearFunction::makeClampLinearFunction(float, float, float, float)
  * Address:	8011B9AC
  * Size:	000134
  */
-void NClampLinearFunction::getValue(float)
+void NClampLinearFunction::getValue(f32)
 {
 	/*
 	.loc_0x0:
@@ -557,7 +557,7 @@ NVibrationFunction::NVibrationFunction()
  * Address:	8011BB74
  * Size:	000020
  */
-void NVibrationFunction::makeVibrationFunction(float, float, float)
+void NVibrationFunction::makeVibrationFunction(f32, f32, f32)
 {
 	/*
 	.loc_0x0:
@@ -577,7 +577,7 @@ void NVibrationFunction::makeVibrationFunction(float, float, float)
  * Address:	8011BB94
  * Size:	000044
  */
-void NVibrationFunction::getValue(float)
+void NVibrationFunction::getValue(f32)
 {
 	/*
 	.loc_0x0:
@@ -626,7 +626,7 @@ void NFunction3D::construct(NFunction*, NFunction*, NFunction*)
  * Address:	8011BBD8
  * Size:	0000A8
  */
-void NFunction3D::outputPosition(float, NVector3f&)
+void NFunction3D::outputPosition(f32, NVector3f&)
 {
 	/*
 	.loc_0x0:

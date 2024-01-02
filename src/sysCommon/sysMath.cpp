@@ -65,7 +65,7 @@ void Plane::reflectVector(Vector3f&)
  * Address:	........
  * Size:	000078
  */
-void Plane::bounceVector(Vector3f&, float)
+void Plane::bounceVector(Vector3f&, f32)
 {
 	// UNUSED FUNCTION
 }
@@ -75,7 +75,7 @@ void Plane::bounceVector(Vector3f&, float)
  * Address:	........
  * Size:	000084
  */
-void Plane::frictionVector(Vector3f&, float)
+void Plane::frictionVector(Vector3f&, f32)
 {
 	// UNUSED FUNCTION
 }
@@ -770,7 +770,7 @@ void Quat::fromMat3f(Matrix3f&)
  * Address:	80037DA0
  * Size:	0000A4
  */
-void Quat::rotate(Vector3f&, float)
+void Quat::rotate(Vector3f&, f32)
 {
 	/*
 	.loc_0x0:
@@ -1105,7 +1105,7 @@ void Quat::genVectorZ(Vector3f&)
  * Address:	80038184
  * Size:	000164
  */
-void Quat::slerp(Quat&, float, int)
+void Quat::slerp(Quat&, f32, int)
 {
 	/*
 	.loc_0x0:
@@ -1398,7 +1398,7 @@ void Quat::fromEuler(Vector3f&)
  * Address:	80038588
  * Size:	00002C
  */
-void roundAng(float)
+void roundAng(f32)
 {
 	/*
 	.loc_0x0:
@@ -1423,7 +1423,7 @@ void roundAng(float)
  * Address:	800385B4
  * Size:	000074
  */
-void angDist(float, float)
+void angDist(f32, f32)
 {
 	/*
 	.loc_0x0:
@@ -1472,7 +1472,7 @@ void angDist(float, float)
  * Address:	80038628
  * Size:	000050
  */
-void qdist2(float, float, float, float)
+void qdist2(f32, f32, f32, f32)
 {
 	/*
 	.loc_0x0:
@@ -1512,7 +1512,7 @@ void qdist2(float, float, float, float)
  * Address:	........
  * Size:	000080
  */
-void qdist3(float, float, float, float, float, float)
+void qdist3(f32, f32, f32, f32, f32, f32)
 {
 	// UNUSED FUNCTION
 }
@@ -2389,7 +2389,7 @@ void triRectDistance(Vector3f*, Vector3f*, Vector3f*, BoundBox&, bool)
  * Address:	80039284
  * Size:	0001A8
  */
-void distanceTriRect(KTri&, KRect&, float*, float*, float*, float*)
+void distanceTriRect(KTri&, KRect&, f32*, f32*, f32*, f32*)
 {
 	/*
 	.loc_0x0:
@@ -2651,7 +2651,7 @@ KSegment::KSegment()
  * Address:	8003958C
  * Size:	0018C4
  */
-void sqrDistance(KSegment&, KTri&, float*, float*, float*)
+void sqrDistance(KSegment&, KTri&, f32*, f32*, f32*)
 {
 	/*
 	.loc_0x0:
@@ -4318,7 +4318,7 @@ void sqrDistance(KSegment&, KTri&, float*, float*, float*)
  * Address:	8003AE50
  * Size:	000828
  */
-void sqrDistance(KSegment&, KSegment&, float*, float*)
+void sqrDistance(KSegment&, KSegment&, f32*, f32*)
 {
 	/*
 	.loc_0x0:
@@ -4938,7 +4938,7 @@ void sqrDistance(KSegment&, KSegment&, float*, float*)
  * Address:	8003B678
  * Size:	001D9C
  */
-void sqrDistance(KSegment&, KRect&, float*, float*, float*)
+void sqrDistance(KSegment&, KRect&, f32*, f32*, f32*)
 {
 	/*
 	.loc_0x0:
@@ -6931,7 +6931,7 @@ void sqrDistance(KSegment&, KRect&, float*, float*, float*)
  * Address:	8003D414
  * Size:	000468
  */
-void sqrDistance(KTri&, KRect&, float*, float*, float*, float*)
+void sqrDistance(KTri&, KRect&, f32*, f32*, f32*, f32*)
 {
 	/*
 	.loc_0x0:
@@ -7245,7 +7245,7 @@ void sqrDistance(KTri&, KRect&, float*, float*, float*, float*)
  * Address:	8003D87C
  * Size:	000540
  */
-void sqrDistance(Vector3f&, KTri&, float*, float*)
+void sqrDistance(Vector3f&, KTri&, f32*, f32*)
 {
 	/*
 	.loc_0x0:

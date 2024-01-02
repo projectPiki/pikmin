@@ -96,7 +96,7 @@ zen::TextColorCallBack::TextColorCallBack(P2DPane*)
  * Address:	80198E18
  * Size:	0000C4
  */
-void zen::TextColorCallBack::setTargetColor(Colour&, Colour&, float)
+void zen::TextColorCallBack::setTargetColor(Colour&, Colour&, f32)
 {
 	/*
 	.loc_0x0:

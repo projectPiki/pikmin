@@ -6,7 +6,7 @@
 
 struct Vector3f {
 	Vector3f() { }
-	Vector3f(float const& x, float const& y, float const& z);
+	Vector3f(f32 const& x, f32 const& y, f32 const& z);
 
 	inline f32 distance(Vector3f& to)
 	{
@@ -23,7 +23,7 @@ struct Vector3f {
 		set(newX, newY, newZ);
 	}
 
-	inline void set(float const& pX, float const& pY, float const& pZ)
+	inline void set(f32 const& pX, f32 const& pY, f32 const& pZ)
 	{
 		x = pX;
 		y = pY;
@@ -44,8 +44,8 @@ struct Vector3f {
 	f32 x, y, z;
 };
 
-inline float Vector3f_diffX(Vector3f& a, Vector3f& b) { return a.getX() - b.getX(); }
-inline float Vector3f_diffY(Vector3f& a, Vector3f& b) { return a.getY() - b.getY(); }
-inline float Vector3f_diffZ(Vector3f& a, Vector3f& b) { return a.getZ() - b.getZ(); }
+inline f32 Vector3f_diffX(Vector3f& a, Vector3f& b) { return a.getX() - b.getX(); }
+inline f32 Vector3f_diffY(Vector3f& a, Vector3f& b) { return a.getY() - b.getY(); }
+inline f32 Vector3f_diffZ(Vector3f& a, Vector3f& b) { return a.getZ() - b.getZ(); }
 
 #endif

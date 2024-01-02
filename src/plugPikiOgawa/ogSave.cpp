@@ -584,7 +584,7 @@ void zen::ogSaveMgr::start()
  * Address:	........
  * Size:	000138
  */
-void zen::ogSaveMgr::startDirectSave(short)
+void zen::ogSaveMgr::startDirectSave(s16)
 {
 	// UNUSED FUNCTION
 }

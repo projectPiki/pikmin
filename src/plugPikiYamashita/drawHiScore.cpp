@@ -583,7 +583,7 @@ void zen::DrawHiScore::start()
  * Address:	801F11B8
  * Size:	00033C
  */
-void zen::DrawHiScore::rewriteNumber(P2DScreen*, unsigned long, int, int, bool)
+void zen::DrawHiScore::rewriteNumber(P2DScreen*, u32, int, int, bool)
 {
 	/*
 	.loc_0x0:

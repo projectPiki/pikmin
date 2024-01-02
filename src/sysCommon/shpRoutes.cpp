@@ -941,7 +941,7 @@ void RouteGroup::refresh(Graphics &, EditNode *)
  * Size:	00001C
  * Weak Function
  */
-Vector3f::Vector3f(float const& _x, float const& _y, float const& _z)
+Vector3f::Vector3f(f32 const& _x, f32 const& _y, f32 const& _z)
     : x(_x)
     , y(_y)
     , z(_z)

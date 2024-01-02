@@ -32,7 +32,7 @@ PcamMotionInfo::PcamMotionInfo() { }
  * Address:	........
  * Size:	00001C
  */
-void PcamMotionInfo::init(float, float, float, float, float, float)
+void PcamMotionInfo::init(f32, f32, f32, f32, f32, f32)
 {
 	// UNUSED FUNCTION
 }
@@ -73,7 +73,7 @@ PcamControlInfo::PcamControlInfo()
  * Address:	80121BE0
  * Size:	00002C
  */
-void PcamControlInfo::init(bool, bool, bool, bool, bool, bool, bool, float, float, float)
+void PcamControlInfo::init(bool, bool, bool, bool, bool, bool, bool, f32, f32, f32)
 {
 	/*
 	.loc_0x0:
@@ -358,7 +358,7 @@ void NArray<Creature>::add(Creature*)
  * Address:	80121F2C
  * Size:	0000DC
  */
-void PcamCamera::makeCurrentPosition(float)
+void PcamCamera::makeCurrentPosition(f32)
 {
 	/*
 	.loc_0x0:
@@ -746,7 +746,7 @@ void PcamCamera::parameterUpdated()
  * Address:	801224D4
  * Size:	000010
  */
-void ParaParameters<float>::get(int)
+void ParaParameters<f32>::get(int)
 {
 	/*
 	.loc_0x0:

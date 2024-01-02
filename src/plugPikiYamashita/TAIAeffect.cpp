@@ -25,7 +25,7 @@ void _Print(char*, ...)
  * Address:	801D5E50
  * Size:	0000B8
  */
-void TAIAeffCloudOfDust::init(EffectMgr::effTypeTable, bool, int, int, float, int, int, int, int, int)
+void TAIAeffCloudOfDust::init(EffectMgr::effTypeTable, bool, int, int, f32, int, int, int, int, int)
 {
 	/*
 	.loc_0x0:

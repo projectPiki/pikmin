@@ -8,20 +8,19 @@
  * .4byte update__17QuittingModeStateFRUl
  * .4byte postRender__9ModeStateFR8Graphics
  * .4byte postUpdate__17QuittingModeStateFv
-*/
+ */
 
 struct ModeState {
-	virtual void update(unsigned long &);  // _08
-	virtual void postRender(Graphics &);   // _0C
+	virtual void update(u32&);          // _08
+	virtual void postRender(Graphics&); // _0C
 };
 
 /**
  * @brief TODO
  */
 struct QuittingModeState : public ModeState {
-	virtual void update(unsigned long &);  // _08
-	virtual void postUpdate();             // _10
-
+	virtual void update(u32&); // _08
+	virtual void postUpdate(); // _10
 };
 
 #endif

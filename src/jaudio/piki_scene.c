@@ -1,4 +1,4 @@
-
+#include "types.h"
 
 /*
  * --INFO--
@@ -31,7 +31,7 @@ void Jac_Delete_CurrentBgmWave(void)
  * Address:	800197A0
  * Size:	000094
  */
-void __Loaded(unsigned long)
+void __Loaded(u32)
 {
 	/*
 	.loc_0x0:
@@ -624,7 +624,7 @@ void Jac_UpdateStreamLevel(void)
  * Address:	80019E80
  * Size:	00007C
  */
-void MovieSync(unsigned long, long)
+void MovieSync(u32, s32)
 {
 	/*
 	.loc_0x0:
@@ -697,7 +697,7 @@ void Jac_InitStreamSystem(void)
  * Address:	80019F40
  * Size:	000038
  */
-void Jac_StopDemoSound(unsigned long)
+void Jac_StopDemoSound(u32)
 {
 	/*
 	.loc_0x0:
@@ -725,7 +725,7 @@ void Jac_StopDemoSound(unsigned long)
  * Address:	80019F80
  * Size:	000098
  */
-void Jac_PrepareDemoSound(unsigned long)
+void Jac_PrepareDemoSound(u32)
 {
 	/*
 	.loc_0x0:
@@ -779,7 +779,7 @@ void Jac_PrepareDemoSound(unsigned long)
  * Address:	8001A020
  * Size:	0000A4
  */
-void Jac_StartDemoSound(unsigned long)
+void Jac_StartDemoSound(u32)
 {
 	/*
 	.loc_0x0:
@@ -838,7 +838,7 @@ void Jac_StartDemoSound(unsigned long)
  * Address:	........
  * Size:	000024
  */
-void Jac_CheckReadyDemoSound(unsigned long)
+void Jac_CheckReadyDemoSound(u32)
 {
 	// UNUSED FUNCTION
 }

@@ -5,7 +5,7 @@
  * Address:	........
  * Size:	000008
  */
-void WRITEIO(unsigned long, unsigned short)
+void WRITEIO(u32, u16)
 {
 	// UNUSED FUNCTION
 }
@@ -15,7 +15,7 @@ void WRITEIO(unsigned long, unsigned short)
  * Address:	........
  * Size:	000008
  */
-void READIO(unsigned long)
+void READIO(u32)
 {
 	// UNUSED FUNCTION
 }
@@ -25,7 +25,7 @@ void READIO(unsigned long)
  * Address:	........
  * Size:	00005C
  */
-void CHKCDCR(unsigned char)
+void CHKCDCR(u8)
 {
 	// UNUSED FUNCTION
 }

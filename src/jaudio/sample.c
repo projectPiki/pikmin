@@ -1,11 +1,11 @@
-
+#include "types.h"
 
 /*
  * --INFO--
  * Address:	........
  * Size:	000024
  */
-void Limit16(long)
+void Limit16(s32)
 {
 	// UNUSED FUNCTION
 }
@@ -15,7 +15,7 @@ void Limit16(long)
  * Address:	........
  * Size:	000064
  */
-void Jac_mixcopy(short*, short*, short*, long)
+void Jac_mixcopy(s16*, s16*, s16*, s32)
 {
 	// UNUSED FUNCTION
 }
@@ -25,7 +25,7 @@ void Jac_mixcopy(short*, short*, short*, long)
  * Address:	80005F00
  * Size:	000030
  */
-void Jac_imixcopy(short*, short*, short*, long)
+void Jac_imixcopy(s16*, s16*, s16*, s32)
 {
 	/*
 	.loc_0x0:
@@ -51,7 +51,7 @@ void Jac_imixcopy(short*, short*, short*, long)
  * Address:	........
  * Size:	000034
  */
-void Jac_bcopyW(short*, short*, long)
+void Jac_bcopyW(s16*, s16*, s32)
 {
 	// UNUSED FUNCTION
 }
@@ -61,7 +61,7 @@ void Jac_bcopyW(short*, short*, long)
  * Address:	80005F40
  * Size:	00003C
  */
-void Jac_bcopyfast(unsigned long*, unsigned long*, unsigned long)
+void Jac_bcopyfast(u32*, u32*, u32)
 {
 	/*
 	.loc_0x0:
@@ -90,7 +90,7 @@ void Jac_bcopyfast(unsigned long*, unsigned long*, unsigned long)
  * Address:	80005F80
  * Size:	0000FC
  */
-void Jac_bcopy(void*, void*, long)
+void Jac_bcopy(void*, void*, s32)
 {
 	/*
 	.loc_0x0:
@@ -185,7 +185,7 @@ void Jac_bcopy(void*, void*, long)
  * Address:	80006080
  * Size:	00002C
  */
-void Jac_bzerofast(unsigned long*, unsigned long)
+void Jac_bzerofast(u32*, u32)
 {
 	/*
 	.loc_0x0:
@@ -210,7 +210,7 @@ void Jac_bzerofast(unsigned long*, unsigned long)
  * Address:	800060C0
  * Size:	0000E0
  */
-void Jac_bzero(void*, long)
+void Jac_bzero(void*, s32)
 {
 	/*
 	.loc_0x0:
@@ -300,7 +300,7 @@ void Jac_bzero(void*, long)
  * Address:	........
  * Size:	00005C
  */
-void SampleDecoder_Alloc(unsigned char*, long, DECODER_FORMAT, long)
+void SampleDecoder_Alloc(u8*, s32, DECODER_FORMAT, s32)
 {
 	// UNUSED FUNCTION
 }
@@ -310,7 +310,7 @@ void SampleDecoder_Alloc(unsigned char*, long, DECODER_FORMAT, long)
  * Address:	........
  * Size:	00010C
  */
-void SampleDecoder_Init(SD_*, long)
+void SampleDecoder_Init(SD_*, s32)
 {
 	// UNUSED FUNCTION
 }
@@ -320,7 +320,7 @@ void SampleDecoder_Init(SD_*, long)
  * Address:	........
  * Size:	0001FC
  */
-void SampleGet(SD_*, long)
+void SampleGet(SD_*, s32)
 {
 	// UNUSED FUNCTION
 }
@@ -340,7 +340,7 @@ void SampleDecoder(SD_*)
  * Address:	........
  * Size:	000104
  */
-void DecodeADPCM(unsigned char*, short*)
+void DecodeADPCM(u8*, s16*)
 {
 	// UNUSED FUNCTION
 }
@@ -350,7 +350,7 @@ void DecodeADPCM(unsigned char*, short*)
  * Address:	........
  * Size:	000104
  */
-void DecodeADPCM2(unsigned char*, short*)
+void DecodeADPCM2(u8*, s16*)
 {
 	// UNUSED FUNCTION
 }

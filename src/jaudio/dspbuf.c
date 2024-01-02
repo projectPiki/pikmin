@@ -1,4 +1,4 @@
-
+#include "types.h"
 
 /*
  * --INFO--
@@ -248,7 +248,7 @@ void UpdateDSP()
  * Address:	80006E60
  * Size:	000040
  */
-void MixDsp(long)
+void MixDsp(s32)
 {
 	/*
 	.loc_0x0:

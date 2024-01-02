@@ -1101,7 +1101,7 @@ void KoganeAi::birthItemPellet(int)
  * Address:	80176CFC
  * Size:	0001E0
  */
-void KoganeAi::birthItemWater(int, float)
+void KoganeAi::birthItemWater(int, f32)
 {
 	/*
 	.loc_0x0:

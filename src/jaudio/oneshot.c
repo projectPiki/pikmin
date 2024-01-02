@@ -1,11 +1,11 @@
-
+#include "types.h"
 
 /*
  * --INFO--
  * Address:	80015140
  * Size:	000034
  */
-void __GetTrigger(jc_*, unsigned char)
+void __GetTrigger(jc_*, u8)
 {
 	/*
 	.loc_0x0:
@@ -36,7 +36,7 @@ void __GetTrigger(jc_*, unsigned char)
  * Address:	80015180
  * Size:	000028
  */
-void __Clamp01(float)
+void __Clamp01(f32)
 {
 	/*
 	.loc_0x0:
@@ -95,7 +95,7 @@ void __Clamp01InitPan(jc_*)
  * Address:	80015220
  * Size:	000068
  */
-void __DoEffect(jc_*, unsigned char, float)
+void __DoEffect(jc_*, u8, f32)
 {
 	/*
 	.loc_0x0:
@@ -245,7 +245,7 @@ void EffecterInit(jc_*, Inst_*)
  * Address:	800153E0
  * Size:	0000D0
  */
-void EffecterInit_Perc(jc_*, Pmap_*, unsigned short)
+void EffecterInit_Perc(jc_*, Pmap_*, u16)
 {
 	/*
 	.loc_0x0:
@@ -358,7 +358,7 @@ void EffecterInit_Osc(jc_*)
  * Address:	80015540
  * Size:	00006C
  */
-void Effecter_Overwrite_1ShotD(jc_*, Osc_*, unsigned long)
+void Effecter_Overwrite_1ShotD(jc_*, Osc_*, u32)
 {
 	/*
 	.loc_0x0:
@@ -409,7 +409,7 @@ void Effecter_Overwrite_1Shot(jc_*, Osc_*, Osc_*)
  * Address:	800155C0
  * Size:	00010C
  */
-void __Oneshot_Play_Start(jcs_*, jc_*, unsigned long)
+void __Oneshot_Play_Start(jcs_*, jc_*, u32)
 {
 	/*
 	.loc_0x0:
@@ -613,7 +613,7 @@ void __Oneshot_GetLogicalChannel(jcs_*, CtrlWave_*)
  * Address:	80015840
  * Size:	000044
  */
-void PercRead(unsigned long, unsigned long)
+void PercRead(u32, u32)
 {
 	/*
 	.loc_0x0:
@@ -646,7 +646,7 @@ void PercRead(unsigned long, unsigned long)
  * Address:	800158A0
  * Size:	000044
  */
-void InstRead(unsigned long, unsigned long)
+void InstRead(u32, u32)
 {
 	/*
 	.loc_0x0:
@@ -679,7 +679,7 @@ void InstRead(unsigned long, unsigned long)
  * Address:	80015900
  * Size:	00002C
  */
-void VmapRead(Inst_*, unsigned char, unsigned char)
+void VmapRead(Inst_*, u8, u8)
 {
 	/*
 	.loc_0x0:
@@ -704,7 +704,7 @@ void VmapRead(Inst_*, unsigned char, unsigned char)
  * Address:	80015940
  * Size:	000010
  */
-void __Oneshot_WavePause(jc_*, unsigned char)
+void __Oneshot_WavePause(jc_*, u8)
 {
 	/*
 	.loc_0x0:
@@ -720,7 +720,7 @@ void __Oneshot_WavePause(jc_*, unsigned char)
  * Address:	80015960
  * Size:	00014C
  */
-void __Oneshot_StartMonoPolyCheck(jc_*, unsigned long)
+void __Oneshot_StartMonoPolyCheck(jc_*, u32)
 {
 	/*
 	.loc_0x0:
@@ -841,7 +841,7 @@ void __Oneshot_StartMonoPolyCheck(jc_*, unsigned long)
  * Address:	80015AC0
  * Size:	0000E8
  */
-void __Oneshot_StopMonoPolyCheck(jc_*, unsigned long)
+void __Oneshot_StopMonoPolyCheck(jc_*, u32)
 {
 	/*
 	.loc_0x0:
@@ -919,7 +919,7 @@ void __Oneshot_StopMonoPolyCheck(jc_*, unsigned long)
  * Address:	80015BC0
  * Size:	000070
  */
-void Init_1shot(jcs_*, unsigned long)
+void Init_1shot(jcs_*, u32)
 {
 	/*
 	.loc_0x0:
@@ -996,7 +996,7 @@ void Stop_1Shot(jc_*)
  * Address:	80015C80
  * Size:	000040
  */
-void Stop_1Shot_R(jc_*, unsigned short)
+void Stop_1Shot_R(jc_*, u16)
 {
 	/*
 	.loc_0x0:
@@ -1112,7 +1112,7 @@ void Extra_Update(jc_*, JCSTATUS)
  * Address:	80015DC0
  * Size:	000030
  */
-void SetPitchTarget_1Shot(jc_*, float, unsigned long)
+void SetPitchTarget_1Shot(jc_*, f32, u32)
 {
 	/*
 	.loc_0x0:
@@ -1138,7 +1138,7 @@ void SetPitchTarget_1Shot(jc_*, float, unsigned long)
  * Address:	80015E00
  * Size:	000090
  */
-void SetKeyTarget_1Shot(jc_*, unsigned char, unsigned long)
+void SetKeyTarget_1Shot(jc_*, u8, u32)
 {
 	/*
 	.loc_0x0:
@@ -1198,7 +1198,7 @@ void SetKeyTarget_1Shot(jc_*, unsigned char, unsigned long)
  * Address:	80015EA0
  * Size:	0000C8
  */
-void Gate_1Shot(jc_*, unsigned char, unsigned char, long)
+void Gate_1Shot(jc_*, u8, u8, s32)
 {
 	/*
 	.loc_0x0:
@@ -1270,7 +1270,7 @@ void Gate_1Shot(jc_*, unsigned char, unsigned char, long)
  * Address:	80015F80
  * Size:	000008
  */
-void UpdatePause_1Shot(jc_*, unsigned char a1)
+void UpdatePause_1Shot(jc_*, u8 a1)
 {
 	// Generated from stb r4, 0x2(r3)
 	_02 = a1;
@@ -1281,7 +1281,7 @@ void UpdatePause_1Shot(jc_*, unsigned char a1)
  * Address:	80015FA0
  * Size:	000030
  */
-void UpdatePanPower_1Shot(jc_*, float, float, float, float)
+void UpdatePanPower_1Shot(jc_*, f32, f32, f32, f32)
 {
 	/*
 	.loc_0x0:
@@ -1335,7 +1335,7 @@ void CheckChan(jc_*)
  * Address:	........
  * Size:	0000AC
  */
-void PrintChan(char*, jc_*, unsigned long)
+void PrintChan(char*, jc_*, u32)
 {
 	// UNUSED FUNCTION
 }
@@ -1630,7 +1630,7 @@ void Get_CtrlWave(SOUNDID_)
  * Address:	80016320
  * Size:	00027C
  */
-void Play_1shot(jcs_*, SOUNDID_, unsigned long)
+void Play_1shot(jcs_*, SOUNDID_, u32)
 {
 	/*
 	.loc_0x0:
@@ -1833,7 +1833,7 @@ void Play_1shot(jcs_*, SOUNDID_, unsigned long)
  * Address:	800165A0
  * Size:	00020C
  */
-void Play_1shot_Perc(jcs_*, SOUNDID_, unsigned long)
+void Play_1shot_Perc(jcs_*, SOUNDID_, u32)
 {
 	/*
 	.loc_0x0:
@@ -1992,7 +1992,7 @@ void Play_1shot_Perc(jcs_*, SOUNDID_, unsigned long)
  * Address:	800167C0
  * Size:	000128
  */
-void Play_1shot_Osc(jcs_*, SOUNDID_, unsigned long)
+void Play_1shot_Osc(jcs_*, SOUNDID_, u32)
 {
 	/*
 	.loc_0x0:

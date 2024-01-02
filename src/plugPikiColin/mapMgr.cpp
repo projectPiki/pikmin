@@ -1462,7 +1462,7 @@ void DynObjBody::applyVelocity(Plane&, Vector3f&, Vector3f&)
  * Address:	8006292C
  * Size:	000868
  */
-void DynObjBody::integrate(int, int, float)
+void DynObjBody::integrate(int, int, f32)
 {
 	/*
 	.loc_0x0:
@@ -2018,7 +2018,7 @@ void DynObjBody::integrate(int, int, float)
  * Address:	80063194
  * Size:	0008A8
  */
-void DynObjSeeSaw::integrate(int, int, float)
+void DynObjSeeSaw::integrate(int, int, f32)
 {
 	/*
 	.loc_0x0:
@@ -3059,7 +3059,7 @@ void DynObjBody::render(Graphics&)
  * Address:	800640C8
  * Size:	0001E0
  */
-void DynObjBody::computeForces(int, float)
+void DynObjBody::computeForces(int, f32)
 {
 	/*
 	.loc_0x0:
@@ -5621,7 +5621,7 @@ void MapMgr::refresh(Graphics&)
  * Address:	8006626C
  * Size:	000094
  */
-void SoftLight::addLight(unsigned long, LShortColour*, Shape*)
+void SoftLight::addLight(u32, LShortColour*, Shape*)
 {
 	/*
 	.loc_0x0:
@@ -7440,7 +7440,7 @@ void MapMgr::postrefresh(Graphics&)
  * Address:	80067B28
  * Size:	000270
  */
-void MapMgr::updatePos(float, float)
+void MapMgr::updatePos(f32, f32)
 {
 	/*
 	.loc_0x0:
@@ -7628,7 +7628,7 @@ void MapMgr::updatePos(float, float)
  * Address:	80067D98
  * Size:	000008
  */
-void MapMgr::getLight(float, float)
+void MapMgr::getLight(f32, f32)
 {
 	/*
 	.loc_0x0:
@@ -7642,7 +7642,7 @@ void MapMgr::getLight(float, float)
  * Address:	80067DA0
  * Size:	000164
  */
-void MapMgr::getCollGroupList(float, float, bool)
+void MapMgr::getCollGroupList(f32, f32, bool)
 {
 	/*
 	.loc_0x0:
@@ -7765,7 +7765,7 @@ void MapMgr::getCollGroupList(float, float, bool)
  * Address:	80067F04
  * Size:	000164
  */
-void MapMgr::getMinY(float, float, bool)
+void MapMgr::getMinY(f32, f32, bool)
 {
 	/*
 	.loc_0x0:
@@ -7894,7 +7894,7 @@ void MapMgr::getMinY(float, float, bool)
  * Address:	80068068
  * Size:	000170
  */
-void MapMgr::getMaxY(float, float, bool)
+void MapMgr::getMaxY(f32, f32, bool)
 {
 	/*
 	.loc_0x0:
@@ -8026,7 +8026,7 @@ void MapMgr::getMaxY(float, float, bool)
  * Address:	800681D8
  * Size:	00015C
  */
-void MapMgr::getCurrTri(float, float, bool)
+void MapMgr::getCurrTri(f32, f32, bool)
 {
 	/*
 	.loc_0x0:
@@ -8149,7 +8149,7 @@ void MapMgr::getCurrTri(float, float, bool)
  * Address:	80068334
  * Size:	0002EC
  */
-void MapMgr::findEdgePenetration(CollTriInfo&, Vector3f*, Vector3f&, float, Vector3f&)
+void MapMgr::findEdgePenetration(CollTriInfo&, Vector3f*, Vector3f&, f32, Vector3f&)
 {
 	/*
 	.loc_0x0:
@@ -8364,7 +8364,7 @@ void MapMgr::findEdgePenetration(CollTriInfo&, Vector3f*, Vector3f&, float, Vect
  * Address:	80068620
  * Size:	00082C
  */
-void MapMgr::recTraceMove(CollGroup*, MoveTrace&, float)
+void MapMgr::recTraceMove(CollGroup*, MoveTrace&, f32)
 {
 	/*
 	.loc_0x0:
@@ -8979,7 +8979,7 @@ void Creature::wallCallback(Plane&, DynCollObject*) { }
  * Address:	80068E54
  * Size:	0005D0
  */
-void MapMgr::traceMove(Creature*, MoveTrace&, float)
+void MapMgr::traceMove(Creature*, MoveTrace&, f32)
 {
 	/*
 	.loc_0x0:

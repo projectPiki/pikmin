@@ -4,10 +4,10 @@
 #include "stdarg.h"
 
 typedef struct {
-	unsigned char filler0[4];
-	unsigned short unk4b0 : 7;
-	unsigned short unk4b7 : 3;
-	unsigned short unk4b10 : 2;
+	u8 filler0[4];
+	u16 unk4b0 : 7;
+	u16 unk4b7 : 3;
+	u16 unk4b10 : 2;
 } FILE;
 
 int puts(const char* s);

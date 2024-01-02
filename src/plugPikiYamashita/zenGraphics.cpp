@@ -25,7 +25,7 @@ void zen::zenGraphics::setTevFillPolygon()
  * Address:	801BA13C
  * Size:	000458
  */
-void zen::DrawLifeCircle::drawLifeCircle(float)
+void zen::DrawLifeCircle::drawLifeCircle(f32)
 {
 	/*
 	.loc_0x0:

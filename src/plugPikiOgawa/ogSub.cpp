@@ -48,7 +48,7 @@ void zen::ogCheckInsCard()
  * Address:	8017E87C
  * Size:	000068
  */
-void zen::calcPuruPuruScale(float)
+void zen::calcPuruPuruScale(f32)
 {
 	/*
 	.loc_0x0:
@@ -88,7 +88,7 @@ void zen::calcPuruPuruScale(float)
  * Address:	8017E8E4
  * Size:	000174
  */
-void zen::setNumberTag(P2DScreen*, unsigned long, int*, int)
+void zen::setNumberTag(P2DScreen*, u32, int*, int)
 {
 	/*
 	.loc_0x0:
@@ -265,7 +265,7 @@ void zen::setTextColor(P2DTextBox*, P2DPicture*)
  * Address:	8017EAF8
  * Size:	000088
  */
-void zen::getStringCVS(char*, char*, short)
+void zen::getStringCVS(char*, char*, s16)
 {
 	/*
 	.loc_0x0:
@@ -594,7 +594,7 @@ void zen::PikaAlphaMgr::start()
  * Address:	8017EF14
  * Size:	000084
  */
-void zen::PikaAlphaMgr::startFadeIn(float)
+void zen::PikaAlphaMgr::startFadeIn(f32)
 {
 	/*
 	.loc_0x0:
@@ -643,7 +643,7 @@ void zen::PikaAlphaMgr::startFadeIn(float)
  * Address:	8017EF98
  * Size:	000084
  */
-void zen::PikaAlphaMgr::startFadeOut(float)
+void zen::PikaAlphaMgr::startFadeOut(f32)
 {
 	/*
 	.loc_0x0:
@@ -800,7 +800,7 @@ void zen::PikaAlphaMgr::update()
  * Address:	8017F134
  * Size:	0000F0
  */
-zen::setTenmetuAlpha::setTenmetuAlpha(P2DPicture*, float, float, unsigned char, unsigned char)
+zen::setTenmetuAlpha::setTenmetuAlpha(P2DPicture*, f32, f32, u8, u8)
 {
 	/*
 	.loc_0x0:
@@ -872,7 +872,7 @@ zen::setTenmetuAlpha::setTenmetuAlpha(P2DPicture*, float, float, unsigned char, 
  * Address:	8017F224
  * Size:	0000F0
  */
-zen::setTenmetuAlpha::setTenmetuAlpha(P2DPicture*, float)
+zen::setTenmetuAlpha::setTenmetuAlpha(P2DPicture*, f32)
 {
 	/*
 	.loc_0x0:
@@ -1201,7 +1201,7 @@ void zen::setTenmetuAlpha::start()
  * Address:	8017F6A0
  * Size:	000060
  */
-void zen::setTenmetuAlpha::startFadeIn(float, float, float)
+void zen::setTenmetuAlpha::startFadeIn(f32, f32, f32)
 {
 	/*
 	.loc_0x0:
@@ -1239,7 +1239,7 @@ void zen::setTenmetuAlpha::startFadeIn(float, float, float)
  * Address:	8017F700
  * Size:	000048
  */
-void zen::setTenmetuAlpha::startFadeOut(float, float, float)
+void zen::setTenmetuAlpha::startFadeOut(f32, f32, f32)
 {
 	/*
 	.loc_0x0:
@@ -1271,7 +1271,7 @@ void zen::setTenmetuAlpha::startFadeOut(float, float, float)
  * Address:	........
  * Size:	0000F0
  */
-void zen::setTenmetuAlpha::calcAlpha(float)
+void zen::setTenmetuAlpha::calcAlpha(f32)
 {
 	// UNUSED FUNCTION
 }
@@ -1535,7 +1535,7 @@ void zen::setTenmetuAlpha::update()
  * Address:	8017FAA0
  * Size:	000080
  */
-zen::ogFadeMgr::ogFadeMgr(P2DPane*, unsigned char)
+zen::ogFadeMgr::ogFadeMgr(P2DPane*, u8)
 {
 	/*
 	.loc_0x0:
@@ -1579,7 +1579,7 @@ zen::ogFadeMgr::ogFadeMgr(P2DPane*, unsigned char)
  * Address:	8017FB20
  * Size:	000068
  */
-void zen::ogFadeMgr::start(zen::ogFadeMgr::ogFadeStatusFlag, float)
+void zen::ogFadeMgr::start(zen::ogFadeMgr::ogFadeStatusFlag, f32)
 {
 	/*
 	.loc_0x0:
@@ -2540,7 +2540,7 @@ zen::ogMsgCtrlTagMgr::ogMsgCtrlTagMgr()
  * Address:	801805F4
  * Size:	0003A8
  */
-void zen::ogMsgCtrlTagMgr::CheckCtrlTag(char*, short*, float*)
+void zen::ogMsgCtrlTagMgr::CheckCtrlTag(char*, s16*, f32*)
 {
 	/*
 	.loc_0x0:

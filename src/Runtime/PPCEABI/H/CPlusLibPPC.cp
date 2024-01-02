@@ -1,4 +1,4 @@
-
+#include "types.h"
 
 /*
  * --INFO--
@@ -50,9 +50,9 @@ void __copy(void)
 /*
 .loc_0x0:
   cmplwi    r3, 0
-  beqlr-    
+  beqlr-
   cmplwi    r5, 0
-  beqlr-    
+  beqlr-
   mr        r6, r3
 
 .loc_0x14:

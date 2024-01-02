@@ -3930,7 +3930,7 @@ void TaiOtimotiAttackingEffectAction::start(Teki&)
  * Address:	8013D9E0
  * Size:	000058
  */
-TaiOtimotiLegEffectAction::TaiOtimotiLegEffectAction(float)
+TaiOtimotiLegEffectAction::TaiOtimotiLegEffectAction(f32)
 {
 	/*
 	.loc_0x0:

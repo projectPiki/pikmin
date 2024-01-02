@@ -122,7 +122,7 @@ void NLine::construct(NLine&)
  * Address:	8011D4A0
  * Size:	0000C0
  */
-void NLine::calcDistance(NVector3f&, float*)
+void NLine::calcDistance(NVector3f&, f32*)
 {
 	/*
 	.loc_0x0:
@@ -186,7 +186,7 @@ void NLine::calcDistance(NVector3f&, float*)
  * Address:	........
  * Size:	0002AC
  */
-void NLine::calcDistance(NLine&, float*, float*)
+void NLine::calcDistance(NLine&, f32*, f32*)
 {
 	// UNUSED FUNCTION
 }
@@ -243,7 +243,7 @@ void NLine::calcVerticalProjection(NVector3f&)
  * Address:	8011D5C4
  * Size:	00009C
  */
-void NLine::outputPosition(float, NVector3f&)
+void NLine::outputPosition(f32, NVector3f&)
 {
 	/*
 	.loc_0x0:
@@ -294,7 +294,7 @@ void NLine::outputPosition(float, NVector3f&)
  * Address:	........
  * Size:	0000A8
  */
-void NLine::outputPositionY(float, NVector3f&)
+void NLine::outputPositionY(f32, NVector3f&)
 {
 	// UNUSED FUNCTION
 }
@@ -371,7 +371,7 @@ NPlane::NPlane()
  * Address:	........
  * Size:	000068
  */
-NPlane::NPlane(NVector3f&, float)
+NPlane::NPlane(NVector3f&, f32)
 {
 	// UNUSED FUNCTION
 }
@@ -381,7 +381,7 @@ NPlane::NPlane(NVector3f&, float)
  * Address:	........
  * Size:	000020
  */
-void NPlane::construct(NVector3f&, float)
+void NPlane::construct(NVector3f&, f32)
 {
 	// UNUSED FUNCTION
 }
@@ -523,7 +523,7 @@ void NPlane::construct(NPlane&)
  * Address:	........
  * Size:	000114
  */
-void NPlane::intersects(NLine&, float*)
+void NPlane::intersects(NLine&, f32*)
 {
 	// UNUSED FUNCTION
 }
@@ -543,7 +543,7 @@ void NPlane::outputIntersection(NLine&, NVector3f&)
  * Address:	........
  * Size:	000154
  */
-void NPlane::intersectsRay(NLine&, float*)
+void NPlane::intersectsRay(NLine&, f32*)
 {
 	// UNUSED FUNCTION
 }
@@ -563,7 +563,7 @@ void NPlane::outputRayIntersection(NLine&, NVector3f&)
  * Address:	........
  * Size:	0001DC
  */
-void NPlane::intersectsSegment(NSegment&, float*)
+void NPlane::intersectsSegment(NSegment&, f32*)
 {
 	// UNUSED FUNCTION
 }
@@ -670,7 +670,7 @@ void NPlane::negate()
  * Address:	........
  * Size:	0000F0
  */
-void NPlane::adjustTo(NVector3f&, float)
+void NPlane::adjustTo(NVector3f&, f32)
 {
 	// UNUSED FUNCTION
 }
@@ -710,7 +710,7 @@ void NPlane::calcAngle(NPlane&)
  * Address:	........
  * Size:	00005C
  */
-void NPlane::calcY(float, float)
+void NPlane::calcY(f32, f32)
 {
 	// UNUSED FUNCTION
 }
@@ -851,7 +851,7 @@ void NSegment::construct(NSegment&)
  * Address:	........
  * Size:	0002E0
  */
-void NSegment::calcDistanceAsSegment(NVector3f&, float*, float*)
+void NSegment::calcDistanceAsSegment(NVector3f&, f32*, f32*)
 {
 	// UNUSED FUNCTION
 }
@@ -861,7 +861,7 @@ void NSegment::calcDistanceAsSegment(NVector3f&, float*, float*)
  * Address:	........
  * Size:	0003CC
  */
-void NSegment::calcDistanceAsSegment(NLine&, float*, float*)
+void NSegment::calcDistanceAsSegment(NLine&, f32*, f32*)
 {
 	// UNUSED FUNCTION
 }
@@ -871,7 +871,7 @@ void NSegment::calcDistanceAsSegment(NLine&, float*, float*)
  * Address:	........
  * Size:	000230
  */
-void NSegment::calcSegmentDistanceAsSegment(NSegment&, float*, float*)
+void NSegment::calcSegmentDistanceAsSegment(NSegment&, f32*, f32*)
 {
 	// UNUSED FUNCTION
 }

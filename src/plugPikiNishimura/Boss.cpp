@@ -604,7 +604,7 @@ void Boss::calcFlickPiki()
  * Address:	8014E110
  * Size:	0002A0
  */
-void Boss::createPellet(Vector3f&, float, bool)
+void Boss::createPellet(Vector3f&, f32, bool)
 {
 	/*
 	.loc_0x0:
@@ -798,7 +798,7 @@ void Boss::createPellet(Vector3f&, float, bool)
  * Address:	8014E3B0
  * Size:	000164
  */
-void Boss::changeDirection(float)
+void Boss::changeDirection(f32)
 {
 	/*
 	.loc_0x0:
@@ -919,7 +919,7 @@ void Boss::changeDirection(float)
  * Address:	........
  * Size:	0000FC
  */
-void Boss::towardFaceDirection(float)
+void Boss::towardFaceDirection(f32)
 {
 	// UNUSED FUNCTION
 }
@@ -1010,7 +1010,7 @@ void Boss::makeTargetCreature()
  * Address:	8014E5C8
  * Size:	000144
  */
-void Boss::makeTargetRandom(float)
+void Boss::makeTargetRandom(f32)
 {
 	/*
 	.loc_0x0:

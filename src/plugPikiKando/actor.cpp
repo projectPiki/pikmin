@@ -158,7 +158,7 @@ void Actor::startMotion(int)
  * Address:	........
  * Size:	000094
  */
-void Actor::startMotion(int, float)
+void Actor::startMotion(int, f32)
 {
 	// UNUSED FUNCTION
 }
@@ -178,7 +178,7 @@ void Actor::finishMotion()
  * Address:	........
  * Size:	000050
  */
-void Actor::finishMotion(float)
+void Actor::finishMotion(f32)
 {
 	// UNUSED FUNCTION
 }

@@ -33,8 +33,8 @@ struct Controller {
 	u32 _40;
 	bool _44;
 
-	void reset(unsigned long);
-	void updateCont(unsigned long);
+	void reset(u32);
+	void updateCont(u32);
 	void update();
 	void getMainStickX();
 	void getMainStickY();
@@ -47,7 +47,7 @@ struct Controller {
  * Address:	800409B0
  * Size:	000024
  */
-void Controller::reset(unsigned long arg1)
+void Controller::reset(u32 arg1)
 {
 	_3C = -1;
 	_44 = false;
@@ -62,7 +62,7 @@ void Controller::reset(unsigned long arg1)
  * Address:	800409D4
  * Size:	00009C
  */
-void Controller::updateCont(unsigned long arg1)
+void Controller::updateCont(u32 arg1)
 {
 	_24 = _20;
 	_20 = 0;

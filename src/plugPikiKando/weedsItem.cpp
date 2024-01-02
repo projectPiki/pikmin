@@ -549,7 +549,7 @@ RockGen::RockGen(Shape*, CreatureProp*)
  * Address:	800E4C74
  * Size:	000284
  */
-void RockGen::create(int, float, int)
+void RockGen::create(int, f32, int)
 {
 	/*
 	.loc_0x0:
@@ -743,7 +743,7 @@ Pebble::Pebble()
  * Address:	800E4F0C
  * Size:	000010
  */
-void RockGen::setSizeAndNum(float, int)
+void RockGen::setSizeAndNum(f32, int)
 {
 	/*
 	.loc_0x0:
@@ -1178,7 +1178,7 @@ GrassGen::GrassGen(Shape*, CreatureProp*)
  * Address:	800E5388
  * Size:	000244
  */
-void GrassGen::create(int, float, int)
+void GrassGen::create(int, f32, int)
 {
 	/*
 	.loc_0x0:
@@ -1356,7 +1356,7 @@ Grass::Grass()
  * Address:	800E55E0
  * Size:	000010
  */
-void GrassGen::setSizeAndNum(float, int)
+void GrassGen::setSizeAndNum(f32, int)
 {
 	/*
 	.loc_0x0:

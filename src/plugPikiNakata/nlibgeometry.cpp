@@ -35,7 +35,7 @@ NAxisAngle4f::NAxisAngle4f()
  * Address:	8011BC80
  * Size:	000058
  */
-NAxisAngle4f::NAxisAngle4f(NVector3f&, float)
+NAxisAngle4f::NAxisAngle4f(NVector3f&, f32)
 {
 	/*
 	.loc_0x0:
@@ -71,7 +71,7 @@ NAxisAngle4f::NAxisAngle4f(NVector3f&, float)
  * Address:	8011BCD8
  * Size:	000020
  */
-void NAxisAngle4f::construct(NVector3f&, float)
+void NAxisAngle4f::construct(NVector3f&, f32)
 {
 	/*
 	.loc_0x0:
@@ -165,7 +165,7 @@ void NMatrix4f::construct(Matrix4f&)
  * Address:	8011BD98
  * Size:	000070
  */
-NMatrix4f::NMatrix4f(float, float, float, float, float, float, float, float, float, float, float, float, float, float, float, float)
+NMatrix4f::NMatrix4f(f32, f32, f32, f32, f32, f32, f32, f32, f32, f32, f32, f32, f32, f32, f32, f32)
 {
 	/*
 	.loc_0x0:
@@ -205,7 +205,7 @@ NMatrix4f::NMatrix4f(float, float, float, float, float, float, float, float, flo
  * Address:	........
  * Size:	000060
  */
-void NMatrix4f::construct(float, float, float, float, float, float, float, float, float, float, float, float, float, float, float, float)
+void NMatrix4f::construct(f32, f32, f32, f32, f32, f32, f32, f32, f32, f32, f32, f32, f32, f32, f32, f32)
 {
 	// UNUSED FUNCTION
 }
@@ -215,7 +215,7 @@ void NMatrix4f::construct(float, float, float, float, float, float, float, float
  * Address:	........
  * Size:	000030
  */
-NMatrix4f::NMatrix4f(float (*)[4])
+NMatrix4f::NMatrix4f(f32 (*)[4])
 {
 	// UNUSED FUNCTION
 }
@@ -225,7 +225,7 @@ NMatrix4f::NMatrix4f(float (*)[4])
  * Address:	........
  * Size:	000020
  */
-void NMatrix4f::construct(float (*)[4])
+void NMatrix4f::construct(f32 (*)[4])
 {
 	// UNUSED FUNCTION
 }
@@ -235,7 +235,7 @@ void NMatrix4f::construct(float (*)[4])
  * Address:	........
  * Size:	000090
  */
-void NMatrix4f::input(float (*)[4])
+void NMatrix4f::input(f32 (*)[4])
 {
 	// UNUSED FUNCTION
 }
@@ -245,7 +245,7 @@ void NMatrix4f::input(float (*)[4])
  * Address:	........
  * Size:	000090
  */
-void NMatrix4f::output(float (*)[4])
+void NMatrix4f::output(f32 (*)[4])
 {
 	// UNUSED FUNCTION
 }
@@ -303,7 +303,7 @@ void NMatrix4f::input(Matrix4f&)
  * Address:	8011BE98
  * Size:	00006C
  */
-void NMatrix4f::set(float, float, float, float, float, float, float, float, float, float, float, float, float, float, float, float)
+void NMatrix4f::set(f32, f32, f32, f32, f32, f32, f32, f32, f32, f32, f32, f32, f32, f32, f32, f32)
 {
 	/*
 	.loc_0x0:
@@ -342,7 +342,7 @@ void NMatrix4f::set(float, float, float, float, float, float, float, float, floa
  * Address:	........
  * Size:	000018
  */
-void NMatrix4f::setRow(int, float, float, float)
+void NMatrix4f::setRow(int, f32, f32, f32)
 {
 	// UNUSED FUNCTION
 }
@@ -362,7 +362,7 @@ void NMatrix4f::inputRow(int, Vector3f&)
  * Address:	........
  * Size:	000028
  */
-void NMatrix4f::inputRow(int, Vector3f&, float)
+void NMatrix4f::inputRow(int, Vector3f&, f32)
 {
 	// UNUSED FUNCTION
 }
@@ -392,7 +392,7 @@ void NMatrix4f::inputRows(NVector3f&, NVector3f&, NVector3f&)
  * Address:	........
  * Size:	000018
  */
-void NMatrix4f::setCol(int, float, float, float)
+void NMatrix4f::setCol(int, f32, f32, f32)
 {
 	// UNUSED FUNCTION
 }
@@ -412,7 +412,7 @@ void NMatrix4f::inputCol(int, Vector3f&)
  * Address:	........
  * Size:	000028
  */
-void NMatrix4f::inputCol(int, Vector3f&, float)
+void NMatrix4f::inputCol(int, Vector3f&, f32)
 {
 	// UNUSED FUNCTION
 }
@@ -473,7 +473,7 @@ void NMatrix4f::mul2(Matrix4f&, Matrix4f&)
  * Address:	........
  * Size:	0000C8
  */
-void NMatrix4f::scale(float)
+void NMatrix4f::scale(f32)
 {
 	// UNUSED FUNCTION
 }
@@ -1015,7 +1015,7 @@ NPolar3f::NPolar3f()
  * Address:	........
  * Size:	000030
  */
-NPolar3f::NPolar3f(float, float, float)
+NPolar3f::NPolar3f(f32, f32, f32)
 {
 	// UNUSED FUNCTION
 }
@@ -1025,7 +1025,7 @@ NPolar3f::NPolar3f(float, float, float)
  * Address:	........
  * Size:	000020
  */
-void NPolar3f::construct(float, float, float)
+void NPolar3f::construct(f32, f32, f32)
 {
 	// UNUSED FUNCTION
 }
@@ -1101,7 +1101,7 @@ void NPolar3f::construct(Vector3f&)
  * Address:	8011C430
  * Size:	000010
  */
-void NPolar3f::set(float, float, float)
+void NPolar3f::set(f32, f32, f32)
 {
 	/*
 	.loc_0x0:
@@ -1244,7 +1244,7 @@ void NPolar3f::negate()
  * Address:	........
  * Size:	000034
  */
-void NMathF::roundAngle(float)
+void NMathF::roundAngle(f32)
 {
 	// UNUSED FUNCTION
 }
@@ -1254,7 +1254,7 @@ void NMathF::roundAngle(float)
  * Address:	........
  * Size:	000054
  */
-void NPolar3f::interpolate(NPolar3f&, NPolar3f&, float)
+void NPolar3f::interpolate(NPolar3f&, NPolar3f&, f32)
 {
 	// UNUSED FUNCTION
 }
@@ -1274,7 +1274,7 @@ void NPolar3f::roundMeridian()
  * Address:	........
  * Size:	00003C
  */
-void NPolar3f::clampMeridian(float)
+void NPolar3f::clampMeridian(f32)
 {
 	// UNUSED FUNCTION
 }
@@ -1304,7 +1304,7 @@ NPosture2D::NPosture2D()
  * Address:	........
  * Size:	000068
  */
-NPosture2D::NPosture2D(Vector3f&, float)
+NPosture2D::NPosture2D(Vector3f&, f32)
 {
 	// UNUSED FUNCTION
 }
@@ -1314,7 +1314,7 @@ NPosture2D::NPosture2D(Vector3f&, float)
  * Address:	........
  * Size:	000020
  */
-void NPosture2D::construct(Vector3f&, float)
+void NPosture2D::construct(Vector3f&, f32)
 {
 	// UNUSED FUNCTION
 }
@@ -1727,7 +1727,7 @@ void NPosture3D::rotatePoint(NVector3f&, NVector3f&, NPolar3f&)
  * Address:	........
  * Size:	000070
  */
-void NPosture3D::interpolate(NPosture3D&, NPosture3D&, float)
+void NPosture3D::interpolate(NPosture3D&, NPosture3D&, f32)
 {
 	// UNUSED FUNCTION
 }
@@ -1898,7 +1898,7 @@ void NSpecialMatrix::construct(int)
  * Address:	........
  * Size:	00004C
  */
-NLowerMatrix::NLowerMatrix(float*, int)
+NLowerMatrix::NLowerMatrix(f32*, int)
 {
 	// UNUSED FUNCTION
 }
@@ -1908,7 +1908,7 @@ NLowerMatrix::NLowerMatrix(float*, int)
  * Address:	........
  * Size:	00000C
  */
-void NLowerMatrix::construct(float*, int)
+void NLowerMatrix::construct(f32*, int)
 {
 	// UNUSED FUNCTION
 }
@@ -1938,7 +1938,7 @@ void NLowerMatrix::println()
  * Address:	........
  * Size:	00004C
  */
-NUpperMatrix::NUpperMatrix(float*, float*, int)
+NUpperMatrix::NUpperMatrix(f32*, f32*, int)
 {
 	// UNUSED FUNCTION
 }
@@ -1948,7 +1948,7 @@ NUpperMatrix::NUpperMatrix(float*, float*, int)
  * Address:	........
  * Size:	000010
  */
-void NUpperMatrix::construct(float*, float*, int)
+void NUpperMatrix::construct(f32*, f32*, int)
 {
 	// UNUSED FUNCTION
 }
@@ -1978,7 +1978,7 @@ void NUpperMatrix::println()
  * Address:	........
  * Size:	00006C
  */
-LUMatrix::LUMatrix(float*, float*, float*, int)
+LUMatrix::LUMatrix(f32*, f32*, f32*, int)
 {
 	// UNUSED FUNCTION
 }
@@ -1988,7 +1988,7 @@ LUMatrix::LUMatrix(float*, float*, float*, int)
  * Address:	........
  * Size:	000034
  */
-void LUMatrix::construct(float*, float*, float*, int)
+void LUMatrix::construct(f32*, f32*, f32*, int)
 {
 	// UNUSED FUNCTION
 }
@@ -2122,7 +2122,7 @@ NTransform3D::NTransform3D()
  * Address:	8011CA80
  * Size:	000088
  */
-void NMath<float>::copyArray44(float (*)[4], float (*)[4])
+void NMath<f32>::copyArray44(f32 (*)[4], f32 (*)[4])
 {
 	/*
 	.loc_0x0:
@@ -2516,7 +2516,7 @@ NVector::NVector()
  * Address:	........
  * Size:	000030
  */
-NVector::NVector(float*, int)
+NVector::NVector(f32*, int)
 {
 	// UNUSED FUNCTION
 }
@@ -2526,7 +2526,7 @@ NVector::NVector(float*, int)
  * Address:	8011CDD0
  * Size:	000028
  */
-void NVector::construct(float*, int)
+void NVector::construct(f32*, int)
 {
 	/*
 	.loc_0x0:
@@ -2723,7 +2723,7 @@ void NVector3f::construct(Vector3f&)
  * Address:	8011CEDC
  * Size:	000040
  */
-NVector3f::NVector3f(float, float, float)
+NVector3f::NVector3f(f32, f32, f32)
 {
 	/*
 	.loc_0x0:
@@ -2753,7 +2753,7 @@ NVector3f::NVector3f(float, float, float)
  * Address:	8011CF1C
  * Size:	000010
  */
-void NVector3f::construct(float, float, float)
+void NVector3f::construct(f32, f32, f32)
 {
 	/*
 	.loc_0x0:
@@ -2824,7 +2824,7 @@ void NVector3f::construct(Vector3f&, Vector3f&)
  * Address:	........
  * Size:	000054
  */
-void NVector3f::interpolate(Vector3f&, Vector3f&, float)
+void NVector3f::interpolate(Vector3f&, Vector3f&, f32)
 {
 	// UNUSED FUNCTION
 }
@@ -2844,7 +2844,7 @@ void NVector3f::isZero()
  * Address:	........
  * Size:	000014
  */
-void NMath<float>::absolute(float)
+void NMath<f32>::absolute(f32)
 {
 	// UNUSED FUNCTION
 }
@@ -2933,7 +2933,7 @@ void NVector3f::makeUnitVector(Vector3f&, Vector3f&)
  * Address:	........
  * Size:	000088
  */
-void NVector3f::outputQuat(float, Quat&)
+void NVector3f::outputQuat(f32, Quat&)
 {
 	// UNUSED FUNCTION
 }
@@ -2980,7 +2980,7 @@ void NVector3f::println() { }
  * Address:	........
  * Size:	000028
  */
-void NVector3f::normalizeByLength(float)
+void NVector3f::normalizeByLength(f32)
 {
 	// UNUSED FUNCTION
 }
@@ -3145,7 +3145,7 @@ void NVector3f::normalize()
  * Address:	........
  * Size:	00003C
  */
-void NAlpha::fadeInValue(float)
+void NAlpha::fadeInValue(f32)
 {
 	// UNUSED FUNCTION
 }
@@ -3155,7 +3155,7 @@ void NAlpha::fadeInValue(float)
  * Address:	........
  * Size:	000030
  */
-void NAlpha::fadeOutValue(float)
+void NAlpha::fadeOutValue(f32)
 {
 	// UNUSED FUNCTION
 }
@@ -3165,7 +3165,7 @@ void NAlpha::fadeOutValue(float)
  * Address:	........
  * Size:	000080
  */
-void NAlpha::fadeInOutValue(float)
+void NAlpha::fadeInOutValue(f32)
 {
 	// UNUSED FUNCTION
 }
@@ -3175,7 +3175,7 @@ void NAlpha::fadeInOutValue(float)
  * Address:	........
  * Size:	000080
  */
-void NAlpha::fadeOutInValue(float)
+void NAlpha::fadeOutInValue(f32)
 {
 	// UNUSED FUNCTION
 }
@@ -3210,7 +3210,7 @@ void NAlpha::reset()
  * Address:	8011D1E8
  * Size:	000198
  */
-void NAlpha::getValue(float)
+void NAlpha::getValue(f32)
 {
 	/*
 	.loc_0x0:

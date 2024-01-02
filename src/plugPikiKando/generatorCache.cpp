@@ -117,7 +117,7 @@ GeneratorCache::GeneratorCache()
  * Address:	800DEE98
  * Size:	000018
  */
-void GeneratorCache::init(unsigned char*, int)
+void GeneratorCache::init(u8*, int)
 {
 	/*
 	.loc_0x0:
@@ -201,7 +201,7 @@ void GeneratorCache::initGame()
  * Address:	800DEF68
  * Size:	0000F4
  */
-void GeneratorCache::addOne(unsigned long)
+void GeneratorCache::addOne(u32)
 {
 	/*
 	.loc_0x0:
@@ -718,7 +718,7 @@ void GeneratorCache::Cache::loadCard(RandomAccessStream&)
  * Address:	800DF5E4
  * Size:	000028
  */
-void GeneratorCache::findCache(GeneratorCache::Cache&, unsigned long)
+void GeneratorCache::findCache(GeneratorCache::Cache&, u32)
 {
 	/*
 	.loc_0x0:
@@ -744,7 +744,7 @@ void GeneratorCache::findCache(GeneratorCache::Cache&, unsigned long)
  * Address:	800DF60C
  * Size:	000160
  */
-void GeneratorCache::preload(unsigned long)
+void GeneratorCache::preload(u32)
 {
 	/*
 	.loc_0x0:
@@ -868,7 +868,7 @@ void GeneratorCache::preload(unsigned long)
  * Address:	800DF76C
  * Size:	000128
  */
-void GeneratorCache::hasUfoParts(unsigned long, unsigned long)
+void GeneratorCache::hasUfoParts(u32, u32)
 {
 	/*
 	.loc_0x0:
@@ -972,7 +972,7 @@ void GeneratorCache::hasUfoParts(unsigned long, unsigned long)
  * Address:	800DF894
  * Size:	00019C
  */
-void GeneratorCache::load(unsigned long)
+void GeneratorCache::load(u32)
 {
 	/*
 	.loc_0x0:
@@ -1109,7 +1109,7 @@ void GeneratorCache::load(unsigned long)
  * Address:	800DFA30
  * Size:	000090
  */
-void GeneratorCache::beginSave(unsigned long)
+void GeneratorCache::beginSave(u32)
 {
 	/*
 	.loc_0x0:

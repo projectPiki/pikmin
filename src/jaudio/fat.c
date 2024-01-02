@@ -1,11 +1,11 @@
-
+#include "types.h"
 
 /*
  * --INFO--
  * Address:	8000DDE0
  * Size:	000044
  */
-void Jac_FatMemory_Init(unsigned long)
+void Jac_FatMemory_Init(u32)
 {
 	/*
 	.loc_0x0:
@@ -36,7 +36,7 @@ void Jac_FatMemory_Init(unsigned long)
  * Address:	8000DE40
  * Size:	0000BC
  */
-void FAT_InitSystem(unsigned char*, unsigned long)
+void FAT_InitSystem(u8*, u32)
 {
 	/*
 	.loc_0x0:
@@ -105,7 +105,7 @@ void FAT_InitSystem(unsigned char*, unsigned long)
  * Address:	8000DF00
  * Size:	0000D4
  */
-void FAT_AllocateMemory(unsigned long)
+void FAT_AllocateMemory(u32)
 {
 	/*
 	.loc_0x0:
@@ -184,7 +184,7 @@ void FAT_AllocateMemory(unsigned long)
  * Address:	8000DFE0
  * Size:	000190
  */
-void FAT_FreeMemory(unsigned short)
+void FAT_FreeMemory(u16)
 {
 	/*
 	.loc_0x0:
@@ -318,7 +318,7 @@ void FAT_FreeMemory(unsigned short)
  * Address:	8000E180
  * Size:	000048
  */
-void FAT_GetPointer(unsigned short, unsigned long)
+void FAT_GetPointer(u16, u32)
 {
 	/*
 	.loc_0x0:
@@ -350,7 +350,7 @@ void FAT_GetPointer(unsigned short, unsigned long)
  * Address:	8000E1E0
  * Size:	000034
  */
-void FAT_ReadByte(unsigned short, unsigned long)
+void FAT_ReadByte(u16, u32)
 {
 	/*
 	.loc_0x0:
@@ -379,7 +379,7 @@ void FAT_ReadByte(unsigned short, unsigned long)
  * Address:	........
  * Size:	000034
  */
-void FAT_ReadWord(unsigned short, unsigned long)
+void FAT_ReadWord(u16, u32)
 {
 	// UNUSED FUNCTION
 }
@@ -389,7 +389,7 @@ void FAT_ReadWord(unsigned short, unsigned long)
  * Address:	........
  * Size:	000050
  */
-void FAT_ReadWordD(unsigned short, unsigned long)
+void FAT_ReadWordD(u16, u32)
 {
 	// UNUSED FUNCTION
 }
@@ -399,7 +399,7 @@ void FAT_ReadWordD(unsigned short, unsigned long)
  * Address:	........
  * Size:	000024
  */
-void FAT_ReadLong(unsigned short, unsigned long)
+void FAT_ReadLong(u16, u32)
 {
 	// UNUSED FUNCTION
 }
@@ -409,7 +409,7 @@ void FAT_ReadLong(unsigned short, unsigned long)
  * Address:	........
  * Size:	000080
  */
-void FAT_ReadLongD(unsigned short, unsigned long)
+void FAT_ReadLongD(u16, u32)
 {
 	// UNUSED FUNCTION
 }
@@ -419,7 +419,7 @@ void FAT_ReadLongD(unsigned short, unsigned long)
  * Address:	8000E220
  * Size:	0000E0
  */
-void FAT_StoreBlock(unsigned char*, unsigned short, unsigned long, unsigned long)
+void FAT_StoreBlock(u8*, u16, u32, u32)
 {
 	/*
 	.loc_0x0:

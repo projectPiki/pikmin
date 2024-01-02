@@ -231,7 +231,7 @@ void CPlate::init(Vector3f&) { }
  * Address:	800A598C
  * Size:	0001C0
  */
-void CPlate::setPos(Vector3f&, float, Vector3f&)
+void CPlate::setPos(Vector3f&, f32, Vector3f&)
 {
 	/*
 	.loc_0x0:
@@ -359,7 +359,7 @@ void CPlate::setPos(Vector3f&, float, Vector3f&)
  * Address:	800A5B4C
  * Size:	0001BC
  */
-void CPlate::setPosGray(Vector3f&, float, Vector3f&)
+void CPlate::setPosGray(Vector3f&, f32, Vector3f&)
 {
 	/*
 	.loc_0x0:
@@ -486,7 +486,7 @@ void CPlate::setPosGray(Vector3f&, float, Vector3f&)
  * Address:	........
  * Size:	0001E0
  */
-void CPlate::setPosNeutral(Vector3f&, float, Vector3f&)
+void CPlate::setPosNeutral(Vector3f&, f32, Vector3f&)
 {
 	// UNUSED FUNCTION
 }
@@ -1085,7 +1085,7 @@ void CPlate::sortByColor(Piki*)
  * Address:	800A6394
  * Size:	0002DC
  */
-void CPlate::rearrangeSlot(Vector3f&, float, Vector3f&)
+void CPlate::rearrangeSlot(Vector3f&, f32, Vector3f&)
 {
 	/*
 	.loc_0x0:
@@ -1306,7 +1306,7 @@ void CPlate::rearrangeSlot(Vector3f&, float, Vector3f&)
  * Address:	800A6670
  * Size:	000188
  */
-void CPlate::refresh(int, float)
+void CPlate::refresh(int, f32)
 {
 	/*
 	.loc_0x0:
@@ -1625,7 +1625,7 @@ void CPlate::update()
  * Address:	........
  * Size:	000004
  */
-void CPlate::postUpdate(float)
+void CPlate::postUpdate(f32)
 {
 	// UNUSED FUNCTION
 }

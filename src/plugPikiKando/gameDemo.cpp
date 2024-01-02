@@ -673,7 +673,7 @@ void DemoFlags::loadCard(RandomAccessStream&)
  * Address:	80082448
  * Size:	00007C
  */
-void DemoFlags::registerDemoFlag(int, char*, unsigned short, unsigned short, bool)
+void DemoFlags::registerDemoFlag(int, char*, u16, u16, bool)
 {
 	/*
 	.loc_0x0:
@@ -961,7 +961,7 @@ void DemoFlags::setFlagOnly(int)
  * Address:	80082780
  * Size:	000048
  */
-void DemoFlags::setTimer(float, int, Creature*)
+void DemoFlags::setTimer(f32, int, Creature*)
 {
 	/*
 	.loc_0x0:

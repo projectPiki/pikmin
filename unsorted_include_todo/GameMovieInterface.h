@@ -11,25 +11,24 @@
  * .4byte parse__13GameInterfaceFii
  * .4byte parse__18GameMovieInterfaceFRQ218GameMovieInterface13SimpleMessage
  * .4byte parse__18GameMovieInterfaceFRQ218GameMovieInterface14ComplexMessage
-*/
+ */
 
 struct GameInterface {
-	virtual void message(int, int);                                                         // _08
-	virtual void movie(int, int, Creature *, Vector3f *, Vector3f *, unsigned long, bool);  // _0C
-	virtual void parseMessages();                                                           // _10
-	virtual void parse(int, int);                                                           // _14
+	virtual void message(int, int);                                           // _08
+	virtual void movie(int, int, Creature*, Vector3f*, Vector3f*, u32, bool); // _0C
+	virtual void parseMessages();                                             // _10
+	virtual void parse(int, int);                                             // _14
 };
 
 /**
  * @brief TODO
  */
 struct GameMovieInterface : public GameInterface {
-	virtual void message(int, int);                                                         // _08
-	virtual void movie(int, int, Creature *, Vector3f *, Vector3f *, unsigned long, bool);  // _0C
-	virtual void parseMessages();                                                           // _10
-	virtual void parse(SimpleMessage &);                                                    // _18
-	virtual void parse(ComplexMessage &);                                                   // _1C
-
+	virtual void message(int, int);                                           // _08
+	virtual void movie(int, int, Creature*, Vector3f*, Vector3f*, u32, bool); // _0C
+	virtual void parseMessages();                                             // _10
+	virtual void parse(SimpleMessage&);                                       // _18
+	virtual void parse(ComplexMessage&);                                      // _1C
 };
 
 #endif

@@ -331,7 +331,7 @@ void AnimInfo::setIndex()
  * Address:	800503C4
  * Size:	000024
  */
-void AnimInfo::setAnimFlags(unsigned long)
+void AnimInfo::setAnimFlags(u32)
 {
 	/*
 	.loc_0x0:
@@ -997,7 +997,7 @@ void ayuID::Set(char*)
  * Address:	80050AE4
  * Size:	000020
  */
-void operator new[](unsigned long)
+void operator new[](u32)
 {
 	/*
 	.loc_0x0:
@@ -1657,7 +1657,7 @@ void Animator::updateContext()
  * Address:	8005121C
  * Size:	00023C
  */
-void Animator::animate(float)
+void Animator::animate(f32)
 {
 	/*
 	.loc_0x0:
@@ -1866,7 +1866,7 @@ u32 Parm<String>::size() { return 0x8; }
  * Address:	80051468
  * Size:	000008
  */
-u32 Parm<float>::size() { return 0x4; }
+u32 Parm<f32>::size() { return 0x4; }
 
 /*
  * --INFO--
