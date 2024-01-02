@@ -5,8 +5,8 @@
  * Address:	801A3594
  * Size:	00003C
  */
-AnimInfo* TAIanimation::addAnimation(char* param_1)
+AnimInfo* TAIanimation::addAnimation(char* anim)
 {
-	m_animinfo = m_animmgr->addAnimation(param_1, true);
-	return m_animinfo;
+	mAniminfo = mAnimmgr->addAnimation(anim, true);
+	return mAniminfo;
 }

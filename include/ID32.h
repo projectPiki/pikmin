@@ -21,7 +21,7 @@ struct ID32 {
 	void updateString(void);
 	void write(class RandomAccessStream&);
 
-	u32 m_id;    // _0
+	u32 mId;    // _0
 	char sId[5]; // _4
 };
 
