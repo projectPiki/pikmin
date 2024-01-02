@@ -1,33 +1,36 @@
 #include "types.h"
-// clang-format off
+
 /*
  * --INFO--
- * Address:	801F5944
- * Size:	000008
+ * Address: 801F5944
+ * Size:    000008
  */
-asm u32 PPCMfmsr (void)
-{
-    nofralloc
-    mfmsr r3
-    blr
+ASM u32 PPCMfmsr(void) {
+#ifdef __MWERKS__ // clang-format off
+	nofralloc
+	mfmsr r3
+	blr
+#endif // clang-format on
 }
 
 /*
  * --INFO--
- * Address:	801F594C
- * Size:	000008
+ * Address: 801F594C
+ * Size:    000008
  */
-asm void PPCMtmsr (register u32 newMSR)
+ASM void PPCMtmsr(register u32 newMSR)
 {
-    nofralloc
-    mtmsr newMSR
-    blr
+#ifdef __MWERKS__ // clang-format off
+	nofralloc
+	mtmsr newMSR
+	blr
+#endif // clang-format on
 }
 
 /*
  * --INFO--
- * Address:	........
- * Size:	00000C
+ * Address: ........
+ * Size:    00000C
  */
 void PPCOrMsr(void)
 {
@@ -36,8 +39,8 @@ void PPCOrMsr(void)
 
 /*
  * --INFO--
- * Address:	........
- * Size:	00000C
+ * Address: ........
+ * Size:    00000C
  */
 void PPCAndMsr(void)
 {
@@ -46,8 +49,8 @@ void PPCAndMsr(void)
 
 /*
  * --INFO--
- * Address:	........
- * Size:	00000C
+ * Address: ........
+ * Size:    00000C
  */
 void PPCAndCMsr(void)
 {
@@ -56,20 +59,22 @@ void PPCAndCMsr(void)
 
 /*
  * --INFO--
- * Address:	801F5954
- * Size:	000008
+ * Address: 801F5954
+ * Size:    000008
  */
-asm u32 PPCMfhid0 (void)
+ASM u32 PPCMfhid0(void)
 {
-    nofralloc
-    mfspr r3, HID0
-    blr
+#ifdef __MWERKS__ // clang-format off
+	nofralloc
+	mfspr r3, HID0
+	blr
+#endif // clang-format on
 }
 
 /*
  * --INFO--
- * Address:	........
- * Size:	000008
+ * Address: ........
+ * Size:    000008
  */
 void PPCMthid0(void)
 {
@@ -78,8 +83,8 @@ void PPCMthid0(void)
 
 /*
  * --INFO--
- * Address:	........
- * Size:	000008
+ * Address: ........
+ * Size:    000008
  */
 void PPCMfhid1(void)
 {
@@ -88,44 +93,48 @@ void PPCMfhid1(void)
 
 /*
  * --INFO--
- * Address:	801F595C
- * Size:	000008
+ * Address: 801F595C
+ * Size:    000008
  */
-asm u32 PPCMfl2cr (void)
-{
-    nofralloc
-    mfspr r3, L2CR
-    blr
+ASM u32 PPCMfl2cr(void) {
+#ifdef __MWERKS__ // clang-format off
+	nofralloc
+	mfspr r3, L2CR
+	blr
+#endif // clang-format on
 }
 
 /*
  * --INFO--
- * Address:	801F5964
- * Size:	000008
+ * Address: 801F5964
+ * Size:    000008
  */
-asm void PPCMtl2cr (register u32 newL2cr)
-{
-    nofralloc
-    mtspr L2CR, newL2cr
-    blr
+ASM void PPCMtl2cr(register u32 newL2cr) {
+#ifdef __MWERKS__ // clang-format off
+	nofralloc
+	mtspr L2CR, newL2cr
+	blr
+#endif // clang-format on
 }
 
 /*
  * --INFO--
- * Address:	801F596C
- * Size:	000008
+ * Address: 801F596C
+ * Size:    000008
  */
-__declspec ( weak ) asm void PPCMtdec ( register u32 newDec )
+WEAKFUNC ASM void PPCMtdec(register u32 newDec)
 {
-    nofralloc
-    mtdec newDec
-    blr
+#ifdef __MWERKS__ // clang-format off
+	nofralloc
+	mtdec newDec
+	blr
+#endif // clang-format on
 }
 
 /*
  * --INFO--
- * Address:	........
- * Size:	000008
+ * Address: ........
+ * Size:    000008
  */
 void PPCMfdec(void)
 {
@@ -134,20 +143,22 @@ void PPCMfdec(void)
 
 /*
  * --INFO--
- * Address:	801F5974
- * Size:	000008
+ * Address: 801F5974
+ * Size:    000008
  */
-asm void PPCSync (void)
+ASM void PPCSync(void)
 {
-    nofralloc
-    sc
-    blr
+#ifdef __MWERKS__ // clang-format off
+	nofralloc
+	sc
+	blr
+#endif // clang-format on
 }
 
 /*
  * --INFO--
- * Address:	........
- * Size:	000034
+ * Address: ........
+ * Size:    000034
  */
 void PPCEieio(void)
 {
@@ -156,28 +167,30 @@ void PPCEieio(void)
 
 /*
  * --INFO--
- * Address:	801F597C
- * Size:	000014
+ * Address: 801F597C
+ * Size:    000014
  */
-__declspec ( weak ) asm void PPCHalt (void) //spins infinitely
+WEAKFUNC ASM void PPCHalt(void) // spins infinitely
 {
-    nofralloc
+#ifdef __MWERKS__ // clang-format off
+	nofralloc
 
-    sync
+	sync
 
 _spin:
-    nop
-    li r3, 0
-    nop
-    b _spin
+	nop
+	li r3, 0
+	nop
+	b _spin
 
-    // NEVER REACHED
+	// NEVER REACHED
+#endif // clang-format on
 }
 
 /*
  * --INFO--
- * Address:	........
- * Size:	000008
+ * Address: ........
+ * Size:    000008
  */
 void PPCMfmmcr0(void)
 {
@@ -186,8 +199,8 @@ void PPCMfmmcr0(void)
 
 /*
  * --INFO--
- * Address:	........
- * Size:	000008
+ * Address: ........
+ * Size:    000008
  */
 void PPCMtmmcr0(void)
 {
@@ -196,8 +209,8 @@ void PPCMtmmcr0(void)
 
 /*
  * --INFO--
- * Address:	........
- * Size:	000008
+ * Address: ........
+ * Size:    000008
  */
 void PPCMfmmcr1(void)
 {
@@ -206,8 +219,8 @@ void PPCMfmmcr1(void)
 
 /*
  * --INFO--
- * Address:	........
- * Size:	000008
+ * Address: ........
+ * Size:    000008
  */
 void PPCMtmmcr1(void)
 {
@@ -216,8 +229,8 @@ void PPCMtmmcr1(void)
 
 /*
  * --INFO--
- * Address:	........
- * Size:	000008
+ * Address: ........
+ * Size:    000008
  */
 void PPCMfpmc1(void)
 {
@@ -226,8 +239,8 @@ void PPCMfpmc1(void)
 
 /*
  * --INFO--
- * Address:	........
- * Size:	000008
+ * Address: ........
+ * Size:    000008
  */
 void PPCMtpmc1(void)
 {
@@ -236,8 +249,8 @@ void PPCMtpmc1(void)
 
 /*
  * --INFO--
- * Address:	........
- * Size:	000008
+ * Address: ........
+ * Size:    000008
  */
 void PPCMfpmc2(void)
 {
@@ -246,8 +259,8 @@ void PPCMfpmc2(void)
 
 /*
  * --INFO--
- * Address:	........
- * Size:	000008
+ * Address: ........
+ * Size:    000008
  */
 void PPCMtpmc2(void)
 {
@@ -256,8 +269,8 @@ void PPCMtpmc2(void)
 
 /*
  * --INFO--
- * Address:	........
- * Size:	000008
+ * Address: ........
+ * Size:    000008
  */
 void PPCMfpmc3(void)
 {
@@ -266,8 +279,8 @@ void PPCMfpmc3(void)
 
 /*
  * --INFO--
- * Address:	........
- * Size:	000008
+ * Address: ........
+ * Size:    000008
  */
 void PPCMtpmc3(void)
 {
@@ -276,8 +289,8 @@ void PPCMtpmc3(void)
 
 /*
  * --INFO--
- * Address:	........
- * Size:	000008
+ * Address: ........
+ * Size:    000008
  */
 void PPCMfpmc4(void)
 {
@@ -286,8 +299,8 @@ void PPCMfpmc4(void)
 
 /*
  * --INFO--
- * Address:	........
- * Size:	000008
+ * Address: ........
+ * Size:    000008
  */
 void PPCMtpmc4(void)
 {
@@ -296,8 +309,8 @@ void PPCMtpmc4(void)
 
 /*
  * --INFO--
- * Address:	........
- * Size:	000008
+ * Address: ........
+ * Size:    000008
  */
 void PPCMfsia(void)
 {
@@ -306,8 +319,8 @@ void PPCMfsia(void)
 
 /*
  * --INFO--
- * Address:	........
- * Size:	000008
+ * Address: ........
+ * Size:    000008
  */
 void PPCMtsia(void)
 {
@@ -316,32 +329,35 @@ void PPCMtsia(void)
 
 /*
  * --INFO--
- * Address:	801F5990
- * Size:	000008
+ * Address: 801F5990
+ * Size:    000008
  */
-asm u32 PPCMfhid2 ( void )
-{
-    nofralloc
-    mfspr r3, 920
-    blr
+ASM u32 PPCMfhid2(void) {
+#ifdef __MWERKS__ // clang-format off
+	nofralloc
+	mfspr r3, 920
+	blr
+#endif // clang-format on
 }
 
 /*
  * --INFO--
- * Address:	801F5998
- * Size:	000008
+ * Address: 801F5998
+ * Size:    000008
  */
-asm void PPCMthid2 ( register u32 newhid2 )
+ASM void PPCMthid2(register u32 newhid2)
 {
-    nofralloc
-    mtspr 920, newhid2
-    blr
+#ifdef __MWERKS__ // clang-format off
+	nofralloc
+	mtspr 920, newhid2
+	blr
+#endif // clang-format on
 }
 
 /*
  * --INFO--
- * Address:	........
- * Size:	00000C
+ * Address: ........
+ * Size:    00000C
  */
 void PPCMfwpar(void)
 {
@@ -350,20 +366,22 @@ void PPCMfwpar(void)
 
 /*
  * --INFO--
- * Address:	801F59A0
- * Size:	000008
+ * Address: 801F59A0
+ * Size:    000008
  */
-asm void PPCMtwpar ( register u32 newwpar )
+ASM void PPCMtwpar(register u32 newwpar)
 {
-    nofralloc
-    mtspr WPAR, newwpar
-    blr
+#ifdef __MWERKS__ // clang-format off
+	nofralloc
+	mtspr WPAR, newwpar
+	blr
+#endif // clang-format on
 }
 
 /*
  * --INFO--
- * Address:	........
- * Size:	000008
+ * Address: ........
+ * Size:    000008
  */
 void PPCMfdmaU(void)
 {
@@ -372,8 +390,8 @@ void PPCMfdmaU(void)
 
 /*
  * --INFO--
- * Address:	........
- * Size:	000008
+ * Address: ........
+ * Size:    000008
  */
 void PPCMfdmaL(void)
 {
@@ -382,8 +400,8 @@ void PPCMfdmaL(void)
 
 /*
  * --INFO--
- * Address:	........
- * Size:	000008
+ * Address: ........
+ * Size:    000008
  */
 void PPCMtdmaU(void)
 {
@@ -392,8 +410,8 @@ void PPCMtdmaU(void)
 
 /*
  * --INFO--
- * Address:	........
- * Size:	000008
+ * Address: ........
+ * Size:    000008
  */
 void PPCMtdmaL(void)
 {
@@ -402,11 +420,10 @@ void PPCMtdmaL(void)
 
 /*
  * --INFO--
- * Address:	........
- * Size:	000008
+ * Address: ........
+ * Size:    000008
  */
 void PPCMfpvr(void)
 {
 	// UNUSED FUNCTION
 }
-// clang-format on

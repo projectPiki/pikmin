@@ -3,8 +3,8 @@
 
 /*
  * --INFO--
- * Address:	........
- * Size:	00009C
+ * Address: ........
+ * Size:    00009C
  */
 void _Error(char*, ...)
 {
@@ -13,8 +13,8 @@ void _Error(char*, ...)
 
 /*
  * --INFO--
- * Address:	........
- * Size:	0000F0
+ * Address: ........
+ * Size:    0000F0
  */
 void _Print(char*, ...)
 {
@@ -23,8 +23,8 @@ void _Print(char*, ...)
 
 /*
  * --INFO--
- * Address:	........
- * Size:	0000C0
+ * Address: ........
+ * Size:    0000C0
  */
 void Plane::equal(Plane&)
 {
@@ -33,8 +33,8 @@ void Plane::equal(Plane&)
 
 /*
  * --INFO--
- * Address:	........
- * Size:	000148
+ * Address: ........
+ * Size:    000148
  */
 void Plane::calcRadScale()
 {
@@ -43,8 +43,8 @@ void Plane::calcRadScale()
 
 /*
  * --INFO--
- * Address:	........
- * Size:	000074
+ * Address: ........
+ * Size:    000074
  */
 void Plane::reflect(Vector3f&)
 {
@@ -53,8 +53,8 @@ void Plane::reflect(Vector3f&)
 
 /*
  * --INFO--
- * Address:	........
- * Size:	00006C
+ * Address: ........
+ * Size:    00006C
  */
 void Plane::reflectVector(Vector3f&)
 {
@@ -63,8 +63,8 @@ void Plane::reflectVector(Vector3f&)
 
 /*
  * --INFO--
- * Address:	........
- * Size:	000078
+ * Address: ........
+ * Size:    000078
  */
 void Plane::bounceVector(Vector3f&, f32)
 {
@@ -73,8 +73,8 @@ void Plane::bounceVector(Vector3f&, f32)
 
 /*
  * --INFO--
- * Address:	........
- * Size:	000084
+ * Address: ........
+ * Size:    000084
  */
 void Plane::frictionVector(Vector3f&, f32)
 {
@@ -83,8 +83,8 @@ void Plane::frictionVector(Vector3f&, f32)
 
 /*
  * --INFO--
- * Address:	8003756C
- * Size:	0000A0
+ * Address: 8003756C
+ * Size:    0000A0
  */
 void CullingPlane::CheckMinMaxDir()
 {
@@ -145,8 +145,8 @@ void CullingPlane::CheckMinMaxDir()
 
 /*
  * --INFO--
- * Address:	........
- * Size:	0000AC
+ * Address: ........
+ * Size:    0000AC
  */
 void Vector3f::rotateTranspose(Matrix4f&)
 {
@@ -155,8 +155,8 @@ void Vector3f::rotateTranspose(Matrix4f&)
 
 /*
  * --INFO--
- * Address:	8003760C
- * Size:	0000AC
+ * Address: 8003760C
+ * Size:    0000AC
  */
 void Vector3f::rotate(Matrix4f&)
 {
@@ -210,8 +210,8 @@ void Vector3f::rotate(Matrix4f&)
 
 /*
  * --INFO--
- * Address:	800376B8
- * Size:	000094
+ * Address: 800376B8
+ * Size:    000094
  */
 void Vector3f::rotateTo(Matrix4f&, Vector3f&)
 {
@@ -259,8 +259,8 @@ void Vector3f::rotateTo(Matrix4f&, Vector3f&)
 
 /*
  * --INFO--
- * Address:	8003774C
- * Size:	0000C4
+ * Address: 8003774C
+ * Size:    0000C4
  */
 void Vector3f::multMatrix(Matrix4f&)
 {
@@ -320,8 +320,8 @@ void Vector3f::multMatrix(Matrix4f&)
 
 /*
  * --INFO--
- * Address:	80037810
- * Size:	0000AC
+ * Address: 80037810
+ * Size:    0000AC
  */
 void Vector3f::multMatrixTo(Matrix4f&, Vector3f&)
 {
@@ -375,8 +375,8 @@ void Vector3f::multMatrixTo(Matrix4f&, Vector3f&)
 
 /*
  * --INFO--
- * Address:	........
- * Size:	000110
+ * Address: ........
+ * Size:    000110
  */
 void Vector3f::rotate(Quat&)
 {
@@ -385,8 +385,8 @@ void Vector3f::rotate(Quat&)
 
 /*
  * --INFO--
- * Address:	........
- * Size:	000104
+ * Address: ........
+ * Size:    000104
  */
 void Vector3f::rotateInverse(Quat&)
 {
@@ -395,8 +395,8 @@ void Vector3f::rotateInverse(Quat&)
 
 /*
  * --INFO--
- * Address:	800378BC
- * Size:	0004E4
+ * Address: 800378BC
+ * Size:    0004E4
  */
 void Quat::fromMat3f(Matrix3f&)
 {
@@ -768,8 +768,8 @@ void Quat::fromMat3f(Matrix3f&)
 
 /*
  * --INFO--
- * Address:	80037DA0
- * Size:	0000A4
+ * Address: 80037DA0
+ * Size:    0000A4
  */
 void Quat::rotate(Vector3f&, f32)
 {
@@ -823,8 +823,8 @@ void Quat::rotate(Vector3f&, f32)
 
 /*
  * --INFO--
- * Address:	80037E44
- * Size:	0000EC
+ * Address: 80037E44
+ * Size:    0000EC
  */
 void Quat::multiply(Quat&)
 {
@@ -894,8 +894,8 @@ void Quat::multiply(Quat&)
 
 /*
  * --INFO--
- * Address:	........
- * Size:	000104
+ * Address: ........
+ * Size:    000104
  */
 void Quat::multiplyTo(Quat&, Quat&)
 {
@@ -904,8 +904,8 @@ void Quat::multiplyTo(Quat&, Quat&)
 
 /*
  * --INFO--
- * Address:	80037F30
- * Size:	0000D4
+ * Address: 80037F30
+ * Size:    0000D4
  */
 void Quat::normalise()
 {
@@ -971,8 +971,8 @@ void Quat::normalise()
 
 /*
  * --INFO--
- * Address:	80038004
- * Size:	000080
+ * Address: 80038004
+ * Size:    000080
  */
 void Quat::genVectorX(Vector3f&)
 {
@@ -1015,8 +1015,8 @@ void Quat::genVectorX(Vector3f&)
 
 /*
  * --INFO--
- * Address:	80038084
- * Size:	000080
+ * Address: 80038084
+ * Size:    000080
  */
 void Quat::genVectorY(Vector3f&)
 {
@@ -1059,8 +1059,8 @@ void Quat::genVectorY(Vector3f&)
 
 /*
  * --INFO--
- * Address:	80038104
- * Size:	000080
+ * Address: 80038104
+ * Size:    000080
  */
 void Quat::genVectorZ(Vector3f&)
 {
@@ -1103,8 +1103,8 @@ void Quat::genVectorZ(Vector3f&)
 
 /*
  * --INFO--
- * Address:	80038184
- * Size:	000164
+ * Address: 80038184
+ * Size:    000164
  */
 void Quat::slerp(Quat&, f32, int)
 {
@@ -1214,8 +1214,8 @@ void Quat::slerp(Quat&, f32, int)
 
 /*
  * --INFO--
- * Address:	800382E8
- * Size:	0002A0
+ * Address: 800382E8
+ * Size:    0002A0
  */
 void Quat::fromEuler(Vector3f&)
 {
@@ -1396,10 +1396,10 @@ void Quat::fromEuler(Vector3f&)
 
 /*
  * --INFO--
- * Address:	80038588
- * Size:	00002C
+ * Address: 80038588
+ * Size:    00002C
  */
-float roundAng(float x)
+f32 roundAng(f32 x)
 {
 	if (x < 0.0f) {
 		x += TAU;
@@ -1430,8 +1430,8 @@ float roundAng(float x)
 
 /*
  * --INFO--
- * Address:	800385B4
- * Size:	000074
+ * Address: 800385B4
+ * Size:    000074
  */
 void angDist(f32, f32)
 {
@@ -1479,18 +1479,18 @@ void angDist(f32, f32)
 
 /*
  * --INFO--
- * Address:	80038628
- * Size:	000050
+ * Address: 80038628
+ * Size:    000050
  */
-void qdist2(float, float, float, float)
+void qdist2(f32, f32, f32, f32)
 {
-	float differenceX         = point2X - point1X;
-	float absoluteDifferenceX = (differenceX < 0.0f) ? -differenceX : differenceX;
+	f32 differenceX         = point2X - point1X;
+	f32 absoluteDifferenceX = (differenceX < 0.0f) ? -differenceX : differenceX;
 
-	float differenceY         = point2Y - point1Y;
-	float absoluteDifferenceY = (differenceY < 0.0f) ? -differenceY : differenceY;
+	f32 differenceY         = point2Y - point1Y;
+	f32 absoluteDifferenceY = (differenceY < 0.0f) ? -differenceY : differenceY;
 
-	float minimumDifference = (absoluteDifferenceX <= absoluteDifferenceY) ? absoluteDifferenceX : absoluteDifferenceY;
+	f32 minimumDifference = (absoluteDifferenceX <= absoluteDifferenceY) ? absoluteDifferenceX : absoluteDifferenceY;
 
 	return absoluteDifferenceX + absoluteDifferenceY - minimumDifference * 0.5f;
 	/*
@@ -1528,8 +1528,8 @@ void qdist2(float, float, float, float)
 
 /*
  * --INFO--
- * Address:	........
- * Size:	000080
+ * Address: ........
+ * Size:    000080
  */
 void qdist3(f32, f32, f32, f32, f32, f32)
 {
@@ -1538,8 +1538,8 @@ void qdist3(f32, f32, f32, f32, f32, f32)
 
 /*
  * --INFO--
- * Address:	80038678
- * Size:	0001BC
+ * Address: 80038678
+ * Size:    0001BC
  */
 void CollTriInfo::init(RoomInfo* info, Vector3f* pos)
 {
@@ -1554,7 +1554,7 @@ void CollTriInfo::init(RoomInfo* info, Vector3f* pos)
 		tempVector.normalise();
 		tempVector.CP(&this->field_18);
 		this->field_28[i] = tempVector;
-		double dpResult   = tempVector.DP(pos2);
+		f64 dpResult      = tempVector.DP(pos2);
 		this->field_34[i] = dpResult;
 	}
 	/*
@@ -1679,8 +1679,8 @@ void CollTriInfo::init(RoomInfo* info, Vector3f* pos)
 
 /*
  * --INFO--
- * Address:	80038834
- * Size:	0000C4
+ * Address: 80038834
+ * Size:    0000C4
  */
 void CollTriInfo::behindEdge(Vector3f&)
 {
@@ -1746,8 +1746,8 @@ void CollTriInfo::behindEdge(Vector3f&)
 
 /*
  * --INFO--
- * Address:	800388F8
- * Size:	000644
+ * Address: 800388F8
+ * Size:    000644
  */
 void BoundBox::draw(Graphics&)
 {
@@ -2159,8 +2159,8 @@ void BoundBox::draw(Graphics&)
 
 /*
  * --INFO--
- * Address:	80038F3C
- * Size:	0000E8
+ * Address: 80038F3C
+ * Size:    0000E8
  */
 void pointInsideTri(KTri&, Vector3f&)
 {
@@ -2237,8 +2237,8 @@ void pointInsideTri(KTri&, Vector3f&)
 
 /*
  * --INFO--
- * Address:	80039024
- * Size:	000260
+ * Address: 80039024
+ * Size:    000260
  */
 void triRectDistance(Vector3f*, Vector3f*, Vector3f*, BoundBox&, bool)
 {
@@ -2419,8 +2419,8 @@ void triRectDistance(Vector3f*, Vector3f*, Vector3f*, BoundBox&, bool)
 
 /*
  * --INFO--
- * Address:	80039284
- * Size:	0001A8
+ * Address: 80039284
+ * Size:    0001A8
  */
 void distanceTriRect(KTri&, KRect&, f32*, f32*, f32*, f32*)
 {
@@ -2545,8 +2545,8 @@ void distanceTriRect(KTri&, KRect&, f32*, f32*, f32*, f32*)
 
 /*
  * --INFO--
- * Address:	8003942C
- * Size:	000070
+ * Address: 8003942C
+ * Size:    000070
  */
 void KRect::inside(Vector3f&)
 {
@@ -2587,8 +2587,8 @@ void KRect::inside(Vector3f&)
 
 /*
  * --INFO--
- * Address:	8003949C
- * Size:	00002C
+ * Address: 8003949C
+ * Size:    00002C
  */
 KTri::KTri()
 {
@@ -2610,8 +2610,8 @@ KTri::KTri()
 
 /*
  * --INFO--
- * Address:	800394C8
- * Size:	0000C4
+ * Address: 800394C8
+ * Size:    0000C4
  */
 void KTri::set(Vector3f&, Vector3f&, Vector3f&)
 {
@@ -2671,8 +2671,8 @@ void KTri::set(Vector3f&, Vector3f&, Vector3f&)
 
 /*
  * --INFO--
- * Address:	........
- * Size:	000020
+ * Address: ........
+ * Size:    000020
  */
 KSegment::KSegment()
 {
@@ -2681,8 +2681,8 @@ KSegment::KSegment()
 
 /*
  * --INFO--
- * Address:	8003958C
- * Size:	0018C4
+ * Address: 8003958C
+ * Size:    0018C4
  */
 void sqrDistance(KSegment&, KTri&, f32*, f32*, f32*)
 {
@@ -4348,8 +4348,8 @@ void sqrDistance(KSegment&, KTri&, f32*, f32*, f32*)
 
 /*
  * --INFO--
- * Address:	8003AE50
- * Size:	000828
+ * Address: 8003AE50
+ * Size:    000828
  */
 void sqrDistance(KSegment&, KSegment&, f32*, f32*)
 {
@@ -4968,8 +4968,8 @@ void sqrDistance(KSegment&, KSegment&, f32*, f32*)
 
 /*
  * --INFO--
- * Address:	8003B678
- * Size:	001D9C
+ * Address: 8003B678
+ * Size:    001D9C
  */
 void sqrDistance(KSegment&, KRect&, f32*, f32*, f32*)
 {
@@ -6961,8 +6961,8 @@ void sqrDistance(KSegment&, KRect&, f32*, f32*, f32*)
 
 /*
  * --INFO--
- * Address:	8003D414
- * Size:	000468
+ * Address: 8003D414
+ * Size:    000468
  */
 void sqrDistance(KTri&, KRect&, f32*, f32*, f32*, f32*)
 {
@@ -7275,8 +7275,8 @@ void sqrDistance(KTri&, KRect&, f32*, f32*, f32*, f32*)
 
 /*
  * --INFO--
- * Address:	8003D87C
- * Size:	000540
+ * Address: 8003D87C
+ * Size:    000540
  */
 void sqrDistance(Vector3f&, KTri&, f32*, f32*)
 {

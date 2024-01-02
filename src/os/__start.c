@@ -2,30 +2,29 @@
 
 #pragma section code_type ".init"
 
-// clang-format off
-
-__declspec (weak) asm void __start(void)
+WEAKFUNC ASM void __start(void)
 {
-    nofralloc
+#ifdef __MWERKS__ // clang-format off
+	nofralloc
 	bl __init_registers
-    bl __init_hardware
-    li r0, -1
-    stwu r1, -8(r1)
-    stw r0, 4(r1)
-    stw r0, 0(r1)
-    bl __init_data
-    li r0, 0
-    lis r6, EXCEPTIONMASK_ADDR@ha
-    addi r6, r6, EXCEPTIONMASK_ADDR@l
-    stw r0, 0(r6)
-    lis r6, BOOTINFO2_ADDR@ha
-    addi r6, r6, BOOTINFO2_ADDR@l
-    lwz r6, 0(r6)
+	bl __init_hardware
+	li r0, -1
+	stwu r1, -8(r1)
+	stw r0, 4(r1)
+	stw r0, 0(r1)
+	bl __init_data
+	li r0, 0
+	lis r6, EXCEPTIONMASK_ADDR@ha
+	addi r6, r6, EXCEPTIONMASK_ADDR@l
+	stw r0, 0(r6)
+	lis r6, BOOTINFO2_ADDR@ha
+	addi r6, r6, BOOTINFO2_ADDR@l
+	lwz r6, 0(r6)
 
 _check_TRK:
-    cmplwi r6, 0
-    beq _goto_main
-    lwz r7, OS_BI2_DEBUGFLAG_OFFSET(r6)
+	cmplwi r6, 0
+	beq _goto_main
+	lwz r7, OS_BI2_DEBUGFLAG_OFFSET(r6)
 
 _check_debug_flag:
 	li r5, 0
@@ -81,10 +80,12 @@ _end_of_parseargs:
 	mr r4, r15
 	bl main
 	b exit
+#endif // clang-format on
 }
 
-asm static void __init_registers(void)
+ASM static void __init_registers(void)
 {
+#ifdef __MWERKS__ // clang-format off
 	nofralloc
 	lis r1,  _stack_addr@h
 	ori r1, r1,  _stack_addr@l
@@ -93,10 +94,11 @@ asm static void __init_registers(void)
 	lis r13, _SDA_BASE_@h
 	ori r13, r13, _SDA_BASE_@l
 	blr
+#endif // clang-format on
 }
 
-__declspec(section ".init") extern __rom_copy_info _rom_copy_info[];
-__declspec(section ".init") extern __bss_init_info _bss_init_info[];
+DECL_SECT(".init") extern __rom_copy_info _rom_copy_info[];
+DECL_SECT(".init") extern __bss_init_info _bss_init_info[];
 
 // clang-format on
 

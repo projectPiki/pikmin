@@ -25,13 +25,13 @@ extern void DBInit(void);
 extern void OSResetSystem(BOOL reset, u32 resetCode, BOOL forceMenu);
 extern void __init_hardware(void);
 
-__declspec(section ".init") extern void __start(void);
-__declspec(section ".init") extern void __init_registers(void);
-__declspec(section ".init") extern void __init_data(void);
+DECL_SECT(".init") extern void __start(void);
+DECL_SECT(".init") extern void __init_registers(void);
+DECL_SECT(".init") extern void __init_data(void);
 
-__declspec(section ".init") extern char _stack_addr[];
-__declspec(section ".init") extern char _SDA_BASE_[];
-__declspec(section ".init") extern char _SDA2_BASE_[];
+DECL_SECT(".init") extern char _stack_addr[];
+DECL_SECT(".init") extern char _SDA_BASE_[];
+DECL_SECT(".init") extern char _SDA2_BASE_[];
 
 typedef struct __rom_copy_info {
 	char* rom;
@@ -39,13 +39,13 @@ typedef struct __rom_copy_info {
 	unsigned int size;
 } __rom_copy_info;
 
-__declspec(section ".init") extern __rom_copy_info _rom_copy_info[];
+DECL_SECT(".init") extern __rom_copy_info _rom_copy_info[];
 
 typedef struct __bss_init_info {
 	char* addr;
 	unsigned int size;
 } __bss_init_info;
 
-__declspec(section ".init") extern __bss_init_info _bss_init_info[];
+DECL_SECT(".init") extern __bss_init_info _bss_init_info[];
 
 #endif
