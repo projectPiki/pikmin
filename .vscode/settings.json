@@ -1,16 +1,20 @@
 {
-  "[c]": {
-    "files.encoding": "shiftjis",
-    "editor.defaultFormatter": "xaver.clang-format"
-  },
-  "[cpp]": {
-    "files.encoding": "shiftjis",
-    "editor.defaultFormatter": "xaver.clang-format"
-  },
-
-  "editor.tabSize": 4,
-  "files.associations": {
-    "source_location": "cpp",
-    "types.h": "c"
-  }
+    "[c]": {
+        "files.encoding": "shiftjis",
+        "editor.defaultFormatter": "ms-vscode.cpptools"
+    },
+    "[cpp]": {
+        "files.encoding": "shiftjis",
+        "editor.defaultFormatter": "ms-vscode.cpptools"
+    },
+    "editor.tabSize": 4,
+    "files.exclude": {
+        "**/*.ctx": true
+    },
+    "files.associations": {
+        "*.c.ctx": "c",
+        "*.ctx": "cpp",
+        "source_location": "cpp",
+        "*.cp": "cpp",
+    }
 }
