@@ -29,8 +29,8 @@ void _Print(char*, ...)
  */
 OdoMeter::OdoMeter()
 {
-	A = 0.0;
-	B = 0.0;
+	_00 = 0.0;
+	_04 = 0.0;
 }
 
 /*
@@ -40,30 +40,31 @@ OdoMeter::OdoMeter()
  */
 void OdoMeter::start(float argA, float argB)
 {
-	D = argA;
-	B = argA;
-	C = argB;
-	A = 0.0;
+	_0C = argA;
+	_04 = argA;
+	_08 = argB;
+	_00 = 0.0;
 }
 
 /*
  * --INFO--
  * Address:	800CD82C
  * Size:	000124
- * This function has some silly inlining.
- * The following, while likely fake, matches the stack.
+ * TODO
  */
 bool OdoMeter::moving(Vector3f& argA, Vector3f& argB)
 {
-	float dummy[4]; // useless padding variable for stack allocation match
-	Vector3f vec;
-	odoGsys();
-	if (A < 100.0f) {
-		vec.y          = vecdiffY(argA, argB);
-		vec.x          = vecdiffX(argA, argB);
-		vec.z          = vecdiffZ(argA, argB);
-		float newthing = sqrtf(vec.x * vec.x + vec.y * vec.y + vec.z * vec.z);
-		A += newthing;
+	float dummy[4]; // Match stack allocation
+
+	unknown1();
+
+	if (_00 < 100.0f) {
+		// THIS IS VECTOR3F::DISTANCE!!! WHAT THE FUUUUUUUUUU
+		Vector3f vec;
+		vec.sub2(argA, argB);
+		f32 distance = vec.length();
+		_00 += distance;
 	}
-	return odoRet();
+
+	return unknown2();
 }

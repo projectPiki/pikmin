@@ -80,7 +80,7 @@ KANDO_FILES:=\
 	$(BUILD_DIR)/asm/plugPikiKando/aiAction.o\
 	$(BUILD_DIR)/asm/plugPikiKando/pikiInf.o\
 	$(BUILD_DIR)/asm/plugPikiKando/piki.o\
-	$(BUILD_DIR)/src/plugPikiKando/odoMeter.o\
+	$(BUILD_DIR)/asm/plugPikiKando/odoMeter.o\
 	$(BUILD_DIR)/asm/plugPikiKando/pikidoKill.o\
 	$(BUILD_DIR)/asm/plugPikiKando/pikiMgr.o\
 	$(BUILD_DIR)/asm/plugPikiKando/pikiState.o\
