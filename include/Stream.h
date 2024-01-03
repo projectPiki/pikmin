@@ -31,7 +31,7 @@ struct Stream {
 	void print(char*, ...);
 	void vPrintf(char*, char*);
 
-	char* mSource; // _04
+	char* mPath; // _04
 };
 
 struct BufferedInputStream : public Stream {
