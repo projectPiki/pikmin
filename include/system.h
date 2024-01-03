@@ -115,6 +115,7 @@ struct System : public StdSystem {
 	static void* alloc(size_t);
 
 	// _244
+	u32 _244;        // _244
 	u32 _248;        // _248
 	Graphics* mGfx;  // _24C
 	char _250[0x3C]; // _250
