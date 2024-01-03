@@ -28,8 +28,8 @@ void _Print(char*, ...)
  */
 OdoMeter::OdoMeter()
 {
-	_00 = 0.0;
-	_04 = 0.0;
+	_00 = 0.0f;
+	_04 = 0.0f;
 }
 
 /*
@@ -42,7 +42,7 @@ void OdoMeter::start(f32 argA, f32 argB)
 	_0C = argA;
 	_04 = argA;
 	_08 = argB;
-	_00 = 0.0;
+	_00 = 0.0f;
 }
 /*
  * --INFO--
@@ -61,9 +61,9 @@ bool OdoMeter::moving(Vector3f& argA, Vector3f& argB)
 		vec.sub2(argA, argB);
 		f32 distance = vec.length();
 #else
-		vec.y          = Vector3f_diffY(argA, argB);
-		vec.x          = Vector3f_diffX(argA, argB);
-		vec.z          = Vector3f_diffZ(argA, argB);
+		vec.y        = Vector3f_diffY(argA, argB);
+		vec.x        = Vector3f_diffX(argA, argB);
+		vec.z        = Vector3f_diffZ(argA, argB);
 		f32 distance = sqrtf(vec.x * vec.x + vec.y * vec.y + vec.z * vec.z);
 #endif
 		_00 += distance;

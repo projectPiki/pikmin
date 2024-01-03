@@ -7,7 +7,7 @@
  * @brief TODO
  */
 struct ANode {
-	virtual void getAgeNodeType(); // _08 (weak)
+	virtual int getAgeNodeType() { return 0; } // _08 (weak)
 
 	// _00 = VTBL
 	// TODO: members

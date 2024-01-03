@@ -4,20 +4,19 @@
 #include "types.h"
 #include "Vector3f.h"
 
-struct OdoMeter { // TODO: figure out what these actually are
-	f32 _00;      // _00
-	f32 _04;      // _04
-	f32 _08;      // _08
-	f32 _0C;      // _0C
-
+/**
+ * @brief TODO
+ */
+struct OdoMeter {
 	OdoMeter();
+
 	void start(f32 argA, f32 argB);
 	bool moving(Vector3f& argA, Vector3f& argB);
 
 	inline void unknown1()
 	{
 		if (_04 > 0.0f) {
-			_04 -= gsys->_28C;
+			_04 -= gsys->mDeltaTime;
 		}
 	}
 
@@ -33,6 +32,12 @@ struct OdoMeter { // TODO: figure out what these actually are
 		}
 		return true;
 	}
+
+	// TODO: figure out what these actually are
+	f32 _00; // _00
+	f32 _04; // _04
+	f32 _08; // _08
+	f32 _0C; // _0C
 };
 
 #endif

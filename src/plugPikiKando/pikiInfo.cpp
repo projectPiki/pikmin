@@ -1,5 +1,7 @@
 #include "types.h"
-#include "pikiInfo.h"
+#include "PikiInfo.h"
+
+PikiInfo* pikiInfo = nullptr;
 
 /*
  * --INFO--
@@ -9,13 +11,13 @@
 
 PikiInfo::PikiInfo()
 {
-	pikiCountB = 0;
-	pikiCountA = 0;
-	_08        = 0;
-	_18        = 0;
-	_14        = 0;
-	_10        = 0;
-	_0C        = 0;
+	_04               = 0;
+	mFormationPikiCnt = 0;
+	_08               = 0;
+	_18               = 0;
+	_14               = 0;
+	_10               = 0;
+	_0C               = 0;
 }
 
 /*
@@ -25,11 +27,11 @@ PikiInfo::PikiInfo()
  */
 void PikiInfo::addFormationPiki(void)
 {
-	pikiCountA += 1;
-	if (pikiCountB >= pikiCountA) {
+	mFormationPikiCnt++;
+	if (_04 >= mFormationPikiCnt) {
 		return;
 	}
-	pikiCountB = pikiCountA;
+	_04 = mFormationPikiCnt;
 	return;
 }
 
@@ -42,7 +44,5 @@ void PikiInfo::addFormationPiki(void)
 void PikiInfo::subFormationPiki(void)
 {
 	BUMP_REGISTER(r4);
-	pikiCountA--;
+	mFormationPikiCnt--;
 }
-
-extern PikiInfo* pikiInfo = nullptr;

@@ -11,7 +11,7 @@ struct AnimMgr {
 };
 
 struct TAIanimation {
-	u32 _00;     // _00
+	u32 _00;             // _00
 	AnimMgr* mAnimmgr;   // _04
 	AnimInfo* mAniminfo; // _08
 

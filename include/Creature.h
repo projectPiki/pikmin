@@ -3,6 +3,7 @@
 
 #include "types.h"
 #include "RefCountable.h"
+#include "Event.h"
 
 struct CollTriInfo;
 struct CollPart;
@@ -20,7 +21,7 @@ struct RouteTracer;
  *
  * @note Size: 0x2B5.
  */
-struct Creature : public RefCountable {
+struct Creature : public RefCountable, public EventTalker {
 	Creature(CreatureProp*);
 
 	virtual void insideSafeArea(struct Vector3f&);            // _10 (weak)
@@ -106,8 +107,6 @@ struct Creature : public RefCountable {
 	void setStateGrabbed(Creature*);
 	void resetStateGrabbed();
 	void turnTo(Vector3f&);
-	void init();
-	void init(Vector3f&);
 	void detachGenerator();
 	void kill(bool);
 	void updateStatic();
@@ -144,7 +143,8 @@ struct Creature : public RefCountable {
 
 	// _00     = VTBL
 	// _00-_08 = RefCountable
-	u8 _08[0x2B5 - 0x8]; // _08, TODO: work out members
+	// _08-_1C = EventTalker
+	u8 _1C[0x2B5 - 0x1C]; // _1C, TODO: work out members
 };
 
 #endif

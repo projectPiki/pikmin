@@ -25,8 +25,8 @@ void _Print(char*, ...)
  * Address:	8019CD0C
  * Size:	00024C
  */
-void zen::particleGenerator::init(u8*, Texture*, Texture*, Vector3f&, zen::particleMdlManager*,
-                                  zen::CallBack1<zen::particleGenerator*>*, zen::CallBack2<zen::particleGenerator*, zen::particleMdl*>*)
+void zen::particleGenerator::init(u8*, Texture*, Texture*, Vector3f&, zen::particleMdlManager*, zen::CallBack1<zen::particleGenerator*>*,
+                                  zen::CallBack2<zen::particleGenerator*, zen::particleMdl*>*)
 {
 	/*
 	.loc_0x0:

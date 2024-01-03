@@ -4,3 +4,5 @@
 #pragma diag_suppress 870
 // disables the "invalid arguments for operator new" error
 #pragma diag_suppress 1767
+// disables the "first parameter of allocation function must be of type 'size_t" error
+#pragma diag_suppress 351

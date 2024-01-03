@@ -51,7 +51,7 @@ typedef unsigned long size_t;
 #define TRUE  1
 #define FALSE 0
 
-#define NULL    ((void*)0)
+#define NULL ((void*)0)
 #define nullptr 0
 
 // Sets specific flag to 1
@@ -82,7 +82,7 @@ typedef unsigned long size_t;
 #define ATTRIBUTE_ALIGN(num) __attribute__((aligned(num)))
 
 // Checks if a flag is set in a bitfield
-#define IS_FLAG_SET(flags, bitsFromLSB) (((flags) >> (bitsFromLSB) & 1))
+#define IS_FLAG_SET(flags, bitsFromLSB) (((flags) >> (bitsFromLSB)&1))
 
 #define ASSERT_HANG(cond) \
 	if (!(cond)) {        \

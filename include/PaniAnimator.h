@@ -34,9 +34,71 @@ struct PaniAnimator : public Animator {
 	virtual void updateContext();             // _18
 
 	void init(AnimContext*, AnimMgr*, PaniMotionTable*);
+	void startMotion(struct PaniMotionInfo&);
+	void finishMotion(PaniMotionInfo&);
+	void checkConstantKeys();
+	void checkConstantKey(int);
+	void checkEventKeys(f32, f32);
+	void finishAnimation();
+	void getKeyValueByKeyType(int);
 
 	// _30     = VTBL
 	// _00-_34 = Animator
+	// TODO: members
+};
+
+/**
+ * @brief TODO
+ */
+struct PaniItemAnimator : public PaniAnimator {
+	// _30     = VTBL
+	// _00-_34 = PaniAnimator
+	// TODO: members
+};
+
+/**
+ * @brief TODO
+ */
+struct PaniPelletAnimator : public PaniAnimator {
+	// _30     = VTBL
+	// _00-_34 = PaniAnimator
+	// TODO: members
+};
+
+/**
+ * @brief TODO
+ */
+struct PaniPikiAnimator : public PaniAnimator {
+	// _30     = VTBL
+	// _00-_34 = PaniAnimator
+	// TODO: members
+};
+
+/**
+ * @brief TODO
+ */
+struct PaniPlantAnimator : public PaniAnimator {
+	// _30     = VTBL
+	// _00-_34 = PaniAnimator
+	// TODO: members
+};
+
+/**
+ * @brief TODO
+ */
+struct PaniTekiAnimator : public PaniAnimator {
+	// _30     = VTBL
+	// _00-_34 = PaniAnimator
+	// TODO: members
+};
+
+/**
+ * @brief TODO
+ */
+struct PaniUfoAnimator : public PaniAnimator {
+	// _30     = VTBL
+	// _00-_34 = PaniAnimator
+	// TODO: members
 };
 
 #endif

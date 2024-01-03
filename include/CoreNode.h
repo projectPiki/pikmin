@@ -6,19 +6,19 @@
 
 /**
  * @brief The CoreNode struct represents a node in a core data structure.
+ *
+ * @note Size: 0x14.
  */
 struct CoreNode : public ANode {
-	/**
-	 * @brief Reads the data from a random access stream into the CoreNode.
-	 * @param stream The random access stream to read from.
-	 */
-	virtual void read(struct RandomAccessStream& stream); // _0C (weak)
-
 	/**
 	 * @brief Constructs a CoreNode object with the specified name.
 	 * @param name The name of the CoreNode.
 	 */
-	CoreNode(char* name = "CoreNode");
+	CoreNode(char* name = "CoreNode")
+	{
+		mParent = mNext = mChild = nullptr;
+		setName(name);
+	}
 
 	/**
 	 * @brief Initializes the core data of the CoreNode.
@@ -26,9 +26,7 @@ struct CoreNode : public ANode {
 	 */
 	void initCore(char* name)
 	{
-		mChild  = nullptr;
-		mNext   = nullptr;
-		mParent = nullptr;
+		mParent = mNext = mChild = nullptr;
 		setName(name);
 	}
 
@@ -91,11 +89,19 @@ struct CoreNode : public ANode {
 	 */
 	void setName(char* name);
 
+	/**
+	 * @brief Reads the data from a random access stream into the CoreNode.
+	 * @param stream The random access stream to read from.
+	 */
+	virtual void read(struct RandomAccessStream& stream) { } // _0C (weak)
+
 	// _00 = VTBL
 	char* mName;       // _04
 	CoreNode* mParent; // _08
 	CoreNode* mNext;   // _0C
 	CoreNode* mChild;  // _10
 };
+
+#define FOREACH_NODE(type, first, varname) for (type* varname = (type*)(first); varname; varname = (type*)(varname->mNext))
 
 #endif

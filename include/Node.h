@@ -8,6 +8,8 @@
  * @brief TODO
  */
 struct Node : public CoreNode {
+	Node(char* name);
+
 	virtual void update();                 // _10
 	virtual void draw(struct Graphics&);   // _14
 	virtual void render(Graphics&);        // _18
@@ -17,8 +19,22 @@ struct Node : public CoreNode {
 	virtual void concat(struct Matrix4f&); // _28 (weak)
 	virtual void getModelMatrix();         // _2C (weak)
 
-	// _00 = VTBL
+	void init(char*);
+
+	// _00     = VTBL
+	// _00-_14 = CoreNode
 	// TODO: members
 };
+
+/**
+ * @brief TODO
+ */
+struct NodeMgr {
+	NodeMgr();
+
+	u8 _00[0x18]; // _00, unknown
+};
+
+extern NodeMgr* nodeMgr;
 
 #endif

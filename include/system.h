@@ -5,17 +5,10 @@
 #include "AyuHeap.h"
 #include "GfxobjInfo.h"
 #include "CoreNode.h"
+#include "Stream.h"
 
-struct RandomAccessStream;
 struct Graphics;
 struct BaseApp;
-
-enum TimerState {
-	TS_Off = 0, // _00
-	TS_On,      // _01
-	TS_Full     // _02
-};
-
 struct CacheTexture;
 struct LoadIdler;
 struct Timers;
@@ -29,6 +22,17 @@ struct Matrix4f;
 
 /**
  * @brief TODO
+ */
+enum TimerState {
+	TS_Off = 0, // 0
+	TS_On,      // 1
+	TS_Full     // 2
+};
+
+/**
+ * @brief TODO
+ *
+ * @note Size: 0x244.
  */
 struct StdSystem {
 	virtual void initSoftReset();                            // _08
@@ -45,6 +49,7 @@ struct StdSystem {
 
 	static char* stringDup(char*);
 
+	// _00 = VTBL
 	bool mPending;                 // _04
 	f32 mCurrentFade;              // _08
 	f32 mFadeStart;                // _0C
@@ -97,6 +102,11 @@ struct StdSystem {
 	u32 _240;                      // _240
 };
 
+/**
+ * @brief TODO
+ *
+ * @note Size: 0x334.
+ */
 struct System : public StdSystem {
 	virtual void initSoftReset();                     // _08
 	virtual void openFile(char*, bool, bool);         // _0C
@@ -114,23 +124,56 @@ struct System : public StdSystem {
 	void Initialise();
 	static void* alloc(size_t);
 
-	// _244
-	u32 _244;        // _244
-	u32 _248;        // _248
-	Graphics* mGfx;  // _24C
-	char _250[0x3C]; // _250
-	f32 _28C;        // _28C
-	char _290[0xA4]; // _290
+	// _00      = VTBL
+	// _00-_248 = StdSystem
+	u32 _244;       // _244
+	u32 _248;       // _248
+	Graphics* mGfx; // _24C
+	u8 _250[0x3C];  // _250, unknown
+	f32 mDeltaTime; // _28C
+	u8 _290[0xA4];  // _290, unknown
 };
 
 extern System* gsys;
 
-struct NodeMgr {
-	char filler0[0x18];
-	NodeMgr();
+// SYSTEM STREAMS
+
+/**
+ * @brief TODO
+ */
+struct LogStream : public Stream {
+	virtual void write(void*, int); // _40 (weak)
+	virtual void flush();           // _54 (weak)
+
+	// _04     = VTBL
+	// _00-_08 = Stream
+	// TODO: members
 };
 
-extern NodeMgr* nodeMgr;
+/**
+ * @brief TODO
+ */
+struct AramStream : public RandomAccessStream {
+	virtual void read(void*, int); // _3C (weak)
+	virtual int getPending();      // _44 (weak)
+
+	// _04     = VTBL
+	// _00-_08 = RandomAccessStream
+	// TODO: members
+};
+
+/**
+ * @brief TODO
+ */
+struct DVDStream : public RandomAccessStream {
+	virtual void read(void*, int); // _3C (weak)
+	virtual int getPending();      // _44 (weak)
+	virtual void close();          // _4C (weak)
+
+	// _04     = VTBL
+	// _00-_08 = RandomAccessStream
+	// TODO: members
+};
 
 extern "C" void OSPanic(const char* filename, int line, const char* msg, ...);
 

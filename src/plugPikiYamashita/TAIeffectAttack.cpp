@@ -51,8 +51,7 @@ void EventTypeCallBack::invoke(zen::particleGenerator*)
  * Address:	801C4998
  * Size:	0001E0
  */
-void CylinderTypeCallBack::init(TAIeffectAttackParam*, Teki*, Vector3f&, Vector3f, f32, f32, f32, f32,
-                                TAIeffectAttackEventCallBack*)
+void CylinderTypeCallBack::init(TAIeffectAttackParam*, Teki*, Vector3f&, Vector3f, f32, f32, f32, f32, TAIeffectAttackEventCallBack*)
 {
 	/*
 	.loc_0x0:

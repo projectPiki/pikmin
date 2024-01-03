@@ -4,6 +4,9 @@
 #include "types.h"
 #include "math.h"
 
+/**
+ * @brief TODO
+ */
 struct Vector3f {
 	Vector3f() { }
 	Vector3f(f32 const& x, f32 const& y, f32 const& z);

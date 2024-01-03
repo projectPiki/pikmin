@@ -13841,7 +13841,7 @@ void BaseShape::loadAnimation(char*, bool)
  * Address:	80034FB8
  * Size:	000030
  */
-CoreNode::CoreNode(char*)
+CoreNode::CoreNode(char* name)
 {
 	/*
 	.loc_0x0:

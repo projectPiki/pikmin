@@ -14,6 +14,7 @@ struct GfxobjInfo {
 	virtual void attach(); // _08
 	virtual void detach(); // _0C
 
+	// _00 = VTBL
 	GfxobjInfo* mPrevious; // _04
 	GfxobjInfo* mNext;     // _08
 	s8* mString;           // _0C

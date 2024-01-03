@@ -13,7 +13,7 @@ extern "C" {
 #define __frsqrte(x) (x)
 #endif
 
-#define FABS(x) (f32)__fabs(x)
+#define FABS(x) (f32) __fabs(x)
 // #define __frsqrtes opword
 
 #define SQUARE(v) ((v) * (v))

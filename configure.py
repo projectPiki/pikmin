@@ -198,7 +198,7 @@ LIBS = [
             ["plugPikiKando/creatureStick", False],
             ["plugPikiKando/dualCreature", False],
             ["plugPikiKando/dynCreature", False],
-            ["plugPikiKando/eventListener", False],
+            ["plugPikiKando/eventListener", True],
             ["plugPikiKando/fastGrid", False],
             ["plugPikiKando/ropeCreature", False],
             ["plugPikiKando/objectTypes", True],
