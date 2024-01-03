@@ -29,7 +29,7 @@ KANDO_FILES:=\
 	$(BUILD_DIR)/asm/plugPikiKando/creatureStick.o\
 	$(BUILD_DIR)/asm/plugPikiKando/dualCreature.o\
 	$(BUILD_DIR)/asm/plugPikiKando/dynCreature.o\
-	$(BUILD_DIR)/asm/plugPikiKando/eventListener.o\
+	$(BUILD_DIR)/src/plugPikiKando/eventListener.o\
 	$(BUILD_DIR)/asm/plugPikiKando/fastGrid.o\
 	$(BUILD_DIR)/asm/plugPikiKando/ropeCreature.o\
 	$(BUILD_DIR)/src/plugPikiKando/objectTypes.o\
