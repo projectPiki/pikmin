@@ -7,11 +7,11 @@
  * .4byte 0
  * .4byte invoke__Q23zen15ArrowLRCallBackFP7P2DPane
  * .4byte draw__15P2DPaneCallBackFP7P2DPane
-*/
+ */
 
 struct P2DPaneCallBack {
-	virtual void invoke(P2DPane *);  // _08
-	virtual void draw(P2DPane *);    // _0C (weak)
+	virtual void invoke(P2DPane*); // _08
+	virtual void draw(P2DPane*);   // _0C (weak)
 };
 
 namespace zen {
@@ -19,8 +19,7 @@ namespace zen {
  * @brief TODO
  */
 struct ArrowLRCallBack : public P2DPaneCallBack {
-	virtual void invoke(P2DPane *);  // _08
-
+	virtual void invoke(P2DPane*); // _08
 };
 } // namespace zen
 

@@ -12,23 +12,22 @@
  * .4byte render__9BaseShapeFR8Graphics
  * .4byte render2d__9BaseShapeFR8Graphics
  * .4byte makeRouteGroup__9BaseShapeFv
-*/
+ */
 
 struct ANode {
-	virtual void getAgeNodeType();  // _08 (weak)
+	virtual void getAgeNodeType(); // _08 (weak)
 };
 
 /**
  * @brief TODO
  */
 struct BaseShape : public ANode {
-	virtual void read(RandomAccessStream &);  // _0C
-	virtual void optimize();                  // _10
-	virtual void update();                    // _14
-	virtual void render(Graphics &);          // _18
-	virtual void render2d(Graphics &);        // _1C
-	virtual void makeRouteGroup();            // _20
-
+	virtual void read(RandomAccessStream&); // _0C
+	virtual void optimize();                // _10
+	virtual void update();                  // _14
+	virtual void render(Graphics&);         // _18
+	virtual void render2d(Graphics&);       // _1C
+	virtual void makeRouteGroup();          // _20
 };
 
 #endif

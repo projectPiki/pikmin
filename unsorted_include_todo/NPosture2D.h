@@ -6,14 +6,13 @@
  * .4byte __RTTI__10NPosture2D
  * .4byte 0
  * .4byte readData__10NPosture2DFR6Stream
-*/
+ */
 
 /**
  * @brief TODO
  */
 struct NPosture2D {
-	virtual void readData(Stream &);  // _08
-
+	virtual void readData(Stream&); // _08
 };
 
 #endif

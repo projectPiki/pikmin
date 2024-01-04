@@ -6,15 +6,14 @@
  * .4byte __RTTI__Q26GoalAI8EmitWait
  * .4byte 0
  * .4byte act__Q26GoalAI8EmitWaitFP10AICreature
-*/
+ */
 
 namespace GoalAI {
 /**
  * @brief TODO
  */
 struct EmitWait {
-	virtual void act(AICreature *);  // _08
-
+	virtual void act(AICreature*); // _08
 };
 } // namespace GoalAI
 

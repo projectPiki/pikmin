@@ -23,49 +23,48 @@
  * .4byte "resume__15AState<6Pellet>FP6Pellet"
  * .4byte "restart__15AState<6Pellet>FP6Pellet"
  * .4byte "transit__15AState<6Pellet>FP6Pelleti"
-*/
+ */
 
 struct Receiver<Pellet> {
-	virtual void procMsg(Pellet *, Msg *);                // _08 (weak)
-	virtual void procBounceMsg(Pellet *, MsgBounce *);    // _0C (weak)
-	virtual void procStickMsg(Pellet *, MsgStick *);      // _10 (weak)
-	virtual void procHangMsg(Pellet *, MsgHang *);        // _14 (weak)
-	virtual void procTargetMsg(Pellet *, MsgTarget *);    // _18 (weak)
-	virtual void procCollideMsg(Pellet *, MsgCollide *);  // _1C (weak)
-	virtual void procAnimMsg(Pellet *, MsgAnim *);        // _20 (weak)
-	virtual void procDamageMsg(Pellet *, MsgDamage *);    // _24 (weak)
-	virtual void procWallMsg(Pellet *, MsgWall *);        // _28 (weak)
-	virtual void procOffWallMsg(Pellet *, MsgOffWall *);  // _2C (weak)
-	virtual void procUserMsg(Pellet *, MsgUser *);        // _30 (weak)
-	virtual void procGroundMsg(Pellet *, MsgGround *);    // _34 (weak)
+	virtual void procMsg(Pellet*, Msg*);               // _08 (weak)
+	virtual void procBounceMsg(Pellet*, MsgBounce*);   // _0C (weak)
+	virtual void procStickMsg(Pellet*, MsgStick*);     // _10 (weak)
+	virtual void procHangMsg(Pellet*, MsgHang*);       // _14 (weak)
+	virtual void procTargetMsg(Pellet*, MsgTarget*);   // _18 (weak)
+	virtual void procCollideMsg(Pellet*, MsgCollide*); // _1C (weak)
+	virtual void procAnimMsg(Pellet*, MsgAnim*);       // _20 (weak)
+	virtual void procDamageMsg(Pellet*, MsgDamage*);   // _24 (weak)
+	virtual void procWallMsg(Pellet*, MsgWall*);       // _28 (weak)
+	virtual void procOffWallMsg(Pellet*, MsgOffWall*); // _2C (weak)
+	virtual void procUserMsg(Pellet*, MsgUser*);       // _30 (weak)
+	virtual void procGroundMsg(Pellet*, MsgGround*);   // _34 (weak)
 };
 
 struct AState<Pellet> {
-	virtual void _08() = 0;               // _08
-	virtual void _0C() = 0;               // _0C
-	virtual void _10() = 0;               // _10
-	virtual void _14() = 0;               // _14
-	virtual void _18() = 0;               // _18
-	virtual void _1C() = 0;               // _1C
-	virtual void _20() = 0;               // _20
-	virtual void _24() = 0;               // _24
-	virtual void _28() = 0;               // _28
-	virtual void _2C() = 0;               // _2C
-	virtual void _30() = 0;               // _30
-	virtual void _34() = 0;               // _34
-	virtual void init(Pellet *);          // _38 (weak)
-	virtual void exec(Pellet *);          // _3C (weak)
-	virtual void cleanup(Pellet *);       // _40 (weak)
-	virtual void resume(Pellet *);        // _44 (weak)
-	virtual void restart(Pellet *);       // _48 (weak)
-	virtual void transit(Pellet *, int);  // _4C (weak)
+	virtual void _08() = 0;             // _08
+	virtual void _0C() = 0;             // _0C
+	virtual void _10() = 0;             // _10
+	virtual void _14() = 0;             // _14
+	virtual void _18() = 0;             // _18
+	virtual void _1C() = 0;             // _1C
+	virtual void _20() = 0;             // _20
+	virtual void _24() = 0;             // _24
+	virtual void _28() = 0;             // _28
+	virtual void _2C() = 0;             // _2C
+	virtual void _30() = 0;             // _30
+	virtual void _34() = 0;             // _34
+	virtual void init(Pellet*);         // _38 (weak)
+	virtual void exec(Pellet*);         // _3C (weak)
+	virtual void cleanup(Pellet*);      // _40 (weak)
+	virtual void resume(Pellet*);       // _44 (weak)
+	virtual void restart(Pellet*);      // _48 (weak)
+	virtual void transit(Pellet*, int); // _4C (weak)
 };
 
 /**
  * @brief TODO
  */
 struct PelletState : public Receiver<Pellet>, public AState<Pellet> {
-
 };
 
 #endif

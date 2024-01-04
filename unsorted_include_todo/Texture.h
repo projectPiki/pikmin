@@ -8,16 +8,22 @@
  * .4byte attach__7TextureFv
  * .4byte detach__7TextureFv
  * .4byte makeResident__7TextureFv
-*/
+ */
 
 /**
  * @brief TODO
  */
 struct Texture {
-	virtual void attach();        // _08
-	virtual void detach();        // _0C
-	virtual void makeResident();  // _10 (weak)
+	virtual void attach();       // _08
+	virtual void detach();       // _0C
+	virtual void makeResident(); // _10 (weak)
 
+	Texture();
+	void getAlpha(int, int);
+	void read(RandomAccessStream&);
+	void createBuffer(int, int, int, void*);
+	void grabBuffer(int, int, bool, bool);
+	void decodeData(TexImg*);
 };
 
 #endif

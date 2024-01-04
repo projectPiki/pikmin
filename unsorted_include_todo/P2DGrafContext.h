@@ -12,20 +12,21 @@
  * .4byte setup2D__14P2DGrafContextFv
  * .4byte setScissor__14P2DGrafContextFv
  * .4byte setLookat__14P2DGrafContextFv
-*/
+ */
 
 /**
  * @brief TODO
  */
 struct P2DGrafContext {
-	virtual ~P2DGrafContext();               // _08
-	virtual void place(const PUTRect &);     // _0C
-	virtual void place(int, int, int, int);  // _10
-	virtual void setPort();                  // _14
-	virtual void setup2D();                  // _18
-	virtual void setScissor();               // _1C
-	virtual void setLookat();                // _20
+	virtual ~P2DGrafContext();              // _08
+	virtual void place(const PUTRect&);     // _0C
+	virtual void place(int, int, int, int); // _10
+	virtual void setPort();                 // _14
+	virtual void setup2D();                 // _18
+	virtual void setScissor();              // _1C
+	virtual void setLookat();               // _20
 
+	P2DGrafContext(int, int, int, int);
 };
 
 #endif

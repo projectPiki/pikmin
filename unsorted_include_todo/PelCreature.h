@@ -138,7 +138,7 @@ struct Creature {
 	virtual void mayIstick();                          // _D8 (weak)
 	virtual void getFormationPri();                    // _DC (weak)
 	virtual void _E0() = 0;                            // _E0
-	virtual void postUpdate(int, f32);                 // _E4
+	virtual void postUpdate(int, float);               // _E4
 	virtual void stickUpdate();                        // _E8
 	virtual void _EC() = 0;                            // _EC
 	virtual void refresh2d(Graphics&);                 // _F0 (weak)

@@ -17,29 +17,28 @@
  * .4byte "procOffWallMsg__22Receiver<10AICreature>FP10AICreatureP10MsgOffWall"
  * .4byte "procUserMsg__22Receiver<10AICreature>FP10AICreatureP7MsgUser"
  * .4byte "procGroundMsg__22Receiver<10AICreature>FP10AICreatureP9MsgGround"
-*/
+ */
 
 struct Receiver<AICreature> {
-	virtual void procMsg(AICreature *, Msg *);                // _08 (weak)
-	virtual void procBounceMsg(AICreature *, MsgBounce *);    // _0C (weak)
-	virtual void procStickMsg(AICreature *, MsgStick *);      // _10 (weak)
-	virtual void procHangMsg(AICreature *, MsgHang *);        // _14 (weak)
-	virtual void procTargetMsg(AICreature *, MsgTarget *);    // _18 (weak)
-	virtual void procCollideMsg(AICreature *, MsgCollide *);  // _1C (weak)
-	virtual void procAnimMsg(AICreature *, MsgAnim *);        // _20
-	virtual void procDamageMsg(AICreature *, MsgDamage *);    // _24 (weak)
-	virtual void procWallMsg(AICreature *, MsgWall *);        // _28 (weak)
-	virtual void procOffWallMsg(AICreature *, MsgOffWall *);  // _2C (weak)
-	virtual void procUserMsg(AICreature *, MsgUser *);        // _30 (weak)
-	virtual void procGroundMsg(AICreature *, MsgGround *);    // _34 (weak)
+	virtual void procMsg(AICreature*, Msg*);               // _08 (weak)
+	virtual void procBounceMsg(AICreature*, MsgBounce*);   // _0C (weak)
+	virtual void procStickMsg(AICreature*, MsgStick*);     // _10 (weak)
+	virtual void procHangMsg(AICreature*, MsgHang*);       // _14 (weak)
+	virtual void procTargetMsg(AICreature*, MsgTarget*);   // _18 (weak)
+	virtual void procCollideMsg(AICreature*, MsgCollide*); // _1C (weak)
+	virtual void procAnimMsg(AICreature*, MsgAnim*);       // _20
+	virtual void procDamageMsg(AICreature*, MsgDamage*);   // _24 (weak)
+	virtual void procWallMsg(AICreature*, MsgWall*);       // _28 (weak)
+	virtual void procOffWallMsg(AICreature*, MsgOffWall*); // _2C (weak)
+	virtual void procUserMsg(AICreature*, MsgUser*);       // _30 (weak)
+	virtual void procGroundMsg(AICreature*, MsgGround*);   // _34 (weak)
 };
 
 /**
  * @brief TODO
  */
 struct SAIMotionDoneEvent : public Receiver<AICreature> {
-	virtual void procAnimMsg(AICreature *, MsgAnim *);  // _20
-
+	virtual void procAnimMsg(AICreature*, MsgAnim*); // _20
 };
 
 #endif

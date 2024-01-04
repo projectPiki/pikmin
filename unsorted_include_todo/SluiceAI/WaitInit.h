@@ -6,15 +6,14 @@
  * .4byte __RTTI__Q28SluiceAI8WaitInit
  * .4byte 0
  * .4byte act__Q28SluiceAI8WaitInitFP10AICreature
-*/
+ */
 
 namespace SluiceAI {
 /**
  * @brief TODO
  */
 struct WaitInit {
-	virtual void act(AICreature *);  // _08
-
+	virtual void act(AICreature*); // _08
 };
 } // namespace SluiceAI
 

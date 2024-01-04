@@ -6,14 +6,13 @@
  * .4byte __RTTI__10FireEffect
  * .4byte 0
  * .4byte invoke__10FireEffectFR4Teki
-*/
+ */
 
 /**
  * @brief TODO
  */
 struct FireEffect {
-	virtual void invoke(Teki &);  // _08
-
+	virtual void invoke(Teki&); // _08
 };
 
 #endif

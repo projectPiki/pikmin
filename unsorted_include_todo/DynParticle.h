@@ -11,26 +11,27 @@
  * .4byte getSize__11DynParticleFv
  * .4byte refresh__11DynParticleFR8Graphics
  * .4byte doKill__11DynParticleFv
-*/
+ */
 
 struct ANode {
-	virtual void getAgeNodeType();  // _08 (weak)
+	virtual void getAgeNodeType(); // _08 (weak)
 };
 
 struct CoreNode {
-	virtual void _08() = 0;                   // _08
-	virtual void read(RandomAccessStream &);  // _0C (weak)
+	virtual void _08() = 0;                 // _08
+	virtual void read(RandomAccessStream&); // _0C (weak)
 };
 
 /**
  * @brief TODO
  */
 struct DynParticle : public ANode, public CoreNode {
-	virtual void isFree();             // _10
-	virtual void getSize();            // _14
-	virtual void refresh(Graphics &);  // _18
-	virtual void doKill();             // _1C
+	virtual void isFree();           // _10
+	virtual void getSize();          // _14
+	virtual void refresh(Graphics&); // _18
+	virtual void doKill();           // _1C
 
+	DynParticle();
 };
 
 #endif

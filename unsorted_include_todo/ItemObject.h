@@ -153,7 +153,7 @@ struct Creature {
 	virtual void mayIstick();                          // _D8 (weak)
 	virtual void getFormationPri();                    // _DC (weak)
 	virtual void update();                             // _E0
-	virtual void postUpdate(int, f32);                 // _E4
+	virtual void postUpdate(int, float);               // _E4
 	virtual void stickUpdate();                        // _E8
 	virtual void _EC() = 0;                            // _EC
 	virtual void refresh2d(Graphics&);                 // _F0 (weak)
@@ -223,7 +223,7 @@ struct ItemCreature {
 	virtual void _D8() = 0;                 // _D8
 	virtual void _DC() = 0;                 // _DC
 	virtual void update();                  // _E0
-	virtual void postUpdate(int, f32);      // _E4
+	virtual void postUpdate(int, float);    // _E4
 	virtual void _E8() = 0;                 // _E8
 	virtual void refresh(Graphics&);        // _EC
 	virtual void _F0()  = 0;                // _F0
@@ -244,12 +244,12 @@ struct ItemCreature {
 	virtual void _12C() = 0;                // _12C
 	virtual void startMotion(int);          // _130
 	virtual void finishMotion();            // _134
-	virtual void finishMotion(f32);         // _138
-	virtual void startMotion(int, f32);     // _13C
+	virtual void finishMotion(float);       // _138
+	virtual void startMotion(int, float);   // _13C
 	virtual void getCurrentMotionName();    // _140
 	virtual void getCurrentMotionCounter(); // _144
 	virtual void getMotionSpeed();          // _148
-	virtual void setMotionSpeed(f32);       // _14C
+	virtual void setMotionSpeed(float);     // _14C
 	virtual void stopMotion();              // _150
 	virtual void _154() = 0;                // _154
 	virtual void finalSetup();              // _158 (weak)
@@ -311,7 +311,7 @@ struct AICreature {
 	virtual void _D8() = 0;                              // _D8
 	virtual void _DC() = 0;                              // _DC
 	virtual void update();                               // _E0
-	virtual void postUpdate(int, f32);                   // _E4
+	virtual void postUpdate(int, float);                 // _E4
 	virtual void _E8()  = 0;                             // _E8
 	virtual void _EC()  = 0;                             // _EC
 	virtual void _F0()  = 0;                             // _F0
@@ -346,10 +346,10 @@ struct AICreature {
  * @brief TODO
  */
 struct ItemObject : public RefCountable, public Creature, public ItemCreature, public AICreature {
-	virtual void isAtari();            // _84
-	virtual void needShadow();         // _90
-	virtual void update();             // _E0
-	virtual void postUpdate(int, f32); // _E4
+	virtual void isAtari();              // _84
+	virtual void needShadow();           // _90
+	virtual void update();               // _E0
+	virtual void postUpdate(int, float); // _E4
 };
 
 #endif

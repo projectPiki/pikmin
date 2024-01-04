@@ -6,14 +6,13 @@
  * .4byte __RTTI__8BossProp
  * .4byte 0
  * .4byte read__8BossPropFR18RandomAccessStream
-*/
+ */
 
 /**
  * @brief TODO
  */
 struct BossProp {
-	virtual void read(RandomAccessStream &);  // _08
-
+	virtual void read(RandomAccessStream&); // _08
 };
 
 #endif

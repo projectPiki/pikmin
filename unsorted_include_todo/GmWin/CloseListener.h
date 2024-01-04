@@ -6,15 +6,14 @@
  * .4byte __RTTI__Q25GmWin13CloseListener
  * .4byte 0
  * .4byte onCloseWindow__Q25GmWin13CloseListenerFv
-*/
+ */
 
 namespace GmWin {
 /**
  * @brief TODO
  */
 struct CloseListener {
-	virtual void onCloseWindow();  // _08
-
+	virtual void onCloseWindow(); // _08
 };
 } // namespace GmWin
 

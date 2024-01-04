@@ -8,16 +8,17 @@
  * .4byte 0
  * .4byte write__8BaseParmFR18RandomAccessStream
  * .4byte read__8BaseParmFR18RandomAccessStream
-*/
+ */
 
 /**
  * @brief TODO
  */
 struct BaseParm {
-	virtual void _08() = 0;                    // _08
-	virtual void write(RandomAccessStream &);  // _0C
-	virtual void read(RandomAccessStream &);   // _10
+	virtual void _08() = 0;                  // _08
+	virtual void write(RandomAccessStream&); // _0C
+	virtual void read(RandomAccessStream&);  // _10
 
+	BaseParm(Parameters*, ayuID);
 };
 
 #endif

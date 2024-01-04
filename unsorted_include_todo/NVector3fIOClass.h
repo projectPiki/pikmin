@@ -7,15 +7,14 @@
  * .4byte 0
  * .4byte input__16NVector3fIOClassFR9NVector3f
  * .4byte output__16NVector3fIOClassFR9NVector3f
-*/
+ */
 
 /**
  * @brief TODO
  */
 struct NVector3fIOClass {
-	virtual void input(NVector3f &);  // _08
-	virtual void output(NVector3f &); // _0C
-
+	virtual void input(NVector3f&);  // _08
+	virtual void output(NVector3f&); // _0C
 };
 
 #endif

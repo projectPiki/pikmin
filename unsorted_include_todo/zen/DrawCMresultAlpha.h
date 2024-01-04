@@ -6,15 +6,14 @@
  * .4byte __RTTI__Q23zen17DrawCMresultAlpha
  * .4byte 0
  * .4byte update__Q23zen17DrawCMresultAlphaFv
-*/
+ */
 
 namespace zen {
 /**
  * @brief TODO
  */
 struct DrawCMresultAlpha {
-	virtual void update();  // _08
-
+	virtual void update(); // _08
 };
 } // namespace zen
 

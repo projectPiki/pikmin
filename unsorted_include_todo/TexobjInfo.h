@@ -7,15 +7,14 @@
  * .4byte 0
  * .4byte attach__10TexobjInfoFv
  * .4byte detach__10TexobjInfoFv
-*/
+ */
 
 /**
  * @brief TODO
  */
 struct TexobjInfo {
-	virtual void attach();  // _08
-	virtual void detach();  // _0C
-
+	virtual void attach(); // _08
+	virtual void detach(); // _0C
 };
 
 #endif

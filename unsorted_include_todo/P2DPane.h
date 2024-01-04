@@ -29,14 +29,16 @@ struct P2DPane {
 	virtual ~P2DPane();                         // _10
 	virtual void move(int, int);                // _14 (weak)
 	virtual void move(Vector3f&);               // _18
-	virtual void move(int, int, f32);           // _1C
-	virtual void moveZ(f32);                    // _20
+	virtual void move(int, int, float);         // _1C
+	virtual void moveZ(float);                  // _20
 	virtual void add(int, int);                 // _24
 	virtual void resize(int, int);              // _28
 	virtual void drawSelf(int, int);            // _2C
 	virtual void drawSelf(int, int, Matrix4f*); // _30
-	virtual void search(u32, bool);             // _34
+	virtual void search(unsigned long, bool);   // _34
 	virtual void makeMatrix(int, int);          // _38
+
+	void setCallBack(P2DPaneCallBack*);
 };
 
 #endif

@@ -13,7 +13,7 @@
 
 struct Animator {
 	virtual void changeContext(AnimContext*); // _08
-	virtual void animate(f32);                // _0C
+	virtual void animate(float);              // _0C
 	virtual void finishOneShot();             // _10
 	virtual void finishLoop();                // _14
 };

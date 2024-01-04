@@ -157,7 +157,7 @@ struct Creature {
 	virtual void mayIstick();                          // _D8 (weak)
 	virtual void getFormationPri();                    // _DC (weak)
 	virtual void update();                             // _E0
-	virtual void postUpdate(int, f32);                 // _E4
+	virtual void postUpdate(int, float);               // _E4
 	virtual void stickUpdate();                        // _E8
 	virtual void refresh(Graphics&);                   // _EC
 	virtual void refresh2d(Graphics&);                 // _F0
@@ -227,7 +227,7 @@ struct PelletView {
 	virtual void mayIstick();                          // _D8 (weak)
 	virtual void _DC() = 0;                            // _DC
 	virtual void update();                             // _E0
-	virtual void postUpdate(int, f32);                 // _E4
+	virtual void postUpdate(int, float);               // _E4
 	virtual void _E8() = 0;                            // _E8
 	virtual void refresh(Graphics&);                   // _EC
 	virtual void refresh2d(Graphics&);                 // _F0
@@ -248,8 +248,8 @@ struct PelletView {
 	virtual void _12C() = 0;                           // _12C
 	virtual void _130() = 0;                           // _130
 	virtual void _134() = 0;                           // _134
-	virtual void viewStartExplodeMotion(f32);          // _138 (weak)
-	virtual void viewSetMotionSpeed(f32);              // _13C (weak)
+	virtual void viewStartExplodeMotion(float);        // _138 (weak)
+	virtual void viewSetMotionSpeed(float);            // _13C (weak)
 	virtual void viewFinishMotion();                   // _140 (weak)
 	virtual void viewDoAnimation();                    // _144 (weak)
 	virtual void _148() = 0;                           // _148
@@ -279,7 +279,7 @@ struct Navi : public RefCountable, public Creature, public PelletView {
 	virtual void isRopable();                            // _D4
 	virtual void mayIstick();                            // _D8 (weak)
 	virtual void update();                               // _E0
-	virtual void postUpdate(int, f32);                   // _E4
+	virtual void postUpdate(int, float);                 // _E4
 	virtual void refresh(Graphics&);                     // _EC
 	virtual void refresh2d(Graphics&);                   // _F0
 	virtual void demoDraw(Graphics&, Matrix4f*);         // _FC
@@ -289,8 +289,44 @@ struct Navi : public RefCountable, public Creature, public PelletView {
 	virtual void viewDraw(Graphics&, Matrix4f&);         // _158 (weak)
 	virtual void viewGetBottomRadius();                  // _15C (weak)
 	virtual void viewGetHeight();                        // _160 (weak)
-	virtual void viewStartTrembleMotion(f32);            // _164 (weak)
+	virtual void viewStartTrembleMotion(float);          // _164 (weak)
 	virtual void animationKeyUpdated(PaniAnimKeyEvent&); // _168 (weak)
+
+	void demoCheck();
+	void isNuking();
+	void startMovieInf();
+	void incPlatePiki();
+	void decPlatePiki();
+	void getPlatePikis();
+	void startDayEnd();
+	void updateDayEnd(Vector3f&);
+	void enterAllPikis();
+	void startDamageEffect();
+	void finishDamage();
+	Navi(CreatureProp*, int);
+	void startKontroller();
+	void rideUfo();
+	void reset();
+	void findNextThrowPiki();
+	void startMotion(PaniMotionInfo&, PaniMotionInfo&);
+	void enableMotionBlend();
+	void updateWalkAnimation();
+	void callPikis(float);
+	void callDebugs(float);
+	void releasePikis();
+	void procActionButton();
+	void letPikiWork();
+	void reviseController(Vector3f&);
+	void makeVelocity(bool);
+	void makeCStick(bool);
+	void draw(Graphics&);
+	void renderCircle(Graphics&);
+	void orimaDamaged();
+	void throwPiki(Piki*, Vector3f&);
+	void swapMotion(PaniMotionInfo&, PaniMotionInfo&);
+	void finishLook();
+	void updateLook();
+	void updateHeadMatrix();
 };
 
 #endif

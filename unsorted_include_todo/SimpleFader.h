@@ -11,19 +11,18 @@
  * .4byte initFadeOut__11SimpleFaderFv
  * .4byte updateFadeOut__11SimpleFaderFv
  * .4byte drawFadeOut__11SimpleFaderFR8Graphics
-*/
+ */
 
 /**
  * @brief TODO
  */
 struct SimpleFader {
-	virtual void initFadeIn();            // _08
-	virtual void updateFadeIn();          // _0C
-	virtual void drawFadeIn(Graphics &);  // _10
-	virtual void initFadeOut();           // _14
-	virtual void updateFadeOut();         // _18
-	virtual void drawFadeOut(Graphics &); // _1C
-
+	virtual void initFadeIn();           // _08
+	virtual void updateFadeIn();         // _0C
+	virtual void drawFadeIn(Graphics&);  // _10
+	virtual void initFadeOut();          // _14
+	virtual void updateFadeOut();        // _18
+	virtual void drawFadeOut(Graphics&); // _1C
 };
 
 #endif

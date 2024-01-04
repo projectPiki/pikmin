@@ -7,18 +7,17 @@
  * .4byte 0
  * .4byte attach__10GfxobjInfoFv
  * .4byte detach__10AnmobjInfoFv
-*/
+ */
 
 struct GfxobjInfo {
-	virtual void attach();  // _08
+	virtual void attach(); // _08
 };
 
 /**
  * @brief TODO
  */
 struct AnmobjInfo : public GfxobjInfo {
-	virtual void detach();  // _0C
-
+	virtual void detach(); // _0C
 };
 
 #endif

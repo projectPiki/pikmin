@@ -6,15 +6,14 @@
  * .4byte __RTTI__Q26BombAI7SetInit
  * .4byte 0
  * .4byte act__Q26BombAI7SetInitFP10AICreature
-*/
+ */
 
 namespace BombAI {
 /**
  * @brief TODO
  */
 struct SetInit {
-	virtual void act(AICreature *);  // _08
-
+	virtual void act(AICreature*); // _08
 };
 } // namespace BombAI
 

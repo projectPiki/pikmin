@@ -11,20 +11,19 @@
  * .4byte initFadeOut__Q215AttentionCamera5FaderFv
  * .4byte updateFadeOut__Q215AttentionCamera5FaderFv
  * .4byte drawFadeOut__Q215AttentionCamera5FaderFR8Graphics
-*/
+ */
 
 namespace AttentionCamera {
 /**
  * @brief TODO
  */
 struct Fader {
-	virtual void initFadeIn();            // _08
-	virtual void updateFadeIn();          // _0C
-	virtual void drawFadeIn(Graphics &);  // _10
-	virtual void initFadeOut();           // _14
-	virtual void updateFadeOut();         // _18
-	virtual void drawFadeOut(Graphics &); // _1C
-
+	virtual void initFadeIn();           // _08
+	virtual void updateFadeIn();         // _0C
+	virtual void drawFadeIn(Graphics&);  // _10
+	virtual void initFadeOut();          // _14
+	virtual void updateFadeOut();        // _18
+	virtual void drawFadeOut(Graphics&); // _1C
 };
 } // namespace AttentionCamera
 

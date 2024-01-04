@@ -8,19 +8,18 @@
  * .4byte getAgeNodeType__5ANodeFv
  * .4byte read__9GamePrefsFR18RandomAccessStream
  * .4byte write__9GamePrefsFR18RandomAccessStream
-*/
+ */
 
 struct ANode {
-	virtual void getAgeNodeType();  // _08 (weak)
+	virtual void getAgeNodeType(); // _08 (weak)
 };
 
 /**
  * @brief TODO
  */
 struct GamePrefs : public ANode {
-	virtual void read(RandomAccessStream &);  // _0C
-	virtual void write(RandomAccessStream &); // _10
-
+	virtual void read(RandomAccessStream&);  // _0C
+	virtual void write(RandomAccessStream&); // _10
 };
 
 #endif

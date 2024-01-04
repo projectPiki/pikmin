@@ -11,16 +11,16 @@
  */
 
 struct ModeState {
-	virtual void update(u32&);          // _08
-	virtual void postRender(Graphics&); // _0C
+	virtual void update(unsigned long&); // _08
+	virtual void postRender(Graphics&);  // _0C
 };
 
 /**
  * @brief TODO
  */
 struct QuittingGameModeState : public ModeState {
-	virtual void update(u32&); // _08
-	virtual void postUpdate(); // _10
+	virtual void update(unsigned long&); // _08
+	virtual void postUpdate();           // _10
 };
 
 #endif

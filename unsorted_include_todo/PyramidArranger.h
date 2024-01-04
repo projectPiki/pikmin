@@ -7,15 +7,14 @@
  * .4byte 0
  * .4byte arrange__15PyramidArrangerFP12FormationMgr
  * .4byte getLength__15PyramidArrangerFP12FormationMgr
-*/
+ */
 
 /**
  * @brief TODO
  */
 struct PyramidArranger {
-	virtual void arrange(FormationMgr *);    // _08
-	virtual void getLength(FormationMgr *);  // _0C
-
+	virtual void arrange(FormationMgr*);   // _08
+	virtual void getLength(FormationMgr*); // _0C
 };
 
 #endif

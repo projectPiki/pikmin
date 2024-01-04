@@ -7,7 +7,7 @@
  * .4byte 0
  * .4byte getPos__Q25Slime20CollideSphereUpdaterFv
  * .4byte getSize__Q25Slime20CollideSphereUpdaterFv
-*/
+ */
 
 namespace Slime {
 /**
@@ -16,7 +16,6 @@ namespace Slime {
 struct CollideSphereUpdater {
 	virtual void getPos();  // _08
 	virtual void getSize(); // _0C
-
 };
 } // namespace Slime
 

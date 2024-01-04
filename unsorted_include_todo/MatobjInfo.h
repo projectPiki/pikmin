@@ -7,15 +7,14 @@
  * .4byte 0
  * .4byte attach__10MatobjInfoFv
  * .4byte detach__10MatobjInfoFv
-*/
+ */
 
 /**
  * @brief TODO
  */
 struct MatobjInfo {
-	virtual void attach();  // _08
-	virtual void detach();  // _0C
-
+	virtual void attach(); // _08
+	virtual void detach(); // _0C
 };
 
 #endif

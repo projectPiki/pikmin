@@ -6,15 +6,14 @@
  * .4byte __RTTI__Q210PikiHeadAI8WaitInit
  * .4byte 0
  * .4byte act__Q210PikiHeadAI8WaitInitFP10AICreature
-*/
+ */
 
 namespace PikiHeadAI {
 /**
  * @brief TODO
  */
 struct WaitInit {
-	virtual void act(AICreature *);  // _08
-
+	virtual void act(AICreature*); // _08
 };
 } // namespace PikiHeadAI
 

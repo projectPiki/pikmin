@@ -6,14 +6,13 @@
  * .4byte __RTTI__17EventTypeCallBack
  * .4byte 0
  * .4byte invoke__17EventTypeCallBackFPQ23zen17particleGenerator
-*/
+ */
 
 /**
  * @brief TODO
  */
 struct EventTypeCallBack {
-	virtual void invoke(zen::particleGenerator *);  // _08
-
+	virtual void invoke(zen::particleGenerator*); // _08
 };
 
 #endif

@@ -12,7 +12,10 @@
  * @brief TODO
  */
 struct NVibrationFunction {
-	virtual void getValue(f32); // _08
+	virtual void getValue(float); // _08
+
+	NVibrationFunction();
+	void makeVibrationFunction(float, float, float);
 };
 
 #endif

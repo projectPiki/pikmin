@@ -6,14 +6,13 @@
  * .4byte __RTTI__9NFunction
  * .4byte 0
  * .4byte 0
-*/
+ */
 
 /**
  * @brief TODO
  */
 struct NFunction {
-	virtual void _08() = 0;  // _08
-
+	virtual void _08() = 0; // _08
 };
 
 #endif

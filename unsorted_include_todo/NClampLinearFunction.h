@@ -13,8 +13,12 @@
  * @brief TODO
  */
 struct NClampLinearFunction {
-	virtual void getValue(f32); // _08
-	virtual void println();     // _0C
+	virtual void getValue(float); // _08
+	virtual void println();       // _0C
+
+	NClampLinearFunction(float*);
+	void construct(float*);
+	void makeClampLinearFunction(float, float, float, float);
 };
 
 #endif

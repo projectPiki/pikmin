@@ -6,15 +6,14 @@
  * .4byte __RTTI__Q210PikiHeadAI10GrowEffect
  * .4byte 0
  * .4byte act__Q210PikiHeadAI10GrowEffectFP10AICreature
-*/
+ */
 
 namespace PikiHeadAI {
 /**
  * @brief TODO
  */
 struct GrowEffect {
-	virtual void act(AICreature *);  // _08
-
+	virtual void act(AICreature*); // _08
 };
 } // namespace PikiHeadAI
 

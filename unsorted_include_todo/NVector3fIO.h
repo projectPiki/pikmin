@@ -7,15 +7,14 @@
  * .4byte 0
  * .4byte 0
  * .4byte 0
-*/
+ */
 
 /**
  * @brief TODO
  */
 struct NVector3fIO {
-	virtual void _08() = 0;  // _08
-	virtual void _0C() = 0;  // _0C
-
+	virtual void _08() = 0; // _08
+	virtual void _0C() = 0; // _0C
 };
 
 #endif

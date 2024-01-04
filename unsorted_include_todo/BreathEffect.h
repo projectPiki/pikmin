@@ -6,14 +6,13 @@
  * .4byte __RTTI__12BreathEffect
  * .4byte 0
  * .4byte invoke__12BreathEffectFR4Teki
-*/
+ */
 
 /**
  * @brief TODO
  */
 struct BreathEffect {
-	virtual void invoke(Teki &);  // _08
-
+	virtual void invoke(Teki&); // _08
 };
 
 #endif

@@ -6,14 +6,15 @@
  * .4byte __RTTI__9NucleusAi
  * .4byte 0
  * .4byte animationKeyUpdated__9NucleusAiFR16PaniAnimKeyEvent
-*/
+ */
 
 /**
  * @brief TODO
  */
 struct NucleusAi {
-	virtual void animationKeyUpdated(PaniAnimKeyEvent &);  // _08
+	virtual void animationKeyUpdated(PaniAnimKeyEvent&); // _08
 
+	NucleusAi(Nucleus*);
 };
 
 #endif

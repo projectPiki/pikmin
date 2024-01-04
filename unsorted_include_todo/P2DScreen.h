@@ -27,13 +27,13 @@ struct P2DPane {
 	virtual ~P2DPane();                         // _10
 	virtual void move(int, int);                // _14 (weak)
 	virtual void move(Vector3f&);               // _18
-	virtual void move(int, int, f32);           // _1C
-	virtual void moveZ(f32);                    // _20
+	virtual void move(int, int, float);         // _1C
+	virtual void moveZ(float);                  // _20
 	virtual void add(int, int);                 // _24
 	virtual void resize(int, int);              // _28
 	virtual void drawSelf(int, int);            // _2C
 	virtual void drawSelf(int, int, Matrix4f*); // _30
-	virtual void search(u32, bool);             // _34
+	virtual void search(unsigned long, bool);   // _34
 	virtual void makeMatrix(int, int);          // _38
 };
 
@@ -41,10 +41,10 @@ struct P2DPane {
  * @brief TODO
  */
 struct P2DScreen : public P2DPane {
-	virtual void loadResource();                                   // _08
-	virtual ~P2DScreen();                                          // _10
-	virtual void search(u32, bool);                                // _34
-	virtual void makeUserPane(u16, P2DPane*, RandomAccessStream*); // _3C
+	virtual void loadResource();                                              // _08
+	virtual ~P2DScreen();                                                     // _10
+	virtual void search(unsigned long, bool);                                 // _34
+	virtual void makeUserPane(unsigned short, P2DPane*, RandomAccessStream*); // _3C
 };
 
 #endif

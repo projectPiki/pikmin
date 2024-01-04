@@ -6,14 +6,13 @@
  * .4byte __RTTI__21KingGenSalivaCallBack
  * .4byte 0
  * .4byte invoke__21KingGenSalivaCallBackFPQ23zen17particleGenerator
-*/
+ */
 
 /**
  * @brief TODO
  */
 struct KingGenSalivaCallBack {
-	virtual void invoke(zen::particleGenerator *);  // _08
-
+	virtual void invoke(zen::particleGenerator*); // _08
 };
 
 #endif

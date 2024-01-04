@@ -7,19 +7,18 @@
  * .4byte 0
  * .4byte setMaterial__17MapShadMatHandlerFP8Material
  * .4byte setTexMatrix__15MaterialHandlerFb
-*/
+ */
 
 struct MaterialHandler {
-	virtual void setMaterial(Material *);  // _08
-	virtual void setTexMatrix(bool);       // _0C
+	virtual void setMaterial(Material*); // _08
+	virtual void setTexMatrix(bool);     // _0C
 };
 
 /**
  * @brief TODO
  */
 struct MapShadMatHandler : public MaterialHandler {
-	virtual void setMaterial(Material *);  // _08
-
+	virtual void setMaterial(Material*); // _08
 };
 
 #endif

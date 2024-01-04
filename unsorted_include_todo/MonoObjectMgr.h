@@ -79,34 +79,34 @@ struct Node {
 };
 
 struct ObjectMgr {
-	virtual void getCreature(int);                        // _08
-	virtual void getFirst();                              // _0C
-	virtual void getNext(int);                            // _10
-	virtual void isDone(int);                             // _14
-	virtual void _18() = 0;                               // _18
-	virtual void _1C() = 0;                               // _1C
-	virtual void _20() = 0;                               // _20
-	virtual void _24() = 0;                               // _24
-	virtual void _28() = 0;                               // _28
-	virtual void _2C() = 0;                               // _2C
-	virtual void _30() = 0;                               // _30
-	virtual void _34() = 0;                               // _34
-	virtual void _38() = 0;                               // _38
-	virtual void _3C() = 0;                               // _3C
-	virtual void _40() = 0;                               // _40
-	virtual void _44() = 0;                               // _44
-	virtual ~ObjectMgr();                                 // _48 (weak)
-	virtual void update();                                // _4C (weak)
-	virtual void postUpdate(int, f32);                    // _50
-	virtual void stickUpdate();                           // _54
-	virtual void refresh(Graphics&);                      // _58
-	virtual void drawShadow(Graphics&, Texture*);         // _5C
-	virtual void getSize();                               // _60 (weak)
-	virtual void getMax();                                // _64 (weak)
-	virtual void findClosest(Vector3f&, f32, Condition*); // _68
-	virtual void findClosest(Vector3f&, Condition*);      // _6C
-	virtual void search(ObjectMgr*);                      // _70
-	virtual void killAll();                               // _74
+	virtual void getCreature(int);                          // _08
+	virtual void getFirst();                                // _0C
+	virtual void getNext(int);                              // _10
+	virtual void isDone(int);                               // _14
+	virtual void _18() = 0;                                 // _18
+	virtual void _1C() = 0;                                 // _1C
+	virtual void _20() = 0;                                 // _20
+	virtual void _24() = 0;                                 // _24
+	virtual void _28() = 0;                                 // _28
+	virtual void _2C() = 0;                                 // _2C
+	virtual void _30() = 0;                                 // _30
+	virtual void _34() = 0;                                 // _34
+	virtual void _38() = 0;                                 // _38
+	virtual void _3C() = 0;                                 // _3C
+	virtual void _40() = 0;                                 // _40
+	virtual void _44() = 0;                                 // _44
+	virtual ~ObjectMgr();                                   // _48 (weak)
+	virtual void update();                                  // _4C (weak)
+	virtual void postUpdate(int, float);                    // _50
+	virtual void stickUpdate();                             // _54
+	virtual void refresh(Graphics&);                        // _58
+	virtual void drawShadow(Graphics&, Texture*);           // _5C
+	virtual void getSize();                                 // _60 (weak)
+	virtual void getMax();                                  // _64 (weak)
+	virtual void findClosest(Vector3f&, float, Condition*); // _68
+	virtual void findClosest(Vector3f&, Condition*);        // _6C
+	virtual void search(ObjectMgr*);                        // _70
+	virtual void killAll();                                 // _74
 };
 
 /**
@@ -119,7 +119,7 @@ struct MonoObjectMgr : public ANode, public CoreNode, public Node, public Object
 	virtual void isDone(int);                     // _14
 	virtual ~MonoObjectMgr();                     // _48 (weak)
 	virtual void update();                        // _4C (weak)
-	virtual void postUpdate(int, f32);            // _50
+	virtual void postUpdate(int, float);          // _50
 	virtual void refresh(Graphics&);              // _58
 	virtual void drawShadow(Graphics&, Texture*); // _5C
 	virtual void getSize();                       // _60 (weak)

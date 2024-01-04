@@ -8,23 +8,22 @@
  * .4byte getAgeNodeType__5ANodeFv
  * .4byte read__8CoreNodeFR18RandomAccessStream
  * .4byte satisfy__12SAIConditionFP10AICreature
-*/
+ */
 
 struct ANode {
-	virtual void getAgeNodeType();  // _08 (weak)
+	virtual void getAgeNodeType(); // _08 (weak)
 };
 
 struct CoreNode {
-	virtual void _08() = 0;                   // _08
-	virtual void read(RandomAccessStream &);  // _0C (weak)
+	virtual void _08() = 0;                 // _08
+	virtual void read(RandomAccessStream&); // _0C (weak)
 };
 
 /**
  * @brief TODO
  */
 struct SAICondition : public ANode, public CoreNode {
-	virtual void satisfy(AICreature *);  // _10 (weak)
-
+	virtual void satisfy(AICreature*); // _10 (weak)
 };
 
 #endif

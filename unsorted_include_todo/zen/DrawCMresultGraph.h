@@ -6,11 +6,11 @@
  * .4byte __RTTI__Q23zen17DrawCMresultGraph
  * .4byte 0
  * .4byte update__Q23zen17DrawCMresultAlphaFv
-*/
+ */
 
 namespace zen {
 struct DrawCMresultAlpha {
-	virtual void update();  // _08
+	virtual void update(); // _08
 };
 } // namespace zen
 
@@ -19,7 +19,6 @@ namespace zen {
  * @brief TODO
  */
 struct DrawCMresultGraph : public DrawCMresultAlpha {
-
 };
 } // namespace zen
 

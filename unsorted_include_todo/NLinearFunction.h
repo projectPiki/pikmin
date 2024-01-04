@@ -10,13 +10,14 @@
  */
 
 struct NPolynomialFunction {
-	virtual void getValue(f32); // _08
-	virtual void println();     // _0C
+	virtual void getValue(float); // _08
+	virtual void println();       // _0C
 };
 
 /**
  * @brief TODO
  */
-struct NLinearFunction : public NPolynomialFunction { };
+struct NLinearFunction : public NPolynomialFunction {
+};
 
 #endif

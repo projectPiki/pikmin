@@ -6,14 +6,13 @@
  * .4byte __RTTI__13CndStickMouth
  * .4byte 0
  * .4byte satisfy__13CndStickMouthFP8Creature
-*/
+ */
 
 /**
  * @brief TODO
  */
 struct CndStickMouth {
-	virtual void satisfy(Creature *);  // _08
-
+	virtual void satisfy(Creature*); // _08
 };
 
 #endif

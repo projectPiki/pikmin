@@ -6,14 +6,13 @@
  * .4byte __RTTI__6KingAi
  * .4byte 0
  * .4byte animationKeyUpdated__6KingAiFR16PaniAnimKeyEvent
-*/
+ */
 
 /**
  * @brief TODO
  */
 struct KingAi {
-	virtual void animationKeyUpdated(PaniAnimKeyEvent &);  // _08
-
+	virtual void animationKeyUpdated(PaniAnimKeyEvent&); // _08
 };
 
 #endif

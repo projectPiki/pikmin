@@ -142,7 +142,7 @@ struct Creature {
 	virtual void mayIstick();                          // _D8 (weak)
 	virtual void getFormationPri();                    // _DC (weak)
 	virtual void update();                             // _E0
-	virtual void postUpdate(int, f32);                 // _E4
+	virtual void postUpdate(int, float);               // _E4
 	virtual void stickUpdate();                        // _E8
 	virtual void refresh(Graphics&);                   // _EC
 	virtual void refresh2d(Graphics&);                 // _F0 (weak)
@@ -212,7 +212,7 @@ struct DualCreature {
 	virtual void _D8() = 0;                     // _D8
 	virtual void _DC() = 0;                     // _DC
 	virtual void update();                      // _E0
-	virtual void postUpdate(int, f32);          // _E4
+	virtual void postUpdate(int, float);        // _E4
 	virtual void _E8() = 0;                     // _E8
 	virtual void refresh(Graphics&);            // _EC
 	virtual void _F0()  = 0;                    // _F0
@@ -250,13 +250,39 @@ struct Pellet : public RefCountable, public Creature, public DualCreature {
 	virtual void startWaterEffect();                     // _CC
 	virtual void finishWaterEffect();                    // _D0
 	virtual void update();                               // _E0
-	virtual void postUpdate(int, f32);                   // _E4
+	virtual void postUpdate(int, float);                 // _E4
 	virtual void refresh(Graphics&);                     // _EC
 	virtual void doAnimation();                          // _108
 	virtual void doKill();                               // _10C
 	virtual void doRender(Graphics&, Matrix4f&);         // _118
 	virtual void doCreateColls(Graphics&);               // _11C
 	virtual void animationKeyUpdated(PaniAnimKeyEvent&); // _12C (weak)
+
+	Pellet();
+	void isUfoPartsID(unsigned long);
+	void getState();
+	void setTrySound(bool);
+	void startPick();
+	void finishPick();
+	void startGoal();
+	void doCarry(Creature*, Vector3f&, unsigned short);
+	void getBottomRadius();
+	void startStickTeki(Creature*, float);
+	void endStickTeki(Creature*);
+	void winnable(int);
+	void stickSlot(int);
+	void stickOffSlot(int);
+	void getMinFreeSlotIndex();
+	void getNearestFreeSlotIndex(Vector3f&);
+	void getRandomFreeSlotIndex();
+	void getSlotLocalPos(int, float);
+	void getSlotGlobalPos(int, float);
+	void setSlotFlag(int);
+	void resetSlotFlag(int);
+	void isSlotFlag(int);
+	void initPellet(PelletShapeObject*, PelletConfig*);
+	void startCarryMotion(float);
+	void finishMotion();
 };
 
 #endif

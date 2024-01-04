@@ -12,20 +12,21 @@
  * .4byte update__7GenBaseFv
  * .4byte render__7GenBaseFR8Graphics
  * .4byte getLatestVersion__7GenBaseFv
-*/
+ */
 
 /**
  * @brief TODO
  */
 struct GenBase {
-	virtual void doWrite(RandomAccessStream &);            // _08
-	virtual void ramSaveParameters(RandomAccessStream &);  // _0C
-	virtual void ramLoadParameters(RandomAccessStream &);  // _10
-	virtual void doRead(RandomAccessStream &);             // _14
-	virtual void update();                                 // _18
-	virtual void render(Graphics &);                       // _1C
-	virtual void getLatestVersion();                       // _20
+	virtual void doWrite(RandomAccessStream&);           // _08
+	virtual void ramSaveParameters(RandomAccessStream&); // _0C
+	virtual void ramLoadParameters(RandomAccessStream&); // _10
+	virtual void doRead(RandomAccessStream&);            // _14
+	virtual void update();                               // _18
+	virtual void render(Graphics&);                      // _1C
+	virtual void getLatestVersion();                     // _20
 
+	GenBase(unsigned long, char*, char*);
 };
 
 #endif

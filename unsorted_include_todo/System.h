@@ -19,29 +19,45 @@
  */
 
 struct StdSystem {
-	virtual void initSoftReset();                   // _08
-	virtual void openFile(char*, bool, bool);       // _0C
-	virtual void copyRamToCache(u32, u32, u32);     // _10
-	virtual void copyCacheToRam(u32, u32, u32);     // _14
-	virtual void copyWaitUntilDone();               // _18
-	virtual void copyCacheToTexture(CacheTexture*); // _1C
-	virtual void Activate(bool);                    // _20
+	virtual void initSoftReset();                                             // _08
+	virtual void openFile(char*, bool, bool);                                 // _0C
+	virtual void copyRamToCache(unsigned long, unsigned long, unsigned long); // _10
+	virtual void copyCacheToRam(unsigned long, unsigned long, unsigned long); // _14
+	virtual void copyWaitUntilDone();                                         // _18
+	virtual void copyCacheToTexture(CacheTexture*);                           // _1C
+	virtual void Activate(bool);                                              // _20
 };
 
 /**
  * @brief TODO
  */
 struct System : public StdSystem {
-	virtual void initSoftReset();                     // _08
-	virtual void openFile(char*, bool, bool);         // _0C
-	virtual void copyRamToCache(u32, u32, u32);       // _10
-	virtual void copyCacheToRam(u32, u32, u32);       // _14
-	virtual void copyWaitUntilDone();                 // _18
-	virtual void copyCacheToTexture(CacheTexture*);   // _1C
-	virtual void parseArchiveDirectory(char*, char*); // _24
-	virtual void sndPlaySe(u32);                      // _28
-	virtual void startLoading(LoadIdler*, bool, u32); // _2C
-	virtual void endLoading();                        // _30
+	virtual void initSoftReset();                                             // _08
+	virtual void openFile(char*, bool, bool);                                 // _0C
+	virtual void copyRamToCache(unsigned long, unsigned long, unsigned long); // _10
+	virtual void copyCacheToRam(unsigned long, unsigned long, unsigned long); // _14
+	virtual void copyWaitUntilDone();                                         // _18
+	virtual void copyCacheToTexture(CacheTexture*);                           // _1C
+	virtual void parseArchiveDirectory(char*, char*);                         // _24
+	virtual void sndPlaySe(unsigned long);                                    // _28
+	virtual void startLoading(LoadIdler*, bool, unsigned long);               // _2C
+	virtual void endLoading();                                                // _30
+
+	void beginRender();
+	void doneRender();
+	void waitRetrace();
+	void run(BaseApp*);
+	void getTime();
+	void updateSysClock();
+	void hardReset();
+	System();
+	void showDvdError(Graphics&);
+	void Initialise();
+	~System();
+	void nudgeLoading();
+	void nudgeDvdThread();
+	void startDvdThread();
+	void alloc(unsigned long);
 };
 
 #endif

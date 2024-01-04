@@ -6,15 +6,14 @@
  * .4byte __RTTI__Q210PikiHeadAI9BuryExec2
  * .4byte 0
  * .4byte act__Q210PikiHeadAI9BuryExec2FP10AICreature
-*/
+ */
 
 namespace PikiHeadAI {
 /**
  * @brief TODO
  */
 struct BuryExec2 {
-	virtual void act(AICreature *);  // _08
-
+	virtual void act(AICreature*); // _08
 };
 } // namespace PikiHeadAI
 

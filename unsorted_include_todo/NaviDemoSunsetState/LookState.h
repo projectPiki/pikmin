@@ -23,42 +23,42 @@
  * .4byte "resume__29AState<19NaviDemoSunsetState>FP19NaviDemoSunsetState"
  * .4byte "restart__29AState<19NaviDemoSunsetState>FP19NaviDemoSunsetState"
  * .4byte "transit__29AState<19NaviDemoSunsetState>FP19NaviDemoSunsetStatei"
-*/
+ */
 
 struct Receiver<NaviDemoSunsetState> {
-	virtual void procMsg(NaviDemoSunsetState *, Msg *);                // _08 (weak)
-	virtual void procBounceMsg(NaviDemoSunsetState *, MsgBounce *);    // _0C (weak)
-	virtual void procStickMsg(NaviDemoSunsetState *, MsgStick *);      // _10 (weak)
-	virtual void procHangMsg(NaviDemoSunsetState *, MsgHang *);        // _14 (weak)
-	virtual void procTargetMsg(NaviDemoSunsetState *, MsgTarget *);    // _18 (weak)
-	virtual void procCollideMsg(NaviDemoSunsetState *, MsgCollide *);  // _1C (weak)
-	virtual void procAnimMsg(NaviDemoSunsetState *, MsgAnim *);        // _20
-	virtual void procDamageMsg(NaviDemoSunsetState *, MsgDamage *);    // _24 (weak)
-	virtual void procWallMsg(NaviDemoSunsetState *, MsgWall *);        // _28 (weak)
-	virtual void procOffWallMsg(NaviDemoSunsetState *, MsgOffWall *);  // _2C (weak)
-	virtual void procUserMsg(NaviDemoSunsetState *, MsgUser *);        // _30 (weak)
-	virtual void procGroundMsg(NaviDemoSunsetState *, MsgGround *);    // _34 (weak)
+	virtual void procMsg(NaviDemoSunsetState*, Msg*);               // _08 (weak)
+	virtual void procBounceMsg(NaviDemoSunsetState*, MsgBounce*);   // _0C (weak)
+	virtual void procStickMsg(NaviDemoSunsetState*, MsgStick*);     // _10 (weak)
+	virtual void procHangMsg(NaviDemoSunsetState*, MsgHang*);       // _14 (weak)
+	virtual void procTargetMsg(NaviDemoSunsetState*, MsgTarget*);   // _18 (weak)
+	virtual void procCollideMsg(NaviDemoSunsetState*, MsgCollide*); // _1C (weak)
+	virtual void procAnimMsg(NaviDemoSunsetState*, MsgAnim*);       // _20
+	virtual void procDamageMsg(NaviDemoSunsetState*, MsgDamage*);   // _24 (weak)
+	virtual void procWallMsg(NaviDemoSunsetState*, MsgWall*);       // _28 (weak)
+	virtual void procOffWallMsg(NaviDemoSunsetState*, MsgOffWall*); // _2C (weak)
+	virtual void procUserMsg(NaviDemoSunsetState*, MsgUser*);       // _30 (weak)
+	virtual void procGroundMsg(NaviDemoSunsetState*, MsgGround*);   // _34 (weak)
 };
 
 struct AState<NaviDemoSunsetState> {
-	virtual void _08() = 0;                                      // _08
-	virtual void _0C() = 0;                                      // _0C
-	virtual void _10() = 0;                                      // _10
-	virtual void _14() = 0;                                      // _14
-	virtual void _18() = 0;                                      // _18
-	virtual void _1C() = 0;                                      // _1C
-	virtual void procAnimMsg(NaviDemoSunsetState *, MsgAnim *);  // _20
-	virtual void _24() = 0;                                      // _24
-	virtual void _28() = 0;                                      // _28
-	virtual void _2C() = 0;                                      // _2C
-	virtual void _30() = 0;                                      // _30
-	virtual void _34() = 0;                                      // _34
-	virtual void init(NaviDemoSunsetState *);                    // _38
-	virtual void exec(NaviDemoSunsetState *);                    // _3C
-	virtual void cleanup(NaviDemoSunsetState *);                 // _40
-	virtual void resume(NaviDemoSunsetState *);                  // _44 (weak)
-	virtual void restart(NaviDemoSunsetState *);                 // _48 (weak)
-	virtual void transit(NaviDemoSunsetState *, int);            // _4C (weak)
+	virtual void _08() = 0;                                   // _08
+	virtual void _0C() = 0;                                   // _0C
+	virtual void _10() = 0;                                   // _10
+	virtual void _14() = 0;                                   // _14
+	virtual void _18() = 0;                                   // _18
+	virtual void _1C() = 0;                                   // _1C
+	virtual void procAnimMsg(NaviDemoSunsetState*, MsgAnim*); // _20
+	virtual void _24() = 0;                                   // _24
+	virtual void _28() = 0;                                   // _28
+	virtual void _2C() = 0;                                   // _2C
+	virtual void _30() = 0;                                   // _30
+	virtual void _34() = 0;                                   // _34
+	virtual void init(NaviDemoSunsetState*);                  // _38
+	virtual void exec(NaviDemoSunsetState*);                  // _3C
+	virtual void cleanup(NaviDemoSunsetState*);               // _40
+	virtual void resume(NaviDemoSunsetState*);                // _44 (weak)
+	virtual void restart(NaviDemoSunsetState*);               // _48 (weak)
+	virtual void transit(NaviDemoSunsetState*, int);          // _4C (weak)
 };
 
 namespace NaviDemoSunsetState {
@@ -66,11 +66,10 @@ namespace NaviDemoSunsetState {
  * @brief TODO
  */
 struct LookState : public Receiver<NaviDemoSunsetState>, public AState<NaviDemoSunsetState> {
-	virtual void procAnimMsg(NaviDemoSunsetState *, MsgAnim *);  // _20
-	virtual void init(NaviDemoSunsetState *);                    // _38
-	virtual void exec(NaviDemoSunsetState *);                    // _3C
-	virtual void cleanup(NaviDemoSunsetState *);                 // _40
-
+	virtual void procAnimMsg(NaviDemoSunsetState*, MsgAnim*); // _20
+	virtual void init(NaviDemoSunsetState*);                  // _38
+	virtual void exec(NaviDemoSunsetState*);                  // _3C
+	virtual void cleanup(NaviDemoSunsetState*);               // _40
 };
 } // namespace NaviDemoSunsetState
 

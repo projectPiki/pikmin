@@ -7,18 +7,17 @@
  * .4byte 0
  * .4byte getAgeNodeType__5ANodeFv
  * .4byte read__5JointFR18RandomAccessStream
-*/
+ */
 
 struct ANode {
-	virtual void getAgeNodeType();  // _08 (weak)
+	virtual void getAgeNodeType(); // _08 (weak)
 };
 
 /**
  * @brief TODO
  */
 struct Joint : public ANode {
-	virtual void read(RandomAccessStream &);  // _0C
-
+	virtual void read(RandomAccessStream&); // _0C
 };
 
 #endif

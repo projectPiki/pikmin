@@ -6,15 +6,14 @@
  * .4byte __RTTI__Q210PikiHeadAI10KaretaInit
  * .4byte 0
  * .4byte act__Q210PikiHeadAI10KaretaInitFP10AICreature
-*/
+ */
 
 namespace PikiHeadAI {
 /**
  * @brief TODO
  */
 struct KaretaInit {
-	virtual void act(AICreature *);  // _08
-
+	virtual void act(AICreature*); // _08
 };
 } // namespace PikiHeadAI
 

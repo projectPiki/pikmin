@@ -7,15 +7,14 @@
  * .4byte 0
  * .4byte 0
  * .4byte draw__15P2DPaneCallBackFP7P2DPane
-*/
+ */
 
 /**
  * @brief TODO
  */
 struct P2DPaneCallBack {
-	virtual void _08() = 0;        // _08
-	virtual void draw(P2DPane *);  // _0C (weak)
-
+	virtual void _08() = 0;      // _08
+	virtual void draw(P2DPane*); // _0C (weak)
 };
 
 #endif

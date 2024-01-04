@@ -6,15 +6,14 @@
  * .4byte __RTTI__Q26BombAI8MizuExec
  * .4byte 0
  * .4byte act__Q26BombAI8MizuExecFP10AICreature
-*/
+ */
 
 namespace BombAI {
 /**
  * @brief TODO
  */
 struct MizuExec {
-	virtual void act(AICreature *);  // _08
-
+	virtual void act(AICreature*); // _08
 };
 } // namespace BombAI
 

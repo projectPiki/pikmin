@@ -6,15 +6,14 @@
  * .4byte __RTTI__Q26GoalAI6Effect
  * .4byte 0
  * .4byte act__Q26GoalAI6EffectFP10AICreature
-*/
+ */
 
 namespace GoalAI {
 /**
  * @brief TODO
  */
 struct Effect {
-	virtual void act(AICreature *);  // _08
-
+	virtual void act(AICreature*); // _08
 };
 } // namespace GoalAI
 

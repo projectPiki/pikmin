@@ -23,53 +23,54 @@
  * .4byte "resume__20AState<10AICreature>FP10AICreature"
  * .4byte "restart__20AState<10AICreature>FP10AICreature"
  * .4byte "transit__20AState<10AICreature>FP10AICreaturei"
-*/
+ */
 
 struct Receiver<AICreature> {
-	virtual void procMsg(AICreature *, Msg *);                // _08
-	virtual void procBounceMsg(AICreature *, MsgBounce *);    // _0C (weak)
-	virtual void procStickMsg(AICreature *, MsgStick *);      // _10 (weak)
-	virtual void procHangMsg(AICreature *, MsgHang *);        // _14 (weak)
-	virtual void procTargetMsg(AICreature *, MsgTarget *);    // _18 (weak)
-	virtual void procCollideMsg(AICreature *, MsgCollide *);  // _1C (weak)
-	virtual void procAnimMsg(AICreature *, MsgAnim *);        // _20 (weak)
-	virtual void procDamageMsg(AICreature *, MsgDamage *);    // _24 (weak)
-	virtual void procWallMsg(AICreature *, MsgWall *);        // _28 (weak)
-	virtual void procOffWallMsg(AICreature *, MsgOffWall *);  // _2C (weak)
-	virtual void procUserMsg(AICreature *, MsgUser *);        // _30 (weak)
-	virtual void procGroundMsg(AICreature *, MsgGround *);    // _34 (weak)
+	virtual void procMsg(AICreature*, Msg*);               // _08
+	virtual void procBounceMsg(AICreature*, MsgBounce*);   // _0C (weak)
+	virtual void procStickMsg(AICreature*, MsgStick*);     // _10 (weak)
+	virtual void procHangMsg(AICreature*, MsgHang*);       // _14 (weak)
+	virtual void procTargetMsg(AICreature*, MsgTarget*);   // _18 (weak)
+	virtual void procCollideMsg(AICreature*, MsgCollide*); // _1C (weak)
+	virtual void procAnimMsg(AICreature*, MsgAnim*);       // _20 (weak)
+	virtual void procDamageMsg(AICreature*, MsgDamage*);   // _24 (weak)
+	virtual void procWallMsg(AICreature*, MsgWall*);       // _28 (weak)
+	virtual void procOffWallMsg(AICreature*, MsgOffWall*); // _2C (weak)
+	virtual void procUserMsg(AICreature*, MsgUser*);       // _30 (weak)
+	virtual void procGroundMsg(AICreature*, MsgGround*);   // _34 (weak)
 };
 
 struct AState<AICreature> {
-	virtual void procMsg(AICreature *, Msg *);  // _08
-	virtual void _0C() = 0;                     // _0C
-	virtual void _10() = 0;                     // _10
-	virtual void _14() = 0;                     // _14
-	virtual void _18() = 0;                     // _18
-	virtual void _1C() = 0;                     // _1C
-	virtual void _20() = 0;                     // _20
-	virtual void _24() = 0;                     // _24
-	virtual void _28() = 0;                     // _28
-	virtual void _2C() = 0;                     // _2C
-	virtual void _30() = 0;                     // _30
-	virtual void _34() = 0;                     // _34
-	virtual void init(AICreature *);            // _38
-	virtual void exec(AICreature *);            // _3C
-	virtual void cleanup(AICreature *);         // _40
-	virtual void resume(AICreature *);          // _44 (weak)
-	virtual void restart(AICreature *);         // _48 (weak)
-	virtual void transit(AICreature *, int);    // _4C (weak)
+	virtual void procMsg(AICreature*, Msg*); // _08
+	virtual void _0C() = 0;                  // _0C
+	virtual void _10() = 0;                  // _10
+	virtual void _14() = 0;                  // _14
+	virtual void _18() = 0;                  // _18
+	virtual void _1C() = 0;                  // _1C
+	virtual void _20() = 0;                  // _20
+	virtual void _24() = 0;                  // _24
+	virtual void _28() = 0;                  // _28
+	virtual void _2C() = 0;                  // _2C
+	virtual void _30() = 0;                  // _30
+	virtual void _34() = 0;                  // _34
+	virtual void init(AICreature*);          // _38
+	virtual void exec(AICreature*);          // _3C
+	virtual void cleanup(AICreature*);       // _40
+	virtual void resume(AICreature*);        // _44 (weak)
+	virtual void restart(AICreature*);       // _48 (weak)
+	virtual void transit(AICreature*, int);  // _4C (weak)
 };
 
 /**
  * @brief TODO
  */
 struct SAIState : public Receiver<AICreature>, public AState<AICreature> {
-	virtual void procMsg(AICreature *, Msg *);  // _08
-	virtual void init(AICreature *);            // _38
-	virtual void exec(AICreature *);            // _3C
-	virtual void cleanup(AICreature *);         // _40
+	virtual void procMsg(AICreature*, Msg*); // _08
+	virtual void init(AICreature*);          // _38
+	virtual void exec(AICreature*);          // _3C
+	virtual void cleanup(AICreature*);       // _40
 
+	SAIState(int);
 };
 
 #endif

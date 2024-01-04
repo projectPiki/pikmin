@@ -9,17 +9,16 @@
  * .4byte getFirst__12FormationMgrFv
  * .4byte getNext__12FormationMgrFi
  * .4byte isDone__12FormationMgrFi
-*/
+ */
 
 /**
  * @brief TODO
  */
 struct FormationMgr {
-	virtual void getCreature(int);  // _08
-	virtual void getFirst();        // _0C
-	virtual void getNext(int);      // _10
-	virtual void isDone(int);       // _14
-
+	virtual void getCreature(int); // _08
+	virtual void getFirst();       // _0C
+	virtual void getNext(int);     // _10
+	virtual void isDone(int);      // _14
 };
 
 #endif

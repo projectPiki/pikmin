@@ -6,14 +6,13 @@
  * .4byte __RTTI__32KingGenSpitPartsParticleCallBack
  * .4byte 0
  * .4byte invoke__32KingGenSpitPartsParticleCallBackFPQ23zen17particleGeneratorPQ23zen11particleMdl
-*/
+ */
 
 /**
  * @brief TODO
  */
 struct KingGenSpitPartsParticleCallBack {
-	virtual void invoke(zen::particleGenerator *, zen::particleMdl *);  // _08
-
+	virtual void invoke(zen::particleGenerator*, zen::particleMdl*); // _08
 };
 
 #endif

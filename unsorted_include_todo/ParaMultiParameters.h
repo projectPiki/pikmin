@@ -8,16 +8,15 @@
  * .4byte read__19ParaMultiParametersFR6Stream
  * .4byte write__19ParaMultiParametersFR6Stream
  * .4byte print__19ParaMultiParametersFv
-*/
+ */
 
 /**
  * @brief TODO
  */
 struct ParaMultiParameters {
-	virtual void read(Stream &);  // _08
-	virtual void write(Stream &); // _0C
-	virtual void print();         // _10
-
+	virtual void read(Stream&);  // _08
+	virtual void write(Stream&); // _0C
+	virtual void print();        // _10
 };
 
 #endif

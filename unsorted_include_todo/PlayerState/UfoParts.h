@@ -6,15 +6,14 @@
  * .4byte __RTTI__Q211PlayerState8UfoParts
  * .4byte 0
  * .4byte animationKeyUpdated__Q211PlayerState8UfoPartsFR16PaniAnimKeyEvent
-*/
+ */
 
 namespace PlayerState {
 /**
  * @brief TODO
  */
 struct UfoParts {
-	virtual void animationKeyUpdated(PaniAnimKeyEvent &);  // _08
-
+	virtual void animationKeyUpdated(PaniAnimKeyEvent&); // _08
 };
 } // namespace PlayerState
 

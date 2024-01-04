@@ -6,15 +6,14 @@
  * .4byte __RTTI__Q211FallWaterAI8EmitInit
  * .4byte 0
  * .4byte act__Q211FallWaterAI8EmitInitFP10AICreature
-*/
+ */
 
 namespace FallWaterAI {
 /**
  * @brief TODO
  */
 struct EmitInit {
-	virtual void act(AICreature *);  // _08
-
+	virtual void act(AICreature*); // _08
 };
 } // namespace FallWaterAI
 

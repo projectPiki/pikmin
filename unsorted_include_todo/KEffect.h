@@ -18,20 +18,19 @@
  * .4byte kill__7KEffectFv
  * .4byte stop__7KEffectFv
  * .4byte restart__7KEffectFv
-*/
+ */
 
 /**
  * @brief TODO
  */
 struct KEffect {
-	virtual void invoke(zen::particleGenerator *);                      // _08 (weak)
-	virtual void invoke(zen::particleGenerator *, zen::particleMdl *);  // _24 (weak)
-	virtual void invoke(zen::particleMdl *);                            // _28 (weak)
-	virtual void _2C() = 0;                                             // _2C
-	virtual void kill();                                                // _30 (weak)
-	virtual void stop();                                                // _34 (weak)
-	virtual void restart();                                             // _38 (weak)
-
+	virtual void invoke(zen::particleGenerator*);                    // _08 (weak)
+	virtual void invoke(zen::particleGenerator*, zen::particleMdl*); // _24 (weak)
+	virtual void invoke(zen::particleMdl*);                          // _28 (weak)
+	virtual void _2C() = 0;                                          // _2C
+	virtual void kill();                                             // _30 (weak)
+	virtual void stop();                                             // _34 (weak)
+	virtual void restart();                                          // _38 (weak)
 };
 
 #endif

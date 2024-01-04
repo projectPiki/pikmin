@@ -6,15 +6,14 @@
  * .4byte __RTTI__Q210PikiHeadAI13FlyingCleanup
  * .4byte 0
  * .4byte act__Q210PikiHeadAI13FlyingCleanupFP10AICreature
-*/
+ */
 
 namespace PikiHeadAI {
 /**
  * @brief TODO
  */
 struct FlyingCleanup {
-	virtual void act(AICreature *);  // _08
-
+	virtual void act(AICreature*); // _08
 };
 } // namespace PikiHeadAI
 

@@ -6,14 +6,13 @@
  * .4byte __RTTI__14NSpecialMatrix
  * .4byte 0
  * .4byte setDimension__14NSpecialMatrixFi
-*/
+ */
 
 /**
  * @brief TODO
  */
 struct NSpecialMatrix {
-	virtual void setDimension(int);  // _08
-
+	virtual void setDimension(int); // _08
 };
 
 #endif

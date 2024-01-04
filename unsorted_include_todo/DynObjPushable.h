@@ -68,9 +68,9 @@ struct DynObjBody {
 	virtual void _24() = 0;                                   // _24
 	virtual void _28() = 0;                                   // _28
 	virtual void _2C() = 0;                                   // _2C
-	virtual void initDimensions(f32, f32, f32);               // _30
-	virtual void computeForces(int, f32);                     // _34
-	virtual void integrate(int, int, f32);                    // _38
+	virtual void initDimensions(float, float, float);         // _30
+	virtual void computeForces(int, float);                   // _34
+	virtual void integrate(int, int, float);                  // _38
 	virtual void _3C() = 0;                                   // _3C
 	virtual void _40() = 0;                                   // _40
 	virtual void _44() = 0;                                   // _44
@@ -106,7 +106,7 @@ struct RigidBody {
 	virtual void calculateVertices(int);                                  // _40
 	virtual void initCollisions(int);                                     // _44
 	virtual void checkForCollisions(int, CollState&);                     // _48
-	virtual void updateVecQuats(int, f32);                                // _4C
+	virtual void updateVecQuats(int, float);                              // _4C
 	virtual void updateViewInfo(int, int);                                // _50
 	virtual void applyBodyFriction(int, Vector3f&, Vector3f&, Vector3f&); // _54
 	virtual void makeBodyQuat(Quat&);                                     // _58

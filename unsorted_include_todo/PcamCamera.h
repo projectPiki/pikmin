@@ -6,14 +6,13 @@
  * .4byte __RTTI__10PcamCamera
  * .4byte 0
  * .4byte update__10PcamCameraFv
-*/
+ */
 
 /**
  * @brief TODO
  */
 struct PcamCamera {
-	virtual void update();  // _08
-
+	virtual void update(); // _08
 };
 
 #endif

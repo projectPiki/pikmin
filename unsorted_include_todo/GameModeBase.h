@@ -7,15 +7,14 @@
  * .4byte 0
  * .4byte update__12GameModeBaseFP10Controller
  * .4byte draw__12GameModeBaseFR8Graphics
-*/
+ */
 
 /**
  * @brief TODO
  */
 struct GameModeBase {
-	virtual void update(Controller *);  // _08
-	virtual void draw(Graphics &);      // _0C
-
+	virtual void update(Controller*); // _08
+	virtual void draw(Graphics&);     // _0C
 };
 
 #endif

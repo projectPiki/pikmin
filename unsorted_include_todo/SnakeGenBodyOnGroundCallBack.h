@@ -6,14 +6,13 @@
  * .4byte __RTTI__28SnakeGenBodyOnGroundCallBack
  * .4byte 0
  * .4byte invoke__28SnakeGenBodyOnGroundCallBackFPQ23zen17particleGenerator
-*/
+ */
 
 /**
  * @brief TODO
  */
 struct SnakeGenBodyOnGroundCallBack {
-	virtual void invoke(zen::particleGenerator *);  // _08
-
+	virtual void invoke(zen::particleGenerator*); // _08
 };
 
 #endif

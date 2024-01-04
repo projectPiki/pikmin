@@ -7,12 +7,12 @@
  * .4byte 0
  * .4byte insertAfter__Q23zen7zenListFPQ23zen7zenList
  * .4byte remove__Q23zen7zenListFv
-*/
+ */
 
 namespace zen {
 struct zenList {
-	virtual void insertAfter(zenList *);  // _08
-	virtual void remove();                // _0C
+	virtual void insertAfter(zenList*); // _08
+	virtual void remove();              // _0C
 };
 } // namespace zen
 
@@ -21,7 +21,6 @@ namespace zen {
  * @brief TODO
  */
 struct PCRData : public zenList {
-
 };
 } // namespace zen
 

@@ -8,16 +8,15 @@
  * .4byte read__15ParaParametersIFR6Stream
  * .4byte write__15ParaParametersIFR6Stream
  * .4byte print__15ParaParametersIFv
-*/
+ */
 
 /**
  * @brief TODO
  */
 struct ParaParametersI {
-	virtual void read(Stream &);  // _08
-	virtual void write(Stream &); // _0C
-	virtual void print();         // _10
-
+	virtual void read(Stream&);  // _08
+	virtual void write(Stream&); // _0C
+	virtual void print();        // _10
 };
 
 #endif

@@ -7,15 +7,14 @@
  * .4byte 0
  * .4byte update__13CountDownModeFP10Controller
  * .4byte draw__13CountDownModeFR8Graphics
-*/
+ */
 
 /**
  * @brief TODO
  */
 struct CountDownMode {
-	virtual void update(Controller *);  // _08
-	virtual void draw(Graphics &);      // _0C
-
+	virtual void update(Controller*); // _08
+	virtual void draw(Graphics&);     // _0C
 };
 
 #endif

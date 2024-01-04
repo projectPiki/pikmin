@@ -6,14 +6,13 @@
  * .4byte __RTTI__23KoganeGenRippleCallBack
  * .4byte 0
  * .4byte invoke__23KoganeGenRippleCallBackFPQ23zen17particleGenerator
-*/
+ */
 
 /**
  * @brief TODO
  */
 struct KoganeGenRippleCallBack {
-	virtual void invoke(zen::particleGenerator *);  // _08
-
+	virtual void invoke(zen::particleGenerator*); // _08
 };
 
 #endif

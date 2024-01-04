@@ -6,14 +6,13 @@
  * .4byte __RTTI__22PomGenOpenStarCallBack
  * .4byte 0
  * .4byte invoke__22PomGenOpenStarCallBackFPQ23zen17particleGenerator
-*/
+ */
 
 /**
  * @brief TODO
  */
 struct PomGenOpenStarCallBack {
-	virtual void invoke(zen::particleGenerator *);  // _08 (weak)
-
+	virtual void invoke(zen::particleGenerator*); // _08 (weak)
 };
 
 #endif

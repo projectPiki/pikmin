@@ -6,15 +6,14 @@
  * .4byte __RTTI__Q25GemAI8RiseInit
  * .4byte 0
  * .4byte act__Q25GemAI8RiseInitFP10AICreature
-*/
+ */
 
 namespace GemAI {
 /**
  * @brief TODO
  */
 struct RiseInit {
-	virtual void act(AICreature *);  // _08
-
+	virtual void act(AICreature*); // _08
 };
 } // namespace GemAI
 

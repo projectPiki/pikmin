@@ -6,15 +6,14 @@
  * .4byte __RTTI__Q211FallWaterAI13DisappearInit
  * .4byte 0
  * .4byte act__Q211FallWaterAI13DisappearInitFP10AICreature
-*/
+ */
 
 namespace FallWaterAI {
 /**
  * @brief TODO
  */
 struct DisappearInit {
-	virtual void act(AICreature *);  // _08
-
+	virtual void act(AICreature*); // _08
 };
 } // namespace FallWaterAI
 

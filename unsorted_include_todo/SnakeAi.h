@@ -6,14 +6,13 @@
  * .4byte __RTTI__7SnakeAi
  * .4byte 0
  * .4byte animationKeyUpdated__7SnakeAiFR16PaniAnimKeyEvent
-*/
+ */
 
 /**
  * @brief TODO
  */
 struct SnakeAi {
-	virtual void animationKeyUpdated(PaniAnimKeyEvent &);  // _08
-
+	virtual void animationKeyUpdated(PaniAnimKeyEvent&); // _08
 };
 
 #endif

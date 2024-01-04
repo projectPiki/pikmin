@@ -6,17 +6,16 @@
  * .4byte __RTTI__12MizuItemProp
  * .4byte 0
  * .4byte read__12CreaturePropFR18RandomAccessStream
-*/
+ */
 
 struct CreatureProp {
-	virtual void read(RandomAccessStream &);  // _08
+	virtual void read(RandomAccessStream&); // _08
 };
 
 /**
  * @brief TODO
  */
 struct MizuItemProp : public CreatureProp {
-
 };
 
 #endif

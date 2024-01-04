@@ -6,14 +6,13 @@
  * .4byte __RTTI__8SpiderAi
  * .4byte 0
  * .4byte animationKeyUpdated__8SpiderAiFR16PaniAnimKeyEvent
-*/
+ */
 
 /**
  * @brief TODO
  */
 struct SpiderAi {
-	virtual void animationKeyUpdated(PaniAnimKeyEvent &);  // _08
-
+	virtual void animationKeyUpdated(PaniAnimKeyEvent&); // _08
 };
 
 #endif

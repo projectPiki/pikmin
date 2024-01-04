@@ -6,14 +6,13 @@
  * .4byte __RTTI__26EffectGeometryRegistration
  * .4byte 0
  * .4byte create__26EffectGeometryRegistrationFR8Vector3fR8Vector3fR8Vector3f
-*/
+ */
 
 /**
  * @brief TODO
  */
 struct EffectGeometryRegistration {
-	virtual void create(Vector3f &, Vector3f &, Vector3f &);  // _08
-
+	virtual void create(Vector3f&, Vector3f&, Vector3f&); // _08
 };
 
 #endif

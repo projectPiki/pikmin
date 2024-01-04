@@ -6,15 +6,14 @@
  * .4byte __RTTI__Q27PlantAI9TouchInit
  * .4byte 0
  * .4byte act__Q27PlantAI9TouchInitFP10AICreature
-*/
+ */
 
 namespace PlantAI {
 /**
  * @brief TODO
  */
 struct TouchInit {
-	virtual void act(AICreature *);  // _08
-
+	virtual void act(AICreature*); // _08
 };
 } // namespace PlantAI
 

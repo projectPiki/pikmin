@@ -152,7 +152,7 @@ struct Creature {
 	virtual void mayIstick();                          // _D8 (weak)
 	virtual void getFormationPri();                    // _DC (weak)
 	virtual void update();                             // _E0
-	virtual void postUpdate(int, f32);                 // _E4
+	virtual void postUpdate(int, float);               // _E4
 	virtual void stickUpdate();                        // _E8
 	virtual void _EC() = 0;                            // _EC
 	virtual void refresh2d(Graphics&);                 // _F0 (weak)
@@ -180,14 +180,18 @@ struct AICreature : public RefCountable, public Creature {
 	virtual void playEffect(int);                        // _12C (weak)
 	virtual void startMotion(int);                       // _130 (weak)
 	virtual void finishMotion();                         // _134 (weak)
-	virtual void finishMotion(f32);                      // _138 (weak)
-	virtual void startMotion(int, f32);                  // _13C (weak)
+	virtual void finishMotion(float);                    // _138 (weak)
+	virtual void startMotion(int, float);                // _13C (weak)
 	virtual void getCurrentMotionName();                 // _140 (weak)
 	virtual void getCurrentMotionCounter();              // _144 (weak)
 	virtual void getMotionSpeed();                       // _148 (weak)
-	virtual void setMotionSpeed(f32);                    // _14C (weak)
+	virtual void setMotionSpeed(float);                  // _14C (weak)
 	virtual void stopMotion();                           // _150 (weak)
 	virtual void animationKeyUpdated(PaniAnimKeyEvent&); // _154 (weak)
+
+	AICreature(CreatureProp*);
+	void clearEventFlags();
+	void setEventFlag(int, bool);
 };
 
 #endif

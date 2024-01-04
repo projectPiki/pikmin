@@ -10,20 +10,19 @@
  * .4byte getAgeNodeType__5ANodeFv
  * .4byte "@4@read__14PelletAnimInfoFR18RandomAccessStream"
  * .4byte read__14PelletAnimInfoFR18RandomAccessStream
-*/
+ */
 
 struct ANode {
-	virtual void _08() = 0;         // _08
-	virtual void _0C() = 0;         // _0C
-	virtual void getAgeNodeType();  // _10 (weak)
+	virtual void _08() = 0;        // _08
+	virtual void _0C() = 0;        // _0C
+	virtual void getAgeNodeType(); // _10 (weak)
 };
 
 /**
  * @brief TODO
  */
 struct PelletAnimInfo : public ANode {
-	virtual void read(RandomAccessStream &);  // _18
-
+	virtual void read(RandomAccessStream&); // _18
 };
 
 #endif

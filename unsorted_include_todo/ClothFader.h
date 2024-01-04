@@ -11,19 +11,18 @@
  * .4byte initFadeOut__10ClothFaderFv
  * .4byte updateFadeOut__10ClothFaderFv
  * .4byte drawFadeOut__10ClothFaderFR8Graphics
-*/
+ */
 
 /**
  * @brief TODO
  */
 struct ClothFader {
-	virtual void initFadeIn();            // _08
-	virtual void updateFadeIn();          // _0C
-	virtual void drawFadeIn(Graphics &);  // _10
-	virtual void initFadeOut();           // _14
-	virtual void updateFadeOut();         // _18
-	virtual void drawFadeOut(Graphics &); // _1C
-
+	virtual void initFadeIn();           // _08
+	virtual void updateFadeIn();         // _0C
+	virtual void drawFadeIn(Graphics&);  // _10
+	virtual void initFadeOut();          // _14
+	virtual void updateFadeOut();        // _18
+	virtual void drawFadeOut(Graphics&); // _1C
 };
 
 #endif

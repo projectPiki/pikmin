@@ -6,14 +6,15 @@
  * .4byte __RTTI__8NaviProp
  * .4byte 0
  * .4byte read__8NaviPropFR18RandomAccessStream
-*/
+ */
 
 /**
  * @brief TODO
  */
 struct NaviProp {
-	virtual void read(RandomAccessStream &);  // _08 (weak)
+	virtual void read(RandomAccessStream&); // _08 (weak)
 
+	NaviProp();
 };
 
 #endif

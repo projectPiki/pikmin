@@ -6,14 +6,13 @@
  * .4byte __RTTI__8KoganeAi
  * .4byte 0
  * .4byte animationKeyUpdated__8KoganeAiFR16PaniAnimKeyEvent
-*/
+ */
 
 /**
  * @brief TODO
  */
 struct KoganeAi {
-	virtual void animationKeyUpdated(PaniAnimKeyEvent &);  // _08
-
+	virtual void animationKeyUpdated(PaniAnimKeyEvent&); // _08
 };
 
 #endif

@@ -13,8 +13,10 @@
  * @brief TODO
  */
 struct NPolynomialFunction {
-	virtual void getValue(f32); // _08
-	virtual void println();     // _0C
+	virtual void getValue(float); // _08
+	virtual void println();       // _0C
+
+	void construct(float*, int);
 };
 
 #endif

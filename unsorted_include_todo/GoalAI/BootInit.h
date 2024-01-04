@@ -6,15 +6,14 @@
  * .4byte __RTTI__Q26GoalAI8BootInit
  * .4byte 0
  * .4byte act__Q26GoalAI8BootInitFP10AICreature
-*/
+ */
 
 namespace GoalAI {
 /**
  * @brief TODO
  */
 struct BootInit {
-	virtual void act(AICreature *);  // _08
-
+	virtual void act(AICreature*); // _08
 };
 } // namespace GoalAI
 

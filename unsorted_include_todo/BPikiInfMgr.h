@@ -11,22 +11,21 @@
  * .4byte getFreeNum__10MonoInfMgrFv
  * .4byte getActiveNum__10MonoInfMgrFv
  * .4byte newInf__11BPikiInfMgrFv
-*/
+ */
 
 struct MonoInfMgr {
-	virtual void init(int);          // _08
-	virtual void getFreeInf();       // _0C
-	virtual void delInf(BaseInf *);  // _10
-	virtual void getFreeNum();       // _14
-	virtual void getActiveNum();     // _18
+	virtual void init(int);        // _08
+	virtual void getFreeInf();     // _0C
+	virtual void delInf(BaseInf*); // _10
+	virtual void getFreeNum();     // _14
+	virtual void getActiveNum();   // _18
 };
 
 /**
  * @brief TODO
  */
 struct BPikiInfMgr : public MonoInfMgr {
-	virtual void newInf();  // _1C
-
+	virtual void newInf(); // _1C
 };
 
 #endif

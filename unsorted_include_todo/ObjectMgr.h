@@ -79,22 +79,22 @@ struct Node {
  * @brief TODO
  */
 struct ObjectMgr : public ANode, public CoreNode, public Node {
-	virtual void _08() = 0;                               // _08
-	virtual void _0C() = 0;                               // _0C
-	virtual void _10() = 0;                               // _10
-	virtual void _14() = 0;                               // _14
-	virtual ~ObjectMgr();                                 // _48
-	virtual void update();                                // _4C
-	virtual void postUpdate(int, f32);                    // _50
-	virtual void stickUpdate();                           // _54
-	virtual void refresh(Graphics&);                      // _58
-	virtual void drawShadow(Graphics&, Texture*);         // _5C
-	virtual void _60() = 0;                               // _60
-	virtual void _64() = 0;                               // _64
-	virtual void findClosest(Vector3f&, f32, Condition*); // _68
-	virtual void findClosest(Vector3f&, Condition*);      // _6C
-	virtual void search(ObjectMgr*);                      // _70
-	virtual void killAll();                               // _74
+	virtual void _08() = 0;                                 // _08
+	virtual void _0C() = 0;                                 // _0C
+	virtual void _10() = 0;                                 // _10
+	virtual void _14() = 0;                                 // _14
+	virtual ~ObjectMgr();                                   // _48
+	virtual void update();                                  // _4C
+	virtual void postUpdate(int, float);                    // _50
+	virtual void stickUpdate();                             // _54
+	virtual void refresh(Graphics&);                        // _58
+	virtual void drawShadow(Graphics&, Texture*);           // _5C
+	virtual void _60() = 0;                                 // _60
+	virtual void _64() = 0;                                 // _64
+	virtual void findClosest(Vector3f&, float, Condition*); // _68
+	virtual void findClosest(Vector3f&, Condition*);        // _6C
+	virtual void search(ObjectMgr*);                        // _70
+	virtual void killAll();                                 // _74
 };
 
 #endif

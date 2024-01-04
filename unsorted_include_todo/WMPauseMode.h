@@ -7,15 +7,14 @@
  * .4byte 0
  * .4byte update__11WMPauseModeFP10Controller
  * .4byte draw__11WMPauseModeFR8Graphics
-*/
+ */
 
 /**
  * @brief TODO
  */
 struct WMPauseMode {
-	virtual void update(Controller *);  // _08
-	virtual void draw(Graphics &);      // _0C
-
+	virtual void update(Controller*); // _08
+	virtual void draw(Graphics&);     // _0C
 };
 
 #endif
