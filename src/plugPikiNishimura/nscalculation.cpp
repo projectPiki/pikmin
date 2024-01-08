@@ -396,30 +396,13 @@ void calcMtxDirect(const Matrix4f&, const Matrix4f&)
  * Address:	8017C81C
  * Size:	00004C
  */
-void calcMat4toMat3(const Matrix4f&, Matrix3f&)
+void calcMat4toMat3(const Matrix4f& inMtx, Matrix3f& outMtx)
 {
-	/*
-	.loc_0x0:
-	  lfs       f0, 0x0(r3)
-	  stfs      f0, 0x0(r4)
-	  lfs       f0, 0x10(r3)
-	  stfs      f0, 0xC(r4)
-	  lfs       f0, 0x20(r3)
-	  stfs      f0, 0x18(r4)
-	  lfs       f0, 0x4(r3)
-	  stfs      f0, 0x4(r4)
-	  lfs       f0, 0x14(r3)
-	  stfs      f0, 0x10(r4)
-	  lfs       f0, 0x24(r3)
-	  stfs      f0, 0x1C(r4)
-	  lfs       f0, 0x8(r3)
-	  stfs      f0, 0x8(r4)
-	  lfs       f0, 0x18(r3)
-	  stfs      f0, 0x14(r4)
-	  lfs       f0, 0x28(r3)
-	  stfs      f0, 0x20(r4)
-	  blr
-	*/
+	for (int i = 0; i < 3; i++) {
+		for (int j = 0; j < 3; j++) {
+			outMtx.mMtx[j][i] = inMtx.mMtx[j][i];
+		}
+	}
 }
 
 /*
@@ -427,8 +410,12 @@ void calcMat4toMat3(const Matrix4f&, Matrix3f&)
  * Address:	........
  * Size:	00004C
  */
-void calcMat3toMat4(const Matrix3f&, Matrix4f&)
+void calcMat3toMat4(const Matrix3f& inMtx, Matrix4f& outMtx)
 {
-	// UNUSED FUNCTION
+	for (int i = 0; i < 3; i++) {
+		for (int j = 0; j < 3; j++) {
+			outMtx.mMtx[j][i] = inMtx.mMtx[j][i];
+		}
+	}
 }
 } // namespace NsCalculation

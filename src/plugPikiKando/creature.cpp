@@ -1,4 +1,5 @@
-#include "types.h"
+#include "Creature.h"
+#include "SearchSystem.h"
 
 /*
  * --INFO--
@@ -51,31 +52,13 @@ void Creature::finishFixPosition()
  * Address:	8008A050
  * Size:	000048
  */
-void Creature::isTerrible()
+bool Creature::isTerrible()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  li        r31, 0x1
-	  lwz       r0, 0x6C(r3)
-	  cmpwi     r0, 0x37
-	  beq-      .loc_0x30
-	  bl        0x238
-	  rlwinm.   r0,r3,0,24,31
-	  bne-      .loc_0x30
-	  li        r31, 0
-
-	.loc_0x30:
-	  mr        r3, r31
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	bool terror = true;
+	if (mObjType != OBJTYPE_Teki && !isBoss()) {
+		terror = false;
+	}
+	return terror;
 }
 
 /*
@@ -271,22 +254,13 @@ void Creature::getCollidePlatformNormal()
  * Address:	8008A2A8
  * Size:	000024
  */
-void Creature::isBoss()
+bool Creature::isBoss()
 {
-	/*
-	.loc_0x0:
-	  lwz       r0, 0x6C(r3)
-	  cmpwi     r0, 0x27
-	  blt-      .loc_0x1C
-	  cmpwi     r0, 0x32
-	  bgt-      .loc_0x1C
-	  li        r3, 0x1
-	  blr
+	if (mObjType >= OBJTYPE_BossBegin && mObjType <= OBJTYPE_BossEnd) {
+		return true;
+	}
 
-	.loc_0x1C:
-	  li        r3, 0
-	  blr
-	*/
+	return false;
 }
 
 /*
@@ -816,35 +790,14 @@ void Creature::getStandType()
  * Size:	00005C
  */
 SearchData::SearchData()
+    : _00(nullptr)
+    , _08(0)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  li        r31, 0
-	  stw       r30, 0x10(r1)
-	  addi      r30, r3, 0
-	  stw       r31, 0x0(r3)
-	  stw       r31, 0x8(r3)
-	  lwz       r3, 0x0(r3)
-	  cmplwi    r3, 0
-	  beq-      .loc_0x38
-	  bl        0x59B44
-	  stw       r31, 0x0(r30)
-
-	.loc_0x38:
-	  lfs       f0, -0x7570(r2)
-	  mr        r3, r30
-	  stfs      f0, 0x4(r30)
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  lwz       r30, 0x10(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	if (_00) {
+		_00->subCnt();
+		_00 = nullptr;
+	}
+	_04 = 12800.0f;
 }
 
 /*
@@ -1471,7 +1424,7 @@ void Creature::kill(bool)
  * Address:	8008AED8
  * Size:	0002C0
  */
-Creature::Creature(CreatureProp*)
+Creature::Creature(CreatureProp* props)
 {
 	/*
 	.loc_0x0:
@@ -3058,7 +3011,7 @@ void Creature::getCatchPos(Creature*)
  * Address:	8008C3C4
  * Size:	000008
  */
-u32 Creature::needShadow() { return 0x1; }
+bool Creature::needShadow() { return true; }
 
 /*
  * --INFO--
@@ -4331,7 +4284,7 @@ void Creature::moveVelocity()
  * Address:	8008D53C
  * Size:	000008
  */
-u32 Creature::getAvoid(Vector3f&, Vector3f&) { return 0x0; }
+u8 Creature::getAvoid(Vector3f&, Vector3f&) { return 0; }
 
 /*
  * --INFO--

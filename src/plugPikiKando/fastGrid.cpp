@@ -1,4 +1,8 @@
-#include "types.h"
+#include "FastGrid.h"
+
+u32 FastGrid::aiGridMap;
+u16 FastGrid::aiGridSize;
+u16 FastGrid::aiGridShift = 12;
 
 /*
  * --INFO--
@@ -27,18 +31,8 @@ void _Print(char*, ...)
  */
 FastGrid::FastGrid()
 {
-	/*
-	.loc_0x0:
-	  li        r4, 0
-	  sth       r4, 0x10(r3)
-	  li        r0, 0x1
-	  sth       r4, 0xC(r3)
-	  sth       r4, 0x8(r3)
-	  sth       r4, 0x4(r3)
-	  sth       r4, 0x0(r3)
-	  sth       r0, 0x14(r3)
-	  blr
-	*/
+	_00 = _04 = _08 = _0C = _10 = 0;
+	_14                         = 1;
 }
 
 /*

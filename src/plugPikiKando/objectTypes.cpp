@@ -1,8 +1,8 @@
 #include "types.h"
-#include "string.h"
+#include "stl/string.h"
 #include "ObjType.h"
 
-ObjType _info[55] = {
+ObjType _info[] = {
 	// index, name
 	{ 0, "piki" },
 	{ 55, "teki" },
@@ -68,10 +68,9 @@ ObjType _info[55] = {
  */
 char* ObjType::getName(int index)
 {
-	for (int slot = 0; _info[slot].obj_index != 57; slot++) {
-
-		if (index == _info[slot].obj_index) {
-			return _info[slot].obj_name;
+	for (int slot = 0; _info[slot].mIndex != OBJTYPE_NULL; slot++) {
+		if (index == _info[slot].mIndex) {
+			return _info[slot].mName;
 		}
 	}
 	return "invalid objname";
@@ -84,11 +83,10 @@ char* ObjType::getName(int index)
  */
 int ObjType::getIndex(char* name)
 {
-	for (int slot = 0; _info[slot].obj_index != 57; slot++) {
-
-		if (strcmp(name, _info[slot].obj_name) == 0) {
-			return _info[slot].obj_index;
+	for (int slot = 0; _info[slot].mIndex != OBJTYPE_NULL; slot++) {
+		if (strcmp(name, _info[slot].mName) == 0) {
+			return _info[slot].mIndex;
 		}
 	}
-	return -1;
+	return OBJTYPE_INVALID;
 }

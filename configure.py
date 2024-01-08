@@ -955,7 +955,7 @@ def main():
         sys.exit(f'Invalid version "{args.version}"')
     build_path = args.build_dir / f"pikmin.{version}"
 
-    cflags_base = f"-Cpp_exceptions off -O4,p -fp hard -proc gekko -nodefaults -RTTI on -sdata 8 -sdata2 8 -str noreadonly -DVERNUM={version_num} -i include -i include/stl"
+    cflags_base = f"-Cpp_exceptions off -O4,p -fp hard -proc gekko -nodefaults -RTTI on -enum int -sdata 8 -sdata2 8 -str noreadonly -DVERNUM={version_num} -i include -i include/stl"
     if args.debug:
         cflags_base += " -sym on -D_DEBUG"
     else:

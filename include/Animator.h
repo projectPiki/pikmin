@@ -150,7 +150,7 @@ struct AnimMgr : public CoreNode {
 	virtual void read(RandomAccessStream&); // _0C
 
 	void loadAnims(char*, char*);
-	void addAnimation(char*, bool);
+	AnimInfo* addAnimation(char*, bool);
 	void countAnims();
 
 	// _00     = VTBL

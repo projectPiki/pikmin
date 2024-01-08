@@ -2,30 +2,28 @@
 #define _STRING_H
 
 #include "types.h"
-
-#ifdef __cplusplus
-extern "C" {
-#endif // ifdef __cplusplus
-
-size_t strlen(char*);
-char* strrchr(const char* str, int chr);
-char* strchr(const char* str, int chr);
-int strncmp(const char* str1, const char* str2, size_t n);
-int strcmp(const char* str1, const char* str2);
-int stricmp(char*, char*);
-char* strcpy(char*, const char*);
-char* strcat(char* dst, const char* src);
-char* strncpy(char* dst, const char* src, size_t n);
-
-#ifdef __cplusplus
-};
-#endif // ifdef __cplusplus
+#include "Stream.h"
 
 struct String {
-	u32 mLength; // _00
-	u8* mStr;    // _04
-
 	int getLength();
+
+	// unused/inlined:
+	bool isSame(char*);
+	f32 toFloat();
+	int toInt();
+	int getLength(char*);
+	bool isSame(char*, char*);
+	void dup(char*);
+	void contains(char*, char*);
+	void copy(char*, char*);
+	void copyUntil(char*, char*, char, char**);
+	void concat(char*, char*);
+	void calcHash(char*);
+	void calcHash();
+	void toInt(char*);
+
+	u32 mLength; // _00
+	char* mStr;  // _04
 };
 
 #endif

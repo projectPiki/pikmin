@@ -2,7 +2,7 @@
 #define _SYSTEM_H
 
 #include "types.h"
-#include "AyuHeap.h"
+#include "Ayu.h"
 #include "GfxobjInfo.h"
 #include "CoreNode.h"
 #include "Stream.h"
@@ -17,7 +17,6 @@ struct CoreNode;
 struct LFInfo;
 struct LightFlare;
 struct LFlareGroup;
-struct AyuHeap;
 struct Matrix4f;
 
 /**
@@ -108,6 +107,8 @@ struct StdSystem {
  * @note Size: 0x334.
  */
 struct System : public StdSystem {
+	System();
+
 	virtual void initSoftReset();                     // _08
 	virtual void openFile(char*, bool, bool);         // _0C
 	virtual void copyRamToCache(u32, u32, u32);       // _10
@@ -119,9 +120,21 @@ struct System : public StdSystem {
 	virtual void startLoading(LoadIdler*, bool, u32); // _2C
 	virtual void endLoading();                        // _30
 
-	void run(BaseApp* app);
+	~System();
 
+	void run(BaseApp* app);
+	void beginRender();
+	void doneRender();
+	void waitRetrace();
+	void getTime();
+	void updateSysClock();
+	void hardReset();
+	void showDvdError(Graphics&);
+	void nudgeLoading();
+	void nudgeDvdThread();
+	void startDvdThread();
 	void Initialise();
+
 	static void* alloc(size_t);
 
 	// _00      = VTBL

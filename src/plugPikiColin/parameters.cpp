@@ -1,4 +1,12 @@
-#include "types.h"
+#include "Ayu.h"
+#include "Colour.h"
+#include "CoreNode.h"
+#include "Parameters.h"
+#include "Stream.h"
+#include "String.h"
+#include "Vector3f.h"
+
+static char filename[] = __FILE__;
 
 /*
  * --INFO--
@@ -25,8 +33,23 @@ void _Print(char*, ...)
  * Address:	8005EA80
  * Size:	00006C
  */
-BaseParm::BaseParm(Parameters*, ayuID)
+BaseParm::BaseParm(Parameters* parm, ayuID id)
+    : mID(nullptr)
 {
+	BaseParm* head = parm->mHead;
+	FOREACH_NODE(BaseParm, head, node) { }
+
+	BaseParm* lastNode = nullptr;
+	FOREACH_NODE(BaseParm, head, node) { lastNode = node; }
+
+	if (lastNode) {
+		lastNode->mNext = this;
+	} else {
+		parm->mHead = this;
+	}
+
+	mID   = id.mID;
+	mNext = nullptr;
 	/*
 	.loc_0x0:
 	  lis       r6, 0x802B
@@ -76,65 +99,18 @@ BaseParm::BaseParm(Parameters*, ayuID)
  * Address:	8005EAEC
  * Size:	0000A8
  */
-void Parameters::write(RandomAccessStream&)
+void Parameters::write(RandomAccessStream& output)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x20(r1)
-	  stw       r31, 0x1C(r1)
-	  stw       r30, 0x18(r1)
-	  mr        r30, r4
-	  lwz       r31, 0x0(r3)
-	  b         .loc_0x70
+	BaseParm* parm; // for stack
 
-	.loc_0x20:
-	  mr        r3, r31
-	  lwz       r12, 0x8(r31)
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r12, 0x4(r30)
-	  lwz       r0, 0x0(r31)
-	  lwz       r12, 0x24(r12)
-	  rlwinm    r0,r0,0,0,23
-	  mtlr      r12
-	  or        r4, r0, r3
-	  addi      r3, r30, 0
-	  blrl
-	  mr        r3, r31
-	  lwz       r12, 0x8(r31)
-	  mr        r4, r30
-	  lwz       r12, 0xC(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r31, 0x4(r31)
+	FOREACH_NODE(BaseParm, mHead, node)
+	{
+		output.writeInt((int)node->mID & 0xFFFFFF00 | node->size());
+		node->write(output);
+	}
 
-	.loc_0x70:
-	  cmplwi    r31, 0
-	  bne+      .loc_0x20
-	  mr        r3, r30
-	  lwz       r12, 0x4(r30)
-	  li        r4, -0x1
-	  lwz       r12, 0x24(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r0, 0x24(r1)
-	  lwz       r31, 0x1C(r1)
-	  lwz       r30, 0x18(r1)
-	  addi      r1, r1, 0x20
-	  mtlr      r0
-	  blr
-	*/
+	output.writeInt(-1);
 }
-
-/*
- * --INFO--
- * Address:	8005EB94
- * Size:	000004
- */
-void BaseParm::write(RandomAccessStream&) { }
 
 /*
  * --INFO--
@@ -151,84 +127,33 @@ void Parameters::sizeInFile()
  * Address:	8005EB98
  * Size:	0000D4
  */
-void Parameters::read(RandomAccessStream&)
+void Parameters::read(RandomAccessStream& input)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x128(r1)
-	  stw       r31, 0x124(r1)
-	  stw       r30, 0x120(r1)
-	  stw       r29, 0x11C(r1)
-	  addi      r29, r4, 0
-	  stw       r28, 0x118(r1)
-	  addi      r28, r3, 0
+	u8 bloat[256];
+	u8 why[0x8]; // just for stack smh
+	while (true) {
+		int val = input.readInt();
+		if (val == -1) {
+			break;
+		}
+		int len    = val & 0xFF;
+		int id     = val & 0xFFFFFF00;
+		bool added = false;
 
-	.loc_0x24:
-	  mr        r3, r29
-	  lwz       r12, 0x4(r29)
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  cmpwi     r3, -0x1
-	  beq-      .loc_0xB4
-	  lwz       r4, 0x0(r28)
-	  rlwinm    r31,r3,0,24,31
-	  rlwinm    r3,r3,0,0,23
-	  li        r30, 0
-	  b         .loc_0x84
+		FOREACH_NODE(BaseParm, mHead, node)
+		{
+			if (id == (int)node->mID) {
+				added = true;
+				node->read(input);
+				break;
+			}
+		}
 
-	.loc_0x54:
-	  lwz       r0, 0x0(r4)
-	  cmpw      r3, r0
-	  bne-      .loc_0x80
-	  mr        r3, r4
-	  lwz       r12, 0x8(r4)
-	  addi      r4, r29, 0
-	  li        r30, 0x1
-	  lwz       r12, 0x10(r12)
-	  mtlr      r12
-	  blrl
-	  b         .loc_0x8C
-
-	.loc_0x80:
-	  lwz       r4, 0x4(r4)
-
-	.loc_0x84:
-	  cmplwi    r4, 0
-	  bne+      .loc_0x54
-
-	.loc_0x8C:
-	  rlwinm.   r0,r30,0,24,31
-	  bne+      .loc_0x24
-	  mr        r3, r29
-	  lwz       r12, 0x4(r29)
-	  addi      r5, r31, 0
-	  addi      r4, r1, 0x18
-	  lwz       r12, 0x3C(r12)
-	  mtlr      r12
-	  blrl
-	  b         .loc_0x24
-
-	.loc_0xB4:
-	  lwz       r0, 0x12C(r1)
-	  lwz       r31, 0x124(r1)
-	  lwz       r30, 0x120(r1)
-	  lwz       r29, 0x11C(r1)
-	  lwz       r28, 0x118(r1)
-	  addi      r1, r1, 0x128
-	  mtlr      r0
-	  blr
-	*/
+		if (!added) {
+			input.read((void*)bloat, len);
+		}
+	}
 }
-
-/*
- * --INFO--
- * Address:	8005EC6C
- * Size:	000004
- */
-void BaseParm::read(RandomAccessStream&) { }
 
 /*
  * --INFO--
@@ -275,141 +200,42 @@ void Parm<Vector3f>::write(RandomAccessStream&)
  * Address:	8005EC70
  * Size:	000040
  */
-void Parm<f32>::read(RandomAccessStream&)
-{
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  addi      r31, r3, 0
-	  addi      r3, r4, 0
-	  lwz       r12, 0x4(r4)
-	  lwz       r12, 0x14(r12)
-	  mtlr      r12
-	  blrl
-	  stfs      f1, 0xC(r31)
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
-}
+void Parm<f32>::read(RandomAccessStream& input) { mValue = input.readFloat(); }
 
 /*
  * --INFO--
  * Address:	8005ECB0
  * Size:	000038
  */
-void Parm<f32>::write(RandomAccessStream&)
-{
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  addi      r5, r3, 0
-	  stw       r0, 0x4(r1)
-	  addi      r3, r4, 0
-	  stwu      r1, -0x8(r1)
-	  lwz       r12, 0x4(r4)
-	  lfs       f1, 0xC(r5)
-	  lwz       r12, 0x30(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
-}
+void Parm<f32>::write(RandomAccessStream& output) { output.writeFloat(mValue); }
 
 /*
  * --INFO--
  * Address:	8005ECE8
  * Size:	000040
  */
-void Parm<int>::read(RandomAccessStream&)
-{
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  addi      r31, r3, 0
-	  addi      r3, r4, 0
-	  lwz       r12, 0x4(r4)
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  stw       r3, 0xC(r31)
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
-}
+void Parm<int>::read(RandomAccessStream& input) { mValue = input.readInt(); }
 
 /*
  * --INFO--
  * Address:	8005ED28
  * Size:	000038
  */
-void Parm<int>::write(RandomAccessStream&)
-{
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  addi      r5, r3, 0
-	  stw       r0, 0x4(r1)
-	  addi      r3, r4, 0
-	  stwu      r1, -0x8(r1)
-	  lwz       r12, 0x4(r3)
-	  lwz       r4, 0xC(r5)
-	  lwz       r12, 0x24(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
-}
+void Parm<int>::write(RandomAccessStream& output) { output.writeInt(mValue); }
 
 /*
  * --INFO--
  * Address:	8005ED60
  * Size:	000058
  */
-void Parm<String>::read(RandomAccessStream&)
+void Parm<String>::read(RandomAccessStream& input)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x28(r1)
-	  stw       r31, 0x24(r1)
-	  addi      r31, r3, 0
-	  addi      r3, r4, 0
-	  lwz       r12, 0x4(r4)
-	  lwz       r12, 0x20(r12)
-	  mtlr      r12
-	  blrl
-	  stw       r3, 0x1C(r1)
-	  li        r0, 0
-	  stw       r0, 0x18(r1)
-	  lwz       r3, 0x18(r1)
-	  lwz       r0, 0x1C(r1)
-	  stw       r3, 0xC(r31)
-	  stw       r0, 0x10(r31)
-	  lwz       r0, 0x2C(r1)
-	  lwz       r31, 0x24(r1)
-	  addi      r1, r1, 0x28
-	  mtlr      r0
-	  blr
-	*/
+	String str;
+	String str2; // just for stack - probably some consequence of an inline?
+
+	str.mStr    = input.readString();
+	str.mLength = 0;
+	mValue      = str;
 }
 
 /*
@@ -417,23 +243,4 @@ void Parm<String>::read(RandomAccessStream&)
  * Address:	8005EDB8
  * Size:	000038
  */
-void Parm<String>::write(RandomAccessStream&)
-{
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  addi      r5, r3, 0
-	  stw       r0, 0x4(r1)
-	  addi      r3, r4, 0
-	  stwu      r1, -0x8(r1)
-	  lwz       r12, 0x4(r4)
-	  addi      r4, r5, 0xC
-	  lwz       r12, 0x38(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
-}
+void Parm<String>::write(RandomAccessStream& output) { output.writeString(mValue); }

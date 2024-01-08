@@ -1,20 +1,18 @@
 #ifndef _TAIANIMATION_H
 #define _TAIANIMATION_H
+
 #include "types.h"
+#include "Animator.h"
 
-struct AnimInfo {
-	AnimInfo();
-};
-struct AnimMgr {
-	AnimMgr();
-	AnimInfo* addAnimation(char*, bool);
-};
-
+/**
+ * @brief TODO
+ */
 struct TAIanimation {
+	AnimInfo* addAnimation(char* anim);
+
 	u32 _00;             // _00
 	AnimMgr* mAnimmgr;   // _04
-	AnimInfo* mAniminfo; // _08
-
-	AnimInfo* addAnimation(char* anim);
+	AnimInfo* mAnimInfo; // _08
 };
+
 #endif

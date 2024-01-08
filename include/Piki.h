@@ -25,7 +25,7 @@ struct Piki : public Creature {
 	virtual bool isAtari();                                     // _84
 	virtual bool isAlive();                                     // _88
 	virtual bool isFixed();                                     // _8C
-	virtual void needShadow();                                  // _90
+	virtual bool needShadow();                                  // _90
 	virtual void needFlick(Creature*);                          // _94
 	virtual void ignoreAtari(Creature*);                        // _98
 	virtual void stimulate(Interaction&);                       // _A0

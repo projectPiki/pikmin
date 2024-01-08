@@ -46,7 +46,7 @@ struct BTeki : public Creature, public PelletView, virtual public PaniAnimKeyLis
 	virtual bool isOrganic();                            // _78
 	virtual bool isAtari();                              // _84
 	virtual bool isAlive();                              // _88
-	virtual void needShadow();                           // _90
+	virtual bool needShadow();                           // _90
 	virtual void ignoreAtari(Creature*);                 // _98
 	virtual void stimulate(Interaction&);                // _A0
 	virtual void collisionCallback(CollEvent&);          // _A8

@@ -1,6 +1,4 @@
-#include "types.h"
-
-#include "string.h"
+#include "String.h"
 
 /*
  * --INFO--
@@ -19,10 +17,11 @@
  */
 int String::getLength()
 {
-	u8* str = this->mStr;
+	u8* str = (u8*)this->mStr;
 	int len = 0;
-	while (*(str++))
+	while (*(str++)) {
 		len++;
+	}
 	return len;
 }
 

@@ -2,9 +2,12 @@
 #define _CREATURE_H
 
 #include "types.h"
-#include "RefCountable.h"
 #include "Event.h"
+#include "FastGrid.h"
+#include "ObjType.h"
+#include "RefCountable.h"
 
+struct CollInfo;
 struct CollTriInfo;
 struct CollPart;
 struct Condition;
@@ -15,6 +18,7 @@ struct Matrix4f;
 struct Msg;
 struct RopeCreature;
 struct RouteTracer;
+struct SeContext;
 
 /**
  * @brief TODO
@@ -56,7 +60,7 @@ struct Creature : public RefCountable, public EventTalker {
 	virtual bool isAtari();                                   // _84 (weak)
 	virtual bool isAlive();                                   // _88 (weak)
 	virtual bool isFixed();                                   // _8C (weak)
-	virtual void needShadow();                                // _90
+	virtual bool needShadow();                                // _90
 	virtual void needFlick(Creature*);                        // _94 (weak)
 	virtual void ignoreAtari(Creature*);                      // _98 (weak)
 	virtual bool isFree();                                    // _9C (weak)
@@ -113,7 +117,7 @@ struct Creature : public RefCountable, public EventTalker {
 	void updateAI();
 	void collisionCheck(f32);
 	void moveVelocity();
-	void getAvoid(Vector3f&, Vector3f&);
+	u8 getAvoid(Vector3f&, Vector3f&);
 	void respondColl(Creature*, f32, CollPart*, CollPart*, const Vector3f&);
 	void moveRotation(f32);
 	void moveAttach();
@@ -141,10 +145,25 @@ struct Creature : public RefCountable, public EventTalker {
 	void updateStickTube();
 	void updateStickRope();
 
+	// unused/inlined:
+	void startFixPosition();
+	void insideSphere(struct Sphere&);
+	void adjustDistance(Vector3f&, f32);
+	void getAtariType();
+
 	// _00     = VTBL
 	// _00-_08 = RefCountable
 	// _08-_1C = EventTalker
-	u8 _1C[0x2B5 - 0x1C]; // _1C, TODO: work out members
+	u8 _1C[0x2C - 0x1C];    // _1C, TODO: work out members
+	SeContext* mSeContext;  // _2C
+	u8 _30[0x40 - 0x30];    // _30, TODO: work out members
+	FastGrid mGrid;         // _40
+	u8 _58[0x6C - 0x58];    // _58, TODO: work out members
+	EObjType mObjType;      // _6C, object type
+	u8 _70[0x220 - 0x70];   // _70, TODO: work out members
+	CollInfo* mCollInfo;    // _220
+	CreatureProp* mProps;   // _224, creature properties
+	u8 _228[0x2B5 - 0x228]; // _228, TODO: work out members
 };
 
 #endif
