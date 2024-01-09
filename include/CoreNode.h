@@ -14,11 +14,7 @@ struct CoreNode : public ANode {
 	 * @brief Constructs a CoreNode object with the specified name.
 	 * @param name The name of the CoreNode.
 	 */
-	CoreNode(char* name = "CoreNode")
-	{
-		mParent = mNext = mChild = nullptr;
-		setName(name);
-	}
+	CoreNode(char* name = "CoreNode") { initCore(name); }
 
 	/**
 	 * @brief Initializes the core data of the CoreNode.
@@ -87,7 +83,7 @@ struct CoreNode : public ANode {
 	 * @brief Sets the name of the CoreNode.
 	 * @param name The name to set.
 	 */
-	void setName(char* name);
+	void setName(char* name) { mName = name; }
 
 	/**
 	 * @brief Reads the data from a random access stream into the CoreNode.

@@ -92,7 +92,7 @@ struct Creature {
 	virtual void resetPosition(Vector3f&);             // _2C
 	virtual void initParam(int);                       // _30 (weak)
 	virtual void startAI(int);                         // _34 (weak)
-	virtual void getiMass();                           // _38
+	virtual f32 getiMass();                           // _38
 	virtual void getSize();                            // _3C
 	virtual void getHeight();                          // _40
 	virtual void getCylinderHeight();                  // _44 (weak)
@@ -101,7 +101,7 @@ struct Creature {
 	virtual void doSave(RandomAccessStream&);          // _50 (weak)
 	virtual void doLoad(RandomAccessStream&);          // _54 (weak)
 	virtual void getCentre();                          // _58
-	virtual void getCentreSize();                      // _5C
+	virtual f32 getCentreSize();                      // _5C
 	virtual void getBoundingSphereCentre();            // _60
 	virtual void getBoundingSphereRadius();            // _64
 	virtual void getShadowPos();                       // _68 (weak)
@@ -154,7 +154,7 @@ struct Creature {
  */
 struct SeedItem : public RefCountable, public Creature {
 	virtual void init(Vector3f&);         // _28
-	virtual void getiMass();              // _38
+	virtual f32 getiMass();              // _38
 	virtual void getSize();               // _3C
 	virtual void getHeight();             // _40
 	virtual void isVisible();             // _74

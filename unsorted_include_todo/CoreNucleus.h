@@ -96,7 +96,7 @@ struct Creature {
 	virtual void resetPosition(Vector3f&);        // _2C
 	virtual void initParam(int);                  // _30 (weak)
 	virtual void startAI(int);                    // _34 (weak)
-	virtual void getiMass();                      // _38
+	virtual f32 getiMass();                      // _38
 	virtual void getSize();                       // _3C (weak)
 	virtual void getHeight();                     // _40 (weak)
 	virtual void getCylinderHeight();             // _44 (weak)
@@ -105,7 +105,7 @@ struct Creature {
 	virtual void doSave(RandomAccessStream&);     // _50 (weak)
 	virtual void doLoad(RandomAccessStream&);     // _54 (weak)
 	virtual void _58() = 0;                       // _58
-	virtual void getCentreSize();                 // _5C
+	virtual f32 getCentreSize();                 // _5C
 	virtual void getBoundingSphereCentre();       // _60
 	virtual void getBoundingSphereRadius();       // _64
 	virtual void getShadowPos();                  // _68 (weak)
@@ -162,7 +162,7 @@ struct Boss {
 	virtual void _2C() = 0;                            // _2C
 	virtual void _30() = 0;                            // _30
 	virtual void _34() = 0;                            // _34
-	virtual void getiMass();                           // _38
+	virtual f32 getiMass();                           // _38
 	virtual void _3C() = 0;                            // _3C
 	virtual void _40() = 0;                            // _40
 	virtual void _44() = 0;                            // _44
@@ -227,7 +227,7 @@ struct Boss {
  */
 struct CoreNucleus : public RefCountable, public Creature, public Boss {
 	virtual void init(Vector3f&);               // _28
-	virtual void getiMass();                    // _38
+	virtual f32 getiMass();                    // _38
 	virtual void collisionCallback(CollEvent&); // _A8
 	virtual void update();                      // _E0
 	virtual void refresh(Graphics&);            // _EC

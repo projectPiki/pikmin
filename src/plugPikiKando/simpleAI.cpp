@@ -1,4 +1,7 @@
-#include "types.h"
+#include "SimpleAI.h"
+
+static char file[] = __FILE__;
+static char name[] = "simpleAI";
 
 /*
  * --INFO--
@@ -25,52 +28,18 @@ void _Print(char*, ...)
  * Address:	8007D26C
  * Size:	0000A4
  */
-AICreature::AICreature(CreatureProp*)
+AICreature::AICreature(CreatureProp* props)
+    : Creature(props)
+    , _2C4(0.0f)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  mr        r31, r3
-	  bl        0xDC58
-	  lis       r3, 0x802B
-	  subi      r0, r3, 0x246C
-	  lis       r3, 0x802B
-	  stw       r0, 0x2B8(r31)
-	  subi      r3, r3, 0x25C4
-	  stw       r3, 0x0(r31)
-	  addi      r0, r3, 0x114
-	  li        r4, 0
-	  stw       r0, 0x2B8(r31)
-	  li        r0, 0x10
-	  addi      r3, r31, 0
-	  lfs       f1, -0x7690(r2)
-	  stfs      f1, 0x2CC(r31)
-	  stfs      f1, 0x2C8(r31)
-	  stfs      f1, 0x2C4(r31)
-	  stw       r4, 0x2BC(r31)
-	  lfs       f0, -0x62A0(r13)
-	  stfs      f0, 0x2C4(r31)
-	  lfs       f0, -0x629C(r13)
-	  stfs      f0, 0x2C8(r31)
-	  lfs       f0, -0x6298(r13)
-	  stfs      f0, 0x2CC(r31)
-	  stw       r4, 0x2D4(r31)
-	  stw       r4, 0x2D0(r31)
-	  stw       r4, 0x2E4(r31)
-	  stfs      f1, 0x2D8(r31)
-	  stw       r4, 0x2E4(r31)
-	  stw       r0, 0x2F0(r31)
-	  bl        0x1A4
-	  mr        r3, r31
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	_2BC = 0;
+	_2C4.set(0.0f, 0.0f, 0.0f);
+	_2D0 = _2D4   = 0;
+	mCurrentState = nullptr;
+	_2D8          = 0.0f;
+	mCurrentState = nullptr; // hm.
+	mMaxEventCnt  = 16;
+	clearEventFlags();
 }
 
 /*
@@ -236,25 +205,10 @@ void AICreature::playSound(int) { }
  */
 void AICreature::clearEventFlags()
 {
-	/*
-	.loc_0x0:
-	  li        r5, 0
-	  li        r4, 0
-	  b         .loc_0x18
-
-	.loc_0xC:
-	  addi      r0, r5, 0x2F4
-	  stbx      r4, r3, r0
-	  addi      r5, r5, 0x1
-
-	.loc_0x18:
-	  lwz       r0, 0x2F0(r3)
-	  cmpw      r5, r0
-	  blt+      .loc_0xC
-	  li        r0, 0
-	  stw       r0, 0x2EC(r3)
-	  blr
-	*/
+	for (int i = 0; i < mMaxEventCnt; i++) {
+		mEventFlags[i] = 0;
+	}
+	_2EC = 0;
 }
 
 /*
@@ -262,8 +216,12 @@ void AICreature::clearEventFlags()
  * Address:	8007D4C8
  * Size:	00001C
  */
-void AICreature::setEventFlag(int, bool)
+void AICreature::setEventFlag(int flagID, bool value)
 {
+	if (_2EC < mMaxEventCnt) {
+		mEventFlags[flagID] = value;
+	}
+
 	/*
 	.loc_0x0:
 	  lwz       r0, 0x2EC(r3)
@@ -291,21 +249,7 @@ void AICreature::checkEventFlag(int)
  * Address:	8007D4E4
  * Size:	000024
  */
-SimpleAI::SimpleAI()
-{
-	/*
-	.loc_0x0:
-	  lis       r4, 0x802B
-	  subi      r0, r4, 0x265C
-	  stw       r0, 0x0(r3)
-	  li        r0, -0x1
-	  lis       r4, 0x802B
-	  stw       r0, 0x18(r3)
-	  subi      r0, r4, 0x2674
-	  stw       r0, 0x0(r3)
-	  blr
-	*/
-}
+SimpleAI::SimpleAI() { }
 
 /*
  * --INFO--
@@ -352,14 +296,7 @@ void SimpleAI::procMsg(AICreature*, Msg*)
  * Address:	8007D570
  * Size:	000008
  */
-void AICreature::getCurrState()
-{
-	/*
-	.loc_0x0:
-	  lwz       r3, 0x2E4(r3)
-	  blr
-	*/
-}
+AState<AICreature>* AICreature::getCurrState() { return mCurrentState; }
 
 /*
  * --INFO--
@@ -526,23 +463,7 @@ void SimpleAI::addArrow(int, SAIEvent*, int)
  * Address:	8007D758
  * Size:	00002C
  */
-void SimpleAI::start(AICreature*, int)
-{
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x14(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
-}
+void SimpleAI::start(AICreature* creature, int stateID) { transit(creature, stateID); }
 
 /*
  * --INFO--
@@ -628,11 +549,7 @@ void AState<AICreature>::init(AICreature*) { }
  * Address:	8007D860
  * Size:	000008
  */
-void AICreature::setCurrState(AState<AICreature>* a1)
-{
-	// Generated from stw r4, 0x2E4(r3)
-	_2E4 = a1;
-}
+void AICreature::setCurrState(AState<AICreature>* state) { mCurrentState = state; }
 
 /*
  * --INFO--
@@ -646,46 +563,13 @@ void AState<AICreature>::cleanup(AICreature*) { }
  * Address:	8007D86C
  * Size:	00007C
  */
-void SimpleAI::exec(AICreature*)
+void SimpleAI::exec(AICreature* creature)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x20(r1)
-	  stw       r31, 0x1C(r1)
-	  stw       r30, 0x18(r1)
-	  addi      r30, r4, 0
-	  stw       r29, 0x14(r1)
-	  addi      r29, r3, 0
-	  addi      r3, r30, 0
-	  lwz       r12, 0x0(r30)
-	  lwz       r12, 0x120(r12)
-	  mtlr      r12
-	  blrl
-	  mr.       r31, r3
-	  beq-      .loc_0x60
-	  addi      r3, r29, 0
-	  addi      r4, r30, 0
-	  bl        .loc_0x7C
-	  mr        r3, r31
-	  lwz       r12, 0x0(r31)
-	  mr        r4, r30
-	  lwz       r12, 0x3C(r12)
-	  mtlr      r12
-	  blrl
-
-	.loc_0x60:
-	  lwz       r0, 0x24(r1)
-	  lwz       r31, 0x1C(r1)
-	  lwz       r30, 0x18(r1)
-	  lwz       r29, 0x14(r1)
-	  addi      r1, r1, 0x20
-	  mtlr      r0
-	  blr
-
-	.loc_0x7C:
-	*/
+	AState<AICreature>* state = creature->getCurrState();
+	if (state) {
+		checkEvent(creature);
+		state->exec(creature);
+	}
 }
 
 /*
@@ -787,14 +671,15 @@ void SimpleAI::checkEvent(AICreature*)
  * Address:	8007D9E0
  * Size:	000008
  */
-u32 SAICondition::satisfy(AICreature*) { return 0x1; }
+bool SAICondition::satisfy(AICreature*) { return true; }
 
 /*
  * --INFO--
  * Address:	8007D9E8
  * Size:	00010C
  */
-SAIState::SAIState(int)
+SAIState::SAIState(int p1)
+    : AState<AICreature>(p1)
 {
 	/*
 	.loc_0x0:
@@ -1153,21 +1038,21 @@ void AICreature::stopMotion() { }
  * Address:	8007DD14
  * Size:	000008
  */
-u32 Creature::insideSafeArea(Vector3f&) { return 0x1; }
+bool Creature::insideSafeArea(Vector3f&) { return true; }
 
 /*
  * --INFO--
  * Address:	8007DD1C
  * Size:	000008
  */
-u32 Creature::platAttachable() { return 0x0; }
+bool Creature::platAttachable() { return false; }
 
 /*
  * --INFO--
  * Address:	8007DD24
  * Size:	000008
  */
-u32 Creature::doDoAI() { return 0x1; }
+bool Creature::doDoAI() { return true; }
 
 /*
  * --INFO--
@@ -1195,7 +1080,7 @@ void Creature::startAI(int) { }
  * Address:	8007DD38
  * Size:	000008
  */
-void Creature::getiMass()
+f32 Creature::getiMass()
 {
 	/*
 	.loc_0x0:
@@ -1317,28 +1202,28 @@ void Creature::setCentre(Vector3f&)
  * Address:	8007DDA0
  * Size:	000008
  */
-u32 Creature::isOrganic() { return 0x1; }
+bool Creature::isOrganic() { return true; }
 
 /*
  * --INFO--
  * Address:	8007DDA8
  * Size:	000008
  */
-u32 Creature::isBuried() { return 0x0; }
+bool Creature::isBuried() { return false; }
 
 /*
  * --INFO--
  * Address:	8007DDB0
  * Size:	000008
  */
-u32 Creature::isAtari() { return 0x1; }
+bool Creature::isAtari() { return true; }
 
 /*
  * --INFO--
  * Address:	8007DDB8
  * Size:	000018
  */
-void Creature::isAlive()
+bool Creature::isAlive()
 {
 	/*
 	.loc_0x0:
@@ -1356,28 +1241,28 @@ void Creature::isAlive()
  * Address:	8007DDD0
  * Size:	000008
  */
-u32 Creature::isFixed() { return 0x0; }
+bool Creature::isFixed() { return false; }
 
 /*
  * --INFO--
  * Address:	8007DDD8
  * Size:	000008
  */
-u32 Creature::needFlick(Creature*) { return 0x1; }
+bool Creature::needFlick(Creature*) { return true; }
 
 /*
  * --INFO--
  * Address:	8007DDE0
  * Size:	000008
  */
-u32 Creature::ignoreAtari(Creature*) { return 0x0; }
+bool Creature::ignoreAtari(Creature*) { return false; }
 
 /*
  * --INFO--
  * Address:	8007DDE8
  * Size:	000018
  */
-void Creature::isFree()
+bool Creature::isFree()
 {
 	/*
 	.loc_0x0:
@@ -1458,21 +1343,21 @@ void Creature::finishWaterEffect() { }
  * Address:	8007DE24
  * Size:	000008
  */
-u32 Creature::isRopable() { return 0x0; }
+bool Creature::isRopable() { return false; }
 
 /*
  * --INFO--
  * Address:	8007DE2C
  * Size:	000008
  */
-u32 Creature::mayIstick() { return 0x0; }
+bool Creature::mayIstick() { return false; }
 
 /*
  * --INFO--
  * Address:	8007DE34
  * Size:	000008
  */
-u32 Creature::getFormationPri() { return 0x80; }
+int Creature::getFormationPri() { return 128; }
 
 /*
  * --INFO--
@@ -1501,20 +1386,6 @@ void Creature::doAnimation() { }
  * Size:	000004
  */
 void Creature::exitCourse() { }
-
-/*
- * --INFO--
- * Address:	8007DE4C
- * Size:	000004
- */
-void RefCountable::addCntCallback() { }
-
-/*
- * --INFO--
- * Address:	8007DE50
- * Size:	000004
- */
-void RefCountable::subCntCallback() { }
 
 /*
  * --INFO--
@@ -1641,19 +1512,5 @@ void StateMachine<AICreature>::procMsg(AICreature*, Msg*)
 	  addi      r1, r1, 0x20
 	  mtlr      r0
 	  blr
-	*/
-}
-
-/*
- * --INFO--
- * Address:	8007DF54
- * Size:	000008
- */
-void AICreature::@696 @animationKeyUpdated(PaniAnimKeyEvent&)
-{
-	/*
-	.loc_0x0:
-	  subi      r3, r3, 0x2B8
-	  b         -0xB7C
 	*/
 }

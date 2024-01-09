@@ -1,4 +1,4 @@
-#include "rand.h"
+#include "Dolphin/rand.h"
 
 u32 next = 1;
 

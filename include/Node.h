@@ -10,6 +10,12 @@
 struct Node : public CoreNode {
 	Node(char* name);
 
+	Node()
+	    : CoreNode("<Node>")
+	{
+		init("<Node>");
+	}
+
 	virtual void update();                 // _10
 	virtual void draw(struct Graphics&);   // _14
 	virtual void render(Graphics&);        // _18

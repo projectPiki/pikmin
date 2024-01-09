@@ -1,4 +1,5 @@
-#include "types.h"
+#include "Slime.h"
+#include "system.h"
 
 /*
  * --INFO--
@@ -387,8 +388,10 @@ SlimeProp::SlimeProp()
  * Address:	80163C8C
  * Size:	0001D4
  */
-Slime::Slime(CreatureProp*, BossShapeObject*)
+Slime::Slime(CreatureProp* props, BossShapeObject* shape)
+    : Boss(props)
 {
+	mCollInfo = new CollInfo(12);
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -596,7 +599,7 @@ Slime::CollideSphereUpdater::CollideSphereUpdater()
  * Address:	80163F08
  * Size:	00000C
  */
-void Slime::getCentreSize()
+f32 Slime::getCentreSize()
 {
 	/*
 	.loc_0x0:
@@ -611,14 +614,7 @@ void Slime::getCentreSize()
  * Address:	80163F14
  * Size:	000008
  */
-void Slime::getiMass()
-{
-	/*
-	.loc_0x0:
-	  lfs       f1, -0x54D4(r2)
-	  blr
-	*/
-}
+f32 Slime::getiMass() { return 0.0001f; }
 
 /*
  * --INFO--
@@ -1638,19 +1634,5 @@ void SlimeProp::read(RandomAccessStream&)
 	  addi      r1, r1, 0x18
 	  mtlr      r0
 	  blr
-	*/
-}
-
-/*
- * --INFO--
- * Address:	80164B78
- * Size:	000008
- */
-void SlimeProp::@492 @read(RandomAccessStream&)
-{
-	/*
-	.loc_0x0:
-	  subi      r3, r3, 0x1EC
-	  b         -0x54
 	*/
 }

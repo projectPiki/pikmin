@@ -118,7 +118,7 @@ struct CollInfo {
 	void makeTubes(u32, int);
 	void getIndex(ObjCollInfo*);
 
-	// TODO: members
+	u8 _00[0x14]; // _00, TODO: work out members;
 };
 
 #endif

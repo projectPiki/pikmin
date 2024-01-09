@@ -1,5 +1,5 @@
 #include "types.h"
-#include "stdio.h"
+#include "stl/stdio.h"
 #include "Dolphin/OSError.h"
 
 static OSErrorHandler OSErrorTable[OS_ERROR_MAX];

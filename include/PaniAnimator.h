@@ -87,6 +87,8 @@ struct PaniPlantAnimator : public PaniAnimator {
  * @brief TODO
  */
 struct PaniTekiAnimator : public PaniAnimator {
+	PaniTekiAnimator();
+
 	// _30     = VTBL
 	// _00-_34 = PaniAnimator
 	// TODO: members

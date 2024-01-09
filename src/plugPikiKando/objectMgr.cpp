@@ -1,4 +1,4 @@
-#include "types.h"
+#include "CreatureNode.h"
 
 /*
  * --INFO--
@@ -1746,7 +1746,7 @@ void MonoObjectMgr::kill(Creature*)
  * Address:	800E15A4
  * Size:	00003C
  */
-void MonoObjectMgr::getCreature(int)
+Creature* MonoObjectMgr::getCreature(int)
 {
 	/*
 	.loc_0x0:
@@ -1777,7 +1777,7 @@ void MonoObjectMgr::getCreature(int)
  * Address:	800E15E0
  * Size:	000058
  */
-void MonoObjectMgr::getFirst()
+int MonoObjectMgr::getFirst()
 {
 	/*
 	.loc_0x0:
@@ -1819,7 +1819,7 @@ void MonoObjectMgr::getFirst()
  * Address:	800E1638
  * Size:	00005C
  */
-void MonoObjectMgr::getNext(int)
+int MonoObjectMgr::getNext(int)
 {
 	/*
 	.loc_0x0:
@@ -1862,7 +1862,7 @@ void MonoObjectMgr::getNext(int)
  * Address:	800E1694
  * Size:	00001C
  */
-void MonoObjectMgr::isDone(int)
+bool MonoObjectMgr::isDone(int)
 {
 	/*
 	.loc_0x0:
@@ -3218,7 +3218,7 @@ void PolyObjectMgr::kill(Creature*)
  * Address:	800E25BC
  * Size:	000044
  */
-void PolyObjectMgr::getCreature(int)
+Creature* PolyObjectMgr::getCreature(int)
 {
 	/*
 	.loc_0x0:
@@ -3251,7 +3251,7 @@ void PolyObjectMgr::getCreature(int)
  * Address:	800E2600
  * Size:	000058
  */
-void PolyObjectMgr::getFirst()
+int PolyObjectMgr::getFirst()
 {
 	/*
 	.loc_0x0:
@@ -3293,7 +3293,7 @@ void PolyObjectMgr::getFirst()
  * Address:	800E2658
  * Size:	00005C
  */
-void PolyObjectMgr::getNext(int)
+int PolyObjectMgr::getNext(int)
 {
 	/*
 	.loc_0x0:
@@ -3336,7 +3336,7 @@ void PolyObjectMgr::getNext(int)
  * Address:	800E26B4
  * Size:	00001C
  */
-void PolyObjectMgr::isDone(int)
+bool PolyObjectMgr::isDone(int)
 {
 	/*
 	.loc_0x0:
@@ -3926,7 +3926,7 @@ void ObjectMgr::search(ObjectMgr*)
  * Address:	800E2DBC
  * Size:	000088
  */
-void CreatureNodeMgr::getCreature(int)
+Creature* CreatureNodeMgr::getCreature(int)
 {
 	/*
 	.loc_0x0:
@@ -3982,14 +3982,14 @@ void CreatureNodeMgr::getCreature(int)
  * Address:	800E2E44
  * Size:	000008
  */
-u32 CreatureNodeMgr::getFirst() { return 0x0; }
+int CreatureNodeMgr::getFirst() { return 0; }
 
 /*
  * --INFO--
  * Address:	800E2E4C
  * Size:	000008
  */
-void CreatureNodeMgr::getNext(int)
+int CreatureNodeMgr::getNext(int)
 {
 	/*
 	.loc_0x0:
@@ -4003,7 +4003,7 @@ void CreatureNodeMgr::getNext(int)
  * Address:	800E2E54
  * Size:	000044
  */
-void CreatureNodeMgr::isDone(int)
+bool CreatureNodeMgr::isDone(int)
 {
 	/*
 	.loc_0x0:
@@ -4036,7 +4036,7 @@ void CreatureNodeMgr::isDone(int)
  * Address:	800E2E98
  * Size:	000024
  */
-void CreatureNodeMgr::getSize()
+int CreatureNodeMgr::getSize()
 {
 	/*
 	.loc_0x0:
@@ -4100,7 +4100,7 @@ CreatureNodeMgr::~CreatureNodeMgr()
  * Address:	800E2F28
  * Size:	000008
  */
-void CreatureNodeMgr::getMax()
+int CreatureNodeMgr::getMax()
 {
 	/*
 	.loc_0x0:
@@ -4157,7 +4157,7 @@ PolyObjectMgr::~PolyObjectMgr()
  * Address:	800E2F9C
  * Size:	000008
  */
-void PolyObjectMgr::getSize()
+int PolyObjectMgr::getSize()
 {
 	/*
 	.loc_0x0:
@@ -4171,25 +4171,11 @@ void PolyObjectMgr::getSize()
  * Address:	800E2FA4
  * Size:	000008
  */
-void PolyObjectMgr::getMax()
+int PolyObjectMgr::getMax()
 {
 	/*
 	.loc_0x0:
 	  lwz       r3, 0x2C(r3)
 	  blr
-	*/
-}
-
-/*
- * --INFO--
- * Address:	800E2FAC
- * Size:	000008
- */
-void PolyObjectMgr::@8 @update()
-{
-	/*
-	.loc_0x0:
-	  subi      r3, r3, 0x8
-	  b         -0xF90
 	*/
 }

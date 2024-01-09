@@ -1,4 +1,10 @@
-#include "types.h"
+#include "Interactions.h"
+#include "Msg.h"
+#include "Piki.h"
+#include "PikiAI.h"
+
+static char file[] = __FILE__;
+static char name[] = "interactEtc";
 
 /*
  * --INFO--
@@ -25,8 +31,9 @@ void _Print(char*, ...)
  * Address:	8007C9F8
  * Size:	00003C
  */
-void InteractTalk::actPiki(Piki*)
+bool InteractTalk::actPiki(Piki* piki)
 {
+
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -52,7 +59,7 @@ void InteractTalk::actPiki(Piki*)
  * Address:	8007CA34
  * Size:	000104
  */
-void InteractWarn::actPiki(Piki*)
+bool InteractWarn::actPiki(Piki* piki)
 {
 	/*
 	.loc_0x0:

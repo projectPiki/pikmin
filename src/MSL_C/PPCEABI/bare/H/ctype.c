@@ -1,5 +1,5 @@
 #include "types.h"
-#include "ctype.h"
+#include "Dolphin/ctype.h"
 
 const u8 __ctype_map[256] = { CTYPE_CNTRL,
 	                          CTYPE_CNTRL,

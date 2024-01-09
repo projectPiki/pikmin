@@ -1,4 +1,6 @@
-#include "types.h"
+#include "Condition.h"
+#include "Interactions.h"
+#include "Piki.h"
 
 /*
  * --INFO--
@@ -25,8 +27,11 @@ void _Print(char*, ...)
  * Address:	8007B7C8
  * Size:	0001A0
  */
-void InteractBomb::actPiki(Piki*)
+bool InteractBomb::actPiki(Piki* piki)
 {
+	if (!piki->isAlive()) {
+		return false;
+	}
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -155,8 +160,11 @@ void InteractBomb::actPiki(Piki*)
  * Address:	8007B968
  * Size:	0000C0
  */
-void InteractBury::actPiki(Piki*)
+bool InteractBury::actPiki(Piki* piki)
 {
+	if (!piki->isAlive()) {
+		return false;
+	}
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -225,8 +233,11 @@ void InteractBury::actPiki(Piki*)
  * Address:	8007BA28
  * Size:	00006C
  */
-void InteractThrowAway::actPiki(Piki*)
+bool InteractThrowAway::actPiki(Piki* piki)
 {
+	if (!piki->isAlive()) {
+		return false;
+	}
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -268,114 +279,38 @@ void InteractThrowAway::actPiki(Piki*)
  * Address:	8007BA94
  * Size:	000080
  */
-void InteractChangeColor::actPiki(Piki*)
+bool InteractChangeColor::actPiki(Piki* piki)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  addi      r31, r4, 0
-	  stw       r30, 0x10(r1)
-	  addi      r30, r3, 0
-	  addi      r3, r31, 0
-	  lwz       r12, 0x0(r31)
-	  lwz       r12, 0x88(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  bne-      .loc_0x40
-	  li        r3, 0
-	  b         .loc_0x68
+	if (!piki->isAlive()) {
+		return false;
+	}
 
-	.loc_0x40:
-	  mr        r3, r31
-	  lwz       r4, 0x8(r30)
-	  lwz       r12, 0x0(r31)
-	  lwz       r12, 0x12C(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r3, r31
-	  lwz       r4, 0x8(r30)
-	  bl        0x4DEDC
-	  li        r3, 0x1
-
-	.loc_0x68:
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  lwz       r30, 0x10(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	piki->changeShape(mColor);
+	piki->setColor(mColor);
+	return true;
 }
-
-/*
- * --INFO--
- * Address:	8007BB14
- * Size:	000004
- */
-void Piki::changeShape(int) { }
 
 /*
  * --INFO--
  * Address:	8007BB18
  * Size:	000074
  */
-void InteractChangeHappa::actPiki(Piki*)
+bool InteractChangeHappa::actPiki(Piki* piki)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  addi      r31, r4, 0
-	  stw       r30, 0x10(r1)
-	  addi      r30, r3, 0
-	  addi      r3, r31, 0
-	  lwz       r12, 0x0(r31)
-	  lwz       r12, 0x88(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  bne-      .loc_0x40
-	  li        r3, 0
-	  b         .loc_0x5C
+	if (!piki->isAlive()) {
+		return false;
+	}
 
-	.loc_0x40:
-	  mr        r3, r31
-	  lwz       r4, 0x8(r30)
-	  lwz       r12, 0x0(r31)
-	  lwz       r12, 0x130(r12)
-	  mtlr      r12
-	  blrl
-	  li        r3, 0x1
-
-	.loc_0x5C:
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  lwz       r30, 0x10(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	piki->setFlower(mHappa);
+	return true;
 }
-
-/*
- * --INFO--
- * Address:	8007BB8C
- * Size:	000004
- */
-void Piki::setFlower(int) { }
 
 /*
  * --INFO--
  * Address:	8007BB90
  * Size:	000120
  */
-void InteractSpore::actPiki(Piki*)
+bool InteractSpore::actPiki(Piki* piki)
 {
 	/*
 	.loc_0x0:
@@ -467,7 +402,7 @@ void InteractSpore::actPiki(Piki*)
  * Address:	8007BCB0
  * Size:	0000B4
  */
-void InteractBubble::actPiki(Piki*)
+bool InteractBubble::actPiki(Piki*)
 {
 	/*
 	.loc_0x0:
@@ -534,7 +469,7 @@ void InteractBubble::actPiki(Piki*)
  * Address:	8007BD64
  * Size:	00007C
  */
-void InteractFire::actPiki(Piki*)
+bool InteractFire::actPiki(Piki*)
 {
 	/*
 	.loc_0x0:
@@ -583,14 +518,14 @@ void InteractFire::actPiki(Piki*)
  * Address:	8007BDE0
  * Size:	000008
  */
-u32 InteractWind::actCommon(Creature*) { return 0x1; }
+bool InteractWind::actCommon(Creature*) { return true; }
 
 /*
  * --INFO--
  * Address:	8007BDE8
  * Size:	000108
  */
-void InteractWind::actPiki(Piki*)
+bool InteractWind::actPiki(Piki*)
 {
 	/*
 	.loc_0x0:
@@ -682,38 +617,19 @@ void InteractWind::actPiki(Piki*)
  * Address:	8007BEF0
  * Size:	00005C
  */
-void InteractFlick::actCommon(Creature*)
+bool InteractFlick::actCommon(Creature* creature)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x20(r1)
-	  stw       r31, 0x1C(r1)
-	  mr        r31, r4
-	  lwz       r0, 0xC8(r4)
-	  rlwinm.   r0,r0,0,16,16
-	  beq-      .loc_0x28
-	  mr        r3, r31
-	  bl        0x14108
+	u32 badCompiler;
+	if (creature->isCreatureFlag(CF_StuckToMouth)) {
+		creature->endStickMouth();
+	}
 
-	.loc_0x28:
-	  lwz       r0, 0x184(r31)
-	  cmplwi    r0, 0
-	  beq-      .loc_0x44
-	  mr        r3, r31
-	  bl        0x14950
-	  mr        r3, r31
-	  bl        0x14AAC
+	if (creature->_184) {
+		creature->endStickObject();
+		creature->endStick();
+	}
 
-	.loc_0x44:
-	  lwz       r0, 0x24(r1)
-	  li        r3, 0x1
-	  lwz       r31, 0x1C(r1)
-	  addi      r1, r1, 0x20
-	  mtlr      r0
-	  blr
-	*/
+	return true;
 }
 
 /*
@@ -721,7 +637,7 @@ void InteractFlick::actCommon(Creature*)
  * Address:	8007BF4C
  * Size:	0000EC
  */
-void InteractFlick::actPiki(Piki*)
+bool InteractFlick::actPiki(Piki*)
 {
 	/*
 	.loc_0x0:
@@ -802,7 +718,7 @@ void InteractFlick::actPiki(Piki*)
  * Address:	8007C038
  * Size:	000008
  */
-u32 InteractSlimeAttack::actCommon(Creature*) { return 0x1; }
+bool InteractSlimeAttack::actCommon(Creature*) { return true; }
 
 /*
  * --INFO--
@@ -942,47 +858,20 @@ void InteractAttack::getDamagePortion()
  * Address:	8007C1CC
  * Size:	000044
  */
-void InteractAttack::actCommon(Creature*)
+bool InteractAttack::actCommon(Creature* creature)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  mr        r3, r4
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  lwz       r12, 0x0(r4)
-	  lwz       r12, 0x74(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm.   r0,r3,0,24,31
-	  bne-      .loc_0x30
-	  li        r3, 0
-	  b         .loc_0x34
-
-	.loc_0x30:
-	  li        r3, 0x1
-
-	.loc_0x34:
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+	if (!creature->isVisible()) {
+		return false;
+	}
+	return true;
 }
-
-/*
- * --INFO--
- * Address:	8007C210
- * Size:	000008
- */
-u32 Creature::isVisible() { return 0x1; }
 
 /*
  * --INFO--
  * Address:	8007C218
  * Size:	000188
  */
-void InteractAttack::actPiki(Piki*)
+bool InteractAttack::actPiki(Piki*)
 {
 	/*
 	.loc_0x0:
@@ -1108,14 +997,14 @@ void InteractAttack::actPiki(Piki*)
  * Address:	8007C3A0
  * Size:	000008
  */
-u32 InteractSwallow::actCommon(Creature*) { return 0x1; }
+bool InteractSwallow::actCommon(Creature*) { return 0x1; }
 
 /*
  * --INFO--
  * Address:	8007C3A8
  * Size:	0002F0
  */
-void InteractSwallow::actPiki(Piki*)
+bool InteractSwallow::actPiki(Piki*)
 {
 	/*
 	.loc_0x0:
@@ -1351,14 +1240,14 @@ void InteractSwallow::actPiki(Piki*)
  * Address:	8007C698
  * Size:	000008
  */
-u32 Condition::satisfy(Creature*) { return 0x1; }
+bool Condition::satisfy(Creature*) { return true; }
 
 /*
  * --INFO--
  * Address:	8007C6A0
  * Size:	000048
  */
-void InteractKill::actPiki(Piki*)
+bool InteractKill::actPiki(Piki*)
 {
 	/*
 	.loc_0x0:
@@ -1392,7 +1281,7 @@ void InteractKill::actPiki(Piki*)
  * Address:	8007C6E8
  * Size:	00002C
  */
-void InteractKill::actNavi(Navi*)
+bool InteractKill::actNavi(Navi* navi)
 {
 	/*
 	.loc_0x0:
@@ -1415,7 +1304,7 @@ void InteractKill::actNavi(Navi*)
  * Address:	8007C714
  * Size:	000138
  */
-void InteractPress::actPiki(Piki*)
+bool InteractPress::actPiki(Piki*)
 {
 	/*
 	.loc_0x0:
@@ -1511,67 +1400,4 @@ void InteractPress::actPiki(Piki*)
  * Address:	8007C84C
  * Size:	000008
  */
-u32 InteractFlute::actTeki(Teki*) { return 0x1; }
-
-/*
- * --INFO--
- * Address:	8007C854
- * Size:	000008
- */
-u32 Interaction::actCommon(Creature*) { return 0x1; }
-
-/*
- * --INFO--
- * Address:	8007C85C
- * Size:	000008
- */
-u32 Interaction::actPiki(Piki*) { return 0x1; }
-
-/*
- * --INFO--
- * Address:	8007C864
- * Size:	000008
- */
-u32 Interaction::actNavi(Navi*) { return 0x1; }
-
-/*
- * --INFO--
- * Address:	8007C86C
- * Size:	000008
- */
-u32 Interaction::actBoss(Boss*) { return 0x1; }
-
-/*
- * --INFO--
- * Address:	8007C874
- * Size:	000008
- */
-u32 Interaction::actPellet(Pellet*) { return 0x1; }
-
-/*
- * --INFO--
- * Address:	8007C87C
- * Size:	000008
- */
-u32 Interaction::actHinderRock(HinderRock*) { return 0x1; }
-
-/*
- * --INFO--
- * Address:	8007C884
- * Size:	000008
- */
-u32 Interaction::actBridge(Bridge*) { return 0x1; }
-
-/*
- * --INFO--
- * Address:	8007C88C
- * Size:	000008
- */
-u32 Interaction::actItem(ItemCreature*) { return 0x1; }
-
-/*
- * --INFO--
- * Address:	8007C894
- * Size:	000008
- */
-u32 Interaction::actTeki(Teki*) { return 0x1; }
+bool InteractFlute::actTeki(Teki*) { return 0x1; }

@@ -13,6 +13,8 @@ struct Vector3f {
 	Vector3f() { }
 	Vector3f(const f32& x, const f32& y, const f32& z);
 
+	inline Vector3f(f32 val) { x = y = z = val; }
+
 	void rotate(struct Matrix4f&);
 	void rotateTo(Matrix4f&, Vector3f&);
 	void multMatrix(Matrix4f&);

@@ -3,6 +3,11 @@
 
 #include "types.h"
 
+/**
+ * @brief TODO
+ *
+ * @note Size: 0x9.
+ */
 struct ID32 {
 	ID32(void);
 	ID32(u32);

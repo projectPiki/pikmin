@@ -112,7 +112,7 @@ struct Creature {
 	virtual void resetPosition(Vector3f&);             // _2C
 	virtual void initParam(int);                       // _30 (weak)
 	virtual void startAI(int);                         // _34
-	virtual void getiMass();                           // _38
+	virtual f32 getiMass();                           // _38
 	virtual void getSize();                            // _3C
 	virtual void _40() = 0;                            // _40
 	virtual void getCylinderHeight();                  // _44 (weak)
@@ -121,7 +121,7 @@ struct Creature {
 	virtual void doSave(RandomAccessStream&);          // _50 (weak)
 	virtual void doLoad(RandomAccessStream&);          // _54 (weak)
 	virtual void getCentre();                          // _58
-	virtual void getCentreSize();                      // _5C
+	virtual f32 getCentreSize();                      // _5C
 	virtual void getBoundingSphereCentre();            // _60
 	virtual void getBoundingSphereRadius();            // _64
 	virtual void getShadowPos();                       // _68 (weak)
@@ -182,7 +182,7 @@ struct ItemCreature {
 	virtual void _2C() = 0;                     // _2C
 	virtual void _30() = 0;                     // _30
 	virtual void startAI(int);                  // _34
-	virtual void getiMass();                    // _38
+	virtual f32 getiMass();                    // _38
 	virtual void getSize();                     // _3C
 	virtual void getHeight();                   // _40
 	virtual void _44() = 0;                     // _44
@@ -270,7 +270,7 @@ struct AICreature {
 	virtual void _2C() = 0;                              // _2C
 	virtual void _30() = 0;                              // _30
 	virtual void startAI(int);                           // _34
-	virtual void getiMass();                             // _38
+	virtual f32 getiMass();                             // _38
 	virtual void getSize();                              // _3C
 	virtual void _40() = 0;                              // _40
 	virtual void _44() = 0;                              // _44
@@ -349,7 +349,7 @@ struct AICreature {
  */
 struct BombItem : public RefCountable, public Creature, public ItemCreature, public AICreature {
 	virtual void startAI(int);                  // _34
-	virtual void getiMass();                    // _38
+	virtual f32 getiMass();                    // _38
 	virtual void getSize();                     // _3C
 	virtual void isVisible();                   // _74
 	virtual void isAlive();                     // _88

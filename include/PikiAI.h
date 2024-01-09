@@ -68,6 +68,8 @@ struct Action : public Receiver<Piki> {
  * @brief TODO
  */
 struct AndAction : public Action {
+	inline AndAction(); // TODO: probably
+
 	virtual ~AndAction();         // _44 (weak)
 	virtual void init(Creature*); // _48
 	virtual void exec();          // _4C
@@ -81,6 +83,8 @@ struct AndAction : public Action {
  * @brief TODO
  */
 struct OrAction : public Action {
+	inline OrAction(); // TODO: probably
+
 	virtual ~OrAction();          // _44 (weak)
 	virtual void init(Creature*); // _48
 	virtual void exec();          // _4C
@@ -531,17 +535,6 @@ struct ActEscape : public Action {
 	virtual void exec();          // _4C
 	virtual void cleanup();       // _50
 	virtual void getInfo(char*);  // _60
-
-	// _00     = VTBL
-	// _00-_14 = Action
-	// TODO: members
-};
-
-/**
- * @brief TODO
- */
-struct ActBou : public Action {
-	ActBou(Piki*);
 
 	// _00     = VTBL
 	// _00-_14 = Action

@@ -1,4 +1,5 @@
-#include "types.h"
+#include "Boss.h"
+#include "Interactions.h"
 
 /*
  * --INFO--
@@ -400,7 +401,12 @@ BossProp::BossProp()
  * Address:	8014DE78
  * Size:	0000EC
  */
-Boss::Boss(CreatureProp*)
+Boss::Boss(CreatureProp* props)
+    : Creature(props)
+    , _300(0.0f)
+    , _30C(0.0f)
+    , mID()
+    , _328(0.0f)
 {
 	/*
 	.loc_0x0:
@@ -1726,7 +1732,7 @@ void Boss::outSideChaseRangeTransit()
  * Address:	8014EED0
  * Size:	0000C4
  */
-void Boss::inSearchAngle(Creature*)
+bool Boss::inSearchAngle(Creature*)
 {
 	/*
 	.loc_0x0:
@@ -1865,7 +1871,7 @@ void Boss::flickPikiTransit()
  * Address:	8014F04C
  * Size:	00002C
  */
-void Boss::getStickPikiCount()
+int Boss::getStickPikiCount()
 {
 	/*
 	.loc_0x0:
@@ -1888,7 +1894,7 @@ void Boss::getStickPikiCount()
  * Address:	8014F078
  * Size:	000158
  */
-void Boss::getStickMouthPikiCount()
+int Boss::getStickMouthPikiCount()
 {
 	/*
 	.loc_0x0:
@@ -2002,7 +2008,7 @@ void Boss::getStickMouthPikiCount()
  * Address:	8014F1D0
  * Size:	000158
  */
-void Boss::getStickNoMouthPikiCount()
+int Boss::getStickNoMouthPikiCount()
 {
 	/*
 	.loc_0x0:
@@ -2446,7 +2452,7 @@ void Boss::wallCallback(Plane&, DynCollObject*)
  * Address:	8014F658
  * Size:	000114
  */
-void InteractAttack::actBoss(Boss*)
+bool InteractAttack::actBoss(Boss*)
 {
 	/*
 	.loc_0x0:
@@ -2541,14 +2547,14 @@ void InteractAttack::actBoss(Boss*)
  * Address:	8014F76C
  * Size:	000008
  */
-u32 Boss::attackDefaultPortion() { return 0x0; }
+bool Boss::attackDefaultPortion() { return false; }
 
 /*
  * --INFO--
  * Address:	8014F774
  * Size:	00003C
  */
-void InteractFlick::actBoss(Boss*)
+bool InteractFlick::actBoss(Boss*)
 {
 	/*
 	.loc_0x0:
@@ -2577,7 +2583,7 @@ void InteractFlick::actBoss(Boss*)
  * Address:	8014F7B0
  * Size:	000084
  */
-void InteractBomb::actBoss(Boss*)
+bool InteractBomb::actBoss(Boss*)
 {
 	/*
 	.loc_0x0:
@@ -2635,7 +2641,7 @@ void Boss::bombDamageCounter(CollPart*) { }
  * Address:	8014F838
  * Size:	000110
  */
-void InteractHitEffect::actBoss(Boss*)
+bool InteractHitEffect::actBoss(Boss*)
 {
 	/*
 	.loc_0x0:
@@ -2762,7 +2768,7 @@ void Boss::stimulate(Interaction&)
  * Address:	8014F9B4
  * Size:	000008
  */
-void Boss::isAlive()
+bool Boss::isAlive()
 {
 	/*
 	.loc_0x0:
@@ -2776,7 +2782,7 @@ void Boss::isAlive()
  * Address:	8014F9BC
  * Size:	000008
  */
-void Boss::isAtari()
+bool Boss::isAtari()
 {
 	/*
 	.loc_0x0:
@@ -2790,7 +2796,7 @@ void Boss::isAtari()
  * Address:	8014F9C4
  * Size:	000008
  */
-void Boss::isVisible()
+bool Boss::isVisible()
 {
 	/*
 	.loc_0x0:
@@ -2804,7 +2810,7 @@ void Boss::isVisible()
  * Address:	8014F9CC
  * Size:	000008
  */
-void Boss::isOrganic()
+bool Boss::isOrganic()
 {
 	/*
 	.loc_0x0:
@@ -2818,14 +2824,14 @@ void Boss::isOrganic()
  * Address:	8014F9D4
  * Size:	000008
  */
-u32 Boss::isFixed() { return 0x1; }
+bool Boss::isFixed() { return 0x1; }
 
 /*
  * --INFO--
  * Address:	8014F9DC
  * Size:	000008
  */
-u32 Boss::ignoreAtari(Creature*) { return 0x0; }
+bool Boss::ignoreAtari(Creature*) { return 0x0; }
 
 /*
  * --INFO--
@@ -2851,7 +2857,7 @@ void Boss::getCentre()
  * Address:	8014FA00
  * Size:	000008
  */
-void Boss::needShadow()
+bool Boss::needShadow()
 {
 	/*
 	.loc_0x0:

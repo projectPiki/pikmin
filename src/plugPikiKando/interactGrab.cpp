@@ -1,4 +1,8 @@
-#include "types.h"
+#include "Creature.h"
+#include "Interactions.h"
+
+static char file[] = __FILE__;
+static char name[] = "interactGrab";
 
 /*
  * --INFO--
@@ -25,26 +29,15 @@ void _Print(char*, ...)
  * Address:	8007C89C
  * Size:	00003C
  */
-void InteractGrab::actCommon(Creature*)
+bool InteractGrab::actCommon(Creature* creature)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  mr        r31, r4
-	  lwz       r4, 0x4(r3)
-	  mr        r3, r31
-	  bl        0xDFE4
-	  lwz       r0, 0x6C(r31)
-	  cmpwi     r0, 0xE
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	bool result = creature->setStateGrabbed(mOwner);
+	if (creature->mObjType == OBJTYPE_Bomb) {
+		// probably commented out code here
+		return result;
+	}
+
+	return result;
 }
 
 /*
@@ -52,7 +45,7 @@ void InteractGrab::actCommon(Creature*)
  * Address:	8007C8D8
  * Size:	000120
  */
-void InteractRelease::actCommon(Creature*)
+bool InteractRelease::actCommon(Creature*)
 {
 	/*
 	.loc_0x0:

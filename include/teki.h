@@ -38,7 +38,7 @@ struct BTeki : public Creature, public PelletView, virtual public PaniAnimKeyLis
 
 	virtual void alwaysUpdatePlatform();                 // _18
 	virtual void startAI(int);                           // _34
-	virtual void getiMass();                             // _38
+	virtual f32 getiMass();                              // _38
 	virtual void doStore(CreatureInf*);                  // _48
 	virtual void doRestore(CreatureInf*);                // _4C
 	virtual void getShadowSize();                        // _70
@@ -47,7 +47,7 @@ struct BTeki : public Creature, public PelletView, virtual public PaniAnimKeyLis
 	virtual bool isAtari();                              // _84
 	virtual bool isAlive();                              // _88
 	virtual bool needShadow();                           // _90
-	virtual void ignoreAtari(Creature*);                 // _98
+	virtual bool ignoreAtari(Creature*);                 // _98
 	virtual void stimulate(Interaction&);                // _A0
 	virtual void collisionCallback(CollEvent&);          // _A8
 	virtual void bounceCallback();                       // _AC
