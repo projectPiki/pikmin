@@ -5,8 +5,6 @@
 #include "Boss.h"
 #include "Collision.h"
 
-struct BossShapeObject;
-
 struct SlimeProp : public BossProp, public CoreNode {
 	SlimeProp();
 

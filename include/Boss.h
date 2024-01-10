@@ -11,7 +11,6 @@
 #include "Vector3f.h"
 
 struct GenObjectBoss;
-struct BossShapeObject;
 
 /**
  * @brief TODO
@@ -24,6 +23,17 @@ struct BossProp : public CreatureProp {
 	// _F8     = VTBL
 	// _00-_FC = CreatureProp
 	u8 _FC[0x1EC - 0xFC]; // _FC, TODO: work out members
+};
+
+/**
+ * @brief TODO
+ */
+struct BossShapeObject {
+	BossShapeObject(Shape*, char*);
+
+	Shape* mShape;            // _00
+	AnimContext mAnimContext; // _04
+	AnimMgr* mAnimMgr;        // _14
 };
 
 /**

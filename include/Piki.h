@@ -16,8 +16,8 @@ struct Piki : public Creature, public PaniAnimKeyListener {
 
 	virtual void addCntCallback();                       // _08
 	virtual void subCntCallback();                       // _0C
-	virtual void platAttachable();                       // _14
-	virtual void doDoAI();                               // _1C
+	virtual bool platAttachable();                       // _14
+	virtual bool doDoAI();                               // _1C
 	virtual void resetPosition(Vector3f&);               // _2C
 	virtual f32 getiMass();                              // _38
 	virtual void getSize();                              // _3C
@@ -28,8 +28,8 @@ struct Piki : public Creature, public PaniAnimKeyListener {
 	virtual bool isAlive();                              // _88
 	virtual bool isFixed();                              // _8C
 	virtual bool needShadow();                           // _90
-	virtual void needFlick(Creature*);                   // _94
-	virtual void ignoreAtari(Creature*);                 // _98
+	virtual bool needFlick(Creature*);                   // _94
+	virtual bool ignoreAtari(Creature*);                 // _98
 	virtual void stimulate(Interaction&);                // _A0
 	virtual void sendMsg(Msg*);                          // _A4
 	virtual void collisionCallback(CollEvent&);          // _A8
@@ -40,8 +40,8 @@ struct Piki : public Creature, public PaniAnimKeyListener {
 	virtual void stickToCallback(Creature*);             // _C4
 	virtual void dump();                                 // _C8
 	virtual bool isRopable();                            // _D4
-	virtual void mayIstick();                            // _D8
-	virtual void getFormationPri();                      // _DC
+	virtual bool mayIstick();                            // _D8
+	virtual int getFormationPri();                       // _DC
 	virtual void getCatchPos(Creature*);                 // _100
 	virtual void doAI();                                 // _104
 	virtual void doAnimation();                          // _108
@@ -108,6 +108,13 @@ struct Piki : public Creature, public PaniAnimKeyListener {
 	u8 _2BC[0x4F8 - 0x2BC]; // _2BC, TODO: work out members
 	TopAction* _4F8;        // _4F8, may be just Action*
 	u8 _4FC[0x585 - 0x4FC]; // _4FC, TODO: work out members
+};
+
+/**
+ * @brief TODO
+ */
+struct PikiShapeObject {
+	void exitCourse();
 };
 
 #endif

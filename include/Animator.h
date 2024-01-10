@@ -21,6 +21,13 @@ struct AnimDataInfo {
 /**
  * @brief TODO
  */
+struct AnimParam {
+	// TODO: members
+};
+
+/**
+ * @brief TODO
+ */
 struct AnimData : public CoreNode {
 
 	virtual void extractSRT(struct SRT&, int, AnimDataInfo*, f32);                  // _10
@@ -95,7 +102,12 @@ struct AnimInfo : public CoreNode {
  * @brief TODO
  */
 struct AnimContext {
-	AnimContext();
+	AnimContext()
+	    : mFrameCount(0)
+	    , mCurrentFrame(0.0f)
+	    , _08(30.0f)
+	{
+	}
 
 	// _0C = VTBL
 	int mFrameCount;   // _00

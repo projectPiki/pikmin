@@ -1,4 +1,4 @@
-#include "types.h"
+#include "PikiState.h"
 
 /*
  * --INFO--
@@ -1794,6 +1794,7 @@ void PikiState::transit(Piki*, int)
  * Size:	00004C
  */
 PikiLookAtState::PikiLookAtState()
+    : PikiState(PIKISTATE_LookAt, "LOOKAT")
 {
 	/*
 	.loc_0x0:
@@ -2124,6 +2125,7 @@ void PikiLookAtState::procAnimMsg(Piki*, MsgAnim*)
  * Size:	000048
  */
 PikiNormalState::PikiNormalState()
+    : PikiState(PIKISTATE_Normal, "NORMAL")
 {
 	/*
 	.loc_0x0:
@@ -2374,6 +2376,7 @@ void PikiNormalState::procCollideMsg(Piki*, MsgCollide*)
  * Size:	00004C
  */
 PikiAbsorbState::PikiAbsorbState()
+    : PikiState(PIKISTATE_Absorb, "ABSORB")
 {
 	/*
 	.loc_0x0:
@@ -2641,6 +2644,8 @@ void PikiAbsorbState::cleanup(Piki*) { }
  * Size:	00005C
  */
 PikiDrownState::PikiDrownState()
+    : PikiState(PIKISTATE_Drown, "DROWN")
+    , _1C(0.0f)
 {
 	/*
 	.loc_0x0:
@@ -3257,6 +3262,8 @@ void PikiDrownState::procAnimMsg(Piki*, MsgAnim*)
  * Size:	00005C
  */
 PikiKinokoState::PikiKinokoState()
+    : PikiState(PIKISTATE_Kinoko, "KINOKO")
+    , _18(0.0f)
 {
 	/*
 	.loc_0x0:
@@ -4134,6 +4141,7 @@ void PikiKinokoState::cleanup(Piki*)
  * Size:	00004C
  */
 PikiBubbleState::PikiBubbleState()
+    : PikiState(PIKISTATE_Bubble, "BUBBLE")
 {
 	/*
 	.loc_0x0:
@@ -4397,6 +4405,7 @@ void PikiBubbleState::cleanup(Piki*)
  * Size:	00004C
  */
 PikiFiredState::PikiFiredState()
+    : PikiState(PIKISTATE_Fired, "FIRED")
 {
 	/*
 	.loc_0x0:
@@ -4605,6 +4614,7 @@ void PikiFiredState::cleanup(Piki*) { }
  * Size:	000050
  */
 PikiSwallowedState::PikiSwallowedState()
+    : PikiState(PIKISTATE_Swallowed, "SWALLOWED")
 {
 	/*
 	.loc_0x0:
@@ -4754,6 +4764,7 @@ void PikiSwallowedState::cleanup(Piki*)
  * Size:	00004C
  */
 PikiBulletState::PikiBulletState()
+    : PikiState(PIKISTATE_Bullet, "BULLET")
 {
 	/*
 	.loc_0x0:
@@ -5158,6 +5169,7 @@ void PikiBulletState::cleanup(Piki*) { }
  * Size:	00004C
  */
 PikiFlickState::PikiFlickState()
+    : PikiState(PIKISTATE_Flick, "FLICK")
 {
 	/*
 	.loc_0x0:
@@ -5694,6 +5706,7 @@ void PikiFlickState::cleanup(Piki*)
  * Size:	00004C
  */
 PikiFlownState::PikiFlownState()
+    : PikiState(PIKISTATE_Flown, "FLOWN")
 {
 	/*
 	.loc_0x0:
@@ -6202,6 +6215,7 @@ void PikiFlownState::cleanup(Piki*)
  * Size:	000050
  */
 PikiFallMeckState::PikiFallMeckState()
+    : PikiState(PIKISTATE_FallMeck, "FALLMECK")
 {
 	/*
 	.loc_0x0:
@@ -6475,6 +6489,7 @@ void PikiFallMeckState::cleanup(Piki*) { }
  * Size:	00004C
  */
 PikiFallState::PikiFallState()
+    : PikiState(PIKISTATE_Fall, "FALL")
 {
 	/*
 	.loc_0x0:
@@ -6686,6 +6701,8 @@ void PikiFallState::cleanup(Piki*) { }
  * Size:	00005C
  */
 PikiCliffState::PikiCliffState()
+    : PikiState(PIKISTATE_Cliff, "CLIFF")
+    , _1C(0.0f)
 {
 	/*
 	.loc_0x0:
@@ -7341,6 +7358,7 @@ void PikiCliffState::cleanup(Piki*) { }
  * Size:	00004C
  */
 PikiGoHangState::PikiGoHangState()
+    : PikiState(PIKISTATE_GoHang, "GOHANG")
 {
 	/*
 	.loc_0x0:
@@ -7525,6 +7543,7 @@ void PikiGoHangState::cleanup(Piki*) { }
  * Size:	00004C
  */
 PikiHangedState::PikiHangedState()
+    : PikiState(PIKISTATE_Hanged, "HANGED")
 {
 	/*
 	.loc_0x0:
@@ -7697,6 +7716,7 @@ void PikiHangedState::cleanup(Piki*)
  * Size:	000050
  */
 PikiWaterHangedState::PikiWaterHangedState()
+    : PikiState(PIKISTATE_WaterHanged, "WATERHANGED")
 {
 	/*
 	.loc_0x0:
@@ -7870,6 +7890,7 @@ void PikiWaterHangedState::cleanup(Piki*)
  * Size:	00004C
  */
 PikiEmitState::PikiEmitState()
+    : PikiState(PIKISTATE_Emit, "EMIT")
 {
 	/*
 	.loc_0x0:
@@ -8116,6 +8137,7 @@ void PikiEmitState::procAnimMsg(Piki*, MsgAnim*)
  * Size:	00008C
  */
 PikiFlyingState::PikiFlyingState()
+    : PikiState(PIKISTATE_Flying, "FLYING")
 {
 	/*
 	.loc_0x0:
@@ -9154,6 +9176,7 @@ void PikiFlyingState::procBounceMsg(Piki*, MsgBounce*)
  * Size:	00004C
  */
 PikiGrowState::PikiGrowState()
+    : PikiState(PIKISTATE_Grow, "GROW")
 {
 	/*
 	.loc_0x0:
@@ -9277,6 +9300,7 @@ void PikiGrowState::procAnimMsg(Piki*, MsgAnim*)
  * Size:	000050
  */
 PikiKinokoChangeState::PikiKinokoChangeState()
+    : PikiState(PIKISTATE_KinokoChange, "KINOKOCHANGE")
 {
 	/*
 	.loc_0x0:
@@ -9503,6 +9527,7 @@ void PikiKinokoChangeState::procAnimMsg(Piki*, MsgAnim*)
  * Size:	00004C
  */
 PikiGrowupState::PikiGrowupState()
+    : PikiState(PIKISTATE_GrowUp, "GROWUP")
 {
 	/*
 	.loc_0x0:
@@ -9760,6 +9785,7 @@ void PikiGrowupState::procAnimMsg(Piki*, MsgAnim*)
  * Size:	00004C
  */
 PikiWaveState::PikiWaveState()
+    : PikiState(PIKISTATE_Wave, "WAVE")
 {
 	/*
 	.loc_0x0:
@@ -9887,6 +9913,7 @@ void PikiWaveState::waveAttack(Piki*)
  * Size:	00004C
  */
 PikiPushState::PikiPushState()
+    : PikiState(PIKISTATE_Push, "PUSH")
 {
 	/*
 	.loc_0x0:
@@ -10194,6 +10221,7 @@ void PikiPushState::procAnimMsg(Piki*, MsgAnim*)
  * Size:	000050
  */
 PikiPushPikiState::PikiPushPikiState()
+    : PikiState(PIKISTATE_PushPiki, "PUSHPIKI")
 {
 	/*
 	.loc_0x0:
@@ -10517,6 +10545,7 @@ void PikiPushPikiState::procAnimMsg(Piki*, MsgAnim*)
  * Size:	00004C
  */
 PikiBuryState::PikiBuryState()
+    : PikiState(PIKISTATE_Bury, "BURY")
 {
 	/*
 	.loc_0x0:
@@ -10708,6 +10737,7 @@ void PikiBuryState::cleanup(Piki*) { }
  * Size:	000050
  */
 PikiNukareWaitState::PikiNukareWaitState()
+    : PikiState(PIKISTATE_NukareWait, "NUKAREWAIT")
 {
 	/*
 	.loc_0x0:
@@ -10896,6 +10926,7 @@ void PikiNukareWaitState::cleanup(Piki*) { }
  * Size:	00004C
  */
 PikiNukareState::PikiNukareState()
+    : PikiState(PIKISTATE_Nukare, "NUKARE")
 {
 	/*
 	.loc_0x0:
@@ -11284,6 +11315,7 @@ void PikiNukareState::procAnimMsg(Piki*, MsgAnim*)
  * Size:	000050
  */
 PikiAutoNukiState::PikiAutoNukiState()
+    : PikiState(PIKISTATE_AutoNuki, "AUTONUKI")
 {
 	/*
 	.loc_0x0:
@@ -11493,6 +11525,7 @@ void PikiAutoNukiState::procAnimMsg(Piki*, MsgAnim*)
  * Size:	00004C
  */
 PikiPressedState::PikiPressedState()
+    : PikiState(PIKISTATE_Pressed, "PRESSED")
 {
 	/*
 	.loc_0x0:
@@ -11679,6 +11712,7 @@ void PikiPressedState::cleanup(Piki*) { }
  * Size:	00004C
  */
 PikiDyingState::PikiDyingState()
+    : PikiState(PIKISTATE_Dying, "DYING")
 {
 	/*
 	.loc_0x0:
@@ -11883,6 +11917,7 @@ void PikiDyingState::procAnimMsg(Piki*, MsgAnim*)
  * Size:	00004C
  */
 PikiDeadState::PikiDeadState()
+    : PikiState(PIKISTATE_Dead, "DEAD")
 {
 	/*
 	.loc_0x0:
@@ -12011,6 +12046,9 @@ void PikiDeadState::cleanup(Piki*)
  * Size:	000060
  */
 PikiEmotionState::PikiEmotionState()
+    : PikiState(PIKISTATE_Emotion, "EMOTION")
+    , _10(0.0f)
+    , _1D(0)
 {
 	/*
 	.loc_0x0:
@@ -12800,77 +12838,77 @@ void PikiEmotionState::procAnimMsg(Piki*, MsgAnim*)
  * Address:	800D880C
  * Size:	000008
  */
-u32 PikiDeadState::useLookUpdate() { return 0x0; }
+bool PikiDeadState::useLookUpdate() { return false; }
 
 /*
  * --INFO--
  * Address:	800D8814
  * Size:	000008
  */
-u32 PikiDyingState::useLookUpdate() { return 0x0; }
+bool PikiDyingState::useLookUpdate() { return false; }
 
 /*
  * --INFO--
  * Address:	800D881C
  * Size:	000008
  */
-u32 PikiPressedState::useLookUpdate() { return 0x0; }
+bool PikiPressedState::useLookUpdate() { return false; }
 
 /*
  * --INFO--
  * Address:	800D8824
  * Size:	000008
  */
-u32 PikiAutoNukiState::useLookUpdate() { return 0x0; }
+bool PikiAutoNukiState::useLookUpdate() { return false; }
 
 /*
  * --INFO--
  * Address:	800D882C
  * Size:	000008
  */
-u32 PikiNukareState::useLookUpdate() { return 0x0; }
+bool PikiNukareState::useLookUpdate() { return false; }
 
 /*
  * --INFO--
  * Address:	800D8834
  * Size:	000008
  */
-u32 PikiNukareWaitState::useLookUpdate() { return 0x0; }
+bool PikiNukareWaitState::useLookUpdate() { return false; }
 
 /*
  * --INFO--
  * Address:	800D883C
  * Size:	000008
  */
-u32 PikiGrowupState::useLookUpdate() { return 0x0; }
+bool PikiGrowupState::useLookUpdate() { return false; }
 
 /*
  * --INFO--
  * Address:	800D8844
  * Size:	000008
  */
-u32 PikiKinokoChangeState::useLookUpdate() { return 0x0; }
+bool PikiKinokoChangeState::useLookUpdate() { return false; }
 
 /*
  * --INFO--
  * Address:	800D884C
  * Size:	000008
  */
-u32 PikiGrowState::useLookUpdate() { return 0x0; }
+bool PikiGrowState::useLookUpdate() { return false; }
 
 /*
  * --INFO--
  * Address:	800D8854
  * Size:	000008
  */
-u32 PikiNormalState::collideAI() { return 0x1; }
+bool PikiNormalState::collideAI() { return true; }
 
 /*
  * --INFO--
  * Address:	800D885C
  * Size:	000008
  */
-u32 PikiNormalState::freeAI() { return 0x1; }
+bool PikiNormalState::freeAI() { return true; }
 
 /*
  * --INFO--

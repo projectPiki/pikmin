@@ -1,4 +1,7 @@
-#include "types.h"
+#include "Animator.h"
+#include "Joint.h"
+#include "Mesh.h"
+#include "Shape.h"
 
 /*
  * --INFO--

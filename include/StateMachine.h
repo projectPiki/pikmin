@@ -11,8 +11,8 @@ struct Msg;
  */
 template <typename T>
 struct AState : public Receiver<T> {
-	inline AState(int p1)
-	    : _04(p1)
+	inline AState(int stateID)
+	    : mStateID(stateID)
 	    , _08(0)
 	{
 	}
@@ -25,8 +25,8 @@ struct AState : public Receiver<T> {
 	virtual void transit(T*, int); // _4C
 
 	// _00 = VTBL
-	int _04; // _04
-	u32 _08; // _08, unknown
+	int mStateID; // _04
+	u32 _08;      // _08, unknown
 };
 
 /**
