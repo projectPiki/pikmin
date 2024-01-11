@@ -678,8 +678,8 @@ bool SAICondition::satisfy(AICreature*) { return true; }
  * Address:	8007D9E8
  * Size:	00010C
  */
-SAIState::SAIState(int p1)
-    : AState<AICreature>(p1)
+SAIState::SAIState(int stateID)
+    : AState<AICreature>(stateID)
 {
 	/*
 	.loc_0x0:

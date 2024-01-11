@@ -7,9 +7,11 @@
  * @brief TODO
  */
 struct ayuID {
-	void Set(char* id);
+	inline ayuID(char* id) { Set(id); }
 
-	char* mID; // _00
+	void Set(char* id) { mID = *(u32*)id; }
+
+	u32 mID; // _00
 };
 
 /**

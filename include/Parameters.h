@@ -24,6 +24,11 @@ struct BaseParm {
  * @brief TODO
  */
 struct Parameters {
+	inline Parameters()
+	    : mHead(nullptr)
+	{
+	}
+
 	void write(RandomAccessStream&);
 	void read(RandomAccessStream&);
 
@@ -35,10 +40,16 @@ struct Parameters {
 
 /**
  * @brief TODO
+ *
+ * @note Size: 0xC + sizeof(T) (so usually 0x10).
  */
 template <typename T>
 struct Parm : public BaseParm {
-	Parm(Parameters*, T, T, T, ayuID, char*);
+	Parm(Parameters* owner, T value, T min, T max, ayuID id, char* str)
+	    : BaseParm(owner, id)
+	    , mValue(value)
+	{
+	}
 
 	virtual int size();                             // _08
 	virtual void write(struct RandomAccessStream&); // _0C

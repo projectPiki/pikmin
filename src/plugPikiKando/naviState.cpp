@@ -11386,26 +11386,6 @@ void NaviLockState::cleanup(Navi*) { }
 NaviClearState::NaviClearState()
     : NaviState(NAVISTATE_Clear)
 {
-	/*
-	.loc_0x0:
-	  lis       r4, 0x802C
-	  addi      r0, r4, 0x19F8
-	  lis       r4, 0x802C
-	  stw       r0, 0x0(r3)
-	  addi      r0, r4, 0x19A8
-	  stw       r0, 0x0(r3)
-	  li        r0, 0x22
-	  lis       r5, 0x802C
-	  stw       r0, 0x4(r3)
-	  li        r0, 0
-	  addi      r5, r5, 0x1954
-	  stw       r0, 0x8(r3)
-	  lis       r4, 0x802C
-	  addi      r0, r4, 0xA28
-	  stw       r5, 0x0(r3)
-	  stw       r0, 0x0(r3)
-	  blr
-	*/
 }
 
 /*
@@ -11519,26 +11499,6 @@ void NaviClearState::cleanup(Navi*) { }
 NaviIroIroState::NaviIroIroState()
     : NaviState(NAVISTATE_IroIro)
 {
-	/*
-	.loc_0x0:
-	  lis       r4, 0x802C
-	  addi      r0, r4, 0x19F8
-	  lis       r4, 0x802C
-	  stw       r0, 0x0(r3)
-	  addi      r0, r4, 0x19A8
-	  stw       r0, 0x0(r3)
-	  li        r0, 0x23
-	  lis       r5, 0x802C
-	  stw       r0, 0x4(r3)
-	  li        r0, 0
-	  addi      r5, r5, 0x1954
-	  stw       r0, 0x8(r3)
-	  lis       r4, 0x802C
-	  addi      r0, r4, 0x9A8
-	  stw       r5, 0x0(r3)
-	  stw       r0, 0x0(r3)
-	  blr
-	*/
 }
 
 /*
@@ -11582,26 +11542,6 @@ void NaviIroIroState::cleanup(Navi*) { }
 NaviDeadState::NaviDeadState()
     : NaviState(NAVISTATE_Dead)
 {
-	/*
-	.loc_0x0:
-	  lis       r4, 0x802C
-	  addi      r0, r4, 0x19F8
-	  lis       r4, 0x802C
-	  stw       r0, 0x0(r3)
-	  addi      r0, r4, 0x19A8
-	  stw       r0, 0x0(r3)
-	  li        r0, 0x1D
-	  lis       r5, 0x802C
-	  stw       r0, 0x4(r3)
-	  li        r0, 0
-	  addi      r5, r5, 0x1954
-	  stw       r0, 0x8(r3)
-	  lis       r4, 0x802C
-	  addi      r0, r4, 0x928
-	  stw       r5, 0x0(r3)
-	  stw       r0, 0x0(r3)
-	  blr
-	*/
 }
 
 /*
@@ -11781,26 +11721,6 @@ void NaviDeadState::procAnimMsg(Navi*, MsgAnim*)
 NaviPikiZeroState::NaviPikiZeroState()
     : NaviState(NAVISTATE_PikiZero)
 {
-	/*
-	.loc_0x0:
-	  lis       r4, 0x802C
-	  addi      r0, r4, 0x19F8
-	  lis       r4, 0x802C
-	  stw       r0, 0x0(r3)
-	  addi      r0, r4, 0x19A8
-	  stw       r0, 0x0(r3)
-	  li        r0, 0x21
-	  lis       r5, 0x802C
-	  stw       r0, 0x4(r3)
-	  li        r0, 0
-	  addi      r5, r5, 0x1954
-	  stw       r0, 0x8(r3)
-	  lis       r4, 0x802C
-	  addi      r0, r4, 0x8A8
-	  stw       r5, 0x0(r3)
-	  stw       r0, 0x0(r3)
-	  blr
-	*/
 }
 
 /*
@@ -11913,36 +11833,6 @@ NaviStartingState::NaviStartingState()
     , _20(0.0f)
     , _34(0.0f)
 {
-	/*
-	.loc_0x0:
-	  lis       r4, 0x802C
-	  addi      r0, r4, 0x19F8
-	  lis       r4, 0x802C
-	  stw       r0, 0x0(r3)
-	  addi      r0, r4, 0x19A8
-	  stw       r0, 0x0(r3)
-	  li        r0, 0x17
-	  lis       r5, 0x802C
-	  stw       r0, 0x4(r3)
-	  li        r0, 0
-	  addi      r5, r5, 0x1954
-	  stw       r0, 0x8(r3)
-	  lis       r4, 0x802C
-	  addi      r0, r4, 0x824
-	  stw       r5, 0x0(r3)
-	  stw       r0, 0x0(r3)
-	  lfs       f0, -0x6268(r2)
-	  stfs      f0, 0x1C(r3)
-	  stfs      f0, 0x18(r3)
-	  stfs      f0, 0x14(r3)
-	  stfs      f0, 0x28(r3)
-	  stfs      f0, 0x24(r3)
-	  stfs      f0, 0x20(r3)
-	  stfs      f0, 0x3C(r3)
-	  stfs      f0, 0x38(r3)
-	  stfs      f0, 0x34(r3)
-	  blr
-	*/
 }
 
 /*
@@ -12472,26 +12362,6 @@ void NaviStartingState::cleanup(Navi*)
 NaviPartsAccessState::NaviPartsAccessState()
     : NaviState(NAVISTATE_PartsAccess)
 {
-	/*
-	.loc_0x0:
-	  lis       r4, 0x802C
-	  addi      r0, r4, 0x19F8
-	  lis       r4, 0x802C
-	  stw       r0, 0x0(r3)
-	  addi      r0, r4, 0x19A8
-	  stw       r0, 0x0(r3)
-	  li        r0, 0xF
-	  lis       r5, 0x802C
-	  stw       r0, 0x4(r3)
-	  li        r0, 0
-	  addi      r5, r5, 0x1954
-	  stw       r0, 0x8(r3)
-	  lis       r4, 0x802C
-	  addi      r0, r4, 0x7A0
-	  stw       r5, 0x0(r3)
-	  stw       r0, 0x0(r3)
-	  blr
-	*/
 }
 
 /*
@@ -12704,26 +12574,6 @@ void NaviPartsAccessState::procAnimMsg(Navi*, MsgAnim*)
 NaviUfoAccessState::NaviUfoAccessState()
     : NaviState(NAVISTATE_UfoAccess)
 {
-	/*
-	.loc_0x0:
-	  lis       r4, 0x802C
-	  addi      r0, r4, 0x19F8
-	  lis       r4, 0x802C
-	  stw       r0, 0x0(r3)
-	  addi      r0, r4, 0x19A8
-	  stw       r0, 0x0(r3)
-	  li        r0, 0xE
-	  lis       r5, 0x802C
-	  stw       r0, 0x4(r3)
-	  li        r0, 0
-	  addi      r5, r5, 0x1954
-	  stw       r0, 0x8(r3)
-	  lis       r4, 0x802C
-	  addi      r0, r4, 0x718
-	  stw       r5, 0x0(r3)
-	  stw       r0, 0x0(r3)
-	  blr
-	*/
 }
 
 /*

@@ -1,4 +1,4 @@
-#include "types.h"
+#include "Generator.h"
 
 /*
  * --INFO--
@@ -601,24 +601,3 @@ void GenObject::init(Generator*) { }
  * Size:	000004
  */
 void GenObject::update(Generator*) { }
-
-/*
- * --INFO--
- * Address:	8005D6EC
- * Size:	000004
- */
-void GenBase::doWrite(RandomAccessStream&) { }
-
-/*
- * --INFO--
- * Address:	8005D6F0
- * Size:	000004
- */
-void GenBase::update() { }
-
-/*
- * --INFO--
- * Address:	8005D6F4
- * Size:	000004
- */
-void GenBase::render(Graphics&) { }

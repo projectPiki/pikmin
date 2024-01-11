@@ -1,4 +1,7 @@
-#include "types.h"
+#include "Animator.h"
+#include "Ayu.h"
+#include "Parameters.h"
+#include "String.h"
 
 /*
  * --INFO--
@@ -979,25 +982,10 @@ AnimMgr::AnimMgr(Shape*, char*, int, char*)
 
 /*
  * --INFO--
- * Address:	80050AD8
- * Size:	00000C
- */
-void ayuID::Set(char*)
-{
-	/*
-	.loc_0x0:
-	  lwz       r0, 0x0(r4)
-	  stw       r0, 0x0(r3)
-	  blr
-	*/
-}
-
-/*
- * --INFO--
  * Address:	80050AE4
  * Size:	000020
  */
-void operator new[](u32)
+void* operator new[](u32)
 {
 	/*
 	.loc_0x0:
@@ -1181,7 +1169,7 @@ void AnimMgr::loadAnims(char*, char*)
  * Address:	80050CEC
  * Size:	00008C
  */
-void AnimMgr::addAnimation(char*, bool)
+AnimInfo* AnimMgr::addAnimation(char*, bool)
 {
 	/*
 	.loc_0x0:
@@ -1851,7 +1839,7 @@ void Animator::animate(f32)
 void Animator::changeContext(AnimContext* a1)
 {
 	// Generated from stw r4, 0x4(r3)
-	_04 = a1;
+	// _04 = a1;
 }
 
 /*
@@ -1859,18 +1847,18 @@ void Animator::changeContext(AnimContext* a1)
  * Address:	80051460
  * Size:	000008
  */
-u32 Parm<String>::size() { return 0x8; }
+int Parm<String>::size() { return sizeof(String); }
 
 /*
  * --INFO--
  * Address:	80051468
  * Size:	000008
  */
-u32 Parm<f32>::size() { return 0x4; }
+int Parm<f32>::size() { return sizeof(f32); }
 
 /*
  * --INFO--
  * Address:	80051470
  * Size:	000008
  */
-u32 Parm<int>::size() { return 0x4; }
+int Parm<int>::size() { return sizeof(int); }

@@ -33,6 +33,11 @@ struct SAIArrow : public CoreNode {
  * @brief TODO
  */
 struct SAICondition : public CoreNode {
+	inline SAICondition()
+	    : CoreNode()
+	{
+	}
+
 	virtual bool satisfy(AICreature*); // _10 (weak)
 
 	// _00     = VTBL
@@ -61,9 +66,12 @@ struct SAIState : public AState<AICreature> {
 
 	// _00     = VTBL
 	// _00-_0C = AState
+	char* mName;             // _0C, probably
 	SAIArrow mArrow;         // _0C
 	int _24;                 // _24
-	SAICondition mCondition; // _28
+	u32 _28;                 // _28, unknown
+	u32 _2C;                 // _2C, unknown
+	SAICondition mCondition; // _30
 };
 
 /**

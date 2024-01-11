@@ -1,4 +1,9 @@
-#include "types.h"
+#include "Generator.h"
+#include "Graphics.h"
+#include "system.h"
+
+static char file[] = __FILE__;
+static char name[] = "generator";
 
 /*
  * --INFO--
@@ -65,23 +70,12 @@ void sprintID(char*, u32)
  * Address:	800DACB4
  * Size:	000030
  */
-GenBase::GenBase(u32, char*, char*)
+GenBase::GenBase(u32 id, char* type, char* name)
+    : mID(id)
+    , mType(type)
+    , mName(name)
 {
-	/*
-	.loc_0x0:
-	  li        r0, 0
-	  lis       r7, 0x802C
-	  stw       r0, 0x0(r3)
-	  subi      r0, r7, 0x542C
-	  stw       r0, 0x4(r3)
-	  lis       r7, 0x5F5F
-	  addi      r0, r7, 0x5F5F
-	  stw       r4, 0x8(r3)
-	  stw       r5, 0x10(r3)
-	  stw       r6, 0x14(r3)
-	  stw       r0, 0xC(r3)
-	  blr
-	*/
+	mVersion = '____';
 }
 
 /*
@@ -96,26 +90,12 @@ void GenBase::writeVersion(RandomAccessStream&)
 
 /*
  * --INFO--
- * Address:	800DACE4
- * Size:	00000C
- */
-void GenBase::getLatestVersion()
-{
-	/*
-	.loc_0x0:
-	  lis       r3, 0x7564
-	  addi      r3, r3, 0x6566
-	  blr
-	*/
-}
-
-/*
- * --INFO--
  * Address:	........
  * Size:	00016C
  */
 void GenBase::write(RandomAccessStream&)
 {
+	getLatestVersion();
 	// UNUSED FUNCTION
 }
 
@@ -124,40 +104,14 @@ void GenBase::write(RandomAccessStream&)
  * Address:	800DACF0
  * Size:	000020
  */
-void GenBase::ramSaveParameters(RandomAccessStream&)
-{
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  bl        -0x7C210
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
-}
+void GenBase::ramSaveParameters(RandomAccessStream& output) { Parameters::write(output); }
 
 /*
  * --INFO--
  * Address:	800DAD10
  * Size:	000020
  */
-void GenBase::ramLoadParameters(RandomAccessStream&)
-{
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  bl        -0x7C184
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
-}
+void GenBase::ramLoadParameters(RandomAccessStream& input) { Parameters::read(input); }
 
 /*
  * --INFO--
@@ -174,94 +128,18 @@ void GenBase::readVersion(RandomAccessStream&)
  * Address:	........
  * Size:	000110
  */
-void GenBase::read(RandomAccessStream&)
+void GenBase::read(RandomAccessStream& input)
 {
+	doRead(input);
 	// UNUSED FUNCTION
 }
-
-/*
- * --INFO--
- * Address:	800DAD30
- * Size:	000004
- */
-void GenBase::doRead(RandomAccessStream&) { }
 
 /*
  * --INFO--
  * Address:	800DAD34
  * Size:	0000FC
  */
-void makeObjectPiki()
-{
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  li        r3, 0x38
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x38(r1)
-	  stw       r31, 0x34(r1)
-	  stw       r30, 0x30(r1)
-	  stw       r29, 0x2C(r1)
-	  bl        -0x93D4C
-	  mr.       r30, r3
-	  beq-      .loc_0xDC
-	  li        r31, 0
-	  lis       r3, 0x802C
-	  stw       r31, 0x0(r30)
-	  subi      r0, r3, 0x542C
-	  lis       r3, 0x7069
-	  stw       r0, 0x4(r30)
-	  addi      r0, r3, 0x6B69
-	  lis       r3, 0x802C
-	  stw       r0, 0x8(r30)
-	  subi      r0, r3, 0x59C4
-	  lis       r3, 0x802C
-	  stw       r0, 0x10(r30)
-	  subi      r0, r3, 0x59B8
-	  lis       r3, 0x5F5F
-	  stw       r0, 0x14(r30)
-	  addi      r0, r3, 0x5F5F
-	  lis       r3, 0x802C
-	  stw       r0, 0xC(r30)
-	  subi      r0, r3, 0x5490
-	  lis       r3, 0x802C
-	  stw       r0, 0x4(r30)
-	  subi      r0, r3, 0x565C
-	  stw       r0, 0x4(r30)
-	  addi      r5, r1, 0x14
-	  addi      r4, r30, 0
-	  lwz       r0, -0x3A70(r13)
-	  addi      r3, r30, 0x18
-	  stw       r0, 0x1C(r1)
-	  lwz       r0, 0x1C(r1)
-	  stw       r0, 0x14(r1)
-	  bl        -0x7C354
-	  lis       r3, 0x802A
-	  addi      r29, r3, 0x60C4
-	  stw       r29, 0x20(r30)
-	  addi      r5, r1, 0x10
-	  addi      r4, r30, 0
-	  stw       r31, 0x24(r30)
-	  addi      r3, r30, 0x28
-	  lwz       r0, -0x3A6C(r13)
-	  stw       r0, 0x24(r1)
-	  lwz       r0, 0x24(r1)
-	  stw       r0, 0x10(r1)
-	  bl        -0x7C384
-	  stw       r29, 0x30(r30)
-	  stw       r31, 0x34(r30)
-
-	.loc_0xDC:
-	  mr        r3, r30
-	  lwz       r0, 0x3C(r1)
-	  lwz       r31, 0x34(r1)
-	  lwz       r30, 0x30(r1)
-	  lwz       r29, 0x2C(r1)
-	  addi      r1, r1, 0x38
-	  mtlr      r0
-	  blr
-	*/
-}
+static GenObjectPiki* makeObjectPiki() { return new GenObjectPiki; }
 
 /*
  * --INFO--
@@ -288,7 +166,7 @@ void GenObjectFactory::createInstance()
  * Address:	800DAE30
  * Size:	000050
  */
-void GenObject::getLatestVersion()
+u32 GenObject::getLatestVersion()
 {
 	/*
 	.loc_0x0:
@@ -324,207 +202,23 @@ void GenObject::getLatestVersion()
  * Address:	800DAE80
  * Size:	00017C
  */
-void makeTypeOne()
-{
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  li        r3, 0x68
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x68(r1)
-	  stw       r31, 0x64(r1)
-	  stw       r30, 0x60(r1)
-	  stw       r29, 0x5C(r1)
-	  bl        -0x93E98
-	  mr.       r30, r3
-	  beq-      .loc_0x15C
-	  li        r31, 0
-	  lis       r3, 0x802C
-	  stw       r31, 0x0(r30)
-	  subi      r0, r3, 0x542C
-	  lis       r3, 0x316F
-	  stw       r0, 0x4(r30)
-	  addi      r0, r3, 0x6E65
-	  lis       r3, 0x802C
-	  stw       r0, 0x8(r30)
-	  subi      r0, r3, 0x59AC
-	  lis       r3, 0x802C
-	  stw       r0, 0x10(r30)
-	  subi      r0, r3, 0x59A0
-	  lis       r3, 0x5F5F
-	  stw       r0, 0x14(r30)
-	  addi      r0, r3, 0x5F5F
-	  lis       r3, 0x802C
-	  stw       r0, 0xC(r30)
-	  subi      r0, r3, 0x54C8
-	  stw       r0, 0x4(r30)
-	  addi      r3, r1, 0x34
-	  subi      r4, r13, 0x3A68
-	  bl        -0x8A428
-	  lwz       r0, 0x34(r1)
-	  addi      r5, r1, 0x20
-	  addi      r4, r30, 0
-	  stw       r0, 0x20(r1)
-	  addi      r3, r30, 0x18
-	  bl        -0x7C498
-	  lis       r3, 0x802A
-	  addi      r29, r3, 0x60C4
-	  stw       r29, 0x20(r30)
-	  addi      r3, r1, 0x3C
-	  subi      r4, r13, 0x3A64
-	  stw       r31, 0x24(r30)
-	  bl        -0x8A45C
-	  lwz       r0, 0x3C(r1)
-	  addi      r5, r1, 0x1C
-	  addi      r4, r30, 0
-	  stw       r0, 0x1C(r1)
-	  addi      r3, r30, 0x28
-	  bl        -0x7C4CC
-	  stw       r29, 0x30(r30)
-	  lis       r3, 0x802C
-	  subi      r0, r3, 0x56E0
-	  stw       r31, 0x34(r30)
-	  addi      r5, r1, 0x2C
-	  addi      r4, r30, 0
-	  stw       r0, 0x4(r30)
-	  addi      r3, r30, 0x38
-	  lwz       r0, -0x3A70(r13)
-	  stw       r0, 0x44(r1)
-	  lwz       r0, 0x44(r1)
-	  stw       r0, 0x2C(r1)
-	  bl        -0x7C500
-	  stw       r29, 0x40(r30)
-	  addi      r5, r1, 0x28
-	  addi      r4, r30, 0
-	  stw       r31, 0x44(r30)
-	  addi      r3, r30, 0x48
-	  lwz       r0, -0x3A6C(r13)
-	  stw       r0, 0x4C(r1)
-	  lwz       r0, 0x4C(r1)
-	  stw       r0, 0x28(r1)
-	  bl        -0x7C528
-	  stw       r29, 0x50(r30)
-	  addi      r5, r1, 0x24
-	  addi      r4, r30, 0
-	  stw       r31, 0x54(r30)
-	  addi      r3, r30, 0x58
-	  lwz       r0, -0x3A60(r13)
-	  stw       r0, 0x54(r1)
-	  lwz       r0, 0x54(r1)
-	  stw       r0, 0x24(r1)
-	  bl        -0x7C550
-	  stw       r29, 0x60(r30)
-	  stw       r31, 0x64(r30)
-
-	.loc_0x15C:
-	  mr        r3, r30
-	  lwz       r0, 0x6C(r1)
-	  lwz       r31, 0x64(r1)
-	  lwz       r30, 0x60(r1)
-	  lwz       r29, 0x5C(r1)
-	  addi      r1, r1, 0x68
-	  mtlr      r0
-	  blr
-	*/
-}
+static GenTypeOne* makeTypeOne() { return new GenTypeOne; }
 
 /*
  * --INFO--
  * Address:	800DAFFC
  * Size:	000130
  */
-void makeTypeAtOnce()
-{
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  li        r3, 0x48
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x48(r1)
-	  stw       r31, 0x44(r1)
-	  stw       r30, 0x40(r1)
-	  stw       r29, 0x3C(r1)
-	  bl        -0x94014
-	  mr.       r30, r3
-	  beq-      .loc_0x110
-	  li        r31, 0
-	  lis       r3, 0x802C
-	  stw       r31, 0x0(r30)
-	  subi      r0, r3, 0x542C
-	  lis       r3, 0x6174
-	  stw       r0, 0x4(r30)
-	  addi      r0, r3, 0x6F6E
-	  lis       r3, 0x802C
-	  stw       r0, 0x8(r30)
-	  subi      r0, r3, 0x59AC
-	  lis       r3, 0x802C
-	  stw       r0, 0x10(r30)
-	  subi      r0, r3, 0x5990
-	  lis       r3, 0x5F5F
-	  stw       r0, 0x14(r30)
-	  addi      r0, r3, 0x5F5F
-	  lis       r3, 0x802C
-	  stw       r0, 0xC(r30)
-	  subi      r0, r3, 0x54C8
-	  stw       r0, 0x4(r30)
-	  addi      r3, r1, 0x24
-	  subi      r4, r13, 0x3A68
-	  bl        -0x8A5A4
-	  lwz       r0, 0x24(r1)
-	  addi      r5, r1, 0x18
-	  addi      r4, r30, 0
-	  stw       r0, 0x18(r1)
-	  addi      r3, r30, 0x18
-	  bl        -0x7C614
-	  lis       r3, 0x802A
-	  addi      r29, r3, 0x60C4
-	  stw       r29, 0x20(r30)
-	  addi      r3, r1, 0x2C
-	  subi      r4, r13, 0x3A64
-	  stw       r31, 0x24(r30)
-	  bl        -0x8A5D8
-	  lwz       r0, 0x2C(r1)
-	  addi      r5, r1, 0x14
-	  addi      r4, r30, 0
-	  stw       r0, 0x14(r1)
-	  addi      r3, r30, 0x28
-	  bl        -0x7C648
-	  stw       r29, 0x30(r30)
-	  lis       r3, 0x802C
-	  subi      r0, r3, 0x5740
-	  stw       r31, 0x34(r30)
-	  addi      r5, r1, 0x1C
-	  addi      r4, r30, 0
-	  stw       r0, 0x4(r30)
-	  addi      r3, r30, 0x38
-	  lwz       r0, -0x3A70(r13)
-	  stw       r0, 0x34(r1)
-	  lwz       r0, 0x34(r1)
-	  stw       r0, 0x1C(r1)
-	  bl        -0x7C67C
-	  stw       r29, 0x40(r30)
-	  li        r0, 0x1
-	  stw       r0, 0x44(r30)
-
-	.loc_0x110:
-	  mr        r3, r30
-	  lwz       r0, 0x4C(r1)
-	  lwz       r31, 0x44(r1)
-	  lwz       r30, 0x40(r1)
-	  lwz       r29, 0x3C(r1)
-	  addi      r1, r1, 0x48
-	  mtlr      r0
-	  blr
-	*/
-}
+static GenTypeAtOnce* makeTypeAtOnce() { return new GenTypeAtOnce; }
 
 /*
  * --INFO--
  * Address:	800DB12C
  * Size:	00015C
  */
-void makeTypeInitRand()
+static GenTypeInitRand* makeTypeInitRand()
 {
+	return new GenTypeInitRand;
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -644,7 +338,7 @@ void GenTypeFactory::createInstance()
  * Address:	800DB288
  * Size:	000050
  */
-void GenType::getLatestVersion()
+u32 GenType::getLatestVersion()
 {
 	/*
 	.loc_0x0:
@@ -1162,120 +856,14 @@ void GenArea::doRead(RandomAccessStream&)
  * Address:	800DB880
  * Size:	0000D8
  */
-void makeCircleArea()
-{
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  li        r3, 0x34
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x20(r1)
-	  stw       r31, 0x1C(r1)
-	  bl        -0x94890
-	  addi      r31, r3, 0
-	  mr.       r4, r31
-	  beq-      .loc_0xC0
-	  li        r0, 0
-	  lis       r3, 0x802C
-	  stw       r0, 0x0(r31)
-	  subi      r0, r3, 0x542C
-	  lis       r3, 0x6369
-	  stw       r0, 0x4(r31)
-	  addi      r0, r3, 0x7263
-	  lis       r3, 0x802C
-	  stw       r0, 0x8(r31)
-	  subi      r0, r3, 0x5930
-	  lis       r3, 0x802C
-	  stw       r0, 0x10(r31)
-	  subi      r0, r3, 0x5924
-	  lis       r3, 0x5F5F
-	  stw       r0, 0x14(r31)
-	  addi      r0, r3, 0x5F5F
-	  lis       r3, 0x802C
-	  stw       r0, 0xC(r31)
-	  subi      r0, r3, 0x5538
-	  stw       r0, 0x4(r31)
-	  lis       r3, 0x802C
-	  subi      r0, r3, 0x5880
-	  lfs       f0, -0x6790(r2)
-	  addi      r5, r1, 0xC
-	  addi      r3, r4, 0x24
-	  stfs      f0, 0x20(r31)
-	  stfs      f0, 0x1C(r31)
-	  stfs      f0, 0x18(r31)
-	  stw       r0, 0x4(r31)
-	  lwz       r0, -0x3A70(r13)
-	  stw       r0, 0x14(r1)
-	  lwz       r0, 0x14(r1)
-	  stw       r0, 0xC(r1)
-	  bl        -0x7CEA8
-	  lis       r3, 0x802A
-	  addi      r0, r3, 0x6098
-	  stw       r0, 0x2C(r31)
-	  lfs       f0, -0x678C(r2)
-	  stfs      f0, 0x30(r31)
-
-	.loc_0xC0:
-	  mr        r3, r31
-	  lwz       r0, 0x24(r1)
-	  lwz       r31, 0x1C(r1)
-	  addi      r1, r1, 0x20
-	  mtlr      r0
-	  blr
-	*/
-}
+static GenAreaCircle* makeCircleArea() { return new GenAreaCircle; }
 
 /*
  * --INFO--
  * Address:	800DB958
  * Size:	000098
  */
-void makePointArea()
-{
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  li        r3, 0x24
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  bl        -0x94964
-	  cmplwi    r3, 0
-	  beq-      .loc_0x88
-	  li        r0, 0
-	  lis       r4, 0x802C
-	  stw       r0, 0x0(r3)
-	  subi      r0, r4, 0x542C
-	  lis       r4, 0x7069
-	  stw       r0, 0x4(r3)
-	  addi      r0, r4, 0x6E74
-	  lis       r4, 0x802C
-	  stw       r0, 0x8(r3)
-	  subi      r0, r4, 0x5930
-	  lis       r4, 0x802C
-	  stw       r0, 0x10(r3)
-	  subi      r0, r4, 0x5914
-	  lis       r4, 0x5F5F
-	  stw       r0, 0x14(r3)
-	  addi      r0, r4, 0x5F5F
-	  lis       r4, 0x802C
-	  stw       r0, 0xC(r3)
-	  subi      r0, r4, 0x5538
-	  stw       r0, 0x4(r3)
-	  lis       r4, 0x802C
-	  subi      r0, r4, 0x581C
-	  lfs       f0, -0x6790(r2)
-	  stfs      f0, 0x20(r3)
-	  stfs      f0, 0x1C(r3)
-	  stfs      f0, 0x18(r3)
-	  stw       r0, 0x4(r3)
-
-	.loc_0x88:
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
-}
+static GenAreaPoint* makePointArea() { return new GenAreaPoint; }
 
 /*
  * --INFO--
@@ -1302,7 +890,7 @@ void GenAreaFactory::createInstance()
  * Address:	800DB9F0
  * Size:	000050
  */
-void GenArea::getLatestVersion()
+u32 GenArea::getLatestVersion()
 {
 	/*
 	.loc_0x0:
@@ -1623,7 +1211,7 @@ void Generator::updateUseList()
  * Address:	800DBDA4
  * Size:	000038
  */
-void Generator::isExpired()
+bool Generator::isExpired()
 {
 	/*
 	.loc_0x0:
@@ -2692,7 +2280,7 @@ void Generator::read(RandomAccessStream&)
  * Address:	800DCB10
  * Size:	00006C
  */
-void Factory<GenType>::create(u32)
+GenType* Factory<GenType>::create(u32)
 {
 	/*
 	.loc_0x0:
@@ -2739,7 +2327,7 @@ void Factory<GenType>::create(u32)
  * Address:	800DCB7C
  * Size:	00006C
  */
-void Factory<GenArea>::create(u32)
+GenArea* Factory<GenArea>::create(u32)
 {
 	/*
 	.loc_0x0:
@@ -2786,7 +2374,7 @@ void Factory<GenArea>::create(u32)
  * Address:	800DCBE8
  * Size:	00006C
  */
-void Factory<GenObject>::create(u32)
+GenObject* Factory<GenObject>::create(u32)
 {
 	/*
 	.loc_0x0:
@@ -4654,14 +4242,7 @@ void GenTypeOne::render(Graphics&, Generator*)
  * Address:	800DE390
  * Size:	000008
  */
-void GenTypeAtOnce::getMaxCount()
-{
-	/*
-	.loc_0x0:
-	  lwz       r3, 0x44(r3)
-	  blr
-	*/
-}
+int GenTypeAtOnce::getMaxCount() { return mMaxCount(); }
 
 /*
  * --INFO--
@@ -4837,14 +4418,7 @@ void GenTypeAtOnce::setBirthInfo(BirthInfo&, Generator*)
  * Address:	800DE5B4
  * Size:	000008
  */
-void GenTypeInitRand::getMaxCount()
-{
-	/*
-	.loc_0x0:
-	  lwz       r3, 0x54(r3)
-	  blr
-	*/
-}
+int GenTypeInitRand::getMaxCount() { return mMaxCount(); }
 
 /*
  * --INFO--
@@ -5484,14 +5058,7 @@ void GeneratorList::updateUseList()
  * Address:	800DED48
  * Size:	000008
  */
-void GenAreaCircle::getRadius()
-{
-	/*
-	.loc_0x0:
-	  lfs       f1, 0x30(r3)
-	  blr
-	*/
-}
+f32 GenAreaCircle::getRadius() { return mRadius(); }
 
 /*
  * --INFO--
@@ -5505,14 +5072,7 @@ void GenArea::update(Generator*) { }
  * Address:	800DED54
  * Size:	000008
  */
-void GenArea::getRadius()
-{
-	/*
-	.loc_0x0:
-	  lfs       f1, -0x6790(r2)
-	  blr
-	*/
-}
+f32 GenArea::getRadius() { return 0.0f; }
 
 /*
  * --INFO--
@@ -5526,4 +5086,4 @@ void GenType::update(Generator*) { }
  * Address:	800DED60
  * Size:	000008
  */
-u32 GenTypeOne::getMaxCount() { return 0x1; }
+int GenTypeOne::getMaxCount() { return 1; }

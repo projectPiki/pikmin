@@ -93,6 +93,9 @@ struct AnimInfo : public CoreNode {
 	void updateAnimFlags();
 	void addKeyFrame();
 
+	// unused/inlined:
+	void initAnimData(AnimData*);
+
 	// _00     = VTBL
 	// _00-_14 = CoreNode
 	// TODO: members
@@ -164,6 +167,9 @@ struct AnimMgr : public CoreNode {
 	void loadAnims(char*, char*);
 	AnimInfo* addAnimation(char*, bool);
 	void countAnims();
+
+	// unused/inlined:
+	void findAnim(int);
 
 	// _00     = VTBL
 	// _00-_14 = CoreNode

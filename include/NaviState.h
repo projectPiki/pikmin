@@ -9,6 +9,9 @@
 
 struct NaviState;
 
+/**
+ * @brief TODO
+ */
 enum NaviStateID {
 	NAVISTATE_Walk        = 0,
 	NAVISTATE_Throw       = 1,
