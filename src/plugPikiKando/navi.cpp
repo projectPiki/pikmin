@@ -1,4 +1,7 @@
-#include "types.h"
+#include "Interactions.h"
+#include "Navi.h"
+#include "NaviProp.h"
+#include "NaviState.h"
 
 /*
  * --INFO--
@@ -361,7 +364,7 @@ void Navi::getPlatePikis()
 void Navi::startDayEnd()
 {
 	// Generated from stw r0, 0x6C0(r3)
-	_6C0 = 1;
+	// _6C0 = 1;
 }
 
 /*
@@ -1637,7 +1640,7 @@ NaviProp::NaviProp()
  * Address:	800F97C8
  * Size:	000020
  */
-void Navi::isBuried()
+bool Navi::isBuried()
 {
 	/*
 	.loc_0x0:
@@ -1659,7 +1662,7 @@ void Navi::isBuried()
  * Address:	800F97E8
  * Size:	000020
  */
-void Navi::isVisible()
+bool Navi::isVisible()
 {
 	/*
 	.loc_0x0:
@@ -1681,7 +1684,7 @@ void Navi::isVisible()
  * Address:	800F9808
  * Size:	000020
  */
-void Navi::isRopable()
+bool Navi::isRopable()
 {
 	/*
 	.loc_0x0:
@@ -1714,13 +1717,6 @@ void Navi::startDamage()
  * Size:	000004
  */
 void AState<Navi>::resume(Navi*) { }
-
-/*
- * --INFO--
- * Address:	800F982C
- * Size:	000008
- */
-u32 NaviState::invincible(Navi*) { return 0x0; }
 
 /*
  * --INFO--
@@ -1987,7 +1983,8 @@ void AState<Navi>::restart(Navi*) { }
  * Address:	800F9B8C
  * Size:	000668
  */
-Navi::Navi(CreatureProp*, int)
+Navi::Navi(CreatureProp* props, int)
+    : Creature(props)
 {
 	/*
 	.loc_0x0:
@@ -2799,7 +2796,7 @@ void Navi::getSize()
  * Address:	800FA69C
  * Size:	000048
  */
-void Navi::getiMass()
+f32 Navi::getiMass()
 {
 	/*
 	.loc_0x0:
@@ -6255,7 +6252,7 @@ void Navi::jumpCallback() { }
  * Address:	800FD2D4
  * Size:	00004C
  */
-void Navi::isAtari()
+bool Navi::isAtari()
 {
 	/*
 	.loc_0x0:
@@ -6292,7 +6289,7 @@ void Navi::isAtari()
  * Address:	800FD320
  * Size:	00004C
  */
-void Navi::ignoreAtari(Creature*)
+bool Navi::ignoreAtari(Creature*)
 {
 	/*
 	.loc_0x0:
@@ -9273,7 +9270,7 @@ void Navi::stimulate(Interaction&)
  * Address:	800FF9DC
  * Size:	0000C4
  */
-void InteractGeyzer::actNavi(Navi*)
+bool InteractGeyzer::actNavi(Navi*)
 {
 	/*
 	.loc_0x0:
@@ -9346,7 +9343,7 @@ void InteractGeyzer::actNavi(Navi*)
  * Address:	800FFAA0
  * Size:	0000FC
  */
-void InteractBury::actNavi(Navi*)
+bool InteractBury::actNavi(Navi*)
 {
 	/*
 	.loc_0x0:
@@ -9427,7 +9424,7 @@ void InteractBury::actNavi(Navi*)
  * Address:	800FFB9C
  * Size:	000094
  */
-void InteractWind::actNavi(Navi*)
+bool InteractWind::actNavi(Navi*)
 {
 	/*
 	.loc_0x0:
@@ -9480,7 +9477,7 @@ void InteractWind::actNavi(Navi*)
  * Address:	800FFC30
  * Size:	000114
  */
-void InteractSuck::actNavi(Navi*)
+bool InteractSuck::actNavi(Navi*)
 {
 	/*
 	.loc_0x0:
@@ -9569,7 +9566,7 @@ void InteractSuck::actNavi(Navi*)
  * Address:	800FFD44
  * Size:	0001A4
  */
-void InteractAttack::actNavi(Navi*)
+bool InteractAttack::actNavi(Navi*)
 {
 	/*
 	.loc_0x0:
@@ -9706,7 +9703,7 @@ void InteractAttack::actNavi(Navi*)
  * Address:	800FFEE8
  * Size:	000110
  */
-void InteractPress::actNavi(Navi*)
+bool InteractPress::actNavi(Navi*)
 {
 	/*
 	.loc_0x0:
@@ -9794,7 +9791,7 @@ void InteractPress::actNavi(Navi*)
  * Address:	800FFFF8
  * Size:	0001B8
  */
-void InteractSwallow::actNavi(Navi*)
+bool InteractSwallow::actNavi(Navi*)
 {
 	/*
 	.loc_0x0:
@@ -9936,7 +9933,7 @@ void InteractSwallow::actNavi(Navi*)
  * Address:	801001B0
  * Size:	000118
  */
-void InteractBomb::actNavi(Navi*)
+bool InteractBomb::actNavi(Navi*)
 {
 	/*
 	.loc_0x0:
@@ -10084,7 +10081,7 @@ void Navi::orimaDamaged()
  * Address:	80100348
  * Size:	000144
  */
-void InteractFlick::actNavi(Navi*)
+bool InteractFlick::actNavi(Navi*)
 {
 	/*
 	.loc_0x0:
@@ -10193,7 +10190,7 @@ void InteractFlick::actNavi(Navi*)
  * Address:	8010048C
  * Size:	0000F0
  */
-void InteractBubble::actNavi(Navi*)
+bool InteractBubble::actNavi(Navi*)
 {
 	/*
 	.loc_0x0:
@@ -10271,7 +10268,7 @@ void InteractBubble::actNavi(Navi*)
  * Address:	8010057C
  * Size:	0000F0
  */
-void InteractFire::actNavi(Navi*)
+bool InteractFire::actNavi(Navi*)
 {
 	/*
 	.loc_0x0:
@@ -11197,7 +11194,7 @@ void NaviProp::read(RandomAccessStream&)
  * Address:	801010FC
  * Size:	000008
  */
-u32 Navi::mayIstick() { return 0x0; }
+bool Navi::mayIstick() { return 0x0; }
 
 /*
  * --INFO--
@@ -11219,87 +11216,3 @@ void Navi::getShadowSize()
  * Size:	000004
  */
 void StateMachine<Navi>::init(Navi*) { }
-
-/*
- * --INFO--
- * Address:	80101110
- * Size:	000008
- */
-void Navi::@696 @animationKeyUpdated(PaniAnimKeyEvent&)
-{
-	/*
-	.loc_0x0:
-	  subi      r3, r3, 0x2B8
-	  b         -0x5F2C
-	*/
-}
-
-/*
- * --INFO--
- * Address:	80101118
- * Size:	000008
- */
-void Navi::@700 @viewGetHeight()
-{
-	/*
-	.loc_0x0:
-	  subi      r3, r3, 0x2BC
-	  b         -0x8D0C
-	*/
-}
-
-/*
- * --INFO--
- * Address:	80101120
- * Size:	000008
- */
-void Navi::@700 @viewGetBottomRadius()
-{
-	/*
-	.loc_0x0:
-	  subi      r3, r3, 0x2BC
-	  b         -0x8D1C
-	*/
-}
-
-/*
- * --INFO--
- * Address:	80101128
- * Size:	000008
- */
-void Navi::@700 @viewStartTrembleMotion(f32)
-{
-	/*
-	.loc_0x0:
-	  subi      r3, r3, 0x2BC
-	  b         -0x8DA8
-	*/
-}
-
-/*
- * --INFO--
- * Address:	80101130
- * Size:	000008
- */
-void Navi::@700 @viewDraw(Graphics&, Matrix4f&)
-{
-	/*
-	.loc_0x0:
-	  subi      r3, r3, 0x2BC
-	  b         -0x8E4C
-	*/
-}
-
-/*
- * --INFO--
- * Address:	80101138
- * Size:	000008
- */
-void Navi::@700 @viewKill()
-{
-	/*
-	.loc_0x0:
-	  subi      r3, r3, 0x2BC
-	  b         -0x8D5C
-	*/
-}

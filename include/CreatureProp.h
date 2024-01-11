@@ -7,7 +7,7 @@
  * @brief TODO
  */
 struct CreatureProp {
-	// _FC = VTBL
+	// _F8 = VTBL
 	u8 _00[0xF8]; // _00, TODO: work out members
 
 	virtual void read(struct RandomAccessStream&); // _08

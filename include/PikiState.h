@@ -212,7 +212,7 @@ struct PikiDrownState : public PikiState {
 	// _00-_10 = PikiState
 	u8 _10[0xC];  // _10, unknown
 	Vector3f _1C; // _1C
-	// TODO: members
+	              // TODO: members
 };
 
 /**

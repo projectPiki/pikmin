@@ -1,4 +1,5 @@
-#include "types.h"
+#include "NaviState.h"
+#include "system.h"
 
 /*
  * --INFO--
@@ -1462,65 +1463,12 @@ void NaviDemoSunsetState::SitState::cleanup(NaviDemoSunsetState*) { }
  * Size:	0000D4
  */
 NaviDemoSunsetState::NaviDemoSunsetState()
+    : NaviState(NAVISTATE_DemoSunset)
+    , _14(0.0f)
+    , _20(0.0f)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  lis       r4, 0x802C
-	  stw       r0, 0x4(r1)
-	  addi      r0, r4, 0x19F8
-	  lis       r4, 0x802C
-	  stwu      r1, -0x18(r1)
-	  addi      r4, r4, 0x1954
-	  stw       r31, 0x14(r1)
-	  addi      r31, r3, 0
-	  lis       r3, 0x802C
-	  stw       r0, 0x0(r31)
-	  addi      r0, r3, 0x19A8
-	  lis       r3, 0x802C
-	  stw       r0, 0x0(r31)
-	  li        r0, 0x19
-	  stw       r0, 0x4(r31)
-	  li        r0, 0
-	  stw       r0, 0x8(r31)
-	  addi      r0, r3, 0x1B8C
-	  li        r3, 0x1C
-	  stw       r4, 0x0(r31)
-	  stw       r0, 0x0(r31)
-	  lfs       f0, -0x6184(r2)
-	  stfs      f0, 0x1C(r31)
-	  stfs      f0, 0x18(r31)
-	  stfs      f0, 0x14(r31)
-	  stfs      f0, 0x28(r31)
-	  stfs      f0, 0x24(r31)
-	  stfs      f0, 0x20(r31)
-	  bl        -0xC51F0
-	  cmplwi    r3, 0
-	  beq-      .loc_0xA0
-	  lis       r4, 0x802C
-	  addi      r0, r4, 0x1C04
-	  stw       r0, 0x0(r3)
-	  li        r0, -0x1
-	  lis       r4, 0x802C
-	  stw       r0, 0x18(r3)
-	  addi      r0, r4, 0x2140
-	  stw       r0, 0x0(r3)
-
-	.loc_0xA0:
-	  stw       r3, 0x38(r31)
-	  mr        r4, r31
-	  lwz       r3, 0x38(r31)
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r3, r31
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	mStateMachine = new DemoStateMachine;
+	mStateMachine->init(this);
 }
 
 /*

@@ -1,4 +1,7 @@
-#include "types.h"
+#include "NaviState.h"
+
+static char file[] = __FILE__;
+static char name[] = "naviState";
 
 /*
  * --INFO--
@@ -25,14 +28,7 @@ void _Print(char*, ...)
  * Address:	80101140
  * Size:	000008
  */
-void NaviStateMachine::getNaviState(Navi*)
-{
-	/*
-	.loc_0x0:
-	  lwz       r3, 0xADC(r4)
-	  blr
-	*/
-}
+NaviState* NaviStateMachine::getNaviState(Navi* navi) { return navi->mCurrState; }
 
 /*
  * --INFO--
@@ -1811,27 +1807,8 @@ void NaviStateMachine::init(Navi*)
  * Size:	000044
  */
 NaviPelletState::NaviPelletState()
+    : NaviState(NAVISTATE_Pellet)
 {
-	/*
-	.loc_0x0:
-	  lis       r4, 0x802C
-	  addi      r0, r4, 0x19F8
-	  lis       r4, 0x802C
-	  stw       r0, 0x0(r3)
-	  addi      r0, r4, 0x19A8
-	  stw       r0, 0x0(r3)
-	  li        r0, 0x18
-	  lis       r5, 0x802C
-	  stw       r0, 0x4(r3)
-	  li        r0, 0
-	  addi      r5, r5, 0x1954
-	  stw       r0, 0x8(r3)
-	  lis       r4, 0x802C
-	  addi      r0, r4, 0x1900
-	  stw       r5, 0x0(r3)
-	  stw       r0, 0x0(r3)
-	  blr
-	*/
 }
 
 /*
@@ -2128,31 +2105,9 @@ void NaviPelletState::cleanup(Navi*)
  * Size:	000054
  */
 NaviDemoWaitState::NaviDemoWaitState()
+    : NaviState(NAVISTATE_DemoWait)
+    , _10(0.0f)
 {
-	/*
-	.loc_0x0:
-	  lis       r4, 0x802C
-	  addi      r0, r4, 0x19F8
-	  lis       r4, 0x802C
-	  stw       r0, 0x0(r3)
-	  addi      r0, r4, 0x19A8
-	  stw       r0, 0x0(r3)
-	  li        r0, 0x15
-	  lis       r5, 0x802C
-	  stw       r0, 0x4(r3)
-	  li        r0, 0
-	  addi      r5, r5, 0x1954
-	  stw       r0, 0x8(r3)
-	  lis       r4, 0x802C
-	  addi      r0, r4, 0x1880
-	  stw       r5, 0x0(r3)
-	  stw       r0, 0x0(r3)
-	  lfs       f0, -0x6268(r2)
-	  stfs      f0, 0x18(r3)
-	  stfs      f0, 0x14(r3)
-	  stfs      f0, 0x10(r3)
-	  blr
-	*/
 }
 
 /*
@@ -2351,27 +2306,8 @@ void NaviDemoWaitState::cleanup(Navi*)
  * Size:	000044
  */
 NaviDemoInfState::NaviDemoInfState()
+    : NaviState(NAVISTATE_DemoInf)
 {
-	/*
-	.loc_0x0:
-	  lis       r4, 0x802C
-	  addi      r0, r4, 0x19F8
-	  lis       r4, 0x802C
-	  stw       r0, 0x0(r3)
-	  addi      r0, r4, 0x19A8
-	  stw       r0, 0x0(r3)
-	  li        r0, 0x16
-	  lis       r5, 0x802C
-	  stw       r0, 0x4(r3)
-	  li        r0, 0
-	  addi      r5, r5, 0x1954
-	  stw       r0, 0x8(r3)
-	  lis       r4, 0x802C
-	  addi      r0, r4, 0x17FC
-	  stw       r5, 0x0(r3)
-	  stw       r0, 0x0(r3)
-	  blr
-	*/
 }
 
 /*
@@ -2413,31 +2349,9 @@ void NaviDemoInfState::cleanup(Navi*) { }
  * Size:	000054
  */
 NaviStuckState::NaviStuckState()
+    : NaviState(NAVISTATE_Stuck)
+    , _10(0.0f)
 {
-	/*
-	.loc_0x0:
-	  lis       r4, 0x802C
-	  addi      r0, r4, 0x19F8
-	  lis       r4, 0x802C
-	  stw       r0, 0x0(r3)
-	  addi      r0, r4, 0x19A8
-	  stw       r0, 0x0(r3)
-	  li        r0, 0x12
-	  lis       r5, 0x802C
-	  stw       r0, 0x4(r3)
-	  li        r0, 0
-	  addi      r5, r5, 0x1954
-	  stw       r0, 0x8(r3)
-	  lis       r4, 0x802C
-	  addi      r0, r4, 0x1778
-	  stw       r5, 0x0(r3)
-	  stw       r0, 0x0(r3)
-	  lfs       f0, -0x6268(r2)
-	  stfs      f0, 0x18(r3)
-	  stfs      f0, 0x14(r3)
-	  stfs      f0, 0x10(r3)
-	  blr
-	*/
 }
 
 /*
@@ -2747,31 +2661,9 @@ void NaviStuckState::cleanup(Navi*) { }
  * Size:	000054
  */
 NaviBuryState::NaviBuryState()
+    : NaviState(NAVISTATE_Bury)
+    , _10(0.0f)
 {
-	/*
-	.loc_0x0:
-	  lis       r4, 0x802C
-	  addi      r0, r4, 0x19F8
-	  lis       r4, 0x802C
-	  stw       r0, 0x0(r3)
-	  addi      r0, r4, 0x19A8
-	  stw       r0, 0x0(r3)
-	  li        r0, 0x13
-	  lis       r5, 0x802C
-	  stw       r0, 0x4(r3)
-	  li        r0, 0
-	  addi      r5, r5, 0x1954
-	  stw       r0, 0x8(r3)
-	  lis       r4, 0x802C
-	  addi      r0, r4, 0x16C0
-	  stw       r5, 0x0(r3)
-	  stw       r0, 0x0(r3)
-	  lfs       f0, -0x6268(r2)
-	  stfs      f0, 0x18(r3)
-	  stfs      f0, 0x14(r3)
-	  stfs      f0, 0x10(r3)
-	  blr
-	*/
 }
 
 /*
@@ -3393,26 +3285,8 @@ void NaviBuryState::cleanup(Navi*) { }
  * Size:	000040
  */
 NaviWalkState::NaviWalkState()
+    : NaviState(NAVISTATE_Walk)
 {
-	/*
-	.loc_0x0:
-	  lis       r4, 0x802C
-	  addi      r0, r4, 0x19F8
-	  lis       r4, 0x802C
-	  stw       r0, 0x0(r3)
-	  addi      r0, r4, 0x19A8
-	  stw       r0, 0x0(r3)
-	  li        r0, 0
-	  lis       r5, 0x802C
-	  stw       r0, 0x4(r3)
-	  addi      r5, r5, 0x1954
-	  lis       r4, 0x802C
-	  stw       r0, 0x8(r3)
-	  addi      r0, r4, 0x1640
-	  stw       r5, 0x0(r3)
-	  stw       r0, 0x0(r3)
-	  blr
-	*/
 }
 
 /*
@@ -4576,31 +4450,9 @@ void NaviWalkState::procCollideMsg(Navi*, MsgCollide*)
  * Size:	000054
  */
 NaviUfoState::NaviUfoState()
+    : NaviState(NAVISTATE_Ufo)
+    , _14(0.0f)
 {
-	/*
-	.loc_0x0:
-	  lis       r4, 0x802C
-	  addi      r0, r4, 0x19F8
-	  lis       r4, 0x802C
-	  stw       r0, 0x0(r3)
-	  addi      r0, r4, 0x19A8
-	  stw       r0, 0x0(r3)
-	  li        r0, 0xD
-	  lis       r5, 0x802C
-	  stw       r0, 0x4(r3)
-	  li        r0, 0
-	  addi      r5, r5, 0x1954
-	  stw       r0, 0x8(r3)
-	  lis       r4, 0x802C
-	  addi      r0, r4, 0x15C0
-	  stw       r5, 0x0(r3)
-	  stw       r0, 0x0(r3)
-	  lfs       f0, -0x6268(r2)
-	  stfs      f0, 0x1C(r3)
-	  stfs      f0, 0x18(r3)
-	  stfs      f0, 0x14(r3)
-	  blr
-	*/
 }
 
 /*
@@ -5093,55 +4945,8 @@ void NaviUfoState::procAnimMsg(Navi*, MsgAnim*)
  * Size:	0000AC
  */
 NaviContainerState::NaviContainerState()
+    : NaviState(NAVISTATE_Container)
 {
-	/*
-	.loc_0x0:
-	  extsh.    r0, r4
-	  beq-      .loc_0x30
-	  addi      r0, r3, 0x20
-	  stw       r0, 0x10(r3)
-	  addi      r0, r3, 0x28
-	  lis       r4, 0x802C
-	  stw       r0, 0x14(r3)
-	  addi      r0, r4, 0x1588
-	  lis       r4, 0x802C
-	  stw       r0, 0x20(r3)
-	  addi      r0, r4, 0x157C
-	  stw       r0, 0x28(r3)
-
-	.loc_0x30:
-	  lis       r4, 0x802C
-	  addi      r0, r4, 0x19F8
-	  lis       r4, 0x802C
-	  stw       r0, 0x0(r3)
-	  addi      r0, r4, 0x19A8
-	  stw       r0, 0x0(r3)
-	  li        r0, 0xC
-	  lis       r4, 0x802C
-	  stw       r0, 0x4(r3)
-	  addi      r4, r4, 0x1508
-	  li        r0, 0
-	  lis       r5, 0x802C
-	  stw       r0, 0x8(r3)
-	  addi      r0, r5, 0x1954
-	  stw       r0, 0x0(r3)
-	  addi      r7, r4, 0x5C
-	  addi      r6, r4, 0x68
-	  stw       r4, 0x0(r3)
-	  addi      r4, r3, 0x20
-	  addi      r0, r3, 0x28
-	  lwz       r5, 0x10(r3)
-	  stw       r7, 0x0(r5)
-	  lwz       r5, 0x14(r3)
-	  stw       r6, 0x0(r5)
-	  lwz       r5, 0x10(r3)
-	  sub       r4, r4, r5
-	  stw       r4, 0x4(r5)
-	  lwz       r4, 0x14(r3)
-	  sub       r0, r0, r4
-	  stw       r0, 0x4(r4)
-	  blr
-	*/
 }
 
 /*
@@ -5641,27 +5446,8 @@ void NaviContainerState::cleanup(Navi*)
  * Size:	000044
  */
 NaviPickState::NaviPickState()
+    : NaviState(NAVISTATE_Pick)
 {
-	/*
-	.loc_0x0:
-	  lis       r4, 0x802C
-	  addi      r0, r4, 0x19F8
-	  lis       r4, 0x802C
-	  stw       r0, 0x0(r3)
-	  addi      r0, r4, 0x19A8
-	  stw       r0, 0x0(r3)
-	  li        r0, 0x10
-	  lis       r5, 0x802C
-	  stw       r0, 0x4(r3)
-	  li        r0, 0
-	  addi      r5, r5, 0x1954
-	  stw       r0, 0x8(r3)
-	  lis       r4, 0x802C
-	  addi      r0, r4, 0x1444
-	  stw       r5, 0x0(r3)
-	  stw       r0, 0x0(r3)
-	  blr
-	*/
 }
 
 /*
@@ -5773,27 +5559,8 @@ void NaviPickState::cleanup(Navi*)
  * Size:	000044
  */
 NaviRopeState::NaviRopeState()
+    : NaviState(NAVISTATE_Rope)
 {
-	/*
-	.loc_0x0:
-	  lis       r4, 0x802C
-	  addi      r0, r4, 0x19F8
-	  lis       r4, 0x802C
-	  stw       r0, 0x0(r3)
-	  addi      r0, r4, 0x19A8
-	  stw       r0, 0x0(r3)
-	  li        r0, 0xA
-	  lis       r5, 0x802C
-	  stw       r0, 0x4(r3)
-	  li        r0, 0
-	  addi      r5, r5, 0x1954
-	  stw       r0, 0x8(r3)
-	  lis       r4, 0x802C
-	  addi      r0, r4, 0x13C4
-	  stw       r5, 0x0(r3)
-	  stw       r0, 0x0(r3)
-	  blr
-	*/
 }
 
 /*
@@ -6027,27 +5794,8 @@ void NaviRopeState::cleanup(Navi*) { }
  * Size:	000044
  */
 NaviRopeExitState::NaviRopeExitState()
+    : NaviState(NAVISTATE_RopeExit)
 {
-	/*
-	.loc_0x0:
-	  lis       r4, 0x802C
-	  addi      r0, r4, 0x19F8
-	  lis       r4, 0x802C
-	  stw       r0, 0x0(r3)
-	  addi      r0, r4, 0x19A8
-	  stw       r0, 0x0(r3)
-	  li        r0, 0xB
-	  lis       r5, 0x802C
-	  stw       r0, 0x4(r3)
-	  li        r0, 0
-	  addi      r5, r5, 0x1954
-	  stw       r0, 0x8(r3)
-	  lis       r4, 0x802C
-	  addi      r0, r4, 0x1344
-	  stw       r5, 0x0(r3)
-	  stw       r0, 0x0(r3)
-	  blr
-	*/
 }
 
 /*
@@ -6163,27 +5911,8 @@ void NaviRopeExitState::procBounceMsg(Navi*, MsgBounce*)
  * Size:	000044
  */
 NaviFunbariState::NaviFunbariState()
+    : NaviState(NAVISTATE_Funbari)
 {
-	/*
-	.loc_0x0:
-	  lis       r4, 0x802C
-	  addi      r0, r4, 0x19F8
-	  lis       r4, 0x802C
-	  stw       r0, 0x0(r3)
-	  addi      r0, r4, 0x19A8
-	  stw       r0, 0x0(r3)
-	  li        r0, 0x9
-	  lis       r5, 0x802C
-	  stw       r0, 0x4(r3)
-	  li        r0, 0
-	  addi      r5, r5, 0x1954
-	  stw       r0, 0x8(r3)
-	  lis       r4, 0x802C
-	  addi      r0, r4, 0x12C0
-	  stw       r5, 0x0(r3)
-	  stw       r0, 0x0(r3)
-	  blr
-	*/
 }
 
 /*
@@ -6304,27 +6033,8 @@ void NaviFunbariState::cleanup(Navi*) { }
  * Size:	000044
  */
 NaviIdleState::NaviIdleState()
+    : NaviState(NAVISTATE_Idle)
 {
-	/*
-	.loc_0x0:
-	  lis       r4, 0x802C
-	  addi      r0, r4, 0x19F8
-	  lis       r4, 0x802C
-	  stw       r0, 0x0(r3)
-	  addi      r0, r4, 0x19A8
-	  stw       r0, 0x0(r3)
-	  li        r0, 0x11
-	  lis       r5, 0x802C
-	  stw       r0, 0x4(r3)
-	  li        r0, 0
-	  addi      r5, r5, 0x1954
-	  stw       r0, 0x8(r3)
-	  lis       r4, 0x802C
-	  addi      r0, r4, 0x123C
-	  stw       r5, 0x0(r3)
-	  stw       r0, 0x0(r3)
-	  blr
-	*/
 }
 
 /*
@@ -6557,27 +6267,8 @@ void NaviIdleState::cleanup(Navi*)
  * Size:	000044
  */
 NaviFlickState::NaviFlickState()
+    : NaviState(NAVISTATE_Flick)
 {
-	/*
-	.loc_0x0:
-	  lis       r4, 0x802C
-	  addi      r0, r4, 0x19F8
-	  lis       r4, 0x802C
-	  stw       r0, 0x0(r3)
-	  addi      r0, r4, 0x19A8
-	  stw       r0, 0x0(r3)
-	  li        r0, 0x8
-	  lis       r5, 0x802C
-	  stw       r0, 0x4(r3)
-	  li        r0, 0
-	  addi      r5, r5, 0x1954
-	  stw       r0, 0x8(r3)
-	  lis       r4, 0x802C
-	  addi      r0, r4, 0x11BC
-	  stw       r5, 0x0(r3)
-	  stw       r0, 0x0(r3)
-	  blr
-	*/
 }
 
 /*
@@ -6922,31 +6613,9 @@ void NaviFlickState::cleanup(Navi*)
  * Size:	000054
  */
 NaviGeyzerState::NaviGeyzerState()
+    : NaviState(NAVISTATE_Geyzer)
+    , _20(0.0f)
 {
-	/*
-	.loc_0x0:
-	  lis       r4, 0x802C
-	  addi      r0, r4, 0x19F8
-	  lis       r4, 0x802C
-	  stw       r0, 0x0(r3)
-	  addi      r0, r4, 0x19A8
-	  stw       r0, 0x0(r3)
-	  li        r0, 0x14
-	  lis       r5, 0x802C
-	  stw       r0, 0x4(r3)
-	  li        r0, 0
-	  addi      r5, r5, 0x1954
-	  stw       r0, 0x8(r3)
-	  lis       r4, 0x802C
-	  addi      r0, r4, 0x113C
-	  stw       r5, 0x0(r3)
-	  stw       r0, 0x0(r3)
-	  lfs       f0, -0x6268(r2)
-	  stfs      f0, 0x28(r3)
-	  stfs      f0, 0x24(r3)
-	  stfs      f0, 0x20(r3)
-	  blr
-	*/
 }
 
 /*
@@ -7380,27 +7049,8 @@ void NaviGeyzerState::cleanup(Navi*)
  * Size:	000044
  */
 NaviGatherState::NaviGatherState()
+    : NaviState(NAVISTATE_Gather)
 {
-	/*
-	.loc_0x0:
-	  lis       r4, 0x802C
-	  addi      r0, r4, 0x19F8
-	  lis       r4, 0x802C
-	  stw       r0, 0x0(r3)
-	  addi      r0, r4, 0x19A8
-	  stw       r0, 0x0(r3)
-	  li        r0, 0x3
-	  lis       r5, 0x802C
-	  stw       r0, 0x4(r3)
-	  li        r0, 0
-	  addi      r5, r5, 0x1954
-	  stw       r0, 0x8(r3)
-	  lis       r4, 0x802C
-	  addi      r0, r4, 0x10BC
-	  stw       r5, 0x0(r3)
-	  stw       r0, 0x0(r3)
-	  blr
-	*/
 }
 
 /*
@@ -8082,27 +7732,8 @@ void NaviGatherState::cleanup(Navi*)
  * Size:	000044
  */
 NaviReleaseState::NaviReleaseState()
+    : NaviState(NAVISTATE_Release)
 {
-	/*
-	.loc_0x0:
-	  lis       r4, 0x802C
-	  addi      r0, r4, 0x19F8
-	  lis       r4, 0x802C
-	  stw       r0, 0x0(r3)
-	  addi      r0, r4, 0x19A8
-	  stw       r0, 0x0(r3)
-	  li        r0, 0x4
-	  lis       r5, 0x802C
-	  stw       r0, 0x4(r3)
-	  li        r0, 0
-	  addi      r5, r5, 0x1954
-	  stw       r0, 0x8(r3)
-	  lis       r4, 0x802C
-	  addi      r0, r4, 0x103C
-	  stw       r5, 0x0(r3)
-	  stw       r0, 0x0(r3)
-	  blr
-	*/
 }
 
 /*
@@ -8278,27 +7909,8 @@ void NaviReleaseState::procAnimMsg(Navi*, MsgAnim*)
  * Size:	000044
  */
 NaviThrowWaitState::NaviThrowWaitState()
+    : NaviState(NAVISTATE_ThrowWait)
 {
-	/*
-	.loc_0x0:
-	  lis       r4, 0x802C
-	  addi      r0, r4, 0x19F8
-	  lis       r4, 0x802C
-	  stw       r0, 0x0(r3)
-	  addi      r0, r4, 0x19A8
-	  stw       r0, 0x0(r3)
-	  li        r0, 0x2
-	  lis       r5, 0x802C
-	  stw       r0, 0x4(r3)
-	  li        r0, 0
-	  addi      r5, r5, 0x1954
-	  stw       r0, 0x8(r3)
-	  lis       r4, 0x802C
-	  addi      r0, r4, 0xFB8
-	  stw       r5, 0x0(r3)
-	  stw       r0, 0x0(r3)
-	  blr
-	*/
 }
 
 /*
@@ -9233,27 +8845,8 @@ void NaviThrowWaitState::cleanup(Navi*) { }
  * Size:	000044
  */
 NaviThrowState::NaviThrowState()
+    : NaviState(NAVISTATE_Throw)
 {
-	/*
-	.loc_0x0:
-	  lis       r4, 0x802C
-	  addi      r0, r4, 0x19F8
-	  lis       r4, 0x802C
-	  stw       r0, 0x0(r3)
-	  addi      r0, r4, 0x19A8
-	  stw       r0, 0x0(r3)
-	  li        r0, 0x1
-	  lis       r5, 0x802C
-	  stw       r0, 0x4(r3)
-	  li        r0, 0
-	  addi      r5, r5, 0x1954
-	  stw       r0, 0x8(r3)
-	  lis       r4, 0x802C
-	  addi      r0, r4, 0xF34
-	  stw       r5, 0x0(r3)
-	  stw       r0, 0x0(r3)
-	  blr
-	*/
 }
 
 /*
@@ -9519,27 +9112,8 @@ void NaviThrowState::cleanup(Navi*) { }
  * Size:	000044
  */
 NaviPushState::NaviPushState()
+    : NaviState(NAVISTATE_Push)
 {
-	/*
-	.loc_0x0:
-	  lis       r4, 0x802C
-	  addi      r0, r4, 0x19F8
-	  lis       r4, 0x802C
-	  stw       r0, 0x0(r3)
-	  addi      r0, r4, 0x19A8
-	  stw       r0, 0x0(r3)
-	  li        r0, 0x1E
-	  lis       r5, 0x802C
-	  stw       r0, 0x4(r3)
-	  li        r0, 0
-	  addi      r5, r5, 0x1954
-	  stw       r0, 0x8(r3)
-	  lis       r4, 0x802C
-	  addi      r0, r4, 0xEB4
-	  stw       r5, 0x0(r3)
-	  stw       r0, 0x0(r3)
-	  blr
-	*/
 }
 
 /*
@@ -9871,27 +9445,8 @@ void NaviPushState::procOffWallMsg(Navi*, MsgOffWall*) { }
  * Size:	000044
  */
 NaviPushPikiState::NaviPushPikiState()
+    : NaviState(NAVISTATE_PushPiki)
 {
-	/*
-	.loc_0x0:
-	  lis       r4, 0x802C
-	  addi      r0, r4, 0x19F8
-	  lis       r4, 0x802C
-	  stw       r0, 0x0(r3)
-	  addi      r0, r4, 0x19A8
-	  stw       r0, 0x0(r3)
-	  li        r0, 0x1F
-	  lis       r5, 0x802C
-	  stw       r0, 0x4(r3)
-	  li        r0, 0
-	  addi      r5, r5, 0x1954
-	  stw       r0, 0x8(r3)
-	  lis       r4, 0x802C
-	  addi      r0, r4, 0xE34
-	  stw       r5, 0x0(r3)
-	  stw       r0, 0x0(r3)
-	  blr
-	*/
 }
 
 /*
@@ -10164,7 +9719,7 @@ void NaviPushPikiState::procAnimMsg(Navi*, MsgAnim*)
 void NaviPushPikiState::procCollideMsg(Navi*, MsgCollide*)
 {
 	// Generated from stw r0, 0x10(r3)
-	_10 = 1;
+	// _10 = 1;
 }
 
 /*
@@ -10173,27 +9728,8 @@ void NaviPushPikiState::procCollideMsg(Navi*, MsgCollide*)
  * Size:	000044
  */
 NaviNukuState::NaviNukuState()
+    : NaviState(NAVISTATE_Nuku)
 {
-	/*
-	.loc_0x0:
-	  lis       r4, 0x802C
-	  addi      r0, r4, 0x19F8
-	  lis       r4, 0x802C
-	  stw       r0, 0x0(r3)
-	  addi      r0, r4, 0x19A8
-	  stw       r0, 0x0(r3)
-	  li        r0, 0x5
-	  lis       r5, 0x802C
-	  stw       r0, 0x4(r3)
-	  li        r0, 0
-	  addi      r5, r5, 0x1954
-	  stw       r0, 0x8(r3)
-	  lis       r4, 0x802C
-	  addi      r0, r4, 0xDB0
-	  stw       r5, 0x0(r3)
-	  stw       r0, 0x0(r3)
-	  blr
-	*/
 }
 
 /*
@@ -10536,34 +10072,10 @@ void NaviNukuState::procAnimMsg(Navi*, MsgAnim*)
  * Size:	000060
  */
 NaviNukuAdjustState::NaviNukuAdjustState()
+    : NaviState(NAVISTATE_NukuAdjust)
+    , _14(0.0f)
+    , _24(0.0f)
 {
-	/*
-	.loc_0x0:
-	  lis       r4, 0x802C
-	  addi      r0, r4, 0x19F8
-	  lis       r4, 0x802C
-	  stw       r0, 0x0(r3)
-	  addi      r0, r4, 0x19A8
-	  stw       r0, 0x0(r3)
-	  li        r0, 0x6
-	  lis       r5, 0x802C
-	  stw       r0, 0x4(r3)
-	  li        r0, 0
-	  addi      r5, r5, 0x1954
-	  stw       r0, 0x8(r3)
-	  lis       r4, 0x802C
-	  addi      r0, r4, 0xD30
-	  stw       r5, 0x0(r3)
-	  stw       r0, 0x0(r3)
-	  lfs       f0, -0x6268(r2)
-	  stfs      f0, 0x1C(r3)
-	  stfs      f0, 0x18(r3)
-	  stfs      f0, 0x14(r3)
-	  stfs      f0, 0x2C(r3)
-	  stfs      f0, 0x28(r3)
-	  stfs      f0, 0x24(r3)
-	  blr
-	*/
 }
 
 /*
@@ -11097,27 +10609,8 @@ void NaviNukuAdjustState::cleanup(Navi*)
  * Size:	000044
  */
 NaviPressedState::NaviPressedState()
+    : NaviState(NAVISTATE_Pressed)
 {
-	/*
-	.loc_0x0:
-	  lis       r4, 0x802C
-	  addi      r0, r4, 0x19F8
-	  lis       r4, 0x802C
-	  stw       r0, 0x0(r3)
-	  addi      r0, r4, 0x19A8
-	  stw       r0, 0x0(r3)
-	  li        r0, 0x7
-	  lis       r5, 0x802C
-	  stw       r0, 0x4(r3)
-	  li        r0, 0
-	  addi      r5, r5, 0x1954
-	  stw       r0, 0x8(r3)
-	  lis       r4, 0x802C
-	  addi      r0, r4, 0xCAC
-	  stw       r5, 0x0(r3)
-	  stw       r0, 0x0(r3)
-	  blr
-	*/
 }
 
 /*
@@ -11232,27 +10725,8 @@ void NaviPressedState::cleanup(Navi*) { }
  * Size:	000044
  */
 NaviSowState::NaviSowState()
+    : NaviState(NAVISTATE_Sow)
 {
-	/*
-	.loc_0x0:
-	  lis       r4, 0x802C
-	  addi      r0, r4, 0x19F8
-	  lis       r4, 0x802C
-	  stw       r0, 0x0(r3)
-	  addi      r0, r4, 0x19A8
-	  stw       r0, 0x0(r3)
-	  li        r0, 0x1A
-	  lis       r5, 0x802C
-	  stw       r0, 0x4(r3)
-	  li        r0, 0
-	  addi      r5, r5, 0x1954
-	  stw       r0, 0x8(r3)
-	  lis       r4, 0x802C
-	  addi      r0, r4, 0xC28
-	  stw       r5, 0x0(r3)
-	  stw       r0, 0x0(r3)
-	  blr
-	*/
 }
 
 /*
@@ -11318,27 +10792,8 @@ void NaviSowState::cleanup(Navi*) { }
  * Size:	000044
  */
 NaviWaterState::NaviWaterState()
+    : NaviState(NAVISTATE_Water)
 {
-	/*
-	.loc_0x0:
-	  lis       r4, 0x802C
-	  addi      r0, r4, 0x19F8
-	  lis       r4, 0x802C
-	  stw       r0, 0x0(r3)
-	  addi      r0, r4, 0x19A8
-	  stw       r0, 0x0(r3)
-	  li        r0, 0x1B
-	  lis       r5, 0x802C
-	  stw       r0, 0x4(r3)
-	  li        r0, 0
-	  addi      r5, r5, 0x1954
-	  stw       r0, 0x8(r3)
-	  lis       r4, 0x802C
-	  addi      r0, r4, 0xBA8
-	  stw       r5, 0x0(r3)
-	  stw       r0, 0x0(r3)
-	  blr
-	*/
 }
 
 /*
@@ -11416,27 +10871,8 @@ void NaviWaterState::cleanup(Navi*) { }
  * Size:	000044
  */
 NaviAttackState::NaviAttackState()
+    : NaviState(NAVISTATE_Attack)
 {
-	/*
-	.loc_0x0:
-	  lis       r4, 0x802C
-	  addi      r0, r4, 0x19F8
-	  lis       r4, 0x802C
-	  stw       r0, 0x0(r3)
-	  addi      r0, r4, 0x19A8
-	  stw       r0, 0x0(r3)
-	  li        r0, 0x1C
-	  lis       r5, 0x802C
-	  stw       r0, 0x4(r3)
-	  li        r0, 0
-	  addi      r5, r5, 0x1954
-	  stw       r0, 0x8(r3)
-	  lis       r4, 0x802C
-	  addi      r0, r4, 0xB28
-	  stw       r5, 0x0(r3)
-	  stw       r0, 0x0(r3)
-	  blr
-	*/
 }
 
 /*
@@ -11917,27 +11353,8 @@ void NaviAttackState::procAnimMsg(Navi*, MsgAnim*)
  * Size:	000044
  */
 NaviLockState::NaviLockState()
+    : NaviState(NAVISTATE_Lock)
 {
-	/*
-	.loc_0x0:
-	  lis       r4, 0x802C
-	  addi      r0, r4, 0x19F8
-	  lis       r4, 0x802C
-	  stw       r0, 0x0(r3)
-	  addi      r0, r4, 0x19A8
-	  stw       r0, 0x0(r3)
-	  li        r0, 0x20
-	  lis       r5, 0x802C
-	  stw       r0, 0x4(r3)
-	  li        r0, 0
-	  addi      r5, r5, 0x1954
-	  stw       r0, 0x8(r3)
-	  lis       r4, 0x802C
-	  addi      r0, r4, 0xAA8
-	  stw       r5, 0x0(r3)
-	  stw       r0, 0x0(r3)
-	  blr
-	*/
 }
 
 /*
@@ -11967,6 +11384,7 @@ void NaviLockState::cleanup(Navi*) { }
  * Size:	000044
  */
 NaviClearState::NaviClearState()
+    : NaviState(NAVISTATE_Clear)
 {
 	/*
 	.loc_0x0:
@@ -12099,6 +11517,7 @@ void NaviClearState::cleanup(Navi*) { }
  * Size:	000044
  */
 NaviIroIroState::NaviIroIroState()
+    : NaviState(NAVISTATE_IroIro)
 {
 	/*
 	.loc_0x0:
@@ -12161,6 +11580,7 @@ void NaviIroIroState::cleanup(Navi*) { }
  * Size:	000044
  */
 NaviDeadState::NaviDeadState()
+    : NaviState(NAVISTATE_Dead)
 {
 	/*
 	.loc_0x0:
@@ -12359,6 +11779,7 @@ void NaviDeadState::procAnimMsg(Navi*, MsgAnim*)
  * Size:	000044
  */
 NaviPikiZeroState::NaviPikiZeroState()
+    : NaviState(NAVISTATE_PikiZero)
 {
 	/*
 	.loc_0x0:
@@ -12487,6 +11908,10 @@ void NaviPikiZeroState::procAnimMsg(Navi*, MsgAnim*) { }
  * Size:	00006C
  */
 NaviStartingState::NaviStartingState()
+    : NaviState(NAVISTATE_Starting)
+    , _14(0.0f)
+    , _20(0.0f)
+    , _34(0.0f)
 {
 	/*
 	.loc_0x0:
@@ -13045,6 +12470,7 @@ void NaviStartingState::cleanup(Navi*)
  * Size:	000044
  */
 NaviPartsAccessState::NaviPartsAccessState()
+    : NaviState(NAVISTATE_PartsAccess)
 {
 	/*
 	.loc_0x0:
@@ -13276,6 +12702,7 @@ void NaviPartsAccessState::procAnimMsg(Navi*, MsgAnim*)
  * Size:	000044
  */
 NaviUfoAccessState::NaviUfoAccessState()
+    : NaviState(NAVISTATE_UfoAccess)
 {
 	/*
 	.loc_0x0:
@@ -13472,63 +12899,63 @@ void NaviUfoAccessState::procAnimMsg(Navi*, MsgAnim*)
  * Address:	8010B044
  * Size:	000008
  */
-u32 NaviUfoAccessState::invincible(Navi*) { return 0x1; }
+bool NaviUfoAccessState::invincible(Navi*) { return 0x1; }
 
 /*
  * --INFO--
  * Address:	8010B04C
  * Size:	000008
  */
-u32 NaviPartsAccessState::invincible(Navi*) { return 0x1; }
+bool NaviPartsAccessState::invincible(Navi*) { return 0x1; }
 
 /*
  * --INFO--
  * Address:	8010B054
  * Size:	000008
  */
-u32 NaviPikiZeroState::invincible(Navi*) { return 0x1; }
+bool NaviPikiZeroState::invincible(Navi*) { return 0x1; }
 
 /*
  * --INFO--
  * Address:	8010B05C
  * Size:	000008
  */
-u32 NaviDeadState::invincible(Navi*) { return 0x1; }
+bool NaviDeadState::invincible(Navi*) { return 0x1; }
 
 /*
  * --INFO--
  * Address:	8010B064
  * Size:	000008
  */
-u32 NaviPressedState::invincible(Navi*) { return 0x1; }
+bool NaviPressedState::invincible(Navi*) { return 0x1; }
 
 /*
  * --INFO--
  * Address:	8010B06C
  * Size:	000008
  */
-u32 NaviNukuState::invincible(Navi*) { return 0x1; }
+bool NaviNukuState::invincible(Navi*) { return 0x1; }
 
 /*
  * --INFO--
  * Address:	8010B074
  * Size:	000008
  */
-u32 NaviGeyzerState::invincible(Navi*) { return 0x1; }
+bool NaviGeyzerState::invincible(Navi*) { return 0x1; }
 
 /*
  * --INFO--
  * Address:	8010B07C
  * Size:	000008
  */
-u32 NaviFlickState::invincible(Navi*) { return 0x1; }
+bool NaviFlickState::invincible(Navi*) { return 0x1; }
 
 /*
  * --INFO--
  * Address:	8010B084
  * Size:	000008
  */
-u32 NaviContainerState::invincible(Navi*) { return 0x1; }
+bool NaviContainerState::invincible(Navi*) { return 0x1; }
 
 /*
  * --INFO--
@@ -13542,66 +12969,32 @@ void GmWin::CloseListener::onCloseWindow() { }
  * Address:	8010B090
  * Size:	000008
  */
-u32 NaviUfoState::invincible(Navi*) { return 0x1; }
+bool NaviUfoState::invincible(Navi*) { return 0x1; }
 
 /*
  * --INFO--
  * Address:	8010B098
  * Size:	000008
  */
-u32 NaviBuryState::invincible(Navi*) { return 0x1; }
+bool NaviBuryState::invincible(Navi*) { return 0x1; }
 
 /*
  * --INFO--
  * Address:	8010B0A0
  * Size:	000008
  */
-u32 NaviDemoInfState::invincible(Navi*) { return 0x1; }
+bool NaviDemoInfState::invincible(Navi*) { return 0x1; }
 
 /*
  * --INFO--
  * Address:	8010B0A8
  * Size:	000008
  */
-u32 NaviDemoWaitState::invincible(Navi*) { return 0x1; }
+bool NaviDemoWaitState::invincible(Navi*) { return 0x1; }
 
 /*
  * --INFO--
  * Address:	8010B0B0
  * Size:	000008
  */
-u32 NaviPelletState::invincible(Navi*) { return 0x1; }
-
-/*
- * --INFO--
- * Address:	8010B0B8
- * Size:	000014
- */
-void NaviContainerState::@32 @4 @informWin(int)
-{
-	/*
-	.loc_0x0:
-	  li        r11, 0x4
-	  lwzx      r11, r3, r11
-	  add       r3, r3, r11
-	  subi      r3, r3, 0x20
-	  b         -0x5E34
-	*/
-}
-
-/*
- * --INFO--
- * Address:	8010B0CC
- * Size:	000014
- */
-void NaviContainerState::@40 @4 @onCloseWindow()
-{
-	/*
-	.loc_0x0:
-	  li        r11, 0x4
-	  lwzx      r11, r3, r11
-	  add       r3, r3, r11
-	  subi      r3, r3, 0x28
-	  b         -0x5E18
-	*/
-}
+bool NaviPelletState::invincible(Navi*) { return 0x1; }
