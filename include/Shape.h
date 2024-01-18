@@ -6,11 +6,18 @@
 #include "Stream.h"
 #include "Matrix4f.h"
 
-struct AnimContext;
-struct CmdStream;
 template <typename A, typename B>
 struct IDelegate2;
+
+struct AnimContext;
+struct CmdStream;
 struct Joint;
+struct RouteGroup;
+struct VtxMatrix;
+struct Texture;
+struct CollTriInfo;
+struct BaseRoomInfo;
+struct NBT;
 
 /**
  * @brief TODO
@@ -35,9 +42,62 @@ struct MtxGroup {
 	// TODO: members
 };
 
+/**
+ * @brief TODO
+ */
 struct ShapeDynMaterials {
 	void animate(f32*);
 	void updateContext();
+};
+
+struct LFlareGroup;
+
+struct LightFlare : public CoreNode {
+	LightFlare() { }
+
+	f32 mSize;          // _14
+	Vector3f mPosition; // _18
+};
+
+/**
+ * @brief TODO
+ */
+struct LightGroup : public CoreNode {
+	LightGroup()
+	{
+		mFlags      = 0;
+		mType       = 0;
+		mJointIndex = -1;
+		mTexture    = nullptr;
+	}
+
+#ifndef __MWERKS__
+	void addLight(struct Vector3f&, float);
+	void ageAddFlare(struct AgeServer&);
+	void ageChangeTexture(struct AgeServer&);
+	void ageDel(struct AgeServer&);
+
+	virtual void genAge(class AgeServer&);
+
+	void addLight(struct Vector3f&, float);
+	void saveini(char*, struct RandomAccessStream&);
+#endif
+
+	void loadini(struct CmdStream*);
+	void refresh(struct Graphics&, struct Matrix4f*);
+
+	s32 mFlags;               // _14
+	s32 mType;                // _18
+	s32 mJointIndex;          // _1C
+	Texture* mTexture;        // _20
+	Vector3f mDirection;      // _24
+	Colour mLightColour;      // _30
+	s8* mTexSource;           // _34
+	s8* mMatSource;           // _38
+	Texture* mHaloTex;        // _3C
+	LightFlare mFlares;       // _40
+	s32 _64;                  // _64
+	LFlareGroup* mFlareGroup; // _68
 };
 
 /**
@@ -51,6 +111,77 @@ struct DispList : public CoreNode {
 	// _00     = VTBL
 	// _00-_14 = CoreNode
 	// TODO: members
+};
+
+struct BoundBox {
+	BoundBox(Vector3f& max, Vector3f& min)
+	    : mMax(max)
+	    , mMin(min)
+	{
+	}
+
+	BoundBox() { }
+
+	void expandBound(BoundBox& other)
+	{
+		if (other.mMax.x < mMax.x) {
+			mMax.x = other.mMax.x;
+		}
+		if (other.mMax.y < mMax.y) {
+			mMax.y = other.mMax.y;
+		}
+		if (other.mMax.z < mMax.z) {
+			mMax.z = other.mMax.z;
+		}
+
+		if (other.mMin.x > mMin.x) {
+			mMin.x = other.mMin.x;
+		}
+		if (other.mMin.y > mMin.y) {
+			mMin.y = other.mMin.y;
+		}
+		if (other.mMin.z > mMin.z) {
+			mMin.z = other.mMin.z;
+		}
+	}
+
+	void expandBound(Vector3f& other)
+	{
+		if (other.x < mMax.x) {
+			mMax.x = other.x;
+		}
+		if (other.y < mMax.y) {
+			mMax.y = other.y;
+		}
+		if (other.z < mMax.z) {
+			mMax.z = other.z;
+		}
+
+		if (other.x > mMin.x) {
+			mMin.x = other.x;
+		}
+		if (other.y > mMin.y) {
+			mMin.y = other.y;
+		}
+		if (other.z > mMin.z) {
+			mMin.z = other.z;
+		}
+	}
+
+	bool intersects(BoundBox& other)
+	{
+		return other.mMax.x <= mMin.x && other.mMin.x >= mMax.x && other.mMax.y <= mMin.y && other.mMin.y >= mMax.y
+		    && other.mMax.z <= mMin.z && other.mMin.z >= mMax.z;
+	}
+
+	void resetBound()
+	{
+		mMax.set(32768.0f, 32768.0f, 32768.0f);
+		mMin.set(-32768.0f, -32768.0f, -32768.0f);
+	}
+
+	Vector3f mMax; // _00
+	Vector3f mMin; // _0C
 };
 
 /**
@@ -105,27 +236,62 @@ struct BaseShape : public CoreNode {
 
 	// _00     = VTBL
 	// _00-_14 = CoreNode
-	u8 _14;
-	int _18;
-	int _1C;
-	int _20;
-	int _24;
-	int _28;
-	int _2C;
-	int _30;
-	int _34;
-	int _38;
-	int _3C;
-	int _40;
-	int _44;
-	int _48;
-	int _4C;
-	int _50;
-	int _54;
-	int _58;
-	Joint* mJoints; // _5C
-
-	u8 _60[0x2AD - 0x5c]; // _14, TODO: work out members
+	s32 mSystemUsed;                   // _14
+	AnimContext* mCurrentAnimations;   // _18
+	AnimContext* mAnimOverrides;       // _1C
+	AnimContext* mBackupAnimOverrides; // _20
+	AnimFrameCacher* mFrameCacher;     // _24
+	Matrix4f* mAnimMatrix;             // _28
+	int _2C;                           // _2C
+	int mEnvelopeCount;                // _30
+	Envelope* mEnvelopeList;           // _34
+	s32 mVtxMatrixCount;               // _38
+	VtxMatrix* mVtxMatrixList;         // _3C
+	s32 mMaterialCount;                // _40
+	Material* mMaterialList;           // _44
+	s32 mTevInfoCount;                 // _48
+	PVWTevInfo* mTevInfoList;          // _4C
+	s32 mMeshCount;                    // _50
+	Mesh* mMeshList;                   // _54
+	s32 mJointCount;                   // _58
+	Joint* mJoints;                    // _5C
+	s32 mRouteGroupCount;              // _60
+	RouteGroup* mRouteGroupList;       // _64
+	s32 mTextureAttributesCount;       // _68
+	TexAttr* mTextureAttributeList;    // _6C
+	s32 _70;                           // _70
+	s32 mTextureCount;                 // _74
+	TexImg* mTextureList;              // _78
+	AnimData mAnimData;                // _7C
+	LightGroup mGroups;                // _C0
+	ObjCollInfo mCollisionInfo;        // _12C
+	s32 _180;                          // _180
+	BoundBox mCourseExtents;           // _184
+	f32 mGridSize;                     // _19C
+	s32 mGridSizeX;                    // _1A0
+	s32 mGridSizeY;                    // _1A4
+	s32* mCollisionTriangles;          // _1A8
+	s32 mCollTriCount;                 // _1AC
+	CollTriInfo* mCollTriInfoList;     // _1B0
+	s32 mBaseRoomCount;                // _1B4
+	BaseRoomInfo* mRoomInfoList;       // _1B8
+	u8 _1BC[0xC0];                     // _1BC
+	s32 mVertexCount;                  // _27C
+	Vector3f* mVertexList;             // _280
+	s32 mVertexColourCount;            // _284
+	Colour* mVertexColourList;         // _288
+	s32 mTexCoordSetCount;             // _28C
+	s32 mTexCoordCount[8];             // _290
+	Vector2f* mTexCoords[8];           // _2B0
+	s32 mNormalCount;                  // _2D0
+	Vector3f* mNormals;                // _2D4
+	s32 mNbtCount;                     // _2D8
+	NBT* mNbtList;                     // _2DC
+	s32 mAttrListCount;                // _2E0
+	Texture** mExternalTextureList;    // _2E4
+	s32 mAttrListMatCount;             // _2E8
+	u32 _2EC;                          // _2EC
+	u8 _2F0;                           // _2FO
 };
 
 /**

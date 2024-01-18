@@ -6,6 +6,7 @@
 #include "Stream.h"
 #include "Vector3f.h"
 #include "Matrix4f.h"
+#include "Stream.h"
 
 struct AnimMgr;
 struct BaseShape;
@@ -15,16 +16,29 @@ struct Shape;
 struct DataChunk {
 	DataChunk()
 	{
-		_00   = 0;
-		mSize = 0;
-		mData = nullptr;
+		mDataIndex = 0;
+		mDataSize  = 0;
+		mData      = nullptr;
 	}
 
 	void addData(f32);
+	void setDataSize(int size)
+	{
+		mData     = new f32[size];
+		mDataSize = size;
+	}
 
-	int _00;
-	int mSize;  // _04
-	f32* mData; // _08
+	void read(RandomAccessStream& stream)
+	{
+		setDataSize(stream.readInt());
+		for (int i = 0; i < mDataSize; i++) {
+			mData[i] = stream.readFloat();
+		}
+	}
+
+	int mDataIndex;
+	int mDataSize; // _04
+	f32* mData;    // _08
 };
 
 struct AnimCacheInfo {

@@ -4494,77 +4494,55 @@ AnimDck::AnimDck(BaseShape* model, int joints)
  */
 void AnimDck::read(RandomAccessStream& stream)
 {
-	// this is for reading a dck file in binary format (what we actually see)
+	// This section reads a dck file in binary format
 
+	// Read the number of joints and frames
 	mNumJoints = stream.readInt();
 	mNumFrames = stream.readInt();
 
+	// Read scale data
 	mScaleDataBlock = new DataChunk;
-	DataChunk* data = mScaleDataBlock;
-	// read number of scale values, allocate block
-	int size    = stream.readInt();
-	data->mData = new f32[size];
-	data->mSize = size;
-	// read each raw scale value into the block
-	for (int i = 0; i < size; i++) {
-		data->mData[i] = stream.readFloat();
-	}
+	mScaleDataBlock->read(stream);
 
+	// Read rotation data
 	mRotateDataBlock = new DataChunk;
-	data             = mRotateDataBlock;
-	// read number of rotation values, allocate block
-	size        = stream.readInt();
-	data->mData = new f32[size];
-	data->mSize = size;
-	// read each raw rotation value into the block
-	for (int i = 0; i < size; i++) {
-		data->mData[i] = stream.readFloat();
-	}
+	mRotateDataBlock->read(stream);
 
+	// Read translation data
 	mTranslationDataBlock = new DataChunk;
-	data                  = mTranslationDataBlock;
-	// read number of translation values, allocate block
-	size        = stream.readInt();
-	data->mData = new f32[size];
-	data->mSize = size;
-	// read each raw translation value into the block
-	for (int i = 0; i < size; i++) {
-		data->mData[i] = stream.readFloat();
-	}
+	mTranslationDataBlock->read(stream);
 
+	// Read animation info for each joint
 	mAnimInfo = new AnimDataInfo[mNumJoints];
-
-	// data for every joint in table
 	for (int i = 0; i < mNumJoints; i++) {
 		mAnimInfo[i].mGroupIndex = stream.readInt();
 
-		// index of data of parent?
-		int id                       = stream.readInt();
-		id                           = (id == -1) ? id : mAnimInfo[id].mParentJntIndex;
-		mAnimInfo[i].mParentJntIndex = id;
+		int parentIndex              = stream.readInt();
+		parentIndex                  = (parentIndex == -1) ? parentIndex : mAnimInfo[parentIndex].mParentJntIndex;
+		mAnimInfo[i].mParentJntIndex = parentIndex;
 
-		// read scale params (3 entries for x y and z)
+		// Read scale parameters (3 entries for x, y, and z)
 		for (int j = 0; j < 3; j++) {
-			AnimParam* data   = &mAnimInfo[i].mScale[j];
-			data->mEntryNum   = stream.readInt();
-			data->mDataOffset = stream.readInt();
-			data->mFlags      = stream.readInt();
+			AnimParam* scaleParam   = &mAnimInfo[i].mScale[j];
+			scaleParam->mEntryNum   = stream.readInt();
+			scaleParam->mDataOffset = stream.readInt();
+			scaleParam->mFlags      = stream.readInt();
 		}
 
-		// read rotation params (3 entries for x y and z)
+		// Read rotation parameters (3 entries for x, y, and z)
 		for (int j = 0; j < 3; j++) {
-			AnimParam* data   = &mAnimInfo[i].mRotation[j];
-			data->mEntryNum   = stream.readInt();
-			data->mDataOffset = stream.readInt();
-			data->mFlags      = stream.readInt();
+			AnimParam* rotationParam   = &mAnimInfo[i].mRotation[j];
+			rotationParam->mEntryNum   = stream.readInt();
+			rotationParam->mDataOffset = stream.readInt();
+			rotationParam->mFlags      = stream.readInt();
 		}
 
-		// read translation params (3 entries for x y and z)
+		// Read translation parameters (3 entries for x, y, and z)
 		for (int j = 0; j < 3; j++) {
-			AnimParam* data   = &mAnimInfo[i].mTranslation[j];
-			data->mEntryNum   = stream.readInt();
-			data->mDataOffset = stream.readInt();
-			data->mFlags      = stream.readInt();
+			AnimParam* translationParam   = &mAnimInfo[i].mTranslation[j];
+			translationParam->mEntryNum   = stream.readInt();
+			translationParam->mDataOffset = stream.readInt();
+			translationParam->mFlags      = stream.readInt();
 		}
 	}
 
@@ -4902,8 +4880,8 @@ void AnimDck::parse(CmdStream* stream)
 					if (stream->isToken("size")) {
 						int size;
 						sscanf(stream->getToken(true), "%d", &size);
-						data->mData = new f32[size];
-						data->mSize = size;
+						data->mData     = new f32[size];
+						data->mDataSize = size;
 						stream->getToken(true);
 					}
 				}
@@ -4931,8 +4909,8 @@ void AnimDck::parse(CmdStream* stream)
 					if (stream->isToken("size")) {
 						int size;
 						sscanf(stream->getToken(true), "%d", &size);
-						data->mData = new f32[size];
-						data->mSize = size;
+						data->mData     = new f32[size];
+						data->mDataSize = size;
 						stream->getToken(true);
 					}
 				}
@@ -4959,8 +4937,8 @@ void AnimDck::parse(CmdStream* stream)
 					if (stream->isToken("size")) {
 						int size;
 						sscanf(stream->getToken(true), "%d", &size);
-						data->mData = new f32[size];
-						data->mSize = size;
+						data->mData     = new f32[size];
+						data->mDataSize = size;
 						stream->getToken(true);
 					}
 				}
