@@ -32,6 +32,27 @@ struct Node : public CoreNode {
 	// TODO: members
 };
 
+struct FaceNode : public CoreNode {
+	FaceNode();
+	FaceNode(int);
+
+	// _00     = VTBL
+	// _00-_14 = CoreNode
+	int _14; // _14
+	int _18; // _18
+	int _1C; // _1C
+	int _20; // _20
+	int _24; // _24
+	int _28; // _28
+	int _2C; // _2C
+	int _30; // _30
+	int _34; // _34
+	int _38; // _38
+	int _3C; // _3C
+	int _40; // _40
+	int _44; // _44
+};
+
 /**
  * @brief TODO
  */

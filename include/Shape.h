@@ -2,7 +2,7 @@
 #define _SHAPE_H
 
 #include "types.h"
-#include "CoreNode.h"
+#include "Node.h"
 #include "Stream.h"
 #include "Colour.h"
 #include "Material.h"
@@ -114,7 +114,13 @@ struct DispList : public CoreNode {
 
 	// _00     = VTBL
 	// _00-_14 = CoreNode
-	// TODO: members
+	int mFlags;         // _14
+	int mDataLength;    // _18
+	char* mData;        // _1C
+	int _20;            // _20
+	int _24;            // _24
+	int _28;            // _28
+	FaceNode mFaceNode; // _2C
 };
 
 struct BoundBox {

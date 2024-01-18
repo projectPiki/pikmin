@@ -45,6 +45,16 @@ struct RandomAccessStream : public Stream {
 	virtual void setPosition(int); // _5C (weak)
 	virtual int getLength();       //{ return getAvailable(); }               // _60 (weak)
 
+	void skipPadding(u32 paddingAmount)
+	{
+		int length       = getPosition();
+		int resultAmount = (~(paddingAmount - 1) & (length + paddingAmount - 1)) - length;
+
+		for (int i = 0; i < resultAmount; i++) {
+			readByte();
+		}
+	}
+
 	// _04     = VTBL
 	// _00-_08 = Stream
 };

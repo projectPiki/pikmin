@@ -45,8 +45,17 @@ void Envelope::read(RandomAccessStream&)
  * Address:	80029F98
  * Size:	000100
  */
-void DispList::read(RandomAccessStream&)
+void DispList::read(RandomAccessStream& stream)
 {
+	mFlags = stream.readInt();
+	_28    = stream.readInt();
+
+	mDataLength = stream.readInt();
+	stream.skipPadding(0x20);
+	mData = new (0x20) char[mDataLength];
+
+	stream.read(mData, mDataLength);
+
 	/*
 	.loc_0x0:
 	  mflr      r0

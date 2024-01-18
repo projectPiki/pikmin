@@ -51,8 +51,15 @@ typedef unsigned long size_t;
 #define TRUE  1
 #define FALSE 0
 
-#define NULL ((void*)0)
+#define NULL    ((void*)0)
 #define nullptr 0
+
+// overloading operators
+void* operator new(size_t);
+void* operator new[](size_t);
+void* operator new[](size_t, int);
+void operator delete(void*);
+void operator delete[](void*);
 
 // Sets specific flag to 1
 #define SET_FLAG(x, val) (x |= (val))
@@ -82,7 +89,7 @@ typedef unsigned long size_t;
 #define ATTRIBUTE_ALIGN(num) __attribute__((aligned(num)))
 
 // Checks if a flag is set in a bitfield
-#define IS_FLAG_SET(flags, bitsFromLSB) (((flags) >> (bitsFromLSB)&1))
+#define IS_FLAG_SET(flags, bitsFromLSB) (((flags) >> (bitsFromLSB) & 1))
 
 #define ASSERT_HANG(cond) \
 	if (!(cond)) {        \
