@@ -1,4 +1,5 @@
 #include "types.h"
+#include "Controller.h"
 
 /*
  * --INFO--
@@ -19,28 +20,6 @@ void _Print(char*, ...)
 {
 	// UNUSED FUNCTION
 }
-
-struct Controller {
-	u8 unknown00[0x20];
-	u32 _20;
-	u32 _24;
-	u32 _28;
-	u32 _2C;
-	u32 _30;
-	u32 _34;
-	u32 _38;
-	u32 _3C;
-	u32 _40;
-	bool _44;
-
-	void reset(u32);
-	void updateCont(u32);
-	void update();
-	void getMainStickX();
-	void getMainStickY();
-	void getSubStickX();
-	void getSubStickY();
-};
 
 /*
  * --INFO--
@@ -100,17 +79,6 @@ void Controller::updateCont(u32 arg1)
  * Address:	80040A70
  * Size:	00002C
  */
-struct ControllerManager {
-	void updateController(Controller*);
-};
-
-struct System {
-	u8 data[0x27C];
-	ControllerManager* mContManager;
-};
-
-extern System* gsys;
-
 void Controller::update() { gsys->mContManager->updateController(this); }
 
 /*
