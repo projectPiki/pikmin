@@ -1,7 +1,7 @@
 SYSCOMMON_FILES:=\
 	$(BUILD_DIR)/asm/sysCommon/ayuStack.o\
 	$(BUILD_DIR)/asm/sysCommon/baseApp.o\
-	$(BUILD_DIR)/asm/sysCommon/stream.o\
+	$(BUILD_DIR)/src/sysCommon/stream.o\
 	$(BUILD_DIR)/asm/sysCommon/streamBufferedInput.o\
 	$(BUILD_DIR)/src/sysCommon/string.o\
 	$(BUILD_DIR)/asm/sysCommon/graphics.o\

@@ -8,6 +8,9 @@
 void sscanf(char*, char*, void*);
 
 struct String {
+	String() { init(64); }
+	String(char* str, int length) { init(str, length); }
+
 	int getLength();
 
 	// unused/inlined:
@@ -24,8 +27,18 @@ struct String {
 	void calcHash(char*);
 	void calcHash();
 	void toInt(char*);
+	void init(int length)
+	{
+		mStr    = length ? new char[length + 1] : nullptr;
+		mLength = length;
+	}
+	void init(char* str, int length)
+	{
+		mStr    = str;
+		mLength = length;
+	}
 
-	u32 mLength; // _00
+	int mLength; // _00
 	char* mStr;  // _04
 };
 
