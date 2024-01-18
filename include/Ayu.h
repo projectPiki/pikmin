@@ -14,6 +14,8 @@ struct ayuID {
 	u32 mID; // _00
 };
 
+struct MemHead { };
+
 /**
  * @brief TODO
  */
@@ -26,6 +28,11 @@ struct AyuCache {
 	bool isEmpty();
 	void largestBlockFree();
 
+	void getIndex();
+	void releaseIndex(int);
+	void deleteIdAll(u32);
+	void amountFree();
+
 	// TODO: members
 };
 
@@ -36,7 +43,7 @@ struct AyuStack {
 	AyuStack();
 
 	bool checkOverflow();
-	void checkStack();
+	inline void checkStack();
 	void create(char*, int, void*, int, bool);
 	int getFree();
 	int getMaxFree();
@@ -48,15 +55,20 @@ struct AyuStack {
 	void* push(int);
 	void reset(int);
 	void reset();
-	int setAllocType(int);
+	inline int setAllocType(int type)
+	{
+		int old    = mAllocType;
+		mAllocType = type;
+		return old;
+	}
 
-	int mAllocType;        // _00
+	s32 mAllocType;        // _00
 	int mSize;             // _04
-	int mUsed;             // _08
-	u32* mTop;             // _0C
-	int mTopSize;          // _10
-	u32* mStackPointer;    // _14
-	int mTopFree;          // _18
+	int mTotalSize;        // _08
+	u32 mInitialStackTop;  // _0C
+	u32 _10;               // _10
+	u32 mStackTop;         // _14
+	u32 mStackLimit;       // _18
 	bool mProtectOverflow; // _1C
 	bool mIsActive;        // _1D
 	char* mName;           // _20

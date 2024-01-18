@@ -46,6 +46,7 @@ struct StdSystem {
 	virtual void startLoading(struct LoadIdler*, bool, u32); // _2C
 	virtual void endLoading();                               // _30
 
+	void invalidateObjs(u32, u32);
 	static char* stringDup(char*);
 
 	// _00 = VTBL

@@ -1,4 +1,6 @@
 #include "types.h"
+#include "Ayu.h"
+#include "system.h"
 
 /*
  * --INFO--
@@ -47,7 +49,11 @@ void AyuStack::reset()
  */
 void AyuStack::checkStack()
 {
-	// UNUSED FUNCTION
+#ifndef __MWERKS__
+	if (mAllocType & 2 && mStackTop - *((u32*)mStackTop - 2) != mInitialStackTop) {
+		_Error("trashed memory stack (%s)\n", mName);
+	}
+#endif
 }
 
 /*
@@ -55,70 +61,29 @@ void AyuStack::checkStack()
  * Address:	800246E4
  * Size:	0000BC
  */
-void AyuStack::reset(int)
+void AyuStack::reset(int i)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  rlwinm.   r0,r4,0,30,30
-	  stwu      r1, -0x40(r1)
-	  stw       r31, 0x3C(r1)
-	  stw       r30, 0x38(r1)
-	  addi      r30, r4, 0
-	  stw       r29, 0x34(r1)
-	  addi      r29, r3, 0
-	  beq-      .loc_0x60
-	  lwz       r31, 0x0(r29)
-	  stw       r30, 0x0(r29)
-	  lwz       r3, 0x2DEC(r13)
-	  lwz       r4, 0xC(r29)
-	  lwz       r5, 0x14(r29)
-	  bl        0x1B090
-	  b         .loc_0x4C
+	if (i & 2) {
+		int prev = setAllocType(i);
+		gsys->invalidateObjs(mInitialStackTop, mStackTop);
 
-	.loc_0x44:
-	  mr        r3, r29
-	  bl        0x188
+		while (mStackTop != mInitialStackTop) {
+			pop();
+		}
 
-	.loc_0x4C:
-	  lwz       r3, 0x14(r29)
-	  lwz       r0, 0xC(r29)
-	  cmplw     r3, r0
-	  bne+      .loc_0x44
-	  stw       r31, 0x0(r29)
+		setAllocType(prev);
+	}
 
-	.loc_0x60:
-	  rlwinm.   r0,r30,0,31,31
-	  beq-      .loc_0xA0
-	  lwz       r31, 0x0(r29)
-	  stw       r30, 0x0(r29)
-	  lwz       r3, 0x2DEC(r13)
-	  lwz       r4, 0x18(r29)
-	  lwz       r5, 0x10(r29)
-	  bl        0x1B050
-	  b         .loc_0x8C
+	if (i & 1) {
+		int prev = setAllocType(i);
+		gsys->invalidateObjs(mStackLimit, _10);
 
-	.loc_0x84:
-	  mr        r3, r29
-	  bl        0x148
+		while (mStackLimit != _10) {
+			pop();
+		}
 
-	.loc_0x8C:
-	  lwz       r3, 0x18(r29)
-	  lwz       r0, 0x10(r29)
-	  cmplw     r3, r0
-	  bne+      .loc_0x84
-	  stw       r31, 0x0(r29)
-
-	.loc_0xA0:
-	  lwz       r0, 0x44(r1)
-	  lwz       r31, 0x3C(r1)
-	  lwz       r30, 0x38(r1)
-	  lwz       r29, 0x34(r1)
-	  addi      r1, r1, 0x40
-	  mtlr      r0
-	  blr
-	*/
+		setAllocType(prev);
+	}
 }
 
 /*
@@ -126,8 +91,46 @@ void AyuStack::reset(int)
  * Address:	800247A0
  * Size:	000114
  */
-void AyuStack::push(int)
+void* AyuStack::push(int requestedSize)
 {
+	if (!requestedSize) {
+		requestedSize = 1;
+	}
+
+	if (IS_NOT_ALIGNED(requestedSize, 8)) {
+		requestedSize = ALIGN_NEXT(requestedSize, 8);
+	}
+
+	if (mAllocType == 2) {
+		if (requestedSize + 8 + mStackTop > mStackLimit) {
+			return nullptr;
+		}
+
+		u32 previousSize;
+		u32 stackStart;
+		if (mStackTop != mInitialStackTop) {
+			previousSize = *(u32*)(mStackTop - 4);
+			stackStart   = mStackTop - previousSize - 8;
+		} else {
+			previousSize = 0;
+			stackStart   = mStackTop;
+		}
+
+		mTotalSize += requestedSize + 8;
+		mStackTop += requestedSize + 8;
+		*(u32*)mStackLimit = requestedSize + 8;
+		checkStack();
+		return (void*)stackStart;
+	} else {
+		if (mStackLimit - (requestedSize + 8) < mStackTop) {
+			return nullptr;
+		}
+
+		mTotalSize += requestedSize + 8;
+		mStackLimit -= requestedSize + 8;
+		*(u32*)mStackLimit = requestedSize + 8;
+		return (void*)(mStackLimit + 8);
+	}
 	/*
 	.loc_0x0:
 	  cmpwi     r4, 0
@@ -696,7 +699,7 @@ void AyuCache::amountFree()
  * Address:	80024DB0
  * Size:	000018
  */
-void AyuCache::isEmpty()
+bool AyuCache::isEmpty()
 {
 	/*
 	.loc_0x0:
