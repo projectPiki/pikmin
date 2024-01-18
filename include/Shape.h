@@ -4,6 +4,10 @@
 #include "types.h"
 #include "CoreNode.h"
 #include "Stream.h"
+#include "Colour.h"
+#include "Material.h"
+#include "TexAttr.h"
+#include "Collision.h"
 #include "Matrix4f.h"
 
 template <typename A, typename B>
