@@ -47,7 +47,6 @@ struct RandomAccessStream : public Stream {
 
 	// _04     = VTBL
 	// _00-_08 = Stream
-	// TODO: members
 };
 
 /**

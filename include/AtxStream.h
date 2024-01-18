@@ -4,6 +4,19 @@
 #include "types.h"
 #include "Stream.h"
 
+struct AtxStream;
+
+struct AtxRouter {
+	virtual bool openRoute(AtxStream*, int) = 0; // _00
+	virtual void closeRoute(AtxStream*)     = 0; // _04
+	virtual void lock() { }                      // _08
+	virtual void unlock() { }                    // _0C
+	virtual void closeAll() { }                  // _10
+	virtual void reset() = 0;                    // _14
+	virtual bool isConnected() { return false; } // _18
+	virtual void setWindow(u32) { }              // _1C
+};
+
 /**
  * @brief TODO
  */
@@ -15,11 +28,12 @@ struct AtxStream : public Stream {
 	virtual void close();           // _4C
 	virtual void flush();           // _54
 
-	void open(char*, int);
+	bool open(char*, int);
 
 	// _04     = VTBL
 	// _00-_08 = Stream
-	// TODO: members
+	Stream* mNetStream; // _08, TcpStream, stripped
+	int _0C;            // _0C
 };
 
 /**
@@ -46,7 +60,9 @@ struct AtxFileStream : public RandomAccessStream {
 
 	// _04     = VTBL
 	// _00-_08 = RandomAccessStream
-	// TODO: members
+	int mPosition;        // _08
+	int mLength;          // _0C
+	AtxStream mAtxStream; // _10
 };
 
 #endif

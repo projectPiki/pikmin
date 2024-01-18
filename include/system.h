@@ -18,6 +18,7 @@ struct LFInfo;
 struct LightFlare;
 struct LFlareGroup;
 struct Matrix4f;
+struct AtxRouter;
 
 /**
  * @brief TODO
@@ -138,14 +139,19 @@ struct System : public StdSystem {
 
 	static void* alloc(size_t);
 
+	inline AtxRouter* getAtxRouter() { return mAtxRouter; }
+	inline void setAtxRouter(AtxRouter* router) { mAtxRouter = router; }
+
 	// _00      = VTBL
 	// _00-_248 = StdSystem
-	u32 _244;       // _244
-	u32 _248;       // _248
-	Graphics* mGfx; // _24C
-	u8 _250[0x3C];  // _250, unknown
-	f32 mDeltaTime; // _28C
-	u8 _290[0xA4];  // _290, unknown
+	u32 _244;              // _244
+	u32 _248;              // _248
+	Graphics* mGfx;        // _24C
+	u8 _250[0x28];         // _250, unknown
+	AtxRouter* mAtxRouter; // _278
+	u8 _27C[0x10];         // _27C, unknown
+	f32 mDeltaTime;        // _28C
+	u8 _290[0xA4];         // _290, unknown
 };
 
 extern System* gsys;
