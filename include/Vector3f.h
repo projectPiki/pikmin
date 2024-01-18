@@ -60,6 +60,12 @@ struct Vector3f {
 	f32 x, y, z; // _00, _04, _08
 };
 
+struct Vector2f {
+	Vector2f() { }
+	Vector2f(const f32& x, const f32& y);
+	f32 x, y; // _00, _04
+};
+
 inline f32 Vector3f_diffX(Vector3f& a, Vector3f& b) { return a.getX() - b.getX(); }
 inline f32 Vector3f_diffY(Vector3f& a, Vector3f& b) { return a.getY() - b.getY(); }
 inline f32 Vector3f_diffZ(Vector3f& a, Vector3f& b) { return a.getZ() - b.getZ(); }

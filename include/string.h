@@ -4,6 +4,9 @@
 #include "types.h"
 #include "Stream.h"
 
+// definitely not the right place for this
+void sscanf(char*, char*, void*);
+
 struct String {
 	int getLength();
 

@@ -121,4 +121,6 @@ struct CollInfo {
 	u8 _00[0x14]; // _00, TODO: work out members;
 };
 
+struct CollGroup { };
+
 #endif

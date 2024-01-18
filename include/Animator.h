@@ -3,11 +3,51 @@
 
 #include "types.h"
 #include "CoreNode.h"
+#include "Stream.h"
+#include "Vector3f.h"
+#include "Matrix4f.h"
 
 struct AnimMgr;
 struct BaseShape;
 struct CmdStream;
 struct Shape;
+
+struct DataChunk {
+	DataChunk()
+	{
+		_00   = 0;
+		mSize = 0;
+		mData = nullptr;
+	}
+
+	void addData(f32);
+
+	int _00;
+	int mSize;  // _04
+	f32* mData; // _08
+};
+
+struct AnimCacheInfo {
+	AnimCacheInfo();
+	void updateContext();
+
+	u8 _00[0x1c];
+};
+
+struct SRT {
+	Vector3f mScale;     // _00
+	Vector3f mRotate;    // _0C
+	Vector3f mTranslate; // _18
+};
+
+/**
+ * @brief TODO
+ */
+struct AnimParam {
+	int mEntryNum;   // _00
+	int mDataOffset; // _04
+	int mFlags;      // _08, controls if 3 or 4 values in block, maybe more stuff?
+};
 
 /**
  * @brief TODO
@@ -15,20 +55,29 @@ struct Shape;
 struct AnimDataInfo {
 	AnimDataInfo();
 
-	// TODO: members
+	AnimParam mScale[3];       // _00, x y and z
+	AnimParam mRotation[3];    // _24, x y and z
+	AnimParam mTranslation[3]; // _48, x y and z
+	int mGroupIndex;           // _6C
+	int mParentJntIndex;       // _70
+	Matrix4f mMtx;             // _74
+	SRT mSRT;                  // _B4
+	u16 mFlags;                // _D8
 };
 
-/**
- * @brief TODO
- */
-struct AnimParam {
-	// TODO: members
-};
+static f32 extract(f32, AnimParam&, DataChunk&);
 
 /**
  * @brief TODO
  */
 struct AnimData : public CoreNode {
+
+	AnimData()
+	    : CoreNode("")
+	{
+		_24 = 0;
+		_38 = 0;
+	}
 
 	virtual void extractSRT(struct SRT&, int, AnimDataInfo*, f32);                  // _10
 	virtual void makeAnimSRT(int, struct Matrix4f*, Matrix4f*, AnimDataInfo*, f32); // _14
@@ -36,10 +85,20 @@ struct AnimData : public CoreNode {
 	virtual void writeType(RandomAccessStream&);                                    // _1C
 
 	void checkMask();
+	void initData();
 
 	// _00     = VTBL
 	// _00-_14 = CoreNode
-	// TODO: members
+	DataChunk* mScaleDataBlock;       // _14
+	DataChunk* mRotateDataBlock;      // _18
+	DataChunk* mTranslationDataBlock; // _1C
+	int _20;
+	int _24;
+	int mNumJoints; // _28
+	int _2C;
+	int mNumFrames;    // _30
+	BaseShape* mModel; // _34
+	int _38;
 };
 
 /**
@@ -52,8 +111,7 @@ struct AnimDca : public AnimData {
 	void getAnimInfo(CmdStream*);
 
 	// _00     = VTBL
-	// _00-_14 = AnimData
-	// TODO: members
+	// _00-_38 = AnimData
 };
 
 /**
@@ -70,8 +128,9 @@ struct AnimDck : public AnimData {
 	void getAnimInfo(CmdStream*);
 
 	// _00     = VTBL
-	// _00-_14 = AnimData
-	// TODO: members
+	// _00-_38 = AnimData
+	AnimDataInfo* mAnimInfo;   // _3C
+	AnimCacheInfo* mCacheInfo; // _40
 };
 
 /**
@@ -174,6 +233,23 @@ struct AnimMgr : public CoreNode {
 	// _00     = VTBL
 	// _00-_14 = CoreNode
 	// TODO: members
+};
+
+template <typename T>
+struct PVWAnimInfo1 {
+	void read(RandomAccessStream&);
+};
+
+template <typename T>
+struct PVWAnimInfo3 {
+	void read(RandomAccessStream&);
+};
+
+struct AnimFrameCacher {
+	AnimFrameCacher(int);
+	void updateInfo(AnimCacheInfo*);
+	void removeOldest();
+	void cacheFrameSpace(int, AnimCacheInfo*);
 };
 
 #endif

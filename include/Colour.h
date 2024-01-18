@@ -16,4 +16,9 @@ struct Colour {
 	u8 r, g, b, a; // _00-_04
 };
 
+struct PVWTevColReg {
+	PVWTevColReg();
+	
+};
+
 #endif

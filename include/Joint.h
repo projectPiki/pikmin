@@ -23,7 +23,9 @@ struct Joint : public CoreNode {
 
 	// _00     = VTBL
 	// _00-_14 = CoreNode
-	// TODO: members
+	int _14;    // _14
+	int mIndex; // _18
+	u8 _1C[0x100];
 };
 
 #endif

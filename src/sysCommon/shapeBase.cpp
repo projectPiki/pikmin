@@ -2,6 +2,13 @@
 #include "Joint.h"
 #include "Mesh.h"
 #include "Shape.h"
+#include "Colour.h"
+#include "Material.h"
+#include "Collision.h"
+#include "TexAttr.h"
+#include "Vector3f.h"
+#include "CmdStream.h"
+#include "string.h"
 
 /*
  * --INFO--
@@ -704,8 +711,73 @@ void AnimContext::animate(f32)
  * Address:	8002A758
  * Size:	0001C4
  */
-void extract(f32, AnimParam&, DataChunk&)
+f32 extract(f32 currTime, AnimParam& param, DataChunk& data)
 {
+	int size;
+
+	// any param can potentially have 3 or 4 values
+	// when 3 values, there is one value for in/out tangent
+	// when 4 values, there is a seperate one for in/out
+	if (param.mFlags == 0) {
+		size = 3;
+	} else {
+		size = 4;
+	}
+
+	// determine base offset of current animation data based on the frame of the animation
+	int offs    = param.mDataOffset;
+	bool active = false;
+	for (int i = 0; i < param.mEntryNum - 1; i++) {
+		// if the current animation time is greater than the value, but less than the value after it
+		if (data.mData[i] <= currTime && data.mData[i + size] >= currTime) {
+			active = true;
+			break;
+		}
+		offs += size;
+	}
+
+	// if theres no defined keys for the current time, abort and return starting value
+	if (!active) {
+		return data.mData[param.mDataOffset + size + 1];
+	}
+
+	// calculate... a lot of math
+	f32 nextFrame, currFrame, nFrameSquare, cFrameSquare, cFrameCube, mult, nextTan, currTan, currPos, nextPos;
+	if (size == 3) {
+		f32* vals = data.mData;
+		currFrame = vals[offs];
+		nextFrame = vals[offs + 3];
+
+		currPos = vals[offs + 1];
+		currTan = vals[offs + 2];
+
+		nextPos = vals[offs + 4];
+		nextTan = vals[offs + 5];
+	} else {
+		f32* vals = data.mData;
+		int offs2 = offs + size;
+
+		currFrame = vals[offs];
+		nextFrame = vals[offs2];
+
+		currPos = vals[offs + 1];
+		currTan = vals[offs + 3];
+
+		nextPos = vals[offs2 + 1];
+		nextTan = vals[offs2 + 2];
+	}
+
+	nextFrame    = 30.0f / (nextFrame - currFrame);
+	currFrame    = 0.033333335f * (currTime - currFrame);
+	nFrameSquare = nextFrame * nextFrame;
+	cFrameSquare = currFrame * currFrame;
+	cFrameCube   = cFrameSquare * currFrame;
+	mult         = 3.0f * cFrameSquare * nFrameSquare;
+	return nextTan * (cFrameCube * nFrameSquare - cFrameSquare * nextFrame)
+	     + currTan * (currFrame + (cFrameCube * nFrameSquare - 2.0f * cFrameSquare * nextFrame))
+	     + currPos * (1.0f + (2.0f * cFrameCube * nFrameSquare * nextFrame - mult))
+	     + nextPos * (-2.0f * cFrameCube * nFrameSquare * nextFrame + mult);
+
 	/*
 	.loc_0x0:
 	  stwu      r1, -0x50(r1)
@@ -838,49 +910,6 @@ void extract(f32, AnimParam&, DataChunk&)
 	  lfd       f31, 0x48(r1)
 	  lfd       f30, 0x40(r1)
 	  addi      r1, r1, 0x50
-	  blr
-	*/
-}
-
-/*
- * --INFO--
- * Address:	8002A91C
- * Size:	00007C
- */
-CamDataInfo::CamDataInfo()
-{
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  addi      r31, r3, 0
-	  addi      r3, r31, 0xA8
-	  lfs       f0, -0x7D20(r2)
-	  stfs      f0, 0x8(r31)
-	  stfs      f0, 0x4(r31)
-	  stfs      f0, 0x0(r31)
-	  stfs      f0, 0x14(r31)
-	  stfs      f0, 0x10(r31)
-	  stfs      f0, 0xC(r31)
-	  stfs      f0, 0x20(r31)
-	  stfs      f0, 0x1C(r31)
-	  stfs      f0, 0x18(r31)
-	  bl        0x18868
-	  lfs       f0, -0x7D0C(r2)
-	  li        r0, 0
-	  addi      r3, r31, 0
-	  stfs      f0, 0x278(r31)
-	  lfs       f0, -0x7D04(r2)
-	  stfs      f0, 0x27C(r31)
-	  lfs       f0, -0x7D00(r2)
-	  stfs      f0, 0x26C(r31)
-	  stb       r0, 0x2C(r31)
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
 	  blr
 	*/
 }
@@ -2504,33 +2533,6 @@ void SceneData::getAnimInfo(CmdStream*)
 	  lmw       r26, 0x20(r1)
 	  lwz       r0, 0x3C(r1)
 	  addi      r1, r1, 0x38
-	  mtlr      r0
-	  blr
-	*/
-}
-
-/*
- * --INFO--
- * Address:	8002BF10
- * Size:	00003C
- */
-LightDataInfo::LightDataInfo()
-{
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  addi      r31, r3, 0
-	  addi      r3, r31, 0x58
-	  bl        -0x24E0
-	  lfs       f0, -0x7CFC(r2)
-	  mr        r3, r31
-	  stfs      f0, 0x70(r31)
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  addi      r1, r1, 0x18
 	  mtlr      r0
 	  blr
 	*/
@@ -4395,8 +4397,16 @@ void AnimDca::getAnimInfo(CmdStream*)
  * Address:	8002D69C
  * Size:	00010C
  */
-AnimDck::AnimDck(BaseShape*, int)
+AnimDck::AnimDck(BaseShape* model, int joints)
 {
+	mModel     = model;
+	mNumJoints = joints;
+	mNumFrames = 0;
+	mAnimInfo  = new AnimDataInfo[mNumJoints];
+
+	for (int i = 0; i < joints; i++) {
+		mAnimInfo = (model->mJoints[i].mIndex == -1) ? nullptr : mAnimInfo + model->mJoints[i].mIndex;
+	}
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -4482,8 +4492,85 @@ AnimDck::AnimDck(BaseShape*, int)
  * Address:	8002D7A8
  * Size:	00041C
  */
-void AnimDck::read(RandomAccessStream&)
+void AnimDck::read(RandomAccessStream& stream)
 {
+	// this is for reading a dck file in binary format (what we actually see)
+
+	mNumJoints = stream.readInt();
+	mNumFrames = stream.readInt();
+
+	mScaleDataBlock = new DataChunk;
+	DataChunk* data = mScaleDataBlock;
+	// read number of scale values, allocate block
+	int size    = stream.readInt();
+	data->mData = new f32[size];
+	data->mSize = size;
+	// read each raw scale value into the block
+	for (int i = 0; i < size; i++) {
+		data->mData[i] = stream.readFloat();
+	}
+
+	mRotateDataBlock = new DataChunk;
+	data             = mRotateDataBlock;
+	// read number of rotation values, allocate block
+	size        = stream.readInt();
+	data->mData = new f32[size];
+	data->mSize = size;
+	// read each raw rotation value into the block
+	for (int i = 0; i < size; i++) {
+		data->mData[i] = stream.readFloat();
+	}
+
+	mTranslationDataBlock = new DataChunk;
+	data                  = mTranslationDataBlock;
+	// read number of translation values, allocate block
+	size        = stream.readInt();
+	data->mData = new f32[size];
+	data->mSize = size;
+	// read each raw translation value into the block
+	for (int i = 0; i < size; i++) {
+		data->mData[i] = stream.readFloat();
+	}
+
+	mAnimInfo = new AnimDataInfo[mNumJoints];
+
+	// data for every joint in table
+	for (int i = 0; i < mNumJoints; i++) {
+		mAnimInfo[i].mGroupIndex = stream.readInt();
+
+		// index of data of parent?
+		int id                       = stream.readInt();
+		id                           = (id == -1) ? id : mAnimInfo[id].mParentJntIndex;
+		mAnimInfo[i].mParentJntIndex = id;
+
+		// read scale params (3 entries for x y and z)
+		for (int j = 0; j < 3; j++) {
+			AnimParam* data   = &mAnimInfo[i].mScale[j];
+			data->mEntryNum   = stream.readInt();
+			data->mDataOffset = stream.readInt();
+			data->mFlags      = stream.readInt();
+		}
+
+		// read rotation params (3 entries for x y and z)
+		for (int j = 0; j < 3; j++) {
+			AnimParam* data   = &mAnimInfo[i].mRotation[j];
+			data->mEntryNum   = stream.readInt();
+			data->mDataOffset = stream.readInt();
+			data->mFlags      = stream.readInt();
+		}
+
+		// read translation params (3 entries for x y and z)
+		for (int j = 0; j < 3; j++) {
+			AnimParam* data   = &mAnimInfo[i].mTranslation[j];
+			data->mEntryNum   = stream.readInt();
+			data->mDataOffset = stream.readInt();
+			data->mFlags      = stream.readInt();
+		}
+	}
+
+	checkMask();
+	mCacheInfo = new AnimCacheInfo[mNumFrames];
+
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -4789,8 +4876,193 @@ void AnimDck::read(RandomAccessStream&)
  * Address:	8002DBC4
  * Size:	000CE4
  */
-void AnimDck::parse(CmdStream*)
+void AnimDck::parse(CmdStream* stream)
 {
+	// this is all reserved for parsing Dck from a text based format which doesnt exist
+
+	mTranslationDataBlock = nullptr;
+	mRotateDataBlock      = nullptr;
+	mScaleDataBlock       = nullptr;
+	while (!stream->endOfCmds() && !stream->endOfSection()) {
+		stream->getToken(true);
+		if (stream->isToken("<KEY_ANM_INFO>")) {
+			stream->getToken(true);
+			getAnimInfo(stream);
+
+		} else if (stream->isToken("<KEY_SCALING>")) {
+			mScaleDataBlock = new DataChunk;
+
+			DataChunk* data = mScaleDataBlock;
+			stream->getToken(true);
+			int i = 0;
+			while (!stream->endOfCmds() && !stream->endOfSection()) {
+				// determine size of block every 4 reads (I think 4)
+				if (!(i & 7)) {
+					stream->getToken(true);
+					if (stream->isToken("size")) {
+						int size;
+						sscanf(stream->getToken(true), "%d", &size);
+						data->mData = new f32[size];
+						data->mSize = size;
+						stream->getToken(true);
+					}
+				}
+				// read scale values into block
+				f32 scale;
+				sscanf(stream->getToken(true), "%f", &scale);
+				data->addData(scale);
+				stream->getToken(true);
+				i++;
+			}
+			if (!stream->endOfCmds()) {
+				stream->getToken(true);
+			}
+
+		} else if (stream->isToken("<KEY_ROTATION>")) {
+			mRotateDataBlock = new DataChunk;
+
+			DataChunk* data = mRotateDataBlock;
+			stream->getToken(true);
+			int i = 0;
+			while (!stream->endOfCmds() && !stream->endOfSection()) {
+				// determine size of block every 4 reads (I think 4)
+				if (!(i & 7)) {
+					stream->getToken(true);
+					if (stream->isToken("size")) {
+						int size;
+						sscanf(stream->getToken(true), "%d", &size);
+						data->mData = new f32[size];
+						data->mSize = size;
+						stream->getToken(true);
+					}
+				}
+				// read scale values into block
+				f32 rotate;
+				sscanf(stream->getToken(true), "%f", &rotate);
+				data->addData(rotate);
+				stream->getToken(true);
+				i++;
+			}
+			if (!stream->endOfCmds()) {
+				stream->getToken(true);
+			}
+		} else if (stream->isToken("<KEY_TRANSLATION>")) {
+			mTranslationDataBlock = new DataChunk;
+
+			DataChunk* data = mTranslationDataBlock;
+			stream->getToken(true);
+			int i = 0;
+			while (!stream->endOfCmds() && !stream->endOfSection()) {
+				// determine size of block every 7 reads (I think 7)
+				if (!(i & 7)) {
+					stream->getToken(true);
+					if (stream->isToken("size")) {
+						int size;
+						sscanf(stream->getToken(true), "%d", &size);
+						data->mData = new f32[size];
+						data->mSize = size;
+						stream->getToken(true);
+					}
+				}
+				// read scale values into block
+				f32 rotate;
+				sscanf(stream->getToken(true), "%f", &rotate);
+				data->addData(rotate);
+				stream->getToken(true);
+				i++;
+			}
+			if (!stream->endOfCmds()) {
+				stream->getToken(true);
+			}
+		} else if (stream->isToken("<JOINT>")) {
+			stream->getToken(true);
+			int temp[2];
+			temp[0] = -1;
+			while (!stream->endOfCmds() && !stream->endOfSection()) {
+				stream->getToken(true);
+				if (stream->isToken("index")) {
+					sscanf(stream->getToken(true), "%d", temp);
+				} else if (stream->isToken("name")) {
+					stream->getToken(true);
+				} else if (stream->isToken("kind")) {
+					stream->getToken(true);
+				} else if (stream->isToken("parent")) {
+					sscanf(stream->getToken(true), "%d", temp);
+					stream->getToken(true);
+					mAnimInfo[temp[0]].mParentJntIndex = (temp[1] == -1) ? 0 : mAnimInfo[temp[1]].mParentJntIndex;
+				} else if (stream->isToken("child")) {
+					stream->getToken(true);
+					stream->getToken(true);
+				} else if (stream->isToken("brother_next")) {
+					stream->getToken(true);
+					stream->getToken(true);
+				} else if (stream->isToken("brother_prev")) {
+					stream->getToken(true);
+					stream->getToken(true);
+				} else if (stream->isToken("sx_param")) {
+					AnimParam* param = &mAnimInfo[temp[0]].mScale[0];
+					sscanf(stream->getToken(true), "%d", &param->mEntryNum);
+					sscanf(stream->getToken(true), "%d", &param->mDataOffset);
+					sscanf(stream->getToken(true), "%d", &param->mFlags);
+				} else if (stream->isToken("sy_param")) {
+					AnimParam* param = &mAnimInfo[temp[0]].mScale[1];
+					sscanf(stream->getToken(true), "%d", &param->mEntryNum);
+					sscanf(stream->getToken(true), "%d", &param->mDataOffset);
+					sscanf(stream->getToken(true), "%d", &param->mFlags);
+				} else if (stream->isToken("sz_param")) {
+					AnimParam* param = &mAnimInfo[temp[0]].mScale[2];
+					sscanf(stream->getToken(true), "%d", &param->mEntryNum);
+					sscanf(stream->getToken(true), "%d", &param->mDataOffset);
+					sscanf(stream->getToken(true), "%d", &param->mFlags);
+				} else if (stream->isToken("rx_param")) {
+					AnimParam* param = &mAnimInfo[temp[0]].mRotation[0];
+					sscanf(stream->getToken(true), "%d", &param->mEntryNum);
+					sscanf(stream->getToken(true), "%d", &param->mDataOffset);
+					sscanf(stream->getToken(true), "%d", &param->mFlags);
+				} else if (stream->isToken("ry_param")) {
+					AnimParam* param = &mAnimInfo[temp[0]].mRotation[1];
+					sscanf(stream->getToken(true), "%d", &param->mEntryNum);
+					sscanf(stream->getToken(true), "%d", &param->mDataOffset);
+					sscanf(stream->getToken(true), "%d", &param->mFlags);
+				} else if (stream->isToken("rz_param")) {
+					AnimParam* param = &mAnimInfo[temp[0]].mRotation[2];
+					sscanf(stream->getToken(true), "%d", &param->mEntryNum);
+					sscanf(stream->getToken(true), "%d", &param->mDataOffset);
+					sscanf(stream->getToken(true), "%d", &param->mFlags);
+				} else if (stream->isToken("tx_param")) {
+					AnimParam* param = &mAnimInfo[temp[0]].mTranslation[0];
+					sscanf(stream->getToken(true), "%d", &param->mEntryNum);
+					sscanf(stream->getToken(true), "%d", &param->mDataOffset);
+					sscanf(stream->getToken(true), "%d", &param->mFlags);
+				} else if (stream->isToken("ty_param")) {
+					AnimParam* param = &mAnimInfo[temp[0]].mTranslation[1];
+					sscanf(stream->getToken(true), "%d", &param->mEntryNum);
+					sscanf(stream->getToken(true), "%d", &param->mDataOffset);
+					sscanf(stream->getToken(true), "%d", &param->mFlags);
+				} else if (stream->isToken("tz_param")) {
+					AnimParam* param = &mAnimInfo[temp[0]].mTranslation[2];
+					sscanf(stream->getToken(true), "%d", &param->mEntryNum);
+					sscanf(stream->getToken(true), "%d", &param->mDataOffset);
+					sscanf(stream->getToken(true), "%d", &param->mFlags);
+				}
+			}
+			if (!stream->endOfCmds()) {
+				stream->getToken(true);
+			}
+		} else {
+			stream->getToken(true);
+			while (!stream->endOfCmds() && !stream->endOfSection()) {
+				stream->getToken(true);
+			}
+			if (!stream->endOfCmds()) {
+				stream->getToken(true);
+			}
+		}
+	}
+
+	checkMask();
+	mCacheInfo = new AnimCacheInfo[mNumFrames];
+
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -5754,112 +6026,26 @@ void AnimDck::parse(CmdStream*)
  * Address:	8002E8A8
  * Size:	000154
  */
-void AnimDck::getAnimInfo(CmdStream*)
+void AnimDck::getAnimInfo(CmdStream* stream)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  lis       r5, 0x8023
-	  stw       r0, 0x4(r1)
-	  lis       r7, 0x8023
-	  lis       r6, 0x8003
-	  stwu      r1, -0x30(r1)
-	  stmw      r26, 0x18(r1)
-	  addi      r29, r3, 0
-	  addi      r30, r4, 0
-	  subi      r28, r5, 0x7B44
-	  subi      r31, r7, 0x7A78
-	  subi      r27, r6, 0x3578
-	  b         .loc_0x104
+	while (!stream->endOfCmds() && !stream->endOfSection()) {
+		stream->getToken(true);
+		if (stream->isToken("numjoints")) {
+			sscanf(stream->getToken(true), "%d", &mNumJoints);
+			mAnimInfo = new AnimDataInfo[mNumJoints];
+			for (int i = 0; i < mNumJoints; i++) {
+				mAnimInfo[i].mGroupIndex = i;
+			}
+		} else if (stream->isToken("numframes")) {
+			sscanf(stream->getToken(true), "%d", &mNumFrames);
+		} else {
+			stream->skipLine();
+		}
+	}
 
-	.loc_0x34:
-	  addi      r3, r30, 0
-	  li        r4, 0x1
-	  bl        0x127CC
-	  addi      r3, r30, 0
-	  addi      r4, r31, 0
-	  bl        0x12AE4
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0xC8
-	  addi      r3, r30, 0
-	  li        r4, 0x1
-	  bl        0x127AC
-	  crclr     6, 0x6
-	  addi      r5, r29, 0x28
-	  subi      r4, r13, 0x7C94
-	  bl        0x1E9780
-	  lwz       r26, 0x28(r29)
-	  mulli     r3, r26, 0xDC
-	  addi      r3, r3, 0x8
-	  bl        0x186E0
-	  addi      r4, r27, 0
-	  addi      r7, r26, 0
-	  li        r5, 0
-	  li        r6, 0xDC
-	  bl        0x1E62F0
-	  stw       r3, 0x3C(r29)
-	  li        r5, 0
-	  li        r4, 0
-	  b         .loc_0xB8
-
-	.loc_0xA4:
-	  lwz       r3, 0x3C(r29)
-	  addi      r0, r4, 0x6C
-	  addi      r4, r4, 0xDC
-	  stwx      r5, r3, r0
-	  addi      r5, r5, 0x1
-
-	.loc_0xB8:
-	  lwz       r0, 0x28(r29)
-	  cmpw      r5, r0
-	  blt+      .loc_0xA4
-	  b         .loc_0x104
-
-	.loc_0xC8:
-	  addi      r3, r30, 0
-	  addi      r4, r28, 0
-	  bl        0x12A5C
-	  rlwinm.   r0,r3,0,24,31
-	  beq-      .loc_0xFC
-	  addi      r3, r30, 0
-	  li        r4, 0x1
-	  bl        0x12724
-	  crclr     6, 0x6
-	  addi      r5, r29, 0x30
-	  subi      r4, r13, 0x7C94
-	  bl        0x1E96F8
-	  b         .loc_0x104
-
-	.loc_0xFC:
-	  mr        r3, r30
-	  bl        0x12574
-
-	.loc_0x104:
-	  mr        r3, r30
-	  bl        0x123A8
-	  rlwinm.   r0,r3,0,24,31
-	  bne-      .loc_0x124
-	  mr        r3, r30
-	  bl        0x12AC8
-	  rlwinm.   r0,r3,0,24,31
-	  beq+      .loc_0x34
-
-	.loc_0x124:
-	  mr        r3, r30
-	  bl        0x12388
-	  rlwinm.   r0,r3,0,24,31
-	  bne-      .loc_0x140
-	  addi      r3, r30, 0
-	  li        r4, 0x1
-	  bl        0x126CC
-
-	.loc_0x140:
-	  lmw       r26, 0x18(r1)
-	  lwz       r0, 0x34(r1)
-	  addi      r1, r1, 0x30
-	  mtlr      r0
-	  blr
-	*/
+	if (!stream->endOfCmds()) {
+		stream->getToken(true);
+	}
 }
 
 /*
@@ -5867,8 +6053,81 @@ void AnimDck::getAnimInfo(CmdStream*)
  * Address:	8002E9FC
  * Size:	000220
  */
-void AnimDck::extractSRT(SRT&, int, AnimDataInfo*, f32)
+void AnimDck::extractSRT(SRT& srt, int, AnimDataInfo* anim, f32 time)
 {
+	if (anim->mFlags & 0x8000) {
+		return;
+	}
+
+	// APPLY SCALE
+	if (!(anim->mFlags & 8)) {
+		// loop for x y and z
+		for (int i = 0; i < 3; i++) {
+			f32* s           = (f32*)&srt.mScale;
+			AnimParam* param = &anim->mScale[i];
+			switch (param->mEntryNum) {
+			case 0: // 0 entries, default to 1.0
+				s[i] = 1.0f;
+				break;
+			case 1: // 1 entry, use the value of that entry alone
+				s[i] = mScaleDataBlock->mData[param->mDataOffset];
+				break;
+			default: // multiple entries, use the extract method
+				s[i] = extract(time, *param, *mScaleDataBlock);
+				break;
+			}
+		}
+		if ((anim->mFlags & 7) == 7) {
+			anim->mFlags |= 8;
+		}
+	}
+
+	// APPLY ROTATION
+	if (!(anim->mFlags & 0x80)) {
+		// loop for x y and z
+		for (int i = 0; i < 3; i++) {
+			f32* r           = (f32*)&srt.mRotate;
+			AnimParam* param = &anim->mRotation[i];
+			switch (param->mEntryNum) {
+			case 0: // 0 entries, default to 1.0
+				r[i] = 1.0f;
+				break;
+			case 1: // 1 entry, use the value of that entry alone
+				r[i] = mRotateDataBlock->mData[param->mDataOffset];
+				break;
+			default: // multiple entries, use the extract method
+				r[i] = extract(time, *param, *mRotateDataBlock);
+				break;
+			}
+		}
+		if ((anim->mFlags & 0x70) == 0x70) {
+			anim->mFlags |= 0x80;
+		}
+	}
+
+	// APPLY TRANSLATION
+	if (!(anim->mFlags & 0x800)) {
+		// loop for x y and z
+		for (int i = 0; i < 3; i++) {
+			f32* t           = (f32*)&srt.mTranslate;
+			AnimParam* param = &anim->mTranslation[i];
+			switch (param->mEntryNum) {
+			case 0: // 0 entries, default to 1.0
+				t[i] = 1.0f;
+				break;
+			case 1: // 1 entry, use the value of that entry alone
+				t[i] = mTranslationDataBlock->mData[param->mDataOffset];
+				break;
+			default: // multiple entries, use the extract method
+				t[i] = extract(time, *param, *mTranslationDataBlock);
+				break;
+			}
+		}
+		if ((anim->mFlags & 0x700) == 0x700) {
+			anim->mFlags |= 0x800;
+		}
+	}
+
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -6051,68 +6310,20 @@ void AnimDck::extractSRT(SRT&, int, AnimDataInfo*, f32)
  * Address:	8002EC1C
  * Size:	0000CC
  */
-void AnimDck::makeAnimSRT(int, Matrix4f*, Matrix4f*, AnimDataInfo*, f32)
+void AnimDck::makeAnimSRT(int a, Matrix4f* mtx1, Matrix4f* mtx2, AnimDataInfo* anim, f32 time)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  addi      r0, r4, 0
-	  stwu      r1, -0x70(r1)
-	  stw       r31, 0x6C(r1)
-	  stw       r30, 0x68(r1)
-	  addi      r30, r7, 0
-	  addi      r31, r30, 0xB4
-	  stw       r29, 0x64(r1)
-	  addi      r29, r6, 0
-	  addi      r4, r31, 0
-	  stw       r28, 0x60(r1)
-	  addi      r28, r5, 0
-	  mr        r5, r0
-	  lwz       r12, 0x0(r3)
-	  addi      r6, r30, 0
-	  lwz       r12, 0x10(r12)
-	  mtlr      r12
-	  blrl
-	  lhz       r3, 0xD8(r30)
-	  andi.     r0, r3, 0x777
-	  cmpwi     r0, 0x777
-	  bne-      .loc_0x98
-	  rlwinm.   r0,r3,0,16,16
-	  bne-      .loc_0x84
-	  addi      r4, r31, 0
-	  addi      r3, r30, 0x74
-	  addi      r5, r31, 0xC
-	  addi      r6, r31, 0x18
-	  bl        0xF464
-	  lhz       r0, 0xD8(r30)
-	  ori       r0, r0, 0x8000
-	  sth       r0, 0xD8(r30)
-
-	.loc_0x84:
-	  addi      r3, r28, 0
-	  addi      r5, r29, 0
-	  addi      r4, r30, 0x74
-	  bl        0x1CEF14
-	  b         .loc_0xAC
-
-	.loc_0x98:
-	  addi      r3, r29, 0
-	  addi      r4, r28, 0
-	  addi      r6, r31, 0
-	  addi      r5, r1, 0x20
-	  bl        0xF5CC
-
-	.loc_0xAC:
-	  lwz       r0, 0x74(r1)
-	  lwz       r31, 0x6C(r1)
-	  lwz       r30, 0x68(r1)
-	  lwz       r29, 0x64(r1)
-	  lwz       r28, 0x60(r1)
-	  addi      r1, r1, 0x70
-	  mtlr      r0
-	  blr
-	*/
+	SRT& srt = anim->mSRT;
+	extractSRT(srt, a, anim, time);
+	if ((anim->mFlags & 0x777) == 0x777) {
+		if (!(anim->mFlags & 0x8000)) {
+			anim->mMtx.makeSRT(srt.mScale, srt.mRotate, srt.mTranslate);
+			anim->mFlags |= 0x8000;
+		}
+		PSMTXConcat(mtx1->mMtx, anim->mMtx.mMtx, mtx2->mMtx);
+	} else {
+		Matrix4f mtx;
+		mtx2->makeConcatSRT(mtx1, mtx, srt);
+	}
 }
 
 /*
@@ -7353,61 +7564,6 @@ PVWTevColReg::PVWTevColReg()
 
 /*
  * --INFO--
- * Address:	8002FC48
- * Size:	0000AC
- */
-Material::Material()
-{
-	/*
-	.loc_0x0:
-	  lis       r4, 0x8022
-	  addi      r0, r4, 0x738C
-	  lis       r4, 0x8022
-	  stw       r0, 0x0(r3)
-	  addi      r0, r4, 0x737C
-	  stw       r0, 0x0(r3)
-	  li        r7, 0
-	  lis       r5, 0x8023
-	  stw       r7, 0x10(r3)
-	  subi      r0, r5, 0x79A8
-	  lis       r4, 0x8023
-	  stw       r7, 0xC(r3)
-	  subi      r6, r4, 0x7D78
-	  li        r5, 0x1
-	  stw       r7, 0x8(r3)
-	  li        r4, 0x100
-	  stw       r0, 0x4(r3)
-	  li        r0, 0xFF
-	  stw       r6, 0x0(r3)
-	  lfs       f1, -0x7D20(r2)
-	  stfs      f1, 0x48(r3)
-	  stw       r5, 0x50(r3)
-	  stw       r5, 0x4C(r3)
-	  lfs       f0, -0x7CEC(r2)
-	  stfs      f0, 0x54(r3)
-	  stfs      f1, 0x70(r3)
-	  stfs      f1, 0x6C(r3)
-	  stfs      f1, 0x68(r3)
-	  stw       r7, 0x80(r3)
-	  stw       r7, 0x78(r3)
-	  stw       r7, 0x14(r3)
-	  stw       r7, 0x28(r3)
-	  stw       r7, 0x24(r3)
-	  stw       r7, 0x20(r3)
-	  stw       r7, 0x28(r3)
-	  stw       r4, 0x18(r3)
-	  stb       r0, 0x2C(r3)
-	  stb       r0, 0x2D(r3)
-	  stb       r0, 0x2E(r3)
-	  stb       r0, 0x2F(r3)
-	  stw       r7, 0x8C(r3)
-	  stw       r7, 0x98(r3)
-	  blr
-	*/
-}
-
-/*
- * --INFO--
  * Address:	........
  * Size:	0000B4
  */
@@ -8431,41 +8587,6 @@ void BaseShape::resolveTextureNames()
 	  lwz       r0, 0x144(r1)
 	  addi      r1, r1, 0x140
 	  mtlr      r0
-	  blr
-	*/
-}
-
-/*
- * --INFO--
- * Address:	80030A18
- * Size:	00005C
- */
-TexAttr::TexAttr()
-{
-	/*
-	.loc_0x0:
-	  lis       r4, 0x8022
-	  addi      r0, r4, 0x738C
-	  lis       r4, 0x8022
-	  stw       r0, 0x0(r3)
-	  addi      r0, r4, 0x737C
-	  stw       r0, 0x0(r3)
-	  li        r6, 0
-	  lis       r4, 0x8023
-	  stw       r6, 0x10(r3)
-	  subi      r5, r13, 0x7C3C
-	  subi      r0, r4, 0x7EE0
-	  stw       r6, 0xC(r3)
-	  stw       r6, 0x8(r3)
-	  stw       r5, 0x4(r3)
-	  stw       r0, 0x0(r3)
-	  stw       r6, 0x28(r3)
-	  stw       r6, 0x2C(r3)
-	  stw       r6, 0x30(r3)
-	  sth       r6, 0x1C(r3)
-	  sth       r6, 0x20(r3)
-	  lfs       f0, -0x7D20(r2)
-	  stfs      f0, 0x24(r3)
 	  blr
 	*/
 }
@@ -11343,24 +11464,6 @@ void BaseShape::read(RandomAccessStream&)
 
 /*
  * --INFO--
- * Address:	800330D0
- * Size:	000018
- */
-CollGroup::CollGroup()
-{
-	/*
-	.loc_0x0:
-	  li        r0, 0
-	  stw       r0, 0x8(r3)
-	  sth       r0, 0x4(r3)
-	  stw       r0, 0x18(r3)
-	  stw       r0, 0xC(r3)
-	  blr
-	*/
-}
-
-/*
- * --INFO--
  * Address:	800330E8
  * Size:	0000E4
  */
@@ -11898,80 +12001,6 @@ void PVWAnimInfo3<PVWKeyInfoS10>::read(RandomAccessStream&)
 	  blr
 	*/
 }
-
-/*
- * --INFO--
- * Address:	80033808
- * Size:	000060
- */
-PVWTevInfo::PVWTevInfo()
-{
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  lis       r4, 0x8003
-	  stw       r0, 0x4(r1)
-	  subi      r4, r4, 0x3C4
-	  li        r5, 0
-	  stwu      r1, -0x18(r1)
-	  li        r6, 0x24
-	  li        r7, 0x3
-	  stw       r31, 0x14(r1)
-	  addi      r31, r3, 0
-	  bl        0x1E1240
-	  lis       r3, 0x8003
-	  subi      r4, r3, 0x3C8
-	  addi      r3, r31, 0x6C
-	  li        r5, 0
-	  li        r6, 0x4
-	  li        r7, 0x4
-	  bl        0x1E1224
-	  mr        r3, r31
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
-}
-
-/*
- * --INFO--
- * Address:	80033868
- * Size:	00004C
- */
-TexImg::TexImg()
-{
-	/*
-	.loc_0x0:
-	  lis       r4, 0x8022
-	  addi      r0, r4, 0x738C
-	  lis       r4, 0x8022
-	  stw       r0, 0x0(r3)
-	  addi      r0, r4, 0x737C
-	  stw       r0, 0x0(r3)
-	  li        r6, 0
-	  lis       r4, 0x8023
-	  stw       r6, 0x10(r3)
-	  subi      r5, r13, 0x7C2C
-	  subi      r4, r4, 0x7EBC
-	  stw       r6, 0xC(r3)
-	  li        r0, 0x1
-	  stw       r6, 0x8(r3)
-	  stw       r5, 0x4(r3)
-	  stw       r4, 0x0(r3)
-	  stw       r0, 0x24(r3)
-	  stw       r6, 0x30(r3)
-	  blr
-	*/
-}
-
-/*
- * --INFO--
- * Address:	800338B4
- * Size:	000004
- */
-Vector2f::Vector2f() { }
 
 /*
  * --INFO--
@@ -13841,30 +13870,6 @@ void BaseShape::loadAnimation(char*, bool)
 
 /*
  * --INFO--
- * Address:	80034FB8
- * Size:	000030
- */
-CoreNode::CoreNode(char* name)
-{
-	/*
-	.loc_0x0:
-	  lis       r5, 0x8022
-	  addi      r0, r5, 0x738C
-	  lis       r5, 0x8022
-	  stw       r0, 0x0(r3)
-	  addi      r0, r5, 0x737C
-	  stw       r0, 0x0(r3)
-	  li        r0, 0
-	  stw       r0, 0x10(r3)
-	  stw       r0, 0xC(r3)
-	  stw       r0, 0x8(r3)
-	  stw       r4, 0x4(r3)
-	  blr
-	*/
-}
-
-/*
- * --INFO--
  * Address:	80034FE8
  * Size:	000010
  */
@@ -14884,30 +14889,6 @@ void AnimData::writeType(RandomAccessStream&) { }
 
 /*
  * --INFO--
- * Address:	80035A6C
- * Size:	000030
- */
-void Delegate2<BaseShape, Joint*, u32>::invoke(Joint*, u32)
-{
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  mr        r6, r3
-	  stw       r0, 0x4(r1)
-	  addi      r12, r6, 0x8
-	  stwu      r1, -0x8(r1)
-	  lwz       r3, 0x4(r3)
-	  bl        0x1DF2AC
-	  nop
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
-}
-
-/*
- * --INFO--
  * Address:	80035A9C
  * Size:	000088
  */
@@ -14948,23 +14929,6 @@ void __sinit_shapeBase_cpp(void)
 	  lwz       r30, 0x8(r1)
 	  addi      r1, r1, 0x10
 	  mtlr      r0
-	  blr
-	*/
-}
-
-/*
- * --INFO--
- * Address:	80035B24
- * Size:	000014
- */
-Vector3f::Vector3f()
-{
-	/*
-	.loc_0x0:
-	  lfs       f0, -0x7D20(r2)
-	  stfs      f0, 0x8(r3)
-	  stfs      f0, 0x4(r3)
-	  stfs      f0, 0x0(r3)
 	  blr
 	*/
 }

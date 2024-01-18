@@ -3,6 +3,8 @@
 
 #include "types.h"
 #include "CoreNode.h"
+#include "Stream.h"
+#include "Matrix4f.h"
 
 struct AnimContext;
 struct CmdStream;
@@ -31,6 +33,11 @@ struct MtxGroup {
 	void read(RandomAccessStream&);
 
 	// TODO: members
+};
+
+struct ShapeDynMaterials {
+	void animate(f32*);
+	void updateContext();
 };
 
 /**
@@ -98,7 +105,27 @@ struct BaseShape : public CoreNode {
 
 	// _00     = VTBL
 	// _00-_14 = CoreNode
-	u8 _14[0x2AD - 0x14]; // _14, TODO: work out members
+	u8 _14;
+	int _18;
+	int _1C;
+	int _20;
+	int _24;
+	int _28;
+	int _2C;
+	int _30;
+	int _34;
+	int _38;
+	int _3C;
+	int _40;
+	int _44;
+	int _48;
+	int _4C;
+	int _50;
+	int _54;
+	int _58;
+	Joint* mJoints; // _5C
+
+	u8 _60[0x2AD - 0x5c]; // _14, TODO: work out members
 };
 
 /**
@@ -112,6 +139,19 @@ struct Shape : public BaseShape {
 	// _00      = VTBL
 	// _00-_2B0 = BaseShape
 	// TODO: members
+};
+
+struct CamDataInfo {
+	void update(f32, Matrix4f&);
+};
+
+struct LightDataInfo {
+	void update(f32);
+};
+
+struct SceneData {
+	void parse(CmdStream*);
+	void getAnimInfo(CmdStream*);
 };
 
 #endif
