@@ -33,8 +33,11 @@ struct Node : public CoreNode {
 };
 
 struct FaceNode : public CoreNode {
-	FaceNode();
-	FaceNode(int);
+	inline FaceNode()
+	    : CoreNode("face")
+	{
+	}
+	inline FaceNode(int) { }
 
 	// _00     = VTBL
 	// _00-_14 = CoreNode

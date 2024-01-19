@@ -9,6 +9,7 @@
 #include "TexAttr.h"
 #include "Collision.h"
 #include "Matrix4f.h"
+#include "GfxobjInfo.h"
 
 template <typename A, typename B>
 struct IDelegate2;
@@ -22,6 +23,7 @@ struct Texture;
 struct CollTriInfo;
 struct BaseRoomInfo;
 struct NBT;
+struct DispList;
 
 /**
  * @brief TODO
@@ -43,7 +45,10 @@ struct MtxGroup {
 
 	void read(RandomAccessStream&);
 
-	// TODO: members
+	int mDependencyLength; // _00
+	int* mDependencyList;  // _04
+	int mDispListLength;   // _08
+	DispList* mDispList;   // _0C
 };
 
 /**
@@ -123,75 +128,8 @@ struct DispList : public CoreNode {
 	FaceNode mFaceNode; // _2C
 };
 
-struct BoundBox {
-	BoundBox(Vector3f& max, Vector3f& min)
-	    : mMax(max)
-	    , mMin(min)
-	{
-	}
-
-	BoundBox() { }
-
-	void expandBound(BoundBox& other)
-	{
-		if (other.mMax.x < mMax.x) {
-			mMax.x = other.mMax.x;
-		}
-		if (other.mMax.y < mMax.y) {
-			mMax.y = other.mMax.y;
-		}
-		if (other.mMax.z < mMax.z) {
-			mMax.z = other.mMax.z;
-		}
-
-		if (other.mMin.x > mMin.x) {
-			mMin.x = other.mMin.x;
-		}
-		if (other.mMin.y > mMin.y) {
-			mMin.y = other.mMin.y;
-		}
-		if (other.mMin.z > mMin.z) {
-			mMin.z = other.mMin.z;
-		}
-	}
-
-	void expandBound(Vector3f& other)
-	{
-		if (other.x < mMax.x) {
-			mMax.x = other.x;
-		}
-		if (other.y < mMax.y) {
-			mMax.y = other.y;
-		}
-		if (other.z < mMax.z) {
-			mMax.z = other.z;
-		}
-
-		if (other.x > mMin.x) {
-			mMin.x = other.x;
-		}
-		if (other.y > mMin.y) {
-			mMin.y = other.y;
-		}
-		if (other.z > mMin.z) {
-			mMin.z = other.z;
-		}
-	}
-
-	bool intersects(BoundBox& other)
-	{
-		return other.mMax.x <= mMin.x && other.mMin.x >= mMax.x && other.mMax.y <= mMin.y && other.mMin.y >= mMax.y
-		    && other.mMax.z <= mMin.z && other.mMin.z >= mMax.z;
-	}
-
-	void resetBound()
-	{
-		mMax.set(32768.0f, 32768.0f, 32768.0f);
-		mMin.set(-32768.0f, -32768.0f, -32768.0f);
-	}
-
-	Vector3f mMax; // _00
-	Vector3f mMin; // _0C
+struct DlobjInfo : public GfxobjInfo {
+	DlobjInfo();
 };
 
 /**
@@ -248,7 +186,7 @@ struct BaseShape : public CoreNode {
 	// _00-_14 = CoreNode
 	s32 mSystemUsed;                   // _14
 	AnimContext* mCurrentAnimations;   // _18
-	AnimContext* mAnimOverrides;       // _1C
+	AnimContext** mAnimOverrides;      // _1C
 	AnimContext* mBackupAnimOverrides; // _20
 	AnimFrameCacher* mFrameCacher;     // _24
 	Matrix4f* mAnimMatrix;             // _28

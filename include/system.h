@@ -48,6 +48,7 @@ struct StdSystem {
 	virtual void endLoading();                               // _30
 
 	void invalidateObjs(u32, u32);
+	void addGfxObject(GfxobjInfo*);
 	static char* stringDup(char*);
 
 	// _00 = VTBL
@@ -197,5 +198,4 @@ struct DVDStream : public RandomAccessStream {
 
 extern "C" void OSPanic(const char* filename, int line, const char* msg, ...);
 
-inline void* operator new(size_t size) { return System::alloc(size); }
 #endif

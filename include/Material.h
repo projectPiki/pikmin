@@ -34,9 +34,4 @@ struct MatobjInfo {
 	void detach();
 };
 
-struct GfxobjInfo {
-	void attach();
-	void detach();
-};
-
 #endif

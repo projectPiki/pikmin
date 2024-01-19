@@ -9,6 +9,8 @@
 #include "Vector3f.h"
 #include "CmdStream.h"
 #include "string.h"
+#include "sysNew.h"
+#include "system.h"
 
 /*
  * --INFO--
@@ -44,6 +46,7 @@ void Envelope::read(RandomAccessStream&)
  * --INFO--
  * Address:	80029F98
  * Size:	000100
+ * Regswaps
  */
 void DispList::read(RandomAccessStream& stream)
 {
@@ -52,81 +55,9 @@ void DispList::read(RandomAccessStream& stream)
 
 	mDataLength = stream.readInt();
 	stream.skipPadding(0x20);
+
 	mData = new (0x20) char[mDataLength];
-
 	stream.read(mData, mDataLength);
-
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x28(r1)
-	  stw       r31, 0x24(r1)
-	  stw       r30, 0x20(r1)
-	  stw       r29, 0x1C(r1)
-	  addi      r29, r4, 0
-	  stw       r28, 0x18(r1)
-	  addi      r28, r3, 0
-	  addi      r3, r29, 0
-	  lwz       r12, 0x4(r29)
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  stw       r3, 0x14(r28)
-	  mr        r3, r29
-	  lwz       r12, 0x4(r29)
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  stw       r3, 0x28(r28)
-	  mr        r3, r29
-	  lwz       r12, 0x4(r29)
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  stw       r3, 0x18(r28)
-	  mr        r3, r29
-	  lwz       r12, 0x4(r29)
-	  lwz       r12, 0x58(r12)
-	  mtlr      r12
-	  blrl
-	  addi      r0, r3, 0x1F
-	  rlwinm    r0,r0,0,0,26
-	  sub       r30, r0, r3
-	  li        r31, 0
-	  b         .loc_0xAC
-
-	.loc_0x94:
-	  mr        r3, r29
-	  lwz       r12, 0x4(r29)
-	  lwz       r12, 0xC(r12)
-	  mtlr      r12
-	  blrl
-	  addi      r31, r31, 0x1
-
-	.loc_0xAC:
-	  cmpw      r31, r30
-	  blt+      .loc_0x94
-	  lwz       r3, 0x18(r28)
-	  li        r4, 0x20
-	  bl        0x1D114
-	  stw       r3, 0x1C(r28)
-	  mr        r3, r29
-	  lwz       r12, 0x4(r29)
-	  lwz       r4, 0x1C(r28)
-	  lwz       r12, 0x3C(r12)
-	  lwz       r5, 0x18(r28)
-	  mtlr      r12
-	  blrl
-	  lwz       r0, 0x2C(r1)
-	  lwz       r31, 0x24(r1)
-	  lwz       r30, 0x20(r1)
-	  lwz       r29, 0x1C(r1)
-	  lwz       r28, 0x18(r1)
-	  addi      r1, r1, 0x28
-	  mtlr      r0
-	  blr
-	*/
 }
 
 /*
@@ -134,102 +65,23 @@ void DispList::read(RandomAccessStream& stream)
  * Address:	8002A098
  * Size:	00013C
  */
-void MtxGroup::read(RandomAccessStream&)
+void MtxGroup::read(RandomAccessStream& stream)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x30(r1)
-	  stw       r31, 0x2C(r1)
-	  addi      r31, r4, 0
-	  stw       r30, 0x28(r1)
-	  addi      r30, r3, 0
-	  addi      r3, r31, 0
-	  stw       r29, 0x24(r1)
-	  stw       r28, 0x20(r1)
-	  lwz       r12, 0x4(r31)
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  stw       r3, 0x0(r30)
-	  lwz       r0, 0x0(r30)
-	  cmpwi     r0, 0
-	  beq-      .loc_0x94
-	  rlwinm    r3,r0,2,0,29
-	  bl        0x1CF20
-	  stw       r3, 0x4(r30)
-	  li        r28, 0
-	  li        r29, 0
-	  b         .loc_0x88
+	mDependencyLength = stream.readInt();
+	if (mDependencyLength) {
+		mDependencyList = new int[mDependencyLength];
+		for (int i = 0; i < mDependencyLength; i++) {
+			mDependencyList[i] = stream.readShort();
+		}
+	}
 
-	.loc_0x60:
-	  mr        r3, r31
-	  lwz       r12, 0x4(r31)
-	  lwz       r12, 0x10(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r4, 0x4(r30)
-	  extsh     r0, r3
-	  addi      r28, r28, 0x1
-	  stwx      r0, r4, r29
-	  addi      r29, r29, 0x4
-
-	.loc_0x88:
-	  lwz       r0, 0x0(r30)
-	  cmpw      r28, r0
-	  blt+      .loc_0x60
-
-	.loc_0x94:
-	  mr        r3, r31
-	  lwz       r12, 0x4(r31)
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  stw       r3, 0x8(r30)
-	  lwz       r29, 0x8(r30)
-	  cmpwi     r29, 0
-	  beq-      .loc_0x11C
-	  mulli     r3, r29, 0x74
-	  addi      r3, r3, 0x8
-	  bl        0x1CEAC
-	  lis       r4, 0x8003
-	  subi      r4, r4, 0x5E2C
-	  addi      r7, r29, 0
-	  li        r5, 0
-	  li        r6, 0x74
-	  bl        0x1EAAB8
-	  li        r28, 0
-	  stw       r3, 0xC(r30)
-	  mulli     r29, r28, 0x74
-	  b         .loc_0x110
-
-	.loc_0xEC:
-	  lwz       r0, 0xC(r30)
-	  addi      r4, r31, 0
-	  add       r3, r0, r29
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0xC(r12)
-	  mtlr      r12
-	  blrl
-	  addi      r29, r29, 0x74
-	  addi      r28, r28, 0x1
-
-	.loc_0x110:
-	  lwz       r0, 0x8(r30)
-	  cmpw      r28, r0
-	  blt+      .loc_0xEC
-
-	.loc_0x11C:
-	  lwz       r0, 0x34(r1)
-	  lwz       r31, 0x2C(r1)
-	  lwz       r30, 0x28(r1)
-	  lwz       r29, 0x24(r1)
-	  lwz       r28, 0x20(r1)
-	  addi      r1, r1, 0x30
-	  mtlr      r0
-	  blr
-	*/
+	mDispListLength = stream.readInt();
+	if (mDispListLength) {
+		mDispList = new DispList[mDispListLength];
+		for (int i = 0; i < mDispListLength; i++) {
+			mDispList[i].read(stream);
+		}
+	}
 }
 
 /*
@@ -239,46 +91,12 @@ void MtxGroup::read(RandomAccessStream&)
  */
 DispList::DispList()
 {
-	/*
-	.loc_0x0:
-	  lis       r4, 0x8022
-	  addi      r10, r4, 0x738C
-	  lis       r4, 0x8022
-	  stw       r10, 0x0(r3)
-	  addi      r9, r4, 0x737C
-	  stw       r9, 0x0(r3)
-	  li        r8, 0
-	  lis       r6, 0x8023
-	  stw       r8, 0x10(r3)
-	  subi      r0, r6, 0x7CB0
-	  lis       r5, 0x8023
-	  stw       r8, 0xC(r3)
-	  subi      r7, r5, 0x763C
-	  lis       r4, 0x8023
-	  stw       r8, 0x8(r3)
-	  subi      r5, r4, 0x7688
-	  subi      r6, r13, 0x7CB0
-	  stw       r0, 0x4(r3)
-	  subi      r4, r13, 0x7CA8
-	  li        r0, -0x1
-	  stw       r7, 0x0(r3)
-	  stw       r10, 0x2C(r3)
-	  stw       r9, 0x2C(r3)
-	  stw       r8, 0x3C(r3)
-	  stw       r8, 0x38(r3)
-	  stw       r8, 0x34(r3)
-	  stw       r6, 0x30(r3)
-	  stw       r5, 0x2C(r3)
-	  stw       r8, 0x3C(r3)
-	  stw       r8, 0x38(r3)
-	  stw       r8, 0x34(r3)
-	  stw       r4, 0x30(r3)
-	  stw       r8, 0x24(r3)
-	  stw       r8, 0x28(r3)
-	  stw       r8, 0x14(r3)
-	  stw       r0, 0x20(r3)
-	  blr
-	*/
+	mFaceNode.initCore("");
+
+	_24    = 0;
+	_28    = 0;
+	mFlags = 0;
+	_20    = -1;
 }
 
 /*
@@ -286,87 +104,23 @@ DispList::DispList()
  * Address:	8002A268
  * Size:	000110
  */
-void Mesh::read(RandomAccessStream&)
+void Mesh::read(RandomAccessStream& stream)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x28(r1)
-	  stw       r31, 0x24(r1)
-	  addi      r31, r4, 0
-	  stw       r30, 0x20(r1)
-	  addi      r30, r3, 0
-	  addi      r3, r31, 0
-	  stw       r29, 0x1C(r1)
-	  stw       r28, 0x18(r1)
-	  lwz       r12, 0x4(r31)
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  stw       r3, 0x18(r30)
-	  mr        r3, r31
-	  lwz       r12, 0x4(r31)
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  stw       r3, 0x2C(r30)
-	  mr        r3, r31
-	  lwz       r12, 0x4(r31)
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  stw       r3, 0x20(r30)
-	  lwz       r29, 0x20(r30)
-	  cmpwi     r29, 0
-	  beq-      .loc_0xF0
-	  rlwinm    r3,r29,4,0,27
-	  addi      r3, r3, 0x8
-	  bl        0x1CD1C
-	  lis       r4, 0x8003
-	  subi      r4, r4, 0x5C88
-	  addi      r7, r29, 0
-	  li        r5, 0
-	  li        r6, 0x10
-	  bl        0x1EA928
-	  stw       r3, 0x24(r30)
-	  li        r0, 0
-	  li        r28, 0
-	  stw       r0, 0x1C(r30)
-	  rlwinm    r29,r28,4,0,27
-	  b         .loc_0xE4
+	_18 = stream.readInt();
+	_2C = stream.readInt();
+	_20 = stream.readInt();
 
-	.loc_0xB4:
-	  lwz       r0, 0x24(r30)
-	  addi      r4, r31, 0
-	  add       r3, r0, r29
-	  bl        -0x290
-	  lwz       r3, 0x24(r30)
-	  lwz       r0, 0x1C(r30)
-	  lwzx      r3, r3, r29
-	  cmpw      r3, r0
-	  ble-      .loc_0xDC
-	  stw       r3, 0x1C(r30)
+	if (_20) {
+		mMtxGroupList = new MtxGroup[_20];
+		_1C           = 0;
+		for (int i = 0; i < _20; i++) {
+			mMtxGroupList[i].read(stream);
 
-	.loc_0xDC:
-	  addi      r29, r29, 0x10
-	  addi      r28, r28, 0x1
-
-	.loc_0xE4:
-	  lwz       r0, 0x20(r30)
-	  cmpw      r28, r0
-	  blt+      .loc_0xB4
-
-	.loc_0xF0:
-	  lwz       r0, 0x2C(r1)
-	  lwz       r31, 0x24(r1)
-	  lwz       r30, 0x20(r1)
-	  lwz       r29, 0x1C(r1)
-	  lwz       r28, 0x18(r1)
-	  addi      r1, r1, 0x28
-	  mtlr      r0
-	  blr
-	*/
+			if (mMtxGroupList[i].mDependencyLength > _1C) {
+				_1C = mMtxGroupList[i].mDependencyLength;
+			}
+		}
+	}
 }
 
 /*
@@ -376,14 +130,9 @@ void Mesh::read(RandomAccessStream&)
  */
 MtxGroup::MtxGroup()
 {
-	/*
-	.loc_0x0:
-	  li        r0, 0
-	  stw       r0, 0x0(r3)
-	  stw       r0, 0x8(r3)
-	  stw       r0, 0xC(r3)
-	  blr
-	*/
+	mDependencyLength = 0;
+	mDispListLength   = 0;
+	mDispList         = 0;
 }
 
 /*
@@ -401,74 +150,22 @@ void Joint::recShowHierarchy()
  * Address:	........
  * Size:	000018
  */
-void Joint::overrideAnim(AnimContext*)
-{
-	// UNUSED FUNCTION
-}
+void Joint::overrideAnim(AnimContext* ctx) { mParentShape->mAnimOverrides[mIndex] = ctx; }
 
 /*
  * --INFO--
  * Address:	8002A38C
  * Size:	0000A4
  */
-void Joint::recOverrideAnim(AnimContext*)
+void Joint::recOverrideAnim(AnimContext* ctx)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x28(r1)
-	  stw       r31, 0x24(r1)
-	  stw       r30, 0x20(r1)
-	  addi      r30, r3, 0
-	  stw       r29, 0x1C(r1)
-	  addi      r29, r4, 0
-	  b         .loc_0x80
+	for (Joint* i = this; i; i = static_cast<Joint*>(i->mNext)) {
+		i->overrideAnim(ctx);
 
-	.loc_0x24:
-	  lwz       r3, 0x118(r30)
-	  lwz       r0, 0x14(r30)
-	  lwz       r3, 0x1C(r3)
-	  rlwinm    r0,r0,2,0,29
-	  stwx      r29, r3, r0
-	  lwz       r31, 0x10(r30)
-	  cmplwi    r31, 0
-	  beq-      .loc_0x7C
-	  b         .loc_0x74
-
-	.loc_0x48:
-	  lwz       r3, 0x118(r31)
-	  lwz       r0, 0x14(r31)
-	  lwz       r3, 0x1C(r3)
-	  rlwinm    r0,r0,2,0,29
-	  stwx      r29, r3, r0
-	  lwz       r3, 0x10(r31)
-	  cmplwi    r3, 0
-	  beq-      .loc_0x70
-	  mr        r4, r29
-	  bl        .loc_0x0
-
-	.loc_0x70:
-	  lwz       r31, 0xC(r31)
-
-	.loc_0x74:
-	  cmplwi    r31, 0
-	  bne+      .loc_0x48
-
-	.loc_0x7C:
-	  lwz       r30, 0xC(r30)
-
-	.loc_0x80:
-	  cmplwi    r30, 0
-	  bne+      .loc_0x24
-	  lwz       r0, 0x2C(r1)
-	  lwz       r31, 0x24(r1)
-	  lwz       r30, 0x20(r1)
-	  lwz       r29, 0x1C(r1)
-	  addi      r1, r1, 0x28
-	  mtlr      r0
-	  blr
-	*/
+		if (i->mChild) {
+			static_cast<Joint*>(i->mChild)->recOverrideAnim(ctx);
+		}
+	}
 }
 
 /*
@@ -4414,7 +4111,7 @@ AnimDck::AnimDck(BaseShape* model, int joints)
 	mAnimInfo  = new AnimDataInfo[mNumJoints];
 
 	for (int i = 0; i < joints; i++) {
-		mAnimInfo = (model->mJoints[i].mIndex == -1) ? nullptr : mAnimInfo + model->mJoints[i].mIndex;
+		mAnimInfo = (model->mJoints[i].mParentIndex == -1) ? nullptr : mAnimInfo + model->mJoints[i].mParentIndex;
 	}
 	/*
 	.loc_0x0:
