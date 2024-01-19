@@ -216,34 +216,12 @@ void Joint::render(Graphics&)
  */
 void AnimContext::animate(f32 time)
 {
-	mCurrentFrame = gsys->getFrameTime() * time + mCurrentFrame;
-	if (mCurrentFrame < mFrameCount) {
-		mCurrentFrame = 0;
-	}
-	/*
-	.loc_0x0:
-	  stwu      r1, -0x28(r1)
-	  lwz       r4, 0x2DEC(r13)
-	  lfs       f2, 0x4(r3)
-	  lfs       f0, 0x28C(r4)
-	  fmuls     f0, f1, f0
-	  fadds     f0, f2, f0
-	  stfs      f0, 0x4(r3)
-	  lfs       f0, 0x4(r3)
-	  lwz       r4, 0x0(r3)
-	  fctiwz    f0, f0
-	  lwz       r0, 0x30(r4)
-	  stfd      f0, 0x20(r1)
-	  lwz       r4, 0x24(r1)
-	  cmpw      r4, r0
-	  blt-      .loc_0x44
-	  lfs       f0, -0x7D20(r2)
-	  stfs      f0, 0x4(r3)
+	mCurrentFrame += gsys->getFrameTime() * time;
 
-	.loc_0x44:
-	  addi      r1, r1, 0x28
-	  blr
-	*/
+	int frame = static_cast<int>(mCurrentFrame);
+	if (frame >= mData->mNumFrames) {
+		mCurrentFrame = 0.0f;
+	}
 }
 
 /*
@@ -253,70 +231,50 @@ void AnimContext::animate(f32 time)
  */
 f32 extract(f32 currTime, AnimParam& param, DataChunk& data)
 {
-	int size;
+	int dataSize = (param.mFlags != 0) ? 4 : 3;
+	int offset   = param.mDataOffset;
 
-	// any param can potentially have 3 or 4 values
-	// when 3 values, there is one value for in/out tangent
-	// when 4 values, there is a seperate one for in/out
-	if (param.mFlags == 0) {
-		size = 3;
-	} else {
-		size = 4;
-	}
-
-	// determine base offset of current animation data based on the frame of the animation
-	int offs    = param.mDataOffset;
-	bool active = false;
-	for (int i = 0; i < param.mEntryNum - 1; i++) {
-		// if the current animation time is greater than the value, but less than the value after it
-		if (data.mData[i] <= currTime && data.mData[i + size] >= currTime) {
-			active = true;
+	// Early return if current time is not active within any data range
+	bool isActive = false;
+	for (int i = 0; i < param.mEntryNum - 1; ++i) {
+		if (data.mData[offset] <= currTime && data.mData[offset + dataSize] >= currTime) {
+			isActive = true;
 			break;
 		}
-		offs += size;
+		offset += dataSize;
 	}
+	if (!isActive)
+		return data.mData[(param.mEntryNum - 1) * dataSize + param.mDataOffset + 1];
 
-	// if theres no defined keys for the current time, abort and return starting value
-	if (!active) {
-		return data.mData[param.mDataOffset + size + 1];
-	}
+	float frameStart = data.mData[offset];
+	float frameEnd   = data.mData[offset + dataSize];
+	float inTangent, outTangent, startPos, endPos;
 
-	// calculate... a lot of math
-	f32 nextFrame, currFrame, nFrameSquare, cFrameSquare, cFrameCube, mult, nextTan, currTan, currPos, nextPos;
-	if (size == 3) {
-		f32* vals = data.mData;
-		currFrame = vals[offs];
-		nextFrame = vals[offs + 3];
-
-		currPos = vals[offs + 1];
-		currTan = vals[offs + 2];
-
-		nextPos = vals[offs + 4];
-		nextTan = vals[offs + 5];
+	// Determine tangents and positions based on dataSize
+	if (dataSize == 4) {
+		startPos   = data.mData[offset + 1];
+		outTangent = data.mData[offset + 3];
+		endPos     = data.mData[offset + dataSize + 1];
+		inTangent  = data.mData[offset + dataSize + 2];
 	} else {
-		f32* vals = data.mData;
-		int offs2 = offs + size;
-
-		currFrame = vals[offs];
-		nextFrame = vals[offs2];
-
-		currPos = vals[offs + 1];
-		currTan = vals[offs + 3];
-
-		nextPos = vals[offs2 + 1];
-		nextTan = vals[offs2 + 2];
+		startPos   = data.mData[offset + 1];
+		inTangent  = data.mData[offset + 2];
+		outTangent = inTangent;
+		endPos     = data.mData[offset + 3];
 	}
 
-	nextFrame    = 30.0f / (nextFrame - currFrame);
-	currFrame    = 0.033333335f * (currTime - currFrame);
-	nFrameSquare = nextFrame * nextFrame;
-	cFrameSquare = currFrame * currFrame;
-	cFrameCube   = cFrameSquare * currFrame;
-	mult         = 3.0f * cFrameSquare * nFrameSquare;
-	return nextTan * (cFrameCube * nFrameSquare - cFrameSquare * nextFrame)
-	     + currTan * (currFrame + (cFrameCube * nFrameSquare - 2.0f * cFrameSquare * nextFrame))
-	     + currPos * (1.0f + (2.0f * cFrameCube * nFrameSquare * nextFrame - mult))
-	     + nextPos * (-2.0f * cFrameCube * nFrameSquare * nextFrame + mult);
+	// Interpolation calculations
+	float t            = (currTime - frameStart) * (1.0f / 30.0f);
+	float tSquared     = t * t;
+	float tCubed       = tSquared * t;
+	float frameDelta   = 30.0f / (frameEnd - frameStart);
+	float deltaSquared = frameDelta * frameDelta;
+	float deltaCubed   = deltaSquared * frameDelta;
+	float mult         = 3.0f * tSquared * deltaSquared;
+
+	return (tCubed * deltaSquared - tSquared * frameDelta) * outTangent
+	     + (t + (tCubed * deltaSquared - 2.0f * tSquared * frameDelta)) * inTangent
+	     + (1.0f + (2.0f * tCubed * deltaCubed - mult)) * startPos + (-2.0f * tCubed * deltaCubed + mult) * endPos;
 
 	/*
 	.loc_0x0:

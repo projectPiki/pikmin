@@ -179,14 +179,14 @@ struct AnimInfo : public CoreNode {
  */
 struct AnimContext {
 	AnimContext()
-	    : mFrameCount(0)
+	    : mData(0)
 	    , mCurrentFrame(0.0f)
 	    , _08(30.0f)
 	{
 	}
 
 	// _0C = VTBL
-	int mFrameCount;   // _00
+	AnimData* mData;   // _00
 	f32 mCurrentFrame; // _04
 	f32 _08;           // _08
 
