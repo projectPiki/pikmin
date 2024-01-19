@@ -18,6 +18,13 @@ struct Vector3f {
 	void multMatrix(Matrix4f&);
 	void multMatrixTo(Matrix4f&, Vector3f&);
 
+	inline void read(Stream& stream)
+	{
+		x = stream.readFloat();
+		y = stream.readFloat();
+		z = stream.readFloat();
+	}
+
 	inline f32 distance(Vector3f& to)
 	{
 		Vector3f result;

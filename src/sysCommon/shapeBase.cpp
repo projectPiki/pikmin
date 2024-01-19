@@ -173,200 +173,30 @@ void Joint::recOverrideAnim(AnimContext* ctx)
  * Address:	8002A430
  * Size:	0002DC
  */
-void Joint::read(RandomAccessStream&)
+void Joint::read(RandomAccessStream& stream)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x38(r1)
-	  stmw      r25, 0x1C(r1)
-	  addi      r31, r4, 0
-	  addi      r30, r3, 0
-	  addi      r3, r31, 0
-	  lwz       r12, 0x4(r31)
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  stw       r3, 0x18(r30)
-	  mr        r3, r31
-	  lwz       r12, 0x4(r31)
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  rlwinm    r0,r3,0,31,31
-	  neg       r5, r0
-	  subic     r4, r5, 0x1
-	  rlwinm    r0,r3,0,17,17
-	  subfe     r4, r4, r5
-	  neg       r3, r0
-	  stb       r4, 0xC9(r30)
-	  subic     r0, r3, 0x1
-	  subfe     r0, r0, r3
-	  stb       r0, 0xCA(r30)
-	  mr        r3, r31
-	  lwz       r12, 0x4(r31)
-	  lwz       r12, 0x14(r12)
-	  mtlr      r12
-	  blrl
-	  stfs      f1, 0xCC(r30)
-	  mr        r3, r31
-	  lwz       r12, 0x4(r31)
-	  lwz       r12, 0x14(r12)
-	  mtlr      r12
-	  blrl
-	  stfs      f1, 0xD0(r30)
-	  mr        r3, r31
-	  lwz       r12, 0x4(r31)
-	  lwz       r12, 0x14(r12)
-	  mtlr      r12
-	  blrl
-	  stfs      f1, 0xD4(r30)
-	  mr        r3, r31
-	  lwz       r12, 0x4(r31)
-	  lwz       r12, 0x14(r12)
-	  mtlr      r12
-	  blrl
-	  stfs      f1, 0xD8(r30)
-	  mr        r3, r31
-	  lwz       r12, 0x4(r31)
-	  lwz       r12, 0x14(r12)
-	  mtlr      r12
-	  blrl
-	  stfs      f1, 0xDC(r30)
-	  mr        r3, r31
-	  lwz       r12, 0x4(r31)
-	  lwz       r12, 0x14(r12)
-	  mtlr      r12
-	  blrl
-	  stfs      f1, 0xE0(r30)
-	  mr        r3, r31
-	  lwz       r12, 0x4(r31)
-	  lwz       r12, 0x14(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r3, r31
-	  lwz       r12, 0x4(r31)
-	  lwz       r12, 0x14(r12)
-	  mtlr      r12
-	  blrl
-	  stfs      f1, 0x24(r30)
-	  mr        r3, r31
-	  lwz       r12, 0x4(r31)
-	  lwz       r12, 0x14(r12)
-	  mtlr      r12
-	  blrl
-	  stfs      f1, 0x28(r30)
-	  mr        r3, r31
-	  lwz       r12, 0x4(r31)
-	  lwz       r12, 0x14(r12)
-	  mtlr      r12
-	  blrl
-	  stfs      f1, 0x2C(r30)
-	  mr        r3, r31
-	  lwz       r12, 0x4(r31)
-	  lwz       r12, 0x14(r12)
-	  mtlr      r12
-	  blrl
-	  stfs      f1, 0x30(r30)
-	  mr        r3, r31
-	  lwz       r12, 0x4(r31)
-	  lwz       r12, 0x14(r12)
-	  mtlr      r12
-	  blrl
-	  stfs      f1, 0x34(r30)
-	  mr        r3, r31
-	  lwz       r12, 0x4(r31)
-	  lwz       r12, 0x14(r12)
-	  mtlr      r12
-	  blrl
-	  stfs      f1, 0x38(r30)
-	  mr        r3, r31
-	  lwz       r12, 0x4(r31)
-	  lwz       r12, 0x14(r12)
-	  mtlr      r12
-	  blrl
-	  stfs      f1, 0x3C(r30)
-	  mr        r3, r31
-	  lwz       r12, 0x4(r31)
-	  lwz       r12, 0x14(r12)
-	  mtlr      r12
-	  blrl
-	  stfs      f1, 0x40(r30)
-	  mr        r3, r31
-	  lwz       r12, 0x4(r31)
-	  lwz       r12, 0x14(r12)
-	  mtlr      r12
-	  blrl
-	  stfs      f1, 0x44(r30)
-	  mr        r3, r31
-	  lwz       r12, 0x4(r31)
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  stw       r3, 0x110(r30)
-	  li        r6, 0
-	  lis       r5, 0x8022
-	  stw       r6, 0xF4(r30)
-	  lis       r4, 0x8022
-	  lis       r3, 0x8023
-	  stw       r6, 0xF0(r30)
-	  subi      r0, r13, 0x7CA8
-	  addi      r27, r5, 0x738C
-	  stw       r6, 0xEC(r30)
-	  addi      r28, r4, 0x737C
-	  subi      r29, r3, 0x7700
-	  stw       r0, 0xE8(r30)
-	  li        r25, 0
-	  b         .loc_0x2BC
+	mParentIndex = stream.readInt();
 
-	.loc_0x238:
-	  li        r3, 0x28
-	  bl        0x1C998
-	  addi      r26, r3, 0
-	  mr.       r0, r26
-	  beq-      .loc_0x274
-	  stw       r27, 0x0(r26)
-	  li        r3, 0
-	  subi      r0, r13, 0x7CA4
-	  stw       r28, 0x0(r26)
-	  stw       r3, 0x10(r26)
-	  stw       r3, 0xC(r26)
-	  stw       r3, 0x8(r26)
-	  stw       r0, 0x4(r26)
-	  stw       r29, 0x0(r26)
-	  stw       r3, 0x24(r26)
+	int flags      = stream.readInt();
+	mUseVolume     = flags & 0x1;
+	mUseLightGroup = (flags & 0x4000) != 0;
 
-	.loc_0x274:
-	  lwz       r12, 0x4(r31)
-	  mr        r3, r31
-	  lwz       r12, 0x10(r12)
-	  mtlr      r12
-	  blrl
-	  extsh     r0, r3
-	  stw       r0, 0x1C(r26)
-	  mr        r3, r31
-	  lwz       r12, 0x4(r31)
-	  lwz       r12, 0x10(r12)
-	  mtlr      r12
-	  blrl
-	  extsh     r0, r3
-	  stw       r0, 0x20(r26)
-	  addi      r4, r26, 0
-	  addi      r3, r30, 0xE4
-	  bl        0x15EF4
-	  addi      r25, r25, 0x1
+	mBounds.mMax.read(stream);
+	mBounds.mMin.read(stream);
+	stream.readFloat();
 
-	.loc_0x2BC:
-	  lwz       r0, 0x110(r30)
-	  cmpw      r25, r0
-	  blt+      .loc_0x238
-	  lmw       r25, 0x1C(r1)
-	  lwz       r0, 0x3C(r1)
-	  addi      r1, r1, 0x38
-	  mtlr      r0
-	  blr
-	*/
+	mScale.read(stream);
+	mRotation.read(stream);
+	mTranslation.read(stream);
+
+	mMatPolyCount = stream.readInt();
+	mMatPoly.initCore("");
+	for (int i = 0; i < mMatPolyCount; i++) {
+		MatPoly* mPoly = new MatPoly();
+		mPoly->mIndex  = stream.readShort();
+		mPoly->_20     = stream.readShort();
+		mMatPoly.add(mPoly);
+	}
 }
 
 /*
@@ -384,8 +214,12 @@ void Joint::render(Graphics&)
  * Address:	8002A70C
  * Size:	00004C
  */
-void AnimContext::animate(f32)
+void AnimContext::animate(f32 time)
 {
+	mCurrentFrame = gsys->getFrameTime() * time + mCurrentFrame;
+	if (mCurrentFrame < mFrameCount) {
+		mCurrentFrame = 0;
+	}
 	/*
 	.loc_0x0:
 	  stwu      r1, -0x28(r1)

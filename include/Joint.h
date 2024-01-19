@@ -20,6 +20,7 @@ struct Joint : public CoreNode {
 		MatPoly()
 		    : CoreNode("matpoly")
 		{
+			_24 = 0;
 		}
 
 		MatPoly(Material* mat, Mesh* mesh)
@@ -30,6 +31,7 @@ struct Joint : public CoreNode {
 			_24       = 0;
 		}
 
+		// CoreNode _00 - _14
 		Material* mMaterial; // _14
 		Mesh* mMesh;         // _18
 		int mIndex;          // _1C
@@ -59,7 +61,9 @@ struct Joint : public CoreNode {
 	Vector3f mTranslation;   // _3C
 	Matrix4f mAnimMatrix;    // _48
 	Matrix4f _88;            // _88
-	u8 _C8;                  // _C8
+	bool mUnused;            // _C8
+	bool mUseVolume;         // _C9
+	bool mUseLightGroup;     // _CA
 	BoundBox mBounds;        // _CC
 	MatPoly mMatPoly;        // _E4
 	int _10C;                // _10C

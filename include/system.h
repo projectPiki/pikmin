@@ -142,6 +142,7 @@ struct System : public StdSystem {
 
 	inline AtxRouter* getAtxRouter() { return mAtxRouter; }
 	inline void setAtxRouter(AtxRouter* router) { mAtxRouter = router; }
+	inline f32 getFrameTime() { return mDeltaTime; }
 
 	// _00      = VTBL
 	// _00-_248 = StdSystem
