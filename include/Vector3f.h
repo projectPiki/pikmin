@@ -3,6 +3,7 @@
 
 #include "types.h"
 #include "math.h"
+#include "Stream.h"
 
 /**
  * @brief TODO
