@@ -538,7 +538,6 @@ struct GenTypeFactory : public Factory<GenType> {
 struct GenArea : public GenBase {
 	inline GenArea(u32 id, char* name)
 	    : GenBase(id, "area type", name)
-	    , _18(0.0f)
 	{
 	}
 

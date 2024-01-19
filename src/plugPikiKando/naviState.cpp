@@ -2106,7 +2106,6 @@ void NaviPelletState::cleanup(Navi*)
  */
 NaviDemoWaitState::NaviDemoWaitState()
     : NaviState(NAVISTATE_DemoWait)
-    , _10(0.0f)
 {
 }
 
@@ -2350,7 +2349,6 @@ void NaviDemoInfState::cleanup(Navi*) { }
  */
 NaviStuckState::NaviStuckState()
     : NaviState(NAVISTATE_Stuck)
-    , _10(0.0f)
 {
 }
 
@@ -2662,7 +2660,6 @@ void NaviStuckState::cleanup(Navi*) { }
  */
 NaviBuryState::NaviBuryState()
     : NaviState(NAVISTATE_Bury)
-    , _10(0.0f)
 {
 }
 
@@ -4451,7 +4448,6 @@ void NaviWalkState::procCollideMsg(Navi*, MsgCollide*)
  */
 NaviUfoState::NaviUfoState()
     : NaviState(NAVISTATE_Ufo)
-    , _14(0.0f)
 {
 }
 
@@ -6614,7 +6610,6 @@ void NaviFlickState::cleanup(Navi*)
  */
 NaviGeyzerState::NaviGeyzerState()
     : NaviState(NAVISTATE_Geyzer)
-    , _20(0.0f)
 {
 }
 
@@ -10073,8 +10068,6 @@ void NaviNukuState::procAnimMsg(Navi*, MsgAnim*)
  */
 NaviNukuAdjustState::NaviNukuAdjustState()
     : NaviState(NAVISTATE_NukuAdjust)
-    , _14(0.0f)
-    , _24(0.0f)
 {
 }
 
@@ -11829,9 +11822,6 @@ void NaviPikiZeroState::procAnimMsg(Navi*, MsgAnim*) { }
  */
 NaviStartingState::NaviStartingState()
     : NaviState(NAVISTATE_Starting)
-    , _14(0.0f)
-    , _20(0.0f)
-    , _34(0.0f)
 {
 }
 

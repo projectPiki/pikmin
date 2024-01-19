@@ -1464,8 +1464,6 @@ void NaviDemoSunsetState::SitState::cleanup(NaviDemoSunsetState*) { }
  */
 NaviDemoSunsetState::NaviDemoSunsetState()
     : NaviState(NAVISTATE_DemoSunset)
-    , _14(0.0f)
-    , _20(0.0f)
 {
 	mStateMachine = new DemoStateMachine;
 	mStateMachine->init(this);

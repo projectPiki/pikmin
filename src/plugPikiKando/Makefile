@@ -85,7 +85,7 @@ KANDO_FILES:=\
 	$(BUILD_DIR)/asm/plugPikiKando/pikiMgr.o\
 	$(BUILD_DIR)/asm/plugPikiKando/pikiState.o\
 	$(BUILD_DIR)/asm/plugPikiKando/viewPiki.o\
-	$(BUILD_DIR)/asm/plugPikiKando/conditions.o\
+	$(BUILD_DIR)/src/plugPikiKando/conditions.o\
 	$(BUILD_DIR)/asm/plugPikiKando/generator.o\
 	$(BUILD_DIR)/asm/plugPikiKando/generatorCache.o\
 	$(BUILD_DIR)/asm/plugPikiKando/objectMgr.o\
@@ -126,7 +126,7 @@ KANDO_FILES:=\
 	$(BUILD_DIR)/asm/plugPikiKando/mapParts.o\
 	$(BUILD_DIR)/asm/plugPikiKando/panipikianimator.o\
 	$(BUILD_DIR)/asm/plugPikiKando/actor.o\
-	$(BUILD_DIR)/asm/plugPikiKando/actorMgr.o\
+	$(BUILD_DIR)/src/plugPikiKando/actorMgr.o\
 	$(BUILD_DIR)/asm/plugPikiKando/genActor.o\
 	$(BUILD_DIR)/src/plugPikiKando/pikiInfo.o\
 	$(BUILD_DIR)/asm/plugPikiKando/plantMgr.o\

@@ -624,7 +624,8 @@ bool InteractFlick::actCommon(Creature* creature)
 		creature->endStickMouth();
 	}
 
-	if (creature->_184) {
+	// if stuck to something, end stick
+	if (creature->mStickTarget) {
 		creature->endStickObject();
 		creature->endStick();
 	}

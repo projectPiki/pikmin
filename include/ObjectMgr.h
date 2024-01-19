@@ -65,7 +65,7 @@ struct MonoObjectMgr : public ObjectMgr {
 	virtual int getSize();                        // _60 (weak)
 	virtual int getMax();                         // _64 (weak)
 	virtual void search(ObjectMgr*);              // _70
-	virtual void birth();                         // _78
+	virtual Creature* birth();                    // _78
 	virtual void kill(Creature*);                 // _7C
 	virtual void createObject() = 0;              // _80
 
@@ -100,7 +100,7 @@ struct PolyObjectMgr : public ObjectMgr {
 	virtual int getSize();                        // _60
 	virtual int getMax();                         // _64
 	virtual void search(ObjectMgr*);              // _70
-	virtual void birth(int);                      // _78
+	virtual Creature* birth(int);                 // _78
 	virtual void kill(Creature*);                 // _7C
 
 	void create(int);

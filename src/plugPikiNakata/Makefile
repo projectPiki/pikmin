@@ -1,6 +1,6 @@
 NAKATA_FILES:=\
 	$(BUILD_DIR)/asm/plugPikiNakata/genteki.o\
-	$(BUILD_DIR)/asm/plugPikiNakata/nakatacode.o\
+	$(BUILD_DIR)/src/plugPikiNakata/nakatacode.o\
 	$(BUILD_DIR)/asm/plugPikiNakata/nlibfunction.o\
 	$(BUILD_DIR)/asm/plugPikiNakata/nlibgeometry.o\
 	$(BUILD_DIR)/asm/plugPikiNakata/nlibgeometry3d.o\

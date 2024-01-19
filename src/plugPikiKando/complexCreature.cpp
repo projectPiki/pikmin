@@ -1,4 +1,4 @@
-#include "types.h"
+#include "ComplexCreature.h"
 
 /*
  * --INFO--
@@ -35,11 +35,7 @@ ComplexCreature::ComplexCreature(int, CreatureProp*)
  * Address:	8008A02C
  * Size:	00000C
  */
-void SmartPtr<Creature>::SmartPtr()
-{
-	// Generated from stw r0, 0x0(r3)
-	_00 = 0;
-}
+SmartPtr<Creature>::SmartPtr() { mPtr = nullptr; }
 
 /*
  * --INFO--
@@ -101,16 +97,16 @@ void ComplexCreature::postUpdate(int, f32)
 	// UNUSED FUNCTION
 }
 
-/*
- * --INFO--
- * Address:	8008A038
- * Size:	000004
- */
-void Creature::collisionCallback(CollEvent&) { }
+// /*
+//  * --INFO--
+//  * Address:	8008A038
+//  * Size:	000004
+//  */
+// void Creature::collisionCallback(CollEvent&) { }
 
-/*
- * --INFO--
- * Address:	8008A03C
- * Size:	000004
- */
-void Creature::bounceCallback() { }
+// /*
+//  * --INFO--
+//  * Address:	8008A03C
+//  * Size:	000004
+//  */
+// void Creature::bounceCallback() { }

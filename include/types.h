@@ -54,13 +54,6 @@ typedef unsigned long size_t;
 #define NULL    ((void*)0)
 #define nullptr 0
 
-// overloading operators
-void* operator new(size_t);
-void* operator new[](size_t);
-void* operator new[](size_t, int);
-void operator delete(void*);
-void operator delete[](void*);
-
 // Sets specific flag to 1
 #define SET_FLAG(x, val) (x |= (val))
 

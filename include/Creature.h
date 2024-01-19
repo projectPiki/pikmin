@@ -79,7 +79,7 @@ struct Creature : public RefCountable, public EventTalker {
 	virtual bool isOrganic();                                 // _78 (weak)
 	virtual bool isTerrible();                                // _7C
 	virtual bool isBuried();                                  // _80 (weak)
-	virtual bool isAtari();                                   // _84 (weak)
+	virtual bool isAtari() { return true; }                   // _84 (weak)
 	virtual bool isAlive();                                   // _88 (weak)
 	virtual bool isFixed();                                   // _8C (weak)
 	virtual bool needShadow();                                // _90
@@ -88,8 +88,8 @@ struct Creature : public RefCountable, public EventTalker {
 	virtual bool isFree();                                    // _9C (weak)
 	virtual void stimulate(struct Interaction&);              // _A0
 	virtual void sendMsg(Msg*);                               // _A4 (weak)
-	virtual void collisionCallback(struct CollEvent&);        // _A8 (weak)
-	virtual void bounceCallback();                            // _AC (weak)
+	virtual void collisionCallback(struct CollEvent&) { }     // _A8 (weak)
+	virtual void bounceCallback() { }                         // _AC (weak)
 	virtual void jumpCallback();                              // _B0 (weak)
 	virtual void wallCallback(struct Plane&, DynCollObject*); // _B4
 	virtual void offwallCallback(DynCollObject*);             // _B8 (weak)
@@ -189,7 +189,7 @@ struct Creature : public RefCountable, public EventTalker {
 	u8 _70[0xC8 - 0x70];    // _70, TODO: work out members
 	u32 mCreatureFlags;     // _C8, bitflag
 	u8 _CC[0x184 - 0xCC];   // _CC, TODO: work out members
-	void* _184;             // _184, TODO: work out what this points to, related to sticking
+	Creature* mStickTarget; // _184, creature/object this creature is stuck to
 	u8 _188[0x220 - 0x188]; // _188, TODO: work out members
 	CollInfo* mCollInfo;    // _220
 	CreatureProp* mProps;   // _224, creature properties

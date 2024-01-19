@@ -403,10 +403,7 @@ BossProp::BossProp()
  */
 Boss::Boss(CreatureProp* props)
     : Creature(props)
-    , _300(0.0f)
-    , _30C(0.0f)
     , mID()
-    , _328(0.0f)
 {
 	/*
 	.loc_0x0:

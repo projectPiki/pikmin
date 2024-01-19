@@ -60,7 +60,7 @@ struct ItemMgr : public PolyObjectMgr {
 	virtual ~ItemMgr();                // _48 (weak)
 	virtual void update();             // _4C (weak)
 	virtual void refresh(Graphics&);   // _58
-	virtual void birth(int);           // _78
+	virtual Creature* birth(int);      // _78
 	virtual void kill(Creature*);      // _7C
 	virtual void refresh2d(Graphics&); // _80
 

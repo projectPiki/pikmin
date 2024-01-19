@@ -103,4 +103,27 @@ struct PaniUfoAnimator : public PaniAnimator {
 	// TODO: members
 };
 
+/**
+ * @brief TODO
+ */
+struct PaniPikiAnimMgr {
+	PaniPikiAnimMgr();
+
+	void init(AnimMgr*, AnimContext*, AnimContext*, PaniMotionTable*);
+	void changeContext(AnimContext*, AnimContext*);
+	void startMotion(PaniMotionInfo*, PaniMotionInfo*);
+	void finishMotion(PaniMotionInfo*, PaniMotionInfo*);
+	void startMotion(PaniMotionInfo&, PaniMotionInfo&);
+	void finishMotion(PaniAnimKeyListener*);
+	void updateAnimation(f32);
+	void updateContext();
+
+	// unused/inlined:
+	PaniMotionTable* getMotionTable();
+
+	static PaniMotionTable* motionTable;
+
+	// TODO: members
+};
+
 #endif

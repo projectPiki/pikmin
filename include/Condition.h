@@ -14,4 +14,34 @@ struct Condition {
 	// _00 = VTBL
 };
 
+/**
+ * @brief TODO
+ */
+struct CndIsAtari : public Condition {
+	virtual bool satisfy(Creature*); // _08
+
+	// _00 = VTBL
+	// TODO: members
+};
+
+/**
+ * @brief TODO
+ */
+struct CndIsVisible : public Condition {
+	virtual bool satisfy(Creature*); // _08
+	
+	// _00 = VTBL
+	// TODO: members
+};
+
+/**
+ * @brief TODO
+ */
+struct CndStickMouth : public Condition {
+	virtual bool satisfy(Creature*); // _08
+
+	// _00 = VTBL
+	Creature* mMouthOwner; // _04
+};
+
 #endif

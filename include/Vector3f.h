@@ -10,10 +10,8 @@
  * @note Size: 0xC.
  */
 struct Vector3f {
-	Vector3f() { }
+	Vector3f() { x = y = z = 0.0f; }
 	Vector3f(const f32& x, const f32& y, const f32& z);
-
-	inline Vector3f(f32 val) { x = y = z = val; }
 
 	void rotate(struct Matrix4f&);
 	void rotateTo(Matrix4f&, Vector3f&);

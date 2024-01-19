@@ -3,6 +3,7 @@
 
 #include "types.h"
 #include "Creature.h"
+#include "ObjectMgr.h"
 #include "PaniAnimator.h"
 #include "PelletView.h"
 
@@ -232,6 +233,42 @@ struct Teki : public YTeki {
 	// _00       = VTBL
 	// _000-_538 = YTeki
 	// _538 = PaniAnimKeyListener
+};
+
+/**
+ * @brief TODO
+ */
+struct TekiMgr : public MonoObjectMgr {
+	TekiMgr();
+
+	virtual ~TekiMgr();              // _48
+	virtual void update();           // _4C
+	virtual void refresh(Graphics&); // _58
+	virtual void createObject();     // _80
+
+	void startStage();
+	void newTeki(int);
+	void reset();
+	void getStrategy(int);
+	void getTekiParameters(int);
+	void getTekiShapeObject(int);
+	void getSoundTable(int);
+	void refresh2d(Graphics&);
+	void setUsingTypeTable(bool);
+	void setVisibleTypeTable(bool);
+	void setVisibleType(int, bool);
+	bool hasModel(int);
+	void getResultFlag(int);
+
+	// unused/inlined:
+	void getTypeIndex(char*);
+	void setUsingType(int, bool);
+
+	static void initTekiMgr();
+
+	// _00     = VTBL
+	// _00-_1C = MonoObjectMgr?
+	// TODO: members
 };
 
 #endif

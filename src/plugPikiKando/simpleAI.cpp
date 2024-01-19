@@ -30,7 +30,6 @@ void _Print(char*, ...)
  */
 AICreature::AICreature(CreatureProp* props)
     : Creature(props)
-    , _2C4(0.0f)
 {
 	_2BC = 0;
 	_2C4.set(0.0f, 0.0f, 0.0f);

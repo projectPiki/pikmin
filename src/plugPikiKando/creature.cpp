@@ -695,7 +695,7 @@ void Creature::getCentre()
  * Address:	8008A718
  * Size:	000074
  */
-void Creature::getCentreSize()
+f32 Creature::getCentreSize()
 {
 	/*
 	.loc_0x0:
@@ -849,7 +849,7 @@ void Creature::stimulate(Interaction&)
  * Address:	8008A89C
  * Size:	000138
  */
-void Creature::setStateGrabbed(Creature*)
+bool Creature::setStateGrabbed(Creature*)
 {
 	/*
 	.loc_0x0:

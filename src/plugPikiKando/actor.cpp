@@ -1,4 +1,4 @@
-#include "types.h"
+#include "Actor.h"
 
 /*
  * --INFO--
@@ -26,6 +26,7 @@ void _Print(char*, ...)
  * Size:	000074
  */
 Actor::Actor()
+    : Creature(nullptr)
 {
 	// UNUSED FUNCTION
 }

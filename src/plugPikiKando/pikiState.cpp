@@ -2645,7 +2645,6 @@ void PikiAbsorbState::cleanup(Piki*) { }
  */
 PikiDrownState::PikiDrownState()
     : PikiState(PIKISTATE_Drown, "DROWN")
-    , _1C(0.0f)
 {
 	/*
 	.loc_0x0:
@@ -3263,7 +3262,6 @@ void PikiDrownState::procAnimMsg(Piki*, MsgAnim*)
  */
 PikiKinokoState::PikiKinokoState()
     : PikiState(PIKISTATE_Kinoko, "KINOKO")
-    , _18(0.0f)
 {
 	/*
 	.loc_0x0:
@@ -6702,7 +6700,6 @@ void PikiFallState::cleanup(Piki*) { }
  */
 PikiCliffState::PikiCliffState()
     : PikiState(PIKISTATE_Cliff, "CLIFF")
-    , _1C(0.0f)
 {
 	/*
 	.loc_0x0:
@@ -12047,7 +12044,6 @@ void PikiDeadState::cleanup(Piki*)
  */
 PikiEmotionState::PikiEmotionState()
     : PikiState(PIKISTATE_Emotion, "EMOTION")
-    , _10(0.0f)
     , _1D(0)
 {
 	/*
