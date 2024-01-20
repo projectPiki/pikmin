@@ -29,7 +29,10 @@ struct Node : public CoreNode {
 
 	// _00     = VTBL
 	// _00-_14 = CoreNode
-	// TODO: members
+	// TODO: Why does it fail if i add these members back?
+	// s32 mType;  // _14
+	// s32 mFlags; // _18
+	// s32 _1C; // _1C
 };
 
 struct FaceNode : public CoreNode {

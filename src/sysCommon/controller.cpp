@@ -1,5 +1,7 @@
 #include "types.h"
 #include "Controller.h"
+#include "system.h"
+#include "dolphin/os.h"
 
 /*
  * --INFO--
@@ -9,6 +11,7 @@
 void _Error(char*, ...)
 {
 	// UNUSED FUNCTION
+	OSReport("controller.cpp");
 }
 
 /*
@@ -28,12 +31,12 @@ void _Print(char*, ...)
  */
 void Controller::reset(u32 arg1)
 {
-	_3C = -1;
-	_44 = false;
-	_38 = arg1;
-	_40 = 0;
-	_20 = 0;
-	_24 = 0;
+	_3C        = -1;
+	_44        = false;
+	_38        = arg1;
+	_40        = 0;
+	_20        = 0;
+	mPrevInput = 0;
 }
 
 /*
@@ -43,34 +46,30 @@ void Controller::reset(u32 arg1)
  */
 void Controller::updateCont(u32 arg1)
 {
-	_24 = _20;
-	_20 = 0;
+	mPrevInput = _20;
+	_20        = 0;
 
 	if (!_44) {
 		_20 = arg1;
 	}
 
-	_28 = _20 & ~_24;
-	_20 = _24 & ~_20;
+	_28 = _20 & ~mPrevInput;
+	_2C = mPrevInput & ~_20;
 
 	if (_40) {
+		if (--_40) {
+			if (_30 = _34 & _28) {
+				_40 = 0;
+				return;
+			}
+		}
+	} else {
 		_30 = 0;
-
 		if (!(_34 = _28)) {
 			return;
 		}
 
 		_40 = 10;
-	} else {
-		if (!(--_40)) {
-			return;
-		}
-
-		if (!(_30 = _34 & _28)) {
-			return;
-		}
-
-		_40 = 0;
 	}
 }
 
@@ -79,108 +78,32 @@ void Controller::updateCont(u32 arg1)
  * Address:	80040A70
  * Size:	00002C
  */
-void Controller::update() { gsys->mContManager->updateController(this); }
+void Controller::update() { gsys->mControllerMgr.updateController(this); }
 
 /*
  * --INFO--
  * Address:	80040A9C
  * Size:	000038
  */
-void Controller::getMainStickX()
-{
-	/*
-  .loc_0x0:
-	stwu      r1, -0x18(r1)
-	lis       r0, 0x4330
-	lbz       r3, 0x45(r3)
-	lfd       f2, -0x7C00(r2)
-	extsb     r3, r3
-	lfs       f0, -0x7C08(r2)
-	xoris     r3, r3, 0x8000
-	stw       r3, 0x14(r1)
-	stw       r0, 0x10(r1)
-	lfd       f1, 0x10(r1)
-	fsubs     f1, f1, f2
-	fdivs     f1, f1, f0
-	addi      r1, r1, 0x18
-	blr
-  */
-}
+f32 Controller::getMainStickX() { return _45 / 74.0f; }
 
 /*
  * --INFO--
  * Address:	80040AD4
  * Size:	000038
  */
-void Controller::getMainStickY()
-{
-	/*
-  .loc_0x0:
-	stwu      r1, -0x18(r1)
-	lis       r0, 0x4330
-	lbz       r3, 0x46(r3)
-	lfd       f2, -0x7C00(r2)
-	extsb     r3, r3
-	lfs       f0, -0x7C08(r2)
-	xoris     r3, r3, 0x8000
-	stw       r3, 0x14(r1)
-	stw       r0, 0x10(r1)
-	lfd       f1, 0x10(r1)
-	fsubs     f1, f1, f2
-	fdivs     f1, f1, f0
-	addi      r1, r1, 0x18
-	blr
-  */
-}
+f32 Controller::getMainStickY() { return _46 / 74.0f; }
 
 /*
  * --INFO--
  * Address:	80040B0C
  * Size:	000038
  */
-void Controller::getSubStickX()
-{
-	/*
-  .loc_0x0:
-	stwu      r1, -0x18(r1)
-	lis       r0, 0x4330
-	lbz       r3, 0x47(r3)
-	lfd       f2, -0x7C00(r2)
-	extsb     r3, r3
-	lfs       f0, -0x7C08(r2)
-	xoris     r3, r3, 0x8000
-	stw       r3, 0x14(r1)
-	stw       r0, 0x10(r1)
-	lfd       f1, 0x10(r1)
-	fsubs     f1, f1, f2
-	fdivs     f1, f1, f0
-	addi      r1, r1, 0x18
-	blr
-  */
-}
+f32 Controller::getSubStickX() { return _47 / 74.0f; }
 
 /*
  * --INFO--
  * Address:	80040B44
  * Size:	000038
  */
-void Controller::getSubStickY()
-{
-	/*
-  .loc_0x0:
-	stwu      r1, -0x18(r1)
-	lis       r0, 0x4330
-	lbz       r3, 0x48(r3)
-	lfd       f2, -0x7C00(r2)
-	extsb     r3, r3
-	lfs       f0, -0x7C08(r2)
-	xoris     r3, r3, 0x8000
-	stw       r3, 0x14(r1)
-	stw       r0, 0x10(r1)
-	lfd       f1, 0x10(r1)
-	fsubs     f1, f1, f2
-	fdivs     f1, f1, f0
-	addi      r1, r1, 0x18
-	blr
-  */
-}
+f32 Controller::getSubStickY() { return _48 / 74.0f; }
