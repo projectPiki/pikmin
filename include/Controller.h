@@ -53,8 +53,6 @@ struct ControllerMgr {
 	void update();
 	void init();
 	void updateController(Controller*);
-
-	u8 mKeyStates[0x100]; // _04
 };
 
 #endif // CONTROLLER_H
