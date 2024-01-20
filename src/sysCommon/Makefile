@@ -16,7 +16,7 @@ SYSCOMMON_FILES:=\
 	$(BUILD_DIR)/asm/sysCommon/node.o\
 	$(BUILD_DIR)/src/sysCommon/timers.o\
 	$(BUILD_DIR)/src/sysCommon/controller.o\
-	$(BUILD_DIR)/asm/sysCommon/cmdStream.o\
+	$(BUILD_DIR)/src/sysCommon/cmdStream.o\
 	$(BUILD_DIR)/asm/sysCommon/camera.o\
 	$(BUILD_DIR)/src/sysCommon/atx.o\
 	$(BUILD_DIR)/asm/sysCommon/id32.o\

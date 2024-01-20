@@ -108,7 +108,7 @@ LIBS = [
             ["sysCommon/node", False],
             ["sysCommon/timers", True],
             ["sysCommon/controller", True],
-            ["sysCommon/cmdStream", False],
+            ["sysCommon/cmdStream", True],
             ["sysCommon/camera", False],
             ["sysCommon/atx", True],
             ["sysCommon/id32", False],
