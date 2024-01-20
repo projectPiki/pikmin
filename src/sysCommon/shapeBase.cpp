@@ -192,9 +192,9 @@ void Joint::read(RandomAccessStream& stream)
 	mMatPolyCount = stream.readInt();
 	mMatPoly.initCore("");
 	for (int i = 0; i < mMatPolyCount; i++) {
-		MatPoly* mPoly = new MatPoly();
-		mPoly->mIndex  = stream.readShort();
-		mPoly->_20     = stream.readShort();
+		MatPoly* mPoly    = new MatPoly();
+		mPoly->mIndex     = stream.readShort();
+		mPoly->mMeshIndex = stream.readShort();
 		mMatPoly.add(mPoly);
 	}
 }

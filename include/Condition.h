@@ -29,7 +29,7 @@ struct CndIsAtari : public Condition {
  */
 struct CndIsVisible : public Condition {
 	virtual bool satisfy(Creature*); // _08
-	
+
 	// _00 = VTBL
 	// TODO: members
 };

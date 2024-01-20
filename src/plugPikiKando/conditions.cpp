@@ -6,20 +6,14 @@
  * Address:	800DAC28
  * Size:	000030
  */
-bool CndIsVisible::satisfy(Creature* creature)
-{
-	return creature->isVisible();
-}
+bool CndIsVisible::satisfy(Creature* creature) { return creature->isVisible(); }
 
 /*
  * --INFO--
  * Address:	800DAC58
  * Size:	000030
  */
-bool CndIsAtari::satisfy(Creature* creature)
-{
-	return creature->isAtari();
-}
+bool CndIsAtari::satisfy(Creature* creature) { return creature->isAtari(); }
 
 /*
  * --INFO--

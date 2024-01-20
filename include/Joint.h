@@ -35,7 +35,7 @@ struct Joint : public CoreNode {
 		Material* mMaterial; // _14
 		Mesh* mMesh;         // _18
 		int mIndex;          // _1C
-		int _20;             // _20
+		int mMeshIndex;      // _20
 		int _24;             // _24
 	};
 
@@ -61,7 +61,7 @@ struct Joint : public CoreNode {
 	Vector3f mTranslation;   // _3C
 	Matrix4f mAnimMatrix;    // _48
 	Matrix4f _88;            // _88
-	bool mUnused;            // _C8
+	bool mIsBillboard;       // _C8
 	bool mUseVolume;         // _C9
 	bool mUseLightGroup;     // _CA
 	BoundBox mBounds;        // _CC

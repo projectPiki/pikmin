@@ -14,7 +14,8 @@ struct ayuID {
 	u32 mID; // _00
 };
 
-struct MemHead { };
+struct MemHead {
+};
 
 /**
  * @brief TODO

@@ -10,7 +10,7 @@ void initSystem(System*);
 void randomInt(int);
 void getFreeHeap();
 
-extern System* system;    
-};
+extern System* system;
+}; // namespace NSystem
 
 #endif

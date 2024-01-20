@@ -78,7 +78,22 @@ struct ObjCollInfo : public CoreNode {
 
 	// _00     = VTBL
 	// _00-_14 = CoreNode
-	// TODO: members
+	int _14; // _14
+	int _18; // _18
+	int _1C; // _1C
+	int _20; // _20
+	int _24; // _24
+	int _28; // _28
+	int _2C; // _2C
+	int _30; // _30
+	int _34; // _34
+	int _38; // _38
+	int _3C; // _3C
+	int _40; // _40
+	int _44; // _44
+	int _48; // _48
+	int _4C; // _4C
+	int _50; // _50
 };
 
 /**
@@ -121,6 +136,7 @@ struct CollInfo {
 	u8 _00[0x14]; // _00, TODO: work out members;
 };
 
-struct CollGroup { };
+struct CollGroup {
+};
 
 #endif

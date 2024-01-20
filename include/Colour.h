@@ -18,7 +18,6 @@ struct Colour {
 
 struct PVWTevColReg {
 	PVWTevColReg();
-	
 };
 
 #endif

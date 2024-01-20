@@ -7,9 +7,9 @@
  * @brief TODO
  */
 struct NakataCodeInitializer {
-    void init();
+	void init();
 
-    // TODO: work out members
+	// TODO: work out members
 };
 
 extern BOOL nakataDebugMode;

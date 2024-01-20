@@ -27,7 +27,8 @@ struct PVWTevStage {
 	void read(RandomAccessStream&);
 };
 
-struct PVWTevInfo { };
+struct PVWTevInfo {
+};
 
 struct MatobjInfo {
 	void attach();
