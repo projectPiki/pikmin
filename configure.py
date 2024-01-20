@@ -111,7 +111,7 @@ LIBS = [
             ["sysCommon/cmdStream", True],
             ["sysCommon/camera", False],
             ["sysCommon/atx", True],
-            ["sysCommon/id32", False],
+            ["sysCommon/id32", True],
         ],
     },
     {

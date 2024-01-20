@@ -19,7 +19,7 @@ SYSCOMMON_FILES:=\
 	$(BUILD_DIR)/src/sysCommon/cmdStream.o\
 	$(BUILD_DIR)/asm/sysCommon/camera.o\
 	$(BUILD_DIR)/src/sysCommon/atx.o\
-	$(BUILD_DIR)/asm/sysCommon/id32.o\
+	$(BUILD_DIR)/src/sysCommon/id32.o\
 
 $(SYSCOMMON_FILES): MWCC_VERSION := 1.2.5n
 

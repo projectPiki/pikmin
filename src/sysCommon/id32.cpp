@@ -1,5 +1,6 @@
 #include "types.h"
 #include "ID32.h"
+#include "Stream.h"
 
 /*
  * --INFO--
@@ -35,133 +36,83 @@ ID32::ID32(void) { setID('none'); }
  */
 ID32::ID32(u32 id) { setID(id); }
 
-/*
+/**
+ * @brief Sets the ID value for the ID32 object.
+ *
+ * @param _id The ID value to be set.
+ *
  * --INFO--
  * Address:	80043EC4
  * Size:	000024
  */
-void ID32::setID(u32)
+void ID32::setID(u32 _id)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  stw       r4, 0x0(r3)
-	  bl        0xE0
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+	mId = _id;
+	updateString();
 }
 
-/*
+/**
+ * @brief Checks if the given ID matches the ID stored in the ID32 object.
+ *
+ * @param pId The ID to be checked.
+ * @param exception The exception value that will be ignored during the matching process.
+ * @return true if the ID matches the stored ID, false otherwise.
+ *
  * --INFO--
  * Address:	80043EE8
  * Size:	0000A8
  */
-void ID32::match(u32, char)
+bool ID32::match(u32 pId, char exception)
 {
-	/*
-	.loc_0x0:
-	  stwu      r1, -0x18(r1)
-	  rlwinm    r5,r5,0,24,31
-	  stw       r4, 0xC(r1)
-	  addi      r4, r1, 0xC
-	  lbz       r6, 0xC(r1)
-	  cmplw     r5, r6
-	  beq-      .loc_0x30
-	  lbz       r0, 0x0(r3)
-	  cmplw     r6, r0
-	  beq-      .loc_0x30
-	  li        r3, 0
-	  b         .loc_0xA0
+	u8* paramId = reinterpret_cast<u8*>(&pId);
+	u8* id      = reinterpret_cast<u8*>(&mId);
 
-	.loc_0x30:
-	  lbzu      r6, 0x1(r4)
-	  addi      r3, r3, 0x1
-	  cmplw     r5, r6
-	  beq-      .loc_0x54
-	  lbz       r0, 0x0(r3)
-	  cmplw     r6, r0
-	  beq-      .loc_0x54
-	  li        r3, 0
-	  b         .loc_0xA0
+	for (int i = 0; i < 4; i++) {
+		if (paramId[i] != (u8)exception && paramId[i] != id[i]) {
+			return false;
+		}
+	}
 
-	.loc_0x54:
-	  lbzu      r6, 0x1(r4)
-	  addi      r3, r3, 0x1
-	  cmplw     r5, r6
-	  beq-      .loc_0x78
-	  lbz       r0, 0x0(r3)
-	  cmplw     r6, r0
-	  beq-      .loc_0x78
-	  li        r3, 0
-	  b         .loc_0xA0
-
-	.loc_0x78:
-	  lbz       r6, 0x1(r4)
-	  addi      r3, r3, 0x1
-	  cmplw     r5, r6
-	  beq-      .loc_0x9C
-	  lbz       r0, 0x0(r3)
-	  cmplw     r6, r0
-	  beq-      .loc_0x9C
-	  li        r3, 0
-	  b         .loc_0xA0
-
-	.loc_0x9C:
-	  li        r3, 0x1
-
-	.loc_0xA0:
-	  addi      r1, r1, 0x18
-	  blr
-	*/
+	return true;
 }
 
-/*
+/**
+ * @brief Updates the ID of the ID32 object based on the string ID.
+ *
+ * This function copies the first 4 bytes of the string ID to the ID32 object's ID.
+ *
  * --INFO--
  * Address:	80043F90
  * Size:	000024
  */
 void ID32::updateID()
 {
-	/*
-	.loc_0x0:
-	  lbz       r0, 0x4(r3)
-	  stb       r0, 0x0(r3)
-	  lbz       r0, 0x5(r3)
-	  stb       r0, 0x1(r3)
-	  lbz       r0, 0x6(r3)
-	  stb       r0, 0x2(r3)
-	  lbz       r0, 0x7(r3)
-	  stb       r0, 0x3(r3)
-	  blr
-	*/
+	u8* id = reinterpret_cast<u8*>(&mId);
+
+	for (int i = 0; i < 4; i++) {
+		id[i] = this->mStringID[i];
+	}
 }
 
-/*
+/**
+ * @brief Updates the string of the ID32 object.
+ *
+ * This function converts the internal ID value to a string and stores it
+ * in the mStringID member variable. The string is a null-terminated character array.
+ *
  * --INFO--
  * Address:	80043FB4
  * Size:	00002C
  */
 void ID32::updateString()
 {
-	/*
-	.loc_0x0:
-	  lbz       r4, 0x0(r3)
-	  li        r0, 0
-	  stb       r4, 0x4(r3)
-	  lbz       r4, 0x1(r3)
-	  stb       r4, 0x5(r3)
-	  lbz       r4, 0x2(r3)
-	  stb       r4, 0x6(r3)
-	  lbz       r4, 0x3(r3)
-	  stb       r4, 0x7(r3)
-	  stb       r0, 0x8(r3)
-	  blr
-	*/
+	u8* id = reinterpret_cast<u8*>(&mId);
+
+	for (int i = 0; i < 4; i++) {
+		mStringID[i] = id[i];
+	}
+
+	mStringID[4] = 0;
 }
 
 /*
@@ -169,151 +120,59 @@ void ID32::updateString()
  * Address:	........
  * Size:	000030
  */
-void ID32::operator=(u32)
-{
-	// UNUSED FUNCTION
-}
+void ID32::operator=(u32 other) { setID(other); }
 
 /*
  * --INFO--
  * Address:	80043FE0
  * Size:	000014
  */
-void ID32::operator==(u32)
-{
-	/*
-	.loc_0x0:
-	  lwz       r0, 0x0(r3)
-	  sub       r0, r4, r0
-	  cntlzw    r0, r0
-	  rlwinm    r3,r0,27,5,31
-	  blr
-	*/
-}
+bool ID32::operator==(u32 other) { return mId == other; }
 
 /*
  * --INFO--
  * Address:	80043FF4
  * Size:	000014
  */
-void ID32::operator!=(u32)
-{
-	/*
-	.loc_0x0:
-	  lwz       r0, 0x0(r3)
-	  sub       r3, r4, r0
-	  subic     r0, r3, 0x1
-	  subfe     r3, r0, r3
-	  blr
-	*/
-}
+bool ID32::operator!=(u32 other) { return mId != other; }
 
-/*
+/**
+ * Writes the ID32 value to the given RandomAccessStream.
+ *
+ * @param stream The RandomAccessStream to write the ID32 value to.
+ *
  * --INFO--
  * Address:	80044008
  * Size:	000094
  */
-void ID32::write(RandomAccessStream&)
+void ID32::write(RandomAccessStream& stream)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  addi      r31, r4, 0
-	  stw       r30, 0x10(r1)
-	  addi      r30, r3, 0
-	  addi      r3, r31, 0
-	  lwz       r12, 0x4(r31)
-	  lbz       r4, 0x3(r30)
-	  lwz       r12, 0x28(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r3, r31
-	  lbz       r4, 0x2(r30)
-	  lwz       r12, 0x4(r31)
-	  lwz       r12, 0x28(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r3, r31
-	  lbz       r4, 0x1(r30)
-	  lwz       r12, 0x4(r31)
-	  lwz       r12, 0x28(r12)
-	  mtlr      r12
-	  blrl
-	  mr        r3, r31
-	  lbz       r4, 0x0(r30)
-	  lwz       r12, 0x4(r31)
-	  lwz       r12, 0x28(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  lwz       r30, 0x10(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	u8* id = reinterpret_cast<u8*>(&mId);
+
+	stream.writeByte(id[3]);
+	stream.writeByte(id[2]);
+	stream.writeByte(id[1]);
+	stream.writeByte(id[0]);
 }
 
-/*
+/**
+ * @brief Reads the ID32 value from the given RandomAccessStream.
+ *
+ * @param stream The RandomAccessStream to read from.
+ *
  * --INFO--
  * Address:	8004409C
  * Size:	0000BC
  */
-void ID32::read(RandomAccessStream&)
+void ID32::read(RandomAccessStream& stream)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x28(r1)
-	  stw       r31, 0x24(r1)
-	  addi      r31, r4, 0
-	  stw       r30, 0x20(r1)
-	  addi      r30, r3, 0
-	  addi      r3, r31, 0
-	  lwz       r12, 0x4(r31)
-	  lwz       r12, 0xC(r12)
-	  mtlr      r12
-	  blrl
-	  stb       r3, 0x3(r30)
-	  mr        r3, r31
-	  lwz       r12, 0x4(r31)
-	  lwz       r12, 0xC(r12)
-	  mtlr      r12
-	  blrl
-	  stb       r3, 0x2(r30)
-	  mr        r3, r31
-	  lwz       r12, 0x4(r31)
-	  lwz       r12, 0xC(r12)
-	  mtlr      r12
-	  blrl
-	  stb       r3, 0x1(r30)
-	  mr        r3, r31
-	  lwz       r12, 0x4(r31)
-	  lwz       r12, 0xC(r12)
-	  mtlr      r12
-	  blrl
-	  stb       r3, 0x0(r30)
-	  li        r0, 0
-	  lbz       r3, 0x0(r30)
-	  stb       r3, 0x4(r30)
-	  lbz       r3, 0x1(r30)
-	  stb       r3, 0x5(r30)
-	  lbz       r3, 0x2(r30)
-	  stb       r3, 0x6(r30)
-	  lbz       r3, 0x3(r30)
-	  stb       r3, 0x7(r30)
-	  stb       r0, 0x8(r30)
-	  lwz       r0, 0x2C(r1)
-	  lwz       r31, 0x24(r1)
-	  lwz       r30, 0x20(r1)
-	  addi      r1, r1, 0x28
-	  mtlr      r0
-	  blr
-	*/
+	u8* id = reinterpret_cast<u8*>(&mId);
+	id[3]  = stream.readByte();
+	id[2]  = stream.readByte();
+	id[1]  = stream.readByte();
+	id[0]  = stream.readByte();
+
+	updateString();
 }
 
 /*
@@ -323,28 +182,24 @@ void ID32::read(RandomAccessStream&)
  */
 void ID32::print() { }
 
-/*
+/**
+ * @brief Converts the ID32 value to a string representation and stores it in the provided buffer.
+ *
+ * The ID32 value is converted to a string by extracting the individual bytes of the ID and
+ * storing them in the buffer. The bytes are stored in big-endian order, with the most significant
+ * byte at the beginning of the buffer. A null terminator is added at the end of the string.
+ *
+ * @param buffer The buffer to store the string representation of the ID32 value.
+ *
  * --INFO--
  * Address:	8004415C
  * Size:	000038
  */
-void ID32::sprint(char*)
+void ID32::sprint(char* buffer)
 {
-	/*
-	.loc_0x0:
-	  lwz       r5, 0x0(r3)
-	  li        r0, 0
-	  rlwinm    r5,r5,8,24,31
-	  stb       r5, 0x0(r4)
-	  lwz       r5, 0x0(r3)
-	  rlwinm    r5,r5,16,24,31
-	  stb       r5, 0x1(r4)
-	  lwz       r5, 0x0(r3)
-	  rlwinm    r5,r5,24,24,31
-	  stb       r5, 0x2(r4)
-	  lwz       r3, 0x0(r3)
-	  stb       r3, 0x3(r4)
-	  stb       r0, 0x4(r4)
-	  blr
-	*/
+	buffer[0] = (u8)((this->mId & 0xFF000000) >> 24);
+	buffer[1] = (u8)((this->mId & 0xFF0000) >> 16);
+	buffer[2] = (u8)((this->mId & 0xFF00) >> 8);
+	buffer[3] = (u8)(this->mId & 0xFF);
+	buffer[4] = 0;
 }
