@@ -1,4 +1,5 @@
 #include "types.h"
+#include "Controller.h"
 
 /*
  * --INFO--
@@ -138,8 +139,67 @@ void ControllerMgr::init()
  * Address:	800472C0
  * Size:	0001F8
  */
-void ControllerMgr::updateController(Controller*)
+void ControllerMgr::updateController(Controller* controller)
 {
+	u32 keyStatus = 0;
+
+#ifdef __WIN32__
+	if (keyDown('V'))
+		keyStatus |= 0x4000;
+	if (keyDown('N'))
+		keyStatus |= 0x8000;
+	if (keyDown('\r'))
+		keyStatus |= 0x1000000;
+	if (keyDown('\t'))
+		keyStatus |= 0x10000;
+	if (keyDown('g'))
+		keyStatus |= 0x20000;
+	if (keyDown('i'))
+		keyStatus |= 0x40000;
+	if (keyDown('d'))
+		keyStatus |= 0x400000;
+	if (keyDown('f'))
+		keyStatus |= 0x100000;
+	if (keyDown('h'))
+		keyStatus |= 0x80000;
+	if (keyDown('b'))
+		keyStatus |= 0x200000;
+	if (keyDown(' '))
+		keyStatus |= 0x10;
+	if (keyDown('B'))
+		keyStatus |= 0x20;
+	if (keyDown('%'))
+		keyStatus |= 1;
+	if (keyDown('\''))
+		keyStatus |= 2;
+	if (keyDown('&'))
+		keyStatus |= 4;
+	if (keyDown('('))
+		keyStatus |= 8;
+	if (keyDown('S'))
+		keyStatus |= 0x100;
+	if (keyDown('D'))
+		keyStatus |= 0x200;
+	if (keyDown('A'))
+		keyStatus |= 0x400;
+	if (keyDown('Z'))
+		keyStatus |= 0x800;
+#else
+	// TODO: decomp
+
+#endif
+
+	controller->mMainStickX = (keyStatus & 0x400000) ? -74 : (keyStatus & 0x100000) ? 74 : 0;
+	controller->mMainStickY = (keyStatus & 0x200000) ? -74 : (keyStatus & 0x80000) ? 74 : 0;
+	controller->mSubStickX  = (keyStatus & 1) ? -74 : (keyStatus & 2) ? 74 : 0;
+	controller->mSubStickY  = (keyStatus & 8) ? -74 : (keyStatus & 4) ? 74 : 0;
+
+	controller->_49 = (keyStatus & 0x1000) ? 0xF : 0;
+	controller->_4A = (keyStatus & 0x2000) ? 0xF : 0;
+	controller->_4B = (keyStatus & 0x20000) ? 0xAA : 0;
+	controller->_4C = (keyStatus & 0x40000) ? 0xAA : 0;
+
+	controller->updateCont(keyStatus);
 	/*
 	.loc_0x0:
 	  mflr      r0

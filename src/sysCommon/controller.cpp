@@ -31,12 +31,12 @@ void _Print(char*, ...)
  */
 void Controller::reset(u32 arg1)
 {
-	_3C        = -1;
-	_44        = false;
-	_38        = arg1;
-	_40        = 0;
-	_20        = 0;
-	mPrevInput = 0;
+	_3C                 = -1;
+	mIsControllerFrozen = false;
+	_38                 = arg1;
+	mInputDelay         = 0;
+	mCurrentInput       = 0;
+	mPrevInput          = 0;
 }
 
 /*
@@ -44,32 +44,33 @@ void Controller::reset(u32 arg1)
  * Address:	800409D4
  * Size:	00009C
  */
-void Controller::updateCont(u32 arg1)
+void Controller::updateCont(u32 keyStatus)
 {
-	mPrevInput = _20;
-	_20        = 0;
+	mPrevInput    = mCurrentInput;
+	mCurrentInput = 0;
 
-	if (!_44) {
-		_20 = arg1;
+	if (!mIsControllerFrozen) {
+		mCurrentInput = keyStatus;
 	}
 
-	_28 = _20 & ~mPrevInput;
-	_2C = mPrevInput & ~_20;
+	mInputPressed  = mCurrentInput & ~mPrevInput;
+	mInputReleased = mPrevInput & ~mCurrentInput;
 
-	if (_40) {
-		if (--_40) {
-			if (_30 = _34 & _28) {
-				_40 = 0;
+	if (mInputDelay) {
+		if (--mInputDelay) {
+			if (mButtonState = mButtonMask & mInputPressed) {
+				mInputDelay = 0;
 				return;
 			}
 		}
 	} else {
-		_30 = 0;
-		if (!(_34 = _28)) {
+		mButtonState = 0;
+
+		if (!(mButtonMask = mInputPressed)) {
 			return;
 		}
 
-		_40 = 10;
+		mInputDelay = 10;
 	}
 }
 
@@ -85,25 +86,25 @@ void Controller::update() { gsys->mControllerMgr.updateController(this); }
  * Address:	80040A9C
  * Size:	000038
  */
-f32 Controller::getMainStickX() { return _45 / 74.0f; }
+f32 Controller::getMainStickX() { return mMainStickX / 74.0f; }
 
 /*
  * --INFO--
  * Address:	80040AD4
  * Size:	000038
  */
-f32 Controller::getMainStickY() { return _46 / 74.0f; }
+f32 Controller::getMainStickY() { return mMainStickY / 74.0f; }
 
 /*
  * --INFO--
  * Address:	80040B0C
  * Size:	000038
  */
-f32 Controller::getSubStickX() { return _47 / 74.0f; }
+f32 Controller::getSubStickX() { return mSubStickX / 74.0f; }
 
 /*
  * --INFO--
  * Address:	80040B44
  * Size:	000038
  */
-f32 Controller::getSubStickY() { return _48 / 74.0f; }
+f32 Controller::getSubStickY() { return mSubStickY / 74.0f; }
