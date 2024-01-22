@@ -5,6 +5,7 @@
 
 /**
  * @brief Represents a 32-bit identifier with associated string ID.
+ * @size 0xC bytes
  */
 struct ID32 {
 	/**

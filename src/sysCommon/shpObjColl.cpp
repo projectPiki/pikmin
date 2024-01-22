@@ -26,7 +26,7 @@ void _Print(char*, ...)
  * Address:	........
  * Size:	000128
  */
-void ObjCollInfo::getCentreSize(Vector3f&, f32&)
+void ObjCollInfo::getCentreSize(Vector3f& centre, f32& radius)
 {
 	// UNUSED FUNCTION
 }

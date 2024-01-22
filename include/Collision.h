@@ -3,12 +3,15 @@
 
 #include "types.h"
 #include "CoreNode.h"
+#include "Vector3f.h"
+#include "GfxobjInfo.h"
 
 struct CmdStream;
 struct Creature;
 struct DynCollObject;
 struct ObjCollInfo;
 struct Shape;
+struct BaseShape;
 
 /**
  * @brief TODO
@@ -65,6 +68,15 @@ struct CndCollPart {
 	// TODO: members
 };
 
+enum ObjCollType {
+	OCT_Sphere   = 1,
+	OCT_Platform = 2,
+};
+
+enum ObjCollFlags {
+	OCF_GetMinY = 1,
+};
+
 /**
  * @brief TODO
  */
@@ -78,22 +90,24 @@ struct ObjCollInfo : public CoreNode {
 
 	// _00     = VTBL
 	// _00-_14 = CoreNode
-	int _14; // _14
-	int _18; // _18
-	int _1C; // _1C
-	int _20; // _20
-	int _24; // _24
-	int _28; // _28
-	int _2C; // _2C
-	int _30; // _30
-	int _34; // _34
-	int _38; // _38
-	int _3C; // _3C
-	int _40; // _40
-	int _44; // _44
-	int _48; // _48
-	int _4C; // _4C
-	int _50; // _50
+	ID32 mId;                 // _14
+	ID32 mCode;               // _20
+	ObjCollType mCollType;    // _2C
+	s32 mJointIndex;          // _30
+	Vector3f mCentrePosition; // _34
+	f32 mRadius;              // _40
+	BaseShape* mParentShape;  // _44
+	s32 _48;                  // _48
+	s8* mPlatformName;        // _4C
+	ObjCollFlags mFlags;      // _50
+	s32 _54;                  // _54
+	s32 _58;                  // _58
+	s32 _5C;                  // _5C
+	s32 _60;                  // _60
+};
+
+struct ShpobjInfo : public GfxobjInfo {
+	Shape* mTarget; // _20
 };
 
 /**
@@ -136,7 +150,6 @@ struct CollInfo {
 	u8 _00[0x14]; // _00, TODO: work out members;
 };
 
-struct CollGroup {
-};
+struct CollGroup { };
 
 #endif
