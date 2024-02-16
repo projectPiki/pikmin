@@ -11,7 +11,7 @@
  * @note Size: 0xC.
  */
 struct Vector3f {
-	Vector3f() { z = y = x = 0.0f; }
+	Vector3f() { x = y = z = 0.0f; } // yes it's this way around, every vector initialised in a ctor is "in reverse"
 	Vector3f(const f32& x, const f32& y, const f32& z);
 
 	void rotate(struct Matrix4f&);

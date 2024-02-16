@@ -5,6 +5,9 @@
 #include "Boss.h"
 #include "Collision.h"
 
+/**
+ * @brief TODO.
+ */
 struct SlimeProp : public BossProp, public CoreNode {
 	SlimeProp();
 

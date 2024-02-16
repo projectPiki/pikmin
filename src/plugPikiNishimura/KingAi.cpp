@@ -1,4 +1,8 @@
-#include "types.h"
+#include "King.h"
+#include "NsMathF.h"
+#include "PaniMotion.h"
+#include "Collision.h"
+#include "Dolphin/rand.h"
 
 /*
  * --INFO--
@@ -25,38 +29,36 @@ void _Print(char*, ...)
  * Address:	8016C2B0
  * Size:	000048
  */
-KingAi::KingAi(King*)
-{
-	/*
-	.loc_0x0:
-	  lis       r5, 0x802B
-	  subi      r0, r5, 0x246C
-	  lis       r5, 0x802D
-	  stw       r0, 0x0(r3)
-	  addi      r0, r5, 0x514
-	  stw       r0, 0x0(r3)
-	  lfs       f0, -0x5390(r2)
-	  stfs      f0, 0x34(r3)
-	  stfs      f0, 0x30(r3)
-	  stfs      f0, 0x2C(r3)
-	  stfs      f0, 0x40(r3)
-	  stfs      f0, 0x3C(r3)
-	  stfs      f0, 0x38(r3)
-	  stfs      f0, 0x4C(r3)
-	  stfs      f0, 0x48(r3)
-	  stfs      f0, 0x44(r3)
-	  stw       r4, 0x4(r3)
-	  blr
-	*/
-}
+KingAi::KingAi(King* king) { mKing = king; }
 
 /*
  * --INFO--
  * Address:	8016C2F8
  * Size:	00010C
  */
-void KingAi::initAI(King*)
+void KingAi::initAI(King* king)
 {
+	mKing       = king;
+	mKing->_2E4 = 16;
+	mKing->_2E8 = 16;
+
+	// something weird with this
+	PaniMotionInfo motionInfo(3, this);
+	mKing->mAnimator.startMotion(motionInfo);
+
+	mKing->_2D8    = 30.0f;
+	_08            = 1;
+	_09            = 0;
+	CollPart* slt1 = mKing->mCollInfo->getSphere('slt1');
+	CollPart* slt2 = mKing->mCollInfo->getSphere('slt2');
+
+	_10 = slt1->getChildCount() + slt2->getChildCount();
+	_0C = 0;
+	_18 = 0;
+	_1C = 0;
+	_20 = 0;
+	_24 = 0.0f;
+	_28 = PI * (mKing->getKingProp()->mKingProps._3C4() / 360.0f);
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -134,46 +136,31 @@ void KingAi::initAI(King*)
  * Address:	8016C404
  * Size:	00007C
  */
-void KingAi::animationKeyUpdated(PaniAnimKeyEvent&)
+void KingAi::animationKeyUpdated(PaniAnimKeyEvent& event)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  lwz       r0, 0x0(r4)
-	  cmplwi    r0, 0x8
-	  bgt-      .loc_0x6C
-	  lis       r5, 0x802D
-	  addi      r5, r5, 0x414
-	  rlwinm    r0,r0,2,0,29
-	  lwzx      r0, r5, r0
-	  mtctr     r0
-	  bctr
-	  bl        .loc_0x7C
-	  b         .loc_0x6C
-	  bl        0x214
-	  b         .loc_0x6C
-	  bl        0x2F0
-	  b         .loc_0x6C
-	  bl        0x338
-	  b         .loc_0x6C
-	  bl        0x344
-	  b         .loc_0x6C
-	  lwz       r4, 0x4(r4)
-	  bl        0x3C8
-	  b         .loc_0x6C
-	  lwz       r4, 0x4(r4)
-	  bl        0x400
-
-	.loc_0x6C:
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-
-	.loc_0x7C:
-	*/
+	switch (event.mKeyFrame) {
+	case 1:
+		keyAction0();
+		break;
+	case 2:
+		keyAction1();
+		break;
+	case 3:
+		keyAction2();
+		break;
+	case 6:
+		keyLoopEnd();
+		break;
+	case 0:
+		keyFinished();
+		break;
+	case 7:
+		playSound(event.mValue);
+		break;
+	case 8:
+		createEffect(event.mValue);
+		break;
+	}
 }
 
 /*
@@ -440,17 +427,7 @@ void KingAi::keyAction3()
  * Address:	8016C784
  * Size:	000014
  */
-void KingAi::keyLoopEnd()
-{
-	/*
-	.loc_0x0:
-	  lwz       r4, 0x4(r3)
-	  lwz       r3, 0x2EC(r4)
-	  addi      r0, r3, 0x1
-	  stw       r0, 0x2EC(r4)
-	  blr
-	*/
-}
+void KingAi::keyLoopEnd() { mKing->_2EC++; }
 
 /*
  * --INFO--
@@ -2545,6 +2522,19 @@ void KingAi::setMoveVelocity(f32)
  */
 void KingAi::setAttackPriority()
 {
+	_08                 = 1;
+	KingProp* kingProps = mKing->getKingProp();
+	if (mKing->mCurrentHealth < mKing->mMaxHealth * kingProps->mKingProps._364()) { // t00
+		f32 factor        = (f32)_20 * kingProps->mKingProps._394();                // t03
+		f32 boundedFactor = (factor < 0.0f) ? 0.0f : (factor > 1.0f) ? 1.0f : factor;
+
+		f32 chance = boundedFactor * kingProps->mKingProps._384() + (1.0f - boundedFactor) * kingProps->mKingProps._374(); // t02, t01
+		if (0.99999f * randWeightFloat(1.0f) < chance) {
+			_08 = 0;
+			_18 = 0;
+			// mKing->_3C0->_05 = 0; // whatever this is
+		}
+	}
 	/*
 	.loc_0x0:
 	  mflr      r0

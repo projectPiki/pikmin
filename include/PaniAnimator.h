@@ -10,6 +10,8 @@ struct PaniMotionTable;
  * @brief TODO
  */
 struct PaniAnimKeyEvent {
+	int mKeyFrame; // _00
+	int mValue;    // _04, used in KingAi for a couple different things - this struct might be differentiated for each use case? unsure.
 };
 
 /**

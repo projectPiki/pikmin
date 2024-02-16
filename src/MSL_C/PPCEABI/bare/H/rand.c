@@ -14,8 +14,8 @@ void srand(u32 seed) { next = seed; }
  * Address:	80218070
  * Size:	000024
  */
-s16 rand(void)
+int rand(void)
 {
 	next = next * 1103515245 + 12345;
-	return (s16)((u16)((u32)next >> 0x10) & 0x7fff);
+	return ((u16)((u32)next >> 0x10) & 0x7fff);
 }

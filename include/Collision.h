@@ -124,7 +124,7 @@ struct CollInfo {
 	void checkCollision(CollInfo*, CollPart**, CollPart**, Vector3f&);
 	void checkCollisionRec(CollInfo*, int, int, CollPart**, CollPart**, Vector3f&);
 	void getBoundingSphere();
-	void getSphere(u32);
+	CollPart* getSphere(u32 id);
 	void getNearestCollPart(Vector3f&, u32);
 	void getRandomCollPart(u32);
 	void getPlatform(DynCollObject*);
@@ -150,6 +150,7 @@ struct CollInfo {
 	u8 _00[0x14]; // _00, TODO: work out members;
 };
 
-struct CollGroup { };
+struct CollGroup {
+};
 
 #endif

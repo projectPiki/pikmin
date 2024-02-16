@@ -16,13 +16,77 @@ struct GenObjectBoss;
  * @brief TODO
  */
 struct BossProp : public CreatureProp {
+
+	/**
+	 * @brief TODO
+	 *
+	 * @note Offset comments are relative to BossProp for ease of use.
+	 */
+	struct Properties : public Parameters {
+		inline Properties()
+		    : mTerritoryRadius(this, 200.0f, 0.0f, 0.0f, "b00", nullptr)
+		    , _6C(this, 100.0f, 0.0f, 0.0f, "b01", nullptr)
+		    , _7C(this, 100.0f, 0.0f, 0.0f, "b02", nullptr)
+		    , _8C(this, 360.0f, 0.0f, 0.0f, "b03", nullptr)
+		    , mMaxHealth(this, 1000.0f, 0.0f, 0.0f, "b10", nullptr)
+		    , _AC(this, 1.0f, 0.0f, 0.0f, "b13", nullptr)
+		    , _BC(this, 0.0f, 0.0f, 0.0f, "b11", nullptr)
+		    , _CC(this, 1.0f, 0.0f, 0.0f, "b14", nullptr)
+		    , _DC(this, 1.0f, 0.0f, 0.0f, "b12", nullptr)
+		    , _EC(this, 5000.0f, 0.0f, 0.0f, "c00", nullptr)
+		    , _FC(this, 30.0f, 0.0f, 0.0f, "c01", nullptr)
+		    , _10C(this, 1.0f, 0.0f, 0.0f, "d00", nullptr)
+		    , _11C(this, 100.0f, 0.0f, 0.0f, "d01", nullptr)
+		    , _12C(this, 0.0f, 0.0f, 0.0f, "d02", nullptr)
+		    , mRenderSphereRadius(this, 10.0f, 0.0f, 0.0f, "p00", nullptr)
+		    , mRenderSphereHeight(this, 0.0f, 0.0f, 0.0f, "p00", nullptr)
+		    , _15C(this, 1, 0, 0, "i10", nullptr)
+		    , _16C(this, 10, 0, 0, "i00", nullptr)
+		    , _17C(this, 20, 0, 0, "i01", nullptr)
+		    , _18C(this, 30, 0, 0, "i02", nullptr)
+		    , _19C(this, 10, 0, 0, "i03", nullptr)
+		    , _1AC(this, 50, 0, 0, "i04", nullptr)
+		    , _1BC(this, 100, 0, 0, "i05", nullptr)
+		    , _1CC(this, 200, 0, 0, "i06", nullptr)
+		    , _1DC(this, 1, 0, 0, "i90", nullptr)
+		{
+		}
+
+		// _58-_5C = Parameters
+		Parm<f32> mTerritoryRadius;    // _5C, b00
+		Parm<f32> _6C;                 // _6C, b01
+		Parm<f32> _7C;                 // _7C, b02 - seeking radius?
+		Parm<f32> _8C;                 // _8C, b03 - private radius?
+		Parm<f32> mMaxHealth;          // _9C, b10
+		Parm<f32> _AC;                 // _AC, b13 - related to AI seeking?
+		Parm<f32> _BC;                 // _BC, b11
+		Parm<f32> _CC;                 // _CC, b14
+		Parm<f32> _DC;                 // _DC, b12
+		Parm<f32> _EC;                 // _EC, c00
+		Parm<f32> _FC;                 // _FC, c01
+		Parm<f32> _10C;                // _10C, d00
+		Parm<f32> _11C;                // _11C, d01
+		Parm<f32> _12C;                // _12C, d02
+		Parm<f32> mRenderSphereRadius; // _13C, p00
+		Parm<f32> mRenderSphereHeight; // _14C, p01
+		Parm<int> _15C;                // _15C, i10
+		Parm<int> _16C;                // _16C, i00
+		Parm<int> _17C;                // _17C, i01
+		Parm<int> _18C;                // _18C, i02
+		Parm<int> _19C;                // _19C, i03
+		Parm<int> _1AC;                // _1AC, i04
+		Parm<int> _1BC;                // _1BC, i05
+		Parm<int> _1CC;                // _1CC, i06
+		Parm<int> _1DC;                // _1DC, i90
+	};
+
 	BossProp();
 
 	virtual void read(RandomAccessStream&); // _08
 
-	// _F8     = VTBL
-	// _00-_FC = CreatureProp
-	u8 _FC[0x1EC - 0xFC]; // _FC, TODO: work out members
+	// _54     = VTBL
+	// _00-_58 = CreatureProp
+	Properties mBossProps; // _58
 };
 
 /**
@@ -98,7 +162,16 @@ struct Boss : public Creature {
 	u8 _2B8;                       // _2B8
 	u8 _2B9;                       // _2B9
 	u8 _2BA[0x2];                  // _2BA, unknown/padding
-	u8 _2BC[0x300 - 0x2BC];        // _2BC, unknown
+	u8 _2BC[0x2C4 - 0x2BC];        // _2BC, unknown
+	f32 mCurrentHealth;            // _2C4
+	f32 mMaxHealth;                // _2C8
+	u8 _2CC[0x2D8 - 0x2CC];        // _2CC, unknown
+	f32 _2D8;                      // _2D8
+	u8 _2DC[0x2E4 - 0x2DC];        // _2DC, unknown
+	u32 _2E4;                      // _2E4, maybe int?
+	u32 _2E8;                      // _2E8, maybe int?
+	u32 _2EC;                      // _2EC, maybe int?
+	u8 _2F0[0x300 - 0x2F0];        // _2F0, unknown
 	Vector3f _300;                 // _300
 	Vector3f _30C;                 // _30C
 	u8 _318[0x4];                  // _318, unknown

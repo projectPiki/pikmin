@@ -1,4 +1,4 @@
-#include "types.h"
+#include "King.h"
 
 /*
  * --INFO--
@@ -532,7 +532,8 @@ KingProp::KingProp()
  * Address:	8016BC60
  * Size:	000148
  */
-King::King(CreatureProp*)
+King::King(CreatureProp* props)
+    : Boss(props)
 {
 	/*
 	.loc_0x0:
@@ -634,7 +635,7 @@ King::King(CreatureProp*)
  * Address:	8016BDA8
  * Size:	000008
  */
-void King::getiMass()
+f32 King::getiMass()
 {
 	/*
 	.loc_0x0:
@@ -1082,7 +1083,7 @@ void KingDrawer::draw(Graphics&)
  * Address:	8016C250
  * Size:	000008
  */
-void King::isBossBgm()
+bool King::isBossBgm()
 {
 	/*
 	.loc_0x0:
@@ -1120,19 +1121,5 @@ void KingProp::read(RandomAccessStream&)
 	  addi      r1, r1, 0x18
 	  mtlr      r0
 	  blr
-	*/
-}
-
-/*
- * --INFO--
- * Address:	8016C2A8
- * Size:	000008
- */
-void KingProp::@492 @read(RandomAccessStream&)
-{
-	/*
-	.loc_0x0:
-	  subi      r3, r3, 0x1EC
-	  b         -0x54
 	*/
 }
