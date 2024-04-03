@@ -108,7 +108,11 @@ struct KingProp : public BossProp, public CoreNode {
 
 	KingProp();
 
-	virtual void read(RandomAccessStream&); // _08
+	virtual void read(RandomAccessStream& input){
+		mCreatureProps.Parameters::read(input);
+		mBossProps.Parameters::read(input);
+		mKingProps.Parameters::read(input);
+		}; // _08
 
 	// _54       = VTBL 1
 	// _1EC      = VTBL 2
@@ -146,7 +150,7 @@ struct King : public Boss {
 	virtual void doAnimation();                // _108
 	virtual void doKill();                     // _10C
 	virtual void exitCourse();                 // _110
-	virtual bool isBossBgm();                  // _114
+	virtual bool isBossBgm(){return mIsBossBgm;};                  // _114
 	virtual void bombDamageCounter(CollPart*); // _11C
 	virtual void drawShape(Graphics&);         // _120
 
@@ -157,6 +161,7 @@ struct King : public Boss {
 	// _00      = VTBL
 	// _00-_3B8 = Boss?
 	// TODO: members
+	bool mIsBossBgm; // _3B8
 };
 
 /**

@@ -1,4 +1,7 @@
 #include "types.h"
+#include "DynCreature.h"
+#include "DynParticle.h"
+#include "Matrix4f.h"
 
 /*
  * --INFO--
@@ -101,15 +104,9 @@ DynParticle::DynParticle()
  * Address:	800928E0
  * Size:	000010
  */
-void DynParticle::getSize()
+f32 DynParticle::getSize()
 {
-	/*
-	.loc_0x0:
-	  lfs       f1, -0x7464(r2)
-	  lfs       f0, 0x90(r3)
-	  fmuls     f1, f1, f0
-	  blr
-	*/
+	return _90 * 3.0f;
 }
 
 /*
@@ -295,6 +292,7 @@ void DynParticleHeap::releaseOne(DynParticle*)
  * Size:	0000F4
  */
 DynCreature::DynCreature()
+: Creature(nullptr) // temporary for compiler happiness- probably not nullptr
 {
 	/*
 	.loc_0x0:
@@ -367,18 +365,11 @@ DynCreature::DynCreature()
  * Address:	80092BE0
  * Size:	00001C
  */
-void DynCreature::enablePickOffset(f32)
+void DynCreature::enablePickOffset(f32 offset)
 {
-	/*
-	.loc_0x0:
-	  lwz       r0, 0xC8(r3)
-	  fneg      f0, f1
-	  ori       r0, r0, 0x100
-	  stw       r0, 0xC8(r3)
-	  stfs      f1, 0xD0(r3)
-	  stfs      f0, 0x2D0(r3)
-	  blr
-	*/
+	SET_FLAG(mCreatureFlags, 0x100);
+	_D0 = offset;
+	_2D0 = -offset;
 }
 
 /*
@@ -388,15 +379,8 @@ void DynCreature::enablePickOffset(f32)
  */
 void DynCreature::disablePickOffset()
 {
-	/*
-	.loc_0x0:
-	  lwz       r0, 0xC8(r3)
-	  rlwinm    r0,r0,0,24,22
-	  stw       r0, 0xC8(r3)
-	  lfs       f0, -0x7470(r2)
-	  stfs      f0, 0x2D0(r3)
-	  blr
-	*/
+	RESET_FLAG(mCreatureFlags, 0x100);
+	_2D0 = 0.0f;
 }
 
 /*
@@ -1834,42 +1818,6 @@ void DynCreature::doKill()
  */
 void DynCreature::simulate2(f32)
 {
+	mProps->read(*reinterpret_cast<RandomAccessStream*>(&this)); // solely to force CreatureProp::read to generate here. remove if unnecessary. -EpochFlame
 	// UNUSED FUNCTION
-}
-
-/*
- * --INFO--
- * Address:	80093F74
- * Size:	000020
- */
-void CreatureProp::read(RandomAccessStream&)
-{
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  bl        -0x353E8
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
-}
-
-/*
- * --INFO--
- * Address:	80093F94
- * Size:	000014
- */
-void DynParticle::isFree()
-{
-	/*
-	.loc_0x0:
-	  lwz       r0, 0x48(r3)
-	  neg       r0, r0
-	  cntlzw    r0, r0
-	  rlwinm    r3,r0,27,5,31
-	  blr
-	*/
 }

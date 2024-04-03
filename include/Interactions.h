@@ -1,5 +1,5 @@
-#ifndef _INTERACTION_H
-#define _INTERACTION_H
+#ifndef _INTERACTIONS_H
+#define _INTERACTIONS_H
 
 #include "types.h"
 
