@@ -939,7 +939,7 @@ void RouteGroup::refresh(Graphics &, EditNode *)
  * --INFO--
  * Address:	8003711C
  * Size:	00001C
- * Weak Function
+ * Weak Function, should live in Vector3f.h
  */
 Vector3f::Vector3f(f32 const& _x, f32 const& _y, f32 const& _z)
     : x(_x)

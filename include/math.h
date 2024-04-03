@@ -3,6 +3,7 @@
 
 #include "types.h"
 
+#define SQUARE(v)                      ((v) * (v))
 #define LONG_TAU   6.2831854820251465
 #define TAU        6.2831855f
 #define PI         3.1415927f

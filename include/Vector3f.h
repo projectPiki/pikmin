@@ -12,8 +12,13 @@
  */
 struct Vector3f {
 	Vector3f() { x = y = z = 0.0f; } // yes it's this way around, every vector initialised in a ctor is "in reverse"
-	Vector3f(const f32& x, const f32& y, const f32& z);
-
+	Vector3f(f32 const& _x, f32 const& _y, f32 const& _z)
+    : x(_x)
+    , y(_y)
+    , z(_z)
+{
+}
+	inline Vector3f operator*(const Vector3f& other) const { return Vector3f(x * other.x, y * other.y, z * other.z); }
 	void rotate(struct Matrix4f&);
 	void rotateTo(Matrix4f&, Vector3f&);
 	void multMatrix(Matrix4f&);
@@ -47,7 +52,12 @@ struct Vector3f {
 		y = pY;
 		z = pZ;
 	}
-
+	inline void operator*=(const f32 other)
+	{
+		this->x *= other;
+		this->y *= other;
+		this->z *= other;
+	}
 	inline void set(const f32 val) { x = y = z = val; }
 
 	void div(f32); // weak
@@ -66,12 +76,22 @@ struct Vector3f {
 	f32 x, y, z; // _00, _04, _08
 };
 
+	inline Vector3f cross(Vector3f& vec1, Vector3f& vec2)
+	{
+		Vector3f outVec;
+		outVec.x = vec1.y * vec2.z - vec1.z * vec2.y;
+		outVec.y = vec1.z * vec2.x - vec1.x * vec2.z;
+		outVec.z = vec1.x * vec2.y - vec1.y * vec2.x;
+		return outVec;
+	}
+
 struct Vector2f {
 	Vector2f() { }
 	Vector2f(const f32& x, const f32& y);
 	f32 x, y; // _00, _04
 };
-
+inline Vector3f operator-(const Vector3f& a, const Vector3f& b) { return Vector3f(a.x - b.x, a.y - b.y, a.z - b.z); }
+inline Vector3f operator+(const Vector3f& a, const Vector3f& b) { return Vector3f(a.x + b.x, a.y + b.y, a.z + b.z); }
 inline f32 Vector3f_diffX(Vector3f& a, Vector3f& b) { return a.getX() - b.getX(); }
 inline f32 Vector3f_diffY(Vector3f& a, Vector3f& b) { return a.getY() - b.getY(); }
 inline f32 Vector3f_diffZ(Vector3f& a, Vector3f& b) { return a.getZ() - b.getZ(); }

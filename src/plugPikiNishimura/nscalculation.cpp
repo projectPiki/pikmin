@@ -172,8 +172,57 @@ void calcMatrix3f(const Vector3f&, const Vector3f&, const Vector3f&, Matrix3f&)
  * Address:	8017C524
  * Size:	0002F8
  */
-void calcJointPos(const Vector3f&, const Vector3f&, f32, f32, Vector3f&, Vector3f&)
+/**
+ * Calculates the position of the middle joint and bottom joint based on the given parameters.
+ *
+ * @param topPosition The position of the top joint.
+ * @param bottomPosition The position of the bottom joint.
+ * @param topToMiddleDistance The distance between the top joint and the middle joint.
+ * @param middleToBottomDistance The distance between the middle joint and the bottom joint.
+ * @param middleJointPos [out] The calculated position of the middle joint.
+ * @param bottomJointPosition [out] The calculated position of the bottom joint.
+ */
+void calcJointPos(const Vector3f& topPosition, const Vector3f& bottomPosition, f32 topToMiddleDistance, f32 middleToBottomDistance,
+                  Vector3f& middleJointPos, Vector3f& bottomJointPosition)
 {
+	f32 distanceTopMiddle    = SQUARE(topToMiddleDistance);
+	f32 distanceMiddleBottom = SQUARE(middleToBottomDistance);
+
+	Vector3f targetXyz         = bottomPosition;
+	Vector3f topToTargetVector = bottomPosition - topPosition;
+
+	f32 distanceTopToTarget = topToTargetVector.squaredLength();
+	if (!(distanceTopToTarget < 0.000001f)) {
+		f32 factor = (0.5f / distanceTopToTarget) * (distanceTopToTarget + (distanceTopMiddle - distanceMiddleBottom));
+
+		Vector3f scaledTopToTarget(factor * topToTargetVector.x + topPosition.x, factor * topToTargetVector.y + topPosition.y,
+		                           factor * topToTargetVector.z + topPosition.z);
+
+		Vector3f offsetFromTop = scaledTopToTarget - topPosition;
+
+		f32 distanceAdjustment = distanceTopMiddle - SQUARE(offsetFromTop.x) - SQUARE(offsetFromTop.y) - SQUARE(offsetFromTop.z);
+
+		if (!(distanceAdjustment <= 0.0f)) {
+			Vector3f cross1 = cross(middleJointPos, topToTargetVector);
+			middleJointPos  = cross(cross1, topToTargetVector);
+
+			f32 outSqr = middleJointPos.squaredLength();
+			if (outSqr != 0.0f) {
+				f32 len               = sqrtf(distanceAdjustment / outSqr);
+				bottomJointPosition.x = len * middleJointPos.x + cross1.x;
+				bottomJointPosition.y = len * middleJointPos.y + cross1.y;
+				bottomJointPosition.z = len * middleJointPos.z + cross1.z;
+				return;
+			}
+		}
+	}
+
+	f32 dtm           = sqrtf(distanceTopMiddle);
+	f32 dmb           = sqrtf(distanceMiddleBottom);
+	f32 distanceRatio = dtm / (dtm + dmb);
+
+	bottomJointPosition = Vector3f(distanceRatio * targetXyz.x + topPosition.x, distanceRatio * targetXyz.y + topPosition.y,
+	                               distanceRatio * targetXyz.z + topPosition.z);
 	/*
 	.loc_0x0:
 	  stwu      r1, -0x68(r1)
