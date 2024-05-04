@@ -21,9 +21,9 @@
 struct TaiAction {
 	virtual void start(Teki&);           // _08
 	virtual void finish(Teki&);          // _0C
-	virtual void act(Teki&);             // _10
-	virtual void actByEvent(TekiEvent&); // _14
-	virtual void hasNextState();         // _18
+	virtual int act(Teki&);             // _10
+	virtual int actByEvent(TekiEvent&); // _14
+	virtual bool hasNextState();         // _18
 };
 
 #endif

@@ -20,7 +20,7 @@
  */
 struct TaiContinuousMotionAction : public TaiAction {
 	virtual void start(Teki&);         // _08
-	virtual void act(Teki&);           // _10
+	virtual int act(Teki&);           // _10
 	virtual void motionStarted(Teki&); // _1C
 };
 

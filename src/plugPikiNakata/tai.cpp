@@ -211,7 +211,7 @@ void TaiSerialAction::act(Teki&)
  * Address:	80126FD4
  * Size:	000008
  */
-u32 TaiAction::act(Teki&) { return 0x0; }
+int TaiAction::act(Teki&) { return 0; }
 
 /*
  * --INFO--
@@ -281,7 +281,7 @@ void TaiSerialAction::actByEvent(TekiEvent&)
  * Address:	80127090
  * Size:	000008
  */
-u32 TaiAction::actByEvent(TekiEvent&) { return 0x0; }
+int TaiAction::actByEvent(TekiEvent&) { return 0; }
 
 /*
  * --INFO--
@@ -498,7 +498,7 @@ void TaiState::act(Teki&)
  * Address:	801272D0
  * Size:	000020
  */
-void TaiAction::hasNextState()
+bool TaiAction::hasNextState()
 {
 	/*
 	.loc_0x0:
