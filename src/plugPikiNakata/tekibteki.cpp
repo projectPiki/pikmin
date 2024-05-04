@@ -3605,6 +3605,7 @@ void BTeki::spawnTeki(int)
  * --INFO--
  * Address:	80146990
  * Size:	00001C
+ * Should be weak.
  */
 void BTeki::getPersonalityF(int)
 {
@@ -3624,6 +3625,7 @@ void BTeki::getPersonalityF(int)
  * --INFO--
  * Address:	801469AC
  * Size:	00001C
+ * Should be weak.
  */
 void BTeki::getParameterF(int)
 {
@@ -3637,16 +3639,6 @@ void BTeki::getParameterF(int)
 	  lfsx      f1, r3, r0
 	  blr
 	*/
-}
-
-/*
- * --INFO--
- * Address:	80146A08
- * Size:	000008
- */
-f32 BTeki::getDirection()
-{
-return mDirection;
 }
 
 /*

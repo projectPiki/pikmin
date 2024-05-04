@@ -132,7 +132,7 @@ struct BTeki : public Creature, public PelletView, virtual public PaniAnimKeyLis
 	void outputSpawnPosition(Vector3f&);
 	void getPersonalityF(int);
 	void getParameterF(int);
-	f32 getDirection();
+	f32 getDirection() {return mDirection;} // weak function
 	void nearestAngleTarget(Creature*);
 	void cullableCenter(Creature&, f32);
 	void cullableSphere(Creature&, f32);
