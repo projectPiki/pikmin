@@ -1,6 +1,8 @@
 #ifndef _TAIMOTIONACTION_H
 #define _TAIMOTIONACTION_H
 
+#include "TaiAction.h"
+
 /**
  * .obj __vt__15TaiMotionAction, global
  * .4byte __RTTI__15TaiMotionAction

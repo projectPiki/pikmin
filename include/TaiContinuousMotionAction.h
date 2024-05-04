@@ -1,6 +1,8 @@
 #ifndef _TAICONTINUOUSMOTIONACTION_H
 #define _TAICONTINUOUSMOTIONACTION_H
 
+#include "TaiAction.h"
+
 /**
  * .obj __vt__25TaiContinuousMotionAction, global
  * .4byte __RTTI__25TaiContinuousMotionAction
@@ -12,14 +14,6 @@
  * .4byte hasNextState__9TaiActionFv
  * .4byte motionStarted__25TaiContinuousMotionActionFR4Teki
  */
-
-struct TaiAction {
-	virtual void start(Teki&);           // _08
-	virtual void finish(Teki&);          // _0C
-	virtual void act(Teki&);             // _10
-	virtual void actByEvent(TekiEvent&); // _14
-	virtual void hasNextState();         // _18
-};
 
 /**
  * @brief TODO
