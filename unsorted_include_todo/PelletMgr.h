@@ -1,6 +1,11 @@
 #ifndef _PELLETMGR_H
 #define _PELLETMGR_H
 
+#include "types.h"
+#include "Node.h"
+#include "Creature.h"
+#include "PelletView.h"
+
 /**
  * .obj __vt__9PelletMgr, global
  * .4byte __RTTI__9PelletMgr
@@ -58,7 +63,7 @@ struct MonoObjectMgr {
 	virtual void _44() = 0;                       // _44
 	virtual ~MonoObjectMgr();                     // _48 (weak)
 	virtual void update();                        // _4C (weak)
-	virtual void postUpdate(int, float);          // _50
+	virtual void postUpdate(int, f32);          // _50
 	virtual void _54() = 0;                       // _54
 	virtual void refresh(Graphics&);              // _58
 	virtual void drawShadow(Graphics&, Texture*); // _5C
@@ -70,35 +75,6 @@ struct MonoObjectMgr {
 	virtual void _74() = 0;                       // _74
 	virtual void birth();                         // _78
 	virtual void kill(Creature*);                 // _7C
-};
-
-struct ANode {
-	virtual void _08() = 0;        // _08
-	virtual void _0C() = 0;        // _0C
-	virtual void _10() = 0;        // _10
-	virtual void _14() = 0;        // _14
-	virtual void _18() = 0;        // _18
-	virtual void _1C() = 0;        // _1C
-	virtual void getAgeNodeType(); // _20 (weak)
-};
-
-struct Node {
-	virtual void _08() = 0;         // _08
-	virtual void _0C() = 0;         // _0C
-	virtual void _10() = 0;         // _10
-	virtual void _14() = 0;         // _14
-	virtual void _18() = 0;         // _18
-	virtual void _1C() = 0;         // _1C
-	virtual void _20() = 0;         // _20
-	virtual void _24() = 0;         // _24
-	virtual void _28() = 0;         // _28
-	virtual void draw(Graphics&);   // _2C
-	virtual void render(Graphics&); // _30
-	virtual void concat();          // _34 (weak)
-	virtual void concat(VQS&);      // _38 (weak)
-	virtual void concat(SRT&);      // _3C (weak)
-	virtual void concat(Matrix4f&); // _40 (weak)
-	virtual void getModelMatrix();  // _44 (weak)
 };
 
 struct ObjectMgr {
@@ -126,7 +102,7 @@ struct ObjectMgr {
 	virtual void _5C() = 0;                                 // _5C
 	virtual void _60() = 0;                                 // _60
 	virtual void _64() = 0;                                 // _64
-	virtual void findClosest(Vector3f&, float, Condition*); // _68
+	virtual void findClosest(Vector3f&, f32, Condition*); // _68
 	virtual void findClosest(Vector3f&, Condition*);        // _6C
 	virtual void _70() = 0;                                 // _70
 	virtual void killAll();                                 // _74
@@ -141,19 +117,19 @@ struct PelletMgr : public MonoObjectMgr, public ANode, public Node, public Objec
 	virtual void createObject();            // _80
 	virtual void read(RandomAccessStream&); // _84 (weak)
 
-	void getUfoIndexFromID(unsigned long);
+	void getUfoIndexFromID(u32);
 	void getUfoIDFromIndex(int);
-	void decomposeNumberPellet(unsigned long, int&, int&);
+	void decomposeNumberPellet(u32, int&, int&);
 	void registerUfoParts();
 	void newNumberPellet(int, int);
-	void newPellet(unsigned long, PelletView*);
-	void getShapeObject(unsigned long);
-	PelletMgr(MapMgr*);
-	void addUseList(unsigned long);
+	void newPellet(u32, PelletView*);
+	void getShapeObject(u32);
+	PelletMgr(struct MapMgr*);
+	void addUseList(u32);
 	void initShapeInfos();
-	void getConfigIndex(unsigned long);
+	void getConfigIndex(u32);
 	void getConfigFromIdx(int);
-	void getConfig(unsigned long);
+	void getConfig(u32);
 	void readConfigs(RandomAccessStream&);
 	void readAnimInfos(RandomAccessStream&);
 	void initTekiNakaParts();

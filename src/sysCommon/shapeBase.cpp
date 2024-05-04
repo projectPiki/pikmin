@@ -1,3 +1,4 @@
+#include "types.h"
 #include "Animator.h"
 #include "Joint.h"
 #include "Mesh.h"
@@ -5,7 +6,7 @@
 #include "Colour.h"
 #include "Material.h"
 #include "Collision.h"
-#include "TexAttr.h"
+#include "Texture.h"
 #include "Vector3f.h"
 #include "CmdStream.h"
 #include "string.h"

@@ -6,7 +6,7 @@
 #include "Stream.h"
 #include "Colour.h"
 #include "Material.h"
-#include "TexAttr.h"
+#include "Texture.h"
 #include "Collision.h"
 #include "Matrix4f.h"
 #include "GfxobjInfo.h"

@@ -36,3 +36,4 @@ tools/powerpc/
 objdiff.json
 __pycache__
 build.ninja
+newlines.py

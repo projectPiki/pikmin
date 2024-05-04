@@ -1,4 +1,5 @@
 #include "types.h"
+#include "Vector3f.h"
 
 /*
  * --INFO--
@@ -2157,7 +2158,7 @@ void ItemMgr::showInfo()
  * Address:	800F4368
  * Size:	000008
  */
-u32 ItemMgr::getPelletShapeObject(int, int) { return 0x0; }
+PelletShapeObject* ItemMgr::getPelletShapeObject(int, int) { return nullptr; }
 
 /*
  * --INFO--

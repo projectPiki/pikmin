@@ -28,6 +28,14 @@ struct TekiEvent {
 /**
  * @brief TODO
  */
+struct TekiShapeObject{
+	TekiShapeObject(Shape*);
+	u32 _00;
+};
+
+/**
+ * @brief TODO
+ */
 struct TekiMessage {
 };
 
@@ -181,7 +189,9 @@ struct BTeki : public Creature, public PelletView, virtual public PaniAnimKeyLis
 	// _00       = VTBL
 	// _000-_2B8 = Creature
 	// _2B8-_2C0 = PelletView
-	u8 _2C0[0x454 - 0x2C0]; // _2C0, TODO: work out members
+	u8 _2C0[0x31C - 0x2C0]; // _2C0, TODO: work out members
+	u32 _31C; // _31C
+	u8 _320[0x454 - 0x320]; // _320, TODO: work out members
 	                        // _454 = PaniAnimKeyListener
 };
 

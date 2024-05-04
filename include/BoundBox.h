@@ -2,6 +2,7 @@
 #define BOUNDBOX_H
 
 #include "Vector3f.h"
+#include "Graphics.h"
 
 struct BoundBox {
 	BoundBox(Vector3f& max, Vector3f& min)
@@ -69,6 +70,8 @@ struct BoundBox {
 		mMax.set(32768.0f, 32768.0f, 32768.0f);
 		mMin.set(-32768.0f, -32768.0f, -32768.0f);
 	}
+
+	void draw(Graphics&);
 
 	Vector3f mMax; // _00
 	Vector3f mMin; // _0C

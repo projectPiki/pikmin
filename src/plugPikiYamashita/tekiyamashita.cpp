@@ -1,4 +1,6 @@
 #include "types.h"
+#include "system.h"
+#include "TekiYamashita.h"
 
 /*
  * --INFO--
@@ -25,7 +27,7 @@ void _Print(char*, ...)
  * Address:	801A30F8
  * Size:	000180
  */
-void TekiYamashita::makeTekiParameters(TekiMgr*)
+void TekiYamashita::makeTekiParameters(TekiMgr* mgr)
 {
 	/*
 	.loc_0x0:
@@ -411,6 +413,7 @@ void TekiYamashita::makeTekis(TekiMgr*)
  * --INFO--
  * Address:	........
  * Size:	000488
+ * Likely follows the same structure of the previous two functions.
  */
 void TekiYamashita::makeDefaultAnimations()
 {

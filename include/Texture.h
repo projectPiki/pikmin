@@ -1,5 +1,5 @@
-#ifndef _TEXATTR_H
-#define _TEXATTR_H
+#ifndef _TEXTURE_H
+#define _TEXTURE_H
 
 #include "CoreNode.h"
 

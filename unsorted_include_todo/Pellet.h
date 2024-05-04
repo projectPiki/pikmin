@@ -1,6 +1,16 @@
 #ifndef _PELLET_H
 #define _PELLET_H
 
+#include "types.h"
+#include "Vector3f.h"
+#include "Matrix4f.h"
+#include "Graphics.h"
+#include "Stream.h"
+#include "Creature.h"
+#include "Interactions.h"
+#include "PelletConfig.h"
+#include "PaniAnimator.h"
+
 /**
  * .obj __vt__6Pellet, global
  * .4byte __RTTI__6Pellet
@@ -245,7 +255,7 @@ struct Pellet : public RefCountable, public Creature, public DualCreature {
 	virtual void ignoreAtari(Creature*);                 // _98
 	virtual void isFree();                               // _9C
 	virtual void stimulate(Interaction&);                // _A0
-	virtual void collisionCallback(CollEvent&);          // _A8
+	virtual void collisionCallback(struct CollEvent&);          // _A8
 	virtual void bounceCallback();                       // _AC
 	virtual void startWaterEffect();                     // _CC
 	virtual void finishWaterEffect();                    // _D0
@@ -265,7 +275,7 @@ struct Pellet : public RefCountable, public Creature, public DualCreature {
 	void startPick();
 	void finishPick();
 	void startGoal();
-	void doCarry(Creature*, Vector3f&, unsigned short);
+	void doCarry(Creature*, Vector3f&, u16);
 	void getBottomRadius();
 	void startStickTeki(Creature*, float);
 	void endStickTeki(Creature*);
@@ -280,7 +290,7 @@ struct Pellet : public RefCountable, public Creature, public DualCreature {
 	void setSlotFlag(int);
 	void resetSlotFlag(int);
 	void isSlotFlag(int);
-	void initPellet(PelletShapeObject*, PelletConfig*);
+	void initPellet(struct PelletShapeObject*, PelletConfig*);
 	void startCarryMotion(float);
 	void finishMotion();
 };

@@ -1,4 +1,6 @@
 #include "types.h"
+#include "teki.h"
+#include "Shape.h"
 
 /*
  * --INFO--
@@ -349,7 +351,7 @@ TekiShapeObject::TekiShapeObject(Shape*)
  * Address:	8014421C
  * Size:	000010
  */
-void BTeki::isPellet(int)
+bool BTeki::isPellet(int)
 {
 	/*
 	.loc_0x0:

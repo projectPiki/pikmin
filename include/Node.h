@@ -3,6 +3,9 @@
 
 #include "types.h"
 #include "CoreNode.h"
+#include "Graphics.h"
+#include "Matrix4f.h"
+#include "Animator.h"
 
 /**
  * @brief TODO
@@ -17,12 +20,12 @@ struct Node : public CoreNode {
 	}
 
 	virtual void update();                 // _10
-	virtual void draw(struct Graphics&);   // _14
+	virtual void draw(Graphics&);   // _14
 	virtual void render(Graphics&);        // _18
 	virtual void concat();                 // _1C (weak)
 	virtual void concat(struct VQS&);      // _20 (weak)
-	virtual void concat(struct SRT&);      // _24 (weak)
-	virtual void concat(struct Matrix4f&); // _28 (weak)
+	virtual void concat(SRT&);      // _24 (weak)
+	virtual void concat(Matrix4f&); // _28 (weak)
 	virtual void getModelMatrix();         // _2C (weak)
 
 	void init(char*);

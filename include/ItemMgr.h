@@ -5,6 +5,8 @@
 #include "AICreature.h"
 #include "ObjectMgr.h"
 
+struct PelletShapeObject;
+
 /**
  * @brief TODO.
  */
@@ -68,7 +70,7 @@ struct ItemMgr : public PolyObjectMgr {
 	void getNearestContainer(Vector3f&, f32);
 	void getUfo();
 	void addUseList(int);
-	void getPelletShapeObject(int, int);
+	PelletShapeObject* getPelletShapeObject(int, int);
 	void initialise();
 	void getContainerExitCount();
 

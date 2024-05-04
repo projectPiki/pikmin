@@ -1,6 +1,10 @@
 #ifndef _CREATUREINF_H
 #define _CREATUREINF_H
 
+#include "types.h"
+#include "Stream.h"
+
+struct Creature;
 /**
  * .obj __vt__11CreatureInf, global
  * .4byte __RTTI__11CreatureInf

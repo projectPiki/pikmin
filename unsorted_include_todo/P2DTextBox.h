@@ -1,6 +1,10 @@
 #ifndef _P2DTEXTBOX_H
 #define _P2DTEXTBOX_H
 
+#include "types.h"
+#include "Vector3f.h"
+#include "Matrix4f.h"
+
 /**
  * .obj __vt__10P2DTextBox, global
  * .4byte __RTTI__10P2DTextBox
@@ -46,7 +50,7 @@ struct P2DTextBox : public P2DPane {
 	virtual void drawSelf(int, int);            // _2C
 	virtual void drawSelf(int, int, Matrix4f*); // _30
 
-	P2DTextBox(P2DPane*, RandomAccessStream*, unsigned short);
+	P2DTextBox(P2DPane*, RandomAccessStream*, u16);
 };
 
 #endif
