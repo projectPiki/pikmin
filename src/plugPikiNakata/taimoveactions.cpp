@@ -28,8 +28,8 @@ void _Print(char*, ...)
  */
 int TaiMoveNestPositionAction::act(Teki& teki)
 {
-teki.moveNestPosition();
-return 0;
+	teki.moveNestPosition();
+	return 0;
 }
 
 /*
@@ -81,16 +81,8 @@ void TaiStopMoveAction::start(Teki& teki)
  */
 void TaiStartFlyingAction::start(Teki& teki)
 {
-	/*
-	.loc_0x0:
-	  lwz       r0, 0xC8(r4)
-	  ori       r0, r0, 0x40
-	  stw       r0, 0xC8(r4)
-	  lwz       r0, 0xC8(r4)
-	  rlwinm    r0,r0,0,31,29
-	  stw       r0, 0xC8(r4)
-	  blr
-	*/
+	teki.setCreatureFlag(CF_Unk7);
+	teki.resetCreatureFlag(CF_Unk2);
 }
 
 /*
@@ -100,16 +92,8 @@ void TaiStartFlyingAction::start(Teki& teki)
  */
 void TaiFinishFlyingAction::start(Teki& teki)
 {
-	/*
-	.loc_0x0:
-	  lwz       r0, 0xC8(r4)
-	  rlwinm    r0,r0,0,26,24
-	  stw       r0, 0xC8(r4)
-	  lwz       r0, 0xC8(r4)
-	  ori       r0, r0, 0x2
-	  stw       r0, 0xC8(r4)
-	  blr
-	*/
+	teki.resetCreatureFlag(CF_Unk7);
+	teki.setCreatureFlag(CF_Unk2);
 }
 
 /*
@@ -606,17 +590,7 @@ int TaiClampMinVelocityYAction::act(Teki& teki)
  */
 void TaiImpassableAction::start(Teki& teki)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  bl        0xC0
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
+	resetPosition(teki);
 }
 
 /*
@@ -1907,6 +1881,11 @@ int TaiWatchOffTerritoryCenterAction::act(Teki& teki)
  */
 void TaiTargetNestAction::start(Teki& teki)
 {
+	// float from pointer and vec3f?
+	// void* ptr = teki._2C8;
+	// teki._388.x = ptr->_10;
+	// teki._388.y = ptr->_04;
+	// teki._388.z = ptr->_08;
 	/*
 	.loc_0x0:
 	  lwz       r3, 0x2C8(r4)

@@ -6,8 +6,10 @@
 #include "ObjectMgr.h"
 #include "PaniAnimator.h"
 #include "PelletView.h"
+#include "Interactions.h"
 
 struct Teki;
+struct CollEvent;
 
 /**
  * @brief TODO
@@ -199,11 +201,15 @@ struct BTeki : public Creature, public PelletView, virtual public PaniAnimKeyLis
 	// _00       = VTBL
 	// _000-_2B8 = Creature
 	// _2B8-_2C0 = PelletView
-	u8 _2C0[0x31C - 0x2C4]; // _2C0, TODO: work out members
+	u8 _2C0[0x2C8 - 0x2C4]; // _2C0, TODO: work out members
+	void* _2C8; // _2C8
+	u8 _2CC[0x31C - 0x2CC]; // _2CC, TODO: work out members
 	u32 _31C; // _31C
-	u8 _320[0x3B4 - 0x320]; // _320, TODO: work out members
+	u8 _320[0x388 - 0x320]; // _320, TODO: work out members
+	Vector3f _388; // _388, possibly position
+	u8 _394[0x3B4 - 0x394]; // _394, TODO: work out members
 	f32 mSetMotionSpeed; // _3B4
-	u8 _3B8[0x454 - 0x3B8]; // _320, TODO: work out members
+	u8 _3B8[0x454 - 0x3B8]; // _3B8, TODO: work out members
 	                        // _454 = PaniAnimKeyListener
 };
 
