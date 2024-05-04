@@ -6,7 +6,6 @@
 #include "Stream.h"
 #include "Vector3f.h"
 #include "Matrix4f.h"
-#include "Stream.h"
 
 struct AnimMgr;
 struct BaseShape;

@@ -3,6 +3,7 @@
 
 #include "types.h"
 #include "Dolphin/mtx.h"
+#include "Joint.h"
 
 struct BaseShape;
 struct Camera;
@@ -17,10 +18,6 @@ struct PVWLightingInfo;
 struct Shape;
 struct ShapeDynMaterials;
 struct Texture;
-
-namespace Joint {
-struct MatPoly;
-} // namespace Joint
 
 /**
  * @brief TODO

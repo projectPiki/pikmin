@@ -64,13 +64,9 @@ void BTeki::viewStartTrembleMotion(f32)
  * Address:	80143FC0
  * Size:	000008
  */
-void BTeki::viewSetMotionSpeed(f32)
+void BTeki::viewSetMotionSpeed(f32 speed)
 {
-	/*
-	.loc_0x0:
-	  stfs      f1, 0x3B4(r3)
-	  blr
-	*/
+mSetMotionSpeed = speed;
 }
 
 /*
@@ -661,6 +657,7 @@ void BTeki::arrivedAt(f32, f32)
  * Size:	000398
  */
 BTeki::BTeki()
+: Creature(nullptr)
 {
 	/*
 	.loc_0x0:
@@ -1854,7 +1851,6 @@ void BTeki::doAI()
  */
 void BTeki::die()
 {
-	// Generated from stw r0, 0x31C(r3)
 	_31C = 1;
 }
 
@@ -2429,7 +2425,7 @@ void BTeki::stimulate(Interaction&)
  * Address:	80145AFC
  * Size:	00009C
  */
-void BTeki::getiMass()
+f32 BTeki::getiMass()
 {
 	/*
 	.loc_0x0:
@@ -3645,56 +3641,12 @@ void BTeki::getParameterF(int)
 
 /*
  * --INFO--
- * Address:	801469C8
- * Size:	000020
- */
-void NMathF::cos(f32)
-{
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  bl        0xD5180
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
-}
-
-/*
- * --INFO--
- * Address:	801469E8
- * Size:	000020
- */
-void NMathF::sin(f32)
-{
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  bl        0xD52F4
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
-}
-
-/*
- * --INFO--
  * Address:	80146A08
  * Size:	000008
  */
-void BTeki::getDirection()
+f32 BTeki::getDirection()
 {
-	/*
-	.loc_0x0:
-	  lfs       f1, 0xA0(r3)
-	  blr
-	*/
+return mDirection;
 }
 
 /*
@@ -6203,7 +6155,7 @@ void BTeki::collisionCallback(CollEvent&)
  * Address:	801486D4
  * Size:	00001C
  */
-void BTeki::ignoreAtari(Creature*)
+bool BTeki::ignoreAtari(Creature*)
 {
 	/*
 	.loc_0x0:
@@ -7528,7 +7480,7 @@ void BTeki::getFreeSlot()
  * Address:	801495E8
  * Size:	000140
  */
-void BTeki::isFreeCollPart(CollPart*)
+bool BTeki::isFreeCollPart(CollPart*)
 {
 	/*
 	.loc_0x0:
@@ -7903,7 +7855,7 @@ void BTeki::getPositionMapCode()
  * Address:	8014997C
  * Size:	00005C
  */
-void BTeki::inWaterTeki()
+bool BTeki::inWaterTeki()
 {
 	/*
 	.loc_0x0:
@@ -8152,21 +8104,4 @@ void BTeki::getCollisionSize()
 void BTeki::getCollisionCenter()
 {
 	// UNUSED FUNCTION
-}
-
-/*
- * --INFO--
- * Address:	80149BAC
- * Size:	000014
- */
-void BTeki::@1108 @4 @animationKeyUpdated(PaniAnimKeyEvent&)
-{
-	/*
-	.loc_0x0:
-	  li        r11, 0x4
-	  lwzx      r11, r3, r11
-	  add       r3, r3, r11
-	  subi      r3, r3, 0x454
-	  b         -0x49DC
-	*/
 }

@@ -1,4 +1,5 @@
 #include "types.h"
+#include "NakataMath.h"
 
 /*
  * --INFO--
@@ -271,7 +272,7 @@ void atan(f32, f32)
  * Address:	........
  * Size:	000058
  */
-void NMathF::remainder(f32, f32)
+f32 NMathF::remainder(f32, f32)
 {
 	// UNUSED FUNCTION
 }
@@ -281,7 +282,7 @@ void NMathF::remainder(f32, f32)
  * Address:	8011DE08
  * Size:	000058
  */
-void NMathF::atan2(f32, f32)
+f32 NMathF::atan2(f32, f32)
 {
 	/*
 	.loc_0x0:

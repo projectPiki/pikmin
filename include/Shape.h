@@ -10,13 +10,14 @@
 #include "Collision.h"
 #include "Matrix4f.h"
 #include "GfxobjInfo.h"
+#include "BoundBox.h"
+#include "Joint.h"
 
 template <typename A, typename B>
 struct IDelegate2;
 
 struct AnimContext;
 struct CmdStream;
-struct Joint;
 struct RouteGroup;
 struct VtxMatrix;
 struct Texture;

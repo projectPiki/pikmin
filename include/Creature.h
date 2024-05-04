@@ -186,7 +186,9 @@ struct Creature : public RefCountable, public EventTalker {
 	FastGrid mGrid;         // _40
 	u8 _58[0x6C - 0x58];    // _58, TODO: work out members
 	EObjType mObjType;      // _6C, object type
-	u8 _70[0xC8 - 0x70];    // _70, TODO: work out members
+	u8 _70[0xA0 - 0x70];    // _70, TODO: work out members
+	f32 mDirection;    // _A0
+	u8 _A4[0xC8 - 0xA4];    // _A4, TODO: work out members
 	u32 mCreatureFlags;     // _C8, bitflag
 	u32 _CC; // _CC
 	f32 _D0; // _D0

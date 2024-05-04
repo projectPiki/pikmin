@@ -132,7 +132,7 @@ struct BTeki : public Creature, public PelletView, virtual public PaniAnimKeyLis
 	void outputSpawnPosition(Vector3f&);
 	void getPersonalityF(int);
 	void getParameterF(int);
-	void getDirection();
+	f32 getDirection();
 	void nearestAngleTarget(Creature*);
 	void cullableCenter(Creature&, f32);
 	void cullableSphere(Creature&, f32);
@@ -185,13 +185,25 @@ struct BTeki : public Creature, public PelletView, virtual public PaniAnimKeyLis
 	void setParticleGeneratorDirection(int, Vector3f&);
 	void calcCollisionDistance(Creature&);
 	void getCollisionSize();
+	void setCorpsePartJoint(int, int); // unused
+	void outputDirectionPosition(Vector3f&, f32, f32); // unused
+	void jumpTo(Vector3f&, f32); // unused
+	void insideDirection(Vector3f&); // unused
+	void attackRangeNaviPiki(Interaction&, Condition&); // unused
+	void interactTeki(Interaction&, Condition&); // unused
+	void countTekis(Condition&); // unused
+	void getCameraAnimationMatrix(int); // unused
+	void outputWorldAnimationMatrix(Matrix4f&, int, Matrix4f&); // unused
+	void getCollisionCenter(); // unused
 
 	// _00       = VTBL
 	// _000-_2B8 = Creature
 	// _2B8-_2C0 = PelletView
-	u8 _2C0[0x31C - 0x2C0]; // _2C0, TODO: work out members
+	u8 _2C0[0x31C - 0x2C4]; // _2C0, TODO: work out members
 	u32 _31C; // _31C
-	u8 _320[0x454 - 0x320]; // _320, TODO: work out members
+	u8 _320[0x3B4 - 0x320]; // _320, TODO: work out members
+	f32 mSetMotionSpeed; // _3B4
+	u8 _3B8[0x454 - 0x3B8]; // _320, TODO: work out members
 	                        // _454 = PaniAnimKeyListener
 };
 

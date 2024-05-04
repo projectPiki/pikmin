@@ -4,6 +4,7 @@
 #include "CoreNode.h"
 
 struct Texture;
+struct TexImg;
 
 /**
  * @brief TODO
