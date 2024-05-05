@@ -105,8 +105,8 @@ struct DynCreature : public Creature {
 	void simulate2(f32);
 
 	DynCreature();
-	u8 _2B8[0x2D0-0x2B8]; // _2B8
-	f32 _2D0; // _2D0
+	u8 _2B8[0x2D0 - 0x2B8]; // _2B8
+	f32 _2D0;               // _2D0
 };
 
 #endif

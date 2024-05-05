@@ -1,4 +1,9 @@
-#include "types.h"
+#include "TekiStrategy.h"
+#include "teki.h"
+#include "sysNew.h"
+
+static char file[] = __FILE__;
+static char name[] = "tekistrategy";
 
 /*
  * --INFO--
@@ -25,16 +30,7 @@ void _Print(char*, ...)
  * Address:	8014D1A4
  * Size:	000010
  */
-TekiStrategy::TekiStrategy()
-{
-	/*
-	.loc_0x0:
-	  lis       r4, 0x802D
-	  subi      r0, r4, 0x191C
-	  stw       r0, 0x0(r3)
-	  blr
-	*/
-}
+TekiStrategy::TekiStrategy() { }
 
 /*
  * --INFO--
@@ -69,75 +65,21 @@ void TekiStrategy::createEffect(Teki&, int) { }
  * Address:	8014D1C4
  * Size:	000034
  */
-void TekiStrategy::draw(Teki&, Graphics&)
-{
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  mr        r3, r4
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  lwz       r12, 0x0(r4)
-	  mr        r4, r5
-	  lwz       r12, 0x1AC(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
-}
+void TekiStrategy::draw(Teki& teki, Graphics& gfx) { teki.drawDefault(gfx); }
 
 /*
  * --INFO--
  * Address:	8014D1F8
  * Size:	000034
  */
-void TekiStrategy::drawDebugInfo(Teki&, Graphics&)
-{
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  mr        r3, r4
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  lwz       r12, 0x0(r4)
-	  mr        r4, r5
-	  lwz       r12, 0x1B8(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
-}
+void TekiStrategy::drawDebugInfo(Teki& teki, Graphics& gfx) { teki.drawTekiDebugInfoDefault(gfx); }
 
 /*
  * --INFO--
  * Address:	8014D22C
  * Size:	000034
  */
-void TekiStrategy::interact(Teki&, TekiInteractionKey&)
-{
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  mr        r3, r4
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  lwz       r12, 0x0(r4)
-	  mr        r4, r5
-	  lwz       r12, 0x1A8(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
-}
+void TekiStrategy::interact(Teki& teki, TekiInteractionKey& key) { teki.interactDefault(key); }
 
 /*
  * --INFO--
@@ -151,40 +93,11 @@ void TekiStrategy::spawnCorpseParts(Teki&) { }
  * Address:	8014D264
  * Size:	00006C
  */
-TekiStrategyTable::TekiStrategyTable(int)
+TekiStrategyTable::TekiStrategyTable(int count)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x20(r1)
-	  stw       r31, 0x1C(r1)
-	  mr        r31, r3
-	  stw       r4, 0x0(r3)
-	  lwz       r0, 0x0(r3)
-	  rlwinm    r3,r0,2,0,29
-	  bl        -0x106280
-	  li        r5, 0
-	  stw       r3, 0x4(r31)
-	  addi      r4, r5, 0
-	  li        r6, 0
-	  b         .loc_0x48
-
-	.loc_0x38:
-	  lwz       r3, 0x4(r31)
-	  addi      r6, r6, 0x1
-	  stwx      r4, r3, r5
-	  addi      r5, r5, 0x4
-
-	.loc_0x48:
-	  lwz       r0, 0x0(r31)
-	  cmpw      r6, r0
-	  blt+      .loc_0x38
-	  mr        r3, r31
-	  lwz       r0, 0x24(r1)
-	  lwz       r31, 0x1C(r1)
-	  addi      r1, r1, 0x20
-	  mtlr      r0
-	  blr
-	*/
+	mCount = count;
+	_04    = new u32[mCount];
+	for (int i = 0; i < mCount; i++) {
+		_04[i] = 0;
+	}
 }

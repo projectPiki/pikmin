@@ -36,9 +36,7 @@ struct CreatureProp {
 	// _54 = VTBL
 	Properties mCreatureProps; // _00
 
-	virtual void read(struct RandomAccessStream& input){
-		mCreatureProps.Parameters::read(input);
-	}; // _08
+	virtual void read(struct RandomAccessStream& input) { mCreatureProps.Parameters::read(input); }; // _08
 };
 
 #endif

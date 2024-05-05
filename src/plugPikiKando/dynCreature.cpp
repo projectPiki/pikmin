@@ -104,10 +104,7 @@ DynParticle::DynParticle()
  * Address:	800928E0
  * Size:	000010
  */
-f32 DynParticle::getSize()
-{
-	return _90 * 3.0f;
-}
+f32 DynParticle::getSize() { return _90 * 3.0f; }
 
 /*
  * --INFO--
@@ -292,7 +289,7 @@ void DynParticleHeap::releaseOne(DynParticle*)
  * Size:	0000F4
  */
 DynCreature::DynCreature()
-: Creature(nullptr) // temporary for compiler happiness- probably not nullptr
+    : Creature(nullptr) // temporary for compiler happiness- probably not nullptr
 {
 	/*
 	.loc_0x0:
@@ -368,7 +365,7 @@ DynCreature::DynCreature()
 void DynCreature::enablePickOffset(f32 offset)
 {
 	SET_FLAG(mCreatureFlags, 0x100);
-	_D0 = offset;
+	_D0  = offset;
 	_2D0 = -offset;
 }
 
@@ -1818,6 +1815,6 @@ void DynCreature::doKill()
  */
 void DynCreature::simulate2(f32)
 {
-	mProps->read(*reinterpret_cast<RandomAccessStream*>(&this)); // solely to force CreatureProp::read to generate here. remove if unnecessary. -EpochFlame
-	// UNUSED FUNCTION
+	mProps->read(*reinterpret_cast<RandomAccessStream*>(&this)); // solely to force CreatureProp::read to generate here. remove if
+	                                                             // unnecessary. -EpochFlame UNUSED FUNCTION
 }

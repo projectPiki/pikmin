@@ -20,10 +20,10 @@
  * @brief TODO
  */
 struct DynParticle : public CoreNode {
-	virtual bool isFree(){return !-mIsFree;};           // _10
-	virtual f32 getSize();          // _14
-	virtual void refresh(struct Graphics&); // _18
-	virtual void doKill();           // _1C
+	virtual bool isFree() { return !-mIsFree; }; // _10
+	virtual f32 getSize();                       // _14
+	virtual void refresh(struct Graphics&);      // _18
+	virtual void doKill();                       // _1C
 
 	DynParticle();
 	u8 _14[0x48 - 0x14];
@@ -32,7 +32,7 @@ struct DynParticle : public CoreNode {
 	f32 _90; // _90
 };
 
-struct DynParticleHeap{
+struct DynParticleHeap {
 	void getFreeOne();
 	void releaseOne(DynParticle*);
 	DynParticleHeap(int);

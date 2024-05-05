@@ -362,7 +362,7 @@ LIBS = [
             ["plugPikiNakata/tekinteki", False],
             ["plugPikiNakata/tekiparameters", False],
             ["plugPikiNakata/tekipersonality", False],
-            ["plugPikiNakata/tekistrategy", False],
+            ["plugPikiNakata/tekistrategy", True],
         ],
     },
     {

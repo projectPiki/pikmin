@@ -1,5 +1,5 @@
-#include "types.h"
 #include "TaiMoveActions.h"
+#include "teki.h"
 
 /*
  * --INFO--
@@ -26,10 +26,10 @@ void _Print(char*, ...)
  * Address:	80134560
  * Size:	000028
  */
-int TaiMoveNestPositionAction::act(Teki& teki)
+bool TaiMoveNestPositionAction::act(Teki& teki)
 {
 	teki.moveNestPosition();
-	return 0;
+	return false;
 }
 
 /*
@@ -101,7 +101,7 @@ void TaiFinishFlyingAction::start(Teki& teki)
  * Address:	80134638
  * Size:	000080
  */
-int TaiMakeVelocityDirectionAction::act(Teki& teki)
+bool TaiMakeVelocityDirectionAction::act(Teki& teki)
 {
 	/*
 	.loc_0x0:
@@ -147,7 +147,7 @@ int TaiMakeVelocityDirectionAction::act(Teki& teki)
  * Address:	801346B8
  * Size:	000080
  */
-int TaiMakeAccelerationDirectionAction::act(Teki& teki)
+bool TaiMakeAccelerationDirectionAction::act(Teki& teki)
 {
 	/*
 	.loc_0x0:
@@ -193,7 +193,7 @@ int TaiMakeAccelerationDirectionAction::act(Teki& teki)
  * Address:	80134738
  * Size:	0000D0
  */
-int TaiMakingNextVelocityAction::act(Teki& teki)
+bool TaiMakingNextVelocityAction::act(Teki& teki)
 {
 	/*
 	.loc_0x0:
@@ -257,7 +257,7 @@ int TaiMakingNextVelocityAction::act(Teki& teki)
  * Address:	80134808
  * Size:	0000D0
  */
-int TaiMakingNextDriveAction::act(Teki& teki)
+bool TaiMakingNextDriveAction::act(Teki& teki)
 {
 	/*
 	.loc_0x0:
@@ -321,7 +321,7 @@ int TaiMakingNextDriveAction::act(Teki& teki)
  * Address:	801348D8
  * Size:	000034
  */
-int TaiAccelerationAction::act(Teki& teki)
+bool TaiAccelerationAction::act(Teki& teki)
 {
 	/*
 	.loc_0x0:
@@ -346,7 +346,7 @@ int TaiAccelerationAction::act(Teki& teki)
  * Address:	8013490C
  * Size:	000034
  */
-int TaiParabolaAction::act(Teki& teki)
+bool TaiParabolaAction::act(Teki& teki)
 {
 	/*
 	.loc_0x0:
@@ -371,7 +371,7 @@ int TaiParabolaAction::act(Teki& teki)
  * Address:	80134940
  * Size:	000034
  */
-int TaiCircleMoveAction::act(Teki& teki)
+bool TaiCircleMoveAction::act(Teki& teki)
 {
 	/*
 	.loc_0x0:
@@ -396,7 +396,7 @@ int TaiCircleMoveAction::act(Teki& teki)
  * Address:	80134974
  * Size:	000034
  */
-int TaiHorizontalSinWaveAction::act(Teki& teki)
+bool TaiHorizontalSinWaveAction::act(Teki& teki)
 {
 	/*
 	.loc_0x0:
@@ -421,7 +421,7 @@ int TaiHorizontalSinWaveAction::act(Teki& teki)
  * Address:	801349A8
  * Size:	0000A8
  */
-int TaiClampMaxHeightAction::act(Teki& teki)
+bool TaiClampMaxHeightAction::act(Teki& teki)
 {
 	/*
 	.loc_0x0:
@@ -479,7 +479,7 @@ int TaiClampMaxHeightAction::act(Teki& teki)
  * Address:	80134A50
  * Size:	0000A8
  */
-int TaiClampMinHeightAction::act(Teki& teki)
+bool TaiClampMinHeightAction::act(Teki& teki)
 {
 	/*
 	.loc_0x0:
@@ -537,7 +537,7 @@ int TaiClampMinHeightAction::act(Teki& teki)
  * Address:	80134AF8
  * Size:	00008C
  */
-int TaiClampMinVelocityYAction::act(Teki& teki)
+bool TaiClampMinVelocityYAction::act(Teki& teki)
 {
 	/*
 	.loc_0x0:
@@ -588,17 +588,14 @@ int TaiClampMinVelocityYAction::act(Teki& teki)
  * Address:	80134B84
  * Size:	000020
  */
-void TaiImpassableAction::start(Teki& teki)
-{
-	resetPosition(teki);
-}
+void TaiImpassableAction::start(Teki& teki) { resetPosition(teki); }
 
 /*
  * --INFO--
  * Address:	80134BA4
  * Size:	0000AC
  */
-int TaiImpassableAction::act(Teki& teki)
+bool TaiImpassableAction::act(Teki& teki)
 {
 	/*
 	.loc_0x0:
@@ -721,7 +718,7 @@ void TaiRandomWanderingRouteAction::finish(Teki& teki) { }
  * Address:	80134CC8
  * Size:	00013C
  */
-int TaiRandomWanderingRouteAction::act(Teki& teki)
+bool TaiRandomWanderingRouteAction::act(Teki& teki)
 {
 	/*
 	.loc_0x0:
@@ -870,7 +867,7 @@ void TaiRandomWanderingRouteAction::makeTargetPosition(Teki& teki)
  * Address:	80134E74
  * Size:	000088
  */
-int TaiTracingAction::act(Teki& teki)
+bool TaiTracingAction::act(Teki& teki)
 {
 	/*
 	.loc_0x0:
@@ -929,7 +926,7 @@ void TaiGoingHomeAction::finish(Teki& teki) { }
  * Address:	80134F00
  * Size:	000078
  */
-int TaiGoingHomeAction::act(Teki& teki)
+bool TaiGoingHomeAction::act(Teki& teki)
 {
 	/*
 	.loc_0x0:
@@ -975,7 +972,7 @@ int TaiGoingHomeAction::act(Teki& teki)
  * Address:	80134F78
  * Size:	000044
  */
-int TaiDirectTurnAction::act(Teki& teki)
+bool TaiDirectTurnAction::act(Teki& teki)
 {
 	/*
 	.loc_0x0:
@@ -1008,7 +1005,7 @@ int TaiDirectTurnAction::act(Teki& teki)
  * Address:	80134FBC
  * Size:	00014C
  */
-int TaiTurningAction::act(Teki& teki)
+bool TaiTurningAction::act(Teki& teki)
 {
 	/*
 	.loc_0x0:
@@ -1113,7 +1110,7 @@ int TaiTurningAction::act(Teki& teki)
  * Address:	80135108
  * Size:	00015C
  */
-int TaiTurningAwayAction::act(Teki& teki)
+bool TaiTurningAwayAction::act(Teki& teki)
 {
 	/*
 	.loc_0x0:
@@ -1222,7 +1219,7 @@ int TaiTurningAwayAction::act(Teki& teki)
  * Address:	80135264
  * Size:	000194
  */
-int TaiTraceTurningAction::act(Teki& teki)
+bool TaiTraceTurningAction::act(Teki& teki)
 {
 	/*
 	.loc_0x0:
@@ -1347,7 +1344,7 @@ int TaiTraceTurningAction::act(Teki& teki)
  * Address:	801353F8
  * Size:	0000D0
  */
-int TaiOutOfTraceAngleAction::act(Teki& teki)
+bool TaiOutOfTraceAngleAction::act(Teki& teki)
 {
 	/*
 	.loc_0x0:
@@ -1419,7 +1416,7 @@ int TaiOutOfTraceAngleAction::act(Teki& teki)
  * Address:	801354C8
  * Size:	000130
  */
-int TaiTurningToTargetPositionAction::act(Teki& teki)
+bool TaiTurningToTargetPositionAction::act(Teki& teki)
 {
 	/*
 	.loc_0x0:
@@ -1515,7 +1512,7 @@ int TaiTurningToTargetPositionAction::act(Teki& teki)
  * Address:	801355F8
  * Size:	00002C
  */
-int TaiRotatingAction::act(Teki& teki)
+bool TaiRotatingAction::act(Teki& teki)
 {
 	/*
 	.loc_0x0:
@@ -1538,7 +1535,7 @@ int TaiRotatingAction::act(Teki& teki)
  * Address:	80135624
  * Size:	0000AC
  */
-int TaiRunningAwayToTargetDirectionAction::act(Teki& teki)
+bool TaiRunningAwayToTargetDirectionAction::act(Teki& teki)
 {
 	/*
 	.loc_0x0:
@@ -1597,7 +1594,7 @@ int TaiRunningAwayToTargetDirectionAction::act(Teki& teki)
  * Address:	801356D0
  * Size:	00036C
  */
-int TaiRunningAwayAction::act(Teki& teki)
+bool TaiRunningAwayAction::act(Teki& teki)
 {
 	/*
 	.loc_0x0:
@@ -1850,7 +1847,7 @@ int TaiRunningAwayAction::act(Teki& teki)
  * Address:	80135A3C
  * Size:	000044
  */
-int TaiWatchOffTerritoryCenterAction::act(Teki& teki)
+bool TaiWatchOffTerritoryCenterAction::act(Teki& teki)
 {
 	/*
 	.loc_0x0:
@@ -1904,7 +1901,7 @@ void TaiTargetNestAction::start(Teki& teki)
  * Address:	80135AA0
  * Size:	000180
  */
-int TaiHeadOnCollisionAvoidanceAction::actByEvent(TekiEvent&)
+bool TaiHeadOnCollisionAvoidanceAction::actByEvent(TekiEvent&)
 {
 	/*
 	.loc_0x0:

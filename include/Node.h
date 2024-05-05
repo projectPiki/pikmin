@@ -19,14 +19,14 @@ struct Node : public CoreNode {
 		init("<Node>");
 	}
 
-	virtual void update();                 // _10
-	virtual void draw(Graphics&);   // _14
-	virtual void render(Graphics&);        // _18
-	virtual void concat();                 // _1C (weak)
-	virtual void concat(struct VQS&);      // _20 (weak)
-	virtual void concat(SRT&);      // _24 (weak)
-	virtual void concat(Matrix4f&); // _28 (weak)
-	virtual void getModelMatrix();         // _2C (weak)
+	virtual void update();            // _10
+	virtual void draw(Graphics&);     // _14
+	virtual void render(Graphics&);   // _18
+	virtual void concat();            // _1C (weak)
+	virtual void concat(struct VQS&); // _20 (weak)
+	virtual void concat(SRT&);        // _24 (weak)
+	virtual void concat(Matrix4f&);   // _28 (weak)
+	virtual void getModelMatrix();    // _2C (weak)
 
 	void init(char*);
 

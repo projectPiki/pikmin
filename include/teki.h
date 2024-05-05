@@ -30,7 +30,7 @@ struct TekiEvent {
 /**
  * @brief TODO
  */
-struct TekiShapeObject{
+struct TekiShapeObject {
 	TekiShapeObject(Shape*);
 	u32 _00;
 };
@@ -134,7 +134,7 @@ struct BTeki : public Creature, public PelletView, virtual public PaniAnimKeyLis
 	void outputSpawnPosition(Vector3f&);
 	void getPersonalityF(int);
 	void getParameterF(int);
-	f32 getDirection() {return mDirection;} // weak function
+	f32 getDirection() { return mDirection; } // weak function
 	void nearestAngleTarget(Creature*);
 	void cullableCenter(Creature&, f32);
 	void cullableSphere(Creature&, f32);
@@ -187,28 +187,33 @@ struct BTeki : public Creature, public PelletView, virtual public PaniAnimKeyLis
 	void setParticleGeneratorDirection(int, Vector3f&);
 	void calcCollisionDistance(Creature&);
 	void getCollisionSize();
-	void setCorpsePartJoint(int, int); // unused
-	void outputDirectionPosition(Vector3f&, f32, f32); // unused
-	void jumpTo(Vector3f&, f32); // unused
-	void insideDirection(Vector3f&); // unused
-	void attackRangeNaviPiki(Interaction&, Condition&); // unused
-	void interactTeki(Interaction&, Condition&); // unused
-	void countTekis(Condition&); // unused
-	void getCameraAnimationMatrix(int); // unused
+	void setCorpsePartJoint(int, int);                          // unused
+	void outputDirectionPosition(Vector3f&, f32, f32);          // unused
+	void jumpTo(Vector3f&, f32);                                // unused
+	void insideDirection(Vector3f&);                            // unused
+	void attackRangeNaviPiki(Interaction&, Condition&);         // unused
+	void interactTeki(Interaction&, Condition&);                // unused
+	void countTekis(Condition&);                                // unused
+	void getCameraAnimationMatrix(int);                         // unused
 	void outputWorldAnimationMatrix(Matrix4f&, int, Matrix4f&); // unused
-	void getCollisionCenter(); // unused
+	void getCollisionCenter();                                  // unused
 
 	// _00       = VTBL
 	// _000-_2B8 = Creature
 	// _2B8-_2C0 = PelletView
 	u8 _2C0[0x2C8 - 0x2C4]; // _2C0, TODO: work out members
-	void* _2C8; // _2C8
+	void* _2C8;             // _2C8
 	u8 _2CC[0x31C - 0x2CC]; // _2CC, TODO: work out members
-	u32 _31C; // _31C
-	u8 _320[0x388 - 0x320]; // _320, TODO: work out members
-	Vector3f _388; // _388, possibly position
+	u32 _31C;               // _31C
+	u8 _320[0x324 - 0x320]; // _320, TODO: work out members
+	int _324;               // _324, related to states
+	bool _328;              // _328, related to states
+	u8 _329[0x334 - 0x329]; // _329, TODO: work out members
+	int _334;               // _334, related to actions
+	u8 _338[0x388 - 0x338]; // _338, TODO: work out members
+	Vector3f _388;          // _388, possibly position
 	u8 _394[0x3B4 - 0x394]; // _394, TODO: work out members
-	f32 mSetMotionSpeed; // _3B4
+	f32 mSetMotionSpeed;    // _3B4
 	u8 _3B8[0x454 - 0x3B8]; // _3B8, TODO: work out members
 	                        // _454 = PaniAnimKeyListener
 };

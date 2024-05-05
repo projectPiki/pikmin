@@ -64,10 +64,7 @@ void BTeki::viewStartTrembleMotion(f32)
  * Address:	80143FC0
  * Size:	000008
  */
-void BTeki::viewSetMotionSpeed(f32 speed)
-{
-mSetMotionSpeed = speed;
-}
+void BTeki::viewSetMotionSpeed(f32 speed) { mSetMotionSpeed = speed; }
 
 /*
  * --INFO--
@@ -657,7 +654,7 @@ void BTeki::arrivedAt(f32, f32)
  * Size:	000398
  */
 BTeki::BTeki()
-: Creature(nullptr)
+    : Creature(nullptr)
 {
 	/*
 	.loc_0x0:
@@ -1849,10 +1846,7 @@ void BTeki::doAI()
  * Address:	80145440
  * Size:	00000C
  */
-void BTeki::die()
-{
-	_31C = 1;
-}
+void BTeki::die() { _31C = 1; }
 
 /*
  * --INFO--

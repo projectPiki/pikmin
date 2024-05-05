@@ -82,7 +82,8 @@ struct BossProp : public CreatureProp {
 
 	BossProp();
 
-	virtual void read(RandomAccessStream& input){
+	virtual void read(RandomAccessStream& input)
+	{
 		mCreatureProps.Parameters::read(input);
 		mBossProps.Parameters::read(input);
 	}; // _08

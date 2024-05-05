@@ -3,7 +3,7 @@
 
 #include "types.h"
 namespace NMathF {
-    f32 cos(f32)
+f32 cos(f32)
 {
 	/*
 	.loc_0x0:
@@ -17,7 +17,7 @@ namespace NMathF {
 	  blr
 	*/
 }
-    f32 sin(f32)
+f32 sin(f32)
 {
 	/*
 	.loc_0x0:

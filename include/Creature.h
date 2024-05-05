@@ -187,11 +187,11 @@ struct Creature : public RefCountable, public EventTalker {
 	u8 _58[0x6C - 0x58];    // _58, TODO: work out members
 	EObjType mObjType;      // _6C, object type
 	u8 _70[0xA0 - 0x70];    // _70, TODO: work out members
-	f32 mDirection;    // _A0
+	f32 mDirection;         // _A0
 	u8 _A4[0xC8 - 0xA4];    // _A4, TODO: work out members
 	u32 mCreatureFlags;     // _C8, bitflag
-	u32 _CC; // _CC
-	f32 _D0; // _D0
+	u32 _CC;                // _CC
+	f32 _D0;                // _D0
 	u8 _D4[0x184 - 0xD4];   // _CC, TODO: work out members
 	Creature* mStickTarget; // _184, creature/object this creature is stuck to
 	u8 _188[0x220 - 0x188]; // _188, TODO: work out members

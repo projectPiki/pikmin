@@ -108,11 +108,12 @@ struct KingProp : public BossProp, public CoreNode {
 
 	KingProp();
 
-	virtual void read(RandomAccessStream& input){
+	virtual void read(RandomAccessStream& input)
+	{
 		mCreatureProps.Parameters::read(input);
 		mBossProps.Parameters::read(input);
 		mKingProps.Parameters::read(input);
-		}; // _08
+	}; // _08
 
 	// _54       = VTBL 1
 	// _1EC      = VTBL 2
@@ -142,17 +143,17 @@ struct KingBackProp : public BossProp, public CoreNode {
 struct King : public Boss {
 	King(CreatureProp*);
 
-	virtual void init(Vector3f&);              // _28
-	virtual f32 getiMass();                    // _38
-	virtual void update();                     // _E0
-	virtual void refresh(Graphics&);           // _EC
-	virtual void doAI();                       // _104
-	virtual void doAnimation();                // _108
-	virtual void doKill();                     // _10C
-	virtual void exitCourse();                 // _110
-	virtual bool isBossBgm(){return mIsBossBgm;};                  // _114
-	virtual void bombDamageCounter(CollPart*); // _11C
-	virtual void drawShape(Graphics&);         // _120
+	virtual void init(Vector3f&);                    // _28
+	virtual f32 getiMass();                          // _38
+	virtual void update();                           // _E0
+	virtual void refresh(Graphics&);                 // _EC
+	virtual void doAI();                             // _104
+	virtual void doAnimation();                      // _108
+	virtual void doKill();                           // _10C
+	virtual void exitCourse();                       // _110
+	virtual bool isBossBgm() { return mIsBossBgm; }; // _114
+	virtual void bombDamageCounter(CollPart*);       // _11C
+	virtual void drawShape(Graphics&);               // _120
 
 	void draw(Graphics&);
 

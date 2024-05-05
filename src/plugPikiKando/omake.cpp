@@ -1,4 +1,4 @@
-#include "types.h"
+#include "Omake.h"
 
 /*
  * --INFO--
@@ -504,23 +504,7 @@ void ClothFader::reset()
  * Address:	80079434
  * Size:	00002C
  */
-ClothFader::Particle::Particle()
-{
-	/*
-	.loc_0x0:
-	  lfs       f0, -0x76F8(r2)
-	  stfs      f0, 0x8(r3)
-	  stfs      f0, 0x4(r3)
-	  stfs      f0, 0x0(r3)
-	  stfs      f0, 0x14(r3)
-	  stfs      f0, 0x10(r3)
-	  stfs      f0, 0xC(r3)
-	  stfs      f0, 0x20(r3)
-	  stfs      f0, 0x1C(r3)
-	  stfs      f0, 0x18(r3)
-	  blr
-	*/
-}
+ClothFader::Particle::Particle() { }
 
 /*
  * --INFO--
@@ -658,7 +642,7 @@ void AttentionCamera::update()
  * Address:	800795A4
  * Size:	000008
  */
-u32 AttentionCamera::Fader::updateFadeIn() { return 0x1; }
+bool AttentionCamera::Fader::updateFadeIn() { return true; }
 
 /*
  * --INFO--
@@ -672,7 +656,7 @@ void AttentionCamera::Fader::initFadeIn() { }
  * Address:	800795B0
  * Size:	000008
  */
-u32 AttentionCamera::Fader::updateFadeOut() { return 0x1; }
+bool AttentionCamera::Fader::updateFadeOut() { return true; }
 
 /*
  * --INFO--
@@ -1438,7 +1422,7 @@ void ClothFader::initFadeOut()
  * Address:	80079EF4
  * Size:	000410
  */
-void ClothFader::updateFadeIn()
+bool ClothFader::updateFadeIn()
 {
 	/*
 	.loc_0x0:
@@ -1728,7 +1712,7 @@ void ClothFader::updateFadeIn()
  * Address:	8007A304
  * Size:	000410
  */
-void ClothFader::updateFadeOut()
+bool ClothFader::updateFadeOut()
 {
 	/*
 	.loc_0x0:
@@ -2504,7 +2488,7 @@ void SimpleFader::initFadeOut()
  * Address:	8007ADAC
  * Size:	00003C
  */
-void SimpleFader::updateFadeIn()
+bool SimpleFader::updateFadeIn()
 {
 	/*
 	.loc_0x0:
@@ -2533,7 +2517,7 @@ void SimpleFader::updateFadeIn()
  * Address:	8007ADE8
  * Size:	00003C
  */
-void SimpleFader::updateFadeOut()
+bool SimpleFader::updateFadeOut()
 {
 	/*
 	.loc_0x0:
@@ -2797,7 +2781,7 @@ void DefaultFader::initFadeIn()
  * Address:	8007B140
  * Size:	00003C
  */
-void DefaultFader::updateFadeIn()
+bool DefaultFader::updateFadeIn()
 {
 	/*
 	.loc_0x0:
@@ -2971,7 +2955,7 @@ void DefaultFader::initFadeOut()
  * Address:	8007B360
  * Size:	00003C
  */
-void DefaultFader::updateFadeOut()
+bool DefaultFader::updateFadeOut()
 {
 	/*
 	.loc_0x0:

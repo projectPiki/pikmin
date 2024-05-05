@@ -13,11 +13,11 @@
 struct Vector3f {
 	Vector3f() { x = y = z = 0.0f; } // yes it's this way around, every vector initialised in a ctor is "in reverse"
 	Vector3f(f32 const& _x, f32 const& _y, f32 const& _z)
-    : x(_x)
-    , y(_y)
-    , z(_z)
-{
-}
+	    : x(_x)
+	    , y(_y)
+	    , z(_z)
+	{
+	}
 	inline Vector3f operator*(const Vector3f& other) const { return Vector3f(x * other.x, y * other.y, z * other.z); }
 	void rotate(struct Matrix4f&);
 	void rotateTo(Matrix4f&, Vector3f&);
@@ -76,14 +76,14 @@ struct Vector3f {
 	f32 x, y, z; // _00, _04, _08
 };
 
-	inline Vector3f cross(Vector3f& vec1, Vector3f& vec2)
-	{
-		Vector3f outVec;
-		outVec.x = vec1.y * vec2.z - vec1.z * vec2.y;
-		outVec.y = vec1.z * vec2.x - vec1.x * vec2.z;
-		outVec.z = vec1.x * vec2.y - vec1.y * vec2.x;
-		return outVec;
-	}
+inline Vector3f cross(Vector3f& vec1, Vector3f& vec2)
+{
+	Vector3f outVec;
+	outVec.x = vec1.y * vec2.z - vec1.z * vec2.y;
+	outVec.y = vec1.z * vec2.x - vec1.x * vec2.z;
+	outVec.z = vec1.x * vec2.y - vec1.y * vec2.x;
+	return outVec;
+}
 
 struct Vector2f {
 	Vector2f() { }
