@@ -14,7 +14,7 @@ struct BaseGameSection : public Node {
 	virtual void openMenu();      // _30
 
 	// _00     = VTBL
-	// _00-_14 = Node
+	// _00-_1C = Node
 	// TODO: members
 };
 
@@ -25,7 +25,7 @@ struct Section : public Node {
 	virtual void init() = 0; // _30
 
 	// _00     = VTBL
-	// _00-_14 = Node
+	// _00-_1C = Node
 	// TODO: members
 };
 

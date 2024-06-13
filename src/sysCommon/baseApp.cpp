@@ -1,4 +1,6 @@
-#include "types.h"
+#include "BaseApp.h"
+#include "AtxStream.h"
+#include "Age.h"
 
 /*
  * --INFO--
@@ -27,65 +29,15 @@ void _Print(char*, ...)
  */
 BaseApp::BaseApp()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  lis       r4, 0x8022
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x30(r1)
-	  stmw      r27, 0x1C(r1)
-	  addi      r27, r3, 0
-	  addi      r28, r4, 0x738C
-	  lis       r3, 0x8022
-	  addi      r29, r3, 0x737C
-	  li        r30, 0
-	  addi      r3, r27, 0
-	  subi      r4, r13, 0x7EB0
-	  stw       r28, 0x0(r27)
-	  stw       r29, 0x0(r27)
-	  stw       r30, 0x10(r27)
-	  stw       r30, 0xC(r27)
-	  stw       r30, 0x8(r27)
-	  bl        .loc_0xD8
-	  lis       r3, 0x8023
-	  subi      r31, r3, 0x71E0
-	  stw       r31, 0x0(r27)
-	  addi      r3, r27, 0
-	  subi      r4, r13, 0x7EB0
-	  bl        0x1B8E4
-	  lis       r3, 0x8022
-	  addi      r0, r3, 0x7330
-	  stw       r0, 0x0(r27)
-	  addi      r3, r27, 0x30
-	  subi      r4, r13, 0x7EB0
-	  stw       r28, 0x30(r27)
-	  stw       r29, 0x30(r27)
-	  stw       r30, 0x40(r27)
-	  stw       r30, 0x3C(r27)
-	  stw       r30, 0x38(r27)
-	  bl        .loc_0xD8
-	  stw       r31, 0x30(r27)
-	  addi      r3, r27, 0x30
-	  subi      r4, r13, 0x7EB0
-	  bl        0x1B8A8
-	  stw       r30, 0x2C(r27)
-	  li        r0, 0x1
-	  addi      r4, r27, 0
-	  stw       r30, 0x20(r27)
-	  stw       r30, 0x24(r27)
-	  stb       r0, 0x28(r27)
-	  lwz       r3, 0x2DD8(r13)
-	  addi      r3, r3, 0x4
-	  bl        0x1B720
-	  mr        r3, r27
-	  lmw       r27, 0x1C(r1)
-	  lwz       r0, 0x34(r1)
-	  addi      r1, r1, 0x30
-	  mtlr      r0
-	  blr
+	init("<Node>");
+	mWindowNode.init("<Node>");
 
-	.loc_0xD8:
-	*/
+	_2C            = 0;
+	mCommandStream = 0;
+	mAgeServer     = 0;
+	_28            = 1;
+
+	nodeMgr->firstNode().add(this);
 }
 
 /*
@@ -93,20 +45,41 @@ BaseApp::BaseApp()
  * Address:	80024ED4
  * Size:	000008
  */
-void CoreNode::setName(char* a1)
-{
-	// Generated from stw r4, 0x4(r3)
-	_04 = a1;
-}
+// void CoreNode::setName(char* name) { mName = name; }
 
 /*
  * --INFO--
  * Address:	........
  * Size:	000008
  */
-void BaseApp::idleupdate()
+int BaseApp::idleupdate()
 {
-	// UNUSED FUNCTION
+#ifndef __MWERKS__
+	bool hasUpdates = false;
+
+	if (mCommandStream) {
+		const int commandStatus = mCommandStream->checkCommands();
+
+		if (commandStatus == -1) {
+			mCommandStream = nullptr;
+		} else if (commandStatus) {
+			hasUpdates = true;
+		}
+	}
+
+	if (mAgeServer) {
+		const int serverStatus = mAgeServer->update();
+
+		if (serverStatus == -1) {
+			stopAgeServer();
+			mAgeServer = nullptr;
+		} else if (serverStatus) {
+			hasUpdates = true;
+		}
+	}
+
+	return hasUpdates;
+#endif
 }
 
 /*
@@ -221,7 +194,7 @@ BaseApp::~BaseApp()
  * Address:	80024FC8
  * Size:	000004
  */
-void Stream::flush() { }
+// void Stream::flush() { }
 
 /*
  * --INFO--
@@ -235,14 +208,14 @@ void BaseApp::InitApp(char*) { }
  * Address:	80024FD0
  * Size:	000008
  */
-u32 BaseApp::idle() { return 0x0; }
+int BaseApp::idle() { return 0; }
 
 /*
  * --INFO--
  * Address:	80024FD8
  * Size:	000008
  */
-u32 BaseApp::keyDown(int, int, int) { return 0x0; }
+bool BaseApp::keyDown(int, int, int) { return false; }
 
 /*
  * --INFO--
@@ -349,25 +322,25 @@ void Node::concat(VQS&)
  * Address:	80025098
  * Size:	000004
  */
-void Node::concat() { }
+// void Node::concat() { }
 
 /*
  * --INFO--
  * Address:	8002509C
  * Size:	000008
  */
-u32 Node::getModelMatrix() { return 0x0; }
+// Matrix4f* Node::getModelMatrix() { return nullptr; }
 
 /*
  * --INFO--
  * Address:	800250A4
  * Size:	000004
  */
-void CoreNode::read(RandomAccessStream&) { }
+// void CoreNode::read(RandomAccessStream&) { }
 
 /*
  * --INFO--
  * Address:	800250A8
  * Size:	000008
  */
-u32 ANode::getAgeNodeType() { return 0x0; }
+// int ANode::getAgeNodeType() { return 0x0; }

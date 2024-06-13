@@ -36,8 +36,7 @@ struct GameFlow : public Node {
 	void addGenNode(char*, CoreNode*);
 
 	// _00     = VTBL
-	// _00-_14 = Node
-	u8 _14[0x355 - 0x14]; // _14, unknown
+	// _00-_1C = Node
 };
 
 extern GameFlow gameflow;

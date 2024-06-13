@@ -88,8 +88,8 @@ void Stream::readString(String& str)
 		str.init(size);
 	}
 
-	read(str.mStr, size);
-	str.mStr[size] = '\0';
+	read(str.mString, size);
+	str.mString[size] = '\0';
 }
 
 /*
@@ -162,7 +162,7 @@ void Stream::writeString(String& s)
 {
 	s32 length = ALIGN_NEXT(s.getLength(), 4);
 	writeInt(length);
-	write(s.mStr, s.getLength());
+	write(s.mString, s.getLength());
 
 	char c = 0;
 	for (s32 i = 0; i < length - s.getLength(); i++) {

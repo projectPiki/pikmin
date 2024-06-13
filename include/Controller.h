@@ -19,11 +19,6 @@ struct Controller : public Node {
 	// _00     = VTBL
 	// _00-_20 = Node
 
-	// THIS IS NODE!!! WHY IS IT FAILING BUILD IF I ADD THE MEMBER TO IT?
-	s32 _14; // _14
-	s32 _18; // _18
-	s32 _1C; // _1C
-
 	u32 mCurrentInput;        // _20
 	u32 mPrevInput;           // _24
 	u32 mInputPressed;        // _28

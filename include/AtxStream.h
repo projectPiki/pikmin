@@ -36,13 +36,22 @@ struct AtxStream : public Stream {
 	int _0C;            // _0C
 };
 
+struct BaseApp;
+
 /**
  * @brief TODO
  */
 struct AtxCommandStream : public AtxStream {
+	AtxCommandStream(BaseApp* app)
+	    : mParentApp(app)
+	{
+	}
+
+	bool checkCommands();
+
 	// _04     = VTBL
 	// _00-_08 = AtxStream
-	// TODO: members
+	BaseApp* mParentApp;
 };
 
 /**

@@ -5,10 +5,21 @@
  * Address:	........
  * Size:	000070
  */
-// void String::isSame(char *)
-//{
-// UNUSED FUNCTION
-//}
+bool String::isSame(char* str)
+{
+	const char* currentChar = this->mString;
+
+	while (*currentChar && *str) {
+		if (*currentChar != *str) {
+			return false;
+		}
+
+		currentChar++;
+		str++;
+	}
+
+	return !(*currentChar || *str);
+}
 
 /*
  * --INFO--
@@ -17,7 +28,7 @@
  */
 int String::getLength()
 {
-	u8* str = (u8*)this->mStr;
+	u8* str = (u8*)this->mString;
 	int len = 0;
 	while (*(str++)) {
 		len++;

@@ -227,7 +227,7 @@ struct KingDrawer : public Node {
 	virtual void draw(Graphics&); // _14
 
 	// _00     = VTBL
-	// _00-_14 = Node
+	// _00-_1C = Node
 	// TODO: members
 };
 

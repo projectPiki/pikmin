@@ -19,23 +19,22 @@ struct Node : public CoreNode {
 		init("<Node>");
 	}
 
-	virtual void update();            // _10
-	virtual void draw(Graphics&);     // _14
-	virtual void render(Graphics&);   // _18
-	virtual void concat();            // _1C (weak)
-	virtual void concat(struct VQS&); // _20 (weak)
-	virtual void concat(SRT&);        // _24 (weak)
-	virtual void concat(Matrix4f&);   // _28 (weak)
-	virtual void getModelMatrix();    // _2C (weak)
+	virtual void update();                                 // _10
+	virtual void draw(Graphics&);                          // _14
+	virtual void render(Graphics&);                        // _18
+	virtual void concat() { }                              // _1C (weak)
+	virtual void concat(struct VQS&);                      // _20 (weak)
+	virtual void concat(SRT&);                             // _24 (weak)
+	virtual void concat(Matrix4f&);                        // _28 (weak)
+	virtual Matrix4f* getModelMatrix() { return nullptr; } // _2C (weak)
 
 	void init(char*);
 
 	// _00     = VTBL
 	// _00-_14 = CoreNode
-	// TODO: Why does it fail if i add these members back?
-	// s32 mType;  // _14
-	// s32 mFlags; // _18
-	// s32 _1C; // _1C
+	s32 mType;  // _14
+	s32 mFlags; // _18
+	s32 _1C;    // _1C
 };
 
 struct FaceNode : public CoreNode {
@@ -67,8 +66,16 @@ struct FaceNode : public CoreNode {
  */
 struct NodeMgr {
 	NodeMgr();
+	~NodeMgr();
 
-	u8 _00[0x18]; // _00, unknown
+	inline CoreNode& firstNode() { return mRootNode; }
+
+	CoreNode* findNode(char*, CoreNode*);
+	void recFindNode(CoreNode*, char*);
+	void Del(Node*);
+
+	bool mDelete;   // _00
+	Node mRootNode; // _04
 };
 
 extern NodeMgr* nodeMgr;

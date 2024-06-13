@@ -128,7 +128,7 @@ struct GeneratorMgr : public Node {
 	void changeNaviPos();
 
 	// _00     = VTBL
-	// _00-_14 = Node
+	// _00-_1C = Node
 	// TODO: members
 };
 

@@ -29,17 +29,17 @@ struct String {
 	void toInt(char*);
 	void init(int length)
 	{
-		mStr    = length ? new char[length + 1] : nullptr;
+		mString = length ? new char[length + 1] : nullptr;
 		mLength = length;
 	}
 	void init(char* str, int length)
 	{
-		mStr    = str;
+		mString = str;
 		mLength = length;
 	}
 
-	int mLength; // _00
-	char* mStr;  // _04
+	int mLength;   // _00
+	char* mString; // _04
 };
 
 #endif

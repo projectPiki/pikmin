@@ -48,11 +48,12 @@ typedef unsigned int uintptr_t;
 
 typedef unsigned long size_t;
 
-#define TRUE  1
-#define FALSE 0
-
-#define NULL ((void*)0)
+#define TRUE    1
+#define FALSE   0
+#define NULL    ((void*)0)
 #define nullptr 0
+
+#define PATH_MAX (256)
 
 // Sets specific flag to 1
 #define SET_FLAG(x, val) (x |= (val))
@@ -67,22 +68,22 @@ typedef unsigned long size_t;
 #define ARRAY_SIZE(o) (sizeof((o)) / sizeof(*(o)))
 
 // Align X to the previous N bytes (N must be power of two)
-#define ALIGN_PREV(X, N) ((X) & ~((N)-1))
+#define ALIGN_PREV(X, N) ((X) & ~((N) - 1))
 
 // Align X to the next N bytes (N must be power of two)
-#define ALIGN_NEXT(X, N) ALIGN_PREV(((X) + (N)-1), N)
+#define ALIGN_NEXT(X, N) ALIGN_PREV(((X) + (N) - 1), N)
 
 // True if X is aligned to N bytes, else false
-#define IS_ALIGNED(X, N) ((X & ((N)-1)) == 0)
+#define IS_ALIGNED(X, N) ((X & ((N) - 1)) == 0)
 
 // True if X is not aligned to N bytes, else false
-#define IS_NOT_ALIGNED(X, N) (((X) & ((N)-1)) != 0)
+#define IS_NOT_ALIGNED(X, N) (((X) & ((N) - 1)) != 0)
 
 // Align object to num bytes (num should be power of two)
 #define ATTRIBUTE_ALIGN(num) __attribute__((aligned(num)))
 
 // Checks if a flag is set in a bitfield
-#define IS_FLAG_SET(flags, bitsFromLSB) (((flags) >> (bitsFromLSB)&1))
+#define IS_FLAG_SET(flags, bitsFromLSB) (((flags) >> (bitsFromLSB) & 1))
 
 #define ASSERT_HANG(cond) \
 	if (!(cond)) {        \
@@ -101,9 +102,9 @@ typedef unsigned long size_t;
 // Number of bytes in a kilobyte
 #define KILOBYTE_BYTECOUNT 1024
 
-#define BUMP_REGISTER(reg)  \
-	{                       \
-		asm { mr reg, reg } \
+#define BUMP_REGISTER(reg) \
+	{                      \
+		asm { mr reg, reg }   \
 	}
 
 #ifdef __MWERKS__
