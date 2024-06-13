@@ -51,6 +51,7 @@ struct StdSystem {
 
 	void invalidateObjs(u32, u32);
 	void addGfxObject(GfxobjInfo*);
+	void setHeap(int);
 	static char* stringDup(char*);
 
 	// _00 = VTBL
