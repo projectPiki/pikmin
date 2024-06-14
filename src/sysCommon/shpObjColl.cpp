@@ -34,14 +34,11 @@ void _Print(char*, ...)
  */
 void ObjCollInfo::getCentreSize(Vector3f& centre, f32& radius)
 {
-	Matrix4f& identity = Matrix4f::ident;
+	Matrix4f& identity = mJointIndex != -1 ? mParentShape->getAnimMatrix(mJointIndex) : Matrix4f::ident;
 
-	if (mJointIndex != -1) {
-		identity = mParentShape->getAnimMatrix(mJointIndex);
-	}
-
-	centre.set(mCentrePosition.x, mCentrePosition.y, mCentrePosition.z);
+	centre = mCentrePosition;
 	centre.multMatrix(identity);
+
 	radius = centre.length() * mRadius;
 }
 

@@ -58,6 +58,8 @@ struct Vector3f {
 		this->y *= other;
 		this->z *= other;
 	}
+	inline void operator=(const Vector3f& other) { set(other.x, other.y, other.z); }
+
 	inline void set(const f32 val) { x = y = z = val; }
 
 	void div(f32); // weak
