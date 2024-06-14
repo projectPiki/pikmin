@@ -74,6 +74,7 @@ enum ObjCollType {
 };
 
 enum ObjCollFlags {
+	OCF_None    = 0,
 	OCF_GetMinY = 1,
 };
 
@@ -81,6 +82,21 @@ enum ObjCollFlags {
  * @brief TODO
  */
 struct ObjCollInfo : public CoreNode {
+	ObjCollInfo()
+	    : CoreNode("")
+	{
+		mId.setID('none');
+		mCode.setID('none');
+		mJointIndex = -1;
+		mCollType   = OCT_Sphere;
+		mRadius     = 10.0f;
+		mCentrePosition.set(0.0f, 0.0f, 0.0f);
+		mParentShape  = nullptr;
+		mPlatformName = nullptr;
+		_48           = 0;
+		mFlags        = OCF_None;
+	}
+
 	void loadini(CmdStream*);
 
 	// unused/inlined:
@@ -98,12 +114,8 @@ struct ObjCollInfo : public CoreNode {
 	f32 mRadius;              // _40
 	BaseShape* mParentShape;  // _44
 	s32 _48;                  // _48
-	s8* mPlatformName;        // _4C
+	char* mPlatformName;      // _4C
 	ObjCollFlags mFlags;      // _50
-	s32 _54;                  // _54
-	s32 _58;                  // _58
-	s32 _5C;                  // _5C
-	s32 _60;                  // _60
 };
 
 struct ShpobjInfo : public GfxobjInfo {
@@ -150,7 +162,6 @@ struct CollInfo {
 	u8 _00[0x14]; // _00, TODO: work out members;
 };
 
-struct CollGroup {
-};
+struct CollGroup { };
 
 #endif

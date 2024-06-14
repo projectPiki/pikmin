@@ -20,6 +20,7 @@ int printf(const char*, ...);
 int sprintf(char* s, const char* format, ...);
 int vprintf(const char* format, va_list arg);
 int vsprintf(char* s, const char* format, va_list arg);
+int sscanf(const char* s, const char* format, ...);
 
 // #include "PowerPC_EABI_Support/MSL_C/MSL_Common/FILE_POS.h"
 // #include "PowerPC_EABI_Support/MSL_C/MSL_Common/direct_io.h"

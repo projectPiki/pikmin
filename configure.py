@@ -100,7 +100,7 @@ LIBS = [
             ["sysCommon/grLight", False],
             ["sysCommon/shapeBase", False],
             ["sysCommon/shpLightFlares", False],
-            ["sysCommon/shpObjColl", False],
+            ["sysCommon/shpObjColl", True],
             ["sysCommon/shpRoutes", False],
             ["sysCommon/sysMath", False],
             ["sysCommon/matMath", False],
