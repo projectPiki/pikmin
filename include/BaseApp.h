@@ -1,5 +1,5 @@
-#ifndef BASEAPP_H
-#define BASEAPP_H
+#ifndef _BASEAPP_H
+#define _BASEAPP_H
 
 #include "Node.h"
 
@@ -34,4 +34,4 @@ struct BaseApp : public Node {
 	u32 mHeapIndex;                   // _50
 };
 
-#endif // BASEAPP_H
+#endif // _BASEAPP_H

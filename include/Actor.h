@@ -54,7 +54,7 @@ struct ActorMgr : public MonoObjectMgr {
 	// _00     = VTBL
 	// _00-_1C = MonoObjectMgr?
 	// TODO: members?
-	u8 _1C[0x40 - 0x1C];   // _1C, unknown
+	u8 _28[0x40 - 0x28];   // _28, unknown
 	PikiShapeObject** _40; // _40
 	CreatureProp** _44;    // _44
 	SimpleAI** _48;        // _48

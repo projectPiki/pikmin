@@ -75,7 +75,7 @@ struct NodeMgr {
 	void Del(Node*);
 
 	bool mDelete;   // _00
-	Node mRootNode; // _04
+	CoreNode mRootNode; // _04
 };
 
 extern NodeMgr* nodeMgr;

@@ -1,5 +1,5 @@
-#ifndef AGE_H
-#define AGE_H
+#ifndef _AGE_H
+#define _AGE_H
 
 #include "types.h"
 
@@ -87,4 +87,4 @@ struct AgeServer : public AtxStream {
 	bool mIsActive; // _10
 };
 
-#endif // AGE_H
+#endif // _AGE_H
