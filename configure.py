@@ -629,7 +629,7 @@ LIBS = [
         "mw_version": "1.2.5",
         "host": True,
         "objects": [
-            ["ai/ai", False],
+            ["ai/ai", True],
         ],
     },
     {
