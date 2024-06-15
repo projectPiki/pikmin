@@ -55,8 +55,8 @@ extern DSPTaskInfo* __DSP_curr_task;
 #define DSP_TASK_STATE_YIELD 2
 #define DSP_TASK_STATE_DONE  3
 
-#define DSPGetTaskState(t)       (t->state) // u32
-#define DSPGetTaskPriority(t)    (t->priority) // u32
+#define DSPGetTaskState(t)       (t->state)         // u32
+#define DSPGetTaskPriority(t)    (t->priority)      // u32
 #define DSPSetTaskPriority(t, x) (t->priority |= x) // x should be u32
 
 ////////////////////////////////////////////
@@ -77,8 +77,6 @@ u32 DSPReadMailFromDSP();
 u32 DSPCheckMailToDSP();
 u32 DSPCheckMailFromDSP();
 
-// Used/defined in JSystem.
-DSPTaskInfo* DSPAddTask(DSPTaskInfo* task);
 void __DSPHandler(__OSInterrupt interrupt, OSContext* context);
 
 // Unused/inlined in P2.

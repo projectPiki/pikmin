@@ -1,22 +1,21 @@
 #include "Dolphin/dsp.h"
+#include "Dolphin/os.h"
+#include "Dolphin/hw_regs.h"
+#include "types.h"
+
 /*
  * --INFO--
  * Address:	80207E14
  * Size:	000010
  */
-
-u32 DSPCheckMailToDSP(void) { return (HW_REG(0xCC005000, u16) >> 15) & 1; }
+u32 DSPCheckMailToDSP() { return __DSPRegs[DSP_MAILBOX_IN_HI] >> 0xF & 1; }
 
 /*
  * --INFO--
  * Address:	80207E24
  * Size:	000010
  */
-u32 DSPCheckMailFromDSP(void)
-{
-	return (HW_REG(0xCC005004, u16) >> 15) & 1;
-	;
-}
+u32 DSPCheckMailFromDSP(void) { return __DSPRegs[DSP_MAILBOX_OUT_HI] >> 0xF & 1; }
 
 /*
  * --INFO--
@@ -33,7 +32,7 @@ void DSPReadCPUToDSPMbox(void)
  * Address:	80207E34
  * Size:	000018
  */
-u32 DSPReadMailFromDSP(void) { return (__DSPRegs[2] << 16) | __DSPRegs[3]; }
+u32 DSPReadMailFromDSP() { return (__DSPRegs[DSP_MAILBOX_OUT_HI] << 0x10) | __DSPRegs[DSP_MAILBOX_OUT_LO]; }
 
 /*
  * --INFO--
@@ -42,8 +41,8 @@ u32 DSPReadMailFromDSP(void) { return (__DSPRegs[2] << 16) | __DSPRegs[3]; }
  */
 void DSPSendMailToDSP(u32 mail)
 {
-	__DSPRegs[0] = (u16)((mail >> 16) & 0xffff);
-	__DSPRegs[1] = (u16)(mail & 0xffff);
+	__DSPRegs[DSP_MAILBOX_IN_HI] = mail >> 0x10;
+	__DSPRegs[DSP_MAILBOX_IN_LO] = mail;
 }
 
 /*
@@ -53,7 +52,11 @@ void DSPSendMailToDSP(u32 mail)
  */
 void DSPAssertInt(void)
 {
-	// UNUSED FUNCTION
+	u32 tmp;
+	BOOL interrupts               = OSDisableInterrupts();
+	tmp                           = __DSPRegs[DSP_CONTROL_STATUS];
+	__DSPRegs[DSP_CONTROL_STATUS] = (tmp & ~0xA8) | 2;
+	OSRestoreInterrupts(interrupts);
 }
 
 /*
@@ -102,16 +105,6 @@ void DSPUnhalt(void)
  * Size:	000010
  */
 void DSPGetDMAStatus(void)
-{
-	// UNUSED FUNCTION
-}
-
-/*
- * --INFO--
- * Address:	........
- * Size:	000070
- */
-void DSPAddTask(void)
 {
 	// UNUSED FUNCTION
 }

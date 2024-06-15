@@ -26,21 +26,11 @@ void* OSInitAlloc(void* arenaStart, void* arenaEnd, int maxHeaps);
 OSHeapHandle OSCreateHeap(void* start, void* end);
 OSHeapHandle OSSetCurrentHeap(OSHeapHandle heap);
 void OSFreeToHeap(OSHeapHandle heap, void* ptr);
-
-// Unused/inlined in P2.
 void* OSAllocFromHeap(OSHeapHandle heap, u32 size);
-void* OSAllocFixed(void** rStart, void** rEnd);
-void OSDestroyHeap(OSHeapHandle heap);
-void OSAddToHeap(OSHeapHandle heap, void* start, void* end);
-s32 OSCheckHeap(OSHeapHandle heap);
-void OSDumpHeap(OSHeapHandle heap);
-u32 OSReferentSize(void* ptr);
-void OSVisitAllocated(OSAllocVisitor visitor);
 
 //////////////////////////////////
 
 ////////// HEAP MACROS ///////////
-// Allocate 'size' bytes from current heap (unused in P2).
 // Returns ptr to allocated space (32-aligned).
 #define OSAlloc(size) OSAllocFromHeap(__OSCurrHeap, (size))
 
