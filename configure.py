@@ -576,7 +576,7 @@ LIBS = [
         "mw_version": "1.2.5",
         "host": True,
         "objects": [
-            ["db/db", False],
+            ["db/db", True],
         ],
     },
     {
