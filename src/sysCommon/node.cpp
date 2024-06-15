@@ -1,4 +1,5 @@
 #include "types.h"
+#include "Node.h"
 
 /*
  * --INFO--
@@ -25,33 +26,26 @@ void _Print(char*, ...)
  * Address:	800405D8
  * Size:	000038
  */
-void CoreNode::add(CoreNode*)
+void CoreNode::add(CoreNode* toAdd)
 {
-	/*
-	.loc_0x0:
-	  lwz       r0, 0x10(r3)
-	  cmplwi    r0, 0
-	  mr        r5, r0
-	  beq-      .loc_0x2C
-	  b         .loc_0x18
+	CoreNode* child = mChild;
 
-	.loc_0x14:
-	  mr        r5, r0
+	// If there is a child
+	if (child) {
+		// Find the last child
+		while (child->mNext) {
+			child = child->mNext;
+		}
 
-	.loc_0x18:
-	  lwz       r0, 0xC(r5)
-	  cmplwi    r0, 0
-	  bne+      .loc_0x14
-	  stw       r4, 0xC(r5)
-	  b         .loc_0x30
+		//  Add the new child to the end
+		child->mNext = toAdd;
+	} else {
+		// If there is no child, add the new child
+		mChild = toAdd;
+	}
 
-	.loc_0x2C:
-	  stw       r4, 0x10(r3)
-
-	.loc_0x30:
-	  stw       r3, 0x8(r4)
-	  blr
-	*/
+	// 	Set the parent of the new child to this node
+	toAdd->mParent = this;
 }
 
 /*
@@ -61,54 +55,42 @@ void CoreNode::add(CoreNode*)
  */
 void CoreNode::del()
 {
-	/*
-	.loc_0x0:
-	  lwz       r4, 0x8(r3)
-	  cmplwi    r4, 0
-	  beqlr-
-	  addi      r5, r4, 0x10
-	  lwz       r4, 0x10(r4)
-	  li        r6, 0
-	  b         .loc_0x64
+	// If there's no parent, there's nothing to delete
+	if (mParent) {
+		CoreNode* child = mParent->mChild;
+		CoreNode* prev  = nullptr;
 
-	.loc_0x1C:
-	  cmplw     r4, r3
-	  bne-      .loc_0x5C
-	  cmplwi    r6, 0
-	  beq-      .loc_0x44
-	  lwz       r4, 0xC(r4)
-	  li        r0, 0
-	  stw       r4, 0xC(r6)
-	  stw       r0, 0xC(r3)
-	  stw       r0, 0x8(r3)
-	  blr
+		// Iterate through the children to find the one to delete
+		while (child) {
+			if (child == this) {
+				if (prev) {
+					// If there's a previous child, bypass the current child
+					prev->mNext = child->mNext;
+				} else {
+					// If there's no previous child, set the parent's child to the next child
+					mParent->mChild = child->mNext;
+				}
 
-	.loc_0x44:
-	  lwz       r4, 0xC(r4)
-	  li        r0, 0
-	  stw       r4, 0x0(r5)
-	  stw       r0, 0xC(r3)
-	  stw       r0, 0x8(r3)
-	  blr
+				// Detach the current child
+				mNext   = nullptr;
+				mParent = nullptr;
+				return;
+			}
 
-	.loc_0x5C:
-	  mr        r6, r4
-	  lwz       r4, 0xC(r4)
-
-	.loc_0x64:
-	  cmplwi    r4, 0
-	  bne+      .loc_0x1C
-	  blr
-	*/
+			// Move to the next child
+			prev  = child;
+			child = child->mNext;
+		}
+	}
 }
-
 /*
  * --INFO--
  * Address:	80040680
  * Size:	000020
  */
-void CoreNode::getChildCount()
+int CoreNode::getChildCount()
 {
+	return 0;
 	/*
 	.loc_0x0:
 	  lwz       r4, 0x10(r3)
@@ -313,10 +295,10 @@ void Node::render(Graphics&)
  * Address:	........
  * Size:	000128
  */
-SRTNode::SRTNode(char*)
-{
-	// UNUSED FUNCTION
-}
+// SRTNode::SRTNode(char*)
+// {
+// 	// UNUSED FUNCTION
+// }
 
 /*
  * --INFO--
@@ -427,7 +409,7 @@ void NodeMgr::recFindNode(CoreNode*, char*)
  * Address:	........
  * Size:	0000A8
  */
-void NodeMgr::findNode(char*, CoreNode*)
+CoreNode* NodeMgr::findNode(char*, CoreNode*)
 {
 	// UNUSED FUNCTION
 }
@@ -488,11 +470,11 @@ void SRTNode::concat(Matrix4f&) { }
  * Address:	8004097C
  * Size:	000008
  */
-void SRTNode::getModelMatrix()
-{
-	/*
-	.loc_0x0:
-	  addi      r3, r3, 0x20
-	  blr
-	*/
-}
+// Matrix4f* SRTNode::getModelMatrix()
+// {
+// 	/*
+// 	.loc_0x0:
+// 	  addi      r3, r3, 0x20
+// 	  blr
+// 	*/
+// }

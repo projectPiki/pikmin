@@ -5563,7 +5563,7 @@ void AnimDck::extractSRT(SRT& srt, int, AnimDataInfo* anim, f32 time)
 	if (!(anim->mFlags & 0x80)) {
 		// loop for x y and z
 		for (int i = 0; i < 3; i++) {
-			f32* r           = (f32*)&srt.mRotate;
+			f32* r           = (f32*)&srt.mRotation;
 			AnimParam* param = &anim->mRotation[i];
 			switch (param->mEntryNum) {
 			case 0: // 0 entries, default to 1.0
@@ -5586,7 +5586,7 @@ void AnimDck::extractSRT(SRT& srt, int, AnimDataInfo* anim, f32 time)
 	if (!(anim->mFlags & 0x800)) {
 		// loop for x y and z
 		for (int i = 0; i < 3; i++) {
-			f32* t           = (f32*)&srt.mTranslate;
+			f32* t           = (f32*)&srt.mTranslation;
 			AnimParam* param = &anim->mTranslation[i];
 			switch (param->mEntryNum) {
 			case 0: // 0 entries, default to 1.0
@@ -5793,7 +5793,7 @@ void AnimDck::makeAnimSRT(int a, Matrix4f* mtx1, Matrix4f* mtx2, AnimDataInfo* a
 	extractSRT(srt, a, anim, time);
 	if ((anim->mFlags & 0x777) == 0x777) {
 		if (!(anim->mFlags & 0x8000)) {
-			anim->mMtx.makeSRT(srt.mScale, srt.mRotate, srt.mTranslate);
+			anim->mMtx.makeSRT(srt.mScale, srt.mRotation, srt.mTranslation);
 			anim->mFlags |= 0x8000;
 		}
 		PSMTXConcat(mtx1->mMtx, anim->mMtx.mMtx, mtx2->mMtx);

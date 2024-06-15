@@ -17,6 +17,12 @@ struct CoreNode : public ANode {
 	CoreNode(char* name = "CoreNode") { initCore(name); }
 
 	/**
+	 * @brief Reads the data from a random access stream into the CoreNode.
+	 * @param stream The random access stream to read from.
+	 */
+	virtual void read(struct RandomAccessStream& stream) { } // _0C (weak)
+
+	/**
 	 * @brief Initializes the core data of the CoreNode.
 	 * @param name The name of the CoreNode.
 	 */
@@ -85,11 +91,7 @@ struct CoreNode : public ANode {
 	 */
 	void setName(char* name) { mName = name; }
 
-	/**
-	 * @brief Reads the data from a random access stream into the CoreNode.
-	 * @param stream The random access stream to read from.
-	 */
-	virtual void read(struct RandomAccessStream& stream) { } // _0C (weak)
+	void load(char*, char*, u32);
 
 	// _00 = VTBL
 	char* mName;       // _04

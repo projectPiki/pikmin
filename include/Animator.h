@@ -48,9 +48,9 @@ struct AnimCacheInfo {
 };
 
 struct SRT {
-	Vector3f mScale;     // _00
-	Vector3f mRotate;    // _0C
-	Vector3f mTranslate; // _18
+	Vector3f mScale;       // _00
+	Vector3f mRotation;    // _0C
+	Vector3f mTranslation; // _18, aka position
 };
 
 /**
