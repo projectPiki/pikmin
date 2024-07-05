@@ -205,9 +205,77 @@ void Joint::read(RandomAccessStream& stream)
  * Address:	........
  * Size:	00043C
  */
-void Joint::render(Graphics&)
+void Joint::render(Graphics& gfx)
 {
-	// UNUSED FUNCTION
+	if (!this->m_flags)
+		return;
+
+	for (Joint::MatPoly* matPoly = this->m_matpolyE4.m_child; matPoly; matPoly = matPoly->m_next) {
+		Mesh* mesh = matPoly->m_mesh;
+		if ((graphics->m_dword8 & matPoly->m_material->mFlags) == 0) {
+			continue;
+		}
+
+		graphics->useMaterial(matPoly->m_material);
+		for (int j = 0; j < mesh->m_mtxGroupCount; ++j) {
+			MtxGroup* mtxGroup               = &mesh->m_groups[j];
+			struct Matrix4f* matrixArray[10] = { &Matrix4f::ident };
+			for (int k = 0; k < mtxGroup->m_dependencyCount; ++k) {
+				int depIndex = mtxGroup->m_dependancies[k];
+				if (depIndex == -1)
+					continue;
+
+				VtxMatrix* vtxMatrix = &this->m_shape->m_vtxMatrix[depIndex];
+				struct Matrix4f* matrix
+				    = this->m_shape->m_currentAnims->m_state
+				        ? BaseShape::getAnimMatrix(this->m_shape,
+				                                   vtxMatrix->m_index + (vtxMatrix->m_partiallyWeighted ? 0 : this->m_shape->m_jointCount))
+				        : &this->m_shape->m_joints[vtxMatrix->m_index].m_animMatrix;
+				matrixArray[k] = matrix;
+			}
+			Vector3f* vertices  = this->m_shape->m_vertices;
+			Vector2f* texCoords = this->m_shape->m_texCoords[0];
+			Vector3f* normal    = (mesh->m_vcd & 0x10000) != 0 ? this->m_shape->m_nbt : this->m_shape->m_normals;
+			int normalStride    = (mesh->m_vcd & 0x10000) != 0 ? 3 : 1;
+			DispList* dispList  = mtxGroup->m_dispLists;
+			for (int l = 0; l < mtxGroup->m_dispListCount; ++l, dispList++) {
+				graphics->setCullFront(graphics->m_dword338 ^ dispList->m_flags & 3);
+
+				for (FaceNode* faceNode = dispList->m_face.m_child; faceNode; faceNode = faceNode->m_next) {
+					int* vertexIndex   = faceNode->m_vtxIdx;
+					int* matrixIndex   = faceNode->m_mtxIdx;
+					int* normalIndex   = faceNode->m_nrmIdx;
+					int* texCoordIndex = faceNode->m_texcoords[0];
+					for (int n = 0; n < faceNode->m_faceCount; ++n) {
+						struct Matrix4f* matrix            = matrixIndex ? matrixArray[*matrixIndex++] : matrixArray[0];
+						Vector3f* vertex                   = &vertices[*vertexIndex++];
+						struct Vector3f* transformedVertex = &unk_101C8B68++;
+						vertex->multMatrixTo(matrix, transformedVertex);
+						if (normalIndex) {
+							Vector3f* normalPtr                = &normal[normalStride * *normalIndex++];
+							struct Vector3f* transformedNormal = &unk_101C7368++;
+							normalPtr->rotateTo(matrix, transformedNormal);
+						}
+						if (texCoordIndex) {
+							Vector3f* texCoord = &unk_101C6368++; // Assuming unk_101C6368 is a pointer to a
+							                                      // Vector3f or similar structure for texture
+							                                      // coordinates
+							texCoord->x = texCoords[*texCoordIndex].m_x;
+							texCoord->y = texCoords[*texCoordIndex++].m_y;
+						}
+					}
+					if (dispList->m_flags & 0x1000000) {
+						graphics->drawOneStrip(&unk_101C8B68, normalIndex ? &unk_101C7368 : 0, texCoordIndex ? &unk_101C6368 : 0,
+						                       faceNode->m_faceCount);
+					} else {
+						graphics->drawOneTri(&unk_101C8B68, normalIndex ? &unk_101C7368 : 0, texCoordIndex ? &unk_101C6368 : 0,
+						                     faceNode->m_faceCount);
+					}
+				}
+			}
+		}
+		graphics->useMaterial(nullptr);
+	}
 }
 
 /*
