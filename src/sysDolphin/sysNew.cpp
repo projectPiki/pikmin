@@ -1,4 +1,5 @@
 #include "types.h"
+#include "sysNew.h"
 
 /*
  * --INFO--
@@ -25,7 +26,7 @@ void _Print(char*, ...)
  * Address:	80047004
  * Size:	000164
  */
-void System::alloc(u32)
+void* System::alloc(u32)
 {
 	/*
 	.loc_0x0:
@@ -146,7 +147,7 @@ void System::alloc(u32)
  * Address:	........
  * Size:	000044
  */
-void operator new(u32, int)
+void* operator new(u32, int)
 {
 	// UNUSED FUNCTION
 }
@@ -156,7 +157,7 @@ void operator new(u32, int)
  * Address:	80047168
  * Size:	000044
  */
-void operator new[](u32, int)
+void* operator new[](u32, int)
 {
 	/*
 	.loc_0x0:

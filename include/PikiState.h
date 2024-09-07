@@ -4,7 +4,7 @@
 #include "types.h"
 #include "Piki.h"
 #include "StateMachine.h"
-#include "Vector3f.h"
+#include "Vector.h"
 
 enum PikiStateID {
 	PIKISTATE_Normal       = 0,

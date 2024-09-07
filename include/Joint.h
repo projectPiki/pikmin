@@ -3,7 +3,7 @@
 
 #include "types.h"
 #include "CoreNode.h"
-#include "Vector3f.h"
+#include "Vector.h"
 #include "Matrix4f.h"
 #include "BoundBox.h"
 

@@ -3,7 +3,7 @@
 
 #include "types.h"
 #include "Creature.h"
-#include "Vector3f.h"
+#include "Vector.h"
 #include "PaniAnimator.h"
 
 template <typename T>

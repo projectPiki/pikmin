@@ -4,14 +4,18 @@
 #include "types.h"
 #include "CoreNode.h"
 #include "Stream.h"
-#include "Vector3f.h"
+#include "SRT.h"
 #include "Matrix4f.h"
+#include "GfxObject.h"
 
 struct AnimMgr;
 struct BaseShape;
 struct CmdStream;
 struct Shape;
 
+/**
+ * @brief TODO
+ */
 struct DataChunk {
 	DataChunk()
 	{
@@ -40,17 +44,14 @@ struct DataChunk {
 	f32* mData;    // _08
 };
 
+/**
+ * @brief TODO
+ */
 struct AnimCacheInfo {
 	AnimCacheInfo();
 	void updateContext();
 
 	u8 _00[0x1c];
-};
-
-struct SRT {
-	Vector3f mScale;       // _00
-	Vector3f mRotation;    // _0C
-	Vector3f mTranslation; // _18, aka position
 };
 
 /**
@@ -78,8 +79,6 @@ struct AnimDataInfo {
 	u16 mFlags;                // _D8
 };
 
-static f32 extract(f32, AnimParam&, DataChunk&);
-
 /**
  * @brief TODO
  */
@@ -105,13 +104,13 @@ struct AnimData : public CoreNode {
 	DataChunk* mScaleDataBlock;       // _14
 	DataChunk* mRotateDataBlock;      // _18
 	DataChunk* mTranslationDataBlock; // _1C
-	int _20;
-	int _24;
-	int mNumJoints; // _28
-	int _2C;
-	int mNumFrames;    // _30
-	BaseShape* mModel; // _34
-	int _38;
+	int _20;                          // _20
+	int _24;                          // _24
+	int mNumJoints;                   // _28
+	int _2C;                          // _2C
+	int mNumFrames;                   // _30
+	BaseShape* mModel;                // _34
+	int _38;                          // _38
 };
 
 /**
@@ -144,6 +143,17 @@ struct AnimDck : public AnimData {
 	// _00-_38 = AnimData
 	AnimDataInfo* mAnimInfo;   // _3C
 	AnimCacheInfo* mCacheInfo; // _40
+};
+
+/**
+ * @brief TODO
+ */
+struct AnmobjInfo : public GfxobjInfo {
+	virtual void detach(); // _0C
+
+	// _00     = VTBL?
+	// _00-_20 = GfxobjInfo?
+	AnimData* mAnimation; // _20
 };
 
 /**
@@ -248,16 +258,9 @@ struct AnimMgr : public CoreNode {
 	// TODO: members
 };
 
-template <typename T>
-struct PVWAnimInfo1 {
-	void read(RandomAccessStream&);
-};
-
-template <typename T>
-struct PVWAnimInfo3 {
-	void read(RandomAccessStream&);
-};
-
+/**
+ * @brief TODO
+ */
 struct AnimFrameCacher {
 	AnimFrameCacher(int);
 	void updateInfo(AnimCacheInfo*);

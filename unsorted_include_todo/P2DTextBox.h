@@ -2,7 +2,7 @@
 #define _P2DTEXTBOX_H
 
 #include "types.h"
-#include "Vector3f.h"
+#include "Vector.h"
 #include "Matrix4f.h"
 
 /**

@@ -1,6 +1,8 @@
 #include "types.h"
 #include "Node.h"
 
+NodeMgr* nodeMgr;
+
 /*
  * --INFO--
  * Address:	........
@@ -419,27 +421,7 @@ CoreNode* NodeMgr::findNode(char*, CoreNode*)
  * Address:	80040938
  * Size:	00003C
  */
-NodeMgr::NodeMgr()
-{
-	/*
-	.loc_0x0:
-	  lis       r4, 0x8022
-	  addi      r0, r4, 0x738C
-	  lis       r4, 0x8022
-	  stw       r0, 0x4(r3)
-	  addi      r0, r4, 0x737C
-	  stw       r0, 0x4(r3)
-	  li        r5, 0
-	  lis       r4, 0x8023
-	  stw       r5, 0x14(r3)
-	  subi      r0, r4, 0x7274
-	  stw       r5, 0x10(r3)
-	  stw       r5, 0xC(r3)
-	  stw       r0, 0x8(r3)
-	  stb       r5, 0x0(r3)
-	  blr
-	*/
-}
+NodeMgr::NodeMgr() { mDelete = false; }
 
 /*
  * --INFO--
@@ -450,31 +432,3 @@ NodeMgr::~NodeMgr()
 {
 	// UNUSED FUNCTION
 }
-
-/*
- * --INFO--
- * Address:	80040974
- * Size:	000004
- */
-void SRTNode::concat() { }
-
-/*
- * --INFO--
- * Address:	80040978
- * Size:	000004
- */
-void SRTNode::concat(Matrix4f&) { }
-
-/*
- * --INFO--
- * Address:	8004097C
- * Size:	000008
- */
-// Matrix4f* SRTNode::getModelMatrix()
-// {
-// 	/*
-// 	.loc_0x0:
-// 	  addi      r3, r3, 0x20
-// 	  blr
-// 	*/
-// }

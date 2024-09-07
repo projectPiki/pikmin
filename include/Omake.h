@@ -2,7 +2,7 @@
 #define _OMAKE_H
 
 #include "types.h"
-#include "Vector3f.h"
+#include "Vector.h"
 
 struct Creature;
 struct Graphics;

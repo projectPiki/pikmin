@@ -35,8 +35,79 @@ struct GameFlow : public Node {
 	void* loadShape(char*, bool);
 	void addGenNode(char*, CoreNode*);
 
+	// unused/inlined:
+	void addOptionsMenu(Menu*);
+	void addFilterMenu(Menu*);
+
 	// _00     = VTBL
 	// _00-_1C = Node
+};
+
+/**
+ * @brief TODO
+ */
+struct GameGenFlow : public Node {
+	virtual void update(); // _10
+
+	// _00     = VTBL
+	// _00-_20 = Node
+	// TODO: members
+};
+
+/**
+ * @brief TODO
+ */
+struct GameHiscores {
+	void Initialise();
+
+	// TODO: members
+};
+
+/**
+ * @brief TODO
+ */
+struct GamePrefs : public CoreNode {
+	void Initialise();
+
+	// _00     = VTBL
+	// _00-_14 = CoreNode
+	// TODO: members
+};
+
+/**
+ * @brief TODO
+ */
+struct GameRecChalCourse {
+	GameRecChalCourse();
+
+	// TODO: members
+};
+
+/**
+ * @brief TODO
+ */
+struct GameRecDeadPikmin {
+	GameRecDeadPikmin();
+
+	// TODO: members
+};
+
+/**
+ * @brief TODO
+ */
+struct GameRecBornPikmin {
+	GameRecBornPikmin();
+
+	// TODO: members
+};
+
+/**
+ * @brief TODO
+ */
+struct GameRecMinDay {
+	GameRecMinDay();
+
+	// TODO: members
 };
 
 extern GameFlow gameflow;

@@ -16,8 +16,18 @@ struct Colour {
 	u8 r, g, b, a; // _00-_04
 };
 
-struct PVWTevColReg {
-	PVWTevColReg();
+/**
+ * @brief TODO
+ */
+struct ShortColour {
+	s16 r, g, b, a; // _00-_0A
+};
+
+/**
+ * @brief TODO
+ */
+struct LShortColour {
+	s16 r, g, b, a; // _00-_0A
 };
 
 #endif

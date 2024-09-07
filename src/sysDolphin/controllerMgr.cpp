@@ -1,5 +1,12 @@
 #include "types.h"
 #include "Controller.h"
+#include "Dolphin/pad.h"
+
+static char file[] = __FILE__;
+static char name[] = "ControllerMgr";
+
+static PADStatus sControllerPad[4];
+static u32 padChannels[4] = { PAD_CHAN0_BIT, PAD_CHAN1_BIT, PAD_CHAN2_BIT, PAD_CHAN3_BIT };
 
 /*
  * --INFO--
@@ -97,7 +104,7 @@ void ControllerMgr::update()
  * Address:	80047278
  * Size:	000020
  */
-void ControllerMgr::keyDown(int)
+bool ControllerMgr::keyDown(int)
 {
 	/*
 	.loc_0x0:

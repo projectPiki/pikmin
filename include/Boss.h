@@ -8,7 +8,7 @@
 #include "PaniAnimator.h"
 #include "ObjectMgr.h"
 #include "SearchSystem.h"
-#include "Vector3f.h"
+#include "Vector.h"
 
 struct GenObjectBoss;
 

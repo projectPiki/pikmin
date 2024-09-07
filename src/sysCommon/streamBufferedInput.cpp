@@ -1,6 +1,7 @@
 #include "types.h"
 #include "Stream.h"
 #include "system.h"
+#include "sysNew.h"
 
 /*
  * --INFO--
@@ -31,58 +32,12 @@ void BufferedInputStream::init(Stream* stream, u8* buffer, int bufferSize)
 {
 	mPath             = StdSystem::stringDup(stream->mPath);
 	mBufferSize       = bufferSize;
-	mBuffer           = buffer ? buffer : new (0x20) u8[bufferSize];
+	mBuffer           = buffer ? buffer : new (0x20) u8[mBufferSize];
 	mPosition         = 0;
 	mCurrentBufferPos = 0;
 	mRemainingBytes   = 0;
 	mStream           = stream;
 	fillBuffer();
-
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x28(r1)
-	  stw       r31, 0x24(r1)
-	  addi      r31, r6, 0
-	  stw       r30, 0x20(r1)
-	  addi      r30, r5, 0
-	  stw       r29, 0x1C(r1)
-	  addi      r29, r4, 0
-	  stw       r28, 0x18(r1)
-	  addi      r28, r3, 0
-	  lwz       r3, 0x0(r4)
-	  bl        0x1AE10
-	  stw       r3, 0x0(r28)
-	  cmplwi    r30, 0
-	  stw       r31, 0xC(r28)
-	  beq-      .loc_0x4C
-	  mr        r3, r30
-	  b         .loc_0x58
-
-	.loc_0x4C:
-	  lwz       r3, 0xC(r28)
-	  li        r4, 0x20
-	  bl        0x21C14
-
-	.loc_0x58:
-	  stw       r3, 0x8(r28)
-	  li        r0, 0
-	  addi      r3, r28, 0
-	  stw       r0, 0x18(r28)
-	  stw       r0, 0x14(r28)
-	  stw       r0, 0x10(r28)
-	  stw       r29, 0x1C(r28)
-	  bl        0xE4
-	  lwz       r0, 0x2C(r1)
-	  lwz       r31, 0x24(r1)
-	  lwz       r30, 0x20(r1)
-	  lwz       r29, 0x1C(r1)
-	  lwz       r28, 0x18(r1)
-	  addi      r1, r1, 0x28
-	  mtlr      r0
-	  blr
-	*/
 }
 
 /*
@@ -90,67 +45,7 @@ void BufferedInputStream::init(Stream* stream, u8* buffer, int bufferSize)
  * Address:	80025598
  * Size:	0000C0
  */
-BufferedInputStream::BufferedInputStream(Stream* stream, u8* buffer, int bufferSize)
-{
-	init(stream, buffer, bufferSize);
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  lis       r7, 0x8022
-	  stw       r0, 0x4(r1)
-	  addi      r0, r7, 0x7398
-	  stwu      r1, -0x28(r1)
-	  stw       r31, 0x24(r1)
-	  mr        r31, r6
-	  stw       r30, 0x20(r1)
-	  addi      r30, r5, 0
-	  stw       r29, 0x1C(r1)
-	  addi      r29, r4, 0
-	  stw       r28, 0x18(r1)
-	  addi      r28, r3, 0
-	  lis       r3, 0x8022
-	  stw       r0, 0x4(r28)
-	  addi      r0, r3, 0x74C8
-	  lis       r3, 0x8022
-	  stw       r0, 0x4(r28)
-	  addi      r0, r3, 0x7464
-	  stw       r0, 0x4(r28)
-	  lwz       r3, 0x0(r4)
-	  bl        0x1AD54
-	  stw       r3, 0x0(r28)
-	  cmplwi    r30, 0
-	  stw       r31, 0xC(r28)
-	  beq-      .loc_0x70
-	  mr        r3, r30
-	  b         .loc_0x7C
-
-	.loc_0x70:
-	  lwz       r3, 0xC(r28)
-	  li        r4, 0x20
-	  bl        0x21B58
-
-	.loc_0x7C:
-	  stw       r3, 0x8(r28)
-	  li        r0, 0
-	  addi      r3, r28, 0
-	  stw       r0, 0x18(r28)
-	  stw       r0, 0x14(r28)
-	  stw       r0, 0x10(r28)
-	  stw       r29, 0x1C(r28)
-	  bl        .loc_0xC0
-	  mr        r3, r28
-	  lwz       r0, 0x2C(r1)
-	  lwz       r31, 0x24(r1)
-	  lwz       r30, 0x20(r1)
-	  lwz       r29, 0x1C(r1)
-	  lwz       r28, 0x18(r1)
-	  addi      r1, r1, 0x28
-	  mtlr      r0
-	  blr
-
-	.loc_0xC0:
-	*/
-}
+BufferedInputStream::BufferedInputStream(Stream* stream, u8* buffer, int bufferSize) { init(stream, buffer, bufferSize); }
 
 /*
  * --INFO--
@@ -196,35 +91,6 @@ void BufferedInputStream::fillBuffer()
 	.loc_0x74:
 	  lwz       r0, 0x1C(r1)
 	  lwz       r31, 0x14(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
-}
-
-/*
- * --INFO--
- * Address:	800256E0
- * Size:	000044
- */
-void BufferedInputStream::getPending()
-{
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  mr        r31, r3
-	  lwz       r3, 0x1C(r3)
-	  lwz       r12, 0x4(r3)
-	  lwz       r12, 0x44(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r0, 0x18(r31)
-	  lwz       r31, 0x14(r1)
-	  sub       r3, r3, r0
-	  lwz       r0, 0x1C(r1)
 	  addi      r1, r1, 0x18
 	  mtlr      r0
 	  blr
@@ -313,109 +179,6 @@ void BufferedInputStream::read(void*, int)
 	  lwz       r29, 0x1C(r1)
 	  lwz       r28, 0x18(r1)
 	  addi      r1, r1, 0x28
-	  mtlr      r0
-	  blr
-	*/
-}
-
-/*
- * --INFO--
- * Address:	80025828
- * Size:	000030
- */
-void BufferedInputStream::close()
-{
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  lwz       r3, 0x1C(r3)
-	  lwz       r12, 0x4(r3)
-	  lwz       r12, 0x4C(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
-}
-
-/*
- * --INFO--
- * Address:	80025858
- * Size:	000008
- */
-void BufferedInputStream::getPosition()
-{
-	/*
-	.loc_0x0:
-	  lwz       r3, 0x18(r3)
-	  blr
-	*/
-}
-
-/*
- * --INFO--
- * Address:	80025860
- * Size:	00002C
- */
-void RandomAccessStream::getLength()
-{
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  lwz       r12, 0x4(r3)
-	  lwz       r12, 0x48(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
-}
-
-/*
- * --INFO--
- * Address:	8002588C
- * Size:	000008
- */
-u32 RandomAccessStream::getPosition() { return 0x0; }
-
-/*
- * --INFO--
- * Address:	80025894
- * Size:	00005C
- */
-void RandomAccessStream::getPending()
-{
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  stw       r30, 0x10(r1)
-	  mr        r30, r3
-	  lwz       r12, 0x4(r30)
-	  lwz       r12, 0x60(r12)
-	  mtlr      r12
-	  blrl
-	  addi      r31, r3, 0
-	  addi      r3, r30, 0
-	  lwz       r12, 0x4(r30)
-	  lwz       r12, 0x58(r12)
-	  mtlr      r12
-	  blrl
-	  sub       r3, r31, r3
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  lwz       r30, 0x10(r1)
-	  addi      r1, r1, 0x18
 	  mtlr      r0
 	  blr
 	*/

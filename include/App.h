@@ -8,7 +8,7 @@
  * @brief TODO
  */
 struct GameApp : public BaseApp {
-	virtual ~GameApp();  // _30 (weak)
+	virtual ~GameApp(); // _30 (weak)
 	virtual int idle(); // _38 (weak)
 
 	void renderall();
@@ -29,7 +29,7 @@ struct PlugPikiApp : public BaseApp {
 	virtual void update();        // _10
 	virtual void draw(Graphics&); // _14
 	virtual ~PlugPikiApp();       // _30 (weak)
-	virtual int idle();          // _38
+	virtual int idle();           // _38
 	virtual void softReset();     // _40
 
 	void hardReset();

@@ -1,36 +1,6 @@
 #include "types.h"
-
-#define PI 3.14159265359
-
-extern "C" f32 sinf(f32);
-
-struct CollTriInfo {
-	char filler[24];
-	f32 float1;
-	f32 float2;
-	f32 float3;
-	char filler2[4];
-	f32 float4;
-	f32 float5;
-	f32 float6;
-	f32 float7;
-};
-
-class MapCode {
-	u32 _00;
-	u32 _04;
-	u32 _08;
-	u32 _0C;
-	u32 _10;
-	u32 _14;
-	u32 _18;
-	f32 _1C;
-
-	u32 getAttribute(CollTriInfo*);
-	char* getAttributeName(int); // UNUSED
-	u32 getSlipCode(CollTriInfo*);
-	bool isBald(CollTriInfo*);
-};
+#include "MapCode.h"
+#include "math.h"
 
 /*
  * --INFO--

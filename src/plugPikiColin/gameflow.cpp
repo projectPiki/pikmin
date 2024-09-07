@@ -1,4 +1,7 @@
-#include "types.h"
+#include "gameflow.h"
+#include "LoadIdler.h"
+#include "WorldClock.h"
+#include "Delegate.h"
 
 /*
  * --INFO--
@@ -1975,51 +1978,53 @@ void GameFlow::softReset()
 	*/
 }
 
-/*
- * --INFO--
- * Address:	80052CA4
- * Size:	00006C
- */
-Node::Node(char*)
-{
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  lis       r5, 0x8022
-	  stw       r0, 0x4(r1)
-	  addi      r0, r5, 0x738C
-	  li        r5, 0
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  addi      r31, r3, 0
-	  lis       r3, 0x8022
-	  stw       r0, 0x0(r31)
-	  addi      r0, r3, 0x737C
-	  lis       r3, 0x8023
-	  stw       r0, 0x0(r31)
-	  subi      r0, r3, 0x71E0
-	  mr        r3, r31
-	  stw       r5, 0x10(r31)
-	  stw       r5, 0xC(r31)
-	  stw       r5, 0x8(r31)
-	  stw       r4, 0x4(r31)
-	  stw       r0, 0x0(r31)
-	  bl        -0x125B8
-	  mr        r3, r31
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
-}
+// /*
+//  * --INFO--
+//  * Address:	80052CA4
+//  * Size:	00006C
+//  */
+// Node::Node(char* name)
+// 	: CoreNode(name)
+// {
+// 	init(name);
+// 	/*
+// 	.loc_0x0:
+// 	  mflr      r0
+// 	  lis       r5, 0x8022
+// 	  stw       r0, 0x4(r1)
+// 	  addi      r0, r5, 0x738C
+// 	  li        r5, 0
+// 	  stwu      r1, -0x18(r1)
+// 	  stw       r31, 0x14(r1)
+// 	  addi      r31, r3, 0
+// 	  lis       r3, 0x8022
+// 	  stw       r0, 0x0(r31)
+// 	  addi      r0, r3, 0x737C
+// 	  lis       r3, 0x8023
+// 	  stw       r0, 0x0(r31)
+// 	  subi      r0, r3, 0x71E0
+// 	  mr        r3, r31
+// 	  stw       r5, 0x10(r31)
+// 	  stw       r5, 0xC(r31)
+// 	  stw       r5, 0x8(r31)
+// 	  stw       r4, 0x4(r31)
+// 	  stw       r0, 0x0(r31)
+// 	  bl        -0x125B8
+// 	  mr        r3, r31
+// 	  lwz       r0, 0x1C(r1)
+// 	  lwz       r31, 0x14(r1)
+// 	  addi      r1, r1, 0x18
+// 	  mtlr      r0
+// 	  blr
+// 	*/
+// }
 
 /*
  * --INFO--
  * Address:	80052D10
  * Size:	000024
  */
-void GameFlow::loadShape(char*, bool)
+void* GameFlow::loadShape(char*, bool)
 {
 	/*
 	.loc_0x0:

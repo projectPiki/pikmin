@@ -1,5 +1,10 @@
 #include "types.h"
 #include "math.h"
+#include "Plane.h"
+#include "Camera.h"
+#include "Collision.h"
+#include "BoundBox.h"
+#include "KMath.h"
 
 /*
  * --INFO--
@@ -26,7 +31,7 @@ void _Print(char*, ...)
  * Address: ........
  * Size:    0000C0
  */
-void Plane::equal(Plane&)
+bool Plane::equal(Plane&)
 {
 	// UNUSED FUNCTION
 }
@@ -1484,15 +1489,15 @@ void angDist(f32, f32)
  */
 void qdist2(f32, f32, f32, f32)
 {
-	f32 differenceX         = point2X - point1X;
-	f32 absoluteDifferenceX = (differenceX < 0.0f) ? -differenceX : differenceX;
+	// f32 differenceX         = point2X - point1X;
+	// f32 absoluteDifferenceX = (differenceX < 0.0f) ? -differenceX : differenceX;
 
-	f32 differenceY         = point2Y - point1Y;
-	f32 absoluteDifferenceY = (differenceY < 0.0f) ? -differenceY : differenceY;
+	// f32 differenceY         = point2Y - point1Y;
+	// f32 absoluteDifferenceY = (differenceY < 0.0f) ? -differenceY : differenceY;
 
-	f32 minimumDifference = (absoluteDifferenceX <= absoluteDifferenceY) ? absoluteDifferenceX : absoluteDifferenceY;
+	// f32 minimumDifference = (absoluteDifferenceX <= absoluteDifferenceY) ? absoluteDifferenceX : absoluteDifferenceY;
 
-	return absoluteDifferenceX + absoluteDifferenceY - minimumDifference * 0.5f;
+	// return absoluteDifferenceX + absoluteDifferenceY - minimumDifference * 0.5f;
 	/*
 	.loc_0x0:
 	  fsubs     f3, f3, f1
@@ -1544,18 +1549,18 @@ void qdist3(f32, f32, f32, f32, f32, f32)
 void CollTriInfo::init(RoomInfo* info, Vector3f* pos)
 {
 	for (int i = 0; i < 3; ++i) {
-		Vector3f* pos1;
-		Vector3f* pos2;
-		pos2 = &pos[this->_04[(i + 1) % 3]];
-		pos1 = &pos[this->_04[i % 3]];
+		// Vector3f* pos1;
+		// Vector3f* pos2;
+		// pos2 = &pos[this->_04[(i + 1) % 3]];
+		// pos1 = &pos[this->_04[i % 3]];
 
-		Vector3f tempVector;
-		tempVector.sub2(pos2, pos1);
-		tempVector.normalise();
-		tempVector.CP(&this->field_18);
-		this->field_28[i] = tempVector;
-		f64 dpResult      = tempVector.DP(pos2);
-		this->field_34[i] = dpResult;
+		// Vector3f tempVector;
+		// tempVector.sub2(pos2, pos1);
+		// tempVector.normalise();
+		// tempVector.CP(&this->field_18);
+		// this->field_28[i] = tempVector;
+		// f64 dpResult      = tempVector.DP(pos2);
+		// this->field_34[i] = dpResult;
 	}
 	/*
 	.loc_0x0:
@@ -2613,7 +2618,7 @@ KTri::KTri()
  * Address: 800394C8
  * Size:    0000C4
  */
-void KTri::set(Vector3f&, Vector3f&, Vector3f&)
+void KTri::set(Vector3f& vecA, Vector3f& vecB, Vector3f& vecC)
 {
 	/*
 	.loc_0x0:

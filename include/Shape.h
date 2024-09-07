@@ -9,7 +9,7 @@
 #include "Texture.h"
 #include "Collision.h"
 #include "Matrix4f.h"
-#include "GfxobjInfo.h"
+#include "GfxObject.h"
 #include "BoundBox.h"
 #include "Joint.h"
 
@@ -25,6 +25,8 @@ struct CollTriInfo;
 struct BaseRoomInfo;
 struct NBT;
 struct DispList;
+struct PVWTevInfo;
+struct LFlareGroup;
 
 /**
  * @brief TODO
@@ -60,56 +62,6 @@ struct ShapeDynMaterials {
 	void updateContext();
 };
 
-struct LFlareGroup;
-
-struct LightFlare : public CoreNode {
-	LightFlare() { }
-
-	f32 mSize;          // _14
-	Vector3f mPosition; // _18
-};
-
-/**
- * @brief TODO
- */
-struct LightGroup : public CoreNode {
-	LightGroup()
-	{
-		mFlags      = 0;
-		mType       = 0;
-		mJointIndex = -1;
-		mTexture    = nullptr;
-	}
-
-#ifndef __MWERKS__
-	void addLight(struct Vector3f&, float);
-	void ageAddFlare(struct AgeServer&);
-	void ageChangeTexture(struct AgeServer&);
-	void ageDel(struct AgeServer&);
-
-	virtual void genAge(class AgeServer&);
-
-	void addLight(struct Vector3f&, float);
-	void saveini(char*, struct RandomAccessStream&);
-#endif
-
-	void loadini(struct CmdStream*);
-	void refresh(struct Graphics&, struct Matrix4f*);
-
-	s32 mFlags;               // _14
-	s32 mType;                // _18
-	s32 mJointIndex;          // _1C
-	Texture* mTexture;        // _20
-	Vector3f mDirection;      // _24
-	Colour mLightColour;      // _30
-	s8* mTexSource;           // _34
-	s8* mMatSource;           // _38
-	Texture* mHaloTex;        // _3C
-	LightFlare mFlares;       // _40
-	s32 _64;                  // _64
-	LFlareGroup* mFlareGroup; // _68
-};
-
 /**
  * @brief TODO
  */
@@ -129,6 +81,9 @@ struct DispList : public CoreNode {
 	FaceNode mFaceNode; // _2C
 };
 
+/**
+ * @brief TODO
+ */
 struct DlobjInfo : public GfxobjInfo {
 	DlobjInfo();
 };
@@ -256,17 +211,26 @@ struct Shape : public BaseShape {
 	// TODO: members
 };
 
-struct CamDataInfo {
-	void update(f32, Matrix4f&);
-};
-
-struct LightDataInfo {
-	void update(f32);
-};
-
+/**
+ * @brief TODO
+ */
 struct SceneData {
 	void parse(CmdStream*);
 	void getAnimInfo(CmdStream*);
+};
+
+/**
+ * @brief TODO
+ *
+ * @note Size: 0x18.
+ */
+struct CachedShape {
+	CachedShape() { _00 = _04 = this; }
+
+	// TODO: members
+	CachedShape* _00;   // _00, maybe prev and next?
+	CachedShape* _04;   // _04
+	u8 _08[0x18 - 0x8]; // _08, unknown
 };
 
 #endif

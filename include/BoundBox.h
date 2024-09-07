@@ -1,7 +1,7 @@
 #ifndef BOUNDBOX_H
 #define BOUNDBOX_H
 
-#include "Vector3f.h"
+#include "Vector.h"
 struct Graphics;
 
 struct BoundBox {
@@ -65,11 +65,12 @@ struct BoundBox {
 		    && other.mMax.z <= mMin.z && other.mMin.z >= mMax.z;
 	}
 
-	void resetBound()
-	{
-		mMax.set(32768.0f, 32768.0f, 32768.0f);
-		mMin.set(-32768.0f, -32768.0f, -32768.0f);
-	}
+	// this puts const floats *everywhere*, definitely wrong
+	// void resetBound()
+	// {
+	// 	mMax.set(32768.0f, 32768.0f, 32768.0f);
+	// 	mMin.set(-32768.0f, -32768.0f, -32768.0f);
+	// }
 
 	void draw(Graphics&);
 

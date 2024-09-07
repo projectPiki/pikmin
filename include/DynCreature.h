@@ -9,7 +9,7 @@
 #include "ObjectMgr.h"
 #include "SearchSystem.h"
 #include "Interactions.h"
-#include "Vector3f.h"
+#include "Vector.h"
 #include "Graphics.h"
 
 /**

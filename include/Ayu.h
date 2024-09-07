@@ -41,7 +41,7 @@ struct AyuCache {
  * @brief TODO
  */
 struct AyuStack {
-	AyuStack();
+	AyuStack() { mIsActive = false; }
 
 	bool checkOverflow();
 	inline void checkStack();
@@ -79,7 +79,7 @@ struct AyuStack {
  * @brief TODO
  */
 struct AyuHeap : public AyuStack {
-	AyuHeap();
+	AyuHeap() { }
 
 	void init(char*, int, void*, int);
 

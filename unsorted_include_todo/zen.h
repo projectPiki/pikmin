@@ -2,7 +2,7 @@
 #define _ZEN_H
 
 #include "types.h"
-#include "Vector3f.h"
+#include "Vector.h"
 #include "Matrix3f.h"
 
 /*

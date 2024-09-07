@@ -1,4 +1,5 @@
-#include "types.h"
+#include "Route.h"
+#include "Colour.h"
 
 /*
  * --INFO--
@@ -37,14 +38,8 @@ PathFinder::PathFinder(RouteMgr::Group&)
  */
 PathFinder::Buffer::Buffer()
 {
-	/*
-	.loc_0x0:
-	  li        r0, 0xFF
-	  stb       r0, 0x4(r3)
-	  li        r0, -0x1
-	  stw       r0, 0x0(r3)
-	  blr
-	*/
+	_04 = 255;
+	_00 = -1;
 }
 
 /*
@@ -2772,6 +2767,7 @@ void RouteMgr::getWayPoint(u32, int)
  * Size:	00009C
  */
 RouteMgr::RouteMgr()
+    : Node("<Node>")
 {
 	/*
 	.loc_0x0:

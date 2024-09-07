@@ -1,4 +1,6 @@
-#include "types.h"
+#include "Graphics.h"
+#include "Dolphin/os.h"
+#include "Shape.h"
 
 /*
  * --INFO--
@@ -442,7 +444,7 @@ void DGXGraphics::setupRender()
  * Address:	800479CC
  * Size:	000008
  */
-void DGXGraphics::getDListPtr()
+u32 DGXGraphics::getDListPtr()
 {
 	/*
 	.loc_0x0:
@@ -456,7 +458,7 @@ void DGXGraphics::getDListPtr()
  * Address:	800479D4
  * Size:	000008
  */
-void DGXGraphics::getDListRemainSize()
+u32 DGXGraphics::getDListRemainSize()
 {
 	/*
 	.loc_0x0:
@@ -489,7 +491,7 @@ void DGXGraphics::useDList(u32)
  * Address:	800479F8
  * Size:	0004C8
  */
-void DGXGraphics::compileMaterial(Material*)
+u32 DGXGraphics::compileMaterial(Material*)
 {
 	/*
 	.loc_0x0:
@@ -1189,7 +1191,7 @@ void DGXGraphics::retraceProc(u32)
 void DGXGraphics::setCamera(Camera* a1)
 {
 	// Generated from stw r4, 0x2E4(r3)
-	_2E4 = a1;
+	// _2E4 = a1;
 }
 
 /*
@@ -6527,27 +6529,7 @@ void DGXGraphics::directErase(RectArea&, bool)
  * Address:	8004C754
  * Size:	00003C
  */
-Shape::Shape()
-{
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  mr        r31, r3
-	  bl        -0x1D3F0
-	  lis       r3, 0x802A
-	  addi      r0, r3, 0x5D78
-	  stw       r0, 0x0(r31)
-	  mr        r3, r31
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
-}
+Shape::Shape() { }
 
 /*
  * --INFO--

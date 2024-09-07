@@ -1,7 +1,16 @@
 #include "types.h"
 #include "bigFont.h"
+#include "system.h"
+#include "LoadIdler.h"
+#include "Delegate.h"
+#include "Dolphin/os.h"
 
-#ifdef AFTER_BIG_FONT
+bool useSymbols = false;
+System* gsys    = nullptr;
+
+u32 DVDStream::numOpen = 0;
+
+System sys;
 
 /*
  * --INFO--
@@ -38,7 +47,7 @@ void DVDStream::init()
  * Address:	800447DC
  * Size:	000254
  */
-void System::openFile(char*, bool, bool)
+BufferedInputStream* System::openFile(char*, bool, bool)
 {
 	/*
 	.loc_0x0:
@@ -812,50 +821,16 @@ void System::parseArchiveDirectory(char*, char*)
  * Address:	80045144
  * Size:	00008C
  */
-void DVDStream::read(void*, int)
+void DVDStream::read(void* addr, int size)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  addi      r0, r5, 0x1F
-	  rlwinm    r5,r0,0,0,26
-	  stwu      r1, -0x28(r1)
-	  stw       r31, 0x24(r1)
-	  addi      r31, r5, 0
-	  stw       r30, 0x20(r1)
-	  addi      r30, r4, 0
-	  stw       r29, 0x1C(r1)
-	  addi      r29, r3, 0
-	  li        r3, -0x1
-	  lwz       r6, 0x2DEC(r13)
-	  lwz       r0, 0x240(r6)
-	  add       r0, r0, r5
-	  stw       r0, 0x240(r6)
-	  b         .loc_0x5C
+	int roundedSize = ALIGN_NEXT(size, 32);
+	s32 result      = -1;
+	gsys->_240 += roundedSize;
+	while (result == -1) {
+		result = DVDReadPrio(&mFileInfo, addr, roundedSize, mOffset, 2);
+	}
 
-	.loc_0x44:
-	  lwz       r6, 0x44(r29)
-	  addi      r4, r30, 0
-	  addi      r5, r31, 0
-	  addi      r3, r29, 0x8
-	  li        r7, 0x2
-	  bl        0x1BA570
-
-	.loc_0x5C:
-	  cmpwi     r3, -0x1
-	  beq+      .loc_0x44
-	  lwz       r0, 0x44(r29)
-	  add       r0, r0, r31
-	  stw       r0, 0x44(r29)
-	  lwz       r0, 0x2C(r1)
-	  lwz       r31, 0x24(r1)
-	  lwz       r30, 0x20(r1)
-	  lwz       r29, 0x1C(r1)
-	  addi      r1, r1, 0x28
-	  mtlr      r0
-	  blr
-	*/
+	mOffset += roundedSize;
 }
 
 /*
@@ -863,14 +838,7 @@ void DVDStream::read(void*, int)
  * Address:	800451D0
  * Size:	000008
  */
-void DVDStream::getPending()
-{
-	/*
-	.loc_0x0:
-	  lwz       r3, 0x48(r3)
-	  blr
-	*/
-}
+int DVDStream::getPending() { return mPending; }
 
 /*
  * --INFO--
@@ -1472,6 +1440,25 @@ void System::hardReset()
  */
 System::System()
 {
+	mTimerState       = TS_Off;
+	mTogglePrint      = 0;
+	mToggleDebugInfo  = 0;
+	mToggleDebugExtra = 0;
+	mToggleBlur       = 1;
+	mToggleColls      = 0;
+	_25C              = 0x40000;
+	mCurrentThread    = OSGetCurrentThread();
+	_254              = 0;
+	_258              = -1;
+	_2A4              = 0;
+	_32C              = 1;
+	_330              = 1;
+	mCurrentDirectory = "";
+	mAtxRouter        = nullptr;
+	mActiveHeapIdx    = -1;
+	gsys              = this;
+	_2BC              = 0;
+	mTimer            = nullptr;
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -2136,7 +2123,7 @@ System::~System()
  * Address:	........
  * Size:	000028
  */
-void System::hasDebugInfo()
+bool System::hasDebugInfo()
 {
 	// UNUSED FUNCTION
 }
@@ -2581,7 +2568,7 @@ void System::copyWaitUntilDone()
  * Address:	800466F0
  * Size:	000104
  */
-void System::copyRamToCache(u32, u32, u32)
+u32 System::copyRamToCache(u32, u32, u32)
 {
 	/*
 	.loc_0x0:
@@ -3221,6 +3208,10 @@ void LogStream::write(void*, int)
  */
 void DVDStream::close()
 {
+	numOpen--;
+	if (mIsFileOpen) {
+		DVDClose(&mFileInfo);
+	}
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -3243,29 +3234,29 @@ void DVDStream::close()
 	*/
 }
 
-/*
- * --INFO--
- * Address:	80046EAC
- * Size:	000030
- */
-void Delegate1<System, Graphics&>::invoke(Graphics&)
-{
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  mr        r5, r3
-	  stw       r0, 0x4(r1)
-	  addi      r12, r5, 0x8
-	  stwu      r1, -0x8(r1)
-	  lwz       r3, 0x4(r3)
-	  bl        0x1CDE6C
-	  nop
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
-}
+// /*
+//  * --INFO--
+//  * Address:	80046EAC
+//  * Size:	000030
+//  */
+// void Delegate1<System, Graphics&>::invoke(Graphics&)
+// {
+// 	/*
+// 	.loc_0x0:
+// 	  mflr      r0
+// 	  mr        r5, r3
+// 	  stw       r0, 0x4(r1)
+// 	  addi      r12, r5, 0x8
+// 	  stwu      r1, -0x8(r1)
+// 	  lwz       r3, 0x4(r3)
+// 	  bl        0x1CDE6C
+// 	  nop
+// 	  lwz       r0, 0xC(r1)
+// 	  addi      r1, r1, 0x8
+// 	  mtlr      r0
+// 	  blr
+// 	*/
+// }
 
 /*
  * --INFO--
@@ -3324,15 +3315,9 @@ void __sinit_system_cpp(void)
  * --INFO--
  * Address:	80046F80
  * Size:	000008
+ * (Should be weak)
  */
-void AramStream::getPending()
-{
-	/*
-	.loc_0x0:
-	  lwz       r3, 0x10(r3)
-	  blr
-	*/
-}
+int AramStream::getPending() { return mPending; }
 
 /*
  * --INFO--
@@ -3376,4 +3361,3 @@ void AramStream::read(void*, int)
 	  blr
 	*/
 }
-#endif

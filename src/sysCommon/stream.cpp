@@ -230,17 +230,12 @@ void Stream::close() { }
  * Address:	........
  * Size:	00006C
  */
-// void RandomAccessStream::writeTo(int, void*, int)
-// {
-// 	// UNUSED FUNCTION
-// }
-
-/*
- * --INFO--
- * Address:	800254F4
- * Size:	000004
- */
-void RandomAccessStream::setPosition(int) { }
+void RandomAccessStream::writeTo(int p1, void*, int)
+{
+	// this is just here to spawn the weak function setPosition(int);
+	setPosition(p1);
+	// UNUSED FUNCTION
+}
 
 /*
  * --INFO--

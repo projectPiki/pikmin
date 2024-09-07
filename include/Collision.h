@@ -3,8 +3,8 @@
 
 #include "types.h"
 #include "CoreNode.h"
-#include "Vector3f.h"
-#include "GfxobjInfo.h"
+#include "Vector.h"
+#include "GfxObject.h"
 
 struct CmdStream;
 struct Creature;
@@ -12,6 +12,7 @@ struct DynCollObject;
 struct ObjCollInfo;
 struct Shape;
 struct BaseShape;
+struct RoomInfo;
 
 /**
  * @brief TODO
@@ -162,6 +163,22 @@ struct CollInfo {
 	u8 _00[0x14]; // _00, TODO: work out members;
 };
 
-struct CollGroup { };
+/**
+ * @brief TODO
+ */
+struct CollGroup {
+};
+
+/**
+ * @brief TODO
+ */
+struct CollTriInfo {
+	CollTriInfo();
+
+	void init(RoomInfo*, Vector3f*);
+	void behindEdge(Vector3f&);
+
+	// TODO: members
+};
 
 #endif

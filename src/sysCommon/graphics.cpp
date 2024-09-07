@@ -1,4 +1,14 @@
 #include "types.h"
+#include "Graphics.h"
+#include "Colour.h"
+#include "Material.h"
+#include "PVW.h"
+#include "Font.h"
+#include "Collision.h"
+#include "Plane.h"
+#include "Texture.h"
+#include "Shape.h"
+#include "sysNew.h"
 
 /*
  * --INFO--
@@ -141,7 +151,7 @@ void PVWPolygonColourInfo::animate(f32*, Colour&)
  * Address:	........
  * Size:	0000A0
  */
-void subExtract(f32, AKeyInfo&, AKeyInfo&)
+void subExtract(f32, struct AKeyInfo&, AKeyInfo&)
 {
 	// UNUSED FUNCTION
 }
@@ -2310,7 +2320,7 @@ void Graphics::useDList(u32) { }
  * Address:	80027730
  * Size:	000008
  */
-u32 Graphics::compileMaterial(Material*) { return 0x0; }
+u32 Graphics::compileMaterial(Material*) { return 0; }
 
 /*
  * --INFO--
@@ -3326,6 +3336,8 @@ void MaterialHandler::setTexMatrix(bool)
  */
 Graphics::Graphics()
 {
+	mCachedShapeCount = 1000;
+	mCachedShapes     = new CachedShape[mCachedShapeCount];
 	/*
 	.loc_0x0:
 	  mflr      r0
@@ -3450,19 +3462,19 @@ Graphics::Graphics()
 }
 
 /*
- * --INFO--
- * Address:	800284AC
- * Size:	00000C
- */
-CachedShape::CachedShape()
-{
-	/*
-	.loc_0x0:
-	  stw       r3, 0x4(r3)
-	  stw       r3, 0x0(r3)
-	  blr
-	*/
-}
+//  * --INFO--
+//  * Address:	800284AC
+//  * Size:	00000C
+//  */
+// CachedShape::CachedShape()
+// {
+// 	/*
+// 	.loc_0x0:
+// 	  stw       r3, 0x4(r3)
+// 	  stw       r3, 0x0(r3)
+// 	  blr
+// 	*/
+// }
 
 /*
  * --INFO--
@@ -3506,7 +3518,7 @@ void Graphics::initRender(int, int)
 void Graphics::resetMatrixBuffer()
 {
 	// Generated from stw r0, 0x38C(r3)
-	_38C = 0;
+	// _38C = 0;
 }
 
 /*
@@ -5241,7 +5253,7 @@ u32 Graphics::getDListRemainSize() { return 0x0; }
 void Graphics::setLightcam(LightCamera* a1)
 {
 	// Generated from stw r4, 0x338(r3)
-	_338 = a1;
+	// _338 = a1;
 }
 
 /*

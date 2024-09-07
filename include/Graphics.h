@@ -4,8 +4,10 @@
 #include "types.h"
 #include "Dolphin/mtx.h"
 #include "Joint.h"
+#include "Light.h"
 
 struct BaseShape;
+struct CachedShape;
 struct Camera;
 struct Font;
 struct Light;
@@ -13,6 +15,7 @@ struct LightCamera;
 struct Material;
 struct MaterialHandler;
 struct Mesh;
+struct OSContext;
 struct Plane;
 struct PVWLightingInfo;
 struct Shape;
@@ -36,15 +39,24 @@ struct Graphics {
 	void drawSphere(Vector3f&, f32, Matrix4f&);
 	void calcLighting(f32);
 
+	// unused/inlined:
+	void drawCircle(Vector3f&, f32, Matrix4f&);
+	void calcSphereLighting(Vector3f&, f32);
+	void calcBoxLighting(BoundBox&);
+
 	// _3B4 = VTBL
-	u8 _00[0x3B4]; // _00, TODO: work out members
+	u8 _00[0x3A8];              // _00, TODO: work out members
+	Light mLight;               // _10
+	CachedShape* mCachedShapes; // _3A8
+	u32 mCachedShapeCount;      // _3AC
+	u8 _3B0[0x4];               // _3B0, unknown
 
 	virtual void videoReset();                                                                    // _08
 	virtual void setVerticalFilter(u8*);                                                          // _0C
 	virtual void getVerticalFilter(u8*);                                                          // _10
-	virtual void getDListPtr();                                                                   // _14
-	virtual void getDListRemainSize();                                                            // _18
-	virtual void compileMaterial(Material*);                                                      // _1C
+	virtual u32 getDListPtr();                                                                    // _14
+	virtual u32 getDListRemainSize();                                                             // _18
+	virtual u32 compileMaterial(Material*);                                                       // _1C
 	virtual void useDList(u32);                                                                   // _20
 	virtual void initRender(int, int);                                                            // _24
 	virtual void resetCopyFilter() = 0;                                                           // _28
@@ -109,9 +121,9 @@ struct DGXGraphics : public Graphics {
 	virtual void videoReset();                                                                // _08
 	virtual void setVerticalFilter(u8*);                                                      // _0C
 	virtual void getVerticalFilter(u8*);                                                      // _10
-	virtual void getDListPtr();                                                               // _14
-	virtual void getDListRemainSize();                                                        // _18
-	virtual void compileMaterial(Material*);                                                  // _1C
+	virtual u32 getDListPtr();                                                                // _14
+	virtual u32 getDListRemainSize();                                                         // _18
+	virtual u32 compileMaterial(Material*);                                                   // _1C
 	virtual void useDList(u32);                                                               // _20
 	virtual void initRender(int, int);                                                        // _24
 	virtual void resetCopyFilter();                                                           // _28
@@ -173,9 +185,26 @@ struct DGXGraphics : public Graphics {
 	void setMatMatrices(Material*, int);
 	void setupVtxDesc(Shape*, Material*, Mesh*);
 
+	// unused/inlined:
+	void GXReInit();
+	void showCrash(u16, OSContext*);
+	void showError(char*, char*, int);
+	void directDrawChar(int, int, int);
+	void directDrawChar(RectArea&, RectArea&);
+	void directPrint(int, int, char*, ...);
+	void directErase(RectArea&, bool);
+
 	// _3B4      = VTBL
 	// _000-_3B8 = Graphics
 	// TODO: members
+};
+
+/**
+ * @brief Stripped, only has one unused/inlined function in map
+ */
+struct GfxInfo {
+	// unused/inlined:
+	void createCollData(Vector3f*, f32);
 };
 
 #endif

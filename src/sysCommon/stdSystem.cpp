@@ -1,4 +1,13 @@
 #include "types.h"
+#include "system.h"
+#include "Texture.h"
+#include "Animator.h"
+#include "sysNew.h"
+#include "CmdStream.h"
+#include "stl/string.h"
+
+static char file[] = __FILE__;
+static char name[] = "StdSystem";
 
 /*
  * --INFO--
@@ -25,24 +34,7 @@ void _Print(char*, ...)
  * Address:	8003EE34
  * Size:	000030
  */
-void AnmobjInfo::detach()
-{
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  lwz       r3, 0x20(r3)
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x18(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
-}
+void AnmobjInfo::detach() { mAnimation->detach(); }
 
 /*
  * --INFO--
@@ -50,106 +42,23 @@ void AnmobjInfo::detach()
  * Size:	000144
  */
 StdSystem::StdSystem()
+    : _200("CoreNode")
+    , _214("CoreNode")
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  lis       r4, 0x8023
-	  stw       r0, 0x4(r1)
-	  subi      r0, r4, 0x735C
-	  li        r5, 0
-	  stwu      r1, -0x20(r1)
-	  li        r6, 0x28
-	  li        r7, 0x8
-	  stw       r31, 0x1C(r1)
-	  addi      r31, r3, 0
-	  lis       r3, 0x8004
-	  stw       r30, 0x18(r1)
-	  subi      r4, r3, 0x1058
-	  lis       r3, 0x8023
-	  stw       r29, 0x14(r1)
-	  subi      r29, r3, 0x7410
-	  addi      r3, r31, 0x54
-	  stw       r0, 0x1A0(r31)
-	  bl        0x1D5BC4
-	  lis       r3, 0x8023
-	  subi      r0, r3, 0x795C
-	  stw       r0, 0x1EC(r31)
-	  addi      r3, r31, 0x1DC
-	  bl        0x4F9C
-	  li        r30, 0
-	  stw       r30, 0x1D4(r31)
-	  lis       r4, 0x6E6F
-	  subi      r0, r13, 0x7A08
-	  stw       r30, 0x1D0(r31)
-	  addi      r3, r31, 0x1DC
-	  addi      r4, r4, 0x6E65
-	  stw       r0, 0x1D8(r31)
-	  bl        0x4FE0
-	  lis       r3, 0x8022
-	  stw       r30, 0x1E8(r31)
-	  addi      r7, r3, 0x738C
-	  lis       r3, 0x8022
-	  stw       r7, 0x200(r31)
-	  addi      r6, r3, 0x737C
-	  stw       r6, 0x200(r31)
-	  addi      r5, r29, 0x1C
-	  li        r4, 0x1
-	  stw       r30, 0x210(r31)
-	  addi      r0, r31, 0x1D0
-	  addi      r3, r31, 0
-	  stw       r30, 0x20C(r31)
-	  stw       r30, 0x208(r31)
-	  stw       r5, 0x204(r31)
-	  stw       r7, 0x214(r31)
-	  stw       r6, 0x214(r31)
-	  stw       r30, 0x224(r31)
-	  stw       r30, 0x220(r31)
-	  stw       r30, 0x21C(r31)
-	  stw       r5, 0x218(r31)
-	  stw       r30, 0x10(r31)
-	  lfs       f0, -0x7C10(r2)
-	  stfs      f0, 0x4(r31)
-	  stfs      f0, 0x8(r31)
-	  lfs       f0, -0x7C0C(r2)
-	  stfs      f0, 0xC(r31)
-	  stw       r4, 0x2C(r31)
-	  stw       r30, 0x198(r31)
-	  stw       r0, 0x1D0(r31)
-	  stw       r0, 0x1D4(r31)
-	  stb       r4, 0x1F0(r31)
-	  stw       r30, 0x238(r31)
-	  lwz       r12, 0x1A0(r31)
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  addi      r0, r29, 0x28
-	  stw       r0, 0x50(r31)
-	  mr        r3, r31
-	  stw       r30, 0x19C(r31)
-	  lwz       r0, 0x24(r1)
-	  lwz       r31, 0x1C(r1)
-	  lwz       r30, 0x18(r1)
-	  lwz       r29, 0x14(r1)
-	  addi      r1, r1, 0x20
-	  mtlr      r0
-	  blr
-	*/
-}
+	mConsFont         = nullptr;
+	mCurrentFade      = 0.0f;
+	mFadeStart        = 0.0f;
+	mFadeEnd          = 1.0;
+	mToggleFileInfo   = 1;
+	_198              = 0;
+	mGfxobjInfo.mPrev = &mGfxobjInfo;
+	mGfxobjInfo.mNext = &mGfxobjInfo;
+	mHasGfxObjects    = true;
+	mLightFlares      = nullptr;
 
-/*
- * --INFO--
- * Address:	8003EFA8
- * Size:	00000C
- */
-AyuHeap::AyuHeap()
-{
-	/*
-	.loc_0x0:
-	  li        r0, 0
-	  stb       r0, 0x1D(r3)
-	  blr
-	*/
+	initSoftReset();
+	mDataRoot = "dataDir/";
+	_19C      = 0;
 }
 
 /*
@@ -159,100 +68,34 @@ AyuHeap::AyuHeap()
  */
 void StdSystem::onceInit()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  li        r4, 0x20
-	  stw       r0, 0x4(r1)
-	  li        r0, 0x2000
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  stw       r30, 0x10(r1)
-	  addi      r30, r3, 0
-	  stw       r0, 0x3C(r3)
-	  lwz       r31, 0x3C(r3)
-	  rlwinm    r3,r31,6,0,25
-	  addi      r3, r3, 0x8
-	  bl        0x8184
-	  lis       r4, 0x8004
-	  subi      r4, r4, 0xFE4
-	  addi      r7, r31, 0
-	  li        r5, 0
-	  li        r6, 0x40
-	  bl        0x1D5C2C
-	  stw       r3, 0x40(r30)
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  lwz       r30, 0x10(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	mMatrixCount = 0x2000;
+	mMatrices    = new (0x20) Matrix4f[mMatrixCount];
 }
-
-/*
- * --INFO--
- * Address:	8003F01C
- * Size:	000004
- */
-Matrix4f::Matrix4f() { }
 
 /*
  * --INFO--
  * Address:	8003F020
  * Size:	000014
  */
-void StdSystem::getHeap(int)
-{
-	/*
-	.loc_0x0:
-	  mulli     r4, r4, 0x28
-	  addi      r0, r3, 0
-	  addi      r3, r4, 0x54
-	  add       r3, r0, r3
-	  blr
-	*/
-}
+AyuHeap* StdSystem::getHeap(int heapIdx) { return &mHeaps[heapIdx]; }
 
 /*
  * --INFO--
  * Address:	8003F034
  * Size:	000034
  */
-void StdSystem::resetHeap(int, int)
-{
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  mulli     r4, r4, 0x28
-	  stw       r0, 0x4(r1)
-	  addi      r0, r3, 0
-	  stwu      r1, -0x8(r1)
-	  addi      r3, r4, 0x54
-	  addi      r4, r5, 0
-	  add       r3, r0, r3
-	  bl        -0x1A970
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
-}
+void StdSystem::resetHeap(int heapIdx, int flag) { mHeaps[heapIdx].reset(flag); }
 
 /*
  * --INFO--
  * Address:	8003F068
  * Size:	000010
  */
-void StdSystem::setHeap(int)
+int StdSystem::setHeap(int newHeapIdx)
 {
-	/*
-	.loc_0x0:
-	  lwz       r0, 0x194(r3)
-	  stw       r4, 0x194(r3)
-	  mr        r3, r0
-	  blr
-	*/
+	int oldIdx     = mActiveHeapIdx;
+	mActiveHeapIdx = newHeapIdx;
+	return oldIdx;
 }
 
 /*
@@ -425,7 +268,7 @@ void StdSystem::loadTexture(char*, bool)
  * Address:	8003F1FC
  * Size:	000008
  */
-u32 StdSystem::openFile(char*, bool, bool) { return 0x0; }
+BufferedInputStream* StdSystem::openFile(char*, bool, bool) { return nullptr; }
 
 /*
  * --INFO--
@@ -1102,13 +945,8 @@ void StdSystem::addTexture(Texture*, char*)
  */
 void StdSystem::initSoftReset()
 {
-	/*
-	.loc_0x0:
-	  li        r0, 0
-	  stw       r0, 0x2DE0(r13)
-	  stw       r0, 0x1FC(r3)
-	  blr
-	*/
+	CmdStream::statbuff = nullptr;
+	mCurrentShape       = nullptr;
 }
 
 /*
@@ -1200,56 +1038,11 @@ void StdSystem::getShape(char*, char*, char*, bool)
  * Address:	8003F9E4
  * Size:	000068
  */
-void StdSystem::initLFlares(int)
+void StdSystem::initLFlares(int count)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x20(r1)
-	  stw       r31, 0x1C(r1)
-	  addi      r31, r4, 0
-	  mulli     r5, r31, 0x2C
-	  stw       r30, 0x18(r1)
-	  stw       r4, 0x230(r3)
-	  addi      r30, r3, 0
-	  addi      r3, r5, 0x8
-	  bl        0x75F8
-	  lis       r4, 0x8004
-	  subi      r4, r4, 0x5B4
-	  addi      r7, r31, 0
-	  li        r5, 0
-	  li        r6, 0x2C
-	  bl        0x1D5204
-	  stw       r3, 0x234(r30)
-	  mr        r3, r30
-	  bl        0x38
-	  lwz       r0, 0x24(r1)
-	  lwz       r31, 0x1C(r1)
-	  lwz       r30, 0x18(r1)
-	  addi      r1, r1, 0x20
-	  mtlr      r0
-	  blr
-	*/
-}
-
-/*
- * --INFO--
- * Address:	8003FA4C
- * Size:	00001C
- */
-LFInfo::LFInfo()
-{
-	/*
-	.loc_0x0:
-	  lfs       f0, -0x7C10(r2)
-	  li        r0, 0
-	  stfs      f0, 0xC(r3)
-	  stfs      f0, 0x8(r3)
-	  stfs      f0, 0x4(r3)
-	  stw       r0, 0x28(r3)
-	  blr
-	*/
+	mLfInfoCount = count;
+	mLfInfo      = new LFInfo[count];
+	resetLFlares();
 }
 
 /*
@@ -1257,38 +1050,21 @@ LFInfo::LFInfo()
  * Address:	8003FA68
  * Size:	00000C
  */
-void StdSystem::resetLFlares()
-{
-	// Generated from stw r0, 0x22C(r3)
-	_22C = 0;
-}
+void StdSystem::resetLFlares() { mFlareCount = 0; }
 
 /*
  * --INFO--
  * Address:	8003FA74
  * Size:	000038
  */
-void StdSystem::getLFlareInfo()
+LFInfo* StdSystem::getLFlareInfo()
 {
-	/*
-	.loc_0x0:
-	  lwz       r4, 0x22C(r3)
-	  lwz       r0, 0x230(r3)
-	  cmpw      r4, r0
-	  bge-      .loc_0x30
-	  addi      r0, r4, 0x1
-	  stw       r0, 0x22C(r3)
-	  lwz       r4, 0x22C(r3)
-	  lwz       r3, 0x234(r3)
-	  subi      r0, r4, 0x1
-	  mulli     r0, r0, 0x2C
-	  add       r3, r3, r0
-	  blr
+	if (mFlareCount < mLfInfoCount) {
+		mFlareCount++;
+		return &mLfInfo[mFlareCount - 1];
+	}
 
-	.loc_0x30:
-	  li        r3, 0
-	  blr
-	*/
+	return nullptr;
 }
 
 /*
@@ -1939,51 +1715,15 @@ void StdSystem::loadBundle(char*, bool)
 
 /*
  * --INFO--
- * Address:	80040334
- * Size:	000004
- */
-void StdSystem::copyWaitUntilDone() { }
-
-/*
- * --INFO--
- * Address:	80040338
- * Size:	000008
- */
-u32 StdSystem::copyRamToCache(u32, u32, u32) { return 0x0; }
-
-/*
- * --INFO--
  * Address:	80040340
  * Size:	00005C
  */
-void StdSystem::stringDup(char*)
+char* StdSystem::stringDup(char* str)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x20(r1)
-	  stw       r31, 0x1C(r1)
-	  stw       r30, 0x18(r1)
-	  stw       r29, 0x14(r1)
-	  mr        r29, r3
-	  bl        0x1D90B0
-	  addi      r30, r3, 0x1
-	  addi      r3, r30, 0
-	  bl        0x6C9C
-	  addi      r31, r3, 0
-	  addi      r4, r29, 0
-	  addi      r5, r30, 0
-	  bl        -0x3CF64
-	  mr        r3, r31
-	  lwz       r0, 0x24(r1)
-	  lwz       r31, 0x1C(r1)
-	  lwz       r30, 0x18(r1)
-	  lwz       r29, 0x14(r1)
-	  addi      r1, r1, 0x20
-	  mtlr      r0
-	  blr
-	*/
+	size_t len   = strlen(str) + 1;
+	char* outStr = new char[len];
+	memcpy(outStr, str, len);
+	return outStr;
 }
 
 /*
@@ -2156,107 +1896,3 @@ void TextureCacher::cacheTexture(CacheTexture*)
 	  blr
 	*/
 }
-
-/*
- * --INFO--
- * Address:	80040558
- * Size:	000004
- */
-void StdSystem::copyCacheToRam(u32, u32, u32) { }
-
-/*
- * --INFO--
- * Address:	8004055C
- * Size:	000004
- */
-void StdSystem::copyCacheToTexture(CacheTexture*) { }
-
-/*
- * --INFO--
- * Address:	80040560
- * Size:	000004
- */
-void StdSystem::Activate(bool) { }
-
-/*
- * --INFO--
- * Address:	80040564
- * Size:	000004
- */
-void StdSystem::parseArchiveDirectory(char*, char*) { }
-
-/*
- * --INFO--
- * Address:	80040568
- * Size:	000004
- */
-void StdSystem::startLoading(LoadIdler*, bool, u32) { }
-
-/*
- * --INFO--
- * Address:	8004056C
- * Size:	000004
- */
-void StdSystem::endLoading() { }
-
-/*
- * --INFO--
- * Address:	80040570
- * Size:	000030
- */
-void TexobjInfo::attach()
-{
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  lwz       r3, 0x20(r3)
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
-}
-
-/*
- * --INFO--
- * Address:	800405A0
- * Size:	000004
- */
-void GfxObject::attach() { }
-
-/*
- * --INFO--
- * Address:	800405A4
- * Size:	000030
- */
-void TexobjInfo::detach()
-{
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x8(r1)
-	  lwz       r3, 0x20(r3)
-	  lwz       r12, 0x0(r3)
-	  lwz       r12, 0xC(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
-}
-
-/*
- * --INFO--
- * Address:	800405D4
- * Size:	000004
- */
-void GfxObject::detach() { }

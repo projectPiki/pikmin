@@ -11,21 +11,19 @@
  * @brief TODO
  */
 struct Node : public CoreNode {
-	Node(char* name);
-
-	Node()
-	    : CoreNode("<Node>")
+	Node(char* name = "<Node>")
+	    : CoreNode(name)
 	{
-		init("<Node>");
+		init(name);
 	}
 
 	virtual void update();                                 // _10
 	virtual void draw(Graphics&);                          // _14
 	virtual void render(Graphics&);                        // _18
 	virtual void concat() { }                              // _1C (weak)
-	virtual void concat(struct VQS&);                      // _20 (weak)
-	virtual void concat(SRT&);                             // _24 (weak)
-	virtual void concat(Matrix4f&);                        // _28 (weak)
+	virtual void concat(struct VQS&) { concat(); }         // _20 (weak)
+	virtual void concat(SRT&) { concat(); }                // _24 (weak)
+	virtual void concat(Matrix4f&) { concat(); }           // _28 (weak)
 	virtual Matrix4f* getModelMatrix() { return nullptr; } // _2C (weak)
 
 	void init(char*);
@@ -37,6 +35,9 @@ struct Node : public CoreNode {
 	s32 _1C;    // _1C
 };
 
+/**
+ * @brief TODO
+ */
 struct FaceNode : public CoreNode {
 	inline FaceNode()
 	    : CoreNode("face")
@@ -61,6 +62,9 @@ struct FaceNode : public CoreNode {
 	int _44; // _44
 };
 
+/**
+ * @brief TODO
+ */
 struct SRTNode : public Node {
 	SRTNode(char* name = "<SRTNode>")
 	    : Node(name)
@@ -68,8 +72,8 @@ struct SRTNode : public Node {
 	}
 
 	virtual void update();                                    // _10
-	virtual void concat();                                    // _1C (weak)
-	virtual void concat(Matrix4f&);                           // _28 (weak)
+	virtual void concat() { }                                 // _1C (weak)
+	virtual void concat(Matrix4f&) { }                        // _28 (weak)
 	virtual Matrix4f* getModelMatrix() { return &mWorldMtx; } // _2C (weak)
 
 	Vector3f& getPosition() { return mSRT.mTranslation; }

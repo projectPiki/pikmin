@@ -5,19 +5,23 @@
 #include "math.h"
 #include "Stream.h"
 
+struct Matrix3f;
+struct Quat;
+
 /**
  * @brief TODO
  *
  * @note Size: 0xC.
  */
 struct Vector3f {
-	Vector3f() { x = y = z = 0.0f; } // yes it's this way around, every vector initialised in a ctor is "in reverse"
+	Vector3f() { x = y = z = 0.0f; }
 	Vector3f(f32 const& _x, f32 const& _y, f32 const& _z)
 	    : x(_x)
 	    , y(_y)
 	    , z(_z)
 	{
 	}
+
 	inline Vector3f operator*(const Vector3f& other) const { return Vector3f(x * other.x, y * other.y, z * other.z); }
 	void rotate(struct Matrix4f&);
 	void rotateTo(Matrix4f&, Vector3f&);
@@ -75,6 +79,11 @@ struct Vector3f {
 	f32 getY() { return y; }
 	f32 getZ() { return z; }
 
+	// unused/inlined:
+	void rotateTranspose(Matrix4f&);
+	void rotate(Quat&);
+	void rotateInverse(Quat&);
+
 	f32 x, y, z; // _00, _04, _08
 };
 
@@ -87,11 +96,40 @@ inline Vector3f cross(Vector3f& vec1, Vector3f& vec2)
 	return outVec;
 }
 
+/**
+ * @brief TODO
+ *
+ * @note Size: 0x8.
+ */
 struct Vector2f {
 	Vector2f() { }
 	Vector2f(const f32& x, const f32& y);
+
 	f32 x, y; // _00, _04
 };
+
+/**
+ * @brief TODO
+ *
+ * @note Size: 0x10.
+ */
+struct Quat {
+	void fromMat3f(Matrix3f&);
+	void rotate(Vector3f&, f32);
+	void multiply(Quat&);
+	void normalise();
+	void genVectorX(Vector3f&);
+	void genVectorY(Vector3f&);
+	void genVectorZ(Vector3f&);
+	void slerp(Quat&, f32, int);
+	void fromEuler(Vector3f&);
+
+	// unused/inlined:
+	void multiplyTo(Quat&, Quat&);
+
+	// TODO: members
+};
+
 inline Vector3f operator-(const Vector3f& a, const Vector3f& b) { return Vector3f(a.x - b.x, a.y - b.y, a.z - b.z); }
 inline Vector3f operator+(const Vector3f& a, const Vector3f& b) { return Vector3f(a.x + b.x, a.y + b.y, a.z + b.z); }
 inline f32 Vector3f_diffX(Vector3f& a, Vector3f& b) { return a.getX() - b.getX(); }

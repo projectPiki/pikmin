@@ -8,8 +8,9 @@
  * Address:	........
  * Size:	00009C
  */
-void _Error(char*, ...)
+void _Error(char* msg, ...)
 {
+	OSPanic(__FILE__, __LINE__, msg);
 	// UNUSED FUNCTION
 }
 
@@ -30,9 +31,6 @@ void _Print(char*, ...)
  */
 BaseApp::BaseApp()
 {
-	init("<Node>");
-	mWindowNode.init("<Node>");
-
 	_2C            = 0;
 	mCommandStream = 0;
 	mAgeServer     = 0;
@@ -119,29 +117,8 @@ void BaseApp::softReset()
 {
 	stopAgeServer();
 	mChild = nullptr;
-	mWindowNode.init("<Windows>");
+	mWindowNode.init("[Windows]");
 	gsys->initSoftReset();
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  lis       r4, 0x8022
-	  stw       r0, 0x4(r1)
-	  li        r0, 0
-	  addi      r4, r4, 0x72DC
-	  stwu      r1, -0x8(r1)
-	  stw       r0, 0x10(r3)
-	  addi      r3, r3, 0x30
-	  bl        0x1B840
-	  lwz       r3, 0x2DEC(r13)
-	  lwz       r12, 0x1A0(r3)
-	  lwz       r12, 0x8(r12)
-	  mtlr      r12
-	  blrl
-	  lwz       r0, 0xC(r1)
-	  addi      r1, r1, 0x8
-	  mtlr      r0
-	  blr
-	*/
 }
 
 /*
@@ -163,98 +140,3 @@ BaseApp::~BaseApp()
 	stopAgeServer();
 	nodeMgr->Del(this);
 }
-
-/*
- * --INFO--
- * Address:	80024FC8
- * Size:	000004
- */
-// void Stream::flush() { }
-
-/*
- * --INFO--
- * Address:	80024FCC
- * Size:	000004
- */
-void BaseApp::InitApp(char*) { }
-
-/*
- * --INFO--
- * Address:	80024FD0
- * Size:	000008
- */
-int BaseApp::idle() { return 0; }
-
-/*
- * --INFO--
- * Address:	80024FD8
- * Size:	000008
- */
-bool BaseApp::keyDown(int, int, int) { return false; }
-
-/*
- * --INFO--
- * Address:	80024FE0
- * Size:	000030
- */
-void BaseApp::useHeap(int index)
-{
-	mHeapIndex = index;
-	gsys->setHeap(mHeapIndex);
-}
-
-/*
- * --INFO--
- * Address:	80025010
- * Size:	000004
- */
-void BaseApp::procCmd(char*) { }
-
-/*
- * --INFO--
- * Address:	80025014
- * Size:	00002C
- */
-void Node::concat(Matrix4f&) { concat(); }
-
-/*
- * --INFO--
- * Address:	80025040
- * Size:	00002C
- */
-void Node::concat(SRT&) { concat(); }
-
-/*
- * --INFO--
- * Address:	8002506C
- * Size:	00002C
- */
-void Node::concat(VQS&) { concat(); }
-
-/*
- * --INFO--
- * Address:	80025098
- * Size:	000004
- */
-// void Node::concat() { }
-
-/*
- * --INFO--
- * Address:	8002509C
- * Size:	000008
- */
-// Matrix4f* Node::getModelMatrix() { return nullptr; }
-
-/*
- * --INFO--
- * Address:	800250A4
- * Size:	000004
- */
-// void CoreNode::read(RandomAccessStream&) { }
-
-/*
- * --INFO--
- * Address:	800250A8
- * Size:	000008
- */
-// int ANode::getAgeNodeType() { return 0x0; }

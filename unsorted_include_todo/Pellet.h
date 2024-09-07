@@ -2,7 +2,7 @@
 #define _PELLET_H
 
 #include "types.h"
-#include "Vector3f.h"
+#include "Vector.h"
 #include "Matrix4f.h"
 #include "Graphics.h"
 #include "Stream.h"

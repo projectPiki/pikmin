@@ -92,7 +92,7 @@ LIBS = [
         "host": True,
         "objects": [
             ["sysCommon/ayuStack", False],
-            ["sysCommon/baseApp", False],
+            ["sysCommon/baseApp", True],
             ["sysCommon/stream", True],
             ["sysCommon/streamBufferedInput", False],
             ["sysCommon/string", True],

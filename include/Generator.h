@@ -5,7 +5,7 @@
 #include "Ayu.h"
 #include "Node.h"
 #include "Parameters.h"
-#include "Vector3f.h"
+#include "Vector.h"
 
 struct Creature;
 struct MapMgr;

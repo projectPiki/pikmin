@@ -2,37 +2,31 @@
 #define _MATERIAL_H
 
 #include "Stream.h"
-#include "ANode.h"
-
-/**
- * .obj __vt__8Material, global
- * .4byte __RTTI__8Material
- * .4byte 0
- * .4byte getAgeNodeType__5ANodeFv
- * .4byte read__8MaterialFR18RandomAccessStream
- * .4byte attach__8MaterialFv
- */
+#include "CoreNode.h"
+#include "GfxObject.h"
 
 /**
  * @brief TODO
  */
-struct Material : public ANode {
+struct Material : public CoreNode {
 	virtual void read(RandomAccessStream&); // _0C
 	virtual void attach();                  // _10
 };
 
-struct PVWKeyInfoS10;
-
-struct PVWTevStage {
-	void read(RandomAccessStream&);
+/**
+ * @brief TODO
+ */
+struct MatobjInfo : public GfxobjInfo {
+	virtual void attach(); // _08
+	virtual void detach(); // _0C
 };
 
-struct PVWTevInfo {
-};
-
-struct MatobjInfo {
-	void attach();
-	void detach();
+/**
+ * @brief TODO
+ */
+struct MaterialHandler {
+	virtual void setMaterial(Material*); // _08
+	virtual void setTexMatrix(bool);     // _0C
 };
 
 #endif

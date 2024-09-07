@@ -1,4 +1,7 @@
-#include "types.h"
+#include "Light.h"
+#include "Camera.h"
+
+static char file[] = __FILE__;
 
 /*
  * --INFO--
@@ -26,155 +29,35 @@ void _Print(char*, ...)
  * Size:	000200
  */
 Light::Light()
+    : CoreNode("light")
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  lis       r4, 0x8022
-	  stw       r0, 0x4(r1)
-	  addi      r0, r4, 0x738C
-	  subi      r6, r13, 0x7D1C
-	  stwu      r1, -0x18(r1)
-	  lis       r5, 0x8023
-	  li        r7, 0x6
-	  stw       r31, 0x14(r1)
-	  li        r31, 0
-	  stw       r30, 0x10(r1)
-	  addi      r30, r3, 0
-	  lis       r3, 0x8022
-	  stw       r0, 0x0(r30)
-	  addi      r0, r3, 0x737C
-	  lis       r3, 0x8003
-	  stw       r0, 0x0(r30)
-	  subi      r0, r5, 0x7D0C
-	  subi      r4, r3, 0x63B8
-	  stw       r31, 0x10(r30)
-	  addi      r3, r30, 0x80
-	  li        r5, 0
-	  stw       r31, 0xC(r30)
-	  stw       r31, 0x8(r30)
-	  stw       r6, 0x4(r30)
-	  li        r6, 0x2C
-	  stw       r0, 0x0(r30)
-	  lfs       f0, -0x7D70(r2)
-	  stfs      f0, 0x5C(r30)
-	  stfs      f0, 0x58(r30)
-	  stfs      f0, 0x54(r30)
-	  stfs      f0, 0x68(r30)
-	  stfs      f0, 0x64(r30)
-	  stfs      f0, 0x60(r30)
-	  bl        0x1EAFA0
-	  lfs       f2, -0x7D70(r2)
-	  li        r6, 0x302
-	  li        r5, 0x3
-	  stfs      f2, 0x1D4(r30)
-	  li        r4, 0x2
-	  li        r0, 0xFF
-	  stfs      f2, 0x1D0(r30)
-	  mr        r3, r30
-	  stfs      f2, 0x1CC(r30)
-	  stfs      f2, 0x1E0(r30)
-	  stfs      f2, 0x1DC(r30)
-	  stfs      f2, 0x1D8(r30)
-	  stfs      f2, 0x1EC(r30)
-	  stfs      f2, 0x1E8(r30)
-	  stfs      f2, 0x1E4(r30)
-	  stfs      f2, 0x1F8(r30)
-	  stfs      f2, 0x1F4(r30)
-	  stfs      f2, 0x1F0(r30)
-	  stfs      f2, 0x204(r30)
-	  stfs      f2, 0x200(r30)
-	  stfs      f2, 0x1FC(r30)
-	  stfs      f2, 0x210(r30)
-	  stfs      f2, 0x20C(r30)
-	  stfs      f2, 0x208(r30)
-	  stfs      f2, 0x21C(r30)
-	  stfs      f2, 0x218(r30)
-	  stfs      f2, 0x214(r30)
-	  stfs      f2, 0x228(r30)
-	  stfs      f2, 0x224(r30)
-	  stfs      f2, 0x220(r30)
-	  stfs      f2, 0x234(r30)
-	  stfs      f2, 0x230(r30)
-	  stfs      f2, 0x22C(r30)
-	  stb       r31, 0x1C9(r30)
-	  lfs       f0, -0x7D40(r13)
-	  stfs      f0, 0x1D8(r30)
-	  lfs       f0, -0x7D3C(r13)
-	  stfs      f0, 0x1DC(r30)
-	  lfs       f0, -0x7D38(r13)
-	  stfs      f0, 0x1E0(r30)
-	  lfs       f0, -0x7D6C(r2)
-	  stfs      f0, 0x240(r30)
-	  lfs       f1, -0x7D68(r2)
-	  stfs      f1, 0x244(r30)
-	  lfs       f0, -0x7D64(r2)
-	  stfs      f0, 0x248(r30)
-	  stw       r6, 0x14(r30)
-	  stw       r5, 0x24(r30)
-	  lfs       f0, -0x7D60(r2)
-	  stfs      f0, 0x18(r30)
-	  lfs       f0, -0x7D5C(r2)
-	  stfs      f0, 0x1C(r30)
-	  stw       r4, 0x28(r30)
-	  lfs       f0, -0x7D58(r2)
-	  stfs      f0, 0x20(r30)
-	  stfs      f2, 0x2C(r30)
-	  stfs      f2, 0x30(r30)
-	  lfs       f0, -0x7D54(r2)
-	  stfs      f0, 0x34(r30)
-	  stfs      f1, 0x38(r30)
-	  stfs      f2, 0x3C(r30)
-	  stfs      f2, 0x40(r30)
-	  lfs       f0, -0x7D50(r2)
-	  stfs      f0, 0x48(r30)
-	  lfs       f0, -0x7D4C(r2)
-	  stfs      f0, 0x44(r30)
-	  lfs       f0, -0x7D34(r13)
-	  stfs      f0, 0x54(r30)
-	  lfs       f0, -0x7D30(r13)
-	  stfs      f0, 0x58(r30)
-	  lfs       f0, -0x7D2C(r13)
-	  stfs      f0, 0x5C(r30)
-	  lfs       f0, -0x7D28(r13)
-	  stfs      f0, 0x60(r30)
-	  lfs       f0, -0x7D24(r13)
-	  stfs      f0, 0x64(r30)
-	  lfs       f0, -0x7D20(r13)
-	  stfs      f0, 0x68(r30)
-	  stb       r0, 0x6C(r30)
-	  stb       r0, 0x6D(r30)
-	  stb       r0, 0x6E(r30)
-	  stb       r0, 0x6F(r30)
-	  lfs       f1, 0x18(r30)
-	  lfs       f2, 0x1C(r30)
-	  lwz       r4, 0x24(r30)
-	  bl        0x34
-	  mr        r3, r30
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  lwz       r30, 0x10(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
-}
+	_1C9 = 0;
+	_1D8.set(0.0f, 0.0f, 0.0f);
+	_240 = 60.0f;
+	_244 = 1.0f;
+	_248 = 1000.0f;
+	_14  = 770;
+	_24  = 3;
+	_18  = 3005.0f;
+	_1C  = 0.5036f;
+	_28  = 2;
+	_20  = 45.0f;
+	_2C  = 0.0f;
+	_30  = 0.0f;
+	_34  = 0.99559999f;
+	_38  = 1.0f;
+	_3C  = 0.0f;
+	_40  = 0.0f;
+	_48  = 0.15f;
+	_44  = 0.05f;
+	_54.set(0.0f, 100.0f, 0.0f);
+	_60.set(0.0f, -1.0f, 0.0f);
+	_6C = 255;
+	_6D = 255;
+	_6E = 255;
+	_6F = 255;
 
-/*
- * --INFO--
- * Address:	80029C48
- * Size:	000014
- */
-CullingPlane::CullingPlane()
-{
-	/*
-	.loc_0x0:
-	  lfs       f0, -0x7D70(r2)
-	  stfs      f0, 0x8(r3)
-	  stfs      f0, 0x4(r3)
-	  stfs      f0, 0x0(r3)
-	  blr
-	*/
+	setLightDistAttn(_18, _1C, _24);
 }
 
 /*
@@ -182,86 +65,50 @@ CullingPlane::CullingPlane()
  * Address:	80029C5C
  * Size:	0000E4
  */
-void Light::setLightDistAttn(f32, f32, int)
+void Light::setLightDistAttn(f32 p1, f32 p2, int p3)
 {
-	/*
-	.loc_0x0:
-	  stfs      f1, 0x18(r3)
-	  stfs      f2, 0x1C(r3)
-	  stw       r4, 0x24(r3)
-	  lfs       f0, -0x7D70(r2)
-	  fcmpo     cr0, f1, f0
-	  bge-      .loc_0x1C
-	  li        r4, 0
+	_18 = p1;
+	_1C = p2;
+	_24 = p3;
 
-	.loc_0x1C:
-	  lfs       f0, -0x7D70(r2)
-	  fcmpo     cr0, f2, f0
-	  cror      2, 0, 0x2
-	  beq-      .loc_0x3C
-	  lfs       f0, -0x7D68(r2)
-	  fcmpo     cr0, f2, f0
-	  cror      2, 0x1, 0x2
-	  bne-      .loc_0x40
+	if (p1 < 0.0f) {
+		p3 = 0;
+	}
+	if (p2 <= 0.0f || p2 >= 1.0f) {
+		p3 = 0;
+	}
 
-	.loc_0x3C:
-	  li        r4, 0
+	f32 val1;
+	f32 val3;
+	f32 val2;
+	switch (p3) {
+	case 1:
+		val1 = 1.0f;
+		val2 = 0.0f;
+		val3 = (1.0f - p2) / (p2 * p1);
+		break;
+	case 2:
+		val1 = 1.0f;
+		val3 = 0.5f * (1.0f - p2) / (p2 * p1);
+		val2 = 0.5f * (1.0f - p2) / (p1 * (p2 * p1));
+		break;
+	case 3:
+		val1 = 1.0f;
+		val3 = 0.0f;
+		val2 = (1.0f - p2) / (p1 * (p2 * p1));
+		break;
+	case 0:
+	default:
+		val1 = 1.0f;
+		val3 = 0.0f;
+		val2 = 0.0f;
+		break;
+	}
 
-	.loc_0x40:
-	  cmpwi     r4, 0x2
-	  beq-      .loc_0x80
-	  bge-      .loc_0x5C
-	  cmpwi     r4, 0
-	  beq-      .loc_0xC0
-	  bge-      .loc_0x68
-	  b         .loc_0xC0
-
-	.loc_0x5C:
-	  cmpwi     r4, 0x4
-	  bge-      .loc_0xC0
-	  b         .loc_0xA4
-
-	.loc_0x68:
-	  lfs       f5, -0x7D68(r2)
-	  fmuls     f0, f2, f1
-	  lfs       f4, -0x7D70(r2)
-	  fsubs     f1, f5, f2
-	  fdivs     f3, f1, f0
-	  b         .loc_0xCC
-
-	.loc_0x80:
-	  lfs       f5, -0x7D68(r2)
-	  fmuls     f4, f2, f1
-	  lfs       f3, -0x7D48(r2)
-	  fsubs     f2, f5, f2
-	  fmuls     f0, f1, f4
-	  fmuls     f1, f3, f2
-	  fdivs     f3, f1, f4
-	  fdivs     f4, f1, f0
-	  b         .loc_0xCC
-
-	.loc_0xA4:
-	  fmuls     f0, f2, f1
-	  lfs       f5, -0x7D68(r2)
-	  lfs       f3, -0x7D70(r2)
-	  fsubs     f2, f5, f2
-	  fmuls     f0, f1, f0
-	  fdivs     f4, f2, f0
-	  b         .loc_0xCC
-
-	.loc_0xC0:
-	  lfs       f3, -0x7D70(r2)
-	  lfs       f5, -0x7D68(r2)
-	  fmr       f4, f3
-
-	.loc_0xCC:
-	  stfs      f5, 0x2C(r3)
-	  li        r0, 0x1
-	  stfs      f3, 0x30(r3)
-	  stfs      f4, 0x34(r3)
-	  stw       r0, 0x70(r3)
-	  blr
-	*/
+	_2C = val1;
+	_30 = val3;
+	_34 = val2;
+	_70 = 1;
 }
 
 /*
@@ -439,6 +286,25 @@ void Light::refresh(Graphics&, LFlareGroup*)
  */
 void Light::update()
 {
+	switch (_14 & 0xFF) {
+	case 1:
+		_2C = 1.0f;
+		_30 = _34 = 0.0f;
+		_38       = 1.0f;
+		_3C = _40 = 0.0f;
+		_70       = 1;
+		break;
+	case 2:
+		setLightDistAttn(_18, _1C, _24);
+		_38 = 1.0f;
+		_3C = _40 = 0.0f;
+		break;
+	case 3:
+		setLightSpot(_20, _28);
+		_2C = 1.0f;
+		_30 = _34 = 0.0f;
+		break;
+	}
 	/*
 	.loc_0x0:
 	  mflr      r0

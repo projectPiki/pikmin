@@ -1,4 +1,4 @@
-#include "types.h"
+#include "Camera.h"
 
 /*
  * --INFO--
@@ -2035,6 +2035,11 @@ void Camera::projectCamPoint(Vector3f&)
  */
 Camera::Camera()
 {
+	_155 = 0;
+	_164.set(0.0f, 0.0f, 0.0f);
+	_1CC = 60.0f;
+	_1D0 = 1.0f;
+	_1D4 = 1000.0f;
 	/*
 	.loc_0x0:
 	  mflr      r0

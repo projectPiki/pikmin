@@ -9,7 +9,7 @@
  * Size: 0x8.
  */
 struct Stream {
-	Stream(void);
+	Stream() { }
 
 	// _04 = VTBL
 	char* mPath; // _00
@@ -40,10 +40,10 @@ struct Stream {
  * @brief TODO
  */
 struct RandomAccessStream : public Stream {
-	virtual int getPending();      // { return getLength() - getPosition(); } // _44 (weak)
-	virtual int getPosition();     // { return 0; }                          // _58 (weak)
-	virtual void setPosition(int); // _5C (weak)
-	virtual int getLength();       //{ return getAvailable(); }               // _60 (weak)
+	virtual int getPending() { return getLength() - getPosition(); } // _44 (weak)
+	virtual int getPosition() { return 0; }                          // _58 (weak)
+	virtual void setPosition(int) { }                                // _5C (weak)
+	virtual int getLength() { return getAvailable(); }               // _60 (weak)
 
 	void skipPadding(u32 paddingAmount)
 	{
@@ -54,6 +54,9 @@ struct RandomAccessStream : public Stream {
 			readByte();
 		}
 	}
+
+	// unused/inlined:
+	void writeTo(int, void*, int);
 
 	// _04     = VTBL
 	// _00-_08 = Stream

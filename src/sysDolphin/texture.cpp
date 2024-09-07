@@ -1,4 +1,9 @@
 #include "types.h"
+#include "Texture.h"
+#include "Stream.h"
+#include "system.h"
+#include "sysNew.h"
+#include "stl/string.h"
 
 /*
  * --INFO--
@@ -27,37 +32,43 @@ void _Print(char*, ...)
  */
 Texture::Texture()
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  lis       r4, 0x8023
-	  stw       r0, 0x4(r1)
-	  subi      r0, r4, 0x6F50
-	  li        r4, 0
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  addi      r31, r3, 0
-	  lis       r3, 0x8023
-	  stw       r0, 0x0(r31)
-	  subi      r0, r3, 0x6F98
-	  li        r3, 0x20
-	  stw       r0, 0x0(r31)
-	  li        r0, -0x1
-	  stw       r4, 0x30(r31)
-	  stw       r4, 0x34(r31)
-	  stw       r0, 0x20(r31)
-	  stw       r4, 0x18(r31)
-	  lfs       f0, -0x7BA0(r2)
-	  stfs      f0, 0x1C(r31)
-	  bl        0x2E20
-	  stw       r3, 0x24(r31)
-	  mr        r3, r31
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	_30          = 0;
+	_34          = 0;
+	_20          = -1;
+	mTextureData = nullptr;
+	_1C          = 0.0f;
+	_24          = new u32[8]; // this is (probably) not a u32 array, it's an object of size 0x20. TODO: work out WHAT object
+	                           /*
+	                           .loc_0x0:
+	                             mflr      r0
+	                             lis       r4, 0x8023
+	                             stw       r0, 0x4(r1)
+	                             subi      r0, r4, 0x6F50
+	                             li        r4, 0
+	                             stwu      r1, -0x18(r1)
+	                             stw       r31, 0x14(r1)
+	                             addi      r31, r3, 0
+	                             lis       r3, 0x8023
+	                             stw       r0, 0x0(r31)
+	                             subi      r0, r3, 0x6F98
+	                             li        r3, 0x20
+	                             stw       r0, 0x0(r31)
+	                             li        r0, -0x1
+	                             stw       r4, 0x30(r31)
+	                             stw       r4, 0x34(r31)
+	                             stw       r0, 0x20(r31)
+	                             stw       r4, 0x18(r31)
+	                             lfs       f0, -0x7BA0(r2)
+	                             stfs      f0, 0x1C(r31)
+	                             bl        0x2E20
+	                             stw       r3, 0x24(r31)
+	                             mr        r3, r31
+	                             lwz       r0, 0x1C(r1)
+	                             lwz       r31, 0x14(r1)
+	                             addi      r1, r1, 0x18
+	                             mtlr      r0
+	                             blr
+	                           */
 }
 
 /*
@@ -75,8 +86,20 @@ void Texture::offsetGLtoGX(int, int)
  * Address:	80044204
  * Size:	0000D4
  */
-void Texture::getAlpha(int, int)
+u16 Texture::getAlpha(int p1, int p2)
 {
+	switch (_04) {
+	case 5:
+		// needs work
+		return ((u8*)mPixelData)[(p1 % mTileSizeX) * mTileSizeY + mWidth % mTileSizeX] & 0xF0;
+	default:
+		// needs work
+		u16 alpha = ((u16*)mPixelData)[(p1 % mTileSizeX) * mTileSizeY + mWidth % mTileSizeX];
+		if (alpha & 0x8000) {
+			return 255;
+		}
+		return (alpha >> 7) & 0xE0;
+	}
 	/*
 	.loc_0x0:
 	  lhz       r0, 0x4(r3)
@@ -156,111 +179,18 @@ void Texture::getRed(int, int)
  * Address:	800442D8
  * Size:	000168
  */
-void Texture::read(RandomAccessStream&)
+void Texture::read(RandomAccessStream& input)
 {
-	/*
-	.loc_0x0:
-	  mflr      r0
-	  stw       r0, 0x4(r1)
-	  stwu      r1, -0x18(r1)
-	  stw       r31, 0x14(r1)
-	  addi      r31, r4, 0
-	  stw       r30, 0x10(r1)
-	  addi      r30, r3, 0
-	  lwz       r3, 0x0(r4)
-	  bl        0x1D5114
-	  lwz       r0, 0x0(r31)
-	  subi      r4, r13, 0x7880
-	  add       r3, r3, r0
-	  subi      r3, r3, 0x3
-	  bl        0x1D4EB8
-	  cmpwi     r3, 0
-	  bne-      .loc_0xA8
-	  li        r3, 0x34
-	  bl        0x2CE8
-	  cmplwi    r3, 0
-	  beq-      .loc_0x98
-	  lis       r4, 0x8022
-	  addi      r0, r4, 0x738C
-	  lis       r4, 0x8022
-	  stw       r0, 0x0(r3)
-	  addi      r0, r4, 0x737C
-	  stw       r0, 0x0(r3)
-	  li        r6, 0
-	  lis       r4, 0x8023
-	  stw       r6, 0x10(r3)
-	  subi      r5, r13, 0x787C
-	  subi      r4, r4, 0x7EBC
-	  stw       r6, 0xC(r3)
-	  li        r0, 0x1
-	  stw       r6, 0x8(r3)
-	  stw       r5, 0x4(r3)
-	  stw       r4, 0x0(r3)
-	  stw       r0, 0x24(r3)
-	  stw       r6, 0x30(r3)
-
-	.loc_0x98:
-	  addi      r4, r30, 0
-	  addi      r5, r31, 0
-	  bl        -0x1B5FC
-	  b         .loc_0x140
-
-	.loc_0xA8:
-	  lwz       r3, 0x0(r31)
-	  bl        0x1D5088
-	  lwz       r0, 0x0(r31)
-	  subi      r4, r13, 0x7874
-	  add       r3, r3, r0
-	  subi      r3, r3, 0x3
-	  bl        0x1D4E2C
-	  cmpwi     r3, 0
-	  bne-      .loc_0x138
-	  li        r3, 0x34
-	  bl        0x2C5C
-	  cmplwi    r3, 0
-	  beq-      .loc_0x124
-	  lis       r4, 0x8022
-	  addi      r0, r4, 0x738C
-	  lis       r4, 0x8022
-	  stw       r0, 0x0(r3)
-	  addi      r0, r4, 0x737C
-	  stw       r0, 0x0(r3)
-	  li        r6, 0
-	  lis       r4, 0x8023
-	  stw       r6, 0x10(r3)
-	  subi      r5, r13, 0x787C
-	  subi      r4, r4, 0x7EBC
-	  stw       r6, 0xC(r3)
-	  li        r0, 0x1
-	  stw       r6, 0x8(r3)
-	  stw       r5, 0x4(r3)
-	  stw       r4, 0x0(r3)
-	  stw       r0, 0x24(r3)
-	  stw       r6, 0x30(r3)
-
-	.loc_0x124:
-	  addi      r4, r30, 0
-	  addi      r5, r31, 0
-	  li        r6, 0
-	  bl        -0x1BA78
-	  b         .loc_0x140
-
-	.loc_0x138:
-	  lwz       r3, 0x0(r31)
-	  bl        0x1D4FF8
-
-	.loc_0x140:
-	  lwz       r3, 0x2DEC(r13)
-	  mr        r4, r30
-	  lwz       r5, 0x0(r31)
-	  bl        -0x4C2C
-	  lwz       r0, 0x1C(r1)
-	  lwz       r31, 0x14(r1)
-	  lwz       r30, 0x10(r1)
-	  addi      r1, r1, 0x18
-	  mtlr      r0
-	  blr
-	*/
+	if (strcmp(input.mPath + (strlen(input.mPath) - 3), "txe") == 0) {
+		TexImg* img = new TexImg;
+		img->importTxe(this, input);
+	} else if (strcmp(input.mPath + (strlen(input.mPath) - 3), "bti") == 0) {
+		TexImg* img = new TexImg;
+		img->importBti(this, input, nullptr);
+	} else {
+		strlen(input.mPath);
+	}
+	gsys->addTexture(this, input.mPath);
 }
 
 /*
@@ -270,12 +200,13 @@ void Texture::read(RandomAccessStream&)
  */
 void Texture::detach()
 {
-	/*
-	.loc_0x0:
-	  li        r4, -0x1
-	  stw       r4, 0x20(r3)
-	  blr
-	*/
+	_20 = -1; // needs to use r4?
+	          /*
+	          .loc_0x0:
+	            li        r4, -0x1
+	            stw       r4, 0x20(r3)
+	            blr
+	          */
 }
 
 /*
@@ -584,10 +515,3 @@ void Texture::decodeData(TexImg*)
 	  blr
 	*/
 }
-
-/*
- * --INFO--
- * Address:	800447D8
- * Size:	000004
- */
-void Texture::makeResident() { }
